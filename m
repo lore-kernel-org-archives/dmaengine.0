@@ -1,14 +1,33 @@
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
-Subject: dmaengine: cppi41: Fix channel queues array size check
-From: Vinod Koul <vinod.koul@intel.com>
-Message-Id: <20171222121720.GU18649@localhost>
-Date: Fri, 22 Dec 2017 17:47:20 +0530
-To: Vasyl Gomonovych <gomonovych@gmail.com>
-Cc: "Williams, Dan J" <dan.j.williams@intel.com>, "dmaengine@vger.kernel.org" <dmaengine@vger.kernel.org>, "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
+Subject: [V7,1/7] Documentation: DT: qcom_hidma: Bump HW revision for the bugfixed HW
+From: Sinan Kaya <okaya@codeaurora.org>
+Message-Id: <1512681031-11343-2-git-send-email-okaya@codeaurora.org>
+Date: Thu,  7 Dec 2017 16:10:25 -0500
+To: dmaengine@vger.kernel.org, timur@codeaurora.org, devicetree@vger.kernel.org, linux-acpi@vger.kernel.org, sakari.ailus@linux.intel.com
+Cc: linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org, Sinan Kaya <okaya@codeaurora.org>, Vinod Koul <vinod.koul@intel.com>, Rob Herring <robh+dt@kernel.org>, Mark Rutland <mark.rutland@arm.com>, open list <linux-kernel@vger.kernel.org>
 List-ID: <dmaengine.vger.kernel.org>
 
-T24gVGh1LCBEZWMgMjEsIDIwMTcgYXQgMDk6MjM6MDRQTSArMDUzMCwgVmFzeWwgR29tb25vdnlj
-aCB3cm90ZToKPiBUaGUgdGVzdCBzaG91bGQgYmUgPj0gQVJSQVlfU0laRSgpIGluc3RlYWQgb2Yg
-PiBBUlJBWV9TSVpFKCkuCgpBcHBsaWVkLCB0aGFua3MK
+QSBuZXcgdmVyc2lvbiBvZiB0aGUgSElETUEgSVAgaGFzIGJlZW4gcmVsZWFzZWQgd2l0aCBidWcg
+Zml4ZXMuIEJ1bXBpbmcgdGhlCmhhcmR3YXJlIHZlcnNpb24gdG8gZGlmZmVyZW50aWF0ZSBmcm9t
+IG90aGVycy4KClNpZ25lZC1vZmYtYnk6IFNpbmFuIEtheWEgPG9rYXlhQGNvZGVhdXJvcmEub3Jn
+PgpSZXZpZXdlZC1ieTogUm9iIEhlcnJpbmcgPHJvYmhAa2VybmVsLm9yZz4KLS0tCiBEb2N1bWVu
+dGF0aW9uL2RldmljZXRyZWUvYmluZGluZ3MvZG1hL3Fjb21faGlkbWFfbWdtdC50eHQgfCA0ICsr
+LS0KIDEgZmlsZSBjaGFuZ2VkLCAyIGluc2VydGlvbnMoKyksIDIgZGVsZXRpb25zKC0pCgpkaWZm
+IC0tZ2l0IGEvRG9jdW1lbnRhdGlvbi9kZXZpY2V0cmVlL2JpbmRpbmdzL2RtYS9xY29tX2hpZG1h
+X21nbXQudHh0IGIvRG9jdW1lbnRhdGlvbi9kZXZpY2V0cmVlL2JpbmRpbmdzL2RtYS9xY29tX2hp
+ZG1hX21nbXQudHh0CmluZGV4IDU1NDkyYzIuLjVkOTNkNmQgMTAwNjQ0Ci0tLSBhL0RvY3VtZW50
+YXRpb24vZGV2aWNldHJlZS9iaW5kaW5ncy9kbWEvcWNvbV9oaWRtYV9tZ210LnR4dAorKysgYi9E
+b2N1bWVudGF0aW9uL2RldmljZXRyZWUvYmluZGluZ3MvZG1hL3Fjb21faGlkbWFfbWdtdC50eHQK
+QEAgLTQ3LDggKzQ3LDggQEAgV2hlbiB0aGUgT1MgaXMgbm90IGluIGNvbnRyb2wgb2YgdGhlIG1h
+bmFnZW1lbnQgaW50ZXJmYWNlIChpLmUuIGl0J3MgYSBndWVzdCksCiB0aGUgY2hhbm5lbCBub2Rl
+cyBhcHBlYXIgb24gdGhlaXIgb3duLCBub3QgdW5kZXIgYSBtYW5hZ2VtZW50IG5vZGUuCiAKIFJl
+cXVpcmVkIHByb3BlcnRpZXM6Ci0tIGNvbXBhdGlibGU6IG11c3QgY29udGFpbiAicWNvbSxoaWRt
+YS0xLjAiIGZvciBpbml0aWFsIEhXIG9yICJxY29tLGhpZG1hLTEuMSIKLWZvciBNU0kgY2FwYWJs
+ZSBIVy4KKy0gY29tcGF0aWJsZTogbXVzdCBjb250YWluICJxY29tLGhpZG1hLTEuMCIgZm9yIGlu
+aXRpYWwgSFcgb3IKKyAgInFjb20saGlkbWEtMS4xIi8icWNvbSxoaWRtYS0xLjIiIGZvciBNU0kg
+Y2FwYWJsZSBIVy4KIC0gcmVnOiBBZGRyZXNzZXMgZm9yIHRoZSB0cmFuc2ZlciBhbmQgZXZlbnQg
+Y2hhbm5lbAogLSBpbnRlcnJ1cHRzOiBTaG91bGQgY29udGFpbiB0aGUgZXZlbnQgaW50ZXJydXB0
+CiAtIGRlc2MtY291bnQ6IE51bWJlciBvZiBhc3luY2hyb25vdXMgcmVxdWVzdHMgdGhpcyBjaGFu
+bmVsIGNhbiBoYW5kbGUK
