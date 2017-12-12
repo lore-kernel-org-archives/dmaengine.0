@@ -1,0 +1,25 @@
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: base64
+Subject: dmaengine: imx-sdma: Add MODULE_FIRMWARE
+From: Nicolas Chauvet <kwizart@gmail.com>
+Message-Id: <20171212113716.21071-1-kwizart@gmail.com>
+Date: Tue, 12 Dec 2017 12:37:16 +0100
+To: Vinod Koul <vinod.koul@intel.com>, Dan Williams <dan.j.williams@intel.com>, Sascha Hauer <s.hauer@pengutronix.de>, Lucas Stach <l.stach@pengutronix.de>
+Cc: dmaengine@vger.kernel.org, Nicolas Chauvet <kwizart@gmail.com>
+List-ID: <dmaengine.vger.kernel.org>
+
+VGhpcyBhdm9pZCB0aGUgZm9sbG93aW5nIGVycm9yIHdoZW4gdXNpbmcgYW4gaW5pdHJhbWZzIG9u
+IHdhbmRib2FyZCBxdWFkCkRpcmVjdCBmaXJtd2FyZSBsb2FkIGZvciBpbXgvc2RtYS9zZG1hLWlt
+eDZxLmJpbiBmYWlsZWQgd2l0aCBlcnJvciAtMgoKU2lnbmVkLW9mZi1ieTogTmljb2xhcyBDaGF1
+dmV0IDxrd2l6YXJ0QGdtYWlsLmNvbT4KLS0tCiBkcml2ZXJzL2RtYS9pbXgtc2RtYS5jIHwgNiAr
+KysrKysKIDEgZmlsZSBjaGFuZ2VkLCA2IGluc2VydGlvbnMoKykKCmRpZmYgLS1naXQgYS9kcml2
+ZXJzL2RtYS9pbXgtc2RtYS5jIGIvZHJpdmVycy9kbWEvaW14LXNkbWEuYwppbmRleCAyMTg0ODgx
+YWZlNzYuLmU3ZGIyNGM2NzAzMCAxMDA2NDQKLS0tIGEvZHJpdmVycy9kbWEvaW14LXNkbWEuYwor
+KysgYi9kcml2ZXJzL2RtYS9pbXgtc2RtYS5jCkBAIC0xOTM5LDQgKzE5MzksMTAgQEAgbW9kdWxl
+X3BsYXRmb3JtX2RyaXZlcihzZG1hX2RyaXZlcik7CiAKIE1PRFVMRV9BVVRIT1IoIlNhc2NoYSBI
+YXVlciwgUGVuZ3V0cm9uaXggPHMuaGF1ZXJAcGVuZ3V0cm9uaXguZGU+Iik7CiBNT0RVTEVfREVT
+Q1JJUFRJT04oImkuTVggU0RNQSBkcml2ZXIiKTsKKyNpZiBJU19FTkFCTEVEKENPTkZJR19TT0Nf
+SU1YNlEpCitNT0RVTEVfRklSTVdBUkUoImlteC9zZG1hL3NkbWEtaW14NnEuYmluIik7CisjZW5k
+aWYKKyNpZiBJU19FTkFCTEVEKENPTkZJR19TT0NfSU1YN0QpCitNT0RVTEVfRklSTVdBUkUoImlt
+eC9zZG1hL3NkbWEtaW14N2QuYmluIik7CisjZW5kaWYKIE1PRFVMRV9MSUNFTlNFKCJHUEwiKTsK
