@@ -2,23 +2,13 @@ Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
 Subject: dmaengine: cppi41: Fix channel queues array size check
-From: Vasyl Gomonovych <gomonovych@gmail.com>
-Message-Id: <1513871584-8783-1-git-send-email-gomonovych@gmail.com>
-Date: Thu, 21 Dec 2017 16:53:04 +0100
-To: dan.j.williams@intel.com, vinod.koul@intel.com, dmaengine@vger.kernel.org, gomonovych@gmail.com
-Cc: linux-kernel@vger.kernel.org
+From: Vinod Koul <vinod.koul@intel.com>
+Message-Id: <20171222121720.GU18649@localhost>
+Date: Fri, 22 Dec 2017 17:47:20 +0530
+To: Vasyl Gomonovych <gomonovych@gmail.com>
+Cc: "Williams, Dan J" <dan.j.williams@intel.com>, "dmaengine@vger.kernel.org" <dmaengine@vger.kernel.org>, "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
 List-ID: <dmaengine.vger.kernel.org>
 
-VGhlIHRlc3Qgc2hvdWxkIGJlID49IEFSUkFZX1NJWkUoKSBpbnN0ZWFkIG9mID4gQVJSQVlfU0la
-RSgpLgoKU2lnbmVkLW9mZi1ieTogVmFzeWwgR29tb25vdnljaCA8Z29tb25vdnljaEBnbWFpbC5j
-b20+Ci0tLQogZHJpdmVycy9kbWEvY3BwaTQxLmMgfCAyICstCiAxIGZpbGUgY2hhbmdlZCwgMSBp
-bnNlcnRpb24oKyksIDEgZGVsZXRpb24oLSkKCmRpZmYgLS1naXQgYS9kcml2ZXJzL2RtYS9jcHBp
-NDEuYyBiL2RyaXZlcnMvZG1hL2NwcGk0MS5jCmluZGV4IGY3ZTk2NWY2MzI3NC4uZDliZWU2NWEx
-OGE0IDEwMDY0NAotLS0gYS9kcml2ZXJzL2RtYS9jcHBpNDEuYworKysgYi9kcml2ZXJzL2RtYS9j
-cHBpNDEuYwpAQCAtOTM0LDcgKzkzNCw3IEBAIHN0YXRpYyBib29sIGNwcDQxX2RtYV9maWx0ZXJf
-Zm4oc3RydWN0IGRtYV9jaGFuICpjaGFuLCB2b2lkICpwYXJhbSkKIAogCUJVSUxEX0JVR19PTihB
-UlJBWV9TSVpFKGFtMzM1eF91c2JfcXVldWVzX3J4KSAhPQogCQkgICAgIEFSUkFZX1NJWkUoYW0z
-MzV4X3VzYl9xdWV1ZXNfdHgpKTsKLQlpZiAoV0FSTl9PTihjY2hhbi0+cG9ydF9udW0gPiBBUlJB
-WV9TSVpFKGFtMzM1eF91c2JfcXVldWVzX3J4KSkpCisJaWYgKFdBUk5fT04oY2NoYW4tPnBvcnRf
-bnVtID49IEFSUkFZX1NJWkUoYW0zMzV4X3VzYl9xdWV1ZXNfcngpKSkKIAkJcmV0dXJuIGZhbHNl
-OwogCiAJY2NoYW4tPnFfbnVtID0gcXVldWVzW2NjaGFuLT5wb3J0X251bV0uc3VibWl0Owo=
+T24gVGh1LCBEZWMgMjEsIDIwMTcgYXQgMDk6MjM6MDRQTSArMDUzMCwgVmFzeWwgR29tb25vdnlj
+aCB3cm90ZToKPiBUaGUgdGVzdCBzaG91bGQgYmUgPj0gQVJSQVlfU0laRSgpIGluc3RlYWQgb2Yg
+PiBBUlJBWV9TSVpFKCkuCgpBcHBsaWVkLCB0aGFua3MK
