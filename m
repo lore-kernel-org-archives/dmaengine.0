@@ -1,25 +1,32 @@
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
-Subject: [v16,2/4] net: e100: Replace PCI pool old API
-From: David Miller <davem@davemloft.net>
-Message-Id: <20171218.150649.1306487926708532702.davem@davemloft.net>
-Date: Mon, 18 Dec 2017 15:06:49 -0500 (EST)
-To: romain.perier@gmail.com
-Cc: axboe@kernel.dk, akpm@linux-foundation.org, dan.j.williams@intel.com, vinod.koul@intel.com, jeffrey.t.kirsher@intel.com, aviad.krawczyk@huawei.com, jejb@linux.vnet.ibm.com, martin.petersen@oracle.com, linux-scsi@vger.kernel.org, bhelgaas@google.com, linux-pci@vger.kernel.org, dmaengine@vger.kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org, gregkh@linuxfoundation.org, romain.perier@collabora.com
+Subject: [V2,6/6] arm: dts: ls1021a: add qdma device tree nodes
+From: Wen He <wen.he_1@nxp.com>
+Message-Id: <20171226054754.14969-4-wen.he_1@nxp.com>
+Date: Tue, 26 Dec 2017 13:47:54 +0800
+To: vinod.koul@intel.com, robh+dt@kernel.org
+Cc: devicetree@vger.kernel.org, dmaengine@vger.kernel.org, leoyang.li@nxp.com, jiafei.pan@nxp.com, jiaheng.fan@nxp.com, Wen He <wen.he_1@nxp.com>
 List-ID: <dmaengine.vger.kernel.org>
 
-RnJvbTogUm9tYWluIFBlcmllciA8cm9tYWluLnBlcmllckBnbWFpbC5jb20+CkRhdGU6IEZyaSwg
-MTUgRGVjIDIwMTcgMjA6MzE6MjEgKzAxMDAKCj4gRnJvbTogUm9tYWluIFBlcmllciA8cm9tYWlu
-LnBlcmllckBjb2xsYWJvcmEuY29tPgo+IAo+IFRoZSBQQ0kgcG9vbCBBUEkgaXMgZGVwcmVjYXRl
-ZC4gVGhpcyBjb21taXQgcmVwbGFjZXMgdGhlIFBDSSBwb29sIG9sZAo+IEFQSSBieSB0aGUgYXBw
-cm9wcmlhdGUgZnVuY3Rpb24gd2l0aCB0aGUgRE1BIHBvb2wgQVBJLgo+IAo+IFNpZ25lZC1vZmYt
-Ynk6IFJvbWFpbiBQZXJpZXIgPHJvbWFpbi5wZXJpZXJAY29sbGFib3JhLmNvbT4KPiBBY2tlZC1i
-eTogUGV0ZXIgU2VubmEgVHNjaHVkaW4gPHBldGVyLnNlbm5hQGNvbGxhYm9yYS5jb20+Cj4gQWNr
-ZWQtYnk6IEplZmYgS2lyc2hlciA8amVmZnJleS50LmtpcnNoZXJAaW50ZWwuY29tPgo+IFRlc3Rl
-ZC1ieTogUGV0ZXIgU2VubmEgVHNjaHVkaW4gPHBldGVyLnNlbm5hQGNvbGxhYm9yYS5jb20+CgpB
-Y2tlZC1ieTogRGF2aWQgUy4gTWlsbGVyIDxkYXZlbUBkYXZlbWxvZnQubmV0PgotLS0KVG8gdW5z
-dWJzY3JpYmUgZnJvbSB0aGlzIGxpc3Q6IHNlbmQgdGhlIGxpbmUgInVuc3Vic2NyaWJlIGRtYWVu
-Z2luZSIgaW4KdGhlIGJvZHkgb2YgYSBtZXNzYWdlIHRvIG1ham9yZG9tb0B2Z2VyLmtlcm5lbC5v
-cmcKTW9yZSBtYWpvcmRvbW8gaW5mbyBhdCAgaHR0cDovL3ZnZXIua2VybmVsLm9yZy9tYWpvcmRv
-bW8taW5mby5odG1sCg==
+YWRkIHRoZSBxRE1BIGRldmljZSB0cmVlIG5vZGVzIGZvciBMUzEwMjFBIGRldmljZXMuCgpTaWdu
+ZWQtb2ZmLWJ5OiBXZW4gSGUgPHdlbi5oZV8xQG54cC5jb20+Ci0tLQpjaGFuZ2UgaW4gdjI6Cgkt
+IEFkZCBjb21taXRzIG1lc3NhZ2VzCgktIFJlcGxhY2UgJ2NoYW5uZWxzJyBieSAnZG1hLWNoYW5u
+ZWxzJwoJLSBSZXBsYWNlICdxZG1hQDgzOTAwMDAnIGJ5ICdkbWEtY29udHJvbGxlckA4MzkwMDAw
+JwoKIGFyY2gvYXJtL2Jvb3QvZHRzL2xzMTAyMWEuZHRzaSB8ICAgMTUgKysrKysrKysrKysrKysr
+CiAxIGZpbGVzIGNoYW5nZWQsIDE1IGluc2VydGlvbnMoKyksIDAgZGVsZXRpb25zKC0pCgpkaWZm
+IC0tZ2l0IGEvYXJjaC9hcm0vYm9vdC9kdHMvbHMxMDIxYS5kdHNpIGIvYXJjaC9hcm0vYm9vdC9k
+dHMvbHMxMDIxYS5kdHNpCmluZGV4IDkzMTllMWYuLjMzZjdiNWMgMTAwNjQ0Ci0tLSBhL2FyY2gv
+YXJtL2Jvb3QvZHRzL2xzMTAyMWEuZHRzaQorKysgYi9hcmNoL2FybS9ib290L2R0cy9sczEwMjFh
+LmR0c2kKQEAgLTU0OSw2ICs1NDksMjEgQEAKIAkJCQkgPCZjbG9ja2dlbiA0IDE+OwogCQl9Owog
+CisJCXFkbWE6IGRtYS1jb250cm9sbGVyQDgzOTAwMDAgeworCQkJY29tcGF0aWJsZSA9ICJmc2ws
+bHMxMDIxYS1xZG1hIjsKKwkJCXJlZyA9IDwweDAgMHg4Mzk4MDAwIDB4MCAweDEwMDA+LCAvKiBD
+b250cm9sbGVyIHJlZ3MgKi8KKwkJCQk8MHgwIDB4ODM5OTAwMCAweDAgMHgxMDAwPiwgLyogU3Rh
+dHVzIHJlZ3MgKi8KKwkJCQk8MHgwIDB4ODM5YTAwMCAweDAgMHgyMDAwPjsgLyogQmxvY2sgcmVn
+cyAqLworCQkJaW50ZXJydXB0cyA9IDxHSUNfU1BJIDE4NSBJUlFfVFlQRV9MRVZFTF9ISUdIPiwK
+KwkJCQkJPEdJQ19TUEkgNzYgSVJRX1RZUEVfTEVWRUxfSElHSD47CisJCQlpbnRlcnJ1cHQtbmFt
+ZXMgPSAicWRtYS1lcnJvciIsICJxZG1hLXF1ZXVlIjsKKwkJCWRtYS1jaGFubmVscyA9IDw4PjsK
+KwkJCXF1ZXVlcyA9IDwyPjsKKwkJCXN0YXR1cy1zaXplcyA9IDw2ND47CisJCQlxdWV1ZS1zaXpl
+cyA9IDw2NCA2ND47CisJCQliaWctZW5kaWFuOworCQl9OworCiAJCWRjdTogZGN1QDJjZTAwMDAg
+ewogCQkJY29tcGF0aWJsZSA9ICJmc2wsbHMxMDIxYS1kY3UiOwogCQkJcmVnID0gPDB4MCAweDJj
+ZTAwMDAgMHgwIDB4MTAwMDA+Owo=
