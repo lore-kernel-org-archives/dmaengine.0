@@ -1,15 +1,34 @@
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
-Subject: [v2] dmaengine: dmatest: fix container_of member in dmatest_callback
-From: Vinod Koul <vinod.koul@intel.com>
-Message-Id: <20180130065522.GO18649@localhost>
-Date: Tue, 30 Jan 2018 12:25:23 +0530
-To: Yang Shunyong <shunyong.yang@hxt-semitech.com>
-Cc: dan.j.williams@intel.com, dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org, yu.zheng@hxt-semitch.com
+Subject: [v17,4/4] PCI: Remove PCI pool macro functions
+From: Romain Perier <romain.perier@gmail.com>
+Message-Id: <20180102175356.7999-5-romain.perier@gmail.com>
+Date: Tue,  2 Jan 2018 18:53:56 +0100
+To: Jens Axboe <axboe@kernel.dk>, Andrew Morton <akpm@linux-foundation.org>, Dan Williams <dan.j.williams@intel.com>, Vinod Koul <vinod.koul@intel.com>, Jeff Kirsher <jeffrey.t.kirsher@intel.com>, Aviad Krawczyk <aviad.krawczyk@huawei.com>, "James E.J. Bottomley" <jejb@linux.vnet.ibm.com>, "Martin K. Petersen" <martin.petersen@oracle.com>, linux-scsi@vger.kernel.org, Bjorn Helgaas <bhelgaas@google.com>, linux-pci@vger.kernel.org
+Cc: dmaengine@vger.kernel.org, "David S. Miller" <davem@davemloft.net>, netdev@vger.kernel.org, linux-kernel@vger.kernel.org, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Romain Perier <romain.perier@collabora.com>
 List-ID: <dmaengine.vger.kernel.org>
 
-T24gTW9uLCBKYW4gMjksIDIwMTggYXQgMDI6NDA6MTFQTSArMDgwMCwgWWFuZyBTaHVueW9uZyB3
-cm90ZToKPiBUaGUgdHlwZSBvZiBhcmcgcGFzc2VkIHRvIGRtYXRlc3RfY2FsbGJhY2sgaXMgc3Ry
-dWN0IGRtYXRlc3RfZG9uZS4KPiBJdCByZWZlcnMgdG8gdGVzdF9kb25lIGluIHN0cnVjdCBkbWF0
-ZXN0X3RocmVhZCwgbm90IGRvbmVfd2FpdC4KCkFwcGxpZWQsIHRoYW5rcwo=
+RnJvbTogUm9tYWluIFBlcmllciA8cm9tYWluLnBlcmllckBjb2xsYWJvcmEuY29tPgoKTm93IHRo
+YXQgYWxsIHRoZSBkcml2ZXJzIHVzZSBkbWEgcG9vbCBBUEksIHdlIGNhbiByZW1vdmUgdGhlIG1h
+Y3JvCmZ1bmN0aW9ucyBmb3IgUENJIHBvb2wuCgpTaWduZWQtb2ZmLWJ5OiBSb21haW4gUGVyaWVy
+IDxyb21haW4ucGVyaWVyQGNvbGxhYm9yYS5jb20+ClJldmlld2VkLWJ5OiBQZXRlciBTZW5uYSBU
+c2NodWRpbiA8cGV0ZXIuc2VubmFAY29sbGFib3JhLmNvbT4KQWNrZWQtYnk6IEJqb3JuIEhlbGdh
+YXMgPGJoZWxnYWFzQGdvb2dsZS5jb20+Ci0tLQogaW5jbHVkZS9saW51eC9wY2kuaCB8IDkgLS0t
+LS0tLS0tCiAxIGZpbGUgY2hhbmdlZCwgOSBkZWxldGlvbnMoLSkKCmRpZmYgLS1naXQgYS9pbmNs
+dWRlL2xpbnV4L3BjaS5oIGIvaW5jbHVkZS9saW51eC9wY2kuaAppbmRleCA2NmNjYTFjNmY3NDIu
+LmM1ZGQwNTAyMWIxNCAxMDA2NDQKLS0tIGEvaW5jbHVkZS9saW51eC9wY2kuaAorKysgYi9pbmNs
+dWRlL2xpbnV4L3BjaS5oCkBAIC0xMzE0LDE1ICsxMzE0LDYgQEAgaW50IHBjaV9zZXRfdmdhX3N0
+YXRlKHN0cnVjdCBwY2lfZGV2ICpwZGV2LCBib29sIGRlY29kZSwKICNpbmNsdWRlIDxsaW51eC9w
+Y2ktZG1hLmg+CiAjaW5jbHVkZSA8bGludXgvZG1hcG9vbC5oPgogCi0jZGVmaW5lCXBjaV9wb29s
+IGRtYV9wb29sCi0jZGVmaW5lIHBjaV9wb29sX2NyZWF0ZShuYW1lLCBwZGV2LCBzaXplLCBhbGln
+biwgYWxsb2NhdGlvbikgXAotCQlkbWFfcG9vbF9jcmVhdGUobmFtZSwgJnBkZXYtPmRldiwgc2l6
+ZSwgYWxpZ24sIGFsbG9jYXRpb24pCi0jZGVmaW5lCXBjaV9wb29sX2Rlc3Ryb3kocG9vbCkgZG1h
+X3Bvb2xfZGVzdHJveShwb29sKQotI2RlZmluZQlwY2lfcG9vbF9hbGxvYyhwb29sLCBmbGFncywg
+aGFuZGxlKSBkbWFfcG9vbF9hbGxvYyhwb29sLCBmbGFncywgaGFuZGxlKQotI2RlZmluZQlwY2lf
+cG9vbF96YWxsb2MocG9vbCwgZmxhZ3MsIGhhbmRsZSkgXAotCQlkbWFfcG9vbF96YWxsb2MocG9v
+bCwgZmxhZ3MsIGhhbmRsZSkKLSNkZWZpbmUJcGNpX3Bvb2xfZnJlZShwb29sLCB2YWRkciwgYWRk
+cikgZG1hX3Bvb2xfZnJlZShwb29sLCB2YWRkciwgYWRkcikKLQogc3RydWN0IG1zaXhfZW50cnkg
+ewogCXUzMgl2ZWN0b3I7CS8qIEtlcm5lbCB1c2VzIHRvIHdyaXRlIGFsbG9jYXRlZCB2ZWN0b3Ig
+Ki8KIAl1MTYJZW50cnk7CS8qIERyaXZlciB1c2VzIHRvIHNwZWNpZnkgZW50cnksIE9TIHdyaXRl
+cyAqLwo=
