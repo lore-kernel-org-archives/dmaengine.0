@@ -1,30 +1,16 @@
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
-Subject: [RFC] dmaengine: pl330: fix a race condition in case of threaded irqs
-From: Jassi Brar <jassisinghbrar@gmail.com>
-Message-Id: <CABb+yY3i5UaP2zzHmR3wrZMWpPEVPhas-3p-XDMDyus2nCqvAQ@mail.gmail.com>
-Date: Tue, 9 Jan 2018 13:59:45 +0530
-To: Qi Hou <qi.hou@windriver.com>
-Cc: Vinod Koul <vinod.koul@intel.com>, Dan Williams <dan.j.williams@intel.com>, paul.gortmaker@windriver.com, xiao.zhang@windriver.com, Russell King <rmk+kernel@arm.linux.org.uk>, dmaengine@vger.kernel.org, Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+Subject: [V2] dmaengine: fsl-qdma: add NXP Layerscape qDMA engine driver support
+From: Vinod Koul <vinod.koul@intel.com>
+Message-Id: <20180103035233.GE18649@localhost>
+Date: Wed, 3 Jan 2018 09:22:33 +0530
+To: Wen He <wen.he_1@nxp.com>
+Cc: kbuild test robot <lkp@intel.com>, "kbuild-all@01.org" <kbuild-all@01.org>, Leo Li <leoyang.li@nxp.com>, "dmaengine@vger.kernel.org" <dmaengine@vger.kernel.org>, Jiafei Pan <jiafei.pan@nxp.com>, Jiaheng Fan <jiaheng.fan@nxp.com>
 List-ID: <dmaengine.vger.kernel.org>
 
-T24gTW9uLCBEZWMgMjUsIDIwMTcgYXQgNzo1MCBBTSwgUWkgSG91IDxxaS5ob3VAd2luZHJpdmVy
-LmNvbT4gd3JvdGU6Cj4gSSBmb3VuZCB0aGlzIHByb2JsZW0gYmVsb3csIGFuZCBJIG5vdyB1bmRl
-cnN0YW5kIHdoeSBpdCBoYXBwZW5zLCBidXQgSSdtIG5vdAo+ICAxMDAlIHN1cmUgd2hhdCBpcyB0
-aGUgYmVzdCB3YXkgdG8gZml4IGl0Lgo+Cj4gV2hlbiBib290aW5nIHVwIHdpdGggInRocmVhZGly
-cXMiIGluIGNvbW1hbmQgbGluZSwgYWxsIGlycSBoYW5kbGVycyBvZiB0aGUgRE1BCj4gY29udHJv
-bGxlciBwbDMzMCB3aWxsIGJlIHRocmVhZGVkIGZvcmNlZGx5LiBUaGVzZSB0aHJlYWRzIHdpbGwg
-cmFjZSBmb3IgdGhlIHNhbWUKPiBsaXN0LCBwbDMzMC0+cmVxX2RvbmUuCj4KPiBCZWZvcmUgdGhl
-IGNhbGxiYWNrLCB0aGUgc3BpbmxvY2sgd2FzIHJlbGVhc2VkLiBBbmQgYWZ0ZXIgaXQsIHRoZSBz
-cGlubG9jayB3YXMKPiB0YWtlbi4gVGhpcyBvcGVuZWQgYW4gcmFjZSB3aW5kb3cgd2hlcmUgYW5v
-dGhlciB0aHJlYWRlZCBpcnEgaGFuZGxlciBjb3VsZCBzdGVhbAo+IHRoZSBzcGlubG9jayBhbmQg
-YmUgcGVybWl0dGVkIHRvIGRlbGV0ZSBlbnRyaWVzIG9mIHRoZSBsaXN0LCBwbDMzMC0+cmVxX2Rv
-bmUuCj4KVGhlIGxvY2tpbmcgaGFzIGJlZW4gcmVjZW50bHkgbW9kaWZpZWQgYmV5b25kIHJlY29n
-bml0aW9uLCBzbyBJIGNhbid0CnRlbGwgd2h5IHRoYXQgcGFydCBvZiBjb2RlIGlzIHRoZSB3YXkg
-aXQgaXMuClRoZSBzYWZlc3QgYW5kIGNsZWFuZXN0IHNvbHV0aW9uIHNlZW1zIHRvIGJlIHRvIG5v
-dCBkcm9wIGFuZCByZS1hcXVpcmUgdGhlIGxvY2suCgpDaGVlcnMhCi0tLQpUbyB1bnN1YnNjcmli
-ZSBmcm9tIHRoaXMgbGlzdDogc2VuZCB0aGUgbGluZSAidW5zdWJzY3JpYmUgZG1hZW5naW5lIiBp
-bgp0aGUgYm9keSBvZiBhIG1lc3NhZ2UgdG8gbWFqb3Jkb21vQHZnZXIua2VybmVsLm9yZwpNb3Jl
-IG1ham9yZG9tbyBpbmZvIGF0ICBodHRwOi8vdmdlci5rZXJuZWwub3JnL21ham9yZG9tby1pbmZv
-Lmh0bWwK
+T24gVHVlLCBEZWMgMjYsIDIwMTcgYXQgMDU6MTU6MzVBTSArMDAwMCwgV2VuIEhlIHdyb3RlOgo+
+IEhpIFZpbm9kLAo+IAo+IFRoaXMgcGF0Y2ggbmVlZCBhcHBsaWVkIE5YUCBMYXllcnNjYXBlIFNv
+Y3MoYXJtL2FybTY0KS4gCj4gCj4gbm90IHN1cHBvcnRlZCBvdGhlciBhcmNoaXRlY3R1cmUuCgp5
+ZWFoIGJ1dCByaWdodCBub3cgZHJpdmVyIGNvbXBpbGVzIG9uIHRoZW0uIEl0IHdvdWxkIGJlIGdy
+ZWF0IGlmIHlvdSBjbmEKZW5zdXJlIHRoYXQgaXQgc3RpbGwgY29tcGlsZXMgb24gb3RoZXJzCg==
