@@ -1,28 +1,32 @@
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
-Subject: [2/2] dma: xilinx: dpdma: Add the Xilinx DisplayPort DMA engine driver
-From: Vinod Koul <vinod.koul@intel.com>
-Message-Id: <20180129041927.GJ18649@localhost>
-Date: Mon, 29 Jan 2018 09:49:35 +0530
-To: Hyun Kwon <hyunk@xilinx.com>
-Cc: "dmaengine@vger.kernel.org" <dmaengine@vger.kernel.org>, "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>, Michal Simek <michal.simek@xilinx.com>, Tejas Upadhyay <TEJASU@xilinx.com>
+Subject: [1/4] dmaengine: qcom: bam_dma: make bam clk optional
+From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Message-Id: <20180116190236.14558-2-srinivas.kandagatla@linaro.org>
+Date: Tue, 16 Jan 2018 19:02:33 +0000
+To: Vinod Koul <vinod.koul@intel.com>, Andy Gross <andy.gross@linaro.org>, dmaengine@vger.kernel.org
+Cc: Rob Herring <robh+dt@kernel.org>, Mark Rutland <mark.rutland@arm.com>, David Brown <david.brown@linaro.org>, Dan Williams <dan.j.williams@intel.com>, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org, yanhe@quicinc.com, ramkri@qti.qualcomm.com, sdharia@quicinc.com, Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 List-ID: <dmaengine.vger.kernel.org>
 
-T24gV2VkLCBKYW4gMjQsIDIwMTggYXQgMDU6NDU6MDBQTSArMDAwMCwgSHl1biBLd29uIHdyb3Rl
-OgoKPiA+ID4gPiA+ICtzdGF0aWMgaW50IHhpbGlueF9kcGRtYV9jb25maWcoc3RydWN0IGRtYV9j
-aGFuICpkY2hhbiwKPiA+ID4gPiA+ICsJCQkgICAgICAgc3RydWN0IGRtYV9zbGF2ZV9jb25maWcg
-KmNvbmZpZykKPiA+ID4gPiA+ICt7Cj4gPiA+ID4gPiArCWlmIChjb25maWctPmRpcmVjdGlvbiAh
-PSBETUFfTUVNX1RPX0RFVikKPiA+ID4gPiA+ICsJCXJldHVybiAtRUlOVkFMOwo+ID4gPiA+Cj4g
-PiA+ID4gPz8gV2h5IGFyZSB0aGUgY29uZmlnIHZhbHVlcyBub3QgdXNlZCwgaG93IGVsc2UgZG8g
-eW91IGNvbmZpZ3VyZSB0aGUKPiA+ID4gPiBjaGFubmVsPwo+ID4gPiA+Cj4gPiA+Cj4gPiA+IFRo
-ZXJlJ3Mgbm90IG11Y2ggY29uZmlndXJhdGlvbiB0byBiZSBkb25lLiBDaGFubmVscyBhcmUgcHJl
-dHR5IG11Y2gKPiA+IGlkZW50aWNhbAo+ID4gPiB3aXRoIGZpeGVkIGNvbmZpZ3VyYXRpb25zLgo+
-ID4gCj4gPiBobW1tLCB5b3UgZG8gc3VwcG9ydCBETUFfU0xBVkUgcmlnaHQ/Cj4gPiAKPiAKPiBZ
-ZXMsIGFuZCBpdCdzIHNpbmdsZSBkaXJlY3Rpb24sIERNQV9NRU1fVE9fREVWLgoKT2theSBob3cg
-ZG8geW91IGZpbmQgdGhlIERNQSBkYXRhIHdpZHRoIGFuZCB0aGUgYnVyc3QgdG8gYXBwbHkgd2hl
-biB5b3UgRE1BCnRvIGRldmljZT8gQXJlIHRoZXNlIG5vdCBwcm9ncmFtbWFibGU/CgpJIHRoaW5r
-IHlvdSBuZWVkIHRvIGdvIGJhY2sgYW5kIGNoZWNrIHRoYXQgcGFydC4gTW9yZW92ZXIgYSBjbGll
-bnQgbWF5IHNlbmQKeW91IHBhcmFtZXRlcnMgYW5kIHByb2dyYW0gdGhlIERldmljZSBGSUZPLCB5
-b3Ugbm90IGhvbm9yaW5nIHRob3NlIHdpbGwKcmVzdWx0IGluIGJhZCBkYXRhIHJlY2VpdmVkIG9u
-IERldmljZSwgYW0gc3VyZSB5b3UgZG9uJ3Qgd2FudCB0aGF0Cg==
+RnJvbTogU3Jpbml2YXMgS2FuZGFnYXRsYSA8c3Jpbml2YXMua2FuZGFnYXRsYUBsaW5hcm8ub3Jn
+PgoKV2hlbiBCQU0gaXMgcmVtb3RlbHkgY29udHJvbGxlZCBpdCBkb2VzIG5vdCBzb3VuZCBjb3Jy
+ZWN0IHRvIGNvbnRyb2wKaXRzIGNsayBvbiBMaW51eCBzaWRlLiBNYWtlIGl0IG9wdGlvbmFsLCBz
+byB0aGF0IGl0cyBub3QgbWFkYXRvcnkKZm9yIHJlbW90ZSBjb250cm9sbGVkIEJBTSBpbnN0YW5j
+ZXMuCgpTaWduZWQtb2ZmLWJ5OiBTcmluaXZhcyBLYW5kYWdhdGxhIDxzcmluaXZhcy5rYW5kYWdh
+dGxhQGxpbmFyby5vcmc+Ci0tLQogZHJpdmVycy9kbWEvcWNvbS9iYW1fZG1hLmMgfCAxNSArKysr
+KysrKy0tLS0tLS0KIDEgZmlsZSBjaGFuZ2VkLCA4IGluc2VydGlvbnMoKyksIDcgZGVsZXRpb25z
+KC0pCgpkaWZmIC0tZ2l0IGEvZHJpdmVycy9kbWEvcWNvbS9iYW1fZG1hLmMgYi9kcml2ZXJzL2Rt
+YS9xY29tL2JhbV9kbWEuYwppbmRleCAwM2M0ZWIzZmQzMTQuLjc4ZTQ4OGU4Zjk2ZCAxMDA2NDQK
+LS0tIGEvZHJpdmVycy9kbWEvcWNvbS9iYW1fZG1hLmMKKysrIGIvZHJpdmVycy9kbWEvcWNvbS9i
+YW1fZG1hLmMKQEAgLTExODAsMTMgKzExODAsMTQgQEAgc3RhdGljIGludCBiYW1fZG1hX3Byb2Jl
+KHN0cnVjdCBwbGF0Zm9ybV9kZXZpY2UgKnBkZXYpCiAJCQkJCQkicWNvbSxjb250cm9sbGVkLXJl
+bW90ZWx5Iik7CiAKIAliZGV2LT5iYW1jbGsgPSBkZXZtX2Nsa19nZXQoYmRldi0+ZGV2LCAiYmFt
+X2NsayIpOwotCWlmIChJU19FUlIoYmRldi0+YmFtY2xrKSkKLQkJcmV0dXJuIFBUUl9FUlIoYmRl
+di0+YmFtY2xrKTsKLQotCXJldCA9IGNsa19wcmVwYXJlX2VuYWJsZShiZGV2LT5iYW1jbGspOwot
+CWlmIChyZXQpIHsKLQkJZGV2X2VycihiZGV2LT5kZXYsICJmYWlsZWQgdG8gcHJlcGFyZS9lbmFi
+bGUgY2xvY2tcbiIpOwotCQlyZXR1cm4gcmV0OworCWlmIChJU19FUlIoYmRldi0+YmFtY2xrKSkg
+eworCQliZGV2LT5iYW1jbGsgPSBOVUxMOworCX0gZWxzZSB7CisJCXJldCA9IGNsa19wcmVwYXJl
+X2VuYWJsZShiZGV2LT5iYW1jbGspOworCQlpZiAocmV0KSB7CisJCQlkZXZfZXJyKGJkZXYtPmRl
+diwgImZhaWxlZCB0byBwcmVwYXJlL2VuYWJsZSBjbG9ja1xuIik7CisJCQlyZXR1cm4gcmV0Owor
+CQl9CiAJfQogCiAJcmV0ID0gYmFtX2luaXQoYmRldik7Cg==
