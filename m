@@ -2,32 +2,14 @@ Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
 Subject: [-next] dmaengine: stm32-dmamux: Remove unnecessary platform_get_resource() error check
-From: Pierre Yves MORDRET <pierre-yves.mordret@st.com>
-Message-Id: <abcc8970-728f-42c2-3986-44d3de0f8a21@st.com>
-Date: Thu, 18 Jan 2018 15:42:43 +0100
-To: Wei Yongjun <weiyongjun1@huawei.com>, Vinod Koul <vinod.koul@intel.com>, Dan Williams <dan.j.williams@intel.com>, Maxime Coquelin <mcoquelin.stm32@gmail.com>, Alexandre Torgue <alexandre.torgue@st.com>
-Cc: dmaengine@vger.kernel.org, linux-arm-kernel@lists.infradead.org
+From: Vinod Koul <vinod.koul@intel.com>
+Message-Id: <20180119053854.GU18649@localhost>
+Date: Fri, 19 Jan 2018 11:08:54 +0530
+To: Wei Yongjun <weiyongjun1@huawei.com>
+Cc: Dan Williams <dan.j.williams@intel.com>, Maxime Coquelin <mcoquelin.stm32@gmail.com>, Alexandre Torgue <alexandre.torgue@st.com>, dmaengine@vger.kernel.org, linux-arm-kernel@lists.infradead.org
 List-ID: <dmaengine.vger.kernel.org>
 
-QWNrZWQtYnk6IFBpZXJyZS1ZdmVzIE1PUkRSRVQgPHBpZXJyZS15dmVzLm1vcmRyZXRAc3QuY29t
-PgoKT24gMDEvMTcvMjAxOCAxMjoyNyBQTSwgV2VpIFlvbmdqdW4gd3JvdGU6Cj4gZGV2bV9pb3Jl
-bWFwX3Jlc291cmNlKCkgYWxyZWFkeSBjaGVja3MgaWYgdGhlIHJlc291cmNlIGlzIE5VTEwsIHNv
-Cj4gcmVtb3ZlIHRoZSB1bm5lY2Vzc2FyeSBwbGF0Zm9ybV9nZXRfcmVzb3VyY2UoKSBlcnJvciBj
-aGVjay4KPiAKPiBTaWduZWQtb2ZmLWJ5OiBXZWkgWW9uZ2p1biA8d2VpeW9uZ2p1bjFAaHVhd2Vp
-LmNvbT4KPiAtLS0KPiAgZHJpdmVycy9kbWEvc3RtMzItZG1hbXV4LmMgfCAzIC0tLQo+ICAxIGZp
-bGUgY2hhbmdlZCwgMyBkZWxldGlvbnMoLSkKPiAKPiBkaWZmIC0tZ2l0IGEvZHJpdmVycy9kbWEv
-c3RtMzItZG1hbXV4LmMgYi9kcml2ZXJzL2RtYS9zdG0zMi1kbWFtdXguYwo+IGluZGV4IGQ1ZGIw
-ZjYuLjRkYmIzMGMgMTAwNjQ0Cj4gLS0tIGEvZHJpdmVycy9kbWEvc3RtMzItZG1hbXV4LmMKPiAr
-KysgYi9kcml2ZXJzL2RtYS9zdG0zMi1kbWFtdXguYwo+IEBAIC0yNTMsOSArMjUzLDYgQEAgc3Rh
-dGljIGludCBzdG0zMl9kbWFtdXhfcHJvYmUoc3RydWN0IHBsYXRmb3JtX2RldmljZSAqcGRldikK
-PiAgCX0KPiAgCj4gIAlyZXMgPSBwbGF0Zm9ybV9nZXRfcmVzb3VyY2UocGRldiwgSU9SRVNPVVJD
-RV9NRU0sIDApOwo+IC0JaWYgKCFyZXMpCj4gLQkJcmV0dXJuIC1FTk9ERVY7Cj4gLQo+ICAJaW9t
-ZW0gPSBkZXZtX2lvcmVtYXBfcmVzb3VyY2UoJnBkZXYtPmRldiwgcmVzKTsKPiAgCWlmIChJU19F
-UlIoaW9tZW0pKQo+ICAJCXJldHVybiBQVFJfRVJSKGlvbWVtKTsKPiAKPiAtLQo+IFRvIHVuc3Vi
-c2NyaWJlIGZyb20gdGhpcyBsaXN0OiBzZW5kIHRoZSBsaW5lICJ1bnN1YnNjcmliZSBkbWFlbmdp
-bmUiIGluCj4gdGhlIGJvZHkgb2YgYSBtZXNzYWdlIHRvIG1ham9yZG9tb0B2Z2VyLmtlcm5lbC5v
-cmcKPiBNb3JlIG1ham9yZG9tbyBpbmZvIGF0ICBodHRwOi8vdmdlci5rZXJuZWwub3JnL21ham9y
-ZG9tby1pbmZvLmh0bWwKPgotLS0KVG8gdW5zdWJzY3JpYmUgZnJvbSB0aGlzIGxpc3Q6IHNlbmQg
-dGhlIGxpbmUgInVuc3Vic2NyaWJlIGRtYWVuZ2luZSIgaW4KdGhlIGJvZHkgb2YgYSBtZXNzYWdl
-IHRvIG1ham9yZG9tb0B2Z2VyLmtlcm5lbC5vcmcKTW9yZSBtYWpvcmRvbW8gaW5mbyBhdCAgaHR0
-cDovL3ZnZXIua2VybmVsLm9yZy9tYWpvcmRvbW8taW5mby5odG1sCg==
+T24gV2VkLCBKYW4gMTcsIDIwMTggYXQgMTE6Mjc6MTBBTSArMDAwMCwgV2VpIFlvbmdqdW4gd3Jv
+dGU6Cj4gZGV2bV9pb3JlbWFwX3Jlc291cmNlKCkgYWxyZWFkeSBjaGVja3MgaWYgdGhlIHJlc291
+cmNlIGlzIE5VTEwsIHNvCj4gcmVtb3ZlIHRoZSB1bm5lY2Vzc2FyeSBwbGF0Zm9ybV9nZXRfcmVz
+b3VyY2UoKSBlcnJvciBjaGVjay4KCkFwcGxpZWQsIHRoYW5rcwo=
