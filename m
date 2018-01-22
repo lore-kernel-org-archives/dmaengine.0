@@ -1,20 +1,26 @@
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
-Subject: dmaengine: qcom_hidma: simplify DT resource parsing
-From: Vinod Koul <vinod.koul@intel.com>
-Message-Id: <20180108170224.GI18649@localhost>
-Date: Mon, 8 Jan 2018 22:32:24 +0530
-To: Rob Herring <robh@kernel.org>
-Cc: linux-kernel@vger.kernel.org, Andy Gross <andy.gross@linaro.org>, David Brown <david.brown@linaro.org>, Dan Williams <dan.j.williams@intel.com>, linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org, dmaengine@vger.kernel.org
+Subject: dmaengine: dmatest: fix container_of member in dmatest_callback
+From: Yang Shunyong <shunyong.yang@hxt-semitech.com>
+Message-Id: <1516606108-40562-1-git-send-email-shunyong.yang@hxt-semitech.com>
+Date: Mon, 22 Jan 2018 15:28:28 +0800
+To: vinod.koul@intel.com
+Cc: dan.j.williams@intel.com, awallis@codeaurora.org, yu.zheng@hxt-semitech.com, dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org, Yang Shunyong <shunyong.yang@hxt-semitech.com>
 List-ID: <dmaengine.vger.kernel.org>
 
-T24gVGh1LCBKYW4gMDQsIDIwMTggYXQgMDQ6NDU6NDBQTSAtMDYwMCwgUm9iIEhlcnJpbmcgd3Jv
-dGU6Cj4gVGhlIGhpZG1hIGRyaXZlciBvcGVuIGNvZGVzIHBvcHVsYXRpbmcgYWRkcmVzcyBhbmQg
-SVJRIHJlc291cmNlcyBmcm9tIERULgo+IFdlIGhhdmUgc3RhbmRhcmQgZnVuY3Rpb25zIG9mX2Fk
-ZHJlc3NfdG9fcmVzb3VyY2UgYW5kIG9mX2lycV90b19yZXNvdXJjZQo+IGZvciB0aGlzLCBzbyB1
-c2UgdGhlbSBpbnN0ZWFkLgo+IAo+IFRoZSBEVCBiaW5kaW5nIHN0YXRlcyBlYWNoIGNoaWxkIHNo
-b3VsZCBoYXZlIDIgYWRkcmVzc2VzIGFuZCAxIElSUSwgc28gd2UKPiBjYW4gc2ltcGxpZnkgdGhl
-IGxvZ2ljIGFuZCBkbyBhIGZpeGVkIHNpemUgcmVzb3VyY2UgYWxsb2NhdGlvbi4gVXNpbmcgdGhl
-Cj4gc3RhbmRhcmQgb2ZfYWRkcmVzc190b19yZXNvdXJjZSB3aWxsIGFsc28gZG8gYW55IGFkZHJl
-c3MgdHJhbnNsYXRpb24gd2hpY2gKPiB3YXMgbWlzc2luZy4KCkFwcGxpZWQsIHRoYW5rcwo=
+VGhlIHR5cGUgb2YgYXJnIHBhc3NlZCB0byBkbWF0ZXN0X2NhbGxiYWNrIGlzIHN0cnVjdCBkbWF0
+ZXN0X2RvbmUuCkl0IHJlZmVycyB0byB0ZXN0X2RvbmUgaW4gc3RydWN0IGRtYXRlc3RfdGhyZWFk
+LCBub3QgZG9uZV93YWl0LgoKRml4ZXM6IDZmNmEyM2EyMTNiZSAoImRtYWVuZ2luZTogZG1hdGVz
+dDogbW92ZSBjYWxsYmFjayB3YWl0IC4uLiIpClNpZ25lZC1vZmYtYnk6IFlhbmcgU2h1bnlvbmcg
+PHNodW55b25nLnlhbmdAaHh0LXNlbWl0ZWNoLmNvbT4KLS0tCiBkcml2ZXJzL2RtYS9kbWF0ZXN0
+LmMgfCAyICstCiAxIGZpbGUgY2hhbmdlZCwgMSBpbnNlcnRpb24oKyksIDEgZGVsZXRpb24oLSkK
+CmRpZmYgLS1naXQgYS9kcml2ZXJzL2RtYS9kbWF0ZXN0LmMgYi9kcml2ZXJzL2RtYS9kbWF0ZXN0
+LmMKaW5kZXggZWM1ZjlkMmJjODIwLi45MDZlODVkNmRlZGMgMTAwNjQ0Ci0tLSBhL2RyaXZlcnMv
+ZG1hL2RtYXRlc3QuYworKysgYi9kcml2ZXJzL2RtYS9kbWF0ZXN0LmMKQEAgLTM1NSw3ICszNTUs
+NyBAQCBzdGF0aWMgdm9pZCBkbWF0ZXN0X2NhbGxiYWNrKHZvaWQgKmFyZykKIHsKIAlzdHJ1Y3Qg
+ZG1hdGVzdF9kb25lICpkb25lID0gYXJnOwogCXN0cnVjdCBkbWF0ZXN0X3RocmVhZCAqdGhyZWFk
+ID0KLQkJY29udGFpbmVyX29mKGFyZywgc3RydWN0IGRtYXRlc3RfdGhyZWFkLCBkb25lX3dhaXQp
+OworCQljb250YWluZXJfb2YoYXJnLCBzdHJ1Y3QgZG1hdGVzdF90aHJlYWQsIHRlc3RfZG9uZSk7
+CiAJaWYgKCF0aHJlYWQtPmRvbmUpIHsKIAkJZG9uZS0+ZG9uZSA9IHRydWU7CiAJCXdha2VfdXBf
+YWxsKGRvbmUtPndhaXQpOwo=
