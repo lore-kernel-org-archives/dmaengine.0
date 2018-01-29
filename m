@@ -2,14 +2,31 @@ Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
 Subject: [1/2] dmaengine: dmatest: change symbolic permissions to octal values
-From: Vinod Koul <vinod.koul@intel.com>
-Message-Id: <20180129044801.GL18649@localhost>
-Date: Mon, 29 Jan 2018 10:18:01 +0530
-To: Yang Shunyong <shunyong.yang@hxt-semitech.com>
-Cc: dan.j.williams@intel.com, dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
+From: Yang Shunyong <shunyong.yang@hxt-semitech.com>
+Message-Id: <1517207190.2845.6.camel@hxt-semitech.com>
+Date: Mon, 29 Jan 2018 06:26:40 +0000
+To: "vinod.koul@intel.com" <vinod.koul@intel.com>
+Cc: "dan.j.williams@intel.com" <dan.j.williams@intel.com>, "dmaengine@vger.kernel.org" <dmaengine@vger.kernel.org>, "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
 List-ID: <dmaengine.vger.kernel.org>
 
-T24gTW9uLCBKYW4gMjIsIDIwMTggYXQgMDY6NDQ6NDBQTSArMDgwMCwgWWFuZyBTaHVueW9uZyB3
-cm90ZToKPiBDdXJyZW50IGNvZGluZyBzdHlsZSBwcmVmZXJzIG9jdGFsIHBlcm1pc3Npb25zIHZh
-bHVlcy4gVGhpcyBwYXRjaAo+IGNoYW5nZXMgc3ltYm9saWMgcGVybWlzc2lvbnMgdG8gb2N0YWwg
-dmFsdWVzLgoKSXMgdGhpcyBwcmVmZXJlbmNlIGRvY3VtZW50ZWQgYW55d2hlcmU/Cg==
+SGksIFZpbm9kCgpPbiBNb24sIDIwMTgtMDEtMjkgYXQgMTA6MTggKzA1MzAsIFZpbm9kIEtvdWwg
+d3JvdGU6Cj4gT24gTW9uLCBKYW4gMjIsIDIwMTggYXQgMDY6NDQ6NDBQTSArMDgwMCwgWWFuZyBT
+aHVueW9uZyB3cm90ZToKPiA+IAo+ID4gQ3VycmVudCBjb2Rpbmcgc3R5bGUgcHJlZmVycyBvY3Rh
+bCBwZXJtaXNzaW9ucyB2YWx1ZXMuIFRoaXMgcGF0Y2gKPiA+IGNoYW5nZXMgc3ltYm9saWMgcGVy
+bWlzc2lvbnMgdG8gb2N0YWwgdmFsdWVzLgo+IElzIHRoaXMgcHJlZmVyZW5jZSBkb2N1bWVudGVk
+IGFueXdoZXJlPwo+IAoKV2hlbiB1c2luZyBzeW1ib2xpYyBwZXJtaXNzaW9ucyBsaWtlICJTX0lS
+VUdPIHwgU19JV1VTUiIuIFRoZQpjaGVja3BhdGNoLnBsIHdpbGwgb3V0cHV0IHNvbWUgd2Fybmlu
+Z3MgdG8gc3VnZ2VzdCB0byB1c2Ugb2N0YWwgdmFsdWVzLgpJIHF1b3RlIGZvbGxvd2luZyBsaW5l
+cyBmcm9tIGNoZWNrcGF0Y2gucGwsCgojIGNoZWNrIGZvciB1c2VzIG9mIFNfPFBFUk1TPiB0aGF0
+IGNvdWxkIGJlIG9jdGFsIGZvciByZWFkYWJpbGl0eQouLi4KaWYgKFdBUk4oIlNZTUJPTElDX1BF
+Uk1TIiwKwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgIlN5bWJvbGljIHBlcm1pc3Npb25zICckb3ZhbCcgYXJlIG5vdApwcmVm
+ZXJyZWQuIENvbnNpZGVyIHVzaW5nIG9jdGFsIHBlcm1pc3Npb25zICckb2N0YWwnLlxuIiAuICRo
+ZXJlY3VycikKJiYKwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqAkZml4KSB7CsKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAkZml4ZWRbJGZpeGxpbmVucl0gPX4gcy8kdmFsLyRv
+Y3RhbC87CsKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoH0K
+ClRoYW5rcy4KU2h1bnlvbmcKLS0tClRvIHVuc3Vic2NyaWJlIGZyb20gdGhpcyBsaXN0OiBzZW5k
+IHRoZSBsaW5lICJ1bnN1YnNjcmliZSBkbWFlbmdpbmUiIGluCnRoZSBib2R5IG9mIGEgbWVzc2Fn
+ZSB0byBtYWpvcmRvbW9Admdlci5rZXJuZWwub3JnCk1vcmUgbWFqb3Jkb21vIGluZm8gYXQgIGh0
+dHA6Ly92Z2VyLmtlcm5lbC5vcmcvbWFqb3Jkb21vLWluZm8uaHRtbAo=
