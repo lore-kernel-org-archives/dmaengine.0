@@ -1,23 +1,31 @@
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
-Subject: dmaengine: dmatest: fix container_of member in dmatest_callback
-From: Adam Wallis <awallis@codeaurora.org>
-Message-Id: <ba859f5a-905f-a980-847d-66b7454f01db@codeaurora.org>
-Date: Wed, 24 Jan 2018 13:34:39 -0500
-To: "Yang, Shunyong" <shunyong.yang@hxt-semitech.com>, "vinod.koul@intel.com" <vinod.koul@intel.com>
-Cc: "dan.j.williams@intel.com" <dan.j.williams@intel.com>, "dmaengine@vger.kernel.org" <dmaengine@vger.kernel.org>, "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>, "Zheng, Joey" <yu.zheng@hxt-semitech.com>, "okaya@codeaurora.org" <okaya@codeaurora.org>, "graham.moore@linux.intel.com" <graham.moore@linux.intel.com>
+Subject: [v1,1/4] ACPI / bus: Remove checks in acpi_get_match_data()
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Message-Id: <20180131212758.68587-1-andriy.shevchenko@linux.intel.com>
+Date: Wed, 31 Jan 2018 23:27:55 +0200
+To: dmaengine <dmaengine@vger.kernel.org>
+Cc: Andy Shevchenko <andriy.shevchenko@linux.intel.com>, Sinan Kaya <okaya@codeaurora.org>, Sakari Ailus <sakari.ailus@linux.intel.com>, Vinod Koul <vinod.koul@intel.com>
 List-ID: <dmaengine.vger.kernel.org>
 
-Vmlub2QsCgpPbiAxLzIzLzIwMTggODo0NyBQTSwgWWFuZywgU2h1bnlvbmcgd3JvdGU6Cj4gSGks
-IEFkYW0KPiAKPiBPbiBUdWUsIDIwMTgtMDEtMjMgYXQgMDk6MzIgLTA1MDAsIEFkYW0gV2FsbGlz
-IHdyb3RlOgo+PiBPbiAxLzIyLzIwMTggMjoyOCBBTSwgWWFuZyBTaHVueW9uZyB3cm90ZToKPj4+
-Cj4+PiBUaGUgdHlwZSBvZiBhcmcgcGFzc2VkIHRvIGRtYXRlc3RfY2FsbGJhY2sgaXMgc3RydWN0
-IGRtYXRlc3RfZG9uZS4KPj4+IEl0IHJlZmVycyB0byB0ZXN0X2RvbmUgaW4gc3RydWN0IGRtYXRl
-c3RfdGhyZWFkLCBub3QgZG9uZV93YWl0Lgo+Pj4KPj4+IEZpeGVzOiA2ZjZhMjNhMjEzYmUgKCJk
-bWFlbmdpbmU6IGRtYXRlc3Q6IG1vdmUgY2FsbGJhY2sgd2FpdCAuLi4iKQo+Pj4gU2lnbmVkLW9m
-Zi1ieTogWWFuZyBTaHVueW9uZyA8c2h1bnlvbmcueWFuZ0BoeHQtc2VtaXRlY2guY29tPgpbLi5d
-Cj4+Pgo+PiBUaGFua3MgZm9yIHRoZSBjYXRjaAo+Pgo+PiBBY2tlZC1ieTogQWRhbSBXYWxsaXMg
-PGF3YWxsaXNAY29kZWF1cm9yYS5vcmc+Cj4gCj4gVGhhbmtzIQo+IAo+IFNodW55b25nCj4gCgpD
-YW4gd2UgZ2V0IHRoaXMgZml4IGludG8gdGhlIDQuMTYga2VybmVsPyBUaGlzIGlzIGFuIGltcG9y
-dGFudCBmaXguCgpUaGFua3MKCkFkYW0K
+QXMgd2VsbCBhcyBpdHMgc2libGluZyBvZl9kZXZpY2VfZ2V0X21hdGNoX2RhdGEoKSBoYXMgbm8g
+c3VjaCBjaGVja3MsCm5vIG5lZWQgdG8gZG8gaXQgaW4gYWNwaV9nZXRfbWF0Y2hfZGF0YSgpLgoK
+Rmlyc3Qgb2YgYWxsLCB3ZSBhcmUgbm90IHN1cHBvc2VkIHRvIGNhbGwgZndub2RlIEFQSSBsaWtl
+IHRoaXMgd2l0aG91dApkcml2ZXIgYXR0YWNoZWQuCgpTZWNvbmQsIGlmIHB1cmUgT0YgZHJpdmVy
+IGNhbGxzIHRoaXMgZnVuY3Rpb24sIGl0J3Mgd2VpcmQgdG8gaGF2ZSBBQ1BJCmNvbXBhbmlvbiB3
+aXRob3V0IEFDUEkgSUQgaW4gdGhpcyBjYXNlLgoKRml4ZXM6IDgwMjEyYTE2MjMyOSAoIkFDUEkg
+LyBidXM6IEludHJvZHVjZSBhY3BpX2dldF9tYXRjaF9kYXRhKCkgZnVuY3Rpb24iKQpDYzogU2lu
+YW4gS2F5YSA8b2theWFAY29kZWF1cm9yYS5vcmc+CkNjOiBTYWthcmkgQWlsdXMgPHNha2FyaS5h
+aWx1c0BsaW51eC5pbnRlbC5jb20+CkNjOiBWaW5vZCBLb3VsIDx2aW5vZC5rb3VsQGludGVsLmNv
+bT4KU2lnbmVkLW9mZi1ieTogQW5keSBTaGV2Y2hlbmtvIDxhbmRyaXkuc2hldmNoZW5rb0BsaW51
+eC5pbnRlbC5jb20+Ci0tLQogZHJpdmVycy9hY3BpL2J1cy5jIHwgNiAtLS0tLS0KIDEgZmlsZSBj
+aGFuZ2VkLCA2IGRlbGV0aW9ucygtKQoKZGlmZiAtLWdpdCBhL2RyaXZlcnMvYWNwaS9idXMuYyBi
+L2RyaXZlcnMvYWNwaS9idXMuYwppbmRleCBmODdlZDNiZTc3OWEuLmIyNzFlYjE2MzQxZCAxMDA2
+NDQKLS0tIGEvZHJpdmVycy9hY3BpL2J1cy5jCisrKyBiL2RyaXZlcnMvYWNwaS9idXMuYwpAQCAt
+Nzg5LDEyICs3ODksNiBAQCB2b2lkICphY3BpX2dldF9tYXRjaF9kYXRhKGNvbnN0IHN0cnVjdCBk
+ZXZpY2UgKmRldikKIHsKIAljb25zdCBzdHJ1Y3QgYWNwaV9kZXZpY2VfaWQgKm1hdGNoOwogCi0J
+aWYgKCFkZXYtPmRyaXZlcikKLQkJcmV0dXJuIE5VTEw7Ci0KLQlpZiAoIWRldi0+ZHJpdmVyLT5h
+Y3BpX21hdGNoX3RhYmxlKQotCQlyZXR1cm4gTlVMTDsKLQogCW1hdGNoID0gYWNwaV9tYXRjaF9k
+ZXZpY2UoZGV2LT5kcml2ZXItPmFjcGlfbWF0Y2hfdGFibGUsIGRldik7CiAJaWYgKCFtYXRjaCkK
+IAkJcmV0dXJuIE5VTEw7Cg==
