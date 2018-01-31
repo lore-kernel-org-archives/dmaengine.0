@@ -2,30 +2,19 @@ Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
 Subject: [v1,1/4] ACPI / bus: Remove checks in acpi_get_match_data()
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Message-Id: <20180131212959.68766-1-andriy.shevchenko@linux.intel.com>
-Date: Wed, 31 Jan 2018 23:29:56 +0200
-To: dmaengine <dmaengine@vger.kernel.org>, "Rafael J. Wysocki" <rjw@rjwysocki.net>, linux-acpi@vger.kernel.org
-Cc: Andy Shevchenko <andriy.shevchenko@linux.intel.com>, Sinan Kaya <okaya@codeaurora.org>, Sakari Ailus <sakari.ailus@linux.intel.com>, Vinod Koul <vinod.koul@intel.com>
+From: Sinan Kaya <okaya@codeaurora.org>
+Message-Id: <b52b3995-ec9c-660d-6c2f-afebf3864b90@codeaurora.org>
+Date: Wed, 31 Jan 2018 17:17:23 -0500
+To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>, dmaengine <dmaengine@vger.kernel.org>, "Rafael J. Wysocki" <rjw@rjwysocki.net>, linux-acpi@vger.kernel.org
+Cc: Sakari Ailus <sakari.ailus@linux.intel.com>, Vinod Koul <vinod.koul@intel.com>
 List-ID: <dmaengine.vger.kernel.org>
 
-QXMgd2VsbCBhcyBpdHMgc2libGluZyBvZl9kZXZpY2VfZ2V0X21hdGNoX2RhdGEoKSBoYXMgbm8g
-c3VjaCBjaGVja3MsCm5vIG5lZWQgdG8gZG8gaXQgaW4gYWNwaV9nZXRfbWF0Y2hfZGF0YSgpLgoK
-Rmlyc3Qgb2YgYWxsLCB3ZSBhcmUgbm90IHN1cHBvc2VkIHRvIGNhbGwgZndub2RlIEFQSSBsaWtl
-IHRoaXMgd2l0aG91dApkcml2ZXIgYXR0YWNoZWQuCgpTZWNvbmQsIGlmIHB1cmUgT0YgZHJpdmVy
-IGNhbGxzIHRoaXMgZnVuY3Rpb24sIGl0J3Mgd2VpcmQgdG8gaGF2ZSBBQ1BJCmNvbXBhbmlvbiB3
-aXRob3V0IEFDUEkgSUQgaW4gdGhpcyBjYXNlLgoKRml4ZXM6IDgwMjEyYTE2MjMyOSAoIkFDUEkg
-LyBidXM6IEludHJvZHVjZSBhY3BpX2dldF9tYXRjaF9kYXRhKCkgZnVuY3Rpb24iKQpDYzogU2lu
-YW4gS2F5YSA8b2theWFAY29kZWF1cm9yYS5vcmc+CkNjOiBTYWthcmkgQWlsdXMgPHNha2FyaS5h
-aWx1c0BsaW51eC5pbnRlbC5jb20+CkNjOiBWaW5vZCBLb3VsIDx2aW5vZC5rb3VsQGludGVsLmNv
-bT4KU2lnbmVkLW9mZi1ieTogQW5keSBTaGV2Y2hlbmtvIDxhbmRyaXkuc2hldmNoZW5rb0BsaW51
-eC5pbnRlbC5jb20+Ci0tLQogZHJpdmVycy9hY3BpL2J1cy5jIHwgNiAtLS0tLS0KIDEgZmlsZSBj
-aGFuZ2VkLCA2IGRlbGV0aW9ucygtKQoKZGlmZiAtLWdpdCBhL2RyaXZlcnMvYWNwaS9idXMuYyBi
-L2RyaXZlcnMvYWNwaS9idXMuYwppbmRleCBmODdlZDNiZTc3OWEuLmIyNzFlYjE2MzQxZCAxMDA2
-NDQKLS0tIGEvZHJpdmVycy9hY3BpL2J1cy5jCisrKyBiL2RyaXZlcnMvYWNwaS9idXMuYwpAQCAt
-Nzg5LDEyICs3ODksNiBAQCB2b2lkICphY3BpX2dldF9tYXRjaF9kYXRhKGNvbnN0IHN0cnVjdCBk
-ZXZpY2UgKmRldikKIHsKIAljb25zdCBzdHJ1Y3QgYWNwaV9kZXZpY2VfaWQgKm1hdGNoOwogCi0J
-aWYgKCFkZXYtPmRyaXZlcikKLQkJcmV0dXJuIE5VTEw7Ci0KLQlpZiAoIWRldi0+ZHJpdmVyLT5h
-Y3BpX21hdGNoX3RhYmxlKQotCQlyZXR1cm4gTlVMTDsKLQogCW1hdGNoID0gYWNwaV9tYXRjaF9k
-ZXZpY2UoZGV2LT5kcml2ZXItPmFjcGlfbWF0Y2hfdGFibGUsIGRldik7CiAJaWYgKCFtYXRjaCkK
-IAkJcmV0dXJuIE5VTEw7Cg==
+T24gMS8zMS8yMDE4IDQ6MjkgUE0sIEFuZHkgU2hldmNoZW5rbyB3cm90ZToKPiBBcyB3ZWxsIGFz
+IGl0cyBzaWJsaW5nIG9mX2RldmljZV9nZXRfbWF0Y2hfZGF0YSgpIGhhcyBubyBzdWNoIGNoZWNr
+cywKPiBubyBuZWVkIHRvIGRvIGl0IGluIGFjcGlfZ2V0X21hdGNoX2RhdGEoKS4KPiAKPiBGaXJz
+dCBvZiBhbGwsIHdlIGFyZSBub3Qgc3VwcG9zZWQgdG8gY2FsbCBmd25vZGUgQVBJIGxpa2UgdGhp
+cyB3aXRob3V0Cj4gZHJpdmVyIGF0dGFjaGVkLgo+IAo+IFNlY29uZCwgaWYgcHVyZSBPRiBkcml2
+ZXIgY2FsbHMgdGhpcyBmdW5jdGlvbiwgaXQncyB3ZWlyZCB0byBoYXZlIEFDUEkKPiBjb21wYW5p
+b24gd2l0aG91dCBBQ1BJIElEIGluIHRoaXMgY2FzZS4KCldlIHRhbGtlZCBhYm91dCB0aGlzIGR1
+cmluZyByZXZpZXcuIAoKb2ZfbWF0Y2hfZGV2aWNlKCkgZG9lcyBhbGwgdGhlIGNoZWNraW5nIGZv
+ciB0aGUgT0YgcGFydC4gQUNQSSBkb2Vzbid0IGhhdmUKYW55IGNoZWNrcy4K
