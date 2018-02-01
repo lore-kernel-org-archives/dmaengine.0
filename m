@@ -2,21 +2,23 @@ Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
 Subject: [v2,6/6] device property: Constify device_get_match_data()
-From: Sinan Kaya <okaya@codeaurora.org>
-Message-Id: <b005dc97-e508-2402-a917-ee23958e0ec6@codeaurora.org>
-Date: Thu, 1 Feb 2018 15:40:21 -0500
-To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>, dmaengine <dmaengine@vger.kernel.org>, "Rafael J . Wysocki" <rjw@rjwysocki.net>, linux-acpi@vger.kernel.org
-Cc: Sakari Ailus <sakari.ailus@linux.intel.com>, Vinod Koul <vinod.koul@intel.com>
+From: Sakari Ailus <sakari.ailus@linux.intel.com>
+Message-Id: <20180201212315.igjdqah4qi2yx7mr@kekkonen.localdomain>
+Date: Thu, 1 Feb 2018 23:23:36 +0200
+To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Cc: dmaengine <dmaengine@vger.kernel.org>, "Rafael J . Wysocki" <rjw@rjwysocki.net>, linux-acpi@vger.kernel.org, Sinan Kaya <okaya@codeaurora.org>, Vinod Koul <vinod.koul@intel.com>
 List-ID: <dmaengine.vger.kernel.org>
 
-T24gMi8xLzIwMTggMzozOCBQTSwgQW5keSBTaGV2Y2hlbmtvIHdyb3RlOgo+IE9uIFRodSwgMjAx
-OC0wMi0wMSBhdCAxNTozNSAtMDUwMCwgU2luYW4gS2F5YSB3cm90ZToKPj4gT24gMi8xLzIwMTgg
-MzoyMCBQTSwgQW5keSBTaGV2Y2hlbmtvIHdyb3RlOgo+Pj4gLXZvaWQgKmRldmljZV9nZXRfbWF0
-Y2hfZGF0YShzdHJ1Y3QgZGV2aWNlICpkZXYpCj4+PiArY29uc3Qgdm9pZCAqZGV2aWNlX2dldF9t
-YXRjaF9kYXRhKHN0cnVjdCBkZXZpY2UgKmRldikKPj4+ICB7Cj4+PiAtCXJldHVybiBmd25vZGVf
-Y2FsbF9wdHJfb3AoZGV2X2Z3bm9kZShkZXYpLAo+Pj4gZGV2aWNlX2dldF9tYXRjaF9kYXRhLAo+
-Pj4gLQkJCQkgIGRldik7Cj4+PiArCXJldHVybiBmd25vZGVfY2FsbF9wdHJfb3AoZGV2X2Z3bm9k
-ZShkZXYpLAo+Pj4gZGV2aWNlX2dldF9tYXRjaF9kYXRhLCBkZXYpOwo+Pj4gIH0KPj4KPj4gSSBy
-ZW1lbWJlciBoYXZpbmcgYSBjaGVja3BhdGNoIHByb2JsZW0gaGVyZS4KPiAKPiBJdCdzIGV4YWN0
-bHkgNzkgY2hhcmFjdGVycy4gCj4gV2hhdCBwcm9ibGVtPwo+IAoKT0suIE1heWJlIHdpdGggb25l
-IG9mIHRoZSB2ZXJzaW9ucyBJIHBvc3RlZC4gSnVzdCBjaGVja2luZy4K
+SGkgQW5keSwKCk9uIFRodSwgRmViIDAxLCAyMDE4IGF0IDEwOjIwOjEyUE0gKzAyMDAsIEFuZHkg
+U2hldmNoZW5rbyB3cm90ZToKPiBDb25zdGlmeSBkZXZpY2VfZ2V0X21hdGNoX2RhdGEoKSBhcyBP
+RiBhbmQgQUNQSSB2YXJpYW50cyByZXR1cm4KPiBjb25zdGFudCB2YWx1ZS4KPiAKPiBGaXhlczog
+ODAyMTJhMTYyMzI5ICgiQUNQSSAvIGJ1czogSW50cm9kdWNlIGFjcGlfZ2V0X21hdGNoX2RhdGEo
+KSBmdW5jdGlvbiIpCj4gRml4ZXM6IGIyODNmMTU3NjExZiAoImRldmljZSBwcm9wZXJ0eTogSW50
+cm9kdWNlIGEgY29tbW9uIEFQSSB0byBmZXRjaCBkZXZpY2UgbWF0Y2ggZGF0YSIpCj4gRml4ZXM6
+IDE0NmI0ZGJiMGVlZiAoIkFDUEk6IHByb3BlcnRpZXM6IEltcGxlbWVudCBnZXRfbWF0Y2hfZGF0
+YSgpIGNhbGxiYWNrIikKPiBDYzogU2luYW4gS2F5YSA8b2theWFAY29kZWF1cm9yYS5vcmc+Cj4g
+Q2M6IFNha2FyaSBBaWx1cyA8c2FrYXJpLmFpbHVzQGxpbnV4LmludGVsLmNvbT4KPiBDYzogVmlu
+b2QgS291bCA8dmlub2Qua291bEBpbnRlbC5jb20+Cj4gU2lnbmVkLW9mZi1ieTogQW5keSBTaGV2
+Y2hlbmtvIDxhbmRyaXkuc2hldmNoZW5rb0BsaW51eC5pbnRlbC5jb20+CgpBY2tlZC1ieTogU2Fr
+YXJpIEFpbHVzIDxzYWthcmkuYWlsdXNAbGludXguaW50ZWwuY29tPiAoZndub2RlIGNoYW5nZXMp
+Cg==
