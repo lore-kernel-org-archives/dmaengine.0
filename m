@@ -2,22 +2,19 @@ Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
 Subject: [1/2] dmaengine: dmatest: change symbolic permissions to octal values
-From: Vinod Koul <vinod.koul@intel.com>
-Message-Id: <20180201034507.GZ18649@localhost>
-Date: Thu, 1 Feb 2018 09:15:08 +0530
-To: Viresh Kumar <viresh.kumar@linaro.org>
+From: Viresh Kumar <viresh.kumar@linaro.org>
+Message-Id: <CAOh2x=kE4uKYnVs0tWnjBHk0t=BQp+=otr89+NHZ0m2GWbNRrA@mail.gmail.com>
+Date: Thu, 1 Feb 2018 09:16:04 +0530
+To: Vinod Koul <vinod.koul@intel.com>
 Cc: Yang Shunyong <shunyong.yang@hxt-semitech.com>, Dan Williams <dan.j.williams@intel.com>, dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
 List-ID: <dmaengine.vger.kernel.org>
 
-T24gV2VkLCBKYW4gMzEsIDIwMTggYXQgMDM6MzE6NDhQTSArMDUzMCwgVmlyZXNoIEt1bWFyIHdy
-b3RlOgo+IE9uIE1vbiwgSmFuIDI5LCAyMDE4IGF0IDEwOjE4IEFNLCBWaW5vZCBLb3VsIDx2aW5v
-ZC5rb3VsQGludGVsLmNvbT4gd3JvdGU6Cj4gPiBPbiBNb24sIEphbiAyMiwgMjAxOCBhdCAwNjo0
-NDo0MFBNICswODAwLCBZYW5nIFNodW55b25nIHdyb3RlOgo+ID4+IEN1cnJlbnQgY29kaW5nIHN0
-eWxlIHByZWZlcnMgb2N0YWwgcGVybWlzc2lvbnMgdmFsdWVzLiBUaGlzIHBhdGNoCj4gPj4gY2hh
-bmdlcyBzeW1ib2xpYyBwZXJtaXNzaW9ucyB0byBvY3RhbCB2YWx1ZXMuCj4gPgo+ID4gSXMgdGhp
-cyBwcmVmZXJlbmNlIGRvY3VtZW50ZWQgYW55d2hlcmU/Cj4gCj4gVGhpcyBpcyB3aGVyZSBpdCBz
-dGFydGVkLgo+IAo+IGxrbWwua2VybmVsLm9yZy9yL0NBKzU1YUZ6dTU5c1hvN3FBOENvQ28rdFNK
-Z0VrVzdmV0Rqa3RfdHNUelBXWjdneGoxQUBtYWlsLmdtYWlsLmNvbQoKUmlnaHQgYnV0IGxldHMg
-bm8gZ28gY2hhbmdpbmcgdG8gb2N0YWxzIGV2ZXJ5d2hlcmUsIG5ldyBjb2RlIHN1cmUgOikKSSBk
-b24ndCBzZWUgcGxhbnMgdG8gcmVtb3ZlIHJlcHJlc2VudGF0aW9ucyBlbnRpcmVseSBmcm9tIGtl
-cm5lbCB5ZXQuCg==
+T24gVGh1LCBGZWIgMSwgMjAxOCBhdCA5OjE1IEFNLCBWaW5vZCBLb3VsIDx2aW5vZC5rb3VsQGlu
+dGVsLmNvbT4gd3JvdGU6Cj4gUmlnaHQgYnV0IGxldHMgbm8gZ28gY2hhbmdpbmcgdG8gb2N0YWxz
+IGV2ZXJ5d2hlcmUsIG5ldyBjb2RlIHN1cmUgOikKPiBJIGRvbid0IHNlZSBwbGFucyB0byByZW1v
+dmUgcmVwcmVzZW50YXRpb25zIGVudGlyZWx5IGZyb20ga2VybmVsIHlldC4KClN1cmUuIEkgd2Fz
+IGp1c3QgcG9pbnRpbmcgb3V0IHRvIHRoZSBkaXNjdXNzaW9uIHdoZXJlIHRoZSAqcHJlZmVycmVk
+KiB0aGluZwpoYXBwZW5lZC4KLS0tClRvIHVuc3Vic2NyaWJlIGZyb20gdGhpcyBsaXN0OiBzZW5k
+IHRoZSBsaW5lICJ1bnN1YnNjcmliZSBkbWFlbmdpbmUiIGluCnRoZSBib2R5IG9mIGEgbWVzc2Fn
+ZSB0byBtYWpvcmRvbW9Admdlci5rZXJuZWwub3JnCk1vcmUgbWFqb3Jkb21vIGluZm8gYXQgIGh0
+dHA6Ly92Z2VyLmtlcm5lbC5vcmcvbWFqb3Jkb21vLWluZm8uaHRtbAo=
