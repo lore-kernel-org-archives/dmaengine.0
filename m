@@ -2,26 +2,20 @@ Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
 Subject: DT: dma: renesas,rcar-dmac: document R8A77980 support
-From: Geert Uytterhoeven <geert@linux-m68k.org>
-Message-Id: <CAMuHMdXBTfyiup+6t77an_dvDA28SgUb-HaLQaR6r9QGmyiZhQ@mail.gmail.com>
-Date: Thu, 1 Feb 2018 21:00:31 +0100
+From: Simon Horman <horms@verge.net.au>
+Message-Id: <20180202084507.sz47whvmhek7qwgt@verge.net.au>
+Date: Fri, 2 Feb 2018 09:45:07 +0100
 To: Sergei Shtylyov <sergei.shtylyov@cogentembedded.com>
-Cc: Vinod Koul <vinod.koul@intel.com>, Rob Herring <robh+dt@kernel.org>, dmaengine@vger.kernel.org, "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" <devicetree@vger.kernel.org>, Mark Rutland <mark.rutland@arm.com>, Linux-Renesas <linux-renesas-soc@vger.kernel.org>
+Cc: vinod.koul@intel.com, robh+dt@kernel.org, dmaengine@vger.kernel.org, devicetree@vger.kernel.org, mark.rutland@arm.com, linux-renesas-soc@vger.kernel.org
 List-ID: <dmaengine.vger.kernel.org>
 
-T24gVGh1LCBGZWIgMSwgMjAxOCBhdCA4OjA5IFBNLCBTZXJnZWkgU2h0eWx5b3YKPHNlcmdlaS5z
-aHR5bHlvdkBjb2dlbnRlbWJlZGRlZC5jb20+IHdyb3RlOgo+IFJlbmVzYXMgIFItQ2FyIFYzSCBT
-b0MgaGFzIHRoZSBSLUNhciBnZW4zIGNvbXBhdGlibGUgRE1BIGNvbnRyb2xsZXJzLgo+IERvY3Vt
-ZW50IFItQ2FyIFYzSCAoYWxzbyBrbm93biBhcyBSOEE3Nzk4MCkgU29DIGJpbmRpbmdzLgo+Cj4g
-U2lnbmVkLW9mZi1ieTogU2VyZ2VpIFNodHlseW92IDxzZXJnZWkuc2h0eWx5b3ZAY29nZW50ZW1i
-ZWRkZWQuY29tPgoKUmV2aWV3ZWQtYnk6IEdlZXJ0IFV5dHRlcmhvZXZlbiA8Z2VlcnQrcmVuZXNh
-c0BnbGlkZXIuYmU+CgpHcntvZXRqZSxlZXRpbmd9cywKCiAgICAgICAgICAgICAgICAgICAgICAg
-IEdlZXJ0Ci0tLQpHZWVydCBVeXR0ZXJob2V2ZW4gLS0gVGhlcmUncyBsb3RzIG9mIExpbnV4IGJl
-eW9uZCBpYTMyIC0tIGdlZXJ0QGxpbnV4LW02OGsub3JnCgpJbiBwZXJzb25hbCBjb252ZXJzYXRp
-b25zIHdpdGggdGVjaG5pY2FsIHBlb3BsZSwgSSBjYWxsIG15c2VsZiBhIGhhY2tlci4gQnV0Cndo
-ZW4gSSdtIHRhbGtpbmcgdG8gam91cm5hbGlzdHMgSSBqdXN0IHNheSAicHJvZ3JhbW1lciIgb3Ig
-c29tZXRoaW5nIGxpa2UgdGhhdC4KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAtLSBM
-aW51cyBUb3J2YWxkcwotLQpUbyB1bnN1YnNjcmliZSBmcm9tIHRoaXMgbGlzdDogc2VuZCB0aGUg
-bGluZSAidW5zdWJzY3JpYmUgZG1hZW5naW5lIiBpbgp0aGUgYm9keSBvZiBhIG1lc3NhZ2UgdG8g
-bWFqb3Jkb21vQHZnZXIua2VybmVsLm9yZwpNb3JlIG1ham9yZG9tbyBpbmZvIGF0ICBodHRwOi8v
-dmdlci5rZXJuZWwub3JnL21ham9yZG9tby1pbmZvLmh0bWwK
+T24gVGh1LCBGZWIgMDEsIDIwMTggYXQgMTA6MDk6MjVQTSArMDMwMCwgU2VyZ2VpIFNodHlseW92
+IHdyb3RlOgo+IFJlbmVzYXMgIFItQ2FyIFYzSCBTb0MgaGFzIHRoZSBSLUNhciBnZW4zIGNvbXBh
+dGlibGUgRE1BIGNvbnRyb2xsZXJzLgo+IERvY3VtZW50IFItQ2FyIFYzSCAoYWxzbyBrbm93biBh
+cyBSOEE3Nzk4MCkgU29DIGJpbmRpbmdzLgo+IAo+IFNpZ25lZC1vZmYtYnk6IFNlcmdlaSBTaHR5
+bHlvdiA8c2VyZ2VpLnNodHlseW92QGNvZ2VudGVtYmVkZGVkLmNvbT4KClJldmlld2VkLWJ5OiBT
+aW1vbiBIb3JtYW4gPGhvcm1zK3JlbmVzYXNAdmVyZ2UubmV0LmF1PgotLS0KVG8gdW5zdWJzY3Jp
+YmUgZnJvbSB0aGlzIGxpc3Q6IHNlbmQgdGhlIGxpbmUgInVuc3Vic2NyaWJlIGRtYWVuZ2luZSIg
+aW4KdGhlIGJvZHkgb2YgYSBtZXNzYWdlIHRvIG1ham9yZG9tb0B2Z2VyLmtlcm5lbC5vcmcKTW9y
+ZSBtYWpvcmRvbW8gaW5mbyBhdCAgaHR0cDovL3ZnZXIua2VybmVsLm9yZy9tYWpvcmRvbW8taW5m
+by5odG1sCg==
