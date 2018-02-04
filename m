@@ -2,22 +2,29 @@ Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
 Subject: [v2,2/6] ACPI / bus: Do not traverse through non-existed device table
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Message-Id: <1517517921.7000.1447.camel@linux.intel.com>
-Date: Thu, 01 Feb 2018 22:45:21 +0200
-To: Sinan Kaya <okaya@codeaurora.org>, dmaengine <dmaengine@vger.kernel.org>, "Rafael J . Wysocki" <rjw@rjwysocki.net>, linux-acpi@vger.kernel.org
-Cc: Sakari Ailus <sakari.ailus@linux.intel.com>, Vinod Koul <vinod.koul@intel.com>
+From: "Rafael J. Wysocki" <rafael@kernel.org>
+Message-Id: <CAJZ5v0gBzP+QGs5zj25N7DQpBnAyqzmDeeVL4mjK1cns4Jyh1g@mail.gmail.com>
+Date: Sun, 4 Feb 2018 08:18:23 +0100
+To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Cc: Sinan Kaya <okaya@codeaurora.org>, dmaengine <dmaengine@vger.kernel.org>, "Rafael J . Wysocki" <rjw@rjwysocki.net>, ACPI Devel Maling List <linux-acpi@vger.kernel.org>, Sakari Ailus <sakari.ailus@linux.intel.com>, Vinod Koul <vinod.koul@intel.com>
 List-ID: <dmaengine.vger.kernel.org>
 
-T24gVGh1LCAyMDE4LTAyLTAxIGF0IDIyOjQwICswMjAwLCBBbmR5IFNoZXZjaGVua28gd3JvdGU6
-Cj4gT24gVGh1LCAyMDE4LTAyLTAxIGF0IDE1OjMyIC0wNTAwLCBTaW5hbiBLYXlhIHdyb3RlOgo+
-ID4gT24gMi8xLzIwMTggMzoyMCBQTSwgQW5keSBTaGV2Y2hlbmtvIHdyb3RlOgo+ID4gPiBXaGVu
-IF9fYWNwaV9tYXRjaF9kZXZpY2UoKSBpcyBjYWxsZWQgaXQgd291bGQgYmUgcG9zc2libGUgdG8g
-aGF2ZQo+ID4gPiBBQ1BJIElEIHRhYmxlIGEgTVVMTCBwb2ludGVyLiBUbyBhdm9pZCBwb3RlbnRp
-YWwgZGVyZWZlcmVuY2UsCj4gPiAKPiA+IE5VTEwKPiAKPiBUaGFua3MsIHdpbGwgZml4IGxhdGVy
-Lgo+IAo+ID4gV2h5IG5vdCBiYWlsIG91dCBoZXJlIGltbWVkaWF0ZWx5IGlmIGlkcyBpcyBudWxs
-Pwo+IAo+IEJlY2F1c2Ugb2YgdGhlIGNvZGUgd2hpY2ggd2Fzbid0IGluIGNvbnRleHQgb2YgdGhp
-cyBwYXRjaC4KPiAKPiBTZWUgYWxzbyBwYXRjaCAxIGluIHRoZSBzZXJpZXMuCj4gCj4gSXQncyBh
-Ym91dCBob3cgYWNwaV9kcml2ZXJfbWF0Y2hfZGV2aWNlKCkgdXNlcyBpdC4KCkJ0dywgaXQgbWFr
-ZXMgZGV2aWNlX2dldF9tYXRjaF9kYXRhKCkgdG8gd29yayBwcm9wZXJseSBvbiBQUlAwMDAxIGtp
-bmQKb2YgZGV2aWNlcy4K
+T24gVGh1LCBGZWIgMSwgMjAxOCBhdCA5OjQ1IFBNLCBBbmR5IFNoZXZjaGVua28KPGFuZHJpeS5z
+aGV2Y2hlbmtvQGxpbnV4LmludGVsLmNvbT4gd3JvdGU6Cj4gT24gVGh1LCAyMDE4LTAyLTAxIGF0
+IDIyOjQwICswMjAwLCBBbmR5IFNoZXZjaGVua28gd3JvdGU6Cj4+IE9uIFRodSwgMjAxOC0wMi0w
+MSBhdCAxNTozMiAtMDUwMCwgU2luYW4gS2F5YSB3cm90ZToKPj4gPiBPbiAyLzEvMjAxOCAzOjIw
+IFBNLCBBbmR5IFNoZXZjaGVua28gd3JvdGU6Cj4+ID4gPiBXaGVuIF9fYWNwaV9tYXRjaF9kZXZp
+Y2UoKSBpcyBjYWxsZWQgaXQgd291bGQgYmUgcG9zc2libGUgdG8gaGF2ZQo+PiA+ID4gQUNQSSBJ
+RCB0YWJsZSBhIE1VTEwgcG9pbnRlci4gVG8gYXZvaWQgcG90ZW50aWFsIGRlcmVmZXJlbmNlLAo+
+PiA+Cj4+ID4gTlVMTAo+Pgo+PiBUaGFua3MsIHdpbGwgZml4IGxhdGVyLgo+Pgo+PiA+IFdoeSBu
+b3QgYmFpbCBvdXQgaGVyZSBpbW1lZGlhdGVseSBpZiBpZHMgaXMgbnVsbD8KPj4KPj4gQmVjYXVz
+ZSBvZiB0aGUgY29kZSB3aGljaCB3YXNuJ3QgaW4gY29udGV4dCBvZiB0aGlzIHBhdGNoLgo+Pgo+
+PiBTZWUgYWxzbyBwYXRjaCAxIGluIHRoZSBzZXJpZXMuCj4+Cj4+IEl0J3MgYWJvdXQgaG93IGFj
+cGlfZHJpdmVyX21hdGNoX2RldmljZSgpIHVzZXMgaXQuCj4KPiBCdHcsIGl0IG1ha2VzIGRldmlj
+ZV9nZXRfbWF0Y2hfZGF0YSgpIHRvIHdvcmsgcHJvcGVybHkgb24gUFJQMDAwMSBraW5kCj4gb2Yg
+ZGV2aWNlcy4KCk1heWJlIGNvbWJpbmUgdGhpcyBvbmUgd2l0aCB0aGUgWzEvNl0gdGhlbiwgaXQg
+d291bGQgbWFrZSBpdCBzb21ld2hhdAplYXNpZXIgdG8gZm9sbG93IHdoYXQncyBnb2luZyBvbi4K
+LS0tClRvIHVuc3Vic2NyaWJlIGZyb20gdGhpcyBsaXN0OiBzZW5kIHRoZSBsaW5lICJ1bnN1YnNj
+cmliZSBkbWFlbmdpbmUiIGluCnRoZSBib2R5IG9mIGEgbWVzc2FnZSB0byBtYWpvcmRvbW9Admdl
+ci5rZXJuZWwub3JnCk1vcmUgbWFqb3Jkb21vIGluZm8gYXQgIGh0dHA6Ly92Z2VyLmtlcm5lbC5v
+cmcvbWFqb3Jkb21vLWluZm8uaHRtbAo=
