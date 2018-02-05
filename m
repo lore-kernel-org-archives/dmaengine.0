@@ -2,14 +2,21 @@ Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
 Subject: DT: dma: renesas,rcar-dmac: document R8A77980 support
-From: Vinod Koul <vinod.koul@intel.com>
-Message-Id: <20180205054057.GR18649@localhost>
-Date: Mon, 5 Feb 2018 11:10:58 +0530
+From: Rob Herring <robh@kernel.org>
+Message-Id: <20180205041232.hzrwlrponxl2cjhg@rob-hp-laptop>
+Date: Mon, 5 Feb 2018 00:09:26 -0600
 To: Sergei Shtylyov <sergei.shtylyov@cogentembedded.com>
-Cc: robh+dt@kernel.org, dmaengine@vger.kernel.org, devicetree@vger.kernel.org, mark.rutland@arm.com, linux-renesas-soc@vger.kernel.org
+Cc: vinod.koul@intel.com, dmaengine@vger.kernel.org, devicetree@vger.kernel.org, mark.rutland@arm.com, linux-renesas-soc@vger.kernel.org
 List-ID: <dmaengine.vger.kernel.org>
 
 T24gVGh1LCBGZWIgMDEsIDIwMTggYXQgMTA6MDk6MjVQTSArMDMwMCwgU2VyZ2VpIFNodHlseW92
 IHdyb3RlOgo+IFJlbmVzYXMgIFItQ2FyIFYzSCBTb0MgaGFzIHRoZSBSLUNhciBnZW4zIGNvbXBh
 dGlibGUgRE1BIGNvbnRyb2xsZXJzLgo+IERvY3VtZW50IFItQ2FyIFYzSCAoYWxzbyBrbm93biBh
-cyBSOEE3Nzk4MCkgU29DIGJpbmRpbmdzLgoKQXBwbGllZCwgdGhhbmtzCg==
+cyBSOEE3Nzk4MCkgU29DIGJpbmRpbmdzLgo+IAo+IFNpZ25lZC1vZmYtYnk6IFNlcmdlaSBTaHR5
+bHlvdiA8c2VyZ2VpLnNodHlseW92QGNvZ2VudGVtYmVkZGVkLmNvbT4KPiAKPiAtLS0KPiAgRG9j
+dW1lbnRhdGlvbi9kZXZpY2V0cmVlL2JpbmRpbmdzL2RtYS9yZW5lc2FzLHJjYXItZG1hYy50eHQg
+fCAgICAxICsKPiAgMSBmaWxlIGNoYW5nZWQsIDEgaW5zZXJ0aW9uKCspCgpSZXZpZXdlZC1ieTog
+Um9iIEhlcnJpbmcgPHJvYmhAa2VybmVsLm9yZz4KLS0tClRvIHVuc3Vic2NyaWJlIGZyb20gdGhp
+cyBsaXN0OiBzZW5kIHRoZSBsaW5lICJ1bnN1YnNjcmliZSBkbWFlbmdpbmUiIGluCnRoZSBib2R5
+IG9mIGEgbWVzc2FnZSB0byBtYWpvcmRvbW9Admdlci5rZXJuZWwub3JnCk1vcmUgbWFqb3Jkb21v
+IGluZm8gYXQgIGh0dHA6Ly92Z2VyLmtlcm5lbC5vcmcvbWFqb3Jkb21vLWluZm8uaHRtbAo=
