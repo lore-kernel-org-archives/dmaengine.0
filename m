@@ -1,23 +1,27 @@
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
-Subject: [v2,3/6] ACPI / bus: Remove checks in acpi_get_match_data()
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Message-Id: <1517921471.22495.45.camel@linux.intel.com>
-Date: Tue, 06 Feb 2018 14:51:11 +0200
-To: "Rafael J. Wysocki" <rjw@rjwysocki.net>
-Cc: "Rafael J. Wysocki" <rafael@kernel.org>, dmaengine <dmaengine@vger.kernel.org>, ACPI Devel Maling List <linux-acpi@vger.kernel.org>, Sinan Kaya <okaya@codeaurora.org>, Sakari Ailus <sakari.ailus@linux.intel.com>, Vinod Koul <vinod.koul@intel.com>
+Subject: dmaengine: usb-dmac: add binding for r8a77965
+From: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
+Message-Id: <1519710896-26527-1-git-send-email-yoshihiro.shimoda.uh@renesas.com>
+Date: Tue, 27 Feb 2018 14:54:56 +0900
+To: vinod.koul@intel.com, robh+dt@kernel.org, mark.rutland@arm.com
+Cc: dmaengine@vger.kernel.org, linux-renesas-soc@vger.kernel.org, devicetree@vger.kernel.org, Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
 List-ID: <dmaengine.vger.kernel.org>
 
-T24gTW9uLCAyMDE4LTAyLTA1IGF0IDE3OjU0ICswMTAwLCBSYWZhZWwgSi4gV3lzb2NraSB3cm90
-ZToKPiBPbiBNb25kYXksIEZlYnJ1YXJ5IDUsIDIwMTggNTowNDoyMiBQTSBDRVQgQW5keSBTaGV2
-Y2hlbmtvIHdyb3RlOgo+ID4gT24gU3VuLCAyMDE4LTAyLTA0IGF0IDA4OjIxICswMTAwLCBSYWZh
-ZWwgSi4gV3lzb2NraSB3cm90ZToKPiA+ID4gT24gVGh1LCBGZWIgMSwgMjAxOCBhdCA5OjQ2IFBN
-LCBBbmR5IFNoZXZjaGVua28KPiA+ID4gPGFuZHJpeS5zaGV2Y2hlbmtvQGxpbnV4LmludGVsLmNv
-bT4gd3JvdGU6Cj4gPiA+IEknbSBhbHNvIG5vdCBzdXJlIGlmIHRoZSBGaXhlczogdGFnIGlzIHJl
-YWxseSBhcHBsaWNhYmxlIHRvIHRoaXMuCj4gPiAKPiA+IFdlIGNhbiBvZiBjb3Vyc2UgZHJvcCBp
-dCwgSSBwdXQgaXQgaGVyZSBpbiBhIGhvcGUgdGhhdCB0aGlzIHNlcmllcwo+ID4gd291bGQKPiA+
-IGJlIG1hdGVyaWFsIHRvIHY0LjE2LXJjMiB0byBmaXggYW4gaW50cm9kdWNlZCBBUEkuCj4gCj4g
-SSBjYW4gc3RpbGwgdGFrZSBpdCBmb3IgLXJjMSBldmVuIGlmIHJlYWR5LCB0aGVzZSB0YWdzIGFy
-ZW4ndAo+IG5lY2Vzc2FyeSBmb3IgdGhhdC4KCk5vdGVkLiAKSSdsbCByZW1vdmUgdGFncyBhbmQg
-cmVzZW5kLgo=
+VGhpcyBwYXRjaCBhZGRzIGJpbmRpbmcgZm9yIHI4YTc3OTY1IChSLUNhciBNMy1OKS4KClNpZ25l
+ZC1vZmYtYnk6IFlvc2hpaGlybyBTaGltb2RhIDx5b3NoaWhpcm8uc2hpbW9kYS51aEByZW5lc2Fz
+LmNvbT4KLS0tCiBEb2N1bWVudGF0aW9uL2RldmljZXRyZWUvYmluZGluZ3MvZG1hL3JlbmVzYXMs
+dXNiLWRtYWMudHh0IHwgMSArCiAxIGZpbGUgY2hhbmdlZCwgMSBpbnNlcnRpb24oKykKCmRpZmYg
+LS1naXQgYS9Eb2N1bWVudGF0aW9uL2RldmljZXRyZWUvYmluZGluZ3MvZG1hL3JlbmVzYXMsdXNi
+LWRtYWMudHh0IGIvRG9jdW1lbnRhdGlvbi9kZXZpY2V0cmVlL2JpbmRpbmdzL2RtYS9yZW5lc2Fz
+LHVzYi1kbWFjLnR4dAppbmRleCBmM2QxZjE1Li45ZGM5MzVlIDEwMDY0NAotLS0gYS9Eb2N1bWVu
+dGF0aW9uL2RldmljZXRyZWUvYmluZGluZ3MvZG1hL3JlbmVzYXMsdXNiLWRtYWMudHh0CisrKyBi
+L0RvY3VtZW50YXRpb24vZGV2aWNldHJlZS9iaW5kaW5ncy9kbWEvcmVuZXNhcyx1c2ItZG1hYy50
+eHQKQEAgLTExLDYgKzExLDcgQEAgUmVxdWlyZWQgUHJvcGVydGllczoKIAkgIC0gInJlbmVzYXMs
+cjhhNzc5NC11c2ItZG1hYyIgKFItQ2FyIEUyKQogCSAgLSAicmVuZXNhcyxyOGE3Nzk1LXVzYi1k
+bWFjIiAoUi1DYXIgSDMpCiAJICAtICJyZW5lc2FzLHI4YTc3OTYtdXNiLWRtYWMiIChSLUNhciBN
+My1XKQorCSAgLSAicmVuZXNhcyxyOGE3Nzk2NS11c2ItZG1hYyIgKFItQ2FyIE0zLU4pCiAtIHJl
+ZzogYmFzZSBhZGRyZXNzIGFuZCBsZW5ndGggb2YgdGhlIHJlZ2lzdGVycyBibG9jayBmb3IgdGhl
+IERNQUMKIC0gaW50ZXJydXB0czogaW50ZXJydXB0IHNwZWNpZmllcnMgZm9yIHRoZSBETUFDLCBv
+bmUgZm9yIGVhY2ggZW50cnkgaW4KICAgaW50ZXJydXB0LW5hbWVzLgo=
