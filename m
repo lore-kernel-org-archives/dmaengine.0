@@ -2,11 +2,11 @@ Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
 Subject: dmaengine: rcar-dmac: fix max_chunk_size for R-Car Gen3
-From: Simon Horman <horms@verge.net.au>
-Message-Id: <20180215185225.7bzdtp6fc5l7sjct@verge.net.au>
-Date: Thu, 15 Feb 2018 19:52:26 +0100
+From: Vinod Koul <vinod.koul@intel.com>
+Message-Id: <20180227150347.GB15443@localhost>
+Date: Tue, 27 Feb 2018 20:33:47 +0530
 To: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
-Cc: vinod.koul@intel.com, dmaengine@vger.kernel.org, linux-renesas-soc@vger.kernel.org
+Cc: dmaengine@vger.kernel.org, linux-renesas-soc@vger.kernel.org
 List-ID: <dmaengine.vger.kernel.org>
 
 T24gV2VkLCBGZWIgMTQsIDIwMTggYXQgMDY6NDA6MTJQTSArMDkwMCwgWW9zaGloaXJvIFNoaW1v
@@ -14,9 +14,4 @@ ZGEgd3JvdGU6Cj4gQWNjb3JkaW5nIHRvIFItQ2FyIEdlbjMgUmV2LjAuODAgbWFudWFsLCB0aGUg
 RE1BVENSIGNhbiBiZSBzZXQgdG8KPiAxNiw3NzcsMjE1IGFzIG1heGltdW0uIFNvLCB0aGlzIHBh
 dGNoIGZpeGVzIHRoZSBtYXhfY2h1bmtfc2l6ZSBmb3IKPiBzYWZldHkgb24gYWxsIG9mIFNvQ3Mu
 IE90aGVyd2lzZSwgYSBzeXN0ZW0gbWF5IGhhbmcgaWYgdGhlIERNQVRDUgo+IGlzIHNldCB0byAw
-IG9uIFItQ2FyIEdlbjMuCj4gCj4gU2lnbmVkLW9mZi1ieTogWW9zaGloaXJvIFNoaW1vZGEgPHlv
-c2hpaGlyby5zaGltb2RhLnVoQHJlbmVzYXMuY29tPgoKUmV2aWV3ZWQtYnk6IFNpbW9uIEhvcm1h
-biA8aG9ybXMrcmVuZXNhc0B2ZXJnZS5uZXQuYXU+Ci0tLQpUbyB1bnN1YnNjcmliZSBmcm9tIHRo
-aXMgbGlzdDogc2VuZCB0aGUgbGluZSAidW5zdWJzY3JpYmUgZG1hZW5naW5lIiBpbgp0aGUgYm9k
-eSBvZiBhIG1lc3NhZ2UgdG8gbWFqb3Jkb21vQHZnZXIua2VybmVsLm9yZwpNb3JlIG1ham9yZG9t
-byBpbmZvIGF0ICBodHRwOi8vdmdlci5rZXJuZWwub3JnL21ham9yZG9tby1pbmZvLmh0bWwK
+IG9uIFItQ2FyIEdlbjMuCgpBcHBsaWVkLCB0aGFua3MK
