@@ -2,11 +2,11 @@ Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
 Subject: [v3] dmaengine: mv_xor_v2: Fix clock resource by adding a register clock
-From: Rob Herring <robh@kernel.org>
-Message-Id: <20180308023829.zullrqsara6epirv@rob-hp-laptop>
-Date: Wed, 7 Mar 2018 20:38:29 -0600
+From: Vinod Koul <vinod.koul@intel.com>
+Message-Id: <20180311150423.GC15443@localhost>
+Date: Sun, 11 Mar 2018 20:34:23 +0530
 To: Gregory CLEMENT <gregory.clement@bootlin.com>
-Cc: Vinod Koul <vinod.koul@intel.com>, dmaengine@vger.kernel.org, Jason Cooper <jason@lakedaemon.net>, Andrew Lunn <andrew@lunn.ch>, Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>, Thomas Petazzoni <thomas.petazzoni@bootlin.com>, linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org, Antoine Tenart <antoine.tenart@bootlin.com>, =?iso-8859-1?Q?Miqu=E8l?= Raynal <miquel.raynal@bootlin.com>, Nadav Haklai <nadavh@marvell.com>, Shadi Ammouri <shadi@marvell.com>, Omri Itach <omrii@marvell.com>, Hanna Hawa <hannah@marvell.com>, Igal Liberman <igall@marvell.com>, Marcin Wojtas <mw@semihalf.com>
+Cc: dmaengine@vger.kernel.org, Jason Cooper <jason@lakedaemon.net>, Andrew Lunn <andrew@lunn.ch>, Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>, Thomas Petazzoni <thomas.petazzoni@bootlin.com>, linux-arm-kernel@lists.infradead.org, Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org, Antoine Tenart <antoine.tenart@bootlin.com>, =?iso-8859-1?Q?Miqu=E8l?= Raynal <miquel.raynal@bootlin.com>, Nadav Haklai <nadavh@marvell.com>, Shadi Ammouri <shadi@marvell.com>, Omri Itach <omrii@marvell.com>, Hanna Hawa <hannah@marvell.com>, Igal Liberman <igall@marvell.com>, Marcin Wojtas <mw@semihalf.com>
 List-ID: <dmaengine.vger.kernel.org>
 
 T24gV2VkLCBNYXIgMDcsIDIwMTggYXQgMDQ6NDA6MTBQTSArMDEwMCwgR3JlZ29yeSBDTEVNRU5U
@@ -17,18 +17,4 @@ QVA4eHggY29tcG9uZW50LCB0aGF0J3Mgd2h5IHRoaXMgY2xvY2sgaXMgb3B0aW9uYWwuCj4gCj4g
 V2l0aCB0aGlzIHBhdGNoIGJvdGggY2xvY2sgaGF2ZSBub3cgYSBuYW1lLCBidXQgaW4gb3JkZXIg
 dG8gYmUgYmFja3dhcmQKPiBjb21wYXRpYmxlLCB0aGUgbmFtZSBvZiB0aGUgZmlyc3QgY2xvY2sg
 aXMgbm90IHVzZWQuIEl0IGFsbG93cyB0byBzdGlsbAo+IHVzZSB0aGlzIGNsb2NrIHdpdGggYSBk
-ZXZpY2UgdHJlZSB1c2luZyB0aGUgb2xkIGJpbmRpbmcuCj4gCj4gU2lnbmVkLW9mZi1ieTogR3Jl
-Z29yeSBDTEVNRU5UIDxncmVnb3J5LmNsZW1lbnRAYm9vdGxpbi5jb20+Cj4gLS0tCj4gQ2hhbmdl
-bG9nOgo+IAo+IHYxIC0+IHYyCj4gCj4gIC0gRml4IHR5cG9zIGluIHRoZSBjb21taXQgbG9nCj4g
-IC0gQWRkIG1vcmUgZXhwbGFuYXRpb24gaW4gdGUgY29tbWl0IGxvZwo+ICAtIE9ubHkgc2tpcCB0
-aGUgcmVnIGNsb2NrIHVzYWdlIGlmIHRoZSBjbG9jayBpcyBub3QgcHJlc2V0biBpbiB0aGUKPiAg
-ICBkZXZpY2UgdHJlZSAoLUVOT0VOVCkKPiAgLSBBZGQgZHQgbGlzdCBpbiBDQwo+IAo+IHYyIC0+
-IHYzCj4gCj4gIC0gRml4IHRoZSBFTk9FTlQgdGVzdAo+IAo+ICAuLi4vZGV2aWNldHJlZS9iaW5k
-aW5ncy9kbWEvbXYteG9yLXYyLnR4dCAgICAgICAgICB8ICA2ICsrKysrLQoKUmV2aWV3ZWQtYnk6
-IFJvYiBIZXJyaW5nIDxyb2JoQGtlcm5lbC5vcmc+Cgo+ICBkcml2ZXJzL2RtYS9tdl94b3JfdjIu
-YyAgICAgICAgICAgICAgICAgICAgICAgICAgICB8IDI1ICsrKysrKysrKysrKysrKysrLS0tLS0K
-PiAgMiBmaWxlcyBjaGFuZ2VkLCAyNSBpbnNlcnRpb25zKCspLCA2IGRlbGV0aW9ucygtKQotLS0K
-VG8gdW5zdWJzY3JpYmUgZnJvbSB0aGlzIGxpc3Q6IHNlbmQgdGhlIGxpbmUgInVuc3Vic2NyaWJl
-IGRtYWVuZ2luZSIgaW4KdGhlIGJvZHkgb2YgYSBtZXNzYWdlIHRvIG1ham9yZG9tb0B2Z2VyLmtl
-cm5lbC5vcmcKTW9yZSBtYWpvcmRvbW8gaW5mbyBhdCAgaHR0cDovL3ZnZXIua2VybmVsLm9yZy9t
-YWpvcmRvbW8taW5mby5odG1sCg==
+ZXZpY2UgdHJlZSB1c2luZyB0aGUgb2xkIGJpbmRpbmcuCgpBcHBsaWVkLCB0aGFua3MK
