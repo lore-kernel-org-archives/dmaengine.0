@@ -1,24 +1,26 @@
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
-Subject: dmaengine: pl330: fix a race condition in case of threaded irqs
-From: Vinod Koul <vinod.koul@intel.com>
-Message-Id: <20180306115153.GS15443@localhost>
-Date: Tue, 6 Mar 2018 17:21:54 +0530
-To: Qi Hou <qi.hou@windriver.com>
-Cc: dan.j.williams@intel.com, fmh6jj@gmail.com, fmhess@users.sourceforge.net, jassisinghbrar@gmail.com, rmk+kernel@arm.linux.org.uk, dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [v1,1/2] dmaengine: stm32-mdma: align TLEN and buffer length on burst
+From: Pierre Yves MORDRET <pierre-yves.mordret@st.com>
+Message-Id: <1520961366-27473-2-git-send-email-pierre-yves.mordret@st.com>
+Date: Tue, 13 Mar 2018 18:16:05 +0100
+To: Vinod Koul <vinod.koul@intel.com>, Maxime Coquelin <mcoquelin.stm32@gmail.com>, Alexandre Torgue <alexandre.torgue@st.com>, Dan Williams <dan.j.williams@intel.com>, M'boumba Cedric Madianga <cedric.madianga@gmail.com>, dmaengine@vger.kernel.org, linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
+Cc: Pierre-Yves MORDRET <pierre-yves.mordret@st.com>
 List-ID: <dmaengine.vger.kernel.org>
 
-T24gVHVlLCBNYXIgMDYsIDIwMTggYXQgMDk6MTM6MzdBTSArMDgwMCwgUWkgSG91IHdyb3RlOgo+
-IFdoZW4gYm9vdGluZyB1cCB3aXRoICJ0aHJlYWRpcnFzIiBpbiBjb21tYW5kIGxpbmUsIGFsbCBp
-cnEgaGFuZGxlcnMgb2YgdGhlIERNQQo+IGNvbnRyb2xsZXIgcGwzMzAgd2lsbCBiZSB0aHJlYWRl
-ZCBmb3JjZWRseS4gVGhlc2UgdGhyZWFkcyB3aWxsIHJhY2UgZm9yIHRoZSBzYW1lCj4gbGlzdCwg
-cGwzMzAtPnJlcV9kb25lLgo+IAo+IEJlZm9yZSB0aGUgY2FsbGJhY2ssIHRoZSBzcGlubG9jayB3
-YXMgcmVsZWFzZWQuIEFuZCBhZnRlciBpdCwgdGhlIHNwaW5sb2NrIHdhcwo+IHRha2VuLiBUaGlz
-IG9wZW5lZCBhbiByYWNlIHdpbmRvdyB3aGVyZSBhbm90aGVyIHRocmVhZGVkIGlycSBoYW5kbGVy
-IGNvdWxkIHN0ZWFsCj4gdGhlIHNwaW5sb2NrIGFuZCBiZSBwZXJtaXR0ZWQgdG8gZGVsZXRlIGVu
-dHJpZXMgb2YgdGhlIGxpc3QsIHBsMzMwLT5yZXFfZG9uZS4KPiAKPiBJZiB0aGUgbGF0ZXIgZGVs
-ZXRlZCBhbiBlbnRyeSB0aGF0IHdhcyBzdGlsbCByZWZlcnJlZCB0byBieSB0aGUgZm9ybWVyLCB0
-aGVyZSB3b3VsZAo+IGJlIGEga2VybmVsIHBhbmljIHdoZW4gdGhlIGZvcm1lciB3YXMgc2NoZWR1
-bGVkIGFuZCB0cmllZCB0byBnZXQgdGhlIG5leHQgc2libGluZwo+IG9mIHRoZSBkZWxldGVkIGVu
-dHJ5LgoKQXBwbGllZCwgdGhhbmtzCg==
+Qm90aCBidWZmZXIgVHJhbnNmZXIgTGVuZ3RoIChUTEVOIGlmIGFueSkgYW5kIHRyYW5zZmVyIHNp
+emUgaGF2ZSB0byBiZQphbGlnbmVkIG9uIGJ1cnN0IHNpemUgKGJ1cnN0IGJlYXRzKmJ1cyB3aWR0
+aCkuCgpTaWduZWQtb2ZmLWJ5OiBQaWVycmUtWXZlcyBNT1JEUkVUIDxwaWVycmUteXZlcy5tb3Jk
+cmV0QHN0LmNvbT4KLS0tCiAgVmVyc2lvbiBoaXN0b3J5OgogICAgdjE6CiAgICAgICAqIEluaXRp
+YWwKLS0tCi0tLQogZHJpdmVycy9kbWEvc3RtMzItbWRtYS5jIHwgMiArLQogMSBmaWxlIGNoYW5n
+ZWQsIDEgaW5zZXJ0aW9uKCspLCAxIGRlbGV0aW9uKC0pCgpkaWZmIC0tZ2l0IGEvZHJpdmVycy9k
+bWEvc3RtMzItbWRtYS5jIGIvZHJpdmVycy9kbWEvc3RtMzItbWRtYS5jCmluZGV4IGRhYTE2MDIu
+LmZiY2ZmYTIgMTAwNjQ0Ci0tLSBhL2RyaXZlcnMvZG1hL3N0bTMyLW1kbWEuYworKysgYi9kcml2
+ZXJzL2RtYS9zdG0zMi1tZG1hLmMKQEAgLTQxMyw3ICs0MTMsNyBAQCBzdGF0aWMgdTMyIHN0bTMy
+X21kbWFfZ2V0X2Jlc3RfYnVyc3QodTMyIGJ1Zl9sZW4sIHUzMiB0bGVuLCB1MzIgbWF4X2J1cnN0
+LAogCXUzMiBiZXN0X2J1cnN0ID0gbWF4X2J1cnN0OwogCXUzMiBidXJzdF9sZW4gPSBiZXN0X2J1
+cnN0ICogd2lkdGg7CiAKLQl3aGlsZSAoKGJ1cnN0X2xlbiA+IDApICYmICh0bGVuICUgYnVyc3Rf
+bGVuKSkgeworCXdoaWxlICgoYnVyc3RfbGVuID4gMCkgJiYgKCgodGxlbiB8IGJ1Zl9sZW4pICYg
+KGJ1cnN0X2xlbiAtIDEpKSAhPSAwKSkgewogCQliZXN0X2J1cnN0ID0gYmVzdF9idXJzdCA+PiAx
+OwogCQlidXJzdF9sZW4gPSBiZXN0X2J1cnN0ICogd2lkdGg7CiAJfQo=
