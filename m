@@ -1,26 +1,27 @@
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
-Subject: [v1,1/2] dmaengine: stm32-mdma: align TLEN and buffer length on burst
-From: Pierre Yves MORDRET <pierre-yves.mordret@st.com>
-Message-Id: <1520961366-27473-2-git-send-email-pierre-yves.mordret@st.com>
-Date: Tue, 13 Mar 2018 18:16:05 +0100
-To: Vinod Koul <vinod.koul@intel.com>, Maxime Coquelin <mcoquelin.stm32@gmail.com>, Alexandre Torgue <alexandre.torgue@st.com>, Dan Williams <dan.j.williams@intel.com>, M'boumba Cedric Madianga <cedric.madianga@gmail.com>, dmaengine@vger.kernel.org, linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
-Cc: Pierre-Yves MORDRET <pierre-yves.mordret@st.com>
+Subject: [v7,3/3] dmaengine: mediatek: update MAINTAINERS entry with MediaTek DMA driver
+From: sean.wang@mediatek.com
+Message-Id: <d63a1d2ca458fd74d5ca188d44b753aa234dd738.1521098171.git.sean.wang@mediatek.com>
+Date: Thu, 15 Mar 2018 15:40:37 +0800
+To: vinod.koul@intel.com, dan.j.williams@intel.com, robh+dt@kernel.org, mark.rutland@arm.com
+Cc: dmaengine@vger.kernel.org, devicetree@vger.kernel.org, linux-mediatek@lists.infradead.org, linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, Sean Wang <sean.wang@mediatek.com>
 List-ID: <dmaengine.vger.kernel.org>
 
-Qm90aCBidWZmZXIgVHJhbnNmZXIgTGVuZ3RoIChUTEVOIGlmIGFueSkgYW5kIHRyYW5zZmVyIHNp
-emUgaGF2ZSB0byBiZQphbGlnbmVkIG9uIGJ1cnN0IHNpemUgKGJ1cnN0IGJlYXRzKmJ1cyB3aWR0
-aCkuCgpTaWduZWQtb2ZmLWJ5OiBQaWVycmUtWXZlcyBNT1JEUkVUIDxwaWVycmUteXZlcy5tb3Jk
-cmV0QHN0LmNvbT4KLS0tCiAgVmVyc2lvbiBoaXN0b3J5OgogICAgdjE6CiAgICAgICAqIEluaXRp
-YWwKLS0tCi0tLQogZHJpdmVycy9kbWEvc3RtMzItbWRtYS5jIHwgMiArLQogMSBmaWxlIGNoYW5n
-ZWQsIDEgaW5zZXJ0aW9uKCspLCAxIGRlbGV0aW9uKC0pCgpkaWZmIC0tZ2l0IGEvZHJpdmVycy9k
-bWEvc3RtMzItbWRtYS5jIGIvZHJpdmVycy9kbWEvc3RtMzItbWRtYS5jCmluZGV4IGRhYTE2MDIu
-LmZiY2ZmYTIgMTAwNjQ0Ci0tLSBhL2RyaXZlcnMvZG1hL3N0bTMyLW1kbWEuYworKysgYi9kcml2
-ZXJzL2RtYS9zdG0zMi1tZG1hLmMKQEAgLTQxMyw3ICs0MTMsNyBAQCBzdGF0aWMgdTMyIHN0bTMy
-X21kbWFfZ2V0X2Jlc3RfYnVyc3QodTMyIGJ1Zl9sZW4sIHUzMiB0bGVuLCB1MzIgbWF4X2J1cnN0
-LAogCXUzMiBiZXN0X2J1cnN0ID0gbWF4X2J1cnN0OwogCXUzMiBidXJzdF9sZW4gPSBiZXN0X2J1
-cnN0ICogd2lkdGg7CiAKLQl3aGlsZSAoKGJ1cnN0X2xlbiA+IDApICYmICh0bGVuICUgYnVyc3Rf
-bGVuKSkgeworCXdoaWxlICgoYnVyc3RfbGVuID4gMCkgJiYgKCgodGxlbiB8IGJ1Zl9sZW4pICYg
-KGJ1cnN0X2xlbiAtIDEpKSAhPSAwKSkgewogCQliZXN0X2J1cnN0ID0gYmVzdF9idXJzdCA+PiAx
-OwogCQlidXJzdF9sZW4gPSBiZXN0X2J1cnN0ICogd2lkdGg7CiAJfQo=
+RnJvbTogU2VhbiBXYW5nIDxzZWFuLndhbmdAbWVkaWF0ZWsuY29tPgoKSSB3b3JrIGZvciBNZWRp
+YVRlayBhbmQgbWFpbnRhaW4gU29DIHRhcmdldGluZyB0byBob21lIGdhdGV3YXkgYW5kCmFsc28g
+d2lsbCBrZWVwIGV4dGVuZGluZyBhbmQgdGVzdGluZyB0aGUgZnVuY3Rpb24uCgpTaWduZWQtb2Zm
+LWJ5OiBTZWFuIFdhbmcgPHNlYW4ud2FuZ0BtZWRpYXRlay5jb20+Ci0tLQogTUFJTlRBSU5FUlMg
+fCA5ICsrKysrKysrKwogMSBmaWxlIGNoYW5nZWQsIDkgaW5zZXJ0aW9ucygrKQoKZGlmZiAtLWdp
+dCBhL01BSU5UQUlORVJTIGIvTUFJTlRBSU5FUlMKaW5kZXggM2JkYzI2MC4uZDNjMzNkNyAxMDA2
+NDQKLS0tIGEvTUFJTlRBSU5FUlMKKysrIGIvTUFJTlRBSU5FUlMKQEAgLTg3ODUsNiArODc4NSwx
+NSBAQCBNOglTZWFuIFdhbmcgPHNlYW4ud2FuZ0BtZWRpYXRlay5jb20+CiBTOglNYWludGFpbmVk
+CiBGOglkcml2ZXJzL21lZGlhL3JjL210ay1jaXIuYwogCitNRURJQVRFSyBETUEgRFJJVkVSCitN
+OglTZWFuIFdhbmcgPHNlYW4ud2FuZ0BtZWRpYXRlay5jb20+CitMOglkbWFlbmdpbmVAdmdlci5r
+ZXJuZWwub3JnCitMOglsaW51eC1hcm0ta2VybmVsQGxpc3RzLmluZnJhZGVhZC5vcmcgKG1vZGVy
+YXRlZCBmb3Igbm9uLXN1YnNjcmliZXJzKQorTDoJbGludXgtbWVkaWF0ZWtAbGlzdHMuaW5mcmFk
+ZWFkLm9yZyAobW9kZXJhdGVkIGZvciBub24tc3Vic2NyaWJlcnMpCitTOglNYWludGFpbmVkCitG
+OglEb2N1bWVudGF0aW9uL2RldmljZXRyZWUvYmluZGluZ3MvZG1hL210ay0qCitGOglkcml2ZXJz
+L2RtYS9tZWRpYXRlay8KKwogTUVESUFURUsgUE1JQyBMRUQgRFJJVkVSCiBNOglTZWFuIFdhbmcg
+PHNlYW4ud2FuZ0BtZWRpYXRlay5jb20+CiBTOglNYWludGFpbmVkCg==
