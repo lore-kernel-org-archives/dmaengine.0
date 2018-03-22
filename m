@@ -2,24 +2,27 @@ Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
 Subject: [v2,1/2] dma-mapping: move dma configuration to bus infrastructure
-From: Christoph Hellwig <hch@lst.de>
-Message-Id: <20180322081705.GB29444@lst.de>
-Date: Thu, 22 Mar 2018 09:17:05 +0100
-To: Bharat Bhushan <bharat.bhushan@nxp.com>
-Cc: Nipun Gupta <nipun.gupta@nxp.com>, "robin.murphy@arm.com" <robin.murphy@arm.com>, "hch@lst.de" <hch@lst.de>, "linux@armlinux.org.uk" <linux@armlinux.org.uk>, "gregkh@linuxfoundation.org" <gregkh@linuxfoundation.org>, "m.szyprowski@samsung.com" <m.szyprowski@samsung.com>, "bhelgaas@google.com" <bhelgaas@google.com>, "zajec5@gmail.com" <zajec5@gmail.com>, "andy.gross@linaro.org" <andy.gross@linaro.org>, "david.brown@linaro.org" <david.brown@linaro.org>, "dan.j.williams@intel.com" <dan.j.williams@intel.com>, "vinod.koul@intel.com" <vinod.koul@intel.com>, "thierry.reding@gmail.com" <thierry.reding@gmail.com>, "robh+dt@kernel.org" <robh+dt@kernel.org>, "frowand.list@gmail.com" <frowand.list@gmail.com>, "jarkko.sakkinen@linux.intel.com" <jarkko.sakkinen@linux.intel.com>, "rafael.j.wysocki@intel.com" <rafael.j.wysocki@intel.com>, "dmitry.torokhov@gmail.com" <dmitry.torokhov@gmail.com>, "johan@kernel.org" <johan@kernel.org>, "msuchanek@suse.de" <msuchanek@suse.de>, "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>, "iommu@lists.linux-foundation.org" <iommu@lists.linux-foundation.org>, "linux-wireless@vger.kernel.org" <linux-wireless@vger.kernel.org>, "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>, "linux-soc@vger.kernel.org" <linux-soc@vger.kernel.org>, "dmaengine@vger.kernel.org" <dmaengine@vger.kernel.org>, "dri-devel@lists.freedesktop.org" <dri-devel@lists.freedesktop.org>, "linux-tegra@vger.kernel.org" <linux-tegra@vger.kernel.org>, "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>, "linux-pci@vger.kernel.org" <linux-pci@vger.kernel.org>, Leo Li <leoyang.li@nxp.com>
+From: Nipun Gupta <nipun.gupta@nxp.com>
+Message-Id: <HE1PR0401MB242569E833A5D617A8818ADEE6A90@HE1PR0401MB2425.eurprd04.prod.outlook.com>
+Date: Thu, 22 Mar 2018 15:05:10 +0000
+To: Christoph Hellwig <hch@lst.de>
+Cc: "robin.murphy@arm.com" <robin.murphy@arm.com>, "linux@armlinux.org.uk" <linux@armlinux.org.uk>, "gregkh@linuxfoundation.org" <gregkh@linuxfoundation.org>, "m.szyprowski@samsung.com" <m.szyprowski@samsung.com>, "bhelgaas@google.com" <bhelgaas@google.com>, "zajec5@gmail.com" <zajec5@gmail.com>, "andy.gross@linaro.org" <andy.gross@linaro.org>, "david.brown@linaro.org" <david.brown@linaro.org>, "dan.j.williams@intel.com" <dan.j.williams@intel.com>, "vinod.koul@intel.com" <vinod.koul@intel.com>, "thierry.reding@gmail.com" <thierry.reding@gmail.com>, "robh+dt@kernel.org" <robh+dt@kernel.org>, "frowand.list@gmail.com" <frowand.list@gmail.com>, "jarkko.sakkinen@linux.intel.com" <jarkko.sakkinen@linux.intel.com>, "rafael.j.wysocki@intel.com" <rafael.j.wysocki@intel.com>, "dmitry.torokhov@gmail.com" <dmitry.torokhov@gmail.com>, "johan@kernel.org" <johan@kernel.org>, "msuchanek@suse.de" <msuchanek@suse.de>, "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>, "iommu@lists.linux-foundation.org" <iommu@lists.linux-foundation.org>, "linux-wireless@vger.kernel.org" <linux-wireless@vger.kernel.org>, "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>, "linux-soc@vger.kernel.org" <linux-soc@vger.kernel.org>, "dmaengine@vger.kernel.org" <dmaengine@vger.kernel.org>, "dri-devel@lists.freedesktop.org" <dri-devel@lists.freedesktop.org>, "linux-tegra@vger.kernel.org" <linux-tegra@vger.kernel.org>, "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>, "linux-pci@vger.kernel.org" <linux-pci@vger.kernel.org>, Bharat Bhushan <bharat.bhushan@nxp.com>, Leo Li <leoyang.li@nxp.com>
 List-ID: <dmaengine.vger.kernel.org>
 
-PiA+ICtpbnQgZG1hX2NvbmZpZ3VyZShzdHJ1Y3QgZGV2aWNlICpkZXYpCj4gPiArewo+ID4gKwlp
-ZiAoZGV2LT5idXMtPmRtYV9jb25maWd1cmUpCj4gPiArCQlyZXR1cm4gZGV2LT5idXMtPmRtYV9j
-b25maWd1cmUoZGV2KTsKPiAKPiBXaGF0IGlmIGRtYV9jb21tb25fY29uZmlndXJlKCkgaXMgY2Fs
-bGVkIGluIGNhc2UgImJ1cy0+ZG1hX2NvbmZpZ3VyZSIgaXMgbm90IGRlZmluZWQ/CgpUaGVuIHdl
-J2Qgc3RpbGwgaGF2ZSBhIGRlcGVuZGVuY3kgb2YgY29tbW9uIGNvZGUgb24gT0YgYW5kIEFDUEku
-CgpPbiB0aGUgb3RoZXIgaGFuZCB3ZSdkIGdldCBmcmVlIE9GIGFuZCBBQ1BJIGRtYSByYW5nZXMg
-cGFyc2luZyBmb3IKZXZlcnlvbmUsIHdoaWNoIG1pZ2h0IGJlIGhhbmR5LiAgQW5kIHdoaWNoIHdv
-dWxkIHJlYWxseSBoZWxwIG1pdGlnYXRpbmcKdGhlIHJpc2sgdGhhdCB3ZSBtaXNzZWQgc29tZSBi
-dXMgdGhhdCBnZXRzIGRtYSBjb25maWd1cmF0aW9uIGZyb20gT0YsCnNvIG1heWJlIGl0IGFjdHVh
-bGx5IGlzIGEgZ29vZCBpZGVhLiAgSSdkIGp1c3QgcmVuYW1lIGl0IHRvCmRtYV9kZWZhdWx0X2Nv
-bmZpZ3VyZSBvciBzaW1pbGFyIGluIHRoYXQgY2FzZS4KLS0tClRvIHVuc3Vic2NyaWJlIGZyb20g
-dGhpcyBsaXN0OiBzZW5kIHRoZSBsaW5lICJ1bnN1YnNjcmliZSBkbWFlbmdpbmUiIGluCnRoZSBi
-b2R5IG9mIGEgbWVzc2FnZSB0byBtYWpvcmRvbW9Admdlci5rZXJuZWwub3JnCk1vcmUgbWFqb3Jk
-b21vIGluZm8gYXQgIGh0dHA6Ly92Z2VyLmtlcm5lbC5vcmcvbWFqb3Jkb21vLWluZm8uaHRtbAo=
+PiAtLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQo+IEZyb206IENocmlzdG9waCBIZWxsd2lnIFtt
+YWlsdG86aGNoQGxzdC5kZV0KPiBTZW50OiBUaHVyc2RheSwgTWFyY2ggMjIsIDIwMTggMTM6NDYK
+PiBUbzogTmlwdW4gR3VwdGEgPG5pcHVuLmd1cHRhQG54cC5jb20+Cj4gCj4gPiArc3RhdGljIGlu
+dCBhbWJhX2RtYV9jb25maWd1cmUoc3RydWN0IGRldmljZSAqZGV2KQo+ID4gK3sKPiA+ICsJcmV0
+dXJuIGRtYV9jb21tb25fY29uZmlndXJlKGRldik7Cj4gPiArfQo+IAo+IFNvIGl0IHR1cm5zIG91
+dCB3ZSBvbmx5IGVuZCB3aXRoIHR3byBjYWxsZXJzIG9mIGRtYV9jb21tb25fY29uZmlndXJlCj4g
+YWZ0ZXIgdGhpcyBzZXJpZXMuICBCYXNlZCBvbnQgaGF0IEknbSB0ZW1wdGVkIHdpdGggdGhlIHN1
+Z2dlc3Rpb24KPiBmcm9tIFJvYmluIHRvIGp1c3QgaGF2ZSBhbWJhIGNhbGwgcGxhdGZvcm1fZG1h
+X2NvbmZpZ3VyZSwgYW5kIG1vdmUKPiB0aGUgY29kZSBmcm9tIGRtYV9jb21tb25fY29uZmlndXJl
+IHRvIHBsYXRmb3JtX2RtYV9jb25maWd1cmUuCgpva2F5LCB0aGF0IHdvdWxkIGJlIGZpbmUsIHRy
+aXZpYWwgcXVlcnkgLSB3aWxsIGl0IGJlIG9rYXkgdG8gaW5jbHVkZQonbGludXgvcGxhdGZvcm1f
+ZGV2aWNlLmgnIGluIHRoZSBBTUJBIGJ1cz8gSSBhbSByZWx1Y3RhbnQgZm9yIHRoaXMgY2hhbmdl
+CmJlY2F1c2Ugb2YgaW5jbHVkaW5nIHBsYXRmb3JtIGZpbGUuCgpUaGFua3MsCk5pcHVuCi0tLQpU
+byB1bnN1YnNjcmliZSBmcm9tIHRoaXMgbGlzdDogc2VuZCB0aGUgbGluZSAidW5zdWJzY3JpYmUg
+ZG1hZW5naW5lIiBpbgp0aGUgYm9keSBvZiBhIG1lc3NhZ2UgdG8gbWFqb3Jkb21vQHZnZXIua2Vy
+bmVsLm9yZwpNb3JlIG1ham9yZG9tbyBpbmZvIGF0ICBodHRwOi8vdmdlci5rZXJuZWwub3JnL21h
+am9yZG9tby1pbmZvLmh0bWwK
