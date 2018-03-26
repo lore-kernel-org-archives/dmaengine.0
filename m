@@ -1,24 +1,29 @@
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
-Subject: dma-mapping: clearing GFP_ZERO flag caused crashes of Ethernet on arc/hsdk board.
-From: Christoph Hellwig <hch@lst.de>
-Message-Id: <20180328075313.GA19864@lst.de>
-Date: Wed, 28 Mar 2018 09:53:13 +0200
-To: Alexey Brodkin <Alexey.Brodkin@synopsys.com>
-Cc: "andy.shevchenko@gmail.com" <andy.shevchenko@gmail.com>, "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>, "jesper.nilsson@axis.com" <jesper.nilsson@axis.com>, "Eugeniy.Paltsev@synopsys.com" <Eugeniy.Paltsev@synopsys.com>, "hch@lst.de" <hch@lst.de>, "linux-snps-arc@lists.infradead.org" <linux-snps-arc@lists.infradead.org>, "iommu@lists.linux-foundation.org" <iommu@lists.linux-foundation.org>, "dmaengine@vger.kernel.org" <dmaengine@vger.kernel.org>, "Evgeniy.Didin@synopsys.com" <Evgeniy.Didin@synopsys.com>, "geert@linux-m68k.org" <geert@linux-m68k.org>
+Subject: [v1,3/3] dmaengine: Fix spelling for parenthesis in dmatest documentation
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Message-Id: <20180326115027.19955-3-andriy.shevchenko@linux.intel.com>
+Date: Mon, 26 Mar 2018 14:50:27 +0300
+To: Vinod Koul <vinod.koul@intel.com>, dmaengine@vger.kernel.org, Jonathan Corbet <corbet@lwn.net>
+Cc: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 List-ID: <dmaengine.vger.kernel.org>
 
-PiA+IFRoZSBsb2dpY2FsIHF1ZXN0aW9uIGlzIHdoeT8KPiAKPiAxLiBTZWUgdGhhdCdzIGFub3Ro
-ZXIgcGxhdGZvcm0gd2l0aCBBUkMgY29yZSBzbyBtYXliZSBpbiBjYXNlIG9mIEFSTQo+ICAgIERN
-QSBhbGxvY2F0b3IgYWxyZWFkeSB6ZXJvZXMgcGFnZXMgcmVnYXJkbGVzcyBwcm92aWRlZCBmbGFn
-cyAtCj4gICAgcGVyc29uYWxseSBJIGRpZG4ndCBjaGVjayB0aGF0LgoKWWVzLCBtb3N0IGFyY2hp
-dGVjdHVyZXMgYWx3YXlzIGNsZWFyIG1lbW9yeSByZXR1cm5lZCBieSBkbWFfYWxsb2MqLgpMb29r
-cyBsaWtlIGEgZmV3IGRvbid0IGFuZCBteSBjb21taXQgZ290IHRoZW0gaW4gdHJvdWJsZS4gIEFz
-IHVzdWFsCkknZCBwcmVmZXIgdG8gbWF0Y2ggeDg2IHNlbWFudGljcyBmb3Igbm93IHRvIGF2b2lk
-IHByb2JsZW1zLgoKSSdsbCBzZW5kIHBhdGNoZXMgZm9yIGFyYyBhbmQgczM5MCB3aGljaCBzZWVt
-IHRvIGJlIGFjdHVhbGx5IHVzZWQKaG9sZG91dHMsIGFuZCB3aWxsIGxvb2sgaWYgYW55b25lIGVs
-c2UgaXMgYWxzbyBhZmZlY3RlZC4KLS0tClRvIHVuc3Vic2NyaWJlIGZyb20gdGhpcyBsaXN0OiBz
-ZW5kIHRoZSBsaW5lICJ1bnN1YnNjcmliZSBkbWFlbmdpbmUiIGluCnRoZSBib2R5IG9mIGEgbWVz
-c2FnZSB0byBtYWpvcmRvbW9Admdlci5rZXJuZWwub3JnCk1vcmUgbWFqb3Jkb21vIGluZm8gYXQg
-IGh0dHA6Ly92Z2VyLmtlcm5lbC5vcmcvbWFqb3Jkb21vLWluZm8uaHRtbAo=
+Rml4IHNwZWxsaW5nIGZvciBwYXJlbnRoZXNpcyBpbiBkbWF0ZXN0IGRvY3VtZW50YXRpb24uCgpT
+aWduZWQtb2ZmLWJ5OiBBbmR5IFNoZXZjaGVua28gPGFuZHJpeS5zaGV2Y2hlbmtvQGxpbnV4Lmlu
+dGVsLmNvbT4KLS0tCiBEb2N1bWVudGF0aW9uL2RyaXZlci1hcGkvZG1hZW5naW5lL2RtYXRlc3Qu
+cnN0IHwgMiArLQogMSBmaWxlIGNoYW5nZWQsIDEgaW5zZXJ0aW9uKCspLCAxIGRlbGV0aW9uKC0p
+CgpkaWZmIC0tZ2l0IGEvRG9jdW1lbnRhdGlvbi9kcml2ZXItYXBpL2RtYWVuZ2luZS9kbWF0ZXN0
+LnJzdCBiL0RvY3VtZW50YXRpb24vZHJpdmVyLWFwaS9kbWFlbmdpbmUvZG1hdGVzdC5yc3QKaW5k
+ZXggOWI0NWZmMGQ4NWNiLi44ODcwMGEwNWQ1NjIgMTAwNjQ0Ci0tLSBhL0RvY3VtZW50YXRpb24v
+ZHJpdmVyLWFwaS9kbWFlbmdpbmUvZG1hdGVzdC5yc3QKKysrIGIvRG9jdW1lbnRhdGlvbi9kcml2
+ZXItYXBpL2RtYWVuZ2luZS9kbWF0ZXN0LnJzdApAQCAtMTAwLDcgKzEwMCw3IEBAIEV4YW1wbGUg
+b2Ygb3V0cHV0OjoKICAgICBkbWF0ZXN0OiByZXN1bHQgZG1hMGNoYW4wLWNvcHkwOiAjMTogTm8g
+ZXJyb3JzIHdpdGggc3JjX29mZj0weDdiZiBkc3Rfb2ZmPTB4OGFkIGxlbj0weDNmZWEgKDApCiAK
+IFRoZSBtZXNzYWdlIGZvcm1hdCBpcyB1bmlmaWVkIGFjcm9zcyB0aGUgZGlmZmVyZW50IHR5cGVz
+IG9mIGVycm9ycy4gQSBudW1iZXIgaW4KLXRoZSBwYXJlbnMgcmVwcmVzZW50cyBhZGRpdGlvbmFs
+IGluZm9ybWF0aW9uLCBlLmcuIGVycm9yIGNvZGUsIGVycm9yIGNvdW50ZXIsCit0aGUgcGFyZW50
+aGVzaXMgcmVwcmVzZW50cyBhZGRpdGlvbmFsIGluZm9ybWF0aW9uLCBlLmcuIGVycm9yIGNvZGUs
+IGVycm9yIGNvdW50ZXIsCiBvciBzdGF0dXMuIEEgdGVzdCB0aHJlYWQgYWxzbyBlbWl0cyBhIHN1
+bW1hcnkgbGluZSBhdCBjb21wbGV0aW9uIGxpc3RpbmcgdGhlCiBudW1iZXIgb2YgdGVzdHMgZXhl
+Y3V0ZWQsIG51bWJlciB0aGF0IGZhaWxlZCwgYW5kIGEgcmVzdWx0IGNvZGUuCiAK
