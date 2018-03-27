@@ -2,27 +2,14 @@ Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
 Subject: [next] dmaengine: dw-axi-dmac: fix spelling mistake: "catched" -> "caught"
-From: Colin King <colin.king@canonical.com>
-Message-Id: <20180321102413.29621-1-colin.king@canonical.com>
-Date: Wed, 21 Mar 2018 10:24:13 +0000
-To: Vinod Koul <vinod.koul@intel.com>, Dan Williams <dan.j.williams@intel.com>, Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>, dmaengine@vger.kernel.org
-Cc: kernel-janitors@vger.kernel.org, linux-kernel@vger.kernel.org
+From: Vinod Koul <vinod.koul@intel.com>
+Message-Id: <20180327121451.GL15443@localhost>
+Date: Tue, 27 Mar 2018 17:44:52 +0530
+To: Colin King <colin.king@canonical.com>
+Cc: Dan Williams <dan.j.williams@intel.com>, Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>, dmaengine@vger.kernel.org, kernel-janitors@vger.kernel.org, linux-kernel@vger.kernel.org
 List-ID: <dmaengine.vger.kernel.org>
 
-RnJvbTogQ29saW4gSWFuIEtpbmcgPGNvbGluLmtpbmdAY2Fub25pY2FsLmNvbT4KClRyaXZpYWwg
-Zml4IHRvIHNwZWxsaW5nIG1pc3Rha2UgaW4gZGV2X2VyciBlcnJvciBtZXNzYWdlIHRleHQKClNp
-Z25lZC1vZmYtYnk6IENvbGluIElhbiBLaW5nIDxjb2xpbi5raW5nQGNhbm9uaWNhbC5jb20+Ci0t
-LQogZHJpdmVycy9kbWEvZHctYXhpLWRtYWMvZHctYXhpLWRtYWMtcGxhdGZvcm0uYyB8IDIgKy0K
-IDEgZmlsZSBjaGFuZ2VkLCAxIGluc2VydGlvbigrKSwgMSBkZWxldGlvbigtKQoKZGlmZiAtLWdp
-dCBhL2RyaXZlcnMvZG1hL2R3LWF4aS1kbWFjL2R3LWF4aS1kbWFjLXBsYXRmb3JtLmMgYi9kcml2
-ZXJzL2RtYS9kdy1heGktZG1hYy9kdy1heGktZG1hYy1wbGF0Zm9ybS5jCmluZGV4IGRiZTczMTJj
-MTVjNi4uYzRlYjU1ZTMwMTFjIDEwMDY0NAotLS0gYS9kcml2ZXJzL2RtYS9kdy1heGktZG1hYy9k
-dy1heGktZG1hYy1wbGF0Zm9ybS5jCisrKyBiL2RyaXZlcnMvZG1hL2R3LWF4aS1kbWFjL2R3LWF4
-aS1kbWFjLXBsYXRmb3JtLmMKQEAgLTU3NCw3ICs1NzQsNyBAQCBzdGF0aWMgdm9pZCBheGlfY2hh
-bl9ibG9ja194ZmVyX2NvbXBsZXRlKHN0cnVjdCBheGlfZG1hX2NoYW4gKmNoYW4pCiAKIAlzcGlu
-X2xvY2tfaXJxc2F2ZSgmY2hhbi0+dmMubG9jaywgZmxhZ3MpOwogCWlmICh1bmxpa2VseShheGlf
-Y2hhbl9pc19od19lbmFibGUoY2hhbikpKSB7Ci0JCWRldl9lcnIoY2hhbjJkZXYoY2hhbiksICJC
-VUc6ICVzIGNhdGNoZWQgRFdBWElETUFDX0lSUV9ETUFfVFJGLCBidXQgY2hhbm5lbCBub3QgaWRs
-ZSFcbiIsCisJCWRldl9lcnIoY2hhbjJkZXYoY2hhbiksICJCVUc6ICVzIGNhdWdodCBEV0FYSURN
-QUNfSVJRX0RNQV9UUkYsIGJ1dCBjaGFubmVsIG5vdCBpZGxlIVxuIiwKIAkJCWF4aV9jaGFuX25h
-bWUoY2hhbikpOwogCQlheGlfY2hhbl9kaXNhYmxlKGNoYW4pOwogCX0K
+T24gV2VkLCBNYXIgMjEsIDIwMTggYXQgMTA6MjQ6MTNBTSArMDAwMCwgQ29saW4gS2luZyB3cm90
+ZToKPiBGcm9tOiBDb2xpbiBJYW4gS2luZyA8Y29saW4ua2luZ0BjYW5vbmljYWwuY29tPgo+IAo+
+IFRyaXZpYWwgZml4IHRvIHNwZWxsaW5nIG1pc3Rha2UgaW4gZGV2X2VyciBlcnJvciBtZXNzYWdl
+IHRleHQKPiAKCkFwcGxpZWQsIHRoYW5rcwo=
