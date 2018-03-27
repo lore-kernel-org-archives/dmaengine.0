@@ -2,28 +2,13 @@ Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
 Subject: dmaengine: edma: Check the memory allocation for the memcpy dma device
-From: Peter Ujfalusi <peter.ujfalusi@ti.com>
-Message-Id: <20180321083022.32616-1-peter.ujfalusi@ti.com>
-Date: Wed, 21 Mar 2018 10:30:22 +0200
-To: vinod.koul@intel.com
+From: Vinod Koul <vinod.koul@intel.com>
+Message-Id: <20180327121353.GK15443@localhost>
+Date: Tue, 27 Mar 2018 17:43:54 +0530
+To: Peter Ujfalusi <peter.ujfalusi@ti.com>
 Cc: linux-arm-kernel@lists.infradead.org, dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org, linux-omap@vger.kernel.org, dan.j.williams@intel.com
 List-ID: <dmaengine.vger.kernel.org>
 
-SWYgdGhlIGFsbG9jYXRpb24gZmFpbHMgdGhlbiBkaXNhYmxlIHRoZSBtZW1jcHkgc3VwcG9ydC4K
-ClNpZ25lZC1vZmYtYnk6IFBldGVyIFVqZmFsdXNpIDxwZXRlci51amZhbHVzaUB0aS5jb20+Ci0t
-LQogZHJpdmVycy9kbWEvZWRtYS5jIHwgNiArKysrKysKIDEgZmlsZSBjaGFuZ2VkLCA2IGluc2Vy
-dGlvbnMoKykKCmRpZmYgLS1naXQgYS9kcml2ZXJzL2RtYS9lZG1hLmMgYi9kcml2ZXJzL2RtYS9l
-ZG1hLmMKaW5kZXggNWIxOTc0NzMxMDZiLi41MTllNjllODFmY2EgMTAwNjQ0Ci0tLSBhL2RyaXZl
-cnMvZG1hL2VkbWEuYworKysgYi9kcml2ZXJzL2RtYS9lZG1hLmMKQEAgLTE4OTksNiArMTg5OSwx
-MSBAQCBzdGF0aWMgdm9pZCBlZG1hX2RtYV9pbml0KHN0cnVjdCBlZG1hX2NjICplY2MsIGJvb2wg
-bGVnYWN5X21vZGUpCiAKIAlpZiAobWVtY3B5X2NoYW5uZWxzKSB7CiAJCW1fZGRldiA9IGRldm1f
-a3phbGxvYyhlY2MtPmRldiwgc2l6ZW9mKCptX2RkZXYpLCBHRlBfS0VSTkVMKTsKKwkJaWYgKCFt
-X2RkZXYpIHsKKwkJCWRldl93YXJuKGVjYy0+ZGV2LCAibWVtY3B5IGlzIGRpc2FibGVkIGR1ZSB0
-byBPb01cbiIpOworCQkJbWVtY3B5X2NoYW5uZWxzID0gTlVMTDsKKwkJCWdvdG8gY2hfc2V0dXA7
-CisJCX0KIAkJZWNjLT5kbWFfbWVtY3B5ID0gbV9kZGV2OwogCiAJCWRtYV9jYXBfemVybyhtX2Rk
-ZXYtPmNhcF9tYXNrKTsKQEAgLTE5MjYsNiArMTkzMSw3IEBAIHN0YXRpYyB2b2lkIGVkbWFfZG1h
-X2luaXQoc3RydWN0IGVkbWFfY2MgKmVjYywgYm9vbCBsZWdhY3lfbW9kZSkKIAkJZGV2X2luZm8o
-ZWNjLT5kZXYsICJtZW1jcHkgaXMgZGlzYWJsZWRcbiIpOwogCX0KIAorY2hfc2V0dXA6CiAJZm9y
-IChpID0gMDsgaSA8IGVjYy0+bnVtX2NoYW5uZWxzOyBpKyspIHsKIAkJc3RydWN0IGVkbWFfY2hh
-biAqZWNoYW4gPSAmZWNjLT5zbGF2ZV9jaGFuc1tpXTsKIAkJZWNoYW4tPmNoX251bSA9IEVETUFf
-Q1RMUl9DSEFOKGVjYy0+aWQsIGkpOwo=
+T24gV2VkLCBNYXIgMjEsIDIwMTggYXQgMTA6MzA6MjJBTSArMDIwMCwgUGV0ZXIgVWpmYWx1c2kg
+d3JvdGU6Cj4gSWYgdGhlIGFsbG9jYXRpb24gZmFpbHMgdGhlbiBkaXNhYmxlIHRoZSBtZW1jcHkg
+c3VwcG9ydC4KCkFwcGxpZWQsIHRoYW5rcwo=
