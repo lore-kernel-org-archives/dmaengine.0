@@ -1,23 +1,50 @@
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
-Subject: [5/8] staging: emxx_udc: Change platform dependency to ARCH_RENESAS
-From: Simon Horman <horms@verge.net.au>
-Message-Id: <20180423075625.utzf6sgu4rlvb55r@verge.net.au>
-Date: Mon, 23 Apr 2018 09:56:26 +0200
-To: Geert Uytterhoeven <geert+renesas@glider.be>
-Cc: Magnus Damm <magnus.damm@gmail.com>, Russell King <linux@armlinux.org.uk>, Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will.deacon@arm.com>, Dan Williams <dan.j.williams@intel.com>, Vinod Koul <vinod.koul@intel.com>, Mauro Carvalho Chehab <mchehab@kernel.org>, Sergei Shtylyov <sergei.shtylyov@cogentembedded.com>, "David S . Miller" <davem@davemloft.net>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, Arnd Bergmann <arnd@arndb.de>, Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>, Laurent Pinchart <laurent.pinchart@ideasonboard.com>, linux-renesas-soc@vger.kernel.org, linux-arm-kernel@lists.infradead.org, dmaengine@vger.kernel.org, linux-media@vger.kernel.org, netdev@vger.kernel.org, devel@driverdev.osuosl.org, alsa-devel@alsa-project.org, linux-kernel@vger.kernel.org
+Subject: [04/15] media: pxa_camera: remove the dmaengine compat need
+From: Robert Jarzmik <robert.jarzmik@free.fr>
+Message-Id: <20180402142656.26815-5-robert.jarzmik@free.fr>
+Date: Mon,  2 Apr 2018 16:26:45 +0200
+To: Daniel Mack <daniel@zonque.org>, Haojian Zhuang <haojian.zhuang@gmail.com>, Robert Jarzmik <robert.jarzmik@free.fr>, Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>, Tejun Heo <tj@kernel.org>, Vinod Koul <vinod.koul@intel.com>, Mauro Carvalho Chehab <mchehab@kernel.org>, Ulf Hansson <ulf.hansson@linaro.org>, Ezequiel Garcia <ezequiel.garcia@free-electrons.com>, Boris Brezillon <boris.brezillon@free-electrons.com>, David Woodhouse <dwmw2@infradead.org>, Brian Norris <computersforpeace@gmail.com>, Marek Vasut <marek.vasut@gmail.com>, Richard Weinberger <richard@nod.at>, Cyrille Pitchen <cyrille.pitchen@wedev4u.fr>, Nicolas Pitre <nico@fluxnic.net>, Samuel Ortiz <samuel@sortiz.org>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, Arnd Bergmann <arnd@arndb.de>, Hans Verkuil <hverkuil@xs4all.nl>, Petr Cvek <petr.cvek@tul.cz>, Sakari Ailus <sakari.ailus@iki.fi>, Laurent Pinchart <laurent.pinchart@ideasonboard.com>, Pravin Shedge <pravin.shedge4linux@gmail.com>, Flavio Ceolin <flavio.ceolin@intel.com>, Robert Jarzmik <robert.jarzmik@renault.com>
+Cc: linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, linux-ide@vger.kernel.org, dmaengine@vger.kernel.org, linux-media@vger.kernel.org, linux-mmc@vger.kernel.org, linux-mtd@lists.infradead.org, netdev@vger.kernel.org, devel@driverdev.osuosl.org, alsa-devel@alsa-project.org, =?UTF-8?q?Niklas=20S=C3=B6derlund?= <niklas.soderlund+renesas@ragnatech.se>
 List-ID: <dmaengine.vger.kernel.org>
 
-T24gRnJpLCBBcHIgMjAsIDIwMTggYXQgMDM6Mjg6MzFQTSArMDIwMCwgR2VlcnQgVXl0dGVyaG9l
-dmVuIHdyb3RlOgo+IEVtbWEgTW9iaWxlIGlzIGEgUmVuZXNhcyBBUk0gU29DLiAgU2luY2UgY29t
-bWl0IDliNWJhMGRmNGVhNGY5NDAgKCJBUk06Cj4gc2htb2JpbGU6IEludHJvZHVjZSBBUkNIX1JF
-TkVTQVMiKSBpcyBBUkNIX1JFTkVTQVMgYSBtb3JlIGFwcHJvcHJpYXRlCj4gcGxhdGZvcm0gZGVw
-ZW5kZW5jeSB0aGFuIHRoZSBsZWdhY3kgQVJDSF9TSE1PQklMRSwgaGVuY2UgdXNlIHRoZQo+IGZv
-cm1lci4KPiAKPiBUaGlzIHdpbGwgYWxsb3cgdG8gZHJvcCBBUkNIX1NITU9CSUxFIG9uIEFSTSBp
-biB0aGUgbmVhciBmdXR1cmUuCj4gCj4gU2lnbmVkLW9mZi1ieTogR2VlcnQgVXl0dGVyaG9ldmVu
-IDxnZWVydCtyZW5lc2FzQGdsaWRlci5iZT4KClJldmlld2VkLWJ5OiBTaW1vbiBIb3JtYW4gPGhv
-cm1zK3JlbmVzYXNAdmVyZ2UubmV0LmF1PgotLS0KVG8gdW5zdWJzY3JpYmUgZnJvbSB0aGlzIGxp
-c3Q6IHNlbmQgdGhlIGxpbmUgInVuc3Vic2NyaWJlIGRtYWVuZ2luZSIgaW4KdGhlIGJvZHkgb2Yg
-YSBtZXNzYWdlIHRvIG1ham9yZG9tb0B2Z2VyLmtlcm5lbC5vcmcKTW9yZSBtYWpvcmRvbW8gaW5m
-byBhdCAgaHR0cDovL3ZnZXIua2VybmVsLm9yZy9tYWpvcmRvbW8taW5mby5odG1sCg==
+RnJvbTogUm9iZXJ0IEphcnptaWsgPHJvYmVydC5qYXJ6bWlrQHJlbmF1bHQuY29tPgoKQXMgdGhl
+IHB4YSBhcmNoaXRlY3R1cmUgc3dpdGNoZWQgdG93YXJkcyB0aGUgZG1hZW5naW5lIHNsYXZlIG1h
+cCwgdGhlCm9sZCBjb21wYXRpYmlsaXR5IG1lY2hhbmlzbSB0byBhY3F1aXJlIHRoZSBkbWEgcmVx
+dWVzdG9yIGxpbmUgbnVtYmVyIGFuZApwcmlvcml0eSBhcmUgbm90IG5lZWRlZCBhbnltb3JlLgoK
+VGhpcyBwYXRjaCBzaW1wbGlmaWVzIHRoZSBkbWEgcmVzb3VyY2UgYWNxdWlzaXRpb24sIHVzaW5n
+IHRoZSBtb3JlCmdlbmVyaWMgZnVuY3Rpb24gZG1hX3JlcXVlc3Rfc2xhdmVfY2hhbm5lbCgpLgoK
+U2lnbmVkLW9mZi1ieTogUm9iZXJ0IEphcnptaWsgPHJvYmVydC5qYXJ6bWlrQGZyZWUuZnI+Ci0t
+LQogZHJpdmVycy9tZWRpYS9wbGF0Zm9ybS9weGFfY2FtZXJhLmMgfCAyMiArKystLS0tLS0tLS0t
+LS0tLS0tLS0tCiAxIGZpbGUgY2hhbmdlZCwgMyBpbnNlcnRpb25zKCspLCAxOSBkZWxldGlvbnMo
+LSkKCmRpZmYgLS1naXQgYS9kcml2ZXJzL21lZGlhL3BsYXRmb3JtL3B4YV9jYW1lcmEuYyBiL2Ry
+aXZlcnMvbWVkaWEvcGxhdGZvcm0vcHhhX2NhbWVyYS5jCmluZGV4IGM3MWEwMDczNjU0MS4uNGM4
+MmQxODgwNzUzIDEwMDY0NAotLS0gYS9kcml2ZXJzL21lZGlhL3BsYXRmb3JtL3B4YV9jYW1lcmEu
+YworKysgYi9kcml2ZXJzL21lZGlhL3BsYXRmb3JtL3B4YV9jYW1lcmEuYwpAQCAtMjM1Nyw4ICsy
+MzU3LDYgQEAgc3RhdGljIGludCBweGFfY2FtZXJhX3Byb2JlKHN0cnVjdCBwbGF0Zm9ybV9kZXZp
+Y2UgKnBkZXYpCiAJCS5zcmNfbWF4YnVyc3QgPSA4LAogCQkuZGlyZWN0aW9uID0gRE1BX0RFVl9U
+T19NRU0sCiAJfTsKLQlkbWFfY2FwX21hc2tfdCBtYXNrOwotCXN0cnVjdCBweGFkX3BhcmFtIHBh
+cmFtczsKIAljaGFyIGNsa19uYW1lW1Y0TDJfQ0xLX05BTUVfU0laRV07CiAJaW50IGlycTsKIAlp
+bnQgZXJyID0gMCwgaTsKQEAgLTI0MzIsMzQgKzI0MzAsMjAgQEAgc3RhdGljIGludCBweGFfY2Ft
+ZXJhX3Byb2JlKHN0cnVjdCBwbGF0Zm9ybV9kZXZpY2UgKnBkZXYpCiAJcGNkZXYtPmJhc2UgPSBi
+YXNlOwogCiAJLyogcmVxdWVzdCBkbWEgKi8KLQlkbWFfY2FwX3plcm8obWFzayk7Ci0JZG1hX2Nh
+cF9zZXQoRE1BX1NMQVZFLCBtYXNrKTsKLQlkbWFfY2FwX3NldChETUFfUFJJVkFURSwgbWFzayk7
+Ci0KLQlwYXJhbXMucHJpbyA9IDA7Ci0JcGFyYW1zLmRyY21yID0gNjg7Ci0JcGNkZXYtPmRtYV9j
+aGFuc1swXSA9Ci0JCWRtYV9yZXF1ZXN0X3NsYXZlX2NoYW5uZWxfY29tcGF0KG1hc2ssIHB4YWRf
+ZmlsdGVyX2ZuLAotCQkJCQkJICZwYXJhbXMsICZwZGV2LT5kZXYsICJDSV9ZIik7CisJcGNkZXYt
+PmRtYV9jaGFuc1swXSA9IGRtYV9yZXF1ZXN0X3NsYXZlX2NoYW5uZWwoJnBkZXYtPmRldiwgIkNJ
+X1kiKTsKIAlpZiAoIXBjZGV2LT5kbWFfY2hhbnNbMF0pIHsKIAkJZGV2X2VycigmcGRldi0+ZGV2
+LCAiQ2FuJ3QgcmVxdWVzdCBETUEgZm9yIFlcbiIpOwogCQlyZXR1cm4gLUVOT0RFVjsKIAl9CiAK
+LQlwYXJhbXMuZHJjbXIgPSA2OTsKLQlwY2Rldi0+ZG1hX2NoYW5zWzFdID0KLQkJZG1hX3JlcXVl
+c3Rfc2xhdmVfY2hhbm5lbF9jb21wYXQobWFzaywgcHhhZF9maWx0ZXJfZm4sCi0JCQkJCQkgJnBh
+cmFtcywgJnBkZXYtPmRldiwgIkNJX1UiKTsKKwlwY2Rldi0+ZG1hX2NoYW5zWzFdID0gZG1hX3Jl
+cXVlc3Rfc2xhdmVfY2hhbm5lbCgmcGRldi0+ZGV2LCAiQ0lfVSIpOwogCWlmICghcGNkZXYtPmRt
+YV9jaGFuc1sxXSkgewogCQlkZXZfZXJyKCZwZGV2LT5kZXYsICJDYW4ndCByZXF1ZXN0IERNQSBm
+b3IgWVxuIik7CiAJCWVyciA9IC1FTk9ERVY7CiAJCWdvdG8gZXhpdF9mcmVlX2RtYV95OwogCX0K
+IAotCXBhcmFtcy5kcmNtciA9IDcwOwotCXBjZGV2LT5kbWFfY2hhbnNbMl0gPQotCQlkbWFfcmVx
+dWVzdF9zbGF2ZV9jaGFubmVsX2NvbXBhdChtYXNrLCBweGFkX2ZpbHRlcl9mbiwKLQkJCQkJCSAm
+cGFyYW1zLCAmcGRldi0+ZGV2LCAiQ0lfViIpOworCXBjZGV2LT5kbWFfY2hhbnNbMl0gPSBkbWFf
+cmVxdWVzdF9zbGF2ZV9jaGFubmVsKCZwZGV2LT5kZXYsICJDSV9WIik7CiAJaWYgKCFwY2Rldi0+
+ZG1hX2NoYW5zWzJdKSB7CiAJCWRldl9lcnIoJnBkZXYtPmRldiwgIkNhbid0IHJlcXVlc3QgRE1B
+IGZvciBWXG4iKTsKIAkJZXJyID0gLUVOT0RFVjsK
