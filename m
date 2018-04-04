@@ -1,31 +1,15 @@
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
-Subject: [v4] dmaengine: pl330: flush before wait, and add dev burst support.
+Subject: dt-bindings: rcar-dmac: Document r8a77470 support
 From: Vinod Koul <vinod.koul@intel.com>
-Message-Id: <20180416153315.GP6014@localhost>
-Date: Mon, 16 Apr 2018 21:03:17 +0530
-To: Frank Mori Hess <fmh6jj@gmail.com>
-Cc: dmaengine@vger.kernel.org, Dan Williams <dan.j.williams@intel.com>, linux-kernel@vger.kernel.org
+Message-Id: <20180404055525.GF15443@localhost>
+Date: Wed, 4 Apr 2018 11:25:25 +0530
+To: Biju Das <biju.das@bp.renesas.com>
+Cc: Rob Herring <robh+dt@kernel.org>, Mark Rutland <mark.rutland@arm.com>, Geert Uytterhoeven <geert+renesas@glider.be>, Simon Horman <horms@verge.net.au>, Chris Paterson <chris.paterson2@renesas.com>, Fabrizio Castro <fabrizio.castro@bp.renesas.com>, devicetree@vger.kernel.org, linux-renesas-soc@vger.kernel.org, linux-arm-kernel@lists.infradead.org, dmaengine@vger.kernel.org
 List-ID: <dmaengine.vger.kernel.org>
 
-T24gU3VuLCBBcHIgMTUsIDIwMTggYXQgMDI6MTI6MzBQTSAtMDQwMCwgRnJhbmsgTW9yaSBIZXNz
-IHdyb3RlOgo+IE9uIFR1ZSwgQXByIDEwLCAyMDE4IGF0IDExOjM3IEFNLCBWaW5vZCBLb3VsIDx2
-aW5vZC5rb3VsQGludGVsLmNvbT4gd3JvdGU6Cj4gPj4KPiA+PiBIaSwgd2hhdCBpcyB0aGUgc3Rh
-dGUgb2YgdGhpcyBwYXRjaD8gIEkganVzdCBub3RpY2VkIGluIHBhdGNod29yayBpdAo+ID4+IGlz
-IG5vdyBsaXN0ZWQgYXMgIk5vdCBhcHBsaWNhYmxlIj8gIFRoZSBvcmlnaW5hbCBicm9rZW4tYnkt
-d29yZHdyYXAKPiA+PiBwYXRjaCBpcyBsaXN0ZWQgYXMgIkFjY2VwdGVkIj8KPiA+Pgo+ID4+IGh0
-dHBzOi8vcGF0Y2h3b3JrLmtlcm5lbC5vcmcvcHJvamVjdC9saW51eC1kbWFlbmdpbmUvbGlzdC8/
-c3VibWl0dGVyPTE3ODY4NyZzdGF0ZT0qCj4gPgo+ID4gVGhhdCBpcyBub3QgY29ycmVjdCBzdGF0
-ZSwgbXkgc2NyaXB0IHdvdWxkIHVwZGF0ZSBhcyBub3QgYXBwbGljYWJsZSB3aGVuIGl0Cj4gPiBk
-b2Vzbid0IGZpbmQgcGF0Y2ggaW4gbXkgcXVldWUuLgo+ID4KPiA+PiBJIGZvdW5kIGl0IGhhcyBh
-IGJ1ZyBoYW5kbGluZyBkcmVncyBidHcsIEknbGwgaW5jbHVkZSBhIGZpeCBmb3IgdGhhdAo+ID4+
-IGluIHRoZSBuZXh0IHZlcnNpb24gb3IgYXMgYSBmb2xsb3ctb24gcGF0Y2ggYXMgYXBwcm9wcmlh
-dGUuCj4gPgo+ID4gTG9va3MgbGlrZSBJIGhhdmUgbWlzc2VkIHRoaXMgb25lIHNvbWVob3csIHNv
-IHBsZWFzZSB1cGRhdGUgdGhlIHBhdGNoIHdpdGgKPiA+IGZpeCBhbmQgSSBzaGFsbCBsb29rIGlu
-dG8gaXQuCj4gPgo+IAo+IE9rLCBJIHRlc3RlZCB0aGUgdjQgcGF0Y2ggYW5kIGl0IHR1cm5zIG91
-dCBpdCB3YXMgYSBmYWxzZSBhbGFybSBhYm91dAo+IHRoZSBidWcgaW4gaGFuZGxpbmcgZHJlZ3Mu
-ICBJdCB3b3JrcyBmaW5lLiAgSSd2ZSByZWdpc3RlcmVkIGluIHRoZQo+IGRtYWVuZ2luZSBwYXRj
-aHdvcmssIGFuZCBjaGFuZ2VkIHRoZSBzdGF0ZSBvZiB0aGUgdjQgcGF0Y2ggYmFjayB0bwo+ICJu
-ZXciLgoKQ2FuIHlvdSBwbGVhc2UgcmVwb3N0IHRoaXMgb25lIGFmdGVyIHJlYmFzaW5nIHRvIGRt
-YWVuZ2luZSAtbmV4dAo=
+T24gVGh1LCBNYXIgMjksIDIwMTggYXQgMTE6MTE6MDZBTSArMDEwMCwgQmlqdSBEYXMgd3JvdGU6
+Cj4gUmVuZXNhcyAgUlovRyBTb0MgYWxzbyBoYXZlIHRoZSBSLUNhciBnZW4yLzMgY29tcGF0aWJs
+ZSBETUEgY29udHJvbGxlcnMuCj4gRG9jdW1lbnQgUlovRzFDIChhbHNvIGtub3duIGFzIFI4QTc3
+NDcwKSBTb0MgYmluZGluZ3MuCgpBcHBsaWVkLCB0aGFua3MK
