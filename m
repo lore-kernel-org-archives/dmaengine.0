@@ -2,14 +2,27 @@ Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
 Subject: dmaengine: dmatest: Remove use of VLAs
-From: Sinan Kaya <okaya@codeaurora.org>
-Message-Id: <4491bde2-cf38-5103-0634-1986ecd32a7c@codeaurora.org>
-Date: Mon, 9 Apr 2018 18:48:14 -0400
-To: Laura Abbott <labbott@redhat.com>, Vinod Koul <vinod.koul@intel.com>, Dan Williams <dan.j.williams@intel.com>
+From: Laura Abbott <labbott@redhat.com>
+Message-Id: <9bdd8bb4-b6d9-e170-b585-b2dc3b8f0d67@redhat.com>
+Date: Mon, 9 Apr 2018 16:14:20 -0700
+To: Sinan Kaya <okaya@codeaurora.org>, Vinod Koul <vinod.koul@intel.com>, Dan Williams <dan.j.williams@intel.com>
 Cc: dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org, kernel-hardening@lists.openwall.com, Kees Cook <keescook@chromium.org>
 List-ID: <dmaengine.vger.kernel.org>
 
-T24gNC85LzIwMTggNTowNiBQTSwgTGF1cmEgQWJib3R0IHdyb3RlOgo+ICsJCQkvKiBkc3RfY250
-IGNhbid0IGJlIG1vcmUgdGhhbiB1OCAqLwo+ICsJCQlkbWFfYWRkcl90IGRtYV9wcVsyNTVdOwoK
-VGhpcyBpcyAyayBzdGFjayBzcGFjZSBvbiA2NCBiaXQgYXJjaGl0ZWN0dXJlcy4gSXNuJ3QgdGhh
-dCBhIGxvdD8K
+T24gMDQvMDkvMjAxOCAwMzo0OCBQTSwgU2luYW4gS2F5YSB3cm90ZToKPiBPbiA0LzkvMjAxOCA1
+OjA2IFBNLCBMYXVyYSBBYmJvdHQgd3JvdGU6Cj4+ICsJCQkvKiBkc3RfY250IGNhbid0IGJlIG1v
+cmUgdGhhbiB1OCAqLwo+PiArCQkJZG1hX2FkZHJfdCBkbWFfcHFbMjU1XTsKPiAKPiBUaGlzIGlz
+IDJrIHN0YWNrIHNwYWNlIG9uIDY0IGJpdCBhcmNoaXRlY3R1cmVzLiBJc24ndCB0aGF0IGEgbG90
+Pwo+IAoKRGVwZW5kcyBvbiB5b3VyIGRlZmluaXRpb24gb2YgJ2EgbG90Jy4gTXkgYXNzdW1wdGlv
+biB3YXMgdGhhdApzaW5jZSB0aGlzIHdhcyBhIHRlc3QgbW9kdWxlIHRoZXJlIHdvdWxkIGJlIHNv
+bWUgd2lsbGluZ25lc3MKdG8gYmUgYSBiaXQgbW9yZSBnZW5lcm91cy4gVGhlIHByb2JsZW0gaXMg
+dGhlIGFycmF5IHNpemUgaXMKYmFzZWQgb2ZmIG9mIHRoZSBwYXJhbWV0ZXJzIHBhc3NlZCBpbiwg
+YWx0aG91Z2ggb2RkbHkgZW5vdWdoCml0J3MgYmFzZWQgb2ZmIG9mIHRoZSBtaW5pbXVtIG9mIHR3
+byB2YXJpYWJsZXMuIElmIHlvdSBoYXZlCmEgc3VnZ2VzdGlvbiBmb3IgYSB0aWdodGVyIGJvdW5k
+IHdlIGNhbiB1c2UgdGhhdC4gQW5vdGhlcgpvcHRpb24gaXMgdG8ganVzdCBzd2l0Y2ggdG8gYWxs
+b2NhdGluZyB0aGUgYXJyYXkgd2l0aCBrbWFsbG9jLgpUaGF0IG1pZ2h0IGJlIHJlYXNvbmFibGUg
+aGVyZSBzaW5jZSB0aGVyZSdzIG90aGVyIHNldHVwCnRoYXQgaGFwcGVucyBiZWZvcmUgdGhlIHRl
+c3Qgc3RhcnRzLgoKVGhhbmtzLApMYXVyYQotLS0KVG8gdW5zdWJzY3JpYmUgZnJvbSB0aGlzIGxp
+c3Q6IHNlbmQgdGhlIGxpbmUgInVuc3Vic2NyaWJlIGRtYWVuZ2luZSIgaW4KdGhlIGJvZHkgb2Yg
+YSBtZXNzYWdlIHRvIG1ham9yZG9tb0B2Z2VyLmtlcm5lbC5vcmcKTW9yZSBtYWpvcmRvbW8gaW5m
+byBhdCAgaHR0cDovL3ZnZXIua2VybmVsLm9yZy9tYWpvcmRvbW8taW5mby5odG1sCg==
