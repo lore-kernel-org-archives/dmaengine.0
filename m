@@ -1,15 +1,35 @@
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
-Subject: dt-bindings: rcar-dmac: Document r8a77470 support
-From: Vinod Koul <vinod.koul@intel.com>
-Message-Id: <20180404055525.GF15443@localhost>
-Date: Wed, 4 Apr 2018 11:25:25 +0530
-To: Biju Das <biju.das@bp.renesas.com>
-Cc: Rob Herring <robh+dt@kernel.org>, Mark Rutland <mark.rutland@arm.com>, Geert Uytterhoeven <geert+renesas@glider.be>, Simon Horman <horms@verge.net.au>, Chris Paterson <chris.paterson2@renesas.com>, Fabrizio Castro <fabrizio.castro@bp.renesas.com>, devicetree@vger.kernel.org, linux-renesas-soc@vger.kernel.org, linux-arm-kernel@lists.infradead.org, dmaengine@vger.kernel.org
+Subject: [v3,2/2] drivers: remove force dma flag from buses
+From: Rob Herring <robh@kernel.org>
+Message-Id: <20180409202745.p6hxkyy4n7fin3bd@rob-hp-laptop>
+Date: Mon, 9 Apr 2018 15:27:45 -0500
+To: Nipun Gupta <nipun.gupta@nxp.com>
+Cc: robin.murphy@arm.com, hch@lst.de, linux@armlinux.org.uk, gregkh@linuxfoundation.org, m.szyprowski@samsung.com, bhelgaas@google.com, zajec5@gmail.com, andy.gross@linaro.org, david.brown@linaro.org, dan.j.williams@intel.com, vinod.koul@intel.com, thierry.reding@gmail.com, frowand.list@gmail.com, jarkko.sakkinen@linux.intel.com, rafael.j.wysocki@intel.com, dmitry.torokhov@gmail.com, johan@kernel.org, msuchanek@suse.de, linux-kernel@vger.kernel.org, iommu@lists.linux-foundation.org, linux-wireless@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org, dmaengine@vger.kernel.org, dri-devel@lists.freedesktop.org, linux-tegra@vger.kernel.org, devicetree@vger.kernel.org, linux-pci@vger.kernel.org, bharat.bhushan@nxp.com, leoyang.li@nxp.com
 List-ID: <dmaengine.vger.kernel.org>
 
-T24gVGh1LCBNYXIgMjksIDIwMTggYXQgMTE6MTE6MDZBTSArMDEwMCwgQmlqdSBEYXMgd3JvdGU6
-Cj4gUmVuZXNhcyAgUlovRyBTb0MgYWxzbyBoYXZlIHRoZSBSLUNhciBnZW4yLzMgY29tcGF0aWJs
-ZSBETUEgY29udHJvbGxlcnMuCj4gRG9jdW1lbnQgUlovRzFDIChhbHNvIGtub3duIGFzIFI4QTc3
-NDcwKSBTb0MgYmluZGluZ3MuCgpBcHBsaWVkLCB0aGFua3MK
+T24gRnJpLCBNYXIgMzAsIDIwMTggYXQgMDE6MjQ6NDVQTSArMDUzMCwgTmlwdW4gR3VwdGEgd3Jv
+dGU6Cj4gV2l0aCBlYWNoIGJ1cyBpbXBsZW1lbnRpbmcgaXRzIG93biBETUEgY29uZmlndXJhdGlv
+biBjYWxsYmFjaywKPiB0aGVyZSBpcyBubyBuZWVkIGZvciBidXMgdG8gZXhwbGljaXRseSBoYXZl
+IGZvcmNlX2RtYSBpbiBpdHMKPiBnbG9iYWwgc3RydWN0dXJlLiBUaGlzIHBhdGNoIG1vZGlmaWVz
+IG9mX2RtYV9jb25maWd1cmUgQVBJIHRvCj4gYWNjZXB0IGFuIGlucHV0IHBhcmFtZXRlciB3aGlj
+aCBzcGVjaWZpZXMgaWYgaW1wbGljaXQgRE1BCj4gY29uZmlndXJhdGlvbiBpcyByZXF1aXJlZCBl
+dmVuIHdoZW4gaXQgaXMgbm90IGRlc2NyaWJlZCBieSB0aGUKPiBmaXJtd2FyZS4KPiAKPiBTaWdu
+ZWQtb2ZmLWJ5OiBOaXB1biBHdXB0YSA8bmlwdW4uZ3VwdGFAbnhwLmNvbT4KPiAtLS0KPiBDaGFu
+Z2VzIGluIHYyOgo+ICAgLSBUaGlzIGlzIGEgbmV3IGNoYW5nZSBzdWdnZXN0ZWQgYnkgUm9iaW4g
+YW5kIENocmlzdG9waAo+ICAgICBhbmQgaXMgYWRkZWQgdG8gdGhlIHNlcmllcy4KPiAKPiBDaGFu
+Z2VzIGluIHYzOgo+ICAgLSBSZWJhc2UgYW5kIGNoYW5nZXMgY29ycmVzcG9uZGluZyB0byB0aGUg
+Y2hhbmdlcyBpbiBwYXRjaCAxLzIKPiAKPiAgZHJpdmVycy9hbWJhL2J1cy5jICAgICAgICAgICAg
+fCAxIC0KPiAgZHJpdmVycy9iYXNlL3BsYXRmb3JtLmMgICAgICAgfCAzICstLQo+ICBkcml2ZXJz
+L2JjbWEvbWFpbi5jICAgICAgICAgICB8IDIgKy0KPiAgZHJpdmVycy9kbWEvcWNvbS9oaWRtYV9t
+Z210LmMgfCAyICstCj4gIGRyaXZlcnMvZ3B1L2hvc3QxeC9idXMuYyAgICAgIHwgNSArKy0tLQo+
+ICBkcml2ZXJzL29mL2RldmljZS5jICAgICAgICAgICB8IDYgKysrKy0tCj4gIGRyaXZlcnMvb2Yv
+b2ZfcmVzZXJ2ZWRfbWVtLmMgIHwgMiArLQo+ICBkcml2ZXJzL3BjaS9wY2ktZHJpdmVyLmMgICAg
+ICB8IDMgKy0tCj4gIGluY2x1ZGUvbGludXgvZGV2aWNlLmggICAgICAgIHwgNCAtLS0tCj4gIGlu
+Y2x1ZGUvbGludXgvb2ZfZGV2aWNlLmggICAgIHwgOCArKysrKystLQo+ICAxMCBmaWxlcyBjaGFu
+Z2VkLCAxNyBpbnNlcnRpb25zKCspLCAxOSBkZWxldGlvbnMoLSkKClJldmlld2VkLWJ5OiBSb2Ig
+SGVycmluZyA8cm9iaEBrZXJuZWwub3JnPgotLS0KVG8gdW5zdWJzY3JpYmUgZnJvbSB0aGlzIGxp
+c3Q6IHNlbmQgdGhlIGxpbmUgInVuc3Vic2NyaWJlIGRtYWVuZ2luZSIgaW4KdGhlIGJvZHkgb2Yg
+YSBtZXNzYWdlIHRvIG1ham9yZG9tb0B2Z2VyLmtlcm5lbC5vcmcKTW9yZSBtYWpvcmRvbW8gaW5m
+byBhdCAgaHR0cDovL3ZnZXIua2VybmVsLm9yZy9tYWpvcmRvbW8taW5mby5odG1sCg==
