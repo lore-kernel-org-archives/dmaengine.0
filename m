@@ -2,32 +2,14 @@ Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
 Subject: dmaengine: dmatest: Remove use of VLAs
-From: Laura Abbott <labbott@redhat.com>
-Message-Id: <20180409210603.3575-1-labbott@redhat.com>
-Date: Mon,  9 Apr 2018 14:06:03 -0700
-To: Vinod Koul <vinod.koul@intel.com>, Dan Williams <dan.j.williams@intel.com>
-Cc: Laura Abbott <labbott@redhat.com>, dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org, kernel-hardening@lists.openwall.com, Kees Cook <keescook@chromium.org>
+From: Sinan Kaya <okaya@codeaurora.org>
+Message-Id: <4491bde2-cf38-5103-0634-1986ecd32a7c@codeaurora.org>
+Date: Mon, 9 Apr 2018 18:48:14 -0400
+To: Laura Abbott <labbott@redhat.com>, Vinod Koul <vinod.koul@intel.com>, Dan Williams <dan.j.williams@intel.com>
+Cc: dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org, kernel-hardening@lists.openwall.com, Kees Cook <keescook@chromium.org>
 List-ID: <dmaengine.vger.kernel.org>
 
-VGhlcmUncyBhbiBvbmdvaW5nIGVmZm9ydCB0byByZW1vdmUgVkxBcyBmcm9tIHRoZSBrZXJuZWwK
-KGh0dHBzOi8vbGttbC5vcmcvbGttbC8yMDE4LzMvNy82MjEpIHRvIGV2ZW50dWFsbHkgdHVybiBv
-biAtV3ZsYS4KVGhlIHVzZXMgaW4gZG1hdGVzdCBhcmUgYm91bmRlZCBieSBhIGNoZWNrIHRvIG1h
-a2Ugc3VyZSB0aGV5IGZpdAppbiBhIHU4IHNvIHVzZSB0aGF0IGFzIGFuIHVwcGVyIGJvdW5kLgoK
-U2lnbmVkLW9mZi1ieTogTGF1cmEgQWJib3R0IDxsYWJib3R0QHJlZGhhdC5jb20+Ci0tLQogZHJp
-dmVycy9kbWEvZG1hdGVzdC5jIHwgNiArKysrLS0KIDEgZmlsZSBjaGFuZ2VkLCA0IGluc2VydGlv
-bnMoKyksIDIgZGVsZXRpb25zKC0pCgpkaWZmIC0tZ2l0IGEvZHJpdmVycy9kbWEvZG1hdGVzdC5j
-IGIvZHJpdmVycy9kbWEvZG1hdGVzdC5jCmluZGV4IDgwY2MyYmU2NDgzYy4uZGNmNzg3YjE3M2U0
-IDEwMDY0NAotLS0gYS9kcml2ZXJzL2RtYS9kbWF0ZXN0LmMKKysrIGIvZHJpdmVycy9kbWEvZG1h
-dGVzdC5jCkBAIC01NTYsNyArNTU2LDggQEAgc3RhdGljIGludCBkbWF0ZXN0X2Z1bmModm9pZCAq
-ZGF0YSkKIAkgICAgICAgJiYgIShwYXJhbXMtPml0ZXJhdGlvbnMgJiYgdG90YWxfdGVzdHMgPj0g
-cGFyYW1zLT5pdGVyYXRpb25zKSkgewogCQlzdHJ1Y3QgZG1hX2FzeW5jX3R4X2Rlc2NyaXB0b3Ig
-KnR4ID0gTlVMTDsKIAkJc3RydWN0IGRtYWVuZ2luZV91bm1hcF9kYXRhICp1bTsKLQkJZG1hX2Fk
-ZHJfdCBzcmNzW3NyY19jbnRdOworCQkvKiB0b3RhbCBidWZmZXIgY291bnQgbXVzdCBmaXQgaW50
-byB1OCAqLworCQlkbWFfYWRkcl90IHNyY3NbMjU1XTsKIAkJZG1hX2FkZHJfdCAqZHN0czsKIAkJ
-dW5zaWduZWQgaW50IHNyY19vZmYsIGRzdF9vZmYsIGxlbjsKIApAQCAtNjY5LDcgKzY3MCw4IEBA
-IHN0YXRpYyBpbnQgZG1hdGVzdF9mdW5jKHZvaWQgKmRhdGEpCiAJCQkJCQkgICAgICBzcmNzLCBz
-cmNfY250LAogCQkJCQkJICAgICAgbGVuLCBmbGFncyk7CiAJCWVsc2UgaWYgKHRocmVhZC0+dHlw
-ZSA9PSBETUFfUFEpIHsKLQkJCWRtYV9hZGRyX3QgZG1hX3BxW2RzdF9jbnRdOworCQkJLyogZHN0
-X2NudCBjYW4ndCBiZSBtb3JlIHRoYW4gdTggKi8KKwkJCWRtYV9hZGRyX3QgZG1hX3BxWzI1NV07
-CiAKIAkJCWZvciAoaSA9IDA7IGkgPCBkc3RfY250OyBpKyspCiAJCQkJZG1hX3BxW2ldID0gZHN0
-c1tpXSArIGRzdF9vZmY7Cg==
+T24gNC85LzIwMTggNTowNiBQTSwgTGF1cmEgQWJib3R0IHdyb3RlOgo+ICsJCQkvKiBkc3RfY250
+IGNhbid0IGJlIG1vcmUgdGhhbiB1OCAqLwo+ICsJCQlkbWFfYWRkcl90IGRtYV9wcVsyNTVdOwoK
+VGhpcyBpcyAyayBzdGFjayBzcGFjZSBvbiA2NCBiaXQgYXJjaGl0ZWN0dXJlcy4gSXNuJ3QgdGhh
+dCBhIGxvdD8K
