@@ -1,18 +1,32 @@
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
-Subject: [07/61] dma: simplify getting .drvdata
-From: Wolfram Sang <wsa@the-dreams.de>
-Message-Id: <20180422091443.ryfdum5nhjc2b7qw@ninjato>
-Date: Sun, 22 Apr 2018 11:14:43 +0200
-To: Vinod Koul <vinod.koul@intel.com>
-Cc: Wolfram Sang <wsa+renesas@sang-engineering.com>, linux-kernel@vger.kernel.org, linux-renesas-soc@vger.kernel.org, kernel-janitors@vger.kernel.org, Ludovic Desroches <ludovic.desroches@microchip.com>, Dan Williams <dan.j.williams@intel.com>, Li Yang <leoyang.li@nxp.com>, Zhang Wei <zw@zh-kernel.org>, Linus Walleij <linus.walleij@linaro.org>, linux-arm-kernel@lists.infradead.org, dmaengine@vger.kernel.org, linuxppc-dev@lists.ozlabs.org
+Subject: [08/61] dmaengine: dw: simplify getting .drvdata
+From: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Message-Id: <20180419140641.27926-9-wsa+renesas@sang-engineering.com>
+Date: Thu, 19 Apr 2018 16:05:38 +0200
+To: linux-kernel@vger.kernel.org
+Cc: linux-renesas-soc@vger.kernel.org, kernel-janitors@vger.kernel.org, Wolfram Sang <wsa+renesas@sang-engineering.com>, Viresh Kumar <vireshk@kernel.org>, Andy Shevchenko <andriy.shevchenko@linux.intel.com>, Dan Williams <dan.j.williams@intel.com>, Vinod Koul <vinod.koul@intel.com>, dmaengine@vger.kernel.org
 List-ID: <dmaengine.vger.kernel.org>
 
-T24gU3VuLCBBcHIgMjIsIDIwMTggYXQgMTE6NDc6MzNBTSArMDUzMCwgVmlub2QgS291bCB3cm90
-ZToKPiBPbiBUaHUsIEFwciAxOSwgMjAxOCBhdCAwNDowNTozN1BNICswMjAwLCBXb2xmcmFtIFNh
-bmcgd3JvdGU6Cj4gPiBXZSBzaG91bGQgZ2V0IGRydmRhdGEgZnJvbSBzdHJ1Y3QgZGV2aWNlIGRp
-cmVjdGx5LiBHb2luZyB2aWEKPiA+IHBsYXRmb3JtX2RldmljZSBpcyBhbiB1bm5lZWRlZCBzdGVw
-IGJhY2sgYW5kIGZvcnRoLgo+IAo+IERvIHlvdSBtaW5kIHNwbGl0dGluZyB0aGlzIHBlciBkcml2
-ZXIgcGxlYXNlLCB0aGF0IG1ha2VzIGl0IGVhc3kgdG8gbWFuYWdlCj4gZm9yIG1lIDopCgpObyBw
-cm9ibGVtLCBkb25lLgo=
+V2Ugc2hvdWxkIGdldCBkcnZkYXRhIGZyb20gc3RydWN0IGRldmljZSBkaXJlY3RseS4gR29pbmcg
+dmlhCnBsYXRmb3JtX2RldmljZSBpcyBhbiB1bm5lZWRlZCBzdGVwIGJhY2sgYW5kIGZvcnRoLgoK
+U2lnbmVkLW9mZi1ieTogV29sZnJhbSBTYW5nIDx3c2ErcmVuZXNhc0BzYW5nLWVuZ2luZWVyaW5n
+LmNvbT4KLS0tCgpCdWlsZCB0ZXN0ZWQgb25seS4gYnVpbGRib3QgaXMgaGFwcHkuIFBsZWFzZSBh
+cHBseSBpbmRpdmlkdWFsbHkuCgogZHJpdmVycy9kbWEvZHcvcGxhdGZvcm0uYyB8IDYgKystLS0t
+CiAxIGZpbGUgY2hhbmdlZCwgMiBpbnNlcnRpb25zKCspLCA0IGRlbGV0aW9ucygtKQoKZGlmZiAt
+LWdpdCBhL2RyaXZlcnMvZG1hL2R3L3BsYXRmb3JtLmMgYi9kcml2ZXJzL2RtYS9kdy9wbGF0Zm9y
+bS5jCmluZGV4IGJjMzFmZTgwMjA2MS4uZjYyZGQwOTQ0OTA4IDEwMDY0NAotLS0gYS9kcml2ZXJz
+L2RtYS9kdy9wbGF0Zm9ybS5jCisrKyBiL2RyaXZlcnMvZG1hL2R3L3BsYXRmb3JtLmMKQEAgLTI5
+Myw4ICsyOTMsNyBAQCBNT0RVTEVfREVWSUNFX1RBQkxFKGFjcGksIGR3X2RtYV9hY3BpX2lkX3Rh
+YmxlKTsKIAogc3RhdGljIGludCBkd19zdXNwZW5kX2xhdGUoc3RydWN0IGRldmljZSAqZGV2KQog
+ewotCXN0cnVjdCBwbGF0Zm9ybV9kZXZpY2UgKnBkZXYgPSB0b19wbGF0Zm9ybV9kZXZpY2UoZGV2
+KTsKLQlzdHJ1Y3QgZHdfZG1hX2NoaXAgKmNoaXAgPSBwbGF0Zm9ybV9nZXRfZHJ2ZGF0YShwZGV2
+KTsKKwlzdHJ1Y3QgZHdfZG1hX2NoaXAgKmNoaXAgPSBkZXZfZ2V0X2RydmRhdGEoZGV2KTsKIAog
+CWR3X2RtYV9kaXNhYmxlKGNoaXApOwogCWNsa19kaXNhYmxlX3VucHJlcGFyZShjaGlwLT5jbGsp
+OwpAQCAtMzA0LDggKzMwMyw3IEBAIHN0YXRpYyBpbnQgZHdfc3VzcGVuZF9sYXRlKHN0cnVjdCBk
+ZXZpY2UgKmRldikKIAogc3RhdGljIGludCBkd19yZXN1bWVfZWFybHkoc3RydWN0IGRldmljZSAq
+ZGV2KQogewotCXN0cnVjdCBwbGF0Zm9ybV9kZXZpY2UgKnBkZXYgPSB0b19wbGF0Zm9ybV9kZXZp
+Y2UoZGV2KTsKLQlzdHJ1Y3QgZHdfZG1hX2NoaXAgKmNoaXAgPSBwbGF0Zm9ybV9nZXRfZHJ2ZGF0
+YShwZGV2KTsKKwlzdHJ1Y3QgZHdfZG1hX2NoaXAgKmNoaXAgPSBkZXZfZ2V0X2RydmRhdGEoZGV2
+KTsKIAlpbnQgcmV0OwogCiAJcmV0ID0gY2xrX3ByZXBhcmVfZW5hYmxlKGNoaXAtPmNsayk7Cg==
