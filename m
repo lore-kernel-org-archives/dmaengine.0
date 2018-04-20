@@ -1,25 +1,29 @@
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
-Subject: dt-bindings: dmaengine: rcar-dmac: document R8A77965 support
-From: Rob Herring <robh@kernel.org>
-Message-Id: <20180416152314.bwpchjpspcvkpcuv@rob-hp-laptop>
-Date: Mon, 16 Apr 2018 10:23:15 -0500
-To: Jacopo Mondi <jacopo+renesas@jmondi.org>
-Cc: vinod.koul@intel.com, mark.rutland@arm.com, dmaengine@vger.kernel.org, devicetree@vger.kernel.org, linux-renesas-soc@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [5/8] staging: emxx_udc: Change platform dependency to ARCH_RENESAS
+From: Geert Uytterhoeven <geert+renesas@glider.be>
+Message-Id: <1524230914-10175-6-git-send-email-geert+renesas@glider.be>
+Date: Fri, 20 Apr 2018 15:28:31 +0200
+To: Simon Horman <horms@verge.net.au>, Magnus Damm <magnus.damm@gmail.com>, Russell King <linux@armlinux.org.uk>, Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will.deacon@arm.com>, Dan Williams <dan.j.williams@intel.com>, Vinod Koul <vinod.koul@intel.com>, Mauro Carvalho Chehab <mchehab@kernel.org>, Sergei Shtylyov <sergei.shtylyov@cogentembedded.com>, "David S . Miller" <davem@davemloft.net>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, Arnd Bergmann <arnd@arndb.de>, Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>, Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Cc: linux-renesas-soc@vger.kernel.org, linux-arm-kernel@lists.infradead.org, dmaengine@vger.kernel.org, linux-media@vger.kernel.org, netdev@vger.kernel.org, devel@driverdev.osuosl.org, alsa-devel@alsa-project.org, linux-kernel@vger.kernel.org, Geert Uytterhoeven <geert+renesas@glider.be>
 List-ID: <dmaengine.vger.kernel.org>
 
-T24gTW9uLCBBcHIgMTYsIDIwMTggYXQgMDM6NTY6MDhQTSArMDIwMCwgSmFjb3BvIE1vbmRpIHdy
-b3RlOgo+IEFkZCBkb2N1bWVudGF0aW9uIGZvciByOGE3Nzk2NSBjb21wYXRpYmxlIHN0cmluZyB0
-byByY2FyLWRtYWMgZGV2aWNlCj4gdHJlZSBiaW5kaW5ncyBkb2N1bWVudGF0aW9uLgo+IAo+IFNp
-Z25lZC1vZmYtYnk6IEphY29wbyBNb25kaSA8amFjb3BvK3JlbmVzYXNAam1vbmRpLm9yZz4KPiBS
-ZXZpZXdlZC1ieTogR2VlcnQgVXl0dGVyaG9ldmVuIDxnZWVydCtyZW5lc2FzQGdsaWRlci5iZT4K
-PiBSZXZpZXdlZC1ieTogU2ltb24gSG9ybWFuIDxob3JtcytyZW5lc2FzQHZlcmdlLm5ldC5hdT4K
-PiAtLS0KPiAKPiBSZW5lc2FzIFItQ2FyIE0zLU4gc3VwcG9ydCBoYXMgYmVlbiBtZXJnZWQgZm9y
-IHY0LjE3Lgo+IERvY3VtZW50IHRoZSBtaXNzaW5nIGRldmljZSB0cmVlIGJpbmRpbmdzLgo+IAo+
-IC0tLQo+ICBEb2N1bWVudGF0aW9uL2RldmljZXRyZWUvYmluZGluZ3MvZG1hL3JlbmVzYXMscmNh
-ci1kbWFjLnR4dCB8IDEgKwo+ICAxIGZpbGUgY2hhbmdlZCwgMSBpbnNlcnRpb24oKykKCkFwcGxp
-ZWQuCgpSb2IKLS0tClRvIHVuc3Vic2NyaWJlIGZyb20gdGhpcyBsaXN0OiBzZW5kIHRoZSBsaW5l
-ICJ1bnN1YnNjcmliZSBkbWFlbmdpbmUiIGluCnRoZSBib2R5IG9mIGEgbWVzc2FnZSB0byBtYWpv
-cmRvbW9Admdlci5rZXJuZWwub3JnCk1vcmUgbWFqb3Jkb21vIGluZm8gYXQgIGh0dHA6Ly92Z2Vy
-Lmtlcm5lbC5vcmcvbWFqb3Jkb21vLWluZm8uaHRtbAo=
+RW1tYSBNb2JpbGUgaXMgYSBSZW5lc2FzIEFSTSBTb0MuICBTaW5jZSBjb21taXQgOWI1YmEwZGY0
+ZWE0Zjk0MCAoIkFSTToKc2htb2JpbGU6IEludHJvZHVjZSBBUkNIX1JFTkVTQVMiKSBpcyBBUkNI
+X1JFTkVTQVMgYSBtb3JlIGFwcHJvcHJpYXRlCnBsYXRmb3JtIGRlcGVuZGVuY3kgdGhhbiB0aGUg
+bGVnYWN5IEFSQ0hfU0hNT0JJTEUsIGhlbmNlIHVzZSB0aGUKZm9ybWVyLgoKVGhpcyB3aWxsIGFs
+bG93IHRvIGRyb3AgQVJDSF9TSE1PQklMRSBvbiBBUk0gaW4gdGhlIG5lYXIgZnV0dXJlLgoKU2ln
+bmVkLW9mZi1ieTogR2VlcnQgVXl0dGVyaG9ldmVuIDxnZWVydCtyZW5lc2FzQGdsaWRlci5iZT4K
+LS0tCiBkcml2ZXJzL3N0YWdpbmcvZW14eF91ZGMvS2NvbmZpZyB8IDIgKy0KIDEgZmlsZSBjaGFu
+Z2VkLCAxIGluc2VydGlvbigrKSwgMSBkZWxldGlvbigtKQoKZGlmZiAtLWdpdCBhL2RyaXZlcnMv
+c3RhZ2luZy9lbXh4X3VkYy9LY29uZmlnIGIvZHJpdmVycy9zdGFnaW5nL2VteHhfdWRjL0tjb25m
+aWcKaW5kZXggZDc1NzcwOTZmYjI1YWU3YS4uZTUwZTcyMjE4MzY0OGM1NSAxMDA2NDQKLS0tIGEv
+ZHJpdmVycy9zdGFnaW5nL2VteHhfdWRjL0tjb25maWcKKysrIGIvZHJpdmVycy9zdGFnaW5nL2Vt
+eHhfdWRjL0tjb25maWcKQEAgLTEsNiArMSw2IEBACiBjb25maWcgVVNCX0VNWFgKIAl0cmlzdGF0
+ZSAiRU1YWCBVU0IgRnVuY3Rpb24gRGV2aWNlIENvbnRyb2xsZXIiCi0gCWRlcGVuZHMgb24gVVNC
+X0dBREdFVCAmJiAoQVJDSF9TSE1PQklMRSB8fCAoQVJNICYmIENPTVBJTEVfVEVTVCkpCisJZGVw
+ZW5kcyBvbiBVU0JfR0FER0VUICYmIChBUkNIX1JFTkVTQVMgfHwgKEFSTSAmJiBDT01QSUxFX1RF
+U1QpKQogCWhlbHAKIAkgICBUaGUgRW1tYSBNb2JpbGUgc2VyaWVzIG9mIFNvQ3MgZnJvbSBSZW5l
+c2FzIEVsZWN0cm9uaWNzIGFuZAogCSAgIGZvcm1lciBORUMgRWxlY3Ryb25pY3MgaW5jbHVkZSBV
+U0IgRnVuY3Rpb24gaGFyZHdhcmUuCg==
