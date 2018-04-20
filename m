@@ -2,36 +2,21 @@ Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
 Subject: [1/8] arm: shmobile: Change platform dependency to ARCH_RENESAS
-From: Geert Uytterhoeven <geert+renesas@glider.be>
-Message-Id: <1524230914-10175-2-git-send-email-geert+renesas@glider.be>
-Date: Fri, 20 Apr 2018 15:28:27 +0200
-To: Simon Horman <horms@verge.net.au>, Magnus Damm <magnus.damm@gmail.com>, Russell King <linux@armlinux.org.uk>, Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will.deacon@arm.com>, Dan Williams <dan.j.williams@intel.com>, Vinod Koul <vinod.koul@intel.com>, Mauro Carvalho Chehab <mchehab@kernel.org>, Sergei Shtylyov <sergei.shtylyov@cogentembedded.com>, "David S . Miller" <davem@davemloft.net>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, Arnd Bergmann <arnd@arndb.de>, Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>, Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Cc: linux-renesas-soc@vger.kernel.org, linux-arm-kernel@lists.infradead.org, dmaengine@vger.kernel.org, linux-media@vger.kernel.org, netdev@vger.kernel.org, devel@driverdev.osuosl.org, alsa-devel@alsa-project.org, linux-kernel@vger.kernel.org, Geert Uytterhoeven <geert+renesas@glider.be>
+From: Sergei Shtylyov <sergei.shtylyov@cogentembedded.com>
+Message-Id: <44b6b9a3-5273-54f4-ee72-0d5fcc36348a@cogentembedded.com>
+Date: Fri, 20 Apr 2018 17:53:18 +0300
+To: Geert Uytterhoeven <geert+renesas@glider.be>, Simon Horman <horms@verge.net.au>, Magnus Damm <magnus.damm@gmail.com>, Russell King <linux@armlinux.org.uk>, Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will.deacon@arm.com>, Dan Williams <dan.j.williams@intel.com>, Vinod Koul <vinod.koul@intel.com>, Mauro Carvalho Chehab <mchehab@kernel.org>, "David S . Miller" <davem@davemloft.net>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, Arnd Bergmann <arnd@arndb.de>, Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>, Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Cc: linux-renesas-soc@vger.kernel.org, linux-arm-kernel@lists.infradead.org, dmaengine@vger.kernel.org, linux-media@vger.kernel.org, netdev@vger.kernel.org, devel@driverdev.osuosl.org, alsa-devel@alsa-project.org, linux-kernel@vger.kernel.org
 List-ID: <dmaengine.vger.kernel.org>
 
-U2luY2UgY29tbWl0IDliNWJhMGRmNGVhNGY5NDAgKCJBUk06IHNobW9iaWxlOiBJbnRyb2R1Y2Ug
-QVJDSF9SRU5FU0FTIikKaXMgQVJDSF9SRU5FU0FTIGEgbW9yZSBhcHByb3ByaWF0ZSBwbGF0Zm9y
-bSBkZXBlbmRlbmN5IHRoYW4gdGhlIGxlZ2FjeQpBUkNIX1NITU9CSUxFLCBoZW5jZSB1c2UgdGhl
-IGZvcm1lci4KClRoaXMgd2lsbCBhbGxvdyB0byBkcm9wIEFSQ0hfU0hNT0JJTEUgb24gQVJNIGlu
-IHRoZSBuZWFyIGZ1dHVyZS4KClNpZ25lZC1vZmYtYnk6IEdlZXJ0IFV5dHRlcmhvZXZlbiA8Z2Vl
-cnQrcmVuZXNhc0BnbGlkZXIuYmU+Ci0tLQogYXJjaC9hcm0vS2NvbmZpZyAgfCAyICstCiBhcmNo
-L2FybS9NYWtlZmlsZSB8IDIgKy0KIDIgZmlsZXMgY2hhbmdlZCwgMiBpbnNlcnRpb25zKCspLCAy
-IGRlbGV0aW9ucygtKQoKZGlmZiAtLWdpdCBhL2FyY2gvYXJtL0tjb25maWcgYi9hcmNoL2FybS9L
-Y29uZmlnCmluZGV4IGE3ZjhlN2Y0Yjg4ZmRkMDMuLjJkMzRjMGE0NDg3N2U4NWIgMTAwNjQ0Ci0t
-LSBhL2FyY2gvYXJtL0tjb25maWcKKysrIGIvYXJjaC9hcm0vS2NvbmZpZwpAQCAtMTQ2Nyw3ICsx
-NDY3LDcgQEAgY29uZmlnIEFSTV9QU0NJCiBjb25maWcgQVJDSF9OUl9HUElPCiAJaW50CiAJZGVm
-YXVsdCAyMDQ4IGlmIEFSQ0hfU09DRlBHQQotCWRlZmF1bHQgMTAyNCBpZiBBUkNIX0JSQ01TVEIg
-fHwgQVJDSF9TSE1PQklMRSB8fCBBUkNIX1RFR1JBIHx8IFwKKwlkZWZhdWx0IDEwMjQgaWYgQVJD
-SF9CUkNNU1RCIHx8IEFSQ0hfUkVORVNBUyB8fCBBUkNIX1RFR1JBIHx8IFwKIAkJQVJDSF9aWU5R
-CiAJZGVmYXVsdCA1MTIgaWYgQVJDSF9FWFlOT1MgfHwgQVJDSF9LRVlTVE9ORSB8fCBTT0NfT01B
-UDUgfHwgXAogCQlTT0NfRFJBN1hYIHx8IEFSQ0hfUzNDMjRYWCB8fCBBUkNIX1MzQzY0WFggfHwg
-QVJDSF9TNVBWMjEwCmRpZmYgLS1naXQgYS9hcmNoL2FybS9NYWtlZmlsZSBiL2FyY2gvYXJtL01h
-a2VmaWxlCmluZGV4IGU0ZTUzN2YyNzMzOWY3YTEuLmE5MmY1YTg3NmQ5NjgzOWQgMTAwNjQ0Ci0t
-LSBhL2FyY2gvYXJtL01ha2VmaWxlCisrKyBiL2FyY2gvYXJtL01ha2VmaWxlCkBAIC0yMTIsNyAr
-MjEyLDcgQEAgbWFjaGluZS0kKENPTkZJR19BUkNIX1MzQzI0WFgpCQkrPSBzM2MyNHh4CiBtYWNo
-aW5lLSQoQ09ORklHX0FSQ0hfUzNDNjRYWCkJCSs9IHMzYzY0eHgKIG1hY2hpbmUtJChDT05GSUdf
-QVJDSF9TNVBWMjEwKQkJKz0gczVwdjIxMAogbWFjaGluZS0kKENPTkZJR19BUkNIX1NBMTEwMCkJ
-CSs9IHNhMTEwMAotbWFjaGluZS0kKENPTkZJR19BUkNIX1NITU9CSUxFKSAJKz0gc2htb2JpbGUK
-K21hY2hpbmUtJChDT05GSUdfQVJDSF9SRU5FU0FTKQkgCSs9IHNobW9iaWxlCiBtYWNoaW5lLSQo
-Q09ORklHX0FSQ0hfU0lSRikJCSs9IHByaW1hMgogbWFjaGluZS0kKENPTkZJR19BUkNIX1NPQ0ZQ
-R0EpCQkrPSBzb2NmcGdhCiBtYWNoaW5lLSQoQ09ORklHX0FSQ0hfU1RJKQkJKz0gc3RpCg==
+T24gMDQvMjAvMjAxOCAwNDoyOCBQTSwgR2VlcnQgVXl0dGVyaG9ldmVuIHdyb3RlOgoKPiBTaW5j
+ZSBjb21taXQgOWI1YmEwZGY0ZWE0Zjk0MCAoIkFSTTogc2htb2JpbGU6IEludHJvZHVjZSBBUkNI
+X1JFTkVTQVMiKQo+IGlzIEFSQ0hfUkVORVNBUyBhIG1vcmUgYXBwcm9wcmlhdGUgcGxhdGZvcm0g
+ZGVwZW5kZW5jeSB0aGFuIHRoZSBsZWdhY3kKCiAgICJBUkNIX1JFTkVTQVMgaXMiLCBubz8KCj4g
+QVJDSF9TSE1PQklMRSwgaGVuY2UgdXNlIHRoZSBmb3JtZXIuCj4gCj4gVGhpcyB3aWxsIGFsbG93
+IHRvIGRyb3AgQVJDSF9TSE1PQklMRSBvbiBBUk0gaW4gdGhlIG5lYXIgZnV0dXJlLgo+IAo+IFNp
+Z25lZC1vZmYtYnk6IEdlZXJ0IFV5dHRlcmhvZXZlbiA8Z2VlcnQrcmVuZXNhc0BnbGlkZXIuYmU+
+ClsuLi5dCgpNQlIsIFNlcmdlaQotLS0KVG8gdW5zdWJzY3JpYmUgZnJvbSB0aGlzIGxpc3Q6IHNl
+bmQgdGhlIGxpbmUgInVuc3Vic2NyaWJlIGRtYWVuZ2luZSIgaW4KdGhlIGJvZHkgb2YgYSBtZXNz
+YWdlIHRvIG1ham9yZG9tb0B2Z2VyLmtlcm5lbC5vcmcKTW9yZSBtYWpvcmRvbW8gaW5mbyBhdCAg
+aHR0cDovL3ZnZXIua2VybmVsLm9yZy9tYWpvcmRvbW8taW5mby5odG1sCg==
