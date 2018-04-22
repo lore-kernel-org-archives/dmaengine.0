@@ -1,21 +1,35 @@
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
-Subject: [08/15] ASoC: pxa: remove the dmaengine compat need
-From: Robert Jarzmik <robert.jarzmik@free.fr>
-Message-Id: <87a7u82wlb.fsf@belgarion.home>
-Date: Thu, 12 Apr 2018 18:55:28 +0200
-To: Mark Brown <broonie@kernel.org>
-Cc: Daniel Mack <daniel@zonque.org>, Haojian Zhuang <haojian.zhuang@gmail.com>, Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>, Tejun Heo <tj@kernel.org>, Vinod Koul <vinod.koul@intel.com>, Mauro Carvalho Chehab <mchehab@kernel.org>, Ulf Hansson <ulf.hansson@linaro.org>, Ezequiel Garcia <ezequiel.garcia@free-electrons.com>, Boris Brezillon <boris.brezillon@free-electrons.com>, David Woodhouse <dwmw2@infradead.org>, Brian Norris <computersforpeace@gmail.com>, Marek Vasut <marek.vasut@gmail.com>, Richard Weinberger <richard@nod.at>, Cyrille Pitchen <cyrille.pitchen@wedev4u.fr>, Nicolas Pitre <nico@fluxnic.net>, Samuel Ortiz <samuel@sortiz.org>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, Liam Girdwood <lgirdwood@gmail.com>, Arnd Bergmann <arnd@arndb.de>, linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, linux-ide@vger.kernel.org, dmaengine@vger.kernel.org, linux-media@vger.kernel.org, linux-mmc@vger.kernel.org, linux-mtd@lists.infradead.org, netdev@vger.kernel.org, devel@driverdev.osuosl.org, alsa-devel@alsa-project.org
+Subject: [6/6] dmaengine: txx9dmac: simplify getting .drvdata
+From: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Message-Id: <20180422091415.7587-7-wsa+renesas@sang-engineering.com>
+Date: Sun, 22 Apr 2018 11:14:14 +0200
+To: dmaengine@vger.kernel.org
+Cc: Wolfram Sang <wsa+renesas@sang-engineering.com>, Dan Williams <dan.j.williams@intel.com>, Vinod Koul <vinod.koul@intel.com>, linux-kernel@vger.kernel.org
 List-ID: <dmaengine.vger.kernel.org>
 
-TWFyayBCcm93biA8YnJvb25pZUBrZXJuZWwub3JnPiB3cml0ZXM6Cgo+IE9uIE1vbiwgQXByIDAy
-LCAyMDE4IGF0IDA0OjI2OjQ5UE0gKzAyMDAsIFJvYmVydCBKYXJ6bWlrIHdyb3RlOgo+PiBBcyB0
-aGUgcHhhIGFyY2hpdGVjdHVyZSBzd2l0Y2hlZCB0b3dhcmRzIHRoZSBkbWFlbmdpbmUgc2xhdmUg
-bWFwLCB0aGUKPj4gb2xkIGNvbXBhdGliaWxpdHkgbWVjaGFuaXNtIHRvIGFjcXVpcmUgdGhlIGRt
-YSByZXF1ZXN0b3IgbGluZSBudW1iZXIgYW5kCj4+IHByaW9yaXR5IGFyZSBub3QgbmVlZGVkIGFu
-eW1vcmUuCj4KPiBBY2tlZC1ieTogTWFyayBCcm93biA8YnJvb25pZUBrZXJuZWwub3JnPgo+Cj4g
-SWYgdGhlcmUncyBubyBkZXBlbmRlbmN5IEknbSBoYXBweSB0byB0YWtlIHRoaXMgZm9yIDQuMTgu
-ClRoYW5rcyBmb3IgdGhlIGFjay4KClRoZSBwYXRjaGVzIDEgYW5kIDIgYXJlIHRoZSBkZXBlbmRl
-bmN5IGhlcmUsIHNvIEknZCByYXRoZXIgcHVzaCBpdCB0aHJvdWdoIG15CnRyZWUgb25jZSB0aGUg
-cmV2aWV3IGlzIGNvbXBsZXRlLgoKQ2hlZXJzLgo=
+V2Ugc2hvdWxkIGdldCBkcnZkYXRhIGZyb20gc3RydWN0IGRldmljZSBkaXJlY3RseS4gR29pbmcg
+dmlhCnBsYXRmb3JtX2RldmljZSBpcyBhbiB1bm5lZWRlZCBzdGVwIGJhY2sgYW5kIGZvcnRoLgoK
+U2lnbmVkLW9mZi1ieTogV29sZnJhbSBTYW5nIDx3c2ErcmVuZXNhc0BzYW5nLWVuZ2luZWVyaW5n
+LmNvbT4KLS0tCgpCdWlsZCB0ZXN0ZWQgb25seS4gYnVpbGRib3QgaXMgaGFwcHkuIFBsZWFzZSBh
+cHBseSB0byB5b3VyIHRyZWUgZGlyZWN0bHkuCgogZHJpdmVycy9kbWEvdHh4OWRtYWMuYyB8IDgg
+KysrLS0tLS0KIDEgZmlsZSBjaGFuZ2VkLCAzIGluc2VydGlvbnMoKyksIDUgZGVsZXRpb25zKC0p
+CgpkaWZmIC0tZ2l0IGEvZHJpdmVycy9kbWEvdHh4OWRtYWMuYyBiL2RyaXZlcnMvZG1hL3R4eDlk
+bWFjLmMKaW5kZXggNGQ4YzdiOTA3OGZkLi5lYjQ1YWY3MWQzYTMgMTAwNjQ0Ci0tLSBhL2RyaXZl
+cnMvZG1hL3R4eDlkbWFjLmMKKysrIGIvZHJpdmVycy9kbWEvdHh4OWRtYWMuYwpAQCAtMTI0NCw4
+ICsxMjQ0LDcgQEAgc3RhdGljIHZvaWQgdHh4OWRtYWNfc2h1dGRvd24oc3RydWN0IHBsYXRmb3Jt
+X2RldmljZSAqcGRldikKIAogc3RhdGljIGludCB0eHg5ZG1hY19zdXNwZW5kX25vaXJxKHN0cnVj
+dCBkZXZpY2UgKmRldikKIHsKLQlzdHJ1Y3QgcGxhdGZvcm1fZGV2aWNlICpwZGV2ID0gdG9fcGxh
+dGZvcm1fZGV2aWNlKGRldik7Ci0Jc3RydWN0IHR4eDlkbWFjX2RldiAqZGRldiA9IHBsYXRmb3Jt
+X2dldF9kcnZkYXRhKHBkZXYpOworCXN0cnVjdCB0eHg5ZG1hY19kZXYgKmRkZXYgPSBkZXZfZ2V0
+X2RydmRhdGEoZGV2KTsKIAogCXR4eDlkbWFjX29mZihkZGV2KTsKIAlyZXR1cm4gMDsKQEAgLTEy
+NTMsOSArMTI1Miw4IEBAIHN0YXRpYyBpbnQgdHh4OWRtYWNfc3VzcGVuZF9ub2lycShzdHJ1Y3Qg
+ZGV2aWNlICpkZXYpCiAKIHN0YXRpYyBpbnQgdHh4OWRtYWNfcmVzdW1lX25vaXJxKHN0cnVjdCBk
+ZXZpY2UgKmRldikKIHsKLQlzdHJ1Y3QgcGxhdGZvcm1fZGV2aWNlICpwZGV2ID0gdG9fcGxhdGZv
+cm1fZGV2aWNlKGRldik7Ci0Jc3RydWN0IHR4eDlkbWFjX2RldiAqZGRldiA9IHBsYXRmb3JtX2dl
+dF9kcnZkYXRhKHBkZXYpOwotCXN0cnVjdCB0eHg5ZG1hY19wbGF0Zm9ybV9kYXRhICpwZGF0YSA9
+IGRldl9nZXRfcGxhdGRhdGEoJnBkZXYtPmRldik7CisJc3RydWN0IHR4eDlkbWFjX2RldiAqZGRl
+diA9IGRldl9nZXRfZHJ2ZGF0YShkZXYpOworCXN0cnVjdCB0eHg5ZG1hY19wbGF0Zm9ybV9kYXRh
+ICpwZGF0YSA9IGRldl9nZXRfcGxhdGRhdGEoZGV2KTsKIAl1MzIgbWNyOwogCiAJbWNyID0gVFhY
+OV9ETUFfTUNSX01TVEVOIHwgTUNSX0xFOwo=
