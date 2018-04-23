@@ -2,39 +2,36 @@ Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
 Subject: [PATCH/RFC,7/8] ARM: shmobile: Remove the ARCH_SHMOBILE Kconfig symbol
-From: Geert Uytterhoeven <geert+renesas@glider.be>
-Message-Id: <1524230914-10175-8-git-send-email-geert+renesas@glider.be>
-Date: Fri, 20 Apr 2018 15:28:33 +0200
-To: Simon Horman <horms@verge.net.au>, Magnus Damm <magnus.damm@gmail.com>, Russell King <linux@armlinux.org.uk>, Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will.deacon@arm.com>, Dan Williams <dan.j.williams@intel.com>, Vinod Koul <vinod.koul@intel.com>, Mauro Carvalho Chehab <mchehab@kernel.org>, Sergei Shtylyov <sergei.shtylyov@cogentembedded.com>, "David S . Miller" <davem@davemloft.net>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, Arnd Bergmann <arnd@arndb.de>, Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>, Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Cc: linux-renesas-soc@vger.kernel.org, linux-arm-kernel@lists.infradead.org, dmaengine@vger.kernel.org, linux-media@vger.kernel.org, netdev@vger.kernel.org, devel@driverdev.osuosl.org, alsa-devel@alsa-project.org, linux-kernel@vger.kernel.org, Geert Uytterhoeven <geert+renesas@glider.be>
+From: Simon Horman <horms@verge.net.au>
+Message-Id: <20180423092011.qnhcorgcu2j5hrls@verge.net.au>
+Date: Mon, 23 Apr 2018 11:20:14 +0200
+To: Geert Uytterhoeven <geert+renesas@glider.be>
+Cc: Magnus Damm <magnus.damm@gmail.com>, Russell King <linux@armlinux.org.uk>, Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will.deacon@arm.com>, Dan Williams <dan.j.williams@intel.com>, Vinod Koul <vinod.koul@intel.com>, Mauro Carvalho Chehab <mchehab@kernel.org>, Sergei Shtylyov <sergei.shtylyov@cogentembedded.com>, "David S . Miller" <davem@davemloft.net>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, Arnd Bergmann <arnd@arndb.de>, Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>, Laurent Pinchart <laurent.pinchart@ideasonboard.com>, linux-renesas-soc@vger.kernel.org, linux-arm-kernel@lists.infradead.org, dmaengine@vger.kernel.org, linux-media@vger.kernel.org, netdev@vger.kernel.org, devel@driverdev.osuosl.org, alsa-devel@alsa-project.org, linux-kernel@vger.kernel.org
 List-ID: <dmaengine.vger.kernel.org>
 
-QWxsIGRyaXZlcnMgZm9yIFJlbmVzYXMgQVJNIFNvQ3MgaGF2ZSBnYWluZWQgcHJvcGVyIEFSQ0hf
-UkVORVNBUwpwbGF0Zm9ybSBkZXBlbmRlbmNpZXMuICBIZW5jZSBmaW5pc2ggdGhlIGNvbnZlcnNp
-b24gZnJvbSBBUkNIX1NITU9CSUxFCnRvIEFSQ0hfUkVORVNBUyBmb3IgUmVuZXNhcyAzMi1iaXQg
-QVJNIFNvQ3MsIGFzIHN0YXJ0ZWQgYnkgY29tbWl0CjliNWJhMGRmNGVhNGY5NDAgKCJBUk06IHNo
-bW9iaWxlOiBJbnRyb2R1Y2UgQVJDSF9SRU5FU0FTIikuCgpTaWduZWQtb2ZmLWJ5OiBHZWVydCBV
-eXR0ZXJob2V2ZW4gPGdlZXJ0K3JlbmVzYXNAZ2xpZGVyLmJlPgotLS0KVGhpcyBkZXBlbmRzIG9u
-IHRoZSBwcmV2aW91cyBwYXRjaGVzIGluIHRoaXMgc2VyaWVzLCBoZW5jZSB0aGUgUkZDLgoKSkZU
-UiwgYWZ0ZXIgdGhpcywgdGhlIGZvbGxvd2luZyBzeW1ib2xzIGZvciBkcml2ZXJzIHN1cHBvcnRp
-bmcgb25seQpSZW5lc2FzIFN1cGVySCAiU0gtTW9iaWxlIiBTb0NzIGNhbiBubyBsb25nZXIgYmUg
-c2VsZWN0ZWQ6CiAgLSBDT05GSUdfS0VZQk9BUkRfU0hfS0VZU0MsCiAgLSBDT05GSUdfVklERU9f
-U0hfVk9VLAogIC0gQ09ORklHX1ZJREVPX1NIX01PQklMRV9DRVUsCiAgLSBDT05GSUdfRFJNX1NI
-TU9CSUxFWypdLAogIC0gQ09ORklHX0ZCX1NIX01PQklMRV9NRVJBTS4KKGNoYW5nZXMgZm9yIGEg
-c2htb2JpbGVfZGVmY29uZmlnIC5jb25maWcpCgpbKl0gQ09ORklHX0RSTV9TSE1PQklMRSBoYXMg
-YSBkZXBlbmRlbmN5IG9uIEFSTSwgYnV0IGl0IHdhcyBuZXZlciB3aXJlZAogICAgdXAuICBGcm9t
-IHRoZSB1c2Ugb2Ygc2hfbW9iaWxlX21lcmFtLCBJIGd1ZXNzIGl0IHdhcyBtZWFudCBmb3IKICAg
-IFNILU1vYmlsZSBBUDQgb24gTWFja2VyZWwgb3IgQVA0RVZCLCB3aGljaCBhcmUgbG9uZyBnb25l
-LgogICAgU28gdGhlIG9ubHkgcmVtYWluaW5nIHVwc3RyZWFtIHBsYXRmb3JtcyB0aGF0IGNvdWxk
-IG1ha2UgdXNlIG9mIGl0CiAgICBhcmUgbGVnYWN5IFN1cGVySCBTSC1Nb2JpbGUgU29Dcz8KLS0t
-CiBhcmNoL2FybS9tYWNoLXNobW9iaWxlL0tjb25maWcgfCA0IC0tLS0KIDEgZmlsZSBjaGFuZ2Vk
-LCA0IGRlbGV0aW9ucygtKQoKZGlmZiAtLWdpdCBhL2FyY2gvYXJtL21hY2gtc2htb2JpbGUvS2Nv
-bmZpZyBiL2FyY2gvYXJtL21hY2gtc2htb2JpbGUvS2NvbmZpZwppbmRleCA5NjY3MmRhMDJmNWYx
-N2I5Li5kODkyYzViNTJiNmY1NjI3IDEwMDY0NAotLS0gYS9hcmNoL2FybS9tYWNoLXNobW9iaWxl
-L0tjb25maWcKKysrIGIvYXJjaC9hcm0vbWFjaC1zaG1vYmlsZS9LY29uZmlnCkBAIC0xLDYgKzEs
-MyBAQAotY29uZmlnIEFSQ0hfU0hNT0JJTEUKLQlib29sCi0KIGNvbmZpZyBQTV9STU9CSUxFCiAJ
-Ym9vbAogCXNlbGVjdCBQTQpAQCAtMzAsNyArMjcsNiBAQCBtZW51Y29uZmlnIEFSQ0hfUkVORVNB
-UwogCWJvb2wgIlJlbmVzYXMgQVJNIFNvQ3MiCiAJZGVwZW5kcyBvbiBBUkNIX01VTFRJX1Y3ICYm
-IE1NVQogCXNlbGVjdCBBUkNIX0RNQV9BRERSX1RfNjRCSVQgaWYgQVJNX0xQQUUKLQlzZWxlY3Qg
-QVJDSF9TSE1PQklMRQogCXNlbGVjdCBBUk1fR0lDCiAJc2VsZWN0IEdQSU9MSUIKIAlzZWxlY3Qg
-SEFWRV9BUk1fU0NVIGlmIFNNUAo=
+T24gRnJpLCBBcHIgMjAsIDIwMTggYXQgMDM6Mjg6MzNQTSArMDIwMCwgR2VlcnQgVXl0dGVyaG9l
+dmVuIHdyb3RlOgo+IEFsbCBkcml2ZXJzIGZvciBSZW5lc2FzIEFSTSBTb0NzIGhhdmUgZ2FpbmVk
+IHByb3BlciBBUkNIX1JFTkVTQVMKPiBwbGF0Zm9ybSBkZXBlbmRlbmNpZXMuICBIZW5jZSBmaW5p
+c2ggdGhlIGNvbnZlcnNpb24gZnJvbSBBUkNIX1NITU9CSUxFCj4gdG8gQVJDSF9SRU5FU0FTIGZv
+ciBSZW5lc2FzIDMyLWJpdCBBUk0gU29DcywgYXMgc3RhcnRlZCBieSBjb21taXQKPiA5YjViYTBk
+ZjRlYTRmOTQwICgiQVJNOiBzaG1vYmlsZTogSW50cm9kdWNlIEFSQ0hfUkVORVNBUyIpLgo+IAo+
+IFNpZ25lZC1vZmYtYnk6IEdlZXJ0IFV5dHRlcmhvZXZlbiA8Z2VlcnQrcmVuZXNhc0BnbGlkZXIu
+YmU+Cj4gLS0tCj4gVGhpcyBkZXBlbmRzIG9uIHRoZSBwcmV2aW91cyBwYXRjaGVzIGluIHRoaXMg
+c2VyaWVzLCBoZW5jZSB0aGUgUkZDLgo+IAo+IEpGVFIsIGFmdGVyIHRoaXMsIHRoZSBmb2xsb3dp
+bmcgc3ltYm9scyBmb3IgZHJpdmVycyBzdXBwb3J0aW5nIG9ubHkKPiBSZW5lc2FzIFN1cGVySCAi
+U0gtTW9iaWxlIiBTb0NzIGNhbiBubyBsb25nZXIgYmUgc2VsZWN0ZWQ6Cj4gICAtIENPTkZJR19L
+RVlCT0FSRF9TSF9LRVlTQywKPiAgIC0gQ09ORklHX1ZJREVPX1NIX1ZPVSwKPiAgIC0gQ09ORklH
+X1ZJREVPX1NIX01PQklMRV9DRVUsCj4gICAtIENPTkZJR19EUk1fU0hNT0JJTEVbKl0sCj4gICAt
+IENPTkZJR19GQl9TSF9NT0JJTEVfTUVSQU0uCj4gKGNoYW5nZXMgZm9yIGEgc2htb2JpbGVfZGVm
+Y29uZmlnIC5jb25maWcpCj4gCj4gWypdIENPTkZJR19EUk1fU0hNT0JJTEUgaGFzIGEgZGVwZW5k
+ZW5jeSBvbiBBUk0sIGJ1dCBpdCB3YXMgbmV2ZXIgd2lyZWQKPiAgICAgdXAuICBGcm9tIHRoZSB1
+c2Ugb2Ygc2hfbW9iaWxlX21lcmFtLCBJIGd1ZXNzIGl0IHdhcyBtZWFudCBmb3IKPiAgICAgU0gt
+TW9iaWxlIEFQNCBvbiBNYWNrZXJlbCBvciBBUDRFVkIsIHdoaWNoIGFyZSBsb25nIGdvbmUuCj4g
+ICAgIFNvIHRoZSBvbmx5IHJlbWFpbmluZyB1cHN0cmVhbSBwbGF0Zm9ybXMgdGhhdCBjb3VsZCBt
+YWtlIHVzZSBvZiBpdAo+ICAgICBhcmUgbGVnYWN5IFN1cGVySCBTSC1Nb2JpbGUgU29Dcz8KClRo
+YXQgc291bmRzIGFib3V0IHJpZ2h0LiBJZiB0aGVyZSBpcyBpbnRlcmVzdCBJIGNhbiBzaWZ0IHRo
+cm91Z2ggbXkgbWFpbAphcmNoaXZlIGFuZCBzZWUgaWYgaXQgeWllbGRzIGFueSBhbnN3ZXJzLgot
+LS0KVG8gdW5zdWJzY3JpYmUgZnJvbSB0aGlzIGxpc3Q6IHNlbmQgdGhlIGxpbmUgInVuc3Vic2Ny
+aWJlIGRtYWVuZ2luZSIgaW4KdGhlIGJvZHkgb2YgYSBtZXNzYWdlIHRvIG1ham9yZG9tb0B2Z2Vy
+Lmtlcm5lbC5vcmcKTW9yZSBtYWpvcmRvbW8gaW5mbyBhdCAgaHR0cDovL3ZnZXIua2VybmVsLm9y
+Zy9tYWpvcmRvbW8taW5mby5odG1sCg==
