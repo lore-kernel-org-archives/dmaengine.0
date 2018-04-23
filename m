@@ -3,8 +3,8 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: base64
 Subject: [PATCH/RFC,7/8] ARM: shmobile: Remove the ARCH_SHMOBILE Kconfig symbol
 From: Simon Horman <horms@verge.net.au>
-Message-Id: <20180423092011.qnhcorgcu2j5hrls@verge.net.au>
-Date: Mon, 23 Apr 2018 11:20:14 +0200
+Message-Id: <20180423092917.h24b2gem6j24uhnk@verge.net.au>
+Date: Mon, 23 Apr 2018 11:29:18 +0200
 To: Geert Uytterhoeven <geert+renesas@glider.be>
 Cc: Magnus Damm <magnus.damm@gmail.com>, Russell King <linux@armlinux.org.uk>, Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will.deacon@arm.com>, Dan Williams <dan.j.williams@intel.com>, Vinod Koul <vinod.koul@intel.com>, Mauro Carvalho Chehab <mchehab@kernel.org>, Sergei Shtylyov <sergei.shtylyov@cogentembedded.com>, "David S . Miller" <davem@davemloft.net>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, Arnd Bergmann <arnd@arndb.de>, Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>, Laurent Pinchart <laurent.pinchart@ideasonboard.com>, linux-renesas-soc@vger.kernel.org, linux-arm-kernel@lists.infradead.org, dmaengine@vger.kernel.org, linux-media@vger.kernel.org, netdev@vger.kernel.org, devel@driverdev.osuosl.org, alsa-devel@alsa-project.org, linux-kernel@vger.kernel.org
 List-ID: <dmaengine.vger.kernel.org>
@@ -17,21 +17,10 @@ ciBSZW5lc2FzIDMyLWJpdCBBUk0gU29DcywgYXMgc3RhcnRlZCBieSBjb21taXQKPiA5YjViYTBk
 ZjRlYTRmOTQwICgiQVJNOiBzaG1vYmlsZTogSW50cm9kdWNlIEFSQ0hfUkVORVNBUyIpLgo+IAo+
 IFNpZ25lZC1vZmYtYnk6IEdlZXJ0IFV5dHRlcmhvZXZlbiA8Z2VlcnQrcmVuZXNhc0BnbGlkZXIu
 YmU+Cj4gLS0tCj4gVGhpcyBkZXBlbmRzIG9uIHRoZSBwcmV2aW91cyBwYXRjaGVzIGluIHRoaXMg
-c2VyaWVzLCBoZW5jZSB0aGUgUkZDLgo+IAo+IEpGVFIsIGFmdGVyIHRoaXMsIHRoZSBmb2xsb3dp
-bmcgc3ltYm9scyBmb3IgZHJpdmVycyBzdXBwb3J0aW5nIG9ubHkKPiBSZW5lc2FzIFN1cGVySCAi
-U0gtTW9iaWxlIiBTb0NzIGNhbiBubyBsb25nZXIgYmUgc2VsZWN0ZWQ6Cj4gICAtIENPTkZJR19L
-RVlCT0FSRF9TSF9LRVlTQywKPiAgIC0gQ09ORklHX1ZJREVPX1NIX1ZPVSwKPiAgIC0gQ09ORklH
-X1ZJREVPX1NIX01PQklMRV9DRVUsCj4gICAtIENPTkZJR19EUk1fU0hNT0JJTEVbKl0sCj4gICAt
-IENPTkZJR19GQl9TSF9NT0JJTEVfTUVSQU0uCj4gKGNoYW5nZXMgZm9yIGEgc2htb2JpbGVfZGVm
-Y29uZmlnIC5jb25maWcpCj4gCj4gWypdIENPTkZJR19EUk1fU0hNT0JJTEUgaGFzIGEgZGVwZW5k
-ZW5jeSBvbiBBUk0sIGJ1dCBpdCB3YXMgbmV2ZXIgd2lyZWQKPiAgICAgdXAuICBGcm9tIHRoZSB1
-c2Ugb2Ygc2hfbW9iaWxlX21lcmFtLCBJIGd1ZXNzIGl0IHdhcyBtZWFudCBmb3IKPiAgICAgU0gt
-TW9iaWxlIEFQNCBvbiBNYWNrZXJlbCBvciBBUDRFVkIsIHdoaWNoIGFyZSBsb25nIGdvbmUuCj4g
-ICAgIFNvIHRoZSBvbmx5IHJlbWFpbmluZyB1cHN0cmVhbSBwbGF0Zm9ybXMgdGhhdCBjb3VsZCBt
-YWtlIHVzZSBvZiBpdAo+ICAgICBhcmUgbGVnYWN5IFN1cGVySCBTSC1Nb2JpbGUgU29Dcz8KClRo
-YXQgc291bmRzIGFib3V0IHJpZ2h0LiBJZiB0aGVyZSBpcyBpbnRlcmVzdCBJIGNhbiBzaWZ0IHRo
-cm91Z2ggbXkgbWFpbAphcmNoaXZlIGFuZCBzZWUgaWYgaXQgeWllbGRzIGFueSBhbnN3ZXJzLgot
-LS0KVG8gdW5zdWJzY3JpYmUgZnJvbSB0aGlzIGxpc3Q6IHNlbmQgdGhlIGxpbmUgInVuc3Vic2Ny
-aWJlIGRtYWVuZ2luZSIgaW4KdGhlIGJvZHkgb2YgYSBtZXNzYWdlIHRvIG1ham9yZG9tb0B2Z2Vy
-Lmtlcm5lbC5vcmcKTW9yZSBtYWpvcmRvbW8gaW5mbyBhdCAgaHR0cDovL3ZnZXIua2VybmVsLm9y
-Zy9tYWpvcmRvbW8taW5mby5odG1sCg==
+c2VyaWVzLCBoZW5jZSB0aGUgUkZDLgoKVGhhbmtzLCBJIGhhdmUgbWFya2VkIHRoaXMgYW5kIHRo
+ZSBmb2xsb3dpbmcgcGF0Y2ggYXMgZGVmZXJyZWQuClBsZWFzZSByZXBvc3Qgb3Igb3RoZXJ3aXNl
+IHBpbmcgbWUgb25jZSB0aGUgZGVwZW5kZW5jaWVzIGFyZSBpbiBwbGFjZS4KLS0tClRvIHVuc3Vi
+c2NyaWJlIGZyb20gdGhpcyBsaXN0OiBzZW5kIHRoZSBsaW5lICJ1bnN1YnNjcmliZSBkbWFlbmdp
+bmUiIGluCnRoZSBib2R5IG9mIGEgbWVzc2FnZSB0byBtYWpvcmRvbW9Admdlci5rZXJuZWwub3Jn
+Ck1vcmUgbWFqb3Jkb21vIGluZm8gYXQgIGh0dHA6Ly92Z2VyLmtlcm5lbC5vcmcvbWFqb3Jkb21v
+LWluZm8uaHRtbAo=
