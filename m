@@ -1,30 +1,24 @@
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
-Subject: [4/5] dmaengine: sprd: Add Spreadtrum DMA configuration
-From: Baolin Wang <baolin.wang@linaro.org>
-Message-Id: <CAMz4ku+uru+53BR9JaqQQ+ik30-8o5By-Ai2jA_g-MYF0iKpCA@mail.gmail.com>
-Date: Tue, 17 Apr 2018 14:06:54 +0800
-To: Vinod Koul <vinod.koul@intel.com>
-Cc: Dan Williams <dan.j.williams@intel.com>, Eric Long <eric.long@spreadtrum.com>, Mark Brown <broonie@kernel.org>, dmaengine@vger.kernel.org, LKML <linux-kernel@vger.kernel.org>
+Subject: dmaengine: stm32-mdma: fix spelling mistake: "avalaible" -> "available"
+From: Colin King <colin.king@canonical.com>
+Message-Id: <20180427192431.17793-1-colin.king@canonical.com>
+Date: Fri, 27 Apr 2018 20:24:31 +0100
+To: Dan Williams <dan.j.williams@intel.com>, Vinod Koul <vinod.koul@intel.com>, Maxime Coquelin <mcoquelin.stm32@gmail.com>, Alexandre Torgue <alexandre.torgue@st.com>, dmaengine@vger.kernel.org, linux-arm-kernel@lists.infradead.org
+Cc: kernel-janitors@vger.kernel.org, linux-kernel@vger.kernel.org
 List-ID: <dmaengine.vger.kernel.org>
 
-T24gMTYgQXByaWwgMjAxOCBhdCAyMzozNSwgVmlub2QgS291bCA8dmlub2Qua291bEBpbnRlbC5j
-b20+IHdyb3RlOgo+IE9uIE1vbiwgQXByIDE2LCAyMDE4IGF0IDAyOjMyOjA1UE0gKzA4MDAsIEJh
-b2xpbiBXYW5nIHdyb3RlOgo+Cj4+ID4+IEJlc2lkZSB0aGUgZ2VuZXJhbCBjb25maWd1cmF0aW9u
-LCBvdXIgYXVkaW8gZHJpdmVyIHdpbGwgY29uZmlndXJlIHRoZQo+PiA+PiBmcmFnbWVudCBsZW5n
-dGgsIGJsb2NrIGxlbmd0aCwgbWF5YmUgdHJhbnNhY3Rpb24gbGVuZ3RoLCBhbmQgdGhleSBtdXN0
-Cj4+ID4+IHNwZWNpZnkgdGhlIHJlcXVlc3QgdHlwZSBhbmQgaW50ZXJydXB0IHR5cGUsIHRoZXNl
-IGFyZSB3aGF0IHdlIHdhbnQgdG8KPj4gPj4gZXhwb3J0IGZvciB1c2Vycy4KPj4gPgo+PiA+IEFz
-IEkgc2FpZCBiZWZvcmUsIHlvdSBuZWVkIHRvIGRlcml2ZSBmcmFnbWVudCwgYmxvY2sgb3IgdHJh
-bnNhY3Rpb24gZnJvbQo+Pgo+PiBJIGFtIHNvcnJ5IEkgZGlkIG5vdCBtYWtlIHRoaW5ncyBjbGVh
-ciBoZXJlLiBXaGF0IEkgbWVhbiBpcyBub3Qgb25seQo+PiBsaW5rIGxpc3QgbW9kZShwcmVwX2N5
-Y2xpYyksIGJ1dCBhbHNvIG90aGVyIG1vZGVzIChwcmVwX3NsYXZlLAo+PiBwcmVwX2ludGVybGVh
-dmVkIC4uLiksIHVzZXJzIHN0aWxsIG5lZWQgdG8gY29uZmlndXJlIHRoZSBmcmFnbWVudAo+PiBs
-ZW5ndGgsIGJsb2NrIGxlbmd0aCBvciB0cmFuc2FjdGlvbiBsZW5ndGggYWNjb3JkaW5nIHRvIHRo
-ZWlyCj4+IHJlcXVpcmVtZW50cy4KPgo+IE90aGVyIG1vZGVzIGFyZSBzaW1pbGFyLCB0aGV5IGFs
-c28gdXNlIHRoZSBwYXJhbWV0ZXJzIHByb2dyYW1tZWQgZnJvbQo+IGRtYV9zbGF2ZV9jb25maWcu
-IFBscyBzZWUgb3RoZXIgZHJpdmVyIGV4YW1wbGVzLiBJSVJDIGR3IGRtYSBoYXMKPiBzaW1pbGFy
-IGNhcGFiaWxpdGllcyBidXQgbm90IGFsbCBhcmUgZXhwb3NlZCB0byB1c2VyIGFuZCBkcml2ZXIg
-Y29uZmlndXJlcy4KCkknbGwgY2hlY2sgdGhlIGR3IGRtYS4gUmVhbGx5IHRoYW5rcyBmb3IgeW91
-ciBoZWxwIDopCg==
+RnJvbTogQ29saW4gSWFuIEtpbmcgPGNvbGluLmtpbmdAY2Fub25pY2FsLmNvbT4KClRyaXZpYWwg
+Zml4IHRvIHNwZWxsaW5nIG1pc3Rha2UgaW4gZGV2X2VyciBlcnJvciBtZXNzYWdlIHRleHQKClNp
+Z25lZC1vZmYtYnk6IENvbGluIElhbiBLaW5nIDxjb2xpbi5raW5nQGNhbm9uaWNhbC5jb20+Ci0t
+LQogZHJpdmVycy9kbWEvc3RtMzItbWRtYS5jIHwgMiArLQogMSBmaWxlIGNoYW5nZWQsIDEgaW5z
+ZXJ0aW9uKCspLCAxIGRlbGV0aW9uKC0pCgpkaWZmIC0tZ2l0IGEvZHJpdmVycy9kbWEvc3RtMzIt
+bWRtYS5jIGIvZHJpdmVycy9kbWEvc3RtMzItbWRtYS5jCmluZGV4IDFhYzc3NWY5M2Q5ZS4uOTBk
+OWY2YmQ5MDViIDEwMDY0NAotLS0gYS9kcml2ZXJzL2RtYS9zdG0zMi1tZG1hLmMKKysrIGIvZHJp
+dmVycy9kbWEvc3RtMzItbWRtYS5jCkBAIC0xNTIxLDcgKzE1MjEsNyBAQCBzdGF0aWMgc3RydWN0
+IGRtYV9jaGFuICpzdG0zMl9tZG1hX29mX3hsYXRlKHN0cnVjdCBvZl9waGFuZGxlX2FyZ3MgKmRt
+YV9zcGVjLAogCiAJYyA9IGRtYV9nZXRfYW55X3NsYXZlX2NoYW5uZWwoJmRtYWRldi0+ZGRldik7
+CiAJaWYgKCFjKSB7Ci0JCWRldl9lcnIobWRtYTJkZXYoZG1hZGV2KSwgIk5vIG1vcmUgY2hhbm5l
+bCBhdmFsYWlibGVcbiIpOworCQlkZXZfZXJyKG1kbWEyZGV2KGRtYWRldiksICJObyBtb3JlIGNo
+YW5uZWwgYXZhaWxhYmxlXG4iKTsKIAkJcmV0dXJuIE5VTEw7CiAJfQogCg==
