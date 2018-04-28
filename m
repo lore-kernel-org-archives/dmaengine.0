@@ -1,30 +1,30 @@
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
-Subject: [3/8,media] v4l: rcar_fdp1: Change platform dependency to ARCH_RENESAS
-From: Geert Uytterhoeven <geert@linux-m68k.org>
-Message-Id: <CAMuHMdUv6Gb6D0qAnDMRYhS8Uzriv1rALXpuzuMm6ndGk24GNg@mail.gmail.com>
-Date: Mon, 23 Apr 2018 10:08:55 +0200
-To: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Cc: Geert Uytterhoeven <geert+renesas@glider.be>, Simon Horman <horms@verge.net.au>, Magnus Damm <magnus.damm@gmail.com>, Russell King <linux@armlinux.org.uk>, Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will.deacon@arm.com>, Dan Williams <dan.j.williams@intel.com>, Vinod Koul <vinod.koul@intel.com>, Mauro Carvalho Chehab <mchehab@kernel.org>, Sergei Shtylyov <sergei.shtylyov@cogentembedded.com>, "David S . Miller" <davem@davemloft.net>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, Arnd Bergmann <arnd@arndb.de>, Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>, Linux-Renesas <linux-renesas-soc@vger.kernel.org>, Linux ARM <linux-arm-kernel@lists.infradead.org>, dmaengine@vger.kernel.org, Linux Media Mailing List <linux-media@vger.kernel.org>, netdev <netdev@vger.kernel.org>, driverdevel <devel@driverdev.osuosl.org>, ALSA Development Mailing List <alsa-devel@alsa-project.org>, Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+Subject: [v3] dmaengine: axi-dmac: Request IRQ with IRQF_SHARED
+From: mdf@kernel.org
+Message-Id: <20180428195754.3053-1-mdf@kernel.org>
+Date: Sat, 28 Apr 2018 12:57:54 -0700
+To: linux-kernel@vger.kernel.org
+Cc: dmaengine@vger.kernel.org, dan.j.williams@intel.com, vinod.koul@intel.com, lars@metafoo.de, Moritz Fischer <mdf@kernel.org>
 List-ID: <dmaengine.vger.kernel.org>
 
-SGkgTGF1cmVudCwKCk9uIFN1biwgQXByIDIyLCAyMDE4IGF0IDEwOjQ2IEFNLCBMYXVyZW50IFBp
-bmNoYXJ0CjxsYXVyZW50LnBpbmNoYXJ0QGlkZWFzb25ib2FyZC5jb20+IHdyb3RlOgo+IE9uIFNh
-dHVyZGF5LCAyMSBBcHJpbCAyMDE4IDExOjA3OjExIEVFU1QgTGF1cmVudCBQaW5jaGFydCB3cm90
-ZToKPj4gT24gRnJpZGF5LCAyMCBBcHJpbCAyMDE4IDE2OjI4OjI5IEVFU1QgR2VlcnQgVXl0dGVy
-aG9ldmVuIHdyb3RlOgo+PiA+IFRoZSBSZW5lc2FzIEZpbmUgRGlzcGxheSBQcm9jZXNzb3IgZHJp
-dmVyIGlzIHVzZWQgb24gUmVuZXNhcyBSLUNhciBTb0NzCj4+ID4gb25seS4gIFNpbmNlIGNvbW1p
-dCA5YjViYTBkZjRlYTRmOTQwICgiQVJNOiBzaG1vYmlsZTogSW50cm9kdWNlCj4+ID4gQVJDSF9S
-RU5FU0FTIikgaXMgQVJDSF9SRU5FU0FTIGEgbW9yZSBhcHByb3ByaWF0ZSBwbGF0Zm9ybSBkZXBl
-bmRlbmN5Cj4+ID4gdGhhbiB0aGUgbGVnYWN5IEFSQ0hfU0hNT0JJTEUsIGhlbmNlIHVzZSB0aGUg
-Zm9ybWVyLgo+PiA+Cj4+ID4gVGhpcyB3aWxsIGFsbG93IHRvIGRyb3AgQVJDSF9TSE1PQklMRSBv
-biBBUk0gYW5kIEFSTTY0IGluIHRoZSBuZWFyCj4+ID4gZnV0dXJlLgo+PiA+Cj4+ID4gU2lnbmVk
-LW9mZi1ieTogR2VlcnQgVXl0dGVyaG9ldmVuIDxnZWVydCtyZW5lc2FzQGdsaWRlci5iZT4KPj4K
-Pj4gQWNrZWQtYnk6IExhdXJlbnQgUGluY2hhcnQgPGxhdXJlbnQucGluY2hhcnRAaWRlYXNvbmJv
-YXJkLmNvbT4KPj4KPj4gSG93IHdvdWxkIHlvdSBsaWtlIHRvIGdldCB0aGlzIG1lcmdlZCA/Cj4K
-PiBVbmxlc3MgeW91IHdvdWxkIGxpa2UgdG8gbWVyZ2UgdGhlIHdob2xlIHNlcmllcyBpbiBvbmUg
-Z28sIEknbGwgdGFrZSB0aGlzIGluCj4gbXkgdHJlZSBhcyBJIGhhdmUgYSBjb25mbGljdGluZyBw
-YXRjaCBJIHdvdWxkIGxpa2UgdG8gc3VibWl0IGZvciB2NC4xOC4KClBsZWFzZSB0YWtlIGl0IGlu
-IHlvdXIgdHJlZSwgdGhhbmtzIQoKR3J7b2V0amUsZWV0aW5nfXMsCgogICAgICAgICAgICAgICAg
-ICAgICAgICBHZWVydAo=
+UmVxdWVzdCBJUlEgd2l0aCBJUlFGX1NIQVJFRCBmbGFnIHRvIGVuYWJsZSBzZXR1cHMgd2l0aCBt
+dWx0aXBsZQppbnN0YW5jZXMgb2YgdGhlIGNvcmUgc2hhcmluZyBhIHNpbmdsZSBJUlEgbGluZS4K
+VGhpcyB3b3JrcyBvdXQgc2luY2UgdGhlIElSUSBoYW5kbGVyIGFscmVhZHkgY2hlY2tzIGlmIHRo
+ZXJlIGlzCmFuIGFjdHVhbCBJUlEgcGVuZGluZyBhbmQgcmV0dXJucyBJUlFfTk9ORSBvdGhlcndp
+c2UuCgpBY2tlZC1ieTogTGFycy1QZXRlciBDbGF1c2VuIDxsYXJzQG1ldGFmb28uZGU+ClNpZ25l
+ZC1vZmYtYnk6IE1vcml0eiBGaXNjaGVyIDxtZGZAa2VybmVsLm9yZz4KLS0tCgpDaGFuZ2VzIGZy
+b20gdjI6Ci0gUmV3b3JkZWQgY29tbWl0IG1lc3NhZ2UKCkNoYW5nZXMgZnJvbSB2MToKLSBBZGRl
+ZCBMYXJzJyBBY2tlZC1ieQotIERyb3BwZWQgcGF0Y2ggWzEvMl0gYW5kIGNoYW5nZWQgYWNjb3Jk
+aW5nbHkKCi0tLQogZHJpdmVycy9kbWEvZG1hLWF4aS1kbWFjLmMgfCAyICstCiAxIGZpbGUgY2hh
+bmdlZCwgMSBpbnNlcnRpb24oKyksIDEgZGVsZXRpb24oLSkKCmRpZmYgLS1naXQgYS9kcml2ZXJz
+L2RtYS9kbWEtYXhpLWRtYWMuYyBiL2RyaXZlcnMvZG1hL2RtYS1heGktZG1hYy5jCmluZGV4IDI0
+MTlmZTUyNGRhYS4uMTViMjQ1M2QyNjQ3IDEwMDY0NAotLS0gYS9kcml2ZXJzL2RtYS9kbWEtYXhp
+LWRtYWMuYworKysgYi9kcml2ZXJzL2RtYS9kbWEtYXhpLWRtYWMuYwpAQCAtNjg3LDcgKzY4Nyw3
+IEBAIHN0YXRpYyBpbnQgYXhpX2RtYWNfcHJvYmUoc3RydWN0IHBsYXRmb3JtX2RldmljZSAqcGRl
+dikKIAlpZiAocmV0KQogCQlnb3RvIGVycl91bnJlZ2lzdGVyX2RldmljZTsKIAotCXJldCA9IHJl
+cXVlc3RfaXJxKGRtYWMtPmlycSwgYXhpX2RtYWNfaW50ZXJydXB0X2hhbmRsZXIsIDAsCisJcmV0
+ID0gcmVxdWVzdF9pcnEoZG1hYy0+aXJxLCBheGlfZG1hY19pbnRlcnJ1cHRfaGFuZGxlciwgSVJR
+Rl9TSEFSRUQsCiAJCWRldl9uYW1lKCZwZGV2LT5kZXYpLCBkbWFjKTsKIAlpZiAocmV0KQogCQln
+b3RvIGVycl91bnJlZ2lzdGVyX29mOwo=
