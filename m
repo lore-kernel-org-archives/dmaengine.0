@@ -1,28 +1,15 @@
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
-Subject: Revert "dmaengine: pl330: add DMA_PAUSE feature"
-From: Vinod Koul <vkoul@kernel.org>
-Message-Id: <20180529070915.GF5666@vkoul-mobl>
-Date: Tue, 29 May 2018 12:39:15 +0530
-To: Marek Szyprowski <m.szyprowski@samsung.com>
-Cc: Frank Mori Hess <fmh6jj@gmail.com>, dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org, Dan Williams <dan.j.williams@intel.com>, r.baldyga@hackerion.com, Krzysztof Kozlowski <krzk@kernel.org>, Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>, Linux Samsung SOC <linux-samsung-soc@vger.kernel.org>
+Subject: [V2] dmaengine: stm32-mdma: fix spelling mistake: "avalaible" -> "available"
+From: Vinod Koul <vinod.koul@intel.com>
+Message-Id: <20180502042910.GP6014@localhost>
+Date: Wed, 2 May 2018 09:59:10 +0530
+To: Colin King <colin.king@canonical.com>
+Cc: Dan Williams <dan.j.williams@intel.com>, Maxime Coquelin <mcoquelin.stm32@gmail.com>, Alexandre Torgue <alexandre.torgue@st.com>, dmaengine@vger.kernel.org, linux-arm-kernel@lists.infradead.org, kernel-janitors@vger.kernel.org, linux-kernel@vger.kernel.org
 List-ID: <dmaengine.vger.kernel.org>
 
-T24gMjktMDUtMTgsIDA3OjE3LCBNYXJlayBTenlwcm93c2tpIHdyb3RlOgo+IEhpIFZpbm9kLAo+
-IAo+IE9uIDIwMTgtMDUtMTggMDk6MjEsIFZpbm9kIHdyb3RlOgo+ID4gT24gMTgtMDUtMTgsIDA4
-OjI4LCBNYXJlayBTenlwcm93c2tpIHdyb3RlOgo+ID4+IEhpIFZpbm9kLAo+ID4+Cj4gPj4gT2th
-eSwgSSBzZWUgdGhhdCBpbiB0aGVvcnksIHRoZXJlIGFyZSBzb21lIHRyaWNreSBiaXRzIGluIGlt
-cGxlbWVudGluZyBETUEKPiA+PiBzdXBwb3J0IGluIFVBUlQgZHJpdmVycy4gT24gdGhlIG90aGVy
-IGhhbmQgdGhlcmUgYXJlIGFscmVhZHkgZHJpdmVycwo+ID4+IHdpdGggc2VlbXMKPiA+PiB0byBi
-ZSB3b3JraW5nIGZpbmUuIFRoaXMgZGlzY3Vzc2lvbiBpcyBhYm91dCByZXZlcnQgb2YgdGhlIGZl
-YXR1cmUKPiA+PiBwcmVzZW50IGluCj4gPj4gcGwzMzAgZHJpdmVyLCB3aGljaCBpcyByZXF1aXJl
-ZCBieSBvdGhlciBpbi1rZXJuZWwgZHJpdmVyIHdpdGhvdXQgcHJvcGVyCj4gPj4gZml4IHRvCj4g
-Pj4gdGhlbS4KPiA+Pgo+ID4+IENhbiB3ZSBkcm9wIGl0IGZvciBub3cgYW5kIGRpc2N1c3Mgd2hh
-dCBhbmQgaG93IHNob3VsZCBiZSBpbXBsZW1lbnRlZCB0bwo+ID4+IG1ha2UKPiA+PiBldmVyeW9u
-ZSBoYXBweSwgd2l0aG91dCBhbnkgcmVncmVzc2lvbnM/Cj4gPiBTdXJlIGFtIGRyb3BwaW5nIHRo
-ZSByZXZlcnQsIHdlIGNhbiBhbHdheXMgYnJpbmcgaXQgYmFjayBpZiBpdCBpcyByZXF1aXJlZAo+
-IAo+IFRoaXMgcmV2ZXJ0IGlzIHN0aWxsIGluIHlvdXIgLW5leHQgYnJhbmNoLiBEbyB5b3UgcGxh
-biB0byB1cGRhdGUgaXQgYXMgd2VsbD8KCkkgZG9udCBzZW5kIGl0IHRvIGxpbnVzIGFuZCBtZXJn
-ZSB0b3BpYy8qIGludG8gZm9yLWxpbnVzIGFuZCBzZW5kLiBJdCBnZXRzCnVwZGF0ZWQgb24gcmVi
-YXNlIG9uIC1yYzEuCg==
+T24gU2F0LCBBcHIgMjgsIDIwMTggYXQgMTE6MDM6NTJQTSArMDEwMCwgQ29saW4gS2luZyB3cm90
+ZToKPiBGcm9tOiBDb2xpbiBJYW4gS2luZyA8Y29saW4ua2luZ0BjYW5vbmljYWwuY29tPgo+IAo+
+IFRyaXZpYWwgZml4IHRvIHNwZWxsaW5nIG1pc3Rha2UgaW4gZGV2X2VyciBlcnJvciBtZXNzYWdl
+IHRleHQgYW5kIG1ha2UKPiBjaGFubmVsIHBsdXJhbC4KCkFwcGxpZWQsIHRoYW5rcwo=
