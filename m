@@ -2,22 +2,17 @@ Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
 Subject: Revert "dmaengine: pl330: add DMA_PAUSE feature"
-From: Vinod Koul <vinod.koul@intel.com>
-Message-Id: <20180502043230.GQ6014@localhost>
-Date: Wed, 2 May 2018 10:02:30 +0530
-To: Frank Mori Hess <fmh6jj@gmail.com>
+From: Frank Mori Hess <fmh6jj@gmail.com>
+Message-Id: <CAJz5OpfTVD7aEH8DK-nSdSrbaS-1DcSK+44FKHkej59KDUX=dw@mail.gmail.com>
+Date: Wed, 2 May 2018 10:37:09 -0400
+To: Vinod Koul <vinod.koul@intel.com>
 Cc: Vinod Koul <vkoul@kernel.org>, dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org, Dan Williams <dan.j.williams@intel.com>, r.baldyga@hackerion.com
 List-ID: <dmaengine.vger.kernel.org>
 
-T24gU2F0LCBBcHIgMjgsIDIwMTggYXQgMDU6NTA6NThQTSAtMDQwMCwgRnJhbmsgTW9yaSBIZXNz
-IHdyb3RlOgo+IFRoaXMgcmV2ZXJ0cyBjb21taXQgODg5ODdkMmM3NTM0YTAyNjlmNTY3ZmIxMDFl
-NmQ3MWEwOGYwZjAxZC4KPiAKPiBUaGUgcGwzMzAuYyBwYXVzZSBpbXBsZW1lbnRhdGlvbiB2aW9s
-YXRlcyB0aGUgZG1hZW5naW5lIHJlcXVpcmVtZW50Cj4gZm9yIG5vIGRhdGEgbG9zcywgc2luY2Ug
-aXQgcmVsaWVzIG9uIHRoZSBETUFLSUxMCj4gaW5zdHJ1Y3Rpb24uICBIb3dldmVyLCBETUFLSUxM
-IGRpc2NhcmRzIGluLWZsaWdodCBkYXRhIGZyb20gdGhlCj4gZG1hIGNvbnRyb2xsZXIncyBmaWZv
-LiAgVGhpcyBpcyBkb2N1bWVudGVkIGluIHRoZSBkbWEtMzMwIG1hbnVhbAo+IGFuZCBJIGhhdmUg
-b2JzZXJ2ZWQgaXQgd2l0aCBoYXJkd2FyZSBkb2luZyBkZXZpY2UtdG8tbWVtb3J5IGJ1cnN0Cj4g
-dHJhbnNmZXJzLiAgVGhlIGRpc2NhcmRlZCBkYXRhIG1heSBvciBtYXkgbm90IHNob3cgdXAgaW4g
-dGhlCj4gcmVzaWR1ZSBjb3VudCwgZGVwZW5kaW5nIG9uIHRpbWluZyAocmVzdWx0aW5nIGluIGRh
-dGEgY29ycnVwdGlvbgo+IGVmZmVjdGl2ZWx5KS4KCkkgYW0gZHJvcHBpbmcgdGhlIG9yaWduYWwg
-cGF0Y2ggZm9yIHF1ZXVlLCBzbyBubyBuZWVkIGZvciByZXZlcnQgcGF0Y2guCg==
+T24gV2VkLCBNYXkgMiwgMjAxOCBhdCAxMjozMiBBTSwgVmlub2QgS291bCA8dmlub2Qua291bEBp
+bnRlbC5jb20+IHdyb3RlOgo+IE9uIFNhdCwgQXByIDI4LCAyMDE4IGF0IDA1OjUwOjU4UE0gLTA0
+MDAsIEZyYW5rIE1vcmkgSGVzcyB3cm90ZToKPj4gVGhpcyByZXZlcnRzIGNvbW1pdCA4ODk4N2Qy
+Yzc1MzRhMDI2OWY1NjdmYjEwMWU2ZDcxYTA4ZjBmMDFkLgo+Pgo+Cj4gSSBhbSBkcm9wcGluZyB0
+aGUgb3JpZ25hbCBwYXRjaCBmb3IgcXVldWUsIHNvIG5vIG5lZWQgZm9yIHJldmVydCBwYXRjaC4K
+PgoKSSBkb24ndCB1bmRlcnN0YW5kLCA4ODk4N2QyYzc1MzRhMDI2OWY1NjdmYjEwMWU2ZDcxYTA4
+ZjBmMDFkIG1hZGUgaXQKaW50byB0aGUgbWFpbmxpbmUga2VybmVsIGluIDIwMTU/Cg==
