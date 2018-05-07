@@ -2,34 +2,16 @@ Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
 Subject: [-next] dmaengine: sprd: Fix potential NULL dereference in sprd_dma_probe()
-From: Baolin Wang <baolin.wang@linaro.org>
-Message-Id: <CAMz4kuKi8nWqUfJAVvYD6FYqBcfgEaoDpRHB8VfcsNjY=L3ioA@mail.gmail.com>
-Date: Mon, 7 May 2018 09:56:30 +0800
+From: Vinod Koul <vinod.koul@linaro.org>
+Message-Id: <20180507080429.GA14832@vkoul-mobl>
+Date: Mon, 7 May 2018 13:34:29 +0530
 To: Wei Yongjun <weiyongjun1@huawei.com>
-Cc: Dan Williams <dan.j.williams@intel.com>, Vinod Koul <vkoul@kernel.org>, Orson Zhai <orsonzhai@gmail.com>, Chunyan Zhang <zhang.lyra@gmail.com>, dmaengine@vger.kernel.org, kernel-janitors@vger.kernel.org
+Cc: Dan Williams <dan.j.williams@intel.com>, Vinod Koul <vkoul@kernel.org>, Orson Zhai <orsonzhai@gmail.com>, Baolin Wang <baolin.wang@linaro.org>, Chunyan Zhang <zhang.lyra@gmail.com>, dmaengine@vger.kernel.org, kernel-janitors@vger.kernel.org
 List-ID: <dmaengine.vger.kernel.org>
 
-SGkgWW9uZ2p1biwKCk9uIDcgTWF5IDIwMTggYXQgMDk6NDAsIFdlaSBZb25nanVuIDx3ZWl5b25n
-anVuMUBodWF3ZWkuY29tPiB3cm90ZToKPiBwbGF0Zm9ybV9nZXRfcmVzb3VyY2UoKSBtYXkgZmFp
-bCBhbmQgcmV0dXJuIE5VTEwsIHNvIHdlIHNob3VsZAo+IGJldHRlciBjaGVjayBpdCdzIHJldHVy
-biB2YWx1ZSB0byBhdm9pZCBhIE5VTEwgcG9pbnRlciBkZXJlZmVyZW5jZQo+IGEgYml0IGxhdGVy
-IGluIHRoZSBjb2RlLgo+Cj4gVGhpcyBpcyBkZXRlY3RlZCBieSBDb2NjaW5lbGxlIHNlbWFudGlj
-IHBhdGNoLgo+Cj4gQEAKPiBleHByZXNzaW9uIHBkZXYsIHJlcywgbiwgdCwgZSwgZTEsIGUyOwo+
-IEBACj4KPiByZXMgPSBwbGF0Zm9ybV9nZXRfcmVzb3VyY2UocGRldiwgdCwgbik7Cj4gKyBpZiAo
-IXJlcykKPiArICAgcmV0dXJuIC1FSU5WQUw7Cj4gLi4uIHdoZW4gIT0gcmVzID09IE5VTEwKPiBl
-ID0gZGV2bV9pb3JlbWFwX25vY2FjaGUoZTEsIHJlcy0+c3RhcnQsIGUyKTsKPgo+IEZpeGVzOiA5
-YjNiODE3MWY3ZjQgKCJkbWFlbmdpbmU6IHNwcmQ6IEFkZCBTcHJlYWR0cnVtIERNQSBkcml2ZXIi
-KQo+IFNpZ25lZC1vZmYtYnk6IFdlaSBZb25nanVuIDx3ZWl5b25nanVuMUBodWF3ZWkuY29tPgoK
-VGhhbmtzIGZvciBmaXhpbmcgbXkgbWlzdGFrZS4KUmV2aWV3ZWQtYnk6IEJhb2xpbiBXYW5nIDxi
-YW9saW4ud2FuZ0BsaW5hcm8ub3JnPgoKPiAtLS0KPiAgZHJpdmVycy9kbWEvc3ByZC1kbWEuYyB8
-IDIgKysKPiAgMSBmaWxlIGNoYW5nZWQsIDIgaW5zZXJ0aW9ucygrKQo+Cj4gZGlmZiAtLWdpdCBh
-L2RyaXZlcnMvZG1hL3NwcmQtZG1hLmMgYi9kcml2ZXJzL2RtYS9zcHJkLWRtYS5jCj4gaW5kZXgg
-Y2NkZWI4Zi4uZGJhN2ExNyAxMDA2NDQKPiAtLS0gYS9kcml2ZXJzL2RtYS9zcHJkLWRtYS5jCj4g
-KysrIGIvZHJpdmVycy9kbWEvc3ByZC1kbWEuYwo+IEBAIC04MDcsNiArODA3LDggQEAgc3RhdGlj
-IGludCBzcHJkX2RtYV9wcm9iZShzdHJ1Y3QgcGxhdGZvcm1fZGV2aWNlICpwZGV2KQo+ICAgICAg
-ICAgfQo+Cj4gICAgICAgICByZXMgPSBwbGF0Zm9ybV9nZXRfcmVzb3VyY2UocGRldiwgSU9SRVNP
-VVJDRV9NRU0sIDApOwo+ICsgICAgICAgaWYgKCFyZXMpCj4gKyAgICAgICAgICAgICAgIHJldHVy
-biAtRUlOVkFMOwo+ICAgICAgICAgc2Rldi0+Z2xiX2Jhc2UgPSBkZXZtX2lvcmVtYXBfbm9jYWNo
-ZSgmcGRldi0+ZGV2LCByZXMtPnN0YXJ0LAo+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICByZXNvdXJjZV9zaXplKHJlcykpOwo+ICAgICAgICAgaWYgKCFzZGV2
-LT5nbGJfYmFzZSkKPgo=
+T24gTW9uLCBNYXkgMDcsIDIwMTggYXQgMDE6NDA6MzRBTSArMDAwMCwgV2VpIFlvbmdqdW4gd3Jv
+dGU6Cj4gcGxhdGZvcm1fZ2V0X3Jlc291cmNlKCkgbWF5IGZhaWwgYW5kIHJldHVybiBOVUxMLCBz
+byB3ZSBzaG91bGQKPiBiZXR0ZXIgY2hlY2sgaXQncyByZXR1cm4gdmFsdWUgdG8gYXZvaWQgYSBO
+VUxMIHBvaW50ZXIgZGVyZWZlcmVuY2UKPiBhIGJpdCBsYXRlciBpbiB0aGUgY29kZS4KPiAKPiBU
+aGlzIGlzIGRldGVjdGVkIGJ5IENvY2NpbmVsbGUgc2VtYW50aWMgcGF0Y2guCgpBcHBsaWVkLCB0
+aGFua3MK
