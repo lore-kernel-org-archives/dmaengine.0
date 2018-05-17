@@ -2,30 +2,14 @@ Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
 Subject: dmaengine: sprd: fix an NULL vs IS_ERR() bug
-From: Baolin Wang <baolin.wang@linaro.org>
-Message-Id: <CAMz4kuJkWoO-m=4PK=TE_Zg8-ut2h-aMDZpgvYUUUkAqCx26jw@mail.gmail.com>
-Date: Wed, 16 May 2018 16:56:46 +0800
+From: Vinod Koul <vkoul@kernel.org>
+Message-Id: <20180517043105.GR13271@vkoul-mobl>
+Date: Thu, 17 May 2018 10:01:05 +0530
 To: Dan Carpenter <dan.carpenter@oracle.com>
-Cc: Dan Williams <dan.j.williams@intel.com>, Vinod Koul <vkoul@kernel.org>, Orson Zhai <orsonzhai@gmail.com>, Chunyan Zhang <zhang.lyra@gmail.com>, dmaengine@vger.kernel.org, kernel-janitors@vger.kernel.org
+Cc: Dan Williams <dan.j.williams@intel.com>, Baolin Wang <baolin.wang@linaro.org>, Orson Zhai <orsonzhai@gmail.com>, Chunyan Zhang <zhang.lyra@gmail.com>, dmaengine@vger.kernel.org, kernel-janitors@vger.kernel.org
 List-ID: <dmaengine.vger.kernel.org>
 
-SGkgRGFuLAoKT24gMTYgTWF5IDIwMTggYXQgMTY6NDgsIERhbiBDYXJwZW50ZXIgPGRhbi5jYXJw
-ZW50ZXJAb3JhY2xlLmNvbT4gd3JvdGU6Cj4gV2UgcmVjZW50bHkgY2xlYW5lZCB0aGlzIGNvZGUg
-dXAgYnV0IHdlIG5lZWQgdG8gdXBkYXRlIHRoZSBlcnJvcgo+IGhhbmRsaW5nIGFzIHdlbGwuICBU
-aGUgZGV2bV9pb3JlbWFwX3Jlc291cmNlKCkgcmV0dXJucyBlcnJvciBwb2ludGVycyBvbgo+IGVy
-cm9yLCBuZXZlciBOVUxMLgo+Cj4gRml4ZXM6IGU3ZjA2M2FlMWEzMSAoImRtYWVuZ2luZTogc3By
-ZDogVXNlIGRldm1faW9yZW1hcF9yZXNvdXJjZSgpIHRvIG1hcCBtZW1vcnkiKQo+IFNpZ25lZC1v
-ZmYtYnk6IERhbiBDYXJwZW50ZXIgPGRhbi5jYXJwZW50ZXJAb3JhY2xlLmNvbT4KClRoYW5rcy4K
-UmV2aWV3ZWQtYnk6IEJhb2xpbiBXYW5nIDxiYW9saW4ud2FuZ0BsaW5hcm8ub3JnPgoKPgo+IGRp
-ZmYgLS1naXQgYS9kcml2ZXJzL2RtYS9zcHJkLWRtYS5jIGIvZHJpdmVycy9kbWEvc3ByZC1kbWEu
-Ywo+IGluZGV4IGU3MTVkMDdhYTYzMi4uMzZkZjNiMDk2YmJjIDEwMDY0NAo+IC0tLSBhL2RyaXZl
-cnMvZG1hL3NwcmQtZG1hLmMKPiArKysgYi9kcml2ZXJzL2RtYS9zcHJkLWRtYS5jCj4gQEAgLTgw
-OCw4ICs4MDgsOCBAQCBzdGF0aWMgaW50IHNwcmRfZG1hX3Byb2JlKHN0cnVjdCBwbGF0Zm9ybV9k
-ZXZpY2UgKnBkZXYpCj4KPiAgICAgICAgIHJlcyA9IHBsYXRmb3JtX2dldF9yZXNvdXJjZShwZGV2
-LCBJT1JFU09VUkNFX01FTSwgMCk7Cj4gICAgICAgICBzZGV2LT5nbGJfYmFzZSA9IGRldm1faW9y
-ZW1hcF9yZXNvdXJjZSgmcGRldi0+ZGV2LCByZXMpOwo+IC0gICAgICAgaWYgKCFzZGV2LT5nbGJf
-YmFzZSkKPiAtICAgICAgICAgICAgICAgcmV0dXJuIC1FTk9NRU07Cj4gKyAgICAgICBpZiAoSVNf
-RVJSKHNkZXYtPmdsYl9iYXNlKSkKPiArICAgICAgICAgICAgICAgcmV0dXJuIFBUUl9FUlIoc2Rl
-di0+Z2xiX2Jhc2UpOwo+Cj4gICAgICAgICBkbWFfY2FwX3NldChETUFfTUVNQ1BZLCBzZGV2LT5k
-bWFfZGV2LmNhcF9tYXNrKTsKPiAgICAgICAgIHNkZXYtPnRvdGFsX2NobnMgPSBjaG5fY291bnQ7
-Cg==
+T24gMTYtMDUtMTgsIDExOjQ4LCBEYW4gQ2FycGVudGVyIHdyb3RlOgo+IFdlIHJlY2VudGx5IGNs
+ZWFuZWQgdGhpcyBjb2RlIHVwIGJ1dCB3ZSBuZWVkIHRvIHVwZGF0ZSB0aGUgZXJyb3IKPiBoYW5k
+bGluZyBhcyB3ZWxsLiAgVGhlIGRldm1faW9yZW1hcF9yZXNvdXJjZSgpIHJldHVybnMgZXJyb3Ig
+cG9pbnRlcnMgb24KPiBlcnJvciwgbmV2ZXIgTlVMTC4KCkFwcGxpZWQsIHRoYW5rcwo=
