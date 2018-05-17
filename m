@@ -2,17 +2,20 @@ Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
 Subject: dmaengine: qcom: bam_dma: fix some doc warnings.
-From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Message-Id: <6d0d7e0d-16eb-2f91-5ca7-9a7ab2196ee3@linaro.org>
-Date: Thu, 17 May 2018 11:56:13 +0100
-To: Vinod <vkoul@kernel.org>
+From: Vinod Koul <vkoul@kernel.org>
+Message-Id: <20180517105949.GA2932@vkoul-mobl>
+Date: Thu, 17 May 2018 16:29:49 +0530
+To: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 Cc: agross@codeaurora.org, dmaengine@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org
 List-ID: <dmaengine.vger.kernel.org>
 
-T24gMTcvMDUvMTggMTE6NTUsIFZpbm9kIHdyb3RlOgo+PiBsZXQgbWUga25vdyBpZiB5b3Ugc3Rp
-bGwgd2FudCBhbiBlbXB0eSBsaW5lLCBJIGNhbiByZXNwaW4uCj4gWWVhaCB0aGF0J3Mgd2h5IGFz
-a2VkLCBJIGNhbiBlZGl0IHdoaWxlIGFwcGx5aW5nIHNvIG5vIGlzc3VlcwpUaGFua3MsIHRoYXQg
-d2lsbCB3b3JrIQoKLS1zcmluaQotLS0KVG8gdW5zdWJzY3JpYmUgZnJvbSB0aGlzIGxpc3Q6IHNl
-bmQgdGhlIGxpbmUgInVuc3Vic2NyaWJlIGRtYWVuZ2luZSIgaW4KdGhlIGJvZHkgb2YgYSBtZXNz
-YWdlIHRvIG1ham9yZG9tb0B2Z2VyLmtlcm5lbC5vcmcKTW9yZSBtYWpvcmRvbW8gaW5mbyBhdCAg
-aHR0cDovL3ZnZXIua2VybmVsLm9yZy9tYWpvcmRvbW8taW5mby5odG1sCg==
+T24gMTctMDUtMTgsIDEwOjU5LCBTcmluaXZhcyBLYW5kYWdhdGxhIHdyb3RlOgo+IEJ1aWxkaW5n
+IGtlcm5lbCB3aXRoIFc9MSB0aHJvd3MgdXAgYmVsb3cgd2FybmluZ3M6Cj4gYmFtX2RtYS5jOjQ1
+OTogd2FybmluZzogRnVuY3Rpb24gcGFyYW1ldGVyIG9yIG1lbWJlciAnZGlyJwo+IAlub3QgZGVz
+Y3JpYmVkIGluICdiYW1fY2hhbl9pbml0X2h3Jwo+IGJhbV9kbWEuYzo2OTc6IHdhcm5pbmc6IEZ1
+bmN0aW9uIHBhcmFtZXRlciBvciBtZW1iZXIgJ2NoYW4nCj4gCW5vdCBkZXNjcmliZWQgaW4gJ2Jh
+bV9kbWFfdGVybWluYXRlX2FsbCcKPiBiYW1fZG1hLmM6Njk3OiB3YXJuaW5nOiBFeGNlc3MgZnVu
+Y3Rpb24gcGFyYW1ldGVyICdiY2hhbicKPiAJZGVzY3JpcHRpb24gaW4gJ2JhbV9kbWFfdGVybWlu
+YXRlX2FsbCcKPiBiYW1fZG1hLmM6OTY0OiB3YXJuaW5nOiBGdW5jdGlvbiBwYXJhbWV0ZXIgb3Ig
+bWVtYmVyICdiY2hhbicKPiAJbm90IGRlc2NyaWJlZCBpbiAnYmFtX3N0YXJ0X2RtYScKPiAKPiBG
+aXggdGhlc2UhLgoKQXBwbGllZCBib3RoLCB0aGFua3MK
