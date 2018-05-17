@@ -2,26 +2,17 @@ Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
 Subject: dmaengine: qcom: bam_dma: fix some doc warnings.
-From: Vinod Koul <vkoul@kernel.org>
-Message-Id: <20180517105517.GA13271@vkoul-mobl>
-Date: Thu, 17 May 2018 16:25:17 +0530
-To: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Message-Id: <6d0d7e0d-16eb-2f91-5ca7-9a7ab2196ee3@linaro.org>
+Date: Thu, 17 May 2018 11:56:13 +0100
+To: Vinod <vkoul@kernel.org>
 Cc: agross@codeaurora.org, dmaengine@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org
 List-ID: <dmaengine.vger.kernel.org>
 
-T24gMTctMDUtMTgsIDExOjUzLCBTcmluaXZhcyBLYW5kYWdhdGxhIHdyb3RlOgo+IAo+IAo+IE9u
-IDE3LzA1LzE4IDExOjUwLCBWaW5vZCBLb3VsIHdyb3RlOgo+ID4gT24gMTctMDUtMTgsIDEwOjU5
-LCBTcmluaXZhcyBLYW5kYWdhdGxhIHdyb3RlOgo+ID4gPiBkaWZmIC0tZ2l0IGEvZHJpdmVycy9k
-bWEvcWNvbS9iYW1fZG1hLmMgYi9kcml2ZXJzL2RtYS9xY29tL2JhbV9kbWEuYwo+ID4gPiBpbmRl
-eCA0YTgyOGMxODA5OWEuLmEwNWZmZjhhMTQ0NyAxMDA2NDQKPiA+ID4gLS0tIGEvZHJpdmVycy9k
-bWEvcWNvbS9iYW1fZG1hLmMKPiA+ID4gKysrIGIvZHJpdmVycy9kbWEvcWNvbS9iYW1fZG1hLmMK
-PiA+ID4gQEAgLTQ1MSw3ICs0NTEsNyBAQCBzdGF0aWMgdm9pZCBiYW1fcmVzZXRfY2hhbm5lbChz
-dHJ1Y3QgYmFtX2NoYW4gKmJjaGFuKQo+ID4gPiAgIC8qKgo+ID4gPiAgICAqIGJhbV9jaGFuX2lu
-aXRfaHcgLSBJbml0aWFsaXplIGNoYW5uZWwgaGFyZHdhcmUKPiA+ID4gICAgKiBAYmNoYW46IGJh
-bSBjaGFubmVsCj4gPiA+IC0gKgo+ID4gPiArICogQGRpcjogRE1BIHRyYW5zZmVyIGRpcmVjdGlv
-bgo+ID4gCj4gPiBEbyB5b3Ugd2FudCB0byBhZGQgYW4gZW1wdHkgbGluZSBoZXJlPwo+ID4gCj4g
-VEJILCBBbSBub3QgMTAwJSBzdXJlIGl0IGl0IGFkZHMgYW55IHZhbHVlLgo+IAo+IE1vc3Qgb2Yg
-dGhlIGZ1bmN0aW9uIGRvY3MgaW4gdGhlIGZpbGUgaGF2ZSB0aGlzIHNhbWUgaXNzdWUuLiA6LSkK
-PiAKPiBsZXQgbWUga25vdyBpZiB5b3Ugc3RpbGwgd2FudCBhbiBlbXB0eSBsaW5lLCBJIGNhbiBy
-ZXNwaW4uCgpZZWFoIHRoYXQncyB3aHkgYXNrZWQsIEkgY2FuIGVkaXQgd2hpbGUgYXBwbHlpbmcg
-c28gbm8gaXNzdWVzCg==
+T24gMTcvMDUvMTggMTE6NTUsIFZpbm9kIHdyb3RlOgo+PiBsZXQgbWUga25vdyBpZiB5b3Ugc3Rp
+bGwgd2FudCBhbiBlbXB0eSBsaW5lLCBJIGNhbiByZXNwaW4uCj4gWWVhaCB0aGF0J3Mgd2h5IGFz
+a2VkLCBJIGNhbiBlZGl0IHdoaWxlIGFwcGx5aW5nIHNvIG5vIGlzc3VlcwpUaGFua3MsIHRoYXQg
+d2lsbCB3b3JrIQoKLS1zcmluaQotLS0KVG8gdW5zdWJzY3JpYmUgZnJvbSB0aGlzIGxpc3Q6IHNl
+bmQgdGhlIGxpbmUgInVuc3Vic2NyaWJlIGRtYWVuZ2luZSIgaW4KdGhlIGJvZHkgb2YgYSBtZXNz
+YWdlIHRvIG1ham9yZG9tb0B2Z2VyLmtlcm5lbC5vcmcKTW9yZSBtYWpvcmRvbW8gaW5mbyBhdCAg
+aHR0cDovL3ZnZXIua2VybmVsLm9yZy9tYWpvcmRvbW8taW5mby5odG1sCg==
