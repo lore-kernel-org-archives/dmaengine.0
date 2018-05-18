@@ -2,22 +2,15 @@ Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
 Subject: [1/2] dmaengine: usb-dmac: Document R8A7799{0,5} bindings
-From: Simon Horman <horms@verge.net.au>
-Message-Id: <20180517074025.x5d7xfs4dtakf3ew@verge.net.au>
-Date: Thu, 17 May 2018 09:40:25 +0200
+From: Vinod Koul <vinod.koul@linaro.org>
+Message-Id: <20180518040648.GC2932@vkoul-mobl>
+Date: Fri, 18 May 2018 09:36:48 +0530
 To: Ulrich Hecht <ulrich.hecht+renesas@gmail.com>
-Cc: linux-renesas-soc@vger.kernel.org, dmaengine@vger.kernel.org, devicetree@vger.kernel.org, Hiroyuki Yokoyama <hiroyuki.yokoyama.vx@renesas.com>
+Cc: linux-renesas-soc@vger.kernel.org, horms@verge.net.au, dmaengine@vger.kernel.org, devicetree@vger.kernel.org, Hiroyuki Yokoyama <hiroyuki.yokoyama.vx@renesas.com>
 List-ID: <dmaengine.vger.kernel.org>
 
-T24gV2VkLCBNYXkgMTYsIDIwMTggYXQgMDM6MDY6MThQTSArMDIwMCwgVWxyaWNoIEhlY2h0IHdy
-b3RlOgo+IEZyb206IEhpcm95dWtpIFlva295YW1hIDxoaXJveXVraS55b2tveWFtYS52eEByZW5l
-c2FzLmNvbT4KPiAKPiBSZW5lc2FzIFItQ2FyIEQzIChSOEE3Nzk5NSkgYW5kIEUzIChSOEE3Nzk5
-MCkgU29DcyBhbHNvIGhhdmUgdGhlIFItQ2FyCj4gZ2VuMi8zIGNvbXBhdGlibGUgRE1BIGNvbnRy
-b2xsZXJzLCBzbyBkb2N1bWVudCB0aGUgU29DIHNwZWNpZmljIGJpbmRpbmcuCj4gCj4gU2lnbmVk
-LW9mZi1ieTogSGlyb3l1a2kgWW9rb3lhbWEgPGhpcm95dWtpLnlva295YW1hLnZ4QHJlbmVzYXMu
-Y29tPgo+IFt1bGk6IHNxdWFzaGVkXQo+IFNpZ25lZC1vZmYtYnk6IFVscmljaCBIZWNodCA8dWxy
-aWNoLmhlY2h0K3JlbmVzYXNAZ21haWwuY29tPgoKUmV2aWV3ZWQtYnk6IFNpbW9uIEhvcm1hbiA8
-aG9ybXMrcmVuZXNhc0B2ZXJnZS5uZXQuYXU+Ci0tLQpUbyB1bnN1YnNjcmliZSBmcm9tIHRoaXMg
-bGlzdDogc2VuZCB0aGUgbGluZSAidW5zdWJzY3JpYmUgZG1hZW5naW5lIiBpbgp0aGUgYm9keSBv
-ZiBhIG1lc3NhZ2UgdG8gbWFqb3Jkb21vQHZnZXIua2VybmVsLm9yZwpNb3JlIG1ham9yZG9tbyBp
-bmZvIGF0ICBodHRwOi8vdmdlci5rZXJuZWwub3JnL21ham9yZG9tby1pbmZvLmh0bWwK
+T24gMTYtMDUtMTgsIDE1OjA2LCBVbHJpY2ggSGVjaHQgd3JvdGU6Cj4gRnJvbTogSGlyb3l1a2kg
+WW9rb3lhbWEgPGhpcm95dWtpLnlva295YW1hLnZ4QHJlbmVzYXMuY29tPgo+IAo+IFJlbmVzYXMg
+Ui1DYXIgRDMgKFI4QTc3OTk1KSBhbmQgRTMgKFI4QTc3OTkwKSBTb0NzIGFsc28gaGF2ZSB0aGUg
+Ui1DYXIKPiBnZW4yLzMgY29tcGF0aWJsZSBETUEgY29udHJvbGxlcnMsIHNvIGRvY3VtZW50IHRo
+ZSBTb0Mgc3BlY2lmaWMgYmluZGluZy4KCkFwcGxpZWQsIHRoYW5rcwo=
