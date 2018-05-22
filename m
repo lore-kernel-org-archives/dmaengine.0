@@ -1,15 +1,28 @@
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
-Subject: [1/3] dmaengine: imx-sdma: Switch to SPDX identifier
-From: Vinod Koul <vinod.koul@linaro.org>
-Message-Id: <20180523054135.GC20991@vkoul-mobl>
-Date: Wed, 23 May 2018 11:11:35 +0530
-To: Fabio Estevam <festevam@gmail.com>
+Subject: [2/3] dmaengine: mxs-dma: Switch to SPDX identifier
+From: Fabio Estevam <festevam@gmail.com>
+Message-Id: <1526957612-20108-2-git-send-email-festevam@gmail.com>
+Date: Mon, 21 May 2018 23:53:31 -0300
+To: vkoul@kernel.org
 Cc: dmaengine@vger.kernel.org, Fabio Estevam <fabio.estevam@nxp.com>
 List-ID: <dmaengine.vger.kernel.org>
 
-T24gMjEtMDUtMTgsIDIzOjUzLCBGYWJpbyBFc3RldmFtIHdyb3RlOgo+IEZyb206IEZhYmlvIEVz
-dGV2YW0gPGZhYmlvLmVzdGV2YW1AbnhwLmNvbT4KPiAKPiBBZG9wdCB0aGUgU1BEWCBsaWNlbnNl
-IGlkZW50aWZpZXIgaGVhZGVycyB0byBlYXNlIGxpY2Vuc2UgY29tcGxpYW5jZQo+IG1hbmFnZW1l
-bnQuCgpBcHBsaWVkIGFsbCwgdGhhbmtzCg==
+RnJvbTogRmFiaW8gRXN0ZXZhbSA8ZmFiaW8uZXN0ZXZhbUBueHAuY29tPgoKQWRvcHQgdGhlIFNQ
+RFggbGljZW5zZSBpZGVudGlmaWVyIGhlYWRlcnMgdG8gZWFzZSBsaWNlbnNlIGNvbXBsaWFuY2UK
+bWFuYWdlbWVudC4KClNpZ25lZC1vZmYtYnk6IEZhYmlvIEVzdGV2YW0gPGZhYmlvLmVzdGV2YW1A
+bnhwLmNvbT4KLS0tCiBkcml2ZXJzL2RtYS9teHMtZG1hLmMgfCAxNCArKysrKy0tLS0tLS0tLQog
+MSBmaWxlIGNoYW5nZWQsIDUgaW5zZXJ0aW9ucygrKSwgOSBkZWxldGlvbnMoLSkKCmRpZmYgLS1n
+aXQgYS9kcml2ZXJzL2RtYS9teHMtZG1hLmMgYi9kcml2ZXJzL2RtYS9teHMtZG1hLmMKaW5kZXgg
+NDFkMTY3OS4uYWU1MTgyZiAxMDA2NDQKLS0tIGEvZHJpdmVycy9kbWEvbXhzLWRtYS5jCisrKyBi
+L2RyaXZlcnMvZG1hL214cy1kbWEuYwpAQCAtMSwxMiArMSw4IEBACi0vKgotICogQ29weXJpZ2h0
+IDIwMTEgRnJlZXNjYWxlIFNlbWljb25kdWN0b3IsIEluYy4gQWxsIFJpZ2h0cyBSZXNlcnZlZC4K
+LSAqCi0gKiBSZWZlciB0byBkcml2ZXJzL2RtYS9pbXgtc2RtYS5jCi0gKgotICogVGhpcyBwcm9n
+cmFtIGlzIGZyZWUgc29mdHdhcmU7IHlvdSBjYW4gcmVkaXN0cmlidXRlIGl0IGFuZC9vciBtb2Rp
+ZnkKLSAqIGl0IHVuZGVyIHRoZSB0ZXJtcyBvZiB0aGUgR05VIEdlbmVyYWwgUHVibGljIExpY2Vu
+c2UgdmVyc2lvbiAyIGFzCi0gKiBwdWJsaXNoZWQgYnkgdGhlIEZyZWUgU29mdHdhcmUgRm91bmRh
+dGlvbi4KLSAqLworLy8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IEdQTC0yLjAKKy8vCisvLyBD
+b3B5cmlnaHQgMjAxMSBGcmVlc2NhbGUgU2VtaWNvbmR1Y3RvciwgSW5jLiBBbGwgUmlnaHRzIFJl
+c2VydmVkLgorLy8KKy8vIFJlZmVyIHRvIGRyaXZlcnMvZG1hL2lteC1zZG1hLmMKIAogI2luY2x1
+ZGUgPGxpbnV4L2luaXQuaD4KICNpbmNsdWRlIDxsaW51eC90eXBlcy5oPgo=
