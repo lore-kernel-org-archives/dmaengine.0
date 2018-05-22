@@ -2,15 +2,23 @@ Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
 Subject: [2/2] dmaengine: rcar-dmac: Document R8A77990 bindings
-From: Vinod Koul <vinod.koul@linaro.org>
-Message-Id: <20180518040834.GD2932@vkoul-mobl>
-Date: Fri, 18 May 2018 09:38:34 +0530
+From: Rob Herring <robh@kernel.org>
+Message-Id: <20180522225813.GA7148@rob-hp-laptop>
+Date: Tue, 22 May 2018 17:58:13 -0500
 To: Ulrich Hecht <ulrich.hecht+renesas@gmail.com>
 Cc: linux-renesas-soc@vger.kernel.org, horms@verge.net.au, dmaengine@vger.kernel.org, devicetree@vger.kernel.org, Hiroyuki Yokoyama <hiroyuki.yokoyama.vx@renesas.com>
 List-ID: <dmaengine.vger.kernel.org>
 
-T24gMTYtMDUtMTgsIDE1OjA2LCBVbHJpY2ggSGVjaHQgd3JvdGU6Cj4gRnJvbTogSGlyb3l1a2kg
-WW9rb3lhbWEgPGhpcm95dWtpLnlva295YW1hLnZ4QHJlbmVzYXMuY29tPgo+IAo+IFJlbmVzYXMg
-Ui1DYXIgRTMgKFI4QTc3OTkwKSBTb0MgYWxzbyBoYXMgdGhlIFItQ2FyIGdlbjIvMyBjb21wYXRp
-YmxlIERNQQo+IGNvbnRyb2xsZXJzLCBzbyBkb2N1bWVudCB0aGUgU29DIHNwZWNpZmljIGJpbmRp
-bmcuCgpUaGlzIGZhaWxzIHRvIGFwcGx5IGZvciBtZSwgcGxlYXNlIHJlYmFzZSBhbmQgc2VuZAo=
+T24gV2VkLCBNYXkgMTYsIDIwMTggYXQgMDM6MDY6MTlQTSArMDIwMCwgVWxyaWNoIEhlY2h0IHdy
+b3RlOgo+IEZyb206IEhpcm95dWtpIFlva295YW1hIDxoaXJveXVraS55b2tveWFtYS52eEByZW5l
+c2FzLmNvbT4KPiAKPiBSZW5lc2FzIFItQ2FyIEUzIChSOEE3Nzk5MCkgU29DIGFsc28gaGFzIHRo
+ZSBSLUNhciBnZW4yLzMgY29tcGF0aWJsZSBETUEKPiBjb250cm9sbGVycywgc28gZG9jdW1lbnQg
+dGhlIFNvQyBzcGVjaWZpYyBiaW5kaW5nLgo+IAo+IFNpZ25lZC1vZmYtYnk6IEhpcm95dWtpIFlv
+a295YW1hIDxoaXJveXVraS55b2tveWFtYS52eEByZW5lc2FzLmNvbT4KPiBTaWduZWQtb2ZmLWJ5
+OiBVbHJpY2ggSGVjaHQgPHVscmljaC5oZWNodCtyZW5lc2FzQGdtYWlsLmNvbT4KPiAtLS0KPiAg
+RG9jdW1lbnRhdGlvbi9kZXZpY2V0cmVlL2JpbmRpbmdzL2RtYS9yZW5lc2FzLHJjYXItZG1hYy50
+eHQgfCAxICsKPiAgMSBmaWxlIGNoYW5nZWQsIDEgaW5zZXJ0aW9uKCspCgpBY2tlZC1ieTogUm9i
+IEhlcnJpbmcgPHJvYmhAa2VybmVsLm9yZz4KLS0tClRvIHVuc3Vic2NyaWJlIGZyb20gdGhpcyBs
+aXN0OiBzZW5kIHRoZSBsaW5lICJ1bnN1YnNjcmliZSBkbWFlbmdpbmUiIGluCnRoZSBib2R5IG9m
+IGEgbWVzc2FnZSB0byBtYWpvcmRvbW9Admdlci5rZXJuZWwub3JnCk1vcmUgbWFqb3Jkb21vIGlu
+Zm8gYXQgIGh0dHA6Ly92Z2VyLmtlcm5lbC5vcmcvbWFqb3Jkb21vLWluZm8uaHRtbAo=
