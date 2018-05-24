@@ -1,17 +1,45 @@
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
-Subject: [v2,11/13] dmaengine: pxa: make the filter function internal
-From: Vinod Koul <vkoul@kernel.org>
-Message-Id: <20180525105943.GP26663@vkoul-mobl>
-Date: Fri, 25 May 2018 16:29:43 +0530
-To: Robert Jarzmik <robert.jarzmik@free.fr>
-Cc: Daniel Mack <daniel@zonque.org>, Haojian Zhuang <haojian.zhuang@gmail.com>, Ezequiel Garcia <ezequiel.garcia@free-electrons.com>, Boris Brezillon <boris.brezillon@free-electrons.com>, David Woodhouse <dwmw2@infradead.org>, Brian Norris <computersforpeace@gmail.com>, Marek Vasut <marek.vasut@gmail.com>, Richard Weinberger <richard@nod.at>, Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, Arnd Bergmann <arnd@arndb.de>, linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, linux-ide@vger.kernel.org, dmaengine@vger.kernel.org, linux-media@vger.kernel.org, linux-mmc@vger.kernel.org, linux-mtd@lists.infradead.org, netdev@vger.kernel.org, alsa-devel@alsa-project.org
+Subject: [v2,09/13] ata: pata_pxa: remove the dmaengine compat need
+From: Robert Jarzmik <robert.jarzmik@free.fr>
+Message-Id: <20180524070703.11901-10-robert.jarzmik@free.fr>
+Date: Thu, 24 May 2018 09:06:59 +0200
+To: Daniel Mack <daniel@zonque.org>, Haojian Zhuang <haojian.zhuang@gmail.com>, Robert Jarzmik <robert.jarzmik@free.fr>, Ezequiel Garcia <ezequiel.garcia@free-electrons.com>, Boris Brezillon <boris.brezillon@free-electrons.com>, David Woodhouse <dwmw2@infradead.org>, Brian Norris <computersforpeace@gmail.com>, Marek Vasut <marek.vasut@gmail.com>, Richard Weinberger <richard@nod.at>, Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, Arnd Bergmann <arnd@arndb.de>
+Cc: linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, linux-ide@vger.kernel.org, dmaengine@vger.kernel.org, linux-media@vger.kernel.org, linux-mmc@vger.kernel.org, linux-mtd@lists.infradead.org, netdev@vger.kernel.org, alsa-devel@alsa-project.org
 List-ID: <dmaengine.vger.kernel.org>
 
-T24gMjQtMDUtMTgsIDA5OjA3LCBSb2JlcnQgSmFyem1payB3cm90ZToKPiBBcyB0aGUgcHhhIGFy
-Y2hpdGVjdHVyZSBhbmQgYWxsIGl0cyByZWxhdGVkIGRyaXZlcnMgZG8gbm90IHJlbHkgYW55bW9y
-ZQo+IG9uIHRoZSBmaWx0ZXIgZnVuY3Rpb24sIHRoYW5rcyB0byB0aGUgc2xhdmUgbWFwIGNvbnZl
-cnNpb24sIG1ha2UKPiBweGFkX2ZpbHRlcl9mbigpIHN0YXRpYywgYW5kIHJlbW92ZSBpdCBmcm9t
-IHRoZSBnbG9iYWwgbmFtZXNwYWNlLgoKQWNrZWQtYnk6IFZpbm9kIEtvdWwgPHZrb3VsQGtlcm5l
-bC5vcmc+Cg==
+QXMgdGhlIHB4YSBhcmNoaXRlY3R1cmUgc3dpdGNoZWQgdG93YXJkcyB0aGUgZG1hZW5naW5lIHNs
+YXZlIG1hcCwgdGhlCm9sZCBjb21wYXRpYmlsaXR5IG1lY2hhbmlzbSB0byBhY3F1aXJlIHRoZSBk
+bWEgcmVxdWVzdG9yIGxpbmUgbnVtYmVyIGFuZApwcmlvcml0eSBhcmUgbm90IG5lZWRlZCBhbnlt
+b3JlLgoKVGhpcyBwYXRjaCBzaW1wbGlmaWVzIHRoZSBkbWEgcmVzb3VyY2UgYWNxdWlzaXRpb24s
+IHVzaW5nIHRoZSBtb3JlCmdlbmVyaWMgZnVuY3Rpb24gZG1hX3JlcXVlc3Rfc2xhdmVfY2hhbm5l
+bCgpLgoKU2lnbmVkLW9mZi1ieTogUm9iZXJ0IEphcnptaWsgPHJvYmVydC5qYXJ6bWlrQGZyZWUu
+ZnI+CkFja2VkLWJ5OiBCYXJ0bG9taWVqIFpvbG5pZXJraWV3aWN6IDxiLnpvbG5pZXJraWVAc2Ft
+c3VuZy5jb20+Ci0tLQogZHJpdmVycy9hdGEvcGF0YV9weGEuYyB8IDEwICstLS0tLS0tLS0KIDEg
+ZmlsZSBjaGFuZ2VkLCAxIGluc2VydGlvbigrKSwgOSBkZWxldGlvbnMoLSkKCmRpZmYgLS1naXQg
+YS9kcml2ZXJzL2F0YS9wYXRhX3B4YS5jIGIvZHJpdmVycy9hdGEvcGF0YV9weGEuYwppbmRleCBm
+NmM0NmU5YTRkYzAuLmU4YjZhMmU0NjRjOSAxMDA2NDQKLS0tIGEvZHJpdmVycy9hdGEvcGF0YV9w
+eGEuYworKysgYi9kcml2ZXJzL2F0YS9wYXRhX3B4YS5jCkBAIC0yNSw3ICsyNSw2IEBACiAjaW5j
+bHVkZSA8bGludXgvbGliYXRhLmg+CiAjaW5jbHVkZSA8bGludXgvcGxhdGZvcm1fZGV2aWNlLmg+
+CiAjaW5jbHVkZSA8bGludXgvZG1hZW5naW5lLmg+Ci0jaW5jbHVkZSA8bGludXgvZG1hL3B4YS1k
+bWEuaD4KICNpbmNsdWRlIDxsaW51eC9ncGlvLmg+CiAjaW5jbHVkZSA8bGludXgvc2xhYi5oPgog
+I2luY2x1ZGUgPGxpbnV4L2NvbXBsZXRpb24uaD4KQEAgLTE4MCw4ICsxNzksNiBAQCBzdGF0aWMg
+aW50IHB4YV9hdGFfcHJvYmUoc3RydWN0IHBsYXRmb3JtX2RldmljZSAqcGRldikKIAlzdHJ1Y3Qg
+cmVzb3VyY2UgKmlycV9yZXM7CiAJc3RydWN0IHBhdGFfcHhhX3BkYXRhICpwZGF0YSA9IGRldl9n
+ZXRfcGxhdGRhdGEoJnBkZXYtPmRldik7CiAJc3RydWN0IGRtYV9zbGF2ZV9jb25maWcJY29uZmln
+OwotCWRtYV9jYXBfbWFza190IG1hc2s7Ci0Jc3RydWN0IHB4YWRfcGFyYW0gcGFyYW07CiAJaW50
+IHJldCA9IDA7CiAKIAkvKgpAQCAtMjc4LDEwICsyNzUsNiBAQCBzdGF0aWMgaW50IHB4YV9hdGFf
+cHJvYmUoc3RydWN0IHBsYXRmb3JtX2RldmljZSAqcGRldikKIAogCWFwLT5wcml2YXRlX2RhdGEg
+PSBkYXRhOwogCi0JZG1hX2NhcF96ZXJvKG1hc2spOwotCWRtYV9jYXBfc2V0KERNQV9TTEFWRSwg
+bWFzayk7Ci0JcGFyYW0ucHJpbyA9IFBYQURfUFJJT19MT1dFU1Q7Ci0JcGFyYW0uZHJjbXIgPSBw
+ZGF0YS0+ZG1hX2RyZXE7CiAJbWVtc2V0KCZjb25maWcsIDAsIHNpemVvZihjb25maWcpKTsKIAlj
+b25maWcuc3JjX2FkZHJfd2lkdGggPSBETUFfU0xBVkVfQlVTV0lEVEhfMl9CWVRFUzsKIAljb25m
+aWcuZHN0X2FkZHJfd2lkdGggPSBETUFfU0xBVkVfQlVTV0lEVEhfMl9CWVRFUzsKQEAgLTI5NCw4
+ICsyODcsNyBAQCBzdGF0aWMgaW50IHB4YV9hdGFfcHJvYmUoc3RydWN0IHBsYXRmb3JtX2Rldmlj
+ZSAqcGRldikKIAkgKiBSZXF1ZXN0IHRoZSBETUEgY2hhbm5lbAogCSAqLwogCWRhdGEtPmRtYV9j
+aGFuID0KLQkJZG1hX3JlcXVlc3Rfc2xhdmVfY2hhbm5lbF9jb21wYXQobWFzaywgcHhhZF9maWx0
+ZXJfZm4sCi0JCQkJCQkgJnBhcmFtLCAmcGRldi0+ZGV2LCAiZGF0YSIpOworCQlkbWFfcmVxdWVz
+dF9zbGF2ZV9jaGFubmVsKCZwZGV2LT5kZXYsICJkYXRhIik7CiAJaWYgKCFkYXRhLT5kbWFfY2hh
+bikKIAkJcmV0dXJuIC1FQlVTWTsKIAlyZXQgPSBkbWFlbmdpbmVfc2xhdmVfY29uZmlnKGRhdGEt
+PmRtYV9jaGFuLCAmY29uZmlnKTsK
