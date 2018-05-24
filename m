@@ -2,25 +2,28 @@ Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
 Subject: [v1] dma: imx-sdma: add virt-dma support
-From: Vinod Koul <vkoul@kernel.org>
-Message-Id: <20180523133441.GK20991@vkoul-mobl>
-Date: Wed, 23 May 2018 19:04:41 +0530
-To: "s.hauer@pengutronix.de" <s.hauer@pengutronix.de>, Robin Gong <yibin.gong@nxp.com>
+From: Robin Gong <yibin.gong@nxp.com>
+Message-Id: <1527154959.3990.39.camel@nxp.com>
+Date: Thu, 24 May 2018 01:42:46 +0000
+To: "s.hauer@pengutronix.de" <s.hauer@pengutronix.de>, "vkoul@kernel.org" <vkoul@kernel.org>
 Cc: "dan.j.williams@intel.com" <dan.j.williams@intel.com>, "dmaengine@vger.kernel.org" <dmaengine@vger.kernel.org>, "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>, "linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>, "vinod.koul@intel.com" <vinod.koul@intel.com>, dl-linux-imx <linux-imx@nxp.com>
 List-ID: <dmaengine.vger.kernel.org>
 
-T24gMjMtMDUtMTgsIDEyOjU2LCBzLmhhdWVyQHBlbmd1dHJvbml4LmRlIHdyb3RlOgoKPiBXZWxs
-LCBpdCdzIHNvbWV3aGF0IHJlbGF0ZWQgdG8gdmlydHVhbCBkbWEgc3VwcG9ydCwgYnV0IHRoYXQn
-cyBub3QgbXkKPiBwb2ludC4gTXkgcG9pbnQgaXMgdGhhdCB0aGlzIHBhdGNoIGlzIHF1aXRlIGJp
-ZyBhbmQgdGh1cyBoYXJkIHRvIHJldmlldy4KPiBJZiB3ZSBmaW5kIHdheXMgdG8gbWFrZSBpdCBz
-bWFsbGVyIGFuZCB0byBzcGxpdCBpdCB1cCBpbiBtdWx0aXBsZQo+IHBhdGNoZXMgdGhlbiB3ZSBz
-aG91bGQgZG8gc28sIGJlY2F1c2UgaXQgbWFrZXMgaXQgZWFzaWVyIHRvIHJldmlldyBhbmQKPiBp
-biBjYXNlIHlvdSBicmVhayBzb21ldGhpbmcgaGVyZSB3ZSByYWlzZSB0aGUgY2hhbmNlIHRoYXQg
-YSAiZ2l0IGJpc2VjdCIKPiBsYW5kcyBvbiBhIHNtYWxsZXIgcGF0Y2ggd2hpY2ggaXMgZWFzaWVy
-IHRvIHVuZGVyc3RhbmQuCj4gCj4gUGxlYXNlIHRyeSBhbmQgbWFrZSB0aGF0IGEgc2VwYXJhdGUg
-Y2hhbmdlLiBJIGhhdmVuJ3QgcmVhbGx5IGxvb2tlZCBpbnRvCj4gaXQgYW5kIGl0IG1heSBub3Qg
-YmUgcG9zc2libGUgZHVlIHRvIHJlYXNvbnMgSSBoYXZlbid0IHNlZW4sIGJ1dCBwbGVhc2UKPiBh
-dCBsZWFzdCBnaXZlIGl0IGEgdHJ5LgoKVGhhdCBpcyBzb21ldGhpbmcgd291bGQgaGVscCBtZSBh
-cyB3ZWxsLiBJIGhhdmUgcmV2aWV3ZWQgdGhlIHBhdGNoIGFuZCBhbSBub3QKc3VyZSBJIGZ1bGx5
-IHVuZGVyc3RhbmQgdGhlIGNoYW5nZXMsIHNvIGJyZWFraW5nIHVwIHN0dWZmIHdvdWxkIGRlZmlu
-aXRlbHkgaGVscAppbiB0aGUgcmV2aWV3Li4K
+T2theSwgSSdsbCB0cnkgdG8gc3BsaXQgaXQuDQpPbiDkuIksIDIwMTgtMDUtMjMgYXQgMTk6MDQg
+KzA1MzAsIFZpbm9kIHdyb3RlOg0KPiBPbiAyMy0wNS0xOCwgMTI6NTYsIHMuaGF1ZXJAcGVuZ3V0
+cm9uaXguZGUgd3JvdGU6DQo+IA0KPiA+IA0KPiA+IFdlbGwsIGl0J3Mgc29tZXdoYXQgcmVsYXRl
+ZCB0byB2aXJ0dWFsIGRtYSBzdXBwb3J0LCBidXQgdGhhdCdzIG5vdA0KPiA+IG15DQo+ID4gcG9p
+bnQuIE15IHBvaW50IGlzIHRoYXQgdGhpcyBwYXRjaCBpcyBxdWl0ZSBiaWcgYW5kIHRodXMgaGFy
+ZCB0bw0KPiA+IHJldmlldy4NCj4gPiBJZiB3ZSBmaW5kIHdheXMgdG8gbWFrZSBpdCBzbWFsbGVy
+IGFuZCB0byBzcGxpdCBpdCB1cCBpbiBtdWx0aXBsZQ0KPiA+IHBhdGNoZXMgdGhlbiB3ZSBzaG91
+bGQgZG8gc28sIGJlY2F1c2UgaXQgbWFrZXMgaXQgZWFzaWVyIHRvIHJldmlldw0KPiA+IGFuZA0K
+PiA+IGluIGNhc2UgeW91IGJyZWFrIHNvbWV0aGluZyBoZXJlIHdlIHJhaXNlIHRoZSBjaGFuY2Ug
+dGhhdCBhICJnaXQNCj4gPiBiaXNlY3QiDQo+ID4gbGFuZHMgb24gYSBzbWFsbGVyIHBhdGNoIHdo
+aWNoIGlzIGVhc2llciB0byB1bmRlcnN0YW5kLg0KPiA+IA0KPiA+IFBsZWFzZSB0cnkgYW5kIG1h
+a2UgdGhhdCBhIHNlcGFyYXRlIGNoYW5nZS4gSSBoYXZlbid0IHJlYWxseSBsb29rZWQNCj4gPiBp
+bnRvDQo+ID4gaXQgYW5kIGl0IG1heSBub3QgYmUgcG9zc2libGUgZHVlIHRvIHJlYXNvbnMgSSBo
+YXZlbid0IHNlZW4sIGJ1dA0KPiA+IHBsZWFzZQ0KPiA+IGF0IGxlYXN0IGdpdmUgaXQgYSB0cnku
+DQo+IFRoYXQgaXMgc29tZXRoaW5nIHdvdWxkIGhlbHAgbWUgYXMgd2VsbC4gSSBoYXZlIHJldmll
+d2VkIHRoZSBwYXRjaA0KPiBhbmQgYW0gbm90DQo+IHN1cmUgSSBmdWxseSB1bmRlcnN0YW5kIHRo
+ZSBjaGFuZ2VzLCBzbyBicmVha2luZyB1cCBzdHVmZiB3b3VsZA0KPiBkZWZpbml0ZWx5IGhlbHAN
+Cj4gaW4gdGhlIHJldmlldy4uDQo+Cg==
