@@ -1,27 +1,41 @@
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
-Subject: [v2,05/13] mtd: rawnand: marvell: remove the dmaengine compat need
-From: Miquel Raynal <miquel.raynal@bootlin.com>
-Message-Id: <20180524113006.3d5f393e@xps13>
-Date: Thu, 24 May 2018 11:30:06 +0200
-To: Robert Jarzmik <robert.jarzmik@free.fr>
-Cc: Daniel Mack <daniel@zonque.org>, Haojian Zhuang <haojian.zhuang@gmail.com>, Ezequiel Garcia <ezequiel.garcia@free-electrons.com>, Boris Brezillon <boris.brezillon@free-electrons.com>, David Woodhouse <dwmw2@infradead.org>, Brian Norris <computersforpeace@gmail.com>, Marek Vasut <marek.vasut@gmail.com>, Richard Weinberger <richard@nod.at>, Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, Arnd Bergmann <arnd@arndb.de>, alsa-devel@alsa-project.org, netdev@vger.kernel.org, linux-mmc@vger.kernel.org, linux-kernel@vger.kernel.org, linux-ide@vger.kernel.org, linux-mtd@lists.infradead.org, dmaengine@vger.kernel.org, linux-arm-kernel@lists.infradead.org, linux-media@vger.kernel.org
+Subject: [v2,06/13] net: smc911x: remove the dmaengine compat need
+From: Robert Jarzmik <robert.jarzmik@free.fr>
+Message-Id: <20180524070703.11901-7-robert.jarzmik@free.fr>
+Date: Thu, 24 May 2018 09:06:56 +0200
+To: Daniel Mack <daniel@zonque.org>, Haojian Zhuang <haojian.zhuang@gmail.com>, Robert Jarzmik <robert.jarzmik@free.fr>, Ezequiel Garcia <ezequiel.garcia@free-electrons.com>, Boris Brezillon <boris.brezillon@free-electrons.com>, David Woodhouse <dwmw2@infradead.org>, Brian Norris <computersforpeace@gmail.com>, Marek Vasut <marek.vasut@gmail.com>, Richard Weinberger <richard@nod.at>, Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, Arnd Bergmann <arnd@arndb.de>
+Cc: linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, linux-ide@vger.kernel.org, dmaengine@vger.kernel.org, linux-media@vger.kernel.org, linux-mmc@vger.kernel.org, linux-mtd@lists.infradead.org, netdev@vger.kernel.org, alsa-devel@alsa-project.org
 List-ID: <dmaengine.vger.kernel.org>
 
-SGkgUm9iZXJ0LAoKT24gVGh1LCAyNCBNYXkgMjAxOCAwOTowNjo1NSArMDIwMCwgUm9iZXJ0IEph
-cnptaWsKPHJvYmVydC5qYXJ6bWlrQGZyZWUuZnI+IHdyb3RlOgoKPiBBcyB0aGUgcHhhIGFyY2hp
-dGVjdHVyZSBzd2l0Y2hlZCB0b3dhcmRzIHRoZSBkbWFlbmdpbmUgc2xhdmUgbWFwLCB0aGUKPiBv
-bGQgY29tcGF0aWJpbGl0eSBtZWNoYW5pc20gdG8gYWNxdWlyZSB0aGUgZG1hIHJlcXVlc3RvciBs
-aW5lIG51bWJlciBhbmQKPiBwcmlvcml0eSBhcmUgbm90IG5lZWRlZCBhbnltb3JlLgo+IAo+IFRo
-aXMgcGF0Y2ggc2ltcGxpZmllcyB0aGUgZG1hIHJlc291cmNlIGFjcXVpc2l0aW9uLCB1c2luZyB0
-aGUgbW9yZQo+IGdlbmVyaWMgZnVuY3Rpb24gZG1hX3JlcXVlc3Rfc2xhdmVfY2hhbm5lbCgpLgo+
-IAo+IFNpZ25lZC1vZmYtYnk6IFNpZ25lZC1vZmYtYnk6IERhbmllbCBNYWNrIDxkYW5pZWxAem9u
-cXVlLm9yZz4KPiBTaWduZWQtb2ZmLWJ5OiBSb2JlcnQgSmFyem1payA8cm9iZXJ0LmphcnptaWtA
-ZnJlZS5mcj4KPiAtLS0KPiAgZHJpdmVycy9tdGQvbmFuZC9yYXcvbWFydmVsbF9uYW5kLmMgfCAx
-NyArLS0tLS0tLS0tLS0tLS0tLQo+ICAxIGZpbGUgY2hhbmdlZCwgMSBpbnNlcnRpb24oKyksIDE2
-IGRlbGV0aW9ucygtKQo+IAoKQWNrZWQtYnk6IE1pcXVlbCBSYXluYWwgPG1pcXVlbC5yYXluYWxA
-Ym9vdGxpbi5jb20+CgpUaGFua3MsCk1pcXXDqGwKLS0tClRvIHVuc3Vic2NyaWJlIGZyb20gdGhp
-cyBsaXN0OiBzZW5kIHRoZSBsaW5lICJ1bnN1YnNjcmliZSBkbWFlbmdpbmUiIGluCnRoZSBib2R5
-IG9mIGEgbWVzc2FnZSB0byBtYWpvcmRvbW9Admdlci5rZXJuZWwub3JnCk1vcmUgbWFqb3Jkb21v
-IGluZm8gYXQgIGh0dHA6Ly92Z2VyLmtlcm5lbC5vcmcvbWFqb3Jkb21vLWluZm8uaHRtbAo=
+QXMgdGhlIHB4YSBhcmNoaXRlY3R1cmUgc3dpdGNoZWQgdG93YXJkcyB0aGUgZG1hZW5naW5lIHNs
+YXZlIG1hcCwgdGhlCm9sZCBjb21wYXRpYmlsaXR5IG1lY2hhbmlzbSB0byBhY3F1aXJlIHRoZSBk
+bWEgcmVxdWVzdG9yIGxpbmUgbnVtYmVyIGFuZApwcmlvcml0eSBhcmUgbm90IG5lZWRlZCBhbnlt
+b3JlLgoKVGhpcyBwYXRjaCBzaW1wbGlmaWVzIHRoZSBkbWEgcmVzb3VyY2UgYWNxdWlzaXRpb24s
+IHVzaW5nIHRoZSBtb3JlCmdlbmVyaWMgZnVuY3Rpb24gZG1hX3JlcXVlc3Rfc2xhdmVfY2hhbm5l
+bCgpLgoKU2lnbmVkLW9mZi1ieTogUm9iZXJ0IEphcnptaWsgPHJvYmVydC5qYXJ6bWlrQGZyZWUu
+ZnI+Ci0tLQogZHJpdmVycy9uZXQvZXRoZXJuZXQvc21zYy9zbWM5MTF4LmMgfCAxNiArKy0tLS0t
+LS0tLS0tLS0tCiAxIGZpbGUgY2hhbmdlZCwgMiBpbnNlcnRpb25zKCspLCAxNCBkZWxldGlvbnMo
+LSkKCmRpZmYgLS1naXQgYS9kcml2ZXJzL25ldC9ldGhlcm5ldC9zbXNjL3NtYzkxMXguYyBiL2Ry
+aXZlcnMvbmV0L2V0aGVybmV0L3Ntc2Mvc21jOTExeC5jCmluZGV4IDA1MTU3NDQyYTk4MC4uNGMz
+NzEzYmQ1Y2FhIDEwMDY0NAotLS0gYS9kcml2ZXJzL25ldC9ldGhlcm5ldC9zbXNjL3NtYzkxMXgu
+YworKysgYi9kcml2ZXJzL25ldC9ldGhlcm5ldC9zbXNjL3NtYzkxMXguYwpAQCAtNzQsNyArNzQs
+NiBAQCBzdGF0aWMgY29uc3QgY2hhciB2ZXJzaW9uW10gPQogI2luY2x1ZGUgPGxpbnV4L3NrYnVm
+Zi5oPgogCiAjaW5jbHVkZSA8bGludXgvZG1hZW5naW5lLmg+Ci0jaW5jbHVkZSA8bGludXgvZG1h
+L3B4YS1kbWEuaD4KIAogI2luY2x1ZGUgPGFzbS9pby5oPgogCkBAIC0xNzk0LDggKzE3OTMsNiBA
+QCBzdGF0aWMgaW50IHNtYzkxMXhfcHJvYmUoc3RydWN0IG5ldF9kZXZpY2UgKmRldikKIAl1bnNp
+Z25lZCBsb25nIGlycV9mbGFnczsKICNpZmRlZiBTTUNfVVNFX0RNQQogCXN0cnVjdCBkbWFfc2xh
+dmVfY29uZmlnCWNvbmZpZzsKLQlkbWFfY2FwX21hc2tfdCBtYXNrOwotCXN0cnVjdCBweGFkX3Bh
+cmFtIHBhcmFtOwogI2VuZGlmCiAKIAlEQkcoU01DX0RFQlVHX0ZVTkMsIGRldiwgIi0tPiAlc1xu
+IiwgX19mdW5jX18pOwpAQCAtMTk2OSwxNyArMTk2Niw4IEBAIHN0YXRpYyBpbnQgc21jOTExeF9w
+cm9iZShzdHJ1Y3QgbmV0X2RldmljZSAqZGV2KQogCiAjaWZkZWYgU01DX1VTRV9ETUEKIAotCWRt
+YV9jYXBfemVybyhtYXNrKTsKLQlkbWFfY2FwX3NldChETUFfU0xBVkUsIG1hc2spOwotCXBhcmFt
+LnByaW8gPSBQWEFEX1BSSU9fTE9XRVNUOwotCXBhcmFtLmRyY21yID0gLTFVTDsKLQotCWxwLT5y
+eGRtYSA9Ci0JCWRtYV9yZXF1ZXN0X3NsYXZlX2NoYW5uZWxfY29tcGF0KG1hc2ssIHB4YWRfZmls
+dGVyX2ZuLAotCQkJCQkJICZwYXJhbSwgJmRldi0+ZGV2LCAicngiKTsKLQlscC0+dHhkbWEgPQot
+CQlkbWFfcmVxdWVzdF9zbGF2ZV9jaGFubmVsX2NvbXBhdChtYXNrLCBweGFkX2ZpbHRlcl9mbiwK
+LQkJCQkJCSAmcGFyYW0sICZkZXYtPmRldiwgInR4Iik7CisJbHAtPnJ4ZG1hID0gZG1hX3JlcXVl
+c3Rfc2xhdmVfY2hhbm5lbCgmZGV2LT5kZXYsICJyeCIpOworCWxwLT50eGRtYSA9IGRtYV9yZXF1
+ZXN0X3NsYXZlX2NoYW5uZWwoJmRldi0+ZGV2LCAidHgiKTsKIAlscC0+cnhkbWFfYWN0aXZlID0g
+MDsKIAlscC0+dHhkbWFfYWN0aXZlID0gMDsKIAo=
