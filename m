@@ -2,31 +2,15 @@ Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
 Subject: [RESEND] dmaengine: pxa: add a default requestor policy
-From: Robert Jarzmik <robert.jarzmik@free.fr>
-Message-Id: <20180526095418.22960-1-robert.jarzmik@free.fr>
-Date: Sat, 26 May 2018 11:54:18 +0200
-To: Daniel Mack <daniel@zonque.org>, Haojian Zhuang <haojian.zhuang@gmail.com>, Robert Jarzmik <robert.jarzmik@free.fr>, Vinod Koul <vinod.koul@intel.com>, Vinod Koul <vkoul@kernel.org>
-Cc: linux-arm-kernel@lists.infradead.org, dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org, Arnd Bergmann <arnd@arndb.de>
+From: Vinod Koul <vkoul@kernel.org>
+Message-Id: <20180529072401.GG5666@vkoul-mobl>
+Date: Tue, 29 May 2018 12:54:01 +0530
+To: Robert Jarzmik <robert.jarzmik@free.fr>
+Cc: Daniel Mack <daniel@zonque.org>, Haojian Zhuang <haojian.zhuang@gmail.com>, Vinod Koul <vinod.koul@intel.com>, linux-arm-kernel@lists.infradead.org, dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org, Arnd Bergmann <arnd@arndb.de>
 List-ID: <dmaengine.vger.kernel.org>
 
-QXMgd2hhdCBmb3JtZXIgZHJjbXIgLTEgdmFsdWUgbWVhbnQsIGFkZCBhIHRoaXMgYXMgYSBkZWZh
-dWx0IHRvIGVhY2gKY2hhbm5lbCwgaWUuIHRoYXQgYnkgZGVmYXVsdCBubyByZXF1ZXN0b3IgbGlu
-ZSBpcyB1c2VkLgoKVGhpcyBpcyBzcGVjaWZpY2FsbHkgdXNlZCBmb3IgbmV0d29yayBkcml2ZXJz
-IHNtYzkxeCBhbmQgc21jOTExeCwgYW5kCm5lZWRlZCBmb3IgdGhlaXIgcG9ydCB0byBzbGF2ZSBt
-YXBzLgoKQ2M6IEFybmQgQmVyZ21hbm4gPGFybmRAYXJuZGIuZGU+ClNpZ25lZC1vZmYtYnk6IFJv
-YmVydCBKYXJ6bWlrIDxyb2JlcnQuamFyem1pa0BmcmVlLmZyPgotLS0KIGRyaXZlcnMvZG1hL3B4
-YV9kbWEuYyB8IDUgKysrKysKIDEgZmlsZSBjaGFuZ2VkLCA1IGluc2VydGlvbnMoKykKCmRpZmYg
-LS1naXQgYS9kcml2ZXJzL2RtYS9weGFfZG1hLmMgYi9kcml2ZXJzL2RtYS9weGFfZG1hLmMKaW5k
-ZXggOTUwNTMzNGY5YzZlLi42MDRkZjFiZGFkZjcgMTAwNjQ0Ci0tLSBhL2RyaXZlcnMvZG1hL3B4
-YV9kbWEuYworKysgYi9kcml2ZXJzL2RtYS9weGFfZG1hLmMKQEAgLTc2Miw2ICs3NjIsOCBAQCBz
-dGF0aWMgdm9pZCBweGFkX2ZyZWVfY2hhbl9yZXNvdXJjZXMoc3RydWN0IGRtYV9jaGFuICpkY2hh
-bikKIAlkbWFfcG9vbF9kZXN0cm95KGNoYW4tPmRlc2NfcG9vbCk7CiAJY2hhbi0+ZGVzY19wb29s
-ID0gTlVMTDsKIAorCWNoYW4tPmRyY21yID0gKHUzMiktMTsKKwljaGFuLT5wcmlvID0gUFhBRF9Q
-UklPX0xPV0VTVDsKIH0KIAogc3RhdGljIHZvaWQgcHhhZF9mcmVlX2Rlc2Moc3RydWN0IHZpcnRf
-ZG1hX2Rlc2MgKnZkKQpAQCAtMTM4Niw2ICsxMzg4LDkgQEAgc3RhdGljIGludCBweGFkX2luaXRf
-ZG1hZGV2KHN0cnVjdCBwbGF0Zm9ybV9kZXZpY2UgKm9wLAogCQljID0gZGV2bV9remFsbG9jKCZv
-cC0+ZGV2LCBzaXplb2YoKmMpLCBHRlBfS0VSTkVMKTsKIAkJaWYgKCFjKQogCQkJcmV0dXJuIC1F
-Tk9NRU07CisKKwkJYy0+ZHJjbXIgPSAodTMyKS0xOworCQljLT5wcmlvID0gUFhBRF9QUklPX0xP
-V0VTVDsKIAkJYy0+dmMuZGVzY19mcmVlID0gcHhhZF9mcmVlX2Rlc2M7CiAJCXZjaGFuX2luaXQo
-JmMtPnZjLCAmcGRldi0+c2xhdmUpOwogCQlpbml0X3dhaXRxdWV1ZV9oZWFkKCZjLT53cV9zdGF0
-ZSk7Cg==
+T24gMjYtMDUtMTgsIDExOjU0LCBSb2JlcnQgSmFyem1payB3cm90ZToKPiBAQCAtNzYyLDYgKzc2
+Miw4IEBAIHN0YXRpYyB2b2lkIHB4YWRfZnJlZV9jaGFuX3Jlc291cmNlcyhzdHJ1Y3QgZG1hX2No
+YW4gKmRjaGFuKQo+ICAJZG1hX3Bvb2xfZGVzdHJveShjaGFuLT5kZXNjX3Bvb2wpOwo+ICAJY2hh
+bi0+ZGVzY19wb29sID0gTlVMTDsKPiAgCj4gKwljaGFuLT5kcmNtciA9ICh1MzIpLTE7Cgp3aHkg
+bm90IHVzZSBVMzJfTUFYIGZvciB0aGlzPwo=
