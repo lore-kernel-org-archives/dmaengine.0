@@ -2,19 +2,28 @@ Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
 Subject: [v5,1/6] dmaengine: fsldma: Replace DMA_IN/OUT by FSL_DMA_IN/OUT
-From: Vinod Koul <vkoul@kernel.org>
-Message-Id: <20180529102121.GK5666@vkoul-mobl>
-Date: Tue, 29 May 2018 15:51:21 +0530
-To: Wen He <wen.he_1@nxp.com>
+From: Wen He <wen.he_1@nxp.com>
+Message-Id: <AM6PR0402MB33825BEBF94C41A0D2567B7CE26D0@AM6PR0402MB3382.eurprd04.prod.outlook.com>
+Date: Tue, 29 May 2018 10:22:51 +0000
+To: Vinod <vkoul@kernel.org>
 Cc: "dmaengine@vger.kernel.org" <dmaengine@vger.kernel.org>, "robh+dt@kernel.org" <robh+dt@kernel.org>, "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>, Leo Li <leoyang.li@nxp.com>, Jiafei Pan <jiafei.pan@nxp.com>, Jiaheng Fan <jiaheng.fan@nxp.com>
 List-ID: <dmaengine.vger.kernel.org>
 
-T24gMjktMDUtMTgsIDEwOjE0LCBXZW4gSGUgd3JvdGU6Cj4gPiAKPiA+IFdlbGwgdGhhdCBwYXRj
-aCBzZWVtcyB0byBkbyBhIGJpdCBtb3JlIHRoYW4gcmVwbGFjZSBETUFfSU4vT1VUIGJ5Cj4gPiBG
-U0xfRE1BX0lOL09VVCBjYXJlIHRvIGV4cGxhaW4gdGhvc2UuIGJlc3Qgd291bGQgYmUgdG8gZG8g
-YSBwYXRjaCB3aGljaAo+ID4gZG9lcyByZXBsYWNlIGFuZCB0aGVuIGFkZCBuZXcgdGhpbmdzIGlu
-IHNlcGFyYXRlIHBhdGNoLCBlYXNpZXIgdG8gcmV2aWV3Cj4gPiAKPiAKPiBXaGF0IGRvZXMgbWVh
-bnM/Cj4gVGhpcyBhbHNvIGEgcGF0Y2guCgpZb3UgY25hIGRvIG9ubHkgcmVwbGFjZSBETUFfSU4v
-T1VUIGJ5IEZTTF9ETUFfSU4vT1VUIGluIHRoaXMgcGF0Y2guIFNlY29uZCBwYXRjaApjYW4gYWRk
-IGFkZGl0aW9uYWwgbWFjcm9zIHlvdSBoYXZlIGFkZGVkIGFuZCBleHBsYWluIHdoYXQgdGhleSBk
-byBhbmQgd2h5IHRoZXkKYXJlIG5lZWRlZAo=
+PiAtLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KPiBGcm9tOiBWaW5vZCBbbWFpbHRvOnZrb3Vs
+QGtlcm5lbC5vcmddDQo+IFNlbnQ6IDIwMTjlubQ15pyIMjnml6UgMTg6MjENCj4gVG86IFdlbiBI
+ZSA8d2VuLmhlXzFAbnhwLmNvbT4NCj4gQ2M6IGRtYWVuZ2luZUB2Z2VyLmtlcm5lbC5vcmc7IHJv
+YmgrZHRAa2VybmVsLm9yZzsNCj4gZGV2aWNldHJlZUB2Z2VyLmtlcm5lbC5vcmc7IExlbyBMaSA8
+bGVveWFuZy5saUBueHAuY29tPjsgSmlhZmVpIFBhbg0KPiA8amlhZmVpLnBhbkBueHAuY29tPjsg
+SmlhaGVuZyBGYW4gPGppYWhlbmcuZmFuQG54cC5jb20+DQo+IFN1YmplY3Q6IFJlOiBbdjUgMS82
+XSBkbWFlbmdpbmU6IGZzbGRtYTogUmVwbGFjZSBETUFfSU4vT1VUIGJ5DQo+IEZTTF9ETUFfSU4v
+T1VUDQo+IA0KPiBPbiAyOS0wNS0xOCwgMTA6MTQsIFdlbiBIZSB3cm90ZToNCj4gPiA+DQo+ID4g
+PiBXZWxsIHRoYXQgcGF0Y2ggc2VlbXMgdG8gZG8gYSBiaXQgbW9yZSB0aGFuIHJlcGxhY2UgRE1B
+X0lOL09VVCBieQ0KPiA+ID4gRlNMX0RNQV9JTi9PVVQgY2FyZSB0byBleHBsYWluIHRob3NlLiBi
+ZXN0IHdvdWxkIGJlIHRvIGRvIGEgcGF0Y2gNCj4gPiA+IHdoaWNoIGRvZXMgcmVwbGFjZSBhbmQg
+dGhlbiBhZGQgbmV3IHRoaW5ncyBpbiBzZXBhcmF0ZSBwYXRjaCwgZWFzaWVyDQo+ID4gPiB0byBy
+ZXZpZXcNCj4gPiA+DQo+ID4NCj4gPiBXaGF0IGRvZXMgbWVhbnM/DQo+ID4gVGhpcyBhbHNvIGEg
+cGF0Y2guDQo+IA0KPiBZb3UgY25hIGRvIG9ubHkgcmVwbGFjZSBETUFfSU4vT1VUIGJ5IEZTTF9E
+TUFfSU4vT1VUIGluIHRoaXMgcGF0Y2guDQo+IFNlY29uZCBwYXRjaCBjYW4gYWRkIGFkZGl0aW9u
+YWwgbWFjcm9zIHlvdSBoYXZlIGFkZGVkIGFuZCBleHBsYWluIHdoYXQNCj4gdGhleSBkbyBhbmQg
+d2h5IHRoZXkgYXJlIG5lZWRlZA0KPiANCg0KR290IGl0LCBpdCdzIGdvb2QgaWRlYS4gDQoNCldl
+bg0KDQo+IC0tDQo+IH5WaW5vZAo=
