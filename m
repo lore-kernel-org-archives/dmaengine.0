@@ -2,18 +2,28 @@ Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
 Subject: [v5,2/6] dmaengine: fsl-qdma: Add qDMA controller driver for Layerscape SoCs
-From: Vinod Koul <vkoul@kernel.org>
-Message-Id: <20180605163043.GX16230@vkoul-mobl>
-Date: Tue, 5 Jun 2018 22:00:43 +0530
-To: Wen He <wen.he_1@nxp.com>
-Cc: Leo Li <leoyang.li@nxp.com>, "dmaengine@vger.kernel.org" <dmaengine@vger.kernel.org>, Rob Herring <robh+dt@kernel.org>, "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" <devicetree@vger.kernel.org>, Jiafei Pan <jiafei.pan@nxp.com>, Jiaheng Fan <jiaheng.fan@nxp.com>
+From: Li Yang <leoyang.li@nxp.com>
+Message-Id: <CADRPPNQzn=1Nvp0h3xdTU7DdwFKN1grxyUKhESCV5u8V9FeMjg@mail.gmail.com>
+Date: Tue, 5 Jun 2018 12:24:56 -0500
+To: Vinod <vkoul@kernel.org>
+Cc: Wen He <wen.he_1@nxp.com>, "dmaengine@vger.kernel.org" <dmaengine@vger.kernel.org>, Rob Herring <robh+dt@kernel.org>, "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" <devicetree@vger.kernel.org>, Jiafei Pan <jiafei.pan@nxp.com>, Jiaheng Fan <jiaheng.fan@nxp.com>
 List-ID: <dmaengine.vger.kernel.org>
 
-T24gMDQtMDYtMTgsIDA5OjUzLCBXZW4gSGUgd3JvdGU6Cgo+IAo+ID4gPiArLy8gU1BEWC1MaWNl
-bnNlLUlkZW50aWZpZXI6IEdQTC0yLjAKPiA+ID4gKy8vIENvcHlyaWdodCAyMDE4IE5YUAo+ID4g
-Cj4gPiBJIGtub3cgdGhlIFNQRFggdGFnIGlzIHJlY29tbWVuZGVkIHRvIGJlIHRoZSAxc3QgbGlu
-ZSwgYnV0IGNvcHlyaWdodCBub3JtYWxseQo+ID4gZ29lcyBiZWxvdyB0aGUgZmlsZSBkZXNjcmlw
-dGlvbiBub3QgYWJvdmUuCgpJIGRvIG5vdCB0aGluayB0aGF0IGlzIHNwZWNpZmllZCBhbnl3aGVy
-ZS4uIGNhbiB5b3UgcG9pbnQgaXQ/Cgo+IAo+IEFsbCByaWdodCwgYnV0IFZpbm9kIHJlY29tbWVu
-ZCB0aGlzIGtpbmQgb2Ygd3JpdGluZy4KPiBNYXkgYmUgd2UgbmVlZCB0byBkaXNjdXNzIHdpdGgg
-Vmlub2QuCg==
+T24gVHVlLCBKdW4gNSwgMjAxOCBhdCAxMTozMCBBTSwgVmlub2QgPHZrb3VsQGtlcm5lbC5vcmc+
+IHdyb3RlOgo+IE9uIDA0LTA2LTE4LCAwOTo1MywgV2VuIEhlIHdyb3RlOgo+Cj4+Cj4+ID4gPiAr
+Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IEdQTC0yLjAKPj4gPiA+ICsvLyBDb3B5cmlnaHQg
+MjAxOCBOWFAKPj4gPgo+PiA+IEkga25vdyB0aGUgU1BEWCB0YWcgaXMgcmVjb21tZW5kZWQgdG8g
+YmUgdGhlIDFzdCBsaW5lLCBidXQgY29weXJpZ2h0IG5vcm1hbGx5Cj4+ID4gZ29lcyBiZWxvdyB0
+aGUgZmlsZSBkZXNjcmlwdGlvbiBub3QgYWJvdmUuCj4KPiBJIGRvIG5vdCB0aGluayB0aGF0IGlz
+IHNwZWNpZmllZCBhbnl3aGVyZS4uIGNhbiB5b3UgcG9pbnQgaXQ/CgpOby4gIEl0IGlzIG5vdCBk
+b2N1bWVudGVkLiAgQnV0IHRoZSBtYWpvcml0eSBvZiB0aGUgc291cmNlIGZpbGVzIGluCkxpbnV4
+IGFyZSB1c2luZyB0aGlzIGhlYWRlciBmb3JtYXQgbGlrZSBiZWxvdywgc28gSSBhc3N1bWUgaXQg
+aXMKc29tZXRoaW5nIGxpa2UgYSBjb252ZW50aW9uLgoKLyoKICoge2ZpbGVuYW1lIC0tfSBmaWxl
+IGRlc2NyaXB0aW9uCiAqCiAqIENvcHlyaWdodCAuLi4KICoKICogTGljZW5zZSAuLi4KICovCgpU
+aGUgRG9jdW1lbnRhdGlvbi9wcm9jZXNzL2xpY2Vuc2UtcnVsZXMucnN0IG9ubHkgbWVudGlvbmVk
+IGFib3V0IHRoZQpyZXF1aXJlbWVudCBmb3IgU1BEWCB0YWdzLiAgU28gSSB0aGluayB3ZSBzaG91
+bGQga2VlcCB0aGUgZm9ybWF0IGZvcgpvdGhlciBwYXJ0IG9mIHRoZSBoZWFkZXIuCgpSZWdhcmRz
+LApMZW8KLS0tClRvIHVuc3Vic2NyaWJlIGZyb20gdGhpcyBsaXN0OiBzZW5kIHRoZSBsaW5lICJ1
+bnN1YnNjcmliZSBkbWFlbmdpbmUiIGluCnRoZSBib2R5IG9mIGEgbWVzc2FnZSB0byBtYWpvcmRv
+bW9Admdlci5rZXJuZWwub3JnCk1vcmUgbWFqb3Jkb21vIGluZm8gYXQgIGh0dHA6Ly92Z2VyLmtl
+cm5lbC5vcmcvbWFqb3Jkb21vLWluZm8uaHRtbAo=
