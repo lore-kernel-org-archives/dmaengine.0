@@ -3,34 +3,17 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: base64
 Subject: [v5,2/6] dmaengine: fsl-qdma: Add qDMA controller driver for Layerscape SoCs
 From: Vinod Koul <vkoul@kernel.org>
-Message-Id: <20180605162854.GW16230@vkoul-mobl>
-Date: Tue, 5 Jun 2018 21:58:54 +0530
+Message-Id: <20180605163043.GX16230@vkoul-mobl>
+Date: Tue, 5 Jun 2018 22:00:43 +0530
 To: Wen He <wen.he_1@nxp.com>
-Cc: "dmaengine@vger.kernel.org" <dmaengine@vger.kernel.org>, "robh+dt@kernel.org" <robh+dt@kernel.org>, "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>, Leo Li <leoyang.li@nxp.com>, Jiafei Pan <jiafei.pan@nxp.com>, Jiaheng Fan <jiaheng.fan@nxp.com>
+Cc: Leo Li <leoyang.li@nxp.com>, "dmaengine@vger.kernel.org" <dmaengine@vger.kernel.org>, Rob Herring <robh+dt@kernel.org>, "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" <devicetree@vger.kernel.org>, Jiafei Pan <jiafei.pan@nxp.com>, Jiaheng Fan <jiaheng.fan@nxp.com>
 List-ID: <dmaengine.vger.kernel.org>
 
-T24gMzEtMDUtMTgsIDAxOjU4LCBXZW4gSGUgd3JvdGU6Cj4gPiA+ID4gPiA+ID4gK3N0YXRpYyB2
-b2lkIGZzbF9xZG1hX2lzc3VlX3BlbmRpbmcoc3RydWN0IGRtYV9jaGFuICpjaGFuKSB7Cj4gPiA+
-ID4gPiA+ID4gKwlzdHJ1Y3QgZnNsX3FkbWFfY2hhbiAqZnNsX2NoYW4gPSB0b19mc2xfcWRtYV9j
-aGFuKGNoYW4pOwo+ID4gPiA+ID4gPiA+ICsJc3RydWN0IGZzbF9xZG1hX3F1ZXVlICpmc2xfcXVl
-dWUgPSBmc2xfY2hhbi0+cXVldWU7Cj4gPiA+ID4gPiA+ID4gKwl1bnNpZ25lZCBsb25nIGZsYWdz
-Owo+ID4gPiA+ID4gPiA+ICsKPiA+ID4gPiA+ID4gPiArCXNwaW5fbG9ja19pcnFzYXZlKCZmc2xf
-cXVldWUtPnF1ZXVlX2xvY2ssIGZsYWdzKTsKPiA+ID4gPiA+ID4gPiArCXNwaW5fbG9jaygmZnNs
-X2NoYW4tPnZjaGFuLmxvY2spOwo+ID4gPiA+ID4gPiA+ICsJaWYgKHZjaGFuX2lzc3VlX3BlbmRp
-bmcoJmZzbF9jaGFuLT52Y2hhbikpCj4gPiA+ID4gPiA+ID4gKwkJZnNsX3FkbWFfZW5xdWV1ZV9k
-ZXNjKGZzbF9jaGFuKTsKPiA+ID4gPiA+ID4gPiArCXNwaW5fdW5sb2NrKCZmc2xfY2hhbi0+dmNo
-YW4ubG9jayk7Cj4gPiA+ID4gPiA+ID4gKwlzcGluX3VubG9ja19pcnFyZXN0b3JlKCZmc2xfcXVl
-dWUtPnF1ZXVlX2xvY2ssIGZsYWdzKTsKPiA+ID4gPiA+ID4KPiA+ID4gPiA+ID4gd2h5IGRvIHdl
-IG5lZWQgdHdvIGxvY2tzLCBhbmQgc2luY2UgeW91IGFyZSBkb2luZyB2Y2hhbiB3aHkKPiA+ID4g
-PiA+ID4gc2hvdWxkIHlvdSBhZGQgeW91ciBvd24gbG9jayBvbiB0b3AKPiA+ID4gPiA+ID4KPiA+
-ID4gPiA+Cj4gPiA+ID4gPiBZZXMsIHdlIG5lZWQgdHdvIGxvY2tzLgo+ID4gPiA+ID4gQXMgeW91
-IGtub3csIHRoZSBRRE1BIHN1cHBvcnQgbXVsdGlwbGUgdmlydHVhbGl6ZWQgYmxvY2tzIGZvcgo+
-ID4gPiA+ID4gbXVsdGktY29yZQo+ID4gPiA+IHN1cHBvcnQuCj4gPiA+ID4gPiBzbyB3ZSBuZWVk
-IHRvIG1ha2Ugc3VyZSB0aGF0IG11bGl0aS1jb3JlIGFjY2VzcyBpc3N1ZXMuCj4gPiA+ID4KPiA+
-ID4gPiBidXQgd2h5IGNhbnQgeW91IHVzZSB2Y2hhbiBsb2NrIGZvciBhbGw/Cj4gPiA+ID4KPiA+
-ID4KPiA+ID4gV2UgY2FuJ3Qgb25seSB1c2UgdmNoYW4gbG9jayBmb3IgYWxsLiBvdGhlcndpc2Ug
-ZW5xdWV1ZSBhY3Rpb24gd2lsbCBiZQo+ID4gaW50ZXJydXB0ZWQuCj4gPiAKPiA+IEkgdGhpbmsg
-aXQgaXMgcG9zc2libGUgdG8gdXNlIG9ubHkgdmNoYW4gbG9jawo+IAo+IEkgdHJpZWQgdGhhdCBp
-ZiBJIHVzZSBvbmx5IHZjaGFuIGxvY2sgdGhlbiBxZG1hIHdpbGwgYmUgY2FuJ3Qgd29yay4KPiBE
-byB5b3UgaGF2ZSBhIG90aGVyIGdvb2QgaWRlYT8KCmNhbiB5b3UgZXhwbGFpbiB0aGUgc2NlbmFy
-aW8uLi4K
+T24gMDQtMDYtMTgsIDA5OjUzLCBXZW4gSGUgd3JvdGU6Cgo+IAo+ID4gPiArLy8gU1BEWC1MaWNl
+bnNlLUlkZW50aWZpZXI6IEdQTC0yLjAKPiA+ID4gKy8vIENvcHlyaWdodCAyMDE4IE5YUAo+ID4g
+Cj4gPiBJIGtub3cgdGhlIFNQRFggdGFnIGlzIHJlY29tbWVuZGVkIHRvIGJlIHRoZSAxc3QgbGlu
+ZSwgYnV0IGNvcHlyaWdodCBub3JtYWxseQo+ID4gZ29lcyBiZWxvdyB0aGUgZmlsZSBkZXNjcmlw
+dGlvbiBub3QgYWJvdmUuCgpJIGRvIG5vdCB0aGluayB0aGF0IGlzIHNwZWNpZmllZCBhbnl3aGVy
+ZS4uIGNhbiB5b3UgcG9pbnQgaXQ/Cgo+IAo+IEFsbCByaWdodCwgYnV0IFZpbm9kIHJlY29tbWVu
+ZCB0aGlzIGtpbmQgb2Ygd3JpdGluZy4KPiBNYXkgYmUgd2UgbmVlZCB0byBkaXNjdXNzIHdpdGgg
+Vmlub2QuCg==
