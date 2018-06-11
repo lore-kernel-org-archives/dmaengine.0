@@ -2,17 +2,23 @@ Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
 Subject: dmaengine: ioatdma: set the completion address register after channel reset
-From: Sinan Kaya <okaya@codeaurora.org>
-Message-Id: <dabe9547-cc14-cd42-f26c-e8daf633d7a6@codeaurora.org>
-Date: Mon, 11 Jun 2018 15:37:25 -0400
-To: Dave Jiang <dave.jiang@intel.com>, vkoul@kernel.org
-Cc: dmaengine@vger.kernel.org
+From: Dave Jiang <dave.jiang@intel.com>
+Message-Id: <c29e27fd-ee10-2a0a-8434-f8630fdff50f@intel.com>
+Date: Mon, 11 Jun 2018 12:38:48 -0700
+To: Sinan Kaya <okaya@codeaurora.org>, "vkoul@kernel.org" <vkoul@kernel.org>
+Cc: "dmaengine@vger.kernel.org" <dmaengine@vger.kernel.org>
 List-ID: <dmaengine.vger.kernel.org>
 
-T24gNi8xMS8yMDE4IDM6MzAgUE0sIERhdmUgSmlhbmcgd3JvdGU6Cj4gKwkvKiBzZXQgdGhlIGNv
-bXBsZXRpb24gYWRkcmVzcyByZWdpc3RlciBhZ2FpbiAqLwo+ICsJd3JpdGVsKCgodTY0KWlvYXRf
-Y2hhbi0+Y29tcGxldGlvbl9kbWEpICYgMHgwMDAwMDAwMEZGRkZGRkZGLAo+ICsJICAgICAgIGlv
-YXRfY2hhbi0+cmVnX2Jhc2UgKyBJT0FUX0NIQU5DTVBfT0ZGU0VUX0xPVyk7Cj4gKwl3cml0ZWwo
-KCh1NjQpaW9hdF9jaGFuLT5jb21wbGV0aW9uX2RtYSkgPj4gMzIsCj4gKwkgICAgICAgaW9hdF9j
-aGFuLT5yZWdfYmFzZSArIElPQVRfQ0hBTkNNUF9PRkZTRVRfSElHSCk7CgpZb3UgY291bGQgaGF2
-ZSB1c2VkIGxvd2VyXzMyX2JpdHMoKSBhbmQgdXBwZXJfMzJfYml0cygpIG1hY3JvcyBoZXJlLgo=
+T24gMDYvMTEvMjAxOCAxMjozNyBQTSwgU2luYW4gS2F5YSB3cm90ZToKPiBPbiA2LzExLzIwMTgg
+MzozMCBQTSwgRGF2ZSBKaWFuZyB3cm90ZToKPj4gKwkvKiBzZXQgdGhlIGNvbXBsZXRpb24gYWRk
+cmVzcyByZWdpc3RlciBhZ2FpbiAqLwo+PiArCXdyaXRlbCgoKHU2NClpb2F0X2NoYW4tPmNvbXBs
+ZXRpb25fZG1hKSAmIDB4MDAwMDAwMDBGRkZGRkZGRiwKPj4gKwkgICAgICAgaW9hdF9jaGFuLT5y
+ZWdfYmFzZSArIElPQVRfQ0hBTkNNUF9PRkZTRVRfTE9XKTsKPj4gKwl3cml0ZWwoKCh1NjQpaW9h
+dF9jaGFuLT5jb21wbGV0aW9uX2RtYSkgPj4gMzIsCj4+ICsJICAgICAgIGlvYXRfY2hhbi0+cmVn
+X2Jhc2UgKyBJT0FUX0NIQU5DTVBfT0ZGU0VUX0hJR0gpOwo+IAo+IFlvdSBjb3VsZCBoYXZlIHVz
+ZWQgbG93ZXJfMzJfYml0cygpIGFuZCB1cHBlcl8zMl9iaXRzKCkgbWFjcm9zIGhlcmUuCj4gCgpJ
+IGp1c3QgY29weSBhbmQgcGFzdGVkIGxlZ2FjeSBjb2RlIGZyb20gc29tZXdoZXJlIGVsc2UgaW4g
+dGhlIGRyaXZlci4gSQpjYW4gdXBkYXRlLgotLS0KVG8gdW5zdWJzY3JpYmUgZnJvbSB0aGlzIGxp
+c3Q6IHNlbmQgdGhlIGxpbmUgInVuc3Vic2NyaWJlIGRtYWVuZ2luZSIgaW4KdGhlIGJvZHkgb2Yg
+YSBtZXNzYWdlIHRvIG1ham9yZG9tb0B2Z2VyLmtlcm5lbC5vcmcKTW9yZSBtYWpvcmRvbW8gaW5m
+byBhdCAgaHR0cDovL3ZnZXIua2VybmVsLm9yZy9tYWpvcmRvbW8taW5mby5odG1sCg==
