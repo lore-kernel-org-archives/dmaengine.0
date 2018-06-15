@@ -3,27 +3,25 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: base64
 Subject: [v2] dmaengine: rcar-dmac: don't use DMAC error interrupt
 From: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
-Message-Id: <87po0ssxx5.wl%kuninori.morimoto.gx@renesas.com>
-Date: Fri, 15 Jun 2018 00:24:45 +0000
-To: Vinod Koul <vinod.koul@linaro.org>
-Cc: Geert Uytterhoeven <geert@linux-m68k.org>, Dan Williams <dan.j.williams@intel.com>, Magnus Damm <magnus.damm@gmail.com>, Linux-Renesas <linux-renesas-soc@vger.kernel.org>, Linux Kernel Mailing List <linux-kernel@vger.kernel.org>, Laurent Pinchart <laurent.pinchart@ideasonboard.com>, Kieran Bingham <kieran@ksquared.org.uk>, Geert Uytterhoeven <geert+renesas@glider.be>, dmaengine@vger.kernel.org, "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" <devicetree@vger.kernel.org>
+Message-Id: <87o9gcsxj3.wl%kuninori.morimoto.gx@renesas.com>
+Date: Fri, 15 Jun 2018 00:33:12 +0000
+To: Geert Uytterhoeven <geert@linux-m68k.org>
+Cc: vkoul@kernel.org, Dan Williams <dan.j.williams@intel.com>, Magnus Damm <magnus.damm@gmail.com>, Linux-Renesas <linux-renesas-soc@vger.kernel.org>, Linux Kernel Mailing List <linux-kernel@vger.kernel.org>, Laurent Pinchart <laurent.pinchart@ideasonboard.com>, Kieran Bingham <kieran@ksquared.org.uk>, Geert Uytterhoeven <geert+renesas@glider.be>, dmaengine@vger.kernel.org, "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" <devicetree@vger.kernel.org>
 List-ID: <dmaengine.vger.kernel.org>
 
-SGkgVmlub2QKClRoYW5rIHlvdSBmb3IgeW91ciBmZWVkYmFjawoKPiA+IEZyb206IEt1bmlub3Jp
-IE1vcmltb3RvIDxrdW5pbm9yaS5tb3JpbW90by5neEByZW5lc2FzLmNvbT4KPiA+IAo+ID4gQ3Vy
-cmVudCByY2FyLWRtYWMgaXMgdXNpbmcgRE1BQyBlcnJvciBpbnRlcnJ1cHQgd2hpY2ggd2lsbCBo
-YW5kbGUgYWxsCj4gPiBjaGFubmVsJ3MgZXJyb3IuIEJ1dCBpbiB0aGlzIGRlc2lnbiwgZXJyb3Ig
-aGFuZGxpbmcgaXRzZWxmIHdpbGwgYmUKPiA+IGlzc3VlIGlmIHVzZXIgd2FudCB0byB1c2Ugdmly
-dHVhbGl6YXRpb24sIG11bHRpIE9TLCBldGMuCj4gPiBUaGlzIHBhdGNoIHJlbW92ZXMgY3VycmVu
-dCBETUFDIGVycm9yIGludGVycnVwdCBoYW5kbGluZywgYW5kIGhhbmRsZSBpdAo+ID4gb24gZWFj
-aCBjaGFubmVsIGludGVycnVwdCBoYW5kbGVyLgo+IAo+IFNvIHdoYXQgaGFwcGVucyB3aGVuIHlv
-dSBhcmUgbm90IGluIHZpcnR1YWxpemF0aW9uLCBtdWx0aSBPUy4uPyBXaG8KPiBoYW5kbGVzIHRo
-aXMgaW50ZXJydXB0PwoKU29ycnkgZm9yIG5vbiBjbGVhciBFbmdsaXNoCkl0IGhhcyAydHlwZXMg
-b2YgaW50ZXJydXB0LgogMSkgSVJRIGZvciBFcnJvcgogMikgSVJRIGZvciBlYWNoIGNoYW5uZWxz
-CgpJZiBlcnJvciBoYXBwZW5zIG9uIHNvbWUgY2hhbm5lbHMsCnRoZSBlcnJvciBJUlEgd2FzIGhh
-bmRsZWQgYnkgMSksIGFuZCAiYWxsIiBjaGFubmVscyB3aWxsIGJlIHJlc3RhcnRlZC4KVGh1cywg
-dGhpcyBwYXRjaCByZW1vdmVzIDEpLCBhbmQgaGFuZGxlcyBlYWNoIGVycm9yIG9uIDIpLgoKQmVz
-dCByZWdhcmRzCi0tLQpLdW5pbm9yaSBNb3JpbW90bwotLQpUbyB1bnN1YnNjcmliZSBmcm9tIHRo
-aXMgbGlzdDogc2VuZCB0aGUgbGluZSAidW5zdWJzY3JpYmUgZG1hZW5naW5lIiBpbgp0aGUgYm9k
-eSBvZiBhIG1lc3NhZ2UgdG8gbWFqb3Jkb21vQHZnZXIua2VybmVsLm9yZwpNb3JlIG1ham9yZG9t
-byBpbmZvIGF0ICBodHRwOi8vdmdlci5rZXJuZWwub3JnL21ham9yZG9tby1pbmZvLmh0bWwK
+SGkgR2VlcnQKClRoYW5rIHlvdSBmb3IgeW91ciBmZWVkYmFjawoKPiA+IEN1cnJlbnQgcmNhci1k
+bWFjIGlzIHVzaW5nIERNQUMgZXJyb3IgaW50ZXJydXB0IHdoaWNoIHdpbGwgaGFuZGxlIGFsbAo+
+ID4gY2hhbm5lbCdzIGVycm9yLiBCdXQgaW4gdGhpcyBkZXNpZ24sIGVycm9yIGhhbmRsaW5nIGl0
+c2VsZiB3aWxsIGJlCj4gPiBpc3N1ZSBpZiB1c2VyIHdhbnQgdG8gdXNlIHZpcnR1YWxpemF0aW9u
+LCBtdWx0aSBPUywgZXRjLgo+ID4gVGhpcyBwYXRjaCByZW1vdmVzIGN1cnJlbnQgRE1BQyBlcnJv
+ciBpbnRlcnJ1cHQgaGFuZGxpbmcsIGFuZCBoYW5kbGUgaXQKPiA+IG9uIGVhY2ggY2hhbm5lbCBp
+bnRlcnJ1cHQgaGFuZGxlci4KPiAKPiBKdXN0IHdvbmRlcmluZywgd2hhdCdzIHRoZSB1c2FnZSBw
+YXR0ZXJuIHdoZXJlIHRoaXMgY2F1c2VzIGEgcHJvYmxlbT8KPiBEbyB5b3UgcGxhbiB0byBleHBv
+cnQgcGFydCBvZiBhIFNZUy1ETUFDIGluc3RhbmNlIHRvIGEgZ3Vlc3Q/CgoidmlydHVhbGl6YXRp
+b24sIG11bHRpIE9TIiBwYXJ0IGlzIG1heWJlIG1pc2xlYWRpbmcuCkl0IHdpbGwgYmUgcHJvYmxl
+bSBvbiBub24gdmlydHVhbGl6YXRpb24sIHRvby4KCj4gSG93IHRvIG1haW50YWluIGhvc3QvZ3Vl
+c3QgaXNvbGF0aW9uPwoKVGhpcyBpcyBhbm90aGVyIHRvcGljL2lzc3VlLCBJIHRoaW5rCgpCZXN0
+IHJlZ2FyZHMKLS0tCkt1bmlub3JpIE1vcmltb3RvCi0tClRvIHVuc3Vic2NyaWJlIGZyb20gdGhp
+cyBsaXN0OiBzZW5kIHRoZSBsaW5lICJ1bnN1YnNjcmliZSBkbWFlbmdpbmUiIGluCnRoZSBib2R5
+IG9mIGEgbWVzc2FnZSB0byBtYWpvcmRvbW9Admdlci5rZXJuZWwub3JnCk1vcmUgbWFqb3Jkb21v
+IGluZm8gYXQgIGh0dHA6Ly92Z2VyLmtlcm5lbC5vcmcvbWFqb3Jkb21vLWluZm8uaHRtbAo=
