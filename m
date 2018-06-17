@@ -1,24 +1,51 @@
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
-Subject: [v3,09/14] ASoC: pxa: remove the dmaengine compat need
+Subject: [v3,05/14] media: pxa_camera: remove the dmaengine compat need
 From: Robert Jarzmik <robert.jarzmik@free.fr>
-Message-Id: <87muvoo75w.fsf@belgarion.home>
-Date: Thu, 21 Jun 2018 10:50:03 +0200
-To: Mark Brown <broonie@kernel.org>, Daniel Mack <daniel@zonque.org>
-Cc: Haojian Zhuang <haojian.zhuang@gmail.com>, Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>, Tejun Heo <tj@kernel.org>, Vinod Koul <vinod.koul@intel.com>, Mauro Carvalho Chehab <mchehab@kernel.org>, Ulf Hansson <ulf.hansson@linaro.org>, Miquel Raynal <miquel.raynal@bootlin.com>, Boris Brezillon <boris.brezillon@bootlin.com>, David Woodhouse <dwmw2@infradead.org>, Brian Norris <computersforpeace@gmail.com>, Marek Vasut <marek.vasut@gmail.com>, Richard Weinberger <richard@nod.at>, Nicolas Pitre <nico@fluxnic.net>, Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, Liam Girdwood <lgirdwood@gmail.com>, linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, linux-ide@vger.kernel.org, dmaengine@vger.kernel.org, linux-media@vger.kernel.org, linux-mmc@vger.kernel.org, linux-mtd@lists.infradead.org, netdev@vger.kernel.org, alsa-devel@alsa-project.org
+Message-Id: <20180617170217.24177-6-robert.jarzmik@free.fr>
+Date: Sun, 17 Jun 2018 19:02:08 +0200
+To: Daniel Mack <daniel@zonque.org>, Haojian Zhuang <haojian.zhuang@gmail.com>, Robert Jarzmik <robert.jarzmik@free.fr>, Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>, Tejun Heo <tj@kernel.org>, Vinod Koul <vinod.koul@intel.com>, Mauro Carvalho Chehab <mchehab@kernel.org>, Ulf Hansson <ulf.hansson@linaro.org>, Miquel Raynal <miquel.raynal@bootlin.com>, Boris Brezillon <boris.brezillon@bootlin.com>, David Woodhouse <dwmw2@infradead.org>, Brian Norris <computersforpeace@gmail.com>, Marek Vasut <marek.vasut@gmail.com>, Richard Weinberger <richard@nod.at>, Nicolas Pitre <nico@fluxnic.net>, Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>
+Cc: linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, linux-ide@vger.kernel.org, dmaengine@vger.kernel.org, linux-media@vger.kernel.org, linux-mmc@vger.kernel.org, linux-mtd@lists.infradead.org, netdev@vger.kernel.org, alsa-devel@alsa-project.org
 List-ID: <dmaengine.vger.kernel.org>
 
-RGFuaWVsIE1hY2sgPGRhbmllbEB6b25xdWUub3JnPiB3cml0ZXM6Cgo+IEhpIE1hcmssCj4KPiBJ
-IHByZXBhcmVkIGEgc2VyaWVzIG9mIHBhdGNoZXMgZm9yIDQuMTggdGhhdCBjb25mbGljdCB3aXRo
-IHRoaXMgb25lLiBJbnN0ZWFkIG9mCj4gbGV0dGluZyBvdGhlciBwZW9wbGUgcmVzb2x2ZSB0aGlz
-IGRvd24gdGhlIHJvYWQsIEknZCBwcmVmZXIgaWYgdGhpcyBvbmUgd2VudAo+IHRocm91Z2ggdGhl
-IEFTb0MgdHJlZSwgaWYgeW91IGRvbid0IG1pbmQuCj4KPiBJJ3ZlIHRhbGtlZCB0byBSb2JlcnQg
-b2ZmLWxpc3QsIGFuZCBoZSdzIGZpbmUgd2l0aCB0aGlzIGFwcHJvYWNoLgpUaGF0J3MgcmlnaHQu
-CgpJJ2xsIHRlbnRhdGl2YWx5IHF1ZXVlIHRoaXMgcGF0Y2ggdG8gbXkgcHhhL2Zvci1uZXh0IHRy
-ZWUuIEFzIHNvb24gYXMgSSBoZWFyCnRoYXQgTWFyayBxdWV1ZWQgaXQgdXAgaW4gaGlzIHRyZWUs
-IEknbGwgZHJvcCBpdCBmcm9tIG1pbmUuCgpDaGVlcnMuCi0tLQpSb2JlcnQKLS0KVG8gdW5zdWJz
-Y3JpYmUgZnJvbSB0aGlzIGxpc3Q6IHNlbmQgdGhlIGxpbmUgInVuc3Vic2NyaWJlIGRtYWVuZ2lu
-ZSIgaW4KdGhlIGJvZHkgb2YgYSBtZXNzYWdlIHRvIG1ham9yZG9tb0B2Z2VyLmtlcm5lbC5vcmcK
-TW9yZSBtYWpvcmRvbW8gaW5mbyBhdCAgaHR0cDovL3ZnZXIua2VybmVsLm9yZy9tYWpvcmRvbW8t
-aW5mby5odG1sCg==
+QXMgdGhlIHB4YSBhcmNoaXRlY3R1cmUgc3dpdGNoZWQgdG93YXJkcyB0aGUgZG1hZW5naW5lIHNs
+YXZlIG1hcCwgdGhlCm9sZCBjb21wYXRpYmlsaXR5IG1lY2hhbmlzbSB0byBhY3F1aXJlIHRoZSBk
+bWEgcmVxdWVzdG9yIGxpbmUgbnVtYmVyIGFuZApwcmlvcml0eSBhcmUgbm90IG5lZWRlZCBhbnlt
+b3JlLgoKVGhpcyBwYXRjaCBzaW1wbGlmaWVzIHRoZSBkbWEgcmVzb3VyY2UgYWNxdWlzaXRpb24s
+IHVzaW5nIHRoZSBtb3JlCmdlbmVyaWMgZnVuY3Rpb24gZG1hX3JlcXVlc3Rfc2xhdmVfY2hhbm5l
+bCgpLgoKU2lnbmVkLW9mZi1ieTogUm9iZXJ0IEphcnptaWsgPHJvYmVydC5qYXJ6bWlrQGZyZWUu
+ZnI+CkFja2VkLWJ5OiBIYW5zIFZlcmt1aWwgPGhhbnMudmVya3VpbEBjaXNjby5jb20+CkFja2Vk
+LWJ5OiBNYXVybyBDYXJ2YWxobyBDaGVoYWIgPG1jaGVoYWIrc2Ftc3VuZ0BrZXJuZWwub3JnPgot
+LS0KIGRyaXZlcnMvbWVkaWEvcGxhdGZvcm0vcHhhX2NhbWVyYS5jIHwgMjIgKysrLS0tLS0tLS0t
+LS0tLS0tLS0tLQogMSBmaWxlIGNoYW5nZWQsIDMgaW5zZXJ0aW9ucygrKSwgMTkgZGVsZXRpb25z
+KC0pCgpkaWZmIC0tZ2l0IGEvZHJpdmVycy9tZWRpYS9wbGF0Zm9ybS9weGFfY2FtZXJhLmMgYi9k
+cml2ZXJzL21lZGlhL3BsYXRmb3JtL3B4YV9jYW1lcmEuYwppbmRleCBjNzFhMDA3MzY1NDEuLjRj
+ODJkMTg4MDc1MyAxMDA2NDQKLS0tIGEvZHJpdmVycy9tZWRpYS9wbGF0Zm9ybS9weGFfY2FtZXJh
+LmMKKysrIGIvZHJpdmVycy9tZWRpYS9wbGF0Zm9ybS9weGFfY2FtZXJhLmMKQEAgLTIzNTcsOCAr
+MjM1Nyw2IEBAIHN0YXRpYyBpbnQgcHhhX2NhbWVyYV9wcm9iZShzdHJ1Y3QgcGxhdGZvcm1fZGV2
+aWNlICpwZGV2KQogCQkuc3JjX21heGJ1cnN0ID0gOCwKIAkJLmRpcmVjdGlvbiA9IERNQV9ERVZf
+VE9fTUVNLAogCX07Ci0JZG1hX2NhcF9tYXNrX3QgbWFzazsKLQlzdHJ1Y3QgcHhhZF9wYXJhbSBw
+YXJhbXM7CiAJY2hhciBjbGtfbmFtZVtWNEwyX0NMS19OQU1FX1NJWkVdOwogCWludCBpcnE7CiAJ
+aW50IGVyciA9IDAsIGk7CkBAIC0yNDMyLDM0ICsyNDMwLDIwIEBAIHN0YXRpYyBpbnQgcHhhX2Nh
+bWVyYV9wcm9iZShzdHJ1Y3QgcGxhdGZvcm1fZGV2aWNlICpwZGV2KQogCXBjZGV2LT5iYXNlID0g
+YmFzZTsKIAogCS8qIHJlcXVlc3QgZG1hICovCi0JZG1hX2NhcF96ZXJvKG1hc2spOwotCWRtYV9j
+YXBfc2V0KERNQV9TTEFWRSwgbWFzayk7Ci0JZG1hX2NhcF9zZXQoRE1BX1BSSVZBVEUsIG1hc2sp
+OwotCi0JcGFyYW1zLnByaW8gPSAwOwotCXBhcmFtcy5kcmNtciA9IDY4OwotCXBjZGV2LT5kbWFf
+Y2hhbnNbMF0gPQotCQlkbWFfcmVxdWVzdF9zbGF2ZV9jaGFubmVsX2NvbXBhdChtYXNrLCBweGFk
+X2ZpbHRlcl9mbiwKLQkJCQkJCSAmcGFyYW1zLCAmcGRldi0+ZGV2LCAiQ0lfWSIpOworCXBjZGV2
+LT5kbWFfY2hhbnNbMF0gPSBkbWFfcmVxdWVzdF9zbGF2ZV9jaGFubmVsKCZwZGV2LT5kZXYsICJD
+SV9ZIik7CiAJaWYgKCFwY2Rldi0+ZG1hX2NoYW5zWzBdKSB7CiAJCWRldl9lcnIoJnBkZXYtPmRl
+diwgIkNhbid0IHJlcXVlc3QgRE1BIGZvciBZXG4iKTsKIAkJcmV0dXJuIC1FTk9ERVY7CiAJfQog
+Ci0JcGFyYW1zLmRyY21yID0gNjk7Ci0JcGNkZXYtPmRtYV9jaGFuc1sxXSA9Ci0JCWRtYV9yZXF1
+ZXN0X3NsYXZlX2NoYW5uZWxfY29tcGF0KG1hc2ssIHB4YWRfZmlsdGVyX2ZuLAotCQkJCQkJICZw
+YXJhbXMsICZwZGV2LT5kZXYsICJDSV9VIik7CisJcGNkZXYtPmRtYV9jaGFuc1sxXSA9IGRtYV9y
+ZXF1ZXN0X3NsYXZlX2NoYW5uZWwoJnBkZXYtPmRldiwgIkNJX1UiKTsKIAlpZiAoIXBjZGV2LT5k
+bWFfY2hhbnNbMV0pIHsKIAkJZGV2X2VycigmcGRldi0+ZGV2LCAiQ2FuJ3QgcmVxdWVzdCBETUEg
+Zm9yIFlcbiIpOwogCQllcnIgPSAtRU5PREVWOwogCQlnb3RvIGV4aXRfZnJlZV9kbWFfeTsKIAl9
+CiAKLQlwYXJhbXMuZHJjbXIgPSA3MDsKLQlwY2Rldi0+ZG1hX2NoYW5zWzJdID0KLQkJZG1hX3Jl
+cXVlc3Rfc2xhdmVfY2hhbm5lbF9jb21wYXQobWFzaywgcHhhZF9maWx0ZXJfZm4sCi0JCQkJCQkg
+JnBhcmFtcywgJnBkZXYtPmRldiwgIkNJX1YiKTsKKwlwY2Rldi0+ZG1hX2NoYW5zWzJdID0gZG1h
+X3JlcXVlc3Rfc2xhdmVfY2hhbm5lbCgmcGRldi0+ZGV2LCAiQ0lfViIpOwogCWlmICghcGNkZXYt
+PmRtYV9jaGFuc1syXSkgewogCQlkZXZfZXJyKCZwZGV2LT5kZXYsICJDYW4ndCByZXF1ZXN0IERN
+QSBmb3IgVlxuIik7CiAJCWVyciA9IC1FTk9ERVY7Cg==
