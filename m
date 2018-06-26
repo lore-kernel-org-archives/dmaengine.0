@@ -2,36 +2,24 @@ Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
 Subject: [1/2] dt-bindings: dmaengine: xilinx_dma: Add VDMA vertical flip property
-From: Appana Durga Kedareswara Rao <appanad@xilinx.com>
-Message-Id: <SN1PR02MB169323BF21815A019D0C486BDC4A0@SN1PR02MB1693.namprd02.prod.outlook.com>
-Date: Mon, 25 Jun 2018 09:06:49 +0000
-To: Radhey Shyam Pandey <radheys@xilinx.com>, "vkoul@kernel.org" <vkoul@kernel.org>, "robh+dt@kernel.org" <robh+dt@kernel.org>, "mark.rutland@arm.com" <mark.rutland@arm.com>, Michal Simek <michals@xilinx.com>, "dan.j.williams@intel.com" <dan.j.williams@intel.com>, "lars@metafoo.de" <lars@metafoo.de>
-Cc: "dmaengine@vger.kernel.org" <dmaengine@vger.kernel.org>, "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>, "linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>, "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
+From: Rob Herring <robh@kernel.org>
+Message-Id: <20180626170054.GA1467@rob-hp-laptop>
+Date: Tue, 26 Jun 2018 11:00:54 -0600
+To: Radhey Shyam Pandey <radhey.shyam.pandey@xilinx.com>
+Cc: vkoul@kernel.org, mark.rutland@arm.com, michal.simek@xilinx.com, dan.j.williams@intel.com, appana.durga.rao@xilinx.com, lars@metafoo.de, dmaengine@vger.kernel.org, devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
 List-ID: <dmaengine.vger.kernel.org>
 
-PFNuaXA+IAo+IAo+IFRoZSBBWEkgVkRNQSBjb3JlIHN1cHBvcnRzIFZlcnRpY2FsIGZsaXAgaW4g
-UzJNTSBwYXRoIHdoZW4gRW5hYmxlIFZlcnRpY2FsCj4gRmxpcCAoQWR2YW5jZWQgdGFiKSBpcyBz
-ZWxlY3RlZC4gVG8gYWxsb3cgdmVydGljYWwgZmxpcCBwcm9ncmFtbWluZyBkZWZpbmUgYW4KPiBv
-cHRpb25hbCAneGxueCxlbmFibGUtdmVydC1mbGlwJyBjaGFubmVsIGNoaWxkIG5vZGUgcHJvcGVy
-dHkuCj4gCj4gU2lnbmVkLW9mZi1ieTogUmFkaGV5IFNoeWFtIFBhbmRleSA8cmFkaGV5LnNoeWFt
-LnBhbmRleUB4aWxpbnguY29tPgo+IFNpZ25lZC1vZmYtYnk6IE1pY2hhbCBTaW1layA8bWljaGFs
-LnNpbWVrQHhpbGlueC5jb20+CgpBY2tlZC1ieTogS2VkYXJlc3dhcmEgcmFvIEFwcGFuYSA8YXBw
-YW5hZEB4aWxpbnguY29tPiAgIAoKUmVnYXJkcywKS2VkYXIuCgo+IC0tLQo+ICAuLi4vZGV2aWNl
-dHJlZS9iaW5kaW5ncy9kbWEveGlsaW54L3hpbGlueF9kbWEudHh0ICB8ICAgIDIgKysKPiAgMSBm
-aWxlcyBjaGFuZ2VkLCAyIGluc2VydGlvbnMoKyksIDAgZGVsZXRpb25zKC0pCj4gCj4gZGlmZiAt
-LWdpdCBhL0RvY3VtZW50YXRpb24vZGV2aWNldHJlZS9iaW5kaW5ncy9kbWEveGlsaW54L3hpbGlu
-eF9kbWEudHh0Cj4gYi9Eb2N1bWVudGF0aW9uL2RldmljZXRyZWUvYmluZGluZ3MvZG1hL3hpbGlu
-eC94aWxpbnhfZG1hLnR4dAo+IGluZGV4IGEyYjhiZmEuLjE3NGFmMmMgMTAwNjQ0Cj4gLS0tIGEv
-RG9jdW1lbnRhdGlvbi9kZXZpY2V0cmVlL2JpbmRpbmdzL2RtYS94aWxpbngveGlsaW54X2RtYS50
-eHQKPiArKysgYi9Eb2N1bWVudGF0aW9uL2RldmljZXRyZWUvYmluZGluZ3MvZG1hL3hpbGlueC94
-aWxpbnhfZG1hLnR4dAo+IEBAIC02Niw2ICs2Niw4IEBAIE9wdGlvbmFsIGNoaWxkIG5vZGUgcHJv
-cGVydGllczoKPiAgT3B0aW9uYWwgY2hpbGQgbm9kZSBwcm9wZXJ0aWVzIGZvciBWRE1BOgo+ICAt
-IHhsbngsZ2VubG9jay1tb2RlOiBUZWxscyBHZW5sb2NrIHN5bmNocm9uaXphdGlvbiBpcwo+ICAJ
-ZW5hYmxlZC9kaXNhYmxlZCBpbiBoYXJkd2FyZS4KPiArLSB4bG54LGVuYWJsZS12ZXJ0LWZsaXA6
-IFRlbGxzIHZlcnRpY2FsIGZsaXAgaXMKPiArCWVuYWJsZWQvZGlzYWJsZWQgaW4gaGFyZHdhcmUo
-UzJNTSBwYXRoKS4KPiAgT3B0aW9uYWwgY2hpbGQgbm9kZSBwcm9wZXJ0aWVzIGZvciBBWEkgRE1B
-Ogo+ICAtZG1hLWNoYW5uZWxzOiBOdW1iZXIgb2YgZG1hIGNoYW5uZWxzIGluIGNoaWxkIG5vZGUu
-Cj4gCj4gLS0KPiAxLjcuMQotLS0KVG8gdW5zdWJzY3JpYmUgZnJvbSB0aGlzIGxpc3Q6IHNlbmQg
+T24gV2VkLCBKdW4gMTMsIDIwMTggYXQgMDE6MDQ6NDdQTSArMDUzMCwgUmFkaGV5IFNoeWFtIFBh
+bmRleSB3cm90ZToKPiBUaGUgQVhJIFZETUEgY29yZSBzdXBwb3J0cyBWZXJ0aWNhbCBmbGlwIGlu
+IFMyTU0gcGF0aCB3aGVuIEVuYWJsZQo+IFZlcnRpY2FsIEZsaXAgKEFkdmFuY2VkIHRhYikgaXMg
+c2VsZWN0ZWQuIFRvIGFsbG93IHZlcnRpY2FsIGZsaXAKPiBwcm9ncmFtbWluZyBkZWZpbmUgYW4g
+b3B0aW9uYWwgJ3hsbngsZW5hYmxlLXZlcnQtZmxpcCcgY2hhbm5lbAo+IGNoaWxkIG5vZGUgcHJv
+cGVydHkuCj4gCj4gU2lnbmVkLW9mZi1ieTogUmFkaGV5IFNoeWFtIFBhbmRleSA8cmFkaGV5LnNo
+eWFtLnBhbmRleUB4aWxpbnguY29tPgo+IFNpZ25lZC1vZmYtYnk6IE1pY2hhbCBTaW1layA8bWlj
+aGFsLnNpbWVrQHhpbGlueC5jb20+Cj4gLS0tCj4gIC4uLi9kZXZpY2V0cmVlL2JpbmRpbmdzL2Rt
+YS94aWxpbngveGlsaW54X2RtYS50eHQgIHwgICAgMiArKwo+ICAxIGZpbGVzIGNoYW5nZWQsIDIg
+aW5zZXJ0aW9ucygrKSwgMCBkZWxldGlvbnMoLSkKClJldmlld2VkLWJ5OiBSb2IgSGVycmluZyA8
+cm9iaEBrZXJuZWwub3JnPgotLS0KVG8gdW5zdWJzY3JpYmUgZnJvbSB0aGlzIGxpc3Q6IHNlbmQg
 dGhlIGxpbmUgInVuc3Vic2NyaWJlIGRtYWVuZ2luZSIgaW4KdGhlIGJvZHkgb2YgYSBtZXNzYWdl
 IHRvIG1ham9yZG9tb0B2Z2VyLmtlcm5lbC5vcmcKTW9yZSBtYWpvcmRvbW8gaW5mbyBhdCAgaHR0
 cDovL3ZnZXIua2VybmVsLm9yZy9tYWpvcmRvbW8taW5mby5odG1sCg==
