@@ -2,26 +2,13 @@ Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
 Subject: dmaengine: k3dma: Off by one in k3_of_dma_simple_xlate()
-From: Dan Carpenter <dan.carpenter@oracle.com>
-Message-Id: <20180622111547.urjjagjf6rxbobpq@kili.mountain>
-Date: Fri, 22 Jun 2018 14:15:47 +0300
-To: Vinod Koul <vkoul@kernel.org>, Zhangfei Gao <zhangfei.gao@linaro.org>
-Cc: dmaengine@vger.kernel.org, kernel-janitors@vger.kernel.org
+From: Vinod Koul <vkoul@kernel.org>
+Message-Id: <20180628062734.GR22377@vkoul-mobl>
+Date: Thu, 28 Jun 2018 11:57:34 +0530
+To: Dan Carpenter <dan.carpenter@oracle.com>
+Cc: Zhangfei Gao <zhangfei.gao@linaro.org>, dmaengine@vger.kernel.org, kernel-janitors@vger.kernel.org
 List-ID: <dmaengine.vger.kernel.org>
 
-VGhlIGQtPmNoYW5zW10gYXJyYXkgaGFzIGQtPmRtYV9yZXF1ZXN0cyBlbGVtZW50cyBzbyB0aGUg
-PiBzaG91bGQgYmUKPj0gaGVyZS4KCkZpeGVzOiA4ZTYxNTJiYzY2MGUgKCJkbWFlbmdpbmU6IEFk
-ZCBoaXNpbGljb24gazMgRE1BIGVuZ2luZSBkcml2ZXIiKQpTaWduZWQtb2ZmLWJ5OiBEYW4gQ2Fy
-cGVudGVyIDxkYW4uY2FycGVudGVyQG9yYWNsZS5jb20+Ci0tLQpUbyB1bnN1YnNjcmliZSBmcm9t
-IHRoaXMgbGlzdDogc2VuZCB0aGUgbGluZSAidW5zdWJzY3JpYmUgZG1hZW5naW5lIiBpbgp0aGUg
-Ym9keSBvZiBhIG1lc3NhZ2UgdG8gbWFqb3Jkb21vQHZnZXIua2VybmVsLm9yZwpNb3JlIG1ham9y
-ZG9tbyBpbmZvIGF0ICBodHRwOi8vdmdlci5rZXJuZWwub3JnL21ham9yZG9tby1pbmZvLmh0bWwK
-CmRpZmYgLS1naXQgYS9kcml2ZXJzL2RtYS9rM2RtYS5jIGIvZHJpdmVycy9kbWEvazNkbWEuYwpp
-bmRleCBmYTMxY2NjYmUwNGYuLjZiZmEyMTdlZDZkMCAxMDA2NDQKLS0tIGEvZHJpdmVycy9kbWEv
-azNkbWEuYworKysgYi9kcml2ZXJzL2RtYS9rM2RtYS5jCkBAIC03OTQsNyArNzk0LDcgQEAgc3Rh
-dGljIHN0cnVjdCBkbWFfY2hhbiAqazNfb2ZfZG1hX3NpbXBsZV94bGF0ZShzdHJ1Y3Qgb2ZfcGhh
-bmRsZV9hcmdzICpkbWFfc3BlYywKIAlzdHJ1Y3QgazNfZG1hX2RldiAqZCA9IG9mZG1hLT5vZl9k
-bWFfZGF0YTsKIAl1bnNpZ25lZCBpbnQgcmVxdWVzdCA9IGRtYV9zcGVjLT5hcmdzWzBdOwogCi0J
-aWYgKHJlcXVlc3QgPiBkLT5kbWFfcmVxdWVzdHMpCisJaWYgKHJlcXVlc3QgPj0gZC0+ZG1hX3Jl
-cXVlc3RzKQogCQlyZXR1cm4gTlVMTDsKIAogCXJldHVybiBkbWFfZ2V0X3NsYXZlX2NoYW5uZWwo
-JihkLT5jaGFuc1tyZXF1ZXN0XS52Yy5jaGFuKSk7Cg==
+T24gMjItMDYtMTgsIDE0OjE1LCBEYW4gQ2FycGVudGVyIHdyb3RlOgo+IFRoZSBkLT5jaGFuc1td
+IGFycmF5IGhhcyBkLT5kbWFfcmVxdWVzdHMgZWxlbWVudHMgc28gdGhlID4gc2hvdWxkIGJlCj4g
+Pj0gaGVyZS4KCkFwcGxpZWQsIHRoYW5rcwo=
