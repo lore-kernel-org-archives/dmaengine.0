@@ -2,27 +2,14 @@ Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
 Subject: dmaengine: pl330: report BURST residue granularity
-From: Marek Szyprowski <m.szyprowski@samsung.com>
-Message-Id: <20180619132105eucas1p2d65cbd799e60a8ab1849c4ae716275c4~5klprrrtK1347113471eucas1p2M@eucas1p2.samsung.com>
-Date: Tue, 19 Jun 2018 15:20:50 +0200
-To: linux-samsung-soc@vger.kernel.org, dmaengine@vger.kernel.org, linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
-Cc: Marek Szyprowski <m.szyprowski@samsung.com>, Krzysztof Kozlowski <krzk@kernel.org>, Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>, Vinod Koul <vinod.koul@intel.com>
+From: Vinod Koul <vkoul@kernel.org>
+Message-Id: <20180628055428.GM22377@vkoul-mobl>
+Date: Thu, 28 Jun 2018 11:24:28 +0530
+To: Marek Szyprowski <m.szyprowski@samsung.com>
+Cc: linux-samsung-soc@vger.kernel.org, dmaengine@vger.kernel.org, linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, Krzysztof Kozlowski <krzk@kernel.org>, Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>, Vinod Koul <vinod.koul@intel.com>
 List-ID: <dmaengine.vger.kernel.org>
 
-VGhlIHJlcG9ydGVkIHJlc2lkdWUgaXMgYWxyZWFkeSBjYWxjdWxhdGVkIGluIEJVUlNUIHVuaXQg
-Z3JhbnVsYXJpdHksIHNvCmFkdmVydGlzZSB0aGlzIGNhcGFiaWxpdHkgcHJvcGVybHkgdG8gb3Ro
-ZXIgZGV2aWNlcyBpbiB0aGUgc3lzdGVtLgoKRml4ZXM6IGFlZTRkMWZhYzg4NyAoImRtYWVuZ2lu
-ZTogcGwzMzA6IGltcHJvdmUgcGwzMzBfdHhfc3RhdHVzKCkgZnVuY3Rpb24iKQpTaWduZWQtb2Zm
-LWJ5OiBNYXJlayBTenlwcm93c2tpIDxtLnN6eXByb3dza2lAc2Ftc3VuZy5jb20+Ci0tLQogZHJp
-dmVycy9kbWEvcGwzMzAuYyB8IDIgKy0KIDEgZmlsZSBjaGFuZ2VkLCAxIGluc2VydGlvbigrKSwg
-MSBkZWxldGlvbigtKQoKZGlmZiAtLWdpdCBhL2RyaXZlcnMvZG1hL3BsMzMwLmMgYi9kcml2ZXJz
-L2RtYS9wbDMzMC5jCmluZGV4IGRlZmNkZGU0ZDM1OC4uZGUwOTU3ZmU5NjY4IDEwMDY0NAotLS0g
-YS9kcml2ZXJzL2RtYS9wbDMzMC5jCisrKyBiL2RyaXZlcnMvZG1hL3BsMzMwLmMKQEAgLTMwMzMs
-NyArMzAzMyw3IEBAIHBsMzMwX3Byb2JlKHN0cnVjdCBhbWJhX2RldmljZSAqYWRldiwgY29uc3Qg
-c3RydWN0IGFtYmFfaWQgKmlkKQogCXBkLT5zcmNfYWRkcl93aWR0aHMgPSBQTDMzMF9ETUFfQlVT
-V0lEVEhTOwogCXBkLT5kc3RfYWRkcl93aWR0aHMgPSBQTDMzMF9ETUFfQlVTV0lEVEhTOwogCXBk
-LT5kaXJlY3Rpb25zID0gQklUKERNQV9ERVZfVE9fTUVNKSB8IEJJVChETUFfTUVNX1RPX0RFVik7
-Ci0JcGQtPnJlc2lkdWVfZ3JhbnVsYXJpdHkgPSBETUFfUkVTSURVRV9HUkFOVUxBUklUWV9TRUdN
-RU5UOworCXBkLT5yZXNpZHVlX2dyYW51bGFyaXR5ID0gRE1BX1JFU0lEVUVfR1JBTlVMQVJJVFlf
-QlVSU1Q7CiAJcGQtPm1heF9idXJzdCA9ICgocGwzMzAtPnF1aXJrcyAmIFBMMzMwX1FVSVJLX0JS
-T0tFTl9OT19GTFVTSFApID8KIAkJCSAxIDogUEwzMzBfTUFYX0JVUlNUKTsKIAo=
+T24gMTktMDYtMTgsIDE1OjIwLCBNYXJlayBTenlwcm93c2tpIHdyb3RlOgo+IFRoZSByZXBvcnRl
+ZCByZXNpZHVlIGlzIGFscmVhZHkgY2FsY3VsYXRlZCBpbiBCVVJTVCB1bml0IGdyYW51bGFyaXR5
+LCBzbwo+IGFkdmVydGlzZSB0aGlzIGNhcGFiaWxpdHkgcHJvcGVybHkgdG8gb3RoZXIgZGV2aWNl
+cyBpbiB0aGUgc3lzdGVtLgoKQXBwbGllZCwgdGhhbmtzCg==
