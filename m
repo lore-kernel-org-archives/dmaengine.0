@@ -2,27 +2,19 @@ Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
 Subject: dmaengine: rcar-dmac: clear channel register when error
-From: Fabio Estevam <festevam@gmail.com>
-Message-Id: <CAOMZO5DvebzRFdUDM1xkR8=-PoYkqM_1svydtXS_zz6pewaY8A@mail.gmail.com>
-Date: Sun, 1 Jul 2018 22:24:47 -0300
-To: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
+From: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
+Message-Id: <87tvpifknm.wl-kuninori.morimoto.gx@renesas.com>
+Date: Mon, 2 Jul 2018 02:20:03 +0000
+To: Fabio Estevam <festevam@gmail.com>
 Cc: Vinod <vkoul@kernel.org>, Geert Uytterhoeven <geert@linux-m68k.org>, Dan Williams <dan.j.williams@intel.com>, Magnus Damm <magnus.damm@gmail.com>, Linux-Renesas <linux-renesas-soc@vger.kernel.org>, Laurent Pinchart <laurent.pinchart@ideasonboard.com>, Kieran Bingham <kieran@ksquared.org.uk>, Geert Uytterhoeven <geert+renesas@glider.be>, dmaengine@vger.kernel.org
 List-ID: <dmaengine.vger.kernel.org>
 
-SGkgS3VuaW5vcmktc2FuLAoKT24gU3VuLCBKdWwgMSwgMjAxOCBhdCAxMDowNyBQTSwgS3VuaW5v
-cmkgTW9yaW1vdG8KPGt1bmlub3JpLm1vcmltb3RvLmd4QHJlbmVzYXMuY29tPiB3cm90ZToKPgo+
-IEZyb206IEt1bmlub3JpIE1vcmltb3RvIDxrdW5pbm9yaS5tb3JpbW90by5neEByZW5lc2FzLmNv
-bT4KPgo+IFdlIG5lZWQgdG8gY2xlYXIgY2hhbm5lbCByZWdpc3RlciBpbiBlcnJvciBjYXNlIGFz
-IHJlY292ZXJ5Lgo+IFRoZSBjaGFubmVsIGlzIGFscmVhZHkgc3RvcHBlZCBpbiBzdWNoIGNhc2Us
-IHRodXMgd2UgZG9uJ3QgbmVlZCB0byBjYWxsCj4gcmNhcl9kbWFjX2NoYW5faGFsdCgpIGJlZm9y
-ZSBjbGVhcmluZy4KPgo+IHJjYXJfZG1hY19jaGFuX2hhbHQoKSB3aWxsIGNsZWFyIHJlZ2lzdGVy
-IGFuZCBjb25maXJtIERFIGJpdC4KPiBCdXQgaXQgd2lsbCBiZSBmYWlsZWQgYmVjYXVzZSBjaGFu
-bmVsIGlzIGFscmVhZHkgc3RvcHBlZCBpbiBlcnJvciBjYXNlLgo+IEluIG90aGVyIHdvcmRzLCB3
-ZSBzaG91bGRuJ3QgY2FsbCBpdCB0aGVuLgo+Cj4gLy8gVGhpcyBwYXRjaCBzdGFydGVkIHRvIHVz
-ZSBDKysgc3R5bGUgY29tbWVudCBvdXQKPiAvLyBiZWNhdXNlIGl0IGlzIHJlY2VudCBMaW51cyBy
-ZXF1ZXN0CgpUaGlzIGlzIHZhbGlkIGZvciB0aGUgU1BEWCBwYXJ0IG9ubHkuCgpGb3IgY29kZSB5
-b3Ugc2hvdWxkIHN0aWxsIHVzZSB0aGUgc3RhbmRhcmQgLyogc3R5bGUuCi0tLQpUbyB1bnN1YnNj
-cmliZSBmcm9tIHRoaXMgbGlzdDogc2VuZCB0aGUgbGluZSAidW5zdWJzY3JpYmUgZG1hZW5naW5l
-IiBpbgp0aGUgYm9keSBvZiBhIG1lc3NhZ2UgdG8gbWFqb3Jkb21vQHZnZXIua2VybmVsLm9yZwpN
-b3JlIG1ham9yZG9tbyBpbmZvIGF0ICBodHRwOi8vdmdlci5rZXJuZWwub3JnL21ham9yZG9tby1p
-bmZvLmh0bWwK
+SGkgRmFiaW8KCj4gPiAvLyBUaGlzIHBhdGNoIHN0YXJ0ZWQgdG8gdXNlIEMrKyBzdHlsZSBjb21t
+ZW50IG91dAo+ID4gLy8gYmVjYXVzZSBpdCBpcyByZWNlbnQgTGludXMgcmVxdWVzdAo+IAo+IFRo
+aXMgaXMgdmFsaWQgZm9yIHRoZSBTUERYIHBhcnQgb25seS4KPiAKPiBGb3IgY29kZSB5b3Ugc2hv
+dWxkIHN0aWxsIHVzZSB0aGUgc3RhbmRhcmQgLyogc3R5bGUuCgpXb3cgIQpUaGFua3MsIEkgd2ls
+bCBwb3N0IHYyIHBhdGNoCgpCZXN0IHJlZ2FyZHMKLS0tCkt1bmlub3JpIE1vcmltb3RvCi0tClRv
+IHVuc3Vic2NyaWJlIGZyb20gdGhpcyBsaXN0OiBzZW5kIHRoZSBsaW5lICJ1bnN1YnNjcmliZSBk
+bWFlbmdpbmUiIGluCnRoZSBib2R5IG9mIGEgbWVzc2FnZSB0byBtYWpvcmRvbW9Admdlci5rZXJu
+ZWwub3JnCk1vcmUgbWFqb3Jkb21vIGluZm8gYXQgIGh0dHA6Ly92Z2VyLmtlcm5lbC5vcmcvbWFq
+b3Jkb21vLWluZm8uaHRtbAo=
