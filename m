@@ -2,29 +2,20 @@ Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
 Subject: [v2] dmaengine: rcar-dmac: convert to SPDX identifiers
-From: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
-Message-Id: <87r2kjx2qw.wl-kuninori.morimoto.gx@renesas.com>
-Date: Wed, 4 Jul 2018 00:34:10 +0000
-To: Vinod <vkoul@kernel.org>
-Cc: Geert Uytterhoeven <geert@linux-m68k.org>, Dan Williams <dan.j.williams@intel.com>, Magnus Damm <magnus.damm@gmail.com>, Linux-Renesas <linux-renesas-soc@vger.kernel.org>, Laurent Pinchart <laurent.pinchart@ideasonboard.com>, Kieran Bingham <kieran@ksquared.org.uk>, Geert Uytterhoeven <geert+renesas@glider.be>, dmaengine@vger.kernel.org, Hiroki Negishi <hiroki.negishi.bx@renesas.com>
+From: Geert Uytterhoeven <geert@linux-m68k.org>
+Message-Id: <CAMuHMdUTZSqVbGwjH-Kia78qo+Sywjo1P1PzEPuYAjTanOY2YA@mail.gmail.com>
+Date: Wed, 4 Jul 2018 09:20:05 +0200
+To: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
+Cc: vkoul@kernel.org, Dan Williams <dan.j.williams@intel.com>, Magnus Damm <magnus.damm@gmail.com>, Linux-Renesas <linux-renesas-soc@vger.kernel.org>, Laurent Pinchart <laurent.pinchart@ideasonboard.com>, Kieran Bingham <kieran@ksquared.org.uk>, Geert Uytterhoeven <geert+renesas@glider.be>, dmaengine@vger.kernel.org, hiroki.negishi.bx@renesas.com
 List-ID: <dmaengine.vger.kernel.org>
 
-RnJvbTogS3VuaW5vcmkgTW9yaW1vdG8gPGt1bmlub3JpLm1vcmltb3RvLmd4QHJlbmVzYXMuY29t
-PgoKVGhpcyBwYXRjaCBpcyB1c2luZyBDKysgY29tbWVudCBzdHlsZSBmb3IgU1BEWCBsaW5lIG9u
-bHksCmJlY2F1c2UgZHJpdmVyIGF1dGhvciB3YW50IGl0LgoKU2lnbmVkLW9mZi1ieTogS3VuaW5v
-cmkgTW9yaW1vdG8gPGt1bmlub3JpLm1vcmltb3RvLmd4QHJlbmVzYXMuY29tPgotLS0KSSBwb3N0
-ZWQgdGhpcyBiZWNhdXNlIEkgZG9uJ3Qga25vdyB3aGljaCBzdHlsZSB3YXMgT0suClBsZWFzZSBw
-aWNrLXVwIGJlc3Qgc2lkZSBwYXRjaAoKdjEgLT4gdjIKCiAtIHVzZWQgLy8gZm9yIFNQRFggbGlu
-ZSBvbmx5CgogZHJpdmVycy9kbWEvc2gvcmNhci1kbWFjLmMgfCA1ICstLS0tCiAxIGZpbGUgY2hh
-bmdlZCwgMSBpbnNlcnRpb24oKyksIDQgZGVsZXRpb25zKC0pCgpkaWZmIC0tZ2l0IGEvZHJpdmVy
-cy9kbWEvc2gvcmNhci1kbWFjLmMgYi9kcml2ZXJzL2RtYS9zaC9yY2FyLWRtYWMuYwppbmRleCA3
-OWQxNGFmLi5lYmQxNjBkIDEwMDY0NAotLS0gYS9kcml2ZXJzL2RtYS9zaC9yY2FyLWRtYWMuYwor
-KysgYi9kcml2ZXJzL2RtYS9zaC9yY2FyLWRtYWMuYwpAQCAtMSwxMyArMSwxMCBAQAorLy8gU1BE
-WC1MaWNlbnNlLUlkZW50aWZpZXI6IEdQTC0yLjAKIC8qCiAgKiBSZW5lc2FzIFItQ2FyIEdlbjIg
-RE1BIENvbnRyb2xsZXIgRHJpdmVyCiAgKgogICogQ29weXJpZ2h0IChDKSAyMDE0IFJlbmVzYXMg
-RWxlY3Ryb25pY3MgSW5jLgogICoKICAqIEF1dGhvcjogTGF1cmVudCBQaW5jaGFydCA8bGF1cmVu
-dC5waW5jaGFydEBpZGVhc29uYm9hcmQuY29tPgotICoKLSAqIFRoaXMgaXMgZnJlZSBzb2Z0d2Fy
-ZTsgeW91IGNhbiByZWRpc3RyaWJ1dGUgaXQgYW5kL29yIG1vZGlmeQotICogaXQgdW5kZXIgdGhl
-IHRlcm1zIG9mIHZlcnNpb24gMiBvZiB0aGUgR05VIEdlbmVyYWwgUHVibGljIExpY2Vuc2UgYXMK
-LSAqIHB1Ymxpc2hlZCBieSB0aGUgRnJlZSBTb2Z0d2FyZSBGb3VuZGF0aW9uLgogICovCiAKICNp
-bmNsdWRlIDxsaW51eC9kZWxheS5oPgo=
+T24gV2VkLCBKdWwgNCwgMjAxOCBhdCAyOjM0IEFNIEt1bmlub3JpIE1vcmltb3RvCjxrdW5pbm9y
+aS5tb3JpbW90by5neEByZW5lc2FzLmNvbT4gd3JvdGU6Cj4gRnJvbTogS3VuaW5vcmkgTW9yaW1v
+dG8gPGt1bmlub3JpLm1vcmltb3RvLmd4QHJlbmVzYXMuY29tPgo+Cj4gVGhpcyBwYXRjaCBpcyB1
+c2luZyBDKysgY29tbWVudCBzdHlsZSBmb3IgU1BEWCBsaW5lIG9ubHksCj4gYmVjYXVzZSBkcml2
+ZXIgYXV0aG9yIHdhbnQgaXQuCj4KPiBTaWduZWQtb2ZmLWJ5OiBLdW5pbm9yaSBNb3JpbW90byA8
+a3VuaW5vcmkubW9yaW1vdG8uZ3hAcmVuZXNhcy5jb20+Cgo+ICAgQXVndXN0IDIxIC0gIFJlbGVh
+c2Ugb2YgcmVuZXNhcy1kcml2ZXJzLTIwMTgtMDgtMjEtdjQuMTggKFRCQykgb3IKPiAgICAgICAg
+ICAgICAgIFJlbGVhc2Ugb2YgcmVuZXNhcy1kcml2ZXJzLTIwMTgtMDgtMjEtdjQuMTktcmMxIChU
+QkMpCgpSZXZpZXdlZC1ieTogR2VlcnQgVXl0dGVyaG9ldmVuIDxnZWVydCtyZW5lc2FzQGdsaWRl
+ci5iZT4KCkdye29ldGplLGVldGluZ31zLAoKICAgICAgICAgICAgICAgICAgICAgICAgR2VlcnQK
