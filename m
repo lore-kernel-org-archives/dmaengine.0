@@ -1,18 +1,29 @@
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
-Subject: [v2,1/2] dmaengine: sh: rcar-dmac: add a new function to clear CHCR.DE with barrier
-From: Geert Uytterhoeven <geert@linux-m68k.org>
-Message-Id: <CAMuHMdXpuOkszzVtX0=iWCi=r884b-Kq4GbF4aM1EJzY74vvLQ@mail.gmail.com>
-Date: Fri, 13 Jul 2018 11:16:07 +0200
-To: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
-Cc: Vinod Koul <vinod.koul@intel.com>, dmaengine@vger.kernel.org, Linux-Renesas <linux-renesas-soc@vger.kernel.org>
+Subject: [PATCHv2,2/2] dmaengine: imx-sdma: request firmware with FW_OPT_NO_WARN
+From: Sebastian Reichel <sebastian.reichel@collabora.co.uk>
+Message-Id: <20180704160500.22699-3-sebastian.reichel@collabora.co.uk>
+Date: Wed,  4 Jul 2018 18:05:00 +0200
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Kees Cook <keescook@chromium.org>, Hans de Goede <hdegoede@redhat.com>
+Cc: andresx7@gmail.com, torvalds@linux-foundation.org, "Luis R. Rodriguez" <mcgrof@kernel.org>, Dan Williams <dan.j.williams@intel.com>, Vinod Koul <vkoul@kernel.org>, dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org, =?UTF-8?q?Rafa=C5=82=20Mi=C5=82ecki?= <rafal@milecki.pl>, kernel@collabora.com, Sebastian Reichel <sebastian.reichel@collabora.co.uk>
 List-ID: <dmaengine.vger.kernel.org>
 
-T24gV2VkLCBKdWwgMTEsIDIwMTggYXQgNDoxMSBBTSBZb3NoaWhpcm8gU2hpbW9kYQo8eW9zaGlo
-aXJvLnNoaW1vZGEudWhAcmVuZXNhcy5jb20+IHdyb3RlOgo+IFRoaXMgcGF0Y2ggYWRkcyBhIG5l
-dyBmdW5jdGlvbiByY2FyX2RtYWNfY2xlYXJfY2hjcl9kZSgpIHRvIHNpbXBsaWZ5Cj4gYWRkaW5n
-IHBhdXNlIGZ1bmN0aW9uIGxhdGVyLgo+Cj4gU2lnbmVkLW9mZi1ieTogWW9zaGloaXJvIFNoaW1v
-ZGEgPHlvc2hpaGlyby5zaGltb2RhLnVoQHJlbmVzYXMuY29tPgoKUmV2aWV3ZWQtYnk6IEdlZXJ0
-IFV5dHRlcmhvZXZlbiA8Z2VlcnQrcmVuZXNhc0BnbGlkZXIuYmU+CgpHcntvZXRqZSxlZXRpbmd9
-cywKCiAgICAgICAgICAgICAgICAgICAgICAgIEdlZXJ0Cg==
+UmVxdWVzdCBmaXJtd2FyZSB3aXRoIEZXX09QVF9OT19XQVJOLiBUaGUgZHJpdmVyIHdvcmtzIHdp
+dGhvdXQgdGhlCmZpcm13YXJlIGJ5IHVzaW5nIHRoZSBvbmUgc3VwcGxpZWQgaW4gUk9NLiBUaGVy
+ZSBpcyBhbHJlYWR5IGFuIGluZm8KbWVzc2FnZSwgdGhhdCBpbmZvcm1zIGFib3V0IHRoaXMuCgpT
+aWduZWQtb2ZmLWJ5OiBTZWJhc3RpYW4gUmVpY2hlbCA8c2ViYXN0aWFuLnJlaWNoZWxAY29sbGFi
+b3JhLmNvLnVrPgotLS0KIGRyaXZlcnMvZG1hL2lteC1zZG1hLmMgfCAxMCArKystLS0tLS0tCiAx
+IGZpbGUgY2hhbmdlZCwgMyBpbnNlcnRpb25zKCspLCA3IGRlbGV0aW9ucygtKQoKZGlmZiAtLWdp
+dCBhL2RyaXZlcnMvZG1hL2lteC1zZG1hLmMgYi9kcml2ZXJzL2RtYS9pbXgtc2RtYS5jCmluZGV4
+IGYwNzc5OTI2MzVjMi4uNjhmN2U1YTIwOTJmIDEwMDY0NAotLS0gYS9kcml2ZXJzL2RtYS9pbXgt
+c2RtYS5jCisrKyBiL2RyaXZlcnMvZG1hL2lteC1zZG1hLmMKQEAgLTE1OTksMTMgKzE1OTksOSBA
+QCBzdGF0aWMgaW50IHNkbWFfZXZlbnRfcmVtYXAoc3RydWN0IHNkbWFfZW5naW5lICpzZG1hKQog
+c3RhdGljIGludCBzZG1hX2dldF9maXJtd2FyZShzdHJ1Y3Qgc2RtYV9lbmdpbmUgKnNkbWEsCiAJ
+CWNvbnN0IGNoYXIgKmZ3X25hbWUpCiB7Ci0JaW50IHJldDsKLQotCXJldCA9IHJlcXVlc3RfZmly
+bXdhcmVfbm93YWl0KFRISVNfTU9EVUxFLAotCQkJRldfQUNUSU9OX0hPVFBMVUcsIGZ3X25hbWUs
+IHNkbWEtPmRldiwKLQkJCUdGUF9LRVJORUwsIHNkbWEsIHNkbWFfbG9hZF9maXJtd2FyZSk7Ci0K
+LQlyZXR1cm4gcmV0OworCXJldHVybiByZXF1ZXN0X2Zpcm13YXJlX25vd2FpdF9ub3dhcm4oVEhJ
+U19NT0RVTEUsIEZXX0FDVElPTl9IT1RQTFVHLAorCQkJCQkgICAgICBmd19uYW1lLCBzZG1hLT5k
+ZXYsIEdGUF9LRVJORUwsCisJCQkJCSAgICAgIHNkbWEsIHNkbWFfbG9hZF9maXJtd2FyZSk7CiB9
+CiAKIHN0YXRpYyBpbnQgc2RtYV9pbml0KHN0cnVjdCBzZG1hX2VuZ2luZSAqc2RtYSkK
