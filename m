@@ -2,20 +2,33 @@ Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
 Subject: [v2] dmaengine: rcar-dmac: convert to SPDX identifiers
-From: Geert Uytterhoeven <geert@linux-m68k.org>
-Message-Id: <CAMuHMdUTZSqVbGwjH-Kia78qo+Sywjo1P1PzEPuYAjTanOY2YA@mail.gmail.com>
-Date: Wed, 4 Jul 2018 09:20:05 +0200
+From: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Message-Id: <7735701.7c6vkt9JJK@avalon>
+Date: Thu, 05 Jul 2018 11:30:07 +0300
 To: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
-Cc: vkoul@kernel.org, Dan Williams <dan.j.williams@intel.com>, Magnus Damm <magnus.damm@gmail.com>, Linux-Renesas <linux-renesas-soc@vger.kernel.org>, Laurent Pinchart <laurent.pinchart@ideasonboard.com>, Kieran Bingham <kieran@ksquared.org.uk>, Geert Uytterhoeven <geert+renesas@glider.be>, dmaengine@vger.kernel.org, hiroki.negishi.bx@renesas.com
+Cc: Vinod <vkoul@kernel.org>, Geert Uytterhoeven <geert@linux-m68k.org>, Dan Williams <dan.j.williams@intel.com>, Magnus Damm <magnus.damm@gmail.com>, Linux-Renesas <linux-renesas-soc@vger.kernel.org>, Kieran Bingham <kieran@ksquared.org.uk>, Geert Uytterhoeven <geert+renesas@glider.be>, dmaengine@vger.kernel.org, Hiroki Negishi <hiroki.negishi.bx@renesas.com>
 List-ID: <dmaengine.vger.kernel.org>
 
-T24gV2VkLCBKdWwgNCwgMjAxOCBhdCAyOjM0IEFNIEt1bmlub3JpIE1vcmltb3RvCjxrdW5pbm9y
-aS5tb3JpbW90by5neEByZW5lc2FzLmNvbT4gd3JvdGU6Cj4gRnJvbTogS3VuaW5vcmkgTW9yaW1v
-dG8gPGt1bmlub3JpLm1vcmltb3RvLmd4QHJlbmVzYXMuY29tPgo+Cj4gVGhpcyBwYXRjaCBpcyB1
-c2luZyBDKysgY29tbWVudCBzdHlsZSBmb3IgU1BEWCBsaW5lIG9ubHksCj4gYmVjYXVzZSBkcml2
-ZXIgYXV0aG9yIHdhbnQgaXQuCj4KPiBTaWduZWQtb2ZmLWJ5OiBLdW5pbm9yaSBNb3JpbW90byA8
-a3VuaW5vcmkubW9yaW1vdG8uZ3hAcmVuZXNhcy5jb20+Cgo+ICAgQXVndXN0IDIxIC0gIFJlbGVh
-c2Ugb2YgcmVuZXNhcy1kcml2ZXJzLTIwMTgtMDgtMjEtdjQuMTggKFRCQykgb3IKPiAgICAgICAg
-ICAgICAgIFJlbGVhc2Ugb2YgcmVuZXNhcy1kcml2ZXJzLTIwMTgtMDgtMjEtdjQuMTktcmMxIChU
-QkMpCgpSZXZpZXdlZC1ieTogR2VlcnQgVXl0dGVyaG9ldmVuIDxnZWVydCtyZW5lc2FzQGdsaWRl
-ci5iZT4KCkdye29ldGplLGVldGluZ31zLAoKICAgICAgICAgICAgICAgICAgICAgICAgR2VlcnQK
+SGkgTW9yaW1vdG8tc2FuLAoKVGhhbmsgeW91IGZvciB0aGUgcGF0Y2guCgpPbiBXZWRuZXNkYXks
+IDQgSnVseSAyMDE4IDAzOjM0OjEwIEVFU1QgS3VuaW5vcmkgTW9yaW1vdG8gd3JvdGU6Cj4gRnJv
+bTogS3VuaW5vcmkgTW9yaW1vdG8gPGt1bmlub3JpLm1vcmltb3RvLmd4QHJlbmVzYXMuY29tPgo+
+IAo+IFRoaXMgcGF0Y2ggaXMgdXNpbmcgQysrIGNvbW1lbnQgc3R5bGUgZm9yIFNQRFggbGluZSBv
+bmx5LAo+IGJlY2F1c2UgZHJpdmVyIGF1dGhvciB3YW50IGl0Lgo+IAo+IFNpZ25lZC1vZmYtYnk6
+IEt1bmlub3JpIE1vcmltb3RvIDxrdW5pbm9yaS5tb3JpbW90by5neEByZW5lc2FzLmNvbT4KClJl
+dmlld2VkLWJ5OiBMYXVyZW50IFBpbmNoYXJ0IDxsYXVyZW50LnBpbmNoYXJ0QGlkZWFzb25ib2Fy
+ZC5jb20+Cgo+IC0tLQo+IEkgcG9zdGVkIHRoaXMgYmVjYXVzZSBJIGRvbid0IGtub3cgd2hpY2gg
+c3R5bGUgd2FzIE9LLgo+IFBsZWFzZSBwaWNrLXVwIGJlc3Qgc2lkZSBwYXRjaAo+IAo+IHYxIC0+
+IHYyCj4gCj4gIC0gdXNlZCAvLyBmb3IgU1BEWCBsaW5lIG9ubHkKPiAKPiAgZHJpdmVycy9kbWEv
+c2gvcmNhci1kbWFjLmMgfCA1ICstLS0tCj4gIDEgZmlsZSBjaGFuZ2VkLCAxIGluc2VydGlvbigr
+KSwgNCBkZWxldGlvbnMoLSkKPiAKPiBkaWZmIC0tZ2l0IGEvZHJpdmVycy9kbWEvc2gvcmNhci1k
+bWFjLmMgYi9kcml2ZXJzL2RtYS9zaC9yY2FyLWRtYWMuYwo+IGluZGV4IDc5ZDE0YWYuLmViZDE2
+MGQgMTAwNjQ0Cj4gLS0tIGEvZHJpdmVycy9kbWEvc2gvcmNhci1kbWFjLmMKPiArKysgYi9kcml2
+ZXJzL2RtYS9zaC9yY2FyLWRtYWMuYwo+IEBAIC0xLDEzICsxLDEwIEBACj4gKy8vIFNQRFgtTGlj
+ZW5zZS1JZGVudGlmaWVyOiBHUEwtMi4wCj4gIC8qCj4gICAqIFJlbmVzYXMgUi1DYXIgR2VuMiBE
+TUEgQ29udHJvbGxlciBEcml2ZXIKPiAgICoKPiAgICogQ29weXJpZ2h0IChDKSAyMDE0IFJlbmVz
+YXMgRWxlY3Ryb25pY3MgSW5jLgo+ICAgKgo+ICAgKiBBdXRob3I6IExhdXJlbnQgUGluY2hhcnQg
+PGxhdXJlbnQucGluY2hhcnRAaWRlYXNvbmJvYXJkLmNvbT4KPiAtICoKPiAtICogVGhpcyBpcyBm
+cmVlIHNvZnR3YXJlOyB5b3UgY2FuIHJlZGlzdHJpYnV0ZSBpdCBhbmQvb3IgbW9kaWZ5Cj4gLSAq
+IGl0IHVuZGVyIHRoZSB0ZXJtcyBvZiB2ZXJzaW9uIDIgb2YgdGhlIEdOVSBHZW5lcmFsIFB1Ymxp
+YyBMaWNlbnNlIGFzCj4gLSAqIHB1Ymxpc2hlZCBieSB0aGUgRnJlZSBTb2Z0d2FyZSBGb3VuZGF0
+aW9uLgo+ICAgKi8KPiAKPiAgI2luY2x1ZGUgPGxpbnV4L2RlbGF5Lmg+Cg==
