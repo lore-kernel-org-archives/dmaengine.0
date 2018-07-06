@@ -2,21 +2,24 @@ Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
 Subject: dmaengine: nbpfaxi: Mark expected switch fall-through
-From: "Gustavo A. R. Silva" <gustavo@embeddedor.com>
-Message-Id: <20180702180605.GA8523@embeddedor.com>
-Date: Mon, 2 Jul 2018 13:06:05 -0500
-To: Vinod Koul <vkoul@kernel.org>, Dan Williams <dan.j.williams@intel.com>
-Cc: dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org, "Gustavo A. R. Silva" <gustavo@embeddedor.com>
+From: Vinod Koul <vkoul@kernel.org>
+Message-Id: <20180706055628.GP22377@vkoul-mobl>
+Date: Fri, 6 Jul 2018 11:26:28 +0530
+To: "Gustavo A. R. Silva" <gustavo@embeddedor.com>
+Cc: Dan Williams <dan.j.williams@intel.com>, dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
 List-ID: <dmaengine.vger.kernel.org>
 
-SW4gcHJlcGFyYXRpb24gdG8gZW5hYmxpbmcgLVdpbXBsaWNpdC1mYWxsdGhyb3VnaCwgbWFyayBz
-d2l0Y2ggY2FzZXMKd2hlcmUgd2UgYXJlIGV4cGVjdGluZyB0byBmYWxsIHRocm91Z2guCgpTaWdu
-ZWQtb2ZmLWJ5OiBHdXN0YXZvIEEuIFIuIFNpbHZhIDxndXN0YXZvQGVtYmVkZGVkb3IuY29tPgot
-LS0KIGRyaXZlcnMvZG1hL25icGZheGkuYyB8IDEgKwogMSBmaWxlIGNoYW5nZWQsIDEgaW5zZXJ0
-aW9uKCspCgpkaWZmIC0tZ2l0IGEvZHJpdmVycy9kbWEvbmJwZmF4aS5jIGIvZHJpdmVycy9kbWEv
-bmJwZmF4aS5jCmluZGV4IDJmOTk3NGQuLjhjN2IyZTggMTAwNjQ0Ci0tLSBhL2RyaXZlcnMvZG1h
-L25icGZheGkuYworKysgYi9kcml2ZXJzL2RtYS9uYnBmYXhpLmMKQEAgLTQ3OSw2ICs0NzksNyBA
-QCBzdGF0aWMgc2l6ZV90IG5icGZfeGZlcl9zaXplKHN0cnVjdCBuYnBmX2RldmljZSAqbmJwZiwK
-IAogCWRlZmF1bHQ6CiAJCXByX3dhcm4oIiVzKCk6IGludmFsaWQgYnVzIHdpZHRoICV1XG4iLCBf
-X2Z1bmNfXywgd2lkdGgpOworCQkvKiBmYWxsIHRocm91Z2ggKi8KIAljYXNlIERNQV9TTEFWRV9C
-VVNXSURUSF8xX0JZVEU6CiAJCXNpemUgPSBidXJzdDsKIAl9Cg==
+T24gMDItMDctMTgsIDEzOjA2LCBHdXN0YXZvIEEuIFIuIFNpbHZhIHdyb3RlOgo+IEluIHByZXBh
+cmF0aW9uIHRvIGVuYWJsaW5nIC1XaW1wbGljaXQtZmFsbHRocm91Z2gsIG1hcmsgc3dpdGNoIGNh
+c2VzCj4gd2hlcmUgd2UgYXJlIGV4cGVjdGluZyB0byBmYWxsIHRocm91Z2guCj4gCj4gU2lnbmVk
+LW9mZi1ieTogR3VzdGF2byBBLiBSLiBTaWx2YSA8Z3VzdGF2b0BlbWJlZGRlZG9yLmNvbT4KPiAt
+LS0KPiAgZHJpdmVycy9kbWEvbmJwZmF4aS5jIHwgMSArCj4gIDEgZmlsZSBjaGFuZ2VkLCAxIGlu
+c2VydGlvbigrKQo+IAo+IGRpZmYgLS1naXQgYS9kcml2ZXJzL2RtYS9uYnBmYXhpLmMgYi9kcml2
+ZXJzL2RtYS9uYnBmYXhpLmMKPiBpbmRleCAyZjk5NzRkLi44YzdiMmU4IDEwMDY0NAo+IC0tLSBh
+L2RyaXZlcnMvZG1hL25icGZheGkuYwo+ICsrKyBiL2RyaXZlcnMvZG1hL25icGZheGkuYwo+IEBA
+IC00NzksNiArNDc5LDcgQEAgc3RhdGljIHNpemVfdCBuYnBmX3hmZXJfc2l6ZShzdHJ1Y3QgbmJw
+Zl9kZXZpY2UgKm5icGYsCj4gIAo+ICAJZGVmYXVsdDoKPiAgCQlwcl93YXJuKCIlcygpOiBpbnZh
+bGlkIGJ1cyB3aWR0aCAldVxuIiwgX19mdW5jX18sIHdpZHRoKTsKPiArCQkvKiBmYWxsIHRocm91
+Z2ggKi8KCkhtbSB0aGlzIGxvb2tzIG9rYXkgYnV0IGFtIG5vdCBhYmxlIHRvIHRyaWdnZXIgdGhp
+cyB3YXJuaW5nLi4odXNlZCBXPTEpIERpZCB5b3UKc2VlIHRoaXMgd2FybmluZyBvbiB5b3VyIGJ1
+aWxkLCBpZiBzbyB3aGF0IG9wdGlvbnM/Cg==
