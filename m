@@ -1,27 +1,34 @@
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
-Subject: [v3,13/18] dmaengine: dma-jz4780: Set DTCn register explicitly
-From: Randy Dunlap <rdunlap@infradead.org>
-Message-Id: <bd06e477-a253-48f2-2b3e-dc48b2a12841@infradead.org>
-Date: Sat, 21 Jul 2018 08:10:16 -0700
-To: Paul Cercueil <paul@crapouillou.net>, Vinod Koul <vkoul@kernel.org>, Rob Herring <robh+dt@kernel.org>, Mark Rutland <mark.rutland@arm.com>, Ralf Baechle <ralf@linux-mips.org>, Paul Burton <paul.burton@mips.com>, James Hogan <jhogan@kernel.org>, Zubair Lutfullah Kakakhel <Zubair.Kakakhel@imgtec.com>
-Cc: Mathieu Malaterre <malat@debian.org>, Daniel Silsby <dansilsby@gmail.com>, dmaengine@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, linux-mips@linux-mips.org
+Subject: [v3,10/18] dmaengine: dma-jz4780: Enable Fast DMA to the AIC
+From: Paul Cercueil <paul@crapouillou.net>
+Message-Id: <20180721110643.19624-11-paul@crapouillou.net>
+Date: Sat, 21 Jul 2018 13:06:35 +0200
+To: Vinod Koul <vkoul@kernel.org>, Rob Herring <robh+dt@kernel.org>, Mark Rutland <mark.rutland@arm.com>, Ralf Baechle <ralf@linux-mips.org>, Paul Burton <paul.burton@mips.com>, James Hogan <jhogan@kernel.org>, Zubair Lutfullah Kakakhel <Zubair.Kakakhel@imgtec.com>
+Cc: Mathieu Malaterre <malat@debian.org>, Daniel Silsby <dansilsby@gmail.com>, Paul Cercueil <paul@crapouillou.net>, dmaengine@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, linux-mips@linux-mips.org
 List-ID: <dmaengine.vger.kernel.org>
 
-T24gMDcvMjEvMjAxOCAwNDowNiBBTSwgUGF1bCBDZXJjdWVpbCB3cm90ZToKPiBGcm9tOiBEYW5p
-ZWwgU2lsc2J5IDxkYW5zaWxzYnlAZ21haWwuY29tPgo+IAo+IE5vcm1hbGx5LCB3ZSB3b3VsZG4n
-dCBzZXQgdGhlIGNoYW5uZWwgdHJhbnNmZXIgY291bnQgcmVnaXN0ZXIgZGlyZWN0bHkKPiB3aGVu
-IHVzaW5nIGRlc2NyaXB0b3ItZHJpdmVuIHRyYW5zZmVycy4gSG93ZXZlciwgdGhlcmUgaXMgbm8g
-aGFybSBpbgo+IGRvaW5nIHNvLCBhbmQgaXQgYWxsb3dzIGp6NDc4MF9kbWFfZGVzY19yZXNpZHVl
-KCkgdG8gcmVwb3J0IHRoZSBjb3JyZWN0Cj4gcmVzaWR1ZSBvZiBhbiBvbmdvaW5nIHRyYW5zZmVy
-LCBubyBtYXR0ZXIgd2hlbiBpdCBpcyBjYWxsZWQuCj4gCj4gU2lnbmVkLW9mZi1ieTogRGFuaWVs
-IFNpbHNieSA8ZGFuc2lsc2J5QGdtYWlsLmNvbT4KPiBUZXN0ZWQtYnk6IE1hdGhpZXUgTWFsYXRl
-cnJlIDxtYWxhdEBkZWJpYW4ub3JnPgo+IC0tLQo+ICBkcml2ZXJzL2RtYS9kbWEtano0NzgwLmMg
-fCA5ICsrKysrKysrKwo+ICAxIGZpbGUgY2hhbmdlZCwgOSBpbnNlcnRpb25zKCspCgpIaSwKCkRv
-Y3VtZW50YXRpb24vcHJvY2Vzcy9zdWJtaXR0aW5nLXBhdGNoZXMucnN0IHNheXM6CgpUaGUgU2ln
-bmVkLW9mZi1ieTogdGFnIGluZGljYXRlcyB0aGF0IHRoZSBzaWduZXIgd2FzIGludm9sdmVkIGlu
-IHRoZQpkZXZlbG9wbWVudCBvZiB0aGUgcGF0Y2gsIG9yIHRoYXQgaGUvc2hlIHdhcyBpbiB0aGUg
-cGF0Y2gncyBkZWxpdmVyeSBwYXRoLgoKVGhhdCBtZWFucyB0aGF0IHBhdGNoZXMgdGhhdCBhcmUg
-ZnJvbSBEYW5pZWwgYnV0IHlvdSBzZW5kIChkZWxpdmVyeSBwYXRoKQpzaG91bGQgYWxzbyBiZSBT
-aWduZWQtb2ZmLWJ5OiB5b3UuCg==
+V2l0aCB0aGUgZmFzdCBETUEgYml0IHNldCwgdGhlIERNQSB3aWxsIHRyYW5zZmVyIHR3aWNlIGFz
+IG11Y2ggZGF0YQpwZXIgY2xvY2sgcGVyaW9kIHRvIHRoZSBBSUMsIHNvIHRoZXJlIGlzIGxpdHRs
+ZSBwb2ludCBub3QgdG8gc2V0IGl0LgoKU2lnbmVkLW9mZi1ieTogUGF1bCBDZXJjdWVpbCA8cGF1
+bEBjcmFwb3VpbGxvdS5uZXQ+ClRlc3RlZC1ieTogTWF0aGlldSBNYWxhdGVycmUgPG1hbGF0QGRl
+Ymlhbi5vcmc+ClJldmlld2VkLWJ5OiBQcmFzYW5uYUt1bWFyIE11cmFsaWRoYXJhbiA8cHJhc2Fu
+bmF0c21rdW1hckBnbWFpbC5jb20+Ci0tLQogZHJpdmVycy9kbWEvZG1hLWp6NDc4MC5jIHwgNSAr
+KystLQogMSBmaWxlIGNoYW5nZWQsIDMgaW5zZXJ0aW9ucygrKSwgMiBkZWxldGlvbnMoLSkKCiB2
+MjogTm8gY2hhbmdlCgogdjM6IE5vIGNoYW5nZQoKZGlmZiAtLWdpdCBhL2RyaXZlcnMvZG1hL2Rt
+YS1qejQ3ODAuYyBiL2RyaXZlcnMvZG1hL2RtYS1qejQ3ODAuYwppbmRleCA4OGNlM2YwMTU3ZjYu
+LjNjOWQzOTUyZTIzYSAxMDA2NDQKLS0tIGEvZHJpdmVycy9kbWEvZG1hLWp6NDc4MC5jCisrKyBi
+L2RyaXZlcnMvZG1hL2RtYS1qejQ3ODAuYwpAQCAtNTIsNiArNTIsNyBAQAogI2RlZmluZSBKWl9E
+TUFfRE1BQ19ETUFFCUJJVCgwKQogI2RlZmluZSBKWl9ETUFfRE1BQ19BUgkJQklUKDIpCiAjZGVm
+aW5lIEpaX0RNQV9ETUFDX0hMVAkJQklUKDMpCisjZGVmaW5lIEpaX0RNQV9ETUFDX0ZBSUMJQklU
+KDI3KQogI2RlZmluZSBKWl9ETUFfRE1BQ19GTVNDCUJJVCgzMSkKIAogI2RlZmluZSBKWl9ETUFf
+RFJUX0FVVE8JCTB4OApAQCAtOTQxLDggKzk0Miw4IEBAIHN0YXRpYyBpbnQgano0NzgwX2RtYV9w
+cm9iZShzdHJ1Y3QgcGxhdGZvcm1fZGV2aWNlICpwZGV2KQogCSAqIEFsc28gc2V0IHRoZSBGTVND
+IGJpdCAtIGl0IGluY3JlYXNlcyBNU0MgcGVyZm9ybWFuY2UsIHNvIGl0IG1ha2VzCiAJICogbGl0
+dGxlIHNlbnNlIG5vdCB0byBlbmFibGUgaXQuCiAJICovCi0Jano0NzgwX2RtYV9jdHJsX3dyaXRl
+bChqemRtYSwgSlpfRE1BX1JFR19ETUFDLAotCQkJICBKWl9ETUFfRE1BQ19ETUFFIHwgSlpfRE1B
+X0RNQUNfRk1TQyk7CisJano0NzgwX2RtYV9jdHJsX3dyaXRlbChqemRtYSwgSlpfRE1BX1JFR19E
+TUFDLCBKWl9ETUFfRE1BQ19ETUFFIHwKKwkJCSAgICAgICBKWl9ETUFfRE1BQ19GQUlDIHwgSlpf
+RE1BX0RNQUNfRk1TQyk7CiAKIAlpZiAoanpkbWEtPnZlcnNpb24gPT0gSURfSlo0NzgwKQogCQlq
+ejQ3ODBfZG1hX2N0cmxfd3JpdGVsKGp6ZG1hLCBKWl9ETUFfUkVHX0RNQUNQLCAwKTsK
