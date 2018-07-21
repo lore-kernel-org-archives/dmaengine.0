@@ -1,15 +1,36 @@
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
-Subject: dmaengine: dma_request_chan_by_mask() to handle deferred probing
-From: Vinod Koul <vkoul@kernel.org>
-Message-Id: <20180725123425.GS3661@vkoul-mobl>
-Date: Wed, 25 Jul 2018 18:04:25 +0530
-To: Peter Ujfalusi <peter.ujfalusi@ti.com>
-Cc: dan.j.williams@intel.com, dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [v3,14/18] dmaengine: dma-jz4780: Further residue status fix
+From: Paul Cercueil <paul@crapouillou.net>
+Message-Id: <20180721110643.19624-15-paul@crapouillou.net>
+Date: Sat, 21 Jul 2018 13:06:39 +0200
+To: Vinod Koul <vkoul@kernel.org>, Rob Herring <robh+dt@kernel.org>, Mark Rutland <mark.rutland@arm.com>, Ralf Baechle <ralf@linux-mips.org>, Paul Burton <paul.burton@mips.com>, James Hogan <jhogan@kernel.org>, Zubair Lutfullah Kakakhel <Zubair.Kakakhel@imgtec.com>
+Cc: Mathieu Malaterre <malat@debian.org>, Daniel Silsby <dansilsby@gmail.com>, Paul Cercueil <paul@crapouillou.net>, dmaengine@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, linux-mips@linux-mips.org
 List-ID: <dmaengine.vger.kernel.org>
 
-T24gMTgtMDctMTgsIDEyOjI5LCBQZXRlciBVamZhbHVzaSB3cm90ZToKPiBJZiB0aGVyZSBhcmUg
-bm8gRE1BIGRldmljZXMgcmVnaXN0ZXJlZCB5ZXQsIHJldHVybiB3aXRoIEVQUk9CRV9ERUZFUgo+
-IHNpbWlsYXJseSB0byB0aGUgY2FzZSB3aGVuIHJlcXVlc3RpbmcgYSBzbGF2ZSBjaGFubmVsLgoK
-QXBwbGllZCwgdGhhbmtzCg==
+RnJvbTogRGFuaWVsIFNpbHNieSA8ZGFuc2lsc2J5QGdtYWlsLmNvbT4KCkZ1bmMgano0NzgwX2Rt
+YV9kZXNjX3Jlc2lkdWUoKSBleHBlY3RzIHRoZSBpbmRleCB0byB0aGUgbmV4dCBodwpkZXNjcmlw
+dG9yIGFzIGl0cyBsYXN0IHBhcmFtZXRlci4gQ2FsbGVyIGZ1bmMgano0NzgwX2RtYV90eF9zdGF0
+dXMoKSwKaG93ZXZlciwgYXBwbGllZCBtb2R1bHVzIGJlZm9yZSBwYXNzaW5nIGl0LiBXaGVuIHRo
+ZSBjdXJyZW50IGh3CmRlc2NyaXB0b3Igd2FzIGxhc3QgaW4gdGhlIGxpc3QsIHRoZSBpbmRleCBw
+YXNzZWQgYmVjYW1lIHplcm8uCgpUaGUgcmVzdWx0aW5nIGV4Y2VzcyBvZiByZXBvcnRlZCByZXNp
+ZHVlIGVzcGVjaWFsbHkgY2F1c2VkIHByb2JsZW1zCndpdGggY3ljbGljIERNQSB0cmFuc2ZlciBj
+bGllbnRzLCBpLmUuIEFMU0EgQUlDIGF1ZGlvIG91dHB1dCwgd2hpY2gKcmVseSBvbiB0aGlzIGZv
+ciBkZXRlcm1pbmluZyBjdXJyZW50IERNQSBsb2NhdGlvbiB3aXRoaW4gYnVmZmVyLgoKQ29tYmlu
+ZWQgd2l0aCB0aGUgcmVjZW50IGFuZCByZWxhdGVkIHJlc2lkdWUtcmVwb3J0aW5nIGZpeGVzLCBz
+cHVyaW91cwpBTFNBIGF1ZGlvIHVuZGVycnVucyBvbiBqejQ3NzAgaGFyZHdhcmUgYXJlIG5vdyBm
+aXhlZC4KClNpZ25lZC1vZmYtYnk6IERhbmllbCBTaWxzYnkgPGRhbnNpbHNieUBnbWFpbC5jb20+
+ClRlc3RlZC1ieTogTWF0aGlldSBNYWxhdGVycmUgPG1hbGF0QGRlYmlhbi5vcmc+Ci0tLQogZHJp
+dmVycy9kbWEvZG1hLWp6NDc4MC5jIHwgMiArLQogMSBmaWxlIGNoYW5nZWQsIDEgaW5zZXJ0aW9u
+KCspLCAxIGRlbGV0aW9uKC0pCgogdjI6IE5vIGNoYW5nZQoKIHYzOiBObyBjaGFuZ2UKCmRpZmYg
+LS1naXQgYS9kcml2ZXJzL2RtYS9kbWEtano0NzgwLmMgYi9kcml2ZXJzL2RtYS9kbWEtano0Nzgw
+LmMKaW5kZXggNzg4NDkxMzFjODFkLi5iOWRiNTM5YTViMzQgMTAwNjQ0Ci0tLSBhL2RyaXZlcnMv
+ZG1hL2RtYS1qejQ3ODAuYworKysgYi9kcml2ZXJzL2RtYS9kbWEtano0NzgwLmMKQEAgLTY1MSw3
+ICs2NTEsNyBAQCBzdGF0aWMgZW51bSBkbWFfc3RhdHVzIGp6NDc4MF9kbWFfdHhfc3RhdHVzKHN0
+cnVjdCBkbWFfY2hhbiAqY2hhbiwKIAkJCQkJdG9fano0NzgwX2RtYV9kZXNjKHZkZXNjKSwgMCk7
+CiAJfSBlbHNlIGlmIChjb29raWUgPT0ganpjaGFuLT5kZXNjLT52ZGVzYy50eC5jb29raWUpIHsK
+IAkJdHhzdGF0ZS0+cmVzaWR1ZSA9IGp6NDc4MF9kbWFfZGVzY19yZXNpZHVlKGp6Y2hhbiwganpj
+aGFuLT5kZXNjLAotCQkJICAoanpjaGFuLT5jdXJyX2h3ZGVzYyArIDEpICUganpjaGFuLT5kZXNj
+LT5jb3VudCk7CisJCQkJCWp6Y2hhbi0+Y3Vycl9od2Rlc2MgKyAxKTsKIAl9IGVsc2UKIAkJdHhz
+dGF0ZS0+cmVzaWR1ZSA9IDA7CiAK
