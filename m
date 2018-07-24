@@ -2,30 +2,23 @@ Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
 Subject: [v3,11/18] dmaengine: dma-jz4780: Add missing residue DTC mask
-From: Paul Cercueil <paul@crapouillou.net>
-Message-Id: <20180721110643.19624-12-paul@crapouillou.net>
-Date: Sat, 21 Jul 2018 13:06:36 +0200
-To: Vinod Koul <vkoul@kernel.org>, Rob Herring <robh+dt@kernel.org>, Mark Rutland <mark.rutland@arm.com>, Ralf Baechle <ralf@linux-mips.org>, Paul Burton <paul.burton@mips.com>, James Hogan <jhogan@kernel.org>, Zubair Lutfullah Kakakhel <Zubair.Kakakhel@imgtec.com>
-Cc: Mathieu Malaterre <malat@debian.org>, Daniel Silsby <dansilsby@gmail.com>, Paul Cercueil <paul@crapouillou.net>, dmaengine@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, linux-mips@linux-mips.org
+From: Vinod Koul <vkoul@kernel.org>
+Message-Id: <20180724133853.GH3661@vkoul-mobl>
+Date: Tue, 24 Jul 2018 19:08:53 +0530
+To: Paul Cercueil <paul@crapouillou.net>
+Cc: Rob Herring <robh+dt@kernel.org>, Mark Rutland <mark.rutland@arm.com>, Ralf Baechle <ralf@linux-mips.org>, Paul Burton <paul.burton@mips.com>, James Hogan <jhogan@kernel.org>, Zubair Lutfullah Kakakhel <Zubair.Kakakhel@imgtec.com>, Mathieu Malaterre <malat@debian.org>, Daniel Silsby <dansilsby@gmail.com>, dmaengine@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, linux-mips@linux-mips.org
 List-ID: <dmaengine.vger.kernel.org>
 
-RnJvbTogRGFuaWVsIFNpbHNieSA8ZGFuc2lsc2J5QGdtYWlsLmNvbT4KClRoZSAnZHRjJyB3b3Jk
-IGluIGp6IERNQSBkZXNjcmlwdG9ycyBjb250YWlucyB0d28gZmllbGRzOiBUaGUKbG93ZXN0IDI0
-IGJpdHMgYXJlIHRoZSB0cmFuc2ZlciBjb3VudCwgYW5kIHVwcGVyIDggYml0cyBhcmUgdGhlIERP
-QQpvZmZzZXQgdG8gbmV4dCBkZXNjcmlwdG9yLiBUaGUgdXBwZXIgOCBiaXRzIGFyZSBub3cgY29y
-cmVjdGx5IG1hc2tlZApvZmYgd2hlbiBjb21wdXRpbmcgcmVzaWR1ZSBpbiBqejQ3ODBfZG1hX2Rl
-c2NfcmVzaWR1ZSgpLiBOb3RlIHRoYXQKcmVhZHMgb2YgdGhlIERUQ24gaGFyZHdhcmUgcmVnIGFy
-ZSBhdXRvbWF0aWNhbGx5IG1hc2tlZCB0aGlzIHdheS4KClNpZ25lZC1vZmYtYnk6IERhbmllbCBT
-aWxzYnkgPGRhbnNpbHNieUBnbWFpbC5jb20+ClRlc3RlZC1ieTogTWF0aGlldSBNYWxhdGVycmUg
-PG1hbGF0QGRlYmlhbi5vcmc+Ci0tLQogZHJpdmVycy9kbWEvZG1hLWp6NDc4MC5jIHwgMyArKy0K
-IDEgZmlsZSBjaGFuZ2VkLCAyIGluc2VydGlvbnMoKyksIDEgZGVsZXRpb24oLSkKCiB2MjogTm8g
-Y2hhbmdlCgogdjM6IE5vIGNoYW5nZQoKZGlmZiAtLWdpdCBhL2RyaXZlcnMvZG1hL2RtYS1qejQ3
-ODAuYyBiL2RyaXZlcnMvZG1hL2RtYS1qejQ3ODAuYwppbmRleCAzYzlkMzk1MmUyM2EuLmZhOTI2
-ZGUwODJiYSAxMDA2NDQKLS0tIGEvZHJpdmVycy9kbWEvZG1hLWp6NDc4MC5jCisrKyBiL2RyaXZl
-cnMvZG1hL2RtYS1qejQ3ODAuYwpAQCAtNjE0LDcgKzYxNCw4IEBAIHN0YXRpYyBzaXplX3Qgano0
-NzgwX2RtYV9kZXNjX3Jlc2lkdWUoc3RydWN0IGp6NDc4MF9kbWFfY2hhbiAqanpjaGFuLAogCXJl
-c2lkdWUgPSAwOwogCiAJZm9yIChpID0gbmV4dF9zZzsgaSA8IGRlc2MtPmNvdW50OyBpKyspCi0J
-CXJlc2lkdWUgKz0gZGVzYy0+ZGVzY1tpXS5kdGMgPDwganpjaGFuLT50cmFuc2Zlcl9zaGlmdDsK
-KwkJcmVzaWR1ZSArPSAoZGVzYy0+ZGVzY1tpXS5kdGMgJiAweGZmZmZmZikgPDwKKwkJCWp6Y2hh
-bi0+dHJhbnNmZXJfc2hpZnQ7CiAKIAlpZiAobmV4dF9zZyAhPSAwKSB7CiAJCWNvdW50ID0gano0
-NzgwX2RtYV9jaG5fcmVhZGwoanpkbWEsIGp6Y2hhbi0+aWQsCg==
+T24gMjEtMDctMTgsIDEzOjA2LCBQYXVsIENlcmN1ZWlsIHdyb3RlOgo+IEZyb206IERhbmllbCBT
+aWxzYnkgPGRhbnNpbHNieUBnbWFpbC5jb20+Cj4gCj4gVGhlICdkdGMnIHdvcmQgaW4ganogRE1B
+IGRlc2NyaXB0b3JzIGNvbnRhaW5zIHR3byBmaWVsZHM6IFRoZQo+IGxvd2VzdCAyNCBiaXRzIGFy
+ZSB0aGUgdHJhbnNmZXIgY291bnQsIGFuZCB1cHBlciA4IGJpdHMgYXJlIHRoZSBET0EKPiBvZmZz
+ZXQgdG8gbmV4dCBkZXNjcmlwdG9yLiBUaGUgdXBwZXIgOCBiaXRzIGFyZSBub3cgY29ycmVjdGx5
+IG1hc2tlZAo+IG9mZiB3aGVuIGNvbXB1dGluZyByZXNpZHVlIGluIGp6NDc4MF9kbWFfZGVzY19y
+ZXNpZHVlKCkuIE5vdGUgdGhhdAo+IHJlYWRzIG9mIHRoZSBEVENuIGhhcmR3YXJlIHJlZyBhcmUg
+YXV0b21hdGljYWxseSBtYXNrZWQgdGhpcyB3YXkuCj4gCj4gU2lnbmVkLW9mZi1ieTogRGFuaWVs
+IFNpbHNieSA8ZGFuc2lsc2J5QGdtYWlsLmNvbT4KPiBUZXN0ZWQtYnk6IE1hdGhpZXUgTWFsYXRl
+cnJlIDxtYWxhdEBkZWJpYW4ub3JnPgoKVGhpcyBuZWVkcyB5b3VyIHMtby1iLiBQbGVhc2Ugc2Vl
+IERvY3VtZW50YXRpb24vcHJvY2Vzcy9zdWJtaXR0aW5nLXBhdGNoZXMucnN0CgpJIHRoaW5rIFJh
+bmR5IGRpZCBmbGFnIHRoaXMgb25lIHNvbWUgb3RoZXIgcGF0Y2ggYXMgd2VsbC4gQWxsIHRoZQpw
+YXRjaGVzIG5lZWQgdG8gYmUgc2lnbmVkIG9mZiBieSBzZW5kZXIgYXMgd2VsbAo=
