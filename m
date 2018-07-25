@@ -2,26 +2,14 @@ Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
 Subject: dmaengine: dma_request_chan_by_mask() to handle deferred probing
-From: Peter Ujfalusi <peter.ujfalusi@ti.com>
-Message-Id: <20180718092957.1934-1-peter.ujfalusi@ti.com>
-Date: Wed, 18 Jul 2018 12:29:57 +0300
-To: vkoul@kernel.org, dan.j.williams@intel.com
-Cc: dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
+From: Vinod Koul <vkoul@kernel.org>
+Message-Id: <20180725123425.GS3661@vkoul-mobl>
+Date: Wed, 25 Jul 2018 18:04:25 +0530
+To: Peter Ujfalusi <peter.ujfalusi@ti.com>
+Cc: dan.j.williams@intel.com, dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
 List-ID: <dmaengine.vger.kernel.org>
 
-SWYgdGhlcmUgYXJlIG5vIERNQSBkZXZpY2VzIHJlZ2lzdGVyZWQgeWV0LCByZXR1cm4gd2l0aCBF
-UFJPQkVfREVGRVIKc2ltaWxhcmx5IHRvIHRoZSBjYXNlIHdoZW4gcmVxdWVzdGluZyBhIHNsYXZl
-IGNoYW5uZWwuCgpTaWduZWQtb2ZmLWJ5OiBQZXRlciBVamZhbHVzaSA8cGV0ZXIudWpmYWx1c2lA
-dGkuY29tPgotLS0KIGRyaXZlcnMvZG1hL2RtYWVuZ2luZS5jIHwgMTAgKysrKysrKystLQogMSBm
-aWxlIGNoYW5nZWQsIDggaW5zZXJ0aW9ucygrKSwgMiBkZWxldGlvbnMoLSkKCmRpZmYgLS1naXQg
-YS9kcml2ZXJzL2RtYS9kbWFlbmdpbmUuYyBiL2RyaXZlcnMvZG1hL2RtYWVuZ2luZS5jCmluZGV4
-IGQ4ZmM3YjU4ZTUwNi4uZjYyZTU5ZTFhMjY0IDEwMDY0NAotLS0gYS9kcml2ZXJzL2RtYS9kbWFl
-bmdpbmUuYworKysgYi9kcml2ZXJzL2RtYS9kbWFlbmdpbmUuYwpAQCAtNzY4LDggKzc2OCwxNCBA
-QCBzdHJ1Y3QgZG1hX2NoYW4gKmRtYV9yZXF1ZXN0X2NoYW5fYnlfbWFzayhjb25zdCBkbWFfY2Fw
-X21hc2tfdCAqbWFzaykKIAkJcmV0dXJuIEVSUl9QVFIoLUVOT0RFVik7CiAKIAljaGFuID0gX19k
-bWFfcmVxdWVzdF9jaGFubmVsKG1hc2ssIE5VTEwsIE5VTEwpOwotCWlmICghY2hhbikKLQkJY2hh
-biA9IEVSUl9QVFIoLUVOT0RFVik7CisJaWYgKCFjaGFuKSB7CisJCW11dGV4X2xvY2soJmRtYV9s
-aXN0X211dGV4KTsKKwkJaWYgKGxpc3RfZW1wdHkoJmRtYV9kZXZpY2VfbGlzdCkpCisJCQljaGFu
-ID0gRVJSX1BUUigtRVBST0JFX0RFRkVSKTsKKwkJZWxzZQorCQkJY2hhbiA9IEVSUl9QVFIoLUVO
-T0RFVik7CisJCW11dGV4X3VubG9jaygmZG1hX2xpc3RfbXV0ZXgpOworCX0KIAogCXJldHVybiBj
-aGFuOwogfQo=
+T24gMTgtMDctMTgsIDEyOjI5LCBQZXRlciBVamZhbHVzaSB3cm90ZToKPiBJZiB0aGVyZSBhcmUg
+bm8gRE1BIGRldmljZXMgcmVnaXN0ZXJlZCB5ZXQsIHJldHVybiB3aXRoIEVQUk9CRV9ERUZFUgo+
+IHNpbWlsYXJseSB0byB0aGUgY2FzZSB3aGVuIHJlcXVlc3RpbmcgYSBzbGF2ZSBjaGFubmVsLgoK
+QXBwbGllZCwgdGhhbmtzCg==
