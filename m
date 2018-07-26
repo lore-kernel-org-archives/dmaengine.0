@@ -1,20 +1,29 @@
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
-Subject: dmaengine: add a new helper dmam_async_device_register
-From: Vinod Koul <vkoul@kernel.org>
-Message-Id: <20180726041038.GY3661@vkoul-mobl>
-Date: Thu, 26 Jul 2018 09:40:38 +0530
-To: Huang Shijie <sjhuang@iluvatar.ai>
-Cc: corbet@lwn.net, dan.j.williams@intel.com, robh@kernel.org, linux-doc@vger.kernel.org, dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [v3,2/4] arm64: dts: actions: Add Actions Semi S900 DMA Controller
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Message-Id: <20180726050658.1399-3-manivannan.sadhasivam@linaro.org>
+Date: Thu, 26 Jul 2018 10:36:56 +0530
+To: vkoul@kernel.org, dan.j.williams@intel.com, afaerber@suse.de, robh+dt@kernel.org, dmaengine@vger.kernel.org, liuwei@actions-semi.com, 96boards@ucrobotics.com, devicetree@vger.kernel.org, daniel.thompson@linaro.org, amit.kucheria@linaro.org, linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, hzhang@ucrobotics.com, bdong@ucrobotics.com, manivannanece23@gmail.com, thomas.liau@actions-semi.com, jeff.chen@actions-semi.com, pn@denx.de, edgar.righi@lsitec.org.br
+Cc: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 List-ID: <dmaengine.vger.kernel.org>
 
-T24gMjYtMDctMTgsIDA5OjIxLCBIdWFuZyBTaGlqaWUgd3JvdGU6Cj4gPiA+IEBAIC0yNDAsNiAr
-MjQwLDcgQEAgQ0xPQ0sKPiA+ID4gICAgIGRldm1fb2ZfY2xrX2FkZF9od19wcm92aWRlcigpCj4g
-PiA+ICAgRE1BCj4gPiA+ICsgIGRtYW1fYXN5bmNfZGV2aWNlX3JlZ2lzdGVyKCkKPiA+IGNhbiB3
-ZSBuYW1lIGl0IGRtYWVuZ2luZV9hc3luY19kZXZpY2VfcmVnaXN0ZXIsIG5vdCB0byBjb25mdXNl
-IHdpdGggZG1hIEFQSXMKPiBvay4KPiBJZiBubyBvbmUgb2JqZWN0cyB0aGUgZG1hZW5naW5lX2Fz
-eW5jX2RldmljZV9yZWdpc3RlcigpLgo+IEkgd2lsbCB1c2UgaXQgaW4gdGhlIG5leHQgdmVyc2lv
-bi4KClJlbG9va2luZyBhdCBpdCwgd2UgYWxzbyBuZWVkIHRvIHN1Z2dlc3QgdGhhdCBpdCBpcyBk
-ZXZtIGFwaSwgc286CgpkbWFlbmdpbmVtX2FzeW5jX2RldmljZV9yZWdpc3RlcigpIHdvdWxkIGJl
-IGJldHRlciBJTU8K
+QWRkIERNQSBjb250cm9sbGVyIG5vZGUgZm9yIEFjdGlvbnMgU2VtaSBTOTAwIFNvQy4KClNpZ25l
+ZC1vZmYtYnk6IE1hbml2YW5uYW4gU2FkaGFzaXZhbSA8bWFuaXZhbm5hbi5zYWRoYXNpdmFtQGxp
+bmFyby5vcmc+Ci0tLQogYXJjaC9hcm02NC9ib290L2R0cy9hY3Rpb25zL3M5MDAuZHRzaSB8IDEz
+ICsrKysrKysrKysrKysKIDEgZmlsZSBjaGFuZ2VkLCAxMyBpbnNlcnRpb25zKCspCgpkaWZmIC0t
+Z2l0IGEvYXJjaC9hcm02NC9ib290L2R0cy9hY3Rpb25zL3M5MDAuZHRzaSBiL2FyY2gvYXJtNjQv
+Ym9vdC9kdHMvYWN0aW9ucy9zOTAwLmR0c2kKaW5kZXggN2FlOGI5MzFmMDAwLi4yZTgxNzhlNTA4
+MzIgMTAwNjQ0Ci0tLSBhL2FyY2gvYXJtNjQvYm9vdC9kdHMvYWN0aW9ucy9zOTAwLmR0c2kKKysr
+IGIvYXJjaC9hcm02NC9ib290L2R0cy9hY3Rpb25zL3M5MDAuZHRzaQpAQCAtMTkxLDYgKzE5MSwx
+OSBAQAogCQkJCSAgICAgPEdJQ19TUEkgMTYgSVJRX1RZUEVfTEVWRUxfSElHSD47CiAJCX07CiAK
+KwkJZG1hOiBkbWEtY29udHJvbGxlckBlMDI2MDAwMCB7CisJCQljb21wYXRpYmxlID0gImFjdGlv
+bnMsczkwMC1kbWEiOworCQkJcmVnID0gPDB4MCAweGUwMjYwMDAwIDB4MCAweDEwMDA+OworCQkJ
+aW50ZXJydXB0cyA9IDxHSUNfU1BJIDU3IElSUV9UWVBFX0xFVkVMX0hJR0g+LAorCQkJCSAgICAg
+PEdJQ19TUEkgNTggSVJRX1RZUEVfTEVWRUxfSElHSD4sCisJCQkJICAgICA8R0lDX1NQSSA1OSBJ
+UlFfVFlQRV9MRVZFTF9ISUdIPiwKKwkJCQkgICAgIDxHSUNfU1BJIDYwIElSUV9UWVBFX0xFVkVM
+X0hJR0g+OworCQkJI2RtYS1jZWxscyA9IDwxPjsKKwkJCWRtYS1jaGFubmVscyA9IDwxMj47CisJ
+CQlkbWEtcmVxdWVzdHMgPSA8NDY+OworCQkJY2xvY2tzID0gPCZjbXUgQ0xLX0RNQUM+OworCQl9
+OworCiAJCXRpbWVyOiB0aW1lckBlMDIyODAwMCB7CiAJCQljb21wYXRpYmxlID0gImFjdGlvbnMs
+czkwMC10aW1lciI7CiAJCQlyZWcgPSA8MHgwIDB4ZTAyMjgwMDAgMHgwIDB4ODAwMD47Cg==
