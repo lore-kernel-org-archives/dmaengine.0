@@ -1,21 +1,36 @@
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
-Subject: [v2,5/9] dmaengine: ste_dma40: use dmaenginem_async_device_register to simplify the code
-From: Linus Walleij <linus.walleij@linaro.org>
-Message-Id: <CACRpkdYhZ6WPwPPyZ13KFhcjbRArXsqxk4W-+e5CvpJ7gX7+uA@mail.gmail.com>
-Date: Mon, 6 Aug 2018 12:34:02 +0200
-To: sjhuang@iluvatar.ai
-Cc: vkoul@kernel.org, Dan Williams <dan.j.williams@intel.com>, Zubair Lutfullah Kakakhel <Zubair.Kakakhel@imgtec.com>, Daniel Mack <daniel@zonque.org>, Haojian Zhuang <haojian.zhuang@gmail.com>, Robert Jarzmik <robert.jarzmik@free.fr>, Patrice CHOTARD <patrice.chotard@st.com>, Maxime Coquelin <mcoquelin.stm32@gmail.com>, Alexandre TORGUE <alexandre.torgue@st.com>, Eugeniy.Paltsev@synopsys.com, Colin King <colin.king@canonical.com>, dmaengine@vger.kernel.org, Linux ARM <linux-arm-kernel@lists.infradead.org>
+Subject: [v4,6/7] dt-bindings: dmaengine: xilinx_dma: drop has-sg property
+From: Andrea Merello <andrea.merello@gmail.com>
+Message-Id: <20180802141012.19970-6-andrea.merello@gmail.com>
+Date: Thu,  2 Aug 2018 16:10:11 +0200
+To: vkoul@kernel.org, dan.j.williams@intel.com, michal.simek@xilinx.com, appana.durga.rao@xilinx.com, dmaengine@vger.kernel.org
+Cc: v4-000linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, robh+dt@kernel.org, mark.rutland@arm.com, devicetree@vger.kernel.org, radhey.shyam.pandey@xilinx.com, Andrea Merello <andrea.merello@gmail.com>
 List-ID: <dmaengine.vger.kernel.org>
 
-T24gTW9uLCBBdWcgNiwgMjAxOCBhdCAxMDo1MyBBTSBIdWFuZyBTaGlqaWUgPHNqaHVhbmdAaWx1
-dmF0YXIuYWk+IHdyb3RlOgoKPiBVc2UgZG1hZW5naW5lbV9hc3luY19kZXZpY2VfcmVnaXN0ZXIg
-dG8gc2ltcGxpZnkgdGhlIGNvZGU6Cj4gICAgICAgICByZW1vdmUgZG1hX2FzeW5jX2RldmljZV91
-bnJlZ2lzdGVyLgo+ICAgICAgICAgcmVtb3ZlIGxhYmVsIHVucmVnaXN0ZXJfc2xhdmUsIHVucmVn
-aXN0ZXJfbWVtY3B5Cj4KPiBTaWduZWQtb2ZmLWJ5OiBIdWFuZyBTaGlqaWUgPHNqaHVhbmdAaWx1
-dmF0YXIuYWk+CgpBY2tlZC1ieTogTGludXMgV2FsbGVpaiA8bGludXMud2FsbGVpakBsaW5hcm8u
-b3JnPgoKWW91cnMsCkxpbnVzIFdhbGxlaWoKLS0tClRvIHVuc3Vic2NyaWJlIGZyb20gdGhpcyBs
-aXN0OiBzZW5kIHRoZSBsaW5lICJ1bnN1YnNjcmliZSBkbWFlbmdpbmUiIGluCnRoZSBib2R5IG9m
-IGEgbWVzc2FnZSB0byBtYWpvcmRvbW9Admdlci5rZXJuZWwub3JnCk1vcmUgbWFqb3Jkb21vIGlu
-Zm8gYXQgIGh0dHA6Ly92Z2VyLmtlcm5lbC5vcmcvbWFqb3Jkb21vLWluZm8uaHRtbAo=
+VGhpcyBwcm9wZXJ0eSBpcyBub3QgbmVlZGVkIGFueW1vcmUsIGJlY2F1c2UgdGhlIGRyaXZlciBu
+b3cgYXV0b2RldGVjdHMgaXQuCkRlbGV0ZSByZWZlcmVuY2VzIGluIGRvY3VtZW50YXRpb24uCgpD
+YzogUm9iIEhlcnJpbmcgPHJvYmgrZHRAa2VybmVsLm9yZz4KQ2M6IE1hcmsgUnV0bGFuZCA8bWFy
+ay5ydXRsYW5kQGFybS5jb20+CkNjOiBkZXZpY2V0cmVlQHZnZXIua2VybmVsLm9yZwpDYzogUmFk
+aGV5IFNoeWFtIFBhbmRleSA8cmFkaGV5LnNoeWFtLnBhbmRleUB4aWxpbnguY29tPgpTaWduZWQt
+b2ZmLWJ5OiBBbmRyZWEgTWVyZWxsbyA8YW5kcmVhLm1lcmVsbG9AZ21haWwuY29tPgpSZXZpZXdl
+ZC1ieTogUmFkaGV5IFNoeWFtIFBhbmRleSA8cmFkaGV5LnNoeWFtLnBhbmRleUB4aWxpbnguY29t
+PgpSZXZpZXdlZC1ieTogUm9iIEhlcnJpbmcgPHJvYmhAa2VybmVsLm9yZz4KLS0tCkNoYW5nZXMg
+aW4gdjI6CgktIGNjIERUIG1haW50YWluZXIKQ2hhbmdlcyBpbiB2MzoKCS0gY2MgRFQgbWFpbnRh
+aW5lclMvTUwKQ2hhbmdlcyBpbiB2NDoKCU5vbmUKLS0tCiBEb2N1bWVudGF0aW9uL2RldmljZXRy
+ZWUvYmluZGluZ3MvZG1hL3hpbGlueC94aWxpbnhfZG1hLnR4dCB8IDMgLS0tCiAxIGZpbGUgY2hh
+bmdlZCwgMyBkZWxldGlvbnMoLSkKCmRpZmYgLS1naXQgYS9Eb2N1bWVudGF0aW9uL2RldmljZXRy
+ZWUvYmluZGluZ3MvZG1hL3hpbGlueC94aWxpbnhfZG1hLnR4dCBiL0RvY3VtZW50YXRpb24vZGV2
+aWNldHJlZS9iaW5kaW5ncy9kbWEveGlsaW54L3hpbGlueF9kbWEudHh0CmluZGV4IGFlYzRhNDFh
+MDNhZS4uMzA1MWJjMzcxM2M2IDEwMDY0NAotLS0gYS9Eb2N1bWVudGF0aW9uL2RldmljZXRyZWUv
+YmluZGluZ3MvZG1hL3hpbGlueC94aWxpbnhfZG1hLnR4dAorKysgYi9Eb2N1bWVudGF0aW9uL2Rl
+dmljZXRyZWUvYmluZGluZ3MvZG1hL3hpbGlueC94aWxpbnhfZG1hLnR4dApAQCAtMzcsOSArMzcs
+NiBAQCBSZXF1aXJlZCBwcm9wZXJ0aWVzOgogUmVxdWlyZWQgcHJvcGVydGllcyBmb3IgVkRNQToK
+IC0geGxueCxudW0tZnN0b3JlczogU2hvdWxkIGJlIHRoZSBudW1iZXIgb2YgZnJhbWVidWZmZXJz
+IGFzIGNvbmZpZ3VyZWQgaW4gaC93LgogCi1PcHRpb25hbCBwcm9wZXJ0aWVzOgotLSB4bG54LGlu
+Y2x1ZGUtc2c6IFRlbGxzIGNvbmZpZ3VyZWQgZm9yIFNjYXR0ZXItbW9kZSBpbgotCXRoZSBoYXJk
+d2FyZS4KIE9wdGlvbmFsIHByb3BlcnRpZXMgZm9yIEFYSSBETUE6CiAtIHhsbngsc2ctbGVuZ3Ro
+LXdpZHRoOiBTaG91bGQgYmUgc2V0IHRvIHRoZSB3aWR0aCBpbiBiaXRzIG9mIHRoZSBsZW5ndGgK
+ICAgCXJlZ2lzdGVyIGFzIGNvbmZpZ3VyZWQgaW4gaC93LiBUYWtlcyB2YWx1ZXMgezguLi4yNn0u
+IElmIHRoZSBwcm9wZXJ0eQo=
