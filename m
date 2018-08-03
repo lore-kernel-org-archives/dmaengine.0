@@ -1,19 +1,30 @@
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
-Subject: [4/6] dt-bindings: dmaengine: usb-dmac: Add binding for r8a774a1
-From: Rob Herring <robh@kernel.org>
-Message-Id: <20180831122015.GA25885@bogus>
-Date: Fri, 31 Aug 2018 08:20:15 -0400
-To: Fabrizio Castro <fabrizio.castro@bp.renesas.com>
-Cc: Vinod Koul <vkoul@kernel.org>, Mark Rutland <mark.rutland@arm.com>, Biju Das <biju.das@bp.renesas.com>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, dmaengine@vger.kernel.org, devicetree@vger.kernel.org, Simon Horman <horms@verge.net.au>, Geert Uytterhoeven <geert+renesas@glider.be>, Chris Paterson <Chris.Paterson2@renesas.com>, linux-renesas-soc@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [06/46] dmaengine: timb_dma: use dmaenginem_async_device_register to simplify the code
+From: Huang Shijie <sjhuang@iluvatar.ai>
+Message-Id: <20180803072016.21544-7-sjhuang@iluvatar.ai>
+Date: Fri,  3 Aug 2018 15:19:36 +0800
+To: vkoul@kernel.org
+Cc: dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org, dave.jiang@intel.com, radhey.shyam.pandey@xilinx.com, appana.durga.rao@xilinx.com, jmkrzyszt@gmail.com, gomonovych@gmail.com, peter.ujfalusi@ti.com, keescook@chromium.org, horms+renesas@verge.net.au, geert+renesas@glider.be, shawnguo@kernel.org, baoyou.xie@linaro.org, michal.simek@xilinx.com, baohua@kernel.org, ludovic.desroches@microchip.com, linus.walleij@linaro.org, david.brown@linaro.org, Huang Shijie <sjhuang@iluvatar.ai>
 List-ID: <dmaengine.vger.kernel.org>
 
-T24gRnJpLCAyNCBBdWcgMjAxOCAwODo1NjoxMyArMDEwMCwgRmFicml6aW8gQ2FzdHJvIHdyb3Rl
-Ogo+IEZyb206IEJpanUgRGFzIDxiaWp1LmRhc0BicC5yZW5lc2FzLmNvbT4KPiAKPiBUaGlzIHBh
-dGNoIGFkZHMgYmluZGluZyBmb3IgcjhhNzc0YTEgKFJaL0cyTSkuCj4gCj4gU2lnbmVkLW9mZi1i
-eTogQmlqdSBEYXMgPGJpanUuZGFzQGJwLnJlbmVzYXMuY29tPgo+IFJldmlld2VkLWJ5OiBGYWJy
-aXppbyBDYXN0cm8gPGZhYnJpemlvLmNhc3Ryb0BicC5yZW5lc2FzLmNvbT4KPiAtLS0KPiAgRG9j
-dW1lbnRhdGlvbi9kZXZpY2V0cmVlL2JpbmRpbmdzL2RtYS9yZW5lc2FzLHVzYi1kbWFjLnR4dCB8
-IDEgKwo+ICAxIGZpbGUgY2hhbmdlZCwgMSBpbnNlcnRpb24oKykKPiAKClJldmlld2VkLWJ5OiBS
-b2IgSGVycmluZyA8cm9iaEBrZXJuZWwub3JnPgo=
+VXNlIGRtYWVuZ2luZW1fYXN5bmNfZGV2aWNlX3JlZ2lzdGVyIHRvIHNpbXBsaWZ5IHRoZSBjb2Rl
+OgogICByZW1vdmUgZG1hX2FzeW5jX2RldmljZV91bnJlZ2lzdGVyCgpTaWduZWQtb2ZmLWJ5OiBI
+dWFuZyBTaGlqaWUgPHNqaHVhbmdAaWx1dmF0YXIuYWk+Ci0tLQogZHJpdmVycy9kbWEvdGltYl9k
+bWEuYyB8IDMgKy0tCiAxIGZpbGUgY2hhbmdlZCwgMSBpbnNlcnRpb24oKyksIDIgZGVsZXRpb25z
+KC0pCgpkaWZmIC0tZ2l0IGEvZHJpdmVycy9kbWEvdGltYl9kbWEuYyBiL2RyaXZlcnMvZG1hL3Rp
+bWJfZG1hLmMKaW5kZXggMzk1YzY5OGVkYjRkLi4zOWUxYmEyMzQ3ZGIgMTAwNjQ0Ci0tLSBhL2Ry
+aXZlcnMvZG1hL3RpbWJfZG1hLmMKKysrIGIvZHJpdmVycy9kbWEvdGltYl9kbWEuYwpAQCAtNzIz
+LDcgKzcyMyw3IEBAIHN0YXRpYyBpbnQgdGRfcHJvYmUoc3RydWN0IHBsYXRmb3JtX2RldmljZSAq
+cGRldikKIAkJbGlzdF9hZGRfdGFpbCgmdGRfY2hhbi0+Y2hhbi5kZXZpY2Vfbm9kZSwgJnRkLT5k
+bWEuY2hhbm5lbHMpOwogCX0KIAotCWVyciA9IGRtYV9hc3luY19kZXZpY2VfcmVnaXN0ZXIoJnRk
+LT5kbWEpOworCWVyciA9IGRtYWVuZ2luZW1fYXN5bmNfZGV2aWNlX3JlZ2lzdGVyKCZ0ZC0+ZG1h
+KTsKIAlpZiAoZXJyKSB7CiAJCWRldl9lcnIoJnBkZXYtPmRldiwgIkZhaWxlZCB0byByZWdpc3Rl
+ciBhc3luYyBkZXZpY2VcbiIpOwogCQlnb3RvIGVycl9mcmVlX2lycTsKQEAgLTc1NCw3ICs3NTQs
+NiBAQCBzdGF0aWMgaW50IHRkX3JlbW92ZShzdHJ1Y3QgcGxhdGZvcm1fZGV2aWNlICpwZGV2KQog
+CXN0cnVjdCByZXNvdXJjZSAqaW9tZW0gPSBwbGF0Zm9ybV9nZXRfcmVzb3VyY2UocGRldiwgSU9S
+RVNPVVJDRV9NRU0sIDApOwogCWludCBpcnEgPSBwbGF0Zm9ybV9nZXRfaXJxKHBkZXYsIDApOwog
+Ci0JZG1hX2FzeW5jX2RldmljZV91bnJlZ2lzdGVyKCZ0ZC0+ZG1hKTsKIAlmcmVlX2lycShpcnEs
+IHRkKTsKIAl0YXNrbGV0X2tpbGwoJnRkLT50YXNrbGV0KTsKIAlpb3VubWFwKHRkLT5tZW1iYXNl
+KTsK
