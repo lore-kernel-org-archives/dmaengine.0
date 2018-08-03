@@ -2,24 +2,31 @@ Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
 Subject: [17/46] dmaengine: stm32-mdma: use dmaenginem_async_device_register to simplify the code
-From: Huang Shijie <sjhuang@iluvatar.ai>
-Message-Id: <20180803072016.21544-18-sjhuang@iluvatar.ai>
-Date: Fri,  3 Aug 2018 15:19:47 +0800
-To: vkoul@kernel.org
-Cc: dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org, dave.jiang@intel.com, radhey.shyam.pandey@xilinx.com, appana.durga.rao@xilinx.com, jmkrzyszt@gmail.com, gomonovych@gmail.com, peter.ujfalusi@ti.com, keescook@chromium.org, horms+renesas@verge.net.au, geert+renesas@glider.be, shawnguo@kernel.org, baoyou.xie@linaro.org, michal.simek@xilinx.com, baohua@kernel.org, ludovic.desroches@microchip.com, linus.walleij@linaro.org, david.brown@linaro.org, Huang Shijie <sjhuang@iluvatar.ai>
+From: Pierre Yves MORDRET <pierre-yves.mordret@st.com>
+Message-Id: <6826c0d6-5d44-631e-ff5e-d67e90a5a848@st.com>
+Date: Fri, 3 Aug 2018 10:10:31 +0200
+To: Huang Shijie <sjhuang@iluvatar.ai>, vkoul@kernel.org
+Cc: dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org, dave.jiang@intel.com, radhey.shyam.pandey@xilinx.com, appana.durga.rao@xilinx.com, jmkrzyszt@gmail.com, gomonovych@gmail.com, peter.ujfalusi@ti.com, keescook@chromium.org, horms+renesas@verge.net.au, geert+renesas@glider.be, shawnguo@kernel.org, baoyou.xie@linaro.org, michal.simek@xilinx.com, baohua@kernel.org, ludovic.desroches@microchip.com, linus.walleij@linaro.org, david.brown@linaro.org
 List-ID: <dmaengine.vger.kernel.org>
 
-VXNlIGRtYWVuZ2luZW1fYXN5bmNfZGV2aWNlX3JlZ2lzdGVyIHRvIHNpbXBsaWZ5IHRoZSBjb2Rl
-OgoJcmVtb3ZlIGRtYV9hc3luY19kZXZpY2VfdW5yZWdpc3Rlci4KClNpZ25lZC1vZmYtYnk6IEh1
-YW5nIFNoaWppZSA8c2podWFuZ0BpbHV2YXRhci5haT4KLS0tCiBkcml2ZXJzL2RtYS9zdG0zMi1t
-ZG1hLmMgfCA0ICstLS0KIDEgZmlsZSBjaGFuZ2VkLCAxIGluc2VydGlvbigrKSwgMyBkZWxldGlv
-bnMoLSkKCmRpZmYgLS1naXQgYS9kcml2ZXJzL2RtYS9zdG0zMi1tZG1hLmMgYi9kcml2ZXJzL2Rt
-YS9zdG0zMi1tZG1hLmMKaW5kZXggMDZkZDE3MjUzNzVlLi4zOTBlNGNhZTBlMWEgMTAwNjQ0Ci0t
-LSBhL2RyaXZlcnMvZG1hL3N0bTMyLW1kbWEuYworKysgYi9kcml2ZXJzL2RtYS9zdG0zMi1tZG1h
-LmMKQEAgLTE2NTYsNyArMTY1Niw3IEBAIHN0YXRpYyBpbnQgc3RtMzJfbWRtYV9wcm9iZShzdHJ1
-Y3QgcGxhdGZvcm1fZGV2aWNlICpwZGV2KQogCQlyZXR1cm4gcmV0OwogCX0KIAotCXJldCA9IGRt
-YV9hc3luY19kZXZpY2VfcmVnaXN0ZXIoZGQpOworCXJldCA9IGRtYWVuZ2luZW1fYXN5bmNfZGV2
-aWNlX3JlZ2lzdGVyKGRkKTsKIAlpZiAocmV0KQogCQlyZXR1cm4gcmV0OwogCkBAIC0xNjc0LDgg
-KzE2NzQsNiBAQCBzdGF0aWMgaW50IHN0bTMyX21kbWFfcHJvYmUoc3RydWN0IHBsYXRmb3JtX2Rl
-dmljZSAqcGRldikKIAlyZXR1cm4gMDsKIAogZXJyX3VucmVnaXN0ZXI6Ci0JZG1hX2FzeW5jX2Rl
-dmljZV91bnJlZ2lzdGVyKGRkKTsKLQogCXJldHVybiByZXQ7CiB9CiAK
+QWNrZWQtYnk6IFBpZXJyZS1ZdmVzIE1PUkRSRVQgPHBpZXJyZS15dmVzLm1vcmRyZXRAc3QuY29t
+PgoKT24gMDgvMDMvMjAxOCAwOToxOSBBTSwgSHVhbmcgU2hpamllIHdyb3RlOgo+IFVzZSBkbWFl
+bmdpbmVtX2FzeW5jX2RldmljZV9yZWdpc3RlciB0byBzaW1wbGlmeSB0aGUgY29kZToKPiAJcmVt
+b3ZlIGRtYV9hc3luY19kZXZpY2VfdW5yZWdpc3Rlci4KPiAKPiBTaWduZWQtb2ZmLWJ5OiBIdWFu
+ZyBTaGlqaWUgPHNqaHVhbmdAaWx1dmF0YXIuYWk+Cj4gLS0tCj4gIGRyaXZlcnMvZG1hL3N0bTMy
+LW1kbWEuYyB8IDQgKy0tLQo+ICAxIGZpbGUgY2hhbmdlZCwgMSBpbnNlcnRpb24oKyksIDMgZGVs
+ZXRpb25zKC0pCj4gCj4gZGlmZiAtLWdpdCBhL2RyaXZlcnMvZG1hL3N0bTMyLW1kbWEuYyBiL2Ry
+aXZlcnMvZG1hL3N0bTMyLW1kbWEuYwo+IGluZGV4IDA2ZGQxNzI1Mzc1ZS4uMzkwZTRjYWUwZTFh
+IDEwMDY0NAo+IC0tLSBhL2RyaXZlcnMvZG1hL3N0bTMyLW1kbWEuYwo+ICsrKyBiL2RyaXZlcnMv
+ZG1hL3N0bTMyLW1kbWEuYwo+IEBAIC0xNjU2LDcgKzE2NTYsNyBAQCBzdGF0aWMgaW50IHN0bTMy
+X21kbWFfcHJvYmUoc3RydWN0IHBsYXRmb3JtX2RldmljZSAqcGRldikKPiAgCQlyZXR1cm4gcmV0
+Owo+ICAJfQo+ICAKPiAtCXJldCA9IGRtYV9hc3luY19kZXZpY2VfcmVnaXN0ZXIoZGQpOwo+ICsJ
+cmV0ID0gZG1hZW5naW5lbV9hc3luY19kZXZpY2VfcmVnaXN0ZXIoZGQpOwo+ICAJaWYgKHJldCkK
+PiAgCQlyZXR1cm4gcmV0Owo+ICAKPiBAQCAtMTY3NCw4ICsxNjc0LDYgQEAgc3RhdGljIGludCBz
+dG0zMl9tZG1hX3Byb2JlKHN0cnVjdCBwbGF0Zm9ybV9kZXZpY2UgKnBkZXYpCj4gIAlyZXR1cm4g
+MDsKPiAgCj4gIGVycl91bnJlZ2lzdGVyOgo+IC0JZG1hX2FzeW5jX2RldmljZV91bnJlZ2lzdGVy
+KGRkKTsKPiAtCj4gIAlyZXR1cm4gcmV0Owo+ICB9Cj4gIAo+Ci0tLQpUbyB1bnN1YnNjcmliZSBm
+cm9tIHRoaXMgbGlzdDogc2VuZCB0aGUgbGluZSAidW5zdWJzY3JpYmUgZG1hZW5naW5lIiBpbgp0
+aGUgYm9keSBvZiBhIG1lc3NhZ2UgdG8gbWFqb3Jkb21vQHZnZXIua2VybmVsLm9yZwpNb3JlIG1h
+am9yZG9tbyBpbmZvIGF0ICBodHRwOi8vdmdlci5rZXJuZWwub3JnL21ham9yZG9tby1pbmZvLmh0
+bWwK
