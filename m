@@ -1,22 +1,34 @@
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
-Subject: [v2,1/2] dt-bindings: dmaengine: add DT binding for UniPhier MIO DMAC
-From: Rob Herring <robh@kernel.org>
-Message-Id: <20180829003639.GA24691@bogus>
-Date: Tue, 28 Aug 2018 19:36:39 -0500
-To: Masahiro Yamada <yamada.masahiro@socionext.com>
-Cc: Vinod Koul <vkoul@kernel.org>, dmaengine@vger.kernel.org, devicetree@vger.kernel.org, Jassi Brar <jaswinder.singh@linaro.org>, Mark Rutland <mark.rutland@arm.com>, linux-arm-kernel@lists.infradead.org
+Subject: [01/46] dmaengine: zx_dma: use dmaenginem_async_device_register to simplify the code
+From: Huang Shijie <sjhuang@iluvatar.ai>
+Message-Id: <20180803072016.21544-2-sjhuang@iluvatar.ai>
+Date: Fri,  3 Aug 2018 15:19:31 +0800
+To: vkoul@kernel.org
+Cc: dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org, dave.jiang@intel.com, radhey.shyam.pandey@xilinx.com, appana.durga.rao@xilinx.com, jmkrzyszt@gmail.com, gomonovych@gmail.com, peter.ujfalusi@ti.com, keescook@chromium.org, horms+renesas@verge.net.au, geert+renesas@glider.be, shawnguo@kernel.org, baoyou.xie@linaro.org, michal.simek@xilinx.com, baohua@kernel.org, ludovic.desroches@microchip.com, linus.walleij@linaro.org, david.brown@linaro.org, Huang Shijie <sjhuang@iluvatar.ai>
 List-ID: <dmaengine.vger.kernel.org>
 
-T24gRnJpLCAyNCBBdWcgMjAxOCAxMDo0MToxMiArMDkwMCwgTWFzYWhpcm8gWWFtYWRhIHdyb3Rl
-Ogo+IFRoZSBNSU8gRE1BQyAoTWVkaWEgSU8gRE1BIENvbnRyb2xsZXIpIGlzIHVzZWQgaW4gVW5p
-UGhpZXIgTEQ0LAo+IFBybzQsIGFuZCBzTEQ4IFNvQ3MuCj4gCj4gU2lnbmVkLW9mZi1ieTogTWFz
-YWhpcm8gWWFtYWRhIDx5YW1hZGEubWFzYWhpcm9Ac29jaW9uZXh0LmNvbT4KPiAtLS0KPiAKPiBD
-aGFuZ2VzIGluIHYyOgo+ICAtIFJlbmFtZSB0aGUgbm9kZSAiZG1hYyIgdG8gImRtYS1jb250cm9s
-bGVyIgo+ICAtIFJlbW92ZSBkbWEtY2hhbm5lbHMgcHJvcGVydHkKPiAKPiAgLi4uL2RldmljZXRy
-ZWUvYmluZGluZ3MvZG1hL3VuaXBoaWVyLW1pby1kbWFjLnR4dCAgfCAyNSArKysrKysrKysrKysr
-KysrKysrKysrCj4gIDEgZmlsZSBjaGFuZ2VkLCAyNSBpbnNlcnRpb25zKCspCj4gIGNyZWF0ZSBt
-b2RlIDEwMDY0NCBEb2N1bWVudGF0aW9uL2RldmljZXRyZWUvYmluZGluZ3MvZG1hL3VuaXBoaWVy
-LW1pby1kbWFjLnR4dAo+IAoKUmV2aWV3ZWQtYnk6IFJvYiBIZXJyaW5nIDxyb2JoQGtlcm5lbC5v
-cmc+Cg==
+VXNlIGRtYWVuZ2luZW1fYXN5bmNfZGV2aWNlX3JlZ2lzdGVyKCkgdG8gc2ltcGxpZnkgdGhlIGNv
+ZGUuClJlbW92ZSB0aGUgY29kZSBjYWxsaW5nIGRtYV9hc3luY19kZXZpY2VfdW5yZWdpc3Rlcigp
+LgoKU2lnbmVkLW9mZi1ieTogSHVhbmcgU2hpamllIDxzamh1YW5nQGlsdXZhdGFyLmFpPgotLS0K
+IGRyaXZlcnMvZG1hL3p4X2RtYS5jIHwgNyArKy0tLS0tCiAxIGZpbGUgY2hhbmdlZCwgMiBpbnNl
+cnRpb25zKCspLCA1IGRlbGV0aW9ucygtKQoKZGlmZiAtLWdpdCBhL2RyaXZlcnMvZG1hL3p4X2Rt
+YS5jIGIvZHJpdmVycy9kbWEvenhfZG1hLmMKaW5kZXggMjU3MWJjNzY5M2RmLi43ZmViZDIwMTEz
+ZWYgMTAwNjQ0Ci0tLSBhL2RyaXZlcnMvZG1hL3p4X2RtYS5jCisrKyBiL2RyaXZlcnMvZG1hL3p4
+X2RtYS5jCkBAIC04NjEsMjAgKzg2MSwxOCBAQCBzdGF0aWMgaW50IHp4X2RtYV9wcm9iZShzdHJ1
+Y3QgcGxhdGZvcm1fZGV2aWNlICpvcCkKIAlJTklUX0xJU1RfSEVBRCgmZC0+Y2hhbl9wZW5kaW5n
+KTsKIAlwbGF0Zm9ybV9zZXRfZHJ2ZGF0YShvcCwgZCk7CiAKLQlyZXQgPSBkbWFfYXN5bmNfZGV2
+aWNlX3JlZ2lzdGVyKCZkLT5zbGF2ZSk7CisJcmV0ID0gZG1hZW5naW5lbV9hc3luY19kZXZpY2Vf
+cmVnaXN0ZXIoJmQtPnNsYXZlKTsKIAlpZiAocmV0KQogCQlnb3RvIGNsa19kaXM7CiAKIAlyZXQg
+PSBvZl9kbWFfY29udHJvbGxlcl9yZWdpc3RlcigoJm9wLT5kZXYpLT5vZl9ub2RlLAogCQkJCQkg
+enhfb2ZfZG1hX3NpbXBsZV94bGF0ZSwgZCk7CiAJaWYgKHJldCkKLQkJZ290byBvZl9kbWFfcmVn
+aXN0ZXJfZmFpbDsKKwkJZ290byBjbGtfZGlzOwogCiAJZGV2X2luZm8oJm9wLT5kZXYsICJpbml0
+aWFsaXplZFxuIik7CiAJcmV0dXJuIDA7CiAKLW9mX2RtYV9yZWdpc3Rlcl9mYWlsOgotCWRtYV9h
+c3luY19kZXZpY2VfdW5yZWdpc3RlcigmZC0+c2xhdmUpOwogY2xrX2RpczoKIAljbGtfZGlzYWJs
+ZV91bnByZXBhcmUoZC0+Y2xrKTsKIHp4X2RtYV9vdXQ6CkBAIC04ODksNyArODg3LDYgQEAgc3Rh
+dGljIGludCB6eF9kbWFfcmVtb3ZlKHN0cnVjdCBwbGF0Zm9ybV9kZXZpY2UgKm9wKQogCS8qIGV4
+cGxpY3RseSBmcmVlIHRoZSBpcnEgKi8KIAlkZXZtX2ZyZWVfaXJxKCZvcC0+ZGV2LCBkLT5pcnEs
+IGQpOwogCi0JZG1hX2FzeW5jX2RldmljZV91bnJlZ2lzdGVyKCZkLT5zbGF2ZSk7CiAJb2ZfZG1h
+X2NvbnRyb2xsZXJfZnJlZSgoJm9wLT5kZXYpLT5vZl9ub2RlKTsKIAogCWxpc3RfZm9yX2VhY2hf
+ZW50cnlfc2FmZShjLCBjbiwgJmQtPnNsYXZlLmNoYW5uZWxzLAo=
