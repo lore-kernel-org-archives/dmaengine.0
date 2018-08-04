@@ -1,13 +1,35 @@
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
-Subject: [v3,3/4] dmaengine: Add Actions Semi Owl family S900 DMA driver
-From: Vinod Koul <vkoul@kernel.org>
-Message-Id: <20180809024658.GR2395@vkoul-mobl>
-Date: Thu, 9 Aug 2018 08:16:58 +0530
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc: dan.j.williams@intel.com, afaerber@suse.de, robh+dt@kernel.org, dmaengine@vger.kernel.org, liuwei@actions-semi.com, 96boards@ucrobotics.com, devicetree@vger.kernel.org, daniel.thompson@linaro.org, amit.kucheria@linaro.org, linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, hzhang@ucrobotics.com, bdong@ucrobotics.com, manivannanece23@gmail.com, thomas.liau@actions-semi.com, jeff.chen@actions-semi.com, pn@denx.de, edgar.righi@lsitec.org.br
+Subject: [v3,07/18] dmaengine: dma-jz4780: Add support for the JZ4770 SoC
+From: Paul Cercueil <paul@crapouillou.net>
+Message-Id: <1533373377.10806.0@smtp.crapouillou.net>
+Date: Sat, 04 Aug 2018 11:02:57 +0200
+To: Vinod <vkoul@kernel.org>
+Cc: Rob Herring <robh+dt@kernel.org>, Mark Rutland <mark.rutland@arm.com>, Ralf Baechle <ralf@linux-mips.org>, Paul Burton <paul.burton@mips.com>, James Hogan <jhogan@kernel.org>, Zubair Lutfullah Kakakhel <Zubair.Kakakhel@imgtec.com>, Mathieu Malaterre <malat@debian.org>, Daniel Silsby <dansilsby@gmail.com>, dmaengine@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, linux-mips@linux-mips.org
 List-ID: <dmaengine.vger.kernel.org>
 
-T24gMjYtMDctMTgsIDEwOjM2LCBNYW5pdmFubmFuIFNhZGhhc2l2YW0gd3JvdGU6Cj4gQWRkIEFj
-dGlvbnMgU2VtaSBPd2wgZmFtaWx5IFM5MDAgRE1BIGRyaXZlci4KCkFwcGxpZWQsIHRoYW5rcwo=
+SGkgVmlub2QsCgpMZSBtYXIuIDI0IGp1aWwuIDIwMTggw6AgMTU6MzIsIFZpbm9kIDx2a291bEBr
+ZXJuZWwub3JnPiBhIMOpY3JpdCA6Cj4gT24gMjEtMDctMTgsIDEzOjA2LCBQYXVsIENlcmN1ZWls
+IHdyb3RlOgo+PiAgK3N0YXRpYyBpbmxpbmUgdm9pZCBqejQ3ODBfZG1hX2NoYW5fZW5hYmxlKHN0
+cnVjdCBqejQ3ODBfZG1hX2RldiAKPj4gKmp6ZG1hLAo+PiAgKwl1bnNpZ25lZCBpbnQgY2huKQo+
+IAo+IHJpZ2h0IGp1c3RpZmllZCBhbmQgYWxpZ25lZCB3aXRoIHByZWNlZGluZyBwbGVhc2UuIFdo
+aWxlIGFkZGluZyBuZXcKPiBjb2RlIHRvIGEgZXhpc3RpbmcgZHJpdmVyIGl0IGlzIGEgZ29vZCBp
+ZGVhIHRvIGNvbmZvcm0gdG8gZXhpc3RpbmcgCj4gc3R5bGUKCldlbGwgdGhhdCdzIGV4YWN0bHkg
+d2hhdCBJIGRpZCwgdGhpcyBpcyB0aGUgc3R5bGUgdXNlZCBpbiB0aGUgRE1BIApkcml2ZXIsCnNv
+IEkgdHJpZWQgdG8gY29uZm9ybSB0byBpdC4KCj4+ICArewo+PiAgKwlpZiAoanpkbWEtPnZlcnNp
+b24gPT0gSURfSlo0NzcwKQo+PiAgKwkJano0NzgwX2RtYV9jdHJsX3dyaXRlbChqemRtYSwgSlpf
+RE1BX1JFR19EQ0tFUywgQklUKGNobikpOwo+PiAgK30KPj4gICsKPj4gICtzdGF0aWMgaW5saW5l
+IHZvaWQgano0NzgwX2RtYV9jaGFuX2Rpc2FibGUoc3RydWN0IGp6NDc4MF9kbWFfZGV2IAo+PiAq
+anpkbWEsCj4+ICArCXVuc2lnbmVkIGludCBjaG4pCj4+ICArewo+PiAgKwlpZiAoanpkbWEtPnZl
+cnNpb24gPT0gSURfSlo0NzcwKQo+PiAgKwkJano0NzgwX2RtYV9jdHJsX3dyaXRlbChqemRtYSwg
+SlpfRE1BX1JFR19EQ0tFQywgQklUKGNobikpOwo+IAo+IHNvIGlmIGFub3RoZXIgdmVyc2lvbiBo
+YXMgdGhpcyBmZWF0dXJlIHdlIHdvdWxkIGRvOgo+ICAgICAgICAgaWYgKGp6ZG1hLT52ZXJzaW9u
+ID09IElEX0paNDc3MCkgfHwKPiAgICAgICAgICAgICAgICAgaWYgKGp6ZG1hLT52ZXJzaW9uID09
+IElEX0paWFhYWCkpCj4gCj4gYW5kIHNvIG9uLi4gd2h5IG5vdCBhZGQgYSB2YWx1ZSwgY2xrX2Vu
+YWJsZSBpbiB0aGUgZGVzY3JpcHRpb24gYW5kIHVzZQo+IHRoYXQuIEZvciBlYWNoIGNvbnRyb2xs
+ZXIgaXQgaXMgc2V0IHRvIHRydWUgb3IgZmFsc2UKPiAKPiAtLQo+IH5WaW5vZAotLS0KVG8gdW5z
+dWJzY3JpYmUgZnJvbSB0aGlzIGxpc3Q6IHNlbmQgdGhlIGxpbmUgInVuc3Vic2NyaWJlIGRtYWVu
+Z2luZSIgaW4KdGhlIGJvZHkgb2YgYSBtZXNzYWdlIHRvIG1ham9yZG9tb0B2Z2VyLmtlcm5lbC5v
+cmcKTW9yZSBtYWpvcmRvbW8gaW5mbyBhdCAgaHR0cDovL3ZnZXIua2VybmVsLm9yZy9tYWpvcmRv
+bW8taW5mby5odG1sCg==
