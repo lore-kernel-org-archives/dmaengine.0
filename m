@@ -2,25 +2,19 @@ Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
 Subject: [v2,9/9] dmaengine: add COMPILE_TEST for the drivers
-From: Huang Shijie <sjhuang@iluvatar.ai>
-Message-Id: <20180806085231.4597-10-sjhuang@iluvatar.ai>
-Date: Mon,  6 Aug 2018 16:52:31 +0800
-To: vkoul@kernel.org
-Cc: dan.j.williams@intel.com, Zubair.Kakakhel@imgtec.com, daniel@zonque.org, haojian.zhuang@gmail.com, robert.jarzmik@free.fr, patrice.chotard@st.com, linus.walleij@linaro.org, mcoquelin.stm32@gmail.com, alexandre.torgue@st.com, Eugeniy.Paltsev@synopsys.com, colin.king@canonical.com, dmaengine@vger.kernel.org, linux-arm-kernel@lists.infradead.org, Huang Shijie <sjhuang@iluvatar.ai>
+From: Linus Walleij <linus.walleij@linaro.org>
+Message-Id: <CACRpkdYwpKR_+FYHYRy2me+gWSM=oGkpHwyHbvdjAUn-A1uuvA@mail.gmail.com>
+Date: Mon, 6 Aug 2018 12:35:00 +0200
+To: sjhuang@iluvatar.ai
+Cc: vkoul@kernel.org, Dan Williams <dan.j.williams@intel.com>, Zubair Lutfullah Kakakhel <Zubair.Kakakhel@imgtec.com>, Daniel Mack <daniel@zonque.org>, Haojian Zhuang <haojian.zhuang@gmail.com>, Robert Jarzmik <robert.jarzmik@free.fr>, Patrice CHOTARD <patrice.chotard@st.com>, Maxime Coquelin <mcoquelin.stm32@gmail.com>, Alexandre TORGUE <alexandre.torgue@st.com>, Eugeniy.Paltsev@synopsys.com, Colin King <colin.king@canonical.com>, dmaengine@vger.kernel.org, Linux ARM <linux-arm-kernel@lists.infradead.org>
 List-ID: <dmaengine.vger.kernel.org>
 
-V2UgY2FuIGRvIHRoZSBjb21waWxpbmcgdGVzdCB3aXRoIENPTVBJTEVfVEVTVC4KVGhpcyBwYXRj
-aCBhZGRzIHRoZSBDT01QSUxFX1RFU1QgZm9yIHRoZSBkcml2ZXJzLgoKU2lnbmVkLW9mZi1ieTog
-SHVhbmcgU2hpamllIDxzamh1YW5nQGlsdXZhdGFyLmFpPgotLS0KIGRyaXZlcnMvZG1hL0tjb25m
-aWcgfCA0ICsrLS0KIDEgZmlsZSBjaGFuZ2VkLCAyIGluc2VydGlvbnMoKyksIDIgZGVsZXRpb25z
-KC0pCgpkaWZmIC0tZ2l0IGEvZHJpdmVycy9kbWEvS2NvbmZpZyBiL2RyaXZlcnMvZG1hL0tjb25m
-aWcKaW5kZXggZDRhNDIzMGE3OTQyLi4xZjBkY2ViMDU1ZDggMTAwNjQ0Ci0tLSBhL2RyaXZlcnMv
-ZG1hL0tjb25maWcKKysrIGIvZHJpdmVycy9kbWEvS2NvbmZpZwpAQCAtNDM5LDcgKzQzOSw3IEBA
-IGNvbmZpZyBQTDMzMF9ETUEKIAogY29uZmlnIFBYQV9ETUEKIAlib29sICJQWEEgRE1BIHN1cHBv
-cnQiCi0JZGVwZW5kcyBvbiAoQVJDSF9NTVAgfHwgQVJDSF9QWEEpCisJZGVwZW5kcyBvbiAoQVJD
-SF9NTVAgfHwgQVJDSF9QWEEgfHwgQ09NUElMRV9URVNUKQogCXNlbGVjdCBETUFfRU5HSU5FCiAJ
-c2VsZWN0IERNQV9WSVJUVUFMX0NIQU5ORUxTCiAJaGVscApAQCAtNDU3LDcgKzQ1Nyw3IEBAIGNv
-bmZpZyBTSVJGX0RNQQogCiBjb25maWcgU1RFX0RNQTQwCiAJYm9vbCAiU1QtRXJpY3Nzb24gRE1B
-NDAgc3VwcG9ydCIKLQlkZXBlbmRzIG9uIEFSQ0hfVTg1MDAKKwlkZXBlbmRzIG9uIEFSQ0hfVTg1
-MDAgfHwgQ09NUElMRV9URVNUCiAJc2VsZWN0IERNQV9FTkdJTkUKIAloZWxwCiAJICBTdXBwb3J0
-IGZvciBTVC1Fcmljc3NvbiBETUE0MCBjb250cm9sbGVyCg==
+T24gTW9uLCBBdWcgNiwgMjAxOCBhdCAxMDo1MyBBTSBIdWFuZyBTaGlqaWUgPHNqaHVhbmdAaWx1
+dmF0YXIuYWk+IHdyb3RlOgoKPiBXZSBjYW4gZG8gdGhlIGNvbXBpbGluZyB0ZXN0IHdpdGggQ09N
+UElMRV9URVNULgo+IFRoaXMgcGF0Y2ggYWRkcyB0aGUgQ09NUElMRV9URVNUIGZvciB0aGUgZHJp
+dmVycy4KPgo+IFNpZ25lZC1vZmYtYnk6IEh1YW5nIFNoaWppZSA8c2podWFuZ0BpbHV2YXRhci5h
+aT4KCkFja2VkLWJ5OiBMaW51cyBXYWxsZWlqIDxsaW51cy53YWxsZWlqQGxpbmFyby5vcmc+CgpZ
+b3VycywKTGludXMgV2FsbGVpagotLS0KVG8gdW5zdWJzY3JpYmUgZnJvbSB0aGlzIGxpc3Q6IHNl
+bmQgdGhlIGxpbmUgInVuc3Vic2NyaWJlIGRtYWVuZ2luZSIgaW4KdGhlIGJvZHkgb2YgYSBtZXNz
+YWdlIHRvIG1ham9yZG9tb0B2Z2VyLmtlcm5lbC5vcmcKTW9yZSBtYWpvcmRvbW8gaW5mbyBhdCAg
+aHR0cDovL3ZnZXIua2VybmVsLm9yZy9tYWpvcmRvbW8taW5mby5odG1sCg==
