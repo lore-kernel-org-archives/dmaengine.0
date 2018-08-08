@@ -2,27 +2,19 @@ Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
 Subject: [09/46] dmaengine: cppi41: use dmaenginem_async_device_register to simplify the code
-From: Huang Shijie <sjhuang@iluvatar.ai>
-Message-Id: <20180807071604.GA5576@hsj-Precision-5520>
-Date: Tue, 7 Aug 2018 15:16:05 +0800
+From: Tony Lindgren <tony@atomide.com>
+Message-Id: <20180808071652.GP99251@atomide.com>
+Date: Wed, 8 Aug 2018 00:16:52 -0700
 To: Peter Ujfalusi <peter.ujfalusi@ti.com>
-Cc: Alexandre Bailon <abailon@baylibre.com>, Tony Lindgren <tony@atomide.com>, vkoul@kernel.org, dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org, dave.jiang@intel.com, radhey.shyam.pandey@xilinx.com, appana.durga.rao@xilinx.com, jmkrzyszt@gmail.com, gomonovych@gmail.com, keescook@chromium.org, horms+renesas@verge.net.au, geert+renesas@glider.be, shawnguo@kernel.org, michal.simek@xilinx.com, baohua@kernel.org, ludovic.desroches@microchip.com, linus.walleij@linaro.org, david.brown@linaro.org
+Cc: Huang Shijie <sjhuang@iluvatar.ai>, Alexandre Bailon <abailon@baylibre.com>, vkoul@kernel.org, dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org, dave.jiang@intel.com, radhey.shyam.pandey@xilinx.com, appana.durga.rao@xilinx.com, jmkrzyszt@gmail.com, gomonovych@gmail.com, keescook@chromium.org, horms+renesas@verge.net.au, geert+renesas@glider.be, shawnguo@kernel.org, baoyou.xie@linaro.org, michal.simek@xilinx.com, baohua@kernel.org, ludovic.desroches@microchip.com, linus.walleij@linaro.org, david.brown@linaro.org
 List-ID: <dmaengine.vger.kernel.org>
 
-T24gVHVlLCBBdWcgMDcsIDIwMTggYXQgMTA6MDE6NDdBTSArMDMwMCwgUGV0ZXIgVWpmYWx1c2kg
-d3JvdGU6Cj4gSGksCj4gCj4gT24gMjAxOC0wOC0wNiAwNjoyOCwgSHVhbmcgU2hpamllIHdyb3Rl
-Ogo+IEl0IG1pZ2h0IGJlIG9ubHkgbWUsIGJ1dCBJIGxpa2UgdG8ga2VlcCB0aGUgcmVzb3VyY2Ug
-dGVhcmRvd24gaW4gYQo+IHJldmVyc2Ugb3JkZXIgb2YgdGhlaXIgY3JlYXRpb24uIElmIGV2ZXJ5
-dGhpbmcgaXMgZGV2bSB0aGVuIGl0IGlzIGdyYW50ZWQuClllcy4KCklmIGV2ZXJ5dGhpbmcgaXMg
-ZGV2bSB0aGVuIGl0IGlzIGdyYW50ZWQuLgoKPiAKPiBJbiBjYXNlIG9mIGNwcGk0IGl0IGxvb2tz
-IHNhZmUgYWZ0ZXIgcmVhZGluZyBpbiB0byB0aGUgRE1BZW5naW5lIGNvcmUsCj4gbW9kdWxlIGNv
-cmUgYW5kIHBsYXRmb3JtIGNvcmUgY29kZS4KPiAKPiBCdXQgZG9lcyB0aGUgcmVtb3ZlZCB0aHJl
-ZSBsaW5lcyB3b3J0aCBvdmVyIHRoZSBjbGFyaXR5IG9mIGhvdyB0aGUKPiBtb2R1bGUgcmVtb3Zh
-bCBpcyBwcm9jZWVkaW5nPwpQbGVhc2Uga2VlcCB0aGUgZHJpdmVyIGFzIGl0IGlzIGlmIHlvdSBs
-aWtlIHRoZSB0cmFkaXRpb25hbCB3YXkuIDopCgpUaGUgRE1BIGRyaXZlcidzIG1haW50YWluZXIg
-aGFzIHRoZSByaWdodCB0byBkZWNpZGUgd2hldGhlcgp0byB1c2UgdGhlIGRtYWVuZ2luZW1fYXN5
-bmNfZGV2aWNlX3JlZ2lzdGVyIG9yIG5vdC4KClRoYW5rcwpIdWFuZyBTaGlqaWUKLS0tClRvIHVu
-c3Vic2NyaWJlIGZyb20gdGhpcyBsaXN0OiBzZW5kIHRoZSBsaW5lICJ1bnN1YnNjcmliZSBkbWFl
-bmdpbmUiIGluCnRoZSBib2R5IG9mIGEgbWVzc2FnZSB0byBtYWpvcmRvbW9Admdlci5rZXJuZWwu
-b3JnCk1vcmUgbWFqb3Jkb21vIGluZm8gYXQgIGh0dHA6Ly92Z2VyLmtlcm5lbC5vcmcvbWFqb3Jk
-b21vLWluZm8uaHRtbAo=
+KiBQZXRlciBVamZhbHVzaSA8cGV0ZXIudWpmYWx1c2lAdGkuY29tPiBbMTgwODA3IDA3OjA1XToK
+PiBCdXQgZG9lcyB0aGUgcmVtb3ZlZCB0aHJlZSBsaW5lcyB3b3J0aCBvdmVyIHRoZSBjbGFyaXR5
+IG9mIGhvdyB0aGUKPiBtb2R1bGUgcmVtb3ZhbCBpcyBwcm9jZWVkaW5nPwo+IAo+IEFsZXhhbmRy
+ZSBhbmQgVG9ueSBwdXQgbG90cyBvZiBlZmZvcnQgdG8gdGhlIGNwcGk0IGRyaXZlciwgSSBsZXQg
+dGhlbQo+IGRlY2lkZS4KClVwIHRvIHlvdSBndXlzIGFzIGZhciBhcyBJJ20gY29uY2VybmVkLgoK
+VG9ueQotLS0KVG8gdW5zdWJzY3JpYmUgZnJvbSB0aGlzIGxpc3Q6IHNlbmQgdGhlIGxpbmUgInVu
+c3Vic2NyaWJlIGRtYWVuZ2luZSIgaW4KdGhlIGJvZHkgb2YgYSBtZXNzYWdlIHRvIG1ham9yZG9t
+b0B2Z2VyLmtlcm5lbC5vcmcKTW9yZSBtYWpvcmRvbW8gaW5mbyBhdCAgaHR0cDovL3ZnZXIua2Vy
+bmVsLm9yZy9tYWpvcmRvbW8taW5mby5odG1sCg==
