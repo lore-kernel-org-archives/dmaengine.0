@@ -2,28 +2,18 @@ Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
 Subject: [02/11] dmaengine: use SPDX identifier for Renesas drivers
-From: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
-Message-Id: <87k1ojfdao.wl-kuninori.morimoto.gx@renesas.com>
-Date: Wed, 22 Aug 2018 00:42:30 +0000
-To: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Cc: linux-renesas-soc@vger.kernel.org, Kuninori Morimoto <kuninori.morimoto.gx@gmail.com>, Vinod Koul <vkoul@kernel.org>, Dan Williams <dan.j.williams@intel.com>, dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
+From: Wolfram Sang <wsa@the-dreams.de>
+Message-Id: <20180822063219.lxkrx3neq5mzgeoo@katana>
+Date: Wed, 22 Aug 2018 08:32:19 +0200
+To: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
+Cc: Wolfram Sang <wsa+renesas@sang-engineering.com>, linux-renesas-soc@vger.kernel.org, Kuninori Morimoto <kuninori.morimoto.gx@gmail.com>, Vinod Koul <vkoul@kernel.org>, Dan Williams <dan.j.williams@intel.com>, dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
 List-ID: <dmaengine.vger.kernel.org>
 
-SGkgV29sZnJhbQoKPiBkaWZmIC0tZ2l0IGEvZHJpdmVycy9kbWEvc2gvc2hkbWEuaCBiL2RyaXZl
-cnMvZG1hL3NoL3NoZG1hLmgKPiBpbmRleCAyYzBhOTY5YWRjOWYuLmZkNzAyY2E5YTM5YyAxMDA2
-NDQKPiAtLS0gYS9kcml2ZXJzL2RtYS9zaC9zaGRtYS5oCj4gKysrIGIvZHJpdmVycy9kbWEvc2gv
-c2hkbWEuaAo+IEBAIC0xLDE0ICsxLDEwIEBACj4gKy8qIFNQRFgtTGljZW5zZS1JZGVudGlmaWVy
-OiBHUEwtMi4wLW9yLWxhdGVyICovCj4gIC8qCj4gICAqIFJlbmVzYXMgU3VwZXJIIERNQSBFbmdp
-bmUgc3VwcG9ydAo+ICAgKgo+ICAgKiBDb3B5cmlnaHQgKEMpIDIwMDkgTm9idWhpcm8gSXdhbWF0
-c3UgPGl3YW1hdHN1Lm5vYnVoaXJvQHJlbmVzYXMuY29tPgo+ICAgKiBDb3B5cmlnaHQgKEMpIDIw
-MDkgUmVuZXNhcyBTb2x1dGlvbnMsIEluYy4gQWxsIHJpZ2h0cyByZXNlcnZlZC4KPiAgICoKPiAt
-ICogVGhpcyBpcyBmcmVlIHNvZnR3YXJlOyB5b3UgY2FuIHJlZGlzdHJpYnV0ZSBpdCBhbmQvb3Ig
-bW9kaWZ5Cj4gLSAqIGl0IHVuZGVyIHRoZSB0ZXJtcyBvZiB0aGUgR05VIEdlbmVyYWwgUHVibGlj
-IExpY2Vuc2UgYXMgcHVibGlzaGVkIGJ5Cj4gLSAqIHRoZSBGcmVlIFNvZnR3YXJlIEZvdW5kYXRp
-b247IGVpdGhlciB2ZXJzaW9uIDIgb2YgdGhlIExpY2Vuc2UsIG9yCj4gLSAqIChhdCB5b3VyIG9w
-dGlvbikgYW55IGxhdGVyIHZlcnNpb24uCj4gLSAqCj4gICAqLwoKRmFiaW8gYWxyZWFkeSBpbmRp
-Y2F0ZWQgc2FtZXRoaW5ncyBvbiBbMDUvMTFdIGJ1dCwgd2Ugd2FudAoKCS0gR1BMLTIuMC1vci1s
-YXRlcgoJKyBHUEwtMi4wKwoKQW5kLCB3ZSBuZWVkIHRvIGNhcmUgYWJvdXQgTU9EVUxFX0xJQ0VO
-U0UoKSB0b28sCmJlY2F1c2Ugc29tZXRpbWVzIGhlYWRlciBsaWNlbnNlIGFuZCBNT0RVTEVfTElD
-RU5TRSgpIGFyZSBtaXNtYXRjaGVkLgojIEkgZGlkbid0IGNoZWNrIGRldGFpbCBvZiB0aGlzIHBh
-dGNoLXNldC4uLgo=
+PiBGYWJpbyBhbHJlYWR5IGluZGljYXRlZCBzYW1ldGhpbmdzIG9uIFswNS8xMV0gYnV0LCB3ZSB3
+YW50Cj4gCj4gCS0gR1BMLTIuMC1vci1sYXRlcgo+IAkrIEdQTC0yLjArCgpBcyBJIG1lbnRpb25l
+ZCB0aGVyZSwgdG9vLCBodHRwczovL3NwZHgub3JnL2xpY2Vuc2VzLyB3YW50cyAiLW9yLWxhdGVy
+Ii4KCj4gQW5kLCB3ZSBuZWVkIHRvIGNhcmUgYWJvdXQgTU9EVUxFX0xJQ0VOU0UoKSB0b28sCj4g
+YmVjYXVzZSBzb21ldGltZXMgaGVhZGVyIGxpY2Vuc2UgYW5kIE1PRFVMRV9MSUNFTlNFKCkgYXJl
+IG1pc21hdGNoZWQuCj4gIyBJIGRpZG4ndCBjaGVjayBkZXRhaWwgb2YgdGhpcyBwYXRjaC1zZXQu
+Li4KCkkgZGlkIGNoZWNrIHRoaXMgdHdpY2UgYW5kIG1vZGlmaWVkIHdoZXJlIE1PRFVMRV9MSUNF
+TlNFIHdhcyB3cm9uZy4KQW5vdGhlciBsb29rIG1heSBub3QgaHVydCwgdGhvdWdoLi4uCg==
