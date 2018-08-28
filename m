@@ -2,25 +2,16 @@ Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
 Subject: dmaengine: Convert to using %pOFn instead of device_node.name
-From: Rob Herring <robh@kernel.org>
-Message-Id: <20180828015252.28511-16-robh@kernel.org>
-Date: Mon, 27 Aug 2018 20:52:17 -0500
-To: linux-kernel@vger.kernel.org
-Cc: Dan Williams <dan.j.williams@intel.com>, Vinod Koul <vkoul@kernel.org>, dmaengine@vger.kernel.org
+From: Vinod Koul <vkoul@kernel.org>
+Message-Id: <20180828051649.GB2388@vkoul-mobl>
+Date: Tue, 28 Aug 2018 10:46:49 +0530
+To: Rob Herring <robh@kernel.org>
+Cc: linux-kernel@vger.kernel.org, Dan Williams <dan.j.williams@intel.com>, dmaengine@vger.kernel.org
 List-ID: <dmaengine.vger.kernel.org>
 
-SW4gcHJlcGFyYXRpb24gdG8gcmVtb3ZlIHRoZSBub2RlIG5hbWUgcG9pbnRlciBmcm9tIHN0cnVj
-dCBkZXZpY2Vfbm9kZSwKY29udmVydCBwcmludGYgdXNlcnMgdG8gdXNlIHRoZSAlcE9GbiBmb3Jt
-YXQgc3BlY2lmaWVyLgoKQ2M6IERhbiBXaWxsaWFtcyA8ZGFuLmoud2lsbGlhbXNAaW50ZWwuY29t
-PgpDYzogVmlub2QgS291bCA8dmtvdWxAa2VybmVsLm9yZz4KQ2M6IGRtYWVuZ2luZUB2Z2VyLmtl
-cm5lbC5vcmcKU2lnbmVkLW9mZi1ieTogUm9iIEhlcnJpbmcgPHJvYmhAa2VybmVsLm9yZz4KLS0t
-CiBkcml2ZXJzL2RtYS9uYnBmYXhpLmMgfCA0ICsrLS0KIDEgZmlsZSBjaGFuZ2VkLCAyIGluc2Vy
-dGlvbnMoKyksIDIgZGVsZXRpb25zKC0pCgpkaWZmIC0tZ2l0IGEvZHJpdmVycy9kbWEvbmJwZmF4
-aS5jIGIvZHJpdmVycy9kbWEvbmJwZmF4aS5jCmluZGV4IDhjN2IyZTg3MDNkYS4uOGQ0OTE0Y2Qw
-NmYwIDEwMDY0NAotLS0gYS9kcml2ZXJzL2RtYS9uYnBmYXhpLmMKKysrIGIvZHJpdmVycy9kbWEv
-bmJwZmF4aS5jCkBAIC0xMDk1LDggKzEwOTUsOCBAQCBzdGF0aWMgc3RydWN0IGRtYV9jaGFuICpu
-YnBmX29mX3hsYXRlKHN0cnVjdCBvZl9waGFuZGxlX2FyZ3MgKmRtYV9zcGVjLAogCWlmICghZGNo
-YW4pCiAJCXJldHVybiBOVUxMOwogCi0JZGV2X2RiZyhkY2hhbi0+ZGV2aWNlLT5kZXYsICJFbnRy
-eSAlcyglcylcbiIsIF9fZnVuY19fLAotCQlkbWFfc3BlYy0+bnAtPm5hbWUpOworCWRldl9kYmco
-ZGNoYW4tPmRldmljZS0+ZGV2LCAiRW50cnkgJXMoJXBPRm4pXG4iLCBfX2Z1bmNfXywKKwkJZG1h
-X3NwZWMtPm5wKTsKIAogCWNoYW4gPSBuYnBmX3RvX2NoYW4oZGNoYW4pOwogCg==
+T24gMjctMDgtMTgsIDIwOjUyLCBSb2IgSGVycmluZyB3cm90ZToKPiBJbiBwcmVwYXJhdGlvbiB0
+byByZW1vdmUgdGhlIG5vZGUgbmFtZSBwb2ludGVyIGZyb20gc3RydWN0IGRldmljZV9ub2RlLAo+
+IGNvbnZlcnQgcHJpbnRmIHVzZXJzIHRvIHVzZSB0aGUgJXBPRm4gZm9ybWF0IHNwZWNpZmllci4K
+PiAKPiBDYzogRGFuIFdpbGxpYW1zIDxkYW4uai53aWxsaWFtc0BpbnRlbC5jb20+Cj4gQ2M6IFZp
+bm9kIEtvdWwgPHZrb3VsQGtlcm5lbC5vcmc+Cj4gQ2M6IGRtYWVuZ2luZUB2Z2VyLmtlcm5lbC5v
+cmcKCkFwcGxpZWQgYWZ0ZXIgZHJvcHBpbmcgQ0MgbGlzdC4gdGhhbmtzCg==
