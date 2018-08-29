@@ -1,22 +1,29 @@
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
-Subject: [v2] dma: mic_x100_dma: use devm_kzalloc to fix an issue
-From: Vinod Koul <vkoul@kernel.org>
-Message-Id: <20180827054652.GW2388@vkoul-mobl>
-Date: Mon, 27 Aug 2018 11:16:53 +0530
-To: Huang Shijie <sjhuang@iluvatar.ai>
-Cc: sudeep.dutt@intel.com, ashutosh.dixit@intel.com, dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [v5,02/18] dmaengine: dma-jz4780: Return error if not probed from DT
+From: Paul Cercueil <paul@crapouillou.net>
+Message-Id: <20180829213300.22829-3-paul@crapouillou.net>
+Date: Wed, 29 Aug 2018 23:32:44 +0200
+To: Vinod Koul <vkoul@kernel.org>, Ralf Baechle <ralf@linux-mips.org>, Paul Burton <paul.burton@mips.com>
+Cc: od@zcrc.me, dmaengine@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, linux-mips@linux-mips.org, Paul Cercueil <paul@crapouillou.net>
 List-ID: <dmaengine.vger.kernel.org>
 
-T24gMjItMDgtMTgsIDEwOjQwLCBIdWFuZyBTaGlqaWUgd3JvdGU6Cj4gVGhlIGZvbGxvd2luZyBw
-YXRjaCBpbnRyb2R1Y2VkIGFuIGlzc3VlLgo+ICAgICBjb21taXQgZjYyMDZmMDBkOGM1ICgiZG1h
-ZW5naW5lOiBtaWNfeDEwMF9kbWE6IHVzZSB0aGUgbmV3IGhlbHBlciB0byBzaW1wbGlmeSB0aGUg
-Y29kZSIpCj4gCj4gVGhpcyBpc3N1ZSBpcyA6Cj4gCj4gCWtmcmVlKG1pY19kbWFfZGV2KQo+IAku
-Li4uLgo+IAlkbWFfYXN5bmNfZGV2aWNlX3VucmVnaXN0ZXIobWljX2RtYV9kZXYtPmRldmljZSk7
-Cj4gCj4gRnJlZSB0aGUgbWVtb3J5LCBhbmQgdXNlIGl0IGFnYWluLgo+IAo+IFNvIHVzZSBkZXZt
-X2t6YWxsb2MgdG8gYWxsb2NhdGUgbWljX2RtYV9kZXYgdG8gZml4IGl0Lgo+IAo+IFdoZW4gdGhl
-IERldnJlcyB0cnkgdG8gcmVsZWFzZSB0aGUgcmVzb3VyY2VzLCBpdCB3aWxsIGNhbGwgcmVsZWFz
-ZSBhdCB0aGUKPiBmb2xsb3dpbmcgb3JkZXI6Cj4gCj4gCWRtYV9hc3luY19kZXZpY2VfdW5yZWdp
-c3RlcihtaWNfZG1hX2Rldi0+ZGV2aWNlKTsKPiAJLi4uLi4KPiAJa2ZyZWUobWljX2RtYV9kZXYp
-CgpBZnRlciBmaXhpbmcgdGhlIHN1YnN5c3RlbSBuYW1lLCBhcHBsaWVkIHRoYW5rcwo=
+VGhlIGRyaXZlciBjYWxscyBjbGtfZ2V0KCkgd2l0aCB0aGUgY2xvY2sgbmFtZSBzZXQgdG8gTlVM
+TCwgd2hpY2ggbWVhbnMKdGhhdCB0aGUgZHJpdmVyIGNvdWxkIG9ubHkgd29yayB3aGVuIHByb2Jl
+ZCBmcm9tIGRldmljZXRyZWUuIEZyb20gbm93Cm9uLCB3ZSBleHBsaWNpdGx5IHJlcXVpcmUgdGhl
+IGRyaXZlciB0byBiZSBwcm9iZWQgZnJvbSBkZXZpY2V0cmVlLgoKU2lnbmVkLW9mZi1ieTogUGF1
+bCBDZXJjdWVpbCA8cGF1bEBjcmFwb3VpbGxvdS5uZXQ+ClRlc3RlZC1ieTogTWF0aGlldSBNYWxh
+dGVycmUgPG1hbGF0QGRlYmlhbi5vcmc+Ci0tLQoKTm90ZXM6CiAgICAgdjI6IE5ldyBwYXRjaAog
+ICAgCiAgICAgdjM6IE5vIGNoYW5nZQogICAgCiAgICAgdjQ6IE5vIGNoYW5nZQogICAgCiAgICAg
+djU6IE5vIGNoYW5nZQoKIGRyaXZlcnMvZG1hL2RtYS1qejQ3ODAuYyB8IDUgKysrKysKIDEgZmls
+ZSBjaGFuZ2VkLCA1IGluc2VydGlvbnMoKykKCmRpZmYgLS1naXQgYS9kcml2ZXJzL2RtYS9kbWEt
+ano0NzgwLmMgYi9kcml2ZXJzL2RtYS9kbWEtano0NzgwLmMKaW5kZXggODU4MjBhMmQ2OWQ0Li45
+ODc4OTk2MTBiNDYgMTAwNjQ0Ci0tLSBhL2RyaXZlcnMvZG1hL2RtYS1qejQ3ODAuYworKysgYi9k
+cml2ZXJzL2RtYS9kbWEtano0NzgwLmMKQEAgLTc2MSw2ICs3NjEsMTEgQEAgc3RhdGljIGludCBq
+ejQ3ODBfZG1hX3Byb2JlKHN0cnVjdCBwbGF0Zm9ybV9kZXZpY2UgKnBkZXYpCiAJc3RydWN0IHJl
+c291cmNlICpyZXM7CiAJaW50IGksIHJldDsKIAorCWlmICghZGV2LT5vZl9ub2RlKSB7CisJCWRl
+dl9lcnIoZGV2LCAiVGhpcyBkcml2ZXIgbXVzdCBiZSBwcm9iZWQgZnJvbSBkZXZpY2V0cmVlXG4i
+KTsKKwkJcmV0dXJuIC1FSU5WQUw7CisJfQorCiAJanpkbWEgPSBkZXZtX2t6YWxsb2MoZGV2LCBz
+aXplb2YoKmp6ZG1hKSwgR0ZQX0tFUk5FTCk7CiAJaWYgKCFqemRtYSkKIAkJcmV0dXJuIC1FTk9N
+RU07Cg==
