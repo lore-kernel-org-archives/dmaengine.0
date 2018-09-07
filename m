@@ -1,19 +1,34 @@
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
-Subject: [02/11] dmaengine: use SPDX identifier for Renesas drivers
-From: Wolfram Sang <wsa@the-dreams.de>
-Message-Id: <20180822063219.lxkrx3neq5mzgeoo@katana>
-Date: Wed, 22 Aug 2018 08:32:19 +0200
-To: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
-Cc: Wolfram Sang <wsa+renesas@sang-engineering.com>, linux-renesas-soc@vger.kernel.org, Kuninori Morimoto <kuninori.morimoto.gx@gmail.com>, Vinod Koul <vkoul@kernel.org>, Dan Williams <dan.j.williams@intel.com>, dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [3/3] dmaengine: xilinx_dma: Fix 64-bit simple CDMA transfer
+From: Radhey Shyam Pandey <radheys@xilinx.com>
+Message-Id: <MWHPR0201MB362841247B08AFFA21CB0A18C7000@MWHPR0201MB3628.namprd02.prod.outlook.com>
+Date: Fri, 7 Sep 2018 12:08:01 +0000
+To: Vinod <vkoul@kernel.org>
+Cc: "dan.j.williams@intel.com" <dan.j.williams@intel.com>, Michal Simek <michals@xilinx.com>, Appana Durga Kedareswara Rao <appanad@xilinx.com>, "lars@metafoo.de" <lars@metafoo.de>, "dmaengine@vger.kernel.org" <dmaengine@vger.kernel.org>, "linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>, "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
 List-ID: <dmaengine.vger.kernel.org>
 
-PiBGYWJpbyBhbHJlYWR5IGluZGljYXRlZCBzYW1ldGhpbmdzIG9uIFswNS8xMV0gYnV0LCB3ZSB3
-YW50Cj4gCj4gCS0gR1BMLTIuMC1vci1sYXRlcgo+IAkrIEdQTC0yLjArCgpBcyBJIG1lbnRpb25l
-ZCB0aGVyZSwgdG9vLCBodHRwczovL3NwZHgub3JnL2xpY2Vuc2VzLyB3YW50cyAiLW9yLWxhdGVy
-Ii4KCj4gQW5kLCB3ZSBuZWVkIHRvIGNhcmUgYWJvdXQgTU9EVUxFX0xJQ0VOU0UoKSB0b28sCj4g
-YmVjYXVzZSBzb21ldGltZXMgaGVhZGVyIGxpY2Vuc2UgYW5kIE1PRFVMRV9MSUNFTlNFKCkgYXJl
-IG1pc21hdGNoZWQuCj4gIyBJIGRpZG4ndCBjaGVjayBkZXRhaWwgb2YgdGhpcyBwYXRjaC1zZXQu
-Li4KCkkgZGlkIGNoZWNrIHRoaXMgdHdpY2UgYW5kIG1vZGlmaWVkIHdoZXJlIE1PRFVMRV9MSUNF
-TlNFIHdhcyB3cm9uZy4KQW5vdGhlciBsb29rIG1heSBub3QgaHVydCwgdGhvdWdoLi4uCg==
+PHNuaXA+Cj4gPiA+ID4gPiAtCQl4aWxpbnhfd3JpdGUoY2hhbiwgWElMSU5YX0NETUFfUkVHX1NS
+Q0FERFIsIGh3LQo+ID4gPiA+ID5zcmNfYWRkcik7Cj4gPiA+ID4gPiAtCQl4aWxpbnhfd3JpdGUo
+Y2hhbiwgWElMSU5YX0NETUFfUkVHX0RTVEFERFIsIGh3LQo+ID4gPiA+ID5kZXN0X2FkZHIpOwo+
+ID4gPiA+ID4gKwkJeGlsaW54X3dyaXRlKGNoYW4sIFhJTElOWF9DRE1BX1JFR19TUkNBRERSLAo+
+ID4gPiA+IChkbWFfYWRkcl90KQo+ID4gPiA+ID4gKwkJCSAgICAgKCh1NjQpaHctPnNyY19hZGRy
+X21zYiA8PCAzMiB8IGh3LQo+ID5zcmNfYWRkcikpOwo+ID4gPiA+Cj4gPiA+ID4gc28gdGhpcyBp
+czoKPiA+ID4gPiAgICAgICAgIChkbWFfYWRkcl90KSgodTY0KWh3LT5zcmNfYWRkcl9tc2IgPDwg
+MzIgfCBody0+c3JjX2FkZHIpCj4gPiA+ID4KPiA+ID4gPiB3aGF0IGlzIHNyY19hZGRyIGRhdGEg
+dHlwZT8gSSB0aGluayBpdHMgdTMyLiBJdCB3b3VsZCBiZSBiZXR0ZXIgdG8KPiA+ID4gPiB1cGRh
+dGUgeGlsaW54X3dyaXRlKCkgdG8gdGFrZSB1NjQgYW5kIG5vdCBkbWFfYWRkcl90Lgo+ID4gPgo+
+ID4gPiBZZXMsIHNyY19hZGRyX21zYiBhbmQgc3JjX2FkZHIgQkQgZmllbGRzIGFyZSB1MzIuIFRv
+IGV4cGxhaW46IFRoZXJlIGlzIG5vCj4gPiA+IHByb2IgaW4geGlsaW54X3dyaXRlIGl0IHRha2Vz
+IGRtYV9hZGRyX3QgYXMgYW4gYXJnIHdoaWNoIGlzIDMyLzY0IGJpdAo+ID4gPiBkZXBlbmRpbmcg
+b24gX0RNQV9BRERSX1RfNjRCSVQuIEluIDY0Yml0IENETUEgdHJhbnNmZXIsIHRoZXJlIHdhcyBh
+Cj4gPiBidWcKPiA+ID4gaS5lIGluIHRoZSBjYWxsIHRvIHhpbGlueF93cml0ZSBzcmNfYWRkcl9t
+c2IgMzIgYml0cyB3ZXJlIG5vdCBwYXNzZWQuIFRvIGZpeAo+ID4gPiB0aGF0IGNvbWJpbmUgTVNC
+IGFuZCBMU0IgMzIgYml0cyBiZWZvcmUgcGFzc2luZyBpdCB0byB4aWxpbnhfd3JpdGUuCj4gPgo+
+ID4gWWVhaCB0aGF0IHBhcnQgd2FzIGNsZWFyIGJ1dCB0aGUgaW1wbGVtZW50YXRpb24gY2FuIGJl
+IGJldHRlci4uCkkgdGhvdWdodCBvdmVyIGl0IGFuZCBpdCBzZWVtcyBoYXZpbmcgYSBuZXcgaW50
+ZXJmYWNlIGRtYV9jdHJsX3dyaXRlXzY0CnRha2luZyBsc2IgYW5kIG1zYiBiaXRzIGlucHV0IGxv
+b2tzIGJldHRlciBhbmQgc2NhbGFibGUuIEl0IHdpbGwgYmUgc2ltaWxhcgp0byBleGlzdGluZyB2
+ZG1hX2Rlc2Nfd3JpdGVfNjQgaW1wbC4gSSB3aWxsIHNlbmQgdjIgaWYgaXQgbG9va3Mgb2suCgpU
+aGFua3MsClJhZGhleQo8c25pcD4KPiAKPiA+Cj4gPiAtLQo+ID4gflZpbm9kCg==
