@@ -1,17 +1,15 @@
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
-Subject: [RESEND,v2] dmaengine: sprd: Support DMA link-list mode
+Subject: [v10,1/4] dmaengine: fsl-edma: extract common fsl-edma code (no changes in behavior intended)
 From: Vinod Koul <vkoul@kernel.org>
-Message-Id: <20180903113038.GI2322@vkoul-mobl>
-Date: Mon, 3 Sep 2018 17:00:38 +0530
-To: Baolin Wang <baolin.wang@linaro.org>
-Cc: dan.j.williams@intel.com, eric.long@spreadtrum.com, broonie@kernel.org, dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
+Message-Id: <20180911063751.GH2634@vkoul-mobl>
+Date: Tue, 11 Sep 2018 12:07:51 +0530
+To: Angelo Dureghello <angelo@sysam.it>
+Cc: dmaengine@vger.kernel.org, linux-arm-kernel@lists.infradead.org, linux-m68k@vger.kernel.org, stefan@agner.ch, krzk@kernel.org
 List-ID: <dmaengine.vger.kernel.org>
 
-T24gMjgtMDgtMTgsIDE5OjA5LCBCYW9saW4gV2FuZyB3cm90ZToKPiBGcm9tOiBFcmljIExvbmcg
-PGVyaWMubG9uZ0BzcHJlYWR0cnVtLmNvbT4KPiAKPiBUaGUgU3ByZWFkdHJ1bSBETUEgY2FuIHN1
-cHBvcnQgdGhlIGxpbmstbGlzdCB0cmFuc2FjdGlvbiBtb2RlLCB3aGljaCBtZWFucwo+IERNQSBj
-b250cm9sbGVyIGNhbiBkbyB0cmFuc2FjdGlvbiBvbmUgYnkgb25lIGF1dG9tYXRpY2FsbHkgb25j
-ZSB3ZSBsaW5rZWQKPiB0aGVzZSB0cmFuc2FjdGlvbiBieSBsaW5rLWxpc3QgcmVnaXN0ZXIuCgpB
-cHBsaWVkLCB0aGFua3MK
+T24gMTktMDgtMTgsIDE5OjI3LCBBbmdlbG8gRHVyZWdoZWxsbyB3cm90ZToKPiBUaGlzIHBhdGNo
+IGFkZHMgYSBuZXcgZnNsLWVkbWEtY29tbW9uIG1vZHVsZSB0byBhbGxvdyBuZXcKPiBtY2YtZWRt
+YSBtb2R1bGUgY29kZSB0byB1c2UgbW9zdCBvZiB0aGUgZnNsLWVkbWEgY29kZS4KCkFwcGxpZWQg
+YWxsLCB0aGFua3MK
