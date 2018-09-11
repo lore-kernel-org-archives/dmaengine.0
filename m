@@ -2,17 +2,29 @@ Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
 Subject: dma: sh: convert to SPDX identifiers
-From: Simon Horman <horms@verge.net.au>
-Message-Id: <20180910131046.ichinxhilvrycodx@verge.net.au>
-Date: Mon, 10 Sep 2018 15:10:46 +0200
+From: Vinod Koul <vkoul@kernel.org>
+Message-Id: <20180911074802.GO2634@vkoul-mobl>
+Date: Tue, 11 Sep 2018 13:18:02 +0530
 To: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
-Cc: Vinod Koul <vkoul@kernel.org>, Linux-Renesas <linux-renesas-soc@vger.kernel.org>, Dan Williams <dan.j.williams@intel.com>, Geert Uytterhoeven <geert+renesas@glider.be>, dmaengine@vger.kernel.org
+Cc: Linux-Renesas <linux-renesas-soc@vger.kernel.org>, Dan Williams <dan.j.williams@intel.com>, Geert Uytterhoeven <geert+renesas@glider.be>, Simon Horman <horms+renesas@verge.net.au>, dmaengine@vger.kernel.org
 List-ID: <dmaengine.vger.kernel.org>
 
-T24gRnJpLCBTZXAgMDcsIDIwMTggYXQgMDE6NTg6NTlBTSArMDAwMCwgS3VuaW5vcmkgTW9yaW1v
-dG8gd3JvdGU6Cj4gCj4gRnJvbTogS3VuaW5vcmkgTW9yaW1vdG8gPGt1bmlub3JpLm1vcmltb3Rv
-Lmd4QHJlbmVzYXMuY29tPgo+IAo+IFRoaXMgcGF0Y2ggdXBkYXRlcyBsaWNlbnNlIHRvIHVzZSBT
-UERYLUxpY2Vuc2UtSWRlbnRpZmllcgo+IGluc3RlYWQgb2YgdmVyYm9zZSBsaWNlbnNlIHRleHQu
-Cj4gCj4gU2lnbmVkLW9mZi1ieTogS3VuaW5vcmkgTW9yaW1vdG8gPGt1bmlub3JpLm1vcmltb3Rv
-Lmd4QHJlbmVzYXMuY29tPgoKUmV2aWV3ZWQtYnk6IFNpbW9uIEhvcm1hbiA8aG9ybXMrcmVuZXNh
-c0B2ZXJnZS5uZXQuYXU+Cg==
+T24gMDctMDktMTgsIDAxOjU4LCBLdW5pbm9yaSBNb3JpbW90byB3cm90ZToKPiAKPiBGcm9tOiBL
+dW5pbm9yaSBNb3JpbW90byA8a3VuaW5vcmkubW9yaW1vdG8uZ3hAcmVuZXNhcy5jb20+Cj4gCj4g
+VGhpcyBwYXRjaCB1cGRhdGVzIGxpY2Vuc2UgdG8gdXNlIFNQRFgtTGljZW5zZS1JZGVudGlmaWVy
+Cj4gaW5zdGVhZCBvZiB2ZXJib3NlIGxpY2Vuc2UgdGV4dC4KClRoYW5rcyBidXQgdGhlIHN0eWxl
+IGlzIG5vdCBjb25zaXN0ZW50IGluIGZpbGVzIDooCgpDYW4gd2UgdXNlIG9uZSBvbmx5PwoKPiBk
+aWZmIC0tZ2l0IGEvZHJpdmVycy9kbWEvc2gvc2hkbWEtYXJtLmggYi9kcml2ZXJzL2RtYS9zaC9z
+aGRtYS1hcm0uaAo+IGluZGV4IGExYjBlZjQuLjMwYmNmZTMgMTAwNjQ0Cj4gLS0tIGEvZHJpdmVy
+cy9kbWEvc2gvc2hkbWEtYXJtLmgKPiArKysgYi9kcml2ZXJzL2RtYS9zaC9zaGRtYS1hcm0uaAo+
+IEBAIC0xLDExICsxLDggQEAKPiAtLyoKPiArLyogU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IEdQ
+TC0yLjAKCnRoaXMgaXMgb25lCgo+ICAjaWZuZGVmIFNIRE1BX0FSTV9ICj4gZGlmZiAtLWdpdCBh
+L2RyaXZlcnMvZG1hL3NoL3NoZG1hLWJhc2UuYyBiL2RyaXZlcnMvZG1hL3NoL3NoZG1hLWJhc2Uu
+Ywo+IGluZGV4IDZiNTYyNmUuLmM1MWRlNDkgMTAwNjQ0Cj4gLS0tIGEvZHJpdmVycy9kbWEvc2gv
+c2hkbWEtYmFzZS5jCj4gKysrIGIvZHJpdmVycy9kbWEvc2gvc2hkbWEtYmFzZS5jCj4gQEAgLTEs
+MyArMSw0IEBACj4gKy8vIFNQRFgtTGljZW5zZS1JZGVudGlmaWVyOiBHUEwtMi4wCgpkaWZmZXJl
+bnQKCj4gZGlmZiAtLWdpdCBhL2RyaXZlcnMvZG1hL3NoL3NoZG1hLmggYi9kcml2ZXJzL2RtYS9z
+aC9zaGRtYS5oCj4gaW5kZXggMmMwYTk2OS4uNzNhZWM3MiAxMDA2NDQKPiAtLS0gYS9kcml2ZXJz
+L2RtYS9zaC9zaGRtYS5oCj4gKysrIGIvZHJpdmVycy9kbWEvc2gvc2hkbWEuaAo+IEBAIC0xLDE0
+ICsxLDkgQEAKPiAtLyoKPiArLyogU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IEdQTC0yLjArCgp0
+aGlzIGFuZCBzbyBvbi4uCg==
