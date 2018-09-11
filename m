@@ -2,33 +2,18 @@ Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
 Subject: [3/3] dmaengine: xilinx_dma: Fix 64-bit simple CDMA transfer
-From: Radhey Shyam Pandey <radheys@xilinx.com>
-Message-Id: <MWHPR0201MB362841247B08AFFA21CB0A18C7000@MWHPR0201MB3628.namprd02.prod.outlook.com>
-Date: Fri, 7 Sep 2018 12:08:01 +0000
-To: Vinod <vkoul@kernel.org>
+From: Vinod Koul <vkoul@kernel.org>
+Message-Id: <20180911074122.GM2634@vkoul-mobl>
+Date: Tue, 11 Sep 2018 13:11:22 +0530
+To: Radhey Shyam Pandey <radheys@xilinx.com>
 Cc: "dan.j.williams@intel.com" <dan.j.williams@intel.com>, Michal Simek <michals@xilinx.com>, Appana Durga Kedareswara Rao <appanad@xilinx.com>, "lars@metafoo.de" <lars@metafoo.de>, "dmaengine@vger.kernel.org" <dmaengine@vger.kernel.org>, "linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>, "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
 List-ID: <dmaengine.vger.kernel.org>
 
-PHNuaXA+Cj4gPiA+ID4gPiAtCQl4aWxpbnhfd3JpdGUoY2hhbiwgWElMSU5YX0NETUFfUkVHX1NS
-Q0FERFIsIGh3LQo+ID4gPiA+ID5zcmNfYWRkcik7Cj4gPiA+ID4gPiAtCQl4aWxpbnhfd3JpdGUo
-Y2hhbiwgWElMSU5YX0NETUFfUkVHX0RTVEFERFIsIGh3LQo+ID4gPiA+ID5kZXN0X2FkZHIpOwo+
-ID4gPiA+ID4gKwkJeGlsaW54X3dyaXRlKGNoYW4sIFhJTElOWF9DRE1BX1JFR19TUkNBRERSLAo+
-ID4gPiA+IChkbWFfYWRkcl90KQo+ID4gPiA+ID4gKwkJCSAgICAgKCh1NjQpaHctPnNyY19hZGRy
-X21zYiA8PCAzMiB8IGh3LQo+ID5zcmNfYWRkcikpOwo+ID4gPiA+Cj4gPiA+ID4gc28gdGhpcyBp
-czoKPiA+ID4gPiAgICAgICAgIChkbWFfYWRkcl90KSgodTY0KWh3LT5zcmNfYWRkcl9tc2IgPDwg
-MzIgfCBody0+c3JjX2FkZHIpCj4gPiA+ID4KPiA+ID4gPiB3aGF0IGlzIHNyY19hZGRyIGRhdGEg
-dHlwZT8gSSB0aGluayBpdHMgdTMyLiBJdCB3b3VsZCBiZSBiZXR0ZXIgdG8KPiA+ID4gPiB1cGRh
-dGUgeGlsaW54X3dyaXRlKCkgdG8gdGFrZSB1NjQgYW5kIG5vdCBkbWFfYWRkcl90Lgo+ID4gPgo+
-ID4gPiBZZXMsIHNyY19hZGRyX21zYiBhbmQgc3JjX2FkZHIgQkQgZmllbGRzIGFyZSB1MzIuIFRv
-IGV4cGxhaW46IFRoZXJlIGlzIG5vCj4gPiA+IHByb2IgaW4geGlsaW54X3dyaXRlIGl0IHRha2Vz
-IGRtYV9hZGRyX3QgYXMgYW4gYXJnIHdoaWNoIGlzIDMyLzY0IGJpdAo+ID4gPiBkZXBlbmRpbmcg
-b24gX0RNQV9BRERSX1RfNjRCSVQuIEluIDY0Yml0IENETUEgdHJhbnNmZXIsIHRoZXJlIHdhcyBh
-Cj4gPiBidWcKPiA+ID4gaS5lIGluIHRoZSBjYWxsIHRvIHhpbGlueF93cml0ZSBzcmNfYWRkcl9t
-c2IgMzIgYml0cyB3ZXJlIG5vdCBwYXNzZWQuIFRvIGZpeAo+ID4gPiB0aGF0IGNvbWJpbmUgTVNC
-IGFuZCBMU0IgMzIgYml0cyBiZWZvcmUgcGFzc2luZyBpdCB0byB4aWxpbnhfd3JpdGUuCj4gPgo+
-ID4gWWVhaCB0aGF0IHBhcnQgd2FzIGNsZWFyIGJ1dCB0aGUgaW1wbGVtZW50YXRpb24gY2FuIGJl
-IGJldHRlci4uCkkgdGhvdWdodCBvdmVyIGl0IGFuZCBpdCBzZWVtcyBoYXZpbmcgYSBuZXcgaW50
-ZXJmYWNlIGRtYV9jdHJsX3dyaXRlXzY0CnRha2luZyBsc2IgYW5kIG1zYiBiaXRzIGlucHV0IGxv
-b2tzIGJldHRlciBhbmQgc2NhbGFibGUuIEl0IHdpbGwgYmUgc2ltaWxhcgp0byBleGlzdGluZyB2
-ZG1hX2Rlc2Nfd3JpdGVfNjQgaW1wbC4gSSB3aWxsIHNlbmQgdjIgaWYgaXQgbG9va3Mgb2suCgpU
-aGFua3MsClJhZGhleQo8c25pcD4KPiAKPiA+Cj4gPiAtLQo+ID4gflZpbm9kCg==
+T24gMDctMDktMTgsIDEyOjA4LCBSYWRoZXkgU2h5YW0gUGFuZGV5IHdyb3RlOgoKPiA+ID4gWWVh
+aCB0aGF0IHBhcnQgd2FzIGNsZWFyIGJ1dCB0aGUgaW1wbGVtZW50YXRpb24gY2FuIGJlIGJldHRl
+ci4uCj4gSSB0aG91Z2h0IG92ZXIgaXQgYW5kIGl0IHNlZW1zIGhhdmluZyBhIG5ldyBpbnRlcmZh
+Y2UgZG1hX2N0cmxfd3JpdGVfNjQKPiB0YWtpbmcgbHNiIGFuZCBtc2IgYml0cyBpbnB1dCBsb29r
+cyBiZXR0ZXIgYW5kIHNjYWxhYmxlLiBJdCB3aWxsIGJlIHNpbWlsYXIKPiB0byBleGlzdGluZyB2
+ZG1hX2Rlc2Nfd3JpdGVfNjQgaW1wbC4gSSB3aWxsIHNlbmQgdjIgaWYgaXQgbG9va3Mgb2suCgpZ
+ZXMgdGhhdCBpcyBtdWNoIGJldHRlciwgYnR3IHdoeSBub3QgcmV1c2Ugc2FtZSByb3V0aW5lIGFz
+IGNvbW1vbiB4aWxpbngKbGliIGZ1bmN0aW9ucyA6KQo=
