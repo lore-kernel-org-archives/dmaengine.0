@@ -2,22 +2,30 @@ Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
 Subject: [1/3] arm64: dts: actions: s900: Enable Tx DMA for UART5
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Message-Id: <20180901164215.3683-2-manivannan.sadhasivam@linaro.org>
-Date: Sat,  1 Sep 2018 22:12:13 +0530
-To: vkoul@kernel.org, dan.j.williams@intel.com, afaerber@suse.de, robh+dt@kernel.org, gregkh@linuxfoundation.org, jslaby@suse.com
-Cc: linux-serial@vger.kernel.org, dmaengine@vger.kernel.org, liuwei@actions-semi.com, 96boards@ucrobotics.com, devicetree@vger.kernel.org, daniel.thompson@linaro.org, amit.kucheria@linaro.org, linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, hzhang@ucrobotics.com, bdong@ucrobotics.com, manivannanece23@gmail.com, thomas.liau@actions-semi.com, jeff.chen@actions-semi.com, pn@denx.de, edgar.righi@lsitec.org.br, Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+From: kbuild test robot <lkp@intel.com>
+Message-Id: <201809112038.kp1QJLmT%fengguang.wu@intel.com>
+Date: Tue, 11 Sep 2018 20:03:45 +0800
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc: kbuild-all@01.org, vkoul@kernel.org, dan.j.williams@intel.com, afaerber@suse.de, robh+dt@kernel.org, gregkh@linuxfoundation.org, jslaby@suse.com, linux-serial@vger.kernel.org, dmaengine@vger.kernel.org, liuwei@actions-semi.com, 96boards@ucrobotics.com, devicetree@vger.kernel.org, daniel.thompson@linaro.org, amit.kucheria@linaro.org, linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, hzhang@ucrobotics.com, bdong@ucrobotics.com, manivannanece23@gmail.com, thomas.liau@actions-semi.com, jeff.chen@actions-semi.com, pn@denx.de, edgar.righi@lsitec.org.br
 List-ID: <dmaengine.vger.kernel.org>
 
-RW5hYmxlIFR4IERNQSBmb3IgVUFSVDUgaW4gQWN0aW9ucyBTZW1pIFM5MDAgU29DLgoKU2lnbmVk
-LW9mZi1ieTogTWFuaXZhbm5hbiBTYWRoYXNpdmFtIDxtYW5pdmFubmFuLnNhZGhhc2l2YW1AbGlu
-YXJvLm9yZz4KLS0tCiBhcmNoL2FybTY0L2Jvb3QvZHRzL2FjdGlvbnMvczkwMC5kdHNpIHwgMiAr
-KwogMSBmaWxlIGNoYW5nZWQsIDIgaW5zZXJ0aW9ucygrKQoKZGlmZiAtLWdpdCBhL2FyY2gvYXJt
-NjQvYm9vdC9kdHMvYWN0aW9ucy9zOTAwLmR0c2kgYi9hcmNoL2FybTY0L2Jvb3QvZHRzL2FjdGlv
-bnMvczkwMC5kdHNpCmluZGV4IGVjZWJhOTE0NzYyYy4uMzlhZjEyMzZmNjExIDEwMDY0NAotLS0g
-YS9hcmNoL2FybTY0L2Jvb3QvZHRzL2FjdGlvbnMvczkwMC5kdHNpCisrKyBiL2FyY2gvYXJtNjQv
-Ym9vdC9kdHMvYWN0aW9ucy9zOTAwLmR0c2kKQEAgLTE1Niw2ICsxNTYsOCBAQAogCQkJY29tcGF0
-aWJsZSA9ICJhY3Rpb25zLHM5MDAtdWFydCIsICJhY3Rpb25zLG93bC11YXJ0IjsKIAkJCXJlZyA9
-IDwweDAgMHhlMDEyYTAwMCAweDAgMHgyMDAwPjsKIAkJCWludGVycnVwdHMgPSA8R0lDX1NQSSAz
-NCBJUlFfVFlQRV9MRVZFTF9ISUdIPjsKKwkJCWRtYS1uYW1lcyA9ICJ0eCI7CisJCQlkbWFzID0g
-PCZkbWEgMjY+OwogCQkJc3RhdHVzID0gImRpc2FibGVkIjsKIAkJfTsKIAo=
+SGkgTWFuaXZhbm5hbiwKClRoYW5rIHlvdSBmb3IgdGhlIHBhdGNoISBZZXQgc29tZXRoaW5nIHRv
+IGltcHJvdmU6CgpbYXV0byBidWlsZCB0ZXN0IEVSUk9SIG9uIHR0eS90dHktdGVzdGluZ10KW2Fs
+c28gYnVpbGQgdGVzdCBFUlJPUiBvbiB2NC4xOS1yYzMgbmV4dC0yMDE4MDkxMF0KW2lmIHlvdXIg
+cGF0Y2ggaXMgYXBwbGllZCB0byB0aGUgd3JvbmcgZ2l0IHRyZWUsIHBsZWFzZSBkcm9wIHVzIGEg
+bm90ZSB0byBoZWxwIGltcHJvdmUgdGhlIHN5c3RlbV0KCnVybDogICAgaHR0cHM6Ly9naXRodWIu
+Y29tLzBkYXktY2kvbGludXgvY29tbWl0cy9NYW5pdmFubmFuLVNhZGhhc2l2YW0vQWRkLXNsYXZl
+LURNQS1zdXBwb3J0LWZvci1BY3Rpb3MtU2VtaS1TOTAwLVNvQy8yMDE4MDkwMy0xNjM3NDQKYmFz
+ZTogICBodHRwczovL2dpdC5rZXJuZWwub3JnL3B1Yi9zY20vbGludXgva2VybmVsL2dpdC9ncmVn
+a2gvdHR5LmdpdCB0dHktdGVzdGluZwpjb25maWc6IGFybTY0LWFsbG1vZGNvbmZpZyAoYXR0YWNo
+ZWQgYXMgLmNvbmZpZykKY29tcGlsZXI6IGFhcmNoNjQtbGludXgtZ251LWdjYyAoRGViaWFuIDcu
+Mi4wLTExKSA3LjIuMApyZXByb2R1Y2U6CiAgICAgICAgd2dldCBodHRwczovL3Jhdy5naXRodWJ1
+c2VyY29udGVudC5jb20vaW50ZWwvbGtwLXRlc3RzL21hc3Rlci9zYmluL21ha2UuY3Jvc3MgLU8g
+fi9iaW4vbWFrZS5jcm9zcwogICAgICAgIGNobW9kICt4IH4vYmluL21ha2UuY3Jvc3MKICAgICAg
+ICAjIHNhdmUgdGhlIGF0dGFjaGVkIC5jb25maWcgdG8gbGludXggYnVpbGQgdHJlZQogICAgICAg
+IEdDQ19WRVJTSU9OPTcuMi4wIG1ha2UuY3Jvc3MgQVJDSD1hcm02NCAKCkFsbCBlcnJvcnMgKG5l
+dyBvbmVzIHByZWZpeGVkIGJ5ID4+KToKCj4+IEVSUk9SOiBJbnB1dCB0cmVlIGhhcyBlcnJvcnMs
+IGFib3J0aW5nICh1c2UgLWYgdG8gZm9yY2Ugb3V0cHV0KQotLS0KMC1EQVkga2VybmVsIHRlc3Qg
+aW5mcmFzdHJ1Y3R1cmUgICAgICAgICAgICAgICAgT3BlbiBTb3VyY2UgVGVjaG5vbG9neSBDZW50
+ZXIKaHR0cHM6Ly9saXN0cy4wMS5vcmcvcGlwZXJtYWlsL2tidWlsZC1hbGwgICAgICAgICAgICAg
+ICAgICAgSW50ZWwgQ29ycG9yYXRpb24K
