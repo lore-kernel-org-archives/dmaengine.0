@@ -1,16 +1,30 @@
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
-Subject: [1/3] dmaengine: fsldma: move spin_lock_bh to spin_lock in tasklet
+Subject: [05/12] dmaengine: dw: remove dma_slave_config direction usage
 From: Vinod Koul <vkoul@kernel.org>
-Message-Id: <20180903105522.GH2322@vkoul-mobl>
-Date: Mon, 3 Sep 2018 16:25:22 +0530
-To: Barry Song <21cnbao@gmail.com>
-Cc: leoyang.li@nxp.com, zw@zh-kernel.org, dan.j.williams@intel.com, linuxppc-dev@lists.ozlabs.org, dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
+Message-Id: <20180911083536.16482-6-vkoul@kernel.org>
+Date: Tue, 11 Sep 2018 14:05:29 +0530
+To: dmaengine@vger.kernel.org
+Cc: Vinod Koul <vkoul@kernel.org>, Viresh Kumar <vireshk@kernel.org>, Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 List-ID: <dmaengine.vger.kernel.org>
 
-T24gMTctMDgtMTgsIDA2OjAwLCBCYXJyeSBTb25nIHdyb3RlOgo+IGFzIHlvdSBhcmUgYWxyZWFk
-eSBpbiBhIHRhc2tsZXQsIGl0IGlzIHVubmVjZXNzYXJ5IHRvIGNhbGwgc3Bpbl9sb2NrX2JoLgoK
-QXBwbGllZCBhbGwsIHRoYW5rcwoKWW91IG1heSB3YW50IHRvIGNoZWNrIHlvdSBzZW5kLW1haWwg
-b3B0aW9ucywgdGhleSBwYXRjaGVzIHdlcmUgYWxsIG92ZXIKbXkgaW5ib3ggYW5kIG5wb3QgdGhy
-ZWFkZWQK
+ZG1hX3NsYXZlX2NvbmZpZyBkaXJlY3Rpb24gd2FzIG1hcmtlZCBhcyBkZXByZWNhdGVkIHF1aXRl
+IHNvbWUKdGltZSBiYWNrLCByZW1vdmUgdGhlIHVzYWdlIGZyb20gdGhpcyBkcml2ZXIgc28gdGhh
+dCB0aGUgZmllbGQKY2FuIGJlIHJlbW92ZWQKClNpZ25lZC1vZmYtYnk6IFZpbm9kIEtvdWwgPHZr
+b3VsQGtlcm5lbC5vcmc+Ci0tLQpDQzogVmlyZXNoIEt1bWFyIDx2aXJlc2hrQGtlcm5lbC5vcmc+
+CkNDOiBBbmR5IFNoZXZjaGVua28gPGFuZHJpeS5zaGV2Y2hlbmtvQGxpbnV4LmludGVsLmNvbT4K
+CiBkcml2ZXJzL2RtYS9kdy9jb3JlLmMgfCA1IC0tLS0tCiAxIGZpbGUgY2hhbmdlZCwgNSBkZWxl
+dGlvbnMoLSkKCmRpZmYgLS1naXQgYS9kcml2ZXJzL2RtYS9kdy9jb3JlLmMgYi9kcml2ZXJzL2Rt
+YS9kdy9jb3JlLmMKaW5kZXggZjQzZTZkYWZlNDQ2Li5kMGMzZTUwYjM5ZmIgMTAwNjQ0Ci0tLSBh
+L2RyaXZlcnMvZG1hL2R3L2NvcmUuYworKysgYi9kcml2ZXJzL2RtYS9kdy9jb3JlLmMKQEAgLTg4
+NiwxMiArODg2LDcgQEAgc3RhdGljIGludCBkd2NfY29uZmlnKHN0cnVjdCBkbWFfY2hhbiAqY2hh
+biwgc3RydWN0IGRtYV9zbGF2ZV9jb25maWcgKnNjb25maWcpCiAJICovCiAJdTMyIHMgPSBkdy0+
+cGRhdGEtPmlzX2lkbWEzMiA/IDEgOiAyOwogCi0JLyogQ2hlY2sgaWYgY2hhbiB3aWxsIGJlIGNv
+bmZpZ3VyZWQgZm9yIHNsYXZlIHRyYW5zZmVycyAqLwotCWlmICghaXNfc2xhdmVfZGlyZWN0aW9u
+KHNjb25maWctPmRpcmVjdGlvbikpCi0JCXJldHVybiAtRUlOVkFMOwotCiAJbWVtY3B5KCZkd2Mt
+PmRtYV9zY29uZmlnLCBzY29uZmlnLCBzaXplb2YoKnNjb25maWcpKTsKLQlkd2MtPmRpcmVjdGlv
+biA9IHNjb25maWctPmRpcmVjdGlvbjsKIAogCXNjLT5zcmNfbWF4YnVyc3QgPSBzYy0+c3JjX21h
+eGJ1cnN0ID4gMSA/IGZscyhzYy0+c3JjX21heGJ1cnN0KSAtIHMgOiAwOwogCXNjLT5kc3RfbWF4
+YnVyc3QgPSBzYy0+ZHN0X21heGJ1cnN0ID4gMSA/IGZscyhzYy0+ZHN0X21heGJ1cnN0KSAtIHMg
+OiAwOwo=
