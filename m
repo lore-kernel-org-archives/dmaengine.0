@@ -1,16 +1,32 @@
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
-Subject: dma: idma64: replace spin_lock_irqsave with spin_lock
-From: Vinod Koul <vkoul@kernel.org>
-Message-Id: <20180911074442.GN2634@vkoul-mobl>
-Date: Tue, 11 Sep 2018 13:14:42 +0530
-To: Zhaoxiong Yuan <yuanzhx326@gmail.com>
-Cc: dan.j.williams@intel.com, dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [v3,2/7] dt-bindings: stm32-dmamux: Add one cell to support DMA/MDMA chain
+From: Pierre Yves MORDRET <pierre-yves.mordret@st.com>
+Message-Id: <1538139715-24406-3-git-send-email-pierre-yves.mordret@st.com>
+Date: Fri, 28 Sep 2018 15:01:50 +0200
+To: Vinod Koul <vkoul@kernel.org>, Rob Herring <robh+dt@kernel.org>, Mark Rutland <mark.rutland@arm.com>, Alexandre Torgue <alexandre.torgue@st.com>, Maxime Coquelin <mcoquelin.stm32@gmail.com>, Dan Williams <dan.j.williams@intel.com>, devicetree@vger.kernel.org, dmaengine@vger.kernel.org, linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
+Cc: Pierre-Yves MORDRET <pierre-yves.mordret@st.com>
 List-ID: <dmaengine.vger.kernel.org>
 
-T24gMDgtMDktMTgsIDA2OjAyLCBaaGFveGlvbmcgWXVhbiB3cm90ZToKPiBpZG1hNjRfY2hhbl9p
-cnEoKSBpcyBpbnZva2VkIGluIGhhcmRpcnEgaGFuZGxlIGZ1bmN0aW9uLCBpdCBpcyB1bm5lY2Vz
-c2FyeSAKPiB0byBjYWxsIHNwaW5fbG9ja19pcnFzYXZlLgoKUGxlYXNlIGFkZCBhIGxpbmUgYWZ0
-ZXIgbG9nIGFuZCBzLW8tYgoKSSBoYXZlIGFwcGxpZWQgYWZ0ZXIgZG9pbmcgYWJvdmUgYW5kIGZp
-eGluZyBzdWJzeXN0ZW0gdGFnIChkbWFlbmdpbmUpCg==
+RnJvbTogTSdib3VtYmEgQ2VkcmljIE1hZGlhbmdhIDxjZWRyaWMubWFkaWFuZ2FAZ21haWwuY29t
+PgoKQWRkIG9uZSBjZWxsIHRvIHN1cHBvcnQgRE1BL01ETUEgY2hhaW5pbmcuCgpTaWduZWQtb2Zm
+LWJ5OiBQaWVycmUtWXZlcyBNT1JEUkVUIDxwaWVycmUteXZlcy5tb3JkcmV0QHN0LmNvbT4KLS0t
+CiAgVmVyc2lvbiBoaXN0b3J5OgogICAgdjM6CiAgICB2MjoKICAgICAgICogcmV3b3JrIGNvbnRl
+bnQKICAgIHYxOgogICAgICAgKiBJbml0aWFsCi0tLQotLS0KIERvY3VtZW50YXRpb24vZGV2aWNl
+dHJlZS9iaW5kaW5ncy9kbWEvc3RtMzItZG1hbXV4LnR4dCB8IDYgKysrLS0tCiAxIGZpbGUgY2hh
+bmdlZCwgMyBpbnNlcnRpb25zKCspLCAzIGRlbGV0aW9ucygtKQoKZGlmZiAtLWdpdCBhL0RvY3Vt
+ZW50YXRpb24vZGV2aWNldHJlZS9iaW5kaW5ncy9kbWEvc3RtMzItZG1hbXV4LnR4dCBiL0RvY3Vt
+ZW50YXRpb24vZGV2aWNldHJlZS9iaW5kaW5ncy9kbWEvc3RtMzItZG1hbXV4LnR4dAppbmRleCAx
+Yjg5M2IyLi41ZTkyYjU5IDEwMDY0NAotLS0gYS9Eb2N1bWVudGF0aW9uL2RldmljZXRyZWUvYmlu
+ZGluZ3MvZG1hL3N0bTMyLWRtYW11eC50eHQKKysrIGIvRG9jdW1lbnRhdGlvbi9kZXZpY2V0cmVl
+L2JpbmRpbmdzL2RtYS9zdG0zMi1kbWFtdXgudHh0CkBAIC00LDkgKzQsOSBAQCBSZXF1aXJlZCBw
+cm9wZXJ0aWVzOgogLSBjb21wYXRpYmxlOgkic3Qsc3RtMzJoNy1kbWFtdXgiCiAtIHJlZzoJCU1l
+bW9yeSBtYXAgZm9yIGFjY2Vzc2luZyBtb2R1bGUKIC0gI2RtYS1jZWxsczoJU2hvdWxkIGJlIHNl
+dCB0byA8Mz4uCi0JCUZpcnN0IHBhcmFtZXRlciBpcyByZXF1ZXN0IGxpbmUgbnVtYmVyLgotCQlT
+ZWNvbmQgaXMgRE1BIGNoYW5uZWwgY29uZmlndXJhdGlvbgotCQlUaGlyZCBpcyBGaWZvIHRocmVz
+aG9sZAorLQkJRmlyc3QgcGFyYW1ldGVyIGlzIHJlcXVlc3QgbGluZSBudW1iZXIuCistCQlTZWNv
+bmQgaXMgRE1BIGNoYW5uZWwgY29uZmlndXJhdGlvbgorLQkJVGhpcmQgaXMgYSAzMmJpdCBiaXRm
+aWVsZAogCQlGb3IgbW9yZSBkZXRhaWxzIGFib3V0IHRoZSB0aHJlZSBjZWxscywgcGxlYXNlIHNl
+ZQogCQlzdG0zMi1kbWEudHh0IGRvY3VtZW50YXRpb24gYmluZGluZyBmaWxlCiAtIGRtYS1tYXN0
+ZXJzOglQaGFuZGxlIHBvaW50aW5nIHRvIHRoZSBETUEgY29udHJvbGxlcnMuCg==
