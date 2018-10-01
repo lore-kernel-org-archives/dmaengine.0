@@ -1,21 +1,16 @@
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
-Subject: dmaengine: ep93xx: Return proper enum in ep93xx_dma_chan_direction
-From: Vinod Koul <vkoul@kernel.org>
-Message-Id: <20181002144203.GC19792@vkoul-mobl>
-Date: Tue, 2 Oct 2018 20:12:03 +0530
-To: Nathan Chancellor <natechancellor@gmail.com>
-Cc: Dan Williams <dan.j.williams@intel.com>, dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org, Nick Desaulniers <ndesaulniers@google.com>
+Subject: dt-bindings: dmaengine: usb-dmac: Add binding for r8a7744
+From: Simon Horman <horms@verge.net.au>
+Message-Id: <20181001130001.tpnxjnxjwpu33f7d@verge.net.au>
+Date: Mon, 1 Oct 2018 15:00:01 +0200
+To: Biju Das <biju.das@bp.renesas.com>
+Cc: Vinod Koul <vkoul@kernel.org>, Rob Herring <robh+dt@kernel.org>, Mark Rutland <mark.rutland@arm.com>, dmaengine@vger.kernel.org, devicetree@vger.kernel.org, Geert Uytterhoeven <geert+renesas@glider.be>, Chris Paterson <Chris.Paterson2@renesas.com>, Fabrizio Castro <fabrizio.castro@bp.renesas.com>, linux-renesas-soc@vger.kernel.org
 List-ID: <dmaengine.vger.kernel.org>
 
-T24gMTEtMDktMTgsIDE2OjQwLCBOYXRoYW4gQ2hhbmNlbGxvciB3cm90ZToKPiBDbGFuZyB3YXJu
-cyB3aGVuIGltcGxpY2l0bHkgY29udmVydGluZyBmcm9tIG9uZSBlbnVtZXJhdGVkIHR5cGUgdG8K
-PiBhbm90aGVyLiBBdm9pZCB0aGlzIGJ5IHVzaW5nIHRoZSBlcXVpdmFsZW50IHZhbHVlIGZyb20g
-dGhlIGV4cGVjdGVkCj4gdHlwZS4KPiAKPiBJbiBmaWxlIGluY2x1ZGVkIGZyb20gZHJpdmVycy9k
-bWEvZXA5M3h4X2RtYS5jOjMwOgo+IC4vaW5jbHVkZS9saW51eC9wbGF0Zm9ybV9kYXRhL2RtYS1l
-cDkzeHguaDo4ODoxMDogd2FybmluZzogaW1wbGljaXQKPiBjb252ZXJzaW9uIGZyb20gZW51bWVy
-YXRpb24gdHlwZSAnZW51bSBkbWFfZGF0YV9kaXJlY3Rpb24nIHRvIGRpZmZlcmVudAo+IGVudW1l
-cmF0aW9uIHR5cGUgJ2VudW0gZG1hX3RyYW5zZmVyX2RpcmVjdGlvbicgWy1XZW51bS1jb252ZXJz
-aW9uXQo+ICAgICAgICAgICAgICAgICByZXR1cm4gRE1BX05PTkU7Cj4gICAgICAgICAgICAgICAg
-IH5+fn5+fiBefn5+fn5+fgo+IDEgd2FybmluZyBnZW5lcmF0ZWQuCgpBcHBsaWVkLCB0aGFua3MK
+T24gVGh1LCBTZXAgMjcsIDIwMTggYXQgMDE6NDY6NDFQTSArMDEwMCwgQmlqdSBEYXMgd3JvdGU6
+Cj4gVGhpcyBwYXRjaCBhZGRzIGJpbmRpbmcgZm9yIHI4YTc3NDQgKFJaL0cxTikuCj4gCj4gU2ln
+bmVkLW9mZi1ieTogQmlqdSBEYXMgPGJpanUuZGFzQGJwLnJlbmVzYXMuY29tPgo+IFJldmlld2Vk
+LWJ5OiBDaHJpcyBQYXRlcnNvbiA8Q2hyaXMuUGF0ZXJzb24yQHJlbmVzYXMuY29tPgoKUmV2aWV3
+ZWQtYnk6IFNpbW9uIEhvcm1hbiA8aG9ybXMrcmVuZXNhc0B2ZXJnZS5uZXQuYXU+Cg==
