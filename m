@@ -1,43 +1,15 @@
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
-Subject: [v2,4/4] dmaengine: xilinx_dma: Fix 64-bit simple CDMA transfer
-From: Appana Durga Kedareswara Rao <appanad@xilinx.com>
-Message-Id: <DM5PR02MB218754E3827458E08060DDF2DCF90@DM5PR02MB2187.namprd02.prod.outlook.com>
-Date: Fri, 19 Oct 2018 10:38:54 +0000
-To: Radhey Shyam Pandey <radheys@xilinx.com>, "vkoul@kernel.org" <vkoul@kernel.org>, "dan.j.williams@intel.com" <dan.j.williams@intel.com>, Michal Simek <michals@xilinx.com>Radhey Shyam Pandey <radheys@xilinx.com>
-Cc: "dmaengine@vger.kernel.org" <dmaengine@vger.kernel.org>, "linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>, "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
+Subject: dt-bindings: rcar-dmac: Document r8a7744 support
+From: Vinod Koul <vkoul@kernel.org>
+Message-Id: <20181002144818.GD19792@vkoul-mobl>
+Date: Tue, 2 Oct 2018 20:18:18 +0530
+To: Biju Das <biju.das@bp.renesas.com>
+Cc: Rob Herring <robh+dt@kernel.org>, Mark Rutland <mark.rutland@arm.com>, dmaengine@vger.kernel.org, devicetree@vger.kernel.org, Simon Horman <horms@verge.net.au>, Geert Uytterhoeven <geert+renesas@glider.be>, Chris Paterson <Chris.Paterson2@renesas.com>, Fabrizio Castro <fabrizio.castro@bp.renesas.com>, linux-renesas-soc@vger.kernel.org
 List-ID: <dmaengine.vger.kernel.org>
 
-PiAtLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQo+IEZyb206IFJhZGhleSBTaHlhbSBQYW5kZXkg
-PHJhZGhleS5zaHlhbS5wYW5kZXlAeGlsaW54LmNvbT4KPiBTZW50OiBTYXR1cmRheSwgU2VwdGVt
-YmVyIDI5LCAyMDE4IDEwOjQ4IFBNCj4gVG86IHZrb3VsQGtlcm5lbC5vcmc7IGRhbi5qLndpbGxp
-YW1zQGludGVsLmNvbTsgTWljaGFsIFNpbWVrCj4gPG1pY2hhbHNAeGlsaW54LmNvbT47IEFwcGFu
-YSBEdXJnYSBLZWRhcmVzd2FyYSBSYW8KPiA8YXBwYW5hZEB4aWxpbnguY29tPjsgUmFkaGV5IFNo
-eWFtIFBhbmRleSA8cmFkaGV5c0B4aWxpbnguY29tPgo+IENjOiBkbWFlbmdpbmVAdmdlci5rZXJu
-ZWwub3JnOyBsaW51eC1hcm0ta2VybmVsQGxpc3RzLmluZnJhZGVhZC5vcmc7IGxpbnV4LQo+IGtl
-cm5lbEB2Z2VyLmtlcm5lbC5vcmcKPiBTdWJqZWN0OiBbUEFUQ0ggdjIgNC80XSBkbWFlbmdpbmU6
-IHhpbGlueF9kbWE6IEZpeCA2NC1iaXQgc2ltcGxlIENETUEKPiB0cmFuc2Zlcgo+IAo+IEluIEFY
-SSBDRE1BIHNpbXBsZSBtb2RlIGFsc28gcGFzcyBNU0IgYml0cyBvZiBzb3VyY2UgYW5kIGRlc3Rp
-bmF0aW9uCj4gYWRkcmVzcyB0byB4aWxpbnhfd3JpdGUgZnVuY3Rpb24uIFRoaXMgZml4ZXMgc2lt
-cGxlIENETUEgb3BlcmF0aW9uIG1vZGUgdXNpbmcKPiA2NC1iaXQgYWRkcmVzc2luZy4KPiAKPiBT
-aWduZWQtb2ZmLWJ5OiBSYWRoZXkgU2h5YW0gUGFuZGV5IDxyYWRoZXkuc2h5YW0ucGFuZGV5QHhp
-bGlueC5jb20+Cj4gU2lnbmVkLW9mZi1ieTogTWljaGFsIFNpbWVrIDxtaWNoYWwuc2ltZWtAeGls
-aW54LmNvbT4KClJldmlld2VkLWJ5OiBBcHBhbmEgRHVyZ2EgS2VkYXJlc3dhcmEgUmFvIDxhcHBh
-bmEuZHVyZ2EucmFvQHhpbGlueC5jb20+CgpSZWdhcmRzLApLZWRhci4KCj4gLS0tCj4gQ2hhbmdl
-cyBmb3IgdjI6Cj4gVXNlIGhlbHBlciBtYWNybyBmb3IgcHJlcGFyaW5nIGRtYV9hZGRyX3QuCj4g
-LS0tCj4gIGRyaXZlcnMvZG1hL3hpbGlueC94aWxpbnhfZG1hLmMgfCAgICA2ICsrKystLQo+ICAx
-IGZpbGVzIGNoYW5nZWQsIDQgaW5zZXJ0aW9ucygrKSwgMiBkZWxldGlvbnMoLSkKPiAKPiBkaWZm
-IC0tZ2l0IGEvZHJpdmVycy9kbWEveGlsaW54L3hpbGlueF9kbWEuYyBiL2RyaXZlcnMvZG1hL3hp
-bGlueC94aWxpbnhfZG1hLmMKPiBpbmRleCBjMjdhYjY0Li5kMDRlZjg1IDEwMDY0NAo+IC0tLSBh
-L2RyaXZlcnMvZG1hL3hpbGlueC94aWxpbnhfZG1hLmMKPiArKysgYi9kcml2ZXJzL2RtYS94aWxp
-bngveGlsaW54X2RtYS5jCj4gQEAgLTEyNDcsOCArMTI0NywxMCBAQCBzdGF0aWMgdm9pZCB4aWxp
-bnhfY2RtYV9zdGFydF90cmFuc2ZlcihzdHJ1Y3QKPiB4aWxpbnhfZG1hX2NoYW4gKmNoYW4pCj4g
-Cj4gIAkJaHcgPSAmc2VnbWVudC0+aHc7Cj4gCj4gLQkJeGlsaW54X3dyaXRlKGNoYW4sIFhJTElO
-WF9DRE1BX1JFR19TUkNBRERSLCBody0KPiA+c3JjX2FkZHIpOwo+IC0JCXhpbGlueF93cml0ZShj
-aGFuLCBYSUxJTlhfQ0RNQV9SRUdfRFNUQUREUiwgaHctCj4gPmRlc3RfYWRkcik7Cj4gKwkJeGls
-aW54X3dyaXRlKGNoYW4sIFhJTElOWF9DRE1BX1JFR19TUkNBRERSLAo+ICsJCQkgICAgIHhpbGlu
-eF9wcmVwX2RtYV9hZGRyX3QoaHctPnNyY19hZGRyKSk7Cj4gKwkJeGlsaW54X3dyaXRlKGNoYW4s
-IFhJTElOWF9DRE1BX1JFR19EU1RBRERSLAo+ICsJCQkgICAgIHhpbGlueF9wcmVwX2RtYV9hZGRy
-X3QoaHctPmRlc3RfYWRkcikpOwo+IAo+ICAJCS8qIFN0YXJ0IHRoZSB0cmFuc2ZlciAqLwo+ICAJ
-CWRtYV9jdHJsX3dyaXRlKGNoYW4sIFhJTElOWF9ETUFfUkVHX0JUVCwKPiAtLQo+IDEuNy4xCg==
+T24gMTctMDktMTgsIDE2OjE4LCBCaWp1IERhcyB3cm90ZToKPiBSZW5lc2FzIFJaL0cgU29DIGFs
+c28gaGF2ZSB0aGUgUi1DYXIgZ2VuMi8zIGNvbXBhdGlibGUgRE1BIGNvbnRyb2xsZXJzLgo+IERv
+Y3VtZW50IFJaL0cxTiAoYWxzbyBrbm93biBhcyBSOEE3NzQ0KSBTb0MgYmluZGluZ3MuCgpBcHBs
+aWVkLCB0aGFua3MK
