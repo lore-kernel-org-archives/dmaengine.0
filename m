@@ -1,18 +1,17 @@
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
-Subject: dmaengine: ioat: fix prototype of ioat_enumerate_channels
+Subject: [v1,1/1] dmaengine: stm32-dma: check whether length is aligned on FIFO threshold
 From: Vinod Koul <vkoul@kernel.org>
-Message-Id: <20181002145238.GF19792@vkoul-mobl>
-Date: Tue, 2 Oct 2018 20:22:38 +0530
-To: Rami Rosen <ramirose@gmail.com>
-Cc: dmaengine@vger.kernel.org, dave.jiang@intel.com, dan.j.williams@intel.com
+Message-Id: <20181002150229.GI19792@vkoul-mobl>
+Date: Tue, 2 Oct 2018 20:32:29 +0530
+To: Pierre-Yves MORDRET <pierre-yves.mordret@st.com>
+Cc: Dan Williams <dan.j.williams@intel.com>, Maxime Coquelin <mcoquelin.stm32@gmail.com>, Alexandre Torgue <alexandre.torgue@st.com>, dmaengine@vger.kernel.org, linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
 List-ID: <dmaengine.vger.kernel.org>
 
-T24gMjctMDktMTgsIDA3OjAyLCBSYW1pIFJvc2VuIHdyb3RlOgo+IFRoaXMgcGF0Y2ggY2hhbmdl
-cyB0aGUgcmV0dXJuIHR5cGUgb2YgdGhlIHN0YXRpYyBtZXRob2QKPiBpb2F0X2luaXRfY2hhbm5l
-bCgpICB0byBiZSB2b2lkLiBUaGVyZSBpcyBubyBuZWVkIGZvciAKPiB0aGlzIG1ldGhvZCB0byBy
-ZXRydW4gYW55IHZhbHVlLCBhbmQgdGhlIHJldHVybiAKPiB2YWx1ZSBvZiB0aGlzIHN0YXRpYyBt
-ZXRob2QgaXMgbm90IHVzZWQgYW55aG93LiAKPiAoU2V0dGluZyBkbWEtPmNoYW5jbnQgaXMgZW5v
-dWdoKS4KClNvcnJ5IGFtIG5vdCBhYmxlIHRvIGFwcGx5IHRoaXMsIGNhbiB5b3UgcmViYXNlIG9u
-IGRtYWVuZ2luZS1uZXh0IGFuZApyZXNlbmQK
+T24gMTEtMDktMTgsIDA5OjMxLCBQaWVycmUtWXZlcyBNT1JEUkVUIHdyb3RlOgo+IFdoZW4gYSBw
+ZXJpb2QgbGVuZ3RoIGlzIG5vdCBtdWx0aXBsZSBvZiBGSUZPIHNvbWUgZGF0YSBtYXkgYmUgc3R1
+Y2sKPiB3aXRoaW4gRklGTy4KPiAKPiBCdXJzdC9GSUZPIFRocmVzaG9sZC9QZXJpb2Qgb3IgYnVm
+ZmVyIGxlbmd0aCBjaGVjayBoYXMgdG8gYmUgaGFyZGVuZWQKPiAKPiBJbiBhbnkgY2FzZSBETUEg
+d2lsbCBncmFudCBhbnkgcmVxdWVzdCBmcm9tIGNsaWVudCBidXQgd2lsbCBkZWdyYWRlZAo+IGFu
+eSBwYXJhbWV0ZXJzIHdoZXRoZXIgYXdrd2FyZC4KCkFwcGxpZWQsIHRoYW5rcwo=
