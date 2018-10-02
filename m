@@ -1,21 +1,21 @@
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
-Subject: dmaengine: timb_dma: Use proper enum in td_prep_slave_sg
+Subject: dmaengine: ep93xx: Return proper enum in ep93xx_dma_chan_direction
 From: Vinod Koul <vkoul@kernel.org>
-Message-Id: <20181002144130.GB19792@vkoul-mobl>
-Date: Tue, 2 Oct 2018 20:11:30 +0530
+Message-Id: <20181002144203.GC19792@vkoul-mobl>
+Date: Tue, 2 Oct 2018 20:12:03 +0530
 To: Nathan Chancellor <natechancellor@gmail.com>
 Cc: Dan Williams <dan.j.williams@intel.com>, dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org, Nick Desaulniers <ndesaulniers@google.com>
 List-ID: <dmaengine.vger.kernel.org>
 
-T24gMTEtMDktMTgsIDE2OjIwLCBOYXRoYW4gQ2hhbmNlbGxvciB3cm90ZToKPiBDbGFuZyB3YXJu
+T24gMTEtMDktMTgsIDE2OjQwLCBOYXRoYW4gQ2hhbmNlbGxvciB3cm90ZToKPiBDbGFuZyB3YXJu
 cyB3aGVuIGltcGxpY2l0bHkgY29udmVydGluZyBmcm9tIG9uZSBlbnVtZXJhdGVkIHR5cGUgdG8K
 PiBhbm90aGVyLiBBdm9pZCB0aGlzIGJ5IHVzaW5nIHRoZSBlcXVpdmFsZW50IHZhbHVlIGZyb20g
-dGhlIGV4cGVjdGVkCj4gdHlwZS4KPiAKPiBkcml2ZXJzL2RtYS90aW1iX2RtYS5jOjU0ODoyNzog
-d2FybmluZzogaW1wbGljaXQgY29udmVyc2lvbiBmcm9tCj4gZW51bWVyYXRpb24gdHlwZSAnZW51
-bSBkbWFfdHJhbnNmZXJfZGlyZWN0aW9uJyB0byBkaWZmZXJlbnQgZW51bWVyYXRpb24KPiB0eXBl
-ICdlbnVtIGRtYV9kYXRhX2RpcmVjdGlvbicgWy1XZW51bS1jb252ZXJzaW9uXQo+ICAgICAgICAg
-ICAgICAgICB0ZF9kZXNjLT5kZXNjX2xpc3RfbGVuLCBETUFfTUVNX1RPX0RFVik7Cj4gICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIF5+fn5+fn5+fn5+fn5+Cj4gMSB3YXJu
-aW5nIGdlbmVyYXRlZC4KCkFwcGxpZWQsIHRoYW5rcwo=
+dGhlIGV4cGVjdGVkCj4gdHlwZS4KPiAKPiBJbiBmaWxlIGluY2x1ZGVkIGZyb20gZHJpdmVycy9k
+bWEvZXA5M3h4X2RtYS5jOjMwOgo+IC4vaW5jbHVkZS9saW51eC9wbGF0Zm9ybV9kYXRhL2RtYS1l
+cDkzeHguaDo4ODoxMDogd2FybmluZzogaW1wbGljaXQKPiBjb252ZXJzaW9uIGZyb20gZW51bWVy
+YXRpb24gdHlwZSAnZW51bSBkbWFfZGF0YV9kaXJlY3Rpb24nIHRvIGRpZmZlcmVudAo+IGVudW1l
+cmF0aW9uIHR5cGUgJ2VudW0gZG1hX3RyYW5zZmVyX2RpcmVjdGlvbicgWy1XZW51bS1jb252ZXJz
+aW9uXQo+ICAgICAgICAgICAgICAgICByZXR1cm4gRE1BX05PTkU7Cj4gICAgICAgICAgICAgICAg
+IH5+fn5+fiBefn5+fn5+fgo+IDEgd2FybmluZyBnZW5lcmF0ZWQuCgpBcHBsaWVkLCB0aGFua3MK
