@@ -1,15 +1,27 @@
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
-Subject: dmaengine: rcar-dmac: set scatter/gather max segment size
+Subject: [v5,4/7] dmaengine: xilinx_dma: program hardware supported buffer length
 From: Vinod Koul <vkoul@kernel.org>
-Message-Id: <20181007143431.GW2372@vkoul-mobl>
-Date: Sun, 7 Oct 2018 20:04:31 +0530
-To: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Cc: dmaengine@vger.kernel.org, linux-renesas-soc@vger.kernel.org, Geert Uytterhoeven <geert@linux-m68k.org>
+Message-Id: <20181002145647.GG19792@vkoul-mobl>
+Date: Tue, 2 Oct 2018 20:26:47 +0530
+To: Andrea Merello <andrea.merello@gmail.com>
+Cc: dan.j.williams@intel.com, michal.simek@xilinx.com, appana.durga.rao@xilinx.com, dmaengine@vger.kernel.org, linux-arm-kernel@lists.infradead.org, linux-kernel <linux-kernel@vger.kernel.org>, Rob Herring <robh+dt@kernel.org>, Mark Rutland <mark.rutland@arm.com>, devicetree <devicetree@vger.kernel.org>, Radhey Shyam Pandey <radhey.shyam.pandey@xilinx.com>
 List-ID: <dmaengine.vger.kernel.org>
 
-T24gMTQtMDktMTgsIDE3OjQzLCBXb2xmcmFtIFNhbmcgd3JvdGU6Cj4gRml4IHdhcm5pbmcgd2hl
-biBydW5uaW5nIHdpdGggQ09ORklHX0RNQV9BUElfREVCVUdfU0c9eSBieSBhbGxvY2F0aW5nIGEK
-PiBkZXZpY2VfZG1hX3BhcmFtZXRlcnMgc3RydWN0dXJlIGFuZCBmaWxsaW5nIGluIHRoZSBtYXgg
-c2VnbWVudCBzaXplLgoKQXBwbGllZCwgdGhhbmtzCg==
+T24gMjgtMDktMTgsIDA4OjUzLCBBbmRyZWEgTWVyZWxsbyB3cm90ZToKPiBPbiBUdWUsIFNlcCAx
+OCwgMjAxOCBhdCA2OjI1IFBNIFZpbm9kIDx2a291bEBrZXJuZWwub3JnPiB3cm90ZToKCj4gPiA+
+IEBAIC05NjQsNyArOTY4LDcgQEAgc3RhdGljIGludCB4aWxpbnhfZG1hX2NhbGNfY29weXNpemUo
+c3RydWN0IHhpbGlueF9kbWFfY2hhbiAqY2hhbiwKPiA+ID4gICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgIGludCBzaXplLCBpbnQgZG9uZSkKPiA+ID4gIHsKPiA+ID4gICAgICAgc2l6
+ZV90IGNvcHkgPSBtaW5fdChzaXplX3QsIHNpemUgLSBkb25lLAo+ID4gPiAtICAgICAgICAgICAg
+ICAgICAgWElMSU5YX0RNQV9NQVhfVFJBTlNfTEVOKTsKPiA+ID4gKyAgICAgICAgICAgICAgICAg
+ICAgICAgICBjaGFuLT54ZGV2LT5tYXhfYnVmZmVyX2xlbik7Cj4gPgo+ID4gaG1tIHdoeSBub3Qg
+YWRkIG1heF9idWZmZXJfbGVuIGluIHBhdGNoIDEgYWdhaW4sIGFuZCB0aGVuIHVzZSBkZWZhdWx0
+Cj4gPiBsZW4gYXMgWElMSU5YX0RNQV9NQVhfVFJBTlNfTEVOIGFuZCBhZGQgbXVsdGlwbGUgbGVu
+Z3RocyBoZXJlIDopCj4gCj4gU29ycnksIEknbSBub3QgZ2V0dGluZyB5b3VyIHBvaW50LiBDb3Vs
+ZCB5b3UgcGxlYXNlIGVsYWJvcmF0ZSB0aGUgImFkZAo+IG11bHRpcGxlIGxlbmd0aHMgaGVyZSIg
+dGhpbmcgPwoKSUlSQyAoc29ycnkgYmVlbiB0cmF2ZWxsaW5nIGFuZCB2YWNhdGlvbiksIGFkZApj
+aGFuLT54ZGV2LT5tYXhfYnVmZmVyX2xlbiBpbiBwYXRjaCAxIGFuZCBpbml0aWFsaXplIGl0IHRv
+ClhJTElOWF9ETUFfTUFYX1RSQU5TX0xFTi4gVGhlbiBpbiBzdWJzZXF1ZW50IHBhdGNoZXMgdXBk
+YXRlIHRoZSBsZW5ndGguCg==
