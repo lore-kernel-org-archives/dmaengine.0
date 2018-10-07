@@ -1,15 +1,36 @@
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
-Subject: dt-bindings: rcar-dmac: Document r8a7744 support
+Subject: [v3,2/7] dt-bindings: stm32-dmamux: Add one cell to support DMA/MDMA chain
 From: Vinod Koul <vkoul@kernel.org>
-Message-Id: <20181002144818.GD19792@vkoul-mobl>
-Date: Tue, 2 Oct 2018 20:18:18 +0530
-To: Biju Das <biju.das@bp.renesas.com>
-Cc: Rob Herring <robh+dt@kernel.org>, Mark Rutland <mark.rutland@arm.com>, dmaengine@vger.kernel.org, devicetree@vger.kernel.org, Simon Horman <horms@verge.net.au>, Geert Uytterhoeven <geert+renesas@glider.be>, Chris Paterson <Chris.Paterson2@renesas.com>, Fabrizio Castro <fabrizio.castro@bp.renesas.com>, linux-renesas-soc@vger.kernel.org
+Message-Id: <20181007145805.GZ2372@vkoul-mobl>
+Date: Sun, 7 Oct 2018 20:28:05 +0530
+To: Pierre-Yves MORDRET <pierre-yves.mordret@st.com>
+Cc: Rob Herring <robh+dt@kernel.org>, Mark Rutland <mark.rutland@arm.com>, Alexandre Torgue <alexandre.torgue@st.com>, Maxime Coquelin <mcoquelin.stm32@gmail.com>, Dan Williams <dan.j.williams@intel.com>, devicetree@vger.kernel.org, dmaengine@vger.kernel.org, linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
 List-ID: <dmaengine.vger.kernel.org>
 
-T24gMTctMDktMTgsIDE2OjE4LCBCaWp1IERhcyB3cm90ZToKPiBSZW5lc2FzIFJaL0cgU29DIGFs
-c28gaGF2ZSB0aGUgUi1DYXIgZ2VuMi8zIGNvbXBhdGlibGUgRE1BIGNvbnRyb2xsZXJzLgo+IERv
-Y3VtZW50IFJaL0cxTiAoYWxzbyBrbm93biBhcyBSOEE3NzQ0KSBTb0MgYmluZGluZ3MuCgpBcHBs
-aWVkLCB0aGFua3MK
+T24gMjgtMDktMTgsIDE1OjAxLCBQaWVycmUtWXZlcyBNT1JEUkVUIHdyb3RlOgo+IEZyb206IE0n
+Ym91bWJhIENlZHJpYyBNYWRpYW5nYSA8Y2VkcmljLm1hZGlhbmdhQGdtYWlsLmNvbT4KPiAKPiBB
+ZGQgb25lIGNlbGwgdG8gc3VwcG9ydCBETUEvTURNQSBjaGFpbmluZy4KPiAKPiBTaWduZWQtb2Zm
+LWJ5OiBQaWVycmUtWXZlcyBNT1JEUkVUIDxwaWVycmUteXZlcy5tb3JkcmV0QHN0LmNvbT4KPiAt
+LS0KPiAgIFZlcnNpb24gaGlzdG9yeToKPiAgICAgdjM6Cj4gICAgIHYyOgo+ICAgICAgICAqIHJl
+d29yayBjb250ZW50Cj4gICAgIHYxOgo+ICAgICAgICAqIEluaXRpYWwKPiAtLS0KPiAtLS0KPiAg
+RG9jdW1lbnRhdGlvbi9kZXZpY2V0cmVlL2JpbmRpbmdzL2RtYS9zdG0zMi1kbWFtdXgudHh0IHwg
+NiArKystLS0KPiAgMSBmaWxlIGNoYW5nZWQsIDMgaW5zZXJ0aW9ucygrKSwgMyBkZWxldGlvbnMo
+LSkKPiAKPiBkaWZmIC0tZ2l0IGEvRG9jdW1lbnRhdGlvbi9kZXZpY2V0cmVlL2JpbmRpbmdzL2Rt
+YS9zdG0zMi1kbWFtdXgudHh0IGIvRG9jdW1lbnRhdGlvbi9kZXZpY2V0cmVlL2JpbmRpbmdzL2Rt
+YS9zdG0zMi1kbWFtdXgudHh0Cj4gaW5kZXggMWI4OTNiMi4uNWU5MmI1OSAxMDA2NDQKPiAtLS0g
+YS9Eb2N1bWVudGF0aW9uL2RldmljZXRyZWUvYmluZGluZ3MvZG1hL3N0bTMyLWRtYW11eC50eHQK
+PiArKysgYi9Eb2N1bWVudGF0aW9uL2RldmljZXRyZWUvYmluZGluZ3MvZG1hL3N0bTMyLWRtYW11
+eC50eHQKPiBAQCAtNCw5ICs0LDkgQEAgUmVxdWlyZWQgcHJvcGVydGllczoKPiAgLSBjb21wYXRp
+YmxlOgkic3Qsc3RtMzJoNy1kbWFtdXgiCj4gIC0gcmVnOgkJTWVtb3J5IG1hcCBmb3IgYWNjZXNz
+aW5nIG1vZHVsZQo+ICAtICNkbWEtY2VsbHM6CVNob3VsZCBiZSBzZXQgdG8gPDM+Lgo+IC0JCUZp
+cnN0IHBhcmFtZXRlciBpcyByZXF1ZXN0IGxpbmUgbnVtYmVyLgo+IC0JCVNlY29uZCBpcyBETUEg
+Y2hhbm5lbCBjb25maWd1cmF0aW9uCj4gLQkJVGhpcmQgaXMgRmlmbyB0aHJlc2hvbGQKPiArLQkJ
+Rmlyc3QgcGFyYW1ldGVyIGlzIHJlcXVlc3QgbGluZSBudW1iZXIuCj4gKy0JCVNlY29uZCBpcyBE
+TUEgY2hhbm5lbCBjb25maWd1cmF0aW9uCj4gKy0JCVRoaXJkIGlzIGEgMzJiaXQgYml0ZmllbGQK
+CnBsZWFzZSBzZXBhcmF0ZSBvdXQgZm9ybWF0dGluZyBjaGFuZ2VzIGFuZCBhY3R1YWwgY2hhbmdl
+IHByb3Bvc2VkLi4KCj4gIAkJRm9yIG1vcmUgZGV0YWlscyBhYm91dCB0aGUgdGhyZWUgY2VsbHMs
+IHBsZWFzZSBzZWUKPiAgCQlzdG0zMi1kbWEudHh0IGRvY3VtZW50YXRpb24gYmluZGluZyBmaWxl
+Cj4gIC0gZG1hLW1hc3RlcnM6CVBoYW5kbGUgcG9pbnRpbmcgdG8gdGhlIERNQSBjb250cm9sbGVy
+cy4KPiAtLSAKPiAyLjcuNAo=
