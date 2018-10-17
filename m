@@ -2,35 +2,43 @@ Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
 Subject: [[PATCH] 8/9] DMA-UART-Driver-for-AST2500
-From: Vinod Koul <vkoul@kernel.org>
-Message-Id: <20181017060531.GU2400@vkoul-mobl>
-Date: Wed, 17 Oct 2018 11:35:31 +0530
-To: "sudheer.v" <open.sudheer@gmail.com>
-Cc: Rob Herring <robh+dt@kernel.org>, Mark Rutland <mark.rutland@arm.com>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Joel Stanley <joel@jms.id.au>, Andrew Jeffery <andrew@aj.id.au>, Russell King <linux@armlinux.org.uk>, Dan Williams <dan.j.williams@intel.com>, Jiri Slaby <jslaby@suse.com>, Thomas Gleixner <tglx@linutronix.de>, Marc Zyngier <marc.zyngier@arm.com>, Benjamin Herrenschmidt <benh@kernel.crashing.org>, Christian Borntraeger <borntraeger@de.ibm.com>, Michael Moese <mmoese@suse.de>, Hendrik Brueckner <brueckner@linux.vnet.ibm.com>, Kate Stewart <kstewart@linuxfoundation.org>, Philippe Ombredanne <pombredanne@nexb.com>, dmaengine@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, linux-serial@vger.kernel.org, linux-arm-kernel@lists.infradead.org, linux-aspeed@lists.ozlabs.org, Sudheer V <sudheer.veliseti@aspeedtech.com>, ShivahShankar Shakarnarayan rao <shivahshankar.shankarnarayanrao@aspeedtech.com>
+From: Benjamin Herrenschmidt <benh@kernel.crashing.org>
+Message-Id: <351eecd5b1b21893e94f76b34c058c6257b7f837.camel@kernel.crashing.org>
+Date: Wed, 17 Oct 2018 19:56:25 +1100
+To: Vinod <vkoul@kernel.org>, "sudheer.v" <open.sudheer@gmail.com>
+Cc: Rob Herring <robh+dt@kernel.org>, Mark Rutland <mark.rutland@arm.com>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Joel Stanley <joel@jms.id.au>, Andrew Jeffery <andrew@aj.id.au>, Russell King <linux@armlinux.org.uk>, Dan Williams <dan.j.williams@intel.com>, Jiri Slaby <jslaby@suse.com>, Thomas Gleixner <tglx@linutronix.de>, Marc Zyngier <marc.zyngier@arm.com>, Christian Borntraeger <borntraeger@de.ibm.com>, Michael Moese <mmoese@suse.de>, Hendrik Brueckner <brueckner@linux.vnet.ibm.com>, Kate Stewart <kstewart@linuxfoundation.org>, Philippe Ombredanne <pombredanne@nexb.com>, dmaengine@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, linux-serial@vger.kernel.org, linux-arm-kernel@lists.infradead.org, linux-aspeed@lists.ozlabs.org, Sudheer V <sudheer.veliseti@aspeedtech.com>, ShivahShankar Shakarnarayan rao <shivahshankar.shankarnarayanrao@aspeedtech.com>
 List-ID: <dmaengine.vger.kernel.org>
 
-T24gMTctMTAtMTgsIDA5OjQxLCBzdWRoZWVyLnYgd3JvdGU6CgpQbGVhc2UgYWRkIHRoZSBjaGFu
-Z2UgbG9nIGRlc2NyaWJpbmcgdGhlIGRyaXZlciBhbmQgaXRzIGZlYXR1cmVzCgo+IFNpZ25lZC1v
-ZmYtYnk6IHN1ZGhlZXIudiA8b3Blbi5zdWRoZWVyQGdtYWlsLmNvbT4KCgo+IC0tLQo+ICBkcml2
-ZXJzL3R0eS9zZXJpYWwvODI1MC84MjUwX2FzcGVlZF91YXJ0X2RtYS5jIHwgMTU5NCArKysrKysr
-KysrKysrKysrKysrKysrKysKPiAgMSBmaWxlIGNoYW5nZWQsIDE1OTQgaW5zZXJ0aW9ucygrKQo+
-ICBjcmVhdGUgbW9kZSAxMDA2NDQgZHJpdmVycy90dHkvc2VyaWFsLzgyNTAvODI1MF9hc3BlZWRf
-dWFydF9kbWEuYwo+IAo+IGRpZmYgLS1naXQgYS9kcml2ZXJzL3R0eS9zZXJpYWwvODI1MC84MjUw
-X2FzcGVlZF91YXJ0X2RtYS5jIGIvZHJpdmVycy90dHkvc2VyaWFsLzgyNTAvODI1MF9hc3BlZWRf
-dWFydF9kbWEuYwo+IG5ldyBmaWxlIG1vZGUgMTAwNjQ0Cj4gaW5kZXggMDAwMDAwMC4uZTEwMTlh
-OAo+IC0tLSAvZGV2L251bGwKPiArKysgYi9kcml2ZXJzL3R0eS9zZXJpYWwvODI1MC84MjUwX2Fz
-cGVlZF91YXJ0X2RtYS5jCgp3aHkgaXMgdGhpcyBpbiBzZXJpYWwuIEl0IGlzIGRtYWVuZ2luZSBk
-cml2ZXIgc28gYmVsb25ncyB0byBkcml2ZXJzL2RtYS8KbGlrZSBvdGhlciBjb250cm9sbGVycy4g
-UGxlYXNlIG1vdmUgaXQgb3V0IGFuZCByZXN1Ym1pdC4KCldoaWxlIGRvaW5nIHJlc3VibWlzc2lv
-biBwbGVhc2UgdGFrZSBzb21lIHRpbWUgdG8gdW5kZXJzdGFuZCBzdWJzeXN0ZW0KdGFncyB0byB1
-c2UuIChoaW50IGdpdCBsb2cgPHN1YnN5c3RlbT4gd2lsbCB0ZWxsIHlvdSkKCkFsc28gc2VyaWVz
-IGhhcyBbW1BBVENIXSA4LzldIHdoZXJlYXMgaXQgc2hvdWxkIGJlIFtQQVRDSCA4LzldIHBsZWFz
-ZQpsZXQgZ2l0IGdlbmVyYXRlIHRoYXQgZm9yIHlvdSAoaGludCBnaXQgZm9ybWF0LXBhdGNoIHN0
-YXJ0Li5lbmQgZG9lcyBhCmdvb2Qgam9iKQoKPiBAQCAtMCwwICsxLDE1OTQgQEAKPiArLy8gU1BE
-WC1MaWNlbnNlLUlkZW50aWZpZXI6IEdQTC0yLjAKPiArLyoKPiArICogICBkcml2ZXJzL3R0eS9z
-ZXJpYWwvODI1MC84MjUwX2FzcGVlZF91YXJ0X2RtYS5jCj4gKyAqICAgIDEuIDIwMTgvMDcvMDEg
-U2hpdmFoIFNoYW5rYXIgY3JlYXRlZAo+ICsgKiAgICAyLiAyMDE4LzA4LzI1IHN1ZGhlZXIudmVs
-aXNldGk8b3Blbi5zdWRoZWVyQGdtYWlsLmNvbT4gbW9kaWZpZWQKCndlIGRvbnQgdXNlIHRoaXMg
-bG9nIGluIGtlcm5lbC4gSSBkbyBub3Qgc2VlIHMtby1iIGJ5IFNoaXZhaCwgdGhhdApzaG91bGQg
-YmUgYWRkZWQuIEkgdGhpbmsgaGUgc2hvdWxkIGJlIGF1dGhvciBhbmQgeW91IG5lZWQgdG8gbGlz
-dApjaGFuZ2VzIHlvdSBkaWQuLgo=
+T24gV2VkLCAyMDE4LTEwLTE3IGF0IDExOjM1ICswNTMwLCBWaW5vZCB3cm90ZToKPiBPbiAxNy0x
+MC0xOCwgMDk6NDEsIHN1ZGhlZXIudiB3cm90ZToKPiAKPiBQbGVhc2UgYWRkIHRoZSBjaGFuZ2Ug
+bG9nIGRlc2NyaWJpbmcgdGhlIGRyaXZlciBhbmQgaXRzIGZlYXR1cmVzCj4gCj4gPiBTaWduZWQt
+b2ZmLWJ5OiBzdWRoZWVyLnYgPG9wZW4uc3VkaGVlckBnbWFpbC5jb20+Cj4gCj4gCj4gPiAtLS0K
+PiA+ICBkcml2ZXJzL3R0eS9zZXJpYWwvODI1MC84MjUwX2FzcGVlZF91YXJ0X2RtYS5jIHwgMTU5
+NCArKysrKysrKysrKysrKysrKysrKysrKysKPiA+ICAxIGZpbGUgY2hhbmdlZCwgMTU5NCBpbnNl
+cnRpb25zKCspCj4gPiAgY3JlYXRlIG1vZGUgMTAwNjQ0IGRyaXZlcnMvdHR5L3NlcmlhbC84MjUw
+LzgyNTBfYXNwZWVkX3VhcnRfZG1hLmMKPiA+IAo+ID4gZGlmZiAtLWdpdCBhL2RyaXZlcnMvdHR5
+L3NlcmlhbC84MjUwLzgyNTBfYXNwZWVkX3VhcnRfZG1hLmMgYi9kcml2ZXJzL3R0eS9zZXJpYWwv
+ODI1MC84MjUwX2FzcGVlZF91YXJ0X2RtYS5jCj4gPiBuZXcgZmlsZSBtb2RlIDEwMDY0NAo+ID4g
+aW5kZXggMDAwMDAwMC4uZTEwMTlhOAo+ID4gLS0tIC9kZXYvbnVsbAo+ID4gKysrIGIvZHJpdmVy
+cy90dHkvc2VyaWFsLzgyNTAvODI1MF9hc3BlZWRfdWFydF9kbWEuYwo+IAo+IHdoeSBpcyB0aGlz
+IGluIHNlcmlhbC4gSXQgaXMgZG1hZW5naW5lIGRyaXZlciBzbyBiZWxvbmdzIHRvIGRyaXZlcnMv
+ZG1hLwo+IGxpa2Ugb3RoZXIgY29udHJvbGxlcnMuIFBsZWFzZSBtb3ZlIGl0IG91dCBhbmQgcmVz
+dWJtaXQuCiAKSXQncyBub3QgYSBkbWFlbmdpbmUgZHJpdmVyLiBJdCdzIGEgc2VyaWFsIFVBUlQg
+ZHJpdmVyIHRoYXQgaGFwcGVucyB0bwp1c2UgYSBkZWRpY2F0ZWQgRE1BIGVuZ2luZS4KCkl0J3Mg
+dW5jbGVhciB3aGV0aGVyIGl0IHNob3VsZCBiZSBzcGxpdCBpbnRvIHR3byBkcml2ZXJzLCBvciBq
+dXN0IGhhdmUKdGhlIHNlcmlhbCBkcml2ZXIgZGlyZWN0bHkgdXNlIHRoZSBkbWEgZW5naW5lIHNp
+bmNlIHRoYXQgZW5naW5lIGlzCmRlZGljYXRlZCBpbiBIVyB0byBvbmx5IHdvcmsgb24gdGhvc2Ug
+VUFSVHMgYW5kIG5vdGhpbmcgZWxzZS4uLgoKQ2hlZXJzLApCZW4uCgoKPiBXaGlsZSBkb2luZyBy
+ZXN1Ym1pc3Npb24gcGxlYXNlIHRha2Ugc29tZSB0aW1lIHRvIHVuZGVyc3RhbmQgc3Vic3lzdGVt
+Cj4gdGFncyB0byB1c2UuIChoaW50IGdpdCBsb2cgPHN1YnN5c3RlbT4gd2lsbCB0ZWxsIHlvdSkK
+PiAKPiBBbHNvIHNlcmllcyBoYXMgW1tQQVRDSF0gOC85XSB3aGVyZWFzIGl0IHNob3VsZCBiZSBb
+UEFUQ0ggOC85XSBwbGVhc2UKPiBsZXQgZ2l0IGdlbmVyYXRlIHRoYXQgZm9yIHlvdSAoaGludCBn
+aXQgZm9ybWF0LXBhdGNoIHN0YXJ0Li5lbmQgZG9lcyBhCj4gZ29vZCBqb2IpCj4gCj4gPiBAQCAt
+MCwwICsxLDE1OTQgQEAKPiA+ICsvLyBTUERYLUxpY2Vuc2UtSWRlbnRpZmllcjogR1BMLTIuMAo+
+ID4gKy8qCj4gPiArICogICBkcml2ZXJzL3R0eS9zZXJpYWwvODI1MC84MjUwX2FzcGVlZF91YXJ0
+X2RtYS5jCj4gPiArICogICAgMS4gMjAxOC8wNy8wMSBTaGl2YWggU2hhbmthciBjcmVhdGVkCj4g
+PiArICogICAgMi4gMjAxOC8wOC8yNSBzdWRoZWVyLnZlbGlzZXRpPG9wZW4uc3VkaGVlckBnbWFp
+bC5jb20+IG1vZGlmaWVkCj4gCj4gd2UgZG9udCB1c2UgdGhpcyBsb2cgaW4ga2VybmVsLiBJIGRv
+IG5vdCBzZWUgcy1vLWIgYnkgU2hpdmFoLCB0aGF0Cj4gc2hvdWxkIGJlIGFkZGVkLiBJIHRoaW5r
+IGhlIHNob3VsZCBiZSBhdXRob3IgYW5kIHlvdSBuZWVkIHRvIGxpc3QKPiBjaGFuZ2VzIHlvdSBk
+aWQuLgo+Cg==
