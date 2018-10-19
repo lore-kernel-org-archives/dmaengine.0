@@ -1,28 +1,31 @@
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
-Subject: [v5,2/7] dmaengine: xilinx_dma: in axidma slave_sg and dma_cyclic mode align split descriptors
-From: Vinod Koul <vkoul@kernel.org>
-Message-Id: <20181002145820.GH19792@vkoul-mobl>
-Date: Tue, 2 Oct 2018 20:28:20 +0530
-To: Andrea Merello <andrea.merello@gmail.com>
-Cc: dan.j.williams@intel.com, michal.simek@xilinx.com, appana.durga.rao@xilinx.com, dmaengine@vger.kernel.org, linux-arm-kernel@lists.infradead.org, linux-kernel <linux-kernel@vger.kernel.org>, Rob Herring <robh+dt@kernel.org>, Mark Rutland <mark.rutland@arm.com>, devicetree <devicetree@vger.kernel.org>, Radhey Shyam Pandey <radhey.shyam.pandey@xilinx.com>
+Subject: [v2,3/4] dmaengine: xilinx_dma: Introduce helper macro for preparing dma address
+From: Appana Durga Kedareswara Rao <appanad@xilinx.com>
+Message-Id: <DM5PR02MB21878ECD3C2B2E4535F2244FDCF90@DM5PR02MB2187.namprd02.prod.outlook.com>
+Date: Fri, 19 Oct 2018 10:37:11 +0000
+To: Radhey Shyam Pandey <radheys@xilinx.com>, "vkoul@kernel.org" <vkoul@kernel.org>, "dan.j.williams@intel.com" <dan.j.williams@intel.com>, Michal Simek <michals@xilinx.com>Radhey Shyam Pandey <radheys@xilinx.com>
+Cc: "dmaengine@vger.kernel.org" <dmaengine@vger.kernel.org>, "linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>, "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
 List-ID: <dmaengine.vger.kernel.org>
 
-T24gMjgtMDktMTgsIDA5OjExLCBBbmRyZWEgTWVyZWxsbyB3cm90ZToKPiBPbiBUdWUsIFNlcCAx
-OCwgMjAxOCBhdCA2OjIxIFBNIFZpbm9kIDx2a291bEBrZXJuZWwub3JnPiB3cm90ZToKCj4gPiA+
-IEBAIC0xODA0LDcgKzE4MTcsNyBAQCBzdGF0aWMgc3RydWN0IGRtYV9hc3luY190eF9kZXNjcmlw
-dG9yICp4aWxpbnhfZG1hX3ByZXBfc2xhdmVfc2coCj4gPiA+ICAgICAgICAgICAgICAgICAgICAg
-ICAgKiBDYWxjdWxhdGUgdGhlIG1heGltdW0gbnVtYmVyIG9mIGJ5dGVzIHRvIHRyYW5zZmVyLAo+
-ID4gPiAgICAgICAgICAgICAgICAgICAgICAgICogbWFraW5nIHN1cmUgaXQgaXMgbGVzcyB0aGFu
-IHRoZSBodyBsaW1pdAo+ID4gPiAgICAgICAgICAgICAgICAgICAgICAgICovCj4gPiA+IC0gICAg
-ICAgICAgICAgICAgICAgICBjb3B5ID0geGlsaW54X2RtYV9jYWxjX2NvcHlzaXplKHNnX2RtYV9s
-ZW4oc2cpLAo+ID4gPiArICAgICAgICAgICAgICAgICAgICAgY29weSA9IHhpbGlueF9kbWFfY2Fs
-Y19jb3B5c2l6ZShjaGFuLCBzZ19kbWFfbGVuKHNnKSwKPiA+Cj4gPiB3aHkgbm90IGtlZXAgY2hh
-biBpbiBwYXRjaCAxIGFuZCBhZGQgb25seSBoYW5kbGluZyBpbiBwYXRjaCAyLCBzZWVtcwo+ID4g
-bGVzcyBjaHVybiB0byBtZS4uCj4gCj4gSW5kZWVkIHRoaXMgd2FzIHNvbWV0aGluZyBJIHdhcyB1
-bnN1cmUgYWJvdXQuLiBJIGVuZGVkIHVwIGluIGZlZWxpbmcKPiBiZXR0ZXIgbm90IHRvIGFkZCBp
-bnRyb2R1Y2UgYSBmdW5jdGlvbiB0aGF0IHRha2VzIGFuIHVudXNlZCAoeWV0KQo+IGFyZ3VtZW50
-LCBidXQgSSBjYW4gY2hhbmdlIHRoaXMgb2YgY291cnNlIDopCgpJTU8gSXQgaXMgZmluZSB0byBh
-ZGQgYSB1c2VyIGluIHN1YnNlcXVlbnQgcGF0Y2ggaW4gYSBzZXJpZXMuIE5vdCBmaW5lIHRvCmFk
-ZCBzb21ldGhpbmcgYW5kIG5vdCB1c2UgaW4gInRoYXQiIHNlcmllcyA6KQo=
+SGksCgoJVGhhbmtzIGZvciB0aGUgcGF0Y2guLi4KCj4gCj4gVGhpcyBwYXRjaCBpbnRyb2R1Y2Vz
+IHRoZSB4aWxpbnhfcHJlcF9kbWFfYWRkcl90IG1hY3JvIHdoaWNoIHByZXBhcmVzCj4gZG1hX2Fk
+ZHJfdCBmcm9tIGhhcmR3YXJlIGJ1ZmZlciBkZXNjcmlwdG9yIExTQiBhbmQgTVNCIGZpZWxkcy4g
+SXQgd2lsbCBiZQo+IHVzZWQgaW4gc2ltcGxlIGRtYSA2NC1iaXQgcHJvZ3JhbW1pbmcgc2VxdWVu
+Y2UuCj4gCj4gU2lnbmVkLW9mZi1ieTogUmFkaGV5IFNoeWFtIFBhbmRleSA8cmFkaGV5LnNoeWFt
+LnBhbmRleUB4aWxpbnguY29tPgoKUmV2aWV3ZWQtYnk6IEFwcGFuYSBEdXJnYSBLZWRhcmVzd2Fy
+YSBSYW8gPGFwcGFuYS5kdXJnYS5yYW9AeGlsaW54LmNvbT4KClJlZ2FyZHMsCktlZGFyLgoKPiAt
+LS0KPiBDaGFuZ2VzIGZvciB2MjoKPiBOZXcgcGF0Y2gtIFByZXBhcmF0b3J5IGNoYW5nZSBmb3Ig
+NC80IGZpeC4KPiAtLS0KPiAgZHJpdmVycy9kbWEveGlsaW54L3hpbGlueF9kbWEuYyB8ICAgIDIg
+KysKPiAgMSBmaWxlcyBjaGFuZ2VkLCAyIGluc2VydGlvbnMoKyksIDAgZGVsZXRpb25zKC0pCj4g
+Cj4gZGlmZiAtLWdpdCBhL2RyaXZlcnMvZG1hL3hpbGlueC94aWxpbnhfZG1hLmMgYi9kcml2ZXJz
+L2RtYS94aWxpbngveGlsaW54X2RtYS5jCj4gaW5kZXggYTM3ODcxZS4uYzI3YWI2NCAxMDA2NDQK
+PiAtLS0gYS9kcml2ZXJzL2RtYS94aWxpbngveGlsaW54X2RtYS5jCj4gKysrIGIvZHJpdmVycy9k
+bWEveGlsaW54L3hpbGlueF9kbWEuYwo+IEBAIC0xOTAsNiArMTkwLDggQEAKPiAgLyogQVhJIENE
+TUEgU3BlY2lmaWMgTWFza3MgKi8KPiAgI2RlZmluZSBYSUxJTlhfQ0RNQV9DUl9TR01PREUgICAg
+ICAgICAgQklUKDMpCj4gCj4gKyNkZWZpbmUgeGlsaW54X3ByZXBfZG1hX2FkZHJfdChhZGRyKQlc
+Cj4gKwkoKGRtYV9hZGRyX3QpKCh1NjQpYWRkciMjXyMjbXNiIDw8IDMyIHwgKGFkZHIpKSkKPiAg
+LyoqCj4gICAqIHN0cnVjdCB4aWxpbnhfdmRtYV9kZXNjX2h3IC0gSGFyZHdhcmUgRGVzY3JpcHRv
+cgo+ICAgKiBAbmV4dF9kZXNjOiBOZXh0IERlc2NyaXB0b3IgUG9pbnRlciBAMHgwMAo+IC0tCj4g
+MS43LjEK
