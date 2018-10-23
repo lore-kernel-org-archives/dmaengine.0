@@ -1,18 +1,32 @@
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
-Subject: [1/3] clk: bcm2835: make license text and module license match
-From: Eric Anholt <eric@anholt.net>
-Message-Id: <877ei81pm1.fsf@anholt.net>
-Date: Tue, 23 Oct 2018 11:31:50 -0700
-To: Stefan Wahren <stefan.wahren@i2se.com>, Florian Meier <florian.meier@koalo.de>, Chris Boot <bootc@bootc.net>, Martin Sperl <kernel@martin.sperl.org>
-Cc: Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, Mark Brown <broonie@kernel.org>, Vinod Koul <vkoul@kernel.org>, linux-clk@vger.kernel.org, dmaengine@vger.kernel.org, linux-spi@vger.kernel.org, linux-arm-kernel@lists.infradead.org
+Subject: [3/3] spi: bcm2835: make license text and module license match
+From: Stefan Wahren <stefan.wahren@i2se.com>
+Message-Id: <1540292769-5905-4-git-send-email-stefan.wahren@i2se.com>
+Date: Tue, 23 Oct 2018 13:06:08 +0200
+To: Florian Meier <florian.meier@koalo.de>, Chris Boot <bootc@bootc.net>, Martin Sperl <kernel@martin.sperl.org>, Eric Anholt <eric@anholt.net>
+Cc: Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, Mark Brown <broonie@kernel.org>, Vinod Koul <vkoul@kernel.org>, linux-clk@vger.kernel.org, dmaengine@vger.kernel.org, linux-spi@vger.kernel.org, linux-arm-kernel@lists.infradead.org, Stefan Wahren <stefan.wahren@i2se.com>
 List-ID: <dmaengine.vger.kernel.org>
 
-U3RlZmFuIFdhaHJlbiA8c3RlZmFuLndhaHJlbkBpMnNlLmNvbT4gd3JpdGVzOgoKPiBUaGUgbGlj
-ZW5zZSB0ZXh0IGlzIHNwZWNpZnlpbmcgR1BMIHYyIG9yIGxhdGVyIGJ1dCB0aGUgTU9EVUxFX0xJ
-Q0VOU0UKPiBpcyBzZXQgdG8gR1BMIHYyIHdoaWNoIG1lYW5zIEdOVSBQdWJsaWMgTGljZW5zZSB2
-MiBvbmx5LiBTbyBjaG9vc2UgdGhlCj4gbGljZW5zZSB0ZXh0IGFzIHRoZSBjb3JyZWN0IG9uZS4K
-Pgo+IFNpZ25lZC1vZmYtYnk6IFN0ZWZhbiBXYWhyZW4gPHN0ZWZhbi53YWhyZW5AaTJzZS5jb20+
-CgpGb3IgdGhlIHNlcmllczoKClJldmlld2VkLWJ5OiBFcmljIEFuaG9sdCA8ZXJpY0BhbmhvbHQu
-bmV0Pgo=
+VGhlIGxpY2Vuc2UgdGV4dCBpcyBzcGVjaWZ5aW5nIEdQTCB2MiBvciBsYXRlciBidXQgdGhlIE1P
+RFVMRV9MSUNFTlNFCmlzIHNldCB0byBHUEwgdjIgd2hpY2ggbWVhbnMgR05VIFB1YmxpYyBMaWNl
+bnNlIHYyIG9ubHkuIFNvIGNob29zZSB0aGUKbGljZW5zZSB0ZXh0IGFzIHRoZSBjb3JyZWN0IG9u
+ZS4KClNpZ25lZC1vZmYtYnk6IFN0ZWZhbiBXYWhyZW4gPHN0ZWZhbi53YWhyZW5AaTJzZS5jb20+
+Ci0tLQogZHJpdmVycy9zcGkvc3BpLWJjbTI4MzUuYyAgICB8IDIgKy0KIGRyaXZlcnMvc3BpL3Nw
+aS1iY20yODM1YXV4LmMgfCAyICstCiAyIGZpbGVzIGNoYW5nZWQsIDIgaW5zZXJ0aW9ucygrKSwg
+MiBkZWxldGlvbnMoLSkKCmRpZmYgLS1naXQgYS9kcml2ZXJzL3NwaS9zcGktYmNtMjgzNS5jIGIv
+ZHJpdmVycy9zcGkvc3BpLWJjbTI4MzUuYwppbmRleCBmMzVjYzEwLi5iMGI4N2ZmIDEwMDY0NAot
+LS0gYS9kcml2ZXJzL3NwaS9zcGktYmNtMjgzNS5jCisrKyBiL2RyaXZlcnMvc3BpL3NwaS1iY20y
+ODM1LmMKQEAgLTg0Myw0ICs4NDMsNCBAQCBtb2R1bGVfcGxhdGZvcm1fZHJpdmVyKGJjbTI4MzVf
+c3BpX2RyaXZlcik7CiAKIE1PRFVMRV9ERVNDUklQVElPTigiU1BJIGNvbnRyb2xsZXIgZHJpdmVy
+IGZvciBCcm9hZGNvbSBCQ00yODM1Iik7CiBNT0RVTEVfQVVUSE9SKCJDaHJpcyBCb290IDxib290
+Y0Bib290Yy5uZXQ+Iik7Ci1NT0RVTEVfTElDRU5TRSgiR1BMIHYyIik7CitNT0RVTEVfTElDRU5T
+RSgiR1BMIik7CmRpZmYgLS1naXQgYS9kcml2ZXJzL3NwaS9zcGktYmNtMjgzNWF1eC5jIGIvZHJp
+dmVycy9zcGkvc3BpLWJjbTI4MzVhdXguYwppbmRleCAzMDk0ZDgxLi42NzFlMzc0IDEwMDY0NAot
+LS0gYS9kcml2ZXJzL3NwaS9zcGktYmNtMjgzNWF1eC5jCisrKyBiL2RyaXZlcnMvc3BpL3NwaS1i
+Y20yODM1YXV4LmMKQEAgLTU0Miw0ICs1NDIsNCBAQCBtb2R1bGVfcGxhdGZvcm1fZHJpdmVyKGJj
+bTI4MzVhdXhfc3BpX2RyaXZlcik7CiAKIE1PRFVMRV9ERVNDUklQVElPTigiU1BJIGNvbnRyb2xs
+ZXIgZHJpdmVyIGZvciBCcm9hZGNvbSBCQ00yODM1IGF1eCIpOwogTU9EVUxFX0FVVEhPUigiTWFy
+dGluIFNwZXJsIDxrZXJuZWxAbWFydGluLnNwZXJsLm9yZz4iKTsKLU1PRFVMRV9MSUNFTlNFKCJH
+UEwgdjIiKTsKK01PRFVMRV9MSUNFTlNFKCJHUEwiKTsK
