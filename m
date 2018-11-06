@@ -1,25 +1,28 @@
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
-Subject: [v2] dmaengine: sh: Remove R-Mobile APE6 support
-From: Vinod Koul <vkoul@kernel.org>
-Message-Id: <20181129142508.GJ3175@vkoul-mobl.Dlink>
-Date: Thu, 29 Nov 2018 19:55:08 +0530
-To: Geert Uytterhoeven <geert+renesas@glider.be>
-Cc: Dan Williams <dan.j.williams@intel.com>, Guennadi Liakhovetski <g.liakhovetski@gmx.de>, Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>, Wolfram Sang <wsa+renesas@sang-engineering.com>, Simon Horman <horms+renesas@verge.net.au>, Magnus Damm <magnus.damm@gmail.com>, Yoshinori Sato <ysato@users.sourceforge.jp>, Rich Felker <dalias@libc.org>, dmaengine@vger.kernel.org, linux-renesas-soc@vger.kernel.org, linux-sh@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [RESEND,3/7] dmaengine: sprd: Fix the last link-list configuration
+From: Baolin Wang <baolin.wang@linaro.org>
+Message-Id: <95cbea4b835bb2689036afe78ff0b2239a24f352.1541480353.git.baolin.wang@linaro.org>
+Date: Tue,  6 Nov 2018 13:01:33 +0800
+To: dan.j.williams@intel.com, vkoul@kernel.org, eric.long@unisoc.com
+Cc: broonie@kernel.org, baolin.wang@linaro.org, dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
 List-ID: <dmaengine.vger.kernel.org>
 
-T24gMjktMTEtMTgsIDEyOjE4LCBHZWVydCBVeXR0ZXJob2V2ZW4gd3JvdGU6Cj4gUmVuZXNhcyBS
-LU1vYmlsZSBBUEU2IHN1cHBvcnQgaXMgY3VycmVudGx5IHVudXNlZDoKPiAgIC0gRE1BIHNsYXZl
-cyB3ZXJlIG5ldmVyIGVuYWJsZWQgaW4gcjhhNzNhNC5kdHNpLAo+ICAgLSBUaGUgZHJpdmVyIHJl
-bGllcyBvbiBsZWdhY3kgZmlsdGVyIG1hdGNoaW5nIGFuZCBkZXNjcmliaW5nIGFsbAo+ICAgICBz
-bGF2ZXMgYW5kIE1JRC9SSURzIGluIGEgdGFibGUsIHVubGlrZSBtb2Rlcm4gRE1BIGVuZ2luZSBk
-cml2ZXJzIGZvcgo+ICAgICBzaW1pbGFyIGhhcmR3YXJlIGxpa2UgcmNhci1kbWFjLAo+ICAgLSBU
-aGUgZHJpdmVyIGRvZXNuJ3Qgc2VlbSB0byB3b3JrIHdlbGwuCj4gCj4gUmVtb3ZlIHRoZSBkcml2
-ZXIsIGl0IGNhbiBiZSByZXN1cnJlY3RlZCBmcm9tIGdpdCBoaXN0b3J5IHdoZW4gbmVlZGVkLgo+
-IAo+IEFzIHRoaXMgd2FzIHRoZSBsYXN0IHVzZXIgb2YgU0hfRE1BRV9CQVNFIG9uIFJlbmVzYXMg
-QVJNIFNvQ3MsIHRoZQo+IHNoLWRtYS1lbmdpbmUgZHJpdmVyIGNvcmUgaXMgbm93IHVzZWQgb24g
-U3VwZXJIIG9ubHkuCj4gCj4gTm90ZSB0aGF0IHRoZSBEVCBiaW5kaW5ncyBhcmUgc3RpbGwgcHJl
-c2VudCwgYXMgcjhhNzNhNC5kdHNpIHVzZXMgdGhlbS4KClNvcnJ5IGJ1dCB0aGlzIGRvZXNudCBh
-cHBseSBmb3IgbWUsIGNhbiB5b3UgcGxlYXNlIHJlYmFzZSBvbiB0b3BpYy9zaAphbmQgcmVzZW5k
-LgoKVGhhbmtzCg==
+RnJvbTogRXJpYyBMb25nIDxlcmljLmxvbmdAc3ByZWFkdHJ1bS5jb20+CgpXZSB3aWxsIHBhc3Mg
+c2dsZW4gYXMgMCBjb25maWd1cmUgdGhlIGxhc3QgbGluay1saXN0IGNvbmZpZ3VyYXRpb24Kd2hl
+biBmaWxsaW5nIHRoZSBkZXNjcmlwdG9yLCB3aGljaCB3aWxsIGNhdXNlIHRoZSBpbmNvcnJlY3Qg
+bGluay1saXN0CmNvbmZpZ3VyYXRpb24uIFRodXMgd2Ugc2hvdWxkIGNoZWNrIGlmIHRoZSBzZ2xl
+biBpcyAwIHRvIGNvbmZpZ3VyZQp0aGUgY29ycmVjdCBsaW5rLWxpc3QgY29uZmlndXJhdGlvbi4K
+ClNpZ25lZC1vZmYtYnk6IEVyaWMgTG9uZyA8ZXJpYy5sb25nQHNwcmVhZHRydW0uY29tPgpTaWdu
+ZWQtb2ZmLWJ5OiBCYW9saW4gV2FuZyA8YmFvbGluLndhbmdAbGluYXJvLm9yZz4KLS0tCiBkcml2
+ZXJzL2RtYS9zcHJkLWRtYS5jIHwgICAgMyArKy0KIDEgZmlsZSBjaGFuZ2VkLCAyIGluc2VydGlv
+bnMoKyksIDEgZGVsZXRpb24oLSkKCmRpZmYgLS1naXQgYS9kcml2ZXJzL2RtYS9zcHJkLWRtYS5j
+IGIvZHJpdmVycy9kbWEvc3ByZC1kbWEuYwppbmRleCA0ZjM1ODdiLi5lNmE3NGRjIDEwMDY0NAot
+LS0gYS9kcml2ZXJzL2RtYS9zcHJkLWRtYS5jCisrKyBiL2RyaXZlcnMvZG1hL3NwcmQtZG1hLmMK
+QEAgLTY5Nyw3ICs2OTcsOCBAQCBzdGF0aWMgaW50IHNwcmRfZG1hX2ZpbGxfZGVzYyhzdHJ1Y3Qg
+ZG1hX2NoYW4gKmNoYW4sCiAJCWh3LT5jZmcgfD0gU1BSRF9ETUFfTElOS0xJU1RfRU47CiAKIAkJ
+LyogbGluay1saXN0IGluZGV4ICovCi0JCXRlbXAgPSAoc2dfaW5kZXggKyAxKSAlIHNnbGVuOwor
+CQl0ZW1wID0gc2dsZW4gPyAoc2dfaW5kZXggKyAxKSAlIHNnbGVuIDogMDsKKwogCQkvKiBOZXh0
+IGxpbmstbGlzdCBjb25maWd1cmF0aW9uJ3MgcGh5c2ljYWwgYWRkcmVzcyBvZmZzZXQgKi8KIAkJ
+dGVtcCA9IHRlbXAgKiBzaXplb2YoKmh3KSArIFNQUkRfRE1BX0NITl9TUkNfQUREUjsKIAkJLyoK
