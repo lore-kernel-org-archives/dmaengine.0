@@ -1,14 +1,33 @@
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
-Subject: [1/2] dt-bindings: dmaengine: usb-dmac: Add binding for r8a77470
-From: Vinod Koul <vkoul@kernel.org>
-Message-Id: <20181111093134.GE12092@vkoul-mobl>
-Date: Sun, 11 Nov 2018 15:01:34 +0530
-To: Biju Das <biju.das@bp.renesas.com>
-Cc: Rob Herring <robh+dt@kernel.org>, Mark Rutland <mark.rutland@arm.com>, dmaengine@vger.kernel.org, devicetree@vger.kernel.org, Simon Horman <horms@verge.net.au>, Geert Uytterhoeven <geert+renesas@glider.be>, Chris Paterson <Chris.Paterson2@renesas.com>, Fabrizio Castro <fabrizio.castro@bp.renesas.com>, linux-renesas-soc@vger.kernel.org
+Subject: [2/6] dma: tegra: make byte counters unsigned int
+From: Dmitry Osipenko <digetx@gmail.com>
+Message-Id: <ceef9771-e423-2533-f00a-0c1cdabc0fe7@gmail.com>
+Date: Tue, 6 Nov 2018 16:11:40 +0300
+To: Ben Dooks <ben.dooks@codethink.co.uk>, dan.j.williams@intel.com, vkoul@kernel.org
+Cc: ldewangan@nvidia.com, dmaengine@vger.kernel.org, linux-tegra@vger.kernel.org
 List-ID: <dmaengine.vger.kernel.org>
 
-T24gMjUtMTAtMTgsIDE1OjUzLCBCaWp1IERhcyB3cm90ZToKPiBUaGlzIHBhdGNoIGFkZHMgdXNi
-IGhpZ2gtc3BlZWQgZG1hYyBiaW5kaW5nIGZvciByOGE3NzQ3MCAoUlovRzFDKSBTb0MuCgpBcHBs
-aWVkLCB0aGFua3MK
+T24gMzEuMTAuMjAxOCAxOTowMywgQmVuIERvb2tzIHdyb3RlOgo+IFRoZSBidWZmZXIgYnl0ZSBy
+ZXF1ZXN0IGxlbmd0aCBhbmQgY291bnRlciBhcmUgZGVjbGFyZWQgYXMgc2lnbmVkIGludGVnZXJz
+Cj4gYnV0IHRoZSB2YWx1ZXMgc2hvdWxkIG5ldmVyIGJlIGJlbG93IHplcm8sIHNvIG1ha2UgdGhl
+c2UgdW5zaWduZWQgaW50ZWdlcnMKPiBpbnN0ZWFkLgo+IAo+IFNpZ25lZC1vZmYtYnk6IEJlbiBE
+b29rcyA8YmVuLmRvb2tzQGNvZGV0aGluay5jby51az4KPiAtLS0KPiAgZHJpdmVycy9kbWEvdGVn
+cmEyMC1hcGItZG1hLmMgfCA2ICsrKy0tLQo+ICAxIGZpbGUgY2hhbmdlZCwgMyBpbnNlcnRpb25z
+KCspLCAzIGRlbGV0aW9ucygtKQo+IAo+IGRpZmYgLS1naXQgYS9kcml2ZXJzL2RtYS90ZWdyYTIw
+LWFwYi1kbWEuYyBiL2RyaXZlcnMvZG1hL3RlZ3JhMjAtYXBiLWRtYS5jCj4gaW5kZXggODIxOWFi
+ODhhNTA3Li5hZGZkOTE4YmFlZGMgMTAwNjQ0Cj4gLS0tIGEvZHJpdmVycy9kbWEvdGVncmEyMC1h
+cGItZG1hLmMKPiArKysgYi9kcml2ZXJzL2RtYS90ZWdyYTIwLWFwYi1kbWEuYwo+IEBAIC0xNTUs
+NyArMTU1LDcgQEAgc3RydWN0IHRlZ3JhX2RtYV9jaGFubmVsX3JlZ3Mgewo+ICAgKi8KPiAgc3Ry
+dWN0IHRlZ3JhX2RtYV9zZ19yZXEgewo+ICAJc3RydWN0IHRlZ3JhX2RtYV9jaGFubmVsX3JlZ3MJ
+Y2hfcmVnczsKPiAtCWludAkJCQlyZXFfbGVuOwo+ICsJdW5zaWduZWQgaW50CQkJcmVxX2xlbjsK
+PiAgCWJvb2wJCQkJY29uZmlndXJlZDsKPiAgCWJvb2wJCQkJbGFzdF9zZzsKPiAgCXN0cnVjdCBs
+aXN0X2hlYWQJCW5vZGU7Cj4gQEAgLTE2OSw4ICsxNjksOCBAQCBzdHJ1Y3QgdGVncmFfZG1hX3Nn
+X3JlcSB7Cj4gICAqLwo+ICBzdHJ1Y3QgdGVncmFfZG1hX2Rlc2Mgewo+ICAJc3RydWN0IGRtYV9h
+c3luY190eF9kZXNjcmlwdG9yCXR4ZDsKPiAtCWludAkJCQlieXRlc19yZXF1ZXN0ZWQ7Cj4gLQlp
+bnQJCQkJYnl0ZXNfdHJhbnNmZXJyZWQ7Cj4gKwl1bnNpZ25lZCBpbnQJCQlieXRlc19yZXF1ZXN0
+ZWQ7Cj4gKwl1bnNpZ25lZCBpbnQJCQlieXRlc190cmFuc2ZlcnJlZDsKPiAgCWVudW0gZG1hX3N0
+YXR1cwkJCWRtYV9zdGF0dXM7Cj4gIAlzdHJ1Y3QgbGlzdF9oZWFkCQlub2RlOwo+ICAJc3RydWN0
+IGxpc3RfaGVhZAkJdHhfbGlzdDsKPiAKUmV2aWV3ZWQtYnk6IERtaXRyeSBPc2lwZW5rbyA8ZGln
+ZXR4QGdtYWlsLmNvbT4K
