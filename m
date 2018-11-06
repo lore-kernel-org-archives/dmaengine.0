@@ -1,14 +1,31 @@
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
-Subject: [06/17] dma: bcm2835: Switch to SPDX identifier
-From: Vinod Koul <vkoul@kernel.org>
-Message-Id: <20181111091312.GY12092@vkoul-mobl>
-Date: Sun, 11 Nov 2018 14:43:12 +0530
-To: Stefan Wahren <stefan.wahren@i2se.com>
-Cc: Eric Anholt <eric@anholt.net>, linux-rpi-kernel@lists.infradead.org, dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org, Florian Kauer <florian.kauer@koalo.de>
+Subject: dma: coh901318: Fix a double-lock bug
+From: Jia-Ju Bai <baijiaju1990@gmail.com>
+Message-Id: <20181106033348.27361-1-baijiaju1990@gmail.com>
+Date: Tue,  6 Nov 2018 11:33:48 +0800
+To: linus.walleij@linaro.org, vkoul@kernel.org, dan.j.williams@intel.com
+Cc: linux-arm-kernel@lists.infradead.org, dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org, Jia-Ju Bai <baijiaju1990@gmail.com>
 List-ID: <dmaengine.vger.kernel.org>
 
-T24gMTAtMTEtMTgsIDE2OjM0LCBTdGVmYW4gV2FocmVuIHdyb3RlOgo+IEFkb3B0IHRoZSBTUERY
-IGxpY2Vuc2UgaWRlbnRpZmllciBoZWFkZXJzIHRvIGVhc2UgbGljZW5zZSBjb21wbGlhbmNlCj4g
-bWFuYWdlbWVudC4KCkFwcGxpZWQgYWZ0ZXIgZml4aW5nIHN1YnN5c3RlbSB0YWdzLCB0aGFua3MK
+VGhlIGZ1bmN0aW9uIGNvaDkwMTMxOF9hbGxvY19jaGFuX3Jlc291cmNlcygpIGNhbGxzIHNwaW5f
+bG9ja19pcnFzYXZlKCkgCmJlZm9yZSBjYWxsaW5nIGNvaDkwMTMxOF9jb25maWcoKS4KQnV0IGNv
+aDkwMTMxOF9jb25maWcoKSBjYWxscyBzcGluX2xvY2tfaXJxc2F2ZSgpIGFnYWluIGluIGl0cwpk
+ZWZpbml0aW9uLCB3aGljaCBtYXkgY2F1c2UgYSBkb3VibGUtbG9jayBidWcuCgpCZWNhdXNlIGNv
+aDkwMTMxOF9jb25maWcoKSBpcyBvbmx5IGNhbGxlZCBieQpjb2g5MDEzMThfYWxsb2NfY2hhbl9y
+ZXNvdXJjZXMoKSwgdGhlIGJ1ZyBmaXggaXMgdG8gcmVtb3ZlIHRoZQpjYWxscyB0byBzcGluLWxv
+Y2sgYW5kIC11bmxvY2sgZnVuY3Rpb25zIGluIGNvaDkwMTMxOF9jb25maWcoKS4KClNpZ25lZC1v
+ZmYtYnk6IEppYS1KdSBCYWkgPGJhaWppYWp1MTk5MEBnbWFpbC5jb20+Ci0tLQogZHJpdmVycy9k
+bWEvY29oOTAxMzE4LmMgfCA0IC0tLS0KIDEgZmlsZSBjaGFuZ2VkLCA0IGRlbGV0aW9ucygtKQoK
+ZGlmZiAtLWdpdCBhL2RyaXZlcnMvZG1hL2NvaDkwMTMxOC5jIGIvZHJpdmVycy9kbWEvY29oOTAx
+MzE4LmMKaW5kZXggZWViYWJhM2Q5ZTc4Li5mZDg2MmE0Nzg3MzggMTAwNjQ0Ci0tLSBhL2RyaXZl
+cnMvZG1hL2NvaDkwMTMxOC5jCisrKyBiL2RyaXZlcnMvZG1hL2NvaDkwMTMxOC5jCkBAIC0xODA3
+LDggKzE4MDcsNiBAQCBzdGF0aWMgaW50IGNvaDkwMTMxOF9jb25maWcoc3RydWN0IGNvaDkwMTMx
+OF9jaGFuICpjb2hjLAogCWludCBjaGFubmVsID0gY29oYy0+aWQ7CiAJdm9pZCBfX2lvbWVtICp2
+aXJ0YmFzZSA9IGNvaGMtPmJhc2UtPnZpcnRiYXNlOwogCi0Jc3Bpbl9sb2NrX2lycXNhdmUoJmNv
+aGMtPmxvY2ssIGZsYWdzKTsKLQogCWlmIChwYXJhbSkKIAkJcCA9IHBhcmFtOwogCWVsc2UKQEAg
+LTE4MjgsOCArMTgyNiw2IEBAIHN0YXRpYyBpbnQgY29oOTAxMzE4X2NvbmZpZyhzdHJ1Y3QgY29o
+OTAxMzE4X2NoYW4gKmNvaGMsCiAJY29oOTAxMzE4X3NldF9jb25mKGNvaGMsIHAtPmNvbmZpZyk7
+CiAJY29oOTAxMzE4X3NldF9jdHJsKGNvaGMsIHAtPmN0cmxfbGxpX2xhc3QpOwogCi0Jc3Bpbl91
+bmxvY2tfaXJxcmVzdG9yZSgmY29oYy0+bG9jaywgZmxhZ3MpOwotCiAJcmV0dXJuIDA7CiB9CiAK
