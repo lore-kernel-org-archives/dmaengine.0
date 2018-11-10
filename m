@@ -2,32 +2,14 @@ Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
 Subject: [06/17] dma: bcm2835: Switch to SPDX identifier
-From: Stefan Wahren <stefan.wahren@i2se.com>
-Message-Id: <1541864080-7320-1-git-send-email-stefan.wahren@i2se.com>
-Date: Sat, 10 Nov 2018 16:34:40 +0100
-To: Eric Anholt <eric@anholt.net>, Vinod Koul <vkoul@kernel.org>
-Cc: linux-rpi-kernel@lists.infradead.org, dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org, Stefan Wahren <stefan.wahren@i2se.com>, Florian Kauer <florian.kauer@koalo.de>
+From: Eric Anholt <eric@anholt.net>
+Message-Id: <878t20zxdi.fsf@anholt.net>
+Date: Sat, 10 Nov 2018 08:54:33 -0800
+To: Stefan Wahren <stefan.wahren@i2se.com>, Vinod Koul <vkoul@kernel.org>
+Cc: linux-rpi-kernel@lists.infradead.org, dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org, Florian Kauer <florian.kauer@koalo.de>
 List-ID: <dmaengine.vger.kernel.org>
 
-QWRvcHQgdGhlIFNQRFggbGljZW5zZSBpZGVudGlmaWVyIGhlYWRlcnMgdG8gZWFzZSBsaWNlbnNl
-IGNvbXBsaWFuY2UKbWFuYWdlbWVudC4KCkNjOiBGbG9yaWFuIEthdWVyIDxmbG9yaWFuLmthdWVy
-QGtvYWxvLmRlPgpTaWduZWQtb2ZmLWJ5OiBTdGVmYW4gV2FocmVuIDxzdGVmYW4ud2FocmVuQGky
-c2UuY29tPgotLS0KIGRyaXZlcnMvZG1hL2JjbTI4MzUtZG1hLmMgfCAxMSArLS0tLS0tLS0tLQog
-MSBmaWxlIGNoYW5nZWQsIDEgaW5zZXJ0aW9uKCspLCAxMCBkZWxldGlvbnMoLSkKCmRpZmYgLS1n
-aXQgYS9kcml2ZXJzL2RtYS9iY20yODM1LWRtYS5jIGIvZHJpdmVycy9kbWEvYmNtMjgzNS1kbWEu
-YwppbmRleCBlZDg3MWViLi4xYTQ0YzgwIDEwMDY0NAotLS0gYS9kcml2ZXJzL2RtYS9iY20yODM1
-LWRtYS5jCisrKyBiL2RyaXZlcnMvZG1hL2JjbTI4MzUtZG1hLmMKQEAgLTEsMyArMSw0IEBACisv
-LyBTUERYLUxpY2Vuc2UtSWRlbnRpZmllcjogR1BMLTIuMCsKIC8qCiAgKiBCQ00yODM1IERNQSBl
-bmdpbmUgc3VwcG9ydAogICoKQEAgLTE4LDE2ICsxOSw2IEBACiAgKgogICoJTUFSVkVMTCBNTVAg
-UGVyaXBoZXJhbCBETUEgRHJpdmVyCiAgKglDb3B5cmlnaHQgMjAxMiBNYXJ2ZWxsIEludGVybmF0
-aW9uYWwgTHRkLgotICoKLSAqIFRoaXMgcHJvZ3JhbSBpcyBmcmVlIHNvZnR3YXJlOyB5b3UgY2Fu
-IHJlZGlzdHJpYnV0ZSBpdCBhbmQvb3IgbW9kaWZ5Ci0gKiBpdCB1bmRlciB0aGUgdGVybXMgb2Yg
-dGhlIEdOVSBHZW5lcmFsIFB1YmxpYyBMaWNlbnNlIGFzIHB1Ymxpc2hlZCBieQotICogdGhlIEZy
-ZWUgU29mdHdhcmUgRm91bmRhdGlvbjsgZWl0aGVyIHZlcnNpb24gMiBvZiB0aGUgTGljZW5zZSwg
-b3IKLSAqIChhdCB5b3VyIG9wdGlvbikgYW55IGxhdGVyIHZlcnNpb24uCi0gKgotICogVGhpcyBw
-cm9ncmFtIGlzIGRpc3RyaWJ1dGVkIGluIHRoZSBob3BlIHRoYXQgaXQgd2lsbCBiZSB1c2VmdWws
-Ci0gKiBidXQgV0lUSE9VVCBBTlkgV0FSUkFOVFk7IHdpdGhvdXQgZXZlbiB0aGUgaW1wbGllZCB3
-YXJyYW50eSBvZgotICogTUVSQ0hBTlRBQklMSVRZIG9yIEZJVE5FU1MgRk9SIEEgUEFSVElDVUxB
-UiBQVVJQT1NFLiAgU2VlIHRoZQotICogR05VIEdlbmVyYWwgUHVibGljIExpY2Vuc2UgZm9yIG1v
-cmUgZGV0YWlscy4KICAqLwogI2luY2x1ZGUgPGxpbnV4L2RtYWVuZ2luZS5oPgogI2luY2x1ZGUg
-PGxpbnV4L2RtYS1tYXBwaW5nLmg+Cg==
+U3RlZmFuIFdhaHJlbiA8c3RlZmFuLndhaHJlbkBpMnNlLmNvbT4gd3JpdGVzOgoKPiBBZG9wdCB0
+aGUgU1BEWCBsaWNlbnNlIGlkZW50aWZpZXIgaGVhZGVycyB0byBlYXNlIGxpY2Vuc2UgY29tcGxp
+YW5jZQo+IG1hbmFnZW1lbnQuCgpSZXZpZXdlZC1ieTogRXJpYyBBbmhvbHQgPGVyaWNAYW5ob2x0
+Lm5ldD4K
