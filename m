@@ -1,16 +1,30 @@
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
-Subject: [4/6] dt-bindings: dmaengine: usb-dmac: Add binding for r8a774a1
+Subject: [v2,2/4] dmaengine: xilinx_dma: Refactor axidma channel validation
 From: Vinod Koul <vkoul@kernel.org>
-Message-Id: <20181111091923.GB12092@vkoul-mobl>
-Date: Sun, 11 Nov 2018 14:49:23 +0530
-To: Simon Horman <horms@verge.net.au>
-Cc: Fabrizio Castro <fabrizio.castro@bp.renesas.com>, Rob Herring <robh+dt@kernel.org>, Mark Rutland <mark.rutland@arm.com>, Biju Das <biju.das@bp.renesas.com>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, "dmaengine@vger.kernel.org" <dmaengine@vger.kernel.org>, "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>, Geert Uytterhoeven <geert+renesas@glider.be>, Chris Paterson <Chris.Paterson2@renesas.com>, "linux-renesas-soc@vger.kernel.org" <linux-renesas-soc@vger.kernel.org>, "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
+Message-Id: <20181111102947.GG12092@vkoul-mobl>
+Date: Sun, 11 Nov 2018 15:59:47 +0530
+To: Radhey Shyam Pandey <radhey.shyam.pandey@xilinx.com>
+Cc: dan.j.williams@intel.com, michal.simek@xilinx.com, appana.durga.rao@xilinx.com, dmaengine@vger.kernel.org, linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
 List-ID: <dmaengine.vger.kernel.org>
 
-T24gMDgtMTEtMTgsIDE0OjIxLCBTaW1vbiBIb3JtYW4gd3JvdGU6Cj4gT24gVGh1LCBOb3YgMDgs
-IDIwMTggYXQgMTI6NDg6NDZQTSArMDAwMCwgRmFicml6aW8gQ2FzdHJvIHdyb3RlOgo+ID4gRGVh
-ciBBbGwsCj4gPiAKPiA+IFdobyBpcyB0aGUgYmVzdCBwZXJzb24gdG8gdGFrZSB0aGlzIHBhdGNo
-Pwo+IAo+IEkgYmVsaWV2ZSB0aGlzIG9uZSBpcyBmb3IgVmlub2QuCgpQbGVhc2UgcmVzZW5kIGl0
-LCBpdCBpcyBub3QgaW4gbXkgcXVldWUK
+T24gMjktMDktMTgsIDExOjE3LCBSYWRoZXkgU2h5YW0gUGFuZGV5IHdyb3RlOgo+IEluIGF4aWRt
+YSBzdGFydF90cmFuc2ZlciwgcHJlZmVyIGNoZWNraW5nIGNoYW5uZWwgc3RhdGVzIGJlZm9yZQo+
+IG90aGVyIHBhcmFtcyBpLmUgcGVuZGluZ19saXN0LiBObyBmdW5jdGlvbmFsIGNoYW5nZS4KClRo
+ZXJlIG5lZWRzIHRvIGJlIHByb3BlciByZWFzb24gcmF0aGVyIHRoYW4gYSBwcmVmZXJlbmNlLCBj
+YW4geW91CmV4cGxhaW4gd2h5Cgo+IAo+IFNpZ25lZC1vZmYtYnk6IFJhZGhleSBTaHlhbSBQYW5k
+ZXkgPHJhZGhleS5zaHlhbS5wYW5kZXlAeGlsaW54LmNvbT4KPiAtLS0KPiBDaGFuZ2VzIGZvciB2
+MjoKPiBNb2RpZmllZCB0aGUgY29tbWl0IG1lc3NhZ2UgdG8gbWFyayBpdCBhcyBub24tZnVuY3Rp
+b25hbCBjaGFuZ2UuCj4gLS0tCj4gIGRyaXZlcnMvZG1hL3hpbGlueC94aWxpbnhfZG1hLmMgfCAg
+ICA0ICsrLS0KPiAgMSBmaWxlcyBjaGFuZ2VkLCAyIGluc2VydGlvbnMoKyksIDIgZGVsZXRpb25z
+KC0pCj4gCj4gZGlmZiAtLWdpdCBhL2RyaXZlcnMvZG1hL3hpbGlueC94aWxpbnhfZG1hLmMgYi9k
+cml2ZXJzL2RtYS94aWxpbngveGlsaW54X2RtYS5jCj4gaW5kZXggMDZkMTYzMi4uYTM3ODcxZSAx
+MDA2NDQKPiAtLS0gYS9kcml2ZXJzL2RtYS94aWxpbngveGlsaW54X2RtYS5jCj4gKysrIGIvZHJp
+dmVycy9kbWEveGlsaW54L3hpbGlueF9kbWEuYwo+IEBAIC0xMjcxLDEwICsxMjcxLDEwIEBAIHN0
+YXRpYyB2b2lkIHhpbGlueF9kbWFfc3RhcnRfdHJhbnNmZXIoc3RydWN0IHhpbGlueF9kbWFfY2hh
+biAqY2hhbikKPiAgCWlmIChjaGFuLT5lcnIpCj4gIAkJcmV0dXJuOwo+ICAKPiAtCWlmIChsaXN0
+X2VtcHR5KCZjaGFuLT5wZW5kaW5nX2xpc3QpKQo+ICsJaWYgKCFjaGFuLT5pZGxlKQo+ICAJCXJl
+dHVybjsKPiAgCj4gLQlpZiAoIWNoYW4tPmlkbGUpCj4gKwlpZiAobGlzdF9lbXB0eSgmY2hhbi0+
+cGVuZGluZ19saXN0KSkKPiAgCQlyZXR1cm47Cj4gIAo+ICAJaGVhZF9kZXNjID0gbGlzdF9maXJz
+dF9lbnRyeSgmY2hhbi0+cGVuZGluZ19saXN0LAo+IC0tIAo+IDEuNy4xCg==
