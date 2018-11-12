@@ -1,18 +1,27 @@
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
-Subject: [v1] dmaengine: Add mailing list address to the documentation
-From: Jonathan Corbet <corbet@lwn.net>
-Message-Id: <20181120092946.13d52f83@lwn.net>
-Date: Tue, 20 Nov 2018 09:29:46 -0700
-To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Cc: Vinod Koul <vkoul@kernel.org>, dmaengine@vger.kernel.org
+Subject: [v2,2/2] dmaengine: imx-sdma: don't print warning when firmware is absent
+From: Lucas Stach <l.stach@pengutronix.de>
+Message-Id: <20181112160143.4459-2-l.stach@pengutronix.de>
+Date: Mon, 12 Nov 2018 17:01:43 +0100
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, "Luis R . Rodriguez" <mcgrof@kernel.org>
+Cc: linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org, Vinod Koul <vkoul@kernel.org>, kernel@pengutronix.de, patchwork-lst@pengutronix.de
 List-ID: <dmaengine.vger.kernel.org>
 
-T24gVHVlLCAyMCBOb3YgMjAxOCAxNToxNTozMyArMDIwMApBbmR5IFNoZXZjaGVua28gPGFuZHJp
-eS5zaGV2Y2hlbmtvQGxpbnV4LmludGVsLmNvbT4gd3JvdGU6Cgo+IEl0J3Mgbm90IHRoZSBmaXJz
-dCB0aW1lIEkndmUgZ290IGEgcHJpdmF0ZSBlbWFpbCBpbiByZWdhcmQgdG8KPiBkbWF0ZXN0LmMg
-bW9kdWxlLgo+IAo+IE1vdGl2YXRlIHBlb3BsZSwgYnkgYWRkaW5nIGEgbm90ZSwgdG8gc2VuZCB0
-aGVpciBxdWVzdGlvbnMKPiB0byB0aGUgbWFpbGluZyBsaXN0IGluc3RlYWQKPiAKPiBTaWduZWQt
-b2ZmLWJ5OiBBbmR5IFNoZXZjaGVua28gPGFuZHJpeS5zaGV2Y2hlbmtvQGxpbnV4LmludGVsLmNv
-bT4KCkFwcGxpZWQsIHRoYW5rcy4KCmpvbgo=
+VGhlIFNETUEgZmlybXdhcmUgaXMgb3B0aW9uYWwgYW5kIGEgdXNhYmxlIGZhbGxhYmNrIHRvIHRo
+ZSBpbnRlcm5hbApST00gZmlybXdhcmUgaXMgcHJlc2VudCBpbiB0aGUgZHJpdmVyLiBUaGVyZSBp
+cyBhbHJlYWR5IGEgbWVzc2FnZQpwcmludGVkIGluZm9ybWluZyB0aGUgdXNlciB0aGF0IHRoZSBp
+bnRlcm5hbCBmaXJtd2FyZSBpcyB1c2VkLCBzbwp0aGVyZSBpcyBubyBuZWVkIHRvIHByaW50IGEg
+c2Nhcnkgd2FybmluZyBmb3Igd2hhdCBpcyBub3JtYWwgb3BlcmF0aW9uCm9uIG1vc3Qgc3lzdGVt
+cy4KClNpZ25lZC1vZmYtYnk6IEx1Y2FzIFN0YWNoIDxsLnN0YWNoQHBlbmd1dHJvbml4LmRlPgot
+LS0KIGRyaXZlcnMvZG1hL2lteC1zZG1hLmMgfCAyICstCiAxIGZpbGUgY2hhbmdlZCwgMSBpbnNl
+cnRpb24oKyksIDEgZGVsZXRpb24oLSkKCmRpZmYgLS1naXQgYS9kcml2ZXJzL2RtYS9pbXgtc2Rt
+YS5jIGIvZHJpdmVycy9kbWEvaW14LXNkbWEuYwppbmRleCBiNGVjMmQyMGU2NjEuLmMyZTc4MTlj
+ZWNiOCAxMDA2NDQKLS0tIGEvZHJpdmVycy9kbWEvaW14LXNkbWEuYworKysgYi9kcml2ZXJzL2Rt
+YS9pbXgtc2RtYS5jCkBAIC0xNzg0LDcgKzE3ODQsNyBAQCBzdGF0aWMgaW50IHNkbWFfZ2V0X2Zp
+cm13YXJlKHN0cnVjdCBzZG1hX2VuZ2luZSAqc2RtYSwKIHsKIAlpbnQgcmV0OwogCi0JcmV0ID0g
+cmVxdWVzdF9maXJtd2FyZV9ub3dhaXQoVEhJU19NT0RVTEUsCisJcmV0ID0gcmVxdWVzdF9maXJt
+d2FyZV9ub3dhaXRfbm93YXJuKFRISVNfTU9EVUxFLAogCQkJRldfQUNUSU9OX0hPVFBMVUcsIGZ3
+X25hbWUsIHNkbWEtPmRldiwKIAkJCUdGUF9LRVJORUwsIHNkbWEsIHNkbWFfbG9hZF9maXJtd2Fy
+ZSk7CiAK
