@@ -1,13 +1,26 @@
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
-Subject: dmaengine: ep93xx_dma: fix misspell
-From: Vinod Koul <vkoul@kernel.org>
-Message-Id: <20181124143958.GN3175@vkoul-mobl.Dlink>
-Date: Sat, 24 Nov 2018 20:09:58 +0530
-To: Yangtao Li <tiny.windzz@gmail.com>
-Cc: dan.j.williams@intel.com, dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [4/5] dma: tegra: reduce channel name field size
+From: Ben Dooks <ben.dooks@codethink.co.uk>
+Message-Id: <20181121161323.20226-5-ben.dooks@codethink.co.uk>
+Date: Wed, 21 Nov 2018 16:13:22 +0000
+To: dan.j.williams@intel.com, vkoul@kernel.org, dmaengine@vger.kernel.org
+Cc: ldewangan@nvidia.com, linux-tegra@vger.kernel.org, jonathanh@nvidia.com, Ben Dooks <ben.dooks@codethink.co.uk>
 List-ID: <dmaengine.vger.kernel.org>
 
-T24gMTktMTEtMTgsIDEwOjE1LCBZYW5ndGFvIExpIHdyb3RlOgo+IGNvdWxuJ3QgLT4gY291bGRu
-J3QKCkFwcGxpZWQsIHRoYW5rcwo=
+VGhlIG5hbWUgZmllbGQgaXMgdXNlZCBmb3IgImFwYmRtYS4lZCIgd2hpY2ggaXMgcmFyZWx5IGdv
+aW5nIHRvIGJlCm1vcmUgdGhhbiAxMCBieXRlcywgc28gcmVkdWNlIHRoZSBzaXplIGZyb20gMzAg
+dG8gMTIuIFRoaXMgaXMgb25seQpiZWluZyB1c2VkIGJ5IHRoZSBpbnRlcnJ1cHQgcmVnaXN0cmF0
+aW9uLCBzbyBpcyBub3QgY3JpdGljYWwgdG8gdGhlCm9wZXJhdGlvbiBvZiB0aGUgZHJpdmVyIGVp
+dGhlci4KClNpZ25lZC1vZmYtYnk6IEJlbiBEb29rcyA8YmVuLmRvb2tzQGNvZGV0aGluay5jby51
+az4KLS0tCiBkcml2ZXJzL2RtYS90ZWdyYTIwLWFwYi1kbWEuYyB8IDIgKy0KIDEgZmlsZSBjaGFu
+Z2VkLCAxIGluc2VydGlvbigrKSwgMSBkZWxldGlvbigtKQoKZGlmZiAtLWdpdCBhL2RyaXZlcnMv
+ZG1hL3RlZ3JhMjAtYXBiLWRtYS5jIGIvZHJpdmVycy9kbWEvdGVncmEyMC1hcGItZG1hLmMKaW5k
+ZXggZWM4OTM4YTJlY2FiLi5jNjBjM2Y3Y2FkNWYgMTAwNjQ0Ci0tLSBhL2RyaXZlcnMvZG1hL3Rl
+Z3JhMjAtYXBiLWRtYS5jCisrKyBiL2RyaXZlcnMvZG1hL3RlZ3JhMjAtYXBiLWRtYS5jCkBAIC0x
+ODYsNyArMTg2LDcgQEAgdHlwZWRlZiB2b2lkICgqZG1hX2lzcl9oYW5kbGVyKShzdHJ1Y3QgdGVn
+cmFfZG1hX2NoYW5uZWwgKnRkYywKIC8qIHRlZ3JhX2RtYV9jaGFubmVsOiBDaGFubmVsIHNwZWNp
+ZmljIGluZm9ybWF0aW9uICovCiBzdHJ1Y3QgdGVncmFfZG1hX2NoYW5uZWwgewogCXN0cnVjdCBk
+bWFfY2hhbgkJZG1hX2NoYW47Ci0JY2hhcgkJCW5hbWVbMzBdOworCWNoYXIJCQluYW1lWzEyXTsK
+IAlib29sCQkJY29uZmlnX2luaXQ7CiAJaW50CQkJaWQ7CiAJaW50CQkJaXJxOwo=
