@@ -2,25 +2,20 @@ Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
 Subject: [4/5] dma: tegra: reduce channel name field size
-From: Ben Dooks <ben.dooks@codethink.co.uk>
-Message-Id: <20181121161323.20226-5-ben.dooks@codethink.co.uk>
-Date: Wed, 21 Nov 2018 16:13:22 +0000
-To: dan.j.williams@intel.com, vkoul@kernel.org, dmaengine@vger.kernel.org
-Cc: ldewangan@nvidia.com, linux-tegra@vger.kernel.org, jonathanh@nvidia.com, Ben Dooks <ben.dooks@codethink.co.uk>
+From: Jon Hunter <jgchunter@gmail.com>
+Message-Id: <CABxZOnyK2kyZ18aqf4NONSJW=ChNeJsFnYd7UV-p+PGVxCf0LQ@mail.gmail.com>
+Date: Thu, 22 Nov 2018 09:26:55 +0000
+To: ben.dooks@codethink.co.uk
+Cc: dan.j.williams@intel.com, vkoul@kernel.org, dmaengine@vger.kernel.org, ldewangan@nvidia.com, linux-tegra@vger.kernel.org, Jon Hunter <jonathanh@nvidia.com>
 List-ID: <dmaengine.vger.kernel.org>
 
-VGhlIG5hbWUgZmllbGQgaXMgdXNlZCBmb3IgImFwYmRtYS4lZCIgd2hpY2ggaXMgcmFyZWx5IGdv
-aW5nIHRvIGJlCm1vcmUgdGhhbiAxMCBieXRlcywgc28gcmVkdWNlIHRoZSBzaXplIGZyb20gMzAg
-dG8gMTIuIFRoaXMgaXMgb25seQpiZWluZyB1c2VkIGJ5IHRoZSBpbnRlcnJ1cHQgcmVnaXN0cmF0
-aW9uLCBzbyBpcyBub3QgY3JpdGljYWwgdG8gdGhlCm9wZXJhdGlvbiBvZiB0aGUgZHJpdmVyIGVp
-dGhlci4KClNpZ25lZC1vZmYtYnk6IEJlbiBEb29rcyA8YmVuLmRvb2tzQGNvZGV0aGluay5jby51
-az4KLS0tCiBkcml2ZXJzL2RtYS90ZWdyYTIwLWFwYi1kbWEuYyB8IDIgKy0KIDEgZmlsZSBjaGFu
-Z2VkLCAxIGluc2VydGlvbigrKSwgMSBkZWxldGlvbigtKQoKZGlmZiAtLWdpdCBhL2RyaXZlcnMv
-ZG1hL3RlZ3JhMjAtYXBiLWRtYS5jIGIvZHJpdmVycy9kbWEvdGVncmEyMC1hcGItZG1hLmMKaW5k
-ZXggZWM4OTM4YTJlY2FiLi5jNjBjM2Y3Y2FkNWYgMTAwNjQ0Ci0tLSBhL2RyaXZlcnMvZG1hL3Rl
-Z3JhMjAtYXBiLWRtYS5jCisrKyBiL2RyaXZlcnMvZG1hL3RlZ3JhMjAtYXBiLWRtYS5jCkBAIC0x
-ODYsNyArMTg2LDcgQEAgdHlwZWRlZiB2b2lkICgqZG1hX2lzcl9oYW5kbGVyKShzdHJ1Y3QgdGVn
-cmFfZG1hX2NoYW5uZWwgKnRkYywKIC8qIHRlZ3JhX2RtYV9jaGFubmVsOiBDaGFubmVsIHNwZWNp
-ZmljIGluZm9ybWF0aW9uICovCiBzdHJ1Y3QgdGVncmFfZG1hX2NoYW5uZWwgewogCXN0cnVjdCBk
-bWFfY2hhbgkJZG1hX2NoYW47Ci0JY2hhcgkJCW5hbWVbMzBdOworCWNoYXIJCQluYW1lWzEyXTsK
-IAlib29sCQkJY29uZmlnX2luaXQ7CiAJaW50CQkJaWQ7CiAJaW50CQkJaXJxOwo=
+T24gV2VkLCBOb3YgMjEsIDIwMTggYXQgNDoxNSBQTSBCZW4gRG9va3MgPGJlbi5kb29rc0Bjb2Rl
+dGhpbmsuY28udWs+IHdyb3RlOgo+Cj4gVGhlIG5hbWUgZmllbGQgaXMgdXNlZCBmb3IgImFwYmRt
+YS4lZCIgd2hpY2ggaXMgcmFyZWx5IGdvaW5nIHRvIGJlCj4gbW9yZSB0aGFuIDEwIGJ5dGVzLCBz
+byByZWR1Y2UgdGhlIHNpemUgZnJvbSAzMCB0byAxMi4gVGhpcyBpcyBvbmx5Cj4gYmVpbmcgdXNl
+ZCBieSB0aGUgaW50ZXJydXB0IHJlZ2lzdHJhdGlvbiwgc28gaXMgbm90IGNyaXRpY2FsIHRvIHRo
+ZQo+IG9wZXJhdGlvbiBvZiB0aGUgZHJpdmVyIGVpdGhlci4KCkRvIHlvdSBtZWFuICduZXZlcicg
+YWJvdmUgaW5zdGVhZCBvZiAncmFyZWx5Jz8gVGhlIG1heCBudW1iZXIgb2YKY2hhbm5lbHMgaXMg
+bmV2ZXIgbW9yZSB0aGFuIDIgZGlnaXRzIGFuZCBzbyB0aGUgY2hhbmdlIGlzIGZpbmUgd2l0aApt
+ZS4gU28gZm9yIHRoZSBjaGFuZ2UgLi4uCgpBY2tlZC1ieTogSm9uIEh1bnRlciA8am9uYXRoYW5o
+QG52aWRpYS5jb20+CgpDaGVlcnMKSm9uCg==
