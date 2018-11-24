@@ -2,36 +2,14 @@ Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
 Subject: [resend] dmaengine: rcar-dmac: Document R8A774A1 bindings
-From: Fabrizio Castro <fabrizio.castro@bp.renesas.com>
-Message-Id: <1542283109-8322-1-git-send-email-fabrizio.castro@bp.renesas.com>
-Date: Thu, 15 Nov 2018 11:58:29 +0000
-To: Vinod Koul <vkoul@kernel.org>, Rob Herring <robh+dt@kernel.org>, Mark Rutland <mark.rutland@arm.com>
-Cc: Fabrizio Castro <fabrizio.castro@bp.renesas.com>, dmaengine@vger.kernel.org, devicetree@vger.kernel.org, Simon Horman <horms@verge.net.au>, Geert Uytterhoeven <geert+renesas@glider.be>, Chris Paterson <Chris.Paterson2@renesas.com>, Biju Das <biju.das@bp.renesas.com>, linux-renesas-soc@vger.kernel.org
+From: Vinod Koul <vkoul@kernel.org>
+Message-Id: <20181124143259.GK3175@vkoul-mobl.Dlink>
+Date: Sat, 24 Nov 2018 20:02:59 +0530
+To: Fabrizio Castro <fabrizio.castro@bp.renesas.com>
+Cc: Rob Herring <robh+dt@kernel.org>, Mark Rutland <mark.rutland@arm.com>, dmaengine@vger.kernel.org, devicetree@vger.kernel.org, Simon Horman <horms@verge.net.au>, Geert Uytterhoeven <geert+renesas@glider.be>, Chris Paterson <Chris.Paterson2@renesas.com>, Biju Das <biju.das@bp.renesas.com>, linux-renesas-soc@vger.kernel.org
 List-ID: <dmaengine.vger.kernel.org>
 
-UmVuZXNhcycgUlovRzJNIChSOEE3NzRBMSkgU29DIGhhcyBETUEgY29udHJvbGxlcnMgY29tcGF0
-aWJsZQp3aXRoIHRoaXMgZHJpdmVyLCB0aGVyZWZvcmUgZG9jdW1lbnQgUlovRzJNIHNwZWNpZmlj
-IGJpbmRpbmdzLgoKU2lnbmVkLW9mZi1ieTogRmFicml6aW8gQ2FzdHJvIDxmYWJyaXppby5jYXN0
-cm9AYnAucmVuZXNhcy5jb20+ClJldmlld2VkLWJ5OiBCaWp1IERhcyA8YmlqdS5kYXNAYnAucmVu
-ZXNhcy5jb20+ClJldmlld2VkLWJ5OiBSb2IgSGVycmluZyA8cm9iaEBrZXJuZWwub3JnPgpSZXZp
-ZXdlZC1ieTogU2ltb24gSG9ybWFuIDxob3JtcytyZW5lc2FzQHZlcmdlLm5ldC5hdT4KLS0tCgog
-RG9jdW1lbnRhdGlvbi9kZXZpY2V0cmVlL2JpbmRpbmdzL2RtYS9yZW5lc2FzLHJjYXItZG1hYy50
-eHQgfCAzICsrLQogMSBmaWxlIGNoYW5nZWQsIDIgaW5zZXJ0aW9ucygrKSwgMSBkZWxldGlvbigt
-KQoKZGlmZiAtLWdpdCBhL0RvY3VtZW50YXRpb24vZGV2aWNldHJlZS9iaW5kaW5ncy9kbWEvcmVu
-ZXNhcyxyY2FyLWRtYWMudHh0IGIvRG9jdW1lbnRhdGlvbi9kZXZpY2V0cmVlL2JpbmRpbmdzL2Rt
-YS9yZW5lc2FzLHJjYXItZG1hYy50eHQKaW5kZXggYTVhN2MzZi4uY2RmMzJiMiAxMDA2NDQKLS0t
-IGEvRG9jdW1lbnRhdGlvbi9kZXZpY2V0cmVlL2JpbmRpbmdzL2RtYS9yZW5lc2FzLHJjYXItZG1h
-Yy50eHQKKysrIGIvRG9jdW1lbnRhdGlvbi9kZXZpY2V0cmVlL2JpbmRpbmdzL2RtYS9yZW5lc2Fz
-LHJjYXItZG1hYy50eHQKQEAgLTEsNiArMSw2IEBACiAqIFJlbmVzYXMgUi1DYXIgKFJaL0cpIERN
-QSBDb250cm9sbGVyIERldmljZSBUcmVlIGJpbmRpbmdzCiAKLVJlbmVzYXMgUi1DYXIgR2VuZXJh
-dGlvbiAyIFNvQ3MgaGF2ZSBtdWx0aXBsZSBtdWx0aS1jaGFubmVsIERNQQorUmVuZXNhcyBSLUNh
-ciAoR2VuIDIvMykgYW5kIFJaL0cgU29DcyBoYXZlIG11bHRpcGxlIG11bHRpLWNoYW5uZWwgRE1B
-CiBjb250cm9sbGVyIGluc3RhbmNlcyBuYW1lZCBETUFDIGNhcGFibGUgb2Ygc2VydmluZyBtdWx0
-aXBsZSBjbGllbnRzLiBDaGFubmVscwogY2FuIGJlIGRlZGljYXRlZCB0byBzcGVjaWZpYyBjbGll
-bnRzIG9yIHNoYXJlZCBiZXR3ZWVuIGEgbGFyZ2UgbnVtYmVyIG9mCiBjbGllbnRzLgpAQCAtMjAs
-NiArMjAsNyBAQCBSZXF1aXJlZCBQcm9wZXJ0aWVzOgogCQktICJyZW5lc2FzLGRtYWMtcjhhNzc0
-NCIgKFJaL0cxTikKIAkJLSAicmVuZXNhcyxkbWFjLXI4YTc3NDUiIChSWi9HMUUpCiAJCS0gInJl
-bmVzYXMsZG1hYy1yOGE3NzQ3MCIgKFJaL0cxQykKKwkJLSAicmVuZXNhcyxkbWFjLXI4YTc3NGEx
-IiAoUlovRzJNKQogCQktICJyZW5lc2FzLGRtYWMtcjhhNzc5MCIgKFItQ2FyIEgyKQogCQktICJy
-ZW5lc2FzLGRtYWMtcjhhNzc5MSIgKFItQ2FyIE0yLVcpCiAJCS0gInJlbmVzYXMsZG1hYy1yOGE3
-NzkyIiAoUi1DYXIgVjJIKQo=
+T24gMTUtMTEtMTgsIDExOjU4LCBGYWJyaXppbyBDYXN0cm8gd3JvdGU6Cj4gUmVuZXNhcycgUlov
+RzJNIChSOEE3NzRBMSkgU29DIGhhcyBETUEgY29udHJvbGxlcnMgY29tcGF0aWJsZQo+IHdpdGgg
+dGhpcyBkcml2ZXIsIHRoZXJlZm9yZSBkb2N1bWVudCBSWi9HMk0gc3BlY2lmaWMgYmluZGluZ3Mu
+CgpBcHBsaWVkLCB0aGFua3MK
