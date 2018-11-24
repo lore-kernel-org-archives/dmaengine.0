@@ -1,15 +1,14 @@
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
-Subject: dmaengine: dmatest: use dmaengine_terminate_sync() instead
+Subject: [V2] dmaengine: dmatest: unmap data on a single code-path when xfer done
 From: Vinod Koul <vkoul@kernel.org>
-Message-Id: <20181124134657.GD3175@vkoul-mobl.Dlink>
-Date: Sat, 24 Nov 2018 19:16:57 +0530
+Message-Id: <20181124134727.GE3175@vkoul-mobl.Dlink>
+Date: Sat, 24 Nov 2018 19:17:27 +0530
 To: Alexandru Ardelean <alexandru.ardelean@analog.com>
-Cc: dmaengine@vger.kernel.org, dan.j.williams@intel.com, vinod.koul@intel.com
+Cc: dmaengine@vger.kernel.org, dan.j.williams@intel.com
 List-ID: <dmaengine.vger.kernel.org>
 
-T24gMjktMTAtMTgsIDExOjIzLCBBbGV4YW5kcnUgQXJkZWxlYW4gd3JvdGU6Cj4gVGhlIGBkbWFl
-bmdpbmVfdGVybWluYXRlX2FsbCgpYCBpcyBtYXJrZWQgYXMgZGVwcmVjYXRlZCwgc28gdXBkYXRl
-IHRoZSB0ZXN0Cj4gd2l0aCBgZG1hZW5naW5lX3Rlcm1pbmF0ZV9zeW5jKClgIHdoaWNoIGlzIHRo
-ZSByZWNvbW1lbmRlZCBhbHRlcm5hdGl2ZS4KCkFwcGxpZWQsIHRoYW5rcwo=
+T24gMjktMTAtMTgsIDEyOjA4LCBBbGV4YW5kcnUgQXJkZWxlYW4gd3JvdGU6Cj4gQWZ0ZXIgdGhl
+IERNQSB0cmFuc2ZlciBpcyBkb25lLCB3ZSBkb24ndCBuZWVkIHRvIGNhbGwgdGhlIHVuLW1hcHBp
+bmcgY29kZQo+IGluIDMgcGxhY2VzLiBPbmUgaXMgZW5vdWdoLgoKQXBwbGllZCwgdGhhbmtzCg==
