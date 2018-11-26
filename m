@@ -2,23 +2,25 @@ Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
 Subject: [V2] mm: Replace all open encodings for NUMA_NO_NODE
-From: David Hildenbrand <david@redhat.com>
-Message-Id: <bcf609de-c60a-d6ad-7acb-6c59c412adbc@redhat.com>
-Date: Mon, 26 Nov 2018 13:48:07 +0100
-To: Anshuman Khandual <anshuman.khandual@arm.com>, linux-mm@kvack.org, linux-kernel@vger.kernel.org
+From: Anshuman Khandual <anshuman.khandual@arm.com>
+Message-Id: <20049f8a-b68f-8af2-c4c7-9410781f37fa@arm.com>
+Date: Mon, 26 Nov 2018 19:32:44 +0530
+To: David Hildenbrand <david@redhat.com>, linux-mm@kvack.org, linux-kernel@vger.kernel.org
 Cc: ocfs2-devel@oss.oracle.com, linux-fbdev@vger.kernel.org, dri-devel@lists.freedesktop.org, netdev@vger.kernel.org, intel-wired-lan@lists.osuosl.org, linux-media@vger.kernel.org, iommu@lists.linux-foundation.org, linux-rdma@vger.kernel.org, dmaengine@vger.kernel.org, linux-block@vger.kernel.org, sparclinux@vger.kernel.org, linuxppc-dev@lists.ozlabs.org, linux-ia64@vger.kernel.org, linux-alpha@vger.kernel.org, akpm@linux-foundation.org, jiangqi903@gmail.com, hverkuil@xs4all.nl, vkoul@kernel.org
 List-ID: <dmaengine.vger.kernel.org>
 
-T24gMjYuMTEuMTggMTM6MjYsIEFuc2h1bWFuIEtoYW5kdWFsIHdyb3RlOgo+IEF0IHByZXNlbnQg
-dGhlcmUgYXJlIG11bHRpcGxlIHBsYWNlcyB3aGVyZSBpbnZhbGlkIG5vZGUgbnVtYmVyIGlzIGVu
-Y29kZWQKPiBhcyAtMS4gRXZlbiB0aG91Z2ggaW1wbGljaXRseSB1bmRlcnN0b29kIGl0IGlzIGFs
-d2F5cyBiZXR0ZXIgdG8gaGF2ZSBtYWNyb3MKPiBpbiB0aGVyZS4gUmVwbGFjZSB0aGVzZSBvcGVu
-IGVuY29kaW5ncyBmb3IgYW4gaW52YWxpZCBub2RlIG51bWJlciB3aXRoIHRoZQo+IGdsb2JhbCBt
-YWNybyBOVU1BX05PX05PREUuIFRoaXMgaGVscHMgcmVtb3ZlIE5VTUEgcmVsYXRlZCBhc3N1bXB0
-aW9ucyBsaWtlCj4gJ2ludmFsaWQgbm9kZScgZnJvbSB2YXJpb3VzIHBsYWNlcyByZWRpcmVjdGlu
-ZyB0aGVtIHRvIGEgY29tbW9uIGRlZmluaXRpb24uCj4gCj4gU2lnbmVkLW9mZi1ieTogQW5zaHVt
-YW4gS2hhbmR1YWwgPGFuc2h1bWFuLmtoYW5kdWFsQGFybS5jb20+Cj4gLS0tCj4gQ2hhbmdlcyBp
-biBWMjoKPiAKPiAtIEFkZGVkIGluY2x1c2lvbiBvZiAnbnVtYS5oJyBoZWFkZXIgYXQgdmFyaW91
-cyBwbGFjZXMgcGVyIEFuZHJldwo+IC0gVXBkYXRlZCAnZGV2X3RvX25vZGUnIHRvIHVzZSBOVU1B
-X05PX05PREUgaW5zdGVhZCBwZXIgVmlub2QKClJldmlld2VkLWJ5OiBEYXZpZCBIaWxkZW5icmFu
-ZCA8ZGF2aWRAcmVkaGF0LmNvbT4K
+T24gMTEvMjYvMjAxOCAwNjoxOCBQTSwgRGF2aWQgSGlsZGVuYnJhbmQgd3JvdGU6Cj4gT24gMjYu
+MTEuMTggMTM6MjYsIEFuc2h1bWFuIEtoYW5kdWFsIHdyb3RlOgo+PiBBdCBwcmVzZW50IHRoZXJl
+IGFyZSBtdWx0aXBsZSBwbGFjZXMgd2hlcmUgaW52YWxpZCBub2RlIG51bWJlciBpcyBlbmNvZGVk
+Cj4+IGFzIC0xLiBFdmVuIHRob3VnaCBpbXBsaWNpdGx5IHVuZGVyc3Rvb2QgaXQgaXMgYWx3YXlz
+IGJldHRlciB0byBoYXZlIG1hY3Jvcwo+PiBpbiB0aGVyZS4gUmVwbGFjZSB0aGVzZSBvcGVuIGVu
+Y29kaW5ncyBmb3IgYW4gaW52YWxpZCBub2RlIG51bWJlciB3aXRoIHRoZQo+PiBnbG9iYWwgbWFj
+cm8gTlVNQV9OT19OT0RFLiBUaGlzIGhlbHBzIHJlbW92ZSBOVU1BIHJlbGF0ZWQgYXNzdW1wdGlv
+bnMgbGlrZQo+PiAnaW52YWxpZCBub2RlJyBmcm9tIHZhcmlvdXMgcGxhY2VzIHJlZGlyZWN0aW5n
+IHRoZW0gdG8gYSBjb21tb24gZGVmaW5pdGlvbi4KPj4KPj4gU2lnbmVkLW9mZi1ieTogQW5zaHVt
+YW4gS2hhbmR1YWwgPGFuc2h1bWFuLmtoYW5kdWFsQGFybS5jb20+Cj4+IC0tLQo+PiBDaGFuZ2Vz
+IGluIFYyOgo+Pgo+PiAtIEFkZGVkIGluY2x1c2lvbiBvZiAnbnVtYS5oJyBoZWFkZXIgYXQgdmFy
+aW91cyBwbGFjZXMgcGVyIEFuZHJldwo+PiAtIFVwZGF0ZWQgJ2Rldl90b19ub2RlJyB0byB1c2Ug
+TlVNQV9OT19OT0RFIGluc3RlYWQgcGVyIFZpbm9kCj4gCj4gUmV2aWV3ZWQtYnk6IERhdmlkIEhp
+bGRlbmJyYW5kIDxkYXZpZEByZWRoYXQuY29tPgoKVGhhbmtzIERhdmlkLiBNeSBiYWQsIGZvcmdv
+dCB0byBhZGQgeW91ciByZXZpZXcgdGFnIGZyb20gdGhlIGVhcmxpZXIgdmVyc2lvbi4K
