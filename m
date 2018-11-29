@@ -2,31 +2,16 @@ Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
 Subject: dmaengine: at_hdmac: fix module unloading
-From: Ludovic Desroches <ludovic.desroches@microchip.com>
-Message-Id: <20181129135259.nhzx5wvpc6kxosto@M43218.corp.atmel.com>
-Date: Thu, 29 Nov 2018 14:52:59 +0100
+From: Vinod Koul <vkoul@kernel.org>
+Message-Id: <20181129142118.GI3175@vkoul-mobl.Dlink>
+Date: Thu, 29 Nov 2018 19:51:18 +0530
 To: Richard Genoud <richard.genoud@gmail.com>
-Cc: Dan Williams <dan.j.williams@intel.com>, Vinod Koul <vkoul@kernel.org>, Alexandre Belloni <alexandre.belloni@bootlin.com>, Nicolas Ferre <nicolas.ferre@microchip.com>, Maxime Ripard <maxime.ripard@bootlin.com>, Mario Forner <m.forner@be4energy.com>, linux-arm-kernel@lists.infradead.org, dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org, linux-serial@vger.kernel.org, stable@vger.kernel.org
+Cc: Ludovic Desroches <ludovic.desroches@microchip.com>, Dan Williams <dan.j.williams@intel.com>, Alexandre Belloni <alexandre.belloni@bootlin.com>, Nicolas Ferre <nicolas.ferre@microchip.com>, Maxime Ripard <maxime.ripard@bootlin.com>, Mario Forner <m.forner@be4energy.com>, linux-arm-kernel@lists.infradead.org, dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org, linux-serial@vger.kernel.org, stable@vger.kernel.org
 List-ID: <dmaengine.vger.kernel.org>
 
-T24gVHVlLCBOb3YgMjcsIDIwMTggYXQgMDU6MDY6MzVQTSArMDEwMCwgUmljaGFyZCBHZW5vdWQg
-d3JvdGU6Cj4gb2ZfZG1hX2NvbnRyb2xsZXJfZnJlZSgpIHdhcyBub3QgY2FsbGVkIG9uIG1vZHVs
-ZSBvbmxvYWRpbmcuCgpzL29ubG9hZGluZy91bmxvYWRpbmcKCj4gVGhpcyBsZWFkIHRvIGEgc29m
-dCBsb2NrdXA6Cj4gd2F0Y2hkb2c6IEJVRzogc29mdCBsb2NrdXAgLSBDUFUjMCBzdHVjayBmb3Ig
-MjNzIQo+IE1vZHVsZXMgbGlua2VkIGluOiBhdF9oZG1hYyBbbGFzdCB1bmxvYWRlZDogYXRfaGRt
-YWNdCj4gd2hlbiBvZl9kbWFfcmVxdWVzdF9zbGF2ZV9jaGFubmVsKCkgdHJpZWQgdG8gY2FsbCBv
-ZmRtYS0+b2ZfZG1hX3hsYXRlKCkuCj4gCj4gQ2M6IHN0YWJsZUB2Z2VyLmtlcm5lbC5vcmcKPiBG
-aXhlczogYmJlODljOGUzZDU5ICgiYXRfaGRtYWM6IG1vdmUgdG8gZ2VuZXJpYyBETUEgYmluZGlu
-ZyIpCj4gU2lnbmVkLW9mZi1ieTogUmljaGFyZCBHZW5vdWQgPHJpY2hhcmQuZ2Vub3VkQGdtYWls
-LmNvbT4KCkFja2VkLWJ5OiBMdWRvdmljIERlc3JvY2hlcyA8bHVkb3ZpYy5kZXNyb2NoZXNAbWlj
-cm9jaGlwLmNvbT4KClRoYW5rcwoKTHVkb3ZpYwoKPiAtLS0KPiAgZHJpdmVycy9kbWEvYXRfaGRt
-YWMuYyB8IDIgKysKPiAgMSBmaWxlIGNoYW5nZWQsIDIgaW5zZXJ0aW9ucygrKQo+IAo+IGRpZmYg
-LS1naXQgYS9kcml2ZXJzL2RtYS9hdF9oZG1hYy5jIGIvZHJpdmVycy9kbWEvYXRfaGRtYWMuYwo+
-IGluZGV4IDFiN2YwY2EwZDVjZC4uMDFkOTM2YzlmZTg5IDEwMDY0NAo+IC0tLSBhL2RyaXZlcnMv
-ZG1hL2F0X2hkbWFjLmMKPiArKysgYi9kcml2ZXJzL2RtYS9hdF9oZG1hYy5jCj4gQEAgLTIwMDYs
-NiArMjAwNiw4IEBAIHN0YXRpYyBpbnQgYXRfZG1hX3JlbW92ZShzdHJ1Y3QgcGxhdGZvcm1fZGV2
-aWNlICpwZGV2KQo+ICAJc3RydWN0IHJlc291cmNlCQkqaW87Cj4gIAo+ICAJYXRfZG1hX29mZihh
-dGRtYSk7Cj4gKwlpZiAocGRldi0+ZGV2Lm9mX25vZGUpCj4gKwkJb2ZfZG1hX2NvbnRyb2xsZXJf
-ZnJlZShwZGV2LT5kZXYub2Zfbm9kZSk7Cj4gIAlkbWFfYXN5bmNfZGV2aWNlX3VucmVnaXN0ZXIo
-JmF0ZG1hLT5kbWFfY29tbW9uKTsKPiAgCj4gIAlkbWFfcG9vbF9kZXN0cm95KGF0ZG1hLT5tZW1z
-ZXRfcG9vbCk7Cg==
+T24gMjctMTEtMTgsIDE3OjA2LCBSaWNoYXJkIEdlbm91ZCB3cm90ZToKPiBvZl9kbWFfY29udHJv
+bGxlcl9mcmVlKCkgd2FzIG5vdCBjYWxsZWQgb24gbW9kdWxlIG9ubG9hZGluZy4KPiBUaGlzIGxl
+YWQgdG8gYSBzb2Z0IGxvY2t1cDoKPiB3YXRjaGRvZzogQlVHOiBzb2Z0IGxvY2t1cCAtIENQVSMw
+IHN0dWNrIGZvciAyM3MhCj4gTW9kdWxlcyBsaW5rZWQgaW46IGF0X2hkbWFjIFtsYXN0IHVubG9h
+ZGVkOiBhdF9oZG1hY10KPiB3aGVuIG9mX2RtYV9yZXF1ZXN0X3NsYXZlX2NoYW5uZWwoKSB0cmll
+ZCB0byBjYWxsIG9mZG1hLT5vZl9kbWFfeGxhdGUoKS4KCkFwcGxpZWQsIHRoYW5rcwo=
