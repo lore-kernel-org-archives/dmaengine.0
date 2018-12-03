@@ -1,15 +1,42 @@
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
-Subject: [v11,4/7] arm: dts: ls1021a: add qdma device tree nodes
-From: Shawn Guo <shawnguo@kernel.org>
-Message-Id: <20181206010237.GP3987@dragon>
-Date: Thu, 6 Dec 2018 09:02:38 +0800
-To: Peng Ma <peng.ma@nxp.com>
-Cc: vkoul@kernel.org, robh+dt@kernel.org, mark.rutland@arm.com, leoyang.li@nxp.com, dan.j.williams@intel.com, zw@zh-kernel.org, dmaengine@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org, linuxppc-dev@lists.ozlabs.org, Wen He <wen.he_1@nxp.com>
+Subject: [V2] mm: Replace all open encodings for NUMA_NO_NODE
+From: Doug Ledford <dledford@redhat.com>
+Message-Id: <e295bca26fce6408c7265292e81107b04a1a144d.camel@redhat.com>
+Date: Mon, 03 Dec 2018 13:59:08 -0500
+To: Anshuman Khandual <anshuman.khandual@arm.com>, linux-mm@kvack.org, linux-kernel@vger.kernel.org
+Cc: ocfs2-devel@oss.oracle.com, linux-fbdev@vger.kernel.org, dri-devel@lists.freedesktop.org, netdev@vger.kernel.org, intel-wired-lan@lists.osuosl.org, linux-media@vger.kernel.org, iommu@lists.linux-foundation.org, linux-rdma@vger.kernel.org, dmaengine@vger.kernel.org, linux-block@vger.kernel.org, sparclinux@vger.kernel.org, linuxppc-dev@lists.ozlabs.org, linux-ia64@vger.kernel.org, linux-alpha@vger.kernel.org, akpm@linux-foundation.org, jiangqi903@gmail.com, hverkuil@xs4all.nl, vkoul@kernel.org
 List-ID: <dmaengine.vger.kernel.org>
 
-T24gVHVlLCBPY3QgMzAsIDIwMTggYXQgMTA6MzY6MDFBTSArMDgwMCwgUGVuZyBNYSB3cm90ZToK
-PiBhZGQgdGhlIHFETUEgZGV2aWNlIHRyZWUgbm9kZXMgZm9yIExTMTAyMUEgZGV2aWNlcy4KPiAK
-PiBTaWduZWQtb2ZmLWJ5OiBXZW4gSGUgPHdlbi5oZV8xQG54cC5jb20+Cj4gU2lnbmVkLW9mZi1i
-eTogUGVuZyBNYSA8cGVuZy5tYUBueHAuY29tPgoKQXBwbGllZCwgdGhhbmtzLgo=
+T24gTW9uLCAyMDE4LTExLTI2IGF0IDE3OjU2ICswNTMwLCBBbnNodW1hbiBLaGFuZHVhbCB3cm90
+ZToKPiBBdCBwcmVzZW50IHRoZXJlIGFyZSBtdWx0aXBsZSBwbGFjZXMgd2hlcmUgaW52YWxpZCBu
+b2RlIG51bWJlciBpcyBlbmNvZGVkCj4gYXMgLTEuIEV2ZW4gdGhvdWdoIGltcGxpY2l0bHkgdW5k
+ZXJzdG9vZCBpdCBpcyBhbHdheXMgYmV0dGVyIHRvIGhhdmUgbWFjcm9zCj4gaW4gdGhlcmUuIFJl
+cGxhY2UgdGhlc2Ugb3BlbiBlbmNvZGluZ3MgZm9yIGFuIGludmFsaWQgbm9kZSBudW1iZXIgd2l0
+aCB0aGUKPiBnbG9iYWwgbWFjcm8gTlVNQV9OT19OT0RFLiBUaGlzIGhlbHBzIHJlbW92ZSBOVU1B
+IHJlbGF0ZWQgYXNzdW1wdGlvbnMgbGlrZQo+ICdpbnZhbGlkIG5vZGUnIGZyb20gdmFyaW91cyBw
+bGFjZXMgcmVkaXJlY3RpbmcgdGhlbSB0byBhIGNvbW1vbiBkZWZpbml0aW9uLgo+IAo+IFNpZ25l
+ZC1vZmYtYnk6IEFuc2h1bWFuIEtoYW5kdWFsIDxhbnNodW1hbi5raGFuZHVhbEBhcm0uY29tPgo+
+IC0tLQo+IENoYW5nZXMgaW4gVjI6Cj4gCj4gLSBBZGRlZCBpbmNsdXNpb24gb2YgJ251bWEuaCcg
+aGVhZGVyIGF0IHZhcmlvdXMgcGxhY2VzIHBlciBBbmRyZXcKPiAtIFVwZGF0ZWQgJ2Rldl90b19u
+b2RlJyB0byB1c2UgTlVNQV9OT19OT0RFIGluc3RlYWQgcGVyIFZpbm9kCj4gCj4gQ2hhbmdlcyBp
+biBWMTogKGh0dHBzOi8vbGttbC5vcmcvbGttbC8yMDE4LzExLzIzLzQ4NSkKPiAKPiAtIERyb3Bw
+ZWQgT0NGUzIgY2hhbmdlcyBwZXIgSm9zZXBoCj4gLSBEcm9wcGVkIG1lZGlhL3ZpZGVvIGRyaXZl
+cnMgY2hhbmdlcyBwZXIgSGFucwo+IAo+IFJGQyAtIGh0dHBzOi8vcGF0Y2h3b3JrLmtlcm5lbC5v
+cmcvcGF0Y2gvMTA2NzgwMzUvCj4gCj4gQnVpbGQgdGVzdGVkIHRoaXMgd2l0aCBtdWx0aXBsZSBj
+cm9zcyBjb21waWxlciBvcHRpb25zIGxpa2UgYWxwaGEsIHNwYXJjLAo+IGFybTY0LCB4ODYsIHBv
+d2VycGMsIHBvd2VycGM2NGxlIGV0YyB3aXRoIHRoZWlyIGRlZmF1bHQgY29uZmlnIHdoaWNoIG1p
+Z2h0Cj4gbm90IGhhdmUgY29tcGlsZWQgdGVzdGVkIGFsbCBkcml2ZXIgcmVsYXRlZCBjaGFuZ2Vz
+LiBJIHdpbGwgYXBwcmVjaWF0ZQo+IGZvbGtzIGdpdmluZyB0aGlzIGEgdGVzdCBpbiB0aGVpciBy
+ZXNwZWN0aXZlIGJ1aWxkIGVudmlyb25tZW50Lgo+IAo+IEFsbCB0aGVzZSBwbGFjZXMgZm9yIHJl
+cGxhY2VtZW50IHdlcmUgZm91bmQgYnkgcnVubmluZyB0aGUgZm9sbG93aW5nIGdyZXAKPiBwYXR0
+ZXJucyBvbiB0aGUgZW50aXJlIGtlcm5lbCBjb2RlLiBQbGVhc2UgbGV0IG1lIGtub3cgaWYgdGhp
+cyBtaWdodCBoYXZlCj4gbWlzc2VkIHNvbWUgaW5zdGFuY2VzLiBUaGlzIG1pZ2h0IGFsc28gaGF2
+ZSByZXBsYWNlZCBzb21lIGZhbHNlIHBvc2l0aXZlcy4KPiBJIHdpbGwgYXBwcmVjaWF0ZSBzdWdn
+ZXN0aW9ucywgaW5wdXRzIGFuZCByZXZpZXcuCj4gCj4gMS4gZ2l0IGdyZXAgIm5pZCA9PSAtMSIK
+PiAyLiBnaXQgZ3JlcCAibm9kZSA9PSAtMSIKPiAzLiBnaXQgZ3JlcCAibmlkID0gLTEiCj4gNC4g
+Z2l0IGdyZXAgIm5vZGUgPSAtMSIKPiAKPiAgZHJpdmVycy9pbmZpbmliYW5kL2h3L2hmaTEvYWZm
+aW5pdHkuYyAgICAgICAgIHwgIDMgKystCj4gIGRyaXZlcnMvaW5maW5pYmFuZC9ody9oZmkxL2lu
+aXQuYyAgICAgICAgICAgICB8ICAzICsrLQoKRm9yIHRoZSBkcml2ZXJzL2luZmluaWJhbmQgY2hh
+bmdlcywKCkFja2VkLWJ5OiBEb3VnIExlZGZvcmQgPGRsZWRmb3JkQHJlZGhhdC5jb20+Cg==
