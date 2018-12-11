@@ -1,44 +1,26 @@
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
-Subject: [2/2] dmaengine: qcom_hidma: assign channel cookie correctly
-From: Yang Shunyong <shunyong.yang@hxt-semitech.com>
-Message-Id: <79da1c31d3e14e6e91cf6a7cc0fea31a@HXTBJIDCEMVIW01.hxtcorp.net>
-Date: Fri, 14 Dec 2018 01:03:09 +0000
-To: Sinan Kaya <okaya@kernel.org>
-Cc: "andy.gross@linaro.org" <andy.gross@linaro.org>, "david.brown@linaro.org" <david.brown@linaro.org>, "vkoul@kernel.org" <vkoul@kernel.org>, "dan.j.williams@intel.com" <dan.j.williams@intel.com>, "dmaengine@vger.kernel.org" <dmaengine@vger.kernel.org>, "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>, "Zheng, Joey" <yu.zheng@hxt-semitech.com>
+Subject: [6/6] dmaengine: sh: rcar-dmac: Use device_iommu_mapped()
+From: Joerg Roedel <joro@8bytes.org>
+Message-Id: <20181211134343.10664-7-joro@8bytes.org>
+Date: Tue, 11 Dec 2018 14:43:43 +0100
+To: iommu@lists.linux-foundation.org
+Cc: Russell Currey <ruscur@russell.cc>, Sam Bobroff <sbobroff@linux.ibm.com>, oohall@gmail.com, Benjamin Herrenschmidt <benh@kernel.crashing.org>, Paul Mackerras <paulus@samba.org>, Michael Ellerman <mpe@ellerman.id.au>, Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>, Hanjun Guo <hanjun.guo@linaro.org>, Sudeep Holla <sudeep.holla@arm.com>, Dan Williams <dan.j.williams@intel.com>, Vinod Koul <vkoul@kernel.org>, Joerg Roedel <joro@8bytes.org>, jroedel@suse.de, Mathias Nyman <mathias.nyman@intel.com>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, linux-kernel@vger.kernel.org, linux-acpi@vger.kernel.org, dmaengine@vger.kernel.org, linux-usb@vger.kernel.org
 List-ID: <dmaengine.vger.kernel.org>
 
-SGksIFNpbmFuCgpPbiAyMDE4LzEyLzkgNDoyOCwgU2luYW4gS2F5YSB3cm90ZToKPiBPbiAxMi82
-LzIwMTggMTE6MjkgUE0sIFNodW55b25nIFlhbmcgd3JvdGU6Cj4+IFdoZW4gZG1hX2Nvb2tpZV9j
-b21wbGV0ZSgpIGlzIGNhbGxlZCBpbiBoaWRtYV9wcm9jZXNzX2NvbXBsZXRlZCgpLAo+PiBkbWFf
-Y29va2llX3N0YXR1cygpIHdpbGwgcmV0dXJuIERNQV9DT01QTEVURSBpbiBoaWRtYV90eF9zdGF0
-dXMoKS4gVGhlbiwKPj4gaGlkbWFfdHhuX2lzX3N1Y2Nlc3MoKSB3aWxsIGJlIGNhbGxlZCB0byB1
-c2UgY2hhbm5lbCBjb29raWUKPj4gbWNoYW4tPmxhc3Rfc3VjY2VzcyB0byBkbyBhZGRpdGlvbmFs
-IERNQSBzdGF0dXMgY2hlY2suIEN1cnJlbnQgY29kZQo+PiBhc3NpZ25zIG1jaGFuLT5sYXN0X3N1
-Y2Nlc3MgYWZ0ZXIgZG1hX2Nvb2tpZV9jb21wbGV0ZSgpLiBUaGlzIGNhdXNlcwo+PiBhIHJhY2Ug
-Y29uZGl0aW9uIG9mIGRtYV9jb29raWVfc3RhdHVzKCkgcmV0dXJucyBETUFfQ09NUExFVEUgYmVm
-b3JlCj4+IG1jaGFuLT5sYXN0X3N1Y2Nlc3MgaXMgYXNzaWduZWQgY29ycmVjdGx5LiBUaGUgcmFj
-ZSB3aWxsIGNhdXNlCj4+IGhpZG1hX3R4X3N0YXR1cygpIHJldHVybiBETUFfRVJST1IgYnV0IHRo
-ZSB0cmFuc2FjdGlvbiBpcyBhY3R1YWxseSBhCj4+IHN1Y2Nlc3MuIE1vcmVvdmVyLCBpbiBhc3lu
-Y190eCBjYXNlLCBpdCB3aWxsIGNhdXNlIGEgdGltZW91dCBwYW5pYwo+PiBpbiBhc3luY190eF9x
-dWllc2NlKCkuCj4+Cj4+ICAgS2VybmVsIHBhbmljIC0gbm90IHN5bmNpbmc6IGFzeW5jX3R4X3F1
-aWVzY2U6IERNQSBlcnJvciB3YWl0aW5nIGZvcgo+PiAgIHRyYW5zYWN0aW9uCj4+ICAgLi4uCj4+
-ICAgQ2FsbCB0cmFjZToKPj4gICBbPGZmZmYwMDAwMDgwODk5OTQ+XSBkdW1wX2JhY2t0cmFjZSsw
-eDAvMHgxZjQKPj4gICBbPGZmZmYwMDAwMDgwODliYWM+XSBzaG93X3N0YWNrKzB4MjQvMHgyYwo+
-PiAgIFs8ZmZmZjAwMDAwODkxZTE5OD5dIGR1bXBfc3RhY2srMHg4NC8weGE4Cj4+ICAgWzxmZmZm
-MDAwMDA4MGRhNTQ0Pl0gcGFuaWMrMHgxMmMvMHgyOWMKPj4gICBbPGZmZmYwMDAwMDQ1ZDAzMzQ+
-XSBhc3luY190eF9xdWllc2NlKzB4YTQvMHhjOCBbYXN5bmNfdHhdCj4+ICAgWzxmZmZmMDAwMDA0
-NWQwM2M4Pl0gYXN5bmNfdHJpZ2dlcl9jYWxsYmFjaysweDcwLzB4MWMwIFthc3luY190eF0KPj4g
-ICBbPGZmZmYwMDAwMDQ4YjdkNzQ+XSByYWlkX3J1bl9vcHMrMHg4NmMvMHgxNTQwIFtyYWlkNDU2
-XQo+PiAgIFs8ZmZmZjAwMDAwNDhiZDA4ND5dIGhhbmRsZV9zdHJpcGUrMHg1ZTgvMHgxYzdjIFty
-YWlkNDU2XQo+PiAgIFs8ZmZmZjAwMDAwNDhiZTllYz5dIGhhbmRsZV9hY3RpdmVfc3RyaXBlcy5p
-c3JhLjQ1KzB4MmQ0LzB4NTUwIFtyYWlkNDU2XQo+PiAgIFs8ZmZmZjAwMDAwNDhiZWZmND5dIHJh
-aWQ1ZCsweDM4Yy8weDVkMCBbcmFpZDQ1Nl0KPj4gICBbPGZmZmYwMDAwMDg3MzY1Mzg+XSBtZF90
-aHJlYWQrMHgxMDgvMHgxNjgKPj4gICBbPGZmZmYwMDAwMDgwZmIxY2M+XSBrdGhyZWFkKzB4MTBj
-LzB4MTM4Cj4+ICAgWzxmZmZmMDAwMDA4MDg0ZDM0Pl0gcmV0X2Zyb21fZm9yaysweDEwLzB4MTgK
-Pj4KPj4gQ2M6IEpvZXkgWmhlbmc8eXUuemhlbmdAaHh0LXNlbWl0ZWNoLmNvbT4KPj4gU2lnbmVk
-LW9mZi1ieTogU2h1bnlvbmcgWWFuZzxzaHVueW9uZy55YW5nQGh4dC1zZW1pdGVjaC5jb20+Cj4g
-Cj4gCj4gQWNrZWQtYnk6IFNpbmFuIEtheWEgPG9rYXlhQGtlcm5lbC5vcmc+Cj4gCj4gdG8gYm90
-aCBwYXRjaGVzIDEvMiBhbmQgMi8yLgo+IAo+IApUaGFua3MgZm9yIHRoZSBBQ0tzLgoKU2h1bnlv
-bmcuCg==
+RnJvbTogSm9lcmcgUm9lZGVsIDxqcm9lZGVsQHN1c2UuZGU+CgpVc2UgVXNlIGRldmljZV9pb21t
+dV9tYXBwZWQoKSB0byBjaGVjayBpZiB0aGUgZGV2aWNlIGlzCmFscmVhZHkgbWFwcGVkIGJ5IGFu
+IElPTU1VLgoKQWNrZWQtYnk6IFJvYmluIE11cnBoeSA8cm9iaW4ubXVycGh5QGFybS5jb20+ClNp
+Z25lZC1vZmYtYnk6IEpvZXJnIFJvZWRlbCA8anJvZWRlbEBzdXNlLmRlPgotLS0KIGRyaXZlcnMv
+ZG1hL3NoL3JjYXItZG1hYy5jIHwgMiArLQogMSBmaWxlIGNoYW5nZWQsIDEgaW5zZXJ0aW9uKCsp
+LCAxIGRlbGV0aW9uKC0pCgpkaWZmIC0tZ2l0IGEvZHJpdmVycy9kbWEvc2gvcmNhci1kbWFjLmMg
+Yi9kcml2ZXJzL2RtYS9zaC9yY2FyLWRtYWMuYwppbmRleCA3NGZhMmIxYTZhODYuLjJiNGYyNTY5
+ODE2OSAxMDA2NDQKLS0tIGEvZHJpdmVycy9kbWEvc2gvcmNhci1kbWFjLmMKKysrIGIvZHJpdmVy
+cy9kbWEvc2gvcmNhci1kbWFjLmMKQEAgLTE4MDksNyArMTgwOSw3IEBAIHN0YXRpYyBpbnQgcmNh
+cl9kbWFjX3Byb2JlKHN0cnVjdCBwbGF0Zm9ybV9kZXZpY2UgKnBkZXYpCiAJICogbGV2ZWwgd2Ug
+Y2FuJ3QgZGlzYWJsZSBpdCBzZWxlY3RpdmVseSwgc28gaWdub3JlIGNoYW5uZWwgMCBmb3Igbm93
+IGlmCiAJICogdGhlIGRldmljZSBpcyBwYXJ0IG9mIGFuIElPTU1VIGdyb3VwLgogCSAqLwotCWlm
+IChwZGV2LT5kZXYuaW9tbXVfZ3JvdXApIHsKKwlpZiAoZGV2aWNlX2lvbW11X21hcHBlZCgmcGRl
+di0+ZGV2KSkgewogCQlkbWFjLT5uX2NoYW5uZWxzLS07CiAJCWNoYW5uZWxzX29mZnNldCA9IDE7
+CiAJfQo=
