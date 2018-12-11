@@ -2,37 +2,16 @@ Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
 Subject: [1/6] driver core: Introduce device_iommu_mapped() function
-From: Sergei Shtylyov <sergei.shtylyov@cogentembedded.com>
-Message-Id: <b1344a34-cd5f-f080-fddf-c1548f85af6a@cogentembedded.com>
-Date: Tue, 11 Dec 2018 17:59:33 +0300
-To: Joerg Roedel <joro@8bytes.org>, iommu@lists.linux-foundation.org
-Cc: Russell Currey <ruscur@russell.cc>, Sam Bobroff <sbobroff@linux.ibm.com>, oohall@gmail.com, Benjamin Herrenschmidt <benh@kernel.crashing.org>, Paul Mackerras <paulus@samba.org>, Michael Ellerman <mpe@ellerman.id.au>, Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>, Hanjun Guo <hanjun.guo@linaro.org>, Sudeep Holla <sudeep.holla@arm.com>, Dan Williams <dan.j.williams@intel.com>, Vinod Koul <vkoul@kernel.org>, jroedel@suse.de, Mathias Nyman <mathias.nyman@intel.com>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, linux-kernel@vger.kernel.org, linux-acpi@vger.kernel.org, dmaengine@vger.kernel.org, linux-usb@vger.kernel.org
+From: Joerg Roedel <joro@8bytes.org>
+Message-Id: <20181211151806.GQ16835@8bytes.org>
+Date: Tue, 11 Dec 2018 16:18:06 +0100
+To: Sergei Shtylyov <sergei.shtylyov@cogentembedded.com>
+Cc: iommu@lists.linux-foundation.org, Russell Currey <ruscur@russell.cc>, Sam Bobroff <sbobroff@linux.ibm.com>, oohall@gmail.com, Benjamin Herrenschmidt <benh@kernel.crashing.org>, Paul Mackerras <paulus@samba.org>, Michael Ellerman <mpe@ellerman.id.au>, Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>, Hanjun Guo <hanjun.guo@linaro.org>, Sudeep Holla <sudeep.holla@arm.com>, Dan Williams <dan.j.williams@intel.com>, Vinod Koul <vkoul@kernel.org>, jroedel@suse.de, Mathias Nyman <mathias.nyman@intel.com>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, linux-kernel@vger.kernel.org, linux-acpi@vger.kernel.org, dmaengine@vger.kernel.org, linux-usb@vger.kernel.org
 List-ID: <dmaengine.vger.kernel.org>
 
-SGVsbG8hCgpPbiAxMi8xMS8yMDE4IDA0OjQzIFBNLCBKb2VyZyBSb2VkZWwgd3JvdGU6Cgo+IEZy
-b206IEpvZXJnIFJvZWRlbCA8anJvZWRlbEBzdXNlLmRlPgo+IAo+IFNvbWUgcGxhY2VzIGluIHRo
-ZSBrZXJuZWwgY2hlY2sgdGhlIGlvbW11X2dyb3VwIHBvaW50ZXIgaW4KPiAnc3RydWN0IGRldmlj
-ZScgaW4gb3JkZXIgdG8gZmluZCBvdCB3aGV0aGVyIGEgZGV2aWNlIGlzCj4gbWFwcGVkIGJ5IGFu
-IElPTU1VLgo+IAo+IFRoaXMgaXMgbm90IGdvb2Qgd2F5IHRvIG1ha2UgdGhpcyBjaGVjaywgYXMg
-dGhlIHBvaW50ZXIgd2lsbAo+IGJlIG1vdmVkIHRvICdzdHJ1Y3QgZGV2X2lvbW11X2RhdGEnLiBU
-aGlzIHdheSB0byBtYWtlIHRoZQo+IGNoZWNrIGlzIGFsc28gbm90IHZlcnkgcmVhZGFibGUuCj4g
-Cj4gSW50cm9kdWNlIGFuIGV4cGxpY2l0IGZ1bmN0aW9uIHRvIHBlcmZvcm0gdGhpcyBjaGVjay4K
-PiAKPiBDYzogR3JlZyBLcm9haC1IYXJ0bWFuIDxncmVna2hAbGludXhmb3VuZGF0aW9uLm9yZz4K
-PiBBY2tlZC1ieTogR3JlZyBLcm9haC1IYXJ0bWFuIDxncmVna2hAbGludXhmb3VuZGF0aW9uLm9y
-Zz4KPiBBY2tlZC1ieTogUm9iaW4gTXVycGh5IDxyb2Jpbi5tdXJwaHlAYXJtLmNvbT4KPiBTaWdu
-ZWQtb2ZmLWJ5OiBKb2VyZyBSb2VkZWwgPGpyb2VkZWxAc3VzZS5kZT4KPiAtLS0KPiAgaW5jbHVk
-ZS9saW51eC9kZXZpY2UuaCB8IDEwICsrKysrKysrKysKPiAgMSBmaWxlIGNoYW5nZWQsIDEwIGlu
-c2VydGlvbnMoKykKPiAKPiBkaWZmIC0tZ2l0IGEvaW5jbHVkZS9saW51eC9kZXZpY2UuaCBiL2lu
-Y2x1ZGUvbGludXgvZGV2aWNlLmgKPiBpbmRleCAxYjI1YzdhNDNmNGMuLjZjYjQ2NDBiNjE2MCAx
-MDA2NDQKPiAtLS0gYS9pbmNsdWRlL2xpbnV4L2RldmljZS5oCj4gKysrIGIvaW5jbHVkZS9saW51
-eC9kZXZpY2UuaAo+IEBAIC0xMDU4LDYgKzEwNTgsMTYgQEAgc3RhdGljIGlubGluZSBzdHJ1Y3Qg
-ZGV2aWNlICprb2JqX3RvX2RldihzdHJ1Y3Qga29iamVjdCAqa29iaikKPiAgCXJldHVybiBjb250
-YWluZXJfb2Yoa29iaiwgc3RydWN0IGRldmljZSwga29iaik7Cj4gIH0KPiAgCj4gKy8qKgo+ICsg
-KiBkZXZpY2VfaW9tbXVfbWFwcGVkIC0gUmV0dXJucyB0cnVlIHdoZW4gdGhlIGRldmljZSBETUEg
-aXMgdHJhbnNsYXRlZAo+ICsgKgkJCSBieSBhbiBJT01NVQo+ICsgKiBAZGV2OiBEZXZpY2UgdG8g
-cGVyZm9ybSB0aGUgY2hlY2sgb24KPiArICovCj4gK3N0YXRpYyBpbmxpbmUgYm9vbCBkZXZpY2Vf
-aW9tbXVfbWFwcGVkKHN0cnVjdCBkZXZpY2UgKmRldikKPiArewo+ICsJcmV0dXJuIChkZXYtPmlv
-bW11X2dyb3VwICE9IE5VTEwpOwoKICAgWW91IGtub3cgdGhhdCBwYXJlbnMgYXJlIHVubmVjZXNz
-YXJ5IGhlcmUsIHJpZ2h0PyA6LSkKCj4gK30KPiArCj4gIC8qIEdldCB0aGUgd2FrZXVwIHJvdXRp
-bmVzLCB3aGljaCBkZXBlbmQgb24gc3RydWN0IGRldmljZSAqLwo+ICAjaW5jbHVkZSA8bGludXgv
-cG1fd2FrZXVwLmg+Cj4gIAoKTUJSLCBTZXJnZWkK
+T24gVHVlLCBEZWMgMTEsIDIwMTggYXQgMDU6NTk6MzNQTSArMDMwMCwgU2VyZ2VpIFNodHlseW92
+IHdyb3RlOgo+ID4gK3N0YXRpYyBpbmxpbmUgYm9vbCBkZXZpY2VfaW9tbXVfbWFwcGVkKHN0cnVj
+dCBkZXZpY2UgKmRldikKPiA+ICt7Cj4gPiArCXJldHVybiAoZGV2LT5pb21tdV9ncm91cCAhPSBO
+VUxMKTsKPiAKPiAgICBZb3Uga25vdyB0aGF0IHBhcmVucyBhcmUgdW5uZWNlc3NhcnkgaGVyZSwg
+cmlnaHQ/IDotKQoKWWVzLCBJIGtub3csIGJ1dCBpdCBmZWVscyBpbmNvbXBsZXRlIHRvIG1lIHdp
+dGhvdXQgdGhlbSA6LSkKCglKb2VyZwo=
