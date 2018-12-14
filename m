@@ -2,26 +2,17 @@ Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
 Subject: dmaengine: rcar-dmac: Document R8A774C0 bindings
-From: Fabrizio Castro <fabrizio.castro@bp.renesas.com>
-Message-Id: <1544732263-5859-1-git-send-email-fabrizio.castro@bp.renesas.com>
-Date: Thu, 13 Dec 2018 20:17:43 +0000
-To: Vinod Koul <vkoul@kernel.org>, Rob Herring <robh+dt@kernel.org>, Mark Rutland <mark.rutland@arm.com>
-Cc: Fabrizio Castro <fabrizio.castro@bp.renesas.com>, dmaengine@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, Simon Horman <horms@verge.net.au>, Geert Uytterhoeven <geert+renesas@glider.be>, Chris Paterson <Chris.Paterson2@renesas.com>, Biju Das <biju.das@bp.renesas.com>, linux-renesas-soc@vger.kernel.org
+From: Geert Uytterhoeven <geert@linux-m68k.org>
+Message-Id: <CAMuHMdUeZWmtdqRx+BuwXV++1SMqvoB_NJ7L4gBBQ5W+zyHgBA@mail.gmail.com>
+Date: Fri, 14 Dec 2018 11:03:00 +0100
+To: Fabrizio Castro <fabrizio.castro@bp.renesas.com>
+Cc: Vinod <vkoul@kernel.org>, Rob Herring <robh+dt@kernel.org>, Mark Rutland <mark.rutland@arm.com>, dmaengine@vger.kernel.org, "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" <devicetree@vger.kernel.org>, Linux Kernel Mailing List <linux-kernel@vger.kernel.org>, Simon Horman <horms@verge.net.au>, Geert Uytterhoeven <geert+renesas@glider.be>, Chris Paterson <Chris.Paterson2@renesas.com>, Biju Das <biju.das@bp.renesas.com>, Linux-Renesas <linux-renesas-soc@vger.kernel.org>
 List-ID: <dmaengine.vger.kernel.org>
 
-UmVuZXNhcycgUlovRzJFIChSOEE3NzRDMCkgU29DIGhhcyBETUEgY29udHJvbGxlcnMgY29tcGF0
-aWJsZQp3aXRoIHRoaXMgZHJpdmVyLCB0aGVyZWZvcmUgZG9jdW1lbnQgUlovRzJFIHNwZWNpZmlj
-IGJpbmRpbmdzLgoKU2lnbmVkLW9mZi1ieTogRmFicml6aW8gQ2FzdHJvIDxmYWJyaXppby5jYXN0
-cm9AYnAucmVuZXNhcy5jb20+Ci0tLQogRG9jdW1lbnRhdGlvbi9kZXZpY2V0cmVlL2JpbmRpbmdz
-L2RtYS9yZW5lc2FzLHJjYXItZG1hYy50eHQgfCAxICsKIDEgZmlsZSBjaGFuZ2VkLCAxIGluc2Vy
-dGlvbigrKQoKZGlmZiAtLWdpdCBhL0RvY3VtZW50YXRpb24vZGV2aWNldHJlZS9iaW5kaW5ncy9k
-bWEvcmVuZXNhcyxyY2FyLWRtYWMudHh0IGIvRG9jdW1lbnRhdGlvbi9kZXZpY2V0cmVlL2JpbmRp
-bmdzL2RtYS9yZW5lc2FzLHJjYXItZG1hYy50eHQKaW5kZXggY2RmMzJiMi4uNWE1MTJjNSAxMDA2
-NDQKLS0tIGEvRG9jdW1lbnRhdGlvbi9kZXZpY2V0cmVlL2JpbmRpbmdzL2RtYS9yZW5lc2FzLHJj
-YXItZG1hYy50eHQKKysrIGIvRG9jdW1lbnRhdGlvbi9kZXZpY2V0cmVlL2JpbmRpbmdzL2RtYS9y
-ZW5lc2FzLHJjYXItZG1hYy50eHQKQEAgLTIxLDYgKzIxLDcgQEAgUmVxdWlyZWQgUHJvcGVydGll
-czoKIAkJLSAicmVuZXNhcyxkbWFjLXI4YTc3NDUiIChSWi9HMUUpCiAJCS0gInJlbmVzYXMsZG1h
-Yy1yOGE3NzQ3MCIgKFJaL0cxQykKIAkJLSAicmVuZXNhcyxkbWFjLXI4YTc3NGExIiAoUlovRzJN
-KQorCQktICJyZW5lc2FzLGRtYWMtcjhhNzc0YzAiIChSWi9HMkUpCiAJCS0gInJlbmVzYXMsZG1h
-Yy1yOGE3NzkwIiAoUi1DYXIgSDIpCiAJCS0gInJlbmVzYXMsZG1hYy1yOGE3NzkxIiAoUi1DYXIg
-TTItVykKIAkJLSAicmVuZXNhcyxkbWFjLXI4YTc3OTIiIChSLUNhciBWMkgpCg==
+T24gVGh1LCBEZWMgMTMsIDIwMTggYXQgOToxNyBQTSBGYWJyaXppbyBDYXN0cm8KPGZhYnJpemlv
+LmNhc3Ryb0BicC5yZW5lc2FzLmNvbT4gd3JvdGU6Cj4gUmVuZXNhcycgUlovRzJFIChSOEE3NzRD
+MCkgU29DIGhhcyBETUEgY29udHJvbGxlcnMgY29tcGF0aWJsZQo+IHdpdGggdGhpcyBkcml2ZXIs
+IHRoZXJlZm9yZSBkb2N1bWVudCBSWi9HMkUgc3BlY2lmaWMgYmluZGluZ3MuCj4KPiBTaWduZWQt
+b2ZmLWJ5OiBGYWJyaXppbyBDYXN0cm8gPGZhYnJpemlvLmNhc3Ryb0BicC5yZW5lc2FzLmNvbT4K
+ClJldmlld2VkLWJ5OiBHZWVydCBVeXR0ZXJob2V2ZW4gPGdlZXJ0K3JlbmVzYXNAZ2xpZGVyLmJl
+PgoKR3J7b2V0amUsZWV0aW5nfXMsCgogICAgICAgICAgICAgICAgICAgICAgICBHZWVydAo=
