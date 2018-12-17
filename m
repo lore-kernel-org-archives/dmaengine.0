@@ -2,30 +2,13 @@ Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
 Subject: [1/4] dmaengine: amba-pl08x: convert to DEFINE_SHOW_ATTRIBUTE
-From: Yangtao Li <tiny.windzz@gmail.com>
-Message-Id: <20181205161900.16434-1-tiny.windzz@gmail.com>
-Date: Wed,  5 Dec 2018 11:18:57 -0500
-To: vkoul@kernel.org, dan.j.williams@intel.com, sudeep.dutt@intel.com, ashutosh.dixit@intel.com, daniel@zonque.org, haojian.zhuang@gmail.com, robert.jarzmik@free.fr, okaya@kernel.org, andy.gross@linaro.org, david.brown@linaro.org
-Cc: dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org, Yangtao Li <tiny.windzz@gmail.com>
+From: Vinod Koul <vkoul@kernel.org>
+Message-Id: <20181217061959.GG2472@vkoul-mobl>
+Date: Mon, 17 Dec 2018 11:49:59 +0530
+To: Yangtao Li <tiny.windzz@gmail.com>
+Cc: dan.j.williams@intel.com, sudeep.dutt@intel.com, ashutosh.dixit@intel.com, daniel@zonque.org, haojian.zhuang@gmail.com, robert.jarzmik@free.fr, okaya@kernel.org, andy.gross@linaro.org, david.brown@linaro.org, dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org
 List-ID: <dmaengine.vger.kernel.org>
 
-VXNlIERFRklORV9TSE9XX0FUVFJJQlVURSBtYWNybyB0byBzaW1wbGlmeSB0aGUgY29kZS4KClNp
-Z25lZC1vZmYtYnk6IFlhbmd0YW8gTGkgPHRpbnkud2luZHp6QGdtYWlsLmNvbT4KLS0tCiBkcml2
-ZXJzL2RtYS9hbWJhLXBsMDh4LmMgfCAxNCArKy0tLS0tLS0tLS0tLQogMSBmaWxlIGNoYW5nZWQs
-IDIgaW5zZXJ0aW9ucygrKSwgMTIgZGVsZXRpb25zKC0pCgpkaWZmIC0tZ2l0IGEvZHJpdmVycy9k
-bWEvYW1iYS1wbDA4eC5jIGIvZHJpdmVycy9kbWEvYW1iYS1wbDA4eC5jCmluZGV4IDk3NDgzZGYx
-ZjgyZS4uZmM4YzJiYWI1NjNjIDEwMDY0NAotLS0gYS9kcml2ZXJzL2RtYS9hbWJhLXBsMDh4LmMK
-KysrIGIvZHJpdmVycy9kbWEvYW1iYS1wbDA4eC5jCkBAIC0yNTA1LDI0ICsyNTA1LDE0IEBAIHN0
-YXRpYyBpbnQgcGwwOHhfZGVidWdmc19zaG93KHN0cnVjdCBzZXFfZmlsZSAqcywgdm9pZCAqZGF0
-YSkKIAlyZXR1cm4gMDsKIH0KIAotc3RhdGljIGludCBwbDA4eF9kZWJ1Z2ZzX29wZW4oc3RydWN0
-IGlub2RlICppbm9kZSwgc3RydWN0IGZpbGUgKmZpbGUpCi17Ci0JcmV0dXJuIHNpbmdsZV9vcGVu
-KGZpbGUsIHBsMDh4X2RlYnVnZnNfc2hvdywgaW5vZGUtPmlfcHJpdmF0ZSk7Ci19Ci0KLXN0YXRp
-YyBjb25zdCBzdHJ1Y3QgZmlsZV9vcGVyYXRpb25zIHBsMDh4X2RlYnVnZnNfb3BlcmF0aW9ucyA9
-IHsKLQkub3BlbgkJPSBwbDA4eF9kZWJ1Z2ZzX29wZW4sCi0JLnJlYWQJCT0gc2VxX3JlYWQsCi0J
-Lmxsc2VlawkJPSBzZXFfbHNlZWssCi0JLnJlbGVhc2UJPSBzaW5nbGVfcmVsZWFzZSwKLX07CitE
-RUZJTkVfU0hPV19BVFRSSUJVVEUocGwwOHhfZGVidWdmcyk7CiAKIHN0YXRpYyB2b2lkIGluaXRf
-cGwwOHhfZGVidWdmcyhzdHJ1Y3QgcGwwOHhfZHJpdmVyX2RhdGEgKnBsMDh4KQogewogCS8qIEV4
-cG9zZSBhIHNpbXBsZSBkZWJ1Z2ZzIGludGVyZmFjZSB0byB2aWV3IGFsbCBjbG9ja3MgKi8KIAko
-dm9pZCkgZGVidWdmc19jcmVhdGVfZmlsZShkZXZfbmFtZSgmcGwwOHgtPmFkZXYtPmRldiksCiAJ
-CQlTX0lGUkVHIHwgU19JUlVHTywgTlVMTCwgcGwwOHgsCi0JCQkmcGwwOHhfZGVidWdmc19vcGVy
-YXRpb25zKTsKKwkJCSZwbDA4eF9kZWJ1Z2ZzX2ZvcHMpOwogfQogCiAjZWxzZQo=
+T24gMDUtMTItMTgsIDExOjE4LCBZYW5ndGFvIExpIHdyb3RlOgo+IFVzZSBERUZJTkVfU0hPV19B
+VFRSSUJVVEUgbWFjcm8gdG8gc2ltcGxpZnkgdGhlIGNvZGUuCgpBcHBsaWVkIGFsbCA0LCB0aGFu
+a3MK
