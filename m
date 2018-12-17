@@ -1,32 +1,26 @@
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
-Subject: dmaengine: remove DBGFS_FUNC_DECL()
-From: Yangtao Li <tiny.windzz@gmail.com>
-Message-Id: <CAEExFWs6vFswAw6nwF8+0o8WRnin1Rk3bFHiMeJqTP1EsikVTg@mail.gmail.com>
-Date: Thu, 6 Dec 2018 00:21:06 +0800
-To: vkoul@kernel.org
-Cc: dan.j.williams@intel.com, sudeep.dutt@intel.com, ashutosh.dixit@intel.com, daniel@zonque.org, Haojian Zhuang <haojian.zhuang@gmail.com>, robert.jarzmik@free.fr, okaya@kernel.org, Andy Gross <andy.gross@linaro.org>, David Brown <david.brown@linaro.org>, dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org
+Subject: dmaengine: ti: omap-dma: Configure LCH_TYPE for OMAP1
+From: Aaro Koskinen <aaro.koskinen@iki.fi>
+Message-Id: <20181217191657.GB7288@darkstar.musicnaut.iki.fi>
+Date: Mon, 17 Dec 2018 21:16:58 +0200
+To: Russell King - ARM Linux <linux@armlinux.org.uk>, Peter Ujfalusi <peter.ujfalusi@ti.com>
+Cc: vkoul@kernel.org, dan.j.williams@intel.com, dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org, tony@atomide.com, linux-omap@vger.kernel.org
 List-ID: <dmaengine.vger.kernel.org>
 
-T24gV2VkLCBEZWMgNSwgMjAxOCBhdCAxMTo1OSBQTSBWaW5vZCBLb3VsIDx2a291bEBrZXJuZWwu
-b3JnPiB3cm90ZToKPgo+IE9uIDA1LTEyLTE4LCAyMzo0OSwgRnJhbmsgTGVlIHdyb3RlOgo+ID4g
-T24gV2VkLCBEZWMgNSwgMjAxOCBhdCA0OjI3IFBNIFZpbm9kIEtvdWwgPHZrb3VsQGtlcm5lbC5v
-cmc+IHdyb3RlOgo+ID4gPgo+ID4gPiBPbiAzMC0xMS0xOCwgMTA6NDIsIFlhbmd0YW8gTGkgd3Jv
-dGU6Cj4gPiA+ID4gV2UgYWxyZWFkeSBoYXZlIHRoZSBERUZJTkVfU0hPV19BVFRSSUJVVEUsVGhl
-cmUgaXMgbm8gbmVlZCB0byBkZWZpbmUKPiA+ID4gPiBzdWNoIGEgbWFjcm8sc28gcmVtb3ZlIERC
-R0ZTX0ZVTkNfREVDTC5BbHNvIHVzZSBtYWNybyB0byBzaW1wbGlmeSBzb21lCj4gPiA+ID4gY29k
-ZS4KPiA+ID4KPiA+ID4gU3BhY2VzIGFmdGVyIGZ1bGwgc3RvcCBhbmQgY29tbWEgcGxlYXNlCj4g
-PiA+Cj4gPiA+ID4KPiA+ID4gPiBTaWduZWQtb2ZmLWJ5OiBZYW5ndGFvIExpIDx0aW55LndpbmR6
-ekBnbWFpbC5jb20+Cj4gPiA+ID4gLS0tCj4gPiA+ID4gIGRyaXZlcnMvZG1hL2FtYmEtcGwwOHgu
-YyAgICAgfCAxNCArKy0tLS0tLS0tLS0tLQo+ID4gPiA+ICBkcml2ZXJzL2RtYS9taWNfeDEwMF9k
-bWEuYyAgIHwgMjIgKysrLS0tLS0tLS0tLS0tLS0tLS0tLQo+ID4gPiA+ICBkcml2ZXJzL2RtYS9w
-eGFfZG1hLmMgICAgICAgIHwgMjQgKysrKysrKysrKysrLS0tLS0tLS0tLS0tCj4gPiA+ID4gIGRy
-aXZlcnMvZG1hL3Fjb20vaGlkbWFfZGJnLmMgfCAzMyArKysrKystLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0KPiA+ID4KPiA+ID4gRG8geW91IG1pbmQgc3BsaXR0aW5nIGl0IHBlciBmaWxlLgo+
-ID4gSGkgVmlub2Q6Cj4gPgo+ID4gV2h5IG5vdCBhcHBseSBpdCBvbmNlIO+8n1RoZSBjaGFuZ2Ug
-aXMgbm90IHRvbyBiaWcuCj4KPiBJdCBpcyBub3QgYWJvdXQgYmlnIG9yIHNtYWxsLiBBIHBhdGNo
-IHNob3VsZCBkbyBvbmUgdGhpbmcgYW5kIHRvdWNoIGEKPiBzaW5nbGUgbW9kdWxlLgo+Cj4gSXQg
-YWxzbyBoZWxwcyBwZW9wbGUgd2hlbiB0aGV5IGxvb2sgYXQgY2hhbmdlcyBhbmQgYmFja3BvcnRz
-LgpBbHJlYWR5IGRpdmlkZWQgaW50byBzbWFsbCBmaWxlcywgYXMgeW91IG5lZWQuCgpNQlIsCllh
-bmd0YW8KPgo+IC0tCj4gflZpbm9kCg==
+T24gVGh1LCBOb3YgMjIsIDIwMTggYXQgMDM6MTI6MzZQTSArMDAwMCwgUnVzc2VsbCBLaW5nIC0g
+QVJNIExpbnV4IHdyb3RlOgo+IEFsc28gd2UgY2FuJ3QgZGVhbCB3aXRoIHRoZSBvbWFwX3NldF9k
+bWFfZGVzdF9idXJzdF9tb2RlKCkgc2V0dGluZyAtCj4gRE1BZW5naW5lIGFsd2F5cyB1c2VzIGEg
+NjQgYnl0ZSBidXJzdCwgYnV0IHVkYyB3YW50cyBhIHNtYWxsZXIgYnVyc3QKPiBzZXR0aW5nLiAg
+RG9lcyB0aGlzIG1hdHRlcj8KCkxvb2tpbmcgYXQgT01BUDEgZG9jcywgaXQgc2VlbXMgaXQgc3Vw
+cG9ydHMgb25seSAxNiBieXRlcy4gVGhlbiBjaGVja2luZwpETUFlbmdpbmUgY29kZSwgSSBkb24n
+dCB0aGluayB0aGVzZSBDU0RQIGJpdCB2YWx1ZXMgYXJlIG5vdCB2YWxpZApmb3IgT01BUDE6Cgog
+ICAgICAgIENTRFBfU1JDX0JVUlNUXzEgICAgICAgID0gMCA8PCA3LAogICAgICAgIENTRFBfU1JD
+X0JVUlNUXzE2ICAgICAgID0gMSA8PCA3LAogICAgICAgIENTRFBfU1JDX0JVUlNUXzMyICAgICAg
+ID0gMiA8PCA3LAogICAgICAgIENTRFBfU1JDX0JVUlNUXzY0ICAgICAgID0gMyA8PCA3LAoKRnJv
+bSBUSSBTUFJVNjc0IGRvY3VtZW50LCBwYWdlcyA1MC01MToKCgkwCXNpbmdsZSBhY2Nlc3MgKG5v
+IGJ1cnN0KQoJMQlzaW5nbGUgYWNjZXNzIChubyBidXJzdCkKCTIJYnVyc3QgNAoJMwlyZXNlcnZl
+ZCAoZG8gbm90IHVzZSB0aGlzIHNldHRpbmcpCgpTbyBpZiBDU0RQX1NSQ19CVVJTVF82NCAoMykg
+Z2V0cyBwcm9ncmFtbWVkIE9NQVAxLCBJIHdvbmRlciB3aGF0IGlzIHRoZQplbmQgcmVzdWx0LCBu
+byBidXJzdCBvciBidXJzdCA0Li4uCgpBLgo=
