@@ -2,25 +2,15 @@ Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
 Subject: dmaengine: fsl-qdma: add MODULE_LICENSE
-From: Arnd Bergmann <arnd@arndb.de>
-Message-Id: <20181210205520.2956776-1-arnd@arndb.de>
-Date: Mon, 10 Dec 2018 21:55:02 +0100
-To: Vinod Koul <vkoul@kernel.org>
-Cc: Arnd Bergmann <arnd@arndb.de>, Dan Williams <dan.j.williams@intel.com>, Wen He <wen.he_1@nxp.com>, Jiaheng Fan <jiaheng.fan@nxp.com>, Peng Ma <peng.ma@nxp.com>, dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
+From: Vinod Koul <vkoul@kernel.org>
+Message-Id: <20181217061657.GF2472@vkoul-mobl>
+Date: Mon, 17 Dec 2018 11:46:57 +0530
+To: Arnd Bergmann <arnd@arndb.de>
+Cc: Dan Williams <dan.j.williams@intel.com>, Wen He <wen.he_1@nxp.com>, Jiaheng Fan <jiaheng.fan@nxp.com>, Peng Ma <peng.ma@nxp.com>, dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
 List-ID: <dmaengine.vger.kernel.org>
 
-VGhlIG5ld2x5IGFkZGVkIGRyaXZlciBsYWNrcyBhIE1PRFVMRV9MSUNFTlNFIHRhZywgd2hpY2gg
-bm93IHByb2R1Y2VzCmEgd2FybmluZzoKCldBUk5JTkc6IG1vZHBvc3Q6IG1pc3NpbmcgTU9EVUxF
-X0xJQ0VOU0UoKSBpbiBkcml2ZXJzL2RtYS9mc2wtcWRtYS5vCgpBZGQgdGhlIGxpY2Vuc2UgYWNj
-b3JkaW5nIHRvIHRoZSBTUERYIHNwZWNpZmllci4KCkZpeGVzOiA3NTYyOGMxNDliMGQgKCJkbWFl
-bmdpbmU6IGZzbC1xZG1hOiBBZGQgcURNQSBjb250cm9sbGVyIGRyaXZlciBmb3IgTGF5ZXJzY2Fw
-ZSBTb0NzIikKU2lnbmVkLW9mZi1ieTogQXJuZCBCZXJnbWFubiA8YXJuZEBhcm5kYi5kZT4KLS0t
-CiBkcml2ZXJzL2RtYS9mc2wtcWRtYS5jIHwgMSArCiAxIGZpbGUgY2hhbmdlZCwgMSBpbnNlcnRp
-b24oKykKCmRpZmYgLS1naXQgYS9kcml2ZXJzL2RtYS9mc2wtcWRtYS5jIGIvZHJpdmVycy9kbWEv
-ZnNsLXFkbWEuYwppbmRleCBjMThlMzQ5MjA5MGIuLmFhMWQwYWUzZDIwNyAxMDA2NDQKLS0tIGEv
-ZHJpdmVycy9kbWEvZnNsLXFkbWEuYworKysgYi9kcml2ZXJzL2RtYS9mc2wtcWRtYS5jCkBAIC0x
-MjU1LDQgKzEyNTUsNSBAQCBzdGF0aWMgc3RydWN0IHBsYXRmb3JtX2RyaXZlciBmc2xfcWRtYV9k
-cml2ZXIgPSB7CiBtb2R1bGVfcGxhdGZvcm1fZHJpdmVyKGZzbF9xZG1hX2RyaXZlcik7CiAKIE1P
-RFVMRV9BTElBUygicGxhdGZvcm06ZnNsLXFkbWEiKTsKK01PRFVMRV9MSUNFTlNFKCJHUEwgdjIi
-KTsKIE1PRFVMRV9ERVNDUklQVElPTigiTlhQIExheWVyc2NhcGUgcURNQSBlbmdpbmUgZHJpdmVy
-Iik7Cg==
+T24gMTAtMTItMTgsIDIxOjU1LCBBcm5kIEJlcmdtYW5uIHdyb3RlOgo+IFRoZSBuZXdseSBhZGRl
+ZCBkcml2ZXIgbGFja3MgYSBNT0RVTEVfTElDRU5TRSB0YWcsIHdoaWNoIG5vdyBwcm9kdWNlcwo+
+IGEgd2FybmluZzoKPiAKPiBXQVJOSU5HOiBtb2Rwb3N0OiBtaXNzaW5nIE1PRFVMRV9MSUNFTlNF
+KCkgaW4gZHJpdmVycy9kbWEvZnNsLXFkbWEubwo+IAo+IEFkZCB0aGUgbGljZW5zZSBhY2NvcmRp
+bmcgdG8gdGhlIFNQRFggc3BlY2lmaWVyLgoKQXBwbGllZCwgdGhhbmtzCg==
