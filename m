@@ -2,27 +2,16 @@ Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
 Subject: [RFC,03/10] dt-bindings: dmaengine: Add Allwinner suniv F1C100s DMA
-From: Mesih Kilinc <mesihkilinc@gmail.com>
-Message-Id: <7322bdfcd38cdcd8ccec56fea25492e4945d498f.1543782328.git.mesihkilinc@gmail.com>
-Date: Mon,  3 Dec 2018 00:23:10 +0300
-To: dmaengine@vger.kernel.org, devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, alsa-devel@alsa-project.org, linux-sunxi@googlegroups.com
-Cc: Mesih Kilinc <mesihkilinc@gmail.com>, Vinod Koul <vkoul@kernel.org>, Rob Herring <robh+dt@kernel.org>, Mark Rutland <mark.rutland@arm.com>, Maxime Ripard <maxime.ripard@bootlin.com>, Chen-Yu Tsai <wens@csie.org>, Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>
+From: Rob Herring <robh@kernel.org>
+Message-Id: <20181219140322.GA6620@bogus>
+Date: Wed, 19 Dec 2018 08:03:22 -0600
+To: Mesih Kilinc <mesihkilinc@gmail.com>
+Cc: dmaengine@vger.kernel.org, devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, alsa-devel@alsa-project.org, linux-sunxi@googlegroups.com, Vinod Koul <vkoul@kernel.org>, Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>
 List-ID: <dmaengine.vger.kernel.org>
 
-QWRkIGNvbXBhdGlibGUgc3RyaW5nIGZvciBBbGx3aW5uZXIgc3VuaXYgRjFDMTAwcyBETUEuCgpT
-aWduZWQtb2ZmLWJ5OiBNZXNpaCBLaWxpbmMgPG1lc2loa2lsaW5jQGdtYWlsLmNvbT4KLS0tCiBE
-b2N1bWVudGF0aW9uL2RldmljZXRyZWUvYmluZGluZ3MvZG1hL3N1bjRpLWRtYS50eHQgfCA0ICsr
-Ky0KIDEgZmlsZSBjaGFuZ2VkLCAzIGluc2VydGlvbnMoKyksIDEgZGVsZXRpb24oLSkKCmRpZmYg
-LS1naXQgYS9Eb2N1bWVudGF0aW9uL2RldmljZXRyZWUvYmluZGluZ3MvZG1hL3N1bjRpLWRtYS50
-eHQgYi9Eb2N1bWVudGF0aW9uL2RldmljZXRyZWUvYmluZGluZ3MvZG1hL3N1bjRpLWRtYS50eHQK
-aW5kZXggOGFkNTU2YS4uY2VlYjQxZSAxMDA2NDQKLS0tIGEvRG9jdW1lbnRhdGlvbi9kZXZpY2V0
-cmVlL2JpbmRpbmdzL2RtYS9zdW40aS1kbWEudHh0CisrKyBiL0RvY3VtZW50YXRpb24vZGV2aWNl
-dHJlZS9iaW5kaW5ncy9kbWEvc3VuNGktZG1hLnR4dApAQCAtNCw3ICs0LDkgQEAgVGhpcyBkcml2
-ZXIgZm9sbG93cyB0aGUgZ2VuZXJpYyBETUEgYmluZGluZ3MgZGVmaW5lZCBpbiBkbWEudHh0Lgog
-CiBSZXF1aXJlZCBwcm9wZXJ0aWVzOgogCi0tIGNvbXBhdGlibGU6CU11c3QgYmUgImFsbHdpbm5l
-cixzdW40aS1hMTAtZG1hIgorLSBjb21wYXRpYmxlOglTaG91bGQgYmUgb25lIG9mIHRoZSBmb2xs
-b3dpbmc6CisJCSJhbGx3aW5uZXIsc3VuNGktYTEwLWRtYSIKKwkJImFsbHdpbm5lcixzdW5pdi1m
-MWMxMDBzLWRtYSIKIC0gcmVnOgkJU2hvdWxkIGNvbnRhaW4gdGhlIHJlZ2lzdGVycyBiYXNlIGFk
-ZHJlc3MgYW5kIGxlbmd0aAogLSBpbnRlcnJ1cHRzOglTaG91bGQgY29udGFpbiBhIHJlZmVyZW5j
-ZSB0byB0aGUgaW50ZXJydXB0IHVzZWQgYnkgdGhpcyBkZXZpY2UKIC0gY2xvY2tzOglTaG91bGQg
-Y29udGFpbiBhIHJlZmVyZW5jZSB0byB0aGUgcGFyZW50IEFIQiBjbG9jawo=
+T24gTW9uLCAgMyBEZWMgMjAxOCAwMDoyMzoxMCArMDMwMCwgTWVzaWggS2lsaW5jIHdyb3RlOgo+
+IEFkZCBjb21wYXRpYmxlIHN0cmluZyBmb3IgQWxsd2lubmVyIHN1bml2IEYxQzEwMHMgRE1BLgo+
+IAo+IFNpZ25lZC1vZmYtYnk6IE1lc2loIEtpbGluYyA8bWVzaWhraWxpbmNAZ21haWwuY29tPgo+
+IC0tLQo+ICBEb2N1bWVudGF0aW9uL2RldmljZXRyZWUvYmluZGluZ3MvZG1hL3N1bjRpLWRtYS50
+eHQgfCA0ICsrKy0KPiAgMSBmaWxlIGNoYW5nZWQsIDMgaW5zZXJ0aW9ucygrKSwgMSBkZWxldGlv
+bigtKQo+IAoKUmV2aWV3ZWQtYnk6IFJvYiBIZXJyaW5nIDxyb2JoQGtlcm5lbC5vcmc+Cg==
