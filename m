@@ -2,41 +2,17 @@ Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
 Subject: [RFC,07/10] dt-bindigs: sound: Add Allwinner suniv F1C100s Audio Codec
-From: Mesih Kilinc <mesihkilinc@gmail.com>
-Message-Id: <d0ce4b1f2a89a319d6becb5f88d7ca4184aa5595.1543782328.git.mesihkilinc@gmail.com>
-Date: Mon,  3 Dec 2018 00:23:14 +0300
-To: dmaengine@vger.kernel.org, devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, alsa-devel@alsa-project.org, linux-sunxi@googlegroups.com
-Cc: Mesih Kilinc <mesihkilinc@gmail.com>, Vinod Koul <vkoul@kernel.org>, Rob Herring <robh+dt@kernel.org>, Mark Rutland <mark.rutland@arm.com>, Maxime Ripard <maxime.ripard@bootlin.com>, Chen-Yu Tsai <wens@csie.org>, Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>
+From: Rob Herring <robh@kernel.org>
+Message-Id: <20181219140439.GA6820@bogus>
+Date: Wed, 19 Dec 2018 08:04:39 -0600
+To: Mesih Kilinc <mesihkilinc@gmail.com>
+Cc: dmaengine@vger.kernel.org, devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, alsa-devel@alsa-project.org, linux-sunxi@googlegroups.com, Vinod Koul <vkoul@kernel.org>, Mark Rutland <mark.rutland@arm.com>, Maxime Ripard <maxime.ripard@bootlin.com>, Chen-Yu Tsai <wens@csie.org>, Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>
 List-ID: <dmaengine.vger.kernel.org>
 
-QWRkIGNvbXBhdGlibGUgc3RyaW5nIGZvciBBbGx3aW5uZXIgc3VuaXYgRjFDMTAwcyBhdWRpbyBj
-b2RlYy4KClNpZ25lZC1vZmYtYnk6IE1lc2loIEtpbGluYyA8bWVzaWhraWxpbmNAZ21haWwuY29t
-PgotLS0KIERvY3VtZW50YXRpb24vZGV2aWNldHJlZS9iaW5kaW5ncy9zb3VuZC9zdW40aS1jb2Rl
-Yy50eHQgfCA1ICsrKysrCiAxIGZpbGUgY2hhbmdlZCwgNSBpbnNlcnRpb25zKCspCgpkaWZmIC0t
-Z2l0IGEvRG9jdW1lbnRhdGlvbi9kZXZpY2V0cmVlL2JpbmRpbmdzL3NvdW5kL3N1bjRpLWNvZGVj
-LnR4dCBiL0RvY3VtZW50YXRpb24vZGV2aWNldHJlZS9iaW5kaW5ncy9zb3VuZC9zdW40aS1jb2Rl
-Yy50eHQKaW5kZXggNjY1NzliYi4uOTc3OGJjMSAxMDA2NDQKLS0tIGEvRG9jdW1lbnRhdGlvbi9k
-ZXZpY2V0cmVlL2JpbmRpbmdzL3NvdW5kL3N1bjRpLWNvZGVjLnR4dAorKysgYi9Eb2N1bWVudGF0
-aW9uL2RldmljZXRyZWUvYmluZGluZ3Mvc291bmQvc3VuNGktY29kZWMudHh0CkBAIC04LDYgKzgs
-NyBAQCBSZXF1aXJlZCBwcm9wZXJ0aWVzOgogCQktICJhbGx3aW5uZXIsc3VuOGktYTIzLWNvZGVj
-IgogCQktICJhbGx3aW5uZXIsc3VuOGktaDMtY29kZWMiCiAJCS0gImFsbHdpbm5lcixzdW44aS12
-M3MtY29kZWMiCisJCS0gImFsbHdpbm5lcixzdW5pdi1mMWMxMDBzLWNvZGVjIgogLSByZWc6IG11
-c3QgY29udGFpbiB0aGUgcmVnaXN0ZXJzIGxvY2F0aW9uIGFuZCBsZW5ndGgKIC0gaW50ZXJydXB0
-czogbXVzdCBjb250YWluIHRoZSBjb2RlYyBpbnRlcnJ1cHQKIC0gZG1hczogRE1BIGNoYW5uZWxz
-IGZvciB0eCBhbmQgcnggZG1hLiBTZWUgdGhlIERNQSBjbGllbnQgYmluZGluZywKQEAgLTI3LDYg
-KzI4LDcgQEAgUmVxdWlyZWQgcHJvcGVydGllcyBmb3IgdGhlIGZvbGxvd2luZyBjb21wYXRpYmxl
-czoKIAkJLSAiYWxsd2lubmVyLHN1bjhpLWEyMy1jb2RlYyIKIAkJLSAiYWxsd2lubmVyLHN1bjhp
-LWgzLWNvZGVjIgogCQktICJhbGx3aW5uZXIsc3VuOGktdjNzLWNvZGVjIgorCQktICJhbGx3aW5u
-ZXIsc3VuaXYtZjFjMTAwcy1jb2RlYyIKIC0gcmVzZXRzOiBwaGFuZGxlIHRvIHRoZSByZXNldCBj
-b250cm9sIGZvciB0aGlzIGRldmljZQogLSBhbGx3aW5uZXIsYXVkaW8tcm91dGluZzogQSBsaXN0
-IG9mIHRoZSBjb25uZWN0aW9ucyBiZXR3ZWVuIGF1ZGlvIGNvbXBvbmVudHMuCiAJCQkgICBFYWNo
-IGVudHJ5IGlzIGEgcGFpciBvZiBzdHJpbmdzLCB0aGUgZmlyc3QgYmVpbmcgdGhlCkBAIC00MSw2
-ICs0Myw3IEBAIFJlcXVpcmVkIHByb3BlcnRpZXMgZm9yIHRoZSBmb2xsb3dpbmcgY29tcGF0aWJs
-ZXM6CiAJCQkgICAiTUlDMSIKIAkJCSAgICJNSUMyIgkobm90IG9uIHN1bjhpLXYzcykKIAkJCSAg
-ICJNSUMzIgkoc3VuNmktYTMxIG9ubHkpCisJCQkgICAiTUlDIgkoc3VuaXYtZjFjMTAwcyBvbmx5
-KQogCiAJCQkgICBNaWNyb3Bob25lIGJpYXNlcyBmcm9tIHRoZSBTb0M6CiAJCQkgICAiSEJJQVMi
-CkBAIC01MSw2ICs1NCw4IEBAIFJlcXVpcmVkIHByb3BlcnRpZXMgZm9yIHRoZSBmb2xsb3dpbmcg
-Y29tcGF0aWJsZXM6CiAJCQkgICAiSGVhZHNldCBNaWMiCiAJCQkgICAiTGluZSBJbiIKIAkJCSAg
-ICJMaW5lIE91dCIKKwkJCSAgICJSaWdodCBGTSBJbiIJKHN1bml2LWYxYzEwMHMgb25seSkKKwkJ
-CSAgICJMZWZ0IEZNIEluIgkJKHN1bml2LWYxYzEwMHMgb25seSkKIAkJCSAgICJNaWMiCiAJCQkg
-ICAiU3BlYWtlciIKIAo=
+T24gTW9uLCBEZWMgMDMsIDIwMTggYXQgMTI6MjM6MTRBTSArMDMwMCwgTWVzaWggS2lsaW5jIHdy
+b3RlOgo+IEFkZCBjb21wYXRpYmxlIHN0cmluZyBmb3IgQWxsd2lubmVyIHN1bml2IEYxQzEwMHMg
+YXVkaW8gY29kZWMuCgpUeXBvIGluIHRoZSBzdWJqZWN0LiBPdGhlcndpc2UsCgpSZXZpZXdlZC1i
+eTogUm9iIEhlcnJpbmcgPHJvYmhAa2VybmVsLm9yZz4KCj4gCj4gU2lnbmVkLW9mZi1ieTogTWVz
+aWggS2lsaW5jIDxtZXNpaGtpbGluY0BnbWFpbC5jb20+Cj4gLS0tCj4gIERvY3VtZW50YXRpb24v
+ZGV2aWNldHJlZS9iaW5kaW5ncy9zb3VuZC9zdW40aS1jb2RlYy50eHQgfCA1ICsrKysrCj4gIDEg
+ZmlsZSBjaGFuZ2VkLCA1IGluc2VydGlvbnMoKykK
