@@ -1,16 +1,26 @@
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
-Subject: dmaengine: fsl-qdma: add MODULE_LICENSE
-From: Vinod Koul <vkoul@kernel.org>
-Message-Id: <20181217061657.GF2472@vkoul-mobl>
-Date: Mon, 17 Dec 2018 11:46:57 +0530
-To: Arnd Bergmann <arnd@arndb.de>
-Cc: Dan Williams <dan.j.williams@intel.com>, Wen He <wen.he_1@nxp.com>, Jiaheng Fan <jiaheng.fan@nxp.com>, Peng Ma <peng.ma@nxp.com>, dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: dma/mv_xor: Fix a missing check in mv_xor_channel_add
+From: Aditya Pakki <pakki001@umn.edu>
+Message-Id: <20181224174154.19904-1-pakki001@umn.edu>
+Date: Mon, 24 Dec 2018 11:41:54 -0600
+To: pakki001@umn.edu
+Cc: kjlu@umn.edu, Dan Williams <dan.j.williams@intel.com>, Vinod Koul <vkoul@kernel.org>, dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
 List-ID: <dmaengine.vger.kernel.org>
 
-T24gMTAtMTItMTgsIDIxOjU1LCBBcm5kIEJlcmdtYW5uIHdyb3RlOgo+IFRoZSBuZXdseSBhZGRl
-ZCBkcml2ZXIgbGFja3MgYSBNT0RVTEVfTElDRU5TRSB0YWcsIHdoaWNoIG5vdyBwcm9kdWNlcwo+
-IGEgd2FybmluZzoKPiAKPiBXQVJOSU5HOiBtb2Rwb3N0OiBtaXNzaW5nIE1PRFVMRV9MSUNFTlNF
-KCkgaW4gZHJpdmVycy9kbWEvZnNsLXFkbWEubwo+IAo+IEFkZCB0aGUgbGljZW5zZSBhY2NvcmRp
-bmcgdG8gdGhlIFNQRFggc3BlY2lmaWVyLgoKQXBwbGllZCwgdGhhbmtzCg==
+ZG1hX2FzeW5jX2RldmljZV9yZWdpc3RlcigpIG1heSBmYWlsIGFuZCByZXR1cm4gYW4gZXJyb3Iu
+IFRoZSBjYXBhYmlsaXRpZXMKY2hlY2tlZCBpbiBtdl94b3JfY2hhbm5lbF9hZGQoKSBhcmUgbm90
+IGNvbXBsZXRlLiBUaGUgZml4IGhhbmRsZXMgdGhlCmVycm9yIGJ5IGZyZWVpbmcgdGhlIHJlc291
+cmNlcy4KClNpZ25lZC1vZmYtYnk6IEFkaXR5YSBQYWtraSA8cGFra2kwMDFAdW1uLmVkdT4KLS0t
+CiBkcml2ZXJzL2RtYS9tdl94b3IuYyB8IDUgKysrKy0KIDEgZmlsZSBjaGFuZ2VkLCA0IGluc2Vy
+dGlvbnMoKyksIDEgZGVsZXRpb24oLSkKCmRpZmYgLS1naXQgYS9kcml2ZXJzL2RtYS9tdl94b3Iu
+YyBiL2RyaXZlcnMvZG1hL212X3hvci5jCmluZGV4IDdmNTk1MzU1ZmI3OS4uZTczM2M1ZWVhYWJj
+IDEwMDY0NAotLS0gYS9kcml2ZXJzL2RtYS9tdl94b3IuYworKysgYi9kcml2ZXJzL2RtYS9tdl94
+b3IuYwpAQCAtMTE1Myw3ICsxMTUzLDEwIEBAIG12X3hvcl9jaGFubmVsX2FkZChzdHJ1Y3QgbXZf
+eG9yX2RldmljZSAqeG9yZGV2LAogCQkgZG1hX2hhc19jYXAoRE1BX01FTUNQWSwgZG1hX2Rldi0+
+Y2FwX21hc2spID8gImNweSAiIDogIiIsCiAJCSBkbWFfaGFzX2NhcChETUFfSU5URVJSVVBULCBk
+bWFfZGV2LT5jYXBfbWFzaykgPyAiaW50ciAiIDogIiIpOwogCi0JZG1hX2FzeW5jX2RldmljZV9y
+ZWdpc3RlcihkbWFfZGV2KTsKKwlyZXQgPSBkbWFfYXN5bmNfZGV2aWNlX3JlZ2lzdGVyKGRtYV9k
+ZXYpOworCWlmIChyZXQpCisJCWdvdG8gZXJyX2ZyZWVfaXJxOworCiAJcmV0dXJuIG12X2NoYW47
+CiAKIGVycl9mcmVlX2lycToK
