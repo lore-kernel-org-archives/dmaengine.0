@@ -1,16 +1,28 @@
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
-Subject: dmaengine: zynqmp_dma: replace spin_lock_bh with spin_lock_irqsave
-From: Vinod Koul <vkoul@kernel.org>
-Message-Id: <20181205090806.GI2847@vkoul-mobl>
-Date: Wed, 5 Dec 2018 14:38:06 +0530
-To: Michael Tretter <m.tretter@pengutronix.de>
-Cc: dmaengine@vger.kernel.org, appana.durga.rao@xilinx.com, kernel@pengutronix.de
+Subject: dmaengine: stm32-mdma: Add a check on read_u32_array
+From: Aditya Pakki <pakki001@umn.edu>
+Message-Id: <20181228192641.9713-1-pakki001@umn.edu>
+Date: Fri, 28 Dec 2018 13:26:41 -0600
+To: pakki001@umn.edu
+Cc: kjlu@umn.edu, Dan Williams <dan.j.williams@intel.com>, Vinod Koul <vkoul@kernel.org>, Maxime Coquelin <mcoquelin.stm32@gmail.com>, Alexandre Torgue <alexandre.torgue@st.com>, dmaengine@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com, linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
 List-ID: <dmaengine.vger.kernel.org>
 
-T24gMjYtMTEtMTgsIDE2OjE0LCBNaWNoYWVsIFRyZXR0ZXIgd3JvdGU6Cj4gQWxsIGRldmljZV9w
-cmVwX2RtYV8qIGZ1bmN0aW9ucyBhbmQgZGV2aWNlX2lzc3VlX3BlbmRpbmcgY2FuIGJlIGNhbGxl
-ZAo+IGZyb20gYW4gaW50ZXJydXB0IGNvbnRleHQuIEFzIHRoaXMgaW5jbHVkZXMgaGFyZCBJUlFz
-LCB3ZSBtdXN0IHVzZQo+IHNwaW5fbG9ja19pcnFzYXZlKCkgaW5zdGVhZCBvZiBzcGluX2xvY2tf
-YmgoKSB0byBhY2Nlc3MgY2hhbi0+bG9jay4KCkFwcGxpZWQsIHRoYW5rcwo=
+SW4gc3RtMzJfbWRtYV9wcm9iZSwgYWZ0ZXIgcmVhZGluZyB0aGUgcHJvcGVydHkgInN0LGFoYi1h
+ZGRyLW1hc2tzIiwgdGhlCnNlY29uZCBjYWxsIGlzIG5vdCBjaGVja2VkIGZvciBmYWlsdXJlLiBU
+aGlzIHRpbWUgb2YgY2hlY2sgdG8gdGltZSBvZiB1c2UKY2FzZSBvZiAiY291bnQiIGVycm9yIGlz
+IHNlbnQgdXBzdHJlYW0uCgpTaWduZWQtb2ZmLWJ5OiBBZGl0eWEgUGFra2kgPHBha2tpMDAxQHVt
+bi5lZHU+Ci0tLQogZHJpdmVycy9kbWEvc3RtMzItbWRtYS5jIHwgNCArKystCiAxIGZpbGUgY2hh
+bmdlZCwgMyBpbnNlcnRpb25zKCspLCAxIGRlbGV0aW9uKC0pCgpkaWZmIC0tZ2l0IGEvZHJpdmVy
+cy9kbWEvc3RtMzItbWRtYS5jIGIvZHJpdmVycy9kbWEvc3RtMzItbWRtYS5jCmluZGV4IDM5MGU0
+Y2FlMGUxYS4uNDg1ZGVhMTc3NzA0IDEwMDY0NAotLS0gYS9kcml2ZXJzL2RtYS9zdG0zMi1tZG1h
+LmMKKysrIGIvZHJpdmVycy9kbWEvc3RtMzItbWRtYS5jCkBAIC0xNTc5LDkgKzE1NzksMTEgQEAg
+c3RhdGljIGludCBzdG0zMl9tZG1hX3Byb2JlKHN0cnVjdCBwbGF0Zm9ybV9kZXZpY2UgKnBkZXYp
+CiAKIAlkbWFkZXYtPm5yX2NoYW5uZWxzID0gbnJfY2hhbm5lbHM7CiAJZG1hZGV2LT5ucl9yZXF1
+ZXN0cyA9IG5yX3JlcXVlc3RzOwotCWRldmljZV9wcm9wZXJ0eV9yZWFkX3UzMl9hcnJheSgmcGRl
+di0+ZGV2LCAic3QsYWhiLWFkZHItbWFza3MiLAorCXJldCA9IGRldmljZV9wcm9wZXJ0eV9yZWFk
+X3UzMl9hcnJheSgmcGRldi0+ZGV2LCAic3QsYWhiLWFkZHItbWFza3MiLAogCQkJCSAgICAgICBk
+bWFkZXYtPmFoYl9hZGRyX21hc2tzLAogCQkJCSAgICAgICBjb3VudCk7CisJaWYgKHJldCkKKwkJ
+cmV0dXJuIHJldDsKIAlkbWFkZXYtPm5yX2FoYl9hZGRyX21hc2tzID0gY291bnQ7CiAKIAlyZXMg
+PSBwbGF0Zm9ybV9nZXRfcmVzb3VyY2UocGRldiwgSU9SRVNPVVJDRV9NRU0sIDApOwo=
