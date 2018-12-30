@@ -2,24 +2,28 @@ Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
 Subject: dmaengine: qcom_hidma: Check for driver register failure
-From: Aditya Pakki <pakki001@umn.edu>
-Message-Id: <20181228201119.11920-1-pakki001@umn.edu>
-Date: Fri, 28 Dec 2018 14:11:19 -0600
-To: pakki001@umn.edu
-Cc: kjlu@umn.edu, Sinan Kaya <okaya@kernel.org>, Andy Gross <andy.gross@linaro.org>, David Brown <david.brown@linaro.org>, Vinod Koul <vkoul@kernel.org>, Dan Williams <dan.j.williams@intel.com>, linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
+From: Sinan Kaya <okaya@kernel.org>
+Message-Id: <CAK9iUCPvmoN4_0jyZ+DP+ROmmoKTpqCoRPgOCKTmjT-o73zW4A@mail.gmail.com>
+Date: Sun, 30 Dec 2018 21:34:12 +0300
+To: Aditya Pakki <pakki001@umn.edu>
+Cc: kjlu@umn.edu, Andy Gross <andy.gross@linaro.org>, David Brown <david.brown@linaro.org>, Vinod Koul <vkoul@kernel.org>, Dan Williams <dan.j.williams@intel.com>, linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org, open list <linux-kernel@vger.kernel.org>
 List-ID: <dmaengine.vger.kernel.org>
 
-V2hpbGUgaW5pdGlhbGl6aW5nIHRoZSBkcml2ZXIsIHRoZSBmdW5jdGlvbiBwbGF0Zm9ybV9kcml2
-ZXJfcmVnaXN0ZXIgY2FuCmZhaWwgYW5kIHJldHVybiBhbiBlcnJvci4gQ29uc2lzdGVudCB3aXRo
-IG90aGVyIGludm9jYXRpb25zLCB0aGlzIHBhdGNoCnJldHVybnMgdGhlIGVycm9yIHVwc3RyZWFt
-LgoKU2lnbmVkLW9mZi1ieTogQWRpdHlhIFBha2tpIDxwYWtraTAwMUB1bW4uZWR1PgotLS0KIGRy
-aXZlcnMvZG1hL3Fjb20vaGlkbWFfbWdtdC5jIHwgMyArLS0KIDEgZmlsZSBjaGFuZ2VkLCAxIGlu
-c2VydGlvbigrKSwgMiBkZWxldGlvbnMoLSkKCmRpZmYgLS1naXQgYS9kcml2ZXJzL2RtYS9xY29t
-L2hpZG1hX21nbXQuYyBiL2RyaXZlcnMvZG1hL3Fjb20vaGlkbWFfbWdtdC5jCmluZGV4IGQ2NGVk
-ZWI2NzcxYS4uNjgxZGUxMmY0YzY3IDEwMDY0NAotLS0gYS9kcml2ZXJzL2RtYS9xY29tL2hpZG1h
-X21nbXQuYworKysgYi9kcml2ZXJzL2RtYS9xY29tL2hpZG1hX21nbXQuYwpAQCAtNDIzLDkgKzQy
-Myw4IEBAIHN0YXRpYyBpbnQgX19pbml0IGhpZG1hX21nbXRfaW5pdCh2b2lkKQogCQloaWRtYV9t
-Z210X29mX3BvcHVsYXRlX2NoYW5uZWxzKGNoaWxkKTsKIAl9CiAjZW5kaWYKLQlwbGF0Zm9ybV9k
-cml2ZXJfcmVnaXN0ZXIoJmhpZG1hX21nbXRfZHJpdmVyKTsKKwlyZXR1cm4gcGxhdGZvcm1fZHJp
-dmVyX3JlZ2lzdGVyKCZoaWRtYV9tZ210X2RyaXZlcik7CiAKLQlyZXR1cm4gMDsKIH0KIG1vZHVs
-ZV9pbml0KGhpZG1hX21nbXRfaW5pdCk7CiBNT0RVTEVfTElDRU5TRSgiR1BMIHYyIik7Cg==
+T24gRnJpLCBEZWMgMjgsIDIwMTggYXQgMTE6MTEgUE0gQWRpdHlhIFBha2tpIDxwYWtraTAwMUB1
+bW4uZWR1PiB3cm90ZToKPgo+IFdoaWxlIGluaXRpYWxpemluZyB0aGUgZHJpdmVyLCB0aGUgZnVu
+Y3Rpb24gcGxhdGZvcm1fZHJpdmVyX3JlZ2lzdGVyIGNhbgo+IGZhaWwgYW5kIHJldHVybiBhbiBl
+cnJvci4gQ29uc2lzdGVudCB3aXRoIG90aGVyIGludm9jYXRpb25zLCB0aGlzIHBhdGNoCj4gcmV0
+dXJucyB0aGUgZXJyb3IgdXBzdHJlYW0uCj4KPiBTaWduZWQtb2ZmLWJ5OiBBZGl0eWEgUGFra2kg
+PHBha2tpMDAxQHVtbi5lZHU+Cj4gLS0tCgpBY2tlZC1ieTogU2luYW4gS2F5YSA8b2theWFAa2Vy
+bmVsLm9yZz4KCgo+ICBkcml2ZXJzL2RtYS9xY29tL2hpZG1hX21nbXQuYyB8IDMgKy0tCj4gIDEg
+ZmlsZSBjaGFuZ2VkLCAxIGluc2VydGlvbigrKSwgMiBkZWxldGlvbnMoLSkKPgo+IGRpZmYgLS1n
+aXQgYS9kcml2ZXJzL2RtYS9xY29tL2hpZG1hX21nbXQuYyBiL2RyaXZlcnMvZG1hL3Fjb20vaGlk
+bWFfbWdtdC5jCj4gaW5kZXggZDY0ZWRlYjY3NzFhLi42ODFkZTEyZjRjNjcgMTAwNjQ0Cj4gLS0t
+IGEvZHJpdmVycy9kbWEvcWNvbS9oaWRtYV9tZ210LmMKPiArKysgYi9kcml2ZXJzL2RtYS9xY29t
+L2hpZG1hX21nbXQuYwo+IEBAIC00MjMsOSArNDIzLDggQEAgc3RhdGljIGludCBfX2luaXQgaGlk
+bWFfbWdtdF9pbml0KHZvaWQpCj4gICAgICAgICAgICAgICAgIGhpZG1hX21nbXRfb2ZfcG9wdWxh
+dGVfY2hhbm5lbHMoY2hpbGQpOwo+ICAgICAgICAgfQo+ICAjZW5kaWYKPiAtICAgICAgIHBsYXRm
+b3JtX2RyaXZlcl9yZWdpc3RlcigmaGlkbWFfbWdtdF9kcml2ZXIpOwo+ICsgICAgICAgcmV0dXJu
+IHBsYXRmb3JtX2RyaXZlcl9yZWdpc3RlcigmaGlkbWFfbWdtdF9kcml2ZXIpOwo+Cj4gLSAgICAg
+ICByZXR1cm4gMDsKPiAgfQo+ICBtb2R1bGVfaW5pdChoaWRtYV9tZ210X2luaXQpOwo+ICBNT0RV
+TEVfTElDRU5TRSgiR1BMIHYyIik7Cj4gLS0KPiAyLjE3LjEKPgo=
