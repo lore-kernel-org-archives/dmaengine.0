@@ -1,16 +1,35 @@
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
-Subject: [RESEND,v1] dmaengine: stm32-dma: check FIFO error interrupt enable
-From: Vinod Koul <vkoul@kernel.org>
-Message-Id: <20190104154746.GO13372@vkoul-mobl.Dlink>
-Date: Fri, 4 Jan 2019 21:17:46 +0530
-To: Pierre-Yves MORDRET <pierre-yves.mordret@st.com>
-Cc: Dan Williams <dan.j.williams@intel.com>, Maxime Coquelin <mcoquelin.stm32@gmail.com>, Alexandre Torgue <alexandre.torgue@st.com>, dmaengine@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com, linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
+Subject: dmaengine: qcom: bam_dma: use struct_size() in kzalloc()
+From: "Gustavo A. R. Silva" <gustavo@embeddedor.com>
+Message-Id: <20190104173215.GA29029@embeddedor>
+Date: Fri, 4 Jan 2019 11:32:15 -0600
+To: Andy Gross <andy.gross@linaro.org>, David Brown <david.brown@linaro.org>, Dan Williams <dan.j.williams@intel.com>, Vinod Koul <vkoul@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org, "Gustavo A. R. Silva" <gustavo@embeddedor.com>
 List-ID: <dmaengine.vger.kernel.org>
 
-T24gMDMtMDEtMTksIDExOjE3LCBQaWVycmUtWXZlcyBNT1JEUkVUIHdyb3RlOgo+IEZvciBhdm9p
-ZGluZyBmYWxzZSBGSUZPIGRldGVjdGlvbiwgY2hlY2sgRklGTyBFcnJvciBpbnRlcnJ1cHQgaXMK
-PiBlbmFibGVkIHByaW9yIHJhaXNpbmcgYW55IGVycm9ycy4KPiBUaGlzIHdpbGwgcHJldmVudCBo
-YXZpbmcgc3B1cmlvdXMgRklGTyBlcnJvciB3aGVyZSBpdCBzaG91bGRuJ3QuCgpBcHBsaWVkLCB0
-aGFua3MK
+T25lIG9mIHRoZSBtb3JlIGNvbW1vbiBjYXNlcyBvZiBhbGxvY2F0aW9uIHNpemUgY2FsY3VsYXRp
+b25zIGlzIGZpbmRpbmcgdGhlCnNpemUgb2YgYSBzdHJ1Y3R1cmUgdGhhdCBoYXMgYSB6ZXJvLXNp
+emVkIGFycmF5IGF0IHRoZSBlbmQsIGFsb25nIHdpdGggbWVtb3J5CmZvciBzb21lIG51bWJlciBv
+ZiBlbGVtZW50cyBmb3IgdGhhdCBhcnJheS4gRm9yIGV4YW1wbGU6CgpzdHJ1Y3QgZm9vIHsKICAg
+IGludCBzdHVmZjsKICAgIHZvaWQgKmVudHJ5W107Cn07CgppbnN0YW5jZSA9IGt6YWxsb2Moc2l6
+ZW9mKHN0cnVjdCBmb28pICsgc2l6ZW9mKHZvaWQgKikgKiBjb3VudCwgR0ZQX0tFUk5FTCk7CgpJ
+bnN0ZWFkIG9mIGxlYXZpbmcgdGhlc2Ugb3Blbi1jb2RlZCBhbmQgcHJvbmUgdG8gdHlwZSBtaXN0
+YWtlcywgd2UgY2FuIG5vdwp1c2UgdGhlIG5ldyBzdHJ1Y3Rfc2l6ZSgpIGhlbHBlcjoKCmluc3Rh
+bmNlID0ga3phbGxvYyhzdHJ1Y3Rfc2l6ZShpbnN0YW5jZSwgZW50cnksIGNvdW50KSwgR0ZQX0tF
+Uk5FTCk7CgpUaGlzIGNvZGUgd2FzIGRldGVjdGVkIHdpdGggdGhlIGhlbHAgb2YgQ29jY2luZWxs
+ZS4KClNpZ25lZC1vZmYtYnk6IEd1c3Rhdm8gQS4gUi4gU2lsdmEgPGd1c3Rhdm9AZW1iZWRkZWRv
+ci5jb20+Ci0tLQogZHJpdmVycy9kbWEvcWNvbS9iYW1fZG1hLmMgfCA0ICsrLS0KIDEgZmlsZSBj
+aGFuZ2VkLCAyIGluc2VydGlvbnMoKyksIDIgZGVsZXRpb25zKC0pCgpkaWZmIC0tZ2l0IGEvZHJp
+dmVycy9kbWEvcWNvbS9iYW1fZG1hLmMgYi9kcml2ZXJzL2RtYS9xY29tL2JhbV9kbWEuYwppbmRl
+eCAxNjE3NzE1YWE2ZTAuLmNiODYwY2I1M2MyNyAxMDA2NDQKLS0tIGEvZHJpdmVycy9kbWEvcWNv
+bS9iYW1fZG1hLmMKKysrIGIvZHJpdmVycy9kbWEvcWNvbS9iYW1fZG1hLmMKQEAgLTYzNiw4ICs2
+MzYsOCBAQCBzdGF0aWMgc3RydWN0IGRtYV9hc3luY190eF9kZXNjcmlwdG9yICpiYW1fcHJlcF9z
+bGF2ZV9zZyhzdHJ1Y3QgZG1hX2NoYW4gKmNoYW4sCiAJCW51bV9hbGxvYyArPSBESVZfUk9VTkRf
+VVAoc2dfZG1hX2xlbihzZyksIEJBTV9GSUZPX1NJWkUpOwogCiAJLyogYWxsb2NhdGUgZW5vdWdo
+IHJvb20gdG8gYWNjb21vZGF0ZSB0aGUgbnVtYmVyIG9mIGVudHJpZXMgKi8KLQlhc3luY19kZXNj
+ID0ga3phbGxvYyhzaXplb2YoKmFzeW5jX2Rlc2MpICsKLQkJCShudW1fYWxsb2MgKiBzaXplb2Yo
+c3RydWN0IGJhbV9kZXNjX2h3KSksIEdGUF9OT1dBSVQpOworCWFzeW5jX2Rlc2MgPSBremFsbG9j
+KHN0cnVjdF9zaXplKGFzeW5jX2Rlc2MsIGRlc2MsIG51bV9hbGxvYyksCisJCQkgICAgIEdGUF9O
+T1dBSVQpOwogCiAJaWYgKCFhc3luY19kZXNjKQogCQlnb3RvIGVycl9vdXQ7Cg==
