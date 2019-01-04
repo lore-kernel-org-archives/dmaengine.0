@@ -2,30 +2,15 @@ Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
 Subject: dmaengine: stm32-mdma: Add a check on read_u32_array
-From: Pierre Yves MORDRET <pierre-yves.mordret@st.com>
-Message-Id: <8412ac64-cd6d-7390-87a1-24f5e7cdf87a@st.com>
-Date: Fri, 4 Jan 2019 09:05:55 +0100
+From: Vinod Koul <vkoul@kernel.org>
+Message-Id: <20190104143346.GC13372@vkoul-mobl.Dlink>
+Date: Fri, 4 Jan 2019 20:03:46 +0530
 To: Aditya Pakki <pakki001@umn.edu>
-Cc: Alexandre Torgue <alexandre.torgue@st.com>, kjlu@umn.edu, linux-kernel@vger.kernel.org, Vinod Koul <vkoul@kernel.org>, Maxime Coquelin <mcoquelin.stm32@gmail.com>, dmaengine@vger.kernel.org, Dan Williams <dan.j.williams@intel.com>, linux-stm32@st-md-mailman.stormreply.com, linux-arm-kernel@lists.infradead.org
+Cc: kjlu@umn.edu, Dan Williams <dan.j.williams@intel.com>, Maxime Coquelin <mcoquelin.stm32@gmail.com>, Alexandre Torgue <alexandre.torgue@st.com>, dmaengine@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com, linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
 List-ID: <dmaengine.vger.kernel.org>
 
-SGVsbG8KCkFja2VkLWJ5OiBQaWVycmUtWXZlcyBNT1JEUkVUIDxwaWVycmUteXZlcy5tb3JkcmV0
-QHN0LmNvbT4KClJlZ2FyZHMKCk9uIDEyLzI4LzE4IDg6MjYgUE0sIEFkaXR5YSBQYWtraSB3cm90
-ZToKPiBJbiBzdG0zMl9tZG1hX3Byb2JlLCBhZnRlciByZWFkaW5nIHRoZSBwcm9wZXJ0eSAic3Qs
-YWhiLWFkZHItbWFza3MiLCB0aGUKPiBzZWNvbmQgY2FsbCBpcyBub3QgY2hlY2tlZCBmb3IgZmFp
-bHVyZS4gVGhpcyB0aW1lIG9mIGNoZWNrIHRvIHRpbWUgb2YgdXNlCj4gY2FzZSBvZiAiY291bnQi
-IGVycm9yIGlzIHNlbnQgdXBzdHJlYW0uCj4gCj4gU2lnbmVkLW9mZi1ieTogQWRpdHlhIFBha2tp
-IDxwYWtraTAwMUB1bW4uZWR1Pgo+IC0tLQo+ICBkcml2ZXJzL2RtYS9zdG0zMi1tZG1hLmMgfCA0
-ICsrKy0KPiAgMSBmaWxlIGNoYW5nZWQsIDMgaW5zZXJ0aW9ucygrKSwgMSBkZWxldGlvbigtKQo+
-IAo+IGRpZmYgLS1naXQgYS9kcml2ZXJzL2RtYS9zdG0zMi1tZG1hLmMgYi9kcml2ZXJzL2RtYS9z
-dG0zMi1tZG1hLmMKPiBpbmRleCAzOTBlNGNhZTBlMWEuLjQ4NWRlYTE3NzcwNCAxMDA2NDQKPiAt
-LS0gYS9kcml2ZXJzL2RtYS9zdG0zMi1tZG1hLmMKPiArKysgYi9kcml2ZXJzL2RtYS9zdG0zMi1t
-ZG1hLmMKPiBAQCAtMTU3OSw5ICsxNTc5LDExIEBAIHN0YXRpYyBpbnQgc3RtMzJfbWRtYV9wcm9i
-ZShzdHJ1Y3QgcGxhdGZvcm1fZGV2aWNlICpwZGV2KQo+ICAKPiAgCWRtYWRldi0+bnJfY2hhbm5l
-bHMgPSBucl9jaGFubmVsczsKPiAgCWRtYWRldi0+bnJfcmVxdWVzdHMgPSBucl9yZXF1ZXN0czsK
-PiAtCWRldmljZV9wcm9wZXJ0eV9yZWFkX3UzMl9hcnJheSgmcGRldi0+ZGV2LCAic3QsYWhiLWFk
-ZHItbWFza3MiLAo+ICsJcmV0ID0gZGV2aWNlX3Byb3BlcnR5X3JlYWRfdTMyX2FycmF5KCZwZGV2
-LT5kZXYsICJzdCxhaGItYWRkci1tYXNrcyIsCj4gIAkJCQkgICAgICAgZG1hZGV2LT5haGJfYWRk
-cl9tYXNrcywKPiAgCQkJCSAgICAgICBjb3VudCk7Cj4gKwlpZiAocmV0KQo+ICsJCXJldHVybiBy
-ZXQ7Cj4gIAlkbWFkZXYtPm5yX2FoYl9hZGRyX21hc2tzID0gY291bnQ7Cj4gIAo+ICAJcmVzID0g
-cGxhdGZvcm1fZ2V0X3Jlc291cmNlKHBkZXYsIElPUkVTT1VSQ0VfTUVNLCAwKTsKPgo=
+T24gMjgtMTItMTgsIDEzOjI2LCBBZGl0eWEgUGFra2kgd3JvdGU6Cj4gSW4gc3RtMzJfbWRtYV9w
+cm9iZSwgYWZ0ZXIgcmVhZGluZyB0aGUgcHJvcGVydHkgInN0LGFoYi1hZGRyLW1hc2tzIiwgdGhl
+Cj4gc2Vjb25kIGNhbGwgaXMgbm90IGNoZWNrZWQgZm9yIGZhaWx1cmUuIFRoaXMgdGltZSBvZiBj
+aGVjayB0byB0aW1lIG9mIHVzZQo+IGNhc2Ugb2YgImNvdW50IiBlcnJvciBpcyBzZW50IHVwc3Ry
+ZWFtLgoKQXBwbGllZCwgdGhhbmtzCg==
