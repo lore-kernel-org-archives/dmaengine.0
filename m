@@ -1,28 +1,16 @@
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
-Subject: [v1] dmaengine: imx-sdma: refine to load context only once
-From: Robin Gong <yibin.gong@nxp.com>
-Message-Id: <VI1PR04MB45438679866C49256F1D79CF898A0@VI1PR04MB4543.eurprd04.prod.outlook.com>
-Date: Tue, 8 Jan 2019 12:02:24 +0000
-To: Vinod Koul <vkoul@kernel.org>
-Cc: "dan.j.williams@intel.com" <dan.j.williams@intel.com>, "kernel@pengutronix.de" <kernel@pengutronix.de>, "dmaengine@vger.kernel.org" <dmaengine@vger.kernel.org>, "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>, dl-linux-imx <linux-imx@nxp.com>
+Subject: dma/mv_xor: Fix a missing check in mv_xor_channel_add
+From: Vinod Koul <vkoul@kernel.org>
+Message-Id: <20190104143648.GD13372@vkoul-mobl.Dlink>
+Date: Fri, 4 Jan 2019 20:06:48 +0530
+To: Aditya Pakki <pakki001@umn.edu>
+Cc: kjlu@umn.edu, Dan Williams <dan.j.williams@intel.com>, dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
 List-ID: <dmaengine.vger.kernel.org>
 
-SGkgVmlub2QsDQoJSSBoYXZlIHNlbnQgdjIgYWZ0ZXIgcmViYXNlLiBQbGVhc2UgaGF2ZSBhIHRy
-eS4gDQoNCj4gLS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0NCj4gRnJvbTogVmlub2QgS291bCA8
-dmtvdWxAa2VybmVsLm9yZz4NCj4gU2VudDogMjAxOeW5tDHmnIg05pelIDIzOjE1DQo+IFRvOiBS
-b2JpbiBHb25nIDx5aWJpbi5nb25nQG54cC5jb20+DQo+IENjOiBkYW4uai53aWxsaWFtc0BpbnRl
-bC5jb207IGtlcm5lbEBwZW5ndXRyb25peC5kZTsNCj4gZG1hZW5naW5lQHZnZXIua2VybmVsLm9y
-ZzsgbGludXgta2VybmVsQHZnZXIua2VybmVsLm9yZzsgZGwtbGludXgtaW14DQo+IDxsaW51eC1p
-bXhAbnhwLmNvbT4NCj4gU3ViamVjdDogUmU6IFtQQVRDSCB2MV0gZG1hZW5naW5lOiBpbXgtc2Rt
-YTogcmVmaW5lIHRvIGxvYWQgY29udGV4dCBvbmx5IG9uY2UNCj4gDQo+IE9uIDA2LTEyLTE4LCAw
-NjozNiwgUm9iaW4gR29uZyB3cm90ZToNCj4gPiBUaGUgY29udGV4dCBsb2FkZWQgb25seSBvbmUg
-dGltZSBiZWZvcmUgY2hhbm5lbCBydW5uaW5nLGJ1dA0KPiAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIF5eIHNwYWNlDQo+IGFmdGVyIGNvbW1h
-IHBsZWFzZQ0KPiANCj4gPiBjdXJyZW50bHkgc2RtYV9jb25maWdfY2hhbm5lbCgpIGFuZCBkbWFf
-cHJlcF8qIGR1cGxpY2F0ZWQgd2l0aA0KPiA+IHNkbWFfbG9hZF9jb250ZXh0KCksIHNvIHJlZmlu
-ZSBpdCB0byBsb2FkIGNvbnRleHQgb25seSBvbmUgdGltZSBiZWZvcmUNCj4gPiBjaGFubmVsIHJ1
-bm5pbmcgYW5kIHJlbG9hZCBhZnRlciB0aGUgY2hhbm5lbCB0ZXJtaW5hdGVkLg0KPiANCj4gSSB3
-YXMgZ29pbmcgdG8gYXBwbHkgaXQsIGJ1dCBpdCBmYWlscyB0byBhcHBseSBmb3IgbWUsIHBsZWFz
-ZSByZWJhc2UgYW5kIHNlbmQNCj4gDQo+IC0tDQo+IH5WaW5vZAo=
+T24gMjQtMTItMTgsIDExOjQxLCBBZGl0eWEgUGFra2kgd3JvdGU6Cj4gZG1hX2FzeW5jX2Rldmlj
+ZV9yZWdpc3RlcigpIG1heSBmYWlsIGFuZCByZXR1cm4gYW4gZXJyb3IuIFRoZSBjYXBhYmlsaXRp
+ZXMKPiBjaGVja2VkIGluIG12X3hvcl9jaGFubmVsX2FkZCgpIGFyZSBub3QgY29tcGxldGUuIFRo
+ZSBmaXggaGFuZGxlcyB0aGUKPiBlcnJvciBieSBmcmVlaW5nIHRoZSByZXNvdXJjZXMuCgpBcHBs
+aWVkIGFmdGVyIGZpeGluZyBzdWJzeXN0ZW0gdGFnLCB0aGFua3MK
