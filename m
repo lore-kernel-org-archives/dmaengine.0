@@ -2,19 +2,23 @@ Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
 Subject: [5/5] dma: tegra: add tracepoints to driver
-From: Vinod Koul <vkoul@kernel.org>
-Message-Id: <20190104150603.GH13372@vkoul-mobl.Dlink>
-Date: Fri, 4 Jan 2019 20:36:03 +0530
-To: Ben Dooks <ben.dooks@codethink.co.uk>
+From: Ben Dooks <ben.dooks@codethink.co.uk>
+Message-Id: <3d9eacb7c987ddf4eab4a6b28c073321@codethink.co.uk>
+Date: Fri, 04 Jan 2019 15:10:47 +0000
+To: Vinod Koul <vkoul@kernel.org>
 Cc: Jon Hunter <jonathanh@nvidia.com>, dan.j.williams@intel.com, dmaengine@vger.kernel.org, ldewangan@nvidia.com, linux-tegra@vger.kernel.org, Ingo Molnar <mingo@redhat.com>, Steven Rostedt <rostedt@goodmis.org>
 List-ID: <dmaengine.vger.kernel.org>
 
-T24gMjItMTEtMTgsIDE1OjE1LCBCZW4gRG9va3Mgd3JvdGU6Cj4gT24gMjIvMTEvMjAxOCAwODo1
-NSwgSm9uIEh1bnRlciB3cm90ZToKCj4gPiBNeSBvbmx5IGNvbW1lbnQgaGVyZSBpcyB0aGF0IGFw
-YXJ0IGZyb20gdGhlIElTUiB0cmFjZSwgdGhlIG90aGVycyBjb3VsZAo+ID4gYmUgYWRkZWQgdG8g
-dGhlIGRtYWVuZ2luZSBkcml2ZXIgY29yZSBhbmQgdGhlbiB0aGVzZSBjb3VsZCBiZSB1c2VkIGZv
-cgo+ID4gb3RoZXIgRE1BcyBhcyB3ZWxsLgo+IAo+IEhtbSwgSSB3aWxsIGdvIGhhdmUgYSBsb29r
-IGF0IGhvdyBkaWZmaWN1bHQgdGhhdCB3b3VsZCBiZS4KClNob3VsZG4ndCBiZSA6KSBBbGwgdGhl
-IGRyaXZlcnMgdXNlIGdlbmVyaWMgZG1hX2NoYW4gc3RydWN0IGFuZCB3ZSBjYW4KdXNlIHRoYXQg
-dG8gdHJhY2UsIGJ1dCBJIGFtIGdvaW5nIHRvIG1lcmdlcyB0aGlzIGFuZCB5b3UgY2FuIHNlbmQg
-YQpwYXRjaCB0byBtb3ZlIGl0IHRvIGNvcmUgOikK
+T24gMjAxOS0wMS0wNCAxNTowNiwgVmlub2QgS291bCB3cm90ZToKPiBPbiAyMi0xMS0xOCwgMTU6
+MTUsIEJlbiBEb29rcyB3cm90ZToKPj4gT24gMjIvMTEvMjAxOCAwODo1NSwgSm9uIEh1bnRlciB3
+cm90ZToKPiAKPj4gPiBNeSBvbmx5IGNvbW1lbnQgaGVyZSBpcyB0aGF0IGFwYXJ0IGZyb20gdGhl
+IElTUiB0cmFjZSwgdGhlIG90aGVycyBjb3VsZAo+PiA+IGJlIGFkZGVkIHRvIHRoZSBkbWFlbmdp
+bmUgZHJpdmVyIGNvcmUgYW5kIHRoZW4gdGhlc2UgY291bGQgYmUgdXNlZCBmb3IKPj4gPiBvdGhl
+ciBETUFzIGFzIHdlbGwuCj4+IAo+PiBIbW0sIEkgd2lsbCBnbyBoYXZlIGEgbG9vayBhdCBob3cg
+ZGlmZmljdWx0IHRoYXQgd291bGQgYmUuCj4gCj4gU2hvdWxkbid0IGJlIDopIEFsbCB0aGUgZHJp
+dmVycyB1c2UgZ2VuZXJpYyBkbWFfY2hhbiBzdHJ1Y3QgYW5kIHdlIGNhbgo+IHVzZSB0aGF0IHRv
+IHRyYWNlLCBidXQgSSBhbSBnb2luZyB0byBtZXJnZXMgdGhpcyBhbmQgeW91IGNhbiBzZW5kIGEK
+PiBwYXRjaCB0byBtb3ZlIGl0IHRvIGNvcmUgOikKCk9rLCBzbyBqdXN0IHRvIGNoZWNrIHRoYXQg
+dGhlIHdob2xlIHNlcmllcyBpcyBnb2luZyB0byBiZSBtZXJnZWQ/Ckkgd2FzIGp1c3Qgd29uZGVy
+aW5nIGlmIGFueXRoaW5nIG5lZWRzIHRvIGJlIHJlLXNlbnQgYXMgSSBoYWQgbm90CmhlYXJkIGFu
+eXRoaW5nIGJhY2sgb24gdGhpcyBzZXJpZXMgaW4gYSB3aGlsZS4K
