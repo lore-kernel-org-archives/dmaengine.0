@@ -2,31 +2,22 @@ Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
 Subject: dmaengine: bcm2835: Use struct_size() in kzalloc()
-From: "Gustavo A. R. Silva" <gustavo@embeddedor.com>
-Message-Id: <20190104183034.GA5364@embeddedor>
-Date: Fri, 4 Jan 2019 12:30:34 -0600
-To: Dan Williams <dan.j.williams@intel.com>, Vinod Koul <vkoul@kernel.org>, Eric Anholt <eric@anholt.net>, Stefan Wahren <stefan.wahren@i2se.com>, Florian Fainelli <f.fainelli@gmail.com>, Ray Jui <rjui@broadcom.com>, Scott Branden <sbranden@broadcom.com>, bcm-kernel-feedback-list@broadcom.com
-Cc: dmaengine@vger.kernel.org, linux-rpi-kernel@lists.infradead.org, linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, "Gustavo A. R. Silva" <gustavo@embeddedor.com>
+From: Vinod Koul <vkoul@kernel.org>
+Message-Id: <20190107124034.GI13372@vkoul-mobl.Dlink>
+Date: Mon, 7 Jan 2019 18:10:34 +0530
+To: "Gustavo A. R. Silva" <gustavo@embeddedor.com>
+Cc: Dan Williams <dan.j.williams@intel.com>, Eric Anholt <eric@anholt.net>, Stefan Wahren <stefan.wahren@i2se.com>, Florian Fainelli <f.fainelli@gmail.com>, Ray Jui <rjui@broadcom.com>, Scott Branden <sbranden@broadcom.com>, bcm-kernel-feedback-list@broadcom.com, dmaengine@vger.kernel.org, linux-rpi-kernel@lists.infradead.org, linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
 List-ID: <dmaengine.vger.kernel.org>
 
-T25lIG9mIHRoZSBtb3JlIGNvbW1vbiBjYXNlcyBvZiBhbGxvY2F0aW9uIHNpemUgY2FsY3VsYXRp
-b25zIGlzIGZpbmRpbmcgdGhlCnNpemUgb2YgYSBzdHJ1Y3R1cmUgdGhhdCBoYXMgYSB6ZXJvLXNp
-emVkIGFycmF5IGF0IHRoZSBlbmQsIGFsb25nIHdpdGggbWVtb3J5CmZvciBzb21lIG51bWJlciBv
-ZiBlbGVtZW50cyBmb3IgdGhhdCBhcnJheS4gRm9yIGV4YW1wbGU6CgpzdHJ1Y3QgZm9vIHsKICAg
-IGludCBzdHVmZjsKICAgIHZvaWQgKmVudHJ5W107Cn07CgppbnN0YW5jZSA9IGt6YWxsb2Moc2l6
-ZW9mKHN0cnVjdCBmb28pICsgc2l6ZW9mKHZvaWQgKikgKiBjb3VudCwgR0ZQX0tFUk5FTCk7CgpJ
-bnN0ZWFkIG9mIGxlYXZpbmcgdGhlc2Ugb3Blbi1jb2RlZCBhbmQgcHJvbmUgdG8gdHlwZSBtaXN0
-YWtlcywgd2UgY2FuIG5vdwp1c2UgdGhlIG5ldyBzdHJ1Y3Rfc2l6ZSgpIGhlbHBlcjoKCmluc3Rh
-bmNlID0ga3phbGxvYyhzdHJ1Y3Rfc2l6ZShpbnN0YW5jZSwgZW50cnksIGNvdW50KSwgR0ZQX0tF
-Uk5FTCk7CgpUaGlzIGNvZGUgd2FzIGRldGVjdGVkIHdpdGggdGhlIGhlbHAgb2YgQ29jY2luZWxs
-ZS4KClNpZ25lZC1vZmYtYnk6IEd1c3Rhdm8gQS4gUi4gU2lsdmEgPGd1c3Rhdm9AZW1iZWRkZWRv
-ci5jb20+Ci0tLQogZHJpdmVycy9kbWEvYmNtMjgzNS1kbWEuYyB8IDMgKy0tCiAxIGZpbGUgY2hh
-bmdlZCwgMSBpbnNlcnRpb24oKyksIDIgZGVsZXRpb25zKC0pCgpkaWZmIC0tZ2l0IGEvZHJpdmVy
-cy9kbWEvYmNtMjgzNS1kbWEuYyBiL2RyaXZlcnMvZG1hL2JjbTI4MzUtZG1hLmMKaW5kZXggMWE0
-NGM4MDg2ZDc3Li43YmVlYzQwM2MyYzkgMTAwNjQ0Ci0tLSBhL2RyaXZlcnMvZG1hL2JjbTI4MzUt
-ZG1hLmMKKysrIGIvZHJpdmVycy9kbWEvYmNtMjgzNS1kbWEuYwpAQCAtMzEyLDggKzMxMiw3IEBA
-IHN0YXRpYyBzdHJ1Y3QgYmNtMjgzNV9kZXNjICpiY20yODM1X2RtYV9jcmVhdGVfY2JfY2hhaW4o
-CiAJCXJldHVybiBOVUxMOwogCiAJLyogYWxsb2NhdGUgYW5kIHNldHVwIHRoZSBkZXNjcmlwdG9y
-LiAqLwotCWQgPSBremFsbG9jKHNpemVvZigqZCkgKyBmcmFtZXMgKiBzaXplb2Yoc3RydWN0IGJj
-bTI4MzVfY2JfZW50cnkpLAotCQkgICAgZ2ZwKTsKKwlkID0ga3phbGxvYyhzdHJ1Y3Rfc2l6ZShk
-LCBjYl9saXN0LCBmcmFtZXMpLCBnZnApOwogCWlmICghZCkKIAkJcmV0dXJuIE5VTEw7CiAK
+T24gMDQtMDEtMTksIDEyOjMwLCBHdXN0YXZvIEEuIFIuIFNpbHZhIHdyb3RlOgo+IE9uZSBvZiB0
+aGUgbW9yZSBjb21tb24gY2FzZXMgb2YgYWxsb2NhdGlvbiBzaXplIGNhbGN1bGF0aW9ucyBpcyBm
+aW5kaW5nIHRoZQo+IHNpemUgb2YgYSBzdHJ1Y3R1cmUgdGhhdCBoYXMgYSB6ZXJvLXNpemVkIGFy
+cmF5IGF0IHRoZSBlbmQsIGFsb25nIHdpdGggbWVtb3J5Cj4gZm9yIHNvbWUgbnVtYmVyIG9mIGVs
+ZW1lbnRzIGZvciB0aGF0IGFycmF5LiBGb3IgZXhhbXBsZToKPiAKPiBzdHJ1Y3QgZm9vIHsKPiAg
+ICAgaW50IHN0dWZmOwo+ICAgICB2b2lkICplbnRyeVtdOwo+IH07Cj4gCj4gaW5zdGFuY2UgPSBr
+emFsbG9jKHNpemVvZihzdHJ1Y3QgZm9vKSArIHNpemVvZih2b2lkICopICogY291bnQsIEdGUF9L
+RVJORUwpOwo+IAo+IEluc3RlYWQgb2YgbGVhdmluZyB0aGVzZSBvcGVuLWNvZGVkIGFuZCBwcm9u
+ZSB0byB0eXBlIG1pc3Rha2VzLCB3ZSBjYW4gbm93Cj4gdXNlIHRoZSBuZXcgc3RydWN0X3NpemUo
+KSBoZWxwZXI6Cj4gCj4gaW5zdGFuY2UgPSBremFsbG9jKHN0cnVjdF9zaXplKGluc3RhbmNlLCBl
+bnRyeSwgY291bnQpLCBHRlBfS0VSTkVMKTsKPiAKPiBUaGlzIGNvZGUgd2FzIGRldGVjdGVkIHdp
+dGggdGhlIGhlbHAgb2YgQ29jY2luZWxsZS4KCkFwcGxpZWQsIHRoYW5rcwo=
