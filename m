@@ -1,23 +1,23 @@
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
-Subject: dmaengine: fsl-edma: use struct_size() in kzalloc()
-From: Vinod Koul <vkoul@kernel.org>
-Message-Id: <20190107124108.GK13372@vkoul-mobl.Dlink>
-Date: Mon, 7 Jan 2019 18:11:08 +0530
-To: "Gustavo A. R. Silva" <gustavo@embeddedor.com>
-Cc: Dan Williams <dan.j.williams@intel.com>, dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [v3,1/7] dmaengine: dw: Add missed multi-block support for iDMA 32-bit
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Message-Id: <20190107110741.15831-2-andriy.shevchenko@linux.intel.com>
+Date: Mon,  7 Jan 2019 13:07:35 +0200
+To: Viresh Kumar <vireshk@kernel.org>, dmaengine@vger.kernel.org, Vinod Koul <vkoul@kernel.org>
+Cc: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 List-ID: <dmaengine.vger.kernel.org>
 
-T24gMDQtMDEtMTksIDE1OjI1LCBHdXN0YXZvIEEuIFIuIFNpbHZhIHdyb3RlOgo+IE9uZSBvZiB0
-aGUgbW9yZSBjb21tb24gY2FzZXMgb2YgYWxsb2NhdGlvbiBzaXplIGNhbGN1bGF0aW9ucyBpcyBm
-aW5kaW5nIHRoZQo+IHNpemUgb2YgYSBzdHJ1Y3R1cmUgdGhhdCBoYXMgYSB6ZXJvLXNpemVkIGFy
-cmF5IGF0IHRoZSBlbmQsIGFsb25nIHdpdGggbWVtb3J5Cj4gZm9yIHNvbWUgbnVtYmVyIG9mIGVs
-ZW1lbnRzIGZvciB0aGF0IGFycmF5LiBGb3IgZXhhbXBsZToKPiAKPiBzdHJ1Y3QgZm9vIHsKPiAg
-ICAgaW50IHN0dWZmOwo+ICAgICB2b2lkICplbnRyeVtdOwo+IH07Cj4gCj4gaW5zdGFuY2UgPSBr
-emFsbG9jKHNpemVvZihzdHJ1Y3QgZm9vKSArIHNpemVvZih2b2lkICopICogY291bnQsIEdGUF9L
-RVJORUwpOwo+IAo+IEluc3RlYWQgb2YgbGVhdmluZyB0aGVzZSBvcGVuLWNvZGVkIGFuZCBwcm9u
-ZSB0byB0eXBlIG1pc3Rha2VzLCB3ZSBjYW4gbm93Cj4gdXNlIHRoZSBuZXcgc3RydWN0X3NpemUo
-KSBoZWxwZXI6Cj4gCj4gaW5zdGFuY2UgPSBremFsbG9jKHN0cnVjdF9zaXplKGluc3RhbmNlLCBl
-bnRyeSwgY291bnQpLCBHRlBfS0VSTkVMKTsKPiAKPiBUaGlzIGNvZGUgd2FzIGRldGVjdGVkIHdp
-dGggdGhlIGhlbHAgb2YgQ29jY2luZWxsZS4KCkFwcGxpZWQsIHRoYW5rcwo=
+SW50ZWwgaW50ZWdyYXRlZCBETUEgMzItYml0IHN1cHBvcnQgbXVsdGktYmxvY2sgdHJhbnNmZXJz
+LgpBZGQgbWlzc2VkIHNldHRpbmcgdG8gdGhlIHBsYXRmb3JtIGRhdGEuCgpTaWduZWQtb2ZmLWJ5
+OiBBbmR5IFNoZXZjaGVua28gPGFuZHJpeS5zaGV2Y2hlbmtvQGxpbnV4LmludGVsLmNvbT4KLS0t
+CiBkcml2ZXJzL2RtYS9kdy9wY2kuYyB8IDEgKwogMSBmaWxlIGNoYW5nZWQsIDEgaW5zZXJ0aW9u
+KCspCgpkaWZmIC0tZ2l0IGEvZHJpdmVycy9kbWEvZHcvcGNpLmMgYi9kcml2ZXJzL2RtYS9kdy9w
+Y2kuYwppbmRleCA3Nzc4ZWQ3MDVhMWEuLjMxM2JhMTBjNjIyNCAxMDA2NDQKLS0tIGEvZHJpdmVy
+cy9kbWEvZHcvcGNpLmMKKysrIGIvZHJpdmVycy9kbWEvZHcvcGNpLmMKQEAgLTI1LDYgKzI1LDcg
+QEAgc3RhdGljIHN0cnVjdCBkd19kbWFfcGxhdGZvcm1fZGF0YSBtcmZsZF9wZGF0YSA9IHsKIAku
+YmxvY2tfc2l6ZSA9IDEzMTA3MSwKIAkubnJfbWFzdGVycyA9IDEsCiAJLmRhdGFfd2lkdGggPSB7
+NH0sCisJLm11bHRpX2Jsb2NrID0gezEsIDEsIDEsIDEsIDEsIDEsIDEsIDF9LAogfTsKIAogc3Rh
+dGljIGludCBkd19wY2lfcHJvYmUoc3RydWN0IHBjaV9kZXYgKnBkZXYsIGNvbnN0IHN0cnVjdCBw
+Y2lfZGV2aWNlX2lkICpwaWQpCg==
