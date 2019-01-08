@@ -2,22 +2,13 @@ Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
 Subject: [v1] dmaengine: dw-axi-dmac: Fix trivia typo
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Message-Id: <20190108155755.29769-1-andriy.shevchenko@linux.intel.com>
-Date: Tue,  8 Jan 2019 17:57:55 +0200
-To: Vinod Koul <vkoul@kernel.org>, dmaengine@vger.kernel.org, Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>
-Cc: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Vinod Koul <vkoul@kernel.org>
+Message-Id: <20190108170643.GS13372@vkoul-mobl.Dlink>
+Date: Tue, 8 Jan 2019 22:36:43 +0530
+To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Cc: dmaengine@vger.kernel.org, Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>
 List-ID: <dmaengine.vger.kernel.org>
 
-RmllbGQgbmFtZSBzdHN0dXNfaGkgc2hvdWxkIGJlIHNwZWxsZWQgYXMgc3RhdHVzX2hpLgoKU2ln
-bmVkLW9mZi1ieTogQW5keSBTaGV2Y2hlbmtvIDxhbmRyaXkuc2hldmNoZW5rb0BsaW51eC5pbnRl
-bC5jb20+Ci0tLQogZHJpdmVycy9kbWEvZHctYXhpLWRtYWMvZHctYXhpLWRtYWMuaCB8IDIgKy0K
-IDEgZmlsZSBjaGFuZ2VkLCAxIGluc2VydGlvbigrKSwgMSBkZWxldGlvbigtKQoKZGlmZiAtLWdp
-dCBhL2RyaXZlcnMvZG1hL2R3LWF4aS1kbWFjL2R3LWF4aS1kbWFjLmggYi9kcml2ZXJzL2RtYS9k
-dy1heGktZG1hYy9kdy1heGktZG1hYy5oCmluZGV4IGY4ODg4ZGMwYjhkYy4uMThiNjAxNGNmOWI0
-IDEwMDY0NAotLS0gYS9kcml2ZXJzL2RtYS9kdy1heGktZG1hYy9kdy1heGktZG1hYy5oCisrKyBi
-L2RyaXZlcnMvZG1hL2R3LWF4aS1kbWFjL2R3LWF4aS1kbWFjLmgKQEAgLTc1LDcgKzc1LDcgQEAg
-c3RydWN0IF9fcGFja2VkIGF4aV9kbWFfbGxpIHsKIAlfX2xlMzIJCXNzdGF0OwogCV9fbGUzMgkJ
-ZHN0YXQ7CiAJX19sZTMyCQlzdGF0dXNfbG87Ci0JX19sZTMyCQlzdHN0dXNfaGk7CisJX19sZTMy
-CQlzdGF0dXNfaGk7CiAJX19sZTMyCQlyZXNlcnZlZF9sbzsKIAlfX2xlMzIJCXJlc2VydmVkX2hp
-OwogfTsK
+T24gMDgtMDEtMTksIDE3OjU3LCBBbmR5IFNoZXZjaGVua28gd3JvdGU6Cj4gRmllbGQgbmFtZSBz
+dHN0dXNfaGkgc2hvdWxkIGJlIHNwZWxsZWQgYXMgc3RhdHVzX2hpLgoKQXBwbGllZCwgdGhhbmtz
+LiBBbmQgaXQgaXMgdW51c2VkIQo=
