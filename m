@@ -1,24 +1,32 @@
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
-Subject: [v5,5/5] dmaengine: imx-sdma: fix consistent dma test failures
-From: Angus Ainslie <angus@akkea.ca>
-Message-Id: <20190128060840.31695-6-angus@akkea.ca>
-Date: Sun, 27 Jan 2019 23:08:40 -0700
-To: angus@akkea.ca
-Cc: angus.ainslie@puri.sm, Vinod Koul <vkoul@kernel.org>, dmaengine@vger.kernel.org, NXP Linux Team <linux-imx@nxp.com>, Pengutronix Kernel Team <kernel@pengutronix.de>, linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, Lucas Stach <l.stach@pengutronix.de>, Daniel Baluta <daniel.baluta@gmail.com>
+Subject: [2/8,v3] Documentation: bindings: k3dma: Add binding for hisi-dma-avail-chan
+From: John Stultz <john.stultz@linaro.org>
+Message-Id: <1547141652-8660-3-git-send-email-john.stultz@linaro.org>
+Date: Thu, 10 Jan 2019 09:34:06 -0800
+To: lkml <linux-kernel@vger.kernel.org>
+Cc: Vinod Koul <vkoul@kernel.org>, Rob Herring <robh+dt@kernel.org>, Mark Rutland <mark.rutland@arm.com>, Tanglei Han <hantanglei@huawei.com>, Zhuangluan Su <suzhuangluan@hisilicon.com>, Ryan Grachek <ryan@edited.us>, Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, dmaengine@vger.kernel.org, devicetree@vger.kernel.org, John Stultz <john.stultz@linaro.org>
 List-ID: <dmaengine.vger.kernel.org>
 
-V2l0aG91dCB0aGUgY29weSBiZWluZyBhbGlnbmVkIHNkbWExIGZhaWxzIH4xMCUgb2YgdGhlIHRp
-bWUKClNpZ25lZC1vZmYtYnk6IEFuZ3VzIEFpbnNsaWUgKFB1cmlzbSkgPGFuZ3VzQGFra2VhLmNh
-PgotLS0KIGRyaXZlcnMvZG1hL2lteC1zZG1hLmMgfCAxICsKIDEgZmlsZSBjaGFuZ2VkLCAxIGlu
-c2VydGlvbigrKQoKZGlmZiAtLWdpdCBhL2RyaXZlcnMvZG1hL2lteC1zZG1hLmMgYi9kcml2ZXJz
-L2RtYS9pbXgtc2RtYS5jCmluZGV4IGQ1Zjg2YmVjZjU5ZS4uODg5MTBlYzA5NTY4IDEwMDY0NAot
-LS0gYS9kcml2ZXJzL2RtYS9pbXgtc2RtYS5jCisrKyBiL2RyaXZlcnMvZG1hL2lteC1zZG1hLmMK
-QEAgLTIxMTgsNiArMjExOCw3IEBAIHN0YXRpYyBpbnQgc2RtYV9wcm9iZShzdHJ1Y3QgcGxhdGZv
-cm1fZGV2aWNlICpwZGV2KQogCXNkbWEtPmRtYV9kZXZpY2UuZGV2aWNlX3ByZXBfZG1hX21lbWNw
-eSA9IHNkbWFfcHJlcF9tZW1jcHk7CiAJc2RtYS0+ZG1hX2RldmljZS5kZXZpY2VfaXNzdWVfcGVu
-ZGluZyA9IHNkbWFfaXNzdWVfcGVuZGluZzsKIAlzZG1hLT5kbWFfZGV2aWNlLmRldi0+ZG1hX3Bh
-cm1zID0gJnNkbWEtPmRtYV9wYXJtczsKKwlzZG1hLT5kbWFfZGV2aWNlLmNvcHlfYWxpZ24gPSAy
-OwogCWRtYV9zZXRfbWF4X3NlZ19zaXplKHNkbWEtPmRtYV9kZXZpY2UuZGV2LCBTRE1BX0JEX01B
-WF9DTlQpOwogCiAJcGxhdGZvcm1fc2V0X2RydmRhdGEocGRldiwgc2RtYSk7Cg==
+U29tZSBkbWEgY2hhbm5lbHMgY2FuIGJlIHJlc2VydmVkIGZvciBzZWN1cmUgbW9kZSBvciBvdGhl
+cgpoYXJkd2FyZSBvbiB0aGUgU29DLCBzbyBwcm92aWRlIGEgYmluZGluZyBmb3IgYSBiaXRtYXNr
+Cmxpc3RpbmcgdGhlIGF2YWlsYWJsZSBjaGFubmVscyBmb3IgdGhlIGtlcm5lbCB0byB1c2UuCgpD
+YzogVmlub2QgS291bCA8dmtvdWxAa2VybmVsLm9yZz4KQ2M6IFJvYiBIZXJyaW5nIDxyb2JoK2R0
+QGtlcm5lbC5vcmc+CkNjOiBNYXJrIFJ1dGxhbmQgPG1hcmsucnV0bGFuZEBhcm0uY29tPgpDYzog
+VGFuZ2xlaSBIYW4gPGhhbnRhbmdsZWlAaHVhd2VpLmNvbT4KQ2M6IFpodWFuZ2x1YW4gU3UgPHN1
+emh1YW5nbHVhbkBoaXNpbGljb24uY29tPgpDYzogUnlhbiBHcmFjaGVrIDxyeWFuQGVkaXRlZC51
+cz4KQ2M6IE1hbml2YW5uYW4gU2FkaGFzaXZhbSA8bWFuaXZhbm5hbi5zYWRoYXNpdmFtQGxpbmFy
+by5vcmc+CkNjOiBkbWFlbmdpbmVAdmdlci5rZXJuZWwub3JnCkNjOiBkZXZpY2V0cmVlQHZnZXIu
+a2VybmVsLm9yZwpTaWduZWQtb2ZmLWJ5OiBKb2huIFN0dWx0eiA8am9obi5zdHVsdHpAbGluYXJv
+Lm9yZz4KLS0tCnYzOiBSZW5hbWVkIHRvIGhpc2ktZG1hLWF2YWlsLWNoYW4KLS0tCiBEb2N1bWVu
+dGF0aW9uL2RldmljZXRyZWUvYmluZGluZ3MvZG1hL2szZG1hLnR4dCB8IDMgKysrCiAxIGZpbGUg
+Y2hhbmdlZCwgMyBpbnNlcnRpb25zKCspCgpkaWZmIC0tZ2l0IGEvRG9jdW1lbnRhdGlvbi9kZXZp
+Y2V0cmVlL2JpbmRpbmdzL2RtYS9rM2RtYS50eHQgYi9Eb2N1bWVudGF0aW9uL2RldmljZXRyZWUv
+YmluZGluZ3MvZG1hL2szZG1hLnR4dAppbmRleCAxMGEyZjE1Li4zODgyNWQ0IDEwMDY0NAotLS0g
+YS9Eb2N1bWVudGF0aW9uL2RldmljZXRyZWUvYmluZGluZ3MvZG1hL2szZG1hLnR4dAorKysgYi9E
+b2N1bWVudGF0aW9uL2RldmljZXRyZWUvYmluZGluZ3MvZG1hL2szZG1hLnR4dApAQCAtMTQsNiAr
+MTQsOSBAQCBSZXF1aXJlZCBwcm9wZXJ0aWVzOgogCQloYXZlIHNwZWNpZmljIHJlcXVlc3QgbGlu
+ZQogLSBjbG9ja3M6IGNsb2NrIHJlcXVpcmVkCiAKK09wdGlvbmFsIHByb3BlcnRpZXM6CistIGhp
+c2ktZG1hLWF2YWlsLWNoYW46IEJpdG1hc2sgb2YgYXZhaWxhYmxlIHBoeXNpY2FsIGNoYW5uZWxz
+CisKIEV4YW1wbGU6CiAKIENvbnRyb2xsZXI6Cg==
