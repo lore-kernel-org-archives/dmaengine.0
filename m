@@ -1,20 +1,39 @@
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
-Subject: [RFC,v3,4/7] PCI: Add Synopsys endpoint EDDA Device id
-From: Bjorn Helgaas <helgaas@kernel.org>
-Message-Id: <20190114144137.GA26781@google.com>
-Date: Mon, 14 Jan 2019 08:41:37 -0600
-To: Gustavo Pimentel <gustavo.pimentel@synopsys.com>
-Cc: linux-pci@vger.kernel.org, dmaengine@vger.kernel.org, Kishon Vijay Abraham I <kishon@ti.com>, Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>, Niklas Cassel <niklas.cassel@linaro.org>, Joao Pinto <joao.pinto@synopsys.com>, Jose Abreu <jose.abreu@synopsys.com>, Luis Oliveira <luis.oliveira@synopsys.com>, Vitor Soares <vitor.soares@synopsys.com>, Nelson Costa <nelson.costa@synopsys.com>, Pedro Sousa <pedrom.sousa@synopsys.com>
+Subject: [2/8,v4] Documentation: bindings: dma: Add binding for dma-channel-mask
+From: John Stultz <john.stultz@linaro.org>
+Message-Id: <1547658629-25378-3-git-send-email-john.stultz@linaro.org>
+Date: Wed, 16 Jan 2019 09:10:23 -0800
+To: lkml <linux-kernel@vger.kernel.org>
+Cc: John Stultz <john.stultz@linaro.org>, Vinod Koul <vkoul@kernel.org>, Rob Herring <robh+dt@kernel.org>, Mark Rutland <mark.rutland@arm.com>, Tanglei Han <hantanglei@huawei.com>, Zhuangluan Su <suzhuangluan@hisilicon.com>, Ryan Grachek <ryan@edited.us>, Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, dmaengine@vger.kernel.org, devicetree@vger.kernel.org
 List-ID: <dmaengine.vger.kernel.org>
 
-T24gRnJpLCBKYW4gMTEsIDIwMTkgYXQgMDc6MzM6NDBQTSArMDEwMCwgR3VzdGF2byBQaW1lbnRl
-bCB3cm90ZToKPiBDcmVhdGUgYW5kIGFkZCBTeW5vcHN5cyBFbmRwb2ludCBFRERBIERldmljZSBp
-ZCB0byBQQ0kgaWQgbGlzdCwgc2luY2UKPiB0aGlzIGlkIGlzIG5vdyBiZWluZyB1c2Ugb24gdHdv
-IGRpZmZlcmVudCBkcml2ZXJzIChwY2lfZW5kcG9pbnRfdGVzdC5rbwo+IGFuZCBkdy1lZG1hLXBj
-aWUua28pLgoKTml0IGlmIHlvdSB1cGRhdGUgdGhpcyBzZXJpZXMgZm9yIHNvbWUgb3RoZXIgcmVh
-c29uOiBzL2lkL0lELyBpbgpzdWJqZWN0IGFuZCBjaGFuZ2Vsb2cuICAiSWQiIGlzIGFuIEVuZ2xp
-c2ggd29yZCwgYnV0IGl0J3Mgbm90CmFwcGxpY2FibGUgaW4gdGhpcyBjb250ZXh0LCBzbyB1c2lu
-ZyAiSUQiIG1ha2VzIGl0IGNsZWFyIHRoYXQgd2UgZG9uJ3QKbWVhbiB0aGUgcHN5Y2hvYW5hbHlz
-aXMgdGVybS4KCkJqb3JuCg==
+U29tZSBkbWEgY2hhbm5lbHMgY2FuIGJlIHJlc2VydmVkIGZvciBzZWN1cmUgbW9kZSBvciBvdGhl
+cgpoYXJkd2FyZSBvbiB0aGUgU29DLCBzbyBwcm92aWRlIGEgYmluZGluZyBmb3IgYSBiaXRtYXNr
+Cmxpc3RpbmcgdGhlIGF2YWlsYWJsZSBjaGFubmVscyBmb3IgdGhlIGtlcm5lbCB0byB1c2UuCgpU
+aGlzIGZvbGxvd3MgdGhlIHByZS1leGlzdGluZyBiY20sZG1hLWNoYW5uZWwtbWFzayBiaW5kaW5n
+LgoKQ2M6IFZpbm9kIEtvdWwgPHZrb3VsQGtlcm5lbC5vcmc+CkNjOiBSb2IgSGVycmluZyA8cm9i
+aCtkdEBrZXJuZWwub3JnPgpDYzogTWFyayBSdXRsYW5kIDxtYXJrLnJ1dGxhbmRAYXJtLmNvbT4K
+Q2M6IFRhbmdsZWkgSGFuIDxoYW50YW5nbGVpQGh1YXdlaS5jb20+CkNjOiBaaHVhbmdsdWFuIFN1
+IDxzdXpodWFuZ2x1YW5AaGlzaWxpY29uLmNvbT4KQ2M6IFJ5YW4gR3JhY2hlayA8cnlhbkBlZGl0
+ZWQudXM+CkNjOiBNYW5pdmFubmFuIFNhZGhhc2l2YW0gPG1hbml2YW5uYW4uc2FkaGFzaXZhbUBs
+aW5hcm8ub3JnPgpDYzogZG1hZW5naW5lQHZnZXIua2VybmVsLm9yZwpDYzogZGV2aWNldHJlZUB2
+Z2VyLmtlcm5lbC5vcmcKU2lnbmVkLW9mZi1ieTogSm9obiBTdHVsdHogPGpvaG4uc3R1bHR6QGxp
+bmFyby5vcmc+Ci0tLQp2MzogUmVuYW1lZCB0byBoaXNpLWRtYS1hdmFpbC1jaGFuCnY0OiBSZXdv
+cmtlZCB0byBnZW5lcmljIGRtYS1jaGFubmVsLW1hc2sKLS0tCiBEb2N1bWVudGF0aW9uL2Rldmlj
+ZXRyZWUvYmluZGluZ3MvZG1hL2RtYS50eHQgfCA0ICsrKysKIDEgZmlsZSBjaGFuZ2VkLCA0IGlu
+c2VydGlvbnMoKykKCmRpZmYgLS1naXQgYS9Eb2N1bWVudGF0aW9uL2RldmljZXRyZWUvYmluZGlu
+Z3MvZG1hL2RtYS50eHQgYi9Eb2N1bWVudGF0aW9uL2RldmljZXRyZWUvYmluZGluZ3MvZG1hL2Rt
+YS50eHQKaW5kZXggNjMxMmZiMC4uZWViNGU0ZCAxMDA2NDQKLS0tIGEvRG9jdW1lbnRhdGlvbi9k
+ZXZpY2V0cmVlL2JpbmRpbmdzL2RtYS9kbWEudHh0CisrKyBiL0RvY3VtZW50YXRpb24vZGV2aWNl
+dHJlZS9iaW5kaW5ncy9kbWEvZG1hLnR4dApAQCAtMTYsNiArMTYsOSBAQCBPcHRpb25hbCBwcm9w
+ZXJ0aWVzOgogLSBkbWEtY2hhbm5lbHM6IAlOdW1iZXIgb2YgRE1BIGNoYW5uZWxzIHN1cHBvcnRl
+ZCBieSB0aGUgY29udHJvbGxlci4KIC0gZG1hLXJlcXVlc3RzOiAJTnVtYmVyIG9mIERNQSByZXF1
+ZXN0IHNpZ25hbHMgc3VwcG9ydGVkIGJ5IHRoZQogCQkJY29udHJvbGxlci4KKy0gZG1hLWNoYW5u
+ZWwtbWFzazoJQml0bWFzayBvZiBhdmFpbGFibGUgRE1BIGNoYW5uZWxzIGluIGFzY2VuZGluZyBv
+cmRlcgorCQkJdGhhdCBhcmUgbm90IHJlc2VydmVkIGJ5IGZpcm13YXJlIGFuZCBhcmUgYXZhaWxh
+YmxlIHRvCisJCQl0aGUga2VybmVsLiBpLmUuIGZpcnN0IGNoYW5uZWwgY29ycmVzcG9uZHMgdG8g
+TFNCLgogCiBFeGFtcGxlOgogCkBAIC0yOSw2ICszMiw3IEBAIEV4YW1wbGU6CiAJCSNkbWEtY2Vs
+bHMgPSA8MT47CiAJCWRtYS1jaGFubmVscyA9IDwzMj47CiAJCWRtYS1yZXF1ZXN0cyA9IDwxMjc+
+OworCQlkbWEtY2hhbm5lbC1tYXNrID0gPDB4ZmZmZT4KIAl9OwogCiAqIERNQSByb3V0ZXIK
