@@ -1,28 +1,28 @@
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
-Subject: [1/8,v3] Documentation: bindings: k3dma: Extend the k3dma driver binding to support hisi-asp
-From: Rob Herring <robh@kernel.org>
-Message-Id: <20190117160637.GA3498@bogus>
-Date: Thu, 17 Jan 2019 10:06:37 -0600
-To: John Stultz <john.stultz@linaro.org>
-Cc: lkml <linux-kernel@vger.kernel.org>, Vinod Koul <vkoul@kernel.org>, Mark Rutland <mark.rutland@arm.com>, Zhuangluan Su <suzhuangluan@hisilicon.com>, Tanglei Han <hantanglei@huawei.com>, Ryan Grachek <ryan@edited.us>, Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, dmaengine@vger.kernel.org, devicetree@vger.kernel.org, Youlin Wang <wwx575822@notesmail.huawei.com>
+Subject: [v5,2/5] dmaengine: imx-sdma: add imx8mq sdma compatible parts
+From: Angus Ainslie <angus@akkea.ca>
+Message-Id: <20190128060840.31695-3-angus@akkea.ca>
+Date: Sun, 27 Jan 2019 23:08:37 -0700
+To: angus@akkea.ca
+Cc: angus.ainslie@puri.sm, Vinod Koul <vkoul@kernel.org>, dmaengine@vger.kernel.org, NXP Linux Team <linux-imx@nxp.com>, Pengutronix Kernel Team <kernel@pengutronix.de>, linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, Lucas Stach <l.stach@pengutronix.de>, Daniel Baluta <daniel.baluta@gmail.com>
 List-ID: <dmaengine.vger.kernel.org>
 
-T24gVGh1LCAxMCBKYW4gMjAxOSAwOTozNDowNSAtMDgwMCwgSm9obiBTdHVsdHogd3JvdGU6Cj4g
-RnJvbTogWW91bGluIFdhbmcgPHd3eDU3NTgyMkBub3Rlc21haWwuaHVhd2VpLmNvbT4KPiAKPiBF
-eHRlbmQgdGhlIGszZG1hIGRyaXZlciBiaW5kaW5nIHRvIHN1cHBvcnQgaGlzaS1hc3AgaGFyZHdh
-cmUKPiB2YXJpYW50cy4KPiAKPiBDYzogVmlub2QgS291bCA8dmtvdWxAa2VybmVsLm9yZz4KPiBD
-YzogUm9iIEhlcnJpbmcgPHJvYmgrZHRAa2VybmVsLm9yZz4KPiBDYzogTWFyayBSdXRsYW5kIDxt
-YXJrLnJ1dGxhbmRAYXJtLmNvbT4KPiBDYzogWmh1YW5nbHVhbiBTdSA8c3V6aHVhbmdsdWFuQGhp
-c2lsaWNvbi5jb20+Cj4gQ2M6IFRhbmdsZWkgSGFuIDxoYW50YW5nbGVpQGh1YXdlaS5jb20+Cj4g
-Q2M6IFJ5YW4gR3JhY2hlayA8cnlhbkBlZGl0ZWQudXM+Cj4gQ2M6IE1hbml2YW5uYW4gU2FkaGFz
-aXZhbSA8bWFuaXZhbm5hbi5zYWRoYXNpdmFtQGxpbmFyby5vcmc+Cj4gQ2M6IGRtYWVuZ2luZUB2
-Z2VyLmtlcm5lbC5vcmcKPiBDYzogZGV2aWNldHJlZUB2Z2VyLmtlcm5lbC5vcmcKPiBTaWduZWQt
-b2ZmLWJ5OiBZb3VsaW4gV2FuZyA8d3d4NTc1ODIyQG5vdGVzbWFpbC5odWF3ZWkuY29tPgo+IFNp
-Z25lZC1vZmYtYnk6IFRhbmdsZWkgSGFuIDxoYW50YW5nbGVpQGh1YXdlaS5jb20+Cj4gU2lnbmVk
-LW9mZi1ieTogSm9obiBTdHVsdHogPGpvaG4uc3R1bHR6QGxpbmFyby5vcmc+Cj4gLS0tCj4gdjI6
-IFNpbXBsaWZ5IHBhdGNoLCByZW1vdmluZyBleHRyYW5pb3VzIGV4YW1wbGVzCj4gLS0tCj4gIERv
-Y3VtZW50YXRpb24vZGV2aWNldHJlZS9iaW5kaW5ncy9kbWEvazNkbWEudHh0IHwgNCArKystCj4g
-IDEgZmlsZSBjaGFuZ2VkLCAzIGluc2VydGlvbnMoKyksIDEgZGVsZXRpb24oLSkKPiAKClJldmll
-d2VkLWJ5OiBSb2IgSGVycmluZyA8cm9iaEBrZXJuZWwub3JnPgo=
+VGhpcyBpcyBpZGVudGljYWwgdG8gdGhlIGlteDdkLgoKU2lnbmVkLW9mZi1ieTogQW5ndXMgQWlu
+c2xpZSAoUHVyaXNtKSA8YW5ndXNAYWtrZWEuY2E+Ci0tLQogZHJpdmVycy9kbWEvaW14LXNkbWEu
+YyB8IDQgKysrKwogMSBmaWxlIGNoYW5nZWQsIDQgaW5zZXJ0aW9ucygrKQoKZGlmZiAtLWdpdCBh
+L2RyaXZlcnMvZG1hL2lteC1zZG1hLmMgYi9kcml2ZXJzL2RtYS9pbXgtc2RtYS5jCmluZGV4IDc1
+N2ZhZDJmYmZhZS4uYzRkYjRmZTZiY2M5IDEwMDY0NAotLS0gYS9kcml2ZXJzL2RtYS9pbXgtc2Rt
+YS5jCisrKyBiL2RyaXZlcnMvZG1hL2lteC1zZG1hLmMKQEAgLTU3OCw2ICs1NzgsOSBAQCBzdGF0
+aWMgY29uc3Qgc3RydWN0IHBsYXRmb3JtX2RldmljZV9pZCBzZG1hX2RldnR5cGVzW10gPSB7CiAJ
+fSwgewogCQkubmFtZSA9ICJpbXg3ZC1zZG1hIiwKIAkJLmRyaXZlcl9kYXRhID0gKHVuc2lnbmVk
+IGxvbmcpJnNkbWFfaW14N2QsCisJfSwgeworCQkubmFtZSA9ICJpbXg4bXEtc2RtYSIsCisJCS5k
+cml2ZXJfZGF0YSA9ICh1bnNpZ25lZCBsb25nKSZzZG1hX2lteDdkLAogCX0sIHsKIAkJLyogc2Vu
+dGluZWwgKi8KIAl9CkBAIC01OTIsNiArNTk1LDcgQEAgc3RhdGljIGNvbnN0IHN0cnVjdCBvZl9k
+ZXZpY2VfaWQgc2RtYV9kdF9pZHNbXSA9IHsKIAl7IC5jb21wYXRpYmxlID0gImZzbCxpbXgzMS1z
+ZG1hIiwgLmRhdGEgPSAmc2RtYV9pbXgzMSwgfSwKIAl7IC5jb21wYXRpYmxlID0gImZzbCxpbXgy
+NS1zZG1hIiwgLmRhdGEgPSAmc2RtYV9pbXgyNSwgfSwKIAl7IC5jb21wYXRpYmxlID0gImZzbCxp
+bXg3ZC1zZG1hIiwgLmRhdGEgPSAmc2RtYV9pbXg3ZCwgfSwKKwl7IC5jb21wYXRpYmxlID0gImZz
+bCxpbXg4bXEtc2RtYSIsIC5kYXRhID0gJnNkbWFfaW14N2QsIH0sCiAJeyAvKiBzZW50aW5lbCAq
+LyB9CiB9OwogTU9EVUxFX0RFVklDRV9UQUJMRShvZiwgc2RtYV9kdF9pZHMpOwo=
