@@ -1,15 +1,41 @@
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
-Subject: [03/18] net: caif: pass struct device to DMA API functions
+Subject: [04/18] au1000_eth: pass struct device to DMA API functions
 From: Christoph Hellwig <hch@lst.de>
-Message-Id: <20190201161045.GF6532@lst.de>
-Date: Fri, 1 Feb 2019 17:10:45 +0100
-To: Robin Murphy <robin.murphy@arm.com>
-Cc: Christoph Hellwig <hch@lst.de>, John Crispin <john@phrozen.org>, Vinod Koul <vkoul@kernel.org>, Dmitry Tarnyagin <dmitry.tarnyagin@lockless.no>, Nicolas Ferre <nicolas.ferre@microchip.com>, Sudip Mukherjee <sudipm.mukherjee@gmail.com>, Felipe Balbi <balbi@kernel.org>, linux-mips@vger.kernel.org, linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org, netdev@vger.kernel.org, linux-usb@vger.kernel.org, linux-fbdev@vger.kernel.org, alsa-devel@alsa-project.org, iommu@lists.linux-foundation.org
+Message-Id: <20190201084801.10983-5-hch@lst.de>
+Date: Fri,  1 Feb 2019 09:47:47 +0100
+To: John Crispin <john@phrozen.org>, Vinod Koul <vkoul@kernel.org>, Dmitry Tarnyagin <dmitry.tarnyagin@lockless.no>, Nicolas Ferre <nicolas.ferre@microchip.com>, Sudip Mukherjee <sudipm.mukherjee@gmail.com>, Felipe Balbi <balbi@kernel.org>, linux-mips@vger.kernel.org, linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org, netdev@vger.kernel.org, linux-usb@vger.kernel.org, linux-fbdev@vger.kernel.org, alsa-devel@alsa-project.org
+Cc: iommu@lists.linux-foundation.org
 List-ID: <dmaengine.vger.kernel.org>
 
-T24gRnJpLCBGZWIgMDEsIDIwMTkgYXQgMDE6NTM6MDlQTSArMDAwMCwgUm9iaW4gTXVycGh5IHdy
-b3RlOgo+PiAgICNkZWZpbmUgTE9XX1dBVEVSX01BUksgICAxMDAKPj4gICAjZGVmaW5lIEhJR0hf
-V0FURVJfTUFSSyAgKExPV19XQVRFUl9NQVJLKjUpCj4+ICAgLSNpZmRlZiBDT05GSUdfVU1MCj4+
-ICsjaWZkZWYgQ09ORklHX0hBU19ETUEKPgo+ICNpZm5kZWYsIHN1cmVseT8KCkluZGVlZC4K
+VGhlIERNQSBBUEkgZ2VuZXJhbGx5IHJlbGllcyBvbiBhIHN0cnVjdCBkZXZpY2UgdG8gd29yayBw
+cm9wZXJseSwgYW5kCm9ubHkgYmFyZWx5IHdvcmtzIHdpdGhvdXQgb25lIGZvciBsZWdhY3kgcmVh
+c29ucy4gIFBhc3MgdGhlIGVhc2lseQphdmFpbGFibGUgc3RydWN0IGRldmljZSBmcm9tIHRoZSBw
+bGF0Zm9ybV9kZXZpY2UgdG8gcmVtZWR5IHRoaXMuCgpTaWduZWQtb2ZmLWJ5OiBDaHJpc3RvcGgg
+SGVsbHdpZyA8aGNoQGxzdC5kZT4KLS0tCiBkcml2ZXJzL25ldC9ldGhlcm5ldC9hbWQvYXUxMDAw
+X2V0aC5jIHwgNiArKystLS0KIDEgZmlsZSBjaGFuZ2VkLCAzIGluc2VydGlvbnMoKyksIDMgZGVs
+ZXRpb25zKC0pCgpkaWZmIC0tZ2l0IGEvZHJpdmVycy9uZXQvZXRoZXJuZXQvYW1kL2F1MTAwMF9l
+dGguYyBiL2RyaXZlcnMvbmV0L2V0aGVybmV0L2FtZC9hdTEwMDBfZXRoLmMKaW5kZXggZTgzM2Qx
+YjNmZTE4Li5lNTA3M2FlZWEwNmEgMTAwNjQ0Ci0tLSBhL2RyaXZlcnMvbmV0L2V0aGVybmV0L2Ft
+ZC9hdTEwMDBfZXRoLmMKKysrIGIvZHJpdmVycy9uZXQvZXRoZXJuZXQvYW1kL2F1MTAwMF9ldGgu
+YwpAQCAtMTE2Nyw3ICsxMTY3LDcgQEAgc3RhdGljIGludCBhdTEwMDBfcHJvYmUoc3RydWN0IHBs
+YXRmb3JtX2RldmljZSAqcGRldikKIAkvKiBBbGxvY2F0ZSB0aGUgZGF0YSBidWZmZXJzCiAJICog
+U25vb3Bpbmcgd29ya3MgZmluZSB3aXRoIGV0aCBvbiBhbGwgYXUxeHh4CiAJICovCi0JYXVwLT52
+YWRkciA9ICh1MzIpZG1hX2FsbG9jX2F0dHJzKE5VTEwsIE1BWF9CVUZfU0laRSAqCisJYXVwLT52
+YWRkciA9ICh1MzIpZG1hX2FsbG9jX2F0dHJzKCZwZGV2LT5kZXYsIE1BWF9CVUZfU0laRSAqCiAJ
+CQkJCSAgKE5VTV9UWF9CVUZGUyArIE5VTV9SWF9CVUZGUyksCiAJCQkJCSAgJmF1cC0+ZG1hX2Fk
+ZHIsIDAsCiAJCQkJCSAgRE1BX0FUVFJfTk9OX0NPTlNJU1RFTlQpOwpAQCAtMTM0OSw3ICsxMzQ5
+LDcgQEAgc3RhdGljIGludCBhdTEwMDBfcHJvYmUoc3RydWN0IHBsYXRmb3JtX2RldmljZSAqcGRl
+dikKIGVycl9yZW1hcDI6CiAJaW91bm1hcChhdXAtPm1hYyk7CiBlcnJfcmVtYXAxOgotCWRtYV9m
+cmVlX2F0dHJzKE5VTEwsIE1BWF9CVUZfU0laRSAqIChOVU1fVFhfQlVGRlMgKyBOVU1fUlhfQlVG
+RlMpLAorCWRtYV9mcmVlX2F0dHJzKCZwZGV2LT5kZXYsIE1BWF9CVUZfU0laRSAqIChOVU1fVFhf
+QlVGRlMgKyBOVU1fUlhfQlVGRlMpLAogCQkJKHZvaWQgKilhdXAtPnZhZGRyLCBhdXAtPmRtYV9h
+ZGRyLAogCQkJRE1BX0FUVFJfTk9OX0NPTlNJU1RFTlQpOwogZXJyX3ZhZGRyOgpAQCAtMTM4Myw3
+ICsxMzgzLDcgQEAgc3RhdGljIGludCBhdTEwMDBfcmVtb3ZlKHN0cnVjdCBwbGF0Zm9ybV9kZXZp
+Y2UgKnBkZXYpCiAJCWlmIChhdXAtPnR4X2RiX2ludXNlW2ldKQogCQkJYXUxMDAwX1JlbGVhc2VE
+QihhdXAsIGF1cC0+dHhfZGJfaW51c2VbaV0pOwogCi0JZG1hX2ZyZWVfYXR0cnMoTlVMTCwgTUFY
+X0JVRl9TSVpFICogKE5VTV9UWF9CVUZGUyArIE5VTV9SWF9CVUZGUyksCisJZG1hX2ZyZWVfYXR0
+cnMoJnBkZXYtPmRldiwgTUFYX0JVRl9TSVpFICogKE5VTV9UWF9CVUZGUyArIE5VTV9SWF9CVUZG
+UyksCiAJCQkodm9pZCAqKWF1cC0+dmFkZHIsIGF1cC0+ZG1hX2FkZHIsCiAJCQlETUFfQVRUUl9O
+T05fQ09OU0lTVEVOVCk7CiAK
