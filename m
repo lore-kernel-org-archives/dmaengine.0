@@ -1,20 +1,34 @@
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
-Subject: [alsa-devel] don't pass a NULL struct device to DMA API functions
-From: Takashi Iwai <tiwai@suse.de>
-Message-Id: <s5hwomj7a9e.wl-tiwai@suse.de>
-Date: Fri, 01 Feb 2019 17:18:21 +0100
-To: Christoph Hellwig <hch@lst.de>
-Cc: John Crispin <john@phrozen.org>, Vinod Koul <vkoul@kernel.org>, Dmitry Tarnyagin <dmitry.tarnyagin@lockless.no>, Nicolas Ferre <nicolas.ferre@microchip.com>, Sudip Mukherjee <sudipm.mukherjee@gmail.com>, Felipe Balbi <balbi@kernel.org>, linux-mips@vger.kernel.org, linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org, netdev@vger.kernel.org, linux-usb@vger.kernel.org, linux-fbdev@vger.kernel.org, alsa-devel@alsa-project.org, iommu@lists.linux-foundation.org
+Subject: [01/18] MIPS: lantiq: pass struct device to DMA API functions
+From: Christoph Hellwig <hch@lst.de>
+Message-Id: <20190201084801.10983-2-hch@lst.de>
+Date: Fri,  1 Feb 2019 09:47:44 +0100
+To: John Crispin <john@phrozen.org>, Vinod Koul <vkoul@kernel.org>, Dmitry Tarnyagin <dmitry.tarnyagin@lockless.no>, Nicolas Ferre <nicolas.ferre@microchip.com>, Sudip Mukherjee <sudipm.mukherjee@gmail.com>, Felipe Balbi <balbi@kernel.org>, linux-mips@vger.kernel.org, linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org, netdev@vger.kernel.org, linux-usb@vger.kernel.org, linux-fbdev@vger.kernel.org, alsa-devel@alsa-project.org
+Cc: iommu@lists.linux-foundation.org
 List-ID: <dmaengine.vger.kernel.org>
 
-T24gRnJpLCAwMSBGZWIgMjAxOSAxNzowOTo1NyArMDEwMCwKQ2hyaXN0b3BoIEhlbGx3aWcgd3Jv
-dGU6Cj4gCj4gT24gRnJpLCBGZWIgMDEsIDIwMTkgYXQgMDI6MTY6MDhQTSArMDEwMCwgVGFrYXNo
-aSBJd2FpIHdyb3RlOgo+ID4gQWN0dWFsbHkgdGhlcmUgYXJlIGEgYnVuY2ggb2YgSVNBIHNvdW5k
-IGRyaXZlcnMgdGhhdCBzdGlsbCBjYWxsCj4gPiBhbGxvY2F0b3JzIHdpdGggTlVMTCBkZXZpY2Uu
-Cj4gPiAKPiA+IFRoZSBwYXRjaCBiZWxvdyBzaG91bGQgYWRkcmVzcyBpdCwgYWx0aG91Z2ggaXQn
-cyBvbmx5IGNvbXBpbGUtdGVzdGVkLgo+IAo+IE9oLCBJIG1pc3NlZCB0aGVzZSAiaW5kaXJlY3Qi
-IGNhbGxzLiAgVGhpcyBsb29rcyBnb29kIHRvIG1lOgo+IAo+IFJldmlld2VkLWJ5OiBDaHJpc3Rv
-cGggSGVsbHdpZyA8aGNoQGxzdC5kZT4KCk9LLCBtZXJnZWQgdGhpcyBvbmUgdG8gZm9yLW5leHQg
-YnJhbmNoIG5vdyBhcyB3ZWxsLgoKCnRoYW5rcywKClRha2FzaGkK
+VGhlIERNQSBBUEkgZ2VuZXJhbGx5IHJlbGllcyBvbiBhIHN0cnVjdCBkZXZpY2UgdG8gd29yayBw
+cm9wZXJseSwgYW5kCm9ubHkgYmFyZWx5IHdvcmtzIHdpdGhvdXQgb25lIGZvciBsZWdhY3kgcmVh
+c29ucy4gIFBhc3MgdGhlIGVhc2lseQphdmFpbGFibGUgc3RydWN0IGRldmljZSBmcm9tIHRoZSBw
+bGF0Zm9ybV9kZXZpY2UgdG8gcmVtZWR5IHRoaXMuCgpBbHNvIHVzZSBHRlBfS0VSTkVMIGluc3Rl
+YWQgb2YgR0ZQX0FUT01JQyBhcyB0aGUgZ2ZwX3QgZm9yIHRoZSBtZW1vcnkKYWxsb2NhdGlvbiwg
+YXMgd2UgYXJlbid0IGluIGludGVycnVwdCBjb250ZXh0IG9yIHVuZGVyIGEgbG9jay4KCk5vdGUg
+dGhhdCB0aGlzIHdob2xlIGZ1bmN0aW9uIGxvb2tzIHNvbWV3aGF0IGJvZ3VzIGdpdmVuIHRoYXQg
+d2UgbmV2ZXIKZXZlbiBsb29rIGF0IHRoZSByZXR1cm5lZCBkbWEgYWRkcmVzcywgYW5kIHRoZSBD
+UEhZU0FERFIgbWFnaWMgb24KYSByZXR1cm5lZCBub25jYWNoZWQgbWFwcGluZyBsb29rcyAiaW50
+ZXJlc3RpbmciLiAgQnV0IEknbGwgbGVhdmUKdGhhdCB0byBwZW9wbGUgbW9yZSBmYW1pbGlhciB3
+aXRoIHRoZSBjb2RlIHRvIHNvcnQgb3V0LgoKU2lnbmVkLW9mZi1ieTogQ2hyaXN0b3BoIEhlbGx3
+aWcgPGhjaEBsc3QuZGU+Ci0tLQogYXJjaC9taXBzL2xhbnRpcS94d2F5L3ZtbWMuYyB8IDQgKyst
+LQogMSBmaWxlIGNoYW5nZWQsIDIgaW5zZXJ0aW9ucygrKSwgMiBkZWxldGlvbnMoLSkKCmRpZmYg
+LS1naXQgYS9hcmNoL21pcHMvbGFudGlxL3h3YXkvdm1tYy5jIGIvYXJjaC9taXBzL2xhbnRpcS94
+d2F5L3ZtbWMuYwppbmRleCA1NzdlYzgxYjU1N2QuLjNkZWFiOWE3NzcxOCAxMDA2NDQKLS0tIGEv
+YXJjaC9taXBzL2xhbnRpcS94d2F5L3ZtbWMuYworKysgYi9hcmNoL21pcHMvbGFudGlxL3h3YXkv
+dm1tYy5jCkBAIC0zMSw4ICszMSw4IEBAIHN0YXRpYyBpbnQgdm1tY19wcm9iZShzdHJ1Y3QgcGxh
+dGZvcm1fZGV2aWNlICpwZGV2KQogCWRtYV9hZGRyX3QgZG1hOwogCiAJY3AxX2Jhc2UgPQotCQko
+dm9pZCAqKSBDUEhZU0FERFIoZG1hX2FsbG9jX2NvaGVyZW50KE5VTEwsIENQMV9TSVpFLAotCQkJ
+CQkJICAgICZkbWEsIEdGUF9BVE9NSUMpKTsKKwkJKHZvaWQgKikgQ1BIWVNBRERSKGRtYV9hbGxv
+Y19jb2hlcmVudCgmcGRldi0+ZGV2LCBDUDFfU0laRSwKKwkJCQkJCSAgICAmZG1hLCBHRlBfS0VS
+TkVMKSk7CiAKIAlncGlvX2NvdW50ID0gb2ZfZ3Bpb19jb3VudChwZGV2LT5kZXYub2Zfbm9kZSk7
+CiAJd2hpbGUgKGdwaW9fY291bnQgPiAwKSB7Cg==
