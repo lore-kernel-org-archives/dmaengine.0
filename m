@@ -2,37 +2,17 @@ Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
 Subject: [13/18] fotg210-udc: pass struct device to DMA API functions
-From: Christoph Hellwig <hch@lst.de>
-Message-Id: <20190201084801.10983-14-hch@lst.de>
-Date: Fri,  1 Feb 2019 09:47:56 +0100
-To: John Crispin <john@phrozen.org>, Vinod Koul <vkoul@kernel.org>, Dmitry Tarnyagin <dmitry.tarnyagin@lockless.no>, Nicolas Ferre <nicolas.ferre@microchip.com>, Sudip Mukherjee <sudipm.mukherjee@gmail.com>, Felipe Balbi <balbi@kernel.org>, linux-mips@vger.kernel.org, linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org, netdev@vger.kernel.org, linux-usb@vger.kernel.org, linux-fbdev@vger.kernel.org, alsa-devel@alsa-project.org
+From: Felipe Balbi <balbi@kernel.org>
+Message-Id: <87a7jfodb0.fsf@linux.intel.com>
+Date: Fri, 01 Feb 2019 15:20:35 +0200
+To: Christoph Hellwig <hch@lst.de>, John Crispin <john@phrozen.org>, Vinod Koul <vkoul@kernel.org>, Dmitry Tarnyagin <dmitry.tarnyagin@lockless.no>, Nicolas Ferre <nicolas.ferre@microchip.com>, Sudip Mukherjee <sudipm.mukherjee@gmail.com>, linux-mips@vger.kernel.org, linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org, netdev@vger.kernel.org, linux-usb@vger.kernel.org, linux-fbdev@vger.kernel.org, alsa-devel@alsa-project.org
 Cc: iommu@lists.linux-foundation.org
 List-ID: <dmaengine.vger.kernel.org>
 
-VGhlIERNQSBBUEkgZ2VuZXJhbGx5IHJlbGllcyBvbiBhIHN0cnVjdCBkZXZpY2UgdG8gd29yayBw
-cm9wZXJseSwgYW5kCm9ubHkgYmFyZWx5IHdvcmtzIHdpdGhvdXQgb25lIGZvciBsZWdhY3kgcmVh
-c29ucy4gIFBhc3MgdGhlIGVhc2lseQphdmFpbGFibGUgc3RydWN0IGRldmljZSBmcm9tIHRoZSBw
-bGF0Zm9ybV9kZXZpY2UgdG8gcmVtZWR5IHRoaXMuCgpTaWduZWQtb2ZmLWJ5OiBDaHJpc3RvcGgg
-SGVsbHdpZyA8aGNoQGxzdC5kZT4KLS0tCiBkcml2ZXJzL3VzYi9nYWRnZXQvdWRjL2ZvdGcyMTAt
-dWRjLmMgfCA3ICsrKystLS0KIDEgZmlsZSBjaGFuZ2VkLCA0IGluc2VydGlvbnMoKyksIDMgZGVs
-ZXRpb25zKC0pCgpkaWZmIC0tZ2l0IGEvZHJpdmVycy91c2IvZ2FkZ2V0L3VkYy9mb3RnMjEwLXVk
-Yy5jIGIvZHJpdmVycy91c2IvZ2FkZ2V0L3VkYy9mb3RnMjEwLXVkYy5jCmluZGV4IGZlOWNmNDE1
-ZjJmMS4uY2VjNDkyOTRiYWM2IDEwMDY0NAotLS0gYS9kcml2ZXJzL3VzYi9nYWRnZXQvdWRjL2Zv
-dGcyMTAtdWRjLmMKKysrIGIvZHJpdmVycy91c2IvZ2FkZ2V0L3VkYy9mb3RnMjEwLXVkYy5jCkBA
-IC0zMjYsNiArMzI2LDcgQEAgc3RhdGljIHZvaWQgZm90ZzIxMF93YWl0X2RtYV9kb25lKHN0cnVj
-dCBmb3RnMjEwX2VwICplcCkKIHN0YXRpYyB2b2lkIGZvdGcyMTBfc3RhcnRfZG1hKHN0cnVjdCBm
-b3RnMjEwX2VwICplcCwKIAkJCXN0cnVjdCBmb3RnMjEwX3JlcXVlc3QgKnJlcSkKIHsKKwlzdHJ1
-Y3QgZGV2aWNlICpkZXYgPSAmZXAtPmZvdGcyMTAtPmdhZGdldC5kZXY7CiAJZG1hX2FkZHJfdCBk
-OwogCXU4ICpidWZmZXI7CiAJdTMyIGxlbmd0aDsKQEAgLTM0OCwxMCArMzQ5LDEwIEBAIHN0YXRp
-YyB2b2lkIGZvdGcyMTBfc3RhcnRfZG1hKHN0cnVjdCBmb3RnMjEwX2VwICplcCwKIAkJCWxlbmd0
-aCA9IHJlcS0+cmVxLmxlbmd0aDsKIAl9CiAKLQlkID0gZG1hX21hcF9zaW5nbGUoTlVMTCwgYnVm
-ZmVyLCBsZW5ndGgsCisJZCA9IGRtYV9tYXBfc2luZ2xlKGRldiwgYnVmZmVyLCBsZW5ndGgsCiAJ
-CQllcC0+ZGlyX2luID8gRE1BX1RPX0RFVklDRSA6IERNQV9GUk9NX0RFVklDRSk7CiAKLQlpZiAo
-ZG1hX21hcHBpbmdfZXJyb3IoTlVMTCwgZCkpIHsKKwlpZiAoZG1hX21hcHBpbmdfZXJyb3IoZGV2
-LCBkKSkgewogCQlwcl9lcnIoImRtYV9tYXBwaW5nX2Vycm9yXG4iKTsKIAkJcmV0dXJuOwogCX0K
-QEAgLTM2Niw3ICszNjcsNyBAQCBzdGF0aWMgdm9pZCBmb3RnMjEwX3N0YXJ0X2RtYShzdHJ1Y3Qg
-Zm90ZzIxMF9lcCAqZXAsCiAJLyogdXBkYXRlIGFjdHVhbCB0cmFuc2ZlciBsZW5ndGggKi8KIAly
-ZXEtPnJlcS5hY3R1YWwgKz0gbGVuZ3RoOwogCi0JZG1hX3VubWFwX3NpbmdsZShOVUxMLCBkLCBs
-ZW5ndGgsIERNQV9UT19ERVZJQ0UpOworCWRtYV91bm1hcF9zaW5nbGUoZGV2LCBkLCBsZW5ndGgs
-IERNQV9UT19ERVZJQ0UpOwogfQogCiBzdGF0aWMgdm9pZCBmb3RnMjEwX2VwMF9xdWV1ZShzdHJ1
-Y3QgZm90ZzIxMF9lcCAqZXAsCg==
+Q2hyaXN0b3BoIEhlbGx3aWcgPGhjaEBsc3QuZGU+IHdyaXRlczoKCj4gVGhlIERNQSBBUEkgZ2Vu
+ZXJhbGx5IHJlbGllcyBvbiBhIHN0cnVjdCBkZXZpY2UgdG8gd29yayBwcm9wZXJseSwgYW5kCj4g
+b25seSBiYXJlbHkgd29ya3Mgd2l0aG91dCBvbmUgZm9yIGxlZ2FjeSByZWFzb25zLiAgUGFzcyB0
+aGUgZWFzaWx5Cj4gYXZhaWxhYmxlIHN0cnVjdCBkZXZpY2UgZnJvbSB0aGUgcGxhdGZvcm1fZGV2
+aWNlIHRvIHJlbWVkeSB0aGlzLgo+Cj4gU2lnbmVkLW9mZi1ieTogQ2hyaXN0b3BoIEhlbGx3aWcg
+PGhjaEBsc3QuZGU+CgpJbiBjYXNlIHlvdSdyZSB0YWtpbmcgdGhlIGVudGlyZSBzZXJpZXM6CgpB
+Y2tlZC1ieTogRmVsaXBlIEJhbGJpIDxmZWxpcGUuYmFsYmlAbGludXguaW50ZWwuY29tPgo=
