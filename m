@@ -1,24 +1,34 @@
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
-Subject: [12/18] fotg210-udc: remove a bogus dma_sync_single_for_device call
-From: Felipe Balbi <balbi@kernel.org>
-Message-Id: <87mun25u67.fsf@linux.intel.com>
-Date: Mon, 11 Feb 2019 15:30:40 +0200
-To: Christoph Hellwig <hch@lst.de>
-Cc: John Crispin <john@phrozen.org>, Vinod Koul <vkoul@kernel.org>, Dmitry Tarnyagin <dmitry.tarnyagin@lockless.no>, Nicolas Ferre <nicolas.ferre@microchip.com>, Sudip Mukherjee <sudipm.mukherjee@gmail.com>, linux-mips@vger.kernel.org, linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org, netdev@vger.kernel.org, linux-usb@vger.kernel.org, linux-fbdev@vger.kernel.org, alsa-devel@alsa-project.org, iommu@lists.linux-foundation.org
+Subject: [10/18] smc911x: pass struct device to DMA API functions
+From: Christoph Hellwig <hch@lst.de>
+Message-Id: <20190201084801.10983-11-hch@lst.de>
+Date: Fri,  1 Feb 2019 09:47:53 +0100
+To: John Crispin <john@phrozen.org>, Vinod Koul <vkoul@kernel.org>, Dmitry Tarnyagin <dmitry.tarnyagin@lockless.no>, Nicolas Ferre <nicolas.ferre@microchip.com>, Sudip Mukherjee <sudipm.mukherjee@gmail.com>, Felipe Balbi <balbi@kernel.org>, linux-mips@vger.kernel.org, linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org, netdev@vger.kernel.org, linux-usb@vger.kernel.org, linux-fbdev@vger.kernel.org, alsa-devel@alsa-project.org
+Cc: iommu@lists.linux-foundation.org
 List-ID: <dmaengine.vger.kernel.org>
 
-SGksCgpDaHJpc3RvcGggSGVsbHdpZyA8aGNoQGxzdC5kZT4gd3JpdGVzOgo+IE9uIEZyaSwgRmVi
-IDAxLCAyMDE5IGF0IDA1OjEwOjI2UE0gKzAxMDAsIENocmlzdG9waCBIZWxsd2lnIHdyb3RlOgo+
-PiBPbiBGcmksIEZlYiAwMSwgMjAxOSBhdCAwMzoxOTo0MVBNICswMjAwLCBGZWxpcGUgQmFsYmkg
-d3JvdGU6Cj4+ID4gQ2hyaXN0b3BoIEhlbGx3aWcgPGhjaEBsc3QuZGU+IHdyaXRlczoKPj4gPiAK
-Pj4gPiA+IGRtYV9tYXBfc2luZ2xlIGFscmVhZHkgdHJhbnNmZXJzIG93bmVyc2hpcCB0byB0aGUg
-ZGV2aWNlLgo+PiA+ID4KPj4gPiA+IFNpZ25lZC1vZmYtYnk6IENocmlzdG9waCBIZWxsd2lnIDxo
-Y2hAbHN0LmRlPgo+PiA+IAo+PiA+IERvIHlvdSB3YW50IG1lIHRvIHRha2UgdGhlIFVTQiBiaXRz
-IG9yIHdpbGwgeW91IHRha2UgdGhlIGVudGlyZSBzZXJpZXM/Cj4+ID4gSW4gY2FzZSB5b3UncmUg
-dGFraW5nIHRoZSBlbnRpcmUgc2VyaWVzOgo+PiAKPj4gSWYgeW91IHdhbnQgdG8gdGFrZSB0aGUg
-VVNCIGZlZWwgZnJlZS4gIEkganVzdCB3YW50IG1vc3Qgb2YgdGhpcyBpbgo+PiB0aGlzIG1lcmdl
-IHdpbmRvdyBpZiBwb3NzaWJsZS4KPgo+IEkgZGlkbid0IHNlZSBpbiB0aGUgVVNCIHRyZWUgeWV0
-LCBzbyBwbGVhc2UgbGV0IG1lIGtub3cgaWYgeW91IHdhbnQgdG8KPiB0YWtlIGl0LgoKc29ycnkg
-Zm9yIHRoZSBkZWxheSwganVzdCB0b29rIGl0IHRvIG15IHRyZWUuCg==
+VGhlIERNQSBBUEkgZ2VuZXJhbGx5IHJlbGllcyBvbiBhIHN0cnVjdCBkZXZpY2UgdG8gd29yayBw
+cm9wZXJseSwgYW5kCm9ubHkgYmFyZWx5IHdvcmtzIHdpdGhvdXQgb25lIGZvciBsZWdhY3kgcmVh
+c29ucy4gIFBhc3MgdGhlIGVhc2lseQphdmFpbGFibGUgc3RydWN0IGRldmljZSBmcm9tIHRoZSBw
+bGF0Zm9ybV9kZXZpY2UgdG8gcmVtZWR5IHRoaXMuCgpTaWduZWQtb2ZmLWJ5OiBDaHJpc3RvcGgg
+SGVsbHdpZyA8aGNoQGxzdC5kZT4KLS0tCiBkcml2ZXJzL25ldC9ldGhlcm5ldC9zbXNjL3NtYzkx
+MXguYyB8IDQgKystLQogMSBmaWxlIGNoYW5nZWQsIDIgaW5zZXJ0aW9ucygrKSwgMiBkZWxldGlv
+bnMoLSkKCmRpZmYgLS1naXQgYS9kcml2ZXJzL25ldC9ldGhlcm5ldC9zbXNjL3NtYzkxMXguYyBi
+L2RyaXZlcnMvbmV0L2V0aGVybmV0L3Ntc2Mvc21jOTExeC5jCmluZGV4IDgzNTVkZmJiOGVjMy4u
+YjU1MGU2MjQ1MDBkIDEwMDY0NAotLS0gYS9kcml2ZXJzL25ldC9ldGhlcm5ldC9zbXNjL3NtYzkx
+MXguYworKysgYi9kcml2ZXJzL25ldC9ldGhlcm5ldC9zbXNjL3NtYzkxMXguYwpAQCAtMTE4OCw3
+ICsxMTg4LDcgQEAgc21jOTExeF90eF9kbWFfaXJxKHZvaWQgKmRhdGEpCiAKIAlEQkcoU01DX0RF
+QlVHX1RYIHwgU01DX0RFQlVHX0RNQSwgZGV2LCAiVFggRE1BIGlycSBoYW5kbGVyXG4iKTsKIAlC
+VUdfT04oc2tiID09IE5VTEwpOwotCWRtYV91bm1hcF9zaW5nbGUoTlVMTCwgdHhfZG1hYnVmLCB0
+eF9kbWFsZW4sIERNQV9UT19ERVZJQ0UpOworCWRtYV91bm1hcF9zaW5nbGUobHAtPmRldiwgdHhf
+ZG1hYnVmLCB0eF9kbWFsZW4sIERNQV9UT19ERVZJQ0UpOwogCW5ldGlmX3RyYW5zX3VwZGF0ZShk
+ZXYpOwogCWRldl9rZnJlZV9za2JfaXJxKHNrYik7CiAJbHAtPmN1cnJlbnRfdHhfc2tiID0gTlVM
+TDsKQEAgLTEyMTksNyArMTIxOSw3IEBAIHNtYzkxMXhfcnhfZG1hX2lycSh2b2lkICpkYXRhKQog
+CiAJREJHKFNNQ19ERUJVR19GVU5DLCBkZXYsICItLT4gJXNcbiIsIF9fZnVuY19fKTsKIAlEQkco
+U01DX0RFQlVHX1JYIHwgU01DX0RFQlVHX0RNQSwgZGV2LCAiUlggRE1BIGlycSBoYW5kbGVyXG4i
+KTsKLQlkbWFfdW5tYXBfc2luZ2xlKE5VTEwsIHJ4X2RtYWJ1ZiwgcnhfZG1hbGVuLCBETUFfRlJP
+TV9ERVZJQ0UpOworCWRtYV91bm1hcF9zaW5nbGUobHAtPmRldiwgcnhfZG1hYnVmLCByeF9kbWFs
+ZW4sIERNQV9GUk9NX0RFVklDRSk7CiAJQlVHX09OKHNrYiA9PSBOVUxMKTsKIAlscC0+Y3VycmVu
+dF9yeF9za2IgPSBOVUxMOwogCVBSSU5UX1BLVChza2ItPmRhdGEsIHNrYi0+bGVuKTsK
