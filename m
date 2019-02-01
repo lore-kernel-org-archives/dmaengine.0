@@ -2,36 +2,20 @@ Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
 Subject: [18/18] ALSA: pass struct device to DMA API functions
-From: Christoph Hellwig <hch@lst.de>
-Message-Id: <20190201084801.10983-19-hch@lst.de>
-Date: Fri,  1 Feb 2019 09:48:01 +0100
-To: John Crispin <john@phrozen.org>, Vinod Koul <vkoul@kernel.org>, Dmitry Tarnyagin <dmitry.tarnyagin@lockless.no>, Nicolas Ferre <nicolas.ferre@microchip.com>, Sudip Mukherjee <sudipm.mukherjee@gmail.com>, Felipe Balbi <balbi@kernel.org>, linux-mips@vger.kernel.org, linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org, netdev@vger.kernel.org, linux-usb@vger.kernel.org, linux-fbdev@vger.kernel.org, alsa-devel@alsa-project.org
-Cc: iommu@lists.linux-foundation.org
+From: Takashi Iwai <tiwai@suse.de>
+Message-Id: <s5hpnsb8xen.wl-tiwai@suse.de>
+Date: Fri, 01 Feb 2019 14:13:04 +0100
+To: Christoph Hellwig <hch@lst.de>
+Cc: John Crispin <john@phrozen.org>, Vinod Koul <vkoul@kernel.org>, Dmitry Tarnyagin <dmitry.tarnyagin@lockless.no>, Nicolas Ferre <nicolas.ferre@microchip.com>, Sudip Mukherjee <sudipm.mukherjee@gmail.com>, Felipe Balbi <balbi@kernel.org>, linux-mips@vger.kernel.org, linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org, netdev@vger.kernel.org, linux-usb@vger.kernel.org, linux-fbdev@vger.kernel.org, alsa-devel@alsa-project.org, iommu@lists.linux-foundation.org
 List-ID: <dmaengine.vger.kernel.org>
 
-VGhlIERNQSBBUEkgZ2VuZXJhbGx5IHJlbGllcyBvbiBhIHN0cnVjdCBkZXZpY2UgdG8gd29yayBw
-cm9wZXJseSwgYW5kCm9ubHkgYmFyZWx5IHdvcmtzIHdpdGhvdXQgb25lIGZvciBsZWdhY3kgcmVh
-c29ucy4gIFBhc3MgdGhlIGVhc2lseQphdmFpbGFibGUgc3RydWN0IGRldmljZSBmcm9tIHRoZSBw
-bGF0Zm9ybV9kZXZpY2UgdG8gcmVtZWR5IHRoaXMuCgpBbHNvIHVzZSBHRlBfS0VSTkVMIGluc3Rl
-YWQgb2YgR0ZQX1VTRVIgYXMgdGhlIGdmcF90IGZvciB0aGUgbWVtb3J5CmFsbG9jYXRpb24sIGFz
-IHdlIHNob3VsZCB0cmVhdCB0aGlzIGFsbG9jYXRpb24gYXMgYSBub3JtYWwga2VybmVsIG9uZS4K
-ClNpZ25lZC1vZmYtYnk6IENocmlzdG9waCBIZWxsd2lnIDxoY2hAbHN0LmRlPgotLS0KIHNvdW5k
-L21pcHMvc2dpbzJhdWRpby5jIHwgNyArKysrLS0tCiAxIGZpbGUgY2hhbmdlZCwgNCBpbnNlcnRp
-b25zKCspLCAzIGRlbGV0aW9ucygtKQoKZGlmZiAtLWdpdCBhL3NvdW5kL21pcHMvc2dpbzJhdWRp
-by5jIGIvc291bmQvbWlwcy9zZ2lvMmF1ZGlvLmMKaW5kZXggM2VjOTM5MWE0NzM2Li41M2E0ZWUw
-MWM1MjIgMTAwNjQ0Ci0tLSBhL3NvdW5kL21pcHMvc2dpbzJhdWRpby5jCisrKyBiL3NvdW5kL21p
-cHMvc2dpbzJhdWRpby5jCkBAIC04MDUsNyArODA1LDcgQEAgc3RhdGljIGludCBzbmRfc2dpbzJh
-dWRpb19mcmVlKHN0cnVjdCBzbmRfc2dpbzJhdWRpbyAqY2hpcCkKIAkJZnJlZV9pcnEoc25kX3Nn
-aW8yX2lzcl90YWJsZVtpXS5pcnEsCiAJCQkgJmNoaXAtPmNoYW5uZWxbc25kX3NnaW8yX2lzcl90
-YWJsZVtpXS5pZHhdKTsKIAotCWRtYV9mcmVlX2NvaGVyZW50KE5VTEwsIE1BQ0VJU0FfUklOR0JV
-RkZFUlNfU0laRSwKKwlkbWFfZnJlZV9jb2hlcmVudChjaGlwLT5jYXJkLT5kZXYsIE1BQ0VJU0Ff
-UklOR0JVRkZFUlNfU0laRSwKIAkJCSAgY2hpcC0+cmluZ19iYXNlLCBjaGlwLT5yaW5nX2Jhc2Vf
-ZG1hKTsKIAogCS8qIHJlbGVhc2UgY2FyZCBkYXRhICovCkBAIC04NDMsOCArODQzLDkgQEAgc3Rh
-dGljIGludCBzbmRfc2dpbzJhdWRpb19jcmVhdGUoc3RydWN0IHNuZF9jYXJkICpjYXJkLAogCiAJ
-Y2hpcC0+Y2FyZCA9IGNhcmQ7CiAKLQljaGlwLT5yaW5nX2Jhc2UgPSBkbWFfYWxsb2NfY29oZXJl
-bnQoTlVMTCwgTUFDRUlTQV9SSU5HQlVGRkVSU19TSVpFLAotCQkJCQkgICAgICZjaGlwLT5yaW5n
-X2Jhc2VfZG1hLCBHRlBfVVNFUik7CisJY2hpcC0+cmluZ19iYXNlID0gZG1hX2FsbG9jX2NvaGVy
-ZW50KGNhcmQtPmRldiwKKwkJCQkJICAgICBNQUNFSVNBX1JJTkdCVUZGRVJTX1NJWkUsCisJCQkJ
-CSAgICAgJmNoaXAtPnJpbmdfYmFzZV9kbWEsIEdGUF9LRVJORUwpOwogCWlmIChjaGlwLT5yaW5n
-X2Jhc2UgPT0gTlVMTCkgewogCQlwcmludGsoS0VSTl9FUlIKIAkJICAgICAgICJzZ2lvMmF1ZGlv
-OiBjb3VsZCBub3QgYWxsb2NhdGUgcmluZyBidWZmZXJzXG4iKTsK
+T24gRnJpLCAwMSBGZWIgMjAxOSAwOTo0ODowMSArMDEwMCwKQ2hyaXN0b3BoIEhlbGx3aWcgd3Jv
+dGU6Cj4gCj4gVGhlIERNQSBBUEkgZ2VuZXJhbGx5IHJlbGllcyBvbiBhIHN0cnVjdCBkZXZpY2Ug
+dG8gd29yayBwcm9wZXJseSwgYW5kCj4gb25seSBiYXJlbHkgd29ya3Mgd2l0aG91dCBvbmUgZm9y
+IGxlZ2FjeSByZWFzb25zLiAgUGFzcyB0aGUgZWFzaWx5Cj4gYXZhaWxhYmxlIHN0cnVjdCBkZXZp
+Y2UgZnJvbSB0aGUgcGxhdGZvcm1fZGV2aWNlIHRvIHJlbWVkeSB0aGlzLgo+IAo+IEFsc28gdXNl
+IEdGUF9LRVJORUwgaW5zdGVhZCBvZiBHRlBfVVNFUiBhcyB0aGUgZ2ZwX3QgZm9yIHRoZSBtZW1v
+cnkKPiBhbGxvY2F0aW9uLCBhcyB3ZSBzaG91bGQgdHJlYXQgdGhpcyBhbGxvY2F0aW9uIGFzIGEg
+bm9ybWFsIGtlcm5lbCBvbmUuCj4gCj4gU2lnbmVkLW9mZi1ieTogQ2hyaXN0b3BoIEhlbGx3aWcg
+PGhjaEBsc3QuZGU+CgpSZXZpZXdlZC1ieTogVGFrYXNoaSBJd2FpIDx0aXdhaUBzdXNlLmRlPgoK
+CnRoYW5rcywKClRha2FzaGkK
