@@ -2,33 +2,28 @@ Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
 Subject: [01/18] MIPS: lantiq: pass struct device to DMA API functions
-From: Christoph Hellwig <hch@lst.de>
-Message-Id: <20190201084801.10983-2-hch@lst.de>
-Date: Fri,  1 Feb 2019 09:47:44 +0100
-To: John Crispin <john@phrozen.org>, Vinod Koul <vkoul@kernel.org>, Dmitry Tarnyagin <dmitry.tarnyagin@lockless.no>, Nicolas Ferre <nicolas.ferre@microchip.com>, Sudip Mukherjee <sudipm.mukherjee@gmail.com>, Felipe Balbi <balbi@kernel.org>, linux-mips@vger.kernel.org, linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org, netdev@vger.kernel.org, linux-usb@vger.kernel.org, linux-fbdev@vger.kernel.org, alsa-devel@alsa-project.org
-Cc: iommu@lists.linux-foundation.org
+From: Paul Burton <paul.burton@mips.com>
+Message-Id: <20190207232912.wfgejc5c6d6lk5so@pburton-laptop>
+Date: Thu, 7 Feb 2019 23:29:14 +0000
+To: Christoph Hellwig <hch@lst.de>
+Cc: John Crispin <john@phrozen.org>, Vinod Koul <vkoul@kernel.org>, Dmitry Tarnyagin <dmitry.tarnyagin@lockless.no>, Nicolas Ferre <nicolas.ferre@microchip.com>, Sudip Mukherjee <sudipm.mukherjee@gmail.com>, Felipe Balbi <balbi@kernel.org>, "linux-mips@vger.kernel.org" <linux-mips@vger.kernel.org>, "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>, "dmaengine@vger.kernel.org" <dmaengine@vger.kernel.org>, "netdev@vger.kernel.org" <netdev@vger.kernel.org>, "linux-usb@vger.kernel.org" <linux-usb@vger.kernel.org>, "linux-fbdev@vger.kernel.org" <linux-fbdev@vger.kernel.org>, "alsa-devel@alsa-project.org" <alsa-devel@alsa-project.org>, "iommu@lists.linux-foundation.org" <iommu@lists.linux-foundation.org>
 List-ID: <dmaengine.vger.kernel.org>
 
-VGhlIERNQSBBUEkgZ2VuZXJhbGx5IHJlbGllcyBvbiBhIHN0cnVjdCBkZXZpY2UgdG8gd29yayBw
-cm9wZXJseSwgYW5kCm9ubHkgYmFyZWx5IHdvcmtzIHdpdGhvdXQgb25lIGZvciBsZWdhY3kgcmVh
-c29ucy4gIFBhc3MgdGhlIGVhc2lseQphdmFpbGFibGUgc3RydWN0IGRldmljZSBmcm9tIHRoZSBw
-bGF0Zm9ybV9kZXZpY2UgdG8gcmVtZWR5IHRoaXMuCgpBbHNvIHVzZSBHRlBfS0VSTkVMIGluc3Rl
-YWQgb2YgR0ZQX0FUT01JQyBhcyB0aGUgZ2ZwX3QgZm9yIHRoZSBtZW1vcnkKYWxsb2NhdGlvbiwg
-YXMgd2UgYXJlbid0IGluIGludGVycnVwdCBjb250ZXh0IG9yIHVuZGVyIGEgbG9jay4KCk5vdGUg
-dGhhdCB0aGlzIHdob2xlIGZ1bmN0aW9uIGxvb2tzIHNvbWV3aGF0IGJvZ3VzIGdpdmVuIHRoYXQg
-d2UgbmV2ZXIKZXZlbiBsb29rIGF0IHRoZSByZXR1cm5lZCBkbWEgYWRkcmVzcywgYW5kIHRoZSBD
-UEhZU0FERFIgbWFnaWMgb24KYSByZXR1cm5lZCBub25jYWNoZWQgbWFwcGluZyBsb29rcyAiaW50
-ZXJlc3RpbmciLiAgQnV0IEknbGwgbGVhdmUKdGhhdCB0byBwZW9wbGUgbW9yZSBmYW1pbGlhciB3
-aXRoIHRoZSBjb2RlIHRvIHNvcnQgb3V0LgoKU2lnbmVkLW9mZi1ieTogQ2hyaXN0b3BoIEhlbGx3
-aWcgPGhjaEBsc3QuZGU+Ci0tLQogYXJjaC9taXBzL2xhbnRpcS94d2F5L3ZtbWMuYyB8IDQgKyst
-LQogMSBmaWxlIGNoYW5nZWQsIDIgaW5zZXJ0aW9ucygrKSwgMiBkZWxldGlvbnMoLSkKCmRpZmYg
-LS1naXQgYS9hcmNoL21pcHMvbGFudGlxL3h3YXkvdm1tYy5jIGIvYXJjaC9taXBzL2xhbnRpcS94
-d2F5L3ZtbWMuYwppbmRleCA1NzdlYzgxYjU1N2QuLjNkZWFiOWE3NzcxOCAxMDA2NDQKLS0tIGEv
-YXJjaC9taXBzL2xhbnRpcS94d2F5L3ZtbWMuYworKysgYi9hcmNoL21pcHMvbGFudGlxL3h3YXkv
-dm1tYy5jCkBAIC0zMSw4ICszMSw4IEBAIHN0YXRpYyBpbnQgdm1tY19wcm9iZShzdHJ1Y3QgcGxh
-dGZvcm1fZGV2aWNlICpwZGV2KQogCWRtYV9hZGRyX3QgZG1hOwogCiAJY3AxX2Jhc2UgPQotCQko
-dm9pZCAqKSBDUEhZU0FERFIoZG1hX2FsbG9jX2NvaGVyZW50KE5VTEwsIENQMV9TSVpFLAotCQkJ
-CQkJICAgICZkbWEsIEdGUF9BVE9NSUMpKTsKKwkJKHZvaWQgKikgQ1BIWVNBRERSKGRtYV9hbGxv
-Y19jb2hlcmVudCgmcGRldi0+ZGV2LCBDUDFfU0laRSwKKwkJCQkJCSAgICAmZG1hLCBHRlBfS0VS
-TkVMKSk7CiAKIAlncGlvX2NvdW50ID0gb2ZfZ3Bpb19jb3VudChwZGV2LT5kZXYub2Zfbm9kZSk7
-CiAJd2hpbGUgKGdwaW9fY291bnQgPiAwKSB7Cg==
+SGkgQ2hyaXN0b3BoLAoKT24gRnJpLCBGZWIgMDEsIDIwMTkgYXQgMDk6NDc6NDRBTSArMDEwMCwg
+Q2hyaXN0b3BoIEhlbGx3aWcgd3JvdGU6Cj4gVGhlIERNQSBBUEkgZ2VuZXJhbGx5IHJlbGllcyBv
+biBhIHN0cnVjdCBkZXZpY2UgdG8gd29yayBwcm9wZXJseSwgYW5kCj4gb25seSBiYXJlbHkgd29y
+a3Mgd2l0aG91dCBvbmUgZm9yIGxlZ2FjeSByZWFzb25zLiAgUGFzcyB0aGUgZWFzaWx5Cj4gYXZh
+aWxhYmxlIHN0cnVjdCBkZXZpY2UgZnJvbSB0aGUgcGxhdGZvcm1fZGV2aWNlIHRvIHJlbWVkeSB0
+aGlzLgo+IAo+IEFsc28gdXNlIEdGUF9LRVJORUwgaW5zdGVhZCBvZiBHRlBfQVRPTUlDIGFzIHRo
+ZSBnZnBfdCBmb3IgdGhlIG1lbW9yeQo+IGFsbG9jYXRpb24sIGFzIHdlIGFyZW4ndCBpbiBpbnRl
+cnJ1cHQgY29udGV4dCBvciB1bmRlciBhIGxvY2suCj4gCj4gTm90ZSB0aGF0IHRoaXMgd2hvbGUg
+ZnVuY3Rpb24gbG9va3Mgc29tZXdoYXQgYm9ndXMgZ2l2ZW4gdGhhdCB3ZSBuZXZlcgo+IGV2ZW4g
+bG9vayBhdCB0aGUgcmV0dXJuZWQgZG1hIGFkZHJlc3MsIGFuZCB0aGUgQ1BIWVNBRERSIG1hZ2lj
+IG9uCj4gYSByZXR1cm5lZCBub25jYWNoZWQgbWFwcGluZyBsb29rcyAiaW50ZXJlc3RpbmciLiAg
+QnV0IEknbGwgbGVhdmUKPiB0aGF0IHRvIHBlb3BsZSBtb3JlIGZhbWlsaWFyIHdpdGggdGhlIGNv
+ZGUgdG8gc29ydCBvdXQuCj4gCj4gU2lnbmVkLW9mZi1ieTogQ2hyaXN0b3BoIEhlbGx3aWcgPGhj
+aEBsc3QuZGU+Cj4gLS0tCj4gIGFyY2gvbWlwcy9sYW50aXEveHdheS92bW1jLmMgfCA0ICsrLS0K
+PiAgMSBmaWxlIGNoYW5nZWQsIDIgaW5zZXJ0aW9ucygrKSwgMiBkZWxldGlvbnMoLSkKCldvdWxk
+IHlvdSBsaWtlIHRoaXMgdG8gZ28gdGhyb3VnaCB0aGUgTUlQUyB0cmVlIG9yIGVsc2V3aGVyZT8g
+SWYgdGhlCmxhdHRlcjoKCiAgICBBY2tlZC1ieTogUGF1bCBCdXJ0b24gPHBhdWwuYnVydG9uQG1p
+cHMuY29tPgoKVGhhbmtzLAogICAgUGF1bAo=
