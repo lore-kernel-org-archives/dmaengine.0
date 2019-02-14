@@ -3,8 +3,8 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: base64
 Subject: [v2,1/1] dt-bindings: dmaengine: Add MediaTek Command-Queue DMA controller bindings
 From: Matthias Brugger <matthias.bgg@gmail.com>
-Message-Id: <e6e7ab27-257d-f0fc-f107-94bff92294cc@gmail.com>
-Date: Thu, 14 Feb 2019 10:18:52 +0100
+Message-Id: <17980f11-dcbf-b033-c525-613a3b3ed62c@gmail.com>
+Date: Thu, 14 Feb 2019 10:19:38 +0100
 To: shun-chih.yu@mediatek.com, Sean Wang <sean.wang@mediatek.com>, Vinod Koul <vkoul@kernel.org>, Rob Herring <robh+dt@kernel.org>, Dan Williams <dan.j.williams@intel.com>
 Cc: dmaengine@vger.kernel.org, linux-arm-kernel@lists.infradead.org, linux-mediatek@lists.infradead.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, srv_wsdupstream@mediatek.com
 List-ID: <dmaengine.vger.kernel.org>
@@ -44,10 +44,12 @@ YSBjbGllbnQgZGV2aWNlIHJlcHJlc2VudHMgdGhlIGNoYW5uZWwKPiArCQludW1iZXIuCj4gK0V4
 YW1wbGU6Cj4gKwo+ICsgICAgICAgIGNxZG1hOiBkbWEtY29udHJvbGxlckAxMDIxMjAwMCB7Cj4g
 KwkJY29tcGF0aWJsZSA9ICJtZWRpYXRlayxtdDY3NjUtY3FkbWEiOwo+ICsJCXJlZyA9IDwwIDB4
 MTAyMTIwMDAgMCAweDEwMDA+OwoKRG9lcyB0aGlzIG1lYW4gdGhhdCB5b3UgaGF2ZSB0byByZXNv
-dXJjZXMgYXQgYmFzZSA9IDB4MCB3aXRoIGRpZmZlcmVudCBsZW5ndGg/CgpSZWdhcmRzLApNYXR0
-aGlhcwoKPiArCQlpbnRlcnJ1cHRzID0gPEdJQ19TUEkgMTEzIElSUV9UWVBFX0xFVkVMX0xPVz4s
-Cj4gKwkJCTxHSUNfU1BJIDExNCBJUlFfVFlQRV9MRVZFTF9MT1c+Owo+ICsJCWNsb2NrcyA9IDwm
-aW5mcmFjZmcgQ0xLX0lGUl9DUV9ETUE+Owo+ICsJCWNsb2NrLW5hbWVzID0gImNxZG1hIjsKPiAr
-CQlkbWEtY2hhbm5lbHMgPSA8Mj47Cj4gKwkJZG1hLXJlcXVlc3RzID0gPDMyPjsKPiArCQkjZG1h
-LWNlbGxzID0gPDE+Owo+ICsJfTsKPiArCj4gK0RNQSBjbGllbnRzIG11c3QgdXNlIHRoZSBmb3Jt
-YXQgZGVzY3JpYmVkIGluIGRtYS9kbWEudHh0IGZpbGUuCj4K
+dXJjZXMgYXQgYmFzZSA9IDB4MCB3aXRoIGRpZmZlcmVudCBsZW5ndGg/CgpGb3IgdGhlIG5leHQg
+dGltZSwgcGxlYXNlIHNlbmQgZHJpdmVyIGFuZCBiaW5kaW5nIGRlc2NyaXB0aW9uIGluIG9uZSBz
+ZXJpZXMgKHR3bwpwYXRjaGVzKS4gVGhhdCBtYWtlcyB0aGluZ3MgZWFzaWVyIHRvIHJldmlldy4K
+ClRoYW5rcywKTWF0dGhpYXMKCj4gKwkJaW50ZXJydXB0cyA9IDxHSUNfU1BJIDExMyBJUlFfVFlQ
+RV9MRVZFTF9MT1c+LAo+ICsJCQk8R0lDX1NQSSAxMTQgSVJRX1RZUEVfTEVWRUxfTE9XPjsKPiAr
+CQljbG9ja3MgPSA8JmluZnJhY2ZnIENMS19JRlJfQ1FfRE1BPjsKPiArCQljbG9jay1uYW1lcyA9
+ICJjcWRtYSI7Cj4gKwkJZG1hLWNoYW5uZWxzID0gPDI+Owo+ICsJCWRtYS1yZXF1ZXN0cyA9IDwz
+Mj47Cj4gKwkJI2RtYS1jZWxscyA9IDwxPjsKPiArCX07Cj4gKwo+ICtETUEgY2xpZW50cyBtdXN0
+IHVzZSB0aGUgZm9ybWF0IGRlc2NyaWJlZCBpbiBkbWEvZG1hLnR4dCBmaWxlLgo+Cg==
