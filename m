@@ -1,16 +1,29 @@
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
-Subject: dmaengine: fsl-edma: dma map slave device address
-From: Vinod Koul <vkoul@kernel.org>
-Message-Id: <20190204070330.GG4296@vkoul-mobl>
-Date: Mon, 4 Feb 2019 12:33:30 +0530
-To: Laurentiu Tudor <laurentiu.tudor@nxp.com>
-Cc: dmaengine@vger.kernel.org, linux-imx@nxp.com, linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, iommu@lists.linux-foundation.org, robin.murphy@arm.com
+Subject: [1/2] dma: axi-dmac: don't check the number of frames for alignment
+From: Alexandru Ardelean <alexandru.ardelean@analog.com>
+Message-Id: <20190215091750.28035-1-alexandru.ardelean@analog.com>
+Date: Fri, 15 Feb 2019 11:17:49 +0200
+To: dmaengine@vger.kernel.org, vkoul@kernel.org
+Cc: Alexandru Ardelean <alexandru.ardelean@analog.com>
 List-ID: <dmaengine.vger.kernel.org>
 
-T24gMTgtMDEtMTksIDEyOjA2LCBMYXVyZW50aXUgVHVkb3Igd3JvdGU6Cj4gVGhpcyBtYXBwaW5n
-IG5lZWRzIHRvIGJlIGNyZWF0ZWQgaW4gb3JkZXIgZm9yIHNsYXZlIGRtYSB0cmFuc2ZlcnMKPiB0
-byB3b3JrIG9uIHN5c3RlbXMgd2l0aCBTTU1VLiBUaGUgaW1wbGVtZW50YXRpb24gbW9zdGx5IG1p
-bWljcyB0aGUKPiBvbmUgaW4gcGwzMzAgZG1hIGRyaXZlciwgYXV0aG9yZWQgYnkgUm9iaW4gTXVy
-cGh5LgoKQXBwbGllZCwgdGhhbmtzCg==
+Rml4ZXMgY29tbWl0IDBlM2I2N2IzNDhiOCAoImRtYWVuZ2luZTogQWRkIHN1cHBvcnQgZm9yIHRo
+ZSBBbmFsb2cgRGV2aWNlcwpBWEktRE1BQyBETUEgY29udHJvbGxlciIpCgpGb3IgMkQgdHJhbnNm
+ZXJzLCB0aGVyZSBpcyBubyByZXF1aXJlbWVudCBmb3IgWV9MRU5HVEggdG8gYmUgYWxpZ25lZAp0
+byB0aGUgYnVzLXdpZHRoIChvciBhbnl0aGluZykuIFhfTEVOR1RIIGlzIHJlcXVpcmVkIHRvIGJl
+IGFsaWduZWQKdGhvdWdoLgoKU28sIHdlIHNob3VsZG4ndCBjaGVjayB0aGF0IHRoZSBudW1iZXIg
+b2YgZnJhbWVzIGlzIGFsaWduZWQuCgpTaWduZWQtb2ZmLWJ5OiBBbGV4YW5kcnUgQXJkZWxlYW4g
+PGFsZXhhbmRydS5hcmRlbGVhbkBhbmFsb2cuY29tPgotLS0KIGRyaXZlcnMvZG1hL2RtYS1heGkt
+ZG1hYy5jIHwgMiArLQogMSBmaWxlIGNoYW5nZWQsIDEgaW5zZXJ0aW9uKCspLCAxIGRlbGV0aW9u
+KC0pCgpkaWZmIC0tZ2l0IGEvZHJpdmVycy9kbWEvZG1hLWF4aS1kbWFjLmMgYi9kcml2ZXJzL2Rt
+YS9kbWEtYXhpLWRtYWMuYwppbmRleCBmZmMwYWRjMmY2Y2UuLjJjOTk5MTEzYjk4OSAxMDA2NDQK
+LS0tIGEvZHJpdmVycy9kbWEvZG1hLWF4aS1kbWFjLmMKKysrIGIvZHJpdmVycy9kbWEvZG1hLWF4
+aS1kbWFjLmMKQEAgLTQ4NSw3ICs0ODUsNyBAQCBzdGF0aWMgc3RydWN0IGRtYV9hc3luY190eF9k
+ZXNjcmlwdG9yICpheGlfZG1hY19wcmVwX2ludGVybGVhdmVkKAogCiAJaWYgKGNoYW4tPmh3XzJk
+KSB7CiAJCWlmICghYXhpX2RtYWNfY2hlY2tfbGVuKGNoYW4sIHh0LT5zZ2xbMF0uc2l6ZSkgfHwK
+LQkJICAgICFheGlfZG1hY19jaGVja19sZW4oY2hhbiwgeHQtPm51bWYpKQorCQkgICAgeHQtPm51
+bWYgPT0gMCkKIAkJCXJldHVybiBOVUxMOwogCQlpZiAoeHQtPnNnbFswXS5zaXplICsgZHN0X2lj
+ZyA+IGNoYW4tPm1heF9sZW5ndGggfHwKIAkJICAgIHh0LT5zZ2xbMF0uc2l6ZSArIHNyY19pY2cg
+PiBjaGFuLT5tYXhfbGVuZ3RoKQo=
