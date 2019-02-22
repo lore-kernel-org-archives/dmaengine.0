@@ -2,29 +2,22 @@ Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
 Subject: [v2,1/2] dt-bindings: dmaengine: sprd: Change channel id to slave id for DMA cell specifier
-From: Baolin Wang <baolin.wang@linaro.org>
-Message-Id: <652a8ef9554890c254823ec39858b8d7413fd561.1550719757.git.baolin.wang@linaro.org>
-Date: Thu, 21 Feb 2019 13:34:40 +0800
-To: vkoul@kernel.org, robh+dt@kernel.org, mark.rutland@arm.com, arnd@arndb.de
-Cc: orsonzhai@gmail.com, zhang.lyra@gmail.com, dan.j.williams@intel.com, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org, eric.long@unisoc.com, broonie@kernel.org, baolin.wang@linaro.org
+From: Rob Herring <robh@kernel.org>
+Message-Id: <20190222204212.GA26859@bogus>
+Date: Fri, 22 Feb 2019 14:42:12 -0600
+To: Baolin Wang <baolin.wang@linaro.org>
+Cc: vkoul@kernel.org, robh+dt@kernel.org, mark.rutland@arm.com, arnd@arndb.de, orsonzhai@gmail.com, zhang.lyra@gmail.com, dan.j.williams@intel.com, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org, eric.long@unisoc.com, broonie@kernel.org
 List-ID: <dmaengine.vger.kernel.org>
 
+T24gVGh1LCAyMSBGZWIgMjAxOSAxMzozNDo0MCArMDgwMCwgQmFvbGluIFdhbmcgd3JvdGU6Cj4g
 Rm9yIFNwcmVhZHRydW0gRE1BIGVuZ2luZSwgYWxsIGNoYW5uZWxzIGFyZSBlcXVhbCwgd2hpY2gg
-bWVhbnMgc2xhdmUgY2FuCnJlcXVlc3QgYW55IGNoYW5uZWxzIHdpdGggc2V0dGluZyBhIHVuaXF1
-ZSBzbGF2ZSBpZCB0byB0cmlnZ2VyIHRoaXMgY2hhbm5lbC4KClRodXMgd2UgY2FuIHJlbW92ZSB0
-aGUgY2hhbm5lbCBpZCBmcm9tIGRldmljZSB0cmVlIHRvIGFzc2lnbiB0aGUgY2hhbm5lbApkeW5h
-bWljYWxseSwgbW9yZW92ZXIgd2Ugc2hvdWxkIGFkZCB0aGUgc2xhdmUgaWQgaW4gZGV2aWNlIHRy
-ZWUuCgpTaWduZWQtb2ZmLWJ5OiBCYW9saW4gV2FuZyA8YmFvbGluLndhbmdAbGluYXJvLm9yZz4K
-LS0tCkNoYW5nZXMgZnJvbSB2MToKIC0gUmVtb3ZlIGNoYW5uZWwgaWQgZnJvbSBEVC4KLS0tCiBE
-b2N1bWVudGF0aW9uL2RldmljZXRyZWUvYmluZGluZ3MvZG1hL3NwcmQtZG1hLnR4dCB8ICAgIDIg
-Ky0KIDEgZmlsZSBjaGFuZ2VkLCAxIGluc2VydGlvbigrKSwgMSBkZWxldGlvbigtKQoKZGlmZiAt
-LWdpdCBhL0RvY3VtZW50YXRpb24vZGV2aWNldHJlZS9iaW5kaW5ncy9kbWEvc3ByZC1kbWEudHh0
-IGIvRG9jdW1lbnRhdGlvbi9kZXZpY2V0cmVlL2JpbmRpbmdzL2RtYS9zcHJkLWRtYS50eHQKaW5k
-ZXggN2ExMGZlYS4uYWRjY2VhOTk0IDEwMDY0NAotLS0gYS9Eb2N1bWVudGF0aW9uL2RldmljZXRy
-ZWUvYmluZGluZ3MvZG1hL3NwcmQtZG1hLnR4dAorKysgYi9Eb2N1bWVudGF0aW9uL2RldmljZXRy
-ZWUvYmluZGluZ3MvZG1hL3NwcmQtZG1hLnR4dApAQCAtMzEsNyArMzEsNyBAQCBETUEgY2xpZW50
-cyBjb25uZWN0ZWQgdG8gdGhlIFNwcmVhZHRydW0gRE1BIGNvbnRyb2xsZXIgbXVzdCB1c2UgdGhl
-IGZvcm1hdAogZGVzY3JpYmVkIGluIHRoZSBkbWEudHh0IGZpbGUsIHVzaW5nIGEgdHdvLWNlbGwg
-c3BlY2lmaWVyIGZvciBlYWNoIGNoYW5uZWwuCiBUaGUgdHdvIGNlbGxzIGluIG9yZGVyIGFyZToK
-IDEuIEEgcGhhbmRsZSBwb2ludGluZyB0byB0aGUgRE1BIGNvbnRyb2xsZXIuCi0yLiBUaGUgY2hh
-bm5lbCBpZC4KKzIuIFRoZSBzbGF2ZSBpZC4KIAogc3BpMDogc3BpQDcwYTAwMDAwewogCS4uLgo=
+bWVhbnMgc2xhdmUgY2FuCj4gcmVxdWVzdCBhbnkgY2hhbm5lbHMgd2l0aCBzZXR0aW5nIGEgdW5p
+cXVlIHNsYXZlIGlkIHRvIHRyaWdnZXIgdGhpcyBjaGFubmVsLgo+IAo+IFRodXMgd2UgY2FuIHJl
+bW92ZSB0aGUgY2hhbm5lbCBpZCBmcm9tIGRldmljZSB0cmVlIHRvIGFzc2lnbiB0aGUgY2hhbm5l
+bAo+IGR5bmFtaWNhbGx5LCBtb3Jlb3ZlciB3ZSBzaG91bGQgYWRkIHRoZSBzbGF2ZSBpZCBpbiBk
+ZXZpY2UgdHJlZS4KPiAKPiBTaWduZWQtb2ZmLWJ5OiBCYW9saW4gV2FuZyA8YmFvbGluLndhbmdA
+bGluYXJvLm9yZz4KPiAtLS0KPiBDaGFuZ2VzIGZyb20gdjE6Cj4gIC0gUmVtb3ZlIGNoYW5uZWwg
+aWQgZnJvbSBEVC4KPiAtLS0KPiAgRG9jdW1lbnRhdGlvbi9kZXZpY2V0cmVlL2JpbmRpbmdzL2Rt
+YS9zcHJkLWRtYS50eHQgfCAgICAyICstCj4gIDEgZmlsZSBjaGFuZ2VkLCAxIGluc2VydGlvbigr
+KSwgMSBkZWxldGlvbigtKQo+IAoKUmV2aWV3ZWQtYnk6IFJvYiBIZXJyaW5nIDxyb2JoQGtlcm5l
+bC5vcmc+Cg==
