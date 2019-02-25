@@ -2,21 +2,24 @@ Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
 Subject: dma: axi-dmac: Split too large segments
-From: Lars-Peter Clausen <lars@metafoo.de>
-Message-Id: <430b3cea-ce62-b67b-bd49-09d599249153@metafoo.de>
-Date: Mon, 18 Feb 2019 08:34:53 +0100
-To: "Ardelean, Alexandru" <Alex.Ardelean@analog.com>, "lkp@intel.com" <lkp@intel.com>
-Cc: "kbuild-all@01.org" <kbuild-all@01.org>, "dmaengine@vger.kernel.org" <dmaengine@vger.kernel.org>, "vkoul@kernel.org" <vkoul@kernel.org>
+From: Vinod Koul <vkoul@kernel.org>
+Message-Id: <20190225065658.GI31146@vkoul-mobl>
+Date: Mon, 25 Feb 2019 12:26:58 +0530
+To: Lars-Peter Clausen <lars@metafoo.de>
+Cc: "Ardelean, Alexandru" <Alex.Ardelean@analog.com>, "lkp@intel.com" <lkp@intel.com>, "kbuild-all@01.org" <kbuild-all@01.org>, "dmaengine@vger.kernel.org" <dmaengine@vger.kernel.org>
 List-ID: <dmaengine.vger.kernel.org>
 
-T24gMi8xOC8xOSA4OjI4IEFNLCBBcmRlbGVhbiwgQWxleGFuZHJ1IHdyb3RlOgo+IE9uIFNhdCwg
-MjAxOS0wMi0xNiBhdCAxNzowMyArMDgwMCwga2J1aWxkIHRlc3Qgcm9ib3Qgd3JvdGU6Cj4+Cj4g
-Cj4gTXkgYmFkIGhlcmUuCj4gSSB0b29rIHRoaXMgcGF0Y2ggZnJvbSBvdXIga2VybmVsIHRyZWUg
-YW5kIHNlbnQgaXQuCj4gSSBhc3N1bWVkIGl0IHdvcmtzLCBzaW5jZSBpdCB3b3JrcyBpbiBvdXIg
-dHJlZS4KPiBJJ2xsIHRha2UgYSBsb29rIGFuZCBzZWUgYWJvdXQgdGhlIG9yZGVyIG9mIHBhdGNo
-ZXMsIGFuZCB3aGljaCBvbmUocykKPiBuZWVkKHMpIHRvIGJlIHNlbnQgYmVmb3JlIHRoaXMgb25l
-CgpodHRwczovL2dpdGh1Yi5jb20vYW5hbG9nZGV2aWNlc2luYy9saW51eC9jb21taXQvNDE0YTU1
-NTg5NmIyYWJjYTM1MThjM2M4NzhmMjFlN2IxZWE5NTkwNCNkaWZmLWI1YjJmZDU0MzBiNGY5YWZm
-MWFlOTdiYWU2MGRkNWM1CgpUaGF0IHBhdGNoIHdhcyBzZW50IHVwc3RyZWFtLCBub3Qgc3VyZSB3
-aHkgaXQgd2FzIG5ldmVyIG1lcmdlZC4KCkJ1dCBpZiBuZWNlc3NhcnkgeW91IGNhbiBhbHNvIHJl
-LXdyaXRlIHRoaXMgcGF0Y2ggdG8gbm90IHJlbHkgb24gdGhlCm90aGVyIG9uZS4K
+T24gMTgtMDItMTksIDA4OjM0LCBMYXJzLVBldGVyIENsYXVzZW4gd3JvdGU6Cj4gT24gMi8xOC8x
+OSA4OjI4IEFNLCBBcmRlbGVhbiwgQWxleGFuZHJ1IHdyb3RlOgo+ID4gT24gU2F0LCAyMDE5LTAy
+LTE2IGF0IDE3OjAzICswODAwLCBrYnVpbGQgdGVzdCByb2JvdCB3cm90ZToKPiA+Pgo+ID4gCj4g
+PiBNeSBiYWQgaGVyZS4KPiA+IEkgdG9vayB0aGlzIHBhdGNoIGZyb20gb3VyIGtlcm5lbCB0cmVl
+IGFuZCBzZW50IGl0Lgo+ID4gSSBhc3N1bWVkIGl0IHdvcmtzLCBzaW5jZSBpdCB3b3JrcyBpbiBv
+dXIgdHJlZS4KPiA+IEknbGwgdGFrZSBhIGxvb2sgYW5kIHNlZSBhYm91dCB0aGUgb3JkZXIgb2Yg
+cGF0Y2hlcywgYW5kIHdoaWNoIG9uZShzKQo+ID4gbmVlZChzKSB0byBiZSBzZW50IGJlZm9yZSB0
+aGlzIG9uZQo+IAo+IGh0dHBzOi8vZ2l0aHViLmNvbS9hbmFsb2dkZXZpY2VzaW5jL2xpbnV4L2Nv
+bW1pdC80MTRhNTU1ODk2YjJhYmNhMzUxOGMzYzg3OGYyMWU3YjFlYTk1OTA0I2RpZmYtYjViMmZk
+NTQzMGI0ZjlhZmYxYWU5N2JhZTYwZGQ1YzUKPiAKPiBUaGF0IHBhdGNoIHdhcyBzZW50IHVwc3Ry
+ZWFtLCBub3Qgc3VyZSB3aHkgaXQgd2FzIG5ldmVyIG1lcmdlZC4KPiAKPiBCdXQgaWYgbmVjZXNz
+YXJ5IHlvdSBjYW4gYWxzbyByZS13cml0ZSB0aGlzIHBhdGNoIHRvIG5vdCByZWx5IG9uIHRoZQo+
+IG90aGVyIG9uZS4KCk9yIHNlbmQgdGhpcyBwYXRjaCB1cHN0cmVhbSBpZiB5b3UgZmluZCBpdCB2
+ZXJ5IHVzZWZ1bCA6KQo=
