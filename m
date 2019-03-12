@@ -1,12 +1,12 @@
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
-Subject: [2/3] dmaengine: tegra210-adma: use devm_clk_*() helpers
+Subject: dmaengine: tegra210-adma: use devm_clk_*() helpers
 From: Sameer Pujar <spujar@nvidia.com>
-Message-Id: <1551868878-1131-2-git-send-email-spujar@nvidia.com>
-Date: Wed, 6 Mar 2019 16:11:17 +0530
-To: vkoul@kernel.org, dan.j.williams@intel.com, tglx@linutronix.de, jason@lakedaemon.net, marc.zyngier@arm.com
-Cc: thierry.reding@gmail.com, jonathanh@nvidia.com, ldewangan@nvidia.com, mkumard@nvidia.com, linux-tegra@vger.kernel.org, linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org, Sameer Pujar <spujar@nvidia.com>
+Message-Id: <1552401352-30043-1-git-send-email-spujar@nvidia.com>
+Date: Tue, 12 Mar 2019 20:05:52 +0530
+To: dan.j.williams@intel.com, vkoul@kernel.org
+Cc: treding@nvidia.com, jonathanh@nvidia.com, dmaengine@vger.kernel.org, linux-tegra@vger.kernel.org, linux-kernel@vger.kernel.org, Sameer Pujar <spujar@nvidia.com>
 List-ID: <dmaengine.vger.kernel.org>
 
 VXNhZ2Ugb2YgcG1fY2xrXyooKSByZXN1bHRzIGluIG5vbi16ZXJvIHByZXBhcmVfY291bnQgZm9y
@@ -22,7 +22,7 @@ b20+ClNpZ25lZC1vZmYtYnk6IFNhbWVlciBQdWphciA8c3B1amFyQG52aWRpYS5jb20+Ci0tLQog
 ZHJpdmVycy9kbWEvdGVncmEyMTAtYWRtYS5jIHwgMzcgKysrKysrKysrKysrKystLS0tLS0tLS0t
 LS0tLS0tLS0tLS0tLQogMSBmaWxlIGNoYW5nZWQsIDE0IGluc2VydGlvbnMoKyksIDIzIGRlbGV0
 aW9ucygtKQoKZGlmZiAtLWdpdCBhL2RyaXZlcnMvZG1hL3RlZ3JhMjEwLWFkbWEuYyBiL2RyaXZl
-cnMvZG1hL3RlZ3JhMjEwLWFkbWEuYwppbmRleCBiMjYyNTZmLi4xMjNmYzZkIDEwMDY0NAotLS0g
+cnMvZG1hL3RlZ3JhMjEwLWFkbWEuYwppbmRleCA1ZWMwZGQ5Li5iZTI5MTcxIDEwMDY0NAotLS0g
 YS9kcml2ZXJzL2RtYS90ZWdyYTIxMC1hZG1hLmMKKysrIGIvZHJpdmVycy9kbWEvdGVncmEyMTAt
 YWRtYS5jCkBAIC0yMiw3ICsyMiw2IEBACiAjaW5jbHVkZSA8bGludXgvb2ZfZGV2aWNlLmg+CiAj
 aW5jbHVkZSA8bGludXgvb2ZfZG1hLmg+CiAjaW5jbHVkZSA8bGludXgvb2ZfaXJxLmg+Ci0jaW5j
@@ -44,7 +44,7 @@ ZXYpOwogCWludCByZXQ7CiAKLQlyZXQgPSBwbV9jbGtfcmVzdW1lKGRldik7Ci0JaWYgKHJldCkK
 KwlyZXQgPSBjbGtfcHJlcGFyZV9lbmFibGUodGRtYS0+YWh1Yl9jbGspOworCWlmIChyZXQpIHsK
 KwkJZGV2X2VycihkZXYsICJhaHViIGNsa19lbmFibGUgZmFpbGVkOiAlZFxuIiwgcmV0KTsKIAkJ
 cmV0dXJuIHJldDsKLQorCX0KIAl0ZG1hX3dyaXRlKHRkbWEsIEFETUFfR0xPQkFMX0NNRCwgdGRt
-YS0+Z2xvYmFsX2NtZCk7CiAKIAlyZXR1cm4gMDsKQEAgLTY5MiwxMyArNjk0LDExIEBAIHN0YXRp
+YS0+Z2xvYmFsX2NtZCk7CiAKIAlyZXR1cm4gMDsKQEAgLTY5MywxMyArNjk1LDExIEBAIHN0YXRp
 YyBpbnQgdGVncmFfYWRtYV9wcm9iZShzdHJ1Y3QgcGxhdGZvcm1fZGV2aWNlICpwZGV2KQogCWlm
 IChJU19FUlIodGRtYS0+YmFzZV9hZGRyKSkKIAkJcmV0dXJuIFBUUl9FUlIodGRtYS0+YmFzZV9h
 ZGRyKTsKIAotCXJldCA9IHBtX2Nsa19jcmVhdGUoJnBkZXYtPmRldik7Ci0JaWYgKHJldCkKLQkJ
@@ -53,11 +53,11 @@ ZGlvIik7Ci0JaWYgKHJldCkKLQkJZ290byBjbGtfZGVzdHJveTsKKwl0ZG1hLT5haHViX2NsayA9
 IGRldm1fY2xrX2dldCgmcGRldi0+ZGV2LCAiZF9hdWRpbyIpOworCWlmIChJU19FUlIodGRtYS0+
 YWh1Yl9jbGspKSB7CisJCWRldl9lcnIoJnBkZXYtPmRldiwgIkVycm9yOiBNaXNzaW5nIGFodWIg
 Y29udHJvbGxlciBjbG9ja1xuIik7CisJCXJldHVybiBQVFJfRVJSKHRkbWEtPmFodWJfY2xrKTsK
-Kwl9CiAKIAlwbV9ydW50aW1lX2VuYWJsZSgmcGRldi0+ZGV2KTsKIApAQCAtNzc1LDggKzc3NSw2
+Kwl9CiAKIAlwbV9ydW50aW1lX2VuYWJsZSgmcGRldi0+ZGV2KTsKIApAQCAtNzc2LDggKzc3Niw2
 IEBAIHN0YXRpYyBpbnQgdGVncmFfYWRtYV9wcm9iZShzdHJ1Y3QgcGxhdGZvcm1fZGV2aWNlICpw
 ZGV2KQogCXBtX3J1bnRpbWVfcHV0X3N5bmMoJnBkZXYtPmRldik7CiBycG1fZGlzYWJsZToKIAlw
 bV9ydW50aW1lX2Rpc2FibGUoJnBkZXYtPmRldik7Ci1jbGtfZGVzdHJveToKLQlwbV9jbGtfZGVz
-dHJveSgmcGRldi0+ZGV2KTsKIAogCXJldHVybiByZXQ7CiB9CkBAIC03OTMsMjIgKzc5MSwxNSBA
+dHJveSgmcGRldi0+ZGV2KTsKIAogCXJldHVybiByZXQ7CiB9CkBAIC03OTQsMjIgKzc5MiwxNSBA
 QCBzdGF0aWMgaW50IHRlZ3JhX2FkbWFfcmVtb3ZlKHN0cnVjdCBwbGF0Zm9ybV9kZXZpY2UgKnBk
 ZXYpCiAKIAlwbV9ydW50aW1lX3B1dF9zeW5jKCZwZGV2LT5kZXYpOwogCXBtX3J1bnRpbWVfZGlz
 YWJsZSgmcGRldi0+ZGV2KTsKLQlwbV9jbGtfZGVzdHJveSgmcGRldi0+ZGV2KTsKIAogCXJldHVy
