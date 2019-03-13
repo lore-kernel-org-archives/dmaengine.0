@@ -1,26 +1,37 @@
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
-Subject: [v2,3/3] arm64: dts: imx8mq: Change ahb clock for imx8mq
-From: Angus Ainslie <angus@akkea.ca>
-Message-Id: <20190329152130.18411-4-angus@akkea.ca>
-Date: Fri, 29 Mar 2019 08:21:30 -0700
-To: angus.ainslie@puri.sm
-Cc: Rob Herring <robh+dt@kernel.org>, Mark Rutland <mark.rutland@arm.com>, Shawn Guo <shawnguo@kernel.org>, Sascha Hauer <s.hauer@pengutronix.de>, Pengutronix Kernel Team <kernel@pengutronix.de>, Fabio Estevam <festevam@gmail.com>, NXP Linux Team <linux-imx@nxp.com>, Dan Williams <dan.j.williams@intel.com>, Vinod Koul <vkoul@kernel.org>, Lucas Stach <l.stach@pengutronix.de>, "Angus Ainslie (Purism)" <angus@akkea.ca>, Carlo Caione <ccaione@baylibre.com>, Daniel Baluta <daniel.baluta@nxp.com>, =?UTF-8?q?Guido=20G=C3=BCnther?= <agx@sigxcpu.org>, devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org
+Subject: [v3,2/2] dmaengine: tegra210-adma: update system sleep callbacks
+From: Sameer Pujar <spujar@nvidia.com>
+Message-Id: <1552476757-22360-2-git-send-email-spujar@nvidia.com>
+Date: Wed, 13 Mar 2019 17:02:37 +0530
+To: dan.j.williams@intel.com, vkoul@kernel.org
+Cc: treding@nvidia.com, jonathanh@nvidia.com, dmaengine@vger.kernel.org, linux-tegra@vger.kernel.org, linux-kernel@vger.kernel.org, Sameer Pujar <spujar@nvidia.com>
 List-ID: <dmaengine.vger.kernel.org>
 
-U2V0IGFoYiBjbG9jayBvbiBzZG1hMSB0byBnZXQgcmlkIG9mICJUaW1lb3V0IHdhaXRpbmcgZm9y
-IENIMCIKb24gdGhlIGlteDhtcS4KClNpZ25lZC1vZmYtYnk6IEFuZ3VzIEFpbnNsaWUgKFB1cmlz
-bSkgPGFuZ3VzQGFra2VhLmNhPgotLS0KIGFyY2gvYXJtNjQvYm9vdC9kdHMvZnJlZXNjYWxlL2lt
-eDhtcS5kdHNpIHwgMiArLQogMSBmaWxlIGNoYW5nZWQsIDEgaW5zZXJ0aW9uKCspLCAxIGRlbGV0
-aW9uKC0pCgpkaWZmIC0tZ2l0IGEvYXJjaC9hcm02NC9ib290L2R0cy9mcmVlc2NhbGUvaW14OG1x
-LmR0c2kgYi9hcmNoL2FybTY0L2Jvb3QvZHRzL2ZyZWVzY2FsZS9pbXg4bXEuZHRzaQppbmRleCAw
-NjE1ODYyNWYyNGYuLjcyMzNkOWEzMTViOCAxMDA2NDQKLS0tIGEvYXJjaC9hcm02NC9ib290L2R0
-cy9mcmVlc2NhbGUvaW14OG1xLmR0c2kKKysrIGIvYXJjaC9hcm02NC9ib290L2R0cy9mcmVlc2Nh
-bGUvaW14OG1xLmR0c2kKQEAgLTcyNCw3ICs3MjQsNyBAQAogCQkJCXJlZyA9IDwweDMwYmQwMDAw
-IDB4MTAwMDA+OwogCQkJCWludGVycnVwdHMgPSA8R0lDX1NQSSAyIElSUV9UWVBFX0xFVkVMX0hJ
-R0g+OwogCQkJCWNsb2NrcyA9IDwmY2xrIElNWDhNUV9DTEtfU0RNQTFfUk9PVD4sCi0JCQkJCSA8
-JmNsayBJTVg4TVFfQ0xLX1NETUExX1JPT1Q+OworCQkJCQkgPCZjbGsgSU1YOE1RX0NMS19BSEI+
-OwogCQkJCWNsb2NrLW5hbWVzID0gImlwZyIsICJhaGIiOwogCQkJCSNkbWEtY2VsbHMgPSA8Mz47
-CiAJCQkJZnNsLHNkbWEtcmFtLXNjcmlwdC1uYW1lID0gImlteC9zZG1hL3NkbWEtaW14N2QuYmlu
-IjsK
+SWYgdGhlIGRyaXZlciBpcyBhY3RpdmUgdGlsbCBsYXRlIHN1c3BlbmQsIHdoZXJlIHJ1bnRpbWUg
+UE0gY2Fubm90IHJ1biwKZm9yY2Ugc3VzcGVuZCBpcyBlc3NlbnRpYWwgaW4gc3VjaCBjYXNlIHRv
+IHB1dCB0aGUgZGV2aWNlIGluIGxvdyBwb3dlcgpzdGF0ZS4gVGh1cyBwbV9ydW50aW1lX2ZvcmNl
+X3N1c3BlbmQgYW5kIHBtX3J1bnRpbWVfZm9yY2VfcmVzdW1lIGFyZQp1c2VkIGFzIHN5c3RlbSBz
+bGVlcCBjYWxsYmFja3MgZHVyaW5nIHN5c3RlbSB3aWRlIFBNIHRyYW5zaXRpb25zLgpMYXRlIHN5
+c3RlbSBzbGVlcCBjYWxsYmFja3MgYXJlIHVzZWQgdG8gZW5zdXJlLCBmb3IgaW5zdGFuY2UsIHRo
+YXQgdGhlCnNvdW5kIGNvcmUgaGFzIHN1c3BlbmRlZCBhbnkgb24tZ29pbmcgYWN0aXZpdHksIGlu
+Y2x1ZGluZyBzdG9wcGluZyB0aGUKQURNQSBpZiBhY3RpdmUsIGJlZm9yZSB3ZSBhdHRlbXB0IHRv
+IHN1c3BlbmQgdGhlIEFETUEuCgpTdWdnZXN0ZWQtYnk6IEpvbmF0aGFuIEh1bnRlciA8am9uYXRo
+YW5oQG52aWRpYS5jb20+ClNpZ25lZC1vZmYtYnk6IFNhbWVlciBQdWphciA8c3B1amFyQG52aWRp
+YS5jb20+Ci0tLQogZHJpdmVycy9kbWEvdGVncmEyMTAtYWRtYS5jIHwgMTAgKystLS0tLS0tLQog
+MSBmaWxlIGNoYW5nZWQsIDIgaW5zZXJ0aW9ucygrKSwgOCBkZWxldGlvbnMoLSkKCmRpZmYgLS1n
+aXQgYS9kcml2ZXJzL2RtYS90ZWdyYTIxMC1hZG1hLmMgYi9kcml2ZXJzL2RtYS90ZWdyYTIxMC1h
+ZG1hLmMKaW5kZXggNjUwY2Q5Yy4uMjUzZDMxMiAxMDA2NDQKLS0tIGEvZHJpdmVycy9kbWEvdGVn
+cmEyMTAtYWRtYS5jCisrKyBiL2RyaXZlcnMvZG1hL3RlZ3JhMjEwLWFkbWEuYwpAQCAtNzk2LDE3
+ICs3OTYsMTEgQEAgc3RhdGljIGludCB0ZWdyYV9hZG1hX3JlbW92ZShzdHJ1Y3QgcGxhdGZvcm1f
+ZGV2aWNlICpwZGV2KQogCXJldHVybiAwOwogfQogCi0jaWZkZWYgQ09ORklHX1BNX1NMRUVQCi1z
+dGF0aWMgaW50IHRlZ3JhX2FkbWFfcG1fc3VzcGVuZChzdHJ1Y3QgZGV2aWNlICpkZXYpCi17Ci0J
+cmV0dXJuIHBtX3J1bnRpbWVfc3VzcGVuZGVkKGRldikgPT0gZmFsc2U7Ci19Ci0jZW5kaWYKLQog
+c3RhdGljIGNvbnN0IHN0cnVjdCBkZXZfcG1fb3BzIHRlZ3JhX2FkbWFfZGV2X3BtX29wcyA9IHsK
+IAlTRVRfUlVOVElNRV9QTV9PUFModGVncmFfYWRtYV9ydW50aW1lX3N1c3BlbmQsCiAJCQkgICB0
+ZWdyYV9hZG1hX3J1bnRpbWVfcmVzdW1lLCBOVUxMKQotCVNFVF9TWVNURU1fU0xFRVBfUE1fT1BT
+KHRlZ3JhX2FkbWFfcG1fc3VzcGVuZCwgTlVMTCkKKwlTRVRfTEFURV9TWVNURU1fU0xFRVBfUE1f
+T1BTKHBtX3J1bnRpbWVfZm9yY2Vfc3VzcGVuZCwKKwkJCQkgICAgIHBtX3J1bnRpbWVfZm9yY2Vf
+cmVzdW1lKQogfTsKIAogc3RhdGljIHN0cnVjdCBwbGF0Zm9ybV9kcml2ZXIgdGVncmFfYWRtYWNf
+ZHJpdmVyID0gewo=
