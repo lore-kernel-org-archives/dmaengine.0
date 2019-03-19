@@ -2,16 +2,28 @@ Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
 Subject: [v1] dmaengine: idma64: Use actual device for DMA transfers
-From: Mark Brown <broonie@kernel.org>
-Message-Id: <20190319125747.GC5514@sirena.org.uk>
-Date: Tue, 19 Mar 2019 12:57:47 +0000
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Message-Id: <20190319142503.GA13758@kroah.com>
+Date: Tue, 19 Mar 2019 15:25:03 +0100
 To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Cc: Vinod Koul <vkoul@kernel.org>, dmaengine@vger.kernel.org, Daniel Mack <daniel@zonque.org>, Haojian Zhuang <haojian.zhuang@gmail.com>, Robert Jarzmik <robert.jarzmik@free.fr>, linux-arm-kernel@lists.infradead.org, linux-spi@vger.kernel.org, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, linux-serial@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc: Vinod Koul <vkoul@kernel.org>, dmaengine@vger.kernel.org, Daniel Mack <daniel@zonque.org>, Haojian Zhuang <haojian.zhuang@gmail.com>, Robert Jarzmik <robert.jarzmik@free.fr>, linux-arm-kernel@lists.infradead.org, Mark Brown <broonie@kernel.org>, linux-spi@vger.kernel.org, linux-serial@vger.kernel.org, linux-kernel@vger.kernel.org
 List-ID: <dmaengine.vger.kernel.org>
 
 T24gTW9uLCBNYXIgMTgsIDIwMTkgYXQgMDY6Mzk6MzBQTSArMDMwMCwgQW5keSBTaGV2Y2hlbmtv
 IHdyb3RlOgo+IEludGVsIElPTU1VLCB3aGVuIGVuYWJsZWQsIHRyaWVzIHRvIGZpbmQgdGhlIGRv
 bWFpbiBvZiB0aGUgZGV2aWNlLAo+IGFzc3VtaW5nIGl0J3MgYSBQQ0kgb25lLCBkdXJpbmcgRE1B
 IG9wZXJhdGlvbnMsIHN1Y2ggYXMgbWFwcGluZyBvcgo+IHVubWFwcGluZy4gU2luY2Ugd2UgYXJl
-IHNwbGl0dGluZyB0aGUgYWN0dWFsIFBDSSBkZXZpY2UgdG8gY291cGxlIG9mCgpBY2tlZC1ieTog
-TWFyayBCcm93biA8YnJvb25pZUBrZXJuZWwub3JnPgo=
+IHNwbGl0dGluZyB0aGUgYWN0dWFsIFBDSSBkZXZpY2UgdG8gY291cGxlIG9mCj4gY2hpbGRyZW4g
+dmlhIE1GRCBmcmFtZXdvcmsgKHNlZSBkcml2ZXJzL21mZC9pbnRlbC1scHNzLmMgZm9yIGRldGFp
+bHMpLAo+IHRoZSBETUEgZGV2aWNlIGFwcGVhcnMgdG8gYmUgYSBwbGF0Zm9ybSBvbmUsIGFuZCB0
+aHVzIG5vdCBhbiBhY3R1YWwgb25lCj4gdGhhdCBwZXJmb3JtcyBETUEuIEluIGEgc3VjaCBzaXR1
+YXRpb24gSU9NTVUgY2FuJ3QgZmluZCBvciBhbGxvY2F0ZQo+IGEgcHJvcGVyIGRvbWFpbiBmb3Ig
+aXRzIG9wZXJhdGlvbnMuIEFzIGEgcmVzdWx0LCBhbGwgRE1BIG9wZXJhdGlvbnMgYXJlCj4gZmFp
+bGVkLgo+IAo+IEluIG9yZGVyIHRvIGZpeCB0aGlzLCBzdXBwbHkgcGFyZW50IG9mIHRoZSBwbGF0
+Zm9ybSBkZXZpY2UKPiB0byB0aGUgRE1BIGVuZ2luZSBmcmFtZXdvcmsgYW5kIGZpeCBmaWx0ZXIg
+ZnVuY3Rpb25zIGFjY29yZGluZ2x5Lgo+IAo+IFdlIG1heSByZWx5IG9uIHRoZSBmYWN0IHRoYXQg
+cGFyZW50IGlzIGEgcmVhbCBQQ0kgZGV2aWNlLCBiZWNhdXNlIG5vCj4gb3RoZXIgY29uZmlndXJh
+dGlvbiBpcyBwcmVzZW50IGluIHRoZSB3aWxkLgo+IAo+IFNpZ25lZC1vZmYtYnk6IEFuZHkgU2hl
+dmNoZW5rbyA8YW5kcml5LnNoZXZjaGVua29AbGludXguaW50ZWwuY29tPgoKRm9yIHRoZSB0dHkv
+c2VyaWFsLyBwb3J0aW9uOgoKQWNrZWQtYnk6IEdyZWcgS3JvYWgtSGFydG1hbiA8Z3JlZ2toQGxp
+bnV4Zm91bmRhdGlvbi5vcmc+Cg==
