@@ -2,17 +2,20 @@ Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
 Subject: [1/1] dmaengine: imx-sdma: revert: add clock ratio 1:1 check
-From: Fabio Estevam <festevam@gmail.com>
-Message-Id: <CAOMZO5DDhxmTd=6zc03wjEYKbu4aM5iRYyiBJHe4v-FpibWR2A@mail.gmail.com>
-Date: Fri, 22 Mar 2019 00:10:43 -0300
-To: Andy Duan <fugang.duan@nxp.com>
+From: Fugang Duan <fugang.duan@nxp.com>
+Message-Id: <VI1PR0402MB36007FA586AB905D3A1DFB2AFF430@VI1PR0402MB3600.eurprd04.prod.outlook.com>
+Date: Fri, 22 Mar 2019 03:31:32 +0000
+To: Fabio Estevam <festevam@gmail.com>
 Cc: "vinod.koul@intel.com" <vinod.koul@intel.com>, "angus@akkea.ca" <angus@akkea.ca>, "dmaengine@vger.kernel.org" <dmaengine@vger.kernel.org>
 List-ID: <dmaengine.vger.kernel.org>
 
-T24gRnJpLCBNYXIgMjIsIDIwMTkgYXQgMTI6MDUgQU0gQW5keSBEdWFuIDxmdWdhbmcuZHVhbkBu
-eHAuY29tPiB3cm90ZToKPgo+IFRoaXMgcmV2ZXJ0cyBjb21taXQgMjVhYWE3NWRmMWU2IChkbWFl
-bmdpbmU6IGlteC1zZG1hOiBhZGQgY2xvY2sgcmF0aW8KPiAxOjEgY2hlY2spIGR1ZSB0byBicmVh
-ayBTRE1BIGZ1bmN0aW9uIG9uIGkuTVg2U1ggcGxhdGZvcm0uCj4KPiBMb2c6Cj4gaW14LXNkbWEg
-MjBlYzAwMC5zZG1hOiBUaW1lb3V0IHdhaXRpbmcgZm9yIENIMCByZWFkeQo+Cj4gU2lnbmVkLW9m
-Zi1ieTogRnVnYW5nIER1YW4gPGZ1Z2FuZy5kdWFuQG54cC5jb20+CgpQbGVhc2UgYWRkIGEgRml4
-ZXMgdGFnLCBzbyB0aGF0IGl0IGNhbiBnbyB0byA1LjEtcmMgYXMgYSBmaXguCg==
+RnJvbTogRmFiaW8gRXN0ZXZhbSA8ZmVzdGV2YW1AZ21haWwuY29tPiBTZW50OiBGcmlkYXksIE1h
+cmNoIDIyLCAyMDE5IDExOjExIEFNDQo+IE9uIEZyaSwgTWFyIDIyLCAyMDE5IGF0IDEyOjA1IEFN
+IEFuZHkgRHVhbiA8ZnVnYW5nLmR1YW5AbnhwLmNvbT4gd3JvdGU6DQo+ID4NCj4gPiBUaGlzIHJl
+dmVydHMgY29tbWl0IDI1YWFhNzVkZjFlNiAoZG1hZW5naW5lOiBpbXgtc2RtYTogYWRkIGNsb2Nr
+IHJhdGlvDQo+ID4gMToxIGNoZWNrKSBkdWUgdG8gYnJlYWsgU0RNQSBmdW5jdGlvbiBvbiBpLk1Y
+NlNYIHBsYXRmb3JtLg0KPiA+DQo+ID4gTG9nOg0KPiA+IGlteC1zZG1hIDIwZWMwMDAuc2RtYTog
+VGltZW91dCB3YWl0aW5nIGZvciBDSDAgcmVhZHkNCj4gPg0KPiA+IFNpZ25lZC1vZmYtYnk6IEZ1
+Z2FuZyBEdWFuIDxmdWdhbmcuZHVhbkBueHAuY29tPg0KPiANCj4gUGxlYXNlIGFkZCBhIEZpeGVz
+IHRhZywgc28gdGhhdCBpdCBjYW4gZ28gdG8gNS4xLXJjIGFzIGEgZml4Lg0KDQpPa2F5LCAgSSB3
+aWxsIHNlbmQgdGhlIHYyIHRvIGFkZCB0aGUgZml4ZXMgdGFnLgo=
