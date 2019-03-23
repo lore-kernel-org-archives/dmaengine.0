@@ -1,15 +1,23 @@
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
-Subject: [3/3] dmaengine: edma: make edma_filter_fn private
-From: Vinod Koul <vkoul@kernel.org>
-Message-Id: <20190325045657.GH5348@vkoul-mobl>
-Date: Mon, 25 Mar 2019 10:26:57 +0530
-To: Arnd Bergmann <arnd@arndb.de>
-Cc: Mark Brown <broonie@kernel.org>, Peter Ujfalusi <peter.ujfalusi@ti.com>, dmaengine@vger.kernel.org, alsa-devel@alsa-project.org, Dan Williams <dan.j.williams@intel.com>, linux-kernel@vger.kernel.org
+Subject: dma: ti: fix a missing check in omap_dma_prep_dma_cyclic
+From: Kangjie Lu <kjlu@umn.edu>
+Message-Id: <20190323223948.13885-1-kjlu@umn.edu>
+Date: Sat, 23 Mar 2019 17:39:43 -0500
+To: kjlu@umn.edu
+Cc: pakki001@umn.edu, Vinod Koul <vkoul@kernel.org>, Dan Williams <dan.j.williams@intel.com>, Peter Ujfalusi <peter.ujfalusi@ti.com>, Janusz Krzysztofik <jmkrzyszt@gmail.com>, dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
 List-ID: <dmaengine.vger.kernel.org>
 
-T24gMDctMDMtMTksIDE2OjE2LCBBcm5kIEJlcmdtYW5uIHdyb3RlOgo+IFdpdGggdGhlIGF1ZGlv
-IGRyaXZlciBubyBsb25nZXIgcmVmZXJyaW5nIHRvIHRoaXMgZnVuY3Rpb24sIGl0Cj4gY2FuIGJl
-IG1hZGUgcHJpdmF0ZSB0byB0aGUgZG1hZW5naW5lIGRyaXZlciBpdHNlbGYsIGFuZCB0aGUKPiBo
-ZWFkZXIgZmlsZSByZW1vdmVkLgoKQXBwbGllZCwgdGhhbmtzCg==
+SXQgaXMgaW52YWxpZCB3aGVuICJidWZfbGVuIiBpcyBub3QgYWxpZ25lZCB3aXRoICJwZXJpb2Rf
+bGVuIi4KClRoZSBmaXggYWRkcyBhIGNoZWNrIGZvciB0aGUgYWxpZ25tZW50LgoKU2lnbmVkLW9m
+Zi1ieTogS2FuZ2ppZSBMdSA8a2psdUB1bW4uZWR1PgotLS0KIGRyaXZlcnMvZG1hL3RpL29tYXAt
+ZG1hLmMgfCAzICsrKwogMSBmaWxlIGNoYW5nZWQsIDMgaW5zZXJ0aW9ucygrKQoKZGlmZiAtLWdp
+dCBhL2RyaXZlcnMvZG1hL3RpL29tYXAtZG1hLmMgYi9kcml2ZXJzL2RtYS90aS9vbWFwLWRtYS5j
+CmluZGV4IGE0YTkzMWRkZjZmNi4uNWYwY2UxOTc1ZTUyIDEwMDY0NAotLS0gYS9kcml2ZXJzL2Rt
+YS90aS9vbWFwLWRtYS5jCisrKyBiL2RyaXZlcnMvZG1hL3RpL29tYXAtZG1hLmMKQEAgLTEwNjUs
+NiArMTA2NSw5IEBAIHN0YXRpYyBzdHJ1Y3QgZG1hX2FzeW5jX3R4X2Rlc2NyaXB0b3IgKm9tYXBf
+ZG1hX3ByZXBfZG1hX2N5Y2xpYygKIAl1bnNpZ25lZCBlczsKIAl1MzIgYnVyc3Q7CiAKKwlpZiAo
+YnVmX2xlbiAlIHBlcmlvZF9sZW4pCisJCXJldHVybiBOVUxMOworCiAJaWYgKGRpciA9PSBETUFf
+REVWX1RPX01FTSkgewogCQlkZXZfYWRkciA9IGMtPmNmZy5zcmNfYWRkcjsKIAkJZGV2X3dpZHRo
+ID0gYy0+Y2ZnLnNyY19hZGRyX3dpZHRoOwo=
