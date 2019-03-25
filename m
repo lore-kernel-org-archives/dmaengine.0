@@ -1,26 +1,35 @@
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
-Subject: [4/4] arm64: dts: imx8mq: Change ahb clock for imx8mq
-From: Angus Ainslie <angus@akkea.ca>
-Message-Id: <20190328133828.20999-5-angus@akkea.ca>
-Date: Thu, 28 Mar 2019 06:38:28 -0700
-To: angus@akkea.ca
-Cc: Rob Herring <robh+dt@kernel.org>, Mark Rutland <mark.rutland@arm.com>, Shawn Guo <shawnguo@kernel.org>, Sascha Hauer <s.hauer@pengutronix.de>, Pengutronix Kernel Team <kernel@pengutronix.de>, Fabio Estevam <festevam@gmail.com>, NXP Linux Team <linux-imx@nxp.com>, Dan Williams <dan.j.williams@intel.com>, Vinod Koul <vkoul@kernel.org>, Lucas Stach <l.stach@pengutronix.de>, Carlo Caione <ccaione@baylibre.com>, Daniel Baluta <daniel.baluta@nxp.com>, =?UTF-8?q?Guido=20G=C3=BCnther?= <agx@sigxcpu.org>, devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org
+Subject: [1/2] dt-bindings: dmaengine: Add Milbeaut AXI DMA controller bindings
+From: Kazuhiro Kasai <kasai.kazuhiro@socionext.com>
+Message-Id: <1553487314-9185-2-git-send-email-kasai.kazuhiro@socionext.com>
+Date: Mon, 25 Mar 2019 13:15:13 +0900
+To: vkoul@kernel.org, robh+dt@kernel.org, mark.rutland@arm.com
+Cc: dmaengine@vger.kernel.org, devicetree@vger.kernel.org, orito.takao@socionext.com, sugaya.taichi@socionext.com, kanematsu.shinji@socionext.com, jaswinder.singh@linaro.org, masami.hiramatsu@linaro.org, linux-kernel@vger.kernel.org, Kazuhiro Kasai <kasai.kazuhiro@socionext.com>
 List-ID: <dmaengine.vger.kernel.org>
 
-U2V0IGFoYiBjbG9jayBvbiBzZG1hMSB0byBnZXQgcmlkIG9mICJUaW1lb3V0IHdhaXRpbmcgZm9y
-IENIMCIKb24gdGhlIGlteDhtcS4KClNpZ25lZC1vZmYtYnk6IEFuZ3VzIEFpbnNsaWUgKFB1cmlz
-bSkgPGFuZ3VzQGFra2VhLmNhPgotLS0KIGFyY2gvYXJtNjQvYm9vdC9kdHMvZnJlZXNjYWxlL2lt
-eDhtcS5kdHNpIHwgMiArLQogMSBmaWxlIGNoYW5nZWQsIDEgaW5zZXJ0aW9uKCspLCAxIGRlbGV0
-aW9uKC0pCgpkaWZmIC0tZ2l0IGEvYXJjaC9hcm02NC9ib290L2R0cy9mcmVlc2NhbGUvaW14OG1x
-LmR0c2kgYi9hcmNoL2FybTY0L2Jvb3QvZHRzL2ZyZWVzY2FsZS9pbXg4bXEuZHRzaQppbmRleCAw
-NzA5OWY4Mjk2NWUuLmNkMGY5ZWVkOWU5YyAxMDA2NDQKLS0tIGEvYXJjaC9hcm02NC9ib290L2R0
-cy9mcmVlc2NhbGUvaW14OG1xLmR0c2kKKysrIGIvYXJjaC9hcm02NC9ib290L2R0cy9mcmVlc2Nh
-bGUvaW14OG1xLmR0c2kKQEAgLTcyNCw3ICs3MjQsNyBAQAogCQkJCXJlZyA9IDwweDMwYmQwMDAw
-IDB4MTAwMDA+OwogCQkJCWludGVycnVwdHMgPSA8R0lDX1NQSSAyIElSUV9UWVBFX0xFVkVMX0hJ
-R0g+OwogCQkJCWNsb2NrcyA9IDwmY2xrIElNWDhNUV9DTEtfU0RNQTFfUk9PVD4sCi0JCQkJCSA8
-JmNsayBJTVg4TVFfQ0xLX1NETUExX1JPT1Q+OworCQkJCQkgPCZjbGsgSU1YOE1RX0NMS19BSEI+
-OwogCQkJCWNsb2NrLW5hbWVzID0gImlwZyIsICJhaGIiOwogCQkJCSNkbWEtY2VsbHMgPSA8Mz47
-CiAJCQkJZnNsLHNkbWEtcmFtLXNjcmlwdC1uYW1lID0gImlteC9zZG1hL3NkbWEtaW14N2QuYmlu
-IjsK
+QWRkIE1pbGJlYXV0IEFYSSBETUEgY29udHJvbGxlciBiaW5kaW5ncy4gVGhpcyBETUEgY29udHJv
+bGxlciBoYXMKb25seSBjYXBhYmxlIG9mIG1lbW9yeSB0byBtZW1vcnkgdHJhbnNmZXIuCgpTaWdu
+ZWQtb2ZmLWJ5OiBLYXp1aGlybyBLYXNhaSA8a2FzYWkua2F6dWhpcm9Ac29jaW9uZXh0LmNvbT4K
+LS0tCiAuLi4vZGV2aWNldHJlZS9iaW5kaW5ncy9kbWEveGRtYWMtbWlsYmVhdXQudHh0ICAgICB8
+IDI0ICsrKysrKysrKysrKysrKysrKysrKysKIDEgZmlsZSBjaGFuZ2VkLCAyNCBpbnNlcnRpb25z
+KCspCiBjcmVhdGUgbW9kZSAxMDA2NDQgRG9jdW1lbnRhdGlvbi9kZXZpY2V0cmVlL2JpbmRpbmdz
+L2RtYS94ZG1hYy1taWxiZWF1dC50eHQKCmRpZmYgLS1naXQgYS9Eb2N1bWVudGF0aW9uL2Rldmlj
+ZXRyZWUvYmluZGluZ3MvZG1hL3hkbWFjLW1pbGJlYXV0LnR4dCBiL0RvY3VtZW50YXRpb24vZGV2
+aWNldHJlZS9iaW5kaW5ncy9kbWEveGRtYWMtbWlsYmVhdXQudHh0Cm5ldyBmaWxlIG1vZGUgMTAw
+NjQ0CmluZGV4IDAwMDAwMDAuLjNhNzdmYjEKLS0tIC9kZXYvbnVsbAorKysgYi9Eb2N1bWVudGF0
+aW9uL2RldmljZXRyZWUvYmluZGluZ3MvZG1hL3hkbWFjLW1pbGJlYXV0LnR4dApAQCAtMCwwICsx
+LDI0IEBACisqIE1pbGJlYXV0IEFYSSBETUEgQ29udHJvbGxlcgorCitNaWxiZWF1dCBBWEkgRE1B
+IGNvbnRyb2xsZXIgaGFzIG9ubHkgbWVtb3J5IHRvIG1lbW9yeSB0cmFuc2ZlciBjYXBhYmlsaXR5
+LgorCisqIERNQSBjb250cm9sbGVyCisKK1JlcXVpcmVkIHByb3BlcnR5OgorLSBjb21wYXRpYmxl
+OiAJCVNob3VsZCBiZSAgInNvY2lvbmV4dCxtaWxiZWF1dC1tMTB2LXhkbWFjIgorLSByZWc6CQkJ
+U2hvdWxkIGNvbnRhaW4gRE1BIHJlZ2lzdGVycyBsb2NhdGlvbiBhbmQgbGVuZ3RoLgorLSBpbnRl
+cnJ1cHRzOiAJCVNob3VsZCBjb250YWluIGFsbCBvZiB0aGUgcGVyLWNoYW5uZWwgRE1BIGludGVy
+cnVwdHMuCistICNkbWEtY2VsbHM6IAkJU2hvdWxkIGJlIDEuCistIGRtYS1jaGFubmVsczogCU51
+bWJlciBvZiBETUEgY2hhbm5lbHMgc3VwcG9ydGVkIGJ5IHRoZSBjb250cm9sbGVyLgorCitFeGFt
+cGxlOgorCXhkbWFjMDogZG1hLWNvbnRyb2xsZXJAMWMyNTAwMDAgeworCQljb21wYXRpYmxlID0g
+InNvY2lvbmV4dCxtaWxiZWF1dC1tMTB2LXhkbWFjIjsKKwkJcmVnID0gPDB4MWMyNTAwMDAgMHgx
+MDAwPjsKKwkJaW50ZXJydXB0cyA9IDwwIDE3IDB4ND4sCisJCQkgICAgIDwwIDE4IDB4ND4sCisJ
+CQkgICAgIDwwIDE5IDB4ND4sCisJCQkgICAgIDwwIDIwIDB4ND47CisJCSNkbWEtY2VsbHMgPSA8
+MT47CisJCWRtYS1jaGFubmVscyA9IDw0PjsKKwl9Owo=
