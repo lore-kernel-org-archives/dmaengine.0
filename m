@@ -1,21 +1,26 @@
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
-Subject: [1/1] dmaengine: imx-sdma: revert: add clock ratio 1:1 check
-From: Fugang Duan <fugang.duan@nxp.com>
-Message-Id: <VI1PR0402MB36007FA586AB905D3A1DFB2AFF430@VI1PR0402MB3600.eurprd04.prod.outlook.com>
-Date: Fri, 22 Mar 2019 03:31:32 +0000
-To: Fabio Estevam <festevam@gmail.com>
-Cc: "vinod.koul@intel.com" <vinod.koul@intel.com>, "angus@akkea.ca" <angus@akkea.ca>, "dmaengine@vger.kernel.org" <dmaengine@vger.kernel.org>
+Subject: [4/4] arm64: dts: imx8mq: Change ahb clock for imx8mq
+From: Angus Ainslie <angus@akkea.ca>
+Message-Id: <20190328133828.20999-5-angus@akkea.ca>
+Date: Thu, 28 Mar 2019 06:38:28 -0700
+To: angus@akkea.ca
+Cc: Rob Herring <robh+dt@kernel.org>, Mark Rutland <mark.rutland@arm.com>, Shawn Guo <shawnguo@kernel.org>, Sascha Hauer <s.hauer@pengutronix.de>, Pengutronix Kernel Team <kernel@pengutronix.de>, Fabio Estevam <festevam@gmail.com>, NXP Linux Team <linux-imx@nxp.com>, Dan Williams <dan.j.williams@intel.com>, Vinod Koul <vkoul@kernel.org>, Lucas Stach <l.stach@pengutronix.de>, Carlo Caione <ccaione@baylibre.com>, Daniel Baluta <daniel.baluta@nxp.com>, =?UTF-8?q?Guido=20G=C3=BCnther?= <agx@sigxcpu.org>, devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org
 List-ID: <dmaengine.vger.kernel.org>
 
-RnJvbTogRmFiaW8gRXN0ZXZhbSA8ZmVzdGV2YW1AZ21haWwuY29tPiBTZW50OiBGcmlkYXksIE1h
-cmNoIDIyLCAyMDE5IDExOjExIEFNDQo+IE9uIEZyaSwgTWFyIDIyLCAyMDE5IGF0IDEyOjA1IEFN
-IEFuZHkgRHVhbiA8ZnVnYW5nLmR1YW5AbnhwLmNvbT4gd3JvdGU6DQo+ID4NCj4gPiBUaGlzIHJl
-dmVydHMgY29tbWl0IDI1YWFhNzVkZjFlNiAoZG1hZW5naW5lOiBpbXgtc2RtYTogYWRkIGNsb2Nr
-IHJhdGlvDQo+ID4gMToxIGNoZWNrKSBkdWUgdG8gYnJlYWsgU0RNQSBmdW5jdGlvbiBvbiBpLk1Y
-NlNYIHBsYXRmb3JtLg0KPiA+DQo+ID4gTG9nOg0KPiA+IGlteC1zZG1hIDIwZWMwMDAuc2RtYTog
-VGltZW91dCB3YWl0aW5nIGZvciBDSDAgcmVhZHkNCj4gPg0KPiA+IFNpZ25lZC1vZmYtYnk6IEZ1
-Z2FuZyBEdWFuIDxmdWdhbmcuZHVhbkBueHAuY29tPg0KPiANCj4gUGxlYXNlIGFkZCBhIEZpeGVz
-IHRhZywgc28gdGhhdCBpdCBjYW4gZ28gdG8gNS4xLXJjIGFzIGEgZml4Lg0KDQpPa2F5LCAgSSB3
-aWxsIHNlbmQgdGhlIHYyIHRvIGFkZCB0aGUgZml4ZXMgdGFnLgo=
+U2V0IGFoYiBjbG9jayBvbiBzZG1hMSB0byBnZXQgcmlkIG9mICJUaW1lb3V0IHdhaXRpbmcgZm9y
+IENIMCIKb24gdGhlIGlteDhtcS4KClNpZ25lZC1vZmYtYnk6IEFuZ3VzIEFpbnNsaWUgKFB1cmlz
+bSkgPGFuZ3VzQGFra2VhLmNhPgotLS0KIGFyY2gvYXJtNjQvYm9vdC9kdHMvZnJlZXNjYWxlL2lt
+eDhtcS5kdHNpIHwgMiArLQogMSBmaWxlIGNoYW5nZWQsIDEgaW5zZXJ0aW9uKCspLCAxIGRlbGV0
+aW9uKC0pCgpkaWZmIC0tZ2l0IGEvYXJjaC9hcm02NC9ib290L2R0cy9mcmVlc2NhbGUvaW14OG1x
+LmR0c2kgYi9hcmNoL2FybTY0L2Jvb3QvZHRzL2ZyZWVzY2FsZS9pbXg4bXEuZHRzaQppbmRleCAw
+NzA5OWY4Mjk2NWUuLmNkMGY5ZWVkOWU5YyAxMDA2NDQKLS0tIGEvYXJjaC9hcm02NC9ib290L2R0
+cy9mcmVlc2NhbGUvaW14OG1xLmR0c2kKKysrIGIvYXJjaC9hcm02NC9ib290L2R0cy9mcmVlc2Nh
+bGUvaW14OG1xLmR0c2kKQEAgLTcyNCw3ICs3MjQsNyBAQAogCQkJCXJlZyA9IDwweDMwYmQwMDAw
+IDB4MTAwMDA+OwogCQkJCWludGVycnVwdHMgPSA8R0lDX1NQSSAyIElSUV9UWVBFX0xFVkVMX0hJ
+R0g+OwogCQkJCWNsb2NrcyA9IDwmY2xrIElNWDhNUV9DTEtfU0RNQTFfUk9PVD4sCi0JCQkJCSA8
+JmNsayBJTVg4TVFfQ0xLX1NETUExX1JPT1Q+OworCQkJCQkgPCZjbGsgSU1YOE1RX0NMS19BSEI+
+OwogCQkJCWNsb2NrLW5hbWVzID0gImlwZyIsICJhaGIiOwogCQkJCSNkbWEtY2VsbHMgPSA8Mz47
+CiAJCQkJZnNsLHNkbWEtcmFtLXNjcmlwdC1uYW1lID0gImlteC9zZG1hL3NkbWEtaW14N2QuYmlu
+IjsK
