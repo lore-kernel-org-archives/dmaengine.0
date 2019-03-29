@@ -1,23 +1,26 @@
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
-Subject: [v3,1/2] dmaengine: tegra210-adma: use devm_clk_*() helpers
-From: Vinod Koul <vkoul@kernel.org>
-Message-Id: <20190325045429.GF5348@vkoul-mobl>
-Date: Mon, 25 Mar 2019 10:24:29 +0530
-To: Sameer Pujar <spujar@nvidia.com>
-Cc: dan.j.williams@intel.com, treding@nvidia.com, jonathanh@nvidia.com, dmaengine@vger.kernel.org, linux-tegra@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [v2,3/3] arm64: dts: imx8mq: Change ahb clock for imx8mq
+From: Angus Ainslie <angus@akkea.ca>
+Message-Id: <20190329152130.18411-4-angus@akkea.ca>
+Date: Fri, 29 Mar 2019 08:21:30 -0700
+To: angus.ainslie@puri.sm
+Cc: Rob Herring <robh+dt@kernel.org>, Mark Rutland <mark.rutland@arm.com>, Shawn Guo <shawnguo@kernel.org>, Sascha Hauer <s.hauer@pengutronix.de>, Pengutronix Kernel Team <kernel@pengutronix.de>, Fabio Estevam <festevam@gmail.com>, NXP Linux Team <linux-imx@nxp.com>, Dan Williams <dan.j.williams@intel.com>, Vinod Koul <vkoul@kernel.org>, Lucas Stach <l.stach@pengutronix.de>, "Angus Ainslie (Purism)" <angus@akkea.ca>, Carlo Caione <ccaione@baylibre.com>, Daniel Baluta <daniel.baluta@nxp.com>, =?UTF-8?q?Guido=20G=C3=BCnther?= <agx@sigxcpu.org>, devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org
 List-ID: <dmaengine.vger.kernel.org>
 
-T24gMTMtMDMtMTksIDE3OjAyLCBTYW1lZXIgUHVqYXIgd3JvdGU6Cj4gYWRtYSBkcml2ZXIgaXMg
-dXNpbmcgcG1fY2xrXyooKSBpbnRlcmZhY2UgZm9yIG1hbmFnaW5nIGNsb2NrIHJlc291cmNlcy4K
-PiBXaXRoIHRoaXMgaXQgaXMgb2JzZXJ2ZWQgdGhhdCBjbG9ja3MgcmVtYWluIE9OIGFsd2F5cy4g
-VGhpcyBoYXBwZW5zIG9uCj4gVGVncmEgZGV2aWNlcyB3aGljaCB1c2UgQlBNUCBjby1wcm9jZXNz
-b3IgdG8gbWFuYWdlIGNsb2NrIHJlc291cmNlcywKPiB3aGVyZSBjbG9ja3MgYXJlIGVuYWJsZWQg
-ZHVyaW5nIHByZXBhcmUgcGhhc2UuIFRoaXMgaXMgbmVjZXNzYXJ5IGJlY2F1c2UKPiBjbG9ja3Mg
-dG8gQlBNUCBhcmUgYWx3YXlzIGJsb2NraW5nLiBXaGVuIHBtX2Nsa18qKCkgaW50ZXJmYWNlIGlz
-IHVzZWQgb24KPiBzdWNoIFRlZ3JhIGRldmljZXMsIGNsb2NrIHByZXBhcmUgY291bnQgaXMgbm90
-IGJhbGFuY2VkIHRpbGwgcmVtb3ZlIGNhbGwKPiBoYXBwZW5zIGZvciB0aGUgZHJpdmVyIGFuZCBo
-ZW5jZSBjbG9ja3MgYXJlIHNlZW4gT04gYWx3YXlzLiBUaHVzIHRoaXMKPiBwYXRjaCByZXBsYWNl
-cyBwbV9jbGtfKigpIHdpdGggZGV2bV9jbGtfKigpIGZyYW1ld29yay4KCkJvdGggYXBwbGllZCwg
-dGhhbmtzCg==
+U2V0IGFoYiBjbG9jayBvbiBzZG1hMSB0byBnZXQgcmlkIG9mICJUaW1lb3V0IHdhaXRpbmcgZm9y
+IENIMCIKb24gdGhlIGlteDhtcS4KClNpZ25lZC1vZmYtYnk6IEFuZ3VzIEFpbnNsaWUgKFB1cmlz
+bSkgPGFuZ3VzQGFra2VhLmNhPgotLS0KIGFyY2gvYXJtNjQvYm9vdC9kdHMvZnJlZXNjYWxlL2lt
+eDhtcS5kdHNpIHwgMiArLQogMSBmaWxlIGNoYW5nZWQsIDEgaW5zZXJ0aW9uKCspLCAxIGRlbGV0
+aW9uKC0pCgpkaWZmIC0tZ2l0IGEvYXJjaC9hcm02NC9ib290L2R0cy9mcmVlc2NhbGUvaW14OG1x
+LmR0c2kgYi9hcmNoL2FybTY0L2Jvb3QvZHRzL2ZyZWVzY2FsZS9pbXg4bXEuZHRzaQppbmRleCAw
+NjE1ODYyNWYyNGYuLjcyMzNkOWEzMTViOCAxMDA2NDQKLS0tIGEvYXJjaC9hcm02NC9ib290L2R0
+cy9mcmVlc2NhbGUvaW14OG1xLmR0c2kKKysrIGIvYXJjaC9hcm02NC9ib290L2R0cy9mcmVlc2Nh
+bGUvaW14OG1xLmR0c2kKQEAgLTcyNCw3ICs3MjQsNyBAQAogCQkJCXJlZyA9IDwweDMwYmQwMDAw
+IDB4MTAwMDA+OwogCQkJCWludGVycnVwdHMgPSA8R0lDX1NQSSAyIElSUV9UWVBFX0xFVkVMX0hJ
+R0g+OwogCQkJCWNsb2NrcyA9IDwmY2xrIElNWDhNUV9DTEtfU0RNQTFfUk9PVD4sCi0JCQkJCSA8
+JmNsayBJTVg4TVFfQ0xLX1NETUExX1JPT1Q+OworCQkJCQkgPCZjbGsgSU1YOE1RX0NMS19BSEI+
+OwogCQkJCWNsb2NrLW5hbWVzID0gImlwZyIsICJhaGIiOwogCQkJCSNkbWEtY2VsbHMgPSA8Mz47
+CiAJCQkJZnNsLHNkbWEtcmFtLXNjcmlwdC1uYW1lID0gImlteC9zZG1hL3NkbWEtaW14N2QuYmlu
+IjsK
