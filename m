@@ -2,24 +2,27 @@ Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
 Subject: dmaengine: bcm2835: Drop duplicate capability setting.
-From: Michal Suchanek <msuchanek@suse.de>
-Message-Id: <20190404172503.12155-1-msuchanek@suse.de>
-Date: Thu,  4 Apr 2019 19:25:03 +0200
-To: bcm-kernel-feedback-list@broadcom.com, dmaengine@vger.kernel.org, linux-rpi-kernel@lists.infradead.org, linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
-Cc: Michal Suchanek <msuchanek@suse.de>, Vinod Koul <vkoul@kernel.org>, Dan Williams <dan.j.williams@intel.com>, Eric Anholt <eric@anholt.net>, Stefan Wahren <stefan.wahren@i2se.com>, Florian Fainelli <f.fainelli@gmail.com>, Ray Jui <rjui@broadcom.com>, Scott Branden <sbranden@broadcom.com>
+From: Stefan Wahren <stefan.wahren@i2se.com>
+Message-Id: <c03b8f37-6ca7-e259-282a-29e81b81e630@i2se.com>
+Date: Fri, 5 Apr 2019 09:07:37 +0200
+To: Michal Suchanek <msuchanek@suse.de>, bcm-kernel-feedback-list@broadcom.com, dmaengine@vger.kernel.org, linux-rpi-kernel@lists.infradead.org, linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
+Cc: Vinod Koul <vkoul@kernel.org>, Dan Williams <dan.j.williams@intel.com>, Eric Anholt <eric@anholt.net>, Florian Fainelli <f.fainelli@gmail.com>, Ray Jui <rjui@broadcom.com>, Scott Branden <sbranden@broadcom.com>
 List-ID: <dmaengine.vger.kernel.org>
 
-U2lnbmVkLW9mZi1ieTogTWljaGFsIFN1Y2hhbmVrIDxtc3VjaGFuZWtAc3VzZS5kZT4KLS0tCiBk
-cml2ZXJzL2RtYS9iY20yODM1LWRtYS5jIHwgMSAtCiAxIGZpbGUgY2hhbmdlZCwgMSBkZWxldGlv
-bigtKQoKZGlmZiAtLWdpdCBhL2RyaXZlcnMvZG1hL2JjbTI4MzUtZG1hLmMgYi9kcml2ZXJzL2Rt
-YS9iY20yODM1LWRtYS5jCmluZGV4IGVjOGEyOTFkNjJiYS4uZTM4YjE5ZGQyODk1IDEwMDY0NAot
-LS0gYS9kcml2ZXJzL2RtYS9iY20yODM1LWRtYS5jCisrKyBiL2RyaXZlcnMvZG1hL2JjbTI4MzUt
-ZG1hLmMKQEAgLTg5MSw3ICs4OTEsNiBAQCBzdGF0aWMgaW50IGJjbTI4MzVfZG1hX3Byb2JlKHN0
-cnVjdCBwbGF0Zm9ybV9kZXZpY2UgKnBkZXYpCiAJZG1hX2NhcF9zZXQoRE1BX1NMQVZFLCBvZC0+
-ZGRldi5jYXBfbWFzayk7CiAJZG1hX2NhcF9zZXQoRE1BX1BSSVZBVEUsIG9kLT5kZGV2LmNhcF9t
-YXNrKTsKIAlkbWFfY2FwX3NldChETUFfQ1lDTElDLCBvZC0+ZGRldi5jYXBfbWFzayk7Ci0JZG1h
-X2NhcF9zZXQoRE1BX1NMQVZFLCBvZC0+ZGRldi5jYXBfbWFzayk7CiAJZG1hX2NhcF9zZXQoRE1B
-X01FTUNQWSwgb2QtPmRkZXYuY2FwX21hc2spOwogCW9kLT5kZGV2LmRldmljZV9hbGxvY19jaGFu
-X3Jlc291cmNlcyA9IGJjbTI4MzVfZG1hX2FsbG9jX2NoYW5fcmVzb3VyY2VzOwogCW9kLT5kZGV2
-LmRldmljZV9mcmVlX2NoYW5fcmVzb3VyY2VzID0gYmNtMjgzNV9kbWFfZnJlZV9jaGFuX3Jlc291
-cmNlczsK
+QW0gMDQuMDQuMTkgdW0gMTk6MjUgc2NocmllYiBNaWNoYWwgU3VjaGFuZWs6Cj4gU2lnbmVkLW9m
+Zi1ieTogTWljaGFsIFN1Y2hhbmVrIDxtc3VjaGFuZWtAc3VzZS5kZT4KCkV4Y2VwdCBvZiB0aGUg
+cG9pbnQgdGhlcmUgaXMgbm8gY29tbWl0IGxvZzoKCkFja2VkLWJ5OiBTdGVmYW4gV2FocmVuIDxz
+dGVmYW4ud2FocmVuQGkyc2UuY29tPgoKPiAtLS0KPiAgZHJpdmVycy9kbWEvYmNtMjgzNS1kbWEu
+YyB8IDEgLQo+ICAxIGZpbGUgY2hhbmdlZCwgMSBkZWxldGlvbigtKQo+Cj4gZGlmZiAtLWdpdCBh
+L2RyaXZlcnMvZG1hL2JjbTI4MzUtZG1hLmMgYi9kcml2ZXJzL2RtYS9iY20yODM1LWRtYS5jCj4g
+aW5kZXggZWM4YTI5MWQ2MmJhLi5lMzhiMTlkZDI4OTUgMTAwNjQ0Cj4gLS0tIGEvZHJpdmVycy9k
+bWEvYmNtMjgzNS1kbWEuYwo+ICsrKyBiL2RyaXZlcnMvZG1hL2JjbTI4MzUtZG1hLmMKPiBAQCAt
+ODkxLDcgKzg5MSw2IEBAIHN0YXRpYyBpbnQgYmNtMjgzNV9kbWFfcHJvYmUoc3RydWN0IHBsYXRm
+b3JtX2RldmljZSAqcGRldikKPiAgCWRtYV9jYXBfc2V0KERNQV9TTEFWRSwgb2QtPmRkZXYuY2Fw
+X21hc2spOwo+ICAJZG1hX2NhcF9zZXQoRE1BX1BSSVZBVEUsIG9kLT5kZGV2LmNhcF9tYXNrKTsK
+PiAgCWRtYV9jYXBfc2V0KERNQV9DWUNMSUMsIG9kLT5kZGV2LmNhcF9tYXNrKTsKPiAtCWRtYV9j
+YXBfc2V0KERNQV9TTEFWRSwgb2QtPmRkZXYuY2FwX21hc2spOwo+ICAJZG1hX2NhcF9zZXQoRE1B
+X01FTUNQWSwgb2QtPmRkZXYuY2FwX21hc2spOwo+ICAJb2QtPmRkZXYuZGV2aWNlX2FsbG9jX2No
+YW5fcmVzb3VyY2VzID0gYmNtMjgzNV9kbWFfYWxsb2NfY2hhbl9yZXNvdXJjZXM7Cj4gIAlvZC0+
+ZGRldi5kZXZpY2VfZnJlZV9jaGFuX3Jlc291cmNlcyA9IGJjbTI4MzVfZG1hX2ZyZWVfY2hhbl9y
+ZXNvdXJjZXM7Cg==
