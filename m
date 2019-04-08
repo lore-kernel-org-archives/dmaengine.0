@@ -1,20 +1,42 @@
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
-Subject: Issues with i.MX SPI DMA transfers
-From: Igor Plyatov <plyatov@gmail.com>
-Message-Id: <7739e283-799c-7dac-2bcd-fbf17fd4fb93@gmail.com>
-Date: Wed, 3 Apr 2019 20:13:49 +0300
-To: Robin Gong <yibin.gong@nxp.com>
-Cc: =?UTF-8?Q?Uwe_Kleine-K=c3=b6nig?= <u.kleine-koenig@pengutronix.de>, "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>, "linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>, "linux-spi@vger.kernel.org" <linux-spi@vger.kernel.org>, dl-linux-imx <linux-imx@nxp.com>, Fabio Estevam <festevam@gmail.com>, Pengutronix Kernel Team <kernel@pengutronix.de>, Sascha Hauer <s.hauer@pengutronix.de>, Shawn Guo <shawnguo@kernel.org>, Mark Brown <broonie@kernel.org>, "dmaengine@vger.kernel.org" <dmaengine@vger.kernel.org>, Vinod Koul <vkoul@kernel.org>, Dan Williams <dan.j.williams@intel.com>, Andy Duan <fugang.duan@nxp.com>, Han Xu <han.xu@nxp.com>, Clark Wang <xiaoning.wang@nxp.com>
+Subject: intel-lpss: Set the device in reset state when init
+From: Binbin Wu <binbin.wu@intel.com>
+Message-Id: <1554702118-20184-1-git-send-email-binbin.wu@intel.com>
+Date: Mon,  8 Apr 2019 13:41:58 +0800
+To: rjw@rjwysocki.net, linux-pm@vger.kernel.org, gregkh@linuxfoundation.org, lee.jones@linaro.org, mika.westerberg@linux.intel.com, linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org, andriy.shevchenko@linux.intel.com
+Cc: binbin.wu@intel.com
 List-ID: <dmaengine.vger.kernel.org>
 
-RGVhciBSb2JpbiwKCkkgaGF2ZSBtYWRlIGFkZGl0aW9uYWwgdGVzdHMgb24gYW5vdGhlciBleGVt
-cGxhciBvZiBib2FyZCB3aXRoIAphYnNvbHV0ZWx5IHNhbWUgaGFyZHdhcmUuCgpUaGUgc3BpZGV2
-X3Rlc3QgZmFpbGVkIG9uIGVDU1BJMiBhbmQgZUNTUEk1IGludGVyZmFjZXMsIGJ1dCB3b3JrcyAK
-c3VjY2Vzc2Z1bGx5IG9uIGVDU1BJMSBpbnRlcmZhY2UuCgpTbywgaXQgbG9va3MsIGlzc3VlIGRv
-ZXMgbm90IGNvcnJlc3BvbmQgdG8gZml4ZWQgaW50ZXJmYWNlIG51bWJlci4KClRoaXMgaXMgZ2Vu
-ZXJpYyBpc3N1ZSBvZiBpLk1YNiBTT0MgYW5kIGhhcmRseSBicm9rZW4gZUNTUEkgaW50ZXJmYWNl
-IApudW1iZXIgY2FuIGNoYW5nZSBmcm9tIFNPQyBjaGlwIHRvIGNoaXAuCgpEbyB5b3UgaGF2ZSBh
-bnkgaWRlYSBob3cgdG8gaW1wcm92ZSBzaXR1YXRpb24gd2l0aCBlQ1NQSSBpbiBETUEgbW9kZT8K
-CkJlc3Qgd2lzaGVzLgotLS0KSWdvciBQbHlhdG92Cg==
+SW4gdmlydHVhbGl6ZWQgc2V0dXAsIHdoZW4gc3lzdGVtIHJlYm9vdHMgZHVlIHRvIHdhcm0KcmVz
+ZXQgaW50ZXJydXB0IHN0b3JtIGlzIHNlZW4uCgpDYWxsIFRyYWNlOgo8SVJRPgpkdW1wX3N0YWNr
+KzB4NzAvMHhhNQpfX3JlcG9ydF9iYWRfaXJxKzB4MmUvMHhjMApub3RlX2ludGVycnVwdCsweDI0
+OC8weDI5MAo/IGFkZF9pbnRlcnJ1cHRfcmFuZG9tbmVzcysweDMwLzB4MjIwCmhhbmRsZV9pcnFf
+ZXZlbnRfcGVyY3B1KzB4NTQvMHg4MApoYW5kbGVfaXJxX2V2ZW50KzB4MzkvMHg2MApoYW5kbGVf
+ZmFzdGVvaV9pcnErMHg5MS8weDE1MApoYW5kbGVfaXJxKzB4MTA4LzB4MTgwCmRvX0lSUSsweDUy
+LzB4ZjAKY29tbW9uX2ludGVycnVwdCsweGYvMHhmCjwvSVJRPgpSSVA6IDAwMzM6MHg3NmZjMmNm
+YWJjMWQKQ29kZTogMjQgMjggYmYgMDMgMDAgMDAgMDAgMzEgYzAgNDggOGQgMzUgNjMgNzcgMGUg
+MDAgNDggOGQgMTUgMmUKOTQgMGUgMDAgNGMgODkgZjkgNDkgODkgZDkgNGMgODkgZDMgZTggYjgg
+ZTIgMDEgMDAgNDggOGIgNTQgMjQgMTgKPDQ4PiA4OSBlZiA0OCA4OSBkZSA0YyA4OSBlMSBlOCBk
+NSA5NyAwMSAwMCA4NCBjMCA3NCAyZCA0OCA4YiAwNAoyNApSU1A6IDAwMmI6MDAwMDdmZmQyNDdj
+MWZjMCBFRkxBR1M6IDAwMDAwMjkzIE9SSUdfUkFYOiBmZmZmZmZmZmZmZmZmZmRhClJBWDogMDAw
+MDAwMDAwMDAwMDAwMCBSQlg6IDAwMDA3ZmZkMjQ3YzFmZjAgUkNYOiAwMDAwMDAwMDAwMDNkM2Nl
+ClJEWDogMDAwMDAwMDAwMDAwMDAwMCBSU0k6IDAwMDA3ZmZkMjQ3YzFmZjAgUkRJOiAwMDAwNzZm
+YzJjYmI2MDEwClJCUDogMDAwMDc2ZmMyY2RlZDAxMCBSMDg6IDAwMDA3ZmZkMjQ3YzIyMTAgUjA5
+OiAwMDAwN2ZmZDI0N2MyMmEwClIxMDogMDAwMDc2ZmMyOTQ2NTQ3MCBSMTE6IDAwMDAwMDAwMDAw
+MDAwMDAgUjEyOiAwMDAwN2ZmZDI0N2MxZmMwClIxMzogMDAwMDc2ZmMyY2U4ZTQ3MCBSMTQ6IDAw
+MDA3NmZjMjdlYzk5NjAgUjE1OiAwMDAwMDAwMDAwMDAwNDE0CmhhbmRsZXJzOgpbPDAwMDAwMDAw
+MGQzZmE5MTM+XSBpZG1hNjRfaXJxCkRpc2FibGluZyBJUlEgIzI3CgpUbyBhdm9pZCBpbnRlcnJ1
+cHQgc3Rvcm0sIHNldCB0aGUgZGV2aWNlIGluIHJlc2V0IHN0YXRlCmJlZm9yZSBicmluZ2luZyBv
+dXQgdGhlIGRldmljZSBmcm9tIHJlc2V0IHN0YXRlLgoKU2lnbmVkLW9mZi1ieTogQmluYmluIFd1
+IDxiaW5iaW4ud3VAaW50ZWwuY29tPgotLS0KIGRyaXZlcnMvbWZkL2ludGVsLWxwc3MuYyB8IDMg
+KysrCiAxIGZpbGUgY2hhbmdlZCwgMyBpbnNlcnRpb25zKCspCgpkaWZmIC0tZ2l0IGEvZHJpdmVy
+cy9tZmQvaW50ZWwtbHBzcy5jIGIvZHJpdmVycy9tZmQvaW50ZWwtbHBzcy5jCmluZGV4IDUwYmZm
+YzMuLmZmM2ZiYTEgMTAwNjQ0Ci0tLSBhL2RyaXZlcnMvbWZkL2ludGVsLWxwc3MuYworKysgYi9k
+cml2ZXJzL21mZC9pbnRlbC1scHNzLmMKQEAgLTI3Myw2ICsyNzMsOSBAQCBzdGF0aWMgdm9pZCBp
+bnRlbF9scHNzX2luaXRfZGV2KGNvbnN0IHN0cnVjdCBpbnRlbF9scHNzICpscHNzKQogewogCXUz
+MiB2YWx1ZSA9IExQU1NfUFJJVl9TU1BfUkVHX0RJU19ETUFfRklOOwogCisJLyogU2V0IHRoZSBk
+ZXZpY2UgaW4gcmVzZXQgc3RhdGUgKi8KKwl3cml0ZWwoMCwgbHBzcy0+cHJpdiArIExQU1NfUFJJ
+Vl9SRVNFVFMpOworCiAJaW50ZWxfbHBzc19kZWFzc2VydF9yZXNldChscHNzKTsKIAogCWludGVs
+X2xwc3Nfc2V0X3JlbWFwX2FkZHIobHBzcyk7Cg==
