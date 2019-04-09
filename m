@@ -2,63 +2,71 @@ Return-Path: <SRS0=Qfcr=SL=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.3 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_PASS,USER_AGENT_MUTT
-	autolearn=unavailable autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.5 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_PASS,USER_AGENT_MUTT autolearn=unavailable
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7DAE6C10F0E
-	for <dmaengine@archiver.kernel.org>; Tue,  9 Apr 2019 16:37:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5E2EEC282CE
+	for <dmaengine@archiver.kernel.org>; Tue,  9 Apr 2019 18:01:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 4B1722084F
-	for <dmaengine@archiver.kernel.org>; Tue,  9 Apr 2019 16:37:34 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="NPbFIx25"
+	by mail.kernel.org (Postfix) with ESMTP id 31D1D2084F
+	for <dmaengine@archiver.kernel.org>; Tue,  9 Apr 2019 18:01:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726396AbfDIQh3 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 9 Apr 2019 12:37:29 -0400
-Received: from bombadil.infradead.org ([198.137.202.133]:33958 "EHLO
-        bombadil.infradead.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726383AbfDIQh3 (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Tue, 9 Apr 2019 12:37:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=infradead.org; s=bombadil.20170209; h=In-Reply-To:Content-Type:MIME-Version
-        :References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
-        Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
-        Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
-        List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-         bh=xGwGZu2v4kIB39gIuhG6d0yk9mI2M/lFF/ZPk/q2qLg=; b=NPbFIx25Eyq3G9g9/LlsnGT19
-        Ld5kGm4ap12LQ+gAPIdkgsVA9S1iKW9V4bkSHioH+U8VTAGvTuTBTYjeqZ3ixTyzx9GejIMjxsrTU
-        kKIoY1YWBLqusEmo0AEDGnZiyz781Kgs/n5qxsqo/MD9Svr/XiSbsIK3rN6KdYHrl+P0lybNF4Gix
-        PvnAI0oM3vB7THK0Ny4Pao12FIHATvIKUUzE0WfTDu/PlgQvAGUSp0oWxS+cD4sGEOjrfSJYcDHR3
-        DRASfv1IaVnJtRoGdy45ikY1OSWFPBDmrcUFbajAs092rYk303/I7NcYme8XTvYUA+WCGkPx4Yf6T
-        frASrloAA==;
-Received: from hch by bombadil.infradead.org with local (Exim 4.90_1 #2 (Red Hat Linux))
-        id 1hDtkW-0000hE-Ni; Tue, 09 Apr 2019 16:37:28 +0000
-Date:   Tue, 9 Apr 2019 09:37:28 -0700
-From:   Christoph Hellwig <hch@infradead.org>
-To:     Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+        id S1726536AbfDISBr (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 9 Apr 2019 14:01:47 -0400
+Received: from mga04.intel.com ([192.55.52.120]:56294 "EHLO mga04.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726383AbfDISBq (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Tue, 9 Apr 2019 14:01:46 -0400
+X-Amp-Result: UNKNOWN
+X-Amp-Original-Verdict: FILE UNKNOWN
+X-Amp-File-Uploaded: False
+Received: from orsmga008.jf.intel.com ([10.7.209.65])
+  by fmsmga104.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 09 Apr 2019 11:01:46 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.60,330,1549958400"; 
+   d="scan'208";a="132827104"
+Received: from smile.fi.intel.com (HELO smile) ([10.237.72.86])
+  by orsmga008.jf.intel.com with ESMTP; 09 Apr 2019 11:01:44 -0700
+Received: from andy by smile with local (Exim 4.92)
+        (envelope-from <andriy.shevchenko@linux.intel.com>)
+        id 1hDv43-0006j1-C0; Tue, 09 Apr 2019 21:01:43 +0300
+Date:   Tue, 9 Apr 2019 21:01:43 +0300
+From:   Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+To:     Christoph Hellwig <hch@infradead.org>
 Cc:     Vinod Koul <vkoul@kernel.org>, dmaengine@vger.kernel.org,
         Lee Jones <lee.jones@linaro.org>, linux-kernel@vger.kernel.org
 Subject: Re: [PATCH v1] dmaengine: idma64: Move driver name to the header
-Message-ID: <20190409163728.GA26872@infradead.org>
+Message-ID: <20190409180143.GZ9224@smile.fi.intel.com>
 References: <20190409150219.15094-1-andriy.shevchenko@linux.intel.com>
+ <20190409163728.GA26872@infradead.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="UTF-8"
 Content-Disposition: inline
-In-Reply-To: <20190409150219.15094-1-andriy.shevchenko@linux.intel.com>
-User-Agent: Mutt/1.9.2 (2017-12-15)
-X-SRS-Rewrite: SMTP reverse-path rewritten from <hch@infradead.org> by bombadil.infradead.org. See http://www.infradead.org/rpr.html
+In-Reply-To: <20190409163728.GA26872@infradead.org>
+Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
-Message-ID: <20190409163728.nEg3ImButdLw31ciLUs6zaivJPBlMPVtHP9ZAunDzis@z>
+Message-ID: <20190409180143.YiY1aZaOAyRo3-WATSErX9l3uj-eFhDxeE6jqgqOUls@z>
 
-On Tue, Apr 09, 2019 at 06:02:19PM +0300, Andy Shevchenko wrote:
-> There are two drivers that are relying on the iDMA 64-bit driver name
-> to match. Instead of duplicating string in both of them, dedicate
-> a header file and share it between users.
+On Tue, Apr 09, 2019 at 09:37:28AM -0700, Christoph Hellwig wrote:
+> On Tue, Apr 09, 2019 at 06:02:19PM +0300, Andy Shevchenko wrote:
+> > There are two drivers that are relying on the iDMA 64-bit driver name
+> > to match. Instead of duplicating string in both of them, dedicate
+> > a header file and share it between users.
+> 
+> Hmm.  Why do we have two separate drivers for the same name?
+> 
+> Something is rather fishy there.
 
-Hmm.  Why do we have two separate drivers for the same name?
+We would like to be sure that the DMA controller driver is loaded before its
+consumers.
 
-Something is rather fishy there.
+-- 
+With Best Regards,
+Andy Shevchenko
+
+
