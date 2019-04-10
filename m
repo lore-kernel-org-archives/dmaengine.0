@@ -1,72 +1,75 @@
-Return-Path: <SRS0=Qfcr=SL=vger.kernel.org=dmaengine-owner@kernel.org>
+Return-Path: <SRS0=phoM=SM=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.5 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_PASS,USER_AGENT_MUTT autolearn=unavailable
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.0 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_PASS,URIBL_BLOCKED,
+	USER_AGENT_GIT autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5E2EEC282CE
-	for <dmaengine@archiver.kernel.org>; Tue,  9 Apr 2019 18:01:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2AB32C10F11
+	for <dmaengine@archiver.kernel.org>; Wed, 10 Apr 2019 18:34:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 31D1D2084F
-	for <dmaengine@archiver.kernel.org>; Tue,  9 Apr 2019 18:01:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F2AE22082A
+	for <dmaengine@archiver.kernel.org>; Wed, 10 Apr 2019 18:34:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726536AbfDISBr (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 9 Apr 2019 14:01:47 -0400
-Received: from mga04.intel.com ([192.55.52.120]:56294 "EHLO mga04.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726383AbfDISBq (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Tue, 9 Apr 2019 14:01:46 -0400
-X-Amp-Result: UNKNOWN
-X-Amp-Original-Verdict: FILE UNKNOWN
-X-Amp-File-Uploaded: False
-Received: from orsmga008.jf.intel.com ([10.7.209.65])
-  by fmsmga104.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 09 Apr 2019 11:01:46 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.60,330,1549958400"; 
-   d="scan'208";a="132827104"
-Received: from smile.fi.intel.com (HELO smile) ([10.237.72.86])
-  by orsmga008.jf.intel.com with ESMTP; 09 Apr 2019 11:01:44 -0700
-Received: from andy by smile with local (Exim 4.92)
-        (envelope-from <andriy.shevchenko@linux.intel.com>)
-        id 1hDv43-0006j1-C0; Tue, 09 Apr 2019 21:01:43 +0300
-Date:   Tue, 9 Apr 2019 21:01:43 +0300
-From:   Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-To:     Christoph Hellwig <hch@infradead.org>
-Cc:     Vinod Koul <vkoul@kernel.org>, dmaengine@vger.kernel.org,
-        Lee Jones <lee.jones@linaro.org>, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v1] dmaengine: idma64: Move driver name to the header
-Message-ID: <20190409180143.GZ9224@smile.fi.intel.com>
-References: <20190409150219.15094-1-andriy.shevchenko@linux.intel.com>
- <20190409163728.GA26872@infradead.org>
+        id S1730210AbfDJSeH (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 10 Apr 2019 14:34:07 -0400
+Received: from bin-mail-out-06.binero.net ([195.74.38.229]:49219 "EHLO
+        bin-mail-out-06.binero.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727561AbfDJSeH (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Wed, 10 Apr 2019 14:34:07 -0400
+X-Greylist: delayed 363 seconds by postgrey-1.27 at vger.kernel.org; Wed, 10 Apr 2019 14:34:07 EDT
+X-Halon-ID: 5945ab33-5bbe-11e9-8e2c-005056917f90
+Authorized-sender: niklas@soderlund.pp.se
+Received: from bismarck.berto.se (unknown [89.233.230.99])
+        by bin-vsp-out-02.atm.binero.net (Halon) with ESMTPA
+        id 5945ab33-5bbe-11e9-8e2c-005056917f90;
+        Wed, 10 Apr 2019 20:28:02 +0200 (CEST)
+From:   =?UTF-8?q?Niklas=20S=C3=B6derlund?= 
+        <niklas.soderlund+renesas@ragnatech.se>
+To:     dmaengine@vger.kernel.org
+Cc:     linux-renesas-soc@vger.kernel.org,
+        Hiroyuki Yokoyama <hiroyuki.yokoyama.vx@renesas.com>,
+        =?UTF-8?q?Niklas=20S=C3=B6derlund?= 
+        <niklas.soderlund+renesas@ragnatech.se>
+Subject: [PATCH] dmaengine: rcar-dmac: Update copyright information
+Date:   Wed, 10 Apr 2019 20:26:57 +0200
+Message-Id: <20190410182657.23034-1-niklas.soderlund+renesas@ragnatech.se>
+X-Mailer: git-send-email 2.21.0
 MIME-Version: 1.0
 Content-Type: text/plain; charset="UTF-8"
-Content-Disposition: inline
-In-Reply-To: <20190409163728.GA26872@infradead.org>
-Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Transfer-Encoding: 8bit
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
-Message-ID: <20190409180143.YiY1aZaOAyRo3-WATSErX9l3uj-eFhDxeE6jqgqOUls@z>
+Message-ID: <20190410182657.yXNOczGjAnfHj0RpgiK0SXugsBOtyDbKcpoyBlF0YJk@z>
 
-On Tue, Apr 09, 2019 at 09:37:28AM -0700, Christoph Hellwig wrote:
-> On Tue, Apr 09, 2019 at 06:02:19PM +0300, Andy Shevchenko wrote:
-> > There are two drivers that are relying on the iDMA 64-bit driver name
-> > to match. Instead of duplicating string in both of them, dedicate
-> > a header file and share it between users.
-> 
-> Hmm.  Why do we have two separate drivers for the same name?
-> 
-> Something is rather fishy there.
+From: Hiroyuki Yokoyama <hiroyuki.yokoyama.vx@renesas.com>
 
-We would like to be sure that the DMA controller driver is loaded before its
-consumers.
+Update copyright and string for Gen3.
 
+Signed-off-by: Hiroyuki Yokoyama <hiroyuki.yokoyama.vx@renesas.com>
+Signed-off-by: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
+---
+ drivers/dma/sh/rcar-dmac.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/dma/sh/rcar-dmac.c b/drivers/dma/sh/rcar-dmac.c
+index 2b4f256981695662..580ca1454fe8cf27 100644
+--- a/drivers/dma/sh/rcar-dmac.c
++++ b/drivers/dma/sh/rcar-dmac.c
+@@ -1,8 +1,8 @@
+ // SPDX-License-Identifier: GPL-2.0
+ /*
+- * Renesas R-Car Gen2 DMA Controller Driver
++ * Renesas R-Car Gen2/Gen3 DMA Controller Driver
+  *
+- * Copyright (C) 2014 Renesas Electronics Inc.
++ * Copyright (C) 2014-2019 Renesas Electronics Inc.
+  *
+  * Author: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+  */
 -- 
-With Best Regards,
-Andy Shevchenko
-
+2.21.0
 
