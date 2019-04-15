@@ -7,62 +7,62 @@ X-Spam-Status: No, score=-9.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SIGNED_OFF_BY,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=unavailable
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8D484C10F12
-	for <dmaengine@archiver.kernel.org>; Mon, 15 Apr 2019 12:15:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BEA42C10F12
+	for <dmaengine@archiver.kernel.org>; Mon, 15 Apr 2019 12:15:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 5E53A20645
-	for <dmaengine@archiver.kernel.org>; Mon, 15 Apr 2019 12:15:33 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8F45D20825
+	for <dmaengine@archiver.kernel.org>; Mon, 15 Apr 2019 12:15:37 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="exbKQxTI"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="k0T6x4sW"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727501AbfDOMPc (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 15 Apr 2019 08:15:32 -0400
-Received: from mail-pl1-f195.google.com ([209.85.214.195]:41355 "EHLO
-        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727483AbfDOMPa (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Mon, 15 Apr 2019 08:15:30 -0400
-Received: by mail-pl1-f195.google.com with SMTP id d1so8475091plj.8
-        for <dmaengine@vger.kernel.org>; Mon, 15 Apr 2019 05:15:30 -0700 (PDT)
+        id S1727496AbfDOMPg (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 15 Apr 2019 08:15:36 -0400
+Received: from mail-pl1-f196.google.com ([209.85.214.196]:45571 "EHLO
+        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727505AbfDOMPe (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Mon, 15 Apr 2019 08:15:34 -0400
+Received: by mail-pl1-f196.google.com with SMTP id bf11so8459242plb.12
+        for <dmaengine@vger.kernel.org>; Mon, 15 Apr 2019 05:15:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :in-reply-to:references;
-        bh=lTV/HwBV1wkVNbsMEdMR98H0jnrUsLsqBHs1N83HCIU=;
-        b=exbKQxTI4xxMk74weN1pp2wuWgBFrTV9NGMiVFBHcSOizFz6Pm1jJnsGxfzgw6aiZl
-         WTZuVOV27S2Q/kVYJy44QMwfvkZWepHXib3hYamU+tiN/c6VURhf7etsMsdTK1o9qLie
-         yNGlyJ6v2Yz3v1vgXciDRK2F/rULdNOQq6GrSAivnwrVe6HeUA/T6mjfNByP14j6smbK
-         2Smp0i7gWEX//tj2tce9NLHqnI4U4FGzml63MT5exyr1d8fubsuqsrcHqbQOG7ICSlTP
-         fxw1JPFdDt2h8Rr4kaYNFEzpqeXIRZnuD604uXsMxWfqqzHlCNmLHN8py/gbxBb2OFJQ
-         VTsQ==
+        bh=EPBexP/YCMERN6VOL5fv1yV7pop7BN15G/3B+N0nQ3U=;
+        b=k0T6x4sWoWO1mBc+OId0DMBw+LrVnMU9zm0p6EsTYO/gUBNMYZKo11zY+DswnZgNt9
+         hvgxI0ywLRGa/hlJyBh506+Le5G4rFLeuxya780+q9eWikKxy5O8aa0W/8gUdOOgE+np
+         +FMg36Tr6d8dmrUl4QkCHHOgqLjaCvk6UvWbVIXZXio120GB05/WUAhYgaSyCabsZZei
+         sax3hHlC/z6qHbXVkOmlIz+6SZw+rp4CMc2+cxPc5twLByBb1aPExtKsDBTydLG5yAcB
+         xFDHS8C7Uzmn04mEefA0Xs6oJBmLCpJyJok+fN94irPRBuLhOmGMbLtslyRZj9czrBwD
+         27Ag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:in-reply-to:references;
-        bh=lTV/HwBV1wkVNbsMEdMR98H0jnrUsLsqBHs1N83HCIU=;
-        b=WlfbnzT478xDA3drCWiJaBNc/7uOg5enBHT72fQ6VoYEDL/1mOW6HkNKVud6sFjgUD
-         F3M+tf+VDEE5ldGyZSxrmBjy/cQbLuo41QbPfRD/NVDhNLBPWN3Hgf/ixRka1bS7nfNK
-         0XLM1HJOMFeqR34rqgdWFunINvlpfxL1520JP+E1z6Q/mmTQ6VVaDnveeR6m/0v/4IxX
-         dKQR29JKMwKYizVu/yZZyhGH45CcC9JnWsPwAFqKWIcwbNxBRmCGZ5renpZB2Sn3tB7O
-         ZQbfbtolKIthwPy9Gf3lWWAQ+SRxFT0qmhjdhnWoYhA2DahG9g6xUDEGNSdOplA7jA7H
-         b3TQ==
-X-Gm-Message-State: APjAAAWU2dN8PuETGgi/KiCBp+RF4MuXBZUSWB9UWEpnpoiR9teNRsUa
-        dAoumPBdmegWtXCKiPIm3I26Sw==
-X-Google-Smtp-Source: APXvYqxyOesy66KaWP5IzQdijN7MfwXi/pMBporGCAAsQQYxbnf4/O/N5kUUgpF51R3icRYVy6aQ+Q==
-X-Received: by 2002:a17:902:6bc7:: with SMTP id m7mr27139625plt.146.1555330530070;
-        Mon, 15 Apr 2019 05:15:30 -0700 (PDT)
+        bh=EPBexP/YCMERN6VOL5fv1yV7pop7BN15G/3B+N0nQ3U=;
+        b=pVZ21fzG94XV/hZLTLZ+lbHHTqxuGNmBjQr1RcbaXH+M3LNf2jkl9sAC3XCMnkcPye
+         BeytUFm3pS36++EILVPuRVHdQQZyesCTK3HOjVVlXYyZBxX40bULp8VWNrzzOQYXuGvT
+         O32/L6HSyd9TIrn2/RCFUDedu9NA+bCXhDmcA5NsUotbBcUMIMVVBVBv7/xs5BVqRU+6
+         QrUAyF0ZRGhlJ6In5bVnDGsViq94TgdJdZjFUYLkYaaIK1zthRCq0JJSvUnyGU+cCJ/e
+         72VsEpSAHQjnp3/azioBGB6YE1aRAVm0pN6CUWQJwiw8EJ0lQdOTpXIQ1D/IH9VkbRR0
+         1CbQ==
+X-Gm-Message-State: APjAAAUMOCe4o25kUrZDDfkRroopS+/3ZfSMUT8RJyauelKPFLeImCxW
+        0H7erQf2GTf+Q2Y/xLoRrLfanw==
+X-Google-Smtp-Source: APXvYqz6YojtFUUCP32JI2uCJ0plSoSuhQ4QnxncHO0rwmGARrnpkNtjTTtNr1F1bEYZuEEJYILPYg==
+X-Received: by 2002:a17:902:d701:: with SMTP id w1mr76553552ply.124.1555330533557;
+        Mon, 15 Apr 2019 05:15:33 -0700 (PDT)
 Received: from baolinwangubtpc.spreadtrum.com ([117.18.48.102])
-        by smtp.gmail.com with ESMTPSA id 6sm64157155pfj.95.2019.04.15.05.15.25
+        by smtp.gmail.com with ESMTPSA id 6sm64157155pfj.95.2019.04.15.05.15.30
         (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 15 Apr 2019 05:15:29 -0700 (PDT)
+        Mon, 15 Apr 2019 05:15:32 -0700 (PDT)
 From:   Baolin Wang <baolin.wang@linaro.org>
 To:     dan.j.williams@intel.com, vkoul@kernel.org
 Cc:     eric.long@unisoc.com, orsonzhai@gmail.com, zhang.lyra@gmail.com,
         broonie@kernel.org, baolin.wang@linaro.org,
         dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH 4/7] dmaengine: sprd: Add device validation to support multiple controllers
-Date:   Mon, 15 Apr 2019 20:14:58 +0800
+Subject: [PATCH 5/7] dmaengine: sprd: Fix block length overflow
+Date:   Mon, 15 Apr 2019 20:14:59 +0800
 Message-Id:
- <d77dca51a14087873627d735a17adcfde5517398.1555330115.git.baolin.wang@linaro.org>
+ <93626039ad49c1c9d5726218b060c2267c1779cf.1555330115.git.baolin.wang@linaro.org>
 X-Mailer: git-send-email 1.7.9.5
 In-Reply-To: <cover.1555330115.git.baolin.wang@linaro.org>
 References: <cover.1555330115.git.baolin.wang@linaro.org>
@@ -73,38 +73,36 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-Message-ID: <20190415121458.GVo5Is6dhZOHvzcjPX9OXI0_Tr0OGL4QKxYPdvsQ9-k@z>
+Message-ID: <20190415121459.feQ6znxAG6fglS46RJO_TwQsS_Y-af5viHTQDLM1UYo@z>
 
 From: Eric Long <eric.long@unisoc.com>
 
-Since we can support multiple DMA engine controllers, we should add
-device validation in filter function to check if the correct controller
-to be requested.
+The maximum value of block length is 0xffff, so if the configured transfer length
+is more than 0xffff, that will cause block length overflow to lead a configuration
+error.
+
+Thus we can set block length as the maximum burst length to avoid this issue, since
+the maximum burst length will not be a big value which is more than 0xffff.
 
 Signed-off-by: Eric Long <eric.long@unisoc.com>
 Signed-off-by: Baolin Wang <baolin.wang@linaro.org>
 ---
- drivers/dma/sprd-dma.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/dma/sprd-dma.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/dma/sprd-dma.c b/drivers/dma/sprd-dma.c
-index 0f92e60..9f99d4b 100644
+index 9f99d4b..a64271e 100644
 --- a/drivers/dma/sprd-dma.c
 +++ b/drivers/dma/sprd-dma.c
-@@ -1020,8 +1020,13 @@ static void sprd_dma_free_desc(struct virt_dma_desc *vd)
- static bool sprd_dma_filter_fn(struct dma_chan *chan, void *param)
- {
- 	struct sprd_dma_chn *schan = to_sprd_dma_chan(chan);
-+	struct of_phandle_args *dma_spec =
-+		container_of(param, struct of_phandle_args, args[0]);
- 	u32 slave_id = *(u32 *)param;
+@@ -778,7 +778,7 @@ static int sprd_dma_fill_desc(struct dma_chan *chan,
+ 	temp |= slave_cfg->src_maxburst & SPRD_DMA_FRG_LEN_MASK;
+ 	hw->frg_len = temp;
  
-+	if (chan->device->dev->of_node != dma_spec->np)
-+		return false;
-+
- 	schan->dev_id = slave_id;
- 	return true;
- }
+-	hw->blk_len = len & SPRD_DMA_BLK_LEN_MASK;
++	hw->blk_len = slave_cfg->src_maxburst & SPRD_DMA_BLK_LEN_MASK;
+ 	hw->trsc_len = len & SPRD_DMA_TRSC_LEN_MASK;
+ 
+ 	temp = (dst_step & SPRD_DMA_TRSF_STEP_MASK) << SPRD_DMA_DEST_TRSF_STEP_OFFSET;
 -- 
 1.7.9.5
 
