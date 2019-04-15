@@ -1,19 +1,23 @@
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
-Subject: [RFC] dmaengine: bcm2835: Avoid GFP_KERNEL in device_prep_slave_sg
-From: Vinod Koul <vkoul@kernel.org>
-Message-Id: <20190423051109.GE28103@vkoul-mobl>
-Date: Tue, 23 Apr 2019 10:41:09 +0530
-To: Stefan Wahren <stefan.wahren@i2se.com>
-Cc: Dan Williams <dan.j.williams@intel.com>, Florian Fainelli <f.fainelli@gmail.com>, Ray Jui <rjui@broadcom.com>, Scott Branden <sbranden@broadcom.com>, Eric Anholt <eric@anholt.net>, bcm-kernel-feedback-list@broadcom.com, Aaro Koskinen <aaro.koskinen@iki.fi>, Lukas Wunner <lukas@wunner.de>, Florian Kauer <florian.kauer@koalo.de>, Martin Sperl <kernel@martin.sperl.org>, dmaengine@vger.kernel.org, linux-arm-kernel@lists.infradead.org, linux-rpi-kernel@lists.infradead.org
+Subject: dmaengine: xgene-dma: fix spelling mistake "descripto" -> "descriptor"
+From: Colin King <colin.king@canonical.com>
+Message-Id: <20190415153028.24849-1-colin.king@canonical.com>
+Date: Mon, 15 Apr 2019 16:30:28 +0100
+To: Dan Williams <dan.j.williams@intel.com>, Vinod Koul <vkoul@kernel.org>, dmaengine@vger.kernel.org
+Cc: kernel-janitors@vger.kernel.org, linux-kernel@vger.kernel.org
 List-ID: <dmaengine.vger.kernel.org>
 
-T24gMDEtMDQtMTksIDIwOjM4LCBTdGVmYW4gV2FocmVuIHdyb3RlOgo+IFRoZSBjb21taXQgYWYx
-OWI3Y2U3NmJhICgibW1jOiBiY20yODM1OiBBdm9pZCBwb3NzaWJsZSByYWNlcyBvbgo+IGRhdGEg
-cmVxdWVzdHMiKSBpbnRyb2R1Y2VzIGEgcG9zc2libGUgY2lyY3VsYXIgbG9ja2luZyBkZXBlbmRl
-bmN5LAo+IHdoaWNoIGlzIHRyaWdnZXJlZCBieSBzd2FwcGluZyB0byB0aGUgc2Rob3N0IGludGVy
-ZmFjZS4KPiAKPiBTbyBpbnN0ZWFkIG9mIHJlaW50cm9kdWNlIHRoZSByYWNlIGNvbmRpdGlvbiBh
-Z2Fpbiwgd2UgY291bGQgYWxzbwo+IGF2b2lkIHRoaXMgc2l0dWF0aW9uIGJ5IHVzaW5nIEdGUF9O
-T1dBSVQgZm9yIHRoZSBhbGxvY2F0aW9uIG9mIHRoZQo+IERNQSBidWZmZXIgZGVzY3JpcHRvcnMu
-CgpBcHBsaWVkLCB0aGFua3MK
+RnJvbTogQ29saW4gSWFuIEtpbmcgPGNvbGluLmtpbmdAY2Fub25pY2FsLmNvbT4KClRoZXJlIGlz
+IGEgc3BlbGxpbmcgbWlzdGFrZSBpbiBhIGNoYW5fZGJnIG1lc3NhZ2UsIGZpeCBpdC4KClNpZ25l
+ZC1vZmYtYnk6IENvbGluIElhbiBLaW5nIDxjb2xpbi5raW5nQGNhbm9uaWNhbC5jb20+Ci0tLQog
+ZHJpdmVycy9kbWEveGdlbmUtZG1hLmMgfCAyICstCiAxIGZpbGUgY2hhbmdlZCwgMSBpbnNlcnRp
+b24oKyksIDEgZGVsZXRpb24oLSkKCmRpZmYgLS1naXQgYS9kcml2ZXJzL2RtYS94Z2VuZS1kbWEu
+YyBiL2RyaXZlcnMvZG1hL3hnZW5lLWRtYS5jCmluZGV4IDAwMjMyMzY2MWQwNy4uOGQxNzRkYzVk
+Y2NkIDEwMDY0NAotLS0gYS9kcml2ZXJzL2RtYS94Z2VuZS1kbWEuYworKysgYi9kcml2ZXJzL2Rt
+YS94Z2VuZS1kbWEuYwpAQCAtNzk3LDcgKzc5Nyw3IEBAIHN0YXRpYyBpbnQgeGdlbmVfZG1hX2Fs
+bG9jX2NoYW5fcmVzb3VyY2VzKHN0cnVjdCBkbWFfY2hhbiAqZGNoYW4pCiAJCXJldHVybiAtRU5P
+TUVNOwogCX0KIAotCWNoYW5fZGJnKGNoYW4sICJBbGxvY2F0ZSBkZXNjcmlwdG8gcG9vbFxuIik7
+CisJY2hhbl9kYmcoY2hhbiwgIkFsbG9jYXRlIGRlc2NyaXB0b3IgcG9vbFxuIik7CiAKIAlyZXR1
+cm4gMTsKIH0K
