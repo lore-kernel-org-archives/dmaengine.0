@@ -1,17 +1,30 @@
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
-Subject: [v3,1/3] dmaengine: at_xdmac: remove BUG_ON macro in tasklet
-From: Vinod Koul <vkoul@kernel.org>
-Message-Id: <20190423051005.GD28103@vkoul-mobl>
-Date: Tue, 23 Apr 2019 10:40:05 +0530
-To: Nicolas Ferre <nicolas.ferre@microchip.com>
-Cc: dmaengine@vger.kernel.org, Ludovic Desroches <ludovic.desroches@microchip.com>, linux-arm-kernel@lists.infradead.org, Alexandre Belloni <alexandre.belloni@bootlin.com>, linux-kernel@vger.kernel.org
+Subject: [1/7] dmaengine: sprd: Fix the possible crash when getting engine status
+From: Baolin Wang <baolin.wang@linaro.org>
+Message-Id: <2eecd528e85377f03e6fbc5e7d6544b9c9f59cb1.1555330115.git.baolin.wang@linaro.org>
+Date: Mon, 15 Apr 2019 20:14:55 +0800
+To: dan.j.williams@intel.com, vkoul@kernel.org
+Cc: eric.long@unisoc.com, orsonzhai@gmail.com, zhang.lyra@gmail.com, broonie@kernel.org, baolin.wang@linaro.org, dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
 List-ID: <dmaengine.vger.kernel.org>
 
-T24gMDMtMDQtMTksIDEyOjIzLCBOaWNvbGFzIEZlcnJlIHdyb3RlOgo+IEV2ZW4gaWYgdGhpcyBj
-YXNlIHNob3VsZG4ndCBoYXBwZW4gd2hlbiBjb250cm9sbGVyIGlzIHByb3Blcmx5IHByb2dyYW1t
-ZWQsCj4gaXQncyBzdGlsbCBiZXR0ZXIgdG8gYXZvaWQgZHVtcGluZyBhIGtlcm5lbCBPb3BzIGZv
-ciB0aGlzLgo+IEFzIHRoZSBzZXF1ZW5jZSBtYXkgaGFwcGVuIG9ubHkgZm9yIGRlYnVnZ2luZyBw
-dXJwb3NlcywgbG9nIHRoZSBlcnJvciBhbmQKPiBqdXN0IGZpbmlzaCB0aGUgdGFza2xldCBjYWxs
-LgoKQXBwbGllZCBhbGwsIHRoYW5rcwo=
+V2Ugd2lsbCBnZXQgYSBOVUxMIHZpcnR1YWwgZGVzY3JpcHRvciBieSB2Y2hhbl9maW5kX2Rlc2Mo
+KSB3aGVuIHRoZSBkZXNjcmlwdG9yCmhhcyBiZWVuIHN1Ym1pdHRlZCwgdGhhdCB3aWxsIGNyYXNo
+IHRoZSBrZXJuZWwgd2hlbiBnZXR0aW5nIHRoZSBlbmdpbmUgc3RhdHVzLgoKSW4gdGhpcyBjYXNl
+LCBzaW5jZSB0aGUgZGVzY3JpcHRvciBoYXMgYmVlbiBzdWJtaXR0ZWQsIHdoaWNoIG1lYW5zIHRo
+ZSBwb2ludGVyCidzY2hhbi0+Y3VyX2Rlc2MnIHdpbGwgcG9pbnQgdG8gdGhlIGN1cnJlbnQgZGVz
+Y3JpcHRvciwgdGhlbiB3ZSBjYW4gdXNlCidzY2hhbi0+Y3VyX2Rlc2MnIHRvIGdldCB0aGUgZW5n
+aW5lIHN0YXR1cyB0byBhdm9pZCB0aGlzIGlzc3VlLgoKU2lnbmVkLW9mZi1ieTogQmFvbGluIFdh
+bmcgPGJhb2xpbi53YW5nQGxpbmFyby5vcmc+Ci0tLQogZHJpdmVycy9kbWEvc3ByZC1kbWEuYyB8
+ICAgIDIgKy0KIDEgZmlsZSBjaGFuZ2VkLCAxIGluc2VydGlvbigrKSwgMSBkZWxldGlvbigtKQoK
+ZGlmZiAtLWdpdCBhL2RyaXZlcnMvZG1hL3NwcmQtZG1hLmMgYi9kcml2ZXJzL2RtYS9zcHJkLWRt
+YS5jCmluZGV4IDQ4NDMxZTIuLmUyOTM0MmEgMTAwNjQ0Ci0tLSBhL2RyaXZlcnMvZG1hL3NwcmQt
+ZG1hLmMKKysrIGIvZHJpdmVycy9kbWEvc3ByZC1kbWEuYwpAQCAtNjI1LDcgKzYyNSw3IEBAIHN0
+YXRpYyBlbnVtIGRtYV9zdGF0dXMgc3ByZF9kbWFfdHhfc3RhdHVzKHN0cnVjdCBkbWFfY2hhbiAq
+Y2hhbiwKIAkJZWxzZQogCQkJcG9zID0gMDsKIAl9IGVsc2UgaWYgKHNjaGFuLT5jdXJfZGVzYyAm
+JiBzY2hhbi0+Y3VyX2Rlc2MtPnZkLnR4LmNvb2tpZSA9PSBjb29raWUpIHsKLQkJc3RydWN0IHNw
+cmRfZG1hX2Rlc2MgKnNkZXNjID0gdG9fc3ByZF9kbWFfZGVzYyh2ZCk7CisJCXN0cnVjdCBzcHJk
+X2RtYV9kZXNjICpzZGVzYyA9IHNjaGFuLT5jdXJfZGVzYzsKIAogCQlpZiAoc2Rlc2MtPmRpciA9
+PSBETUFfREVWX1RPX01FTSkKIAkJCXBvcyA9IHNwcmRfZG1hX2dldF9kc3RfYWRkcihzY2hhbik7
+Cg==
