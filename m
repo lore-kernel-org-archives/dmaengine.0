@@ -1,140 +1,471 @@
-Return-Path: <SRS0=BZfm=SR=vger.kernel.org=dmaengine-owner@kernel.org>
+Return-Path: <SRS0=ubQh=SS=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.0 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SIGNED_OFF_BY,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-7.0 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_PASS
+	autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6B3CAC10F0E
-	for <dmaengine@archiver.kernel.org>; Mon, 15 Apr 2019 16:56:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 088EDC10F0E
+	for <dmaengine@archiver.kernel.org>; Tue, 16 Apr 2019 02:06:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 2C3282077C
-	for <dmaengine@archiver.kernel.org>; Mon, 15 Apr 2019 16:56:31 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iMJvkaR8"
+	by mail.kernel.org (Postfix) with ESMTP id BF05B20854
+	for <dmaengine@archiver.kernel.org>; Tue, 16 Apr 2019 02:06:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726523AbfDOQ4a (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 15 Apr 2019 12:56:30 -0400
-Received: from mail-lf1-f66.google.com ([209.85.167.66]:37607 "EHLO
-        mail-lf1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726313AbfDOQ4a (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Mon, 15 Apr 2019 12:56:30 -0400
-Received: by mail-lf1-f66.google.com with SMTP id o19so9320030lfl.4;
-        Mon, 15 Apr 2019 09:56:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=tClfXadjyrF6+aZMAlT2go17OlVy7BVazY0h6iOGTFc=;
-        b=iMJvkaR8VlaAU0rvlFWZUmBw6sNF+Vzz83del1bUA3oLmq9Nv3cg4z83ULZsj9yKyK
-         mTridcJMoShxEidfOkmg1wlvY6qdJRFvioXMBvdxj7RtDtM0APBtdEa3jI/LTgSdl61p
-         NFn7aX3BnvLwnAsFk5XtthXV3ntRChnoJbm93t5e7gGExR/oO8tEjZa6vltJ1htGxh6p
-         oLeUSeYvx8QS7eicVWekGoe4B543WyXGgrZbWgqbYYUdVqw1Mv8CMiitNh42Ru5eRIDg
-         Q84SSYWzmJ32RgFdv8rO//gxMovzBtTfZmJ02oVPLa6tDf5QJ7ZXBNlUVU0hcziFnki2
-         bPqg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=tClfXadjyrF6+aZMAlT2go17OlVy7BVazY0h6iOGTFc=;
-        b=HtA/3W19QaBMnMKxjSkbhoTANldoYIqV6KdqVf1UQEJDLnFZR8SIMC+K1rnjfTPLlq
-         uwgONQnzIOc2pFgul4HhnUv3R+HeeBVpO0xGWyj+l2GwUf4p178mAegfIbw7SNygl8eQ
-         AhMsNPMcvHfZTjcrWfuMmDB07zJ1FvdZZO2PLibRAEy/ZnJyzs0WKaI7zHtMwyrNGCFg
-         vKl2+EGe4ijhttuSSPPTErlCqypQ6jsY7HZPj0vu1Tmx/G2InoSSASMaauVlHlCZ05Fv
-         RauJoztLlgtqjlGnd9kN2LMInGo87QGBOGWv2qHMXG5o8uGmDz6GGSMt+vuhCOfY+wpK
-         b7aw==
-X-Gm-Message-State: APjAAAUH6Hy7WRgMgjTJBZls0CoQAWN+jdGjhM36+Y5znuzBvTNfISER
-        turs/j6C5UFSFmLJ3rVWyq4oJNG6
-X-Google-Smtp-Source: APXvYqw2XsxGV1eF9d9ZZiyihrDBW5V3dF+iAUmjqVwrIuIOTMjZ+CzM5RsTf1Zk7GYlwzjLfVsqKA==
-X-Received: by 2002:ac2:43cf:: with SMTP id u15mr18787264lfl.67.1555347386853;
-        Mon, 15 Apr 2019 09:56:26 -0700 (PDT)
-Received: from [192.168.2.145] (ppp94-29-35-107.pppoe.spdop.ru. [94.29.35.107])
-        by smtp.googlemail.com with ESMTPSA id g6sm9982443lja.64.2019.04.15.09.56.25
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 15 Apr 2019 09:56:25 -0700 (PDT)
-Subject: Re: [PATCH 4/6] dma: tegra: add accurate reporting of dma state
-To:     Ben Dooks <ben.dooks@codethink.co.uk>
-Cc:     dan.j.williams@intel.com, vkoul@kernel.org, ldewangan@nvidia.com,
-        dmaengine@vger.kernel.org, linux-tegra@vger.kernel.org
-References: <20181031160309.20408-1-ben.dooks@codethink.co.uk>
- <20181031160309.20408-5-ben.dooks@codethink.co.uk>
- <5b955473-92fd-e4b9-d136-8df3e11525c1@gmail.com>
- <92e2651e-393a-e958-123b-355741a34f80@codethink.co.uk>
- <2d324d93-b869-8ae8-bfc7-789cdb5976b4@gmail.com>
- <3e1ab7c6-c820-a812-e879-a69344805fed@codethink.co.uk>
- <85a8afa6-8b0d-dcc2-3254-a79cf90e90df@gmail.com>
- <687294f3-aeb5-f17f-bf7d-886346baf02d@gmail.com>
- <204824b3-40af-5fa1-1005-028153dbe83a@codethink.co.uk>
-From:   Dmitry Osipenko <digetx@gmail.com>
-Message-ID: <c720ffaf-e903-602a-f1c4-4e9e3dd02be5@gmail.com>
-Date:   Mon, 15 Apr 2019 19:56:24 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
+        id S1728036AbfDPCGV (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 15 Apr 2019 22:06:21 -0400
+Received: from mx.socionext.com ([202.248.49.38]:26755 "EHLO mx.socionext.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727938AbfDPCGV (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Mon, 15 Apr 2019 22:06:21 -0400
+Received: from unknown (HELO kinkan-ex.css.socionext.com) ([172.31.9.52])
+  by mx.socionext.com with ESMTP; 16 Apr 2019 11:06:19 +0900
+Received: from mail.mfilter.local (m-filter-1 [10.213.24.61])
+        by kinkan-ex.css.socionext.com (Postfix) with ESMTP id 7631B180B51;
+        Tue, 16 Apr 2019 11:06:19 +0900 (JST)
+Received: from 172.31.9.53 (172.31.9.53) by m-FILTER with ESMTP; Tue, 16 Apr 2019 11:06:19 +0900
+Received: from yuzu.css.socionext.com (yuzu [172.31.8.45])
+        by iyokan.css.socionext.com (Postfix) with ESMTP id 4566F40393;
+        Tue, 16 Apr 2019 11:06:19 +0900 (JST)
+Received: from localhost (unknown [10.213.234.103])
+        by yuzu.css.socionext.com (Postfix) with ESMTPS id 2E0D2121BD1;
+        Tue, 16 Apr 2019 11:06:19 +0900 (JST)
+Date:   Tue, 16 Apr 2019 11:06:18 +0900
+From:   Kazuhiro Kasai <kasai.kazuhiro@socionext.com>
+To:     "vkoul@kernel.org" <vkoul@kernel.org>,
+        "robh+dt@kernel.org" <robh+dt@kernel.org>,
+        "mark.rutland@arm.com" <mark.rutland@arm.com>
+Cc:     "dmaengine@vger.kernel.org" <dmaengine@vger.kernel.org>,
+        "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
+        =?utf-8?B?T3JpdG8sIFRha2FvL+e5lOaIuCDoqonnlJ8=?= 
+        <orito.takao@socionext.com>,
+        =?utf-8?B?U3VnYXlhLCBUYWljaGkv6I+F6LC3IOWkquS4gA==?= 
+        <sugaya.taichi@socionext.com>,
+        =?utf-8?B?S2FuZW1hdHN1LCBTaGluamkv5YW85p2+IOS8uOasoQ==?= 
+        <kanematsu.shinji@socionext.com>,
+        "jaswinder.singh@linaro.org" <jaswinder.singh@linaro.org>,
+        "masami.hiramatsu@linaro.org" <masami.hiramatsu@linaro.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH 2/2] dmaengine: milbeaut: Add Milbeaut AXI DMA controller
+Message-ID: <20190416020618.GC2495@ubuntu>
+References: <1553487314-9185-1-git-send-email-kasai.kazuhiro@socionext.com>
+ <1553487314-9185-3-git-send-email-kasai.kazuhiro@socionext.com>
 MIME-Version: 1.0
-In-Reply-To: <204824b3-40af-5fa1-1005-028153dbe83a@codethink.co.uk>
 Content-Type: text/plain; charset="UTF-8"
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Disposition: inline
+In-Reply-To: <1553487314-9185-3-git-send-email-kasai.kazuhiro@socionext.com>
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
-Message-ID: <20190415165624.zHEB8PWn5Xpt-ET04byRD3yQZu-RC6Ysn3frkiVtJ_U@z>
+Message-ID: <20190416020618.NHTbfiXheA47nBqMaTHiToBJqfwKwXqSC76VQOQDtiI@z>
 
-15.04.2019 18:01, Ben Dooks пишет:
-> On 14/04/2019 16:20, Dmitry Osipenko wrote:
->> 22.02.2019 21:10, Dmitry Osipenko пишет:
->>> 22.02.2019 20:23, Ben Dooks пишет:
->>>> On 21/02/2019 13:02, Dmitry Osipenko wrote:
->>>>> 21.02.2019 13:06, Ben Dooks пишет:
->>>>>> On 21/02/2019 00:41, Dmitry Osipenko wrote:
->>>>>>> 31.10.2018 19:03, Ben Dooks пишет:
->>>>>>>> The tx_status callback does not report the state of the transfer
->>>>>>>> beyond complete segments. This causes problems with users such as
->>>>>>>> ALSA when applications want to know accurately how much data has
->>>>>>>> been moved.
->>>>>>>>
->>>>>>>> This patch addes a function tegra_dma_update_residual() to query
->>>>>>>> the hardware and modify the residual information accordinly. It
->>>>>>>> takes into account any hardware issues when trying to read the
->>>>>>>> state, such as delays between finishing a buffer and signalling
->>>>>>>> the interrupt.
->>>>>>>>
->>>>>>>> Signed-off-by: Ben Dooks <ben.dooks@codethink.co.uk>
->>>>>>>
->>>>>>> Hello Ben,
->>>>>>>
->>>>>>> Do you have any plans to submit a new version of this patch? It's really useful and fixes a real problem with the audio playback. I could help with finalizing the patch and could submit it for you if you happened to lost the interest.
->>>>>>
->>>>>> Personally I think the original version was fine. It has been tested
->>>>>> and returns fairly quickly (I am not a fan of just adding more delay in)
->>>>>>
->>>>>> My notes say the condition doesn't last for long and the loop tends
->>>>>> to terminate within 2 runs.
->>>>>>
->>>>>
->>>>> Okay, so are you going to re-send the patch? We can back to the review after, you need at least to re-send because this series has been outdated. Also please take a look and feel free to use as-is the reduced variant of yours patch that I was carrying and testing for months now [0], it works great.
->>>>>
->>>>> [0] https://github.com/grate-driver/linux/commit/ab8a67a6f47185f265f16749b55df214aaaefad4
->>>>>
->>>>
->>>> I can try rebasing, but I have not got a lot of time to do any testing
->>>> at the moment. I agree I should have remembered to chase this stuff up
->>>> earlier.
->>>
->>> No problems, thank you. I'll help with the testing. And I could rebase the patch and send it out for you if will be needed, please just let me know if you're okay with it.
->>>
->>
->> Hello Ben,
->>
->> Do you have any status update on the state of the patch? Again, I could help with sending it out for you if you're too busy or something else. Please let me know how we could proceed with getting the fix upstreamed and sorry for disturbing you again with this.
-> 
-> I am currently re-looking at the updates for TDM audio and slave mode
-> audio for the tegra, I should be able to re-test the original patch
-> tomorrow.
+Hello,
 
-Sounds great, thank you very much.
+Does anyone have any commnets on this?
+
+On Mon, Mar 25, 2019 at  4:15 +0000, Kazuhiro Kasai wrote:
+> Add Milbeaut AXI DMA controller. This DMA controller has
+> only capable of memory to memory transfer.
+>
+> Signed-off-by: Kazuhiro Kasai <kasai.kazuhiro@socionext.com>
+> ---
+>  drivers/dma/Kconfig          |   8 +
+>  drivers/dma/Makefile         |   1 +
+>  drivers/dma/xdmac-milbeaut.c | 353 +++++++++++++++++++++++++++++++++++++++++++
+>  3 files changed, 362 insertions(+)
+>  create mode 100644 drivers/dma/xdmac-milbeaut.c
+>
+> diff --git a/drivers/dma/Kconfig b/drivers/dma/Kconfig
+> index 0b1dfb5..733fe5f 100644
+> --- a/drivers/dma/Kconfig
+> +++ b/drivers/dma/Kconfig
+> @@ -612,6 +612,14 @@ config UNIPHIER_MDMAC
+>  	  UniPhier platform.  This DMA controller is used as the external
+>  	  DMA engine of the SD/eMMC controllers of the LD4, Pro4, sLD8 SoCs.
+>
+> +config XDMAC_MILBEAUT
+> +       tristate "Milbeaut AXI DMA support"
+> +       depends on ARCH_MILBEAUT || COMPILE_TEST
+> +       select DMA_ENGINE
+> +       help
+> +         Support for Milbeaut AXI DMA controller driver. The DMA controller
+> +         has only memory to memory capability.
+> +
+>  config XGENE_DMA
+>  	tristate "APM X-Gene DMA support"
+>  	depends on ARCH_XGENE || COMPILE_TEST
+> diff --git a/drivers/dma/Makefile b/drivers/dma/Makefile
+> index 6126e1c..4aab810 100644
+> --- a/drivers/dma/Makefile
+> +++ b/drivers/dma/Makefile
+> @@ -72,6 +72,7 @@ obj-$(CONFIG_TEGRA20_APB_DMA) += tegra20-apb-dma.o
+>  obj-$(CONFIG_TEGRA210_ADMA) += tegra210-adma.o
+>  obj-$(CONFIG_TIMB_DMA) += timb_dma.o
+>  obj-$(CONFIG_UNIPHIER_MDMAC) += uniphier-mdmac.o
+> +obj-$(CONFIG_XDMAC_MILBEAUT) += xdmac-milbeaut.o
+>  obj-$(CONFIG_XGENE_DMA) += xgene-dma.o
+>  obj-$(CONFIG_ZX_DMA) += zx_dma.o
+>  obj-$(CONFIG_ST_FDMA) += st_fdma.o
+> diff --git a/drivers/dma/xdmac-milbeaut.c b/drivers/dma/xdmac-milbeaut.c
+> new file mode 100644
+> index 0000000..7035c61
+> --- /dev/null
+> +++ b/drivers/dma/xdmac-milbeaut.c
+> @@ -0,0 +1,353 @@
+> +// SPDX-License-Identifier: GPL-2.0
+> +/*
+> + * Copyright (C) 2019 Socionext Inc.
+> + */
+> +
+> +#include <linux/bitfield.h>
+> +#include <linux/interrupt.h>
+> +#include <linux/module.h>
+> +#include <linux/of_dma.h>
+> +#include <linux/platform_device.h>
+> +
+> +#include "dmaengine.h"
+> +
+> +/* global register */
+> +#define M10V_XDACS 0x00
+> +
+> +/* channel local register */
+> +#define M10V_XDTBC 0x10
+> +#define M10V_XDSSA 0x14
+> +#define M10V_XDDSA 0x18
+> +#define M10V_XDSAC 0x1C
+> +#define M10V_XDDAC 0x20
+> +#define M10V_XDDCC 0x24
+> +#define M10V_XDDES 0x28
+> +#define M10V_XDDPC 0x2C
+> +#define M10V_XDDSD 0x30
+> +
+> +#define M10V_XDACS_XE BIT(28)
+> +
+> +#define M10V_XDSAC_SBS	GENMASK(17, 16)
+> +#define M10V_XDSAC_SBL	GENMASK(11, 8)
+> +
+> +#define M10V_XDDAC_DBS	GENMASK(17, 16)
+> +#define M10V_XDDAC_DBL	GENMASK(11, 8)
+> +
+> +#define M10V_XDDES_CE	BIT(28)
+> +#define M10V_XDDES_SE	BIT(24)
+> +#define M10V_XDDES_SA	BIT(15)
+> +#define M10V_XDDES_TF	GENMASK(23, 20)
+> +#define M10V_XDDES_EI	BIT(1)
+> +#define M10V_XDDES_TI	BIT(0)
+> +
+> +#define M10V_XDDSD_IS_MASK	GENMASK(3, 0)
+> +#define M10V_XDDSD_IS_NORMAL	0x8
+> +
+> +#define M10V_XDMAC_BUSWIDTHS	(BIT(DMA_SLAVE_BUSWIDTH_1_BYTE) | \
+> +				 BIT(DMA_SLAVE_BUSWIDTH_2_BYTES) | \
+> +				 BIT(DMA_SLAVE_BUSWIDTH_4_BYTES) | \
+> +				 BIT(DMA_SLAVE_BUSWIDTH_8_BYTES))
+> +
+> +#define M10V_XDMAC_CHAN_BASE(base, i)	((base) + (i) * 0x30)
+> +
+> +#define to_m10v_dma_chan(c)	container_of((c), struct m10v_dma_chan, chan)
+> +
+> +struct m10v_dma_desc {
+> +	struct dma_async_tx_descriptor txd;
+> +	size_t len;
+> +	dma_addr_t src;
+> +	dma_addr_t dst;
+> +};
+> +
+> +struct m10v_dma_chan {
+> +	struct dma_chan chan;
+> +	struct m10v_dma_device *mdmac;
+> +	void __iomem *regs;
+> +	int irq;
+> +	struct m10v_dma_desc mdesc;
+> +	spinlock_t lock;
+> +};
+> +
+> +struct m10v_dma_device {
+> +	struct dma_device dmac;
+> +	void __iomem *regs;
+> +	unsigned int channels;
+> +	struct m10v_dma_chan mchan[0];
+> +};
+> +
+> +static void m10v_xdmac_enable_dma(struct m10v_dma_device *mdmac)
+> +{
+> +	unsigned int val;
+> +
+> +	val = readl(mdmac->regs + M10V_XDACS);
+> +	val &= ~M10V_XDACS_XE;
+> +	val |= FIELD_PREP(M10V_XDACS_XE, 1);
+> +	writel(val, mdmac->regs + M10V_XDACS);
+> +}
+> +
+> +static void m10v_xdmac_disable_dma(struct m10v_dma_device *mdmac)
+> +{
+> +	unsigned int val;
+> +
+> +	val = readl(mdmac->regs + M10V_XDACS);
+> +	val &= ~M10V_XDACS_XE;
+> +	val |= FIELD_PREP(M10V_XDACS_XE, 0);
+> +	writel(val, mdmac->regs + M10V_XDACS);
+> +}
+> +
+> +static void m10v_xdmac_config_chan(struct m10v_dma_chan *mchan)
+> +{
+> +	u32 val;
+> +
+> +	val = mchan->mdesc.len - 1;
+> +	writel(val, mchan->regs + M10V_XDTBC);
+> +
+> +	val = mchan->mdesc.src;
+> +	writel(val, mchan->regs + M10V_XDSSA);
+> +
+> +	val = mchan->mdesc.dst;
+> +	writel(val, mchan->regs + M10V_XDDSA);
+> +
+> +	val = readl(mchan->regs + M10V_XDSAC);
+> +	val &= ~(M10V_XDSAC_SBS | M10V_XDSAC_SBL);
+> +	val |= FIELD_PREP(M10V_XDSAC_SBS, 0x3) |
+> +	       FIELD_PREP(M10V_XDSAC_SBL, 0xf);
+> +	writel(val, mchan->regs + M10V_XDSAC);
+> +
+> +	val = readl(mchan->regs + M10V_XDDAC);
+> +	val &= ~(M10V_XDDAC_DBS | M10V_XDDAC_DBL);
+> +	val |= FIELD_PREP(M10V_XDDAC_DBS, 0x3) |
+> +	       FIELD_PREP(M10V_XDDAC_DBL, 0xf);
+> +	writel(val, mchan->regs + M10V_XDDAC);
+> +}
+> +
+> +static void m10v_xdmac_enable_chan(struct m10v_dma_chan *mchan)
+> +{
+> +	u32 val;
+> +
+> +	val = readl(mchan->regs + M10V_XDDES);
+> +	val &= ~(M10V_XDDES_CE |
+> +	         M10V_XDDES_SE |
+> +	         M10V_XDDES_TF |
+> +	         M10V_XDDES_EI |
+> +	         M10V_XDDES_TI);
+> +	val |= FIELD_PREP(M10V_XDDES_CE, 1) |
+> +	       FIELD_PREP(M10V_XDDES_SE, 1) |
+> +	       FIELD_PREP(M10V_XDDES_TF, 1) |
+> +	       FIELD_PREP(M10V_XDDES_EI, 1) |
+> +	       FIELD_PREP(M10V_XDDES_TI, 1);
+> +	writel(val, mchan->regs + M10V_XDDES);
+> +}
+> +
+> +static void m10v_xdmac_disable_chan(struct m10v_dma_chan *mchan)
+> +{
+> +	u32 val;
+> +
+> +	val = readl(mchan->regs + M10V_XDDES);
+> +	val &= ~M10V_XDDES_CE;
+> +	val |= FIELD_PREP(M10V_XDDES_CE, 0);
+> +	writel(val, mchan->regs + M10V_XDDES);
+> +}
+> +
+> +static irqreturn_t m10v_xdmac_irq(int irq, void *data)
+> +{
+> +	struct m10v_dma_chan *mchan = data;
+> +	unsigned long flags;
+> +	u32 val;
+> +
+> +	val = readl(mchan->regs + M10V_XDDSD);
+> +	val = FIELD_GET(M10V_XDDSD_IS_MASK, val);
+> +
+> +	if (val != M10V_XDDSD_IS_NORMAL)
+> +		dev_err(mchan->chan.device->dev, "XDMAC error with status: %x", val);
+> +
+> +	val = FIELD_PREP(M10V_XDDSD_IS_MASK, 0x0);
+> +	writel(val, mchan->regs + M10V_XDDSD);
+> +
+> +	spin_lock_irqsave(&mchan->lock, flags);
+> +	dma_cookie_complete(&mchan->mdesc.txd);
+> +	spin_unlock_irqrestore(&mchan->lock, flags);
+> +
+> +	if (mchan->mdesc.txd.flags & DMA_PREP_INTERRUPT)
+> +		dmaengine_desc_get_callback_invoke(&mchan->mdesc.txd, NULL);
+> +
+> +	return IRQ_HANDLED;
+> +}
+> +
+> +static void m10v_xdmac_issue_pending(struct dma_chan *chan)
+> +{
+> +	struct m10v_dma_chan *mchan = to_m10v_dma_chan(chan);
+> +
+> +	m10v_xdmac_config_chan(mchan);
+> +
+> +	m10v_xdmac_enable_chan(mchan);
+> +}
+> +
+> +static dma_cookie_t m10v_xdmac_tx_submit(struct dma_async_tx_descriptor *txd)
+> +{
+> +	struct m10v_dma_chan *mchan = to_m10v_dma_chan(txd->chan);
+> +	dma_cookie_t cookie;
+> +	unsigned long flags;
+> +
+> +	spin_lock_irqsave(&mchan->lock, flags);
+> +	cookie = dma_cookie_assign(txd);
+> +	spin_unlock_irqrestore(&mchan->lock, flags);
+> +
+> +	return cookie;
+> +}
+> +
+> +static struct dma_async_tx_descriptor *
+> +m10v_xdmac_prep_dma_memcpy(struct dma_chan *chan, dma_addr_t dst,
+> +			   dma_addr_t src, size_t len, unsigned long flags)
+> +{
+> +	struct m10v_dma_chan *mchan = to_m10v_dma_chan(chan);
+> +
+> +	dma_async_tx_descriptor_init(&mchan->mdesc.txd, chan);
+> +	mchan->mdesc.txd.tx_submit = m10v_xdmac_tx_submit;
+> +	mchan->mdesc.txd.callback = NULL;
+> +	mchan->mdesc.txd.flags = flags;
+> +	mchan->mdesc.txd.cookie = -EBUSY;
+> +
+> +	mchan->mdesc.len = len;
+> +	mchan->mdesc.src = src;
+> +	mchan->mdesc.dst = dst;
+> +
+> +	return &mchan->mdesc.txd;
+> +}
+> +
+> +static int m10v_xdmac_device_terminate_all(struct dma_chan *chan)
+> +{
+> +	struct m10v_dma_chan *mchan = to_m10v_dma_chan(chan);
+> +
+> +	m10v_xdmac_disable_chan(mchan);
+> +
+> +	return 0;
+> +}
+> +
+> +static int m10v_xdmac_alloc_chan_resources(struct dma_chan *chan)
+> +{
+> +	struct m10v_dma_chan *mchan = to_m10v_dma_chan(chan);
+> +	unsigned long flags;
+> +
+> +	spin_lock_irqsave(&mchan->lock, flags);
+> +	dma_cookie_init(chan);
+> +	spin_unlock_irqrestore(&mchan->lock, flags);
+> +
+> +	return 1;
+> +}
+> +
+> +static int m10v_xdmac_probe(struct platform_device *pdev)
+> +{
+> +	struct device_node *np = pdev->dev.of_node;
+> +	struct m10v_dma_chan *mchan;
+> +	struct m10v_dma_device *mdmac;
+> +	struct resource *res;
+> +	unsigned int channels;
+> +	int ret, i;
+> +
+> +	ret = device_property_read_u32(&pdev->dev, "dma-channels", &channels);
+> +	if (ret) {
+> +		dev_err(&pdev->dev, "get dma-channels failed\n");
+> +		return ret;
+> +	}
+> +
+> +	mdmac = devm_kzalloc(&pdev->dev,
+> +			     struct_size(mdmac, mchan, channels),
+> +			     GFP_KERNEL);
+> +	if (!mdmac)
+> +		return -ENOMEM;
+> +
+> +	mdmac->channels = channels;
+> +
+> +	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+> +	mdmac->regs = devm_ioremap_resource(&pdev->dev, res);
+> +	if (IS_ERR(mdmac->regs))
+> +		return PTR_ERR(mdmac->regs);
+> +
+> +	INIT_LIST_HEAD(&mdmac->dmac.channels);
+> +	for (i = 0; i < mdmac->channels; i++) {
+> +		mchan = &mdmac->mchan[i];
+> +		mchan->irq = platform_get_irq(pdev, i);
+> +		ret = devm_request_irq(&pdev->dev, mchan->irq, m10v_xdmac_irq,
+> +				       IRQF_SHARED, dev_name(&pdev->dev), mchan);
+> +		if (ret) {
+> +			dev_err(&pdev->dev, "failed to request IRQ\n");
+> +			return ret;
+> +		}
+> +		mchan->mdmac = mdmac;
+> +		mchan->chan.device = &mdmac->dmac;
+> +		list_add_tail(&mchan->chan.device_node,
+> +				&mdmac->dmac.channels);
+> +
+> +		mchan->regs = M10V_XDMAC_CHAN_BASE(mdmac->regs, i);
+> +		spin_lock_init(&mchan->lock);
+> +	}
+> +
+> +	dma_cap_set(DMA_MEMCPY, mdmac->dmac.cap_mask);
+> +
+> +	mdmac->dmac.device_alloc_chan_resources = m10v_xdmac_alloc_chan_resources;
+> +	mdmac->dmac.device_prep_dma_memcpy = m10v_xdmac_prep_dma_memcpy;
+> +	mdmac->dmac.device_issue_pending = m10v_xdmac_issue_pending;
+> +	mdmac->dmac.device_tx_status = dma_cookie_status;
+> +	mdmac->dmac.device_terminate_all = m10v_xdmac_device_terminate_all;
+> +	mdmac->dmac.src_addr_widths = M10V_XDMAC_BUSWIDTHS;
+> +	mdmac->dmac.dst_addr_widths = M10V_XDMAC_BUSWIDTHS;
+> +	mdmac->dmac.residue_granularity = DMA_RESIDUE_GRANULARITY_DESCRIPTOR;
+> +	mdmac->dmac.dev = &pdev->dev;
+> +
+> +	platform_set_drvdata(pdev, mdmac);
+> +
+> +	m10v_xdmac_enable_dma(mdmac);
+> +
+> +	ret = dmaenginem_async_device_register(&mdmac->dmac);
+> +	if (ret) {
+> +		dev_err(&pdev->dev, "failed to register dmaengine device\n");
+> +		return ret;
+> +	}
+> +
+> +	ret = of_dma_controller_register(np, of_dma_simple_xlate, mdmac);
+> +	if (ret) {
+> +		dev_err(&pdev->dev, "failed to register OF DMA controller\n");
+> +		return ret;
+> +	}
+> +
+> +	return 0;
+> +}
+> +
+> +static int m10v_xdmac_remove(struct platform_device *pdev)
+> +{
+> +	struct m10v_dma_chan *mchan;
+> +	struct m10v_dma_device *mdmac = platform_get_drvdata(pdev);
+> +	int i;
+> +
+> +	m10v_xdmac_disable_dma(mdmac);
+> +
+> +	for (i = 0; i < mdmac->channels; i++) {
+> +		mchan = &mdmac->mchan[i];
+> +		devm_free_irq(&pdev->dev, mchan->irq, mchan);
+> +	}
+> +
+> +	of_dma_controller_free(pdev->dev.of_node);
+> +
+> +	return 0;
+> +}
+> +
+> +static const struct of_device_id m10v_xdmac_dt_ids[] = {
+> +	{.compatible = "socionext,milbeaut-m10v-xdmac",},
+> +	{},
+> +};
+> +MODULE_DEVICE_TABLE(of, m10v_xdmac_dt_ids);
+> +
+> +static struct platform_driver m10v_xdmac_driver = {
+> +	.driver = {
+> +		.name = "m10v-xdmac",
+> +		.of_match_table = of_match_ptr(m10v_xdmac_dt_ids),
+> +	},
+> +	.probe = m10v_xdmac_probe,
+> +	.remove = m10v_xdmac_remove,
+> +};
+> +module_platform_driver(m10v_xdmac_driver);
+> +
+> +MODULE_AUTHOR("Kazuhiro Kasai <kasai.kazuhiro@socionext.com>");
+> +MODULE_DESCRIPTION("Socionext Milbeaut XDMAC driver");
+> +MODULE_LICENSE("GPL v2");
+> --
+> 1.9.1
+>
