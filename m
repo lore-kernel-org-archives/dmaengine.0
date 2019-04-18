@@ -1,16 +1,55 @@
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
-Subject: [v2,3/3] arm64: dts: imx8mq: Change ahb clock for imx8mq
-From: Shawn Guo <shawnguo@kernel.org>
-Message-Id: <20190403105959.GJ7932@X250>
-Date: Wed, 3 Apr 2019 18:00:00 +0700
-To: "Angus Ainslie (Purism)" <angus@akkea.ca>
-Cc: angus.ainslie@puri.sm, Rob Herring <robh+dt@kernel.org>, Mark Rutland <mark.rutland@arm.com>, Sascha Hauer <s.hauer@pengutronix.de>, Pengutronix Kernel Team <kernel@pengutronix.de>, Fabio Estevam <festevam@gmail.com>, NXP Linux Team <linux-imx@nxp.com>, Dan Williams <dan.j.williams@intel.com>, Vinod Koul <vkoul@kernel.org>, Lucas Stach <l.stach@pengutronix.de>, Carlo Caione <ccaione@baylibre.com>, Daniel Baluta <daniel.baluta@nxp.com>, Guido =?iso-8859-1?Q?G=FCnther?= <agx@sigxcpu.org>, devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org
+Subject: [v2,2/3] dmaengine: imx-sdma: Only check ratio on parts that support 1:1
+From: Robin Gong <yibin.gong@nxp.com>
+Message-Id: <1555577278.24617.6.camel@nxp.com>
+Date: Thu, 18 Apr 2019 08:54:07 +0000
+To: Angus Ainslie <angus.ainslie@puri.sm>, "angus@akkea.ca" <angus@akkea.ca>
+Cc: dl-linux-imx <linux-imx@nxp.com>, "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>, "robh+dt@kernel.org" <robh+dt@kernel.org>, "ccaione@baylibre.com" <ccaione@baylibre.com>, "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>, "festevam@gmail.com" <festevam@gmail.com>, "agx@sigxcpu.org" <agx@sigxcpu.org>, "dan.j.williams@intel.com" <dan.j.williams@intel.com>, "mark.rutland@arm.com" <mark.rutland@arm.com>, "dmaengine@vger.kernel.org" <dmaengine@vger.kernel.org>, "shawnguo@kernel.org" <shawnguo@kernel.org>, "linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>, "vkoul@kernel.org" <vkoul@kernel.org>, Daniel Baluta <daniel.baluta@nxp.com>, "l.stach@pengutronix.de" <l.stach@pengutronix.de>, "kernel@pengutronix.de" <kernel@pengutronix.de>, "s.hauer@pengutronix.de" <s.hauer@pengutronix.de>
 List-ID: <dmaengine.vger.kernel.org>
 
-T24gRnJpLCBNYXIgMjksIDIwMTkgYXQgMDg6MjE6MzBBTSAtMDcwMCwgQW5ndXMgQWluc2xpZSAo
-UHVyaXNtKSB3cm90ZToKPiBTZXQgYWhiIGNsb2NrIG9uIHNkbWExIHRvIGdldCByaWQgb2YgIlRp
-bWVvdXQgd2FpdGluZyBmb3IgQ0gwIgo+IG9uIHRoZSBpbXg4bXEuCj4gCj4gU2lnbmVkLW9mZi1i
-eTogQW5ndXMgQWluc2xpZSAoUHVyaXNtKSA8YW5ndXNAYWtrZWEuY2E+CgpBcHBsaWVkLCB0aGFu
-a3MuCg==
+QWNrZWQtYnk6IFJvYmluIEdvbmcgPHlpYmluLmdvbmdAbnhwLmNvbT4NCk9uIDIwMTktMDMtMjkg
+YXQgMTU6MjEgKzAwMDAsIEFuZ3VzIEFpbnNsaWUgKFB1cmlzbSkgd3JvdGU6DQo+IE9uIGlteDht
+cSBCMCBjaGlwLCBBSEIvU0RNQSBjbG9jayByYXRpbyAyOjEgY2FuJ3QgYmUgc3VwcG9ydGVkLA0K
+PiBzaW5jZSBTRE1BIGNsb2NrIHJhdGlvIGhhcyB0byBiZSBpbmNyZWFzZWQgdG8gMjUwTWh6LCBB
+SEIgY2FuJ3QgcmVhY2gNCj4gdG8gNTAwTWh6LCBzbyB1c2UgMToxIGluc3RlYWQuDQo+IA0KPiBU
+byBsaW1pdCB0aGlzIGNoYW5nZSB0byB0aGUgaW14OG1xIGZvciBub3cgdGhpcyBwYXRjaCBhbHNv
+IGFkZHMgYW4NCj4gaW04bXEtc2RtYSBjb21wYXRpYmxlIHN0cmluZy4NCj4gDQo+IFNpZ25lZC1v
+ZmYtYnk6IEFuZ3VzIEFpbnNsaWUgKFB1cmlzbSkgPGFuZ3VzQGFra2VhLmNhPg0KPiAtLS0NCj4g
+wqBkcml2ZXJzL2RtYS9pbXgtc2RtYS5jIHwgMTUgKysrKysrKysrKysrKystDQo+IMKgMSBmaWxl
+IGNoYW5nZWQsIDE0IGluc2VydGlvbnMoKyksIDEgZGVsZXRpb24oLSkNCj4gDQo+IGRpZmYgLS1n
+aXQgYS9kcml2ZXJzL2RtYS9pbXgtc2RtYS5jIGIvZHJpdmVycy9kbWEvaW14LXNkbWEuYw0KPiBp
+bmRleCA1ZjNjMTM3OGI5MGUuLjk5ZDlmNDMxYWUyYyAxMDA2NDQNCj4gLS0tIGEvZHJpdmVycy9k
+bWEvaW14LXNkbWEuYw0KPiArKysgYi9kcml2ZXJzL2RtYS9pbXgtc2RtYS5jDQo+IEBAIC00MTks
+NiArNDE5LDcgQEAgc3RydWN0IHNkbWFfZHJpdmVyX2RhdGEgew0KPiDCoAlpbnQgY2huZW5ibDA7
+DQo+IMKgCWludCBudW1fZXZlbnRzOw0KPiDCoAlzdHJ1Y3Qgc2RtYV9zY3JpcHRfc3RhcnRfYWRk
+cnMJKnNjcmlwdF9hZGRyczsNCj4gKwlib29sIGNoZWNrX3JhdGlvOw0KPiDCoH07DQo+IMKgDQo+
+IMKgc3RydWN0IHNkbWFfZW5naW5lIHsNCj4gQEAgLTU1Nyw2ICs1NTgsMTMgQEAgc3RhdGljIHN0
+cnVjdCBzZG1hX2RyaXZlcl9kYXRhIHNkbWFfaW14N2QgPSB7DQo+IMKgCS5zY3JpcHRfYWRkcnMg
+PSAmc2RtYV9zY3JpcHRfaW14N2QsDQo+IMKgfTsNCj4gwqANCj4gK3N0YXRpYyBzdHJ1Y3Qgc2Rt
+YV9kcml2ZXJfZGF0YSBzZG1hX2lteDhtcSA9IHsNCj4gKwkuY2huZW5ibDAgPSBTRE1BX0NITkVO
+QkwwX0lNWDM1LA0KPiArCS5udW1fZXZlbnRzID0gNDgsDQo+ICsJLnNjcmlwdF9hZGRycyA9ICZz
+ZG1hX3NjcmlwdF9pbXg3ZCwNCj4gKwkuY2hlY2tfcmF0aW8gPSAxLA0KPiArfTsNCj4gKw0KPiDC
+oHN0YXRpYyBjb25zdCBzdHJ1Y3QgcGxhdGZvcm1fZGV2aWNlX2lkIHNkbWFfZGV2dHlwZXNbXSA9
+IHsNCj4gwqAJew0KPiDCoAkJLm5hbWUgPSAiaW14MjUtc2RtYSIsDQo+IEBAIC01NzksNiArNTg3
+LDkgQEAgc3RhdGljIGNvbnN0IHN0cnVjdCBwbGF0Zm9ybV9kZXZpY2VfaWQNCj4gc2RtYV9kZXZ0
+eXBlc1tdID0gew0KPiDCoAl9LCB7DQo+IMKgCQkubmFtZSA9ICJpbXg3ZC1zZG1hIiwNCj4gwqAJ
+CS5kcml2ZXJfZGF0YSA9ICh1bnNpZ25lZCBsb25nKSZzZG1hX2lteDdkLA0KPiArCX0sIHsNCj4g
+KwkJLm5hbWUgPSAiaW14OG1xLXNkbWEiLA0KPiArCQkuZHJpdmVyX2RhdGEgPSAodW5zaWduZWQg
+bG9uZykmc2RtYV9pbXg4bXEsDQo+IMKgCX0sIHsNCj4gwqAJCS8qIHNlbnRpbmVsICovDQo+IMKg
+CX0NCj4gQEAgLTU5Myw2ICs2MDQsNyBAQCBzdGF0aWMgY29uc3Qgc3RydWN0IG9mX2RldmljZV9p
+ZCBzZG1hX2R0X2lkc1tdID0NCj4gew0KPiDCoAl7IC5jb21wYXRpYmxlID0gImZzbCxpbXgzMS1z
+ZG1hIiwgLmRhdGEgPSAmc2RtYV9pbXgzMSwgfSwNCj4gwqAJeyAuY29tcGF0aWJsZSA9ICJmc2ws
+aW14MjUtc2RtYSIsIC5kYXRhID0gJnNkbWFfaW14MjUsIH0sDQo+IMKgCXsgLmNvbXBhdGlibGUg
+PSAiZnNsLGlteDdkLXNkbWEiLCAuZGF0YSA9ICZzZG1hX2lteDdkLCB9LA0KPiArCXsgLmNvbXBh
+dGlibGUgPSAiZnNsLGlteDhtcS1zZG1hIiwgLmRhdGEgPSAmc2RtYV9pbXg4bXEsIH0sDQo+IMKg
+CXsgLyogc2VudGluZWwgKi8gfQ0KPiDCoH07DQo+IMKgTU9EVUxFX0RFVklDRV9UQUJMRShvZiwg
+c2RtYV9kdF9pZHMpOw0KPiBAQCAtMTg1Miw3ICsxODY0LDggQEAgc3RhdGljIGludCBzZG1hX2lu
+aXQoc3RydWN0IHNkbWFfZW5naW5lICpzZG1hKQ0KPiDCoAlpZiAocmV0KQ0KPiDCoAkJZ290byBk
+aXNhYmxlX2Nsa19pcGc7DQo+IMKgDQo+IC0JaWYgKGNsa19nZXRfcmF0ZShzZG1hLT5jbGtfYWhi
+KSA9PSBjbGtfZ2V0X3JhdGUoc2RtYS0NCj4gPmNsa19pcGcpKQ0KPiArCWlmIChzZG1hLT5kcnZk
+YXRhLT5jaGVja19yYXRpbyAmJg0KPiArCcKgwqDCoMKgKGNsa19nZXRfcmF0ZShzZG1hLT5jbGtf
+YWhiKSA9PSBjbGtfZ2V0X3JhdGUoc2RtYS0NCj4gPmNsa19pcGcpKSkNCj4gwqAJCXNkbWEtPmNs
+a19yYXRpbyA9IDE7DQo+IMKgDQo+IMKgCS8qIEJlIHN1cmUgU0RNQSBoYXMgbm90IHN0YXJ0ZWQg
+eWV0ICovCg==
