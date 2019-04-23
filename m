@@ -1,28 +1,33 @@
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
-Subject: [v1,15/15] arm64: defconfig: Enable SDMA on i.mx8mq/8mm
-From: Robin Gong <yibin.gong@nxp.com>
-Message-Id: <1556027045-5269-16-git-send-email-yibin.gong@nxp.com>
-Date: Tue, 23 Apr 2019 13:51:50 +0000
-To: "broonie@kernel.org" <broonie@kernel.org>, "shawnguo@kernel.org" <shawnguo@kernel.org>, "s.hauer@pengutronix.de" <s.hauer@pengutronix.de>, "festevam@gmail.com" <festevam@gmail.com>, "robh+dt@kernel.org" <robh+dt@kernel.org>, "mark.rutland@arm.com" <mark.rutland@arm.com>, "u.kleine-koenig@pengutronix.de" <u.kleine-koenig@pengutronix.de>, "plyatov@gmail.com" <plyatov@gmail.com>, "sean.nyekjaer@prevas.dk" <sean.nyekjaer@prevas.dk>
-Cc: dl-linux-imx <linux-imx@nxp.com>, "linux-spi@vger.kernel.org" <linux-spi@vger.kernel.org>, "linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>, "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>, "dmaengine@vger.kernel.org" <dmaengine@vger.kernel.org>, "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>, "kernel@pengutronix.de" <kernel@pengutronix.de>
+Subject: [RFC,v6,6/6] MAINTAINERS: Add Synopsys eDMA IP driver maintainer
+From: Gustavo Pimentel <gustavo.pimentel@synopsys.com>
+Message-Id: <aafdd8ccf01206a81af00087fca8e6e072ac1319.1556043127.git.gustavo.pimentel@synopsys.com>
+Date: Tue, 23 Apr 2019 20:30:13 +0200
+To: linux-pci@vger.kernel.org, dmaengine@vger.kernel.org
+Cc: Gustavo Pimentel <Gustavo.Pimentel@synopsys.com>, Vinod Koul <vkoul@kernel.org>, Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>, Joao Pinto <Joao.Pinto@synopsys.com>
 List-ID: <dmaengine.vger.kernel.org>
 
-RW5hYmxlIFNETUEgc3VwcG9ydCBvbiBpLm14OG1xLzhtbSBjaGlwcywgaW5jbHVkaW5nIGVuYWJs
-aW5nDQpDT05GSUdfRldfTE9BREVSX1VTRVJfSEVMUEVSL0NPTkZJR19GV19MT0FERVJfVVNFUl9I
-RUxQRVJfRkFMTEJBQ0sNCmZvciBmaXJtd2FyZSBsb2FkZWQgYnkgdWRldi4NCg0KU2lnbmVkLW9m
-Zi1ieTogUm9iaW4gR29uZyA8eWliaW4uZ29uZ0BueHAuY29tPg0KLS0tDQogYXJjaC9hcm02NC9j
-b25maWdzL2RlZmNvbmZpZyB8IDMgKysrDQogMSBmaWxlIGNoYW5nZWQsIDMgaW5zZXJ0aW9ucygr
-KQ0KDQotLSANCjIuNy40CgpkaWZmIC0tZ2l0IGEvYXJjaC9hcm02NC9jb25maWdzL2RlZmNvbmZp
-ZyBiL2FyY2gvYXJtNjQvY29uZmlncy9kZWZjb25maWcNCmluZGV4IDE3ZGFhOTcuLjcwODE4MTcg
-MTAwNjQ0DQotLS0gYS9hcmNoL2FybTY0L2NvbmZpZ3MvZGVmY29uZmlnDQorKysgYi9hcmNoL2Fy
-bTY0L2NvbmZpZ3MvZGVmY29uZmlnDQpAQCAtMjAzLDYgKzIwMyw4IEBAIENPTkZJR19ORVRfOVBf
-VklSVElPPXkNCiBDT05GSUdfVUVWRU5UX0hFTFBFUl9QQVRIPSIvc2Jpbi9ob3RwbHVnIg0KIENP
-TkZJR19ERVZUTVBGUz15DQogQ09ORklHX0RFVlRNUEZTX01PVU5UPXkNCitDT05GSUdfRldfTE9B
-REVSX1VTRVJfSEVMUEVSPXkNCitDT05GSUdfRldfTE9BREVSX1VTRVJfSEVMUEVSX0ZBTExCQUNL
-PXkNCiBDT05GSUdfRE1BX0NNQT15DQogQ09ORklHX0NNQV9TSVpFX01CWVRFUz0zMg0KIENPTkZJ
-R19ISVNJTElDT05fTFBDPXkNCkBAIC02MzUsNiArNjM3LDcgQEAgQ09ORklHX1JUQ19EUlZfSU1Y
-X1NDPW0NCiBDT05GSUdfUlRDX0RSVl9YR0VORT15DQogQ09ORklHX0RNQURFVklDRVM9eQ0KIENP
-TkZJR19ETUFfQkNNMjgzNT1tDQorQ09ORklHX0lNWF9TRE1BPXkNCiBDT05GSUdfSzNfRE1BPXkN
-CiBDT05GSUdfTVZfWE9SX1YyPXkNCiBDT05GSUdfUEwzMzBfRE1BPXkNCg==
+QWRkIFN5bm9wc3lzIGVETUEgSVAgZHJpdmVyIG1haW50YWluZXIuCgpUaGlzIGRyaXZlciBhaW1z
+IHRvIHN1cHBvcnQgU3lub3BzeXMgZURNQSBJUCBhbmQgaXMgbm9ybWFsbHkgZGlzdHJpYnV0ZWQK
+YWxvbmcgd2l0aCBTeW5vcHN5cyBQQ0llIEVuZFBvaW50IElQIChkZXBlbmRzIG9mIHRoZSB1c2Ug
+YW5kIGxpY2Vuc2luZwphZ3JlZW1lbnQpLgoKU2lnbmVkLW9mZi1ieTogR3VzdGF2byBQaW1lbnRl
+bCA8Z3VzdGF2by5waW1lbnRlbEBzeW5vcHN5cy5jb20+CkNjOiBWaW5vZCBLb3VsIDx2a291bEBr
+ZXJuZWwub3JnPgpDYzogRXVnZW5peSBQYWx0c2V2IDxwYWx0c2V2QHN5bm9wc3lzLmNvbT4KQ2M6
+IEpvYW8gUGludG8gPGpwaW50b0BzeW5vcHN5cy5jb20+Ci0tLQpDaGFuZ2VzOgpSRkMgdjEtPlJG
+QyB2MjoKIC0gTm8gY2hhbmdlcwpSRkMgdjItPlJGQyB2MzoKIC0gUmViYXNlIHRvIHY1LjAtcmMx
+ClJGQyB2My0+UkZDIHY0OgogLSBObyBjaGFuZ2VzClJGQyB2NC0+UkZDIHY1OgogLSBQYXRjaCBy
+ZXNlbmRlZCwgZm9yZ290IHRvIHJlcGxhY2Ugb2YgJ19fXycgYnkgJy0tLScgYW5kIHRvIHJlbW92
+ZQogZHVwbGljYXRlIHNpZ25lZC1vZmYKUkZDIHY1LT5SRkMgdjY6CiAtIEZvbGxvd2luZyBwYXRj
+aCB2ZXJzaW9uCgogTUFJTlRBSU5FUlMgfCA3ICsrKysrKysKIDEgZmlsZSBjaGFuZ2VkLCA3IGlu
+c2VydGlvbnMoKykKCmRpZmYgLS1naXQgYS9NQUlOVEFJTkVSUyBiL01BSU5UQUlORVJTCmluZGV4
+IGUxN2ViZjcuLjMyMjIyYjggMTAwNjQ0Ci0tLSBhL01BSU5UQUlORVJTCisrKyBiL01BSU5UQUlO
+RVJTCkBAIC00NTEzLDYgKzQ1MTMsMTMgQEAgTDoJbGludXgtbXRkQGxpc3RzLmluZnJhZGVhZC5v
+cmcKIFM6CVN1cHBvcnRlZAogRjoJZHJpdmVycy9tdGQvbmFuZC9yYXcvZGVuYWxpKgogCitERVNJ
+R05XQVJFIEVETUEgQ09SRSBJUCBEUklWRVIKK006CUd1c3Rhdm8gUGltZW50ZWwgPGd1c3Rhdm8u
+cGltZW50ZWxAc3lub3BzeXMuY29tPgorTDoJZG1hZW5naW5lQHZnZXIua2VybmVsLm9yZworUzoJ
+TWFpbnRhaW5lZAorRjoJZHJpdmVycy9kbWEvZHctZWRtYS8KK0Y6CWluY2x1ZGUvbGludXgvZG1h
+L2VkbWEuaAorCiBERVNJR05XQVJFIFVTQjIgRFJEIElQIERSSVZFUgogTToJTWluYXMgSGFydXR5
+dW55YW4gPGhtaW5hc0BzeW5vcHN5cy5jb20+CiBMOglsaW51eC11c2JAdmdlci5rZXJuZWwub3Jn
+Cg==
