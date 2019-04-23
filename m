@@ -2,70 +2,95 @@ Return-Path: <SRS0=Lzn8=SZ=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,MAILING_LIST_MULTI,SPF_PASS,T_DKIMWL_WL_HIGH,USER_AGENT_MUTT
-	autolearn=unavailable autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.0 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_PASS,URIBL_BLOCKED,
+	USER_AGENT_GIT autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 81500C282E1
-	for <dmaengine@archiver.kernel.org>; Tue, 23 Apr 2019 05:16:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3894BC282E1
+	for <dmaengine@archiver.kernel.org>; Tue, 23 Apr 2019 07:42:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 502672177B
-	for <dmaengine@archiver.kernel.org>; Tue, 23 Apr 2019 05:16:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1555996561;
-	bh=SaKbq3VWldnSqZadWRhgrbRg6S9DDhZgQ0cGocH1CM8=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:List-ID:From;
-	b=lVmjvg6sFB0rdzWafYaJVgqzAVo3720L5R17h5+3tk9+5Jx0bmztXOHvUCaMCmbGj
-	 wzrcGR7tuHZkWBMKN0do+K6MsOF8BAQuAbCjspWxv13hEliKubKVp1/LeNJf4KpHGv
-	 i9yCM+QdProdFY2EKZFbE1DQi1XACGzjeX1xRPGI=
+	by mail.kernel.org (Postfix) with ESMTP id 08202206BA
+	for <dmaengine@archiver.kernel.org>; Tue, 23 Apr 2019 07:42:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725970AbfDWFQA (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 23 Apr 2019 01:16:00 -0400
-Received: from mail.kernel.org ([198.145.29.99]:33916 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725882AbfDWFQA (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Tue, 23 Apr 2019 01:16:00 -0400
-Received: from localhost (unknown [171.76.113.243])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 395F22064A;
-        Tue, 23 Apr 2019 05:15:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1555996559;
-        bh=SaKbq3VWldnSqZadWRhgrbRg6S9DDhZgQ0cGocH1CM8=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=tQQMUbVUsLWRkjAP2inONF1dSy8LWxbDXjvjCThdk7DyNME4SEGVBHWWnTWgxUtqJ
-         bG6MkzHnxf84u7FmTLGlS3Qd6nnBYjstLEYHyImXlTjRivQ7/GCecBfwR6/5E0BffQ
-         rQStLLPzwfh0XZUPXYDufuQZgRJJ7XrZvIUYf1LA=
-Date:   Tue, 23 Apr 2019 10:45:54 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Dirk Behme <dirk.behme@de.bosch.com>
-Cc:     linux-renesas-soc@vger.kernel.org, dmaengine@vger.kernel.org,
-        geert+renesas@glider.be, niklas.soderlund+renesas@ragnatech.se,
-        laurent.pinchart+renesas@ideasonboard.com,
-        Achim.Dahlhoff@de.bosch.com, yoshihiro.shimoda.uh@renesas.com,
-        ylhuajnu@outlook.com, hiroyuki.yokoyama.vx@renesas.com,
-        kuninori.morimoto.gx@renesas.com, stable@vger.kernel.org
-Subject: Re: [PATCH v3 1/2] dmaengine: sh: rcar-dmac: With cyclic DMA residue
- 0 is valid
-Message-ID: <20190423051554.GF28103@vkoul-mobl>
-References: <20190412052914.16006-1-dirk.behme@de.bosch.com>
+        id S1726617AbfDWHmX (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 23 Apr 2019 03:42:23 -0400
+Received: from szxga04-in.huawei.com ([45.249.212.190]:6677 "EHLO huawei.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1726410AbfDWHkR (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Tue, 23 Apr 2019 03:40:17 -0400
+Received: from DGGEMS405-HUB.china.huawei.com (unknown [172.30.72.60])
+        by Forcepoint Email with ESMTP id C0AB01FABA2A7D13B765;
+        Tue, 23 Apr 2019 15:40:12 +0800 (CST)
+Received: from localhost.localdomain.localdomain (10.175.113.25) by
+ DGGEMS405-HUB.china.huawei.com (10.3.19.205) with Microsoft SMTP Server id
+ 14.3.439.0; Tue, 23 Apr 2019 15:40:04 +0800
+From:   Kefeng Wang <wangkefeng.wang@huawei.com>
+To:     <linux-kernel@vger.kernel.org>
+CC:     Masahiro Yamada <yamada.masahiro@socionext.com>,
+        Kefeng Wang <wangkefeng.wang@huawei.com>,
+        Vinod Koul <vinod.koul@intel.com>, <dmaengine@vger.kernel.org>
+Subject: [PATCH next 03/25] dmaengine: Use dev_get_drvdata()
+Date:   Tue, 23 Apr 2019 15:49:58 +0800
+Message-ID: <20190423075020.173734-4-wangkefeng.wang@huawei.com>
+X-Mailer: git-send-email 2.20.1
+In-Reply-To: <20190423075020.173734-1-wangkefeng.wang@huawei.com>
+References: <20190423075020.173734-1-wangkefeng.wang@huawei.com>
 MIME-Version: 1.0
+Content-Transfer-Encoding: 7BIT
 Content-Type: text/plain; charset="UTF-8"
-Content-Disposition: inline
-In-Reply-To: <20190412052914.16006-1-dirk.behme@de.bosch.com>
-User-Agent: Mutt/1.11.3 (2019-02-01)
+X-Originating-IP: [10.175.113.25]
+X-CFilter-Loop: Reflected
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
-Message-ID: <20190423051554.z89bRi4-xaK3b0UdqHHtUUXXeGR57rj0223H7sh5DSM@z>
+Message-ID: <20190423074958.LX_QBc1g_5WU9Jt0bpFyU7eJmOrcdGU4IMCxnbACg40@z>
 
-On 12-04-19, 07:29, Dirk Behme wrote:
-> Having a cyclic DMA, a residue 0 is not an indication of a completed
-> DMA. In case of cyclic DMA make sure that dma_set_residue() is called
-> and with this a residue of 0 is forwarded correctly to the caller.
+Using dev_get_drvdata directly.
 
-Applied both, thanks
+Cc: Vinod Koul <vinod.koul@intel.com>
+Cc: dmaengine@vger.kernel.org
+Signed-off-by: Kefeng Wang <wangkefeng.wang@huawei.com>
+---
+ drivers/dma/bcm-sba-raid.c | 3 +--
+ drivers/dma/nbpfaxi.c      | 4 ++--
+ 2 files changed, 3 insertions(+), 4 deletions(-)
+
+diff --git a/drivers/dma/bcm-sba-raid.c b/drivers/dma/bcm-sba-raid.c
+index 72878ac5c78d..fa81d0177765 100644
+--- a/drivers/dma/bcm-sba-raid.c
++++ b/drivers/dma/bcm-sba-raid.c
+@@ -1459,8 +1459,7 @@ static void sba_receive_message(struct mbox_client *cl, void *msg)
+ 
+ static int sba_debugfs_stats_show(struct seq_file *file, void *offset)
+ {
+-	struct platform_device *pdev = to_platform_device(file->private);
+-	struct sba_device *sba = platform_get_drvdata(pdev);
++	struct sba_device *sba = dev_get_drvdata(file->private);
+ 
+ 	/* Write stats in file */
+ 	sba_write_stats_in_seqfile(sba, file);
+diff --git a/drivers/dma/nbpfaxi.c b/drivers/dma/nbpfaxi.c
+index a67b292190f4..594409a6e975 100644
+--- a/drivers/dma/nbpfaxi.c
++++ b/drivers/dma/nbpfaxi.c
+@@ -1491,14 +1491,14 @@ MODULE_DEVICE_TABLE(platform, nbpf_ids);
+ #ifdef CONFIG_PM
+ static int nbpf_runtime_suspend(struct device *dev)
+ {
+-	struct nbpf_device *nbpf = platform_get_drvdata(to_platform_device(dev));
++	struct nbpf_device *nbpf = dev_get_drvdata(dev);
+ 	clk_disable_unprepare(nbpf->clk);
+ 	return 0;
+ }
+ 
+ static int nbpf_runtime_resume(struct device *dev)
+ {
+-	struct nbpf_device *nbpf = platform_get_drvdata(to_platform_device(dev));
++	struct nbpf_device *nbpf = dev_get_drvdata(dev);
+ 	return clk_prepare_enable(nbpf->clk);
+ }
+ #endif
 -- 
-~Vinod
+2.20.1
+
