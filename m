@@ -2,29 +2,16 @@ Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
 Subject: [v3,1/3] dmaengine: at_xdmac: remove BUG_ON macro in tasklet
-From: Nicolas Ferre <nicolas.ferre@microchip.com>
-Message-Id: <20190403102359.27698-1-nicolas.ferre@microchip.com>
-Date: Wed, 3 Apr 2019 12:23:57 +0200
-To: dmaengine@vger.kernel.org, Vinod Koul <vkoul@kernel.org>
-Cc: Ludovic Desroches <ludovic.desroches@microchip.com>, linux-arm-kernel@lists.infradead.org, Alexandre Belloni <alexandre.belloni@bootlin.com>, linux-kernel@vger.kernel.org, Nicolas Ferre <nicolas.ferre@microchip.com>
+From: Vinod Koul <vkoul@kernel.org>
+Message-Id: <20190423051005.GD28103@vkoul-mobl>
+Date: Tue, 23 Apr 2019 10:40:05 +0530
+To: Nicolas Ferre <nicolas.ferre@microchip.com>
+Cc: dmaengine@vger.kernel.org, Ludovic Desroches <ludovic.desroches@microchip.com>, linux-arm-kernel@lists.infradead.org, Alexandre Belloni <alexandre.belloni@bootlin.com>, linux-kernel@vger.kernel.org
 List-ID: <dmaengine.vger.kernel.org>
 
-RXZlbiBpZiB0aGlzIGNhc2Ugc2hvdWxkbid0IGhhcHBlbiB3aGVuIGNvbnRyb2xsZXIgaXMgcHJv
-cGVybHkgcHJvZ3JhbW1lZCwKaXQncyBzdGlsbCBiZXR0ZXIgdG8gYXZvaWQgZHVtcGluZyBhIGtl
-cm5lbCBPb3BzIGZvciB0aGlzLgpBcyB0aGUgc2VxdWVuY2UgbWF5IGhhcHBlbiBvbmx5IGZvciBk
-ZWJ1Z2dpbmcgcHVycG9zZXMsIGxvZyB0aGUgZXJyb3IgYW5kCmp1c3QgZmluaXNoIHRoZSB0YXNr
-bGV0IGNhbGwuCgpTaWduZWQtb2ZmLWJ5OiBOaWNvbGFzIEZlcnJlIDxuaWNvbGFzLmZlcnJlQG1p
-Y3JvY2hpcC5jb20+CkFja2VkLWJ5OiBMdWRvdmljIERlc3JvY2hlcyA8bHVkb3ZpYy5kZXNyb2No
-ZXNAbWljcm9jaGlwLmNvbT4KLS0tCnYzOiBubyBjaGFuZ2UKdjI6IGFkZGVkIEx1ZG92aWMncyB0
-YWcKCiBkcml2ZXJzL2RtYS9hdF94ZG1hYy5jIHwgNiArKysrKy0KIDEgZmlsZSBjaGFuZ2VkLCA1
-IGluc2VydGlvbnMoKyksIDEgZGVsZXRpb24oLSkKCmRpZmYgLS1naXQgYS9kcml2ZXJzL2RtYS9h
-dF94ZG1hYy5jIGIvZHJpdmVycy9kbWEvYXRfeGRtYWMuYwppbmRleCBmZTY5ZGNjZmEwYzAuLjM3
-YTI2OTQyMDQzNSAxMDA2NDQKLS0tIGEvZHJpdmVycy9kbWEvYXRfeGRtYWMuYworKysgYi9kcml2
-ZXJzL2RtYS9hdF94ZG1hYy5jCkBAIC0xNjA2LDcgKzE2MDYsMTEgQEAgc3RhdGljIHZvaWQgYXRf
-eGRtYWNfdGFza2xldCh1bnNpZ25lZCBsb25nIGRhdGEpCiAJCQkJCXN0cnVjdCBhdF94ZG1hY19k
-ZXNjLAogCQkJCQl4ZmVyX25vZGUpOwogCQlkZXZfdmRiZyhjaGFuMmRldigmYXRjaGFuLT5jaGFu
-KSwgIiVzOiBkZXNjIDB4JXBcbiIsIF9fZnVuY19fLCBkZXNjKTsKLQkJQlVHX09OKCFkZXNjLT5h
-Y3RpdmVfeGZlcik7CisJCWlmICghZGVzYy0+YWN0aXZlX3hmZXIpIHsKKwkJCWRldl9lcnIoY2hh
-bjJkZXYoJmF0Y2hhbi0+Y2hhbiksICJYZmVyIG5vdCBhY3RpdmU6IGV4aXRpbmciKTsKKwkJCXNw
-aW5fdW5sb2NrX2JoKCZhdGNoYW4tPmxvY2spOworCQkJcmV0dXJuOworCQl9CiAKIAkJdHhkID0g
-JmRlc2MtPnR4X2RtYV9kZXNjOwogCg==
+T24gMDMtMDQtMTksIDEyOjIzLCBOaWNvbGFzIEZlcnJlIHdyb3RlOgo+IEV2ZW4gaWYgdGhpcyBj
+YXNlIHNob3VsZG4ndCBoYXBwZW4gd2hlbiBjb250cm9sbGVyIGlzIHByb3Blcmx5IHByb2dyYW1t
+ZWQsCj4gaXQncyBzdGlsbCBiZXR0ZXIgdG8gYXZvaWQgZHVtcGluZyBhIGtlcm5lbCBPb3BzIGZv
+ciB0aGlzLgo+IEFzIHRoZSBzZXF1ZW5jZSBtYXkgaGFwcGVuIG9ubHkgZm9yIGRlYnVnZ2luZyBw
+dXJwb3NlcywgbG9nIHRoZSBlcnJvciBhbmQKPiBqdXN0IGZpbmlzaCB0aGUgdGFza2xldCBjYWxs
+LgoKQXBwbGllZCBhbGwsIHRoYW5rcwo=
