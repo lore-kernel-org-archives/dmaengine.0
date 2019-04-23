@@ -2,30 +2,18 @@ Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
 Subject: [RFC] dmaengine: bcm2835: Avoid GFP_KERNEL in device_prep_slave_sg
-From: Stefan Wahren <stefan.wahren@i2se.com>
-Message-Id: <1554143899-4124-1-git-send-email-stefan.wahren@i2se.com>
-Date: Mon,  1 Apr 2019 20:38:19 +0200
-To: Dan Williams <dan.j.williams@intel.com>, Vinod Koul <vkoul@kernel.org>, Florian Fainelli <f.fainelli@gmail.com>, Ray Jui <rjui@broadcom.com>, Scott Branden <sbranden@broadcom.com>, Eric Anholt <eric@anholt.net>
-Cc: bcm-kernel-feedback-list@broadcom.com, Aaro Koskinen <aaro.koskinen@iki.fi>, Lukas Wunner <lukas@wunner.de>, Florian Kauer <florian.kauer@koalo.de>, Martin Sperl <kernel@martin.sperl.org>, dmaengine@vger.kernel.org, linux-arm-kernel@lists.infradead.org, linux-rpi-kernel@lists.infradead.org, Stefan Wahren <stefan.wahren@i2se.com>
+From: Vinod Koul <vkoul@kernel.org>
+Message-Id: <20190423051109.GE28103@vkoul-mobl>
+Date: Tue, 23 Apr 2019 10:41:09 +0530
+To: Stefan Wahren <stefan.wahren@i2se.com>
+Cc: Dan Williams <dan.j.williams@intel.com>, Florian Fainelli <f.fainelli@gmail.com>, Ray Jui <rjui@broadcom.com>, Scott Branden <sbranden@broadcom.com>, Eric Anholt <eric@anholt.net>, bcm-kernel-feedback-list@broadcom.com, Aaro Koskinen <aaro.koskinen@iki.fi>, Lukas Wunner <lukas@wunner.de>, Florian Kauer <florian.kauer@koalo.de>, Martin Sperl <kernel@martin.sperl.org>, dmaengine@vger.kernel.org, linux-arm-kernel@lists.infradead.org, linux-rpi-kernel@lists.infradead.org
 List-ID: <dmaengine.vger.kernel.org>
 
-VGhlIGNvbW1pdCBhZjE5YjdjZTc2YmEgKCJtbWM6IGJjbTI4MzU6IEF2b2lkIHBvc3NpYmxlIHJh
-Y2VzIG9uCmRhdGEgcmVxdWVzdHMiKSBpbnRyb2R1Y2VzIGEgcG9zc2libGUgY2lyY3VsYXIgbG9j
-a2luZyBkZXBlbmRlbmN5LAp3aGljaCBpcyB0cmlnZ2VyZWQgYnkgc3dhcHBpbmcgdG8gdGhlIHNk
-aG9zdCBpbnRlcmZhY2UuCgpTbyBpbnN0ZWFkIG9mIHJlaW50cm9kdWNlIHRoZSByYWNlIGNvbmRp
-dGlvbiBhZ2Fpbiwgd2UgY291bGQgYWxzbwphdm9pZCB0aGlzIHNpdHVhdGlvbiBieSB1c2luZyBH
-RlBfTk9XQUlUIGZvciB0aGUgYWxsb2NhdGlvbiBvZiB0aGUKRE1BIGJ1ZmZlciBkZXNjcmlwdG9y
-cy4KClJlcG9ydGVkLWJ5OiBBYXJvIEtvc2tpbmVuIDxhYXJvLmtvc2tpbmVuQGlraS5maT4KU2ln
-bmVkLW9mZi1ieTogU3RlZmFuIFdhaHJlbiA8c3RlZmFuLndhaHJlbkBpMnNlLmNvbT4KRml4ZXM6
-IGFmMTliN2NlNzZiYSAoIm1tYzogYmNtMjgzNTogQXZvaWQgcG9zc2libGUgcmFjZXMgb24gZGF0
-YSByZXF1ZXN0cyIpCkxpbms6IGh0dHA6Ly9saXN0cy5pbmZyYWRlYWQub3JnL3BpcGVybWFpbC9s
-aW51eC1ycGkta2VybmVsLzIwMTktTWFyY2gvMDA4NjE1Lmh0bWwKLS0tCiBkcml2ZXJzL2RtYS9i
-Y20yODM1LWRtYS5jIHwgMiArLQogMSBmaWxlIGNoYW5nZWQsIDEgaW5zZXJ0aW9uKCspLCAxIGRl
-bGV0aW9uKC0pCgpkaWZmIC0tZ2l0IGEvZHJpdmVycy9kbWEvYmNtMjgzNS1kbWEuYyBiL2RyaXZl
-cnMvZG1hL2JjbTI4MzUtZG1hLmMKaW5kZXggZWM4YTI5MS4uNTQwOTNmZiAxMDA2NDQKLS0tIGEv
-ZHJpdmVycy9kbWEvYmNtMjgzNS1kbWEuYworKysgYi9kcml2ZXJzL2RtYS9iY20yODM1LWRtYS5j
-CkBAIC02NzEsNyArNjcxLDcgQEAgc3RhdGljIHN0cnVjdCBkbWFfYXN5bmNfdHhfZGVzY3JpcHRv
-ciAqYmNtMjgzNV9kbWFfcHJlcF9zbGF2ZV9zZygKIAlkID0gYmNtMjgzNV9kbWFfY3JlYXRlX2Ni
-X2NoYWluKGNoYW4sIGRpcmVjdGlvbiwgZmFsc2UsCiAJCQkJCWluZm8sIGV4dHJhLAogCQkJCQlm
-cmFtZXMsIHNyYywgZHN0LCAwLCAwLAotCQkJCQlHRlBfS0VSTkVMKTsKKwkJCQkJR0ZQX05PV0FJ
-VCk7CiAJaWYgKCFkKQogCQlyZXR1cm4gTlVMTDsKIAo=
+T24gMDEtMDQtMTksIDIwOjM4LCBTdGVmYW4gV2FocmVuIHdyb3RlOgo+IFRoZSBjb21taXQgYWYx
+OWI3Y2U3NmJhICgibW1jOiBiY20yODM1OiBBdm9pZCBwb3NzaWJsZSByYWNlcyBvbgo+IGRhdGEg
+cmVxdWVzdHMiKSBpbnRyb2R1Y2VzIGEgcG9zc2libGUgY2lyY3VsYXIgbG9ja2luZyBkZXBlbmRl
+bmN5LAo+IHdoaWNoIGlzIHRyaWdnZXJlZCBieSBzd2FwcGluZyB0byB0aGUgc2Rob3N0IGludGVy
+ZmFjZS4KPiAKPiBTbyBpbnN0ZWFkIG9mIHJlaW50cm9kdWNlIHRoZSByYWNlIGNvbmRpdGlvbiBh
+Z2Fpbiwgd2UgY291bGQgYWxzbwo+IGF2b2lkIHRoaXMgc2l0dWF0aW9uIGJ5IHVzaW5nIEdGUF9O
+T1dBSVQgZm9yIHRoZSBhbGxvY2F0aW9uIG9mIHRoZQo+IERNQSBidWZmZXIgZGVzY3JpcHRvcnMu
+CgpBcHBsaWVkLCB0aGFua3MK
