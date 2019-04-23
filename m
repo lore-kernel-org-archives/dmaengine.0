@@ -1,132 +1,71 @@
-Return-Path: <SRS0=7HL3=SV=vger.kernel.org=dmaengine-owner@kernel.org>
+Return-Path: <SRS0=Lzn8=SZ=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.0 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_PASS,URIBL_BLOCKED,
-	USER_AGENT_GIT autolearn=unavailable autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,MAILING_LIST_MULTI,SPF_PASS,T_DKIMWL_WL_HIGH,USER_AGENT_MUTT
+	autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 36136C282DF
-	for <dmaengine@archiver.kernel.org>; Fri, 19 Apr 2019 18:21:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9F2D1C10F14
+	for <dmaengine@archiver.kernel.org>; Tue, 23 Apr 2019 05:10:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 12486222AF
-	for <dmaengine@archiver.kernel.org>; Fri, 19 Apr 2019 18:21:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6C3A3214AE
+	for <dmaengine@archiver.kernel.org>; Tue, 23 Apr 2019 05:10:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=default; t=1555996212;
+	bh=69ba/LcdkGrzPUsyKo78VQP0+UkYmFORyGWlVeZinxc=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:List-ID:From;
+	b=aEw371W6TqinIJqy/Dk3d/NnyggRqAyxZbxLhv2EzHObNiKFZQNeq09uhgdSI25Sv
+	 +mgIFFyX6gGlqIu2uNfAZ5yA5A1X6+vBbeyxIw74a642R6nFevyq71y55wT5ErNV1X
+	 oSFCTQBZe67pYV5KAdfa3EX4cnab0/9KFGAHzrOs=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726977AbfDSSVF (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 19 Apr 2019 14:21:05 -0400
-Received: from inva021.nxp.com ([92.121.34.21]:58650 "EHLO inva021.nxp.com"
+        id S1725888AbfDWFKM (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 23 Apr 2019 01:10:12 -0400
+Received: from mail.kernel.org ([198.145.29.99]:59194 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727371AbfDSSVF (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Fri, 19 Apr 2019 14:21:05 -0400
-Received: from inva021.nxp.com (localhost [127.0.0.1])
-        by inva021.eu-rdc02.nxp.com (Postfix) with ESMTP id ED4D0200176;
-        Fri, 19 Apr 2019 10:53:32 +0200 (CEST)
-Received: from invc005.ap-rdc01.nxp.com (invc005.ap-rdc01.nxp.com [165.114.16.14])
-        by inva021.eu-rdc02.nxp.com (Postfix) with ESMTP id C3C572000D0;
-        Fri, 19 Apr 2019 10:53:29 +0200 (CEST)
-Received: from titan.ap.freescale.net (TITAN.ap.freescale.net [10.192.208.233])
-        by invc005.ap-rdc01.nxp.com (Postfix) with ESMTP id 857E9402BB;
-        Fri, 19 Apr 2019 16:53:25 +0800 (SGT)
-From:   Peng Ma <peng.ma@nxp.com>
-To:     dan.j.williams@intel.com, vkoul@kernel.org
-Cc:     leoyang.li@nxp.com, dmaengine@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Peng Ma <peng.ma@nxp.com>
-Subject: [PATCH] dmaengine: fsl-qdma: fixed the source/destination descriptior format
-Date:   Fri, 19 Apr 2019 08:46:29 +0000
-Message-Id: <20190419084629.41742-1-peng.ma@nxp.com>
-X-Mailer: git-send-email 2.14.1
-X-Virus-Scanned: ClamAV using ClamSMTP
+        id S1725882AbfDWFKL (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Tue, 23 Apr 2019 01:10:11 -0400
+Received: from localhost (unknown [171.76.113.243])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 78D9E20811;
+        Tue, 23 Apr 2019 05:10:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1555996211;
+        bh=69ba/LcdkGrzPUsyKo78VQP0+UkYmFORyGWlVeZinxc=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=nW+wFJRM27F8h3lQQMrkZxTcrAi99D4KSeOvOuruSs5/yd1BFadM9ZwyuH84d7dDb
+         inz21vNS6RGC72CnJZKsUVwo/ygvILgKGnqItQ59HWW3TXQnkSdQdP5HTXsa4+1vi7
+         Bj0u2ttAZWEhctUfP/VsWc107Kb9GTKiUZYInBjk=
+Date:   Tue, 23 Apr 2019 10:40:05 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Nicolas Ferre <nicolas.ferre@microchip.com>
+Cc:     dmaengine@vger.kernel.org,
+        Ludovic Desroches <ludovic.desroches@microchip.com>,
+        linux-arm-kernel@lists.infradead.org,
+        Alexandre Belloni <alexandre.belloni@bootlin.com>,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 1/3] dmaengine: at_xdmac: remove BUG_ON macro in
+ tasklet
+Message-ID: <20190423051005.GD28103@vkoul-mobl>
+References: <20190403102359.27698-1-nicolas.ferre@microchip.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="UTF-8"
+Content-Disposition: inline
+In-Reply-To: <20190403102359.27698-1-nicolas.ferre@microchip.com>
+User-Agent: Mutt/1.11.3 (2019-02-01)
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Message-ID: <20190419084629.wU3vEP6XQ8h6OuxkalyJ4Y6B2yyH_6iAPHEQR_VZ-oY@z>
+Message-ID: <20190423051005.X65A2A05WGs3aKPx0tgKSgtC0brvHUzlw_nY0HFDR0U@z>
 
-CMD of Source/Destination descriptior format should be lower of
-struct fsl_qdma_engine number data address.
+On 03-04-19, 12:23, Nicolas Ferre wrote:
+> Even if this case shouldn't happen when controller is properly programmed,
+> it's still better to avoid dumping a kernel Oops for this.
+> As the sequence may happen only for debugging purposes, log the error and
+> just finish the tasklet call.
 
-Signed-off-by: Peng Ma <peng.ma@nxp.com>
----
- drivers/dma/fsl-qdma.c |   29 ++++++++++++++++++-----------
- 1 files changed, 18 insertions(+), 11 deletions(-)
-
-diff --git a/drivers/dma/fsl-qdma.c b/drivers/dma/fsl-qdma.c
-index aa1d0ae..542765a 100644
---- a/drivers/dma/fsl-qdma.c
-+++ b/drivers/dma/fsl-qdma.c
-@@ -113,6 +113,7 @@
- /* Field definition for Descriptor offset */
- #define QDMA_CCDF_STATUS		20
- #define QDMA_CCDF_OFFSET		20
-+#define QDMA_SDDF_CMD(x)		(((u64)(x)) << 32)
- 
- /* Field definition for safe loop count*/
- #define FSL_QDMA_HALT_COUNT		1500
-@@ -214,6 +215,12 @@ struct fsl_qdma_engine {
- 
- };
- 
-+static inline void
-+qdma_sddf_set_cmd(struct fsl_qdma_format *sddf, u32 val)
-+{
-+	sddf->data = QDMA_SDDF_CMD(val);
-+}
-+
- static inline u64
- qdma_ccdf_addr_get64(const struct fsl_qdma_format *ccdf)
- {
-@@ -341,6 +348,7 @@ static void fsl_qdma_free_chan_resources(struct dma_chan *chan)
- static void fsl_qdma_comp_fill_memcpy(struct fsl_qdma_comp *fsl_comp,
- 				      dma_addr_t dst, dma_addr_t src, u32 len)
- {
-+	u32 cmd;
- 	struct fsl_qdma_format *sdf, *ddf;
- 	struct fsl_qdma_format *ccdf, *csgf_desc, *csgf_src, *csgf_dest;
- 
-@@ -353,6 +361,7 @@ static void fsl_qdma_comp_fill_memcpy(struct fsl_qdma_comp *fsl_comp,
- 
- 	memset(fsl_comp->virt_addr, 0, FSL_QDMA_COMMAND_BUFFER_SIZE);
- 	memset(fsl_comp->desc_virt_addr, 0, FSL_QDMA_DESCRIPTOR_BUFFER_SIZE);
-+
- 	/* Head Command Descriptor(Frame Descriptor) */
- 	qdma_desc_addr_set64(ccdf, fsl_comp->bus_addr + 16);
- 	qdma_ccdf_set_format(ccdf, qdma_ccdf_get_offset(ccdf));
-@@ -369,14 +378,14 @@ static void fsl_qdma_comp_fill_memcpy(struct fsl_qdma_comp *fsl_comp,
- 	/* This entry is the last entry. */
- 	qdma_csgf_set_f(csgf_dest, len);
- 	/* Descriptor Buffer */
--	sdf->data =
--		cpu_to_le64(FSL_QDMA_CMD_RWTTYPE <<
--			    FSL_QDMA_CMD_RWTTYPE_OFFSET);
--	ddf->data =
--		cpu_to_le64(FSL_QDMA_CMD_RWTTYPE <<
--			    FSL_QDMA_CMD_RWTTYPE_OFFSET);
--	ddf->data |=
--		cpu_to_le64(FSL_QDMA_CMD_LWC << FSL_QDMA_CMD_LWC_OFFSET);
-+	cmd = cpu_to_le32(FSL_QDMA_CMD_RWTTYPE <<
-+			  FSL_QDMA_CMD_RWTTYPE_OFFSET);
-+	qdma_sddf_set_cmd(sdf, cmd);
-+
-+	cmd = cpu_to_le32(FSL_QDMA_CMD_RWTTYPE <<
-+			  FSL_QDMA_CMD_RWTTYPE_OFFSET);
-+	cmd |= cpu_to_le32(FSL_QDMA_CMD_LWC << FSL_QDMA_CMD_LWC_OFFSET);
-+	qdma_sddf_set_cmd(ddf, cmd);
- }
- 
- /*
-@@ -701,10 +710,8 @@ static irqreturn_t fsl_qdma_error_handler(int irq, void *dev_id)
- 
- 	intr = qdma_readl(fsl_qdma, status + FSL_QDMA_DEDR);
- 
--	if (intr) {
-+	if (intr)
- 		dev_err(fsl_qdma->dma_dev.dev, "DMA transaction error!\n");
--		return IRQ_NONE;
--	}
- 
- 	qdma_writel(fsl_qdma, FSL_QDMA_DEDR_CLEAR, status + FSL_QDMA_DEDR);
- 	return IRQ_HANDLED;
+Applied all, thanks
 -- 
-1.7.1
-
+~Vinod
