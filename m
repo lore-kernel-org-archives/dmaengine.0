@@ -7,53 +7,53 @@ X-Spam-Status: No, score=-9.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SIGNED_OFF_BY,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=unavailable
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A74E0C282E1
-	for <dmaengine@archiver.kernel.org>; Tue, 23 Apr 2019 18:30:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BA600C282E5
+	for <dmaengine@archiver.kernel.org>; Tue, 23 Apr 2019 18:30:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 653DB217D9
-	for <dmaengine@archiver.kernel.org>; Tue, 23 Apr 2019 18:30:27 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8074D20693
+	for <dmaengine@archiver.kernel.org>; Tue, 23 Apr 2019 18:30:28 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=synopsys.com header.i=@synopsys.com header.b="KFEhbnfJ"
+	dkim=pass (2048-bit key) header.d=synopsys.com header.i=@synopsys.com header.b="J86d5Q+D"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726181AbfDWSa1 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        id S1726211AbfDWSa1 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
         Tue, 23 Apr 2019 14:30:27 -0400
-Received: from dc2-smtprelay2.synopsys.com ([198.182.61.142]:60420 "EHLO
+Received: from dc2-smtprelay2.synopsys.com ([198.182.61.142]:60386 "EHLO
         smtprelay-out1.synopsys.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726136AbfDWSa0 (ORCPT
+        by vger.kernel.org with ESMTP id S1726124AbfDWSa0 (ORCPT
         <rfc822;dmaengine@vger.kernel.org>); Tue, 23 Apr 2019 14:30:26 -0400
 Received: from mailhost.synopsys.com (dc2-mailhost2.synopsys.com [10.12.135.162])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
         (No client certificate requested)
-        by smtprelay-out1.synopsys.com (Postfix) with ESMTPS id 86314C0B12;
-        Tue, 23 Apr 2019 18:30:24 +0000 (UTC)
+        by smtprelay-out1.synopsys.com (Postfix) with ESMTPS id 1577FC0B16;
+        Tue, 23 Apr 2019 18:30:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=synopsys.com; s=mail;
-        t=1556044224; bh=5ucPZ2Vmwv/w6xssI35vG3bXVA//9941qXlSBu60J+E=;
+        t=1556044225; bh=RmUDVbuamu6fton8ZT3BKpmeH38c4wATuViqRZL99Jo=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:In-Reply-To:
          References:From;
-        b=KFEhbnfJBgbqqKEVplwbNIY0/MU2ZIsY5oBTUvfJ+E8tv3g3n3FNqC4/vCo4+I5LN
-         hCm3ihJzsABtN6fMmWAcENryhjBmmScB5/jrWOIADGDrPuO0Hl5+Mamq22zzaKkFso
-         pLBBV4yBdYwDvAIxFiza+AcyNj9p8ZqX6vDR49aIRcnumEf1M5KecaUNHSUKIeBPwp
-         plAbUWbJ00DmxvWYf2xtX6lCvyBgmuZxzRLwCtuxp2rTH3ZMYyQ+v2iUAmoACTb7hJ
-         xVTB8YXXZthIpoGDFkh8kbJ4PBosC+R9miiFWK4wAk0rm3fyf/CCsiht6MLhnTuALP
-         /pnPDxIK74jpQ==
+        b=J86d5Q+DGIYMO2bkyaoNDS6f+dljEv0BEE+/+3zA4sWjl7BYcFAocUyjL3rFAamkE
+         klbE5U2kPmdMnFVQUQoEZNPHaN2adlqtoQXkEr889RUj8+gfOuhUVwR+XJa9Imavj1
+         Sn1O1uphHQ0SZsJa5rx0de7sBxBP7Ldhg+F1TRsKrKQP3fzdflolDZuSQH1pK45Oi+
+         efja3+L/wkOIcbc3MIPz6q0sdu+BMBYf14KWWczPRIbwdnzN0tBsUVtshOHIFdkYlE
+         28Re/SbUmNWo+/iGn/x6AecgBk7E+Yb8UzvsgRgjoMmczflrIxuxtvBH8vwVZEpoD+
+         hjLUTVp6U8PQA==
 Received: from de02.synopsys.com (de02.internal.synopsys.com [10.225.17.21])
-        by mailhost.synopsys.com (Postfix) with ESMTP id D37F6A0091;
-        Tue, 23 Apr 2019 18:30:24 +0000 (UTC)
+        by mailhost.synopsys.com (Postfix) with ESMTP id CA5E9A009B;
+        Tue, 23 Apr 2019 18:30:25 +0000 (UTC)
 Received: from de02dwia024.internal.synopsys.com (de02dwia024.internal.synopsys.com [10.225.19.81])
-        by de02.synopsys.com (Postfix) with ESMTP id 920C43F824;
-        Tue, 23 Apr 2019 20:30:23 +0200 (CEST)
+        by de02.synopsys.com (Postfix) with ESMTP id 043123F831;
+        Tue, 23 Apr 2019 20:30:24 +0200 (CEST)
 From:   Gustavo Pimentel <Gustavo.Pimentel@synopsys.com>
 To:     linux-pci@vger.kernel.org, dmaengine@vger.kernel.org
 Cc:     Gustavo Pimentel <Gustavo.Pimentel@synopsys.com>,
         Vinod Koul <vkoul@kernel.org>,
         Dan Williams <dan.j.williams@intel.com>,
-        Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
         Russell King <rmk+kernel@armlinux.org.uk>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
         Joao Pinto <Joao.Pinto@synopsys.com>
-Subject: [RFC v6 1/6] dmaengine: Add Synopsys eDMA IP core driver
-Date:   Tue, 23 Apr 2019 20:30:08 +0200
+Subject: [RFC v6 5/6] dmaengine: Add Synopsys eDMA IP PCIe glue-logic
+Date:   Tue, 23 Apr 2019 20:30:12 +0200
 Message-Id:
- <0e877ac0115d37e466ac234f47c51cb1cae7f292.1556043127.git.gustavo.pimentel@synopsys.com>
+ <7db737e11950c6eced69f68f75584fa1b7b37982.1556043127.git.gustavo.pimentel@synopsys.com>
 X-Mailer: git-send-email 2.7.4
 In-Reply-To: <cover.1556043127.git.gustavo.pimentel@synopsys.com>
 References: <cover.1556043127.git.gustavo.pimentel@synopsys.com>
@@ -64,1397 +64,361 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-Message-ID: <20190423183008.KUpoSRqLcdasXuRxoNjEIYBOLymz87Z_RzX72ObyYm4@z>
+Message-ID: <20190423183012.yYbiQdOoif_Ps7RKWSxVNteAfCN71yNfVR3tEUxGfLs@z>
 
-Add Synopsys PCIe Endpoint eDMA IP core driver to kernel.
+Synopsys eDMA IP is normally distributed along with Synopsys PCIe
+EndPoint IP (depends of the use and licensing agreement).
 
-This IP is generally distributed with Synopsys PCIe Endpoint IP (depends
-of the use and licensing agreement).
+This IP requires some basic configurations, such as:
+ - eDMA registers BAR
+ - eDMA registers offset
+ - eDMA registers size
+ - eDMA linked list memory BAR
+ - eDMA linked list memory offset
+ - eDMA linked list memory size
+ - eDMA data memory BAR
+ - eDMA data memory offset
+ - eDMA data memory size
+ - eDMA version
+ - eDMA mode
+ - IRQs available for eDMA
 
-This core driver, initializes and configures the eDMA IP using vma-helpers
-functions and dma-engine subsystem.
+As a working example, PCIe glue-logic will attach to a Synopsys PCIe
+EndPoint IP prototype kit (Vendor ID = 0x16c3, Device ID = 0xedda),
+which has built-in an eDMA IP with this default configuration:
+ - eDMA registers BAR = 0
+ - eDMA registers offset = 0x00001000 (4 Kbytes)
+ - eDMA registers size = 0x00002000 (8 Kbytes)
+ - eDMA linked list memory BAR = 2
+ - eDMA linked list memory offset = 0x00000000 (0 Kbytes)
+ - eDMA linked list memory size = 0x00800000 (8 Mbytes)
+ - eDMA data memory BAR = 2
+ - eDMA data memory offset = 0x00800000 (8 Mbytes)
+ - eDMA data memory size = 0x03800000 (56 Mbytes)
+ - eDMA version = 0
+ - eDMA mode = EDMA_MODE_UNROLL
+ - IRQs = 1
 
 This driver can be compile as built-in or external module in kernel.
 
-To enable this driver just select DW_EDMA option in kernel configuration,
-however it requires and selects automatically DMA_ENGINE and
-DMA_VIRTUAL_CHANNELS option too.
-
-In order to transfer data from point A to B as fast as possible this IP
-requires a dedicated memory space containing linked list of elements.
-
-All elements of this linked list are continuous and each one describes a
-data transfer (source and destination addresses, length and a control
-variable).
-
-For the sake of simplicity, lets assume a memory space for channel write
-0 which allows about 42 elements.
-
-+---------+
-| Desc #0 |-+
-+---------+ |
-            V
-       +----------+
-       | Chunk #0 |-+
-       |  CB = 1  | |  +----------+  +-----+  +-----------+  +-----+
-       +----------+ +->| Burst #0 |->| ... |->| Burst #41 |->| llp |
-            |          +----------+  +-----+  +-----------+  +-----+
-            V
-       +----------+
-       | Chunk #1 |-+
-       |  CB = 0  | |  +-----------+  +-----+  +-----------+  +-----+
-       +----------+ +->| Burst #42 |->| ... |->| Burst #83 |->| llp |
-            |          +-----------+  +-----+  +-----------+  +-----+
-            V
-       +----------+
-       | Chunk #2 |-+
-       |  CB = 1  | |  +-----------+  +-----+  +------------+  +-----+
-       +----------+ +->| Burst #84 |->| ... |->| Burst #125 |->| llp |
-            |          +-----------+  +-----+  +------------+  +-----+
-            V
-       +----------+
-       | Chunk #3 |-+
-       |  CB = 0  | |  +------------+  +-----+  +------------+  +-----+
-       +----------+ +->| Burst #126 |->| ... |->| Burst #129 |->| llp |
-                       +------------+  +-----+  +------------+  +-----+
-
-Legend:
- - Linked list, also know as Chunk
- - Linked list element*, also know as Burst *CB*, also know as Change Bit,
-it's a control bit (and typically is toggled) that allows to easily
-identify and differentiate between the current linked list and the
-previous or the next one.
- - LLP, is a special element that indicates the end of the linked list
-element stream also informs that the next CB should be toggle
-
-On every last Burst of the Chunk (Burst #41, Burst #83, Burst #125 or
-even Burst #129) is set some flags on their control variable (RIE and
-LIE bits) that will trigger the send of "done" interruption.
-
-On the interruptions callback, is decided whether to recycle the linked
-list memory space by writing a new set of Bursts elements (if still
-exists Chunks to transfer) or is considered completed (if there is no
-Chunks available to transfer).
-
-On scatter-gather transfer mode, the client will submit a scatter-gather
-list of n (on this case 130) elements, that will be divide in multiple
-Chunks, each Chunk will have (on this case 42) a limited number of
-Bursts and after transferring all Bursts, an interrupt will be
-triggered, which will allow to recycle the all linked list dedicated
-memory again with the new information relative to the next Chunk and
-respective Burst associated and repeat the whole cycle again.
-
-On cyclic transfer mode, the client will submit a buffer pointer, length
-of it and number of repetitions, in this case each burst will correspond
-directly to each repetition.
-
-Each Burst can describes a data transfer from point A(source) to point
-B(destination) with a length that can be from 1 byte up to 4 GB. Since
-dedicated the memory space where the linked list will reside is limited,
-the whole n burst elements will be organized in several Chunks, that
-will be used later to recycle the dedicated memory space to initiate a
-new sequence of data transfers.
-
-The whole transfer is considered has completed when it was transferred
-all bursts.
-
-Currently this IP has a set well-known register map, which includes
-support for legacy and unroll modes. Legacy mode is version of this
-register map that has multiplexer register that allows to switch
-registers between all write and read channels and the unroll modes
-repeats all write and read channels registers with an offset between
-them. This register map is called v0.
-
-The IP team is creating a new register map more suitable to the latest
-PCIe features, that very likely will change the map register, which this
-version will be called v1. As soon as this new version is released by
-the IP team the support for this version in be included on this driver.
-
-This patch has a direct dependency of the patch ("[RFC 2/7] dmaengine:
-Add Synopsys eDMA IP version 0 support").
-
-According to the logic, patches 1, 2 and 3 should be squashed into 1
-unique patch, but for the sake of simplicity of review, it was divided
-in this 3 patches files.
+To enable this driver just select DW_EDMA_PCIE option in kernel
+configuration, however it requires and selects automatically DW_EDMA
+option too.
 
 Signed-off-by: Gustavo Pimentel <gustavo.pimentel@synopsys.com>
 Cc: Vinod Koul <vkoul@kernel.org>
 Cc: Dan Williams <dan.j.williams@intel.com>
-Cc: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 Cc: Russell King <rmk+kernel@armlinux.org.uk>
+Cc: Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
 Cc: Joao Pinto <jpinto@synopsys.com>
 ---
 Changes:
 RFC v1->RFC v2:
  - Replace comments // (C99 style) by /**/
+ - Merge two pcim_iomap_regions() calls into just one call
+ - Remove pci_try_set_mwi() call
+ - Replace some dev_info() by dev_dbg() to reduce *noise*
+ - Remove pci_name(pdev) call after being call dw_edma_remove()
+ - Remove all power management support
  - Fix the headers of the .c and .h files according to the most recent
    convention
  - Fix errors and checks pointed out by checkpatch with --strict option
  - Replace patch small description tag from dma by dmaengine
- - Change some dev_info() into dev_dbg()
- - Remove unnecessary zero initialization after kzalloc
- - Remove direction validation on config() API, since the direction
-   parameter is deprecated
- - Refactor code to replace atomic_t by u32 variable type
- - Replace start_transfer() name by dw_edma_start_transfer()
- - Add spinlock to dw_edma_device_prep_slave_sg()
- - Add spinlock to dw_edma_free_chunk()
- - Simplify switch case into if on dw_edma_device_pause(),
-   dw_edma_device_resume() and dw_edma_device_terminate_all()
 RFC v2->RFC v3:
- - Add driver parameter to disable msix feature
  - Fix printk variable of phys_addr_t type
- - Fix printk variable of __iomem type
- - Fix printk variable of size_t type
+ - Fix missing variable initialization (chan->configured)
+ - Change linked list size to 512 Kbytes
+ - Add data memory information
+ - Add register size information
  - Add comments or improve existing ones
  - Add possibility to work with multiple IRQs feature
- - Fix source and destination addresses
- - Add define to magic numbers
- - Add DMA cyclic transfer feature
+ - Replace MSI and MSI-X enable condition by pci_dev_msi_enabled()
+ - Replace code to acquire MSI(-X) address and data by
+   get_cached_msi_msg()
  - Rebase to v5.0-rc1
 RFC v3->RFC v4:
+ - Replace enum dw_edma_pcie and use by enum pci_barno
  - Remove unnecessary dev_info() calls
- - Add multiple IRQ automatic adaption feature
- - Reorder variables declaration in reverse tree order on several
-   functions
- - Add return check of dw_edma_alloc_burst() in dw_edma_alloc_chunk()
- - Add return check of dw_edma_alloc_chunk() in dw_edma_alloc_desc()
- - Remove pm_runtime_get_sync() call in probe()
- - Fix dma_cyclic() buffer address
- - Replace devm_*_irq() by *_irq() and recode accordingly
+ - Remove unnecessary pointer null validation
+ - Reorder variables declaration in reverse tree order in
+   dw_edma_pcie_probe()
+ - Remove pdata validation
+ - Remove disable_msix parameter
  - Fix license header
- - Replace kvzalloc() by kzalloc() and kvfree() by kfree()
- - Move ops->device_config callback from config() to probe()
- - Remove restriction to perform operation only in IDLE state on
-   dw_edma_device_config(), dw_edma_device_prep_slave_sg(),
-   dw_edma_device_prep_dma_cyclic()
- - Recode and simplify slave_sg() and dma_cyclic()
- - Recode and simplify interrupts and channel setup
- - Recode dw_edma_device_tx_status()
- - Move get_cached_msi_msg() to here
- - Code rewrite to use direct dw-edma-v0-core functions instead of
- callbacks
+ - Move get_cached_msi_msg() to dw-edma-core file
 RFC v4->RFC v5:
  - Patch resended, forgot to replace of '___' by '---' and to remove
  duplicate signed-off
 RFC v5->RFC v6:
  - Add author on file header
- - Remove debug prints
- - Code rewrite following Andy's suggestations
 
- drivers/dma/Kconfig                |   2 +
- drivers/dma/Makefile               |   1 +
- drivers/dma/dw-edma/Kconfig        |   9 +
- drivers/dma/dw-edma/Makefile       |   4 +
- drivers/dma/dw-edma/dw-edma-core.c | 919 +++++++++++++++++++++++++++++++++++++
- drivers/dma/dw-edma/dw-edma-core.h | 165 +++++++
- include/linux/dma/edma.h           |  47 ++
- 7 files changed, 1147 insertions(+)
- create mode 100644 drivers/dma/dw-edma/Kconfig
- create mode 100644 drivers/dma/dw-edma/Makefile
- create mode 100644 drivers/dma/dw-edma/dw-edma-core.c
- create mode 100644 drivers/dma/dw-edma/dw-edma-core.h
- create mode 100644 include/linux/dma/edma.h
+ drivers/dma/dw-edma/Kconfig        |   9 ++
+ drivers/dma/dw-edma/Makefile       |   1 +
+ drivers/dma/dw-edma/dw-edma-pcie.c | 229 +++++++++++++++++++++++++++++++++++++
+ 3 files changed, 239 insertions(+)
+ create mode 100644 drivers/dma/dw-edma/dw-edma-pcie.c
 
-diff --git a/drivers/dma/Kconfig b/drivers/dma/Kconfig
-index 0b1dfb5..58b78d2 100644
---- a/drivers/dma/Kconfig
-+++ b/drivers/dma/Kconfig
-@@ -665,6 +665,8 @@ source "drivers/dma/qcom/Kconfig"
- 
- source "drivers/dma/dw/Kconfig"
- 
-+source "drivers/dma/dw-edma/Kconfig"
-+
- source "drivers/dma/hsu/Kconfig"
- 
- source "drivers/dma/sh/Kconfig"
-diff --git a/drivers/dma/Makefile b/drivers/dma/Makefile
-index 6126e1c..5bddf6f 100644
---- a/drivers/dma/Makefile
-+++ b/drivers/dma/Makefile
-@@ -29,6 +29,7 @@ obj-$(CONFIG_DMA_SUN4I) += sun4i-dma.o
- obj-$(CONFIG_DMA_SUN6I) += sun6i-dma.o
- obj-$(CONFIG_DW_AXI_DMAC) += dw-axi-dmac/
- obj-$(CONFIG_DW_DMAC_CORE) += dw/
-+obj-$(CONFIG_DW_EDMA) += dw-edma/
- obj-$(CONFIG_EP93XX_DMA) += ep93xx_dma.o
- obj-$(CONFIG_FSL_DMA) += fsldma.o
- obj-$(CONFIG_FSL_EDMA) += fsl-edma.o fsl-edma-common.o
 diff --git a/drivers/dma/dw-edma/Kconfig b/drivers/dma/dw-edma/Kconfig
-new file mode 100644
-index 0000000..3016bed
---- /dev/null
+index 3016bed..c0838ce 100644
+--- a/drivers/dma/dw-edma/Kconfig
 +++ b/drivers/dma/dw-edma/Kconfig
-@@ -0,0 +1,9 @@
-+# SPDX-License-Identifier: GPL-2.0
+@@ -7,3 +7,12 @@ config DW_EDMA
+ 	help
+ 	  Support the Synopsys DesignWare eDMA controller, normally
+ 	  implemented on endpoints SoCs.
 +
-+config DW_EDMA
-+	tristate "Synopsys DesignWare eDMA controller driver"
-+	select DMA_ENGINE
-+	select DMA_VIRTUAL_CHANNELS
++config DW_EDMA_PCIE
++	tristate "Synopsys DesignWare eDMA PCIe driver"
++	depends on PCI && PCI_MSI
++	select DW_EDMA
 +	help
-+	  Support the Synopsys DesignWare eDMA controller, normally
-+	  implemented on endpoints SoCs.
++	  Provides a glue-logic between the Synopsys DesignWare
++	  eDMA controller and an endpoint PCIe device. This also serves
++	  as a reference design to whom desires to use this IP.
 diff --git a/drivers/dma/dw-edma/Makefile b/drivers/dma/dw-edma/Makefile
-new file mode 100644
-index 0000000..3224010
---- /dev/null
+index 0c53033..8d45c0d 100644
+--- a/drivers/dma/dw-edma/Makefile
 +++ b/drivers/dma/dw-edma/Makefile
-@@ -0,0 +1,4 @@
-+# SPDX-License-Identifier: GPL-2.0
-+
-+obj-$(CONFIG_DW_EDMA)		+= dw-edma.o
-+dw-edma-objs			:= dw-edma-core.o
-diff --git a/drivers/dma/dw-edma/dw-edma-core.c b/drivers/dma/dw-edma/dw-edma-core.c
+@@ -4,3 +4,4 @@ obj-$(CONFIG_DW_EDMA)		+= dw-edma.o
+ dw-edma-$(CONFIG_DEBUG_FS)	:= dw-edma-v0-debugfs.o
+ dw-edma-objs			:= dw-edma-core.o \
+ 					dw-edma-v0-core.o $(dw-edma-y)
++obj-$(CONFIG_DW_EDMA_PCIE)	+= dw-edma-pcie.o
+diff --git a/drivers/dma/dw-edma/dw-edma-pcie.c b/drivers/dma/dw-edma/dw-edma-pcie.c
 new file mode 100644
-index 0000000..54cd531
+index 0000000..4c96e1c
 --- /dev/null
-+++ b/drivers/dma/dw-edma/dw-edma-core.c
-@@ -0,0 +1,919 @@
++++ b/drivers/dma/dw-edma/dw-edma-pcie.c
+@@ -0,0 +1,229 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
 + * Copyright (c) 2018-2019 Synopsys, Inc. and/or its affiliates.
-+ * Synopsys DesignWare eDMA core driver
++ * Synopsys DesignWare eDMA PCIe driver
 + *
 + * Author: Gustavo Pimentel <gustavo.pimentel@synopsys.com>
 + */
 +
-+#include <linux/module.h>
-+#include <linux/device.h>
 +#include <linux/kernel.h>
-+#include <linux/pm_runtime.h>
-+#include <linux/dmaengine.h>
-+#include <linux/err.h>
-+#include <linux/interrupt.h>
-+#include <linux/dma/edma.h>
++#include <linux/module.h>
 +#include <linux/pci.h>
++#include <linux/device.h>
++#include <linux/dma/edma.h>
++#include <linux/pci-epf.h>
++#include <linux/msi.h>
 +
 +#include "dw-edma-core.h"
-+#include "../dmaengine.h"
-+#include "../virt-dma.h"
 +
-+static inline
-+struct device *dchan2dev(struct dma_chan *dchan)
++struct dw_edma_pcie_data {
++	/* eDMA registers location */
++	enum pci_barno			rg_bar;
++	off_t				rg_off;
++	size_t				rg_sz;
++	/* eDMA memory linked list location */
++	enum pci_barno			ll_bar;
++	off_t				ll_off;
++	size_t				ll_sz;
++	/* eDMA memory data location */
++	enum pci_barno			dt_bar;
++	off_t				dt_off;
++	size_t				dt_sz;
++	/* Other */
++	u32				version;
++	enum dw_edma_mode		mode;
++	u8				irqs;
++};
++
++static const struct dw_edma_pcie_data snps_edda_data = {
++	/* eDMA registers location */
++	.rg_bar				= BAR_0,
++	.rg_off				= 0x00001000,	/*  4 Kbytes */
++	.rg_sz				= 0x00002000,	/*  8 Kbytes */
++	/* eDMA memory linked list location */
++	.ll_bar				= BAR_2,
++	.ll_off				= 0x00000000,	/*  0 Kbytes */
++	.ll_sz				= 0x00800000,	/*  8 Mbytes */
++	/* eDMA memory data location */
++	.dt_bar				= BAR_2,
++	.dt_off				= 0x00800000,	/*  8 Mbytes */
++	.dt_sz				= 0x03800000,	/* 56 Mbytes */
++	/* Other */
++	.version			= 0,
++	.mode				= EDMA_MODE_UNROLL,
++	.irqs				= 1,
++};
++
++static int dw_edma_pcie_probe(struct pci_dev *pdev,
++			      const struct pci_device_id *pid)
 +{
-+	return &dchan->dev->device;
-+}
++	const struct dw_edma_pcie_data *pdata = (void *)pid->driver_data;
++	struct device *dev = &pdev->dev;
++	struct dw_edma_chip *chip;
++	int err, nr_irqs;
++	struct dw_edma *dw;
 +
-+static inline
-+struct device *chan2dev(struct dw_edma_chan *chan)
-+{
-+	return &chan->vc.chan.dev->device;
-+}
-+
-+static inline
-+struct dw_edma_desc *vd2dw_edma_desc(struct virt_dma_desc *vd)
-+{
-+	return container_of(vd, struct dw_edma_desc, vd);
-+}
-+
-+static struct dw_edma_burst *dw_edma_alloc_burst(struct dw_edma_chunk *chunk)
-+{
-+	struct dw_edma_burst *burst;
-+
-+	burst = kzalloc(sizeof(*burst), GFP_KERNEL);
-+	if (unlikely(!burst))
-+		return NULL;
-+
-+	INIT_LIST_HEAD(&burst->list);
-+	if (chunk->burst) {
-+		/* Create and add new element into the linked list */
-+		chunk->bursts_alloc++;
-+		list_add_tail(&burst->list, &chunk->burst->list);
-+	} else {
-+		/* List head */
-+		chunk->bursts_alloc = 0;
-+		chunk->burst = burst;
++	/* Enable PCI device */
++	err = pcim_enable_device(pdev);
++	if (err) {
++		pci_err(pdev, "enabling device failed\n");
++		return err;
 +	}
 +
-+	return burst;
-+}
-+
-+static struct dw_edma_chunk *dw_edma_alloc_chunk(struct dw_edma_desc *desc)
-+{
-+	struct dw_edma_chan *chan = desc->chan;
-+	struct dw_edma *dw = chan->chip->dw;
-+	struct dw_edma_chunk *chunk;
-+
-+	chunk = kzalloc(sizeof(*chunk), GFP_KERNEL);
-+	if (unlikely(!chunk))
-+		return NULL;
-+
-+	INIT_LIST_HEAD(&chunk->list);
-+	chunk->chan = chan;
-+	chunk->cb = !(desc->chunks_alloc % 2);
-+	chunk->ll_region.paddr = dw->ll_region.paddr + chan->ll_off;
-+	chunk->ll_region.vaddr = dw->ll_region.vaddr + chan->ll_off;
-+
-+	if (desc->chunk) {
-+		/* Create and add new element into the linked list */
-+		desc->chunks_alloc++;
-+		list_add_tail(&chunk->list, &desc->chunk->list);
-+		if (!dw_edma_alloc_burst(chunk)) {
-+			kfree(chunk);
-+			return NULL;
-+		}
-+	} else {
-+		/* List head */
-+		chunk->burst = NULL;
-+		desc->chunks_alloc = 0;
-+		desc->chunk = chunk;
++	/* Mapping PCI BAR regions */
++	err = pcim_iomap_regions(pdev, BIT(pdata->rg_bar) |
++				       BIT(pdata->ll_bar) |
++				       BIT(pdata->dt_bar),
++				 pci_name(pdev));
++	if (err) {
++		pci_err(pdev, "eDMA BAR I/O remapping failed\n");
++		return err;
 +	}
 +
-+	return chunk;
-+}
-+
-+static struct dw_edma_desc *dw_edma_alloc_desc(struct dw_edma_chan *chan)
-+{
-+	struct dw_edma_desc *desc;
-+
-+	desc = kzalloc(sizeof(*desc), GFP_KERNEL);
-+	if (unlikely(!desc))
-+		return NULL;
-+
-+	desc->chan = chan;
-+	if (!dw_edma_alloc_chunk(desc)) {
-+		kfree(desc);
-+		return NULL;
-+	}
-+
-+	return desc;
-+}
-+
-+static void dw_edma_free_burst(struct dw_edma_chunk *chunk)
-+{
-+	struct dw_edma_burst *child, *_next;
-+
-+	/* Remove all the list elements */
-+	list_for_each_entry_safe(child, _next, &chunk->burst->list, list) {
-+		list_del(&child->list);
-+		kfree(child);
-+		chunk->bursts_alloc--;
-+	}
-+
-+	/* Remove the list head */
-+	kfree(child);
-+	chunk->burst = NULL;
-+}
-+
-+static void dw_edma_free_chunk(struct dw_edma_desc *desc)
-+{
-+	struct dw_edma_chunk *child, *_next;
-+
-+	if (!desc->chunk)
-+		return;
-+
-+	/* Remove all the list elements */
-+	list_for_each_entry_safe(child, _next, &desc->chunk->list, list) {
-+		dw_edma_free_burst(child);
-+		list_del(&child->list);
-+		kfree(child);
-+		desc->chunks_alloc--;
-+	}
-+
-+	/* Remove the list head */
-+	kfree(child);
-+	desc->chunk = NULL;
-+}
-+
-+static void dw_edma_free_desc(struct dw_edma_desc *desc)
-+{
-+	dw_edma_free_chunk(desc);
-+	kfree(desc);
-+}
-+
-+static void vchan_free_desc(struct virt_dma_desc *vdesc)
-+{
-+	dw_edma_free_desc(vd2dw_edma_desc(vdesc));
-+}
-+
-+static void dw_edma_start_transfer(struct dw_edma_chan *chan)
-+{
-+	struct dw_edma_chunk *child;
-+	struct dw_edma_desc *desc;
-+	struct virt_dma_desc *vd;
-+
-+	vd = vchan_next_desc(&chan->vc);
-+	if (!vd)
-+		return;
-+
-+	desc = vd2dw_edma_desc(vd);
-+	if (!desc)
-+		return;
-+
-+	child = list_first_entry_or_null(&desc->chunk->list,
-+					 struct dw_edma_chunk, list);
-+	if (!child)
-+		return;
-+
-+	dw_edma_v0_core_start(child, !desc->xfer_sz);
-+	desc->xfer_sz += child->ll_region.sz;
-+	dw_edma_free_burst(child);
-+	list_del(&child->list);
-+	kfree(child);
-+	desc->chunks_alloc--;
-+}
-+
-+static int dw_edma_device_config(struct dma_chan *dchan,
-+				 struct dma_slave_config *config)
-+{
-+	struct dw_edma_chan *chan = dchan2dw_edma_chan(dchan);
-+
-+	memcpy(&chan->config, config, sizeof(*config));
-+	chan->configured = true;
-+
-+	return 0;
-+}
-+
-+static int dw_edma_device_pause(struct dma_chan *dchan)
-+{
-+	struct dw_edma_chan *chan = dchan2dw_edma_chan(dchan);
-+	int err = 0;
-+
-+	if (!chan->configured)
-+		err = -EPERM;
-+	else if (chan->status != EDMA_ST_BUSY)
-+		err = -EPERM;
-+	else if (chan->request != EDMA_REQ_NONE)
-+		err = -EPERM;
-+	else
-+		chan->request = EDMA_REQ_PAUSE;
-+
-+	return err;
-+}
-+
-+static int dw_edma_device_resume(struct dma_chan *dchan)
-+{
-+	struct dw_edma_chan *chan = dchan2dw_edma_chan(dchan);
-+	int err = 0;
-+
-+	if (!chan->configured) {
-+		err = -EPERM;
-+	} else if (chan->status != EDMA_ST_PAUSE) {
-+		err = -EPERM;
-+	} else if (chan->request != EDMA_REQ_NONE) {
-+		err = -EPERM;
-+	} else {
-+		chan->status = EDMA_ST_BUSY;
-+		dw_edma_start_transfer(chan);
-+	}
-+
-+	return err;
-+}
-+
-+static int dw_edma_device_terminate_all(struct dma_chan *dchan)
-+{
-+	struct dw_edma_chan *chan = dchan2dw_edma_chan(dchan);
-+	int err = 0;
-+	LIST_HEAD(head);
-+
-+	if (!chan->configured) {
-+		/* Do nothing */
-+	} else if (chan->status == EDMA_ST_PAUSE) {
-+		chan->status = EDMA_ST_IDLE;
-+		chan->configured = false;
-+	} else if (chan->status == EDMA_ST_IDLE) {
-+		chan->configured = false;
-+	} else if (dw_edma_v0_core_ch_status(chan) == DMA_COMPLETE) {
-+		/*
-+		 * The channel is in a false BUSY state, probably didn't
-+		 * receive or lost an interrupt
-+		 */
-+		chan->status = EDMA_ST_IDLE;
-+		chan->configured = false;
-+	} else if (chan->request > EDMA_REQ_PAUSE) {
-+		err = -EPERM;
-+	} else {
-+		chan->request = EDMA_REQ_STOP;
-+	}
-+
-+	return err;
-+}
-+
-+static void dw_edma_device_issue_pending(struct dma_chan *dchan)
-+{
-+	struct dw_edma_chan *chan = dchan2dw_edma_chan(dchan);
-+	unsigned long flags;
-+
-+	spin_lock_irqsave(&chan->vc.lock, flags);
-+	if (chan->configured && chan->request == EDMA_REQ_NONE &&
-+	    chan->status == EDMA_ST_IDLE && vchan_issue_pending(&chan->vc)) {
-+		chan->status = EDMA_ST_BUSY;
-+		dw_edma_start_transfer(chan);
-+	}
-+	spin_unlock_irqrestore(&chan->vc.lock, flags);
-+}
-+
-+static enum dma_status
-+dw_edma_device_tx_status(struct dma_chan *dchan, dma_cookie_t cookie,
-+			 struct dma_tx_state *txstate)
-+{
-+	struct dw_edma_chan *chan = dchan2dw_edma_chan(dchan);
-+	struct dw_edma_desc *desc;
-+	struct virt_dma_desc *vd;
-+	unsigned long flags;
-+	enum dma_status ret;
-+	u32 residue = 0;
-+
-+	ret = dma_cookie_status(dchan, cookie, txstate);
-+	if (ret == DMA_COMPLETE)
-+		return ret;
-+
-+	if (ret == DMA_IN_PROGRESS && chan->status == EDMA_ST_PAUSE)
-+		ret = DMA_PAUSED;
-+
-+	if (!txstate)
-+		goto ret_residue;
-+
-+	spin_lock_irqsave(&chan->vc.lock, flags);
-+	vd = vchan_find_desc(&chan->vc, cookie);
-+	if (vd) {
-+		desc = vd2dw_edma_desc(vd);
-+		if (desc)
-+			residue = desc->alloc_sz - desc->xfer_sz;
-+	}
-+	spin_unlock_irqrestore(&chan->vc.lock, flags);
-+
-+ret_residue:
-+	dma_set_residue(txstate, residue);
-+
-+	return ret;
-+}
-+
-+static struct dma_async_tx_descriptor *
-+dw_edma_device_transfer(struct dw_edma_transfer *xfer)
-+{
-+	struct dw_edma_chan *chan = dchan2dw_edma_chan(xfer->dchan);
-+	enum dma_transfer_direction direction = xfer->direction;
-+	phys_addr_t src_addr, dst_addr;
-+	struct scatterlist *sg = NULL;
-+	struct dw_edma_chunk *chunk;
-+	struct dw_edma_burst *burst;
-+	struct dw_edma_desc *desc;
-+	u32 cnt;
-+	int i;
-+
-+	if ((direction == DMA_MEM_TO_DEV && chan->dir == EDMA_DIR_WRITE) ||
-+	    (direction == DMA_DEV_TO_MEM && chan->dir == EDMA_DIR_READ))
-+		return NULL;
-+
-+	if (xfer->cyclic) {
-+		if (!xfer->xfer.cyclic.len || !xfer->xfer.cyclic.cnt)
-+			return NULL;
-+	} else {
-+		if (xfer->xfer.sg.len < 1)
-+			return NULL;
-+	}
-+
-+	if (!chan->configured)
-+		return NULL;
-+
-+	desc = dw_edma_alloc_desc(chan);
-+	if (unlikely(!desc))
-+		goto err_alloc;
-+
-+	chunk = dw_edma_alloc_chunk(desc);
-+	if (unlikely(!chunk))
-+		goto err_alloc;
-+
-+	src_addr = chan->config.src_addr;
-+	dst_addr = chan->config.dst_addr;
-+
-+	if (xfer->cyclic) {
-+		cnt = xfer->xfer.cyclic.cnt;
-+	} else {
-+		cnt = xfer->xfer.sg.len;
-+		sg = xfer->xfer.sg.sgl;
-+	}
-+
-+	for (i = 0; i < cnt; i++) {
-+		if (!xfer->cyclic && !sg)
-+			break;
-+
-+		if (chunk->bursts_alloc == chan->ll_max) {
-+			chunk = dw_edma_alloc_chunk(desc);
-+			if (unlikely(!chunk))
-+				goto err_alloc;
-+		}
-+
-+		burst = dw_edma_alloc_burst(chunk);
-+		if (unlikely(!burst))
-+			goto err_alloc;
-+
-+		if (xfer->cyclic)
-+			burst->sz = xfer->xfer.cyclic.len;
-+		else
-+			burst->sz = sg_dma_len(sg);
-+
-+		chunk->ll_region.sz += burst->sz;
-+		desc->alloc_sz += burst->sz;
-+
-+		if (direction == DMA_DEV_TO_MEM) {
-+			burst->sar = src_addr;
-+			if (xfer->cyclic) {
-+				burst->dar = xfer->xfer.cyclic.paddr;
-+			} else {
-+				burst->dar = sg_dma_address(sg);
-+				src_addr += sg_dma_len(sg);
-+			}
-+		} else {
-+			burst->dar = dst_addr;
-+			if (xfer->cyclic) {
-+				burst->sar = xfer->xfer.cyclic.paddr;
-+			} else {
-+				burst->sar = sg_dma_address(sg);
-+				dst_addr += sg_dma_len(sg);
-+			}
-+		}
-+
-+		if (!xfer->cyclic)
-+			sg = sg_next(sg);
-+	}
-+
-+	return vchan_tx_prep(&chan->vc, &desc->vd, xfer->flags);
-+
-+err_alloc:
-+	if (desc)
-+		dw_edma_free_desc(desc);
-+
-+	return NULL;
-+}
-+
-+static struct dma_async_tx_descriptor *
-+dw_edma_device_prep_slave_sg(struct dma_chan *dchan, struct scatterlist *sgl,
-+			     unsigned int len,
-+			     enum dma_transfer_direction direction,
-+			     unsigned long flags, void *context)
-+{
-+	struct dw_edma_transfer xfer;
-+
-+	xfer.dchan = dchan;
-+	xfer.direction = direction;
-+	xfer.xfer.sg.sgl = sgl;
-+	xfer.xfer.sg.len = len;
-+	xfer.flags = flags;
-+	xfer.cyclic = false;
-+
-+	return dw_edma_device_transfer(&xfer);
-+}
-+
-+static struct dma_async_tx_descriptor *
-+dw_edma_device_prep_dma_cyclic(struct dma_chan *dchan, dma_addr_t paddr,
-+			       size_t len, size_t count,
-+			       enum dma_transfer_direction direction,
-+			       unsigned long flags)
-+{
-+	struct dw_edma_transfer xfer;
-+
-+	xfer.dchan = dchan;
-+	xfer.direction = direction;
-+	xfer.xfer.cyclic.paddr = paddr;
-+	xfer.xfer.cyclic.len = len;
-+	xfer.xfer.cyclic.cnt = count;
-+	xfer.flags = flags;
-+	xfer.cyclic = true;
-+
-+	return dw_edma_device_transfer(&xfer);
-+}
-+
-+static void dw_edma_done_interrupt(struct dw_edma_chan *chan)
-+{
-+	struct dw_edma_desc *desc;
-+	struct virt_dma_desc *vd;
-+	unsigned long flags;
-+
-+	dw_edma_v0_core_clear_done_int(chan);
-+
-+	spin_lock_irqsave(&chan->vc.lock, flags);
-+	vd = vchan_next_desc(&chan->vc);
-+	if (vd) {
-+		switch (chan->request) {
-+		case EDMA_REQ_NONE:
-+			desc = vd2dw_edma_desc(vd);
-+			if (desc->chunks_alloc) {
-+				chan->status = EDMA_ST_BUSY;
-+				dw_edma_start_transfer(chan);
-+			} else {
-+				list_del(&vd->node);
-+				vchan_cookie_complete(vd);
-+				chan->status = EDMA_ST_IDLE;
-+			}
-+			break;
-+		case EDMA_REQ_STOP:
-+			list_del(&vd->node);
-+			vchan_cookie_complete(vd);
-+			chan->request = EDMA_REQ_NONE;
-+			chan->status = EDMA_ST_IDLE;
-+			break;
-+		case EDMA_REQ_PAUSE:
-+			chan->request = EDMA_REQ_NONE;
-+			chan->status = EDMA_ST_PAUSE;
-+			break;
-+		default:
-+			break;
-+		}
-+	}
-+	spin_unlock_irqrestore(&chan->vc.lock, flags);
-+}
-+
-+static void dw_edma_abort_interrupt(struct dw_edma_chan *chan)
-+{
-+	struct virt_dma_desc *vd;
-+	unsigned long flags;
-+
-+	dw_edma_v0_core_clear_abort_int(chan);
-+
-+	spin_lock_irqsave(&chan->vc.lock, flags);
-+	vd = vchan_next_desc(&chan->vc);
-+	if (vd) {
-+		list_del(&vd->node);
-+		vchan_cookie_complete(vd);
-+	}
-+	spin_unlock_irqrestore(&chan->vc.lock, flags);
-+	chan->request = EDMA_REQ_NONE;
-+	chan->status = EDMA_ST_IDLE;
-+}
-+
-+static irqreturn_t dw_edma_interrupt(int irq, void *data, bool write)
-+{
-+	struct dw_edma_irq *dw_irq = data;
-+	struct dw_edma *dw = dw_irq->dw;
-+	unsigned long total, pos, val;
-+	unsigned long off;
-+	u32 mask;
-+
-+	if (write) {
-+		total = dw->wr_ch_cnt;
-+		off = 0;
-+		mask = dw_irq->wr_mask;
-+	} else {
-+		total = dw->rd_ch_cnt;
-+		off = dw->wr_ch_cnt;
-+		mask = dw_irq->rd_mask;
-+	}
-+
-+	val = dw_edma_v0_core_status_done_int(dw, write ?
-+							  EDMA_DIR_WRITE :
-+							  EDMA_DIR_READ);
-+	val &= mask;
-+	for_each_set_bit(pos, &val, total) {
-+		struct dw_edma_chan *chan = &dw->chan[pos + off];
-+
-+		dw_edma_done_interrupt(chan);
-+	}
-+
-+	val = dw_edma_v0_core_status_abort_int(dw, write ?
-+							   EDMA_DIR_WRITE :
-+							   EDMA_DIR_READ);
-+	val &= mask;
-+	for_each_set_bit(pos, &val, total) {
-+		struct dw_edma_chan *chan = &dw->chan[pos + off];
-+
-+		dw_edma_abort_interrupt(chan);
-+	}
-+
-+	return IRQ_HANDLED;
-+}
-+
-+static inline irqreturn_t dw_edma_interrupt_write(int irq, void *data)
-+{
-+	return dw_edma_interrupt(irq, data, true);
-+}
-+
-+static inline irqreturn_t dw_edma_interrupt_read(int irq, void *data)
-+{
-+	return dw_edma_interrupt(irq, data, false);
-+}
-+
-+static irqreturn_t dw_edma_interrupt_common(int irq, void *data)
-+{
-+	dw_edma_interrupt(irq, data, true);
-+	dw_edma_interrupt(irq, data, false);
-+
-+	return IRQ_HANDLED;
-+}
-+
-+static int dw_edma_alloc_chan_resources(struct dma_chan *dchan)
-+{
-+	struct dw_edma_chan *chan = dchan2dw_edma_chan(dchan);
-+
-+	if (chan->status != EDMA_ST_IDLE)
-+		return -EBUSY;
-+
-+	dma_cookie_init(dchan);
-+
-+	pm_runtime_get(chan->chip->dev);
-+
-+	return 0;
-+}
-+
-+static void dw_edma_free_chan_resources(struct dma_chan *dchan)
-+{
-+	unsigned long timeout = jiffies + msecs_to_jiffies(5000);
-+	struct dw_edma_chan *chan = dchan2dw_edma_chan(dchan);
-+	int ret;
-+
-+	while (time_before(jiffies, timeout)) {
-+		ret = dw_edma_device_terminate_all(dchan);
-+		if (!ret)
-+			break;
-+
-+		if (time_after_eq(jiffies, timeout))
-+			return;
-+
-+		cpu_relax();
-+	};
-+
-+	pm_runtime_put(chan->chip->dev);
-+}
-+
-+static int dw_edma_channel_setup(struct dw_edma_chip *chip, bool write,
-+				 u32 wr_alloc, u32 rd_alloc)
-+{
-+	struct dw_edma_region *dt_region;
-+	struct device *dev = chip->dev;
-+	struct dw_edma *dw = chip->dw;
-+	struct dw_edma_chan *chan;
-+	size_t ll_chunk, dt_chunk;
-+	struct dw_edma_irq *irq;
-+	struct dma_device *dma;
-+	u32 i, j, cnt, ch_cnt;
-+	u32 alloc, off_alloc;
-+	int err = 0;
-+	u32 pos;
-+
-+	ch_cnt = dw->wr_ch_cnt + dw->rd_ch_cnt;
-+	ll_chunk = dw->ll_region.sz;
-+	dt_chunk = dw->dt_region.sz;
-+
-+	/* Calculate linked list chunk for each channel */
-+	ll_chunk /= roundup_pow_of_two(ch_cnt);
-+
-+	/* Calculate linked list chunk for each channel */
-+	dt_chunk /= roundup_pow_of_two(ch_cnt);
-+
-+	if (write) {
-+		i = 0;
-+		cnt = dw->wr_ch_cnt;
-+		dma = &dw->wr_edma;
-+		alloc = wr_alloc;
-+		off_alloc = 0;
-+	} else {
-+		i = dw->wr_ch_cnt;
-+		cnt = dw->rd_ch_cnt;
-+		dma = &dw->rd_edma;
-+		alloc = rd_alloc;
-+		off_alloc = wr_alloc;
-+	}
-+
-+	INIT_LIST_HEAD(&dma->channels);
-+	for (j = 0; (alloc || dw->nr_irqs == 1) && j < cnt; j++, i++) {
-+		chan = &dw->chan[i];
-+
-+		dt_region = devm_kzalloc(dev, sizeof(*dt_region), GFP_KERNEL);
-+		if (!dt_region)
-+			return -ENOMEM;
-+
-+		chan->vc.chan.private = dt_region;
-+
-+		chan->chip = chip;
-+		chan->id = j;
-+		chan->dir = write ? EDMA_DIR_WRITE : EDMA_DIR_READ;
-+		chan->configured = false;
-+		chan->request = EDMA_REQ_NONE;
-+		chan->status = EDMA_ST_IDLE;
-+
-+		chan->ll_off = (ll_chunk * i);
-+		chan->ll_max = (ll_chunk / EDMA_LL_SZ) - 1;
-+
-+		chan->dt_off = (dt_chunk * i);
-+
-+		dev_vdbg(dev, "L. List:\tChannel %s[%u] off=0x%.8lx, max_cnt=%u\n",
-+			 write ? "write" : "read", j,
-+			 chan->ll_off, chan->ll_max);
-+
-+		if (dw->nr_irqs == 1)
-+			pos = 0;
-+		else
-+			pos = off_alloc + (j % alloc);
-+
-+		irq = &dw->irq[pos];
-+
-+		if (write)
-+			irq->wr_mask |= BIT(j);
-+		else
-+			irq->rd_mask |= BIT(j);
-+
-+		irq->dw = dw;
-+		memcpy(&chan->msi, &irq->msi, sizeof(chan->msi));
-+
-+		dev_vdbg(dev, "MSI:\t\tChannel %s[%u] addr=0x%.8x%.8x, data=0x%.8x\n",
-+			 write ? "write" : "read", j,
-+			 chan->msi.address_hi, chan->msi.address_lo,
-+			 chan->msi.data);
-+
-+		chan->vc.desc_free = vchan_free_desc;
-+		vchan_init(&chan->vc, dma);
-+
-+		dt_region->paddr = dw->dt_region.paddr + chan->dt_off;
-+		dt_region->vaddr = dw->dt_region.vaddr + chan->dt_off;
-+		dt_region->sz = dt_chunk;
-+
-+		dev_vdbg(dev, "Data:\tChannel %s[%u] off=0x%.8lx\n",
-+			 write ? "write" : "read", j, chan->dt_off);
-+
-+		dw_edma_v0_core_device_config(chan);
-+	}
-+
-+	/* Set DMA channel capabilities */
-+	dma_cap_zero(dma->cap_mask);
-+	dma_cap_set(DMA_SLAVE, dma->cap_mask);
-+	dma_cap_set(DMA_CYCLIC, dma->cap_mask);
-+	dma_cap_set(DMA_PRIVATE, dma->cap_mask);
-+	dma->directions = BIT(write ? DMA_DEV_TO_MEM : DMA_MEM_TO_DEV);
-+	dma->src_addr_widths = BIT(DMA_SLAVE_BUSWIDTH_4_BYTES);
-+	dma->dst_addr_widths = BIT(DMA_SLAVE_BUSWIDTH_4_BYTES);
-+	dma->residue_granularity = DMA_RESIDUE_GRANULARITY_DESCRIPTOR;
-+	dma->chancnt = cnt;
-+
-+	/* Set DMA channel callbacks */
-+	dma->dev = chip->dev;
-+	dma->device_alloc_chan_resources = dw_edma_alloc_chan_resources;
-+	dma->device_free_chan_resources = dw_edma_free_chan_resources;
-+	dma->device_config = dw_edma_device_config;
-+	dma->device_pause = dw_edma_device_pause;
-+	dma->device_resume = dw_edma_device_resume;
-+	dma->device_terminate_all = dw_edma_device_terminate_all;
-+	dma->device_issue_pending = dw_edma_device_issue_pending;
-+	dma->device_tx_status = dw_edma_device_tx_status;
-+	dma->device_prep_slave_sg = dw_edma_device_prep_slave_sg;
-+	dma->device_prep_dma_cyclic = dw_edma_device_prep_dma_cyclic;
-+
-+	dma_set_max_seg_size(dma->dev, U32_MAX);
-+
-+	/* Register DMA device */
-+	err = dma_async_device_register(dma);
-+
-+	return err;
-+}
-+
-+static inline void dw_edma_dec_irq_alloc(int *nr_irqs, u32 *alloc, u16 cnt)
-+{
-+	if (*nr_irqs && *alloc < cnt) {
-+		(*alloc)++;
-+		(*nr_irqs)--;
-+	}
-+}
-+
-+static inline void dw_edma_add_irq_mask(u32 *mask, u32 alloc, u16 cnt)
-+{
-+	while (*mask * alloc < cnt)
-+		(*mask)++;
-+}
-+
-+static int dw_edma_irq_request(struct dw_edma_chip *chip,
-+			       u32 *wr_alloc, u32 *rd_alloc)
-+{
-+	struct device *dev = chip->dev;
-+	struct dw_edma *dw = chip->dw;
-+	u32 wr_mask = 1;
-+	u32 rd_mask = 1;
-+	int i, err = 0;
-+	u32 ch_cnt;
-+
-+	ch_cnt = dw->wr_ch_cnt + dw->rd_ch_cnt;
-+
-+	if (dw->nr_irqs < 1)
-+		return -EINVAL;
-+
-+	if (dw->nr_irqs == 1) {
-+		/* Common IRQ shared among all channels */
-+		err = request_irq(pci_irq_vector(to_pci_dev(dev), 0),
-+				  dw_edma_interrupt_common,
-+				  IRQF_SHARED, dw->name, &dw->irq[0]);
++	pci_set_master(pdev);
++
++	/* DMA configuration */
++	err = pci_set_dma_mask(pdev, DMA_BIT_MASK(64));
++	if (!err) {
++		err = pci_set_consistent_dma_mask(pdev, DMA_BIT_MASK(64));
 +		if (err) {
-+			dw->nr_irqs = 0;
++			pci_err(pdev, "consistent DMA mask 64 set failed\n");
++			return err;
++		}
++	} else {
++		pci_err(pdev, "DMA mask 64 set failed\n");
++
++		err = pci_set_dma_mask(pdev, DMA_BIT_MASK(32));
++		if (err) {
++			pci_err(pdev, "DMA mask 32 set failed\n");
 +			return err;
 +		}
 +
-+		get_cached_msi_msg(pci_irq_vector(to_pci_dev(dev), 0),
-+				   &dw->irq[0].msi);
-+	} else {
-+		/* Distribute IRQs equally among all channels */
-+		int tmp = dw->nr_irqs;
-+
-+		while (tmp && (*wr_alloc + *rd_alloc) < ch_cnt) {
-+			dw_edma_dec_irq_alloc(&tmp, wr_alloc, dw->wr_ch_cnt);
-+			dw_edma_dec_irq_alloc(&tmp, rd_alloc, dw->rd_ch_cnt);
++		err = pci_set_consistent_dma_mask(pdev, DMA_BIT_MASK(32));
++		if (err) {
++			pci_err(pdev, "consistent DMA mask 32 set failed\n");
++			return err;
 +		}
-+
-+		dw_edma_add_irq_mask(&wr_mask, *wr_alloc, dw->wr_ch_cnt);
-+		dw_edma_add_irq_mask(&rd_mask, *rd_alloc, dw->rd_ch_cnt);
-+
-+		for (i = 0; i < (*wr_alloc + *rd_alloc); i++) {
-+			err = request_irq(pci_irq_vector(to_pci_dev(dev), i),
-+					  i < *wr_alloc ?
-+						dw_edma_interrupt_write :
-+						dw_edma_interrupt_read,
-+					  IRQF_SHARED, dw->name,
-+					  &dw->irq[i]);
-+			if (err) {
-+				dw->nr_irqs = i;
-+				return err;
-+			}
-+
-+			get_cached_msi_msg(pci_irq_vector(to_pci_dev(dev), i),
-+					   &dw->irq[i].msi);
-+		}
-+
-+		dw->nr_irqs = i;
 +	}
 +
-+	return err;
-+}
-+
-+int dw_edma_probe(struct dw_edma_chip *chip)
-+{
-+	struct device *dev = chip->dev;
-+	struct dw_edma *dw = chip->dw;
-+	u32 wr_alloc = 0;
-+	u32 rd_alloc = 0;
-+	int i, err;
-+
-+	raw_spin_lock_init(&dw->lock);
-+
-+	/* Find out how many write channels are supported by hardware */
-+	dw->wr_ch_cnt = dw_edma_v0_core_ch_count(dw, EDMA_DIR_WRITE);
-+	if (!dw->wr_ch_cnt)
-+		return -EINVAL;
-+
-+	/* Find out how many read channels are supported by hardware */
-+	dw->rd_ch_cnt = dw_edma_v0_core_ch_count(dw, EDMA_DIR_READ);
-+	if (!dw->rd_ch_cnt)
-+		return -EINVAL;
-+
-+	dev_vdbg(dev, "Channels:\twrite=%d, read=%d\n",
-+		 dw->wr_ch_cnt, dw->rd_ch_cnt);
-+
-+	/* Allocate channels */
-+	dw->chan = devm_kcalloc(dev, dw->wr_ch_cnt + dw->rd_ch_cnt,
-+				sizeof(*dw->chan), GFP_KERNEL);
-+	if (!dw->chan)
++	/* Data structure allocation */
++	chip = devm_kzalloc(dev, sizeof(*chip), GFP_KERNEL);
++	if (!chip)
 +		return -ENOMEM;
 +
-+	snprintf(dw->name, sizeof(dw->name), "dw-edma-core:%d", chip->id);
++	dw = devm_kzalloc(dev, sizeof(*dw), GFP_KERNEL);
++	if (!dw)
++		return -ENOMEM;
 +
-+	/* Disable eDMA, only to establish the ideal initial conditions */
-+	dw_edma_v0_core_off(dw);
++	/* IRQs allocation */
++	nr_irqs = pci_alloc_irq_vectors(pdev, 1, pdata->irqs,
++					PCI_IRQ_MSI | PCI_IRQ_MSIX);
++	if (nr_irqs < 1) {
++		pci_err(pdev, "fail to alloc IRQ vector (number of IRQs=%u)\n",
++			nr_irqs);
++		return -EPERM;
++	}
 +
-+	/* Request IRQs */
-+	err = dw_edma_irq_request(chip, &wr_alloc, &rd_alloc);
-+	if (err)
++	/* Data structure initialization */
++	chip->dw = dw;
++	chip->dev = dev;
++	chip->id = pdev->devfn;
++	chip->irq = pdev->irq;
++
++	dw->rg_region.vaddr = (dma_addr_t)pcim_iomap_table(pdev)[pdata->rg_bar];
++	dw->rg_region.vaddr += pdata->rg_off;
++	dw->rg_region.paddr = pdev->resource[pdata->rg_bar].start;
++	dw->rg_region.paddr += pdata->rg_off;
++	dw->rg_region.sz = pdata->rg_sz;
++
++	dw->ll_region.vaddr = (dma_addr_t)pcim_iomap_table(pdev)[pdata->ll_bar];
++	dw->ll_region.vaddr += pdata->ll_off;
++	dw->ll_region.paddr = pdev->resource[pdata->ll_bar].start;
++	dw->ll_region.paddr += pdata->ll_off;
++	dw->ll_region.sz = pdata->ll_sz;
++
++	dw->dt_region.vaddr = (dma_addr_t)pcim_iomap_table(pdev)[pdata->dt_bar];
++	dw->dt_region.vaddr += pdata->dt_off;
++	dw->dt_region.paddr = pdev->resource[pdata->dt_bar].start;
++	dw->dt_region.paddr += pdata->dt_off;
++	dw->dt_region.sz = pdata->dt_sz;
++
++	dw->version = pdata->version;
++	dw->mode = pdata->mode;
++	dw->nr_irqs = nr_irqs;
++
++	/* Debug info */
++	pci_dbg(pdev, "Version:\t%u\n", dw->version);
++
++	pci_dbg(pdev, "Mode:\t%s\n",
++		dw->mode == EDMA_MODE_LEGACY ? "Legacy" : "Unroll");
++
++	pci_dbg(pdev, "Registers:\tBAR=%u, off=0x%.8lx, sz=0x%zx bytes, addr(v=%pa, p=%pa)\n",
++		pdata->rg_bar, pdata->rg_off, pdata->rg_sz,
++		&dw->rg_region.vaddr, &dw->rg_region.paddr);
++
++	pci_dbg(pdev, "L. List:\tBAR=%u, off=0x%.8lx, sz=0x%zx bytes, addr(v=%pa, p=%pa)\n",
++		pdata->ll_bar, pdata->ll_off, pdata->ll_sz,
++		&dw->ll_region.vaddr, &dw->ll_region.paddr);
++
++	pci_dbg(pdev, "Data:\tBAR=%u, off=0x%.8lx, sz=0x%zx bytes, addr(v=%pa, p=%pa)\n",
++		pdata->dt_bar, pdata->dt_off, pdata->dt_sz,
++		&dw->dt_region.vaddr, &dw->dt_region.paddr);
++
++	pci_dbg(pdev, "Nr. IRQs:\t%u\n", dw->nr_irqs);
++
++	/* Validating if PCI interrupts were enabled */
++	if (!pci_dev_msi_enabled(pdev)) {
++		pci_err(pdev, "enable interrupt failed\n");
++		return -EPERM;
++	}
++
++	dw->irq = devm_kcalloc(dev, nr_irqs, sizeof(*dw->irq), GFP_KERNEL);
++	if (!dw->irq)
++		return -ENOMEM;
++
++	/* Starting eDMA driver */
++	err = dw_edma_probe(chip);
++	if (err) {
++		pci_err(pdev, "eDMA probe failed\n");
 +		return err;
++	}
 +
-+	/* Setup write channels */
-+	err = dw_edma_channel_setup(chip, true, wr_alloc, rd_alloc);
-+	if (err)
-+		goto err_irq_free;
-+
-+	/* Setup read channels */
-+	err = dw_edma_channel_setup(chip, false, wr_alloc, rd_alloc);
-+	if (err)
-+		goto err_irq_free;
-+
-+	/* Power management */
-+	pm_runtime_enable(dev);
-+
-+	/* Turn debugfs on */
-+	err = dw_edma_v0_core_debugfs_on(chip);
-+	if (err)
-+		goto err_pm_disable;
++	/* Saving data structure reference */
++	pci_set_drvdata(pdev, chip);
 +
 +	return 0;
-+
-+err_pm_disable:
-+	pm_runtime_disable(dev);
-+err_irq_free:
-+	for (i = (dw->nr_irqs - 1); i >= 0; i--)
-+		free_irq(pci_irq_vector(to_pci_dev(dev), i), &dw->irq[i]);
-+
-+	dw->nr_irqs = 0;
-+
-+	return err;
 +}
-+EXPORT_SYMBOL_GPL(dw_edma_probe);
 +
-+int dw_edma_remove(struct dw_edma_chip *chip)
++static void dw_edma_pcie_remove(struct pci_dev *pdev)
 +{
-+	struct dw_edma_chan *chan, *_chan;
-+	struct device *dev = chip->dev;
-+	struct dw_edma *dw = chip->dw;
-+	int i;
++	struct dw_edma_chip *chip = pci_get_drvdata(pdev);
++	int err;
 +
-+	/* Disable eDMA */
-+	dw_edma_v0_core_off(dw);
++	/* Stopping eDMA driver */
++	err = dw_edma_remove(chip);
++	if (err)
++		pci_warn(pdev, "can't remove device properly: %d\n", err);
 +
-+	/* Free irqs */
-+	for (i = (dw->nr_irqs - 1); i >= 0; i--)
-+		free_irq(pci_irq_vector(to_pci_dev(dev), i), &dw->irq[i]);
-+
-+	/* Power management */
-+	pm_runtime_disable(dev);
-+
-+	list_for_each_entry_safe(chan, _chan, &dw->wr_edma.channels,
-+				 vc.chan.device_node) {
-+		list_del(&chan->vc.chan.device_node);
-+		tasklet_kill(&chan->vc.task);
-+	}
-+
-+	list_for_each_entry_safe(chan, _chan, &dw->rd_edma.channels,
-+				 vc.chan.device_node) {
-+		list_del(&chan->vc.chan.device_node);
-+		tasklet_kill(&chan->vc.task);
-+	}
-+
-+	/* Deregister eDMA device */
-+	dma_async_device_unregister(&dw->wr_edma);
-+	dma_async_device_unregister(&dw->rd_edma);
-+
-+	/* Turn debugfs off */
-+	dw_edma_v0_core_debugfs_off();
-+
-+	return 0;
++	/* Freeing IRQs */
++	pci_free_irq_vectors(pdev);
 +}
-+EXPORT_SYMBOL_GPL(dw_edma_remove);
++
++static const struct pci_device_id dw_edma_pcie_id_table[] = {
++	{ PCI_DEVICE_DATA(SYNOPSYS, EDDA, &snps_edda_data) },
++	{ }
++};
++MODULE_DEVICE_TABLE(pci, dw_edma_pcie_id_table);
++
++static struct pci_driver dw_edma_pcie_driver = {
++	.name		= "dw-edma-pcie",
++	.id_table	= dw_edma_pcie_id_table,
++	.probe		= dw_edma_pcie_probe,
++	.remove		= dw_edma_pcie_remove,
++};
++
++module_pci_driver(dw_edma_pcie_driver);
 +
 +MODULE_LICENSE("GPL v2");
-+MODULE_DESCRIPTION("Synopsys DesignWare eDMA controller core driver");
++MODULE_DESCRIPTION("Synopsys DesignWare eDMA PCIe driver");
 +MODULE_AUTHOR("Gustavo Pimentel <gustavo.pimentel@synopsys.com>");
-diff --git a/drivers/dma/dw-edma/dw-edma-core.h b/drivers/dma/dw-edma/dw-edma-core.h
-new file mode 100644
-index 0000000..8a3a0a4
---- /dev/null
-+++ b/drivers/dma/dw-edma/dw-edma-core.h
-@@ -0,0 +1,165 @@
-+/* SPDX-License-Identifier: GPL-2.0 */
-+/*
-+ * Copyright (c) 2018-2019 Synopsys, Inc. and/or its affiliates.
-+ * Synopsys DesignWare eDMA core driver
-+ *
-+ * Author: Gustavo Pimentel <gustavo.pimentel@synopsys.com>
-+ */
-+
-+#ifndef _DW_EDMA_CORE_H
-+#define _DW_EDMA_CORE_H
-+
-+#include <linux/msi.h>
-+#include <linux/dma/edma.h>
-+
-+#include "../virt-dma.h"
-+
-+#define EDMA_LL_SZ					24
-+
-+enum dw_edma_dir {
-+	EDMA_DIR_WRITE = 0,
-+	EDMA_DIR_READ
-+};
-+
-+enum dw_edma_mode {
-+	EDMA_MODE_LEGACY = 0,
-+	EDMA_MODE_UNROLL
-+};
-+
-+enum dw_edma_request {
-+	EDMA_REQ_NONE = 0,
-+	EDMA_REQ_STOP,
-+	EDMA_REQ_PAUSE
-+};
-+
-+enum dw_edma_status {
-+	EDMA_ST_IDLE = 0,
-+	EDMA_ST_PAUSE,
-+	EDMA_ST_BUSY
-+};
-+
-+struct dw_edma_chan;
-+struct dw_edma_chunk;
-+
-+struct dw_edma_burst {
-+	struct list_head		list;
-+	u64				sar;
-+	u64				dar;
-+	u32				sz;
-+};
-+
-+struct dw_edma_region {
-+	phys_addr_t			paddr;
-+	dma_addr_t			vaddr;
-+	size_t				sz;
-+};
-+
-+struct dw_edma_chunk {
-+	struct list_head		list;
-+	struct dw_edma_chan		*chan;
-+	struct dw_edma_burst		*burst;
-+
-+	u32				bursts_alloc;
-+
-+	u8				cb;
-+	struct dw_edma_region		ll_region;	/* Linked list */
-+};
-+
-+struct dw_edma_desc {
-+	struct virt_dma_desc		vd;
-+	struct dw_edma_chan		*chan;
-+	struct dw_edma_chunk		*chunk;
-+
-+	u32				chunks_alloc;
-+
-+	u32				alloc_sz;
-+	u32				xfer_sz;
-+};
-+
-+struct dw_edma_chan {
-+	struct virt_dma_chan		vc;
-+	struct dw_edma_chip		*chip;
-+	int				id;
-+	enum dw_edma_dir		dir;
-+
-+	off_t				ll_off;
-+	u32				ll_max;
-+
-+	off_t				dt_off;
-+
-+	struct msi_msg			msi;
-+
-+	enum dw_edma_request		request;
-+	enum dw_edma_status		status;
-+	u8				configured;
-+
-+	struct dma_slave_config		config;
-+};
-+
-+struct dw_edma_irq {
-+	struct msi_msg                  msi;
-+	u32				wr_mask;
-+	u32				rd_mask;
-+	struct dw_edma			*dw;
-+};
-+
-+struct dw_edma {
-+	char				name[20];
-+
-+	struct dma_device		wr_edma;
-+	u16				wr_ch_cnt;
-+
-+	struct dma_device		rd_edma;
-+	u16				rd_ch_cnt;
-+
-+	struct dw_edma_region		rg_region;	/* Registers */
-+	struct dw_edma_region		ll_region;	/* Linked list */
-+	struct dw_edma_region		dt_region;	/* Data */
-+
-+	struct dw_edma_irq		*irq;
-+	int				nr_irqs;
-+
-+	u32				version;
-+	enum dw_edma_mode		mode;
-+
-+	struct dw_edma_chan		*chan;
-+	const struct dw_edma_core_ops	*ops;
-+
-+	raw_spinlock_t			lock;		/* Only for legacy */
-+};
-+
-+struct dw_edma_sg {
-+	struct scatterlist		*sgl;
-+	unsigned int			len;
-+};
-+
-+struct dw_edma_cyclic {
-+	dma_addr_t			paddr;
-+	size_t				len;
-+	size_t				cnt;
-+};
-+
-+struct dw_edma_transfer {
-+	struct dma_chan			*dchan;
-+	union Xfer {
-+		struct dw_edma_sg	sg;
-+		struct dw_edma_cyclic	cyclic;
-+	} xfer;
-+	enum dma_transfer_direction	direction;
-+	unsigned long			flags;
-+	bool				cyclic;
-+};
-+
-+static inline
-+struct dw_edma_chan *vc2dw_edma_chan(struct virt_dma_chan *vc)
-+{
-+	return container_of(vc, struct dw_edma_chan, vc);
-+}
-+
-+static inline
-+struct dw_edma_chan *dchan2dw_edma_chan(struct dma_chan *dchan)
-+{
-+	return vc2dw_edma_chan(to_virt_chan(dchan));
-+}
-+
-+#endif /* _DW_EDMA_CORE_H */
-diff --git a/include/linux/dma/edma.h b/include/linux/dma/edma.h
-new file mode 100644
-index 0000000..cab6e18
---- /dev/null
-+++ b/include/linux/dma/edma.h
-@@ -0,0 +1,47 @@
-+/* SPDX-License-Identifier: GPL-2.0 */
-+/*
-+ * Copyright (c) 2018-2019 Synopsys, Inc. and/or its affiliates.
-+ * Synopsys DesignWare eDMA core driver
-+ *
-+ * Author: Gustavo Pimentel <gustavo.pimentel@synopsys.com>
-+ */
-+
-+#ifndef _DW_EDMA_H
-+#define _DW_EDMA_H
-+
-+#include <linux/device.h>
-+#include <linux/dmaengine.h>
-+
-+struct dw_edma;
-+
-+/**
-+ * struct dw_edma_chip - representation of DesignWare eDMA controller hardware
-+ * @dev:		 struct device of the eDMA controller
-+ * @id:			 instance ID
-+ * @irq:		 irq line
-+ * @dw:			 struct dw_edma that is filed by dw_edma_probe()
-+ */
-+struct dw_edma_chip {
-+	struct device		*dev;
-+	int			id;
-+	int			irq;
-+	struct dw_edma		*dw;
-+};
-+
-+/* Export to the platform drivers */
-+#if IS_ENABLED(CONFIG_DW_EDMA)
-+int dw_edma_probe(struct dw_edma_chip *chip);
-+int dw_edma_remove(struct dw_edma_chip *chip);
-+#else
-+static inline int dw_edma_probe(struct dw_edma_chip *chip)
-+{
-+	return -ENODEV;
-+}
-+
-+static inline int dw_edma_remove(struct dw_edma_chip *chip)
-+{
-+	return 0;
-+}
-+#endif /* CONFIG_DW_EDMA */
-+
-+#endif /* _DW_EDMA_H */
 -- 
 2.7.4
 
