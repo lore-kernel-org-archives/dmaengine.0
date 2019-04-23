@@ -1,33 +1,35 @@
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
-Subject: [RFC,v6,6/6] MAINTAINERS: Add Synopsys eDMA IP driver maintainer
-From: Gustavo Pimentel <gustavo.pimentel@synopsys.com>
-Message-Id: <aafdd8ccf01206a81af00087fca8e6e072ac1319.1556043127.git.gustavo.pimentel@synopsys.com>
-Date: Tue, 23 Apr 2019 20:30:13 +0200
-To: linux-pci@vger.kernel.org, dmaengine@vger.kernel.org
-Cc: Gustavo Pimentel <Gustavo.Pimentel@synopsys.com>, Vinod Koul <vkoul@kernel.org>, Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>, Joao Pinto <Joao.Pinto@synopsys.com>
+Subject: [v1,13/15] ARM: dts: imx6ul: add dma support on ecspi
+From: Robin Gong <yibin.gong@nxp.com>
+Message-Id: <1556027045-5269-14-git-send-email-yibin.gong@nxp.com>
+Date: Tue, 23 Apr 2019 13:51:40 +0000
+To: "broonie@kernel.org" <broonie@kernel.org>, "shawnguo@kernel.org" <shawnguo@kernel.org>, "s.hauer@pengutronix.de" <s.hauer@pengutronix.de>, "festevam@gmail.com" <festevam@gmail.com>, "robh+dt@kernel.org" <robh+dt@kernel.org>, "mark.rutland@arm.com" <mark.rutland@arm.com>, "u.kleine-koenig@pengutronix.de" <u.kleine-koenig@pengutronix.de>, "plyatov@gmail.com" <plyatov@gmail.com>, "sean.nyekjaer@prevas.dk" <sean.nyekjaer@prevas.dk>
+Cc: dl-linux-imx <linux-imx@nxp.com>, "linux-spi@vger.kernel.org" <linux-spi@vger.kernel.org>, "linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>, "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>, "dmaengine@vger.kernel.org" <dmaengine@vger.kernel.org>, "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>, "kernel@pengutronix.de" <kernel@pengutronix.de>
 List-ID: <dmaengine.vger.kernel.org>
 
-QWRkIFN5bm9wc3lzIGVETUEgSVAgZHJpdmVyIG1haW50YWluZXIuCgpUaGlzIGRyaXZlciBhaW1z
-IHRvIHN1cHBvcnQgU3lub3BzeXMgZURNQSBJUCBhbmQgaXMgbm9ybWFsbHkgZGlzdHJpYnV0ZWQK
-YWxvbmcgd2l0aCBTeW5vcHN5cyBQQ0llIEVuZFBvaW50IElQIChkZXBlbmRzIG9mIHRoZSB1c2Ug
-YW5kIGxpY2Vuc2luZwphZ3JlZW1lbnQpLgoKU2lnbmVkLW9mZi1ieTogR3VzdGF2byBQaW1lbnRl
-bCA8Z3VzdGF2by5waW1lbnRlbEBzeW5vcHN5cy5jb20+CkNjOiBWaW5vZCBLb3VsIDx2a291bEBr
-ZXJuZWwub3JnPgpDYzogRXVnZW5peSBQYWx0c2V2IDxwYWx0c2V2QHN5bm9wc3lzLmNvbT4KQ2M6
-IEpvYW8gUGludG8gPGpwaW50b0BzeW5vcHN5cy5jb20+Ci0tLQpDaGFuZ2VzOgpSRkMgdjEtPlJG
-QyB2MjoKIC0gTm8gY2hhbmdlcwpSRkMgdjItPlJGQyB2MzoKIC0gUmViYXNlIHRvIHY1LjAtcmMx
-ClJGQyB2My0+UkZDIHY0OgogLSBObyBjaGFuZ2VzClJGQyB2NC0+UkZDIHY1OgogLSBQYXRjaCBy
-ZXNlbmRlZCwgZm9yZ290IHRvIHJlcGxhY2Ugb2YgJ19fXycgYnkgJy0tLScgYW5kIHRvIHJlbW92
-ZQogZHVwbGljYXRlIHNpZ25lZC1vZmYKUkZDIHY1LT5SRkMgdjY6CiAtIEZvbGxvd2luZyBwYXRj
-aCB2ZXJzaW9uCgogTUFJTlRBSU5FUlMgfCA3ICsrKysrKysKIDEgZmlsZSBjaGFuZ2VkLCA3IGlu
-c2VydGlvbnMoKykKCmRpZmYgLS1naXQgYS9NQUlOVEFJTkVSUyBiL01BSU5UQUlORVJTCmluZGV4
-IGUxN2ViZjcuLjMyMjIyYjggMTAwNjQ0Ci0tLSBhL01BSU5UQUlORVJTCisrKyBiL01BSU5UQUlO
-RVJTCkBAIC00NTEzLDYgKzQ1MTMsMTMgQEAgTDoJbGludXgtbXRkQGxpc3RzLmluZnJhZGVhZC5v
-cmcKIFM6CVN1cHBvcnRlZAogRjoJZHJpdmVycy9tdGQvbmFuZC9yYXcvZGVuYWxpKgogCitERVNJ
-R05XQVJFIEVETUEgQ09SRSBJUCBEUklWRVIKK006CUd1c3Rhdm8gUGltZW50ZWwgPGd1c3Rhdm8u
-cGltZW50ZWxAc3lub3BzeXMuY29tPgorTDoJZG1hZW5naW5lQHZnZXIua2VybmVsLm9yZworUzoJ
-TWFpbnRhaW5lZAorRjoJZHJpdmVycy9kbWEvZHctZWRtYS8KK0Y6CWluY2x1ZGUvbGludXgvZG1h
-L2VkbWEuaAorCiBERVNJR05XQVJFIFVTQjIgRFJEIElQIERSSVZFUgogTToJTWluYXMgSGFydXR5
-dW55YW4gPGhtaW5hc0BzeW5vcHN5cy5jb20+CiBMOglsaW51eC11c2JAdmdlci5rZXJuZWwub3Jn
-Cg==
+QWRkIGRtYSBzdXBwb3J0IG9uIGVjc3BpLg0KDQpTaWduZWQtb2ZmLWJ5OiBSb2JpbiBHb25nIDx5
+aWJpbi5nb25nQG54cC5jb20+DQotLS0NCiBhcmNoL2FybS9ib290L2R0cy9pbXg2dWwuZHRzaSB8
+IDggKysrKysrKysNCiAxIGZpbGUgY2hhbmdlZCwgOCBpbnNlcnRpb25zKCspDQoNCi0tIA0KMi43
+LjQKCmRpZmYgLS1naXQgYS9hcmNoL2FybS9ib290L2R0cy9pbXg2dWwuZHRzaSBiL2FyY2gvYXJt
+L2Jvb3QvZHRzL2lteDZ1bC5kdHNpDQppbmRleCBiYmYwMTBjLi44ODBiOWVlIDEwMDY0NA0KLS0t
+IGEvYXJjaC9hcm0vYm9vdC9kdHMvaW14NnVsLmR0c2kNCisrKyBiL2FyY2gvYXJtL2Jvb3QvZHRz
+L2lteDZ1bC5kdHNpDQpAQCAtMjI2LDYgKzIyNiw4IEBADQogCQkJCQljbG9ja3MgPSA8JmNsa3Mg
+SU1YNlVMX0NMS19FQ1NQSTE+LA0KIAkJCQkJCSA8JmNsa3MgSU1YNlVMX0NMS19FQ1NQSTE+Ow0K
+IAkJCQkJY2xvY2stbmFtZXMgPSAiaXBnIiwgInBlciI7DQorCQkJCQlkbWFzID0gPCZzZG1hIDMg
+NyAxPiwgPCZzZG1hIDQgNyAyPjsNCisJCQkJCWRtYS1uYW1lcyA9ICJyeCIsICJ0eCI7DQogCQkJ
+CQlzdGF0dXMgPSAiZGlzYWJsZWQiOw0KIAkJCQl9Ow0KIA0KQEAgLTIzOCw2ICsyNDAsOCBAQA0K
+IAkJCQkJY2xvY2tzID0gPCZjbGtzIElNWDZVTF9DTEtfRUNTUEkyPiwNCiAJCQkJCQkgPCZjbGtz
+IElNWDZVTF9DTEtfRUNTUEkyPjsNCiAJCQkJCWNsb2NrLW5hbWVzID0gImlwZyIsICJwZXIiOw0K
+KwkJCQkJZG1hcyA9IDwmc2RtYSA1IDcgMT4sIDwmc2RtYSA2IDcgMj47DQorCQkJCQlkbWEtbmFt
+ZXMgPSAicngiLCAidHgiOw0KIAkJCQkJc3RhdHVzID0gImRpc2FibGVkIjsNCiAJCQkJfTsNCiAN
+CkBAIC0yNTAsNiArMjU0LDggQEANCiAJCQkJCWNsb2NrcyA9IDwmY2xrcyBJTVg2VUxfQ0xLX0VD
+U1BJMz4sDQogCQkJCQkJIDwmY2xrcyBJTVg2VUxfQ0xLX0VDU1BJMz47DQogCQkJCQljbG9jay1u
+YW1lcyA9ICJpcGciLCAicGVyIjsNCisJCQkJCWRtYXMgPSA8JnNkbWEgNyA3IDE+LCA8JnNkbWEg
+OCA3IDI+Ow0KKwkJCQkJZG1hLW5hbWVzID0gInJ4IiwgInR4IjsNCiAJCQkJCXN0YXR1cyA9ICJk
+aXNhYmxlZCI7DQogCQkJCX07DQogDQpAQCAtMjYyLDYgKzI2OCw4IEBADQogCQkJCQljbG9ja3Mg
+PSA8JmNsa3MgSU1YNlVMX0NMS19FQ1NQSTQ+LA0KIAkJCQkJCSA8JmNsa3MgSU1YNlVMX0NMS19F
+Q1NQSTQ+Ow0KIAkJCQkJY2xvY2stbmFtZXMgPSAiaXBnIiwgInBlciI7DQorCQkJCQlkbWFzID0g
+PCZzZG1hIDkgNyAxPiwgPCZzZG1hIDEwIDcgMj47DQorCQkJCQlkbWEtbmFtZXMgPSAicngiLCAi
+dHgiOw0KIAkJCQkJc3RhdHVzID0gImRpc2FibGVkIjsNCiAJCQkJfTsNCiANCg==
