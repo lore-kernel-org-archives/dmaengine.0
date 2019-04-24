@@ -2,67 +2,141 @@ Return-Path: <SRS0=fQ6P=S2=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,MAILING_LIST_MULTI,SPF_PASS,T_DKIMWL_WL_HIGH,URIBL_BLOCKED,
-	USER_AGENT_MUTT autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.0 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_PASS,URIBL_BLOCKED,
+	USER_AGENT_NEOMUTT autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 147D9C10F11
-	for <dmaengine@archiver.kernel.org>; Wed, 24 Apr 2019 05:39:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9C89DC282E1
+	for <dmaengine@archiver.kernel.org>; Wed, 24 Apr 2019 06:32:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id D6532218D3
-	for <dmaengine@archiver.kernel.org>; Wed, 24 Apr 2019 05:39:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1556084353;
-	bh=gsinXkBgFIGD0/7FqtRBNfYQ4Nw7H+RS94t9EZY7Mw8=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:List-ID:From;
-	b=g9dde4avas3FxrnXKn2FNeKzSrBesFTMjdNHkj9nmhUWzrLu8rVG+LwmxLhKZ6bsB
-	 +iV0Ia/exT2l2uryFBeGkmrNRjw/UT1KlMilpWjZHJxyOZRW/SxtX6ET9MR8ks326C
-	 z/ivdMjFTdforqxL/EDxawtqb4HuyjiLSIvh42dM=
+	by mail.kernel.org (Postfix) with ESMTP id 735DA218D3
+	for <dmaengine@archiver.kernel.org>; Wed, 24 Apr 2019 06:32:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729334AbfDXFjN (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 24 Apr 2019 01:39:13 -0400
-Received: from mail.kernel.org ([198.145.29.99]:59848 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726232AbfDXFjN (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Wed, 24 Apr 2019 01:39:13 -0400
-Received: from localhost (unknown [171.76.113.243])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 1E44D2089F;
-        Wed, 24 Apr 2019 05:39:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1556084352;
-        bh=gsinXkBgFIGD0/7FqtRBNfYQ4Nw7H+RS94t9EZY7Mw8=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=UOxm7BzgXVCb1lDG4LGlNZFMK5KSbjQcGy5ozeMhTw184475AA8hZJRqc5T3+aCak
-         FRWV7v1GKPGhP3Xtnrlu48pgKGNJq7mAFogp3toJMB+5jFfSQDVLPwDlkmxRxhKBSm
-         UJ9Ot7JjrBGrHkPMVHsBe4DAa/DwjGA/bNPVb8oI=
-Date:   Wed, 24 Apr 2019 11:09:09 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Alexandru Ardelean <alexandru.ardelean@analog.com>
-Cc:     dmaengine@vger.kernel.org, Dragos Bogdan <dragos.bogdan@analog.com>
-Subject: Re: [PATCH][V2][RESEND] dmaengine: axi-dmac: Enable DMA_INTERLEAVE
- capability
-Message-ID: <20190424053909.GM28103@vkoul-mobl>
-References: <20190326140756.1941-1-alexandru.ardelean@analog.com>
+        id S1729822AbfDXGc4 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 24 Apr 2019 02:32:56 -0400
+Received: from metis.ext.pengutronix.de ([85.220.165.71]:41511 "EHLO
+        metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727039AbfDXGcz (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Wed, 24 Apr 2019 02:32:55 -0400
+Received: from ptx.hi.pengutronix.de ([2001:67c:670:100:1d::c0])
+        by metis.ext.pengutronix.de with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.89)
+        (envelope-from <sha@pengutronix.de>)
+        id 1hJBSU-0006pn-64; Wed, 24 Apr 2019 08:32:42 +0200
+Received: from sha by ptx.hi.pengutronix.de with local (Exim 4.89)
+        (envelope-from <sha@pengutronix.de>)
+        id 1hJBSS-0006n1-Jx; Wed, 24 Apr 2019 08:32:40 +0200
+Date:   Wed, 24 Apr 2019 08:32:40 +0200
+From:   "s.hauer@pengutronix.de" <s.hauer@pengutronix.de>
+To:     Robin Gong <yibin.gong@nxp.com>
+Cc:     "broonie@kernel.org" <broonie@kernel.org>,
+        "shawnguo@kernel.org" <shawnguo@kernel.org>,
+        "festevam@gmail.com" <festevam@gmail.com>,
+        "robh+dt@kernel.org" <robh+dt@kernel.org>,
+        "mark.rutland@arm.com" <mark.rutland@arm.com>,
+        "u.kleine-koenig@pengutronix.de" <u.kleine-koenig@pengutronix.de>,
+        "plyatov@gmail.com" <plyatov@gmail.com>,
+        "sean.nyekjaer@prevas.dk" <sean.nyekjaer@prevas.dk>,
+        dl-linux-imx <linux-imx@nxp.com>,
+        "linux-spi@vger.kernel.org" <linux-spi@vger.kernel.org>,
+        "linux-arm-kernel@lists.infradead.org" 
+        <linux-arm-kernel@lists.infradead.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        "dmaengine@vger.kernel.org" <dmaengine@vger.kernel.org>,
+        "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
+        "kernel@pengutronix.de" <kernel@pengutronix.de>
+Subject: Re: [PATCH v1 07/15] spi: imx: remove ERR009165 workaround on i.mx6ul
+Message-ID: <20190424063240.vr5in5nez6hl2zgr@pengutronix.de>
+References: <1556027045-5269-1-git-send-email-yibin.gong@nxp.com>
+ <1556027045-5269-8-git-send-email-yibin.gong@nxp.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="UTF-8"
 Content-Disposition: inline
-In-Reply-To: <20190326140756.1941-1-alexandru.ardelean@analog.com>
-User-Agent: Mutt/1.11.3 (2019-02-01)
+In-Reply-To: <1556027045-5269-8-git-send-email-yibin.gong@nxp.com>
+X-Sent-From: Pengutronix Hildesheim
+X-URL:  http://www.pengutronix.de/
+X-IRC:  #ptxdist @freenode
+X-Accept-Language: de,en
+X-Accept-Content-Type: text/plain
+X-Uptime: 08:30:46 up 36 days, 17:41, 80 users,  load average: 1.48, 1.38,
+ 1.32
+User-Agent: NeoMutt/20170113 (1.7.2)
+X-SA-Exim-Connect-IP: 2001:67c:670:100:1d::c0
+X-SA-Exim-Mail-From: sha@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: dmaengine@vger.kernel.org
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
-Message-ID: <20190424053909.orZ9xruKFHoEZ3PqQAEiAHsu7IvGdfIkXvCoQqrYZ2g@z>
+Message-ID: <20190424063240.vn2hI8Pb7w7DGF0rDhK5HQVygAzt8lokNGVnAWEDu1E@z>
 
-On 26-03-19, 16:07, Alexandru Ardelean wrote:
-> From: Dragos Bogdan <dragos.bogdan@analog.com>
+On Tue, Apr 23, 2019 at 01:51:10PM +0000, Robin Gong wrote:
+>    ERR009165 fix on i.mx6ul and next chip, such as i.mx6ull/i.mx8mq/i.mx8mm.
+> Remove workaround on those chips. Add new i.mx6ul type for that.
 > 
-> Since device_prep_interleaved_dma() is already implemented, the
-> DMA_INTERLEAVE capability should be set.
+> Signed-off-by: Robin Gong <yibin.gong@nxp.com>
+> ---
+>  drivers/spi/spi-imx.c | 39 +++++++++++++++++++++++++++++++++++----
+>  1 file changed, 35 insertions(+), 4 deletions(-)
+> 
+> diff --git a/drivers/spi/spi-imx.c b/drivers/spi/spi-imx.c
+> index eb56eac..2e5e978 100644
+> --- a/drivers/spi/spi-imx.c
+> +++ b/drivers/spi/spi-imx.c
+> @@ -57,6 +57,7 @@ enum spi_imx_devtype {
+>  	IMX35_CSPI,	/* CSPI on all i.mx except above */
+>  	IMX51_ECSPI,	/* ECSPI on i.mx51 */
+>  	IMX53_ECSPI,	/* ECSPI on i.mx53 and later */
+> +	IMX6UL_ECSPI,	/* ERR009165 fix from i.mx6ul */
+>  };
+>  
+>  struct spi_imx_data;
+> @@ -128,7 +129,8 @@ static inline int is_imx35_cspi(struct spi_imx_data *d)
+>  
+>  static inline int is_imx51_ecspi(struct spi_imx_data *d)
+>  {
+> -	return d->devtype_data->devtype == IMX51_ECSPI;
+> +	return d->devtype_data->devtype == IMX51_ECSPI ||
+> +	       d->devtype_data->devtype == IMX6UL_ECSPI;
+>  }
+>  
+>  static inline int is_imx53_ecspi(struct spi_imx_data *d)
+> @@ -585,9 +587,16 @@ static int mx51_ecspi_prepare_transfer(struct spi_imx_data *spi_imx,
+>  	ctrl |= mx51_ecspi_clkdiv(spi_imx, t->speed_hz, &clk);
+>  	spi_imx->spi_bus_clk = clk;
+>  
+> -	/* ERR009165: work in XHC mode as PIO */
+> -	if (spi_imx->usedma)
+> -		ctrl &= ~MX51_ECSPI_CTRL_SMC;
+> +	/*
+> +	 * ERR009165: work in XHC mode instead of SMC as PIO on the chips
+> +	 * before i.mx6ul.
+> +	 */
+> +	if (spi_imx->usedma) {
+> +		if (spi_imx->devtype_data->devtype == IMX6UL_ECSPI)
+> +			ctrl |= MX51_ECSPI_CTRL_SMC;
+> +		else
+> +			ctrl &= ~MX51_ECSPI_CTRL_SMC;
+> +	}
+>  
+>  	writel(ctrl, spi_imx->base + MX51_ECSPI_CTRL);
+>  
+> @@ -615,6 +624,8 @@ static void mx51_setup_wml(struct spi_imx_data *spi_imx)
+>  {
+>  	u32 tx_wml = 0;
+>  
+> +	if (spi_imx->devtype_data->devtype == IMX6UL_ECSPI)
+> +		tx_wml = spi_imx->wml;
 
-Applied, thanks
+This if clause has to be adjusted for every new SoC which doesn't have
+this issue. Better introduce a has_err009165 boolean flag to the driver
+data and set it where necessary.
+
+Sascha
 
 -- 
-~Vinod
+Pengutronix e.K.                           |                             |
+Industrial Linux Solutions                 | http://www.pengutronix.de/  |
+Peiner Str. 6-8, 31137 Hildesheim, Germany | Phone: +49-5121-206917-0    |
+Amtsgericht Hildesheim, HRA 2686           | Fax:   +49-5121-206917-5555 |
