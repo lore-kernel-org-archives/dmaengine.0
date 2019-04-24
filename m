@@ -1,26 +1,20 @@
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
-Subject: dmaengine: stm32-dma: fix residue calculation in stm32-dma
+Subject: dmaengine: axi-dmac: Infer synthesis configuration parameters hardware
 From: Vinod Koul <vkoul@kernel.org>
-Message-Id: <20190430171856.GW3845@vkoul-mobl.Dlink>
-Date: Tue, 30 Apr 2019 22:48:56 +0530
-To: Arnaud Pouliquen <arnaud.pouliquen@st.com>
-Cc: Dan Williams <dan.j.williams@intel.com>, Pierre-Yves MORDRET <pierre-yves.mordret@st.com>, linux-stm32@st-md-mailman.stormreply.com, linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org
+Message-Id: <20190424053654.GK28103@vkoul-mobl>
+Date: Wed, 24 Apr 2019 11:06:54 +0530
+To: Alexandru Ardelean <alexandru.ardelean@analog.com>
+Cc: dmaengine@vger.kernel.org, Lars-Peter Clausen <lars@metafoo.de>
 List-ID: <dmaengine.vger.kernel.org>
 
-T24gMzAtMDQtMTksIDE2OjU4LCBBcm5hdWQgUG91bGlxdWVuIHdyb3RlOgoKPiA+PiBIb3BlIHRo
-YXQgd2lsbCBoZWxwIHRvIGNsYXJpZnkuCj4gPiAKPiA+IFllcyB0aGF0IGhlbHBzLCBtYXliZSB3
-ZSBzaG91bGQgYWRkIHRoZXNlIGJpdHMgaW4gY29kZSBhbmQgY2hhbmdlbG9nLi4KPiA+IDopSSB3
-aWxsIHVwZGF0ZSB0aGUgY29tbWVudHMgYW5kIGNvbW1pdCBtZXNzYWdlIGluIGEgVjIgaW4gdGhp
-cyB3YXkKPiA+IAo+ID4gQW5kIGhvdyBkb2VzIHRoaXMgaW1wYWN0IG5vbiBjeWNsaWMgY2FzZSB3
-aGVyZSBOIGRlc2NyaXB0b3JzIG1heWJlCj4gPiBpc3N1ZWQuIFRoZSBkcml2ZXIgc2VlbXMgdG8g
-c3VwcG9ydCBub24gY3ljbGljIHRvby4uLgo+IAo+IENvcnJlY3QgaXQgc3VwcG9ydHMgU0cgYXMg
-d2VsbCwgYnV0IGRvdWJsZSBidWZmZXIgbW9kZSBpcyBub3QgdXNlZCBpbgo+IHN1Y2ggY2FzZS4g
-SHcgaXMgcHJvZ3JhbW1lZCB1bmRlciBJVCBmb3IgZXZlcnkgZGVzY3JpcHRvcnMgOiBubwo+IGF1
-dG9tYXRpYyByZWdpc3RlciByZWxvYWRlZCBhcyBpbiBjeWNsaWMgbW9kZS4gV2Ugd29uJ3QgZW5k
-IHVwIGluIHRoZQo+IHNpdHVhdGlvbiBkZXBpY3RlZCBiZWxvdy4KCk9rYXkgc291bmRzIGdvb2Qg
-dGhlbi4gQ2FuIHlvdSBhZGQgYSBiaXQgbW9yZSBvZiB0aGlzIGluIHRoZSBjb2RlICh0aGlzCndh
-cyB2ZXJ5IGhlbHBmdWwpIG5vdCBhcyBhIGZpeCBidXQgZG9jdW1lbnRhdGlvbiBzbyB0aGF0IHBl
-b3BsZSAob3IgeW91CmRvd24gdGhlIGxpbmUpIHdpbGwgcmVtZW1iZXIgd2h5IHRoaXMgd2FzIGRv
-bmUgbGlrZSB0aGlzCgpUaGFua3MK
+T24gMjYtMDMtMTksIDE1OjA2LCBBbGV4YW5kcnUgQXJkZWxlYW4gd3JvdGU6Cj4gRnJvbTogTGFy
+cy1QZXRlciBDbGF1c2VuIDxsYXJzQG1ldGFmb28uZGU+Cj4gCj4gU29tZSBzeW50aGVzaXMgdGlt
+ZSBjb25maWd1cmF0aW9uIHBhcmFtZXRlcnMgb2YgdGhlIERNQSBjb250cm9sbGVyIGNhbiBiZQo+
+IGluZmVycmVkIGZyb20gdGhlIGhhcmR3YXJlIGl0c2VsZi4KPiAKPiBVc2UgdGhpcyBpbmZvcm1h
+dGlvbiBhcyBpdCBpcyBtb3JlIHJlbGlhYmx5IHRoYW4gdGhlIGluZm9ybWF0aW9uIHNwZWNpZmll
+ZAo+IGluIHRoZSBkZXZpY2V0cmVlIHdoaWNoIG1pZ2h0IGJlIG91dGRhdGVkIGlmIHRoZSBIREwg
+cHJvamVjdCBnb3QgY2hhbmdlZC4KPiAKPiBEZXByZWNhdGUgdGhlIGRldmljZXRyZWUgcHJvcGVy
+dGllcyB0aGF0IGNhbiBiZSBpbmZlcnJlZCBmcm9tIHRoZSBoYXJkd2FyZQo+IGl0c2VsZi4KCkFw
+cGxpZWQsIHRoYW5rcwo=
