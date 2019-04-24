@@ -2,121 +2,96 @@ Return-Path: <SRS0=fQ6P=S2=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SIGNED_OFF_BY,SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-1.0 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_PASS autolearn=unavailable autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B38F4C10F11
-	for <dmaengine@archiver.kernel.org>; Wed, 24 Apr 2019 09:27:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D9FB9C282CE
+	for <dmaengine@archiver.kernel.org>; Wed, 24 Apr 2019 12:22:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 7E6D920878
-	for <dmaengine@archiver.kernel.org>; Wed, 24 Apr 2019 09:27:40 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=st.com header.i=@st.com header.b="HDTvYV3W"
+	by mail.kernel.org (Postfix) with ESMTP id B2D19218D2
+	for <dmaengine@archiver.kernel.org>; Wed, 24 Apr 2019 12:22:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726480AbfDXJ1k (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 24 Apr 2019 05:27:40 -0400
-Received: from mx07-00178001.pphosted.com ([62.209.51.94]:58822 "EHLO
-        mx07-00178001.pphosted.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726454AbfDXJ1j (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Wed, 24 Apr 2019 05:27:39 -0400
-Received: from pps.filterd (m0046668.ppops.net [127.0.0.1])
-        by mx07-00178001.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id x3O9MOwQ020109;
-        Wed, 24 Apr 2019 11:27:22 +0200
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=st.com; h=subject : to : references
- : from : message-id : date : mime-version : in-reply-to : content-type :
- content-transfer-encoding; s=STMicroelectronics;
- bh=Np/3S0I0cy9sOf0bpvtPMHGI+KAGlta3TBJOf7x9EAc=;
- b=HDTvYV3WstZzVIUD4AnnuGVudDgMOIuigIoHWCpZ6BVQD4xPk+22iPVlJOJ0ocCdAvEb
- RunryB13s0OsJ6ckAfZhCpZYRm2Rc7vXf3y7YDpPRDUpbimOvL9//rOg7K7VyjtaiZdj
- G3dNdXExGirggJN4G3FQkoERw0/DlN3S2NfvntBGKHBlEQbpXEajMgwepU6d+8dM5IPM
- pL/crnQwk2Q2pOyhj9YlzN0XUEYNPFQ+OXNH1c/1yICeXbuU3OetNdWZ5Sx4bT2KP6ZG
- XE9tD8nrdZObRjE3ItpV+8a5rj+cpdaaQ6PMSP4tDe5CBLLMxDVYr2/C3hmF+Vwv41Wu Ww== 
-Received: from beta.dmz-eu.st.com (beta.dmz-eu.st.com [164.129.1.35])
-        by mx07-00178001.pphosted.com with ESMTP id 2ryrvxckck-1
-        (version=TLSv1 cipher=ECDHE-RSA-AES256-SHA bits=256 verify=NOT);
-        Wed, 24 Apr 2019 11:27:22 +0200
-Received: from zeta.dmz-eu.st.com (zeta.dmz-eu.st.com [164.129.230.9])
-        by beta.dmz-eu.st.com (STMicroelectronics) with ESMTP id 6E7CD34;
-        Wed, 24 Apr 2019 09:27:21 +0000 (GMT)
-Received: from Webmail-eu.st.com (sfhdag5node2.st.com [10.75.127.14])
-        by zeta.dmz-eu.st.com (STMicroelectronics) with ESMTP id 4CB691578;
-        Wed, 24 Apr 2019 09:27:21 +0000 (GMT)
-Received: from [10.48.1.93] (10.75.127.47) by SFHDAG5NODE2.st.com
- (10.75.127.14) with Microsoft SMTP Server (TLS) id 15.0.1347.2; Wed, 24 Apr
- 2019 11:27:20 +0200
-Subject: Re: [PATCH] dmaengine: stm32-dma: dmaengine: stm32-dma: use
- platform_get_irq()
-To:     Fabien Dessenne <fabien.dessenne@st.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        Dan Williams <dan.j.williams@intel.com>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@st.com>,
-        <dmaengine@vger.kernel.org>,
-        <linux-stm32@st-md-mailman.stormreply.com>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>
-References: <1556097685-7236-1-git-send-email-fabien.dessenne@st.com>
-From:   Pierre Yves MORDRET <pierre-yves.mordret@st.com>
-Message-ID: <20f014c3-0511-2b43-bcd2-1ca8cc700d54@st.com>
-Date:   Wed, 24 Apr 2019 11:27:20 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
+        id S1729736AbfDXMWU convert rfc822-to-8bit (ORCPT
+        <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 24 Apr 2019 08:22:20 -0400
+Received: from mail-vs1-f67.google.com ([209.85.217.67]:42441 "EHLO
+        mail-vs1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729396AbfDXMWU (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Wed, 24 Apr 2019 08:22:20 -0400
+Received: by mail-vs1-f67.google.com with SMTP id f15so10234877vsk.9;
+        Wed, 24 Apr 2019 05:22:19 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=2+gyHyjOSfX4EDiY7exTorEvXpPqFPghhbTRaLfpWlM=;
+        b=ceuvQkcGt7B5W8Gk/AoM+nZ0XxBxed4s+paATFE3CE3QN8ssjVLrjU4jl+DRF5XoPi
+         LAnUS2/jJW+GlBNjpkJUtuYwNWTnKqCzyHbLFsZ3YtrXpXBUeZxrtN+tiS0ImB0OlwYD
+         5E3HV8YskKO0OuJMMYTRdOIYDmkvnHCaGFld3Wceaqvc7cyL+hYgEIRVO5SKXA41M70y
+         A3+Ih8PREXMtknEU11xKsiHlB8t71y609FcSsoUqEJKB7xNlQmkwlbQxTZxiAGhTXniW
+         8wI6N4+edCNJhiSyNL0mb5539HkJqRcU4ov1iTFlMjMAmqWWBguJNxaThoJaVJukw0eS
+         ds5Q==
+X-Gm-Message-State: APjAAAUJ0xHNcc1Ao3kV2JaiRuiBsPVIx9/AWQ4wXP/C7/8dV/RHMFB/
+        i9SgwBa24tOvI16zDH2KRXPWwGHhrX7gZnPt99Y=
+X-Google-Smtp-Source: APXvYqxMS+D620DJ7TPM39p4hDoPhPRDnewp45WELr1tq/x1uzopZXTMdhoYdD1nvFF0JaYq+u5Li1jFcdaBFXdRq+g=
+X-Received: by 2002:a67:8e03:: with SMTP id q3mr6228666vsd.152.1556108538862;
+ Wed, 24 Apr 2019 05:22:18 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <1556097685-7236-1-git-send-email-fabien.dessenne@st.com>
+References: <20190410182657.23034-1-niklas.soderlund+renesas@ragnatech.se>
+ <20190411084937.y5m6vzcwtkqqun7s@verge.net.au> <20190411151756.GC30887@bigcity.dyn.berto.se>
+In-Reply-To: <20190411151756.GC30887@bigcity.dyn.berto.se>
+From:   Geert Uytterhoeven <geert@linux-m68k.org>
+Date:   Wed, 24 Apr 2019 14:22:06 +0200
+Message-ID:
+ <CAMuHMdXLM0hkUva4AukBpYy+=mRQ_tWT4XCGb=ZGbuT5nYMzjA@mail.gmail.com>
+Subject: Re: [PATCH] dmaengine: rcar-dmac: Update copyright information
+To:     =?UTF-8?Q?Niklas_S=C3=B6derlund?= <niklas.soderlund@ragnatech.se>,
+        Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
+Cc:     Simon Horman <horms@verge.net.au>, dmaengine@vger.kernel.org,
+        Linux-Renesas <linux-renesas-soc@vger.kernel.org>,
+        Hiroyuki Yokoyama <hiroyuki.yokoyama.vx@renesas.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.75.127.47]
-X-ClientProxiedBy: SFHDAG2NODE2.st.com (10.75.127.5) To SFHDAG5NODE2.st.com
- (10.75.127.14)
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,, definitions=2019-04-24_07:,,
- signatures=0
+Content-Transfer-Encoding: 8BIT
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
-Message-ID: <20190424092720.j-u9DN_xYuLGtc3Zh3fsJIRdf_2vDICyihwzRLUfruA@z>
+Message-ID: <20190424122206.OtcecimGAQzwjZ7v_0KTN1tRldYoKkhtOVMJvgZZuYY@z>
 
-Hello
+Hi Niklas, Shimoda-san,
 
-Reviewed-by: Pierre-Yves MORDRET <pierre-yves.mordret@st.com>
+On Thu, Apr 11, 2019 at 5:18 PM Niklas Söderlund
+<niklas.soderlund@ragnatech.se> wrote:
+> On 2019-04-11 10:49:37 +0200, Simon Horman wrote:
+> > On Wed, Apr 10, 2019 at 08:26:57PM +0200, Niklas Söderlund wrote:
+> > Not strictly related, but is it appropriate to:
+> >
+> > 1. Move this driver and drivers/dma/sh/usb-dmac.c to drivers/dma/renesas/
 
-Thanks
+That may make sense...
 
-On 4/24/19 11:21 AM, Fabien Dessenne wrote:
-> platform_get_resource(pdev, IORESOURCE_IRQ) is not recommended for
-> requesting IRQ's resources, as they can be not ready yet. Using
-> platform_get_irq() instead is preferred for getting IRQ even if it was
-> not retrieved earlier.
-> 
-> Signed-off-by: Fabien Dessenne <fabien.dessenne@st.com>
-> ---
->  drivers/dma/stm32-dma.c | 11 ++++++-----
->  1 file changed, 6 insertions(+), 5 deletions(-)
-> 
-> diff --git a/drivers/dma/stm32-dma.c b/drivers/dma/stm32-dma.c
-> index ba239b5..3306818 100644
-> --- a/drivers/dma/stm32-dma.c
-> +++ b/drivers/dma/stm32-dma.c
-> @@ -1302,13 +1302,14 @@ static int stm32_dma_probe(struct platform_device *pdev)
->  
->  	for (i = 0; i < STM32_DMA_MAX_CHANNELS; i++) {
->  		chan = &dmadev->chan[i];
-> -		res = platform_get_resource(pdev, IORESOURCE_IRQ, i);
-> -		if (!res) {
-> -			ret = -EINVAL;
-> -			dev_err(&pdev->dev, "No irq resource for chan %d\n", i);
-> +		chan->irq = platform_get_irq(pdev, i);
-> +		if (chan->irq < 0)  {
-> +			ret = chan->irq;
-> +			if (ret != -EPROBE_DEFER)
-> +				dev_err(&pdev->dev,
-> +					"No irq resource for chan %d\n", i);
->  			goto err_unregister;
->  		}
-> -		chan->irq = res->start;
->  		ret = devm_request_irq(&pdev->dev, chan->irq,
->  				       stm32_dma_chan_irq, 0,
->  				       dev_name(chan2dev(chan)), chan);
-> 
+> > 2. Remove drivers/dma/sh/sudmac.c which appears unused
+>
+> I let someone with a better grasp of history answer this one. From my
+> side removing drivers which are unused seems like a good idea :-)
+
+There seem to be some (half-baked?) interaction between sudmac.c and
+drivers/usb/gadget/udc/r8a66597-udc.c and drivers/usb/renesas_usbhs/fifo.c.
+These don't seem to be used at all on Renesas ARM platforms, but
+CONFIG_USB_R8A66597_HCD is enabled in shmobile_defconfig and
+multi_v7_defconfig?
+
+Shimoda-san: can you please enlighten us?
+Thanks!
+
+Gr{oetje,eeting}s,
+
+                        Geert
+
+-- 
+Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
+
+In personal conversations with technical people, I call myself a hacker. But
+when I'm talking to journalists I just say "programmer" or something like that.
+                                -- Linus Torvalds
