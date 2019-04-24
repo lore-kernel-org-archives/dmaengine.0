@@ -1,14 +1,33 @@
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
-Subject: dmaengine: rcar-dmac: Update copyright information
-From: Vinod Koul <vkoul@kernel.org>
-Message-Id: <20190426115447.GZ28103@vkoul-mobl>
-Date: Fri, 26 Apr 2019 17:24:47 +0530
-To: Niklas =?iso-8859-1?Q?S=F6derlund?= <niklas.soderlund+renesas@ragnatech.se>
-Cc: dmaengine@vger.kernel.org, linux-renesas-soc@vger.kernel.org, Hiroyuki Yokoyama <hiroyuki.yokoyama.vx@renesas.com>
+Subject: dmaengine: stm32-dma: dmaengine: stm32-dma: use platform_get_irq()
+From: Fabien DESSENNE <fabien.dessenne@st.com>
+Message-Id: <1556097685-7236-1-git-send-email-fabien.dessenne@st.com>
+Date: Wed, 24 Apr 2019 11:21:25 +0200
+To: Vinod Koul <vkoul@kernel.org>, Dan Williams <dan.j.williams@intel.com>, Maxime Coquelin <mcoquelin.stm32@gmail.com>, Alexandre Torgue <alexandre.torgue@st.com>, Pierre-Yves MORDRET <pierre-yves.mordret@st.com>, dmaengine@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com, linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
+Cc: Fabien Dessenne <fabien.dessenne@st.com>
 List-ID: <dmaengine.vger.kernel.org>
 
-T24gMTAtMDQtMTksIDIwOjI2LCBOaWtsYXMgU8O2ZGVybHVuZCB3cm90ZToKPiBGcm9tOiBIaXJv
-eXVraSBZb2tveWFtYSA8aGlyb3l1a2kueW9rb3lhbWEudnhAcmVuZXNhcy5jb20+Cj4gCj4gVXBk
-YXRlIGNvcHlyaWdodCBhbmQgc3RyaW5nIGZvciBHZW4zLgoKQXBwbGllZCwgdGhhbmtzCg==
+cGxhdGZvcm1fZ2V0X3Jlc291cmNlKHBkZXYsIElPUkVTT1VSQ0VfSVJRKSBpcyBub3QgcmVjb21t
+ZW5kZWQgZm9yCnJlcXVlc3RpbmcgSVJRJ3MgcmVzb3VyY2VzLCBhcyB0aGV5IGNhbiBiZSBub3Qg
+cmVhZHkgeWV0LiBVc2luZwpwbGF0Zm9ybV9nZXRfaXJxKCkgaW5zdGVhZCBpcyBwcmVmZXJyZWQg
+Zm9yIGdldHRpbmcgSVJRIGV2ZW4gaWYgaXQgd2FzCm5vdCByZXRyaWV2ZWQgZWFybGllci4KClNp
+Z25lZC1vZmYtYnk6IEZhYmllbiBEZXNzZW5uZSA8ZmFiaWVuLmRlc3Nlbm5lQHN0LmNvbT4KLS0t
+CiBkcml2ZXJzL2RtYS9zdG0zMi1kbWEuYyB8IDExICsrKysrKy0tLS0tCiAxIGZpbGUgY2hhbmdl
+ZCwgNiBpbnNlcnRpb25zKCspLCA1IGRlbGV0aW9ucygtKQoKZGlmZiAtLWdpdCBhL2RyaXZlcnMv
+ZG1hL3N0bTMyLWRtYS5jIGIvZHJpdmVycy9kbWEvc3RtMzItZG1hLmMKaW5kZXggYmEyMzliNS4u
+MzMwNjgxOCAxMDA2NDQKLS0tIGEvZHJpdmVycy9kbWEvc3RtMzItZG1hLmMKKysrIGIvZHJpdmVy
+cy9kbWEvc3RtMzItZG1hLmMKQEAgLTEzMDIsMTMgKzEzMDIsMTQgQEAgc3RhdGljIGludCBzdG0z
+Ml9kbWFfcHJvYmUoc3RydWN0IHBsYXRmb3JtX2RldmljZSAqcGRldikKIAogCWZvciAoaSA9IDA7
+IGkgPCBTVE0zMl9ETUFfTUFYX0NIQU5ORUxTOyBpKyspIHsKIAkJY2hhbiA9ICZkbWFkZXYtPmNo
+YW5baV07Ci0JCXJlcyA9IHBsYXRmb3JtX2dldF9yZXNvdXJjZShwZGV2LCBJT1JFU09VUkNFX0lS
+USwgaSk7Ci0JCWlmICghcmVzKSB7Ci0JCQlyZXQgPSAtRUlOVkFMOwotCQkJZGV2X2VycigmcGRl
+di0+ZGV2LCAiTm8gaXJxIHJlc291cmNlIGZvciBjaGFuICVkXG4iLCBpKTsKKwkJY2hhbi0+aXJx
+ID0gcGxhdGZvcm1fZ2V0X2lycShwZGV2LCBpKTsKKwkJaWYgKGNoYW4tPmlycSA8IDApICB7CisJ
+CQlyZXQgPSBjaGFuLT5pcnE7CisJCQlpZiAocmV0ICE9IC1FUFJPQkVfREVGRVIpCisJCQkJZGV2
+X2VycigmcGRldi0+ZGV2LAorCQkJCQkiTm8gaXJxIHJlc291cmNlIGZvciBjaGFuICVkXG4iLCBp
+KTsKIAkJCWdvdG8gZXJyX3VucmVnaXN0ZXI7CiAJCX0KLQkJY2hhbi0+aXJxID0gcmVzLT5zdGFy
+dDsKIAkJcmV0ID0gZGV2bV9yZXF1ZXN0X2lycSgmcGRldi0+ZGV2LCBjaGFuLT5pcnEsCiAJCQkJ
+ICAgICAgIHN0bTMyX2RtYV9jaGFuX2lycSwgMCwKIAkJCQkgICAgICAgZGV2X25hbWUoY2hhbjJk
+ZXYoY2hhbikpLCBjaGFuKTsK
