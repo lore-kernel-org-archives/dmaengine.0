@@ -1,22 +1,15 @@
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
-Subject: [V3] dmaengine: axi-dmac: Don't check the number of frames for alignment
+Subject: [V2,RESEND] dmaengine: axi-dmac: Enable DMA_INTERLEAVE capability
 From: Vinod Koul <vkoul@kernel.org>
-Message-Id: <20190424053851.GL28103@vkoul-mobl>
-Date: Wed, 24 Apr 2019 11:08:51 +0530
+Message-Id: <20190424053909.GM28103@vkoul-mobl>
+Date: Wed, 24 Apr 2019 11:09:09 +0530
 To: Alexandru Ardelean <alexandru.ardelean@analog.com>
-Cc: dmaengine@vger.kernel.org
+Cc: dmaengine@vger.kernel.org, Dragos Bogdan <dragos.bogdan@analog.com>
 List-ID: <dmaengine.vger.kernel.org>
 
-T24gMjYtMDMtMTksIDE2OjA1LCBBbGV4YW5kcnUgQXJkZWxlYW4gd3JvdGU6Cj4gSW4gMkQgdHJh
-bnNmZXJzIChmb3IgdGhlIEFYSSBETUFDKSwgdGhlIG51bWJlciBvZiBmcmFtZXMgKG51bWYpIHJl
-cHJlc2VudHMKPiBZX0xFTkdUSCwgYW5kIHRoZSBsZW5ndGggb2YgYSBmcmFtZSBpcyBYX0xFTkdU
-SC4gMkQgdHJhbnNmZXJzIGFyZSB1c2VmdWwKPiBmb3IgdmlkZW8gdHJhbnNmZXJzIHdoZXJlIHNj
-cmVlbiByZXNvbHV0aW9ucyAoIFggKiBZICkgYXJlIHR5cGljYWxseQo+IGFsaWduZWQgZm9yIFgs
-IGJ1dCBub3QgZm9yIFkuCj4gCj4gVGhlcmUgaXMgbm8gcmVxdWlyZW1lbnQgZm9yIFlfTEVOR1RI
-IHRvIGJlIGFsaWduZWQgdG8gdGhlIGJ1cy13aWR0aCAob3IKPiBhbnl0aGluZyksIGFuZCB0aGlz
-IGlzIGFsc28gdHJ1ZSBmb3IgQVhJIERNQUMuCj4gCj4gQ2hlY2tpbmcgdGhlIFlfTEVOR1RIIGZv
-ciBhbGlnbm1lbnQgY2F1c2VzIGZhbHNlIGVycm9ycyB3aGVuIGluaXRpYXRpbmcgRE1BCj4gdHJh
-bnNmZXJzLiBUaGlzIGNoYW5nZSBmaXhlcyB0aGlzIGJ5IGNoZWNraW5nIG9ubHkgdGhhdCB0aGUg
-WV9MRU5HVEggaXMKPiBub24temVyby4KCkFwcGxpZWQsIHRoYW5rcwo=
+T24gMjYtMDMtMTksIDE2OjA3LCBBbGV4YW5kcnUgQXJkZWxlYW4gd3JvdGU6Cj4gRnJvbTogRHJh
+Z29zIEJvZ2RhbiA8ZHJhZ29zLmJvZ2RhbkBhbmFsb2cuY29tPgo+IAo+IFNpbmNlIGRldmljZV9w
+cmVwX2ludGVybGVhdmVkX2RtYSgpIGlzIGFscmVhZHkgaW1wbGVtZW50ZWQsIHRoZQo+IERNQV9J
+TlRFUkxFQVZFIGNhcGFiaWxpdHkgc2hvdWxkIGJlIHNldC4KCkFwcGxpZWQsIHRoYW5rcwo=
