@@ -1,32 +1,28 @@
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
-Subject: [v1,05/15] dma: engine: imx-sdma: add mcu_2_ecspi script
-From: Robin Gong <yibin.gong@nxp.com>
-Message-Id: <1556027045-5269-6-git-send-email-yibin.gong@nxp.com>
-Date: Tue, 23 Apr 2019 13:51:00 +0000
-To: "broonie@kernel.org" <broonie@kernel.org>, "shawnguo@kernel.org" <shawnguo@kernel.org>, "s.hauer@pengutronix.de" <s.hauer@pengutronix.de>, "festevam@gmail.com" <festevam@gmail.com>, "robh+dt@kernel.org" <robh+dt@kernel.org>, "mark.rutland@arm.com" <mark.rutland@arm.com>, "u.kleine-koenig@pengutronix.de" <u.kleine-koenig@pengutronix.de>, "plyatov@gmail.com" <plyatov@gmail.com>, "sean.nyekjaer@prevas.dk" <sean.nyekjaer@prevas.dk>
-Cc: dl-linux-imx <linux-imx@nxp.com>, "linux-spi@vger.kernel.org" <linux-spi@vger.kernel.org>, "linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>, "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>, "dmaengine@vger.kernel.org" <dmaengine@vger.kernel.org>, "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>, "kernel@pengutronix.de" <kernel@pengutronix.de>
+Subject: [1/1] dmaengine: mediatek-cqdma: fix wrong register usage in mtk_cqdma_start
+From: shun-chih.yu@mediatek.com
+Message-Id: <1556164430-30724-1-git-send-email-shun-chih.yu@mediatek.com>
+Date: Thu, 25 Apr 2019 11:53:50 +0800
+To: Sean Wang <sean.wang@mediatek.com>, Vinod Koul <vkoul@kernel.org>, Matthias Brugger <matthias.bgg@gmail.com>, Dan Williams <dan.j.williams@intel.com>
+Cc: dmaengine@vger.kernel.org, linux-arm-kernel@lists.infradead.org, linux-mediatek@lists.infradead.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, srv_wsdupstream@mediatek.com, Shun-Chih Yu <shun-chih.yu@mediatek.com>
 List-ID: <dmaengine.vger.kernel.org>
 
-QWRkIG1jdV8yX2Vjc3BpIHNjcmlwdCB0byBmaXggZWNzcGkgZXJyYXRhIEVSUjAwOTE2NS4NCg0K
-U2lnbmVkLW9mZi1ieTogUm9iaW4gR29uZyA8eWliaW4uZ29uZ0BueHAuY29tPg0KLS0tDQogZHJp
-dmVycy9kbWEvaW14LXNkbWEuYyAgICAgICAgICAgICAgICAgICAgIHwgMyArKysNCiBpbmNsdWRl
-L2xpbnV4L3BsYXRmb3JtX2RhdGEvZG1hLWlteC1zZG1hLmggfCAxICsNCiAyIGZpbGVzIGNoYW5n
-ZWQsIDQgaW5zZXJ0aW9ucygrKQ0KDQotLSANCjIuNy40CgpkaWZmIC0tZ2l0IGEvZHJpdmVycy9k
-bWEvaW14LXNkbWEuYyBiL2RyaXZlcnMvZG1hL2lteC1zZG1hLmMNCmluZGV4IDhhOGNlOThhLi4x
-ZTIwNDcwIDEwMDY0NA0KLS0tIGEvZHJpdmVycy9kbWEvaW14LXNkbWEuYw0KKysrIGIvZHJpdmVy
-cy9kbWEvaW14LXNkbWEuYw0KQEAgLTkyNCw2ICs5MjQsOSBAQCBzdGF0aWMgdm9pZCBzZG1hX2dl
-dF9wYyhzdHJ1Y3Qgc2RtYV9jaGFubmVsICpzZG1hYywNCiAJCWVtaV8yX3BlciA9IHNkbWEtPnNj
-cmlwdF9hZGRycy0+bWN1XzJfYXRhX2FkZHI7DQogCQlicmVhazsNCiAJY2FzZSBJTVhfRE1BVFlQ
-RV9DU1BJOg0KKwkJcGVyXzJfZW1pID0gc2RtYS0+c2NyaXB0X2FkZHJzLT5hcHBfMl9tY3VfYWRk
-cjsNCisJCWVtaV8yX3BlciA9IHNkbWEtPnNjcmlwdF9hZGRycy0+bWN1XzJfZWNzcGlfYWRkcjsN
-CisJCWJyZWFrOw0KIAljYXNlIElNWF9ETUFUWVBFX0VYVDoNCiAJY2FzZSBJTVhfRE1BVFlQRV9T
-U0k6DQogCWNhc2UgSU1YX0RNQVRZUEVfU0FJOg0KZGlmZiAtLWdpdCBhL2luY2x1ZGUvbGludXgv
-cGxhdGZvcm1fZGF0YS9kbWEtaW14LXNkbWEuaCBiL2luY2x1ZGUvbGludXgvcGxhdGZvcm1fZGF0
-YS9kbWEtaW14LXNkbWEuaA0KaW5kZXggNmVhYTUzYy4uZjc5NGZlZSAxMDA2NDQNCi0tLSBhL2lu
-Y2x1ZGUvbGludXgvcGxhdGZvcm1fZGF0YS9kbWEtaW14LXNkbWEuaA0KKysrIGIvaW5jbHVkZS9s
-aW51eC9wbGF0Zm9ybV9kYXRhL2RtYS1pbXgtc2RtYS5oDQpAQCAtNTEsNiArNTEsNyBAQCBzdHJ1
-Y3Qgc2RtYV9zY3JpcHRfc3RhcnRfYWRkcnMgew0KIAkvKiBFbmQgb2YgdjIgYXJyYXkgKi8NCiAJ
-czMyIHpjYW5mZF8yX21jdV9hZGRyOw0KIAlzMzIgenFzcGlfMl9tY3VfYWRkcjsNCisJczMyIG1j
-dV8yX2Vjc3BpX2FkZHI7DQogCS8qIEVuZCBvZiB2MyBhcnJheSAqLw0KIH07DQogDQo=
+RnJvbTogU2h1bi1DaGloIFl1IDxzaHVuLWNoaWgueXVAbWVkaWF0ZWsuY29tPgoKVGhpcyBwYXRj
+aCBmaXhlcyB3cm9uZyByZWdpc3RlciB1c2FnZSBpbiB0aGUgbXRrX2NxZG1hX3N0YXJ0LiBUaGUK
+ZGVzdGluYXRpb24gcmVnaXN0ZXIgc2hvdWxkIGJlIE1US19DUURNQV9EU1QyIGluc3RlYWQuCgpG
+aXhlczogYjFmMDFlNDhkZjVhICgiZG1hZW5naW5lOiBtZWRpYXRlazogQWRkIE1lZGlhVGVrIENv
+bW1hbmQtUXVldWUgRE1BIGNvbnRyb2xsZXIgZm9yIE1UNjc2NSBTb0MiKQpTaWduZWQtb2ZmLWJ5
+OiBTaHVuLUNoaWggWXUgPHNodW4tY2hpaC55dUBtZWRpYXRlay5jb20+Ci0tLQogZHJpdmVycy9k
+bWEvbWVkaWF0ZWsvbXRrLWNxZG1hLmMgfCAgICAyICstCiAxIGZpbGUgY2hhbmdlZCwgMSBpbnNl
+cnRpb24oKyksIDEgZGVsZXRpb24oLSkKCmRpZmYgLS1naXQgYS9kcml2ZXJzL2RtYS9tZWRpYXRl
+ay9tdGstY3FkbWEuYyBiL2RyaXZlcnMvZG1hL21lZGlhdGVrL210ay1jcWRtYS5jCmluZGV4IDEz
+MWYzOTcuLjgxNDg1MzggMTAwNjQ0Ci0tLSBhL2RyaXZlcnMvZG1hL21lZGlhdGVrL210ay1jcWRt
+YS5jCisrKyBiL2RyaXZlcnMvZG1hL21lZGlhdGVrL210ay1jcWRtYS5jCkBAIC0yNTMsNyArMjUz
+LDcgQEAgc3RhdGljIHZvaWQgbXRrX2NxZG1hX3N0YXJ0KHN0cnVjdCBtdGtfY3FkbWFfcGNoYW4g
+KnBjLAogI2lmZGVmIENPTkZJR19BUkNIX0RNQV9BRERSX1RfNjRCSVQKIAltdGtfZG1hX3NldChw
+YywgTVRLX0NRRE1BX0RTVDIsIGN2ZC0+ZGVzdCA+PiBNVEtfQ1FETUFfQUREUjJfU0hGSVQpOwog
+I2Vsc2UKLQltdGtfZG1hX3NldChwYywgTVRLX0NRRE1BX1NSQzIsIDApOworCW10a19kbWFfc2V0
+KHBjLCBNVEtfQ1FETUFfRFNUMiwgMCk7CiAjZW5kaWYKIAogCS8qIHNldHVwIHRoZSBsZW5ndGgg
+Ki8K
