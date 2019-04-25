@@ -1,122 +1,124 @@
-Return-Path: <SRS0=fQ6P=S2=vger.kernel.org=dmaengine-owner@kernel.org>
+Return-Path: <SRS0=dFZC=S3=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.0 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_PASS,USER_AGENT_GIT autolearn=unavailable autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-1.0 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_PASS,URIBL_BLOCKED
+	autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 270F3C282CE
-	for <dmaengine@archiver.kernel.org>; Wed, 24 Apr 2019 23:18:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 52B3CC282DD
+	for <dmaengine@archiver.kernel.org>; Thu, 25 Apr 2019 03:52:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id E9D482175B
-	for <dmaengine@archiver.kernel.org>; Wed, 24 Apr 2019 23:18:32 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1E360218AD
+	for <dmaengine@archiver.kernel.org>; Thu, 25 Apr 2019 03:52:30 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bVNjo/CR"
+	dkim=pass (1024-bit key) header.d=renesasgroup.onmicrosoft.com header.i=@renesasgroup.onmicrosoft.com header.b="M8y/PigK"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727950AbfDXXS2 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 24 Apr 2019 19:18:28 -0400
-Received: from mail-lj1-f194.google.com ([209.85.208.194]:38431 "EHLO
-        mail-lj1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727945AbfDXXS1 (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Wed, 24 Apr 2019 19:18:27 -0400
-Received: by mail-lj1-f194.google.com with SMTP id p14so18462845ljg.5;
-        Wed, 24 Apr 2019 16:18:26 -0700 (PDT)
+        id S2389044AbfDYDw3 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 24 Apr 2019 23:52:29 -0400
+Received: from mail-eopbgr1410101.outbound.protection.outlook.com ([40.107.141.101]:59306
+        "EHLO JPN01-OS2-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S2388848AbfDYDw3 (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Wed, 24 Apr 2019 23:52:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=3SWil8fXUv08kqinX3hYmvZH788sYA0vKX106ff7czk=;
-        b=bVNjo/CREbsXIw2upxUCOy5WeHGRR5BoRsbxd/AK/PuzP1D3hdgJzamdz1n/M7Q62z
-         u8yS0ecyncyJHx7bpAyE8wTQZLz16+sD33ey3X44LgUjru36shIk/FpOMeGkagb99nyJ
-         OyOBJUuDy9U2pr1laTY7lPzAlcqfGj85u7SXjoxWrQtQ9+PX28g4b5CKLRuKmCn1Jh9K
-         NV9pC5qxCcob0DyblLiDVHtbhHyrvhVdVjMhPRglSACszeUy/eDyYTAZmJ967cJ0nhCg
-         +oyCJkwQNyF60449cBykm2S9NtcGCvP6nQQCNK4GgUoKZNdlW1Iy9vqhX9/cC+E86ylp
-         HeHA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=3SWil8fXUv08kqinX3hYmvZH788sYA0vKX106ff7czk=;
-        b=eiA3YIXe82BzZyXHul6y7JjykC7Q7v6P8Ptw5rLuKKZT6WgyG7ZIbQzlDf4WFZn6Rk
-         425L25uO9c5Yn+7HrF/HcnTtyRRLJEsalHy1WCAuCCFGbBSjvw6j8eb102SQEkFEUCbe
-         //qURkdp1+VdoGB3Y2sKdC0F4ZRD8RvE3JAiXlJ4GizZUMd/WJN/eE548TCrj5Nz9lGr
-         3B4EbboQRHv3cxmVBxotnzheQVfphc/wuVYEd58GZ5bz5Dw9keRPJYBtR67ALwio6nTZ
-         vqeIho5jRNNoAvCqBvPtRv6i7CwAJlhHfl4a+D+AhReV8X0BUqIzYixSo8FHsttsBuj6
-         oinw==
-X-Gm-Message-State: APjAAAVMMgerbmCPMxYrSv0ylpo+5bP0hCWYwvsBU6KBEOigtwMarEEG
-        YpoYo5YW3DCDvaNYMHSRK2c=
-X-Google-Smtp-Source: APXvYqzTODQRoKzG1HhNkcjlO8yvJ9/ZOS0I9zGBBnncViYQi2ZlGKSszVlNsSZjNzEX61fRKhGKqg==
-X-Received: by 2002:a2e:9812:: with SMTP id a18mr1439076ljj.146.1556147905499;
-        Wed, 24 Apr 2019 16:18:25 -0700 (PDT)
-Received: from localhost.localdomain (ppp94-29-35-107.pppoe.spdop.ru. [94.29.35.107])
-        by smtp.gmail.com with ESMTPSA id p72sm41861lja.41.2019.04.24.16.18.24
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 24 Apr 2019 16:18:24 -0700 (PDT)
-From:   Dmitry Osipenko <digetx@gmail.com>
-To:     Laxman Dewangan <ldewangan@nvidia.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>
-Cc:     dmaengine@vger.kernel.org, linux-tegra@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH v1] dmaengine: tegra: Use relaxed versions of readl/writel
-Date:   Thu, 25 Apr 2019 02:17:08 +0300
-Message-Id: <20190424231708.21219-1-digetx@gmail.com>
-X-Mailer: git-send-email 2.21.0
+ d=renesasgroup.onmicrosoft.com; s=selector1-renesas-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=bnjF23ojk3xuGNM4wuu7Ko6A6vVJUmZEu3PoFoZryQw=;
+ b=M8y/PigK2CCtiwYiUpCEPuQu5Sr59cRJWu3sc2ngoChDoGxCbpdaa33w7SYjFHI/LW3f8BaXG3VhH89hO2sYcUjIr8S4A+RNF062WgTVJ4sppzbwzRvyai1fIZWBcoPwA8YAyvjNlYLWTvgj5IPIXTnpJhz/xViKzsTlhnAkaVk=
+Received: from OSBPR01MB1733.jpnprd01.prod.outlook.com (52.134.227.22) by
+ OSBPR01MB3398.jpnprd01.prod.outlook.com (20.178.96.11) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.1835.13; Thu, 25 Apr 2019 03:52:22 +0000
+Received: from OSBPR01MB1733.jpnprd01.prod.outlook.com
+ ([fe80::902e:1148:6b6d:8280]) by OSBPR01MB1733.jpnprd01.prod.outlook.com
+ ([fe80::902e:1148:6b6d:8280%3]) with mapi id 15.20.1813.017; Thu, 25 Apr 2019
+ 03:52:22 +0000
+From:   Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
+To:     Geert Uytterhoeven <geert@linux-m68k.org>,
+        =?utf-8?B?TmlrbGFzIFPDtmRlcmx1bmQ=?= 
+        <niklas.soderlund@ragnatech.se>
+CC:     Simon Horman <horms@verge.net.au>,
+        "dmaengine@vger.kernel.org" <dmaengine@vger.kernel.org>,
+        Linux-Renesas <linux-renesas-soc@vger.kernel.org>,
+        HIROYUKI YOKOYAMA <hiroyuki.yokoyama.vx@renesas.com>
+Subject: RE: [PATCH] dmaengine: rcar-dmac: Update copyright information
+Thread-Topic: [PATCH] dmaengine: rcar-dmac: Update copyright information
+Thread-Index: AQHU78smMz+XEEhstEycfA+c5SHoMqY2p2WAgABsgICAFD0tAIAA7a+A
+Date:   Thu, 25 Apr 2019 03:52:21 +0000
+Message-ID:
+ <OSBPR01MB1733615712FC0F8271580D8BD83D0@OSBPR01MB1733.jpnprd01.prod.outlook.com>
+References: <20190410182657.23034-1-niklas.soderlund+renesas@ragnatech.se>
+ <20190411084937.y5m6vzcwtkqqun7s@verge.net.au>
+ <20190411151756.GC30887@bigcity.dyn.berto.se>
+ <CAMuHMdXLM0hkUva4AukBpYy+=mRQ_tWT4XCGb=ZGbuT5nYMzjA@mail.gmail.com>
+In-Reply-To: <CAMuHMdXLM0hkUva4AukBpYy+=mRQ_tWT4XCGb=ZGbuT5nYMzjA@mail.gmail.com>
+Accept-Language: ja-JP, en-US
+Content-Language: ja-JP
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: spf=none (sender IP is )
+ smtp.mailfrom=yoshihiro.shimoda.uh@renesas.com; 
+x-originating-ip: [118.238.235.108]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 337f54b0-71f6-44c0-e789-08d6c9316bf2
+x-ms-office365-filtering-ht: Tenant
+x-microsoft-antispam: BCL:0;PCL:0;RULEID:(2390118)(7020095)(4652040)(8989299)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(5600141)(711020)(4605104)(4618075)(2017052603328)(7193020);SRVR:OSBPR01MB3398;
+x-ms-traffictypediagnostic: OSBPR01MB3398:
+x-microsoft-antispam-prvs: <OSBPR01MB3398590EF59E136D9ABB76A6D83D0@OSBPR01MB3398.jpnprd01.prod.outlook.com>
+x-forefront-prvs: 0018A2705B
+x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(39860400002)(136003)(366004)(376002)(396003)(346002)(189003)(199004)(9686003)(86362001)(55016002)(97736004)(6436002)(229853002)(256004)(81156014)(8676002)(53936002)(81166006)(25786009)(4326008)(107886003)(6246003)(316002)(7736002)(305945005)(26005)(186003)(74316002)(446003)(476003)(11346002)(14454004)(486006)(478600001)(6116002)(2906002)(3846002)(8936002)(33656002)(68736007)(99286004)(110136005)(54906003)(7696005)(76176011)(53546011)(6506007)(5660300002)(102836004)(71190400001)(93886005)(52536014)(71200400001)(66066001)(76116006)(66476007)(66946007)(73956011)(66446008)(64756008)(66556008);DIR:OUT;SFP:1102;SCL:1;SRVR:OSBPR01MB3398;H:OSBPR01MB1733.jpnprd01.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;MX:1;A:1;
+received-spf: None (protection.outlook.com: renesas.com does not designate
+ permitted sender hosts)
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam-message-info: m4hBt2kfvaWJtOeF8xZ5R8I8iF1goVErUesY5YdMCyH5EliHL9OYBCwrVci4zOxJTZbghWauUg7yYLCcO5vEvrajsluWhpI685yEPthOA3+RrtJ8H8PMXAFK8rus+aBbL8eVd0x1u9OZRKLxaua7ZtGCeRpePJptadHrnQdNS5jl962okUdggE4OLYXo44iaOEwmWEnN2Lt3A0CYAW6BUN0x6Z+R3Wu8lqkKXqg/LFaKLaUPzU7g96oY76WM0uESmCAE/Bdn2ZFVJcs8mD5A6Xn3Pw7eTjniO0v77Ou8WD+pUl75UIoFlA3Pw724NpDwF4YMlmabCbep0ktG95CHCWO4as2Q92ikFBR2ivXcElXygZrbieIJmjNczilCX4CQscj0iNfnWIQjSLyCQ6kOgELYhxTexGyJuhUcf+gXTTo=
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+X-OriginatorOrg: renesas.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 337f54b0-71f6-44c0-e789-08d6c9316bf2
+X-MS-Exchange-CrossTenant-originalarrivaltime: 25 Apr 2019 03:52:21.9194
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 53d82571-da19-47e4-9cb4-625a166a4a2a
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: OSBPR01MB3398
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Message-ID: <20190424231708.cts_BWWJ9VOnq6kabZ_4FPvMryaEKbVLoYNGP4Cx1N4@z>
+Message-ID: <20190425035221.x4dRJslfWAzHyReBEw98PXM6pD5vUILbE4NoXZCpi2Y@z>
 
-The readl/writel functions are inserting memory barrier in order to
-ensure that memory stores are completed. On Tegra20 and Tegra30 this
-results in L2 cache syncing which isn't a cheapest operation. The
-tegra20-apb-dma driver doesn't need to synchronize generic memory
-accesses, hence use the relaxed versions of the functions.
-
-Signed-off-by: Dmitry Osipenko <digetx@gmail.com>
----
- drivers/dma/tegra20-apb-dma.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
-
-diff --git a/drivers/dma/tegra20-apb-dma.c b/drivers/dma/tegra20-apb-dma.c
-index cf462b1abc0b..e646e1c7b299 100644
---- a/drivers/dma/tegra20-apb-dma.c
-+++ b/drivers/dma/tegra20-apb-dma.c
-@@ -241,23 +241,23 @@ struct tegra_dma {
- 
- static inline void tdma_write(struct tegra_dma *tdma, u32 reg, u32 val)
- {
--	writel(val, tdma->base_addr + reg);
-+	writel_relaxed(val, tdma->base_addr + reg);
- }
- 
- static inline u32 tdma_read(struct tegra_dma *tdma, u32 reg)
- {
--	return readl(tdma->base_addr + reg);
-+	return readl_relaxed(tdma->base_addr + reg);
- }
- 
- static inline void tdc_write(struct tegra_dma_channel *tdc,
- 		u32 reg, u32 val)
- {
--	writel(val, tdc->chan_addr + reg);
-+	writel_relaxed(val, tdc->chan_addr + reg);
- }
- 
- static inline u32 tdc_read(struct tegra_dma_channel *tdc, u32 reg)
- {
--	return readl(tdc->chan_addr + reg);
-+	return readl_relaxed(tdc->chan_addr + reg);
- }
- 
- static inline struct tegra_dma_channel *to_tegra_dma_chan(struct dma_chan *dc)
--- 
-2.21.0
-
+SGkgR2VlcnQtc2FuLA0KDQo+IEZyb206IEdlZXJ0IFV5dHRlcmhvZXZlbiwgU2VudDogV2VkbmVz
+ZGF5LCBBcHJpbCAyNCwgMjAxOSA5OjIyIFBNDQo+IA0KPiBIaSBOaWtsYXMsIFNoaW1vZGEtc2Fu
+LA0KPiANCj4gT24gVGh1LCBBcHIgMTEsIDIwMTkgYXQgNToxOCBQTSBOaWtsYXMgU8O2ZGVybHVu
+ZA0KPiA8bmlrbGFzLnNvZGVybHVuZEByYWduYXRlY2guc2U+IHdyb3RlOg0KPiA+IE9uIDIwMTkt
+MDQtMTEgMTA6NDk6MzcgKzAyMDAsIFNpbW9uIEhvcm1hbiB3cm90ZToNCj4gPiA+IE9uIFdlZCwg
+QXByIDEwLCAyMDE5IGF0IDA4OjI2OjU3UE0gKzAyMDAsIE5pa2xhcyBTw7ZkZXJsdW5kIHdyb3Rl
+Og0KPiA+ID4gTm90IHN0cmljdGx5IHJlbGF0ZWQsIGJ1dCBpcyBpdCBhcHByb3ByaWF0ZSB0bzoN
+Cj4gPiA+DQo+ID4gPiAxLiBNb3ZlIHRoaXMgZHJpdmVyIGFuZCBkcml2ZXJzL2RtYS9zaC91c2It
+ZG1hYy5jIHRvIGRyaXZlcnMvZG1hL3JlbmVzYXMvDQo+IA0KPiBUaGF0IG1heSBtYWtlIHNlbnNl
+Li4uDQo+IA0KPiA+ID4gMi4gUmVtb3ZlIGRyaXZlcnMvZG1hL3NoL3N1ZG1hYy5jIHdoaWNoIGFw
+cGVhcnMgdW51c2VkDQo+ID4NCj4gPiBJIGxldCBzb21lb25lIHdpdGggYSBiZXR0ZXIgZ3Jhc3Ag
+b2YgaGlzdG9yeSBhbnN3ZXIgdGhpcyBvbmUuIEZyb20gbXkNCj4gPiBzaWRlIHJlbW92aW5nIGRy
+aXZlcnMgd2hpY2ggYXJlIHVudXNlZCBzZWVtcyBsaWtlIGEgZ29vZCBpZGVhIDotKQ0KPiANCj4g
+VGhlcmUgc2VlbSB0byBiZSBzb21lIChoYWxmLWJha2VkPykgaW50ZXJhY3Rpb24gYmV0d2VlbiBz
+dWRtYWMuYyBhbmQNCj4gZHJpdmVycy91c2IvZ2FkZ2V0L3VkYy9yOGE2NjU5Ny11ZGMuYyBhbmQg
+ZHJpdmVycy91c2IvcmVuZXNhc191c2Jocy9maWZvLmMuDQo+IFRoZXNlIGRvbid0IHNlZW0gdG8g
+YmUgdXNlZCBhdCBhbGwgb24gUmVuZXNhcyBBUk0gcGxhdGZvcm1zLCBidXQNCj4gQ09ORklHX1VT
+Ql9SOEE2NjU5N19IQ0QgaXMgZW5hYmxlZCBpbiBzaG1vYmlsZV9kZWZjb25maWcgYW5kDQo+IG11
+bHRpX3Y3X2RlZmNvbmZpZz8NCj4gDQo+IFNoaW1vZGEtc2FuOiBjYW4geW91IHBsZWFzZSBlbmxp
+Z2h0ZW4gdXM/DQo+IFRoYW5rcyENCg0KU3VyZS4NCg0KLSBTSDRBIC8gc2g3NzU3IGhhcyBTVURN
+QUMuIChhbnkgb3RoZXIgUmVuZXNhcyBBUk0gcGxhdGZvcm1zIGRvbid0IGhhdmUgaXQpLg0KICMg
+c2g3NzU3IGlzIG5vdCBwdWJsaWMgcHJvZHVjdCB0aG91Z2guLi4NCi0gQXQgZmlyc3QsIEkgYWRk
+ZWQgdGhpcyBTVURNQUMgc3VwcG9ydCBpbnRvIHI4YTY2NTk3LXVkYy4NCi0gQnV0LCBvdXIgZGly
+ZWN0aW9uIGlzIGNoYW5nZWQgYnkgc29tZSByZWFzb24uIFNvLCB3ZSB1c2UgcmVuZXNhc191c2Jo
+cyBkcml2ZXIgYW55d2F5Lg0KLSBUaGUgcmVuZXNhc191c2JocyBzdXBwb3J0cyBkbWFlbmdpbmUs
+IHNvIEkgYWRkZWQgZG1hL3NoL3N1ZG1hYyBkcml2ZXIuDQotIEhvd2V2ZXIsIGZvciBzb21lIHJl
+YXNvbnMgKG1heWJlIEknbSBidXN5IGZvciBvdGhlciBwcm9qZWN0cz8pLA0KICBJIGRpZG4ndCBh
+ZGQgdXNpbmcgdGhlIHN1ZG1hYyBzdXBwb3J0IGludG8gYXJjaC9zaC9rZXJuZWwvY3B1L3NoNGEv
+c2V0dXAtc2g3NzU3LmMuDQotIFNvLCBubyBvbmUgdXNlcyBib3RoIHI4YTY2NTk3LXVkYyBhbmQg
+c3VkbWFjIG5vdy4NCg0KRnJvbSAyMDEzIChhZGRlZCB0aGUgc3VkbWFjIGRyaXZlcikgdG8gbm93
+LCBzaW5jZSBubyBvbmUgaW50ZWdyYXRlZCB0aGUgc3VkbWFjIGZvciBzaDc3NTcsDQpJIHRoaW5r
+IHdlIGNhbiByZW1vdmUgdGhlIGRyaXZlci4NCg0KQmVzdCByZWdhcmRzLA0KWW9zaGloaXJvIFNo
+aW1vZGENCg0K
