@@ -2,90 +2,97 @@ Return-Path: <SRS0=bl+G=S4=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_PASS autolearn=unavailable autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-1.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_PASS,
+	T_DKIMWL_WL_HIGH autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 872B5C43218
-	for <dmaengine@archiver.kernel.org>; Fri, 26 Apr 2019 09:37:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 25505C43218
+	for <dmaengine@archiver.kernel.org>; Fri, 26 Apr 2019 09:52:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 5C59C206BA
-	for <dmaengine@archiver.kernel.org>; Fri, 26 Apr 2019 09:37:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E981D20679
+	for <dmaengine@archiver.kernel.org>; Fri, 26 Apr 2019 09:52:20 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=nvidia.com header.i=@nvidia.com header.b="aZpKIHzM"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726058AbfDZJhk (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 26 Apr 2019 05:37:40 -0400
-Received: from metis.ext.pengutronix.de ([85.220.165.71]:34459 "EHLO
-        metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725935AbfDZJhf (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Fri, 26 Apr 2019 05:37:35 -0400
-Received: from kresse.hi.pengutronix.de ([2001:67c:670:100:1d::2a])
-        by metis.ext.pengutronix.de with esmtp (Exim 4.89)
-        (envelope-from <l.stach@pengutronix.de>)
-        id 1hJxIK-0004Mr-LY; Fri, 26 Apr 2019 11:37:24 +0200
-Message-ID: <1556271442.2584.29.camel@pengutronix.de>
-Subject: Re: [EXT] Re: [PATCH v2 06/15] spi: imx: fix ERR009165
-From:   Lucas Stach <l.stach@pengutronix.de>
-To:     Robin Gong <yibin.gong@nxp.com>,
-        "robh+dt@kernel.org" <robh+dt@kernel.org>,
-        "u.kleine-koenig@pengutronix.de" <u.kleine-koenig@pengutronix.de>,
-        "festevam@gmail.com" <festevam@gmail.com>,
-        "plyatov@gmail.com" <plyatov@gmail.com>,
-        "broonie@kernel.org" <broonie@kernel.org>,
-        "dan.j.williams@intel.com" <dan.j.williams@intel.com>,
-        "mark.rutland@arm.com" <mark.rutland@arm.com>,
-        "catalin.marinas@arm.com" <catalin.marinas@arm.com>,
-        "will.deacon@arm.com" <will.deacon@arm.com>,
-        "shawnguo@kernel.org" <shawnguo@kernel.org>,
-        "s.hauer@pengutronix.de" <s.hauer@pengutronix.de>
-Cc:     "linux-spi@vger.kernel.org" <linux-spi@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "dmaengine@vger.kernel.org" <dmaengine@vger.kernel.org>,
-        dl-linux-imx <linux-imx@nxp.com>,
-        "kernel@pengutronix.de" <kernel@pengutronix.de>,
-        "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
-        "linux-arm-kernel@lists.infradead.org" 
-        <linux-arm-kernel@lists.infradead.org>
-Date:   Fri, 26 Apr 2019 11:37:22 +0200
-In-Reply-To: <1556270196.9298.16.camel@nxp.com>
-References: <1556265512-9130-1-git-send-email-yibin.gong@nxp.com>
-         <1556265512-9130-7-git-send-email-yibin.gong@nxp.com>
-         <1556269635.2584.23.camel@pengutronix.de>
-         <1556270196.9298.16.camel@nxp.com>
+        id S1726167AbfDZJwU (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 26 Apr 2019 05:52:20 -0400
+Received: from hqemgate14.nvidia.com ([216.228.121.143]:5976 "EHLO
+        hqemgate14.nvidia.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725944AbfDZJwU (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Fri, 26 Apr 2019 05:52:20 -0400
+Received: from hqpgpgate101.nvidia.com (Not Verified[216.228.121.13]) by hqemgate14.nvidia.com (using TLS: TLSv1.2, DES-CBC3-SHA)
+        id <B5cc2d4d90000>; Fri, 26 Apr 2019 02:52:25 -0700
+Received: from hqmail.nvidia.com ([172.20.161.6])
+  by hqpgpgate101.nvidia.com (PGP Universal service);
+  Fri, 26 Apr 2019 02:52:19 -0700
+X-PGP-Universal: processed;
+        by hqpgpgate101.nvidia.com on Fri, 26 Apr 2019 02:52:19 -0700
+Received: from [10.21.132.148] (10.124.1.5) by HQMAIL101.nvidia.com
+ (172.20.187.10) with Microsoft SMTP Server (TLS) id 15.0.1473.3; Fri, 26 Apr
+ 2019 09:52:17 +0000
+Subject: Re: [PATCH v1] dmaengine: tegra: Use relaxed versions of readl/writel
+To:     Dmitry Osipenko <digetx@gmail.com>,
+        Laxman Dewangan <ldewangan@nvidia.com>,
+        Vinod Koul <vkoul@kernel.org>,
+        Thierry Reding <thierry.reding@gmail.com>
+CC:     <dmaengine@vger.kernel.org>, <linux-tegra@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <20190424231708.21219-1-digetx@gmail.com>
+From:   Jon Hunter <jonathanh@nvidia.com>
+Message-ID: <d789f1bc-44d1-abf6-a046-7cf835416e8f@nvidia.com>
+Date:   Fri, 26 Apr 2019 10:52:15 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.6.1
+MIME-Version: 1.0
+In-Reply-To: <20190424231708.21219-1-digetx@gmail.com>
+X-Originating-IP: [10.124.1.5]
+X-ClientProxiedBy: HQMAIL105.nvidia.com (172.20.187.12) To
+ HQMAIL101.nvidia.com (172.20.187.10)
 Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.22.6-1+deb9u1 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: 2001:67c:670:100:1d::2a
-X-SA-Exim-Mail-From: l.stach@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: dmaengine@vger.kernel.org
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nvidia.com; s=n1;
+        t=1556272345; bh=QOZLdR2lD8/lHPVcDQMaWidLRGULKACQlNQH2+6obcE=;
+        h=X-PGP-Universal:Subject:To:CC:References:From:Message-ID:Date:
+         User-Agent:MIME-Version:In-Reply-To:X-Originating-IP:
+         X-ClientProxiedBy:Content-Type:Content-Language:
+         Content-Transfer-Encoding;
+        b=aZpKIHzM03vyqkp1zj3rvxPPJKNVuJZnSre0OhNHCSX5nHmutzs5LXO32h235RUc1
+         FNrk4ULuaLoOc/7pmjirYH0AajET9/aS+aDitcT8c2Rr12jtce2XdKE6/dlaz/Cw/E
+         +rpQH6AcU9hRT5dSXBIlMRGRcO2g9ly3yaHjEjNRsmI9Ch8T9sApDqz0y5M/F4RmnS
+         0Ect3WQtONs017lRyaUtMlpawqKAknAwRITBhKVanQevtqeoSgBaLezRjE4u7cCmmg
+         u2vUwuVguO+AasRwBuxg3G1z3elCb8UEHvCYiMTYcX+VQgmiV5JNwxwiMQ8tBRQzPt
+         X73B6t83daEbQ==
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
-Message-ID: <20190426093722.ri-pnBhumvyUPqxYRYeSsm_mXX_FVCIVkMrG6vmP_hM@z>
+Message-ID: <20190426095215.0lMZRVR8-LGfg7llEI3RhpE2fBLpyRR4yWp8l_01g_c@z>
 
-Am Freitag, den 26.04.2019, 09:22 +0000 schrieb Robin Gong:
-> On 2019-04-26 at 11:07 +0200, Lucas Stach wrote:
-> > 
-> > Am Freitag, den 26.04.2019, 08:05 +0000 schrieb Robin Gong:
-> > >  static void mx51_setup_wml(struct spi_imx_data *spi_imx)
-> > >  {
-> > > +     u32 tx_wml = 0;
-> > > +
-> > 
-> > With a wml of 0 you might set the maxburst of the TX dma channel to
-> > fifosize to minimize the performance impact of this workaround.
-> > 
-> > Regards,
-> > Lucas
-> 
-> Unfortunately, this is a MUST part of errata which cause performance
-> drop.
 
-I'm not talking about changing the WML, but when the WML must be 0 you
-can safely increase the DMA burst size without overflowing the FIFO,
-which might recover some of of the performance loss.
+On 25/04/2019 00:17, Dmitry Osipenko wrote:
+> The readl/writel functions are inserting memory barrier in order to
+> ensure that memory stores are completed. On Tegra20 and Tegra30 this
+> results in L2 cache syncing which isn't a cheapest operation. The
+> tegra20-apb-dma driver doesn't need to synchronize generic memory
+> accesses, hence use the relaxed versions of the functions.
 
-Regards,
-Lucas
+Do you mean device-io accesses here as this is not generic memory?
+
+Although there may not be any issues with this change, I think I need a
+bit more convincing that we should do this given that we have had it
+this way for sometime and I would not like to see us introduce any
+regressions as this point without being 100% certain we would not.
+Ideally, if I had some good extensive tests I could run to hammer the
+DMA for all configurations with different combinations of channels
+running simultaneously then we could test this, but right now I don't :-(
+
+Have you ...
+1. Tested both cyclic and scatter-gather transfers?
+2. Stress tested simultaneous transfers with various different
+   configurations?
+3. Quantified the actual performance benefit of this change so we can
+   understand how much of a performance boost this offers?
+
+Cheers
+Jon
