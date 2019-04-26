@@ -2,45 +2,19 @@ Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
 Subject: [v2,06/15] spi: imx: fix ERR009165
-From: Lucas Stach <l.stach@pengutronix.de>
-Message-Id: <1556269635.2584.23.camel@pengutronix.de>
-Date: Fri, 26 Apr 2019 11:07:15 +0200
-To: Robin Gong <yibin.gong@nxp.com>, "broonie@kernel.org" <broonie@kernel.org>, "shawnguo@kernel.org" <shawnguo@kernel.org>, "s.hauer@pengutronix.de" <s.hauer@pengutronix.de>, "festevam@gmail.com" <festevam@gmail.com>, "robh+dt@kernel.org" <robh+dt@kernel.org>, "mark.rutland@arm.com" <mark.rutland@arm.com>, "u.kleine-koenig@pengutronix.de" <u.kleine-koenig@pengutronix.de>, "plyatov@gmail.com" <plyatov@gmail.com>, "dan.j.williams@intel.com" <dan.j.williams@intel.com>, "catalin.marinas@arm.com" <catalin.marinas@arm.com>, "will.deacon@arm.com" <will.deacon@arm.com>
-Cc: "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>, "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>, "linux-spi@vger.kernel.org" <linux-spi@vger.kernel.org>, dl-linux-imx <linux-imx@nxp.com>, "kernel@pengutronix.de" <kernel@pengutronix.de>, "dmaengine@vger.kernel.org" <dmaengine@vger.kernel.org>, "linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>
+From: Robin Gong <yibin.gong@nxp.com>
+Message-Id: <1556270196.9298.16.camel@nxp.com>
+Date: Fri, 26 Apr 2019 09:22:52 +0000
+To: "robh+dt@kernel.org" <robh+dt@kernel.org>, "u.kleine-koenig@pengutronix.de" <u.kleine-koenig@pengutronix.de>, "festevam@gmail.com" <festevam@gmail.com>, "plyatov@gmail.com" <plyatov@gmail.com>, "broonie@kernel.org" <broonie@kernel.org>, "dan.j.williams@intel.com" <dan.j.williams@intel.com>, "mark.rutland@arm.com" <mark.rutland@arm.com>, "catalin.marinas@arm.com" <catalin.marinas@arm.com>, "will.deacon@arm.com" <will.deacon@arm.com>, "shawnguo@kernel.org" <shawnguo@kernel.org>, "l.stach@pengutronix.de" <l.stach@pengutronix.de>, "s.hauer@pengutronix.de" <s.hauer@pengutronix.de>
+Cc: "linux-spi@vger.kernel.org" <linux-spi@vger.kernel.org>, "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>, "dmaengine@vger.kernel.org" <dmaengine@vger.kernel.org>, dl-linux-imx <linux-imx@nxp.com>, "kernel@pengutronix.de" <kernel@pengutronix.de>, "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>, "linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>
 List-ID: <dmaengine.vger.kernel.org>
 
-QW0gRnJlaXRhZywgZGVuIDI2LjA0LjIwMTksIDA4OjA1ICswMDAwIHNjaHJpZWIgUm9iaW4gR29u
-ZzoKPiBDaGFuZ2UgdG8gWENIwqDCoG1vZGUgZXZlbiBpbiBkbWEgbW9kZSwgcGxlYXNlIHJlZmVy
-IHRvIHRoZSBiZWxvdwo+IGVycmF0YToKPiBodHRwczovL3d3dy5ueHAuY29tL2RvY3MvZW4vZXJy
-YXRhL0lNWDZEUUNFLnBkZgo+IAo+IFNpZ25lZC1vZmYtYnk6IFJvYmluIEdvbmcgPHlpYmluLmdv
-bmdAbnhwLmNvbT4KPiAtLS0KPiDCoGRyaXZlcnMvc3BpL3NwaS1pbXguYyB8IDExICsrKysrLS0t
-LS0tCj4gwqAxIGZpbGUgY2hhbmdlZCwgNSBpbnNlcnRpb25zKCspLCA2IGRlbGV0aW9ucygtKQo+
-IAo+IGRpZmYgLS1naXQgYS9kcml2ZXJzL3NwaS9zcGktaW14LmMgYi9kcml2ZXJzL3NwaS9zcGkt
-aW14LmMKPiBpbmRleCAwOWM5YTFlLi5lYjU2ZWFjIDEwMDY0NAo+IC0tLSBhL2RyaXZlcnMvc3Bp
-L3NwaS1pbXguYwo+ICsrKyBiL2RyaXZlcnMvc3BpL3NwaS1pbXguYwo+IEBAIC01ODUsOCArNTg1
-LDkgQEAgc3RhdGljIGludCBteDUxX2Vjc3BpX3ByZXBhcmVfdHJhbnNmZXIoc3RydWN0Cj4gc3Bp
-X2lteF9kYXRhICpzcGlfaW14LAo+IMKgCWN0cmwgfD0gbXg1MV9lY3NwaV9jbGtkaXYoc3BpX2lt
-eCwgdC0+c3BlZWRfaHosICZjbGspOwo+IMKgCXNwaV9pbXgtPnNwaV9idXNfY2xrID0gY2xrOwo+
-IMKgCj4gKwkvKiBFUlIwMDkxNjU6IHdvcmsgaW4gWEhDIG1vZGUgYXMgUElPICovCj4gwqAJaWYg
-KHNwaV9pbXgtPnVzZWRtYSkKPiAtCQljdHJsIHw9IE1YNTFfRUNTUElfQ1RSTF9TTUM7Cj4gKwkJ
-Y3RybCAmPSB+TVg1MV9FQ1NQSV9DVFJMX1NNQzsKPiDCoAo+IMKgCXdyaXRlbChjdHJsLCBzcGlf
-aW14LT5iYXNlICsgTVg1MV9FQ1NQSV9DVFJMKTsKPiDCoAo+IEBAIC02MTIsMTIgKzYxMywxNCBA
-QCBzdGF0aWMgaW50IG14NTFfZWNzcGlfcHJlcGFyZV90cmFuc2ZlcihzdHJ1Y3QKPiBzcGlfaW14
-X2RhdGEgKnNwaV9pbXgsCj4gwqAKPiDCoHN0YXRpYyB2b2lkIG14NTFfc2V0dXBfd21sKHN0cnVj
-dCBzcGlfaW14X2RhdGEgKnNwaV9pbXgpCj4gwqB7Cj4gKwl1MzIgdHhfd21sID0gMDsKPiArCgpX
-aXRoIGEgd21sIG9mIDAgeW91IG1pZ2h0IHNldCB0aGUgbWF4YnVyc3Qgb2YgdGhlIFRYIGRtYSBj
-aGFubmVsIHRvCmZpZm9zaXplIHRvIG1pbmltaXplIHRoZSBwZXJmb3JtYW5jZSBpbXBhY3Qgb2Yg
-dGhpcyB3b3JrYXJvdW5kLgoKUmVnYXJkcywKTHVjYXMKCj4gwqAJLyoKPiDCoAnCoCogQ29uZmln
-dXJlIHRoZSBETUEgcmVnaXN0ZXI6IHNldHVwIHRoZSB3YXRlcm1hcmsKPiDCoAnCoCogYW5kIGVu
-YWJsZSBETUEgcmVxdWVzdC4KPiDCoAnCoCovCj4gwqAJd3JpdGVsKE1YNTFfRUNTUElfRE1BX1JY
-X1dNTChzcGlfaW14LT53bWwgLSAxKSB8Cj4gLQkJTVg1MV9FQ1NQSV9ETUFfVFhfV01MKHNwaV9p
-bXgtPndtbCkgfAo+ICsJCU1YNTFfRUNTUElfRE1BX1RYX1dNTCh0eF93bWwpIHwKPiDCoAkJTVg1
-MV9FQ1NQSV9ETUFfUlhUX1dNTChzcGlfaW14LT53bWwpIHwKPiDCoAkJTVg1MV9FQ1NQSV9ETUFf
-VEVERU4gfCBNWDUxX0VDU1BJX0RNQV9SWERFTiB8Cj4gwqAJCU1YNTFfRUNTUElfRE1BX1JYVERF
-Tiwgc3BpX2lteC0+YmFzZSArCj4gTVg1MV9FQ1NQSV9ETUEpOwo+IEBAIC0xMjY1LDEwICsxMjY4
-LDYgQEAgc3RhdGljIGludCBzcGlfaW14X3NkbWFfaW5pdChzdHJ1Y3QgZGV2aWNlCj4gKmRldiwg
-c3RydWN0IHNwaV9pbXhfZGF0YSAqc3BpX2lteCwKPiDCoHsKPiDCoAlpbnQgcmV0Owo+IMKgCj4g
-LQkvKiB1c2UgcGlvIG1vZGUgZm9yIGkubXg2ZGwgY2hpcCBUS1QyMzgyODUgKi8KPiAtCWlmIChv
-Zl9tYWNoaW5lX2lzX2NvbXBhdGlibGUoImZzbCxpbXg2ZGwiKSkKPiAtCQlyZXR1cm4gMDsKPiAt
-Cj4gwqAJc3BpX2lteC0+d21sID0gc3BpX2lteC0+ZGV2dHlwZV9kYXRhLT5maWZvX3NpemUgLyAy
-Owo+IMKgCj4gwqAJLyogUHJlcGFyZSBmb3IgVFggRE1BOiAqLwo+IC0twqAKPiAyLjcuNAo+Cg==
+T24gMjAxOS0wNC0yNiBhdCAxMTowNyArMDIwMCwgTHVjYXMgU3RhY2ggd3JvdGU6DQo+IA0KPiBB
+bSBGcmVpdGFnLCBkZW4gMjYuMDQuMjAxOSwgMDg6MDUgKzAwMDAgc2NocmllYiBSb2JpbiBHb25n
+Og0KPiA+IMKgc3RhdGljIHZvaWQgbXg1MV9zZXR1cF93bWwoc3RydWN0IHNwaV9pbXhfZGF0YSAq
+c3BpX2lteCkNCj4gPiDCoHsNCj4gPiArwqDCoMKgwqDCoHUzMiB0eF93bWwgPSAwOw0KPiA+ICsN
+Cj4gV2l0aCBhIHdtbCBvZiAwIHlvdSBtaWdodCBzZXQgdGhlIG1heGJ1cnN0IG9mIHRoZSBUWCBk
+bWEgY2hhbm5lbCB0bw0KPiBmaWZvc2l6ZSB0byBtaW5pbWl6ZSB0aGUgcGVyZm9ybWFuY2UgaW1w
+YWN0IG9mIHRoaXMgd29ya2Fyb3VuZC4NCj4gDQo+IFJlZ2FyZHMsDQo+IEx1Y2FzDQpVbmZvcnR1
+bmF0ZWx5LCB0aGlzIGlzIGEgTVVTVCBwYXJ0IG9mIGVycmF0YSB3aGljaCBjYXVzZSBwZXJmb3Jt
+YW5jZQ0KZHJvcC4K
