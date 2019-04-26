@@ -2,70 +2,189 @@ Return-Path: <SRS0=bl+G=S4=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,MAILING_LIST_MULTI,SPF_PASS,T_DKIMWL_WL_HIGH,USER_AGENT_MUTT
-	autolearn=unavailable autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_PASS,
+	T_DKIMWL_WL_HIGH,URIBL_BLOCKED,USER_AGENT_MUTT autolearn=unavailable
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4F124C43219
-	for <dmaengine@archiver.kernel.org>; Fri, 26 Apr 2019 12:01:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 34CF5C43218
+	for <dmaengine@archiver.kernel.org>; Fri, 26 Apr 2019 12:18:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 1AFA4206C1
-	for <dmaengine@archiver.kernel.org>; Fri, 26 Apr 2019 12:01:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 065012089E
+	for <dmaengine@archiver.kernel.org>; Fri, 26 Apr 2019 12:18:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1556280115;
-	bh=Vowjtrv0OJqv16TygegnL2eNyyqR0noN1UiGX25yQ5M=;
+	s=default; t=1556281083;
+	bh=de4ui+tuZDXUFHeZfBrIGjZoQ8NU2gODJGhbz3Cpnjk=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:List-ID:From;
-	b=0czmq88f22V7+UllQTZBOGG+YLaRAwA4cEl+SlNlz0HBPvBPB0Q/0NZzUBbp4eeCk
-	 fSp31EW5iyFL2YVhLEmptOaR0Q5risBT6qTpOYsWhNMI2/Jy6zAlObr052CMgBkqX/
-	 Ah89dFY6CqRVO2hP3LIfR2UwxcafcotHY7V+1nlg=
+	b=k7QmQeXQC98b6Ue0BcJA+Ni9FIS3tDz0DT32Ps2wT5FiszFnHL+a4SLrrNl81trRl
+	 IMz4yns0WxhhHGZ33q+ibaqHlzl0QY7Eps92uToreHHmxpkiGL+rrH1W7aOetGX89q
+	 YeYdCYzlEtdn/UCRVSc9zmIa1KJqTET+vdv+jpg4=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726050AbfDZMBy (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 26 Apr 2019 08:01:54 -0400
-Received: from mail.kernel.org ([198.145.29.99]:49942 "EHLO mail.kernel.org"
+        id S1726191AbfDZMR6 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 26 Apr 2019 08:17:58 -0400
+Received: from mail.kernel.org ([198.145.29.99]:57504 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726048AbfDZMBy (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Fri, 26 Apr 2019 08:01:54 -0400
+        id S1725901AbfDZMR6 (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Fri, 26 Apr 2019 08:17:58 -0400
 Received: from localhost (unknown [171.76.113.243])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 469ED206C1;
-        Fri, 26 Apr 2019 12:01:53 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 73FCF2089E;
+        Fri, 26 Apr 2019 12:17:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1556280114;
-        bh=Vowjtrv0OJqv16TygegnL2eNyyqR0noN1UiGX25yQ5M=;
+        s=default; t=1556281077;
+        bh=de4ui+tuZDXUFHeZfBrIGjZoQ8NU2gODJGhbz3Cpnjk=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=1FJxFm9yyGkW7/V4pU3/CJBWNf1kfnlus8LFDwz7yzcUTAO0hM6LSqYL4QLkYNkhb
-         /uVaRnSnzFrdalkqxNTV2rBeUpKeeC1Y/tjEgt+3Py+viXjnqub3wkGFgrKSWkFJaL
-         Gr/tGF2AVfx21Bal8t39J8Xe16y8NzM4cWsS76L0=
-Date:   Fri, 26 Apr 2019 17:31:48 +0530
+        b=t0pB7TXqBuFjcpZPFv/22gI3vnaBkSJqd/a0HdtbiXx8m09Kaqn1uUEJ3GVwyMfdH
+         JK80Bd0SMsJ5Vu8ZXnynkAN3+SPvc64/IokPcSYcGcq6KMNyETIM4xyzJJzDzM6QYI
+         rNhtzv3TXhjKZYHwJN/JGf6y9nrvQHXsFp5RuwZc=
+Date:   Fri, 26 Apr 2019 17:47:51 +0530
 From:   Vinod Koul <vkoul@kernel.org>
-To:     Dmitry Osipenko <digetx@gmail.com>
-Cc:     Laxman Dewangan <ldewangan@nvidia.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        dmaengine@vger.kernel.org, linux-tegra@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v1] dmaengine: tegra: Use relaxed versions of readl/writel
-Message-ID: <20190426120148.GB28103@vkoul-mobl>
-References: <20190424231708.21219-1-digetx@gmail.com>
+To:     Arnaud Pouliquen <arnaud.pouliquen@st.com>
+Cc:     Dan Williams <dan.j.williams@intel.com>,
+        Pierre-Yves MORDRET <pierre-yves.mordret@st.com>,
+        linux-stm32@st-md-mailman.stormreply.com,
+        linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org
+Subject: Re: [PATCH] dmaengine: stm32-dma: fix residue calculation in
+ stm32-dma
+Message-ID: <20190426121751.GC28103@vkoul-mobl>
+References: <1553689316-6231-1-git-send-email-arnaud.pouliquen@st.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="UTF-8"
 Content-Disposition: inline
-In-Reply-To: <20190424231708.21219-1-digetx@gmail.com>
+In-Reply-To: <1553689316-6231-1-git-send-email-arnaud.pouliquen@st.com>
 User-Agent: Mutt/1.11.3 (2019-02-01)
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
-Message-ID: <20190426120148.fQEESqwtE5Q-7O7PcOnU4X0-DGxdwrBbR-ZrpBuMb_c@z>
+Message-ID: <20190426121751.qCjW3wvcH9D7AtuUEk5_uz1E7bwQZYrVRueqw7w7qVo@z>
 
-On 25-04-19, 02:17, Dmitry Osipenko wrote:
-> The readl/writel functions are inserting memory barrier in order to
-> ensure that memory stores are completed. On Tegra20 and Tegra30 this
-> results in L2 cache syncing which isn't a cheapest operation. The
-> tegra20-apb-dma driver doesn't need to synchronize generic memory
-> accesses, hence use the relaxed versions of the functions.
+Hi Arnaud,
 
-Subsystem name is **dmaengine** not dma! Please fix that
+Sorry for delay in review, the conference travel/vacation plan delayed
+this.
+
+On 27-03-19, 13:21, Arnaud Pouliquen wrote:
+> During residue calculation. the DMA can switch to the next sg. When
+> this race condition occurs, the residue returned value is not valid.
+> Indeed the position in the sg returned by the hardware is the position
+> of the next sg, not the current sg.
+> Solution is to check the sg after the calculation to verify it.
+> If a transition is detected we consider that the DMA has switched to
+> the beginning of next sg.
+
+Now, that sounds like duct tape. Why should we bother doing that.
+
+Also looking back at the stm32_dma_desc_residue() and calls to it from
+stm32_dma_tx_status() am not sure we are doing the right thing
+
+why are we looking at next_sg here, can you explain me that please
+
+> 
+> Signed-off-by: Arnaud Pouliquen <arnaud.pouliquen@st.com>
+> Signed-off-by: Pierre-Yves MORDRET <pierre-yves.mordret@st.com>
+> ---
+>  drivers/dma/stm32-dma.c | 70 ++++++++++++++++++++++++++++++++++++++++---------
+>  1 file changed, 57 insertions(+), 13 deletions(-)
+> 
+> diff --git a/drivers/dma/stm32-dma.c b/drivers/dma/stm32-dma.c
+> index 4903a40..30309d2 100644
+> --- a/drivers/dma/stm32-dma.c
+> +++ b/drivers/dma/stm32-dma.c
+> @@ -1038,33 +1038,77 @@ static u32 stm32_dma_get_remaining_bytes(struct stm32_dma_chan *chan)
+>  	return ndtr << width;
+>  }
+>  
+> +static bool stm32_dma_is_current_sg(struct stm32_dma_chan *chan)
+> +{
+> +	struct stm32_dma_device *dmadev = stm32_dma_get_dev(chan);
+> +	struct stm32_dma_sg_req *sg_req;
+> +	u32 dma_scr, dma_smar, id;
+> +
+> +	id = chan->id;
+> +	dma_scr = stm32_dma_read(dmadev, STM32_DMA_SCR(id));
+> +
+> +	if (!(dma_scr & STM32_DMA_SCR_DBM))
+> +		return true;
+> +
+> +	sg_req = &chan->desc->sg_req[chan->next_sg];
+> +
+> +	if (dma_scr & STM32_DMA_SCR_CT) {
+> +		dma_smar = stm32_dma_read(dmadev, STM32_DMA_SM0AR(id));
+> +		return (dma_smar == sg_req->chan_reg.dma_sm0ar);
+> +	}
+> +
+> +	dma_smar = stm32_dma_read(dmadev, STM32_DMA_SM1AR(id));
+> +
+> +	return (dma_smar == sg_req->chan_reg.dma_sm1ar);
+> +}
+> +
+>  static size_t stm32_dma_desc_residue(struct stm32_dma_chan *chan,
+>  				     struct stm32_dma_desc *desc,
+>  				     u32 next_sg)
+>  {
+>  	u32 modulo, burst_size;
+> -	u32 residue = 0;
+> +	u32 residue;
+> +	u32 n_sg = next_sg;
+> +	struct stm32_dma_sg_req *sg_req = &chan->desc->sg_req[chan->next_sg];
+>  	int i;
+>  
+> +	residue = stm32_dma_get_remaining_bytes(chan);
+> +
+>  	/*
+> -	 * In cyclic mode, for the last period, residue = remaining bytes from
+> -	 * NDTR
+> +	 * Calculate the residue means compute the descriptors
+> +	 * information:
+> +	 * - the sg currently transferred
+> +	 * - the remaining position in this sg (NDTR).
+> +	 *
+> +	 * The issue is that a race condition can occur if DMA is
+> +	 * running. DMA can have started to transfer the next sg before
+> +	 * the position in sg is read. In this case the remaing position
+> +	 * can correspond to the new sg position.
+> +	 * The strategy implemented in the stm32 driver is to check the
+> +	 * sg transition. If detected we can not trust the SxNDTR register
+> +	 * value, this register can not be up to date during the transition.
+> +	 * In this case we can assume that the dma is at the beginning of next
+> +	 * sg so we calculate the residue in consequence.
+>  	 */
+> -	if (chan->desc->cyclic && next_sg == 0) {
+> -		residue = stm32_dma_get_remaining_bytes(chan);
+> -		goto end;
+> +
+> +	if (!stm32_dma_is_current_sg(chan)) {
+> +		n_sg++;
+> +		if (n_sg == chan->desc->num_sgs)
+> +			n_sg = 0;
+> +		residue = sg_req->len;
+>  	}
+>  
+>  	/*
+> -	 * For all other periods in cyclic mode, and in sg mode,
+> -	 * residue = remaining bytes from NDTR + remaining periods/sg to be
+> -	 * transferred
+> +	 * In cyclic mode, for the last period, residue = remaining bytes
+> +	 * from NDTR,
+> +	 * else for all other periods in cyclic mode, and in sg mode,
+> +	 * residue = remaining bytes from NDTR + remaining
+> +	 * periods/sg to be transferred
+>  	 */
+> -	for (i = next_sg; i < desc->num_sgs; i++)
+> -		residue += desc->sg_req[i].len;
+> -	residue += stm32_dma_get_remaining_bytes(chan);
+> +	if (!chan->desc->cyclic || n_sg != 0)
+> +		for (i = n_sg; i < desc->num_sgs; i++)
+> +			residue += desc->sg_req[i].len;
+>  
+> -end:
+>  	if (!chan->mem_burst)
+>  		return residue;
+>  
+> -- 
+> 2.7.4
+
 -- 
 ~Vinod
