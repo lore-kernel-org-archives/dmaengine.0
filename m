@@ -2,27 +2,15 @@ Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
 Subject: [1/1] dmaengine: mediatek-cqdma: fix wrong register usage in mtk_cqdma_start
-From: shun-chih.yu@mediatek.com
-Message-Id: <1556164430-30724-1-git-send-email-shun-chih.yu@mediatek.com>
-Date: Thu, 25 Apr 2019 11:53:50 +0800
-To: Sean Wang <sean.wang@mediatek.com>, Vinod Koul <vkoul@kernel.org>, Matthias Brugger <matthias.bgg@gmail.com>, Dan Williams <dan.j.williams@intel.com>
-Cc: dmaengine@vger.kernel.org, linux-arm-kernel@lists.infradead.org, linux-mediatek@lists.infradead.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, srv_wsdupstream@mediatek.com, Shun-Chih Yu <shun-chih.yu@mediatek.com>
+From: Vinod Koul <vkoul@kernel.org>
+Message-Id: <20190426115840.GA28103@vkoul-mobl>
+Date: Fri, 26 Apr 2019 17:28:40 +0530
+To: shun-chih.yu@mediatek.com
+Cc: Sean Wang <sean.wang@mediatek.com>, Matthias Brugger <matthias.bgg@gmail.com>, Dan Williams <dan.j.williams@intel.com>, dmaengine@vger.kernel.org, linux-arm-kernel@lists.infradead.org, linux-mediatek@lists.infradead.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, srv_wsdupstream@mediatek.com
 List-ID: <dmaengine.vger.kernel.org>
 
-RnJvbTogU2h1bi1DaGloIFl1IDxzaHVuLWNoaWgueXVAbWVkaWF0ZWsuY29tPgoKVGhpcyBwYXRj
-aCBmaXhlcyB3cm9uZyByZWdpc3RlciB1c2FnZSBpbiB0aGUgbXRrX2NxZG1hX3N0YXJ0LiBUaGUK
-ZGVzdGluYXRpb24gcmVnaXN0ZXIgc2hvdWxkIGJlIE1US19DUURNQV9EU1QyIGluc3RlYWQuCgpG
-aXhlczogYjFmMDFlNDhkZjVhICgiZG1hZW5naW5lOiBtZWRpYXRlazogQWRkIE1lZGlhVGVrIENv
-bW1hbmQtUXVldWUgRE1BIGNvbnRyb2xsZXIgZm9yIE1UNjc2NSBTb0MiKQpTaWduZWQtb2ZmLWJ5
-OiBTaHVuLUNoaWggWXUgPHNodW4tY2hpaC55dUBtZWRpYXRlay5jb20+Ci0tLQogZHJpdmVycy9k
-bWEvbWVkaWF0ZWsvbXRrLWNxZG1hLmMgfCAgICAyICstCiAxIGZpbGUgY2hhbmdlZCwgMSBpbnNl
-cnRpb24oKyksIDEgZGVsZXRpb24oLSkKCmRpZmYgLS1naXQgYS9kcml2ZXJzL2RtYS9tZWRpYXRl
-ay9tdGstY3FkbWEuYyBiL2RyaXZlcnMvZG1hL21lZGlhdGVrL210ay1jcWRtYS5jCmluZGV4IDEz
-MWYzOTcuLjgxNDg1MzggMTAwNjQ0Ci0tLSBhL2RyaXZlcnMvZG1hL21lZGlhdGVrL210ay1jcWRt
-YS5jCisrKyBiL2RyaXZlcnMvZG1hL21lZGlhdGVrL210ay1jcWRtYS5jCkBAIC0yNTMsNyArMjUz
-LDcgQEAgc3RhdGljIHZvaWQgbXRrX2NxZG1hX3N0YXJ0KHN0cnVjdCBtdGtfY3FkbWFfcGNoYW4g
-KnBjLAogI2lmZGVmIENPTkZJR19BUkNIX0RNQV9BRERSX1RfNjRCSVQKIAltdGtfZG1hX3NldChw
-YywgTVRLX0NRRE1BX0RTVDIsIGN2ZC0+ZGVzdCA+PiBNVEtfQ1FETUFfQUREUjJfU0hGSVQpOwog
-I2Vsc2UKLQltdGtfZG1hX3NldChwYywgTVRLX0NRRE1BX1NSQzIsIDApOworCW10a19kbWFfc2V0
-KHBjLCBNVEtfQ1FETUFfRFNUMiwgMCk7CiAjZW5kaWYKIAogCS8qIHNldHVwIHRoZSBsZW5ndGgg
-Ki8K
+T24gMjUtMDQtMTksIDExOjUzLCBzaHVuLWNoaWgueXVAbWVkaWF0ZWsuY29tIHdyb3RlOgo+IEZy
+b206IFNodW4tQ2hpaCBZdSA8c2h1bi1jaGloLnl1QG1lZGlhdGVrLmNvbT4KPiAKPiBUaGlzIHBh
+dGNoIGZpeGVzIHdyb25nIHJlZ2lzdGVyIHVzYWdlIGluIHRoZSBtdGtfY3FkbWFfc3RhcnQuIFRo
+ZQo+IGRlc3RpbmF0aW9uIHJlZ2lzdGVyIHNob3VsZCBiZSBNVEtfQ1FETUFfRFNUMiBpbnN0ZWFk
+LgoKQXBwbGllZCBhbmQgY2NlZCBzdGFibGUsIHRoYW5rcwo=
