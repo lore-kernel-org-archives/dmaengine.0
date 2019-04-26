@@ -2,131 +2,295 @@ Return-Path: <SRS0=bl+G=S4=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_PASS,URIBL_BLOCKED
-	autolearn=unavailable autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SIGNED_OFF_BY,SPF_PASS,URIBL_BLOCKED autolearn=unavailable autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2E811C43219
-	for <dmaengine@archiver.kernel.org>; Fri, 26 Apr 2019 13:21:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6A21DC43219
+	for <dmaengine@archiver.kernel.org>; Fri, 26 Apr 2019 13:41:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id F25BA2077B
-	for <dmaengine@archiver.kernel.org>; Fri, 26 Apr 2019 13:21:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 25BFD206E0
+	for <dmaengine@archiver.kernel.org>; Fri, 26 Apr 2019 13:41:24 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nGmzSrbl"
+	dkim=pass (2048-bit key) header.d=st.com header.i=@st.com header.b="ON5xaAw/"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726152AbfDZNVa (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 26 Apr 2019 09:21:30 -0400
-Received: from mail-io1-f66.google.com ([209.85.166.66]:41926 "EHLO
-        mail-io1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726069AbfDZNVa (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Fri, 26 Apr 2019 09:21:30 -0400
-Received: by mail-io1-f66.google.com with SMTP id r10so2902140ioc.8;
-        Fri, 26 Apr 2019 06:21:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:reply-to:from:date:message-id
-         :subject:to:cc;
-        bh=ZNOtvepFevmzmMtAUynEOqUF3jb2beeDOj9721fg26s=;
-        b=nGmzSrblxYDMUcPBuYBgpHf4YKWS/UFdqu0FexfPA3zAWdOyUVLwBKg1uVOt74zMKh
-         E1K3XPO75+jzOWsDlU0ITQKjqiMg3Y6yVbQ59SxeZEgIVX5xiCwd7XdLg6gX+b6kMOv/
-         OZdQu7sRGRQZUcWiTszrqjKZuDtqE+VBlpAA1hkzbv1w8Sd3mF9jb0ufhlsUZVEUc8TE
-         HYa7e2ev3V/drC5fUHUvPvvmb+MVnW63mDbdb1EtI6z5S2bJgH98iL+aixU8vebQauDt
-         sL0IWTKcj/kv+OSMno76VEqiiByouh5QLaVwHymzzUqtUYqKqjy3a2I2h0eWHYmnSPOx
-         xveQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:reply-to
-         :from:date:message-id:subject:to:cc;
-        bh=ZNOtvepFevmzmMtAUynEOqUF3jb2beeDOj9721fg26s=;
-        b=g90JshFAKaCYP0bPZan3zSqPixvNaC3GkS5znZMVvkfKliOyJMMB7IVjyXinSvrrsp
-         IcliKUMdJ5OMpgvMrYIdc60xL9w691UfJajGS7jW1dXKrwkHOmIqRGSKPzzlpAO+ilEA
-         cedVAlMf1Ucrl6OChKnodaXhAkrTmFeG88caC/3GAU5c1oyz3jZZHXYhkmpRhM0cU9mH
-         o610IYbV8ZFi4o8jIwy8ib/9lMuFUQVJYRO/ExWJUYyNQCpFTP25SJcmuowW0KI9bee6
-         8JWQ4676shK4VDhv+nIoI+vjatFPav9ywweTJ6dhg4EMiVKAB6HhTV0Wn2d9gk6McwOR
-         UQLw==
-X-Gm-Message-State: APjAAAW8gDlWp/xGceMjWlE1wmk4NrB5birME9Mo/f8BYlRQN1ryk2Lw
-        bbzjJh5VIuryFXDMpp12dYAxRFFFavI+7b9orhdjBLWL
-X-Google-Smtp-Source: APXvYqx2FjAOr6/Bc+db7gR/r8ORgt4vjRbHsXytKCPPhiKbZhc0s15k4d/98Qv0NV/Fy09ma4NEwe8unOTfutFrn88=
-X-Received: by 2002:a05:6602:20d6:: with SMTP id 22mr24484648ioz.163.1556284889287;
- Fri, 26 Apr 2019 06:21:29 -0700 (PDT)
+        id S1726138AbfDZNlX (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 26 Apr 2019 09:41:23 -0400
+Received: from mx08-00178001.pphosted.com ([91.207.212.93]:49882 "EHLO
+        mx07-00178001.pphosted.com" rhost-flags-OK-OK-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1726120AbfDZNlX (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Fri, 26 Apr 2019 09:41:23 -0400
+Received: from pps.filterd (m0046661.ppops.net [127.0.0.1])
+        by mx08-00178001.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id x3QDWBEP017163;
+        Fri, 26 Apr 2019 15:41:14 +0200
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=st.com; h=subject : to : cc :
+ references : from : message-id : date : mime-version : in-reply-to :
+ content-type : content-transfer-encoding; s=STMicroelectronics;
+ bh=ykuZA6DtzWG+MyyQPuNhTSp+xxbJHKfVbR5sDbF/lDk=;
+ b=ON5xaAw/hw/j6/88plqbTWYuSDppPRq/mFgS/iNqiSkwC8JN3COfTHGkdVMKkuHqdQWA
+ 0CpT44udCpDWXNxj1fG4iaehdn/Ro/mjzfsVX+t3LnuU1CJ7gLKJMA53G+ice1TJMHl7
+ Aq6HxAkV+yyw/9yHn/8oK3cF03m1BrBlg9+HfoAmz90sTT03TsIzeRCgEVVgvhwgZEhO
+ dvSTpsLkuxDiRc3+A6BtvUoB5lLNTP4CU9X6i597w4UneGRuEhPJUOKY94gKWx3AmWec
+ Urih1obylI5b6qw7jjOIc0Hp1+bkIuFjyYcQLq+xSEcf4LxZ9ApH+wVmAk23YxDkfCDw Ag== 
+Received: from beta.dmz-eu.st.com (beta.dmz-eu.st.com [164.129.1.35])
+        by mx08-00178001.pphosted.com with ESMTP id 2rytadmsm3-1
+        (version=TLSv1 cipher=ECDHE-RSA-AES256-SHA bits=256 verify=NOT);
+        Fri, 26 Apr 2019 15:41:14 +0200
+Received: from zeta.dmz-eu.st.com (zeta.dmz-eu.st.com [164.129.230.9])
+        by beta.dmz-eu.st.com (STMicroelectronics) with ESMTP id EB3FB38;
+        Fri, 26 Apr 2019 13:41:09 +0000 (GMT)
+Received: from Webmail-eu.st.com (sfhdag3node1.st.com [10.75.127.7])
+        by zeta.dmz-eu.st.com (STMicroelectronics) with ESMTP id C33BA2645;
+        Fri, 26 Apr 2019 13:41:09 +0000 (GMT)
+Received: from [10.48.0.131] (10.75.127.47) by SFHDAG3NODE1.st.com
+ (10.75.127.7) with Microsoft SMTP Server (TLS) id 15.0.1347.2; Fri, 26 Apr
+ 2019 15:41:09 +0200
+Subject: Re: [PATCH] dmaengine: stm32-dma: fix residue calculation in
+ stm32-dma
+To:     Vinod Koul <vkoul@kernel.org>
+CC:     Dan Williams <dan.j.williams@intel.com>,
+        Pierre-Yves MORDRET <pierre-yves.mordret@st.com>,
+        <linux-stm32@st-md-mailman.stormreply.com>,
+        <linux-kernel@vger.kernel.org>, <dmaengine@vger.kernel.org>
+References: <1553689316-6231-1-git-send-email-arnaud.pouliquen@st.com>
+ <20190426121751.GC28103@vkoul-mobl>
+From:   Arnaud Pouliquen <arnaud.pouliquen@st.com>
+Openpgp: preference=signencrypt
+Autocrypt: addr=arnaud.pouliquen@st.com; prefer-encrypt=mutual; keydata=
+ xsFNBFZu+HIBEAC/bt4pnj18oKkUw40q1IXSPeDFOuuznWgFbjFS6Mrb8axwtnxeYicv0WAL
+ rWhlhQ6W2TfKDJtkDygkfaZw7Nlsj57zXrzjVXuy4Vkezxtg7kvSLYItQAE8YFSOrBTL58Yd
+ d5cAFz/9WbWGRf0o9MxFavvGQ9zkfHVd+Ytw6dJNP4DUys9260BoxKZZMaevxobh5Hnram6M
+ gVBYGMuJf5tmkXD/FhxjWEZ5q8pCfqZTlN9IZn7S8d0tyFL7+nkeYldA2DdVplfXXieEEURQ
+ aBjcZ7ZTrzu1X/1RrH1tIQE7dclxk5pr2xY8osNePmxSoi+4DJzpZeQ32U4wAyZ8Hs0i50rS
+ VxZuT2xW7tlNcw147w+kR9+xugXrECo0v1uX7/ysgFnZ/YasN8E+osM2sfa7OYUloVX5KeUK
+ yT58KAVkjUfo0OdtSmGkEkILWQLACFEFVJPz7/I8PisoqzLS4Jb8aXbrwgIg7d4NDgW2FddV
+ X9jd1odJK5N68SZqRF+I8ndttRGK0o7NZHH4hxJg9jvyEELdgQAmjR9Vf0eZGNfowLCnVcLq
+ s+8q3nQ1RrW5cRBgB8YT2kC8wwY5as8fhfp4846pe2b8Akh0+Vba5pXaTvtmdOMRrcS7CtF6
+ Ogf9zKAxPZxTp0qGUOLE3PmSc3P3FQBLYa6Y+uS2v2iZTXljqQARAQABzSpBcm5hdWQgUG91
+ bGlxdWVuIDxhcm5hdWQucG91bGlxdWVuQHN0LmNvbT7CwX4EEwECACgFAlZu+HICGyMFCQlm
+ AYAGCwkIBwMCBhUIAgkKCwQWAgMBAh4BAheAAAoJEP0ZQ+DAfqbfdXgP/RN0bU0gq3Pm1uAO
+ 4LejmGbYeTi5OSKh7niuFthrlgUvzR4UxMbUBk30utQAd/FwYPHR81mE9N4PYEWKWMW0T3u0
+ 5ASOBLpQeWj+edSE50jLggclVa4qDMl0pTfyLKOodt8USNB8aF0aDg5ITkt0euaGFaPn2kOZ
+ QWVN+9a5O2MzNR3Sm61ojM2WPuB1HobbrCFzCT+VQDy4FLU0rsTjTanf6zpZdOeabt0LfWxF
+ M69io06vzNSHYH91RJVl9mkIz7bYEZTBQR23KjLCsRXWfZ+54x6d6ITYZ2hp965PWuAhwWQr
+ DdTJ3gPxmXJ7xK9+O15+DdUAbxF9FJXvvt9U5pTk3taTM3FIp/qaw77uxI/wniYA0dnIJRX0
+ o51sjR6cCO6hwLciO7+Q0OCDCbtStuKCCCTZY5bF6fuEqgybDwvLGAokYIdoMagJu1DLKu4p
+ seKgPqGZ4vouTmEp6cWMzSyRz4pf3xIJc5McsdrUTN2LtcX63E45xKaj/n0Neft/Ce7OuyLB
+ rr0ujOrVlWsLwyzpU5w5dX7bzkEW1Hp4mv44EDxH9zRiyI5dNPpLf57I83Vs/qP4bpy7/Hm1
+ fqbuM0wMbOquPGFI8fcYTkghntAAXMqNE6IvETzYqsPZwT0URpOzM9mho8u5+daFWWAuUXGA
+ qRbo7qRs8Ev5jDsKBvGhzsFNBFZu+HIBEACrw5wF7Uf1h71YD5Jk7BG+57rpvnrLGk2s+YVW
+ zmKsZPHT68SlMOy8/3gptJWgddHaM5xRLFsERswASmnJjIdPTOkSkVizfAjrFekZUr+dDZi2
+ 3PrISz8AQBd+uJ29jRpeqViLiV+PrtCHnAKM0pxQ1BOv8TVlkfO7tZVduLJl5mVoz1sq3/C7
+ hT5ZICc2REWrfS24/Gk8mmtvMybiTMyM0QLFZvWyvNCvcGUS8s2a8PIcr+Xb3R9H0hMnYc2E
+ 7bc5/e39f8oTbKI6xLLFLa5yJEVfTiVksyCkzpJSHo2eoVdW0lOtIlcUz1ICgZ7vVJg7chmQ
+ nPmubeBMw73EyvagdzVeLm8Y/6Zux8SRab+ZcU/ZQWNPKoW5clUvagFBQYJ6I2qEoh2PqBI4
+ Wx0g1ca7ZIwjsIfWS7L3e310GITBsDmIeUJqMkfIAregf8KADPs4+L71sLeOXvjmdgTsHA8P
+ lK8kUxpbIaTrGgHoviJ1IYwOvJBWrZRhdjfXTPl+ZFrJiB2E55XXogAAF4w/XHpEQNGkAXdQ
+ u0o6tFkJutsJoU75aHPA4q/OvRlEiU6/8LNJeqRAR7oAvTexpO70f0Jns9GHzoy8sWbnp/LD
+ BSH5iRCwq6Q0hJiEzrVTnO3bBp0WXfgowjXqR+YR86JPrzw2zjgr1e2zCZ1gHBTOyJZiDwAR
+ AQABwsFlBBgBAgAPBQJWbvhyAhsMBQkJZgGAAAoJEP0ZQ+DAfqbfs5AQAJKIr2+j+U3JaMs3
+ px9bbxcuxRLtVP5gR3FiPR0onalO0QEOLKkXb1DeJaeHHxDdJnVV7rCJX/Fz5CzkymUJ7GIO
+ gpUGstSpJETi2sxvYvxfmTvE78D76rM5duvnGy8lob6wR2W3IqIRwmd4X0Cy1Gtgo+i2plh2
+ ttVOM3OoigkCPY3AGD0ts+FbTn1LBVeivaOorezSGpKXy3cTKrEY9H5PC+DRJ1j3nbodC3o6
+ peWAlfCXVtErSQ17QzNydFDOysL1GIVn0+XY7X4Bq+KpVmhQOloEX5/At4FlhOpsv9AQ30rZ
+ 3F5lo6FG1EqLIvg4FnMJldDmszZRv0bR0RM9Ag71J9bgwHEn8uS2vafuL1hOazZ0eAo7Oyup
+ 2VNRC7Inbc+irY1qXSjmq3ZrD3SSZVa+LhYfijFYuEgKjs4s+Dvk/xVL0JYWbKkpGWRz5M82
+ Pj7co6u8pTEReGBYSVUBHx7GF1e3L/IMZZMquggEsixD8CYMOzahCEZ7UUwD5LKxRfmBWBgK
+ 36tfTyducLyZtGB3mbJYfWeI7aiFgYsd5ehov6OIBlOz5iOshd97+wbbmziYEp6jWMIMX+Em
+ zqSvS5ETZydayO5JBbw7fFBd1nGVYk1WL6Ll72g+iEnqgIckMtxey1TgfT7GhPkR7hl54ZAe
+ 8mOik8I/F6EW8XyQAA2P
+Message-ID: <6894b54e-651f-1caf-d363-79d1ef0eee14@st.com>
+Date:   Fri, 26 Apr 2019 15:41:08 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.6.1
 MIME-Version: 1.0
-References: <bug-203435-193951@https.bugzilla.kernel.org/>
-In-Reply-To: <bug-203435-193951@https.bugzilla.kernel.org/>
-Reply-To: bjorn@helgaas.com
-From:   Bjorn Helgaas <bjorn.helgaas@gmail.com>
-Date:   Fri, 26 Apr 2019 08:21:18 -0500
-Message-ID: <CABhMZUV2bSHUeZErR8=AQrBvuJHeKEMfQJbGTVRgcxZcXp6i2g@mail.gmail.com>
-Subject: Re: [Bug 203435] New: Xilinx pcie endpoint DMA not functional for
- ZynqMP PS AXI-PXI DMA endpoint
-To:     linux-pci@vger.kernel.org
-Cc:     dtyree@newagemicro.com, Michal Simek <michal.simek@xilinx.com>,
-        Vinod Koul <vkoul@kernel.org>, dmaengine@vger.kernel.org
+In-Reply-To: <20190426121751.GC28103@vkoul-mobl>
 Content-Type: text/plain; charset="UTF-8"
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.75.127.47]
+X-ClientProxiedBy: SFHDAG1NODE1.st.com (10.75.127.1) To SFHDAG3NODE1.st.com
+ (10.75.127.7)
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,, definitions=2019-04-26_08:,,
+ signatures=0
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
+Message-ID: <20190426134108.5InS2qrCIMAauiizZq78tZPZTbjYBMWVm5nZjfU3efk@z>
 
-[+cc linux-pci, Xilinx and DMA engine folks]
+Hi Vinod
 
-I'm not sure what to do with this report.  It mentions "vivado" and
-xilinx_ps_pcie_platform.c, neither of which seems to be in mainline or
-linux-next.  A Google search suggests that Vivado is a Xilinx product;
-maybe this bug report should be directed there?
+On 4/26/19 2:17 PM, Vinod Koul wrote:
+> Hi Arnaud,
+> 
+> Sorry for delay in review, the conference travel/vacation plan delayed
+> this.
+no problem, just a rememder to be sure that you not missed it in the
+patch stream.
 
-On Fri, Apr 26, 2019 at 7:09 AM <bugzilla-daemon@bugzilla.kernel.org> wrote:
->
-> https://bugzilla.kernel.org/show_bug.cgi?id=203435
->
->             Bug ID: 203435
->            Summary: Xilinx pcie endpoint DMA not functional for ZynqMP PS
->                     AXI-PXI DMA endpoint
->            Product: Drivers
->            Version: 2.5
->     Kernel Version: 4.14.0
->           Hardware: Other
->                 OS: Linux
->               Tree: Mainline
->             Status: NEW
->           Severity: normal
->           Priority: P1
->          Component: PCI
->           Assignee: drivers_pci@kernel-bugs.osdl.org
->           Reporter: dtyree@newagemicro.com
->         Regression: No
->
-> The ps_pcie_dma-1.00.a driver does not work as an endpoint. I'd be happy to
-> help fix/enable/test this out, but I do not understand what the intent was.
->
-> The rootdma option is the only one allowed / documented through device-tree and
-> kernel docs. It does not cover the epdma branches in the code that require that
-> drivers/dma/xilinx/xilinx_ps_pcie_platform.c:18:#define PLATFORM_DRIVER_NAME
->           "ps_pcie_pform_dma"
->
-> be available. I am not sure if this was intended to be the endpoint.
->
-> The vivado build for the pcie endpoint will not enable the endpoint DMA
-> channels. I would expect that to be done through device-tree/PCIe BAR
-> configuration reads (for sizes) to set up the channels, but I can't find
-> anything that may other than the mystery of epdma with PLATFORM_DRIVER_NAME.
->
-> Because the fsbl does not enable the AXI-DMA the rootdma channel enable check
-> fails on line xilinx_ps_pcie_platform.c:1832
->         channel->chan_base =
->         (struct DMA_ENGINE_REGISTERS *)((__force char *)(xdev->reg_base) +
->                                  (channel_number * DMA_CHANNEL_REGS_SIZE));
->
->         if (((channel->chan_base->dma_channel_status) &
->                                 DMA_STATUS_DMA_PRES_BIT) == 0) {
->                 dev_err(&platform_dev->dev,
->                         "Hardware reports channel not present\n");
->                 return -ENOTSUPP;
->         }
->
-> Is there a different way to access use the PS AXI-PCIe DMA?
->
-> Can anyone offer some advice? Have I misunderstood the dis-functionality of the
-> epdma -vs- rootdma branching?
->
-> Thanks
+> 
+> On 27-03-19, 13:21, Arnaud Pouliquen wrote:
+>> During residue calculation. the DMA can switch to the next sg. When
+>> this race condition occurs, the residue returned value is not valid.
+>> Indeed the position in the sg returned by the hardware is the position
+>> of the next sg, not the current sg.
+>> Solution is to check the sg after the calculation to verify it.
+>> If a transition is detected we consider that the DMA has switched to
+>> the beginning of next sg.
+> 
+> Now, that sounds like duct tape. Why should we bother doing that.
+> 
+> Also looking back at the stm32_dma_desc_residue() and calls to it from
+> stm32_dma_tx_status() am not sure we are doing the right thing
+Please, could you explain what you have in mind here?
+
+> 
+> why are we looking at next_sg here, can you explain me that please
+
+This solution is similar to one implemented in the at_hdmac.c driver
+(atc_get_bytes_left function).
+
+Yes could be consider as a workaround for a hardware issue...
+
+In stm32 DMA Peripheral, we can register up to 2 sg descriptors (sg1 &
+sg2)in DMA registers, and use it in a cyclic mode (auto reload). This
+mode is mainly use for audio transfer initiated by an ALSA driver.
+
+From hardware point of view the DMA transfers first block based on sg1,
+then it updates registers to prepare sg2 transfer, and then generates an
+IRQ to inform that it issues the next transfer (sg2).
+
+Then driver can update sg1 to prepare the third transfer...
+
+In parallel the client driver can requests status to get the residue to
+update internal pointer.
+The issue is in the race condition between the call of the
+device_tx_status ops and the update of the DMA register on sg switch.
+
+During a short time the hardware updated the registers containing the
+sg ID but not the transfer counter(SxNDTR). In this case there is a
+mismatch between the Sg ID and the associated transfer counter.
+So residue calculation is wrong.
+Idea of this patch is to perform the calculation and then to crosscheck
+that the hardware has not switched to the next sg during the
+calculation. The way to crosscheck is to compare the the sg ID before
+and after the calculation.
+
+I tested the solution to force a new recalculation but no real solution
+to trust the registers during this phase. In this case an approximation
+is to consider that the DMA is transferring the first bytes of the next sg.
+So we return the residue corresponding to the beginning of the next buffer.
+
+Don't hesitate if it is still not clear
+
+Thanks
+Arnaud
+
+> 
+>>
+>> Signed-off-by: Arnaud Pouliquen <arnaud.pouliquen@st.com>
+>> Signed-off-by: Pierre-Yves MORDRET <pierre-yves.mordret@st.com>
+>> ---
+>>  drivers/dma/stm32-dma.c | 70 ++++++++++++++++++++++++++++++++++++++++---------
+>>  1 file changed, 57 insertions(+), 13 deletions(-)
+>>
+>> diff --git a/drivers/dma/stm32-dma.c b/drivers/dma/stm32-dma.c
+>> index 4903a40..30309d2 100644
+>> --- a/drivers/dma/stm32-dma.c
+>> +++ b/drivers/dma/stm32-dma.c
+>> @@ -1038,33 +1038,77 @@ static u32 stm32_dma_get_remaining_bytes(struct stm32_dma_chan *chan)
+>>  	return ndtr << width;
+>>  }
+>>  
+>> +static bool stm32_dma_is_current_sg(struct stm32_dma_chan *chan)
+>> +{
+>> +	struct stm32_dma_device *dmadev = stm32_dma_get_dev(chan);
+>> +	struct stm32_dma_sg_req *sg_req;
+>> +	u32 dma_scr, dma_smar, id;
+>> +
+>> +	id = chan->id;
+>> +	dma_scr = stm32_dma_read(dmadev, STM32_DMA_SCR(id));
+>> +
+>> +	if (!(dma_scr & STM32_DMA_SCR_DBM))
+>> +		return true;
+>> +
+>> +	sg_req = &chan->desc->sg_req[chan->next_sg];
+>> +
+>> +	if (dma_scr & STM32_DMA_SCR_CT) {
+>> +		dma_smar = stm32_dma_read(dmadev, STM32_DMA_SM0AR(id));
+>> +		return (dma_smar == sg_req->chan_reg.dma_sm0ar);
+>> +	}
+>> +
+>> +	dma_smar = stm32_dma_read(dmadev, STM32_DMA_SM1AR(id));
+>> +
+>> +	return (dma_smar == sg_req->chan_reg.dma_sm1ar);
+>> +}
+>> +
+>>  static size_t stm32_dma_desc_residue(struct stm32_dma_chan *chan,
+>>  				     struct stm32_dma_desc *desc,
+>>  				     u32 next_sg)
+>>  {
+>>  	u32 modulo, burst_size;
+>> -	u32 residue = 0;
+>> +	u32 residue;
+>> +	u32 n_sg = next_sg;
+>> +	struct stm32_dma_sg_req *sg_req = &chan->desc->sg_req[chan->next_sg];
+>>  	int i;
+>>  
+>> +	residue = stm32_dma_get_remaining_bytes(chan);
+>> +
+>>  	/*
+>> -	 * In cyclic mode, for the last period, residue = remaining bytes from
+>> -	 * NDTR
+>> +	 * Calculate the residue means compute the descriptors
+>> +	 * information:
+>> +	 * - the sg currently transferred
+>> +	 * - the remaining position in this sg (NDTR).
+>> +	 *
+>> +	 * The issue is that a race condition can occur if DMA is
+>> +	 * running. DMA can have started to transfer the next sg before
+>> +	 * the position in sg is read. In this case the remaing position
+>> +	 * can correspond to the new sg position.
+>> +	 * The strategy implemented in the stm32 driver is to check the
+>> +	 * sg transition. If detected we can not trust the SxNDTR register
+>> +	 * value, this register can not be up to date during the transition.
+>> +	 * In this case we can assume that the dma is at the beginning of next
+>> +	 * sg so we calculate the residue in consequence.
+>>  	 */
+>> -	if (chan->desc->cyclic && next_sg == 0) {
+>> -		residue = stm32_dma_get_remaining_bytes(chan);
+>> -		goto end;
+>> +
+>> +	if (!stm32_dma_is_current_sg(chan)) {
+>> +		n_sg++;
+>> +		if (n_sg == chan->desc->num_sgs)
+>> +			n_sg = 0;
+>> +		residue = sg_req->len;
+>>  	}
+>>  
+>>  	/*
+>> -	 * For all other periods in cyclic mode, and in sg mode,
+>> -	 * residue = remaining bytes from NDTR + remaining periods/sg to be
+>> -	 * transferred
+>> +	 * In cyclic mode, for the last period, residue = remaining bytes
+>> +	 * from NDTR,
+>> +	 * else for all other periods in cyclic mode, and in sg mode,
+>> +	 * residue = remaining bytes from NDTR + remaining
+>> +	 * periods/sg to be transferred
+>>  	 */
+>> -	for (i = next_sg; i < desc->num_sgs; i++)
+>> -		residue += desc->sg_req[i].len;
+>> -	residue += stm32_dma_get_remaining_bytes(chan);
+>> +	if (!chan->desc->cyclic || n_sg != 0)
+>> +		for (i = n_sg; i < desc->num_sgs; i++)
+>> +			residue += desc->sg_req[i].len;
+>>  
+>> -end:
+>>  	if (!chan->mem_burst)
+>>  		return residue;
+>>  
+>> -- 
+>> 2.7.4
+> 
