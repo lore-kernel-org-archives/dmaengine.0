@@ -2,141 +2,154 @@ Return-Path: <SRS0=bl+G=S4=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.0 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_PASS,URIBL_BLOCKED
-	autolearn=unavailable autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-1.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_PASS,
+	URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DB4E8C43218
-	for <dmaengine@archiver.kernel.org>; Fri, 26 Apr 2019 08:19:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B2A5EC43218
+	for <dmaengine@archiver.kernel.org>; Fri, 26 Apr 2019 08:47:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id B91DE2077B
-	for <dmaengine@archiver.kernel.org>; Fri, 26 Apr 2019 08:19:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7674120675
+	for <dmaengine@archiver.kernel.org>; Fri, 26 Apr 2019 08:47:56 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=nxp.com header.i=@nxp.com header.b="vSscYAAy"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725854AbfDZITz (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 26 Apr 2019 04:19:55 -0400
-Received: from metis.ext.pengutronix.de ([85.220.165.71]:42081 "EHLO
-        metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725899AbfDZITy (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Fri, 26 Apr 2019 04:19:54 -0400
-Received: from kresse.hi.pengutronix.de ([2001:67c:670:100:1d::2a])
-        by metis.ext.pengutronix.de with esmtp (Exim 4.89)
-        (envelope-from <l.stach@pengutronix.de>)
-        id 1hJw57-0003R7-1D; Fri, 26 Apr 2019 10:19:41 +0200
-Message-ID: <1556266779.2584.15.camel@pengutronix.de>
-Subject: Re: [PATCH v2 00/15] add ecspi ERR009165 for i.mx6/7 soc family
-From:   Lucas Stach <l.stach@pengutronix.de>
-To:     Robin Gong <yibin.gong@nxp.com>,
-        "broonie@kernel.org" <broonie@kernel.org>,
-        "shawnguo@kernel.org" <shawnguo@kernel.org>,
-        "s.hauer@pengutronix.de" <s.hauer@pengutronix.de>,
-        "festevam@gmail.com" <festevam@gmail.com>,
-        "robh+dt@kernel.org" <robh+dt@kernel.org>,
-        "mark.rutland@arm.com" <mark.rutland@arm.com>,
+        id S1725923AbfDZIrt (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 26 Apr 2019 04:47:49 -0400
+Received: from mail-eopbgr60040.outbound.protection.outlook.com ([40.107.6.40]:12165
+        "EHLO EUR04-DB3-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1725881AbfDZIrs (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Fri, 26 Apr 2019 04:47:48 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=qGKRzEKRD0yxYZoKEZLnS7vXZPGXjXct+wYWsciIgJs=;
+ b=vSscYAAy4A6kSNPVqCEAlU594/h6+QuZlfnnY/TfUA+uJhntX09JejnISeIiYR8kqOI3yMTF8mPqD0PArqAXUnYBXnIxo7zrFfYU7gdTLxZmahfEpr5wARkaMSsE1xCe8DNw9pPf8Q2biDFyh09UDcVudsGmbm/ffXzTiaS6aKc=
+Received: from VI1PR04MB4543.eurprd04.prod.outlook.com (20.177.55.90) by
+ VI1PR04MB5037.eurprd04.prod.outlook.com (20.177.50.94) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.1835.13; Fri, 26 Apr 2019 08:47:04 +0000
+Received: from VI1PR04MB4543.eurprd04.prod.outlook.com
+ ([fe80::5d07:911b:18e1:1525]) by VI1PR04MB4543.eurprd04.prod.outlook.com
+ ([fe80::5d07:911b:18e1:1525%4]) with mapi id 15.20.1835.010; Fri, 26 Apr 2019
+ 08:47:03 +0000
+From:   Robin Gong <yibin.gong@nxp.com>
+To:     "robh+dt@kernel.org" <robh+dt@kernel.org>,
         "u.kleine-koenig@pengutronix.de" <u.kleine-koenig@pengutronix.de>,
+        "festevam@gmail.com" <festevam@gmail.com>,
         "plyatov@gmail.com" <plyatov@gmail.com>,
+        "broonie@kernel.org" <broonie@kernel.org>,
         "dan.j.williams@intel.com" <dan.j.williams@intel.com>,
+        "mark.rutland@arm.com" <mark.rutland@arm.com>,
         "catalin.marinas@arm.com" <catalin.marinas@arm.com>,
-        "will.deacon@arm.com" <will.deacon@arm.com>
-Cc:     "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
+        "will.deacon@arm.com" <will.deacon@arm.com>,
+        "shawnguo@kernel.org" <shawnguo@kernel.org>,
+        "l.stach@pengutronix.de" <l.stach@pengutronix.de>,
+        "s.hauer@pengutronix.de" <s.hauer@pengutronix.de>
+CC:     "linux-spi@vger.kernel.org" <linux-spi@vger.kernel.org>,
         "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "linux-spi@vger.kernel.org" <linux-spi@vger.kernel.org>,
+        "dmaengine@vger.kernel.org" <dmaengine@vger.kernel.org>,
         dl-linux-imx <linux-imx@nxp.com>,
         "kernel@pengutronix.de" <kernel@pengutronix.de>,
-        "dmaengine@vger.kernel.org" <dmaengine@vger.kernel.org>,
+        "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
         "linux-arm-kernel@lists.infradead.org" 
         <linux-arm-kernel@lists.infradead.org>
-Date:   Fri, 26 Apr 2019 10:19:39 +0200
-In-Reply-To: <1556265512-9130-1-git-send-email-yibin.gong@nxp.com>
+Subject: Re: [EXT] Re: [PATCH v2 00/15] add ecspi ERR009165 for i.mx6/7 soc
+ family
+Thread-Topic: [EXT] Re: [PATCH v2 00/15] add ecspi ERR009165 for i.mx6/7 soc
+ family
+Thread-Index: AQHU/AbBy202P2j5a0C7BDmMWU+Kf6ZOGYeAgAAF6QA=
+Date:   Fri, 26 Apr 2019 08:47:03 +0000
+Message-ID: <1556268048.9298.11.camel@nxp.com>
 References: <1556265512-9130-1-git-send-email-yibin.gong@nxp.com>
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.22.6-1+deb9u1 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: 2001:67c:670:100:1d::2a
-X-SA-Exim-Mail-From: l.stach@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: dmaengine@vger.kernel.org
+         <1556266779.2584.15.camel@pengutronix.de>
+In-Reply-To: <1556266779.2584.15.camel@pengutronix.de>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-mailer: Evolution 3.18.5.2-0ubuntu3.2 
+authentication-results: spf=none (sender IP is )
+ smtp.mailfrom=yibin.gong@nxp.com; 
+x-originating-ip: [119.31.174.66]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: c23c7579-2943-4d61-e0b5-08d6ca23c195
+x-ms-office365-filtering-ht: Tenant
+x-microsoft-antispam: BCL:0;PCL:0;RULEID:(2390118)(7020095)(4652040)(8989299)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(5600141)(711020)(4605104)(4618075)(2017052603328)(7193020);SRVR:VI1PR04MB5037;
+x-ms-traffictypediagnostic: VI1PR04MB5037:
+x-ms-exchange-purlcount: 2
+x-microsoft-antispam-prvs: <VI1PR04MB50375CB6CC3126F7A6831644893E0@VI1PR04MB5037.eurprd04.prod.outlook.com>
+x-forefront-prvs: 001968DD50
+x-forefront-antispam-report: SFV:NSPM;SFS:(10009020)(376002)(136003)(346002)(396003)(39860400002)(366004)(199004)(189003)(478600001)(71200400001)(45080400002)(99286004)(7736002)(76116006)(91956017)(305945005)(14454004)(7416002)(71190400001)(36756003)(68736007)(81166006)(6436002)(8676002)(53936002)(110136005)(66476007)(6512007)(316002)(66946007)(66446008)(64756008)(966005)(2501003)(66556008)(54906003)(73956011)(86362001)(6306002)(66066001)(97736004)(2201001)(6506007)(26005)(103116003)(76176011)(102836004)(2906002)(5660300002)(53546011)(8936002)(2616005)(11346002)(476003)(486006)(446003)(4326008)(6246003)(6486002)(25786009)(81156014)(3846002)(6116002)(256004)(50226002)(229853002)(186003)(99106002)(921003)(1121003);DIR:OUT;SFP:1101;SCL:1;SRVR:VI1PR04MB5037;H:VI1PR04MB4543.eurprd04.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;A:1;MX:1;
+received-spf: None (protection.outlook.com: nxp.com does not designate
+ permitted sender hosts)
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam-message-info: 8B0MdFOaNUquD+uT7/q2bFHHPm5jr9rVY1LV9FuQX2UBRBQj8zcgrSLr8xXjE2U4gc5e8yH7ewLUkcS/XuenxTLmRxRCtTyoqg7dpQ4AwSRYR2vSRb00QVSEV7YzhSpkAjfX49eeFhZwdwtUAbsMKEZqH1RnTRGxUmf0LWEhgbLmSBa6tedyMrj3yWSa4miNW/TI3FLhpj3f+8WVSfUps32ZicZn1z3rY9ar79+yWcRw5GFQlUa/FqgqKz1d2+tfCzGRzPJzr5yRJaWxfYLJGj31o+jPVCMlRj8NiVhXDKovWKTIzv7AwRXifftBn+EiiBmt8hqfnbpwYEUvBf2Lw0R75W7Rt4de2NPQRxpyFo6QMjITvzEs+VqG3DH5Y38DL0Xl3GlG31e7f4bSSS6rXJbPSYviLmIlFTayD+qH/Gk=
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <5C931906363223438109019DB56EA928@eurprd04.prod.outlook.com>
+Content-Transfer-Encoding: base64
+MIME-Version: 1.0
+X-OriginatorOrg: nxp.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: c23c7579-2943-4d61-e0b5-08d6ca23c195
+X-MS-Exchange-CrossTenant-originalarrivaltime: 26 Apr 2019 08:47:03.9284
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: VI1PR04MB5037
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Hi Robin,
-
-Am Freitag, den 26.04.2019, 08:05 +0000 schrieb Robin Gong:
->   There is ecspi ERR009165 on i.mx6/7 soc family, which cause FIFO
-> transfer to be send twice in DMA mode. Please get more information from:
-> https://www.nxp.com/docs/en/errata/IMX6DQCE.pdf. The workaround is adding
-> new sdma ram script which works in XCH  mode as PIO inside sdma instead
-> of SMC mode, meanwhile, 'TX_THRESHOLD' should be 0.
-
-I would like to have a more in-depth explanation about how this new RAM
-script differs from the existing ROM script and the changes to the
-state transitions.
-
->   The issue should be exist on all legacy i.mx6/7 soc family before i.mx6ul,
-> NXP fix this design issue from i.mx6ul, so newer chips such as i.mx6ull/
-> i.mx8mq/i.mx8mm, don't need this workaroud anymore. This patch set
-> add new 'fsl,imx6ul-ecspi' for ecspi driver and 'ecspi_fixed' in sdma
-> driver to choose if need errata or not.
->   The first two reverted patches should be the same issue, though, it
-> seems 'fixed' by changing to other shp script. Hope Sean or Sascha could
-> have the chance to test this patch set if could fix their issues.
->   Besides, enable sdma support for i.mx8mm/8mq and fix ecspi1 not work
-> on i.mx8mm because the event id is zero.
-> 
-> PS:
->  Please get sdma firmware from below linux-firmware and copy it to your
-> local rootfs /lib/firmware/imx/sdma.
-> https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git/tree/imx/sdma
-
-This is not an option as long as the SDMA RAM firmware breaks the
-mainline serial DMA support. Please provide a fixed SDMA RAM firmware
-that doesn't replace the ROM serial script, as that one is totally
-fine.
-
-Regards,
-Lucas
-
-> v2:
->   1. add commit log for reverted patches.
->   2. add comment for 'ecspi_fixed' in sdma driver.
->   3. add 'fsl,imx6sll-ecspi' compatible instead of 'fsl,imx6ul-ecspi'
->      rather than remove.
-> 
-> 
-> Robin Gong (15):
->   Revert "ARM: dts: imx6q: Use correct SDMA script for SPI5 core"
->   Revert "ARM: dts: imx6: Use correct SDMA script for SPI cores"
->   Revert "dmaengine: imx-sdma: refine to load context only once"
->   dmaengine: imx-sdma: remove dupilicated sdma_load_context
->   dma: engine: imx-sdma: add mcu_2_ecspi script
->   spi: imx: fix ERR009165
->   spi: imx: remove ERR009165 workaround on i.mx6ul
->   dt-bindings: spi: imx: add i.mx6ul to state errata fixed
->   dmaengine: imx-sdma: remove ERR009165 on i.mx6ul
->   dt-bindings: dma: imx-sdma: add i.mx6ul/6sx compatible name
->   dmaengine: imx-sdma: fix ecspi1 rx dma not work on i.mx8mm
->   ARM64: dts: freescale: imx8mm/8mq: update new compatible name for
->     ecspi and sdma
->   ARM: dts: imx6ul: add dma support on ecspi
->   ARM: dts: imx6sll: correct ecspi/sdma compatible
->   arm64: defconfig: Enable SDMA on i.mx8mq/8mm
-> 
->  .../devicetree/bindings/dma/fsl-imx-sdma.txt       |  2 +
->  .../devicetree/bindings/spi/fsl-imx-cspi.txt       |  2 +
->  arch/arm/boot/dts/imx6q.dtsi                       |  2 +-
->  arch/arm/boot/dts/imx6qdl.dtsi                     |  8 +--
->  arch/arm/boot/dts/imx6sll.dtsi                     | 10 ++--
->  arch/arm/boot/dts/imx6ul.dtsi                      |  8 +++
->  arch/arm64/boot/dts/freescale/imx8mm.dtsi          | 14 ++---
->  arch/arm64/boot/dts/freescale/imx8mq.dtsi          |  6 +-
->  arch/arm64/configs/defconfig                       |  3 +
->  drivers/dma/imx-sdma.c                             | 67 ++++++++++++++++------
->  drivers/spi/spi-imx.c                              | 46 ++++++++++++---
->  include/linux/platform_data/dma-imx-sdma.h         |  1 +
->  12 files changed, 124 insertions(+), 45 deletions(-)
-> 
-> -- 
-> 2.7.4
-> 
+T24gMjAxOS0wNC0yNiBhdCAwODoxOSArMDAwMCwgTHVjYXMgU3RhY2ggd3JvdGU6DQo+IENhdXRp
+b246IEVYVCBFbWFpbA0KPiANCj4gSGkgUm9iaW4sDQo+IA0KPiBBbSBGcmVpdGFnLCBkZW4gMjYu
+MDQuMjAxOSwgMDg6MDUgKzAwMDAgc2NocmllYiBSb2JpbiBHb25nOg0KPiA+IA0KPiA+IMKgIFRo
+ZXJlIGlzIGVjc3BpIEVSUjAwOTE2NSBvbiBpLm14Ni83IHNvYyBmYW1pbHksIHdoaWNoIGNhdXNl
+IEZJRk8NCj4gPiB0cmFuc2ZlciB0byBiZSBzZW5kIHR3aWNlIGluIERNQSBtb2RlLiBQbGVhc2Ug
+Z2V0IG1vcmUgaW5mb3JtYXRpb24NCj4gPiBmcm9tOg0KPiA+IGh0dHBzOi8vZXVyMDEuc2FmZWxp
+bmtzLnByb3RlY3Rpb24ub3V0bG9vay5jb20vP3VybD1odHRwcyUzQSUyRiUyRncNCj4gPiB3dy5u
+eHAuY29tJTJGZG9jcyUyRmVuJTJGZXJyYXRhJTJGSU1YNkRRQ0UucGRmJmFtcDtkYXRhPTAyJTdD
+MDElN0N5DQo+ID4gaWJpbi5nb25nJTQwbnhwLmNvbSU3QzAwNzg2OTRiMjMxNDQzZDFjYjdkMDhk
+NmNhMWZlZWNmJTdDNjg2ZWExZDNiYw0KPiA+IDJiNGM2ZmE5MmNkOTljNWMzMDE2MzUlN0MwJTdD
+MSU3QzYzNjkxODYzNTgyODQ4OTA0OSZhbXA7c2RhdGE9SWNQemcNCj4gPiB1SFRTODFyZEhHTXpV
+MndRZERZSm45YkUxVURDc2MwQlVPNUluOCUzRCZhbXA7cmVzZXJ2ZWQ9MC4gVGhlDQo+ID4gd29y
+a2Fyb3VuZCBpcyBhZGRpbmcNCj4gPiBuZXcgc2RtYSByYW0gc2NyaXB0IHdoaWNoIHdvcmtzIGlu
+IFhDSMKgwqBtb2RlIGFzIFBJTyBpbnNpZGUgc2RtYQ0KPiA+IGluc3RlYWQNCj4gPiBvZiBTTUMg
+bW9kZSwgbWVhbndoaWxlLCAnVFhfVEhSRVNIT0xEJyBzaG91bGQgYmUgMC4NCj4gSSB3b3VsZCBs
+aWtlIHRvIGhhdmUgYSBtb3JlIGluLWRlcHRoIGV4cGxhbmF0aW9uIGFib3V0IGhvdyB0aGlzIG5l
+dw0KPiBSQU0NCj4gc2NyaXB0IGRpZmZlcnMgZnJvbSB0aGUgZXhpc3RpbmcgUk9NIHNjcmlwdCBh
+bmQgdGhlIGNoYW5nZXMgdG8gdGhlDQo+IHN0YXRlIHRyYW5zaXRpb25zLg0KVGhlIG5ldyBlY3Nw
+aSByYW0gc2NyaXB0IGp1c3QgZm9sbG93IGVycmF0YSB0byBlbmFibGUgZWNzcGkgWENIIGJpdA0K
+YWZ0ZXIgZXZlcnkgdGltZSB0eGZpZm8gZmlsbGVkIGp1c3QgYXMgUElPLCBwbGVhc2UgY2hlY2sg
+c3BpX2lteF9wdXNoKCkNCmluIHNwaS1pbXguYy4NCj4gDQo+ID4gDQo+ID4gwqAgVGhlIGlzc3Vl
+IHNob3VsZCBiZSBleGlzdCBvbiBhbGwgbGVnYWN5IGkubXg2Lzcgc29jIGZhbWlseSBiZWZvcmUN
+Cj4gPiBpLm14NnVsLA0KPiA+IE5YUCBmaXggdGhpcyBkZXNpZ24gaXNzdWUgZnJvbSBpLm14NnVs
+LCBzbyBuZXdlciBjaGlwcyBzdWNoIGFzDQo+ID4gaS5teDZ1bGwvDQo+ID4gaS5teDhtcS9pLm14
+OG1tLCBkb24ndCBuZWVkIHRoaXMgd29ya2Fyb3VkIGFueW1vcmUuIFRoaXMgcGF0Y2ggc2V0DQo+
+ID4gYWRkIG5ldyAnZnNsLGlteDZ1bC1lY3NwaScgZm9yIGVjc3BpIGRyaXZlciBhbmQgJ2Vjc3Bp
+X2ZpeGVkJyBpbg0KPiA+IHNkbWENCj4gPiBkcml2ZXIgdG8gY2hvb3NlIGlmIG5lZWQgZXJyYXRh
+IG9yIG5vdC4NCj4gPiDCoCBUaGUgZmlyc3QgdHdvIHJldmVydGVkIHBhdGNoZXMgc2hvdWxkIGJl
+IHRoZSBzYW1lIGlzc3VlLCB0aG91Z2gsDQo+ID4gaXQNCj4gPiBzZWVtcyAnZml4ZWQnIGJ5IGNo
+YW5naW5nIHRvIG90aGVyIHNocCBzY3JpcHQuIEhvcGUgU2VhbiBvciBTYXNjaGENCj4gPiBjb3Vs
+ZA0KPiA+IGhhdmUgdGhlIGNoYW5jZSB0byB0ZXN0IHRoaXMgcGF0Y2ggc2V0IGlmIGNvdWxkIGZp
+eCB0aGVpciBpc3N1ZXMuDQo+ID4gwqAgQmVzaWRlcywgZW5hYmxlIHNkbWEgc3VwcG9ydCBmb3Ig
+aS5teDhtbS84bXEgYW5kIGZpeCBlY3NwaTEgbm90DQo+ID4gd29yaw0KPiA+IG9uIGkubXg4bW0g
+YmVjYXVzZSB0aGUgZXZlbnQgaWQgaXMgemVyby4NCj4gPiANCj4gPiBQUzoNCj4gPiDCoFBsZWFz
+ZSBnZXQgc2RtYSBmaXJtd2FyZSBmcm9tIGJlbG93IGxpbnV4LWZpcm13YXJlIGFuZCBjb3B5IGl0
+IHRvDQo+ID4geW91cg0KPiA+IGxvY2FsIHJvb3RmcyAvbGliL2Zpcm13YXJlL2lteC9zZG1hLg0K
+PiA+IGh0dHBzOi8vZXVyMDEuc2FmZWxpbmtzLnByb3RlY3Rpb24ub3V0bG9vay5jb20vP3VybD1o
+dHRwcyUzQSUyRiUyRmcNCj4gPiBpdC5rZXJuZWwub3JnJTJGcHViJTJGc2NtJTJGbGludXglMkZr
+ZXJuZWwlMkZnaXQlMkZmaXJtd2FyZSUyRmxpbnV4DQo+ID4gLWZpcm13YXJlLmdpdCUyRnRyZWUl
+MkZpbXglMkZzZG1hJmFtcDtkYXRhPTAyJTdDMDElN0N5aWJpbi5nb25nJTQwbg0KPiA+IHhwLmNv
+bSU3QzAwNzg2OTRiMjMxNDQzZDFjYjdkMDhkNmNhMWZlZWNmJTdDNjg2ZWExZDNiYzJiNGM2ZmE5
+MmNkOTkNCj4gPiBjNWMzMDE2MzUlN0MwJTdDMSU3QzYzNjkxODYzNTgyODQ4OTA0OSZhbXA7c2Rh
+dGE9U01vb25KOUhRcFVqM1R6UG1pDQo+ID4gN0NjQ1NBd2FSNDQlMkJHUGklMkJTQmolMkZYY2Vx
+byUzRCZhbXA7cmVzZXJ2ZWQ9MA0KPiBUaGlzIGlzIG5vdCBhbiBvcHRpb24gYXMgbG9uZyBhcyB0
+aGUgU0RNQSBSQU0gZmlybXdhcmUgYnJlYWtzIHRoZQ0KPiBtYWlubGluZSBzZXJpYWwgRE1BIHN1
+cHBvcnQuIFBsZWFzZSBwcm92aWRlIGEgZml4ZWQgU0RNQSBSQU0gZmlybXdhcmUNCj4gdGhhdCBk
+b2Vzbid0IHJlcGxhY2UgdGhlIFJPTSBzZXJpYWwgc2NyaXB0LCBhcyB0aGF0IG9uZSBpcyB0b3Rh
+bGx5DQo+IGZpbmUuDQpZZXMsIEkgaGF2ZSBhbm90aGVyIHBhdGNoIHRvIGZpeCBzdWNoIHVhcnQg
+ZnVuY3Rpb24gYnJva2VuIHdpdGggU0RNQQ0KUkFNIGZpcm13YXJlLCBpbmNsdWRpbmcgbmV3IHNk
+bWEgZmlybXdhcmUgdXBkYXRlZCBhbmQga2VybmVsIHBhdGNoLg0KU2hvdWxkIEkgYWRkIHRoYXQg
+cGF0Y2ggaW50byB0aGlzIHBhdGNoIHNldD8NCg0K
