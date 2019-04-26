@@ -2,34 +2,16 @@ Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
 Subject: dmaengine: stm32-dma: dmaengine: stm32-dma: use platform_get_irq()
-From: Pierre Yves MORDRET <pierre-yves.mordret@st.com>
-Message-Id: <20f014c3-0511-2b43-bcd2-1ca8cc700d54@st.com>
-Date: Wed, 24 Apr 2019 11:27:20 +0200
-To: Fabien Dessenne <fabien.dessenne@st.com>, Vinod Koul <vkoul@kernel.org>, Dan Williams <dan.j.williams@intel.com>, Maxime Coquelin <mcoquelin.stm32@gmail.com>, Alexandre Torgue <alexandre.torgue@st.com>, dmaengine@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com, linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
+From: Vinod Koul <vkoul@kernel.org>
+Message-Id: <20190426122012.GD28103@vkoul-mobl>
+Date: Fri, 26 Apr 2019 17:50:12 +0530
+To: Fabien Dessenne <fabien.dessenne@st.com>
+Cc: Dan Williams <dan.j.williams@intel.com>, Maxime Coquelin <mcoquelin.stm32@gmail.com>, Alexandre Torgue <alexandre.torgue@st.com>, Pierre-Yves MORDRET <pierre-yves.mordret@st.com>, dmaengine@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com, linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
 List-ID: <dmaengine.vger.kernel.org>
 
-SGVsbG8KClJldmlld2VkLWJ5OiBQaWVycmUtWXZlcyBNT1JEUkVUIDxwaWVycmUteXZlcy5tb3Jk
-cmV0QHN0LmNvbT4KClRoYW5rcwoKT24gNC8yNC8xOSAxMToyMSBBTSwgRmFiaWVuIERlc3Nlbm5l
-IHdyb3RlOgo+IHBsYXRmb3JtX2dldF9yZXNvdXJjZShwZGV2LCBJT1JFU09VUkNFX0lSUSkgaXMg
-bm90IHJlY29tbWVuZGVkIGZvcgo+IHJlcXVlc3RpbmcgSVJRJ3MgcmVzb3VyY2VzLCBhcyB0aGV5
-IGNhbiBiZSBub3QgcmVhZHkgeWV0LiBVc2luZwo+IHBsYXRmb3JtX2dldF9pcnEoKSBpbnN0ZWFk
-IGlzIHByZWZlcnJlZCBmb3IgZ2V0dGluZyBJUlEgZXZlbiBpZiBpdCB3YXMKPiBub3QgcmV0cmll
-dmVkIGVhcmxpZXIuCj4gCj4gU2lnbmVkLW9mZi1ieTogRmFiaWVuIERlc3Nlbm5lIDxmYWJpZW4u
-ZGVzc2VubmVAc3QuY29tPgo+IC0tLQo+ICBkcml2ZXJzL2RtYS9zdG0zMi1kbWEuYyB8IDExICsr
-KysrKy0tLS0tCj4gIDEgZmlsZSBjaGFuZ2VkLCA2IGluc2VydGlvbnMoKyksIDUgZGVsZXRpb25z
-KC0pCj4gCj4gZGlmZiAtLWdpdCBhL2RyaXZlcnMvZG1hL3N0bTMyLWRtYS5jIGIvZHJpdmVycy9k
-bWEvc3RtMzItZG1hLmMKPiBpbmRleCBiYTIzOWI1Li4zMzA2ODE4IDEwMDY0NAo+IC0tLSBhL2Ry
-aXZlcnMvZG1hL3N0bTMyLWRtYS5jCj4gKysrIGIvZHJpdmVycy9kbWEvc3RtMzItZG1hLmMKPiBA
-QCAtMTMwMiwxMyArMTMwMiwxNCBAQCBzdGF0aWMgaW50IHN0bTMyX2RtYV9wcm9iZShzdHJ1Y3Qg
-cGxhdGZvcm1fZGV2aWNlICpwZGV2KQo+ICAKPiAgCWZvciAoaSA9IDA7IGkgPCBTVE0zMl9ETUFf
-TUFYX0NIQU5ORUxTOyBpKyspIHsKPiAgCQljaGFuID0gJmRtYWRldi0+Y2hhbltpXTsKPiAtCQly
-ZXMgPSBwbGF0Zm9ybV9nZXRfcmVzb3VyY2UocGRldiwgSU9SRVNPVVJDRV9JUlEsIGkpOwo+IC0J
-CWlmICghcmVzKSB7Cj4gLQkJCXJldCA9IC1FSU5WQUw7Cj4gLQkJCWRldl9lcnIoJnBkZXYtPmRl
-diwgIk5vIGlycSByZXNvdXJjZSBmb3IgY2hhbiAlZFxuIiwgaSk7Cj4gKwkJY2hhbi0+aXJxID0g
-cGxhdGZvcm1fZ2V0X2lycShwZGV2LCBpKTsKPiArCQlpZiAoY2hhbi0+aXJxIDwgMCkgIHsKPiAr
-CQkJcmV0ID0gY2hhbi0+aXJxOwo+ICsJCQlpZiAocmV0ICE9IC1FUFJPQkVfREVGRVIpCj4gKwkJ
-CQlkZXZfZXJyKCZwZGV2LT5kZXYsCj4gKwkJCQkJIk5vIGlycSByZXNvdXJjZSBmb3IgY2hhbiAl
-ZFxuIiwgaSk7Cj4gIAkJCWdvdG8gZXJyX3VucmVnaXN0ZXI7Cj4gIAkJfQo+IC0JCWNoYW4tPmly
-cSA9IHJlcy0+c3RhcnQ7Cj4gIAkJcmV0ID0gZGV2bV9yZXF1ZXN0X2lycSgmcGRldi0+ZGV2LCBj
-aGFuLT5pcnEsCj4gIAkJCQkgICAgICAgc3RtMzJfZG1hX2NoYW5faXJxLCAwLAo+ICAJCQkJICAg
-ICAgIGRldl9uYW1lKGNoYW4yZGV2KGNoYW4pKSwgY2hhbik7Cj4K
+T24gMjQtMDQtMTksIDExOjIxLCBGYWJpZW4gRGVzc2VubmUgd3JvdGU6Cj4gcGxhdGZvcm1fZ2V0
+X3Jlc291cmNlKHBkZXYsIElPUkVTT1VSQ0VfSVJRKSBpcyBub3QgcmVjb21tZW5kZWQgZm9yCj4g
+cmVxdWVzdGluZyBJUlEncyByZXNvdXJjZXMsIGFzIHRoZXkgY2FuIGJlIG5vdCByZWFkeSB5ZXQu
+IFVzaW5nCj4gcGxhdGZvcm1fZ2V0X2lycSgpIGluc3RlYWQgaXMgcHJlZmVycmVkIGZvciBnZXR0
+aW5nIElSUSBldmVuIGlmIGl0IHdhcwo+IG5vdCByZXRyaWV2ZWQgZWFybGllci4KCkFwcGxpZWQs
+IHRoYW5rcwo=
