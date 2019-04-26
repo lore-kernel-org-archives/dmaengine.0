@@ -2,181 +2,131 @@ Return-Path: <SRS0=bl+G=S4=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.0 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-1.0 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_PASS,URIBL_BLOCKED
+	autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5AB7DC43219
-	for <dmaengine@archiver.kernel.org>; Fri, 26 Apr 2019 13:03:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2E811C43219
+	for <dmaengine@archiver.kernel.org>; Fri, 26 Apr 2019 13:21:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 1D4082067D
-	for <dmaengine@archiver.kernel.org>; Fri, 26 Apr 2019 13:03:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F25BA2077B
+	for <dmaengine@archiver.kernel.org>; Fri, 26 Apr 2019 13:21:30 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MHPQrblC"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nGmzSrbl"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726197AbfDZNDN (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 26 Apr 2019 09:03:13 -0400
-Received: from mail-lf1-f67.google.com ([209.85.167.67]:38773 "EHLO
-        mail-lf1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726308AbfDZNDN (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Fri, 26 Apr 2019 09:03:13 -0400
-Received: by mail-lf1-f67.google.com with SMTP id v1so2427828lfg.5;
-        Fri, 26 Apr 2019 06:03:11 -0700 (PDT)
+        id S1726152AbfDZNVa (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 26 Apr 2019 09:21:30 -0400
+Received: from mail-io1-f66.google.com ([209.85.166.66]:41926 "EHLO
+        mail-io1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726069AbfDZNVa (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Fri, 26 Apr 2019 09:21:30 -0400
+Received: by mail-io1-f66.google.com with SMTP id r10so2902140ioc.8;
+        Fri, 26 Apr 2019 06:21:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:from:to:cc:references:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=eQoi9xbGcMcYfOoWsGLbOHVHNTXp7aikInN/pNRji8Q=;
-        b=MHPQrblCLmuF8oN4myJ4270iLPUopYcgS+X75r85ziPmgMpd8OP8ONi+DRskxigUcG
-         JhdwrDOPT7UP8clNTvUld3qEusk3DEu/w3+S852X1TT78f03Fferiyhxej6x01q6vU5q
-         Noau5yF2VFx0dSOkkTUiHTGgRrVa5QYoQ57ykmYdbcvGlVXlZ16VZ6f9hq3gKyqe+99w
-         Y9sTuXrh1VBi3lgM1zOTfx4oLLel8BZP0Gp+bzEZXSnt5xvY9ehEaKBfjwMRBvehN3QO
-         hBPHwe10vO7H9QUVBao46+qtlnmAi+s/M/QTUXhCzIpRuWAg6cOEifO7YUtGqlFDeuHB
-         aIeg==
+        h=mime-version:references:in-reply-to:reply-to:from:date:message-id
+         :subject:to:cc;
+        bh=ZNOtvepFevmzmMtAUynEOqUF3jb2beeDOj9721fg26s=;
+        b=nGmzSrblxYDMUcPBuYBgpHf4YKWS/UFdqu0FexfPA3zAWdOyUVLwBKg1uVOt74zMKh
+         E1K3XPO75+jzOWsDlU0ITQKjqiMg3Y6yVbQ59SxeZEgIVX5xiCwd7XdLg6gX+b6kMOv/
+         OZdQu7sRGRQZUcWiTszrqjKZuDtqE+VBlpAA1hkzbv1w8Sd3mF9jb0ufhlsUZVEUc8TE
+         HYa7e2ev3V/drC5fUHUvPvvmb+MVnW63mDbdb1EtI6z5S2bJgH98iL+aixU8vebQauDt
+         sL0IWTKcj/kv+OSMno76VEqiiByouh5QLaVwHymzzUqtUYqKqjy3a2I2h0eWHYmnSPOx
+         xveQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:from:to:cc:references:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=eQoi9xbGcMcYfOoWsGLbOHVHNTXp7aikInN/pNRji8Q=;
-        b=niJsP9zDCamuh4HlbAT1i4ZVOlrtAqv6eEUOoBbyzarROXg9qjpi5rggSIA65tWRsG
-         Al8DRULy0EmCagZpXdLuqKq3/HqK0mIsDN1tN5GnkRkAQEzRXzwBiO47V1wSP0p/7eQf
-         UcBSNClONnQHfSJSD+ZEk+oYwFJ0Er2qWvtpAdNqgb+zkjPEisyAzrTYeMPbwj4fM0eR
-         KlPsRC/rnvW11cHE3jzM5bKc03uMZ32Y4WulC1RSCmpJd+OtECGVPAEy+VDPBlshFEAY
-         4sikvEa473vvTyMtPLueNa5m1tioz3QEYNHa3jb6toXbMNsbqW0Uox6Da3r8PP8bTXlC
-         Vz3w==
-X-Gm-Message-State: APjAAAUhIoxUXPm0RM6HJFHeJ3cY8NRIfp7API7eh16yuHWyAizsyLfK
-        +1idsvRCdAlAMF/GO56xUDH0CNBo
-X-Google-Smtp-Source: APXvYqxGr9IvMFAvCl6D/qvGYxV5I2Gx8U81/nb+rVq5F67+UwtbSead7yVV4X5EjlovziWV7fWxRw==
-X-Received: by 2002:ac2:558d:: with SMTP id v13mr17676257lfg.76.1556283790000;
-        Fri, 26 Apr 2019 06:03:10 -0700 (PDT)
-Received: from [192.168.2.145] (ppp94-29-35-107.pppoe.spdop.ru. [94.29.35.107])
-        by smtp.googlemail.com with ESMTPSA id v28sm5564779lfi.33.2019.04.26.06.03.08
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 26 Apr 2019 06:03:09 -0700 (PDT)
-Subject: Re: [PATCH v1] dmaengine: tegra: Use relaxed versions of readl/writel
-From:   Dmitry Osipenko <digetx@gmail.com>
-To:     Jon Hunter <jonathanh@nvidia.com>,
-        Laxman Dewangan <ldewangan@nvidia.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        Thierry Reding <thierry.reding@gmail.com>
-Cc:     dmaengine@vger.kernel.org, linux-tegra@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20190424231708.21219-1-digetx@gmail.com>
- <d789f1bc-44d1-abf6-a046-7cf835416e8f@nvidia.com>
- <4a315b63-bc71-3c3e-f1ae-8638bcf4033d@gmail.com>
- <bff59709-426b-32d2-08eb-d8f51cd7d5c1@nvidia.com>
- <49392c02-6dcc-9a95-0035-27c4c0d14820@gmail.com>
- <242863b9-b75e-4b37-178a-5aa03e56d3e1@gmail.com>
-Message-ID: <d6d1e420-6707-f446-a531-4b38e4e82c19@gmail.com>
-Date:   Fri, 26 Apr 2019 16:03:08 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
+        h=x-gm-message-state:mime-version:references:in-reply-to:reply-to
+         :from:date:message-id:subject:to:cc;
+        bh=ZNOtvepFevmzmMtAUynEOqUF3jb2beeDOj9721fg26s=;
+        b=g90JshFAKaCYP0bPZan3zSqPixvNaC3GkS5znZMVvkfKliOyJMMB7IVjyXinSvrrsp
+         IcliKUMdJ5OMpgvMrYIdc60xL9w691UfJajGS7jW1dXKrwkHOmIqRGSKPzzlpAO+ilEA
+         cedVAlMf1Ucrl6OChKnodaXhAkrTmFeG88caC/3GAU5c1oyz3jZZHXYhkmpRhM0cU9mH
+         o610IYbV8ZFi4o8jIwy8ib/9lMuFUQVJYRO/ExWJUYyNQCpFTP25SJcmuowW0KI9bee6
+         8JWQ4676shK4VDhv+nIoI+vjatFPav9ywweTJ6dhg4EMiVKAB6HhTV0Wn2d9gk6McwOR
+         UQLw==
+X-Gm-Message-State: APjAAAW8gDlWp/xGceMjWlE1wmk4NrB5birME9Mo/f8BYlRQN1ryk2Lw
+        bbzjJh5VIuryFXDMpp12dYAxRFFFavI+7b9orhdjBLWL
+X-Google-Smtp-Source: APXvYqx2FjAOr6/Bc+db7gR/r8ORgt4vjRbHsXytKCPPhiKbZhc0s15k4d/98Qv0NV/Fy09ma4NEwe8unOTfutFrn88=
+X-Received: by 2002:a05:6602:20d6:: with SMTP id 22mr24484648ioz.163.1556284889287;
+ Fri, 26 Apr 2019 06:21:29 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <242863b9-b75e-4b37-178a-5aa03e56d3e1@gmail.com>
+References: <bug-203435-193951@https.bugzilla.kernel.org/>
+In-Reply-To: <bug-203435-193951@https.bugzilla.kernel.org/>
+Reply-To: bjorn@helgaas.com
+From:   Bjorn Helgaas <bjorn.helgaas@gmail.com>
+Date:   Fri, 26 Apr 2019 08:21:18 -0500
+Message-ID: <CABhMZUV2bSHUeZErR8=AQrBvuJHeKEMfQJbGTVRgcxZcXp6i2g@mail.gmail.com>
+Subject: Re: [Bug 203435] New: Xilinx pcie endpoint DMA not functional for
+ ZynqMP PS AXI-PXI DMA endpoint
+To:     linux-pci@vger.kernel.org
+Cc:     dtyree@newagemicro.com, Michal Simek <michal.simek@xilinx.com>,
+        Vinod Koul <vkoul@kernel.org>, dmaengine@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
-Message-ID: <20190426130308.kN8o8SoRoimFc-IcS_uFwqAtXXySTYqAx-XO2MNU6-U@z>
 
-26.04.2019 15:42, Dmitry Osipenko пишет:
-> 26.04.2019 15:18, Dmitry Osipenko пишет:
->> 26.04.2019 14:13, Jon Hunter пишет:
->>>
->>> On 26/04/2019 11:45, Dmitry Osipenko wrote:
->>>> 26.04.2019 12:52, Jon Hunter пишет:
->>>>>
->>>>> On 25/04/2019 00:17, Dmitry Osipenko wrote:
->>>>>> The readl/writel functions are inserting memory barrier in order to
->>>>>> ensure that memory stores are completed. On Tegra20 and Tegra30 this
->>>>>> results in L2 cache syncing which isn't a cheapest operation. The
->>>>>> tegra20-apb-dma driver doesn't need to synchronize generic memory
->>>>>> accesses, hence use the relaxed versions of the functions.
->>>>>
->>>>> Do you mean device-io accesses here as this is not generic memory?
->>>>
->>>> Yes. The IOMEM accesses within are always ordered and uncached, while
->>>> generic memory accesses are out-of-order and cached.
->>>>
->>>>> Although there may not be any issues with this change, I think I need a
->>>>> bit more convincing that we should do this given that we have had it
->>>>> this way for sometime and I would not like to see us introduce any
->>>>> regressions as this point without being 100% certain we would not.
->>>>> Ideally, if I had some good extensive tests I could run to hammer the
->>>>> DMA for all configurations with different combinations of channels
->>>>> running simultaneously then we could test this, but right now I don't :-(
->>>>>
->>>>> Have you ...
->>>>> 1. Tested both cyclic and scatter-gather transfers?
->>>>> 2. Stress tested simultaneous transfers with various different
->>>>>    configurations?
->>>>> 3. Quantified the actual performance benefit of this change so we can
->>>>>    understand how much of a performance boost this offers?
->>>>
->>>> Actually I found a case where this change causes a problem, I'm seeing
->>>> I2C transfer timeout for touchscreen and it breaks the touch input.
->>>> Indeed, I haven't tested this patch very well.
->>>>
->>>> And the fix is this:
->>>>
->>>> @@ -1592,6 +1592,8 @@ static int tegra_dma_runtime_suspend(struct device
->>>> *dev)
->>>>  						  TEGRA_APBDMA_CHAN_WCOUNT);
->>>>  	}
->>>>
->>>> +	dsb();
->>>> +
->>>>  	clk_disable_unprepare(tdma->dma_clk);
->>>>
->>>>  	return 0;
->>>>
->>>>
->>>> Apparently the problem is that CLK/DMA (PPSB/APB) accesses are
->>>> incoherent and CPU disables clock before writes are reaching DMA controller.
->>>>
->>>> I'd say that cyclic and scatter-gather transfers are now tested. I also
->>>> made some more testing of simultaneous transfers.
->>>>
->>>> Quantifying performance probably won't be easy to make as the DMA
->>>> read/writes are not on any kind of code's hot-path.
->>>
->>> So why make the change?
->>
->> For consistency.
->>
->>>> Jon, are you still insisting about to drop this patch or you will be
->>>> fine with the v2 that will have the dsb() in place?
->>>
->>> If we can't quantify the performance gain, then it is difficult to
->>> justify the change. I would also be concerned if that is the only place
->>> we need an explicit dsb.
->>
->> Maybe it won't hurt to add dsb to the ISR as well. But okay, let's drop
->> this patch for now.
->>
-> 
-> Jon, it occurred to me that there still should be a problem with the
-> writel() ordering in the driver because writel() ensures that memory
-> stores are completed *before* the write occurs and hence translates into
-> iowmb() + writel_relaxed() [0]. Thus the last write will always happen
-> asynchronously in regards to clk accesses.
-> 
-> [0]
-> https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/tree/arch/arm/include/asm/io.h#n311
-> 
+[+cc linux-pci, Xilinx and DMA engine folks]
 
-Also please note that iowmb() translates into wmb() if
-CONFIG_ARM_DMA_MEM_BUFFERABLE=y and sometime ago I was profiling host1x
-driver job submission performance and have seen cases where wmb() could
-take up to 1ms on T20 due to L2 syncing if there are outstanding memory
-writes in the cache (or even more, I don't remember exactly already how
-bad it was..).
+I'm not sure what to do with this report.  It mentions "vivado" and
+xilinx_ps_pcie_platform.c, neither of which seems to be in mainline or
+linux-next.  A Google search suggests that Vivado is a Xilinx product;
+maybe this bug report should be directed there?
 
-Altogether, I think the usage of readl/writel in pretty much all of
-Tegra drivers is plainly wrong and explicit dsb() shall be used in
-places where hardware synchronization is really needed.
+On Fri, Apr 26, 2019 at 7:09 AM <bugzilla-daemon@bugzilla.kernel.org> wrote:
+>
+> https://bugzilla.kernel.org/show_bug.cgi?id=203435
+>
+>             Bug ID: 203435
+>            Summary: Xilinx pcie endpoint DMA not functional for ZynqMP PS
+>                     AXI-PXI DMA endpoint
+>            Product: Drivers
+>            Version: 2.5
+>     Kernel Version: 4.14.0
+>           Hardware: Other
+>                 OS: Linux
+>               Tree: Mainline
+>             Status: NEW
+>           Severity: normal
+>           Priority: P1
+>          Component: PCI
+>           Assignee: drivers_pci@kernel-bugs.osdl.org
+>           Reporter: dtyree@newagemicro.com
+>         Regression: No
+>
+> The ps_pcie_dma-1.00.a driver does not work as an endpoint. I'd be happy to
+> help fix/enable/test this out, but I do not understand what the intent was.
+>
+> The rootdma option is the only one allowed / documented through device-tree and
+> kernel docs. It does not cover the epdma branches in the code that require that
+> drivers/dma/xilinx/xilinx_ps_pcie_platform.c:18:#define PLATFORM_DRIVER_NAME
+>           "ps_pcie_pform_dma"
+>
+> be available. I am not sure if this was intended to be the endpoint.
+>
+> The vivado build for the pcie endpoint will not enable the endpoint DMA
+> channels. I would expect that to be done through device-tree/PCIe BAR
+> configuration reads (for sizes) to set up the channels, but I can't find
+> anything that may other than the mystery of epdma with PLATFORM_DRIVER_NAME.
+>
+> Because the fsbl does not enable the AXI-DMA the rootdma channel enable check
+> fails on line xilinx_ps_pcie_platform.c:1832
+>         channel->chan_base =
+>         (struct DMA_ENGINE_REGISTERS *)((__force char *)(xdev->reg_base) +
+>                                  (channel_number * DMA_CHANNEL_REGS_SIZE));
+>
+>         if (((channel->chan_base->dma_channel_status) &
+>                                 DMA_STATUS_DMA_PRES_BIT) == 0) {
+>                 dev_err(&platform_dev->dev,
+>                         "Hardware reports channel not present\n");
+>                 return -ENOTSUPP;
+>         }
+>
+> Is there a different way to access use the PS AXI-PCIe DMA?
+>
+> Can anyone offer some advice? Have I misunderstood the dis-functionality of the
+> epdma -vs- rootdma branching?
+>
+> Thanks
