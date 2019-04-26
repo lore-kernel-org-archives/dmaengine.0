@@ -2,210 +2,81 @@ Return-Path: <SRS0=bl+G=S4=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_PASS,T_DKIMWL_WL_HIGH,
-	USER_AGENT_MUTT autolearn=unavailable autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,MAILING_LIST_MULTI,SPF_PASS,T_DKIMWL_WL_HIGH,USER_AGENT_MUTT
+	autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EE590C43218
-	for <dmaengine@archiver.kernel.org>; Fri, 26 Apr 2019 12:46:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4896CC43219
+	for <dmaengine@archiver.kernel.org>; Fri, 26 Apr 2019 12:47:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id BECD92084F
-	for <dmaengine@archiver.kernel.org>; Fri, 26 Apr 2019 12:46:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 19015206C1
+	for <dmaengine@archiver.kernel.org>; Fri, 26 Apr 2019 12:47:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1556282764;
-	bh=ydMoE2lxrI6T7Lp8FQ7vaxTOP0crHdPE0/Pvavc1xig=;
+	s=default; t=1556282876;
+	bh=Z6ULejNUNVbPN+kGDhh078TUTsx/3cjJ2E/JQmrHYIY=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:List-ID:From;
-	b=VG0/tjh8RWwPGif88ON05+pkWgLwX6QkfQafKvt+RWv5q3Fc12E7fLBnobkeltBjf
-	 0guSpOGp2vz6J7KI9L6NPLE2Y1fsRsOwPyOuZDjqVdffIY6O1/TBekutYoNAZDXRJP
-	 B0XBfJP54c/wl0o8fOOf4sZDPknywXjXz84tpdP8=
+	b=N2oITvf+ZX//Qizypn82oWFMeVOJlxe3WaosK521IR3WySrUPmh3+yep393nwECMk
+	 7VSz8MVgPn5ZOdUvXldYSpai//eOUWTQflLPsou9LBFtfofjcUaz6/WRGNW3bQRHcv
+	 28KPIiB4WDoEdXnN3NMm55jC6AESjjRMMdkHjf9k=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726245AbfDZMp7 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 26 Apr 2019 08:45:59 -0400
-Received: from mail.kernel.org ([198.145.29.99]:39540 "EHLO mail.kernel.org"
+        id S1726198AbfDZMrz (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 26 Apr 2019 08:47:55 -0400
+Received: from mail.kernel.org ([198.145.29.99]:40146 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726039AbfDZMp5 (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Fri, 26 Apr 2019 08:45:57 -0400
+        id S1726197AbfDZMrz (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Fri, 26 Apr 2019 08:47:55 -0400
 Received: from localhost (unknown [171.76.113.243])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 06A72206C1;
-        Fri, 26 Apr 2019 12:45:55 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 24950206C1;
+        Fri, 26 Apr 2019 12:47:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1556282757;
-        bh=ydMoE2lxrI6T7Lp8FQ7vaxTOP0crHdPE0/Pvavc1xig=;
+        s=default; t=1556282874;
+        bh=Z6ULejNUNVbPN+kGDhh078TUTsx/3cjJ2E/JQmrHYIY=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=N4+MwCuKZi80NxAWVk7chnP02NuwecayAFdiOG7mb/zXxfop5+166celMECSOYOBE
-         GTJakMg3B9ezWhFmK6b+nWmluePQufQg7Apmj+H+rXOKEjbZs4cRIJ8jB3RvCFHIxO
-         7vb+jOeDOiidDRYiCUF7ox3Obh1iw4XbHpre8s14=
-Date:   Fri, 26 Apr 2019 18:15:50 +0530
+        b=mmMx9GeNaaNzMTlwYFxqS6Xr51Zgoq0LKFKKk1W6wmfmNulRAMQPhWzUIcumq9k+G
+         5KGDF2vy7kghsy/RpSgvjW2QH50D9daTCw8DUiC7DkcIZA5jzgf6a3p7FZPXlchvTk
+         q731RFfvLMQIEcxqC+eL94PQWz8P8gVKh9AFWHA0=
+Date:   Fri, 26 Apr 2019 18:17:48 +0530
 From:   Vinod Koul <vkoul@kernel.org>
-To:     Peng Ma <peng.ma@nxp.com>
-Cc:     dan.j.williams@intel.com, leoyang.li@nxp.com,
-        linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org
-Subject: Re: [V3 1/2] dmaengine: fsl-dpaa2-qdma: Add the DPDMAI(Data Path DMA
- Interface) support
-Message-ID: <20190426124550.GE28103@vkoul-mobl>
-References: <20190409072212.15860-1-peng.ma@nxp.com>
+To:     Dmitry Osipenko <digetx@gmail.com>
+Cc:     Laxman Dewangan <ldewangan@nvidia.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        dmaengine@vger.kernel.org, linux-tegra@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v1] dmaengine: tegra: Use relaxed versions of readl/writel
+Message-ID: <20190426124748.GF28103@vkoul-mobl>
+References: <20190424231708.21219-1-digetx@gmail.com>
+ <20190426120148.GB28103@vkoul-mobl>
+ <68c342e2-5662-5632-82aa-659da0381f54@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="UTF-8"
 Content-Disposition: inline
-In-Reply-To: <20190409072212.15860-1-peng.ma@nxp.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <68c342e2-5662-5632-82aa-659da0381f54@gmail.com>
 User-Agent: Mutt/1.11.3 (2019-02-01)
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
-Message-ID: <20190426124550.w30GPk4Poc8EIGwj-1WkFTpz4LdwDdvlm6avaXL9qCw@z>
+Message-ID: <20190426124748.fVpL7jdnnbATixwd8_oUq5v-hUsN9r7IK2zxef_elCs@z>
 
-On 09-04-19, 15:22, Peng Ma wrote:
+On 26-04-19, 15:19, Dmitry Osipenko wrote:
+> 26.04.2019 15:01, Vinod Koul пишет:
+> > On 25-04-19, 02:17, Dmitry Osipenko wrote:
+> >> The readl/writel functions are inserting memory barrier in order to
+> >> ensure that memory stores are completed. On Tegra20 and Tegra30 this
+> >> results in L2 cache syncing which isn't a cheapest operation. The
+> >> tegra20-apb-dma driver doesn't need to synchronize generic memory
+> >> accesses, hence use the relaxed versions of the functions.
+> > 
+> > Subsystem name is **dmaengine** not dma! Please fix that
+> > 
+> 
+> Looks like you answered to a wrong email.
 
-Subject missed PATCH tag!
-
-> The MC exports the DPDMAI object as an interface to operate the DPAA2 QDMA
-
-whats MC, DPDMAI, DPAA2
-
-> Engine. The DPDMAI enables sending frame-based requests to QDMA and receiving
-> back confirmation response on transaction completion, utilizing the DPAA2 QBMan
-> infrastructure. DPDMAI object provides up to two priorities for processing QDMA
-> requests.
-
-> +int dpdmai_open(struct fsl_mc_io *mc_io,
-> +		u32 cmd_flags,
-> +		int dpdmai_id,
-> +		u16 *token)
-
-could be written as:
-
-int dpdmai_open(struct fsl_mc_io *mc_io, u32 cmd_flags,
-                int dpdmai_id, u16 *token)
-
-Looks neater, right? It would be to reread coding guidelines and run
-checkpatch with --strict on this
-
-
-> +{
-> +	struct fsl_mc_command cmd = { 0 };
-
-where is this defined?
-
-> +	struct dpdmai_cmd_open *cmd_params;
-> +	int err;
-> +
-> +	/* prepare command */
-> +	cmd.header = mc_encode_cmd_header(DPDMAI_CMDID_OPEN,
-> +					  cmd_flags,
-> +					  0);
-> +
-> +	cmd_params = (struct dpdmai_cmd_open *)cmd.params;
-
-I dont like casts, can you explain
-
-> +	cmd_params->dpdmai_id = cpu_to_le32(dpdmai_id);
-> +
-> +	/* send command to mc*/
-> +	err = mc_send_command(mc_io, &cmd);
-> +	if (err)
-> +		return err;
-> +
-> +	/* retrieve response parameters */
-> +	*token = mc_cmd_hdr_read_token(&cmd);
-> +	return 0;
-> +}
-
-who will call this API?
-
-> +int dpdmai_create(struct fsl_mc_io *mc_io,
-> +		  u32 cmd_flags,
-> +		  const struct dpdmai_cfg *cfg,
-> +		  u16 *token)
-> +{
-> +	struct fsl_mc_command cmd = { 0 };
-> +	int err;
-> +
-> +	/* prepare command */
-> +	cmd.header = mc_encode_cmd_header(DPDMAI_CMDID_CREATE,
-> +					  cmd_flags,
-> +					  0);
-
-why waste a line, last arg can be in previous line!
-
-> +int dpdmai_get_tx_queue(struct fsl_mc_io *mc_io,
-> +			u32 cmd_flags,
-> +			u16 token,
-> +			u8 priority,
-> +			struct dpdmai_tx_queue_attr *attr)
-> +{
-> +	struct fsl_mc_command cmd = { 0 };
-> +	struct dpdmai_cmd_queue *cmd_params;
-> +	struct dpdmai_rsp_get_tx_queue *rsp_params;
-> +	int err;
-> +
-> +	/* prepare command */
-> +	cmd.header = mc_encode_cmd_header(DPDMAI_CMDID_GET_TX_QUEUE,
-> +					  cmd_flags,
-> +					  token);
-> +
-> +	cmd_params = (struct dpdmai_cmd_queue *)cmd.params;
-> +	cmd_params->queue = priority;
-> +
-> +	/* send command to mc*/
-> +	err = mc_send_command(mc_io, &cmd);
-> +	if (err)
-> +		return err;
-> +
-> +	/* retrieve response parameters */
-> +
-> +	rsp_params = (struct dpdmai_rsp_get_tx_queue *)cmd.params;
-> +	attr->fqid = le32_to_cpu(rsp_params->fqid);
-> +
-> +	return 0;
-> +}
-
-Okay this file does not use any of dmaengine apis, is this a dmaengine
-driver?
-
-> diff --git a/drivers/dma/fsl-dpaa2-qdma/dpdmai.h b/drivers/dma/fsl-dpaa2-qdma/dpdmai.h
-> new file mode 100644
-> index 0000000..c8a7b7f
-> --- /dev/null
-> +++ b/drivers/dma/fsl-dpaa2-qdma/dpdmai.h
-> @@ -0,0 +1,524 @@
-> +/* SPDX-License-Identifier: GPL-2.0 */
-> +/* Copyright 2014-2018 NXP */
-> +
-> +/*
-> + * Redistribution and use in source and binary forms, with or without
-> + * modification, are permitted provided that the following conditions are met:
-> + * * Redistributions of source code must retain the above copyright
-> + * notice, this list of conditions and the following disclaimer.
-> + * * Redistributions in binary form must reproduce the above copyright
-> + * notice, this list of conditions and the following disclaimer in the
-> + * documentation and/or other materials provided with the distribution.
-> + * * Neither the name of the above-listed copyright holders nor the
-> + * names of any contributors may be used to endorse or promote products
-> + * derived from this software without specific prior written permission.
-> + *
-> + *
-> + * ALTERNATIVELY, this software may be distributed under the terms of the
-> + * GNU General Public License ("GPL") as published by the Free Software
-> + * Foundation, either version 2 of that License or (at your option) any
-> + * later version.
-> + *
-> + * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-> + * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-> + * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
-> + * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDERS OR CONTRIBUTORS BE
-> + * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
-> + * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
-> + * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
-> + * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
-> + * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
-> + * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
-> + * POSSIBILITY OF SUCH DAMAGE.
-> + */
-
-we have SiPDX tag, why do you need ths here!
+Yes looks like I did, apologies for that :(
 
 -- 
 ~Vinod
