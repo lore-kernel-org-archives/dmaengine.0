@@ -2,84 +2,155 @@ Return-Path: <SRS0=bl+G=S4=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,MAILING_LIST_MULTI,SPF_PASS,T_DKIMWL_WL_HIGH,USER_AGENT_MUTT
-	autolearn=unavailable autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_PASS,
+	T_DKIMWL_WL_HIGH,URIBL_BLOCKED,USER_AGENT_MUTT autolearn=unavailable
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 460ADC43219
-	for <dmaengine@archiver.kernel.org>; Fri, 26 Apr 2019 11:48:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9E32AC43219
+	for <dmaengine@archiver.kernel.org>; Fri, 26 Apr 2019 11:50:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 16F0D208C3
-	for <dmaengine@archiver.kernel.org>; Fri, 26 Apr 2019 11:48:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6C1B6208C3
+	for <dmaengine@archiver.kernel.org>; Fri, 26 Apr 2019 11:50:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1556279332;
-	bh=y2eO2+Egp17vfAqy6bGFhHQulFyPwA2ldw8S2io0kE4=;
+	s=default; t=1556279456;
+	bh=Lwhq3yGTLwZBXZG7d5cZPZUNHsm6dVmKEROQ8WGGliM=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:List-ID:From;
-	b=BSTaXJyE7pT5jEd8IdxJI1pBzYuwm0TuheUAiRwJVryCEE83XFz3yLHkxFv/4bmLq
-	 QbqMltRPdnVReyWFzIve44GpuPAL0FDn0pviF8wuYvDWuaDeJFF043TyPjUrYqH8AN
-	 C8GTQMy03e8erbE8A41WqNtqF79Ibxt7x8Dtis/s=
+	b=y5iLHV9qjw2Tr/vWdCSJ3bbua1QigAFTPhWW5tyZox2cxC4RAMlfevAQmfHntvQYX
+	 p/owypMpOxciI7RHYgQdkvSfde7yQJN6LSiknEhJyySQAhEmHovQuV4w30QwHvbFqL
+	 mvLmu7yiAUTC5KdL3QumgE6Tun4OrqpVG9nTLlQM=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726360AbfDZLsr (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 26 Apr 2019 07:48:47 -0400
-Received: from mail.kernel.org ([198.145.29.99]:42390 "EHLO mail.kernel.org"
+        id S1726026AbfDZLu4 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 26 Apr 2019 07:50:56 -0400
+Received: from mail.kernel.org ([198.145.29.99]:43630 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725901AbfDZLsq (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Fri, 26 Apr 2019 07:48:46 -0400
+        id S1725901AbfDZLuz (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Fri, 26 Apr 2019 07:50:55 -0400
 Received: from localhost (unknown [171.76.113.243])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 572DC2077B;
-        Fri, 26 Apr 2019 11:48:45 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id F40FA2084F;
+        Fri, 26 Apr 2019 11:50:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1556279326;
-        bh=y2eO2+Egp17vfAqy6bGFhHQulFyPwA2ldw8S2io0kE4=;
+        s=default; t=1556279454;
+        bh=Lwhq3yGTLwZBXZG7d5cZPZUNHsm6dVmKEROQ8WGGliM=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=Qadh/VoYlZuYyfU98gD8T6FZEBSGf4A0lW0Krf1HiEmLpuYiI1WM64cXRQRbBE7kj
-         07YlK+kaiJJSpTCKo5eZHS8+UiXcb3Jdxroc8ALPRiHcPIuZIKsK7vtaZqzTmNDPQi
-         dcd+ACdjcsDBM6TsrU6tqhjcqQ56zSh8sN4N+tys=
-Date:   Fri, 26 Apr 2019 17:18:40 +0530
+        b=OE7X96wLJ7r/44OQU/ONgLqbtBQX7QoV3QL1ig4fkpoXr7iI9ywW2ec1D04l93k/o
+         qEsS92zXBO446tnIdei/yZe7BrE6iVH4dpvvqCqm9Owdwl+33QHhP+Hj059DB0P8U1
+         TRQHEwHFiJULFK9HMQ55/A1W3iZRkSIxmrbBO9Ks=
+Date:   Fri, 26 Apr 2019 17:20:47 +0530
 From:   Vinod Koul <vkoul@kernel.org>
-To:     "Angus Ainslie (Purism)" <angus@akkea.ca>
-Cc:     angus.ainslie@puri.sm, Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Dan Williams <dan.j.williams@intel.com>,
-        Lucas Stach <l.stach@pengutronix.de>,
-        Carlo Caione <ccaione@baylibre.com>,
-        Daniel Baluta <daniel.baluta@nxp.com>,
-        Guido =?iso-8859-1?Q?G=FCnther?= <agx@sigxcpu.org>,
-        devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org
-Subject: Re: [PATCH v2 2/3] dmaengine: imx-sdma: Only check ratio on parts
- that support 1:1
-Message-ID: <20190426114840.GV28103@vkoul-mobl>
-References: <20190328133828.20999-1-angus@akkea.ca>
- <20190329152130.18411-1-angus@akkea.ca>
- <20190329152130.18411-3-angus@akkea.ca>
+To:     Peng Ma <peng.ma@nxp.com>
+Cc:     dan.j.williams@intel.com, leoyang.li@nxp.com,
+        dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] dmaengine: fsl-qdma: fixed the source/destination
+ descriptior format
+Message-ID: <20190426115047.GW28103@vkoul-mobl>
+References: <20190419084629.41742-1-peng.ma@nxp.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="UTF-8"
 Content-Disposition: inline
-In-Reply-To: <20190329152130.18411-3-angus@akkea.ca>
+In-Reply-To: <20190419084629.41742-1-peng.ma@nxp.com>
 User-Agent: Mutt/1.11.3 (2019-02-01)
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
-Message-ID: <20190426114840.amApglJ1J26SENw3JQHoTVvvxlVzYD8N3lqsd2qCUqs@z>
+Message-ID: <20190426115047.6j7Fo-zoXV5BF37nrjadWsnyzWqLCFYKT87HLty-1Ik@z>
 
-On 29-03-19, 08:21, Angus Ainslie (Purism) wrote:
-> On imx8mq B0 chip, AHB/SDMA clock ratio 2:1 can't be supported,
-> since SDMA clock ratio has to be increased to 250Mhz, AHB can't reach
-> to 500Mhz, so use 1:1 instead.
+On 19-04-19, 08:46, Peng Ma wrote:
+> CMD of Source/Destination descriptior format should be lower of
+
+s/descriptior/descriptor
+
+> struct fsl_qdma_engine number data address.
 > 
-> To limit this change to the imx8mq for now this patch also adds an
-> im8mq-sdma compatible string.
+> Signed-off-by: Peng Ma <peng.ma@nxp.com>
+> ---
+>  drivers/dma/fsl-qdma.c |   29 ++++++++++++++++++-----------
+>  1 files changed, 18 insertions(+), 11 deletions(-)
+> 
+> diff --git a/drivers/dma/fsl-qdma.c b/drivers/dma/fsl-qdma.c
+> index aa1d0ae..542765a 100644
+> --- a/drivers/dma/fsl-qdma.c
+> +++ b/drivers/dma/fsl-qdma.c
+> @@ -113,6 +113,7 @@
+>  /* Field definition for Descriptor offset */
+>  #define QDMA_CCDF_STATUS		20
+>  #define QDMA_CCDF_OFFSET		20
+> +#define QDMA_SDDF_CMD(x)		(((u64)(x)) << 32)
+>  
+>  /* Field definition for safe loop count*/
+>  #define FSL_QDMA_HALT_COUNT		1500
+> @@ -214,6 +215,12 @@ struct fsl_qdma_engine {
+>  
+>  };
+>  
+> +static inline void
+> +qdma_sddf_set_cmd(struct fsl_qdma_format *sddf, u32 val)
+> +{
+> +	sddf->data = QDMA_SDDF_CMD(val);
+> +}
+> +
+>  static inline u64
+>  qdma_ccdf_addr_get64(const struct fsl_qdma_format *ccdf)
+>  {
+> @@ -341,6 +348,7 @@ static void fsl_qdma_free_chan_resources(struct dma_chan *chan)
+>  static void fsl_qdma_comp_fill_memcpy(struct fsl_qdma_comp *fsl_comp,
+>  				      dma_addr_t dst, dma_addr_t src, u32 len)
+>  {
+> +	u32 cmd;
+>  	struct fsl_qdma_format *sdf, *ddf;
+>  	struct fsl_qdma_format *ccdf, *csgf_desc, *csgf_src, *csgf_dest;
+>  
+> @@ -353,6 +361,7 @@ static void fsl_qdma_comp_fill_memcpy(struct fsl_qdma_comp *fsl_comp,
+>  
+>  	memset(fsl_comp->virt_addr, 0, FSL_QDMA_COMMAND_BUFFER_SIZE);
+>  	memset(fsl_comp->desc_virt_addr, 0, FSL_QDMA_DESCRIPTOR_BUFFER_SIZE);
+> +
+>  	/* Head Command Descriptor(Frame Descriptor) */
+>  	qdma_desc_addr_set64(ccdf, fsl_comp->bus_addr + 16);
+>  	qdma_ccdf_set_format(ccdf, qdma_ccdf_get_offset(ccdf));
+> @@ -369,14 +378,14 @@ static void fsl_qdma_comp_fill_memcpy(struct fsl_qdma_comp *fsl_comp,
+>  	/* This entry is the last entry. */
+>  	qdma_csgf_set_f(csgf_dest, len);
+>  	/* Descriptor Buffer */
+> -	sdf->data =
+> -		cpu_to_le64(FSL_QDMA_CMD_RWTTYPE <<
+> -			    FSL_QDMA_CMD_RWTTYPE_OFFSET);
+> -	ddf->data =
+> -		cpu_to_le64(FSL_QDMA_CMD_RWTTYPE <<
+> -			    FSL_QDMA_CMD_RWTTYPE_OFFSET);
+> -	ddf->data |=
+> -		cpu_to_le64(FSL_QDMA_CMD_LWC << FSL_QDMA_CMD_LWC_OFFSET);
+> +	cmd = cpu_to_le32(FSL_QDMA_CMD_RWTTYPE <<
+> +			  FSL_QDMA_CMD_RWTTYPE_OFFSET);
+> +	qdma_sddf_set_cmd(sdf, cmd);
+> +
+> +	cmd = cpu_to_le32(FSL_QDMA_CMD_RWTTYPE <<
+> +			  FSL_QDMA_CMD_RWTTYPE_OFFSET);
+> +	cmd |= cpu_to_le32(FSL_QDMA_CMD_LWC << FSL_QDMA_CMD_LWC_OFFSET);
+> +	qdma_sddf_set_cmd(ddf, cmd);
+>  }
+>  
+>  /*
+> @@ -701,10 +710,8 @@ static irqreturn_t fsl_qdma_error_handler(int irq, void *dev_id)
+>  
+>  	intr = qdma_readl(fsl_qdma, status + FSL_QDMA_DEDR);
+>  
+> -	if (intr) {
+> +	if (intr)
+>  		dev_err(fsl_qdma->dma_dev.dev, "DMA transaction error!\n");
+> -		return IRQ_NONE;
+> -	}
 
-Applied, thanks
+this seems unrelated can you explain?
+
+>  
+>  	qdma_writel(fsl_qdma, FSL_QDMA_DEDR_CLEAR, status + FSL_QDMA_DEDR);
+>  	return IRQ_HANDLED;
+> -- 
+> 1.7.1
 
 -- 
 ~Vinod
