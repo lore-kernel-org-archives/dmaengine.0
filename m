@@ -3,66 +3,151 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-2.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,MAILING_LIST_MULTI,SPF_PASS,T_DKIMWL_WL_HIGH,URIBL_BLOCKED,
-	USER_AGENT_MUTT autolearn=unavailable autolearn_force=no version=3.4.0
+	DKIM_VALID_AU,MAILING_LIST_MULTI,SPF_PASS,T_DKIMWL_WL_HIGH,USER_AGENT_MUTT
+	autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4A133C43219
-	for <dmaengine@archiver.kernel.org>; Fri, 26 Apr 2019 11:27:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2D51BC43219
+	for <dmaengine@archiver.kernel.org>; Fri, 26 Apr 2019 11:46:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 191CD2089E
-	for <dmaengine@archiver.kernel.org>; Fri, 26 Apr 2019 11:27:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0057E2084F
+	for <dmaengine@archiver.kernel.org>; Fri, 26 Apr 2019 11:46:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1556278061;
-	bh=zBXxIWmmRGWmmbmBaM3ZVBb8Ka7HoT5CAw6AZ/GEdyQ=;
+	s=default; t=1556279197;
+	bh=n8yw9/htPFOd154d9bBPo0Nohz8yCfSxy7/DyQypKE4=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:List-ID:From;
-	b=MAK5m+FCkvZ2NTrF7J466M0eTS66DonD2/iWXIbq3b1ftyQxrNJQZKeOtMRLjMoZ6
-	 wrd0me0RTgpmIO0lkk4ktxqtO5WkOkuURrjdX3FSoTIqAMt2BbnJ7S0ivVMpQbzN4s
-	 eD1y7ZPAISGtWGr5Oq2ZQNgtsb3fdmKT3pwHcfGw=
+	b=TKWr4k6D1Em8SMXIPoBxmE/F+ZoNlXc1xTAgQQWm4KSuXJVvViFGD7d28GtkM+T6S
+	 A2q6zAIPvSQPavyXLcbzWg8Bq/b4kPJD4Ymfrn6n4Jp2kcEGzyCBGlrCfPm6N9dL3X
+	 uKLKvntCJfUzDr4DnDp2aYAvNs8Hc7gpODgCz8y8=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726058AbfDZL1k (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 26 Apr 2019 07:27:40 -0400
-Received: from mail.kernel.org ([198.145.29.99]:33136 "EHLO mail.kernel.org"
+        id S1726012AbfDZLqg (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 26 Apr 2019 07:46:36 -0400
+Received: from mail.kernel.org ([198.145.29.99]:41136 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726048AbfDZL1k (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Fri, 26 Apr 2019 07:27:40 -0400
+        id S1725923AbfDZLqg (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Fri, 26 Apr 2019 07:46:36 -0400
 Received: from localhost (unknown [171.76.113.243])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 55303206BF;
-        Fri, 26 Apr 2019 11:27:39 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 61D632077B;
+        Fri, 26 Apr 2019 11:46:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1556278060;
-        bh=zBXxIWmmRGWmmbmBaM3ZVBb8Ka7HoT5CAw6AZ/GEdyQ=;
+        s=default; t=1556279195;
+        bh=n8yw9/htPFOd154d9bBPo0Nohz8yCfSxy7/DyQypKE4=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=hU3EhyvCDGBu7m1aK/qt6NK+r89U0JlJjxq+k8nywUXLCgqMIWhl+1062BKKoo7XB
-         f1oNhj48N/RqxVJhFhzyuQaDknS/qKvAITjRwSbsD+pMHQ3x93eAEpFjyFNMM/w7mc
-         Dkr5jpeqgbmEZO5BjA95q8MK+T20j0N8wSvm7JlU=
-Date:   Fri, 26 Apr 2019 16:57:34 +0530
+        b=ygvk7YrxZCWvJLv7BTONpvongXp0h3FGxAc0sYzoNI1080pCCZhPHxuxPptYmJG2S
+         G9Kf12BKMGEm3TNUPVfqwjKiVI5kSrny5ANfb9W8ekK4E0P3i+m4f6yallRSSYVYW0
+         FAx08FZTHfpmPT1kxXZ/fmHQ3QkFFzuvCFMjQA2Q=
+Date:   Fri, 26 Apr 2019 17:16:29 +0530
 From:   Vinod Koul <vkoul@kernel.org>
-To:     Colin King <colin.king@canonical.com>
-Cc:     Dan Williams <dan.j.williams@intel.com>, dmaengine@vger.kernel.org,
-        kernel-janitors@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] dmaengine: xgene-dma: fix spelling mistake "descripto"
- -> "descriptor"
-Message-ID: <20190426112734.GT28103@vkoul-mobl>
-References: <20190415153028.24849-1-colin.king@canonical.com>
+To:     Kazuhiro Kasai <kasai.kazuhiro@socionext.com>
+Cc:     robh+dt@kernel.org, mark.rutland@arm.com,
+        dmaengine@vger.kernel.org, devicetree@vger.kernel.org,
+        orito.takao@socionext.com, sugaya.taichi@socionext.com,
+        kanematsu.shinji@socionext.com, jaswinder.singh@linaro.org,
+        masami.hiramatsu@linaro.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 2/2] dmaengine: milbeaut: Add Milbeaut AXI DMA controller
+Message-ID: <20190426114629.GU28103@vkoul-mobl>
+References: <1553487314-9185-1-git-send-email-kasai.kazuhiro@socionext.com>
+ <1553487314-9185-3-git-send-email-kasai.kazuhiro@socionext.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="UTF-8"
 Content-Disposition: inline
-In-Reply-To: <20190415153028.24849-1-colin.king@canonical.com>
+In-Reply-To: <1553487314-9185-3-git-send-email-kasai.kazuhiro@socionext.com>
 User-Agent: Mutt/1.11.3 (2019-02-01)
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
-Message-ID: <20190426112734.dY1ZSPDhIg7dKGcBEaE9JpFN9GYII7YKhiJSpxUevGQ@z>
+Message-ID: <20190426114629.yY06RJgqD6U-7gEoe5rTDIOYJ0aOna0o5agZDluu1Q8@z>
 
-On 15-04-19, 16:30, Colin King wrote:
-> From: Colin Ian King <colin.king@canonical.com>
-> 
-> There is a spelling mistake in a chan_dbg message, fix it.
+On 25-03-19, 13:15, Kazuhiro Kasai wrote:
+> Add Milbeaut AXI DMA controller. This DMA controller has
+> only capable of memory to memory transfer.
 
-Applied, thanks
+Have you tested this with dmatest?
 
+> +struct m10v_dma_chan {
+> +	struct dma_chan chan;
+> +	struct m10v_dma_device *mdmac;
+> +	void __iomem *regs;
+> +	int irq;
+> +	struct m10v_dma_desc mdesc;
+
+So there is a *single* descriptor? Not a list??
+
+> +static void m10v_xdmac_disable_dma(struct m10v_dma_device *mdmac)
+> +{
+> +	unsigned int val;
+> +
+> +	val = readl(mdmac->regs + M10V_XDACS);
+> +	val &= ~M10V_XDACS_XE;
+> +	val |= FIELD_PREP(M10V_XDACS_XE, 0);
+> +	writel(val, mdmac->regs + M10V_XDACS);
+
+Why not create a modifyl() macro and use it here
+
+> +static void m10v_xdmac_issue_pending(struct dma_chan *chan)
+> +{
+> +	struct m10v_dma_chan *mchan = to_m10v_dma_chan(chan);
+> +
+> +	m10v_xdmac_config_chan(mchan);
+> +
+> +	m10v_xdmac_enable_chan(mchan);
+
+You dont check if anything is already running or not?
+
+> +static dma_cookie_t m10v_xdmac_tx_submit(struct dma_async_tx_descriptor *txd)
+> +{
+> +	struct m10v_dma_chan *mchan = to_m10v_dma_chan(txd->chan);
+> +	dma_cookie_t cookie;
+> +	unsigned long flags;
+> +
+> +	spin_lock_irqsave(&mchan->lock, flags);
+> +	cookie = dma_cookie_assign(txd);
+> +	spin_unlock_irqrestore(&mchan->lock, flags);
+> +
+> +	return cookie;
+
+sounds like vchan_tx_submit() i think you can use virt-dma layer and then
+get rid of artificial limit in driver and be able to queue up the txn on
+dmaengine.
+
+> +static struct dma_async_tx_descriptor *
+> +m10v_xdmac_prep_dma_memcpy(struct dma_chan *chan, dma_addr_t dst,
+> +			   dma_addr_t src, size_t len, unsigned long flags)
+> +{
+> +	struct m10v_dma_chan *mchan = to_m10v_dma_chan(chan);
+> +
+> +	dma_async_tx_descriptor_init(&mchan->mdesc.txd, chan);
+> +	mchan->mdesc.txd.tx_submit = m10v_xdmac_tx_submit;
+> +	mchan->mdesc.txd.callback = NULL;
+> +	mchan->mdesc.txd.flags = flags;
+> +	mchan->mdesc.txd.cookie = -EBUSY;
+> +
+> +	mchan->mdesc.len = len;
+> +	mchan->mdesc.src = src;
+> +	mchan->mdesc.dst = dst;
+> +
+> +	return &mchan->mdesc.txd;
+
+So you support single descriptor and dont check if this has been already
+configured. So I guess this has been tested by doing txn one at a time
+and not submitted bunch of txn and wait for them to complete. Please fix
+that to really enable dmaengine capabilities.
+
+> +static int m10v_xdmac_remove(struct platform_device *pdev)
+> +{
+> +	struct m10v_dma_chan *mchan;
+> +	struct m10v_dma_device *mdmac = platform_get_drvdata(pdev);
+> +	int i;
+> +
+> +	m10v_xdmac_disable_dma(mdmac);
+> +
+> +	for (i = 0; i < mdmac->channels; i++) {
+> +		mchan = &mdmac->mchan[i];
+> +		devm_free_irq(&pdev->dev, mchan->irq, mchan);
+> +	}
+
+No call to dma_async_device_unregister()?
 -- 
 ~Vinod
