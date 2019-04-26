@@ -2,55 +2,53 @@ Return-Path: <SRS0=bl+G=S4=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.0 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_PASS,URIBL_BLOCKED
+	autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B3648C43218
-	for <dmaengine@archiver.kernel.org>; Fri, 26 Apr 2019 09:06:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 49D4AC43219
+	for <dmaengine@archiver.kernel.org>; Fri, 26 Apr 2019 09:07:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 9024E2077B
-	for <dmaengine@archiver.kernel.org>; Fri, 26 Apr 2019 09:06:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 24468206E0
+	for <dmaengine@archiver.kernel.org>; Fri, 26 Apr 2019 09:07:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726036AbfDZJGW (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 26 Apr 2019 05:06:22 -0400
-Received: from metis.ext.pengutronix.de ([85.220.165.71]:43733 "EHLO
+        id S1726026AbfDZJH2 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 26 Apr 2019 05:07:28 -0400
+Received: from metis.ext.pengutronix.de ([85.220.165.71]:38025 "EHLO
         metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725935AbfDZJGW (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Fri, 26 Apr 2019 05:06:22 -0400
+        with ESMTP id S1726197AbfDZJH2 (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Fri, 26 Apr 2019 05:07:28 -0400
 Received: from kresse.hi.pengutronix.de ([2001:67c:670:100:1d::2a])
         by metis.ext.pengutronix.de with esmtp (Exim 4.89)
         (envelope-from <l.stach@pengutronix.de>)
-        id 1hJwo9-0008Rc-6C; Fri, 26 Apr 2019 11:06:13 +0200
-Message-ID: <1556269571.2584.21.camel@pengutronix.de>
-Subject: Re: [EXT] Re: [PATCH v2 00/15] add ecspi ERR009165 for i.mx6/7 soc
- family
+        id 1hJwp9-0000Bx-TF; Fri, 26 Apr 2019 11:07:15 +0200
+Message-ID: <1556269635.2584.23.camel@pengutronix.de>
+Subject: Re: [PATCH v2 06/15] spi: imx: fix ERR009165
 From:   Lucas Stach <l.stach@pengutronix.de>
 To:     Robin Gong <yibin.gong@nxp.com>,
-        "robh+dt@kernel.org" <robh+dt@kernel.org>,
-        "u.kleine-koenig@pengutronix.de" <u.kleine-koenig@pengutronix.de>,
-        "festevam@gmail.com" <festevam@gmail.com>,
-        "plyatov@gmail.com" <plyatov@gmail.com>,
         "broonie@kernel.org" <broonie@kernel.org>,
-        "dan.j.williams@intel.com" <dan.j.williams@intel.com>,
-        "mark.rutland@arm.com" <mark.rutland@arm.com>,
-        "catalin.marinas@arm.com" <catalin.marinas@arm.com>,
-        "will.deacon@arm.com" <will.deacon@arm.com>,
         "shawnguo@kernel.org" <shawnguo@kernel.org>,
-        "s.hauer@pengutronix.de" <s.hauer@pengutronix.de>
-Cc:     "linux-spi@vger.kernel.org" <linux-spi@vger.kernel.org>,
+        "s.hauer@pengutronix.de" <s.hauer@pengutronix.de>,
+        "festevam@gmail.com" <festevam@gmail.com>,
+        "robh+dt@kernel.org" <robh+dt@kernel.org>,
+        "mark.rutland@arm.com" <mark.rutland@arm.com>,
+        "u.kleine-koenig@pengutronix.de" <u.kleine-koenig@pengutronix.de>,
+        "plyatov@gmail.com" <plyatov@gmail.com>,
+        "dan.j.williams@intel.com" <dan.j.williams@intel.com>,
+        "catalin.marinas@arm.com" <catalin.marinas@arm.com>,
+        "will.deacon@arm.com" <will.deacon@arm.com>
+Cc:     "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
         "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "dmaengine@vger.kernel.org" <dmaengine@vger.kernel.org>,
+        "linux-spi@vger.kernel.org" <linux-spi@vger.kernel.org>,
         dl-linux-imx <linux-imx@nxp.com>,
         "kernel@pengutronix.de" <kernel@pengutronix.de>,
-        "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
+        "dmaengine@vger.kernel.org" <dmaengine@vger.kernel.org>,
         "linux-arm-kernel@lists.infradead.org" 
         <linux-arm-kernel@lists.infradead.org>
-Date:   Fri, 26 Apr 2019 11:06:11 +0200
-In-Reply-To: <1556268048.9298.11.camel@nxp.com>
+Date:   Fri, 26 Apr 2019 11:07:15 +0200
+In-Reply-To: <1556265512-9130-7-git-send-email-yibin.gong@nxp.com>
 References: <1556265512-9130-1-git-send-email-yibin.gong@nxp.com>
-         <1556266779.2584.15.camel@pengutronix.de>
-         <1556268048.9298.11.camel@nxp.com>
+         <1556265512-9130-7-git-send-email-yibin.gong@nxp.com>
 Content-Type: text/plain; charset="UTF-8"
 X-Mailer: Evolution 3.22.6-1+deb9u1 
 Mime-Version: 1.0
@@ -63,78 +61,71 @@ Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
+Message-ID: <20190426090715.DA3c96iKl3WjuTrEau864jVXggH5NiN1WDUohWC3a6k@z>
 
-Am Freitag, den 26.04.2019, 08:47 +0000 schrieb Robin Gong:
-> On 2019-04-26 at 08:19 +0000, Lucas Stach wrote:
-> > Caution: EXT Email
-> > 
-> > Hi Robin,
-> > 
-> > Am Freitag, den 26.04.2019, 08:05 +0000 schrieb Robin Gong:
-> > > 
-> > >   There is ecspi ERR009165 on i.mx6/7 soc family, which cause FIFO
-> > > transfer to be send twice in DMA mode. Please get more information
-> > > from:
-> > > https://eur01.safelinks.protection.outlook.com/?url=https%3A%2F%2Fw
-> > > ww.nxp.com%2Fdocs%2Fen%2Ferrata%2FIMX6DQCE.pdf&amp;data=02%7C01%7Cy
-> > > ibin.gong%40nxp.com%7C0078694b231443d1cb7d08d6ca1feecf%7C686ea1d3bc
-> > > 2b4c6fa92cd99c5c301635%7C0%7C1%7C636918635828489049&amp;sdata=IcPzg
-> > > uHTS81rdHGMzU2wQdDYJn9bE1UDCsc0BUO5In8%3D&amp;reserved=0. The
-> > > workaround is adding
-> > > new sdma ram script which works in XCH  mode as PIO inside sdma
-> > > instead
-> > > of SMC mode, meanwhile, 'TX_THRESHOLD' should be 0.
-> > 
-> > I would like to have a more in-depth explanation about how this new
-> > RAM
-> > script differs from the existing ROM script and the changes to the
-> > state transitions.
+Am Freitag, den 26.04.2019, 08:05 +0000 schrieb Robin Gong:
+> Change to XCH  mode even in dma mode, please refer to the below
+> errata:
+> https://www.nxp.com/docs/en/errata/IMX6DQCE.pdf
 > 
-> The new ecspi ram script just follow errata to enable ecspi XCH bit
-> after every time txfifo filled just as PIO, please check spi_imx_push()
-> in spi-imx.c.
-> > 
-> > > 
-> > >   The issue should be exist on all legacy i.mx6/7 soc family before
-> > > i.mx6ul,
-> > > NXP fix this design issue from i.mx6ul, so newer chips such as
-> > > i.mx6ull/
-> > > i.mx8mq/i.mx8mm, don't need this workaroud anymore. This patch set
-> > > add new 'fsl,imx6ul-ecspi' for ecspi driver and 'ecspi_fixed' in
-> > > sdma
-> > > driver to choose if need errata or not.
-> > >   The first two reverted patches should be the same issue, though,
-> > > it
-> > > seems 'fixed' by changing to other shp script. Hope Sean or Sascha
-> > > could
-> > > have the chance to test this patch set if could fix their issues.
-> > >   Besides, enable sdma support for i.mx8mm/8mq and fix ecspi1 not
-> > > work
-> > > on i.mx8mm because the event id is zero.
-> > > 
-> > > PS:
-> > >  Please get sdma firmware from below linux-firmware and copy it to
-> > > your
-> > > local rootfs /lib/firmware/imx/sdma.
-> > > https://eur01.safelinks.protection.outlook.com/?url=https%3A%2F%2Fg
-> > > it.kernel.org%2Fpub%2Fscm%2Flinux%2Fkernel%2Fgit%2Ffirmware%2Flinux
-> > > -firmware.git%2Ftree%2Fimx%2Fsdma&amp;data=02%7C01%7Cyibin.gong%40n
-> > > xp.com%7C0078694b231443d1cb7d08d6ca1feecf%7C686ea1d3bc2b4c6fa92cd99
-> > > c5c301635%7C0%7C1%7C636918635828489049&amp;sdata=SMoonJ9HQpUj3TzPmi
-> > > 7CcCSAwaR44%2BGPi%2BSBj%2FXceqo%3D&amp;reserved=0
-> > 
-> > This is not an option as long as the SDMA RAM firmware breaks the
-> > mainline serial DMA support. Please provide a fixed SDMA RAM firmware
-> > that doesn't replace the ROM serial script, as that one is totally
-> > fine.
+> Signed-off-by: Robin Gong <yibin.gong@nxp.com>
+> ---
+>  drivers/spi/spi-imx.c | 11 +++++------
+>  1 file changed, 5 insertions(+), 6 deletions(-)
 > 
-> Yes, I have another patch to fix such uart function broken with SDMA
-> RAM firmware, including new sdma firmware updated and kernel patch.
-> Should I add that patch into this patch set?
+> diff --git a/drivers/spi/spi-imx.c b/drivers/spi/spi-imx.c
+> index 09c9a1e..eb56eac 100644
+> --- a/drivers/spi/spi-imx.c
+> +++ b/drivers/spi/spi-imx.c
+> @@ -585,8 +585,9 @@ static int mx51_ecspi_prepare_transfer(struct
+> spi_imx_data *spi_imx,
+>  	ctrl |= mx51_ecspi_clkdiv(spi_imx, t->speed_hz, &clk);
+>  	spi_imx->spi_bus_clk = clk;
+>  
+> +	/* ERR009165: work in XHC mode as PIO */
+>  	if (spi_imx->usedma)
+> -		ctrl |= MX51_ECSPI_CTRL_SMC;
+> +		ctrl &= ~MX51_ECSPI_CTRL_SMC;
+>  
+>  	writel(ctrl, spi_imx->base + MX51_ECSPI_CTRL);
+>  
+> @@ -612,12 +613,14 @@ static int mx51_ecspi_prepare_transfer(struct
+> spi_imx_data *spi_imx,
+>  
+>  static void mx51_setup_wml(struct spi_imx_data *spi_imx)
+>  {
+> +	u32 tx_wml = 0;
+> +
 
-Why would we need a kernel patch for this? Just drop the SDMA serial
-RAM script, it does not add any value as the ROM script is totally
-fine.
+With a wml of 0 you might set the maxburst of the TX dma channel to
+fifosize to minimize the performance impact of this workaround.
 
 Regards,
 Lucas
+
+>  	/*
+>  	 * Configure the DMA register: setup the watermark
+>  	 * and enable DMA request.
+>  	 */
+>  	writel(MX51_ECSPI_DMA_RX_WML(spi_imx->wml - 1) |
+> -		MX51_ECSPI_DMA_TX_WML(spi_imx->wml) |
+> +		MX51_ECSPI_DMA_TX_WML(tx_wml) |
+>  		MX51_ECSPI_DMA_RXT_WML(spi_imx->wml) |
+>  		MX51_ECSPI_DMA_TEDEN | MX51_ECSPI_DMA_RXDEN |
+>  		MX51_ECSPI_DMA_RXTDEN, spi_imx->base +
+> MX51_ECSPI_DMA);
+> @@ -1265,10 +1268,6 @@ static int spi_imx_sdma_init(struct device
+> *dev, struct spi_imx_data *spi_imx,
+>  {
+>  	int ret;
+>  
+> -	/* use pio mode for i.mx6dl chip TKT238285 */
+> -	if (of_machine_is_compatible("fsl,imx6dl"))
+> -		return 0;
+> -
+>  	spi_imx->wml = spi_imx->devtype_data->fifo_size / 2;
+>  
+>  	/* Prepare for TX DMA: */
+> -- 
+> 2.7.4
+> 
