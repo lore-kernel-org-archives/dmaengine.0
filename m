@@ -2,22 +2,13 @@ Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
 Subject: dmaengine: xgene-dma: fix spelling mistake "descripto" -> "descriptor"
-From: Colin King <colin.king@canonical.com>
-Message-Id: <20190415153028.24849-1-colin.king@canonical.com>
-Date: Mon, 15 Apr 2019 16:30:28 +0100
-To: Dan Williams <dan.j.williams@intel.com>, Vinod Koul <vkoul@kernel.org>, dmaengine@vger.kernel.org
-Cc: kernel-janitors@vger.kernel.org, linux-kernel@vger.kernel.org
+From: Vinod Koul <vkoul@kernel.org>
+Message-Id: <20190426112734.GT28103@vkoul-mobl>
+Date: Fri, 26 Apr 2019 16:57:34 +0530
+To: Colin King <colin.king@canonical.com>
+Cc: Dan Williams <dan.j.williams@intel.com>, dmaengine@vger.kernel.org, kernel-janitors@vger.kernel.org, linux-kernel@vger.kernel.org
 List-ID: <dmaengine.vger.kernel.org>
 
-RnJvbTogQ29saW4gSWFuIEtpbmcgPGNvbGluLmtpbmdAY2Fub25pY2FsLmNvbT4KClRoZXJlIGlz
-IGEgc3BlbGxpbmcgbWlzdGFrZSBpbiBhIGNoYW5fZGJnIG1lc3NhZ2UsIGZpeCBpdC4KClNpZ25l
-ZC1vZmYtYnk6IENvbGluIElhbiBLaW5nIDxjb2xpbi5raW5nQGNhbm9uaWNhbC5jb20+Ci0tLQog
-ZHJpdmVycy9kbWEveGdlbmUtZG1hLmMgfCAyICstCiAxIGZpbGUgY2hhbmdlZCwgMSBpbnNlcnRp
-b24oKyksIDEgZGVsZXRpb24oLSkKCmRpZmYgLS1naXQgYS9kcml2ZXJzL2RtYS94Z2VuZS1kbWEu
-YyBiL2RyaXZlcnMvZG1hL3hnZW5lLWRtYS5jCmluZGV4IDAwMjMyMzY2MWQwNy4uOGQxNzRkYzVk
-Y2NkIDEwMDY0NAotLS0gYS9kcml2ZXJzL2RtYS94Z2VuZS1kbWEuYworKysgYi9kcml2ZXJzL2Rt
-YS94Z2VuZS1kbWEuYwpAQCAtNzk3LDcgKzc5Nyw3IEBAIHN0YXRpYyBpbnQgeGdlbmVfZG1hX2Fs
-bG9jX2NoYW5fcmVzb3VyY2VzKHN0cnVjdCBkbWFfY2hhbiAqZGNoYW4pCiAJCXJldHVybiAtRU5P
-TUVNOwogCX0KIAotCWNoYW5fZGJnKGNoYW4sICJBbGxvY2F0ZSBkZXNjcmlwdG8gcG9vbFxuIik7
-CisJY2hhbl9kYmcoY2hhbiwgIkFsbG9jYXRlIGRlc2NyaXB0b3IgcG9vbFxuIik7CiAKIAlyZXR1
-cm4gMTsKIH0K
+T24gMTUtMDQtMTksIDE2OjMwLCBDb2xpbiBLaW5nIHdyb3RlOgo+IEZyb206IENvbGluIElhbiBL
+aW5nIDxjb2xpbi5raW5nQGNhbm9uaWNhbC5jb20+Cj4gCj4gVGhlcmUgaXMgYSBzcGVsbGluZyBt
+aXN0YWtlIGluIGEgY2hhbl9kYmcgbWVzc2FnZSwgZml4IGl0LgoKQXBwbGllZCwgdGhhbmtzCg==
