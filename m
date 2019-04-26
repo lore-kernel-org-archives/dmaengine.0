@@ -2,145 +2,70 @@ Return-Path: <SRS0=bl+G=S4=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_PASS,
-	T_DKIMWL_WL_HIGH autolearn=unavailable autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,MAILING_LIST_MULTI,SPF_PASS,T_DKIMWL_WL_HIGH,USER_AGENT_MUTT
+	autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 13472C43218
-	for <dmaengine@archiver.kernel.org>; Fri, 26 Apr 2019 11:13:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 157FBC43218
+	for <dmaengine@archiver.kernel.org>; Fri, 26 Apr 2019 11:21:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id D95D42077B
-	for <dmaengine@archiver.kernel.org>; Fri, 26 Apr 2019 11:13:41 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=nvidia.com header.i=@nvidia.com header.b="A0CPH/SJ"
+	by mail.kernel.org (Postfix) with ESMTP id D63A72089E
+	for <dmaengine@archiver.kernel.org>; Fri, 26 Apr 2019 11:21:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=default; t=1556277718;
+	bh=UTTAxG+Jg2VAeqcLpeFJKIEKlZAfzGGDG25z5H78rAM=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:List-ID:From;
+	b=vyzv1t7872s3GblUaQpe9s9u8wyzp15EG8x5GQqNJRqOZfqC1JYryNWUYdP/xqcOx
+	 +H/wGOJ8XdON+wJ8hYl6bvJBUWP6P4jAwlu0ftndrXtp4ATquVL/PGQpgfWMH0w/LV
+	 M+uIxzMe4oR7UX0NRXLasC7vK/lkvBbCt1k7gbak=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725954AbfDZLNl (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 26 Apr 2019 07:13:41 -0400
-Received: from hqemgate14.nvidia.com ([216.228.121.143]:12126 "EHLO
-        hqemgate14.nvidia.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725901AbfDZLNl (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Fri, 26 Apr 2019 07:13:41 -0400
-Received: from hqpgpgate102.nvidia.com (Not Verified[216.228.121.13]) by hqemgate14.nvidia.com (using TLS: TLSv1.2, DES-CBC3-SHA)
-        id <B5cc2e7ea0001>; Fri, 26 Apr 2019 04:13:46 -0700
-Received: from hqmail.nvidia.com ([172.20.161.6])
-  by hqpgpgate102.nvidia.com (PGP Universal service);
-  Fri, 26 Apr 2019 04:13:40 -0700
-X-PGP-Universal: processed;
-        by hqpgpgate102.nvidia.com on Fri, 26 Apr 2019 04:13:40 -0700
-Received: from [10.21.132.148] (172.20.13.39) by HQMAIL101.nvidia.com
- (172.20.187.10) with Microsoft SMTP Server (TLS) id 15.0.1473.3; Fri, 26 Apr
- 2019 11:13:38 +0000
-Subject: Re: [PATCH v1] dmaengine: tegra: Use relaxed versions of readl/writel
-To:     Dmitry Osipenko <digetx@gmail.com>,
-        Laxman Dewangan <ldewangan@nvidia.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        Thierry Reding <thierry.reding@gmail.com>
-CC:     <dmaengine@vger.kernel.org>, <linux-tegra@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <20190424231708.21219-1-digetx@gmail.com>
- <d789f1bc-44d1-abf6-a046-7cf835416e8f@nvidia.com>
- <4a315b63-bc71-3c3e-f1ae-8638bcf4033d@gmail.com>
-From:   Jon Hunter <jonathanh@nvidia.com>
-Message-ID: <bff59709-426b-32d2-08eb-d8f51cd7d5c1@nvidia.com>
-Date:   Fri, 26 Apr 2019 12:13:37 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
+        id S1726189AbfDZLV6 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 26 Apr 2019 07:21:58 -0400
+Received: from mail.kernel.org ([198.145.29.99]:59138 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725901AbfDZLV6 (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Fri, 26 Apr 2019 07:21:58 -0400
+Received: from localhost (unknown [171.76.113.243])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id EA3C4206C1;
+        Fri, 26 Apr 2019 11:21:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1556277717;
+        bh=UTTAxG+Jg2VAeqcLpeFJKIEKlZAfzGGDG25z5H78rAM=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=t+6KkdQqRKDBxuQwEWECujbYKroyxMsUN1ZGCNldId/wYNBxex9hZZXZn2uJKXoRU
+         3vJAtRYLJFg7/3fvBkY2lkHFdXFIlVzUUk+NOrKPvpv1zWCvMWKhnNGVbVMj1QJPIS
+         7MAHS3/Z9G0fs1D+9HoIpeYne2/hwhOjoncJtc/g=
+Date:   Fri, 26 Apr 2019 16:51:51 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Sugar Zhang <sugar.zhang@rock-chips.com>
+Cc:     heiko@sntech.de, broonie@kernel.org,
+        linux-rockchip@lists.infradead.org,
+        Dan Williams <dan.j.williams@intel.com>,
+        dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] dmaengine: pl330: _stop: clear interrupt status
+Message-ID: <20190426112151.GQ28103@vkoul-mobl>
+References: <1554289582-43695-1-git-send-email-sugar.zhang@rock-chips.com>
 MIME-Version: 1.0
-In-Reply-To: <4a315b63-bc71-3c3e-f1ae-8638bcf4033d@gmail.com>
-X-Originating-IP: [172.20.13.39]
-X-ClientProxiedBy: HQMAIL103.nvidia.com (172.20.187.11) To
- HQMAIL101.nvidia.com (172.20.187.10)
 Content-Type: text/plain; charset="UTF-8"
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nvidia.com; s=n1;
-        t=1556277227; bh=O/GAZj9r0fT77AziCi8BIUhr0zpYSUaCjsqVbQvWxNo=;
-        h=X-PGP-Universal:Subject:To:CC:References:From:Message-ID:Date:
-         User-Agent:MIME-Version:In-Reply-To:X-Originating-IP:
-         X-ClientProxiedBy:Content-Type:Content-Language:
-         Content-Transfer-Encoding;
-        b=A0CPH/SJVtOlSPOSszQYDZd0C6X66NRGXuSvxP1l6gaQHKYJsaWAQQTIGERJntQ6b
-         zJz4XL/eXrb7+xdLsMLJwLTn2aKAzUAkouWMo2HyQdp+EWdkNX1BXp6hbnhIJOMrci
-         99uFOEL9QIS5Q9FTXJ4AY/4xUfFGjscNEJmIvUKipqDQgwWVf6xxhrFa+LfGC8pQx9
-         uPXrcvA8OPW4auaVU7TO24A9TGE/8sPKJhMtWYFojYv3ahB/BmwMxS3rhwNE3YO/H2
-         DY9AqT19P2a0sx2de0gnzyPOPrc9ZITUyWabrukDRR9ke5qZP8E0Y09IoKIqX/I78o
-         D2sT4UENqIXPg==
+Content-Disposition: inline
+In-Reply-To: <1554289582-43695-1-git-send-email-sugar.zhang@rock-chips.com>
+User-Agent: Mutt/1.11.3 (2019-02-01)
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
-Message-ID: <20190426111337.gJqmoKw138Rv81xztKOm3CnZikM9U-4FMd6l57X9ysY@z>
+Message-ID: <20190426112151.ZTz1L4_6sUi2-2-aUv_x3QBzOcULFgMfzTIMYAjOanY@z>
 
+On 03-04-19, 19:06, Sugar Zhang wrote:
+> This patch kill instructs the DMAC to immediately terminate
+> execution of a thread. and then clear the interrupt status,
+> at last, stop generating interrupts for DMA_SEV. to guarantee
+> the next dma start is clean. otherwise, one interrupt maybe leave
+> to next start and make some mistake.
 
-On 26/04/2019 11:45, Dmitry Osipenko wrote:
-> 26.04.2019 12:52, Jon Hunter =D0=BF=D0=B8=D1=88=D0=B5=D1=82:
->>
->> On 25/04/2019 00:17, Dmitry Osipenko wrote:
->>> The readl/writel functions are inserting memory barrier in order to
->>> ensure that memory stores are completed. On Tegra20 and Tegra30 this
->>> results in L2 cache syncing which isn't a cheapest operation. The
->>> tegra20-apb-dma driver doesn't need to synchronize generic memory
->>> accesses, hence use the relaxed versions of the functions.
->>
->> Do you mean device-io accesses here as this is not generic memory?
->=20
-> Yes. The IOMEM accesses within are always ordered and uncached, while
-> generic memory accesses are out-of-order and cached.
->=20
->> Although there may not be any issues with this change, I think I need a
->> bit more convincing that we should do this given that we have had it
->> this way for sometime and I would not like to see us introduce any
->> regressions as this point without being 100% certain we would not.
->> Ideally, if I had some good extensive tests I could run to hammer the
->> DMA for all configurations with different combinations of channels
->> running simultaneously then we could test this, but right now I don't :-=
-(
->>
->> Have you ...
->> 1. Tested both cyclic and scatter-gather transfers?
->> 2. Stress tested simultaneous transfers with various different
->>    configurations?
->> 3. Quantified the actual performance benefit of this change so we can
->>    understand how much of a performance boost this offers?
->=20
-> Actually I found a case where this change causes a problem, I'm seeing
-> I2C transfer timeout for touchscreen and it breaks the touch input.
-> Indeed, I haven't tested this patch very well.
->=20
-> And the fix is this:
->=20
-> @@ -1592,6 +1592,8 @@ static int tegra_dma_runtime_suspend(struct device
-> *dev)
->  						  TEGRA_APBDMA_CHAN_WCOUNT);
->  	}
->=20
-> +	dsb();
-> +
->  	clk_disable_unprepare(tdma->dma_clk);
->=20
->  	return 0;
->=20
->=20
-> Apparently the problem is that CLK/DMA (PPSB/APB) accesses are
-> incoherent and CPU disables clock before writes are reaching DMA controll=
-er.
->=20
-> I'd say that cyclic and scatter-gather transfers are now tested. I also
-> made some more testing of simultaneous transfers.
->=20
-> Quantifying performance probably won't be easy to make as the DMA
-> read/writes are not on any kind of code's hot-path.
+Applied, thanks
 
-So why make the change?
-> Jon, are you still insisting about to drop this patch or you will be
-> fine with the v2 that will have the dsb() in place?
-
-If we can't quantify the performance gain, then it is difficult to
-justify the change. I would also be concerned if that is the only place
-we need an explicit dsb.
-
-Cheers
-Jon
-
---=20
-nvpublic
+-- 
+~Vinod
