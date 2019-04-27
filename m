@@ -2,35 +2,34 @@ Return-Path: <SRS0=fOVI=S5=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.0 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_PASS,UNPARSEABLE_RELAY,
-	URIBL_BLOCKED,USER_AGENT_GIT autolearn=unavailable autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_PASS,UNPARSEABLE_RELAY,USER_AGENT_GIT
+	autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E52DEC43219
-	for <dmaengine@archiver.kernel.org>; Sat, 27 Apr 2019 03:37:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 63623C43219
+	for <dmaengine@archiver.kernel.org>; Sat, 27 Apr 2019 03:37:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id C30BF2084F
-	for <dmaengine@archiver.kernel.org>; Sat, 27 Apr 2019 03:37:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3E6052084F
+	for <dmaengine@archiver.kernel.org>; Sat, 27 Apr 2019 03:37:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727366AbfD0Dgv (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 26 Apr 2019 23:36:51 -0400
-Received: from mailgw02.mediatek.com ([210.61.82.184]:46531 "EHLO
+        id S1727256AbfD0Dgt (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 26 Apr 2019 23:36:49 -0400
+Received: from mailgw02.mediatek.com ([210.61.82.184]:27878 "EHLO
         mailgw02.mediatek.com" rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1726294AbfD0Dgu (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Fri, 26 Apr 2019 23:36:50 -0400
-X-UUID: 29baef2a9c1d4b20ba9a6cb17b7d620e-20190427
-X-UUID: 29baef2a9c1d4b20ba9a6cb17b7d620e-20190427
+        with ESMTP id S1725933AbfD0Dgs (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Fri, 26 Apr 2019 23:36:48 -0400
+X-UUID: 69dd131840a548239512be439ae1e945-20190427
+X-UUID: 69dd131840a548239512be439ae1e945-20190427
 Received: from mtkcas08.mediatek.inc [(172.21.101.126)] by mailgw02.mediatek.com
         (envelope-from <long.cheng@mediatek.com>)
         (mhqrelay.mediatek.com ESMTP with TLS)
-        with ESMTP id 2024520194; Sat, 27 Apr 2019 11:36:47 +0800
+        with ESMTP id 1103383770; Sat, 27 Apr 2019 11:36:42 +0800
 Received: from mtkcas07.mediatek.inc (172.21.101.84) by
- mtkmbs01n1.mediatek.inc (172.21.101.68) with Microsoft SMTP Server (TLS) id
- 15.0.1395.4; Sat, 27 Apr 2019 11:36:45 +0800
+ mtkmbs01n2.mediatek.inc (172.21.101.79) with Microsoft SMTP Server (TLS) id
+ 15.0.1395.4; Sat, 27 Apr 2019 11:36:40 +0800
 Received: from localhost.localdomain (10.17.3.153) by mtkcas07.mediatek.inc
  (172.21.101.73) with Microsoft SMTP Server id 15.0.1395.4 via Frontend
- Transport; Sat, 27 Apr 2019 11:36:44 +0800
+ Transport; Sat, 27 Apr 2019 11:36:40 +0800
 From:   Long Cheng <long.cheng@mediatek.com>
 To:     Vinod Koul <vkoul@kernel.org>,
         Randy Dunlap <rdunlap@infradead.org>,
@@ -53,137 +52,77 @@ CC:     Dan Williams <dan.j.williams@intel.com>,
         YT Shen <yt.shen@mediatek.com>,
         Zhenbao Liu <zhenbao.liu@mediatek.com>,
         Long Cheng <long.cheng@mediatek.com>
-Subject: [PATCH 4/4] serial: 8250-mtk: modify uart DMA rx
-Date:   Sat, 27 Apr 2019 11:36:33 +0800
-Message-ID: <1556336193-15198-5-git-send-email-long.cheng@mediatek.com>
+Subject: [PATCH v12 0/4] add uart DMA function 
+Date:   Sat, 27 Apr 2019 11:36:29 +0800
+Message-ID: <1556336193-15198-1-git-send-email-long.cheng@mediatek.com>
 X-Mailer: git-send-email 1.7.9.5
-In-Reply-To: <1556336193-15198-1-git-send-email-long.cheng@mediatek.com>
-References: <1556336193-15198-1-git-send-email-long.cheng@mediatek.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-TM-SNTS-SMTP: 380E7148DB3C720F74ADAE99429A073B5931D5CE5B02F9DD34F8311691EB87102000:8
 X-MTK:  N
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
-Message-ID: <20190427033633.Zb-pAhdGCWjiFd6SgeOEHdqsOU-06_XXZt7zY675mYA@z>
 
-Modify uart rx and complete for DMA.
+In Mediatek SOCs, the uart can support DMA function.
+Base on DMA engine formwork, we add the DMA code to support uart. And put the code under drivers/dma/mediatek.
 
-Signed-off-by: Long Cheng <long.cheng@mediatek.com>
----
- drivers/tty/serial/8250/8250_mtk.c |   53 ++++++++++++++++--------------------
- 1 file changed, 23 insertions(+), 30 deletions(-)
+This series contains document bindings, Kconfig to control the function enable or not,
+device tree including interrupt and dma device node, the code of UART DMA
 
-diff --git a/drivers/tty/serial/8250/8250_mtk.c b/drivers/tty/serial/8250/8250_mtk.c
-index c1fdbc0..04081a6 100644
---- a/drivers/tty/serial/8250/8250_mtk.c
-+++ b/drivers/tty/serial/8250/8250_mtk.c
-@@ -30,7 +30,6 @@
- #define MTK_UART_DMA_EN_TX	0x2
- #define MTK_UART_DMA_EN_RX	0x5
- 
--#define MTK_UART_TX_SIZE	UART_XMIT_SIZE
- #define MTK_UART_RX_SIZE	0x8000
- #define MTK_UART_TX_TRIGGER	1
- #define MTK_UART_RX_TRIGGER	MTK_UART_RX_SIZE
-@@ -64,28 +63,30 @@ static void mtk8250_dma_rx_complete(void *param)
- 	struct mtk8250_data *data = up->port.private_data;
- 	struct tty_port *tty_port = &up->port.state->port;
- 	struct dma_tx_state state;
-+	int copied, cnt, tmp;
- 	unsigned char *ptr;
--	int copied;
- 
--	dma_sync_single_for_cpu(dma->rxchan->device->dev, dma->rx_addr,
--				dma->rx_size, DMA_FROM_DEVICE);
-+	if (data->rx_status == DMA_RX_SHUTDOWN)
-+		return;
- 
- 	dmaengine_tx_status(dma->rxchan, dma->rx_cookie, &state);
-+	cnt = dma->rx_size - state.residue;
-+	tmp = cnt;
- 
--	if (data->rx_status == DMA_RX_SHUTDOWN)
--		return;
-+	if ((data->rx_pos + cnt) > dma->rx_size)
-+		tmp = dma->rx_size - data->rx_pos;
- 
--	if ((data->rx_pos + state.residue) <= dma->rx_size) {
--		ptr = (unsigned char *)(data->rx_pos + dma->rx_buf);
--		copied = tty_insert_flip_string(tty_port, ptr, state.residue);
--	} else {
--		ptr = (unsigned char *)(data->rx_pos + dma->rx_buf);
--		copied = tty_insert_flip_string(tty_port, ptr,
--						dma->rx_size - data->rx_pos);
-+	ptr = (unsigned char *)(data->rx_pos + dma->rx_buf);
-+	copied = tty_insert_flip_string(tty_port, ptr, tmp);
-+	data->rx_pos += tmp;
-+
-+	if (cnt > tmp) {
- 		ptr = (unsigned char *)(dma->rx_buf);
--		copied += tty_insert_flip_string(tty_port, ptr,
--				data->rx_pos + state.residue - dma->rx_size);
-+		tmp = cnt - tmp;
-+		copied += tty_insert_flip_string(tty_port, ptr, tmp);
-+		data->rx_pos = tmp;
- 	}
-+
- 	up->port.icount.rx += copied;
- 
- 	tty_flip_buffer_push(tty_port);
-@@ -96,9 +97,7 @@ static void mtk8250_dma_rx_complete(void *param)
- static void mtk8250_rx_dma(struct uart_8250_port *up)
- {
- 	struct uart_8250_dma *dma = up->dma;
--	struct mtk8250_data *data = up->port.private_data;
- 	struct dma_async_tx_descriptor	*desc;
--	struct dma_tx_state	 state;
- 
- 	desc = dmaengine_prep_slave_single(dma->rxchan, dma->rx_addr,
- 					   dma->rx_size, DMA_DEV_TO_MEM,
-@@ -113,12 +112,6 @@ static void mtk8250_rx_dma(struct uart_8250_port *up)
- 
- 	dma->rx_cookie = dmaengine_submit(desc);
- 
--	dmaengine_tx_status(dma->rxchan, dma->rx_cookie, &state);
--	data->rx_pos = state.residue;
--
--	dma_sync_single_for_device(dma->rxchan->device->dev, dma->rx_addr,
--				   dma->rx_size, DMA_FROM_DEVICE);
--
- 	dma_async_issue_pending(dma->rxchan);
- }
- 
-@@ -131,13 +124,13 @@ static void mtk8250_dma_enable(struct uart_8250_port *up)
- 	if (data->rx_status != DMA_RX_START)
- 		return;
- 
--	dma->rxconf.direction		= DMA_DEV_TO_MEM;
--	dma->rxconf.src_addr_width	= dma->rx_size / 1024;
--	dma->rxconf.src_addr		= dma->rx_addr;
-+	dma->rxconf.direction				= DMA_DEV_TO_MEM;
-+	dma->rxconf.src_port_window_size	= dma->rx_size;
-+	dma->rxconf.src_addr				= dma->rx_addr;
- 
--	dma->txconf.direction		= DMA_MEM_TO_DEV;
--	dma->txconf.dst_addr_width	= MTK_UART_TX_SIZE / 1024;
--	dma->txconf.dst_addr		= dma->tx_addr;
-+	dma->txconf.direction				= DMA_MEM_TO_DEV;
-+	dma->txconf.dst_port_window_size	= UART_XMIT_SIZE;
-+	dma->txconf.dst_addr				= dma->tx_addr;
- 
- 	serial_out(up, UART_FCR, UART_FCR_ENABLE_FIFO | UART_FCR_CLEAR_RCVR |
- 		UART_FCR_CLEAR_XMIT);
-@@ -217,7 +210,7 @@ static void mtk8250_shutdown(struct uart_port *port)
- 	 * Mediatek UARTs use an extra highspeed register (UART_MTK_HIGHS)
- 	 *
- 	 * We need to recalcualte the quot register, as the claculation depends
--	 * on the vaule in the highspeed register.
-+	 * on the value in the highspeed register.
- 	 *
- 	 * Some baudrates are not supported by the chip, so we use the next
- 	 * lower rate supported and update termios c_flag.
+Changes compared to v11
+-modify TX/RX
+-pause function by software
+Changes compared to v10
+-modify DMA tx status function
+-modify 8250_mtk for DMA rx
+-add notes to binding Document.
+Changes compared to v9
+-rename dt-bindings file
+-remove direction from device_config
+-simplified code
+Changes compared to v8
+-revise missing items
+Changes compared to v7:
+-modify apdma uart tx
+Changes compared to v6:
+-Correct spelling
+Changes compared to v5:
+-move 'requst irqs' to alloc channel
+-remove tasklet.
+Changes compared to v4:
+-modify Kconfig depends on.
+Changes compared to v3:
+-fix CONFIG_PM, will cause build fail
+Changes compared to v2:
+-remove unimportant parameters
+-instead of cookie, use APIs of virtual channel.
+-use of_dma_xlate_by_chan_id.
+Changes compared to v1:
+-mian revised file, 8250_mtk_dma.c
+--parameters renamed for standard
+--remove atomic operation
+
+Long Cheng (4):
+  dmaengine: mediatek: Add MediaTek UART APDMA support
+  arm: dts: mt2712: add uart APDMA to device tree
+  dt-bindings: dma: uart: rename binding
+  serial: 8250-mtk: modify uart DMA rx
+
+ .../devicetree/bindings/dma/8250_mtk_dma.txt       |   33 -
+ .../devicetree/bindings/dma/mtk-uart-apdma.txt     |   55 ++
+ arch/arm64/boot/dts/mediatek/mt2712e.dtsi          |   51 ++
+ drivers/dma/mediatek/Kconfig                       |   11 +
+ drivers/dma/mediatek/Makefile                      |    1 +
+ drivers/dma/mediatek/mtk-uart-apdma.c              |  666 ++++++++++++++++++++
+ drivers/tty/serial/8250/8250_mtk.c                 |   53 +-
+ 7 files changed, 807 insertions(+), 63 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/dma/8250_mtk_dma.txt
+ create mode 100644 Documentation/devicetree/bindings/dma/mtk-uart-apdma.txt
+ create mode 100644 drivers/dma/mediatek/mtk-uart-apdma.c
+
 -- 
 1.7.9.5
+
 
