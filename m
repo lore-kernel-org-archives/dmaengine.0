@@ -1,13 +1,28 @@
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
-Subject: [next,v2,1/2] dmaengine: bcm-sba-raid: Use dev_get_drvdata()
-From: Vinod Koul <vkoul@kernel.org>
-Message-Id: <20190429051736.GE3845@vkoul-mobl.Dlink>
-Date: Mon, 29 Apr 2019 10:47:36 +0530
-To: Kefeng Wang <wangkefeng.wang@huawei.com>
-Cc: linux-kernel@vger.kernel.org, Vinod Koul <vinod.koul@intel.com>, dmaengine@vger.kernel.org
+Subject: [next,v2,2/2] dmaengine: nbpfaxi: Use dev_get_drvdata()
+From: Kefeng Wang <wangkefeng.wang@huawei.com>
+Message-Id: <20190428040025.142181-2-wangkefeng.wang@huawei.com>
+Date: Sun, 28 Apr 2019 12:00:25 +0800
+To: linux-kernel@vger.kernel.org
+Cc: Kefeng Wang <wangkefeng.wang@huawei.com>, Vinod Koul <vinod.koul@intel.com>, dmaengine@vger.kernel.org
 List-ID: <dmaengine.vger.kernel.org>
 
-T24gMjgtMDQtMTksIDEyOjAwLCBLZWZlbmcgV2FuZyB3cm90ZToKPiBVc2luZyBkZXZfZ2V0X2Ry
-dmRhdGEgZGlyZWN0bHkuCj4gCgpBcHBsaWVkIGJvdGgsIHRoYW5rcwo=
+VXNpbmcgZGV2X2dldF9kcnZkYXRhIGRpcmVjdGx5LgoKQ2M6IFZpbm9kIEtvdWwgPHZpbm9kLmtv
+dWxAaW50ZWwuY29tPgpDYzogZG1hZW5naW5lQHZnZXIua2VybmVsLm9yZwpTaWduZWQtb2ZmLWJ5
+OiBLZWZlbmcgV2FuZyA8d2FuZ2tlZmVuZy53YW5nQGh1YXdlaS5jb20+Ci0tLQogZHJpdmVycy9k
+bWEvbmJwZmF4aS5jIHwgNCArKy0tCiAxIGZpbGUgY2hhbmdlZCwgMiBpbnNlcnRpb25zKCspLCAy
+IGRlbGV0aW9ucygtKQoKZGlmZiAtLWdpdCBhL2RyaXZlcnMvZG1hL25icGZheGkuYyBiL2RyaXZl
+cnMvZG1hL25icGZheGkuYwppbmRleCBhNjdiMjkyMTkwZjQuLjU5NDQwOWE2ZTk3NSAxMDA2NDQK
+LS0tIGEvZHJpdmVycy9kbWEvbmJwZmF4aS5jCisrKyBiL2RyaXZlcnMvZG1hL25icGZheGkuYwpA
+QCAtMTQ5MSwxNCArMTQ5MSwxNCBAQCBNT0RVTEVfREVWSUNFX1RBQkxFKHBsYXRmb3JtLCBuYnBm
+X2lkcyk7CiAjaWZkZWYgQ09ORklHX1BNCiBzdGF0aWMgaW50IG5icGZfcnVudGltZV9zdXNwZW5k
+KHN0cnVjdCBkZXZpY2UgKmRldikKIHsKLQlzdHJ1Y3QgbmJwZl9kZXZpY2UgKm5icGYgPSBwbGF0
+Zm9ybV9nZXRfZHJ2ZGF0YSh0b19wbGF0Zm9ybV9kZXZpY2UoZGV2KSk7CisJc3RydWN0IG5icGZf
+ZGV2aWNlICpuYnBmID0gZGV2X2dldF9kcnZkYXRhKGRldik7CiAJY2xrX2Rpc2FibGVfdW5wcmVw
+YXJlKG5icGYtPmNsayk7CiAJcmV0dXJuIDA7CiB9CiAKIHN0YXRpYyBpbnQgbmJwZl9ydW50aW1l
+X3Jlc3VtZShzdHJ1Y3QgZGV2aWNlICpkZXYpCiB7Ci0Jc3RydWN0IG5icGZfZGV2aWNlICpuYnBm
+ID0gcGxhdGZvcm1fZ2V0X2RydmRhdGEodG9fcGxhdGZvcm1fZGV2aWNlKGRldikpOworCXN0cnVj
+dCBuYnBmX2RldmljZSAqbmJwZiA9IGRldl9nZXRfZHJ2ZGF0YShkZXYpOwogCXJldHVybiBjbGtf
+cHJlcGFyZV9lbmFibGUobmJwZi0+Y2xrKTsKIH0KICNlbmRpZgo=
