@@ -1,18 +1,26 @@
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
-Subject: [next,03/25] dmaengine: Use dev_get_drvdata()
-From: Vinod Koul <vkoul@kernel.org>
-Message-Id: <20190426115235.GX28103@vkoul-mobl>
-Date: Fri, 26 Apr 2019 17:22:35 +0530
-To: Kefeng Wang <wangkefeng.wang@huawei.com>
-Cc: linux-kernel@vger.kernel.org, Masahiro Yamada <yamada.masahiro@socionext.com>, Vinod Koul <vinod.koul@intel.com>, dmaengine@vger.kernel.org
+Subject: [next,v2,1/2] dmaengine: bcm-sba-raid: Use dev_get_drvdata()
+From: Kefeng Wang <wangkefeng.wang@huawei.com>
+Message-Id: <20190428040025.142181-1-wangkefeng.wang@huawei.com>
+Date: Sun, 28 Apr 2019 12:00:24 +0800
+To: linux-kernel@vger.kernel.org
+Cc: Kefeng Wang <wangkefeng.wang@huawei.com>, Vinod Koul <vinod.koul@intel.com>, dmaengine@vger.kernel.org
 List-ID: <dmaengine.vger.kernel.org>
 
-T24gMjMtMDQtMTksIDE1OjQ5LCBLZWZlbmcgV2FuZyB3cm90ZToKPiBVc2luZyBkZXZfZ2V0X2Ry
-dmRhdGEgZGlyZWN0bHkuCj4gCj4gQ2M6IFZpbm9kIEtvdWwgPHZpbm9kLmtvdWxAaW50ZWwuY29t
-Pgo+IENjOiBkbWFlbmdpbmVAdmdlci5rZXJuZWwub3JnCj4gU2lnbmVkLW9mZi1ieTogS2VmZW5n
-IFdhbmcgPHdhbmdrZWZlbmcud2FuZ0BodWF3ZWkuY29tPgo+IC0tLQo+ICBkcml2ZXJzL2RtYS9i
-Y20tc2JhLXJhaWQuYyB8IDMgKy0tCj4gIGRyaXZlcnMvZG1hL25icGZheGkuYyAgICAgIHwgNCAr
-Ky0tCgpJIHdvdWxkIHByZWZlciB0aGVzZSB0byBiZSB0d28gcGF0Y2hlcywgb25lIGZvciBlYWNo
-IGRyaXZlcgo=
+VXNpbmcgZGV2X2dldF9kcnZkYXRhIGRpcmVjdGx5LgoKQ2M6IFZpbm9kIEtvdWwgPHZpbm9kLmtv
+dWxAaW50ZWwuY29tPgpDYzogZG1hZW5naW5lQHZnZXIua2VybmVsLm9yZwpTaWduZWQtb2ZmLWJ5
+OiBLZWZlbmcgV2FuZyA8d2FuZ2tlZmVuZy53YW5nQGh1YXdlaS5jb20+Ci0tLQogZHJpdmVycy9k
+bWEvYmNtLXNiYS1yYWlkLmMgfCAzICstLQogMSBmaWxlIGNoYW5nZWQsIDEgaW5zZXJ0aW9uKCsp
+LCAyIGRlbGV0aW9ucygtKQoKZGlmZiAtLWdpdCBhL2RyaXZlcnMvZG1hL2JjbS1zYmEtcmFpZC5j
+IGIvZHJpdmVycy9kbWEvYmNtLXNiYS1yYWlkLmMKaW5kZXggNzI4NzhhYzVjNzhkLi5mYTgxZDAx
+Nzc3NjUgMTAwNjQ0Ci0tLSBhL2RyaXZlcnMvZG1hL2JjbS1zYmEtcmFpZC5jCisrKyBiL2RyaXZl
+cnMvZG1hL2JjbS1zYmEtcmFpZC5jCkBAIC0xNDU5LDggKzE0NTksNyBAQCBzdGF0aWMgdm9pZCBz
+YmFfcmVjZWl2ZV9tZXNzYWdlKHN0cnVjdCBtYm94X2NsaWVudCAqY2wsIHZvaWQgKm1zZykKIAog
+c3RhdGljIGludCBzYmFfZGVidWdmc19zdGF0c19zaG93KHN0cnVjdCBzZXFfZmlsZSAqZmlsZSwg
+dm9pZCAqb2Zmc2V0KQogewotCXN0cnVjdCBwbGF0Zm9ybV9kZXZpY2UgKnBkZXYgPSB0b19wbGF0
+Zm9ybV9kZXZpY2UoZmlsZS0+cHJpdmF0ZSk7Ci0Jc3RydWN0IHNiYV9kZXZpY2UgKnNiYSA9IHBs
+YXRmb3JtX2dldF9kcnZkYXRhKHBkZXYpOworCXN0cnVjdCBzYmFfZGV2aWNlICpzYmEgPSBkZXZf
+Z2V0X2RydmRhdGEoZmlsZS0+cHJpdmF0ZSk7CiAKIAkvKiBXcml0ZSBzdGF0cyBpbiBmaWxlICov
+CiAJc2JhX3dyaXRlX3N0YXRzX2luX3NlcWZpbGUoc2JhLCBmaWxlKTsK
