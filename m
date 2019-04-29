@@ -1,134 +1,142 @@
-Return-Path: <SRS0=gq6v=S6=vger.kernel.org=dmaengine-owner@kernel.org>
+Return-Path: <SRS0=bREy=S7=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,INCLUDES_PULL_REQUEST,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_PASS,T_DKIMWL_WL_HIGH,URIBL_BLOCKED,USER_AGENT_MUTT autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,MAILING_LIST_MULTI,SPF_PASS,T_DKIMWL_WL_HIGH,USER_AGENT_MUTT
+	autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F2EB1C43219
-	for <dmaengine@archiver.kernel.org>; Sun, 28 Apr 2019 06:26:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3C20CC43219
+	for <dmaengine@archiver.kernel.org>; Mon, 29 Apr 2019 05:13:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id C21AD21473
-	for <dmaengine@archiver.kernel.org>; Sun, 28 Apr 2019 06:26:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0784621473
+	for <dmaengine@archiver.kernel.org>; Mon, 29 Apr 2019 05:13:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1556432767;
-	bh=9B//KzvFa5dLXrKGQMUwCgfLmhWJGugeVFX6eHGEn8E=;
-	h=Date:From:To:Cc:Subject:List-ID:From;
-	b=g900IJRj2dKvRUChD00IvXMfSHcGIxrRtHNzZ+gu/2qb1ad18+Qf/TdzbmcoVHG5J
-	 ttxHEUcRHww1GB8rMsZIp2qiMgKkv/5xJD0H9GwHdFmPL962xqZ5VUPEn0f44lt7Gv
-	 ERU38pgtUfyFVBoLM0bG6rwoFO+df4pZRpGUDjUs=
+	s=default; t=1556514809;
+	bh=7VmgqraXn/9VuG/nJLtKzsply2v6Qrak0T0ayd5evyU=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:List-ID:From;
+	b=j2jkvz6F2lVZGAc88R060KBr8wlQl8oPs7t2Fnira9WyCTRrmHXdnxWUt1wliBNH9
+	 T3gunQ1QyUOqXCh1Zd5F0syvotj97lSKuPnkuKRdMkMisas9gGlHn/tilwQQ8uvI3d
+	 x0BCYj5gTQcw61mGAeM2s7ZIyfwAllOLq97CAPUI=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726451AbfD1G0H (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Sun, 28 Apr 2019 02:26:07 -0400
-Received: from mail.kernel.org ([198.145.29.99]:58596 "EHLO mail.kernel.org"
+        id S1726090AbfD2FN2 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 29 Apr 2019 01:13:28 -0400
+Received: from mail.kernel.org ([198.145.29.99]:60798 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726450AbfD1G0H (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Sun, 28 Apr 2019 02:26:07 -0400
-Received: from localhost (unknown [49.207.57.237])
+        id S1725783AbfD2FN2 (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Mon, 29 Apr 2019 01:13:28 -0400
+Received: from localhost (unknown [171.76.113.243])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 6614A21473;
-        Sun, 28 Apr 2019 06:26:05 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id F15A62075E;
+        Mon, 29 Apr 2019 05:13:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1556432766;
-        bh=9B//KzvFa5dLXrKGQMUwCgfLmhWJGugeVFX6eHGEn8E=;
-        h=Date:From:To:Cc:Subject:From;
-        b=cDRxOZocI6Zm7lfT1KLlh64juaFy/DE49hVfbGOd337TlNRjJxOTYP2JW04MM/sO4
-         OdWKbsEyecgoc0WYz3cRH9yNGRGpCWKtMzUMabSa/qEPbafLFZDUXEyPCIDx/WA6Rc
-         fnqHTYExp1O52JZPWs9KAraUCti7zZM+7I29M33w=
-Date:   Sun, 28 Apr 2019 11:56:02 +0530
+        s=default; t=1556514806;
+        bh=7VmgqraXn/9VuG/nJLtKzsply2v6Qrak0T0ayd5evyU=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=Q/ofAF2mDvIZ/HGpM13OgWf7Vxb81OYKP9Y0Hb9hZqR19GnHWy6fIY8jSfFOgkFkR
+         WmqvjSDfKvxv2B4bUBwXNb9JcIm4nx7CYx3/qIc5e8ycMiCr5ORdFZDMKrT62+9baw
+         0+/170xhhnZSRbNfzmoXM2J5Etd+5Zl3iy4VePUk=
+Date:   Mon, 29 Apr 2019 10:43:23 +0530
 From:   Vinod Koul <vkoul@kernel.org>
-To:     Linus Torvalds <torvalds@linux-foundation.org>
-Cc:     dma <dmaengine@vger.kernel.org>
-Subject: [GIT PULL]: late dmaengine fixes for v5.1-rc7
-Message-ID: <20190428062602.GA3845@vkoul-mobl.Dlink>
+To:     Arnaud Pouliquen <arnaud.pouliquen@st.com>
+Cc:     Dan Williams <dan.j.williams@intel.com>,
+        Pierre-Yves MORDRET <pierre-yves.mordret@st.com>,
+        linux-stm32@st-md-mailman.stormreply.com,
+        linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org
+Subject: Re: [PATCH] dmaengine: stm32-dma: fix residue calculation in
+ stm32-dma
+Message-ID: <20190429051310.GC3845@vkoul-mobl.Dlink>
+References: <1553689316-6231-1-git-send-email-arnaud.pouliquen@st.com>
+ <20190426121751.GC28103@vkoul-mobl>
+ <6894b54e-651f-1caf-d363-79d1ef0eee14@st.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-        protocol="application/pgp-signature"; boundary="yrj/dFKFPuw6o+aM"
+Content-Type: text/plain; charset="UTF-8"
 Content-Disposition: inline
+In-Reply-To: <6894b54e-651f-1caf-d363-79d1ef0eee14@st.com>
 User-Agent: Mutt/1.11.3 (2019-02-01)
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
+Message-ID: <20190429051323.nQsc13Rpcq0ZhBwbjOW6Da9zx7j4FLQkIQXHgZS6C74@z>
 
+On 26-04-19, 15:41, Arnaud Pouliquen wrote:
+> >> During residue calculation. the DMA can switch to the next sg. When
+> >> this race condition occurs, the residue returned value is not valid.
+> >> Indeed the position in the sg returned by the hardware is the position
+> >> of the next sg, not the current sg.
+> >> Solution is to check the sg after the calculation to verify it.
+> >> If a transition is detected we consider that the DMA has switched to
+> >> the beginning of next sg.
+> > 
+> > Now, that sounds like duct tape. Why should we bother doing that.
+> > 
+> > Also looking back at the stm32_dma_desc_residue() and calls to it from
+> > stm32_dma_tx_status() am not sure we are doing the right thing
+> Please, could you explain what you have in mind here?
 
---yrj/dFKFPuw6o+aM
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+So when we call vchan_find_desc() that tells us if the descriptor is in
+the issued queue or not..  Ideally it should not matter if we have one
+or N descriptors issued to hardware.
 
-Hi Linus,
+So why should you bother checking for next_sg.
 
-Here is the late pull request for v5.1-rc7
-Please consider pulling to receive:
+> > why are we looking at next_sg here, can you explain me that please
+> 
+> This solution is similar to one implemented in the at_hdmac.c driver
+> (atc_get_bytes_left function).
+> 
+> Yes could be consider as a workaround for a hardware issue...
+> 
+> In stm32 DMA Peripheral, we can register up to 2 sg descriptors (sg1 &
+> sg2)in DMA registers, and use it in a cyclic mode (auto reload). This
+> mode is mainly use for audio transfer initiated by an ALSA driver.
+> 
+> >From hardware point of view the DMA transfers first block based on sg1,
+> then it updates registers to prepare sg2 transfer, and then generates an
+> IRQ to inform that it issues the next transfer (sg2).
+> 
+> Then driver can update sg1 to prepare the third transfer...
+> 
+> In parallel the client driver can requests status to get the residue to
+> update internal pointer.
+> The issue is in the race condition between the call of the
+> device_tx_status ops and the update of the DMA register on sg switch.
 
-The following changes since commit 79a3aaa7b82e3106be97842dedfd8429248896e6:
+Sorry I do not agree! You are in stm32_dma_tx_status() hold the lock and
+irqs are disabled, so even if sg2 was loaded, you will not get an
+interrupt and wont know. By looking at sg1 register you will see that
+sg1 is telling you that it has finished and residue can be zero. That is
+fine and correct to report.
 
-  Linux 5.1-rc3 (2019-03-31 14:39:29 -0700)
+Most important thing here is that reside is for _requested_ descriptor
+and not _current_ descriptor, so looking into sg2 doesnt not fit.
 
-are available in the Git repository at:
+> During a short time the hardware updated the registers containing the
+> sg ID but not the transfer counter(SxNDTR). In this case there is a
+> mismatch between the Sg ID and the associated transfer counter.
+> So residue calculation is wrong.
+> Idea of this patch is to perform the calculation and then to crosscheck
+> that the hardware has not switched to the next sg during the
+> calculation. The way to crosscheck is to compare the the sg ID before
+> and after the calculation.
+> 
+> I tested the solution to force a new recalculation but no real solution
+> to trust the registers during this phase. In this case an approximation
+> is to consider that the DMA is transferring the first bytes of the next sg.
+> So we return the residue corresponding to the beginning of the next buffer.
 
-  git://git.infradead.org/users/vkoul/slave-dma.git tags/dmaengine-fix-5.1-=
-rc7
+And that is wrong!. The argument is 'cookie' and you return residue for
+that cookie.
 
-for you to fetch changes up to 5bb5c3a3ac102158b799bf5eda871223aa5e9c25:
-
-  dmaengine: mediatek-cqdma: fix wrong register usage in mtk_cqdma_start (2=
-019-04-26 17:26:38 +0530)
-
-----------------------------------------------------------------
-dmaengine-fix-5.1-rc7
-
-dmaengine fixes for v5.1-rc7
-
- - fix for wrong register use in mediatek driver
- - fix in sh driver for glitch is tx_status and treating 0 a valid
-   reside for cyclic
- - fix in bcm driver for using right memory allocation flag
-
-----------------------------------------------------------------
-Achim Dahlhoff (1):
-      dmaengine: sh: rcar-dmac: Fix glitch in dmaengine_tx_status
-
-Dirk Behme (1):
-      dmaengine: sh: rcar-dmac: With cyclic DMA residue 0 is valid
-
-Shun-Chih Yu (1):
-      dmaengine: mediatek-cqdma: fix wrong register usage in mtk_cqdma_start
-
-Stefan Wahren (1):
-      dmaengine: bcm2835: Avoid GFP_KERNEL in device_prep_slave_sg
-
- drivers/dma/bcm2835-dma.c        |  2 +-
- drivers/dma/mediatek/mtk-cqdma.c |  2 +-
- drivers/dma/sh/rcar-dmac.c       | 30 ++++++++++++++++++++++++++----
- 3 files changed, 28 insertions(+), 6 deletions(-)
+For example, if you have dma txn with cookie 1, 2, 3, 4 submitted, then currently HW
+is processing cookie 2, then for tx_status on:
+cookie 1: return DMA_COMPLETE, residue 0
+cookie 2: return DMA_IN_PROGRESS, residue (read from HW)
+cookie 3: return DMA_IN_PROGRESS, residue txn length
+cookie 4: return DMA_IN_PROGRESS, residue txn length
 
 Thanks
---=20
+-- 
 ~Vinod
-
---yrj/dFKFPuw6o+aM
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIcBAEBAgAGBQJcxUd6AAoJEHwUBw8lI4NHFj0P/35fn0uxuPom/Od6lLFqzqHD
-rWOS1w54wshpft7m6LwbGbeaZ40o38QeMft3DZNbkmUPD24ho0SYxjQxlm53+zbT
-AKSfqEj//jzkhY//xw5uJVnbAHPXZGJbSMLIuh3p9p0eJuwWAHxhj5xlLHlDb+uC
-NPoWbB3P07cMbifz9bvZcTlCuyP/+OPfjarenkP0E72egiCdOYFK0FDnmGYVG4jV
-8r/2THKUZuUSJ9cn51a/CDBm1dntjHRrWL2C+EIHUb6UirUYqqHkRbT+IVSzGcLt
-sVIMr8c4FiqNNaPWTs7+khhMQNYxssY4IIcbp/f/9w2IIE0WULgiYKVv+iMl4m4K
-0O+Q+Pzjh97RNrhF2AgMLJF5t8kTLKg5hl/M+Dvcxv0zL/iNYDu1ylhe5N1aMArY
-OP16Obr2zRzkq3O1Y5dTJL5k85xMPw1EUDyK6VDMQAQDnE/+zKcqVVcGSc8bCjFF
-6NklW4sRT7PXIzsjAhdnuSkbaS8RIpLI7iBCISriIjGftF8GW1sTdH8u8I786hfW
-1mKBXM6byCJEA9FlR6PQR5bm31ZDVQMIRdO3IciZA72AURTdRMY9nMAxI6EKf9Bt
-4jHYBfkSUxjAQVz9n6vaewIDCZec997UlcXl7XuVr8gwTTJ9u4g97oWbTkgRSqSU
-36HUDlsF0yCONDdnh3kb
-=DNb9
------END PGP SIGNATURE-----
-
---yrj/dFKFPuw6o+aM--
