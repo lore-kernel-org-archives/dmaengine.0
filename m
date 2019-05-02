@@ -2,40 +2,40 @@ Return-Path: <SRS0=9te7=TC=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_PASS,
-	T_DKIMWL_WL_HIGH,USER_AGENT_GIT autolearn=unavailable autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-9.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SIGNED_OFF_BY,SPF_PASS,T_DKIMWL_WL_HIGH,USER_AGENT_GIT autolearn=unavailable
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2B368C43219
-	for <dmaengine@archiver.kernel.org>; Thu,  2 May 2019 12:55:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EA8ADC43219
+	for <dmaengine@archiver.kernel.org>; Thu,  2 May 2019 12:55:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id EAB382085A
-	for <dmaengine@archiver.kernel.org>; Thu,  2 May 2019 12:55:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BCCAE2085A
+	for <dmaengine@archiver.kernel.org>; Thu,  2 May 2019 12:55:47 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=nvidia.com header.i=@nvidia.com header.b="FxhZsRMe"
+	dkim=pass (2048-bit key) header.d=nvidia.com header.i=@nvidia.com header.b="RHWBaOC+"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726415AbfEBMz3 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Thu, 2 May 2019 08:55:29 -0400
-Received: from hqemgate16.nvidia.com ([216.228.121.65]:17095 "EHLO
+        id S1726571AbfEBMzm (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Thu, 2 May 2019 08:55:42 -0400
+Received: from hqemgate16.nvidia.com ([216.228.121.65]:17111 "EHLO
         hqemgate16.nvidia.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726282AbfEBMz3 (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Thu, 2 May 2019 08:55:29 -0400
-Received: from hqpgpgate101.nvidia.com (Not Verified[216.228.121.13]) by hqemgate16.nvidia.com (using TLS: TLSv1.2, DES-CBC3-SHA)
-        id <B5ccae8bd0000>; Thu, 02 May 2019 05:55:25 -0700
+        with ESMTP id S1726282AbfEBMzl (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Thu, 2 May 2019 08:55:41 -0400
+Received: from hqpgpgate102.nvidia.com (Not Verified[216.228.121.13]) by hqemgate16.nvidia.com (using TLS: TLSv1.2, DES-CBC3-SHA)
+        id <B5ccae8c90000>; Thu, 02 May 2019 05:55:37 -0700
 Received: from hqmail.nvidia.com ([172.20.161.6])
-  by hqpgpgate101.nvidia.com (PGP Universal service);
-  Thu, 02 May 2019 05:55:28 -0700
+  by hqpgpgate102.nvidia.com (PGP Universal service);
+  Thu, 02 May 2019 05:55:40 -0700
 X-PGP-Universal: processed;
-        by hqpgpgate101.nvidia.com on Thu, 02 May 2019 05:55:28 -0700
-Received: from HQMAIL101.nvidia.com (172.20.187.10) by HQMAIL101.nvidia.com
- (172.20.187.10) with Microsoft SMTP Server (TLS) id 15.0.1473.3; Thu, 2 May
- 2019 12:55:28 +0000
+        by hqpgpgate102.nvidia.com on Thu, 02 May 2019 05:55:40 -0700
+Received: from HQMAIL101.nvidia.com (172.20.187.10) by HQMAIL106.nvidia.com
+ (172.18.146.12) with Microsoft SMTP Server (TLS) id 15.0.1473.3; Thu, 2 May
+ 2019 12:55:40 +0000
 Received: from hqnvemgw01.nvidia.com (172.20.150.20) by HQMAIL101.nvidia.com
  (172.20.187.10) with Microsoft SMTP Server (TLS) id 15.0.1473.3 via Frontend
- Transport; Thu, 2 May 2019 12:55:28 +0000
+ Transport; Thu, 2 May 2019 12:55:40 +0000
 Received: from linux.nvidia.com (Not Verified[10.24.34.185]) by hqnvemgw01.nvidia.com with Trustwave SEG (v7,5,8,10121)
-        id <B5ccae8bd0000>; Thu, 02 May 2019 05:55:28 -0700
+        id <B5ccae8c90000>; Thu, 02 May 2019 05:55:40 -0700
 From:   Sameer Pujar <spujar@nvidia.com>
 To:     <vkoul@kernel.org>, <dan.j.williams@intel.com>,
         <robh+dt@kernel.org>, <mark.rutland@arm.com>
@@ -43,90 +43,53 @@ CC:     <thierry.reding@gmail.com>, <jonathanh@nvidia.com>,
         <ldewangan@nvidia.com>, <dmaengine@vger.kernel.org>,
         <devicetree@vger.kernel.org>, <linux-tegra@vger.kernel.org>,
         <linux-kernel@vger.kernel.org>, Sameer Pujar <spujar@nvidia.com>
-Subject: [PATCH 0/6] Add support for Tegra186/Tegra194 and generic fixes
-Date:   Thu, 2 May 2019 18:25:11 +0530
-Message-ID: <1556801717-31507-1-git-send-email-spujar@nvidia.com>
+Subject: [PATCH 2/6] Documentation: DT: Add compatibility binding for Tegra186
+Date:   Thu, 2 May 2019 18:25:13 +0530
+Message-ID: <1556801717-31507-3-git-send-email-spujar@nvidia.com>
 X-Mailer: git-send-email 2.7.4
+In-Reply-To: <1556801717-31507-1-git-send-email-spujar@nvidia.com>
+References: <1556801717-31507-1-git-send-email-spujar@nvidia.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nvidia.com; s=n1;
-        t=1556801725; bh=xyGsJZTzhujgVWu4NMnFenNqEk9EavZ+0dkdg0MyO7M=;
+        t=1556801737; bh=L0yrmYX9Yuz1r3hflXw6ZiWZWallxxnZWXwST9deuNs=;
         h=X-PGP-Universal:From:To:CC:Subject:Date:Message-ID:X-Mailer:
-         MIME-Version:Content-Type;
-        b=FxhZsRMeolt75QngFCSxHZ2dckUMoYrFccMSsycY6kv/HQj5XUE/niiUYg1L+2c9g
-         PLrIrjy4IwHHn3Bf3ogc6PnZ53s20gwM0XQJH+I+ZC/dTNMyUvyTd/TXQB/wmNzICW
-         QTIOU52jckyPNvwCtJuAunSRDloOOTl9S6AnwL8cwFlLdlELQVEFBYuny8x2uJGxOq
-         aXNpRXa+/gJWaNDBTP1B7fgjB+xP1HF6DCs7zIZZCpKjcd6qzSeJw+pQW8ihZRof4V
-         tLdygaa8MAVT9uRPfXjx0rYsKyQAewlh56Us1b1ftFP8kaDcqDLG1PIagj/EhonxXo
-         PWzFiGb/Eo0QA==
+         In-Reply-To:References:MIME-Version:Content-Type;
+        b=RHWBaOC+ZC8GVM+PZoBFjLz2ihALnwspZXlVha1hsgBWLoC5bMdU//+qdlUQdheNe
+         2OrgQ/rF/UvmdjiOp54ywr9PDTiQbYC6CRCAG/urNSSsNWDKqAKlZAYmkX+NSVRI2Q
+         myVQTDzccRgCBJ141+LZ4qukoWnNBrySpQ+eYD3AVvd6apCjUMJwJbowdpaw8du5uK
+         t7wrgtisBGTZn6hPTl+/hnEGdw1/SH+wEPWpMO7vSzMV95ab8s0v/o+Q7dwybePr9Q
+         54QPOXAWMICfMQxxKirodp0EF2NgnVmgmZ+Th+VLHWvbqN4m0K1U15AYEcsWjXsz2h
+         vcX2Q8j3DBuQw==
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Audio DMA(ADMA) interface is a gateway in the AHUB for facilitating DMA
-transfers between memory and all of its clients. Currently the driver
-supports Tegra210 based platforms. This series adds support for Tegra186
-and Tegra194 based platforms and fixes few functional issues.
+Tegra186 Audio DMA controller has new updates from Tegra210 version.
+Thus add new compatibility binding string and the same can be used
+by Tegra194 as well.
 
-Patches in the series are classified into three categories,
-  1. Add support for Tegra186 and Tegra194
-  2. Add DMA pause/resume feature
-  3. Fixes common to differernt Tegra generations
+Signed-off-by: Sameer Pujar <spujar@nvidia.com>
+---
+ Documentation/devicetree/bindings/dma/nvidia,tegra210-adma.txt | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-Below change log describes the patches in detail.
-
-Change log:
-=====================================
-v1
-----
-The series can be classified into 3 categories,
-  1. Add support for Tegra186 and Tegra194
-     [Patch 1/6] dmaengine: tegra210-adma: prepare for supporting newer
-     Tegra chips
-       * The support was there only for Tegra210
-       * This is a preparation for adding support for newer Tegra chips
-       * chip_data is enhanced to support differences between Tegra210 and
-         Tegra186/Tegra194
-     [Patch 2/6] Documentation: DT: Add compatibility binding for Tegra186
-       * New compatibility string is required for driver to work for
-         Tegra186 and Tegra194. Hence new compatibility is introduced.
-       * Tegra194 can use the same compatibility as Tegra186
-     [Patch 3/6] dmaengine: tegra210-adma: add support for Tegra186/
-     Tegra194
-       * Populates chip specific information for Tegra186
-       * There is a difference in the way ADMA CH_CONFIG registers are
-         encoded for Tegra210 and Tegra186. Added helper fucntions to
-         support different versions of burst size configuration
-
-  2. Add DMA pause/resume feature
-     [Patch 4/6] dmaengine: tegra210-adma: add pause/resume support
-       * Adds support for ADMA pause/resume, otherwise audio loss was seen
-         during continuous pause/resume of audio playback.
-
-  3. Fixes common to differernt Tegra generations
-     [Patch 5/6] dmaengine: tegra210-dma: free dma controller in remove()
-       * Fixes kernel panic observed during driver reload. DMA controller
-         needs to be freed when driver is unloaded
-     [Patch 6/6] dmaengine: tegra210-adma: restore channel status
-       * Fixes resume across system suspend. If the channel state is not
-         restored, the transfers won't resume from the state from where it
-         was left during suspend entry. In this case, audio playback did
-         not resume properly once system exited from low power state.
-
-===============================
-Sameer Pujar (6):
-  dmaengine: tegra210-adma: prepare for supporting newer Tegra chips
-  Documentation: DT: Add compatibility binding for Tegra186
-  dmaengine: tegra210-adma: add support for Tegra186/Tegra194
-  dmaengine: tegra210-adma: add pause/resume support
-  dmaengine: tegra210-dma: free dma controller in remove()
-  dmaengine: tegra210-adma: restore channel status
-
- .../bindings/dma/nvidia,tegra210-adma.txt     |   4 +-
- drivers/dma/tegra210-adma.c                   | 232 +++++++++++++++++----
- 2 files changed, 193 insertions(+), 43 deletions(-)
-
+diff --git a/Documentation/devicetree/bindings/dma/nvidia,tegra210-adma.txt b/Documentation/devicetree/bindings/dma/nvidia,tegra210-adma.txt
+index 2f35b04..245d306 100644
+--- a/Documentation/devicetree/bindings/dma/nvidia,tegra210-adma.txt
++++ b/Documentation/devicetree/bindings/dma/nvidia,tegra210-adma.txt
+@@ -4,7 +4,9 @@ The Tegra Audio DMA controller that is used for transferring data
+ between system memory and the Audio Processing Engine (APE).
+ 
+ Required properties:
+-- compatible: Must be "nvidia,tegra210-adma".
++- compatible: Should contain one of the following:
++  - "nvidia,tegra210-adma": for Tegra210
++  - "nvidia,tegra186-adma": for Tegra186 and Tegra194
+ - reg: Should contain DMA registers location and length. This should be
+   a single entry that includes all of the per-channel registers in one
+   contiguous bank.
 -- 
 2.7.4
 
