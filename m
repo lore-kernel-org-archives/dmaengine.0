@@ -2,11 +2,11 @@ Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
 Subject: [v2,08/15] dt-bindings: spi: imx: add i.mx6ul to state errata fixed
-From: Rob Herring <robh@kernel.org>
-Message-Id: <20190501200711.GA31231@bogus>
-Date: Wed, 1 May 2019 15:07:11 -0500
-To: Robin Gong <yibin.gong@nxp.com>
-Cc: "broonie@kernel.org" <broonie@kernel.org>, "shawnguo@kernel.org" <shawnguo@kernel.org>, "s.hauer@pengutronix.de" <s.hauer@pengutronix.de>, "festevam@gmail.com" <festevam@gmail.com>, "mark.rutland@arm.com" <mark.rutland@arm.com>, "u.kleine-koenig@pengutronix.de" <u.kleine-koenig@pengutronix.de>, "plyatov@gmail.com" <plyatov@gmail.com>, "dan.j.williams@intel.com" <dan.j.williams@intel.com>, "catalin.marinas@arm.com" <catalin.marinas@arm.com>, "will.deacon@arm.com" <will.deacon@arm.com>, dl-linux-imx <linux-imx@nxp.com>, "linux-spi@vger.kernel.org" <linux-spi@vger.kernel.org>, "linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>, "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>, "dmaengine@vger.kernel.org" <dmaengine@vger.kernel.org>, "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>, "kernel@pengutronix.de" <kernel@pengutronix.de>
+From: =?utf-8?q?Uwe_Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
+Message-Id: <20190502065939.nyejomrsowhy6xox@pengutronix.de>
+Date: Thu, 2 May 2019 08:59:39 +0200
+To: Robin Gong <yibin.gong@nxp.com>, "robh+dt@kernel.org" <robh+dt@kernel.org>
+Cc: "broonie@kernel.org" <broonie@kernel.org>, "shawnguo@kernel.org" <shawnguo@kernel.org>, "s.hauer@pengutronix.de" <s.hauer@pengutronix.de>, "festevam@gmail.com" <festevam@gmail.com>, "mark.rutland@arm.com" <mark.rutland@arm.com>, "plyatov@gmail.com" <plyatov@gmail.com>, "dan.j.williams@intel.com" <dan.j.williams@intel.com>, "catalin.marinas@arm.com" <catalin.marinas@arm.com>, "will.deacon@arm.com" <will.deacon@arm.com>, dl-linux-imx <linux-imx@nxp.com>, "linux-spi@vger.kernel.org" <linux-spi@vger.kernel.org>, "linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>, "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>, "dmaengine@vger.kernel.org" <dmaengine@vger.kernel.org>, "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>, "kernel@pengutronix.de" <kernel@pengutronix.de>
 List-ID: <dmaengine.vger.kernel.org>
 
 T24gRnJpLCBBcHIgMjYsIDIwMTkgYXQgMDg6MDU6NTFBTSArMDAwMCwgUm9iaW4gR29uZyB3cm90
@@ -26,10 +26,12 @@ ZSBvbmUgaW50ZWdyYXRlZCBvbiBpLk1YNTEKPiAgICAtICJmc2wsaW14NTMtZWNzcGkiIGZvciBT
 UEkgY29tcGF0aWJsZSB3aXRoIHRoZSBvbmUgaW50ZWdyYXRlZCBvbiBpLk1YNTMgYW5kIGxhdGVy
 IFNvYwo+ICsgIC0gImZzbCxpbXg2dWwtZWNzcGkiIEVSUjAwOTE2NSBmaXhlZCBvbiBpLk1YNlVM
 IGFuZCBsYXRlciBTb2MKPiArICAgIChodHRwczovL3d3dy5ueHAuY29tL2RvY3MvZW4vZXJyYXRh
-L0lNWDZEUUNFLnBkZikKCldoYXQgYWJvdXQgb3RoZXIgaS5NWDYgY2hpcHM/CgpTZWVtcyBsaWtl
-IHRoaXMgaXMgbWlzc2luZyBzb21lIGZhbGxiYWNrcy4gVGhlIGJpbmRpbmcgZG9jIHNob3VsZCBt
-YWtlIAppdCBjbGVhciB3aGF0IGFyZSBhbGwgdmFsaWQgY29tYmluYXRpb25zIG9mIGNvbXBhdGli
-bGUgc3RyaW5ncy4KCj4gICAgLSAiZnNsLGlteDhtcS1lY3NwaSIgZm9yIFNQSSBjb21wYXRpYmxl
-IHdpdGggdGhlIG9uZSBpbnRlZ3JhdGVkIG9uIGkuTVg4TQo+ICAtIHJlZyA6IE9mZnNldCBhbmQg
-bGVuZ3RoIG9mIHRoZSByZWdpc3RlciBzZXQgZm9yIHRoZSBkZXZpY2UKPiAgLSBpbnRlcnJ1cHRz
-IDogU2hvdWxkIGNvbnRhaW4gQ1NQSS9lQ1NQSSBpbnRlcnJ1cHQKPiAtLSAKPiAyLjcuNAo+Cg==
+L0lNWDZEUUNFLnBkZikKCkkgd291bGRuJ3QgbWVudGlvbiB0aGlzIGVycmF0YSBpbiB0aGUgYmlu
+ZGluZyBkb2N1bWVudGF0aW9uLiBKdXN0IHN0YXRlCnRoYXQgZnNsLGlteDZ1bC1lY3NwaSBpcyBk
+ZXNpZ25lZCB0byBiZSB1c2VkIG9uIGkuTVg2VUwuIEFuZCB0aGF0IGl0Cm1pZ2h0IGFsc28gYmUg
+dXNlZCBvbiBsYXRlciBTb0NzIGFzIGEgImZhbGxiYWNrIGNvbXBhdGlibGUiIGlzIGEgZGV0YWls
+CnRoYXQgaXMgc28gY29tbW9uIHRoYXQgSSB3b3VsZCBleHBlY3QgaXQgbm90IGJlaW5nIHdvcnRo
+IG1lbnRpb25pbmcuIFNvCmZvciBtZSBpdCB3b3VsZCBhbHNvIGJlIE9LIHRvIGRyb3AgImZzbCxp
+bXg1My1lY3NwaSIgZnJvbSB0aGUgbGlzdCBhcwp0aGlzIGlzIG9ubHkgdXNlZCBsaWtlOgoKCWNv
+bXBhdGlibGUgPSAiZnNsLGlteDUzLWVjc3BpIiwgImZzbCxpbXg1MS1lY3NwaSI7CgooQnV0IG5v
+dGUgdGhhdCBJIGhhdmUgbm8gYXV0aG9yaXR5IGhlcmUuKQoKQmVzdCByZWdhcmRzClV3ZQo=
