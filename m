@@ -2,106 +2,182 @@ Return-Path: <SRS0=/9x7=TD=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-7.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SIGNED_OFF_BY,SPF_PASS,T_DKIMWL_WL_HIGH,UNPARSEABLE_RELAY,USER_AGENT_MUTT
-	autolearn=ham autolearn_force=no version=3.4.0
+	SIGNED_OFF_BY,SPF_PASS,T_DKIMWL_WL_HIGH,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 65FAEC43219
-	for <dmaengine@archiver.kernel.org>; Fri,  3 May 2019 13:15:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 72E29C43219
+	for <dmaengine@archiver.kernel.org>; Fri,  3 May 2019 19:07:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 37D922070B
-	for <dmaengine@archiver.kernel.org>; Fri,  3 May 2019 13:15:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 43DD420651
+	for <dmaengine@archiver.kernel.org>; Fri,  3 May 2019 19:07:42 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b="4G2lnSaL"
+	dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b="fPiDCoIN"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727228AbfECNPY (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 3 May 2019 09:15:24 -0400
-Received: from aserp2130.oracle.com ([141.146.126.79]:52788 "EHLO
-        aserp2130.oracle.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726719AbfECNPY (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Fri, 3 May 2019 09:15:24 -0400
-Received: from pps.filterd (aserp2130.oracle.com [127.0.0.1])
-        by aserp2130.oracle.com (8.16.0.27/8.16.0.27) with SMTP id x43DEPat139648;
-        Fri, 3 May 2019 13:15:18 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=date : from : to : cc
- : subject : message-id : mime-version : content-type; s=corp-2018-07-02;
- bh=d49XUlWUS/ecewkjLcZmEWaD2tXdj0+kyjA873JE4hM=;
- b=4G2lnSaLD8X4wRYJ38dijgjZLueSpdU7LYYdGThu52pqBD75fahhJi6c7x7h0b7ksA32
- EWl8O6Jy1wQJdu30G0LHmT5Y3eNw3sgIWqyNJ8CNx1hyk5A1myTHu6G5xOf3B6AHYPkz
- j++flV1QRQAmdu1ZPjyJxyKm72oU8iOu2hXTM1z55OH5Uv2uNAEs7vAdbnVev9/Qx3EE
- OhhGvM1F9K1mL3nbIYAMZwXBXhFAKnvZPlH54MPgTh1drUV2c7LiGJ0+sywVjJN2CAnI
- cN7RfTTYZrnB50SlMBXys7fBN/ucP3OutpglWCVbaU6E565X8heMH40l17MjOUKZcOAW Sw== 
-Received: from userp3030.oracle.com (userp3030.oracle.com [156.151.31.80])
-        by aserp2130.oracle.com with ESMTP id 2s6xhypmwk-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-        Fri, 03 May 2019 13:15:18 +0000
-Received: from pps.filterd (userp3030.oracle.com [127.0.0.1])
-        by userp3030.oracle.com (8.16.0.27/8.16.0.27) with SMTP id x43DDkfT181036;
-        Fri, 3 May 2019 13:15:17 GMT
-Received: from userv0121.oracle.com (userv0121.oracle.com [156.151.31.72])
-        by userp3030.oracle.com with ESMTP id 2s7p8aaxgg-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-        Fri, 03 May 2019 13:15:17 +0000
-Received: from abhmp0016.oracle.com (abhmp0016.oracle.com [141.146.116.22])
-        by userv0121.oracle.com (8.14.4/8.13.8) with ESMTP id x43DFF1V006149;
-        Fri, 3 May 2019 13:15:15 GMT
-Received: from mwanda (/196.104.111.181)
-        by default (Oracle Beehive Gateway v4.0)
-        with ESMTP ; Fri, 03 May 2019 06:15:14 -0700
-Date:   Fri, 3 May 2019 16:15:07 +0300
-From:   Dan Carpenter <dan.carpenter@oracle.com>
-To:     Ludovic Desroches <ludovic.desroches@microchip.com>,
-        Barry Song <21cnbao@gmail.com>
-Cc:     Vinod Koul <vkoul@kernel.org>,
-        Dan Williams <dan.j.williams@intel.com>,
-        dmaengine@vger.kernel.org, kernel-janitors@vger.kernel.org
-Subject: [PATCH] dmaengine: at_xdmac: remove a stray bottom half unlock
-Message-ID: <20190503131507.GA1236@mwanda>
+        id S1726993AbfECTHm (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 3 May 2019 15:07:42 -0400
+Received: from fllv0015.ext.ti.com ([198.47.19.141]:60288 "EHLO
+        fllv0015.ext.ti.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726769AbfECTHl (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Fri, 3 May 2019 15:07:41 -0400
+Received: from fllv0034.itg.ti.com ([10.64.40.246])
+        by fllv0015.ext.ti.com (8.15.2/8.15.2) with ESMTP id x43J7Xcc110358;
+        Fri, 3 May 2019 14:07:33 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
+        s=ti-com-17Q1; t=1556910453;
+        bh=pYv6PEbbvUQ4QwW2nRLlz/8c0qEeR+Fe/OgZ13lvx2A=;
+        h=Subject:To:CC:References:From:Date:In-Reply-To;
+        b=fPiDCoIN1R4UFVQ/5AlFFA+C9j5DIR3CpAV5TlaLCthE8K5ImPqRPjXyO4fOqsiWC
+         T7lE1Z4XI5TD5lP+bYcG81iDmuF9G1jmy/1cRtNwwTltf8o9tctM1m6aOh9/yMeniG
+         yXkuK+nTd91QrvOtzv7KzudIB+dqMmAo8KsFFDxE=
+Received: from DLEE103.ent.ti.com (dlee103.ent.ti.com [157.170.170.33])
+        by fllv0034.itg.ti.com (8.15.2/8.15.2) with ESMTPS id x43J7XbQ044522
+        (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
+        Fri, 3 May 2019 14:07:33 -0500
+Received: from DLEE105.ent.ti.com (157.170.170.35) by DLEE103.ent.ti.com
+ (157.170.170.33) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1713.5; Fri, 3 May
+ 2019 14:07:32 -0500
+Received: from fllv0040.itg.ti.com (10.64.41.20) by DLEE105.ent.ti.com
+ (157.170.170.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1713.5 via
+ Frontend Transport; Fri, 3 May 2019 14:07:31 -0500
+Received: from [192.168.2.6] (ileax41-snat.itg.ti.com [10.172.224.153])
+        by fllv0040.itg.ti.com (8.15.2/8.15.2) with ESMTP id x43J7UXi101169;
+        Fri, 3 May 2019 14:07:30 -0500
+Subject: Re: [PATCH] [RFC] dmaengine: add fifo_size member
+To:     Sameer Pujar <spujar@nvidia.com>, Vinod Koul <vkoul@kernel.org>
+CC:     <dan.j.williams@intel.com>, <tiwai@suse.com>,
+        <jonathanh@nvidia.com>, <dmaengine@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <1556623828-21577-1-git-send-email-spujar@nvidia.com>
+ <20190502060446.GI3845@vkoul-mobl.Dlink>
+ <e852d576-9cc2-ed42-1a1a-d696112c88bf@nvidia.com>
+ <20190502122506.GP3845@vkoul-mobl.Dlink>
+ <3368d1e1-0d7f-f602-5b96-a978fcf4d91b@nvidia.com>
+From:   Peter Ujfalusi <peter.ujfalusi@ti.com>
+Message-ID: <076bd6cc-aff2-693e-2c68-837d0d552df1@ti.com>
+Date:   Fri, 3 May 2019 22:10:25 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.6.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-X-Mailer: git-send-email haha only kidding
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Proofpoint-Virus-Version: vendor=nai engine=5900 definitions=9245 signatures=668685
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0 malwarescore=0
- phishscore=0 bulkscore=0 spamscore=0 mlxscore=0 mlxlogscore=999
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.0.1-1810050000 definitions=main-1905030083
-X-Proofpoint-Virus-Version: vendor=nai engine=5900 definitions=9245 signatures=668685
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 priorityscore=1501 malwarescore=0
- suspectscore=0 phishscore=0 bulkscore=0 spamscore=0 clxscore=1011
- lowpriorityscore=0 mlxscore=0 impostorscore=0 mlxlogscore=999 adultscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.0.1-1810050000
- definitions=main-1905030083
+In-Reply-To: <3368d1e1-0d7f-f602-5b96-a978fcf4d91b@nvidia.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-EXCLAIMER-MD-CONFIG: e1e8a2fd-e40a-4ac6-ac9b-f7e9cc9ee180
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-We switched this code from spin_lock_bh() to vanilla spin_lock() but
-there was one stray spin_unlock_bh() that was overlooked.  This
-patch converts it to spin_unlock() as well.
 
-Fixes: d8570d018f69 ("dmaengine: at_xdmac: move spin_lock_bh to spin_lock in tasklet")
-Signed-off-by: Dan Carpenter <dan.carpenter@oracle.com>
----
- drivers/dma/at_xdmac.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/dma/at_xdmac.c b/drivers/dma/at_xdmac.c
-index 06cbe54e4c30..e4ae2ee46d3f 100644
---- a/drivers/dma/at_xdmac.c
-+++ b/drivers/dma/at_xdmac.c
-@@ -1655,7 +1655,7 @@ static void at_xdmac_tasklet(unsigned long data)
- 		dev_vdbg(chan2dev(&atchan->chan), "%s: desc 0x%p\n", __func__, desc);
- 		if (!desc->active_xfer) {
- 			dev_err(chan2dev(&atchan->chan), "Xfer not active: exiting");
--			spin_unlock_bh(&atchan->lock);
-+			spin_unlock(&atchan->lock);
- 			return;
- 		}
- 
--- 
-2.18.0
+On 5/2/19 4:29 PM, Sameer Pujar wrote:
+> 
+> On 5/2/2019 5:55 PM, Vinod Koul wrote:
+>> On 02-05-19, 16:23, Sameer Pujar wrote:
+>>> On 5/2/2019 11:34 AM, Vinod Koul wrote:
+>>>> On 30-04-19, 17:00, Sameer Pujar wrote:
+>>>>> During the DMA transfers from memory to I/O, it was observed that
+>>>>> transfers
+>>>>> were inconsistent and resulted in glitches for audio playback. It
+>>>>> happened
+>>>>> because fifo size on DMA did not match with slave channel
+>>>>> configuration.
+>>>>>
+>>>>> currently 'dma_slave_config' structure does not have a field for
+>>>>> fifo size.
+>>>>> Hence the platform pcm driver cannot pass the fifo size as a
+>>>>> slave_config.
+>>>>> Note that 'snd_dmaengine_dai_dma_data' structure has fifo_size
+>>>>> field which
+>>>>> cannot be used to pass the size info. This patch introduces
+>>>>> fifo_size field
+>>>>> and the same can be populated on slave side. Users can set required
+>>>>> size
+>>>>> for slave peripheral (multiple channels can be independently
+>>>>> running with
+>>>>> different fifo sizes) and the corresponding sizes are programmed
+>>>>> through
+>>>>> dma_slave_config on DMA side.
+>>>> FIFO size is a hardware property not sure why you would want an
+>>>> interface to program that?
+>>>>
+>>>> On mismatch, I guess you need to take care of src/dst_maxburst..
+>>> Yes, FIFO size is a HW property. But it is SW configurable(atleast in my
+>>> case) on
+>>> slave side and can be set to different sizes. The src/dst_maxburst is
+>> Are you sure, have you talked to HW folks on that? IIUC you are
+>> programming the data to be used in FIFO not the FIFO length!
+> Yes, I mentioned about FIFO length.
+> 
+> 1. MAX FIFO size is fixed in HW. But there is a way to limit the usage
+> per channel
+>    in multiples of 64 bytes.
+> 2. Having a separate member would give independent control over MAX
+> BURST SIZE and
+>    FIFO SIZE.
 
+Why would the DMA care about the FIFO size of a peripheral?
+All it should be concerned that how many bytes it should transfer per
+DMA request from the peripheral.
+It is the task of the peripheral driver to choose the maxburst to match
+with the peripheral's configuration and the peripheral configuration
+should not allow maxburst to overflow (or underflow) the peripheral FIFO.
+
+>>
+>>> programmed
+>>> for specific values, I think this depends on few factors related to
+>>> bandwidth
+>>> needs of client, DMA needs of the system etc.,
+>> Precisely
+>>
+>>> In such cases how does DMA know the actual FIFO depth of slave
+>>> peripheral?
+>> Why should DMA know? Its job is to push/pull data as configured by
+>> peripheral driver. The peripheral driver knows and configures DMA
+>> accordingly.
+> I am not sure if there is any HW logic that mandates DMA to know the size
+> of configured FIFO depth on slave side. I will speak to HW folks and
+> would update here.
+>>  
+>>>>> Request for feedback/suggestions.
+>>>>>
+>>>>> Signed-off-by: Sameer Pujar <spujar@nvidia.com>
+>>>>> ---
+>>>>>    include/linux/dmaengine.h | 3 +++
+>>>>>    1 file changed, 3 insertions(+)
+>>>>>
+>>>>> diff --git a/include/linux/dmaengine.h b/include/linux/dmaengine.h
+>>>>> index d49ec5c..9ec198b 100644
+>>>>> --- a/include/linux/dmaengine.h
+>>>>> +++ b/include/linux/dmaengine.h
+>>>>> @@ -351,6 +351,8 @@ enum dma_slave_buswidth {
+>>>>>     * @slave_id: Slave requester id. Only valid for slave channels.
+>>>>> The dma
+>>>>>     * slave peripheral will have unique id as dma requester which
+>>>>> need to be
+>>>>>     * pass as slave config.
+>>>>> + * @fifo_size: Fifo size value. The dma slave peripheral can
+>>>>> configure required
+>>>>> + * fifo size and the same needs to be passed as slave config.
+>>>>>     *
+>>>>>     * This struct is passed in as configuration data to a DMA engine
+>>>>>     * in order to set up a certain channel for DMA transport at
+>>>>> runtime.
+>>>>> @@ -376,6 +378,7 @@ struct dma_slave_config {
+>>>>>        u32 dst_port_window_size;
+>>>>>        bool device_fc;
+>>>>>        unsigned int slave_id;
+>>>>> +    u32 fifo_size;
+>>>>>    };
+>>>>>    /**
+>>>>> -- 
+>>>>> 2.7.4
+
+- Peter
+
+Texas Instruments Finland Oy, Porkkalankatu 22, 00180 Helsinki.
+Y-tunnus/Business ID: 0615521-4. Kotipaikka/Domicile: Helsinki
