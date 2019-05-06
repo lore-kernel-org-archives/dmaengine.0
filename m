@@ -2,226 +2,188 @@ Return-Path: <SRS0=ODwx=TG=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.0 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_PASS,
-	T_DKIMWL_WL_HIGH,URIBL_BLOCKED,USER_AGENT_GIT autolearn=unavailable
+X-Spam-Status: No, score=-7.0 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SIGNED_OFF_BY,SPF_PASS,T_DKIMWL_WL_HIGH,URIBL_BLOCKED autolearn=unavailable
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C974BC04A6B
-	for <dmaengine@archiver.kernel.org>; Mon,  6 May 2019 12:36:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B62FCC04A6B
+	for <dmaengine@archiver.kernel.org>; Mon,  6 May 2019 13:04:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 92AD62087F
-	for <dmaengine@archiver.kernel.org>; Mon,  6 May 2019 12:36:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7E4E4206BF
+	for <dmaengine@archiver.kernel.org>; Mon,  6 May 2019 13:04:59 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b="Zg6iW+m8"
+	dkim=pass (2048-bit key) header.d=nvidia.com header.i=@nvidia.com header.b="h8HVnFhr"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726236AbfEFMfK (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 6 May 2019 08:35:10 -0400
-Received: from lelv0142.ext.ti.com ([198.47.23.249]:51452 "EHLO
-        lelv0142.ext.ti.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725852AbfEFMfK (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Mon, 6 May 2019 08:35:10 -0400
-Received: from fllv0034.itg.ti.com ([10.64.40.246])
-        by lelv0142.ext.ti.com (8.15.2/8.15.2) with ESMTP id x46CYsSX016802;
-        Mon, 6 May 2019 07:34:54 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
-        s=ti-com-17Q1; t=1557146094;
-        bh=791UZX4gEG7SoDY1IQYcG5T4/BuZV0fdBtg46h2Ksew=;
-        h=From:To:CC:Subject:Date;
-        b=Zg6iW+m8adp/Z8CF6YAeEypc0rM+mAMKzYiaHdnHZb7E8XbVkLAp8qJUeFf1Heupe
-         5n8rHaj5R9cBZG8MOih626AhUVXxQWnvkxr7ymXWQtbv+6hU32p5SZNSZnw6P//3SD
-         guCvtY7eyPSJ8m4W+n7yXOCuZn40IaHZTrce0TJk=
-Received: from DFLE103.ent.ti.com (dfle103.ent.ti.com [10.64.6.24])
-        by fllv0034.itg.ti.com (8.15.2/8.15.2) with ESMTPS id x46CYsWB022840
-        (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
-        Mon, 6 May 2019 07:34:54 -0500
-Received: from DFLE104.ent.ti.com (10.64.6.25) by DFLE103.ent.ti.com
- (10.64.6.24) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1713.5; Mon, 6 May
- 2019 07:34:54 -0500
-Received: from fllv0040.itg.ti.com (10.64.41.20) by DFLE104.ent.ti.com
- (10.64.6.25) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1713.5 via
- Frontend Transport; Mon, 6 May 2019 07:34:54 -0500
-Received: from feketebors.ti.com (ileax41-snat.itg.ti.com [10.172.224.153])
-        by fllv0040.itg.ti.com (8.15.2/8.15.2) with ESMTP id x46CYpU6110286;
-        Mon, 6 May 2019 07:34:51 -0500
-From:   Peter Ujfalusi <peter.ujfalusi@ti.com>
-To:     <vkoul@kernel.org>, <robh+dt@kernel.org>, <nm@ti.com>,
-        <ssantosh@kernel.org>
-CC:     <dan.j.williams@intel.com>, <dmaengine@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <grygorii.strashko@ti.com>, <lokeshvutla@ti.com>,
-        <t-kristo@ti.com>, <tony@atomide.com>
-Subject: [PATCH 00/16] dmaengine/soc/firmware: Add Texas Instruments UDMA support
-Date:   Mon, 6 May 2019 15:34:40 +0300
-Message-ID: <20190506123456.6777-1-peter.ujfalusi@ti.com>
-X-Mailer: git-send-email 2.21.0
+        id S1726147AbfEFNEy (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 6 May 2019 09:04:54 -0400
+Received: from hqemgate15.nvidia.com ([216.228.121.64]:1666 "EHLO
+        hqemgate15.nvidia.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725852AbfEFNEy (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Mon, 6 May 2019 09:04:54 -0400
+Received: from hqpgpgate102.nvidia.com (Not Verified[216.228.121.13]) by hqemgate15.nvidia.com (using TLS: TLSv1.2, DES-CBC3-SHA)
+        id <B5cd030d10000>; Mon, 06 May 2019 06:04:17 -0700
+Received: from hqmail.nvidia.com ([172.20.161.6])
+  by hqpgpgate102.nvidia.com (PGP Universal service);
+  Mon, 06 May 2019 06:04:51 -0700
+X-PGP-Universal: processed;
+        by hqpgpgate102.nvidia.com on Mon, 06 May 2019 06:04:51 -0700
+Received: from [10.24.45.132] (172.20.13.39) by HQMAIL101.nvidia.com
+ (172.20.187.10) with Microsoft SMTP Server (TLS) id 15.0.1473.3; Mon, 6 May
+ 2019 13:04:48 +0000
+Subject: Re: [PATCH] [RFC] dmaengine: add fifo_size member
+To:     Vinod Koul <vkoul@kernel.org>
+CC:     <dan.j.williams@intel.com>, <tiwai@suse.com>,
+        <jonathanh@nvidia.com>, <dmaengine@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <sharadg@nvidia.com>,
+        <rlokhande@nvidia.com>, <dramesh@nvidia.com>, <mkumard@nvidia.com>
+References: <1556623828-21577-1-git-send-email-spujar@nvidia.com>
+ <20190502060446.GI3845@vkoul-mobl.Dlink>
+ <e852d576-9cc2-ed42-1a1a-d696112c88bf@nvidia.com>
+ <20190502122506.GP3845@vkoul-mobl.Dlink>
+ <3368d1e1-0d7f-f602-5b96-a978fcf4d91b@nvidia.com>
+ <20190504102304.GZ3845@vkoul-mobl.Dlink>
+From:   Sameer Pujar <spujar@nvidia.com>
+Message-ID: <ce0e9c0b-b909-54ae-9086-a1f0f6be903c@nvidia.com>
+Date:   Mon, 6 May 2019 18:34:45 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.6.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-EXCLAIMER-MD-CONFIG: e1e8a2fd-e40a-4ac6-ac9b-f7e9cc9ee180
+In-Reply-To: <20190504102304.GZ3845@vkoul-mobl.Dlink>
+X-Originating-IP: [172.20.13.39]
+X-ClientProxiedBy: HQMAIL107.nvidia.com (172.20.187.13) To
+ HQMAIL101.nvidia.com (172.20.187.10)
+Content-Type: text/plain; charset="utf-8"; format=flowed
+Content-Transfer-Encoding: quoted-printable
+Content-Language: en-GB
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nvidia.com; s=n1;
+        t=1557147857; bh=mumrUBbdUYqX0ghF8OegxnxbeYI8W3YkayjPjU3GNLg=;
+        h=X-PGP-Universal:Subject:To:CC:References:From:Message-ID:Date:
+         User-Agent:MIME-Version:In-Reply-To:X-Originating-IP:
+         X-ClientProxiedBy:Content-Type:Content-Transfer-Encoding:
+         Content-Language;
+        b=h8HVnFhrM55cXksQPT+DOa2lPcoqGtmqXtJ+EAeWhrusZ1gxCbiMJJjVhwKpLuqEF
+         gZafPFzNXycxVgWQoKReMfAFti6Dfb/SI8JbdNImXqxQEyCIgbbXTjMyM6ukQ3vRnK
+         VETjgKA9iuxgU0KwfHu7HHBKkD2XO5ieyb/J9b8HGUkaHw04uw8PTO/1XK/4Ggla+G
+         DAEYD0Xw3s6QEKppixUTZEFuE19V1hRlv6rSGg6FnakzWD6TO/jfvftnzohWlhxqNk
+         GviRj4fNCwGrb1kE2ZFcuqoPe1zsJV0d38wnE9vmbhVjjmXlL/R6+WbqivB82vD5FX
+         BoFi8KK0q6y2g==
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Changes since RFC (https://patchwork.kernel.org/cover/10612465/):
-- Based on linux-next (20190506) which now have the ti_sci interrupt support
-- The series can be applied and the UDMA via DMAengine API will be functional
-- Included in the series: ti_sci Resource management API, cppi5 header and
-  driver for the ring accelerator.
-- The DMAengine core patches have been updated as per the review comments for
-  earlier submittion.
-- The DMAengine driver patch is artificially split up to 6 smaller patches
 
-The AM65x TRM (http://www.ti.com/lit/pdf/spruid7) describes the Data Movement
-Architecture which is implmented by the k3-udma driver.
+On 5/4/2019 3:53 PM, Vinod Koul wrote:
+> On 02-05-19, 18:59, Sameer Pujar wrote:
+>> On 5/2/2019 5:55 PM, Vinod Koul wrote:
+>>> On 02-05-19, 16:23, Sameer Pujar wrote:
+>>>> On 5/2/2019 11:34 AM, Vinod Koul wrote:
+>>>>> On 30-04-19, 17:00, Sameer Pujar wrote:
+>>>>>> During the DMA transfers from memory to I/O, it was observed that tr=
+ansfers
+>>>>>> were inconsistent and resulted in glitches for audio playback. It ha=
+ppened
+>>>>>> because fifo size on DMA did not match with slave channel configurat=
+ion.
+>>>>>>
+>>>>>> currently 'dma_slave_config' structure does not have a field for fif=
+o size.
+>>>>>> Hence the platform pcm driver cannot pass the fifo size as a slave_c=
+onfig.
+>>>>>> Note that 'snd_dmaengine_dai_dma_data' structure has fifo_size field=
+ which
+>>>>>> cannot be used to pass the size info. This patch introduces fifo_siz=
+e field
+>>>>>> and the same can be populated on slave side. Users can set required =
+size
+>>>>>> for slave peripheral (multiple channels can be independently running=
+ with
+>>>>>> different fifo sizes) and the corresponding sizes are programmed thr=
+ough
+>>>>>> dma_slave_config on DMA side.
+>>>>> FIFO size is a hardware property not sure why you would want an
+>>>>> interface to program that?
+>>>>>
+>>>>> On mismatch, I guess you need to take care of src/dst_maxburst..
+>>>> Yes, FIFO size is a HW property. But it is SW configurable(atleast in =
+my
+>>>> case) on
+>>>> slave side and can be set to different sizes. The src/dst_maxburst is
+>>> Are you sure, have you talked to HW folks on that? IIUC you are
+>>> programming the data to be used in FIFO not the FIFO length!
+>> Yes, I mentioned about FIFO length.
+>>
+>> 1. MAX FIFO size is fixed in HW. But there is a way to limit the usage p=
+er
+>> channel
+>>  =C2=A0=C2=A0 in multiples of 64 bytes.
+>> 2. Having a separate member would give independent control over MAX BURS=
+T
+>> SIZE and
+>>  =C2=A0=C2=A0 FIFO SIZE.
+>>>> programmed
+>>>> for specific values, I think this depends on few factors related to
+>>>> bandwidth
+>>>> needs of client, DMA needs of the system etc.,
+>>> Precisely
+>>>
+>>>> In such cases how does DMA know the actual FIFO depth of slave periphe=
+ral?
+>>> Why should DMA know? Its job is to push/pull data as configured by
+>>> peripheral driver. The peripheral driver knows and configures DMA
+>>> accordingly.
+>> I am not sure if there is any HW logic that mandates DMA to know the siz=
+e
+>> of configured FIFO depth on slave side. I will speak to HW folks and
+>> would update here.
+> I still do not comprehend why dma would care about slave side
+> configuration. In the absence of patch which uses this I am not sure
+> what you are trying to do...
 
-This DMA architecture is a big departure from 'traditional' architecture where
-we had either EDMA or sDMA as system DMA.
+I am using DMA HW in cyclic mode for data transfers to Audio sub-system.
+In such cases flow control on DMA transfers is essential, since I/O is
+consuming/producing the data at slower rate. The DMA tranfer is enabled/
+disabled during start/stop of audio playback/capture sessions through ALSA
+callbacks and DMA runs in cyclic mode. Hence DMA is the one which is doing
+flow control and it is necessary for it to know the peripheral FIFO depth
+to avoid overruns/underruns.
 
-Packet DMAs were used as dedicated DMAs to service only networking (Kesytone2)
-or USB (am335x) while other peripherals were serviced by EDMA.
+Also please note that, peripheral device has multiple channels and share
+a fixed MAX FIFO buffer. But SW can program different FIFO sizes for
+individual channels.
 
-In AM65x the UDMA (Unified DMA) is used for all data movment within the SoC,
-tasked to service all peripherals (UART, McSPI, McASP, networking, etc). 
-
-The NAVSS/UDMA is built around CPPI5 (Communications Port Programming Interface)
-and it supports Packet mode (similar to CPPI4.1 in Keystone2 for networking) and
-TR mode (similar to EDMA descriptor).
-The data movement is done within a PSI-L fabric, all peripherals (including the
-UDMA-P) are not addressed by their I/O register as with traditional DMAs but
-with their PSI-L thread ID.
-
-In AM65x we have two main type of peripherals:
-Legacy: McASP, McSPI, UART, etc.
- to provide connectivity they are serviced by PDMA (Peripheral DMA)
- PDMA threads are locked to service a given peripheral, for example PSI-L thread
- 0x4400/0xc400 is to service McASP0 rx/tx.
- The PDMa configuration can be done via the UDMA Real Time Peer registers.
-Native: Networking, security accelerator
- these peripherals have native support for PSI-L.
-
-To be able to use the DMA the following generic steps need to be taken:
-- configure a DMA channel (tchan for TX, rchan for RX)
- - channel mode: Packet or TR mode
- - for memcpy a tchan and rchan pair is used.
- - for packet mode RX we also need to configure a receive flow to configure the
-   packet receiption
-- the source and destination threads must be paired
-- at minimum one pair of rings need to be configured:
- - tx: transfer ring and transfer completion ring
- - rx: free descriptor ring and receive ring
-- two interrupts: UDMA-P channel interrupt and ring interrupt for tc_ring/r_ring
- - If the channel is in packet mode or configured to memcpy then we only need
-   one interrupt from the ring, events from UDMAP is not used.
-
-When the channel setup is completed we only interract with the rings:
-- TX: push a descriptor to t_ring and wait for it to be pushed to the tc_ring by
-  the UDMA-P
-- RX: push a descriptor to the fd_ring and waith for UDMA-P to push it back to
-  the r_ring.
-
-Since we have FIFOs in the DMA fabric (UDMA-P, PSI-L and PDMA) which was not the
-case in previous DMAs we need to report the amount of data held in these FIFOs
-to clients (delay calculation for ALSA, UART FIFO flush support).
-
-- dmadev_get_slave_channel()
-
-I needed a way to request a channel from a specific dma_device which would
-invoke the filter function to get the needed parameters prior needed for the
-alloc_chan_resources.
-
-Note on the last patch:
-In Keystone2 the networking had dedicated DMA (packet DMA) which is not the case
-anymore and the DMAengine API currently missing support for the features we
-would need to support networking, things like
-- support for receive descriptor 'classification'
- - we need to support several receive queues for a channel.
- - the queues are used for packet priority handling for example, but they can be
-   used to have pools of descriptors for different sizes.
-- out of order completion of descriptors on a channel
- - when we have several queues to handle different priority packets the
-   descriptors will be completed 'out-of-order'
-- NAPI type of operation (polling instead of interrupt driven transfer)
- - without this we can not sustain gigabit speeds and we need to support NAPI
- - not to limit this to networking, but other high performance operations
-
-It is my intention to work on these to be able to remove the 'glue' layer and
-switch to DMAengine API - or have an API aside of DMAengine to have generic way
-to support networking, but given how controversial and not trivial these changes
-are we need something to support networking.
-
-Regards,
-Peter
----
-Grygorii Strashko (3):
-  bindings: soc: ti: add documentation for k3 ringacc
-  soc: ti: k3: add navss ringacc driver
-  dmaengine: ti: k3-udma: Add glue layer for non DMAengine users
-
-Peter Ujfalusi (13):
-  firmware: ti_sci: Add resource management APIs for ringacc, psi-l and
-    udma
-  dmaengine: doc: Add sections for per descriptor metadata support
-  dmaengine: Add metadata_ops for dma_async_tx_descriptor
-  dmaengine: Add support for reporting DMA cached data amount
-  dmaengine: Add function to request slave channel from a dma_device
-  dmaengine: ti: Add cppi5 header for UDMA
-  dt-bindings: dma: ti: Add document for K3 UDMA
-  dmaengine: ti: New driver for K3 UDMA - split#1: defines, structs, io
-    func
-  dmaengine: ti: New driver for K3 UDMA - split#2: probe/remove, xlate
-    and filter_fn
-  dmaengine: ti: New driver for K3 UDMA - split#3: alloc/free
-    chan_resources
-  dmaengine: ti: New driver for K3 UDMA - split#4: dma_device callbacks
-    1
-  dmaengine: ti: New driver for K3 UDMA - split#5: dma_device callbacks
-    2
-  dmaengine: ti: New driver for K3 UDMA - split#6: Kconfig and Makefile
-
- .../devicetree/bindings/dma/ti/k3-udma.txt    |  134 +
- .../devicetree/bindings/soc/ti/k3-ringacc.txt |   59 +
- Documentation/driver-api/dmaengine/client.rst |   75 +
- .../driver-api/dmaengine/provider.rst         |   46 +
- drivers/dma/dmaengine.c                       |   80 +-
- drivers/dma/dmaengine.h                       |    8 +
- drivers/dma/ti/Kconfig                        |   22 +
- drivers/dma/ti/Makefile                       |    2 +
- drivers/dma/ti/k3-udma-glue.c                 | 1039 +++++
- drivers/dma/ti/k3-udma-private.c              |  124 +
- drivers/dma/ti/k3-udma.c                      | 3329 +++++++++++++++++
- drivers/dma/ti/k3-udma.h                      |  159 +
- drivers/firmware/ti_sci.c                     |  439 +++
- drivers/firmware/ti_sci.h                     |  704 ++++
- drivers/soc/ti/Kconfig                        |   17 +
- drivers/soc/ti/Makefile                       |    1 +
- drivers/soc/ti/k3-ringacc.c                   | 1190 ++++++
- include/dt-bindings/dma/k3-udma.h             |   26 +
- include/linux/dma/k3-udma-glue.h              |  123 +
- include/linux/dma/ti-cppi5.h                  |  994 +++++
- include/linux/dmaengine.h                     |  115 +-
- include/linux/soc/ti/k3-ringacc.h             |  258 ++
- include/linux/soc/ti/ti_sci_protocol.h        |  216 ++
- 23 files changed, 9156 insertions(+), 4 deletions(-)
- create mode 100644 Documentation/devicetree/bindings/dma/ti/k3-udma.txt
- create mode 100644 Documentation/devicetree/bindings/soc/ti/k3-ringacc.txt
- create mode 100644 drivers/dma/ti/k3-udma-glue.c
- create mode 100644 drivers/dma/ti/k3-udma-private.c
- create mode 100644 drivers/dma/ti/k3-udma.c
- create mode 100644 drivers/dma/ti/k3-udma.h
- create mode 100644 drivers/soc/ti/k3-ringacc.c
- create mode 100644 include/dt-bindings/dma/k3-udma.h
- create mode 100644 include/linux/dma/k3-udma-glue.h
- create mode 100644 include/linux/dma/ti-cppi5.h
- create mode 100644 include/linux/soc/ti/k3-ringacc.h
-
--- 
-Peter
-
-Texas Instruments Finland Oy, Porkkalankatu 22, 00180 Helsinki.
-Y-tunnus/Business ID: 0615521-4. Kotipaikka/Domicile: Helsinki
-
+>>>>>> Request for feedback/suggestions.
+>>>>>>
+>>>>>> Signed-off-by: Sameer Pujar <spujar@nvidia.com>
+>>>>>> ---
+>>>>>>     include/linux/dmaengine.h | 3 +++
+>>>>>>     1 file changed, 3 insertions(+)
+>>>>>>
+>>>>>> diff --git a/include/linux/dmaengine.h b/include/linux/dmaengine.h
+>>>>>> index d49ec5c..9ec198b 100644
+>>>>>> --- a/include/linux/dmaengine.h
+>>>>>> +++ b/include/linux/dmaengine.h
+>>>>>> @@ -351,6 +351,8 @@ enum dma_slave_buswidth {
+>>>>>>      * @slave_id: Slave requester id. Only valid for slave channels.=
+ The dma
+>>>>>>      * slave peripheral will have unique id as dma requester which n=
+eed to be
+>>>>>>      * pass as slave config.
+>>>>>> + * @fifo_size: Fifo size value. The dma slave peripheral can config=
+ure required
+>>>>>> + * fifo size and the same needs to be passed as slave config.
+>>>>>>      *
+>>>>>>      * This struct is passed in as configuration data to a DMA engin=
+e
+>>>>>>      * in order to set up a certain channel for DMA transport at run=
+time.
+>>>>>> @@ -376,6 +378,7 @@ struct dma_slave_config {
+>>>>>>     	u32 dst_port_window_size;
+>>>>>>     	bool device_fc;
+>>>>>>     	unsigned int slave_id;
+>>>>>> +	u32 fifo_size;
+>>>>>>     };
+>>>>>>     /**
+>>>>>> --=20
+>>>>>> 2.7.4
