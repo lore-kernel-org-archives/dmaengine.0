@@ -2,180 +2,155 @@ Return-Path: <SRS0=ODwx=TG=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=0.2 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,MAILING_LIST_MULTI,SPF_PASS,T_DKIMWL_WL_HIGH,
-	UNWANTED_LANGUAGE_BODY,USER_AGENT_MUTT autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-9.0 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SIGNED_OFF_BY,SPF_PASS,T_DKIMWL_WL_HIGH,URIBL_BLOCKED,USER_AGENT_GIT
+	autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CD1BCC04A6B
-	for <dmaengine@archiver.kernel.org>; Mon,  6 May 2019 12:07:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C864FC04AAE
+	for <dmaengine@archiver.kernel.org>; Mon,  6 May 2019 12:35:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 9CC91206BF
-	for <dmaengine@archiver.kernel.org>; Mon,  6 May 2019 12:07:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1557144437;
-	bh=G6r1hJ56O3Ptuo7d/d8TIA581V33XYv2keXBIZwzRIo=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:List-ID:From;
-	b=EHEkeA4k1/Ud1Sg28H9ZlRSgk50uOidvF9OrMpH8pLE+6kCPGHcl9rslZjqX/QmDA
-	 eOzRNGb2O3hVkQI+P0o7aVPJDuSdoG8bI3PXQ0fUTK6gH0apUIfmcrCYhVGKoDM0Hm
-	 3yoTMM7IiZE+7x5X/PyfYJaJRyRgTs3fMVMA9kE4=
+	by mail.kernel.org (Postfix) with ESMTP id 95B422087F
+	for <dmaengine@archiver.kernel.org>; Mon,  6 May 2019 12:35:22 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b="ee0gR8vr"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725886AbfEFMHR (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 6 May 2019 08:07:17 -0400
-Received: from mail.kernel.org ([198.145.29.99]:39354 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725827AbfEFMHR (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Mon, 6 May 2019 08:07:17 -0400
-Received: from localhost (unknown [106.200.210.185])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 592E320830;
-        Mon,  6 May 2019 12:07:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1557144436;
-        bh=G6r1hJ56O3Ptuo7d/d8TIA581V33XYv2keXBIZwzRIo=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=c4hrG6RTpaLO50xdtvOlVm3ADZdpfj2f/0TMVWUH+wPurtC56fkJ5949i59t2EXvk
-         ZU+0ZuHJyx/rhhToaxbL7gmq2lfxYgfjUxBzPr1Rk/3mLGoNzaVVn4D4pw6M0stDp/
-         9X6iW0Eud4GWl5CWjWziOTRrtrN1/RhGFF+i0voQ=
-Date:   Mon, 6 May 2019 17:37:10 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Gustavo Pimentel <Gustavo.Pimentel@synopsys.com>
-Cc:     linux-pci@vger.kernel.org, dmaengine@vger.kernel.org,
-        Dan Williams <dan.j.williams@intel.com>,
-        Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-        Russell King <rmk+kernel@armlinux.org.uk>,
-        Joao Pinto <Joao.Pinto@synopsys.com>
-Subject: Re: [RFC v6 3/6] dmaengine: Add Synopsys eDMA IP version 0 debugfs
- support
-Message-ID: <20190506120710.GG3845@vkoul-mobl.Dlink>
-References: <cover.1556043127.git.gustavo.pimentel@synopsys.com>
- <ba56a34f11c4bb699079946ca51bb11244ac713e.1556043127.git.gustavo.pimentel@synopsys.com>
+        id S1726308AbfEFMfM (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 6 May 2019 08:35:12 -0400
+Received: from fllv0016.ext.ti.com ([198.47.19.142]:54068 "EHLO
+        fllv0016.ext.ti.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725852AbfEFMfL (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Mon, 6 May 2019 08:35:11 -0400
+Received: from fllv0035.itg.ti.com ([10.64.41.0])
+        by fllv0016.ext.ti.com (8.15.2/8.15.2) with ESMTP id x46CZ2sO058381;
+        Mon, 6 May 2019 07:35:02 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
+        s=ti-com-17Q1; t=1557146102;
+        bh=GpP5OJnC1vUI88M5KQpucPLxJvzjC5ZH8+aBBrYhIWc=;
+        h=From:To:CC:Subject:Date:In-Reply-To:References;
+        b=ee0gR8vr22TFOPpT9budlF53oCdsQpl/aLACMXYam4dWAy5TOQRRkys8E15cTF9HC
+         5mKa9TbAkv1PlSDyiRi+ArCUCQsrK1fhlGp/uivz0KFCS8yHRhEEAKyefxdM5hcjJy
+         wh5C8wkFj5s2jWB8qLuRTI0XmT+v6zKTwZezDoRY=
+Received: from DLEE112.ent.ti.com (dlee112.ent.ti.com [157.170.170.23])
+        by fllv0035.itg.ti.com (8.15.2/8.15.2) with ESMTPS id x46CZ1jK034333
+        (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
+        Mon, 6 May 2019 07:35:02 -0500
+Received: from DLEE113.ent.ti.com (157.170.170.24) by DLEE112.ent.ti.com
+ (157.170.170.23) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1713.5; Mon, 6 May
+ 2019 07:35:00 -0500
+Received: from fllv0040.itg.ti.com (10.64.41.20) by DLEE113.ent.ti.com
+ (157.170.170.24) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1713.5 via
+ Frontend Transport; Mon, 6 May 2019 07:35:00 -0500
+Received: from feketebors.ti.com (ileax41-snat.itg.ti.com [10.172.224.153])
+        by fllv0040.itg.ti.com (8.15.2/8.15.2) with ESMTP id x46CYpU8110286;
+        Mon, 6 May 2019 07:34:58 -0500
+From:   Peter Ujfalusi <peter.ujfalusi@ti.com>
+To:     <vkoul@kernel.org>, <robh+dt@kernel.org>, <nm@ti.com>,
+        <ssantosh@kernel.org>
+CC:     <dan.j.williams@intel.com>, <dmaengine@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <grygorii.strashko@ti.com>, <lokeshvutla@ti.com>,
+        <t-kristo@ti.com>, <tony@atomide.com>
+Subject: [PATCH 02/16] bindings: soc: ti: add documentation for k3 ringacc
+Date:   Mon, 6 May 2019 15:34:42 +0300
+Message-ID: <20190506123456.6777-3-peter.ujfalusi@ti.com>
+X-Mailer: git-send-email 2.21.0
+In-Reply-To: <20190506123456.6777-1-peter.ujfalusi@ti.com>
+References: <20190506123456.6777-1-peter.ujfalusi@ti.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ba56a34f11c4bb699079946ca51bb11244ac713e.1556043127.git.gustavo.pimentel@synopsys.com>
-User-Agent: Mutt/1.11.3 (2019-02-01)
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-EXCLAIMER-MD-CONFIG: e1e8a2fd-e40a-4ac6-ac9b-f7e9cc9ee180
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On 23-04-19, 20:30, Gustavo Pimentel wrote:
+From: Grygorii Strashko <grygorii.strashko@ti.com>
 
->  int dw_edma_v0_core_debugfs_on(struct dw_edma_chip *chip)
->  {
-> -	return 0;
-> +	return dw_edma_v0_debugfs_on(chip);
+The Ring Accelerator (RINGACC or RA) provides hardware acceleration to
+enable straightforward passing of work between a producer and a consumer.
+There is one RINGACC module per NAVSS on TI AM65x SoCs.
 
-who calls this?
+This patch introduces RINGACC device tree bindings.
 
-> +#define RD_PERM					0444
+Signed-off-by: Grygorii Strashko <grygorii.strashko@ti.com>
+---
+ .../devicetree/bindings/soc/ti/k3-ringacc.txt | 59 +++++++++++++++++++
+ 1 file changed, 59 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/soc/ti/k3-ringacc.txt
 
-lets not use a macro for these, 444 is more readable :)
-
-> +static int dw_edma_debugfs_u32_get(void *data, u64 *val)
-> +{
-> +	if (dw->mode == EDMA_MODE_LEGACY &&
-> +	    data >= (void *)&regs->type.legacy.ch) {
-> +		void *ptr = (void *)&regs->type.legacy.ch;
-> +		u32 viewport_sel = 0;
-> +		unsigned long flags;
-> +		u16 ch;
-> +
-> +		for (ch = 0; ch < dw->wr_ch_cnt; ch++)
-> +			if (lim[0][ch].start >= data && data < lim[0][ch].end) {
-> +				ptr += (data - lim[0][ch].start);
-> +				goto legacy_sel_wr;
-> +			}
-> +
-> +		for (ch = 0; ch < dw->rd_ch_cnt; ch++)
-> +			if (lim[1][ch].start >= data && data < lim[1][ch].end) {
-> +				ptr += (data - lim[1][ch].start);
-> +				goto legacy_sel_rd;
-> +			}
-> +
-> +		return 0;
-> +legacy_sel_rd:
-> +		viewport_sel = BIT(31);
-> +legacy_sel_wr:
-> +		viewport_sel |= FIELD_PREP(EDMA_V0_VIEWPORT_MASK, ch);
-> +
-> +		raw_spin_lock_irqsave(&dw->lock, flags);
-> +
-> +		writel(viewport_sel, &regs->type.legacy.viewport_sel);
-> +		*val = readl((u32 *)ptr);
-
-why do you need the cast?
-
-> +static int dw_edma_debugfs_regs(void)
-> +{
-> +	const struct debugfs_entries debugfs_regs[] = {
-> +		REGISTER(ctrl_data_arb_prior),
-> +		REGISTER(ctrl),
-> +	};
-> +	struct dentry *regs_dir;
-> +	int nr_entries, err;
-> +
-> +	regs_dir = debugfs_create_dir(REGISTERS_STR, base_dir);
-> +	if (!regs_dir)
-> +		return -EPERM;
-> +
-> +	nr_entries = ARRAY_SIZE(debugfs_regs);
-> +	err = dw_edma_debugfs_create_x32(debugfs_regs, nr_entries, regs_dir);
-> +	if (err)
-> +		return err;
-> +
-> +	err = dw_edma_debugfs_regs_wr(regs_dir);
-> +	if (err)
-> +		return err;
-> +
-> +	err = dw_edma_debugfs_regs_rd(regs_dir);
-> +	if (err)
-> +		return err;
-> +
-> +	return 0;
-
-single return err would suffice right?
-
-> +int dw_edma_v0_debugfs_on(struct dw_edma_chip *chip)
-> +{
-> +	struct dentry *entry;
-> +	int err;
-> +
-> +	dw = chip->dw;
-> +	if (!dw)
-> +		return -EPERM;
-> +
-> +	regs = (struct dw_edma_v0_regs *)dw->rg_region.vaddr;
-> +	if (!regs)
-> +		return -EPERM;
-> +
-> +	base_dir = debugfs_create_dir(dw->name, 0);
-> +	if (!base_dir)
-> +		return -EPERM;
-> +
-> +	entry = debugfs_create_u32("version", RD_PERM, base_dir, &dw->version);
-> +	if (!entry)
-> +		return -EPERM;
-> +
-> +	entry = debugfs_create_u32("mode", RD_PERM, base_dir, &dw->mode);
-> +	if (!entry)
-> +		return -EPERM;
-> +
-> +	entry = debugfs_create_u16("wr_ch_cnt", RD_PERM, base_dir,
-> +				   &dw->wr_ch_cnt);
-> +	if (!entry)
-> +		return -EPERM;
-> +
-> +	entry = debugfs_create_u16("rd_ch_cnt", RD_PERM, base_dir,
-> +				   &dw->rd_ch_cnt);
-> +	if (!entry)
-> +		return -EPERM;
-> +
-> +	err = dw_edma_debugfs_regs();
-> +	return err;
-
-return dw_edma_debugfs_regs() perhpaps..?
+diff --git a/Documentation/devicetree/bindings/soc/ti/k3-ringacc.txt b/Documentation/devicetree/bindings/soc/ti/k3-ringacc.txt
+new file mode 100644
+index 000000000000..86954cf4fa99
+--- /dev/null
++++ b/Documentation/devicetree/bindings/soc/ti/k3-ringacc.txt
+@@ -0,0 +1,59 @@
++* Texas Instruments K3 NavigatorSS Ring Accelerator
++
++The Ring Accelerator (RA) is a machine which converts read/write accesses
++from/to a constant address into corresponding read/write accesses from/to a
++circular data structure in memory. The RA eliminates the need for each DMA
++controller which needs to access ring elements from having to know the current
++state of the ring (base address, current offset). The DMA controller
++performs a read or write access to a specific address range (which maps to the
++source interface on the RA) and the RA replaces the address for the transaction
++with a new address which corresponds to the head or tail element of the ring
++(head for reads, tail for writes).
++
++The Ring Accelerator is a hardware module that is responsible for accelerating
++management of the packet queues. The K3 SoCs can have more than one RA instances
++
++Required properties:
++- compatible	: Must be "ti,am654-navss-ringacc";
++- reg		: Should contain register location and length of the following
++		  named register regions.
++- reg-names	: should be
++		  "rt" - The RA Ring Real-time Control/Status Registers
++		  "fifos" - The RA Queues Registers
++		  "proxy_gcfg" - The RA Proxy Global Config Registers
++		  "proxy_target" - The RA Proxy Datapath Registers
++- ti,num-rings	: Number of rings supported by RA
++- ti,sci-rm-range-gp-rings : TI-SCI RM subtype for GP ring range
++- ti,sci	: phandle on TI-SCI compatible System controller node
++- ti,sci-dev-id	: TI-SCI device id
++- msi-parent	: phandle for "ti,sci-inta" interrupt controller
++
++Optional properties:
++ -- ti,dma-ring-reset-quirk : enable ringacc / udma ring state interoperability
++		  issue software w/a
++
++Example:
++
++ringacc: ringacc@3c000000 {
++	compatible = "ti,am654-navss-ringacc";
++	reg =	<0x0 0x3c000000 0x0 0x400000>,
++		<0x0 0x38000000 0x0 0x400000>,
++		<0x0 0x31120000 0x0 0x100>,
++		<0x0 0x33000000 0x0 0x40000>;
++	reg-names = "rt", "fifos",
++		    "proxy_gcfg", "proxy_target";
++	ti,num-rings = <818>;
++	ti,sci-rm-range-gp-rings = <0x2>; /* GP ring range */
++	ti,dma-ring-reset-quirk;
++	ti,sci = <&dmsc>;
++	ti,sci-dev-id = <187>;
++	msi-parent = <&inta_main_udmass>;
++};
++
++client:
++
++dma_ipx: dma_ipx@<addr> {
++	...
++	ti,ringacc = <&ringacc>;
++	...
++}
 -- 
-~Vinod
+Peter
+
+Texas Instruments Finland Oy, Porkkalankatu 22, 00180 Helsinki.
+Y-tunnus/Business ID: 0615521-4. Kotipaikka/Domicile: Helsinki
+
