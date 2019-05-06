@@ -2,82 +2,254 @@ Return-Path: <SRS0=ODwx=TG=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.9 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_PASS,URIBL_BLOCKED,
-	USER_AGENT_GIT autolearn=unavailable autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,MAILING_LIST_MULTI,SPF_PASS,T_DKIMWL_WL_HIGH,USER_AGENT_MUTT
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 45959C04AAB
-	for <dmaengine@archiver.kernel.org>; Mon,  6 May 2019 09:11:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6A823C04A6B
+	for <dmaengine@archiver.kernel.org>; Mon,  6 May 2019 11:20:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 1AB6D20C01
-	for <dmaengine@archiver.kernel.org>; Mon,  6 May 2019 09:11:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3428A2087F
+	for <dmaengine@archiver.kernel.org>; Mon,  6 May 2019 11:20:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=default; t=1557141617;
+	bh=RWzWLNRmkhsx4X7UpZcftA+Wiv1oQRs9O0WY0WPKXWk=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:List-ID:From;
+	b=ZAWTsKximk0VJFh9v2DM+ZwZpywAcbmy6xgiz9+YiJKb9XfhG9+bEP+xJ4liViFBa
+	 g7IK7gFPX2aRgEfshtB4ybOnnViq0VZIVdxDLfc6EN3bKTQJ2hzV2cj2GZmwHcHQ9s
+	 K0+VQ0IQTK0py44+UWWx6rmhT896/JtcYyfQEPew=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726427AbfEFJLg (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 6 May 2019 05:11:36 -0400
-Received: from inva021.nxp.com ([92.121.34.21]:39348 "EHLO inva021.nxp.com"
+        id S1725883AbfEFLUQ (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 6 May 2019 07:20:16 -0400
+Received: from mail.kernel.org ([198.145.29.99]:49494 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725851AbfEFJLg (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Mon, 6 May 2019 05:11:36 -0400
-Received: from inva021.nxp.com (localhost [127.0.0.1])
-        by inva021.eu-rdc02.nxp.com (Postfix) with ESMTP id 8796620000F;
-        Mon,  6 May 2019 11:11:34 +0200 (CEST)
-Received: from invc005.ap-rdc01.nxp.com (invc005.ap-rdc01.nxp.com [165.114.16.14])
-        by inva021.eu-rdc02.nxp.com (Postfix) with ESMTP id 9C344200169;
-        Mon,  6 May 2019 11:11:29 +0200 (CEST)
-Received: from titan.ap.freescale.net (TITAN.ap.freescale.net [10.192.208.233])
-        by invc005.ap-rdc01.nxp.com (Postfix) with ESMTP id 45C64402A6;
-        Mon,  6 May 2019 17:11:23 +0800 (SGT)
-From:   Peng Ma <peng.ma@nxp.com>
-To:     vkoul@kernel.org, robh+dt@kernel.org, shawnguo@kernel.org,
-        mark.rutland@arm.com, leoyang.li@nxp.com
-Cc:     dan.j.williams@intel.com, dmaengine@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, Peng Ma <peng.ma@nxp.com>
-Subject: [PATCH 2/4] arm64: dts: fsl: ls1028a: Add eDMA node
-Date:   Mon,  6 May 2019 09:03:42 +0000
-Message-Id: <20190506090344.37784-2-peng.ma@nxp.com>
-X-Mailer: git-send-email 2.14.1
-In-Reply-To: <20190506090344.37784-1-peng.ma@nxp.com>
-References: <20190506090344.37784-1-peng.ma@nxp.com>
-X-Virus-Scanned: ClamAV using ClamSMTP
+        id S1725852AbfEFLUQ (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Mon, 6 May 2019 07:20:16 -0400
+Received: from localhost (unknown [106.200.210.185])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id B2DE020830;
+        Mon,  6 May 2019 11:20:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1557141615;
+        bh=RWzWLNRmkhsx4X7UpZcftA+Wiv1oQRs9O0WY0WPKXWk=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=hk4dwhjLQEPPRdQ0zwXdrTWUl1vfNqBiUN8qayLMMWwiHk1oKjGjoJVQfu08f9pB7
+         Yy7pioHSPaFNZVaErU08zdmhEgdSOt3z6lvjU5eo0aNpYHDBZPT5+dlqgySyjp5DQq
+         4nlKbWB55nozAsvihO8wK1GzCNKBdrzb/kFhja7A=
+Date:   Mon, 6 May 2019 16:50:01 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Gustavo Pimentel <Gustavo.Pimentel@synopsys.com>
+Cc:     linux-pci@vger.kernel.org, dmaengine@vger.kernel.org,
+        Dan Williams <dan.j.williams@intel.com>,
+        Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+        Russell King <rmk+kernel@armlinux.org.uk>,
+        Joao Pinto <Joao.Pinto@synopsys.com>
+Subject: Re: [RFC v6 1/6] dmaengine: Add Synopsys eDMA IP core driver
+Message-ID: <20190506112001.GE3845@vkoul-mobl.Dlink>
+References: <cover.1556043127.git.gustavo.pimentel@synopsys.com>
+ <0e877ac0115d37e466ac234f47c51cb1cae7f292.1556043127.git.gustavo.pimentel@synopsys.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <0e877ac0115d37e466ac234f47c51cb1cae7f292.1556043127.git.gustavo.pimentel@synopsys.com>
+User-Agent: Mutt/1.11.3 (2019-02-01)
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Add the eDMA device tree nodes for LS1028A devices
+On 23-04-19, 20:30, Gustavo Pimentel wrote:
+> Add Synopsys PCIe Endpoint eDMA IP core driver to kernel.
 
-Signed-off-by: Peng Ma <peng.ma@nxp.com>
----
- arch/arm64/boot/dts/freescale/fsl-ls1028a.dtsi |   15 +++++++++++++++
- 1 files changed, 15 insertions(+), 0 deletions(-)
+Still an RFC ?
 
-diff --git a/arch/arm64/boot/dts/freescale/fsl-ls1028a.dtsi b/arch/arm64/boot/dts/freescale/fsl-ls1028a.dtsi
-index 8116fb3..71b87cb 100644
---- a/arch/arm64/boot/dts/freescale/fsl-ls1028a.dtsi
-+++ b/arch/arm64/boot/dts/freescale/fsl-ls1028a.dtsi
-@@ -235,6 +235,21 @@
- 			status = "disabled";
- 		};
- 
-+		edma0: edma@22c0000 {
-+			#dma-cells = <2>;
-+			compatible = "fsl,vf610-edma";
-+			reg = <0x0 0x22c0000 0x0 0x10000>,
-+			      <0x0 0x22d0000 0x0 0x10000>,
-+			      <0x0 0x22e0000 0x0 0x10000>;
-+			interrupts = <GIC_SPI 56 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 56 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupt-names = "edma-tx", "edma-err";
-+			dma-channels = <32>;
-+			clock-names = "dmamux0", "dmamux1";
-+			clocks = <&clockgen 4 1>,
-+				 <&clockgen 4 1>;
-+		};
-+
- 		gpio1: gpio@2300000 {
- 			compatible = "fsl,qoriq-gpio";
- 			reg = <0x0 0x2300000 0x0 0x10000>;
+> +static struct dw_edma_chunk *dw_edma_alloc_chunk(struct dw_edma_desc *desc)
+> +{
+> +	struct dw_edma_chan *chan = desc->chan;
+> +	struct dw_edma *dw = chan->chip->dw;
+> +	struct dw_edma_chunk *chunk;
+> +
+> +	chunk = kzalloc(sizeof(*chunk), GFP_KERNEL);
+
+Looking at the code this should be called from one of the
+device_prep_xxx calls so this should not sleep, so GFP_NOWAIT please
+
+(pls audit rest of the mem allocations in the code)
+
+> +	if (unlikely(!chunk))
+> +		return NULL;
+> +
+> +	INIT_LIST_HEAD(&chunk->list);
+> +	chunk->chan = chan;
+> +	chunk->cb = !(desc->chunks_alloc % 2);
+? why %2?
+
+> +static enum dma_status
+> +dw_edma_device_tx_status(struct dma_chan *dchan, dma_cookie_t cookie,
+> +			 struct dma_tx_state *txstate)
+> +{
+> +	struct dw_edma_chan *chan = dchan2dw_edma_chan(dchan);
+> +	struct dw_edma_desc *desc;
+> +	struct virt_dma_desc *vd;
+> +	unsigned long flags;
+> +	enum dma_status ret;
+> +	u32 residue = 0;
+> +
+> +	ret = dma_cookie_status(dchan, cookie, txstate);
+> +	if (ret == DMA_COMPLETE)
+> +		return ret;
+> +
+> +	if (ret == DMA_IN_PROGRESS && chan->status == EDMA_ST_PAUSE)
+> +		ret = DMA_PAUSED;
+
+Don't you want to set residue on paused channel, how else will user know
+the position of pause?
+
+> +static struct dma_async_tx_descriptor *
+> +dw_edma_device_transfer(struct dw_edma_transfer *xfer)
+> +{
+> +	struct dw_edma_chan *chan = dchan2dw_edma_chan(xfer->dchan);
+> +	enum dma_transfer_direction direction = xfer->direction;
+> +	phys_addr_t src_addr, dst_addr;
+> +	struct scatterlist *sg = NULL;
+> +	struct dw_edma_chunk *chunk;
+> +	struct dw_edma_burst *burst;
+> +	struct dw_edma_desc *desc;
+> +	u32 cnt;
+> +	int i;
+> +
+> +	if ((direction == DMA_MEM_TO_DEV && chan->dir == EDMA_DIR_WRITE) ||
+> +	    (direction == DMA_DEV_TO_MEM && chan->dir == EDMA_DIR_READ))
+> +		return NULL;
+> +
+> +	if (xfer->cyclic) {
+> +		if (!xfer->xfer.cyclic.len || !xfer->xfer.cyclic.cnt)
+> +			return NULL;
+> +	} else {
+> +		if (xfer->xfer.sg.len < 1)
+> +			return NULL;
+> +	}
+> +
+> +	if (!chan->configured)
+> +		return NULL;
+> +
+> +	desc = dw_edma_alloc_desc(chan);
+> +	if (unlikely(!desc))
+> +		goto err_alloc;
+> +
+> +	chunk = dw_edma_alloc_chunk(desc);
+> +	if (unlikely(!chunk))
+> +		goto err_alloc;
+> +
+> +	src_addr = chan->config.src_addr;
+> +	dst_addr = chan->config.dst_addr;
+> +
+> +	if (xfer->cyclic) {
+> +		cnt = xfer->xfer.cyclic.cnt;
+> +	} else {
+> +		cnt = xfer->xfer.sg.len;
+> +		sg = xfer->xfer.sg.sgl;
+> +	}
+> +
+> +	for (i = 0; i < cnt; i++) {
+> +		if (!xfer->cyclic && !sg)
+> +			break;
+> +
+> +		if (chunk->bursts_alloc == chan->ll_max) {
+> +			chunk = dw_edma_alloc_chunk(desc);
+> +			if (unlikely(!chunk))
+> +				goto err_alloc;
+> +		}
+> +
+> +		burst = dw_edma_alloc_burst(chunk);
+> +		if (unlikely(!burst))
+> +			goto err_alloc;
+> +
+> +		if (xfer->cyclic)
+> +			burst->sz = xfer->xfer.cyclic.len;
+> +		else
+> +			burst->sz = sg_dma_len(sg);
+> +
+> +		chunk->ll_region.sz += burst->sz;
+> +		desc->alloc_sz += burst->sz;
+> +
+> +		if (direction == DMA_DEV_TO_MEM) {
+> +			burst->sar = src_addr;
+
+We are device to mem, so src is peripheral.. okay
+
+> +			if (xfer->cyclic) {
+> +				burst->dar = xfer->xfer.cyclic.paddr;
+> +			} else {
+> +				burst->dar = sg_dma_address(sg);
+> +				src_addr += sg_dma_len(sg);
+
+and we increment the src, doesn't make sense to me!
+
+> +			}
+> +		} else {
+> +			burst->dar = dst_addr;
+> +			if (xfer->cyclic) {
+> +				burst->sar = xfer->xfer.cyclic.paddr;
+> +			} else {
+> +				burst->sar = sg_dma_address(sg);
+> +				dst_addr += sg_dma_len(sg);
+
+same here as well
+
+> +static void dw_edma_done_interrupt(struct dw_edma_chan *chan)
+> +{
+> +	struct dw_edma_desc *desc;
+> +	struct virt_dma_desc *vd;
+> +	unsigned long flags;
+> +
+> +	dw_edma_v0_core_clear_done_int(chan);
+> +
+> +	spin_lock_irqsave(&chan->vc.lock, flags);
+> +	vd = vchan_next_desc(&chan->vc);
+> +	if (vd) {
+> +		switch (chan->request) {
+> +		case EDMA_REQ_NONE:
+> +			desc = vd2dw_edma_desc(vd);
+> +			if (desc->chunks_alloc) {
+> +				chan->status = EDMA_ST_BUSY;
+> +				dw_edma_start_transfer(chan);
+> +			} else {
+> +				list_del(&vd->node);
+> +				vchan_cookie_complete(vd);
+> +				chan->status = EDMA_ST_IDLE;
+> +			}
+> +			break;
+
+Empty line after each break please
+
+> +		case EDMA_REQ_STOP:
+> +			list_del(&vd->node);
+> +			vchan_cookie_complete(vd);
+> +			chan->request = EDMA_REQ_NONE;
+> +			chan->status = EDMA_ST_IDLE;
+
+Why do we need to track request as well as status?
+
+> +static int dw_edma_alloc_chan_resources(struct dma_chan *dchan)
+> +{
+> +	struct dw_edma_chan *chan = dchan2dw_edma_chan(dchan);
+> +
+> +	if (chan->status != EDMA_ST_IDLE)
+> +		return -EBUSY;
+> +
+> +	dma_cookie_init(dchan);
+
+not using vchan_init() you need to do this and init the lists..?
+
+> +struct dw_edma_transfer {
+> +	struct dma_chan			*dchan;
+> +	union Xfer {
+
+no camel case please
+
+It would help to run checkpatch with --strict option to find any style
+issues and fix them as well
 -- 
-1.7.1
-
+~Vinod
