@@ -2,98 +2,107 @@ Return-Path: <SRS0=g4or=TH=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_PASS,
-	T_DKIMWL_WL_HIGH,URIBL_BLOCKED,USER_AGENT_GIT autolearn=unavailable
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_PASS,
+	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 98131C04AAD
-	for <dmaengine@archiver.kernel.org>; Tue,  7 May 2019 06:03:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A0EA9C004C9
+	for <dmaengine@archiver.kernel.org>; Tue,  7 May 2019 06:10:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 5FDD42087F
-	for <dmaengine@archiver.kernel.org>; Tue,  7 May 2019 06:03:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1557209012;
-	bh=2hlKV15dkf6OVVVvZVumgaT6f7V2OIqq3kDJNscJRKQ=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:List-ID:From;
-	b=p1XicWgwcw++neRvkqhmEgMRZ6TUSnpdFhmMiRwzXwW3fNarlusr/s/XaZwJpxs0A
-	 tKgclTEc80AVYWLtF+GekI51xnt7d0xmWK1EfhNJ84u2bqBYLq6ZiZxreoQE14Nw6x
-	 kIr34PLbckHIAhK0/LPQS+WFNK3HT8jfiGAZfY50=
+	by mail.kernel.org (Postfix) with ESMTP id 71B8A2087F
+	for <dmaengine@archiver.kernel.org>; Tue,  7 May 2019 06:10:08 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Dl5JgfjZ"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726981AbfEGGD0 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 7 May 2019 02:03:26 -0400
-Received: from mail.kernel.org ([198.145.29.99]:55152 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727703AbfEGFfH (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Tue, 7 May 2019 01:35:07 -0400
-Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 39F9020C01;
-        Tue,  7 May 2019 05:35:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1557207307;
-        bh=2hlKV15dkf6OVVVvZVumgaT6f7V2OIqq3kDJNscJRKQ=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=MQMsMX5TCfjXTKlSJp7jh6eGTExqJfB7Pzy3vtYzw1FQLLzYVYRLjdVFcOdfDbecL
-         ykeum5fLAMlVpCPXrPmMm9cihWkNWGt7WtfMRrPviL6JuYtYJ6tDNXrl/p+EurK6xZ
-         WexRM+1DvXqhSzDJgLduUkZPAhbcQ+FXPHdWRoNc=
-From:   Sasha Levin <sashal@kernel.org>
-To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Stefan Wahren <stefan.wahren@i2se.com>,
-        Aaro Koskinen <aaro.koskinen@iki.fi>,
-        Vinod Koul <vkoul@kernel.org>, Sasha Levin <sashal@kernel.org>,
-        dmaengine@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.0 76/99] dmaengine: bcm2835: Avoid GFP_KERNEL in device_prep_slave_sg
-Date:   Tue,  7 May 2019 01:32:10 -0400
-Message-Id: <20190507053235.29900-76-sashal@kernel.org>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20190507053235.29900-1-sashal@kernel.org>
-References: <20190507053235.29900-1-sashal@kernel.org>
-MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-Content-Transfer-Encoding: 8bit
+        id S1726578AbfEGGKH (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 7 May 2019 02:10:07 -0400
+Received: from mail-pl1-f193.google.com ([209.85.214.193]:39750 "EHLO
+        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725780AbfEGGKH (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Tue, 7 May 2019 02:10:07 -0400
+Received: by mail-pl1-f193.google.com with SMTP id g9so201251plm.6
+        for <dmaengine@vger.kernel.org>; Mon, 06 May 2019 23:10:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id;
+        bh=F2rlrgjaiJp1NZ6RM4VM9hD4Rmd/jUUVurwXpw2zOD0=;
+        b=Dl5JgfjZLUNAedfPuQQEAtFakRXAUtWL3Qc7a0Ko7nRreVMr5QXRF9ELOhpMzYIXEF
+         M+uqiTbjF/ZOFb9Sy+fVQzLBwvmpryBUYQ/+FdjbY6Hn5tU95O3/0by2Hv5r5CaTSk9U
+         a9ISQUlkFaTyzuMtX1+uVWLFQZAsUKnaI5jGOPi1EbiB3yaPKy75oW0BPNMZMsdRBw2O
+         +xUO/mmPVEm418F9q7Aclbkl5PTgkOdagQsrzNnQdQK3bbq5zfJrduth/X3I7ZpcKkXd
+         tCRFsqKB1xW66ic0/V8jaC1kGEWwhP7tYUHaJVsMVtBAwISXMYtJ/YAdq2dTVyVrPtwg
+         mafw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=F2rlrgjaiJp1NZ6RM4VM9hD4Rmd/jUUVurwXpw2zOD0=;
+        b=mNZcHZ7cRuNG+3UtbXBHDkp0h+csZMQSQseqAiv9XT7onUIMgbEuFAoOIogf6kNZwy
+         AVPxgKu7wPEegi4rsuWYSsq4aMW20+6RDF0pcBVVoQMGjopH6gmRtgkqnglMuISrPzyB
+         zi8/BuwY8Q5UtwmW3AmG3Mf4PyaZO2pdTH+KcNgIKuS3EVymJ4yaOY9OqtE00xVTQ+0T
+         8Knf7WTSW043/cD5rZVi9gn5ASOodA6fa2pifp+/LZmEmrhFeeukaoSmHr2UbwwC/8nF
+         c5BoXKHVPafnE6OwosdSvQwL3L8XXS030Jm9h/AGIbi2yD+a/1oMuILH7gkMWsHeoXpx
+         daVQ==
+X-Gm-Message-State: APjAAAUHyQNEwAcPLA0sUDPNDU3WKniJUbqvb9l5IQTBdnGZ4ki13bN0
+        EDUA/tnGEPxMGjI+9V6wlgBHQQ==
+X-Google-Smtp-Source: APXvYqyFxErSKOJGlANeP4eMybnknfCs0uOocek9g5tx0HVX9gFqZV9fJIv0GNvM6WxbwVQ6k420WQ==
+X-Received: by 2002:a17:902:9a0c:: with SMTP id v12mr38439694plp.184.1557209406749;
+        Mon, 06 May 2019 23:10:06 -0700 (PDT)
+Received: from baolinwangubtpc.spreadtrum.com ([117.18.48.102])
+        by smtp.gmail.com with ESMTPSA id e184sm30786325pfc.102.2019.05.06.23.10.01
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 06 May 2019 23:10:06 -0700 (PDT)
+From:   Baolin Wang <baolin.wang@linaro.org>
+To:     dan.j.williams@intel.com, vkoul@kernel.org
+Cc:     thierry.reding@gmail.com, jonathanh@nvidia.com,
+        linux-tegra@vger.kernel.org, shawnguo@kernel.org,
+        s.hauer@pengutronix.de, kernel@pengutronix.de, festevam@gmail.com,
+        linux-imx@nxp.com, Zubair.Kakakhel@imgtec.com,
+        wsa+renesas@sang-engineering.com, jroedel@suse.de,
+        vincent.guittot@linaro.org, baolin.wang@linaro.org,
+        dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org
+Subject: [PATCH 0/8] Add matching device node validation in DMA engine core
+Date:   Tue,  7 May 2019 14:09:37 +0800
+Message-Id: <cover.1557206859.git.baolin.wang@linaro.org>
+X-Mailer: git-send-email 1.7.9.5
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-From: Stefan Wahren <stefan.wahren@i2se.com>
+Hi,
 
-[ Upstream commit f147384774a7b24dda4783a3dcd61af272757ea8 ]
+This patch set adds a device node validation in DMA engine core, that will
+help some drivers to remove the duplicate device node validation in each
+driver.
 
-The commit af19b7ce76ba ("mmc: bcm2835: Avoid possible races on
-data requests") introduces a possible circular locking dependency,
-which is triggered by swapping to the sdhost interface.
+Any comments are welcome. Thanks.
 
-So instead of reintroduce the race condition again, we could also
-avoid this situation by using GFP_NOWAIT for the allocation of the
-DMA buffer descriptors.
+Baolin Wang (8):
+  dmaengine: Add matching device node validation in
+    __dma_request_channel()
+  soc: tegra: fuse: Change to the correct __dma_request_channel()
+    prototype
+  dmaengine: imx-sdma: Let the core do the device node validation
+  dmaengine: dma-jz4780: Let the core do the device node validation
+  dmaengine: mmp_tdma: Let the core do the device node validation
+  dmaengine: mxs-dma: Let the core do the device node validation
+  dmaengine: sh: rcar-dmac: Let the core do the device node validation
+  dmaengine: sh: usb-dmac: Let the core do the device node validation
 
-Reported-by: Aaro Koskinen <aaro.koskinen@iki.fi>
-Signed-off-by: Stefan Wahren <stefan.wahren@i2se.com>
-Fixes: af19b7ce76ba ("mmc: bcm2835: Avoid possible races on data requests")
-Link: http://lists.infradead.org/pipermail/linux-rpi-kernel/2019-March/008615.html
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- drivers/dma/bcm2835-dma.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/dma/dma-jz4780.c              |    7 ++-----
+ drivers/dma/dmaengine.c               |   10 ++++++++--
+ drivers/dma/imx-sdma.c                |    9 ++-------
+ drivers/dma/mmp_tdma.c                |   10 ++--------
+ drivers/dma/mxs-dma.c                 |    8 ++------
+ drivers/dma/of-dma.c                  |    4 ++--
+ drivers/dma/sh/rcar-dmac.c            |    6 +++---
+ drivers/dma/sh/usb-dmac.c             |    6 ++----
+ drivers/soc/tegra/fuse/fuse-tegra20.c |    2 +-
+ include/linux/dmaengine.h             |   12 ++++++++----
+ include/linux/platform_data/dma-imx.h |    1 -
+ 11 files changed, 32 insertions(+), 43 deletions(-)
 
-diff --git a/drivers/dma/bcm2835-dma.c b/drivers/dma/bcm2835-dma.c
-index ae10f5614f95..bf5119203637 100644
---- a/drivers/dma/bcm2835-dma.c
-+++ b/drivers/dma/bcm2835-dma.c
-@@ -674,7 +674,7 @@ static struct dma_async_tx_descriptor *bcm2835_dma_prep_slave_sg(
- 	d = bcm2835_dma_create_cb_chain(chan, direction, false,
- 					info, extra,
- 					frames, src, dst, 0, 0,
--					GFP_KERNEL);
-+					GFP_NOWAIT);
- 	if (!d)
- 		return NULL;
- 
 -- 
-2.20.1
+1.7.9.5
 
