@@ -2,164 +2,190 @@ Return-Path: <SRS0=g4or=TH=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,MAILING_LIST_MULTI,SPF_PASS,T_DKIMWL_WL_HIGH,USER_AGENT_MUTT
-	autolearn=unavailable autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.9 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_PASS autolearn=unavailable autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7E952C004C9
-	for <dmaengine@archiver.kernel.org>; Tue,  7 May 2019 05:11:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 45447C004C9
+	for <dmaengine@archiver.kernel.org>; Tue,  7 May 2019 05:52:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 4C12E2087F
-	for <dmaengine@archiver.kernel.org>; Tue,  7 May 2019 05:11:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1557205904;
-	bh=DhGcLuNPmEe+wui1gUyB30BTjYJWqF5WS3OUjoUnFNA=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:List-ID:From;
-	b=dr/l/rqAspTfchrxYHRZVwMQu4WHXW2QFu5Ylf9Ouip0EDAT3KE4ZMGG8EJeTNimd
-	 A3yxb5wlnPeAYoGMg1wYbxvziG8rtC3x1Bi//7JTP7gWe54BuT4RlsDNkZwoOfyav9
-	 0GxbiTvdAHThL2CRnHMjyKRin2+kdZjIHYHwXza4=
+	by mail.kernel.org (Postfix) with ESMTP id 1742A20675
+	for <dmaengine@archiver.kernel.org>; Tue,  7 May 2019 05:52:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726255AbfEGFLn (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 7 May 2019 01:11:43 -0400
-Received: from mail.kernel.org ([198.145.29.99]:49604 "EHLO mail.kernel.org"
+        id S1728865AbfEGFj2 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 7 May 2019 01:39:28 -0400
+Received: from mx.socionext.com ([202.248.49.38]:58579 "EHLO mx.socionext.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725843AbfEGFLn (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Tue, 7 May 2019 01:11:43 -0400
-Received: from localhost (unknown [106.200.210.185])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 0BCD620825;
-        Tue,  7 May 2019 05:11:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1557205902;
-        bh=DhGcLuNPmEe+wui1gUyB30BTjYJWqF5WS3OUjoUnFNA=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=elaAKIyLZawJXjWixh6NrJpXsyL6MHcA60hoFLKdBW5Dw+c5GPCj3vuY8oHe2II+k
-         o3JCTrGvaFVhGtszsj09NpHw9+uTumMOQmOZySZ1YdL0sBz1Rni5RN8d7TzJiRe56n
-         AiPkX0YKwLnGjScpveq4Wh+bI+JSZ66Fut4Lj428=
-Date:   Tue, 7 May 2019 10:41:36 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Gustavo Pimentel <Gustavo.Pimentel@synopsys.com>
-Cc:     "linux-pci@vger.kernel.org" <linux-pci@vger.kernel.org>,
-        "dmaengine@vger.kernel.org" <dmaengine@vger.kernel.org>,
-        Dan Williams <dan.j.williams@intel.com>,
-        Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-        Russell King <rmk+kernel@armlinux.org.uk>,
-        Joao Pinto <Joao.Pinto@synopsys.com>
-Subject: Re: [RFC v6 3/6] dmaengine: Add Synopsys eDMA IP version 0 debugfs
- support
-Message-ID: <20190507051136.GB16052@vkoul-mobl>
-References: <cover.1556043127.git.gustavo.pimentel@synopsys.com>
- <ba56a34f11c4bb699079946ca51bb11244ac713e.1556043127.git.gustavo.pimentel@synopsys.com>
- <20190506120710.GG3845@vkoul-mobl.Dlink>
- <305100E33629484CBB767107E4246BBB0A2386A1@de02wembxa.internal.synopsys.com>
+        id S1727562AbfEGFj1 (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Tue, 7 May 2019 01:39:27 -0400
+Received: from unknown (HELO iyokan-ex.css.socionext.com) ([172.31.9.54])
+  by mx.socionext.com with ESMTP; 07 May 2019 14:39:25 +0900
+Received: from mail.mfilter.local (m-filter-2 [10.213.24.62])
+        by iyokan-ex.css.socionext.com (Postfix) with ESMTP id A12B16117D;
+        Tue,  7 May 2019 14:39:25 +0900 (JST)
+Received: from 172.31.9.51 (172.31.9.51) by m-FILTER with ESMTP; Tue, 7 May 2019 14:39:25 +0900
+Received: from yuzu.css.socionext.com (yuzu [172.31.8.45])
+        by kinkan.css.socionext.com (Postfix) with ESMTP id 7B19A1A04E0;
+        Tue,  7 May 2019 14:39:25 +0900 (JST)
+Received: from localhost (unknown [10.213.234.103])
+        by yuzu.css.socionext.com (Postfix) with ESMTPS id 656A7121B6C;
+        Tue,  7 May 2019 14:39:25 +0900 (JST)
+Date:   Tue, 7 May 2019 14:39:24 +0900
+From:   Kazuhiro Kasai <kasai.kazuhiro@socionext.com>
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     robh+dt@kernel.org, mark.rutland@arm.com,
+        dmaengine@vger.kernel.org, devicetree@vger.kernel.org,
+        orito.takao@socionext.com, sugaya.taichi@socionext.com,
+        kanematsu.shinji@socionext.com, jaswinder.singh@linaro.org,
+        masami.hiramatsu@linaro.org, linux-kernel@vger.kernel.org,
+        kasai.kazuhiro@socionext.com
+Subject: Re: [PATCH 2/2] dmaengine: milbeaut: Add Milbeaut AXI DMA controller
+Message-ID: <20190507053924.GA3359@ubuntu>
+References: <1553487314-9185-1-git-send-email-kasai.kazuhiro@socionext.com>
+ <1553487314-9185-3-git-send-email-kasai.kazuhiro@socionext.com>
+ <20190426114629.GU28103@vkoul-mobl>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <305100E33629484CBB767107E4246BBB0A2386A1@de02wembxa.internal.synopsys.com>
-User-Agent: Mutt/1.11.3 (2019-02-01)
+In-Reply-To: <20190426114629.GU28103@vkoul-mobl>
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On 06-05-19, 17:09, Gustavo Pimentel wrote:
-> Hi Vinod,
-> 
-> On Mon, May 6, 2019 at 13:7:10, Vinod Koul <vkoul@kernel.org> wrote:
-> 
-> > On 23-04-19, 20:30, Gustavo Pimentel wrote:
-> > 
-> > >  int dw_edma_v0_core_debugfs_on(struct dw_edma_chip *chip)
-> > >  {
-> > > -	return 0;
-> > > +	return dw_edma_v0_debugfs_on(chip);
-> > 
-> > who calls this?
-> 
-> The main driver. This was done like this for 2 reasons:
-> 1) To not break the patch #1 compilation
-> 2) Since the code it's to extensive, I decided to break it in another 
-> patch.
 
-Hmm I guess I missed that one. I was actually looking at usage and not
-questioning split :)
+Thank you very much for reviewing my patch.
+Sorry for my late reply. Japan was in Spring Vacation.
 
-> > > +static int dw_edma_debugfs_u32_get(void *data, u64 *val)
-> > > +{
-> > > +	if (dw->mode == EDMA_MODE_LEGACY &&
-> > > +	    data >= (void *)&regs->type.legacy.ch) {
-> > > +		void *ptr = (void *)&regs->type.legacy.ch;
-> > > +		u32 viewport_sel = 0;
-> > > +		unsigned long flags;
-> > > +		u16 ch;
-> > > +
-> > > +		for (ch = 0; ch < dw->wr_ch_cnt; ch++)
-> > > +			if (lim[0][ch].start >= data && data < lim[0][ch].end) {
-> > > +				ptr += (data - lim[0][ch].start);
-> > > +				goto legacy_sel_wr;
-> > > +			}
-> > > +
-> > > +		for (ch = 0; ch < dw->rd_ch_cnt; ch++)
-> > > +			if (lim[1][ch].start >= data && data < lim[1][ch].end) {
-> > > +				ptr += (data - lim[1][ch].start);
-> > > +				goto legacy_sel_rd;
-> > > +			}
-> > > +
-> > > +		return 0;
-> > > +legacy_sel_rd:
-> > > +		viewport_sel = BIT(31);
-> > > +legacy_sel_wr:
-> > > +		viewport_sel |= FIELD_PREP(EDMA_V0_VIEWPORT_MASK, ch);
-> > > +
-> > > +		raw_spin_lock_irqsave(&dw->lock, flags);
-> > > +
-> > > +		writel(viewport_sel, &regs->type.legacy.viewport_sel);
-> > > +		*val = readl((u32 *)ptr);
-> > 
-> > why do you need the cast?
-> 
-> I can't tell from my head, but I think checkpatch or some code analysis 
-> tool was complaining about not having that.
+On Fri, Apr 26, 2019 at 17:16 +0530, Vinod Koul wrote:
+> On 25-03-19, 13:15, Kazuhiro Kasai wrote:
+> > Add Milbeaut AXI DMA controller. This DMA controller has
+> > only capable of memory to memory transfer.
+>
+> Have you tested this with dmatest?
+Yes, I have tested this with dmatest.
 
-ptr is void, so there is no need for casts to or away from void.
+I use dmatest with the following parameter.
+>echo 10 > iterations
+>echo "" > channel
+>echo 1 > run
 
-> > > +static int dw_edma_debugfs_regs(void)
-> > > +{
-> > > +	const struct debugfs_entries debugfs_regs[] = {
-> > > +		REGISTER(ctrl_data_arb_prior),
-> > > +		REGISTER(ctrl),
-> > > +	};
-> > > +	struct dentry *regs_dir;
-> > > +	int nr_entries, err;
-> > > +
-> > > +	regs_dir = debugfs_create_dir(REGISTERS_STR, base_dir);
-> > > +	if (!regs_dir)
-> > > +		return -EPERM;
-> > > +
-> > > +	nr_entries = ARRAY_SIZE(debugfs_regs);
-> > > +	err = dw_edma_debugfs_create_x32(debugfs_regs, nr_entries, regs_dir);
-> > > +	if (err)
-> > > +		return err;
-> > > +
-> > > +	err = dw_edma_debugfs_regs_wr(regs_dir);
-> > > +	if (err)
-> > > +		return err;
-> > > +
-> > > +	err = dw_edma_debugfs_regs_rd(regs_dir);
-> > > +	if (err)
-> > > +		return err;
-> > > +
-> > > +	return 0;
-> > 
-> > single return err would suffice right?
-> 
-> By looking now to this code, I decided to remove the err variable and 
-> perform the if immediately on the function, if the result is different 
-> from 0 it goes directly to a return -EPERM. 
+And I got the below report from dmatest.
+[11675.231268] dmatest: dma0chan0-copy0: summary 10 tests, 0 failures 6910.84 iops 67035 KB/s (0)
+[ 5646.689234] dmatest: dma0chan1-copy0: summary 10 tests, 0 failures 7949.12 iops 59618 KB/s (0)
+[12487.712996] dmatest: dma0chan2-copy0: summary 10 tests, 0 failures 1493.87 iops 15088 KB/s (0)
+[12487.733932] dmatest: dma1chan0-copy0: summary 10 tests, 0 failures 490.98 iops 3142 KB/s (0)
+[11675.282428] dmatest: dma1chan2-copy0: summary 10 tests, 0 failures 7112.37 iops 56187 KB/s (0)
+[ 5646.754230] dmatest: dma1chan3-copy0: summary 10 tests, 0 failures 6609.38 iops 61467 KB/s (0)
+[ 5043.009255] dmatest: dma0chan3-copy0: summary 10 tests, 0 failures 498.08 iops 4183 KB/s (0)
+[ 5043.018385] dmatest: dma1chan1-copy0: summary 10 tests, 0 failures 350.62 iops 3155 KB/s (0)
 
-And one more things, we do not need to check errors on debugfs calls,
-and if it fails it fails...
+>
+> > +struct m10v_dma_chan {
+> > +	struct dma_chan chan;
+> > +	struct m10v_dma_device *mdmac;
+> > +	void __iomem *regs;
+> > +	int irq;
+> > +	struct m10v_dma_desc mdesc;
+>
+> So there is a *single* descriptor? Not a list??
 
--- 
-~Vinod
+Yes, single descriptor.
+
+>
+> > +static void m10v_xdmac_disable_dma(struct m10v_dma_device *mdmac)
+> > +{
+> > +	unsigned int val;
+> > +
+> > +	val = readl(mdmac->regs + M10V_XDACS);
+> > +	val &= ~M10V_XDACS_XE;
+> > +	val |= FIELD_PREP(M10V_XDACS_XE, 0);
+> > +	writel(val, mdmac->regs + M10V_XDACS);
+>
+> Why not create a modifyl() macro and use it here
+
+Thank you for advise, I will creat modifyl() macro and use it in next version.
+
+>
+> > +static void m10v_xdmac_issue_pending(struct dma_chan *chan)
+> > +{
+> > +	struct m10v_dma_chan *mchan = to_m10v_dma_chan(chan);
+> > +
+> > +	m10v_xdmac_config_chan(mchan);
+> > +
+> > +	m10v_xdmac_enable_chan(mchan);
+>
+> You dont check if anything is already running or not?
+
+Yes, I think I don't need check if dma is running or not.
+Because there's a single descriptor.
+
+>
+> > +static dma_cookie_t m10v_xdmac_tx_submit(struct dma_async_tx_descriptor *txd)
+> > +{
+> > +	struct m10v_dma_chan *mchan = to_m10v_dma_chan(txd->chan);
+> > +	dma_cookie_t cookie;
+> > +	unsigned long flags;
+> > +
+> > +	spin_lock_irqsave(&mchan->lock, flags);
+> > +	cookie = dma_cookie_assign(txd);
+> > +	spin_unlock_irqrestore(&mchan->lock, flags);
+> > +
+> > +	return cookie;
+>
+> sounds like vchan_tx_submit() i think you can use virt-dma layer and then
+> get rid of artificial limit in driver and be able to queue up the txn on
+> dmaengine.
+
+OK, I will try to use virt-dma layer in next version.
+
+>
+> > +static struct dma_async_tx_descriptor *
+> > +m10v_xdmac_prep_dma_memcpy(struct dma_chan *chan, dma_addr_t dst,
+> > +			   dma_addr_t src, size_t len, unsigned long flags)
+> > +{
+> > +	struct m10v_dma_chan *mchan = to_m10v_dma_chan(chan);
+> > +
+> > +	dma_async_tx_descriptor_init(&mchan->mdesc.txd, chan);
+> > +	mchan->mdesc.txd.tx_submit = m10v_xdmac_tx_submit;
+> > +	mchan->mdesc.txd.callback = NULL;
+> > +	mchan->mdesc.txd.flags = flags;
+> > +	mchan->mdesc.txd.cookie = -EBUSY;
+> > +
+> > +	mchan->mdesc.len = len;
+> > +	mchan->mdesc.src = src;
+> > +	mchan->mdesc.dst = dst;
+> > +
+> > +	return &mchan->mdesc.txd;
+>
+> So you support single descriptor and dont check if this has been already
+> configured. So I guess this has been tested by doing txn one at a time
+> and not submitted bunch of txn and wait for them to complete. Please fix
+> that to really enable dmaengine capabilities.
+
+Thank you for advice. I want to fix it and I have 2 questions.
+
+1. Does virt-dma layer help to fix this?
+2. Can dmatest test that dmaengine capabilities?
+
+>
+> > +static int m10v_xdmac_remove(struct platform_device *pdev)
+> > +{
+> > +	struct m10v_dma_chan *mchan;
+> > +	struct m10v_dma_device *mdmac = platform_get_drvdata(pdev);
+> > +	int i;
+> > +
+> > +	m10v_xdmac_disable_dma(mdmac);
+> > +
+> > +	for (i = 0; i < mdmac->channels; i++) {
+> > +		mchan = &mdmac->mchan[i];
+> > +		devm_free_irq(&pdev->dev, mchan->irq, mchan);
+> > +	}
+>
+> No call to dma_async_device_unregister()?
+
+Thank you, I will call dma_async_device_unregister in next version.
+
+Thanks,
+Kasai
+
