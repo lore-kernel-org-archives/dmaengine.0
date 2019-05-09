@@ -2,68 +2,102 @@ Return-Path: <SRS0=XS51=TJ=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_PASS,
-	T_DKIMWL_WL_HIGH,URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.9 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 780A4C04AB1
-	for <dmaengine@archiver.kernel.org>; Thu,  9 May 2019 16:25:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D880BC04AB1
+	for <dmaengine@archiver.kernel.org>; Thu,  9 May 2019 23:37:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 4C3BC2173C
-	for <dmaengine@archiver.kernel.org>; Thu,  9 May 2019 16:25:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1557419133;
-	bh=xto6+id0Mi1ewqtcVp1HIIrd38CrS4FIKCZ/SeV5aRU=;
-	h=Subject:From:In-Reply-To:References:Date:To:Cc:List-ID:From;
-	b=crRbl4Ixmm/kfZhrVKAM4Mc03GSF9JnkDH2LJn8tf95ShJzJ/i1mm61YtQypTDgvI
-	 azTgfFJPpDqfb1WXjQqXJSWG85PwOiiVR9dzjJviBIh0DenOD5qqZi8z8+mb2YN2Yl
-	 4UDrjiNjzPIkdX6uc3+/EbQf11a93z8/8CcW/lhU=
+	by mail.kernel.org (Postfix) with ESMTP id A7C2A205C9
+	for <dmaengine@archiver.kernel.org>; Thu,  9 May 2019 23:37:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726968AbfEIQZc (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Thu, 9 May 2019 12:25:32 -0400
-Received: from mail.kernel.org ([198.145.29.99]:47214 "EHLO mail.kernel.org"
+        id S1726704AbfEIXh0 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Thu, 9 May 2019 19:37:26 -0400
+Received: from mga01.intel.com ([192.55.52.88]:12199 "EHLO mga01.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726883AbfEIQZP (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Thu, 9 May 2019 12:25:15 -0400
-Subject: Re: [GIT PULL]: dmaengine updates for v5.2-rc1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1557419115;
-        bh=xto6+id0Mi1ewqtcVp1HIIrd38CrS4FIKCZ/SeV5aRU=;
-        h=From:In-Reply-To:References:Date:To:Cc:From;
-        b=RJ01z0r5hV8yRJPQqu0moSU/03WIYLne678hMSvMcMSHigwHAFIcwnGupTHDKRPvC
-         wpW/Q6Yf2IE1TXMlfVg+e8OdnmMb8CnQRu3/KV8MufZQP1OxI7KeG/GM1QhZTpuZTT
-         eU+aOgXUi8y73EAoTtolXWWU1pRTmY/z9H9bMJOw=
-From:   pr-tracker-bot@kernel.org
-In-Reply-To: <20190509074615.GB16052@vkoul-mobl>
-References: <20190509074615.GB16052@vkoul-mobl>
-X-PR-Tracked-List-Id: <linux-kernel.vger.kernel.org>
-X-PR-Tracked-Message-Id: <20190509074615.GB16052@vkoul-mobl>
-X-PR-Tracked-Remote: git://git.infradead.org/users/vkoul/slave-dma.git
- tags/dmaengine-5.2-rc1
-X-PR-Tracked-Commit-Id: f33e7bb3eb922618612a90f0a828c790e8880773
-X-PR-Merge-Tree: torvalds/linux.git
-X-PR-Merge-Refname: refs/heads/master
-X-PR-Merge-Commit-Id: 055128ee008b00fba14e3638e7e84fc2cff8d77d
-Message-Id: <155741911494.30533.404952002387503115.pr-tracker-bot@kernel.org>
-Date:   Thu, 09 May 2019 16:25:14 +0000
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Linus Torvalds <torvalds@linux-foundation.org>,
-        dma <dmaengine@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>
+        id S1726108AbfEIXh0 (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Thu, 9 May 2019 19:37:26 -0400
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from fmsmga005.fm.intel.com ([10.253.24.32])
+  by fmsmga101.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 09 May 2019 16:37:25 -0700
+X-ExtLoop1: 1
+Received: from djiang5-desk3.ch.intel.com ([143.182.137.59])
+  by fmsmga005.fm.intel.com with ESMTP; 09 May 2019 16:37:25 -0700
+Subject: [PATCH] dmaengine: ioatdma: fix unprotected timer deletion
+From:   Dave Jiang <dave.jiang@intel.com>
+To:     vkoul@kernel.org
+Cc:     dmaengine@vger.kernel.org, dan.j.williams@intel.com,
+        fan.du@intel.com
+Date:   Thu, 09 May 2019 16:37:25 -0700
+Message-ID: <155744504539.8006.16459393524018173816.stgit@djiang5-desk3.ch.intel.com>
+User-Agent: StGit/unknown-version
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-The pull request you sent on Thu, 9 May 2019 13:16:15 +0530:
+When ioat_free_chan_resources() gets called, ioat_stop() is called without
+chan->cleanup_lock. ioat_stop modifies IOAT_RUN bit.  It needs to be
+protected by cleanup_lock. Also, in the __cleanup() path, if IOAT_RUN is
+cleared, we should not touch the timer again. We observed that the timer
+routine was run after timer was deleted.
 
-> git://git.infradead.org/users/vkoul/slave-dma.git tags/dmaengine-5.2-rc1
+Fixes: 3372de5813e ("dmaengine: ioatdma: removal of dma_v3.c and relevant ioat3
+references")
 
-has been merged into torvalds/linux.git:
-https://git.kernel.org/torvalds/c/055128ee008b00fba14e3638e7e84fc2cff8d77d
+Reported-by: Fan Du <fan.du@intel.com>
+Tested-by: Fan Du <fan.du@intel.com>
+Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+---
+ drivers/dma/ioat/dma.c |   16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
 
-Thank you!
+diff --git a/drivers/dma/ioat/dma.c b/drivers/dma/ioat/dma.c
+index f373a139e0c3..78598ba5c73b 100644
+--- a/drivers/dma/ioat/dma.c
++++ b/drivers/dma/ioat/dma.c
+@@ -138,11 +138,14 @@ void ioat_stop(struct ioatdma_chan *ioat_chan)
+ 	struct pci_dev *pdev = ioat_dma->pdev;
+ 	int chan_id = chan_num(ioat_chan);
+ 	struct msix_entry *msix;
++	unsigned long flags;
+ 
+-	/* 1/ stop irq from firing tasklets
+-	 * 2/ stop the tasklet from re-arming irqs
+-	 */
++	spin_lock_irqsave(&ioat_chan->cleanup_lock, flags);
+ 	clear_bit(IOAT_RUN, &ioat_chan->state);
++	spin_unlock_irqrestore(&ioat_chan->cleanup_lock, flags);
++
++	/* flush inflight timers */
++	del_timer_sync(&ioat_chan->timer);
+ 
+ 	/* flush inflight interrupts */
+ 	switch (ioat_dma->irq_mode) {
+@@ -158,9 +161,6 @@ void ioat_stop(struct ioatdma_chan *ioat_chan)
+ 		break;
+ 	}
+ 
+-	/* flush inflight timers */
+-	del_timer_sync(&ioat_chan->timer);
+-
+ 	/* flush inflight tasklet runs */
+ 	tasklet_kill(&ioat_chan->cleanup_task);
+ 
+@@ -652,7 +652,9 @@ static void __cleanup(struct ioatdma_chan *ioat_chan, dma_addr_t phys_complete)
+ 	if (active - i == 0) {
+ 		dev_dbg(to_dev(ioat_chan), "%s: cancel completion timeout\n",
+ 			__func__);
+-		mod_timer(&ioat_chan->timer, jiffies + IDLE_TIMEOUT);
++
++		if (test_bit(IOAT_RUN, &ioat_chan->state))
++			mod_timer(&ioat_chan->timer, jiffies + IDLE_TIMEOUT);
+ 	}
+ 
+ 	/* microsecond delay by sysfs variable  per pending descriptor */
 
--- 
-Deet-doot-dot, I am a bot.
-https://korg.wiki.kernel.org/userdoc/prtracker
