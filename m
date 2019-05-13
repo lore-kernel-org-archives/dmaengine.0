@@ -1,116 +1,102 @@
-Return-Path: <SRS0=t+S4=TM=vger.kernel.org=dmaengine-owner@kernel.org>
+Return-Path: <SRS0=V4vZ=TN=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.5 required=3.0 tests=DATE_IN_PAST_06_12,
-	DKIMWL_WL_HIGH,DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,MAILING_LIST_MULTI,
-	SIGNED_OFF_BY,SPF_PASS,USER_AGENT_MUTT autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_PASS,
+	URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A3399C46460
-	for <dmaengine@archiver.kernel.org>; Sun, 12 May 2019 17:06:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4313FC04AB3
+	for <dmaengine@archiver.kernel.org>; Mon, 13 May 2019 07:57:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 730C12146F
-	for <dmaengine@archiver.kernel.org>; Sun, 12 May 2019 17:06:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1557680769;
-	bh=lAEvnf+sOb/r+GA/+UEQoTMTMRoxwAcoe1/91mUt5HQ=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:List-ID:From;
-	b=cdYbEd9V6iccpgrsQV90dlhkTdNd7ouhjMpdbnsC5k2RW5EzzLZJKqETtH/Vvh/xm
-	 uMyZxVlL8g+LxqDnWPRPFNnvnbIUz9PzGh8NXdzwWXjD2kJ7HsCBU+r6Nva33MIZSf
-	 2HWzBiMC4KcEX+2etQw63GH2Cio8WA+PEeIiZzj4=
+	by mail.kernel.org (Postfix) with ESMTP id 14D1D2086A
+	for <dmaengine@archiver.kernel.org>; Mon, 13 May 2019 07:57:11 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=renesasgroup.onmicrosoft.com header.i=@renesasgroup.onmicrosoft.com header.b="R5HI3sIF"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727094AbfELRGJ (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Sun, 12 May 2019 13:06:09 -0400
-Received: from heliosphere.sirena.org.uk ([172.104.155.198]:49686 "EHLO
-        heliosphere.sirena.org.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727016AbfELRFw (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Sun, 12 May 2019 13:05:52 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=sirena.org.uk; s=20170815-heliosphere; h=In-Reply-To:Content-Type:
-        MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
-        Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
-        Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
-        List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-         bh=01m3A/Y96dMVi6jTGfgljQjDaC0yvjKoGzz4EJpMfPs=; b=jTRdt4HhtnJjJHafp1MIflgZ8
-        DZNUAtSsEZnlic7cY43AZUWFfqne/30nLvtlhzq+5gLB7NCZVftCdhuPDJGwaTEwGgQ385E7Oxy6z
-        ejT7lGh7gJceE/BG8tR/752ua5O1uQ3VB0PdZAl8F4cgWquXy+a85ZE9YD+VG0yBo5hm4=;
-Received: from [81.145.206.43] (helo=finisterre.sirena.org.uk)
-        by heliosphere.sirena.org.uk with esmtpsa (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.89)
-        (envelope-from <broonie@sirena.org.uk>)
-        id 1hPruu-00044n-A0; Sun, 12 May 2019 17:05:40 +0000
-Received: by finisterre.sirena.org.uk (Postfix, from userid 1000)
-        id BEB6F44006E; Sun, 12 May 2019 10:17:53 +0100 (BST)
-Date:   Sun, 12 May 2019 18:17:53 +0900
-From:   Mark Brown <broonie@kernel.org>
-To:     Robin Gong <yibin.gong@nxp.com>
-Cc:     "robh@kernel.org" <robh@kernel.org>,
-        "shawnguo@kernel.org" <shawnguo@kernel.org>,
-        "s.hauer@pengutronix.de" <s.hauer@pengutronix.de>,
-        "festevam@gmail.com" <festevam@gmail.com>,
-        "mark.rutland@arm.com" <mark.rutland@arm.com>,
-        "u.kleine-koenig@pengutronix.de" <u.kleine-koenig@pengutronix.de>,
-        "plyatov@gmail.com" <plyatov@gmail.com>,
-        "vkoul@kernel.org" <vkoul@kernel.org>,
-        "dan.j.williams@intel.com" <dan.j.williams@intel.com>,
-        "catalin.marinas@arm.com" <catalin.marinas@arm.com>,
-        "will.deacon@arm.com" <will.deacon@arm.com>,
-        "l.stach@pengutronix.de" <l.stach@pengutronix.de>,
-        dl-linux-imx <linux-imx@nxp.com>,
-        "linux-spi@vger.kernel.org" <linux-spi@vger.kernel.org>,
-        "linux-arm-kernel@lists.infradead.org" 
-        <linux-arm-kernel@lists.infradead.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "dmaengine@vger.kernel.org" <dmaengine@vger.kernel.org>,
-        "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
-        "kernel@pengutronix.de" <kernel@pengutronix.de>
-Subject: Re: [PATCH v3 08/14] dt-bindings: spi: imx: add new i.mx6ul
- compatible name
-Message-ID: <20190512091753.GR21483@sirena.org.uk>
-References: <1557249513-4903-1-git-send-email-yibin.gong@nxp.com>
- <1557249513-4903-9-git-send-email-yibin.gong@nxp.com>
+        id S1728237AbfEMH5K (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 13 May 2019 03:57:10 -0400
+Received: from mail-eopbgr1410139.outbound.protection.outlook.com ([40.107.141.139]:40573
+        "EHLO JPN01-OS2-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1727914AbfEMH5K (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Mon, 13 May 2019 03:57:10 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=renesasgroup.onmicrosoft.com; s=selector1-renesas-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=ZCubA7wcxUXNDADIJ7ouIewx9sQQyGE+5bjOBZHeyOA=;
+ b=R5HI3sIFxxvqcJqLn83WMVq5kUH7nwxZvdAr66eUaGIHdZrXb0kAyM/ols1eILpXDMSvgI5gTi9MxQJJKA1hhoulZXYi+pZQo0NfHpcopY3kCARhIaBMfKTvMxMXwZ5warzNVMC+vGMn/GaCVD0tPsXyDi/B4UiX9xmcMimjeYc=
+Received: from OSBPR01MB3174.jpnprd01.prod.outlook.com (20.176.240.146) by
+ OSBPR01MB3333.jpnprd01.prod.outlook.com (20.178.5.150) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.1878.22; Mon, 13 May 2019 07:57:07 +0000
+Received: from OSBPR01MB3174.jpnprd01.prod.outlook.com
+ ([fe80::f873:6332:738d:7213]) by OSBPR01MB3174.jpnprd01.prod.outlook.com
+ ([fe80::f873:6332:738d:7213%3]) with mapi id 15.20.1878.024; Mon, 13 May 2019
+ 07:57:07 +0000
+From:   Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
+To:     Simon Horman <horms+renesas@verge.net.au>,
+        Vinod Koul <vinod.koul@intel.com>
+CC:     "dmaengine@vger.kernel.org" <dmaengine@vger.kernel.org>,
+        "linux-renesas-soc@vger.kernel.org" 
+        <linux-renesas-soc@vger.kernel.org>,
+        Magnus Damm <magnus.damm@gmail.com>
+Subject: RE: [PATCH] dmaengine: sudmac: remove unused driver
+Thread-Topic: [PATCH] dmaengine: sudmac: remove unused driver
+Thread-Index: AQHVBmYUs4O0Dq2sV0yGUFPTpg0f96ZoterA
+Date:   Mon, 13 May 2019 07:57:07 +0000
+Message-ID: <OSBPR01MB3174C44D415A0748033AD2A1D80F0@OSBPR01MB3174.jpnprd01.prod.outlook.com>
+References: <20190509125211.324-1-horms+renesas@verge.net.au>
+In-Reply-To: <20190509125211.324-1-horms+renesas@verge.net.au>
+Accept-Language: ja-JP, en-US
+Content-Language: ja-JP
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: spf=none (sender IP is )
+ smtp.mailfrom=yoshihiro.shimoda.uh@renesas.com; 
+x-originating-ip: [118.238.235.108]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: ffe73c73-bd87-456e-2f19-08d6d7789898
+x-ms-office365-filtering-ht: Tenant
+x-microsoft-antispam: BCL:0;PCL:0;RULEID:(2390118)(7020095)(4652040)(8989299)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(5600141)(711020)(4605104)(4618075)(2017052603328)(7193020);SRVR:OSBPR01MB3333;
+x-ms-traffictypediagnostic: OSBPR01MB3333:
+x-microsoft-antispam-prvs: <OSBPR01MB33330839A649E03D03A7E6E6D80F0@OSBPR01MB3333.jpnprd01.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:6108;
+x-forefront-prvs: 0036736630
+x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(39860400002)(376002)(366004)(136003)(396003)(346002)(199004)(189003)(86362001)(478600001)(186003)(74316002)(6436002)(5660300002)(476003)(26005)(486006)(81166006)(6116002)(99286004)(14454004)(81156014)(76116006)(256004)(3846002)(4744005)(33656002)(53936002)(6246003)(4326008)(25786009)(8676002)(71190400001)(71200400001)(8936002)(66946007)(7736002)(316002)(73956011)(102836004)(305945005)(2906002)(7696005)(66066001)(110136005)(54906003)(11346002)(6506007)(55016002)(68736007)(9686003)(76176011)(64756008)(66446008)(229853002)(66556008)(66476007)(446003)(52536014);DIR:OUT;SFP:1102;SCL:1;SRVR:OSBPR01MB3333;H:OSBPR01MB3174.jpnprd01.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;A:1;MX:1;
+received-spf: None (protection.outlook.com: renesas.com does not designate
+ permitted sender hosts)
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam-message-info: tpKX9O9u7VkzdQ/cTrL/GC9TgeL1AzaTa41fRzewN5l0MrkgPPVPUOFldSAQvsyKSMX/hpAb0OzMaV2AC8GrdmcFT1QaokBGnqt/worOmOz1AzcB/ZgbzYqL4wuOb6UUXOiF69/XQbEXpGRxKUJdYrfvbJL6BfyhnuVdN/+47WqJg9J+puxikXlEgUHq/nMoyTLzMYjYSCGbJGJXr6gd4awpqHNFcbL3KbCm9Dr6ekVZzhw0toffy6WuAU7jrKMXvbYZZqy4nl4rDhGDx1yHGLC7RZ053zn9TajX33qZrrJavM34i4/umfd+71w2cPylwYhmaUqXXZ0A3/b6Vdl5s9t7SbzOy+XPvcXmYQPxA6o+GwVg7+pCegLCn0Mo9ye1VNTeSeY8Jn/rK/jU3lMlEmnlKRcjuB7+GRUhGujeZWo=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="7UIJfHqpdi+oBJdT"
-Content-Disposition: inline
-In-Reply-To: <1557249513-4903-9-git-send-email-yibin.gong@nxp.com>
-X-Cookie: HOST SYSTEM RESPONDING, PROBABLY UP...
-User-Agent: Mutt/1.10.1 (2018-07-13)
+X-OriginatorOrg: renesas.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: ffe73c73-bd87-456e-2f19-08d6d7789898
+X-MS-Exchange-CrossTenant-originalarrivaltime: 13 May 2019 07:57:07.3912
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 53d82571-da19-47e4-9cb4-625a166a4a2a
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: OSBPR01MB3333
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
+Hi Simon-san,
 
---7UIJfHqpdi+oBJdT
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Tue, May 07, 2019 at 09:16:25AM +0000, Robin Gong wrote:
-> ERR009165 fixed from i.mx6ul, add its compatible name.
+> From: Simon Horman, Sent: Thursday, May 9, 2019 9:52 PM
 >=20
-> Signed-off-by: Robin Gong <yibin.gong@nxp.com>
+> SUDMAC driver was introduced in v3.10 but was never integrated for use
+> by any platform. As it unused remove it.
+>=20
+> Signed-off-by: Simon Horman <horms+renesas@verge.net.au>
 
-Acked-by: Mark Brown <broonie@kernel.org>
+Thank you for the patch!
 
-Please use subject lines matching the style for the subsystem.  This
-makes it easier for people to identify relevant patches.
+Acked-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
 
---7UIJfHqpdi+oBJdT
-Content-Type: application/pgp-signature; name="signature.asc"
+Best regards,
+Yoshihiro Shimoda
 
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAlzX5MEACgkQJNaLcl1U
-h9DdIAf/X2qeVaCSbFh1puBpR4faa0Kk6jowtA52t44qC/EzFms+BOzR9IEV5IEl
-CMfUXrocjbJGM9ubz9YDaTcdp1hfJPXjfpkkFfnYubbnPeIR7gH5JQVDb9k21Q4q
-DQ3x92Ldeq94CS1/5udatrzwOwnPwzayg+jnMrXg8piLbxdaJND8cxuvCdcr5be2
-7TCvW2RvUU1RCVLa3RlgTrfPDPx5DMHEvrNihyLa9MBeWBqvL4w/amqfgFefglJo
-oymv3ABjbEAWv31Gl/ZsvQsU3CAFv/pLy9C5MSysjtK9jJA2HZXzDCn+kPYwu7ul
-XGAR6UEeIZ8LBryhYFFLGTrT89O+fQ==
-=5tdn
------END PGP SIGNATURE-----
-
---7UIJfHqpdi+oBJdT--
