@@ -4,39 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-9.0 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F266BC04AAF
-	for <dmaengine@archiver.kernel.org>; Tue, 21 May 2019 14:14:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B08A5C04AAF
+	for <dmaengine@archiver.kernel.org>; Tue, 21 May 2019 14:14:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id C47F1217D7
-	for <dmaengine@archiver.kernel.org>; Tue, 21 May 2019 14:14:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 80868217D7
+	for <dmaengine@archiver.kernel.org>; Tue, 21 May 2019 14:14:56 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=analog.onmicrosoft.com header.i=@analog.onmicrosoft.com header.b="LefPsbcI"
+	dkim=pass (1024-bit key) header.d=analog.onmicrosoft.com header.i=@analog.onmicrosoft.com header.b="OAoiL8r7"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727044AbfEUOOv (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 21 May 2019 10:14:51 -0400
-Received: from mail-eopbgr750082.outbound.protection.outlook.com ([40.107.75.82]:23491
-        "EHLO NAM02-BL2-obe.outbound.protection.outlook.com"
+        id S1728067AbfEUOO4 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 21 May 2019 10:14:56 -0400
+Received: from mail-eopbgr760040.outbound.protection.outlook.com ([40.107.76.40]:8388
+        "EHLO NAM02-CY1-obe.outbound.protection.outlook.com"
         rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1726900AbfEUOOv (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Tue, 21 May 2019 10:14:51 -0400
+        id S1728202AbfEUOO4 (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Tue, 21 May 2019 10:14:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=analog.onmicrosoft.com; s=selector1-analog-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=02ThFPfSX8mreM4p2BRvdbg0zDfEYQNxXPWjqMZxnbU=;
- b=LefPsbcIT+sAvKN55rl+LbRk5nt26yp0+G5VquaipYFnasuJCngKO5hyXzCRaoCSdFlzZ46M/rzuQJF16/9PcxhxCtxlN2JqbhtTglIU/672e/yeYDdkZ5ZgPljWPpVC2ry8Q+w7VvrE7hy3bWQ/iLoW2p+xNViPCC5+HU791hM=
-Received: from BN6PR03CA0051.namprd03.prod.outlook.com (2603:10b6:404:4c::13)
- by BLUPR03MB550.namprd03.prod.outlook.com (2a01:111:e400:880::28) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.1900.19; Tue, 21 May
- 2019 14:14:48 +0000
-Received: from SN1NAM02FT036.eop-nam02.prod.protection.outlook.com
- (2a01:111:f400:7e44::202) by BN6PR03CA0051.outlook.office365.com
- (2603:10b6:404:4c::13) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id 15.20.1900.17 via Frontend
- Transport; Tue, 21 May 2019 14:14:48 +0000
+ bh=6wQXnhr0DrcQ0TBrDjTt8b2DfI2dGItjw2i7B0+5cb4=;
+ b=OAoiL8r7KWA8YUMeHPalkdKGt0tUEhl2jBe/Rhvoyrsk+QrUyMck+Bb9C+FgdVH661SZNGisf6/IxAPswPImuT5bGYa4+upMxR8mtQzF6oPrSPVYR4kmH70Z91qXL4Snupk2X2F6HQ1FFzmdcFkHY/b23kTBl5AoOAw/KKtytsI=
+Received: from BN3PR03CA0080.namprd03.prod.outlook.com
+ (2a01:111:e400:7a4d::40) by BN3PR03MB2258.namprd03.prod.outlook.com
+ (2a01:111:e400:7bbf::19) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.1900.17; Tue, 21 May
+ 2019 14:14:54 +0000
+Received: from CY1NAM02FT058.eop-nam02.prod.protection.outlook.com
+ (2a01:111:f400:7e45::200) by BN3PR03CA0080.outlook.office365.com
+ (2a01:111:e400:7a4d::40) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id 15.20.1922.15 via Frontend
+ Transport; Tue, 21 May 2019 14:14:54 +0000
 Authentication-Results: spf=pass (sender IP is 137.71.25.55)
  smtp.mailfrom=analog.com; vger.kernel.org; dkim=none (message not signed)
  header.d=none;vger.kernel.org; dmarc=bestguesspass action=none
@@ -45,89 +45,76 @@ Received-SPF: Pass (protection.outlook.com: domain of analog.com designates
  137.71.25.55 as permitted sender) receiver=protection.outlook.com;
  client-ip=137.71.25.55; helo=nwd2mta1.analog.com;
 Received: from nwd2mta1.analog.com (137.71.25.55) by
- SN1NAM02FT036.mail.protection.outlook.com (10.152.72.149) with Microsoft SMTP
+ CY1NAM02FT058.mail.protection.outlook.com (10.152.74.149) with Microsoft SMTP
  Server (version=TLS1_0, cipher=TLS_RSA_WITH_AES_256_CBC_SHA) id 15.20.1900.16
- via Frontend Transport; Tue, 21 May 2019 14:14:47 +0000
+ via Frontend Transport; Tue, 21 May 2019 14:14:53 +0000
 Received: from NWD2HUBCAS7.ad.analog.com (nwd2hubcas7.ad.analog.com [10.64.69.107])
-        by nwd2mta1.analog.com (8.13.8/8.13.8) with ESMTP id x4LEElnl032390
+        by nwd2mta1.analog.com (8.13.8/8.13.8) with ESMTP id x4LEErpO032419
         (version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=OK)
-        for <dmaengine@vger.kernel.org>; Tue, 21 May 2019 07:14:47 -0700
+        for <dmaengine@vger.kernel.org>; Tue, 21 May 2019 07:14:53 -0700
 Received: from saturn.analog.com (10.50.1.244) by NWD2HUBCAS7.ad.analog.com
  (10.64.69.107) with Microsoft SMTP Server id 14.3.408.0; Tue, 21 May 2019
- 10:14:46 -0400
+ 10:14:51 -0400
 From:   Alexandru Ardelean <alexandru.ardelean@analog.com>
 To:     <dmaengine@vger.kernel.org>
 CC:     Alexandru Ardelean <alexandru.ardelean@analog.com>
-Subject: [PATCH 1/3][V2] include: fpga: adi-axi-common.h: add common regs & defs header
-Date:   Tue, 21 May 2019 17:14:23 +0300
-Message-ID: <20190521141425.26176-1-alexandru.ardelean@analog.com>
+Subject: [PATCH 3/3][V2] dmaengine: axi-dmac: assign `copy_align` property
+Date:   Tue, 21 May 2019 17:14:25 +0300
+Message-ID: <20190521141425.26176-3-alexandru.ardelean@analog.com>
 X-Mailer: git-send-email 2.17.1
+In-Reply-To: <20190521141425.26176-1-alexandru.ardelean@analog.com>
+References: <20190521141425.26176-1-alexandru.ardelean@analog.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-ADIRoutedOnPrem: True
 X-EOPAttributedMessage: 0
 X-MS-Office365-Filtering-HT: Tenant
-X-Forefront-Antispam-Report: CIP:137.71.25.55;IPV:NLI;CTRY:US;EFV:NLI;SFV:NSPM;SFS:(10009020)(376002)(396003)(346002)(136003)(39860400002)(2980300002)(199004)(189003)(50226002)(1076003)(316002)(16586007)(6306002)(2906002)(5660300002)(70586007)(70206006)(356004)(6666004)(126002)(2616005)(476003)(305945005)(47776003)(7636002)(426003)(86362001)(336012)(966005)(486006)(478600001)(51416003)(4326008)(44832011)(7696005)(6916009)(53416004)(36756003)(186003)(77096007)(26005)(50466002)(246002)(2351001)(8936002)(48376002)(107886003)(106002)(8676002);DIR:OUT;SFP:1101;SCL:1;SRVR:BLUPR03MB550;H:nwd2mta1.analog.com;FPR:;SPF:Pass;LANG:en;PTR:nwd2mail10.analog.com;A:1;MX:1;
+X-Forefront-Antispam-Report: CIP:137.71.25.55;IPV:NLI;CTRY:US;EFV:NLI;SFV:NSPM;SFS:(10009020)(136003)(396003)(376002)(39860400002)(346002)(2980300002)(199004)(189003)(316002)(486006)(107886003)(2616005)(2351001)(11346002)(8676002)(126002)(44832011)(86362001)(50226002)(2906002)(36756003)(305945005)(6916009)(7636002)(1076003)(426003)(356004)(6666004)(478600001)(51416003)(7696005)(76176011)(50466002)(48376002)(53416004)(47776003)(186003)(77096007)(26005)(70206006)(70586007)(106002)(4326008)(476003)(446003)(246002)(16586007)(336012)(5660300002)(4744005)(8936002)(81973001);DIR:OUT;SFP:1101;SCL:1;SRVR:BN3PR03MB2258;H:nwd2mta1.analog.com;FPR:;SPF:Pass;LANG:en;PTR:nwd2mail10.analog.com;A:1;MX:1;
 X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: c1fbcec9-fc09-4d55-c0b3-08d6ddf6ae83
-X-Microsoft-Antispam: BCL:0;PCL:0;RULEID:(2390118)(7020095)(4652040)(8989299)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(5600141)(711020)(4605104)(4709054)(2017052603328);SRVR:BLUPR03MB550;
-X-MS-TrafficTypeDiagnostic: BLUPR03MB550:
-X-MS-Exchange-PUrlCount: 2
-X-Microsoft-Antispam-PRVS: <BLUPR03MB550662A56CACA7E9F10BE50F9070@BLUPR03MB550.namprd03.prod.outlook.com>
-X-MS-Oob-TLC-OOBClassifiers: OLM:3968;
+X-MS-Office365-Filtering-Correlation-Id: 15807ffa-79ea-45f9-970f-08d6ddf6b225
+X-Microsoft-Antispam: BCL:0;PCL:0;RULEID:(2390118)(7020095)(4652040)(8989299)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(5600141)(711020)(4605104)(4709054)(2017052603328);SRVR:BN3PR03MB2258;
+X-MS-TrafficTypeDiagnostic: BN3PR03MB2258:
+X-Microsoft-Antispam-PRVS: <BN3PR03MB22587DEC7C16752B4EBB0C6FF9070@BN3PR03MB2258.namprd03.prod.outlook.com>
+X-MS-Oob-TLC-OOBClassifiers: OLM:5516;
 X-Forefront-PRVS: 0044C17179
 X-MS-Exchange-SenderADCheck: 1
-X-Microsoft-Antispam-Message-Info: 4AzqNgSqlLII1dQ+U74l4wHLM5Ed6ef+GPhambWPzXkX2Ol6oX9ziRLVfAHLu9tm7oFfT9xtIVOQtkGZ0XrUqrT9BkFO7IURnDMwSXsJ2ggGt5661lBSSTwBazUO1h3/FqjxoiZLzHLkgBz327EbPrP/fw3fl24v1hL1y8Q/lOQs9uFh2TOprNe9oEIFNzsaHR43nhWkT3UelixochK5bWZxgDZXcWLaRamvfN8OQrmr70yrqG0qVNnJsimaUmKYgJyJo+KZbtNK7Y9hP8qBtENCrsHMSFSVrXJ3f7R7f8C2CDU0vvEyxb/Ebe3Mp4ZoY8zEJ+wElIZyoG64H3zk96B3PuXcfelH+SNQlCNzLxTFCoM8GjL7xEpFVrG7ni/SPv/FtTtpykReCbBgHB/L4YDW2QslOMwexyPlN0s5gJk=
+X-Microsoft-Antispam-Message-Info: A5OeSkyHIuUc904olr3Qq6FDL83ZEB4xoiNjCJAwgb55z88VoDha+M/vhCWprthPyRFW81227XYk5o7WNa3jC1W8OTDdwddMDc6gn70PKugU5FudGRgnqrqcoNYvrB/QeMmll7tmZg9o2XvlYoOFg5hpx9PKp09wLL46HlNxFJKQHK+0qBIlGlZm3dVFRonbRYHPnCdBfDUxFrLEQRWQXGCBt5jhliLTybbTYqmbhZh5cvZCVGRqXJ6PPbYpw92bbKFO4b1GSzFIKzHV5A7biLW2ogvwndXvqQRpV5VT8a7n7HBbh99xa8INGaY3AzZz9/7EDaQVWJCVOL8A9UpYfWkt6ZEZkqy4oriNqE0/+EDJsnTLLrji7razhYuFqORUWrQF4N5aRRKjWu0g85LGrXqFuADbSWuJtn11fM6MFbM=
 X-OriginatorOrg: analog.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 May 2019 14:14:47.6585
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 May 2019 14:14:53.7142
  (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: c1fbcec9-fc09-4d55-c0b3-08d6ddf6ae83
+X-MS-Exchange-CrossTenant-Network-Message-Id: 15807ffa-79ea-45f9-970f-08d6ddf6b225
 X-MS-Exchange-CrossTenant-Id: eaa689b4-8f87-40e0-9c6f-7228de4d754a
 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=eaa689b4-8f87-40e0-9c6f-7228de4d754a;Ip=[137.71.25.55];Helo=[nwd2mta1.analog.com]
 X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BLUPR03MB550
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN3PR03MB2258
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-The AXI HDL cores provided for Analog Devices reference designs all share
-some common base registers (e.g. version register at address 0x00).
-
-To reduce duplication for this, a common header is added to define these
-registers as well as bitfields & macros to work with these registers.
+The `copy_align` property is a generic property that describes alignment
+for DMA memcpy & sg ops.
+It serves mostly an informational purpose, and can be used in DMA tests, to
+pass the info to know what alignment to expect.
 
 Signed-off-by: Alexandru Ardelean <alexandru.ardelean@analog.com>
 ---
- include/linux/fpga/adi-axi-common.h | 19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
- create mode 100644 include/linux/fpga/adi-axi-common.h
+ drivers/dma/dma-axi-dmac.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/include/linux/fpga/adi-axi-common.h b/include/linux/fpga/adi-axi-common.h
-new file mode 100644
-index 000000000000..7966c89561b1
---- /dev/null
-+++ b/include/linux/fpga/adi-axi-common.h
-@@ -0,0 +1,19 @@
-+// SPDX-License-Identifier: GPL-2.0
-+/*
-+ * Analog Devices AXI common registers & definitions
-+ *
-+ * Copyright 2019 Analog Devices Inc.
-+ *
-+ * https://wiki.analog.com/resources/fpga/docs/axi_ip
-+ * https://wiki.analog.com/resources/fpga/docs/hdl/regmap
-+ */
+diff --git a/drivers/dma/dma-axi-dmac.c b/drivers/dma/dma-axi-dmac.c
+index 196e6c429182..88f9986e0e14 100644
+--- a/drivers/dma/dma-axi-dmac.c
++++ b/drivers/dma/dma-axi-dmac.c
+@@ -762,6 +762,8 @@ static int axi_dmac_probe(struct platform_device *pdev)
+ 	if (ret)
+ 		goto err_clk_disable;
+ 
++	dma_dev->copy_align = (dmac->chan.address_align_mask + 1);
 +
-+#ifndef ADI_AXI_COMMON_H_
-+#define ADI_AXI_COMMON_H_
-+
-+#define	ADI_AXI_REG_VERSION			0x0000
-+
-+#define ADI_AXI_PCORE_VER(major, minor, patch)	\
-+	(((major) << 16) | ((minor) << 8) | (patch))
-+
-+#endif /* ADI_AXI_COMMON_H_ */
+ 	axi_dmac_write(dmac, AXI_DMAC_REG_IRQ_MASK, 0x00);
+ 
+ 	ret = dma_async_device_register(dma_dev);
 -- 
 2.17.1
 
