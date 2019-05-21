@@ -2,81 +2,63 @@ Return-Path: <SRS0=94oH=TV=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.6 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED,USER_AGENT_MUTT autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_MUTT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9F9C9C04AAF
-	for <dmaengine@archiver.kernel.org>; Tue, 21 May 2019 05:09:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0EE16C04AAF
+	for <dmaengine@archiver.kernel.org>; Tue, 21 May 2019 05:11:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 6A67E21743
-	for <dmaengine@archiver.kernel.org>; Tue, 21 May 2019 05:09:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D83002173E
+	for <dmaengine@archiver.kernel.org>; Tue, 21 May 2019 05:11:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1558415370;
-	bh=xP1xvBpudzfyHGSbZ8VGYTeUcTRCa9wyjvuakbLPV8A=;
+	s=default; t=1558415495;
+	bh=D2A1a8uO0qa3ryOp/c7RkKvhSbGpjJMOZlcPLfIRdag=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:List-ID:From;
-	b=ZGQERBe+EAT0FwdJUVcwTsx6SpN9IGXonEEfwoUM7mrUVXkIeegNVPjf8Z2lHueSW
-	 GHiOKi23rMi1yHYoQn0vmxF8XHlOAF6JuwbGXUBuyHl5n6JckemrOlXSLsqE1poM39
-	 aI2dnLOXROFJ7L4wm51w0/e1YlEycPaAmHBxRBvA=
+	b=Cbe+Ndcv/BtXdvXSAMS6JYhyQ8Zt6vv4i1R45fJUc2lrSQ7qQuHoH0vXhEeS2P3aS
+	 FL6YlAdt3PSQ/BPabV6dVP34oPafzUxds+iwhA2dQIBf5fmbCvPCejgG6m15n78vB/
+	 r3LLpryW3ewoZ3KN60aMRhhR/AdW8DqOQjKMYn38=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725885AbfEUFJa (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 21 May 2019 01:09:30 -0400
-Received: from mail.kernel.org ([198.145.29.99]:57730 "EHLO mail.kernel.org"
+        id S1727615AbfEUFLf (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 21 May 2019 01:11:35 -0400
+Received: from mail.kernel.org ([198.145.29.99]:58090 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725798AbfEUFJa (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Tue, 21 May 2019 01:09:30 -0400
+        id S1725804AbfEUFLf (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Tue, 21 May 2019 01:11:35 -0400
 Received: from localhost (unknown [106.201.107.13])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id B93AA21743;
-        Tue, 21 May 2019 05:09:28 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 08AA22173E;
+        Tue, 21 May 2019 05:11:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1558415369;
-        bh=xP1xvBpudzfyHGSbZ8VGYTeUcTRCa9wyjvuakbLPV8A=;
+        s=default; t=1558415494;
+        bh=D2A1a8uO0qa3ryOp/c7RkKvhSbGpjJMOZlcPLfIRdag=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=hKFLAsq71fNaW+HnVwHRCzAs9YNI0XjjhmYRiopdaZp9J+Z3aRwTjMIQ4ghjlI+Ow
-         MetyBCPLP6QP0iukhLAAlv5flx2i1egoK/S1hf6MenTXy5YJEVm9rQeqIX2g4hekxc
-         yiUGKwjoWw6YOuz1YD8G0k26KU3Mrm/uCWd8jDbE=
-Date:   Tue, 21 May 2019 10:39:25 +0530
+        b=JkaaG/ZTFW3ru4gBGiS4Ka+TGAmEF+ze0A3O7b7UslyYe6eTu3IEIFUR35nzCmbhx
+         91IvQQ9Rd7y+7Cz6zzsHIZbmFuJPzb6CTsAskxFd/FO0QEN11eUruXC/lfkHHVNR5j
+         qN9hp3+WjtreKw3WMLPMbAj51zAhf+5BKR+r+zhw=
+Date:   Tue, 21 May 2019 10:41:31 +0530
 From:   Vinod Koul <vkoul@kernel.org>
-To:     Dave Jiang <dave.jiang@intel.com>
-Cc:     dmaengine@vger.kernel.org, dan.j.williams@intel.com,
-        fan.du@intel.com
-Subject: Re: [PATCH] dmaengine: ioatdma: fix unprotected timer deletion
-Message-ID: <20190521050925.GW15118@vkoul-mobl>
-References: <155744504539.8006.16459393524018173816.stgit@djiang5-desk3.ch.intel.com>
- <f80ae09d-82f3-e395-f797-afd79381ce36@intel.com>
+To:     Jon Hunter <jonathanh@nvidia.com>
+Cc:     Laxman Dewangan <ldewangan@nvidia.com>, dmaengine@vger.kernel.org,
+        linux-tegra@vger.kernel.org, Sameer Pujar <spujar@nvidia.com>
+Subject: Re: [PATCH 0/3] dmaengine: tegra210-adma: Fixes for v5.2
+Message-ID: <20190521051131.GX15118@vkoul-mobl>
+References: <1558022034-19911-1-git-send-email-jonathanh@nvidia.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <f80ae09d-82f3-e395-f797-afd79381ce36@intel.com>
+In-Reply-To: <1558022034-19911-1-git-send-email-jonathanh@nvidia.com>
 User-Agent: Mutt/1.11.3 (2019-02-01)
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On 16-05-19, 09:11, Dave Jiang wrote:
+On 16-05-19, 16:53, Jon Hunter wrote:
+> Here are 3 fixes for the Tegra210 ADMA driver for v5.2.
 > 
-> 
-> On 5/9/19 4:37 PM, Dave Jiang wrote:
-> > When ioat_free_chan_resources() gets called, ioat_stop() is called without
-> > chan->cleanup_lock. ioat_stop modifies IOAT_RUN bit.  It needs to be
-> > protected by cleanup_lock. Also, in the __cleanup() path, if IOAT_RUN is
-> > cleared, we should not touch the timer again. We observed that the timer
-> > routine was run after timer was deleted.
-> > 
-> > Fixes: 3372de5813e ("dmaengine: ioatdma: removal of dma_v3.c and relevant ioat3
-> > references")
-> > 
-> > Reported-by: Fan Du <fan.du@intel.com>
-> > Tested-by: Fan Du <fan.du@intel.com>
-> > Signed-off-by: Dave Jiang <dave.jiang@intel.com>
-> 
-> Vinod, can you hold off on this please? There may be more changes. Thanks.
 
-Okay dropped
-
+Applied all, thanks
 -- 
 ~Vinod
