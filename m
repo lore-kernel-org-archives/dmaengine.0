@@ -2,132 +2,116 @@ Return-Path: <SRS0=94oH=TV=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.0 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
+	SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CA768C04AAF
-	for <dmaengine@archiver.kernel.org>; Tue, 21 May 2019 10:13:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A173DC04AAF
+	for <dmaengine@archiver.kernel.org>; Tue, 21 May 2019 13:47:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 9581F21773
-	for <dmaengine@archiver.kernel.org>; Tue, 21 May 2019 10:13:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 76B78205ED
+	for <dmaengine@archiver.kernel.org>; Tue, 21 May 2019 13:47:22 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=analog.onmicrosoft.com header.i=@analog.onmicrosoft.com header.b="OPvQLG3h"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VUnf2o+V"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726466AbfEUKN7 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 21 May 2019 06:13:59 -0400
-Received: from mail-eopbgr800085.outbound.protection.outlook.com ([40.107.80.85]:53152
-        "EHLO NAM03-DM3-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1726138AbfEUKN6 (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Tue, 21 May 2019 06:13:58 -0400
+        id S1728060AbfEUNrW (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 21 May 2019 09:47:22 -0400
+Received: from mail-lj1-f194.google.com ([209.85.208.194]:39192 "EHLO
+        mail-lj1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726995AbfEUNrV (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Tue, 21 May 2019 09:47:21 -0400
+Received: by mail-lj1-f194.google.com with SMTP id a10so15943174ljf.6;
+        Tue, 21 May 2019 06:47:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=analog.onmicrosoft.com; s=selector1-analog-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=LvIevJpH8phmcZff4nQVBQOYXNFYuiFPWf5LjqxLTsg=;
- b=OPvQLG3hrvkLnWsWOCgLgeQdKFssiS8NOMVmS1VM5shikYZHZGQvHAB4EPVlKCm5C6iEALOMQvgk/OQ57I18ODluqscPJk78Uy4X3Fh+nBwPSTqcxWpKn3fpHpYdC2qioNj8Pnvrc4hIfQog54mJqBa+I0DuRwHRKko3nLrwRSU=
-Received: from BN6PR03CA0093.namprd03.prod.outlook.com (2603:10b6:405:6f::31)
- by DM2PR03MB557.namprd03.prod.outlook.com (2a01:111:e400:241b::24) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.1900.17; Tue, 21 May
- 2019 10:13:56 +0000
-Received: from SN1NAM02FT018.eop-nam02.prod.protection.outlook.com
- (2a01:111:f400:7e44::200) by BN6PR03CA0093.outlook.office365.com
- (2603:10b6:405:6f::31) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id 15.20.1900.18 via Frontend
- Transport; Tue, 21 May 2019 10:13:55 +0000
-Authentication-Results: spf=pass (sender IP is 137.71.25.55)
- smtp.mailfrom=analog.com; metafoo.de; dkim=none (message not signed)
- header.d=none;metafoo.de; dmarc=bestguesspass action=none
- header.from=analog.com;
-Received-SPF: Pass (protection.outlook.com: domain of analog.com designates
- 137.71.25.55 as permitted sender) receiver=protection.outlook.com;
- client-ip=137.71.25.55; helo=nwd2mta1.analog.com;
-Received: from nwd2mta1.analog.com (137.71.25.55) by
- SN1NAM02FT018.mail.protection.outlook.com (10.152.72.122) with Microsoft SMTP
- Server (version=TLS1_0, cipher=TLS_RSA_WITH_AES_256_CBC_SHA) id 15.20.1900.16
- via Frontend Transport; Tue, 21 May 2019 10:13:55 +0000
-Received: from NWD2HUBCAS7.ad.analog.com (nwd2hubcas7.ad.analog.com [10.64.69.107])
-        by nwd2mta1.analog.com (8.13.8/8.13.8) with ESMTP id x4LADshH004887
-        (version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=OK);
-        Tue, 21 May 2019 03:13:54 -0700
-Received: from NWD2MBX7.ad.analog.com ([fe80::190e:f9c1:9a22:9663]) by
- NWD2HUBCAS7.ad.analog.com ([fe80::595b:ced1:cc03:539d%12]) with mapi id
- 14.03.0415.000; Tue, 21 May 2019 06:13:54 -0400
-From:   "Ardelean, Alexandru" <alexandru.Ardelean@analog.com>
-To:     "vkoul@kernel.org" <vkoul@kernel.org>
-CC:     "dmaengine@vger.kernel.org" <dmaengine@vger.kernel.org>,
-        "lars@metafoo.de" <lars@metafoo.de>
-Subject: Re: [PATCH 1/2] dmaengine: axi-dmac: Discover length alignment
- requirement
-Thread-Topic: [PATCH 1/2] dmaengine: axi-dmac: Discover length alignment
- requirement
-Thread-Index: AQHVD7O9rDImV13Iu0q4u2mKgqNjYaZ1n2+A
-Date:   Tue, 21 May 2019 10:13:53 +0000
-Message-ID: <0eeb8b8ca54e7268a905abd72785dde51d254498.camel@analog.com>
-References: <20190521112331.32424-1-alexandru.ardelean@analog.com>
-         <20190521090042.GC15118@vkoul-mobl>
-In-Reply-To: <20190521090042.GC15118@vkoul-mobl>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.50.1.244]
-x-adiroutedonprem: True
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <80F59EAFFD3DB34496AA62F203FA4FF6@analog.com>
-Content-Transfer-Encoding: base64
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=In5PRp85Hdp7mJFze1AHQkeVW9zdgNgdDH3L4mddjfI=;
+        b=VUnf2o+ViCCTsf9a7aQEus8kSVExtQxa2qJjTwk++BreeX0+tlkonkHafflrc2y0fB
+         1rHXxl/zAK4hq1UyWtGk0jEoSeLbn6+vvGibilMBecXBuhFBbrjuiiToz/ZISMLHnKcH
+         IACydUqrVt18rQggUf27Dz3vV6T1XLI+h8cdTWe/VsLGdB1kntXnaiBxuvnFRvNQBvLt
+         SbIRp6CMl9m82GbIMCmHULKrv+pz8qyCf5fH5qNRSSaOziJH4Vad8ft/jxhEHeXZAY5Z
+         am9v3E4Zlbc9PIVVt4mRzGXOZqPLJwRczdLa58G9y/d1lkfdi058ZOJZvQq8E3YCP++x
+         55Wg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=In5PRp85Hdp7mJFze1AHQkeVW9zdgNgdDH3L4mddjfI=;
+        b=CluZ5x+rLdaNyyo5T2ebvBYlYcuxVRSm2NJLMEOi0geOVwgie6ZCLCqJlWjj88UDLk
+         aHj0KJxlZuJg0PhnYQ+FaPvBwwq7Num3YllvP2CO5KXGvtgEkZVa4iUajqjmXYyFxBFE
+         w+iKYak+7KIr0YPKK54ECjjRgjLYVl+uNXzzzG8ptRceaIy7P1jkDo27G49ArvE3XD4X
+         x3b/JVsZHqTYWqAXU25/iYhejw4jmjG/xI/fVkxi9fJ2RRNaAEzCuNt+dewRb2Q/H+6C
+         Mvq0yv+jRatmg1V0uimH/uzRzS2LWt1A4aoAbzyV12Ij6VZSOMChBTwjIvi+4tqtP5Hv
+         iIaA==
+X-Gm-Message-State: APjAAAXePh2TEom58JMUJsmUWSbyHh6E1FOhm3g3Owb+Qf+vh4QZjOHm
+        MFXqkv/tfW5ww7te56BiITPPuhPb
+X-Google-Smtp-Source: APXvYqy/MngDy/oMQUQBSli0p3w5nw/8PnfFEKecb2nSAakgxPyzjNmCOnf8QHRDDe7bp2cQVFO/ww==
+X-Received: by 2002:a2e:730c:: with SMTP id o12mr39365811ljc.61.1558446438471;
+        Tue, 21 May 2019 06:47:18 -0700 (PDT)
+Received: from [192.168.2.145] ([94.29.32.140])
+        by smtp.googlemail.com with ESMTPSA id z6sm4601722ljh.61.2019.05.21.06.47.14
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 21 May 2019 06:47:15 -0700 (PDT)
+Subject: Re: [PATCH v1] dmaengine: tegra-apb: Handle DMA_PREP_INTERRUPT flag
+ properly
+To:     Vinod Koul <vkoul@kernel.org>, Jon Hunter <jonathanh@nvidia.com>
+Cc:     Laxman Dewangan <ldewangan@nvidia.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Ben Dooks <ben.dooks@codethink.co.uk>,
+        dmaengine@vger.kernel.org, linux-tegra@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20190505181235.14798-1-digetx@gmail.com>
+ <287d7e67-1572-b4f2-d4bb-b1f02f534d47@nvidia.com>
+ <20190521045545.GP15118@vkoul-mobl>
+From:   Dmitry Osipenko <digetx@gmail.com>
+Message-ID: <973513f9-0d87-4c39-6b29-f98a1d9dc00c@gmail.com>
+Date:   Tue, 21 May 2019 16:46:24 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.6.1
 MIME-Version: 1.0
-X-EOPAttributedMessage: 0
-X-MS-Office365-Filtering-HT: Tenant
-X-Forefront-Antispam-Report: CIP:137.71.25.55;IPV:NLI;CTRY:US;EFV:NLI;SFV:NSPM;SFS:(10009020)(39860400002)(136003)(396003)(376002)(346002)(2980300002)(199004)(189003)(186003)(54906003)(246002)(50466002)(106002)(1730700003)(8936002)(47776003)(8676002)(70206006)(36756003)(70586007)(7636002)(76176011)(2486003)(7696005)(336012)(23676004)(316002)(6916009)(2351001)(2501003)(7736002)(118296001)(26005)(14444005)(4326008)(126002)(6246003)(5660300002)(53546011)(426003)(86362001)(14454004)(11346002)(486006)(436003)(476003)(5640700003)(102836004)(2906002)(229853002)(478600001)(305945005)(3846002)(6116002)(2616005)(446003)(356004);DIR:OUT;SFP:1101;SCL:1;SRVR:DM2PR03MB557;H:nwd2mta1.analog.com;FPR:;SPF:Pass;LANG:en;PTR:nwd2mail10.analog.com;A:1;MX:1;
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: e0c3a19c-2ab7-4f54-3302-08d6ddd50835
-X-Microsoft-Antispam: BCL:0;PCL:0;RULEID:(2390118)(7020095)(4652040)(8989299)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(5600141)(711020)(4605104)(4709054)(2017052603328)(7193020);SRVR:DM2PR03MB557;
-X-MS-TrafficTypeDiagnostic: DM2PR03MB557:
-X-Microsoft-Antispam-PRVS: <DM2PR03MB5571731A12263C3AEF7C4EBF9070@DM2PR03MB557.namprd03.prod.outlook.com>
-X-MS-Oob-TLC-OOBClassifiers: OLM:8882;
-X-Forefront-PRVS: 0044C17179
-X-MS-Exchange-SenderADCheck: 1
-X-Microsoft-Antispam-Message-Info: 2t6gv1oFCRqOru3l/eVTB9nZVcA45gUknw5A7uOlGq1CJVoTJyqkvMkR9FBL2ZW+HFuP98wInDAVvmPEEmil19Tx2fIOIqhEtpvHEXsSCyVr8YbOPyPYlXH7FVpH6/2rRhpu2CFtto2gjomH+bTDD9lAG+tlDgns/pQkVU5gonhyAXXa6aXp+uEyKE+IJ1ZqAORApq3Xr4VHcBmI9qTXiDHaWHhwzs2rSa6Wi2cq8fWJdPoLVtOiQMRg+CcVdycI4Bpv2sxrOUDEBf+vvysgbY0CRiPXi8Mk8RPxQIjT9YhjrqDWGZ3PtaAbtt3c1pOWjdkvFoiFcIz1nlMTUfJoq/NZYwpWO3CMoL7pqYGVzCcSlsbo9orx59XD7f9jq8ozkhKeUHK6kqrTZabvYVCp8tOBqi6QJCEfkcGO1VbSWH4=
-X-OriginatorOrg: analog.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 May 2019 10:13:55.2698
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: e0c3a19c-2ab7-4f54-3302-08d6ddd50835
-X-MS-Exchange-CrossTenant-Id: eaa689b4-8f87-40e0-9c6f-7228de4d754a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=eaa689b4-8f87-40e0-9c6f-7228de4d754a;Ip=[137.71.25.55];Helo=[nwd2mta1.analog.com]
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM2PR03MB557
+In-Reply-To: <20190521045545.GP15118@vkoul-mobl>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-T24gVHVlLCAyMDE5LTA1LTIxIGF0IDE0OjMwICswNTMwLCBWaW5vZCBLb3VsIHdyb3RlOg0KPiBb
-RXh0ZXJuYWxdDQo+IA0KPiANCj4gT24gMjEtMDUtMTksIDE0OjIzLCBBbGV4YW5kcnUgQXJkZWxl
-YW4gd3JvdGU6DQo+ID4gRnJvbTogTGFycy1QZXRlciBDbGF1c2VuIDxsYXJzQG1ldGFmb28uZGU+
-DQo+ID4gDQo+ID4gU3RhcnRpbmcgd2l0aCB2ZXJzaW9uIDQuMS5hIHRoZSBBWEktRE1BQyBpcyBj
-YXBhYmxlIG9mIHJlcG9ydGluZyB0aGUNCj4gPiByZXF1aXJlZCBsZW5ndGggYWxpZ25tZW50Lg0K
-PiA+IA0KPiA+IFRoZSBMU0JzIHRoYXQgYXJlIHJlcXVpcmVkIHRvIGJlIHNldCBmb3IgYWxpZ25t
-ZW50IHdpbGwgYWx3YXlzIHJlYWQgYmFjayBhcw0KPiA+IHNldCBmcm9tIHRoZSB0cmFuc2ZlciBs
-ZW5ndGggcmVnaXN0ZXIuIEl0IGlzIG5vdCBwb3NzaWJsZSB0byBjbGVhciB0aGVtIGJ5DQo+ID4g
-d3JpdGluZyBhIDAuIFRoaXMgbWVhbnMgdGhlIGRyaXZlciBjYW4gZGlzY292ZXIgdGhlIGxlbmd0
-aCBhbGlnbm1lbnQNCj4gPiByZXF1aXJlbWVudCBieSB3cml0aW5nIDAgdG8gdGhhdCByZWdpc3Rl
-ciBhbmQgcmVhZGluZyBiYWNrIHRoZSB2YWx1ZS4NCj4gPiANCj4gPiBTaW5jZSB0aGUgRE1BIHdp
-bGwgc3VwcG9ydCBsZW5ndGggYWxpZ25tZW50IHJlcXVpcmVtZW50cyB0aGF0IGFyZSBkaWZmZXJl
-bnQNCj4gPiBmcm9tIHRoZSBhZGRyZXNzIGFsaWdubWVudCByZXF1aXJlbWVudCB0cmFjayBib3Ro
-IG9mIHRoZW0gaW5kZXBlbmRlbnRseS4NCj4gPiANCj4gPiBGb3Igb2xkZXIgdmVyc2lvbnMgb2Yg
-dGhlIHBlcmlwaGVyYWwgYXNzdW1lIHRoYXQgdGhlIGxlbmd0aCBhbGlnbm1lbnQNCj4gPiByZXF1
-aXJlbWVudCBpcyBlcXVhbCB0byB0aGUgYWRkcmVzcyBhbGlnbm1lbnQgcmVxdWlyZW1lbnQuDQo+
-ID4gDQo+ID4gU2lnbmVkLW9mZi1ieTogTGFycy1QZXRlciBDbGF1c2VuIDxsYXJzQG1ldGFmb28u
-ZGU+DQo+IA0KPiBZb3UgbmVlZCB0byBzaWduIG9mZiB0aGUgcGF0Y2ggYmVmb3JlIHNlbmRpbmcu
-IFBsZWFzZSByZXJlYWQgRG9jdW1lbnRhdGlvbi9wcm9jZXNzL3N1Ym1pdHRpbmctcGF0Y2hlcy5y
-c3QNCg0KQWNrLg0KDQpTb3JyeSBmb3IgZm9yZ2V0dGluZyB0aGlzIG9uZS4NCg0KPiANCj4gPiAg
-ICAgICBheGlfZG1hY193cml0ZShkbWFjLCBBWElfRE1BQ19SRUdfRkxBR1MsIEFYSV9ETUFDX0ZM
-QUdfQ1lDTElDKTsNCj4gPiAgICAgICBpZiAoYXhpX2RtYWNfcmVhZChkbWFjLCBBWElfRE1BQ19S
-RUdfRkxBR1MpID09IEFYSV9ETUFDX0ZMQUdfQ1lDTElDKQ0KPiA+IEBAIC02NzAsNiArNjc2LDEz
-IEBAIHN0YXRpYyBpbnQgYXhpX2RtYWNfZGV0ZWN0X2NhcHMoc3RydWN0IGF4aV9kbWFjICpkbWFj
-KQ0KPiA+ICAgICAgICAgICAgICAgcmV0dXJuIC1FTk9ERVY7DQo+ID4gICAgICAgfQ0KPiA+IA0K
-PiA+ICsgICAgIGlmICgodmVyc2lvbiAmIDB4ZmYwMCkgPj0gMHgwMTAwKSB7DQo+IA0KPiBtYWdp
-YyBudW1iZXJzIHlhYXkNCg0KR29vZCBwb2ludC4NCldpbGwgZml4Lg0KDQo+IA0KPiAtLQ0KPiB+
-Vmlub2QNCg==
+21.05.2019 7:55, Vinod Koul пишет:
+> On 08-05-19, 10:24, Jon Hunter wrote:
+>>
+>> On 05/05/2019 19:12, Dmitry Osipenko wrote:
+>>> The DMA_PREP_INTERRUPT flag means that descriptor's callback should be
+>>> invoked upon transfer completion and that's it. For some reason driver
+>>> completely disables the hardware interrupt handling, leaving channel in
+>>> unusable state if transfer is issued with the flag being unset. Note
+>>> that there are no occurrences in the relevant drivers that do not set
+>>> the flag, hence this patch doesn't fix any actual bug and merely fixes
+>>> potential problem.
+>>>
+>>> Signed-off-by: Dmitry Osipenko <digetx@gmail.com>
+>>
+>> >From having a look at this, I am guessing that we have never really
+>> tested the case where DMA_PREP_INTERRUPT flag is not set because as you
+>> mentioned it does not look like this will work at all!
+> 
+> That is a fair argument
+>>
+>> Is there are use-case you are looking at where you don't set the
+>> DMA_PREP_INTERRUPT flag?
+>>
+>> If not I am wondering if we should even bother supporting this and warn
+>> if it is not set. AFAICT it does not appear to be mandatory, but maybe
+>> Vinod can comment more on this.
+> 
+> This is supposed to be used in the cases where you submit a bunch of
+> descriptors and selectively dont want an interrupt in few cases...
+> 
+> Is this such a case?
+
+The flag is set by device drivers. AFAIK, none of the drivers that are
+used on Tegra SoC's make a use of that flag, at least not in upstream.
