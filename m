@@ -2,289 +2,119 @@ Return-Path: <SRS0=94oH=TV=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.1 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.0 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9DB66C04AAF
-	for <dmaengine@archiver.kernel.org>; Tue, 21 May 2019 08:00:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A1458C04E87
+	for <dmaengine@archiver.kernel.org>; Tue, 21 May 2019 08:23:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 682BB2173C
-	for <dmaengine@archiver.kernel.org>; Tue, 21 May 2019 08:00:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 714EF21783
+	for <dmaengine@archiver.kernel.org>; Tue, 21 May 2019 08:23:41 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b="y9VFNTkl"
+	dkim=pass (1024-bit key) header.d=analog.onmicrosoft.com header.i=@analog.onmicrosoft.com header.b="q2aQE7gC"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726259AbfEUIAz (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 21 May 2019 04:00:55 -0400
-Received: from fllv0016.ext.ti.com ([198.47.19.142]:60352 "EHLO
-        fllv0016.ext.ti.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726006AbfEUIAz (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Tue, 21 May 2019 04:00:55 -0400
-Received: from fllv0035.itg.ti.com ([10.64.41.0])
-        by fllv0016.ext.ti.com (8.15.2/8.15.2) with ESMTP id x4L80nv4028232;
-        Tue, 21 May 2019 03:00:49 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
-        s=ti-com-17Q1; t=1558425649;
-        bh=xVnV5zl7CIAwKezyuk211wuN3LYm3mjEnQABRyhteYY=;
-        h=Subject:From:To:CC:References:Date:In-Reply-To;
-        b=y9VFNTklfvJKXfi4IRWduQ36CusAUHPVGUoV+Yn83fm0Hnik+8LkU9dvq28WoUBe+
-         wPR4fECWgGfPLW9CFH+sgHn30rW17gw7jJMG9B4anfmQV7IXlrpH83Xc6YKuLsAJHH
-         Oa0kU33RVsYqYO22c7GOsMexp291H5VbBfNbNF0E=
-Received: from DLEE100.ent.ti.com (dlee100.ent.ti.com [157.170.170.30])
-        by fllv0035.itg.ti.com (8.15.2/8.15.2) with ESMTPS id x4L80nJX074720
-        (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
-        Tue, 21 May 2019 03:00:49 -0500
-Received: from DLEE105.ent.ti.com (157.170.170.35) by DLEE100.ent.ti.com
- (157.170.170.30) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1713.5; Tue, 21
- May 2019 03:00:48 -0500
-Received: from fllv0040.itg.ti.com (10.64.41.20) by DLEE105.ent.ti.com
- (157.170.170.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1713.5 via
- Frontend Transport; Tue, 21 May 2019 03:00:48 -0500
-Received: from [192.168.2.6] (ileax41-snat.itg.ti.com [10.172.224.153])
-        by fllv0040.itg.ti.com (8.15.2/8.15.2) with ESMTP id x4L80kM9080313;
-        Tue, 21 May 2019 03:00:47 -0500
-Subject: Re: [PATCH v2 1/2] dmaengine: ti: edma: Clean up the 2x32bit array
- register accesses
-From:   Peter Ujfalusi <peter.ujfalusi@ti.com>
-To:     <vkoul@kernel.org>
-CC:     <dan.j.williams@intel.com>, <dmaengine@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-omap@vger.kernel.org>
-References: <20190521075945.14085-1-peter.ujfalusi@ti.com>
- <20190521075945.14085-2-peter.ujfalusi@ti.com>
-Message-ID: <83f01abb-26b7-2b38-fb72-0581b1455a44@ti.com>
-Date:   Tue, 21 May 2019 11:01:02 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.7.0
+        id S1726138AbfEUIXl (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 21 May 2019 04:23:41 -0400
+Received: from mail-eopbgr710065.outbound.protection.outlook.com ([40.107.71.65]:11997
+        "EHLO NAM05-BY2-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1726289AbfEUIXk (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Tue, 21 May 2019 04:23:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=analog.onmicrosoft.com; s=selector1-analog-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=tU6uK3En89KmXXTp9paUgCWrXYW6Udye1VW5ru0UuSE=;
+ b=q2aQE7gCWiuaZZnEiZRdk4pcPeMI9Gfol6nkXPrbGvQYtQe1fqBRiwpsWFzy8m03B+V5AfhRFzXgN7Xz94ONlgHeW7f8b/e9nWirGQlDS+VulVrUH8YsurJaD1ScycFoAg//9nXdkwAPH72J9+0yYKR9ijrITtl+4juOwMWKmV0=
+Received: from MWHPR03CA0004.namprd03.prod.outlook.com (2603:10b6:300:117::14)
+ by BL2PR03MB546.namprd03.prod.outlook.com (2a01:111:e400:c24::24) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.1900.16; Tue, 21 May
+ 2019 08:23:38 +0000
+Received: from BL2NAM02FT058.eop-nam02.prod.protection.outlook.com
+ (2a01:111:f400:7e46::205) by MWHPR03CA0004.outlook.office365.com
+ (2603:10b6:300:117::14) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id 15.20.1900.16 via Frontend
+ Transport; Tue, 21 May 2019 08:23:38 +0000
+Authentication-Results: spf=pass (sender IP is 137.71.25.55)
+ smtp.mailfrom=analog.com; vger.kernel.org; dkim=none (message not signed)
+ header.d=none;vger.kernel.org; dmarc=bestguesspass action=none
+ header.from=analog.com;
+Received-SPF: Pass (protection.outlook.com: domain of analog.com designates
+ 137.71.25.55 as permitted sender) receiver=protection.outlook.com;
+ client-ip=137.71.25.55; helo=nwd2mta1.analog.com;
+Received: from nwd2mta1.analog.com (137.71.25.55) by
+ BL2NAM02FT058.mail.protection.outlook.com (10.152.76.176) with Microsoft SMTP
+ Server (version=TLS1_0, cipher=TLS_RSA_WITH_AES_256_CBC_SHA) id 15.20.1900.16
+ via Frontend Transport; Tue, 21 May 2019 08:23:37 +0000
+Received: from NWD2HUBCAS7.ad.analog.com (nwd2hubcas7.ad.analog.com [10.64.69.107])
+        by nwd2mta1.analog.com (8.13.8/8.13.8) with ESMTP id x4L8NbW8021508
+        (version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=OK)
+        for <dmaengine@vger.kernel.org>; Tue, 21 May 2019 01:23:37 -0700
+Received: from saturn.analog.com (10.50.1.244) by NWD2HUBCAS7.ad.analog.com
+ (10.64.69.107) with Microsoft SMTP Server id 14.3.408.0; Tue, 21 May 2019
+ 04:23:36 -0400
+From:   Alexandru Ardelean <alexandru.ardelean@analog.com>
+To:     <dmaengine@vger.kernel.org>
+CC:     Alexandru Ardelean <alexandru.ardelean@analog.com>
+Subject: [PATCH 2/2] dmaengine: axi-dmac: assign `copy_align` property
+Date:   Tue, 21 May 2019 14:23:31 +0300
+Message-ID: <20190521112331.32424-2-alexandru.ardelean@analog.com>
+X-Mailer: git-send-email 2.17.1
+In-Reply-To: <20190521112331.32424-1-alexandru.ardelean@analog.com>
+References: <20190521112331.32424-1-alexandru.ardelean@analog.com>
 MIME-Version: 1.0
-In-Reply-To: <20190521075945.14085-2-peter.ujfalusi@ti.com>
-Content-Type: text/plain; charset="utf-8"
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-EXCLAIMER-MD-CONFIG: e1e8a2fd-e40a-4ac6-ac9b-f7e9cc9ee180
+Content-Type: text/plain
+X-ADIRoutedOnPrem: True
+X-EOPAttributedMessage: 0
+X-MS-Office365-Filtering-HT: Tenant
+X-Forefront-Antispam-Report: CIP:137.71.25.55;IPV:NLI;CTRY:US;EFV:NLI;SFV:NSPM;SFS:(10009020)(979002)(136003)(376002)(396003)(346002)(39860400002)(2980300002)(189003)(199004)(50226002)(53416004)(47776003)(50466002)(107886003)(5660300002)(48376002)(2351001)(4326008)(246002)(8936002)(305945005)(51416003)(7696005)(8676002)(76176011)(478600001)(6916009)(86362001)(7636002)(4744005)(70206006)(44832011)(36756003)(1076003)(16586007)(11346002)(316002)(2616005)(2906002)(426003)(446003)(126002)(486006)(70586007)(336012)(476003)(106002)(6666004)(77096007)(186003)(356004)(26005)(81973001)(969003)(989001)(999001)(1009001)(1019001);DIR:OUT;SFP:1101;SCL:1;SRVR:BL2PR03MB546;H:nwd2mta1.analog.com;FPR:;SPF:Pass;LANG:en;PTR:nwd2mail10.analog.com;MX:1;A:1;
+X-MS-PublicTrafficType: Email
+X-MS-Office365-Filtering-Correlation-Id: d0856ce1-59e0-4b8d-f415-08d6ddc59fd6
+X-Microsoft-Antispam: BCL:0;PCL:0;RULEID:(2390118)(7020095)(4652040)(8989299)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(5600141)(711020)(4605104)(4709054)(2017052603328);SRVR:BL2PR03MB546;
+X-MS-TrafficTypeDiagnostic: BL2PR03MB546:
+X-Microsoft-Antispam-PRVS: <BL2PR03MB546301F9134CD6D9FFA8D35F9070@BL2PR03MB546.namprd03.prod.outlook.com>
+X-MS-Oob-TLC-OOBClassifiers: OLM:5516;
+X-Forefront-PRVS: 0044C17179
+X-MS-Exchange-SenderADCheck: 1
+X-Microsoft-Antispam-Message-Info: fuN8Pr9jFfSk476ESJByLrvO6necBhOLO9HRPcubnzZITBmWDsiajRhXu2CyxmBiXWCRsHoNrHfHK7RLTnBpxGMw7/pKlLQDu2DMhppFuOgfWniqXmeKsEhbqNvJv7HamWiy9/ooE9GaMdchW8//WVx5icRTGbthTtrJStx1ureO02PgPzt01RVI42ifxAmB0iAaUsNR7fWdUQg+396mIlK+mg45ZPJk0ffQJIFKe4lNkIp/AB4czfdg0VNrIRIXlC4906VZ+7s7hRovfOfxmVb85UUlFdGw6vL5b9LAINdpI762wyXzx5Ss+3CWWZ3lS7pLCtMakQJRJflmLh09/aSsAeZ92PUpjZn1hfsl8s3pdRtNqijAQOgYbtRf4g8iRV39z84PrG4sn6ziOihLdhooXXnrIhK4mS96/jvJ1F4=
+X-OriginatorOrg: analog.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 May 2019 08:23:37.8533
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: d0856ce1-59e0-4b8d-f415-08d6ddc59fd6
+X-MS-Exchange-CrossTenant-Id: eaa689b4-8f87-40e0-9c6f-7228de4d754a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=eaa689b4-8f87-40e0-9c6f-7228de4d754a;Ip=[137.71.25.55];Helo=[nwd2mta1.analog.com]
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL2PR03MB546
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
+The `copy_align` property is a generic property that describes alignment
+for DMA memcpy & sg ops.
+It serves mostly an informational purpose, and can be used in DMA tests, to
+pass the info to know what alignment to expect.
 
+Signed-off-by: Alexandru Ardelean <alexandru.ardelean@analog.com>
+---
+ drivers/dma/dma-axi-dmac.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-On 21/05/2019 10.59, Peter Ujfalusi wrote:
-> Introduce defines for getting the array index and the bit number within the
-> 64bit array register pairs.
-> 
-> Signed-off-by: Peter Ujfalusi <peter.ujfalusi@ti.com>
-> ---
->  drivers/dma/ti/edma.c | 106 ++++++++++++++++++++++++------------------
->  1 file changed, 61 insertions(+), 45 deletions(-)
-> 
-> diff --git a/drivers/dma/ti/edma.c b/drivers/dma/ti/edma.c
-> index ceabdea40ae0..a5822925a327 100644
-> --- a/drivers/dma/ti/edma.c
-> +++ b/drivers/dma/ti/edma.c
-> @@ -133,6 +133,17 @@
->  #define EDMA_CONT_PARAMS_FIXED_EXACT	 1002
->  #define EDMA_CONT_PARAMS_FIXED_NOT_EXACT 1003
->  
-> +/*
-> + * 64bit array registers are plit into two 32bit registers:
+diff --git a/drivers/dma/dma-axi-dmac.c b/drivers/dma/dma-axi-dmac.c
+index edd81ceeeb33..eea994d827ba 100644
+--- a/drivers/dma/dma-axi-dmac.c
++++ b/drivers/dma/dma-axi-dmac.c
+@@ -763,6 +763,8 @@ static int axi_dmac_probe(struct platform_device *pdev)
+ 	if (ret)
+ 		goto err_clk_disable;
+ 
++	dma_dev->copy_align = (dmac->chan.address_align_mask + 1);
++
+ 	axi_dmac_write(dmac, AXI_DMAC_REG_IRQ_MASK, 0x00);
+ 
+ 	ret = dma_async_device_register(dma_dev);
+-- 
+2.17.1
 
-typo s/plit/split
-
-> + * reg0: channel/event 0-31
-> + * reg1: channel/event 32-63
-> + *
-> + * bit 5 in the channel number tells the array index (0/1)
-> + * bit 0-4 (0x1f) is the bit offset within the register
-> + */
-> +#define EDMA_REG_ARRAY_INDEX(channel)	((channel) >> 5)
-> +#define EDMA_CHANNEL_BIT(channel)	(BIT((channel) & 0x1f))
-> +
->  /* PaRAM slots are laid out like this */
->  struct edmacc_param {
->  	u32 opt;
-> @@ -441,15 +452,14 @@ static void edma_setup_interrupt(struct edma_chan *echan, bool enable)
->  {
->  	struct edma_cc *ecc = echan->ecc;
->  	int channel = EDMA_CHAN_SLOT(echan->ch_num);
-> +	int idx = EDMA_REG_ARRAY_INDEX(channel);
-> +	int ch_bit = EDMA_CHANNEL_BIT(channel);
->  
->  	if (enable) {
-> -		edma_shadow0_write_array(ecc, SH_ICR, channel >> 5,
-> -					 BIT(channel & 0x1f));
-> -		edma_shadow0_write_array(ecc, SH_IESR, channel >> 5,
-> -					 BIT(channel & 0x1f));
-> +		edma_shadow0_write_array(ecc, SH_ICR, idx, ch_bit);
-> +		edma_shadow0_write_array(ecc, SH_IESR, idx, ch_bit);
->  	} else {
-> -		edma_shadow0_write_array(ecc, SH_IECR, channel >> 5,
-> -					 BIT(channel & 0x1f));
-> +		edma_shadow0_write_array(ecc, SH_IECR, idx, ch_bit);
->  	}
->  }
->  
-> @@ -587,26 +597,26 @@ static void edma_start(struct edma_chan *echan)
->  {
->  	struct edma_cc *ecc = echan->ecc;
->  	int channel = EDMA_CHAN_SLOT(echan->ch_num);
-> -	int j = (channel >> 5);
-> -	unsigned int mask = BIT(channel & 0x1f);
-> +	int idx = EDMA_REG_ARRAY_INDEX(channel);
-> +	int ch_bit = EDMA_CHANNEL_BIT(channel);
->  
->  	if (!echan->hw_triggered) {
->  		/* EDMA channels without event association */
-> -		dev_dbg(ecc->dev, "ESR%d %08x\n", j,
-> -			edma_shadow0_read_array(ecc, SH_ESR, j));
-> -		edma_shadow0_write_array(ecc, SH_ESR, j, mask);
-> +		dev_dbg(ecc->dev, "ESR%d %08x\n", idx,
-> +			edma_shadow0_read_array(ecc, SH_ESR, idx));
-> +		edma_shadow0_write_array(ecc, SH_ESR, idx, ch_bit);
->  	} else {
->  		/* EDMA channel with event association */
-> -		dev_dbg(ecc->dev, "ER%d %08x\n", j,
-> -			edma_shadow0_read_array(ecc, SH_ER, j));
-> +		dev_dbg(ecc->dev, "ER%d %08x\n", idx,
-> +			edma_shadow0_read_array(ecc, SH_ER, idx));
->  		/* Clear any pending event or error */
-> -		edma_write_array(ecc, EDMA_ECR, j, mask);
-> -		edma_write_array(ecc, EDMA_EMCR, j, mask);
-> +		edma_write_array(ecc, EDMA_ECR, idx, ch_bit);
-> +		edma_write_array(ecc, EDMA_EMCR, idx, ch_bit);
->  		/* Clear any SER */
-> -		edma_shadow0_write_array(ecc, SH_SECR, j, mask);
-> -		edma_shadow0_write_array(ecc, SH_EESR, j, mask);
-> -		dev_dbg(ecc->dev, "EER%d %08x\n", j,
-> -			edma_shadow0_read_array(ecc, SH_EER, j));
-> +		edma_shadow0_write_array(ecc, SH_SECR, idx, ch_bit);
-> +		edma_shadow0_write_array(ecc, SH_EESR, idx, ch_bit);
-> +		dev_dbg(ecc->dev, "EER%d %08x\n", idx,
-> +			edma_shadow0_read_array(ecc, SH_EER, idx));
->  	}
->  }
->  
-> @@ -614,19 +624,19 @@ static void edma_stop(struct edma_chan *echan)
->  {
->  	struct edma_cc *ecc = echan->ecc;
->  	int channel = EDMA_CHAN_SLOT(echan->ch_num);
-> -	int j = (channel >> 5);
-> -	unsigned int mask = BIT(channel & 0x1f);
-> +	int idx = EDMA_REG_ARRAY_INDEX(channel);
-> +	int ch_bit = EDMA_CHANNEL_BIT(channel);
->  
-> -	edma_shadow0_write_array(ecc, SH_EECR, j, mask);
-> -	edma_shadow0_write_array(ecc, SH_ECR, j, mask);
-> -	edma_shadow0_write_array(ecc, SH_SECR, j, mask);
-> -	edma_write_array(ecc, EDMA_EMCR, j, mask);
-> +	edma_shadow0_write_array(ecc, SH_EECR, idx, ch_bit);
-> +	edma_shadow0_write_array(ecc, SH_ECR, idx, ch_bit);
-> +	edma_shadow0_write_array(ecc, SH_SECR, idx, ch_bit);
-> +	edma_write_array(ecc, EDMA_EMCR, idx, ch_bit);
->  
->  	/* clear possibly pending completion interrupt */
-> -	edma_shadow0_write_array(ecc, SH_ICR, j, mask);
-> +	edma_shadow0_write_array(ecc, SH_ICR, idx, ch_bit);
->  
-> -	dev_dbg(ecc->dev, "EER%d %08x\n", j,
-> -		edma_shadow0_read_array(ecc, SH_EER, j));
-> +	dev_dbg(ecc->dev, "EER%d %08x\n", idx,
-> +		edma_shadow0_read_array(ecc, SH_EER, idx));
->  
->  	/* REVISIT:  consider guarding against inappropriate event
->  	 * chaining by overwriting with dummy_paramset.
-> @@ -640,45 +650,49 @@ static void edma_stop(struct edma_chan *echan)
->  static void edma_pause(struct edma_chan *echan)
->  {
->  	int channel = EDMA_CHAN_SLOT(echan->ch_num);
-> -	unsigned int mask = BIT(channel & 0x1f);
->  
-> -	edma_shadow0_write_array(echan->ecc, SH_EECR, channel >> 5, mask);
-> +	edma_shadow0_write_array(echan->ecc, SH_EECR,
-> +				 EDMA_REG_ARRAY_INDEX(channel),
-> +				 EDMA_CHANNEL_BIT(channel));
->  }
->  
->  /* Re-enable EDMA hardware events on the specified channel.  */
->  static void edma_resume(struct edma_chan *echan)
->  {
->  	int channel = EDMA_CHAN_SLOT(echan->ch_num);
-> -	unsigned int mask = BIT(channel & 0x1f);
->  
-> -	edma_shadow0_write_array(echan->ecc, SH_EESR, channel >> 5, mask);
-> +	edma_shadow0_write_array(echan->ecc, SH_EESR,
-> +				 EDMA_REG_ARRAY_INDEX(channel),
-> +				 EDMA_CHANNEL_BIT(channel));
->  }
->  
->  static void edma_trigger_channel(struct edma_chan *echan)
->  {
->  	struct edma_cc *ecc = echan->ecc;
->  	int channel = EDMA_CHAN_SLOT(echan->ch_num);
-> -	unsigned int mask = BIT(channel & 0x1f);
-> +	int idx = EDMA_REG_ARRAY_INDEX(channel);
-> +	int ch_bit = EDMA_CHANNEL_BIT(channel);
->  
-> -	edma_shadow0_write_array(ecc, SH_ESR, (channel >> 5), mask);
-> +	edma_shadow0_write_array(ecc, SH_ESR, idx, ch_bit);
->  
-> -	dev_dbg(ecc->dev, "ESR%d %08x\n", (channel >> 5),
-> -		edma_shadow0_read_array(ecc, SH_ESR, (channel >> 5)));
-> +	dev_dbg(ecc->dev, "ESR%d %08x\n", idx,
-> +		edma_shadow0_read_array(ecc, SH_ESR, idx));
->  }
->  
->  static void edma_clean_channel(struct edma_chan *echan)
->  {
->  	struct edma_cc *ecc = echan->ecc;
->  	int channel = EDMA_CHAN_SLOT(echan->ch_num);
-> -	int j = (channel >> 5);
-> -	unsigned int mask = BIT(channel & 0x1f);
-> +	int idx = EDMA_REG_ARRAY_INDEX(channel);
-> +	int ch_bit = EDMA_CHANNEL_BIT(channel);
->  
-> -	dev_dbg(ecc->dev, "EMR%d %08x\n", j, edma_read_array(ecc, EDMA_EMR, j));
-> -	edma_shadow0_write_array(ecc, SH_ECR, j, mask);
-> +	dev_dbg(ecc->dev, "EMR%d %08x\n", idx,
-> +		edma_read_array(ecc, EDMA_EMR, idx));
-> +	edma_shadow0_write_array(ecc, SH_ECR, idx, ch_bit);
->  	/* Clear the corresponding EMR bits */
-> -	edma_write_array(ecc, EDMA_EMCR, j, mask);
-> +	edma_write_array(ecc, EDMA_EMCR, idx, ch_bit);
->  	/* Clear any SER */
-> -	edma_shadow0_write_array(ecc, SH_SECR, j, mask);
-> +	edma_shadow0_write_array(ecc, SH_SECR, idx, ch_bit);
->  	edma_write(ecc, EDMA_CCERRCLR, BIT(16) | BIT(1) | BIT(0));
->  }
->  
-> @@ -708,7 +722,8 @@ static int edma_alloc_channel(struct edma_chan *echan,
->  	int channel = EDMA_CHAN_SLOT(echan->ch_num);
->  
->  	/* ensure access through shadow region 0 */
-> -	edma_or_array2(ecc, EDMA_DRAE, 0, channel >> 5, BIT(channel & 0x1f));
-> +	edma_or_array2(ecc, EDMA_DRAE, 0, EDMA_REG_ARRAY_INDEX(channel),
-> +		       EDMA_CHANNEL_BIT(channel));
->  
->  	/* ensure no events are pending */
->  	edma_stop(echan);
-> @@ -2482,8 +2497,9 @@ static int edma_pm_resume(struct device *dev)
->  	for (i = 0; i < ecc->num_channels; i++) {
->  		if (echan[i].alloced) {
->  			/* ensure access through shadow region 0 */
-> -			edma_or_array2(ecc, EDMA_DRAE, 0, i >> 5,
-> -				       BIT(i & 0x1f));
-> +			edma_or_array2(ecc, EDMA_DRAE, 0,
-> +				       EDMA_REG_ARRAY_INDEX(i),
-> +				       EDMA_CHANNEL_BIT(i));
->  
->  			edma_setup_interrupt(&echan[i], true);
->  
-> 
-
-- Péter
-
-Texas Instruments Finland Oy, Porkkalankatu 22, 00180 Helsinki.
-Y-tunnus/Business ID: 0615521-4. Kotipaikka/Domicile: Helsinki
