@@ -2,59 +2,61 @@ Return-Path: <SRS0=94oH=TV=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.1 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-9.1 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
+	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 447FCC04AAF
-	for <dmaengine@archiver.kernel.org>; Tue, 21 May 2019 07:59:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 09DD8C04AAF
+	for <dmaengine@archiver.kernel.org>; Tue, 21 May 2019 07:59:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 17D702173C
-	for <dmaengine@archiver.kernel.org>; Tue, 21 May 2019 07:59:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D26EB2173C
+	for <dmaengine@archiver.kernel.org>; Tue, 21 May 2019 07:59:42 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b="onyOFoYd"
+	dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b="TjLtTLB0"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726006AbfEUH7i (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 21 May 2019 03:59:38 -0400
-Received: from lelv0142.ext.ti.com ([198.47.23.249]:59518 "EHLO
-        lelv0142.ext.ti.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725920AbfEUH7i (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Tue, 21 May 2019 03:59:38 -0400
-Received: from fllv0034.itg.ti.com ([10.64.40.246])
-        by lelv0142.ext.ti.com (8.15.2/8.15.2) with ESMTP id x4L7xXqj072922;
-        Tue, 21 May 2019 02:59:33 -0500
+        id S1726851AbfEUH7m (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 21 May 2019 03:59:42 -0400
+Received: from lelv0143.ext.ti.com ([198.47.23.248]:51398 "EHLO
+        lelv0143.ext.ti.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725920AbfEUH7m (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Tue, 21 May 2019 03:59:42 -0400
+Received: from fllv0035.itg.ti.com ([10.64.41.0])
+        by lelv0143.ext.ti.com (8.15.2/8.15.2) with ESMTP id x4L7xaA7120057;
+        Tue, 21 May 2019 02:59:36 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
-        s=ti-com-17Q1; t=1558425573;
-        bh=IzWT3e6xVFbiZmSHFjmPBCCwZEObs0gFBMkK0Qxp8bg=;
-        h=From:To:CC:Subject:Date;
-        b=onyOFoYd6iT3zbfUFrP1jChuvkmOzb97Db8+o2dfG3+pdNkb8jHonbpEOYD/98gld
-         ivbuzODleKw4Yhuj+epqWIS3u2uD5zqVAw8bdZ67wshrYaLduB02Hr20a/+5nAneUS
-         AwGMIZAwmsAK1329HQVpIOXBSCS5lhVfi8YL7rBs=
+        s=ti-com-17Q1; t=1558425576;
+        bh=5FvJ6nHLjhjVMrC3TxE53QTyFIFMi2zQ7rGA3i0mTRA=;
+        h=From:To:CC:Subject:Date:In-Reply-To:References;
+        b=TjLtTLB08aPVw+6l7OG6wm3UtFsXU61Y8HXE3XT+qwXj9iIdXXPsedsCnAVBCItw9
+         0St/vWQsV7eo7/1wdW9MEJCINhZrkIvJJrF3WucD6KFQQKmez8dZbXF/rZ4VJNlVdf
+         Qh4QpFQXfU+Y/e/vhhJuQvQkSIwGhelENH/U0Xtw=
 Received: from DLEE106.ent.ti.com (dlee106.ent.ti.com [157.170.170.36])
-        by fllv0034.itg.ti.com (8.15.2/8.15.2) with ESMTPS id x4L7xWYj051369
+        by fllv0035.itg.ti.com (8.15.2/8.15.2) with ESMTPS id x4L7xa7l073407
         (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
-        Tue, 21 May 2019 02:59:33 -0500
-Received: from DLEE103.ent.ti.com (157.170.170.33) by DLEE106.ent.ti.com
+        Tue, 21 May 2019 02:59:36 -0500
+Received: from DLEE100.ent.ti.com (157.170.170.30) by DLEE106.ent.ti.com
  (157.170.170.36) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1713.5; Tue, 21
- May 2019 02:59:32 -0500
-Received: from fllv0040.itg.ti.com (10.64.41.20) by DLEE103.ent.ti.com
- (157.170.170.33) with Microsoft SMTP Server (version=TLS1_2,
+ May 2019 02:59:35 -0500
+Received: from fllv0040.itg.ti.com (10.64.41.20) by DLEE100.ent.ti.com
+ (157.170.170.30) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1713.5 via
- Frontend Transport; Tue, 21 May 2019 02:59:32 -0500
+ Frontend Transport; Tue, 21 May 2019 02:59:35 -0500
 Received: from feketebors.ti.com (ileax41-snat.itg.ti.com [10.172.224.153])
-        by fllv0040.itg.ti.com (8.15.2/8.15.2) with ESMTP id x4L7xUjx078442;
-        Tue, 21 May 2019 02:59:30 -0500
+        by fllv0040.itg.ti.com (8.15.2/8.15.2) with ESMTP id x4L7xUk1078442;
+        Tue, 21 May 2019 02:59:34 -0500
 From:   Peter Ujfalusi <peter.ujfalusi@ti.com>
 To:     <vkoul@kernel.org>
 CC:     <dan.j.williams@intel.com>, <dmaengine@vger.kernel.org>,
         <linux-arm-kernel@lists.infradead.org>,
         <linux-omap@vger.kernel.org>
-Subject: [PATCH v2 0/2] dmaengine: ti: edma: Polled completion support
-Date:   Tue, 21 May 2019 10:59:43 +0300
-Message-ID: <20190521075945.14085-1-peter.ujfalusi@ti.com>
+Subject: [PATCH v2 2/2] dmaengine: ti: edma: Enable support for polled (memcpy) completion
+Date:   Tue, 21 May 2019 10:59:45 +0300
+Message-ID: <20190521075945.14085-3-peter.ujfalusi@ti.com>
 X-Mailer: git-send-email 2.21.0
+In-Reply-To: <20190521075945.14085-1-peter.ujfalusi@ti.com>
+References: <20190521075945.14085-1-peter.ujfalusi@ti.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
@@ -64,15 +66,6 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Hi,
-
-Changes since v1:
-- Cleanup patch for the array register handling
-- typo fixed in patch2 commit message
-
-The code around the array register access was pretty confusing for the first
-look, so clean them up first then use the cleaner way in the polled handling.
-
 When a DMA client driver decides that it is not providing callback for
 completion of a transfer (and/or does not set the DMA_PREP_INTERRUPT) but
 it will poll the status of the transfer (in case of short memcpy for
@@ -80,19 +73,62 @@ example) we will not get interrupt for the completion of the transfer and
 will not mark the transaction as done.
 
 Check the event registers (ER and EER) and if the channel is inactive then
-return wioth DMA_COMPLETE to let the client know that the transfer is
+return with DMA_COMPLETE to let the client know that the transfer is
 completed.
 
-Regards,
-Peter
+Signed-off-by: Peter Ujfalusi <peter.ujfalusi@ti.com>
 ---
-Peter Ujfalusi (2):
-  dmaengine: ti: edma: Clean up the 2x32bit array register accesses
-  dmaengine: ti: edma: Enable support for polled (memcpy) completion
+ drivers/dma/ti/edma.c | 23 ++++++++++++++++++++---
+ 1 file changed, 20 insertions(+), 3 deletions(-)
 
- drivers/dma/ti/edma.c | 129 ++++++++++++++++++++++++++----------------
- 1 file changed, 81 insertions(+), 48 deletions(-)
-
+diff --git a/drivers/dma/ti/edma.c b/drivers/dma/ti/edma.c
+index a5822925a327..0f4873c2aa12 100644
+--- a/drivers/dma/ti/edma.c
++++ b/drivers/dma/ti/edma.c
+@@ -1226,8 +1226,9 @@ static struct dma_async_tx_descriptor *edma_prep_dma_memcpy(
+ 
+ 	edesc->pset[0].param.opt |= ITCCHEN;
+ 	if (nslots == 1) {
+-		/* Enable transfer complete interrupt */
+-		edesc->pset[0].param.opt |= TCINTEN;
++		/* Enable transfer complete interrupt if requested */
++		if (tx_flags & DMA_PREP_INTERRUPT)
++			edesc->pset[0].param.opt |= TCINTEN;
+ 	} else {
+ 		/* Enable transfer complete chaining for the first slot */
+ 		edesc->pset[0].param.opt |= TCCHEN;
+@@ -1254,7 +1255,9 @@ static struct dma_async_tx_descriptor *edma_prep_dma_memcpy(
+ 		}
+ 
+ 		edesc->pset[1].param.opt |= ITCCHEN;
+-		edesc->pset[1].param.opt |= TCINTEN;
++		/* Enable transfer complete interrupt if requested */
++		if (tx_flags & DMA_PREP_INTERRUPT)
++			edesc->pset[1].param.opt |= TCINTEN;
+ 	}
+ 
+ 	return vchan_tx_prep(&echan->vchan, &edesc->vdesc, tx_flags);
+@@ -1816,6 +1819,20 @@ static enum dma_status edma_tx_status(struct dma_chan *chan,
+ 	unsigned long flags;
+ 
+ 	ret = dma_cookie_status(chan, cookie, txstate);
++
++	if (ret != DMA_COMPLETE && echan->edesc && !echan->edesc->cyclic) {
++		struct edma_cc *ecc = echan->ecc;
++		int channel = EDMA_CHAN_SLOT(echan->ch_num);
++		int idx = EDMA_REG_ARRAY_INDEX(channel);
++		int ch_bit = EDMA_CHANNEL_BIT(channel);
++		unsigned int sh_er = edma_shadow0_read_array(ecc, SH_ER, idx);
++		unsigned int sh_eer = edma_shadow0_read_array(ecc, SH_EER, idx);
++
++		/* The channel is no longer active */
++		if (!(sh_er & ch_bit) && !(sh_eer & ch_bit))
++			ret = DMA_COMPLETE;
++	}
++
+ 	if (ret == DMA_COMPLETE || !txstate)
+ 		return ret;
+ 
 -- 
 Peter
 
