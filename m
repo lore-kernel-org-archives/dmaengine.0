@@ -6,59 +6,93 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
 	USER_AGENT_MUTT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0EE16C04AAF
-	for <dmaengine@archiver.kernel.org>; Tue, 21 May 2019 05:11:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 47F2AC04AAF
+	for <dmaengine@archiver.kernel.org>; Tue, 21 May 2019 05:12:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id D83002173E
-	for <dmaengine@archiver.kernel.org>; Tue, 21 May 2019 05:11:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1F4D72173E
+	for <dmaengine@archiver.kernel.org>; Tue, 21 May 2019 05:12:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1558415495;
-	bh=D2A1a8uO0qa3ryOp/c7RkKvhSbGpjJMOZlcPLfIRdag=;
+	s=default; t=1558415575;
+	bh=yRdHJ2XmIK1WbEUMMgmxiCl4z/bvxpUafqfuQkwnoXY=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:List-ID:From;
-	b=Cbe+Ndcv/BtXdvXSAMS6JYhyQ8Zt6vv4i1R45fJUc2lrSQ7qQuHoH0vXhEeS2P3aS
-	 FL6YlAdt3PSQ/BPabV6dVP34oPafzUxds+iwhA2dQIBf5fmbCvPCejgG6m15n78vB/
-	 r3LLpryW3ewoZ3KN60aMRhhR/AdW8DqOQjKMYn38=
+	b=nOcBmNb9TYln2XiZhRjMKlR2uziTabsVCBwl5JvSaFhBBjdC4/O7sJhh/TaCskASW
+	 fO7BGOrBCak3xi90AVeMqrbaPeuIhO6Be1EB8TJWwRdgcxotwvDmv23GkI1tdZ+wYv
+	 sEhT+OuCtDR4WwVRAgZ0duhqBeFgCO8hk8M7GLAU=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727615AbfEUFLf (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 21 May 2019 01:11:35 -0400
-Received: from mail.kernel.org ([198.145.29.99]:58090 "EHLO mail.kernel.org"
+        id S1725793AbfEUFMy (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 21 May 2019 01:12:54 -0400
+Received: from mail.kernel.org ([198.145.29.99]:58566 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725804AbfEUFLf (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Tue, 21 May 2019 01:11:35 -0400
+        id S1725798AbfEUFMy (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Tue, 21 May 2019 01:12:54 -0400
 Received: from localhost (unknown [106.201.107.13])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 08AA22173E;
-        Tue, 21 May 2019 05:11:33 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id D867D21743;
+        Tue, 21 May 2019 05:12:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1558415494;
-        bh=D2A1a8uO0qa3ryOp/c7RkKvhSbGpjJMOZlcPLfIRdag=;
+        s=default; t=1558415573;
+        bh=yRdHJ2XmIK1WbEUMMgmxiCl4z/bvxpUafqfuQkwnoXY=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=JkaaG/ZTFW3ru4gBGiS4Ka+TGAmEF+ze0A3O7b7UslyYe6eTu3IEIFUR35nzCmbhx
-         91IvQQ9Rd7y+7Cz6zzsHIZbmFuJPzb6CTsAskxFd/FO0QEN11eUruXC/lfkHHVNR5j
-         qN9hp3+WjtreKw3WMLPMbAj51zAhf+5BKR+r+zhw=
-Date:   Tue, 21 May 2019 10:41:31 +0530
+        b=LVwjL/13xrfaEJ6AUBwZQFm+fa/btvzfRm/Y8CBLxx/5AoMRHbrbnsRRTHdWq8A+B
+         6T40TTcYmIo6qFDmhzoTdegDWImPKepEQAkT+lfqy2H7mC97xyNji7IBtdE04bEq1u
+         quivMZvg2u2AG9QBormnpyQNetqMXa1KkJD1lM3A=
+Date:   Tue, 21 May 2019 10:42:50 +0530
 From:   Vinod Koul <vkoul@kernel.org>
-To:     Jon Hunter <jonathanh@nvidia.com>
-Cc:     Laxman Dewangan <ldewangan@nvidia.com>, dmaengine@vger.kernel.org,
-        linux-tegra@vger.kernel.org, Sameer Pujar <spujar@nvidia.com>
-Subject: Re: [PATCH 0/3] dmaengine: tegra210-adma: Fixes for v5.2
-Message-ID: <20190521051131.GX15118@vkoul-mobl>
-References: <1558022034-19911-1-git-send-email-jonathanh@nvidia.com>
+To:     Robin Gong <yibin.gong@nxp.com>
+Cc:     "robh@kernel.org" <robh@kernel.org>,
+        "broonie@kernel.org" <broonie@kernel.org>,
+        "shawnguo@kernel.org" <shawnguo@kernel.org>,
+        "s.hauer@pengutronix.de" <s.hauer@pengutronix.de>,
+        "festevam@gmail.com" <festevam@gmail.com>,
+        "mark.rutland@arm.com" <mark.rutland@arm.com>,
+        "u.kleine-koenig@pengutronix.de" <u.kleine-koenig@pengutronix.de>,
+        "plyatov@gmail.com" <plyatov@gmail.com>,
+        "dan.j.williams@intel.com" <dan.j.williams@intel.com>,
+        "catalin.marinas@arm.com" <catalin.marinas@arm.com>,
+        "will.deacon@arm.com" <will.deacon@arm.com>,
+        "l.stach@pengutronix.de" <l.stach@pengutronix.de>,
+        dl-linux-imx <linux-imx@nxp.com>,
+        "linux-spi@vger.kernel.org" <linux-spi@vger.kernel.org>,
+        "linux-arm-kernel@lists.infradead.org" 
+        <linux-arm-kernel@lists.infradead.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        "dmaengine@vger.kernel.org" <dmaengine@vger.kernel.org>,
+        "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
+        "kernel@pengutronix.de" <kernel@pengutronix.de>
+Subject: Re: Re: [PATCH v3 11/14] dmaengine: imx-sdma: fix ecspi1 rx dma not
+ work on i.mx8mm
+Message-ID: <20190521051250.GY15118@vkoul-mobl>
+References: <VI1PR04MB45436C98D70C16635CF3CFDE89070@VI1PR04MB4543.eurprd04.prod.outlook.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <1558022034-19911-1-git-send-email-jonathanh@nvidia.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <VI1PR04MB45436C98D70C16635CF3CFDE89070@VI1PR04MB4543.eurprd04.prod.outlook.com>
 User-Agent: Mutt/1.11.3 (2019-02-01)
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On 16-05-19, 16:53, Jon Hunter wrote:
-> Here are 3 fixes for the Tegra210 ADMA driver for v5.2.
-> 
+On 21-05-19, 04:58, Robin Gong wrote:
+> > -----Original Message-----
+> > From: Vinod Koul <vkoul@kernel.org>
+> > Sent: 2019年5月21日 12:18
+> > 
+> > On 07-05-19, 09:16, Robin Gong wrote:
+> > > Because the number of ecspi1 rx event on i.mx8mm is 0, the condition
+> > > check ignore such special case without dma channel enabled, which
+> > > caused
+> > > ecspi1 rx works failed. Actually, no need to check event_id0, checking
+> > > event_id1 is enough for DEV_2_DEV case because it's so lucky that
+> > > event_id1 never be 0.
+> > 
+> > Well is that by chance or design that event_id1 will be never 0?
+> > 
+> That's by chance. DEV_2_DEV is just for Audio case and non-zero for event_id1 on current i.MX family.
 
-Applied all, thanks
+Then it wont be fgood to rely on chance :)
+
 -- 
 ~Vinod
