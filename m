@@ -2,53 +2,54 @@ Return-Path: <SRS0=g0X/=T3=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.0 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_NEOMUTT
-	autolearn=unavailable autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.0 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED,USER_AGENT_NEOMUTT autolearn=unavailable autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D1D4BC07542
-	for <dmaengine@archiver.kernel.org>; Mon, 27 May 2019 09:06:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3BE80C28CBF
+	for <dmaengine@archiver.kernel.org>; Mon, 27 May 2019 09:08:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id B09642173C
-	for <dmaengine@archiver.kernel.org>; Mon, 27 May 2019 09:06:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1DA5A21734
+	for <dmaengine@archiver.kernel.org>; Mon, 27 May 2019 09:08:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726856AbfE0JGH (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 27 May 2019 05:06:07 -0400
-Received: from metis.ext.pengutronix.de ([85.220.165.71]:55253 "EHLO
+        id S1726653AbfE0JIZ (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 27 May 2019 05:08:25 -0400
+Received: from metis.ext.pengutronix.de ([85.220.165.71]:38203 "EHLO
         metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726831AbfE0JGF (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Mon, 27 May 2019 05:06:05 -0400
+        with ESMTP id S1726063AbfE0JIZ (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Mon, 27 May 2019 05:08:25 -0400
 Received: from ptx.hi.pengutronix.de ([2001:67c:670:100:1d::c0])
         by metis.ext.pengutronix.de with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
         (Exim 4.89)
         (envelope-from <sha@pengutronix.de>)
-        id 1hVBZr-0004GD-6D; Mon, 27 May 2019 11:05:55 +0200
+        id 1hVBc7-0004fQ-KN; Mon, 27 May 2019 11:08:15 +0200
 Received: from sha by ptx.hi.pengutronix.de with local (Exim 4.89)
         (envelope-from <sha@pengutronix.de>)
-        id 1hVBZp-0001YR-Ic; Mon, 27 May 2019 11:05:53 +0200
-Date:   Mon, 27 May 2019 11:05:53 +0200
+        id 1hVBc6-0001ZE-VS; Mon, 27 May 2019 11:08:14 +0200
+Date:   Mon, 27 May 2019 11:08:14 +0200
 From:   Sascha Hauer <s.hauer@pengutronix.de>
 To:     yibin.gong@nxp.com
 Cc:     robh@kernel.org, shawnguo@kernel.org, festevam@gmail.com,
         mark.rutland@arm.com, vkoul@kernel.org, dan.j.williams@intel.com,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-imx@nxp.com, kernel@pengutronix.de,
-        dmaengine@vger.kernel.org, linux-arm-kernel@lists.infradead.org
-Subject: Re: [PATCH v2 6/7] dmaengine: fsl-edma: add i.mx7ulp edma2 version
- support
-Message-ID: <20190527090553.lek7tm3lyst3bhrd@pengutronix.de>
+        linux-imx@nxp.com, linux-arm-kernel@lists.infradead.org,
+        linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org,
+        devicetree@vger.kernel.org, kernel@pengutronix.de
+Subject: Re: [PATCH v2 4/7] dmaengine: fsl-edma-common: version check for v2
+ instead
+Message-ID: <20190527090814.qfjiksqi24x2jrs3@pengutronix.de>
 References: <20190527085118.40423-1-yibin.gong@nxp.com>
- <20190527085118.40423-7-yibin.gong@nxp.com>
+ <20190527085118.40423-5-yibin.gong@nxp.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20190527085118.40423-7-yibin.gong@nxp.com>
+In-Reply-To: <20190527085118.40423-5-yibin.gong@nxp.com>
 X-Sent-From: Pengutronix Hildesheim
 X-URL:  http://www.pengutronix.de/
 X-IRC:  #ptxdist @freenode
 X-Accept-Language: de,en
 X-Accept-Content-Type: text/plain
-X-Uptime: 11:01:40 up 9 days, 15:19, 72 users,  load average: 0.51, 0.30, 0.17
+X-Uptime: 11:07:14 up 9 days, 15:25, 72 users,  load average: 0.12, 0.20, 0.16
 User-Agent: NeoMutt/20170113 (1.7.2)
 X-SA-Exim-Connect-IP: 2001:67c:670:100:1d::c0
 X-SA-Exim-Mail-From: sha@pengutronix.de
@@ -59,42 +60,68 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On Mon, May 27, 2019 at 04:51:17PM +0800, yibin.gong@nxp.com wrote:
+On Mon, May 27, 2019 at 04:51:15PM +0800, yibin.gong@nxp.com wrote:
 > From: Robin Gong <yibin.gong@nxp.com>
 > 
-> +static const struct of_device_id fsl_edma_dt_ids[] = {
-> +	{ .compatible = "fsl,vf610-edma", .data = (void *)v1 },
-> +	{ .compatible = "fsl,imx7ulp-edma", .data = (void *)v3 },
-> +	{ /* sentinel */ }
-
-Please put a struct type behind the .data pointer so that you can
-configure...
-
-> +};
-> +MODULE_DEVICE_TABLE(of, fsl_edma_dt_ids);
-> +
-> @@ -218,6 +272,22 @@ static int fsl_edma_probe(struct platform_device *pdev)
->  	fsl_edma_setup_regs(fsl_edma);
->  	regs = &fsl_edma->regs;
+> The next v3 i.mx7ulp edma is based on v1, so change version
+> check logic for v2 instead.
+> 
+> Signed-off-by: Robin Gong <yibin.gong@nxp.com>
+> ---
+>  drivers/dma/fsl-edma-common.c | 40 ++++++++++++++++++++--------------------
+>  1 file changed, 20 insertions(+), 20 deletions(-)
+> 
+> diff --git a/drivers/dma/fsl-edma-common.c b/drivers/dma/fsl-edma-common.c
+> index bb24251..45d70d3 100644
+> --- a/drivers/dma/fsl-edma-common.c
+> +++ b/drivers/dma/fsl-edma-common.c
+> @@ -657,26 +657,26 @@ void fsl_edma_setup_regs(struct fsl_edma_engine *edma)
+>  	edma->regs.erql = edma->membase + EDMA_ERQ;
+>  	edma->regs.eeil = edma->membase + EDMA_EEI;
 >  
-> +	if (fsl_edma->version == v3) {
-> +		fsl_edma->dmamux_nr = 1;
+> -	edma->regs.serq = edma->membase + ((edma->version == v1) ?
+> -			EDMA_SERQ : EDMA64_SERQ);
+> -	edma->regs.cerq = edma->membase + ((edma->version == v1) ?
+> -			EDMA_CERQ : EDMA64_CERQ);
+> -	edma->regs.seei = edma->membase + ((edma->version == v1) ?
+> -			EDMA_SEEI : EDMA64_SEEI);
+> -	edma->regs.ceei = edma->membase + ((edma->version == v1) ?
+> -			EDMA_CEEI : EDMA64_CEEI);
+> -	edma->regs.cint = edma->membase + ((edma->version == v1) ?
+> -			EDMA_CINT : EDMA64_CINT);
+> -	edma->regs.cerr = edma->membase + ((edma->version == v1) ?
+> -			EDMA_CERR : EDMA64_CERR);
+> -	edma->regs.ssrt = edma->membase + ((edma->version == v1) ?
+> -			EDMA_SSRT : EDMA64_SSRT);
+> -	edma->regs.cdne = edma->membase + ((edma->version == v1) ?
+> -			EDMA_CDNE : EDMA64_CDNE);
+> -	edma->regs.intl = edma->membase + ((edma->version == v1) ?
+> -			EDMA_INTR : EDMA64_INTL);
+> -	edma->regs.errl = edma->membase + ((edma->version == v1) ?
+> -			EDMA_ERR : EDMA64_ERRL);
+> +	edma->regs.serq = edma->membase + ((edma->version == v2) ?
+> +			EDMA64_SERQ : EDMA_SERQ);
+> +	edma->regs.cerq = edma->membase + ((edma->version == v2) ?
+> +			EDMA64_CERQ : EDMA_CERQ);
+> +	edma->regs.seei = edma->membase + ((edma->version == v2) ?
+> +			EDMA64_SEEI : EDMA_SEEI);
+> +	edma->regs.ceei = edma->membase + ((edma->version == v2) ?
+> +			EDMA64_CEEI : EDMA_CEEI);
+> +	edma->regs.cint = edma->membase + ((edma->version == v2) ?
+> +			EDMA64_CINT : EDMA_CINT);
+> +	edma->regs.cerr = edma->membase + ((edma->version == v2) ?
+> +			EDMA64_CERR : EDMA_CERR);
+> +	edma->regs.ssrt = edma->membase + ((edma->version == v2) ?
+> +			EDMA64_SSRT : EDMA_SSRT);
+> +	edma->regs.cdne = edma->membase + ((edma->version == v2) ?
+> +			EDMA64_CDNE : EDMA_CDNE);
+> +	edma->regs.intl = edma->membase + ((edma->version == v2) ?
+> +			EDMA64_INTL : EDMA_INTR);
+> +	edma->regs.errl = edma->membase + ((edma->version == v2) ?
+> +			EDMA64_ERRL : EDMA_ERR);
 
-...things like this...
-
-> @@ -264,7 +334,11 @@ static int fsl_edma_probe(struct platform_device *pdev)
->  	}
->  
->  	edma_writel(fsl_edma, ~0, regs->intl);
-> -	ret = fsl_edma_irq_init(pdev, fsl_edma);
-> +
-> +	if (fsl_edma->version == v3)
-> +		ret = fsl_edma2_irq_init(pdev, fsl_edma);
-> +	else
-> +		ret = fsl_edma_irq_init(pdev, fsl_edma);
-
-...and this one in that struct rather than littering the code more and
-more with such version tests.
+Following to what I have said to 6/7 you can put the register offsets
+into that new struct aswell.
 
 Sascha
 
