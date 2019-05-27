@@ -2,85 +2,103 @@ Return-Path: <SRS0=g0X/=T3=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,T_DKIMWL_WL_HIGH,
-	USER_AGENT_MUTT autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=unavailable
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E56F0C04AB3
-	for <dmaengine@archiver.kernel.org>; Mon, 27 May 2019 13:27:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9D9F9C04AB3
+	for <dmaengine@archiver.kernel.org>; Mon, 27 May 2019 20:15:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id AE11120883
-	for <dmaengine@archiver.kernel.org>; Mon, 27 May 2019 13:27:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1558963665;
-	bh=5LGQZbcDiGADtRy7nX7CzuVlxf33jXUOVsnEJ3zPY0c=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:List-ID:From;
-	b=UM0ycSQl0OuScU1gfB3T78fk8jMcpj4Uat85Zv5yBoOUjuGG3c4xLEVfUvinIhZew
-	 w5ZNFK3EnkVNlYtmpofb7pDMpTjvV3iajWa3FykEx3GKKeMEKaq0XMMudEh3J3JQdk
-	 slnTgyCdT5Em5vwdyie/piXNQX68ew3v6uNTtRcI=
+	by mail.kernel.org (Postfix) with ESMTP id 74E2F2133F
+	for <dmaengine@archiver.kernel.org>; Mon, 27 May 2019 20:15:23 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FxY8LQQd"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726476AbfE0N1p (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 27 May 2019 09:27:45 -0400
-Received: from mail.kernel.org ([198.145.29.99]:34176 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726264AbfE0N1p (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Mon, 27 May 2019 09:27:45 -0400
-Received: from localhost (unknown [171.61.91.186])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id ED6842075E;
-        Mon, 27 May 2019 13:27:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1558963664;
-        bh=5LGQZbcDiGADtRy7nX7CzuVlxf33jXUOVsnEJ3zPY0c=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=uUXx9qkdl3PVY7xkVd58jgCJb3Lp8OiMlxFqQAZ1sXvFApYBGITyi/UALTTG1JNUy
-         b4OWejyk5gOFmczJsWLyvzX/xMHkG9aA+Gs4E2Yyer9SEsRVyYUwwjJhI9jtNeZVmJ
-         yENXghH6AMpxYO/JJtw0k+PYaBdMKfJNOOojTcVI=
-Date:   Mon, 27 May 2019 18:57:39 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Weitao Hou <houweitaoo@gmail.com>
-Cc:     dan.j.williams@intel.com, mcoquelin.stm32@gmail.com,
-        alexandre.torgue@st.com, dmaengine@vger.kernel.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] dmaengine: use to_platform_device()
-Message-ID: <20190527132739.GJ15118@vkoul-mobl>
-References: <20190526071324.15307-1-houweitaoo@gmail.com>
- <20190527064303.GG15118@vkoul-mobl>
- <CAK98mP9teTxZn9mMZ_yXSmC7h8gimgN14kX=GT0Q43O58zC-rw@mail.gmail.com>
+        id S1726839AbfE0UPT (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 27 May 2019 16:15:19 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:42450 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727351AbfE0UPP (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Mon, 27 May 2019 16:15:15 -0400
+Received: by mail-wr1-f66.google.com with SMTP id l2so17878402wrb.9;
+        Mon, 27 May 2019 13:15:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=kX1q8iX0X4303ErWm6lM+rRst5YhXcgIu4cEhOJHl1c=;
+        b=FxY8LQQd0PZVApVNIF+eHR5wYvbPUxCZAA5A1YZjzxZ7eM+eWerTJam3mrqVRMSYEe
+         kjQ95H/YeXQ5HdiiMDBshV81jYgwBpgEeL91TdAz4p581fj0KHLbyS8rsxUOT7otLd30
+         e6smxAcZcGyyn7sz48eglWl86Bi/FVXnKEVshr8jJmsrq9IjhRrH72GEjl3QVGs9CWJx
+         ZmjZ0AHJtrC4BLATXmkTn9OSa1I5Tmu1asg90LTaKMM9XR4Jf1ICtMFyaxDhaNYj4asi
+         XWq3Z3bmBcUaryPHRrI7hrdP+mlKPzlZ1YG+/95rZnfrgMQzQjgik4vvFEDar/OPe0Z2
+         HO0g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=kX1q8iX0X4303ErWm6lM+rRst5YhXcgIu4cEhOJHl1c=;
+        b=s+F6/2aQfQw1IyM1Tpu2EMQU8v+kp6THj9ok5f3TObH9L5f/lLYimA0roHtgb5x6PB
+         p07JHGuMt5t85rpb6VQNy+BVOurSKPvXFn35AesVMuZuI01uVzxIDMjt3TNBzE6HogYO
+         hho6eCHZOSpG5Bk5eowZp3lsNKJg3Wgd5EO7xwm65MA830OEM4nn9SFplZ8CF4N5TxVa
+         TGntD7m3CIogYVr2zniteJ1h550xWoKxPspmfk57uhp8M4PKFeEE3eYMVb4V23WjbM97
+         MZiyMVUFXsw89ABwQoYCJpfyRGZQNOx0u/WV1bTW+/JCuNoPiJOMLSbMITFeEBd4xMCC
+         21Cw==
+X-Gm-Message-State: APjAAAXbbB3tslpEdPfAZjL8pw393XqayeA3nemIKGXF/+VzigpLYGoj
+        sQHLTep1nczPQOxaVSHwdrY=
+X-Google-Smtp-Source: APXvYqw43Ws45Qhr7xAS6WK8q2QHHFf0KA8NC8Pf9gwKYfj+j7tHTjZkvjaposYHAiD6VDUxbsNV/w==
+X-Received: by 2002:adf:f2c2:: with SMTP id d2mr1885143wrp.153.1558988113583;
+        Mon, 27 May 2019 13:15:13 -0700 (PDT)
+Received: from localhost.localdomain ([2a01:e0a:1f1:d0f0::4e2b:d7ca])
+        by smtp.gmail.com with ESMTPSA id i27sm347146wmb.16.2019.05.27.13.15.12
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 27 May 2019 13:15:12 -0700 (PDT)
+From:   =?UTF-8?q?Cl=C3=A9ment=20P=C3=A9ron?= <peron.clem@gmail.com>
+To:     Vinod Koul <vkoul@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Maxime Ripard <maxime.ripard@bootlin.com>,
+        Chen-Yu Tsai <wens@csie.org>,
+        Dan Williams <dan.j.williams@intel.com>
+Cc:     dmaengine@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        =?UTF-8?q?Cl=C3=A9ment=20P=C3=A9ron?= <peron.clem@gmail.com>
+Subject: [PATCH v3 7/7] arm64: defconfig: enable Allwinner DMA drivers
+Date:   Mon, 27 May 2019 22:14:59 +0200
+Message-Id: <20190527201459.20130-8-peron.clem@gmail.com>
+X-Mailer: git-send-email 2.20.1
+In-Reply-To: <20190527201459.20130-1-peron.clem@gmail.com>
+References: <20190527201459.20130-1-peron.clem@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAK98mP9teTxZn9mMZ_yXSmC7h8gimgN14kX=GT0Q43O58zC-rw@mail.gmail.com>
-User-Agent: Mutt/1.11.3 (2019-02-01)
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Hi Weitao,
+Allwinner sun6i DMA drivers is used on A64 and H6 boards.
 
-On 27-05-19, 21:10, Weitao Hou wrote:
-> Hi,Vinod
->     Need I add the stm32 driver tag and resend v2 patch?
+Enable it as a module.
 
-Please do not top post!
+Signed-off-by: Clément Péron <peron.clem@gmail.com>
+---
+ arch/arm64/configs/defconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-As below says, the patch is applied and I corrected the tag and added
-stm32 while applying, so no change or v2 required.
-
-> Vinod Koul <vkoul@kernel.org> 于2019年5月27日周一 下午2:43写道：
-> 
-> > On 26-05-19, 15:13, Weitao Hou wrote:
-> > > Use to_platform_device() instead of open-coding it.
-> >
-> > Applied after adding stm32 driver tag, thanks
-> >
-> > --
-> > ~Vinod
-> >
-
+diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
+index 4d583514258c..b535f0f412cc 100644
+--- a/arch/arm64/configs/defconfig
++++ b/arch/arm64/configs/defconfig
+@@ -614,6 +614,7 @@ CONFIG_RTC_DRV_IMX_SC=m
+ CONFIG_RTC_DRV_XGENE=y
+ CONFIG_DMADEVICES=y
+ CONFIG_DMA_BCM2835=m
++CONFIG_DMA_SUN6I=m
+ CONFIG_K3_DMA=y
+ CONFIG_MV_XOR=y
+ CONFIG_MV_XOR_V2=y
 -- 
-~Vinod
+2.20.1
+
