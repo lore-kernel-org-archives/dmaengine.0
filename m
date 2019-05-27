@@ -4,29 +4,30 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-9.0 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
+	URIBL_BLOCKED,USER_AGENT_GIT autolearn=unavailable autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D62E2C07542
-	for <dmaengine@archiver.kernel.org>; Mon, 27 May 2019 08:50:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 40064C07542
+	for <dmaengine@archiver.kernel.org>; Mon, 27 May 2019 08:50:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id B8D172173C
-	for <dmaengine@archiver.kernel.org>; Mon, 27 May 2019 08:50:32 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1E1352173C
+	for <dmaengine@archiver.kernel.org>; Mon, 27 May 2019 08:50:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726757AbfE0Iub (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 27 May 2019 04:50:31 -0400
-Received: from inva021.nxp.com ([92.121.34.21]:53394 "EHLO inva021.nxp.com"
+        id S1726400AbfE0IuE (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 27 May 2019 04:50:04 -0400
+Received: from inva021.nxp.com ([92.121.34.21]:53230 "EHLO inva021.nxp.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726654AbfE0IuH (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Mon, 27 May 2019 04:50:07 -0400
+        id S1725869AbfE0IuE (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Mon, 27 May 2019 04:50:04 -0400
 Received: from inva021.nxp.com (localhost [127.0.0.1])
-        by inva021.eu-rdc02.nxp.com (Postfix) with ESMTP id D28BD200079;
-        Mon, 27 May 2019 10:50:05 +0200 (CEST)
+        by inva021.eu-rdc02.nxp.com (Postfix) with ESMTP id 1CC0E200B08;
+        Mon, 27 May 2019 10:50:03 +0200 (CEST)
 Received: from invc005.ap-rdc01.nxp.com (invc005.ap-rdc01.nxp.com [165.114.16.14])
-        by inva021.eu-rdc02.nxp.com (Postfix) with ESMTP id 2A179200AF0;
-        Mon, 27 May 2019 10:50:00 +0200 (CEST)
+        by inva021.eu-rdc02.nxp.com (Postfix) with ESMTP id 6B87C200AF4;
+        Mon, 27 May 2019 10:49:57 +0200 (CEST)
 Received: from localhost.localdomain (mega.ap.freescale.net [10.192.208.232])
-        by invc005.ap-rdc01.nxp.com (Postfix) with ESMTP id B2FD7402FB;
-        Mon, 27 May 2019 16:49:52 +0800 (SGT)
+        by invc005.ap-rdc01.nxp.com (Postfix) with ESMTP id 288B4402F1;
+        Mon, 27 May 2019 16:49:50 +0800 (SGT)
 From:   yibin.gong@nxp.com
 To:     robh@kernel.org, shawnguo@kernel.org, s.hauer@pengutronix.de,
         festevam@gmail.com, mark.rutland@arm.com, vkoul@kernel.org,
@@ -34,9 +35,9 @@ To:     robh@kernel.org, shawnguo@kernel.org, s.hauer@pengutronix.de,
 Cc:     linux-imx@nxp.com, linux-arm-kernel@lists.infradead.org,
         linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org,
         devicetree@vger.kernel.org, kernel@pengutronix.de
-Subject: [PATCH v2 4/7] dmaengine: fsl-edma-common: version check for v2 instead
-Date:   Mon, 27 May 2019 16:51:15 +0800
-Message-Id: <20190527085118.40423-5-yibin.gong@nxp.com>
+Subject: [PATCH v2 2/7] dmaengine: mcf-edma: update to 'dmamux_nr'
+Date:   Mon, 27 May 2019 16:51:13 +0800
+Message-Id: <20190527085118.40423-3-yibin.gong@nxp.com>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20190527085118.40423-1-yibin.gong@nxp.com>
 References: <20190527085118.40423-1-yibin.gong@nxp.com>
@@ -48,65 +49,40 @@ X-Mailing-List: dmaengine@vger.kernel.org
 
 From: Robin Gong <yibin.gong@nxp.com>
 
-The next v3 i.mx7ulp edma is based on v1, so change version
-check logic for v2 instead.
+Update to 'dmamux_nr' instead of static macro DMAMUX_NR since
+new version edma only has one dmamux.
 
 Signed-off-by: Robin Gong <yibin.gong@nxp.com>
 ---
- drivers/dma/fsl-edma-common.c | 40 ++++++++++++++++++++--------------------
- 1 file changed, 20 insertions(+), 20 deletions(-)
+ drivers/dma/fsl-edma-common.c | 2 +-
+ drivers/dma/mcf-edma.c        | 1 +
+ 2 files changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/dma/fsl-edma-common.c b/drivers/dma/fsl-edma-common.c
-index bb24251..45d70d3 100644
+index 680b2a0..c9a17fc 100644
 --- a/drivers/dma/fsl-edma-common.c
 +++ b/drivers/dma/fsl-edma-common.c
-@@ -657,26 +657,26 @@ void fsl_edma_setup_regs(struct fsl_edma_engine *edma)
- 	edma->regs.erql = edma->membase + EDMA_ERQ;
- 	edma->regs.eeil = edma->membase + EDMA_EEI;
+@@ -84,7 +84,7 @@ void fsl_edma_chan_mux(struct fsl_edma_chan *fsl_chan,
+ 	void __iomem *muxaddr;
+ 	unsigned int chans_per_mux, ch_off;
  
--	edma->regs.serq = edma->membase + ((edma->version == v1) ?
--			EDMA_SERQ : EDMA64_SERQ);
--	edma->regs.cerq = edma->membase + ((edma->version == v1) ?
--			EDMA_CERQ : EDMA64_CERQ);
--	edma->regs.seei = edma->membase + ((edma->version == v1) ?
--			EDMA_SEEI : EDMA64_SEEI);
--	edma->regs.ceei = edma->membase + ((edma->version == v1) ?
--			EDMA_CEEI : EDMA64_CEEI);
--	edma->regs.cint = edma->membase + ((edma->version == v1) ?
--			EDMA_CINT : EDMA64_CINT);
--	edma->regs.cerr = edma->membase + ((edma->version == v1) ?
--			EDMA_CERR : EDMA64_CERR);
--	edma->regs.ssrt = edma->membase + ((edma->version == v1) ?
--			EDMA_SSRT : EDMA64_SSRT);
--	edma->regs.cdne = edma->membase + ((edma->version == v1) ?
--			EDMA_CDNE : EDMA64_CDNE);
--	edma->regs.intl = edma->membase + ((edma->version == v1) ?
--			EDMA_INTR : EDMA64_INTL);
--	edma->regs.errl = edma->membase + ((edma->version == v1) ?
--			EDMA_ERR : EDMA64_ERRL);
-+	edma->regs.serq = edma->membase + ((edma->version == v2) ?
-+			EDMA64_SERQ : EDMA_SERQ);
-+	edma->regs.cerq = edma->membase + ((edma->version == v2) ?
-+			EDMA64_CERQ : EDMA_CERQ);
-+	edma->regs.seei = edma->membase + ((edma->version == v2) ?
-+			EDMA64_SEEI : EDMA_SEEI);
-+	edma->regs.ceei = edma->membase + ((edma->version == v2) ?
-+			EDMA64_CEEI : EDMA_CEEI);
-+	edma->regs.cint = edma->membase + ((edma->version == v2) ?
-+			EDMA64_CINT : EDMA_CINT);
-+	edma->regs.cerr = edma->membase + ((edma->version == v2) ?
-+			EDMA64_CERR : EDMA_CERR);
-+	edma->regs.ssrt = edma->membase + ((edma->version == v2) ?
-+			EDMA64_SSRT : EDMA_SSRT);
-+	edma->regs.cdne = edma->membase + ((edma->version == v2) ?
-+			EDMA64_CDNE : EDMA_CDNE);
-+	edma->regs.intl = edma->membase + ((edma->version == v2) ?
-+			EDMA64_INTL : EDMA_INTR);
-+	edma->regs.errl = edma->membase + ((edma->version == v2) ?
-+			EDMA64_ERRL : EDMA_ERR);
+-	chans_per_mux = fsl_chan->edma->n_chans / DMAMUX_NR;
++	chans_per_mux = fsl_chan->edma->n_chans / fsl_chan->edma->dmamux_nr;
+ 	ch_off = fsl_chan->vchan.chan.chan_id % chans_per_mux;
+ 	muxaddr = fsl_chan->edma->muxbase[ch / chans_per_mux];
+ 	slot = EDMAMUX_CHCFG_SOURCE(slot);
+diff --git a/drivers/dma/mcf-edma.c b/drivers/dma/mcf-edma.c
+index 7de54b2f..4484190 100644
+--- a/drivers/dma/mcf-edma.c
++++ b/drivers/dma/mcf-edma.c
+@@ -189,6 +189,7 @@ static int mcf_edma_probe(struct platform_device *pdev)
  
- 	if (edma->version == v2) {
- 		edma->regs.erqh = edma->membase + EDMA64_ERQH;
+ 	/* Set up version for ColdFire edma */
+ 	mcf_edma->version = v2;
++	mcf_edma->dmamux_nr = DMAMUX_NR;
+ 	mcf_edma->big_endian = 1;
+ 
+ 	if (!mcf_edma->n_chans) {
 -- 
 2.7.4
 
