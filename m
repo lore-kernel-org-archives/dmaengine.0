@@ -2,165 +2,131 @@ Return-Path: <SRS0=pYiH=T5=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,T_DKIMWL_WL_HIGH,URIBL_BLOCKED,
-	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.0 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 72B35C04AB3
-	for <dmaengine@archiver.kernel.org>; Wed, 29 May 2019 08:37:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8120EC28CC0
+	for <dmaengine@archiver.kernel.org>; Wed, 29 May 2019 09:07:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 39EC12081C
-	for <dmaengine@archiver.kernel.org>; Wed, 29 May 2019 08:37:41 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b="vw9UGOUw"
+	by mail.kernel.org (Postfix) with ESMTP id 64CA220665
+	for <dmaengine@archiver.kernel.org>; Wed, 29 May 2019 09:07:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725948AbfE2Ihk (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 29 May 2019 04:37:40 -0400
-Received: from fllv0016.ext.ti.com ([198.47.19.142]:47626 "EHLO
-        fllv0016.ext.ti.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725917AbfE2Ihk (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Wed, 29 May 2019 04:37:40 -0400
-Received: from lelv0266.itg.ti.com ([10.180.67.225])
-        by fllv0016.ext.ti.com (8.15.2/8.15.2) with ESMTP id x4T8b6G2013179;
-        Wed, 29 May 2019 03:37:06 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
-        s=ti-com-17Q1; t=1559119026;
-        bh=wv91vppiNCnts7PhrSMc8dj3+Ppj0UtKwTnbDQl9lhk=;
-        h=From:To:CC:Subject:Date;
-        b=vw9UGOUw3GL067S3a3vkN2D8vXKQ97o7XT3kTKt+6NWSCnOpRGkNdOIkc4VlPg84a
-         iiVqyV5Nv0ZXiPpT+c0VjI8XVoquL6wD/iWJXHUtLXRGoFa3+wncp3PMqo+6oXE3Wc
-         OstYcNZOLrt1zoqARLJtgmXiJNZvJMUhTqv1wNvk=
-Received: from DLEE100.ent.ti.com (dlee100.ent.ti.com [157.170.170.30])
-        by lelv0266.itg.ti.com (8.15.2/8.15.2) with ESMTPS id x4T8b56A092333
-        (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
-        Wed, 29 May 2019 03:37:05 -0500
-Received: from DLEE106.ent.ti.com (157.170.170.36) by DLEE100.ent.ti.com
- (157.170.170.30) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1713.5; Wed, 29
- May 2019 03:37:04 -0500
-Received: from lelv0327.itg.ti.com (10.180.67.183) by DLEE106.ent.ti.com
- (157.170.170.36) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1713.5 via
- Frontend Transport; Wed, 29 May 2019 03:37:04 -0500
-Received: from feketebors.ti.com (ileax41-snat.itg.ti.com [10.172.224.153])
-        by lelv0327.itg.ti.com (8.15.2/8.15.2) with ESMTP id x4T8b2EV072804;
-        Wed, 29 May 2019 03:37:03 -0500
-From:   Peter Ujfalusi <peter.ujfalusi@ti.com>
-To:     <vkoul@kernel.org>
-CC:     <dan.j.williams@intel.com>, <dmaengine@vger.kernel.org>,
-        <andriy.shevchenko@linux.intel.com>
-Subject: [PATCH] dmaengine: dmatest: Add support for completion polling
-Date:   Wed, 29 May 2019 11:37:24 +0300
-Message-ID: <20190529083724.18182-1-peter.ujfalusi@ti.com>
-X-Mailer: git-send-email 2.21.0
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-EXCLAIMER-MD-CONFIG: e1e8a2fd-e40a-4ac6-ac9b-f7e9cc9ee180
+        id S1726254AbfE2JHM (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 29 May 2019 05:07:12 -0400
+Received: from inva020.nxp.com ([92.121.34.13]:47846 "EHLO inva020.nxp.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725956AbfE2JHL (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Wed, 29 May 2019 05:07:11 -0400
+Received: from inva020.nxp.com (localhost [127.0.0.1])
+        by inva020.eu-rdc02.nxp.com (Postfix) with ESMTP id EC31B1A025A;
+        Wed, 29 May 2019 11:07:08 +0200 (CEST)
+Received: from invc005.ap-rdc01.nxp.com (invc005.ap-rdc01.nxp.com [165.114.16.14])
+        by inva020.eu-rdc02.nxp.com (Postfix) with ESMTP id 4608A1A11C4;
+        Wed, 29 May 2019 11:07:03 +0200 (CEST)
+Received: from localhost.localdomain (mega.ap.freescale.net [10.192.208.232])
+        by invc005.ap-rdc01.nxp.com (Postfix) with ESMTP id 07158402F1;
+        Wed, 29 May 2019 17:06:55 +0800 (SGT)
+From:   yibin.gong@nxp.com
+To:     robh@kernel.org, shawnguo@kernel.org, s.hauer@pengutronix.de,
+        festevam@gmail.com, mark.rutland@arm.com, vkoul@kernel.org,
+        dan.j.williams@intel.com
+Cc:     linux-imx@nxp.com, linux-arm-kernel@lists.infradead.org,
+        linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org,
+        devicetree@vger.kernel.org, kernel@pengutronix.de
+Subject: [PATCH v3 1/8] dmaengine: fsl-edma: add dmamux_nr for next version
+Date:   Wed, 29 May 2019 17:08:41 +0800
+Message-Id: <20190529090848.34350-2-yibin.gong@nxp.com>
+X-Mailer: git-send-email 2.17.1
+In-Reply-To: <20190529090848.34350-1-yibin.gong@nxp.com>
+References: <20190529090848.34350-1-yibin.gong@nxp.com>
+X-Virus-Scanned: ClamAV using ClamSMTP
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-With the polled parameter the DMA drivers can be tested if they can work
-correctly when no completion is requested (no DMA_PREP_INTERRUPT and no
-callback is provided).
+From: Robin Gong <yibin.gong@nxp.com>
 
-If polled mode is selected then use dma_sync_wait() to execute the test
-iteration instead of relying on the completion callback.
+Next version of edma such as edmav2 on i.mx7ulp has only one dmamux.
+Add dmamux_nr instead of static macro define 'DMAMUX_NR'. No any
+function change here.
 
-Signed-off-by: Peter Ujfalusi <peter.ujfalusi@ti.com>
+Signed-off-by: Robin Gong <yibin.gong@nxp.com>
 ---
- drivers/dma/dmatest.c | 35 ++++++++++++++++++++++++++++-------
- 1 file changed, 28 insertions(+), 7 deletions(-)
+ drivers/dma/fsl-edma-common.h |  1 +
+ drivers/dma/fsl-edma.c        | 11 ++++++-----
+ 2 files changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/dma/dmatest.c b/drivers/dma/dmatest.c
-index b96814a7dceb..088086d041e9 100644
---- a/drivers/dma/dmatest.c
-+++ b/drivers/dma/dmatest.c
-@@ -75,6 +75,10 @@ static bool norandom;
- module_param(norandom, bool, 0644);
- MODULE_PARM_DESC(norandom, "Disable random offset setup (default: random)");
+diff --git a/drivers/dma/fsl-edma-common.h b/drivers/dma/fsl-edma-common.h
+index c53f76e..21a9cfd 100644
+--- a/drivers/dma/fsl-edma-common.h
++++ b/drivers/dma/fsl-edma-common.h
+@@ -145,6 +145,7 @@ struct fsl_edma_engine {
+ 	void __iomem		*membase;
+ 	void __iomem		*muxbase[DMAMUX_NR];
+ 	struct clk		*muxclk[DMAMUX_NR];
++	u32			dmamux_nr;
+ 	struct mutex		fsl_edma_mutex;
+ 	u32			n_chans;
+ 	int			txirq;
+diff --git a/drivers/dma/fsl-edma.c b/drivers/dma/fsl-edma.c
+index d641ef8..7b65ef4 100644
+--- a/drivers/dma/fsl-edma.c
++++ b/drivers/dma/fsl-edma.c
+@@ -96,7 +96,7 @@ static struct dma_chan *fsl_edma_xlate(struct of_phandle_args *dma_spec,
+ 	struct fsl_edma_engine *fsl_edma = ofdma->of_dma_data;
+ 	struct dma_chan *chan, *_chan;
+ 	struct fsl_edma_chan *fsl_chan;
+-	unsigned long chans_per_mux = fsl_edma->n_chans / DMAMUX_NR;
++	unsigned long chans_per_mux = fsl_edma->n_chans / fsl_edma->dmamux_nr;
  
-+static bool polled;
-+module_param(polled, bool, S_IRUGO | S_IWUSR);
-+MODULE_PARM_DESC(polled, "Use polling for completion instead of interrupts");
-+
- static bool verbose;
- module_param(verbose, bool, S_IRUGO | S_IWUSR);
- MODULE_PARM_DESC(verbose, "Enable \"success\" result messages (default: off)");
-@@ -113,6 +117,7 @@ struct dmatest_params {
- 	bool		norandom;
- 	int		alignment;
- 	unsigned int	transfer_size;
-+	bool		polled;
- };
+ 	if (dma_spec->args_count != 2)
+ 		return NULL;
+@@ -206,6 +206,7 @@ static int fsl_edma_probe(struct platform_device *pdev)
+ 		return -ENOMEM;
  
- /**
-@@ -654,7 +659,10 @@ static int dmatest_func(void *data)
- 	/*
- 	 * src and dst buffers are freed by ourselves below
- 	 */
--	flags = DMA_CTRL_ACK | DMA_PREP_INTERRUPT;
-+	if (params->polled)
-+		flags = DMA_CTRL_ACK;
-+	else
-+		flags = DMA_CTRL_ACK | DMA_PREP_INTERRUPT;
+ 	fsl_edma->version = v1;
++	fsl_edma->dmamux_nr = DMAMUX_NR;
+ 	fsl_edma->n_chans = chans;
+ 	mutex_init(&fsl_edma->fsl_edma_mutex);
  
- 	ktime = ktime_get();
- 	while (!kthread_should_stop()
-@@ -783,8 +791,10 @@ static int dmatest_func(void *data)
- 		}
+@@ -217,7 +218,7 @@ static int fsl_edma_probe(struct platform_device *pdev)
+ 	fsl_edma_setup_regs(fsl_edma);
+ 	regs = &fsl_edma->regs;
  
- 		done->done = false;
--		tx->callback = dmatest_callback;
--		tx->callback_param = done;
-+		if (!params->polled) {
-+			tx->callback = dmatest_callback;
-+			tx->callback_param = done;
-+		}
- 		cookie = tx->tx_submit(tx);
+-	for (i = 0; i < DMAMUX_NR; i++) {
++	for (i = 0; i < fsl_edma->dmamux_nr; i++) {
+ 		char clkname[32];
  
- 		if (dma_submit_error(cookie)) {
-@@ -793,12 +803,22 @@ static int dmatest_func(void *data)
- 			msleep(100);
- 			goto error_unmap_continue;
- 		}
--		dma_async_issue_pending(chan);
+ 		res = platform_get_resource(pdev, IORESOURCE_MEM, 1 + i);
+@@ -295,7 +296,7 @@ static int fsl_edma_probe(struct platform_device *pdev)
+ 	if (ret) {
+ 		dev_err(&pdev->dev,
+ 			"Can't register Freescale eDMA engine. (%d)\n", ret);
+-		fsl_disable_clocks(fsl_edma, DMAMUX_NR);
++		fsl_disable_clocks(fsl_edma, fsl_edma->dmamux_nr);
+ 		return ret;
+ 	}
  
--		wait_event_freezable_timeout(thread->done_wait, done->done,
--					     msecs_to_jiffies(params->timeout));
-+		if (params->polled) {
-+			status = dma_sync_wait(chan, cookie);
-+			dmaengine_terminate_sync(chan);
-+			if (status == DMA_COMPLETE)
-+				done->done = true;
-+		} else {
-+			dma_async_issue_pending(chan);
-+
-+			wait_event_freezable_timeout(thread->done_wait,
-+					done->done,
-+					msecs_to_jiffies(params->timeout));
+@@ -304,7 +305,7 @@ static int fsl_edma_probe(struct platform_device *pdev)
+ 		dev_err(&pdev->dev,
+ 			"Can't register Freescale eDMA of_dma. (%d)\n", ret);
+ 		dma_async_device_unregister(&fsl_edma->dma_dev);
+-		fsl_disable_clocks(fsl_edma, DMAMUX_NR);
++		fsl_disable_clocks(fsl_edma, fsl_edma->dmamux_nr);
+ 		return ret;
+ 	}
  
--		status = dma_async_is_tx_complete(chan, cookie, NULL, NULL);
-+			status = dma_async_is_tx_complete(chan, cookie, NULL,
-+							  NULL);
-+		}
+@@ -323,7 +324,7 @@ static int fsl_edma_remove(struct platform_device *pdev)
+ 	fsl_edma_cleanup_vchan(&fsl_edma->dma_dev);
+ 	of_dma_controller_free(np);
+ 	dma_async_device_unregister(&fsl_edma->dma_dev);
+-	fsl_disable_clocks(fsl_edma, DMAMUX_NR);
++	fsl_disable_clocks(fsl_edma, fsl_edma->dmamux_nr);
  
- 		if (!done->done) {
- 			result("test timed out", total_tests, src->off, dst->off,
-@@ -1068,6 +1088,7 @@ static void add_threaded_test(struct dmatest_info *info)
- 	params->norandom = norandom;
- 	params->alignment = alignment;
- 	params->transfer_size = transfer_size;
-+	params->polled = polled;
- 
- 	request_channels(info, DMA_MEMCPY);
- 	request_channels(info, DMA_MEMSET);
+ 	return 0;
+ }
 -- 
-Peter
-
-Texas Instruments Finland Oy, Porkkalankatu 22, 00180 Helsinki.
-Y-tunnus/Business ID: 0615521-4. Kotipaikka/Domicile: Helsinki
+2.7.4
 
