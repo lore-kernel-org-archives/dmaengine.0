@@ -2,90 +2,123 @@ Return-Path: <SRS0=pYiH=T5=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.0 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=unavailable autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=unavailable
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E5694C28CC0
-	for <dmaengine@archiver.kernel.org>; Wed, 29 May 2019 09:07:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A0E29C28CC0
+	for <dmaengine@archiver.kernel.org>; Wed, 29 May 2019 21:45:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id AD66A2054F
-	for <dmaengine@archiver.kernel.org>; Wed, 29 May 2019 09:07:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 797612423A
+	for <dmaengine@archiver.kernel.org>; Wed, 29 May 2019 21:45:24 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PNLKJhpe"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725987AbfE2JHK (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 29 May 2019 05:07:10 -0400
-Received: from inva020.nxp.com ([92.121.34.13]:47806 "EHLO inva020.nxp.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725861AbfE2JHK (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Wed, 29 May 2019 05:07:10 -0400
-Received: from inva020.nxp.com (localhost [127.0.0.1])
-        by inva020.eu-rdc02.nxp.com (Postfix) with ESMTP id A6D841A0006;
-        Wed, 29 May 2019 11:07:07 +0200 (CEST)
-Received: from invc005.ap-rdc01.nxp.com (invc005.ap-rdc01.nxp.com [165.114.16.14])
-        by inva020.eu-rdc02.nxp.com (Postfix) with ESMTP id F33EE1A03C1;
-        Wed, 29 May 2019 11:07:01 +0200 (CEST)
-Received: from localhost.localdomain (mega.ap.freescale.net [10.192.208.232])
-        by invc005.ap-rdc01.nxp.com (Postfix) with ESMTP id B97EE402E6;
-        Wed, 29 May 2019 17:06:54 +0800 (SGT)
-From:   yibin.gong@nxp.com
-To:     robh@kernel.org, shawnguo@kernel.org, s.hauer@pengutronix.de,
-        festevam@gmail.com, mark.rutland@arm.com, vkoul@kernel.org,
-        dan.j.williams@intel.com
-Cc:     linux-imx@nxp.com, linux-arm-kernel@lists.infradead.org,
-        linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org,
-        devicetree@vger.kernel.org, kernel@pengutronix.de
-Subject: [PATCH v3 0/8] add edma2 for i.mx7ulp
-Date:   Wed, 29 May 2019 17:08:40 +0800
-Message-Id: <20190529090848.34350-1-yibin.gong@nxp.com>
-X-Mailer: git-send-email 2.17.1
-X-Virus-Scanned: ClamAV using ClamSMTP
+        id S1726605AbfE2VpU (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 29 May 2019 17:45:20 -0400
+Received: from mail-io1-f68.google.com ([209.85.166.68]:44687 "EHLO
+        mail-io1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726311AbfE2VpT (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Wed, 29 May 2019 17:45:19 -0400
+Received: by mail-io1-f68.google.com with SMTP id f22so3201959iol.11;
+        Wed, 29 May 2019 14:45:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Xore5EbM1RPfaLGDfwvhBCS+nazjtQv0oHu+w4QdH3A=;
+        b=PNLKJhpev592jajRJweAd6ImF/wZIJ9YUIGUSqTBtUSiUhlTIrxrN9PmdrAhG1UvWU
+         2mYWvkBW+ZyalqKAWpjwq+jqOB2ozxHzr6Wqj9g4HvRwPNTApf19g+/t/19uu+gPHLpg
+         4D9Y2L7KYq0bI1IqIM6tZ0wbfPdXx8E4CE1Uk4lmADOuhgLg8fRHSakyWCPfq46H/CgF
+         M4MMxqZ7hgvadjj6JV+7mnaAenPGpQcwNi1Tux65omB4Ds1BCwcKWLalcwfz0Bc0wjjw
+         CqRmxnWABROB1QQRALB3mRl5Mkqr7MJZmzKhEIdJe5Xxuxnh9I9PaVv2wWsVSYpVVI0r
+         GiWQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Xore5EbM1RPfaLGDfwvhBCS+nazjtQv0oHu+w4QdH3A=;
+        b=s9Pi6bVX/rudiajGcM0Vjv9uleZnniQkNrchCYeJPzcSdCNvryO2x+F9qi+pQRnJYi
+         MhqZSgarKQSJRPjaY0F+rGybk/FS+Ez7c8lEbPGuKUYjTv3JKKRfiazJOOuV7JPiF2E5
+         0sLDbYXXvBriCm+PkBL1+2syADVb9Z4offkQ/IbX6gdLv4SbmxbsPUxG2cUJljQhM6Nj
+         8Aca3fijLyReUymrgxg5QhCiYbQKyYoogYMP067zPdRV/ToQC49T9Quqse773fkGdl+s
+         lz5FUUTkBAEEKrHFqPRtHKL7BtL1KJ8JBgZ9aUwupi7vWYhlEHr1dJPguy6oYhKegYbO
+         5fvg==
+X-Gm-Message-State: APjAAAVz/AN8Au0s89jnawaBkUoX/WdXtPL6grFn2RAuNEHX/Ooex3tx
+        V6KWUFvNrW2kF8zxgAnf4dI=
+X-Google-Smtp-Source: APXvYqyZrKJjM9qRtO2iSZD3sXsntg5OG3mNUdRz0cpJ9sP9DLJh3Rb6v5ULOHPHFoseVQFmAwXqZA==
+X-Received: by 2002:a6b:b7d5:: with SMTP id h204mr214015iof.188.1559166318332;
+        Wed, 29 May 2019 14:45:18 -0700 (PDT)
+Received: from localhost.localdomain ([94.29.35.141])
+        by smtp.gmail.com with ESMTPSA id n193sm259992itn.27.2019.05.29.14.45.16
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 29 May 2019 14:45:17 -0700 (PDT)
+From:   Dmitry Osipenko <digetx@gmail.com>
+To:     Laxman Dewangan <ldewangan@nvidia.com>,
+        Vinod Koul <vkoul@kernel.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Ben Dooks <ben.dooks@codethink.co.uk>
+Cc:     dmaengine@vger.kernel.org, linux-tegra@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH v1] dmaengine: tegra-apb: Error out if DMA_PREP_INTERRUPT flag is unset
+Date:   Thu, 30 May 2019 00:43:55 +0300
+Message-Id: <20190529214355.15339-1-digetx@gmail.com>
+X-Mailer: git-send-email 2.21.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-From: Robin Gong <yibin.gong@nxp.com>
+Apparently driver was never tested with DMA_PREP_INTERRUPT flag being
+unset since it completely disables interrupt handling instead of skipping
+the callbacks invocations, hence putting channel into unusable state.
 
-  This patch set add new version of edma for i.mx7ulp, the main changes
-are as belows:
-  1. only one dmamux.
-  2. another clock dma_clk except dmamux clk.
-  3. 16 independent interrupts instead of only one interrupt for
-     all channels.
-  For the first change, need modify fsl-edma-common.c and mcf-edma,
-so create the first two patches to prepare without any function impact.
-  For the third change, need request single irq for every channel with
-the legacy handler. But actually 2 dma channels share one interrupt(16
-channel interrupts, but 32 channels.),ch0/ch16,ch1/ch17... For now, just
-simply request irq without IRQF_SHARED flag, since 16 channels are enough
-on i.mx7ulp whose M4 domain own some peripherals.
+The flag is always set by all of kernel drivers that use APB DMA, so let's
+error out in otherwise case for consistency. It won't be difficult to
+support that case properly if ever will be needed.
 
-change from v1:
-  1. check .data of 'of_device_id' in probe instead of compatible name. 
+Signed-off-by: Dmitry Osipenko <digetx@gmail.com>
+---
+ drivers/dma/tegra20-apb-dma.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-change from v2:
-  1. move the difference between edma and edma2 into driver data so that
-     no need version checking in fsl-edma.c.
-
-Robin Gong (8):
-  dmaengine: fsl-edma: add dmamux_nr for next version
-  dmaengine: mcf-edma: update to 'dmamux_nr'
-  dmaengine: fsl-edma-common: move dmamux register to another single
-    function
-  dmaengine: fsl-edma-common: version check for v2 instead
-  dmaengine: fsl-edma: add drvdata for vf610
-  dt-bindings: dma: fsl-edma: add new i.mx7ulp-edma
-  dmaengine: fsl-edma: add i.mx7ulp edma2 version support
-  ARM: dts: imx7ulp: add edma device node
-
- Documentation/devicetree/bindings/dma/fsl-edma.txt |  44 +++++++-
- arch/arm/boot/dts/imx7ulp.dtsi                     |  28 ++++++
- drivers/dma/fsl-edma-common.c                      |  74 +++++++++-----
- drivers/dma/fsl-edma-common.h                      |  13 +++
- drivers/dma/fsl-edma.c                             | 112 ++++++++++++++++++---
- drivers/dma/mcf-edma.c                             |   1 +
- 6 files changed, 230 insertions(+), 42 deletions(-)
-
+diff --git a/drivers/dma/tegra20-apb-dma.c b/drivers/dma/tegra20-apb-dma.c
+index cf462b1abc0b..2c84a660ba36 100644
+--- a/drivers/dma/tegra20-apb-dma.c
++++ b/drivers/dma/tegra20-apb-dma.c
+@@ -988,8 +988,12 @@ static struct dma_async_tx_descriptor *tegra_dma_prep_slave_sg(
+ 		csr |= tdc->slave_id << TEGRA_APBDMA_CSR_REQ_SEL_SHIFT;
+ 	}
+ 
+-	if (flags & DMA_PREP_INTERRUPT)
++	if (flags & DMA_PREP_INTERRUPT) {
+ 		csr |= TEGRA_APBDMA_CSR_IE_EOC;
++	} else {
++		WARN_ON_ONCE(1);
++		return NULL;
++	}
+ 
+ 	apb_seq |= TEGRA_APBDMA_APBSEQ_WRAP_WORD_1;
+ 
+@@ -1131,8 +1135,12 @@ static struct dma_async_tx_descriptor *tegra_dma_prep_dma_cyclic(
+ 		csr |= tdc->slave_id << TEGRA_APBDMA_CSR_REQ_SEL_SHIFT;
+ 	}
+ 
+-	if (flags & DMA_PREP_INTERRUPT)
++	if (flags & DMA_PREP_INTERRUPT) {
+ 		csr |= TEGRA_APBDMA_CSR_IE_EOC;
++	} else {
++		WARN_ON_ONCE(1);
++		return NULL;
++	}
+ 
+ 	apb_seq |= TEGRA_APBDMA_APBSEQ_WRAP_WORD_1;
+ 
 -- 
-2.7.4
+2.21.0
 
