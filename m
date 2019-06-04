@@ -4,70 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-2.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,T_DKIMWL_WL_HIGH,
-	USER_AGENT_MUTT autolearn=unavailable autolearn_force=no version=3.4.0
+	USER_AGENT_MUTT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 495C1C282CE
-	for <dmaengine@archiver.kernel.org>; Tue,  4 Jun 2019 12:19:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9B15AC282CE
+	for <dmaengine@archiver.kernel.org>; Tue,  4 Jun 2019 12:30:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 2306724AD6
-	for <dmaengine@archiver.kernel.org>; Tue,  4 Jun 2019 12:19:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7210324107
+	for <dmaengine@archiver.kernel.org>; Tue,  4 Jun 2019 12:30:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1559650769;
-	bh=5mDhuWW9AhtrNyi3+kKWCarCqtJksnkX7XioSL9hjMQ=;
+	s=default; t=1559651435;
+	bh=IQ7Kg2HzTQ2nVL1MNKgIUyZrLVCbPoVX2ISWMBIj8I4=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:List-ID:From;
-	b=CPrXn2rslQyIONQ6yGqkqDtsD/da3rSHRJoR+hfDkVQV+tdau4YemipVievijaaNx
-	 RixIuVtGtxTjkLi5j30YuQgrYNlih/PNDwhlX8UBuIkKnuVdOWQ5UFH1tprpg8v5Fn
-	 MwxUHwoFuXQaaLOToNxMVydts++gacx8CgcUY454=
+	b=aPB4Yi6wTqKuwbUPcCypEnLl40Cs8E9QqN6e+zevogb0y5moSqT29evWBTGeN8ao+
+	 N+QwoezlFQPIQsMwSIz8gHmLPgiKSqExF78G/9rWx7qZbLy8FRZ5Njj+JCMWm4M7GF
+	 oHazMLmDgAadG0gUmK5z7QCupo6RZQI0d6mPPC6U=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727447AbfFDMTZ (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 4 Jun 2019 08:19:25 -0400
-Received: from mail.kernel.org ([198.145.29.99]:50728 "EHLO mail.kernel.org"
+        id S1727553AbfFDMae (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 4 Jun 2019 08:30:34 -0400
+Received: from mail.kernel.org ([198.145.29.99]:34126 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727377AbfFDMTY (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Tue, 4 Jun 2019 08:19:24 -0400
+        id S1726994AbfFDMae (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Tue, 4 Jun 2019 08:30:34 -0400
 Received: from localhost (unknown [117.99.94.117])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 8EC95247F9;
-        Tue,  4 Jun 2019 12:19:23 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 7020123E30;
+        Tue,  4 Jun 2019 12:30:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1559650764;
-        bh=5mDhuWW9AhtrNyi3+kKWCarCqtJksnkX7XioSL9hjMQ=;
+        s=default; t=1559651434;
+        bh=IQ7Kg2HzTQ2nVL1MNKgIUyZrLVCbPoVX2ISWMBIj8I4=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=vHCMyNsNztRQezlvHEmUk9aqrMCdYbMy0Mdyfos6pISt0WgXVGPcBTDQqAEruEflY
-         BsWnL1h5qIH90UBz4tpmenjYSZYYgFGgYl+y4rxhPf1geZsPdf6rX2Ld0JToHN7uvP
-         FaK2332k1zX7wk9PeLuoCWFNj79Ebqi+LQ1OZNeU=
-Date:   Tue, 4 Jun 2019 17:46:16 +0530
+        b=RByXCAjz6MKy9XaPkoAfY3JJSv/jA5nGvo7B0u1EPB4yqokCcdbqMPQgCfP9vt5jx
+         JYcJn785U/G5uDbglaMLhEAynzdMGuZalesc6mQ6vHUBYdVK54EKOXcYKSubBEMRkb
+         hA6TfYhxo9kFwbD+piVbfM8B/lCCh3uw7NuxFVd4=
+Date:   Tue, 4 Jun 2019 17:57:26 +0530
 From:   Vinod Koul <vkoul@kernel.org>
-To:     Dmitry Osipenko <digetx@gmail.com>
-Cc:     Laxman Dewangan <ldewangan@nvidia.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Ben Dooks <ben.dooks@codethink.co.uk>,
-        dmaengine@vger.kernel.org, linux-tegra@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v1] dmaengine: tegra-apb: Error out if DMA_PREP_INTERRUPT
- flag is unset
-Message-ID: <20190604121616.GX15118@vkoul-mobl>
-References: <20190529214355.15339-1-digetx@gmail.com>
+To:     =?iso-8859-1?Q?Cl=E9ment_P=E9ron?= <peron.clem@gmail.com>
+Cc:     Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Maxime Ripard <maxime.ripard@bootlin.com>,
+        Chen-Yu Tsai <wens@csie.org>,
+        Dan Williams <dan.j.williams@intel.com>,
+        dmaengine@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        Jernej Skrabec <jernej.skrabec@siol.net>,
+        Rob Herring <robh@kernel.org>
+Subject: Re: [PATCH v3 1/7] dt-bindings: arm64: allwinner: h6: Add binding
+ for DMA controller
+Message-ID: <20190604122726.GZ15118@vkoul-mobl>
+References: <20190527201459.20130-1-peron.clem@gmail.com>
+ <20190527201459.20130-2-peron.clem@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <20190529214355.15339-1-digetx@gmail.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20190527201459.20130-2-peron.clem@gmail.com>
 User-Agent: Mutt/1.11.3 (2019-02-01)
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On 30-05-19, 00:43, Dmitry Osipenko wrote:
-> Apparently driver was never tested with DMA_PREP_INTERRUPT flag being
-> unset since it completely disables interrupt handling instead of skipping
-> the callbacks invocations, hence putting channel into unusable state.
+On 27-05-19, 22:14, Clément Péron wrote:
+> From: Jernej Skrabec <jernej.skrabec@siol.net>
 > 
-> The flag is always set by all of kernel drivers that use APB DMA, so let's
-> error out in otherwise case for consistency. It won't be difficult to
-> support that case properly if ever will be needed.
+> DMA in H6 is similar to other DMA controller, except it is first which
+> supports more than 32 request sources and has 16 channels. It also needs
+> additional clock to be enabled.
+> 
 
 Applied, thanks
 
