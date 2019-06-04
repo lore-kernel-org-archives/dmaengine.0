@@ -7,38 +7,38 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	URIBL_BLOCKED,USER_AGENT_MUTT autolearn=unavailable autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 624FBC282CE
-	for <dmaengine@archiver.kernel.org>; Tue,  4 Jun 2019 12:31:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 214A5C282CE
+	for <dmaengine@archiver.kernel.org>; Tue,  4 Jun 2019 12:31:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 3C9CA23E30
-	for <dmaengine@archiver.kernel.org>; Tue,  4 Jun 2019 12:31:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id ECD6423F50
+	for <dmaengine@archiver.kernel.org>; Tue,  4 Jun 2019 12:31:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1559651480;
-	bh=dQ7XidRn8nhHn/npV7YYlxeNwNQENKUs3m0lmgeliLE=;
+	s=default; t=1559651509;
+	bh=h3div24HmIVR9PtYjSlq+KxcCbCX5aE7f1ApJlDDTyk=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:List-ID:From;
-	b=mdu7rW11GshR03GPWYOxX5I4iKK03QtqGXqqBIq/tPHKJc/ZFeYh6VgOOT+3Xwiel
-	 IeoEqZ2x3mDJ0zXf/e+sNqT3ybdC7lN1KrArH7ach1/hKhWISWmiEvLoLJxF6rYAvg
-	 0nM+pS0zuDZJZQwtBoquLckxVrp6GTFAegiH/KtM=
+	b=Kq022g9D32YEya77I52SGjNecpVTcw5nt84QR06carWpEGNykuNdKRgbeFgK5aUWL
+	 tFEAabjUia3pLHv5ero5Qb2aMbFxt/Jtk2YIxFDPnsdErHRLihjDByyI9EnvVQNSe6
+	 IjVv0i8RNwn61y0RJTj6DRMxokwKC5xXEz8egLt0=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727597AbfFDMbP (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 4 Jun 2019 08:31:15 -0400
-Received: from mail.kernel.org ([198.145.29.99]:35004 "EHLO mail.kernel.org"
+        id S1727860AbfFDMbo (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 4 Jun 2019 08:31:44 -0400
+Received: from mail.kernel.org ([198.145.29.99]:35774 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726994AbfFDMbP (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Tue, 4 Jun 2019 08:31:15 -0400
+        id S1727765AbfFDMbo (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Tue, 4 Jun 2019 08:31:44 -0400
 Received: from localhost (unknown [117.99.94.117])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 1AE7523E30;
-        Tue,  4 Jun 2019 12:31:13 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 046E023E30;
+        Tue,  4 Jun 2019 12:31:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1559651474;
-        bh=dQ7XidRn8nhHn/npV7YYlxeNwNQENKUs3m0lmgeliLE=;
+        s=default; t=1559651503;
+        bh=h3div24HmIVR9PtYjSlq+KxcCbCX5aE7f1ApJlDDTyk=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=g6aZDDwIwcsV7ZpXUF9p0gTbtl9CPtGGvvzmIFCtIicHutWFd7sAAmVCb6aG9CWee
-         vos9CObhCxqn8vC9hyUlPdDoPQl5eecau9dUJ62eZC51q3PE8jQx/weLKgMLjlMBCm
-         jfXgEdP2jI/RtE/Rjlm7hIQ7UDT4hG5P7qbz47oY=
-Date:   Tue, 4 Jun 2019 17:58:07 +0530
+        b=0iHCEsCi2jRHQpX3bGnLgzVuQriHjFLzEKW0HoXKI9BJWjxuVIDTlSGcW7ZZRFnBW
+         i9lVxPEyifVlZRAamSe45MAQtsRVjBC5C9PUvRKHB+ScYvwiKrSCGXby4zAmksUqN4
+         FhXUYKfUGEUtBuymOtXdUMVee98Th8ys0yMRMgC4=
+Date:   Tue, 4 Jun 2019 17:58:36 +0530
 From:   Vinod Koul <vkoul@kernel.org>
 To:     =?iso-8859-1?Q?Cl=E9ment_P=E9ron?= <peron.clem@gmail.com>
 Cc:     Rob Herring <robh+dt@kernel.org>,
@@ -49,16 +49,16 @@ Cc:     Rob Herring <robh+dt@kernel.org>,
         dmaengine@vger.kernel.org, devicetree@vger.kernel.org,
         linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
         Jernej Skrabec <jernej.skrabec@siol.net>
-Subject: Re: [PATCH v3 3/7] dmaengine: sun6i: Add a quirk for setting DRQ
+Subject: Re: [PATCH v3 4/7] dmaengine: sun6i: Add a quirk for setting mode
  fields
-Message-ID: <20190604122807.GB15118@vkoul-mobl>
+Message-ID: <20190604122836.GC15118@vkoul-mobl>
 References: <20190527201459.20130-1-peron.clem@gmail.com>
- <20190527201459.20130-4-peron.clem@gmail.com>
+ <20190527201459.20130-5-peron.clem@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20190527201459.20130-4-peron.clem@gmail.com>
+In-Reply-To: <20190527201459.20130-5-peron.clem@gmail.com>
 User-Agent: Mutt/1.11.3 (2019-02-01)
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
@@ -68,10 +68,10 @@ X-Mailing-List: dmaengine@vger.kernel.org
 On 27-05-19, 22:14, Clément Péron wrote:
 > From: Jernej Skrabec <jernej.skrabec@siol.net>
 > 
-> H6 DMA has more than 32 possible DRQs. That means that current maximum
-> of 31 DRQs is not enough anymore.
+> H6 DMA has mode fields in different position than any other currently
+> supported DMA controller.
 > 
-> Add a quirk which will set source and destination DRQ number.
+> Add a quirk for that.
 
 Applied, thanks
 
