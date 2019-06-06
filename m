@@ -7,36 +7,35 @@ X-Spam-Status: No, score=-9.0 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6E5B7C28D1D
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9A7B2C28D1E
 	for <dmaengine@archiver.kernel.org>; Thu,  6 Jun 2019 10:46:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 3DC722083E
+	by mail.kernel.org (Postfix) with ESMTP id 738042083E
 	for <dmaengine@archiver.kernel.org>; Thu,  6 Jun 2019 10:46:03 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=analog.onmicrosoft.com header.i=@analog.onmicrosoft.com header.b="0bBcRNN7"
+	dkim=pass (1024-bit key) header.d=analog.onmicrosoft.com header.i=@analog.onmicrosoft.com header.b="AAUTupEk"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726954AbfFFKqD (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        id S1726959AbfFFKqD (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
         Thu, 6 Jun 2019 06:46:03 -0400
-Received: from mail-eopbgr810074.outbound.protection.outlook.com ([40.107.81.74]:52096
-        "EHLO NAM01-BY2-obe.outbound.protection.outlook.com"
+Received: from mail-eopbgr790057.outbound.protection.outlook.com ([40.107.79.57]:31872
+        "EHLO NAM03-CO1-obe.outbound.protection.outlook.com"
         rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1726959AbfFFKqC (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        id S1725784AbfFFKqC (ORCPT <rfc822;dmaengine@vger.kernel.org>);
         Thu, 6 Jun 2019 06:46:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=analog.onmicrosoft.com; s=selector1-analog-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=qg1R0I6reR9dplWRbPP7GkSQrygmHnJ38V+4yz7MpKU=;
- b=0bBcRNN7nw6OMCcb6b2YKN173OZqnkuBoElrTh4Xy0ZYfAJXHqTpQGymbghzWrHoyeImtx8QSOSz6eH8IASpe+i633Q7BQ6nejRyWtLbi9F8Eh5tA04h9WShrW/7ysC7KBGyf0CzQDJWkJT4vt9qGpClxMIatU+dqr5k570dI5g=
-Received: from CY4PR03CA0016.namprd03.prod.outlook.com (2603:10b6:903:33::26)
- by DM5PR03MB3130.namprd03.prod.outlook.com (2603:10b6:4:3c::27) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.1965.14; Thu, 6 Jun
- 2019 10:46:00 +0000
-Received: from SN1NAM02FT023.eop-nam02.prod.protection.outlook.com
- (2a01:111:f400:7e44::207) by CY4PR03CA0016.outlook.office365.com
- (2603:10b6:903:33::26) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id 15.20.1965.14 via Frontend
- Transport; Thu, 6 Jun 2019 10:46:00 +0000
+ bh=yzcvRzTx/BX4fb85nYT8X67khODAmxmfCi7faI2/STg=;
+ b=AAUTupEksld/zRGhWEquO26iAUEBM9bqbboP7BpN9tcI0pkRaqCO359q35nuDS1U5YNAwGaXnlOST0EOC3GhfI7TUKiSfkDeVLgBfXThDjA+vQREXqBn9s6+B75yXlIrImwSooDa+NGC55GFYCvjWOdXWteXcinxio7pPi/j7DU=
+Received: from DM5PR03CA0049.namprd03.prod.outlook.com (2603:10b6:4:3b::38) by
+ BL2PR03MB548.namprd03.prod.outlook.com (2a01:111:e400:c26::12) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.1965.12; Thu, 6 Jun 2019 10:45:58 +0000
+Received: from SN1NAM02FT012.eop-nam02.prod.protection.outlook.com
+ (2a01:111:f400:7e44::200) by DM5PR03CA0049.outlook.office365.com
+ (2603:10b6:4:3b::38) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id 15.20.1943.21 via Frontend
+ Transport; Thu, 6 Jun 2019 10:45:58 +0000
 Authentication-Results: spf=pass (sender IP is 137.71.25.57)
  smtp.mailfrom=analog.com; vger.kernel.org; dkim=none (message not signed)
  header.d=none;vger.kernel.org; dmarc=bestguesspass action=none
@@ -45,22 +44,22 @@ Received-SPF: Pass (protection.outlook.com: domain of analog.com designates
  137.71.25.57 as permitted sender) receiver=protection.outlook.com;
  client-ip=137.71.25.57; helo=nwd2mta2.analog.com;
 Received: from nwd2mta2.analog.com (137.71.25.57) by
- SN1NAM02FT023.mail.protection.outlook.com (10.152.72.156) with Microsoft SMTP
+ SN1NAM02FT012.mail.protection.outlook.com (10.152.72.95) with Microsoft SMTP
  Server (version=TLS1_0, cipher=TLS_RSA_WITH_AES_256_CBC_SHA) id 15.20.1965.12
- via Frontend Transport; Thu, 6 Jun 2019 10:45:59 +0000
+ via Frontend Transport; Thu, 6 Jun 2019 10:45:57 +0000
 Received: from NWD2HUBCAS7.ad.analog.com (nwd2hubcas7.ad.analog.com [10.64.69.107])
-        by nwd2mta2.analog.com (8.13.8/8.13.8) with ESMTP id x56AjxcI013758
+        by nwd2mta2.analog.com (8.13.8/8.13.8) with ESMTP id x56Ajvb3013752
         (version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=OK)
-        for <dmaengine@vger.kernel.org>; Thu, 6 Jun 2019 03:45:59 -0700
+        for <dmaengine@vger.kernel.org>; Thu, 6 Jun 2019 03:45:57 -0700
 Received: from saturn.ad.analog.com (10.48.65.129) by
  NWD2HUBCAS7.ad.analog.com (10.64.69.107) with Microsoft SMTP Server id
- 14.3.408.0; Thu, 6 Jun 2019 06:45:59 -0400
+ 14.3.408.0; Thu, 6 Jun 2019 06:45:57 -0400
 From:   Alexandru Ardelean <alexandru.ardelean@analog.com>
 To:     <dmaengine@vger.kernel.org>
 CC:     Alexandru Ardelean <alexandru.ardelean@analog.com>
-Subject: [PATCH 4/4] dmaengine: axi-dmac: add regmap support
-Date:   Thu, 6 Jun 2019 13:45:50 +0300
-Message-ID: <20190606104550.32336-4-alexandru.ardelean@analog.com>
+Subject: [PATCH 2/4] dmaengine: axi-dmac: populate residue info for completed xfers
+Date:   Thu, 6 Jun 2019 13:45:48 +0300
+Message-ID: <20190606104550.32336-2-alexandru.ardelean@analog.com>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20190606104550.32336-1-alexandru.ardelean@analog.com>
 References: <20190606104550.32336-1-alexandru.ardelean@analog.com>
@@ -70,120 +69,214 @@ Content-Type: text/plain
 X-ADIRoutedOnPrem: True
 X-EOPAttributedMessage: 0
 X-MS-Office365-Filtering-HT: Tenant
-X-Forefront-Antispam-Report: CIP:137.71.25.57;IPV:NLI;CTRY:US;EFV:NLI;SFV:NSPM;SFS:(10009020)(346002)(396003)(136003)(39850400004)(376002)(2980300002)(199004)(189003)(107886003)(106002)(50466002)(1076003)(305945005)(7636002)(2906002)(4326008)(246002)(50226002)(6306002)(8676002)(8936002)(356004)(6666004)(48376002)(316002)(2870700001)(5660300002)(6916009)(336012)(426003)(51416003)(7696005)(966005)(478600001)(14444005)(36756003)(2351001)(77096007)(486006)(186003)(446003)(11346002)(126002)(26005)(47776003)(86362001)(76176011)(70206006)(2616005)(70586007)(476003)(44832011);DIR:OUT;SFP:1101;SCL:1;SRVR:DM5PR03MB3130;H:nwd2mta2.analog.com;FPR:;SPF:Pass;LANG:en;PTR:nwd2mail11.analog.com;A:1;MX:1;
+X-Forefront-Antispam-Report: CIP:137.71.25.57;IPV:NLI;CTRY:US;EFV:NLI;SFV:NSPM;SFS:(10009020)(396003)(136003)(346002)(39860400002)(376002)(2980300002)(199004)(189003)(316002)(50466002)(2870700001)(426003)(106002)(126002)(246002)(51416003)(48376002)(8676002)(6916009)(1076003)(86362001)(5660300002)(36756003)(77096007)(6666004)(7636002)(14444005)(76176011)(70586007)(11346002)(44832011)(70206006)(186003)(2616005)(476003)(446003)(486006)(305945005)(7696005)(8936002)(50226002)(478600001)(107886003)(2906002)(4326008)(356004)(47776003)(2351001)(26005)(336012);DIR:OUT;SFP:1101;SCL:1;SRVR:BL2PR03MB548;H:nwd2mta2.analog.com;FPR:;SPF:Pass;LANG:en;PTR:nwd2mail11.analog.com;A:1;MX:1;
 X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: 21a27c51-291d-4e91-e811-08d6ea6c29db
-X-Microsoft-Antispam: BCL:0;PCL:0;RULEID:(2390118)(7020095)(4652040)(8989299)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(5600148)(711020)(4605104)(4709080)(1401327)(2017052603328);SRVR:DM5PR03MB3130;
-X-MS-TrafficTypeDiagnostic: DM5PR03MB3130:
-X-MS-Exchange-PUrlCount: 1
-X-Microsoft-Antispam-PRVS: <DM5PR03MB31302705136A94A6475762AAF9170@DM5PR03MB3130.namprd03.prod.outlook.com>
-X-MS-Oob-TLC-OOBClassifiers: OLM:7219;
+X-MS-Office365-Filtering-Correlation-Id: e553d6c1-1eb0-4541-2a68-08d6ea6c28b3
+X-Microsoft-Antispam: BCL:0;PCL:0;RULEID:(2390118)(7020095)(4652040)(8989299)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(5600148)(711020)(4605104)(4709080)(1401327)(2017052603328);SRVR:BL2PR03MB548;
+X-MS-TrafficTypeDiagnostic: BL2PR03MB548:
+X-Microsoft-Antispam-PRVS: <BL2PR03MB5484339E2238BAC40A5EFEFF9170@BL2PR03MB548.namprd03.prod.outlook.com>
+X-MS-Oob-TLC-OOBClassifiers: OLM:5236;
 X-Forefront-PRVS: 00603B7EEF
 X-MS-Exchange-SenderADCheck: 1
-X-Microsoft-Antispam-Message-Info: C2TyvMEd7aFqHuOmnBdkahyTyI8+Xu8vfhPRCwpGrN85/W+qhcMHsil0Bs6L4KcNystF7gtdgW33Euovatty7ts/1ceQcMpNHiRlheSNt9hs4ZfKGNexdX52e/GFFP1Mhnwr2gI19e0AtHSZItip39mgyMN/NzcZTyb4LoGR2RHmwrYfomIQvf/Hkb7lLekKZZdwOT91N188pDUu6RxjrW9RG8g0EQUErDSkRp38m7nnOjGP5agphDq6a8S4pJF/Xlz/4cW+vg9SeUrNv/D2TOOyh3ypTirlyohyIXYTXUpIYxFpcG6J3bRa2XIoqxIrjaGYQoxxuqo3FGI8XkFwfNa73YjshDPM1jie9ES/YedAl/9XIae6sTm6282ak2wyXa0WA4ZWF1MI/zCsQDINC2fBE29bsfBdRmgKUCM+QaU=
+X-Microsoft-Antispam-Message-Info: 9FyIKk0b5hecVkFxRB+z5C3m1YSs4RKh3uNI2Y2zR/j2NIybIpXVhmj9gnz0/Ee6DDtAiMS0SstjbyMR6jj12iklAraUA9IsT+fJbu+Xdz2BxGMKg9IKpJ9GqQGHfgiwX/LXNbWP3ZuF0moOMu0aS5ZXUntSczs9lCqzPhYmPZoUAdPKuhGeDrEcGCgfDjJ+x+NaYe9uBLM5U6++bzXw335R7n3QzJT1jF3fSm8tnc55jbL9G16BTwH2hy2QPy4Ebfe8w96bY41K8miH60DklqmhS1S9L6+/DE4u29OeJTFrNknUl29HIJVNVbpxdY7qtZ43RMtZ2MsO31uB9kJoB8nZ1RG86o2TEbX+TO/wdfPJW+tyErWHrMnBSQhGtlPPleDR3bOG1VeRF331seMSuCXNwsjsfuZB0KnFV8TiMMc=
 X-OriginatorOrg: analog.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Jun 2019 10:45:59.6917
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Jun 2019 10:45:57.7470
  (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 21a27c51-291d-4e91-e811-08d6ea6c29db
+X-MS-Exchange-CrossTenant-Network-Message-Id: e553d6c1-1eb0-4541-2a68-08d6ea6c28b3
 X-MS-Exchange-CrossTenant-Id: eaa689b4-8f87-40e0-9c6f-7228de4d754a
 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=eaa689b4-8f87-40e0-9c6f-7228de4d754a;Ip=[137.71.25.57];Helo=[nwd2mta2.analog.com]
 X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM5PR03MB3130
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL2PR03MB548
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-The registers for AXI DMAC are detailed at:
-  https://wiki.analog.com/resources/fpga/docs/axi_dmac#register_map
+Starting with version 4.2.a, the AXI DMAC controller can report partial
+transfers that have been issued.
 
-This change adds regmap support for these registers, in case some wants to
-have a more direct access to them via this interface.
+This change implements computing DMA residue information for transfers,
+based on that reported information.
+
+The way this is done, is to dequeue the partial transfers from the FIFO of
+partial transfers, store the partial length to the correct segment &
+descriptor, and compute the residue before submitting the DMA cookie to the
+DMA framework.
 
 Signed-off-by: Alexandru Ardelean <alexandru.ardelean@analog.com>
 ---
- drivers/dma/Kconfig        |  1 +
- drivers/dma/dma-axi-dmac.c | 41 ++++++++++++++++++++++++++++++++++++++
- 2 files changed, 42 insertions(+)
+ drivers/dma/dma-axi-dmac.c | 99 +++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 98 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/dma/Kconfig b/drivers/dma/Kconfig
-index eaf78f4e07ce..ae631c6e8bc5 100644
---- a/drivers/dma/Kconfig
-+++ b/drivers/dma/Kconfig
-@@ -102,6 +102,7 @@ config AXI_DMAC
- 	depends on MICROBLAZE || NIOS2 || ARCH_ZYNQ || ARCH_ZYNQMP || ARCH_SOCFPGA || COMPILE_TEST
- 	select DMA_ENGINE
- 	select DMA_VIRTUAL_CHANNELS
-+	select REGMAP_MMIO
- 	help
- 	  Enable support for the Analog Devices AXI-DMAC peripheral. This DMA
- 	  controller is often used in Analog Device's reference designs for FPGA
 diff --git a/drivers/dma/dma-axi-dmac.c b/drivers/dma/dma-axi-dmac.c
-index 3b418d545c7a..a35b76f08dfa 100644
+index d5e29bbc3d43..e0702697e2b3 100644
 --- a/drivers/dma/dma-axi-dmac.c
 +++ b/drivers/dma/dma-axi-dmac.c
-@@ -19,6 +19,7 @@
- #include <linux/of.h>
- #include <linux/of_dma.h>
- #include <linux/platform_device.h>
-+#include <linux/regmap.h>
- #include <linux/slab.h>
- #include <linux/fpga/adi-axi-common.h>
+@@ -64,6 +64,8 @@
+ #define AXI_DMAC_REG_STATUS		0x430
+ #define AXI_DMAC_REG_CURRENT_SRC_ADDR	0x434
+ #define AXI_DMAC_REG_CURRENT_DEST_ADDR	0x438
++#define AXI_DMAC_REG_PARTIAL_XFER_LEN	0x44c
++#define AXI_DMAC_REG_PARTIAL_XFER_ID	0x450
  
-@@ -679,6 +680,44 @@ static void axi_dmac_desc_free(struct virt_dma_desc *vdesc)
- 	kfree(container_of(vdesc, struct axi_dmac_desc, vdesc));
+ #define AXI_DMAC_CTRL_ENABLE		BIT(0)
+ #define AXI_DMAC_CTRL_PAUSE		BIT(1)
+@@ -73,6 +75,9 @@
+ 
+ #define AXI_DMAC_FLAG_CYCLIC		BIT(0)
+ #define AXI_DMAC_FLAG_LAST		BIT(1)
++#define AXI_DMAC_FLAG_PARTIAL_REPORT	BIT(2)
++
++#define AXI_DMAC_FLAG_PARTIAL_XFER_DONE BIT(31)
+ 
+ /* The maximum ID allocated by the hardware is 31 */
+ #define AXI_DMAC_SG_UNUSED 32U
+@@ -85,6 +90,7 @@ struct axi_dmac_sg {
+ 	unsigned int dest_stride;
+ 	unsigned int src_stride;
+ 	unsigned int id;
++	unsigned int partial_len;
+ 	bool schedule_when_free;
+ };
+ 
+@@ -114,6 +120,7 @@ struct axi_dmac_chan {
+ 	unsigned int address_align_mask;
+ 	unsigned int length_align_mask;
+ 
++	bool hw_partial_xfer;
+ 	bool hw_cyclic;
+ 	bool hw_2d;
+ };
+@@ -245,6 +252,9 @@ static void axi_dmac_start_transfer(struct axi_dmac_chan *chan)
+ 		desc->num_sgs == 1)
+ 		flags |= AXI_DMAC_FLAG_CYCLIC;
+ 
++	if (chan->hw_partial_xfer)
++		flags |= AXI_DMAC_FLAG_PARTIAL_REPORT;
++
+ 	axi_dmac_write(dmac, AXI_DMAC_REG_X_LENGTH, sg->x_len - 1);
+ 	axi_dmac_write(dmac, AXI_DMAC_REG_Y_LENGTH, sg->y_len - 1);
+ 	axi_dmac_write(dmac, AXI_DMAC_REG_FLAGS, flags);
+@@ -257,6 +267,82 @@ static struct axi_dmac_desc *axi_dmac_active_desc(struct axi_dmac_chan *chan)
+ 		struct axi_dmac_desc, vdesc.node);
  }
  
-+static bool axi_dmac_regmap_rdwr(struct device *dev, unsigned int reg)
++static inline unsigned int axi_dmac_total_sg_bytes(struct axi_dmac_chan *chan,
++	struct axi_dmac_sg *sg)
 +{
-+	switch (reg) {
-+	case AXI_DMAC_REG_IRQ_MASK:
-+	case AXI_DMAC_REG_IRQ_SOURCE:
-+	case AXI_DMAC_REG_IRQ_PENDING:
-+	case AXI_DMAC_REG_CTRL:
-+	case AXI_DMAC_REG_TRANSFER_ID:
-+	case AXI_DMAC_REG_START_TRANSFER:
-+	case AXI_DMAC_REG_FLAGS:
-+	case AXI_DMAC_REG_DEST_ADDRESS:
-+	case AXI_DMAC_REG_SRC_ADDRESS:
-+	case AXI_DMAC_REG_X_LENGTH:
-+	case AXI_DMAC_REG_Y_LENGTH:
-+	case AXI_DMAC_REG_DEST_STRIDE:
-+	case AXI_DMAC_REG_SRC_STRIDE:
-+	case AXI_DMAC_REG_TRANSFER_DONE:
-+	case AXI_DMAC_REG_ACTIVE_TRANSFER_ID :
-+	case AXI_DMAC_REG_STATUS:
-+	case AXI_DMAC_REG_CURRENT_SRC_ADDR:
-+	case AXI_DMAC_REG_CURRENT_DEST_ADDR:
-+	case AXI_DMAC_REG_PARTIAL_XFER_LEN:
-+	case AXI_DMAC_REG_PARTIAL_XFER_ID:
-+		return true;
-+	default:
-+		return false;
++	if (chan->hw_2d)
++		return sg->x_len * sg->y_len;
++	else
++		return sg->x_len;
++}
++
++static void axi_dmac_dequeue_partial_xfers(struct axi_dmac_chan *chan)
++{
++	struct axi_dmac *dmac = chan_to_axi_dmac(chan);
++	struct axi_dmac_desc *desc;
++	struct axi_dmac_sg *sg;
++	u32 xfer_done, len, id, i;
++	bool found_sg;
++
++	do {
++		len = axi_dmac_read(dmac, AXI_DMAC_REG_PARTIAL_XFER_LEN);
++		id  = axi_dmac_read(dmac, AXI_DMAC_REG_PARTIAL_XFER_ID);
++
++		found_sg = false;
++		list_for_each_entry(desc, &chan->active_descs, vdesc.node) {
++			for (i = 0; i < desc->num_sgs; i++) {
++				sg = &desc->sg[i];
++				if (sg->id == AXI_DMAC_SG_UNUSED)
++					continue;
++				if (sg->id == id) {
++					sg->partial_len = len;
++					found_sg = true;
++					break;
++				}
++			}
++			if (found_sg)
++				break;
++		}
++
++		if (found_sg) {
++			dev_dbg(dmac->dma_dev.dev,
++				"Found partial segment id=%u, len=%u\n",
++				id, len);
++		} else {
++			dev_warn(dmac->dma_dev.dev,
++				 "Not found partial segment id=%u, len=%u\n",
++				 id, len);
++		}
++
++		/* Check if we have any more partial transfers */
++		xfer_done = axi_dmac_read(dmac, AXI_DMAC_REG_TRANSFER_DONE);
++		xfer_done = !(xfer_done & AXI_DMAC_FLAG_PARTIAL_XFER_DONE);
++
++	} while (!xfer_done);
++}
++
++static void axi_dmac_compute_residue(struct axi_dmac_chan *chan,
++	struct axi_dmac_desc *active)
++{
++	struct dmaengine_result *rslt = &active->vdesc.tx_result;
++	unsigned int start = active->num_completed - 1;
++	struct axi_dmac_sg *sg;
++	unsigned int i, total;
++
++	rslt->result = DMA_TRANS_NOERROR;
++	rslt->residue = 0;
++
++	/*
++	 * We get here if the last completed segment is partial, which
++	 * means we can compute the residue from that segment onwards
++	 */
++	for (i = start; i < active->num_sgs; i++) {
++		sg = &active->sg[i];
++		total = axi_dmac_total_sg_bytes(chan, sg);
++		rslt->residue += (total - sg->partial_len);
 +	}
 +}
 +
-+static const struct regmap_config axi_dmac_regmap_config = {
-+	.reg_bits = 32,
-+	.val_bits = 32,
-+	.reg_stride = 4,
-+	.max_register = AXI_DMAC_REG_PARTIAL_XFER_ID,
-+	.readable_reg = axi_dmac_regmap_rdwr,
-+	.writeable_reg = axi_dmac_regmap_rdwr,
-+};
+ static bool axi_dmac_transfer_done(struct axi_dmac_chan *chan,
+ 	unsigned int completed_transfers)
+ {
+@@ -268,6 +354,10 @@ static bool axi_dmac_transfer_done(struct axi_dmac_chan *chan,
+ 	if (!active)
+ 		return false;
+ 
++	if (chan->hw_partial_xfer &&
++	    (completed_transfers & AXI_DMAC_FLAG_PARTIAL_XFER_DONE))
++		axi_dmac_dequeue_partial_xfers(chan);
 +
- /*
-  * The configuration stored in the devicetree matches the configuration
-  * parameters of the peripheral instance and allows the driver to know which
-@@ -883,6 +922,8 @@ static int axi_dmac_probe(struct platform_device *pdev)
+ 	do {
+ 		sg = &active->sg[active->num_completed];
+ 		if (sg->id == AXI_DMAC_SG_UNUSED) /* Not yet submitted */
+@@ -281,10 +371,14 @@ static bool axi_dmac_transfer_done(struct axi_dmac_chan *chan,
+ 			start_next = true;
+ 		}
  
- 	platform_set_drvdata(pdev, dmac);
- 
-+	devm_regmap_init_mmio(&pdev->dev, dmac->base, &axi_dmac_regmap_config);
++		if (sg->partial_len)
++			axi_dmac_compute_residue(chan, active);
 +
- 	return 0;
+ 		if (active->cyclic)
+ 			vchan_cyclic_callback(&active->vdesc);
  
- err_unregister_of:
+-		if (active->num_completed == active->num_sgs) {
++		if (active->num_completed == active->num_sgs ||
++		    sg->partial_len) {
+ 			if (active->cyclic) {
+ 				active->num_completed = 0; /* wrap around */
+ 			} else {
+@@ -675,6 +769,9 @@ static int axi_dmac_detect_caps(struct axi_dmac *dmac)
+ 		return -ENODEV;
+ 	}
+ 
++	if (version >= ADI_AXI_PCORE_VER(4, 2, 'a'))
++		chan->hw_partial_xfer = true;
++
+ 	if (version >= ADI_AXI_PCORE_VER(4, 1, 'a')) {
+ 		axi_dmac_write(dmac, AXI_DMAC_REG_X_LENGTH, 0x00);
+ 		chan->length_align_mask =
 -- 
 2.20.1
 
