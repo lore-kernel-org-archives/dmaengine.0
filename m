@@ -2,281 +2,173 @@ Return-Path: <SRS0=wwUa=UF=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.0 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-1.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,T_DKIMWL_WL_HIGH autolearn=unavailable autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9A7B2C28D1E
-	for <dmaengine@archiver.kernel.org>; Thu,  6 Jun 2019 10:46:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 73AFDC28EB3
+	for <dmaengine@archiver.kernel.org>; Thu,  6 Jun 2019 10:49:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 738042083E
-	for <dmaengine@archiver.kernel.org>; Thu,  6 Jun 2019 10:46:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4C59020868
+	for <dmaengine@archiver.kernel.org>; Thu,  6 Jun 2019 10:49:28 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=analog.onmicrosoft.com header.i=@analog.onmicrosoft.com header.b="AAUTupEk"
+	dkim=pass (2048-bit key) header.d=nvidia.com header.i=@nvidia.com header.b="k57U96xj"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726959AbfFFKqD (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Thu, 6 Jun 2019 06:46:03 -0400
-Received: from mail-eopbgr790057.outbound.protection.outlook.com ([40.107.79.57]:31872
-        "EHLO NAM03-CO1-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1725784AbfFFKqC (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Thu, 6 Jun 2019 06:46:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=analog.onmicrosoft.com; s=selector1-analog-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=yzcvRzTx/BX4fb85nYT8X67khODAmxmfCi7faI2/STg=;
- b=AAUTupEksld/zRGhWEquO26iAUEBM9bqbboP7BpN9tcI0pkRaqCO359q35nuDS1U5YNAwGaXnlOST0EOC3GhfI7TUKiSfkDeVLgBfXThDjA+vQREXqBn9s6+B75yXlIrImwSooDa+NGC55GFYCvjWOdXWteXcinxio7pPi/j7DU=
-Received: from DM5PR03CA0049.namprd03.prod.outlook.com (2603:10b6:4:3b::38) by
- BL2PR03MB548.namprd03.prod.outlook.com (2a01:111:e400:c26::12) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.1965.12; Thu, 6 Jun 2019 10:45:58 +0000
-Received: from SN1NAM02FT012.eop-nam02.prod.protection.outlook.com
- (2a01:111:f400:7e44::200) by DM5PR03CA0049.outlook.office365.com
- (2603:10b6:4:3b::38) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id 15.20.1943.21 via Frontend
- Transport; Thu, 6 Jun 2019 10:45:58 +0000
-Authentication-Results: spf=pass (sender IP is 137.71.25.57)
- smtp.mailfrom=analog.com; vger.kernel.org; dkim=none (message not signed)
- header.d=none;vger.kernel.org; dmarc=bestguesspass action=none
- header.from=analog.com;
-Received-SPF: Pass (protection.outlook.com: domain of analog.com designates
- 137.71.25.57 as permitted sender) receiver=protection.outlook.com;
- client-ip=137.71.25.57; helo=nwd2mta2.analog.com;
-Received: from nwd2mta2.analog.com (137.71.25.57) by
- SN1NAM02FT012.mail.protection.outlook.com (10.152.72.95) with Microsoft SMTP
- Server (version=TLS1_0, cipher=TLS_RSA_WITH_AES_256_CBC_SHA) id 15.20.1965.12
- via Frontend Transport; Thu, 6 Jun 2019 10:45:57 +0000
-Received: from NWD2HUBCAS7.ad.analog.com (nwd2hubcas7.ad.analog.com [10.64.69.107])
-        by nwd2mta2.analog.com (8.13.8/8.13.8) with ESMTP id x56Ajvb3013752
-        (version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=OK)
-        for <dmaengine@vger.kernel.org>; Thu, 6 Jun 2019 03:45:57 -0700
-Received: from saturn.ad.analog.com (10.48.65.129) by
- NWD2HUBCAS7.ad.analog.com (10.64.69.107) with Microsoft SMTP Server id
- 14.3.408.0; Thu, 6 Jun 2019 06:45:57 -0400
-From:   Alexandru Ardelean <alexandru.ardelean@analog.com>
-To:     <dmaengine@vger.kernel.org>
-CC:     Alexandru Ardelean <alexandru.ardelean@analog.com>
-Subject: [PATCH 2/4] dmaengine: axi-dmac: populate residue info for completed xfers
-Date:   Thu, 6 Jun 2019 13:45:48 +0300
-Message-ID: <20190606104550.32336-2-alexandru.ardelean@analog.com>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20190606104550.32336-1-alexandru.ardelean@analog.com>
-References: <20190606104550.32336-1-alexandru.ardelean@analog.com>
+        id S1726581AbfFFKtX (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Thu, 6 Jun 2019 06:49:23 -0400
+Received: from hqemgate16.nvidia.com ([216.228.121.65]:18957 "EHLO
+        hqemgate16.nvidia.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725784AbfFFKtX (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Thu, 6 Jun 2019 06:49:23 -0400
+Received: from hqpgpgate101.nvidia.com (Not Verified[216.228.121.13]) by hqemgate16.nvidia.com (using TLS: TLSv1.2, DES-CBC3-SHA)
+        id <B5cf8efb00000>; Thu, 06 Jun 2019 03:49:20 -0700
+Received: from hqmail.nvidia.com ([172.20.161.6])
+  by hqpgpgate101.nvidia.com (PGP Universal service);
+  Thu, 06 Jun 2019 03:49:20 -0700
+X-PGP-Universal: processed;
+        by hqpgpgate101.nvidia.com on Thu, 06 Jun 2019 03:49:20 -0700
+Received: from [10.21.132.148] (10.124.1.5) by HQMAIL107.nvidia.com
+ (172.20.187.13) with Microsoft SMTP Server (TLS) id 15.0.1473.3; Thu, 6 Jun
+ 2019 10:49:18 +0000
+Subject: Re: [PATCH] [RFC] dmaengine: add fifo_size member
+To:     Peter Ujfalusi <peter.ujfalusi@ti.com>,
+        Sameer Pujar <spujar@nvidia.com>, Vinod Koul <vkoul@kernel.org>
+CC:     <dan.j.williams@intel.com>, <tiwai@suse.com>,
+        <dmaengine@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <sharadg@nvidia.com>, <rlokhande@nvidia.com>, <dramesh@nvidia.com>,
+        <mkumard@nvidia.com>, linux-tegra <linux-tegra@vger.kernel.org>
+References: <1556623828-21577-1-git-send-email-spujar@nvidia.com>
+ <20190502060446.GI3845@vkoul-mobl.Dlink>
+ <e852d576-9cc2-ed42-1a1a-d696112c88bf@nvidia.com>
+ <20190502122506.GP3845@vkoul-mobl.Dlink>
+ <3368d1e1-0d7f-f602-5b96-a978fcf4d91b@nvidia.com>
+ <20190504102304.GZ3845@vkoul-mobl.Dlink>
+ <ce0e9c0b-b909-54ae-9086-a1f0f6be903c@nvidia.com>
+ <20190506155046.GH3845@vkoul-mobl.Dlink>
+ <b7e28e73-7214-f1dc-866f-102410c88323@nvidia.com>
+ <ed95f03a-bbe7-ad62-f2e1-9bfe22ec733a@ti.com>
+ <4cab47d0-41c3-5a87-48e1-d7f085c2e091@nvidia.com>
+ <8a5b84db-c00b-fff4-543f-69d90c245660@nvidia.com>
+ <3f836a10-eaf3-f59b-7170-6fe937cf2e43@ti.com>
+From:   Jon Hunter <jonathanh@nvidia.com>
+Message-ID: <a36302fc-3173-070b-5c97-7d2c55d5e2cc@nvidia.com>
+Date:   Thu, 6 Jun 2019 11:49:16 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.7.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ADIRoutedOnPrem: True
-X-EOPAttributedMessage: 0
-X-MS-Office365-Filtering-HT: Tenant
-X-Forefront-Antispam-Report: CIP:137.71.25.57;IPV:NLI;CTRY:US;EFV:NLI;SFV:NSPM;SFS:(10009020)(396003)(136003)(346002)(39860400002)(376002)(2980300002)(199004)(189003)(316002)(50466002)(2870700001)(426003)(106002)(126002)(246002)(51416003)(48376002)(8676002)(6916009)(1076003)(86362001)(5660300002)(36756003)(77096007)(6666004)(7636002)(14444005)(76176011)(70586007)(11346002)(44832011)(70206006)(186003)(2616005)(476003)(446003)(486006)(305945005)(7696005)(8936002)(50226002)(478600001)(107886003)(2906002)(4326008)(356004)(47776003)(2351001)(26005)(336012);DIR:OUT;SFP:1101;SCL:1;SRVR:BL2PR03MB548;H:nwd2mta2.analog.com;FPR:;SPF:Pass;LANG:en;PTR:nwd2mail11.analog.com;A:1;MX:1;
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: e553d6c1-1eb0-4541-2a68-08d6ea6c28b3
-X-Microsoft-Antispam: BCL:0;PCL:0;RULEID:(2390118)(7020095)(4652040)(8989299)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(5600148)(711020)(4605104)(4709080)(1401327)(2017052603328);SRVR:BL2PR03MB548;
-X-MS-TrafficTypeDiagnostic: BL2PR03MB548:
-X-Microsoft-Antispam-PRVS: <BL2PR03MB5484339E2238BAC40A5EFEFF9170@BL2PR03MB548.namprd03.prod.outlook.com>
-X-MS-Oob-TLC-OOBClassifiers: OLM:5236;
-X-Forefront-PRVS: 00603B7EEF
-X-MS-Exchange-SenderADCheck: 1
-X-Microsoft-Antispam-Message-Info: 9FyIKk0b5hecVkFxRB+z5C3m1YSs4RKh3uNI2Y2zR/j2NIybIpXVhmj9gnz0/Ee6DDtAiMS0SstjbyMR6jj12iklAraUA9IsT+fJbu+Xdz2BxGMKg9IKpJ9GqQGHfgiwX/LXNbWP3ZuF0moOMu0aS5ZXUntSczs9lCqzPhYmPZoUAdPKuhGeDrEcGCgfDjJ+x+NaYe9uBLM5U6++bzXw335R7n3QzJT1jF3fSm8tnc55jbL9G16BTwH2hy2QPy4Ebfe8w96bY41K8miH60DklqmhS1S9L6+/DE4u29OeJTFrNknUl29HIJVNVbpxdY7qtZ43RMtZ2MsO31uB9kJoB8nZ1RG86o2TEbX+TO/wdfPJW+tyErWHrMnBSQhGtlPPleDR3bOG1VeRF331seMSuCXNwsjsfuZB0KnFV8TiMMc=
-X-OriginatorOrg: analog.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Jun 2019 10:45:57.7470
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: e553d6c1-1eb0-4541-2a68-08d6ea6c28b3
-X-MS-Exchange-CrossTenant-Id: eaa689b4-8f87-40e0-9c6f-7228de4d754a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=eaa689b4-8f87-40e0-9c6f-7228de4d754a;Ip=[137.71.25.57];Helo=[nwd2mta2.analog.com]
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL2PR03MB548
+In-Reply-To: <3f836a10-eaf3-f59b-7170-6fe937cf2e43@ti.com>
+X-Originating-IP: [10.124.1.5]
+X-ClientProxiedBy: HQMAIL101.nvidia.com (172.20.187.10) To
+ HQMAIL107.nvidia.com (172.20.187.13)
+Content-Type: text/plain; charset="utf-8"
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nvidia.com; s=n1;
+        t=1559818160; bh=WzzhEJK2De3f43eCu/BsQHMI4/xvHgWD7ruox2mfSOg=;
+        h=X-PGP-Universal:Subject:To:CC:References:From:Message-ID:Date:
+         User-Agent:MIME-Version:In-Reply-To:X-Originating-IP:
+         X-ClientProxiedBy:Content-Type:Content-Language:
+         Content-Transfer-Encoding;
+        b=k57U96xj4MeWVr4uU7VFDpQyr5ZsS+4muuzcTIAQ1QtIWGfjypzQHPUBi3Fv92EcI
+         LzBIVxGr0iSFMR09zDaT/+vfJQmf7fObPdj0cJpoPZAKdwiH3TkFu5zVaK3gGbVUQd
+         yL/LH5aNtSW0Fqds4Nwcr7gRJVk9J195aBM4yzyAfIdG3+h1T9a6bhmwbgdgM+fSEr
+         5KyHDYOlYrhWwdCtrzJEQhrAgIjNIw5Yx6Nk/cIs0qfQ7F8DD2r3UPsBHtW+LXGiUL
+         HJXIn3J8Fw6s1AHDxhXX+64j+tOhQkuU4aBxqgmYj+O1BSlvNaC6sGgDc9E9rOqlPV
+         CvTDb6pOlE5PQ==
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Starting with version 4.2.a, the AXI DMAC controller can report partial
-transfers that have been issued.
 
-This change implements computing DMA residue information for transfers,
-based on that reported information.
+On 06/06/2019 11:22, Peter Ujfalusi wrote:
 
-The way this is done, is to dequeue the partial transfers from the FIFO of
-partial transfers, store the partial length to the correct segment &
-descriptor, and compute the residue before submitting the DMA cookie to the
-DMA framework.
+...
 
-Signed-off-by: Alexandru Ardelean <alexandru.ardelean@analog.com>
----
- drivers/dma/dma-axi-dmac.c | 99 +++++++++++++++++++++++++++++++++++++-
- 1 file changed, 98 insertions(+), 1 deletion(-)
+>>>> It does sounds like that FIFO_SIZE == src/dst_maxburst in your case as
+>>>> well.
+>>> Not exactly equal.
+>>> ADMA burst_size can range from 1(WORD) to 16(WORDS)
+>>> FIFO_SIZE can be adjusted from 16(WORDS) to 1024(WORDS) [can vary in
+>>> multiples of 16]
+>>
+>> So I think that the key thing to highlight here, is that the as Sameer
+>> highlighted above for the Tegra ADMA there are two values that need to
+>> be programmed; the DMA client FIFO size and the max burst size. The ADMA
+>> has register fields for both of these.
+> 
+> How does the ADMA uses the 'client FIFO size' and 'max burst size'
+> values and what is the relation of these values to the peripheral side
+> (ADMAIF)?
 
-diff --git a/drivers/dma/dma-axi-dmac.c b/drivers/dma/dma-axi-dmac.c
-index d5e29bbc3d43..e0702697e2b3 100644
---- a/drivers/dma/dma-axi-dmac.c
-+++ b/drivers/dma/dma-axi-dmac.c
-@@ -64,6 +64,8 @@
- #define AXI_DMAC_REG_STATUS		0x430
- #define AXI_DMAC_REG_CURRENT_SRC_ADDR	0x434
- #define AXI_DMAC_REG_CURRENT_DEST_ADDR	0x438
-+#define AXI_DMAC_REG_PARTIAL_XFER_LEN	0x44c
-+#define AXI_DMAC_REG_PARTIAL_XFER_ID	0x450
- 
- #define AXI_DMAC_CTRL_ENABLE		BIT(0)
- #define AXI_DMAC_CTRL_PAUSE		BIT(1)
-@@ -73,6 +75,9 @@
- 
- #define AXI_DMAC_FLAG_CYCLIC		BIT(0)
- #define AXI_DMAC_FLAG_LAST		BIT(1)
-+#define AXI_DMAC_FLAG_PARTIAL_REPORT	BIT(2)
-+
-+#define AXI_DMAC_FLAG_PARTIAL_XFER_DONE BIT(31)
- 
- /* The maximum ID allocated by the hardware is 31 */
- #define AXI_DMAC_SG_UNUSED 32U
-@@ -85,6 +90,7 @@ struct axi_dmac_sg {
- 	unsigned int dest_stride;
- 	unsigned int src_stride;
- 	unsigned int id;
-+	unsigned int partial_len;
- 	bool schedule_when_free;
- };
- 
-@@ -114,6 +120,7 @@ struct axi_dmac_chan {
- 	unsigned int address_align_mask;
- 	unsigned int length_align_mask;
- 
-+	bool hw_partial_xfer;
- 	bool hw_cyclic;
- 	bool hw_2d;
- };
-@@ -245,6 +252,9 @@ static void axi_dmac_start_transfer(struct axi_dmac_chan *chan)
- 		desc->num_sgs == 1)
- 		flags |= AXI_DMAC_FLAG_CYCLIC;
- 
-+	if (chan->hw_partial_xfer)
-+		flags |= AXI_DMAC_FLAG_PARTIAL_REPORT;
-+
- 	axi_dmac_write(dmac, AXI_DMAC_REG_X_LENGTH, sg->x_len - 1);
- 	axi_dmac_write(dmac, AXI_DMAC_REG_Y_LENGTH, sg->y_len - 1);
- 	axi_dmac_write(dmac, AXI_DMAC_REG_FLAGS, flags);
-@@ -257,6 +267,82 @@ static struct axi_dmac_desc *axi_dmac_active_desc(struct axi_dmac_chan *chan)
- 		struct axi_dmac_desc, vdesc.node);
- }
- 
-+static inline unsigned int axi_dmac_total_sg_bytes(struct axi_dmac_chan *chan,
-+	struct axi_dmac_sg *sg)
-+{
-+	if (chan->hw_2d)
-+		return sg->x_len * sg->y_len;
-+	else
-+		return sg->x_len;
-+}
-+
-+static void axi_dmac_dequeue_partial_xfers(struct axi_dmac_chan *chan)
-+{
-+	struct axi_dmac *dmac = chan_to_axi_dmac(chan);
-+	struct axi_dmac_desc *desc;
-+	struct axi_dmac_sg *sg;
-+	u32 xfer_done, len, id, i;
-+	bool found_sg;
-+
-+	do {
-+		len = axi_dmac_read(dmac, AXI_DMAC_REG_PARTIAL_XFER_LEN);
-+		id  = axi_dmac_read(dmac, AXI_DMAC_REG_PARTIAL_XFER_ID);
-+
-+		found_sg = false;
-+		list_for_each_entry(desc, &chan->active_descs, vdesc.node) {
-+			for (i = 0; i < desc->num_sgs; i++) {
-+				sg = &desc->sg[i];
-+				if (sg->id == AXI_DMAC_SG_UNUSED)
-+					continue;
-+				if (sg->id == id) {
-+					sg->partial_len = len;
-+					found_sg = true;
-+					break;
-+				}
-+			}
-+			if (found_sg)
-+				break;
-+		}
-+
-+		if (found_sg) {
-+			dev_dbg(dmac->dma_dev.dev,
-+				"Found partial segment id=%u, len=%u\n",
-+				id, len);
-+		} else {
-+			dev_warn(dmac->dma_dev.dev,
-+				 "Not found partial segment id=%u, len=%u\n",
-+				 id, len);
-+		}
-+
-+		/* Check if we have any more partial transfers */
-+		xfer_done = axi_dmac_read(dmac, AXI_DMAC_REG_TRANSFER_DONE);
-+		xfer_done = !(xfer_done & AXI_DMAC_FLAG_PARTIAL_XFER_DONE);
-+
-+	} while (!xfer_done);
-+}
-+
-+static void axi_dmac_compute_residue(struct axi_dmac_chan *chan,
-+	struct axi_dmac_desc *active)
-+{
-+	struct dmaengine_result *rslt = &active->vdesc.tx_result;
-+	unsigned int start = active->num_completed - 1;
-+	struct axi_dmac_sg *sg;
-+	unsigned int i, total;
-+
-+	rslt->result = DMA_TRANS_NOERROR;
-+	rslt->residue = 0;
-+
-+	/*
-+	 * We get here if the last completed segment is partial, which
-+	 * means we can compute the residue from that segment onwards
-+	 */
-+	for (i = start; i < active->num_sgs; i++) {
-+		sg = &active->sg[i];
-+		total = axi_dmac_total_sg_bytes(chan, sg);
-+		rslt->residue += (total - sg->partial_len);
-+	}
-+}
-+
- static bool axi_dmac_transfer_done(struct axi_dmac_chan *chan,
- 	unsigned int completed_transfers)
- {
-@@ -268,6 +354,10 @@ static bool axi_dmac_transfer_done(struct axi_dmac_chan *chan,
- 	if (!active)
- 		return false;
- 
-+	if (chan->hw_partial_xfer &&
-+	    (completed_transfers & AXI_DMAC_FLAG_PARTIAL_XFER_DONE))
-+		axi_dmac_dequeue_partial_xfers(chan);
-+
- 	do {
- 		sg = &active->sg[active->num_completed];
- 		if (sg->id == AXI_DMAC_SG_UNUSED) /* Not yet submitted */
-@@ -281,10 +371,14 @@ static bool axi_dmac_transfer_done(struct axi_dmac_chan *chan,
- 			start_next = true;
- 		}
- 
-+		if (sg->partial_len)
-+			axi_dmac_compute_residue(chan, active);
-+
- 		if (active->cyclic)
- 			vchan_cyclic_callback(&active->vdesc);
- 
--		if (active->num_completed == active->num_sgs) {
-+		if (active->num_completed == active->num_sgs ||
-+		    sg->partial_len) {
- 			if (active->cyclic) {
- 				active->num_completed = 0; /* wrap around */
- 			} else {
-@@ -675,6 +769,9 @@ static int axi_dmac_detect_caps(struct axi_dmac *dmac)
- 		return -ENODEV;
- 	}
- 
-+	if (version >= ADI_AXI_PCORE_VER(4, 2, 'a'))
-+		chan->hw_partial_xfer = true;
-+
- 	if (version >= ADI_AXI_PCORE_VER(4, 1, 'a')) {
- 		axi_dmac_write(dmac, AXI_DMAC_REG_X_LENGTH, 0x00);
- 		chan->length_align_mask =
+Per Sameer's previous comment, the FIFO size is used by the ADMA to
+determine how much space is available in the FIFO. I assume the burst
+size just limits how much data is transferred per transaction.
+
+>> As you can see from the above the FIFO size can be much greater than the
+>> burst size and so ideally both of these values would be passed to the DMA.
+>>
+>> We could get by with just passing the FIFO size (as the max burst size)
+>> and then have the DMA driver set the max burst size depending on this,
+>> but this does feel quite correct for this DMA. Hence, ideally, we would
+>> like to pass both.
+>>
+>> We are also open to other ideas.
+> 
+> I can not find public documentation (I think they are walled off by
+> registration), but correct me if I'm wrong:
+
+No unfortunately, you are not wrong here :-(
+
+> ADMAIF - peripheral side
+>  - kind of a small DMA for audio preipheral(s)?
+
+Yes this is the interface to the APE (audio processing engine) and data
+sent to the ADMAIF is then sent across a crossbar to one of many
+devices/interfaces (I2S, DMIC, etc). Basically a large mux that is user
+configurable depending on the use-case.
+
+>  - Variable FIFO size
+
+Yes.
+
+>  - sends DMA request to ADMA per words
+
+From Sameer's notes it says the ADMAIF send a signal to the ADMA per
+word, yes.
+
+> ADMA - system DMA
+>  - receives the DMA requests from ADMAIF
+>  - counts the requests
+>  - based on some threshold of the counter it will send/read from ADMAIF?
+>   - maxburst number of words probably?
+
+Sounds about right to me.
+
+> ADMA needs to know the ADMAIF's FIFO size because, it is the one who is
+> managing that FIFO from the outside, making sure that it does not over
+> or underrun?
+
+Yes.
+
+> And it is the one who sets the pace (in effect the DMA burst size - how
+> many bytes the DMA jumps between refills) of refills to the ADMAIF's FIFO?
+
+Yes.
+
+So currently, if you look at the ADMA driver
+(drivers/dma/tegra210-adma.c) you will see we use the src/dst_maxburst
+for the burst, but the FIFO size is hard-coded (see the
+TEGRA210_FIFO_CTRL_DEFAULT and TEGRA186_FIFO_CTRL_DEFAULT definitions).
+Ideally, we should not hard-code this but pass it.
+
+Given that there are no current users of the ADMA upstream, we could
+change the usage of the src/dst_maxburst, but being able to set the FIFO
+size as well would be ideal.
+
+Cheers
+Jon
+
 -- 
-2.20.1
-
+nvpublic
