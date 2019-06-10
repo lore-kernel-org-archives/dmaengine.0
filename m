@@ -2,31 +2,31 @@ Return-Path: <SRS0=FmAI=UJ=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 55874C282DD
-	for <dmaengine@archiver.kernel.org>; Mon, 10 Jun 2019 08:16:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 60CC4C468BC
+	for <dmaengine@archiver.kernel.org>; Mon, 10 Jun 2019 08:16:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 303BB2082E
-	for <dmaengine@archiver.kernel.org>; Mon, 10 Jun 2019 08:16:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 35DBE2082E
+	for <dmaengine@archiver.kernel.org>; Mon, 10 Jun 2019 08:16:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387932AbfFJIQX (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 10 Jun 2019 04:16:23 -0400
-Received: from inva020.nxp.com ([92.121.34.13]:36684 "EHLO inva020.nxp.com"
+        id S2388192AbfFJIQ1 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 10 Jun 2019 04:16:27 -0400
+Received: from inva021.nxp.com ([92.121.34.21]:37208 "EHLO inva021.nxp.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2387824AbfFJIQX (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Mon, 10 Jun 2019 04:16:23 -0400
-Received: from inva020.nxp.com (localhost [127.0.0.1])
-        by inva020.eu-rdc02.nxp.com (Postfix) with ESMTP id 4C4C11A07AF;
-        Mon, 10 Jun 2019 10:16:20 +0200 (CEST)
+        id S2388064AbfFJIQ1 (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Mon, 10 Jun 2019 04:16:27 -0400
+Received: from inva021.nxp.com (localhost [127.0.0.1])
+        by inva021.eu-rdc02.nxp.com (Postfix) with ESMTP id CB7F9200738;
+        Mon, 10 Jun 2019 10:16:24 +0200 (CEST)
 Received: from invc005.ap-rdc01.nxp.com (invc005.ap-rdc01.nxp.com [165.114.16.14])
-        by inva020.eu-rdc02.nxp.com (Postfix) with ESMTP id 0FC271A07AC;
-        Mon, 10 Jun 2019 10:16:12 +0200 (CEST)
+        by inva021.eu-rdc02.nxp.com (Postfix) with ESMTP id C92BB200736;
+        Mon, 10 Jun 2019 10:16:16 +0200 (CEST)
 Received: from localhost.localdomain (mega.ap.freescale.net [10.192.208.232])
-        by invc005.ap-rdc01.nxp.com (Postfix) with ESMTP id 0DAE4402FB;
-        Mon, 10 Jun 2019 16:16:01 +0800 (SGT)
+        by invc005.ap-rdc01.nxp.com (Postfix) with ESMTP id 32A2E4031E;
+        Mon, 10 Jun 2019 16:16:07 +0800 (SGT)
 From:   yibin.gong@nxp.com
 To:     robh+dt@kernel.org, mark.rutland@arm.com, shawnguo@kernel.org,
         s.hauer@pengutronix.de, kernel@pengutronix.de, broonie@kernel.org,
@@ -36,10 +36,12 @@ To:     robh+dt@kernel.org, mark.rutland@arm.com, shawnguo@kernel.org,
 Cc:     linux-spi@vger.kernel.org, linux-imx@nxp.com,
         linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
         dmaengine@vger.kernel.org, devicetree@vger.kernel.org
-Subject: [PATCH v5 00/15] add ecspi ERR009165 for i.mx6/7 soc family
-Date:   Mon, 10 Jun 2019 16:17:38 +0800
-Message-Id: <20190610081753.11422-1-yibin.gong@nxp.com>
+Subject: [PATCH v5 03/15] Revert "dmaengine: imx-sdma: refine to load context only once"
+Date:   Mon, 10 Jun 2019 16:17:41 +0800
+Message-Id: <20190610081753.11422-4-yibin.gong@nxp.com>
 X-Mailer: git-send-email 2.17.1
+In-Reply-To: <20190610081753.11422-1-yibin.gong@nxp.com>
+References: <20190610081753.11422-1-yibin.gong@nxp.com>
 X-Virus-Scanned: ClamAV using ClamSMTP
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
@@ -48,80 +50,53 @@ X-Mailing-List: dmaengine@vger.kernel.org
 
 From: Robin Gong <yibin.gong@nxp.com>
 
-  There is ecspi ERR009165 on i.mx6/7 soc family, which cause FIFO
-transfer to be send twice in DMA mode. Please get more information from:
-https://www.nxp.com/docs/en/errata/IMX6DQCE.pdf. The workaround is adding
-new sdma ram script which works in XCH  mode as PIO inside sdma instead
-of SMC mode, meanwhile, 'TX_THRESHOLD' should be 0. The issue should be
-exist on all legacy i.mx6/7 soc family before i.mx6ul.
-  NXP fix this design issue from i.mx6ul, so newer chips including i.mx6ul/
-6ull/6sll do not need this workaroud anymore. All other i.mx6/7/8 chips
-still need this workaroud. This patch set add new 'fsl,imx6ul-ecspi'
-for ecspi driver and 'ecspi_fixed' in sdma driver to choose if need errata
-or not.
-  The first two reverted patches should be the same issue, though, it
-seems 'fixed' by changing to other shp script. Hope Sean or Sascha could
-have the chance to test this patch set if could fix their issues.
-  Besides, enable sdma support for i.mx8mm/8mq and fix ecspi1 not work
-on i.mx8mm because the event id is zero.
+This reverts commit ad0d92d7ba6aecbe2705907c38ff8d8be4da1e9c, because
+in spi-imx case, burst length may be changed dynamically.
 
-PS:
-   Please get sdma firmware from below linux-firmware and copy it to your
-local rootfs /lib/firmware/imx/sdma.
-https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git/tree/imx/sdma
+Signed-off-by: Robin Gong <yibin.gong@nxp.com>
+---
+ drivers/dma/imx-sdma.c | 7 -------
+ 1 file changed, 7 deletions(-)
 
-v2:
-  1.Add commit log for reverted patches.
-  2.Add comment for 'ecspi_fixed' in sdma driver.
-  3.Add 'fsl,imx6sll-ecspi' compatible instead of 'fsl,imx6ul-ecspi'
-    rather than remove.
-v3:
-  1.Confirm with design team make sure ERR009165 fixed on i.mx6ul/i.mx6ull
-    /i.mx6sll, not fixed on i.mx8m/8mm and other i.mx6/7 legacy chips.
-    Correct dts related dts patch in v2.
-  2.Clean eratta information in binding doc and new 'tx_glitch_fixed' flag
-    in spi-imx driver to state ERR009165 fixed or not.
-  3.Enlarge burst size to fifo size for tx since tx_wml set to 0 in the
-    errata workaroud, thus improve performance as possible.
-v4:
-  1.add Ack tag from Mark and Vinod
-  2. remove checking 'event_id1' zero as 'event_id0'.
-v5:
-  1.Add another patch for compatible with the current uart driver which
-    using rom script, so both uart ram script and rom script supported
-    in latest firmware, by default uart rom script used. UART driver
-    will be broken without this patch. Latest sdma firmware has been
-    already updated in linux-firmware. 
-
-Robin Gong (15):
-  Revert "ARM: dts: imx6q: Use correct SDMA script for SPI5 core"
-  Revert "ARM: dts: imx6: Use correct SDMA script for SPI cores"
-  Revert "dmaengine: imx-sdma: refine to load context only once"
-  dmaengine: imx-sdma: remove dupilicated sdma_load_context
-  dmaengine: imx-sdma: add mcu_2_ecspi script
-  spi: imx: fix ERR009165
-  spi: imx: remove ERR009165 workaround on i.mx6ul
-  spi: imx: add new i.mx6ul compatible name in binding doc
-  dmaengine: imx-sdma: remove ERR009165 on i.mx6ul
-  dma: imx-sdma: add i.mx6ul/6sx compatible name
-  dmaengine: imx-sdma: fix ecspi1 rx dma not work on i.mx8mm
-  ARM: dts: imx6ul: add dma support on ecspi
-  ARM: dts: imx6sll: correct sdma compatible
-  arm64: defconfig: Enable SDMA on i.mx8mq/8mm
-  dmaengine: imx-sdma: add uart rom script
-
- .../devicetree/bindings/dma/fsl-imx-sdma.txt       |  2 +
- .../devicetree/bindings/spi/fsl-imx-cspi.txt       |  1 +
- arch/arm/boot/dts/imx6q.dtsi                       |  2 +-
- arch/arm/boot/dts/imx6qdl.dtsi                     |  8 +-
- arch/arm/boot/dts/imx6sll.dtsi                     |  2 +-
- arch/arm/boot/dts/imx6ul.dtsi                      |  8 ++
- arch/arm64/configs/defconfig                       |  3 +
- drivers/dma/imx-sdma.c                             | 88 ++++++++++++++++------
- drivers/spi/spi-imx.c                              | 61 ++++++++++++---
- include/linux/platform_data/dma-imx-sdma.h         | 11 ++-
- 10 files changed, 145 insertions(+), 41 deletions(-)
-
+diff --git a/drivers/dma/imx-sdma.c b/drivers/dma/imx-sdma.c
+index ca296f0..21db6b69 100644
+--- a/drivers/dma/imx-sdma.c
++++ b/drivers/dma/imx-sdma.c
+@@ -377,7 +377,6 @@ struct sdma_channel {
+ 	unsigned long			watermark_level;
+ 	u32				shp_addr, per_addr;
+ 	enum dma_status			status;
+-	bool				context_loaded;
+ 	struct imx_dma_data		data;
+ 	struct work_struct		terminate_worker;
+ };
+@@ -988,9 +987,6 @@ static int sdma_load_context(struct sdma_channel *sdmac)
+ 	int ret;
+ 	unsigned long flags;
+ 
+-	if (sdmac->context_loaded)
+-		return 0;
+-
+ 	if (sdmac->direction == DMA_DEV_TO_MEM)
+ 		load_address = sdmac->pc_from_device;
+ 	else if (sdmac->direction == DMA_DEV_TO_DEV)
+@@ -1033,8 +1029,6 @@ static int sdma_load_context(struct sdma_channel *sdmac)
+ 
+ 	spin_unlock_irqrestore(&sdma->channel_0_lock, flags);
+ 
+-	sdmac->context_loaded = true;
+-
+ 	return ret;
+ }
+ 
+@@ -1074,7 +1068,6 @@ static void sdma_channel_terminate_work(struct work_struct *work)
+ 	sdmac->desc = NULL;
+ 	spin_unlock_irqrestore(&sdmac->vc.lock, flags);
+ 	vchan_dma_desc_free_list(&sdmac->vc, &head);
+-	sdmac->context_loaded = false;
+ }
+ 
+ static int sdma_disable_channel_async(struct dma_chan *chan)
 -- 
 2.7.4
 
