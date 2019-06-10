@@ -6,27 +6,27 @@ X-Spam-Status: No, score=-8.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
 	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 60CC4C468BC
-	for <dmaengine@archiver.kernel.org>; Mon, 10 Jun 2019 08:16:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1F53CC468C1
+	for <dmaengine@archiver.kernel.org>; Mon, 10 Jun 2019 08:16:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 35DBE2082E
-	for <dmaengine@archiver.kernel.org>; Mon, 10 Jun 2019 08:16:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id ED8532082E
+	for <dmaengine@archiver.kernel.org>; Mon, 10 Jun 2019 08:16:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388192AbfFJIQ1 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 10 Jun 2019 04:16:27 -0400
-Received: from inva021.nxp.com ([92.121.34.21]:37208 "EHLO inva021.nxp.com"
+        id S2388466AbfFJIQi (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 10 Jun 2019 04:16:38 -0400
+Received: from inva020.nxp.com ([92.121.34.13]:37328 "EHLO inva020.nxp.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2388064AbfFJIQ1 (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Mon, 10 Jun 2019 04:16:27 -0400
-Received: from inva021.nxp.com (localhost [127.0.0.1])
-        by inva021.eu-rdc02.nxp.com (Postfix) with ESMTP id CB7F9200738;
-        Mon, 10 Jun 2019 10:16:24 +0200 (CEST)
+        id S2388454AbfFJIQi (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Mon, 10 Jun 2019 04:16:38 -0400
+Received: from inva020.nxp.com (localhost [127.0.0.1])
+        by inva020.eu-rdc02.nxp.com (Postfix) with ESMTP id 034EC1A07AF;
+        Mon, 10 Jun 2019 10:16:37 +0200 (CEST)
 Received: from invc005.ap-rdc01.nxp.com (invc005.ap-rdc01.nxp.com [165.114.16.14])
-        by inva021.eu-rdc02.nxp.com (Postfix) with ESMTP id C92BB200736;
-        Mon, 10 Jun 2019 10:16:16 +0200 (CEST)
+        by inva020.eu-rdc02.nxp.com (Postfix) with ESMTP id 00C831A07AC;
+        Mon, 10 Jun 2019 10:16:29 +0200 (CEST)
 Received: from localhost.localdomain (mega.ap.freescale.net [10.192.208.232])
-        by invc005.ap-rdc01.nxp.com (Postfix) with ESMTP id 32A2E4031E;
-        Mon, 10 Jun 2019 16:16:07 +0800 (SGT)
+        by invc005.ap-rdc01.nxp.com (Postfix) with ESMTP id 53CA04031D;
+        Mon, 10 Jun 2019 16:16:19 +0800 (SGT)
 From:   yibin.gong@nxp.com
 To:     robh+dt@kernel.org, mark.rutland@arm.com, shawnguo@kernel.org,
         s.hauer@pengutronix.de, kernel@pengutronix.de, broonie@kernel.org,
@@ -36,9 +36,9 @@ To:     robh+dt@kernel.org, mark.rutland@arm.com, shawnguo@kernel.org,
 Cc:     linux-spi@vger.kernel.org, linux-imx@nxp.com,
         linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
         dmaengine@vger.kernel.org, devicetree@vger.kernel.org
-Subject: [PATCH v5 03/15] Revert "dmaengine: imx-sdma: refine to load context only once"
-Date:   Mon, 10 Jun 2019 16:17:41 +0800
-Message-Id: <20190610081753.11422-4-yibin.gong@nxp.com>
+Subject: [PATCH v5 10/15] dma: imx-sdma: add i.mx6ul/6sx compatible name
+Date:   Mon, 10 Jun 2019 16:17:48 +0800
+Message-Id: <20190610081753.11422-11-yibin.gong@nxp.com>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20190610081753.11422-1-yibin.gong@nxp.com>
 References: <20190610081753.11422-1-yibin.gong@nxp.com>
@@ -50,53 +50,26 @@ X-Mailing-List: dmaengine@vger.kernel.org
 
 From: Robin Gong <yibin.gong@nxp.com>
 
-This reverts commit ad0d92d7ba6aecbe2705907c38ff8d8be4da1e9c, because
-in spi-imx case, burst length may be changed dynamically.
+Add i.mx6ul and i.mx6sx compatible name in binding doc.
 
 Signed-off-by: Robin Gong <yibin.gong@nxp.com>
 ---
- drivers/dma/imx-sdma.c | 7 -------
- 1 file changed, 7 deletions(-)
+ Documentation/devicetree/bindings/dma/fsl-imx-sdma.txt | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/dma/imx-sdma.c b/drivers/dma/imx-sdma.c
-index ca296f0..21db6b69 100644
---- a/drivers/dma/imx-sdma.c
-+++ b/drivers/dma/imx-sdma.c
-@@ -377,7 +377,6 @@ struct sdma_channel {
- 	unsigned long			watermark_level;
- 	u32				shp_addr, per_addr;
- 	enum dma_status			status;
--	bool				context_loaded;
- 	struct imx_dma_data		data;
- 	struct work_struct		terminate_worker;
- };
-@@ -988,9 +987,6 @@ static int sdma_load_context(struct sdma_channel *sdmac)
- 	int ret;
- 	unsigned long flags;
- 
--	if (sdmac->context_loaded)
--		return 0;
--
- 	if (sdmac->direction == DMA_DEV_TO_MEM)
- 		load_address = sdmac->pc_from_device;
- 	else if (sdmac->direction == DMA_DEV_TO_DEV)
-@@ -1033,8 +1029,6 @@ static int sdma_load_context(struct sdma_channel *sdmac)
- 
- 	spin_unlock_irqrestore(&sdma->channel_0_lock, flags);
- 
--	sdmac->context_loaded = true;
--
- 	return ret;
- }
- 
-@@ -1074,7 +1068,6 @@ static void sdma_channel_terminate_work(struct work_struct *work)
- 	sdmac->desc = NULL;
- 	spin_unlock_irqrestore(&sdmac->vc.lock, flags);
- 	vchan_dma_desc_free_list(&sdmac->vc, &head);
--	sdmac->context_loaded = false;
- }
- 
- static int sdma_disable_channel_async(struct dma_chan *chan)
+diff --git a/Documentation/devicetree/bindings/dma/fsl-imx-sdma.txt b/Documentation/devicetree/bindings/dma/fsl-imx-sdma.txt
+index 9d8bbac..d024a83 100644
+--- a/Documentation/devicetree/bindings/dma/fsl-imx-sdma.txt
++++ b/Documentation/devicetree/bindings/dma/fsl-imx-sdma.txt
+@@ -9,6 +9,8 @@ Required properties:
+       "fsl,imx53-sdma"
+       "fsl,imx6q-sdma"
+       "fsl,imx7d-sdma"
++      "fsl,imx6sx-sdma"
++      "fsl,imx6ul-sdma"
+       "fsl,imx8mq-sdma"
+   The -to variants should be preferred since they allow to determine the
+   correct ROM script addresses needed for the driver to work without additional
 -- 
 2.7.4
 
