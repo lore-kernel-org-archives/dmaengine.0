@@ -6,27 +6,27 @@ X-Spam-Status: No, score=-8.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
 	USER_AGENT_GIT autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8AAC1C282DD
-	for <dmaengine@archiver.kernel.org>; Mon, 10 Jun 2019 08:17:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CF6CCC468C1
+	for <dmaengine@archiver.kernel.org>; Mon, 10 Jun 2019 08:17:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 63D0920859
-	for <dmaengine@archiver.kernel.org>; Mon, 10 Jun 2019 08:17:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B2BB220859
+	for <dmaengine@archiver.kernel.org>; Mon, 10 Jun 2019 08:17:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388541AbfFJIQq (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 10 Jun 2019 04:16:46 -0400
-Received: from inva021.nxp.com ([92.121.34.21]:37978 "EHLO inva021.nxp.com"
+        id S2388518AbfFJIQn (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 10 Jun 2019 04:16:43 -0400
+Received: from inva020.nxp.com ([92.121.34.13]:37446 "EHLO inva020.nxp.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2388529AbfFJIQq (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Mon, 10 Jun 2019 04:16:46 -0400
-Received: from inva021.nxp.com (localhost [127.0.0.1])
-        by inva021.eu-rdc02.nxp.com (Postfix) with ESMTP id 2292F20073C;
-        Mon, 10 Jun 2019 10:16:44 +0200 (CEST)
+        id S2388499AbfFJIQm (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Mon, 10 Jun 2019 04:16:42 -0400
+Received: from inva020.nxp.com (localhost [127.0.0.1])
+        by inva020.eu-rdc02.nxp.com (Postfix) with ESMTP id 6C3FE1A07CA;
+        Mon, 10 Jun 2019 10:16:40 +0200 (CEST)
 Received: from invc005.ap-rdc01.nxp.com (invc005.ap-rdc01.nxp.com [165.114.16.14])
-        by inva021.eu-rdc02.nxp.com (Postfix) with ESMTP id E5DBE2001C0;
-        Mon, 10 Jun 2019 10:16:35 +0200 (CEST)
+        by inva020.eu-rdc02.nxp.com (Postfix) with ESMTP id 6A3ED1A07CF;
+        Mon, 10 Jun 2019 10:16:32 +0200 (CEST)
 Received: from localhost.localdomain (mega.ap.freescale.net [10.192.208.232])
-        by invc005.ap-rdc01.nxp.com (Postfix) with ESMTP id 462444030E;
-        Mon, 10 Jun 2019 16:16:26 +0800 (SGT)
+        by invc005.ap-rdc01.nxp.com (Postfix) with ESMTP id C699640324;
+        Mon, 10 Jun 2019 16:16:22 +0800 (SGT)
 From:   yibin.gong@nxp.com
 To:     robh+dt@kernel.org, mark.rutland@arm.com, shawnguo@kernel.org,
         s.hauer@pengutronix.de, kernel@pengutronix.de, broonie@kernel.org,
@@ -36,9 +36,9 @@ To:     robh+dt@kernel.org, mark.rutland@arm.com, shawnguo@kernel.org,
 Cc:     linux-spi@vger.kernel.org, linux-imx@nxp.com,
         linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
         dmaengine@vger.kernel.org, devicetree@vger.kernel.org
-Subject: [PATCH v5 14/15]  arm64: defconfig: Enable SDMA on i.mx8mq/8mm
-Date:   Mon, 10 Jun 2019 16:17:52 +0800
-Message-Id: <20190610081753.11422-15-yibin.gong@nxp.com>
+Subject: [PATCH v5 12/15] ARM: dts: imx6ul: add dma support on ecspi
+Date:   Mon, 10 Jun 2019 16:17:50 +0800
+Message-Id: <20190610081753.11422-13-yibin.gong@nxp.com>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20190610081753.11422-1-yibin.gong@nxp.com>
 References: <20190610081753.11422-1-yibin.gong@nxp.com>
@@ -50,36 +50,53 @@ X-Mailing-List: dmaengine@vger.kernel.org
 
 From: Robin Gong <yibin.gong@nxp.com>
 
-Enable SDMA support on i.mx8mq/8mm chips, including enabling
-CONFIG_FW_LOADER_USER_HELPER/CONFIG_FW_LOADER_USER_HELPER_FALLBACK
-for firmware loaded by udev.
+Add dma support on ecspi.
 
 Signed-off-by: Robin Gong <yibin.gong@nxp.com>
 ---
- arch/arm64/configs/defconfig | 3 +++
- 1 file changed, 3 insertions(+)
+ arch/arm/boot/dts/imx6ul.dtsi | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-index bb0705e..e8aabc52 100644
---- a/arch/arm64/configs/defconfig
-+++ b/arch/arm64/configs/defconfig
-@@ -195,6 +195,8 @@ CONFIG_PCIE_HISI_STB=y
- CONFIG_UEVENT_HELPER_PATH="/sbin/hotplug"
- CONFIG_DEVTMPFS=y
- CONFIG_DEVTMPFS_MOUNT=y
-+CONFIG_FW_LOADER_USER_HELPER=y
-+CONFIG_FW_LOADER_USER_HELPER_FALLBACK=y
- CONFIG_HISILICON_LPC=y
- CONFIG_SIMPLE_PM_BUS=y
- CONFIG_MTD=y
-@@ -627,6 +629,7 @@ CONFIG_RTC_DRV_XGENE=y
- CONFIG_DMADEVICES=y
- CONFIG_FSL_EDMA=y
- CONFIG_DMA_BCM2835=m
-+CONFIG_IMX_SDMA=y
- CONFIG_K3_DMA=y
- CONFIG_MV_XOR=y
- CONFIG_MV_XOR_V2=y
+diff --git a/arch/arm/boot/dts/imx6ul.dtsi b/arch/arm/boot/dts/imx6ul.dtsi
+index fc388b8..4a34316 100644
+--- a/arch/arm/boot/dts/imx6ul.dtsi
++++ b/arch/arm/boot/dts/imx6ul.dtsi
+@@ -227,6 +227,8 @@
+ 					clocks = <&clks IMX6UL_CLK_ECSPI1>,
+ 						 <&clks IMX6UL_CLK_ECSPI1>;
+ 					clock-names = "ipg", "per";
++					dmas = <&sdma 3 7 1>, <&sdma 4 7 2>;
++					dma-names = "rx", "tx";
+ 					status = "disabled";
+ 				};
+ 
+@@ -239,6 +241,8 @@
+ 					clocks = <&clks IMX6UL_CLK_ECSPI2>,
+ 						 <&clks IMX6UL_CLK_ECSPI2>;
+ 					clock-names = "ipg", "per";
++					dmas = <&sdma 5 7 1>, <&sdma 6 7 2>;
++					dma-names = "rx", "tx";
+ 					status = "disabled";
+ 				};
+ 
+@@ -251,6 +255,8 @@
+ 					clocks = <&clks IMX6UL_CLK_ECSPI3>,
+ 						 <&clks IMX6UL_CLK_ECSPI3>;
+ 					clock-names = "ipg", "per";
++					dmas = <&sdma 7 7 1>, <&sdma 8 7 2>;
++					dma-names = "rx", "tx";
+ 					status = "disabled";
+ 				};
+ 
+@@ -263,6 +269,8 @@
+ 					clocks = <&clks IMX6UL_CLK_ECSPI4>,
+ 						 <&clks IMX6UL_CLK_ECSPI4>;
+ 					clock-names = "ipg", "per";
++					dmas = <&sdma 9 7 1>, <&sdma 10 7 2>;
++					dma-names = "rx", "tx";
+ 					status = "disabled";
+ 				};
+ 
 -- 
 2.7.4
 
