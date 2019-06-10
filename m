@@ -6,27 +6,27 @@ X-Spam-Status: No, score=-8.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
 	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1F53CC468C1
-	for <dmaengine@archiver.kernel.org>; Mon, 10 Jun 2019 08:16:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8E333C282DD
+	for <dmaengine@archiver.kernel.org>; Mon, 10 Jun 2019 08:16:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id ED8532082E
-	for <dmaengine@archiver.kernel.org>; Mon, 10 Jun 2019 08:16:38 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 63EA32085A
+	for <dmaengine@archiver.kernel.org>; Mon, 10 Jun 2019 08:16:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388466AbfFJIQi (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 10 Jun 2019 04:16:38 -0400
-Received: from inva020.nxp.com ([92.121.34.13]:37328 "EHLO inva020.nxp.com"
+        id S2388527AbfFJIQo (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 10 Jun 2019 04:16:44 -0400
+Received: from inva021.nxp.com ([92.121.34.21]:37858 "EHLO inva021.nxp.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2388454AbfFJIQi (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Mon, 10 Jun 2019 04:16:38 -0400
-Received: from inva020.nxp.com (localhost [127.0.0.1])
-        by inva020.eu-rdc02.nxp.com (Postfix) with ESMTP id 034EC1A07AF;
-        Mon, 10 Jun 2019 10:16:37 +0200 (CEST)
+        id S2388516AbfFJIQo (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Mon, 10 Jun 2019 04:16:44 -0400
+Received: from inva021.nxp.com (localhost [127.0.0.1])
+        by inva021.eu-rdc02.nxp.com (Postfix) with ESMTP id 2D868200737;
+        Mon, 10 Jun 2019 10:16:42 +0200 (CEST)
 Received: from invc005.ap-rdc01.nxp.com (invc005.ap-rdc01.nxp.com [165.114.16.14])
-        by inva020.eu-rdc02.nxp.com (Postfix) with ESMTP id 00C831A07AC;
-        Mon, 10 Jun 2019 10:16:29 +0200 (CEST)
+        by inva021.eu-rdc02.nxp.com (Postfix) with ESMTP id 2C0B320072F;
+        Mon, 10 Jun 2019 10:16:34 +0200 (CEST)
 Received: from localhost.localdomain (mega.ap.freescale.net [10.192.208.232])
-        by invc005.ap-rdc01.nxp.com (Postfix) with ESMTP id 53CA04031D;
-        Mon, 10 Jun 2019 16:16:19 +0800 (SGT)
+        by invc005.ap-rdc01.nxp.com (Postfix) with ESMTP id 81CE9402C0;
+        Mon, 10 Jun 2019 16:16:24 +0800 (SGT)
 From:   yibin.gong@nxp.com
 To:     robh+dt@kernel.org, mark.rutland@arm.com, shawnguo@kernel.org,
         s.hauer@pengutronix.de, kernel@pengutronix.de, broonie@kernel.org,
@@ -36,9 +36,9 @@ To:     robh+dt@kernel.org, mark.rutland@arm.com, shawnguo@kernel.org,
 Cc:     linux-spi@vger.kernel.org, linux-imx@nxp.com,
         linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
         dmaengine@vger.kernel.org, devicetree@vger.kernel.org
-Subject: [PATCH v5 10/15] dma: imx-sdma: add i.mx6ul/6sx compatible name
-Date:   Mon, 10 Jun 2019 16:17:48 +0800
-Message-Id: <20190610081753.11422-11-yibin.gong@nxp.com>
+Subject: [PATCH v5 13/15] ARM: dts: imx6sll: correct sdma compatible
+Date:   Mon, 10 Jun 2019 16:17:51 +0800
+Message-Id: <20190610081753.11422-14-yibin.gong@nxp.com>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20190610081753.11422-1-yibin.gong@nxp.com>
 References: <20190610081753.11422-1-yibin.gong@nxp.com>
@@ -50,26 +50,27 @@ X-Mailing-List: dmaengine@vger.kernel.org
 
 From: Robin Gong <yibin.gong@nxp.com>
 
-Add i.mx6ul and i.mx6sx compatible name in binding doc.
+Correct sdma compatible since ecspi errata ERR009165 has been fixed
+on i.mx6sll as i.mx6ul.
 
 Signed-off-by: Robin Gong <yibin.gong@nxp.com>
 ---
- Documentation/devicetree/bindings/dma/fsl-imx-sdma.txt | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/arm/boot/dts/imx6sll.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/Documentation/devicetree/bindings/dma/fsl-imx-sdma.txt b/Documentation/devicetree/bindings/dma/fsl-imx-sdma.txt
-index 9d8bbac..d024a83 100644
---- a/Documentation/devicetree/bindings/dma/fsl-imx-sdma.txt
-+++ b/Documentation/devicetree/bindings/dma/fsl-imx-sdma.txt
-@@ -9,6 +9,8 @@ Required properties:
-       "fsl,imx53-sdma"
-       "fsl,imx6q-sdma"
-       "fsl,imx7d-sdma"
-+      "fsl,imx6sx-sdma"
-+      "fsl,imx6ul-sdma"
-       "fsl,imx8mq-sdma"
-   The -to variants should be preferred since they allow to determine the
-   correct ROM script addresses needed for the driver to work without additional
+diff --git a/arch/arm/boot/dts/imx6sll.dtsi b/arch/arm/boot/dts/imx6sll.dtsi
+index 1b4899f..d810e10 100644
+--- a/arch/arm/boot/dts/imx6sll.dtsi
++++ b/arch/arm/boot/dts/imx6sll.dtsi
+@@ -619,7 +619,7 @@
+ 			};
+ 
+ 			sdma: dma-controller@20ec000 {
+-				compatible = "fsl,imx6sll-sdma", "fsl,imx35-sdma";
++				compatible = "fsl,imx6sll-sdma", "fsl,imx6ul-sdma";
+ 				reg = <0x020ec000 0x4000>;
+ 				interrupts = <GIC_SPI 2 IRQ_TYPE_LEVEL_HIGH>;
+ 				clocks = <&clks IMX6SLL_CLK_IPG>,
 -- 
 2.7.4
 
