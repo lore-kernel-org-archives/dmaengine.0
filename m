@@ -2,108 +2,87 @@ Return-Path: <SRS0=4r3/=UL=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.7 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 628C7C31E48
-	for <dmaengine@archiver.kernel.org>; Wed, 12 Jun 2019 12:26:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 06938C31E46
+	for <dmaengine@archiver.kernel.org>; Wed, 12 Jun 2019 12:43:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 3391C20874
-	for <dmaengine@archiver.kernel.org>; Wed, 12 Jun 2019 12:26:30 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1560342390;
-	bh=pwRn6AXU7SWO1tJhlUuy4tZltJqtkI4L1pFotOCpAEU=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:List-ID:From;
-	b=djOX9Aogoe/qqx6iDXXnd1QsKKkPZUegN/PPTER4dmlz/zJkfbqOF7a0JrsBeXFVt
-	 ihO4WjlLRXi4m5jyBaAYa+NJjQcy1b2ShAyEsTzlW/iMQwk9hDw9l67BZ+xl8BVRpJ
-	 g90UkNxsWM0vQcIfNQM2jBiKWpYspmYfwRFsK0Kw=
+	by mail.kernel.org (Postfix) with ESMTP id C8FCE20896
+	for <dmaengine@archiver.kernel.org>; Wed, 12 Jun 2019 12:43:08 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="DWxwBLkL"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732358AbfFLM03 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 12 Jun 2019 08:26:29 -0400
-Received: from mail.kernel.org ([198.145.29.99]:59854 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726941AbfFLM0Z (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Wed, 12 Jun 2019 08:26:25 -0400
-Received: from localhost (83-86-89-107.cable.dynamic.v4.ziggo.nl [83.86.89.107])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 00D69208C4;
-        Wed, 12 Jun 2019 12:26:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1560342384;
-        bh=pwRn6AXU7SWO1tJhlUuy4tZltJqtkI4L1pFotOCpAEU=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=1+/Xsan74f4XdgCu9VaU2vkspMbyBS8QvScp8jEVLqbpTrRML8fX+438U2RZ8BwdX
-         sfckT6icVtnTgxnNGd4gf70cQmwQk64okzM1M6Q5IrWO56V0wCZ47SifU7dJ+0ucAA
-         sX3IAgUh1x3CcIljR90kH0zUlAqcdikJl9zyx+aE=
-From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To:     dan.j.williams@intel.com, vkoul@kernel.org
-Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH 2/6] dma: bcm-sba-raid: no need to check return value of debugfs_create functions
-Date:   Wed, 12 Jun 2019 14:25:53 +0200
-Message-Id: <20190612122557.24158-2-gregkh@linuxfoundation.org>
-X-Mailer: git-send-email 2.22.0
-In-Reply-To: <20190612122557.24158-1-gregkh@linuxfoundation.org>
-References: <20190612122557.24158-1-gregkh@linuxfoundation.org>
+        id S2408386AbfFLMnI (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 12 Jun 2019 08:43:08 -0400
+Received: from mail-lf1-f66.google.com ([209.85.167.66]:41076 "EHLO
+        mail-lf1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2408385AbfFLMnI (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Wed, 12 Jun 2019 08:43:08 -0400
+Received: by mail-lf1-f66.google.com with SMTP id 136so11967580lfa.8
+        for <dmaengine@vger.kernel.org>; Wed, 12 Jun 2019 05:43:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=V6vkS5UR633RrFItkYoPggOLkHWdZUqhLnRcNcB2XtY=;
+        b=DWxwBLkLxa7JT3I+1DgXWyreCPEz8X0Ha8jOv9NGq44hFVhu69D4kduMd/7uGxdh2B
+         cIWRCPCq9jJl98wMSvk7YGohrJKFaa4PjW4Fvp5KM5MDKt+1PdvXIPoI1h4fZ95dVbD5
+         TaGctVbxlPdhfCs4/YfxV6Yh9vakovpMQRAO+ShReg9Ik42y2oFyjfGBQwD8ecB8Mx9e
+         KsV3DGPXKQnRi3XO26tvGXvahStPbVMpkwSPPBVvPQeeQqaFZ4WA11sLI2Sgc4bbOkal
+         7zKsFLYwaJ1Odl/F1Puf5twxvAEC0IhjHtX4SrQulhoxhfrJpiA1XP+ZGVCT+3bexZAM
+         SnOQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=V6vkS5UR633RrFItkYoPggOLkHWdZUqhLnRcNcB2XtY=;
+        b=AveMpOE7hjrlfuyNEq1O1/7zVoedPEZyUJMydd3uxk6d/2X/0t1xbpC3W2EsgudhVL
+         VTsaiyxUlpKqbnZIigaNqEvaYgrdk17ptZxNP4h+KvJz5erTy/Os7uJScmGVcGy6xFpj
+         0n8RHVsA1toXQ7OxXBxSsxP85ON5hRCeerJsEHdVLtoimv4uvNnRsC4eUl0+x526hUC0
+         cvfJZ8hJSQ/SNZ8sh6B2foc1vjrUyDCMmtOb0A8HCJCFs4smwfbgfy7gJl35k0GM986C
+         CtU6Snd47CAizY2Gszpfz94MYsMDKO4xopF3RV02Bc89/wXMNFTKaNrMkaPXK3DUpWBS
+         oJ+g==
+X-Gm-Message-State: APjAAAVkbWVUl0XIAwQZ8DjMtVdDQDwRy94f9IQ/TQifkipEcBKxIYZO
+        KNFegCJf70aRvdCw3dWCXIz2NirgJYKYrzX8ctNHqA==
+X-Google-Smtp-Source: APXvYqzdmDZbWcjzXKF4+qJgAd8KclcnVSdd+i4vFNoSgCTrLDHUk6WwujykW+79sxKgM6urEsZlcpEXfTd0l81tX9Q=
+X-Received: by 2002:ac2:50c4:: with SMTP id h4mr28043288lfm.61.1560343386199;
+ Wed, 12 Jun 2019 05:43:06 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20190612122557.24158-1-gregkh@linuxfoundation.org> <20190612122557.24158-3-gregkh@linuxfoundation.org>
+In-Reply-To: <20190612122557.24158-3-gregkh@linuxfoundation.org>
+From:   Linus Walleij <linus.walleij@linaro.org>
+Date:   Wed, 12 Jun 2019 14:42:54 +0200
+Message-ID: <CACRpkdYC0DJkasyLawUvLWuM4_hE7OWLxaXwwus11Ga8-2+Fdg@mail.gmail.com>
+Subject: Re: [PATCH 3/6] dma: coh901318: no need to cast away call to debugfs_create_file()
+To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc:     Dan Williams <dan.j.williams@intel.com>,
+        Vinod Koul <vkoul@kernel.org>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        dmaengine@vger.kernel.org,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-When calling debugfs functions, there is no need to ever check the
-return value.  The function can work or not, but the code logic should
-never do something different based on this.
+On Wed, Jun 12, 2019 at 2:26 PM Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
 
-Also, because there is no need to save the file dentry, remove the
-variable that was saving it as it was never even being used once set.
+> No need to check the return value of debugfs_create_file(), so no need
+> to provide a fake "cast away" of the return value either.
+>
+> Cc: Linus Walleij <linus.walleij@linaro.org>
+> Cc: Vinod Koul <vkoul@kernel.org>
+> Cc: Dan Williams <dan.j.williams@intel.com>
+> Cc: linux-arm-kernel@lists.infradead.org
+> Cc: dmaengine@vger.kernel.org
+> Cc: linux-kernel@vger.kernel.org
+> Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-Cc: Vinod Koul <vkoul@kernel.org>
-Cc: Dan Williams <dan.j.williams@intel.com>
-Cc: dmaengine@vger.kernel.org
-Cc: linux-kernel@vger.kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- drivers/dma/bcm-sba-raid.c | 13 +++----------
- 1 file changed, 3 insertions(+), 10 deletions(-)
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
 
-diff --git a/drivers/dma/bcm-sba-raid.c b/drivers/dma/bcm-sba-raid.c
-index fa81d0177765..275e90fa829d 100644
---- a/drivers/dma/bcm-sba-raid.c
-+++ b/drivers/dma/bcm-sba-raid.c
-@@ -164,7 +164,6 @@ struct sba_device {
- 	struct list_head reqs_free_list;
- 	/* DebugFS directory entries */
- 	struct dentry *root;
--	struct dentry *stats;
- };
- 
- /* ====== Command helper routines ===== */
-@@ -1716,17 +1715,11 @@ static int sba_probe(struct platform_device *pdev)
- 
- 	/* Create debugfs root entry */
- 	sba->root = debugfs_create_dir(dev_name(sba->dev), NULL);
--	if (IS_ERR_OR_NULL(sba->root)) {
--		dev_err(sba->dev, "failed to create debugfs root entry\n");
--		sba->root = NULL;
--		goto skip_debugfs;
--	}
- 
- 	/* Create debugfs stats entry */
--	sba->stats = debugfs_create_devm_seqfile(sba->dev, "stats", sba->root,
--						 sba_debugfs_stats_show);
--	if (IS_ERR_OR_NULL(sba->stats))
--		dev_err(sba->dev, "failed to create debugfs stats file\n");
-+	debugfs_create_devm_seqfile(sba->dev, "stats", sba->root,
-+				    sba_debugfs_stats_show);
-+
- skip_debugfs:
- 
- 	/* Register DMA device with Linux async framework */
--- 
-2.22.0
-
+Yours,
+Linus Walleij
