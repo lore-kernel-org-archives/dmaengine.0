@@ -2,87 +2,87 @@ Return-Path: <SRS0=4r3/=UL=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 06938C31E46
-	for <dmaengine@archiver.kernel.org>; Wed, 12 Jun 2019 12:43:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DA7A1C31E46
+	for <dmaengine@archiver.kernel.org>; Wed, 12 Jun 2019 15:18:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id C8FCE20896
-	for <dmaengine@archiver.kernel.org>; Wed, 12 Jun 2019 12:43:08 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="DWxwBLkL"
+	by mail.kernel.org (Postfix) with ESMTP id B093820874
+	for <dmaengine@archiver.kernel.org>; Wed, 12 Jun 2019 15:18:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2408386AbfFLMnI (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 12 Jun 2019 08:43:08 -0400
-Received: from mail-lf1-f66.google.com ([209.85.167.66]:41076 "EHLO
-        mail-lf1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2408385AbfFLMnI (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Wed, 12 Jun 2019 08:43:08 -0400
-Received: by mail-lf1-f66.google.com with SMTP id 136so11967580lfa.8
-        for <dmaengine@vger.kernel.org>; Wed, 12 Jun 2019 05:43:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=V6vkS5UR633RrFItkYoPggOLkHWdZUqhLnRcNcB2XtY=;
-        b=DWxwBLkLxa7JT3I+1DgXWyreCPEz8X0Ha8jOv9NGq44hFVhu69D4kduMd/7uGxdh2B
-         cIWRCPCq9jJl98wMSvk7YGohrJKFaa4PjW4Fvp5KM5MDKt+1PdvXIPoI1h4fZ95dVbD5
-         TaGctVbxlPdhfCs4/YfxV6Yh9vakovpMQRAO+ShReg9Ik42y2oFyjfGBQwD8ecB8Mx9e
-         KsV3DGPXKQnRi3XO26tvGXvahStPbVMpkwSPPBVvPQeeQqaFZ4WA11sLI2Sgc4bbOkal
-         7zKsFLYwaJ1Odl/F1Puf5twxvAEC0IhjHtX4SrQulhoxhfrJpiA1XP+ZGVCT+3bexZAM
-         SnOQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=V6vkS5UR633RrFItkYoPggOLkHWdZUqhLnRcNcB2XtY=;
-        b=AveMpOE7hjrlfuyNEq1O1/7zVoedPEZyUJMydd3uxk6d/2X/0t1xbpC3W2EsgudhVL
-         VTsaiyxUlpKqbnZIigaNqEvaYgrdk17ptZxNP4h+KvJz5erTy/Os7uJScmGVcGy6xFpj
-         0n8RHVsA1toXQ7OxXBxSsxP85ON5hRCeerJsEHdVLtoimv4uvNnRsC4eUl0+x526hUC0
-         cvfJZ8hJSQ/SNZ8sh6B2foc1vjrUyDCMmtOb0A8HCJCFs4smwfbgfy7gJl35k0GM986C
-         CtU6Snd47CAizY2Gszpfz94MYsMDKO4xopF3RV02Bc89/wXMNFTKaNrMkaPXK3DUpWBS
-         oJ+g==
-X-Gm-Message-State: APjAAAVkbWVUl0XIAwQZ8DjMtVdDQDwRy94f9IQ/TQifkipEcBKxIYZO
-        KNFegCJf70aRvdCw3dWCXIz2NirgJYKYrzX8ctNHqA==
-X-Google-Smtp-Source: APXvYqzdmDZbWcjzXKF4+qJgAd8KclcnVSdd+i4vFNoSgCTrLDHUk6WwujykW+79sxKgM6urEsZlcpEXfTd0l81tX9Q=
-X-Received: by 2002:ac2:50c4:: with SMTP id h4mr28043288lfm.61.1560343386199;
- Wed, 12 Jun 2019 05:43:06 -0700 (PDT)
-MIME-Version: 1.0
-References: <20190612122557.24158-1-gregkh@linuxfoundation.org> <20190612122557.24158-3-gregkh@linuxfoundation.org>
-In-Reply-To: <20190612122557.24158-3-gregkh@linuxfoundation.org>
-From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Wed, 12 Jun 2019 14:42:54 +0200
-Message-ID: <CACRpkdYC0DJkasyLawUvLWuM4_hE7OWLxaXwwus11Ga8-2+Fdg@mail.gmail.com>
-Subject: Re: [PATCH 3/6] dma: coh901318: no need to cast away call to debugfs_create_file()
+        id S2408415AbfFLPSZ (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 12 Jun 2019 11:18:25 -0400
+Received: from mga12.intel.com ([192.55.52.136]:5808 "EHLO mga12.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2407138AbfFLPSZ (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Wed, 12 Jun 2019 11:18:25 -0400
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga003.jf.intel.com ([10.7.209.27])
+  by fmsmga106.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 12 Jun 2019 08:18:24 -0700
+X-ExtLoop1: 1
+Received: from unknown (HELO localhost.localdomain) ([10.10.37.186])
+  by orsmga003.jf.intel.com with ESMTP; 12 Jun 2019 08:18:24 -0700
+Message-ID: <1560354254.22001.3.camel@intel.com>
+Subject: Re: [PATCH 5/6] dma: mic_x100_dma: no need to check return value of
+ debugfs_create functions
+From:   Sudeep Dutt <sudeep.dutt@intel.com>
 To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc:     Dan Williams <dan.j.williams@intel.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        dmaengine@vger.kernel.org,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Cc:     Sudeep Dutt <sudeep.dutt@intel.com>, dan.j.williams@intel.com,
+        vkoul@kernel.org, Ashutosh Dixit <ashutosh.dixit@intel.com>,
+        dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
+Date:   Wed, 12 Jun 2019 08:44:14 -0700
+In-Reply-To: <20190612122557.24158-5-gregkh@linuxfoundation.org>
+References: <20190612122557.24158-1-gregkh@linuxfoundation.org>
+         <20190612122557.24158-5-gregkh@linuxfoundation.org>
+Content-Type: text/plain; charset="us-ascii"
+X-Mailer: Evolution 3.12.11 (3.12.11-15.el7) 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On Wed, Jun 12, 2019 at 2:26 PM Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
+On Wed, 2019-06-12 at 14:25 +0200, Greg Kroah-Hartman wrote:
+> When calling debugfs functions, there is no need to ever check the
+> return value.  The function can work or not, but the code logic should
+> never do something different based on this.
+> 
 
-> No need to check the return value of debugfs_create_file(), so no need
-> to provide a fake "cast away" of the return value either.
->
-> Cc: Linus Walleij <linus.walleij@linaro.org>
-> Cc: Vinod Koul <vkoul@kernel.org>
+Thanks Greg.
+
+Reviewed-by: Sudeep Dutt <sudeep.dutt@intel.com>
+
+> Cc: Sudeep Dutt <sudeep.dutt@intel.com>
+> Cc: Ashutosh Dixit <ashutosh.dixit@intel.com>
 > Cc: Dan Williams <dan.j.williams@intel.com>
-> Cc: linux-arm-kernel@lists.infradead.org
+> Cc: Vinod Koul <vkoul@kernel.org>
 > Cc: dmaengine@vger.kernel.org
 > Cc: linux-kernel@vger.kernel.org
 > Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> ---
+>  drivers/dma/mic_x100_dma.c | 6 ++----
+>  1 file changed, 2 insertions(+), 4 deletions(-)
+> 
+> diff --git a/drivers/dma/mic_x100_dma.c b/drivers/dma/mic_x100_dma.c
+> index 6a91e28d537d..584e09661507 100644
+> --- a/drivers/dma/mic_x100_dma.c
+> +++ b/drivers/dma/mic_x100_dma.c
+> @@ -728,10 +728,8 @@ static int mic_dma_driver_probe(struct mbus_device *mbdev)
+>  	if (mic_dma_dbg) {
+>  		mic_dma_dev->dbg_dir = debugfs_create_dir(dev_name(&mbdev->dev),
+>  							  mic_dma_dbg);
+> -		if (mic_dma_dev->dbg_dir)
+> -			debugfs_create_file("mic_dma_reg", 0444,
+> -					    mic_dma_dev->dbg_dir, mic_dma_dev,
+> -					    &mic_dma_reg_fops);
+> +		debugfs_create_file("mic_dma_reg", 0444, mic_dma_dev->dbg_dir,
+> +				    mic_dma_dev, &mic_dma_reg_fops);
+>  	}
+>  	return 0;
+>  }
 
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
 
-Yours,
-Linus Walleij
