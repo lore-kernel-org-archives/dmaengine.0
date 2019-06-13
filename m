@@ -2,133 +2,81 @@ Return-Path: <SRS0=PHut=UM=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-21.3 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.6 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED,USER_AGENT_MUTT autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4F370C31E45
-	for <dmaengine@archiver.kernel.org>; Thu, 13 Jun 2019 17:10:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A6FF0C31E45
+	for <dmaengine@archiver.kernel.org>; Thu, 13 Jun 2019 18:07:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 232F8205ED
-	for <dmaengine@archiver.kernel.org>; Thu, 13 Jun 2019 17:10:12 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="ZLHNttwE"
+	by mail.kernel.org (Postfix) with ESMTP id 7C7AC2082C
+	for <dmaengine@archiver.kernel.org>; Thu, 13 Jun 2019 18:07:37 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=default; t=1560449257;
+	bh=Sg4URcoFfKoD00j6BQ6rs69foysWMk28J78oyol8SQM=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:List-ID:From;
+	b=wbNqhDGcSxNnMfS2zAZ87C4l6ZW1aFA6Z4UgSOBOIgVfUTol5rbTHMXCvPm+sDDZt
+	 /Z7qD+YwQBX5KOKegYdk8q5Z9mo80zqbJkwppkDlk0nld31yGm+Dq6xOiq228FjLOm
+	 OiHoGW5v58axcd0KYBZWuo2IOtyiCnoUPZQ/HKRc=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2393276AbfFMRKL (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Thu, 13 Jun 2019 13:10:11 -0400
-Received: from mail-yb1-f202.google.com ([209.85.219.202]:52556 "EHLO
-        mail-yb1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729440AbfFLWyY (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Wed, 12 Jun 2019 18:54:24 -0400
-Received: by mail-yb1-f202.google.com with SMTP id w6so16742229ybp.19
-        for <dmaengine@vger.kernel.org>; Wed, 12 Jun 2019 15:54:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:message-id:mime-version:subject:from:to:cc;
-        bh=cg4GgLRitlpfBz4sDsL5vn6FUGoGpxbPJh3gLwSUUBQ=;
-        b=ZLHNttwEAgZTax7rHR8gaWDTXQZJ50l9DUDJnEdnLxBOaXGxDAr82EtnSc5BX1ZWBu
-         nGJKRhsThNGVvZjC//PkMhwScvrQlOyP9acktXyXZiLBLkohjjzxz9oQK/GLNKEE0WbS
-         CekX2XykSzztg5BPNJ4Ba1pKuiiPYL3QuR3V8LRPu1FUPcNtlHbxIDMVZPvOEX6qH0ZT
-         RX5KjrpwAaxBp7PiupG96uSfVr0LPni1gXJftlW/tejqqKtNqYr8nzXyxYJX9DhpHfWT
-         cgWOXAcDsqT373njAwO6alaZyznYwla1mQVySwvSwEa8/FXROvDQH8tYtIij7HTFtbm4
-         hIWw==
+        id S1726265AbfFMSHh (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Thu, 13 Jun 2019 14:07:37 -0400
+Received: from mail-qt1-f193.google.com ([209.85.160.193]:38873 "EHLO
+        mail-qt1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725889AbfFMSHg (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Thu, 13 Jun 2019 14:07:36 -0400
+Received: by mail-qt1-f193.google.com with SMTP id n11so21496702qtl.5;
+        Thu, 13 Jun 2019 11:07:36 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
-        bh=cg4GgLRitlpfBz4sDsL5vn6FUGoGpxbPJh3gLwSUUBQ=;
-        b=oFrVwz6ymtXVilIfFc6dkj9z5UEZzjfefhXIEImKpSAC85Dc3c1VDsLh0ToaY01GPE
-         BsyF2+rHvOFa9kFbzZBx5YQQl3KdIrQkbmDiZcHAPXktHzXKDbQUqH1H/imlOZgBK75v
-         EhT6LBH52DcWkHi2ZgrHkkoEti4nGqwpBDun1hQKi/qK5EuMMiF90JuihvxhgfeGo0lV
-         GruQnNQLkB92Uu/TGGNJRi4VmSCbVQxTjrtNZyu6ZzcxoG9mXAPABVSbVt7dfwBZ9Xek
-         6HDRa/4wzTMP5eyQiMyJz/tMT+7t5yIJx4yus9nj9+5Enuwda7FJW0q2G/UFEHjZZWeZ
-         q07w==
-X-Gm-Message-State: APjAAAUP14xDggOU2BAuBwemAazdLE4E0R8aEFzvXwrBtAm9KfWk/zUu
-        rPw38G/333YqQIFpSrqtTATGht0pog==
-X-Google-Smtp-Source: APXvYqyp1vwDO0ridmK87WclU3RaE0JJbNMleIO7nj8j5IDLHINL+tdloA5ZhJOYL7Kuj/7NKE884DhW4w==
-X-Received: by 2002:a25:87:: with SMTP id 129mr41644872yba.196.1560380063404;
- Wed, 12 Jun 2019 15:54:23 -0700 (PDT)
-Date:   Wed, 12 Jun 2019 15:54:19 -0700
-Message-Id: <20190612225419.241618-1-nhuck@google.com>
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.22.0.rc2.383.gf4fbbf30c2-goog
-Subject: [PATCH] dmaengine: mv_xor_v2: Fix -Wshift-negative-value
-From:   Nathan Huckleberry <nhuck@google.com>
-To:     dan.j.williams@intel.com, vkoul@kernel.org
-Cc:     dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Nathan Huckleberry <nhuck@google.com>,
-        clang-built-linux@googlegroups.com
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=Oj9KR+T1fOqKQ4FESSVm1jnPwC60Lm44k4F4XEoSR9o=;
+        b=Sul5XNJ8VYOzBBN660uHAjDRKi0A+HhQhyMksgpIYFjnGdNFxkNW96wIBK/q3eCnYn
+         4bJlURsf/gV5mL9gNjoyvCRB1C9Gt/B/Bxcil1hO/s8MgPgpXzGJoExoAwxdPypjv3JH
+         0lWmeflYMJ6nZSha0Namvh6SFeZosihilDkaCmizF+K86sCmXcDyLe5jX6B2a2WTufNw
+         7C64lb+hDe+jPfTfsXFaInLHGdjR60WFS20jel9bgjABbFFPRSHs5dCLyF2pZMqjNMdT
+         SYePBGeyUds1BfTHCd8MyK56gcq6IZExGQWaaky8fL01FFuOhkHNbrsSewuka+rLu9xr
+         sL5Q==
+X-Gm-Message-State: APjAAAVxVVNd5JQ/OTmUszKfqBNJIrsDx4GNFU/VfrGNtpxsU/A3CcFi
+        LfCEgrHcx30Uqsh0Z8yLKkbmdpg=
+X-Google-Smtp-Source: APXvYqyUp5hOsDZfLIs3lS90BPkWO4yBBGNdYOYbR9C7XHV9gSGJlFFkMIKIt+hKrpXob3c5vDNzQQ==
+X-Received: by 2002:a0c:d1f0:: with SMTP id k45mr4787080qvh.69.1560449255707;
+        Thu, 13 Jun 2019 11:07:35 -0700 (PDT)
+Received: from localhost ([64.188.179.243])
+        by smtp.gmail.com with ESMTPSA id x10sm264965qtc.34.2019.06.13.11.07.34
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Thu, 13 Jun 2019 11:07:35 -0700 (PDT)
+Date:   Thu, 13 Jun 2019 12:07:34 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Peng Ma <peng.ma@nxp.com>
+Cc:     vkoul@kernel.org, robh+dt@kernel.org, shawnguo@kernel.org,
+        mark.rutland@arm.com, leoyang.li@nxp.com, dan.j.williams@intel.com,
+        dmaengine@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        Peng Ma <peng.ma@nxp.com>
+Subject: Re: [PATCH 4/4] dt-bindings: fsl-qdma: Add LS1028A qDMA bindings
+Message-ID: <20190613180734.GA3178@bogus>
+References: <20190506090344.37784-1-peng.ma@nxp.com>
+ <20190506090344.37784-4-peng.ma@nxp.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20190506090344.37784-4-peng.ma@nxp.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Clang produces the following warning
+On Mon,  6 May 2019 09:03:44 +0000, Peng Ma wrote:
+> Add LS1028A qDMA controller bindings to fsl-qdma bindings.
+> 
+> Signed-off-by: Peng Ma <peng.ma@nxp.com>
+> ---
+>  Documentation/devicetree/bindings/dma/fsl-qdma.txt |    1 +
+>  1 files changed, 1 insertions(+), 0 deletions(-)
+> 
 
-drivers/dma/mv_xor_v2.c:264:40: warning: shifting a negative signed value
-	is undefined [-Wshift-negative-value]
-        reg &= (~MV_XOR_V2_DMA_IMSG_THRD_MASK <<
-	MV_XOR_V2_DMA_IMSG_THRD_SHIFT);
-                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ^
-drivers/dma/mv_xor_v2.c:271:46: warning: shifting a negative signed value
-	is undefined [-Wshift-negative-value]
-        reg &= (~MV_XOR_V2_DMA_IMSG_TIMER_THRD_MASK <<
-                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ^
-
-Upon further investigation MV_XOR_V2_DMA_IMSG_THRD_SHIFT and
-MV_XOR_V2_DMA_IMSG_TIMER_THRD_SHIFT are both 0. Since shifting by 0 does
-nothing, these variables can be removed.
-
-Cc: clang-built-linux@googlegroups.com
-Link: https://github.com/ClangBuiltLinux/linux/issues/521
-Signed-off-by: Nathan Huckleberry <nhuck@google.com>
----
- drivers/dma/mv_xor_v2.c | 11 ++++-------
- 1 file changed, 4 insertions(+), 7 deletions(-)
-
-diff --git a/drivers/dma/mv_xor_v2.c b/drivers/dma/mv_xor_v2.c
-index fa5dab481203..5d2e0d1f3ec9 100644
---- a/drivers/dma/mv_xor_v2.c
-+++ b/drivers/dma/mv_xor_v2.c
-@@ -33,7 +33,6 @@
- #define MV_XOR_V2_DMA_IMSG_CDAT_OFF			0x014
- #define MV_XOR_V2_DMA_IMSG_THRD_OFF			0x018
- #define   MV_XOR_V2_DMA_IMSG_THRD_MASK			0x7FFF
--#define   MV_XOR_V2_DMA_IMSG_THRD_SHIFT			0x0
- #define   MV_XOR_V2_DMA_IMSG_TIMER_EN			BIT(18)
- #define MV_XOR_V2_DMA_DESQ_AWATTR_OFF			0x01C
-   /* Same flags as MV_XOR_V2_DMA_DESQ_ARATTR_OFF */
-@@ -50,7 +49,6 @@
- #define MV_XOR_V2_DMA_DESQ_ADD_OFF			0x808
- #define MV_XOR_V2_DMA_IMSG_TMOT				0x810
- #define   MV_XOR_V2_DMA_IMSG_TIMER_THRD_MASK		0x1FFF
--#define   MV_XOR_V2_DMA_IMSG_TIMER_THRD_SHIFT		0
- 
- /* XOR Global registers */
- #define MV_XOR_V2_GLOB_BW_CTRL				0x4
-@@ -261,16 +259,15 @@ void mv_xor_v2_enable_imsg_thrd(struct mv_xor_v2_device *xor_dev)
- 
- 	/* Configure threshold of number of descriptors, and enable timer */
- 	reg = readl(xor_dev->dma_base + MV_XOR_V2_DMA_IMSG_THRD_OFF);
--	reg &= (~MV_XOR_V2_DMA_IMSG_THRD_MASK << MV_XOR_V2_DMA_IMSG_THRD_SHIFT);
--	reg |= (MV_XOR_V2_DONE_IMSG_THRD << MV_XOR_V2_DMA_IMSG_THRD_SHIFT);
-+	reg &= (~MV_XOR_V2_DMA_IMSG_THRD_MASK);
-+	reg |= (MV_XOR_V2_DONE_IMSG_THRD);
- 	reg |= MV_XOR_V2_DMA_IMSG_TIMER_EN;
- 	writel(reg, xor_dev->dma_base + MV_XOR_V2_DMA_IMSG_THRD_OFF);
- 
- 	/* Configure Timer Threshold */
- 	reg = readl(xor_dev->dma_base + MV_XOR_V2_DMA_IMSG_TMOT);
--	reg &= (~MV_XOR_V2_DMA_IMSG_TIMER_THRD_MASK <<
--		MV_XOR_V2_DMA_IMSG_TIMER_THRD_SHIFT);
--	reg |= (MV_XOR_V2_TIMER_THRD << MV_XOR_V2_DMA_IMSG_TIMER_THRD_SHIFT);
-+	reg &= (~MV_XOR_V2_DMA_IMSG_TIMER_THRD_MASK);
-+	reg |= (MV_XOR_V2_TIMER_THRD);
- 	writel(reg, xor_dev->dma_base + MV_XOR_V2_DMA_IMSG_TMOT);
- }
- 
--- 
-2.22.0.rc2.383.gf4fbbf30c2-goog
-
+Reviewed-by: Rob Herring <robh@kernel.org>
