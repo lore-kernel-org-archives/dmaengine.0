@@ -2,119 +2,230 @@ Return-Path: <SRS0=LQqC=UN=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=0.0 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	UPPERCASE_50_75 autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.7 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D4A18C31E44
-	for <dmaengine@archiver.kernel.org>; Fri, 14 Jun 2019 08:15:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 901DBC31E4C
+	for <dmaengine@archiver.kernel.org>; Fri, 14 Jun 2019 08:15:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id A10C02080A
-	for <dmaengine@archiver.kernel.org>; Fri, 14 Jun 2019 08:15:35 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=analog.onmicrosoft.com header.i=@analog.onmicrosoft.com header.b="TpVpySkF"
+	by mail.kernel.org (Postfix) with ESMTP id 72A262080A
+	for <dmaengine@archiver.kernel.org>; Fri, 14 Jun 2019 08:15:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726567AbfFNIPb (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 14 Jun 2019 04:15:31 -0400
-Received: from mail-eopbgr680088.outbound.protection.outlook.com ([40.107.68.88]:16512
-        "EHLO NAM04-BN3-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1726551AbfFNIPW (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Fri, 14 Jun 2019 04:15:22 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=analog.onmicrosoft.com; s=selector1-analog-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=IU51HHqm9ZRnFP73vQTI1/OZYnHZ2XoUGsB7RVRqTs4=;
- b=TpVpySkFasLkbI97whyhdxxnp4IxgkxvLRdmwH+PKIRRjvW+N5u1oniLMhvR7X7rDYH2bemOgzAOzQPXQVS99mcewkIMXMjkJ3Msp2HEVr9zYiMshVEDJ19CTwuB4jwnqWCwgEB0mC0vOKznylcSI4P9TMvKBDBVUQrATQlg39U=
-Received: from BN3PR03CA0092.namprd03.prod.outlook.com
- (2a01:111:e400:7a4d::52) by CY4PR03MB3127.namprd03.prod.outlook.com
- (2603:10b6:910:53::28) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.1987.13; Fri, 14 Jun
- 2019 08:15:19 +0000
-Received: from CY1NAM02FT037.eop-nam02.prod.protection.outlook.com
- (2a01:111:f400:7e45::200) by BN3PR03CA0092.outlook.office365.com
- (2a01:111:e400:7a4d::52) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.1965.15 via Frontend
- Transport; Fri, 14 Jun 2019 08:14:37 +0000
-Authentication-Results: spf=pass (sender IP is 137.71.25.57)
- smtp.mailfrom=analog.com; vger.kernel.org; dkim=none (message not signed)
- header.d=none;vger.kernel.org; dmarc=bestguesspass action=none
- header.from=analog.com;
-Received-SPF: Pass (protection.outlook.com: domain of analog.com designates
- 137.71.25.57 as permitted sender) receiver=protection.outlook.com;
- client-ip=137.71.25.57; helo=nwd2mta2.analog.com;
-Received: from nwd2mta2.analog.com (137.71.25.57) by
- CY1NAM02FT037.mail.protection.outlook.com (10.152.75.77) with Microsoft SMTP
- Server (version=TLS1_0, cipher=TLS_RSA_WITH_AES_256_CBC_SHA) id 15.20.1987.11
- via Frontend Transport; Fri, 14 Jun 2019 08:14:36 +0000
-Received: from NWD2HUBCAS9.ad.analog.com (nwd2hubcas9.ad.analog.com [10.64.69.109])
-        by nwd2mta2.analog.com (8.13.8/8.13.8) with ESMTP id x5E8EZBP001917
-        (version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=OK);
-        Fri, 14 Jun 2019 01:14:35 -0700
-Received: from NWD2MBX7.ad.analog.com ([fe80::190e:f9c1:9a22:9663]) by
- NWD2HUBCAS9.ad.analog.com ([fe80::44a2:871b:49ab:ea47%12]) with mapi id
- 14.03.0415.000; Fri, 14 Jun 2019 04:14:35 -0400
-From:   "Ardelean, Alexandru" <alexandru.Ardelean@analog.com>
-To:     "vkoul@kernel.org" <vkoul@kernel.org>
-CC:     "dmaengine@vger.kernel.org" <dmaengine@vger.kernel.org>
-Subject: Re: [PATCH 4/4] dmaengine: axi-dmac: add regmap support
-Thread-Topic: [PATCH 4/4] dmaengine: axi-dmac: add regmap support
-Thread-Index: AQHVHFUHMVY6/rwYRk2QCcpVOmPugKaa9QMAgAAnxAA=
-Date:   Fri, 14 Jun 2019 08:14:34 +0000
-Message-ID: <d39019156021aabb2bf8ddc822b6f38b70e46bb5.camel@analog.com>
-References: <20190606104550.32336-1-alexandru.ardelean@analog.com>
-         <20190606104550.32336-4-alexandru.ardelean@analog.com>
-         <20190614055212.GC2962@vkoul-mobl>
-In-Reply-To: <20190614055212.GC2962@vkoul-mobl>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.48.65.129]
-x-adiroutedonprem: True
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <DFB49C229C847C469E279AEC1100F6DF@analog.com>
-Content-Transfer-Encoding: base64
-MIME-Version: 1.0
-X-EOPAttributedMessage: 0
-X-MS-Office365-Filtering-HT: Tenant
-X-Forefront-Antispam-Report: CIP:137.71.25.57;IPV:NLI;CTRY:US;EFV:NLI;SFV:NSPM;SFS:(10009020)(346002)(39860400002)(376002)(136003)(396003)(2980300002)(189003)(199004)(486006)(50466002)(5660300002)(47776003)(118296001)(6246003)(436003)(4744005)(6916009)(4326008)(126002)(11346002)(446003)(2616005)(2351001)(76176011)(305945005)(7636002)(7736002)(23676004)(102836004)(53546011)(7696005)(14444005)(426003)(356004)(14454004)(36756003)(5640700003)(229853002)(70206006)(476003)(2486003)(316002)(478600001)(26005)(8936002)(70586007)(336012)(106002)(246002)(186003)(2501003)(3846002)(2906002)(6116002)(1730700003)(86362001)(8676002);DIR:OUT;SFP:1101;SCL:1;SRVR:CY4PR03MB3127;H:nwd2mta2.analog.com;FPR:;SPF:Pass;LANG:en;PTR:nwd2mail11.analog.com;MX:1;A:1;
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: 54cf5469-5e06-4422-f172-08d6f0a056f9
-X-Microsoft-Antispam: BCL:0;PCL:0;RULEID:(2390118)(7020095)(4652040)(8989299)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(5600148)(711020)(4605104)(4709080)(1401327)(2017052603328)(7193020);SRVR:CY4PR03MB3127;
-X-MS-TrafficTypeDiagnostic: CY4PR03MB3127:
-X-Microsoft-Antispam-PRVS: <CY4PR03MB3127397B88DCA8D13AF207CDF9EE0@CY4PR03MB3127.namprd03.prod.outlook.com>
-X-MS-Oob-TLC-OOBClassifiers: OLM:3383;
-X-Forefront-PRVS: 0068C7E410
-X-MS-Exchange-SenderADCheck: 1
-X-Microsoft-Antispam-Message-Info: F8xuPK9gqBGolM5y0Lne6NQG+HXpCGhFGPhe9Cwi74Ck8FGoAZqhzWQj71thDBYet7jZxLtx69rqBaSeQqf3nQLuJtPPiR2w/QXmLaWGXkW4qT+Ed+2yURJZEE2Oy0ak7B3SVO4s5HMA4oGsPqgBfv+ms4cyDWtrghmGL1/PvhAVvuACAaYMpCEJQhIznljQtoeJYGgMd5T8mhvoJl7dukIgez3gI+A2UCrPF5GLgeP2+yB1v+hdHhqj399HCBoeHMvgtUMGoO54j7kkR3jTZll6aIflcyuBpUdNYhAV/aG3J0XhNCRSsCLjvkXmTkIthTlfIUF86USbx9xnvOqQ4anJ4lA2OR1hrH07TkBb/t5LDFwv8H6srYx+wc4gO1VyLdLuACUnNR8kEscaHJark1WIGB3z2712BsicXtnwwAM=
-X-OriginatorOrg: analog.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Jun 2019 08:14:36.1296
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 54cf5469-5e06-4422-f172-08d6f0a056f9
-X-MS-Exchange-CrossTenant-Id: eaa689b4-8f87-40e0-9c6f-7228de4d754a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=eaa689b4-8f87-40e0-9c6f-7228de4d754a;Ip=[137.71.25.57];Helo=[nwd2mta2.analog.com]
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY4PR03MB3127
+        id S1726821AbfFNIPx (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 14 Jun 2019 04:15:53 -0400
+Received: from inva021.nxp.com ([92.121.34.21]:58962 "EHLO inva021.nxp.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726788AbfFNIPw (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Fri, 14 Jun 2019 04:15:52 -0400
+Received: from inva021.nxp.com (localhost [127.0.0.1])
+        by inva021.eu-rdc02.nxp.com (Postfix) with ESMTP id 8FB522005DF;
+        Fri, 14 Jun 2019 10:15:50 +0200 (CEST)
+Received: from invc005.ap-rdc01.nxp.com (invc005.ap-rdc01.nxp.com [165.114.16.14])
+        by inva021.eu-rdc02.nxp.com (Postfix) with ESMTP id 4CDBD2005CB;
+        Fri, 14 Jun 2019 10:15:44 +0200 (CEST)
+Received: from localhost.localdomain (mega.ap.freescale.net [10.192.208.232])
+        by invc005.ap-rdc01.nxp.com (Postfix) with ESMTP id F347B4031E;
+        Fri, 14 Jun 2019 16:15:36 +0800 (SGT)
+From:   yibin.gong@nxp.com
+To:     robh@kernel.org, shawnguo@kernel.org, s.hauer@pengutronix.de,
+        festevam@gmail.com, mark.rutland@arm.com, vkoul@kernel.org,
+        dan.j.williams@intel.com, angelo@sysam.it
+Cc:     linux-imx@nxp.com, linux-arm-kernel@lists.infradead.org,
+        linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org,
+        devicetree@vger.kernel.org, kernel@pengutronix.de
+Subject: [PATCH v4 5/6] dmaengine: fsl-edma: add i.mx7ulp edma2 version support
+Date:   Fri, 14 Jun 2019 16:17:23 +0800
+Message-Id: <20190614081724.13366-6-yibin.gong@nxp.com>
+X-Mailer: git-send-email 2.17.1
+In-Reply-To: <20190614081724.13366-1-yibin.gong@nxp.com>
+References: <20190614081724.13366-1-yibin.gong@nxp.com>
+X-Virus-Scanned: ClamAV using ClamSMTP
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-T24gRnJpLCAyMDE5LTA2LTE0IGF0IDExOjIyICswNTMwLCBWaW5vZCBLb3VsIHdyb3RlOg0KPiBb
-RXh0ZXJuYWxdDQo+IA0KPiANCj4gT24gMDYtMDYtMTksIDEzOjQ1LCBBbGV4YW5kcnUgQXJkZWxl
-YW4gd3JvdGU6DQo+IA0KPiA+ICtzdGF0aWMgYm9vbCBheGlfZG1hY19yZWdtYXBfcmR3cihzdHJ1
-Y3QgZGV2aWNlICpkZXYsIHVuc2lnbmVkIGludCByZWcpDQo+ID4gK3sNCj4gPiArICAgICBzd2l0
-Y2ggKHJlZykgew0KPiA+ICsgICAgIGNhc2UgQVhJX0RNQUNfUkVHX0lSUV9NQVNLOg0KPiA+ICsg
-ICAgIGNhc2UgQVhJX0RNQUNfUkVHX0lSUV9TT1VSQ0U6DQo+ID4gKyAgICAgY2FzZSBBWElfRE1B
-Q19SRUdfSVJRX1BFTkRJTkc6DQo+ID4gKyAgICAgY2FzZSBBWElfRE1BQ19SRUdfQ1RSTDoNCj4g
-PiArICAgICBjYXNlIEFYSV9ETUFDX1JFR19UUkFOU0ZFUl9JRDoNCj4gPiArICAgICBjYXNlIEFY
-SV9ETUFDX1JFR19TVEFSVF9UUkFOU0ZFUjoNCj4gPiArICAgICBjYXNlIEFYSV9ETUFDX1JFR19G
-TEFHUzoNCj4gPiArICAgICBjYXNlIEFYSV9ETUFDX1JFR19ERVNUX0FERFJFU1M6DQo+ID4gKyAg
-ICAgY2FzZSBBWElfRE1BQ19SRUdfU1JDX0FERFJFU1M6DQo+ID4gKyAgICAgY2FzZSBBWElfRE1B
-Q19SRUdfWF9MRU5HVEg6DQo+ID4gKyAgICAgY2FzZSBBWElfRE1BQ19SRUdfWV9MRU5HVEg6DQo+
-ID4gKyAgICAgY2FzZSBBWElfRE1BQ19SRUdfREVTVF9TVFJJREU6DQo+ID4gKyAgICAgY2FzZSBB
-WElfRE1BQ19SRUdfU1JDX1NUUklERToNCj4gPiArICAgICBjYXNlIEFYSV9ETUFDX1JFR19UUkFO
-U0ZFUl9ET05FOg0KPiA+ICsgICAgIGNhc2UgQVhJX0RNQUNfUkVHX0FDVElWRV9UUkFOU0ZFUl9J
-RCA6DQo+IA0KPiBTcGFjZSBiZWZvcmUgOiAuLi4/DQoNCm9vcHMNCnNvcnJ5IGFib3V0IHRoYXQN
-Cg0KdGhhbmtzIGZvciBmaXhpbmcNCg0KQWxleA0KDQo+IA0KPiAtLQ0KPiB+Vmlub2QNCg==
+From: Robin Gong <yibin.gong@nxp.com>
+
+Add edma2 for i.mx7ulp by version v3, since v2 has already
+been used by mcf-edma.
+The big changes based on v1 are belows:
+1. only one dmamux.
+2. another clock dma_clk except dmamux clk.
+3. 16 independent interrupts instead of only one interrupt for
+all channels.
+
+Signed-off-by: Robin Gong <yibin.gong@nxp.com>
+---
+ drivers/dma/fsl-edma-common.c | 18 +++++++++++-
+ drivers/dma/fsl-edma-common.h |  4 +++
+ drivers/dma/fsl-edma.c        | 66 +++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 87 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/dma/fsl-edma-common.c b/drivers/dma/fsl-edma-common.c
+index 44d92c3..6d6d8a4 100644
+--- a/drivers/dma/fsl-edma-common.c
++++ b/drivers/dma/fsl-edma-common.c
+@@ -90,6 +90,19 @@ static void mux_configure8(struct fsl_edma_chan *fsl_chan, void __iomem *addr,
+ 	iowrite8(val8, addr + off);
+ }
+ 
++void mux_configure32(struct fsl_edma_chan *fsl_chan, void __iomem *addr,
++		     u32 off, u32 slot, bool enable)
++{
++	u32 val;
++
++	if (enable)
++		val = EDMAMUX_CHCFG_ENBL << 24 | slot;
++	else
++		val = EDMAMUX_CHCFG_DIS;
++
++	iowrite32(val, addr + off * 4);
++}
++
+ void fsl_edma_chan_mux(struct fsl_edma_chan *fsl_chan,
+ 			unsigned int slot, bool enable)
+ {
+@@ -103,7 +116,10 @@ void fsl_edma_chan_mux(struct fsl_edma_chan *fsl_chan,
+ 	muxaddr = fsl_chan->edma->muxbase[ch / chans_per_mux];
+ 	slot = EDMAMUX_CHCFG_SOURCE(slot);
+ 
+-	mux_configure8(fsl_chan, muxaddr, ch_off, slot, enable);
++	if (fsl_chan->edma->drvdata->version == v3)
++		mux_configure32(fsl_chan, muxaddr, ch_off, slot, enable);
++	else
++		mux_configure8(fsl_chan, muxaddr, ch_off, slot, enable);
+ }
+ EXPORT_SYMBOL_GPL(fsl_edma_chan_mux);
+ 
+diff --git a/drivers/dma/fsl-edma-common.h b/drivers/dma/fsl-edma-common.h
+index 4e17556..5eaa290 100644
+--- a/drivers/dma/fsl-edma-common.h
++++ b/drivers/dma/fsl-edma-common.h
+@@ -125,6 +125,7 @@ struct fsl_edma_chan {
+ 	dma_addr_t			dma_dev_addr;
+ 	u32				dma_dev_size;
+ 	enum dma_data_direction		dma_dir;
++	char				chan_name[16];
+ };
+ 
+ struct fsl_edma_desc {
+@@ -139,11 +140,13 @@ struct fsl_edma_desc {
+ enum edma_version {
+ 	v1, /* 32ch, Vybrid, mpc57x, etc */
+ 	v2, /* 64ch Coldfire */
++	v3, /* 32ch, i.mx7ulp */
+ };
+ 
+ struct fsl_edma_drvdata {
+ 	enum edma_version	version;
+ 	u32			dmamuxs;
++	bool			has_dmaclk;
+ 	int			(*setup_irq)(struct platform_device *pdev,
+ 					     struct fsl_edma_engine *fsl_edma);
+ };
+@@ -153,6 +156,7 @@ struct fsl_edma_engine {
+ 	void __iomem		*membase;
+ 	void __iomem		*muxbase[DMAMUX_NR];
+ 	struct clk		*muxclk[DMAMUX_NR];
++	struct clk		*dmaclk;
+ 	struct mutex		fsl_edma_mutex;
+ 	const struct fsl_edma_drvdata *drvdata;
+ 	u32			n_chans;
+diff --git a/drivers/dma/fsl-edma.c b/drivers/dma/fsl-edma.c
+index fcbad6a..05215ab 100644
+--- a/drivers/dma/fsl-edma.c
++++ b/drivers/dma/fsl-edma.c
+@@ -162,6 +162,50 @@ fsl_edma_irq_init(struct platform_device *pdev, struct fsl_edma_engine *fsl_edma
+ 	return 0;
+ }
+ 
++static int
++fsl_edma2_irq_init(struct platform_device *pdev,
++		   struct fsl_edma_engine *fsl_edma)
++{
++	struct device_node *np = pdev->dev.of_node;
++	int i, ret, irq;
++	int count;
++
++	count = of_irq_count(np);
++	dev_dbg(&pdev->dev, "%s Found %d interrupts\r\n", __func__, count);
++	if (count <= 2) {
++		dev_err(&pdev->dev, "Interrupts in DTS not correct.\n");
++		return -EINVAL;
++	}
++	/*
++	 * 16 channel independent interrupts + 1 error interrupt on i.mx7ulp.
++	 * 2 channel share one interrupt, for example, ch0/ch16, ch1/ch17...
++	 * For now, just simply request irq without IRQF_SHARED flag, since 16
++	 * channels are enough on i.mx7ulp whose M4 domain own some peripherals.
++	 */
++	for (i = 0; i < count; i++) {
++		irq = platform_get_irq(pdev, i);
++		if (irq < 0)
++			return -ENXIO;
++
++		sprintf(fsl_edma->chans[i].chan_name, "eDMA2-CH%02d", i);
++
++		/* The last IRQ is for eDMA err */
++		if (i == count - 1)
++			ret = devm_request_irq(&pdev->dev, irq,
++						fsl_edma_err_handler,
++						0, "eDMA2-ERR", fsl_edma);
++		else
++			ret = devm_request_irq(&pdev->dev, irq,
++						fsl_edma_tx_handler, 0,
++						fsl_edma->chans[i].chan_name,
++						fsl_edma);
++		if (ret)
++			return ret;
++	}
++
++	return 0;
++}
++
+ static void fsl_edma_irq_exit(
+ 		struct platform_device *pdev, struct fsl_edma_engine *fsl_edma)
+ {
+@@ -187,8 +231,16 @@ static struct fsl_edma_drvdata vf610_data = {
+ 	.setup_irq = fsl_edma_irq_init,
+ };
+ 
++static struct fsl_edma_drvdata imx7ulp_data = {
++	.version = v3,
++	.dmamuxs = 1,
++	.has_dmaclk = true,
++	.setup_irq = fsl_edma2_irq_init,
++};
++
+ static const struct of_device_id fsl_edma_dt_ids[] = {
+ 	{ .compatible = "fsl,vf610-edma", .data = &vf610_data},
++	{ .compatible = "fsl,imx7ulp-edma", .data = &imx7ulp_data},
+ 	{ /* sentinel */ }
+ };
+ MODULE_DEVICE_TABLE(of, fsl_edma_dt_ids);
+@@ -236,6 +288,20 @@ static int fsl_edma_probe(struct platform_device *pdev)
+ 	fsl_edma_setup_regs(fsl_edma);
+ 	regs = &fsl_edma->regs;
+ 
++	if (drvdata->has_dmaclk) {
++		fsl_edma->dmaclk = devm_clk_get(&pdev->dev, "dma");
++		if (IS_ERR(fsl_edma->dmaclk)) {
++			dev_err(&pdev->dev, "Missing DMA block clock.\n");
++			return PTR_ERR(fsl_edma->dmaclk);
++		}
++
++		ret = clk_prepare_enable(fsl_edma->dmaclk);
++		if (ret) {
++			dev_err(&pdev->dev, "DMA clk block failed.\n");
++			return ret;
++		}
++	}
++
+ 	for (i = 0; i < fsl_edma->drvdata->dmamuxs; i++) {
+ 		char clkname[32];
+ 
+-- 
+2.7.4
+
