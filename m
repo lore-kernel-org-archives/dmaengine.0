@@ -4,49 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-9.1 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4274CC31E50
-	for <dmaengine@archiver.kernel.org>; Fri, 14 Jun 2019 20:39:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7C06BC31E4B
+	for <dmaengine@archiver.kernel.org>; Fri, 14 Jun 2019 20:39:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 0FF492084D
-	for <dmaengine@archiver.kernel.org>; Fri, 14 Jun 2019 20:39:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 49A012084D
+	for <dmaengine@archiver.kernel.org>; Fri, 14 Jun 2019 20:39:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1560544763;
-	bh=EGJ5b7wgv3N9IuHk6sFXpBIJQl97aOdOMqmObwWV09w=;
+	s=default; t=1560544776;
+	bh=dUTdEH27/0TdMZv/PHxATEcSeN8pCEOoHAd9DqixFSo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:List-ID:From;
-	b=QgIWloBJvXingmMwKKAcvUi5xUuIFxqwMx7gyY3I1TRPU7O9/ERm3JMouuX61y6tW
-	 YF5Af2yU0QZhtiTqOlgFeviYA8ZcnPs39S0I2iKMFFionOVFMluX1nrhlITlMZmOMp
-	 5yNhz1xo7eJwFgJCf0fuB2jLLtlqc7geYaJQZj+A=
+	b=CfmOALscLjEa570F6ejQ6dIEofI0tbGqe9q7wUSwrQuAmTTXiO26PD7C9V3vAkzd2
+	 hR9GXyQLV+2lrXAgPyZ6lzwSWdV8gcJaxA7rpbFKtpbQ6To452PFL+eLlN4r3cyo5E
+	 5GR+uDl4rJ7LFPXsVKXwAUtooaUMC+thsYYn/CfI=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727706AbfFNUjW (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 14 Jun 2019 16:39:22 -0400
-Received: from mail.kernel.org ([198.145.29.99]:50466 "EHLO mail.kernel.org"
+        id S1726758AbfFNUjf (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 14 Jun 2019 16:39:35 -0400
+Received: from mail.kernel.org ([198.145.29.99]:50372 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726393AbfFNU2v (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Fri, 14 Jun 2019 16:28:51 -0400
+        id S1726370AbfFNU2u (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Fri, 14 Jun 2019 16:28:50 -0400
 Received: from sasha-vm.mshome.net (unknown [131.107.159.134])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 05B4421848;
-        Fri, 14 Jun 2019 20:28:51 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id EF7C42184D;
+        Fri, 14 Jun 2019 20:28:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1560544131;
-        bh=EGJ5b7wgv3N9IuHk6sFXpBIJQl97aOdOMqmObwWV09w=;
+        s=default; t=1560544130;
+        bh=dUTdEH27/0TdMZv/PHxATEcSeN8pCEOoHAd9DqixFSo=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=Y6t2HJuM+I+Dis0ZYLVJhftx49RhgShdMwPJ6yLg2W2iZb9S2hfstsfIJazHRaVmn
-         8m+nqWGDGExnBmKbqk7yWp8YAMp2XSDKlygfY68AbJl8peis0j+BJ5PMyGwKIJMpxh
-         97NwiGBqGm2ayKSoca50lznF7n85wEaZ59S18IYk=
+        b=E8iMaWWIxiL9hayqvVD7lzJHKYM01iS5ZESvBYHP1KoN3y5jMeY6cQEUPAaNSyg3F
+         C/syOp+efaOaS9rfB6Hoxv8p8dzwx9R9edSDpl9GB1D8pCppcbI8cDjh6h+PhDhJ4z
+         sbIhpE42X4vJ3dRHtw8dbMC2erCu+f7X3EcTLk18=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Eric Long <eric.long@unisoc.com>,
-        Baolin Wang <baolin.wang@linaro.org>,
+Cc:     Dan Carpenter <dan.carpenter@oracle.com>,
         Vinod Koul <vkoul@kernel.org>, Sasha Levin <sashal@kernel.org>,
         dmaengine@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.1 08/59] dmaengine: sprd: Fix the incorrect start for 2-stage destination channels
-Date:   Fri, 14 Jun 2019 16:27:52 -0400
-Message-Id: <20190614202843.26941-8-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 5.1 05/59] dmaengine: mediatek-cqdma: sleeping in atomic context
+Date:   Fri, 14 Jun 2019 16:27:49 -0400
+Message-Id: <20190614202843.26941-5-sashal@kernel.org>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20190614202843.26941-1-sashal@kernel.org>
 References: <20190614202843.26941-1-sashal@kernel.org>
@@ -59,36 +58,49 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-From: Eric Long <eric.long@unisoc.com>
+From: Dan Carpenter <dan.carpenter@oracle.com>
 
-[ Upstream commit 3d626a97f0303e9c30d063434b749de3f0f91fb5 ]
+[ Upstream commit 069b3c4214f27b130d0642f32438560db30f452e ]
 
-The 2-stage destination channel will be triggered by source channel
-automatically, which means we should not trigger it by software request.
+The mtk_cqdma_poll_engine_done() function takes a true/false parameter
+where true means it's called from atomic context.  There are a couple
+places where it was set to false but it's actually in atomic context
+so it should be true.
 
-Signed-off-by: Eric Long <eric.long@unisoc.com>
-Signed-off-by: Baolin Wang <baolin.wang@linaro.org>
+All the callers for mtk_cqdma_hard_reset() are holding a spin_lock and
+in mtk_cqdma_free_chan_resources() we take a spin_lock before calling
+the mtk_cqdma_poll_engine_done() function.
+
+Fixes: b1f01e48df5a ("dmaengine: mediatek: Add MediaTek Command-Queue DMA controller for MT6765 SoC")
+Signed-off-by: Dan Carpenter <dan.carpenter@oracle.com>
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/sprd-dma.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/dma/mediatek/mtk-cqdma.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/dma/sprd-dma.c b/drivers/dma/sprd-dma.c
-index 431e289d59a5..0f92e60529d1 100644
---- a/drivers/dma/sprd-dma.c
-+++ b/drivers/dma/sprd-dma.c
-@@ -510,7 +510,9 @@ static void sprd_dma_start(struct sprd_dma_chn *schan)
- 	sprd_dma_set_uid(schan);
- 	sprd_dma_enable_chn(schan);
+diff --git a/drivers/dma/mediatek/mtk-cqdma.c b/drivers/dma/mediatek/mtk-cqdma.c
+index 814853842e29..723b11c190b3 100644
+--- a/drivers/dma/mediatek/mtk-cqdma.c
++++ b/drivers/dma/mediatek/mtk-cqdma.c
+@@ -225,7 +225,7 @@ static int mtk_cqdma_hard_reset(struct mtk_cqdma_pchan *pc)
+ 	mtk_dma_set(pc, MTK_CQDMA_RESET, MTK_CQDMA_HARD_RST_BIT);
+ 	mtk_dma_clr(pc, MTK_CQDMA_RESET, MTK_CQDMA_HARD_RST_BIT);
  
--	if (schan->dev_id == SPRD_DMA_SOFTWARE_UID)
-+	if (schan->dev_id == SPRD_DMA_SOFTWARE_UID &&
-+	    schan->chn_mode != SPRD_DMA_DST_CHN0 &&
-+	    schan->chn_mode != SPRD_DMA_DST_CHN1)
- 		sprd_dma_soft_request(schan);
+-	return mtk_cqdma_poll_engine_done(pc, false);
++	return mtk_cqdma_poll_engine_done(pc, true);
  }
  
+ static void mtk_cqdma_start(struct mtk_cqdma_pchan *pc,
+@@ -671,7 +671,7 @@ static void mtk_cqdma_free_chan_resources(struct dma_chan *c)
+ 		mtk_dma_set(cvc->pc, MTK_CQDMA_FLUSH, MTK_CQDMA_FLUSH_BIT);
+ 
+ 		/* wait for the completion of flush operation */
+-		if (mtk_cqdma_poll_engine_done(cvc->pc, false) < 0)
++		if (mtk_cqdma_poll_engine_done(cvc->pc, true) < 0)
+ 			dev_err(cqdma2dev(to_cqdma_dev(c)), "cqdma flush timeout\n");
+ 
+ 		/* clear the flush bit and interrupt flag */
 -- 
 2.20.1
 
