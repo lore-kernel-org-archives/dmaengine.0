@@ -7,48 +7,49 @@ X-Spam-Status: No, score=-9.1 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=unavailable
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CE448C31E4B
-	for <dmaengine@archiver.kernel.org>; Fri, 14 Jun 2019 20:36:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A5FB2C31E4E
+	for <dmaengine@archiver.kernel.org>; Fri, 14 Jun 2019 20:39:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 9B90C217F9
-	for <dmaengine@archiver.kernel.org>; Fri, 14 Jun 2019 20:36:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 72FA72184B
+	for <dmaengine@archiver.kernel.org>; Fri, 14 Jun 2019 20:39:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1560544569;
-	bh=1XWVcna6ibM0e624qpjkh6BRvMNG84hwCnjcEQh/zcg=;
+	s=default; t=1560544755;
+	bh=v1aZ80rCPAZc/VTMHWYtYVRdyC/Tp44TTIvq+21x6MQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:List-ID:From;
-	b=rCmVl6KZ4mTGrP69ABPjksPkgD3Lb6o0C7FS6y0f+eU+Xh97DeotmR3u9NE/Y8F0T
-	 RsS7fu3ROPMAiO1F+vwZS1ObVJLd+4oGIW8XN2+uTtYUrBegCkfxKpXiN/ujMyTNzR
-	 WYp8x5qWdjfKKoZZgirM2Adn3MzExSClWkolupuQ=
+	b=HmPk6m1g/q4/7Hu/LFa4tvCdBiXe2kz67tAwxYRjkcfAfsHX/D4GZ6yVGXaEW8uEw
+	 lA3EkAwek38eaXk6pSJmM8Xb5TtlwzomPokQcCRgu/2gDVT+txo5Ql9s7HkEAr7E/z
+	 wVr5s2YPQ81chabHqlTWs1a2gTVVtWZORdwEYPUs=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727179AbfFNUgF (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 14 Jun 2019 16:36:05 -0400
-Received: from mail.kernel.org ([198.145.29.99]:52090 "EHLO mail.kernel.org"
+        id S1726457AbfFNU2y (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 14 Jun 2019 16:28:54 -0400
+Received: from mail.kernel.org ([198.145.29.99]:50538 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727177AbfFNU3t (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Fri, 14 Jun 2019 16:29:49 -0400
+        id S1726429AbfFNU2x (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Fri, 14 Jun 2019 16:28:53 -0400
 Received: from sasha-vm.mshome.net (unknown [131.107.159.134])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 8DEEE21848;
-        Fri, 14 Jun 2019 20:29:48 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 517E52186A;
+        Fri, 14 Jun 2019 20:28:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1560544188;
-        bh=1XWVcna6ibM0e624qpjkh6BRvMNG84hwCnjcEQh/zcg=;
+        s=default; t=1560544131;
+        bh=v1aZ80rCPAZc/VTMHWYtYVRdyC/Tp44TTIvq+21x6MQ=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=LcG0ULtSlJS2kIxIiZPHuKHmsykL78+DEWpejEbQMm+r+xXJWXAOs0wHeAJRN29Q4
-         PYgkIWS4RK0zcPc1ZdVvh+g7hy4tloZuZR1e0tznP2BAM669kZBadvn/rIJvJAkClS
-         krnBxsClz360GxuRBtgWUy6xECTsjjlBq0D3dx30=
+        b=YCngdZZ8qHpBjwTCDazCL8Zw8TYv5/1p00yWJuHjWAYAzPpnlnfhKbPBn0fvd/T4e
+         cW4XhwwE4ikP1ipHGmljzObY/YoE0QwNlp8cpXuUNMVXOHr3sbg1XzL1vspcQWYpM5
+         QKmysU5sWPaVL79vV6C5VJ0rBnH346Nu+klUCKGg=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Colin Ian King <colin.king@canonical.com>,
+Cc:     Eric Long <eric.long@unisoc.com>,
+        Baolin Wang <baolin.wang@linaro.org>,
         Vinod Koul <vkoul@kernel.org>, Sasha Levin <sashal@kernel.org>,
         dmaengine@vger.kernel.org
-Subject: [PATCH AUTOSEL 4.19 02/39] dmaengine: dw-axi-dmac: fix null dereference when pointer first is null
-Date:   Fri, 14 Jun 2019 16:29:07 -0400
-Message-Id: <20190614202946.27385-2-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 5.1 09/59] dmaengine: sprd: Fix block length overflow
+Date:   Fri, 14 Jun 2019 16:27:53 -0400
+Message-Id: <20190614202843.26941-9-sashal@kernel.org>
 X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20190614202946.27385-1-sashal@kernel.org>
-References: <20190614202946.27385-1-sashal@kernel.org>
+In-Reply-To: <20190614202843.26941-1-sashal@kernel.org>
+References: <20190614202843.26941-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
@@ -58,39 +59,38 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-From: Colin Ian King <colin.king@canonical.com>
+From: Eric Long <eric.long@unisoc.com>
 
-[ Upstream commit 0788611c9a0925c607de536b2449de5ed98ef8df ]
+[ Upstream commit 89d03b3c126d683f7b2cd5b07178493993d12448 ]
 
-In the unlikely event that axi_desc_get returns a null desc in the
-very first iteration of the while-loop the error exit path ends
-up calling axi_desc_put on a null pointer 'first' and this causes
-a null pointer dereference.  Fix this by adding a null check on
-pointer 'first' before calling axi_desc_put.
+The maximum value of block length is 0xffff, so if the configured transfer length
+is more than 0xffff, that will cause block length overflow to lead a configuration
+error.
 
-Addresses-Coverity: ("Explicit null dereference")
-Fixes: 1fe20f1b8454 ("dmaengine: Introduce DW AXI DMAC driver")
-Signed-off-by: Colin Ian King <colin.king@canonical.com>
+Thus we can set block length as the maximum burst length to avoid this issue, since
+the maximum burst length will not be a big value which is more than 0xffff.
+
+Signed-off-by: Eric Long <eric.long@unisoc.com>
+Signed-off-by: Baolin Wang <baolin.wang@linaro.org>
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/dma/sprd-dma.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-index c4eb55e3011c..c05ef7f1d7b6 100644
---- a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-+++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-@@ -512,7 +512,8 @@ dma_chan_prep_dma_memcpy(struct dma_chan *dchan, dma_addr_t dst_adr,
- 	return vchan_tx_prep(&chan->vc, &first->vd, flags);
+diff --git a/drivers/dma/sprd-dma.c b/drivers/dma/sprd-dma.c
+index 0f92e60529d1..a01c23246632 100644
+--- a/drivers/dma/sprd-dma.c
++++ b/drivers/dma/sprd-dma.c
+@@ -778,7 +778,7 @@ static int sprd_dma_fill_desc(struct dma_chan *chan,
+ 	temp |= slave_cfg->src_maxburst & SPRD_DMA_FRG_LEN_MASK;
+ 	hw->frg_len = temp;
  
- err_desc_get:
--	axi_desc_put(first);
-+	if (first)
-+		axi_desc_put(first);
- 	return NULL;
- }
+-	hw->blk_len = len & SPRD_DMA_BLK_LEN_MASK;
++	hw->blk_len = slave_cfg->src_maxburst & SPRD_DMA_BLK_LEN_MASK;
+ 	hw->trsc_len = len & SPRD_DMA_TRSC_LEN_MASK;
  
+ 	temp = (dst_step & SPRD_DMA_TRSF_STEP_MASK) << SPRD_DMA_DEST_TRSF_STEP_OFFSET;
 -- 
 2.20.1
 
