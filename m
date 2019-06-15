@@ -1,96 +1,83 @@
-Return-Path: <SRS0=LQqC=UN=vger.kernel.org=dmaengine-owner@kernel.org>
+Return-Path: <SRS0=26aw=UO=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.1 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=unavailable
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.2 required=3.0
+	tests=HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_MUTT
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 22B35C31E4D
-	for <dmaengine@archiver.kernel.org>; Fri, 14 Jun 2019 20:39:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3B8EEC31E50
+	for <dmaengine@archiver.kernel.org>; Sat, 15 Jun 2019 16:06:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id DF4402084D
-	for <dmaengine@archiver.kernel.org>; Fri, 14 Jun 2019 20:39:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1560544785;
-	bh=ZX08YHl2FZ35ikq0OIWHJWth0qvr2WIkpo3dvqXdO1o=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:List-ID:From;
-	b=lUesgeMpP630c4b1LxPiktDN7n6BoA4oWwuY9ZQEWU0kffyB/Zfvw5OSPGIfc2h3h
-	 JuCZxcn4AIdBmlhiJ+zLs7F+YGGGDdmlBru7VUexPv8KqihwpHAWBO69+u5kdmRf5i
-	 dTZYIJH177BknSqbIy1LzDfnHaImCtKGW95pxd3w=
+	by mail.kernel.org (Postfix) with ESMTP id 16B7721473
+	for <dmaengine@archiver.kernel.org>; Sat, 15 Jun 2019 16:06:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727344AbfFNUjf (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 14 Jun 2019 16:39:35 -0400
-Received: from mail.kernel.org ([198.145.29.99]:50356 "EHLO mail.kernel.org"
+        id S1726754AbfFOQGO (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Sat, 15 Jun 2019 12:06:14 -0400
+Received: from mga18.intel.com ([134.134.136.126]:15385 "EHLO mga18.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725991AbfFNU2u (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Fri, 14 Jun 2019 16:28:50 -0400
-Received: from sasha-vm.mshome.net (unknown [131.107.159.134])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id AAC7F217F9;
-        Fri, 14 Jun 2019 20:28:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1560544129;
-        bh=ZX08YHl2FZ35ikq0OIWHJWth0qvr2WIkpo3dvqXdO1o=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=NzLhsyGDIplL0ENyb6e0QXtlc+uwAcQ7LeTI3DkcJyYTbxTA0hqXFqjcrW0gBlUNJ
-         m6omIIwBTz7XaZKylH9s5cDs2ttNnjdICkUL6LQsgge2S5H7x3HfCS9Lql0/ieHbch
-         mqH8AlqAStsv2E2ujV+ZtYbDmtqg/u7dbPuh9qvs=
-From:   Sasha Levin <sashal@kernel.org>
-To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Colin Ian King <colin.king@canonical.com>,
-        Vinod Koul <vkoul@kernel.org>, Sasha Levin <sashal@kernel.org>,
-        dmaengine@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.1 04/59] dmaengine: dw-axi-dmac: fix null dereference when pointer first is null
-Date:   Fri, 14 Jun 2019 16:27:48 -0400
-Message-Id: <20190614202843.26941-4-sashal@kernel.org>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20190614202843.26941-1-sashal@kernel.org>
-References: <20190614202843.26941-1-sashal@kernel.org>
+        id S1726405AbfFOQGO (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Sat, 15 Jun 2019 12:06:14 -0400
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga006.jf.intel.com ([10.7.209.51])
+  by orsmga106.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 15 Jun 2019 09:06:13 -0700
+X-ExtLoop1: 1
+Received: from lkp-server01.sh.intel.com (HELO lkp-server01) ([10.239.97.150])
+  by orsmga006.jf.intel.com with ESMTP; 15 Jun 2019 09:06:12 -0700
+Received: from kbuild by lkp-server01 with local (Exim 4.89)
+        (envelope-from <lkp@intel.com>)
+        id 1hcBC0-000IwW-3e; Sun, 16 Jun 2019 00:06:12 +0800
+Date:   Sun, 16 Jun 2019 00:05:50 +0800
+From:   kbuild test robot <lkp@intel.com>
+To:     Gustavo Pimentel <Gustavo.Pimentel@synopsys.com>
+Cc:     kbuild-all@01.org, Vinod Koul <vkoul@kernel.org>,
+        Dan Williams <dan.j.williams@intel.com>,
+        dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH] dmaengine: fix semicolon.cocci warnings
+Message-ID: <20190615160550.GA59533@lkp-kbuild03>
+References: <201906160043.LzDXUsKd%lkp@intel.com>
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <201906160043.LzDXUsKd%lkp@intel.com>
+X-Patchwork-Hint: ignore
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-From: Colin Ian King <colin.king@canonical.com>
+From: kbuild test robot <lkp@intel.com>
 
-[ Upstream commit 0788611c9a0925c607de536b2449de5ed98ef8df ]
+drivers/dma/dw-edma/dw-edma-core.c:617:2-3: Unneeded semicolon
 
-In the unlikely event that axi_desc_get returns a null desc in the
-very first iteration of the while-loop the error exit path ends
-up calling axi_desc_put on a null pointer 'first' and this causes
-a null pointer dereference.  Fix this by adding a null check on
-pointer 'first' before calling axi_desc_put.
 
-Addresses-Coverity: ("Explicit null dereference")
-Fixes: 1fe20f1b8454 ("dmaengine: Introduce DW AXI DMAC driver")
-Signed-off-by: Colin Ian King <colin.king@canonical.com>
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+ Remove unneeded semicolon.
+
+Generated by: scripts/coccinelle/misc/semicolon.cocci
+
+Fixes: e63d79d1ffcd ("dmaengine: Add Synopsys eDMA IP core driver")
+CC: Gustavo Pimentel <Gustavo.Pimentel@synopsys.com>
+Signed-off-by: kbuild test robot <lkp@intel.com>
 ---
- drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-index b2ac1d2c5b86..a1ce307c502f 100644
---- a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-+++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-@@ -512,7 +512,8 @@ dma_chan_prep_dma_memcpy(struct dma_chan *dchan, dma_addr_t dst_adr,
- 	return vchan_tx_prep(&chan->vc, &first->vd, flags);
+tree:   https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git master
+head:   f4788d37bc84e27ac9370be252afb451bf6ef718
+commit: e63d79d1ffcd2201a2dbff1d7a1184b8f3ec74cf [5032/6646] dmaengine: Add Synopsys eDMA IP core driver
+
+ dw-edma-core.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+--- a/drivers/dma/dw-edma/dw-edma-core.c
++++ b/drivers/dma/dw-edma/dw-edma-core.c
+@@ -614,7 +614,7 @@ static void dw_edma_free_chan_resources(
+ 			return;
  
- err_desc_get:
--	axi_desc_put(first);
-+	if (first)
-+		axi_desc_put(first);
- 	return NULL;
+ 		cpu_relax();
+-	};
++	}
+ 
+ 	pm_runtime_put(chan->chip->dev);
  }
- 
--- 
-2.20.1
-
