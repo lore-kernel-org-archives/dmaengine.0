@@ -2,104 +2,158 @@ Return-Path: <SRS0=sXyE=UR=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.6 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_MUTT autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.9 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
+	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AAE44C31E51
-	for <dmaengine@archiver.kernel.org>; Tue, 18 Jun 2019 13:14:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C7FE1C31E51
+	for <dmaengine@archiver.kernel.org>; Tue, 18 Jun 2019 13:21:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 73D2A20873
-	for <dmaengine@archiver.kernel.org>; Tue, 18 Jun 2019 13:14:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1560863658;
-	bh=/l30FOU0AryVpc5HW+1cx+d4B+hv8HqciAB/OIoARr4=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:List-ID:From;
-	b=nSS77Gnv5rbj2p0861O2UMU4ZusF2OuxEKKzLg6zzInfXEVLrdxIW7JO7CyKxaf4i
-	 E7Giufq9e9rpnpMft1AILTZRy20cFYNByAVDpy99i/e52TykHYIgdcy06OqjnF2g16
-	 OAESa5cBy6J5KeAx2emoFpI+K0p8i0nMCanaJW0I=
+	by mail.kernel.org (Postfix) with ESMTP id 9E59E2070B
+	for <dmaengine@archiver.kernel.org>; Tue, 18 Jun 2019 13:21:30 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b="UA6N49Za"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726037AbfFRNOS (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 18 Jun 2019 09:14:18 -0400
-Received: from mail.kernel.org ([198.145.29.99]:37796 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725955AbfFRNOS (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Tue, 18 Jun 2019 09:14:18 -0400
-Received: from dragon (li1322-146.members.linode.com [45.79.223.146])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 3168E2070B;
-        Tue, 18 Jun 2019 13:14:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1560863657;
-        bh=/l30FOU0AryVpc5HW+1cx+d4B+hv8HqciAB/OIoARr4=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=M7aWkd2lU4lW1/75YEvMN623tYFX4RQhAA/Nr/6vUzS0Oz0yixi/ufY9+mub+PaYf
-         e8yxEXUh9NWL3J6PghN/BvQgrRHILFT5L+grP6f1m1gwrUR3Ugd9gCcc1KR246ihis
-         oqgfX8ShPxP+oPUa3p4VgBgnxmOGDfuOxDzvRvYM=
-Date:   Tue, 18 Jun 2019 21:13:20 +0800
-From:   Shawn Guo <shawnguo@kernel.org>
-To:     Peng Ma <peng.ma@nxp.com>
-Cc:     vkoul@kernel.org, robh+dt@kernel.org, mark.rutland@arm.com,
-        leoyang.li@nxp.com, dan.j.williams@intel.com,
-        dmaengine@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org
-Subject: Re: [PATCH 2/4] arm64: dts: fsl: ls1028a: Add eDMA node
-Message-ID: <20190618131319.GC1959@dragon>
-References: <20190506090344.37784-1-peng.ma@nxp.com>
- <20190506090344.37784-2-peng.ma@nxp.com>
+        id S1729281AbfFRNVa (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 18 Jun 2019 09:21:30 -0400
+Received: from lelv0142.ext.ti.com ([198.47.23.249]:33790 "EHLO
+        lelv0142.ext.ti.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725919AbfFRNVa (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Tue, 18 Jun 2019 09:21:30 -0400
+Received: from fllv0035.itg.ti.com ([10.64.41.0])
+        by lelv0142.ext.ti.com (8.15.2/8.15.2) with ESMTP id x5IDLIXI095404;
+        Tue, 18 Jun 2019 08:21:18 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
+        s=ti-com-17Q1; t=1560864078;
+        bh=C7JoaS/KSR5kOredj6u+NHN8evey0o8bmyMIlXmzdPQ=;
+        h=From:To:CC:Subject:Date:In-Reply-To:References;
+        b=UA6N49ZabXq3vPChrBddi7saqDxZsP8Kt4eIYObGk+8vxxBbzZeh0PPkOLXz7r3qS
+         xkSJQmR1XmivKP6+eLjORHtuSNz95HQi0Wl7BrukBn9CSaJvgdm9KvyiDKReDjlax3
+         zRVlq20TJqpqVc/v/OPqFYHI4KuLSie32QobtzGs=
+Received: from DLEE102.ent.ti.com (dlee102.ent.ti.com [157.170.170.32])
+        by fllv0035.itg.ti.com (8.15.2/8.15.2) with ESMTPS id x5IDLIco021527
+        (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
+        Tue, 18 Jun 2019 08:21:18 -0500
+Received: from DLEE112.ent.ti.com (157.170.170.23) by DLEE102.ent.ti.com
+ (157.170.170.32) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1713.5; Tue, 18
+ Jun 2019 08:21:17 -0500
+Received: from lelv0327.itg.ti.com (10.180.67.183) by DLEE112.ent.ti.com
+ (157.170.170.23) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1713.5 via
+ Frontend Transport; Tue, 18 Jun 2019 08:21:17 -0500
+Received: from feketebors.ti.com (ileax41-snat.itg.ti.com [10.172.224.153])
+        by lelv0327.itg.ti.com (8.15.2/8.15.2) with ESMTP id x5IDLBKl026006;
+        Tue, 18 Jun 2019 08:21:15 -0500
+From:   Peter Ujfalusi <peter.ujfalusi@ti.com>
+To:     <vkoul@kernel.org>
+CC:     <dan.j.williams@intel.com>, <dmaengine@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-omap@vger.kernel.org>
+Subject: [PATCH v4 2/3] dmaengine: ti: edma: Correct the residue calculation (fix for memcpy)
+Date:   Tue, 18 Jun 2019 16:21:47 +0300
+Message-ID: <20190618132148.26468-3-peter.ujfalusi@ti.com>
+X-Mailer: git-send-email 2.22.0
+In-Reply-To: <20190618132148.26468-1-peter.ujfalusi@ti.com>
+References: <20190618132148.26468-1-peter.ujfalusi@ti.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190506090344.37784-2-peng.ma@nxp.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-EXCLAIMER-MD-CONFIG: e1e8a2fd-e40a-4ac6-ac9b-f7e9cc9ee180
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On Mon, May 06, 2019 at 09:03:42AM +0000, Peng Ma wrote:
-> Add the eDMA device tree nodes for LS1028A devices
-> 
-> Signed-off-by: Peng Ma <peng.ma@nxp.com>
-> ---
->  arch/arm64/boot/dts/freescale/fsl-ls1028a.dtsi |   15 +++++++++++++++
->  1 files changed, 15 insertions(+), 0 deletions(-)
-> 
-> diff --git a/arch/arm64/boot/dts/freescale/fsl-ls1028a.dtsi b/arch/arm64/boot/dts/freescale/fsl-ls1028a.dtsi
-> index 8116fb3..71b87cb 100644
-> --- a/arch/arm64/boot/dts/freescale/fsl-ls1028a.dtsi
-> +++ b/arch/arm64/boot/dts/freescale/fsl-ls1028a.dtsi
-> @@ -235,6 +235,21 @@
->  			status = "disabled";
->  		};
->  
-> +		edma0: edma@22c0000 {
-> +			#dma-cells = <2>;
-> +			compatible = "fsl,vf610-edma";
-> +			reg = <0x0 0x22c0000 0x0 0x10000>,
-> +			      <0x0 0x22d0000 0x0 0x10000>,
-> +			      <0x0 0x22e0000 0x0 0x10000>;
-> +			interrupts = <GIC_SPI 56 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 56 IRQ_TYPE_LEVEL_HIGH>;
-> +			interrupt-names = "edma-tx", "edma-err";
-> +			dma-channels = <32>;
-> +			clock-names = "dmamux0", "dmamux1";
-> +			clocks = <&clockgen 4 1>,
-> +				 <&clockgen 4 1>;
-> +		};
-> +
+For memcpy we never stored the start address of the transfer for the pset
+which rendered the memcpy residue calculation completely broken.
 
-The edma@22c0000 node had already been added by commit below:
+In the edma_residue() function we also need to to some correction for the
+calculations:
+Instead waiting for all EDMA channels to be idle (in a busy system it can
+take few iteration to hit a point when all queues are idle) wait for the
+event pending on the given channel (SH_ER for hw synchronized channels,
+SH_ESR for manually triggered channels).
 
-  f54f7be5c5ac ("arm64: dts: ls1028a: Add Audio DT nodes")
+If the position returned by EMDA is 0 it imiplies that the last paRAM set
+has been consumed and we are at the closing dummy set, thus we can conclude
+that the transfer is completed and we can return 0 as residue.
 
-Shawn
+Signed-off-by: Peter Ujfalusi <peter.ujfalusi@ti.com>
+---
+ drivers/dma/ti/edma.c | 31 +++++++++++++++++++++++--------
+ 1 file changed, 23 insertions(+), 8 deletions(-)
 
->  		gpio1: gpio@2300000 {
->  			compatible = "fsl,qoriq-gpio";
->  			reg = <0x0 0x2300000 0x0 0x10000>;
-> -- 
-> 1.7.1
-> 
+diff --git a/drivers/dma/ti/edma.c b/drivers/dma/ti/edma.c
+index 3fd7831d1279..48b155cab822 100644
+--- a/drivers/dma/ti/edma.c
++++ b/drivers/dma/ti/edma.c
+@@ -1039,6 +1039,7 @@ static int edma_config_pset(struct dma_chan *chan, struct edma_pset *epset,
+ 		src_cidx = cidx;
+ 		dst_bidx = acnt;
+ 		dst_cidx = cidx;
++		epset->addr = src_addr;
+ 	} else {
+ 		dev_err(dev, "%s: direction not implemented yet\n", __func__);
+ 		return -EINVAL;
+@@ -1749,7 +1750,11 @@ static u32 edma_residue(struct edma_desc *edesc)
+ 	int loop_count = EDMA_MAX_TR_WAIT_LOOPS;
+ 	struct edma_chan *echan = edesc->echan;
+ 	struct edma_pset *pset = edesc->pset;
+-	dma_addr_t done, pos;
++	dma_addr_t done, pos, pos_old;
++	int channel = EDMA_CHAN_SLOT(echan->ch_num);
++	int idx = EDMA_REG_ARRAY_INDEX(channel);
++	int ch_bit = EDMA_CHANNEL_BIT(channel);
++	int event_reg;
+ 	int i;
+ 
+ 	/*
+@@ -1762,16 +1767,20 @@ static u32 edma_residue(struct edma_desc *edesc)
+ 	 * "pos" may represent a transfer request that is still being
+ 	 * processed by the EDMACC or EDMATC. We will busy wait until
+ 	 * any one of the situations occurs:
+-	 *   1. the DMA hardware is idle
+-	 *   2. a new transfer request is setup
++	 *   1. while and event is pending for the channel
++	 *   2. a position updated
+ 	 *   3. we hit the loop limit
+ 	 */
+-	while (edma_read(echan->ecc, EDMA_CCSTAT) & EDMA_CCSTAT_ACTV) {
+-		/* check if a new transfer request is setup */
+-		if (edma_get_position(echan->ecc,
+-				      echan->slot[0], dst) != pos) {
++	if (is_slave_direction(edesc->direction))
++		event_reg = SH_ER;
++	else
++		event_reg = SH_ESR;
++
++	pos_old = pos;
++	while (edma_shadow0_read_array(echan->ecc, event_reg, idx) & ch_bit) {
++		pos = edma_get_position(echan->ecc, echan->slot[0], dst);
++		if (pos != pos_old)
+ 			break;
+-		}
+ 
+ 		if (!--loop_count) {
+ 			dev_dbg_ratelimited(echan->vchan.chan.device->dev,
+@@ -1796,6 +1805,12 @@ static u32 edma_residue(struct edma_desc *edesc)
+ 		return edesc->residue_stat;
+ 	}
+ 
++	/*
++	 * If the position is 0, then EDMA loaded the closing dummy slot, the
++	 * transfer is completed
++	 */
++	if (!pos)
++		return 0;
+ 	/*
+ 	 * For SG operation we catch up with the last processed
+ 	 * status.
+-- 
+Peter
+
+Texas Instruments Finland Oy, Porkkalankatu 22, 00180 Helsinki.
+Y-tunnus/Business ID: 0615521-4. Kotipaikka/Domicile: Helsinki
+
