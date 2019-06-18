@@ -7,59 +7,60 @@ X-Spam-Status: No, score=-5.6 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
 	SPF_PASS,URIBL_BLOCKED,USER_AGENT_MUTT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5A61BC31E51
-	for <dmaengine@archiver.kernel.org>; Tue, 18 Jun 2019 13:07:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 053E1C31E51
+	for <dmaengine@archiver.kernel.org>; Tue, 18 Jun 2019 13:09:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 31605208E4
-	for <dmaengine@archiver.kernel.org>; Tue, 18 Jun 2019 13:07:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CB0B920873
+	for <dmaengine@archiver.kernel.org>; Tue, 18 Jun 2019 13:09:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1560863264;
-	bh=VE0S7GCn+EbKWsC3UJVmk1yL5T1BYtNXt8mSBrOsjTM=;
+	s=default; t=1560863389;
+	bh=f9SHC6ue1dvc84vpVLaqwcu3AML1Htt1R+Utuud1GTE=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:List-ID:From;
-	b=2mpJTowad+rGFiRouivplg5LvznZzhyQZomtzCjtPuvnYoEr9SmK9dly8JtqkTqeV
-	 XL2Ur5s1m6biFpSY9kwdSqjiEA/5+Ti2ekW1TG05LWsGFVW3xLIYc6bz2M+e9NxBX2
-	 JQ3bLxGkI3KdGIzHVSzlBTlSU/xNogNr/X8PV7bE=
+	b=mdLTWey4x+3BCsN64ARLTvQp7RKaOFqAo4FlmvMq1W3FaP3UOuxYhzkwPGRhO3gJG
+	 IyrMm6xdwNKeyCY0ppZPrXV4cXJUYBg4k+XeUNbbVIyEvDaGqNxM8kGDzd+OCWrUuz
+	 Mw7/HbxJIfMwGGt9AinPpsBhqXyUnNo/ofj6X+NQ=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726518AbfFRNHo (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 18 Jun 2019 09:07:44 -0400
-Received: from mail.kernel.org ([198.145.29.99]:33760 "EHLO mail.kernel.org"
+        id S1726518AbfFRNJt (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 18 Jun 2019 09:09:49 -0400
+Received: from mail.kernel.org ([198.145.29.99]:34556 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725913AbfFRNHn (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Tue, 18 Jun 2019 09:07:43 -0400
+        id S1725955AbfFRNJt (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Tue, 18 Jun 2019 09:09:49 -0400
 Received: from dragon (li1322-146.members.linode.com [45.79.223.146])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 70BC12084D;
-        Tue, 18 Jun 2019 13:07:37 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id A7B972084D;
+        Tue, 18 Jun 2019 13:09:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1560863262;
-        bh=VE0S7GCn+EbKWsC3UJVmk1yL5T1BYtNXt8mSBrOsjTM=;
+        s=default; t=1560863388;
+        bh=f9SHC6ue1dvc84vpVLaqwcu3AML1Htt1R+Utuud1GTE=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=Z9bZq/JS3pwdAUtsp5oTPoUmzKUchwKyZg1vrEy+xOf3mOKf4mfP/9SvqEhaw6FoU
-         I5H170T2bQGUl9j3fkhLb7VmSnoFzEuHASNL0r2EhTQhyJe1EEQZ2UhKsHKPfGdZnJ
-         O0Hr2N9D9pevumRJhlHXpaKu4y4s58hSmnSJKPOo=
-Date:   Tue, 18 Jun 2019 21:06:50 +0800
+        b=rPKYFxhGfJdxNynwSUcJvOSB2VvmorxMuALt8f5OBtdiSNMe5kb/Fw86etHgDOW9S
+         xnU+h29Vb1rNycsM+/Wy3zybYASLnmCa3xaECrAwDCPoHvW7f8MDvjc+3QaQ2bTO8A
+         aMijB6RtLVioPsjacen7t8s5XPORJLq6Aqs6T6ck=
+Date:   Tue, 18 Jun 2019 21:08:44 +0800
 From:   Shawn Guo <shawnguo@kernel.org>
 To:     Peng Ma <peng.ma@nxp.com>
 Cc:     vkoul@kernel.org, robh+dt@kernel.org, mark.rutland@arm.com,
         leoyang.li@nxp.com, dan.j.williams@intel.com,
         dmaengine@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org
-Subject: Re: [PATCH 1/4] arm64: dts: fsl: ls1028a: Add qDMA node
-Message-ID: <20190618130634.GA1959@dragon>
+Subject: Re: [PATCH 4/4] dt-bindings: fsl-qdma: Add LS1028A qDMA bindings
+Message-ID: <20190618130843.GB1959@dragon>
 References: <20190506090344.37784-1-peng.ma@nxp.com>
+ <20190506090344.37784-4-peng.ma@nxp.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20190506090344.37784-1-peng.ma@nxp.com>
+In-Reply-To: <20190506090344.37784-4-peng.ma@nxp.com>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On Mon, May 06, 2019 at 09:03:41AM +0000, Peng Ma wrote:
-> Add the qDMA device tree nodes for LS1028A devices
+On Mon, May 06, 2019 at 09:03:44AM +0000, Peng Ma wrote:
+> Add LS1028A qDMA controller bindings to fsl-qdma bindings.
 > 
 > Signed-off-by: Peng Ma <peng.ma@nxp.com>
 
