@@ -7,149 +7,86 @@ X-Spam-Status: No, score=-8.7 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
 	URIBL_BLOCKED,USER_AGENT_GIT autolearn=unavailable autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 81366C48BEB
-	for <dmaengine@archiver.kernel.org>; Mon, 24 Jun 2019 12:35:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 636B7C48BE8
+	for <dmaengine@archiver.kernel.org>; Mon, 24 Jun 2019 12:38:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 5A891205F4
-	for <dmaengine@archiver.kernel.org>; Mon, 24 Jun 2019 12:35:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3AE19212F5
+	for <dmaengine@archiver.kernel.org>; Mon, 24 Jun 2019 12:38:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728105AbfFXMft (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 24 Jun 2019 08:35:49 -0400
-Received: from andre.telenet-ops.be ([195.130.132.53]:51570 "EHLO
+        id S1726453AbfFXMi2 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 24 Jun 2019 08:38:28 -0400
+Received: from andre.telenet-ops.be ([195.130.132.53]:56744 "EHLO
         andre.telenet-ops.be" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726834AbfFXMfs (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Mon, 24 Jun 2019 08:35:48 -0400
+        with ESMTP id S1728051AbfFXMi1 (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Mon, 24 Jun 2019 08:38:27 -0400
 Received: from ramsan ([84.194.111.163])
         by andre.telenet-ops.be with bizsmtp
-        id Ucbi200093XaVaC01cbi87; Mon, 24 Jun 2019 14:35:45 +0200
+        id UceQ2000M3XaVaC01ceQZz; Mon, 24 Jun 2019 14:38:25 +0200
 Received: from rox.of.borg ([192.168.97.57])
         by ramsan with esmtp (Exim 4.90_1)
         (envelope-from <geert@linux-m68k.org>)
-        id 1hfOCE-0003jw-FD; Mon, 24 Jun 2019 14:35:42 +0200
+        id 1hfOEq-0003kT-Gn; Mon, 24 Jun 2019 14:38:24 +0200
 Received: from geert by rox.of.borg with local (Exim 4.90_1)
         (envelope-from <geert@linux-m68k.org>)
-        id 1hfOCE-0005NW-E2; Mon, 24 Jun 2019 14:35:42 +0200
+        id 1hfOEq-0005SP-Fh; Mon, 24 Jun 2019 14:38:24 +0200
 From:   Geert Uytterhoeven <geert+renesas@glider.be>
-To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Jiri Slaby <jslaby@suse.com>,
-        Eugeniu Rosca <erosca@de.adit-jv.com>
-Cc:     Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-        Vinod Koul <vkoul@kernel.org>,
+To:     Vinod Koul <vkoul@kernel.org>,
         Dan Williams <dan.j.williams@intel.com>,
+        Eugeniu Rosca <erosca@de.adit-jv.com>
+Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Jiri Slaby <jslaby@suse.com>,
+        Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
         Wolfram Sang <wsa+renesas@sang-engineering.com>,
         linux-serial@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
         dmaengine@vger.kernel.org,
         Geert Uytterhoeven <geert+renesas@glider.be>
-Subject: [PATCH 1/2] serial: sh-sci: Fix TX DMA buffer flushing and workqueue races
-Date:   Mon, 24 Jun 2019 14:35:39 +0200
-Message-Id: <20190624123540.20629-2-geert+renesas@glider.be>
+Subject: [PATCH] dmaengine: rcar-dmac: Reject zero-length slave DMA requests
+Date:   Mon, 24 Jun 2019 14:38:18 +0200
+Message-Id: <20190624123818.20919-1-geert+renesas@glider.be>
 X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20190624123540.20629-1-geert+renesas@glider.be>
-References: <20190624123540.20629-1-geert+renesas@glider.be>
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-When uart_flush_buffer() is called, the .flush_buffer() callback zeroes
-the tx_dma_len field.  This may race with the work queue function
-handling transmit DMA requests:
+While the .device_prep_slave_sg() callback rejects empty scatterlists,
+it still accepts single-entry scatterlists with a zero-length segment.
+These may happen if a driver calls dmaengine_prep_slave_single() with a
+zero len parameter.  The corresponding DMA request will never complete,
+leading to messages like:
 
-  1. If the buffer is flushed before the first DMA API call,
-     dmaengine_prep_slave_single() may be called with a zero length,
-     causing the DMA request to never complete, leading to messages
-     like:
+    rcar-dmac e7300000.dma-controller: Channel Address Error happen
 
-        rcar-dmac e7300000.dma-controller: Channel Address Error happen
+and DMA timeouts.
 
-     and, with debug enabled:
-
-	sh-sci e6e88000.serial: sci_dma_tx_work_fn: ffff800639b55000: 0...0, cookie 126
-
-     and DMA timeouts.
-
-  2. If the buffer is flushed after the first DMA API call, but before
-     the second, dma_sync_single_for_device() may be called with a zero
-     length, causing the transmit data not to be flushed to RAM, and
-     leading to stale data being output.
-
-Fix this by:
-  1. Letting sci_dma_tx_work_fn() return immediately if the transmit
-     buffer is empty,
-  2. Extending the critical section to cover all DMA preparational work,
-     so tx_dma_len stays consistent for all of it,
-  3. Using local copies of circ_buf.head and circ_buf.tail, to make sure
-     they match the actual operation above.
+Although requesting a zero-length DMA request is a driver bug, rejecting
+it early eases debugging.  Note that the .device_prep_dma_memcpy()
+callback already rejects requests to copy zero bytes.
 
 Reported-by: Eugeniu Rosca <erosca@de.adit-jv.com>
-Suggested-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
+Analyzed-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
 Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
 ---
- drivers/tty/serial/sh-sci.c | 22 +++++++++++++++-------
- 1 file changed, 15 insertions(+), 7 deletions(-)
+See "[PATCH 0/2] serial: sh-sci: Fix .flush_buffer() issues"
+(https://lore.kernel.org/linux-renesas-soc/20190624123540.20629-1-geert+renesas@glider.be/)
+for the driver fix.
 
-diff --git a/drivers/tty/serial/sh-sci.c b/drivers/tty/serial/sh-sci.c
-index abc705716aa094fd..d4504daff99263f5 100644
---- a/drivers/tty/serial/sh-sci.c
-+++ b/drivers/tty/serial/sh-sci.c
-@@ -1398,6 +1398,7 @@ static void sci_dma_tx_work_fn(struct work_struct *work)
- 	struct circ_buf *xmit = &port->state->xmit;
- 	unsigned long flags;
- 	dma_addr_t buf;
-+	int head, tail;
+ drivers/dma/sh/rcar-dmac.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/dma/sh/rcar-dmac.c b/drivers/dma/sh/rcar-dmac.c
+index 67df54ac329400b7..9c41a4e425759fcc 100644
+--- a/drivers/dma/sh/rcar-dmac.c
++++ b/drivers/dma/sh/rcar-dmac.c
+@@ -1165,7 +1165,7 @@ rcar_dmac_prep_slave_sg(struct dma_chan *chan, struct scatterlist *sgl,
+ 	struct rcar_dmac_chan *rchan = to_rcar_dmac_chan(chan);
  
- 	/*
- 	 * DMA is idle now.
-@@ -1407,16 +1408,23 @@ static void sci_dma_tx_work_fn(struct work_struct *work)
- 	 * consistent xmit buffer state.
- 	 */
- 	spin_lock_irq(&port->lock);
--	buf = s->tx_dma_addr + (xmit->tail & (UART_XMIT_SIZE - 1));
-+	head = xmit->head;
-+	tail = xmit->tail;
-+	buf = s->tx_dma_addr + (tail & (UART_XMIT_SIZE - 1));
- 	s->tx_dma_len = min_t(unsigned int,
--		CIRC_CNT(xmit->head, xmit->tail, UART_XMIT_SIZE),
--		CIRC_CNT_TO_END(xmit->head, xmit->tail, UART_XMIT_SIZE));
--	spin_unlock_irq(&port->lock);
-+		CIRC_CNT(head, tail, UART_XMIT_SIZE),
-+		CIRC_CNT_TO_END(head, tail, UART_XMIT_SIZE));
-+	if (!s->tx_dma_len) {
-+		/* Transmit buffer has been flushed */
-+		spin_unlock_irq(&port->lock);
-+		return;
-+	}
- 
- 	desc = dmaengine_prep_slave_single(chan, buf, s->tx_dma_len,
- 					   DMA_MEM_TO_DEV,
- 					   DMA_PREP_INTERRUPT | DMA_CTRL_ACK);
- 	if (!desc) {
-+		spin_unlock_irq(&port->lock);
- 		dev_warn(port->dev, "Failed preparing Tx DMA descriptor\n");
- 		goto switch_to_pio;
- 	}
-@@ -1424,18 +1432,18 @@ static void sci_dma_tx_work_fn(struct work_struct *work)
- 	dma_sync_single_for_device(chan->device->dev, buf, s->tx_dma_len,
- 				   DMA_TO_DEVICE);
- 
--	spin_lock_irq(&port->lock);
- 	desc->callback = sci_dma_tx_complete;
- 	desc->callback_param = s;
--	spin_unlock_irq(&port->lock);
- 	s->cookie_tx = dmaengine_submit(desc);
- 	if (dma_submit_error(s->cookie_tx)) {
-+		spin_unlock_irq(&port->lock);
- 		dev_warn(port->dev, "Failed submitting Tx DMA descriptor\n");
- 		goto switch_to_pio;
- 	}
- 
-+	spin_unlock_irq(&port->lock);
- 	dev_dbg(port->dev, "%s: %p: %d...%d, cookie %d\n",
--		__func__, xmit->buf, xmit->tail, xmit->head, s->cookie_tx);
-+		__func__, xmit->buf, tail, head, s->cookie_tx);
- 
- 	dma_async_issue_pending(chan);
- 	return;
+ 	/* Someone calling slave DMA on a generic channel? */
+-	if (rchan->mid_rid < 0 || !sg_len) {
++	if (rchan->mid_rid < 0 || !sg_len || !sg_dma_len(sgl)) {
+ 		dev_warn(chan->device->dev,
+ 			 "%s: bad parameter: len=%d, id=%d\n",
+ 			 __func__, sg_len, rchan->mid_rid);
 -- 
 2.17.1
 
