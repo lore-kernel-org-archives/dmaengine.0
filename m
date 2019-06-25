@@ -4,61 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-2.6 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_MUTT autolearn=ham autolearn_force=no version=3.4.0
+	USER_AGENT_MUTT autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BC37CC48BD5
-	for <dmaengine@archiver.kernel.org>; Tue, 25 Jun 2019 04:36:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D89FDC48BD5
+	for <dmaengine@archiver.kernel.org>; Tue, 25 Jun 2019 04:41:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 9299E2085A
-	for <dmaengine@archiver.kernel.org>; Tue, 25 Jun 2019 04:36:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A9A0C2086D
+	for <dmaengine@archiver.kernel.org>; Tue, 25 Jun 2019 04:41:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1561437417;
-	bh=SvVn8LnfBh5pTFcwqtDE2hTF/uLgKV+aA3v8+JjVZh4=;
+	s=default; t=1561437705;
+	bh=+svs1xm0F2/CdYWQbH30vJyA8MQxdVc1RKbfdXbmfn4=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:List-ID:From;
-	b=Opb4Z966Rogb1html2sL5rbubx+HNGiaaI/uyvrPSgpb2sz8pZiWns7KxUsIZtQGi
-	 utnj/2JpkxLll/yxyY/IGLGA963OAFbkjyQLt6aVq5NcD6g4ubmlBbbRywRLXzs5wE
-	 3d1OV7MQot1VXX9IeqTXoLwYfF9fO7SliloXPcqk=
+	b=PI6nBcAgVUYBCFI9+RGDVyrnZOJ+WKaoXlv9tLc4Ux84tO7CK6Q1XpNKsXx3CmzFS
+	 6GUdLc6BI6g8JHRJYJnQLVlgzd7t+tv0agsqnK0sOh+sclOT2IDVTnwXohpiJE6oAF
+	 AUvvipo1EtrxRisqQZeSRX68zeZMRk5mTE/A+4g0=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726421AbfFYEg5 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 25 Jun 2019 00:36:57 -0400
-Received: from mail.kernel.org ([198.145.29.99]:46548 "EHLO mail.kernel.org"
+        id S1726689AbfFYElp (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 25 Jun 2019 00:41:45 -0400
+Received: from mail.kernel.org ([198.145.29.99]:47722 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726053AbfFYEg5 (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Tue, 25 Jun 2019 00:36:57 -0400
+        id S1726421AbfFYElp (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Tue, 25 Jun 2019 00:41:45 -0400
 Received: from localhost (unknown [106.201.40.23])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 4A1EE20656;
-        Tue, 25 Jun 2019 04:36:55 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 3047B20665;
+        Tue, 25 Jun 2019 04:41:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1561437416;
-        bh=SvVn8LnfBh5pTFcwqtDE2hTF/uLgKV+aA3v8+JjVZh4=;
+        s=default; t=1561437703;
+        bh=+svs1xm0F2/CdYWQbH30vJyA8MQxdVc1RKbfdXbmfn4=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=RG1l3U3g3o+uSULUcTwuAP+ux/cIX5hVAljSvsFmGxBs+NaiiszBxs6oryV+8Ui9T
-         rw6GAuvlrQXniJJ5SgykNw7pK5JLM8n+HscmjPuxCgkDtf/i7p7kl65DF/hDC3fqMm
-         mrsED3fHFcMZKQxCCLHrP8UE4cuybUNeA3XNDpLM=
-Date:   Tue, 25 Jun 2019 10:03:46 +0530
+        b=mjDHLFkECUqfmBrB6XzMV6RGFbWvfcCeasIkpZtutySDEKLgJ07zd2tmEN4LyN8om
+         q566uosEJ6XjdH3ProvBEG7beGqqUrHiuPP3DA39BzUVk1krp1S923MpTqtQcqV9Sn
+         voabsvHph35dQK78AjCT0f7Dl19ooAYla/Yx4eoM=
+Date:   Tue, 25 Jun 2019 10:08:33 +0530
 From:   Vinod Koul <vkoul@kernel.org>
-To:     Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Cc:     Viresh Kumar <vireshk@kernel.org>, dmaengine@vger.kernel.org,
-        Dan Williams <dan.j.williams@intel.com>
-Subject: Re: [PATCH v1] dmaengine: dw: Enable iDMA 32-bit on Intel Elkhart
- Lake
-Message-ID: <20190625043346.GJ2962@vkoul-mobl>
-References: <20190621131914.38855-1-andriy.shevchenko@linux.intel.com>
+To:     Geert Uytterhoeven <geert+renesas@glider.be>
+Cc:     Dan Williams <dan.j.williams@intel.com>,
+        Eugeniu Rosca <erosca@de.adit-jv.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Jiri Slaby <jslaby@suse.com>,
+        Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+        Wolfram Sang <wsa+renesas@sang-engineering.com>,
+        linux-serial@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
+        dmaengine@vger.kernel.org
+Subject: Re: [PATCH] dmaengine: rcar-dmac: Reject zero-length slave DMA
+ requests
+Message-ID: <20190625043833.GK2962@vkoul-mobl>
+References: <20190624123818.20919-1-geert+renesas@glider.be>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20190621131914.38855-1-andriy.shevchenko@linux.intel.com>
+In-Reply-To: <20190624123818.20919-1-geert+renesas@glider.be>
 User-Agent: Mutt/1.11.3 (2019-02-01)
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On 21-06-19, 16:19, Andy Shevchenko wrote:
-> Intel Elkhart Lake OSE (Offload Service Engine) provides few DMA controllers
-> to the host. Enable them in the driver.
+On 24-06-19, 14:38, Geert Uytterhoeven wrote:
+> While the .device_prep_slave_sg() callback rejects empty scatterlists,
+> it still accepts single-entry scatterlists with a zero-length segment.
+> These may happen if a driver calls dmaengine_prep_slave_single() with a
+> zero len parameter.  The corresponding DMA request will never complete,
+> leading to messages like:
+> 
+>     rcar-dmac e7300000.dma-controller: Channel Address Error happen
+> 
+> and DMA timeouts.
+> 
+> Although requesting a zero-length DMA request is a driver bug, rejecting
+> it early eases debugging.  Note that the .device_prep_dma_memcpy()
+> callback already rejects requests to copy zero bytes.
 
 Applied, thanks
 
