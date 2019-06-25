@@ -2,97 +2,94 @@ Return-Path: <SRS0=mcWF=UY=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED,USER_AGENT_GIT autolearn=unavailable autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 730D5C48BD6
-	for <dmaengine@archiver.kernel.org>; Tue, 25 Jun 2019 09:42:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 437E2C48BD5
+	for <dmaengine@archiver.kernel.org>; Tue, 25 Jun 2019 15:46:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 4B223214DA
-	for <dmaengine@archiver.kernel.org>; Tue, 25 Jun 2019 09:42:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 158B9208E3
+	for <dmaengine@archiver.kernel.org>; Tue, 25 Jun 2019 15:46:09 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qXtq11Gc"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731665AbfFYJmM (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 25 Jun 2019 05:42:12 -0400
-Received: from inva021.nxp.com ([92.121.34.21]:52324 "EHLO inva021.nxp.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726557AbfFYJlu (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Tue, 25 Jun 2019 05:41:50 -0400
-Received: from inva021.nxp.com (localhost [127.0.0.1])
-        by inva021.eu-rdc02.nxp.com (Postfix) with ESMTP id 836A9200727;
-        Tue, 25 Jun 2019 11:41:48 +0200 (CEST)
-Received: from invc005.ap-rdc01.nxp.com (invc005.ap-rdc01.nxp.com [165.114.16.14])
-        by inva021.eu-rdc02.nxp.com (Postfix) with ESMTP id 6900120072B;
-        Tue, 25 Jun 2019 11:41:41 +0200 (CEST)
-Received: from mega.ap.freescale.net (mega.ap.freescale.net [10.192.208.232])
-        by invc005.ap-rdc01.nxp.com (Postfix) with ESMTP id 827424030F;
-        Tue, 25 Jun 2019 17:41:32 +0800 (SGT)
-From:   yibin.gong@nxp.com
-To:     robh@kernel.org, shawnguo@kernel.org, s.hauer@pengutronix.de,
-        festevam@gmail.com, mark.rutland@arm.com, vkoul@kernel.org,
-        dan.j.williams@intel.com, angelo@sysam.it
-Cc:     linux-imx@nxp.com, linux-arm-kernel@lists.infradead.org,
-        linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org,
-        devicetree@vger.kernel.org, kernel@pengutronix.de
-Subject: [PATCH v5 2/6] dmaengine: fsl-edma-common: move dmamux register to another single function
-Date:   Tue, 25 Jun 2019 17:43:20 +0800
-Message-Id: <20190625094324.19196-3-yibin.gong@nxp.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20190625094324.19196-1-yibin.gong@nxp.com>
-References: <20190625094324.19196-1-yibin.gong@nxp.com>
-X-Virus-Scanned: ClamAV using ClamSMTP
+        id S1731241AbfFYPqI (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 25 Jun 2019 11:46:08 -0400
+Received: from mail-lf1-f65.google.com ([209.85.167.65]:44487 "EHLO
+        mail-lf1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727572AbfFYPqI (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Tue, 25 Jun 2019 11:46:08 -0400
+Received: by mail-lf1-f65.google.com with SMTP id r15so12950443lfm.11;
+        Tue, 25 Jun 2019 08:46:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=5HkYvt7vqYcoplSqjUO7R3ulPIH/lqglCxToVLLxHq0=;
+        b=qXtq11GckrDcJCHDDEgthhpG8mHYmTpXpzctewOXeUwZmzUo0b5ZeAtMwVAfPHhIPT
+         3RhfwsBrNQETw2uzvpCbSc8dG/ITMshgLL9OzsWB5XOnH1VuBhB1eJF709b3TLytZa66
+         iPZ6oUBRjQ47hp3xXYtwKt8NpfCcGF3sPAHVG6KRSOSsrYYx/5qUxulw8KdpvUSSNZ6j
+         wxuwby4vZz9pG3VaHAkPbhhkzSoLLFtCq/7AA0gftSopUeZpN5J3cYWU7xqUlQBj2TsE
+         sWo6eQY/SLn3t/XWBGW9SmsuLqBCzeFuVIqOzL9A+qq68NVNOowGczMSJrmpmUYAm2p8
+         RLHw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=5HkYvt7vqYcoplSqjUO7R3ulPIH/lqglCxToVLLxHq0=;
+        b=RImzWAmk85hJDcS1JoVRUHJZsED/dm/ANwRrs0ZmC3wQwRNkrX5kzi+3zNSW+Ym3fY
+         2TabmsQABekY508UA6/WlZACtnDjHsVfgnYlyh7JlPI+kQAdqlfM2aCcPACQfUM4NCO3
+         lPBWYfIjaRZbrBEzPePaddb+n1JpZKuwhxTJ8uGy0N5kWY4Nj1krJcwTcyEQZbWqxlqL
+         6gm8sXToCbozozXxsUuNDrcBxt2+IytEF6Uepm5HoDURNqhmy973Dx2+heZ8MeQvzB4N
+         QDfE/DVUjiP3w2b+lSEZBb/1BFmutYJDFt3RfsoVnTMlsQhv9injIw25YmUvbno9sb0y
+         t+Ew==
+X-Gm-Message-State: APjAAAUvHn6RMLmycI9CtS0Y+fw8se2C4p1BFcyj/0CY2lTpAJ9++X+A
+        qPx+7ArbDpYx6lz/lMfImfP7hIYHc0LD3WOJ4UA=
+X-Google-Smtp-Source: APXvYqzVkv3ISEpy81fk9GqWVELv6LncGBQA618cty6rXyn6Ym+TyTksnqIcZ4ZJkwyOgbRhI2GPWbZy/JzI4c4/Nq0=
+X-Received: by 2002:ac2:5a5e:: with SMTP id r30mr16968201lfn.12.1561477566289;
+ Tue, 25 Jun 2019 08:46:06 -0700 (PDT)
+MIME-Version: 1.0
+References: <20190621082306.34415-1-yibin.gong@nxp.com> <CAOMZO5B+uXF=1WTPsA-9LrmtTF0Q0s7Fipwtd1nkWSgr3ec25w@mail.gmail.com>
+ <VE1PR04MB6638D58DED0D7092D8FCE93589E30@VE1PR04MB6638.eurprd04.prod.outlook.com>
+In-Reply-To: <VE1PR04MB6638D58DED0D7092D8FCE93589E30@VE1PR04MB6638.eurprd04.prod.outlook.com>
+From:   Fabio Estevam <festevam@gmail.com>
+Date:   Tue, 25 Jun 2019 12:45:54 -0300
+Message-ID: <CAOMZO5AUnDJ_Wz3sWFDv4hZ-vAwO4_ioTW=5FUNDwFS7zBRJOg@mail.gmail.com>
+Subject: Re: [PATCH v2] dmaengine: imx-sdma: remove BD_INTR for channel0
+To:     Robin Gong <yibin.gong@nxp.com>
+Cc:     Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Vinod <vkoul@kernel.org>,
+        Dan Williams <dan.j.williams@intel.com>,
+        Sven Van Asbroeck <thesven73@gmail.com>,
+        Michael Olbrich <m.olbrich@pengutronix.de>,
+        dl-linux-imx <linux-imx@nxp.com>,
+        stable <stable@vger.kernel.org>,
+        "moderated list:ARM/FREESCALE IMX / MXC ARM ARCHITECTURE" 
+        <linux-arm-kernel@lists.infradead.org>,
+        "dmaengine@vger.kernel.org" <dmaengine@vger.kernel.org>,
+        Sascha Hauer <kernel@pengutronix.de>
+Content-Type: text/plain; charset="UTF-8"
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-From: Robin Gong <yibin.gong@nxp.com>
+Hi Robin,
 
-Prepare for edmav2 on i.mx7ulp whose dmamux register is 32bit. No function
-impacted.
+On Tue, Jun 25, 2019 at 4:36 AM Robin Gong <yibin.gong@nxp.com> wrote:
 
-Signed-off-by: Robin Gong <yibin.gong@nxp.com>
----
- drivers/dma/fsl-edma-common.c | 18 ++++++++++++++----
- 1 file changed, 14 insertions(+), 4 deletions(-)
+> Yes, although Sven only met this issue after v4.19, this potential issue should be there.
+> But 1d069bfa3c78 seems merged from v4.7 instead?
 
-diff --git a/drivers/dma/fsl-edma-common.c b/drivers/dma/fsl-edma-common.c
-index 07d9689..ba74e10 100644
---- a/drivers/dma/fsl-edma-common.c
-+++ b/drivers/dma/fsl-edma-common.c
-@@ -77,6 +77,19 @@ void fsl_edma_disable_request(struct fsl_edma_chan *fsl_chan)
- }
- EXPORT_SYMBOL_GPL(fsl_edma_disable_request);
- 
-+static void mux_configure8(struct fsl_edma_chan *fsl_chan, void __iomem *addr,
-+			   u32 off, u32 slot, bool enable)
-+{
-+	u8 val8;
-+
-+	if (enable)
-+		val8 = EDMAMUX_CHCFG_ENBL | slot;
-+	else
-+		val8 = EDMAMUX_CHCFG_DIS;
-+
-+	iowrite8(val8, addr + off);
-+}
-+
- void fsl_edma_chan_mux(struct fsl_edma_chan *fsl_chan,
- 			unsigned int slot, bool enable)
- {
-@@ -90,10 +103,7 @@ void fsl_edma_chan_mux(struct fsl_edma_chan *fsl_chan,
- 	muxaddr = fsl_chan->edma->muxbase[ch / chans_per_mux];
- 	slot = EDMAMUX_CHCFG_SOURCE(slot);
- 
--	if (enable)
--		iowrite8(EDMAMUX_CHCFG_ENBL | slot, muxaddr + ch_off);
--	else
--		iowrite8(EDMAMUX_CHCFG_DIS, muxaddr + ch_off);
-+	mux_configure8(fsl_chan, muxaddr, ch_off, slot, enable);
- }
- EXPORT_SYMBOL_GPL(fsl_edma_chan_mux);
- 
--- 
-2.7.4
+Yes, you could simply do:
 
+Fixes: 1d069bfa3c78 ("dmaengine: imx-sdma: ack channel 0 IRQ in the
+interrupt handler")
+Cc: stable@vger.kernel.org
+
+And it will get applied to all relevant stable trees.
+
+Thanks
