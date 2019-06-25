@@ -6,38 +6,38 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
 	USER_AGENT_MUTT autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D89FDC48BD5
-	for <dmaengine@archiver.kernel.org>; Tue, 25 Jun 2019 04:41:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D3FB9C48BD4
+	for <dmaengine@archiver.kernel.org>; Tue, 25 Jun 2019 04:43:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id A9A0C2086D
-	for <dmaengine@archiver.kernel.org>; Tue, 25 Jun 2019 04:41:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A066220863
+	for <dmaengine@archiver.kernel.org>; Tue, 25 Jun 2019 04:43:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1561437705;
+	s=default; t=1561437805;
 	bh=+svs1xm0F2/CdYWQbH30vJyA8MQxdVc1RKbfdXbmfn4=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:List-ID:From;
-	b=PI6nBcAgVUYBCFI9+RGDVyrnZOJ+WKaoXlv9tLc4Ux84tO7CK6Q1XpNKsXx3CmzFS
-	 6GUdLc6BI6g8JHRJYJnQLVlgzd7t+tv0agsqnK0sOh+sclOT2IDVTnwXohpiJE6oAF
-	 AUvvipo1EtrxRisqQZeSRX68zeZMRk5mTE/A+4g0=
+	b=uaEFInAKNiA83mO5Ywd0z/otvLrA2b6OCVEHrTIb2RD4LYpt72SDnCx2qMLf4jqKo
+	 afo32164IRmsKWrRssZAoLcaACEhFYqP0V0c6Rl8Q7t24a4oawzHsmnmMsbLOaXPj8
+	 +mVe3m/nsY0EsgwhpSjQLmkp8n0flEi/Luzk4U84=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726689AbfFYElp (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 25 Jun 2019 00:41:45 -0400
-Received: from mail.kernel.org ([198.145.29.99]:47722 "EHLO mail.kernel.org"
+        id S1727047AbfFYEnZ (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 25 Jun 2019 00:43:25 -0400
+Received: from mail.kernel.org ([198.145.29.99]:47906 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726421AbfFYElp (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Tue, 25 Jun 2019 00:41:45 -0400
+        id S1726421AbfFYEnY (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Tue, 25 Jun 2019 00:43:24 -0400
 Received: from localhost (unknown [106.201.40.23])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 3047B20665;
-        Tue, 25 Jun 2019 04:41:42 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id EB6F320665;
+        Tue, 25 Jun 2019 04:43:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1561437703;
+        s=default; t=1561437803;
         bh=+svs1xm0F2/CdYWQbH30vJyA8MQxdVc1RKbfdXbmfn4=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=mjDHLFkECUqfmBrB6XzMV6RGFbWvfcCeasIkpZtutySDEKLgJ07zd2tmEN4LyN8om
-         q566uosEJ6XjdH3ProvBEG7beGqqUrHiuPP3DA39BzUVk1krp1S923MpTqtQcqV9Sn
-         voabsvHph35dQK78AjCT0f7Dl19ooAYla/Yx4eoM=
-Date:   Tue, 25 Jun 2019 10:08:33 +0530
+        b=02tb7MAIsylFHaBkdmn1s9wKrHFWBomvZc0RQKO3xWkT1lvq0XxxYTDUGatspxZ+K
+         r8H2n4NOLYN0339SPYo7VgJ8m7s/QKU2x5lKHQjsdh/n+ZbGKgLvBd4jYqxk9nG84V
+         61udSRhPhjErNptANGH+WsdajYE0mTfMMRqpMy8w=
+Date:   Tue, 25 Jun 2019 10:10:13 +0530
 From:   Vinod Koul <vkoul@kernel.org>
 To:     Geert Uytterhoeven <geert+renesas@glider.be>
 Cc:     Dan Williams <dan.j.williams@intel.com>,
@@ -50,7 +50,7 @@ Cc:     Dan Williams <dan.j.williams@intel.com>,
         dmaengine@vger.kernel.org
 Subject: Re: [PATCH] dmaengine: rcar-dmac: Reject zero-length slave DMA
  requests
-Message-ID: <20190625043833.GK2962@vkoul-mobl>
+Message-ID: <20190625044013.GL2962@vkoul-mobl>
 References: <20190624123818.20919-1-geert+renesas@glider.be>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
