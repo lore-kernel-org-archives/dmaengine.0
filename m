@@ -2,68 +2,69 @@ Return-Path: <SRS0=ihCo=U7=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+X-Spam-Status: No, score=-1.1 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
 	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1C8F5C06510
-	for <dmaengine@archiver.kernel.org>; Tue,  2 Jul 2019 12:12:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BA8A5C06510
+	for <dmaengine@archiver.kernel.org>; Tue,  2 Jul 2019 12:17:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id D62B021721
-	for <dmaengine@archiver.kernel.org>; Tue,  2 Jul 2019 12:12:57 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BAVMIjQy"
+	by mail.kernel.org (Postfix) with ESMTP id 7ADF02146F
+	for <dmaengine@archiver.kernel.org>; Tue,  2 Jul 2019 12:17:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=default; t=1562069824;
+	bh=LV9Ip+CS/5+6ApAoCV2G4pofD6a3cphFg7wo9KlOsXg=;
+	h=References:In-Reply-To:From:Date:Subject:To:List-ID:From;
+	b=jI7nF7kYY75vMkN5QfD9EZHMeJM89p7Cg73UTp+Cj581usqG1iMPGajWWfwzujLtZ
+	 y2BHwtDVg6/kzMqOrqNG34i+PgH2Hb8TNhyDlwO9r3g7YfmM54DSagPNdb5t0b04ea
+	 nCcpWsExnHHw7Rw323NA6YrfKNb269+uZ9e7eoUE=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726930AbfGBMM5 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 2 Jul 2019 08:12:57 -0400
-Received: from mail-lf1-f52.google.com ([209.85.167.52]:44883 "EHLO
-        mail-lf1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725835AbfGBMM5 (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Tue, 2 Jul 2019 08:12:57 -0400
-Received: by mail-lf1-f52.google.com with SMTP id r15so11180397lfm.11;
-        Tue, 02 Jul 2019 05:12:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=/Gaw1oFEGgEBnGhUJjPPskQRIfMsn+pmKd41rVJKT5w=;
-        b=BAVMIjQyEGGh9GC5zXhqsyjlyoixJfFAn8c55zZWEu9Exn1PHm2c+K1hB8bGF+6fa6
-         MrdRSqmZ95u09WO6Bnp1mCpDgv9Ew3Vmo08MNfSYJhND1UEz+1ZZgrVpOlxx5TguEkj9
-         7OVmosnRrcMEi2aHcLtlagACptn/uITIpxfvH8vZkEKZD/OC71PRBybe/Wzn9jshF8MB
-         JfSWPV+iNzI8sf73U2ptVSljd7jtPY+0YlVENa+909dAD7Hcp1R71m0NGzL/caWX4gw4
-         B165HkpE0C6iT+PqrdOe8SIGB3TW3eVd+1/ikevQFzZoxv/9ku2BZNu1/brQOvQDhrkq
-         Ja2g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=/Gaw1oFEGgEBnGhUJjPPskQRIfMsn+pmKd41rVJKT5w=;
-        b=t+eqmfDBYSyYwk7yZBkKCIQh+Kvv82YYawuA9INRRtBz32USLAjwruM1BICN/BhZLM
-         +FPVXDmF1Raf+6/DZrA2Q2iIGzWrO0DgWFYeYkscrzrJbX3hLgiMnxa2fFxmRGWHSk8d
-         KcnKLT1xxuDNVWPSEULTw3CNBxuoMT6A5DRvPbnSgycdtWPy4vJr0T/1AYv53+JhPhim
-         UKLeQiyT9/T9feK9Gw04+dQYzfbT8Wg8WxiMHFUoXETKdqdi5q+m4CCPADCL7BradeUb
-         RhhshZoUub/1lQbmUrkm4rhPVUl99HGVM6zt7vP91ZyclG0P97E1JWg0Uf9FVganGT+8
-         6Rpw==
-X-Gm-Message-State: APjAAAVZZ3Cc1KfbCWD4mIyhwe1qriFIMmUxdGI8reSAyBICVEMGvh+O
-        ZRF8tSXqYG7wwxpAlhfPKF44DfD8ea9aKcv6AGE=
-X-Google-Smtp-Source: APXvYqyBFxQsIkjzSAin3+SimXiRt/DAP1J/fx/YT7a6Rx0zTCTPnHIsy0vC0K8r01bXGqYcbzX8SouYN4ZsLU1gzb0=
-X-Received: by 2002:ac2:4891:: with SMTP id x17mr14972646lfc.60.1562069572684;
- Tue, 02 Jul 2019 05:12:52 -0700 (PDT)
+        id S1726457AbfGBMRE (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 2 Jul 2019 08:17:04 -0400
+Received: from mail.kernel.org ([198.145.29.99]:42170 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726475AbfGBMRE (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Tue, 2 Jul 2019 08:17:04 -0400
+Received: from mail-lf1-f44.google.com (mail-lf1-f44.google.com [209.85.167.44])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 2ED222146F;
+        Tue,  2 Jul 2019 12:17:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1562069822;
+        bh=LV9Ip+CS/5+6ApAoCV2G4pofD6a3cphFg7wo9KlOsXg=;
+        h=References:In-Reply-To:From:Date:Subject:To:From;
+        b=osGKTdCnPiyUp2NEQh6CRYa7EettNSWaA3MlToFuNm5KOw7lgzzy1/GdPgHmQMf6r
+         X+/kOo+LFw5lFhBkkffJq4YcjPI78zQGBI8DeaiogX+JVTxbSCpatVNBgEecwgTu4K
+         3ysgSkMtv1/3KpvbYxZ9f4yo3XQX41AQIazOX+oU=
+Received: by mail-lf1-f44.google.com with SMTP id p24so11211094lfo.6;
+        Tue, 02 Jul 2019 05:17:02 -0700 (PDT)
+X-Gm-Message-State: APjAAAWcgN0rJGtVzitn2pL/Cis4ZOUFFw3NdGgSf+6J3zxyR8bWfJm8
+        7CxIPtsya+kAmkgKsEflnguLDwrZ9GEAbUqak+A=
+X-Google-Smtp-Source: APXvYqywnKFYcC5UnFQkKlp9f/9u9e4dNMbR7WYf5bduvlEcPdhyecXeH69/RogGbw8uuS+go5rQx6PD9VWqCAthL4U=
+X-Received: by 2002:ac2:4d1c:: with SMTP id r28mr13918805lfi.159.1562069820475;
+ Tue, 02 Jul 2019 05:17:00 -0700 (PDT)
 MIME-Version: 1.0
-From:   =?UTF-8?Q?Krzysztof_Koz=C5=82owski?= <k.kozlowski.k@gmail.com>
-Date:   Tue, 2 Jul 2019 14:12:41 +0200
-Message-ID: <CAJKOXPfx6HeJgTu9TiusGACyt+uXVSmnpibO0m-qzCvFQNGK7g@mail.gmail.com>
-Subject: [BUG BISECT] Net boot fails on VF50 after "dmaengine: fsl-edma:
+References: <CAJKOXPfx6HeJgTu9TiusGACyt+uXVSmnpibO0m-qzCvFQNGK7g@mail.gmail.com>
+In-Reply-To: <CAJKOXPfx6HeJgTu9TiusGACyt+uXVSmnpibO0m-qzCvFQNGK7g@mail.gmail.com>
+From:   Krzysztof Kozlowski <krzk@kernel.org>
+Date:   Tue, 2 Jul 2019 14:16:49 +0200
+X-Gmail-Original-Message-ID: <CAJKOXPdwtuT5eDiPhUiQhKjN26hDBmKsYVLUrz2LmcOW0N=_dg@mail.gmail.com>
+Message-ID: <CAJKOXPdwtuT5eDiPhUiQhKjN26hDBmKsYVLUrz2LmcOW0N=_dg@mail.gmail.com>
+Subject: Re: [BUG BISECT] Net boot fails on VF50 after "dmaengine: fsl-edma:
  support little endian for edma driver"
 To:     Peng Ma <peng.ma@nxp.com>, Vinod Koul <vkoul@kernel.org>,
         dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
-Content-Type: multipart/mixed; boundary="000000000000feb4ac058cb1a9fa"
+Content-Type: multipart/mixed; boundary="000000000000c3b26e058cb1b832"
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
---000000000000feb4ac058cb1a9fa
+--000000000000c3b26e058cb1b832
 Content-Type: text/plain; charset="UTF-8"
+
+... one more time, but from proper email address:
 
 Hi,
 
@@ -87,12 +88,12 @@ Full log attached.
 Best regards,
 Krzysztof
 
---000000000000feb4ac058cb1a9fa
+--000000000000c3b26e058cb1b832
 Content-Type: text/plain; charset="US-ASCII"; name="bootlog.txt"
 Content-Disposition: attachment; filename="bootlog.txt"
 Content-Transfer-Encoding: base64
-Content-ID: <f_jxlru9k60>
-X-Attachment-Id: f_jxlru9k60
+Content-ID: <f_jxls0rts0>
+X-Attachment-Id: f_jxls0rts0
 
 WyAgICAwLjAwMDAwMF0gQm9vdGluZyBMaW51eCBvbiBwaHlzaWNhbCBDUFUgMHgwClsgICAgMC4w
 MDAwMDBdIExpbnV4IHZlcnNpb24gNS4yLjAtcmMxLTAwMDUyLWcwMDI5MDVlY2E1YmUgKGtyemtA
@@ -298,4 +299,4 @@ IHVyYW5kb20gcmVhZCAoMTYgYnl0ZXMgcmVhZCkKWyAgIDY1LjcxNzcxOV0gc3lzdGVtZFsxXTog
 U3RhcnRlZCBEaXNwYXRjaCBQYXNzd29yZCBSZXF1ZXN0cyB0byBDb25zb2xlIERpcmVjdG9yeSBX
 YXRjaC4KWyAgIDk1Ljg1MTQxN10gc3lzdGVtZFsxXTogTGlzdGVuaW5nIG9uIEpvdXJuYWwgU29j
 a2V0LgoK
---000000000000feb4ac058cb1a9fa--
+--000000000000c3b26e058cb1b832--
