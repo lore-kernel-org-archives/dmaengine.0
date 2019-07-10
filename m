@@ -4,52 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-10.1 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
-	version=3.4.0
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=unavailable
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 43112C74A21
-	for <dmaengine@archiver.kernel.org>; Wed, 10 Jul 2019 15:04:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CAA37C74A2B
+	for <dmaengine@archiver.kernel.org>; Wed, 10 Jul 2019 15:04:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 1431421530
-	for <dmaengine@archiver.kernel.org>; Wed, 10 Jul 2019 15:04:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A3CF721670
+	for <dmaengine@archiver.kernel.org>; Wed, 10 Jul 2019 15:04:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1562771056;
-	bh=v1Wk/HvLNFBZWtEXQWxjIRIVKkMaRMBZQCIrUWgf9tU=;
+	s=default; t=1562771074;
+	bh=NOZS4sPdMUeEFcRgneiXHh6A/CC/WAk1BAuKohPYOjE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:List-ID:From;
-	b=FHvz3cmb+P1U0tTMjIPm6fHcUE/XFxkOR4U5nWPL70dSIWHo5V7KXY5Pj3KA//7AK
-	 27mAc97cEBUmosFawnqT64c+0x75cumkK1kLXgIP+AnFNFiHrvs20HC/wXcrUEocr8
-	 Cp/LMjntJRgEYa6XID5wLiYSASstW2gf2YQXooDI=
+	b=Xz0qCrwEvLaHOVdMuM/FCH3X1P8UYRfQ3uPSS379aX+IAvHv+M4ok610UeNmPWhxn
+	 CvKSOw/I7x5bCiQ5E8vuvVZwLbYgRqSP/HpfUAxMTPV0xoHyM+U0yzN7be4ObnVloK
+	 oxWHDyfyBuQ+eivMxgH+z75Q+viRSgjueW5xLZSo=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727853AbfGJPEP (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 10 Jul 2019 11:04:15 -0400
-Received: from mail.kernel.org ([198.145.29.99]:35896 "EHLO mail.kernel.org"
+        id S1728008AbfGJPE3 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 10 Jul 2019 11:04:29 -0400
+Received: from mail.kernel.org ([198.145.29.99]:35588 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728292AbfGJPDu (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Wed, 10 Jul 2019 11:03:50 -0400
+        id S1728228AbfGJPDg (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Wed, 10 Jul 2019 11:03:36 -0400
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 6B3CA21537;
-        Wed, 10 Jul 2019 15:03:48 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 995ED21537;
+        Wed, 10 Jul 2019 15:03:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1562771029;
-        bh=v1Wk/HvLNFBZWtEXQWxjIRIVKkMaRMBZQCIrUWgf9tU=;
+        s=default; t=1562771015;
+        bh=NOZS4sPdMUeEFcRgneiXHh6A/CC/WAk1BAuKohPYOjE=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=n32wGNbGxgojV4w2sAMX+8E85PHTozGAgSrq3dJTMru9p7F+PUZbmIJl3Dcgx16tA
-         8OcrBU3wKInO0mt7snZJrHxow/4BiH/a5ufSRN0AmgRNTNHCGo2JKUGMigcqEiZzzT
-         dtl6Bk1c61QnBwwSHxQa3oOhIoeEe7MwuNiyMyFQ=
+        b=0/WCktcQ+i6pf44WBrb/7S6VFnKkdsukTmGanZ0YufbXeveCf6MNUyyyrB0fBuDdE
+         y9WquWaYMN3io8GDVqdDmUyzr8xCypN2WJinE2Wz1oSgHgnwfu2RGhBzw9KiA/oiHD
+         OITdbELokc3Wx4DmvaW6uRWWX3oDUP7rN5I02V9U=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Cc:     Sven Van Asbroeck <thesven73@gmail.com>,
         Sven Van Asbroeck <TheSven73@gmail.com>,
         Robin Gong <yibin.gong@nxp.com>, Vinod Koul <vkoul@kernel.org>,
         Sasha Levin <sashal@kernel.org>, dmaengine@vger.kernel.org
-Subject: [PATCH AUTOSEL 4.9 7/7] dmaengine: imx-sdma: fix use-after-free on probe error path
-Date:   Wed, 10 Jul 2019 11:03:35 -0400
-Message-Id: <20190710150337.7390-7-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 4.14 8/8] dmaengine: imx-sdma: fix use-after-free on probe error path
+Date:   Wed, 10 Jul 2019 11:03:18 -0400
+Message-Id: <20190710150319.7258-8-sashal@kernel.org>
 X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20190710150337.7390-1-sashal@kernel.org>
-References: <20190710150337.7390-1-sashal@kernel.org>
+In-Reply-To: <20190710150319.7258-1-sashal@kernel.org>
+References: <20190710150319.7258-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
@@ -95,7 +95,7 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 27 insertions(+), 21 deletions(-)
 
 diff --git a/drivers/dma/imx-sdma.c b/drivers/dma/imx-sdma.c
-index b9c29720aeb1..840d0755e24d 100644
+index a67ec1bdc4e0..80798958706c 100644
 --- a/drivers/dma/imx-sdma.c
 +++ b/drivers/dma/imx-sdma.c
 @@ -1821,27 +1821,6 @@ static int sdma_probe(struct platform_device *pdev)
