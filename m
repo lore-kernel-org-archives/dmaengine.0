@@ -2,120 +2,164 @@ Return-Path: <SRS0=BhcN=VH=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.1 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+X-Spam-Status: No, score=-10.1 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4D429C74A21
-	for <dmaengine@archiver.kernel.org>; Wed, 10 Jul 2019 13:49:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 51502C74A2E
+	for <dmaengine@archiver.kernel.org>; Wed, 10 Jul 2019 15:04:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 1DD7020651
-	for <dmaengine@archiver.kernel.org>; Wed, 10 Jul 2019 13:49:00 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2BAB0217D4
+	for <dmaengine@archiver.kernel.org>; Wed, 10 Jul 2019 15:04:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1562766540;
-	bh=u+h9L2PkMGszB6CZLiEEQigUEngQOBljD1CgcZzVQs8=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:List-ID:From;
-	b=Nrfds7sIouswVf4INSWfGhz8k9IoWOtSdjx1fe2OFLA0wdRESWk5Bdq9LYQtelFv3
-	 Tj3FtbmeoalilnJcJDoqk8rWt/Rqsj20JSaeBLTSuLE1WrYGqxWQst2WcOGgVLVUTQ
-	 jlhCj9isNw4aaKRLL8/ldIaBTmg8s7GZPgRhDN9k=
+	s=default; t=1562771041;
+	bh=SgKtNlGvmcolH+Y6n6BkE017fwoirfKj5mwD5Rf7jUY=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:List-ID:From;
+	b=lk0uu4xdL3mSrhY+rRWDuFIhJckn7ZFvQEZW28cHbKDexxU4VlvKlZ2G+C9MJPBNK
+	 i+jtxTZWeo8iTJ4bUNIWlL7NUxH3qnRoKmC34hWsCRF+NLnO25Q4Kyy2hp09islflB
+	 dcL3+K1Kw+L9Hzp1Nj18Os96zUZNbw2rKLdULvTg=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727154AbfGJNs7 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 10 Jul 2019 09:48:59 -0400
-Received: from mail.kernel.org ([198.145.29.99]:56878 "EHLO mail.kernel.org"
+        id S1728343AbfGJPEA (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 10 Jul 2019 11:04:00 -0400
+Received: from mail.kernel.org ([198.145.29.99]:36068 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727102AbfGJNs7 (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Wed, 10 Jul 2019 09:48:59 -0400
-Received: from mail-qk1-f180.google.com (mail-qk1-f180.google.com [209.85.222.180])
+        id S1728339AbfGJPD7 (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Wed, 10 Jul 2019 11:03:59 -0400
+Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 8EA482086D;
-        Wed, 10 Jul 2019 13:48:58 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 87BDE21537;
+        Wed, 10 Jul 2019 15:03:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1562766538;
-        bh=u+h9L2PkMGszB6CZLiEEQigUEngQOBljD1CgcZzVQs8=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=lZ4A3uCdSkp29Q/gAuH6R2uj6rbrd53DWPa4VlstJqQldNKxgTjsLASLg+tfjB+hg
-         NNi6IR+fLrGr3J0vl6OWLzR8CFyoUz93EuC0buH4M99Yywpe7IF47tdardJkbkPqvI
-         /S7S4Rn2gJbCmsj+gUCx3VhOBuKiXlUikMMoIjYE=
-Received: by mail-qk1-f180.google.com with SMTP id g18so1915014qkl.3;
-        Wed, 10 Jul 2019 06:48:58 -0700 (PDT)
-X-Gm-Message-State: APjAAAVOMA4uI29oStj4HfAxQZvNlH/8NeoJWVDEWQUj7ftqxsc9NqOY
-        5yNPQu599Qqonw1QxjgVJrNDpqsqavPLoJ0QkA==
-X-Google-Smtp-Source: APXvYqzLjS4ENFrvg6Ny01xGrcyKKx0P85tzVM/HZcRb+gBjeV+mgbMRCgrB0/kR689V7NgUiJbGMqBd++/xEeWl0uU=
-X-Received: by 2002:a37:a48e:: with SMTP id n136mr23970720qke.223.1562766537777;
- Wed, 10 Jul 2019 06:48:57 -0700 (PDT)
+        s=default; t=1562771038;
+        bh=SgKtNlGvmcolH+Y6n6BkE017fwoirfKj5mwD5Rf7jUY=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=u1ieH24/HzL1rzSyTN60k45SYDtOJ0e+jKj1YhpJjFS13+tYYbL5bp5F0+E5D+FDm
+         aj8m1Dsh5NLAauMcVZgkBiY29nNWcBkMY8Or+GPj1LOpvYdB5op9zzi7KE0+hoL0fw
+         SCEPan0w4nCubRNP6CibDDzlb4eZc2h8OjlSYp+s=
+From:   Sasha Levin <sashal@kernel.org>
+To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
+Cc:     Sven Van Asbroeck <thesven73@gmail.com>,
+        Sven Van Asbroeck <TheSven73@gmail.com>,
+        Robin Gong <yibin.gong@nxp.com>, Vinod Koul <vkoul@kernel.org>,
+        Sasha Levin <sashal@kernel.org>, dmaengine@vger.kernel.org
+Subject: [PATCH AUTOSEL 4.4 4/4] dmaengine: imx-sdma: fix use-after-free on probe error path
+Date:   Wed, 10 Jul 2019 11:03:49 -0400
+Message-Id: <20190710150350.7501-4-sashal@kernel.org>
+X-Mailer: git-send-email 2.20.1
+In-Reply-To: <20190710150350.7501-1-sashal@kernel.org>
+References: <20190710150350.7501-1-sashal@kernel.org>
 MIME-Version: 1.0
-References: <20190613005109.1867-1-jassisinghbrar@gmail.com>
- <20190613005237.1996-1-jassisinghbrar@gmail.com> <20190709143437.GA30850@bogus>
- <CABb+yY3OsAh3xgX8_vvA7A7mU+FkEj__BQs9CxMvf=eYxRYXyw@mail.gmail.com>
-In-Reply-To: <CABb+yY3OsAh3xgX8_vvA7A7mU+FkEj__BQs9CxMvf=eYxRYXyw@mail.gmail.com>
-From:   Rob Herring <robh@kernel.org>
-Date:   Wed, 10 Jul 2019 07:48:40 -0600
-X-Gmail-Original-Message-ID: <CAL_JsqKB2tw8NFYgO09RHvYBKJ8uVCktYH36wiPWi0wvH758Eg@mail.gmail.com>
-Message-ID: <CAL_JsqKB2tw8NFYgO09RHvYBKJ8uVCktYH36wiPWi0wvH758Eg@mail.gmail.com>
-Subject: Re: [PATCH 1/2] dt-bindings: milbeaut-m10v-hdmac: Add Socionext
- Milbeaut HDMAC bindings
-To:     Jassi Brar <jassisinghbrar@gmail.com>
-Cc:     "open list:DMA GENERIC OFFLOAD ENGINE SUBSYSTEM" 
-        <dmaengine@vger.kernel.org>,
-        Devicetree List <devicetree@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Vinod <vkoul@kernel.org>, Mark Rutland <mark.rutland@arm.com>,
-        Takao Orito <orito.takao@socionext.com>,
-        Masami Hiramatsu <masami.hiramatsu@linaro.org>,
-        Kazuhiro Kasai <kasai.kazuhiro@socionext.com>,
-        Jassi Brar <jaswinder.singh@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
+X-stable: review
+X-Patchwork-Hint: Ignore
+Content-Transfer-Encoding: 8bit
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On Tue, Jul 9, 2019 at 10:12 PM Jassi Brar <jassisinghbrar@gmail.com> wrote:
->
-> On Tue, Jul 9, 2019 at 9:34 AM Rob Herring <robh@kernel.org> wrote:
-> >
-> > On Wed, Jun 12, 2019 at 07:52:37PM -0500, jassisinghbrar@gmail.com wrote:
-> > > From: Jassi Brar <jaswinder.singh@linaro.org>
-> > >
-> > > Document the devicetree bindings for Socionext Milbeaut HDMAC
-> > > controller. Controller has upto 8 floating channels, that need
-> > > a predefined slave-id to work from a set of slaves.
-> > >
-> > > Signed-off-by: Jassi Brar <jaswinder.singh@linaro.org>
-> > > ---
-> > >  .../bindings/dma/milbeaut-m10v-hdmac.txt           | 54 +++++++++++++++++++
-> > >  1 file changed, 54 insertions(+)
-> > >  create mode 100644 Documentation/devicetree/bindings/dma/milbeaut-m10v-hdmac.txt
-> > >
-> > > diff --git a/Documentation/devicetree/bindings/dma/milbeaut-m10v-hdmac.txt b/Documentation/devicetree/bindings/dma/milbeaut-m10v-hdmac.txt
-> > > new file mode 100644
-> > > index 000000000000..a104fcb9e73d
-> > > --- /dev/null
-> > > +++ b/Documentation/devicetree/bindings/dma/milbeaut-m10v-hdmac.txt
-> > > @@ -0,0 +1,51 @@
-> > > +* Milbeaut AHB DMA Controller
-> > > +
-> > > +Milbeaut AHB DMA controller has transfer capability bellow.
-> > > + - memory to memory transfer
-> > > + - device to memory transfer
-> > > + - memory to device transfer
-> > > +
-> > > +Required property:
-> > > +- compatible:       Should be  "socionext,milbeaut-m10v-hdmac"
-> > > +- reg:              Should contain DMA registers location and length.
-> > > +- interrupts:       Should contain all of the per-channel DMA interrupts.
-> >
-> > How many?
-> >
-> Each channel has an IRQ line. And the number of channels is
-> configurable. So instead of having some explicit property like
-> 'dma-channels', we infer that from the number of irqs registered.
+From: Sven Van Asbroeck <thesven73@gmail.com>
 
-Yes, I get that. There's still a range that's valid and you need to
-define those constraints. If there's a variable number of channels,
-then that implies different SoCs which should also mean different
-compatible strings.
+[ Upstream commit 2b8066c3deb9140fdf258417a51479b2aeaa7622 ]
 
-Rob
+If probe() fails anywhere beyond the point where
+sdma_get_firmware() is called, then a kernel oops may occur.
+
+Problematic sequence of events:
+1. probe() calls sdma_get_firmware(), which schedules the
+   firmware callback to run when firmware becomes available,
+   using the sdma instance structure as the context
+2. probe() encounters an error, which deallocates the
+   sdma instance structure
+3. firmware becomes available, firmware callback is
+   called with deallocated sdma instance structure
+4. use after free - kernel oops !
+
+Solution: only attempt to load firmware when we're certain
+that probe() will succeed. This guarantees that the firmware
+callback's context will remain valid.
+
+Note that the remove() path is unaffected by this issue: the
+firmware loader will increment the driver module's use count,
+ensuring that the module cannot be unloaded while the
+firmware callback is pending or running.
+
+Signed-off-by: Sven Van Asbroeck <TheSven73@gmail.com>
+Reviewed-by: Robin Gong <yibin.gong@nxp.com>
+[vkoul: fixed braces for if condition]
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ drivers/dma/imx-sdma.c | 48 ++++++++++++++++++++++++------------------
+ 1 file changed, 27 insertions(+), 21 deletions(-)
+
+diff --git a/drivers/dma/imx-sdma.c b/drivers/dma/imx-sdma.c
+index 48d4dddf4941..b7615f7c223c 100644
+--- a/drivers/dma/imx-sdma.c
++++ b/drivers/dma/imx-sdma.c
+@@ -1786,27 +1786,6 @@ static int sdma_probe(struct platform_device *pdev)
+ 	if (pdata && pdata->script_addrs)
+ 		sdma_add_scripts(sdma, pdata->script_addrs);
+ 
+-	if (pdata) {
+-		ret = sdma_get_firmware(sdma, pdata->fw_name);
+-		if (ret)
+-			dev_warn(&pdev->dev, "failed to get firmware from platform data\n");
+-	} else {
+-		/*
+-		 * Because that device tree does not encode ROM script address,
+-		 * the RAM script in firmware is mandatory for device tree
+-		 * probe, otherwise it fails.
+-		 */
+-		ret = of_property_read_string(np, "fsl,sdma-ram-script-name",
+-					      &fw_name);
+-		if (ret)
+-			dev_warn(&pdev->dev, "failed to get firmware name\n");
+-		else {
+-			ret = sdma_get_firmware(sdma, fw_name);
+-			if (ret)
+-				dev_warn(&pdev->dev, "failed to get firmware from device tree\n");
+-		}
+-	}
+-
+ 	sdma->dma_device.dev = &pdev->dev;
+ 
+ 	sdma->dma_device.device_alloc_chan_resources = sdma_alloc_chan_resources;
+@@ -1848,6 +1827,33 @@ static int sdma_probe(struct platform_device *pdev)
+ 		of_node_put(spba_bus);
+ 	}
+ 
++	/*
++	 * Kick off firmware loading as the very last step:
++	 * attempt to load firmware only if we're not on the error path, because
++	 * the firmware callback requires a fully functional and allocated sdma
++	 * instance.
++	 */
++	if (pdata) {
++		ret = sdma_get_firmware(sdma, pdata->fw_name);
++		if (ret)
++			dev_warn(&pdev->dev, "failed to get firmware from platform data\n");
++	} else {
++		/*
++		 * Because that device tree does not encode ROM script address,
++		 * the RAM script in firmware is mandatory for device tree
++		 * probe, otherwise it fails.
++		 */
++		ret = of_property_read_string(np, "fsl,sdma-ram-script-name",
++					      &fw_name);
++		if (ret) {
++			dev_warn(&pdev->dev, "failed to get firmware name\n");
++		} else {
++			ret = sdma_get_firmware(sdma, fw_name);
++			if (ret)
++				dev_warn(&pdev->dev, "failed to get firmware from device tree\n");
++		}
++	}
++
+ 	return 0;
+ 
+ err_register:
+-- 
+2.20.1
+
