@@ -2,98 +2,113 @@ Return-Path: <SRS0=BhcN=VH=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.1 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=unavailable
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.2 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CE33BC74A2E
-	for <dmaengine@archiver.kernel.org>; Wed, 10 Jul 2019 15:05:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6FC80C74A21
+	for <dmaengine@archiver.kernel.org>; Wed, 10 Jul 2019 16:43:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 9DFB1214AF
-	for <dmaengine@archiver.kernel.org>; Wed, 10 Jul 2019 15:05:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1562771119;
-	bh=kkVtKIKtY+cKBVcVE9XetstR4pjnwlDvVK28e/w5Q7g=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:List-ID:From;
-	b=iRVPS9wXGLPQzEyZpj3IqVCnO7bQGShuqHPbLQKCw8u4FhT9ctCeLFTVXc1ez4oVv
-	 p+COHiWhkSW487IBd+9bfj0i7vvChLfAQNqumeau/y1MUhm2pYkdZFaqjLu3ed/DOM
-	 b928BWMgwh+zji4+hg0Lp5HPTxTVrofcHeBH0+Ic=
+	by mail.kernel.org (Postfix) with ESMTP id 3D5A320665
+	for <dmaengine@archiver.kernel.org>; Wed, 10 Jul 2019 16:43:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728026AbfGJPDA (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 10 Jul 2019 11:03:00 -0400
-Received: from mail.kernel.org ([198.145.29.99]:34828 "EHLO mail.kernel.org"
+        id S1727230AbfGJQnu (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 10 Jul 2019 12:43:50 -0400
+Received: from mga03.intel.com ([134.134.136.65]:24221 "EHLO mga03.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727978AbfGJPC7 (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Wed, 10 Jul 2019 11:02:59 -0400
-Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 67145208E4;
-        Wed, 10 Jul 2019 15:02:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1562770978;
-        bh=kkVtKIKtY+cKBVcVE9XetstR4pjnwlDvVK28e/w5Q7g=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=oLe3BNRsasVE+pGUlmjRUjfLGFlWJwKSXUrXX2NKojdGBSxKEQnEsWxJ6B2blBTBt
-         mWZUPk9IseVqV9i3xLRyQQ71Vis7Nb5PEZVtylP8D8DeGBvgsOqEYtRrFj+HIg8ueH
-         PN/WoU0NRzJW5x4HRCc1Rpei8TUOPc/pg5pMOoUM=
-From:   Sasha Levin <sashal@kernel.org>
-To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Dan Carpenter <dan.carpenter@oracle.com>,
-        Vinod Koul <vkoul@kernel.org>, Sasha Levin <sashal@kernel.org>,
-        dmaengine@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.1 10/11] dmaengine: jz4780: Fix an endian bug in IRQ handler
-Date:   Wed, 10 Jul 2019 11:02:37 -0400
-Message-Id: <20190710150240.6984-10-sashal@kernel.org>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20190710150240.6984-1-sashal@kernel.org>
-References: <20190710150240.6984-1-sashal@kernel.org>
+        id S1726957AbfGJQnu (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Wed, 10 Jul 2019 12:43:50 -0400
+X-Amp-Result: UNKNOWN
+X-Amp-Original-Verdict: FILE UNKNOWN
+X-Amp-File-Uploaded: False
+Received: from orsmga001.jf.intel.com ([10.7.209.18])
+  by orsmga103.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 10 Jul 2019 09:43:49 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.63,475,1557212400"; 
+   d="scan'208";a="249523913"
+Received: from smile.fi.intel.com (HELO smile) ([10.237.68.145])
+  by orsmga001.jf.intel.com with ESMTP; 10 Jul 2019 09:43:47 -0700
+Received: from andy by smile with local (Exim 4.92)
+        (envelope-from <andriy.shevchenko@linux.intel.com>)
+        id 1hlFh4-00061t-7A; Wed, 10 Jul 2019 19:43:46 +0300
+Date:   Wed, 10 Jul 2019 19:43:46 +0300
+From:   Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+To:     Curtis Malainey <cujomalainey@google.com>
+Cc:     Ross Zwisler <zwisler@google.com>,
+        Fletcher Woodruff <fletcherw@google.com>,
+        dmaengine@vger.kernel.org,
+        ALSA development <alsa-devel@alsa-project.org>,
+        Pierre-louis Bossart <pierre-louis.bossart@intel.com>,
+        Liam Girdwood <liam.r.girdwood@intel.com>
+Subject: Re: DW-DMA: Probe failures on broadwell
+Message-ID: <20190710164346.GP9224@smile.fi.intel.com>
+References: <CAOReqxhxHiJ-4UYC-j4Quuuy5YP9ywohe_JwiLpCxqCvP-7ypg@mail.gmail.com>
+ <20190709131401.GA9224@smile.fi.intel.com>
+ <20190709132943.GB9224@smile.fi.intel.com>
+ <20190709133448.GC9224@smile.fi.intel.com>
+ <20190709133847.GD9224@smile.fi.intel.com>
+ <CAOReqxgnbDJsEcv7vdX3w44rzB=B69sHj95E8yBZ8DnZq0=63Q@mail.gmail.com>
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAOReqxgnbDJsEcv7vdX3w44rzB=B69sHj95E8yBZ8DnZq0=63Q@mail.gmail.com>
+Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-From: Dan Carpenter <dan.carpenter@oracle.com>
+On Tue, Jul 09, 2019 at 12:27:49PM -0700, Curtis Malainey wrote:
+> Hi Andy,
 
-[ Upstream commit 4c89cc73d1da42ae48b5c5dfbfd12304d0b86786 ]
+Please, don't top post in the public mailing lists, community doesn't like it.
 
-The "pending" variable was a u32 but we cast it to an unsigned long
-pointer when we do the for_each_set_bit() loop.  The problem is that on
-big endian 64bit systems that results in an out of bounds read.
+> Thanks for the information, we are running a 4.14 kernel so we don't
+> have the idma32 driver, I will see if I can backport it and report
+> back if the fix works.
 
-Fixes: 4e4106f5e942 ("dmaengine: jz4780: Fix transfers being ACKed too soon")
-Signed-off-by: Dan Carpenter <dan.carpenter@oracle.com>
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- drivers/dma/dma-jz4780.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+Driver is supporting iDMA 32-bit in v4.14 AFAICS.
+The missed stuff is a split and some fixes here and there.
+Here is the list of patches I have in a range v4.14..v5.2
+(I deliberately dropped the insignificant ones)
 
-diff --git a/drivers/dma/dma-jz4780.c b/drivers/dma/dma-jz4780.c
-index f49534019d37..503d9f13ea97 100644
---- a/drivers/dma/dma-jz4780.c
-+++ b/drivers/dma/dma-jz4780.c
-@@ -722,12 +722,13 @@ static irqreturn_t jz4780_dma_irq_handler(int irq, void *data)
- {
- 	struct jz4780_dma_dev *jzdma = data;
- 	unsigned int nb_channels = jzdma->soc_data->nb_channels;
--	uint32_t pending, dmac;
-+	unsigned long pending;
-+	uint32_t dmac;
- 	int i;
- 
- 	pending = jz4780_dma_ctrl_readl(jzdma, JZ_DMA_REG_DIRQP);
- 
--	for_each_set_bit(i, (unsigned long *)&pending, nb_channels) {
-+	for_each_set_bit(i, &pending, nb_channels) {
- 		if (jz4780_dma_chan_irq(jzdma, &jzdma->chan[i]))
- 			pending &= ~BIT(i);
- 	}
+934891b0a16c dmaengine: dw: Don't pollute CTL_LO on iDMA 32-bit
+91f0ff883e9a dmaengine: dw: Reset DRAIN bit when resume the channel
+69da8be90d5e dmaengine: dw: Split DW and iDMA 32-bit operations
+87fe9ae84d7b dmaengine: dw: Add missed multi-block support for iDMA 32-bit
+ffe843b18211 dmaengine: dw: Fix FIFO size for Intel Merrifield
+7b0c03ecc42f dmaengine: dw-dmac: implement dma protection control setting
+
+For me sounds like fairly easy to backport.
+
+> On Tue, Jul 9, 2019 at 6:38 AM Andy Shevchenko
+> <andriy.shevchenko@linux.intel.com> wrote:
+> >
+> > On Tue, Jul 09, 2019 at 04:34:48PM +0300, Andy Shevchenko wrote:
+> > > On Tue, Jul 09, 2019 at 04:29:43PM +0300, Andy Shevchenko wrote:
+> > > > On Tue, Jul 09, 2019 at 04:14:01PM +0300, Andy Shevchenko wrote:
+> > > > > On Mon, Jul 08, 2019 at 01:50:07PM -0700, Curtis Malainey wrote:
+> > > >
+> > > > > So, the correct fix is to provide a platform data, like it's done in
+> > > > > drivers/dma/dw/pci.c::idma32_pdata, in the sst-firmware.c::dw_probe(), and call
+> > > > > idma32_dma_probe() with idma32_dma_remove() respectively on removal stage.
+> > > > >
+> > > > > (It will require latest patches to be applied, which are material for v5.x)
+> > > >
+> > > > Below completely untested patch to try
+> > >
+> > > Also, it might require to set proper request lines (currently it uses 0 AFAICS).
+> > > Something like it's done in drivers/spi/spi-pxa2xx-pci.c for Intel Merrifield.
+> >
+> > And SST_DSP_DMA_MAX_BURST seems encoded while it's should be simple number,
+> > like 8 (bytes). Also SPI PXA is an example to look into.
+> >
+> > I doubt it has been validated with upstream driver (I know about some internal
+> > drivers, hacked version of dw one, you may find sources somewhere in public).
+
 -- 
-2.20.1
+With Best Regards,
+Andy Shevchenko
+
 
