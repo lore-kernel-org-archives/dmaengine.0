@@ -6,23 +6,23 @@ X-Spam-Status: No, score=-9.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
 	URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3EC71C74A4B
-	for <dmaengine@archiver.kernel.org>; Thu, 11 Jul 2019 09:36:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C53F4C74A4B
+	for <dmaengine@archiver.kernel.org>; Thu, 11 Jul 2019 09:36:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 1399221019
-	for <dmaengine@archiver.kernel.org>; Thu, 11 Jul 2019 09:36:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A871D208E4
+	for <dmaengine@archiver.kernel.org>; Thu, 11 Jul 2019 09:36:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727940AbfGKJgJ (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Thu, 11 Jul 2019 05:36:09 -0400
-Received: from relay3-d.mail.gandi.net ([217.70.183.195]:50463 "EHLO
-        relay3-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726088AbfGKJgJ (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Thu, 11 Jul 2019 05:36:09 -0400
+        id S1728028AbfGKJgY (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Thu, 11 Jul 2019 05:36:24 -0400
+Received: from relay6-d.mail.gandi.net ([217.70.183.198]:41907 "EHLO
+        relay6-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726088AbfGKJgY (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Thu, 11 Jul 2019 05:36:24 -0400
 X-Originating-IP: 86.250.200.211
 Received: from localhost (lfbn-1-17395-211.w86-250.abo.wanadoo.fr [86.250.200.211])
         (Authenticated sender: maxime.ripard@bootlin.com)
-        by relay3-d.mail.gandi.net (Postfix) with ESMTPSA id 39EE760009;
-        Thu, 11 Jul 2019 09:34:29 +0000 (UTC)
+        by relay6-d.mail.gandi.net (Postfix) with ESMTPSA id B715EC0042;
+        Thu, 11 Jul 2019 09:36:08 +0000 (UTC)
 From:   Maxime Ripard <maxime.ripard@bootlin.com>
 To:     Mark Rutland <mark.rutland@arm.com>,
         Rob Herring <robh+dt@kernel.org>,
@@ -32,9 +32,9 @@ Cc:     devicetree@vger.kernel.org, dmaengine@vger.kernel.org,
         Chen-Yu Tsai <wens@csie.org>,
         Maxime Ripard <maxime.ripard@bootlin.com>,
         linux-arm-kernel@lists.infradead.org
-Subject: [PATCH 3/3] dt-bindings: dma: Convert Allwinner A31 and A64 DMA to a schema
-Date:   Thu, 11 Jul 2019 11:21:58 +0200
-Message-Id: <20190711092158.14678-3-maxime.ripard@bootlin.com>
+Subject: [PATCH 2/3] dt-bindings: dma: Convert Allwinner A10 DMA to a schema
+Date:   Thu, 11 Jul 2019 11:21:57 +0200
+Message-Id: <20190711092158.14678-2-maxime.ripard@bootlin.com>
 X-Mailer: git-send-email 2.21.0
 In-Reply-To: <20190711092158.14678-1-maxime.ripard@bootlin.com>
 References: <20190711092158.14678-1-maxime.ripard@bootlin.com>
@@ -45,7 +45,7 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-The newer Allwinner SoCs have a DMA controller supported in Linux, with a
+The older Allwinner SoCs have a DMA controller supported in Linux, with a
 matching Device Tree binding.
 
 Now that we have the DT validation in place, let's convert the device tree
@@ -53,27 +53,25 @@ bindings for that controller over to a YAML schemas.
 
 Signed-off-by: Maxime Ripard <maxime.ripard@bootlin.com>
 ---
- .../dma/allwinner,sun50i-a64-dma.yaml         | 88 +++++++++++++++++++
- .../bindings/dma/allwinner,sun6i-a31-dma.yaml | 62 +++++++++++++
- .../devicetree/bindings/dma/sun6i-dma.txt     | 81 -----------------
- 3 files changed, 150 insertions(+), 81 deletions(-)
- create mode 100644 Documentation/devicetree/bindings/dma/allwinner,sun50i-a64-dma.yaml
- create mode 100644 Documentation/devicetree/bindings/dma/allwinner,sun6i-a31-dma.yaml
- delete mode 100644 Documentation/devicetree/bindings/dma/sun6i-dma.txt
+ .../bindings/dma/allwinner,sun4i-a10-dma.yaml | 55 +++++++++++++++++++
+ .../devicetree/bindings/dma/sun4i-dma.txt     | 45 ---------------
+ 2 files changed, 55 insertions(+), 45 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/dma/allwinner,sun4i-a10-dma.yaml
+ delete mode 100644 Documentation/devicetree/bindings/dma/sun4i-dma.txt
 
-diff --git a/Documentation/devicetree/bindings/dma/allwinner,sun50i-a64-dma.yaml b/Documentation/devicetree/bindings/dma/allwinner,sun50i-a64-dma.yaml
+diff --git a/Documentation/devicetree/bindings/dma/allwinner,sun4i-a10-dma.yaml b/Documentation/devicetree/bindings/dma/allwinner,sun4i-a10-dma.yaml
 new file mode 100644
-index 000000000000..4cb9d6b93138
+index 000000000000..15abc0f9429f
 --- /dev/null
-+++ b/Documentation/devicetree/bindings/dma/allwinner,sun50i-a64-dma.yaml
-@@ -0,0 +1,88 @@
++++ b/Documentation/devicetree/bindings/dma/allwinner,sun4i-a10-dma.yaml
+@@ -0,0 +1,55 @@
 +# SPDX-License-Identifier: GPL-2.0
 +%YAML 1.2
 +---
-+$id: http://devicetree.org/schemas/dma/allwinner,sun50i-a64-dma.yaml#
++$id: http://devicetree.org/schemas/dma/allwinner,sun4i-a10-dma.yaml#
 +$schema: http://devicetree.org/meta-schemas/core.yaml#
 +
-+title: Allwinner A64 DMA Controller Device Tree Bindings
++title: Allwinner A10 DMA Controller Device Tree Bindings
 +
 +maintainers:
 +  - Chen-Yu Tsai <wens@csie.org>
@@ -84,110 +82,14 @@ index 000000000000..4cb9d6b93138
 +
 +properties:
 +  "#dma-cells":
-+    const: 1
-+    description: The cell is the request line number.
++    const: 2
++    description:
++      The first cell is either 0 or 1, the former to use the normal
++      DMA, 1 for dedicated DMA. The second cell is the request line
++      number.
 +
 +  compatible:
-+    enum:
-+      - allwinner,sun50i-a64-dma
-+      - allwinner,sun50i-h6-dma
-+
-+  reg:
-+    maxItems: 1
-+
-+  interrupts:
-+    maxItems: 1
-+
-+  clocks:
-+    minItems: 1
-+    maxItems: 2
-+
-+  clock-names:
-+    items:
-+      - const: bus
-+      - const: mbus
-+
-+  resets:
-+    maxItems: 1
-+
-+required:
-+  - "#dma-cells"
-+  - compatible
-+  - reg
-+  - interrupts
-+  - clocks
-+  - resets
-+  - dma-channels
-+
-+if:
-+  properties:
-+    compatible:
-+      const: allwinner,sun50i-h6-dma
-+
-+then:
-+  properties:
-+    clocks:
-+      maxItems: 2
-+
-+  required:
-+    - clock-names
-+
-+else:
-+  properties:
-+    clocks:
-+      maxItems: 1
-+
-+# FIXME: We should set it, but it would report all the generic
-+# properties as additional properties.
-+# additionalProperties: false
-+
-+examples:
-+  - |
-+    dma: dma-controller@1c02000 {
-+        compatible = "allwinner,sun50i-a64-dma";
-+        reg = <0x01c02000 0x1000>;
-+        interrupts = <0 50 4>;
-+        clocks = <&ccu 30>;
-+        dma-channels = <8>;
-+        dma-requests = <27>;
-+        resets = <&ccu 7>;
-+        #dma-cells = <1>;
-+    };
-+
-+...
-diff --git a/Documentation/devicetree/bindings/dma/allwinner,sun6i-a31-dma.yaml b/Documentation/devicetree/bindings/dma/allwinner,sun6i-a31-dma.yaml
-new file mode 100644
-index 000000000000..740b7f9b535b
---- /dev/null
-+++ b/Documentation/devicetree/bindings/dma/allwinner,sun6i-a31-dma.yaml
-@@ -0,0 +1,62 @@
-+# SPDX-License-Identifier: GPL-2.0
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/dma/allwinner,sun6i-a31-dma.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Allwinner A31 DMA Controller Device Tree Bindings
-+
-+maintainers:
-+  - Chen-Yu Tsai <wens@csie.org>
-+  - Maxime Ripard <maxime.ripard@bootlin.com>
-+
-+allOf:
-+  - $ref: "dma-controller.yaml#"
-+
-+properties:
-+  "#dma-cells":
-+    const: 1
-+    description: The cell is the request line number.
-+
-+  compatible:
-+    oneOf:
-+      - const: allwinner,sun6i-a31-dma
-+      - const: allwinner,sun8i-a23-dma
-+      - const: allwinner,sun8i-a83t-dma
-+      - const: allwinner,sun8i-h3-dma
-+      - const: allwinner,sun8i-v3s-dma
++    const: allwinner,sun4i-a10-dma
 +
 +  reg:
 +    maxItems: 1
@@ -198,118 +100,77 @@ index 000000000000..740b7f9b535b
 +  clocks:
 +    maxItems: 1
 +
-+  resets:
-+    maxItems: 1
-+
 +required:
 +  - "#dma-cells"
 +  - compatible
 +  - reg
 +  - interrupts
 +  - clocks
-+  - resets
 +
 +additionalProperties: false
 +
 +examples:
 +  - |
 +    dma: dma-controller@1c02000 {
-+        compatible = "allwinner,sun6i-a31-dma";
++        compatible = "allwinner,sun4i-a10-dma";
 +        reg = <0x01c02000 0x1000>;
-+        interrupts = <0 50 4>;
-+        clocks = <&ahb1_gates 6>;
-+        resets = <&ahb1_rst 6>;
-+        #dma-cells = <1>;
++        interrupts = <27>;
++        clocks = <&ahb_gates 6>;
++        #dma-cells = <2>;
 +    };
 +
 +...
-diff --git a/Documentation/devicetree/bindings/dma/sun6i-dma.txt b/Documentation/devicetree/bindings/dma/sun6i-dma.txt
+diff --git a/Documentation/devicetree/bindings/dma/sun4i-dma.txt b/Documentation/devicetree/bindings/dma/sun4i-dma.txt
 deleted file mode 100644
-index cae31f4e77ba..000000000000
---- a/Documentation/devicetree/bindings/dma/sun6i-dma.txt
+index 8ad556aca70b..000000000000
+--- a/Documentation/devicetree/bindings/dma/sun4i-dma.txt
 +++ /dev/null
-@@ -1,81 +0,0 @@
--Allwinner A31 DMA Controller
+@@ -1,45 +0,0 @@
+-Allwinner A10 DMA Controller
 -
 -This driver follows the generic DMA bindings defined in dma.txt.
 -
 -Required properties:
 -
--- compatible:	Must be one of
--		  "allwinner,sun6i-a31-dma"
--		  "allwinner,sun8i-a23-dma"
--		  "allwinner,sun8i-a83t-dma"
--		  "allwinner,sun8i-h3-dma"
--		  "allwinner,sun8i-v3s-dma"
+-- compatible:	Must be "allwinner,sun4i-a10-dma"
 -- reg:		Should contain the registers base address and length
 -- interrupts:	Should contain a reference to the interrupt used by this device
 -- clocks:	Should contain a reference to the parent AHB clock
--- resets:	Should contain a reference to the reset controller asserting
--		this device in reset
--- #dma-cells :	Should be 1, a single cell holding a line request number
+-- #dma-cells :	Should be 2, first cell denoting normal or dedicated dma,
+-		second cell holding the request line number.
 -
 -Example:
 -	dma: dma-controller@1c02000 {
--		compatible = "allwinner,sun6i-a31-dma";
+-		compatible = "allwinner,sun4i-a10-dma";
 -		reg = <0x01c02000 0x1000>;
--		interrupts = <0 50 4>;
--		clocks = <&ahb1_gates 6>;
--		resets = <&ahb1_rst 6>;
--		#dma-cells = <1>;
+-		interrupts = <27>;
+-		clocks = <&ahb_gates 6>;
+-		#dma-cells = <2>;
 -	};
--
--------------------------------------------------------------------------------
--For A64 and H6 DMA controller:
--
--Required properties:
--- compatible:	Must be one of
--		  "allwinner,sun50i-a64-dma"
--		  "allwinner,sun50i-h6-dma"
--- dma-channels: Number of DMA channels supported by the controller.
--		Refer to Documentation/devicetree/bindings/dma/dma.txt
--- clocks:	In addition to parent AHB clock, it should also contain mbus
--		clock (H6 only)
--- clock-names:	Should contain "bus" and "mbus" (H6 only)
--- all properties above, i.e. reg, interrupts, clocks, resets and #dma-cells
--
--Optional properties:
--- dma-requests: Number of DMA request signals supported by the controller.
--		Refer to Documentation/devicetree/bindings/dma/dma.txt
--
--Example:
--	dma: dma-controller@1c02000 {
--		compatible = "allwinner,sun50i-a64-dma";
--		reg = <0x01c02000 0x1000>;
--		interrupts = <GIC_SPI 50 IRQ_TYPE_LEVEL_HIGH>;
--		clocks = <&ccu CLK_BUS_DMA>;
--		dma-channels = <8>;
--		dma-requests = <27>;
--		resets = <&ccu RST_BUS_DMA>;
--		#dma-cells = <1>;
--	};
--------------------------------------------------------------------------------
 -
 -Clients:
 -
--DMA clients connected to the A31 DMA controller must use the format
--described in the dma.txt file, using a two-cell specifier for each
--channel: a phandle plus one integer cells.
--The two cells in order are:
+-DMA clients connected to the Allwinner A10 DMA controller must use the
+-format described in the dma.txt file, using a three-cell specifier for
+-each channel: a phandle plus two integer cells.
+-The three cells in order are:
 -
 -1. A phandle pointing to the DMA controller.
--2. The port ID as specified in the datasheet
+-2. Whether it is using normal (0) or dedicated (1) channels
+-3. The port ID as specified in the datasheet
 -
 -Example:
--spi2: spi@1c6a000 {
--	compatible = "allwinner,sun6i-a31-spi";
--	reg = <0x01c6a000 0x1000>;
--	interrupts = <0 67 4>;
--	clocks = <&ahb1_gates 22>, <&spi2_clk>;
--	clock-names = "ahb", "mod";
--	dmas = <&dma 25>, <&dma 25>;
--	dma-names = "rx", "tx";
--	resets = <&ahb1_rst 22>;
--};
+-	spi2: spi@1c17000 {
+-		compatible = "allwinner,sun4i-a10-spi";
+-		reg = <0x01c17000 0x1000>;
+-		interrupts = <0 12 4>;
+-		clocks = <&ahb_gates 22>, <&spi2_clk>;
+-		clock-names = "ahb", "mod";
+-		dmas = <&dma 1 29>, <&dma 1 28>;
+-		dma-names = "rx", "tx";
+-		#address-cells = <1>;
+-		#size-cells = <0>;
+-	};
 -- 
 2.21.0
 
