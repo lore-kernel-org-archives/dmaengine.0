@@ -2,64 +2,69 @@ Return-Path: <SRS0=kJH2=VM=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BDB63C7618A
-	for <dmaengine@archiver.kernel.org>; Mon, 15 Jul 2019 05:43:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 25105C76191
+	for <dmaengine@archiver.kernel.org>; Mon, 15 Jul 2019 15:17:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 8EF5220838
-	for <dmaengine@archiver.kernel.org>; Mon, 15 Jul 2019 05:43:35 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kuCj5ogP"
+	by mail.kernel.org (Postfix) with ESMTP id EDC7A2054F
+	for <dmaengine@archiver.kernel.org>; Mon, 15 Jul 2019 15:17:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=default; t=1563203831;
+	bh=E/egqeiPmeR+wTmeoTlfpr/9l78nB77vFY1VUyDOmQo=;
+	h=From:Subject:To:Cc:References:Date:In-Reply-To:List-ID:From;
+	b=yUKgz9C2I4w23Zw/rb6SC0ksC/Yd6QgHcXLbarMAYlq23Oam0XFZg5j/vXGPFL+D4
+	 3hBAHeMe1CpNtOu9lVAA1o2pTEXwHr9g4f+5z4A6GAcyPj5Gv1WvlTelGiQU4jG7+w
+	 XxP7TNAOBfi2VySsaIPUwkJJBbM1eYZD28ihICZ0=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726052AbfGOFnf (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 15 Jul 2019 01:43:35 -0400
-Received: from mail-yb1-f196.google.com ([209.85.219.196]:39002 "EHLO
-        mail-yb1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725385AbfGOFnf (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Mon, 15 Jul 2019 01:43:35 -0400
-Received: by mail-yb1-f196.google.com with SMTP id z128so2370973yba.6;
-        Sun, 14 Jul 2019 22:43:34 -0700 (PDT)
+        id S1730722AbfGOPRK (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 15 Jul 2019 11:17:10 -0400
+Received: from mail-qt1-f196.google.com ([209.85.160.196]:45706 "EHLO
+        mail-qt1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730221AbfGOPRK (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Mon, 15 Jul 2019 11:17:10 -0400
+Received: by mail-qt1-f196.google.com with SMTP id x22so11091350qtp.12;
+        Mon, 15 Jul 2019 08:17:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=x1fTuAZhIfrlETbUSsP1dpVtOtalwzPUJBl71LNvF/I=;
-        b=kuCj5ogPMdv0UR/QbaMvt17fr1Kks7yEIQad2BJdVAokAZGlp1pIrgGLGzQdE0T1RV
-         He4TDIBNF2P9i7c1V/dsB/e3IQveyT5EDel5NOC4W7KrSmfeqlqj6hkp7T2KAeplDFAE
-         A/Ey/a40RVJy2pswyCyrxpPA6hUPt+ZRXoqg/v8a+5C15YZtMf9Niyg638/l0aneZsUV
-         8NqbReKDtdSyFKHPPXkLvAoe8VjQSr7oeTUH3hxoxVsn6Va/r+CZ3OLFdRA4Hv04sVEh
-         /67D9sbCHe9uCbd9vvLLbgobLk+mhRSNo0VSMRzb70MGGgT7y6W+BUlhjVkbja4k4vyZ
-         lzvA==
+        h=sender:from:subject:to:cc:references:openpgp:autocrypt:message-id
+         :date:user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=E/egqeiPmeR+wTmeoTlfpr/9l78nB77vFY1VUyDOmQo=;
+        b=fdAmHhIIQ5M5U7SJWntEaFH5x/7ZSNGV/zJLzvCc6oy4ze5UqIr+ewk8gIlu3LdeuD
+         bSVEyGeFqfynptNWDeMxR39rY9enAHf0Fv1HLodHpi15tfBmQUEXzcug2siLXm7QiiV+
+         nvoFtKO/+CJy9ikan9o/6tAq9hW4sFK4dBkAI48pIMeG2iYFU+HZnSor5brUWCEWjDSW
+         IqydetLko55QSdg+D97dxHsmuqyEdIZtiX2rG9LU3EpWaMWJpfmlcAWAVyFkW3BRMDCt
+         wYMyell5jTZlhr0A5x34LrJqIB+pLUrHN9vlFu3BF4RmKpB8O9BH0bblbyQTl1+semWS
+         Q6Hw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=x1fTuAZhIfrlETbUSsP1dpVtOtalwzPUJBl71LNvF/I=;
-        b=kLsJixhDpK3lpb0ge9nEA+cNaXDLpnTVyqi5heSCk7ZoGsK8mZ/NwIR8Q2rv/Szxkg
-         pIwN9gW5S/ITcjDci8L+82xaYlhw5nbDZHorottW6SWqyjnDFcirAQG8kzeJzgJrqE3j
-         BrhVGk5Q4bv+O/UJyVMlbwPMIsn6PmyLDZXcMNtnqgw6a6GgR/DCjxJFG18LwsTtJ98t
-         HtpxgDZCrBdNBXszjFyWKUUcPUzns7zx4O26EO20EvEmaOw6mqHXmS6TaTfUXhfZ63dQ
-         oc8LKkQe94++e/uy276KLxqM7WDEcWPd4VgWdUGlvgqL7P2kRjqd3he7cmPCUaDxJ//a
-         0C1g==
-X-Gm-Message-State: APjAAAUtSS8vyg7Rv9ziYB2WcHOF9Xp9I/1vLSwBJCu1Etti2MoJABzT
-        JiPuI9+Fg9WVy6hvEA/ZeQ/uc+7lPmbjc83MEnU=
-X-Google-Smtp-Source: APXvYqxAyT0M6B1ZXmetW6nzhOPqBX2DjnMDBB77OGQIp1Q/u6NBc/ONz4SQsmC8fZf4oF3b4dFRdlG5OJHS/2lqFY0=
-X-Received: by 2002:a25:d10c:: with SMTP id i12mr14015312ybg.395.1563169414192;
- Sun, 14 Jul 2019 22:43:34 -0700 (PDT)
-MIME-Version: 1.0
-References: <20190715031723.6375-1-huangfq.daxian@gmail.com> <72c45b14-f0c0-9d1c-0953-eea70ce513a0@kernel.org>
-In-Reply-To: <72c45b14-f0c0-9d1c-0953-eea70ce513a0@kernel.org>
-From:   Fuqian Huang <huangfq.daxian@gmail.com>
-Date:   Mon, 15 Jul 2019 13:43:23 +0800
-Message-ID: <CABXRUiQXweOLRTpdyhx9xT_B1VBmoSoNm=_+Qr4prmz7u1QRFA@mail.gmail.com>
+        h=x-gm-message-state:sender:from:subject:to:cc:references:openpgp
+         :autocrypt:message-id:date:user-agent:mime-version:in-reply-to
+         :content-language:content-transfer-encoding;
+        bh=E/egqeiPmeR+wTmeoTlfpr/9l78nB77vFY1VUyDOmQo=;
+        b=dFa5nhVHprauNC67XuYkZUsyv9Ot6zcU6BVsiegyz5AdyfXpmzvlQ2qdxwC+Xdl0t+
+         YVTYganwwziYJXgkeyMD18oxbLY8F0PNYl31awfoeMwHIN8Xoh8cbZXPpRv3vWa0R/xC
+         gLUHTYB4Q1OjxunkahfLQn3qDFkk2In4FqU3tputEAw6aLE9gYM9vmsbTO6LcTiPfiA/
+         XFrznnUnVJDEOC38TsNlkQ40951XeIKzPPgRGlU0kN7sObaCI/DF++1rdTRrb7LWDKiO
+         lHLw9GaX/EJPCHHqJTqJppblRFHw0DrGwm/GI0kgdDPKWNneBSL0D1GirIxUdFIY3E6U
+         2SyA==
+X-Gm-Message-State: APjAAAXECgRkddBdwz2IIKCVeCntbN8nZILDRhs8/Nva+Hl4DvHaQB3Z
+        l2Rg3tuT83M4FHfYHCStclc=
+X-Google-Smtp-Source: APXvYqw+Jj/zJuzoP/WabIMtvOAfiFGap4BYM3yfG3iS6kDjoZ16oLEcwXvluS9Yi+h/DsFIMYTcnQ==
+X-Received: by 2002:ac8:1106:: with SMTP id c6mr17077663qtj.332.1563203829090;
+        Mon, 15 Jul 2019 08:17:09 -0700 (PDT)
+Received: from [10.84.150.27] ([167.220.148.27])
+        by smtp.gmail.com with ESMTPSA id q17sm3683624qtl.13.2019.07.15.08.17.08
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 15 Jul 2019 08:17:08 -0700 (PDT)
+From:   Sinan Kaya <Okaya@kernel.org>
+X-Google-Original-From: Sinan Kaya <okaya@kernel.org>
 Subject: Re: [PATCH v3 04/24] dmaengine: qcom_hidma: Remove call to memset
  after dmam_alloc_coherent
-To:     Sinan Kaya <Okaya@kernel.org>
+To:     Fuqian Huang <huangfq.daxian@gmail.com>
 Cc:     Andy Gross <agross@kernel.org>,
         David Brown <david.brown@linaro.org>,
         Vinod Koul <vkoul@kernel.org>,
@@ -68,46 +73,52 @@ Cc:     Andy Gross <agross@kernel.org>,
         Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
         Robin Murphy <robin.murphy@arm.com>,
         Christoph Hellwig <hch@infradead.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+References: <20190715031723.6375-1-huangfq.daxian@gmail.com>
+ <72c45b14-f0c0-9d1c-0953-eea70ce513a0@kernel.org>
+ <CABXRUiQXweOLRTpdyhx9xT_B1VBmoSoNm=_+Qr4prmz7u1QRFA@mail.gmail.com>
+Openpgp: preference=signencrypt
+Autocrypt: addr=okaya@kernel.org; keydata=
+ mQENBFrnOrUBCADGOL0kF21B6ogpOkuYvz6bUjO7NU99PKhXx1MfK/AzK+SFgxJF7dMluoF6
+ uT47bU7zb7HqACH6itTgSSiJeSoq86jYoq5s4JOyaj0/18Hf3/YBah7AOuwk6LtV3EftQIhw
+ 9vXqCnBwP/nID6PQ685zl3vH68yzF6FVNwbDagxUz/gMiQh7scHvVCjiqkJ+qu/36JgtTYYw
+ 8lGWRcto6gr0eTF8Wd8f81wspmUHGsFdN/xPsZPKMw6/on9oOj3AidcR3P9EdLY4qQyjvcNC
+ V9cL9b5I/Ud9ghPwW4QkM7uhYqQDyh3SwgEFudc+/RsDuxjVlg9CFnGhS0nPXR89SaQZABEB
+ AAG0HVNpbmFuIEtheWEgPG9rYXlhQGtlcm5lbC5vcmc+iQFOBBMBCAA4FiEEYdOlMSE+a7/c
+ ckrQvGF4I+4LAFcFAlztcAoCGwMFCwkIBwIGFQoJCAsCBBYCAwECHgECF4AACgkQvGF4I+4L
+ AFfidAf/VKHInxep0Z96iYkIq42432HTZUrxNzG9IWk4HN7c3vTJKv2W+b9pgvBF1SmkyQSy
+ 8SJ3Zd98CO6FOHA1FigFyZahVsme+T0GsS3/OF1kjrtMktoREr8t0rK0yKpCTYVdlkHadxmR
+ Qs5xLzW1RqKlrNigKHI2yhgpMwrpzS+67F1biT41227sqFzW9urEl/jqGJXaB6GV+SRKSHN+
+ ubWXgE1NkmfAMeyJPKojNT7ReL6eh3BNB/Xh1vQJew+AE50EP7o36UXghoUktnx6cTkge0ZS
+ qgxuhN33cCOU36pWQhPqVSlLTZQJVxuCmlaHbYWvye7bBOhmiuNKhOzb3FcgT7kBDQRa5zq1
+ AQgAyRq/7JZKOyB8wRx6fHE0nb31P75kCnL3oE+smKW/sOcIQDV3C7mZKLf472MWB1xdr4Tm
+ eXeL/wT0QHapLn5M5wWghC80YvjjdolHnlq9QlYVtvl1ocAC28y43tKJfklhHiwMNDJfdZbw
+ 9lQ2h+7nccFWASNUu9cqZOABLvJcgLnfdDpnSzOye09VVlKr3NHgRyRZa7me/oFJCxrJlKAl
+ 2hllRLt0yV08o7i14+qmvxI2EKLX9zJfJ2rGWLTVe3EJBnCsQPDzAUVYSnTtqELu2AGzvDiM
+ gatRaosnzhvvEK+kCuXuCuZlRWP7pWSHqFFuYq596RRG5hNGLbmVFZrCxQARAQABiQEfBBgB
+ CAAJBQJa5zq1AhsMAAoJELxheCPuCwBX2UYH/2kkMC4mImvoClrmcMsNGijcZHdDlz8NFfCI
+ gSb3NHkarnA7uAg8KJuaHUwBMk3kBhv2BGPLcmAknzBIehbZ284W7u3DT9o1Y5g+LDyx8RIi
+ e7pnMcC+bE2IJExCVf2p3PB1tDBBdLEYJoyFz/XpdDjZ8aVls/pIyrq+mqo5LuuhWfZzPPec
+ 9EiM2eXpJw+Rz+vKjSt1YIhg46YbdZrDM2FGrt9ve3YaM5H0lzJgq/JQPKFdbd5MB0X37Qc+
+ 2m/A9u9SFnOovA42DgXUyC2cSbIJdPWOK9PnzfXqF3sX9Aol2eLUmQuLpThJtq5EHu6FzJ7Y
+ L+s0nPaNMKwv/Xhhm6Y=
+Message-ID: <245ffd79-316c-e985-d1da-2ccea6d29636@kernel.org>
+Date:   Mon, 15 Jul 2019 11:17:07 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
+MIME-Version: 1.0
+In-Reply-To: <CABXRUiQXweOLRTpdyhx9xT_B1VBmoSoNm=_+Qr4prmz7u1QRFA@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Sinan Kaya <Okaya@kernel.org> =E6=96=BC 2019=E5=B9=B47=E6=9C=8815=E6=97=A5=
-=E9=80=B1=E4=B8=80 =E4=B8=8B=E5=8D=8812:17=E5=AF=AB=E9=81=93=EF=BC=9A
->
-> On 7/14/2019 11:17 PM, Fuqian Huang wrote:
-> > In commit 518a2f1925c3
-> > ("dma-mapping: zero memory returned from dma_alloc_*"),
-> > dma_alloc_coherent has already zeroed the memory.
-> > So memset is not needed.
-> >
-> > Signed-off-by: Fuqian Huang <huangfq.daxian@gmail.com>
->
-> I don't see SWIO or ARM64 IOMMU drivers getting impacted by
-> the mentioned change above (518a2f1925c3).
->
-> How does this new behavior apply globally?
->
-In the last version patch set, I referenced the commit af7ddd8a627c
-("Merge tag 'dma-mapping-4.21' of
-git://git.infradead.org/users/hch/dma-mapping")
-in the commit log.
-The merged commit mentions that
-"ensure dma_alloc_coherent returns zeroed memory to
-avoid kernel data leaks through userspace.
-We already did this for most common architectures,
-but this ensures we do it everywhere."
-dma_alloc_coherent has already zeroed the memory during allocation
-and the commit also deprecates dma_zalloc_coherent.
-Greg and other maintainer told me to use the actual commit
-rather than the merged commit.
-So I reference the commit that ensures the dma_alloc_coherent to
-returns zeroed memory every where.
-Maybe this belongs to the `most common achitectures` and is not impacted
-by the mentioned change.
-Should I rewrite the commit log? Just mention that dma_alloc_coherent
-has already
-zeroed the memory and not to reference the commit?
+On 7/15/2019 1:43 AM, Fuqian Huang wrote:
+> Should I rewrite the commit log? Just mention that dma_alloc_coherent
+> has already
+> zeroed the memory and not to reference the commit?
+
+I'd like to hear from Robin Murphy that arm smmu driver follows this as
+well.
