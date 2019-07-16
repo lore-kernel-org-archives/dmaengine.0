@@ -7,53 +7,53 @@ X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
 	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 67893C76188
-	for <dmaengine@archiver.kernel.org>; Tue, 16 Jul 2019 08:26:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7540AC76195
+	for <dmaengine@archiver.kernel.org>; Tue, 16 Jul 2019 08:26:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 4143721721
-	for <dmaengine@archiver.kernel.org>; Tue, 16 Jul 2019 08:26:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 46A5921738
+	for <dmaengine@archiver.kernel.org>; Tue, 16 Jul 2019 08:26:13 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b="F6L+Lqbg"
+	dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b="TnOWfb0k"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727906AbfGPI0M (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 16 Jul 2019 04:26:12 -0400
-Received: from lelv0143.ext.ti.com ([198.47.23.248]:43300 "EHLO
-        lelv0143.ext.ti.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726774AbfGPI0L (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Tue, 16 Jul 2019 04:26:11 -0400
-Received: from lelv0265.itg.ti.com ([10.180.67.224])
-        by lelv0143.ext.ti.com (8.15.2/8.15.2) with ESMTP id x6G8Q47R114442;
-        Tue, 16 Jul 2019 03:26:04 -0500
+        id S1728001AbfGPI0N (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 16 Jul 2019 04:26:13 -0400
+Received: from fllv0016.ext.ti.com ([198.47.19.142]:37938 "EHLO
+        fllv0016.ext.ti.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727862AbfGPI0M (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Tue, 16 Jul 2019 04:26:12 -0400
+Received: from fllv0035.itg.ti.com ([10.64.41.0])
+        by fllv0016.ext.ti.com (8.15.2/8.15.2) with ESMTP id x6G8Q0of074214;
+        Tue, 16 Jul 2019 03:26:00 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
-        s=ti-com-17Q1; t=1563265564;
-        bh=INN8eT9Tuq8HUrMekaBYruIJDFB4niwn3CDGYmdZlz4=;
+        s=ti-com-17Q1; t=1563265560;
+        bh=t+Qlr1SoRNQmbucrnseL/C40XiGOQTaRa+VSXOPP/Fo=;
         h=From:To:CC:Subject:Date:In-Reply-To:References;
-        b=F6L+LqbgAYmwu/oCbR/YjbnSLrvApeMDtbO8aTDr8Ga4FYB/ZJrSQ1RDszlr7Bs+z
-         XlkEDznObLeEil7wqdT1HQXQqfn/TW+YTxwgdm6awLHo8rRDFX6rkgWgB7KNFQDeOQ
-         6LQcaGfRZ/56YHrEoIAd/vVgf7guJiEsKDbLpHX0=
-Received: from DFLE102.ent.ti.com (dfle102.ent.ti.com [10.64.6.23])
-        by lelv0265.itg.ti.com (8.15.2/8.15.2) with ESMTPS id x6G8Q4V7102469
+        b=TnOWfb0krGedRaVZXpsyZneBtXoPv8RPUIu7bGn/Ac19/A1PrHGcwjfgyZqeLo3Y8
+         cbHf7M9W3oguw7q6b3zDJ2zgnI9zHBojzI+wCKZBkg5faxOsGRBecS4eB0vdOZE+Xv
+         nOs0A46WqXeXf/IK/pwHDy03bDk3ZogQjG08HcVM=
+Received: from DFLE107.ent.ti.com (dfle107.ent.ti.com [10.64.6.28])
+        by fllv0035.itg.ti.com (8.15.2/8.15.2) with ESMTPS id x6G8Q0oF053474
         (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
-        Tue, 16 Jul 2019 03:26:04 -0500
-Received: from DFLE104.ent.ti.com (10.64.6.25) by DFLE102.ent.ti.com
- (10.64.6.23) with Microsoft SMTP Server (version=TLS1_2,
+        Tue, 16 Jul 2019 03:26:00 -0500
+Received: from DFLE103.ent.ti.com (10.64.6.24) by DFLE107.ent.ti.com
+ (10.64.6.28) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1713.5; Tue, 16
- Jul 2019 03:26:03 -0500
-Received: from lelv0326.itg.ti.com (10.180.67.84) by DFLE104.ent.ti.com
- (10.64.6.25) with Microsoft SMTP Server (version=TLS1_2,
+ Jul 2019 03:25:59 -0500
+Received: from lelv0326.itg.ti.com (10.180.67.84) by DFLE103.ent.ti.com
+ (10.64.6.24) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1713.5 via
- Frontend Transport; Tue, 16 Jul 2019 03:26:03 -0500
+ Frontend Transport; Tue, 16 Jul 2019 03:25:59 -0500
 Received: from feketebors.ti.com (ileax41-snat.itg.ti.com [10.172.224.153])
-        by lelv0326.itg.ti.com (8.15.2/8.15.2) with ESMTP id x6G8PuBq103858;
-        Tue, 16 Jul 2019 03:26:01 -0500
+        by lelv0326.itg.ti.com (8.15.2/8.15.2) with ESMTP id x6G8PuBo103858;
+        Tue, 16 Jul 2019 03:25:58 -0500
 From:   Peter Ujfalusi <peter.ujfalusi@ti.com>
 To:     <vkoul@kernel.org>
 CC:     <dan.j.williams@intel.com>, <dmaengine@vger.kernel.org>,
         <linux-arm-kernel@lists.infradead.org>,
         <linux-omap@vger.kernel.org>
-Subject: [PATCH v5 3/3] dmaengine: ti: edma: Support for polled (memcpy) completion
-Date:   Tue, 16 Jul 2019 11:26:55 +0300
-Message-ID: <20190716082655.1620-4-peter.ujfalusi@ti.com>
+Subject: [PATCH v5 1/3] dmaengine: ti: edma: Clean up the 2x32bit array register accesses
+Date:   Tue, 16 Jul 2019 11:26:53 +0300
+Message-ID: <20190716082655.1620-2-peter.ujfalusi@ti.com>
 X-Mailer: git-send-email 2.22.0
 In-Reply-To: <20190716082655.1620-1-peter.ujfalusi@ti.com>
 References: <20190716082655.1620-1-peter.ujfalusi@ti.com>
@@ -66,103 +66,212 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-When a DMA client driver does not set the DMA_PREP_INTERRUPT because it
-does not want to use interrupts for DMA completion or because it can not
-rely on DMA interrupts due to executing the memcpy when interrupts are
-disabled it will poll the status of the transfer.
-
-Since we can not tell from any EDMA register that the transfer is
-completed, we can only know that the paRAM set has been sent to TPTC for
-processing we need to check the residue of the transfer, if it is 0 then
-the transfer is completed.
+Introduce defines for getting the array index and the bit number within the
+64bit array register pairs.
 
 Signed-off-by: Peter Ujfalusi <peter.ujfalusi@ti.com>
 ---
- drivers/dma/ti/edma.c | 37 +++++++++++++++++++++++++++++++++----
- 1 file changed, 33 insertions(+), 4 deletions(-)
+ drivers/dma/ti/edma.c | 106 ++++++++++++++++++++++++------------------
+ 1 file changed, 61 insertions(+), 45 deletions(-)
 
 diff --git a/drivers/dma/ti/edma.c b/drivers/dma/ti/edma.c
-index 5b8cbd6d7610..bcd431283d8a 100644
+index ceabdea40ae0..a39f817b3888 100644
 --- a/drivers/dma/ti/edma.c
 +++ b/drivers/dma/ti/edma.c
-@@ -180,6 +180,7 @@ struct edma_desc {
- 	struct list_head		node;
- 	enum dma_transfer_direction	direction;
- 	int				cyclic;
-+	bool				polled;
- 	int				absync;
- 	int				pset_nr;
- 	struct edma_chan		*echan;
-@@ -1227,8 +1228,9 @@ static struct dma_async_tx_descriptor *edma_prep_dma_memcpy(
+@@ -133,6 +133,17 @@
+ #define EDMA_CONT_PARAMS_FIXED_EXACT	 1002
+ #define EDMA_CONT_PARAMS_FIXED_NOT_EXACT 1003
  
- 	edesc->pset[0].param.opt |= ITCCHEN;
- 	if (nslots == 1) {
--		/* Enable transfer complete interrupt */
--		edesc->pset[0].param.opt |= TCINTEN;
-+		/* Enable transfer complete interrupt if requested */
-+		if (tx_flags & DMA_PREP_INTERRUPT)
-+			edesc->pset[0].param.opt |= TCINTEN;
- 	} else {
- 		/* Enable transfer complete chaining for the first slot */
- 		edesc->pset[0].param.opt |= TCCHEN;
-@@ -1255,9 +1257,14 @@ static struct dma_async_tx_descriptor *edma_prep_dma_memcpy(
- 		}
- 
- 		edesc->pset[1].param.opt |= ITCCHEN;
--		edesc->pset[1].param.opt |= TCINTEN;
-+		/* Enable transfer complete interrupt if requested */
-+		if (tx_flags & DMA_PREP_INTERRUPT)
-+			edesc->pset[1].param.opt |= TCINTEN;
- 	}
- 
-+	if (!(tx_flags & DMA_PREP_INTERRUPT))
-+		edesc->polled = true;
++/*
++ * 64bit array registers are split into two 32bit registers:
++ * reg0: channel/event 0-31
++ * reg1: channel/event 32-63
++ *
++ * bit 5 in the channel number tells the array index (0/1)
++ * bit 0-4 (0x1f) is the bit offset within the register
++ */
++#define EDMA_REG_ARRAY_INDEX(channel)	((channel) >> 5)
++#define EDMA_CHANNEL_BIT(channel)	(BIT((channel) & 0x1f))
 +
- 	return vchan_tx_prep(&echan->vchan, &edesc->vdesc, tx_flags);
+ /* PaRAM slots are laid out like this */
+ struct edmacc_param {
+ 	u32 opt;
+@@ -441,15 +452,14 @@ static void edma_setup_interrupt(struct edma_chan *echan, bool enable)
+ {
+ 	struct edma_cc *ecc = echan->ecc;
+ 	int channel = EDMA_CHAN_SLOT(echan->ch_num);
++	int idx = EDMA_REG_ARRAY_INDEX(channel);
++	int ch_bit = EDMA_CHANNEL_BIT(channel);
+ 
+ 	if (enable) {
+-		edma_shadow0_write_array(ecc, SH_ICR, channel >> 5,
+-					 BIT(channel & 0x1f));
+-		edma_shadow0_write_array(ecc, SH_IESR, channel >> 5,
+-					 BIT(channel & 0x1f));
++		edma_shadow0_write_array(ecc, SH_ICR, idx, ch_bit);
++		edma_shadow0_write_array(ecc, SH_IESR, idx, ch_bit);
+ 	} else {
+-		edma_shadow0_write_array(ecc, SH_IECR, channel >> 5,
+-					 BIT(channel & 0x1f));
++		edma_shadow0_write_array(ecc, SH_IECR, idx, ch_bit);
+ 	}
  }
  
-@@ -1827,18 +1834,40 @@ static enum dma_status edma_tx_status(struct dma_chan *chan,
+@@ -587,26 +597,26 @@ static void edma_start(struct edma_chan *echan)
  {
- 	struct edma_chan *echan = to_edma_chan(chan);
- 	struct virt_dma_desc *vdesc;
-+	struct dma_tx_state txstate_tmp;
- 	enum dma_status ret;
- 	unsigned long flags;
+ 	struct edma_cc *ecc = echan->ecc;
+ 	int channel = EDMA_CHAN_SLOT(echan->ch_num);
+-	int j = (channel >> 5);
+-	unsigned int mask = BIT(channel & 0x1f);
++	int idx = EDMA_REG_ARRAY_INDEX(channel);
++	int ch_bit = EDMA_CHANNEL_BIT(channel);
  
- 	ret = dma_cookie_status(chan, cookie, txstate);
--	if (ret == DMA_COMPLETE || !txstate)
-+
-+	if (ret == DMA_COMPLETE)
- 		return ret;
+ 	if (!echan->hw_triggered) {
+ 		/* EDMA channels without event association */
+-		dev_dbg(ecc->dev, "ESR%d %08x\n", j,
+-			edma_shadow0_read_array(ecc, SH_ESR, j));
+-		edma_shadow0_write_array(ecc, SH_ESR, j, mask);
++		dev_dbg(ecc->dev, "ESR%d %08x\n", idx,
++			edma_shadow0_read_array(ecc, SH_ESR, idx));
++		edma_shadow0_write_array(ecc, SH_ESR, idx, ch_bit);
+ 	} else {
+ 		/* EDMA channel with event association */
+-		dev_dbg(ecc->dev, "ER%d %08x\n", j,
+-			edma_shadow0_read_array(ecc, SH_ER, j));
++		dev_dbg(ecc->dev, "ER%d %08x\n", idx,
++			edma_shadow0_read_array(ecc, SH_ER, idx));
+ 		/* Clear any pending event or error */
+-		edma_write_array(ecc, EDMA_ECR, j, mask);
+-		edma_write_array(ecc, EDMA_EMCR, j, mask);
++		edma_write_array(ecc, EDMA_ECR, idx, ch_bit);
++		edma_write_array(ecc, EDMA_EMCR, idx, ch_bit);
+ 		/* Clear any SER */
+-		edma_shadow0_write_array(ecc, SH_SECR, j, mask);
+-		edma_shadow0_write_array(ecc, SH_EESR, j, mask);
+-		dev_dbg(ecc->dev, "EER%d %08x\n", j,
+-			edma_shadow0_read_array(ecc, SH_EER, j));
++		edma_shadow0_write_array(ecc, SH_SECR, idx, ch_bit);
++		edma_shadow0_write_array(ecc, SH_EESR, idx, ch_bit);
++		dev_dbg(ecc->dev, "EER%d %08x\n", idx,
++			edma_shadow0_read_array(ecc, SH_EER, idx));
+ 	}
+ }
  
-+	/* Provide a dummy dma_tx_state for completion checking */
-+	if (!txstate)
-+		txstate = &txstate_tmp;
-+
-+	txstate->residue = 0;
- 	spin_lock_irqsave(&echan->vchan.lock, flags);
- 	if (echan->edesc && echan->edesc->vdesc.tx.cookie == cookie)
- 		txstate->residue = edma_residue(echan->edesc);
- 	else if ((vdesc = vchan_find_desc(&echan->vchan, cookie)))
- 		txstate->residue = to_edma_desc(&vdesc->tx)->residue;
-+
-+	/*
-+	 * Mark the cookie completed if the residue is 0 for non cyclic
-+	 * transfers
-+	 */
-+	if (ret != DMA_COMPLETE && !txstate->residue &&
-+	    echan->edesc && echan->edesc->polled &&
-+	    echan->edesc->vdesc.tx.cookie == cookie) {
-+		edma_stop(echan);
-+		vchan_cookie_complete(&echan->edesc->vdesc);
-+		echan->edesc = NULL;
-+		edma_execute(echan);
-+		ret = DMA_COMPLETE;
-+	}
-+
- 	spin_unlock_irqrestore(&echan->vchan.lock, flags);
+@@ -614,19 +624,19 @@ static void edma_stop(struct edma_chan *echan)
+ {
+ 	struct edma_cc *ecc = echan->ecc;
+ 	int channel = EDMA_CHAN_SLOT(echan->ch_num);
+-	int j = (channel >> 5);
+-	unsigned int mask = BIT(channel & 0x1f);
++	int idx = EDMA_REG_ARRAY_INDEX(channel);
++	int ch_bit = EDMA_CHANNEL_BIT(channel);
  
- 	return ret;
+-	edma_shadow0_write_array(ecc, SH_EECR, j, mask);
+-	edma_shadow0_write_array(ecc, SH_ECR, j, mask);
+-	edma_shadow0_write_array(ecc, SH_SECR, j, mask);
+-	edma_write_array(ecc, EDMA_EMCR, j, mask);
++	edma_shadow0_write_array(ecc, SH_EECR, idx, ch_bit);
++	edma_shadow0_write_array(ecc, SH_ECR, idx, ch_bit);
++	edma_shadow0_write_array(ecc, SH_SECR, idx, ch_bit);
++	edma_write_array(ecc, EDMA_EMCR, idx, ch_bit);
+ 
+ 	/* clear possibly pending completion interrupt */
+-	edma_shadow0_write_array(ecc, SH_ICR, j, mask);
++	edma_shadow0_write_array(ecc, SH_ICR, idx, ch_bit);
+ 
+-	dev_dbg(ecc->dev, "EER%d %08x\n", j,
+-		edma_shadow0_read_array(ecc, SH_EER, j));
++	dev_dbg(ecc->dev, "EER%d %08x\n", idx,
++		edma_shadow0_read_array(ecc, SH_EER, idx));
+ 
+ 	/* REVISIT:  consider guarding against inappropriate event
+ 	 * chaining by overwriting with dummy_paramset.
+@@ -640,45 +650,49 @@ static void edma_stop(struct edma_chan *echan)
+ static void edma_pause(struct edma_chan *echan)
+ {
+ 	int channel = EDMA_CHAN_SLOT(echan->ch_num);
+-	unsigned int mask = BIT(channel & 0x1f);
+ 
+-	edma_shadow0_write_array(echan->ecc, SH_EECR, channel >> 5, mask);
++	edma_shadow0_write_array(echan->ecc, SH_EECR,
++				 EDMA_REG_ARRAY_INDEX(channel),
++				 EDMA_CHANNEL_BIT(channel));
+ }
+ 
+ /* Re-enable EDMA hardware events on the specified channel.  */
+ static void edma_resume(struct edma_chan *echan)
+ {
+ 	int channel = EDMA_CHAN_SLOT(echan->ch_num);
+-	unsigned int mask = BIT(channel & 0x1f);
+ 
+-	edma_shadow0_write_array(echan->ecc, SH_EESR, channel >> 5, mask);
++	edma_shadow0_write_array(echan->ecc, SH_EESR,
++				 EDMA_REG_ARRAY_INDEX(channel),
++				 EDMA_CHANNEL_BIT(channel));
+ }
+ 
+ static void edma_trigger_channel(struct edma_chan *echan)
+ {
+ 	struct edma_cc *ecc = echan->ecc;
+ 	int channel = EDMA_CHAN_SLOT(echan->ch_num);
+-	unsigned int mask = BIT(channel & 0x1f);
++	int idx = EDMA_REG_ARRAY_INDEX(channel);
++	int ch_bit = EDMA_CHANNEL_BIT(channel);
+ 
+-	edma_shadow0_write_array(ecc, SH_ESR, (channel >> 5), mask);
++	edma_shadow0_write_array(ecc, SH_ESR, idx, ch_bit);
+ 
+-	dev_dbg(ecc->dev, "ESR%d %08x\n", (channel >> 5),
+-		edma_shadow0_read_array(ecc, SH_ESR, (channel >> 5)));
++	dev_dbg(ecc->dev, "ESR%d %08x\n", idx,
++		edma_shadow0_read_array(ecc, SH_ESR, idx));
+ }
+ 
+ static void edma_clean_channel(struct edma_chan *echan)
+ {
+ 	struct edma_cc *ecc = echan->ecc;
+ 	int channel = EDMA_CHAN_SLOT(echan->ch_num);
+-	int j = (channel >> 5);
+-	unsigned int mask = BIT(channel & 0x1f);
++	int idx = EDMA_REG_ARRAY_INDEX(channel);
++	int ch_bit = EDMA_CHANNEL_BIT(channel);
+ 
+-	dev_dbg(ecc->dev, "EMR%d %08x\n", j, edma_read_array(ecc, EDMA_EMR, j));
+-	edma_shadow0_write_array(ecc, SH_ECR, j, mask);
++	dev_dbg(ecc->dev, "EMR%d %08x\n", idx,
++		edma_read_array(ecc, EDMA_EMR, idx));
++	edma_shadow0_write_array(ecc, SH_ECR, idx, ch_bit);
+ 	/* Clear the corresponding EMR bits */
+-	edma_write_array(ecc, EDMA_EMCR, j, mask);
++	edma_write_array(ecc, EDMA_EMCR, idx, ch_bit);
+ 	/* Clear any SER */
+-	edma_shadow0_write_array(ecc, SH_SECR, j, mask);
++	edma_shadow0_write_array(ecc, SH_SECR, idx, ch_bit);
+ 	edma_write(ecc, EDMA_CCERRCLR, BIT(16) | BIT(1) | BIT(0));
+ }
+ 
+@@ -708,7 +722,8 @@ static int edma_alloc_channel(struct edma_chan *echan,
+ 	int channel = EDMA_CHAN_SLOT(echan->ch_num);
+ 
+ 	/* ensure access through shadow region 0 */
+-	edma_or_array2(ecc, EDMA_DRAE, 0, channel >> 5, BIT(channel & 0x1f));
++	edma_or_array2(ecc, EDMA_DRAE, 0, EDMA_REG_ARRAY_INDEX(channel),
++		       EDMA_CHANNEL_BIT(channel));
+ 
+ 	/* ensure no events are pending */
+ 	edma_stop(echan);
+@@ -2482,8 +2497,9 @@ static int edma_pm_resume(struct device *dev)
+ 	for (i = 0; i < ecc->num_channels; i++) {
+ 		if (echan[i].alloced) {
+ 			/* ensure access through shadow region 0 */
+-			edma_or_array2(ecc, EDMA_DRAE, 0, i >> 5,
+-				       BIT(i & 0x1f));
++			edma_or_array2(ecc, EDMA_DRAE, 0,
++				       EDMA_REG_ARRAY_INDEX(i),
++				       EDMA_CHANNEL_BIT(i));
+ 
+ 			edma_setup_interrupt(&echan[i], true);
+ 
 -- 
 Peter
 
