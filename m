@@ -7,53 +7,53 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C62A8C76188
-	for <dmaengine@archiver.kernel.org>; Tue, 16 Jul 2019 08:24:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BEB42C76188
+	for <dmaengine@archiver.kernel.org>; Tue, 16 Jul 2019 08:26:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 9E95520659
-	for <dmaengine@archiver.kernel.org>; Tue, 16 Jul 2019 08:24:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 91EB320659
+	for <dmaengine@archiver.kernel.org>; Tue, 16 Jul 2019 08:26:10 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b="OIyhkG9q"
+	dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b="DSpvd3Pl"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730972AbfGPIYU (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 16 Jul 2019 04:24:20 -0400
-Received: from lelv0143.ext.ti.com ([198.47.23.248]:43040 "EHLO
-        lelv0143.ext.ti.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726774AbfGPIYU (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Tue, 16 Jul 2019 04:24:20 -0400
-Received: from fllv0035.itg.ti.com ([10.64.41.0])
-        by lelv0143.ext.ti.com (8.15.2/8.15.2) with ESMTP id x6G8O5Zh113419;
-        Tue, 16 Jul 2019 03:24:05 -0500
+        id S1727829AbfGPI0K (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 16 Jul 2019 04:26:10 -0400
+Received: from fllv0016.ext.ti.com ([198.47.19.142]:37934 "EHLO
+        fllv0016.ext.ti.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727105AbfGPI0K (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Tue, 16 Jul 2019 04:26:10 -0400
+Received: from lelv0266.itg.ti.com ([10.180.67.225])
+        by fllv0016.ext.ti.com (8.15.2/8.15.2) with ESMTP id x6G8PwWi074208;
+        Tue, 16 Jul 2019 03:25:58 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
-        s=ti-com-17Q1; t=1563265445;
-        bh=KMXHtI3sKuhmBB8FFbgYzVJP9JhJyNEHQ+sOiwAQro0=;
+        s=ti-com-17Q1; t=1563265558;
+        bh=RsPF870WF8479WJ6GVCkPNaNd+0N7S3578PK0r/prRQ=;
         h=From:To:CC:Subject:Date;
-        b=OIyhkG9qcRpBHqryRlLXbDKzbiHhcNe2+xpz8SCnfWbzHYNVEma3RATO9WqkffHHj
-         c4Q5bvGzyL9NUdny2sMJvH8mPh0IWYvUULsXY0u4dplwO+Ua/ipaq+ShBLZc3IBYrk
-         qs0BkosjHiK6L+L+zkrBpA7vZ3FfnDJYKIKAOUNI=
-Received: from DLEE100.ent.ti.com (dlee100.ent.ti.com [157.170.170.30])
-        by fllv0035.itg.ti.com (8.15.2/8.15.2) with ESMTPS id x6G8O4uf051393
+        b=DSpvd3PlWIovlzkPNA2mcIM3pKW/Zt3aBqPQ8XsuVjNACtBIa14vCKjJ/ypSkS9l8
+         fXlcA0xVM2cF0MNXqAN6HehEA5qms5Bo9GGUhB4fztk0WNMU3oP5dhzXNaZOvhNTjS
+         L6i5a6Tfqo9m6LEkREb5Gtjk7ATb7eS7LtH5kvlo=
+Received: from DFLE104.ent.ti.com (dfle104.ent.ti.com [10.64.6.25])
+        by lelv0266.itg.ti.com (8.15.2/8.15.2) with ESMTPS id x6G8PwAm021053
         (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
-        Tue, 16 Jul 2019 03:24:05 -0500
-Received: from DLEE107.ent.ti.com (157.170.170.37) by DLEE100.ent.ti.com
- (157.170.170.30) with Microsoft SMTP Server (version=TLS1_2,
+        Tue, 16 Jul 2019 03:25:58 -0500
+Received: from DFLE107.ent.ti.com (10.64.6.28) by DFLE104.ent.ti.com
+ (10.64.6.25) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1713.5; Tue, 16
- Jul 2019 03:24:02 -0500
-Received: from fllv0039.itg.ti.com (10.64.41.19) by DLEE107.ent.ti.com
- (157.170.170.37) with Microsoft SMTP Server (version=TLS1_2,
+ Jul 2019 03:25:58 -0500
+Received: from lelv0326.itg.ti.com (10.180.67.84) by DFLE107.ent.ti.com
+ (10.64.6.28) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1713.5 via
- Frontend Transport; Tue, 16 Jul 2019 03:24:02 -0500
+ Frontend Transport; Tue, 16 Jul 2019 03:25:58 -0500
 Received: from feketebors.ti.com (ileax41-snat.itg.ti.com [10.172.224.153])
-        by fllv0039.itg.ti.com (8.15.2/8.15.2) with ESMTP id x6G8O0lf033709;
-        Tue, 16 Jul 2019 03:24:01 -0500
+        by lelv0326.itg.ti.com (8.15.2/8.15.2) with ESMTP id x6G8PuBn103858;
+        Tue, 16 Jul 2019 03:25:56 -0500
 From:   Peter Ujfalusi <peter.ujfalusi@ti.com>
 To:     <vkoul@kernel.org>
 CC:     <dan.j.williams@intel.com>, <dmaengine@vger.kernel.org>,
         <linux-arm-kernel@lists.infradead.org>,
         <linux-omap@vger.kernel.org>
-Subject: [PATCH v2 0/2] dmaengine: ti: omap-dma: Improved polling support
-Date:   Tue, 16 Jul 2019 11:24:57 +0300
-Message-ID: <20190716082459.1222-1-peter.ujfalusi@ti.com>
+Subject: [PATCH v5 0/3] dmaengine: ti: edma: Polled completion support
+Date:   Tue, 16 Jul 2019 11:26:52 +0300
+Message-ID: <20190716082655.1620-1-peter.ujfalusi@ti.com>
 X-Mailer: git-send-email 2.22.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -66,30 +66,52 @@ X-Mailing-List: dmaengine@vger.kernel.org
 
 Hi,
 
-changes since v1:
-- New preparation cleanup patch
-- Simplified code for the main patch to be easier to read
+Changes since v4:
+- Split the DMA_COMPLETE and !txstate check as Vinod suggested
 
-This series fine-tunes the omap-dma polled memcpy support to be inline with how
-the EDMA driver is handling it.
+Change since v3:
+- fix DMA pointer tracking for memcpy
+- completion polling is only done when it is asked by not providing
+  DMA_PREP_INTERRUPT for memcpy
 
-The polled completion can be tested by applying:
+Changes since v2:
+- Fix typo in the comment for patch 0
+
+Changes since v1:
+- Cleanup patch for the array register handling
+- typo fixed in patch2 commit message
+
+The code around the array register access was pretty confusing for the first
+look, so clean them up first then use the cleaner way in the polled handling.
+
+When a DMA client driver does not set the DMA_PREP_INTERRUPT because it
+does not want to use interrupts for DMA completion or because it can not
+rely on DMA interrupts due to executing the memcpy when interrupts are
+disabled it will poll the status of the transfer.
+
+Since we can not tell from any EDMA register that the transfer is
+completed, we can only know that the paRAM set has been sent to TPTC for
+processing we need to check the residue of the transfer, if it is 0 then
+the transfer is completed.
+
+The polled completion can bve tested by applying:
 https://patchwork.kernel.org/patch/10966499/
 
-and run the dmatest with polled = 1 on boards where sDMA is used.
+Enabling the memcpy for EDMA and run the dmatest with polled = 1.
 
-Or boot up any dra7 family device with display enabled. The workaround for DMM
-errata i878 uses polled DMA memcpy.
+Or, enable the EDMA memcpy support and boot up any dra7 family device with
+display enabled. The workaround for DMM errata i878 uses polled DMA memcpy.
 
 Regards,
 Peter
 ---
-Peter Ujfalusi (2):
-  dmaengine: ti: omap-dma: Readability cleanup in omap_dma_tx_status()
-  dmaengine: ti: omap-dma: Improved memcpy polling support
+Peter Ujfalusi (3):
+  dmaengine: ti: edma: Clean up the 2x32bit array register accesses
+  dmaengine: ti: edma: Correct the residue calculation (fix for memcpy)
+  dmaengine: ti: edma: Support for polled (memcpy) completion
 
- drivers/dma/ti/omap-dma.c | 52 +++++++++++++++++++++++++--------------
- 1 file changed, 33 insertions(+), 19 deletions(-)
+ drivers/dma/ti/edma.c | 174 ++++++++++++++++++++++++++++--------------
+ 1 file changed, 117 insertions(+), 57 deletions(-)
 
 -- 
 Peter
