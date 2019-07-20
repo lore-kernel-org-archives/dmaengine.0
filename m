@@ -1,108 +1,178 @@
-Return-Path: <SRS0=PW0h=VQ=vger.kernel.org=dmaengine-owner@kernel.org>
+Return-Path: <SRS0=XYkF=VR=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.6 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.7 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C925CC76195
-	for <dmaengine@archiver.kernel.org>; Fri, 19 Jul 2019 05:06:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7D3D1C76188
+	for <dmaengine@archiver.kernel.org>; Sat, 20 Jul 2019 06:41:32 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 936662084D
-	for <dmaengine@archiver.kernel.org>; Fri, 19 Jul 2019 05:06:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1563512773;
-	bh=psl4jjNZDQaZ36V6nEf1qHJEUDJyLtVzshme/46dQbY=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:List-ID:From;
-	b=mCyUyZvylVFtBrkukfy0jC3Sv7gCyQcpR+ACSUf3ridiL98LSEu+SksJZjbTfU5Ho
-	 yMt3QkLVFH0cJf4BQ1qCjq6Aug2xECgB6iTAS65PXnHHK0K8DAiJ5HebGJlkGw9dpt
-	 GOJJNbIIcZmDobZq+tI/+3vDuV5f3XkNegtTgO3g=
+	by mail.kernel.org (Postfix) with ESMTP id 49EC821874
+	for <dmaengine@archiver.kernel.org>; Sat, 20 Jul 2019 06:41:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726135AbfGSFGN (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 19 Jul 2019 01:06:13 -0400
-Received: from mail.kernel.org ([198.145.29.99]:50880 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725853AbfGSFGM (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Fri, 19 Jul 2019 01:06:12 -0400
-Received: from localhost (unknown [49.207.58.149])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id B74F12082F;
-        Fri, 19 Jul 2019 05:06:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1563512771;
-        bh=psl4jjNZDQaZ36V6nEf1qHJEUDJyLtVzshme/46dQbY=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=c+e5fIAG1af0gZlQk28PSXyzpSXtFZ9lrE9Q5asIftPmY155IQtBE69R+HAf+XaF1
-         2/jrPwV5xA/Vr5R9UUqKlypbs7RoDmMNp/M5K+LisC/e3UkcSlgv+krgMm7Hg64iMR
-         yzZaWhh4GTnFTS7xBtal8p17P0Vv02imtunpNU5c=
-Date:   Fri, 19 Jul 2019 10:34:59 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Sameer Pujar <spujar@nvidia.com>,
-        Peter Ujfalusi <peter.ujfalusi@ti.com>
-Cc:     dan.j.williams@intel.com, tiwai@suse.com, jonathanh@nvidia.com,
-        dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
-        sharadg@nvidia.com, rlokhande@nvidia.com, dramesh@nvidia.com,
-        mkumard@nvidia.com
-Subject: Re: [PATCH] [RFC] dmaengine: add fifo_size member
-Message-ID: <20190719050459.GM12733@vkoul-mobl.Dlink>
-References: <ce0e9c0b-b909-54ae-9086-a1f0f6be903c@nvidia.com>
- <20190506155046.GH3845@vkoul-mobl.Dlink>
- <b7e28e73-7214-f1dc-866f-102410c88323@nvidia.com>
- <20190613044352.GC9160@vkoul-mobl.Dlink>
- <09929edf-ddec-b70e-965e-cbc9ba4ffe6a@nvidia.com>
- <20190618043308.GJ2962@vkoul-mobl>
- <23474b74-3c26-3083-be21-4de7731a0e95@nvidia.com>
- <20190624062609.GV2962@vkoul-mobl>
- <e9e822da-1cb9-b510-7639-43407fda8321@nvidia.com>
- <75be49ac-8461-0798-b673-431ec527d74f@nvidia.com>
+        id S1726388AbfGTGlb (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Sat, 20 Jul 2019 02:41:31 -0400
+Received: from relay12.mail.gandi.net ([217.70.178.232]:56909 "EHLO
+        relay12.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726238AbfGTGlb (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Sat, 20 Jul 2019 02:41:31 -0400
+Received: from localhost (91-163-65-175.subs.proxad.net [91.163.65.175])
+        (Authenticated sender: maxime.ripard@bootlin.com)
+        by relay12.mail.gandi.net (Postfix) with ESMTPSA id 179C7200007;
+        Sat, 20 Jul 2019 06:41:28 +0000 (UTC)
+From:   Maxime Ripard <maxime.ripard@bootlin.com>
+To:     Mark Rutland <mark.rutland@arm.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Frank Rowand <frowand.list@gmail.com>,
+        Vinod Koul <vkoul@kernel.org>
+Cc:     devicetree@vger.kernel.org, dmaengine@vger.kernel.org,
+        Chen-Yu Tsai <wens@csie.org>,
+        Maxime Ripard <maxime.ripard@bootlin.com>,
+        linux-arm-kernel@lists.infradead.org,
+        Peter Ujfalusi <peter.ujfalusi@ti.com>,
+        Rob Herring <robh@kernel.org>
+Subject: [PATCH 2/3] dt-bindings: dma: Convert Allwinner A10 DMA to a schema
+Date:   Sat, 20 Jul 2019 08:41:22 +0200
+Message-Id: <20190720064123.15411-2-maxime.ripard@bootlin.com>
+X-Mailer: git-send-email 2.21.0
+In-Reply-To: <20190720064123.15411-1-maxime.ripard@bootlin.com>
+References: <20190720064123.15411-1-maxime.ripard@bootlin.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <75be49ac-8461-0798-b673-431ec527d74f@nvidia.com>
-User-Agent: Mutt/1.11.3 (2019-02-01)
+Content-Transfer-Encoding: 8bit
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On 05-07-19, 11:45, Sameer Pujar wrote:
-> Hi Vinod,
-> 
-> What are your final thoughts regarding this?
+The older Allwinner SoCs have a DMA controller supported in Linux, with a
+matching Device Tree binding.
 
-Hi sameer,
+Now that we have the DT validation in place, let's convert the device tree
+bindings for that controller over to a YAML schemas.
 
-Sorry for the delay in replying
+Reviewed-by: Rob Herring <robh@kernel.org>
+Signed-off-by: Maxime Ripard <maxime.ripard@bootlin.com>
+---
+ .../bindings/dma/allwinner,sun4i-a10-dma.yaml | 55 +++++++++++++++++++
+ .../devicetree/bindings/dma/sun4i-dma.txt     | 45 ---------------
+ 2 files changed, 55 insertions(+), 45 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/dma/allwinner,sun4i-a10-dma.yaml
+ delete mode 100644 Documentation/devicetree/bindings/dma/sun4i-dma.txt
 
-On this, I am inclined to think that dma driver should not be involved.
-The ADMAIF needs this configuration and we should take the path of
-dma_router for this piece and add features like this to it
-
-> 
-> Thanks,
-> Sameer.
-> 
-> > > Where does ADMAIF driver reside in kernel, who configures it for normal
-> > > dma txns..?
-> > Not yet, we are in the process of upstreaming ADMAIF driver.
-> > To describe briefly, audio subsystem is using ALSA SoC(ASoC) layer.
-> > ADMAIF is
-> > registered as platform driver and exports DMA functionality. It
-> > registers PCM
-> > devices for each Rx/Tx ADMAIF channel. During PCM playback/capture
-> > operations,
-> > ALSA callbacks configure DMA channel using API dmaengine_slave_config().
-> > RFC patch proposed, is to help populate FIFO_SIZE value as well during
-> > above
-> > call, since ADMA requires it.
-> > > 
-> > > Also it wold have helped the long discussion if that part was made clear
-> > > rather than talking about peripheral all this time :(
-> > Thought it was clear, though should have avoided using 'peripheral' in
-> > the
-> > discussions. Sorry for the confusion.
-
+diff --git a/Documentation/devicetree/bindings/dma/allwinner,sun4i-a10-dma.yaml b/Documentation/devicetree/bindings/dma/allwinner,sun4i-a10-dma.yaml
+new file mode 100644
+index 000000000000..15abc0f9429f
+--- /dev/null
++++ b/Documentation/devicetree/bindings/dma/allwinner,sun4i-a10-dma.yaml
+@@ -0,0 +1,55 @@
++# SPDX-License-Identifier: GPL-2.0
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/dma/allwinner,sun4i-a10-dma.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Allwinner A10 DMA Controller Device Tree Bindings
++
++maintainers:
++  - Chen-Yu Tsai <wens@csie.org>
++  - Maxime Ripard <maxime.ripard@bootlin.com>
++
++allOf:
++  - $ref: "dma-controller.yaml#"
++
++properties:
++  "#dma-cells":
++    const: 2
++    description:
++      The first cell is either 0 or 1, the former to use the normal
++      DMA, 1 for dedicated DMA. The second cell is the request line
++      number.
++
++  compatible:
++    const: allwinner,sun4i-a10-dma
++
++  reg:
++    maxItems: 1
++
++  interrupts:
++    maxItems: 1
++
++  clocks:
++    maxItems: 1
++
++required:
++  - "#dma-cells"
++  - compatible
++  - reg
++  - interrupts
++  - clocks
++
++additionalProperties: false
++
++examples:
++  - |
++    dma: dma-controller@1c02000 {
++        compatible = "allwinner,sun4i-a10-dma";
++        reg = <0x01c02000 0x1000>;
++        interrupts = <27>;
++        clocks = <&ahb_gates 6>;
++        #dma-cells = <2>;
++    };
++
++...
+diff --git a/Documentation/devicetree/bindings/dma/sun4i-dma.txt b/Documentation/devicetree/bindings/dma/sun4i-dma.txt
+deleted file mode 100644
+index 8ad556aca70b..000000000000
+--- a/Documentation/devicetree/bindings/dma/sun4i-dma.txt
++++ /dev/null
+@@ -1,45 +0,0 @@
+-Allwinner A10 DMA Controller
+-
+-This driver follows the generic DMA bindings defined in dma.txt.
+-
+-Required properties:
+-
+-- compatible:	Must be "allwinner,sun4i-a10-dma"
+-- reg:		Should contain the registers base address and length
+-- interrupts:	Should contain a reference to the interrupt used by this device
+-- clocks:	Should contain a reference to the parent AHB clock
+-- #dma-cells :	Should be 2, first cell denoting normal or dedicated dma,
+-		second cell holding the request line number.
+-
+-Example:
+-	dma: dma-controller@1c02000 {
+-		compatible = "allwinner,sun4i-a10-dma";
+-		reg = <0x01c02000 0x1000>;
+-		interrupts = <27>;
+-		clocks = <&ahb_gates 6>;
+-		#dma-cells = <2>;
+-	};
+-
+-Clients:
+-
+-DMA clients connected to the Allwinner A10 DMA controller must use the
+-format described in the dma.txt file, using a three-cell specifier for
+-each channel: a phandle plus two integer cells.
+-The three cells in order are:
+-
+-1. A phandle pointing to the DMA controller.
+-2. Whether it is using normal (0) or dedicated (1) channels
+-3. The port ID as specified in the datasheet
+-
+-Example:
+-	spi2: spi@1c17000 {
+-		compatible = "allwinner,sun4i-a10-spi";
+-		reg = <0x01c17000 0x1000>;
+-		interrupts = <0 12 4>;
+-		clocks = <&ahb_gates 22>, <&spi2_clk>;
+-		clock-names = "ahb", "mod";
+-		dmas = <&dma 1 29>, <&dma 1 28>;
+-		dma-names = "rx", "tx";
+-		#address-cells = <1>;
+-		#size-cells = <0>;
+-	};
 -- 
-~Vinod
+2.21.0
+
