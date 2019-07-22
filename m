@@ -6,72 +6,70 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
 	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9328CC76188
-	for <dmaengine@archiver.kernel.org>; Mon, 22 Jul 2019 14:23:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7EB35C76188
+	for <dmaengine@archiver.kernel.org>; Mon, 22 Jul 2019 14:25:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 5949E20651
-	for <dmaengine@archiver.kernel.org>; Mon, 22 Jul 2019 14:23:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4D9F3218EA
+	for <dmaengine@archiver.kernel.org>; Mon, 22 Jul 2019 14:25:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1563805383;
-	bh=cmeknv+ms+SGcXgCwrtlqmuRDH1GTIq39zwqMIJiiXo=;
+	s=default; t=1563805559;
+	bh=wuhTsZIObGWDG2QzWvOgk7IFTgkRJ2Atch9ilONi/HI=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:List-ID:From;
-	b=GULJSj1EDAT1EpVYJt6oCdnL0lhHDfHWLZIk01sjrbl6GSCUjXSUfyx9qaL/05juY
-	 +5pCfZs1pYInhzMk1Yrkwktsu1hxxS6of0F4PTRXEk7oJazGd35axSAQUtUVmm/dKk
-	 oz3wTASbgG+XsVYq2Onw38VbEwyfh3ua3UItS3ZE=
+	b=zNHoIjrawIj/9SVfCsVma36d99uQWCjNhNq7ZxuUg7nIE4qfAw6ei+cR34f1DCn9S
+	 GguHQ4Cl+OaRcONmTCZCG6UEqopDtOyli2++pingJzty6BGnr0FGjArNw4vh6YUE8C
+	 aG4pYUIvNjK64gDGg9sVwRBppkixbeS7zgM2+7E8=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729015AbfGVOXD (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 22 Jul 2019 10:23:03 -0400
-Received: from mail.kernel.org ([198.145.29.99]:54180 "EHLO mail.kernel.org"
+        id S1729058AbfGVOZ7 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 22 Jul 2019 10:25:59 -0400
+Received: from mail.kernel.org ([198.145.29.99]:54876 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728083AbfGVOXC (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Mon, 22 Jul 2019 10:23:02 -0400
+        id S1725907AbfGVOZ6 (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Mon, 22 Jul 2019 10:25:58 -0400
 Received: from localhost (unknown [223.226.98.106])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 24CC2217D6;
-        Mon, 22 Jul 2019 14:23:00 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 623302171F;
+        Mon, 22 Jul 2019 14:25:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1563805381;
-        bh=cmeknv+ms+SGcXgCwrtlqmuRDH1GTIq39zwqMIJiiXo=;
+        s=default; t=1563805558;
+        bh=wuhTsZIObGWDG2QzWvOgk7IFTgkRJ2Atch9ilONi/HI=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=zAewChpdqo3yoTZoj5XSDwyLeuv1n5gaKyp4cDy0ltGITn+FHZ0MpF8OK+fz3nihW
-         +vPDYEMZ46I9chAcK0gBR2BzCmVnnaGfnAlx6SC43iEPJJGHPjAImLjqLEPHoTFO4p
-         G8CY35nRdFh95P1EArFDL4KcrOuDAC/kHgdlyb6U=
-Date:   Mon, 22 Jul 2019 19:51:49 +0530
+        b=roEaUJSgM2YJgzNoyPsqezUm4dic3X2NV9saH90TLvV0rPQj8PbmHyLhvcEMzafLT
+         Hk8pK8aLzQsEQGfsN4cr+47FuIMEzSlhs9LsUGGWeZq7EhDDIOdPvKvxUDWGK4Olk+
+         0bjK+thA1SDg8vh99WIJ/AYSYY5qjPLsuW0fvdpg=
+Date:   Mon, 22 Jul 2019 19:54:45 +0530
 From:   Vinod Koul <vkoul@kernel.org>
 To:     Arnd Bergmann <arnd@arndb.de>
-Cc:     Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-        Dan Williams <dan.j.williams@intel.com>,
-        Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-        Russell King <rmk+kernel@armlinux.org.uk>,
-        Joao Pinto <jpinto@synopsys.com>, dmaengine@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/3] [v2] dmaengine: dw-edma: fix unnecessary stack usage
-Message-ID: <20190722142149.GU12733@vkoul-mobl.Dlink>
-References: <20190722124457.1093886-1-arnd@arndb.de>
+Cc:     Linus Walleij <linus.walleij@linaro.org>,
+        linux-arm-kernel@lists.infradead.org, dmaengine@vger.kernel.org,
+        linux-kernel@vger.kernel.org, clang-built-linux@googlegroups.com
+Subject: Re: [PATCH] dma: ste_dma40: fix unneeded variable warning
+Message-ID: <20190722142445.GV12733@vkoul-mobl.Dlink>
+References: <20190712091357.744515-1-arnd@arndb.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20190722124457.1093886-1-arnd@arndb.de>
+In-Reply-To: <20190712091357.744515-1-arnd@arndb.de>
 User-Agent: Mutt/1.11.3 (2019-02-01)
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On 22-07-19, 14:44, Arnd Bergmann wrote:
-> Putting large constant data on the stack causes unnecessary overhead
-> and stack usage:
+On 12-07-19, 11:13, Arnd Bergmann wrote:
+> clang-9 points out that there are two variables that depending on the
+> configuration may only be used in an ARRAY_SIZE() expression but not
+> referenced:
 > 
-> drivers/dma/dw-edma/dw-edma-v0-debugfs.c:285:6: error: stack frame size of 1376 bytes in function 'dw_edma_v0_debugfs_on' [-Werror,-Wframe-larger-than=]
+> drivers/dma/ste_dma40.c:145:12: error: variable 'd40_backup_regs' is not needed and will not be emitted [-Werror,-Wunneeded-internal-declaration]
+> static u32 d40_backup_regs[] = {
+>            ^
+> drivers/dma/ste_dma40.c:214:12: error: variable 'd40_backup_regs_chan' is not needed and will not be emitted [-Werror,-Wunneeded-internal-declaration]
+> static u32 d40_backup_regs_chan[] = {
 > 
-> Mark the variable 'static const' in order for the compiler to move it
-> into the .rodata section where it does no such harm.
+> Mark these __maybe_unused to shut up the warning.
 
-Applied all, thanks
-
-Please do note the link was pointing to older rev, I have updated them
-to this revision.
+Applied, thanks
 
 -- 
 ~Vinod
