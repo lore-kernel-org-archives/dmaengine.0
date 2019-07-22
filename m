@@ -2,71 +2,72 @@ Return-Path: <SRS0=OaGC=VT=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.6 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 168F8C76188
-	for <dmaengine@archiver.kernel.org>; Mon, 22 Jul 2019 14:13:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A7C87C76188
+	for <dmaengine@archiver.kernel.org>; Mon, 22 Jul 2019 14:22:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id DE10421951
-	for <dmaengine@archiver.kernel.org>; Mon, 22 Jul 2019 14:13:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1563804834;
-	bh=b4iTL+3agj7PdCdScIUEXy95wqTx7S+Qv3Dd4gllawk=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:List-ID:From;
-	b=gFAkkX8Qkwg1T58k88XFdd9/ZjbC7uhSMi56trPHgagF1Pz7VLaxsFa9Stk9bO70m
-	 u9yhwEq6JH5U+LnkHpuCQZP4eIGlrzWzW8CX4vtSYN9WrUOV/5wM9GD0gQph6IF1oH
-	 C0RwuBM7VndZPymV9pXFASyWKqLkAd1pWvwGZJmI=
+	by mail.kernel.org (Postfix) with ESMTP id 7D8CB217D6
+	for <dmaengine@archiver.kernel.org>; Mon, 22 Jul 2019 14:22:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727916AbfGVONy (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 22 Jul 2019 10:13:54 -0400
-Received: from mail.kernel.org ([198.145.29.99]:50824 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727880AbfGVONy (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Mon, 22 Jul 2019 10:13:54 -0400
-Received: from localhost (unknown [223.226.98.106])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id AD30921911;
-        Mon, 22 Jul 2019 14:13:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1563804833;
-        bh=b4iTL+3agj7PdCdScIUEXy95wqTx7S+Qv3Dd4gllawk=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=eyU0TbjkLPjAt4SKfuS+Oy2g29st+OImzk3jxkbNVHbnCXheuvi9j/H5VgAjS9b9I
-         lgkyLvQ0q+ytR4rjQnJRJml0i1R9Z/6g2q13TUNUPrvJm7f0aktVS3Sei390FQ0Dfc
-         gyqkdZuJOpJ66NWOODc3HNZDmt4y4VCGU+x3YVAg=
-Date:   Mon, 22 Jul 2019 19:42:40 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Arnd Bergmann <arnd@arndb.de>
+        id S1730185AbfGVOWZ (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 22 Jul 2019 10:22:25 -0400
+Received: from mail-qk1-f193.google.com ([209.85.222.193]:36215 "EHLO
+        mail-qk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730178AbfGVOWZ (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Mon, 22 Jul 2019 10:22:25 -0400
+Received: by mail-qk1-f193.google.com with SMTP id g18so28711308qkl.3;
+        Mon, 22 Jul 2019 07:22:24 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=uTmepm+1wfFxfhcjqWinIonpHuVFe0DnWusOLHAhtlk=;
+        b=O2P7n+PBhpJokVp9oQM6s23hqF4JXmFo3u8AHdqz9P8n+bgxM6BY4V49t5WLXT0/7v
+         /lRizT9pXBmDtcPrf4YdCjyUtwNa4+YemX8UbpKVRpK0VnMLwfZLlIuf8r6Jkmeyb0il
+         O6bYtWe7/w1uNqhx0Gaam2CnG+0fDQ8siSEYBXKXZukZTz5NF9E4gjz5mC1XUZDEyLtc
+         V261YPJ3Iu0B5y/uRQGTzA8xK1Dz3ovRi7NPJsANjtU1OqEuS554RwnvCitUkhfhQaAW
+         2Ekj0B7l9tCv/bba+QLRgxhqlm5g5HbcKH2AQMXem+tBezsekPc928D8qCkc1rBxJ7GE
+         gRVg==
+X-Gm-Message-State: APjAAAWUbpU5tuGlxXswNSyvAqYCV3a7WVMjD0vRjisHfKKgycqgqHTF
+        +DJmRlbYoH+ESjnhFQoLuCZqzdaGLxgDdk1AWXM=
+X-Google-Smtp-Source: APXvYqyRl/V5f/dWzvRYci6j6FaJpVCVBePMszoWUP6PKN73YEOIAlkXQ8DgddVWxMgoli8YQHbOJLf6Q2SbjJgx0cU=
+X-Received: by 2002:a37:ad12:: with SMTP id f18mr2798435qkm.3.1563805344006;
+ Mon, 22 Jul 2019 07:22:24 -0700 (PDT)
+MIME-Version: 1.0
+References: <20190722081705.2084961-1-arnd@arndb.de> <20190722141240.GT12733@vkoul-mobl.Dlink>
+In-Reply-To: <20190722141240.GT12733@vkoul-mobl.Dlink>
+From:   Arnd Bergmann <arnd@arndb.de>
+Date:   Mon, 22 Jul 2019 16:22:08 +0200
+Message-ID: <CAK8P3a0tHRyjwwHk3tGFA=3dByH4g7R4FobrGC874bW5DJCnNw@mail.gmail.com>
+Subject: Re: [PATCH 1/2] [RESEND] dmaengine: omap-dma: make omap_dma_filter_fn private
+To:     Vinod Koul <vkoul@kernel.org>
 Cc:     Peter Ujfalusi <peter.ujfalusi@ti.com>,
         Dan Williams <dan.j.williams@intel.com>,
-        linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org
-Subject: Re: [PATCH 1/2] [RESEND] dmaengine: omap-dma: make
- omap_dma_filter_fn private
-Message-ID: <20190722141240.GT12733@vkoul-mobl.Dlink>
-References: <20190722081705.2084961-1-arnd@arndb.de>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190722081705.2084961-1-arnd@arndb.de>
-User-Agent: Mutt/1.11.3 (2019-02-01)
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        dmaengine@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On 22-07-19, 10:16, Arnd Bergmann wrote:
-> With the audio driver no longer referring to this function, it
-> can be made private to the dmaengine driver itself, and the
-> header file removed.
-> 
-> Acked-by: Peter Ujfalusi <peter.ujfalusi@ti.com>
-> Link: https://lore.kernel.org/lkml/20190307151646.1016966-1-arnd@arndb.de/
+On Mon, Jul 22, 2019 at 4:13 PM Vinod Koul <vkoul@kernel.org> wrote:
+>
+> On 22-07-19, 10:16, Arnd Bergmann wrote:
+> > With the audio driver no longer referring to this function, it
+> > can be made private to the dmaengine driver itself, and the
+> > header file removed.
+> >
+> > Acked-by: Peter Ujfalusi <peter.ujfalusi@ti.com>
+> > Link: https://lore.kernel.org/lkml/20190307151646.1016966-1-arnd@arndb.de/
+>
+> This seems to point to older rev, my script updated it to latest one.
 
-This seems to point to older rev, my script updated it to latest one.
+That was intentional, to see the replies to the last time it got
+posted. I'm not sure if that's the best way to do it, would you
+rather not have that included?
 
-Applied both, thanks
--- 
-~Vinod
+       Arnd
