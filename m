@@ -1,71 +1,95 @@
-Return-Path: <SRS0=5LDy=VU=vger.kernel.org=dmaengine-owner@kernel.org>
+Return-Path: <SRS0=xd5k=VV=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.6 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 447E6C76194
-	for <dmaengine@archiver.kernel.org>; Tue, 23 Jul 2019 19:08:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2F121C76186
+	for <dmaengine@archiver.kernel.org>; Wed, 24 Jul 2019 00:49:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 2609D2239E
-	for <dmaengine@archiver.kernel.org>; Tue, 23 Jul 2019 19:08:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EE72C229F3
+	for <dmaengine@archiver.kernel.org>; Wed, 24 Jul 2019 00:49:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=default; t=1563929366;
+	bh=f1BgHRD07iLgL/RGh4ch0V6HXKB6ToEvnZ787DM64e0=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:List-ID:From;
+	b=P+I/nLXOu6kASD3T+2iIPeJokTKL0fPg0u0AMVeW+UA5DcJ/arHWBsOg5bevWiBOP
+	 z4CZvBXgZcWfxlGFhxVsfOCXH/aPjDEHEYGzVdfPwPKayUvTW7u/cCnOT1UzCn7dei
+	 RYkgY4IPcmujsEU17VwJoUZ/bgfOGggqoaj1P9+Y=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728140AbfGWTIA (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 23 Jul 2019 15:08:00 -0400
-Received: from mga09.intel.com ([134.134.136.24]:1069 "EHLO mga09.intel.com"
+        id S1726086AbfGXAtZ (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 23 Jul 2019 20:49:25 -0400
+Received: from mail.kernel.org ([198.145.29.99]:52638 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726167AbfGWTIA (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Tue, 23 Jul 2019 15:08:00 -0400
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from orsmga004.jf.intel.com ([10.7.209.38])
-  by orsmga102.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 23 Jul 2019 12:08:00 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.64,300,1559545200"; 
-   d="scan'208";a="321094484"
-Received: from black.fi.intel.com ([10.237.72.28])
-  by orsmga004.jf.intel.com with ESMTP; 23 Jul 2019 12:07:58 -0700
-Received: by black.fi.intel.com (Postfix, from userid 1003)
-        id F089281; Tue, 23 Jul 2019 22:07:57 +0300 (EEST)
-From:   Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-To:     Vinod Koul <vkoul@kernel.org>, dmaengine@vger.kernel.org,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@st.com>
-Cc:     Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Subject: [PATCH v1 1/2] dmaengine: stm32-dmamux: Switch to use device_property_count_u32()
-Date:   Tue, 23 Jul 2019 22:07:56 +0300
-Message-Id: <20190723190757.67351-1-andriy.shevchenko@linux.intel.com>
-X-Mailer: git-send-email 2.20.1
+        id S1725863AbfGXAtZ (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Tue, 23 Jul 2019 20:49:25 -0400
+Received: from dragon (98.142.130.235.16clouds.com [98.142.130.235])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 7D6132253D;
+        Wed, 24 Jul 2019 00:49:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1563929364;
+        bh=f1BgHRD07iLgL/RGh4ch0V6HXKB6ToEvnZ787DM64e0=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=UX3gv9jRpafjJM3CJy7HbkTSbt/ys7gAa35KrwrO23HsfEBMYrs3uAfjIb4Oo+6yl
+         3O8q/Fwca+iHDZkxXpAk9yp7xJCJYGn1Xisup3xheKcnBIvTH8bi6aDN4q+g+ZZWCt
+         5Nf+czS/e/GSOTlPGT7NCihNbmoXCQW/bjYkv0nM=
+Date:   Wed, 24 Jul 2019 08:48:51 +0800
+From:   Shawn Guo <shawnguo@kernel.org>
+To:     Robin Gong <yibin.gong@nxp.com>
+Cc:     "robh+dt@kernel.org" <robh+dt@kernel.org>,
+        "mark.rutland@arm.com" <mark.rutland@arm.com>,
+        "s.hauer@pengutronix.de" <s.hauer@pengutronix.de>,
+        "kernel@pengutronix.de" <kernel@pengutronix.de>,
+        "broonie@kernel.org" <broonie@kernel.org>,
+        "festevam@gmail.com" <festevam@gmail.com>,
+        "vkoul@kernel.org" <vkoul@kernel.org>,
+        "dan.j.williams@intel.com" <dan.j.williams@intel.com>,
+        "u.kleine-koenig@pengutronix.de" <u.kleine-koenig@pengutronix.de>,
+        "catalin.marinas@arm.com" <catalin.marinas@arm.com>,
+        "l.stach@pengutronix.de" <l.stach@pengutronix.de>,
+        "will.deacon@arm.com" <will.deacon@arm.com>,
+        "linux-spi@vger.kernel.org" <linux-spi@vger.kernel.org>,
+        dl-linux-imx <linux-imx@nxp.com>,
+        "linux-arm-kernel@lists.infradead.org" 
+        <linux-arm-kernel@lists.infradead.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        "dmaengine@vger.kernel.org" <dmaengine@vger.kernel.org>,
+        "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>
+Subject: Re: [PATCH v5 12/15] ARM: dts: imx6ul: add dma support on ecspi
+Message-ID: <20190724004848.GV15632@dragon>
+References: <20190610081753.11422-1-yibin.gong@nxp.com>
+ <20190610081753.11422-13-yibin.gong@nxp.com>
+ <20190717064204.GA3738@dragon>
+ <VE1PR04MB663894FA5BC88B130C70AC0789C70@VE1PR04MB6638.eurprd04.prod.outlook.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <VE1PR04MB663894FA5BC88B130C70AC0789C70@VE1PR04MB6638.eurprd04.prod.outlook.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Use use device_property_count_u32() directly, that makes code neater.
+On Tue, Jul 23, 2019 at 09:39:38AM +0000, Robin Gong wrote:
+> On 2019-7-17 at 14:42 Shawn Guo <shawnguo@kernel.org> wrote:
+> > On Mon, Jun 10, 2019 at 04:17:50PM +0800, yibin.gong@nxp.com wrote:
+> > > From: Robin Gong <yibin.gong@nxp.com>
+> > >
+> > > Add dma support on ecspi.
+> > >
+> > > Signed-off-by: Robin Gong <yibin.gong@nxp.com>
+> > 
+> > Applied, thanks.
+> Thanks Shawn, but how about other dts patches such as 01/15,02/15?
 
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
----
- drivers/dma/stm32-dmamux.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+I need the authors of the commits being reverted agree on the reverting.
 
-diff --git a/drivers/dma/stm32-dmamux.c b/drivers/dma/stm32-dmamux.c
-index b552949da14b..3c89bd39e096 100644
---- a/drivers/dma/stm32-dmamux.c
-+++ b/drivers/dma/stm32-dmamux.c
-@@ -185,8 +185,7 @@ static int stm32_dmamux_probe(struct platform_device *pdev)
- 	if (!node)
- 		return -ENODEV;
- 
--	count = device_property_read_u32_array(&pdev->dev, "dma-masters",
--					       NULL, 0);
-+	count = device_property_count_u32(&pdev->dev, "dma-masters");
- 	if (count < 0) {
- 		dev_err(&pdev->dev, "Can't get DMA master(s) node\n");
- 		return -ENODEV;
--- 
-2.20.1
+  Sean Nyekjaer <sean.nyekjaer@prevas.dk>
+  Sascha Hauer <s.hauer@pengutronix.de>
 
+Shawn
