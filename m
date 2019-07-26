@@ -7,37 +7,37 @@ X-Spam-Status: No, score=-10.1 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=unavailable
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 64D59C76191
-	for <dmaengine@archiver.kernel.org>; Fri, 26 Jul 2019 13:48:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D29EFC76190
+	for <dmaengine@archiver.kernel.org>; Fri, 26 Jul 2019 13:52:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 2F31E22CD8
-	for <dmaengine@archiver.kernel.org>; Fri, 26 Jul 2019 13:48:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AC6CE22CE5
+	for <dmaengine@archiver.kernel.org>; Fri, 26 Jul 2019 13:52:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1564148883;
-	bh=f8LvDihBYfADIjCThN3i3ijbr8O455t6YObrPM4vvV4=;
+	s=default; t=1564149167;
+	bh=Ddis5wSh85eQHMFKf18Q4z3RMg29oAkwG1hGcPQLMCA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:List-ID:From;
-	b=mExAxmfd9G4qr4rd18VQUKKm0R+/XMfQTRJ+1lP2z5hQjaaHTSozvVy5tvPbVeFjN
-	 GFV3pFFrBXiriFOXwF5dLuUQtLio2xOPEREQP2+xBeyMueeE6M1sInf2LNYHAdgKD6
-	 RvRynwEZAFNr9krhHRS+XkYUpYGzIi5NHp3nLb8c=
+	b=FOW70k7AcvtNy12yCMT87UktZKmPywipu8QbcwWIF3KEfnjSiFtl2YIgM0ibqe+Kx
+	 3PNPpE8yP10LATop6j9gQY91lOYC6x4OfpzphiL7Xoh/rZGzzVDRWEGhtpXQdV3H4U
+	 KAH+19AVdHxzYrGuZxv1jl5e3ELO4TdMwhRDLNkE=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728173AbfGZNpg (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 26 Jul 2019 09:45:36 -0400
-Received: from mail.kernel.org ([198.145.29.99]:54652 "EHLO mail.kernel.org"
+        id S2387679AbfGZNwm (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 26 Jul 2019 09:52:42 -0400
+Received: from mail.kernel.org ([198.145.29.99]:51628 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728170AbfGZNpg (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Fri, 26 Jul 2019 09:45:36 -0400
+        id S2388291AbfGZNno (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Fri, 26 Jul 2019 09:43:44 -0400
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 5C3D422CBF;
-        Fri, 26 Jul 2019 13:45:34 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 03BED22BF5;
+        Fri, 26 Jul 2019 13:43:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1564148735;
-        bh=f8LvDihBYfADIjCThN3i3ijbr8O455t6YObrPM4vvV4=;
+        s=default; t=1564148623;
+        bh=Ddis5wSh85eQHMFKf18Q4z3RMg29oAkwG1hGcPQLMCA=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=2CXCYJQArZIE9oj6QswS8y+cydcQllgQWegYuFxGCe59hTG0eRtjJ94wVFNcyMjYN
-         CcMvOBjUqWYz+w6APUwGS1VjlVIL/nl32S/zWHGZgbMs9DEfvRIST/YNKCy/Rfogpx
-         ME7G0qtWaPLswe6LRaKTwG9OqEx3nMwFGxB9lWww=
+        b=SztKJIsUrOTV65IZon1sTbKkmyqAjo6DiPuVqeCS2U8EpAQxrubNTiJkX6GBdjOjz
+         TJD6okQHzTXTmXfat1Z6pmhIm+2cfWvGA994ZQohFru0qT+KCfVHKEyqkZzpmdny67
+         rdNtUJml+myKveMIr3D6ZAZRAmlRRatuFIyvOq4g=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Cc:     Geert Uytterhoeven <geert+renesas@glider.be>,
@@ -45,12 +45,12 @@ Cc:     Geert Uytterhoeven <geert+renesas@glider.be>,
         Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
         Vinod Koul <vkoul@kernel.org>, Sasha Levin <sashal@kernel.org>,
         dmaengine@vger.kernel.org
-Subject: [PATCH AUTOSEL 4.4 05/23] dmaengine: rcar-dmac: Reject zero-length slave DMA requests
-Date:   Fri, 26 Jul 2019 09:45:04 -0400
-Message-Id: <20190726134522.13308-5-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 4.14 08/37] dmaengine: rcar-dmac: Reject zero-length slave DMA requests
+Date:   Fri, 26 Jul 2019 09:43:03 -0400
+Message-Id: <20190726134332.12626-8-sashal@kernel.org>
 X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20190726134522.13308-1-sashal@kernel.org>
-References: <20190726134522.13308-1-sashal@kernel.org>
+In-Reply-To: <20190726134332.12626-1-sashal@kernel.org>
+References: <20190726134332.12626-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
@@ -88,11 +88,11 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/dma/sh/rcar-dmac.c b/drivers/dma/sh/rcar-dmac.c
-index 2b36d1c63aa5..956189a1ba81 100644
+index 77b126525dac..19c7433e8309 100644
 --- a/drivers/dma/sh/rcar-dmac.c
 +++ b/drivers/dma/sh/rcar-dmac.c
-@@ -1030,7 +1030,7 @@ rcar_dmac_prep_slave_sg(struct dma_chan *chan, struct scatterlist *sgl,
- 	dma_addr_t dev_addr;
+@@ -1129,7 +1129,7 @@ rcar_dmac_prep_slave_sg(struct dma_chan *chan, struct scatterlist *sgl,
+ 	struct rcar_dmac_chan *rchan = to_rcar_dmac_chan(chan);
  
  	/* Someone calling slave DMA on a generic channel? */
 -	if (rchan->mid_rid < 0 || !sg_len) {
