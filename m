@@ -2,99 +2,105 @@ Return-Path: <SRS0=4Qe8=V2=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2A325C433FF
-	for <dmaengine@archiver.kernel.org>; Mon, 29 Jul 2019 02:08:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 536D5C76186
+	for <dmaengine@archiver.kernel.org>; Mon, 29 Jul 2019 06:11:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id EA29C206DD
-	for <dmaengine@archiver.kernel.org>; Mon, 29 Jul 2019 02:08:58 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VhQ24Xm4"
+	by mail.kernel.org (Postfix) with ESMTP id 22DED2070D
+	for <dmaengine@archiver.kernel.org>; Mon, 29 Jul 2019 06:11:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=default; t=1564380686;
+	bh=nMKUNWZ9yoS62/Zd9AxV9+IUb4TvSPx7bEbfZkPkxOA=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:List-ID:From;
+	b=hcp5d3AIUTCfdvtW9CJ9D2f0IXSHjII+OQmltzRC+cW0CdRb4rBJpPnLmBmwHJcbO
+	 9JFuTxMLjUKaGKvJ5p2pInNxnArFhWXrNMo45U1FoFonbzHQ/j3rArG34gk0aUY6LQ
+	 PO0exdAq9Y+xbNSgoiiBTOdSEzIjceWJ+nxi95yI=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726247AbfG2CI6 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Sun, 28 Jul 2019 22:08:58 -0400
-Received: from mail-pg1-f195.google.com ([209.85.215.195]:36086 "EHLO
-        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726216AbfG2CI6 (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Sun, 28 Jul 2019 22:08:58 -0400
-Received: by mail-pg1-f195.google.com with SMTP id l21so27389693pgm.3;
-        Sun, 28 Jul 2019 19:08:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=GgqqXrj0IVL3XCjuqMEeh46rLbd7N7hEVY5Hg1vftSk=;
-        b=VhQ24Xm4qxQ1CYPaB6WhF5IedavT1hfH+pAW+nNKczx/aBxtKhr9dgC0SKzTRe7Ki1
-         Q/JIQnvaFXbFkPQPNUtjOH9TiNTZxLeArg10E3/dbQT5HukCE3gU6ogpsY0Xe023uXaB
-         xn6L0Njlqzzes1/8U6W8kkKjqQWd09QkV9vm68h+BXbnNyszCP9lzlVNMEulf7UTfHVd
-         r6c/3wkyPbUYYHd411oyZDnVh08fs0lVD0Tki4DtGEgvvM2GURS+ibiV/DJcHrma8HIU
-         g/7LUwI7OneWn3HokbE90LPxQFDugrsUgxA8SSO9yUJfauib0nV78nnai5iBhOqMhig/
-         QmQQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=GgqqXrj0IVL3XCjuqMEeh46rLbd7N7hEVY5Hg1vftSk=;
-        b=YTtsZdVqAT+oNTb226A4dkGA/wjs3+wDyJeEWgpDuOvVpFEssrFyDTcIiJh+5unUFE
-         tEnSfCu//qrGe22KCBhYgdeVEaCE3ocQyA/5mCirq1itXgtLPKugxg6qKby3HZ4MAxUH
-         DmJjL0wWYW3B6Az2LxE1sxaBbhPpkHiuMip0isUBQppFfEbp0ZgTs8DLidoeT/Cd2Uf+
-         4jlpHYe7mNKGMXJc0hwsztI4GuwNB7zMSp6d1YIIxqAoGhu7TFafJgtEy6zizSUtDym4
-         OvvLVANjll60Jx6jt3v1VN2Ku12LwLhhqKyg4mKgPARj05fP851T00epmC3KMs8ynhcn
-         jhYg==
-X-Gm-Message-State: APjAAAWnHR2BXCf6u18yzQMhCN3GEThi/NiVU3cpDoIblAyIgPTzAUBB
-        VVPYBlduzL3A81QfnFuG2Tg=
-X-Google-Smtp-Source: APXvYqziKiVqdTi0EohhcF4w3kBjAEogyGJ2Ibb+1USarrNmtJONCBPCB1AYleTdYQ9v52s4F2E6kA==
-X-Received: by 2002:a65:68c9:: with SMTP id k9mr68919329pgt.17.1564366137516;
-        Sun, 28 Jul 2019 19:08:57 -0700 (PDT)
-Received: from oslab.tsinghua.edu.cn ([2402:f000:4:72:808::3ca])
-        by smtp.gmail.com with ESMTPSA id p15sm57011634pjf.27.2019.07.28.19.08.54
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 28 Jul 2019 19:08:56 -0700 (PDT)
-From:   Jia-Ju Bai <baijiaju1990@gmail.com>
-To:     vkoul@kernel.org, dan.j.williams@intel.com,
-        mcoquelin.stm32@gmail.com, alexandre.torgue@st.com
-Cc:     dmaengine@vger.kernel.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        Jia-Ju Bai <baijiaju1990@gmail.com>
-Subject: [PATCH] dma: stm32-mdma: Fix a possible null-pointer dereference in stm32_mdma_irq_handler()
-Date:   Mon, 29 Jul 2019 10:08:49 +0800
-Message-Id: <20190729020849.17971-1-baijiaju1990@gmail.com>
-X-Mailer: git-send-email 2.17.0
+        id S1726300AbfG2GLZ (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 29 Jul 2019 02:11:25 -0400
+Received: from mail.kernel.org ([198.145.29.99]:44282 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725934AbfG2GLZ (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Mon, 29 Jul 2019 02:11:25 -0400
+Received: from localhost (unknown [122.178.221.187])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id CEBB8204FD;
+        Mon, 29 Jul 2019 06:11:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1564380684;
+        bh=nMKUNWZ9yoS62/Zd9AxV9+IUb4TvSPx7bEbfZkPkxOA=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=gpfJbMluyoxSsI8ETGPCvW/rNJLyFllQggJeLqu9lmBhW+0TuiqxwIjFjWj5P6Ugz
+         GXdIrfZUyIRbjCXABBbeztbRQToVhI7Mi162rijjxYuSqYzlhmGvjQuSfJmvcHerCJ
+         MZZnAO/EG7QMJNzBSHpF9a2wQCLWkHM/gstRhCn0=
+Date:   Mon, 29 Jul 2019 11:40:10 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Sameer Pujar <spujar@nvidia.com>
+Cc:     Peter Ujfalusi <peter.ujfalusi@ti.com>, dan.j.williams@intel.com,
+        tiwai@suse.com, jonathanh@nvidia.com, dmaengine@vger.kernel.org,
+        linux-kernel@vger.kernel.org, sharadg@nvidia.com,
+        rlokhande@nvidia.com, dramesh@nvidia.com, mkumard@nvidia.com
+Subject: Re: [PATCH] [RFC] dmaengine: add fifo_size member
+Message-ID: <20190729061010.GC12733@vkoul-mobl.Dlink>
+References: <b7e28e73-7214-f1dc-866f-102410c88323@nvidia.com>
+ <20190613044352.GC9160@vkoul-mobl.Dlink>
+ <09929edf-ddec-b70e-965e-cbc9ba4ffe6a@nvidia.com>
+ <20190618043308.GJ2962@vkoul-mobl>
+ <23474b74-3c26-3083-be21-4de7731a0e95@nvidia.com>
+ <20190624062609.GV2962@vkoul-mobl>
+ <e9e822da-1cb9-b510-7639-43407fda8321@nvidia.com>
+ <75be49ac-8461-0798-b673-431ec527d74f@nvidia.com>
+ <20190719050459.GM12733@vkoul-mobl.Dlink>
+ <3e7f795d-56fb-6a71-b844-2fc2b85e099e@nvidia.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <3e7f795d-56fb-6a71-b844-2fc2b85e099e@nvidia.com>
+User-Agent: Mutt/1.11.3 (2019-02-01)
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-In stm32_mdma_irq_handler(), chan is checked on line 1368.
-When chan is NULL, it is still used on line 1369:
-    dev_err(chan2dev(chan), "MDMA channel not initialized\n");
+On 23-07-19, 11:24, Sameer Pujar wrote:
+> 
+> On 7/19/2019 10:34 AM, Vinod Koul wrote:
+> > On 05-07-19, 11:45, Sameer Pujar wrote:
+> > > Hi Vinod,
+> > > 
+> > > What are your final thoughts regarding this?
+> > Hi sameer,
+> > 
+> > Sorry for the delay in replying
+> > 
+> > On this, I am inclined to think that dma driver should not be involved.
+> > The ADMAIF needs this configuration and we should take the path of
+> > dma_router for this piece and add features like this to it
+> 
+> Hi Vinod,
+> 
+> The configuration is needed by both ADMA and ADMAIF. The size is
+> configurable
+> on ADMAIF side. ADMA needs to know this info and program accordingly.
 
-Thus, a possible null-pointer dereference may occur.
+Well I would say client decides the settings for both DMA, DMAIF and
+sets the peripheral accordingly as well, so client communicates the two
+sets of info to two set of drivers
 
-To fix this bug, "dev_dbg(mdma2dev(dmadev), ...)" is used instead.
+> Not sure if dma_router can help to achieve this.
+> 
+> I checked on dma_router. It would have been useful when a configuration
+> exported
+> via ADMA, had to be applied to ADMAIF. Please correct me if I am wrong here.
 
-Signed-off-by: Jia-Ju Bai <baijiaju1990@gmail.com>
----
- drivers/dma/stm32-mdma.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+router was added for such a senario, if you feel that it doesn't serve
+your purpose, feel free to send up update for it, if that is the case.
 
-diff --git a/drivers/dma/stm32-mdma.c b/drivers/dma/stm32-mdma.c
-index d6e919d3936a..1311de74bfdd 100644
---- a/drivers/dma/stm32-mdma.c
-+++ b/drivers/dma/stm32-mdma.c
-@@ -1366,7 +1366,7 @@ static irqreturn_t stm32_mdma_irq_handler(int irq, void *devid)
- 
- 	chan = &dmadev->chan[id];
- 	if (!chan) {
--		dev_err(chan2dev(chan), "MDMA channel not initialized\n");
-+		dev_dbg(mdma2dev(dmadev), "MDMA channel not initialized\n");
- 		goto exit;
- 	}
- 
+Thanks
+
 -- 
-2.17.0
-
+~Vinod
