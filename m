@@ -2,136 +2,78 @@ Return-Path: <SRS0=4Qe8=V2=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.6 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 09859C76186
-	for <dmaengine@archiver.kernel.org>; Mon, 29 Jul 2019 06:17:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8B569C433FF
+	for <dmaengine@archiver.kernel.org>; Mon, 29 Jul 2019 06:36:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id CD38C2073F
-	for <dmaengine@archiver.kernel.org>; Mon, 29 Jul 2019 06:17:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5D9642087B
+	for <dmaengine@archiver.kernel.org>; Mon, 29 Jul 2019 06:36:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1564381068;
-	bh=SzvnrYeZ/XVMFTRV94yVm4GxaXQLhbrOmoBn0kkt5WA=;
+	s=default; t=1564382189;
+	bh=jbM48Eg7Yx5V9z4igLzOpQybV0ra5WLa7K3ccfFGuMY=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:List-ID:From;
-	b=SXE713QyPVvL0mgTXF+FOWleX6bQGXNkAd7Su5xfdVXkslbT55r1rSbKJ9D659zvx
-	 0MFpV23X46rBa60J5/yvfYan7f3lP1VgJAybbOyVqa+jwMPiAFCl8DKUy/Wb7HYwXM
-	 yBI+HTnQ8QKO6b22R13M/RwDt4A40wSwntLd4wlA=
+	b=wsuDI3V1X1TkW56q+vxjQlPLFFa3UFPBK70YXWWpA1Vwy02cHMKbfdIhloMxdZRB7
+	 eQjWxqtv/XtvtJTN568fXqOq4cy2jwFK4QXA4oq1ZmJU2MWXSOM9aROOOGW7rt1NFo
+	 yK6+RaSapKkav7HyIvyuq/iIMPdH82xTwgyHiw04=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726508AbfG2GRs (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 29 Jul 2019 02:17:48 -0400
-Received: from mail.kernel.org ([198.145.29.99]:46174 "EHLO mail.kernel.org"
+        id S1726828AbfG2Gg3 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 29 Jul 2019 02:36:29 -0400
+Received: from mail.kernel.org ([198.145.29.99]:52840 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725934AbfG2GRs (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Mon, 29 Jul 2019 02:17:48 -0400
+        id S1725934AbfG2Gg2 (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Mon, 29 Jul 2019 02:36:28 -0400
 Received: from localhost (unknown [122.178.221.187])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 34E9A20578;
-        Mon, 29 Jul 2019 06:17:45 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 5CF1E2070B;
+        Mon, 29 Jul 2019 06:36:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1564381067;
-        bh=SzvnrYeZ/XVMFTRV94yVm4GxaXQLhbrOmoBn0kkt5WA=;
+        s=default; t=1564382188;
+        bh=jbM48Eg7Yx5V9z4igLzOpQybV0ra5WLa7K3ccfFGuMY=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=NEJHkhIRe3vLDfy4/gTgsVp62iujdtY5y67s5hPGe2OzXzQbgUR7lpQhcgd61inXL
-         qUStUbcCTjjyD5EYIU/1BUbc0pIGXDfSeWzoPAzHZt5aibsI/EZkl02fqyKzLIX4yc
-         mM32MaHU+ycs/lyOjtTIft+tIE84XRl5cNhHYaE8=
-Date:   Mon, 29 Jul 2019 11:46:34 +0530
+        b=pH0ozCVJa4iWQkH3dXM5D+1GzWT3ECrY+N3AZwQtUZOKB71Oie7Tb3N3q1Gn9TZxX
+         Bhbi4DmxJCaNEpEhvC3z+qqFjyBah+/NUeQIAeLpr9Hoa/xOZmCuMY5j+IhPaxUn9J
+         ZvgY0OvpfKIfxSD2EsCEivoIQD5X0D6/tRSNln2c=
+Date:   Mon, 29 Jul 2019 12:05:15 +0530
 From:   Vinod Koul <vkoul@kernel.org>
 To:     Peter Ujfalusi <peter.ujfalusi@ti.com>
 Cc:     dan.j.williams@intel.com, dmaengine@vger.kernel.org,
         linux-arm-kernel@lists.infradead.org, linux-omap@vger.kernel.org
-Subject: Re: [PATCH v2 2/2] dmaengine: ti: omap-dma: Improved memcpy polling
- support
-Message-ID: <20190729061634.GD12733@vkoul-mobl.Dlink>
+Subject: Re: [PATCH v2 0/2] dmaengine: ti: omap-dma: Improved polling support
+Message-ID: <20190729063515.GE12733@vkoul-mobl.Dlink>
 References: <20190716082459.1222-1-peter.ujfalusi@ti.com>
- <20190716082459.1222-3-peter.ujfalusi@ti.com>
- <20190725133748.GX12733@vkoul-mobl.Dlink>
- <59794775-95e6-04c3-2660-9344c89df9a1@ti.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <59794775-95e6-04c3-2660-9344c89df9a1@ti.com>
+In-Reply-To: <20190716082459.1222-1-peter.ujfalusi@ti.com>
 User-Agent: Mutt/1.11.3 (2019-02-01)
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On 25-07-19, 17:07, Peter Ujfalusi wrote:
+On 16-07-19, 11:24, Peter Ujfalusi wrote:
+> Hi,
 > 
+> changes since v1:
+> - New preparation cleanup patch
+> - Simplified code for the main patch to be easier to read
 > 
-> On 25/07/2019 16.37, Vinod Koul wrote:
-> > On 16-07-19, 11:24, Peter Ujfalusi wrote:
-> >> When a DMA client driver does not set the DMA_PREP_INTERRUPT because it
-> >> does not want to use interrupts for DMA completion or because it can not
-> >> rely on DMA interrupts due to executing the memcpy when interrupts are
-> >> disabled it will poll the status of the transfer.
-> >>
-> >> If the interrupts are enabled then the cookie will be set completed in the
-> >> interrupt handler so only check in HW completion when the polling is really
-> >> needed.
-> >>
-> >> Signed-off-by: Peter Ujfalusi <peter.ujfalusi@ti.com>
-> >> ---
-> >>  drivers/dma/ti/omap-dma.c | 44 +++++++++++++++++++++++++--------------
-> >>  1 file changed, 28 insertions(+), 16 deletions(-)
-> >>
-> >> diff --git a/drivers/dma/ti/omap-dma.c b/drivers/dma/ti/omap-dma.c
-> >> index 029c0bd550d5..966d8f0323b5 100644
-> >> --- a/drivers/dma/ti/omap-dma.c
-> >> +++ b/drivers/dma/ti/omap-dma.c
-> >> @@ -91,6 +91,7 @@ struct omap_desc {
-> >>  	bool using_ll;
-> >>  	enum dma_transfer_direction dir;
-> >>  	dma_addr_t dev_addr;
-> >> +	bool polled;
-> >>  
-> >>  	int32_t fi;		/* for OMAP_DMA_SYNC_PACKET / double indexing */
-> >>  	int16_t ei;		/* for double indexing */
-> >> @@ -815,26 +816,20 @@ static enum dma_status omap_dma_tx_status(struct dma_chan *chan,
-> >>  	struct virt_dma_desc *vd;
-> >>  	enum dma_status ret;
-> >>  	unsigned long flags;
-> >> +	struct omap_desc *d = NULL;
-> >>  
-> >>  	ret = dma_cookie_status(chan, cookie, txstate);
-> >> -
-> >> -	if (!c->paused && c->running) {
-> >> -		uint32_t ccr = omap_dma_chan_read(c, CCR);
-> >> -		/*
-> >> -		 * The channel is no longer active, set the return value
-> >> -		 * accordingly
-> >> -		 */
-> >> -		if (!(ccr & CCR_ENABLE))
-> >> -			ret = DMA_COMPLETE;
-> >> -	}
-> >> -
-> >> -	if (ret == DMA_COMPLETE || !txstate)
-> >> +	if (ret == DMA_COMPLETE)
-> > 
-> > why do you want to continue for txstate being null?
+> This series fine-tunes the omap-dma polled memcpy support to be inline with how
+> the EDMA driver is handling it.
 > 
-> The caller could opt to not provide txstate and I still need to check if
-> the non completed transfer is actually done by the HW or not.
+> The polled completion can be tested by applying:
+> https://patchwork.kernel.org/patch/10966499/
 > 
-> > Also it would lead to NULL ptr deref for txstate
+> and run the dmatest with polled = 1 on boards where sDMA is used.
 > 
-> There is a !txstate check to avoid that.
-> 
-> > 
-> >>  		return ret;
-> >>  
-> >>  	spin_lock_irqsave(&c->vc.lock, flags);
-> >> +	if (c->desc && c->desc->vd.tx.cookie == cookie)
-> >> +		d = c->desc;
-> >> +
-> >> +	if (!txstate)
-> >> +		goto out;
+> Or boot up any dra7 family device with display enabled. The workaround for DMM
+> errata i878 uses polled DMA memcpy.
 
-Oops missed that, let me check again and do the needful
+Applied, thanks
 
 -- 
 ~Vinod
