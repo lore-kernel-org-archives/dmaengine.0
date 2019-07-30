@@ -7,45 +7,45 @@ X-Spam-Status: No, score=-9.9 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
 	USER_AGENT_GIT autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F37ABC0650F
-	for <dmaengine@archiver.kernel.org>; Tue, 30 Jul 2019 09:35:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BBA61C433FF
+	for <dmaengine@archiver.kernel.org>; Tue, 30 Jul 2019 09:36:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id C1607208E4
-	for <dmaengine@archiver.kernel.org>; Tue, 30 Jul 2019 09:35:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 734082089E
+	for <dmaengine@archiver.kernel.org>; Tue, 30 Jul 2019 09:36:17 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b="LYATqRcQ"
+	dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b="OnwZrA4Z"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731408AbfG3JfJ (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 30 Jul 2019 05:35:09 -0400
-Received: from lelv0142.ext.ti.com ([198.47.23.249]:46824 "EHLO
-        lelv0142.ext.ti.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729152AbfG3JfI (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Tue, 30 Jul 2019 05:35:08 -0400
-Received: from fllv0034.itg.ti.com ([10.64.40.246])
-        by lelv0142.ext.ti.com (8.15.2/8.15.2) with ESMTP id x6U9Z1tf100582;
-        Tue, 30 Jul 2019 04:35:01 -0500
+        id S1731323AbfG3JgI (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 30 Jul 2019 05:36:08 -0400
+Received: from fllv0015.ext.ti.com ([198.47.19.141]:58648 "EHLO
+        fllv0015.ext.ti.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730514AbfG3JgH (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Tue, 30 Jul 2019 05:36:07 -0400
+Received: from fllv0035.itg.ti.com ([10.64.41.0])
+        by fllv0015.ext.ti.com (8.15.2/8.15.2) with ESMTP id x6U9ZxQk060065;
+        Tue, 30 Jul 2019 04:35:59 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
-        s=ti-com-17Q1; t=1564479301;
-        bh=FmEP4mSp+GB3++ivD8Sfw2OMCbXIs8M52yHh6m5wEd4=;
+        s=ti-com-17Q1; t=1564479359;
+        bh=XE7PJWAxclsE4Y74rnXt5+mgn4DIMV/2pyQg3wG4rQU=;
         h=From:To:CC:Subject:Date:In-Reply-To:References;
-        b=LYATqRcQprPaQwLyBByKQlP9ll91SQSwU1S+vHgkyFgcBK4FVPI+sCVfljtrp251M
-         CS5nYpTDQeyfD7CoEJw72YivxZV9R2sSKS+DgrYA30gTBEauCjmQCm0IyWc2X7nE6H
-         OD1BU7PCw+Z3cllFAUqsxQyYKhs4YhDzzjTudXls=
-Received: from DFLE106.ent.ti.com (dfle106.ent.ti.com [10.64.6.27])
-        by fllv0034.itg.ti.com (8.15.2/8.15.2) with ESMTPS id x6U9Z1G9058580
+        b=OnwZrA4ZBctJrO6km1i7ZMXXDI5TkTsWS/URJLgZOsJG68J6C5xrPYl1wMWB6Mha1
+         mmvjm4/yIbYQeiU5npm2i9t141A/wALVO+VXb5++mU9XLDmfD77hLd1ad7ofQFj4cq
+         hqqyeJgHboxjNRp7q7TCvouIvSLWsRu8tZljAWZQ=
+Received: from DFLE102.ent.ti.com (dfle102.ent.ti.com [10.64.6.23])
+        by fllv0035.itg.ti.com (8.15.2/8.15.2) with ESMTPS id x6U9Zxjb100606
         (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
-        Tue, 30 Jul 2019 04:35:01 -0500
-Received: from DFLE102.ent.ti.com (10.64.6.23) by DFLE106.ent.ti.com
- (10.64.6.27) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1713.5; Tue, 30
- Jul 2019 04:35:00 -0500
-Received: from lelv0326.itg.ti.com (10.180.67.84) by DFLE102.ent.ti.com
+        Tue, 30 Jul 2019 04:35:59 -0500
+Received: from DFLE101.ent.ti.com (10.64.6.22) by DFLE102.ent.ti.com
  (10.64.6.23) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1713.5; Tue, 30
+ Jul 2019 04:35:58 -0500
+Received: from lelv0326.itg.ti.com (10.180.67.84) by DFLE101.ent.ti.com
+ (10.64.6.22) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1713.5 via
- Frontend Transport; Tue, 30 Jul 2019 04:35:00 -0500
+ Frontend Transport; Tue, 30 Jul 2019 04:35:58 -0500
 Received: from feketebors.ti.com (ileax41-snat.itg.ti.com [10.172.224.153])
-        by lelv0326.itg.ti.com (8.15.2/8.15.2) with ESMTP id x6U9YkU0027547;
-        Tue, 30 Jul 2019 04:34:57 -0500
+        by lelv0326.itg.ti.com (8.15.2/8.15.2) with ESMTP id x6U9YkU9027547;
+        Tue, 30 Jul 2019 04:35:55 -0500
 From:   Peter Ujfalusi <peter.ujfalusi@ti.com>
 To:     <vkoul@kernel.org>, <robh+dt@kernel.org>, <nm@ti.com>,
         <ssantosh@kernel.org>
@@ -54,173 +54,766 @@ CC:     <dan.j.williams@intel.com>, <dmaengine@vger.kernel.org>,
         <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
         <grygorii.strashko@ti.com>, <lokeshvutla@ti.com>,
         <t-kristo@ti.com>, <tony@atomide.com>, <j-keerthy@ti.com>
-Subject: [PATCH v2 03/14] dmaengine: doc: Add sections for per descriptor metadata support
-Date:   Tue, 30 Jul 2019 12:34:39 +0300
-Message-ID: <20190730093450.12664-4-peter.ujfalusi@ti.com>
+Subject: [PATCH v2 12/14] dmaengine: ti: New driver for K3 UDMA - split#5: dma_device callbacks 2
+Date:   Tue, 30 Jul 2019 12:34:48 +0300
+Message-ID: <20190730093450.12664-13-peter.ujfalusi@ti.com>
 X-Mailer: git-send-email 2.22.0
 In-Reply-To: <20190730093450.12664-1-peter.ujfalusi@ti.com>
 References: <20190730093450.12664-1-peter.ujfalusi@ti.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
 X-EXCLAIMER-MD-CONFIG: e1e8a2fd-e40a-4ac6-ac9b-f7e9cc9ee180
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Update the provider and client documentation with details about the
-metadata support.
+Split patch for review containing:
+device_prep_slave_sg and device_prep_dma_cyclic implementation supporting
+packet and TR channels.
+
+DMA driver for
+Texas Instruments K3 NAVSS Unified DMA – Peripheral Root Complex (UDMA-P)
+
+The UDMA-P is intended to perform similar (but significantly upgraded) functions
+as the packet-oriented DMA used on previous SoC devices. The UDMA-P module
+supports the transmission and reception of various packet types. The UDMA-P is
+architected to facilitate the segmentation and reassembly of SoC DMA data
+structure compliant packets to/from smaller data blocks that are natively
+compatible with the specific requirements of each connected peripheral. Multiple
+Tx and Rx channels are provided within the DMA which allow multiple segmentation
+or reassembly operations to be ongoing. The DMA controller maintains state
+information for each of the channels which allows packet segmentation and
+reassembly operations to be time division multiplexed between channels in order
+to share the underlying DMA hardware. An external DMA scheduler is used to
+control the ordering and rate at which this multiplexing occurs for Transmit
+operations. The ordering and rate of Receive operations is indirectly controlled
+by the order in which blocks are pushed into the DMA on the Rx PSI-L interface.
+
+The UDMA-P also supports acting as both a UTC and UDMA-C for its internal
+channels. Channels in the UDMA-P can be configured to be either Packet-Based or
+Third-Party channels on a channel by channel basis.
+
+The initial driver supports:
+- MEM_TO_MEM (TR mode)
+- DEV_TO_MEM (Packet / TR mode)
+- MEM_TO_DEV (Packet / TR mode)
+- Cyclic (Packet / TR mode)
+- Metadata for descriptors
 
 Signed-off-by: Peter Ujfalusi <peter.ujfalusi@ti.com>
 ---
- Documentation/driver-api/dmaengine/client.rst | 75 +++++++++++++++++++
- .../driver-api/dmaengine/provider.rst         | 46 ++++++++++++
- 2 files changed, 121 insertions(+)
+ drivers/dma/ti/k3-udma.c | 696 +++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 696 insertions(+)
 
-diff --git a/Documentation/driver-api/dmaengine/client.rst b/Documentation/driver-api/dmaengine/client.rst
-index 45953f171500..d708e46b88a2 100644
---- a/Documentation/driver-api/dmaengine/client.rst
-+++ b/Documentation/driver-api/dmaengine/client.rst
-@@ -151,6 +151,81 @@ The details of these operations are:
-      Note that callbacks will always be invoked from the DMA
-      engines tasklet, never from interrupt context.
+diff --git a/drivers/dma/ti/k3-udma.c b/drivers/dma/ti/k3-udma.c
+index 807670ba9774..bdd7652b01cf 100644
+--- a/drivers/dma/ti/k3-udma.c
++++ b/drivers/dma/ti/k3-udma.c
+@@ -1780,6 +1780,702 @@ static int udma_slave_config(struct dma_chan *chan,
+ 	return 0;
+ }
  
-+  Optional: per descriptor metadata
-+  ---------------------------------
-+  DMAengine provides two ways for metadata support.
++static struct udma_desc *udma_alloc_tr_desc(struct udma_chan *uc,
++					    size_t tr_size, int tr_count,
++					    enum dma_transfer_direction dir)
++{
++	struct udma_hwdesc *hwdesc;
++	struct cppi5_desc_hdr_t *tr_desc;
++	struct udma_desc *d;
++	u32 reload_count = 0;
++	u32 ring_id;
 +
-+  DESC_METADATA_CLIENT
++	switch (tr_size) {
++	case 16:
++	case 32:
++	case 64:
++	case 128:
++		break;
++	default:
++		dev_err(uc->ud->dev, "Unsupported TR size of %zu\n", tr_size);
++		return NULL;
++	}
 +
-+    The metadata buffer is allocated/provided by the client driver and it is
-+    attached to the descriptor.
++	/* We have only one descriptor containing multiple TRs */
++	d = kzalloc(sizeof(*d) + sizeof(d->hwdesc[0]), GFP_ATOMIC);
++	if (!d)
++		return NULL;
 +
-+  .. code-block:: c
++	d->sglen = tr_count;
 +
-+     int dmaengine_desc_attach_metadata(struct dma_async_tx_descriptor *desc,
-+				   void *data, size_t len);
++	d->hwdesc_count = 1;
++	hwdesc = &d->hwdesc[0];
 +
-+  DESC_METADATA_ENGINE
++	/* Allocate memory for DMA ring descriptor */
++	if (uc->use_dma_pool) {
++		hwdesc->cppi5_desc_size = uc->hdesc_size;
++		hwdesc->cppi5_desc_vaddr = dma_pool_zalloc(uc->hdesc_pool,
++						GFP_ATOMIC,
++						&hwdesc->cppi5_desc_paddr);
++	} else {
++		hwdesc->cppi5_desc_size = cppi5_trdesc_calc_size(tr_size,
++								 tr_count);
++		hwdesc->cppi5_desc_size = ALIGN(hwdesc->cppi5_desc_size,
++						uc->ud->desc_align);
++		hwdesc->cppi5_desc_vaddr = dma_alloc_coherent(uc->ud->dev,
++						hwdesc->cppi5_desc_size,
++						&hwdesc->cppi5_desc_paddr,
++						GFP_ATOMIC);
++	}
 +
-+    The metadata buffer is allocated/managed by the DMA driver. The client
-+    driver can ask for the pointer, maximum size and the currently used size of
-+    the metadata and can directly update or read it.
++	if (!hwdesc->cppi5_desc_vaddr) {
++		kfree(d);
++		return NULL;
++	}
 +
-+  .. code-block:: c
++	/* Start of the TR req records */
++	hwdesc->tr_req_base = hwdesc->cppi5_desc_vaddr + tr_size;
++	/* Start address of the TR response array */
++	hwdesc->tr_resp_base = hwdesc->tr_req_base + tr_size * tr_count;
 +
-+     void *dmaengine_desc_get_metadata_ptr(struct dma_async_tx_descriptor *desc,
-+		size_t *payload_len, size_t *max_len);
++	tr_desc = hwdesc->cppi5_desc_vaddr;
 +
-+     int dmaengine_desc_set_metadata_len(struct dma_async_tx_descriptor *desc,
-+		size_t payload_len);
++	if (uc->cyclic)
++		reload_count = CPPI5_INFO0_TRDESC_RLDCNT_INFINITE;
 +
-+  Client drivers can query if a given mode is supported with:
++	if (dir == DMA_DEV_TO_MEM)
++		ring_id = k3_ringacc_get_ring_id(uc->rchan->r_ring);
++	else
++		ring_id = k3_ringacc_get_ring_id(uc->tchan->tc_ring);
 +
-+  .. code-block:: c
++	cppi5_trdesc_init(tr_desc, tr_count, tr_size, 0, reload_count);
++	cppi5_desc_set_pktids(tr_desc, uc->id, 0x3fff);
++	cppi5_desc_set_retpolicy(tr_desc, 0, ring_id);
 +
-+     bool dmaengine_is_metadata_mode_supported(struct dma_chan *chan,
-+		enum dma_desc_metadata_mode mode);
++	return d;
++}
 +
-+  Depending on the used mode client drivers must follow different flow.
++static struct udma_desc *udma_prep_slave_sg_tr(
++	struct udma_chan *uc, struct scatterlist *sgl, unsigned int sglen,
++	enum dma_transfer_direction dir, unsigned long tx_flags, void *context)
++{
++	enum dma_slave_buswidth dev_width;
++	struct scatterlist *sgent;
++	struct udma_desc *d;
++	size_t tr_size;
++	struct cppi5_tr_type1_t *tr_req = NULL;
++	unsigned int i;
++	u32 burst;
 +
-+  DESC_METADATA_CLIENT
++	if (dir == DMA_DEV_TO_MEM) {
++		dev_width = uc->cfg.src_addr_width;
++		burst = uc->cfg.src_maxburst;
++	} else if (dir == DMA_MEM_TO_DEV) {
++		dev_width = uc->cfg.dst_addr_width;
++		burst = uc->cfg.dst_maxburst;
++	} else {
++		dev_err(uc->ud->dev, "%s: bad direction?\n", __func__);
++		return NULL;
++	}
 +
-+    - DMA_MEM_TO_DEV / DEV_MEM_TO_MEM:
-+      1. prepare the descriptor (dmaengine_prep_*)
-+         construct the metadata in the client's buffer
-+      2. use dmaengine_desc_attach_metadata() to attach the buffer to the
-+         descriptor
-+      3. submit the transfer
-+    - DMA_DEV_TO_MEM:
-+      1. prepare the descriptor (dmaengine_prep_*)
-+      2. use dmaengine_desc_attach_metadata() to attach the buffer to the
-+         descriptor
-+      3. submit the transfer
-+      4. when the transfer is completed, the metadata should be available in the
-+         attached buffer
++	if (!burst)
++		burst = 1;
 +
-+  DESC_METADATA_ENGINE
++	/* Now allocate and setup the descriptor. */
++	tr_size = sizeof(struct cppi5_tr_type1_t);
++	d = udma_alloc_tr_desc(uc, tr_size, sglen, dir);
++	if (!d)
++		return NULL;
 +
-+    - DMA_MEM_TO_DEV / DEV_MEM_TO_MEM:
-+      1. prepare the descriptor (dmaengine_prep_*)
-+      2. use dmaengine_desc_get_metadata_ptr() to get the pointer to the
-+         engine's metadata area
-+      3. update the metadata at the pointer
-+      4. use dmaengine_desc_set_metadata_len()  to tell the DMA engine the
-+         amount of data the client has placed into the metadata buffer
-+      5. submit the transfer
-+    - DMA_DEV_TO_MEM:
-+      1. prepare the descriptor (dmaengine_prep_*)
-+      2. submit the transfer
-+      3. on transfer completion, use dmaengine_desc_get_metadata_ptr() to get the
-+         pointer to the engine's metadata are
-+      4. Read out the metadate from the pointer
++	d->sglen = sglen;
 +
-+  .. note::
++	tr_req = (struct cppi5_tr_type1_t *)d->hwdesc[0].tr_req_base;
++	for_each_sg(sgl, sgent, sglen, i) {
++		d->residue += sg_dma_len(sgent);
 +
-+     Mixed use of DESC_METADATA_CLIENT / DESC_METADATA_ENGINE is not allowed,
-+     client drivers must use either of the modes per descriptor.
++		cppi5_tr_init(&tr_req[i].flags, CPPI5_TR_TYPE1, false, false,
++			      CPPI5_TR_EVENT_SIZE_COMPLETION, 0);
++		cppi5_tr_csf_set(&tr_req[i].flags, CPPI5_TR_CSF_SUPR_EVT);
 +
- 4. Submit the transaction
- 
-    Once the descriptor has been prepared and the callback information
-diff --git a/Documentation/driver-api/dmaengine/provider.rst b/Documentation/driver-api/dmaengine/provider.rst
-index dfc4486b5743..9e6d87b3c477 100644
---- a/Documentation/driver-api/dmaengine/provider.rst
-+++ b/Documentation/driver-api/dmaengine/provider.rst
-@@ -247,6 +247,52 @@ after each transfer. In case of a ring buffer, they may loop
- (DMA_CYCLIC). Addresses pointing to a device's register (e.g. a FIFO)
- are typically fixed.
- 
-+Per descriptor metadata support
-+-------------------------------
-+Some data movement architecure (DMA controller and peripherals) uses metadata
-+associated with a transaction. The DMA controller role is to transfer the
-+payload and the metadata alongside.
-+The metadata itself is not used by the DMA engine itself, but it contains
-+parameters, keys, vectors, etc for peripheral or from the peripheral.
++		tr_req[i].addr = sg_dma_address(sgent);
++		tr_req[i].icnt0 = burst * dev_width;
++		tr_req[i].dim1 = burst * dev_width;
++		tr_req[i].icnt1 = sg_dma_len(sgent) / tr_req[i].icnt0;
++	}
 +
-+The DMAengine framework provides a generic ways to facilitate the metadata for
-+descriptors. Depending on the architecture the DMA driver can implement either
-+or both of the methods and it is up to the client driver to choose which one
-+to use.
++	cppi5_tr_csf_set(&tr_req[i - 1].flags, CPPI5_TR_CSF_EOP);
 +
-+- DESC_METADATA_CLIENT
++	return d;
++}
 +
-+  The metadata buffer is allocated/provided by the client driver and it is
-+  attached (via the dmaengine_desc_attach_metadata() helper to the descriptor.
++static int udma_configure_statictr(struct udma_chan *uc, struct udma_desc *d,
++				   enum dma_slave_buswidth dev_width,
++				   u16 elcnt)
++{
++	if (!uc->static_tr_type)
++		return 0;
 +
-+  From the DMA driver the following is expected for this mode:
-+  - DMA_MEM_TO_DEV / DEV_MEM_TO_MEM
-+    The data from the provided metadata buffer should be prepared for the DMA
-+    controller to be sent alongside of the payload data. Either by copying to a
-+    hardware descriptor, or highly coupled packet.
-+  - DMA_DEV_TO_MEM
-+    On transfer completion the DMA driver must copy the metadata to the client
-+    provided metadata buffer.
++	/* Bus width translates to the element size (ES) */
++	switch (dev_width) {
++	case DMA_SLAVE_BUSWIDTH_1_BYTE:
++		d->static_tr.elsize = 0;
++		break;
++	case DMA_SLAVE_BUSWIDTH_2_BYTES:
++		d->static_tr.elsize = 1;
++		break;
++	case DMA_SLAVE_BUSWIDTH_3_BYTES:
++		d->static_tr.elsize = 2;
++		break;
++	case DMA_SLAVE_BUSWIDTH_4_BYTES:
++		d->static_tr.elsize = 3;
++		break;
++	case DMA_SLAVE_BUSWIDTH_8_BYTES:
++		d->static_tr.elsize = 4;
++		break;
++	default: /* not reached */
++		return -EINVAL;
++	}
 +
-+- DESC_METADATA_ENGINE
++	d->static_tr.elcnt = elcnt;
 +
-+  The metadata buffer is allocated/managed by the DMA driver. The client driver
-+  can ask for the pointer, maximum size and the currently used size of the
-+  metadata and can directly update or read it. dmaengine_desc_get_metadata_ptr()
-+  and dmaengine_desc_set_metadata_len() is provided as helper functions.
++	/*
++	 * PDMA must to close the packet when the channel is in packet mode.
++	 * For TR mode when the channel is not cyclic we also need PDMA to close
++	 * the packet otherwise the transfer will stall because PDMA holds on
++	 * the data it has received from the peripheral.
++	 */
++	if (uc->pkt_mode || !uc->cyclic) {
++		unsigned int div = dev_width * elcnt;
 +
-+  From the DMA driver the following is expected for this mode:
-+  - get_metadata_ptr
-+    Should return a pointer for the metadata buffer, the maximum size of the
-+    metadata buffer and the currently used / valid (if any) bytes in the buffer.
-+  - set_metadata_len
-+    It is called by the clients after it have placed the metadata to the buffer
-+    to let the DMA driver know the number of valid bytes provided.
++		if (uc->cyclic)
++			d->static_tr.bstcnt = d->residue / d->sglen / div;
++		else
++			d->static_tr.bstcnt = d->residue / div;
 +
-+  Note: since the client will ask for the metadata pointer in the completion
-+  callback (in DMA_DEV_TO_MEM case) the DMA driver must ensure that the
-+  descriptor is not freed up prior the callback is called.
++		if (uc->dir == DMA_DEV_TO_MEM &&
++		    d->static_tr.bstcnt > uc->ud->match_data->statictr_z_mask)
++			return -EINVAL;
++	} else {
++		d->static_tr.bstcnt = 0;
++	}
 +
- Device operations
- -----------------
- 
++	return 0;
++}
++
++static struct udma_desc *udma_prep_slave_sg_pkt(
++	struct udma_chan *uc, struct scatterlist *sgl, unsigned int sglen,
++	enum dma_transfer_direction dir, unsigned long tx_flags, void *context)
++{
++	struct scatterlist *sgent;
++	struct cppi5_host_desc_t *h_desc = NULL;
++	struct udma_desc *d;
++	u32 ring_id;
++	unsigned int i;
++
++	d = kzalloc(sizeof(*d) + sglen * sizeof(d->hwdesc[0]), GFP_ATOMIC);
++	if (!d)
++		return NULL;
++
++	d->sglen = sglen;
++	d->hwdesc_count = sglen;
++
++	if (dir == DMA_DEV_TO_MEM)
++		ring_id = k3_ringacc_get_ring_id(uc->rchan->r_ring);
++	else
++		ring_id = k3_ringacc_get_ring_id(uc->tchan->tc_ring);
++
++	for_each_sg(sgl, sgent, sglen, i) {
++		struct udma_hwdesc *hwdesc = &d->hwdesc[i];
++		dma_addr_t sg_addr = sg_dma_address(sgent);
++		struct cppi5_host_desc_t *desc;
++		size_t sg_len = sg_dma_len(sgent);
++
++		hwdesc->cppi5_desc_vaddr = dma_pool_zalloc(uc->hdesc_pool,
++						GFP_ATOMIC,
++						&hwdesc->cppi5_desc_paddr);
++		if (!hwdesc->cppi5_desc_vaddr) {
++			dev_err(uc->ud->dev,
++				"descriptor%d allocation failed\n", i);
++
++			udma_free_hwdesc(uc, d);
++			kfree(d);
++			return NULL;
++		}
++
++		d->residue += sg_len;
++		hwdesc->cppi5_desc_size = uc->hdesc_size;
++		desc = hwdesc->cppi5_desc_vaddr;
++
++		if (i == 0) {
++			cppi5_hdesc_init(desc, 0, 0);
++			/* Flow and Packed ID */
++			cppi5_desc_set_pktids(&desc->hdr, uc->id, 0x3fff);
++			cppi5_desc_set_retpolicy(&desc->hdr, 0, ring_id);
++		} else {
++			cppi5_hdesc_reset_hbdesc(desc);
++			cppi5_desc_set_retpolicy(&desc->hdr, 0, 0xffff);
++		}
++
++		/* attach the sg buffer to the descriptor */
++		cppi5_hdesc_attach_buf(desc, sg_addr, sg_len, sg_addr, sg_len);
++
++		/* Attach link as host buffer descriptor */
++		if (h_desc)
++			cppi5_hdesc_link_hbdesc(h_desc,
++						hwdesc->cppi5_desc_paddr);
++
++		if (dir == DMA_MEM_TO_DEV)
++			h_desc = desc;
++	}
++
++	if (d->residue >= SZ_4M) {
++		dev_err(uc->ud->dev,
++			"%s: Transfer size %u is over the supported 4M range\n",
++			__func__, d->residue);
++		udma_free_hwdesc(uc, d);
++		kfree(d);
++		return NULL;
++	}
++
++	h_desc = d->hwdesc[0].cppi5_desc_vaddr;
++	cppi5_hdesc_set_pktlen(h_desc, d->residue);
++
++	return d;
++}
++
++static int udma_attach_metadata(struct dma_async_tx_descriptor *desc,
++				void *data, size_t len)
++{
++	struct udma_desc *d = to_udma_desc(desc);
++	struct udma_chan *uc = to_udma_chan(desc->chan);
++	struct cppi5_host_desc_t *h_desc;
++	u32 psd_size = len;
++	u32 flags = 0;
++
++	if (!uc->pkt_mode || !uc->metadata_size)
++		return -ENOTSUPP;
++
++	if (!data || len > uc->metadata_size)
++		return -EINVAL;
++
++	if (uc->needs_epib && len < CPPI5_INFO0_HDESC_EPIB_SIZE)
++		return -EINVAL;
++
++	h_desc = d->hwdesc[0].cppi5_desc_vaddr;
++	if (d->dir == DMA_MEM_TO_DEV)
++		memcpy(h_desc->epib, data, len);
++
++	if (uc->needs_epib)
++		psd_size -= CPPI5_INFO0_HDESC_EPIB_SIZE;
++
++	d->metadata = data;
++	d->metadata_size = len;
++	if (uc->needs_epib)
++		flags |= CPPI5_INFO0_HDESC_EPIB_PRESENT;
++
++	cppi5_hdesc_update_flags(h_desc, flags);
++	cppi5_hdesc_update_psdata_size(h_desc, psd_size);
++
++	return 0;
++}
++
++static void *udma_get_metadata_ptr(struct dma_async_tx_descriptor *desc,
++				   size_t *payload_len, size_t *max_len)
++{
++	struct udma_desc *d = to_udma_desc(desc);
++	struct udma_chan *uc = to_udma_chan(desc->chan);
++	struct cppi5_host_desc_t *h_desc;
++
++	if (!uc->pkt_mode || !uc->metadata_size)
++		return ERR_PTR(-ENOTSUPP);
++
++	h_desc = d->hwdesc[0].cppi5_desc_vaddr;
++
++	*max_len = uc->metadata_size;
++
++	*payload_len = cppi5_hdesc_epib_present(&h_desc->hdr) ?
++		       CPPI5_INFO0_HDESC_EPIB_SIZE : 0;
++	*payload_len += cppi5_hdesc_get_psdata_size(h_desc);
++
++	return h_desc->epib;
++}
++
++static int udma_set_metadata_len(struct dma_async_tx_descriptor *desc,
++				 size_t payload_len)
++{
++	struct udma_desc *d = to_udma_desc(desc);
++	struct udma_chan *uc = to_udma_chan(desc->chan);
++	struct cppi5_host_desc_t *h_desc;
++	u32 psd_size = payload_len;
++	u32 flags = 0;
++
++	if (!uc->pkt_mode || !uc->metadata_size)
++		return -ENOTSUPP;
++
++	if (payload_len > uc->metadata_size)
++		return -EINVAL;
++
++	if (uc->needs_epib && payload_len < CPPI5_INFO0_HDESC_EPIB_SIZE)
++		return -EINVAL;
++
++	h_desc = d->hwdesc[0].cppi5_desc_vaddr;
++
++	if (uc->needs_epib) {
++		psd_size -= CPPI5_INFO0_HDESC_EPIB_SIZE;
++		flags |= CPPI5_INFO0_HDESC_EPIB_PRESENT;
++	}
++
++	cppi5_hdesc_update_flags(h_desc, flags);
++	cppi5_hdesc_update_psdata_size(h_desc, psd_size);
++
++	return 0;
++}
++
++static struct dma_descriptor_metadata_ops metadata_ops = {
++	.attach = udma_attach_metadata,
++	.get_ptr = udma_get_metadata_ptr,
++	.set_len = udma_set_metadata_len,
++};
++
++static struct dma_async_tx_descriptor *udma_prep_slave_sg(
++	struct dma_chan *chan, struct scatterlist *sgl, unsigned int sglen,
++	enum dma_transfer_direction dir, unsigned long tx_flags, void *context)
++{
++	struct udma_chan *uc = to_udma_chan(chan);
++	enum dma_slave_buswidth dev_width;
++	struct udma_desc *d;
++	u32 burst;
++
++	if (dir != uc->dir) {
++		dev_err(chan->device->dev,
++			"%s: chan%d is for %s, not supporting %s\n",
++			__func__, uc->id, udma_get_dir_text(uc->dir),
++			udma_get_dir_text(dir));
++		return NULL;
++	}
++
++	if (dir == DMA_DEV_TO_MEM) {
++		dev_width = uc->cfg.src_addr_width;
++		burst = uc->cfg.src_maxburst;
++	} else if (dir == DMA_MEM_TO_DEV) {
++		dev_width = uc->cfg.dst_addr_width;
++		burst = uc->cfg.dst_maxburst;
++	} else {
++		dev_err(chan->device->dev, "%s: bad direction?\n", __func__);
++		return NULL;
++	}
++
++	if (!burst)
++		burst = 1;
++
++	if (uc->pkt_mode)
++		d = udma_prep_slave_sg_pkt(uc, sgl, sglen, dir, tx_flags,
++					   context);
++	else
++		d = udma_prep_slave_sg_tr(uc, sgl, sglen, dir, tx_flags,
++					  context);
++
++	if (!d)
++		return NULL;
++
++	d->dir = dir;
++	d->desc_idx = 0;
++	d->tr_idx = 0;
++
++	/* static TR for remote PDMA */
++	if (udma_configure_statictr(uc, d, dev_width, burst)) {
++		dev_err(uc->ud->dev,
++			"%s: StaticTR Z is limted to maximum 4095 (%u)\n",
++			__func__, d->static_tr.bstcnt);
++
++		udma_free_hwdesc(uc, d);
++		kfree(d);
++		return NULL;
++	}
++
++	if (uc->metadata_size)
++		d->vd.tx.metadata_ops = &metadata_ops;
++
++	return vchan_tx_prep(&uc->vc, &d->vd, tx_flags);
++}
++
++static struct udma_desc *udma_prep_dma_cyclic_tr(
++	struct udma_chan *uc, dma_addr_t buf_addr, size_t buf_len,
++	size_t period_len, enum dma_transfer_direction dir, unsigned long flags)
++{
++	enum dma_slave_buswidth dev_width;
++	struct udma_desc *d;
++	size_t tr_size;
++	struct cppi5_tr_type1_t *tr_req;
++	unsigned int i;
++	unsigned int periods = buf_len / period_len;
++	u32 burst;
++
++	if (dir == DMA_DEV_TO_MEM) {
++		dev_width = uc->cfg.src_addr_width;
++		burst = uc->cfg.src_maxburst;
++	} else if (dir == DMA_MEM_TO_DEV) {
++		dev_width = uc->cfg.dst_addr_width;
++		burst = uc->cfg.dst_maxburst;
++	} else {
++		dev_err(uc->ud->dev, "%s: bad direction?\n", __func__);
++		return NULL;
++	}
++
++	if (!burst)
++		burst = 1;
++
++	/* Now allocate and setup the descriptor. */
++	tr_size = sizeof(struct cppi5_tr_type1_t);
++	d = udma_alloc_tr_desc(uc, tr_size, periods, dir);
++	if (!d)
++		return NULL;
++
++	tr_req = (struct cppi5_tr_type1_t *)d->hwdesc[0].tr_req_base;
++	for (i = 0; i < periods; i++) {
++		cppi5_tr_init(&tr_req[i].flags, CPPI5_TR_TYPE1, false, false,
++			      CPPI5_TR_EVENT_SIZE_COMPLETION, 0);
++
++		tr_req[i].addr = buf_addr + period_len * i;
++		tr_req[i].icnt0 = dev_width;
++		tr_req[i].icnt1 = period_len / dev_width;
++		tr_req[i].dim1 = dev_width;
++
++		if (!(flags & DMA_PREP_INTERRUPT))
++			cppi5_tr_csf_set(&tr_req[i].flags,
++					 CPPI5_TR_CSF_SUPR_EVT);
++	}
++
++	return d;
++}
++
++static struct udma_desc *udma_prep_dma_cyclic_pkt(
++	struct udma_chan *uc, dma_addr_t buf_addr, size_t buf_len,
++	size_t period_len, enum dma_transfer_direction dir, unsigned long flags)
++{
++	struct udma_desc *d;
++	u32 ring_id;
++	int i;
++	int periods = buf_len / period_len;
++
++	if (periods > (K3_UDMA_DEFAULT_RING_SIZE - 1))
++		return NULL;
++
++	if (period_len > 0x3FFFFF)
++		return NULL;
++
++	d = kzalloc(sizeof(*d) + periods * sizeof(d->hwdesc[0]), GFP_ATOMIC);
++	if (!d)
++		return NULL;
++
++	d->hwdesc_count = periods;
++
++	/* TODO: re-check this... */
++	if (dir == DMA_DEV_TO_MEM)
++		ring_id = k3_ringacc_get_ring_id(uc->rchan->r_ring);
++	else
++		ring_id = k3_ringacc_get_ring_id(uc->tchan->tc_ring);
++
++	for (i = 0; i < periods; i++) {
++		struct udma_hwdesc *hwdesc = &d->hwdesc[i];
++		dma_addr_t period_addr = buf_addr + (period_len * i);
++		struct cppi5_host_desc_t *h_desc;
++
++		hwdesc->cppi5_desc_vaddr = dma_pool_zalloc(uc->hdesc_pool,
++						GFP_ATOMIC,
++						&hwdesc->cppi5_desc_paddr);
++		if (!hwdesc->cppi5_desc_vaddr) {
++			dev_err(uc->ud->dev,
++				"descriptor%d allocation failed\n", i);
++
++			udma_free_hwdesc(uc, d);
++			kfree(d);
++			return NULL;
++		}
++
++		hwdesc->cppi5_desc_size = uc->hdesc_size;
++		h_desc = hwdesc->cppi5_desc_vaddr;
++
++		cppi5_hdesc_init(h_desc, 0, 0);
++		cppi5_hdesc_set_pktlen(h_desc, period_len);
++
++		/* Flow and Packed ID */
++		cppi5_desc_set_pktids(&h_desc->hdr, uc->id, 0x3fff);
++		cppi5_desc_set_retpolicy(&h_desc->hdr, 0, ring_id);
++
++		/* attach each period to a new descriptor */
++		cppi5_hdesc_attach_buf(h_desc,
++				       period_addr, period_len,
++				       period_addr, period_len);
++	}
++
++	return d;
++}
++
++static struct dma_async_tx_descriptor *udma_prep_dma_cyclic(
++	struct dma_chan *chan, dma_addr_t buf_addr, size_t buf_len,
++	size_t period_len, enum dma_transfer_direction dir, unsigned long flags)
++{
++	struct udma_chan *uc = to_udma_chan(chan);
++	enum dma_slave_buswidth dev_width;
++	struct udma_desc *d;
++	u32 burst;
++
++	if (dir != uc->dir) {
++		dev_err(chan->device->dev,
++			"%s: chan%d is for %s, not supporting %s\n",
++			__func__, uc->id, udma_get_dir_text(uc->dir),
++			udma_get_dir_text(dir));
++		return NULL;
++	}
++
++	uc->cyclic = true;
++
++	if (dir == DMA_DEV_TO_MEM) {
++		dev_width = uc->cfg.src_addr_width;
++		burst = uc->cfg.src_maxburst;
++	} else if (dir == DMA_MEM_TO_DEV) {
++		dev_width = uc->cfg.dst_addr_width;
++		burst = uc->cfg.dst_maxburst;
++	} else {
++		dev_err(uc->ud->dev, "%s: bad direction?\n", __func__);
++		return NULL;
++	}
++
++	if (!burst)
++		burst = 1;
++
++	if (uc->pkt_mode)
++		d = udma_prep_dma_cyclic_pkt(uc, buf_addr, buf_len, period_len,
++					     dir, flags);
++	else
++		d = udma_prep_dma_cyclic_tr(uc, buf_addr, buf_len, period_len,
++					    dir, flags);
++
++	if (!d)
++		return NULL;
++
++	d->sglen = buf_len / period_len;
++
++	d->dir = dir;
++	d->residue = buf_len;
++
++	/* static TR for remote PDMA */
++	if (udma_configure_statictr(uc, d, dev_width, burst)) {
++		dev_err(uc->ud->dev,
++			"%s: StaticTR Z is limted to maximum 4095 (%u)\n",
++			__func__, d->static_tr.bstcnt);
++
++		udma_free_hwdesc(uc, d);
++		kfree(d);
++		return NULL;
++	}
++
++	if (uc->metadata_size)
++		d->vd.tx.metadata_ops = &metadata_ops;
++
++	return vchan_tx_prep(&uc->vc, &d->vd, flags);
++}
++
++static struct dma_async_tx_descriptor *udma_prep_dma_memcpy(
++	struct dma_chan *chan, dma_addr_t dest, dma_addr_t src,
++	size_t len, unsigned long tx_flags)
++{
++	struct udma_chan *uc = to_udma_chan(chan);
++	struct udma_desc *d;
++	struct cppi5_tr_type15_t *tr_req;
++	int num_tr;
++	size_t tr_size = sizeof(struct cppi5_tr_type15_t);
++	u16 tr0_cnt0, tr0_cnt1, tr1_cnt0;
++
++	if (uc->dir != DMA_MEM_TO_MEM) {
++		dev_err(chan->device->dev,
++			"%s: chan%d is for %s, not supporting %s\n",
++			__func__, uc->id, udma_get_dir_text(uc->dir),
++			udma_get_dir_text(DMA_MEM_TO_MEM));
++		return NULL;
++	}
++
++	if (len < SZ_64K) {
++		num_tr = 1;
++		tr0_cnt0 = len;
++		tr0_cnt1 = 1;
++	} else {
++		unsigned long align_to = __ffs(src | dest);
++
++		if (align_to > 3)
++			align_to = 3;
++		/*
++		 * Keep simple: tr0: SZ_64K-alignment blocks,
++		 *		tr1: the remaining
++		 */
++		num_tr = 2;
++		tr0_cnt0 = (SZ_64K - BIT(align_to));
++		if (len / tr0_cnt0 >= SZ_64K) {
++			dev_err(uc->ud->dev, "size %zu is not supported\n",
++				len);
++			return NULL;
++		}
++
++		tr0_cnt1 = len / tr0_cnt0;
++		tr1_cnt0 = len % tr0_cnt0;
++	}
++
++	d = udma_alloc_tr_desc(uc, tr_size, num_tr, DMA_MEM_TO_MEM);
++	if (!d)
++		return NULL;
++
++	d->dir = DMA_MEM_TO_MEM;
++	d->desc_idx = 0;
++	d->tr_idx = 0;
++	d->residue = len;
++
++	tr_req = (struct cppi5_tr_type15_t *)d->hwdesc[0].tr_req_base;
++
++	cppi5_tr_init(&tr_req[0].flags, CPPI5_TR_TYPE15, false, true,
++		      CPPI5_TR_EVENT_SIZE_COMPLETION, 0);
++	cppi5_tr_csf_set(&tr_req[0].flags, CPPI5_TR_CSF_SUPR_EVT);
++
++	tr_req[0].addr = src;
++	tr_req[0].icnt0 = tr0_cnt0;
++	tr_req[0].icnt1 = tr0_cnt1;
++	tr_req[0].icnt2 = 1;
++	tr_req[0].icnt3 = 1;
++	tr_req[0].dim1 = tr0_cnt0;
++
++	tr_req[0].daddr = dest;
++	tr_req[0].dicnt0 = tr0_cnt0;
++	tr_req[0].dicnt1 = tr0_cnt1;
++	tr_req[0].dicnt2 = 1;
++	tr_req[0].dicnt3 = 1;
++	tr_req[0].ddim1 = tr0_cnt0;
++
++	if (num_tr == 2) {
++		cppi5_tr_init(&tr_req[1].flags, CPPI5_TR_TYPE15, false, true,
++			      CPPI5_TR_EVENT_SIZE_COMPLETION, 0);
++		cppi5_tr_csf_set(&tr_req[1].flags, CPPI5_TR_CSF_SUPR_EVT);
++
++		tr_req[1].addr = src + tr0_cnt1 * tr0_cnt0;
++		tr_req[1].icnt0 = tr1_cnt0;
++		tr_req[1].icnt1 = 1;
++		tr_req[1].icnt2 = 1;
++		tr_req[1].icnt3 = 1;
++
++		tr_req[1].daddr = dest + tr0_cnt1 * tr0_cnt0;
++		tr_req[1].dicnt0 = tr1_cnt0;
++		tr_req[1].dicnt1 = 1;
++		tr_req[1].dicnt2 = 1;
++		tr_req[1].dicnt3 = 1;
++	}
++
++	cppi5_tr_csf_set(&tr_req[num_tr - 1].flags, CPPI5_TR_CSF_EOP);
++
++	if (uc->metadata_size)
++		d->vd.tx.metadata_ops = &metadata_ops;
++
++	return vchan_tx_prep(&uc->vc, &d->vd, tx_flags);
++}
++
+ static void udma_issue_pending(struct dma_chan *chan)
+ {
+ 	struct udma_chan *uc = to_udma_chan(chan);
 -- 
 Peter
 
