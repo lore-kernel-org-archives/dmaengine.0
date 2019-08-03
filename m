@@ -6,35 +6,36 @@ X-Spam-Status: No, score=-6.7 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
 	URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 28EECC31E40
-	for <dmaengine@archiver.kernel.org>; Sat,  3 Aug 2019 10:40:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F30BCC31E40
+	for <dmaengine@archiver.kernel.org>; Sat,  3 Aug 2019 10:41:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 015F62166E
-	for <dmaengine@archiver.kernel.org>; Sat,  3 Aug 2019 10:40:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CEF2E2166E
+	for <dmaengine@archiver.kernel.org>; Sat,  3 Aug 2019 10:41:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388807AbfHCKkw (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Sat, 3 Aug 2019 06:40:52 -0400
-Received: from mailout3.hostsharing.net ([176.9.242.54]:41163 "EHLO
+        id S2388832AbfHCKlx (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Sat, 3 Aug 2019 06:41:53 -0400
+Received: from mailout3.hostsharing.net ([176.9.242.54]:54533 "EHLO
         mailout3.hostsharing.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727123AbfHCKkw (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Sat, 3 Aug 2019 06:40:52 -0400
+        with ESMTP id S2388809AbfHCKlx (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Sat, 3 Aug 2019 06:41:53 -0400
 Received: from h08.hostsharing.net (h08.hostsharing.net [IPv6:2a01:37:1000::53df:5f1c:0])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (Client CN "*.hostsharing.net", Issuer "COMODO RSA Domain Validation Secure Server CA" (not verified))
-        by mailout3.hostsharing.net (Postfix) with ESMTPS id 4EC491034071B;
-        Sat,  3 Aug 2019 12:40:49 +0200 (CEST)
+        by mailout3.hostsharing.net (Postfix) with ESMTPS id 2D88B1034071B;
+        Sat,  3 Aug 2019 12:41:50 +0200 (CEST)
 Received: from localhost (unknown [89.246.108.87])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
         (No client certificate requested)
-        by h08.hostsharing.net (Postfix) with ESMTPSA id E146B618F189;
-        Sat,  3 Aug 2019 12:40:48 +0200 (CEST)
-X-Mailbox-Line: From edb004dff4af6106f6bfcb89e1a96391e96eb857 Mon Sep 17 00:00:00 2001
-Message-Id: <edb004dff4af6106f6bfcb89e1a96391e96eb857.1564825752.git.lukas@wunner.de>
+        by h08.hostsharing.net (Postfix) with ESMTPSA id BAD30618F189;
+        Sat,  3 Aug 2019 12:41:49 +0200 (CEST)
+X-Mailbox-Line: From 3f471dcb5da331d0efb831d6e3117e0c127ebea7 Mon Sep 17 00:00:00 2001
+Message-Id: <3f471dcb5da331d0efb831d6e3117e0c127ebea7.1564825752.git.lukas@wunner.de>
 In-Reply-To: <cover.1564825752.git.lukas@wunner.de>
 References: <cover.1564825752.git.lukas@wunner.de>
 From:   Lukas Wunner <lukas@wunner.de>
 Date:   Sat, 3 Aug 2019 12:10:00 +0200
-Subject: [PATCH 05/10] spi: bcm2835: Work around DONE bit erratum
+Subject: [PATCH 06/10] spi: bcm2835: Cache CS register value for
+ ->prepare_message()
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -55,87 +56,143 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Commit 3bd7f6589f67 ("spi: bcm2835: Overcome sglist entry length
-limitation") amended the BCM2835 SPI driver with support for DMA
-transfers whose buffers are not aligned to 4 bytes and require more than
-one sglist entry.
+The BCM2835 SPI driver needs to set up the clock polarity in its
+->prepare_message() hook before spi_transfer_one_message() asserts chip
+select to avoid a gratuitous clock signal edge (cf. commit acace73df2c1
+("spi: bcm2835: set up spi-mode before asserting cs-gpio")).
 
-When testing this feature with upcoming commits to speed up TX-only and
-RX-only transfers, I noticed that SPI transmission sometimes breaks.
-A function introduced by the commit, bcm2835_spi_transfer_prologue(),
-performs one or two PIO transmissions as a prologue to the actual DMA
-transmission.  It turns out that the breakage goes away if the DONE bit
-in the CS register is set when ending such a PIO transmission.
-
-The DONE bit signifies emptiness of the TX FIFO.  According to the spec,
-the bit is of type RO, so writing it should never have any effect.
-Perhaps the spec is wrong and the bit is actually of type RW1C.
-E.g. the I2C controller on the BCM2835 does have an RW1C DONE bit which
-needs to be cleared by the driver.  Another, possibly more likely
-explanation is that it's a hardware erratum since the issue does not
-occur consistently.
-
-Either way, amend bcm2835_spi_transfer_prologue() to always write the
-DONE bit.
-
-Usually a transmission is ended by bcm2835_spi_reset_hw().  If the
-transmission was successful, the TX FIFO is empty and thus the DONE bit
-is set when bcm2835_spi_reset_hw() reads the CS register.  The bit is
-then written back to the register, so we happen to do the right thing.
-
-However if DONE is not set, e.g. because transmission is aborted with
-a non-empty TX FIFO, the bit won't be written by bcm2835_spi_reset_hw()
-and it seems possible that transmission might subsequently break.  To be
-on the safe side, likewise amend bcm2835_spi_reset_hw() to always write
-the bit.
+Precalculate the CS register value (which selects the clock polarity)
+once in ->setup() and use that cached value in ->prepare_message() and
+->transfer_one().  This avoids one MMIO read per message and one per
+transfer, yielding a small latency improvement.  Additionally, a
+forthcoming commit will use the precalculated value to derive the
+register value for clearing the RX FIFO, which will eliminate the need
+for an RX dummy buffer when performing TX-only DMA transfers.
 
 Tested-by: Nuno Sá <nuno.sa@analog.com>
 Signed-off-by: Lukas Wunner <lukas@wunner.de>
 Cc: Martin Sperl <kernel@martin.sperl.org>
 Cc: Noralf Trønnes <noralf@tronnes.org>
 ---
- drivers/spi/spi-bcm2835.c | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ drivers/spi/spi-bcm2835.c | 47 ++++++++++++++++++++++-----------------
+ 1 file changed, 27 insertions(+), 20 deletions(-)
 
 diff --git a/drivers/spi/spi-bcm2835.c b/drivers/spi/spi-bcm2835.c
-index 2bf725e909fd..f6391c302363 100644
+index f6391c302363..fcf203c30455 100644
 --- a/drivers/spi/spi-bcm2835.c
 +++ b/drivers/spi/spi-bcm2835.c
-@@ -317,6 +317,13 @@ static void bcm2835_spi_reset_hw(struct spi_controller *ctlr)
- 		BCM2835_SPI_CS_INTD |
- 		BCM2835_SPI_CS_DMAEN |
- 		BCM2835_SPI_CS_TA);
-+	/*
-+	 * Transmission sometimes breaks unless the DONE bit is written at the
-+	 * end of every transfer.  The spec says it's a RO bit.  Either the
-+	 * spec is wrong and the bit is actually of type RW1C, or it's a
-+	 * hardware erratum.
-+	 */
-+	cs |= BCM2835_SPI_CS_DONE;
- 	/* and reset RX/TX FIFOS */
- 	cs |= BCM2835_SPI_CS_CLEAR_RX | BCM2835_SPI_CS_CLEAR_TX;
+@@ -66,6 +66,7 @@
+ #define BCM2835_SPI_FIFO_SIZE		64
+ #define BCM2835_SPI_FIFO_SIZE_3_4	48
+ #define BCM2835_SPI_DMA_MIN_LENGTH	96
++#define BCM2835_SPI_NUM_CS		3   /* raise as necessary */
+ #define BCM2835_SPI_MODE_BITS	(SPI_CPOL | SPI_CPHA | SPI_CS_HIGH \
+ 				| SPI_NO_CS | SPI_3WIRE)
  
-@@ -475,7 +482,9 @@ static void bcm2835_spi_transfer_prologue(struct spi_controller *ctlr,
- 		bcm2835_wr_fifo_count(bs, bs->rx_prologue);
- 		bcm2835_wait_tx_fifo_empty(bs);
- 		bcm2835_rd_fifo_count(bs, bs->rx_prologue);
--		bcm2835_spi_reset_hw(ctlr);
-+		bcm2835_wr(bs, BCM2835_SPI_CS, cs | BCM2835_SPI_CS_CLEAR_RX
-+						  | BCM2835_SPI_CS_CLEAR_TX
-+						  | BCM2835_SPI_CS_DONE);
+@@ -92,6 +93,8 @@ MODULE_PARM_DESC(polling_limit_us,
+  * @rx_prologue: bytes received without DMA if first RX sglist entry's
+  *	length is not a multiple of 4 (to overcome hardware limitation)
+  * @tx_spillover: whether @tx_prologue spills over to second TX sglist entry
++ * @prepare_cs: precalculated CS register value for ->prepare_message()
++ *	(uses slave-specific clock polarity and phase settings)
+  * @debugfs_dir: the debugfs directory - neede to remove debugfs when
+  *      unloading the module
+  * @count_transfer_polling: count of how often polling mode is used
+@@ -114,6 +117,7 @@ struct bcm2835_spi {
+ 	int tx_prologue;
+ 	int rx_prologue;
+ 	unsigned int tx_spillover;
++	u32 prepare_cs[BCM2835_SPI_NUM_CS];
  
- 		dma_sync_single_for_device(ctlr->dma_rx->device->dev,
- 					   sg_dma_address(&tfr->rx_sg.sgl[0]),
-@@ -496,7 +505,8 @@ static void bcm2835_spi_transfer_prologue(struct spi_controller *ctlr,
- 						  | BCM2835_SPI_CS_DMAEN);
- 		bcm2835_wr_fifo_count(bs, tx_remaining);
- 		bcm2835_wait_tx_fifo_empty(bs);
--		bcm2835_wr(bs, BCM2835_SPI_CS, cs | BCM2835_SPI_CS_CLEAR_TX);
-+		bcm2835_wr(bs, BCM2835_SPI_CS, cs | BCM2835_SPI_CS_CLEAR_TX
-+						  | BCM2835_SPI_CS_DONE);
+ 	struct dentry *debugfs_dir;
+ 	u64 count_transfer_polling;
+@@ -816,7 +820,7 @@ static int bcm2835_spi_transfer_one(struct spi_controller *ctlr,
+ 	struct bcm2835_spi *bs = spi_controller_get_devdata(ctlr);
+ 	unsigned long spi_hz, clk_hz, cdiv, spi_used_hz;
+ 	unsigned long hz_per_byte, byte_limit;
+-	u32 cs = bcm2835_rd(bs, BCM2835_SPI_CS);
++	u32 cs = bs->prepare_cs[spi->chip_select];
+ 
+ 	/* set clock */
+ 	spi_hz = tfr->speed_hz;
+@@ -841,15 +845,6 @@ static int bcm2835_spi_transfer_one(struct spi_controller *ctlr,
+ 	if (spi->mode & SPI_3WIRE && tfr->rx_buf &&
+ 	    tfr->rx_buf != ctlr->dummy_rx)
+ 		cs |= BCM2835_SPI_CS_REN;
+-	else
+-		cs &= ~BCM2835_SPI_CS_REN;
+-
+-	/*
+-	 * The driver always uses software-controlled GPIO Chip Select.
+-	 * Set the hardware-controlled native Chip Select to an invalid
+-	 * value to prevent it from interfering.
+-	 */
+-	cs |= BCM2835_SPI_CS_CS_10 | BCM2835_SPI_CS_CS_01;
+ 
+ 	/* set transmit buffers and length */
+ 	bs->tx_buf = tfr->tx_buf;
+@@ -886,7 +881,6 @@ static int bcm2835_spi_prepare_message(struct spi_controller *ctlr,
+ {
+ 	struct spi_device *spi = msg->spi;
+ 	struct bcm2835_spi *bs = spi_controller_get_devdata(ctlr);
+-	u32 cs = bcm2835_rd(bs, BCM2835_SPI_CS);
+ 	int ret;
+ 
+ 	if (ctlr->can_dma) {
+@@ -901,14 +895,11 @@ static int bcm2835_spi_prepare_message(struct spi_controller *ctlr,
+ 			return ret;
  	}
  
- 	if (likely(!bs->tx_spillover)) {
+-	cs &= ~(BCM2835_SPI_CS_CPOL | BCM2835_SPI_CS_CPHA);
+-
+-	if (spi->mode & SPI_CPOL)
+-		cs |= BCM2835_SPI_CS_CPOL;
+-	if (spi->mode & SPI_CPHA)
+-		cs |= BCM2835_SPI_CS_CPHA;
+-
+-	bcm2835_wr(bs, BCM2835_SPI_CS, cs);
++	/*
++	 * Set up clock polarity before spi_transfer_one_message() asserts
++	 * chip select to avoid a gratuitous clock signal edge.
++	 */
++	bcm2835_wr(bs, BCM2835_SPI_CS, bs->prepare_cs[spi->chip_select]);
+ 
+ 	return 0;
+ }
+@@ -934,8 +925,24 @@ static int chip_match_name(struct gpio_chip *chip, void *data)
+ 
+ static int bcm2835_spi_setup(struct spi_device *spi)
+ {
++	struct bcm2835_spi *bs = spi_controller_get_devdata(spi->controller);
+ 	int err;
+ 	struct gpio_chip *chip;
++	u32 cs;
++
++	/*
++	 * Precalculate SPI slave's CS register value for ->prepare_message():
++	 * The driver always uses software-controlled GPIO chip select, hence
++	 * set the hardware-controlled native chip select to an invalid value
++	 * to prevent it from interfering.
++	 */
++	cs = BCM2835_SPI_CS_CS_10 | BCM2835_SPI_CS_CS_01;
++	if (spi->mode & SPI_CPOL)
++		cs |= BCM2835_SPI_CS_CPOL;
++	if (spi->mode & SPI_CPHA)
++		cs |= BCM2835_SPI_CS_CPHA;
++	bs->prepare_cs[spi->chip_select] = cs;
++
+ 	/*
+ 	 * sanity checking the native-chipselects
+ 	 */
+@@ -994,7 +1001,7 @@ static int bcm2835_spi_probe(struct platform_device *pdev)
+ 
+ 	ctlr->mode_bits = BCM2835_SPI_MODE_BITS;
+ 	ctlr->bits_per_word_mask = SPI_BPW_MASK(8);
+-	ctlr->num_chipselect = 3;
++	ctlr->num_chipselect = BCM2835_SPI_NUM_CS;
+ 	ctlr->setup = bcm2835_spi_setup;
+ 	ctlr->transfer_one = bcm2835_spi_transfer_one;
+ 	ctlr->handle_err = bcm2835_spi_handle_err;
 -- 
 2.20.1
 
