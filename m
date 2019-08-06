@@ -2,102 +2,78 @@ Return-Path: <SRS0=hhcP=WC=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.2 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F3855C31E40
-	for <dmaengine@archiver.kernel.org>; Tue,  6 Aug 2019 09:45:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CB6C9C433FF
+	for <dmaengine@archiver.kernel.org>; Tue,  6 Aug 2019 13:08:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id C8DF820717
-	for <dmaengine@archiver.kernel.org>; Tue,  6 Aug 2019 09:45:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A910520C01
+	for <dmaengine@archiver.kernel.org>; Tue,  6 Aug 2019 13:08:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732254AbfHFJp2 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 6 Aug 2019 05:45:28 -0400
-Received: from mga18.intel.com ([134.134.136.126]:62195 "EHLO mga18.intel.com"
+        id S1726373AbfHFNIn (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 6 Aug 2019 09:08:43 -0400
+Received: from mga17.intel.com ([192.55.52.151]:25156 "EHLO mga17.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1732197AbfHFJp2 (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Tue, 6 Aug 2019 05:45:28 -0400
-X-Amp-Result: SKIPPED(no attachment in message)
+        id S1726036AbfHFNIm (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Tue, 6 Aug 2019 09:08:42 -0400
+X-Amp-Result: UNKNOWN
+X-Amp-Original-Verdict: FILE UNKNOWN
 X-Amp-File-Uploaded: False
-Received: from orsmga004.jf.intel.com ([10.7.209.38])
-  by orsmga106.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 06 Aug 2019 02:40:59 -0700
+Received: from fmsmga004.fm.intel.com ([10.253.24.48])
+  by fmsmga107.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 06 Aug 2019 06:08:42 -0700
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="5.64,353,1559545200"; 
-   d="scan'208";a="325589304"
-Received: from black.fi.intel.com ([10.237.72.28])
-  by orsmga004.jf.intel.com with ESMTP; 06 Aug 2019 02:40:58 -0700
-Received: by black.fi.intel.com (Postfix, from userid 1003)
-        id C775D40E; Tue,  6 Aug 2019 12:40:55 +0300 (EEST)
+   d="scan'208";a="198305977"
+Received: from smile.fi.intel.com (HELO smile) ([10.237.68.145])
+  by fmsmga004.fm.intel.com with ESMTP; 06 Aug 2019 06:08:41 -0700
+Received: from andy by smile with local (Exim 4.92)
+        (envelope-from <andriy.shevchenko@linux.intel.com>)
+        id 1huzCi-0008MC-52; Tue, 06 Aug 2019 16:08:40 +0300
+Date:   Tue, 6 Aug 2019 16:08:40 +0300
 From:   Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-To:     Vinod Koul <vkoul@kernel.org>, dmaengine@vger.kernel.org,
-        Viresh Kumar <vireshk@kernel.org>
-Cc:     Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Subject: [PATCH v1 07/12] dmaengine: dw: platform: Enable iDMA 32-bit on Intel Elkhart Lake
-Date:   Tue,  6 Aug 2019 12:40:49 +0300
-Message-Id: <20190806094054.64871-7-andriy.shevchenko@linux.intel.com>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20190806094054.64871-1-andriy.shevchenko@linux.intel.com>
-References: <20190806094054.64871-1-andriy.shevchenko@linux.intel.com>
+To:     Thomas Bohn <thbohn@gmail.com>
+Cc:     dmaengine <dmaengine@vger.kernel.org>,
+        Mika Westerberg <mika.westerberg@linux.intel.com>
+Subject: Re: idma64.0 is keeping my processor awake after boot
+Message-ID: <20190806130840.GD30120@smile.fi.intel.com>
+References: <CAJEfxfYRZs_XH9Kp7ocB-ZZjAKa8eNo3vgCq1qWtL1Ak+cWS9A@mail.gmail.com>
+ <1479226768.24056.23.camel@linux.intel.com>
+ <CAJEfxfZAXfOJ79CjbfZWXVK_Y3+1+EQAja2wu3LGUGFzes75kQ@mail.gmail.com>
+ <1479291233.24056.35.camel@linux.intel.com>
+ <CAJEfxfaz+K-Wpun4Crqu1i5ocXKm0+rJv9=PSP3rqmztdpdH5A@mail.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAJEfxfaz+K-Wpun4Crqu1i5ocXKm0+rJv9=PSP3rqmztdpdH5A@mail.gmail.com>
+Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Intel Elkhart Lake OSE (Offload Service Engine) provides few DMA controllers
-to the host. Enable them in the ACPI glue driver.
+On Wed, Nov 16, 2016 at 06:14:51PM +0100, Thomas Bohn wrote:
+> 2016-11-16 11:13 GMT+01:00 Andy Shevchenko <andriy.shevchenko@linux.intel.com>:
+> > On Tue, 2016-11-15 at 22:03 +0100, Thomas Bohn wrote:
+> >> 2016-11-15 17:19 GMT+01:00 Andy Shevchenko <andriy.shevchenko@linux.in
+> >> tel.com>:
 
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
----
- drivers/dma/dw/platform.c | 16 +++++++++++-----
- 1 file changed, 11 insertions(+), 5 deletions(-)
+> >> > idma64 itself can't be a culprit of such behaviour.
+> >> >
+> >> > The driver is loaded and bound whenever one of I2C, UART or SPI
+> >> > controllers is enumerated and have DMA capability enabled.
+> >> >
+> >> > So, if you check /proc/interrupt and see what is the counterpart for
+> >> > this DMA IP (some driver with .0 at the end) it would be helpful.
 
-diff --git a/drivers/dma/dw/platform.c b/drivers/dma/dw/platform.c
-index 234abbd6359a..7e0ec6ef3a1f 100644
---- a/drivers/dma/dw/platform.c
-+++ b/drivers/dma/dw/platform.c
-@@ -173,7 +173,6 @@ static int dw_probe(struct platform_device *pdev)
- 	struct dw_dma_chip *chip;
- 	struct device *dev = &pdev->dev;
- 	struct resource *mem;
--	const struct dw_dma_platform_data *pdata;
- 	int err;
- 
- 	match = device_get_match_data(dev);
-@@ -201,13 +200,14 @@ static int dw_probe(struct platform_device *pdev)
- 	if (err)
- 		return err;
- 
--	pdata = dev_get_platdata(dev);
--	if (!pdata)
--		pdata = dw_dma_parse_dt(pdev);
-+	if (!data->pdata)
-+		data->pdata = dev_get_platdata(dev);
-+	if (!data->pdata)
-+		data->pdata = dw_dma_parse_dt(pdev);
- 
- 	chip->dev = dev;
- 	chip->id = pdev->id;
--	chip->pdata = pdata;
-+	chip->pdata = data->pdata;
- 
- 	data->chip = chip;
- 
-@@ -298,6 +298,12 @@ static const struct acpi_device_id dw_dma_acpi_id_table[] = {
- 	{ "INTL9C60", (kernel_ulong_t)&dw_dma_chip_pdata },
- 	{ "80862286", (kernel_ulong_t)&dw_dma_chip_pdata },
- 	{ "808622C0", (kernel_ulong_t)&dw_dma_chip_pdata },
-+
-+	/* Elkhart Lake iDMA 32-bit (OSE DMA) */
-+	{ "80864BB4", (kernel_ulong_t)&idma32_chip_pdata },
-+	{ "80864BB5", (kernel_ulong_t)&idma32_chip_pdata },
-+	{ "80864BB6", (kernel_ulong_t)&idma32_chip_pdata },
-+
- 	{ }
- };
- MODULE_DEVICE_TABLE(acpi, dw_dma_acpi_id_table);
+Isn't it the same as described in
+
+https://bugzilla.kernel.org/show_bug.cgi?id=177311
+
 -- 
-2.20.1
+With Best Regards,
+Andy Shevchenko
+
 
