@@ -6,36 +6,36 @@ X-Spam-Status: No, score=-9.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
 	URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B9B77C31E40
-	for <dmaengine@archiver.kernel.org>; Tue,  6 Aug 2019 09:41:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F3855C31E40
+	for <dmaengine@archiver.kernel.org>; Tue,  6 Aug 2019 09:45:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 9109220717
-	for <dmaengine@archiver.kernel.org>; Tue,  6 Aug 2019 09:41:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C8DF820717
+	for <dmaengine@archiver.kernel.org>; Tue,  6 Aug 2019 09:45:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726713AbfHFJlB (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 6 Aug 2019 05:41:01 -0400
-Received: from mga09.intel.com ([134.134.136.24]:38375 "EHLO mga09.intel.com"
+        id S1732254AbfHFJp2 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 6 Aug 2019 05:45:28 -0400
+Received: from mga18.intel.com ([134.134.136.126]:62195 "EHLO mga18.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1732546AbfHFJlB (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Tue, 6 Aug 2019 05:41:01 -0400
+        id S1732197AbfHFJp2 (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Tue, 6 Aug 2019 05:45:28 -0400
 X-Amp-Result: SKIPPED(no attachment in message)
 X-Amp-File-Uploaded: False
-Received: from orsmga005.jf.intel.com ([10.7.209.41])
-  by orsmga102.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 06 Aug 2019 02:41:00 -0700
+Received: from orsmga004.jf.intel.com ([10.7.209.38])
+  by orsmga106.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 06 Aug 2019 02:40:59 -0700
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="5.64,353,1559545200"; 
-   d="scan'208";a="349375341"
+   d="scan'208";a="325589304"
 Received: from black.fi.intel.com ([10.237.72.28])
-  by orsmga005.jf.intel.com with ESMTP; 06 Aug 2019 02:40:58 -0700
+  by orsmga004.jf.intel.com with ESMTP; 06 Aug 2019 02:40:58 -0700
 Received: by black.fi.intel.com (Postfix, from userid 1003)
-        id 049B05A3; Tue,  6 Aug 2019 12:40:56 +0300 (EEST)
+        id C775D40E; Tue,  6 Aug 2019 12:40:55 +0300 (EEST)
 From:   Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 To:     Vinod Koul <vkoul@kernel.org>, dmaengine@vger.kernel.org,
         Viresh Kumar <vireshk@kernel.org>
 Cc:     Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Subject: [PATCH v1 12/12] dmaengine: dw: platform: Split OF helpers to separate module
-Date:   Tue,  6 Aug 2019 12:40:54 +0300
-Message-Id: <20190806094054.64871-12-andriy.shevchenko@linux.intel.com>
+Subject: [PATCH v1 07/12] dmaengine: dw: platform: Enable iDMA 32-bit on Intel Elkhart Lake
+Date:   Tue,  6 Aug 2019 12:40:49 +0300
+Message-Id: <20190806094054.64871-7-andriy.shevchenko@linux.intel.com>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20190806094054.64871-1-andriy.shevchenko@linux.intel.com>
 References: <20190806094054.64871-1-andriy.shevchenko@linux.intel.com>
@@ -46,338 +46,58 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-For better maintenance split OF helpers to the separate module.
+Intel Elkhart Lake OSE (Offload Service Engine) provides few DMA controllers
+to the host. Enable them in the ACPI glue driver.
 
 Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 ---
- drivers/dma/dw/Makefile   |   1 +
- drivers/dma/dw/internal.h |  15 +++++
- drivers/dma/dw/of.c       | 131 ++++++++++++++++++++++++++++++++++++++
- drivers/dma/dw/platform.c | 115 +--------------------------------
- 4 files changed, 149 insertions(+), 113 deletions(-)
- create mode 100644 drivers/dma/dw/of.c
+ drivers/dma/dw/platform.c | 16 +++++++++++-----
+ 1 file changed, 11 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/dma/dw/Makefile b/drivers/dma/dw/Makefile
-index 5e69815f3cf1..b6f06699e91a 100644
---- a/drivers/dma/dw/Makefile
-+++ b/drivers/dma/dw/Makefile
-@@ -5,6 +5,7 @@ dw_dmac_core-objs	:= core.o dw.o idma32.o
- obj-$(CONFIG_DW_DMAC)		+= dw_dmac.o
- dw_dmac-y			:= platform.o
- dw_dmac-$(CONFIG_ACPI)		+= acpi.o
-+dw_dmac-$(CONFIG_OF)		+= of.o
- 
- obj-$(CONFIG_DW_DMAC_PCI)	+= dw_dmac_pci.o
- dw_dmac_pci-objs	:= pci.o
-diff --git a/drivers/dma/dw/internal.h b/drivers/dma/dw/internal.h
-index acada530aa96..2e1c52eefdeb 100644
---- a/drivers/dma/dw/internal.h
-+++ b/drivers/dma/dw/internal.h
-@@ -31,6 +31,21 @@ static inline void dw_dma_acpi_controller_register(struct dw_dma *dw) {}
- static inline void dw_dma_acpi_controller_free(struct dw_dma *dw) {}
- #endif /* !CONFIG_ACPI */
- 
-+struct platform_device;
-+
-+#ifdef CONFIG_OF
-+struct dw_dma_platform_data *dw_dma_parse_dt(struct platform_device *pdev);
-+void dw_dma_of_controller_register(struct dw_dma *dw);
-+void dw_dma_of_controller_free(struct dw_dma *dw);
-+#else
-+static inline struct dw_dma_platform_data *dw_dma_parse_dt(struct platform_device *pdev)
-+{
-+	return NULL;
-+}
-+static inline void dw_dma_of_controller_register(struct dw_dma *dw) {}
-+static inline void dw_dma_of_controller_free(struct dw_dma *dw) {}
-+#endif
-+
- struct dw_dma_chip_pdata {
- 	const struct dw_dma_platform_data *pdata;
- 	int (*probe)(struct dw_dma_chip *chip);
-diff --git a/drivers/dma/dw/of.c b/drivers/dma/dw/of.c
-new file mode 100644
-index 000000000000..9e27831dee32
---- /dev/null
-+++ b/drivers/dma/dw/of.c
-@@ -0,0 +1,131 @@
-+// SPDX-License-Identifier: GPL-2.0
-+/*
-+ * Platform driver for the Synopsys DesignWare DMA Controller
-+ *
-+ * Copyright (C) 2007-2008 Atmel Corporation
-+ * Copyright (C) 2010-2011 ST Microelectronics
-+ * Copyright (C) 2013 Intel Corporation
-+ */
-+
-+#include <linux/of.h>
-+#include <linux/of_dma.h>
-+#include <linux/platform_device.h>
-+
-+#include "internal.h"
-+
-+static struct dma_chan *dw_dma_of_xlate(struct of_phandle_args *dma_spec,
-+					struct of_dma *ofdma)
-+{
-+	struct dw_dma *dw = ofdma->of_dma_data;
-+	struct dw_dma_slave slave = {
-+		.dma_dev = dw->dma.dev,
-+	};
-+	dma_cap_mask_t cap;
-+
-+	if (dma_spec->args_count != 3)
-+		return NULL;
-+
-+	slave.src_id = dma_spec->args[0];
-+	slave.dst_id = dma_spec->args[0];
-+	slave.m_master = dma_spec->args[1];
-+	slave.p_master = dma_spec->args[2];
-+
-+	if (WARN_ON(slave.src_id >= DW_DMA_MAX_NR_REQUESTS ||
-+		    slave.dst_id >= DW_DMA_MAX_NR_REQUESTS ||
-+		    slave.m_master >= dw->pdata->nr_masters ||
-+		    slave.p_master >= dw->pdata->nr_masters))
-+		return NULL;
-+
-+	dma_cap_zero(cap);
-+	dma_cap_set(DMA_SLAVE, cap);
-+
-+	/* TODO: there should be a simpler way to do this */
-+	return dma_request_channel(cap, dw_dma_filter, &slave);
-+}
-+
-+struct dw_dma_platform_data *dw_dma_parse_dt(struct platform_device *pdev)
-+{
-+	struct device_node *np = pdev->dev.of_node;
-+	struct dw_dma_platform_data *pdata;
-+	u32 tmp, arr[DW_DMA_MAX_NR_MASTERS], mb[DW_DMA_MAX_NR_CHANNELS];
-+	u32 nr_masters;
-+	u32 nr_channels;
-+
-+	if (!np) {
-+		dev_err(&pdev->dev, "Missing DT data\n");
-+		return NULL;
-+	}
-+
-+	if (of_property_read_u32(np, "dma-masters", &nr_masters))
-+		return NULL;
-+	if (nr_masters < 1 || nr_masters > DW_DMA_MAX_NR_MASTERS)
-+		return NULL;
-+
-+	if (of_property_read_u32(np, "dma-channels", &nr_channels))
-+		return NULL;
-+	if (nr_channels > DW_DMA_MAX_NR_CHANNELS)
-+		return NULL;
-+
-+	pdata = devm_kzalloc(&pdev->dev, sizeof(*pdata), GFP_KERNEL);
-+	if (!pdata)
-+		return NULL;
-+
-+	pdata->nr_masters = nr_masters;
-+	pdata->nr_channels = nr_channels;
-+
-+	if (!of_property_read_u32(np, "chan_allocation_order", &tmp))
-+		pdata->chan_allocation_order = (unsigned char)tmp;
-+
-+	if (!of_property_read_u32(np, "chan_priority", &tmp))
-+		pdata->chan_priority = tmp;
-+
-+	if (!of_property_read_u32(np, "block_size", &tmp))
-+		pdata->block_size = tmp;
-+
-+	if (!of_property_read_u32_array(np, "data-width", arr, nr_masters)) {
-+		for (tmp = 0; tmp < nr_masters; tmp++)
-+			pdata->data_width[tmp] = arr[tmp];
-+	} else if (!of_property_read_u32_array(np, "data_width", arr, nr_masters)) {
-+		for (tmp = 0; tmp < nr_masters; tmp++)
-+			pdata->data_width[tmp] = BIT(arr[tmp] & 0x07);
-+	}
-+
-+	if (!of_property_read_u32_array(np, "multi-block", mb, nr_channels)) {
-+		for (tmp = 0; tmp < nr_channels; tmp++)
-+			pdata->multi_block[tmp] = mb[tmp];
-+	} else {
-+		for (tmp = 0; tmp < nr_channels; tmp++)
-+			pdata->multi_block[tmp] = 1;
-+	}
-+
-+	if (!of_property_read_u32(np, "snps,dma-protection-control", &tmp)) {
-+		if (tmp > CHAN_PROTCTL_MASK)
-+			return NULL;
-+		pdata->protctl = tmp;
-+	}
-+
-+	return pdata;
-+}
-+
-+void dw_dma_of_controller_register(struct dw_dma *dw)
-+{
-+	struct device *dev = dw->dma.dev;
-+	int ret;
-+
-+	if (!dev->of_node)
-+		return;
-+
-+	ret = of_dma_controller_register(dev->of_node, dw_dma_of_xlate, dw);
-+	if (ret)
-+		dev_err(dev, "could not register of_dma_controller\n");
-+}
-+
-+void dw_dma_of_controller_free(struct dw_dma *dw)
-+{
-+	struct device *dev = dw->dma.dev;
-+
-+	if (!dev->of_node)
-+		return;
-+
-+	of_dma_controller_free(dev->of_node);
-+}
 diff --git a/drivers/dma/dw/platform.c b/drivers/dma/dw/platform.c
-index dcf9b6dc96a9..8e803cedef70 100644
+index 234abbd6359a..7e0ec6ef3a1f 100644
 --- a/drivers/dma/dw/platform.c
 +++ b/drivers/dma/dw/platform.c
-@@ -17,116 +17,12 @@
- #include <linux/dmaengine.h>
- #include <linux/dma-mapping.h>
- #include <linux/of.h>
--#include <linux/of_dma.h>
- #include <linux/acpi.h>
+@@ -173,7 +173,6 @@ static int dw_probe(struct platform_device *pdev)
+ 	struct dw_dma_chip *chip;
+ 	struct device *dev = &pdev->dev;
+ 	struct resource *mem;
+-	const struct dw_dma_platform_data *pdata;
+ 	int err;
  
- #include "internal.h"
+ 	match = device_get_match_data(dev);
+@@ -201,13 +200,14 @@ static int dw_probe(struct platform_device *pdev)
+ 	if (err)
+ 		return err;
  
- #define DRV_NAME	"dw_dmac"
- 
--static struct dma_chan *dw_dma_of_xlate(struct of_phandle_args *dma_spec,
--					struct of_dma *ofdma)
--{
--	struct dw_dma *dw = ofdma->of_dma_data;
--	struct dw_dma_slave slave = {
--		.dma_dev = dw->dma.dev,
--	};
--	dma_cap_mask_t cap;
--
--	if (dma_spec->args_count != 3)
--		return NULL;
--
--	slave.src_id = dma_spec->args[0];
--	slave.dst_id = dma_spec->args[0];
--	slave.m_master = dma_spec->args[1];
--	slave.p_master = dma_spec->args[2];
--
--	if (WARN_ON(slave.src_id >= DW_DMA_MAX_NR_REQUESTS ||
--		    slave.dst_id >= DW_DMA_MAX_NR_REQUESTS ||
--		    slave.m_master >= dw->pdata->nr_masters ||
--		    slave.p_master >= dw->pdata->nr_masters))
--		return NULL;
--
--	dma_cap_zero(cap);
--	dma_cap_set(DMA_SLAVE, cap);
--
--	/* TODO: there should be a simpler way to do this */
--	return dma_request_channel(cap, dw_dma_filter, &slave);
--}
--
--#ifdef CONFIG_OF
--static struct dw_dma_platform_data *
--dw_dma_parse_dt(struct platform_device *pdev)
--{
--	struct device_node *np = pdev->dev.of_node;
--	struct dw_dma_platform_data *pdata;
--	u32 tmp, arr[DW_DMA_MAX_NR_MASTERS], mb[DW_DMA_MAX_NR_CHANNELS];
--	u32 nr_masters;
--	u32 nr_channels;
--
--	if (!np) {
--		dev_err(&pdev->dev, "Missing DT data\n");
--		return NULL;
--	}
--
--	if (of_property_read_u32(np, "dma-masters", &nr_masters))
--		return NULL;
--	if (nr_masters < 1 || nr_masters > DW_DMA_MAX_NR_MASTERS)
--		return NULL;
--
--	if (of_property_read_u32(np, "dma-channels", &nr_channels))
--		return NULL;
--	if (nr_channels > DW_DMA_MAX_NR_CHANNELS)
--		return NULL;
--
--	pdata = devm_kzalloc(&pdev->dev, sizeof(*pdata), GFP_KERNEL);
+-	pdata = dev_get_platdata(dev);
 -	if (!pdata)
--		return NULL;
--
--	pdata->nr_masters = nr_masters;
--	pdata->nr_channels = nr_channels;
--
--	if (!of_property_read_u32(np, "chan_allocation_order", &tmp))
--		pdata->chan_allocation_order = (unsigned char)tmp;
--
--	if (!of_property_read_u32(np, "chan_priority", &tmp))
--		pdata->chan_priority = tmp;
--
--	if (!of_property_read_u32(np, "block_size", &tmp))
--		pdata->block_size = tmp;
--
--	if (!of_property_read_u32_array(np, "data-width", arr, nr_masters)) {
--		for (tmp = 0; tmp < nr_masters; tmp++)
--			pdata->data_width[tmp] = arr[tmp];
--	} else if (!of_property_read_u32_array(np, "data_width", arr, nr_masters)) {
--		for (tmp = 0; tmp < nr_masters; tmp++)
--			pdata->data_width[tmp] = BIT(arr[tmp] & 0x07);
--	}
--
--	if (!of_property_read_u32_array(np, "multi-block", mb, nr_channels)) {
--		for (tmp = 0; tmp < nr_channels; tmp++)
--			pdata->multi_block[tmp] = mb[tmp];
--	} else {
--		for (tmp = 0; tmp < nr_channels; tmp++)
--			pdata->multi_block[tmp] = 1;
--	}
--
--	if (!of_property_read_u32(np, "snps,dma-protection-control", &tmp)) {
--		if (tmp > CHAN_PROTCTL_MASK)
--			return NULL;
--		pdata->protctl = tmp;
--	}
--
--	return pdata;
--}
--#else
--static inline struct dw_dma_platform_data *
--dw_dma_parse_dt(struct platform_device *pdev)
--{
--	return NULL;
--}
--#endif
--
- static int dw_probe(struct platform_device *pdev)
- {
- 	const struct dw_dma_chip_pdata *match;
-@@ -185,13 +81,7 @@ static int dw_probe(struct platform_device *pdev)
+-		pdata = dw_dma_parse_dt(pdev);
++	if (!data->pdata)
++		data->pdata = dev_get_platdata(dev);
++	if (!data->pdata)
++		data->pdata = dw_dma_parse_dt(pdev);
  
- 	platform_set_drvdata(pdev, data);
+ 	chip->dev = dev;
+ 	chip->id = pdev->id;
+-	chip->pdata = pdata;
++	chip->pdata = data->pdata;
  
--	if (pdev->dev.of_node) {
--		err = of_dma_controller_register(pdev->dev.of_node,
--						 dw_dma_of_xlate, chip->dw);
--		if (err)
--			dev_err(&pdev->dev,
--				"could not register of_dma_controller\n");
--	}
-+	dw_dma_of_controller_register(chip->dw);
+ 	data->chip = chip;
  
- 	dw_dma_acpi_controller_register(chip->dw);
- 
-@@ -211,8 +101,7 @@ static int dw_remove(struct platform_device *pdev)
- 
- 	dw_dma_acpi_controller_free(chip->dw);
- 
--	if (pdev->dev.of_node)
--		of_dma_controller_free(pdev->dev.of_node);
-+	dw_dma_of_controller_free(chip->dw);
- 
- 	ret = data->remove(chip);
- 	if (ret)
+@@ -298,6 +298,12 @@ static const struct acpi_device_id dw_dma_acpi_id_table[] = {
+ 	{ "INTL9C60", (kernel_ulong_t)&dw_dma_chip_pdata },
+ 	{ "80862286", (kernel_ulong_t)&dw_dma_chip_pdata },
+ 	{ "808622C0", (kernel_ulong_t)&dw_dma_chip_pdata },
++
++	/* Elkhart Lake iDMA 32-bit (OSE DMA) */
++	{ "80864BB4", (kernel_ulong_t)&idma32_chip_pdata },
++	{ "80864BB5", (kernel_ulong_t)&idma32_chip_pdata },
++	{ "80864BB6", (kernel_ulong_t)&idma32_chip_pdata },
++
+ 	{ }
+ };
+ MODULE_DEVICE_TABLE(acpi, dw_dma_acpi_id_table);
 -- 
 2.20.1
 
