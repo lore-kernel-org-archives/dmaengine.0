@@ -2,83 +2,110 @@ Return-Path: <SRS0=XnJ3=WF=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.6 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_GIT autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 362FCC31E40
-	for <dmaengine@archiver.kernel.org>; Fri,  9 Aug 2019 11:05:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0E444C31E40
+	for <dmaengine@archiver.kernel.org>; Fri,  9 Aug 2019 16:34:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id F3A5A2171F
-	for <dmaengine@archiver.kernel.org>; Fri,  9 Aug 2019 11:05:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1565348739;
-	bh=eoCx8u5R444JhsbK9zwRJFeJZ8fwMoWRZ1HGZAidTJE=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:List-ID:From;
-	b=i3hy2X3o6wGXsyu7ytH/uukw7nx1pYjNEEM5P70e8L+9XYMHTERCC+5E+XL+Kq1fp
-	 DBYwinn8DtV9Vch7hvZTzmgiwfgBho3qSKOHLohvmWyj947gQ/w6YI2cNgCx5nOULi
-	 iz91rKwfXbBoP9L1xLHqVIFollPvRLu/2b6HZ29U=
+	by mail.kernel.org (Postfix) with ESMTP id 7B34A214C6
+	for <dmaengine@archiver.kernel.org>; Fri,  9 Aug 2019 16:34:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2406272AbfHILFi (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 9 Aug 2019 07:05:38 -0400
-Received: from mail.kernel.org ([198.145.29.99]:60580 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2405954AbfHILFi (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Fri, 9 Aug 2019 07:05:38 -0400
-Received: from localhost (unknown [122.167.65.92])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 05EE12084D;
-        Fri,  9 Aug 2019 11:05:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1565348737;
-        bh=eoCx8u5R444JhsbK9zwRJFeJZ8fwMoWRZ1HGZAidTJE=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=jaBldWwjh9AECKG9c2IH/EcQqi0c7G6bHg2+9ulqkq5Dl9ks6cYvrKgt+WqItS69B
-         8hqsGC+fdsXKUFVS7twWZ0QFohC+1BA46Txx5Wt/pPRRCgGfLVzuGqB0xgpUn0RL+Q
-         r2v0bEzo1jYP2HL9HYCqQznU1uHNkE6N99FBbZI4=
-Date:   Fri, 9 Aug 2019 16:34:21 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Hans Verkuil <hverkuil@xs4all.nl>
-Cc:     Linux Media Mailing List <linux-media@vger.kernel.org>,
-        dmaengine@vger.kernel.org, Peter Ujfalusi <peter.ujfalusi@ti.com>,
-        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>
-Subject: Re: [PATCHv2] omap-dma/omap_vout_vrfb: fix off-by-one fi value
-Message-ID: <20190809110421.GL12733@vkoul-mobl.Dlink>
-References: <952e7f51-f208-9333-6f58-b7ed20d2ea0b@xs4all.nl>
+        id S2437181AbfHIQeE (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 9 Aug 2019 12:34:04 -0400
+Received: from mout.kundenserver.de ([212.227.126.131]:45279 "EHLO
+        mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2437156AbfHIQeB (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Fri, 9 Aug 2019 12:34:01 -0400
+Received: from threadripper.lan ([149.172.19.189]) by mrelayeu.kundenserver.de
+ (mreue010 [212.227.15.129]) with ESMTPA (Nemesis) id
+ 1MiaLn-1iYmm935N9-00fn4k; Fri, 09 Aug 2019 18:33:50 +0200
+From:   Arnd Bergmann <arnd@arndb.de>
+To:     soc@kernel.org
+Cc:     Arnd Bergmann <arnd@arndb.de>,
+        Russell King <linux@armlinux.org.uk>,
+        Dan Williams <dan.j.williams@intel.com>,
+        Vinod Koul <vkoul@kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Bartosz Golaszewski <bgolaszewski@baylibre.com>,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        dmaengine@vger.kernel.org, linux-gpio@vger.kernel.org,
+        linux-i2c@vger.kernel.org
+Subject: [PATCH 5/7] ARM: xscale: fix multi-cpu compilation
+Date:   Fri,  9 Aug 2019 18:33:19 +0200
+Message-Id: <20190809163334.489360-5-arnd@arndb.de>
+X-Mailer: git-send-email 2.20.0
+In-Reply-To: <20190809163334.489360-1-arnd@arndb.de>
+References: <20190809162956.488941-1-arnd@arndb.de>
+ <20190809163334.489360-1-arnd@arndb.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <952e7f51-f208-9333-6f58-b7ed20d2ea0b@xs4all.nl>
-User-Agent: Mutt/1.11.3 (2019-02-01)
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K1:wZlcz48ar72OTI0b4lRDVG5g8z7FKcBbmmlRwz5OyJHN+RZnSIu
+ rPO+wv2A51N4cneEGdq5++c3p7S8W9hvSc0/+MJlbGu9ejYfTujT8svnratVAcjpJEGGv/T
+ NXHhTUGyJQX/PS6OeT3qB34XlnqG4OMumh+VLw3NibgQKnG6LEXRUilqHtuedJI6D+RIZly
+ Fm2LpeYj60KlsDF4evXVg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:p9OV/IkT9gI=:vQKEMVaVwwOvgHQ9k8wqNy
+ frRgQ5iPSYZBBsJ8Qrbd1D1A1CH34rn2cdmC6UGHpIGXrTyp8CD2Aa78I5ZU4E9jyTv9WvdIl
+ fbt/7UygAPSI8fo0/ttAzm1GSPsmpTVHt3DJLPiVMpWX4qAT63RJizHPB9OYD7IdxM5UQnwH9
+ LzDyHR8lG2qAV0gMRg6a8kksSkiEBhFFT1+JSKXdOVMSh/Wfm3ZYWTt1yUaYvD4fajrm1oM4X
+ oHx1+k/fMd6xnGJZC1jvy9yy5ntt/RVfiy74k9RPx8cZ4JFLKxxQDwwlKvCbYnU4qWm+kEyfI
+ Cnb6f+To5gLTzFOrAeaVq9rjR+CjsKD2hYMZ7n9pLVUWu1FsAPHu+eIbVkyTsPgzHivVNF3Fl
+ T9Xl35tHU6a+7gMm/0epFHhknfyINhgxBBCVl4Y7YnTQrZ97ZYpZwYMTqdn9ZzvaEgO0hzKRd
+ ofGcyc0AcO+aDSnWMN6PyWvOn2yuQWBxKjnmRNnx4uNKdkf2A5WKZaue0MYO59x7xX7PcCC3f
+ d4+w9fPOaCT+U6hD4KHvhRJhkQ1ibQjgCOLS5NQuEsRO4yJkVR1RIxLB9PepRwK4SO4idjf7D
+ HIM1rsTJ5V+xnSVw4JzkGeCHJC1dfPLXxhw4A9DvbGxKYVFF39vhTqy5t23p/4RsNyNZZJqp0
+ RHEMej39ZLyU/RccOCDWLGm4+2AWUCIv6b2hfUEJnCqEKAF1Aoz6hehAgXjaDaPThbJt/2iDa
+ I6d+QTwbVTuZmWqY4lyKpeiDTl0FNdnCXrKRBQ==
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On 09-08-19, 10:32, Hans Verkuil wrote:
-> The OMAP 4 TRM specifies that when using double-index addressing
-> the address increases by the ES plus the EI value minus 1 within
-> a frame. When a full frame is transferred, the address increases
-> by the ES plus the frame index (FI) value minus 1.
-> 
-> The omap-dma code didn't account for the 'minus 1' in the FI register.
-> To get correct addressing, add 1 to the src_icg value.
-> 
-> This was found when testing a hacked version of the media m2m-deinterlace.c
-> driver on a Pandaboard.
-> 
-> The only other source that uses this feature is omap_vout_vrfb.c,
-> and that adds a + 1 when setting the dst_icg. This is a workaround
-> for the broken omap-dma.c behavior. So remove the workaround at the
-> same time that we fix omap-dma.c.
-> 
-> I tested the omap_vout driver with a Beagle XM board to check that
-> the '+ 1' in omap_vout_vrfb.c was indeed a workaround for the omap-dma
-> bug.
+Building a combined ARMv4+XScale kernel produces these
+and other build failures:
 
-Applied, thanks
+/tmp/copypage-xscale-3aa821.s: Assembler messages:
+/tmp/copypage-xscale-3aa821.s:167: Error: selected processor does not support `pld [r7,#0]' in ARM mode
+/tmp/copypage-xscale-3aa821.s:168: Error: selected processor does not support `pld [r7,#32]' in ARM mode
+/tmp/copypage-xscale-3aa821.s:169: Error: selected processor does not support `pld [r1,#0]' in ARM mode
+/tmp/copypage-xscale-3aa821.s:170: Error: selected processor does not support `pld [r1,#32]' in ARM mode
+/tmp/copypage-xscale-3aa821.s:171: Error: selected processor does not support `pld [r7,#64]' in ARM mode
+/tmp/copypage-xscale-3aa821.s:176: Error: selected processor does not support `ldrd r4,r5,[r7],#8' in ARM mode
+/tmp/copypage-xscale-3aa821.s:180: Error: selected processor does not support `strd r4,r5,[r1],#8' in ARM mode
 
+Add an explict .arch armv5 in the inline assembly to allow the ARMv5
+specific instructions regardless of the compiler -march= target.
+
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+---
+ arch/arm/mm/copypage-xscale.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/arch/arm/mm/copypage-xscale.c b/arch/arm/mm/copypage-xscale.c
+index 61d834157bc0..382e1c2855e8 100644
+--- a/arch/arm/mm/copypage-xscale.c
++++ b/arch/arm/mm/copypage-xscale.c
+@@ -42,6 +42,7 @@ static void mc_copy_user_page(void *from, void *to)
+ 	 * when prefetching destination as well.  (NP)
+ 	 */
+ 	asm volatile ("\
++.arch xscale					\n\
+ 	pld	[%0, #0]			\n\
+ 	pld	[%0, #32]			\n\
+ 	pld	[%1, #0]			\n\
+@@ -106,8 +107,9 @@ void
+ xscale_mc_clear_user_highpage(struct page *page, unsigned long vaddr)
+ {
+ 	void *ptr, *kaddr = kmap_atomic(page);
+-	asm volatile(
+-	"mov	r1, %2				\n\
++	asm volatile("\
++.arch xscale					\n\
++	mov	r1, %2				\n\
+ 	mov	r2, #0				\n\
+ 	mov	r3, #0				\n\
+ 1:	mov	ip, %0				\n\
 -- 
-~Vinod
+2.20.0
+
