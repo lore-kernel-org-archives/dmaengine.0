@@ -6,27 +6,27 @@ X-Spam-Status: No, score=2.1 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,UNWANTED_LANGUAGE_BODY,
 	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A6FB1C3A59D
-	for <dmaengine@archiver.kernel.org>; Fri, 16 Aug 2019 20:41:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BA2F7C3A59D
+	for <dmaengine@archiver.kernel.org>; Fri, 16 Aug 2019 20:41:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 7D58C2077C
-	for <dmaengine@archiver.kernel.org>; Fri, 16 Aug 2019 20:41:31 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 956CD2077C
+	for <dmaengine@archiver.kernel.org>; Fri, 16 Aug 2019 20:41:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727589AbfHPUlb convert rfc822-to-8bit (ORCPT
+        id S1727585AbfHPUlo convert rfc822-to-8bit (ORCPT
         <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 16 Aug 2019 16:41:31 -0400
-Received: from emita3.mittwald.de ([37.202.1.53]:48200 "EHLO
+        Fri, 16 Aug 2019 16:41:44 -0400
+Received: from emita3.mittwald.de ([37.202.1.53]:41801 "EHLO
         emita3.mittwald.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727585AbfHPUlb (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Fri, 16 Aug 2019 16:41:31 -0400
+        with ESMTP id S1727545AbfHPUlo (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Fri, 16 Aug 2019 16:41:44 -0400
 Received: from s4953 (s4953.internal21 [172.21.149.53])
-        by emita3.mittwald.de (Postfix) with ESMTP id E862CA407B
-        for <dmaengine@vger.kernel.org>; Fri, 16 Aug 2019 22:41:28 +0200 (CEST)
+        by emita3.mittwald.de (Postfix) with ESMTP id 24915A407C
+        for <dmaengine@vger.kernel.org>; Fri, 16 Aug 2019 22:41:42 +0200 (CEST)
 To:     dmaengine@vger.kernel.org
 Subject: Newsletter Stiftung Marktwirtschaft
 X-PHP-Originating-Script: 433988:SimpleMailInvoker.php
-Message-ID: <d69a195480116567ada941ce13aec0aa@www.stiftung-marktwirtschaft.de>
-Date:   Fri, 16 Aug 2019 22:41:28 +0200
+Message-ID: <356ea7b5b956e3f66ec720d5d5c9d49e@www.stiftung-marktwirtschaft.de>
+Date:   Fri, 16 Aug 2019 22:41:42 +0200
 From:   Stiftung Marktwirtschaft <newsletter@stiftung-marktwirtschaft.de>
 Reply-To: Stiftung Marktwirtschaft 
           <newsletter@stiftung-marktwirtschaft.de>
