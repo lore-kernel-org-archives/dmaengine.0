@@ -7,37 +7,37 @@ X-Spam-Status: No, score=-10.1 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=unavailable
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 68E8AC3A589
-	for <dmaengine@archiver.kernel.org>; Tue, 20 Aug 2019 13:43:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 94609C3A59D
+	for <dmaengine@archiver.kernel.org>; Tue, 20 Aug 2019 13:44:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 3486622DD6
-	for <dmaengine@archiver.kernel.org>; Tue, 20 Aug 2019 13:43:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 58B7A22DBF
+	for <dmaengine@archiver.kernel.org>; Tue, 20 Aug 2019 13:44:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1566308634;
-	bh=wiCsbZWwRHIuHm00HMq4RBi1zW5xCUqrHbzHKVOQFZY=;
+	s=default; t=1566308659;
+	bh=0Am0qtdNwSQg3Bskun8I7pWCiq0uX0Ute1NE12kHESs=;
 	h=From:To:Cc:Subject:Date:List-ID:From;
-	b=FjOXbwJqtF5My9Yx5o6wfnIucQ/GyzudxwNccFwbN0ZU0RRaCKNKBGJvpoYb7mMlS
-	 a0CbILd2vYn3kRVrjicDc1LCY33wxrw9a2dDlI8cI+5I/ggwb7SB2VHivI4CwgKV44
-	 XyC04ULm6g6wYGNAtwXkGcx+5UP3MvqUp4NMGnjQ=
+	b=YiOEa9Fjog4RYl1En1Be+LgPvo/7Y6HORkioadem85S0dBPVqu1VZvQ4sIFNsd25C
+	 yeC4bJC+B+NYsQ6J8roiwag5nWUCyeFwYq2crmO/eAz1fZif4v7BSGr358p6ssxhP4
+	 eGUvUIpgTxoMd4QxmeIQ6VxhxzBMLrTe/RwYDcnI=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730003AbfHTNnt (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 20 Aug 2019 09:43:49 -0400
-Received: from mail.kernel.org ([198.145.29.99]:39236 "EHLO mail.kernel.org"
+        id S1730327AbfHTNoJ (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 20 Aug 2019 09:44:09 -0400
+Received: from mail.kernel.org ([198.145.29.99]:39026 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1730404AbfHTNn2 (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Tue, 20 Aug 2019 09:43:28 -0400
+        id S1730826AbfHTNnS (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Tue, 20 Aug 2019 09:43:18 -0400
 Received: from sasha-vm.mshome.net (unknown [12.236.144.82])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id B10042087E;
-        Tue, 20 Aug 2019 13:43:26 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 7DBCE22DA7;
+        Tue, 20 Aug 2019 13:43:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1566308607;
-        bh=wiCsbZWwRHIuHm00HMq4RBi1zW5xCUqrHbzHKVOQFZY=;
+        s=default; t=1566308597;
+        bh=0Am0qtdNwSQg3Bskun8I7pWCiq0uX0Ute1NE12kHESs=;
         h=From:To:Cc:Subject:Date:From;
-        b=ow1vNCSSU2BIAQrVOQ2XzdJvEo1F6o2i82hAPP5Pdt2crgcDztyaQpg4j6hQz4hUc
-         QQECGx1ZObubiBJYokDQSdyGxppnPL0gMbqZdxer0U7+pfCLlUAIClWgCMKx8PTgxD
-         O5KpudLsIdm1XUTK3wCw57fPzTJql0//nyrNMVfk=
+        b=raDt/mLxCZACRJPbLPpOkg8bg71QTxKg2hK3N98UPJhwB56ls4f2LxZ0fW02cHJwo
+         gI8xSKR724JR0rP8VzMwN/62fGXwg8cRZQGfxbGzDt6p13lj3kYhupJsaKiTa48aUV
+         WK+R2XeV5EiU4RXpQHxUt13D3PuX8sLqpxwkaieQ=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Cc:     Arnd Bergmann <arnd@arndb.de>,
@@ -45,9 +45,9 @@ Cc:     Arnd Bergmann <arnd@arndb.de>,
         Linus Walleij <linus.walleij@linaro.org>,
         Vinod Koul <vkoul@kernel.org>, Sasha Levin <sashal@kernel.org>,
         dmaengine@vger.kernel.org, clang-built-linux@googlegroups.com
-Subject: [PATCH AUTOSEL 4.4 1/4] dmaengine: ste_dma40: fix unneeded variable warning
-Date:   Tue, 20 Aug 2019 09:43:22 -0400
-Message-Id: <20190820134325.11825-1-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 4.9 1/7] dmaengine: ste_dma40: fix unneeded variable warning
+Date:   Tue, 20 Aug 2019 09:43:09 -0400
+Message-Id: <20190820134315.11720-1-sashal@kernel.org>
 X-Mailer: git-send-email 2.20.1
 MIME-Version: 1.0
 X-stable: review
@@ -85,7 +85,7 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/dma/ste_dma40.c b/drivers/dma/ste_dma40.c
-index dd3e7ba273ad0..0fede051f4e1c 100644
+index 8684d11b29bba..68b41daab3a8f 100644
 --- a/drivers/dma/ste_dma40.c
 +++ b/drivers/dma/ste_dma40.c
 @@ -142,7 +142,7 @@ enum d40_events {
