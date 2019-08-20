@@ -6,37 +6,37 @@ X-Spam-Status: No, score=-9.7 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
 	URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3C00FC3A5A2
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1B3FCC3A59D
 	for <dmaengine@archiver.kernel.org>; Tue, 20 Aug 2019 13:15:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 1B18722DD6
-	for <dmaengine@archiver.kernel.org>; Tue, 20 Aug 2019 13:15:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EDFC122DBF
+	for <dmaengine@archiver.kernel.org>; Tue, 20 Aug 2019 13:15:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729024AbfHTNPu (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        id S1728595AbfHTNPu (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
         Tue, 20 Aug 2019 09:15:50 -0400
 Received: from mga09.intel.com ([134.134.136.24]:13976 "EHLO mga09.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728771AbfHTNPu (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        id S1729024AbfHTNPu (ORCPT <rfc822;dmaengine@vger.kernel.org>);
         Tue, 20 Aug 2019 09:15:50 -0400
 X-Amp-Result: SKIPPED(no attachment in message)
 X-Amp-File-Uploaded: False
-Received: from fmsmga004.fm.intel.com ([10.253.24.48])
+Received: from orsmga008.jf.intel.com ([10.7.209.65])
   by orsmga102.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 20 Aug 2019 06:15:49 -0700
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="5.64,408,1559545200"; 
-   d="scan'208";a="202674802"
+   d="scan'208";a="172446732"
 Received: from black.fi.intel.com ([10.237.72.28])
-  by fmsmga004.fm.intel.com with ESMTP; 20 Aug 2019 06:15:48 -0700
+  by orsmga008.jf.intel.com with ESMTP; 20 Aug 2019 06:15:48 -0700
 Received: by black.fi.intel.com (Postfix, from userid 1003)
-        id 357DD2A3; Tue, 20 Aug 2019 16:15:47 +0300 (EEST)
+        id 1F02C1A1; Tue, 20 Aug 2019 16:15:47 +0300 (EEST)
 From:   Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 To:     Vinod Koul <vkoul@kernel.org>, dmaengine@vger.kernel.org,
         Viresh Kumar <vireshk@kernel.org>,
         Jarkko Nikula <jarkko.nikula@linux.intel.com>
 Cc:     Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Subject: [PATCH v2 04/10] dmaengine: dw: platform: Use struct dw_dma_chip_pdata
-Date:   Tue, 20 Aug 2019 16:15:40 +0300
-Message-Id: <20190820131546.75744-5-andriy.shevchenko@linux.intel.com>
+Subject: [PATCH v2 02/10] dmaengine: acpi: Add kernel doc parameter descriptions
+Date:   Tue, 20 Aug 2019 16:15:38 +0300
+Message-Id: <20190820131546.75744-3-andriy.shevchenko@linux.intel.com>
 X-Mailer: git-send-email 2.23.0.rc1
 In-Reply-To: <20190820131546.75744-1-andriy.shevchenko@linux.intel.com>
 References: <20190820131546.75744-1-andriy.shevchenko@linux.intel.com>
@@ -47,136 +47,50 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Now, when we have a generic structure for the chip and platform data,
-use it in the platform glue driver.
+Kernel documentation script is not happy about absence of function parameter
+descriptions:
+
+drivers/dma/acpi-dma.c:163: warning: Function parameter or member 'data' not described in 'acpi_dma_controller_register'
+drivers/dma/acpi-dma.c:247: warning: Function parameter or member 'data' not described in 'devm_acpi_dma_controller_register'
+drivers/dma/acpi-dma.c:274: warning: Function parameter or member 'dev' not described in 'devm_acpi_dma_controller_free'
+
+Append the descriptions of above mentioned function parameters.
 
 Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 ---
- drivers/dma/dw/platform.c | 42 +++++++++++++++++++++++++++++----------
- 1 file changed, 31 insertions(+), 11 deletions(-)
+ drivers/dma/acpi-dma.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/dma/dw/platform.c b/drivers/dma/dw/platform.c
-index 382dfd9e9600..234abbd6359a 100644
---- a/drivers/dma/dw/platform.c
-+++ b/drivers/dma/dw/platform.c
-@@ -168,12 +168,22 @@ dw_dma_parse_dt(struct platform_device *pdev)
+diff --git a/drivers/dma/acpi-dma.c b/drivers/dma/acpi-dma.c
+index 4d66ee059808..8a05db3343d3 100644
+--- a/drivers/dma/acpi-dma.c
++++ b/drivers/dma/acpi-dma.c
+@@ -147,7 +147,7 @@ static void acpi_dma_parse_csrt(struct acpi_device *adev, struct acpi_dma *adma)
+  * @dev:		struct device of DMA controller
+  * @acpi_dma_xlate:	translation function which converts a dma specifier
+  *			into a dma_chan structure
+- * @data		pointer to controller specific data to be used by
++ * @data:		pointer to controller specific data to be used by
+  *			translation function
+  *
+  * Allocated memory should be freed with appropriate acpi_dma_controller_free()
+@@ -231,7 +231,7 @@ static void devm_acpi_dma_release(struct device *dev, void *res)
+  * devm_acpi_dma_controller_register - resource managed acpi_dma_controller_register()
+  * @dev:		device that is registering this DMA controller
+  * @acpi_dma_xlate:	translation function
+- * @data		pointer to controller specific data
++ * @data:		pointer to controller specific data
+  *
+  * Managed acpi_dma_controller_register(). DMA controller registered by this
+  * function are automatically freed on driver detach. See
+@@ -264,6 +264,7 @@ EXPORT_SYMBOL_GPL(devm_acpi_dma_controller_register);
  
- static int dw_probe(struct platform_device *pdev)
- {
-+	const struct dw_dma_chip_pdata *match;
-+	struct dw_dma_chip_pdata *data;
- 	struct dw_dma_chip *chip;
- 	struct device *dev = &pdev->dev;
- 	struct resource *mem;
- 	const struct dw_dma_platform_data *pdata;
- 	int err;
- 
-+	match = device_get_match_data(dev);
-+	if (!match)
-+		return -ENODEV;
-+
-+	data = devm_kmemdup(&pdev->dev, match, sizeof(*match), GFP_KERNEL);
-+	if (!data)
-+		return -ENOMEM;
-+
- 	chip = devm_kzalloc(dev, sizeof(*chip), GFP_KERNEL);
- 	if (!chip)
- 		return -ENOMEM;
-@@ -199,6 +209,8 @@ static int dw_probe(struct platform_device *pdev)
- 	chip->id = pdev->id;
- 	chip->pdata = pdata;
- 
-+	data->chip = chip;
-+
- 	chip->clk = devm_clk_get(chip->dev, "hclk");
- 	if (IS_ERR(chip->clk))
- 		return PTR_ERR(chip->clk);
-@@ -208,11 +220,11 @@ static int dw_probe(struct platform_device *pdev)
- 
- 	pm_runtime_enable(&pdev->dev);
- 
--	err = dw_dma_probe(chip);
-+	err = data->probe(chip);
- 	if (err)
- 		goto err_dw_dma_probe;
- 
--	platform_set_drvdata(pdev, chip);
-+	platform_set_drvdata(pdev, data);
- 
- 	if (pdev->dev.of_node) {
- 		err = of_dma_controller_register(pdev->dev.of_node,
-@@ -235,12 +247,17 @@ static int dw_probe(struct platform_device *pdev)
- 
- static int dw_remove(struct platform_device *pdev)
- {
--	struct dw_dma_chip *chip = platform_get_drvdata(pdev);
-+	struct dw_dma_chip_pdata *data = platform_get_drvdata(pdev);
-+	struct dw_dma_chip *chip = data->chip;
-+	int ret;
- 
- 	if (pdev->dev.of_node)
- 		of_dma_controller_free(pdev->dev.of_node);
- 
--	dw_dma_remove(chip);
-+	ret = data->remove(chip);
-+	if (ret)
-+		dev_warn(chip->dev, "can't remove device properly: %d\n", ret);
-+
- 	pm_runtime_disable(&pdev->dev);
- 	clk_disable_unprepare(chip->clk);
- 
-@@ -249,7 +266,8 @@ static int dw_remove(struct platform_device *pdev)
- 
- static void dw_shutdown(struct platform_device *pdev)
- {
--	struct dw_dma_chip *chip = platform_get_drvdata(pdev);
-+	struct dw_dma_chip_pdata *data = platform_get_drvdata(pdev);
-+	struct dw_dma_chip *chip = data->chip;
- 
- 	/*
- 	 * We have to call do_dw_dma_disable() to stop any ongoing transfer. On
-@@ -269,7 +287,7 @@ static void dw_shutdown(struct platform_device *pdev)
- 
- #ifdef CONFIG_OF
- static const struct of_device_id dw_dma_of_id_table[] = {
--	{ .compatible = "snps,dma-spear1340" },
-+	{ .compatible = "snps,dma-spear1340", .data = &dw_dma_chip_pdata },
- 	{}
- };
- MODULE_DEVICE_TABLE(of, dw_dma_of_id_table);
-@@ -277,9 +295,9 @@ MODULE_DEVICE_TABLE(of, dw_dma_of_id_table);
- 
- #ifdef CONFIG_ACPI
- static const struct acpi_device_id dw_dma_acpi_id_table[] = {
--	{ "INTL9C60", 0 },
--	{ "80862286", 0 },
--	{ "808622C0", 0 },
-+	{ "INTL9C60", (kernel_ulong_t)&dw_dma_chip_pdata },
-+	{ "80862286", (kernel_ulong_t)&dw_dma_chip_pdata },
-+	{ "808622C0", (kernel_ulong_t)&dw_dma_chip_pdata },
- 	{ }
- };
- MODULE_DEVICE_TABLE(acpi, dw_dma_acpi_id_table);
-@@ -289,7 +307,8 @@ MODULE_DEVICE_TABLE(acpi, dw_dma_acpi_id_table);
- 
- static int dw_suspend_late(struct device *dev)
- {
--	struct dw_dma_chip *chip = dev_get_drvdata(dev);
-+	struct dw_dma_chip_pdata *data = dev_get_drvdata(dev);
-+	struct dw_dma_chip *chip = data->chip;
- 
- 	do_dw_dma_disable(chip);
- 	clk_disable_unprepare(chip->clk);
-@@ -299,7 +318,8 @@ static int dw_suspend_late(struct device *dev)
- 
- static int dw_resume_early(struct device *dev)
- {
--	struct dw_dma_chip *chip = dev_get_drvdata(dev);
-+	struct dw_dma_chip_pdata *data = dev_get_drvdata(dev);
-+	struct dw_dma_chip *chip = data->chip;
- 	int ret;
- 
- 	ret = clk_prepare_enable(chip->clk);
+ /**
+  * devm_acpi_dma_controller_free - resource managed acpi_dma_controller_free()
++ * @dev:	device that is unregistering as DMA controller
+  *
+  * Unregister a DMA controller registered with
+  * devm_acpi_dma_controller_register(). Normally this function will not need to
 -- 
 2.23.0.rc1
 
