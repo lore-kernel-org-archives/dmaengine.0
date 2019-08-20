@@ -4,51 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-10.1 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=unavailable
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=unavailable
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1F0FEC3A589
-	for <dmaengine@archiver.kernel.org>; Tue, 20 Aug 2019 13:46:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 73AA7C3A589
+	for <dmaengine@archiver.kernel.org>; Tue, 20 Aug 2019 13:47:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id DC11222DD6
-	for <dmaengine@archiver.kernel.org>; Tue, 20 Aug 2019 13:46:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3EFF322DCC
+	for <dmaengine@archiver.kernel.org>; Tue, 20 Aug 2019 13:47:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1566308790;
-	bh=1fivXv3Xy+71BjwYr1CKkSmG40mAsuBQnNFjG4WErMs=;
-	h=From:To:Cc:Subject:Date:List-ID:From;
-	b=aF68MvMyTB4C3/wVl1mG+qX4Azx0FqlP8zyWwkfQExqPAKTF6gNSIBZ387fYPyEC2
-	 //DvO3wkeKVMYnY4LoypLO667V4NtHw7XEUNrrPYBt7LH0YvNqdg4nJBsBJIHleyP2
-	 slYzRFOHAXEhS0HaaNwf+rLpyFfhsNHi6zuH0Yao=
+	s=default; t=1566308832;
+	bh=70PthrKPcAjH6fz4sj3+ihFqgk5baALMdE+eUNFhEGI=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:List-ID:From;
+	b=D+5iKbnYb9lR/k59UixIgttbwNjvxOItbz1EMRSVscA8keXqsd3DjFIlBElJ9hZlZ
+	 ROvkqf8x24cfcfiYRX2q9oDsKlbIiZd2/Ln5yTKqYt1nV3K5NIvj26Qc6Q/wyVZHUB
+	 tXRDCuAUJQ/RIKGFqgY7Olel/Qp3EUe1zi8+DoJU=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730185AbfHTNmQ (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 20 Aug 2019 09:42:16 -0400
-Received: from mail.kernel.org ([198.145.29.99]:37474 "EHLO mail.kernel.org"
+        id S1730263AbfHTNk6 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 20 Aug 2019 09:40:58 -0400
+Received: from mail.kernel.org ([198.145.29.99]:35892 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1730557AbfHTNmP (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Tue, 20 Aug 2019 09:42:15 -0400
+        id S1729879AbfHTNk5 (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Tue, 20 Aug 2019 09:40:57 -0400
 Received: from sasha-vm.mshome.net (unknown [12.236.144.82])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 3F43822DD6;
-        Tue, 20 Aug 2019 13:42:14 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 8019522DA9;
+        Tue, 20 Aug 2019 13:40:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1566308535;
-        bh=1fivXv3Xy+71BjwYr1CKkSmG40mAsuBQnNFjG4WErMs=;
-        h=From:To:Cc:Subject:Date:From;
-        b=D88kYfj7ve81YUFW6rq42wsZa7RujQ1kXkQTM96D+hq9O9fv/5TWoHLH3+Pr+rBkJ
-         zvudiUfdMXWFhCCNm/QbFvrRRLDrLOTbyxkjQUx0JEh7CXZWXXpekxd6TNjNG44FmP
-         sgw4yvcp6A/KqzlPGSy15FGde7HGDt7kzCLgERlg=
+        s=default; t=1566308456;
+        bh=70PthrKPcAjH6fz4sj3+ihFqgk5baALMdE+eUNFhEGI=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=ejggrZ6AGRN4CDZ/KSgKXORvVCMParKoUkE/qi8Vbb80dqSc/GPgUg0QzljCn7xeO
+         pmoEhfrle5V4Tbh/00q6sB+FuyOLWlGHm/TfH5L79XObPnpRPjRSN3Mz74dy0wSstT
+         /jbi51zzPxJpJ7+6RLmMHPDj3XChFQeBmMQ+1Od4=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Arnd Bergmann <arnd@arndb.de>,
-        Nathan Chancellor <natechancellor@gmail.com>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>, Sasha Levin <sashal@kernel.org>,
-        dmaengine@vger.kernel.org, clang-built-linux@googlegroups.com
-Subject: [PATCH AUTOSEL 4.19 01/27] dmaengine: ste_dma40: fix unneeded variable warning
-Date:   Tue, 20 Aug 2019 09:41:47 -0400
-Message-Id: <20190820134213.11279-1-sashal@kernel.org>
+Cc:     Jia-Ju Bai <baijiaju1990@gmail.com>, Vinod Koul <vkoul@kernel.org>,
+        Sasha Levin <sashal@kernel.org>, dmaengine@vger.kernel.org
+Subject: [PATCH AUTOSEL 5.2 24/44] dmaengine: stm32-mdma: Fix a possible null-pointer dereference in stm32_mdma_irq_handler()
+Date:   Tue, 20 Aug 2019 09:40:08 -0400
+Message-Id: <20190820134028.10829-24-sashal@kernel.org>
 X-Mailer: git-send-email 2.20.1
+In-Reply-To: <20190820134028.10829-1-sashal@kernel.org>
+References: <20190820134028.10829-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
@@ -58,54 +57,40 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Jia-Ju Bai <baijiaju1990@gmail.com>
 
-[ Upstream commit 5d6fb560729a5d5554e23db8d00eb57cd0021083 ]
+[ Upstream commit 39c71a5b8212f4b502d9a630c6706ac723abd422 ]
 
-clang-9 points out that there are two variables that depending on the
-configuration may only be used in an ARRAY_SIZE() expression but not
-referenced:
+In stm32_mdma_irq_handler(), chan is checked on line 1368.
+When chan is NULL, it is still used on line 1369:
+    dev_err(chan2dev(chan), "MDMA channel not initialized\n");
 
-drivers/dma/ste_dma40.c:145:12: error: variable 'd40_backup_regs' is not needed and will not be emitted [-Werror,-Wunneeded-internal-declaration]
-static u32 d40_backup_regs[] = {
-           ^
-drivers/dma/ste_dma40.c:214:12: error: variable 'd40_backup_regs_chan' is not needed and will not be emitted [-Werror,-Wunneeded-internal-declaration]
-static u32 d40_backup_regs_chan[] = {
+Thus, a possible null-pointer dereference may occur.
 
-Mark these __maybe_unused to shut up the warning.
+To fix this bug, "dev_dbg(mdma2dev(dmadev), ...)" is used instead.
 
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Reviewed-by: Nathan Chancellor <natechancellor@gmail.com>
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-Link: https://lore.kernel.org/r/20190712091357.744515-1-arnd@arndb.de
+Signed-off-by: Jia-Ju Bai <baijiaju1990@gmail.com>
+Fixes: a4ffb13c8946 ("dmaengine: Add STM32 MDMA driver")
+Link: https://lore.kernel.org/r/20190729020849.17971-1-baijiaju1990@gmail.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/ste_dma40.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/dma/stm32-mdma.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/dma/ste_dma40.c b/drivers/dma/ste_dma40.c
-index f4edfc56f34ef..3d55405c49cac 100644
---- a/drivers/dma/ste_dma40.c
-+++ b/drivers/dma/ste_dma40.c
-@@ -142,7 +142,7 @@ enum d40_events {
-  * when the DMA hw is powered off.
-  * TODO: Add save/restore of D40_DREG_GCC on dma40 v3 or later, if that works.
-  */
--static u32 d40_backup_regs[] = {
-+static __maybe_unused u32 d40_backup_regs[] = {
- 	D40_DREG_LCPA,
- 	D40_DREG_LCLA,
- 	D40_DREG_PRMSE,
-@@ -211,7 +211,7 @@ static u32 d40_backup_regs_v4b[] = {
+diff --git a/drivers/dma/stm32-mdma.c b/drivers/dma/stm32-mdma.c
+index d6e919d3936a2..1311de74bfdde 100644
+--- a/drivers/dma/stm32-mdma.c
++++ b/drivers/dma/stm32-mdma.c
+@@ -1366,7 +1366,7 @@ static irqreturn_t stm32_mdma_irq_handler(int irq, void *devid)
  
- #define BACKUP_REGS_SZ_V4B ARRAY_SIZE(d40_backup_regs_v4b)
+ 	chan = &dmadev->chan[id];
+ 	if (!chan) {
+-		dev_err(chan2dev(chan), "MDMA channel not initialized\n");
++		dev_dbg(mdma2dev(dmadev), "MDMA channel not initialized\n");
+ 		goto exit;
+ 	}
  
--static u32 d40_backup_regs_chan[] = {
-+static __maybe_unused u32 d40_backup_regs_chan[] = {
- 	D40_CHAN_REG_SSCFG,
- 	D40_CHAN_REG_SSELT,
- 	D40_CHAN_REG_SSPTR,
 -- 
 2.20.1
 
