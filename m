@@ -1,96 +1,73 @@
-Return-Path: <SRS0=Ed1A=WQ=vger.kernel.org=dmaengine-owner@kernel.org>
+Return-Path: <SRS0=zFvX=WR=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.1 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=unavailable
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 73AA7C3A589
-	for <dmaengine@archiver.kernel.org>; Tue, 20 Aug 2019 13:47:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 841CAC3A59E
+	for <dmaengine@archiver.kernel.org>; Wed, 21 Aug 2019 04:12:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 3EFF322DCC
-	for <dmaengine@archiver.kernel.org>; Tue, 20 Aug 2019 13:47:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 55CAF206DF
+	for <dmaengine@archiver.kernel.org>; Wed, 21 Aug 2019 04:12:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1566308832;
-	bh=70PthrKPcAjH6fz4sj3+ihFqgk5baALMdE+eUNFhEGI=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:List-ID:From;
-	b=D+5iKbnYb9lR/k59UixIgttbwNjvxOItbz1EMRSVscA8keXqsd3DjFIlBElJ9hZlZ
-	 ROvkqf8x24cfcfiYRX2q9oDsKlbIiZd2/Ln5yTKqYt1nV3K5NIvj26Qc6Q/wyVZHUB
-	 tXRDCuAUJQ/RIKGFqgY7Olel/Qp3EUe1zi8+DoJU=
+	s=default; t=1566360776;
+	bh=qcEQgVoNCUFOmWm4YOfN+msxE1DbtuqC2ZTcnt+RPnw=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:List-ID:From;
+	b=FxoGjqf73IFYB+uAFHpAKV5qK8PKuZ/lLppyt1gZb614JUyRaKN4DIIknxKH2IBDT
+	 rRPpfJOJmo2U8MKw5YFffySKPhVGi+2qfIau8rAdMzBBrSF26LTBtOe3FBzseu/29v
+	 2bb0iaCDa6oPAQ3/r+hJLKvBGfEdlj2BqoosLlhg=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730263AbfHTNk6 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 20 Aug 2019 09:40:58 -0400
-Received: from mail.kernel.org ([198.145.29.99]:35892 "EHLO mail.kernel.org"
+        id S1726150AbfHUEM4 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 21 Aug 2019 00:12:56 -0400
+Received: from mail.kernel.org ([198.145.29.99]:45218 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729879AbfHTNk5 (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Tue, 20 Aug 2019 09:40:57 -0400
-Received: from sasha-vm.mshome.net (unknown [12.236.144.82])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        id S1725866AbfHUEMz (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Wed, 21 Aug 2019 00:12:55 -0400
+Received: from localhost (unknown [106.201.100.47])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 8019522DA9;
-        Tue, 20 Aug 2019 13:40:56 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 5A025206DF;
+        Wed, 21 Aug 2019 04:12:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1566308456;
-        bh=70PthrKPcAjH6fz4sj3+ihFqgk5baALMdE+eUNFhEGI=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=ejggrZ6AGRN4CDZ/KSgKXORvVCMParKoUkE/qi8Vbb80dqSc/GPgUg0QzljCn7xeO
-         pmoEhfrle5V4Tbh/00q6sB+FuyOLWlGHm/TfH5L79XObPnpRPjRSN3Mz74dy0wSstT
-         /jbi51zzPxJpJ7+6RLmMHPDj3XChFQeBmMQ+1Od4=
-From:   Sasha Levin <sashal@kernel.org>
-To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Jia-Ju Bai <baijiaju1990@gmail.com>, Vinod Koul <vkoul@kernel.org>,
-        Sasha Levin <sashal@kernel.org>, dmaengine@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.2 24/44] dmaengine: stm32-mdma: Fix a possible null-pointer dereference in stm32_mdma_irq_handler()
-Date:   Tue, 20 Aug 2019 09:40:08 -0400
-Message-Id: <20190820134028.10829-24-sashal@kernel.org>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20190820134028.10829-1-sashal@kernel.org>
-References: <20190820134028.10829-1-sashal@kernel.org>
+        s=default; t=1566360775;
+        bh=qcEQgVoNCUFOmWm4YOfN+msxE1DbtuqC2ZTcnt+RPnw=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=FzXaiXFrZIH7V0LmhqSxqWlGM+OB7m4PbO4MMjZ2WRPufIBCDE5LrjgpJwhRL4KAw
+         3tNg1XRWcyMYMTcigl6Vg7dWailBHOB0tQCA7W6JE5v/NXSpZ3hYYYqfKB+s9gEztG
+         MrHkmOtAJZgOOldYnONQWflWlBY6Mzn8xRSJptEc=
+Date:   Wed, 21 Aug 2019 09:41:44 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Cc:     dmaengine@vger.kernel.org, Viresh Kumar <vireshk@kernel.org>,
+        Jarkko Nikula <jarkko.nikula@linux.intel.com>
+Subject: Re: [PATCH v2 00/10] dmaengine: dw: Enable for Intel Elkhart Lake
+Message-ID: <20190821041144.GG12733@vkoul-mobl.Dlink>
+References: <20190820131546.75744-1-andriy.shevchenko@linux.intel.com>
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <20190820131546.75744-1-andriy.shevchenko@linux.intel.com>
+User-Agent: Mutt/1.11.3 (2019-02-01)
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-From: Jia-Ju Bai <baijiaju1990@gmail.com>
+On 20-08-19, 16:15, Andy Shevchenko wrote:
+> On Intel Elkhart Lake the DMA controllers can be provided by Intel® PSE
+> (Programmable Services Engine) and exposed either as PCI or ACPI devices.
+> 
+> To support both schemes here is a patch series.
+> 
+> First two patches fixes minor issues in DMA ACPI layer, patches 3-5 enables
+> Intel Elkhart Lake DMA controllers that exposed as ACPI devices, patch 6 is
+> clean up, patch 7 is fix for possible race on ->remove() stage, patch 8 is
+> follow up clean up and patches 9-10 is a split for better maintenance.
 
-[ Upstream commit 39c71a5b8212f4b502d9a630c6706ac723abd422 ]
+Applied all, thanks
 
-In stm32_mdma_irq_handler(), chan is checked on line 1368.
-When chan is NULL, it is still used on line 1369:
-    dev_err(chan2dev(chan), "MDMA channel not initialized\n");
-
-Thus, a possible null-pointer dereference may occur.
-
-To fix this bug, "dev_dbg(mdma2dev(dmadev), ...)" is used instead.
-
-Signed-off-by: Jia-Ju Bai <baijiaju1990@gmail.com>
-Fixes: a4ffb13c8946 ("dmaengine: Add STM32 MDMA driver")
-Link: https://lore.kernel.org/r/20190729020849.17971-1-baijiaju1990@gmail.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- drivers/dma/stm32-mdma.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/drivers/dma/stm32-mdma.c b/drivers/dma/stm32-mdma.c
-index d6e919d3936a2..1311de74bfdde 100644
---- a/drivers/dma/stm32-mdma.c
-+++ b/drivers/dma/stm32-mdma.c
-@@ -1366,7 +1366,7 @@ static irqreturn_t stm32_mdma_irq_handler(int irq, void *devid)
- 
- 	chan = &dmadev->chan[id];
- 	if (!chan) {
--		dev_err(chan2dev(chan), "MDMA channel not initialized\n");
-+		dev_dbg(mdma2dev(dmadev), "MDMA channel not initialized\n");
- 		goto exit;
- 	}
- 
 -- 
-2.20.1
-
+~Vinod
