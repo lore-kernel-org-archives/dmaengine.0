@@ -1,113 +1,55 @@
-Return-Path: <SRS0=2TKh=WU=vger.kernel.org=dmaengine-owner@kernel.org>
+Return-Path: <SRS0=nrMa=WX=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.3 required=3.0
-	tests=HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PULL_REQUEST,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
+X-Spam-Status: No, score=-3.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E1D0EC3A59E
-	for <dmaengine@archiver.kernel.org>; Sat, 24 Aug 2019 10:33:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B51EBC3A5A6
+	for <dmaengine@archiver.kernel.org>; Tue, 27 Aug 2019 11:12:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id AC58521670
-	for <dmaengine@archiver.kernel.org>; Sat, 24 Aug 2019 10:33:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 90F77217F5
+	for <dmaengine@archiver.kernel.org>; Tue, 27 Aug 2019 11:12:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726950AbfHXKdk (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Sat, 24 Aug 2019 06:33:40 -0400
-Received: from bmailout2.hostsharing.net ([83.223.78.240]:40433 "EHLO
-        bmailout2.hostsharing.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725616AbfHXKdj (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Sat, 24 Aug 2019 06:33:39 -0400
-Received: from h08.hostsharing.net (h08.hostsharing.net [83.223.95.28])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (Client CN "*.hostsharing.net", Issuer "COMODO RSA Domain Validation Secure Server CA" (not verified))
-        by bmailout2.hostsharing.net (Postfix) with ESMTPS id 40EC728000DF1;
-        Sat, 24 Aug 2019 12:33:37 +0200 (CEST)
-Received: by h08.hostsharing.net (Postfix, from userid 100393)
-        id 0F24316F35; Sat, 24 Aug 2019 12:33:37 +0200 (CEST)
-Date:   Sat, 24 Aug 2019 12:33:36 +0200
-From:   Lukas Wunner <lukas@wunner.de>
-To:     Mark Brown <broonie@kernel.org>, Vinod Koul <vkoul@kernel.org>,
-        Stefan Wahren <wahrenst@gmx.net>, linux-spi@vger.kernel.org,
-        dmaengine@vger.kernel.org, linux-rpi-kernel@lists.infradead.org,
-        bcm-kernel-feedback-list@broadcom.com
-Cc:     Eric Anholt <eric@anholt.net>, Nuno Sa <nuno.sa@analog.com>,
-        Martin Sperl <kernel@martin.sperl.org>,
-        Noralf Tronnes <noralf@tronnes.org>,
-        Robert Jarzmik <robert.jarzmik@free.fr>,
-        Florian Kauer <florian.kauer@koalo.de>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Ray Jui <rjui@broadcom.com>,
-        Scott Branden <sbranden@broadcom.com>
-Subject: Re: [PATCH 00/10] Raspberry Pi SPI speedups
-Message-ID: <20190824103336.splslj4jqihzfi23@wunner.de>
-References: <cover.1564825752.git.lukas@wunner.de>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <cover.1564825752.git.lukas@wunner.de>
-User-Agent: NeoMutt/20170113 (1.7.2)
+        id S1727048AbfH0LMN (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 27 Aug 2019 07:12:13 -0400
+Received: from relmlor1.renesas.com ([210.160.252.171]:44344 "EHLO
+        relmlie5.idc.renesas.com" rhost-flags-OK-OK-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1725793AbfH0LMN (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Tue, 27 Aug 2019 07:12:13 -0400
+X-IronPort-AV: E=Sophos;i="5.64,436,1559487600"; 
+   d="scan'208";a="25050326"
+Received: from unknown (HELO relmlir5.idc.renesas.com) ([10.200.68.151])
+  by relmlie5.idc.renesas.com with ESMTP; 27 Aug 2019 20:12:11 +0900
+Received: from localhost.localdomain (unknown [10.166.17.210])
+        by relmlir5.idc.renesas.com (Postfix) with ESMTP id 786384007F56;
+        Tue, 27 Aug 2019 20:12:11 +0900 (JST)
+From:   Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
+To:     vkoul@kernel.org
+Cc:     dmaengine@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
+        Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
+Subject: [PATCH 0/2] dmaengine: rcar-dmac: minor modifications
+Date:   Tue, 27 Aug 2019 20:10:29 +0900
+Message-Id: <1566904231-25486-1-git-send-email-yoshihiro.shimoda.uh@renesas.com>
+X-Mailer: git-send-email 2.7.4
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Dear Marc,
+This patch series is based on renesas-drivers.git /
+renesas-drivers-2019-08-13-v5.3-rc4 tag. This is minor modifications
+to add support for changed registers memory mapping hardware support
+easily in the future.
 
-to alleviate you of having to add all the Acked-by and Tested-by tags
-to this series, I've prepared a "prêt-à-porter" branch complete with
-all tags which you can cherry-pick or merge from.
+Yoshihiro Shimoda (2):
+  dmaengine: rcar-dmac: Use of_data values instead of a macro
+  dmaengine: rcar-dmac: Use devm_platform_ioremap_resource()
 
-If you decide to instead apply the patches yourself, you can double-check
-the result by comparing it to my branch with "git range-diff".
+ drivers/dma/sh/rcar-dmac.c | 37 +++++++++++++++++++++++++++++--------
+ 1 file changed, 29 insertions(+), 8 deletions(-)
 
-If you have any comments on the series or would like to have anything
-changed, please let me know.
+-- 
+2.7.4
 
-Thanks!
-
-----------------------------------------------------------------
-
-The following changes since commit c55be305915974db160ce6472722ff74f45b8d4e:
-
-  spi: spi-fsl-dspi: Use poll mode in case the platform IRQ is missing (2019-08-23 12:01:44 +0100)
-
-are available in the git repository at:
-
-  https://github.com/l1k/linux bcm2835_spi_simplex_v1
-
-for you to fetch changes up to 37ad33d4bee27d9a24f1deffd675e327d1bb899e:
-
-  spi: bcm2835: Speed up RX-only DMA transfers by zero-filling TX FIFO (2019-08-24 11:54:11 +0200)
-
-----------------------------------------------------------------
-So far the BCM2835 SPI driver cannot cope with TX-only and RX-only
-transfers (rx_buf or tx_buf is NULL) when using DMA:  It relies on
-the SPI core to convert them to full-duplex transfers by allocating
-and DMA-mapping a dummy rx_buf or tx_buf.  This costs performance.
-
-Resolve by pre-allocating reusable DMA descriptors which cyclically
-clear the RX FIFO (for TX-only transfers) or zero-fill the TX FIFO
-(for RX-only transfers).  Commit fecf4ba3f248 provides some numbers
-for the achieved latency improvement and CPU time reduction with an
-SPI Ethernet controller.  SPI displays should see a similar speedup.
-I've also made an effort to reduce peripheral and memory bus accesses.
-----------------------------------------------------------------
-Lukas Wunner (10):
-      dmaengine: bcm2835: Allow reusable descriptors
-      dmaengine: bcm2835: Allow cyclic transactions without interrupt
-      spi: Guarantee cacheline alignment of driver-private data
-      spi: bcm2835: Drop dma_pending flag
-      spi: bcm2835: Work around DONE bit erratum
-      spi: bcm2835: Cache CS register value for ->prepare_message()
-      spi: bcm2835: Speed up TX-only DMA transfers by clearing RX FIFO
-      dmaengine: bcm2835: Document struct bcm2835_dmadev
-      dmaengine: bcm2835: Avoid accessing memory when copying zeroes
-      spi: bcm2835: Speed up RX-only DMA transfers by zero-filling TX FIFO
-
- drivers/dma/bcm2835-dma.c |  38 ++++-
- drivers/spi/spi-bcm2835.c | 408 ++++++++++++++++++++++++++++++++++++++--------
- drivers/spi/spi.c         |  18 +-
- 3 files changed, 390 insertions(+), 74 deletions(-)
