@@ -7,51 +7,52 @@ X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
 	USER_AGENT_GIT autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 52E84C43140
-	for <dmaengine@archiver.kernel.org>; Fri,  6 Sep 2019 14:17:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6A18BC43331
+	for <dmaengine@archiver.kernel.org>; Fri,  6 Sep 2019 14:17:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 2051D214DE
-	for <dmaengine@archiver.kernel.org>; Fri,  6 Sep 2019 14:17:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 40118208C3
+	for <dmaengine@archiver.kernel.org>; Fri,  6 Sep 2019 14:17:11 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b="I3hUmqTW"
+	dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b="bMPSYu3h"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2394137AbfIFORC (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 6 Sep 2019 10:17:02 -0400
-Received: from lelv0142.ext.ti.com ([198.47.23.249]:54202 "EHLO
-        lelv0142.ext.ti.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2394120AbfIFORC (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Fri, 6 Sep 2019 10:17:02 -0400
-Received: from fllv0035.itg.ti.com ([10.64.41.0])
-        by lelv0142.ext.ti.com (8.15.2/8.15.2) with ESMTP id x86EGv2l021991;
-        Fri, 6 Sep 2019 09:16:57 -0500
+        id S2391823AbfIFOQ7 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 6 Sep 2019 10:16:59 -0400
+Received: from lelv0143.ext.ti.com ([198.47.23.248]:53072 "EHLO
+        lelv0143.ext.ti.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729017AbfIFOQ6 (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Fri, 6 Sep 2019 10:16:58 -0400
+Received: from lelv0266.itg.ti.com ([10.180.67.225])
+        by lelv0143.ext.ti.com (8.15.2/8.15.2) with ESMTP id x86EGrqM081318;
+        Fri, 6 Sep 2019 09:16:53 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
-        s=ti-com-17Q1; t=1567779417;
-        bh=bZLbfyDYIbQSM/yox3v/jl434Vis5vyrJc6A2BOuhBo=;
+        s=ti-com-17Q1; t=1567779413;
+        bh=lL+zXXpiAMPM0yEzqtzknYNhG5vy2NXPPxTYA7JesO0=;
         h=From:To:CC:Subject:Date:In-Reply-To:References;
-        b=I3hUmqTWTT2+3Lcq+H5M1u5aluKQ3nndK2yTjytWxqAFPZk/uapYGeo/HeBQ3/Ir+
-         VMa8Nn9Mm3CrN6ZppvJM8Zwr+3NSeTuo4jpBH2qPiGjn4GXSr1hGFkXRKStJO5O19g
-         Y+aPtXFaOqYQW2nB3kVLYiOWlecwavFePZczCX2A=
-Received: from DFLE105.ent.ti.com (dfle105.ent.ti.com [10.64.6.26])
-        by fllv0035.itg.ti.com (8.15.2/8.15.2) with ESMTP id x86EGvZa127784;
-        Fri, 6 Sep 2019 09:16:57 -0500
-Received: from DFLE115.ent.ti.com (10.64.6.36) by DFLE105.ent.ti.com
- (10.64.6.26) with Microsoft SMTP Server (version=TLS1_2,
+        b=bMPSYu3h2iINSzphkoyAysVXm0iwyvy1a2EUt0dQQ2CW6AglsVw2xIayp6CImvkpF
+         HRT8Z/IvKAgoQdyC+D5FNdoVy/vScxAeC1a0CmnzFsh0kZ33Hh5Rvl76Sr/nRbPYlC
+         3QSOVssDCgoEaihU3HP5w3hah29dn2/QNSPPUoKs=
+Received: from DFLE107.ent.ti.com (dfle107.ent.ti.com [10.64.6.28])
+        by lelv0266.itg.ti.com (8.15.2/8.15.2) with ESMTPS id x86EGrAd092427
+        (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
+        Fri, 6 Sep 2019 09:16:53 -0500
+Received: from DFLE114.ent.ti.com (10.64.6.35) by DFLE107.ent.ti.com
+ (10.64.6.28) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1713.5; Fri, 6 Sep
- 2019 09:16:57 -0500
-Received: from fllv0040.itg.ti.com (10.64.41.20) by DFLE115.ent.ti.com
- (10.64.6.36) with Microsoft SMTP Server (version=TLS1_2,
+ 2019 09:16:53 -0500
+Received: from fllv0040.itg.ti.com (10.64.41.20) by DFLE114.ent.ti.com
+ (10.64.6.35) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1713.5 via
- Frontend Transport; Fri, 6 Sep 2019 09:16:57 -0500
+ Frontend Transport; Fri, 6 Sep 2019 09:16:53 -0500
 Received: from feketebors.ti.com (ileax41-snat.itg.ti.com [10.172.224.153])
-        by fllv0040.itg.ti.com (8.15.2/8.15.2) with ESMTP id x86EGmaf042400;
-        Fri, 6 Sep 2019 09:16:55 -0500
+        by fllv0040.itg.ti.com (8.15.2/8.15.2) with ESMTP id x86EGmad042400;
+        Fri, 6 Sep 2019 09:16:51 -0500
 From:   Peter Ujfalusi <peter.ujfalusi@ti.com>
 To:     <vinod.koul@intel.com>, <robh+dt@kernel.org>
 CC:     <dmaengine@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
         <dan.j.williams@intel.com>, <devicetree@vger.kernel.org>
-Subject: [RFC 3/3] dmaengine: Support for requesting channels preferring DMA domain controller
-Date:   Fri, 6 Sep 2019 17:17:17 +0300
-Message-ID: <20190906141717.23859-4-peter.ujfalusi@ti.com>
+Subject: [RFC 1/3] dt-bindings: dma: Add documentation for DMA domains
+Date:   Fri, 6 Sep 2019 17:17:15 +0300
+Message-ID: <20190906141717.23859-2-peter.ujfalusi@ti.com>
 X-Mailer: git-send-email 2.23.0
 In-Reply-To: <20190906141717.23859-1-peter.ujfalusi@ti.com>
 References: <20190906141717.23859-1-peter.ujfalusi@ti.com>
@@ -64,107 +65,91 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-In case the channel is not requested via the slave API, use the
-of_find_dma_domain() to see if a system default DMA controller is
-specified.
+On systems where multiple DMA controllers available, none Slave (for example
+memcpy operation) users can not be described in DT as there is no device
+involved from the DMA controller's point of view, DMA binding is not usable.
+However in these systems still a peripheral might need to be serviced by or
+it is better to serviced by specific DMA controller.
+When a memcpy is used to/from a memory mapped region for example a DMA in the
+same domain can perform better.
+For generic software modules doing mem 2 mem operations it also matter that
+they will get a channel from a controller which is faster in DDR to DDR mode
+rather then from the first controller happen to be loaded.
 
-Add new function which can be used by clients to request channels by mask
-from their DMA domain controller if specified.
-
-Client drivers can take advantage of the domain support by moving from
-dma_request_chan_by_mask() to dma_domain_request_chan_by_mask()
+This property is inherited, so it may be specified in a device node or in any
+of its parent nodes.
 
 Signed-off-by: Peter Ujfalusi <peter.ujfalusi@ti.com>
 ---
- drivers/dma/dmaengine.c   | 17 ++++++++++++-----
- include/linux/dmaengine.h |  9 ++++++---
- 2 files changed, 18 insertions(+), 8 deletions(-)
+ .../devicetree/bindings/dma/dma-domain.yaml   | 59 +++++++++++++++++++
+ 1 file changed, 59 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/dma/dma-domain.yaml
 
-diff --git a/drivers/dma/dmaengine.c b/drivers/dma/dmaengine.c
-index 6baddf7dcbfd..087450eed68c 100644
---- a/drivers/dma/dmaengine.c
-+++ b/drivers/dma/dmaengine.c
-@@ -640,6 +640,10 @@ struct dma_chan *__dma_request_channel(const dma_cap_mask_t *mask,
- 	struct dma_device *device, *_d;
- 	struct dma_chan *chan = NULL;
- 
-+	/* If np is not specified, get the default DMA domain controller */
-+	if (!np)
-+		np = of_find_dma_domain(NULL);
+diff --git a/Documentation/devicetree/bindings/dma/dma-domain.yaml b/Documentation/devicetree/bindings/dma/dma-domain.yaml
+new file mode 100644
+index 000000000000..c2f182f30081
+--- /dev/null
++++ b/Documentation/devicetree/bindings/dma/dma-domain.yaml
+@@ -0,0 +1,59 @@
++# SPDX-License-Identifier: GPL-2.0
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/dma/dma-controller.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
 +
- 	/* Find a channel */
- 	mutex_lock(&dma_list_mutex);
- 	list_for_each_entry_safe(device, _d, &dma_device_list, global_node) {
-@@ -751,19 +755,22 @@ struct dma_chan *dma_request_slave_channel(struct device *dev,
- EXPORT_SYMBOL_GPL(dma_request_slave_channel);
- 
- /**
-- * dma_request_chan_by_mask - allocate a channel satisfying certain capabilities
-- * @mask: capabilities that the channel must satisfy
-+ * dma_domain_request_chan_by_mask - allocate a channel by mask from DMA domain
-+ * @dev:	pointer to client device structure
-+ * @mask:	capabilities that the channel must satisfy
-  *
-  * Returns pointer to appropriate DMA channel on success or an error pointer.
-  */
--struct dma_chan *dma_request_chan_by_mask(const dma_cap_mask_t *mask)
-+struct dma_chan *dma_domain_request_chan_by_mask(struct device *dev,
-+						 const dma_cap_mask_t *mask)
- {
- 	struct dma_chan *chan;
- 
- 	if (!mask)
- 		return ERR_PTR(-ENODEV);
- 
--	chan = __dma_request_channel(mask, NULL, NULL, NULL);
-+	chan = __dma_request_channel(mask, NULL, NULL,
-+				     of_find_dma_domain(dev->of_node));
- 	if (!chan) {
- 		mutex_lock(&dma_list_mutex);
- 		if (list_empty(&dma_device_list))
-@@ -775,7 +782,7 @@ struct dma_chan *dma_request_chan_by_mask(const dma_cap_mask_t *mask)
- 
- 	return chan;
- }
--EXPORT_SYMBOL_GPL(dma_request_chan_by_mask);
-+EXPORT_SYMBOL_GPL(dma_domain_request_chan_by_mask);
- 
- void dma_release_channel(struct dma_chan *chan)
- {
-diff --git a/include/linux/dmaengine.h b/include/linux/dmaengine.h
-index 3b2e8e302f6c..9f94df81e83f 100644
---- a/include/linux/dmaengine.h
-+++ b/include/linux/dmaengine.h
-@@ -1438,7 +1438,8 @@ struct dma_chan *__dma_request_channel(const dma_cap_mask_t *mask,
- struct dma_chan *dma_request_slave_channel(struct device *dev, const char *name);
- 
- struct dma_chan *dma_request_chan(struct device *dev, const char *name);
--struct dma_chan *dma_request_chan_by_mask(const dma_cap_mask_t *mask);
-+struct dma_chan *dma_domain_request_chan_by_mask(struct device *dev,
-+						 const dma_cap_mask_t *mask);
- 
- void dma_release_channel(struct dma_chan *chan);
- int dma_get_slave_caps(struct dma_chan *chan, struct dma_slave_caps *caps);
-@@ -1475,8 +1476,8 @@ static inline struct dma_chan *dma_request_chan(struct device *dev,
- {
- 	return ERR_PTR(-ENODEV);
- }
--static inline struct dma_chan *dma_request_chan_by_mask(
--						const dma_cap_mask_t *mask)
-+static inline struct dma_chan *dma_domain_request_chan_by_mask(struct device *dev,
-+			const dma_cap_mask_t *mask)
- {
- 	return ERR_PTR(-ENODEV);
- }
-@@ -1537,6 +1538,8 @@ struct dma_chan *dma_get_any_slave_channel(struct dma_device *device);
- 	__dma_request_channel(&(mask), x, y, NULL)
- #define dma_request_slave_channel_compat(mask, x, y, dev, name) \
- 	__dma_request_slave_channel_compat(&(mask), x, y, dev, name)
-+#define dma_request_chan_by_mask(mask) \
-+	dma_domain_request_chan_by_mask(NULL, mask)
- 
- static inline struct dma_chan
- *__dma_request_slave_channel_compat(const dma_cap_mask_t *mask,
++title: DMA Domain Controller Definition
++
++maintainers:
++  - Vinod Koul <vkoul@kernel.org>
++
++allOf:
++  - $ref: "dma-controller.yaml#"
++
++description:
++  On systems where multiple DMA controllers available, none Slave (for example
++  memcpy operation) users can not be described in DT as there is no device
++  involved from the DMA controller's point of view, DMA binding is not usable.
++  However in these systems still a peripheral might need to be serviced by or
++  it is better to serviced by specific DMA controller.
++  When a memcpy is used to/from a memory mapped region for example a DMA in the
++  same domain can perform better.
++  For generic software modules doing mem 2 mem operations it also matter that
++  they will get a channel from a controller which is faster in DDR to DDR mode
++  rather then from the first controller happen to be loaded.
++
++  This property is inherited, so it may be specified in a device node or in any
++  of its parent nodes.
++
++properties:
++  $dma-domain-controller:
++    $ref: /schemas/types.yaml#definitions/phandle
++    description:
++      phande to the DMA controller node which should be used for the device or
++      domain.
++
++examples:
++  - |
++    / {
++        model = "Texas Instruments K3 AM654 SoC";
++        compatible = "ti,am654";
++        interrupt-parent = <&gic500>;
++        /* For modules without device, DDR to DDR is faster on main UDMAP */
++        dma-domain-controller = <&main_udmap>;
++        #address-cells = <2>;
++        #size-cells = <2>;
++        ...
++    };
++
++    &cbass_main {
++        /* For modules within MAIN domain, use main UDMAP */
++        dma-domain-controller = <&main_udmap>;
++    };
++
++    &cbass_mcu {
++        /* For modules within MCU domain, use mcu UDMAP */
++        dma-domain-controller = <&mcu_udmap>;
++    };
++...
 -- 
 Peter
 
