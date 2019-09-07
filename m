@@ -1,127 +1,102 @@
-Return-Path: <SRS0=KyWl=XB=vger.kernel.org=dmaengine-owner@kernel.org>
+Return-Path: <SRS0=7c5T=XC=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.9 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-12.6 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,INCLUDES_PULL_REQUEST,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 37AE8C43331
-	for <dmaengine@archiver.kernel.org>; Fri,  6 Sep 2019 14:18:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EF3BDC43331
+	for <dmaengine@archiver.kernel.org>; Sat,  7 Sep 2019 08:13:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 110D220854
-	for <dmaengine@archiver.kernel.org>; Fri,  6 Sep 2019 14:18:12 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b="XBgpn3/S"
+	by mail.kernel.org (Postfix) with ESMTP id C06772186A
+	for <dmaengine@archiver.kernel.org>; Sat,  7 Sep 2019 08:13:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=default; t=1567844025;
+	bh=mafzhMPZiGWkW1SiBA8276/Vtqm3xN/GmkS2BBdN6Ig=;
+	h=Date:From:To:Cc:Subject:List-ID:From;
+	b=dG/3Umd6ndxG6h2dBEZ/rolR4f+AgzSMSEuxRacxjKi+hLbrXboqwn+HJBNwIwtE9
+	 BUZeznrcwnqr0IEVr/NVqlnfm+2ps5PzX2/e3LVEWJlXPqrbYh2gpnw53ebha+FGAb
+	 7J7FYTNI0V5GyuJ7m9jZXCMx1sCGsJUH16QM0Yyo=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2394332AbfIFORz (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 6 Sep 2019 10:17:55 -0400
-Received: from fllv0015.ext.ti.com ([198.47.19.141]:33864 "EHLO
-        fllv0015.ext.ti.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2394290AbfIFORy (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Fri, 6 Sep 2019 10:17:54 -0400
-Received: from lelv0266.itg.ti.com ([10.180.67.225])
-        by fllv0015.ext.ti.com (8.15.2/8.15.2) with ESMTP id x86EHqm4033766;
-        Fri, 6 Sep 2019 09:17:52 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
-        s=ti-com-17Q1; t=1567779472;
-        bh=+L55aTwWGyUbvaaXfZF0uAs4AUymc3puZPlhVMgEnt8=;
-        h=From:To:CC:Subject:Date;
-        b=XBgpn3/SQXgbuHcAblOfiMb5pJn2Z9Ecob7dA9FuQSF5UdytHfYfoZuSwy3+cnF11
-         WWNmMjDdpMU48ZIGBzkx4DF+RUaCIgG6tKpNtxPxyQ52e+CHF/fXs2SpSsVQ85rVN1
-         qh3Aa+LVJPc2ZHKIpukYSSmvsTZPN+68MO39fyfM=
-Received: from DFLE102.ent.ti.com (dfle102.ent.ti.com [10.64.6.23])
-        by lelv0266.itg.ti.com (8.15.2/8.15.2) with ESMTPS id x86EHq3J093589
-        (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
-        Fri, 6 Sep 2019 09:17:52 -0500
-Received: from DFLE106.ent.ti.com (10.64.6.27) by DFLE102.ent.ti.com
- (10.64.6.23) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1713.5; Fri, 6 Sep
- 2019 09:17:50 -0500
-Received: from lelv0327.itg.ti.com (10.180.67.183) by DFLE106.ent.ti.com
- (10.64.6.27) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1713.5 via
- Frontend Transport; Fri, 6 Sep 2019 09:17:49 -0500
-Received: from feketebors.ti.com (ileax41-snat.itg.ti.com [10.172.224.153])
-        by lelv0327.itg.ti.com (8.15.2/8.15.2) with ESMTP id x86EHlOd032723;
-        Fri, 6 Sep 2019 09:17:48 -0500
-From:   Peter Ujfalusi <peter.ujfalusi@ti.com>
-To:     <vkoul@kernel.org>, <robh+dt@kernel.org>
-CC:     <dmaengine@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <dan.j.williams@intel.com>, <devicetree@vger.kernel.org>
-Subject: [RFC 0/3] dmaengine: Support for DMA domain controllers
-Date:   Fri, 6 Sep 2019 17:18:13 +0300
-Message-ID: <20190906141816.24095-1-peter.ujfalusi@ti.com>
-X-Mailer: git-send-email 2.23.0
+        id S1726738AbfIGINp (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Sat, 7 Sep 2019 04:13:45 -0400
+Received: from mail.kernel.org ([198.145.29.99]:42070 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726133AbfIGINp (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Sat, 7 Sep 2019 04:13:45 -0400
+Received: from localhost (unknown [223.226.124.26])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id A0C2E208C3;
+        Sat,  7 Sep 2019 08:13:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1567844024;
+        bh=mafzhMPZiGWkW1SiBA8276/Vtqm3xN/GmkS2BBdN6Ig=;
+        h=Date:From:To:Cc:Subject:From;
+        b=KB03eYeDvaxU+Me6/wa2AU7K9BUABrwYNk7bY1FRTbLN/Czwrm+ZAM7AUlMmwNHFq
+         905pl8Nw6WiuqP+aybBaD7CkspJVeOiteiMarC7JPRWS5DYDKpb70QOMLoIvV6CrIK
+         sT0ArO8IW/hxqi59ChT1Psofs0mXeMaxlX4Yqc3I=
+Date:   Sat, 7 Sep 2019 13:42:34 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Linus Torvalds <torvalds@linux-foundation.org>
+Cc:     dma <dmaengine@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>
+Subject: [GIT PULL] dmaengine late fixes for 5.3
+Message-ID: <20190907081234.GJ2672@vkoul-mobl>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-EXCLAIMER-MD-CONFIG: e1e8a2fd-e40a-4ac6-ac9b-f7e9cc9ee180
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.12.0 (2019-05-25)
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Hi,
+Heya Linus,
 
-More and more SoC have more than one DMA controller integrated.
+I would like you to pull for couple of simple dmaengine driver fixes we
+got in last few days.
 
-If a device needs none slave DMA channel for operation (block copy from/to
-memory mapped regions for example) at the moment when they request a channel it
-is going to be taken from the first DMA controller which was registered, but
-this might be not optimal for the device.
+The following changes since commit d1abaeb3be7b5fa6d7a1fbbd2e14e3310005c4c1:
 
-For example on AM654 we have two DMAs: main_udmap and mcu_udmap.
-DDR to DDR memcpy is twice as fast on main_udmap compared to mcu_udmap, while
-devices on MCU domain (OSPI for example) are more than twice as fast on
-mcu_udmap than with main_udmap.
+  Linux 5.3-rc5 (2019-08-18 14:31:08 -0700)
 
-Because of probing order (mcu_udmap is probing first) modules would use
-mcu_udmap instead of the better main_udmap. Currently the only solution is to
-make a choice and disable the MEM_TO_MEM functionality on one of them which is
-not a great solution.
+are available in the Git repository at:
 
-With the introduction of DMA domain controllers we can utilize the best DMA
-controller for the job around the SoC without the need to degrade performance.
+  git://git.infradead.org/users/vkoul/slave-dma.git tags/dmaengine-fix-5.3
 
-If the dma-domain-controller is not present in DT or booted w/o DT the none
-slave channel request will work as it does today.
+for you to fetch changes up to cf24aac38698bfa1d021afd3883df3c4c65143a4:
 
-The last patch introduces a new dma_domain_request_chan_by_mask() function and
-I have a define for dma_request_chan_by_mask() to avoid breaking users of the
-dma_request_chan_by_mask, but looking at the kernel we have small amount of
-users:
-drivers/gpu/drm/vc4/vc4_dsi.c
-drivers/media/platform/omap/omap_vout_vrfb.c
-drivers/media/platform/omap3isp/isphist.c
-drivers/mtd/spi-nor/cadence-quadspi.c
-drivers/spi/spi-ti-qspi.c
+  dmaengine: rcar-dmac: Fix DMACHCLR handling if iommu is mapped (2019-09-04 11:35:58 +0530)
 
-If it is acceptable we can modify the parameters of dma_request_chan_by_mask()
-to include ther device pointer and at the same time change all of the clients
-by giving NULL or in case of the last two their dev.
+----------------------------------------------------------------
+dmaengine late fixes for 5.3
 
-Regards,
-Peter
----
-Peter Ujfalusi (3):
-  dt-bindings: dma: Add documentation for DMA domains
-  dmaengine: of_dma: Function to look up the DMA domain of a client
-  dmaengine: Support for requesting channels preferring DMA domain
-    controller
+Some late fixes for drivers:
+ - memory leak in ti crossbar dma driver
+ - cleanup of omap dma probe
+ - Fix for link list configuration in sprd dma driver
+ - Handling fixed for DMACHCLR if iommu is mapped in rcar dma
 
- .../devicetree/bindings/dma/dma-domain.yaml   | 59 +++++++++++++++++++
- drivers/dma/dmaengine.c                       | 17 ++++--
- drivers/dma/of-dma.c                          | 42 +++++++++++++
- include/linux/dmaengine.h                     |  9 ++-
- include/linux/of_dma.h                        |  7 +++
- 5 files changed, 126 insertions(+), 8 deletions(-)
- create mode 100644 Documentation/devicetree/bindings/dma/dma-domain.yaml
+----------------------------------------------------------------
+Baolin Wang (1):
+      dmaengine: sprd: Fix the DMA link-list configuration
 
+Wenwen Wang (2):
+      dmaengine: ti: dma-crossbar: Fix a memory leak bug
+      dmaengine: ti: omap-dma: Add cleanup in omap_dma_probe()
+
+Yoshihiro Shimoda (1):
+      dmaengine: rcar-dmac: Fix DMACHCLR handling if iommu is mapped
+
+ drivers/dma/sh/rcar-dmac.c    | 28 +++++++++++++++++++---------
+ drivers/dma/sprd-dma.c        | 10 ++++++++--
+ drivers/dma/ti/dma-crossbar.c |  4 +++-
+ drivers/dma/ti/omap-dma.c     |  4 +++-
+ 4 files changed, 33 insertions(+), 13 deletions(-)
+
+Thanks
 -- 
-Peter
-
-Texas Instruments Finland Oy, Porkkalankatu 22, 00180 Helsinki.
-Y-tunnus/Business ID: 0615521-4. Kotipaikka/Domicile: Helsinki
-
+~Vinod
