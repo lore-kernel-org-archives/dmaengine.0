@@ -7,47 +7,48 @@ X-Spam-Status: No, score=-9.0 required=3.0 tests=DATE_IN_PAST_06_12,
 	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
 	USER_AGENT_GIT autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9BF93C4740A
-	for <dmaengine@archiver.kernel.org>; Mon,  9 Sep 2019 22:18:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 89346C4740A
+	for <dmaengine@archiver.kernel.org>; Mon,  9 Sep 2019 22:18:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 6A40F21D7B
-	for <dmaengine@archiver.kernel.org>; Mon,  9 Sep 2019 22:18:33 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5B9112171F
+	for <dmaengine@archiver.kernel.org>; Mon,  9 Sep 2019 22:18:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1568067513;
-	bh=566Bz2o9qSdYSA2i4UQw+4bzvn1OWackuqqOtUWjLro=;
-	h=From:To:Cc:Subject:Date:List-ID:From;
-	b=uKRIjXGceN33KHxm7yicE8kEmLinE/fpJhWbhddgbe4cIiDo6pLiOen6yYZ59tVQ7
-	 Mpz3/l3tWwoXAtBi8Iakj0JsP892ueaMOhiu82o3Cx9TjTXy4G+MpDHg4WoCDGxUOn
-	 8aJA6E16jZTJw8nqXQHT6oN8SneeCM1tOd8Md7Ak=
+	s=default; t=1568067516;
+	bh=sjobayxK8BQV7kAzsBZ5thsoTl6H6cbirtCozGkDE30=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:List-ID:From;
+	b=N0HjyB2jCY6QNonlNUIz7ZMW4OGvWWO6cJfTXqJz2THI/H/UA8+QbPBwGKn8CJc85
+	 yxEr+DpX4Fe2OxHkoEZLW92CXHmqZP6K26tkNajqNmMl/3HD+C/s5NWN/EFz3IddlP
+	 zfZqhd7dg6JpJpSsMsz2xYLA22Lr/4kzG0MN93Fs=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726245AbfIIWS3 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 9 Sep 2019 18:18:29 -0400
-Received: from mail.kernel.org ([198.145.29.99]:45538 "EHLO mail.kernel.org"
+        id S2392081AbfIIWQX (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 9 Sep 2019 18:16:23 -0400
+Received: from mail.kernel.org ([198.145.29.99]:45204 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2406149AbfIIWQg (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Mon, 9 Sep 2019 18:16:36 -0400
+        id S2392067AbfIIWQU (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Mon, 9 Sep 2019 18:16:20 -0400
 Received: from sasha-vm.mshome.net (unknown [62.28.240.114])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 114392171F;
-        Mon,  9 Sep 2019 22:16:34 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 4676821D7B;
+        Mon,  9 Sep 2019 22:16:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1568067396;
-        bh=566Bz2o9qSdYSA2i4UQw+4bzvn1OWackuqqOtUWjLro=;
-        h=From:To:Cc:Subject:Date:From;
-        b=VWkrOhaOvDXXhvtmt1kK0+dH+KCBoOG/02z8Ly7R2U0Xk4RnwpNw17j1XpXGGGcPS
-         nvUOQXw7HGxo6jGUu7mh5hu/IdcrTRpI8qTsD8AhIeUuSpYyBmkf17DPidIPZ2Li88
-         iPsMr3da+UV7WV1fHgxr16kcEwyvD45IHs0GXM6s=
+        s=default; t=1568067379;
+        bh=sjobayxK8BQV7kAzsBZ5thsoTl6H6cbirtCozGkDE30=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=b0FVNnvQ3hp7K8rqP5xme5BJlwhCWSLCGOvSfClu0HKV1SgAeb80zyzl5mbUtns0h
+         KBHkA7TY6bRxShbQTRFeroEQLo1mEKXML+U+flZgmIhkB/Vtc7xSnLlYOQ0hjtZ3Hs
+         GbywuCdAJ6Rl/dBKHG2g6J42fPLLpbcdTxLpGDBQ=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Wenwen Wang <wenwen@cs.uga.edu>,
-        Peter Ujfalusi <peter.ujfalusi@ti.com>,
+Cc:     Baolin Wang <baolin.wang@linaro.org>,
         Vinod Koul <vkoul@kernel.org>, Sasha Levin <sashal@kernel.org>,
         dmaengine@vger.kernel.org
-Subject: [PATCH AUTOSEL 4.19 1/8] dmaengine: ti: dma-crossbar: Fix a memory leak bug
-Date:   Mon,  9 Sep 2019 11:41:16 -0400
-Message-Id: <20190909154124.31146-1-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 5.2 08/12] dmaengine: sprd: Fix the DMA link-list configuration
+Date:   Mon,  9 Sep 2019 11:40:48 -0400
+Message-Id: <20190909154052.30941-8-sashal@kernel.org>
 X-Mailer: git-send-email 2.20.1
+In-Reply-To: <20190909154052.30941-1-sashal@kernel.org>
+References: <20190909154052.30941-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
@@ -57,41 +58,64 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-From: Wenwen Wang <wenwen@cs.uga.edu>
+From: Baolin Wang <baolin.wang@linaro.org>
 
-[ Upstream commit 2c231c0c1dec42192aca0f87f2dc68b8f0cbc7d2 ]
+[ Upstream commit 689379c2f383b1fdfdff03e84cf659daf62f2088 ]
 
-In ti_dra7_xbar_probe(), 'rsv_events' is allocated through kcalloc(). Then
-of_property_read_u32_array() is invoked to search for the property.
-However, if this process fails, 'rsv_events' is not deallocated, leading to
-a memory leak bug. To fix this issue, free 'rsv_events' before returning
-the error.
+For the Spreadtrum DMA link-list mode, when the DMA engine got a slave
+hardware request, which will trigger the DMA engine to load the DMA
+configuration from the link-list memory automatically. But before the
+slave hardware request, the slave will get an incorrect residue due
+to the first node used to trigger the link-list was configured as the
+last source address and destination address.
 
-Signed-off-by: Wenwen Wang <wenwen@cs.uga.edu>
-Acked-by: Peter Ujfalusi <peter.ujfalusi@ti.com>
-Link: https://lore.kernel.org/r/1565938136-7249-1-git-send-email-wenwen@cs.uga.edu
+Thus we should make sure the first node was configured the start source
+address and destination address, which can fix this issue.
+
+Fixes: 4ac695464763 ("dmaengine: sprd: Support DMA link-list mode")
+Signed-off-by: Baolin Wang <baolin.wang@linaro.org>
+Link: https://lore.kernel.org/r/77868edb7aff9d5cb12ac3af8827ef2e244441a6.1567150471.git.baolin.wang@linaro.org
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/ti/dma-crossbar.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/dma/sprd-dma.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/dma/ti/dma-crossbar.c b/drivers/dma/ti/dma-crossbar.c
-index 9272b173c7465..6574cb5a12fee 100644
---- a/drivers/dma/ti/dma-crossbar.c
-+++ b/drivers/dma/ti/dma-crossbar.c
-@@ -395,8 +395,10 @@ static int ti_dra7_xbar_probe(struct platform_device *pdev)
+diff --git a/drivers/dma/sprd-dma.c b/drivers/dma/sprd-dma.c
+index baac476c86224..525dc7338fe3b 100644
+--- a/drivers/dma/sprd-dma.c
++++ b/drivers/dma/sprd-dma.c
+@@ -908,6 +908,7 @@ sprd_dma_prep_slave_sg(struct dma_chan *chan, struct scatterlist *sgl,
+ 	struct sprd_dma_chn *schan = to_sprd_dma_chan(chan);
+ 	struct dma_slave_config *slave_cfg = &schan->slave_cfg;
+ 	dma_addr_t src = 0, dst = 0;
++	dma_addr_t start_src = 0, start_dst = 0;
+ 	struct sprd_dma_desc *sdesc;
+ 	struct scatterlist *sg;
+ 	u32 len = 0;
+@@ -954,6 +955,11 @@ sprd_dma_prep_slave_sg(struct dma_chan *chan, struct scatterlist *sgl,
+ 			dst = sg_dma_address(sg);
+ 		}
  
- 		ret = of_property_read_u32_array(node, pname, (u32 *)rsv_events,
- 						 nelm * 2);
--		if (ret)
-+		if (ret) {
-+			kfree(rsv_events);
- 			return ret;
++		if (!i) {
++			start_src = src;
++			start_dst = dst;
 +		}
++
+ 		/*
+ 		 * The link-list mode needs at least 2 link-list
+ 		 * configurations. If there is only one sg, it doesn't
+@@ -970,8 +976,8 @@ sprd_dma_prep_slave_sg(struct dma_chan *chan, struct scatterlist *sgl,
+ 		}
+ 	}
  
- 		for (i = 0; i < nelm; i++) {
- 			ti_dra7_xbar_reserve(rsv_events[i][0], rsv_events[i][1],
+-	ret = sprd_dma_fill_desc(chan, &sdesc->chn_hw, 0, 0, src, dst, len,
+-				 dir, flags, slave_cfg);
++	ret = sprd_dma_fill_desc(chan, &sdesc->chn_hw, 0, 0, start_src,
++				 start_dst, len, dir, flags, slave_cfg);
+ 	if (ret) {
+ 		kfree(sdesc);
+ 		return NULL;
 -- 
 2.20.1
 
