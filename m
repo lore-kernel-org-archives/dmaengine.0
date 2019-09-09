@@ -4,50 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-9.0 required=3.0 tests=DATE_IN_PAST_06_12,
 	DKIMWL_WL_HIGH,DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
-	autolearn=unavailable autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
+	USER_AGENT_GIT autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 21FFBC4740C
-	for <dmaengine@archiver.kernel.org>; Mon,  9 Sep 2019 22:17:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A52FAC4740A
+	for <dmaengine@archiver.kernel.org>; Mon,  9 Sep 2019 22:17:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id DFA0421D82
-	for <dmaengine@archiver.kernel.org>; Mon,  9 Sep 2019 22:17:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6B50C2171F
+	for <dmaengine@archiver.kernel.org>; Mon,  9 Sep 2019 22:17:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1568067465;
-	bh=L0xacNcsY2XpxXNLsk8K58LyQ1BNZxBNfKIvvTCiasE=;
-	h=From:To:Cc:Subject:Date:List-ID:From;
-	b=gtIT14RJUseXqmOqYLzTPdNHVUgZAorUThFB2f/Dha76JKIP4jHRsQ1Gl7r6YILcR
-	 PXYJOvctldIvN9kSE/7/w3DdGW1DulXe7o6MLX7yPSHMa1IJLdfnZ3flO2wFZvxus8
-	 PqhZ6M1iUUr65YMa2WXJ/wn/pFGDMKxRzHPXNhe0=
+	s=default; t=1568067469;
+	bh=8Ay5QZRIfx6Enn7YintV43y+fPovqavXMA0bfouCU1Y=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:List-ID:From;
+	b=AtM7mww/FEI++NHb27xTpUGKT+7svTGjxRvU3FkDJpBfK4/au+/pOi06TdZLURfDo
+	 n+m/hpXLdKtGq69YzxCP3fdr375ej0ekgQR3MIradFjk5R7CGCU6HOUIk2B0Cak1YF
+	 LQ3QNJpvcemzzHAb2iqk/7C9f0gfBa0GYMX+mqQs=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2406376AbfIIWRd (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 9 Sep 2019 18:17:33 -0400
-Received: from mail.kernel.org ([198.145.29.99]:46772 "EHLO mail.kernel.org"
+        id S2392274AbfIIWRW (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 9 Sep 2019 18:17:22 -0400
+Received: from mail.kernel.org ([198.145.29.99]:46480 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2406370AbfIIWRd (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Mon, 9 Sep 2019 18:17:33 -0400
+        id S2392262AbfIIWRU (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Mon, 9 Sep 2019 18:17:20 -0400
 Received: from sasha-vm.mshome.net (unknown [62.28.240.114])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 69EE121D7D;
-        Mon,  9 Sep 2019 22:17:31 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 2B5F1222C4;
+        Mon,  9 Sep 2019 22:17:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1568067452;
-        bh=L0xacNcsY2XpxXNLsk8K58LyQ1BNZxBNfKIvvTCiasE=;
-        h=From:To:Cc:Subject:Date:From;
-        b=tZZT7625XvUTqgHbQgm6cUenB8wtOPInb9ojr1BtpbUXh0ohJOnLvNIAGYXpMuMU6
-         tHNPrJltMA2DGWVSdpcigd5nNo+/0U6mxhPlO46Ex/7EMUPpVgaNRD3heblj+xhG9a
-         4fEC0mR0/tTUKQrfOnDpoIPes0r73XKYLqkJCnts=
+        s=default; t=1568067439;
+        bh=8Ay5QZRIfx6Enn7YintV43y+fPovqavXMA0bfouCU1Y=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=bJGAS4PMi4E2Yjng1XGqxZH/WaIKdk+ONsId/WHQs8vfYwut6iCN72TqHMBphboDN
+         wo9ytmIBv35rMOblvB2h9kHRfOpO7YsrswlxON0WxLUw/y3BQYNXBsbhprJ+nzumL2
+         obPz8m7HgIFJRlAIPKvQX1Fb/yGVaEdWOrocxmu8=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Cc:     Wenwen Wang <wenwen@cs.uga.edu>,
         Peter Ujfalusi <peter.ujfalusi@ti.com>,
         Vinod Koul <vkoul@kernel.org>, Sasha Levin <sashal@kernel.org>,
         dmaengine@vger.kernel.org
-Subject: [PATCH AUTOSEL 4.4 1/2] dmaengine: ti: omap-dma: Add cleanup in omap_dma_probe()
-Date:   Mon,  9 Sep 2019 11:42:20 -0400
-Message-Id: <20190909154221.31473-1-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 4.9 2/6] dmaengine: ti: omap-dma: Add cleanup in omap_dma_probe()
+Date:   Mon,  9 Sep 2019 11:42:01 -0400
+Message-Id: <20190909154205.31376-2-sashal@kernel.org>
 X-Mailer: git-send-email 2.20.1
+In-Reply-To: <20190909154205.31376-1-sashal@kernel.org>
+References: <20190909154205.31376-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
@@ -75,10 +77,10 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/dma/omap-dma.c b/drivers/dma/omap-dma.c
-index 1dfc71c90123f..57b6e6ca14a88 100644
+index 6b16ce390dce1..9f901f16bddcd 100644
 --- a/drivers/dma/omap-dma.c
 +++ b/drivers/dma/omap-dma.c
-@@ -1199,8 +1199,10 @@ static int omap_dma_probe(struct platform_device *pdev)
+@@ -1429,8 +1429,10 @@ static int omap_dma_probe(struct platform_device *pdev)
  
  		rc = devm_request_irq(&pdev->dev, irq, omap_dma_irq,
  				      IRQF_SHARED, "omap-dma-engine", od);
@@ -89,7 +91,7 @@ index 1dfc71c90123f..57b6e6ca14a88 100644
 +		}
  	}
  
- 	rc = dma_async_device_register(&od->ddev);
+ 	if (omap_dma_glbl_read(od, CAPS_0) & CAPS_0_SUPPORT_LL123)
 -- 
 2.20.1
 
