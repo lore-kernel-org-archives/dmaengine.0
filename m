@@ -2,112 +2,105 @@ Return-Path: <SRS0=STcq=XF=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.6 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.1 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
+	USER_AGENT_GIT autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 897F9C3A5A2
-	for <dmaengine@archiver.kernel.org>; Tue, 10 Sep 2019 11:29:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 14C5FC3A5A2
+	for <dmaengine@archiver.kernel.org>; Tue, 10 Sep 2019 11:45:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 4EA46208E4
-	for <dmaengine@archiver.kernel.org>; Tue, 10 Sep 2019 11:29:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1568114976;
-	bh=GNZWQsFSU2/mBBzkXd2KKgoH3lq/nM1DO0qMfX3aJcA=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:List-ID:From;
-	b=XNWDOBENlBpX2KwDMt+uh+8/UOJUUD3HNrLXHD6BbYSc4blfFvU7GH9d6DBGE8wEE
-	 /gmbXjOLRkkkQUKfAVTZ7hU3eUYQHsqy3yxqm5FiXUetyLpWcnDxPrXzHTbNIfo+Mm
-	 Jz4i4ZsVBkT+VV+J14UxhTga5C84RDk54ECx49p0=
+	by mail.kernel.org (Postfix) with ESMTP id DD1D321924
+	for <dmaengine@archiver.kernel.org>; Tue, 10 Sep 2019 11:45:47 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b="xhY4es2s"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730457AbfIJL3g (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 10 Sep 2019 07:29:36 -0400
-Received: from heliosphere.sirena.org.uk ([172.104.155.198]:45162 "EHLO
-        heliosphere.sirena.org.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728618AbfIJL3f (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Tue, 10 Sep 2019 07:29:35 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=sirena.org.uk; s=20170815-heliosphere; h=In-Reply-To:Content-Type:
-        MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
-        Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
-        Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
-        List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-         bh=wgIQgAvUrwptuky0KxuYuEfEm9DxQ/ou+hkqf/1K8sc=; b=pV7lK0yHBFHYmggetiQx0qLE0
-        OMLiGbI/uzb/K9cl+jUWdcgv19DNq2VtbJ+Kbqz5b1co5p722filQenw7dIiGRMmPtC9/2Qwomt0D
-        LgkSoNPl8svcuZeh72IiVDaPebDneIE5DZIPLIHtJwIoza2I7O3k03NTvSUugVF7X5a2M=;
-Received: from [148.69.85.38] (helo=fitzroy.sirena.org.uk)
-        by heliosphere.sirena.org.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.92)
-        (envelope-from <broonie@sirena.org.uk>)
-        id 1i7eKp-0006xV-NC; Tue, 10 Sep 2019 11:29:23 +0000
-Received: by fitzroy.sirena.org.uk (Postfix, from userid 1000)
-        id 131B8D02D76; Tue, 10 Sep 2019 12:29:23 +0100 (BST)
-Date:   Tue, 10 Sep 2019 12:29:23 +0100
-From:   Mark Brown <broonie@kernel.org>
-To:     Lukas Wunner <lukas@wunner.de>
-Cc:     Vinod Koul <vkoul@kernel.org>, Stefan Wahren <wahrenst@gmx.net>,
-        linux-spi@vger.kernel.org, dmaengine@vger.kernel.org,
-        linux-rpi-kernel@lists.infradead.org,
-        bcm-kernel-feedback-list@broadcom.com,
-        Eric Anholt <eric@anholt.net>, Nuno Sa <nuno.sa@analog.com>,
-        Martin Sperl <kernel@martin.sperl.org>,
-        Noralf Tronnes <noralf@tronnes.org>,
-        Robert Jarzmik <robert.jarzmik@free.fr>,
-        Florian Kauer <florian.kauer@koalo.de>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Ray Jui <rjui@broadcom.com>,
-        Scott Branden <sbranden@broadcom.com>
-Subject: Re: [PATCH 03/10] spi: Guarantee cacheline alignment of
- driver-private data
-Message-ID: <20190910112923.GN2036@sirena.org.uk>
-References: <cover.1564825752.git.lukas@wunner.de>
- <69faaeb305582ab7dca65fa08635edfa1a39b3fa.1564825752.git.lukas@wunner.de>
+        id S1731433AbfIJLpm (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 10 Sep 2019 07:45:42 -0400
+Received: from lelv0143.ext.ti.com ([198.47.23.248]:41574 "EHLO
+        lelv0143.ext.ti.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731389AbfIJLpl (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Tue, 10 Sep 2019 07:45:41 -0400
+Received: from lelv0265.itg.ti.com ([10.180.67.224])
+        by lelv0143.ext.ti.com (8.15.2/8.15.2) with ESMTP id x8ABjZYh130303;
+        Tue, 10 Sep 2019 06:45:35 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
+        s=ti-com-17Q1; t=1568115935;
+        bh=oj1t9aK27h7kYmeJtRxpc+tY35M83uRPBJm+zMEvkzs=;
+        h=From:To:CC:Subject:Date:In-Reply-To:References;
+        b=xhY4es2sP9GJEKK2AZdZWSswZpwAbOEtHXfbgHYhxJTNGP+2JYkfypnvXd0Fq/84S
+         NOyG7vS/LyLrz0oGoYMz6GoiMzxP2JK70ozW3zwkGKjlrswpv7d/W6WcGSy3UnDagR
+         Q9X0OxRLBe+coZNZwDjIn2meeg4r5im5Dcuf24Uo=
+Received: from DLEE101.ent.ti.com (dlee101.ent.ti.com [157.170.170.31])
+        by lelv0265.itg.ti.com (8.15.2/8.15.2) with ESMTPS id x8ABjZNr005985
+        (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
+        Tue, 10 Sep 2019 06:45:35 -0500
+Received: from DLEE110.ent.ti.com (157.170.170.21) by DLEE101.ent.ti.com
+ (157.170.170.31) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1713.5; Tue, 10
+ Sep 2019 06:45:32 -0500
+Received: from fllv0040.itg.ti.com (10.64.41.20) by DLEE110.ent.ti.com
+ (157.170.170.21) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1713.5 via
+ Frontend Transport; Tue, 10 Sep 2019 06:45:32 -0500
+Received: from feketebors.ti.com (ileax41-snat.itg.ti.com [10.172.224.153])
+        by fllv0040.itg.ti.com (8.15.2/8.15.2) with ESMTP id x8ABjRpJ119821;
+        Tue, 10 Sep 2019 06:45:30 -0500
+From:   Peter Ujfalusi <peter.ujfalusi@ti.com>
+To:     <vkoul@kernel.org>, <robh+dt@kernel.org>
+CC:     <dmaengine@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <dan.j.williams@intel.com>, <devicetree@vger.kernel.org>
+Subject: [PATCH v2 1/3] dt-bindings: dmaengine: dma-common: Change dma-channel-mask to uint32-array
+Date:   Tue, 10 Sep 2019 14:45:57 +0300
+Message-ID: <20190910114559.22810-2-peter.ujfalusi@ti.com>
+X-Mailer: git-send-email 2.23.0
+In-Reply-To: <20190910114559.22810-1-peter.ujfalusi@ti.com>
+References: <20190910114559.22810-1-peter.ujfalusi@ti.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="HL3CiL6n73+IAdG4"
-Content-Disposition: inline
-In-Reply-To: <69faaeb305582ab7dca65fa08635edfa1a39b3fa.1564825752.git.lukas@wunner.de>
-X-Cookie: Be careful!  UGLY strikes 9 out of 10!
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-EXCLAIMER-MD-CONFIG: e1e8a2fd-e40a-4ac6-ac9b-f7e9cc9ee180
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
+Make the dma-channel-mask to be usable for controllers with more than 32
+channels.
 
---HL3CiL6n73+IAdG4
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Signed-off-by: Peter Ujfalusi <peter.ujfalusi@ti.com>
+---
+ Documentation/devicetree/bindings/dma/dma-common.yaml | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-On Sat, Aug 03, 2019 at 12:10:00PM +0200, Lukas Wunner wrote:
-> __spi_alloc_controller() uses a single allocation to accommodate struct
->=20
-> Reverse the order.  A forthcoming commit leverages this to grant DMA
-> access to driver-private data of the BCM2835 SPI master.
+diff --git a/Documentation/devicetree/bindings/dma/dma-common.yaml b/Documentation/devicetree/bindings/dma/dma-common.yaml
+index ed0a49a6f020..41460946be64 100644
+--- a/Documentation/devicetree/bindings/dma/dma-common.yaml
++++ b/Documentation/devicetree/bindings/dma/dma-common.yaml
+@@ -25,11 +25,19 @@ properties:
+       Used to provide DMA controller specific information.
+ 
+   dma-channel-mask:
+-    $ref: /schemas/types.yaml#definitions/uint32
+     description:
+       Bitmask of available DMA channels in ascending order that are
+       not reserved by firmware and are available to the
+       kernel. i.e. first channel corresponds to LSB.
++    allOf:
++      - $ref: /schemas/types.yaml#/definitions/uint32-array
++        items:
++          minItems = 1
++          maxItems = 255 # Should be enough
++          - description: Mask of channels 0-31
++          - description: Mask of channels 32-63
++          ...
++          - description: Mask of chnanels X-(X+31)
+ 
+   dma-channels:
+     $ref: /schemas/types.yaml#definitions/uint32
+-- 
+Peter
 
-That's just shuffling the problem around, the same issues will
-then apply to the controller struct and you'll take a performance
-penalty on architectures that don't like unaligned accesses.
+Texas Instruments Finland Oy, Porkkalankatu 22, 00180 Helsinki.
+Y-tunnus/Business ID: 0615521-4. Kotipaikka/Domicile: Helsinki
 
-> An alternative approach would be to round up struct spi_controller to
-> cacheline size, at the expense of some wasted memory.
-
-That would seem more logical, or just do two alloacations.  It's
-not like we allocate huge numbers of SPI controllers.
-
---HL3CiL6n73+IAdG4
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAl13iRIACgkQJNaLcl1U
-h9CbxwgAg4jjd1KJdTBT4e6p6KE9w/p5UJ0GGEXa8Jkt7PnhdYsUJY5Q5Qn6X4M9
-JDBbkQL60QbtYcHfw8KOSKmpuMOBcERliowOajWGKEGkwMP43u1ebTgVDjuUDAzO
-+xqQnUUz9I68js5OOT4Ha67QFwYsPrteM+PHgvt1cf8Lx/JJOXOoNn+FAtUdbGRo
-+BNEqIC4uvaPESXbfteHq9YT9gnl2zgHP+wX5Gds10V2tFkmqbDHJ9G61MI5OM0n
-d0KQxrL+mEfi35s4RvdUAKAH4OYFVRLLUpsp/cFs/tKsO7sVn1+p1GPALhkpLaRW
-I57TaHuRcc9SfYm58Sr03r90Aa9ajg==
-=rzgq
------END PGP SIGNATURE-----
-
---HL3CiL6n73+IAdG4--
