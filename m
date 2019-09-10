@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AC6A3C3A5A2
-	for <dmaengine@archiver.kernel.org>; Tue, 10 Sep 2019 11:45:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 28325C3A5A2
+	for <dmaengine@archiver.kernel.org>; Tue, 10 Sep 2019 11:50:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 770A2207FC
-	for <dmaengine@archiver.kernel.org>; Tue, 10 Sep 2019 11:45:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EF62D21479
+	for <dmaengine@archiver.kernel.org>; Tue, 10 Sep 2019 11:50:12 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b="DaEKQpD8"
+	dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b="RjPBdJug"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731207AbfIJLpi (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 10 Sep 2019 07:45:38 -0400
-Received: from fllv0016.ext.ti.com ([198.47.19.142]:59058 "EHLO
+        id S1731626AbfIJLuM (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 10 Sep 2019 07:50:12 -0400
+Received: from fllv0016.ext.ti.com ([198.47.19.142]:59530 "EHLO
         fllv0016.ext.ti.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731205AbfIJLpi (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Tue, 10 Sep 2019 07:45:38 -0400
-Received: from fllv0034.itg.ti.com ([10.64.40.246])
-        by fllv0016.ext.ti.com (8.15.2/8.15.2) with ESMTP id x8ABjVRn049469;
-        Tue, 10 Sep 2019 06:45:31 -0500
+        with ESMTP id S1727120AbfIJLuM (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Tue, 10 Sep 2019 07:50:12 -0400
+Received: from lelv0266.itg.ti.com ([10.180.67.225])
+        by fllv0016.ext.ti.com (8.15.2/8.15.2) with ESMTP id x8ABo9EP050408;
+        Tue, 10 Sep 2019 06:50:09 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
-        s=ti-com-17Q1; t=1568115931;
-        bh=rGQYwREz07lItXpjPOr/Y91fa8TR1naCyoIvgeiuneo=;
+        s=ti-com-17Q1; t=1568116209;
+        bh=JcH26n/D7DAN+euHsWczUuhZTWYKCDEdx+p+sNANUYU=;
         h=From:To:CC:Subject:Date;
-        b=DaEKQpD8MFWd9BGXwD5jrtps80mKQVA0DwDLHO21R1JoQTFTDFqqVfxERkMr1Ty2t
-         CfX29vb1kWdxmDrRTkhdFdHiHphdnXD8yOPmUKkfMmESmNLZdrwRYlkWFgSYfNEAsq
-         X3sn+/mWKoD7YBgS1IrWoLzjjANT1zG5whzQn8Ac=
-Received: from DLEE100.ent.ti.com (dlee100.ent.ti.com [157.170.170.30])
-        by fllv0034.itg.ti.com (8.15.2/8.15.2) with ESMTPS id x8ABjVbM088210
+        b=RjPBdJugaAKGMYFepjUPRbGHeFB/245pfBHjOaKDeWdDXyNd45dx9mKVtKgWn5CNR
+         +1XJ6ozLmioURFZxlZ3m+CFhHqzKs6bHQ/nztXmEBkGpK3JJXVVG3dea3itYxeJ3Z/
+         7vq0ggSVnncuaqdaQ6G+WteZihk5AnnKZFnyABgs=
+Received: from DFLE101.ent.ti.com (dfle101.ent.ti.com [10.64.6.22])
+        by lelv0266.itg.ti.com (8.15.2/8.15.2) with ESMTPS id x8ABo9cO092200
         (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
-        Tue, 10 Sep 2019 06:45:31 -0500
-Received: from DLEE113.ent.ti.com (157.170.170.24) by DLEE100.ent.ti.com
- (157.170.170.30) with Microsoft SMTP Server (version=TLS1_2,
+        Tue, 10 Sep 2019 06:50:09 -0500
+Received: from DFLE111.ent.ti.com (10.64.6.32) by DFLE101.ent.ti.com
+ (10.64.6.22) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1713.5; Tue, 10
- Sep 2019 06:45:30 -0500
-Received: from fllv0040.itg.ti.com (10.64.41.20) by DLEE113.ent.ti.com
- (157.170.170.24) with Microsoft SMTP Server (version=TLS1_2,
+ Sep 2019 06:50:07 -0500
+Received: from lelv0327.itg.ti.com (10.180.67.183) by DFLE111.ent.ti.com
+ (10.64.6.32) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1713.5 via
- Frontend Transport; Tue, 10 Sep 2019 06:45:30 -0500
+ Frontend Transport; Tue, 10 Sep 2019 06:50:07 -0500
 Received: from feketebors.ti.com (ileax41-snat.itg.ti.com [10.172.224.153])
-        by fllv0040.itg.ti.com (8.15.2/8.15.2) with ESMTP id x8ABjRpI119821;
-        Tue, 10 Sep 2019 06:45:28 -0500
+        by lelv0327.itg.ti.com (8.15.2/8.15.2) with ESMTP id x8ABo5cF028909;
+        Tue, 10 Sep 2019 06:50:06 -0500
 From:   Peter Ujfalusi <peter.ujfalusi@ti.com>
 To:     <vkoul@kernel.org>, <robh+dt@kernel.org>
 CC:     <dmaengine@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
         <dan.j.williams@intel.com>, <devicetree@vger.kernel.org>
-Subject: [PATCH v2 0/3] dmaengine: bindings/edma: dma-channel-mask to array
-Date:   Tue, 10 Sep 2019 14:45:56 +0300
-Message-ID: <20190910114559.22810-1-peter.ujfalusi@ti.com>
+Subject: [PATCH 0/3] dmaengine: Support for DMA domain controllers
+Date:   Tue, 10 Sep 2019 14:50:34 +0300
+Message-ID: <20190910115037.23539-1-peter.ujfalusi@ti.com>
 X-Mailer: git-send-email 2.23.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -65,32 +65,52 @@ X-Mailing-List: dmaengine@vger.kernel.org
 
 Hi,
 
-Changes since v1:
-- Extend the common dma-channel-mask to uint32-array to be usable for
-  controllers with more than 32 channels
-- Use the dma-channel-mask instead custom property for available channels for
-  EDMA.
+Changes since RFC:
+- Extended the binding document's example
+- Changed the API to dma_request_chan_by_domain(dev, mask)
+ - Fixed certain crash if the dev parameter would be NULL
+- Add missing parenthesis in of_dma.c
+- typo fix.
 
-The original patch was part of the EDMA multicore usage series.
+More and more SoC have more than one DMA controller integrated.
 
-Rob: I'm not sure if I got the dma-common.yaml update correctly...
+If a device needs none slave DMA channel for operation (block copy from/to
+memory mapped regions for example) at the moment when they request a channel it
+is going to be taken from the first DMA controller which was registered, but
+this might be not optimal for the device.
 
-EDMAs can have 32 or 64 channels depending on the SoC, the dma-channel-mask
-needs to be an array to be usable for the driver.
+For example on AM654 we have two DMAs: main_udmap and mcu_udmap.
+DDR to DDR memcpy is twice as fast on main_udmap compared to mcu_udmap, while
+devices on MCU domain (OSPI for example) are more than twice as fast on
+mcu_udmap than with main_udmap.
+
+Because of probing order (mcu_udmap is probing first) modules would use
+mcu_udmap instead of the better main_udmap. Currently the only solution is to
+make a choice and disable the MEM_TO_MEM functionality on one of them which is
+not a great solution.
+
+With the introduction of DMA domain controllers we can utilize the best DMA
+controller for the job around the SoC without the need to degrade performance.
+
+If the dma-domain-controller is not present in DT or booted w/o DT the none
+slave channel request will work as it does today.
 
 Regards,
 Peter
 ---
 Peter Ujfalusi (3):
-  dt-bindings: dmaengine: dma-common: Change dma-channel-mask to
-    uint32-array
-  dt-bindings: dma: ti-edma: Document dma-channel-mask for EDMA
-  dmaengine: ti: edma: Add support for handling reserved channels
+  dt-bindings: dma: Add documentation for DMA domains
+  dmaengine: of_dma: Function to look up the DMA domain of a client
+  dmaengine: Support for requesting channels preferring DMA domain
+    controller
 
- .../devicetree/bindings/dma/dma-common.yaml   | 10 +++-
- .../devicetree/bindings/dma/ti-edma.txt       |  6 ++
- drivers/dma/ti/edma.c                         | 59 +++++++++++++++++--
- 3 files changed, 68 insertions(+), 7 deletions(-)
+ .../devicetree/bindings/dma/dma-domain.yaml   | 88 +++++++++++++++++++
+ drivers/dma/dmaengine.c                       | 21 +++--
+ drivers/dma/of-dma.c                          | 42 +++++++++
+ include/linux/dmaengine.h                     |  9 +-
+ include/linux/of_dma.h                        |  7 ++
+ 5 files changed, 159 insertions(+), 8 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/dma/dma-domain.yaml
 
 -- 
 Peter
