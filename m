@@ -1,50 +1,89 @@
 Return-Path: <SRS0=y25i=XG=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
-X-Spam-Level: **
-X-Spam-Status: No, score=2.0 required=3.0 tests=FREEMAIL_FORGED_FROMDOMAIN,
-	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,PRICE_CATALOG,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Level: 
+X-Spam-Status: No, score=-10.0 required=3.0
+	tests=HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 83B8DECDE20
-	for <dmaengine@archiver.kernel.org>; Wed, 11 Sep 2019 08:55:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 00552C49ED6
+	for <dmaengine@archiver.kernel.org>; Wed, 11 Sep 2019 14:55:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 611F82084D
-	for <dmaengine@archiver.kernel.org>; Wed, 11 Sep 2019 08:55:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BD12D2075C
+	for <dmaengine@archiver.kernel.org>; Wed, 11 Sep 2019 14:55:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726579AbfIKIz6 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 11 Sep 2019 04:55:58 -0400
-Received: from host200-115-40-89.static.arubacloud.fr ([89.40.115.200]:59730
-        "EHLO mail.qeaudio.ga" rhost-flags-OK-FAIL-OK-OK) by vger.kernel.org
-        with ESMTP id S1725616AbfIKIz6 (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Wed, 11 Sep 2019 04:55:58 -0400
-Received: by mail.qeaudio.ga (Postfix, from userid 48)
-        id D9AAEA3EEE; Wed, 11 Sep 2019 04:37:49 -0400 (EDT)
-To:     dmaengine@vger.kernel.org
-Subject: Inquiry 11/Sept/2019
-X-PHP-Originating-Script: 0:bmaiiler.php
-From:   Julian Smith <juliansmith2015@mail.ru>
-Reply-To: julian.smith@list.ru
+        id S1728253AbfIKOzk (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 11 Sep 2019 10:55:40 -0400
+Received: from mx1.emlix.com ([188.40.240.192]:37216 "EHLO mx1.emlix.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728198AbfIKOzk (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Wed, 11 Sep 2019 10:55:40 -0400
+Received: from mailer.emlix.com (unknown [81.20.119.6])
+        (using TLSv1.2 with cipher ADH-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mx1.emlix.com (Postfix) with ESMTPS id BC6E95FC57;
+        Wed, 11 Sep 2019 16:50:00 +0200 (CEST)
+From:   Philipp Puschmann <philipp.puschmann@emlix.com>
+To:     linux-kernel@vger.kernel.org
+Cc:     vkoul@kernel.org, dan.j.williams@intel.com, shawnguo@kernel.org,
+        s.hauer@pengutronix.de, kernel@pengutronix.de, festevam@gmail.com,
+        linux-imx@nxp.com, gregkh@linuxfoundation.org, jslaby@suse.com,
+        dmaengine@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-serial@vger.kernel.org,
+        Philipp Puschmann <philipp.puschmann@emlix.com>
+Subject: [PATCH 1/4] dmaengine: imx-sdma: fix buffer ownership
+Date:   Wed, 11 Sep 2019 16:49:40 +0200
+Message-Id: <20190911144943.21554-2-philipp.puschmann@emlix.com>
+X-Mailer: git-send-email 2.23.0
+In-Reply-To: <20190911144943.21554-1-philipp.puschmann@emlix.com>
+References: <20190911144943.21554-1-philipp.puschmann@emlix.com>
 MIME-Version: 1.0
-Content-Type:   text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Message-Id: <20190911083810.D9AAEA3EEE@mail.qeaudio.ga>
-Date:   Wed, 11 Sep 2019 04:37:49 -0400 (EDT)
+Content-Transfer-Encoding: 8bit
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Hi,friend,
+BD_DONE flag marks ownership of the buffer. When 1 SDMA owns the buffer,
+when 0 ARM owns it. When processing the buffers in
+sdma_update_channel_loop the ownership of the currently processed buffer
+was set to SDMA again before running the callback function of the the
+buffer and while the sdma script may be running in parallel. So there was
+the possibility to get the buffer overwritten by SDMA before it has been
+processed by kernel leading to kind of random errors in the upper layers,
+e.g. bluetooth.
 
-This is Julian Smith and i am purchasing manager from E-cloth Co.,LTD in the UK.
-We are glad to know about your company from the web and we are interested in your products.
-Could you kindly send us your Latest catalog and price list for our trial order.
+It may be further a good idea to make the status struct member volatile or
+access it using writel or similar to rule out that the compiler sets the
+BD_DONE flag before the callback routine has finished.
 
-Thanks and Best Regards,
+Signed-off-by: Philipp Puschmann <philipp.puschmann@emlix.com>
+---
+ drivers/dma/imx-sdma.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-Ms Julian Smith
-Purchasing Manager
-E-cloth Co.,LTD
-
+diff --git a/drivers/dma/imx-sdma.c b/drivers/dma/imx-sdma.c
+index a01f4b5d793c..1abb14ff394d 100644
+--- a/drivers/dma/imx-sdma.c
++++ b/drivers/dma/imx-sdma.c
+@@ -802,7 +802,6 @@ static void sdma_update_channel_loop(struct sdma_channel *sdmac)
+ 		*/
+ 
+ 		desc->chn_real_count = bd->mode.count;
+-		bd->mode.status |= BD_DONE;
+ 		bd->mode.count = desc->period_len;
+ 		desc->buf_ptail = desc->buf_tail;
+ 		desc->buf_tail = (desc->buf_tail + 1) % desc->num_bd;
+@@ -817,6 +816,8 @@ static void sdma_update_channel_loop(struct sdma_channel *sdmac)
+ 		dmaengine_desc_get_callback_invoke(&desc->vd.tx, NULL);
+ 		spin_lock(&sdmac->vc.lock);
+ 
++		bd->mode.status |= BD_DONE;
++
+ 		if (error)
+ 			sdmac->status = old_status;
+ 	}
+-- 
+2.23.0
 
