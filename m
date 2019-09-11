@@ -7,22 +7,22 @@ X-Spam-Status: No, score=-10.0 required=3.0
 	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7D41CC5ACAE
-	for <dmaengine@archiver.kernel.org>; Wed, 11 Sep 2019 14:55:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 77D95C5ACAE
+	for <dmaengine@archiver.kernel.org>; Wed, 11 Sep 2019 14:55:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 5B7EE21928
-	for <dmaengine@archiver.kernel.org>; Wed, 11 Sep 2019 14:55:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5986721928
+	for <dmaengine@archiver.kernel.org>; Wed, 11 Sep 2019 14:55:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728267AbfIKOzk (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 11 Sep 2019 10:55:40 -0400
-Received: from mx1.emlix.com ([188.40.240.192]:37222 "EHLO mx1.emlix.com"
+        id S1728416AbfIKOzx (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 11 Sep 2019 10:55:53 -0400
+Received: from mx1.emlix.com ([188.40.240.192]:37204 "EHLO mx1.emlix.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727627AbfIKOzk (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        id S1728182AbfIKOzk (ORCPT <rfc822;dmaengine@vger.kernel.org>);
         Wed, 11 Sep 2019 10:55:40 -0400
 Received: from mailer.emlix.com (unknown [81.20.119.6])
         (using TLSv1.2 with cipher ADH-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mx1.emlix.com (Postfix) with ESMTPS id BEE3C5FCE8;
+        by mx1.emlix.com (Postfix) with ESMTPS id D6CEE5FCFF;
         Wed, 11 Sep 2019 16:50:00 +0200 (CEST)
 From:   Philipp Puschmann <philipp.puschmann@emlix.com>
 To:     linux-kernel@vger.kernel.org
@@ -32,9 +32,9 @@ Cc:     vkoul@kernel.org, dan.j.williams@intel.com, shawnguo@kernel.org,
         dmaengine@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
         linux-serial@vger.kernel.org,
         Philipp Puschmann <philipp.puschmann@emlix.com>
-Subject: [PATCH 2/4] dmaengine: imx-sdma: fix dma freezes
-Date:   Wed, 11 Sep 2019 16:49:41 +0200
-Message-Id: <20190911144943.21554-3-philipp.puschmann@emlix.com>
+Subject: [PATCH 4/4] dmaengine: imx-sdma: drop redundant variable
+Date:   Wed, 11 Sep 2019 16:49:43 +0200
+Message-Id: <20190911144943.21554-5-philipp.puschmann@emlix.com>
 X-Mailer: git-send-email 2.23.0
 In-Reply-To: <20190911144943.21554-1-philipp.puschmann@emlix.com>
 References: <20190911144943.21554-1-philipp.puschmann@emlix.com>
@@ -45,76 +45,45 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-For some years and since many kernel versions there are reports that the
-RX UART SDMA channel stops working at some point. The workaround was to
-disable DMA for RX. This commit tries to fix the problem itself.
-
-Due to its license i wasn't able to debug the sdma script itself but it
-somehow leads to blocking the scheduling of the channel script when a
-running sdma script does not find any usable destination buffer to put its
-data into.
-
-If we detect such a potential case we manually retrigger the sdma script
-for this channel and by this reenable the scipt being run by scheduler.
-
-As sdmac->desc is constant we can move desc out of the loop.
+In sdma_prep_dma_cyclic buf is redundant. Drop it.
 
 Signed-off-by: Philipp Puschmann <philipp.puschmann@emlix.com>
 ---
- drivers/dma/imx-sdma.c | 22 ++++++++++++++++++----
- 1 file changed, 18 insertions(+), 4 deletions(-)
+ drivers/dma/imx-sdma.c | 7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
 diff --git a/drivers/dma/imx-sdma.c b/drivers/dma/imx-sdma.c
-index 1abb14ff394d..6a5a84504858 100644
+index 6a5a84504858..5b6beeee9f0e 100644
 --- a/drivers/dma/imx-sdma.c
 +++ b/drivers/dma/imx-sdma.c
-@@ -775,21 +775,23 @@ static void sdma_start_desc(struct sdma_channel *sdmac)
- static void sdma_update_channel_loop(struct sdma_channel *sdmac)
- {
- 	struct sdma_buffer_descriptor *bd;
--	int error = 0;
--	enum dma_status	old_status = sdmac->status;
-+	struct sdma_desc *desc = sdmac->desc;
-+	int error = 0, cnt = 0;
-+	enum dma_status old_status = sdmac->status;
+@@ -1544,7 +1544,7 @@ static struct dma_async_tx_descriptor *sdma_prep_dma_cyclic(
+ 	struct sdma_engine *sdma = sdmac->sdma;
+ 	int num_periods = buf_len / period_len;
+ 	int channel = sdmac->channel;
+-	int i = 0, buf = 0;
++	int i;
+ 	struct sdma_desc *desc;
  
- 	/*
- 	 * loop mode. Iterate over descriptors, re-setup them and
- 	 * call callback function.
- 	 */
--	while (sdmac->desc) {
--		struct sdma_desc *desc = sdmac->desc;
-+	while (desc) {
- 
- 		bd = &desc->bd[desc->buf_tail];
- 
- 		if (bd->mode.status & BD_DONE)
- 			break;
- 
-+		cnt++;
-+
- 		if (bd->mode.status & BD_RROR) {
- 			bd->mode.status &= ~BD_RROR;
- 			sdmac->status = DMA_ERROR;
-@@ -821,6 +823,18 @@ static void sdma_update_channel_loop(struct sdma_channel *sdmac)
- 		if (error)
- 			sdmac->status = old_status;
+ 	dev_dbg(sdma->dev, "%s channel: %d\n", __func__, channel);
+@@ -1565,7 +1565,7 @@ static struct dma_async_tx_descriptor *sdma_prep_dma_cyclic(
+ 		goto err_bd_out;
  	}
-+
-+	/* In some situations it happens that the sdma stops serving
-+	 * dma interrupt requests. It happens when running dma script
-+	 * does not find any usable destination buffer to put its data into.
-+	 *
-+	 * While there is no specific error condition we can check for, a
-+	 * necessary condition is that all available buffers for the current
-+	 * channel have been written to by the sdma script. In such a case we
-+	 * will trigger the sdma script manually.
-+	 */
-+	if (cnt >= desc->num_bd)
-+		sdma_enable_channel(sdmac->sdma, sdmac->channel);
- }
  
- static void mxc_sdma_handle_channel_normal(struct sdma_channel *data)
+-	while (buf < buf_len) {
++	for (i = 0; i < num_periods; i++) {
+ 		struct sdma_buffer_descriptor *bd = &desc->bd[i];
+ 		int param;
+ 
+@@ -1592,9 +1592,6 @@ static struct dma_async_tx_descriptor *sdma_prep_dma_cyclic(
+ 		bd->mode.status = param;
+ 
+ 		dma_addr += period_len;
+-		buf += period_len;
+-
+-		i++;
+ 	}
+ 
+ 	return vchan_tx_prep(&sdmac->vc, &desc->vd, flags);
 -- 
 2.23.0
 
