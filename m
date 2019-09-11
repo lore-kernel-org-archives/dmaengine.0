@@ -2,27 +2,26 @@ Return-Path: <SRS0=y25i=XG=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.0 required=3.0
-	tests=HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 00552C49ED6
-	for <dmaengine@archiver.kernel.org>; Wed, 11 Sep 2019 14:55:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4ED53C5ACAE
+	for <dmaengine@archiver.kernel.org>; Wed, 11 Sep 2019 14:55:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id BD12D2075C
-	for <dmaengine@archiver.kernel.org>; Wed, 11 Sep 2019 14:55:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2CE1F20863
+	for <dmaengine@archiver.kernel.org>; Wed, 11 Sep 2019 14:55:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728253AbfIKOzk (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 11 Sep 2019 10:55:40 -0400
-Received: from mx1.emlix.com ([188.40.240.192]:37216 "EHLO mx1.emlix.com"
+        id S1728198AbfIKOzl (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 11 Sep 2019 10:55:41 -0400
+Received: from mx1.emlix.com ([188.40.240.192]:37206 "EHLO mx1.emlix.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728198AbfIKOzk (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        id S1728202AbfIKOzk (ORCPT <rfc822;dmaengine@vger.kernel.org>);
         Wed, 11 Sep 2019 10:55:40 -0400
 Received: from mailer.emlix.com (unknown [81.20.119.6])
         (using TLSv1.2 with cipher ADH-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mx1.emlix.com (Postfix) with ESMTPS id BC6E95FC57;
+        by mx1.emlix.com (Postfix) with ESMTPS id A80495FBAB;
         Wed, 11 Sep 2019 16:50:00 +0200 (CEST)
 From:   Philipp Puschmann <philipp.puschmann@emlix.com>
 To:     linux-kernel@vger.kernel.org
@@ -32,12 +31,10 @@ Cc:     vkoul@kernel.org, dan.j.williams@intel.com, shawnguo@kernel.org,
         dmaengine@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
         linux-serial@vger.kernel.org,
         Philipp Puschmann <philipp.puschmann@emlix.com>
-Subject: [PATCH 1/4] dmaengine: imx-sdma: fix buffer ownership
-Date:   Wed, 11 Sep 2019 16:49:40 +0200
-Message-Id: <20190911144943.21554-2-philipp.puschmann@emlix.com>
+Subject: [PATCH 0/4] Fix UART DMA freezes for iMX6
+Date:   Wed, 11 Sep 2019 16:49:39 +0200
+Message-Id: <20190911144943.21554-1-philipp.puschmann@emlix.com>
 X-Mailer: git-send-email 2.23.0
-In-Reply-To: <20190911144943.21554-1-philipp.puschmann@emlix.com>
-References: <20190911144943.21554-1-philipp.puschmann@emlix.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: dmaengine-owner@vger.kernel.org
@@ -45,45 +42,39 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-BD_DONE flag marks ownership of the buffer. When 1 SDMA owns the buffer,
-when 0 ARM owns it. When processing the buffers in
-sdma_update_channel_loop the ownership of the currently processed buffer
-was set to SDMA again before running the callback function of the the
-buffer and while the sdma script may be running in parallel. So there was
-the possibility to get the buffer overwritten by SDMA before it has been
-processed by kernel leading to kind of random errors in the upper layers,
-e.g. bluetooth.
+For some years and since many kernel versions there are reports that
+RX UART DMA channel stops working at one point. So far the usual workaround was
+to disable RX DMA. This patches try to fix the underlying problem.
 
-It may be further a good idea to make the status struct member volatile or
-access it using writel or similar to rule out that the compiler sets the
-BD_DONE flag before the callback routine has finished.
+When a running sdma script does not find any usable destination buffer to put
+its data into it just leads to stopping the channel being scheduled again. As
+solution we we manually retrigger the sdma script for this channel and by this
+dissolve the freeze.
 
-Signed-off-by: Philipp Puschmann <philipp.puschmann@emlix.com>
----
- drivers/dma/imx-sdma.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+While this seems to work fine so far a further patch in this series increases
+the number of RX DMA periods for UART to reduce use cases running into such
+a situation.
 
-diff --git a/drivers/dma/imx-sdma.c b/drivers/dma/imx-sdma.c
-index a01f4b5d793c..1abb14ff394d 100644
---- a/drivers/dma/imx-sdma.c
-+++ b/drivers/dma/imx-sdma.c
-@@ -802,7 +802,6 @@ static void sdma_update_channel_loop(struct sdma_channel *sdmac)
- 		*/
- 
- 		desc->chn_real_count = bd->mode.count;
--		bd->mode.status |= BD_DONE;
- 		bd->mode.count = desc->period_len;
- 		desc->buf_ptail = desc->buf_tail;
- 		desc->buf_tail = (desc->buf_tail + 1) % desc->num_bd;
-@@ -817,6 +816,8 @@ static void sdma_update_channel_loop(struct sdma_channel *sdmac)
- 		dmaengine_desc_get_callback_invoke(&desc->vd.tx, NULL);
- 		spin_lock(&sdmac->vc.lock);
- 
-+		bd->mode.status |= BD_DONE;
-+
- 		if (error)
- 			sdmac->status = old_status;
- 	}
+This patch series was tested with the current kernel and backported to
+kernel 4.15 with a special use case using a WL1837MOD via UART and provoking
+the hanging of UART RX DMA within seconds after starting a test application.
+It resulted in well known
+  "Bluetooth: hci0: command 0x0408 tx timeout"
+errors and complete stop of UART data reception. Our Bluetooth traffic consists
+of many independent small packets, mostly only a few bytes, causing high usage
+of periods.
+
+
+Philipp Puschmann (4):
+  dmaengine: imx-sdma: fix buffer ownership
+  dmaengine: imx-sdma: fix dma freezes
+  serial: imx: adapt rx buffer and dma periods
+  dmaengine: imx-sdma: drop redundant variable
+
+ drivers/dma/imx-sdma.c   | 32 ++++++++++++++++++++++----------
+ drivers/tty/serial/imx.c |  5 ++---
+ 2 files changed, 24 insertions(+), 13 deletions(-)
+
 -- 
 2.23.0
 
