@@ -1,158 +1,133 @@
-Return-Path: <SRS0=7pVK=XN=vger.kernel.org=dmaengine-owner@kernel.org>
+Return-Path: <SRS0=oKIR=XO=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.1 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED,USER_AGENT_GIT autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DDAD3C4CEC9
-	for <dmaengine@archiver.kernel.org>; Wed, 18 Sep 2019 14:21:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 56786C49ED7
+	for <dmaengine@archiver.kernel.org>; Thu, 19 Sep 2019 07:26:46 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id B1DE721920
-	for <dmaengine@archiver.kernel.org>; Wed, 18 Sep 2019 14:21:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1568816500;
-	bh=wXgtDQ2Bk9vjBzgeHu+dOpDd3lEyXdo3Em4I00Qq0go=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:List-ID:From;
-	b=Y4zfVyf1MPI0uJj97QyyQqf9aIkgiHe/BfCAF8KP2I/EypwUZegIEir1GNZUhc+9y
-	 WF30hzjYsT1jWUIcAbSHBTj4C9/CUosGqABk7PiAivpIUK4QxJsdZYr7Fz0rWs4OMH
-	 YbKyKDCEeP4GQgp/DbNYQvA3UiB2GGgD3ndWvzsw=
+	by mail.kernel.org (Postfix) with ESMTP id 0B38D21924
+	for <dmaengine@archiver.kernel.org>; Thu, 19 Sep 2019 07:26:45 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=sifive.com header.i=@sifive.com header.b="CtQFocnZ"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728507AbfIROVk (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 18 Sep 2019 10:21:40 -0400
-Received: from mail.kernel.org ([198.145.29.99]:38934 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727056AbfIROVk (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Wed, 18 Sep 2019 10:21:40 -0400
-Received: from mail-yw1-f51.google.com (mail-yw1-f51.google.com [209.85.161.51])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 8DC762067B;
-        Wed, 18 Sep 2019 14:21:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1568816498;
-        bh=wXgtDQ2Bk9vjBzgeHu+dOpDd3lEyXdo3Em4I00Qq0go=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=GD8v6IR4n4ZFgYbHm4vs9fdVL0NBUorWvqvJHWa6MP0LPCqjmy/PtK6aRVG5s2IqP
-         GYXzm9YSypo9MsFMZfRbqMm38/8YmfgHGKiuzKo5iqlZV6wgW0sZ0dsm8lGJBWEamP
-         rjAfeX4yXPpsQjqB4lUUpEJvtiPfe9EBUsi7diQg=
-Received: by mail-yw1-f51.google.com with SMTP id j128so11153ywf.0;
-        Wed, 18 Sep 2019 07:21:38 -0700 (PDT)
-X-Gm-Message-State: APjAAAVEMhh0WkQjAtmwE3Eb/AI8yqm8p/GbO3inhJlmddEZM9fL0gwf
-        +Kc3ou6/fdeCj5xTEZXhZL0ZVAMd9gVrIOPPIA==
-X-Google-Smtp-Source: APXvYqzliDG2Xy58F978kJGtp6vQ1A2AyEZNr8e3uVSmktEs+lZEJgI2FWH3qKtnlcumLLeZFhha8AUbhOFoHfMVSDo=
-X-Received: by 2002:a81:9182:: with SMTP id i124mr3466623ywg.279.1568816497852;
- Wed, 18 Sep 2019 07:21:37 -0700 (PDT)
-MIME-Version: 1.0
-References: <20190910114559.22810-1-peter.ujfalusi@ti.com> <20190910114559.22810-2-peter.ujfalusi@ti.com>
- <20190918132835.GA4527@bogus> <d76ffc38-8e68-656a-325b-37de9b01e015@ti.com>
-In-Reply-To: <d76ffc38-8e68-656a-325b-37de9b01e015@ti.com>
-From:   Rob Herring <robh@kernel.org>
-Date:   Wed, 18 Sep 2019 09:21:26 -0500
-X-Gmail-Original-Message-ID: <CAL_JsqLJn4dmnjU=7kVgiosAU=o+fSJNH6578D92fGbdOR8Zfw@mail.gmail.com>
-Message-ID: <CAL_JsqLJn4dmnjU=7kVgiosAU=o+fSJNH6578D92fGbdOR8Zfw@mail.gmail.com>
-Subject: Re: [PATCH v2 1/3] dt-bindings: dmaengine: dma-common: Change
- dma-channel-mask to uint32-array
-To:     Peter Ujfalusi <peter.ujfalusi@ti.com>
-Cc:     Vinod <vkoul@kernel.org>,
-        "open list:DMA GENERIC OFFLOAD ENGINE SUBSYSTEM" 
-        <dmaengine@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        Dan Williams <dan.j.williams@intel.com>,
-        devicetree@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+        id S1732001AbfISH0p (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Thu, 19 Sep 2019 03:26:45 -0400
+Received: from mail-pg1-f193.google.com ([209.85.215.193]:39167 "EHLO
+        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731914AbfISH0p (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Thu, 19 Sep 2019 03:26:45 -0400
+Received: by mail-pg1-f193.google.com with SMTP id u17so1362986pgi.6
+        for <dmaengine@vger.kernel.org>; Thu, 19 Sep 2019 00:26:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=sifive.com; s=google;
+        h=from:to:cc:subject:date:message-id;
+        bh=LT2z44LmrD8QiD0ZavUH6kqFzDYzxRxS7Yx8XNbtmgg=;
+        b=CtQFocnZL4WmYuwxWCYhyEntS5rlt+d1KJfZ+HqgKSog1hBrz8eBhoC7C/vROml3Oh
+         AS++a3QV9CsqrBUzgONj0CPB5SzjdH18bMPKvGgPA/TopigokdBDKHJTdr2MO1vdwu9A
+         oyCWz79UboRAvyHMV8QE2A7lSeDLGuy7FrLbe9azF3v/ppn5HSRegEli0MrxXI71FkLn
+         7yfJlz4wFoUsQnY8gyFCjw+j4+J/lNhR4t6muGEMsg+gZJDjn/b2iBzpZqO4xYbYZDtE
+         6QkI5t16FOK6ssoLnkapKTHBxwKZrINNCZ9xNk6K4eQVuS85UDsRcxDa4Ln//yQ10cn8
+         PDNw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=LT2z44LmrD8QiD0ZavUH6kqFzDYzxRxS7Yx8XNbtmgg=;
+        b=Ha9QLjeT9/RSW+R9jvZI0jp76FpmNFP+SU1nl11ihXhO0EY/+bf//OeET7wpc79QXa
+         PXLCi5gxTIDnjkbokvJgNSDlVOuvJ7wxO3dQNhHK6Y1Iso4SG5gSdDZ2KVfKrKH7vy5Y
+         NLDoUMQknPSETfFI8JSh8rS6bud1IfJYnsQbN6SuFuAnaH++R3nKRml7V+S2MW1shCKb
+         8fx2L/b1htCkEf6HWuOphoKhccj5Mrym9F100GRxMcxw3nd8sVJUg5glUl3uobhh0Uo2
+         nJ1U4pRz5jnlYTIPg6JqFo7bhEW9PrOOoAXdHwMFbeXxw6roIPwiWxPU1ciIDwyUYho0
+         szHw==
+X-Gm-Message-State: APjAAAUSumRBlqTWoD3ZFRIvL+0bFZeplOoa7CDL9X2AqquqWVko2G6Z
+        aj2TNSeI5ybXXcZ1mmXO2oIkRw==
+X-Google-Smtp-Source: APXvYqzj/tUGOJg5wnHc5YqepfesJlG4rD39ze0qs4Fw4GBM+v3Y4zCzaZ44ydGQGaexDNA219KQ3A==
+X-Received: by 2002:a63:3c46:: with SMTP id i6mr7623466pgn.18.1568878004335;
+        Thu, 19 Sep 2019 00:26:44 -0700 (PDT)
+Received: from localhost.localdomain (36-228-113-219.dynamic-ip.hinet.net. [36.228.113.219])
+        by smtp.gmail.com with ESMTPSA id b2sm10453620pfd.81.2019.09.19.00.26.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 19 Sep 2019 00:26:43 -0700 (PDT)
+From:   Green Wan <green.wan@sifive.com>
+Cc:     linux-hackers@sifive.com, Green Wan <green.wan@sifive.com>,
+        Vinod Koul <vkoul@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Palmer Dabbelt <palmer@sifive.com>,
+        Paul Walmsley <paul.walmsley@sifive.com>,
+        Albert Ou <aou@eecs.berkeley.edu>,
+        Mauro Carvalho Chehab <mchehab+samsung@kernel.org>,
+        "David S. Miller" <davem@davemloft.net>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Nicolas Ferre <nicolas.ferre@microchip.com>,
+        "Paul E. McKenney" <paulmck@linux.ibm.com>,
+        dmaengine@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org
+Subject: [PATCH v2 0/3] dmaengine: sf-pdma: Add platform dma driver
+Date:   Thu, 19 Sep 2019 15:26:03 +0800
+Message-Id: <20190919072634.1885-1-green.wan@sifive.com>
+X-Mailer: git-send-email 2.17.1
+To:     unlisted-recipients:; (no To-header on input)
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On Wed, Sep 18, 2019 at 9:04 AM Peter Ujfalusi <peter.ujfalusi@ti.com> wrot=
-e:
->
->
->
-> On 18/09/2019 16.28, Rob Herring wrote:
-> > On Tue, Sep 10, 2019 at 02:45:57PM +0300, Peter Ujfalusi wrote:
-> >> Make the dma-channel-mask to be usable for controllers with more than =
-32
-> >> channels.
-> >>
-> >> Signed-off-by: Peter Ujfalusi <peter.ujfalusi@ti.com>
-> >> ---
-> >>  Documentation/devicetree/bindings/dma/dma-common.yaml | 10 +++++++++-
-> >>  1 file changed, 9 insertions(+), 1 deletion(-)
-> >>
-> >> diff --git a/Documentation/devicetree/bindings/dma/dma-common.yaml b/D=
-ocumentation/devicetree/bindings/dma/dma-common.yaml
-> >> index ed0a49a6f020..41460946be64 100644
-> >> --- a/Documentation/devicetree/bindings/dma/dma-common.yaml
-> >> +++ b/Documentation/devicetree/bindings/dma/dma-common.yaml
-> >> @@ -25,11 +25,19 @@ properties:
-> >>        Used to provide DMA controller specific information.
-> >>
-> >>    dma-channel-mask:
-> >> -    $ref: /schemas/types.yaml#definitions/uint32
-> >>      description:
-> >>        Bitmask of available DMA channels in ascending order that are
-> >>        not reserved by firmware and are available to the
-> >>        kernel. i.e. first channel corresponds to LSB.
-> >> +    allOf:
-> >> +      - $ref: /schemas/types.yaml#/definitions/uint32-array
-> >> +        items:
-> >> +          minItems =3D 1
-> >
-> > '=3D'? Just making up the syntax?
->
-> Opps, sorry.
->
-> >
-> >> +          maxItems =3D 255 # Should be enough
-> >> +          - description: Mask of channels 0-31
-> >> +          - description: Mask of channels 32-63
-> >
-> > You are mixing a schema and list here...
->
-> Should I extend the description with something like this:
-> "The first item in the array is for channels 0-31, the second is for
-> channels 32-63, etc."
->
-> To make sure that it is used in a correct and consistent manner.
+Add PDMA driver support for SiFive HiFive Unleashed RevA00 board. Mainly follows
+DMAengine controller doc[1] to implement and take other DMA drivers as reference.
+Such as
 
-Sure.
+  - drivers/dma/fsl-edma.c
+  - drivers/dma/dw-edma/
+  - drivers/dma/pxa-dma.c
 
->
-> >> +          ...
-> >
-> > That's end of doc marker in YAML...
->
-> I believe I need some reading to do for YAML..
->
-> >
-> >> +          - description: Mask of chnanels X-(X+31)
-> >
-> > Obviously, this was not validated with 'make dt_binding_check'.
-> make dt_bindings_check
-> make: *** No rule to make target 'dt_bindings_check'.  Stop.
+Using DMA test client[2] to test. Detailed datasheet is doc[3]. Driver supports:
 
-Read Documentation/devicetree/writing-schema.md (or .rst in next).
+ - 4 physical DMA channels, share same DONE and error interrupt handler. 
+ - Support MEM_TO_MEM
+ - Tested by DMA test client
+ - patches include DT Bindgins document and dts for fu450-c000 SoC. Separate dts
+   patch for easier review and apply to different branch or SoC platform.
+ - retry 1 time if DMA error occurs.
 
-Either your config doesn't have DTC enabled or you don't have
-dt-schema installed.
+[Reference Doc]
+ [1] ./Documentation/driver-api/dmaengine/provider.rst
+ [2] ./Documentation/driver-api/dmaengine/dmatest.rst
+ [3] https://static.dev.sifive.com/FU540-C000-v1.0.pdf 
 
->
-> > What you  want is:
-> >
-> >     allOf:
-> >       - $ref: /schemas/types.yaml#/definitions/uint32-array
-> >       - minItems: 1
-> >         maxItems: 255 # Should be enough
->
-> OK and thanks for the comments.
->
-> - P=C3=A9ter
->
-> Texas Instruments Finland Oy, Porkkalankatu 22, 00180 Helsinki.
-> Y-tunnus/Business ID: 0615521-4. Kotipaikka/Domicile: Helsinki
+[Simple steps to test of DMA Test client]
+ $ echo 1 > /sys/module/dmatest/parameters/iterations
+ $ echo dma0chan0 > /sys/module/dmatest/parameters/channel
+ $ echo dma0chan1 > /sys/module/dmatest/parameters/channel
+ $ echo dma0chan2 > /sys/module/dmatest/parameters/channel
+ $ echo dma0chan3 > /sys/module/dmatest/parameters/channel
+ $ echo 1 > /sys/module/dmatest/parameters/run
+
+Green Wan (3):
+  dt-bindings: dmaengine: sf-pdma: add bindins for SiFive PDMA
+  riscv: dts: add support for PDMA device of HiFive Unleashed Rev A00
+  dmaengine: sf-pdma: add platform DMA support for HiFive Unleashed A00
+
+ .../bindings/dma/sifive,fu540-c000-pdma.yaml  |  63 ++
+ MAINTAINERS                                   |   6 +
+ arch/riscv/boot/dts/sifive/fu540-c000.dtsi    |   7 +
+ drivers/dma/Kconfig                           |   2 +
+ drivers/dma/Makefile                          |   1 +
+ drivers/dma/sf-pdma/Kconfig                   |   6 +
+ drivers/dma/sf-pdma/Makefile                  |   1 +
+ drivers/dma/sf-pdma/sf-pdma.c                 | 623 ++++++++++++++++++
+ drivers/dma/sf-pdma/sf-pdma.h                 | 124 ++++
+ 9 files changed, 833 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/dma/sifive,fu540-c000-pdma.yaml
+ create mode 100644 drivers/dma/sf-pdma/Kconfig
+ create mode 100644 drivers/dma/sf-pdma/Makefile
+ create mode 100644 drivers/dma/sf-pdma/sf-pdma.c
+ create mode 100644 drivers/dma/sf-pdma/sf-pdma.h
+
+-- 
+2.17.1
+
