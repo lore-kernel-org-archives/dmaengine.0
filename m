@@ -1,185 +1,154 @@
-Return-Path: <SRS0=Ha9Y=XP=vger.kernel.org=dmaengine-owner@kernel.org>
+Return-Path: <SRS0=brDT=XQ=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_GIT autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C78ECC4CECD
-	for <dmaengine@archiver.kernel.org>; Fri, 20 Sep 2019 10:01:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E52CBC4360D
+	for <dmaengine@archiver.kernel.org>; Sat, 21 Sep 2019 14:58:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 93736208C0
-	for <dmaengine@archiver.kernel.org>; Fri, 20 Sep 2019 10:01:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A74AA2073F
+	for <dmaengine@archiver.kernel.org>; Sat, 21 Sep 2019 14:58:13 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=sifive.com header.i=@sifive.com header.b="iFc44Jyz"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="n35lnfvx"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2437968AbfITKBs (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 20 Sep 2019 06:01:48 -0400
-Received: from mail-io1-f65.google.com ([209.85.166.65]:39118 "EHLO
-        mail-io1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2437988AbfITKBs (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Fri, 20 Sep 2019 06:01:48 -0400
-Received: by mail-io1-f65.google.com with SMTP id a1so14842179ioc.6
-        for <dmaengine@vger.kernel.org>; Fri, 20 Sep 2019 03:01:46 -0700 (PDT)
+        id S2393539AbfIUO6N (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Sat, 21 Sep 2019 10:58:13 -0400
+Received: from mail-pf1-f194.google.com ([209.85.210.194]:41450 "EHLO
+        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2390556AbfIUO6N (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Sat, 21 Sep 2019 10:58:13 -0400
+Received: by mail-pf1-f194.google.com with SMTP id q7so6431378pfh.8;
+        Sat, 21 Sep 2019 07:58:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=sifive.com; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=g994BJg/jPAigCOVsri275vhxV1YMwyqa+ZWpEcSJHY=;
-        b=iFc44JyzXlsEdJ8ZGOrWgpTK0QF37LYXPDpneIFX6jIh3j9MM3sAu1JGGTadYRKuwW
-         CGl0Fmrl34Sy+7DxuUlu82SW2IVLCHpQOmoeAApYxtgGdXZ4U4i504sEJ9qWkIE2mR0k
-         gWIeJskW/cZLd2m2sNLkxAFFne9NpN8DuiK+ZshTWQJboqhi3fk5xYVnFyDkbDoGmDam
-         5xiLOm5+J+eEPhm2b+N/5/2Xo/v4KTqIeYmEtXWgDctdq8wzZvJ/nzPPedZwHZKdqTOZ
-         vrp0QrFtQntkesy5Rp7I1O5fqPAz5BGq6ELB/cOVvXCoOkAZYUNmwlxjXXRnSLmzsb8Y
-         /3bg==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to;
+        bh=rMu789LD1T8uU9KacNFi9FCRB7xCR3S38zLi0aGwMPk=;
+        b=n35lnfvxCsApW2kK/lMjVc0YEBMnaP2lRsh3iZP3PqPJ2tV3sg11DolTl/kk9xyJde
+         /ha5P/doLG5uKhkPQNY5bQt/JkPdzdAEqzqk3AkVfHXePMgjGLWFzx80KbrzYnZ78z7s
+         oKFHDgAnjMCs0loyHFt1jjasbEjPENOE1nLRi9OkT3p6vUCxrLXzpNR/BOoFSGI+z9Y7
+         4OaVoqk3tj5sFv/99bVXIE/7qHl3U+ulaMA5oy3DSGu7oxcstDO/eXPyv6MwtrqODYPG
+         U1QjzItNO/Fqx18aXt3H2HDvTec+8NdgrenBqnlI0CejEldxq1YFrwkqsWEk6G5YoH8C
+         mdXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=g994BJg/jPAigCOVsri275vhxV1YMwyqa+ZWpEcSJHY=;
-        b=M3dxmpW/bMJ5D+usTEO3m4bwXWYm9aVo1IZVjwTkluBDxS0dh+3ukl5pXsebL1nrTd
-         qgXMNEOxxE/af1deeBvAI5HhNuvW6WbctZzAPF8RO5UBrEtvEdC52Qnb155UZY27jZx1
-         h5an9wFIa8tdgfW1ZorW2KMRafHkerXN7EbDXexY8qzAuGTR9OsEDifb8oXZ624c6a45
-         MdeUnAZev9WS1ZWQI9OlylsMEAVecUDQ+UOgOwkqoBr0tVW5dm+/lmJN661yVpioqnjN
-         2ndDUXZxuetiW/luB2rKixBRwaWTngCzWi9lA9tofuQDUn2gRPmMX64iFmOoHhZWC/iB
-         8AMA==
-X-Gm-Message-State: APjAAAWDssGKpEUIIkGy1sAPe9HyDcWtvGTfOYRkSHxPA3qIbDiz6QL4
-        tN7LUnSkEbbE4xaVM12yjCjPIOKwmZFAoH6YMHiVZw==
-X-Google-Smtp-Source: APXvYqxfUxvLHOR+Wn2vv6/tsz0PWRvLzPL3QAajZParvvSIWZcYkRXLxLuyaEQmx0JgaIHOXcW/CUZEbaflcc7pARM=
-X-Received: by 2002:a6b:e719:: with SMTP id b25mr11639828ioh.100.1568973705798;
- Fri, 20 Sep 2019 03:01:45 -0700 (PDT)
-MIME-Version: 1.0
-References: <20190920090033.19438-1-green.wan@sifive.com>
-In-Reply-To: <20190920090033.19438-1-green.wan@sifive.com>
-From:   Pragnesh Patel <pragnesh.patel@sifive.com>
-Date:   Fri, 20 Sep 2019 15:31:35 +0530
-Message-ID: <CAN8ut8Lfo3zm2mjoiH3o4FSTkHexagwUFT=V3MpgcE=arm5c4g@mail.gmail.com>
-Subject: Re: [PATCH v3 1/3] dt-bindings: dmaengine: sf-pdma: add bindins for
- SiFive PDMA
-To:     Green Wan <green.wan@sifive.com>
-Cc:     linux-hackers@sifive.com, Vinod Koul <vkoul@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Paul Walmsley <paul.walmsley@sifive.com>,
-        Palmer Dabbelt <palmer@sifive.com>,
-        Mauro Carvalho Chehab <mchehab+samsung@kernel.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Nicolas Ferre <nicolas.ferre@microchip.com>,
-        "Paul E. McKenney" <paulmck@linux.ibm.com>,
-        dmaengine@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to;
+        bh=rMu789LD1T8uU9KacNFi9FCRB7xCR3S38zLi0aGwMPk=;
+        b=izd/ZohTSYNTXe4yKXd8tFo99/ktHj0JfJNs615xVOLjgopJ1mbI3j5ZHOsh+9sn+C
+         A9if4zpUTfdzIXP8iFIuopdgT3HvNwd22aAqNMpVotwOik1YI07Lb3AtkTri5qZni/74
+         dAHr5m/M9Fw9sOQkeuIxXCA+y2NYs+THJJG5gTudXUGV8rBXjIpyklcCbX1+rYNWPpG5
+         8Or1AVCylBjOR5F5iiVfjlt58bvedDywTXA03d8BDt1TmI+qDVKMVp6ItP6jFsf235qt
+         wGYmWYC0O5Xf7ekk6nGiJFOIKbapInz3VeHofzX+B/7baPxVEP8z5Epvz0x6KUoohN3S
+         60rA==
+X-Gm-Message-State: APjAAAViIAeo2KwNqVZVaAYGR45ldqvfDZ1N/6LHtBq9TmFVDh/K4itA
+        CzJOA+wBcWIbXBlkkU3/GOI=
+X-Google-Smtp-Source: APXvYqzq1rGaqCGeV44c1S06GyiRUKXeYke/1wz8RtK+UwfNjVz8EIJCJF0JnYuM5kiFHQQ1VUVAJA==
+X-Received: by 2002:a63:2224:: with SMTP id i36mr12763638pgi.135.1569077891943;
+        Sat, 21 Sep 2019 07:58:11 -0700 (PDT)
+Received: from satendra-MM061.ib-wrb304n.setup.in ([103.82.150.67])
+        by smtp.gmail.com with ESMTPSA id r185sm5933695pfr.68.2019.09.21.07.58.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 21 Sep 2019 07:58:10 -0700 (PDT)
+From:   Satendra Singh Thakur <sst2005@gmail.com>
+To:     dan.j.williams@intel.com, vkoul@kernel.org, jun.nie@linaro.org,
+        shawnguo@kernel.org, agross@kernel.org, sean.wang@mediatek.com,
+        matthias.bgg@gmail.com, maxime.ripard@bootlin.com, wens@csie.org,
+        lars@metafoo.de, afaerber@suse.de, manivannan.sadhasivam@linaro.org
+Cc:     dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-mediatek@lists.infradead.org, satendrasingh.thakur@hcl.com,
+        Satendra Singh Thakur <sst2005@gmail.com>
+Subject: Re: Re: [PATCH 0/9] added helper macros to remove duplicate code from probe functions of the platform drivers
+Date:   Sat, 21 Sep 2019 20:27:26 +0530
+Message-Id: <2356e29bca5bdfa901534bb32a2782185eb0415f.1568909689.git.sst2005@gmail.com>
+X-Mailer: git-send-email 2.17.1
+In-Reply-To: <20190918102715.GO4392@vkoul-mobl>
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On Fri, Sep 20, 2019 at 2:30 PM Green Wan <green.wan@sifive.com> wrote:
+On Wed, Sep 18, 2019 at 3:57 PM, Vinod Koul wrote:
+> On 15-09-19, 12:30, Satendra Singh Thakur wrote:
+> > 1. For most of the platform drivers's probe include following steps
+> > 
+> > -memory allocation for driver's private structure
+> > -getting io resources
+> > -io remapping resources
+> > -getting irq number
+> > -registering irq
+> > -setting driver's private data
+> > -getting clock
+> > -preparing and enabling clock
 >
-> Add DT bindings document for Platform DMA(PDMA) driver of board,
-> HiFive Unleashed Rev A00.
->
-> Signed-off-by: Green Wan <green.wan@sifive.com>
-> ---
->  .../bindings/dma/sifive,fu540-c000-pdma.yaml  | 55 +++++++++++++++++++
->  MAINTAINERS                                   |  5 ++
->  2 files changed, 60 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/dma/sifive,fu540-c000-pdma.yaml
->
-> diff --git a/Documentation/devicetree/bindings/dma/sifive,fu540-c000-pdma.yaml b/Documentation/devicetree/bindings/dma/sifive,fu540-c000-pdma.yaml
-> new file mode 100644
-> index 000000000000..3ed015f2b83a
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/dma/sifive,fu540-c000-pdma.yaml
-> @@ -0,0 +1,55 @@
-> +# SPDX-License-Identifier: GPL-2.0
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/dma/sifive,fu540-c000-pdma.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: SiFive Unleashed Rev C000 Platform DMA
-> +
-> +maintainers:
-> +  - Green Wan <green.wan@sifive.com>
-> +  - Palmer Debbelt <palmer@sifive.com>
-> +  - Paul Walmsley <paul.walmsley@sifive.com>
-> +
-> +description: |
-> +  Platform DMA is a DMA engine of SiFive Unleashed. It supports 4
-> +  channels. Each channel has 2 interrupts. One is for DMA done and
-> +  the other is for DME error.
-> +
-> +  In different SoC, DMA could be attached to different IRQ line.
-> +  DT file need to be changed to meet the difference. For technical
-> +  doc,
-> +
-> +  https://static.dev.sifive.com/FU540-C000-v1.0.pdf
-> +
-> +properties:
-> +  compatible:
-> +    items:
-> +      - const: sifive,fu540-c000-pdma
-> +
-> +  reg:
-> +    maxItems: 1
-> +
-> +  interrupts:
-> +    minItems: 8
-> +    maxItems: 8
+> And we have perfect set of APIs for these tasks!
+Hi Vinod,
+Thanks for the comments.
+You are right, we already have set of APIs for these tasks.
+The proposed macros combine the very same APIs to remove 
+duplicate/redundant code.
+A new driver author can use these macros to easily write probe 
+function without having to worry about signatures of internal APIs.
+In the past, people have combined some of them e.g.
+a) clk_prepare_enable combines clk_prepare and clk_enable
+b) devm_platform_ioremap_resource combines
+platform_get_resource (for type IORESOURCE_MEM)
+and devm_ioremap_resource
+c) module_platform_driver macro encompasses module_init/exit 
+and driver_register/unregister functions.
+The basic idea is to simplyfy coding.
+> > 2. We have defined a set of macros to combine some or all of
+> > the above mentioned steps. This will remove redundant/duplicate
+> > code in drivers' probe functions of platform drivers.
+> 
+> Why, how does it help and you do realize it also introduces bugs
+This will make probe function shorter by removing repeated code.
+This will also reduce bugs caused due to improper handling
+of failure cases because of these reasons:
+a) If the developer calls each API individualy one might miss
+proper handling of the failure for some API; Whereas the macro
+properly handles failure of each API.
+b) Macros are devres compatible which leaves less room for
+memory leaks.
 
-"make dt_binding_check" should give you the error that interrupts is too short.
+Yes, the macros which enable clock and request irqs
+might cause bugs if they are not used carefully.
+For instance, enabling the clock or requesting the irq
+earlier than actually required. So, the macros with _clk
+and _irq, _all suffix should be used carefully.
 
-When you say minItems: 8 then interrupts property should be like this:
-interrupts = <23>, <24>,  <25>,  <26>,  <27>,  <28>,  <29>,  <30>;
+Please let me know if I miss any specific type of bug
+here.
+> 
+> > devm_platform_probe_helper(pdev, priv, clk_name);
+> > devm_platform_probe_helper_clk(pdev, priv, clk_name);
+> > devm_platform_probe_helper_irq(pdev, priv, clk_name,
+> > irq_hndlr, irq_flags, irq_name, irq_devid);
+> > devm_platform_probe_helper_all(pdev, priv, clk_name,
+> > irq_hndlr, irq_flags, irq_name, irq_devid);
+> > devm_platform_probe_helper_all_data(pdev, priv, clk_name,
+> > irq_hndlr, irq_flags, irq_name, irq_devid);
+> > 
+> > 3. Code is made devres compatible (wherever required)
+> > The functions: clk_get, request_irq, kzalloc, platform_get_resource
+> > are replaced with their devm_* counterparts.
+> 
+> We already have devres APIs for people to use!
+Yes, we have devres APIs and many drivers do use them.
+But still there are many which don't use them.
+The proposed macros provides just another way to use devres APIs.
+> > 
+> > 4. Few bugs are also fixed.
+> 
+> Which ones..?
+The bug is that the failure of request_irq 
+is not handled properly in mtk-hsdma.c. This is fixed in patch [5/9].
+https://lkml.org/lkml/2019/9/15/35
 
-So,  remove the minItems: 8 and change maxItems: 1 for interrupts =
-<23 24 25 26 27 28 29 30>;
+Please let me know if I am missing something here.
+Thanks
+-Satendra 
 
-> +
-> +  '#dma-cells':
-> +    const: 1
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - interrupts
-> +  - '#dma-cells'
-> +
-> +examples:
-> +  - |
-> +    dma@3000000 {
-> +      compatible = "sifive,fu540-c000-pdma";
-> +      reg = <0x0 0x3000000 0x0 0x8000>;
-> +      interrupts = <23 24 25 26 27 28 29 30>;
-> +      #dma-cells = <1>;
-> +    };
-> +
-> +...
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 49f75d1b7b51..d0caa09a479e 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -14591,6 +14591,11 @@ F:     drivers/media/usb/siano/
->  F:     drivers/media/usb/siano/
->  F:     drivers/media/mmc/siano/
->
-> +SIFIVE PDMA DRIVER
-> +M:     Green Wan <green.wan@sifive.com>
-> +S:     Maintained
-> +F:     Documentation/devicetree/bindings/dma/sifive,fu540-c000-pdma.yaml
-> +
->  SIFIVE DRIVERS
->  M:     Palmer Dabbelt <palmer@sifive.com>
->  M:     Paul Walmsley <paul.walmsley@sifive.com>
-> --
-> 2.17.1
->
-> --
-> You received this message because you are subscribed to the Google Groups "linux-hackers" group.
-> To unsubscribe from this group and stop receiving emails from it, send an email to linux-hackers+unsubscribe@sifive.com.
-> To view this discussion on the web visit https://groups.google.com/a/sifive.com/d/msgid/linux-hackers/20190920090033.19438-1-green.wan%40sifive.com.
