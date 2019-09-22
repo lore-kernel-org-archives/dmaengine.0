@@ -2,52 +2,53 @@ Return-Path: <SRS0=UIJX=XR=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.3 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+X-Spam-Status: No, score=-10.1 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,UNWANTED_LANGUAGE_BODY,USER_AGENT_GIT
-	autolearn=unavailable autolearn_force=no version=3.4.0
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=unavailable
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E4945C4740C
-	for <dmaengine@archiver.kernel.org>; Sun, 22 Sep 2019 19:20:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A5FECC4740C
+	for <dmaengine@archiver.kernel.org>; Sun, 22 Sep 2019 19:23:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id B45BD2067B
-	for <dmaengine@archiver.kernel.org>; Sun, 22 Sep 2019 19:20:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 74AF7206C2
+	for <dmaengine@archiver.kernel.org>; Sun, 22 Sep 2019 19:23:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1569180055;
-	bh=XgrJTEr1zHVb1qydoT2TySsbUVaRZlc38KN9JrnviyM=;
+	s=default; t=1569180201;
+	bh=LHr0zQNTuWMvB8KfJDg2lp4+b/SuKXqID+v+rc6sg8g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:List-ID:From;
-	b=y3yW5nC8VYNXNdFhNCKzGuVX+SBKwtjhEhc+PJ4XDjDTOAXpzDLfp4PnInv12a5tP
-	 xNuvdybldQptdba8N5STmHqg416ZV8PFTLP5aZNJ7fYILcNg1DDm8xttQDo08lgMoW
-	 ewDiEtZpatAGPQ29wohqqnydIARPAyyzmtffa7OE=
+	b=b2wmPADivseiL4+EQBHC5Ik0EsIVoR992u7Ecgv7eSZrxSJ2Vwxc5x8McfmZTyO+6
+	 eWaTwvH8ajliTa0G3xRlXLagf0YcpdQWirSUq8Ond5eAzk20KYXsz9EpjNDqJZ5yNG
+	 Q268TQZ9Yjg7sdrI/xoU/sBG75lmsuItE0Mz/Lsc=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730992AbfIVTUu (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Sun, 22 Sep 2019 15:20:50 -0400
-Received: from mail.kernel.org ([198.145.29.99]:54988 "EHLO mail.kernel.org"
+        id S2394302AbfIVSx1 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Sun, 22 Sep 2019 14:53:27 -0400
+Received: from mail.kernel.org ([198.145.29.99]:53274 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2405189AbfIVSy2 (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Sun, 22 Sep 2019 14:54:28 -0400
+        id S2394299AbfIVSx1 (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Sun, 22 Sep 2019 14:53:27 -0400
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 09A1921BE5;
-        Sun, 22 Sep 2019 18:54:26 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id C9ADC21D7C;
+        Sun, 22 Sep 2019 18:53:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1569178467;
-        bh=XgrJTEr1zHVb1qydoT2TySsbUVaRZlc38KN9JrnviyM=;
+        s=default; t=1569178406;
+        bh=LHr0zQNTuWMvB8KfJDg2lp4+b/SuKXqID+v+rc6sg8g=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=UoUStBkOQ1PE276fEKKOc7AcA+90zVjhs75lfq2vpqLMiJa0Iczeqc8lViv7OAkE7
-         5Zd70yusr4a2F4zkEKGRMSObO/3Qx2Aqy5nBQ60viPLU/+tK66kJDZZ9tTjxcE2vS/
-         R8sPpTjFMk61aR7E5YfNXuanNQCl86fWI/6hqCPE=
+        b=xeZMQXUBjvEftq1wagbYegP+khONP8M6c6koMu98tHIo/p65/teznbLIvaUId9YDj
+         RsvpTVUbluqUK+RG8wjiRJ7Jf920rJ8VuWw1rVROzBIUh/32bPlc9+4dAR1XEH65vt
+         BnEvuYT/09TNW5eO3JCzUj6BSXwihv2rAIOXuvH4=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Stefan Wahren <wahrenst@gmx.net>, Vinod Koul <vkoul@kernel.org>,
-        Sasha Levin <sashal@kernel.org>, dmaengine@vger.kernel.org
-Subject: [PATCH AUTOSEL 4.19 007/128] dmaengine: bcm2835: Print error in case setting DMA mask fails
-Date:   Sun, 22 Sep 2019 14:52:17 -0400
-Message-Id: <20190922185418.2158-7-sashal@kernel.org>
+Cc:     Peter Ujfalusi <peter.ujfalusi@ti.com>,
+        Vinod Koul <vkoul@kernel.org>, Sasha Levin <sashal@kernel.org>,
+        dmaengine@vger.kernel.org
+Subject: [PATCH AUTOSEL 5.2 148/185] dmaengine: ti: edma: Do not reset reserved paRAM slots
+Date:   Sun, 22 Sep 2019 14:48:46 -0400
+Message-Id: <20190922184924.32534-148-sashal@kernel.org>
 X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20190922185418.2158-1-sashal@kernel.org>
-References: <20190922185418.2158-1-sashal@kernel.org>
+In-Reply-To: <20190922184924.32534-1-sashal@kernel.org>
+References: <20190922184924.32534-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
@@ -57,37 +58,48 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-From: Stefan Wahren <wahrenst@gmx.net>
+From: Peter Ujfalusi <peter.ujfalusi@ti.com>
 
-[ Upstream commit 72503b25ee363827aafffc3e8d872e6a92a7e422 ]
+[ Upstream commit c5dbe60664b3660f5ac5854e21273ea2e7ff698f ]
 
-During enabling of the RPi 4, we found out that the driver doesn't provide
-a helpful error message in case setting DMA mask fails. So add one.
+Skip resetting paRAM slots marked as reserved as they might be used by
+other cores.
 
-Signed-off-by: Stefan Wahren <wahrenst@gmx.net>
-Link: https://lore.kernel.org/r/1563297318-4900-1-git-send-email-wahrenst@gmx.net
+Signed-off-by: Peter Ujfalusi <peter.ujfalusi@ti.com>
+Link: https://lore.kernel.org/r/20190823125618.8133-2-peter.ujfalusi@ti.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/bcm2835-dma.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/dma/ti/edma.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/dma/bcm2835-dma.c b/drivers/dma/bcm2835-dma.c
-index 2b11d967acd02..9d782cc95c6a0 100644
---- a/drivers/dma/bcm2835-dma.c
-+++ b/drivers/dma/bcm2835-dma.c
-@@ -898,8 +898,10 @@ static int bcm2835_dma_probe(struct platform_device *pdev)
- 		pdev->dev.dma_mask = &pdev->dev.coherent_dma_mask;
+diff --git a/drivers/dma/ti/edma.c b/drivers/dma/ti/edma.c
+index ceabdea40ae0f..982631d4e1f8a 100644
+--- a/drivers/dma/ti/edma.c
++++ b/drivers/dma/ti/edma.c
+@@ -2273,9 +2273,6 @@ static int edma_probe(struct platform_device *pdev)
  
- 	rc = dma_set_mask_and_coherent(&pdev->dev, DMA_BIT_MASK(32));
--	if (rc)
-+	if (rc) {
-+		dev_err(&pdev->dev, "Unable to set DMA mask\n");
- 		return rc;
+ 	ecc->default_queue = info->default_queue;
+ 
+-	for (i = 0; i < ecc->num_slots; i++)
+-		edma_write_slot(ecc, i, &dummy_paramset);
+-
+ 	if (info->rsv) {
+ 		/* Set the reserved slots in inuse list */
+ 		rsv_slots = info->rsv->rsv_slots;
+@@ -2288,6 +2285,12 @@ static int edma_probe(struct platform_device *pdev)
+ 		}
+ 	}
+ 
++	for (i = 0; i < ecc->num_slots; i++) {
++		/* Reset only unused - not reserved - paRAM slots */
++		if (!test_bit(i, ecc->slot_inuse))
++			edma_write_slot(ecc, i, &dummy_paramset);
 +	}
- 
- 	od = devm_kzalloc(&pdev->dev, sizeof(*od), GFP_KERNEL);
- 	if (!od)
++
+ 	/* Clear the xbar mapped channels in unused list */
+ 	xbar_chans = info->xbar_chans;
+ 	if (xbar_chans) {
 -- 
 2.20.1
 
