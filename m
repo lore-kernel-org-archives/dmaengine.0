@@ -7,45 +7,44 @@ X-Spam-Status: No, score=-10.1 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=unavailable
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A5FECC4740C
-	for <dmaengine@archiver.kernel.org>; Sun, 22 Sep 2019 19:23:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 45272C3A5A2
+	for <dmaengine@archiver.kernel.org>; Sun, 22 Sep 2019 19:27:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 74AF7206C2
-	for <dmaengine@archiver.kernel.org>; Sun, 22 Sep 2019 19:23:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1D5AC206B6
+	for <dmaengine@archiver.kernel.org>; Sun, 22 Sep 2019 19:27:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1569180201;
-	bh=LHr0zQNTuWMvB8KfJDg2lp4+b/SuKXqID+v+rc6sg8g=;
+	s=default; t=1569180425;
+	bh=dmdbnGlcQ67LSvX15BeOkemg/oVzkc782wV47LPJXig=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:List-ID:From;
-	b=b2wmPADivseiL4+EQBHC5Ik0EsIVoR992u7Ecgv7eSZrxSJ2Vwxc5x8McfmZTyO+6
-	 eWaTwvH8ajliTa0G3xRlXLagf0YcpdQWirSUq8Ond5eAzk20KYXsz9EpjNDqJZ5yNG
-	 Q268TQZ9Yjg7sdrI/xoU/sBG75lmsuItE0Mz/Lsc=
+	b=dAgiLokSm/FlKU2a0sPCt55h8PjO9Do8Dnda5PcxD7DRyzP1j2zCuPCmfVi8+g/wk
+	 2KBmUr2UFJLeWwuFLentQXSkDr+hrE+wD9227JVcejqWmsR5tPXwePPEwZnIVpkFIS
+	 Br3XwmZmkaTOJGQ1YhYFqQNR56viN4tkMjPfMsBk=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2394302AbfIVSx1 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Sun, 22 Sep 2019 14:53:27 -0400
-Received: from mail.kernel.org ([198.145.29.99]:53274 "EHLO mail.kernel.org"
+        id S2405653AbfIVSvd (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Sun, 22 Sep 2019 14:51:33 -0400
+Received: from mail.kernel.org ([198.145.29.99]:49428 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2394299AbfIVSx1 (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Sun, 22 Sep 2019 14:53:27 -0400
+        id S2405631AbfIVSvc (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Sun, 22 Sep 2019 14:51:32 -0400
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id C9ADC21D7C;
-        Sun, 22 Sep 2019 18:53:25 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id B386A21479;
+        Sun, 22 Sep 2019 18:51:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1569178406;
-        bh=LHr0zQNTuWMvB8KfJDg2lp4+b/SuKXqID+v+rc6sg8g=;
+        s=default; t=1569178291;
+        bh=dmdbnGlcQ67LSvX15BeOkemg/oVzkc782wV47LPJXig=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=xeZMQXUBjvEftq1wagbYegP+khONP8M6c6koMu98tHIo/p65/teznbLIvaUId9YDj
-         RsvpTVUbluqUK+RG8wjiRJ7Jf920rJ8VuWw1rVROzBIUh/32bPlc9+4dAR1XEH65vt
-         BnEvuYT/09TNW5eO3JCzUj6BSXwihv2rAIOXuvH4=
+        b=XYqs++9RLAbhxJFAcCyvQt46prOBayN/A9ei9nW5/mvnZJLbTBJUBOETAj9JkBIwE
+         sOlmFLF/HsNzkAMdU992+MvfeLaCZ4kgwlmf3jnUGjC/PEXeukJZ3ydyMz4py/Wd9b
+         QqpnGYJ7IvvTLsNcxtKE8el9E/SHyCtLBFTrErrU=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Peter Ujfalusi <peter.ujfalusi@ti.com>,
-        Vinod Koul <vkoul@kernel.org>, Sasha Levin <sashal@kernel.org>,
-        dmaengine@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.2 148/185] dmaengine: ti: edma: Do not reset reserved paRAM slots
-Date:   Sun, 22 Sep 2019 14:48:46 -0400
-Message-Id: <20190922184924.32534-148-sashal@kernel.org>
+Cc:     Arnd Bergmann <arnd@arndb.de>, Vinod Koul <vkoul@kernel.org>,
+        Sasha Levin <sashal@kernel.org>, dmaengine@vger.kernel.org
+Subject: [PATCH AUTOSEL 5.2 068/185] dmaengine: iop-adma: use correct printk format strings
+Date:   Sun, 22 Sep 2019 14:47:26 -0400
+Message-Id: <20190922184924.32534-68-sashal@kernel.org>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20190922184924.32534-1-sashal@kernel.org>
 References: <20190922184924.32534-1-sashal@kernel.org>
@@ -58,48 +57,106 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-From: Peter Ujfalusi <peter.ujfalusi@ti.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit c5dbe60664b3660f5ac5854e21273ea2e7ff698f ]
+[ Upstream commit 00c9755524fbaa28117be774d7c92fddb5ca02f3 ]
 
-Skip resetting paRAM slots marked as reserved as they might be used by
-other cores.
+When compile-testing on other architectures, we get lots of warnings
+about incorrect format strings, like:
 
-Signed-off-by: Peter Ujfalusi <peter.ujfalusi@ti.com>
-Link: https://lore.kernel.org/r/20190823125618.8133-2-peter.ujfalusi@ti.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+   drivers/dma/iop-adma.c: In function 'iop_adma_alloc_slots':
+   drivers/dma/iop-adma.c:307:6: warning: format '%x' expects argument of type 'unsigned int', but argument 6 has type 'dma_addr_t {aka long long unsigned int}' [-Wformat=]
+
+   drivers/dma/iop-adma.c: In function 'iop_adma_prep_dma_memcpy':
+>> drivers/dma/iop-adma.c:518:40: warning: format '%u' expects argument of type 'unsigned int', but argument 5 has type 'size_t {aka long unsigned int}' [-Wformat=]
+
+Use %zu for printing size_t as required, and cast the dma_addr_t
+arguments to 'u64' for printing with %llx. Ideally this should use
+the %pad format string, but that requires an lvalue argument that
+doesn't work here.
+
+Link: https://lore.kernel.org/r/20190809163334.489360-3-arnd@arndb.de
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Acked-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/ti/edma.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/dma/iop-adma.c | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/dma/ti/edma.c b/drivers/dma/ti/edma.c
-index ceabdea40ae0f..982631d4e1f8a 100644
---- a/drivers/dma/ti/edma.c
-+++ b/drivers/dma/ti/edma.c
-@@ -2273,9 +2273,6 @@ static int edma_probe(struct platform_device *pdev)
+diff --git a/drivers/dma/iop-adma.c b/drivers/dma/iop-adma.c
+index c6c0143670d9d..a776857d89c8f 100644
+--- a/drivers/dma/iop-adma.c
++++ b/drivers/dma/iop-adma.c
+@@ -116,9 +116,9 @@ static void __iop_adma_slot_cleanup(struct iop_adma_chan *iop_chan)
+ 	list_for_each_entry_safe(iter, _iter, &iop_chan->chain,
+ 					chain_node) {
+ 		pr_debug("\tcookie: %d slot: %d busy: %d "
+-			"this_desc: %#x next_desc: %#x ack: %d\n",
++			"this_desc: %#x next_desc: %#llx ack: %d\n",
+ 			iter->async_tx.cookie, iter->idx, busy,
+-			iter->async_tx.phys, iop_desc_get_next_desc(iter),
++			iter->async_tx.phys, (u64)iop_desc_get_next_desc(iter),
+ 			async_tx_test_ack(&iter->async_tx));
+ 		prefetch(_iter);
+ 		prefetch(&_iter->async_tx);
+@@ -306,9 +306,9 @@ iop_adma_alloc_slots(struct iop_adma_chan *iop_chan, int num_slots,
+ 				int i;
+ 				dev_dbg(iop_chan->device->common.dev,
+ 					"allocated slot: %d "
+-					"(desc %p phys: %#x) slots_per_op %d\n",
++					"(desc %p phys: %#llx) slots_per_op %d\n",
+ 					iter->idx, iter->hw_desc,
+-					iter->async_tx.phys, slots_per_op);
++					(u64)iter->async_tx.phys, slots_per_op);
  
- 	ecc->default_queue = info->default_queue;
+ 				/* pre-ack all but the last descriptor */
+ 				if (num_slots != slots_per_op)
+@@ -516,7 +516,7 @@ iop_adma_prep_dma_memcpy(struct dma_chan *chan, dma_addr_t dma_dest,
+ 		return NULL;
+ 	BUG_ON(len > IOP_ADMA_MAX_BYTE_COUNT);
  
--	for (i = 0; i < ecc->num_slots; i++)
--		edma_write_slot(ecc, i, &dummy_paramset);
--
- 	if (info->rsv) {
- 		/* Set the reserved slots in inuse list */
- 		rsv_slots = info->rsv->rsv_slots;
-@@ -2288,6 +2285,12 @@ static int edma_probe(struct platform_device *pdev)
- 		}
- 	}
+-	dev_dbg(iop_chan->device->common.dev, "%s len: %u\n",
++	dev_dbg(iop_chan->device->common.dev, "%s len: %zu\n",
+ 		__func__, len);
  
-+	for (i = 0; i < ecc->num_slots; i++) {
-+		/* Reset only unused - not reserved - paRAM slots */
-+		if (!test_bit(i, ecc->slot_inuse))
-+			edma_write_slot(ecc, i, &dummy_paramset);
-+	}
-+
- 	/* Clear the xbar mapped channels in unused list */
- 	xbar_chans = info->xbar_chans;
- 	if (xbar_chans) {
+ 	spin_lock_bh(&iop_chan->lock);
+@@ -549,7 +549,7 @@ iop_adma_prep_dma_xor(struct dma_chan *chan, dma_addr_t dma_dest,
+ 	BUG_ON(len > IOP_ADMA_XOR_MAX_BYTE_COUNT);
+ 
+ 	dev_dbg(iop_chan->device->common.dev,
+-		"%s src_cnt: %d len: %u flags: %lx\n",
++		"%s src_cnt: %d len: %zu flags: %lx\n",
+ 		__func__, src_cnt, len, flags);
+ 
+ 	spin_lock_bh(&iop_chan->lock);
+@@ -582,7 +582,7 @@ iop_adma_prep_dma_xor_val(struct dma_chan *chan, dma_addr_t *dma_src,
+ 	if (unlikely(!len))
+ 		return NULL;
+ 
+-	dev_dbg(iop_chan->device->common.dev, "%s src_cnt: %d len: %u\n",
++	dev_dbg(iop_chan->device->common.dev, "%s src_cnt: %d len: %zu\n",
+ 		__func__, src_cnt, len);
+ 
+ 	spin_lock_bh(&iop_chan->lock);
+@@ -620,7 +620,7 @@ iop_adma_prep_dma_pq(struct dma_chan *chan, dma_addr_t *dst, dma_addr_t *src,
+ 	BUG_ON(len > IOP_ADMA_XOR_MAX_BYTE_COUNT);
+ 
+ 	dev_dbg(iop_chan->device->common.dev,
+-		"%s src_cnt: %d len: %u flags: %lx\n",
++		"%s src_cnt: %d len: %zu flags: %lx\n",
+ 		__func__, src_cnt, len, flags);
+ 
+ 	if (dmaf_p_disabled_continue(flags))
+@@ -683,7 +683,7 @@ iop_adma_prep_dma_pq_val(struct dma_chan *chan, dma_addr_t *pq, dma_addr_t *src,
+ 		return NULL;
+ 	BUG_ON(len > IOP_ADMA_XOR_MAX_BYTE_COUNT);
+ 
+-	dev_dbg(iop_chan->device->common.dev, "%s src_cnt: %d len: %u\n",
++	dev_dbg(iop_chan->device->common.dev, "%s src_cnt: %d len: %zu\n",
+ 		__func__, src_cnt, len);
+ 
+ 	spin_lock_bh(&iop_chan->lock);
 -- 
 2.20.1
 
