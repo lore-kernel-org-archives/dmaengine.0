@@ -2,210 +2,119 @@ Return-Path: <SRS0=IPQN=XT=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.6 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-6.1 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1F4D8C432C1
-	for <dmaengine@archiver.kernel.org>; Tue, 24 Sep 2019 21:21:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 71333C432C2
+	for <dmaengine@archiver.kernel.org>; Tue, 24 Sep 2019 21:59:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id DE52821783
-	for <dmaengine@archiver.kernel.org>; Tue, 24 Sep 2019 21:21:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 42FBD214DA
+	for <dmaengine@archiver.kernel.org>; Tue, 24 Sep 2019 21:59:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1569360074;
-	bh=YwTnTLVeehJrct4PNQdvbGHqGUqGNX0FXMXJ8P27DZE=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:List-ID:From;
-	b=hBK1RgScrl/q/vH3rWRwAU4SJdVIRJFn1z7NwEx5prm/4F8rtSB5xFD5Yo3hC3Avn
-	 PhlFsrT0gIqQePQiDoKfheExID1XFSrfhKXwwpcYVsHFCm/IWsp0EbcUK3Jz3msFnz
-	 udb2xd7Z22ySktrIAQceD6D2DW9mkKA3GAkoVns0=
+	s=default; t=1569362379;
+	bh=7EnBQLGJXbJ0krx6sf9eAXMt0SpVcFYHvJ4Ffxc+GEI=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:List-ID:From;
+	b=Q3ilpHVrXf1RctxLBYanruZ0lgsFgcYXS/QEyDmfwjzk3wynA5JSGE5nO7ICGWuwN
+	 6wIOJ4cAdrt3ZZnIz+8HqrXx+dNchAKh5FMGPswKHwtKInW0hitFtJTpL0VN+KYTyc
+	 CttwyZFK1T4FyL1iVbozyxN0CmAv57PIwTMmueEU=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731462AbfIXVVO (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 24 Sep 2019 17:21:14 -0400
-Received: from mail.kernel.org ([198.145.29.99]:47220 "EHLO mail.kernel.org"
+        id S2404533AbfIXV7e (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 24 Sep 2019 17:59:34 -0400
+Received: from mail.kernel.org ([198.145.29.99]:60378 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1731409AbfIXVVO (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Tue, 24 Sep 2019 17:21:14 -0400
-Received: from localhost (unknown [12.157.10.118])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S2387723AbfIXV7d (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Tue, 24 Sep 2019 17:59:33 -0400
+Received: from mail-qt1-f179.google.com (mail-qt1-f179.google.com [209.85.160.179])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 812862146E;
-        Tue, 24 Sep 2019 21:21:12 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 6156D217D7;
+        Tue, 24 Sep 2019 21:59:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1569360072;
-        bh=YwTnTLVeehJrct4PNQdvbGHqGUqGNX0FXMXJ8P27DZE=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=wfE5PHL673l/faJkcNrHUaXRQ+94j1pJKdEikf3DrBIKkUirdnWkQ++L3dso3zdlj
-         0WAQkVJbn8QR38mdR/Ih4PtjGoEC4Sc0ATLE2Jnvjjci+uLv/F/QEu6su4299nQWVs
-         z7JgEH7pmrLakQ0RlTkVSf8CmWFmZeq5T9FX7FpA=
-Date:   Tue, 24 Sep 2019 14:20:11 -0700
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Green Wan <green.wan@sifive.com>
-Cc:     linux-hackers@sifive.com, Dan Williams <dan.j.williams@intel.com>,
-        Palmer Dabbelt <palmer@sifive.com>,
-        Paul Walmsley <paul.walmsley@sifive.com>,
-        Mauro Carvalho Chehab <mchehab+samsung@kernel.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Nicolas Ferre <nicolas.ferre@microchip.com>,
-        "Paul E. McKenney" <paulmck@linux.ibm.com>,
-        linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org,
-        linux-riscv@lists.infradead.org
-Subject: Re: [PATCH v3 3/3] dmaengine: sf-pdma: add platform DMA support for
- HiFive Unleashed A00
-Message-ID: <20190924212011.GG3824@vkoul-mobl>
-References: <20190920090205.19552-1-green.wan@sifive.com>
+        s=default; t=1569362372;
+        bh=7EnBQLGJXbJ0krx6sf9eAXMt0SpVcFYHvJ4Ffxc+GEI=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=ZUjBfJ5y+ysHUqZVHvVQV6vmXEF5m5l7X/D3o8MMo6T+fnXCBe1Len91UdIVSmNm8
+         1+IgmCK2yWkyLXKdLfON0wTF2uVY6/Zj+z4CbqBQ8S1mTFhTzxJ4K+kIhlIbeitlp5
+         qXtcO6SJzhSJ74/8s14mN0YBxYms1LJJP0SwTimA=
+Received: by mail-qt1-f179.google.com with SMTP id x4so4100980qtq.8;
+        Tue, 24 Sep 2019 14:59:32 -0700 (PDT)
+X-Gm-Message-State: APjAAAUSipfNLAs0r3iY98Oq51rlrlAyRzY6XaLme2e9ZLFqmU4bXOcs
+        y3XFqQogK86HIUelflV99P3yYhl0p6JxbjmCsw==
+X-Google-Smtp-Source: APXvYqxu7lx2ORNXYuD01RyoAdK8YY//zQYn3oJnMVZaPVMMDgXcioCqkbUXveNdRfpBkQzN/4OY/SjTncH5t1k8eUk=
+X-Received: by 2002:ac8:6982:: with SMTP id o2mr5274643qtq.143.1569362371529;
+ Tue, 24 Sep 2019 14:59:31 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190920090205.19552-1-green.wan@sifive.com>
-User-Agent: Mutt/1.12.1 (2019-06-15)
+References: <20190924181244.7159-1-nsaenzjulienne@suse.de>
+In-Reply-To: <20190924181244.7159-1-nsaenzjulienne@suse.de>
+From:   Rob Herring <robh+dt@kernel.org>
+Date:   Tue, 24 Sep 2019 16:59:20 -0500
+X-Gmail-Original-Message-ID: <CAL_Jsq+v+svTyna7UzQdRVqfNc5Z_bgWzxNRXv7-Wqv3NwDu2g@mail.gmail.com>
+Message-ID: <CAL_Jsq+v+svTyna7UzQdRVqfNc5Z_bgWzxNRXv7-Wqv3NwDu2g@mail.gmail.com>
+Subject: Re: [PATCH 00/11] of: Fix DMA configuration for non-DT masters
+To:     Nicolas Saenz Julienne <nsaenzjulienne@suse.de>
+Cc:     devicetree@vger.kernel.org, Frank Rowand <frowand.list@gmail.com>,
+        "moderated list:ARM/FREESCALE IMX / MXC ARM ARCHITECTURE" 
+        <linux-arm-kernel@lists.infradead.org>,
+        linux-wireless <linux-wireless@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "open list:DMA GENERIC OFFLOAD ENGINE SUBSYSTEM" 
+        <dmaengine@vger.kernel.org>, etnaviv@lists.freedesktop.org,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        xen-devel@lists.xenproject.org, linux-tegra@vger.kernel.org,
+        Linux Media Mailing List <linux-media@vger.kernel.org>,
+        linux-pci@vger.kernel.org, Matthias Brugger <mbrugger@suse.com>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Florian Fainelli <f.fainelli@gmail.com>,
+        james.quinlan@broadcom.com, Stefan Wahren <wahrenst@gmx.net>,
+        Dan Williams <dan.j.williams@intel.com>,
+        freedreno <freedreno@lists.freedesktop.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Hi Green,
+On Tue, Sep 24, 2019 at 1:12 PM Nicolas Saenz Julienne
+<nsaenzjulienne@suse.de> wrote:
+>
+> Hi All,
+> this series tries to address one of the issues blocking us from
+> upstreaming Broadcom's STB PCIe controller[1]. Namely, the fact that
+> devices not represented in DT which sit behind a PCI bus fail to get the
+> bus' DMA addressing constraints.
+>
+> This is due to the fact that of_dma_configure() assumes it's receiving a
+> DT node representing the device being configured, as opposed to the PCIe
+> bridge node we currently pass. This causes the code to directly jump
+> into PCI's parent node when checking for 'dma-ranges' and misses
+> whatever was set there.
+>
+> To address this I create a new API in OF - inspired from Robin Murphys
+> original proposal[2] - which accepts a bus DT node as it's input in
+> order to configure a device's DMA constraints. The changes go deep into
+> of/address.c's implementation, as a device being having a DT node
+> assumption was pretty strong.
+>
+> On top of this work, I also cleaned up of_dma_configure() removing its
+> redundant arguments and creating an alternative function for the special cases
+> not applicable to either the above case or the default usage.
+>
+> IMO the resulting functions are more explicit. They will probably
+> surface some hacky usages that can be properly fixed as I show with the
+> DT fixes on the Layerscape platform.
+>
+> This was also tested on a Raspberry Pi 4 with a custom PCIe driver and
+> on a Seattle AMD board.
 
-On 20-09-19, 17:01, Green Wan wrote:
+Humm, I've been working on this issue too. Looks similar though yours
+has a lot more churn and there's some other bugs I've found.
 
-Please make sure threading is *not* broken in your patch series. Atm
-they are all over place in my mailbox!
+Can you test out this branch[1]. I don't have any h/w needing this,
+but wrote a unittest and tested with modified QEMU.
 
-> Link: https://www.kernel.org/doc/html/v4.17/driver-api/dmaengine/
-> Link: https://static.dev.sifive.com/FU540-C000-v1.0.pdf
+Rob
 
-Link tag is used for discussion for the patch, please drop first one and
-add second one as a documentation for hardware
-
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index d0caa09a479e..c5f0662c9106 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -14594,6 +14594,7 @@ F:	drivers/media/mmc/siano/
->  SIFIVE PDMA DRIVER
->  M:	Green Wan <green.wan@sifive.com>
->  S:	Maintained
-> +F:	drivers/dma/sf-pdma/
->  F:	Documentation/devicetree/bindings/dma/sifive,fu540-c000-pdma.yaml
-
-What is this generated against, only one line?
-
-> +static void sf_pdma_fill_desc(struct sf_pdma_chan *chan,
-> +			      u64 dst,
-> +			      u64 src,
-> +			      u64 size)
-
-Please align these to precceeding line open brace!
-
-> +{
-> +	struct pdma_regs *regs = &chan->regs;
-> +
-> +	writel(PDMA_FULL_SPEED, regs->xfer_type);
-> +	writeq(size, regs->xfer_size);
-> +	writeq(dst, regs->dst_addr);
-> +	writeq(src, regs->src_addr);
-> +}
-> +
-> +void sf_pdma_disclaim_chan(struct sf_pdma_chan *chan)
-> +{
-> +	struct pdma_regs *regs = &chan->regs;
-> +
-> +	writel(PDMA_CLEAR_CTRL, regs->ctrl);
-> +}
-> +
-> +struct dma_async_tx_descriptor *
-> +	sf_pdma_prep_dma_memcpy(struct dma_chan *dchan,
-> +				dma_addr_t dest,
-> +				dma_addr_t src,
-> +				size_t len,
-> +				unsigned long flags)
-> +{
-> +	struct sf_pdma_chan *chan = to_sf_pdma_chan(dchan);
-> +	struct sf_pdma_desc *desc;
-> +
-> +	if (!chan || !len || !dest || !src) {
-> +		pr_debug("%s: Please check dma len, dest, src!\n", __func__);
-> +		return NULL;
-> +	}
-> +
-> +	desc = sf_pdma_alloc_desc(chan);
-> +	if (!desc)
-> +		return NULL;
-> +
-> +	desc->in_use = true;
-> +	desc->dirn = DMA_MEM_TO_MEM;
-> +	desc->async_tx = vchan_tx_prep(&chan->vchan, &desc->vdesc, flags);
-
-No error checking?
-> +
-> +	spin_lock_irqsave(&chan->lock, flags);
-> +	chan->desc = desc;
-> +	sf_pdma_fill_desc(desc->chan, dest, src, len);
-> +	spin_unlock_irqrestore(&chan->lock, flags);
-> +
-> +	return desc->async_tx;
-> +}
-> +
-> +static void sf_pdma_unprep_slave_dma(struct sf_pdma_chan *chan)
-> +{
-> +	if (chan->dma_dir != DMA_NONE)
-> +		dma_unmap_resource(chan->vchan.chan.device->dev,
-
-This is slave dma right, why are you unmapping? Also where is the
-mapping call?
-
-> +				   chan->dma_dev_addr,
-> +				   chan->dma_dev_size,
-> +				   chan->dma_dir, 0);
-> +	chan->dma_dir = DMA_NONE;
-> +}
-> +
-> +static int sf_pdma_slave_config(struct dma_chan *dchan,
-> +				struct dma_slave_config *cfg)
-> +{
-> +	struct sf_pdma_chan *chan = to_sf_pdma_chan(dchan);
-> +
-> +	memcpy(&chan->cfg, cfg, sizeof(*cfg));
-> +	sf_pdma_unprep_slave_dma(chan);
-
-Why unprep?
-
-> +static enum dma_status
-> +sf_pdma_tx_status(struct dma_chan *dchan,
-> +		  dma_cookie_t cookie,
-> +		  struct dma_tx_state *txstate)
-> +{
-> +	struct sf_pdma_chan *chan = to_sf_pdma_chan(dchan);
-> +	enum dma_status status;
-> +	unsigned long flags;
-> +
-> +	spin_lock_irqsave(&chan->lock, flags);
-> +	if (chan->xfer_err) {
-> +		chan->status = DMA_ERROR;
-> +		spin_unlock_irqrestore(&chan->lock, flags);
-> +		return chan->status;
-> +	}
-> +
-> +	spin_unlock_irqrestore(&chan->lock, flags);
-> +
-> +	status = dma_cookie_status(dchan, cookie, txstate);
-> +
-> +	if (status == DMA_COMPLETE)
-> +		return status;
-> +
-> +	if (!txstate)
-> +		return chan->status;
-
-why not return status? Is that expected to be different than status?
-
-> +static int sf_pdma_remove(struct platform_device *pdev)
-> +{
-> +	struct sf_pdma *pdma = platform_get_drvdata(pdev);
-> +
-> +	dma_async_device_unregister(&pdma->dma_dev);
-
-whay about irqs and tasklets, they are still enabled and can trigger!
--- 
-~Vinod
+[1] git://git.kernel.org/pub/scm/linux/kernel/git/robh/linux.git dma-masks
