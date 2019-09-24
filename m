@@ -2,102 +2,83 @@ Return-Path: <SRS0=IPQN=XT=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.5 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 35DFDC432C1
-	for <dmaengine@archiver.kernel.org>; Tue, 24 Sep 2019 19:32:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9CE75C432C1
+	for <dmaengine@archiver.kernel.org>; Tue, 24 Sep 2019 19:35:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 0A99E214DA
-	for <dmaengine@archiver.kernel.org>; Tue, 24 Sep 2019 19:32:56 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=crapouillou.net header.i=@crapouillou.net header.b="jW0lrNqJ"
+	by mail.kernel.org (Postfix) with ESMTP id 6934421655
+	for <dmaengine@archiver.kernel.org>; Tue, 24 Sep 2019 19:35:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=default; t=1569353749;
+	bh=yqLbfyP3s05vZswu1l3DHL96kMMX6o89wcVspUz5tXE=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:List-ID:From;
+	b=0KxmzNIi/zB3hBZ5BdFUuCgmD/39VGEAEnXccNLKbteSFcDHX0JM9xyumeBj1ir7e
+	 7denmvTavUfAGQoy3HTpRgjSAS3+vUaJpisWmq1Ej+FDqebpm7Nb5Ay3HNuT8YyrYs
+	 b4BTHC6Z8W3mVzfooFpu9uZ9s06LckV6/H1lGsyQ=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390640AbfIXTcz (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 24 Sep 2019 15:32:55 -0400
-Received: from outils.crapouillou.net ([89.234.176.41]:50500 "EHLO
-        crapouillou.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388207AbfIXTcz (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Tue, 24 Sep 2019 15:32:55 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=crapouillou.net;
-        s=mail; t=1569353572; h=from:from:sender:reply-to:subject:subject:date:date:
-         message-id:message-id:to:to:cc:cc:mime-version:mime-version:
-         content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=KlcrFKHqRHEWTZwgwOrmjPoSAcprqpYblaKBY9ljXVE=;
-        b=jW0lrNqJ9kfs3VLCQGkvbq0bjx2lK5xC4x7irzyPUAKayRIgQdwstRK5YwCHoHCVh/yN22
-        KzC25U3qxCJg6MTPZyi2E1r2I3kSKh/DarsAfhK7LNaJjRqTvGGBkCeOJ6FAh6ZIiMtNSJ
-        TBC49rH918ZFJ0rEjFkUaLSDhZbwB0o=
-Date:   Tue, 24 Sep 2019 21:32:32 +0200
-From:   Paul Cercueil <paul@crapouillou.net>
-Subject: Re: [PATCH] dmaengine: jz4780: Use devm_platform_ioremap_resource()
- in jz4780_dma_probe()
-To:     Markus Elfring <Markus.Elfring@web.de>
-Cc:     dmaengine@vger.kernel.org, Dan Williams <dan.j.williams@intel.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        Zubair Lutfullah Kakakhel <Zubair.Kakakhel@imgtec.com>,
-        LKML <linux-kernel@vger.kernel.org>,
-        kernel-janitors@vger.kernel.org, Alex Smith <alex.smith@imgtec.com>
-Message-Id: <1569353552.1911.0@crapouillou.net>
-In-Reply-To: <5dd19f28-349a-4957-ea3a-6aebbd7c97e2@web.de>
-References: <5dd19f28-349a-4957-ea3a-6aebbd7c97e2@web.de>
+        id S1730732AbfIXTft (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 24 Sep 2019 15:35:49 -0400
+Received: from mail.kernel.org ([198.145.29.99]:38128 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726717AbfIXTft (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Tue, 24 Sep 2019 15:35:49 -0400
+Received: from localhost (unknown [12.206.46.61])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 47744214AF;
+        Tue, 24 Sep 2019 19:35:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1569353748;
+        bh=yqLbfyP3s05vZswu1l3DHL96kMMX6o89wcVspUz5tXE=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=imZX4t9J5RJWMYVJzBZ1BB+v90CW6xi1fSsCmfUFF274dlU4Q3jNpZgd/JztMhSLb
+         msSBY399rrkEmrj/aLfx4XVOGRP8YjTAnYPi7T/LnUSsfTfEzUG9kCNSmVO/1VUEk0
+         TnsV8GIJFV48IQWGuWaali3tdgOXWOGklts1xCVo=
+Date:   Tue, 24 Sep 2019 12:34:46 -0700
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Peng Ma <peng.ma@nxp.com>
+Cc:     "dan.j.williams@intel.com" <dan.j.williams@intel.com>,
+        Leo Li <leoyang.li@nxp.com>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        "dmaengine@vger.kernel.org" <dmaengine@vger.kernel.org>
+Subject: Re: [EXT] Re: [V4 2/2] dmaengine: fsl-dpaa2-qdma: Add NXP dpaa2 qDMA
+ controller driver for Layerscape SoCs
+Message-ID: <20190924193446.GF3824@vkoul-mobl>
+References: <20190613101341.21169-1-peng.ma@nxp.com>
+ <20190613101341.21169-2-peng.ma@nxp.com>
+ <20190624164556.GD2962@vkoul-mobl>
+ <VI1PR04MB443142772665BB29B909DFF4EDB10@VI1PR04MB4431.eurprd04.prod.outlook.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1; format=flowed
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <VI1PR04MB443142772665BB29B909DFF4EDB10@VI1PR04MB4431.eurprd04.prod.outlook.com>
+User-Agent: Mutt/1.12.1 (2019-06-15)
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Hi Markus,
+Hey Peng,
 
+On 11-09-19, 02:01, Peng Ma wrote:
+> Hi Vinod,
+> 
+> I send those series patchs(V5) on June 25, 2019. I haven't received any comments yet. Their current state
+> is "Not Applicable", so please let me know what I need to do next.
+> Thanks very much for your comments.
+> 
+> Patch link:
+> https://patchwork.kernel.org/patch/11015035/
+> https://patchwork.kernel.org/patch/11015033/
 
-Le dim. 22 sept. 2019 =E0 11:25, Markus Elfring <Markus.Elfring@web.de>=20
-a =E9crit :
-> From: Markus Elfring <elfring@users.sourceforge.net>
-> Date: Sun, 22 Sep 2019 11:18:27 +0200
->=20
-> Simplify this function implementation a bit by using
-> a known wrapper function.
->=20
-> This issue was detected by using the Coccinelle software.
->=20
-> Signed-off-by: Markus Elfring <elfring@users.sourceforge.net>
+Am sorry this looks to have missed by me and my script updated the
+status.
 
-Looks good to me.
+Can you please resend me after rc1 is out and I will review it and do
+the needful
 
-Signed-off-by: Paul Cercueil <paul@crapouillou.net>
-
-
-> ---
->  drivers/dma/dma-jz4780.c | 8 +-------
->  1 file changed, 1 insertion(+), 7 deletions(-)
->=20
-> diff --git a/drivers/dma/dma-jz4780.c b/drivers/dma/dma-jz4780.c
-> index cafb1cc065bb..f42b3ef8e036 100644
-> --- a/drivers/dma/dma-jz4780.c
-> +++ b/drivers/dma/dma-jz4780.c
-> @@ -858,13 +858,7 @@ static int jz4780_dma_probe(struct=20
-> platform_device *pdev)
->  	jzdma->soc_data =3D soc_data;
->  	platform_set_drvdata(pdev, jzdma);
->=20
-> -	res =3D platform_get_resource(pdev, IORESOURCE_MEM, 0);
-> -	if (!res) {
-> -		dev_err(dev, "failed to get I/O memory\n");
-> -		return -EINVAL;
-> -	}
-> -
-> -	jzdma->chn_base =3D devm_ioremap_resource(dev, res);
-> +	jzdma->chn_base =3D devm_platform_ioremap_resource(pdev, 0);
->  	if (IS_ERR(jzdma->chn_base))
->  		return PTR_ERR(jzdma->chn_base);
->=20
-> --
-> 2.23.0
->=20
-
-=
-
+-- 
+~Vinod
