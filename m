@@ -2,104 +2,122 @@ Return-Path: <SRS0=z9wQ=XV=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
-	USER_AGENT_GIT autolearn=unavailable autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.2 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 32501C47E4B
-	for <dmaengine@archiver.kernel.org>; Thu, 26 Sep 2019 11:19:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 585FBC4360C
+	for <dmaengine@archiver.kernel.org>; Thu, 26 Sep 2019 11:21:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 08B68222C3
-	for <dmaengine@archiver.kernel.org>; Thu, 26 Sep 2019 11:19:36 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b="hYR2Zwaz"
+	by mail.kernel.org (Postfix) with ESMTP id 3673F222C4
+	for <dmaengine@archiver.kernel.org>; Thu, 26 Sep 2019 11:21:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726394AbfIZLTW (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Thu, 26 Sep 2019 07:19:22 -0400
-Received: from lelv0142.ext.ti.com ([198.47.23.249]:48892 "EHLO
-        lelv0142.ext.ti.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725819AbfIZLTW (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Thu, 26 Sep 2019 07:19:22 -0400
-Received: from lelv0265.itg.ti.com ([10.180.67.224])
-        by lelv0142.ext.ti.com (8.15.2/8.15.2) with ESMTP id x8QBJF47022824;
-        Thu, 26 Sep 2019 06:19:15 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
-        s=ti-com-17Q1; t=1569496755;
-        bh=gYeM81ZJ0PDJp9Yxe7eqp+2YLGoUzBTCt62WZh8PCUA=;
-        h=From:To:CC:Subject:Date:In-Reply-To:References;
-        b=hYR2ZwazZKeQfAknCA8Lfqt6ffg1ZGT3pP2Z9tnZxnrNaEfNm0+cqvulVZv3XnPaM
-         DWuuL4AbK1dNRLHHQgmgOznEwKdnmgM1s5iD8iQn7jP8WKZH4opIY1+e4TgPSd8GuP
-         kbRgYMcydK3hlQKWFkF6ZyLKq2RGiKSQ8e8Ehii8=
-Received: from DFLE102.ent.ti.com (dfle102.ent.ti.com [10.64.6.23])
-        by lelv0265.itg.ti.com (8.15.2/8.15.2) with ESMTPS id x8QBJFX4038351
-        (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
-        Thu, 26 Sep 2019 06:19:15 -0500
-Received: from DFLE108.ent.ti.com (10.64.6.29) by DFLE102.ent.ti.com
- (10.64.6.23) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1713.5; Thu, 26
- Sep 2019 06:19:15 -0500
-Received: from fllv0039.itg.ti.com (10.64.41.19) by DFLE108.ent.ti.com
- (10.64.6.29) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1713.5 via
- Frontend Transport; Thu, 26 Sep 2019 06:19:07 -0500
-Received: from feketebors.ti.com (ileax41-snat.itg.ti.com [10.172.224.153])
-        by fllv0039.itg.ti.com (8.15.2/8.15.2) with ESMTP id x8QBJAds013885;
-        Thu, 26 Sep 2019 06:19:13 -0500
-From:   Peter Ujfalusi <peter.ujfalusi@ti.com>
-To:     <vkoul@kernel.org>, <robh+dt@kernel.org>
-CC:     <dmaengine@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <dan.j.williams@intel.com>, <devicetree@vger.kernel.org>
-Subject: [PATCH v3 1/3] dt-bindings: dmaengine: dma-common: Change dma-channel-mask to uint32-array
-Date:   Thu, 26 Sep 2019 14:19:52 +0300
-Message-ID: <20190926111954.9184-2-peter.ujfalusi@ti.com>
-X-Mailer: git-send-email 2.23.0
-In-Reply-To: <20190926111954.9184-1-peter.ujfalusi@ti.com>
-References: <20190926111954.9184-1-peter.ujfalusi@ti.com>
+        id S1725912AbfIZLUz (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Thu, 26 Sep 2019 07:20:55 -0400
+Received: from foss.arm.com ([217.140.110.172]:46496 "EHLO foss.arm.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725536AbfIZLUy (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Thu, 26 Sep 2019 07:20:54 -0400
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 9053B142F;
+        Thu, 26 Sep 2019 04:20:53 -0700 (PDT)
+Received: from [192.168.1.124] (unknown [172.31.20.19])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id A8D1D3F67D;
+        Thu, 26 Sep 2019 04:20:50 -0700 (PDT)
+Subject: Re: [PATCH 00/11] of: Fix DMA configuration for non-DT masters
+To:     Nicolas Saenz Julienne <nsaenzjulienne@suse.de>,
+        Rob Herring <robh+dt@kernel.org>
+Cc:     "moderated list:ARM/FREESCALE IMX / MXC ARM ARCHITECTURE" 
+        <linux-arm-kernel@lists.infradead.org>, devicetree@vger.kernel.org,
+        Matthias Brugger <mbrugger@suse.com>,
+        Frank Rowand <frowand.list@gmail.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        linux-wireless <linux-wireless@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        etnaviv@lists.freedesktop.org,
+        "open list:DMA GENERIC OFFLOAD ENGINE SUBSYSTEM" 
+        <dmaengine@vger.kernel.org>,
+        Florian Fainelli <f.fainelli@gmail.com>,
+        Stefan Wahren <wahrenst@gmx.net>, james.quinlan@broadcom.com,
+        linux-pci@vger.kernel.org, linux-tegra@vger.kernel.org,
+        xen-devel@lists.xenproject.org,
+        Dan Williams <dan.j.williams@intel.com>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        Linux Media Mailing List <linux-media@vger.kernel.org>
+References: <20190924181244.7159-1-nsaenzjulienne@suse.de>
+ <CAL_Jsq+v+svTyna7UzQdRVqfNc5Z_bgWzxNRXv7-Wqv3NwDu2g@mail.gmail.com>
+ <d1a31a2ec8eb2f226b1fb41f6c24ffb47c3bf7c7.camel@suse.de>
+ <e404c65b-5a66-6f91-5b38-8bf89a7697b2@arm.com>
+ <43fb5fe1de317d65a4edf592f88ea150c6e3b8cc.camel@suse.de>
+ <CAL_JsqLhx500cx3YLoC7HL1ux3bBpV+fEA2Qnk7D5RFGgiGzSw@mail.gmail.com>
+ <aa4c8d62-7990-e385-2bb1-cec55148f0a8@arm.com>
+ <CAL_JsqKKYcHPnA80ZwLY=Sk3e5MqrimedUhWQ5+iuPZXQxYHdA@mail.gmail.com>
+ <307b988d0c67fb1c42166eca12742bcfda09d92d.camel@suse.de>
+From:   Robin Murphy <robin.murphy@arm.com>
+Message-ID: <c27a51e1-1adf-ae6a-dc67-ae76222a1163@arm.com>
+Date:   Thu, 26 Sep 2019 12:20:44 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; rv:68.0) Gecko/20100101
+ Thunderbird/68.1.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-EXCLAIMER-MD-CONFIG: e1e8a2fd-e40a-4ac6-ac9b-f7e9cc9ee180
+In-Reply-To: <307b988d0c67fb1c42166eca12742bcfda09d92d.camel@suse.de>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Make the dma-channel-mask to be usable for controllers with more than 32
-channels.
+On 2019-09-26 11:44 am, Nicolas Saenz Julienne wrote:
+>>>>> Robin, have you looked into supporting multiple dma-ranges? It's the
+>>>>> next thing
+>>>>> we need for BCM STB's PCIe. I'll have a go at it myself if nothing is in
+>>>>> the
+>>>>> works already.
+>>>>
+>>>> Multiple dma-ranges as far as configuring inbound windows should work
+>>>> already other than the bug when there's any parent translation. But if
+>>>> you mean supporting multiple DMA offsets and masks per device in the
+>>>> DMA API, there's nothing in the works yet.
+> 
+> Sorry, I meant supporting multiple DMA offsets[1]. I think I could still make
+> it with a single DMA mask though.
 
-Signed-off-by: Peter Ujfalusi <peter.ujfalusi@ti.com>
----
- Documentation/devicetree/bindings/dma/dma-common.yaml | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+The main problem for supporting that case in general is the disgusting 
+carving up of the physical memory map you may have to do to guarantee 
+that a single buffer allocation cannot ever span two windows with 
+different offsets. I don't think we ever reached a conclusion on whether 
+that was even achievable in practice.
 
-diff --git a/Documentation/devicetree/bindings/dma/dma-common.yaml b/Documentation/devicetree/bindings/dma/dma-common.yaml
-index ed0a49a6f020..4527f20301ff 100644
---- a/Documentation/devicetree/bindings/dma/dma-common.yaml
-+++ b/Documentation/devicetree/bindings/dma/dma-common.yaml
-@@ -25,11 +25,18 @@ properties:
-       Used to provide DMA controller specific information.
- 
-   dma-channel-mask:
--    $ref: /schemas/types.yaml#definitions/uint32
-     description:
-       Bitmask of available DMA channels in ascending order that are
-       not reserved by firmware and are available to the
-       kernel. i.e. first channel corresponds to LSB.
-+      The first item in the array is for channels 0-31, the second is for
-+      channels 32-63, etc.
-+    allOf:
-+      - $ref: /schemas/types.yaml#/definitions/uint32-array
-+        items:
-+          minItems: 1
-+          # Should be enough
-+          maxItems: 255
- 
-   dma-channels:
-     $ref: /schemas/types.yaml#definitions/uint32
--- 
-Peter
+>>> There's also the in-between step of making of_dma_get_range() return a
+>>> size based on all the dma-ranges entries rather than only the first one
+>>> - otherwise, something like [1] can lead to pretty unworkable default
+>>> masks. We implemented that when doing acpi_dma_get_range(), it's just
+>>> that the OF counterpart never caught up.
+>>
+>> Right. I suppose we assume any holes in the ranges are addressable by
+>> the device but won't get used for other reasons (such as no memory
+>> there). However, to be correct, the range of the dma offset plus mask
+>> would need to be within the min start and max end addresses. IOW,
+>> while we need to round up (0xa_8000_0000 - 0x2c1c_0000) to the next
+>> power of 2, the 'correct' thing to do is round down.
+> 
+> IIUC I also have this issue on my list. The RPi4 PCIe block has an integration
+> bug that only allows DMA to the lower 3GB. With dma-ranges of size 0xc000_0000
+> you get a 32bit DMA mask wich is not what you need. So far I faked it in the
+> device-tree but I guess it be better to add an extra check in
+> of_dma_configure(), decrease the mask and print some kind of warning stating
+> that DMA addressing is suboptimal.
 
-Texas Instruments Finland Oy, Porkkalankatu 22, 00180 Helsinki.
-Y-tunnus/Business ID: 0615521-4. Kotipaikka/Domicile: Helsinki
+Yeah, there's just no way for masks to describe that the device can 
+drive all the individual bits, just not in certain combinations :(
 
+The plan I have sketched out there is to merge dma_pfn_offset and 
+bus_dma_mask into a "DMA range" descriptor, so we can then hang one or 
+more of those off a device to properly cope with all these weird 
+interconnects. Conceptually it feels pretty straightforward; I think 
+most of the challenge is in implementing it efficiently. Plus there's 
+the question of whether it could also subsume the dma_mask as well.
+
+Robin.
