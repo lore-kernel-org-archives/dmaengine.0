@@ -2,29 +2,30 @@ Return-Path: <SRS0=i4n3=YB=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED,USER_AGENT_GIT autolearn=unavailable autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 29CC2C4360C
-	for <dmaengine@archiver.kernel.org>; Tue,  8 Oct 2019 10:39:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 12F8FC10F14
+	for <dmaengine@archiver.kernel.org>; Tue,  8 Oct 2019 10:39:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 04BBF2070B
-	for <dmaengine@archiver.kernel.org>; Tue,  8 Oct 2019 10:39:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E71F02173B
+	for <dmaengine@archiver.kernel.org>; Tue,  8 Oct 2019 10:39:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729989AbfJHKjG (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 8 Oct 2019 06:39:06 -0400
-Received: from relmlor2.renesas.com ([210.160.252.172]:25755 "EHLO
+        id S1730523AbfJHKjS (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 8 Oct 2019 06:39:18 -0400
+Received: from relmlor2.renesas.com ([210.160.252.172]:15602 "EHLO
         relmlie6.idc.renesas.com" rhost-flags-OK-OK-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1729790AbfJHKjG (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Tue, 8 Oct 2019 06:39:06 -0400
+        by vger.kernel.org with ESMTP id S1730511AbfJHKjS (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Tue, 8 Oct 2019 06:39:18 -0400
 X-IronPort-AV: E=Sophos;i="5.67,270,1566831600"; 
-   d="scan'208";a="28359337"
+   d="scan'208";a="28359360"
 Received: from unknown (HELO relmlir5.idc.renesas.com) ([10.200.68.151])
-  by relmlie6.idc.renesas.com with ESMTP; 08 Oct 2019 19:39:03 +0900
+  by relmlie6.idc.renesas.com with ESMTP; 08 Oct 2019 19:39:16 +0900
 Received: from fabrizio-dev.ree.adwin.renesas.com (unknown [10.226.36.196])
-        by relmlir5.idc.renesas.com (Postfix) with ESMTP id 55637400C0B8;
-        Tue,  8 Oct 2019 19:38:59 +0900 (JST)
+        by relmlir5.idc.renesas.com (Postfix) with ESMTP id AE679400C0B8;
+        Tue,  8 Oct 2019 19:39:12 +0900 (JST)
 From:   Fabrizio Castro <fabrizio.castro@bp.renesas.com>
 To:     Geert Uytterhoeven <geert+renesas@glider.be>,
         Simon Horman <horms@verge.net.au>,
@@ -42,53 +43,36 @@ Cc:     Fabrizio Castro <fabrizio.castro@bp.renesas.com>,
         Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
         Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>,
         Jacopo Mondi <jacopo+renesas@jmondi.org>
-Subject: [PATCH 00/10] Add USB2/USB3/INTC-EX support to RZ/G2N
-Date:   Tue,  8 Oct 2019 11:38:42 +0100
-Message-Id: <1570531132-21856-1-git-send-email-fabrizio.castro@bp.renesas.com>
+Subject: [PATCH 03/10] dt-bindings: usb: renesas_usbhs: Add r8a774b1 support
+Date:   Tue,  8 Oct 2019 11:38:45 +0100
+Message-Id: <1570531132-21856-4-git-send-email-fabrizio.castro@bp.renesas.com>
 X-Mailer: git-send-email 2.7.4
+In-Reply-To: <1570531132-21856-1-git-send-email-fabrizio.castro@bp.renesas.com>
+References: <1570531132-21856-1-git-send-email-fabrizio.castro@bp.renesas.com>
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Dear All,
+Document RZ/G2N (R8A774B1) SoC bindings.
 
-this series adds USB 2.0, USB 3.0, and INTC-EX support to the RZ/G2N
-SoC specfic dtsi.
+Signed-off-by: Fabrizio Castro <fabrizio.castro@bp.renesas.com>
+---
+ Documentation/devicetree/bindings/usb/renesas,usbhs.txt | 1 +
+ 1 file changed, 1 insertion(+)
 
-This series depends on the following patches:
-* https://patchwork.kernel.org/cover/11166155/
-* https://patchwork.kernel.org/cover/11157129/
-* https://patchwork.kernel.org/cover/11158259/
-* https://patchwork.kernel.org/cover/11171325/
-* https://patchwork.kernel.org/cover/11173787/
-* https://patchwork.kernel.org/patch/11174777/
-
-Thanks,
-Fab
-
-Fabrizio Castro (10):
-  dt-bindings: rcar-gen3-phy-usb2: Add r8a774b1 support
-  dt-bindings: dmaengine: usb-dmac: Add binding for r8a774b1
-  dt-bindings: usb: renesas_usbhs: Add r8a774b1 support
-  dt-bindings: rcar-gen3-phy-usb3: Add r8a774b1 support
-  dt-bindings: usb-xhci: Add r8a774b1 support
-  dt-bindings: usb: renesas_usb3: Document r8a774b1 support
-  arm64: dts: renesas: r8a774b1: Add USB2.0 phy and host (EHCI/OHCI)
-    device nodes
-  arm64: dts: renesas: r8a774b1: Add USB-DMAC and HSUSB device nodes
-  arm64: dts: renesas: r8a774b1: Add USB3.0 device nodes
-  arm64: dts: renesas: r8a774b1: Add INTC-EX device node
-
- .../devicetree/bindings/dma/renesas,usb-dmac.txt   |   1 +
- .../devicetree/bindings/phy/rcar-gen3-phy-usb2.txt |   2 +
- .../devicetree/bindings/phy/rcar-gen3-phy-usb3.txt |   2 +
- .../devicetree/bindings/usb/renesas,usb3-peri.txt  |   1 +
- .../devicetree/bindings/usb/renesas,usbhs.txt      |   1 +
- Documentation/devicetree/bindings/usb/usb-xhci.txt |   1 +
- arch/arm64/boot/dts/renesas/r8a774b1.dtsi          | 138 +++++++++++++++++++--
- 7 files changed, 136 insertions(+), 10 deletions(-)
-
+diff --git a/Documentation/devicetree/bindings/usb/renesas,usbhs.txt b/Documentation/devicetree/bindings/usb/renesas,usbhs.txt
+index e39255e..06abe99 100644
+--- a/Documentation/devicetree/bindings/usb/renesas,usbhs.txt
++++ b/Documentation/devicetree/bindings/usb/renesas,usbhs.txt
+@@ -8,6 +8,7 @@ Required properties:
+ 	- "renesas,usbhs-r8a7745" for r8a7745 (RZ/G1E) compatible device
+ 	- "renesas,usbhs-r8a77470" for r8a77470 (RZ/G1C) compatible device
+ 	- "renesas,usbhs-r8a774a1" for r8a774a1 (RZ/G2M) compatible device
++	- "renesas,usbhs-r8a774b1" for r8a774b1 (RZ/G2N) compatible device
+ 	- "renesas,usbhs-r8a774c0" for r8a774c0 (RZ/G2E) compatible device
+ 	- "renesas,usbhs-r8a7790" for r8a7790 (R-Car H2) compatible device
+ 	- "renesas,usbhs-r8a7791" for r8a7791 (R-Car M2-W) compatible device
 -- 
 2.7.4
 
