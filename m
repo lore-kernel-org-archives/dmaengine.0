@@ -2,78 +2,85 @@ Return-Path: <SRS0=i4n3=YB=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED,USER_AGENT_GIT autolearn=unavailable autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 849B3C4360C
-	for <dmaengine@archiver.kernel.org>; Tue,  8 Oct 2019 10:40:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 29CA5C4360C
+	for <dmaengine@archiver.kernel.org>; Tue,  8 Oct 2019 11:31:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 5E223206C2
-	for <dmaengine@archiver.kernel.org>; Tue,  8 Oct 2019 10:40:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0BD4220673
+	for <dmaengine@archiver.kernel.org>; Tue,  8 Oct 2019 11:31:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730375AbfJHKjK (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 8 Oct 2019 06:39:10 -0400
-Received: from relmlor1.renesas.com ([210.160.252.171]:12627 "EHLO
-        relmlie5.idc.renesas.com" rhost-flags-OK-OK-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1729790AbfJHKjK (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Tue, 8 Oct 2019 06:39:10 -0400
-X-IronPort-AV: E=Sophos;i="5.67,270,1566831600"; 
-   d="scan'208";a="28578186"
-Received: from unknown (HELO relmlir5.idc.renesas.com) ([10.200.68.151])
-  by relmlie5.idc.renesas.com with ESMTP; 08 Oct 2019 19:39:07 +0900
-Received: from fabrizio-dev.ree.adwin.renesas.com (unknown [10.226.36.196])
-        by relmlir5.idc.renesas.com (Postfix) with ESMTP id BE38C400C0B8;
-        Tue,  8 Oct 2019 19:39:03 +0900 (JST)
-From:   Fabrizio Castro <fabrizio.castro@bp.renesas.com>
-To:     Geert Uytterhoeven <geert+renesas@glider.be>,
-        Simon Horman <horms@verge.net.au>,
-        Vinod Koul <vkoul@kernel.org>,
+        id S1730316AbfJHLbg (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 8 Oct 2019 07:31:36 -0400
+Received: from mail-ot1-f67.google.com ([209.85.210.67]:43002 "EHLO
+        mail-ot1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729790AbfJHLbg (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Tue, 8 Oct 2019 07:31:36 -0400
+Received: by mail-ot1-f67.google.com with SMTP id c10so13700125otd.9;
+        Tue, 08 Oct 2019 04:31:35 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=rWU50A1ftSfnXS5t6he0dr7vBuFC5vEUJUAdKOgY8bw=;
+        b=BLWDEKEE40Z43yFmL1QT7KNpYscsV8gKDrE6P0C+TiWgwjN+nC8Bp73g/dVgKRfwWt
+         opTja6tEFInTPdhAjQJHQwT409vWWGmXFDs4lHPb3X9SlBBznfFtE8v00b5OLM+BmgJJ
+         gZbbgmwEwawOzrpWAeH2n0sgxxwAi4qcWlH5EentE8C6S7R6jnuLa1uZJON5/+4taVE0
+         wA25sxaHp7RidarA2YY75+wV/50cwu0JMnQ/JTvwobgl1+EpVW0UDLF16yPMMlcB7ngJ
+         ejjKTNsGGWMstBL9WM4uWFQ2WU81f94s3qQ3lINDCgQ3D7AicSIlgYL8Wqh81J66LLGA
+         MREQ==
+X-Gm-Message-State: APjAAAX9YpacNthpWh2Iipu6AaKUY176TcbeE27VUGjbW4oIg8Fl14lW
+        Gi/3gbASwoaRQMtDQ4hkpMMS4to2v239xlOU2UI=
+X-Google-Smtp-Source: APXvYqwg3JosVAAgDSiL28e72fmiuqQR8WnI4fg5raXCpMujENXSYM2HP7kCRnJ80aJMkRAJk+mptxa3ILDqF8ntcjM=
+X-Received: by 2002:a9d:404d:: with SMTP id o13mr15552472oti.39.1570534295529;
+ Tue, 08 Oct 2019 04:31:35 -0700 (PDT)
+MIME-Version: 1.0
+References: <1570531132-21856-1-git-send-email-fabrizio.castro@bp.renesas.com> <1570531132-21856-2-git-send-email-fabrizio.castro@bp.renesas.com>
+In-Reply-To: <1570531132-21856-2-git-send-email-fabrizio.castro@bp.renesas.com>
+From:   Geert Uytterhoeven <geert@linux-m68k.org>
+Date:   Tue, 8 Oct 2019 13:31:23 +0200
+Message-ID: <CAMuHMdVtFHbKnTk3xerOK4ju5NAS9-VSXrM10bZyquSR17V6-A@mail.gmail.com>
+Subject: Re: [PATCH 01/10] dt-bindings: rcar-gen3-phy-usb2: Add r8a774b1 support
+To:     Fabrizio Castro <fabrizio.castro@bp.renesas.com>
+Cc:     Simon Horman <horms@verge.net.au>, Vinod Koul <vkoul@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>
-Cc:     Fabrizio Castro <fabrizio.castro@bp.renesas.com>,
+        Mark Rutland <mark.rutland@arm.com>,
         Kishon Vijay Abraham I <kishon@ti.com>,
         Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
         Magnus Damm <magnus.damm@gmail.com>, dmaengine@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-usb@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        USB list <linux-usb@vger.kernel.org>,
+        Linux-Renesas <linux-renesas-soc@vger.kernel.org>,
         Chris Paterson <Chris.Paterson2@renesas.com>,
         Biju Das <biju.das@bp.renesas.com>,
         Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
         Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>,
         Jacopo Mondi <jacopo+renesas@jmondi.org>
-Subject: [PATCH 01/10] dt-bindings: rcar-gen3-phy-usb2: Add r8a774b1 support
-Date:   Tue,  8 Oct 2019 11:38:43 +0100
-Message-Id: <1570531132-21856-2-git-send-email-fabrizio.castro@bp.renesas.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1570531132-21856-1-git-send-email-fabrizio.castro@bp.renesas.com>
-References: <1570531132-21856-1-git-send-email-fabrizio.castro@bp.renesas.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Document RZ/G2N (R8A774B1) SoC bindings.
+On Tue, Oct 8, 2019 at 12:39 PM Fabrizio Castro
+<fabrizio.castro@bp.renesas.com> wrote:
+> Document RZ/G2N (R8A774B1) SoC bindings.
+>
+> Signed-off-by: Fabrizio Castro <fabrizio.castro@bp.renesas.com>
 
-Signed-off-by: Fabrizio Castro <fabrizio.castro@bp.renesas.com>
----
- Documentation/devicetree/bindings/phy/rcar-gen3-phy-usb2.txt | 2 ++
- 1 file changed, 2 insertions(+)
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
 
-diff --git a/Documentation/devicetree/bindings/phy/rcar-gen3-phy-usb2.txt b/Documentation/devicetree/bindings/phy/rcar-gen3-phy-usb2.txt
-index 503a8cf..7734b21 100644
---- a/Documentation/devicetree/bindings/phy/rcar-gen3-phy-usb2.txt
-+++ b/Documentation/devicetree/bindings/phy/rcar-gen3-phy-usb2.txt
-@@ -10,6 +10,8 @@ Required properties:
- 	      SoC.
- 	      "renesas,usb2-phy-r8a774a1" if the device is a part of an R8A774A1
- 	      SoC.
-+	      "renesas,usb2-phy-r8a774b1" if the device is a part of an R8A774B1
-+	      SoC.
- 	      "renesas,usb2-phy-r8a774c0" if the device is a part of an R8A774C0
- 	      SoC.
- 	      "renesas,usb2-phy-r8a7795" if the device is a part of an R8A7795
+Gr{oetje,eeting}s,
+
+                        Geert
+
 -- 
-2.7.4
+Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
 
+In personal conversations with technical people, I call myself a hacker. But
+when I'm talking to journalists I just say "programmer" or something like that.
+                                -- Linus Torvalds
