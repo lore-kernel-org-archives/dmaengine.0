@@ -1,91 +1,101 @@
-Return-Path: <SRS0=oqFp=YE=vger.kernel.org=dmaengine-owner@kernel.org>
+Return-Path: <SRS0=axD5=YG=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.6 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=unavailable autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-7.3 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8AA6CECE58C
-	for <dmaengine@archiver.kernel.org>; Fri, 11 Oct 2019 14:32:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 85F2FECE587
+	for <dmaengine@archiver.kernel.org>; Sun, 13 Oct 2019 13:05:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 5AD3A20673
-	for <dmaengine@archiver.kernel.org>; Fri, 11 Oct 2019 14:32:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1570804329;
-	bh=hG85HZzdi1ynZ6Zv+05PrkA9XkcYf0+JqDF1a/FsyHw=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:List-ID:From;
-	b=ZZkeuJptCcpV48UO+3cVxAFGYmi9SJfLqB2EHBhE6JyXm600p2d7RyxznbK6WWoo1
-	 P6OsobSX7D2ISgg/OO5QwFT1pod7TpdSoPbWuksXXFBGsq6vddepwbzfabIEKEVPGX
-	 V5VDNETsRTm9kuYU1btMI8WXiD8gWsRMa48PTyQU=
+	by mail.kernel.org (Postfix) with ESMTP id 684532082F
+	for <dmaengine@archiver.kernel.org>; Sun, 13 Oct 2019 13:05:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728169AbfJKOcI (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 11 Oct 2019 10:32:08 -0400
-Received: from mail-ot1-f67.google.com ([209.85.210.67]:46229 "EHLO
-        mail-ot1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728068AbfJKOcI (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Fri, 11 Oct 2019 10:32:08 -0400
-Received: by mail-ot1-f67.google.com with SMTP id 89so8100523oth.13;
-        Fri, 11 Oct 2019 07:32:07 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=H3n2Fz+qj7wCeXKJS+vYpyY/63hEGZCo5PhUXjdN+zA=;
-        b=nIgAbI29o+gkDMUimIzxegd63rTcNMRG+h8NOlRQlabevaRcCm85QeZ3aT0RiGY3Cx
-         ZDe9vE9atVg+4MMnTVCip4UadSHlnvOmvNIeTM59pBWnXneRxmyyWVXHqBMZicpbyoyz
-         2TkOvWgLE2V6j1o4eIVRUVIPWZGLfRXa8dneDYNMaRS4LHKNVR4S1vB7JDz1EWoPUMng
-         LdcGS+rUgpjKqXNQmiLfxIdnITVAhJV+4OD7niN/vUy1Yn039GqzzxoBUqaj9WJwzlpI
-         AFNwSq+vDxX8McvwmsWeoqeq9Q5Wi0CO9SAxuRnkvCllXUDnYEXxbgFVQtTxw+tsM69j
-         TFzw==
-X-Gm-Message-State: APjAAAUfUp45ibHm7z3d9qP9OpxWT3UPkARIg5ETTUOtpMh+H7OBrdr2
-        1339wCHWSPlAaxBAspE4RQ==
-X-Google-Smtp-Source: APXvYqzBomLw3m4J3taZnodc7sOY0vwonGNkdZBQ5F2aw5rN7biaYOSRbhELpcDaSNS8gI1A1Ds40A==
-X-Received: by 2002:a05:6830:1e59:: with SMTP id e25mr12350373otj.342.1570804327317;
-        Fri, 11 Oct 2019 07:32:07 -0700 (PDT)
-Received: from localhost (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.gmail.com with ESMTPSA id i4sm2668323oto.43.2019.10.11.07.32.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 11 Oct 2019 07:32:06 -0700 (PDT)
-Date:   Fri, 11 Oct 2019 09:32:05 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Biju Das <biju.das@bp.renesas.com>
-Cc:     Vinod Koul <vkoul@kernel.org>,
-        Geert Uytterhoeven <geert+renesas@glider.be>,
+        id S1729088AbfJMNFB (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Sun, 13 Oct 2019 09:05:01 -0400
+Received: from mga18.intel.com ([134.134.136.126]:25489 "EHLO mga18.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728478AbfJMNFA (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Sun, 13 Oct 2019 09:05:00 -0400
+X-Amp-Result: UNKNOWN
+X-Amp-Original-Verdict: FILE UNKNOWN
+X-Amp-File-Uploaded: False
+Received: from orsmga004.jf.intel.com ([10.7.209.38])
+  by orsmga106.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 13 Oct 2019 06:05:00 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.67,292,1566889200"; 
+   d="scan'208";a="346492348"
+Received: from lkp-server01.sh.intel.com (HELO lkp-server01) ([10.239.97.150])
+  by orsmga004.jf.intel.com with ESMTP; 13 Oct 2019 06:04:56 -0700
+Received: from kbuild by lkp-server01 with local (Exim 4.89)
+        (envelope-from <lkp@intel.com>)
+        id 1iJdYN-000ApH-EF; Sun, 13 Oct 2019 21:04:55 +0800
+Date:   Sun, 13 Oct 2019 21:04:47 +0800
+From:   kbuild test robot <lkp@intel.com>
+To:     Green Wan <green.wan@sifive.com>
+Cc:     kbuild-all@lists.01.org, linux-hackers@sifive.com,
+        Green Wan <green.wan@sifive.com>,
+        Vinod Koul <vkoul@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
         Mark Rutland <mark.rutland@arm.com>,
-        Biju Das <biju.das@bp.renesas.com>, dmaengine@vger.kernel.org,
-        devicetree@vger.kernel.org, Simon Horman <horms@verge.net.au>,
-        Chris Paterson <Chris.Paterson2@renesas.com>,
-        Fabrizio Castro <fabrizio.castro@bp.renesas.com>,
-        linux-renesas-soc@vger.kernel.org
-Subject: Re: [PATCH v2] dt-bindings: dmaengine: rcar-dmac: Document R8A774B1
- bindings
-Message-ID: <20191011143205.GA19988@bogus>
-References: <1569580629-55677-1-git-send-email-biju.das@bp.renesas.com>
+        Palmer Dabbelt <palmer@sifive.com>,
+        Paul Walmsley <paul.walmsley@sifive.com>,
+        Albert Ou <aou@eecs.berkeley.edu>,
+        Dan Williams <dan.j.williams@intel.com>,
+        Mauro Carvalho Chehab <mchehab+samsung@kernel.org>,
+        "David S. Miller" <davem@davemloft.net>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+        "Paul E. McKenney" <paulmck@linux.ibm.com>,
+        Bin Meng <bmeng.cn@gmail.com>,
+        Yash Shah <yash.shah@sifive.com>,
+        Sagar Kadam <sagar.kadam@sifive.com>,
+        dmaengine@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v4 3/4] dmaengine: sf-pdma: add platform DMA support for
+ HiFive Unleashed A00
+Message-ID: <201910132151.A52iK7nK%lkp@intel.com>
+References: <20191003090945.29210-4-green.wan@sifive.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1569580629-55677-1-git-send-email-biju.das@bp.renesas.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <20191003090945.29210-4-green.wan@sifive.com>
+X-Patchwork-Hint: ignore
+User-Agent: NeoMutt/20170113 (1.7.2)
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On Fri, 27 Sep 2019 11:37:09 +0100, Biju Das wrote:
-> Renesas RZ/G2N (R8A774B1) SoC also has the R-Car gen2/3 compatible
-> DMA controllers, therefore document RZ/G2N specific bindings.
-> 
-> Signed-off-by: Biju Das <biju.das@bp.renesas.com>
-> Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-> ---
-> V1-->V2
->   * Incorporated Geert's review comment
->   * Added Geert's reviewed by tag
-> ---
->  Documentation/devicetree/bindings/dma/renesas,rcar-dmac.txt | 1 +
->  1 file changed, 1 insertion(+)
-> 
+Hi Green,
 
-Acked-by: Rob Herring <robh@kernel.org>
+Thank you for the patch! Perhaps something to improve:
+
+[auto build test WARNING on linus/master]
+[cannot apply to v5.4-rc2 next-20191011]
+[if your patch is applied to the wrong git tree, please drop us a note to help
+improve the system. BTW, we also suggest to use '--base' option to specify the
+base tree in git format-patch, please see https://stackoverflow.com/a/37406982]
+
+url:    https://github.com/0day-ci/linux/commits/Green-Wan/dmaengine-sf-pdma-Add-platform-dma-driver/20191003-172343
+reproduce:
+        # apt-get install sparse
+        # sparse version: v0.6.1-rc1-43-g0ccb3b4-dirty
+        make ARCH=x86_64 allmodconfig
+        make C=1 CF='-fdiagnostic-prefix -D__CHECK_ENDIAN__'
+
+If you fix the issue, kindly add following tag
+Reported-by: kbuild test robot <lkp@intel.com>
+
+
+sparse warnings: (new ones prefixed by >>)
+
+>> drivers/dma/sf-pdma/sf-pdma.c:100:6: sparse: sparse: symbol 'sf_pdma_disclaim_chan' was not declared. Should it be static?
+>> drivers/dma/sf-pdma/sf-pdma.c:107:32: sparse: sparse: symbol 'sf_pdma_prep_dma_memcpy' was not declared. Should it be static?
+
+Please review and possibly fold the followup patch.
+
+---
+0-DAY kernel test infrastructure                Open Source Technology Center
+https://lists.01.org/pipermail/kbuild-all                   Intel Corporation
