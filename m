@@ -2,33 +2,32 @@ Return-Path: <SRS0=cP/1=YI=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=unavailable
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED,USER_AGENT_GIT autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CCACCC10F14
-	for <dmaengine@archiver.kernel.org>; Tue, 15 Oct 2019 14:49:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 883D0ECE588
+	for <dmaengine@archiver.kernel.org>; Tue, 15 Oct 2019 14:49:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 9A69120640
-	for <dmaengine@archiver.kernel.org>; Tue, 15 Oct 2019 14:49:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 53DC020640
+	for <dmaengine@archiver.kernel.org>; Tue, 15 Oct 2019 14:49:06 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=xilinx.onmicrosoft.com header.i=@xilinx.onmicrosoft.com header.b="cfNGdCMF"
+	dkim=pass (1024-bit key) header.d=xilinx.onmicrosoft.com header.i=@xilinx.onmicrosoft.com header.b="datBo8qo"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732953AbfJOOsw (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        id S1732949AbfJOOsw (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
         Tue, 15 Oct 2019 10:48:52 -0400
-Received: from mail-eopbgr800053.outbound.protection.outlook.com ([40.107.80.53]:7680
-        "EHLO NAM03-DM3-obe.outbound.protection.outlook.com"
+Received: from mail-eopbgr770088.outbound.protection.outlook.com ([40.107.77.88]:42638
+        "EHLO NAM02-SN1-obe.outbound.protection.outlook.com"
         rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1732909AbfJOOsv (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        id S1732898AbfJOOsv (ORCPT <rfc822;dmaengine@vger.kernel.org>);
         Tue, 15 Oct 2019 10:48:51 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=UdlgAilvWZ0oEIhDR2hWYjvobYNEGf3Ew9zKk3X40XR7CWdfeQ2rWY4QM9eeKOPDu/FIRladvmIuAESeghjlQiAp5Rlo/FuuNw1tXtlXabkAUKhb9T53bh3vCB7tRpbY7f2/BFnzItjJQyUPi/1jiB1/miPK1ERvzfkYRw9jS0Galp1n9arKHg7VDOcaeN+iSsoTK/FqaGVft8r3M8+sNJvPAyZxerEy3reC7U1Tegnu0vu2x0eMMfHkdzTdR0aqp6bp7kvjHeFXhS3iwNfDUepu1raUsPChrrXMx9Ndmg2dRgfQuGaKqkkOX/cMYic3IymvrCV1zeJ8LilYxXwi+g==
+ b=LPcgK7szQJkqxzAvGJ8qV2RfPNjzJhZi2K5nhqRxS09jBRFwtDQ5Du6N2jsT/0WsUNXe0V3meECQitrBBFITWzG0DV0ACk68mUbT3/XzaNRF865oBpDev/EbOSz8k68gMnnwW9Sevcl38XbiVJd1wpXuxf5du0ELPH055BqYuidyXRmiEocuahx+cfblEVU5DAoi6lRh3vxgDhHjLJnuhZDzU0h2wf2ClNNwkfR69AGb73cb+mMLsmuZ10WplPICrSVUyBGEznWXtPiwQsdVtL6uMsqw88HA5xYDhBf2Ne/TPwXWSc1gcqK86FGP12J5HeXG9hyup/ED2dLnY0tcAA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=z7i5O8AkP7mVizfDypfihzcLg7vKXFkfhX8XCF5XkL4=;
- b=RgbHXFblrjQ4SF8s/FlNm3qJFwRVh3Ssmh+dkTTiA3Qr4/XDADo/m+YokUwiHZWj7efqX/ofjWRJU+SoL8MUUWqPLyKrQF/3yCcyJofK9tjUmYX+OKGHsN42U/58IRKmElkKwwEgZmYhnp0yBxegKXkiz4q636wCASxa2E1dsJY8MTA905ZWMFM79IU9BYp3ckqvxsAvFDwOUz13c2rZlXSJGL3/GD1ziJl+hb21IfA8aqtsmQQioPBbOZx23V6aoA5tkbQzOAjlC9fjicTgg4Jxv+wegfGN/SqNrYazyWpc5UszfCMzP+AKvXwQ8LsUkutU73/Vhf+etl0G1zXPMw==
+ bh=9Bfw98o/cttjLLeVQI8WWVEumV9j5VRzeCFqb5qcOQc=;
+ b=WNzIf6Su5Yr53joArxeDH09hC6SejwQjL46hGMyVz8dVhlFIC/X7XHkTkp/4UT28BUoji6BCSV8gLLo+/0S4X3vlfZWyVRS8jCDYdU7CuGoZyhZYM++NRtEGjVwDKJSGBaHMzNzVrkj1KQLJF1Q6RzrOIrPtnQBviMwdTmJEU9k/VK1jZiIbCg8kBH0hzt94RNPmnB8ovGIwhek7W0GMPAOYbPkis4PW/9qZziCEfmPmXzT+NnfzfcCdJuj1TXPKi3Fr+SGhzxzou1/8YuSYIo3HoJ4zN4DkIoniOHdbvEEDOMsbkup6ujE/oo56MvGK+nbcUvLBUZWuK2VUhF3xAw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
  149.199.60.83) smtp.rcpttodomain=vger.kernel.org smtp.mailfrom=xilinx.com;
  dmarc=bestguesspass action=none header.from=xilinx.com; dkim=none (message
@@ -36,16 +35,16 @@ ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=xilinx.onmicrosoft.com; s=selector2-xilinx-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=z7i5O8AkP7mVizfDypfihzcLg7vKXFkfhX8XCF5XkL4=;
- b=cfNGdCMFHjjlFI31y1qXqEGnsgdK7dJWQxTM0Vbqwh7RNDkIRSdxbA50dBj7TwAhFqvGMmAugM67JCjiU/BIPo8bjOwiV3trZCbBcoxrmdXhm//mlTMBFdIKME+63xPZEnQ0eO/aYdfZLMWEo309zCV9cwLRu5KOvZqbk1L6lXM=
-Received: from DM6PR02CA0066.namprd02.prod.outlook.com (2603:10b6:5:177::43)
- by DM6PR02MB6283.namprd02.prod.outlook.com (2603:10b6:5:1d3::21) with
+ bh=9Bfw98o/cttjLLeVQI8WWVEumV9j5VRzeCFqb5qcOQc=;
+ b=datBo8qo2LesbAu6Ds5QWuCKzCBpm3cEEld4xsQG3DvuC+mt4ZtN9kHpuxFlm22ytlrBaAnX5pfBMlGMEhp3QdZ/mSzxhmTqZ0Duz1KkYFlzGDMcD2oogMKHhWycP+A56uJCAME9X2Dc+UI62fySe6tjfv93ecj2y3GnSfwR4UA=
+Received: from DM6PR02CA0095.namprd02.prod.outlook.com (2603:10b6:5:1f4::36)
+ by CY4SPR00MB232.namprd02.prod.outlook.com (2603:10b6:903:30::22) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.2347.21; Tue, 15 Oct
- 2019 14:48:49 +0000
-Received: from BL2NAM02FT025.eop-nam02.prod.protection.outlook.com
- (2a01:111:f400:7e46::202) by DM6PR02CA0066.outlook.office365.com
- (2603:10b6:5:177::43) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.2347.16; Tue, 15 Oct
+ 2019 14:48:48 +0000
+Received: from BL2NAM02FT003.eop-nam02.prod.protection.outlook.com
+ (2a01:111:f400:7e46::200) by DM6PR02CA0095.outlook.office365.com
+ (2603:10b6:5:1f4::36) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.2347.17 via Frontend
  Transport; Tue, 15 Oct 2019 14:48:48 +0000
 Authentication-Results: spf=pass (sender IP is 149.199.60.83)
@@ -56,26 +55,26 @@ Received-SPF: Pass (protection.outlook.com: domain of xilinx.com designates
  149.199.60.83 as permitted sender) receiver=protection.outlook.com;
  client-ip=149.199.60.83; helo=xsj-pvapsmtpgw01;
 Received: from xsj-pvapsmtpgw01 (149.199.60.83) by
- BL2NAM02FT025.mail.protection.outlook.com (10.152.77.151) with Microsoft SMTP
+ BL2NAM02FT003.mail.protection.outlook.com (10.152.76.204) with Microsoft SMTP
  Server (version=TLS1_0, cipher=TLS_RSA_WITH_AES_256_CBC_SHA) id 15.20.2347.16
- via Frontend Transport; Tue, 15 Oct 2019 14:48:48 +0000
+ via Frontend Transport; Tue, 15 Oct 2019 14:48:47 +0000
 Received: from unknown-38-66.xilinx.com ([149.199.38.66] helo=xsj-pvapsmtp01)
         by xsj-pvapsmtpgw01 with esmtp (Exim 4.63)
         (envelope-from <radhey.shyam.pandey@xilinx.com>)
-        id 1iKO80-0006Fx-2L; Tue, 15 Oct 2019 07:48:48 -0700
-Received: from [127.0.0.1] (helo=xsj-smtp-dlp2.xlnx.xilinx.com)
+        id 1iKO7z-0006Fv-8X; Tue, 15 Oct 2019 07:48:47 -0700
+Received: from [127.0.0.1] (helo=xsj-smtp-dlp1.xlnx.xilinx.com)
         by xsj-pvapsmtp01 with esmtp (Exim 4.63)
         (envelope-from <radhey.shyam.pandey@xilinx.com>)
-        id 1iKO7u-0002Ar-UD; Tue, 15 Oct 2019 07:48:42 -0700
-Received: from xsj-pvapsmtp01 (smtp2.xilinx.com [149.199.38.66])
-        by xsj-smtp-dlp2.xlnx.xilinx.com (8.13.8/8.13.1) with ESMTP id x9FEmgdt019628;
-        Tue, 15 Oct 2019 07:48:42 -0700
+        id 1iKO7u-0002AM-3q; Tue, 15 Oct 2019 07:48:42 -0700
+Received: from xsj-pvapsmtp01 (xsj-smtp.xilinx.com [149.199.38.66])
+        by xsj-smtp-dlp1.xlnx.xilinx.com (8.13.8/8.13.1) with ESMTP id x9FEmeSK014655;
+        Tue, 15 Oct 2019 07:48:41 -0700
 Received: from [10.140.184.180] (helo=ubuntu)
         by xsj-pvapsmtp01 with esmtp (Exim 4.63)
         (envelope-from <radheys@ubuntu>)
-        id 1iKO7t-0002AJ-PJ; Tue, 15 Oct 2019 07:48:41 -0700
+        id 1iKO7s-00029M-NM; Tue, 15 Oct 2019 07:48:40 -0700
 Received: by ubuntu (Postfix, from userid 13245)
-        id 1E8B3101132; Tue, 15 Oct 2019 20:18:40 +0530 (IST)
+        id EB543100DD5; Tue, 15 Oct 2019 20:18:39 +0530 (IST)
 From:   Radhey Shyam Pandey <radhey.shyam.pandey@xilinx.com>
 To:     vkoul@kernel.org, dan.j.williams@intel.com,
         michal.simek@xilinx.com, nick.graumann@gmail.com,
@@ -83,78 +82,73 @@ To:     vkoul@kernel.org, dan.j.williams@intel.com,
         mcgrof@kernel.org
 Cc:     dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
         Radhey Shyam Pandey <radhey.shyam.pandey@xilinx.com>
-Subject: [PATCH v2 -next 6/7] dmaengine: xilinx_dma: Print debug message when no free tx segments
-Date:   Tue, 15 Oct 2019 20:18:23 +0530
-Message-Id: <1571150904-3988-7-git-send-email-radhey.shyam.pandey@xilinx.com>
+Subject: [PATCH v2 -next 0/7] dmaengine: xilinx_dma: AXI DMA driver improvements
+Date:   Tue, 15 Oct 2019 20:18:17 +0530
+Message-Id: <1571150904-3988-1-git-send-email-radhey.shyam.pandey@xilinx.com>
 X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1571150904-3988-1-git-send-email-radhey.shyam.pandey@xilinx.com>
-References: <1571150904-3988-1-git-send-email-radhey.shyam.pandey@xilinx.com>
 X-RCIS-Action: ALLOW
 X-TM-AS-Product-Ver: IMSS-7.1.0.1224-8.2.0.1013-23620.005
-X-TM-AS-Result: No--6.170-7.0-31-1
-X-imss-scan-details: No--6.170-7.0-31-1;No--6.170-5.0-31-1
+X-TM-AS-Result: No--0.503-7.0-31-1
+X-imss-scan-details: No--0.503-7.0-31-1;No--0.503-5.0-31-1
 X-TM-AS-User-Approved-Sender: No;No
 X-TM-AS-Result-Xfilter: Match text exemption rules:No
 X-EOPAttributedMessage: 0
 X-MS-Office365-Filtering-HT: Tenant
-X-Forefront-Antispam-Report: CIP:149.199.60.83;IPV:NLI;CTRY:US;EFV:NLI;SFV:NSPM;SFS:(10009020)(4636009)(376002)(346002)(39860400002)(136003)(396003)(199004)(189003)(8936002)(70206006)(81156014)(8676002)(81166006)(70586007)(14444005)(50226002)(6666004)(356004)(4744005)(305945005)(5660300002)(11346002)(126002)(2616005)(336012)(476003)(426003)(478600001)(107886003)(6266002)(51416003)(26005)(446003)(76176011)(486006)(2906002)(36756003)(106002)(4326008)(186003)(48376002)(16586007)(103686004)(47776003)(42186006)(316002)(50466002)(15650500001);DIR:OUT;SFP:1101;SCL:1;SRVR:DM6PR02MB6283;H:xsj-pvapsmtpgw01;FPR:;SPF:Pass;LANG:en;PTR:unknown-60-83.xilinx.com;A:1;MX:1;
+X-Forefront-Antispam-Report: CIP:149.199.60.83;IPV:NLI;CTRY:US;EFV:NLI;SFV:NSPM;SFS:(10009020)(4636009)(346002)(39850400004)(136003)(396003)(376002)(189003)(199004)(106002)(316002)(6306002)(51416003)(16586007)(42186006)(47776003)(50466002)(50226002)(8936002)(107886003)(81156014)(8676002)(81166006)(6266002)(26005)(186003)(2616005)(476003)(6666004)(356004)(36756003)(126002)(2906002)(336012)(5660300002)(486006)(70206006)(103686004)(966005)(305945005)(70586007)(4326008)(426003)(478600001)(48376002);DIR:OUT;SFP:1101;SCL:1;SRVR:CY4SPR00MB232;H:xsj-pvapsmtpgw01;FPR:;SPF:Pass;LANG:en;PTR:unknown-60-83.xilinx.com;MX:1;A:1;
 MIME-Version: 1.0
 Content-Type: text/plain
 X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: f58df84a-c1e7-495d-f97e-08d7517ec9bb
-X-MS-TrafficTypeDiagnostic: DM6PR02MB6283:
-X-Microsoft-Antispam-PRVS: <DM6PR02MB62838CB2556E5D7AF864A78EC7930@DM6PR02MB6283.namprd02.prod.outlook.com>
+X-MS-Office365-Filtering-Correlation-Id: a1d07745-0640-46e7-1f9a-08d7517ec945
+X-MS-TrafficTypeDiagnostic: CY4SPR00MB232:
+X-MS-Exchange-PUrlCount: 1
+X-Microsoft-Antispam-PRVS: <CY4SPR00MB232C02122732DD658ABA2B5C7930@CY4SPR00MB232.namprd02.prod.outlook.com>
 X-Auto-Response-Suppress: DR, RN, NRN, OOF, AutoReply
-X-MS-Oob-TLC-OOBClassifiers: OLM:7691;
+X-MS-Oob-TLC-OOBClassifiers: OLM:3383;
 X-Forefront-PRVS: 01917B1794
 X-MS-Exchange-SenderADCheck: 1
 X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: hiyF7xXFNguM7dhROCdbPsP2oyTzg+u9+7IcUpDiYp9WKBxspsU6bEeVNsvSMZsnCXOSaeOu7mGs5frcssT7kk1FnDDBHxixnnuq8y8MiNaU/xb2fXsTABsDqkxH9b7vHXfY+iW1yy23sS4lXDlzXPAGeEl1PSbMgYnoOYkRZYSmTytn4SLbBCTfiMwsNOReXoLZgJokol+2Q4b3EWGMjYLpStnAYaExf02OCj7BN6ZJmDYmJ7a804YsZMqKtS45kKUP6MVs1lozRL5hZt68zntTLGV3oaPUZvmyzkQA3DbouZr4WqLJ2dAapvI/GvJlIs33TaKDShc/tQSw7Kwoi1XZ2HPJLn7CWGWwDzXFmZQUuIskY/jozxr0nYg4P2qXkZ9+FP4XWVvSBXSgpeqgx9jwNFO+KgIastBp0zCdWLY=
+X-Microsoft-Antispam-Message-Info: pDvTE6Oj172NGO9Jg04V62SdYyqF0RBeAgzvPl328yjqeHmkClSW45h/jdhpIoWWhKP4D5U3n6k+YDWb5PqVWDahmDVmknInCgs6qh8BVzByOjqT2jzrzyegzXB9SDz7WXYHPRDR2n+UyfhSMtks1oXeibXFvpX52YbTdMErqPbs3aq9adyrC8fblRGD866lLCVVavALxQEPFPAxndHmetbg0iC+6XwfWBKCkyhmpb2nZ/+UeDYVG/h5JIVL03Yy6OQd9eC9pyRwh7NlIqtsCCNUGX86GcuahuI8flh8u4wKHoqUiEfwOqPKt6F1UzPzVqprrki9NvnrPLcMxS0+6kPKSG7oe5gPAHzNYT4DW3dqBV4i5xVAmhTIq2Kq/HTGJbf3j/cToYO3flW/u8qlIZTxgLib/FyQWYmhuSSbGBA3Dl8iGtv4L/mPoxrMMJnqTtCMDkFEgswy+puvij+x6A==
 X-OriginatorOrg: xilinx.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 15 Oct 2019 14:48:48.6751
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 15 Oct 2019 14:48:47.8952
  (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: f58df84a-c1e7-495d-f97e-08d7517ec9bb
+X-MS-Exchange-CrossTenant-Network-Message-Id: a1d07745-0640-46e7-1f9a-08d7517ec945
 X-MS-Exchange-CrossTenant-Id: 657af505-d5df-48d0-8300-c31994686c5c
 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=657af505-d5df-48d0-8300-c31994686c5c;Ip=[149.199.60.83];Helo=[xsj-pvapsmtpgw01]
 X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR02MB6283
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY4SPR00MB232
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-From: Nicholas Graumann <nick.graumann@gmail.com>
+This patchset adds callback result, descriptor residue
+calculation and some regression fixes.
 
-The driver should not run out of tx segments in normal operation. But,
-if the user attempts to prepare a transaction with a large sg list,
-the driver may not have enough free segments to accommodate the request.
-
-Log a message at the debug level to inform the user in case they are
-experiencing issues.
-
-Signed-off-by: Nicholas Graumann <nick.graumann@gmail.com>
-Signed-off-by: Radhey Shyam Pandey <radhey.shyam.pandey@xilinx.com>
----
 Changes for v2:
-None
----
- drivers/dma/xilinx/xilinx_dma.c | 3 +++
- 1 file changed, 3 insertions(+)
+- Fix commenting style in 3/8 Introduce xilinx_dma_get_residue patch.
+- Invoke get_residue for supported configuration and remove internal check.
+- Remove residue from channel data in a new preparatory patch.
+- Drop patch checking for idle state in axidma stop_transfer. 
+  It need further debug.
 
-diff --git a/drivers/dma/xilinx/xilinx_dma.c b/drivers/dma/xilinx/xilinx_dma.c
-index 932407a..b0d3aac 100644
---- a/drivers/dma/xilinx/xilinx_dma.c
-+++ b/drivers/dma/xilinx/xilinx_dma.c
-@@ -615,6 +615,9 @@ xilinx_axidma_alloc_tx_segment(struct xilinx_dma_chan *chan)
- 	}
- 	spin_unlock_irqrestore(&chan->lock, flags);
- 
-+	if (!segment)
-+		dev_dbg(chan->dev, "Could not find free tx segment\n");
-+
- 	return segment;
- }
- 
+Please refer to below link for more information:
+https://www.spinics.net/lists/dmaengine/msg19480.html
+
+
+Nicholas Graumann (5):
+  dmaengine: xilinx_dma: Merge get_callback and _invoke
+  dmaengine: xilinx_dma: Introduce xilinx_dma_get_residue
+  dmaengine: xilinx_dma: Add callback_result support
+  dmaengine: xilinx_dma: Print debug message when no free tx segments
+  dmaengine: xilinx_dma: Clear desc_pendingcount in xilinx_dma_reset
+
+Radhey Shyam Pandey (2):
+  dmaengine: xilinx_dma: Remove desc_callback_valid check
+  dmaengine: xilinx_dma: Remove residue from channel data
+
+ drivers/dma/xilinx/xilinx_dma.c | 111 ++++++++++++++++++++++++++++++----------
+ 1 file changed, 84 insertions(+), 27 deletions(-)
+
 -- 
 2.7.4
 
