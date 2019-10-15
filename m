@@ -6,68 +6,73 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
 	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2F9B4C10F14
-	for <dmaengine@archiver.kernel.org>; Tue, 15 Oct 2019 10:17:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B1A23C10F14
+	for <dmaengine@archiver.kernel.org>; Tue, 15 Oct 2019 10:19:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 03837217F9
-	for <dmaengine@archiver.kernel.org>; Tue, 15 Oct 2019 10:17:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 774ED2083B
+	for <dmaengine@archiver.kernel.org>; Tue, 15 Oct 2019 10:19:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1571134660;
-	bh=xfGawPr58UBjheSl/F7JbyPz+DBSYB1h9/sggCT0fko=;
+	s=default; t=1571134763;
+	bh=LVAubQ5a4tx6kJZJZxy2deaudXFrQruZncCOv4L38Mc=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:List-ID:From;
-	b=LAdOsfs12N3pbZ6Sh51AotKNa9rvMsAPFaSLr4mrb3sg2lamV3lq+bEvG0Tbyhwv9
-	 ZNZYHlNSfv4KnCJDuvZJEASG2KDEt9+ds3sKwf0jYIuwgBffegQB1GiyedvR/5IfqD
-	 zAiMzkgVIMMzQO/YYkr6R2HHu062hdZoN95AVMTw=
+	b=e7GIcA3iNlkUfEF1rOuCf170PhRXdcuk11G4c2khM+Svt4/qbKdXNeyIlj555k763
+	 VpJzxNOX3BlaU0INR+AszKE7UlxDPd5Kz6Ln63DgZbPKKkiY2hQFEV/tZnB5m9FFo9
+	 KVYj2WcgaBtt1U/pqqp2b9FSNZZKDGNXVKmq+qos=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729941AbfJOKRj (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 15 Oct 2019 06:17:39 -0400
-Received: from mail.kernel.org ([198.145.29.99]:39092 "EHLO mail.kernel.org"
+        id S1730318AbfJOKTW (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 15 Oct 2019 06:19:22 -0400
+Received: from mail.kernel.org ([198.145.29.99]:39602 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729923AbfJOKRj (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Tue, 15 Oct 2019 06:17:39 -0400
+        id S1729923AbfJOKTU (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Tue, 15 Oct 2019 06:19:20 -0400
 Received: from localhost (unknown [171.76.96.211])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 1E78F2083B;
-        Tue, 15 Oct 2019 10:17:37 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id C4D0E217F9;
+        Tue, 15 Oct 2019 10:19:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1571134658;
-        bh=xfGawPr58UBjheSl/F7JbyPz+DBSYB1h9/sggCT0fko=;
+        s=default; t=1571134759;
+        bh=LVAubQ5a4tx6kJZJZxy2deaudXFrQruZncCOv4L38Mc=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=CJiafd99ZoMvX4wveVXN0dlVDyg4QpdEORABUlzV9BdrSv7Y1jQ7xtPwDwIG/ICnv
-         FXkqqOrFtwKFlZtvRR3nuQ9hVQAak8PL7xd0SP6Hp4vJvfpLp039XgxVpoETcs9/ak
-         +sjH4xmqa/RYy6lT4FaUYc3ctHmeh36NQRMc/i7U=
-Date:   Tue, 15 Oct 2019 15:47:34 +0530
+        b=eq+Kcnom8n08MOw6Tu5+4FF+hrx6aSgIUwLuwIGc1H3goH3rgQNwA5srrcWaXrnPc
+         Ujnb5hUX9a6V6glWMH2ljcibvyplBruPDS/vTjpfJy4XuDWtFC2+SRITOesr27mCcV
+         OjO7Kwd/z/mA8ifT6WbtvRkVqtAQjjOCdCbaWTfQ=
+Date:   Tue, 15 Oct 2019 15:49:14 +0530
 From:   Vinod Koul <vkoul@kernel.org>
-To:     Baolin Wang <baolin.wang@linaro.org>
-Cc:     orsonzhai@gmail.com, zhang.lyra@gmail.com,
-        dan.j.williams@intel.com, linux-kernel@vger.kernel.org,
-        dmaengine@vger.kernel.org, eric.long@unisoc.com,
-        zhenfang.wang@unisoc.com
-Subject: Re: [PATCH] dmaengine: sprd: Fix the possible memory leak issue
-Message-ID: <20191015101734.GS2654@vkoul-mobl>
-References: <170dbbc6d5366b6fa974ce2d366652e23a334251.1570609788.git.baolin.wang@linaro.org>
+To:     Fabrizio Castro <fabrizio.castro@bp.renesas.com>
+Cc:     Geert Uytterhoeven <geert+renesas@glider.be>,
+        Simon Horman <horms@verge.net.au>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Magnus Damm <magnus.damm@gmail.com>, dmaengine@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-usb@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
+        Chris Paterson <Chris.Paterson2@renesas.com>,
+        Biju Das <biju.das@bp.renesas.com>,
+        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+        Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>,
+        Jacopo Mondi <jacopo+renesas@jmondi.org>
+Subject: Re: [PATCH 02/10] dt-bindings: dmaengine: usb-dmac: Add binding for
+ r8a774b1
+Message-ID: <20191015101914.GT2654@vkoul-mobl>
+References: <1570531132-21856-1-git-send-email-fabrizio.castro@bp.renesas.com>
+ <1570531132-21856-3-git-send-email-fabrizio.castro@bp.renesas.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <170dbbc6d5366b6fa974ce2d366652e23a334251.1570609788.git.baolin.wang@linaro.org>
+In-Reply-To: <1570531132-21856-3-git-send-email-fabrizio.castro@bp.renesas.com>
 User-Agent: Mutt/1.12.1 (2019-06-15)
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On 09-10-19, 17:11, Baolin Wang wrote:
-> If we terminate the channel to free all descriptors associated with this
-> channel, we will leak the memory of current descriptor if the current
-> descriptor is not completed, since it had been deteled from the desc_issued
-> list and have not been added into the desc_completed list.
-> 
-> Thus we should check if current descriptor is completed or not, when freeing
-> the descriptors associated with one channel, if not, we should free it to
-> avoid this issue.
+On 08-10-19, 11:38, Fabrizio Castro wrote:
+> This patch adds the binding for r8a774b1 SoC (RZ/G2N).
 
-Applied, thanks
+Acked-by: Vinod Koul <vkoul@kernel.org>
 
 -- 
 ~Vinod
