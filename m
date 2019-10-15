@@ -2,67 +2,71 @@ Return-Path: <SRS0=cP/1=YI=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED,USER_AGENT_GIT autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=unavailable
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D4BB7C4CECE
-	for <dmaengine@archiver.kernel.org>; Tue, 15 Oct 2019 03:33:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 950D1ECE58C
+	for <dmaengine@archiver.kernel.org>; Tue, 15 Oct 2019 03:33:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id AA5D7217F9
-	for <dmaengine@archiver.kernel.org>; Tue, 15 Oct 2019 03:33:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6D7A721835
+	for <dmaengine@archiver.kernel.org>; Tue, 15 Oct 2019 03:33:58 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EiQqKdgE"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Z4lO4m6R"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727816AbfJODdH (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 14 Oct 2019 23:33:07 -0400
-Received: from mail-pf1-f195.google.com ([209.85.210.195]:44182 "EHLO
-        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727781AbfJODdH (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Mon, 14 Oct 2019 23:33:07 -0400
-Received: by mail-pf1-f195.google.com with SMTP id q21so11512510pfn.11;
-        Mon, 14 Oct 2019 20:33:06 -0700 (PDT)
+        id S1727947AbfJODdy (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 14 Oct 2019 23:33:54 -0400
+Received: from mail-pg1-f194.google.com ([209.85.215.194]:34364 "EHLO
+        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727931AbfJODdy (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Mon, 14 Oct 2019 23:33:54 -0400
+Received: by mail-pg1-f194.google.com with SMTP id k20so3888069pgi.1;
+        Mon, 14 Oct 2019 20:33:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=v17IeGLW/dg7MHzgbQg0hm5lGoCuR79TfbJB8jiaQoQ=;
-        b=EiQqKdgEzfPZqLhcjSWP0k+WMaU2Qz9lOsb78pyj/d64rU3mM1nbKa735G9OUw+Vj0
-         LgtIaC9AWHVdAthrXbZ+mAIfHQN/vsSRFgASOXEXQJxYiHmv4ljE+PNOSVWm9pg9bE+e
-         NZ09ULUl/LdT2W/VGmw4OD0s2MDiQemSlVYoHLfb2JJ3YhC4ceWOD/4o2Z44J3/TIGVi
-         5INMBmGWJTbNuu8Y1dO12NcamEUfAomEHDo4VbktjmerSQzJSXL3pJWJUWus5XDwHqd0
-         RtZSvZO9zkA3GCJJooW2ST9g56ogf7m7tB0ZSpxi/3cc1Ud6l2AD/84xg/g8QbChTXWb
-         qZpA==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=5VxMaYUDhGvjPs63iaiTixHwZKtvhNFibU+RwYL+rHM=;
+        b=Z4lO4m6Re1dwgpnnPRFo9OvicbDWZOSYxWogJk/emHGpsSoUEYHxiGxUJbbOMN6UaP
+         VdGN9ZmD85TH/AqGQsglQ0ZNweFX4JBYPj3KX/K6ulRlPhKh3cUhLMpSnrKSoU/AXVJV
+         TYFXw7dHiEGk8Tjr32ZyrqqkN/fi6pyncG3gh2tFdKxC50Z4OgGyk5A+eWZ66Vu0OIll
+         s4hs4CFTnkMAoXAE4z0aq/HXoXXdqCTxPtQqSszJlI8yqh3L6jHN4+TTVH3W/j6OYuDM
+         k6UQQfWW0hqjBu3OTtwqUeuqJ1cqbAQ5gdg5hdw9ehqe55SUeq5dYQ2lEPgzq3TNK9bZ
+         M+rA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=v17IeGLW/dg7MHzgbQg0hm5lGoCuR79TfbJB8jiaQoQ=;
-        b=Zn3CxsOjkm27XWiZ71TNUY1Hzb1mf8dgs/0FrkSZSAuVOa1FUDkXfCn26/o5XH3g5a
-         TezRxiBKS/EBu4s+pGpLVqcsuO4NDrXQQ7OSk3oDyAuFt/qs3r4Na1A0xmlw6cMASO9T
-         vE3zfnCcYmSlBzojbvL82UJS8Ng9azXlGlmJK6m9FsL1qO60YI8mUY48ijLXTSrnWIYi
-         ky+h6r+n1ORyzuNxN+ot6/DIhW6J6OKrhLZp6fr4yInh+01Oz9J5o+E22DtMsbyH0MCL
-         s/QOfoV1GZiFl/Ijgqjvx7iyRw7nSO4uvfNzvihTsoqMD08q09P1NHhsiASPy+HbmIzI
-         1nGg==
-X-Gm-Message-State: APjAAAUqotxLU8n3a/bgTRHKOBdglEg4LdskuswvZkL2T82a+yqq7yoz
-        T046Bg5aS1lN53kWTqc4P8RTzlUS
-X-Google-Smtp-Source: APXvYqwP7PCBXMIwWBobPgR8L5kjJEPhxCh+w/2snnJEx6fG0x+xZ25lJw+FtKIY+PtLjjz0EaiabQ==
-X-Received: by 2002:a62:6842:: with SMTP id d63mr35469346pfc.166.1571110385675;
-        Mon, 14 Oct 2019 20:33:05 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=5VxMaYUDhGvjPs63iaiTixHwZKtvhNFibU+RwYL+rHM=;
+        b=It529IhF8xcAQ7KUTJG3ZQK6T9/YUp7QQLIy3nspwSta2KEHEpl8SaC28Bb4uJ00M/
+         EuXRbTMQ0NxidzFZPFTvHDF/hRJi84YaCBexPD6R9E5mQUxFeXihA0c8PpPsl6qxjhGK
+         szE0itVqMcIBaqLxFLGdlc6jK6ap9Te77TbRR+SRHmLCsYdyYQto3UrnEQn4f0yR5wUU
+         jRByaYrohfHfVobBB9lvI8vzIs+Cc9DupE6FqKYlsyKYz9N3LNWF9LjaIhSkTITK8kH1
+         JpgbCqoj8qOqpPqAKUTdpn8pgwsn3pOY2C1SQtYh7Wimbme+sPg+3Ah9TTooYkGDqfr4
+         NyhA==
+X-Gm-Message-State: APjAAAUXHEH0xdA3gdjply7E802uh6R+uF4FNi7Imy4KwG2GV8wtgVlE
+        ZOmrn8WZ+quB76+qygxCMVwpXH0A
+X-Google-Smtp-Source: APXvYqxtsoJ/AyiSd3vof0hpIpvZoU1QbUoypWrozxiOv65HssNBbwFBeWxazio4PP6++SFv0d+GNw==
+X-Received: by 2002:a17:90a:a411:: with SMTP id y17mr40990822pjp.116.1571110433697;
+        Mon, 14 Oct 2019 20:33:53 -0700 (PDT)
 Received: from localhost.localdomain (S0106d80d17472dbd.wp.shawcable.net. [24.79.253.190])
-        by smtp.gmail.com with ESMTPSA id k15sm19973675pfa.65.2019.10.14.20.33.03
+        by smtp.gmail.com with ESMTPSA id 14sm20564794pfn.21.2019.10.14.20.33.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 14 Oct 2019 20:33:04 -0700 (PDT)
+        Mon, 14 Oct 2019 20:33:53 -0700 (PDT)
 From:   jassisinghbrar@gmail.com
 To:     dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
         devicetree@vger.kernel.org
 Cc:     vkoul@kernel.org, masami.hiramatsu@linaro.org,
-        orito.takao@socionext.com, Jassi Brar <jaswinder.singh@linaro.org>
-Subject: [PATCH v4 0/2] Add support for AHB DMA controller on Milbeaut series
-Date:   Mon, 14 Oct 2019 22:33:01 -0500
-Message-Id: <20191015033301.14791-1-jassisinghbrar@gmail.com>
+        orito.takao@socionext.com, Jassi Brar <jaswinder.singh@linaro.org>,
+        Rob Herring <robh@kernel.org>
+Subject: [PATCH v4 1/2] dt-bindings: milbeaut-m10v-hdmac: Add Socionext Milbeaut HDMAC bindings
+Date:   Mon, 14 Oct 2019 22:33:50 -0500
+Message-Id: <20191015033350.14866-1-jassisinghbrar@gmail.com>
 X-Mailer: git-send-email 2.20.1
+In-Reply-To: <20191015033301.14791-1-jassisinghbrar@gmail.com>
+References: <20191015033301.14791-1-jassisinghbrar@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: dmaengine-owner@vger.kernel.org
@@ -72,31 +76,55 @@ X-Mailing-List: dmaengine@vger.kernel.org
 
 From: Jassi Brar <jaswinder.singh@linaro.org>
 
-The following series adds AHB DMA (HDMAC) controller support on Milbeaut series.
-This controller is capable of Mem<->MEM and DEV<->MEM transfer. But only DEV<->MEM
-is currently supported.
+Document the devicetree bindings for Socionext Milbeaut HDMAC
+controller. Controller has upto 8 floating channels, that need
+a predefined slave-id to work from a set of slaves.
 
-Changes since v3:
- # Drop unused variables
- # Add controller init instruction
-
-Changes since v2:
- # Spelling mistake fix
- # Bug fix prep_slave - made local copy of sgl
-
-Jassi Brar (2):
-  dt-bindings: milbeaut-m10v-hdmac: Add Socionext Milbeaut HDMAC
-    bindings
-  dmaengine: milbeaut-hdmac: Add HDMAC driver for Milbeaut platforms
-
- .../bindings/dma/milbeaut-m10v-hdmac.txt      |  32 +
- drivers/dma/Kconfig                           |  10 +
- drivers/dma/Makefile                          |   1 +
- drivers/dma/milbeaut-hdmac.c                  | 581 ++++++++++++++++++
- 4 files changed, 624 insertions(+)
+Reviewed-by: Rob Herring <robh@kernel.org>
+Signed-off-by: Jassi Brar <jaswinder.singh@linaro.org>
+---
+ .../bindings/dma/milbeaut-m10v-hdmac.txt      | 32 +++++++++++++++++++
+ 1 file changed, 32 insertions(+)
  create mode 100644 Documentation/devicetree/bindings/dma/milbeaut-m10v-hdmac.txt
- create mode 100644 drivers/dma/milbeaut-hdmac.c
 
+diff --git a/Documentation/devicetree/bindings/dma/milbeaut-m10v-hdmac.txt b/Documentation/devicetree/bindings/dma/milbeaut-m10v-hdmac.txt
+new file mode 100644
+index 000000000000..1f0875bd5abc
+--- /dev/null
++++ b/Documentation/devicetree/bindings/dma/milbeaut-m10v-hdmac.txt
+@@ -0,0 +1,32 @@
++* Milbeaut AHB DMA Controller
++
++Milbeaut AHB DMA controller has transfer capability below.
++ - device to memory transfer
++ - memory to device transfer
++
++Required property:
++- compatible:       Should be  "socionext,milbeaut-m10v-hdmac"
++- reg:              Should contain DMA registers location and length.
++- interrupts:       Should contain all of the per-channel DMA interrupts.
++                     Number of channels is configurable - 2, 4 or 8, so
++                     the number of interrupts specified should be {2,4,8}.
++- #dma-cells:       Should be 1. Specify the ID of the slave.
++- clocks:           Phandle to the clock used by the HDMAC module.
++
++
++Example:
++
++	hdmac1: dma-controller@1e110000 {
++		compatible = "socionext,milbeaut-m10v-hdmac";
++		reg = <0x1e110000 0x10000>;
++		interrupts = <0 132 4>,
++			     <0 133 4>,
++			     <0 134 4>,
++			     <0 135 4>,
++			     <0 136 4>,
++			     <0 137 4>,
++			     <0 138 4>,
++			     <0 139 4>;
++		#dma-cells = <1>;
++		clocks = <&dummy_clk>;
++	};
 -- 
 2.20.1
 
