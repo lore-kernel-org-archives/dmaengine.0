@@ -4,69 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-2.6 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B6A37CA9EA0
-	for <dmaengine@archiver.kernel.org>; Fri, 18 Oct 2019 07:59:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 47BC5CA9EA0
+	for <dmaengine@archiver.kernel.org>; Fri, 18 Oct 2019 08:02:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 8DB7B222C9
-	for <dmaengine@archiver.kernel.org>; Fri, 18 Oct 2019 07:59:00 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1F38E2089C
+	for <dmaengine@archiver.kernel.org>; Fri, 18 Oct 2019 08:02:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1571385540;
-	bh=r9mIGNyICLZKduhVIr2wJ2+qRiOFioKTV4sTZSUNf3A=;
+	s=default; t=1571385770;
+	bh=Ntm+G7UaaAAt6/MZrn+mvHAfZaYTK61Q3hCldEAMCXE=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:List-ID:From;
-	b=A8g5i5KIe3XLODsrv3ax+cS/YEeKcp44rczWlDv8vThSCzwk6rFUeN3E2JIJT9cqM
-	 +Fm15tnuTFWSRjYr77rqa0Dqz3iSSshOz0CwBqjxS3P+Zqa2GfACtNKNtP/qj8OLOr
-	 F2W1AmTW44g1YhZPN++JgxbHggI9nZ9MhKrNktog=
+	b=TlSMXd2+nTdq2R/MoVBImEZpbPqIpIIQbDBbyv5UVt7mOFD/NQiWbnEr9zTZsptvQ
+	 BjeMHDUQdNeKSWqCuGzHJwgrF4Jt5xcmVMtsHAIkkjV+xamxempXYxPjsuccIAwtbF
+	 W+LDroFZ5UfQofiGrkdHofmlaW0zM7v6UJY2o4Q8=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2391397AbfJRH7A (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 18 Oct 2019 03:59:00 -0400
-Received: from mail.kernel.org ([198.145.29.99]:38358 "EHLO mail.kernel.org"
+        id S2407640AbfJRICq (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 18 Oct 2019 04:02:46 -0400
+Received: from mail.kernel.org ([198.145.29.99]:39644 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728064AbfJRH7A (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Fri, 18 Oct 2019 03:59:00 -0400
+        id S1729376AbfJRICq (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Fri, 18 Oct 2019 04:02:46 -0400
 Received: from localhost (unknown [106.200.243.180])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id DED7D21897;
-        Fri, 18 Oct 2019 07:58:58 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id B98542089C;
+        Fri, 18 Oct 2019 08:02:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1571385539;
-        bh=r9mIGNyICLZKduhVIr2wJ2+qRiOFioKTV4sTZSUNf3A=;
+        s=default; t=1571385765;
+        bh=Ntm+G7UaaAAt6/MZrn+mvHAfZaYTK61Q3hCldEAMCXE=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=jruileM5WG9ou5fFTu2c50e/SsvPW9vAVRA2x9RoEOb9Xpg7VC5on6WTuJSFi6umb
-         /X4BOrkAB4MfipWflUnbeusBocDcFdDOqwKHMdbsFc65EFdd49YwfygMv/1RpTh/6H
-         zB06aBSif9CCW1lX9f4mdX4IMw7fniSfNJh8AEUw=
-Date:   Fri, 18 Oct 2019 13:28:55 +0530
+        b=HYDITSsAr18ZLEicyiGmnMITuZH5dimDuhrDrGRJnQmx5Jv6clGFtsQhOoI1zbNyX
+         kSuaR1+xdgzJ1edTxqgrCvY1Iq1Uc/7mpsW73fxzWz2Q+k7KI//k9MvcjDKrgIVeMy
+         DehetQMb+tjGg4ayL4sArL33nJXRrJ8QcudHohec=
+Date:   Fri, 18 Oct 2019 13:32:41 +0530
 From:   Vinod Koul <vkoul@kernel.org>
-To:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
-        dan.j.williams@intel.com, linux-arm-msm@vger.kernel.org,
-        dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] dmaengine: qcom: bam_dma: Fix resource leak
-Message-ID: <20191018075855.GP2654@vkoul-mobl>
-References: <20191017152606.34120-1-jeffrey.l.hugo@gmail.com>
+To:     jassisinghbrar@gmail.com
+Cc:     dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, masami.hiramatsu@linaro.org,
+        orito.takao@socionext.com, Jassi Brar <jaswinder.singh@linaro.org>
+Subject: Re: [PATCH v3 0/2] Add support for AXI DMA controller on Milbeaut
+ series
+Message-ID: <20191018080241.GQ2654@vkoul-mobl>
+References: <20191015033116.14580-1-jassisinghbrar@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20191017152606.34120-1-jeffrey.l.hugo@gmail.com>
+In-Reply-To: <20191015033116.14580-1-jassisinghbrar@gmail.com>
 User-Agent: Mutt/1.12.1 (2019-06-15)
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On 17-10-19, 08:26, Jeffrey Hugo wrote:
-> bam_dma_terminate_all() will leak resources if any of the transactions are
-> committed to the hardware (present in the desc fifo), and not complete.
-> Since bam_dma_terminate_all() does not cause the hardware to be updated,
-> the hardware will still operate on any previously committed transactions.
-> This can cause memory corruption if the memory for the transaction has been
-> reassigned, and will cause a sync issue between the BAM and its client(s).
+On 14-10-19, 22:31, jassisinghbrar@gmail.com wrote:
+> From: Jassi Brar <jaswinder.singh@linaro.org>
 > 
-> Fix this by properly updating the hardware in bam_dma_terminate_all().
+> The following series adds AXI DMA (XDMAC) controller support on Milbeaut series.
+> This controller is capable of only Mem<->MEM transfers. Number of channels is
+> configurable {2,4,8}
 
-Applied and marked stable, thanks
+Applied, thanks
 
 -- 
 ~Vinod
