@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-2.6 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 47BC5CA9EA0
-	for <dmaengine@archiver.kernel.org>; Fri, 18 Oct 2019 08:02:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5E037CA9EA1
+	for <dmaengine@archiver.kernel.org>; Fri, 18 Oct 2019 08:03:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 1F38E2089C
-	for <dmaengine@archiver.kernel.org>; Fri, 18 Oct 2019 08:02:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 334C8222C9
+	for <dmaengine@archiver.kernel.org>; Fri, 18 Oct 2019 08:03:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1571385770;
-	bh=Ntm+G7UaaAAt6/MZrn+mvHAfZaYTK61Q3hCldEAMCXE=;
+	s=default; t=1571385781;
+	bh=H2AnPxP61DdUfGRZbiKUE6pyvKjTw7ttUbZaaO0THK0=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:List-ID:From;
-	b=TlSMXd2+nTdq2R/MoVBImEZpbPqIpIIQbDBbyv5UVt7mOFD/NQiWbnEr9zTZsptvQ
-	 BjeMHDUQdNeKSWqCuGzHJwgrF4Jt5xcmVMtsHAIkkjV+xamxempXYxPjsuccIAwtbF
-	 W+LDroFZ5UfQofiGrkdHofmlaW0zM7v6UJY2o4Q8=
+	b=q6m7ECVc5gbZdEbpJm42BD+O3I+ZB0QEeFkA4iYcFDLVex2GuXmZW5d+voDcOMVuc
+	 j0r77DBm2gZ9Aoxj5DPIqjRTwN4ejabj/uAAE5pC0C/wmIU5EkrFaBmkIfmcsOCOcW
+	 hcII2mdBXwroZUiJWP8tSRKaQOJQDDsMU/a75Qrw=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2407640AbfJRICq (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 18 Oct 2019 04:02:46 -0400
-Received: from mail.kernel.org ([198.145.29.99]:39644 "EHLO mail.kernel.org"
+        id S2504707AbfJRIDA (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 18 Oct 2019 04:03:00 -0400
+Received: from mail.kernel.org ([198.145.29.99]:39756 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729376AbfJRICq (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Fri, 18 Oct 2019 04:02:46 -0400
+        id S1729376AbfJRIDA (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Fri, 18 Oct 2019 04:03:00 -0400
 Received: from localhost (unknown [106.200.243.180])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id B98542089C;
-        Fri, 18 Oct 2019 08:02:44 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 333362089C;
+        Fri, 18 Oct 2019 08:02:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1571385765;
-        bh=Ntm+G7UaaAAt6/MZrn+mvHAfZaYTK61Q3hCldEAMCXE=;
+        s=default; t=1571385780;
+        bh=H2AnPxP61DdUfGRZbiKUE6pyvKjTw7ttUbZaaO0THK0=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=HYDITSsAr18ZLEicyiGmnMITuZH5dimDuhrDrGRJnQmx5Jv6clGFtsQhOoI1zbNyX
-         kSuaR1+xdgzJ1edTxqgrCvY1Iq1Uc/7mpsW73fxzWz2Q+k7KI//k9MvcjDKrgIVeMy
-         DehetQMb+tjGg4ayL4sArL33nJXRrJ8QcudHohec=
-Date:   Fri, 18 Oct 2019 13:32:41 +0530
+        b=r2yb586hMDXEfwkIlvEuj++GZhMRqXLx3ZdvUfWus68wwjWYsZ+0Z95CifSzhGI+N
+         ueu6LuewQu/PjpAS/hld8Cw7yfkjOgPb0NLbzPxpe/xgv8N5Fl5LaWhyiD8Rn8hxK0
+         KbjBksjjcFs2kbK9WIkmqNS7+zvX4ENh6cQO1wRA=
+Date:   Fri, 18 Oct 2019 13:32:56 +0530
 From:   Vinod Koul <vkoul@kernel.org>
 To:     jassisinghbrar@gmail.com
 Cc:     dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
         devicetree@vger.kernel.org, masami.hiramatsu@linaro.org,
         orito.takao@socionext.com, Jassi Brar <jaswinder.singh@linaro.org>
-Subject: Re: [PATCH v3 0/2] Add support for AXI DMA controller on Milbeaut
+Subject: Re: [PATCH v4 0/2] Add support for AHB DMA controller on Milbeaut
  series
-Message-ID: <20191018080241.GQ2654@vkoul-mobl>
-References: <20191015033116.14580-1-jassisinghbrar@gmail.com>
+Message-ID: <20191018080256.GR2654@vkoul-mobl>
+References: <20191015033301.14791-1-jassisinghbrar@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20191015033116.14580-1-jassisinghbrar@gmail.com>
+In-Reply-To: <20191015033301.14791-1-jassisinghbrar@gmail.com>
 User-Agent: Mutt/1.12.1 (2019-06-15)
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On 14-10-19, 22:31, jassisinghbrar@gmail.com wrote:
+On 14-10-19, 22:33, jassisinghbrar@gmail.com wrote:
 > From: Jassi Brar <jaswinder.singh@linaro.org>
 > 
-> The following series adds AXI DMA (XDMAC) controller support on Milbeaut series.
-> This controller is capable of only Mem<->MEM transfers. Number of channels is
-> configurable {2,4,8}
+> The following series adds AHB DMA (HDMAC) controller support on Milbeaut series.
+> This controller is capable of Mem<->MEM and DEV<->MEM transfer. But only DEV<->MEM
+> is currently supported.
 
 Applied, thanks
 
