@@ -2,131 +2,84 @@ Return-Path: <SRS0=/GFc=YP=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-14.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DF264CA9EA0
-	for <dmaengine@archiver.kernel.org>; Tue, 22 Oct 2019 17:16:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9E15CCA9EA0
+	for <dmaengine@archiver.kernel.org>; Tue, 22 Oct 2019 21:46:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id B2E9C20679
-	for <dmaengine@archiver.kernel.org>; Tue, 22 Oct 2019 17:16:59 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DIwKEi7q"
+	by mail.kernel.org (Postfix) with ESMTP id 79AD52053B
+	for <dmaengine@archiver.kernel.org>; Tue, 22 Oct 2019 21:46:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387683AbfJVRQ7 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 22 Oct 2019 13:16:59 -0400
-Received: from mail-ot1-f46.google.com ([209.85.210.46]:39507 "EHLO
-        mail-ot1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730658AbfJVRQ7 (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Tue, 22 Oct 2019 13:16:59 -0400
-Received: by mail-ot1-f46.google.com with SMTP id s22so14862635otr.6;
-        Tue, 22 Oct 2019 10:16:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=N+r28++QmE97B3YyUbwqqgILQ6GkScGiNmGk0rbaE4M=;
-        b=DIwKEi7queHKniCnlTvSf0yXFfGigi3q7Gdt8CzMnhAcxQwgNlDwh+J4xNyvAHqIcJ
-         hrwmE6nbLguADLBhg813NKD9+Ixumefx6kmLhFO1cBSWtAxD/wNsZJ8p6Q5uq/8Vl0oJ
-         CM1rRdpWz6rMH+usEi4CYXjtlQL3JoC+Cfesdd1wlh/cHFe6dX+SQnCpD1S7ALDP2gP/
-         +iNQAhLEksTzJ7Fs1qphYdiNsBG+EQpWp6fUY5mdlXZFAnhkzsPJNofgQbM0FFR3F/ul
-         C/IiV2cbmr4aX/JtVMDdiYoL72w/moDN929ub7DnXWbafUozXsnJ+Wu2Y3isZqPtNHG+
-         GV1Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=N+r28++QmE97B3YyUbwqqgILQ6GkScGiNmGk0rbaE4M=;
-        b=pev1Zo09sIsUNzOQcjFthhXKGNhroJjgF6QDOrvJ9+aEdlUUHCa1x011Pp4RjWMyGU
-         EnpGeyQDtbgmxC9hzYCWiYMbR1hDhakc6GRRHR0y3Q+sN8wIfJFOBsyiiDPtAwlRUche
-         cFkxZCGo+Hm8pjthbOXdQy2KVXWd/1tB1GHVKisr32RJ1ml1CMF6WL+gR6V3dn9NCi3F
-         1TY+OwmyW51sOYvVltnLoVYspTGtn4LZDnsU4nAlL3GrI7fIRcSShIybh0iMhOOVIx7I
-         11GaIaxN3DwZo0c5gLdnRqRKcUvyhPv2OD8FSpm3dJwS31JB/wLO6nJZ9MSm/vAdb/Be
-         WgCw==
-X-Gm-Message-State: APjAAAXZBOG/cSbTXdaJhPg7tC+dZfsxx5o2ONPqS7Gzbqc/pvwYesGE
-        QxOY0v/ZMzUGazabtc57l3Q=
-X-Google-Smtp-Source: APXvYqzoONu4gvcCac2l7qmeXHmuK5PoWa0b5XS6T6776F3Bwh8Mph1jJ+2LvkPcF23G7g/L2SkntA==
-X-Received: by 2002:a9d:8a5:: with SMTP id 34mr929413otf.197.1571764617978;
-        Tue, 22 Oct 2019 10:16:57 -0700 (PDT)
-Received: from localhost.localdomain ([2604:1380:4111:8b00::1])
-        by smtp.gmail.com with ESMTPSA id u130sm4857224oib.56.2019.10.22.10.16.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 22 Oct 2019 10:16:57 -0700 (PDT)
-From:   Nathan Chancellor <natechancellor@gmail.com>
-To:     Peng Ma <peng.ma@nxp.com>, Vinod Koul <vkoul@kernel.org>
-Cc:     Dan Williams <dan.j.williams@intel.com>, dmaengine@vger.kernel.org,
-        linux-kernel@vger.kernel.org, clang-built-linux@googlegroups.com,
-        Nathan Chancellor <natechancellor@gmail.com>
-Subject: [PATCH -next] dmaengine: fsl-dpaa2-qdma: Remove unnecessary local variables in DPDMAI_CMD_CREATE macro
-Date:   Tue, 22 Oct 2019 10:16:48 -0700
-Message-Id: <20191022171648.37732-1-natechancellor@gmail.com>
-X-Mailer: git-send-email 2.23.0
+        id S1732091AbfJVVqV (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 22 Oct 2019 17:46:21 -0400
+Received: from ale.deltatee.com ([207.54.116.67]:33056 "EHLO ale.deltatee.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1731271AbfJVVqU (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Tue, 22 Oct 2019 17:46:20 -0400
+Received: from cgy1-donard.priv.deltatee.com ([172.16.1.31])
+        by ale.deltatee.com with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.89)
+        (envelope-from <gunthorp@deltatee.com>)
+        id 1iN1ys-00049O-Rf; Tue, 22 Oct 2019 15:46:20 -0600
+Received: from gunthorp by cgy1-donard.priv.deltatee.com with local (Exim 4.92)
+        (envelope-from <gunthorp@deltatee.com>)
+        id 1iN1ys-000250-6w; Tue, 22 Oct 2019 15:46:18 -0600
+From:   Logan Gunthorpe <logang@deltatee.com>
+To:     linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org,
+        Vinod Koul <vkoul@kernel.org>
+Cc:     Dan Williams <dan.j.williams@intel.com>,
+        Logan Gunthorpe <logang@deltatee.com>
+Date:   Tue, 22 Oct 2019 15:46:13 -0600
+Message-Id: <20191022214616.7943-3-logang@deltatee.com>
+X-Mailer: git-send-email 2.20.1
+In-Reply-To: <20191022214616.7943-1-logang@deltatee.com>
+References: <20191022214616.7943-1-logang@deltatee.com>
 MIME-Version: 1.0
-X-Patchwork-Bot: notify
 Content-Transfer-Encoding: 8bit
+X-SA-Exim-Connect-IP: 172.16.1.31
+X-SA-Exim-Rcpt-To: linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org, vkoul@kernel.org, dan.j.williams@intel.com, logang@deltatee.com
+X-SA-Exim-Mail-From: gunthorp@deltatee.com
+Subject: [PATCH 2/5] dmaengine: Call module_put() after device_free_chan_resources()
+X-SA-Exim-Version: 4.2.1 (built Tue, 02 Aug 2016 21:08:31 +0000)
+X-SA-Exim-Scanned: Yes (on ale.deltatee.com)
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Clang warns:
+The module reference is taken to ensure the callbacks still exist
+when they are called. If the channel holds the last reference to the
+module, the module can disappear before device_free_chan_resources() is
+called and would cause a call into free'd memory.
 
-drivers/dma/fsl-dpaa2-qdma/dpdmai.c:148:25: warning: variable 'cfg' is
-uninitialized when used within its own initialization [-Wuninitialized]
-        DPDMAI_CMD_CREATE(cmd, cfg);
-        ~~~~~~~~~~~~~~~~~~~~~~~^~~~
-drivers/dma/fsl-dpaa2-qdma/dpdmai.c:42:24: note: expanded from macro
-'DPDMAI_CMD_CREATE'
-        typeof(_cfg) (cfg) = (_cfg); \
-                      ~~~     ^~~~
-1 warning generated.
-
-Looking at the preprocessed source, we can see that this is true.
-
-int dpdmai_create(struct fsl_mc_io *mc_io, u32 cmd_flags,
-                  const struct dpdmai_cfg *cfg, u16 *token)
-{
-        struct fsl_mc_command cmd = { 0 };
-        int err;
-
-        cmd.header = mc_encode_cmd_header((((0x90E) << 4) | 0), cmd_flags, 0);
-        do {
-                typeof(cmd)(cmd) = (cmd);
-                typeof(cfg)(cfg) = (cfg);
-                ((cmd).params[0] |= mc_enc((8), (8), (cfg)->priorities[0]));
-                ((cmd).params[0] |= mc_enc((16), (8), (cfg)->priorities[1]));
-        } while (0);
-
-I cannot see a good reason to create another version of cfg when the
-parameter one will work perfectly fine and cmd can just be used as is.
-Remove them to fix this warning.
-
-Fixes: f2835adf8afb ("dmaengine: fsl-dpaa2-qdma: Add the DPDMAI(Data Path DMA Interface) support")
-Link: https://github.com/ClangBuiltLinux/linux/issues/746
-Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+Signed-off-by: Logan Gunthorpe <logang@deltatee.com>
 ---
- drivers/dma/fsl-dpaa2-qdma/dpdmai.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/dma/dmaengine.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/dma/fsl-dpaa2-qdma/dpdmai.c b/drivers/dma/fsl-dpaa2-qdma/dpdmai.c
-index fbc2b2f39bec..f26c0b71688a 100644
---- a/drivers/dma/fsl-dpaa2-qdma/dpdmai.c
-+++ b/drivers/dma/fsl-dpaa2-qdma/dpdmai.c
-@@ -36,10 +36,8 @@ struct dpdmai_rsp_get_tx_queue {
- 	((_cmd).params[_param] |= mc_enc((_offset), (_width), _arg))
+diff --git a/drivers/dma/dmaengine.c b/drivers/dma/dmaengine.c
+index 4b604086b1b3..776fdf535a3a 100644
+--- a/drivers/dma/dmaengine.c
++++ b/drivers/dma/dmaengine.c
+@@ -250,7 +250,6 @@ static void dma_chan_put(struct dma_chan *chan)
+ 		return;
  
- /* cmd, param, offset, width, type, arg_name */
--#define DPDMAI_CMD_CREATE(_cmd, _cfg) \
-+#define DPDMAI_CMD_CREATE(cmd, cfg) \
- do { \
--	typeof(_cmd) (cmd) = (_cmd); \
--	typeof(_cfg) (cfg) = (_cfg); \
- 	MC_CMD_OP(cmd, 0, 8,  8,  u8,  (cfg)->priorities[0]);\
- 	MC_CMD_OP(cmd, 0, 16, 8,  u8,  (cfg)->priorities[1]);\
- } while (0)
+ 	chan->client_count--;
+-	module_put(dma_chan_to_owner(chan));
+ 
+ 	/* This channel is not in use anymore, free it */
+ 	if (!chan->client_count && chan->device->device_free_chan_resources) {
+@@ -259,6 +258,8 @@ static void dma_chan_put(struct dma_chan *chan)
+ 		chan->device->device_free_chan_resources(chan);
+ 	}
+ 
++	module_put(dma_chan_to_owner(chan));
++
+ 	/* If the channel is used via a DMA request router, free the mapping */
+ 	if (chan->router && chan->router->route_free) {
+ 		chan->router->route_free(chan->router->dev, chan->route_data);
 -- 
-2.23.0
+2.20.1
 
