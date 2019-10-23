@@ -2,90 +2,88 @@ Return-Path: <SRS0=i6BN=YQ=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.2 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E3DAFCA9EB9
-	for <dmaengine@archiver.kernel.org>; Wed, 23 Oct 2019 07:05:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 53A9DCA9EB6
+	for <dmaengine@archiver.kernel.org>; Wed, 23 Oct 2019 15:28:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id B181421872
-	for <dmaengine@archiver.kernel.org>; Wed, 23 Oct 2019 07:05:57 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=zoho.com header.i=zhouyanjie@zoho.com header.b="aAe58B4m"
+	by mail.kernel.org (Postfix) with ESMTP id 27B2820650
+	for <dmaengine@archiver.kernel.org>; Wed, 23 Oct 2019 15:28:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389663AbfJWHFy (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 23 Oct 2019 03:05:54 -0400
-Received: from sender4-pp-o94.zoho.com ([136.143.188.94]:25484 "EHLO
-        sender4-pp-o94.zoho.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731524AbfJWHFx (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Wed, 23 Oct 2019 03:05:53 -0400
-ARC-Seal: i=1; a=rsa-sha256; t=1571814345; cv=none; 
-        d=zohomail.com; s=zohoarc; 
-        b=jr7mWKEKLyiwfuKNe153uS0njAj9MTrbFHzTeWpXZUEUJRAknqW3EPEJlx/h8bIiSCdnd015aji3qZH9/YxvhTsK3kUkTPcQ9RWK+aWuscnX4Lm0Q7t+Ar9J4by6QI1K8kuxSeFnFF65x1n6XbOPwXMIaUdL2QDhxdm3CngQzPk=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-        t=1571814345; h=Content-Type:Content-Transfer-Encoding:Cc:Date:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:To; 
-        bh=WPsbhAfF3C26wxU12FTMldjsNOHj3+246cITfOLeTA8=; 
-        b=RGkZKe3UfI3ihSwxcKLHbyGH4UFd88zzFl0YiWVrhLvi+HYnqxZAgKNK6u2nRxuefNjLyri9yxe95TRfx8pJ5Vr6vs1ur2wTK2/M/24V+34oGOu1IQc1SygRmIKtmgKSArQ7bGdjTP6+TLo0bjwdZX/s49+0CTqcVTBXpUUeA3s=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-        dkim=pass  header.i=zoho.com;
-        spf=pass  smtp.mailfrom=zhouyanjie@zoho.com;
-        dmarc=pass header.from=<zhouyanjie@zoho.com> header.from=<zhouyanjie@zoho.com>
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; 
-  s=zapps768; d=zoho.com; 
-  h=subject:to:references:cc:from:message-id:date:user-agent:mime-version:in-reply-to:content-type; 
-  b=HNvJON1v3X9nvG9gzrH5476wN1ykojZz1m1MEb9vzMNlkrj+5l2U0cCuvwyrd0+NWMVSVDFluU7v
-    Bs6QbhgHG9w8ODsFws9eUd+aGfnDC0l/Q8XTte76QRE4h9PeeunD  
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1571814345;
-        s=zm2019; d=zoho.com; i=zhouyanjie@zoho.com;
-        h=Subject:To:References:Cc:From:Message-ID:Date:MIME-Version:In-Reply-To:Content-Type:Content-Transfer-Encoding;
-        l=411; bh=WPsbhAfF3C26wxU12FTMldjsNOHj3+246cITfOLeTA8=;
-        b=aAe58B4m49uzhA+cNEx66K1JkI4BJpmSB2UWUQUdqBe3L5nRgA0NZHca9awulPKz
-        i3Og2l3cNDDGjQaJBoSsW8KKAT1ZPLYp8gPggjCTKuQnA6rVkIp6RJuXmymzpFKCKeA
-        kEjOTMdFaGH9dgFg1CNTdHTiuPizcM8p//6bAt+k=
-Received: from [192.168.88.140] (125.71.5.36 [125.71.5.36]) by mx.zohomail.com
-        with SMTPS id 1571814345090395.0371569746694; Wed, 23 Oct 2019 00:05:45 -0700 (PDT)
-Subject: Re: DMA: JZ4780: Add DMA driver for X1000.
+        id S2390944AbfJWP2A (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 23 Oct 2019 11:28:00 -0400
+Received: from muru.com ([72.249.23.125]:39348 "EHLO muru.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1732725AbfJWP2A (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Wed, 23 Oct 2019 11:28:00 -0400
+Received: from atomide.com (localhost [127.0.0.1])
+        by muru.com (Postfix) with ESMTPS id 360F980CF;
+        Wed, 23 Oct 2019 15:28:33 +0000 (UTC)
+Date:   Wed, 23 Oct 2019 08:27:55 -0700
+From:   Tony Lindgren <tony@atomide.com>
 To:     Vinod Koul <vkoul@kernel.org>
-References: <1571799903-44561-1-git-send-email-zhouyanjie@zoho.com>
- <20191023051501.GQ2654@vkoul-mobl>
-Cc:     linux-mips@vger.kernel.org, linux-kernel@vger.kernel.org,
-        dmaengine@vger.kernel.org, devicetree@vger.kernel.org,
-        robh+dt@kernel.org, paul.burton@mips.com, paul@crapouillou.net,
-        mark.rutland@arm.com, Zubair.Kakakhel@imgtec.com,
-        dan.j.williams@intel.com
-From:   Zhou Yanjie <zhouyanjie@zoho.com>
-Message-ID: <5DAFFBBC.2080207@zoho.com>
-Date:   Wed, 23 Oct 2019 15:05:32 +0800
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.8.0
+Cc:     Dan Williams <dan.j.williams@intel.com>,
+        Vinod Koul <vinod.koul@intel.com>,
+        Alexandre Bailon <abailon@baylibre.com>,
+        Andy Shevchenko <andy.shevchenko@gmail.com>,
+        Bin Liu <b-liu@ti.com>, Daniel Mack <zonque@gmail.com>,
+        Felipe Balbi <felipe.balbi@linux.intel.com>,
+        George Cherian <george.cherian@ti.com>,
+        Grygorii Strashko <grygorii.strashko@ti.com>,
+        Johan Hovold <johan@kernel.org>,
+        Peter Ujfalusi <peter.ujfalusi@ti.com>,
+        Sekhar Nori <nsekhar@ti.com>,
+        Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+        Sergei Shtylyov <sergei.shtylyov@cogentembedded.com>,
+        dmaengine@vger.kernel.org, linux-usb@vger.kernel.org,
+        linux-omap@vger.kernel.org, giulio.benetti@benettiengineering.com,
+        Sebastian Reichel <sre@kernel.org>,
+        Skvortsov <andrej.skvortzov@gmail.com>,
+        Yegor Yefremov <yegorslists@googlemail.com>
+Subject: Re: [PATCH] dmaengine: cppi41: Fix issue with musb and ftdi uart
+Message-ID: <20191023152755.GK5610@atomide.com>
+References: <20191022145545.6449-1-tony@atomide.com>
+ <20191023045333.GO2654@vkoul-mobl>
 MIME-Version: 1.0
-In-Reply-To: <20191023051501.GQ2654@vkoul-mobl>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
-X-ZohoMailClient: External
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20191023045333.GO2654@vkoul-mobl>
+User-Agent: Mutt/1.12.1 (2019-06-15)
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Hi Vinod,
+* Vinod Koul <vkoul@kernel.org> [191023 04:54]:
+> Hi Tony,
+> 
+> On 22-10-19, 07:55, Tony Lindgren wrote:
+> 
+> Patch subject should reflect the patch changes not the fix. The patch
+> title here is not telling me anything about the change below. Pls
+> consider updating the title.
 
-On 2019=E5=B9=B410=E6=9C=8823=E6=97=A5 13:15, Vinod Koul wrote:
-> On 23-10-19, 11:05, Zhou Yanjie wrote:
->> 1.Add the DMA bindings for the X1000 SoC from Ingenic.
->> 2.Add support for probing the dma-jz4780 driver on the
->>    X1000 SoC from Ingenic.
-> The subsystem in dmaengine and not dma
->
-> Please resend with correct tags!
->
-> Thanks
+Sure, I'll resend with updated description using:
 
-I already resend this patches.
+dmaengine: cppi41: Fix cppi41_dma_prep_slave_sg() when idle
 
-Best regards!
+> > The first dma call done by musb_ep_program() must wait if cppi41 is PM
+> > runtime suspended. Otherwise musb_ep_program() continues with other
+> > non-dma packets before the DMA transfer is started causing at least ftdi
+> > uarts to fail to receive data.
+> > 
+> > Let's fix the issue by waking up cppi41 with PM runtime calls added to
+> > cppi41_dma_prep_slave_sg() and return NULL if still idled. This way we
+> > have musb_ep_program() continue with PIO until cppi41 is awake.
+> > 
+> > Fixes: fdea2d09b997 ("dmaengine: cppi41: Add basic PM runtime support")
+> 
+> Cc stable?
 
+Yes please.
 
+Regards,
 
+Tony
