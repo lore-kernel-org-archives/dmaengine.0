@@ -2,143 +2,185 @@ Return-Path: <SRS0=i6BN=YQ=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=unavailable
+X-Spam-Status: No, score=-8.6 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 69525CA9EA0
-	for <dmaengine@archiver.kernel.org>; Wed, 23 Oct 2019 03:21:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 33CA8CA9EBC
+	for <dmaengine@archiver.kernel.org>; Wed, 23 Oct 2019 04:28:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 3D2222064A
-	for <dmaengine@archiver.kernel.org>; Wed, 23 Oct 2019 03:21:26 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=zoho.com header.i=zhouyanjie@zoho.com header.b="WimihvXB"
+	by mail.kernel.org (Postfix) with ESMTP id EF45921872
+	for <dmaengine@archiver.kernel.org>; Wed, 23 Oct 2019 04:28:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=default; t=1571804908;
+	bh=pud1AqfrL2+yGH3/Mj/96RE5LhtzfD6/WYjBiXtPT38=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:List-ID:From;
+	b=xp9uBDaWCf4JFxF62mQ6cmHgGkx1NI+wdNma+2rD4TdDPGraGSe6amgy4BGn4MhPO
+	 6zboE3tzA/ZhRrjK0puB5LDOT2p+bcmcOBzKuVXmLXzpL5QtuNQEkbC1kPi+TodE/t
+	 4f7pmPH4fHyLvlTgerQA2p1/C8DuVQ8867AQ2YyM=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727403AbfJWDV0 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 22 Oct 2019 23:21:26 -0400
-Received: from sender4-pp-o94.zoho.com ([136.143.188.94]:25466 "EHLO
-        sender4-pp-o94.zoho.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727154AbfJWDVZ (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Tue, 22 Oct 2019 23:21:25 -0400
-ARC-Seal: i=1; a=rsa-sha256; t=1571799938; cv=none; 
-        d=zohomail.com; s=zohoarc; 
-        b=alDZSa/zwVG35lZ9NVMD8gMTfszk2u2d7oJPcmh1zY3+CF65WHrDxjPseiXXSugUtM5tSyM1QbBmV3UzOfiUGdIR+5eEYJjFcAittPFz3UPCpMW/0CvAVZbLs1jSUPPc0avUXhdwAwIm/LjRXdP0ZhtumDgrQdUEYQRZ6ZPWLuI=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-        t=1571799938; h=Cc:Date:From:In-Reply-To:Message-ID:References:Subject:To; 
-        bh=+ZC+Ztn4Z88CANaZD4GP5wciSkS3J6M/3/Mvs4l0lQU=; 
-        b=c5BKo9mAqAHVqLt2QsGeEXrcZh2gUHRpW3yQAUSUlujOFielwA/n5Y8avbhG7S4t+qHQP0dlfTUcEl/MVwR5x6wjmemXnKpGJcfDmwcUh16OMQ510T21Pzrfk+qO5K2GusGniNoSD18RPyP979DD6K4cH3/pdFuRqvDUNpQvWHI=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-        dkim=pass  header.i=zoho.com;
-        spf=pass  smtp.mailfrom=zhouyanjie@zoho.com;
-        dmarc=pass header.from=<zhouyanjie@zoho.com> header.from=<zhouyanjie@zoho.com>
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; 
-  s=zapps768; d=zoho.com; 
-  h=from:to:cc:subject:date:message-id:in-reply-to:references; 
-  b=hyNBCoiEGawmaV2oRxT66jQbV6DsG7UCLnSv2Na85CdDtvCtY+RaT3uN4Wf6zQuIAi2NywGr0mxb
-    nr8pD5VMGe4pFc3Mo/FTlDD6MgdVX87+06ls+QsiKeDcmWLfptlZ  
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1571799938;
-        s=zm2019; d=zoho.com; i=zhouyanjie@zoho.com;
-        h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References;
-        l=2663; bh=+ZC+Ztn4Z88CANaZD4GP5wciSkS3J6M/3/Mvs4l0lQU=;
-        b=WimihvXB59/+jlhasElTxyEYdebY4G4f6YEba+mf4x25aHEEV80QqvfIad/KAZK+
-        TkxD+bu8rR8fB1UuM3t9aG9Uhcwc6l9plUqO4QAOnbBTnzjwn5ZyrZm1s/oJD3zYUOl
-        Nhn0xZBryou9SLg56HuW0dokFl1lft870LM/2el8=
-Received: from zhouyanjie-virtual-machine.lan (182.148.156.27 [182.148.156.27]) by mx.zohomail.com
-        with SMTPS id 1571799937274540.3617094666886; Tue, 22 Oct 2019 20:05:37 -0700 (PDT)
-From:   Zhou Yanjie <zhouyanjie@zoho.com>
-To:     linux-mips@vger.kernel.org
-Cc:     linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org,
-        devicetree@vger.kernel.org, robh+dt@kernel.org,
-        paul.burton@mips.com, vkoul@kernel.org, paul@crapouillou.net,
-        mark.rutland@arm.com, Zubair.Kakakhel@imgtec.com,
-        dan.j.williams@intel.com
-Subject: [PATCH 1/2] dt-bindings: DMA: Add X1000 bindings.
-Date:   Wed, 23 Oct 2019 11:05:02 +0800
-Message-Id: <1571799903-44561-2-git-send-email-zhouyanjie@zoho.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1571799903-44561-1-git-send-email-zhouyanjie@zoho.com>
-References: <1571799903-44561-1-git-send-email-zhouyanjie@zoho.com>
-X-ZohoMailClient: External
+        id S1726283AbfJWE21 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 23 Oct 2019 00:28:27 -0400
+Received: from mail.kernel.org ([198.145.29.99]:56286 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725773AbfJWE21 (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Wed, 23 Oct 2019 00:28:27 -0400
+Received: from localhost (unknown [122.181.210.10])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 9B2BA214B2;
+        Wed, 23 Oct 2019 04:28:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1571804906;
+        bh=pud1AqfrL2+yGH3/Mj/96RE5LhtzfD6/WYjBiXtPT38=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=iqwY2860h37CrasP50CZJnw67mckyQb0+sRAUhAsM0LM9RQyIAMU0IbWjZJbzb3D0
+         9yHNOVAqpoNp60Vc8vVAxZnBGrn6Q0IZ7+b9Ht2e5+W2/iHgQ+Ocso03WHoEwj/Zaq
+         LG2USbNiXQ0tVBlfewWmUCCYm0ZJWeSr6aHHlUBs=
+Date:   Wed, 23 Oct 2019 09:58:18 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Peng Ma <peng.ma@nxp.com>
+Cc:     dan.j.williams@intel.com, leoyang.li@nxp.com,
+        anders.roxell@linaro.org, linux-kernel@vger.kernel.org,
+        dmaengine@vger.kernel.org
+Subject: Re: [PATCH] dmaengine: fsl-dpaa2-qdma: Fixed build error when enable
+ dpaa2 qdma module driver
+Message-ID: <20191023042818.GN2654@vkoul-mobl>
+References: <20191023021959.35596-1-peng.ma@nxp.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20191023021959.35596-1-peng.ma@nxp.com>
+User-Agent: Mutt/1.12.1 (2019-06-15)
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Add the DMA bindings for the X1000 Soc from Ingenic.
+Hi Peng,
 
-Signed-off-by: Zhou Yanjie <zhouyanjie@zoho.com>
----
- .../devicetree/bindings/dma/jz4780-dma.txt         |  3 +-
- include/dt-bindings/dma/x1000-dma.h                | 40 ++++++++++++++++++++++
- 2 files changed, 42 insertions(+), 1 deletion(-)
- create mode 100644 include/dt-bindings/dma/x1000-dma.h
+On 23-10-19, 10:19, Peng Ma wrote:
 
-diff --git a/Documentation/devicetree/bindings/dma/jz4780-dma.txt b/Documentation/devicetree/bindings/dma/jz4780-dma.txt
-index 636fcb2..ec89782 100644
---- a/Documentation/devicetree/bindings/dma/jz4780-dma.txt
-+++ b/Documentation/devicetree/bindings/dma/jz4780-dma.txt
-@@ -7,10 +7,11 @@ Required properties:
-   * ingenic,jz4725b-dma
-   * ingenic,jz4770-dma
-   * ingenic,jz4780-dma
-+  * ingenic,x1000-dma
- - reg: Should contain the DMA channel registers location and length, followed
-   by the DMA controller registers location and length.
- - interrupts: Should contain the interrupt specifier of the DMA controller.
--- clocks: Should contain a clock specifier for the JZ4780 PDMA clock.
-+- clocks: Should contain a clock specifier for the JZ4780/X1000 PDMA clock.
- - #dma-cells: Must be <2>. Number of integer cells in the dmas property of
-   DMA clients (see below).
- 
-diff --git a/include/dt-bindings/dma/x1000-dma.h b/include/dt-bindings/dma/x1000-dma.h
-new file mode 100644
-index 00000000..401e165
---- /dev/null
-+++ b/include/dt-bindings/dma/x1000-dma.h
-@@ -0,0 +1,40 @@
-+/* SPDX-License-Identifier: GPL-2.0-only */
-+/*
-+ * This header provides macros for X1000 DMA bindings.
-+ *
-+ * Copyright (c) 2019 Zhou Yanjie <zhouyanjie@zoho.com>
-+ */
-+
-+#ifndef __DT_BINDINGS_DMA_X1000_DMA_H__
-+#define __DT_BINDINGS_DMA_X1000_DMA_H__
-+
-+/*
-+ * Request type numbers for the X1000 DMA controller (written to the DRTn
-+ * register for the channel).
-+ */
-+#define X1000_DMA_DMIC_RX	0x5
-+#define X1000_DMA_I2S0_TX	0x6
-+#define X1000_DMA_I2S0_RX	0x7
-+#define X1000_DMA_AUTO		0x8
-+#define X1000_DMA_UART2_TX	0x10
-+#define X1000_DMA_UART2_RX	0x11
-+#define X1000_DMA_UART1_TX	0x12
-+#define X1000_DMA_UART1_RX	0x13
-+#define X1000_DMA_UART0_TX	0x14
-+#define X1000_DMA_UART0_RX	0x15
-+#define X1000_DMA_SSI0_TX	0x16
-+#define X1000_DMA_SSI0_RX	0x17
-+#define X1000_DMA_MSC0_TX	0x1a
-+#define X1000_DMA_MSC0_RX	0x1b
-+#define X1000_DMA_MSC1_TX	0x1c
-+#define X1000_DMA_MSC1_RX	0x1d
-+#define X1000_DMA_PCM0_TX	0x20
-+#define X1000_DMA_PCM0_RX	0x21
-+#define X1000_DMA_SMB0_TX	0x24
-+#define X1000_DMA_SMB0_RX	0x25
-+#define X1000_DMA_SMB1_TX	0x26
-+#define X1000_DMA_SMB1_RX	0x27
-+#define X1000_DMA_SMB2_TX	0x28
-+#define X1000_DMA_SMB2_RX	0x29
-+
-+#endif /* __DT_BINDINGS_DMA_X1000_DMA_H__ */
+A patch title should detail the change it is doing so a better patch
+title would be: "dmaengine: fsl-dpaa2-qdma: export the symbols"
+
+> Fixed the following error:
+> WARNING: modpost: missing MODULE_LICENSE() in drivers/dma/fsl-dpaa2-qdma/dpdmai.o
+> see include/linux/module.h for more information
+> GZIP    arch/arm64/boot/Image.gz
+> ERROR: "dpdmai_enable" [drivers/dma/fsl-dpaa2-qdma/dpaa2-qdma.ko] undefined!
+> ERROR: "dpdmai_set_rx_queue" [drivers/dma/fsl-dpaa2-qdma/dpaa2-qdma.ko] undefined!
+> ERROR: "dpdmai_get_tx_queue" [drivers/dma/fsl-dpaa2-qdma/dpaa2-qdma.ko] undefined!
+> ERROR: "dpdmai_get_rx_queue" [drivers/dma/fsl-dpaa2-qdma/dpaa2-qdma.ko] undefined!
+> ERROR: "dpdmai_get_attributes" [drivers/dma/fsl-dpaa2-qdma/dpaa2-qdma.ko] undefined!
+> ERROR: "dpdmai_open" [drivers/dma/fsl-dpaa2-qdma/dpaa2-qdma.ko] undefined!
+> ERROR: "dpdmai_close" [drivers/dma/fsl-dpaa2-qdma/dpaa2-qdma.ko] undefined!
+> ERROR: "dpdmai_disable" [drivers/dma/fsl-dpaa2-qdma/dpaa2-qdma.ko] undefined!
+> ERROR: "dpdmai_reset" [drivers/dma/fsl-dpaa2-qdma/dpaa2-qdma.ko] undefined!
+> WARNING: "HYPERVISOR_platform_op" [vmlinux] is a static EXPORT_SYMBOL_GPL
+> make[2]: *** [__modpost] Error 1
+> make[1]: *** [modules] Error 2
+> make[1]: *** Waiting for unfinished jobs....
+> make: *** [sub-make] Error 2
+
+And here in the log, you should say the symbols were not exported
+leading to error <give error log>
+
+So export it
+
+> 
+> Signed-off-by: Peng Ma <peng.ma@nxp.com>
+> Reported-by: Anders Roxell <anders.roxell@linaro.org>
+> ---
+>  drivers/dma/fsl-dpaa2-qdma/dpdmai.c | 12 ++++++++++++
+>  1 file changed, 12 insertions(+)
+> 
+> diff --git a/drivers/dma/fsl-dpaa2-qdma/dpdmai.c b/drivers/dma/fsl-dpaa2-qdma/dpdmai.c
+> index fbc2b2f..f8a1f66 100644
+> --- a/drivers/dma/fsl-dpaa2-qdma/dpdmai.c
+> +++ b/drivers/dma/fsl-dpaa2-qdma/dpdmai.c
+> @@ -1,6 +1,7 @@
+>  // SPDX-License-Identifier: GPL-2.0
+>  // Copyright 2019 NXP
+>  
+> +#include <linux/module.h>
+>  #include <linux/types.h>
+>  #include <linux/io.h>
+>  #include <linux/fsl/mc.h>
+> @@ -90,6 +91,7 @@ int dpdmai_open(struct fsl_mc_io *mc_io, u32 cmd_flags,
+>  
+>  	return 0;
+>  }
+> +EXPORT_SYMBOL_GPL(dpdmai_open);
+>  
+>  /**
+>   * dpdmai_close() - Close the control session of the object
+> @@ -113,6 +115,7 @@ int dpdmai_close(struct fsl_mc_io *mc_io, u32 cmd_flags, u16 token)
+>  	/* send command to mc*/
+>  	return mc_send_command(mc_io, &cmd);
+>  }
+> +EXPORT_SYMBOL_GPL(dpdmai_close);
+>  
+>  /**
+>   * dpdmai_create() - Create the DPDMAI object
+> @@ -177,6 +180,7 @@ int dpdmai_enable(struct fsl_mc_io *mc_io, u32 cmd_flags, u16 token)
+>  	/* send command to mc*/
+>  	return mc_send_command(mc_io, &cmd);
+>  }
+> +EXPORT_SYMBOL_GPL(dpdmai_enable);
+>  
+>  /**
+>   * dpdmai_disable() - Disable the DPDMAI, stop sending and receiving frames.
+> @@ -197,6 +201,7 @@ int dpdmai_disable(struct fsl_mc_io *mc_io, u32 cmd_flags, u16 token)
+>  	/* send command to mc*/
+>  	return mc_send_command(mc_io, &cmd);
+>  }
+> +EXPORT_SYMBOL_GPL(dpdmai_disable);
+>  
+>  /**
+>   * dpdmai_reset() - Reset the DPDMAI, returns the object to initial state.
+> @@ -217,6 +222,7 @@ int dpdmai_reset(struct fsl_mc_io *mc_io, u32 cmd_flags, u16 token)
+>  	/* send command to mc*/
+>  	return mc_send_command(mc_io, &cmd);
+>  }
+> +EXPORT_SYMBOL_GPL(dpdmai_reset);
+>  
+>  /**
+>   * dpdmai_get_attributes() - Retrieve DPDMAI attributes.
+> @@ -252,6 +258,7 @@ int dpdmai_get_attributes(struct fsl_mc_io *mc_io, u32 cmd_flags,
+>  
+>  	return 0;
+>  }
+> +EXPORT_SYMBOL_GPL(dpdmai_get_attributes);
+>  
+>  /**
+>   * dpdmai_set_rx_queue() - Set Rx queue configuration
+> @@ -285,6 +292,7 @@ int dpdmai_set_rx_queue(struct fsl_mc_io *mc_io, u32 cmd_flags, u16 token,
+>  	/* send command to mc*/
+>  	return mc_send_command(mc_io, &cmd);
+>  }
+> +EXPORT_SYMBOL_GPL(dpdmai_set_rx_queue);
+>  
+>  /**
+>   * dpdmai_get_rx_queue() - Retrieve Rx queue attributes.
+> @@ -325,6 +333,7 @@ int dpdmai_get_rx_queue(struct fsl_mc_io *mc_io, u32 cmd_flags, u16 token,
+>  
+>  	return 0;
+>  }
+> +EXPORT_SYMBOL_GPL(dpdmai_get_rx_queue);
+>  
+>  /**
+>   * dpdmai_get_tx_queue() - Retrieve Tx queue attributes.
+> @@ -364,3 +373,6 @@ int dpdmai_get_tx_queue(struct fsl_mc_io *mc_io, u32 cmd_flags,
+>  
+>  	return 0;
+>  }
+> +EXPORT_SYMBOL_GPL(dpdmai_get_tx_queue);
+> +
+> +MODULE_LICENSE("GPL v2");
+> -- 
+> 2.9.5
+
 -- 
-2.7.4
-
-
+~Vinod
