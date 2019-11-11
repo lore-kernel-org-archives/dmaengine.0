@@ -2,50 +2,52 @@ Return-Path: <SRS0=cr4R=ZD=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.9 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+X-Spam-Status: No, score=-8.4 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
-	autolearn=unavailable autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6211EC17441
-	for <dmaengine@archiver.kernel.org>; Mon, 11 Nov 2019 13:53:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EDE46C43331
+	for <dmaengine@archiver.kernel.org>; Mon, 11 Nov 2019 15:24:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 38ED6222C6
-	for <dmaengine@archiver.kernel.org>; Mon, 11 Nov 2019 13:53:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C112321783
+	for <dmaengine@archiver.kernel.org>; Mon, 11 Nov 2019 15:24:18 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b="hnq85HW3"
+	dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b="EFxfIiWF"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727201AbfKKNw7 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 11 Nov 2019 08:52:59 -0500
-Received: from fllv0015.ext.ti.com ([198.47.19.141]:56638 "EHLO
+        id S1726877AbfKKPYS (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 11 Nov 2019 10:24:18 -0500
+Received: from fllv0015.ext.ti.com ([198.47.19.141]:44024 "EHLO
         fllv0015.ext.ti.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726902AbfKKNw4 (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Mon, 11 Nov 2019 08:52:56 -0500
-Received: from lelv0265.itg.ti.com ([10.180.67.224])
-        by fllv0015.ext.ti.com (8.15.2/8.15.2) with ESMTP id xABDqb9T090509;
-        Mon, 11 Nov 2019 07:52:37 -0600
+        with ESMTP id S1726811AbfKKPYS (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Mon, 11 Nov 2019 10:24:18 -0500
+Received: from fllv0034.itg.ti.com ([10.64.40.246])
+        by fllv0015.ext.ti.com (8.15.2/8.15.2) with ESMTP id xABFO7G0123167;
+        Mon, 11 Nov 2019 09:24:07 -0600
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
-        s=ti-com-17Q1; t=1573480357;
-        bh=1ejU+vd2T9/FB/A9l3rJiiNfVEy7pyhWG9mzxXGvrc8=;
-        h=From:To:CC:Subject:Date:In-Reply-To:References;
-        b=hnq85HW3l4Dpf5ZtpTMz7HnD2F0nuQyoB5bD+lMZRcIrRCCR4W2ViUWkt18ZVViW6
-         FdGjIxcvoZnUU0a0WLWE3SdzFIhsYsN/3WYBtyLqjx8DiOfgGIBpidnQrKRhZdE6+i
-         LAvIULA3O4cz77jyq899/u7nrqFHplIctwC1ycvw=
-Received: from DFLE101.ent.ti.com (dfle101.ent.ti.com [10.64.6.22])
-        by lelv0265.itg.ti.com (8.15.2/8.15.2) with ESMTPS id xABDqbg6001492
+        s=ti-com-17Q1; t=1573485847;
+        bh=CS+i48le/nixyfp28KvB8emlqsL8zLIaTpD4UiUPBgg=;
+        h=Subject:From:To:CC:References:Date:In-Reply-To;
+        b=EFxfIiWFMAuTURTKB1Nqf1eArMcjvwoTQtrncyqluxEXYyeL9EX1bIRk4TKehpxHC
+         vWhrB04F3pd6z97BEeGNblTbLXPidgZlnObE6Oqi3rJcnG1G/EdVBqIij3czCePGwc
+         bmTxhAVGtgOxmrzho+ffLh0BGuw+SpobEDOq6sdM=
+Received: from DFLE100.ent.ti.com (dfle100.ent.ti.com [10.64.6.21])
+        by fllv0034.itg.ti.com (8.15.2/8.15.2) with ESMTPS id xABFO7Qr002743
         (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
-        Mon, 11 Nov 2019 07:52:37 -0600
-Received: from DFLE104.ent.ti.com (10.64.6.25) by DFLE101.ent.ti.com
- (10.64.6.22) with Microsoft SMTP Server (version=TLS1_2,
+        Mon, 11 Nov 2019 09:24:07 -0600
+Received: from DFLE106.ent.ti.com (10.64.6.27) by DFLE100.ent.ti.com
+ (10.64.6.21) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1847.3; Mon, 11
- Nov 2019 07:52:19 -0600
-Received: from fllv0040.itg.ti.com (10.64.41.20) by DFLE104.ent.ti.com
- (10.64.6.25) with Microsoft SMTP Server (version=TLS1_2,
+ Nov 2019 09:23:49 -0600
+Received: from lelv0327.itg.ti.com (10.180.67.183) by DFLE106.ent.ti.com
+ (10.64.6.27) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1847.3 via
- Frontend Transport; Mon, 11 Nov 2019 07:52:20 -0600
-Received: from feketebors.ti.com (ileax41-snat.itg.ti.com [10.172.224.153])
-        by fllv0040.itg.ti.com (8.15.2/8.15.2) with ESMTP id xABDqE8q097668;
-        Mon, 11 Nov 2019 07:52:33 -0600
+ Frontend Transport; Mon, 11 Nov 2019 09:23:49 -0600
+Received: from [192.168.2.6] (ileax41-snat.itg.ti.com [10.172.224.153])
+        by lelv0327.itg.ti.com (8.15.2/8.15.2) with ESMTP id xABFO2lD094280;
+        Mon, 11 Nov 2019 09:24:03 -0600
+Subject: Re: [PATCH v5 09/15] dmaengine: ti: New driver for K3 UDMA - split#1:
+ defines, structs, io func
 From:   Peter Ujfalusi <peter.ujfalusi@ti.com>
 To:     <vkoul@kernel.org>, <robh+dt@kernel.org>, <nm@ti.com>,
         <ssantosh@kernel.org>
@@ -54,81 +56,96 @@ CC:     <dan.j.williams@intel.com>, <dmaengine@vger.kernel.org>,
         <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
         <grygorii.strashko@ti.com>, <lokeshvutla@ti.com>,
         <t-kristo@ti.com>, <tony@atomide.com>, <j-keerthy@ti.com>
-Subject: [PATCH v5 05/15] dmaengine: Add support for reporting DMA cached data amount
-Date:   Mon, 11 Nov 2019 15:53:20 +0200
-Message-ID: <20191111135330.8235-6-peter.ujfalusi@ti.com>
-X-Mailer: git-send-email 2.24.0
-In-Reply-To: <20191111135330.8235-1-peter.ujfalusi@ti.com>
 References: <20191111135330.8235-1-peter.ujfalusi@ti.com>
+ <20191111135330.8235-10-peter.ujfalusi@ti.com>
+Message-ID: <f6ad18d4-a8c2-fbed-3e41-40dcb23e651c@ti.com>
+Date:   Mon, 11 Nov 2019 17:25:18 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.0
 MIME-Version: 1.0
+In-Reply-To: <20191111135330.8235-10-peter.ujfalusi@ti.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
 X-EXCLAIMER-MD-CONFIG: e1e8a2fd-e40a-4ac6-ac9b-f7e9cc9ee180
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-A DMA hardware can have big cache or FIFO and the amount of data sitting in
-the DMA fabric can be an interest for the clients.
+Hi,
 
-For example in audio we want to know the delay in the data flow and in case
-the DMA have significantly large FIFO/cache, it can affect the latenc/delay
+On 11/11/2019 15.53, Peter Ujfalusi wrote:
+> Split patch for review containing: defines, structs, io and low level
+> functions and interrupt callbacks.
+> 
+> DMA driver for
+> Texas Instruments K3 NAVSS Unified DMA – Peripheral Root Complex (UDMA-P)
+> 
+> The UDMA-P is intended to perform similar (but significantly upgraded) functions
+> as the packet-oriented DMA used on previous SoC devices. The UDMA-P module
+> supports the transmission and reception of various packet types. The UDMA-P is
+> architected to facilitate the segmentation and reassembly of SoC DMA data
+> structure compliant packets to/from smaller data blocks that are natively
+> compatible with the specific requirements of each connected peripheral. Multiple
+> Tx and Rx channels are provided within the DMA which allow multiple segmentation
+> or reassembly operations to be ongoing. The DMA controller maintains state
+> information for each of the channels which allows packet segmentation and
+> reassembly operations to be time division multiplexed between channels in order
+> to share the underlying DMA hardware. An external DMA scheduler is used to
+> control the ordering and rate at which this multiplexing occurs for Transmit
+> operations. The ordering and rate of Receive operations is indirectly controlled
+> by the order in which blocks are pushed into the DMA on the Rx PSI-L interface.
+> 
+> The UDMA-P also supports acting as both a UTC and UDMA-C for its internal
+> channels. Channels in the UDMA-P can be configured to be either Packet-Based or
+> Third-Party channels on a channel by channel basis.
+> 
+> The initial driver supports:
+> - MEM_TO_MEM (TR mode)
+> - DEV_TO_MEM (Packet / TR mode)
+> - MEM_TO_DEV (Packet / TR mode)
+> - Cyclic (Packet / TR mode)
+> - Metadata for descriptors
+> 
+> Signed-off-by: Peter Ujfalusi <peter.ujfalusi@ti.com>
+> ---
+>  drivers/dma/ti/k3-udma.c | 1047 ++++++++++++++++++++++++++++++++++++++
+>  drivers/dma/ti/k3-udma.h |  120 +++++
+>  2 files changed, 1167 insertions(+)
+>  create mode 100644 drivers/dma/ti/k3-udma.c
+>  create mode 100644 drivers/dma/ti/k3-udma.h
+> 
+> diff --git a/drivers/dma/ti/k3-udma.c b/drivers/dma/ti/k3-udma.c
+> new file mode 100644
+> index 000000000000..c6f94d79388c
+> --- /dev/null
+> +++ b/drivers/dma/ti/k3-udma.c
 
-Signed-off-by: Peter Ujfalusi <peter.ujfalusi@ti.com>
-Reviewed-by: Tero Kristo <t-kristo@ti.com>
----
- drivers/dma/dmaengine.h   | 8 ++++++++
- include/linux/dmaengine.h | 2 ++
- 2 files changed, 10 insertions(+)
+...
 
-diff --git a/drivers/dma/dmaengine.h b/drivers/dma/dmaengine.h
-index 501c0b063f85..b0b97475707a 100644
---- a/drivers/dma/dmaengine.h
-+++ b/drivers/dma/dmaengine.h
-@@ -77,6 +77,7 @@ static inline enum dma_status dma_cookie_status(struct dma_chan *chan,
- 		state->last = complete;
- 		state->used = used;
- 		state->residue = 0;
-+		state->in_flight_bytes = 0;
- 	}
- 	return dma_async_is_complete(cookie, complete, used);
- }
-@@ -87,6 +88,13 @@ static inline void dma_set_residue(struct dma_tx_state *state, u32 residue)
- 		state->residue = residue;
- }
- 
-+static inline void dma_set_in_flight_bytes(struct dma_tx_state *state,
-+					   u32 in_flight_bytes)
-+{
-+	if (state)
-+		state->in_flight_bytes = in_flight_bytes;
-+}
-+
- struct dmaengine_desc_callback {
- 	dma_async_tx_callback callback;
- 	dma_async_tx_callback_result callback_result;
-diff --git a/include/linux/dmaengine.h b/include/linux/dmaengine.h
-index 0e8b426bbde9..c4c5219030a6 100644
---- a/include/linux/dmaengine.h
-+++ b/include/linux/dmaengine.h
-@@ -682,11 +682,13 @@ static inline struct dma_async_tx_descriptor *txd_next(struct dma_async_tx_descr
-  * @residue: the remaining number of bytes left to transmit
-  *	on the selected transfer for states DMA_IN_PROGRESS and
-  *	DMA_PAUSED if this is implemented in the driver, else 0
-+ * @in_flight_bytes: amount of data in bytes cached by the DMA.
-  */
- struct dma_tx_state {
- 	dma_cookie_t last;
- 	dma_cookie_t used;
- 	u32 residue;
-+	u32 in_flight_bytes;
- };
- 
- /**
--- 
-Peter
+> +static bool udma_is_chan_running(struct udma_chan *uc)
+> +{
+> +	u32 trt_ctl = 0;
+> +	u32 rrt_ctl = 0;
+> +
+> +	if (uc->tchan)
+> +		trt_ctl = udma_tchanrt_read(uc->tchan, UDMA_TCHAN_RT_CTL_REG);
+> +	if (uc->rchan)
+> +		rrt_ctl = udma_rchanrt_read(uc->rchan, UDMA_RCHAN_RT_CTL_REG);
+> +
+> +	if (trt_ctl & (UDMA_CHAN_RT_CTL_EN || rrt_ctl & UDMA_CHAN_RT_CTL_EN))
+
+Gash:
+if (trt_ctl & UDMA_CHAN_RT_CTL_EN || rrt_ctl & UDMA_CHAN_RT_CTL_EN)
+
+
+> +		return true;
+> +
+> +	return false;
+> +}
+
+- Péter
 
 Texas Instruments Finland Oy, Porkkalankatu 22, 00180 Helsinki.
 Y-tunnus/Business ID: 0615521-4. Kotipaikka/Domicile: Helsinki
-
