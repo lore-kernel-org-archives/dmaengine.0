@@ -4,52 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-10.1 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=unavailable
-	autolearn_force=no version=3.4.0
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 77120C17441
-	for <dmaengine@archiver.kernel.org>; Wed, 13 Nov 2019 02:08:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7A69CC17440
+	for <dmaengine@archiver.kernel.org>; Wed, 13 Nov 2019 02:12:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 458B421783
-	for <dmaengine@archiver.kernel.org>; Wed, 13 Nov 2019 02:08:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4C941222D3
+	for <dmaengine@archiver.kernel.org>; Wed, 13 Nov 2019 02:12:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1573610928;
-	bh=S42pxMw6/wYTxvLBzsja1ndTqzGbyWY3pPEbYY4F1S4=;
+	s=default; t=1573611142;
+	bh=CyxFmt8RNp2/3hmmxtbe3/3gSyvkKx15wfdi3MWjiG4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:List-ID:From;
-	b=WCb5eLVqdb1co/XhTgFnC27lhW4yyLTczTgLOsyUg6l4r8GIN1cgXaB04xEMt4JHE
-	 81MB6l3OsqcQyVOFhE1V/92kbRO/ETouXJ2XC7nHhyNwfeyc2c5frbCo1jDmqB2BJs
-	 J+5og7hlH+FIpJBlMHt2j5FF4QjOkl7bInevnZdo=
+	b=cBkosVgAFhyzpUUzNIRixGPV+Q956UnuUoI2ZV1Rs3yiiczjINb+svuWHOAOeiSqo
+	 cXlSrLmDJ2VG1wlYZFc8stYKWhfTmK6JFyVEWwMaEThHW+JsNv9uh9+cXQ8quYbkoR
+	 8I+PwiFqft9OgA2eiOrJCPLfsZt59WZuWIrKBi3w=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730373AbfKMB76 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 12 Nov 2019 20:59:58 -0500
-Received: from mail.kernel.org ([198.145.29.99]:54828 "EHLO mail.kernel.org"
+        id S1729269AbfKMCMV (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 12 Nov 2019 21:12:21 -0500
+Received: from mail.kernel.org ([198.145.29.99]:52188 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1730369AbfKMB75 (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Tue, 12 Nov 2019 20:59:57 -0500
+        id S1730011AbfKMB6Z (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Tue, 12 Nov 2019 20:58:25 -0500
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id C0ED4222CF;
-        Wed, 13 Nov 2019 01:59:55 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 7B0B22245C;
+        Wed, 13 Nov 2019 01:58:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1573610396;
-        bh=S42pxMw6/wYTxvLBzsja1ndTqzGbyWY3pPEbYY4F1S4=;
+        s=default; t=1573610305;
+        bh=CyxFmt8RNp2/3hmmxtbe3/3gSyvkKx15wfdi3MWjiG4=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=UqvpvX4LVU8BZeGVfoSnFpMjTywlm0qAAktL2OBFj1GOPLkOWy6C1S20igHzfwouh
-         bMWSyoaXAzPJelPvXEChAlAHtAvC5kNDMM4qZANxWFtxHinD4TmJZmI9mdzdVwmvfE
-         th5pEdBlim5zNeMHe/ABFhXwBAn+KmTXfrwDl1cs=
+        b=1Wpb1LrkdQ/dv1j33cBk0WIYghbaOlfQL9zTBPyKrezSzYXfoIkvq117r9gZHldNP
+         LnxkUWUBTYkIhrB7wcQuq/j6B5Bo0h/ZNLir6/lHF3rMtWNAhikJhuTidY/3hjAYBo
+         FGnUqKeAyehbgRt8yd9DZXWXSANTpYygcqYIGptU=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Nathan Chancellor <natechancellor@gmail.com>,
-        Nick Desaulniers <ndesaulniers@google.com>,
+Cc:     Wolfram Sang <wsa+renesas@sang-engineering.com>,
         Vinod Koul <vkoul@kernel.org>, Sasha Levin <sashal@kernel.org>,
-        dmaengine@vger.kernel.org, clang-built-linux@googlegroups.com
-Subject: [PATCH AUTOSEL 4.9 15/68] dmaengine: timb_dma: Use proper enum in td_prep_slave_sg
-Date:   Tue, 12 Nov 2019 20:58:39 -0500
-Message-Id: <20191113015932.12655-15-sashal@kernel.org>
+        dmaengine@vger.kernel.org
+Subject: [PATCH AUTOSEL 4.14 074/115] dmaengine: rcar-dmac: set scatter/gather max segment size
+Date:   Tue, 12 Nov 2019 20:55:41 -0500
+Message-Id: <20191113015622.11592-74-sashal@kernel.org>
 X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20191113015932.12655-1-sashal@kernel.org>
-References: <20191113015932.12655-1-sashal@kernel.org>
+In-Reply-To: <20191113015622.11592-1-sashal@kernel.org>
+References: <20191113015622.11592-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
@@ -59,43 +58,41 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-From: Nathan Chancellor <natechancellor@gmail.com>
+From: Wolfram Sang <wsa+renesas@sang-engineering.com>
 
-[ Upstream commit 5e621f5d538985f010035c6f3e28c22829d36db1 ]
+[ Upstream commit 97d49c59e219acac576e16293a6b8cb99302f62f ]
 
-Clang warns when implicitly converting from one enumerated type to
-another. Avoid this by using the equivalent value from the expected
-type.
+Fix warning when running with CONFIG_DMA_API_DEBUG_SG=y by allocating a
+device_dma_parameters structure and filling in the max segment size.
 
-drivers/dma/timb_dma.c:548:27: warning: implicit conversion from
-enumeration type 'enum dma_transfer_direction' to different enumeration
-type 'enum dma_data_direction' [-Wenum-conversion]
-                td_desc->desc_list_len, DMA_MEM_TO_DEV);
-                                        ^~~~~~~~~~~~~~
-1 warning generated.
-
-Reported-by: Nick Desaulniers <ndesaulniers@google.com>
-Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
-Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/timb_dma.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/dma/sh/rcar-dmac.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/dma/timb_dma.c b/drivers/dma/timb_dma.c
-index 896bafb7a5324..cf6588cc3efdc 100644
---- a/drivers/dma/timb_dma.c
-+++ b/drivers/dma/timb_dma.c
-@@ -545,7 +545,7 @@ static struct dma_async_tx_descriptor *td_prep_slave_sg(struct dma_chan *chan,
- 	}
+diff --git a/drivers/dma/sh/rcar-dmac.c b/drivers/dma/sh/rcar-dmac.c
+index 19c7433e83097..f7ca57125ac7c 100644
+--- a/drivers/dma/sh/rcar-dmac.c
++++ b/drivers/dma/sh/rcar-dmac.c
+@@ -200,6 +200,7 @@ struct rcar_dmac {
+ 	struct dma_device engine;
+ 	struct device *dev;
+ 	void __iomem *iomem;
++	struct device_dma_parameters parms;
  
- 	dma_sync_single_for_device(chan2dmadev(chan), td_desc->txd.phys,
--		td_desc->desc_list_len, DMA_MEM_TO_DEV);
-+		td_desc->desc_list_len, DMA_TO_DEVICE);
+ 	unsigned int n_channels;
+ 	struct rcar_dmac_chan *channels;
+@@ -1764,6 +1765,8 @@ static int rcar_dmac_probe(struct platform_device *pdev)
  
- 	return &td_desc->txd;
- }
+ 	dmac->dev = &pdev->dev;
+ 	platform_set_drvdata(pdev, dmac);
++	dmac->dev->dma_parms = &dmac->parms;
++	dma_set_max_seg_size(dmac->dev, RCAR_DMATCR_MASK);
+ 	dma_set_mask_and_coherent(dmac->dev, DMA_BIT_MASK(40));
+ 
+ 	ret = rcar_dmac_parse_of(&pdev->dev, dmac);
 -- 
 2.20.1
 
