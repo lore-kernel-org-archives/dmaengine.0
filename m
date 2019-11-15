@@ -2,135 +2,98 @@ Return-Path: <SRS0=L3SP=ZH=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
+X-Spam-Status: No, score=-9.4 required=3.0 tests=DKIM_ADSP_CUSTOM_MED,
+	DKIM_INVALID,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=unavailable
-	autolearn_force=no version=3.4.0
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0D016C43215
-	for <dmaengine@archiver.kernel.org>; Fri, 15 Nov 2019 03:10:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E811AC432C3
+	for <dmaengine@archiver.kernel.org>; Fri, 15 Nov 2019 08:31:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id D44002068D
-	for <dmaengine@archiver.kernel.org>; Fri, 15 Nov 2019 03:10:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B4F542072B
+	for <dmaengine@archiver.kernel.org>; Fri, 15 Nov 2019 08:31:21 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=sifive.com header.i=@sifive.com header.b="fYgwOJG4"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UyApXg21"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727063AbfKODKf (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Thu, 14 Nov 2019 22:10:35 -0500
-Received: from mail-pf1-f195.google.com ([209.85.210.195]:42223 "EHLO
-        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726674AbfKODKe (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Thu, 14 Nov 2019 22:10:34 -0500
-Received: by mail-pf1-f195.google.com with SMTP id s5so5645200pfh.9
-        for <dmaengine@vger.kernel.org>; Thu, 14 Nov 2019 19:10:32 -0800 (PST)
+        id S1726196AbfKOIbV (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 15 Nov 2019 03:31:21 -0500
+Received: from mail-pl1-f194.google.com ([209.85.214.194]:36373 "EHLO
+        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725829AbfKOIbV (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Fri, 15 Nov 2019 03:31:21 -0500
+Received: by mail-pl1-f194.google.com with SMTP id d7so4132579pls.3;
+        Fri, 15 Nov 2019 00:31:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=sifive.com; s=google;
-        h=from:to:cc:subject:date:message-id;
-        bh=TRkIoUi0GBj9I4dT2JvmosKGsiQbJSEbDRvIbo63/Gs=;
-        b=fYgwOJG4p9E2bxbHOo4pCi89Hr08mSB/gRVLkMDo8YVyIIskkfZmcetI7SGL1kvyqy
-         3eO1N/T57ru6/euwUaEJejoKH6VZACKTd5iN4k1772MFSuuka+MmixMTp3yVdTIpQGK2
-         6XY3GqQeP5Yla8O5YPKiW+8loVXwnFV6MAaE8ptt3nqnwPYGr4CMtkGhjPr9UilcBvvh
-         sBZ0Yqczu5m/VGWJ+dJ1fphpOECSRurVOpLgb5VHTqsXsuFmgZaI3IlO7FE9T93iRSFt
-         UakLoWh57bVXCLTBaVk1wXwvKzlONOWYRoxwdIOs4uuBK5IwWRy4XqgQVfKVfu3Zjd7J
-         mHLA==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=RnTVU3msasSGFVmLQ6w3HwKQq7iABYeW4r2PZszqmD0=;
+        b=UyApXg21rduT6941OYAxmxV6yDowZjbsIqLcSD7rlWy6kVOcgHvexsjgj5UDiJpD7F
+         hz7bwGEZ8HB1Ldr6JOXdIjb1JCfIxPcIHmJACnloTi5FuI9WXn0JrtN2FWPWAO56Mm1P
+         6TxjN2eM8S1NtjVNnQ1HPojLXZLIaTozP/5UJ0yj23tVe4mAw42syzutqN4R0cB0gHnW
+         s1/NQUL6H9jW1kR0JIQdBW85ILQSwtYgM8A5KN8OfZgg8lgIyBrHEFWqehMQ70I7eXUP
+         TV9qIHT0XzEa0Td6dRe5snuqkJJNLRQWARQC+xnZpe2dUhbJOBKQt9Mh0Rj5VmdwnBS0
+         UvqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=TRkIoUi0GBj9I4dT2JvmosKGsiQbJSEbDRvIbo63/Gs=;
-        b=B5KKCvoRtj6Q+W9SD3D7SBs6IUmN2he0Cq78Tc7jhVn2XOAwm+9N1H4LfIoHxUInQE
-         Ug9ZUTfBVOhqxYGWtuYRzbmyk4i/gs0dnhRnC+I4KJ6gFdJn3B2mtvqPbWB9YftSrzM8
-         GB0NAl8mJdVAGYfjbFqXVWYY4tTOfauyo9/zl7c8DRkq8QXPwQpV1DzQqSfQnMebJkad
-         Nu0Hl3FoUfawOIkj8A7xdtH2pvOrU6v8zFjT00RK7CbqdhXJraOkDWDWU57eEyYLF9Ck
-         f28SlPV+O5ucjJS5m1S/dzYKhtGBhagrTwLS74fIBF8p+nX6zxHNi5D35yT+Rb123TDW
-         4vDw==
-X-Gm-Message-State: APjAAAVwJzGUQNXBzB1SaF4jXFAaJ/DDxinuxSwK27+ULN1H6S5Ai95w
-        4nTRGRiY07EVcaY1FkIfN6OP8A==
-X-Google-Smtp-Source: APXvYqxUrktXvFs7jzxCHAmUbP3k8BfyrSbz4O+ZCgj98MyJK5NAdeX2EiyFlAwcnLMJqUyG3/Rkag==
-X-Received: by 2002:a63:f743:: with SMTP id f3mr10817140pgk.410.1573787431911;
-        Thu, 14 Nov 2019 19:10:31 -0800 (PST)
-Received: from localhost.localdomain (111-241-173-86.dynamic-ip.hinet.net. [111.241.173.86])
-        by smtp.gmail.com with ESMTPSA id z23sm7260287pgj.43.2019.11.14.19.10.30
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=RnTVU3msasSGFVmLQ6w3HwKQq7iABYeW4r2PZszqmD0=;
+        b=Bch2xYkO4lZVZUjGEzYpDU4s5ulBjQM4mgbjR4/t9eUF4DoJPVqoHJgKn4MvOofoGt
+         tSM1trur4J5BbOS2MiUfQLva2AwdSFEWljaV5cPZLGXYkwubzqGkSjiRELr+jNKZL+WL
+         38+LlqWy1W4rL8jRQSyZjG8M0zgWPbB3DIBEeakXjU2kSSxhZwpwPV2AfaVCWk1lTjb6
+         /S50sMcf1V9LQWOl9OX4WloAFLSFX4uc51UvNfGOsN0uKmHQa8PIw/ngG1ry1Hlt4UPP
+         chvIDc27cb47GJcRK9zs7NcO2IY+PpUaeUhfZoH82FpRQ8CsyWvNSmc3NkVNmh5GxJ4x
+         3EDQ==
+X-Gm-Message-State: APjAAAUWhwrBvvGjZQm3hgxLG3h40nRvsiQwV2Pa5E3SXf+n/0at6mff
+        m/wMs/jzJNMCHtqV+pLbUHk=
+X-Google-Smtp-Source: APXvYqxgxpn5+ozBvP+tWX4FbyNK4npTxvNqQk9+ptchYUGRDCLEYH90309gfNmR/B9Dtwcmu5ymkw==
+X-Received: by 2002:a17:90a:b30b:: with SMTP id d11mr17869764pjr.25.1573806680591;
+        Fri, 15 Nov 2019 00:31:20 -0800 (PST)
+Received: from suzukaze.ipads-lab.se.sjtu.edu.cn ([202.120.40.82])
+        by smtp.gmail.com with ESMTPSA id 81sm11804997pfx.142.2019.11.15.00.31.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 14 Nov 2019 19:10:31 -0800 (PST)
-From:   Green Wan <green.wan@sifive.com>
-Cc:     Green Wan <green.wan@sifive.com>, Vinod Koul <vkoul@kernel.org>,
-        Dan Williams <dan.j.williams@intel.com>,
-        dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH] dmaengine: sf-pdma: fix kernel-doc W=1 warning
-Date:   Fri, 15 Nov 2019 11:10:09 +0800
-Message-Id: <20191115031013.30448-1-green.wan@sifive.com>
-X-Mailer: git-send-email 2.17.1
+        Fri, 15 Nov 2019 00:31:19 -0800 (PST)
+From:   Chuhong Yuan <hslester96@gmail.com>
+Cc:     Dan Williams <dan.j.williams@intel.com>,
+        Vinod Koul <vkoul@kernel.org>, dmaengine@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Chuhong Yuan <hslester96@gmail.com>
+Subject: [PATCH 1/2] dmaengine: mmp_tdma: add missed of_dma_controller_free
+Date:   Fri, 15 Nov 2019 16:31:00 +0800
+Message-Id: <20191115083100.12220-1-hslester96@gmail.com>
+X-Mailer: git-send-email 2.24.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 To:     unlisted-recipients:; (no To-header on input)
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Fix kernel-doc W=1 warning. There are several comments starting from "/**"
-but not for function comment purpose. Remove them to fix the warning.
-Another definition in front of function causes warning. Move definition
-to header file.
+The driver calls of_dma_controller_register in probe but does not free
+it in remove.
+Add the call to fix it.
 
-kernel-doc warning:
-
-drivers/dma/sf-pdma/sf-pdma.c:28: warning: Function parameter or member
-	'addr' not described in 'readq'
-drivers/dma/sf-pdma/sf-pdma.c:438: warning: Function parameter or member
-	'ch' not described in 'SF_PDMA_REG_BASE'
-drivers/dma/sf-pdma/sf-pdma.c:438: warning: Excess function parameter
-	'pdma' description in 'SF_PDMA_REG_BASE'
-
-Changes:
- - Replace string '/**' with '/*' not for comment purpose
- - Move definition, "SF_PDMA_REG_BASE", fomr sf-pdma.c to sf-pdma.h
-
-Signed-off-by: Green Wan <green.wan@sifive.com>
+Signed-off-by: Chuhong Yuan <hslester96@gmail.com>
 ---
- drivers/dma/sf-pdma/sf-pdma.c | 3 +--
- drivers/dma/sf-pdma/sf-pdma.h | 4 +++-
- 2 files changed, 4 insertions(+), 3 deletions(-)
+ drivers/dma/mmp_tdma.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/dma/sf-pdma/sf-pdma.c b/drivers/dma/sf-pdma/sf-pdma.c
-index 16fe00553496..465256fe8b1f 100644
---- a/drivers/dma/sf-pdma/sf-pdma.c
-+++ b/drivers/dma/sf-pdma/sf-pdma.c
-@@ -1,5 +1,5 @@
- // SPDX-License-Identifier: GPL-2.0-or-later
--/**
-+/*
-  * SiFive FU540 Platform DMA driver
-  * Copyright (C) 2019 SiFive
-  *
-@@ -435,7 +435,6 @@ static int sf_pdma_irq_init(struct platform_device *pdev, struct sf_pdma *pdma)
-  *
-  * Return: none
-  */
--#define SF_PDMA_REG_BASE(ch)	(pdma->membase + (PDMA_CHAN_OFFSET * (ch)))
- static void sf_pdma_setup_chans(struct sf_pdma *pdma)
- {
- 	int i;
-diff --git a/drivers/dma/sf-pdma/sf-pdma.h b/drivers/dma/sf-pdma/sf-pdma.h
-index 55816c9e0249..0c20167b097d 100644
---- a/drivers/dma/sf-pdma/sf-pdma.h
-+++ b/drivers/dma/sf-pdma/sf-pdma.h
-@@ -1,5 +1,5 @@
- /* SPDX-License-Identifier: GPL-2.0-or-later */
--/**
-+/*
-  * SiFive FU540 Platform DMA driver
-  * Copyright (C) 2019 SiFive
-  *
-@@ -57,6 +57,8 @@
- /* Error Recovery */
- #define MAX_RETRY					1
+diff --git a/drivers/dma/mmp_tdma.c b/drivers/dma/mmp_tdma.c
+index e7d1e12bf464..10117f271b12 100644
+--- a/drivers/dma/mmp_tdma.c
++++ b/drivers/dma/mmp_tdma.c
+@@ -544,6 +544,9 @@ static void mmp_tdma_issue_pending(struct dma_chan *chan)
  
-+#define SF_PDMA_REG_BASE(ch)	(pdma->membase + (PDMA_CHAN_OFFSET * (ch)))
+ static int mmp_tdma_remove(struct platform_device *pdev)
+ {
++	if (pdev->dev.of_node)
++		of_dma_controller_free(pdev->dev.of_node);
 +
- struct pdma_regs {
- 	/* read-write regs */
- 	void __iomem *ctrl;		/* 4 bytes */
-
-base-commit: a7e335deed174a37fc6f84f69caaeff8a08f8ff8
+ 	return 0;
+ }
+ 
 -- 
-2.17.1
+2.24.0
 
