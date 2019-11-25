@@ -1,200 +1,161 @@
-Return-Path: <SRS0=3eWs=ZQ=vger.kernel.org=dmaengine-owner@kernel.org>
+Return-Path: <SRS0=sup+=ZR=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.4 required=3.0 tests=DKIM_ADSP_CUSTOM_MED,
-	DKIM_INVALID,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-9.7 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
-	version=3.4.0
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0E20CC432C0
-	for <dmaengine@archiver.kernel.org>; Sun, 24 Nov 2019 05:29:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5A7C6C43215
+	for <dmaengine@archiver.kernel.org>; Mon, 25 Nov 2019 06:50:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id CD17D20748
-	for <dmaengine@archiver.kernel.org>; Sun, 24 Nov 2019 05:29:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 154E220748
+	for <dmaengine@archiver.kernel.org>; Mon, 25 Nov 2019 06:50:10 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ovCu849u"
+	dkim=pass (1024-bit key) header.d=xilinx.onmicrosoft.com header.i=@xilinx.onmicrosoft.com header.b="CWNwUM5a"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725810AbfKXF3J (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Sun, 24 Nov 2019 00:29:09 -0500
-Received: from mail-pg1-f195.google.com ([209.85.215.195]:37871 "EHLO
-        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725616AbfKXF3J (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Sun, 24 Nov 2019 00:29:09 -0500
-Received: by mail-pg1-f195.google.com with SMTP id b10so5448262pgd.4;
-        Sat, 23 Nov 2019 21:29:08 -0800 (PST)
+        id S1725747AbfKYGuI (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 25 Nov 2019 01:50:08 -0500
+Received: from mail-eopbgr800059.outbound.protection.outlook.com ([40.107.80.59]:29472
+        "EHLO NAM03-DM3-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1725535AbfKYGuI (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Mon, 25 Nov 2019 01:50:08 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=W9fR9QYztQsxZ4tZ1QuJ2OGglhqQ4VC3JLLFvnu2uNLdkjhsSKnHxjiXuXXgeGYDAbrDE4uKFlpbOto+cufltUugT5zNd4CVIHUyhjPu7ediqKDxZ83GJ61isLq+YfRdwCtBFLeIp0367GcmeoQPEYGDPHLQv7RYprK/dpyqLhDYm0UaDF8y2oW0wQVuzoH5ZFlYfCpCx2Avgw1fbQuOAoAXN4B3Lx5Vn+G8+sYuwWKPIapmGt7/dVZKxwyl5OOWuxoREX/gl1UW2/qkqpZM09QY1RW4FidPbHTuVxB/gZLq4zef6hb+4Toalw/AYMSPwAIvCruAqcLT/d2kxGA5dQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=h6l5KvdcJa0ccXBN+PYpy6Nc/2p21mtTmyjYszCsbwM=;
+ b=I3qNaGMqlHPYAs9OtHNNvkJtrzr50EnG+hE46UyKUFcT5/t151CTUm/x7NoCs3qV1iz+o3evIBkcb51K9uOb0HC1pSkqULTlfYPdeRz6CPA5JMKix/3J4RkOyRQ6R8DZDPsmVA4fLF6UdK9qN1yEva5gasZtEpe62PJeueSTwEoTfKGSN4ViNVcUdmBs1NJO559zBPqFRCfxQg+KY8F+rTTaZPrJs1CzGJ0QMELfzO/zS4QoFGlJAUNjBxbhnJD4/RZtO39w9icIj5jX52LGhUXvSYMhxLeSs5tMK5MarQ3mjPljBJTrYMpm0Y7IinnczFHH9xbMOShXvvX4fvUHWg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none (sender ip is
+ 149.199.60.83) smtp.rcpttodomain=vger.kernel.org
+ smtp.mailfrom=xhdpunnaia40.localdomain; dmarc=none action=none
+ header.from=xilinx.com; dkim=none (message not signed); arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=ON5n9I/25k32O1A/2D3MIyo2BlxDNMBzybIh7RG8xz8=;
-        b=ovCu849udwskipv9/n1UhD8x9SQztBcID0T7scQUYgV/Oqa9t9ykaT5HLGPaH2OfbT
-         iyXIL9hLJ+W4msEziMmzJsDwGEnQoQHZaQxdOJe3qY8OTBhbSZM4K8dGrg4zqN5EW2Ds
-         xySz8L3x/m2cnLnOVjyW4SqeYEZuIXK7hIxrhZAB13CNQgVFex2YyqCg0Nqqg7zSsPzP
-         KQJWNl+6OR9b7UmAW8JG/nFkmK1Dmw/+/hMxRILeHz4aZLVhzNZiGHR+kq7tH7hxdj30
-         4fk6XbUxGUCqzbKE/ZHMG8GoIdA58IEt2++duGOKMGZTet3ZGg6pnLPTuB6748RUZ7mM
-         qrag==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=ON5n9I/25k32O1A/2D3MIyo2BlxDNMBzybIh7RG8xz8=;
-        b=mn3QJMMuiDuF4dYn8M/nHJxatBg0B7BUP1rvz3flUKFcX3SH1FyG5dtNyRmUcgIBfq
-         oextaWePwgkFONYI/846eLhIOBXLPuwzIRwlY1AVOCRvmXKzQ9O31kRIjhFTe1BJlpe9
-         jLoNVQ5XxaXNpqHsakc412FsGXvHPo9LP/Xrj27N6WRuY78FZPTZRHeyoHu/HjAq7dg/
-         pWIE3GhJTARADED6K//a574mf+wOCrT/E2gOxNYBc7OTOFfTCXX2A37fa76ONVsld5ME
-         49f1L9FgdmoqAl5FX6d1pKqOINKWl/ADRYCu5rGU26vo4F+/f1h2/uxEnFRIwEyhJppJ
-         asmQ==
-X-Gm-Message-State: APjAAAXKP9i76EaZ+9/GxynnuH+upsOfmQT/dYsSIeRXBlYv3H9LtgCD
-        N8WjB1MlkSiSU3ZHg3qLCk0=
-X-Google-Smtp-Source: APXvYqzY/4pwBvAuCjFLW6iGX4cS5O5pnbcB2MKCL8mSMp5arnvtk+SQTE1PdNAwdvov+JskFcDtcg==
-X-Received: by 2002:a62:140d:: with SMTP id 13mr26312229pfu.79.1574573348284;
-        Sat, 23 Nov 2019 21:29:08 -0800 (PST)
-Received: from suzukaze.ipads-lab.se.sjtu.edu.cn ([202.120.40.82])
-        by smtp.gmail.com with ESMTPSA id w2sm3453358pfj.22.2019.11.23.21.29.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 23 Nov 2019 21:29:07 -0800 (PST)
-From:   Chuhong Yuan <hslester96@gmail.com>
-Cc:     Vinod Koul <vkoul@kernel.org>,
-        Dan Williams <dan.j.williams@intel.com>,
-        Peter Ujfalusi <peter.ujfalusi@ti.com>,
-        dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Chuhong Yuan <hslester96@gmail.com>
-Subject: [PATCH v2] dmaengine: ti: edma: add missed operations
-Date:   Sun, 24 Nov 2019 13:28:55 +0800
-Message-Id: <20191124052855.6472-1-hslester96@gmail.com>
-X-Mailer: git-send-email 2.24.0
+ d=xilinx.onmicrosoft.com; s=selector2-xilinx-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=h6l5KvdcJa0ccXBN+PYpy6Nc/2p21mtTmyjYszCsbwM=;
+ b=CWNwUM5avgO5QoedtsfOxfKd6CEgK4yMfSYCaSTCWyLtfVXryBWTZaHGrYpuUCln2n8oQY7G/6tRiqjz5Wl4E+vUFyzGAnlWIviUzbCi7F45aCBmTHU7NUIDwajHilTlk8+YcFqVH9HRiRiHMz2JuoYLXmCYOxfHM5r9XiEVqmo=
+Received: from SN4PR0201CA0041.namprd02.prod.outlook.com
+ (2603:10b6:803:2e::27) by DM5PR02MB3704.namprd02.prod.outlook.com
+ (2603:10b6:4:af::29) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.2474.19; Mon, 25 Nov
+ 2019 06:50:04 +0000
+Received: from BL2NAM02FT054.eop-nam02.prod.protection.outlook.com
+ (2a01:111:f400:7e46::204) by SN4PR0201CA0041.outlook.office365.com
+ (2603:10b6:803:2e::27) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.2474.17 via Frontend
+ Transport; Mon, 25 Nov 2019 06:50:04 +0000
+Authentication-Results: spf=none (sender IP is 149.199.60.83)
+ smtp.mailfrom=xhdpunnaia40.localdomain; vger.kernel.org; dkim=none (message
+ not signed) header.d=none;vger.kernel.org; dmarc=none action=none
+ header.from=xilinx.com;
+Received-SPF: None (protection.outlook.com: xhdpunnaia40.localdomain does not
+ designate permitted sender hosts)
+Received: from xsj-pvapsmtpgw01 (149.199.60.83) by
+ BL2NAM02FT054.mail.protection.outlook.com (10.152.77.107) with Microsoft SMTP
+ Server (version=TLS1_0, cipher=TLS_RSA_WITH_AES_256_CBC_SHA) id 15.20.2474.17
+ via Frontend Transport; Mon, 25 Nov 2019 06:50:03 +0000
+Received: from unknown-38-66.xilinx.com ([149.199.38.66] helo=xsj-pvapsmtp01)
+        by xsj-pvapsmtpgw01 with esmtp (Exim 4.63)
+        (envelope-from <radheys@xhdpunnaia40.localdomain>)
+        id 1iZ84Y-0005dU-Gg; Sun, 24 Nov 2019 22:42:10 -0800
+Received: from localhost ([127.0.0.1] helo=xsj-pvapsmtp01)
+        by xsj-pvapsmtp01 with esmtp (Exim 4.63)
+        (envelope-from <radheys@xhdpunnaia40.localdomain>)
+        id 1iZ84R-0003BF-Vc; Sun, 24 Nov 2019 22:42:04 -0800
+Received: from [10.140.184.180] (helo=xhdpunnaia40.localdomain)
+        by xsj-pvapsmtp01 with esmtp (Exim 4.63)
+        (envelope-from <radheys@xhdpunnaia40.localdomain>)
+        id 1iZ84R-0003Af-6u; Sun, 24 Nov 2019 22:42:03 -0800
+Received: by xhdpunnaia40.localdomain (Postfix, from userid 13245)
+        id 65911105F6F; Mon, 25 Nov 2019 12:12:02 +0530 (IST)
+From:   Radhey Shyam Pandey <radhey.shyam.pandey@xilinx.com>
+To:     vkoul@kernel.org, dan.j.williams@intel.com,
+        michal.simek@xilinx.com, nick.graumann@gmail.com,
+        andrea.merello@gmail.com, appana.durga.rao@xilinx.com,
+        mcgrof@kernel.org
+Cc:     dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
+        git@xilinx.com,
+        Radhey Shyam Pandey <radhey.shyam.pandey@xilinx.com>
+Subject: [PATCH] dmaengine: xilinx_dma: Reset DMA channel in dma_terminate_all
+Date:   Mon, 25 Nov 2019 12:12:01 +0530
+Message-Id: <1574664121-13451-1-git-send-email-radhey.shyam.pandey@xilinx.com>
+X-Mailer: git-send-email 2.7.4
+X-TM-AS-Product-Ver: IMSS-7.1.0.1224-8.2.0.1013-23620.005
+X-TM-AS-Result: No--0.351-7.0-31-1
+X-imss-scan-details: No--0.351-7.0-31-1;No--0.351-5.0-31-1
+X-TM-AS-User-Approved-Sender: No;No
+X-TM-AS-Result-Xfilter: Match text exemption rules:No
+X-EOPAttributedMessage: 0
+X-MS-Office365-Filtering-HT: Tenant
+X-Forefront-Antispam-Report: CIP:149.199.60.83;IPV:NLI;CTRY:US;EFV:NLI;SFV:NSPM;SFS:(10009020)(4636009)(346002)(396003)(39860400002)(136003)(376002)(428003)(249900001)(189003)(199004)(50466002)(14444005)(42186006)(16586007)(103686004)(51416003)(316002)(36756003)(5660300002)(26005)(2616005)(336012)(70586007)(42882007)(70206006)(305945005)(498600001)(81166006)(50226002)(81156014)(8676002)(48376002)(2906002)(8936002)(356004)(47776003)(4326008)(107886003)(6266002)(450100002);DIR:OUT;SFP:1101;SCL:1;SRVR:DM5PR02MB3704;H:xsj-pvapsmtpgw01;FPR:;SPF:None;LANG:en;PTR:unknown-60-83.xilinx.com;MX:0;A:0;
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-To:     unlisted-recipients:; (no To-header on input)
+Content-Type: text/plain
+X-MS-PublicTrafficType: Email
+X-MS-Office365-Filtering-Correlation-Id: 374d063a-3a8f-4f3d-13a7-08d77173b362
+X-MS-TrafficTypeDiagnostic: DM5PR02MB3704:
+X-Microsoft-Antispam-PRVS: <DM5PR02MB3704C4F4C7DCB90B0036AF7AD54A0@DM5PR02MB3704.namprd02.prod.outlook.com>
+X-Auto-Response-Suppress: DR, RN, NRN, OOF, AutoReply
+X-MS-Oob-TLC-OOBClassifiers: OLM:4502;
+X-Forefront-PRVS: 0232B30BBC
+X-MS-Exchange-SenderADCheck: 1
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: XM6qyOSU4XYNgWGzWUS8WC7jNFjOXij1yxWkD+zfrlOukevpY6h6xab8vQYa3Ci5jrwW4L7T5Rt0VsnVfargeTNn9yha3TMQNrnTZNLmuTnvxF1mE4OJPc4EqGpMD467iw8NmfN2hdAUPOcPeFKqUAxPe5Odo8/lSGnGgo3KFup2SQcXnKi/50+UJSx6bdW9RRk2ewyaxaKd61wO4BhTaHYCstN8tYoSKbjqEWUMe8JrRNHNsbLaJQsG0p5M9flZhlcgpHe1prCJbY67ZN9/yjDpb7O9WwdyFGhlq3wPGK0lGa5fTmYYGCrHV2P4xHsjysjggfckjhwYLbMnxqbc52L2VMnXPq1WuMNSgggXmjpa+2dpTOgPibP9ZZqzYaGeUPDB7yncBGN0IDGlLHTMKrlPNKWFN5w/IjYbjmQWlGTomKP9RF9kLSKuhPskvjuS
+X-OriginatorOrg: xilinx.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Nov 2019 06:50:03.9210
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 374d063a-3a8f-4f3d-13a7-08d77173b362
+X-MS-Exchange-CrossTenant-Id: 657af505-d5df-48d0-8300-c31994686c5c
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=657af505-d5df-48d0-8300-c31994686c5c;Ip=[149.199.60.83];Helo=[xsj-pvapsmtpgw01]
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM5PR02MB3704
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-The driver forgets to call pm_runtime_disable and pm_runtime_put_sync in
-probe failure and remove.
-Add the calls and modify probe failure handling to fix it.
+Reset DMA channel after stop to ensure that pending transfers and FIFOs
+in the datapath are flushed or completed. It fixes intermittent data
+verification failure reported by xilinx dma test client.
 
-To simplify the fix, the patch adjusts the calling order and merges checks
-for devm_kcalloc.
-
-Fixes: 2b6b3b742019 ("ARM/dmaengine: edma: Merge the two drivers under drivers/dma/")
-Signed-off-by: Chuhong Yuan <hslester96@gmail.com>
+Signed-off-by: Radhey Shyam Pandey <radhey.shyam.pandey@xilinx.com>
 ---
-Changes in v2:
-  - Add the missed pm_runtime_put_sync.
-  - Simplify the patch.
-  - Rebase to dma-next.
+ drivers/dma/xilinx/xilinx_dma.c | 17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
 
- drivers/dma/ti/edma.c | 37 ++++++++++++++++++++-----------------
- 1 file changed, 20 insertions(+), 17 deletions(-)
-
-diff --git a/drivers/dma/ti/edma.c b/drivers/dma/ti/edma.c
-index 756a3c951dc7..0628ee4bf1b4 100644
---- a/drivers/dma/ti/edma.c
-+++ b/drivers/dma/ti/edma.c
-@@ -2289,13 +2289,6 @@ static int edma_probe(struct platform_device *pdev)
- 	if (!info)
- 		return -ENODEV;
+diff --git a/drivers/dma/xilinx/xilinx_dma.c b/drivers/dma/xilinx/xilinx_dma.c
+index a9c5d5c..6f1539c 100644
+--- a/drivers/dma/xilinx/xilinx_dma.c
++++ b/drivers/dma/xilinx/xilinx_dma.c
+@@ -2404,16 +2404,17 @@ static int xilinx_dma_terminate_all(struct dma_chan *dchan)
+ 	u32 reg;
+ 	int err;
  
--	pm_runtime_enable(dev);
--	ret = pm_runtime_get_sync(dev);
--	if (ret < 0) {
--		dev_err(dev, "pm_runtime_get_sync() failed\n");
--		return ret;
--	}
+-	if (chan->cyclic)
+-		xilinx_dma_chan_reset(chan);
 -
- 	ret = dma_set_mask_and_coherent(dev, DMA_BIT_MASK(32));
- 	if (ret)
- 		return ret;
-@@ -2326,27 +2319,31 @@ static int edma_probe(struct platform_device *pdev)
- 
- 	platform_set_drvdata(pdev, ecc);
- 
-+	pm_runtime_enable(dev);
-+	ret = pm_runtime_get_sync(dev);
-+	if (ret < 0) {
-+		dev_err(dev, "pm_runtime_get_sync() failed\n");
-+		pm_runtime_disable(dev);
-+		return ret;
-+	}
-+
- 	/* Get eDMA3 configuration from IP */
- 	ret = edma_setup_from_hw(dev, info, ecc);
- 	if (ret)
--		return ret;
-+		goto err_disable_pm;
- 
- 	/* Allocate memory based on the information we got from the IP */
- 	ecc->slave_chans = devm_kcalloc(dev, ecc->num_channels,
- 					sizeof(*ecc->slave_chans), GFP_KERNEL);
--	if (!ecc->slave_chans)
--		return -ENOMEM;
- 
- 	ecc->slot_inuse = devm_kcalloc(dev, BITS_TO_LONGS(ecc->num_slots),
- 				       sizeof(unsigned long), GFP_KERNEL);
--	if (!ecc->slot_inuse)
--		return -ENOMEM;
- 
- 	ecc->channels_mask = devm_kcalloc(dev,
- 					   BITS_TO_LONGS(ecc->num_channels),
- 					   sizeof(unsigned long), GFP_KERNEL);
--	if (!ecc->channels_mask)
--		return -ENOMEM;
-+	if (!ecc->slave_chans || !ecc->slot_inuse || !ecc->channels_mask)
-+		goto err_disable_pm;
- 
- 	/* Mark all channels available initially */
- 	bitmap_fill(ecc->channels_mask, ecc->num_channels);
-@@ -2388,7 +2385,7 @@ static int edma_probe(struct platform_device *pdev)
- 				       ecc);
- 		if (ret) {
- 			dev_err(dev, "CCINT (%d) failed --> %d\n", irq, ret);
--			return ret;
-+			goto err_disable_pm;
- 		}
- 		ecc->ccint = irq;
- 	}
-@@ -2404,7 +2401,7 @@ static int edma_probe(struct platform_device *pdev)
- 				       ecc);
- 		if (ret) {
- 			dev_err(dev, "CCERRINT (%d) failed --> %d\n", irq, ret);
--			return ret;
-+			goto err_disable_pm;
- 		}
- 		ecc->ccerrint = irq;
- 	}
-@@ -2412,7 +2409,8 @@ static int edma_probe(struct platform_device *pdev)
- 	ecc->dummy_slot = edma_alloc_slot(ecc, EDMA_SLOT_ANY);
- 	if (ecc->dummy_slot < 0) {
- 		dev_err(dev, "Can't allocate PaRAM dummy slot\n");
--		return ecc->dummy_slot;
-+		ret = ecc->dummy_slot;
-+		goto err_disable_pm;
+-	err = chan->stop_transfer(chan);
+-	if (err) {
+-		dev_err(chan->dev, "Cannot stop channel %p: %x\n",
+-			chan, dma_ctrl_read(chan, XILINX_DMA_REG_DMASR));
+-		chan->err = true;
++	if (!chan->cyclic) {
++		err = chan->stop_transfer(chan);
++		if (err) {
++			dev_err(chan->dev, "Cannot stop channel %p: %x\n",
++				chan, dma_ctrl_read(chan,
++				XILINX_DMA_REG_DMASR));
++			chan->err = true;
++		}
  	}
  
- 	queue_priority_mapping = info->queue_priority_mapping;
-@@ -2512,6 +2510,9 @@ static int edma_probe(struct platform_device *pdev)
- 
- err_reg1:
- 	edma_free_slot(ecc, ecc->dummy_slot);
-+err_disable_pm:
-+	pm_runtime_put_sync(dev);
-+	pm_runtime_disable(dev);
- 	return ret;
- }
- 
-@@ -2542,6 +2543,8 @@ static int edma_remove(struct platform_device *pdev)
- 	if (ecc->dma_memcpy)
- 		dma_async_device_unregister(ecc->dma_memcpy);
- 	edma_free_slot(ecc, ecc->dummy_slot);
-+	pm_runtime_put_sync(dev);
-+	pm_runtime_disable(dev);
- 
- 	return 0;
- }
++	xilinx_dma_chan_reset(chan);
+ 	/* Remove and free all of the descriptors in the lists */
+ 	xilinx_dma_free_descriptors(chan);
+ 	chan->idle = true;
 -- 
-2.24.0
+2.7.4
 
