@@ -2,153 +2,151 @@ Return-Path: <SRS0=w4ve=Z2=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.4 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 13CE0C43603
-	for <dmaengine@archiver.kernel.org>; Wed,  4 Dec 2019 11:47:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 73A60C43603
+	for <dmaengine@archiver.kernel.org>; Wed,  4 Dec 2019 14:01:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id D9F0920661
-	for <dmaengine@archiver.kernel.org>; Wed,  4 Dec 2019 11:47:26 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b="vFIdZ3f7"
+	by mail.kernel.org (Postfix) with ESMTP id 3E6D120803
+	for <dmaengine@archiver.kernel.org>; Wed,  4 Dec 2019 14:01:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=default; t=1575468079;
+	bh=61Cj72oRv0JHSjGbWXtj3mk2DE3IKgsrpLNIkbH/oys=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:List-ID:From;
+	b=qZYfI0AsYEJK5c1Q3gcBso5gTuhPQBeVcHw7YLAFnYZJl2IyO/0jqscfS/VBMBXEM
+	 k4fsTnKjJ5beulhnwHSCfoXrXO3hsCccmFdBSQLn/asDJdBtRG7aeBiqlbV6LbRfGf
+	 bsXZP3CQr7GY4p8xLx3DHHWTrO/HFOt7B0AecdwQ=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727445AbfLDLr0 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 4 Dec 2019 06:47:26 -0500
-Received: from lelv0143.ext.ti.com ([198.47.23.248]:37240 "EHLO
-        lelv0143.ext.ti.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727268AbfLDLr0 (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Wed, 4 Dec 2019 06:47:26 -0500
-Received: from fllv0035.itg.ti.com ([10.64.41.0])
-        by lelv0143.ext.ti.com (8.15.2/8.15.2) with ESMTP id xB4Bl2sF002950;
-        Wed, 4 Dec 2019 05:47:02 -0600
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
-        s=ti-com-17Q1; t=1575460022;
-        bh=GzDNworWBtqYezjFy1PouWFEtcVajB2CsP3RTLTs3EY=;
-        h=Subject:To:CC:References:From:Date:In-Reply-To;
-        b=vFIdZ3f78mYDNJR7se/mnsiflN1hDZ9MW30244U1lxnT8OcUlZsWbD4Tx9tEqQBtm
-         bOIbiLlceJjbeb4Qi2B0nnnYMUDFDeL/3P3spxPoKWyrL/pQNK+184q4BaFYNQSO/C
-         Lzn9Y8F9r/m4T7Sq9LkbWNN8ayGL4VCf3+1KS4Nc=
-Received: from DFLE104.ent.ti.com (dfle104.ent.ti.com [10.64.6.25])
-        by fllv0035.itg.ti.com (8.15.2/8.15.2) with ESMTP id xB4Bl201096189;
-        Wed, 4 Dec 2019 05:47:02 -0600
-Received: from DFLE101.ent.ti.com (10.64.6.22) by DFLE104.ent.ti.com
- (10.64.6.25) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1847.3; Wed, 4 Dec
- 2019 05:47:01 -0600
-Received: from fllv0039.itg.ti.com (10.64.41.19) by DFLE101.ent.ti.com
- (10.64.6.22) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1847.3 via
- Frontend Transport; Wed, 4 Dec 2019 05:47:01 -0600
-Received: from [192.168.2.6] (ileax41-snat.itg.ti.com [10.172.224.153])
-        by fllv0039.itg.ti.com (8.15.2/8.15.2) with ESMTP id xB4BkxEa033437;
-        Wed, 4 Dec 2019 05:47:00 -0600
-Subject: Re: vchan helper broken wrt locking
-To:     Sascha Hauer <s.hauer@pengutronix.de>, <dmaengine@vger.kernel.org>
-CC:     Robert Jarzmik <robert.jarzmik@free.fr>,
-        Vinod Koul <vkoul@kernel.org>, <kernel@pengutronix.de>,
+        id S1727838AbfLDOBS (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 4 Dec 2019 09:01:18 -0500
+Received: from mail.kernel.org ([198.145.29.99]:54184 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727828AbfLDOBS (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Wed, 4 Dec 2019 09:01:18 -0500
+Received: from localhost (unknown [122.178.246.30])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 7DFEF205F4;
+        Wed,  4 Dec 2019 14:01:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1575468077;
+        bh=61Cj72oRv0JHSjGbWXtj3mk2DE3IKgsrpLNIkbH/oys=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=GOs0nTI8bdm2PZ8u8o30otqkwRisxRmEXBVm5xUSQlxxDsjNADfg2qA2s6sgbkvp0
+         KwHWW42U3Nd6oB8xf+ByMLGpVYZLNdpww93Jp5Hd7/yFjGEx4meGrC5xq4CUy990dd
+         NMVv2j8j4h76SAK6znUogXcbv3NCEpd3oiSoWwHg=
+Date:   Wed, 4 Dec 2019 19:31:12 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Peter Ujfalusi <peter.ujfalusi@ti.com>
+Cc:     Sascha Hauer <s.hauer@pengutronix.de>, dmaengine@vger.kernel.org,
+        Robert Jarzmik <robert.jarzmik@free.fr>, kernel@pengutronix.de,
         Russell King <linux@armlinux.org.uk>
+Subject: Re: vchan helper broken wrt locking
+Message-ID: <20191204140112.GD82508@vkoul-mobl>
 References: <20191203115050.yvpaehsrck6zydmk@pengutronix.de>
-From:   Peter Ujfalusi <peter.ujfalusi@ti.com>
-Message-ID: <12ec3499-ac9a-2722-2052-02d77975c26c@ti.com>
-Date:   Wed, 4 Dec 2019 13:47:03 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.0
+ <12ec3499-ac9a-2722-2052-02d77975c26c@ti.com>
 MIME-Version: 1.0
-In-Reply-To: <20191203115050.yvpaehsrck6zydmk@pengutronix.de>
-Content-Type: text/plain; charset="utf-8"
-Content-Language: en-US
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-EXCLAIMER-MD-CONFIG: e1e8a2fd-e40a-4ac6-ac9b-f7e9cc9ee180
+In-Reply-To: <12ec3499-ac9a-2722-2052-02d77975c26c@ti.com>
+User-Agent: Mutt/1.12.1 (2019-06-15)
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Hi Sascha,
-
-On 03/12/2019 13.50, Sascha Hauer wrote:
-> Hi All,
+On 04-12-19, 13:47, Peter Ujfalusi wrote:
+> Hi Sascha,
 > 
-> vc->desc_free() used to be called in non atomic context which makes
-> sense to me. This changed over time and now vc->desc_free() is sometimes
-> called in atomic context and sometimes not.
+> On 03/12/2019 13.50, Sascha Hauer wrote:
+> > Hi All,
+> > 
+> > vc->desc_free() used to be called in non atomic context which makes
+> > sense to me. This changed over time and now vc->desc_free() is sometimes
+> > called in atomic context and sometimes not.
+> > 
+> > The story starts with 13bb26ae8850 ("dmaengine: virt-dma: don't always
+> > free descriptor upon completion"). This introduced a vc->desc_allocated
+> > list which is mostly handled with the lock held, except in vchan_complete().
+> > vchan_complete() moves the completed descs onto a separate list for the sake
+> > of iterating over that list without the lock held allowing to call
+> > vc->desc_free() without lock. 13bb26ae8850 changes this to:
+> > 
+> > @@ -83,8 +110,10 @@ static void vchan_complete(unsigned long arg)
+> >                 cb_data = vd->tx.callback_param;
+> >  
+> >                 list_del(&vd->node);
+> > -
+> > -               vc->desc_free(vd);
+> > +               if (dmaengine_desc_test_reuse(&vd->tx))
+> > +                       list_add(&vd->node, &vc->desc_allocated);
+> > +               else
+> > +                       vc->desc_free(vd);
+> > 
+> > vc->desc_free() is still called without lock, but the list operation is done
+> > without locking as well which is wrong.
 > 
-> The story starts with 13bb26ae8850 ("dmaengine: virt-dma: don't always
-> free descriptor upon completion"). This introduced a vc->desc_allocated
-> list which is mostly handled with the lock held, except in vchan_complete().
-> vchan_complete() moves the completed descs onto a separate list for the sake
-> of iterating over that list without the lock held allowing to call
-> vc->desc_free() without lock. 13bb26ae8850 changes this to:
+> Hrm, yes all list operation against desc_* should be protected by the
+> lock, it is a miss.
 > 
-> @@ -83,8 +110,10 @@ static void vchan_complete(unsigned long arg)
->                 cb_data = vd->tx.callback_param;
->  
->                 list_del(&vd->node);
-> -
-> -               vc->desc_free(vd);
-> +               if (dmaengine_desc_test_reuse(&vd->tx))
-> +                       list_add(&vd->node, &vc->desc_allocated);
-> +               else
-> +                       vc->desc_free(vd);
+> > Now with 6af149d2b142 ("dmaengine: virt-dma: Add helper to free/reuse a
+> > descriptor") the hunk above was moved to a separate function
+> > (vchan_vdesc_fini()). With 1c7f072d94e8 ("dmaengine: virt-dma: Support for
+> > race free transfer termination") the helper is started to be called with
+> > lock held resulting in vc->desc_free() being called under the lock as
+> > well. It is still called from vchan_complete() without lock.
 > 
-> vc->desc_free() is still called without lock, but the list operation is done
-> without locking as well which is wrong.
-
-Hrm, yes all list operation against desc_* should be protected by the
-lock, it is a miss.
-
-> Now with 6af149d2b142 ("dmaengine: virt-dma: Add helper to free/reuse a
-> descriptor") the hunk above was moved to a separate function
-> (vchan_vdesc_fini()). With 1c7f072d94e8 ("dmaengine: virt-dma: Support for
-> race free transfer termination") the helper is started to be called with
-> lock held resulting in vc->desc_free() being called under the lock as
-> well. It is still called from vchan_complete() without lock.
-
-Right.
-I think the most elegant way to fix this would be to introduce a new
-list_head in virt_dma_chan, let's name it desc_terminated.
-
-We would add the descriptor to this within vchan_terminate_vdesc() (lock
-is held).
-In vchan_synchronize() we would
-list_splice_tail_init(&vc->desc_terminated, &head);
-with the lock held and outside of the lock we free them up.
-
-So we would put the terminated descs to the new list and free them up in
-synchronize.
-
-This way the vchan_vdesc_fini() would be only called without the lock held.
-
-> I think vc->desc_free() being called under a spin_lock is unfortunate as
-> the i.MX SDMA driver does a dma_free_coherent() there which is required
-> to be called with interrupts enabled.
-
-In the in review k3-udma driver I use dma_pool or dma_alloc_coherent in
-mixed mode depending on the type of the channel.
-
-I did also see the same issue and what I ended up doing is to have
-desc_to_purge list and udma_purge_desc_work()
-in udma_desc_free() if the descriptor is from the dma_pool, I free it
-right away, if it needs dma_free_coherent() then I put it to the
-desc_to_purge list and schedule the purge worker to deal with them at a
-later time.
-
-In this driver I don't use vchan_terminate_vdesc() because of this.
-
-> I am not sure where to go from here hence I'm writing this mail. Do we
-> agree that vc->desc_free() should be called without lock?
-
-I think it should be called without the lock held.
-
+> Right.
+> I think the most elegant way to fix this would be to introduce a new
+> list_head in virt_dma_chan, let's name it desc_terminated.
 > 
-> Sascha
+> We would add the descriptor to this within vchan_terminate_vdesc() (lock
+> is held).
+> In vchan_synchronize() we would
+> list_splice_tail_init(&vc->desc_terminated, &head);
+> with the lock held and outside of the lock we free them up.
 > 
+> So we would put the terminated descs to the new list and free them up in
+> synchronize.
 > 
+> This way the vchan_vdesc_fini() would be only called without the lock held.
 
-- PÃ©ter
+This makes sense to me as well. I would like the vc->desc_free() to be
+always called with lock and in non-atomic context.
+> 
+> > I think vc->desc_free() being called under a spin_lock is unfortunate as
+> > the i.MX SDMA driver does a dma_free_coherent() there which is required
+> > to be called with interrupts enabled.
+> 
+> In the in review k3-udma driver I use dma_pool or dma_alloc_coherent in
+> mixed mode depending on the type of the channel.
+> 
+> I did also see the same issue and what I ended up doing is to have
+> desc_to_purge list and udma_purge_desc_work()
+> in udma_desc_free() if the descriptor is from the dma_pool, I free it
+> right away, if it needs dma_free_coherent() then I put it to the
+> desc_to_purge list and schedule the purge worker to deal with them at a
+> later time.
+> 
+> In this driver I don't use vchan_terminate_vdesc() because of this.
+> 
+> > I am not sure where to go from here hence I'm writing this mail. Do we
+> > agree that vc->desc_free() should be called without lock?
+> 
+> I think it should be called without the lock held.
+> 
+> > 
+> > Sascha
+> > 
+> > 
+> 
+> - Péter
+> 
+> Texas Instruments Finland Oy, Porkkalankatu 22, 00180 Helsinki.
+> Y-tunnus/Business ID: 0615521-4. Kotipaikka/Domicile: Helsinki
 
-Texas Instruments Finland Oy, Porkkalankatu 22, 00180 Helsinki.
-Y-tunnus/Business ID: 0615521-4. Kotipaikka/Domicile: Helsinki
+-- 
+~Vinod
