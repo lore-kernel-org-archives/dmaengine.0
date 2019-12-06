@@ -2,30 +2,30 @@ Return-Path: <SRS0=/BL3=Z4=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E2EBBC2D0D1
-	for <dmaengine@archiver.kernel.org>; Fri,  6 Dec 2019 13:54:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6DE2FC2D0D8
+	for <dmaengine@archiver.kernel.org>; Fri,  6 Dec 2019 13:54:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id C0C6B24677
-	for <dmaengine@archiver.kernel.org>; Fri,  6 Dec 2019 13:54:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4E59C24681
+	for <dmaengine@archiver.kernel.org>; Fri,  6 Dec 2019 13:54:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726777AbfLFNyV (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 6 Dec 2019 08:54:21 -0500
-Received: from metis.ext.pengutronix.de ([85.220.165.71]:53537 "EHLO
+        id S1726824AbfLFNya (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 6 Dec 2019 08:54:30 -0500
+Received: from metis.ext.pengutronix.de ([85.220.165.71]:44685 "EHLO
         metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726743AbfLFNyU (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Fri, 6 Dec 2019 08:54:20 -0500
+        with ESMTP id S1726811AbfLFNy2 (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Fri, 6 Dec 2019 08:54:28 -0500
 Received: from dude.hi.pengutronix.de ([2001:67c:670:100:1d::7])
         by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
         (Exim 4.92)
         (envelope-from <sha@pengutronix.de>)
-        id 1idE3G-0008NA-Nf; Fri, 06 Dec 2019 14:53:46 +0100
+        id 1idE3G-0008N8-Nd; Fri, 06 Dec 2019 14:53:46 +0100
 Received: from sha by dude.hi.pengutronix.de with local (Exim 4.92)
         (envelope-from <sha@pengutronix.de>)
-        id 1idE3F-0001ED-OZ; Fri, 06 Dec 2019 14:53:45 +0100
+        id 1idE3F-0001E1-Ms; Fri, 06 Dec 2019 14:53:45 +0100
 From:   Sascha Hauer <s.hauer@pengutronix.de>
 To:     dmaengine@vger.kernel.org
 Cc:     Vinod Koul <vkoul@kernel.org>,
@@ -34,12 +34,10 @@ Cc:     Vinod Koul <vkoul@kernel.org>,
         Peter Ujfalusi <peter.ujfalusi@ti.com>,
         Robert Jarzmik <robert.jarzmik@free.fr>,
         Sascha Hauer <s.hauer@pengutronix.de>
-Subject: [PATCH 2/5] dmaengine: virt-dma: Do not call desc_free() under a spin_lock
-Date:   Fri,  6 Dec 2019 14:53:41 +0100
-Message-Id: <20191206135344.29330-3-s.hauer@pengutronix.de>
+Subject: [PATCH 0/5] virt-dma and i.MX SDMA fixes
+Date:   Fri,  6 Dec 2019 14:53:39 +0100
+Message-Id: <20191206135344.29330-1-s.hauer@pengutronix.de>
 X-Mailer: git-send-email 2.24.0
-In-Reply-To: <20191206135344.29330-1-s.hauer@pengutronix.de>
-References: <20191206135344.29330-1-s.hauer@pengutronix.de>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-SA-Exim-Connect-IP: 2001:67c:670:100:1d::7
@@ -51,83 +49,26 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-vchan_vdesc_fini() shouldn't be called under a spin_lock. This is done
-in two places, once in vchan_terminate_vdesc() and once in
-vchan_synchronize(). Instead of freeing the vdesc right away, collect
-the aborted vdescs on a separate list and free them along with the other
-vdescs.
+The i.MX SDMA driver leaks memory when a currently running descriptor is
+aborted. Calling vchan_terminate_vdesc() on it to fix this revealed that
+the virt-dma support calls the desc_free with the spin_lock held. This
+doesn't work for the SDMA driver because it calls dma_free_coherent in
+its desc_free hook. This series aims to fix that up.
 
-Signed-off-by: Sascha Hauer <s.hauer@pengutronix.de>
----
+Sascha
+
+Sascha Hauer (5):
+  dmaengine: virt-dma: Add missing locking around list operations
+  dmaengine: virt-dma: Do not call desc_free() under a spin_lock
+  dmaengine: imx-sdma: rename function
+  dmaengine: imx-sdma: find desc first in sdma_tx_status
+  dmaengine: imx-sdma: Fix memory leak
+
+ drivers/dma/imx-sdma.c | 37 ++++++++++++++++++++++---------------
  drivers/dma/virt-dma.c |  1 +
- drivers/dma/virt-dma.h | 17 +++--------------
- 2 files changed, 4 insertions(+), 14 deletions(-)
+ drivers/dma/virt-dma.h | 26 ++++++++++----------------
+ 3 files changed, 33 insertions(+), 31 deletions(-)
 
-diff --git a/drivers/dma/virt-dma.c b/drivers/dma/virt-dma.c
-index ec4adf4260a0..87d5bd53c98b 100644
---- a/drivers/dma/virt-dma.c
-+++ b/drivers/dma/virt-dma.c
-@@ -135,6 +135,7 @@ void vchan_init(struct virt_dma_chan *vc, struct dma_device *dmadev)
- 	INIT_LIST_HEAD(&vc->desc_submitted);
- 	INIT_LIST_HEAD(&vc->desc_issued);
- 	INIT_LIST_HEAD(&vc->desc_completed);
-+	INIT_LIST_HEAD(&vc->desc_aborted);
- 
- 	tasklet_init(&vc->task, vchan_complete, (unsigned long)vc);
- 
-diff --git a/drivers/dma/virt-dma.h b/drivers/dma/virt-dma.h
-index 41883ee2c29f..6cae93624f0d 100644
---- a/drivers/dma/virt-dma.h
-+++ b/drivers/dma/virt-dma.h
-@@ -31,9 +31,9 @@ struct virt_dma_chan {
- 	struct list_head desc_submitted;
- 	struct list_head desc_issued;
- 	struct list_head desc_completed;
-+	struct list_head desc_aborted;
- 
- 	struct virt_dma_desc *cyclic;
--	struct virt_dma_desc *vd_terminated;
- };
- 
- static inline struct virt_dma_chan *to_virt_chan(struct dma_chan *chan)
-@@ -146,11 +146,8 @@ static inline void vchan_terminate_vdesc(struct virt_dma_desc *vd)
- {
- 	struct virt_dma_chan *vc = to_virt_chan(vd->tx.chan);
- 
--	/* free up stuck descriptor */
--	if (vc->vd_terminated)
--		vchan_vdesc_fini(vc->vd_terminated);
-+	list_add_tail(&vd->node, &vc->desc_aborted);
- 
--	vc->vd_terminated = vd;
- 	if (vc->cyclic == vd)
- 		vc->cyclic = NULL;
- }
-@@ -184,6 +181,7 @@ static inline void vchan_get_all_descriptors(struct virt_dma_chan *vc,
- 	list_splice_tail_init(&vc->desc_submitted, head);
- 	list_splice_tail_init(&vc->desc_issued, head);
- 	list_splice_tail_init(&vc->desc_completed, head);
-+	list_splice_tail_init(&vc->desc_aborted, head);
- }
- 
- static inline void vchan_free_chan_resources(struct virt_dma_chan *vc)
-@@ -212,16 +210,7 @@ static inline void vchan_free_chan_resources(struct virt_dma_chan *vc)
-  */
- static inline void vchan_synchronize(struct virt_dma_chan *vc)
- {
--	unsigned long flags;
--
- 	tasklet_kill(&vc->task);
--
--	spin_lock_irqsave(&vc->lock, flags);
--	if (vc->vd_terminated) {
--		vchan_vdesc_fini(vc->vd_terminated);
--		vc->vd_terminated = NULL;
--	}
--	spin_unlock_irqrestore(&vc->lock, flags);
- }
- 
- #endif
 -- 
 2.24.0
 
