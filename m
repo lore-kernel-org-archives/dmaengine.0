@@ -6,26 +6,26 @@ X-Spam-Status: No, score=-9.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
 	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F0FA6C2D0C1
-	for <dmaengine@archiver.kernel.org>; Fri,  6 Dec 2019 13:54:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E2EBBC2D0D1
+	for <dmaengine@archiver.kernel.org>; Fri,  6 Dec 2019 13:54:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id CC30B2467A
-	for <dmaengine@archiver.kernel.org>; Fri,  6 Dec 2019 13:54:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C0C6B24677
+	for <dmaengine@archiver.kernel.org>; Fri,  6 Dec 2019 13:54:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726688AbfLFNyO (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 6 Dec 2019 08:54:14 -0500
-Received: from metis.ext.pengutronix.de ([85.220.165.71]:43083 "EHLO
+        id S1726777AbfLFNyV (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 6 Dec 2019 08:54:21 -0500
+Received: from metis.ext.pengutronix.de ([85.220.165.71]:53537 "EHLO
         metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726599AbfLFNyM (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Fri, 6 Dec 2019 08:54:12 -0500
+        with ESMTP id S1726743AbfLFNyU (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Fri, 6 Dec 2019 08:54:20 -0500
 Received: from dude.hi.pengutronix.de ([2001:67c:670:100:1d::7])
         by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
         (Exim 4.92)
         (envelope-from <sha@pengutronix.de>)
-        id 1idE3G-0008NF-Nd; Fri, 06 Dec 2019 14:53:46 +0100
+        id 1idE3G-0008NA-Nf; Fri, 06 Dec 2019 14:53:46 +0100
 Received: from sha by dude.hi.pengutronix.de with local (Exim 4.92)
         (envelope-from <sha@pengutronix.de>)
-        id 1idE3F-0001EJ-Pl; Fri, 06 Dec 2019 14:53:45 +0100
+        id 1idE3F-0001ED-OZ; Fri, 06 Dec 2019 14:53:45 +0100
 From:   Sascha Hauer <s.hauer@pengutronix.de>
 To:     dmaengine@vger.kernel.org
 Cc:     Vinod Koul <vkoul@kernel.org>,
@@ -34,9 +34,9 @@ Cc:     Vinod Koul <vkoul@kernel.org>,
         Peter Ujfalusi <peter.ujfalusi@ti.com>,
         Robert Jarzmik <robert.jarzmik@free.fr>,
         Sascha Hauer <s.hauer@pengutronix.de>
-Subject: [PATCH 4/5] dmaengine: imx-sdma: find desc first in sdma_tx_status
-Date:   Fri,  6 Dec 2019 14:53:43 +0100
-Message-Id: <20191206135344.29330-5-s.hauer@pengutronix.de>
+Subject: [PATCH 2/5] dmaengine: virt-dma: Do not call desc_free() under a spin_lock
+Date:   Fri,  6 Dec 2019 14:53:41 +0100
+Message-Id: <20191206135344.29330-3-s.hauer@pengutronix.de>
 X-Mailer: git-send-email 2.24.0
 In-Reply-To: <20191206135344.29330-1-s.hauer@pengutronix.de>
 References: <20191206135344.29330-1-s.hauer@pengutronix.de>
@@ -51,66 +51,83 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-In sdma_tx_status() we must first find the current sdma_desc. In cyclic
-mode we assume that this can always be found with vchan_find_desc().
-This is true because do not remove the current descriptor from the
-desc_issued list:
-
-	/*
-	 * Do not delete the node in desc_issued list in cyclic mode, otherwise
-	 * the desc allocated will never be freed in vchan_dma_desc_free_list
-	 */
-	if (!(sdmac->flags & IMX_DMA_SG_LOOP))
-		list_del(&vd->node);
-
-We will change this in the next step, so check if the current descriptor is
-the desired one also for the cyclic case.
+vchan_vdesc_fini() shouldn't be called under a spin_lock. This is done
+in two places, once in vchan_terminate_vdesc() and once in
+vchan_synchronize(). Instead of freeing the vdesc right away, collect
+the aborted vdescs on a separate list and free them along with the other
+vdescs.
 
 Signed-off-by: Sascha Hauer <s.hauer@pengutronix.de>
 ---
- drivers/dma/imx-sdma.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ drivers/dma/virt-dma.c |  1 +
+ drivers/dma/virt-dma.h | 17 +++--------------
+ 2 files changed, 4 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/dma/imx-sdma.c b/drivers/dma/imx-sdma.c
-index 527f8a81f50b..99dbfd9039cf 100644
---- a/drivers/dma/imx-sdma.c
-+++ b/drivers/dma/imx-sdma.c
-@@ -1648,7 +1648,7 @@ static enum dma_status sdma_tx_status(struct dma_chan *chan,
- 				      struct dma_tx_state *txstate)
+diff --git a/drivers/dma/virt-dma.c b/drivers/dma/virt-dma.c
+index ec4adf4260a0..87d5bd53c98b 100644
+--- a/drivers/dma/virt-dma.c
++++ b/drivers/dma/virt-dma.c
+@@ -135,6 +135,7 @@ void vchan_init(struct virt_dma_chan *vc, struct dma_device *dmadev)
+ 	INIT_LIST_HEAD(&vc->desc_submitted);
+ 	INIT_LIST_HEAD(&vc->desc_issued);
+ 	INIT_LIST_HEAD(&vc->desc_completed);
++	INIT_LIST_HEAD(&vc->desc_aborted);
+ 
+ 	tasklet_init(&vc->task, vchan_complete, (unsigned long)vc);
+ 
+diff --git a/drivers/dma/virt-dma.h b/drivers/dma/virt-dma.h
+index 41883ee2c29f..6cae93624f0d 100644
+--- a/drivers/dma/virt-dma.h
++++ b/drivers/dma/virt-dma.h
+@@ -31,9 +31,9 @@ struct virt_dma_chan {
+ 	struct list_head desc_submitted;
+ 	struct list_head desc_issued;
+ 	struct list_head desc_completed;
++	struct list_head desc_aborted;
+ 
+ 	struct virt_dma_desc *cyclic;
+-	struct virt_dma_desc *vd_terminated;
+ };
+ 
+ static inline struct virt_dma_chan *to_virt_chan(struct dma_chan *chan)
+@@ -146,11 +146,8 @@ static inline void vchan_terminate_vdesc(struct virt_dma_desc *vd)
  {
- 	struct sdma_channel *sdmac = to_sdma_chan(chan);
--	struct sdma_desc *desc;
-+	struct sdma_desc *desc = NULL;
- 	u32 residue;
- 	struct virt_dma_desc *vd;
- 	enum dma_status ret;
-@@ -1659,19 +1659,23 @@ static enum dma_status sdma_tx_status(struct dma_chan *chan,
- 		return ret;
+ 	struct virt_dma_chan *vc = to_virt_chan(vd->tx.chan);
  
- 	spin_lock_irqsave(&sdmac->vc.lock, flags);
-+
- 	vd = vchan_find_desc(&sdmac->vc, cookie);
--	if (vd) {
-+	if (vd)
- 		desc = to_sdma_desc(&vd->tx);
-+	else if (sdmac->desc && sdmac->desc->vd.tx.cookie == cookie)
-+		desc = sdmac->desc;
-+
-+	if (desc) {
- 		if (sdmac->flags & IMX_DMA_SG_LOOP)
- 			residue = (desc->num_bd - desc->buf_ptail) *
- 				desc->period_len - desc->chn_real_count;
- 		else
- 			residue = desc->chn_count - desc->chn_real_count;
--	} else if (sdmac->desc && sdmac->desc->vd.tx.cookie == cookie) {
--		residue = sdmac->desc->chn_count - sdmac->desc->chn_real_count;
- 	} else {
- 		residue = 0;
- 	}
-+
- 	spin_unlock_irqrestore(&sdmac->vc.lock, flags);
+-	/* free up stuck descriptor */
+-	if (vc->vd_terminated)
+-		vchan_vdesc_fini(vc->vd_terminated);
++	list_add_tail(&vd->node, &vc->desc_aborted);
  
- 	dma_set_tx_state(txstate, chan->completed_cookie, chan->cookie,
+-	vc->vd_terminated = vd;
+ 	if (vc->cyclic == vd)
+ 		vc->cyclic = NULL;
+ }
+@@ -184,6 +181,7 @@ static inline void vchan_get_all_descriptors(struct virt_dma_chan *vc,
+ 	list_splice_tail_init(&vc->desc_submitted, head);
+ 	list_splice_tail_init(&vc->desc_issued, head);
+ 	list_splice_tail_init(&vc->desc_completed, head);
++	list_splice_tail_init(&vc->desc_aborted, head);
+ }
+ 
+ static inline void vchan_free_chan_resources(struct virt_dma_chan *vc)
+@@ -212,16 +210,7 @@ static inline void vchan_free_chan_resources(struct virt_dma_chan *vc)
+  */
+ static inline void vchan_synchronize(struct virt_dma_chan *vc)
+ {
+-	unsigned long flags;
+-
+ 	tasklet_kill(&vc->task);
+-
+-	spin_lock_irqsave(&vc->lock, flags);
+-	if (vc->vd_terminated) {
+-		vchan_vdesc_fini(vc->vd_terminated);
+-		vc->vd_terminated = NULL;
+-	}
+-	spin_unlock_irqrestore(&vc->lock, flags);
+ }
+ 
+ #endif
 -- 
 2.24.0
 
