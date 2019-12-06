@@ -2,30 +2,30 @@ Return-Path: <SRS0=/BL3=Z4=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6DE2FC2D0D8
-	for <dmaengine@archiver.kernel.org>; Fri,  6 Dec 2019 13:54:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AE54BC2D0D4
+	for <dmaengine@archiver.kernel.org>; Fri,  6 Dec 2019 13:55:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 4E59C24681
-	for <dmaengine@archiver.kernel.org>; Fri,  6 Dec 2019 13:54:31 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8D57F24659
+	for <dmaengine@archiver.kernel.org>; Fri,  6 Dec 2019 13:55:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726824AbfLFNya (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 6 Dec 2019 08:54:30 -0500
-Received: from metis.ext.pengutronix.de ([85.220.165.71]:44685 "EHLO
+        id S1726552AbfLFNyE (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 6 Dec 2019 08:54:04 -0500
+Received: from metis.ext.pengutronix.de ([85.220.165.71]:36953 "EHLO
         metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726811AbfLFNy2 (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Fri, 6 Dec 2019 08:54:28 -0500
+        with ESMTP id S1726472AbfLFNx4 (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Fri, 6 Dec 2019 08:53:56 -0500
 Received: from dude.hi.pengutronix.de ([2001:67c:670:100:1d::7])
         by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
         (Exim 4.92)
         (envelope-from <sha@pengutronix.de>)
-        id 1idE3G-0008N8-Nd; Fri, 06 Dec 2019 14:53:46 +0100
+        id 1idE3G-0008NC-Nb; Fri, 06 Dec 2019 14:53:46 +0100
 Received: from sha by dude.hi.pengutronix.de with local (Exim 4.92)
         (envelope-from <sha@pengutronix.de>)
-        id 1idE3F-0001E1-Ms; Fri, 06 Dec 2019 14:53:45 +0100
+        id 1idE3F-0001EG-PG; Fri, 06 Dec 2019 14:53:45 +0100
 From:   Sascha Hauer <s.hauer@pengutronix.de>
 To:     dmaengine@vger.kernel.org
 Cc:     Vinod Koul <vkoul@kernel.org>,
@@ -34,10 +34,12 @@ Cc:     Vinod Koul <vkoul@kernel.org>,
         Peter Ujfalusi <peter.ujfalusi@ti.com>,
         Robert Jarzmik <robert.jarzmik@free.fr>,
         Sascha Hauer <s.hauer@pengutronix.de>
-Subject: [PATCH 0/5] virt-dma and i.MX SDMA fixes
-Date:   Fri,  6 Dec 2019 14:53:39 +0100
-Message-Id: <20191206135344.29330-1-s.hauer@pengutronix.de>
+Subject: [PATCH 3/5] dmaengine: imx-sdma: rename function
+Date:   Fri,  6 Dec 2019 14:53:42 +0100
+Message-Id: <20191206135344.29330-4-s.hauer@pengutronix.de>
 X-Mailer: git-send-email 2.24.0
+In-Reply-To: <20191206135344.29330-1-s.hauer@pengutronix.de>
+References: <20191206135344.29330-1-s.hauer@pengutronix.de>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-SA-Exim-Connect-IP: 2001:67c:670:100:1d::7
@@ -49,26 +51,45 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-The i.MX SDMA driver leaks memory when a currently running descriptor is
-aborted. Calling vchan_terminate_vdesc() on it to fix this revealed that
-the virt-dma support calls the desc_free with the spin_lock held. This
-doesn't work for the SDMA driver because it calls dma_free_coherent in
-its desc_free hook. This series aims to fix that up.
+Rename sdma_disable_channel_async() after the hook it implements, like
+done for all other functions in the SDMA driver.
 
-Sascha
+Signed-off-by: Sascha Hauer <s.hauer@pengutronix.de>
+---
+ drivers/dma/imx-sdma.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-Sascha Hauer (5):
-  dmaengine: virt-dma: Add missing locking around list operations
-  dmaengine: virt-dma: Do not call desc_free() under a spin_lock
-  dmaengine: imx-sdma: rename function
-  dmaengine: imx-sdma: find desc first in sdma_tx_status
-  dmaengine: imx-sdma: Fix memory leak
-
- drivers/dma/imx-sdma.c | 37 ++++++++++++++++++++++---------------
- drivers/dma/virt-dma.c |  1 +
- drivers/dma/virt-dma.h | 26 ++++++++++----------------
- 3 files changed, 33 insertions(+), 31 deletions(-)
-
+diff --git a/drivers/dma/imx-sdma.c b/drivers/dma/imx-sdma.c
+index c27e206a764c..527f8a81f50b 100644
+--- a/drivers/dma/imx-sdma.c
++++ b/drivers/dma/imx-sdma.c
+@@ -1077,7 +1077,7 @@ static void sdma_channel_terminate_work(struct work_struct *work)
+ 	sdmac->context_loaded = false;
+ }
+ 
+-static int sdma_disable_channel_async(struct dma_chan *chan)
++static int sdma_terminate_all(struct dma_chan *chan)
+ {
+ 	struct sdma_channel *sdmac = to_sdma_chan(chan);
+ 
+@@ -1324,7 +1324,7 @@ static void sdma_free_chan_resources(struct dma_chan *chan)
+ 	struct sdma_channel *sdmac = to_sdma_chan(chan);
+ 	struct sdma_engine *sdma = sdmac->sdma;
+ 
+-	sdma_disable_channel_async(chan);
++	sdma_terminate_all(chan);
+ 
+ 	sdma_channel_synchronize(chan);
+ 
+@@ -2103,7 +2103,7 @@ static int sdma_probe(struct platform_device *pdev)
+ 	sdma->dma_device.device_prep_slave_sg = sdma_prep_slave_sg;
+ 	sdma->dma_device.device_prep_dma_cyclic = sdma_prep_dma_cyclic;
+ 	sdma->dma_device.device_config = sdma_config;
+-	sdma->dma_device.device_terminate_all = sdma_disable_channel_async;
++	sdma->dma_device.device_terminate_all = sdma_terminate_all;
+ 	sdma->dma_device.device_synchronize = sdma_channel_synchronize;
+ 	sdma->dma_device.src_addr_widths = SDMA_DMA_BUSWIDTHS;
+ 	sdma->dma_device.dst_addr_widths = SDMA_DMA_BUSWIDTHS;
 -- 
 2.24.0
 
