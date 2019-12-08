@@ -1,95 +1,144 @@
-Return-Path: <SRS0=/BL3=Z4=vger.kernel.org=dmaengine-owner@kernel.org>
+Return-Path: <SRS0=MqQ6=Z6=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.3 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AE54BC2D0D4
-	for <dmaengine@archiver.kernel.org>; Fri,  6 Dec 2019 13:55:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9300EC43603
+	for <dmaengine@archiver.kernel.org>; Sun,  8 Dec 2019 16:03:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 8D57F24659
-	for <dmaengine@archiver.kernel.org>; Fri,  6 Dec 2019 13:55:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5E4F9206C3
+	for <dmaengine@archiver.kernel.org>; Sun,  8 Dec 2019 16:03:59 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b="jmE86OGj"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726552AbfLFNyE (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 6 Dec 2019 08:54:04 -0500
-Received: from metis.ext.pengutronix.de ([85.220.165.71]:36953 "EHLO
-        metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726472AbfLFNx4 (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Fri, 6 Dec 2019 08:53:56 -0500
-Received: from dude.hi.pengutronix.de ([2001:67c:670:100:1d::7])
-        by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.92)
-        (envelope-from <sha@pengutronix.de>)
-        id 1idE3G-0008NC-Nb; Fri, 06 Dec 2019 14:53:46 +0100
-Received: from sha by dude.hi.pengutronix.de with local (Exim 4.92)
-        (envelope-from <sha@pengutronix.de>)
-        id 1idE3F-0001EG-PG; Fri, 06 Dec 2019 14:53:45 +0100
-From:   Sascha Hauer <s.hauer@pengutronix.de>
-To:     dmaengine@vger.kernel.org
+        id S1726453AbfLHQD6 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Sun, 8 Dec 2019 11:03:58 -0500
+Received: from perceval.ideasonboard.com ([213.167.242.64]:43348 "EHLO
+        perceval.ideasonboard.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726440AbfLHQD6 (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Sun, 8 Dec 2019 11:03:58 -0500
+Received: from pendragon.ideasonboard.com (81-175-216-236.bb.dnainternet.fi [81.175.216.236])
+        by perceval.ideasonboard.com (Postfix) with ESMTPSA id 8C0FD52B;
+        Sun,  8 Dec 2019 17:03:56 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
+        s=mail; t=1575821036;
+        bh=ZvcLAs9fZ2AAwtiANkJEvG48AhEnJZDrE7y69+gtfrY=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=jmE86OGjx3jjJihEpMBUADS5i36a7sfOt11aXF8KWBxaFKkNXJDjb778FQbIsEc3I
+         RJQIkDE4CddaPMfLkJen8rWH+wvCFwU8Jme0x2CBxuHgMdHlJBzkga2q6BcWINVobt
+         8w2LC6DY0G9e1txjvMryZ+DhExEIrxei2/lhmKqc=
+Date:   Sun, 8 Dec 2019 18:03:49 +0200
+From:   Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+To:     Hyun Kwon <hyun.kwon@xilinx.com>
 Cc:     Vinod Koul <vkoul@kernel.org>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Peter Ujfalusi <peter.ujfalusi@ti.com>,
-        Robert Jarzmik <robert.jarzmik@free.fr>,
-        Sascha Hauer <s.hauer@pengutronix.de>
-Subject: [PATCH 3/5] dmaengine: imx-sdma: rename function
-Date:   Fri,  6 Dec 2019 14:53:42 +0100
-Message-Id: <20191206135344.29330-4-s.hauer@pengutronix.de>
-X-Mailer: git-send-email 2.24.0
-In-Reply-To: <20191206135344.29330-1-s.hauer@pengutronix.de>
-References: <20191206135344.29330-1-s.hauer@pengutronix.de>
+        "dmaengine@vger.kernel.org" <dmaengine@vger.kernel.org>,
+        Michal Simek <michals@xilinx.com>,
+        Hyun Kwon <hyunk@xilinx.com>,
+        Tejas Upadhyay <tejasu@xilinx.com>,
+        Satish Kumar Nagireddy <SATISHNA@xilinx.com>
+Subject: Re: [PATCH v2 2/4] dma: xilinx: dpdma: Add the Xilinx DisplayPort
+ DMA engine driver
+Message-ID: <20191208160349.GD14311@pendragon.ideasonboard.com>
+References: <20191107021400.16474-1-laurent.pinchart@ideasonboard.com>
+ <20191107021400.16474-3-laurent.pinchart@ideasonboard.com>
+ <20191109175908.GI952516@vkoul-mobl>
+ <20191205150407.GL4734@pendragon.ideasonboard.com>
+ <20191205163909.GH82508@vkoul-mobl>
+ <20191205202746.GA26880@smtp.xilinx.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: 2001:67c:670:100:1d::7
-X-SA-Exim-Mail-From: sha@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: dmaengine@vger.kernel.org
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20191205202746.GA26880@smtp.xilinx.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Rename sdma_disable_channel_async() after the hook it implements, like
-done for all other functions in the SDMA driver.
+Hi Hyun and Vinod,
 
-Signed-off-by: Sascha Hauer <s.hauer@pengutronix.de>
----
- drivers/dma/imx-sdma.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+On Thu, Dec 05, 2019 at 12:27:47PM -0800, Hyun Kwon wrote:
+> On Thu, 2019-12-05 at 08:39:09 -0800, Vinod Koul wrote:
+> > On 05-12-19, 17:04, Laurent Pinchart wrote:
+> > > > > +/*
+> > > > > + * DPDMA descriptor placement
+> > > > > + * --------------------------
+> > > > > + * DPDMA descritpor life time is described with following placements:
+> > > > > + *
+> > > > > + * allocated_desc -> submitted_desc -> pending_desc -> active_desc -> done_list
+> > > > > + *
+> > > > > + * Transition is triggered as following:
+> > > > > + *
+> > > > > + * -> allocated_desc : a descriptor allocation
+> > > > > + * allocated_desc -> submitted_desc: a descriptor submission
+> > > > > + * submitted_desc -> pending_desc: request to issue pending a descriptor
+> > > > > + * pending_desc -> active_desc: VSYNC intr when a desc is scheduled to DPDMA
+> > > > > + * active_desc -> done_list: VSYNC intr when DPDMA switches to a new desc
+> > > > 
+> > > > Well this tells me driver is not using vchan infrastructure, the
+> > > > drivers/dma/virt-dma.c is common infra which does pretty decent list
+> > > > management and drivers do not need to open code this.
+> > > > 
+> > > > Please convert the driver to use virt-dma
+> > > 
+> > > As noted in the cover letter,
+> > > 
+> > > "There is one review comment that is still pending: switching to
+> > > virt-dma. I started investigating this, and it quickly appeared that
+> > > this would result in an almost complete rewrite of the driver's logic.
+> > > While the end result may be better, I wonder if this is worth it, given
+> > > that the DPDMA is tied to the DisplayPort subsystem and can't be used
+> > > with other DMA slaves. The DPDMA is thus used with very specific usage
+> > > patterns, which don't need the genericity of descriptor handling
+> > > provided by virt-dma. Vinod, what's your opinion on this ? Is virt-dma
+> > > usage a blocker to merge this driver, could we switch to it later, or is
+> > > it just overkill in this case ?"
+> > > 
+> > > I'd like to ask an additional question : is the dmaengine API the best
+> > > solution for this ? The DPDMA is a separate IP core, but it is tied with
+> > > the DP subsystem. I'm tempted to just fold it in the display driver. The
+> > > only reason why I'm hesitant on this is that the DPDMA also handles
+> > > audio channels, that are also part of the DP subsystem, but that could
+> > > be handled by a separate ALSA driver. Still, handling display, audio and
+> > > DMA in drivers that we pretend are independent and generic would be a
+> > > bit of a lie.
+> > 
+> > Yeah if it is _only_ going to be used in display and no other client
+> > using it, then I really do not see any advantage of this being a
+> > dmaengine driver. That is pretty much we have been telling folks over
+> > the years.
+> 
+> In the development cycles, the IP blocks came in pieces. The DP tx driver
+> was developed first as one driver, with dmaengine driver other than DPDMA.
+> Then the ZynqMP block was added along with this DPDMA driver. Hence,
+> the reverse is possible, meaning some can decide to take a part of it
+> and harden with other blocks in next generation SoC. So there was and will
+> be benefit of keeping drivers modular at block level in my opinion, and
+> I'm not sure if it needs to put in a monolithic format, when it's already
+> modular.
 
-diff --git a/drivers/dma/imx-sdma.c b/drivers/dma/imx-sdma.c
-index c27e206a764c..527f8a81f50b 100644
---- a/drivers/dma/imx-sdma.c
-+++ b/drivers/dma/imx-sdma.c
-@@ -1077,7 +1077,7 @@ static void sdma_channel_terminate_work(struct work_struct *work)
- 	sdmac->context_loaded = false;
- }
- 
--static int sdma_disable_channel_async(struct dma_chan *chan)
-+static int sdma_terminate_all(struct dma_chan *chan)
- {
- 	struct sdma_channel *sdmac = to_sdma_chan(chan);
- 
-@@ -1324,7 +1324,7 @@ static void sdma_free_chan_resources(struct dma_chan *chan)
- 	struct sdma_channel *sdmac = to_sdma_chan(chan);
- 	struct sdma_engine *sdma = sdmac->sdma;
- 
--	sdma_disable_channel_async(chan);
-+	sdma_terminate_all(chan);
- 
- 	sdma_channel_synchronize(chan);
- 
-@@ -2103,7 +2103,7 @@ static int sdma_probe(struct platform_device *pdev)
- 	sdma->dma_device.device_prep_slave_sg = sdma_prep_slave_sg;
- 	sdma->dma_device.device_prep_dma_cyclic = sdma_prep_dma_cyclic;
- 	sdma->dma_device.device_config = sdma_config;
--	sdma->dma_device.device_terminate_all = sdma_disable_channel_async;
-+	sdma->dma_device.device_terminate_all = sdma_terminate_all;
- 	sdma->dma_device.device_synchronize = sdma_channel_synchronize;
- 	sdma->dma_device.src_addr_widths = SDMA_DMA_BUSWIDTHS;
- 	sdma->dma_device.dst_addr_widths = SDMA_DMA_BUSWIDTHS;
+OK, in the light of this information I'll keep the two separate and will
+switch to vchan as requested by Vinod.
+
+> > Btw since this is xilinx and I guess everything is an IP how difficult
+> > would it be to put this on a non display core :)
+> > 
+> > If you decide to use dmaengine I would prefer it use virt-dma that mean
+> > rewrite yes but helps you term
+> 
+> I made changes using vchan[1], but it was a while ago. So it might have
+> been outdated, and details are vague in my head. Not sure if it was at
+> fully functional stage. Still, just in case it may be helpful.
+> 
+> [1] https://github.com/starhwk/linux-xlnx/commits/hyunk/upstreaming?after=0b0002113e7381d8a5f3119d064676af4d0953f4+34
+
+Thank you, I will use that as a starting point.
+
 -- 
-2.24.0
+Regards,
 
+Laurent Pinchart
