@@ -6,26 +6,26 @@ X-Spam-Status: No, score=-9.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
 	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 35F1BC43603
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D6F94C3F68F
 	for <dmaengine@archiver.kernel.org>; Tue, 10 Dec 2019 12:34:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 112C721556
+	by mail.kernel.org (Postfix) with ESMTP id ABBCB20652
 	for <dmaengine@archiver.kernel.org>; Tue, 10 Dec 2019 12:34:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727627AbfLJMeQ (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 10 Dec 2019 07:34:16 -0500
-Received: from metis.ext.pengutronix.de ([85.220.165.71]:46699 "EHLO
+        id S1727385AbfLJMeR (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 10 Dec 2019 07:34:17 -0500
+Received: from metis.ext.pengutronix.de ([85.220.165.71]:48179 "EHLO
         metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727385AbfLJMeQ (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Tue, 10 Dec 2019 07:34:16 -0500
+        with ESMTP id S1727325AbfLJMeR (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Tue, 10 Dec 2019 07:34:17 -0500
 Received: from dude.hi.pengutronix.de ([2001:67c:670:100:1d::7])
         by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
         (Exim 4.92)
         (envelope-from <sha@pengutronix.de>)
-        id 1ieeiF-0003aw-32; Tue, 10 Dec 2019 13:33:59 +0100
+        id 1ieeiF-0003ax-39; Tue, 10 Dec 2019 13:33:59 +0100
 Received: from sha by dude.hi.pengutronix.de with local (Exim 4.92)
         (envelope-from <sha@pengutronix.de>)
-        id 1ieeiE-0002D6-5J; Tue, 10 Dec 2019 13:33:58 +0100
+        id 1ieeiE-0002DA-6V; Tue, 10 Dec 2019 13:33:58 +0100
 From:   Sascha Hauer <s.hauer@pengutronix.de>
 To:     dmaengine@vger.kernel.org
 Cc:     Vinod Koul <vkoul@kernel.org>,
@@ -34,9 +34,9 @@ Cc:     Vinod Koul <vkoul@kernel.org>,
         Peter Ujfalusi <peter.ujfalusi@ti.com>,
         Robert Jarzmik <robert.jarzmik@free.fr>,
         Sascha Hauer <s.hauer@pengutronix.de>
-Subject: [PATCH 1/6] dmaengine: virt-dma: Do not call desc_free() under a spin_lock
-Date:   Tue, 10 Dec 2019 13:33:47 +0100
-Message-Id: <20191210123352.7555-2-s.hauer@pengutronix.de>
+Subject: [PATCH 3/6] dmaengine: imx-sdma: rename function
+Date:   Tue, 10 Dec 2019 13:33:49 +0100
+Message-Id: <20191210123352.7555-4-s.hauer@pengutronix.de>
 X-Mailer: git-send-email 2.24.0
 In-Reply-To: <20191210123352.7555-1-s.hauer@pengutronix.de>
 References: <20191210123352.7555-1-s.hauer@pengutronix.de>
@@ -51,90 +51,45 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-vchan_vdesc_fini() shouldn't be called under a spin_lock. This is done
-in two places, once in vchan_terminate_vdesc() and once in
-vchan_synchronize(). Instead of freeing the vdesc right away, collect
-the aborted vdescs on a separate list and free them along with the other
-vdescs. The terminated descs are also freed in vchan_synchronize as done
-before this patch.
+Rename sdma_disable_channel_async() after the hook it implements, like
+done for all other functions in the SDMA driver.
 
 Signed-off-by: Sascha Hauer <s.hauer@pengutronix.de>
 ---
- drivers/dma/virt-dma.c |  1 +
- drivers/dma/virt-dma.h | 18 +++++++++---------
- 2 files changed, 10 insertions(+), 9 deletions(-)
+ drivers/dma/imx-sdma.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/dma/virt-dma.c b/drivers/dma/virt-dma.c
-index ec4adf4260a0..02c0a8885a53 100644
---- a/drivers/dma/virt-dma.c
-+++ b/drivers/dma/virt-dma.c
-@@ -135,6 +135,7 @@ void vchan_init(struct virt_dma_chan *vc, struct dma_device *dmadev)
- 	INIT_LIST_HEAD(&vc->desc_submitted);
- 	INIT_LIST_HEAD(&vc->desc_issued);
- 	INIT_LIST_HEAD(&vc->desc_completed);
-+	INIT_LIST_HEAD(&vc->desc_terminated);
+diff --git a/drivers/dma/imx-sdma.c b/drivers/dma/imx-sdma.c
+index c27e206a764c..527f8a81f50b 100644
+--- a/drivers/dma/imx-sdma.c
++++ b/drivers/dma/imx-sdma.c
+@@ -1077,7 +1077,7 @@ static void sdma_channel_terminate_work(struct work_struct *work)
+ 	sdmac->context_loaded = false;
+ }
  
- 	tasklet_init(&vc->task, vchan_complete, (unsigned long)vc);
- 
-diff --git a/drivers/dma/virt-dma.h b/drivers/dma/virt-dma.h
-index ab158bac03a7..e213137b6bc1 100644
---- a/drivers/dma/virt-dma.h
-+++ b/drivers/dma/virt-dma.h
-@@ -31,9 +31,9 @@ struct virt_dma_chan {
- 	struct list_head desc_submitted;
- 	struct list_head desc_issued;
- 	struct list_head desc_completed;
-+	struct list_head desc_terminated;
- 
- 	struct virt_dma_desc *cyclic;
--	struct virt_dma_desc *vd_terminated;
- };
- 
- static inline struct virt_dma_chan *to_virt_chan(struct dma_chan *chan)
-@@ -141,11 +141,8 @@ static inline void vchan_terminate_vdesc(struct virt_dma_desc *vd)
+-static int sdma_disable_channel_async(struct dma_chan *chan)
++static int sdma_terminate_all(struct dma_chan *chan)
  {
- 	struct virt_dma_chan *vc = to_virt_chan(vd->tx.chan);
+ 	struct sdma_channel *sdmac = to_sdma_chan(chan);
  
--	/* free up stuck descriptor */
--	if (vc->vd_terminated)
--		vchan_vdesc_fini(vc->vd_terminated);
-+	list_add_tail(&vd->node, &vc->desc_terminated);
+@@ -1324,7 +1324,7 @@ static void sdma_free_chan_resources(struct dma_chan *chan)
+ 	struct sdma_channel *sdmac = to_sdma_chan(chan);
+ 	struct sdma_engine *sdma = sdmac->sdma;
  
--	vc->vd_terminated = vd;
- 	if (vc->cyclic == vd)
- 		vc->cyclic = NULL;
- }
-@@ -179,6 +176,7 @@ static inline void vchan_get_all_descriptors(struct virt_dma_chan *vc,
- 	list_splice_tail_init(&vc->desc_submitted, head);
- 	list_splice_tail_init(&vc->desc_issued, head);
- 	list_splice_tail_init(&vc->desc_completed, head);
-+	list_splice_tail_init(&vc->desc_terminated, head);
- }
+-	sdma_disable_channel_async(chan);
++	sdma_terminate_all(chan);
  
- static inline void vchan_free_chan_resources(struct virt_dma_chan *vc)
-@@ -207,16 +205,18 @@ static inline void vchan_free_chan_resources(struct virt_dma_chan *vc)
-  */
- static inline void vchan_synchronize(struct virt_dma_chan *vc)
- {
-+	LIST_HEAD(head);
- 	unsigned long flags;
+ 	sdma_channel_synchronize(chan);
  
- 	tasklet_kill(&vc->task);
- 
- 	spin_lock_irqsave(&vc->lock, flags);
--	if (vc->vd_terminated) {
--		vchan_vdesc_fini(vc->vd_terminated);
--		vc->vd_terminated = NULL;
--	}
-+
-+	list_splice_tail_init(&vc->desc_terminated, &head);
-+
- 	spin_unlock_irqrestore(&vc->lock, flags);
-+
-+	vchan_dma_desc_free_list(vc, &head);
- }
- 
- #endif
+@@ -2103,7 +2103,7 @@ static int sdma_probe(struct platform_device *pdev)
+ 	sdma->dma_device.device_prep_slave_sg = sdma_prep_slave_sg;
+ 	sdma->dma_device.device_prep_dma_cyclic = sdma_prep_dma_cyclic;
+ 	sdma->dma_device.device_config = sdma_config;
+-	sdma->dma_device.device_terminate_all = sdma_disable_channel_async;
++	sdma->dma_device.device_terminate_all = sdma_terminate_all;
+ 	sdma->dma_device.device_synchronize = sdma_channel_synchronize;
+ 	sdma->dma_device.src_addr_widths = SDMA_DMA_BUSWIDTHS;
+ 	sdma->dma_device.dst_addr_widths = SDMA_DMA_BUSWIDTHS;
 -- 
 2.24.0
 
