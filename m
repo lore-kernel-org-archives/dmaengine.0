@@ -2,56 +2,47 @@ Return-Path: <SRS0=KFUa=2A=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.2 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+X-Spam-Status: No, score=-9.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D1984C43603
-	for <dmaengine@archiver.kernel.org>; Tue, 10 Dec 2019 11:58:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5F3EEC2D0BF
+	for <dmaengine@archiver.kernel.org>; Tue, 10 Dec 2019 12:34:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id AC94E20726
-	for <dmaengine@archiver.kernel.org>; Tue, 10 Dec 2019 11:58:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3E87B20652
+	for <dmaengine@archiver.kernel.org>; Tue, 10 Dec 2019 12:34:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727227AbfLJL6x (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 10 Dec 2019 06:58:53 -0500
-Received: from metis.ext.pengutronix.de ([85.220.165.71]:58055 "EHLO
+        id S1727351AbfLJMeB (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 10 Dec 2019 07:34:01 -0500
+Received: from metis.ext.pengutronix.de ([85.220.165.71]:42327 "EHLO
         metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727223AbfLJL6x (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Tue, 10 Dec 2019 06:58:53 -0500
-Received: from ptx.hi.pengutronix.de ([2001:67c:670:100:1d::c0])
-        by metis.ext.pengutronix.de with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        with ESMTP id S1727900AbfLJMeA (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Tue, 10 Dec 2019 07:34:00 -0500
+Received: from dude.hi.pengutronix.de ([2001:67c:670:100:1d::7])
+        by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
         (Exim 4.92)
         (envelope-from <sha@pengutronix.de>)
-        id 1ieeAG-0001F9-0N; Tue, 10 Dec 2019 12:58:52 +0100
-Received: from sha by ptx.hi.pengutronix.de with local (Exim 4.89)
+        id 1ieeiF-0003az-32; Tue, 10 Dec 2019 13:33:59 +0100
+Received: from sha by dude.hi.pengutronix.de with local (Exim 4.92)
         (envelope-from <sha@pengutronix.de>)
-        id 1ieeAF-0008Aw-Im; Tue, 10 Dec 2019 12:58:51 +0100
-Date:   Tue, 10 Dec 2019 12:58:51 +0100
+        id 1ieeiE-0002DI-8a; Tue, 10 Dec 2019 13:33:58 +0100
 From:   Sascha Hauer <s.hauer@pengutronix.de>
-To:     Peter Ujfalusi <peter.ujfalusi@ti.com>
-Cc:     dmaengine@vger.kernel.org, Vinod Koul <vkoul@kernel.org>,
+To:     dmaengine@vger.kernel.org
+Cc:     Vinod Koul <vkoul@kernel.org>,
         Pengutronix Kernel Team <kernel@pengutronix.de>,
         NXP Linux Team <linux-imx@nxp.com>,
-        Robert Jarzmik <robert.jarzmik@free.fr>
-Subject: Re: [PATCH 2/5] dmaengine: virt-dma: Do not call desc_free() under a
- spin_lock
-Message-ID: <20191210115851.mxzadx4z47tadwzv@pengutronix.de>
-References: <20191206135344.29330-1-s.hauer@pengutronix.de>
- <20191206135344.29330-3-s.hauer@pengutronix.de>
- <65b923ed-4370-089c-1d6c-ce7efac176e6@ti.com>
+        Peter Ujfalusi <peter.ujfalusi@ti.com>,
+        Robert Jarzmik <robert.jarzmik@free.fr>,
+        Sascha Hauer <s.hauer@pengutronix.de>
+Subject: [PATCH 5/6] dmaengine: imx-sdma: Fix memory leak
+Date:   Tue, 10 Dec 2019 13:33:51 +0100
+Message-Id: <20191210123352.7555-6-s.hauer@pengutronix.de>
+X-Mailer: git-send-email 2.24.0
+In-Reply-To: <20191210123352.7555-1-s.hauer@pengutronix.de>
+References: <20191210123352.7555-1-s.hauer@pengutronix.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <65b923ed-4370-089c-1d6c-ce7efac176e6@ti.com>
-X-Sent-From: Pengutronix Hildesheim
-X-URL:  http://www.pengutronix.de/
-X-IRC:  #ptxdist @freenode
-X-Accept-Language: de,en
-X-Accept-Content-Type: text/plain
-X-Uptime: 12:56:43 up 155 days, 18:06, 143 users,  load average: 0.12, 0.14,
- 0.16
-User-Agent: NeoMutt/20170113 (1.7.2)
-X-SA-Exim-Connect-IP: 2001:67c:670:100:1d::c0
+Content-Transfer-Encoding: 8bit
+X-SA-Exim-Connect-IP: 2001:67c:670:100:1d::7
 X-SA-Exim-Mail-From: sha@pengutronix.de
 X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
 X-PTX-Original-Recipient: dmaengine@vger.kernel.org
@@ -60,59 +51,67 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On Mon, Dec 09, 2019 at 09:48:22AM +0200, Peter Ujfalusi wrote:
-> Hi Sascha,
-> 
-> 
-> On 06/12/2019 15.53, Sascha Hauer wrote:
-> > vchan_vdesc_fini() shouldn't be called under a spin_lock. This is done
-> > in two places, once in vchan_terminate_vdesc() and once in
-> > vchan_synchronize(). Instead of freeing the vdesc right away, collect
-> > the aborted vdescs on a separate list and free them along with the other
-> > vdescs.
-> > 
-> > Signed-off-by: Sascha Hauer <s.hauer@pengutronix.de>
-> > ---
-> >  drivers/dma/virt-dma.c |  1 +
-> >  drivers/dma/virt-dma.h | 17 +++--------------
-> >  2 files changed, 4 insertions(+), 14 deletions(-)
-> > 
-> > diff --git a/drivers/dma/virt-dma.c b/drivers/dma/virt-dma.c
-> > index ec4adf4260a0..87d5bd53c98b 100644
-> > --- a/drivers/dma/virt-dma.c
-> > +++ b/drivers/dma/virt-dma.c
-> > @@ -135,6 +135,7 @@ void vchan_init(struct virt_dma_chan *vc, struct dma_device *dmadev)
-> >  	INIT_LIST_HEAD(&vc->desc_submitted);
-> >  	INIT_LIST_HEAD(&vc->desc_issued);
-> >  	INIT_LIST_HEAD(&vc->desc_completed);
-> > +	INIT_LIST_HEAD(&vc->desc_aborted);
-> 
-> Can we keep the terminated term instead of aborted: desc_terminated
+The current descriptor is not on any list of the virtual DMA channel.
+Once sdma_terminate_all() is called when a descriptor is currently
+in flight then this one is forgotten to be freed. We have to call
+vchan_terminate_vdesc() on this descriptor to re-add it to the lists.
+Now that we also free the currently running descriptor we can (and
+actually have to) remove the current descriptor from its list also
+for the cyclic case.
 
-Sure.
+Signed-off-by: Sascha Hauer <s.hauer@pengutronix.de>
+---
+ drivers/dma/imx-sdma.c | 19 +++++++++++--------
+ 1 file changed, 11 insertions(+), 8 deletions(-)
 
-> >  	tasklet_kill(&vc->task);
-> > -
-> > -	spin_lock_irqsave(&vc->lock, flags);
-> > -	if (vc->vd_terminated) {
-> > -		vchan_vdesc_fini(vc->vd_terminated);
-> > -		vc->vd_terminated = NULL;
-> > -	}
-> > -	spin_unlock_irqrestore(&vc->lock, flags);
-> 
-> We don't want the terminated descriptors to accumulate until the channel
-> is freed up.
-
-Nothing easier than that. I just have to revert to an earlier version
-before I decided that it's better to free up the descriptors at the end ;)
-
-I'll send a v2 shortly.
-
-Sascha
-
-
+diff --git a/drivers/dma/imx-sdma.c b/drivers/dma/imx-sdma.c
+index 99dbfd9039cf..066b21a32232 100644
+--- a/drivers/dma/imx-sdma.c
++++ b/drivers/dma/imx-sdma.c
+@@ -760,12 +760,8 @@ static void sdma_start_desc(struct sdma_channel *sdmac)
+ 		return;
+ 	}
+ 	sdmac->desc = desc = to_sdma_desc(&vd->tx);
+-	/*
+-	 * Do not delete the node in desc_issued list in cyclic mode, otherwise
+-	 * the desc allocated will never be freed in vchan_dma_desc_free_list
+-	 */
+-	if (!(sdmac->flags & IMX_DMA_SG_LOOP))
+-		list_del(&vd->node);
++
++	list_del(&vd->node);
+ 
+ 	sdma->channel_control[channel].base_bd_ptr = desc->bd_phys;
+ 	sdma->channel_control[channel].current_bd_ptr = desc->bd_phys;
+@@ -1071,7 +1067,6 @@ static void sdma_channel_terminate_work(struct work_struct *work)
+ 
+ 	spin_lock_irqsave(&sdmac->vc.lock, flags);
+ 	vchan_get_all_descriptors(&sdmac->vc, &head);
+-	sdmac->desc = NULL;
+ 	spin_unlock_irqrestore(&sdmac->vc.lock, flags);
+ 	vchan_dma_desc_free_list(&sdmac->vc, &head);
+ 	sdmac->context_loaded = false;
+@@ -1080,11 +1075,19 @@ static void sdma_channel_terminate_work(struct work_struct *work)
+ static int sdma_terminate_all(struct dma_chan *chan)
+ {
+ 	struct sdma_channel *sdmac = to_sdma_chan(chan);
++	unsigned long flags;
++
++	spin_lock_irqsave(&sdmac->vc.lock, flags);
+ 
+ 	sdma_disable_channel(chan);
+ 
+-	if (sdmac->desc)
++	if (sdmac->desc) {
++		vchan_terminate_vdesc(&sdmac->desc->vd);
++		sdmac->desc = NULL;
+ 		schedule_work(&sdmac->terminate_worker);
++	}
++
++	spin_unlock_irqrestore(&sdmac->vc.lock, flags);
+ 
+ 	return 0;
+ }
 -- 
-Pengutronix e.K.                           |                             |
-Steuerwalder Str. 21                       | http://www.pengutronix.de/  |
-31137 Hildesheim, Germany                  | Phone: +49-5121-206917-0    |
-Amtsgericht Hildesheim, HRA 2686           | Fax:   +49-5121-206917-5555 |
+2.24.0
+
