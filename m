@@ -4,30 +4,31 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-6.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS
-	autolearn=unavailable autolearn_force=no version=3.4.0
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2D680C2D0CA
-	for <dmaengine@archiver.kernel.org>; Thu, 12 Dec 2019 18:24:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 69A65C2D0CA
+	for <dmaengine@archiver.kernel.org>; Thu, 12 Dec 2019 18:24:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 0F21B24658
-	for <dmaengine@archiver.kernel.org>; Thu, 12 Dec 2019 18:24:31 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 432F222B48
+	for <dmaengine@archiver.kernel.org>; Thu, 12 Dec 2019 18:24:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730275AbfLLSY0 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Thu, 12 Dec 2019 13:24:26 -0500
-Received: from mga01.intel.com ([192.55.52.88]:20582 "EHLO mga01.intel.com"
+        id S1730295AbfLLSYg (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Thu, 12 Dec 2019 13:24:36 -0500
+Received: from mga18.intel.com ([134.134.136.126]:35418 "EHLO mga18.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1730295AbfLLSYY (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Thu, 12 Dec 2019 13:24:24 -0500
+        id S1730210AbfLLSYf (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Thu, 12 Dec 2019 13:24:35 -0500
 X-Amp-Result: SKIPPED(no attachment in message)
 X-Amp-File-Uploaded: False
-Received: from orsmga006.jf.intel.com ([10.7.209.51])
-  by fmsmga101.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 12 Dec 2019 10:24:23 -0800
+Received: from fmsmga008.fm.intel.com ([10.253.24.58])
+  by orsmga106.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 12 Dec 2019 10:24:35 -0800
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="5.69,306,1571727600"; 
-   d="scan'208";a="216201185"
+   d="scan'208";a="211201169"
 Received: from djiang5-desk3.ch.intel.com ([143.182.136.137])
-  by orsmga006.jf.intel.com with ESMTP; 12 Dec 2019 10:24:22 -0800
-Subject: [PATCH RFC v2 02/14] dmaengine: break out channel registration
+  by fmsmga008.fm.intel.com with ESMTP; 12 Dec 2019 10:24:34 -0800
+Subject: [PATCH RFC v2 04/14] mm: create common code from request allocation
+ based from blk-mq code
 From:   Dave Jiang <dave.jiang@intel.com>
 To:     dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
         vkoul@kernel.org
@@ -36,8 +37,8 @@ Cc:     dan.j.williams@intel.com, tony.luck@intel.com, jing.lin@intel.com,
         jacob.jun.pan@intel.com, yi.l.liu@intel.com, axboe@kernel.dk,
         akpm@linux-foundation.org, tglx@linutronix.de, mingo@redhat.com,
         bp@alien8.de, fenghua.yu@intel.com, hpa@zytor.com
-Date:   Thu, 12 Dec 2019 11:24:22 -0700
-Message-ID: <157617506217.42350.158281933095533374.stgit@djiang5-desk3.ch.intel.com>
+Date:   Thu, 12 Dec 2019 11:24:34 -0700
+Message-ID: <157617507410.42350.16156693139630931510.stgit@djiang5-desk3.ch.intel.com>
 In-Reply-To: <157617487798.42350.4471714981643413895.stgit@djiang5-desk3.ch.intel.com>
 References: <157617487798.42350.4471714981643413895.stgit@djiang5-desk3.ch.intel.com>
 User-Agent: StGit/unknown-version
@@ -49,238 +50,306 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-In preparation for dynamic channel registration, the code segment that
-does the channel registration is broken out to its own function.
+Move the allocation of requests from compound pages to a common function
+to allow usages by other callers. Since the routine has more to do with
+memory allocation and management, it is moved to be exported by the
+mempool.h and be part of mm subsystem.
 
 Signed-off-by: Dave Jiang <dave.jiang@intel.com>
 ---
- drivers/dma/dmaengine.c   |  157 ++++++++++++++++++++++++++++++---------------
- include/linux/dmaengine.h |    4 +
- 2 files changed, 107 insertions(+), 54 deletions(-)
+ block/blk-mq.c          |   94 +++++++++++++----------------------------------
+ include/linux/mempool.h |    6 +++
+ mm/Makefile             |    2 -
+ mm/request_alloc.c      |   95 +++++++++++++++++++++++++++++++++++++++++++++++
+ 4 files changed, 128 insertions(+), 69 deletions(-)
+ create mode 100644 mm/request_alloc.c
 
-diff --git a/drivers/dma/dmaengine.c b/drivers/dma/dmaengine.c
-index 03ac4b96117c..a20ab568b637 100644
---- a/drivers/dma/dmaengine.c
-+++ b/drivers/dma/dmaengine.c
-@@ -900,15 +900,109 @@ static int get_dma_id(struct dma_device *device)
+diff --git a/block/blk-mq.c b/block/blk-mq.c
+index 323c9cb28066..10f3fecb381a 100644
+--- a/block/blk-mq.c
++++ b/block/blk-mq.c
+@@ -10,7 +10,6 @@
+ #include <linux/backing-dev.h>
+ #include <linux/bio.h>
+ #include <linux/blkdev.h>
+-#include <linux/kmemleak.h>
+ #include <linux/mm.h>
+ #include <linux/init.h>
+ #include <linux/slab.h>
+@@ -26,6 +25,7 @@
+ #include <linux/delay.h>
+ #include <linux/crash_dump.h>
+ #include <linux/prefetch.h>
++#include <linux/mempool.h>
+ 
+ #include <trace/events/block.h>
+ 
+@@ -2015,8 +2015,6 @@ static blk_qc_t blk_mq_make_request(struct request_queue *q, struct bio *bio)
+ void blk_mq_free_rqs(struct blk_mq_tag_set *set, struct blk_mq_tags *tags,
+ 		     unsigned int hctx_idx)
+ {
+-	struct page *page;
+-
+ 	if (tags->rqs && set->ops->exit_request) {
+ 		int i;
+ 
+@@ -2030,16 +2028,7 @@ void blk_mq_free_rqs(struct blk_mq_tag_set *set, struct blk_mq_tags *tags,
+ 		}
+ 	}
+ 
+-	while (!list_empty(&tags->page_list)) {
+-		page = list_first_entry(&tags->page_list, struct page, lru);
+-		list_del_init(&page->lru);
+-		/*
+-		 * Remove kmemleak object previously allocated in
+-		 * blk_mq_alloc_rqs().
+-		 */
+-		kmemleak_free(page_address(page));
+-		__free_pages(page, page->private);
+-	}
++	request_from_pages_free(&tags->page_list);
+ }
+ 
+ void blk_mq_free_rq_map(struct blk_mq_tags *tags)
+@@ -2089,11 +2078,6 @@ struct blk_mq_tags *blk_mq_alloc_rq_map(struct blk_mq_tag_set *set,
+ 	return tags;
+ }
+ 
+-static size_t order_to_size(unsigned int order)
+-{
+-	return (size_t)PAGE_SIZE << order;
+-}
+-
+ static int blk_mq_init_request(struct blk_mq_tag_set *set, struct request *rq,
+ 			       unsigned int hctx_idx, int node)
+ {
+@@ -2109,12 +2093,20 @@ static int blk_mq_init_request(struct blk_mq_tag_set *set, struct request *rq,
  	return 0;
  }
  
-+static int __dma_async_device_channel_register(struct dma_device *device,
-+					       struct dma_chan *chan,
-+					       int chan_id)
++static void blk_mq_assign_request(void *ctx, void *ptr, int idx)
 +{
-+	int rc = 0;
-+	int chancnt = device->chancnt;
-+	atomic_t *idr_ref;
-+	struct dma_chan *tchan;
++	struct blk_mq_tags *tags = (struct blk_mq_tags *)ctx;
++	struct request *rq = ptr;
 +
-+	tchan = list_first_entry_or_null(&device->channels,
-+					 struct dma_chan, device_node);
-+	if (tchan->dev) {
-+		idr_ref = tchan->dev->idr_ref;
-+	} else {
-+		idr_ref = kmalloc(sizeof(*idr_ref), GFP_KERNEL);
-+		if (!idr_ref)
-+			return -ENOMEM;
-+		atomic_set(idr_ref, 0);
-+	}
-+
-+	chan->local = alloc_percpu(typeof(*chan->local));
-+	if (!chan->local)
-+		goto err_out;
-+	chan->dev = kzalloc(sizeof(*chan->dev), GFP_KERNEL);
-+	if (!chan->dev) {
-+		free_percpu(chan->local);
-+		chan->local = NULL;
-+		goto err_out;
-+	}
-+
-+	/*
-+	 * When the chan_id is a negative value, we are dynamically adding
-+	 * the channel. Otherwise we are static enumerating.
-+	 */
-+	chan->chan_id = chan_id < 0 ? chancnt : chan_id;
-+	chan->dev->device.class = &dma_devclass;
-+	chan->dev->device.parent = device->dev;
-+	chan->dev->chan = chan;
-+	chan->dev->idr_ref = idr_ref;
-+	chan->dev->dev_id = device->dev_id;
-+	atomic_inc(idr_ref);
-+	dev_set_name(&chan->dev->device, "dma%dchan%d",
-+		     device->dev_id, chan->chan_id);
-+
-+	rc = device_register(&chan->dev->device);
-+	if (rc)
-+		goto err_out;
-+	chan->client_count = 0;
-+	device->chancnt = chan->chan_id + 1;
-+
-+	return 0;
-+
-+ err_out:
-+	free_percpu(chan->local);
-+	kfree(chan->dev);
-+	if (atomic_dec_return(idr_ref) == 0)
-+		kfree(idr_ref);
-+	return rc;
++	tags->static_rqs[idx] = rq;
 +}
 +
-+int dma_async_device_channel_register(struct dma_device *device,
-+				      struct dma_chan *chan)
-+{
-+	int rc;
-+
-+	rc = __dma_async_device_channel_register(device, chan, -1);
-+	if (rc < 0)
-+		return rc;
-+
-+	dma_channel_rebalance();
-+	return 0;
-+}
-+EXPORT_SYMBOL_GPL(dma_async_device_channel_register);
-+
-+static void __dma_async_device_channel_unregister(struct dma_device *device,
-+						  struct dma_chan *chan)
-+{
-+	WARN_ONCE(chan->client_count,
-+		  "%s called while %d clients hold a reference\n",
-+		  __func__, chan->client_count);
-+	mutex_lock(&dma_list_mutex);
-+	chan->dev->chan = NULL;
-+	mutex_unlock(&dma_list_mutex);
-+	device_unregister(&chan->dev->device);
-+	free_percpu(chan->local);
-+}
-+
-+void dma_async_device_channel_unregister(struct dma_device *device,
-+					 struct dma_chan *chan)
-+{
-+	__dma_async_device_channel_unregister(device, chan);
-+	dma_channel_rebalance();
-+}
-+EXPORT_SYMBOL_GPL(dma_async_device_channel_unregister);
-+
- /**
-  * dma_async_device_register - registers DMA devices found
-  * @device: &dma_device
-  */
- int dma_async_device_register(struct dma_device *device)
+ int blk_mq_alloc_rqs(struct blk_mq_tag_set *set, struct blk_mq_tags *tags,
+ 		     unsigned int hctx_idx, unsigned int depth)
  {
--	int chancnt = 0, rc;
-+	int rc, i = 0;
- 	struct dma_chan* chan;
--	atomic_t *idr_ref;
+-	unsigned int i, j, entries_per_page, max_order = 4;
+-	size_t rq_size, left;
+-	int node;
++	unsigned int i;
++	size_t rq_size;
++	int node, rc;
  
- 	if (!device)
- 		return -ENODEV;
-@@ -1000,59 +1094,23 @@ int dma_async_device_register(struct dma_device *device)
- 	if (device_has_all_tx_types(device))
- 		dma_cap_set(DMA_ASYNC_TX, device->cap_mask);
+ 	node = blk_mq_hw_queue_to_node(&set->map[HCTX_TYPE_DEFAULT], hctx_idx);
+ 	if (node == NUMA_NO_NODE)
+@@ -2128,62 +2120,28 @@ int blk_mq_alloc_rqs(struct blk_mq_tag_set *set, struct blk_mq_tags *tags,
+ 	 */
+ 	rq_size = round_up(sizeof(struct request) + set->cmd_size,
+ 				cache_line_size());
+-	left = rq_size * depth;
+-
+-	for (i = 0; i < depth; ) {
+-		int this_order = max_order;
+-		struct page *page;
+-		int to_do;
+-		void *p;
+-
+-		while (this_order && left < order_to_size(this_order - 1))
+-			this_order--;
+-
+-		do {
+-			page = alloc_pages_node(node,
+-				GFP_NOIO | __GFP_NOWARN | __GFP_NORETRY | __GFP_ZERO,
+-				this_order);
+-			if (page)
+-				break;
+-			if (!this_order--)
+-				break;
+-			if (order_to_size(this_order) < rq_size)
+-				break;
+-		} while (1);
  
--	idr_ref = kmalloc(sizeof(*idr_ref), GFP_KERNEL);
--	if (!idr_ref)
--		return -ENOMEM;
- 	rc = get_dma_id(device);
--	if (rc != 0) {
--		kfree(idr_ref);
-+	if (rc != 0)
- 		return rc;
--	}
--
--	atomic_set(idr_ref, 0);
+-		if (!page)
+-			goto fail;
++	rc = request_from_pages_alloc((void *)tags, depth, rq_size,
++				      &tags->page_list, 4, node,
++				      blk_mq_assign_request);
++	if (rc < 0)
++		goto fail;
  
- 	/* represent channels in sysfs. Probably want devs too */
- 	list_for_each_entry(chan, &device->channels, device_node) {
--		rc = -ENOMEM;
--		chan->local = alloc_percpu(typeof(*chan->local));
--		if (chan->local == NULL)
-+		rc = __dma_async_device_channel_register(device, chan, i++);
-+		if (rc < 0)
- 			goto err_out;
--		chan->dev = kzalloc(sizeof(*chan->dev), GFP_KERNEL);
--		if (chan->dev == NULL) {
--			free_percpu(chan->local);
--			chan->local = NULL;
--			goto err_out;
--		}
+-		page->private = this_order;
+-		list_add_tail(&page->lru, &tags->page_list);
++	for (i = 0; i < rc; i++) {
++		struct request *rq = tags->static_rqs[i];
+ 
+-		p = page_address(page);
+-		/*
+-		 * Allow kmemleak to scan these pages as they contain pointers
+-		 * to additional allocations like via ops->init_request().
+-		 */
+-		kmemleak_alloc(p, order_to_size(this_order), 1, GFP_NOIO);
+-		entries_per_page = order_to_size(this_order) / rq_size;
+-		to_do = min(entries_per_page, depth - i);
+-		left -= to_do * rq_size;
+-		for (j = 0; j < to_do; j++) {
+-			struct request *rq = p;
 -
--		chan->chan_id = chancnt++;
--		chan->dev->device.class = &dma_devclass;
--		chan->dev->device.parent = device->dev;
--		chan->dev->chan = chan;
--		chan->dev->idr_ref = idr_ref;
--		chan->dev->dev_id = device->dev_id;
--		atomic_inc(idr_ref);
--		dev_set_name(&chan->dev->device, "dma%dchan%d",
--			     device->dev_id, chan->chan_id);
+-			tags->static_rqs[i] = rq;
+-			if (blk_mq_init_request(set, rq, hctx_idx, node)) {
+-				tags->static_rqs[i] = NULL;
+-				goto fail;
+-			}
 -
--		rc = device_register(&chan->dev->device);
--		if (rc) {
--			free_percpu(chan->local);
--			chan->local = NULL;
--			kfree(chan->dev);
--			atomic_dec(idr_ref);
--			goto err_out;
--		}
--		chan->client_count = 0;
+-			p += rq_size;
+-			i++;
++		if (blk_mq_init_request(set, rq, hctx_idx, node)) {
++			tags->static_rqs[i] = NULL;
++			rc = -ENOMEM;
++			goto fail;
+ 		}
  	}
++
+ 	return 0;
  
--	if (!chancnt) {
-+	if (!device->chancnt) {
- 		dev_err(device->dev, "%s: device has no channels!\n", __func__);
- 		rc = -ENODEV;
- 		goto err_out;
- 	}
- 
--	device->chancnt = chancnt;
--
- 	mutex_lock(&dma_list_mutex);
- 	/* take references on public channels */
- 	if (dmaengine_ref_count && !dma_has_cap(DMA_PRIVATE, device->cap_mask))
-@@ -1080,9 +1138,8 @@ int dma_async_device_register(struct dma_device *device)
- 
- err_out:
- 	/* if we never registered a channel just release the idr */
--	if (atomic_read(idr_ref) == 0) {
-+	if (!device->chancnt) {
- 		ida_free(&dma_ida, device->dev_id);
--		kfree(idr_ref);
- 		return rc;
- 	}
- 
-@@ -1115,16 +1172,8 @@ void dma_async_device_unregister(struct dma_device *device)
- 	dma_channel_rebalance();
- 	mutex_unlock(&dma_list_mutex);
- 
--	list_for_each_entry(chan, &device->channels, device_node) {
--		WARN_ONCE(chan->client_count,
--			  "%s called while %d clients hold a reference\n",
--			  __func__, chan->client_count);
--		mutex_lock(&dma_list_mutex);
--		chan->dev->chan = NULL;
--		mutex_unlock(&dma_list_mutex);
--		device_unregister(&chan->dev->device);
--		free_percpu(chan->local);
--	}
-+	list_for_each_entry(chan, &device->channels, device_node)
-+		__dma_async_device_channel_unregister(device, chan);
+ fail:
+ 	blk_mq_free_rqs(set, tags, hctx_idx);
+-	return -ENOMEM;
++	return rc;
  }
- EXPORT_SYMBOL(dma_async_device_unregister);
  
-diff --git a/include/linux/dmaengine.h b/include/linux/dmaengine.h
-index 8fcdee1c0cf9..0202d44a17a5 100644
---- a/include/linux/dmaengine.h
-+++ b/include/linux/dmaengine.h
-@@ -1399,6 +1399,10 @@ static inline int dmaengine_desc_free(struct dma_async_tx_descriptor *desc)
- int dma_async_device_register(struct dma_device *device);
- int dmaenginem_async_device_register(struct dma_device *device);
- void dma_async_device_unregister(struct dma_device *device);
-+int dma_async_device_channel_register(struct dma_device *device,
-+				      struct dma_chan *chan);
-+void dma_async_device_channel_unregister(struct dma_device *device,
-+					 struct dma_chan *chan);
- void dma_run_dependencies(struct dma_async_tx_descriptor *tx);
- struct dma_chan *dma_get_slave_channel(struct dma_chan *chan);
- struct dma_chan *dma_get_any_slave_channel(struct dma_device *device);
+ /*
+diff --git a/include/linux/mempool.h b/include/linux/mempool.h
+index 0c964ac107c2..5b1f6214c881 100644
+--- a/include/linux/mempool.h
++++ b/include/linux/mempool.h
+@@ -108,4 +108,10 @@ static inline mempool_t *mempool_create_page_pool(int min_nr, int order)
+ 			      (void *)(long)order);
+ }
+ 
++int request_from_pages_alloc(void *ctx, unsigned int depth, size_t rq_size,
++			     struct list_head *page_list, int max_order,
++			     int node,
++			     void (*assign)(void *ctx, void *req, int idx));
++void request_from_pages_free(struct list_head *page_list);
++
+ #endif /* _LINUX_MEMPOOL_H */
+diff --git a/mm/Makefile b/mm/Makefile
+index 1937cc251883..92e7d74ba7a7 100644
+--- a/mm/Makefile
++++ b/mm/Makefile
+@@ -42,7 +42,7 @@ obj-y			:= filemap.o mempool.o oom_kill.o fadvise.o \
+ 			   mm_init.o mmu_context.o percpu.o slab_common.o \
+ 			   compaction.o vmacache.o \
+ 			   interval_tree.o list_lru.o workingset.o \
+-			   debug.o gup.o $(mmu-y)
++			   debug.o gup.o request_alloc.o $(mmu-y)
+ 
+ # Give 'page_alloc' its own module-parameter namespace
+ page-alloc-y := page_alloc.o
+diff --git a/mm/request_alloc.c b/mm/request_alloc.c
+new file mode 100644
+index 000000000000..01ebea8ccdfc
+--- /dev/null
++++ b/mm/request_alloc.c
+@@ -0,0 +1,95 @@
++// SPDX-License-Identifier: GPL-2.0
++/*
++ * Common function for struct allocation. Moved from blk-mq code
++ *
++ * Copyright (C) 2013-2014 Jens Axboe
++ */
++#include <linux/kernel.h>
++#include <linux/export.h>
++#include <linux/mm_types.h>
++#include <linux/list.h>
++#include <linux/kmemleak.h>
++#include <linux/mm.h>
++
++void request_from_pages_free(struct list_head *page_list)
++{
++	struct page *page, *n;
++
++	list_for_each_entry_safe(page, n, page_list, lru) {
++		list_del_init(&page->lru);
++		/*
++		 * Remove kmemleak object previously allocated in
++		 * blk_mq_alloc_rqs().
++		 */
++		kmemleak_free(page_address(page));
++		__free_pages(page, page->private);
++	}
++}
++EXPORT_SYMBOL_GPL(request_from_pages_free);
++
++static size_t order_to_size(unsigned int order)
++{
++	return (size_t)PAGE_SIZE << order;
++}
++
++int request_from_pages_alloc(void *ctx, unsigned int depth, size_t rq_size,
++			     struct list_head *page_list, int max_order,
++			     int node,
++			     void (*assign)(void *ctx, void *req, int idx))
++{
++	size_t left;
++	unsigned int i, j, entries_per_page;
++
++	left = rq_size * depth;
++
++	for (i = 0; i < depth; ) {
++		int this_order = max_order;
++		struct page *page;
++		int to_do;
++		void *p;
++
++		while (this_order && left < order_to_size(this_order - 1))
++			this_order--;
++
++		do {
++			page = alloc_pages_node(node,
++						GFP_NOIO | __GFP_NOWARN |
++						__GFP_NORETRY | __GFP_ZERO,
++						this_order);
++			if (page)
++				break;
++			if (!this_order--)
++				break;
++			if (order_to_size(this_order) < rq_size)
++				break;
++		} while (1);
++
++		if (!page)
++			goto fail;
++
++		page->private = this_order;
++		list_add_tail(&page->lru, page_list);
++
++		p = page_address(page);
++		/*
++		 * Allow kmemleak to scan these pages as they contain pointers
++		 * to additional allocations like via ops->init_request().
++		 */
++		kmemleak_alloc(p, order_to_size(this_order), 1, GFP_NOIO);
++		entries_per_page = order_to_size(this_order) / rq_size;
++		to_do = min(entries_per_page, depth - i);
++		left -= to_do * rq_size;
++		for (j = 0; j < to_do; j++) {
++			assign((void *)ctx, p, i);
++			p += rq_size;
++			i++;
++		}
++	}
++
++	return i;
++
++fail:
++	request_from_pages_free(page_list);
++	return -ENOMEM;
++}
++EXPORT_SYMBOL_GPL(request_from_pages_alloc);
 
