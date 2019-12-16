@@ -6,26 +6,26 @@ X-Spam-Status: No, score=-9.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
 	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6EE7BC43603
-	for <dmaengine@archiver.kernel.org>; Mon, 16 Dec 2019 10:53:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4AAFFC43603
+	for <dmaengine@archiver.kernel.org>; Mon, 16 Dec 2019 10:54:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 3EB9420684
-	for <dmaengine@archiver.kernel.org>; Mon, 16 Dec 2019 10:53:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1671920684
+	for <dmaengine@archiver.kernel.org>; Mon, 16 Dec 2019 10:54:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727482AbfLPKx7 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 16 Dec 2019 05:53:59 -0500
-Received: from metis.ext.pengutronix.de ([85.220.165.71]:40647 "EHLO
+        id S1727422AbfLPKyG (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 16 Dec 2019 05:54:06 -0500
+Received: from metis.ext.pengutronix.de ([85.220.165.71]:43691 "EHLO
         metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727403AbfLPKx6 (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Mon, 16 Dec 2019 05:53:58 -0500
+        with ESMTP id S1727403AbfLPKyG (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Mon, 16 Dec 2019 05:54:06 -0500
 Received: from dude.hi.pengutronix.de ([2001:67c:670:100:1d::7])
         by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
         (Exim 4.92)
         (envelope-from <sha@pengutronix.de>)
-        id 1igo0L-0001dX-9V; Mon, 16 Dec 2019 11:53:33 +0100
+        id 1igo0L-0001dd-9S; Mon, 16 Dec 2019 11:53:33 +0100
 Received: from sha by dude.hi.pengutronix.de with local (Exim 4.92)
         (envelope-from <sha@pengutronix.de>)
-        id 1igo0I-0005t4-Am; Mon, 16 Dec 2019 11:53:30 +0100
+        id 1igo0I-0005tN-Ew; Mon, 16 Dec 2019 11:53:30 +0100
 From:   Sascha Hauer <s.hauer@pengutronix.de>
 To:     dmaengine@vger.kernel.org
 Cc:     Vinod Koul <vkoul@kernel.org>,
@@ -42,9 +42,9 @@ Cc:     Vinod Koul <vkoul@kernel.org>,
         NXP Linux Team <linux-imx@nxp.com>,
         Robert Jarzmik <robert.jarzmik@free.fr>,
         Sascha Hauer <s.hauer@pengutronix.de>
-Subject: [PATCH 1/9] dmaengine: bcm2835: do not call vchan_vdesc_fini() with lock held
-Date:   Mon, 16 Dec 2019 11:53:20 +0100
-Message-Id: <20191216105328.15198-2-s.hauer@pengutronix.de>
+Subject: [PATCH 7/9] dmaengine: imx-sdma: rename function
+Date:   Mon, 16 Dec 2019 11:53:26 +0100
+Message-Id: <20191216105328.15198-8-s.hauer@pengutronix.de>
 X-Mailer: git-send-email 2.24.0
 In-Reply-To: <20191216105328.15198-1-s.hauer@pengutronix.de>
 References: <20191216105328.15198-1-s.hauer@pengutronix.de>
@@ -59,31 +59,45 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-vchan_vdesc_fini() can't be called locked. Instead, call
-vchan_terminate_vdesc() which delays the freeing of the descriptor to
-vchan_synchronize().
+Rename sdma_disable_channel_async() after the hook it implements, like
+done for all other functions in the SDMA driver.
 
 Signed-off-by: Sascha Hauer <s.hauer@pengutronix.de>
 ---
- drivers/dma/bcm2835-dma.c | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ drivers/dma/imx-sdma.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/dma/bcm2835-dma.c b/drivers/dma/bcm2835-dma.c
-index e4c593f48575..4768ef26013b 100644
---- a/drivers/dma/bcm2835-dma.c
-+++ b/drivers/dma/bcm2835-dma.c
-@@ -797,10 +797,7 @@ static int bcm2835_dma_terminate_all(struct dma_chan *chan)
+diff --git a/drivers/dma/imx-sdma.c b/drivers/dma/imx-sdma.c
+index c27e206a764c..527f8a81f50b 100644
+--- a/drivers/dma/imx-sdma.c
++++ b/drivers/dma/imx-sdma.c
+@@ -1077,7 +1077,7 @@ static void sdma_channel_terminate_work(struct work_struct *work)
+ 	sdmac->context_loaded = false;
+ }
  
- 	/* stop DMA activity */
- 	if (c->desc) {
--		if (c->desc->vd.tx.flags & DMA_PREP_INTERRUPT)
--			vchan_terminate_vdesc(&c->desc->vd);
--		else
--			vchan_vdesc_fini(&c->desc->vd);
-+		vchan_terminate_vdesc(&c->desc->vd);
- 		c->desc = NULL;
- 		bcm2835_dma_abort(c);
- 	}
+-static int sdma_disable_channel_async(struct dma_chan *chan)
++static int sdma_terminate_all(struct dma_chan *chan)
+ {
+ 	struct sdma_channel *sdmac = to_sdma_chan(chan);
+ 
+@@ -1324,7 +1324,7 @@ static void sdma_free_chan_resources(struct dma_chan *chan)
+ 	struct sdma_channel *sdmac = to_sdma_chan(chan);
+ 	struct sdma_engine *sdma = sdmac->sdma;
+ 
+-	sdma_disable_channel_async(chan);
++	sdma_terminate_all(chan);
+ 
+ 	sdma_channel_synchronize(chan);
+ 
+@@ -2103,7 +2103,7 @@ static int sdma_probe(struct platform_device *pdev)
+ 	sdma->dma_device.device_prep_slave_sg = sdma_prep_slave_sg;
+ 	sdma->dma_device.device_prep_dma_cyclic = sdma_prep_dma_cyclic;
+ 	sdma->dma_device.device_config = sdma_config;
+-	sdma->dma_device.device_terminate_all = sdma_disable_channel_async;
++	sdma->dma_device.device_terminate_all = sdma_terminate_all;
+ 	sdma->dma_device.device_synchronize = sdma_channel_synchronize;
+ 	sdma->dma_device.src_addr_widths = SDMA_DMA_BUSWIDTHS;
+ 	sdma->dma_device.dst_addr_widths = SDMA_DMA_BUSWIDTHS;
 -- 
 2.24.0
 
