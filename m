@@ -2,30 +2,30 @@ Return-Path: <SRS0=aXT2=2G=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 415A0C2D0C0
-	for <dmaengine@archiver.kernel.org>; Mon, 16 Dec 2019 10:53:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5389CC43603
+	for <dmaengine@archiver.kernel.org>; Mon, 16 Dec 2019 10:53:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 176D92082E
-	for <dmaengine@archiver.kernel.org>; Mon, 16 Dec 2019 10:53:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2D5362072D
+	for <dmaengine@archiver.kernel.org>; Mon, 16 Dec 2019 10:53:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727229AbfLPKxf (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 16 Dec 2019 05:53:35 -0500
-Received: from metis.ext.pengutronix.de ([85.220.165.71]:60969 "EHLO
+        id S1727500AbfLPKxm (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 16 Dec 2019 05:53:42 -0500
+Received: from metis.ext.pengutronix.de ([85.220.165.71]:35563 "EHLO
         metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727099AbfLPKxf (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Mon, 16 Dec 2019 05:53:35 -0500
+        with ESMTP id S1727403AbfLPKxm (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Mon, 16 Dec 2019 05:53:42 -0500
 Received: from dude.hi.pengutronix.de ([2001:67c:670:100:1d::7])
         by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
         (Exim 4.92)
         (envelope-from <sha@pengutronix.de>)
-        id 1igo0L-0001dc-9O; Mon, 16 Dec 2019 11:53:33 +0100
+        id 1igo0L-0001dW-9O; Mon, 16 Dec 2019 11:53:33 +0100
 Received: from sha by dude.hi.pengutronix.de with local (Exim 4.92)
         (envelope-from <sha@pengutronix.de>)
-        id 1igo0I-0005tJ-EH; Mon, 16 Dec 2019 11:53:30 +0100
+        id 1igo0I-0005t2-A3; Mon, 16 Dec 2019 11:53:30 +0100
 From:   Sascha Hauer <s.hauer@pengutronix.de>
 To:     dmaengine@vger.kernel.org
 Cc:     Vinod Koul <vkoul@kernel.org>,
@@ -42,12 +42,10 @@ Cc:     Vinod Koul <vkoul@kernel.org>,
         NXP Linux Team <linux-imx@nxp.com>,
         Robert Jarzmik <robert.jarzmik@free.fr>,
         Sascha Hauer <s.hauer@pengutronix.de>
-Subject: [PATCH 6/9] dmaengine: virt-dma: use vchan_vdesc_fini() to free descriptors
-Date:   Mon, 16 Dec 2019 11:53:25 +0100
-Message-Id: <20191216105328.15198-7-s.hauer@pengutronix.de>
+Subject: [PATCH v3 0/9] dmaengine: virt-dma related fixes
+Date:   Mon, 16 Dec 2019 11:53:19 +0100
+Message-Id: <20191216105328.15198-1-s.hauer@pengutronix.de>
 X-Mailer: git-send-email 2.24.0
-In-Reply-To: <20191216105328.15198-1-s.hauer@pengutronix.de>
-References: <20191216105328.15198-1-s.hauer@pengutronix.de>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-SA-Exim-Connect-IP: 2001:67c:670:100:1d::7
@@ -59,37 +57,51 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-vchan_dma_desc_free_list() basically open codes vchan_vdesc_fini() in its
-loop body. Call it directly rather than duplicating the code.
+Several drivers call vchan_dma_desc_free_list() or vchan_vdesc_fini() under
+&vc->lock. This is not allowed and the first two patches fix this up. If you
+are a DMA driver maintainer, the first two patches are the reason you are on
+Cc.
 
-Signed-off-by: Sascha Hauer <s.hauer@pengutronix.de>
----
- drivers/dma/virt-dma.c | 12 ++----------
- 1 file changed, 2 insertions(+), 10 deletions(-)
+The remaining patches are the original purpose of this series:
+The i.MX SDMA driver leaks memory when a currently running descriptor is
+aborted. Calling vchan_terminate_vdesc() on it to fix this revealed that
+the virt-dma support calls the desc_free with the spin_lock held. This
+doesn't work for the SDMA driver because it calls dma_free_coherent in
+its desc_free hook. This series aims to fix that up.
 
-diff --git a/drivers/dma/virt-dma.c b/drivers/dma/virt-dma.c
-index 26e08c7a7465..95dfe431777e 100644
---- a/drivers/dma/virt-dma.c
-+++ b/drivers/dma/virt-dma.c
-@@ -115,16 +115,8 @@ void vchan_dma_desc_free_list(struct virt_dma_chan *vc, struct list_head *head)
- 	struct virt_dma_desc *vd, *_vd;
- 
- 	list_for_each_entry_safe(vd, _vd, head, node) {
--		if (dmaengine_desc_test_reuse(&vd->tx)) {
--			unsigned long flags;
--
--			spin_lock_irqsave(&vc->lock, flags);
--			list_move_tail(&vd->node, &vc->desc_allocated);
--			spin_unlock_irqrestore(&vc->lock, flags);
--		} else {
--			list_del(&vd->node);
--			vc->desc_free(vd);
--		}
-+		list_del(&vd->node);
-+		vchan_vdesc_fini(vd);
- 	}
- }
- EXPORT_SYMBOL_GPL(vchan_dma_desc_free_list);
+Changes since v2:
+- change drivers to not call vchan_dma_desc_free_list() under spin_lock
+- remove debug message from vchan_dma_desc_free_list()
+
+Changes since v1:
+- rebase on v5.5-rc1
+- Swap patches 1 and 2 for bisectablity
+- Rename desc_aborted to desc_terminated
+- Free up terminated descriptors immediately instead of letting them accumulate
+
+Sascha Hauer (9):
+  dmaengine: bcm2835: do not call vchan_vdesc_fini() with lock held
+  dmaengine: virt-dma: Add missing locking
+  dmaengine: virt-dma: remove debug message
+  dmaengine: virt-dma: Do not call desc_free() under a spin_lock
+  dmaengine: virt-dma: Add missing locking around list operations
+  dmaengine: virt-dma: use vchan_vdesc_fini() to free descriptors
+  dmaengine: imx-sdma: rename function
+  dmaengine: imx-sdma: find desc first in sdma_tx_status
+  dmaengine: imx-sdma: Fix memory leak
+
+ drivers/dma/bcm2835-dma.c                     |  5 +--
+ .../dma/dw-axi-dmac/dw-axi-dmac-platform.c    |  8 +---
+ drivers/dma/imx-sdma.c                        | 37 +++++++++++--------
+ drivers/dma/mediatek/mtk-uart-apdma.c         |  3 +-
+ drivers/dma/owl-dma.c                         |  3 +-
+ drivers/dma/s3c24xx-dma.c                     | 22 +++++------
+ drivers/dma/sf-pdma/sf-pdma.c                 |  4 +-
+ drivers/dma/sun4i-dma.c                       |  3 +-
+ drivers/dma/virt-dma.c                        | 10 ++---
+ drivers/dma/virt-dma.h                        | 27 ++++++++------
+ 10 files changed, 63 insertions(+), 59 deletions(-)
+
 -- 
 2.24.0
 
