@@ -6,26 +6,26 @@ X-Spam-Status: No, score=-9.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
 	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 172D8C43603
-	for <dmaengine@archiver.kernel.org>; Mon, 16 Dec 2019 10:54:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 02268C43603
+	for <dmaengine@archiver.kernel.org>; Mon, 16 Dec 2019 10:54:32 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id DAA9A20684
-	for <dmaengine@archiver.kernel.org>; Mon, 16 Dec 2019 10:54:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C934220684
+	for <dmaengine@archiver.kernel.org>; Mon, 16 Dec 2019 10:54:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727569AbfLPKyX (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 16 Dec 2019 05:54:23 -0500
-Received: from metis.ext.pengutronix.de ([85.220.165.71]:48451 "EHLO
+        id S1727571AbfLPKyb (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 16 Dec 2019 05:54:31 -0500
+Received: from metis.ext.pengutronix.de ([85.220.165.71]:58385 "EHLO
         metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727436AbfLPKyX (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Mon, 16 Dec 2019 05:54:23 -0500
+        with ESMTP id S1727570AbfLPKyb (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Mon, 16 Dec 2019 05:54:31 -0500
 Received: from dude.hi.pengutronix.de ([2001:67c:670:100:1d::7])
         by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
         (Exim 4.92)
         (envelope-from <sha@pengutronix.de>)
-        id 1igo0L-0001dZ-9W; Mon, 16 Dec 2019 11:53:33 +0100
+        id 1igo0L-0001db-9e; Mon, 16 Dec 2019 11:53:33 +0100
 Received: from sha by dude.hi.pengutronix.de with local (Exim 4.92)
         (envelope-from <sha@pengutronix.de>)
-        id 1igo0I-0005tA-CD; Mon, 16 Dec 2019 11:53:30 +0100
+        id 1igo0I-0005tG-De; Mon, 16 Dec 2019 11:53:30 +0100
 From:   Sascha Hauer <s.hauer@pengutronix.de>
 To:     dmaengine@vger.kernel.org
 Cc:     Vinod Koul <vkoul@kernel.org>,
@@ -42,9 +42,9 @@ Cc:     Vinod Koul <vkoul@kernel.org>,
         NXP Linux Team <linux-imx@nxp.com>,
         Robert Jarzmik <robert.jarzmik@free.fr>,
         Sascha Hauer <s.hauer@pengutronix.de>
-Subject: [PATCH 3/9] dmaengine: virt-dma: remove debug message
-Date:   Mon, 16 Dec 2019 11:53:22 +0100
-Message-Id: <20191216105328.15198-4-s.hauer@pengutronix.de>
+Subject: [PATCH 5/9] dmaengine: virt-dma: Add missing locking around list operations
+Date:   Mon, 16 Dec 2019 11:53:24 +0100
+Message-Id: <20191216105328.15198-6-s.hauer@pengutronix.de>
 X-Mailer: git-send-email 2.24.0
 In-Reply-To: <20191216105328.15198-1-s.hauer@pengutronix.de>
 References: <20191216105328.15198-1-s.hauer@pengutronix.de>
@@ -59,27 +59,36 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-vchan_dma_desc_free_list() basically open codes vchan_vdesc_fini() in
-the loop body. One difference is an additional debug message. As this
-isn't overly useful remove it.
+All list operations are protected by &vc->lock. As vchan_vdesc_fini()
+is called unlocked add the missing locking around the list operations.
 
 Signed-off-by: Sascha Hauer <s.hauer@pengutronix.de>
 ---
- drivers/dma/virt-dma.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/dma/virt-dma.h | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/dma/virt-dma.c b/drivers/dma/virt-dma.c
-index 660267ca5e42..7ba712888ac7 100644
---- a/drivers/dma/virt-dma.c
-+++ b/drivers/dma/virt-dma.c
-@@ -122,7 +122,6 @@ void vchan_dma_desc_free_list(struct virt_dma_chan *vc, struct list_head *head)
- 			list_move_tail(&vd->node, &vc->desc_allocated);
- 			spin_unlock_irqrestore(&vc->lock, flags);
- 		} else {
--			dev_dbg(vc->chan.device->dev, "txd %p: freeing\n", vd);
- 			list_del(&vd->node);
- 			vc->desc_free(vd);
- 		}
+diff --git a/drivers/dma/virt-dma.h b/drivers/dma/virt-dma.h
+index e213137b6bc1..e9f5250fbe4d 100644
+--- a/drivers/dma/virt-dma.h
++++ b/drivers/dma/virt-dma.h
+@@ -113,10 +113,15 @@ static inline void vchan_vdesc_fini(struct virt_dma_desc *vd)
+ {
+ 	struct virt_dma_chan *vc = to_virt_chan(vd->tx.chan);
+ 
+-	if (dmaengine_desc_test_reuse(&vd->tx))
++	if (dmaengine_desc_test_reuse(&vd->tx)) {
++		unsigned long flags;
++
++		spin_lock_irqsave(&vc->lock, flags);
+ 		list_add(&vd->node, &vc->desc_allocated);
+-	else
++		spin_unlock_irqrestore(&vc->lock, flags);
++	} else {
+ 		vc->desc_free(vd);
++	}
+ }
+ 
+ /**
 -- 
 2.24.0
 
