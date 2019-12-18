@@ -2,115 +2,126 @@ Return-Path: <SRS0=xwZh=2I=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.4 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 68E5BC43603
-	for <dmaengine@archiver.kernel.org>; Wed, 18 Dec 2019 14:23:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 745A0C43603
+	for <dmaengine@archiver.kernel.org>; Wed, 18 Dec 2019 19:09:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 3BB2524650
-	for <dmaengine@archiver.kernel.org>; Wed, 18 Dec 2019 14:23:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 48801218AC
+	for <dmaengine@archiver.kernel.org>; Wed, 18 Dec 2019 19:09:11 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=st.com header.i=@st.com header.b="sO8+RfNM"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="cpQOKq46"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727165AbfLROXx (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 18 Dec 2019 09:23:53 -0500
-Received: from mx08-00178001.pphosted.com ([91.207.212.93]:1049 "EHLO
-        mx07-00178001.pphosted.com" rhost-flags-OK-OK-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1726998AbfLROXx (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Wed, 18 Dec 2019 09:23:53 -0500
-Received: from pps.filterd (m0046660.ppops.net [127.0.0.1])
-        by mx08-00178001.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id xBIEMRju009267;
-        Wed, 18 Dec 2019 15:23:40 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=st.com; h=subject : to : cc :
- references : from : message-id : date : mime-version : in-reply-to :
- content-type : content-transfer-encoding; s=STMicroelectronics;
- bh=CqqtdBSOQzQqY2X0T5pw83xNGBYfoG1Y6eQNNcwZcOs=;
- b=sO8+RfNMnFy+X6hhI9GL6hnltJcNCoANQTxOee2pWtP2t9XSI6aMsUr+18FYUeyt5bCT
- rQYgeOsAnIRPdHlagkpf3ZjL4lsFu79+2jVdeX58pd6nMhoXOiPoO2/vqhtBYM2tu4h6
- 9SHIOLyEQIK64dOpBRuuPSiWQJqvhTqRHVcTrzbGe0Nudli8a01BQTryfnLvlBZn1mLa
- z7J6OK67HdEkDfHkru6qSaztT8KaN3XSWaiLiEQQetNIrhd1eLYG4DqPMO+/Exni8Ggx
- GaE44x0p/Z/M8Svt1rFcfJ/3BxVguwLOLXzWcRGcyk2Rg/AJ3oP0cJ55Rd7rpioRbV5O WQ== 
-Received: from beta.dmz-eu.st.com (beta.dmz-eu.st.com [164.129.1.35])
-        by mx08-00178001.pphosted.com with ESMTP id 2wvnremuku-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 18 Dec 2019 15:23:40 +0100
-Received: from euls16034.sgp.st.com (euls16034.sgp.st.com [10.75.44.20])
-        by beta.dmz-eu.st.com (STMicroelectronics) with ESMTP id 2435D100038;
-        Wed, 18 Dec 2019 15:23:39 +0100 (CET)
-Received: from Webmail-eu.st.com (sfhdag3node2.st.com [10.75.127.8])
-        by euls16034.sgp.st.com (STMicroelectronics) with ESMTP id 0ADDA210D29;
-        Wed, 18 Dec 2019 15:23:39 +0100 (CET)
-Received: from lmecxl0912.lme.st.com (10.75.127.51) by SFHDAG3NODE2.st.com
- (10.75.127.8) with Microsoft SMTP Server (TLS) id 15.0.1347.2; Wed, 18 Dec
- 2019 15:23:38 +0100
-Subject: Re: [PATCH 0/6] Convert STM32 dma to json-schema
-To:     Benjamin Gaignard <benjamin.gaignard@st.com>, <vkoul@kernel.org>,
-        <robh+dt@kernel.org>, <mark.rutland@arm.com>,
-        <mcoquelin.stm32@gmail.com>
-CC:     <dmaengine@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-stm32@st-md-mailman.stormreply.com>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>
-References: <20191217092201.20022-1-benjamin.gaignard@st.com>
-From:   Alexandre Torgue <alexandre.torgue@st.com>
-Message-ID: <925ed27e-25a4-7382-af52-fda1688ac789@st.com>
-Date:   Wed, 18 Dec 2019 15:23:38 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.2.2
-MIME-Version: 1.0
-In-Reply-To: <20191217092201.20022-1-benjamin.gaignard@st.com>
-Content-Type: text/plain; charset="utf-8"; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.75.127.51]
-X-ClientProxiedBy: SFHDAG5NODE2.st.com (10.75.127.14) To SFHDAG3NODE2.st.com
- (10.75.127.8)
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.95,18.0.572
- definitions=2019-12-18_04:2019-12-17,2019-12-18 signatures=0
+        id S1727297AbfLRTJK (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 18 Dec 2019 14:09:10 -0500
+Received: from mail-pf1-f194.google.com ([209.85.210.194]:44934 "EHLO
+        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726698AbfLRTJK (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Wed, 18 Dec 2019 14:09:10 -0500
+Received: by mail-pf1-f194.google.com with SMTP id 195so859723pfw.11
+        for <dmaengine@vger.kernel.org>; Wed, 18 Dec 2019 11:09:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id;
+        bh=j0zBkq0VgJoL6PSpb9mhqIxD+Izq0jA3YTPBw0iDOVI=;
+        b=cpQOKq46F3NoaI609tjoxOTU4bqZ6/gguyChGCfNtNNp+G9VmpWSMl3ctH9P3EEHOt
+         SUDVzO2PqPC+yeJFDiQSXPvK1akjj7zKG55VVCamYt+/1mymm5EY8Bsg/+tyRSnk717B
+         bb/DOkEwp52gHt5Xx8ueGKentiKKJkzpKsnjs4xxo/bZynRzSehP+skC+Y9HYTMxGwDj
+         eqLFU9QXeHAU3MaMuWqvVt7nMCi3+kQYStuaPygHgwsgQD2td4jjVS/zvexgb6ElB1/9
+         Jsf4OukzbhjBfubeQCH038G2vSBZ1odepyBe02+V0UBagJQdzpwoX5iXNUDn2nFFaQIM
+         QfVA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=j0zBkq0VgJoL6PSpb9mhqIxD+Izq0jA3YTPBw0iDOVI=;
+        b=QBLToEhsjHcGd8Y9wZM8bkAxAMy4IXs47BoXeiYB1k29RDBwXUYpkn8FpUIeVFUnvi
+         X3slwtNmSRiW7rnnll1tjhJkEdVyWcW4PhepMsic/dJhfR5kixLMDMnfjKhKfbNdstf7
+         lYPsevSJt7EdLlQRUl2/8Vv3kB5svqfN6IvnTFhc6Rxvax3uSaEJBRLNFnZBaT02gbvO
+         e2wAKneXcdIGgdYLAvU4zDPLXYQe8bDimqMU6nSc5xpinDS3GyF4+Po+PD7+31K4Wi49
+         J0LXDusGcr4BbobFp3YUFibmP9yUC9Adyd8Iz97MKTeGkY0GhnN9dQ9zjXwffKE5nMSl
+         TV1Q==
+X-Gm-Message-State: APjAAAWjCqpQCZTj75keGbsl99Anwf4TIFxmUnLLbNn5Z+t8UlUCChiD
+        q1ceP+qg3wAq3SUzZdHBg0KipQ==
+X-Google-Smtp-Source: APXvYqxHKPx9oJncAqOZSvlZDU+b6hC8CJR05VxvwFjY+yLFMVdyoo1P4k1hS1WOwawqq6M7cbqOFQ==
+X-Received: by 2002:aa7:8299:: with SMTP id s25mr4610914pfm.261.1576696149859;
+        Wed, 18 Dec 2019 11:09:09 -0800 (PST)
+Received: from localhost.localdomain ([2601:1c2:680:1319:692:26ff:feda:3a81])
+        by smtp.gmail.com with ESMTPSA id r6sm4376396pfh.91.2019.12.18.11.09.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 18 Dec 2019 11:09:09 -0800 (PST)
+From:   John Stultz <john.stultz@linaro.org>
+To:     lkml <linux-kernel@vger.kernel.org>
+Cc:     John Stultz <john.stultz@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Dan Williams <dan.j.williams@intel.com>, ryan@edited.us,
+        aserbinski@gmail.com, dmaengine@vger.kernel.org
+Subject: [PATCH] k3dma: Avoid null pointer traversal
+Date:   Wed, 18 Dec 2019 19:09:06 +0000
+Message-Id: <20191218190906.6641-1-john.stultz@linaro.org>
+X-Mailer: git-send-email 2.17.1
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Hi Benjamin,
+In some cases we seem to submit two transactions in a row, which
+causes us to lose track of the first. If we then cancel the
+request, we may still get an interrupt, which traverses a null
+ds_run value.
 
-On 12/17/19 10:21 AM, Benjamin Gaignard wrote:
-> This series convert STM32 dma, mdma and dmamux bindings to json-schema.
-> Yaml bindings use dma-controller and dma-router schemas where nodes names
-> are verified which lead to fix stm32f746, stm32f743 and stm32mp157 device
-> tree files.
-> 
-> Benjamin Gaignard (6):
->    dt-bindings: dma: Convert stm32 DMA bindings to json-schema
->    dt-bindings: dma: Convert stm32 MDMA bindings to json-schema
->    dt-bindings: dma: Convert stm32 DMAMUX bindings to json-schema
->    ARM: dts: stm32: fix dma controller node name on stm32f746
->    ARM: dts: stm32: fix dma controller node name on stm32f743
->    ARM: dts: stm32: fix dma controller node name on stm32mp157c
-> 
->   .../devicetree/bindings/dma/st,stm32-dma.yaml      | 102 ++++++++++++++++++++
->   .../devicetree/bindings/dma/st,stm32-dmamux.yaml   |  52 ++++++++++
->   .../devicetree/bindings/dma/st,stm32-mdma.yaml     | 105 +++++++++++++++++++++
->   .../devicetree/bindings/dma/stm32-dma.txt          |  83 ----------------
->   .../devicetree/bindings/dma/stm32-dmamux.txt       |  84 -----------------
->   .../devicetree/bindings/dma/stm32-mdma.txt         |  94 ------------------
->   arch/arm/boot/dts/stm32f746.dtsi                   |   4 +-
->   arch/arm/boot/dts/stm32h743.dtsi                   |   6 +-
->   arch/arm/boot/dts/stm32mp157c.dtsi                 |   6 +-
->   9 files changed, 267 insertions(+), 269 deletions(-)
->   create mode 100644 Documentation/devicetree/bindings/dma/st,stm32-dma.yaml
->   create mode 100644 Documentation/devicetree/bindings/dma/st,stm32-dmamux.yaml
->   create mode 100644 Documentation/devicetree/bindings/dma/st,stm32-mdma.yaml
->   delete mode 100644 Documentation/devicetree/bindings/dma/stm32-dma.txt
->   delete mode 100644 Documentation/devicetree/bindings/dma/stm32-dmamux.txt
->   delete mode 100644 Documentation/devicetree/bindings/dma/stm32-mdma.txt
-> 
+So try to avoid starting a new transaction if the ds_run value
+is set.
 
-For  DT patches, please rebase your patches on stm32-next. Major updates 
-have been done for STM DT diversity.
+While this patch avoids the null pointer crash, I've had some
+reports of the k3dma driver still getting confused, which
+suggests the ds_run/ds_done value handling still isn't quite
+right. However, I've not run into an issue recently with it
+so I think this patch is worth pushing upstream to avoid the
+crash.
 
-Thanks in advance.
+Cc: Vinod Koul <vkoul@kernel.org>
+Cc: Dan Williams <dan.j.williams@intel.com>
+Cc: ryan@edited.us
+Cc: aserbinski@gmail.com
+Cc: dmaengine@vger.kernel.org
+Signed-off-by: John Stultz <john.stultz@linaro.org>
+---
+ drivers/dma/k3dma.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
-Alex
+diff --git a/drivers/dma/k3dma.c b/drivers/dma/k3dma.c
+index adecea51814f..c5c1aa0dcaed 100644
+--- a/drivers/dma/k3dma.c
++++ b/drivers/dma/k3dma.c
+@@ -229,9 +229,11 @@ static irqreturn_t k3_dma_int_handler(int irq, void *dev_id)
+ 			c = p->vchan;
+ 			if (c && (tc1 & BIT(i))) {
+ 				spin_lock_irqsave(&c->vc.lock, flags);
+-				vchan_cookie_complete(&p->ds_run->vd);
+-				p->ds_done = p->ds_run;
+-				p->ds_run = NULL;
++				if (p->ds_run != NULL) {
++					vchan_cookie_complete(&p->ds_run->vd);
++					p->ds_done = p->ds_run;
++					p->ds_run = NULL;
++				}
+ 				spin_unlock_irqrestore(&c->vc.lock, flags);
+ 			}
+ 			if (c && (tc2 & BIT(i))) {
+@@ -271,6 +273,10 @@ static int k3_dma_start_txd(struct k3_dma_chan *c)
+ 	if (BIT(c->phy->idx) & k3_dma_get_chan_stat(d))
+ 		return -EAGAIN;
+ 
++	/* Avoid losing track of  ds_run if a transaction is in flight */
++	if (c->phy->ds_run)
++		return -EAGAIN;
++
+ 	if (vd) {
+ 		struct k3_dma_desc_sw *ds =
+ 			container_of(vd, struct k3_dma_desc_sw, vd);
+-- 
+2.17.1
+
