@@ -2,66 +2,125 @@ Return-Path: <SRS0=xwZh=2I=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.1 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B1430C43603
-	for <dmaengine@archiver.kernel.org>; Wed, 18 Dec 2019 00:57:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A9F70C43603
+	for <dmaengine@archiver.kernel.org>; Wed, 18 Dec 2019 06:04:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 80DCA24672
-	for <dmaengine@archiver.kernel.org>; Wed, 18 Dec 2019 00:57:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7C461206B7
+	for <dmaengine@archiver.kernel.org>; Wed, 18 Dec 2019 06:04:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=default; t=1576649090;
+	bh=KwPuZdR5lSwje+uhKXoVIKve1o6Gk5r5nmvl/M3/epw=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:List-ID:From;
+	b=UxfUlr/8M0D8jMSeS8h47e0bn0r0hzBiytGojGXuAJfrVuqbOeMw53rxPaJ7oGTy1
+	 cFNFCodZCcDf0bJGjYFdOo+IBJLIMBJPuhUofFSTPTL48/qiGEvZVb91FlzvY9b+EX
+	 jd61khsALnfjSTrvE+2ngJDWED5C6ToEF/DfFoPQ=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726401AbfLRA5R (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 17 Dec 2019 19:57:17 -0500
-Received: from mx.socionext.com ([202.248.49.38]:11515 "EHLO mx.socionext.com"
+        id S1725955AbfLRGEu (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 18 Dec 2019 01:04:50 -0500
+Received: from mail.kernel.org ([198.145.29.99]:48388 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726143AbfLRA5R (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Tue, 17 Dec 2019 19:57:17 -0500
-Received: from unknown (HELO iyokan-ex.css.socionext.com) ([172.31.9.54])
-  by mx.socionext.com with ESMTP; 18 Dec 2019 09:57:15 +0900
-Received: from mail.mfilter.local (m-filter-2 [10.213.24.62])
-        by iyokan-ex.css.socionext.com (Postfix) with ESMTP id DFF06603AB;
-        Wed, 18 Dec 2019 09:57:15 +0900 (JST)
-Received: from 172.31.9.51 (172.31.9.51) by m-FILTER with ESMTP; Wed, 18 Dec 2019 09:58:00 +0900
-Received: from plum.e01.socionext.com (unknown [10.213.132.32])
-        by kinkan.css.socionext.com (Postfix) with ESMTP id 360311A0006;
-        Wed, 18 Dec 2019 09:57:15 +0900 (JST)
-From:   Kunihiko Hayashi <hayashi.kunihiko@socionext.com>
-To:     Vinod Koul <vkoul@kernel.org>,
-        Dan Williams <dan.j.williams@intel.com>,
-        Masahiro Yamada <yamada.masahiro@socionext.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>
-Cc:     dmaengine@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        Masami Hiramatsu <masami.hiramatsu@linaro.org>,
-        Jassi Brar <jaswinder.singh@linaro.org>,
-        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>
-Subject: [PATCH 0/2] dmaengine: Add UniPhier XDMAC driver
-Date:   Wed, 18 Dec 2019 09:56:58 +0900
-Message-Id: <1576630620-1977-1-git-send-email-hayashi.kunihiko@socionext.com>
-X-Mailer: git-send-email 2.7.4
+        id S1725799AbfLRGEt (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Wed, 18 Dec 2019 01:04:49 -0500
+Received: from localhost (unknown [27.59.34.83])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id C964F2053B;
+        Wed, 18 Dec 2019 06:04:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1576649088;
+        bh=KwPuZdR5lSwje+uhKXoVIKve1o6Gk5r5nmvl/M3/epw=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=pXJ1+uJZuO0XEHpCJzw3AQzS4Rs73Qj7rxAOEamLyGimaDZMncGbiWAayRsRlenV1
+         w9i5x9W+6uHFtAtvAenxYSOr5+czXfp/IeJB40mwltaWuNkPoM+Eow5gaMKvdDkFgi
+         mq0lNCxtdL4ERtTibmjQV+kf1VjEdVX1mscciTw0=
+Date:   Wed, 18 Dec 2019 11:34:37 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Radhey Shyam Pandey <radheys@xilinx.com>
+Cc:     "dan.j.williams@intel.com" <dan.j.williams@intel.com>,
+        Michal Simek <michals@xilinx.com>,
+        "nick.graumann@gmail.com" <nick.graumann@gmail.com>,
+        "andrea.merello@gmail.com" <andrea.merello@gmail.com>,
+        Appana Durga Kedareswara Rao <appanad@xilinx.com>,
+        "mcgrof@kernel.org" <mcgrof@kernel.org>,
+        "dmaengine@vger.kernel.org" <dmaengine@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        git <git@xilinx.com>
+Subject: Re: [PATCH] dmaengine: xilinx_dma: Reset DMA channel in
+ dma_terminate_all
+Message-ID: <20191218060437.GQ2536@vkoul-mobl>
+References: <1574664121-13451-1-git-send-email-radhey.shyam.pandey@xilinx.com>
+ <20191210060113.GP82508@vkoul-mobl>
+ <CH2PR02MB70009D78EA8C487BFFA54964C75A0@CH2PR02MB7000.namprd02.prod.outlook.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CH2PR02MB70009D78EA8C487BFFA54964C75A0@CH2PR02MB7000.namprd02.prod.outlook.com>
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Add support for UniPhier external DMA controller (XDMAC), that is implemented
-in Pro4, Pro5, PXs2, LD11, LD20 and PXs3 SoCs.
+On 11-12-19, 14:46, Radhey Shyam Pandey wrote:
+> > -----Original Message-----
+> > From: Vinod Koul <vkoul@kernel.org>
+> > Sent: Tuesday, December 10, 2019 11:31 AM
+> > To: Radhey Shyam Pandey <radheys@xilinx.com>
+> > Cc: dan.j.williams@intel.com; Michal Simek <michals@xilinx.com>;
+> > nick.graumann@gmail.com; andrea.merello@gmail.com; Appana Durga
+> > Kedareswara Rao <appanad@xilinx.com>; mcgrof@kernel.org;
+> > dmaengine@vger.kernel.org; linux-kernel@vger.kernel.org; git
+> > <git@xilinx.com>
+> > Subject: Re: [PATCH] dmaengine: xilinx_dma: Reset DMA channel in
+> > dma_terminate_all
+> > 
+> > On 25-11-19, 12:12, Radhey Shyam Pandey wrote:
+> > > Reset DMA channel after stop to ensure that pending transfers and
+> > > FIFOs in the datapath are flushed or completed. It fixes intermittent
+> > > data verification failure reported by xilinx dma test client.
+> > >
+> > > Signed-off-by: Radhey Shyam Pandey <radhey.shyam.pandey@xilinx.com>
+> > > ---
+> > >  drivers/dma/xilinx/xilinx_dma.c | 17 +++++++++--------
+> > >  1 file changed, 9 insertions(+), 8 deletions(-)
+> > >
+> > > diff --git a/drivers/dma/xilinx/xilinx_dma.c
+> > > b/drivers/dma/xilinx/xilinx_dma.c index a9c5d5c..6f1539c 100644
+> > > --- a/drivers/dma/xilinx/xilinx_dma.c
+> > > +++ b/drivers/dma/xilinx/xilinx_dma.c
+> > > @@ -2404,16 +2404,17 @@ static int xilinx_dma_terminate_all(struct
+> > dma_chan *dchan)
+> > >  	u32 reg;
+> > >  	int err;
+> > >
+> > > -	if (chan->cyclic)
+> > > -		xilinx_dma_chan_reset(chan);
+> > 
+> > So reset is required for non cyclic cases as well now?
+> 
+> Yes. In absence of reset in non-cyclic case, when dmatest client
+> driver is stressed and loaded/unloaded multiple times we see dma 
+> data comparison failures. Possibly IP is prefetching/holding the
+> previous state and reset ensures a clean state on each iteration.
+> > 
+> > > -
+> > > -	err = chan->stop_transfer(chan);
+> > > -	if (err) {
+> > > -		dev_err(chan->dev, "Cannot stop channel %p: %x\n",
+> > > -			chan, dma_ctrl_read(chan,
+> > XILINX_DMA_REG_DMASR));
+> > > -		chan->err = true;
+> > > +	if (!chan->cyclic) {
+> > > +		err = chan->stop_transfer(chan);
+> > 
+> > no stop for cyclic now..?
+> After reset stop is not needed, so for the cyclic mode we only do reset.
 
-Kunihiko Hayashi (2):
-  dt-bindings: dmaengine: Add UniPhier external DMA controller bindings
-  dmaengine: uniphier-xdmac: Add UniPhier external DMA controller driver
-
- .../devicetree/bindings/dma/uniphier-xdmac.txt     |  86 +++
- drivers/dma/Kconfig                                |  11 +
- drivers/dma/Makefile                               |   1 +
- drivers/dma/uniphier-xdmac.c                       | 620 +++++++++++++++++++++
- 4 files changed, 718 insertions(+)
- create mode 100644 Documentation/devicetree/bindings/dma/uniphier-xdmac.txt
- create mode 100644 drivers/dma/uniphier-xdmac.c
+Okay makes sense, can you please add these as comments, down the line
+these will be very useful for you & others to debug!
 
 -- 
-2.7.4
-
+~Vinod
