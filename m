@@ -2,87 +2,154 @@ Return-Path: <SRS0=xwZh=2I=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.6 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_GIT autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 43A3AC43603
-	for <dmaengine@archiver.kernel.org>; Wed, 18 Dec 2019 00:01:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8AC8FC2D0CD
+	for <dmaengine@archiver.kernel.org>; Wed, 18 Dec 2019 00:57:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 1554921775
-	for <dmaengine@archiver.kernel.org>; Wed, 18 Dec 2019 00:01:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1576627309;
-	bh=CGs+GJMvzNfe0g0vmpyJaJ16tVcX2qCR7J4dY06iyB4=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:List-ID:From;
-	b=oylziFMFbDpmOt/we1TJT8kFHYT4rBJSK7YtCsUEZ0cOdM//yvpJzEDYKu64crbra
-	 miO6RUyx7lzHjpWNU3UCgvrGFh0pPETWX3QVSNC4TzqEEt8og9JjGYnCrgK+/s0d85
-	 A2aZ1GZ8EHVkV3rLflRi/oYLSCENCLS958Urh8w4=
+	by mail.kernel.org (Postfix) with ESMTP id 6BF412146E
+	for <dmaengine@archiver.kernel.org>; Wed, 18 Dec 2019 00:57:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726090AbfLRABs (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 17 Dec 2019 19:01:48 -0500
-Received: from mail-oi1-f195.google.com ([209.85.167.195]:33342 "EHLO
-        mail-oi1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725975AbfLRABs (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Tue, 17 Dec 2019 19:01:48 -0500
-Received: by mail-oi1-f195.google.com with SMTP id v140so154576oie.0;
-        Tue, 17 Dec 2019 16:01:47 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=JP0u5snGp+xc8yKUTmrKXjEUcHiiNAHT0AftIoZKcgY=;
-        b=BvdAlb7z5/O4XifyFQN8cWZtnIofdVCJXnsVu5nH/l9+CXSvafkzsnEdYx5cK6nKpy
-         HRMSz11H7haKp+057iNP1PGccvSB6wdDUhKlOsC9wCwV4KBj/YCdqhV9iNg4Ce0/9OAx
-         kEDGVNrEEEkVF79KG/A7wnXN33gYi943aBsVZ5ozd6lczZGDxAXU/tC4bb1MktA51JIh
-         jn0JWQPTQFbSJFpEUnwq+5QrEI1kwEJuZE3Yh11nXyuArobbELiicYc9OSf4kbr0I3CX
-         HzjT31gWMJUDkS1QVg/3yR19zBc+md3iTj2C7cFurmz+rv/6cn3liyamSEAXvO6ndyzu
-         /Opg==
-X-Gm-Message-State: APjAAAURSum7r1IUzfwWhDM5rx6UT4eoImdGit6fork7boqyPH3cQkDg
-        0RjiIXaNL9Q1XDlnW5id8g==
-X-Google-Smtp-Source: APXvYqwuKoimb/fkC26Ulk74P68DdyeLLteEpSMqe8rqs1CwILHTcp7X1D54Jd94iGGt4cUdrtCBCg==
-X-Received: by 2002:aca:bb08:: with SMTP id l8mr3144897oif.47.1576627307437;
-        Tue, 17 Dec 2019 16:01:47 -0800 (PST)
-Received: from localhost (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.gmail.com with ESMTPSA id m11sm169161oie.20.2019.12.17.16.01.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 Dec 2019 16:01:46 -0800 (PST)
-Date:   Tue, 17 Dec 2019 18:01:46 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Benjamin Gaignard <benjamin.gaignard@st.com>
-Cc:     vkoul@kernel.org, robh+dt@kernel.org, mark.rutland@arm.com,
-        mcoquelin.stm32@gmail.com, alexandre.torgue@st.com,
-        dmaengine@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-stm32@st-md-mailman.stormreply.com,
+        id S1726721AbfLRA5T (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 17 Dec 2019 19:57:19 -0500
+Received: from mx.socionext.com ([202.248.49.38]:11520 "EHLO mx.socionext.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726387AbfLRA5S (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Tue, 17 Dec 2019 19:57:18 -0500
+Received: from unknown (HELO iyokan-ex.css.socionext.com) ([172.31.9.54])
+  by mx.socionext.com with ESMTP; 18 Dec 2019 09:57:16 +0900
+Received: from mail.mfilter.local (m-filter-1 [10.213.24.61])
+        by iyokan-ex.css.socionext.com (Postfix) with ESMTP id 0BE35603AB;
+        Wed, 18 Dec 2019 09:57:17 +0900 (JST)
+Received: from 172.31.9.51 (172.31.9.51) by m-FILTER with ESMTP; Wed, 18 Dec 2019 09:57:52 +0900
+Received: from plum.e01.socionext.com (unknown [10.213.132.32])
+        by kinkan.css.socionext.com (Postfix) with ESMTP id 5E43A1A0006;
+        Wed, 18 Dec 2019 09:57:16 +0900 (JST)
+From:   Kunihiko Hayashi <hayashi.kunihiko@socionext.com>
+To:     Vinod Koul <vkoul@kernel.org>,
+        Dan Williams <dan.j.williams@intel.com>,
+        Masahiro Yamada <yamada.masahiro@socionext.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>
+Cc:     dmaengine@vger.kernel.org, devicetree@vger.kernel.org,
         linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        Benjamin Gaignard <benjamin.gaignard@st.com>
-Subject: Re: [PATCH 3/6] dt-bindings: dma: Convert stm32 DMAMUX bindings to
- json-schema
-Message-ID: <20191218000146.GA24153@bogus>
-References: <20191217092201.20022-1-benjamin.gaignard@st.com>
- <20191217092201.20022-4-benjamin.gaignard@st.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20191217092201.20022-4-benjamin.gaignard@st.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+        Masami Hiramatsu <masami.hiramatsu@linaro.org>,
+        Jassi Brar <jaswinder.singh@linaro.org>,
+        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>
+Subject: [PATCH 1/2] dt-bindings: dmaengine: Add UniPhier external DMA controller bindings
+Date:   Wed, 18 Dec 2019 09:56:59 +0900
+Message-Id: <1576630620-1977-2-git-send-email-hayashi.kunihiko@socionext.com>
+X-Mailer: git-send-email 2.7.4
+In-Reply-To: <1576630620-1977-1-git-send-email-hayashi.kunihiko@socionext.com>
+References: <1576630620-1977-1-git-send-email-hayashi.kunihiko@socionext.com>
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On Tue, 17 Dec 2019 10:21:58 +0100, Benjamin Gaignard wrote:
-> Convert the STM32 DMAMUX binding to DT schema format using json-schema
-> 
-> Signed-off-by: Benjamin Gaignard <benjamin.gaignard@st.com>
-> ---
->  .../devicetree/bindings/dma/st,stm32-dmamux.yaml   | 52 ++++++++++++++
->  .../devicetree/bindings/dma/stm32-dmamux.txt       | 84 ----------------------
->  2 files changed, 52 insertions(+), 84 deletions(-)
->  create mode 100644 Documentation/devicetree/bindings/dma/st,stm32-dmamux.yaml
->  delete mode 100644 Documentation/devicetree/bindings/dma/stm32-dmamux.txt
-> 
+Add external DMA controller bindings implemented in Socionext UniPhier
+SoCs.
 
-Applied, thanks.
+Signed-off-by: Kunihiko Hayashi <hayashi.kunihiko@socionext.com>
+---
+ .../devicetree/bindings/dma/uniphier-xdmac.txt     | 86 ++++++++++++++++++++++
+ 1 file changed, 86 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/dma/uniphier-xdmac.txt
 
-Rob
+diff --git a/Documentation/devicetree/bindings/dma/uniphier-xdmac.txt b/Documentation/devicetree/bindings/dma/uniphier-xdmac.txt
+new file mode 100644
+index 00000000..4e3927f
+--- /dev/null
++++ b/Documentation/devicetree/bindings/dma/uniphier-xdmac.txt
+@@ -0,0 +1,86 @@
++Socionext UniPhier external DMA controller bindings
++
++This describes the devicetree bindings for an external DMA engine to perform
++memory-to-memory or peripheral-to-memory data transfer, implemented in
++Socionext UniPhier SoCs.
++
++* DMA controller
++
++Required properties:
++- compatible: Should be "socionext,uniphier-xdmac".
++- reg: Specifies offset and length of the register set for the device.
++- interrupts: An interrupt specifier associated with the DMA controller.
++- #dma-cells: Must be <2>. The first cell represents the channel index.
++	The second cell represents the factor for transfer request.
++	This is mentioned in DMA client section.
++- dma-channels : Number of DMA channels supported. Should be 16.
++
++Example:
++	xdmac: dma-controller@5fc10000 {
++		compatible = "socionext,uniphier-xdmac";
++		reg = <0x5fc10000 0x1000>, <0x5fc20000 0x800>;
++		interrupts = <0 188 4>;
++		#dma-cells = <2>;
++		dma-channels = <16>;
++	};
++
++* DMA client
++
++Required properties:
++- dmas: A list of DMA channel requests.
++- dma-names: Names of the requested channels corresponding to dmas.
++
++DMA clients must use the format described in the dma.txt file, using a two cell
++specifier for each channel.
++
++Each DMA request consists of 3 cells:
++ 1. A phandle pointing to the DMA controller
++ 2. Channel index
++ 3. Transfer request factor number, If no transfer factor, use 0.
++	The number is SoC-specific, and this should be specified with relation
++	to the device to use the DMA controller. The list of the factor number
++	can be found below.
++
++	0x0	none
++	0x8	UART ch0 Rx
++	0x9	UART ch0 Tx
++	0xa	UART ch1 Rx
++	0xb	UART ch1 Tx
++	0xc	UART ch2 Rx
++	0xd	UART ch2 Tx
++	0xe	UART ch3 Rx
++	0xf	UART ch3 Tx
++	0x14	SCSSI ch1 Rx
++	0x15	SCSSI ch1 Tx
++	0x16	SCSSI ch0 Rx
++	0x17	SCSSI ch0 Tx
++	0x18	SCSSI ch2 Rx
++	0x19	SCSSI ch2 Tx
++	0x1a	SCSSI ch3 Rx
++	0x1b	SCSSI ch3 Tx
++	0x21	I2C ch0 Rx
++	0x22	I2C ch0 Tx
++	0x23	I2C ch1 Rx
++	0x24	I2C ch1 Tx
++	0x25	I2C ch2 Rx
++	0x26	I2C ch2 Tx
++	0x27	I2C ch3 Rx
++	0x28	I2C ch3 Tx
++	0x29	I2C ch4 Rx
++	0x2a	I2C ch4 Tx
++	0x2b	I2C ch5 Rx
++	0x2c	I2C ch5 Tx
++	0x2d	I2C ch6 Rx
++	0x2e	I2C ch6 Tx
++
++Example:
++	spi3: spi@54006300 {
++		compatible = "socionext,uniphier-scssi";
++		reg = <0x54006300 0x100>;
++		interrupts = <0 39 4>;
++		clocks = <&peri_clk 14>;
++		resets = <&peri_rst 14>;
++
++		dmas = <&xdmac 0 0x1a>, <&xdmac 1 0x1b>;
++		dma-names = "rx", "tx";
++	};
+-- 
+2.7.4
+
