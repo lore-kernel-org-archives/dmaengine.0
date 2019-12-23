@@ -7,45 +7,45 @@ X-Spam-Status: No, score=-9.9 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
 	autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B89E0C2D0D0
-	for <dmaengine@archiver.kernel.org>; Mon, 23 Dec 2019 11:06:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D2A6CC2D0C0
+	for <dmaengine@archiver.kernel.org>; Mon, 23 Dec 2019 11:06:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 8BD9F20715
-	for <dmaengine@archiver.kernel.org>; Mon, 23 Dec 2019 11:06:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AA1F120709
+	for <dmaengine@archiver.kernel.org>; Mon, 23 Dec 2019 11:06:17 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b="lZaHGjmg"
+	dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b="reCILNYQ"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727180AbfLWLFs (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 23 Dec 2019 06:05:48 -0500
-Received: from lelv0143.ext.ti.com ([198.47.23.248]:54112 "EHLO
-        lelv0143.ext.ti.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726884AbfLWLFs (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Mon, 23 Dec 2019 06:05:48 -0500
-Received: from fllv0034.itg.ti.com ([10.64.40.246])
-        by lelv0143.ext.ti.com (8.15.2/8.15.2) with ESMTP id xBNB5Xeo085735;
-        Mon, 23 Dec 2019 05:05:33 -0600
+        id S1727363AbfLWLGH (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 23 Dec 2019 06:06:07 -0500
+Received: from fllv0015.ext.ti.com ([198.47.19.141]:52768 "EHLO
+        fllv0015.ext.ti.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727354AbfLWLGG (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Mon, 23 Dec 2019 06:06:06 -0500
+Received: from lelv0266.itg.ti.com ([10.180.67.225])
+        by fllv0015.ext.ti.com (8.15.2/8.15.2) with ESMTP id xBNB5vOD067342;
+        Mon, 23 Dec 2019 05:05:57 -0600
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
-        s=ti-com-17Q1; t=1577099133;
-        bh=DXhPXQ57bTixpANNa4EeL9ylMJkN8luzm7W8jy4bdI8=;
+        s=ti-com-17Q1; t=1577099157;
+        bh=r1gS6mo4nypLVCopYeBhWj8jG7dU7VspthOGMAgLfCc=;
         h=From:To:CC:Subject:Date:In-Reply-To:References;
-        b=lZaHGjmgf4Uaupf5cCETugvA45j+4x0GwKeDqOxqFQT4vd08A7WWB4z024xFefzlN
-         QYaABLNKPJfdb8L122BiRA285KDyGrdpFGSqmiPCLABCmr05lkw8x1+GvaEio50Xa+
-         sHmOTNKx1EZ3AKuM7LzNAanAjuGA2PpJCCtLZeuU=
-Received: from DLEE100.ent.ti.com (dlee100.ent.ti.com [157.170.170.30])
-        by fllv0034.itg.ti.com (8.15.2/8.15.2) with ESMTPS id xBNB5XrO107219
+        b=reCILNYQ06w6nhsoWm1LzMu9B8gj/GCwuN1tm6THht27TG84HqLsyP7ae/mdy2r1O
+         oN1QZ4rhvak5Hwd2tHRSx3TbQOPuVqEen+XALH4mX2F2bXCq+zwVuST7JIwIR1YdKq
+         UygbiAcxyJLukkL898z3D1lsK8e2t4lxh8Nel/SE=
+Received: from DFLE104.ent.ti.com (dfle104.ent.ti.com [10.64.6.25])
+        by lelv0266.itg.ti.com (8.15.2/8.15.2) with ESMTPS id xBNB5vku026316
         (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
-        Mon, 23 Dec 2019 05:05:33 -0600
-Received: from DLEE113.ent.ti.com (157.170.170.24) by DLEE100.ent.ti.com
- (157.170.170.30) with Microsoft SMTP Server (version=TLS1_2,
+        Mon, 23 Dec 2019 05:05:57 -0600
+Received: from DFLE105.ent.ti.com (10.64.6.26) by DFLE104.ent.ti.com
+ (10.64.6.25) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1847.3; Mon, 23
- Dec 2019 05:05:31 -0600
-Received: from lelv0327.itg.ti.com (10.180.67.183) by DLEE113.ent.ti.com
- (157.170.170.24) with Microsoft SMTP Server (version=TLS1_2,
+ Dec 2019 05:05:47 -0600
+Received: from lelv0327.itg.ti.com (10.180.67.183) by DFLE105.ent.ti.com
+ (10.64.6.26) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1847.3 via
- Frontend Transport; Mon, 23 Dec 2019 05:05:31 -0600
+ Frontend Transport; Mon, 23 Dec 2019 05:05:47 -0600
 Received: from feketebors.ti.com (ileax41-snat.itg.ti.com [10.172.224.153])
-        by lelv0327.itg.ti.com (8.15.2/8.15.2) with ESMTP id xBNB4eMJ025693;
-        Mon, 23 Dec 2019 05:05:28 -0600
+        by lelv0327.itg.ti.com (8.15.2/8.15.2) with ESMTP id xBNB4eMN025693;
+        Mon, 23 Dec 2019 05:05:43 -0600
 From:   Peter Ujfalusi <peter.ujfalusi@ti.com>
 To:     <vkoul@kernel.org>, <robh+dt@kernel.org>, <nm@ti.com>,
         <ssantosh@kernel.org>
@@ -55,9 +55,9 @@ CC:     <dan.j.williams@intel.com>, <dmaengine@vger.kernel.org>,
         <grygorii.strashko@ti.com>, <lokeshvutla@ti.com>,
         <t-kristo@ti.com>, <tony@atomide.com>, <j-keerthy@ti.com>,
         <vigneshr@ti.com>, <frowand.list@gmail.com>
-Subject: [PATCH v8 12/18] firmware: ti_sci: rm: Add support for tx_tdtype parameter for tx channel
-Date:   Mon, 23 Dec 2019 13:04:52 +0200
-Message-ID: <20191223110458.30766-13-peter.ujfalusi@ti.com>
+Subject: [PATCH v8 16/18] dmaengine: ti: k3-udma: Allow the driver to be built as module
+Date:   Mon, 23 Dec 2019 13:04:56 +0200
+Message-ID: <20191223110458.30766-17-peter.ujfalusi@ti.com>
 X-Mailer: git-send-email 2.24.1
 In-Reply-To: <20191223110458.30766-1-peter.ujfalusi@ti.com>
 References: <20191223110458.30766-1-peter.ujfalusi@ti.com>
@@ -70,86 +70,91 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-The system controller's resource manager have support for configuring the
-TDTYPE of TCHAN_CFG register on j721e.
-With this parameter the teardown completion can be controlled:
-TDTYPE == 0: Return without waiting for peer to complete the teardown
-TDTYPE == 1: Wait for peer to complete the teardown
+The ring accelerator driver can be built as module since all depending
+functions are exported.
 
 Signed-off-by: Peter Ujfalusi <peter.ujfalusi@ti.com>
-Reviewed-by: Tero Kristo <t-kristo@ti.com>
 Tested-by: Keerthy <j-keerthy@ti.com>
 Reviewed-by: Grygorii Strashko <grygorii.strashko@ti.com>
 ---
- drivers/firmware/ti_sci.c              | 1 +
- drivers/firmware/ti_sci.h              | 7 +++++++
- include/linux/soc/ti/ti_sci_protocol.h | 2 ++
- 3 files changed, 10 insertions(+)
+ drivers/dma/ti/Kconfig   |  2 +-
+ drivers/dma/ti/k3-udma.c | 29 +++++++++++++++++++++++++++--
+ 2 files changed, 28 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/firmware/ti_sci.c b/drivers/firmware/ti_sci.c
-index 4126be9e3216..f13e4a96f3b7 100644
---- a/drivers/firmware/ti_sci.c
-+++ b/drivers/firmware/ti_sci.c
-@@ -2412,6 +2412,7 @@ static int ti_sci_cmd_rm_udmap_tx_ch_cfg(const struct ti_sci_handle *handle,
- 	req->fdepth = params->fdepth;
- 	req->tx_sched_priority = params->tx_sched_priority;
- 	req->tx_burst_size = params->tx_burst_size;
-+	req->tx_tdtype = params->tx_tdtype;
+diff --git a/drivers/dma/ti/Kconfig b/drivers/dma/ti/Kconfig
+index f76e06651f80..beb000be7d1b 100644
+--- a/drivers/dma/ti/Kconfig
++++ b/drivers/dma/ti/Kconfig
+@@ -35,7 +35,7 @@ config DMA_OMAP
+ 	  DMA engine is found on OMAP and DRA7xx parts.
  
- 	ret = ti_sci_do_xfer(info, xfer);
- 	if (ret) {
-diff --git a/drivers/firmware/ti_sci.h b/drivers/firmware/ti_sci.h
-index f0d068c03944..255327171dae 100644
---- a/drivers/firmware/ti_sci.h
-+++ b/drivers/firmware/ti_sci.h
-@@ -910,6 +910,7 @@ struct rm_ti_sci_msg_udmap_rx_flow_opt_cfg {
-  *   12 - Valid bit for @ref ti_sci_msg_rm_udmap_tx_ch_cfg::tx_credit_count
-  *   13 - Valid bit for @ref ti_sci_msg_rm_udmap_tx_ch_cfg::fdepth
-  *   14 - Valid bit for @ref ti_sci_msg_rm_udmap_tx_ch_cfg::tx_burst_size
-+ *   15 - Valid bit for @ref ti_sci_msg_rm_udmap_tx_ch_cfg::tx_tdtype
-  *
-  * @nav_id: SoC device ID of Navigator Subsystem where tx channel is located
-  *
-@@ -973,6 +974,11 @@ struct rm_ti_sci_msg_udmap_rx_flow_opt_cfg {
-  *
-  * @tx_burst_size: UDMAP transmit channel burst size configuration to be
-  * programmed into the tx_burst_size field of the TCHAN_TCFG register.
-+ *
-+ * @tx_tdtype: UDMAP transmit channel teardown type configuration to be
-+ * programmed into the tdtype field of the TCHAN_TCFG register:
-+ * 0 - Return immediately
-+ * 1 - Wait for completion message from remote peer
-  */
- struct ti_sci_msg_rm_udmap_tx_ch_cfg_req {
- 	struct ti_sci_msg_hdr hdr;
-@@ -994,6 +1000,7 @@ struct ti_sci_msg_rm_udmap_tx_ch_cfg_req {
- 	u16 fdepth;
- 	u8 tx_sched_priority;
- 	u8 tx_burst_size;
-+	u8 tx_tdtype;
- } __packed;
- 
- /**
-diff --git a/include/linux/soc/ti/ti_sci_protocol.h b/include/linux/soc/ti/ti_sci_protocol.h
-index 9531ec823298..f3aed0b91564 100644
---- a/include/linux/soc/ti/ti_sci_protocol.h
-+++ b/include/linux/soc/ti/ti_sci_protocol.h
-@@ -342,6 +342,7 @@ struct ti_sci_msg_rm_udmap_tx_ch_cfg {
- #define TI_SCI_MSG_VALUE_RM_UDMAP_CH_TX_SUPR_TDPKT_VALID        BIT(11)
- #define TI_SCI_MSG_VALUE_RM_UDMAP_CH_TX_CREDIT_COUNT_VALID      BIT(12)
- #define TI_SCI_MSG_VALUE_RM_UDMAP_CH_TX_FDEPTH_VALID            BIT(13)
-+#define TI_SCI_MSG_VALUE_RM_UDMAP_CH_TX_TDTYPE_VALID            BIT(15)
- 	u16 nav_id;
- 	u16 index;
- 	u8 tx_pause_on_err;
-@@ -359,6 +360,7 @@ struct ti_sci_msg_rm_udmap_tx_ch_cfg {
- 	u16 fdepth;
- 	u8 tx_sched_priority;
- 	u8 tx_burst_size;
-+	u8 tx_tdtype;
+ config TI_K3_UDMA
+-	bool "Texas Instruments UDMA support"
++	tristate "Texas Instruments UDMA support"
+ 	depends on ARCH_K3 || COMPILE_TEST
+ 	depends on TI_SCI_PROTOCOL
+ 	depends on TI_SCI_INTA_IRQCHIP
+diff --git a/drivers/dma/ti/k3-udma.c b/drivers/dma/ti/k3-udma.c
+index c97c5f6f1e29..dbed2205065a 100644
+--- a/drivers/dma/ti/k3-udma.c
++++ b/drivers/dma/ti/k3-udma.c
+@@ -12,6 +12,7 @@
+ #include <linux/init.h>
+ #include <linux/interrupt.h>
+ #include <linux/list.h>
++#include <linux/module.h>
+ #include <linux/platform_device.h>
+ #include <linux/slab.h>
+ #include <linux/spinlock.h>
+@@ -3088,6 +3089,7 @@ static const struct of_device_id udma_of_match[] = {
+ 	},
+ 	{ /* Sentinel */ },
  };
++MODULE_DEVICE_TABLE(of, udma_of_match);
  
- /**
+ static int udma_get_mmrs(struct platform_device *pdev, struct udma_dev *ud)
+ {
+@@ -3426,15 +3428,38 @@ static int udma_probe(struct platform_device *pdev)
+ 	return ret;
+ }
+ 
++static int udma_remove(struct platform_device *pdev)
++{
++	struct udma_dev *ud = platform_get_drvdata(pdev);
++	struct udma_chan *uc;
++
++	list_for_each_entry(uc, &ud->ddev.channels, vc.chan.device_node)
++		tasklet_kill(&uc->vc.task);
++
++	of_dma_controller_free(pdev->dev.of_node);
++	dma_async_device_unregister(&ud->ddev);
++
++	/* Make sure that we did proper cleanup */
++	cancel_work_sync(&ud->purge_work);
++	udma_purge_desc_work(&ud->purge_work);
++
++	return 0;
++}
++
+ static struct platform_driver udma_driver = {
+ 	.driver = {
+ 		.name	= "ti-udma",
+ 		.of_match_table = udma_of_match,
+-		.suppress_bind_attrs = true,
+ 	},
+ 	.probe		= udma_probe,
++	.remove		= udma_remove,
+ };
+-builtin_platform_driver(udma_driver);
++module_platform_driver(udma_driver);
+ 
+ /* Private interfaces to UDMA */
+ #include "k3-udma-private.c"
++
++MODULE_ALIAS("platform:ti-udma");
++MODULE_DESCRIPTION("TI K3 DMA driver for CPPI 5.0 compliant devices");
++MODULE_AUTHOR("Peter Ujfalusi <peter.ujfalusi@ti.com>");
++MODULE_LICENSE("GPL v2");
 -- 
 Peter
 
