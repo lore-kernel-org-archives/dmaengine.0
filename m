@@ -2,97 +2,75 @@ Return-Path: <SRS0=lXVO=2O=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.1 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-1.1 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 63BAFC2D0C3
-	for <dmaengine@archiver.kernel.org>; Tue, 24 Dec 2019 04:37:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EF91CC2D0C3
+	for <dmaengine@archiver.kernel.org>; Tue, 24 Dec 2019 04:50:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 2C3A420718
-	for <dmaengine@archiver.kernel.org>; Tue, 24 Dec 2019 04:37:19 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B6A0120718
+	for <dmaengine@archiver.kernel.org>; Tue, 24 Dec 2019 04:50:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1577162239;
-	bh=MTC8x6597YAibU9FQCS3ExzUhGCIVEAaMacsH86pYiM=;
+	s=default; t=1577163009;
+	bh=UL9b/SbX1WZ6RedDEtgQXJCpnmdECOSxErzvE+HN1eQ=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:List-ID:From;
-	b=rp2WVUGyvo4vEt3qdCErnPoNq3JIQYm0DFj0OFCE2q0eA1IjWlciFzVu7v5D0AaQf
-	 ngLn7ODRYpGCAg+zywq5u6A8D0aYAaBeWt7N3WR20kTV/NooV1jsCa4W5FzxmdU8K/
-	 VFSu8t3t2AZRrF0JQw+3WEPs8+GiebU+W094DCrg=
+	b=tB2fOCbEQCm/Hq/YFLBEDuKtW+Vo9UqsrMjoQUgZ9X+rRVb/Shf7+Cuytc+H2Uipu
+	 TLzjc1HWBwSmgTCfj7NB/LuTjffu3n4ThXyxYx7c6nQozOmvqaIRfR/lFhAFpzrwok
+	 D5DKICGi728Da9XltCKkgejL/glHQ2yxPjyrt6WY=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726861AbfLXEhS (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 23 Dec 2019 23:37:18 -0500
-Received: from mail.kernel.org ([198.145.29.99]:44142 "EHLO mail.kernel.org"
+        id S1726867AbfLXEuJ (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 23 Dec 2019 23:50:09 -0500
+Received: from mail.kernel.org ([198.145.29.99]:52998 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726853AbfLXEhS (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Mon, 23 Dec 2019 23:37:18 -0500
+        id S1726853AbfLXEuJ (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Mon, 23 Dec 2019 23:50:09 -0500
 Received: from localhost (unknown [122.167.68.227])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 4468C206CB;
-        Tue, 24 Dec 2019 04:37:17 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id BDE39206CB;
+        Tue, 24 Dec 2019 04:50:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1577162238;
-        bh=MTC8x6597YAibU9FQCS3ExzUhGCIVEAaMacsH86pYiM=;
+        s=default; t=1577163008;
+        bh=UL9b/SbX1WZ6RedDEtgQXJCpnmdECOSxErzvE+HN1eQ=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=tJljMcQgPMazwkiE30XJib/B4iEsUNt3YxCMH1ktyaETGf4selR9MDcqqVGUilygL
-         Q4xJ5UaKJo1npm3kuwuTi2WSw1YgmJWwYoV+UiAq+zMwsrjbexjmq489g3kMSRVzg0
-         7a7ld1ZJlG98f0G5/Y18AkfBHOjh6jEszOWYBCvQ=
-Date:   Tue, 24 Dec 2019 10:07:13 +0530
+        b=1DahhM3gJcOt286sQXsr1sihpHCDy9BrmnkilCr459a+rW6phc8h+yMCqkrQ6VARu
+         r/4GgRBjblHRn4zZyQ63v2oQwg4DkurXppGe6yGm3XKrPWi/QRXaH83M/HzKrmEcpu
+         brCn4XTUGYl9aVy+ud5wFFaZXAkrX2c4/CokRk/8=
+Date:   Tue, 24 Dec 2019 10:20:04 +0530
 From:   Vinod Koul <vkoul@kernel.org>
 To:     Logan Gunthorpe <logang@deltatee.com>
 Cc:     linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org,
         Dan Williams <dan.j.williams@intel.com>,
         Dave Jiang <dave.jiang@intel.com>, Kit Chow <kchow@gigaio.com>
-Subject: Re: [PATCH 2/5] dmaengine: Call module_put() after
- device_free_chan_resources()
-Message-ID: <20191224043713.GH2536@vkoul-mobl>
+Subject: Re: [PATCH 0/5] Support hot-unbind in IOAT
+Message-ID: <20191224045004.GI2536@vkoul-mobl>
 References: <20191216190120.21374-1-logang@deltatee.com>
- <20191216190120.21374-3-logang@deltatee.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20191216190120.21374-3-logang@deltatee.com>
+In-Reply-To: <20191216190120.21374-1-logang@deltatee.com>
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
 On 16-12-19, 12:01, Logan Gunthorpe wrote:
-> The module reference is taken to ensure the callbacks still exist
-> when they are called. If the channel holds the last reference to the
-> module, the module can disappear before device_free_chan_resources() is
-> called and would cause a call into free'd memory.
+> Hey,
 > 
-> Signed-off-by: Logan Gunthorpe <logang@deltatee.com>
-> ---
->  drivers/dma/dmaengine.c | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
+> This patchset creates some common infrastructure which I will use in the
+> next version of the PLX driver. It adds a reference count to the
+> dma_device struct which is taken and released every time a channel
+> is allocated or freed. A call back is used to allow the driver to
+> free the underlying memory and do any final cleanup.
 > 
-> diff --git a/drivers/dma/dmaengine.c b/drivers/dma/dmaengine.c
-> index 4b604086b1b3..776fdf535a3a 100644
-> --- a/drivers/dma/dmaengine.c
-> +++ b/drivers/dma/dmaengine.c
-> @@ -250,7 +250,6 @@ static void dma_chan_put(struct dma_chan *chan)
->  		return;
->  
->  	chan->client_count--;
-> -	module_put(dma_chan_to_owner(chan));
->  
->  	/* This channel is not in use anymore, free it */
->  	if (!chan->client_count && chan->device->device_free_chan_resources) {
-> @@ -259,6 +258,8 @@ static void dma_chan_put(struct dma_chan *chan)
->  		chan->device->device_free_chan_resources(chan);
->  	}
->  
-> +	module_put(dma_chan_to_owner(chan));
-> +
->  	/* If the channel is used via a DMA request router, free the mapping */
->  	if (chan->router && chan->router->route_free) {
->  		chan->router->route_free(chan->router->dev, chan->route_data);
+> For a use-case, I've adjusted the ioat driver to properly support
+> hot-unbind. The driver was already pretty close as it already had
+> a shutdown state; so it mostly only required freeing the memory
+> correctly and calling ioat_shutdown at the correct time.
 
-I think this should be moved here after route_free() and will take care
-of route cleanup as well
+I didnt find anything else (apart from one change i pointed), so I have
+applied this and will fix the comment. No point in delaying this
 
-Thanks
 -- 
 ~Vinod
