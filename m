@@ -1,83 +1,75 @@
-Return-Path: <SRS0=lXVO=2O=vger.kernel.org=dmaengine-owner@kernel.org>
+Return-Path: <SRS0=G7qD=2P=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.1 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.2 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 26513C2D0CF
-	for <dmaengine@archiver.kernel.org>; Tue, 24 Dec 2019 06:25:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2056CC2D0C3
+	for <dmaengine@archiver.kernel.org>; Wed, 25 Dec 2019 02:25:46 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id D693320730
-	for <dmaengine@archiver.kernel.org>; Tue, 24 Dec 2019 06:25:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1577168754;
-	bh=InoE8ryzjR+FID2QK7KPw32193qUgMsnYRn9+U++QDM=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:List-ID:From;
-	b=EX+lEUdduDgK3O8S+4FFcEU3U88YUT6fsv2QWsk5TNpClHZKekmL8vCmE224WkdIK
-	 /y1R9YJF1y0wZ6RSTcQhANXzOgXIXkwxWiB30HecWuobsEH7I+rzUL0zNAVEwU19gu
-	 kisdrE++f9QLkxoituK09VM1rRsufK01CYS5vNtk=
+	by mail.kernel.org (Postfix) with ESMTP id F2E76206B7
+	for <dmaengine@archiver.kernel.org>; Wed, 25 Dec 2019 02:25:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726020AbfLXGZy (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 24 Dec 2019 01:25:54 -0500
-Received: from mail.kernel.org ([198.145.29.99]:54456 "EHLO mail.kernel.org"
+        id S1726259AbfLYCZp (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 24 Dec 2019 21:25:45 -0500
+Received: from ale.deltatee.com ([207.54.116.67]:60070 "EHLO ale.deltatee.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726009AbfLXGZy (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Tue, 24 Dec 2019 01:25:54 -0500
-Received: from localhost (unknown [122.167.68.227])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id D89F4206CB;
-        Tue, 24 Dec 2019 06:25:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1577168753;
-        bh=InoE8ryzjR+FID2QK7KPw32193qUgMsnYRn9+U++QDM=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=SK2AZDRtPCzRvSUy+gpty5CrqB1jckZ6y+Itx/Um154hA9qntpCsm/3UdO0zc1xGW
-         uFMkO5LygHb3YW5QTabCdz3ZQnE6Lutf0k2K89ZBFtVWo9JsrwUr677S84Y/OtSd8Z
-         OEHOoxhmV4YoQlnUJTpR5CGKQl2hTyKnPVBRPSIw=
-Date:   Tue, 24 Dec 2019 11:55:47 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Sascha Hauer <s.hauer@pengutronix.de>
-Cc:     dmaengine@vger.kernel.org, Peter Ujfalusi <peter.ujfalusi@ti.com>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Green Wan <green.wan@sifive.com>,
-        Kukjin Kim <kgene@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Andreas =?iso-8859-1?Q?F=E4rber?= <afaerber@suse.de>,
-        Sean Wang <sean.wang@mediatek.com>,
-        Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Robert Jarzmik <robert.jarzmik@free.fr>
-Subject: Re: [PATCH v3 0/9] dmaengine: virt-dma related fixes
-Message-ID: <20191224062547.GJ2536@vkoul-mobl>
-References: <20191216105328.15198-1-s.hauer@pengutronix.de>
+        id S1726258AbfLYCZp (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Tue, 24 Dec 2019 21:25:45 -0500
+Received: from s0106602ad0811846.cg.shawcable.net ([68.147.191.165] helo=[192.168.0.12])
+        by ale.deltatee.com with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
+        (Exim 4.92)
+        (envelope-from <logang@deltatee.com>)
+        id 1ijwMn-0002rd-Gt; Tue, 24 Dec 2019 19:25:42 -0700
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org,
+        Dan Williams <dan.j.williams@intel.com>,
+        Dave Jiang <dave.jiang@intel.com>, Kit Chow <kchow@gigaio.com>
+References: <20191216190120.21374-1-logang@deltatee.com>
+ <20191224045004.GI2536@vkoul-mobl>
+From:   Logan Gunthorpe <logang@deltatee.com>
+Message-ID: <aba86729-b9e7-dc7e-0860-05c95439a673@deltatee.com>
+Date:   Tue, 24 Dec 2019 19:25:39 -0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.3.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20191216105328.15198-1-s.hauer@pengutronix.de>
+In-Reply-To: <20191224045004.GI2536@vkoul-mobl>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-SA-Exim-Connect-IP: 68.147.191.165
+X-SA-Exim-Rcpt-To: kchow@gigaio.com, dave.jiang@intel.com, dan.j.williams@intel.com, dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org, vkoul@kernel.org
+X-SA-Exim-Mail-From: logang@deltatee.com
+Subject: Re: [PATCH 0/5] Support hot-unbind in IOAT
+X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
+X-SA-Exim-Scanned: Yes (on ale.deltatee.com)
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On 16-12-19, 11:53, Sascha Hauer wrote:
-> Several drivers call vchan_dma_desc_free_list() or vchan_vdesc_fini() under
-> &vc->lock. This is not allowed and the first two patches fix this up. If you
-> are a DMA driver maintainer, the first two patches are the reason you are on
-> Cc.
+
+
+On 2019-12-23 9:50 p.m., Vinod Koul wrote:
+> On 16-12-19, 12:01, Logan Gunthorpe wrote:
+>> Hey,
+>>
+>> This patchset creates some common infrastructure which I will use in the
+>> next version of the PLX driver. It adds a reference count to the
+>> dma_device struct which is taken and released every time a channel
+>> is allocated or freed. A call back is used to allow the driver to
+>> free the underlying memory and do any final cleanup.
+>>
+>> For a use-case, I've adjusted the ioat driver to properly support
+>> hot-unbind. The driver was already pretty close as it already had
+>> a shutdown state; so it mostly only required freeing the memory
+>> correctly and calling ioat_shutdown at the correct time.
 > 
-> The remaining patches are the original purpose of this series:
-> The i.MX SDMA driver leaks memory when a currently running descriptor is
-> aborted. Calling vchan_terminate_vdesc() on it to fix this revealed that
-> the virt-dma support calls the desc_free with the spin_lock held. This
-> doesn't work for the SDMA driver because it calls dma_free_coherent in
-> its desc_free hook. This series aims to fix that up.
+> I didnt find anything else (apart from one change i pointed), so I have
+> applied this and will fix the comment. No point in delaying this
 
-Applied all, thanks
+Great, thanks!
 
--- 
-~Vinod
+Logan
