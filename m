@@ -1,88 +1,110 @@
-Return-Path: <SRS0=tGf+=2Q=vger.kernel.org=dmaengine-owner@kernel.org>
+Return-Path: <SRS0=/9+a=2R=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.6 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=unavailable autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.2 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 41B4DC2D0DC
-	for <dmaengine@archiver.kernel.org>; Thu, 26 Dec 2019 22:30:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A4906C2D0C3
+	for <dmaengine@archiver.kernel.org>; Fri, 27 Dec 2019 04:16:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 0C1E7206CB
-	for <dmaengine@archiver.kernel.org>; Thu, 26 Dec 2019 22:30:31 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1577399431;
-	bh=P+0KcDQ/Yx8Nuk7b2278RkgOxU2ZsiTj9sOmnw3t0/4=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:List-ID:From;
-	b=iWeB95iwoAH+cGVu+oUz6WqaK5tw5EOH6RhdHs/r8WQy0N8c5HBiEHpfbglIFuKjr
-	 WNfUJle5FCniq8JSV27rB1XwOz1HMp6qJ360abMoR09suVQxJFLGCQseM097sXF6hi
-	 5kA4ggLnEkpuji2gVGkM+4Peeyz1jTBW9gWXgYo0=
+	by mail.kernel.org (Postfix) with ESMTP id 7655B208C4
+	for <dmaengine@archiver.kernel.org>; Fri, 27 Dec 2019 04:16:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726839AbfLZWaa (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Thu, 26 Dec 2019 17:30:30 -0500
-Received: from mail-io1-f67.google.com ([209.85.166.67]:34626 "EHLO
-        mail-io1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726653AbfLZWaa (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Thu, 26 Dec 2019 17:30:30 -0500
-Received: by mail-io1-f67.google.com with SMTP id z193so24320366iof.1;
-        Thu, 26 Dec 2019 14:30:29 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=oXj0egOLEipXvK+Cz50CdkjFGq0EgLBghdmBZ/5exkA=;
-        b=BaM0Kv9PitrssQO4/B6aM9d1d2nm86iTYsvEAFl43U2yJ+W7z2dteG4zllHXMzH+Gy
-         E9gpMYNbg1shBDkfqlqJNLXxt9BtgnjChgh8j/0DMLtX4RRPWvq0JJgWDxM5oC0zP3tj
-         HviaSLP8+HUEJ51IJSjmZJ6oBb2/qsMtYqohZNyL6zk8aYYPQBi3UvDGY8JbN1eiSTCs
-         JTx4LOpb4C7FfBDJkKJx97v8CC975hLm4L07JjEcIOCnO9vUks9t+kO0LL5A9cdgzRwD
-         jU5d1f+mTRbyC4gESq4AcGR4Tz7pmZj4mr96f6dLMUh2pvK8liwuQzcKLrWWx3CKjS6a
-         KC8A==
-X-Gm-Message-State: APjAAAXXmMeAtRHeeX/4OUGZMg6lIqgzwAS7qQTz/1T6grl1CFFnUjOB
-        TM1h5sevwPIFgWc0qZLlXg==
-X-Google-Smtp-Source: APXvYqybilZELhr0wxtYJ1otx4J19UA6rDSIOcsvRrEk+czzp4qNmJFh99eChtoX3LmtuL9hvrlJFg==
-X-Received: by 2002:a5e:8b06:: with SMTP id g6mr31032706iok.61.1577399429555;
-        Thu, 26 Dec 2019 14:30:29 -0800 (PST)
-Received: from localhost ([64.188.179.250])
-        by smtp.gmail.com with ESMTPSA id t88sm12617185ill.51.2019.12.26.14.30.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 26 Dec 2019 14:30:28 -0800 (PST)
-Date:   Thu, 26 Dec 2019 15:30:27 -0700
-From:   Rob Herring <robh@kernel.org>
-To:     =?utf-8?B?5ZGo55Cw5p2wIChaaG91IFlhbmppZSk=?= 
-        <zhouyanjie@wanyeetech.com>
-Cc:     linux-mips@vger.kernel.org, linux-kernel@vger.kernel.org,
-        dmaengine@vger.kernel.org, devicetree@vger.kernel.org,
-        robh+dt@kernel.org, paul.burton@mips.com, paulburton@kernel.org,
-        mark.rutland@arm.com, paul@crapouillou.net, vkoul@kernel.org,
-        Zubair.Kakakhel@imgtec.com, dan.j.williams@intel.com,
-        sernia.zhou@foxmail.com, zhenwenjin@gmail.com, 2374286503@qq.com
-Subject: Re: [PATCH 1/2] dt-bindings: dmaengine: Add X1830 bindings.
-Message-ID: <20191226223027.GA29959@bogus>
-References: <1576591140-125668-1-git-send-email-zhouyanjie@wanyeetech.com>
- <1576591140-125668-3-git-send-email-zhouyanjie@wanyeetech.com>
+        id S1727028AbfL0EQ7 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Thu, 26 Dec 2019 23:16:59 -0500
+Received: from szxga05-in.huawei.com ([45.249.212.191]:8200 "EHLO huawei.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1727021AbfL0EQ6 (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Thu, 26 Dec 2019 23:16:58 -0500
+Received: from DGGEMS410-HUB.china.huawei.com (unknown [172.30.72.58])
+        by Forcepoint Email with ESMTP id DABC8C47F161E11503F3;
+        Fri, 27 Dec 2019 12:16:55 +0800 (CST)
+Received: from [127.0.0.1] (10.63.139.185) by DGGEMS410-HUB.china.huawei.com
+ (10.3.19.210) with Microsoft SMTP Server id 14.3.439.0; Fri, 27 Dec 2019
+ 12:16:46 +0800
+Subject: Re: [PATCH v2] dmaengine: hisilicon: Add Kunpeng DMA engine support
+To:     Vinod Koul <vkoul@kernel.org>
+References: <1575943997-164744-1-git-send-email-wangzhou1@hisilicon.com>
+ <20191211105234.GG2536@vkoul-mobl> <5DF0D666.6060908@hisilicon.com>
+ <20191211165458.GJ2536@vkoul-mobl>
+CC:     Dan Williams <dan.j.williams@intel.com>,
+        <dmaengine@vger.kernel.org>, <linuxarm@huawei.com>,
+        Zhenfa Qiu <qiuzhenfa@hisilicon.com>
+From:   Zhou Wang <wangzhou1@hisilicon.com>
+Message-ID: <5E0585AE.3000405@hisilicon.com>
+Date:   Fri, 27 Dec 2019 12:16:46 +0800
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:38.0) Gecko/20100101
+ Thunderbird/38.5.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <1576591140-125668-3-git-send-email-zhouyanjie@wanyeetech.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <20191211165458.GJ2536@vkoul-mobl>
+Content-Type: text/plain; charset="windows-1252"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.63.139.185]
+X-CFilter-Loop: Reflected
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On Tue, 17 Dec 2019 21:58:59 +0800, =?UTF-8?q?=E5=91=A8=E7=90=B0=E6=9D=B0=20=28Zhou=20Yanjie=29?=          wrote:
-> Add the dmaengine bindings for the X1830 Soc from Ingenic.
+On 2019/12/12 0:54, Vinod Koul wrote:
+> On 11-12-19, 19:43, Zhou Wang wrote:
+>> On 2019/12/11 18:52, Vinod Koul wrote:
+>>> On 10-12-19, 10:13, Zhou Wang wrote:
 > 
-> Signed-off-by: 周琰杰 (Zhou Yanjie) <zhouyanjie@wanyeetech.com>
-> ---
->  .../devicetree/bindings/dma/jz4780-dma.txt         |  6 ++--
->  include/dt-bindings/dma/x1830-dma.h                | 39 ++++++++++++++++++++++
->  2 files changed, 43 insertions(+), 2 deletions(-)
->  create mode 100644 include/dt-bindings/dma/x1830-dma.h
+>>>> +static int hisi_dma_terminate_all(struct dma_chan *c)
+>>>> +{
+>>>> +	struct hisi_dma_chan *chan = to_hisi_dma_chan(c);
+>>>> +	unsigned long flags;
+>>>> +	LIST_HEAD(head);
+>>>> +
+>>>> +	spin_lock_irqsave(&chan->vc.lock, flags);
+>>>> +
+>>>> +	hisi_dma_pause_dma(chan->hdma_dev, chan->qp_num, true);
+>>>> +	if (chan->desc) {
+>>>> +		vchan_terminate_vdesc(&chan->desc->vd);
+>>>> +		chan->desc = NULL;
+>>>> +	}
+>>>> +
+>>>> +	vchan_get_all_descriptors(&chan->vc, &head);
+>>>> +
+>>>> +	spin_unlock_irqrestore(&chan->vc.lock, flags);
+>>>> +
+>>>> +	vchan_dma_desc_free_list(&chan->vc, &head);
+>>>> +	hisi_dma_pause_dma(chan->hdma_dev, chan->qp_num, false);
+>>>
+>>> pause on terminate? Not DISABLE?
+>>
+>> here this function just aborts transfers on specific channel.
+> 
+> yeah and I would expect the channel to go into disable state right!
+> 
+>>>> +static struct pci_driver hisi_dma_pci_driver = {
+>>>> +	.name		= "hisi_dma",
+>>>> +	.id_table	= hisi_dma_pci_tbl,
+>>>> +	.probe		= hisi_dma_probe,
+>>>
+>>> no .remove and kconfig has a tristate option!
+>>
+>> Use devres APIs in probe, so seems nothing should be done in remove :)
+> 
+> who will de-register from dmaengine, you have dangiling chan_tasklet
+> which needs to be killed and you have isr which is still enabled, yeah
+> what could go wrong!
+
+I missed to do tasklet_kill when disabling qps. And also missed to do
+pci_free_irq_vectors, which seems can be done by adding a devres callback
+by devm_add_action_or_reset.
+
+Here we use devres API to register to dmaengine, so no need to de-register
+from it.
+
+Thanks!
+Zhou
+
+> 
+> Please, deregister from dmaengine, kill the vchan tasklet and make sur
+> irq is disabled and tasklets killed
 > 
 
-Reviewed-by: Rob Herring <robh@kernel.org>
