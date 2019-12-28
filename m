@@ -8,53 +8,53 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=unavailable
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5E7A4C2D0C8
-	for <dmaengine@archiver.kernel.org>; Sat, 28 Dec 2019 20:48:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 009E9C2D0C8
+	for <dmaengine@archiver.kernel.org>; Sat, 28 Dec 2019 20:48:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 33FA721775
-	for <dmaengine@archiver.kernel.org>; Sat, 28 Dec 2019 20:48:00 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CB0A4208C4
+	for <dmaengine@archiver.kernel.org>; Sat, 28 Dec 2019 20:48:04 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DhcLEAjg"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jioFFi89"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726982AbfL1Uri (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Sat, 28 Dec 2019 15:47:38 -0500
-Received: from mail-lj1-f194.google.com ([209.85.208.194]:32984 "EHLO
-        mail-lj1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726575AbfL1Urh (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Sat, 28 Dec 2019 15:47:37 -0500
-Received: by mail-lj1-f194.google.com with SMTP id y6so21868187lji.0;
-        Sat, 28 Dec 2019 12:47:35 -0800 (PST)
+        id S1726860AbfL1Urf (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Sat, 28 Dec 2019 15:47:35 -0500
+Received: from mail-lf1-f65.google.com ([209.85.167.65]:33121 "EHLO
+        mail-lf1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726605AbfL1Urf (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Sat, 28 Dec 2019 15:47:35 -0500
+Received: by mail-lf1-f65.google.com with SMTP id n25so22936072lfl.0;
+        Sat, 28 Dec 2019 12:47:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=fLPm8kYY1aMbkcJ/I/yZlSuw3yqow+z5kIYMGPZJf+g=;
-        b=DhcLEAjgQc+e+kejOgHEOasdw3svYPV7Y0HmjnfxXi3lqUPMqunzHIWTkaz5yWpfn8
-         m88ZSmIorpX/QQN40Anbfw+53ES/v8KWYZd4x18I4b38+UEnfx5yL6QvciIrvATeawOG
-         gQlmj6Ep0Z2I/mU6fTY7RELCJWEAIC4KxTimJ8M4lyo5uOeAF9pKs6zp+l08EdJYyp5g
-         Hu/0u37DttgBZY7SsdR3pzp8/a3HeWQBUYBwSUwnk2daPXbBS26aQdMXepu0L1E94C1A
-         FpCtkpKqj43jCoehxyt8tIkBFWEVchkU4ELgI7kFKzsQoE1250WaTNNvGX6D0Zza9X7P
-         Msaw==
+        bh=CDAf62ZTY71vcxUcl3aWo7Qq3pJ8TaeUpJZpeGFMx9A=;
+        b=jioFFi89pBk9zb91Gbs374SGf0pLZAXb2FzjPMMg1+jG1GVqHFNKV+1o3i+80GrzGa
+         2ga1yijBlOP8tWQ65/cQECsC8B2/8LyYupM9mQBbs7jA2at7uZWjly/0S9N5sxacFl9O
+         WuTbR/eQo3QayLtVrLhscPzFJwzumm+w1pfMDSvJwlPRpquu+XvdfjbvFVkDvAO5xQuM
+         Y3QMZF5YJZHXF1KQwXfM+6O8pb4+P5L8EQQT/C0vDCxG/FDR1ensftjU71JHtBjstg4h
+         lIi/5ehTDWcErlKKaR5KdwmrfjLHuim2Maq1F/BFC/uDCtDLyZZ0EYLGHXDCOV1H0bKQ
+         jeBg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=fLPm8kYY1aMbkcJ/I/yZlSuw3yqow+z5kIYMGPZJf+g=;
-        b=cN9X1SLIFCCEqe3FIXeE+oZXGm7sGmQe+stQjpCWUofOpYxLH8KKUargC6CnCG8XQ9
-         iNQ745xPqzJqL5bKFDWwJGb1RehvN5j+hvwTl6//zWiykBqav4liteUVn4/M5BxwxK16
-         L0oVVucpaYQEU8wMFR8zL8W9A65wBpCHipcX92bvQGP1eEhfVgqbKeV4wc1gnSjH578o
-         9cU//v37C26ykBsIFrksO0makLQZQIOt4JvOPT3yIEMWmjJzTfxDAlxMQm7xHnmwgD4w
-         IyJK87pVSKt+xwhxgFJ8JvKA+scnVbKWNdBgjMH3fHb5Pn96p2cNRxU0FG4ilZG0mOcm
-         OI/g==
-X-Gm-Message-State: APjAAAWxW7SL3WNHW4vo6oQ1sG+BaD6JCG6x8re1Hk3tp0dVHPzjG5cH
-        xCJEj2MYrKGYTh4334RdxOk=
-X-Google-Smtp-Source: APXvYqwkrd2qAHBpXHL6S2DsvRKvIdpUjHngYf75N5aAJvkIP0DUqrZ2vWLREPyGCmS39AcXIRHwSQ==
-X-Received: by 2002:a2e:556:: with SMTP id 83mr33163294ljf.127.1577566054744;
-        Sat, 28 Dec 2019 12:47:34 -0800 (PST)
+        bh=CDAf62ZTY71vcxUcl3aWo7Qq3pJ8TaeUpJZpeGFMx9A=;
+        b=Z4hCrE70DDVxbrLrnbNBJfYTbhoirwdVuH9//qSYJUbCgPf5WdkCbZSzM1cBo9WrB9
+         LBWLa3IAsRLJWHwzN95xze7BQcUFgLLVNS3bRS+V1AsCH3gsjlfSwfvLPiOZpqAXfLtQ
+         WNTWMs48bEyQWRRDaIUkkvrtHbyV1cWBHKi4VMpxiBZFFTF3Z9sEH6aY8ztcvq/R24Ti
+         t76XZa+rYAqFlcAqidgwj3md41lz////fY0ED8B+vn1fmsIV+BUoaJ+gsWrGZGuQkFlO
+         xdPys1r1eYCoyd+rTAJ04JAl8zMeR/e56ZR5b4E4qUH4JFCbNKVThXXultZAYyZ9Hrvi
+         WKEw==
+X-Gm-Message-State: APjAAAXKA01f8I8eHMcpt3TlbEMVko3HlwyiQ31dgLuSk2fm4RHUH2bu
+        ha98/e65jH8BIqltVtIOJVw=
+X-Google-Smtp-Source: APXvYqw97z5b/W5LsK7Q5H8ywvRCnqNkQ85dYdx8D61oy9s3zvfu0sEUtmJpS+lVF2rMx4PpyShxgg==
+X-Received: by 2002:ac2:4add:: with SMTP id m29mr32108188lfp.190.1577566053115;
+        Sat, 28 Dec 2019 12:47:33 -0800 (PST)
 Received: from localhost.localdomain (79-139-233-37.dynamic.spd-mgts.ru. [79.139.233.37])
-        by smtp.gmail.com with ESMTPSA id g15sm10571219ljl.10.2019.12.28.12.47.33
+        by smtp.gmail.com with ESMTPSA id g15sm10571219ljl.10.2019.12.28.12.47.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 28 Dec 2019 12:47:34 -0800 (PST)
+        Sat, 28 Dec 2019 12:47:32 -0800 (PST)
 From:   Dmitry Osipenko <digetx@gmail.com>
 To:     Laxman Dewangan <ldewangan@nvidia.com>,
         Vinod Koul <vkoul@kernel.org>,
@@ -63,9 +63,9 @@ To:     Laxman Dewangan <ldewangan@nvidia.com>,
         Jonathan Hunter <jonathanh@nvidia.com>
 Cc:     dmaengine@vger.kernel.org, linux-tegra@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: [PATCH v1 3/7] dmaengine: tegra-apb: Prevent race conditions on channel's freeing
-Date:   Sat, 28 Dec 2019 23:46:36 +0300
-Message-Id: <20191228204640.25163-4-digetx@gmail.com>
+Subject: [PATCH v1 1/7] dmaengine: tegra-apb: Fix use-after-free
+Date:   Sat, 28 Dec 2019 23:46:34 +0300
+Message-Id: <20191228204640.25163-2-digetx@gmail.com>
 X-Mailer: git-send-email 2.24.0
 In-Reply-To: <20191228204640.25163-1-digetx@gmail.com>
 References: <20191228204640.25163-1-digetx@gmail.com>
@@ -76,45 +76,57 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-It's unsafe to check the channel's "busy" state without taking a lock,
-it is also unsafe to assume that tasklet isn't in-fly.
+I was doing some experiments with I2C and noticed that Tegra APB DMA
+driver crashes sometime after I2C DMA transfer termination. The crash
+happens because tegra_dma_terminate_all() bails out immediately if pending
+list is empty, thus it doesn't stop hardware and doesn't release the
+half-completed descriptors which are getting re-used before ISR tasklet
+kicks-in.
 
+ tegra-i2c 7000c400.i2c: DMA transfer timeout
+ elants_i2c 0-0010: elants_i2c_irq: failed to read data: -110
+ ------------[ cut here ]------------
+ WARNING: CPU: 0 PID: 142 at lib/list_debug.c:45 __list_del_entry_valid+0x45/0xac
+ list_del corruption, ddbaac44->next is LIST_POISON1 (00000100)
+ Modules linked in:
+ CPU: 0 PID: 142 Comm: kworker/0:2 Not tainted 5.5.0-rc2-next-20191220-00175-gc3605715758d-dirty #538
+ Hardware name: NVIDIA Tegra SoC (Flattened Device Tree)
+ Workqueue: events_freezable_power_ thermal_zone_device_check
+ [<c010e5c5>] (unwind_backtrace) from [<c010a1c5>] (show_stack+0x11/0x14)
+ [<c010a1c5>] (show_stack) from [<c0973925>] (dump_stack+0x85/0x94)
+ [<c0973925>] (dump_stack) from [<c011f529>] (__warn+0xc1/0xc4)
+ [<c011f529>] (__warn) from [<c011f7e9>] (warn_slowpath_fmt+0x61/0x78)
+ [<c011f7e9>] (warn_slowpath_fmt) from [<c042497d>] (__list_del_entry_valid+0x45/0xac)
+ [<c042497d>] (__list_del_entry_valid) from [<c047a87f>] (tegra_dma_tasklet+0x5b/0x154)
+ [<c047a87f>] (tegra_dma_tasklet) from [<c0124799>] (tasklet_action_common.constprop.0+0x41/0x7c)
+ [<c0124799>] (tasklet_action_common.constprop.0) from [<c01022ab>] (__do_softirq+0xd3/0x2a8)
+ [<c01022ab>] (__do_softirq) from [<c0124683>] (irq_exit+0x7b/0x98)
+ [<c0124683>] (irq_exit) from [<c0168c19>] (__handle_domain_irq+0x45/0x80)
+ [<c0168c19>] (__handle_domain_irq) from [<c043e429>] (gic_handle_irq+0x45/0x7c)
+ [<c043e429>] (gic_handle_irq) from [<c0101aa5>] (__irq_svc+0x65/0x94)
+ Exception stack(0xde2ebb90 to 0xde2ebbd8)
+
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Dmitry Osipenko <digetx@gmail.com>
 ---
- drivers/dma/tegra20-apb-dma.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/dma/tegra20-apb-dma.c | 4 ----
+ 1 file changed, 4 deletions(-)
 
 diff --git a/drivers/dma/tegra20-apb-dma.c b/drivers/dma/tegra20-apb-dma.c
-index 664e9c5df3ba..28aff0b9763e 100644
+index 3a45079d11ec..319f31d27014 100644
 --- a/drivers/dma/tegra20-apb-dma.c
 +++ b/drivers/dma/tegra20-apb-dma.c
-@@ -1294,8 +1294,8 @@ static void tegra_dma_free_chan_resources(struct dma_chan *dc)
- 
- 	dev_dbg(tdc2dev(tdc), "Freeing channel %d\n", tdc->id);
- 
--	if (tdc->busy)
--		tegra_dma_terminate_all(dc);
-+	tegra_dma_terminate_all(dc);
-+	tasklet_kill(&tdc->tasklet);
+@@ -756,10 +756,6 @@ static int tegra_dma_terminate_all(struct dma_chan *dc)
+ 	bool was_busy;
  
  	spin_lock_irqsave(&tdc->lock, flags);
- 	list_splice_init(&tdc->pending_sg_req, &sg_req_list);
-@@ -1543,7 +1543,6 @@ static int tegra_dma_probe(struct platform_device *pdev)
- 		struct tegra_dma_channel *tdc = &tdma->channels[i];
+-	if (list_empty(&tdc->pending_sg_req)) {
+-		spin_unlock_irqrestore(&tdc->lock, flags);
+-		return 0;
+-	}
  
- 		free_irq(tdc->irq, tdc);
--		tasklet_kill(&tdc->tasklet);
- 	}
- 
- 	pm_runtime_disable(&pdev->dev);
-@@ -1563,7 +1562,6 @@ static int tegra_dma_remove(struct platform_device *pdev)
- 	for (i = 0; i < tdma->chip_data->nr_channels; ++i) {
- 		tdc = &tdma->channels[i];
- 		free_irq(tdc->irq, tdc);
--		tasklet_kill(&tdc->tasklet);
- 	}
- 
- 	pm_runtime_disable(&pdev->dev);
+ 	if (!tdc->busy)
+ 		goto skip_dma_stop;
 -- 
 2.24.0
 
