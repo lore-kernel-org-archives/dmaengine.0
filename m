@@ -2,58 +2,59 @@ Return-Path: <SRS0=vc8l=2S=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_GIT autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BC016C2D0D1
-	for <dmaengine@archiver.kernel.org>; Sat, 28 Dec 2019 20:47:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D9DDDC2D0D1
+	for <dmaengine@archiver.kernel.org>; Sat, 28 Dec 2019 20:47:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 831B821775
-	for <dmaengine@archiver.kernel.org>; Sat, 28 Dec 2019 20:47:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B11C421744
+	for <dmaengine@archiver.kernel.org>; Sat, 28 Dec 2019 20:47:38 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="U0pe3eDj"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aQobqtgc"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726741AbfL1Ure (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Sat, 28 Dec 2019 15:47:34 -0500
-Received: from mail-lj1-f195.google.com ([209.85.208.195]:43638 "EHLO
-        mail-lj1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726575AbfL1Ure (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Sat, 28 Dec 2019 15:47:34 -0500
-Received: by mail-lj1-f195.google.com with SMTP id a13so29878246ljm.10;
-        Sat, 28 Dec 2019 12:47:32 -0800 (PST)
+        id S1726923AbfL1Urh (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Sat, 28 Dec 2019 15:47:37 -0500
+Received: from mail-lj1-f193.google.com ([209.85.208.193]:40975 "EHLO
+        mail-lj1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726730AbfL1Urg (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Sat, 28 Dec 2019 15:47:36 -0500
+Received: by mail-lj1-f193.google.com with SMTP id h23so29878263ljc.8;
+        Sat, 28 Dec 2019 12:47:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=7nVaAP4MCfY0nef5qeRA366CqleaDa1AKgRj0nav16Q=;
-        b=U0pe3eDjYWAZosIfyZGkgAA7AIHDqj9CXJQQArB/Iau5M1ZbWYhH5jLASXl+0lBQab
-         2YtOxOm4O163K2S79O9hZvhdzA5qxA7FUqQoC9QKOocbUAowjHh5DPju7Eg8uGFpl+BV
-         8/SUa5DLLn9xgJxLT7U/zXNboMkVrrYqeRubPp51PhPqjtYE7IUzVt9xTF+X8td/pS1D
-         kJUkiiNA9CdiiE/n6/jPAL1pYqfeB7y2SEGyJu6rB5gZEKI7qXpWwQhl5pvVJi+08Cq+
-         E/J6FHovTckDmXg7/EmbC2tzVqyj0vEt8Izdk72zt9XrNY3m09Pypqf5Iceu1llF61Vh
-         JRKw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=iSzNtTGK3mbZvFsWdibdEoWrg4nzIZ5PMxmWTFl+mGA=;
+        b=aQobqtgc9qfZlmPXk8UOStRSUkmmwPp8tOLqOok9CH5lvlEgAIEA6eORSie2AELROd
+         HpZWkaKM8qTqLFx6lN+8Ij4xCBeZp+pR3SP1NaM06AJM5CKr10Aro7t99IJCAA8qH4xO
+         zfovOiDdoosbldJP+MWdO4bC0DpsfhEs0NR6J+Ot+iWbe67zJpmcnp/3tjcNogYxA7lI
+         ZMT8Bq4qH8zhhHLg0PVQNyMAkHlkg3XO+cthBkTKL/nWZOloWzwIxIARoXFuyt90DPQZ
+         B42FfiHiHvfVqCOBtuqcoH6ss2TuBJUJTyG6nAaOmm3IlC4+YQ0VNpuTADLQUXA+VZvK
+         s06w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=7nVaAP4MCfY0nef5qeRA366CqleaDa1AKgRj0nav16Q=;
-        b=JtDB8M3kxj3xdkpNXKGI7bhJSKWD/EnjPoQktbNeG9e3qSxbr0vgrbis012kXy1IER
-         OtdHPuzJ0Jbx3QpHRlCfl+Nfl3vMt6UkIMDVaueNt35KZ30WJmPw19zetYwgmNrQ06yW
-         gMhQXv5KSffAxuktDs7pO5Mbov9/4pl73Vk+/cEksE7VbXSpYI0HhWwG3RynJWscV9ye
-         qaHxY/EItVlHOt/1LQOCBxx3E9VWMvrZ7RxOsbRsLR5h5yRAVQ6YGI/0sc0upVq86z62
-         f9MNKnPypR5wrFSng9CV1WdDSE3wp3dP8qBGXAITqTXfw4uctzzqNovwE8xTdQU4DcTi
-         PqPA==
-X-Gm-Message-State: APjAAAXsEC9HGnLV/NCJvwLDHTPLbyp0MK8eWeZYiJVxiuNJh/bMLVjx
-        pf0x3oStFWoexuCcsTWTSNw=
-X-Google-Smtp-Source: APXvYqzqlrx1bUF1l2zBwl0RbJ8BQfk5EKWKRNzJi/EvRX3v5I5XLmqlNyi954GUTSZBFqUeyJPiVw==
-X-Received: by 2002:a2e:9cc:: with SMTP id 195mr30540288ljj.130.1577566052293;
-        Sat, 28 Dec 2019 12:47:32 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=iSzNtTGK3mbZvFsWdibdEoWrg4nzIZ5PMxmWTFl+mGA=;
+        b=oHKWgS7hdDLpEG3M7O0kch1hqAw/ApYc31eqN6w2jv7GpFSutz7Lq5E6KEkrHhMB/F
+         m1m63JqISHmlx1n80uiPUXgTsus/VGS32sTBsHjrryGOpPZV1IDQuiLrqbwd/6F0Ktke
+         U47WUlu/Ozfb1TVeVR9TexrxzL0NV7bFYIrQ0RXUwxfT4V4QfAZKRrxYMTi+gfs75fP7
+         DuMCY5oNUG0LVECr/htJ1f+Qhhe4ZlkGzioy00zhqa2o3ZLeHBTbqUKU94l+ef5Iso1N
+         Bp8YD915wOpKyxImAm0wPe+ujyD1QAKf6k0HZ/qeM8wZ9ZMOZ4OqXNslFDVm4iH7yZ+r
+         xdTA==
+X-Gm-Message-State: APjAAAWw2elLqVI1ejbk/+dKMtGY9UQb574dNiLj14YxIcLj7bTeMTZB
+        qzlScz3S5jLFcp629nNZSqM=
+X-Google-Smtp-Source: APXvYqwvTuwFfA5xYeX0IUUhu0tlpFP6dPmn2gLahtb441Lto3fi3ieam7nB8EGvQhtKtttZEpQeCw==
+X-Received: by 2002:a2e:8954:: with SMTP id b20mr16119033ljk.27.1577566053945;
+        Sat, 28 Dec 2019 12:47:33 -0800 (PST)
 Received: from localhost.localdomain (79-139-233-37.dynamic.spd-mgts.ru. [79.139.233.37])
-        by smtp.gmail.com with ESMTPSA id g15sm10571219ljl.10.2019.12.28.12.47.31
+        by smtp.gmail.com with ESMTPSA id g15sm10571219ljl.10.2019.12.28.12.47.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 28 Dec 2019 12:47:31 -0800 (PST)
+        Sat, 28 Dec 2019 12:47:33 -0800 (PST)
 From:   Dmitry Osipenko <digetx@gmail.com>
 To:     Laxman Dewangan <ldewangan@nvidia.com>,
         Vinod Koul <vkoul@kernel.org>,
@@ -62,10 +63,12 @@ To:     Laxman Dewangan <ldewangan@nvidia.com>,
         Jonathan Hunter <jonathanh@nvidia.com>
 Cc:     dmaengine@vger.kernel.org, linux-tegra@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: [PATCH v1 0/7] NVIDIA Tegra APB DMA driver fixes and improvements
-Date:   Sat, 28 Dec 2019 23:46:33 +0300
-Message-Id: <20191228204640.25163-1-digetx@gmail.com>
+Subject: [PATCH v1 2/7] dmaengine: tegra-apb: Implement synchronization callback
+Date:   Sat, 28 Dec 2019 23:46:35 +0300
+Message-Id: <20191228204640.25163-3-digetx@gmail.com>
 X-Mailer: git-send-email 2.24.0
+In-Reply-To: <20191228204640.25163-1-digetx@gmail.com>
+References: <20191228204640.25163-1-digetx@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: dmaengine-owner@vger.kernel.org
@@ -73,23 +76,40 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Hello,
+The ISR tasklet could be kept scheduled after DMA transfer termination,
+let's add synchronization callback which blocks until tasklet is finished.
 
-This is series fixes some problems that I spotted recently, secondly the
-driver's code gets a cleanup. Please review and apply, thanks in advance!
+Signed-off-by: Dmitry Osipenko <digetx@gmail.com>
+---
+ drivers/dma/tegra20-apb-dma.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-Dmitry Osipenko (7):
-  dmaengine: tegra-apb: Fix use-after-free
-  dmaengine: tegra-apb: Implement synchronization callback
-  dmaengine: tegra-apb: Prevent race conditions on channel's freeing
-  dmaengine: tegra-apb: Prevent race conditions of tasklet vs free list
-  dmaengine: tegra-apb: Use devm_platform_ioremap_resource
-  dmaengine: tegra-apb: Use devm_request_irq
-  dmaengine: tegra-apb: Fix coding style problems
-
- drivers/dma/tegra20-apb-dma.c | 329 +++++++++++++++++-----------------
- 1 file changed, 164 insertions(+), 165 deletions(-)
-
+diff --git a/drivers/dma/tegra20-apb-dma.c b/drivers/dma/tegra20-apb-dma.c
+index 319f31d27014..664e9c5df3ba 100644
+--- a/drivers/dma/tegra20-apb-dma.c
++++ b/drivers/dma/tegra20-apb-dma.c
+@@ -798,6 +798,13 @@ static int tegra_dma_terminate_all(struct dma_chan *dc)
+ 	return 0;
+ }
+ 
++static void tegra_dma_synchronize(struct dma_chan *dc)
++{
++	struct tegra_dma_channel *tdc = to_tegra_dma_chan(dc);
++
++	tasklet_kill(&tdc->tasklet);
++}
++
+ static unsigned int tegra_dma_sg_bytes_xferred(struct tegra_dma_channel *tdc,
+ 					       struct tegra_dma_sg_req *sg_req)
+ {
+@@ -1506,6 +1513,7 @@ static int tegra_dma_probe(struct platform_device *pdev)
+ 	tdma->dma_dev.residue_granularity = DMA_RESIDUE_GRANULARITY_BURST;
+ 	tdma->dma_dev.device_config = tegra_dma_slave_config;
+ 	tdma->dma_dev.device_terminate_all = tegra_dma_terminate_all;
++	tdma->dma_dev.device_synchronize = tegra_dma_synchronize;
+ 	tdma->dma_dev.device_tx_status = tegra_dma_tx_status;
+ 	tdma->dma_dev.device_issue_pending = tegra_dma_issue_pending;
+ 
 -- 
 2.24.0
 
