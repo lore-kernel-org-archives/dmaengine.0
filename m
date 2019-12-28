@@ -8,53 +8,53 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D9DDDC2D0D1
-	for <dmaengine@archiver.kernel.org>; Sat, 28 Dec 2019 20:47:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 45B7CC2D0C8
+	for <dmaengine@archiver.kernel.org>; Sat, 28 Dec 2019 20:47:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id B11C421744
-	for <dmaengine@archiver.kernel.org>; Sat, 28 Dec 2019 20:47:38 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1A83D21744
+	for <dmaengine@archiver.kernel.org>; Sat, 28 Dec 2019 20:47:40 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aQobqtgc"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BmrmvnwR"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726923AbfL1Urh (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Sat, 28 Dec 2019 15:47:37 -0500
-Received: from mail-lj1-f193.google.com ([209.85.208.193]:40975 "EHLO
-        mail-lj1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726730AbfL1Urg (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Sat, 28 Dec 2019 15:47:36 -0500
-Received: by mail-lj1-f193.google.com with SMTP id h23so29878263ljc.8;
-        Sat, 28 Dec 2019 12:47:34 -0800 (PST)
+        id S1727028AbfL1Urj (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Sat, 28 Dec 2019 15:47:39 -0500
+Received: from mail-lj1-f194.google.com ([209.85.208.194]:43641 "EHLO
+        mail-lj1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726925AbfL1Urj (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Sat, 28 Dec 2019 15:47:39 -0500
+Received: by mail-lj1-f194.google.com with SMTP id a13so29878331ljm.10;
+        Sat, 28 Dec 2019 12:47:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=iSzNtTGK3mbZvFsWdibdEoWrg4nzIZ5PMxmWTFl+mGA=;
-        b=aQobqtgc9qfZlmPXk8UOStRSUkmmwPp8tOLqOok9CH5lvlEgAIEA6eORSie2AELROd
-         HpZWkaKM8qTqLFx6lN+8Ij4xCBeZp+pR3SP1NaM06AJM5CKr10Aro7t99IJCAA8qH4xO
-         zfovOiDdoosbldJP+MWdO4bC0DpsfhEs0NR6J+Ot+iWbe67zJpmcnp/3tjcNogYxA7lI
-         ZMT8Bq4qH8zhhHLg0PVQNyMAkHlkg3XO+cthBkTKL/nWZOloWzwIxIARoXFuyt90DPQZ
-         B42FfiHiHvfVqCOBtuqcoH6ss2TuBJUJTyG6nAaOmm3IlC4+YQ0VNpuTADLQUXA+VZvK
-         s06w==
+        bh=iZ3D39bl0eyByo7/hfV3v45VBZOWa7JfxNIxRNpu/N8=;
+        b=BmrmvnwR3GOPQNeRWzfJ2QlcpbhMh0Qyb61SHXPdhESVag2N3vLPby7fSwv20xW6Dh
+         H3YRT2KM0OU+OBfP34LxWZ96jcJAhYin7pWStBpzg9UJYnDBh0JknVx9S37y6oiZWh0x
+         lQEdllzhB/XHrLF/3B6arW1psrYLUUGBe11QGWZLxUhJiqW10n+FD7dg32r+NNbnvj5/
+         4OVxlb00LOw2qozR52ibezCFPjYDN1xB/NhIoUmgWlDTOLcN9vSX29fZpS7kzgShYRfn
+         7HHtG6Pl9Orn9WvZlQxnhNcEmiC/uQbQ1DuGcknaGStG1N6UXNgKpyvQArjrx5cH3KpJ
+         F+dQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=iSzNtTGK3mbZvFsWdibdEoWrg4nzIZ5PMxmWTFl+mGA=;
-        b=oHKWgS7hdDLpEG3M7O0kch1hqAw/ApYc31eqN6w2jv7GpFSutz7Lq5E6KEkrHhMB/F
-         m1m63JqISHmlx1n80uiPUXgTsus/VGS32sTBsHjrryGOpPZV1IDQuiLrqbwd/6F0Ktke
-         U47WUlu/Ozfb1TVeVR9TexrxzL0NV7bFYIrQ0RXUwxfT4V4QfAZKRrxYMTi+gfs75fP7
-         DuMCY5oNUG0LVECr/htJ1f+Qhhe4ZlkGzioy00zhqa2o3ZLeHBTbqUKU94l+ef5Iso1N
-         Bp8YD915wOpKyxImAm0wPe+ujyD1QAKf6k0HZ/qeM8wZ9ZMOZ4OqXNslFDVm4iH7yZ+r
-         xdTA==
-X-Gm-Message-State: APjAAAWw2elLqVI1ejbk/+dKMtGY9UQb574dNiLj14YxIcLj7bTeMTZB
-        qzlScz3S5jLFcp629nNZSqM=
-X-Google-Smtp-Source: APXvYqwvTuwFfA5xYeX0IUUhu0tlpFP6dPmn2gLahtb441Lto3fi3ieam7nB8EGvQhtKtttZEpQeCw==
-X-Received: by 2002:a2e:8954:: with SMTP id b20mr16119033ljk.27.1577566053945;
-        Sat, 28 Dec 2019 12:47:33 -0800 (PST)
+        bh=iZ3D39bl0eyByo7/hfV3v45VBZOWa7JfxNIxRNpu/N8=;
+        b=n0ndDuQD2MTRWzHrsHu1Rcfrd4mLNu36G6mrmOfVB/tCUaYQQaj+7scD/Oewkpone5
+         thR2f34kpwOjX58d5ZNKUMwb8ieg1YySwArQx765bFA9iJrnuaXV6nzPJcQpmaHFz7xL
+         pSgWIBeZ749vmL03Dz58Etlr6HOyf1EEWYoIxLyLOFXQ1yjqlPXV3GehYlDUoqFnu5JH
+         awmfefz3HgGCjQ4KNyXSWgpUhI4d2+qXJ+GQORRccc+gb2NmSveF+SxrzoMA91LpFJ1h
+         IlWKvxJliQuGSws+CTVs+9FsbWNLM1XihLWXu2hxwiuK1B+8sqbOKo1e6ONp/a1XvXCa
+         LIYA==
+X-Gm-Message-State: APjAAAXi2wr6hw96x2oPW1OFYuvxuyKCI89McG+rfLgE39SzEkrcEkdm
+        iDJm85o6JgUzzPoX3hNJm1k=
+X-Google-Smtp-Source: APXvYqwRFDWMCt+5WITO7u0D8AG40U1iA3Rkjy8bP/LOlJNsScDdPx0qJp4OQspninWhQEtnAITkUg==
+X-Received: by 2002:a2e:8119:: with SMTP id d25mr32134447ljg.76.1577566056359;
+        Sat, 28 Dec 2019 12:47:36 -0800 (PST)
 Received: from localhost.localdomain (79-139-233-37.dynamic.spd-mgts.ru. [79.139.233.37])
-        by smtp.gmail.com with ESMTPSA id g15sm10571219ljl.10.2019.12.28.12.47.33
+        by smtp.gmail.com with ESMTPSA id g15sm10571219ljl.10.2019.12.28.12.47.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 28 Dec 2019 12:47:33 -0800 (PST)
+        Sat, 28 Dec 2019 12:47:35 -0800 (PST)
 From:   Dmitry Osipenko <digetx@gmail.com>
 To:     Laxman Dewangan <ldewangan@nvidia.com>,
         Vinod Koul <vkoul@kernel.org>,
@@ -63,9 +63,9 @@ To:     Laxman Dewangan <ldewangan@nvidia.com>,
         Jonathan Hunter <jonathanh@nvidia.com>
 Cc:     dmaengine@vger.kernel.org, linux-tegra@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: [PATCH v1 2/7] dmaengine: tegra-apb: Implement synchronization callback
-Date:   Sat, 28 Dec 2019 23:46:35 +0300
-Message-Id: <20191228204640.25163-3-digetx@gmail.com>
+Subject: [PATCH v1 5/7] dmaengine: tegra-apb: Use devm_platform_ioremap_resource
+Date:   Sat, 28 Dec 2019 23:46:38 +0300
+Message-Id: <20191228204640.25163-6-digetx@gmail.com>
 X-Mailer: git-send-email 2.24.0
 In-Reply-To: <20191228204640.25163-1-digetx@gmail.com>
 References: <20191228204640.25163-1-digetx@gmail.com>
@@ -76,39 +76,26 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-The ISR tasklet could be kept scheduled after DMA transfer termination,
-let's add synchronization callback which blocks until tasklet is finished.
+Use devm_platform_ioremap_resource to keep code cleaner a tad.
 
 Signed-off-by: Dmitry Osipenko <digetx@gmail.com>
 ---
- drivers/dma/tegra20-apb-dma.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/dma/tegra20-apb-dma.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
 diff --git a/drivers/dma/tegra20-apb-dma.c b/drivers/dma/tegra20-apb-dma.c
-index 319f31d27014..664e9c5df3ba 100644
+index 740b0ceec7ec..d2353f23b201 100644
 --- a/drivers/dma/tegra20-apb-dma.c
 +++ b/drivers/dma/tegra20-apb-dma.c
-@@ -798,6 +798,13 @@ static int tegra_dma_terminate_all(struct dma_chan *dc)
- 	return 0;
- }
+@@ -1405,8 +1405,7 @@ static int tegra_dma_probe(struct platform_device *pdev)
+ 	tdma->chip_data = cdata;
+ 	platform_set_drvdata(pdev, tdma);
  
-+static void tegra_dma_synchronize(struct dma_chan *dc)
-+{
-+	struct tegra_dma_channel *tdc = to_tegra_dma_chan(dc);
-+
-+	tasklet_kill(&tdc->tasklet);
-+}
-+
- static unsigned int tegra_dma_sg_bytes_xferred(struct tegra_dma_channel *tdc,
- 					       struct tegra_dma_sg_req *sg_req)
- {
-@@ -1506,6 +1513,7 @@ static int tegra_dma_probe(struct platform_device *pdev)
- 	tdma->dma_dev.residue_granularity = DMA_RESIDUE_GRANULARITY_BURST;
- 	tdma->dma_dev.device_config = tegra_dma_slave_config;
- 	tdma->dma_dev.device_terminate_all = tegra_dma_terminate_all;
-+	tdma->dma_dev.device_synchronize = tegra_dma_synchronize;
- 	tdma->dma_dev.device_tx_status = tegra_dma_tx_status;
- 	tdma->dma_dev.device_issue_pending = tegra_dma_issue_pending;
+-	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+-	tdma->base_addr = devm_ioremap_resource(&pdev->dev, res);
++	tdma->base_addr = devm_platform_ioremap_resource(pdev, 0);
+ 	if (IS_ERR(tdma->base_addr))
+ 		return PTR_ERR(tdma->base_addr);
  
 -- 
 2.24.0
