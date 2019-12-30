@@ -1,115 +1,111 @@
-Return-Path: <SRS0=qY92=2T=vger.kernel.org=dmaengine-owner@kernel.org>
+Return-Path: <SRS0=/3MZ=2U=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.7 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=unavailable
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.3 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1780DC2D0DA
-	for <dmaengine@archiver.kernel.org>; Sun, 29 Dec 2019 14:57:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 56813C2D0C3
+	for <dmaengine@archiver.kernel.org>; Mon, 30 Dec 2019 03:39:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id E2BA2208E4
-	for <dmaengine@archiver.kernel.org>; Sun, 29 Dec 2019 14:57:35 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MwKNQosH"
+	by mail.kernel.org (Postfix) with ESMTP id 2F2832075D
+	for <dmaengine@archiver.kernel.org>; Mon, 30 Dec 2019 03:39:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726901AbfL2O5c (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Sun, 29 Dec 2019 09:57:32 -0500
-Received: from mail-lf1-f68.google.com ([209.85.167.68]:35406 "EHLO
-        mail-lf1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726410AbfL2O4t (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Sun, 29 Dec 2019 09:56:49 -0500
-Received: by mail-lf1-f68.google.com with SMTP id 15so23756270lfr.2;
-        Sun, 29 Dec 2019 06:56:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=iSzNtTGK3mbZvFsWdibdEoWrg4nzIZ5PMxmWTFl+mGA=;
-        b=MwKNQosH9a8b+Mk8QNMzF8LOvWNFAxJSTi2TjwDnWeUXRQjSYIuEFpt21T2Jl3A8Wo
-         ayjDSJRJHwb45xzBLrk67GQZBMh0dAHmJejTD7q6x3YtUN4z1+qE8VvCpckWW0FnUzLM
-         dWM8FVd0XQ5flXmeJzqU4ZNQqvAV2pYl7mE+lKl+QzHwMSsahC69lt2Y6+RsLp4VT5CG
-         2bd9jH7iO3lI7CByboWpVdYJlpg6/Gp1wDDW/1Iib+rZ5KUeMvPbWWxyVxxCjNy+JEVV
-         eAzPkw2xRpDxrAn3rBv0dMOdQVledqx+9HLGEs0udGZIhQWVXEvetvu1CWHXet2JUpbN
-         MsGA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=iSzNtTGK3mbZvFsWdibdEoWrg4nzIZ5PMxmWTFl+mGA=;
-        b=ogNGhBKWViPf8n16Wsl5k28PU1pqnDNsXN6/cTIVSUPLHNl5IdZX+c/bPBUb5rRoIt
-         Sj8csAA4DfryO7BJtmLRXJ98SwISWVhITFE0pcWfK6sDLTdTmTL9UCHB/8WvBnV+QMS0
-         /+F6Jy0JCPSHSWaYmUyRRv2FAI2PdsG4qH4aEqGS2NvP2W1joRM1zyCe0bNjnHb9OCfE
-         Au2Q/kGIlbsbOH0cCfW7hjqMzl4ehPhd9ymSM1loLOA7pXLVhkKktCvIgKYTaOA9AQfx
-         1HQwvHwA7rA2/4X4d46c/r3f2NmWjSbJ57SKJvVWN7yH3Opm1msvECjbXby1u2NLGiSc
-         PNKA==
-X-Gm-Message-State: APjAAAUp0rk0bM0ji9uITIbqwJnaMLqpApfzCFdsfHtHOc0xK4XP9Xm8
-        1zIt9t17BUAa2APALB7nE4o=
-X-Google-Smtp-Source: APXvYqz30BXETtkX0XrGReewQVqwNpDpi1baurkjEb5pjwHevSIKLqRrMEsSyNOnHaqreFESGJGhmw==
-X-Received: by 2002:a19:3f16:: with SMTP id m22mr33866388lfa.116.1577631406140;
-        Sun, 29 Dec 2019 06:56:46 -0800 (PST)
-Received: from localhost.localdomain (79-139-233-37.dynamic.spd-mgts.ru. [79.139.233.37])
-        by smtp.gmail.com with ESMTPSA id g15sm11563944ljl.10.2019.12.29.06.56.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 29 Dec 2019 06:56:45 -0800 (PST)
-From:   Dmitry Osipenko <digetx@gmail.com>
-To:     Laxman Dewangan <ldewangan@nvidia.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        Dan Williams <dan.j.williams@intel.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>
-Cc:     dmaengine@vger.kernel.org, linux-tegra@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH v2 02/12] dmaengine: tegra-apb: Implement synchronization callback
-Date:   Sun, 29 Dec 2019 17:55:15 +0300
-Message-Id: <20191229145525.533-3-digetx@gmail.com>
-X-Mailer: git-send-email 2.24.0
-In-Reply-To: <20191229145525.533-1-digetx@gmail.com>
-References: <20191229145525.533-1-digetx@gmail.com>
+        id S1727065AbfL3Djj (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Sun, 29 Dec 2019 22:39:39 -0500
+Received: from szxga07-in.huawei.com ([45.249.212.35]:42696 "EHLO huawei.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1727081AbfL3Djj (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Sun, 29 Dec 2019 22:39:39 -0500
+Received: from DGGEMS414-HUB.china.huawei.com (unknown [172.30.72.59])
+        by Forcepoint Email with ESMTP id C73592ED2E51E9DDE1FC;
+        Mon, 30 Dec 2019 11:39:37 +0800 (CST)
+Received: from [127.0.0.1] (10.63.139.185) by DGGEMS414-HUB.china.huawei.com
+ (10.3.19.214) with Microsoft SMTP Server id 14.3.439.0; Mon, 30 Dec 2019
+ 11:39:29 +0800
+Subject: Re: [PATCH v3] dmaengine: hisilicon: Add Kunpeng DMA engine support
+To:     kbuild test robot <lkp@intel.com>
+References: <1577533684-152202-1-git-send-email-wangzhou1@hisilicon.com>
+ <201912290029.kc8oo1h9%lkp@intel.com>
+CC:     <kbuild-all@lists.01.org>, Dan Williams <dan.j.williams@intel.com>,
+        "Vinod Koul" <vkoul@kernel.org>, <dmaengine@vger.kernel.org>,
+        <linuxarm@huawei.com>, Zhenfa Qiu <qiuzhenfa@hisilicon.com>
+From:   Zhou Wang <wangzhou1@hisilicon.com>
+Message-ID: <5E097171.1090608@hisilicon.com>
+Date:   Mon, 30 Dec 2019 11:39:29 +0800
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:38.0) Gecko/20100101
+ Thunderbird/38.5.1
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <201912290029.kc8oo1h9%lkp@intel.com>
+Content-Type: text/plain; charset="windows-1252"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.63.139.185]
+X-CFilter-Loop: Reflected
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-The ISR tasklet could be kept scheduled after DMA transfer termination,
-let's add synchronization callback which blocks until tasklet is finished.
+On 2019/12/29 0:54, kbuild test robot wrote:
+> Hi Zhou,
+> 
+> I love your patch! Yet something to improve:
+> 
+> [auto build test ERROR on slave-dma/next]
+> [also build test ERROR on linus/master v5.5-rc3 next-20191220]
+> [if your patch is applied to the wrong git tree, please drop us a note to help
+> improve the system. BTW, we also suggest to use '--base' option to specify the
+> base tree in git format-patch, please see https://stackoverflow.com/a/37406982]
+> 
+> url:    https://github.com/0day-ci/linux/commits/Zhou-Wang/dmaengine-hisilicon-Add-Kunpeng-DMA-engine-support/20191228-195257
+> base:   https://git.kernel.org/pub/scm/linux/kernel/git/vkoul/slave-dma.git next
+> config: sh-allmodconfig (attached as .config)
+> compiler: sh4-linux-gcc (GCC) 7.5.0
+> reproduce:
+>         wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
+>         chmod +x ~/bin/make.cross
+>         # save the attached .config to linux build tree
+>         GCC_VERSION=7.5.0 make.cross ARCH=sh 
+> 
+> If you fix the issue, kindly add following tag
+> Reported-by: kbuild test robot <lkp@intel.com>
+> 
+> All error/warnings (new ones prefixed by >>):
+> 
+>    drivers//dma/hisi_dma.c: In function 'hisi_dma_free_irq_vectors':
+>>> drivers//dma/hisi_dma.c:132:2: error: implicit declaration of function 'pci_free_irq_vectors'; did you mean 'pci_alloc_irq_vectors'? [-Werror=implicit-function-declaration]
+>      pci_free_irq_vectors(data);
+>      ^~~~~~~~~~~~~~~~~~~~
+>      pci_alloc_irq_vectors
+>    drivers//dma/hisi_dma.c: At top level:
+>>> drivers//dma/hisi_dma.c:593:1: warning: data definition has no type or storage class
+>     module_pci_driver(hisi_dma_pci_driver);
+>     ^~~~~~~~~~~~~~~~~
+>>> drivers//dma/hisi_dma.c:593:1: error: type defaults to 'int' in declaration of 'module_pci_driver' [-Werror=implicit-int]
+>>> drivers//dma/hisi_dma.c:593:1: warning: parameter names (without types) in function declaration
+>    drivers//dma/hisi_dma.c:587:26: warning: 'hisi_dma_pci_driver' defined but not used [-Wunused-variable]
+>     static struct pci_driver hisi_dma_pci_driver = {
+>                              ^~~~~~~~~~~~~~~~~~~
+>    cc1: some warnings being treated as errors
+> 
+> vim +132 drivers//dma/hisi_dma.c
+> 
+>    129	
+>    130	static void hisi_dma_free_irq_vectors(void *data)
+>    131	{
+>  > 132		pci_free_irq_vectors(data);
+>    133	}
+>    134	
+> 
 
-Signed-off-by: Dmitry Osipenko <digetx@gmail.com>
----
- drivers/dma/tegra20-apb-dma.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+Will add PCI_MSI dependency in Kconfig, like: depends on ARM64 || (COMPILE_TEST && PCI_MSI)
 
-diff --git a/drivers/dma/tegra20-apb-dma.c b/drivers/dma/tegra20-apb-dma.c
-index 319f31d27014..664e9c5df3ba 100644
---- a/drivers/dma/tegra20-apb-dma.c
-+++ b/drivers/dma/tegra20-apb-dma.c
-@@ -798,6 +798,13 @@ static int tegra_dma_terminate_all(struct dma_chan *dc)
- 	return 0;
- }
- 
-+static void tegra_dma_synchronize(struct dma_chan *dc)
-+{
-+	struct tegra_dma_channel *tdc = to_tegra_dma_chan(dc);
-+
-+	tasklet_kill(&tdc->tasklet);
-+}
-+
- static unsigned int tegra_dma_sg_bytes_xferred(struct tegra_dma_channel *tdc,
- 					       struct tegra_dma_sg_req *sg_req)
- {
-@@ -1506,6 +1513,7 @@ static int tegra_dma_probe(struct platform_device *pdev)
- 	tdma->dma_dev.residue_granularity = DMA_RESIDUE_GRANULARITY_BURST;
- 	tdma->dma_dev.device_config = tegra_dma_slave_config;
- 	tdma->dma_dev.device_terminate_all = tegra_dma_terminate_all;
-+	tdma->dma_dev.device_synchronize = tegra_dma_synchronize;
- 	tdma->dma_dev.device_tx_status = tegra_dma_tx_status;
- 	tdma->dma_dev.device_issue_pending = tegra_dma_issue_pending;
- 
--- 
-2.24.0
+Thanks,
+Zhou
+
+> ---
+> 0-DAY kernel test infrastructure                 Open Source Technology Center
+> https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org Intel Corporation
+> 
 
