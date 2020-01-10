@@ -2,553 +2,174 @@ Return-Path: <SRS0=tV9m=27=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.0 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
-	UNWANTED_LANGUAGE_BODY,USER_AGENT_GIT autolearn=unavailable
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8FA38C33CA3
-	for <dmaengine@archiver.kernel.org>; Fri, 10 Jan 2020 14:43:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 53FC4C33CA3
+	for <dmaengine@archiver.kernel.org>; Fri, 10 Jan 2020 15:03:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 65ED42072E
-	for <dmaengine@archiver.kernel.org>; Fri, 10 Jan 2020 14:43:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 28F0420721
+	for <dmaengine@archiver.kernel.org>; Fri, 10 Jan 2020 15:03:08 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=microchiptechnology.onmicrosoft.com header.i=@microchiptechnology.onmicrosoft.com header.b="WPUm0YU5"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728141AbgAJOnY (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 10 Jan 2020 09:43:24 -0500
-Received: from olimex.com ([184.105.72.32]:45997 "EHLO olimex.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728107AbgAJOnX (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Fri, 10 Jan 2020 09:43:23 -0500
-Received: from localhost.localdomain ([94.155.250.134])
-        by olimex.com with ESMTPSA (ECDHE-RSA-AES128-GCM-SHA256:TLSv1.2:Kx=ECDH:Au=RSA:Enc=AESGCM(128):Mac=AEAD) (SMTP-AUTH username stefan@olimex.com, mechanism PLAIN)
-        for <dmaengine@vger.kernel.org>; Fri, 10 Jan 2020 06:12:04 -0800
-From:   Stefan Mavrodiev <stefan@olimex.com>
-To:     Dan Williams <dan.j.williams@intel.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        Maxime Ripard <mripard@kernel.org>,
-        Chen-Yu Tsai <wens@csie.org>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        linux-kernel@vger.kernel.org (open list),
-        dmaengine@vger.kernel.org (open list:DMA GENERIC OFFLOAD ENGINE
-        SUBSYSTEM),
-        linux-arm-kernel@lists.infradead.org (moderated list:ARM/Allwinner
-        sunXi SoC support),
-        dri-devel@lists.freedesktop.org (open list:DRM DRIVERS FOR ALLWINNER
-        A10)
-Cc:     linux-sunxi@googlegroups.com, Stefan Mavrodiev <stefan@olimex.com>
-Subject: [PATCH 2/2] drm: sun4i: hdmi: Add support for sun4i HDMI encoder audio
-Date:   Fri, 10 Jan 2020 16:11:40 +0200
-Message-Id: <20200110141140.28527-3-stefan@olimex.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20200110141140.28527-1-stefan@olimex.com>
-References: <20200110141140.28527-1-stefan@olimex.com>
+        id S1728327AbgAJPDB (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 10 Jan 2020 10:03:01 -0500
+Received: from esa3.microchip.iphmx.com ([68.232.153.233]:8141 "EHLO
+        esa3.microchip.iphmx.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728249AbgAJPDA (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Fri, 10 Jan 2020 10:03:00 -0500
+Received-SPF: Pass (esa3.microchip.iphmx.com: domain of
+  Claudiu.Beznea@microchip.com designates 198.175.253.82 as
+  permitted sender) identity=mailfrom;
+  client-ip=198.175.253.82; receiver=esa3.microchip.iphmx.com;
+  envelope-from="Claudiu.Beznea@microchip.com";
+  x-sender="Claudiu.Beznea@microchip.com";
+  x-conformance=spf_only; x-record-type="v=spf1";
+  x-record-text="v=spf1 mx a:ushub1.microchip.com
+  a:smtpout.microchip.com -exists:%{i}.spf.microchip.iphmx.com
+  include:servers.mcsv.net include:mktomail.com
+  include:spf.protection.outlook.com ~all"
+Received-SPF: None (esa3.microchip.iphmx.com: no sender
+  authenticity information available from domain of
+  postmaster@email.microchip.com) identity=helo;
+  client-ip=198.175.253.82; receiver=esa3.microchip.iphmx.com;
+  envelope-from="Claudiu.Beznea@microchip.com";
+  x-sender="postmaster@email.microchip.com";
+  x-conformance=spf_only
+Authentication-Results: esa3.microchip.iphmx.com; spf=Pass smtp.mailfrom=Claudiu.Beznea@microchip.com; spf=None smtp.helo=postmaster@email.microchip.com; dkim=pass (signature verified) header.i=@microchiptechnology.onmicrosoft.com; dmarc=pass (p=none dis=none) d=microchip.com
+IronPort-SDR: q1mZVEN9+9nW+41vxWAi9UpPaolO36Gv6BAftDCUtxI9Vs+WlxZ+r9Mt14bSknsGsG5e9CWlT5
+ GUOEqYpVdaJTX6RGfbeKYdrSIYqx9T6gj+foUKu4P/Ofdq7mPWdys8NrkrX9y42aCZSY4Hg6iX
+ OVtsUuuauqEFqqwrjejtqKe75XqvXJHv8oVd6oZENCHuwIxMoh7J+3R7n/2mcsZ2ozbePmnEl2
+ 3PACBOOhyXFJQ/K3CgpJGMhmbiSZ6HOiWhKRpdjwSnVjCWGSoI+7P1HT/CI67Qv0r1q7ns2WFW
+ hBc=
+X-IronPort-AV: E=Sophos;i="5.69,417,1571727600"; 
+   d="scan'208";a="62881054"
+Received: from smtpout.microchip.com (HELO email.microchip.com) ([198.175.253.82])
+  by esa3.microchip.iphmx.com with ESMTP/TLS/AES256-SHA256; 10 Jan 2020 08:02:57 -0700
+Received: from chn-vm-ex01.mchp-main.com (10.10.85.143) by
+ chn-vm-ex02.mchp-main.com (10.10.85.144) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.1713.5; Fri, 10 Jan 2020 08:02:56 -0700
+Received: from NAM11-CO1-obe.outbound.protection.outlook.com (10.10.215.89) by
+ email.microchip.com (10.10.87.71) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.1713.5 via Frontend
+ Transport; Fri, 10 Jan 2020 08:02:56 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=lswe8IrsffHQnGEOc/m08k4TFkyhASIbI9pLP6ZP2SUMgxlht8kOovEEVcmJ4yWRwdyVeOtRZmkeDv45nlY2bzGxvtZRNEaaYQFUiE3VkrTnjHIllvWdq/Uc74H6JMM92/gHliW4o4yPy/P4BUL4sJZXoxG6qtWIzR4b+7KSENVYEUIMmMBxgYH7ogVCUMk1i/vIcCUXPYAh4Q/p0Glhw4DvkLFQrc0TsR/p8g8NdDDATRD666Yty2aD8r2eByhKgxdigyGuTjy/lRjfYBiOnJhSdX7GbG+xWJqzWdCdqd/brn3PefDRVOlXAxhWUHfHJN64sK+AihX5+rYrShSigQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=ROYUQMPp03uT25P58fK2sBlfAea5ZRoYtOpcKJhSISs=;
+ b=LJAbNACXHrIL1ZOgru/FlYDYtHSbDZlz4TNkRIyjjALHC3sZbaAVjfi7lkUiomU62b7NzM959T6TATPshzX6b5caUnj7jDRQBCrGaY84L/zAwflQsrK3Jdvk95xbNZWXD+gBZ9wIO1hkoQUEfWPJ9fHK4oDvY5XGni0g6DObq/hlsZayX0h+bLSRahhXDBlI5xU+9h65jBIaXNSWPCJ9av1PINBkANLhrG7Eazp2hFGgJosGfTkv7SgTdsjF1OtQF+rW2yTMGFrccLM+gwU1F//G2kJLPjLTnybYWNp8rb1F8wcsb7hQ2ZXzjmpSEEK7NymestctrNnH1es7VjofTA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=microchip.com; dmarc=pass action=none
+ header.from=microchip.com; dkim=pass header.d=microchip.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=microchiptechnology.onmicrosoft.com;
+ s=selector2-microchiptechnology-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=ROYUQMPp03uT25P58fK2sBlfAea5ZRoYtOpcKJhSISs=;
+ b=WPUm0YU5eWGC/DgvWkZMio4tPNbVPq899Z9fw6fILUacE1XLRZNfmq8dc290WXJZ3uDua0/2NFCNfRQzAWiPBAQhh2OHk2aMBbNNMaqSD4xWkR+1MiGnJqUDw15E7r8BzbcDJNO/Y2xs6DHLVPnTwhV68HDEfbG9h2GFuhEHqJ8=
+Received: from DM6PR11MB3225.namprd11.prod.outlook.com (20.176.120.224) by
+ DM6PR11MB4073.namprd11.prod.outlook.com (10.255.61.22) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.2623.9; Fri, 10 Jan 2020 15:02:55 +0000
+Received: from DM6PR11MB3225.namprd11.prod.outlook.com
+ ([fe80::106f:424f:ac54:1dbb]) by DM6PR11MB3225.namprd11.prod.outlook.com
+ ([fe80::106f:424f:ac54:1dbb%7]) with mapi id 15.20.2623.008; Fri, 10 Jan 2020
+ 15:02:55 +0000
+From:   <Claudiu.Beznea@microchip.com>
+To:     <alexandre.belloni@bootlin.com>
+CC:     <robh+dt@kernel.org>, <mark.rutland@arm.com>,
+        <Nicolas.Ferre@microchip.com>, <Ludovic.Desroches@microchip.com>,
+        <vkoul@kernel.org>, <Eugen.Hristev@microchip.com>,
+        <jic23@kernel.org>, <knaack.h@gmx.de>, <lars@metafoo.de>,
+        <pmeerw@pmeerw.net>, <mchehab@kernel.org>, <lee.jones@linaro.org>,
+        <richard.genoud@gmail.com>, <radu_nicolae.pirea@upb.ro>,
+        <Tudor.Ambarus@microchip.com>, <miquel.raynal@bootlin.com>,
+        <richard@nod.at>, <vigneshr@ti.com>, <wg@grandegger.com>,
+        <mkl@pengutronix.de>, <a.zummo@towertech.it>, <broonie@kernel.org>,
+        <devicetree@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>, <dmaengine@vger.kernel.org>,
+        <linux-iio@vger.kernel.org>, <linux-media@vger.kernel.org>,
+        <linux-spi@vger.kernel.org>, <linux-mtd@lists.infradead.org>,
+        <linux-can@vger.kernel.org>, <netdev@vger.kernel.org>,
+        <linux-rtc@vger.kernel.org>
+Subject: Re: [PATCH 11/16] dt-bindings: atmel,at91rm9200-rtc: add
+ microchip,sam9x60-rtc
+Thread-Topic: [PATCH 11/16] dt-bindings: atmel,at91rm9200-rtc: add
+ microchip,sam9x60-rtc
+Thread-Index: AQHVx8cJ1Sdz4XPBp0a+PBJp3PSmrg==
+Date:   Fri, 10 Jan 2020 15:02:55 +0000
+Message-ID: <cd8ecfb1-b88a-88c4-205f-45ac7e25c5cc@microchip.com>
+References: <1578488123-26127-1-git-send-email-claudiu.beznea@microchip.com>
+ <1578488123-26127-12-git-send-email-claudiu.beznea@microchip.com>
+ <20200110143001.GE1027187@piout.net>
+In-Reply-To: <20200110143001.GE1027187@piout.net>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [94.177.32.156]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 3f3eed86-8fd5-4bf0-35f0-08d795de2c78
+x-ms-traffictypediagnostic: DM6PR11MB4073:
+x-ms-exchange-transport-forked: True
+x-microsoft-antispam-prvs: <DM6PR11MB4073030C1B5DBFA428B71AF787380@DM6PR11MB4073.namprd11.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:4941;
+x-forefront-prvs: 02788FF38E
+x-forefront-antispam-report: SFV:NSPM;SFS:(10009020)(346002)(396003)(39860400002)(376002)(366004)(136003)(199004)(189003)(8676002)(186003)(5660300002)(6486002)(6512007)(2906002)(71200400001)(53546011)(6506007)(2616005)(26005)(478600001)(66556008)(6916009)(66946007)(66446008)(76116006)(64756008)(66476007)(4326008)(8936002)(81166006)(54906003)(91956017)(31686004)(31696002)(7416002)(7406005)(966005)(316002)(86362001)(81156014)(36756003)(142933001);DIR:OUT;SFP:1101;SCL:1;SRVR:DM6PR11MB4073;H:DM6PR11MB3225.namprd11.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;A:1;MX:1;
+received-spf: None (protection.outlook.com: microchip.com does not designate
+ permitted sender hosts)
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: iwSqYCZiVdt5raWL0+yTz682VYv1qyx7XtWg5eo1oekx5xf+sw34bc+EqB2Vat14SBoqfHBZUhe9AONHULKP8ivYiLSZs7xr+DXzvLR8ttdv2tvPCBpwTma/flzeDtc7Iit+bqLnXKQMep/PIIEDt37PDXTPhqHOoqHvZVSOdoC+rfSP9yQx+BRACJXVCFZQ9tFrbQKqr2GpctWj6kRFS8z+2eX+sBjuu4yjg3anKLa5LX1r07sOqueQo5ZPonA4FULeeAah2U+2kN83Dj9+5nF4KEPY/HGGofbi2Tcqph845d2tmA4ZjQdM7FHfIpU7UN19QOmwRhmOCXxlvVZOVo09I/UiXWjRT47z9AF+29AO/ayrBLKwqpIjt1Ltl7IbS4s++yTfnpkLlDl7RNP5luU6+XeTgwG6SEzdUK7aQoCJnmXwK2AmGNX8cHrnMUqGwaYFLHpCvvHEiOJYOB78PykKqXObMglF01qSpJKVNmY1mEdG8WWlVGqv1NPBEVQbm5TZEP3brumwVq61Foe0yg==
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <AE39BBAE4DFACA498B36344FFFF2868E@namprd11.prod.outlook.com>
+Content-Transfer-Encoding: base64
+MIME-Version: 1.0
+X-MS-Exchange-CrossTenant-Network-Message-Id: 3f3eed86-8fd5-4bf0-35f0-08d795de2c78
+X-MS-Exchange-CrossTenant-originalarrivaltime: 10 Jan 2020 15:02:55.5649
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 3f4057f3-b418-4d4e-ba84-d55b4e897d88
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: lstx1sjPtslO9cBwiO8kwk8GOEMvvmTcWCx/9VtduurAc4xi13Z118GNEtPtQAoOyi5efonltgFH80Q7t6LwkHm2VBspvI71Uh+h8ZS3nmM=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR11MB4073
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Add HDMI audio support for the sun4i-hdmi encoder, used on
-the older Allwinner chips - A10, A20, A31.
-
-Most of the code is based on the BSP implementation. In it
-dditional formats are supported (S20_3LE and S24_LE), however
-there where some problems with them and only S16_LE is left.
-
-Signed-off-by: Stefan Mavrodiev <stefan@olimex.com>
----
- drivers/gpu/drm/sun4i/Kconfig            |   1 +
- drivers/gpu/drm/sun4i/Makefile           |   1 +
- drivers/gpu/drm/sun4i/sun4i_hdmi.h       |  30 ++
- drivers/gpu/drm/sun4i/sun4i_hdmi_audio.c | 375 +++++++++++++++++++++++
- drivers/gpu/drm/sun4i/sun4i_hdmi_enc.c   |   4 +
- 5 files changed, 411 insertions(+)
- create mode 100644 drivers/gpu/drm/sun4i/sun4i_hdmi_audio.c
-
-diff --git a/drivers/gpu/drm/sun4i/Kconfig b/drivers/gpu/drm/sun4i/Kconfig
-index 37e90e42943f..192b732b10cd 100644
---- a/drivers/gpu/drm/sun4i/Kconfig
-+++ b/drivers/gpu/drm/sun4i/Kconfig
-@@ -19,6 +19,7 @@ if DRM_SUN4I
- config DRM_SUN4I_HDMI
-        tristate "Allwinner A10 HDMI Controller Support"
-        default DRM_SUN4I
-+       select SND_PCM_ELD
-        help
- 	  Choose this option if you have an Allwinner SoC with an HDMI
- 	  controller.
-diff --git a/drivers/gpu/drm/sun4i/Makefile b/drivers/gpu/drm/sun4i/Makefile
-index 0d04f2447b01..e2d82b451c36 100644
---- a/drivers/gpu/drm/sun4i/Makefile
-+++ b/drivers/gpu/drm/sun4i/Makefile
-@@ -5,6 +5,7 @@ sun4i-frontend-y		+= sun4i_frontend.o
- sun4i-drm-y			+= sun4i_drv.o
- sun4i-drm-y			+= sun4i_framebuffer.o
- 
-+sun4i-drm-hdmi-y		+= sun4i_hdmi_audio.o
- sun4i-drm-hdmi-y		+= sun4i_hdmi_ddc_clk.o
- sun4i-drm-hdmi-y		+= sun4i_hdmi_enc.o
- sun4i-drm-hdmi-y		+= sun4i_hdmi_i2c.o
-diff --git a/drivers/gpu/drm/sun4i/sun4i_hdmi.h b/drivers/gpu/drm/sun4i/sun4i_hdmi.h
-index 7ad3f06c127e..456964e681b0 100644
---- a/drivers/gpu/drm/sun4i/sun4i_hdmi.h
-+++ b/drivers/gpu/drm/sun4i/sun4i_hdmi.h
-@@ -42,7 +42,32 @@
- #define SUN4I_HDMI_VID_TIMING_POL_VSYNC		BIT(1)
- #define SUN4I_HDMI_VID_TIMING_POL_HSYNC		BIT(0)
- 
-+#define SUN4I_HDMI_AUDIO_CTRL_REG	0x040
-+#define SUN4I_HDMI_AUDIO_CTRL_ENABLE		BIT(31)
-+#define SUN4I_HDMI_AUDIO_CTRL_RESET		BIT(30)
-+
-+#define SUN4I_HDMI_AUDIO_FMT_REG	0x048
-+#define SUN4I_HDMI_AUDIO_FMT_SRC		BIT(31)
-+#define SUN4I_HDMI_AUDIO_FMT_LAYOUT		BIT(3)
-+#define SUN4I_HDMI_AUDIO_FMT_CH_CFG(n)		(n - 1)
-+#define SUN4I_HDMI_AUDIO_FMT_CH_CFG_MASK	GENMASK(2, 0)
-+
-+#define SUN4I_HDMI_AUDIO_PCM_REG	0x4c
-+#define SUN4I_HDMI_AUDIO_PCM_CH_MAP(n, m)	((m - 1) << (n * 4))
-+#define SUN4I_HDMI_AUDIO_PCM_CH_MAP_MASK(n)	(GENMASK(2, 0) << (n * 4))
-+
-+#define SUN4I_HDMI_AUDIO_CTS_REG	0x050
-+#define SUN4I_HDMI_AUDIO_CTS(n)			(n & GENMASK(19, 0))
-+
-+#define SUN4I_HDMI_AUDIO_N_REG		0x054
-+#define SUN4I_HDMI_AUDIO_N(n)			(n & GENMASK(19, 0))
-+
-+#define SUN4I_HDMI_AUDIO_STAT0_REG	0x58
-+#define SUN4I_HDMI_AUDIO_STAT0_FREQ(n)		(n << 24)
-+#define SUN4I_HDMI_AUDIO_STAT0_FREQ_MASK	GENMASK(27, 24)
-+
- #define SUN4I_HDMI_AVI_INFOFRAME_REG(n)	(0x080 + (n))
-+#define SUN4I_HDMI_AUDIO_INFOFRAME_REG(n)	(0x0a0 + (n))
- 
- #define SUN4I_HDMI_PAD_CTRL0_REG	0x200
- #define SUN4I_HDMI_PAD_CTRL0_BIASEN		BIT(31)
-@@ -283,9 +308,13 @@ struct sun4i_hdmi {
- 	struct regmap_field	*field_ddc_sda_en;
- 	struct regmap_field	*field_ddc_sck_en;
- 
-+	u8			hdmi_audio_channels;
-+
- 	struct sun4i_drv	*drv;
- 
- 	bool			hdmi_monitor;
-+	bool			hdmi_audio;
-+
- 	struct cec_adapter	*cec_adap;
- 
- 	const struct sun4i_hdmi_variant	*variant;
-@@ -294,5 +323,6 @@ struct sun4i_hdmi {
- int sun4i_ddc_create(struct sun4i_hdmi *hdmi, struct clk *clk);
- int sun4i_tmds_create(struct sun4i_hdmi *hdmi);
- int sun4i_hdmi_i2c_create(struct device *dev, struct sun4i_hdmi *hdmi);
-+int sun4i_hdmi_audio_create(struct sun4i_hdmi *hdmi);
- 
- #endif /* _SUN4I_HDMI_H_ */
-diff --git a/drivers/gpu/drm/sun4i/sun4i_hdmi_audio.c b/drivers/gpu/drm/sun4i/sun4i_hdmi_audio.c
-new file mode 100644
-index 000000000000..b6d4199d15ce
---- /dev/null
-+++ b/drivers/gpu/drm/sun4i/sun4i_hdmi_audio.c
-@@ -0,0 +1,375 @@
-+// SPDX-License-Identifier: GPL-2.0-or-later
-+/*
-+ * Copyright (C) 2020 Olimex Ltd.
-+ *   Author: Stefan Mavrodiev <stefan@olimex.com>
-+ */
-+#include <linux/dma-mapping.h>
-+#include <linux/dmaengine.h>
-+#include <linux/module.h>
-+#include <linux/of_dma.h>
-+#include <linux/regmap.h>
-+
-+#include <drm/drm_print.h>
-+
-+#include <sound/dmaengine_pcm.h>
-+#include <sound/pcm_drm_eld.h>
-+#include <sound/pcm_params.h>
-+#include <sound/soc.h>
-+
-+#include "sun4i_hdmi.h"
-+
-+static const struct snd_soc_dapm_widget sun4i_hdmi_audio_widgets[] = {
-+	SND_SOC_DAPM_OUTPUT("TX"),
-+};
-+
-+static const struct snd_soc_dapm_route sun4i_hdmi_audio_routes[] = {
-+	{ "TX", NULL, "Playback" },
-+};
-+
-+static const struct snd_soc_component_driver sun4i_hdmi_audio_component = {
-+	.dapm_widgets		= sun4i_hdmi_audio_widgets,
-+	.num_dapm_widgets	= ARRAY_SIZE(sun4i_hdmi_audio_widgets),
-+	.dapm_routes		= sun4i_hdmi_audio_routes,
-+	.num_dapm_routes	= ARRAY_SIZE(sun4i_hdmi_audio_routes),
-+};
-+
-+static int sun4i_hdmi_audio_startup(struct snd_pcm_substream *substream,
-+				    struct snd_soc_dai *dai)
-+{
-+	struct snd_soc_card *card = snd_soc_dai_get_drvdata(dai);
-+	struct sun4i_hdmi *hdmi = snd_soc_card_get_drvdata(card);
-+	u32 reg;
-+	int ret;
-+
-+	regmap_write(hdmi->regmap, SUN4I_HDMI_AUDIO_CTRL_REG, 0);
-+	regmap_write(hdmi->regmap,
-+		     SUN4I_HDMI_AUDIO_CTRL_REG,
-+		     SUN4I_HDMI_AUDIO_CTRL_RESET);
-+	ret = regmap_read_poll_timeout(hdmi->regmap,
-+				       SUN4I_HDMI_AUDIO_CTRL_REG,
-+				       reg, !reg, 100, 50000);
-+	if (ret < 0) {
-+		DRM_ERROR("Failed to reset HDMI Audio\n");
-+		return ret;
-+	}
-+
-+	regmap_write(hdmi->regmap,
-+		     SUN4I_HDMI_AUDIO_CTRL_REG,
-+		     SUN4I_HDMI_AUDIO_CTRL_ENABLE);
-+
-+	return snd_pcm_hw_constraint_eld(substream->runtime,
-+					 hdmi->connector.eld);
-+}
-+
-+static void sun4i_hdmi_audio_shutdown(struct snd_pcm_substream *substream,
-+				      struct snd_soc_dai *dai)
-+{
-+	struct snd_soc_card *card = snd_soc_dai_get_drvdata(dai);
-+	struct sun4i_hdmi *hdmi = snd_soc_card_get_drvdata(card);
-+
-+	regmap_write(hdmi->regmap, SUN4I_HDMI_AUDIO_CTRL_REG, 0);
-+}
-+
-+static int sun4i_hdmi_setup_audio_infoframes(struct sun4i_hdmi *hdmi)
-+{
-+	union hdmi_infoframe frame;
-+	u8 buffer[14];
-+	int i, ret;
-+
-+	ret = hdmi_audio_infoframe_init(&frame.audio);
-+	if (ret < 0) {
-+		DRM_ERROR("Failed to init HDMI audio infoframe\n");
-+		return ret;
-+	}
-+
-+	frame.audio.coding_type = HDMI_AUDIO_CODING_TYPE_STREAM;
-+	frame.audio.sample_frequency = HDMI_AUDIO_SAMPLE_FREQUENCY_STREAM;
-+	frame.audio.sample_size = HDMI_AUDIO_SAMPLE_SIZE_STREAM;
-+	frame.audio.channels = hdmi->hdmi_audio_channels;
-+
-+	ret = hdmi_infoframe_pack(&frame, buffer, sizeof(buffer));
-+	if (ret < 0) {
-+		DRM_ERROR("Failed to pack HDMI audio infoframe\n");
-+		return ret;
-+	}
-+
-+	for (i = 0; i < sizeof(buffer); i++)
-+		writeb(buffer[i],
-+		       hdmi->base + SUN4I_HDMI_AUDIO_INFOFRAME_REG(i));
-+
-+	return 0;
-+}
-+
-+static void sun4i_hdmi_audio_set_cts_n(struct sun4i_hdmi *hdmi,
-+				       struct snd_pcm_hw_params *params)
-+{
-+	struct drm_encoder *encoder = &hdmi->encoder;
-+	struct drm_crtc *crtc = encoder->crtc;
-+	const struct drm_display_mode *mode = &crtc->state->adjusted_mode;
-+	u32 rate = params_rate(params);
-+	u32 n, cts;
-+	u64 tmp;
-+
-+	/**
-+	 * Calculate Cycle Time Stamp (CTS) and Numerator (N):
-+	 *
-+	 * N = 128 * Samplerate / 1000
-+	 * CTS = (Ftdms * N) / (128 * Samplerate)
-+	 */
-+
-+	n = 128 * rate / 1000;
-+	tmp = (u64)(mode->clock * 1000) * n;
-+	do_div(tmp, 128 * rate);
-+	cts = tmp;
-+
-+	regmap_write(hdmi->regmap,
-+		     SUN4I_HDMI_AUDIO_CTS_REG,
-+		     SUN4I_HDMI_AUDIO_CTS(cts));
-+
-+	regmap_write(hdmi->regmap,
-+		     SUN4I_HDMI_AUDIO_N_REG,
-+		     SUN4I_HDMI_AUDIO_N(n));
-+}
-+
-+static int sun4i_hdmi_audio_set_hw_rate(struct sun4i_hdmi *hdmi,
-+					struct snd_pcm_hw_params *params)
-+{
-+	u32 rate = params_rate(params);
-+	u32 val;
-+
-+	switch (rate) {
-+	case 44100:
-+		val = 0x0;
-+		break;
-+	case 48000:
-+		val = 0x2;
-+		break;
-+	case 32000:
-+		val = 0x3;
-+		break;
-+	case 88200:
-+		val = 0x8;
-+		break;
-+	case 96000:
-+		val = 0x9;
-+		break;
-+	case 176400:
-+		val = 0xc;
-+		break;
-+	case 192000:
-+		val = 0xe;
-+		break;
-+	default:
-+		return -EINVAL;
-+	}
-+
-+	regmap_update_bits(hdmi->regmap,
-+			   SUN4I_HDMI_AUDIO_STAT0_REG,
-+			   SUN4I_HDMI_AUDIO_STAT0_FREQ_MASK,
-+			   SUN4I_HDMI_AUDIO_STAT0_FREQ(val));
-+
-+	return 0;
-+}
-+
-+static int sun4i_hdmi_audio_set_hw_channels(struct sun4i_hdmi *hdmi,
-+					    struct snd_pcm_hw_params *params)
-+{
-+	u32 channels = params_channels(params);
-+
-+	if (channels > 8)
-+		return -EINVAL;
-+
-+	hdmi->hdmi_audio_channels = channels;
-+
-+	regmap_update_bits(hdmi->regmap,
-+			   SUN4I_HDMI_AUDIO_FMT_REG,
-+			   SUN4I_HDMI_AUDIO_FMT_LAYOUT,
-+			   (channels > 2) ? SUN4I_HDMI_AUDIO_FMT_LAYOUT : 0);
-+
-+	regmap_update_bits(hdmi->regmap,
-+			   SUN4I_HDMI_AUDIO_FMT_REG,
-+			   SUN4I_HDMI_AUDIO_FMT_CH_CFG_MASK,
-+			   SUN4I_HDMI_AUDIO_FMT_CH_CFG(channels));
-+
-+	regmap_write(hdmi->regmap, SUN4I_HDMI_AUDIO_PCM_REG, 0x76543210);
-+
-+	/**
-+	 * If only one channel is required, send the same sample
-+	 * to the sink device as a left and right channel.
-+	 */
-+	if (channels == 1)
-+		regmap_update_bits(hdmi->regmap,
-+				   SUN4I_HDMI_AUDIO_PCM_REG,
-+				   SUN4I_HDMI_AUDIO_PCM_CH_MAP_MASK(1),
-+				   SUN4I_HDMI_AUDIO_PCM_CH_MAP(1, 1));
-+
-+	return 0;
-+}
-+
-+static int sun4i_hdmi_audio_hw_params(struct snd_pcm_substream *substream,
-+				      struct snd_pcm_hw_params *params,
-+				      struct snd_soc_dai *dai)
-+{
-+	struct snd_soc_card *card = snd_soc_dai_get_drvdata(dai);
-+	struct sun4i_hdmi *hdmi = snd_soc_card_get_drvdata(card);
-+	int ret;
-+
-+	ret = sun4i_hdmi_audio_set_hw_rate(hdmi, params);
-+	if (ret)
-+		return ret;
-+
-+	ret = sun4i_hdmi_audio_set_hw_channels(hdmi, params);
-+	if (ret)
-+		return ret;
-+
-+	sun4i_hdmi_audio_set_cts_n(hdmi, params);
-+
-+	return 0;
-+}
-+
-+static int sun4i_hdmi_audio_trigger(struct snd_pcm_substream *substream,
-+				    int cmd,
-+				    struct snd_soc_dai *dai)
-+{
-+	struct snd_soc_card *card = snd_soc_dai_get_drvdata(dai);
-+	struct sun4i_hdmi *hdmi = snd_soc_card_get_drvdata(card);
-+	int ret = 0;
-+
-+	switch (cmd) {
-+	case SNDRV_PCM_TRIGGER_START:
-+		ret = sun4i_hdmi_setup_audio_infoframes(hdmi);
-+		break;
-+	default:
-+		break;
-+	}
-+
-+	return ret;
-+}
-+
-+static const struct snd_soc_dai_ops sun4i_hdmi_audio_dai_ops = {
-+	.startup = sun4i_hdmi_audio_startup,
-+	.shutdown = sun4i_hdmi_audio_shutdown,
-+	.hw_params = sun4i_hdmi_audio_hw_params,
-+	.trigger = sun4i_hdmi_audio_trigger,
-+};
-+
-+static int sun4i_hdmi_audio_dai_probe(struct snd_soc_dai *dai)
-+{
-+	struct snd_dmaengine_dai_dma_data *dma_data;
-+
-+	dma_data = devm_kzalloc(dai->dev, sizeof(*dma_data), GFP_KERNEL);
-+	if (!dma_data)
-+		return -ENOMEM;
-+
-+	dma_data->addr_width = DMA_SLAVE_BUSWIDTH_4_BYTES;
-+	dma_data->maxburst = 8;
-+
-+	snd_soc_dai_init_dma_data(dai, dma_data, NULL);
-+
-+	return 0;
-+}
-+
-+static struct snd_soc_dai_driver sun4i_hdmi_audio_dai = {
-+	.name = "HDMI",
-+	.ops = &sun4i_hdmi_audio_dai_ops,
-+	.probe = sun4i_hdmi_audio_dai_probe,
-+	.playback = {
-+		.stream_name	= "Playback",
-+		.channels_min	= 1,
-+		.channels_max	= 8,
-+		.formats	= SNDRV_PCM_FMTBIT_S16_LE,
-+		.rates		= SNDRV_PCM_RATE_8000_192000,
-+	},
-+};
-+
-+static const struct snd_pcm_hardware sun4i_hdmi_audio_pcm_hardware = {
-+	.info			= SNDRV_PCM_INFO_INTERLEAVED |
-+				  SNDRV_PCM_INFO_BLOCK_TRANSFER |
-+				  SNDRV_PCM_INFO_MMAP |
-+				  SNDRV_PCM_INFO_MMAP_VALID |
-+				  SNDRV_PCM_INFO_PAUSE |
-+				  SNDRV_PCM_INFO_RESUME,
-+	.formats		= SNDRV_PCM_FMTBIT_S16_LE,
-+	.rates                  = SNDRV_PCM_RATE_8000_192000,
-+	.rate_min               = 8000,
-+	.rate_max               = 192000,
-+	.channels_min           = 1,
-+	.channels_max           = 8,
-+	.buffer_bytes_max	= 128 * 1024,
-+	.period_bytes_min	= 4 * 1024,
-+	.period_bytes_max	= 32 * 1024,
-+	.periods_min		= 2,
-+	.periods_max		= 8,
-+	.fifo_size		= 128,
-+};
-+
-+static const struct snd_dmaengine_pcm_config sun4i_hdmi_audio_pcm_config = {
-+	.chan_names[SNDRV_PCM_STREAM_PLAYBACK] = "audio-tx",
-+	.pcm_hardware = &sun4i_hdmi_audio_pcm_hardware,
-+	.prealloc_buffer_size = 128 * 1024,
-+	.prepare_slave_config = snd_dmaengine_pcm_prepare_slave_config,
-+};
-+
-+struct snd_soc_card sun4i_hdmi_audio_card = {
-+	.name = "sun4i-hdmi",
-+};
-+
-+int sun4i_hdmi_audio_create(struct sun4i_hdmi *hdmi)
-+{
-+	struct snd_soc_card *card = &sun4i_hdmi_audio_card;
-+	struct snd_soc_dai_link_component *comp;
-+	struct snd_soc_dai_link *link;
-+	int ret;
-+
-+	ret = devm_snd_dmaengine_pcm_register(hdmi->dev,
-+					      &sun4i_hdmi_audio_pcm_config, 0);
-+	if (ret) {
-+		DRM_ERROR("Could not register PCM\n");
-+		return ret;
-+	}
-+
-+	ret = devm_snd_soc_register_component(hdmi->dev,
-+					      &sun4i_hdmi_audio_component,
-+					      &sun4i_hdmi_audio_dai, 1);
-+	if (ret) {
-+		DRM_ERROR("Could not register DAI\n");
-+		return ret;
-+	}
-+
-+	link = devm_kzalloc(hdmi->dev, sizeof(*link), GFP_KERNEL);
-+	if (!link)
-+		return -ENOMEM;
-+
-+	comp = devm_kzalloc(hdmi->dev, sizeof(*comp) * 3, GFP_KERNEL);
-+	if (!comp)
-+		return -ENOMEM;
-+
-+	link->cpus = &comp[0];
-+	link->codecs = &comp[1];
-+	link->platforms = &comp[2];
-+
-+	link->num_cpus = 1;
-+	link->num_codecs = 1;
-+	link->num_platforms = 1;
-+
-+	link->playback_only = 1;
-+
-+	link->name = "SUN4I-HDMI";
-+	link->stream_name = "SUN4I-HDMI PCM";
-+
-+	link->codecs->name = dev_name(hdmi->dev);
-+	link->codecs->dai_name	= sun4i_hdmi_audio_dai.name;
-+
-+	link->cpus->dai_name = dev_name(hdmi->dev);
-+
-+	link->platforms->name = dev_name(hdmi->dev);
-+
-+	link->dai_fmt = SND_SOC_DAIFMT_I2S;
-+
-+	card->dai_link = link;
-+	card->num_links = 1;
-+	card->dev = hdmi->dev;
-+
-+	snd_soc_card_set_drvdata(card, hdmi);
-+	return devm_snd_soc_register_card(hdmi->dev, card);
-+}
-diff --git a/drivers/gpu/drm/sun4i/sun4i_hdmi_enc.c b/drivers/gpu/drm/sun4i/sun4i_hdmi_enc.c
-index a7c4654445c7..79ecd89fb705 100644
---- a/drivers/gpu/drm/sun4i/sun4i_hdmi_enc.c
-+++ b/drivers/gpu/drm/sun4i/sun4i_hdmi_enc.c
-@@ -114,6 +114,9 @@ static void sun4i_hdmi_enable(struct drm_encoder *encoder)
- 		val |= SUN4I_HDMI_VID_CTRL_HDMI_MODE;
- 
- 	writel(val, hdmi->base + SUN4I_HDMI_VID_CTRL_REG);
-+
-+	if (hdmi->hdmi_audio && sun4i_hdmi_audio_create(hdmi))
-+		DRM_ERROR("Couldn't create the HDMI audio adapter\n");
- }
- 
- static void sun4i_hdmi_mode_set(struct drm_encoder *encoder,
-@@ -218,6 +221,7 @@ static int sun4i_hdmi_get_modes(struct drm_connector *connector)
- 	if (!edid)
- 		return 0;
- 
-+	hdmi->hdmi_audio = drm_detect_monitor_audio(edid);
- 	hdmi->hdmi_monitor = drm_detect_hdmi_monitor(edid);
- 	DRM_DEBUG_DRIVER("Monitor is %s monitor\n",
- 			 hdmi->hdmi_monitor ? "an HDMI" : "a DVI");
--- 
-2.17.1
-
+DQoNCk9uIDEwLjAxLjIwMjAgMTY6MzAsIEFsZXhhbmRyZSBCZWxsb25pIHdyb3RlOg0KPiBFWFRF
+Uk5BTCBFTUFJTDogRG8gbm90IGNsaWNrIGxpbmtzIG9yIG9wZW4gYXR0YWNobWVudHMgdW5sZXNz
+IHlvdSBrbm93IHRoZSBjb250ZW50IGlzIHNhZmUNCj4gDQo+IEhpLA0KPiANCj4gT24gMDgvMDEv
+MjAyMCAxNDo1NToxOCswMjAwLCBDbGF1ZGl1IEJlem5lYSB3cm90ZToNCj4+IEFkZCBtaWNyb2No
+aXAsc2FtOXg2MC1ydGMgdG8gRFQgYmluZGluZ3MgZG9jdW1lbnRhdGlvbi4NCj4gDQo+IFRoaXMg
+d2lsbCBoYXZlIHRvIGJlIHJlYmFzZWQgb24gdG9wIG9mDQo+IGh0dHBzOi8vbG9yZS5rZXJuZWwu
+b3JnL2xpbnV4LXJ0Yy8yMDE5MTIyOTIwNDQyMS4zMzc2MTItMi1hbGV4YW5kcmUuYmVsbG9uaUBi
+b290bGluLmNvbS8NCg0KVGhpcyBpcyBhbHNvIG5vdCBpbnRlZ3JhdGVkIGluIGxhdGVzdCBuZXh0
+LiBXaWxsIHRoaXMgcG9zdHBvbmUgdGhlDQphY2NlcHRhbmNlIG9mIHRoZSBkZXZpY2UgdHJlZSwg
+dW50aWwgdGhlIHlhbWwgY29udmVyc2lvbiBpcyBhY2NlcHRlZD8NCg0KPiANCj4+DQo+PiBTaWdu
+ZWQtb2ZmLWJ5OiBDbGF1ZGl1IEJlem5lYSA8Y2xhdWRpdS5iZXpuZWFAbWljcm9jaGlwLmNvbT4N
+Cj4+IC0tLQ0KPj4gIERvY3VtZW50YXRpb24vZGV2aWNldHJlZS9iaW5kaW5ncy9ydGMvYXRtZWws
+YXQ5MXJtOTIwMC1ydGMudHh0IHwgMyArKy0NCj4+ICAxIGZpbGUgY2hhbmdlZCwgMiBpbnNlcnRp
+b25zKCspLCAxIGRlbGV0aW9uKC0pDQo+Pg0KPj4gZGlmZiAtLWdpdCBhL0RvY3VtZW50YXRpb24v
+ZGV2aWNldHJlZS9iaW5kaW5ncy9ydGMvYXRtZWwsYXQ5MXJtOTIwMC1ydGMudHh0IGIvRG9jdW1l
+bnRhdGlvbi9kZXZpY2V0cmVlL2JpbmRpbmdzL3J0Yy9hdG1lbCxhdDkxcm05MjAwLXJ0Yy50eHQN
+Cj4+IGluZGV4IDVkMzc5MWU3ODljNi4uMzVlYWI5MTM4ZDBiIDEwMDY0NA0KPj4gLS0tIGEvRG9j
+dW1lbnRhdGlvbi9kZXZpY2V0cmVlL2JpbmRpbmdzL3J0Yy9hdG1lbCxhdDkxcm05MjAwLXJ0Yy50
+eHQNCj4+ICsrKyBiL0RvY3VtZW50YXRpb24vZGV2aWNldHJlZS9iaW5kaW5ncy9ydGMvYXRtZWws
+YXQ5MXJtOTIwMC1ydGMudHh0DQo+PiBAQCAtMSw3ICsxLDggQEANCj4+ICBBdG1lbCBBVDkxUk05
+MjAwIFJlYWwgVGltZSBDbG9jaw0KPj4NCj4+ICBSZXF1aXJlZCBwcm9wZXJ0aWVzOg0KPj4gLS0g
+Y29tcGF0aWJsZTogc2hvdWxkIGJlOiAiYXRtZWwsYXQ5MXJtOTIwMC1ydGMiIG9yICJhdG1lbCxh
+dDkxc2FtOXg1LXJ0YyINCj4+ICstIGNvbXBhdGlibGU6IHNob3VsZCBiZTogImF0bWVsLGF0OTFy
+bTkyMDAtcnRjIiwgImF0bWVsLGF0OTFzYW05eDUtcnRjIiBvcg0KPj4gKyAgIm1pY3JvY2hpcCxz
+YW05eDYwLXJ0YyINCj4+ICAtIHJlZzogcGh5c2ljYWwgYmFzZSBhZGRyZXNzIG9mIHRoZSBjb250
+cm9sbGVyIGFuZCBsZW5ndGggb2YgbWVtb3J5IG1hcHBlZA0KPj4gICAgcmVnaW9uLg0KPj4gIC0g
+aW50ZXJydXB0czogcnRjIGFsYXJtL2V2ZW50IGludGVycnVwdA0KPj4gLS0NCj4+IDIuNy40DQo+
+Pg0KPiANCj4gLS0NCj4gQWxleGFuZHJlIEJlbGxvbmksIEJvb3RsaW4NCj4gRW1iZWRkZWQgTGlu
+dXggYW5kIEtlcm5lbCBlbmdpbmVlcmluZw0KPiBodHRwczovL2Jvb3RsaW4uY29tDQo+IA==
