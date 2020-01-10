@@ -7,37 +7,37 @@ X-Spam-Status: No, score=-10.1 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EA56DC282DD
-	for <dmaengine@archiver.kernel.org>; Fri, 10 Jan 2020 22:05:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C30AFC33CA4
+	for <dmaengine@archiver.kernel.org>; Fri, 10 Jan 2020 22:06:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id C18A82084D
-	for <dmaengine@archiver.kernel.org>; Fri, 10 Jan 2020 22:05:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8F27F24677
+	for <dmaengine@archiver.kernel.org>; Fri, 10 Jan 2020 22:06:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1578693940;
-	bh=Fiz5fCpuoIFHozhj8KdiO82jhr2DQ5w1R7fvcwlPtaM=;
+	s=default; t=1578693970;
+	bh=C9LryPPI8PsxaJh91bW40PmXS34SlvRrDvM0ud5fJqA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:List-ID:From;
-	b=03dQV81tEWZ6ttQLtZUT5u22TtdhW99MHJ5GuIraomkobTcoWaRJ10TKkdB4sLHpZ
-	 8lUucS1xSQ0iou3rqVDn6cGIDFShYr99Bk3Nrhf2ofERoONx00oEmqZRsRKW4wjP0D
-	 fuzPz4H24aE15ATG7DHNd+1BCfnPndWnFjbjiQLo=
+	b=SpxGRASU+w0GIzttskcMeK3pmkQR4BaDSNNBT5JLrdiPs1qqwBIedGdCjmGl4Kaim
+	 UIcATOJbY5fFhcahuQzSeyuFwkSfDT6PE3o4V0PsemGQbrlZVFWKZL6Z1gy/tbOSET
+	 Z4FxZJCEHkSraVPGLYELXOH7S7Ze4lrTptf0wLQs=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727783AbgAJWFj (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 10 Jan 2020 17:05:39 -0500
-Received: from mail.kernel.org ([198.145.29.99]:51386 "EHLO mail.kernel.org"
+        id S1728158AbgAJWGJ (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 10 Jan 2020 17:06:09 -0500
+Received: from mail.kernel.org ([198.145.29.99]:52528 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727764AbgAJWFh (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Fri, 10 Jan 2020 17:05:37 -0500
+        id S1728117AbgAJWGF (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Fri, 10 Jan 2020 17:06:05 -0500
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 640CA20842;
-        Fri, 10 Jan 2020 22:05:36 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 1A1192072E;
+        Fri, 10 Jan 2020 22:06:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1578693937;
-        bh=Fiz5fCpuoIFHozhj8KdiO82jhr2DQ5w1R7fvcwlPtaM=;
+        s=default; t=1578693964;
+        bh=C9LryPPI8PsxaJh91bW40PmXS34SlvRrDvM0ud5fJqA=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=mWDsyXXSD2+UeTqru04J497SKhwBWKKsMgrz5WCOdsxFVFYE0BTT51YXi1Ed7MzCy
-         w4sOyI5wUMOQqH4hHxY1xRDeeshamOf50e/ceZ3WXerjBxUYPZo7gZ+GRZzdgWlDqf
-         lTYBSCsAekk1ReqwB636h/0iArYE9LU22meDs3mo=
+        b=jZTPpOg+z8ylhfNPthp7K7G8VEmLrZOn9Tzu1zOPyCwAGfVXkGu9/ePT1ofmIHm/f
+         WhyxvsmiMKPvn4zR1If8SsOKswbUQSjKZlJUS3HSxjTlcYAU0ZV6dYtDlX++sUma7N
+         8TbIX/xHRF4AAJAwCNagguolrYTQMKpAD3dXwVUU=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Cc:     "Alexander.Barabash@dell.com" <Alexander.Barabash@dell.com>,
@@ -45,12 +45,12 @@ Cc:     "Alexander.Barabash@dell.com" <Alexander.Barabash@dell.com>,
         Dave Jiang <dave.jiang@intel.com>,
         Vinod Koul <vkoul@kernel.org>, Sasha Levin <sashal@kernel.org>,
         dmaengine@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.4 19/26] ioat: ioat_alloc_ring() failure handling.
-Date:   Fri, 10 Jan 2020 17:05:12 -0500
-Message-Id: <20200110220519.28250-14-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 4.19 08/11] ioat: ioat_alloc_ring() failure handling.
+Date:   Fri, 10 Jan 2020 17:05:52 -0500
+Message-Id: <20200110220556.28505-7-sashal@kernel.org>
 X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20200110220519.28250-1-sashal@kernel.org>
-References: <20200110220519.28250-1-sashal@kernel.org>
+In-Reply-To: <20200110220556.28505-1-sashal@kernel.org>
+References: <20200110220556.28505-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
@@ -81,10 +81,10 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/dma/ioat/dma.c b/drivers/dma/ioat/dma.c
-index 1a422a8b43cf..18c011e57592 100644
+index 23fb2fa04000..b94cece58b98 100644
 --- a/drivers/dma/ioat/dma.c
 +++ b/drivers/dma/ioat/dma.c
-@@ -377,10 +377,11 @@ ioat_alloc_ring(struct dma_chan *c, int order, gfp_t flags)
+@@ -388,10 +388,11 @@ ioat_alloc_ring(struct dma_chan *c, int order, gfp_t flags)
  
  		descs->virt = dma_alloc_coherent(to_dev(ioat_chan),
  						 SZ_2M, &descs->hw, flags);
