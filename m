@@ -7,48 +7,50 @@ X-Spam-Status: No, score=-10.1 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=unavailable
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A4F3DC33CA4
-	for <dmaengine@archiver.kernel.org>; Fri, 10 Jan 2020 22:07:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BB041C33CA3
+	for <dmaengine@archiver.kernel.org>; Fri, 10 Jan 2020 22:08:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 7D5CD21744
-	for <dmaengine@archiver.kernel.org>; Fri, 10 Jan 2020 22:07:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 81B2B20721
+	for <dmaengine@archiver.kernel.org>; Fri, 10 Jan 2020 22:08:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1578694031;
-	bh=ok15enOupA5W/wMO7U7KSrXVmeBc2HMpZ4pSkfou/bw=;
+	s=default; t=1578694081;
+	bh=V3GbiHcfk6BfHbV+lS0V0Esc5dLq3FYLB6Xqf/5iltk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:List-ID:From;
-	b=BjWUT8JTIfECN+RdKFXxCjfrCIw1bRXfdxVV7LG0BYItw2ndJNeN7VO1cxkCOqo40
-	 nnnNsrUN/uPewrJaX7VW0lIKaI6vBsYHS8NCjHiF80cN9rpwonmNktZuVcNFjLvQgl
-	 LrGe+ld+rS57tBghwkTsgjwmBgamW5nAjtv31XNY=
+	b=PBPPozSh1k7lrgFbxMQef+XmuBVl6wSDNz23DwCMLn9Xy3o//QnMRjgqqng317E/e
+	 zGK8dJEi6HPjCk2UUqOkDX4LksrD62tePEJ0APmaKkJLLxlHAoC1VdcWxgRqa2qksn
+	 nKlt1o4xhWxHCaLvk6rlmEFcchtzSQoGiyqKyMbw=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728047AbgAJWGB (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 10 Jan 2020 17:06:01 -0500
-Received: from mail.kernel.org ([198.145.29.99]:52334 "EHLO mail.kernel.org"
+        id S1728108AbgAJWH1 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 10 Jan 2020 17:07:27 -0500
+Received: from mail.kernel.org ([198.145.29.99]:55190 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728036AbgAJWGA (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Fri, 10 Jan 2020 17:06:00 -0500
+        id S1728063AbgAJWH0 (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Fri, 10 Jan 2020 17:07:26 -0500
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 8E8CC20838;
-        Fri, 10 Jan 2020 22:05:59 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id B756F21569;
+        Fri, 10 Jan 2020 22:07:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1578693960;
-        bh=ok15enOupA5W/wMO7U7KSrXVmeBc2HMpZ4pSkfou/bw=;
+        s=default; t=1578694045;
+        bh=V3GbiHcfk6BfHbV+lS0V0Esc5dLq3FYLB6Xqf/5iltk=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=eWHliHLv3aiGkx43/6SDnEY4UstoanJ4twy/Mg+qtlN5OQfxRNggQrnswgP+Ut+1w
-         d7Yxz0czpKG4HMiP6Tk3Mkk4hUOokFDL7cojKNwh5rOS+kIWffF//bz4FqP/NSPYLs
-         poluyx3k4SPl5uycli6g+zK+iGL9srvPHHipEFnM=
+        b=10aczAVCN5InKBNkPy8RNtszHE/ArUo6nnwejsmxE3Rs9sIxqJay/AH+TZp+EyboE
+         XXjgDc/82A19wJGCbSzGnNBqXYKBIvtAd0M2mF0CZmkHC0lxCkHCrCi/gQuaql8jVB
+         lezaN31s24oB8pzbmISkMMzXfm5YRX9J3f0k8Utg=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     John Stultz <john.stultz@linaro.org>,
+Cc:     "Alexander.Barabash@dell.com" <Alexander.Barabash@dell.com>,
+        Alexander Barabash <alexander.barabash@dell.com>,
+        Dave Jiang <dave.jiang@intel.com>,
         Vinod Koul <vkoul@kernel.org>, Sasha Levin <sashal@kernel.org>,
         dmaengine@vger.kernel.org
-Subject: [PATCH AUTOSEL 4.19 04/11] dmaengine: k3dma: Avoid null pointer traversal
-Date:   Fri, 10 Jan 2020 17:05:48 -0500
-Message-Id: <20200110220556.28505-3-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 4.9 3/6] ioat: ioat_alloc_ring() failure handling.
+Date:   Fri, 10 Jan 2020 17:07:18 -0500
+Message-Id: <20200110220721.28780-3-sashal@kernel.org>
 X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20200110220556.28505-1-sashal@kernel.org>
-References: <20200110220556.28505-1-sashal@kernel.org>
+In-Reply-To: <20200110220721.28780-1-sashal@kernel.org>
+References: <20200110220721.28780-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
@@ -58,64 +60,43 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-From: John Stultz <john.stultz@linaro.org>
+From: "Alexander.Barabash@dell.com" <Alexander.Barabash@dell.com>
 
-[ Upstream commit 2f42e05b942fe2fbfb9bbc6e34e1dd8c3ce4f3a4 ]
+[ Upstream commit b0b5ce1010ffc50015eaec72b0028aaae3f526bb ]
 
-In some cases we seem to submit two transactions in a row, which
-causes us to lose track of the first. If we then cancel the
-request, we may still get an interrupt, which traverses a null
-ds_run value.
+If dma_alloc_coherent() returns NULL in ioat_alloc_ring(), ring
+allocation must not proceed.
 
-So try to avoid starting a new transaction if the ds_run value
-is set.
+Until now, if the first call to dma_alloc_coherent() in
+ioat_alloc_ring() returned NULL, the processing could proceed, failing
+with NULL-pointer dereferencing further down the line.
 
-While this patch avoids the null pointer crash, I've had some
-reports of the k3dma driver still getting confused, which
-suggests the ds_run/ds_done value handling still isn't quite
-right. However, I've not run into an issue recently with it
-so I think this patch is worth pushing upstream to avoid the
-crash.
-
-Signed-off-by: John Stultz <john.stultz@linaro.org>
-[add ss tag]
-Link: https://lore.kernel.org/r/20191218190906.6641-1-john.stultz@linaro.org
+Signed-off-by: Alexander Barabash <alexander.barabash@dell.com>
+Acked-by: Dave Jiang <dave.jiang@intel.com>
+Link: https://lore.kernel.org/r/75e9c0e84c3345d693c606c64f8b9ab5@x13pwhopdag1307.AMER.DELL.COM
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/k3dma.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ drivers/dma/ioat/dma.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/dma/k3dma.c b/drivers/dma/k3dma.c
-index 6bfa217ed6d0..ba3c3791f9dc 100644
---- a/drivers/dma/k3dma.c
-+++ b/drivers/dma/k3dma.c
-@@ -222,9 +222,11 @@ static irqreturn_t k3_dma_int_handler(int irq, void *dev_id)
- 			c = p->vchan;
- 			if (c && (tc1 & BIT(i))) {
- 				spin_lock_irqsave(&c->vc.lock, flags);
--				vchan_cookie_complete(&p->ds_run->vd);
--				p->ds_done = p->ds_run;
--				p->ds_run = NULL;
-+				if (p->ds_run != NULL) {
-+					vchan_cookie_complete(&p->ds_run->vd);
-+					p->ds_done = p->ds_run;
-+					p->ds_run = NULL;
-+				}
- 				spin_unlock_irqrestore(&c->vc.lock, flags);
- 			}
- 			if (c && (tc2 & BIT(i))) {
-@@ -264,6 +266,10 @@ static int k3_dma_start_txd(struct k3_dma_chan *c)
- 	if (BIT(c->phy->idx) & k3_dma_get_chan_stat(d))
- 		return -EAGAIN;
+diff --git a/drivers/dma/ioat/dma.c b/drivers/dma/ioat/dma.c
+index 49386ce04bf5..1389f0582e29 100644
+--- a/drivers/dma/ioat/dma.c
++++ b/drivers/dma/ioat/dma.c
+@@ -394,10 +394,11 @@ ioat_alloc_ring(struct dma_chan *c, int order, gfp_t flags)
  
-+	/* Avoid losing track of  ds_run if a transaction is in flight */
-+	if (c->phy->ds_run)
-+		return -EAGAIN;
-+
- 	if (vd) {
- 		struct k3_dma_desc_sw *ds =
- 			container_of(vd, struct k3_dma_desc_sw, vd);
+ 		descs->virt = dma_alloc_coherent(to_dev(ioat_chan),
+ 						 SZ_2M, &descs->hw, flags);
+-		if (!descs->virt && (i > 0)) {
++		if (!descs->virt) {
+ 			int idx;
+ 
+ 			for (idx = 0; idx < i; idx++) {
++				descs = &ioat_chan->descs[idx];
+ 				dma_free_coherent(to_dev(ioat_chan), SZ_2M,
+ 						  descs->virt, descs->hw);
+ 				descs->virt = NULL;
 -- 
 2.20.1
 
