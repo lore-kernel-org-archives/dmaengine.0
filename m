@@ -8,53 +8,53 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=unavailable
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A9A0BC33CA7
-	for <dmaengine@archiver.kernel.org>; Sun, 12 Jan 2020 17:32:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4CEABC33CA9
+	for <dmaengine@archiver.kernel.org>; Sun, 12 Jan 2020 17:32:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 835A72187F
+	by mail.kernel.org (Postfix) with ESMTP id E5AC72187F
 	for <dmaengine@archiver.kernel.org>; Sun, 12 Jan 2020 17:32:25 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NjupIj9S"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jLYnfmpa"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1733290AbgALRcR (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Sun, 12 Jan 2020 12:32:17 -0500
-Received: from mail-lf1-f68.google.com ([209.85.167.68]:36125 "EHLO
-        mail-lf1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1733169AbgALRbj (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Sun, 12 Jan 2020 12:31:39 -0500
-Received: by mail-lf1-f68.google.com with SMTP id n12so5153745lfe.3;
-        Sun, 12 Jan 2020 09:31:37 -0800 (PST)
+        id S1733165AbgALRbg (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Sun, 12 Jan 2020 12:31:36 -0500
+Received: from mail-lj1-f196.google.com ([209.85.208.196]:38623 "EHLO
+        mail-lj1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1733130AbgALRbf (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Sun, 12 Jan 2020 12:31:35 -0500
+Received: by mail-lj1-f196.google.com with SMTP id w1so7453864ljh.5;
+        Sun, 12 Jan 2020 09:31:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=7Jmy3B5v2Ce2+BDHjWIjOOpZMBGG7iH2rg2LqI+jBWo=;
-        b=NjupIj9S3KJjP65J1UyjdC2snd+hLsabb5ygpvHN7JVrE4+BqMHKG3h70eTnvl1LpS
-         y5KifdPY0Aqn+K7owyyqrbBWX8pZZkK65FtW1kqI9SOWCkmszk9D5MwNgBmaAbPCwb6N
-         ykgfrXK4Ovs1fJSl2NUPwb1QFhmpKN1at/H44p3YiB8bvLPRZVD+T+EeAlfX+rhzEAwA
-         pQk1aX/6ZkbFK8c2sJSymXdsiAeypNenTHoV+bH4/PY3/8E4JITdkWOuRm8I/vxYuljb
-         HL8ARML+qAg6YVCirrrhcPuH8FoqembqH8DFKn5XKuy4XQFV2Bp8783evpNWSQ2X9YoX
-         yn/Q==
+        bh=PqNp1UdCqeyiLALCUBHMvdBWRB+JgxkXykXZjY6I1uo=;
+        b=jLYnfmpaDvagxToMteOAX02zqX3JdNkY1NNHBc2V5F5AdomTR+cE43o9jQF5NkfiT3
+         zIJ6R3KAGRSEB55TbV/s00z+cspVPJu57SEXavK810Ltu/e7aTLBJv46aminE9dl2Xr4
+         eIltzKsXZtcwwMQ8XUbJzG+VAjZZzguzhCU7MYTLrn1W+aMpWWeKJl5+rsWdMitZqm6Q
+         bg8TIcM0sucYLne1Zpf+h0F512rbtXkfho1/Vo4ZR1mMzT9YXGoE4UsM3GJvoiXV8IR4
+         +QUgA9pt4YDqFvUUg4KCxY1Qt8e0r6RXPrA1IZapuP2tsieeOummlM4APJrp6yVZQIYO
+         XqYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=7Jmy3B5v2Ce2+BDHjWIjOOpZMBGG7iH2rg2LqI+jBWo=;
-        b=eGlM09QjtG8bMhBI4sbGpYpZokqMwA8jIRj7QH6dnLGCYclcohQiCWTlHb957niBBj
-         feIrdXijICJWXfNqisZGYWiVbWFN8qPL28PoB3cSpy01wHUIltN0yx9+ndzqVpzCNBpb
-         nMSpe1/7e175EfbAujr+DWBQ4BJN7uQym7YMq+REuLLbA+UZOYKSj+VHeWQIm7n85faT
-         cFMgmWqnr1KeCfa30lYDXAETtYwfCuN92y3HniT4P9Kp9y4fU43mb4AJzBfr8sGSDUjf
-         3emSQMZx+bfUD8nhc1VhmPCBL97ba7lpbrbcHl9wMU+aPqIypKCAraOFbtQm0qWhTGft
-         RVnA==
-X-Gm-Message-State: APjAAAU9zaR+6lJJImFyaGrK3kakwigCo3QKg7RqBhra5ZaA96gGnuHa
-        fdr28eDgwibD+3NOmi4JY4g=
-X-Google-Smtp-Source: APXvYqwo+ZGXn3KyQo7FHPS98R6YOVgHned9sG2IXs3oABYXuv/88YkzpzcuNx/MOHRLJq1dM2UcaQ==
-X-Received: by 2002:ac2:4add:: with SMTP id m29mr7438524lfp.190.1578850297066;
-        Sun, 12 Jan 2020 09:31:37 -0800 (PST)
+        bh=PqNp1UdCqeyiLALCUBHMvdBWRB+JgxkXykXZjY6I1uo=;
+        b=Zso5z+trE9JvTckMSarhzSHtcqHpNw4AodnGSb59lGbzMhvDteBmw5fB/bFCgBTFzC
+         oUHEG/CfC5CJ7EeaCmALQY4eeExrUfftJYhNjgTkPJWvhhwJum88f3V9v8QxW1FB0OEF
+         3gTcRsDYzzfhBwMH2oU5MnyWHD7myWP+sl8nVYGGQwcHVig5GYDekB19WUmnW7vWi7te
+         7KTSQ1Yk/91xC6ej/LN+6wSNCAN9wBpUWk3wYbXS/ORFBC39LvX9Ze6sxSVCaKt9Vdro
+         6RzodL4Z4fK+HN+AUj/ayYpgEWpWBJ4j2UGibiRqOSMC9Tj71Kd1+a0BC52bmFIO2Lev
+         ujwA==
+X-Gm-Message-State: APjAAAVQdEldWZd1h+HUUo6pjtc4EWXUXlcdwU1uo9bytOFLHh5pNuRh
+        kPIguhPUOkEOyuk5KT7LZVM=
+X-Google-Smtp-Source: APXvYqyk69gPnTU1szw7MirFqod0bsijIASrwmHqWCpYENr6jHmuA6nt+B6zXBSrYyGl34NYqcEkbQ==
+X-Received: by 2002:a2e:b0c4:: with SMTP id g4mr8281818ljl.83.1578850293432;
+        Sun, 12 Jan 2020 09:31:33 -0800 (PST)
 Received: from localhost.localdomain (79-139-233-37.dynamic.spd-mgts.ru. [79.139.233.37])
-        by smtp.gmail.com with ESMTPSA id 140sm4458888lfk.78.2020.01.12.09.31.36
+        by smtp.gmail.com with ESMTPSA id 140sm4458888lfk.78.2020.01.12.09.31.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 12 Jan 2020 09:31:36 -0800 (PST)
+        Sun, 12 Jan 2020 09:31:32 -0800 (PST)
 From:   Dmitry Osipenko <digetx@gmail.com>
 To:     Laxman Dewangan <ldewangan@nvidia.com>,
         Vinod Koul <vkoul@kernel.org>,
@@ -64,9 +64,9 @@ To:     Laxman Dewangan <ldewangan@nvidia.com>,
         =?UTF-8?q?Micha=C5=82=20Miros=C5=82aw?= <mirq-linux@rere.qmqm.pl>
 Cc:     dmaengine@vger.kernel.org, linux-tegra@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: [PATCH v4 09/14] dmaengine: tegra-apb: Clean up runtime PM teardown
-Date:   Sun, 12 Jan 2020 20:30:01 +0300
-Message-Id: <20200112173006.29863-10-digetx@gmail.com>
+Subject: [PATCH v4 05/14] dmaengine: tegra-apb: Prevent race conditions of tasklet vs free list
+Date:   Sun, 12 Jan 2020 20:29:57 +0300
+Message-Id: <20200112173006.29863-6-digetx@gmail.com>
 X-Mailer: git-send-email 2.24.0
 In-Reply-To: <20200112173006.29863-1-digetx@gmail.com>
 References: <20200112173006.29863-1-digetx@gmail.com>
@@ -77,65 +77,30 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-It's cleaner to teardown RPM by revering the enable sequence, which makes
-code much easier to follow.
+The interrupt handler puts a half-completed DMA descriptor on a free list
+and then schedules tasklet to process bottom half of the descriptor that
+executes client's callback, this creates possibility to pick up the busy
+descriptor from the free list. Thus let's disallow descriptor's re-use
+until it is fully processed.
 
 Signed-off-by: Dmitry Osipenko <digetx@gmail.com>
 ---
- drivers/dma/tegra20-apb-dma.c | 22 +++++++++++++---------
- 1 file changed, 13 insertions(+), 9 deletions(-)
+ drivers/dma/tegra20-apb-dma.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/dma/tegra20-apb-dma.c b/drivers/dma/tegra20-apb-dma.c
-index 7158bd3145c4..cc4a9ca20780 100644
+index 1b8a11804962..aafad50d075e 100644
 --- a/drivers/dma/tegra20-apb-dma.c
 +++ b/drivers/dma/tegra20-apb-dma.c
-@@ -1429,13 +1429,15 @@ static int tegra_dma_probe(struct platform_device *pdev)
- 	spin_lock_init(&tdma->global_lock);
+@@ -281,7 +281,7 @@ static struct tegra_dma_desc *tegra_dma_desc_get(
  
- 	pm_runtime_enable(&pdev->dev);
--	if (!pm_runtime_enabled(&pdev->dev))
-+	if (!pm_runtime_enabled(&pdev->dev)) {
- 		ret = tegra_dma_runtime_resume(&pdev->dev);
--	else
-+		if (ret)
-+			return ret;
-+	} else {
- 		ret = pm_runtime_get_sync(&pdev->dev);
--
--	if (ret < 0)
--		goto err_pm_disable;
-+		if (ret < 0)
-+			goto err_pm_disable;
-+	}
- 
- 	/* Reset DMA controller */
- 	reset_control_assert(tdma->rst);
-@@ -1545,9 +1547,10 @@ static int tegra_dma_probe(struct platform_device *pdev)
- 	dma_async_device_unregister(&tdma->dma_dev);
- 
- err_pm_disable:
--	pm_runtime_disable(&pdev->dev);
--	if (!pm_runtime_status_suspended(&pdev->dev))
-+	if (!pm_runtime_enabled(&pdev->dev))
- 		tegra_dma_runtime_suspend(&pdev->dev);
-+	else
-+		pm_runtime_disable(&pdev->dev);
- 
- 	return ret;
- }
-@@ -1558,9 +1561,10 @@ static int tegra_dma_remove(struct platform_device *pdev)
- 
- 	dma_async_device_unregister(&tdma->dma_dev);
- 
--	pm_runtime_disable(&pdev->dev);
--	if (!pm_runtime_status_suspended(&pdev->dev))
-+	if (!pm_runtime_enabled(&pdev->dev))
- 		tegra_dma_runtime_suspend(&pdev->dev);
-+	else
-+		pm_runtime_disable(&pdev->dev);
- 
- 	return 0;
- }
+ 	/* Do not allocate if desc are waiting for ack */
+ 	list_for_each_entry(dma_desc, &tdc->free_dma_desc, node) {
+-		if (async_tx_test_ack(&dma_desc->txd)) {
++		if (async_tx_test_ack(&dma_desc->txd) && !dma_desc->cb_count) {
+ 			list_del(&dma_desc->node);
+ 			spin_unlock_irqrestore(&tdc->lock, flags);
+ 			dma_desc->txd.flags = 0;
 -- 
 2.24.0
 
