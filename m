@@ -6,27 +6,27 @@ X-Spam-Status: No, score=-9.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
 	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E90E0C33CAE
-	for <dmaengine@archiver.kernel.org>; Mon, 13 Jan 2020 05:37:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C8AACC33CAB
+	for <dmaengine@archiver.kernel.org>; Mon, 13 Jan 2020 05:38:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id B158721744
-	for <dmaengine@archiver.kernel.org>; Mon, 13 Jan 2020 05:37:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A8BBA2187F
+	for <dmaengine@archiver.kernel.org>; Mon, 13 Jan 2020 05:38:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726055AbgAMFhp (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 13 Jan 2020 00:37:45 -0500
-Received: from inva020.nxp.com ([92.121.34.13]:32912 "EHLO inva020.nxp.com"
+        id S2387541AbgAMFiB (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 13 Jan 2020 00:38:01 -0500
+Received: from inva020.nxp.com ([92.121.34.13]:33222 "EHLO inva020.nxp.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725978AbgAMFhp (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Mon, 13 Jan 2020 00:37:45 -0500
+        id S1729184AbgAMFh6 (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Mon, 13 Jan 2020 00:37:58 -0500
 Received: from inva020.nxp.com (localhost [127.0.0.1])
-        by inva020.eu-rdc02.nxp.com (Postfix) with ESMTP id 89A1C1A01C0;
-        Mon, 13 Jan 2020 06:37:43 +0100 (CET)
+        by inva020.eu-rdc02.nxp.com (Postfix) with ESMTP id 2D5E51A01A4;
+        Mon, 13 Jan 2020 06:37:57 +0100 (CET)
 Received: from invc005.ap-rdc01.nxp.com (invc005.ap-rdc01.nxp.com [165.114.16.14])
-        by inva020.eu-rdc02.nxp.com (Postfix) with ESMTP id 5B8A81A01A4;
-        Mon, 13 Jan 2020 06:37:30 +0100 (CET)
+        by inva020.eu-rdc02.nxp.com (Postfix) with ESMTP id 2BF871A001D;
+        Mon, 13 Jan 2020 06:37:44 +0100 (CET)
 Received: from localhost.localdomain (shlinux2.ap.freescale.net [10.192.224.44])
-        by invc005.ap-rdc01.nxp.com (Postfix) with ESMTP id 246E540285;
-        Mon, 13 Jan 2020 13:37:17 +0800 (SGT)
+        by invc005.ap-rdc01.nxp.com (Postfix) with ESMTP id EB6EB402F0;
+        Mon, 13 Jan 2020 13:37:30 +0800 (SGT)
 From:   Anson Huang <Anson.Huang@nxp.com>
 To:     robh+dt@kernel.org, mark.rutland@arm.com, vkoul@kernel.org,
         shawnguo@kernel.org, s.hauer@pengutronix.de, kernel@pengutronix.de,
@@ -42,39 +42,44 @@ To:     robh+dt@kernel.org, mark.rutland@arm.com, vkoul@kernel.org,
         dmaengine@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
         linux-mmc@vger.kernel.org, linux-spi@vger.kernel.org
 Cc:     Linux-imx@nxp.com
-Subject: [PATCH V2 1/7] dt-bindings: fsl-imx-sdma: Add i.MX8MM/i.MX8MN/i.MX8MP compatible string
-Date:   Mon, 13 Jan 2020 13:33:16 +0800
-Message-Id: <1578893602-14395-1-git-send-email-Anson.Huang@nxp.com>
+Subject: [PATCH V2 7/7] dt-bindings: arm: imx: Add the i.MX8MP EVK board
+Date:   Mon, 13 Jan 2020 13:33:22 +0800
+Message-Id: <1578893602-14395-7-git-send-email-Anson.Huang@nxp.com>
 X-Mailer: git-send-email 2.7.4
+In-Reply-To: <1578893602-14395-1-git-send-email-Anson.Huang@nxp.com>
+References: <1578893602-14395-1-git-send-email-Anson.Huang@nxp.com>
 X-Virus-Scanned: ClamAV using ClamSMTP
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Add imx8mm/imx8mn/imx8mp sdma support.
+Add board binding for i.MX8MP EVK board.
 
 Signed-off-by: Anson Huang <Anson.Huang@nxp.com>
 ---
-New patch
+No change.
 ---
- Documentation/devicetree/bindings/dma/fsl-imx-sdma.txt | 3 +++
- 1 file changed, 3 insertions(+)
+ Documentation/devicetree/bindings/arm/fsl.yaml | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/dma/fsl-imx-sdma.txt b/Documentation/devicetree/bindings/dma/fsl-imx-sdma.txt
-index 9d8bbac..c9e9740 100644
---- a/Documentation/devicetree/bindings/dma/fsl-imx-sdma.txt
-+++ b/Documentation/devicetree/bindings/dma/fsl-imx-sdma.txt
-@@ -10,6 +10,9 @@ Required properties:
-       "fsl,imx6q-sdma"
-       "fsl,imx7d-sdma"
-       "fsl,imx8mq-sdma"
-+      "fsl,imx8mm-sdma"
-+      "fsl,imx8mn-sdma"
-+      "fsl,imx8mp-sdma"
-   The -to variants should be preferred since they allow to determine the
-   correct ROM script addresses needed for the driver to work without additional
-   firmware.
+diff --git a/Documentation/devicetree/bindings/arm/fsl.yaml b/Documentation/devicetree/bindings/arm/fsl.yaml
+index c5b0270..b8c8c72b 100644
+--- a/Documentation/devicetree/bindings/arm/fsl.yaml
++++ b/Documentation/devicetree/bindings/arm/fsl.yaml
+@@ -324,6 +324,12 @@ properties:
+               - fsl,imx8mn-evk            # i.MX8MN LPDDR4 EVK Board
+           - const: fsl,imx8mn
+ 
++      - description: i.MX8MP based Boards
++        items:
++          - enum:
++              - fsl,imx8mp-evk            # i.MX8MP EVK Board
++          - const: fsl,imx8mp
++
+       - description: i.MX8MQ based Boards
+         items:
+           - enum:
 -- 
 2.7.4
 
