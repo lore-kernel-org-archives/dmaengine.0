@@ -1,103 +1,80 @@
-Return-Path: <SRS0=XleW=3B=vger.kernel.org=dmaengine-owner@kernel.org>
+Return-Path: <SRS0=kZgs=3C=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-9.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C204FC33CAA
-	for <dmaengine@archiver.kernel.org>; Sun, 12 Jan 2020 17:32:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E90E0C33CAE
+	for <dmaengine@archiver.kernel.org>; Mon, 13 Jan 2020 05:37:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 9BCFF24676
-	for <dmaengine@archiver.kernel.org>; Sun, 12 Jan 2020 17:32:26 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TU4wcA6d"
+	by mail.kernel.org (Postfix) with ESMTP id B158721744
+	for <dmaengine@archiver.kernel.org>; Mon, 13 Jan 2020 05:37:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1733307AbgALRc0 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Sun, 12 Jan 2020 12:32:26 -0500
-Received: from mail-lf1-f65.google.com ([209.85.167.65]:36121 "EHLO
-        mail-lf1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1733152AbgALRbg (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Sun, 12 Jan 2020 12:31:36 -0500
-Received: by mail-lf1-f65.google.com with SMTP id n12so5153666lfe.3;
-        Sun, 12 Jan 2020 09:31:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=KfuSooXOkxJU0/VsQZ2ZGbsgKKy+nQ25m7jbl5DejHM=;
-        b=TU4wcA6dES1E3c5DikAX5RTjfTAZDt++p3dfUk6koqvGT7aJcOMgP66k2vRwLjpkeV
-         ogz4EWKuGcXhDZYNq55NsB26SkKU3K6jM87WGFl4eme3GSP6G2Sb4geiLP18Pu29Gjhu
-         uWmyN+6G+t9XN6uESFmQHr0n2W5kevJBDgIA1j7oq58leYbTkKN2WFhA3uZ57rKvEgxM
-         lqDINrg4ZhyTjljew0ULQWQ2GcM6njyusH9zi8MbLq30mZlMqfoQcqMq2jve2hfDLdnP
-         cyYX9wziAbqmbFErQSC/LuChu8Z60/sPKm3h2Rj6/khk7tu3XE+z59bVgUJXqFKmAKAt
-         LRNA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=KfuSooXOkxJU0/VsQZ2ZGbsgKKy+nQ25m7jbl5DejHM=;
-        b=Px5TMBjtA442Snt5P4pM4nAk5KB2XRlo9TpcuzRVdPNwFQnCIny11g/yB4ZTHdJUCt
-         D+VbKdFlKeSJVtnL5lOhM3JCXvmbufNWo/wXKDz1HJNumS+Qn4ff6tTiPBqiINWNtQFW
-         UEzONxWQAFJ4iOzf7v1nGMtMIxEdR+FcseFefMGvPDjhjhsT5ChfVH2Ktu2CtzwckUAN
-         ccKoSQw6z737VsSnKw15z/w905EjpETJHDsrbSxXSwdSUadkq+d86u13qj92IvHPnyIm
-         /tinW8PDVa3W/rRGeoXOS/eqWKSVFkmYz+Ba1zq1ueJ9QGNlmvKkoKD/jw3P952UIfpt
-         7Ifw==
-X-Gm-Message-State: APjAAAV0f1gSFnTnOxHYu/np1TNQTeBmgdNkFuWrrEPaQxs+172YbB2Q
-        Fv5rSvdvVQhWf/6uUWJi7nc=
-X-Google-Smtp-Source: APXvYqwULa8/QnjzJ8ktnccpfzu7jYvhSJqzgEte3YBhequmV+ogCORMJn9TE5/4LXrlF7lPYudTnQ==
-X-Received: by 2002:ac2:5f68:: with SMTP id c8mr5501762lfc.196.1578850294315;
-        Sun, 12 Jan 2020 09:31:34 -0800 (PST)
-Received: from localhost.localdomain (79-139-233-37.dynamic.spd-mgts.ru. [79.139.233.37])
-        by smtp.gmail.com with ESMTPSA id 140sm4458888lfk.78.2020.01.12.09.31.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 12 Jan 2020 09:31:33 -0800 (PST)
-From:   Dmitry Osipenko <digetx@gmail.com>
-To:     Laxman Dewangan <ldewangan@nvidia.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        Dan Williams <dan.j.williams@intel.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        =?UTF-8?q?Micha=C5=82=20Miros=C5=82aw?= <mirq-linux@rere.qmqm.pl>
-Cc:     dmaengine@vger.kernel.org, linux-tegra@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH v4 06/14] dmaengine: tegra-apb: Use devm_platform_ioremap_resource
-Date:   Sun, 12 Jan 2020 20:29:58 +0300
-Message-Id: <20200112173006.29863-7-digetx@gmail.com>
-X-Mailer: git-send-email 2.24.0
-In-Reply-To: <20200112173006.29863-1-digetx@gmail.com>
-References: <20200112173006.29863-1-digetx@gmail.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        id S1726055AbgAMFhp (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 13 Jan 2020 00:37:45 -0500
+Received: from inva020.nxp.com ([92.121.34.13]:32912 "EHLO inva020.nxp.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725978AbgAMFhp (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Mon, 13 Jan 2020 00:37:45 -0500
+Received: from inva020.nxp.com (localhost [127.0.0.1])
+        by inva020.eu-rdc02.nxp.com (Postfix) with ESMTP id 89A1C1A01C0;
+        Mon, 13 Jan 2020 06:37:43 +0100 (CET)
+Received: from invc005.ap-rdc01.nxp.com (invc005.ap-rdc01.nxp.com [165.114.16.14])
+        by inva020.eu-rdc02.nxp.com (Postfix) with ESMTP id 5B8A81A01A4;
+        Mon, 13 Jan 2020 06:37:30 +0100 (CET)
+Received: from localhost.localdomain (shlinux2.ap.freescale.net [10.192.224.44])
+        by invc005.ap-rdc01.nxp.com (Postfix) with ESMTP id 246E540285;
+        Mon, 13 Jan 2020 13:37:17 +0800 (SGT)
+From:   Anson Huang <Anson.Huang@nxp.com>
+To:     robh+dt@kernel.org, mark.rutland@arm.com, vkoul@kernel.org,
+        shawnguo@kernel.org, s.hauer@pengutronix.de, kernel@pengutronix.de,
+        festevam@gmail.com, ulf.hansson@linaro.org,
+        srinivas.kandagatla@linaro.org, broonie@kernel.org,
+        manivannan.sadhasivam@linaro.org, andrew.smirnov@gmail.com,
+        rjones@gateworks.com, marcel.ziswiler@toradex.com,
+        sebastien.szymanski@armadeus.com, aisheng.dong@nxp.com,
+        richard.hu@technexion.com, angus@akkea.ca, cosmin.stoica@nxp.com,
+        l.stach@pengutronix.de, rabeeh@solid-run.com,
+        leonard.crestez@nxp.com, daniel.baluta@nxp.com, jun.li@nxp.com,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        dmaengine@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-mmc@vger.kernel.org, linux-spi@vger.kernel.org
+Cc:     Linux-imx@nxp.com
+Subject: [PATCH V2 1/7] dt-bindings: fsl-imx-sdma: Add i.MX8MM/i.MX8MN/i.MX8MP compatible string
+Date:   Mon, 13 Jan 2020 13:33:16 +0800
+Message-Id: <1578893602-14395-1-git-send-email-Anson.Huang@nxp.com>
+X-Mailer: git-send-email 2.7.4
+X-Virus-Scanned: ClamAV using ClamSMTP
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Use devm_platform_ioremap_resource to keep code cleaner a tad.
+Add imx8mm/imx8mn/imx8mp sdma support.
 
-Signed-off-by: Dmitry Osipenko <digetx@gmail.com>
+Signed-off-by: Anson Huang <Anson.Huang@nxp.com>
 ---
- drivers/dma/tegra20-apb-dma.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+New patch
+---
+ Documentation/devicetree/bindings/dma/fsl-imx-sdma.txt | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/dma/tegra20-apb-dma.c b/drivers/dma/tegra20-apb-dma.c
-index aafad50d075e..f44291207928 100644
---- a/drivers/dma/tegra20-apb-dma.c
-+++ b/drivers/dma/tegra20-apb-dma.c
-@@ -1402,8 +1402,7 @@ static int tegra_dma_probe(struct platform_device *pdev)
- 	tdma->chip_data = cdata;
- 	platform_set_drvdata(pdev, tdma);
- 
--	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
--	tdma->base_addr = devm_ioremap_resource(&pdev->dev, res);
-+	tdma->base_addr = devm_platform_ioremap_resource(pdev, 0);
- 	if (IS_ERR(tdma->base_addr))
- 		return PTR_ERR(tdma->base_addr);
- 
+diff --git a/Documentation/devicetree/bindings/dma/fsl-imx-sdma.txt b/Documentation/devicetree/bindings/dma/fsl-imx-sdma.txt
+index 9d8bbac..c9e9740 100644
+--- a/Documentation/devicetree/bindings/dma/fsl-imx-sdma.txt
++++ b/Documentation/devicetree/bindings/dma/fsl-imx-sdma.txt
+@@ -10,6 +10,9 @@ Required properties:
+       "fsl,imx6q-sdma"
+       "fsl,imx7d-sdma"
+       "fsl,imx8mq-sdma"
++      "fsl,imx8mm-sdma"
++      "fsl,imx8mn-sdma"
++      "fsl,imx8mp-sdma"
+   The -to variants should be preferred since they allow to determine the
+   correct ROM script addresses needed for the driver to work without additional
+   firmware.
 -- 
-2.24.0
+2.7.4
 
