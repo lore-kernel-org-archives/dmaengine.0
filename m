@@ -4,57 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-5.6 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,
-	SPF_PASS,UNPARSEABLE_RELAY,USER_AGENT_SANE_1 autolearn=unavailable
-	autolearn_force=no version=3.4.0
+	SPF_PASS,UNPARSEABLE_RELAY,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CD393C33CAE
-	for <dmaengine@archiver.kernel.org>; Tue, 14 Jan 2020 00:25:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 47239C33CA9
+	for <dmaengine@archiver.kernel.org>; Tue, 14 Jan 2020 00:30:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id A23E52080D
-	for <dmaengine@archiver.kernel.org>; Tue, 14 Jan 2020 00:25:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 18C322084D
+	for <dmaengine@archiver.kernel.org>; Tue, 14 Jan 2020 00:30:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1578961534;
-	bh=r//HtQr1/GkF0gDefeI9nE/SnYU1wpl4iGrpC+20fEU=;
+	s=default; t=1578961806;
+	bh=ICuLmJcd5MuUF5ih4nNV4O+uuHngWapP4XE/nqFRloI=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:List-ID:From;
-	b=X85bZdlbwVlfQFZsBQxHsKaE2vi74HbLem9X0P3po2qh7dr1O5w0ajFOpX4jKYFGY
-	 9tEVuBGRm351KGsaB0VfjgyBhYB2ymsiD8oYtpq23aF299yIwu2FtYBMaAeg52CQup
-	 I7Xawg0vXNxEOMRzaseKOHdOg6RNhRksClCo9HOY=
+	b=xq4AxcGqP73vod7/y/M1gVs27AxTof71fKHSuw5m6fNcHPagHu22ux5xWQWGJZSsx
+	 4u7v6qImXoIqQI2efYtkKdeZs+VZbyRM9esvGzCpTXHF+y5TgLalYyLLpaeYNNTx43
+	 hHPNSZi4Qw2rlSLIDN15gBg51CZMsYomUqBRZglE=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729153AbgANAZe (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 13 Jan 2020 19:25:34 -0500
-Received: from mail-ot1-f65.google.com ([209.85.210.65]:41925 "EHLO
-        mail-ot1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726536AbgANAZe (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Mon, 13 Jan 2020 19:25:34 -0500
-Received: by mail-ot1-f65.google.com with SMTP id r27so10856211otc.8
-        for <dmaengine@vger.kernel.org>; Mon, 13 Jan 2020 16:25:33 -0800 (PST)
+        id S1728890AbgANAaF (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 13 Jan 2020 19:30:05 -0500
+Received: from mail-ot1-f68.google.com ([209.85.210.68]:36745 "EHLO
+        mail-ot1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728714AbgANAaF (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Mon, 13 Jan 2020 19:30:05 -0500
+Received: by mail-ot1-f68.google.com with SMTP id m2so6024970otq.3
+        for <dmaengine@vger.kernel.org>; Mon, 13 Jan 2020 16:30:05 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=/2uIWxQRw2ac2zDhobeFtImF06Kett0ywn6nB0mPlAo=;
-        b=VIMtDxDQ6vsqc7+xuo8fKaAMg2lXlCJvnba5nEvgzyMrkBHEygpQyoe6U0QK4kPdx1
-         05P64axMf4fWmvdbDaPKI/9iP2UWKLr93t0GDHksqmbElJzakkOjTkZJd3/e8dSNLof3
-         BHvjwSKM4jDuw6cmENJJTGGFNi+LkohQXgZQ6kzGxoAAXNT3b1Q4xnUcxOU853yx/8lg
-         9lvUw6O4PU3pr8FCe4akvkdfo9i2ZkK4XmeBPDEsTb59fmMvn3hiWjGGqkf9y0uAXVV+
-         a5qKFdH6L8C24HVrI0ZxPkxsOGsEO2Djfn11Nzv70WT/kmaAqv8wETTb253xbAX9Qb89
-         AhHg==
-X-Gm-Message-State: APjAAAVnzB+xuHKkLN4jaQMs5hqkT6+mJu7mTYWcvrtpnlf+l3eXqiIO
-        /AMIpxshWpaRIe24oosQJrovHV+vCQ==
-X-Google-Smtp-Source: APXvYqw0FyHAfWd4WDjDH/cIFu54ELwYMsg6JeHJirCocpuwUF8ccpl/GQ4/F8+4x/jGdQrY4Uk6Tw==
-X-Received: by 2002:a9d:6f0d:: with SMTP id n13mr15616959otq.165.1578961533168;
-        Mon, 13 Jan 2020 16:25:33 -0800 (PST)
+        bh=+qSm233hBzLTG9G2DIy5d4ytValKHnVbjxr5pAXtlvA=;
+        b=GfYovsz14FzLTOhGrrWXdnRnpgpaSIeuXwiPlA34zngup1lZQMWma4WJVwd+fDF9t/
+         L+Xmmts2b9porky9YYuYJxr3oatcBgWdhzRnF7DwKrGiv4UMjqAPQ6ZiaK3S5jA3fDhw
+         K9PRHu7aam+jhJmuwNP/F0dukybFaAXmJaSwN7OHgZsSvcZX1Xc/i8wE3z5tlKmynMAL
+         qN9MmnO/7UKyz5l+LtIQqvl9GrdDh04kXlIdvGZ/nbG6IuZjW+5yARf4mmznfyMTtfVi
+         h0wizMRA8LdKJtmfw+ppUEzORxHvP+dOBiecZvEwVnYlU6AUc9D65yQrQIYRSxQG435N
+         6xcA==
+X-Gm-Message-State: APjAAAXnrGRqAO9k/ACo+x+252SbF12g4TwGTa9l/SAUa5R/F9S+mZaO
+        ZuE+NTIzi97Oi9wFfR7RVZHCpoVh9w==
+X-Google-Smtp-Source: APXvYqxSR6ocqDYIGNc2Xzjunyn0KEOQ7d7GuPpA23lJiW2EyKzeJTRBzGgR1JIEqdqlpWguueDeBQ==
+X-Received: by 2002:a05:6830:120b:: with SMTP id r11mr13783190otp.254.1578961804351;
+        Mon, 13 Jan 2020 16:30:04 -0800 (PST)
 Received: from rob-hp-laptop (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.gmail.com with ESMTPSA id j26sm4801412otq.18.2020.01.13.16.25.32
+        by smtp.gmail.com with ESMTPSA id m3sm4770536otf.13.2020.01.13.16.30.02
         for <dmaengine@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 13 Jan 2020 16:25:32 -0800 (PST)
+        Mon, 13 Jan 2020 16:30:03 -0800 (PST)
 Received: from rob (uid 1000)
         (envelope-from rob@rob-hp-laptop)
-        id 221ab2
+        id 2219d1
         by rob-hp-laptop (DragonFly Mail Agent v0.11);
-        Mon, 13 Jan 2020 18:16:59 -0600
-Date:   Mon, 13 Jan 2020 18:16:59 -0600
+        Mon, 13 Jan 2020 18:21:19 -0600
+Date:   Mon, 13 Jan 2020 18:21:19 -0600
 From:   Rob Herring <robh@kernel.org>
 To:     Claudiu Beznea <claudiu.beznea@microchip.com>
 Cc:     robh+dt@kernel.org, mark.rutland@arm.com,
@@ -72,29 +72,39 @@ Cc:     robh+dt@kernel.org, mark.rutland@arm.com,
         linux-spi@vger.kernel.org, linux-mtd@lists.infradead.org,
         linux-can@vger.kernel.org, linux-rtc@vger.kernel.org,
         Claudiu Beznea <claudiu.beznea@microchip.com>
-Subject: Re: [PATCH v2 08/17] dt-bindings: atmel-nand: add
- microchip,sam9x60-pmecc
-Message-ID: <20200114001659.GA11452@bogus>
+Subject: Re: [PATCH v2 12/17] dt-bindings: atmel,at91rm9200-rtc: add
+ microchip,sam9x60-rtc
+Message-ID: <20200114002119.GA18003@bogus>
 References: <1578673089-3484-1-git-send-email-claudiu.beznea@microchip.com>
- <1578673089-3484-9-git-send-email-claudiu.beznea@microchip.com>
+ <1578673089-3484-13-git-send-email-claudiu.beznea@microchip.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1578673089-3484-9-git-send-email-claudiu.beznea@microchip.com>
+In-Reply-To: <1578673089-3484-13-git-send-email-claudiu.beznea@microchip.com>
 User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On Fri, 10 Jan 2020 18:18:00 +0200, Claudiu Beznea wrote:
-> Add microchip,sam9x60-pmecc to DT bindings documentation.
+On Fri, 10 Jan 2020 18:18:04 +0200, Claudiu Beznea wrote:
+> Add microchip,sam9x60-rtc to DT bindings documentation.
 > 
+> Cc: Alexandre Belloni <alexandre.belloni@bootlin.com>
 > Signed-off-by: Claudiu Beznea <claudiu.beznea@microchip.com>
-> Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
 > ---
->  Documentation/devicetree/bindings/mtd/atmel-nand.txt | 1 +
->  1 file changed, 1 insertion(+)
+> 
+> Hi Alexandre,
+> 
+> I kept this patch as in v1 (same for patch
+> "dt-bindings: atmel-tcb: add microchip,sam9x60-tcb").
+> I'm waiting your response to this version and take an action aftewards.
+> 
+> Thank you,
+> Claudiu Beznea
+> 
+>  Documentation/devicetree/bindings/rtc/atmel,at91rm9200-rtc.txt | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
 > 
 
 Acked-by: Rob Herring <robh@kernel.org>
