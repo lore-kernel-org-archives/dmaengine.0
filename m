@@ -2,195 +2,305 @@ Return-Path: <SRS0=m5Qb=3E=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.3 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.1 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C3B33C33CB1
-	for <dmaengine@archiver.kernel.org>; Wed, 15 Jan 2020 08:14:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A0971C3F68F
+	for <dmaengine@archiver.kernel.org>; Wed, 15 Jan 2020 08:32:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 96DC224671
-	for <dmaengine@archiver.kernel.org>; Wed, 15 Jan 2020 08:14:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6DE852467E
+	for <dmaengine@archiver.kernel.org>; Wed, 15 Jan 2020 08:32:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=default; t=1579077158;
+	bh=AJyv1HZR4EHgQ2ATWhJRGP+gmuAx89Jzdjy+Kx5JWto=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:List-ID:From;
+	b=gkXTcjYA2eCHFVB68GCSOt1n3l/ZlcOX5dBxmYqQ3YEM4/9U06lqX38q1fmWraNmN
+	 8OpBO5+Si9kML0P+tPBLHKc9FL2JLmKgUJyoXRR0fNnpffQt9VGmQJvxfbB58mWEVM
+	 GyCZXT6XvuJDpIx1DDwKPnXpBp5Jc9me6zJzglRA=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726418AbgAOIOy (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 15 Jan 2020 03:14:54 -0500
-Received: from metis.ext.pengutronix.de ([85.220.165.71]:58923 "EHLO
-        metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726100AbgAOIOy (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Wed, 15 Jan 2020 03:14:54 -0500
-Received: from ptx.hi.pengutronix.de ([2001:67c:670:100:1d::c0])
-        by metis.ext.pengutronix.de with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.92)
-        (envelope-from <sha@pengutronix.de>)
-        id 1irdp0-0001Tj-6d; Wed, 15 Jan 2020 09:14:38 +0100
-Received: from sha by ptx.hi.pengutronix.de with local (Exim 4.89)
-        (envelope-from <sha@pengutronix.de>)
-        id 1irdoz-0000CT-5q; Wed, 15 Jan 2020 09:14:37 +0100
-Date:   Wed, 15 Jan 2020 09:14:37 +0100
-From:   Sascha Hauer <s.hauer@pengutronix.de>
-To:     Han Xu <han.xu@nxp.com>
-Cc:     vkoul@kernel.org, shawnguo@kernel.org, miquel.raynal@bootlin.com,
-        richard@nod.at, vigneshr@ti.com, esben@geanix.com,
-        boris.brezillon@collabora.com, festevam@gmail.com,
-        linux-imx@nxp.com, dmaengine@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-mtd@lists.infradead.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 4/6] dmaengine: mxs: switch from dma_coherent to dma_pool
-Message-ID: <20200115081437.gsrzwm5bkk2hg6vo@pengutronix.de>
-References: <1579038243-28550-1-git-send-email-han.xu@nxp.com>
- <1579038243-28550-5-git-send-email-han.xu@nxp.com>
+        id S1728915AbgAOIci (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 15 Jan 2020 03:32:38 -0500
+Received: from mail.kernel.org ([198.145.29.99]:38356 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726088AbgAOIch (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Wed, 15 Jan 2020 03:32:37 -0500
+Received: from localhost (lfbn-tou-1-1502-76.w90-89.abo.wanadoo.fr [90.89.68.76])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 9EDB62187F;
+        Wed, 15 Jan 2020 08:32:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1579077156;
+        bh=AJyv1HZR4EHgQ2ATWhJRGP+gmuAx89Jzdjy+Kx5JWto=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=S3T1oBaqDC6tntUQMYVvrQOVvm4PoNHLCcm6dT2c4bq9ngC9hqWnNpR0Djn//d779
+         ZINmrLjH4ZlDVmIA+PN/HR6pE4dCNhE0xcnADbgKkQzaq334ms0vj9p66uDVhBNl5y
+         f1Jn3Lo8LiQ2vnlPTcg2SpvCvjbUGXfPcg2w4THI=
+Date:   Wed, 15 Jan 2020 09:32:33 +0100
+From:   Maxime Ripard <mripard@kernel.org>
+To:     Stefan Mavrodiev <stefan@olimex.com>
+Cc:     Dan Williams <dan.j.williams@intel.com>,
+        Vinod Koul <vkoul@kernel.org>, Chen-Yu Tsai <wens@csie.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        open list <linux-kernel@vger.kernel.org>,
+        "open list:DMA GENERIC OFFLOAD ENGINE SUBSYSTEM" 
+        <dmaengine@vger.kernel.org>,
+        "moderated list:ARM/Allwinner sunXi SoC support" 
+        <linux-arm-kernel@lists.infradead.org>,
+        "open list:DRM DRIVERS FOR ALLWINNER A10" 
+        <dri-devel@lists.freedesktop.org>, linux-sunxi@googlegroups.com
+Subject: Re: [PATCH 2/2] drm: sun4i: hdmi: Add support for sun4i HDMI encoder
+ audio
+Message-ID: <20200115083233.7wedmnkj4ju4eccv@gilmour.lan>
+References: <20200110141140.28527-1-stefan@olimex.com>
+ <20200110141140.28527-3-stefan@olimex.com>
+ <20200110162631.wbufz5h7nqfgd6am@gilmour.lan>
+ <f4ad41ce-e3d0-33e4-1e85-d23e557b484d@olimex.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha256;
+        protocol="application/pgp-signature"; boundary="7lkei534qhur3fvp"
 Content-Disposition: inline
-In-Reply-To: <1579038243-28550-5-git-send-email-han.xu@nxp.com>
-X-Sent-From: Pengutronix Hildesheim
-X-URL:  http://www.pengutronix.de/
-X-IRC:  #ptxdist @freenode
-X-Accept-Language: de,en
-X-Accept-Content-Type: text/plain
-X-Uptime: 09:03:40 up 191 days, 14:13, 86 users,  load average: 0.25, 0.42,
- 0.34
-User-Agent: NeoMutt/20170113 (1.7.2)
-X-SA-Exim-Connect-IP: 2001:67c:670:100:1d::c0
-X-SA-Exim-Mail-From: sha@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: dmaengine@vger.kernel.org
+In-Reply-To: <f4ad41ce-e3d0-33e4-1e85-d23e557b484d@olimex.com>
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On Wed, Jan 15, 2020 at 05:44:01AM +0800, Han Xu wrote:
-> create one dma_pool dedicate for mxs-dma to avoid the
-> "alloc_contig_range: [xxx, xxx) PFNs busy" warning message during
-> frequently alloc/free resource ops in runtime pm.
-> 
-> Signed-off-by: Han Xu <han.xu@nxp.com>
-> ---
->  drivers/dma/mxs-dma.c | 32 ++++++++++++++++++++++++--------
->  1 file changed, 24 insertions(+), 8 deletions(-)
-> 
-> diff --git a/drivers/dma/mxs-dma.c b/drivers/dma/mxs-dma.c
-> index 251492c5ea58..dfee41ae1981 100644
-> --- a/drivers/dma/mxs-dma.c
-> +++ b/drivers/dma/mxs-dma.c
-> @@ -26,6 +26,7 @@
->  #include <linux/list.h>
->  #include <linux/dma/mxs-dma.h>
->  #include <linux/pm_runtime.h>
-> +#include <linux/dmapool.h>
->  
->  #include <asm/irq.h>
->  
-> @@ -121,6 +122,7 @@ struct mxs_dma_chan {
->  	enum dma_status			status;
->  	unsigned int			flags;
->  	bool				reset;
-> +	struct dma_pool			*ccw_pool;
->  #define MXS_DMA_SG_LOOP			(1 << 0)
->  #define MXS_DMA_USE_SEMAPHORE		(1 << 1)
->  };
-> @@ -422,9 +424,10 @@ static int mxs_dma_alloc_chan_resources(struct dma_chan *chan)
->  	struct device *dev = &mxs_dma->pdev->dev;
->  	int ret;
->  
-> -	mxs_chan->ccw = dma_alloc_coherent(mxs_dma->dma_device.dev,
-> -					   CCW_BLOCK_SIZE,
-> -					   &mxs_chan->ccw_phys, GFP_KERNEL);
-> +	mxs_chan->ccw = dma_pool_zalloc(mxs_chan->ccw_pool,
-> +					GFP_ATOMIC,
-> +					&mxs_chan->ccw_phys);
 
-Why GFP_ATOMIC?
+--7lkei534qhur3fvp
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-> +
->  	if (!mxs_chan->ccw) {
->  		ret = -ENOMEM;
->  		goto err_alloc;
-> @@ -454,8 +457,8 @@ static int mxs_dma_alloc_chan_resources(struct dma_chan *chan)
->  err_clk:
->  	free_irq(mxs_chan->chan_irq, mxs_dma);
->  err_irq:
-> -	dma_free_coherent(mxs_dma->dma_device.dev, CCW_BLOCK_SIZE,
-> -			mxs_chan->ccw, mxs_chan->ccw_phys);
-> +	dma_pool_free(mxs_chan->ccw_pool, mxs_chan->ccw,
-> +		      mxs_chan->ccw_phys);
->  err_alloc:
->  	return ret;
->  }
-> @@ -470,8 +473,8 @@ static void mxs_dma_free_chan_resources(struct dma_chan *chan)
->  
->  	free_irq(mxs_chan->chan_irq, mxs_dma);
->  
-> -	dma_free_coherent(mxs_dma->dma_device.dev, CCW_BLOCK_SIZE,
-> -			mxs_chan->ccw, mxs_chan->ccw_phys);
-> +	dma_pool_free(mxs_chan->ccw_pool, mxs_chan->ccw,
-> +		      mxs_chan->ccw_phys);
->  
->  	pm_runtime_mark_last_busy(dev);
->  	pm_runtime_put_autosuspend(dev);
-> @@ -796,6 +799,7 @@ static int mxs_dma_probe(struct platform_device *pdev)
->  	const struct mxs_dma_type *dma_type;
->  	struct mxs_dma_engine *mxs_dma;
->  	struct resource *iores;
-> +	struct dma_pool *ccw_pool;
->  	int ret, i;
->  
->  	mxs_dma = devm_kzalloc(&pdev->dev, sizeof(*mxs_dma), GFP_KERNEL);
-> @@ -843,7 +847,6 @@ static int mxs_dma_probe(struct platform_device *pdev)
->  		tasklet_init(&mxs_chan->tasklet, mxs_dma_tasklet,
->  			     (unsigned long) mxs_chan);
->  
-> -
->  		/* Add the channel to mxs_chan list */
->  		list_add_tail(&mxs_chan->chan.device_node,
->  			&mxs_dma->dma_device.channels);
-> @@ -858,6 +861,17 @@ static int mxs_dma_probe(struct platform_device *pdev)
->  
->  	mxs_dma->dma_device.dev = &pdev->dev;
->  
-> +	/* create the dma pool */
-> +	ccw_pool = dma_pool_create("ccw_pool",
-> +				   mxs_dma->dma_device.dev,
-> +				   CCW_BLOCK_SIZE, 32, 0);
-> +
-> +	for (i = 0; i < MXS_DMA_CHANNELS; i++) {
-> +		struct mxs_dma_chan *mxs_chan = &mxs_dma->mxs_chans[i];
-> +
-> +		mxs_chan->ccw_pool = ccw_pool;
-> +	}
+Hi Stefan,
 
-ccw_pool is the same for every channel, it should be a member of
-struct mxs_dma_engine and not of struct mcs_dma_chan.
+On Tue, Jan 14, 2020 at 11:04:55AM +0200, Stefan Mavrodiev wrote:
+> On 1/10/20 6:26 PM, Maxime Ripard wrote:
+> > Hi,
+> >
+> > On Fri, Jan 10, 2020 at 04:11:40PM +0200, Stefan Mavrodiev wrote:
+> > > Add HDMI audio support for the sun4i-hdmi encoder, used on
+> > > the older Allwinner chips - A10, A20, A31.
+> > >
+> > > Most of the code is based on the BSP implementation. In it
+> > > dditional formats are supported (S20_3LE and S24_LE), however
+> > > there where some problems with them and only S16_LE is left.
+> > >
+> > > Signed-off-by: Stefan Mavrodiev <stefan@olimex.com>
+> > > ---
+> > >   drivers/gpu/drm/sun4i/Kconfig            |   1 +
+> > >   drivers/gpu/drm/sun4i/Makefile           |   1 +
+> > >   drivers/gpu/drm/sun4i/sun4i_hdmi.h       |  30 ++
+> > >   drivers/gpu/drm/sun4i/sun4i_hdmi_audio.c | 375 +++++++++++++++++++++++
+> > >   drivers/gpu/drm/sun4i/sun4i_hdmi_enc.c   |   4 +
+> > >   5 files changed, 411 insertions(+)
+> > >   create mode 100644 drivers/gpu/drm/sun4i/sun4i_hdmi_audio.c
+> > >
+> > > diff --git a/drivers/gpu/drm/sun4i/Kconfig b/drivers/gpu/drm/sun4i/Kconfig
+> > > index 37e90e42943f..192b732b10cd 100644
+> > > --- a/drivers/gpu/drm/sun4i/Kconfig
+> > > +++ b/drivers/gpu/drm/sun4i/Kconfig
+> > > @@ -19,6 +19,7 @@ if DRM_SUN4I
+> > >   config DRM_SUN4I_HDMI
+> > >          tristate "Allwinner A10 HDMI Controller Support"
+> > >          default DRM_SUN4I
+> > > +       select SND_PCM_ELD
+> > >          help
+> > >   	  Choose this option if you have an Allwinner SoC with an HDMI
+> > >   	  controller.
+> > > diff --git a/drivers/gpu/drm/sun4i/Makefile b/drivers/gpu/drm/sun4i/Makefile
+> > > index 0d04f2447b01..e2d82b451c36 100644
+> > > --- a/drivers/gpu/drm/sun4i/Makefile
+> > > +++ b/drivers/gpu/drm/sun4i/Makefile
+> > > @@ -5,6 +5,7 @@ sun4i-frontend-y		+= sun4i_frontend.o
+> > >   sun4i-drm-y			+= sun4i_drv.o
+> > >   sun4i-drm-y			+= sun4i_framebuffer.o
+> > >
+> > > +sun4i-drm-hdmi-y		+= sun4i_hdmi_audio.o
+> > >   sun4i-drm-hdmi-y		+= sun4i_hdmi_ddc_clk.o
+> > >   sun4i-drm-hdmi-y		+= sun4i_hdmi_enc.o
+> > >   sun4i-drm-hdmi-y		+= sun4i_hdmi_i2c.o
+> > > diff --git a/drivers/gpu/drm/sun4i/sun4i_hdmi.h b/drivers/gpu/drm/sun4i/sun4i_hdmi.h
+> > > index 7ad3f06c127e..456964e681b0 100644
+> > > --- a/drivers/gpu/drm/sun4i/sun4i_hdmi.h
+> > > +++ b/drivers/gpu/drm/sun4i/sun4i_hdmi.h
+> > > @@ -42,7 +42,32 @@
+> > >   #define SUN4I_HDMI_VID_TIMING_POL_VSYNC		BIT(1)
+> > >   #define SUN4I_HDMI_VID_TIMING_POL_HSYNC		BIT(0)
+> > >
+> > > +#define SUN4I_HDMI_AUDIO_CTRL_REG	0x040
+> > > +#define SUN4I_HDMI_AUDIO_CTRL_ENABLE		BIT(31)
+> > > +#define SUN4I_HDMI_AUDIO_CTRL_RESET		BIT(30)
+> > > +
+> > > +#define SUN4I_HDMI_AUDIO_FMT_REG	0x048
+> > > +#define SUN4I_HDMI_AUDIO_FMT_SRC		BIT(31)
+> > > +#define SUN4I_HDMI_AUDIO_FMT_LAYOUT		BIT(3)
+> > > +#define SUN4I_HDMI_AUDIO_FMT_CH_CFG(n)		(n - 1)
+> > There's the issue multiple times in the headers, but you should wrap n
+> > in parentheses to make sure we have no issue with precedence when
+> > calling the macro.
+> >
+> > > +int sun4i_hdmi_audio_create(struct sun4i_hdmi *hdmi)
+> > > +{
+> > > +	struct snd_soc_card *card = &sun4i_hdmi_audio_card;
+> > > +	struct snd_soc_dai_link_component *comp;
+> > > +	struct snd_soc_dai_link *link;
+> > > +	int ret;
+> > > +
+> > > +	ret = devm_snd_dmaengine_pcm_register(hdmi->dev,
+> > > +					      &sun4i_hdmi_audio_pcm_config, 0);
+> > > +	if (ret) {
+> > > +		DRM_ERROR("Could not register PCM\n");
+> > > +		return ret;
+> > > +	}
+> > > +
+> > > +	ret = devm_snd_soc_register_component(hdmi->dev,
+> > > +					      &sun4i_hdmi_audio_component,
+> > > +					      &sun4i_hdmi_audio_dai, 1);
+> > > +	if (ret) {
+> > > +		DRM_ERROR("Could not register DAI\n");
+> > > +		return ret;
+> > > +	}
+> > > +
+> > > +	link = devm_kzalloc(hdmi->dev, sizeof(*link), GFP_KERNEL);
+> > > +	if (!link)
+> > > +		return -ENOMEM;
+> > > +
+> > > +	comp = devm_kzalloc(hdmi->dev, sizeof(*comp) * 3, GFP_KERNEL);
+> > > +	if (!comp)
+> > > +		return -ENOMEM;
+> > > +
+> > > +	link->cpus = &comp[0];
+> > > +	link->codecs = &comp[1];
+> > > +	link->platforms = &comp[2];
+> > > +
+> > > +	link->num_cpus = 1;
+> > > +	link->num_codecs = 1;
+> > > +	link->num_platforms = 1;
+> > > +
+> > > +	link->playback_only = 1;
+> > > +
+> > > +	link->name = "SUN4I-HDMI";
+> > > +	link->stream_name = "SUN4I-HDMI PCM";
+> > > +
+> > > +	link->codecs->name = dev_name(hdmi->dev);
+> > > +	link->codecs->dai_name	= sun4i_hdmi_audio_dai.name;
+> > > +
+> > > +	link->cpus->dai_name = dev_name(hdmi->dev);
+> > > +
+> > > +	link->platforms->name = dev_name(hdmi->dev);
+> > > +
+> > > +	link->dai_fmt = SND_SOC_DAIFMT_I2S;
+> > > +
+> > > +	card->dai_link = link;
+> > > +	card->num_links = 1;
+> > > +	card->dev = hdmi->dev;
+> > > +
+> > > +	snd_soc_card_set_drvdata(card, hdmi);
+> > > +	return devm_snd_soc_register_card(hdmi->dev, card);
+> >
+> > Out of curiosity, did you try to remove the module with that patch
+> > applied? IIRC, these functions will overwrite the device drvdata, and
+> > we will try to access them in unbind / remove.
+>
+> Actually I did not. Just tried that and you're right. The module
+> crashes at the unbind call.  I use sun4i_hdmi struct only for
+> regmap. Maybe create separate private structure and copy only
+> regmap?
 
-> +
->  	/* mxs_dma gets 65535 bytes maximum sg size */
->  	mxs_dma->dma_device.dev->dma_parms = &mxs_dma->dma_parms;
->  	dma_set_max_seg_size(mxs_dma->dma_device.dev, MAX_XFER_BYTES);
-> @@ -899,11 +913,13 @@ static int mxs_dma_remove(struct platform_device *pdev)
->  	int i;
->  
->  	dma_async_device_unregister(&mxs_dma->dma_device);
-> +	dma_pool_destroy(mxs_dma->mxs_chans[0].ccw_pool);
+I think the issue is that:
 
-It doesn't seem to make a big difference, but I would do this after
-killing the tasklets, not before. Otherwise we would have to prove that
-no tasklet is still accessing the dma_pool.
+  - In bind, we first call dev_set_drvdata on the bound device, with a
+    pointer to struct sun4i_hdmi as the value. The driver_data field
+    in struct device is now a pointer to our instance of struct
+    sun4i_hdmi.
 
->  
->  	for (i = 0; i < MXS_DMA_CHANNELS; i++) {
->  		struct mxs_dma_chan *mxs_chan = &mxs_dma->mxs_chans[i];
->  
->  		tasklet_kill(&mxs_chan->tasklet);
-> +		mxs_chan->ccw_pool = NULL;
+  - In audio create, you then call snd_soc_card_set_drvdata with a
+    pointer to struct sun4i_hdmi as the value. The drvdata field in
+    the struct snd_soc_card is now a pointer to our instance of struct
+    sun4i_hdmi (so far so good).
 
-There's no point in resetting this to NULL, mxs_chan is never going to
-be touched again.
+  - Then you call (devm_)snd_soc_register_card. One of the thing that
+    it will do is call drv_set_drvdata on the card->dev device,
+    setting it to our pointer to the struct snd_soc_card we provided.
+    However, since you set card->dev to the same device than the one
+    initially bound, this means that you just overwrote the struct
+    sun4i_hdmi pointer with a pointer to struct snd_soc_card.
 
-Sascha
+  - The driver will operate properly, since we never really use the
+    driver_data field, in the HDMI driver, except when...
 
--- 
-Pengutronix e.K.                           |                             |
-Steuerwalder Str. 21                       | http://www.pengutronix.de/  |
-31137 Hildesheim, Germany                  | Phone: +49-5121-206917-0    |
-Amtsgericht Hildesheim, HRA 2686           | Fax:   +49-5121-206917-5555 |
+  - At unbind, you retrieve the driver_data field, expecting a struct
+    sun4i_hdmi pointer, except you have a pointer to struct
+    snd_soc_card, and everything explodes.
+
+I think the way to work around that would be to create a new
+(platform_)device for the HDMI audio component, so that ASoC can work
+on that device instead.
+
+This seems to be what dw-hdmi is doing here:
+https://elixir.bootlin.com/linux/latest/source/drivers/gpu/drm/bridge/synopsys/dw-hdmi.c#L2812
+
+(Except that they are also using platform_data, since they have
+multiple drivers, we wouldn't, so we can just lookup sun4i_hdmi using
+the parent's device driver_data).
+
+> > > +}
+> > > diff --git a/drivers/gpu/drm/sun4i/sun4i_hdmi_enc.c b/drivers/gpu/drm/sun4i/sun4i_hdmi_enc.c
+> > > index a7c4654445c7..79ecd89fb705 100644
+> > > --- a/drivers/gpu/drm/sun4i/sun4i_hdmi_enc.c
+> > > +++ b/drivers/gpu/drm/sun4i/sun4i_hdmi_enc.c
+> > > @@ -114,6 +114,9 @@ static void sun4i_hdmi_enable(struct drm_encoder *encoder)
+> > >   		val |= SUN4I_HDMI_VID_CTRL_HDMI_MODE;
+> > >
+> > >   	writel(val, hdmi->base + SUN4I_HDMI_VID_CTRL_REG);
+> > > +
+> > > +	if (hdmi->hdmi_audio && sun4i_hdmi_audio_create(hdmi))
+> > > +		DRM_ERROR("Couldn't create the HDMI audio adapter\n");
+> >
+> > So you create the audio card each time the display is enabled? I guess
+> > this is to deal with the hotplug?
+>
+> Yes. See below.
+>
+> > I'm not sure this is the right thing to do. If I remember well, the
+> > ELD are here precisely to let userspace know that the display is
+> > plugged (and audio-capable) or not.
+> >
+> > Also, you don't remove that card in the disable, which mean that if
+> > you end up in a situation where you would enable the display, disable
+> > it and then enable it again, you have two audio cards now.
+>
+> There is issue with the hotplug. When inserting the cable, the event
+> is detected and the hdmi encoder is enabled. Thus the card is
+> created. However further removal and insertions are not
+> detected.
+
+I guess we would need to fix that then?
+
+> This is why I don't remove the card.
+>
+> Also I count on devm_snd_soc_register_card() to release the card.
+
+I think you should really create the card all the time, and just
+update the ELD to let the userspace know when something has been
+created.
+
+And yeah, we should have a working hotplug, but that's a separate
+story :)
+
+Maxime
+
+--7lkei534qhur3fvp
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYIAB0WIQRcEzekXsqa64kGDp7j7w1vZxhRxQUCXh7OIQAKCRDj7w1vZxhR
+xSGNAQCNXFtKsLB1nNmulxiyZXc/7/SfbpDPB/OKbkP52GqFbQEA63XlCs381oP3
+sIQOwaZU0eGpZ8IU+Sse2PFWS9FNTgE=
+=hGfC
+-----END PGP SIGNATURE-----
+
+--7lkei534qhur3fvp--
