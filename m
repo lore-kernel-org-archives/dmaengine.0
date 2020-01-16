@@ -7,45 +7,45 @@ X-Spam-Status: No, score=-10.1 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=unavailable
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 79BEBC33CB6
-	for <dmaengine@archiver.kernel.org>; Thu, 16 Jan 2020 18:05:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1766AC33CB6
+	for <dmaengine@archiver.kernel.org>; Thu, 16 Jan 2020 18:06:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 4CC0A2192A
-	for <dmaengine@archiver.kernel.org>; Thu, 16 Jan 2020 18:05:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DEAEA2468E
+	for <dmaengine@archiver.kernel.org>; Thu, 16 Jan 2020 18:06:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1579197906;
-	bh=NXRH1zrkux0uh3Nx6CaKGorHIc5+hpGlHHAkdvf5fMo=;
+	s=default; t=1579197990;
+	bh=5Hqvj1d0sGbjAeExLTLRYC4kjmNKiEF1Y0ULRa5GIMs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:List-ID:From;
-	b=LMs4sZL5PN3dfn5LmWadn6On1gUTw1Hocu77BsMhdwmkfIH1Sqc8P86DwBPd7bsxe
-	 HxH253I0UG6P2wkw+rpEvSFPNc6qPRYEWIsyE0/lOBz3Q09eTbWiOF3rVJCdvaMH77
-	 gjlvh63CRA3LztvrhoEQo6Cp2JqWkFtYsSUJjskU=
+	b=vT6cKABzvxwtbPV+vh+RHhylXyMGwm6CgQdergL0j5mhm0zCOIPUPbSqivyRyqFUV
+	 rkRu5Qt6ssDsyavR0CkuSXydVdMHyMlWyCaR5FIqDGlxWE2aH3zRxKbo4RctSaEsnR
+	 7v7SxJVt1YNRXtS5rMzefMIn10oLXwxh41uuLP3I=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2393598AbgAPRkN (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Thu, 16 Jan 2020 12:40:13 -0500
-Received: from mail.kernel.org ([198.145.29.99]:57252 "EHLO mail.kernel.org"
+        id S2393494AbgAPSG2 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Thu, 16 Jan 2020 13:06:28 -0500
+Received: from mail.kernel.org ([198.145.29.99]:56034 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2393596AbgAPRkM (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Thu, 16 Jan 2020 12:40:12 -0500
+        id S2390757AbgAPRjf (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Thu, 16 Jan 2020 12:39:35 -0500
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 9D0FF2471B;
-        Thu, 16 Jan 2020 17:40:11 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 447E324713;
+        Thu, 16 Jan 2020 17:39:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1579196412;
-        bh=NXRH1zrkux0uh3Nx6CaKGorHIc5+hpGlHHAkdvf5fMo=;
+        s=default; t=1579196375;
+        bh=5Hqvj1d0sGbjAeExLTLRYC4kjmNKiEF1Y0ULRa5GIMs=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=PLhnPk7je4uzsf+4dFl2zJiLTl6U7kYt5Nkri4Ya0CGm9Q9p9CENDKSpchFMCs8s5
-         dMV8mvEj0WrC3Hzb2y8zJBmA+Lyx2GG2Gc7F1Q3+5/6fxzVO8oRRk6IBMqWVGOLfCg
-         ASA5YPNW5NbptIv/Vruame5PNPj7JmgD+I+d50tY=
+        b=ePYr0LiY0GZp33xW+oHNaUbYeQSXXjWq7kL0o0KM8olnPhyE21LX1ajmfjqwyaIkg
+         ZL+nFhzw3v9nMrPfP5Js+WNxdRqNTn4+qpsNJU75IDDboymaxQFBMefLY+hbndhZmA
+         +evKj1tzxIVrzxb2A+bnK0SayTpmTu1a2QCTPdBs=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Cc:     Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
         Vinod Koul <vkoul@kernel.org>, Sasha Levin <sashal@kernel.org>,
         dmaengine@vger.kernel.org
-Subject: [PATCH AUTOSEL 4.9 185/251] dmaengine: dw: platform: Switch to acpi_dma_controller_register()
-Date:   Thu, 16 Jan 2020 12:35:34 -0500
-Message-Id: <20200116173641.22137-145-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 4.9 160/251] dmaengine: hsu: Revert "set HSU_CH_MTSR to memory width"
+Date:   Thu, 16 Jan 2020 12:35:09 -0500
+Message-Id: <20200116173641.22137-120-sashal@kernel.org>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20200116173641.22137-1-sashal@kernel.org>
 References: <20200116173641.22137-1-sashal@kernel.org>
@@ -60,60 +60,47 @@ X-Mailing-List: dmaengine@vger.kernel.org
 
 From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit e7b8514e4d68bec21fc6385fa0a66797ddc34ac9 ]
+[ Upstream commit c24a5c735f87d0549060de31367c095e8810b895 ]
 
-There is a possibility to have registered ACPI DMA controller
-while it has been gone already.
+The commit
 
-To avoid the potential crash, move to non-managed
-acpi_dma_controller_register().
+  080edf75d337 ("dmaengine: hsu: set HSU_CH_MTSR to memory width")
 
-Fixes: 42c91ee71d6d ("dw_dmac: add ACPI support")
+has been mistakenly submitted. The further investigations show that
+the original code does better job since the memory side transfer size
+has never been configured by DMA users.
+
+As per latest revision of documentation: "Channel minimum transfer size
+(CHnMTSR)... For IOSF UART, maximum value that can be programmed is 64 and
+minimum value that can be programmed is 1."
+
+This reverts commit 080edf75d337d35faa6fc3df99342b10d2848d16.
+
+Fixes: 080edf75d337 ("dmaengine: hsu: set HSU_CH_MTSR to memory width")
 Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://lore.kernel.org/r/20190820131546.75744-8-andriy.shevchenko@linux.intel.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/dw/platform.c | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ drivers/dma/hsu/hsu.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/dma/dw/platform.c b/drivers/dma/dw/platform.c
-index 5bda0eb9f393..7536fe80bc33 100644
---- a/drivers/dma/dw/platform.c
-+++ b/drivers/dma/dw/platform.c
-@@ -87,13 +87,20 @@ static void dw_dma_acpi_controller_register(struct dw_dma *dw)
- 	dma_cap_set(DMA_SLAVE, info->dma_cap);
- 	info->filter_fn = dw_dma_acpi_filter;
+diff --git a/drivers/dma/hsu/hsu.c b/drivers/dma/hsu/hsu.c
+index 29d04ca71d52..15525a2b8ebd 100644
+--- a/drivers/dma/hsu/hsu.c
++++ b/drivers/dma/hsu/hsu.c
+@@ -64,10 +64,10 @@ static void hsu_dma_chan_start(struct hsu_dma_chan *hsuc)
  
--	ret = devm_acpi_dma_controller_register(dev, acpi_dma_simple_xlate,
--						info);
-+	ret = acpi_dma_controller_register(dev, acpi_dma_simple_xlate, info);
- 	if (ret)
- 		dev_err(dev, "could not register acpi_dma_controller\n");
- }
-+
-+static void dw_dma_acpi_controller_free(struct dw_dma *dw)
-+{
-+	struct device *dev = dw->dma.dev;
-+
-+	acpi_dma_controller_free(dev);
-+}
- #else /* !CONFIG_ACPI */
- static inline void dw_dma_acpi_controller_register(struct dw_dma *dw) {}
-+static inline void dw_dma_acpi_controller_free(struct dw_dma *dw) {}
- #endif /* !CONFIG_ACPI */
+ 	if (hsuc->direction == DMA_MEM_TO_DEV) {
+ 		bsr = config->dst_maxburst;
+-		mtsr = config->src_addr_width;
++		mtsr = config->dst_addr_width;
+ 	} else if (hsuc->direction == DMA_DEV_TO_MEM) {
+ 		bsr = config->src_maxburst;
+-		mtsr = config->dst_addr_width;
++		mtsr = config->src_addr_width;
+ 	}
  
- #ifdef CONFIG_OF
-@@ -226,6 +233,9 @@ static int dw_remove(struct platform_device *pdev)
- {
- 	struct dw_dma_chip *chip = platform_get_drvdata(pdev);
- 
-+	if (ACPI_HANDLE(&pdev->dev))
-+		dw_dma_acpi_controller_free(chip->dw);
-+
- 	if (pdev->dev.of_node)
- 		of_dma_controller_free(pdev->dev.of_node);
- 
+ 	hsu_chan_disable(hsuc);
 -- 
 2.20.1
 
