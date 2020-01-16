@@ -7,47 +7,46 @@ X-Spam-Status: No, score=-10.1 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=unavailable
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B10B6C33CAF
-	for <dmaengine@archiver.kernel.org>; Thu, 16 Jan 2020 17:23:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F4049C33CB6
+	for <dmaengine@archiver.kernel.org>; Thu, 16 Jan 2020 17:24:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 859A52468C
-	for <dmaengine@archiver.kernel.org>; Thu, 16 Jan 2020 17:23:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C728824684
+	for <dmaengine@archiver.kernel.org>; Thu, 16 Jan 2020 17:24:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1579195394;
-	bh=C9LryPPI8PsxaJh91bW40PmXS34SlvRrDvM0ud5fJqA=;
+	s=default; t=1579195446;
+	bh=X71KVo4xG0cjqx0gcs9hfFfsMPtQ4qoxi0HywtBXbOE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:List-ID:From;
-	b=fH3E4iFs8RSjLWGZEWlzWEzMjRBhjbZA4/3JGDmJufqXggCFWj2GqpThOlYZQM6wC
-	 P4ChzcucwpJ+6XMszozOnzJ/3zpYYazr9UpkkbsrCE6+92lDJOFsQ861KczbhTj8PT
-	 jFeccJWIGru60s3ZYtOGVizx0CQA3aU+4w9qjR3E=
+	b=iL0fzjo6kPhZlTTzToQTmQ8sI/vkOjqoocwHkwIrHbSgZ/lZJXIbivQVVSFsUU1JN
+	 +mQgumb12KOWiMx2s1093lMzTzIWS3P0vFf0/FwgBXbUCdOwYZDI6ayJc+8VWqTaYG
+	 Qwf/jZhliIUiy5fmj3WjgELFonYlu8mOmadAHK+I=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390098AbgAPRXL (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Thu, 16 Jan 2020 12:23:11 -0500
-Received: from mail.kernel.org ([198.145.29.99]:57930 "EHLO mail.kernel.org"
+        id S2388127AbgAPRND (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Thu, 16 Jan 2020 12:13:03 -0500
+Received: from mail.kernel.org ([198.145.29.99]:57024 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2390699AbgAPRNR (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Thu, 16 Jan 2020 12:13:17 -0500
+        id S1729380AbgAPRNC (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Thu, 16 Jan 2020 12:13:02 -0500
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 243432469F;
-        Thu, 16 Jan 2020 17:13:16 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 5F3BF24690;
+        Thu, 16 Jan 2020 17:13:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1579194797;
-        bh=C9LryPPI8PsxaJh91bW40PmXS34SlvRrDvM0ud5fJqA=;
+        s=default; t=1579194781;
+        bh=X71KVo4xG0cjqx0gcs9hfFfsMPtQ4qoxi0HywtBXbOE=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=stMVjiCookmKK7J0kL2gEXUDZAL2nqDSpnO1FawTwNJ4sYVPLg632CiwqFTwLP+ue
-         m1W46oPO4mFdWNPIZ2xd/PkiMbuvkW6q2PFjsnd4BsbFA9R6cqmQttq7/khJSwz6Zd
-         QrA6rMGQmSCjgb+p3jM6X6d7V2d5+jnGH30vq4oo=
+        b=ZC+BGZ0iiiA1tSaElD3iPhuz1NR0W2+Xizz3BLsQ0qotj6Cdc8aGZ1iOPny0/WPpm
+         cqgt1ZqfcKeyMNJyw5MYdlEuXWqOe4Ts2nxYKxu0BozXHhT4P4SZWPYrp/MT53/92i
+         pmJzfKwe5SUc35jZ5MrgjAPGHQt9H6HOCi9F00sM=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     "Alexander.Barabash@dell.com" <Alexander.Barabash@dell.com>,
-        Alexander Barabash <alexander.barabash@dell.com>,
-        Dave Jiang <dave.jiang@intel.com>,
+Cc:     Robin Gong <yibin.gong@nxp.com>, stable@vger.kernel,
+        Jurgen Lambrecht <J.Lambrecht@TELEVIC.com>,
         Vinod Koul <vkoul@kernel.org>, Sasha Levin <sashal@kernel.org>,
-        dmaengine@vger.kernel.org
-Subject: [PATCH AUTOSEL 4.19 609/671] ioat: ioat_alloc_ring() failure handling.
-Date:   Thu, 16 Jan 2020 12:04:07 -0500
-Message-Id: <20200116170509.12787-346-sashal@kernel.org>
+        dmaengine@vger.kernel.org, linux-arm-kernel@lists.infradead.org
+Subject: [PATCH AUTOSEL 4.19 597/671] dmaengine: imx-sdma: fix size check for sdma script_number
+Date:   Thu, 16 Jan 2020 12:03:55 -0500
+Message-Id: <20200116170509.12787-334-sashal@kernel.org>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20200116170509.12787-1-sashal@kernel.org>
 References: <20200116170509.12787-1-sashal@kernel.org>
@@ -60,43 +59,71 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-From: "Alexander.Barabash@dell.com" <Alexander.Barabash@dell.com>
+From: Robin Gong <yibin.gong@nxp.com>
 
-[ Upstream commit b0b5ce1010ffc50015eaec72b0028aaae3f526bb ]
+[ Upstream commit bd73dfabdda280fc5f05bdec79b6721b4b2f035f ]
 
-If dma_alloc_coherent() returns NULL in ioat_alloc_ring(), ring
-allocation must not proceed.
+Illegal memory will be touch if SDMA_SCRIPT_ADDRS_ARRAY_SIZE_V3
+(41) exceed the size of structure sdma_script_start_addrs(40),
+thus cause memory corrupt such as slob block header so that kernel
+trap into while() loop forever in slob_free(). Please refer to below
+code piece in imx-sdma.c:
+for (i = 0; i < sdma->script_number; i++)
+	if (addr_arr[i] > 0)
+		saddr_arr[i] = addr_arr[i]; /* memory corrupt here */
+That issue was brought by commit a572460be9cf ("dmaengine: imx-sdma: Add
+support for version 3 firmware") because SDMA_SCRIPT_ADDRS_ARRAY_SIZE_V3
+(38->41 3 scripts added) not align with script number added in
+sdma_script_start_addrs(2 scripts).
 
-Until now, if the first call to dma_alloc_coherent() in
-ioat_alloc_ring() returned NULL, the processing could proceed, failing
-with NULL-pointer dereferencing further down the line.
-
-Signed-off-by: Alexander Barabash <alexander.barabash@dell.com>
-Acked-by: Dave Jiang <dave.jiang@intel.com>
-Link: https://lore.kernel.org/r/75e9c0e84c3345d693c606c64f8b9ab5@x13pwhopdag1307.AMER.DELL.COM
+Fixes: a572460be9cf ("dmaengine: imx-sdma: Add support for version 3 firmware")
+Cc: stable@vger.kernel
+Link: https://www.spinics.net/lists/arm-kernel/msg754895.html
+Signed-off-by: Robin Gong <yibin.gong@nxp.com>
+Reported-by: Jurgen Lambrecht <J.Lambrecht@TELEVIC.com>
+Link: https://lore.kernel.org/r/1569347584-3478-1-git-send-email-yibin.gong@nxp.com
+[vkoul: update the patch title]
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/ioat/dma.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/dma/imx-sdma.c                     | 8 ++++++++
+ include/linux/platform_data/dma-imx-sdma.h | 3 +++
+ 2 files changed, 11 insertions(+)
 
-diff --git a/drivers/dma/ioat/dma.c b/drivers/dma/ioat/dma.c
-index 23fb2fa04000..b94cece58b98 100644
---- a/drivers/dma/ioat/dma.c
-+++ b/drivers/dma/ioat/dma.c
-@@ -388,10 +388,11 @@ ioat_alloc_ring(struct dma_chan *c, int order, gfp_t flags)
+diff --git a/drivers/dma/imx-sdma.c b/drivers/dma/imx-sdma.c
+index 3f5a01cb4ab4..ceb82e74f5b4 100644
+--- a/drivers/dma/imx-sdma.c
++++ b/drivers/dma/imx-sdma.c
+@@ -1662,6 +1662,14 @@ static void sdma_add_scripts(struct sdma_engine *sdma,
+ 	if (!sdma->script_number)
+ 		sdma->script_number = SDMA_SCRIPT_ADDRS_ARRAY_SIZE_V1;
  
- 		descs->virt = dma_alloc_coherent(to_dev(ioat_chan),
- 						 SZ_2M, &descs->hw, flags);
--		if (!descs->virt && (i > 0)) {
-+		if (!descs->virt) {
- 			int idx;
++	if (sdma->script_number > sizeof(struct sdma_script_start_addrs)
++				  / sizeof(s32)) {
++		dev_err(sdma->dev,
++			"SDMA script number %d not match with firmware.\n",
++			sdma->script_number);
++		return;
++	}
++
+ 	for (i = 0; i < sdma->script_number; i++)
+ 		if (addr_arr[i] > 0)
+ 			saddr_arr[i] = addr_arr[i];
+diff --git a/include/linux/platform_data/dma-imx-sdma.h b/include/linux/platform_data/dma-imx-sdma.h
+index 6eaa53cef0bd..30e676b36b24 100644
+--- a/include/linux/platform_data/dma-imx-sdma.h
++++ b/include/linux/platform_data/dma-imx-sdma.h
+@@ -51,7 +51,10 @@ struct sdma_script_start_addrs {
+ 	/* End of v2 array */
+ 	s32 zcanfd_2_mcu_addr;
+ 	s32 zqspi_2_mcu_addr;
++	s32 mcu_2_ecspi_addr;
+ 	/* End of v3 array */
++	s32 mcu_2_zqspi_addr;
++	/* End of v4 array */
+ };
  
- 			for (idx = 0; idx < i; idx++) {
-+				descs = &ioat_chan->descs[idx];
- 				dma_free_coherent(to_dev(ioat_chan), SZ_2M,
- 						  descs->virt, descs->hw);
- 				descs->virt = NULL;
+ /**
 -- 
 2.20.1
 
