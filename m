@@ -7,46 +7,47 @@ X-Spam-Status: No, score=-10.1 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=unavailable
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E539CC33CAF
-	for <dmaengine@archiver.kernel.org>; Thu, 16 Jan 2020 18:27:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 45D47C33CAF
+	for <dmaengine@archiver.kernel.org>; Thu, 16 Jan 2020 18:32:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id BDACC24681
-	for <dmaengine@archiver.kernel.org>; Thu, 16 Jan 2020 18:27:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1F0A02073A
+	for <dmaengine@archiver.kernel.org>; Thu, 16 Jan 2020 18:32:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1579199244;
-	bh=z74F/bU9mJJQaq5QDuOoedzduxCAFVcJY24kFun4BwQ=;
+	s=default; t=1579199525;
+	bh=o/9sH5pE9k4rFAh1zROCpzLfE+tZgovyTyZunZJY9j8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:List-ID:From;
-	b=IUzWDBf+9poSczh2VXgLTBq8TURwchtB+5xRh7psIsdF3rE6MV7dkIjjaYaDrnfc0
-	 5CjUWJ6GccEdpyZOY0bIPajsC5I6b7w2O1plfA4z6qhBDFA4tegwls5vUpipVHTK7v
-	 Kn62BCbbMDW9qoYwBnDGnXbd3k3t22JHK5FyPziQ=
+	b=a3OSHWVEG4ig15JObFooEkHL3/T4xQ7BaBva+rwDWRhDLOXYOs6Aqms15jfFTrzSr
+	 DhlPlHX2k5GF/GAyYXMlCTrdPRthJEDJ1TsQ0Syybh+wYoQqq9YyVpIz/6c8k76jyv
+	 WjnmAzFWSZ8/i4MNP516yVau/yRdiCay/7nHm4P4=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2392347AbgAPR0z (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Thu, 16 Jan 2020 12:26:55 -0500
-Received: from mail.kernel.org ([198.145.29.99]:36074 "EHLO mail.kernel.org"
+        id S2391875AbgAPRZG (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Thu, 16 Jan 2020 12:25:06 -0500
+Received: from mail.kernel.org ([198.145.29.99]:60568 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2392339AbgAPR0x (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Thu, 16 Jan 2020 12:26:53 -0500
+        id S2391871AbgAPRZG (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Thu, 16 Jan 2020 12:25:06 -0500
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 54ADB246C8;
-        Thu, 16 Jan 2020 17:26:52 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 82A7E246CD;
+        Thu, 16 Jan 2020 17:25:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1579195613;
-        bh=z74F/bU9mJJQaq5QDuOoedzduxCAFVcJY24kFun4BwQ=;
+        s=default; t=1579195505;
+        bh=o/9sH5pE9k4rFAh1zROCpzLfE+tZgovyTyZunZJY9j8=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=GQDcovVpozduLVwBvP92TuneTRfHblTAZZI2R4Wjc99tZuAVe8Ms0wOoBYXhU67YX
-         XAFvbZj11RstvvbImFONnLULnCEhVWZe4OPAZB+plH2yBIngGgUiVoRPDn9JUEhp5j
-         gGxWzDN44VRfD6n5uWDehrV2LLPun9uU3V1fO4q4=
+        b=a5UoZiRIaDUkMvWEV1sURwM6bY7eHa2BJorh1h/6RiJRTELGqb+e73v3IiEjxJgaH
+         AMn49uV601Yu21zGn/u8pUYs58989sreuH5wFSMAqnrjZgHbtTtHNpopy0XWRZES95
+         HbokOs3d8fMUqqjusprHK9SrpJo2YoQ+A3MgUqec=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Sameer Pujar <spujar@nvidia.com>,
-        Jon Hunter <jonathanh@nvidia.com>,
+Cc:     Robin Murphy <robin.murphy@arm.com>,
+        John David Anglin <dave.anglin@bell.net>,
+        Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
         Vinod Koul <vkoul@kernel.org>, Sasha Levin <sashal@kernel.org>,
-        dmaengine@vger.kernel.org, linux-tegra@vger.kernel.org
-Subject: [PATCH AUTOSEL 4.14 186/371] dmaengine: tegra210-adma: restore channel status
-Date:   Thu, 16 Jan 2020 12:20:58 -0500
-Message-Id: <20200116172403.18149-129-sashal@kernel.org>
+        dmaengine@vger.kernel.org
+Subject: [PATCH AUTOSEL 4.14 105/371] dmaengine: mv_xor: Use correct device for DMA API
+Date:   Thu, 16 Jan 2020 12:19:37 -0500
+Message-Id: <20200116172403.18149-48-sashal@kernel.org>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20200116172403.18149-1-sashal@kernel.org>
 References: <20200116172403.18149-1-sashal@kernel.org>
@@ -59,122 +60,51 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-From: Sameer Pujar <spujar@nvidia.com>
+From: Robin Murphy <robin.murphy@arm.com>
 
-[ Upstream commit f33e7bb3eb922618612a90f0a828c790e8880773 ]
+[ Upstream commit 3e5daee5ecf314da33a890fabaa2404244cd2a36 ]
 
-Status of ADMA channel registers is not saved and restored during system
-suspend. During active playback if system enters suspend, this results in
-wrong state of channel registers during system resume and playback fails
-to resume properly. Fix this by saving following channel registers in
-runtime suspend and restore during runtime resume.
- * ADMA_CH_LOWER_SRC_ADDR
- * ADMA_CH_LOWER_TRG_ADDR
- * ADMA_CH_FIFO_CTRL
- * ADMA_CH_CONFIG
- * ADMA_CH_CTRL
- * ADMA_CH_CMD
- * ADMA_CH_TC
-Runtime PM calls will be inovked during system resume path if a playback
-or capture needs to be resumed. Hence above changes work fine for system
-suspend case.
+Using dma_dev->dev for mappings before it's assigned with the correct
+device is unlikely to work as expected, and with future dma-direct
+changes, passing a NULL device may end up crashing entirely. I don't
+know enough about this hardware or the mv_xor_prep_dma_interrupt()
+operation to implement the appropriate error-handling logic that would
+have revealed those dma_map_single() calls failing on arm64 for as long
+as the driver has been enabled there, but moving the assignment earlier
+will at least make the current code operate as intended.
 
-Fixes: f46b195799b5 ("dmaengine: tegra-adma: Add support for Tegra210 ADMA")
-Signed-off-by: Sameer Pujar <spujar@nvidia.com>
-Reviewed-by: Jon Hunter <jonathanh@nvidia.com>
+Fixes: 22843545b200 ("dma: mv_xor: Add support for DMA_INTERRUPT")
+Reported-by: John David Anglin <dave.anglin@bell.net>
+Tested-by: John David Anglin <dave.anglin@bell.net>
+Signed-off-by: Robin Murphy <robin.murphy@arm.com>
+Acked-by: Thomas Petazzoni <thomas.petazzoni@bootlin.com>
+Tested-by: Thomas Petazzoni <thomas.petazzoni@bootlin.com>
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/tegra210-adma.c | 46 ++++++++++++++++++++++++++++++++++++-
- 1 file changed, 45 insertions(+), 1 deletion(-)
+ drivers/dma/mv_xor.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/dma/tegra210-adma.c b/drivers/dma/tegra210-adma.c
-index 09b6756366c3..ac2a6b800db3 100644
---- a/drivers/dma/tegra210-adma.c
-+++ b/drivers/dma/tegra210-adma.c
-@@ -98,6 +98,7 @@ struct tegra_adma_chan_regs {
- 	unsigned int src_addr;
- 	unsigned int trg_addr;
- 	unsigned int fifo_ctrl;
-+	unsigned int cmd;
- 	unsigned int tc;
- };
+diff --git a/drivers/dma/mv_xor.c b/drivers/dma/mv_xor.c
+index 1993889003fd..1c57577f49fe 100644
+--- a/drivers/dma/mv_xor.c
++++ b/drivers/dma/mv_xor.c
+@@ -1059,6 +1059,7 @@ mv_xor_channel_add(struct mv_xor_device *xordev,
+ 		mv_chan->op_in_desc = XOR_MODE_IN_DESC;
  
-@@ -127,6 +128,7 @@ struct tegra_adma_chan {
- 	enum dma_transfer_direction	sreq_dir;
- 	unsigned int			sreq_index;
- 	bool				sreq_reserved;
-+	struct tegra_adma_chan_regs	ch_regs;
+ 	dma_dev = &mv_chan->dmadev;
++	dma_dev->dev = &pdev->dev;
+ 	mv_chan->xordev = xordev;
  
- 	/* Transfer count and position info */
- 	unsigned int			tx_buf_count;
-@@ -635,8 +637,30 @@ static struct dma_chan *tegra_dma_of_xlate(struct of_phandle_args *dma_spec,
- static int tegra_adma_runtime_suspend(struct device *dev)
- {
- 	struct tegra_adma *tdma = dev_get_drvdata(dev);
-+	struct tegra_adma_chan_regs *ch_reg;
-+	struct tegra_adma_chan *tdc;
-+	int i;
+ 	/*
+@@ -1091,7 +1092,6 @@ mv_xor_channel_add(struct mv_xor_device *xordev,
+ 	dma_dev->device_free_chan_resources = mv_xor_free_chan_resources;
+ 	dma_dev->device_tx_status = mv_xor_status;
+ 	dma_dev->device_issue_pending = mv_xor_issue_pending;
+-	dma_dev->dev = &pdev->dev;
  
- 	tdma->global_cmd = tdma_read(tdma, ADMA_GLOBAL_CMD);
-+	if (!tdma->global_cmd)
-+		goto clk_disable;
-+
-+	for (i = 0; i < tdma->nr_channels; i++) {
-+		tdc = &tdma->channels[i];
-+		ch_reg = &tdc->ch_regs;
-+		ch_reg->cmd = tdma_ch_read(tdc, ADMA_CH_CMD);
-+		/* skip if channel is not active */
-+		if (!ch_reg->cmd)
-+			continue;
-+		ch_reg->tc = tdma_ch_read(tdc, ADMA_CH_TC);
-+		ch_reg->src_addr = tdma_ch_read(tdc, ADMA_CH_LOWER_SRC_ADDR);
-+		ch_reg->trg_addr = tdma_ch_read(tdc, ADMA_CH_LOWER_TRG_ADDR);
-+		ch_reg->ctrl = tdma_ch_read(tdc, ADMA_CH_CTRL);
-+		ch_reg->fifo_ctrl = tdma_ch_read(tdc, ADMA_CH_FIFO_CTRL);
-+		ch_reg->config = tdma_ch_read(tdc, ADMA_CH_CONFIG);
-+	}
-+
-+clk_disable:
- 	clk_disable_unprepare(tdma->ahub_clk);
- 
- 	return 0;
-@@ -645,7 +669,9 @@ static int tegra_adma_runtime_suspend(struct device *dev)
- static int tegra_adma_runtime_resume(struct device *dev)
- {
- 	struct tegra_adma *tdma = dev_get_drvdata(dev);
--	int ret;
-+	struct tegra_adma_chan_regs *ch_reg;
-+	struct tegra_adma_chan *tdc;
-+	int ret, i;
- 
- 	ret = clk_prepare_enable(tdma->ahub_clk);
- 	if (ret) {
-@@ -654,6 +680,24 @@ static int tegra_adma_runtime_resume(struct device *dev)
- 	}
- 	tdma_write(tdma, ADMA_GLOBAL_CMD, tdma->global_cmd);
- 
-+	if (!tdma->global_cmd)
-+		return 0;
-+
-+	for (i = 0; i < tdma->nr_channels; i++) {
-+		tdc = &tdma->channels[i];
-+		ch_reg = &tdc->ch_regs;
-+		/* skip if channel was not active earlier */
-+		if (!ch_reg->cmd)
-+			continue;
-+		tdma_ch_write(tdc, ADMA_CH_TC, ch_reg->tc);
-+		tdma_ch_write(tdc, ADMA_CH_LOWER_SRC_ADDR, ch_reg->src_addr);
-+		tdma_ch_write(tdc, ADMA_CH_LOWER_TRG_ADDR, ch_reg->trg_addr);
-+		tdma_ch_write(tdc, ADMA_CH_CTRL, ch_reg->ctrl);
-+		tdma_ch_write(tdc, ADMA_CH_FIFO_CTRL, ch_reg->fifo_ctrl);
-+		tdma_ch_write(tdc, ADMA_CH_CONFIG, ch_reg->config);
-+		tdma_ch_write(tdc, ADMA_CH_CMD, ch_reg->cmd);
-+	}
-+
- 	return 0;
- }
- 
+ 	/* set prep routines based on capability */
+ 	if (dma_has_cap(DMA_INTERRUPT, dma_dev->cap_mask))
 -- 
 2.20.1
 
