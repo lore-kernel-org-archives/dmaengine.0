@@ -7,45 +7,45 @@ X-Spam-Status: No, score=-10.1 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=unavailable
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4989FC33CB3
-	for <dmaengine@archiver.kernel.org>; Thu, 16 Jan 2020 18:22:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B63DDC33CB6
+	for <dmaengine@archiver.kernel.org>; Thu, 16 Jan 2020 18:27:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 2172521582
-	for <dmaengine@archiver.kernel.org>; Thu, 16 Jan 2020 18:22:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 89C11206D7
+	for <dmaengine@archiver.kernel.org>; Thu, 16 Jan 2020 18:27:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1579198976;
-	bh=yvtZJ7G06qHmIA9YwZK0mSiWIPHTw3YbdwvdRaviQYo=;
+	s=default; t=1579199222;
+	bh=206sE0FgN/guZTm+kxehiEoGAU09Y0UfRM/qPQMxmPE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:List-ID:From;
-	b=EouUOoF0ysxDttTGXcAi4NApAMuHqxKVTmyIbscKDlBnYDis77jtSM5zYg3Olq9c7
-	 +GDiHXycdm5+62n1psVnaDdaanHH2OAYA76iSHPBDrycxnE5Ku4WqA87d1DtXJ6sm3
-	 6+kD95IHikyGz8vnEmYbfAY85w0+Lnl+VOxla2dU=
+	b=pPruVnkIrPwwvxFTxwk0Kj01Ie6W4R/iqwxSZmWdhd86atcTBcmo/Mbd/AbnItW3U
+	 iy6Sy/p5jBfYTYrxFMVp1UlxJTZPsRNpYoBKD72+DkYBfiAxBsu4BO2OAbtcsr3F5b
+	 3Uf4qjTcqDkGyt9NhurcBGbmmORiwBS8nDaF9Kmo=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2392465AbgAPR1Y (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Thu, 16 Jan 2020 12:27:24 -0500
-Received: from mail.kernel.org ([198.145.29.99]:37194 "EHLO mail.kernel.org"
+        id S2403971AbgAPR0e (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Thu, 16 Jan 2020 12:26:34 -0500
+Received: from mail.kernel.org ([198.145.29.99]:35442 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2392460AbgAPR1X (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Thu, 16 Jan 2020 12:27:23 -0500
+        id S2403966AbgAPR0d (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Thu, 16 Jan 2020 12:26:33 -0500
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id A1E22246C9;
-        Thu, 16 Jan 2020 17:27:20 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id F2515246BE;
+        Thu, 16 Jan 2020 17:26:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1579195642;
-        bh=yvtZJ7G06qHmIA9YwZK0mSiWIPHTw3YbdwvdRaviQYo=;
+        s=default; t=1579195592;
+        bh=206sE0FgN/guZTm+kxehiEoGAU09Y0UfRM/qPQMxmPE=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=pjd9ACNqw4hLwObOVPMDYTuGffB0mEz7mJN108mF/b6+Vfo6orfPcAScekLe0eYel
-         iZgAgZn5KkddF6uF3O2CNq+egijIzneYXF/Ww5/lanep31Pt8U2bM8VkA8nA6s7Q15
-         CS+PPBx9ALpE9KAcd8ggFtiYXwUS0p1sMfcyV96c=
+        b=lcEa72yR+CEIYivF1+ofSUFTWceGg1eAVQeoJ1HkKIi47PGYO1Fzi4tsYfzqoj/p0
+         Wv3HyTj0hoPZvD2c7ysRhq1EGMElexoQdgUdzHhaw/nAtQsFhQV2EztKxQV3qzDmiM
+         BBxA+WtPJUnwB+6+yrN+ZaoxRwdDmohCq+UVaqsY=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Jon Hunter <jonathanh@nvidia.com>, Vinod Koul <vkoul@kernel.org>,
-        Sasha Levin <sashal@kernel.org>, dmaengine@vger.kernel.org,
-        linux-tegra@vger.kernel.org
-Subject: [PATCH AUTOSEL 4.14 206/371] dmaengine: tegra210-adma: Fix crash during probe
-Date:   Thu, 16 Jan 2020 12:21:18 -0500
-Message-Id: <20200116172403.18149-149-sashal@kernel.org>
+Cc:     Alexandru Ardelean <alexandru.ardelean@analog.com>,
+        Vinod Koul <vkoul@kernel.org>, Sasha Levin <sashal@kernel.org>,
+        dmaengine@vger.kernel.org
+Subject: [PATCH AUTOSEL 4.14 170/371] dmaengine: axi-dmac: Don't check the number of frames for alignment
+Date:   Thu, 16 Jan 2020 12:20:42 -0500
+Message-Id: <20200116172403.18149-113-sashal@kernel.org>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20200116172403.18149-1-sashal@kernel.org>
 References: <20200116172403.18149-1-sashal@kernel.org>
@@ -58,90 +58,43 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-From: Jon Hunter <jonathanh@nvidia.com>
+From: Alexandru Ardelean <alexandru.ardelean@analog.com>
 
-[ Upstream commit b53611fb1ce9b1786bd18205473e0c1d6bfa8934 ]
+[ Upstream commit 648865a79d8ee3d1aa64aab5eb2a9d12eeed14f9 ]
 
-Commit f33e7bb3eb92 ("dmaengine: tegra210-adma: restore channel status")
-added support to save and restore the DMA channel registers when runtime
-suspending the ADMA. This change is causing the kernel to crash when
-probing the ADMA, if the device is probed deferred when looking up the
-channel interrupts. The crash occurs because not all of the channel base
-addresses have been setup at this point and in the clean-up path of the
-probe, pm_runtime_suspend() is called invoking its callback which
-expects all the channel base addresses to be initialised.
+In 2D transfers (for the AXI DMAC), the number of frames (numf) represents
+Y_LENGTH, and the length of a frame is X_LENGTH. 2D transfers are useful
+for video transfers where screen resolutions ( X * Y ) are typically
+aligned for X, but not for Y.
 
-Although this could be fixed by simply checking for a NULL address, on
-further review of the driver it seems more appropriate that we only call
-pm_runtime_get_sync() after all the channel interrupts and base
-addresses have been configured. Therefore, fix this crash by moving the
-calls to pm_runtime_enable(), pm_runtime_get_sync() and
-tegra_adma_init() after the DMA channels have been initialised.
+There is no requirement for Y_LENGTH to be aligned to the bus-width (or
+anything), and this is also true for AXI DMAC.
 
-Fixes: f33e7bb3eb92 ("dmaengine: tegra210-adma: restore channel status")
+Checking the Y_LENGTH for alignment causes false errors when initiating DMA
+transfers. This change fixes this by checking only that the Y_LENGTH is
+non-zero.
 
-Signed-off-by: Jon Hunter <jonathanh@nvidia.com>
+Fixes: 0e3b67b348b8 ("dmaengine: Add support for the Analog Devices AXI-DMAC DMA controller")
+Signed-off-by: Alexandru Ardelean <alexandru.ardelean@analog.com>
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/tegra210-adma.c | 26 +++++++++++++-------------
- 1 file changed, 13 insertions(+), 13 deletions(-)
+ drivers/dma/dma-axi-dmac.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/dma/tegra210-adma.c b/drivers/dma/tegra210-adma.c
-index ac2a6b800db3..4f4733d831a1 100644
---- a/drivers/dma/tegra210-adma.c
-+++ b/drivers/dma/tegra210-adma.c
-@@ -744,16 +744,6 @@ static int tegra_adma_probe(struct platform_device *pdev)
- 		return PTR_ERR(tdma->ahub_clk);
- 	}
+diff --git a/drivers/dma/dma-axi-dmac.c b/drivers/dma/dma-axi-dmac.c
+index 7f0b9aa15867..9887f2a14aa9 100644
+--- a/drivers/dma/dma-axi-dmac.c
++++ b/drivers/dma/dma-axi-dmac.c
+@@ -451,7 +451,7 @@ static struct dma_async_tx_descriptor *axi_dmac_prep_interleaved(
  
--	pm_runtime_enable(&pdev->dev);
--
--	ret = pm_runtime_get_sync(&pdev->dev);
--	if (ret < 0)
--		goto rpm_disable;
--
--	ret = tegra_adma_init(tdma);
--	if (ret)
--		goto rpm_put;
--
- 	INIT_LIST_HEAD(&tdma->dma_dev.channels);
- 	for (i = 0; i < tdma->nr_channels; i++) {
- 		struct tegra_adma_chan *tdc = &tdma->channels[i];
-@@ -771,6 +761,16 @@ static int tegra_adma_probe(struct platform_device *pdev)
- 		tdc->tdma = tdma;
- 	}
- 
-+	pm_runtime_enable(&pdev->dev);
-+
-+	ret = pm_runtime_get_sync(&pdev->dev);
-+	if (ret < 0)
-+		goto rpm_disable;
-+
-+	ret = tegra_adma_init(tdma);
-+	if (ret)
-+		goto rpm_put;
-+
- 	dma_cap_set(DMA_SLAVE, tdma->dma_dev.cap_mask);
- 	dma_cap_set(DMA_PRIVATE, tdma->dma_dev.cap_mask);
- 	dma_cap_set(DMA_CYCLIC, tdma->dma_dev.cap_mask);
-@@ -812,13 +812,13 @@ static int tegra_adma_probe(struct platform_device *pdev)
- 
- dma_remove:
- 	dma_async_device_unregister(&tdma->dma_dev);
--irq_dispose:
--	while (--i >= 0)
--		irq_dispose_mapping(tdma->channels[i].irq);
- rpm_put:
- 	pm_runtime_put_sync(&pdev->dev);
- rpm_disable:
- 	pm_runtime_disable(&pdev->dev);
-+irq_dispose:
-+	while (--i >= 0)
-+		irq_dispose_mapping(tdma->channels[i].irq);
- 
- 	return ret;
- }
+ 	if (chan->hw_2d) {
+ 		if (!axi_dmac_check_len(chan, xt->sgl[0].size) ||
+-		    !axi_dmac_check_len(chan, xt->numf))
++		    xt->numf == 0)
+ 			return NULL;
+ 		if (xt->sgl[0].size + dst_icg > chan->max_length ||
+ 		    xt->sgl[0].size + src_icg > chan->max_length)
 -- 
 2.20.1
 
