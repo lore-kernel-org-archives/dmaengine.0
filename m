@@ -4,50 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-10.1 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
-	version=3.4.0
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=unavailable
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0D7D8C33CB6
-	for <dmaengine@archiver.kernel.org>; Thu, 16 Jan 2020 17:41:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7B5EDC33CAF
+	for <dmaengine@archiver.kernel.org>; Thu, 16 Jan 2020 17:47:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id DBCD4246A4
-	for <dmaengine@archiver.kernel.org>; Thu, 16 Jan 2020 17:41:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4C3D5246B4
+	for <dmaengine@archiver.kernel.org>; Thu, 16 Jan 2020 17:47:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1579196509;
-	bh=Gz3DyGPdoK3HaUxL8jcQcFzoATbXBNNfW6xPJ5GWL7Q=;
+	s=default; t=1579196837;
+	bh=LImxpWH48XUcJ4jqv/KOtICIueN+UYO/dlffxiNMlSE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:List-ID:From;
-	b=Swf+zykWfE7asDTkexN4GRQK2dZ34W7/qMoQcgssFam4TE7Q3CPUPB0DG3J4vxgc5
-	 j8ToDZgCOG96xu8ucNCXXF2kh+/tYkC9ZiL/yrBsGYkq1uqcx4cEIzBkWkcuvgwTw4
-	 wR2DydeHSYv+jK0+JJ5M5yg75YUbf2x9nriNCQ0A=
+	b=YwqYI2972GxM1LURTAuTtVkgN+721LKCzO0AT7lmXYn14VLw7QGbmQKgqWfqmFuIn
+	 PX12ynVuKayjwjtUvkyindLQqVCoiOe2A5egFkU7QhAHMHQL9dvPQV3fYh7y51SfyP
+	 v/KnFULA5+xJwCZ36ebSR8v88cEWQKT3sb+ja6q8=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2405791AbgAPRls (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Thu, 16 Jan 2020 12:41:48 -0500
-Received: from mail.kernel.org ([198.145.29.99]:59622 "EHLO mail.kernel.org"
+        id S2406840AbgAPRq5 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Thu, 16 Jan 2020 12:46:57 -0500
+Received: from mail.kernel.org ([198.145.29.99]:40152 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2405784AbgAPRlr (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Thu, 16 Jan 2020 12:41:47 -0500
+        id S2406837AbgAPRq4 (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Thu, 16 Jan 2020 12:46:56 -0500
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 7B88124731;
-        Thu, 16 Jan 2020 17:41:46 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 63914246EA;
+        Thu, 16 Jan 2020 17:46:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1579196507;
-        bh=Gz3DyGPdoK3HaUxL8jcQcFzoATbXBNNfW6xPJ5GWL7Q=;
+        s=default; t=1579196815;
+        bh=LImxpWH48XUcJ4jqv/KOtICIueN+UYO/dlffxiNMlSE=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=hVoTnASGp9KZ+4h9S/CNCVP6Glr6XM8r2+dYLixLD1klfK0Pt54t/NVa/k6tqx8hd
-         bjPOmTodDGV7zMLe31/+Ory395LypBdxqKeknnzYyuHOS4LlflinWzuYlMDm9SWdZp
-         tYcE+83UtrSQq7aHEG7NKm7tyfB6xdFX/+Xk2oNE=
+        b=bXlMOMwEQ1NwobqIdbxXlraAqXcOVqAPz5nnUGuFC01Cxaj2qA2DhEWkAtyzyauTy
+         YBp4vjjLNU1QqgRAHCn6UO7JvTOee7ANVPm1YxWi8XKdMbqTfqxbTxMOI4Wyq6YE3c
+         kBR64HNl61JvZMWucHGMg9omz51sv2V+pXrJBODY=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Cc:     Chuhong Yuan <hslester96@gmail.com>, Vinod Koul <vkoul@kernel.org>,
         Sasha Levin <sashal@kernel.org>, dmaengine@vger.kernel.org
-Subject: [PATCH AUTOSEL 4.9 247/251] dmaengine: ti: edma: fix missed failure handling
-Date:   Thu, 16 Jan 2020 12:36:36 -0500
-Message-Id: <20200116173641.22137-207-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 4.4 171/174] dmaengine: ti: edma: fix missed failure handling
+Date:   Thu, 16 Jan 2020 12:42:48 -0500
+Message-Id: <20200116174251.24326-171-sashal@kernel.org>
 X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20200116173641.22137-1-sashal@kernel.org>
-References: <20200116173641.22137-1-sashal@kernel.org>
+In-Reply-To: <20200116174251.24326-1-sashal@kernel.org>
+References: <20200116174251.24326-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
@@ -74,10 +74,10 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 4 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/dma/edma.c b/drivers/dma/edma.c
-index 72f31e837b1d..56ec72468745 100644
+index e508c8c5f3fd..17521fcf226f 100644
 --- a/drivers/dma/edma.c
 +++ b/drivers/dma/edma.c
-@@ -2340,8 +2340,10 @@ static int edma_probe(struct platform_device *pdev)
+@@ -2288,8 +2288,10 @@ static int edma_probe(struct platform_device *pdev)
  
  		ecc->tc_list = devm_kcalloc(dev, ecc->num_tc,
  					    sizeof(*ecc->tc_list), GFP_KERNEL);
