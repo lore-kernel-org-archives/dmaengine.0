@@ -2,99 +2,226 @@ Return-Path: <SRS0=BHVi=3F=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.1 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=unavailable
+X-Spam-Status: No, score=-8.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=unavailable
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E02EFC33CB7
-	for <dmaengine@archiver.kernel.org>; Thu, 16 Jan 2020 18:08:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EEE69C33CB6
+	for <dmaengine@archiver.kernel.org>; Thu, 16 Jan 2020 18:11:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id B3C53214AF
-	for <dmaengine@archiver.kernel.org>; Thu, 16 Jan 2020 18:08:55 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1579198135;
-	bh=206sE0FgN/guZTm+kxehiEoGAU09Y0UfRM/qPQMxmPE=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:List-ID:From;
-	b=0JyN6NfuxopBc3Dx4POAG9yaC54QkrNWy4scmbsrLaPc+34Sw8qM9tuYl0RPu7Fjh
-	 XqJDet+5ZrBAIc5DBjJFaNh+MekrdLeJoj/lEjxS0YTdldBT+wKYt3DBx51KGl1maL
-	 k4HwfBrxTBKjIe0XGbiv711Lzdlej27pUNWMJOHo=
+	by mail.kernel.org (Postfix) with ESMTP id BFCA52073A
+	for <dmaengine@archiver.kernel.org>; Thu, 16 Jan 2020 18:11:22 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QSl3ac0k"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2405073AbgAPRig (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Thu, 16 Jan 2020 12:38:36 -0500
-Received: from mail.kernel.org ([198.145.29.99]:54518 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2405058AbgAPRig (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Thu, 16 Jan 2020 12:38:36 -0500
-Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 98BDF24700;
-        Thu, 16 Jan 2020 17:38:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1579196315;
-        bh=206sE0FgN/guZTm+kxehiEoGAU09Y0UfRM/qPQMxmPE=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=K+EfXb8j03j9bO5AhfTzwohUiVkUmb2lQ85aVLkbBp2lZkl7fO+oLxFxV4m74bZvN
-         gvfDYGj6kGM+My9zemR0qRBIu6MVn9yDSetsor4/SCxWJodX3Uw6hSZBdH7kbleVwL
-         KivVUnDQeUp2fwS6HNH5LSbUarTl/J8rTCCrC2JA=
-From:   Sasha Levin <sashal@kernel.org>
-To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Alexandru Ardelean <alexandru.ardelean@analog.com>,
-        Vinod Koul <vkoul@kernel.org>, Sasha Levin <sashal@kernel.org>,
-        dmaengine@vger.kernel.org
-Subject: [PATCH AUTOSEL 4.9 121/251] dmaengine: axi-dmac: Don't check the number of frames for alignment
-Date:   Thu, 16 Jan 2020 12:34:30 -0500
-Message-Id: <20200116173641.22137-81-sashal@kernel.org>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20200116173641.22137-1-sashal@kernel.org>
-References: <20200116173641.22137-1-sashal@kernel.org>
+        id S2405388AbgAPRhb (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Thu, 16 Jan 2020 12:37:31 -0500
+Received: from mail-lj1-f194.google.com ([209.85.208.194]:42199 "EHLO
+        mail-lj1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2405332AbgAPRhb (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Thu, 16 Jan 2020 12:37:31 -0500
+Received: by mail-lj1-f194.google.com with SMTP id y4so23601087ljj.9;
+        Thu, 16 Jan 2020 09:37:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=suZU8pKiTx0kVLzvrdfAKUboMnJzI6jejrwEJFaOhgo=;
+        b=QSl3ac0kH3tQptaRPYSJBi23DOf/HEN7MsCIq7hJ56/U3BquCENmm5wgCJTbCmJYCV
+         Cap70k8IV2TcDFZ89riu6fmj8VEg1F1l6qFBiD05YaaDmaNNPU0n7VxejGgsHjjvXbcp
+         L+R8jBRuCDlzUA7oh6ne4IC8b6WTP+1A7+1H5X4v+j+QvMiXPfl1CmqL2OveSiLTnA9k
+         xfHbasSx+A/eL0gVA8W8H+RwkKphERordECc+/ug+8mfy2Bs2MQ3MTVdQGLLXVZP4xTV
+         bpgdMSk7EsxHH/sULrPa/sNkUfWoutvc71lvYupsoeFgbDMYkCxN0YJM0nYWHy5HXgFL
+         Rl7A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=suZU8pKiTx0kVLzvrdfAKUboMnJzI6jejrwEJFaOhgo=;
+        b=R0aF43rO4nixsYyYXLlFLNSLZUtnPpTEucFNsxMYUxqzmLMdX6rwxXi4BGG68U6qn/
+         X+wLXZldGwPxdoMO9mpF460bUrN5BM+iH8Z6LhCc2IkEVsEMmOdvZGZVFSY8t/7/EjGC
+         vS6tbYrviD3Ba/tmZmof0COsRBXwHYQoC5QnZH1nLuKD6tTqXV7JlgExzLwMcPTornlQ
+         NCgWKcC8HBjqhnZAEe//eVdrhk0/NqDUl/ApUfwvwRpk/C97taCL8LPMKIwzf2Pax3bJ
+         J09cxa6UB//BQKnM5UXUJrPQTahjR4upmract3xUBPOhdDWt9k3RLxYZocky/48N+JHZ
+         PQ9Q==
+X-Gm-Message-State: APjAAAVpqvwFZbpCI00Olvfrrtrvv28MzafY6cppp7puqzDucdeAjodC
+        3gjGopbrrrOFLsX+ZGZY7huJroSf
+X-Google-Smtp-Source: APXvYqx6JhZ2lTCM6y/kPnmCTL7amKRUaFNa9X+BN6e6g88XO6jI8mGsCFQst0153VbjUCm0r0MMvw==
+X-Received: by 2002:a2e:808a:: with SMTP id i10mr3054036ljg.151.1579196248890;
+        Thu, 16 Jan 2020 09:37:28 -0800 (PST)
+Received: from [192.168.2.145] (79-139-233-37.dynamic.spd-mgts.ru. [79.139.233.37])
+        by smtp.googlemail.com with ESMTPSA id t29sm10858436lfg.84.2020.01.16.09.37.27
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 16 Jan 2020 09:37:28 -0800 (PST)
+Subject: Re: [PATCH v4 08/14] dmaengine: tegra-apb: Fix coding style problems
+To:     Jon Hunter <jonathanh@nvidia.com>,
+        Laxman Dewangan <ldewangan@nvidia.com>,
+        Vinod Koul <vkoul@kernel.org>,
+        Dan Williams <dan.j.williams@intel.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        =?UTF-8?B?TWljaGHFgiBNaXJvc8WCYXc=?= <mirq-linux@rere.qmqm.pl>
+Cc:     dmaengine@vger.kernel.org, linux-tegra@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20200112173006.29863-1-digetx@gmail.com>
+ <20200112173006.29863-9-digetx@gmail.com>
+ <844c4ace-d043-a908-823d-545b5b753008@nvidia.com>
+From:   Dmitry Osipenko <digetx@gmail.com>
+Message-ID: <134adcfb-83fb-4bb7-986e-65217bc4f821@gmail.com>
+Date:   Thu, 16 Jan 2020 20:37:27 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.3.0
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
+In-Reply-To: <844c4ace-d043-a908-823d-545b5b753008@nvidia.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-From: Alexandru Ardelean <alexandru.ardelean@analog.com>
+15.01.2020 12:49, Jon Hunter пишет:
+> 
+> 
+> On 12/01/2020 17:30, Dmitry Osipenko wrote:
+>> This patch fixes few dozens of coding style problems reported by
+>> checkpatch and prettifies code where makes sense.
+>>
+>> Signed-off-by: Dmitry Osipenko <digetx@gmail.com>
+>> ---
+>>  drivers/dma/tegra20-apb-dma.c | 276 ++++++++++++++++++----------------
+>>  1 file changed, 144 insertions(+), 132 deletions(-)
+>>
+>> diff --git a/drivers/dma/tegra20-apb-dma.c b/drivers/dma/tegra20-apb-dma.c
+>> index dff21e80ffa4..7158bd3145c4 100644
+>> --- a/drivers/dma/tegra20-apb-dma.c
+>> +++ b/drivers/dma/tegra20-apb-dma.c
+> 
+> ...
+> 
+>> @@ -1003,20 +1014,23 @@ static void tegra_dma_prep_wcount(struct tegra_dma_channel *tdc,
+>>  		ch_regs->csr |= len_field;
+>>  }
+>>  
+>> -static struct dma_async_tx_descriptor *tegra_dma_prep_slave_sg(
+>> -	struct dma_chan *dc, struct scatterlist *sgl, unsigned int sg_len,
+>> -	enum dma_transfer_direction direction, unsigned long flags,
+>> -	void *context)
+>> +static struct dma_async_tx_descriptor *
+>> +tegra_dma_prep_slave_sg(struct dma_chan *dc,
+>> +			struct scatterlist *sgl,
+>> +			unsigned int sg_len,
+>> +			enum dma_transfer_direction direction,
+>> +			unsigned long flags,
+>> +			void *context)
+>>  {
+>>  	struct tegra_dma_channel *tdc = to_tegra_dma_chan(dc);
+>> +	struct tegra_dma_sg_req *sg_req = NULL;
+>> +	u32 csr, ahb_seq, apb_ptr, apb_seq;
+>> +	enum dma_slave_buswidth slave_bw;
+>>  	struct tegra_dma_desc *dma_desc;
+>> -	unsigned int i;
+>> -	struct scatterlist *sg;
+>> -	unsigned long csr, ahb_seq, apb_ptr, apb_seq;
+>>  	struct list_head req_list;
+>> -	struct tegra_dma_sg_req  *sg_req = NULL;
+>> -	u32 burst_size;
+>> -	enum dma_slave_buswidth slave_bw;
+>> +	struct scatterlist *sg;
+>> +	unsigned int burst_size;
+>> +	unsigned int i;
+> 
+> This is not really consistent with the rest of the changes by having 'i'
+> and 'burst_size' on separate lines.
 
-[ Upstream commit 648865a79d8ee3d1aa64aab5eb2a9d12eeed14f9 ]
+The goal wasn't to squash everything into a single line, but to make
+code more readable. In this particular case the separated lines look
+better to me.
 
-In 2D transfers (for the AXI DMAC), the number of frames (numf) represents
-Y_LENGTH, and the length of a frame is X_LENGTH. 2D transfers are useful
-for video transfers where screen resolutions ( X * Y ) are typically
-aligned for X, but not for Y.
+>>  
+>>  	if (!tdc->config_init) {
+>>  		dev_err(tdc2dev(tdc), "DMA channel is not configured\n");
+>> @@ -1028,7 +1042,7 @@ static struct dma_async_tx_descriptor *tegra_dma_prep_slave_sg(
+>>  	}
+>>  
+>>  	if (get_transfer_param(tdc, direction, &apb_ptr, &apb_seq, &csr,
+>> -				&burst_size, &slave_bw) < 0)
+>> +			       &burst_size, &slave_bw) < 0)
+>>  		return NULL;
+>>  
+>>  	INIT_LIST_HEAD(&req_list);
+>> @@ -1074,7 +1088,7 @@ static struct dma_async_tx_descriptor *tegra_dma_prep_slave_sg(
+>>  		len = sg_dma_len(sg);
+>>  
+>>  		if ((len & 3) || (mem & 3) ||
+>> -				(len > tdc->tdma->chip_data->max_dma_count)) {
+>> +		    len > tdc->tdma->chip_data->max_dma_count) {
+>>  			dev_err(tdc2dev(tdc),
+>>  				"DMA length/memory address is not supported\n");
+>>  			tegra_dma_desc_put(tdc, dma_desc);
+>> @@ -1126,20 +1140,21 @@ static struct dma_async_tx_descriptor *tegra_dma_prep_slave_sg(
+>>  	return &dma_desc->txd;
+>>  }
+>>  
+>> -static struct dma_async_tx_descriptor *tegra_dma_prep_dma_cyclic(
+>> -	struct dma_chan *dc, dma_addr_t buf_addr, size_t buf_len,
+>> -	size_t period_len, enum dma_transfer_direction direction,
+>> -	unsigned long flags)
+>> +static struct dma_async_tx_descriptor *
+>> +tegra_dma_prep_dma_cyclic(struct dma_chan *dc, dma_addr_t buf_addr,
+>> +			  size_t buf_len,
+>> +			  size_t period_len,
+>> +			  enum dma_transfer_direction direction,
+>> +			  unsigned long flags)
+>>  {
+>>  	struct tegra_dma_channel *tdc = to_tegra_dma_chan(dc);
+>> -	struct tegra_dma_desc *dma_desc = NULL;
+>>  	struct tegra_dma_sg_req *sg_req = NULL;
+>> -	unsigned long csr, ahb_seq, apb_ptr, apb_seq;
+>> -	int len;
+>> -	size_t remain_len;
+>> -	dma_addr_t mem = buf_addr;
+>> -	u32 burst_size;
+>> +	u32 csr, ahb_seq, apb_ptr, apb_seq;
+>>  	enum dma_slave_buswidth slave_bw;
+>> +	struct tegra_dma_desc *dma_desc;
+>> +	dma_addr_t mem = buf_addr;
+>> +	unsigned int burst_size;
+>> +	size_t len, remain_len;
+>>  
+>>  	if (!buf_len || !period_len) {
+>>  		dev_err(tdc2dev(tdc), "Invalid buffer/period len\n");
+>> @@ -1173,13 +1188,13 @@ static struct dma_async_tx_descriptor *tegra_dma_prep_dma_cyclic(
+>>  
+>>  	len = period_len;
+>>  	if ((len & 3) || (buf_addr & 3) ||
+>> -			(len > tdc->tdma->chip_data->max_dma_count)) {
+>> +	    len > tdc->tdma->chip_data->max_dma_count) {
+>>  		dev_err(tdc2dev(tdc), "Req len/mem address is not correct\n");
+>>  		return NULL;
+>>  	}
+>>  
+>>  	if (get_transfer_param(tdc, direction, &apb_ptr, &apb_seq, &csr,
+>> -				&burst_size, &slave_bw) < 0)
+>> +			       &burst_size, &slave_bw) < 0)
+>>  		return NULL;
+>>  
+>>  	ahb_seq = TEGRA_APBDMA_AHBSEQ_INTR_ENB;
+>> @@ -1269,7 +1284,6 @@ static int tegra_dma_alloc_chan_resources(struct dma_chan *dc)
+>>  	int ret;
+>>  
+>>  	dma_cookie_init(&tdc->dma_chan);
+>> -	tdc->config_init = false;
+> 
+> Why is this removed? Does not seem to belong in this patch.
 
-There is no requirement for Y_LENGTH to be aligned to the bus-width (or
-anything), and this is also true for AXI DMAC.
-
-Checking the Y_LENGTH for alignment causes false errors when initiating DMA
-transfers. This change fixes this by checking only that the Y_LENGTH is
-non-zero.
-
-Fixes: 0e3b67b348b8 ("dmaengine: Add support for the Analog Devices AXI-DMAC DMA controller")
-Signed-off-by: Alexandru Ardelean <alexandru.ardelean@analog.com>
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- drivers/dma/dma-axi-dmac.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/drivers/dma/dma-axi-dmac.c b/drivers/dma/dma-axi-dmac.c
-index 7f0b9aa15867..9887f2a14aa9 100644
---- a/drivers/dma/dma-axi-dmac.c
-+++ b/drivers/dma/dma-axi-dmac.c
-@@ -451,7 +451,7 @@ static struct dma_async_tx_descriptor *axi_dmac_prep_interleaved(
- 
- 	if (chan->hw_2d) {
- 		if (!axi_dmac_check_len(chan, xt->sgl[0].size) ||
--		    !axi_dmac_check_len(chan, xt->numf))
-+		    xt->numf == 0)
- 			return NULL;
- 		if (xt->sgl[0].size + dst_icg > chan->max_length ||
- 		    xt->sgl[0].size + src_icg > chan->max_length)
--- 
-2.20.1
-
+Because initially, on driver's probe, the tdc->config_init is false for
+all channels and then tegra_dma_free_chan_resources() also sets it to
+false. Thus there is no need to re-initilize the already initialized
+variable. It's not a very good coding style if variables are
+unnecessarily initialized, you probably noticed that there are few other
+cases of removing the unneeded initializations of local variables in
+this patch.
