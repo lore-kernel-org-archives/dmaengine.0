@@ -1,98 +1,140 @@
-Return-Path: <SRS0=gyxd=3G=vger.kernel.org=dmaengine-owner@kernel.org>
+Return-Path: <SRS0=UwEB=3J=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URI_HEX autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9A006C33C9E
-	for <dmaengine@archiver.kernel.org>; Fri, 17 Jan 2020 20:15:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 807A9C33CA1
+	for <dmaengine@archiver.kernel.org>; Mon, 20 Jan 2020 09:02:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 660CD20663
-	for <dmaengine@archiver.kernel.org>; Fri, 17 Jan 2020 20:15:48 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=geanix.com header.i=@geanix.com header.b="b/n+rnpA"
+	by mail.kernel.org (Postfix) with ESMTP id 5A8812073D
+	for <dmaengine@archiver.kernel.org>; Mon, 20 Jan 2020 09:02:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729657AbgAQUPs (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 17 Jan 2020 15:15:48 -0500
-Received: from first.geanix.com ([116.203.34.67]:55076 "EHLO first.geanix.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727519AbgAQUPs (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Fri, 17 Jan 2020 15:15:48 -0500
-Received: from localhost (87-49-44-45-mobile.dk.customer.tdc.net [87.49.44.45])
-        by first.geanix.com (Postfix) with ESMTPSA id 8A681AB7CF;
-        Fri, 17 Jan 2020 20:14:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=geanix.com; s=first;
-        t=1579292096; bh=NyD2V5SZSfQVTYmJ6N+L70KBjajwnojRIy5BahhEoVQ=;
-        h=From:To:Cc:Subject:References:Date:In-Reply-To;
-        b=b/n+rnpA3v2O8rwAeqUqPDB/3pEwDc8aT2Fzok20ORw+bUJDTkgOWQJHZ3Eb86Nia
-         h98IRvImFLnZ3NQRetCb6D/15fc32Ni9LV793Q5O3DKiP92rHDevyMv5bwJLFN0Ta6
-         ctOCLIZmzJBbNrwj5Z2qa7uSVgnhjj37BGjVLtTy5oUdnotiRsWizk+MAELt9JT9KH
-         GFdOjdO64TpbS+k62YS0jqpEbH46IEswdqmK+kaLNugVhwRmefu4zDFGZCI48g0Lsf
-         W4gUgVPD8KoWVI0J28kJEVZhPwjJMfaGqologNqBxhwXb0FMrHeMhgdOTg9/hJ2g9S
-         as4l4hd/ssMvQ==
-From:   Esben Haabendal <esben@geanix.com>
-To:     Han Xu <han.xu@nxp.com>
-Cc:     vkoul@kernel.org, shawnguo@kernel.org, s.hauer@pengutronix.de,
-        miquel.raynal@bootlin.com, richard@nod.at, vigneshr@ti.com,
-        boris.brezillon@collabora.com, festevam@gmail.com,
-        linux-imx@nxp.com, dmaengine@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-mtd@lists.infradead.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 6/6] mtd: rawnand: gpmi: set the pinctrl state for suspend/reusme
-References: <1579038243-28550-1-git-send-email-han.xu@nxp.com>
-        <1579038243-28550-7-git-send-email-han.xu@nxp.com>
-Date:   Fri, 17 Jan 2020 21:15:44 +0100
-In-Reply-To: <1579038243-28550-7-git-send-email-han.xu@nxp.com> (Han Xu's
-        message of "Wed, 15 Jan 2020 05:44:03 +0800")
-Message-ID: <87wo9pvnyn.fsf@geanix.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1726075AbgATJCO convert rfc822-to-8bit (ORCPT
+        <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 20 Jan 2020 04:02:14 -0500
+Received: from mail-oi1-f195.google.com ([209.85.167.195]:39842 "EHLO
+        mail-oi1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725872AbgATJCN (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Mon, 20 Jan 2020 04:02:13 -0500
+Received: by mail-oi1-f195.google.com with SMTP id z2so3892632oih.6;
+        Mon, 20 Jan 2020 01:02:13 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=EDa/ZVNGvwyY4lRA+wxSdtjDm7nJG1InbdRTQhCgYUs=;
+        b=IwkMv58ZRHL1ohFY2z4UYBfLxjCUADjseozTDn+Rif1z1QSesm6F463J4/maGZd1/x
+         kFzGbBNJ3Qki2iNejZRJeUzhlkLICaUpVST7mKSj6LO2T8bAukwCfMIKtJBMyvOPy19t
+         c8jUF2+TfZu83U0IUHY8H1Jp4S8nA5pDlfLvWvtpLrGB57zOFmPwCk0epapK0kq64ud3
+         gs452+HseZPll6uiZjV4iCUJWRj206QLUXvePUzsTdC66u0dXc4UU1YKnsHL+S1/HEmx
+         uRnM/Bk/J3ePN7/qPxXanz4iJADwMsD/Y+tjUY3wGEaGrhJ4WOwIwFmNhuhwnN8jZYBt
+         NXdA==
+X-Gm-Message-State: APjAAAVHKvvIabGkeEbIx82yZioMstHHhJaV3pZxtOUxpeiSOVNz2xQk
+        kL1I3V8xm0XMDXGO/oC5BP3wKFazzpHe69boqRw=
+X-Google-Smtp-Source: APXvYqy2+nlFf8CNQvNrugEXLRUIQO11SX6/COqt7l6vSF13D0b6ZBMZc6d0k+QLUiI4gi0VYO0PziFbmhdmtWhG8GA=
+X-Received: by 2002:a05:6808:292:: with SMTP id z18mr11627160oic.131.1579510933130;
+ Mon, 20 Jan 2020 01:02:13 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20200117153056.31363-1-geert+renesas@glider.be> <d2b669e7-a5d4-20ec-5b54-103b71df7407@ti.com>
+In-Reply-To: <d2b669e7-a5d4-20ec-5b54-103b71df7407@ti.com>
+From:   Geert Uytterhoeven <geert@linux-m68k.org>
+Date:   Mon, 20 Jan 2020 10:01:51 +0100
+Message-ID: <CAMuHMdVzQCWvH-LJ9ME5dRyafudZBHQLaJQzkSCPnughv_q2aA@mail.gmail.com>
+Subject: Re: [PATCH v2] dmaengine: Create symlinks between DMA channels and slaves
+To:     Peter Ujfalusi <peter.ujfalusi@ti.com>
+Cc:     Geert Uytterhoeven <geert+renesas@glider.be>,
+        Vinod Koul <vkoul@kernel.org>,
+        Dan Williams <dan.j.williams@intel.com>,
+        dmaengine@vger.kernel.org,
+        Linux-Renesas <linux-renesas-soc@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Han Xu <han.xu@nxp.com> writes:
+Hi Peter,
 
-> set the correct pinctrl state in system pm suspend/resume ops
+On Fri, Jan 17, 2020 at 9:08 PM Peter Ujfalusi <peter.ujfalusi@ti.com> wrote:
+> On 1/17/20 5:30 PM, Geert Uytterhoeven wrote:
+> > Currently it is not easy to find out which DMA channels are in use, and
+> > which slave devices are using which channels.
+> >
+> > Fix this by creating two symlinks between the DMA channel and the actual
+> > slave device when a channel is requested:
+> >   1. A "slave" symlink from DMA channel to slave device,
 >
-> Signed-off-by: Han Xu <han.xu@nxp.com>
-> ---
->  drivers/mtd/nand/raw/gpmi-nand/gpmi-nand.c | 4 ++++
->  1 file changed, 4 insertions(+)
+> Have you considered similar link name as on the slave device:
+> slave:<name>
 >
-> diff --git a/drivers/mtd/nand/raw/gpmi-nand/gpmi-nand.c b/drivers/mtd/nand/raw/gpmi-nand/gpmi-nand.c
-> index 73644c96fa9b..de1e3dbb2eb1 100644
-> --- a/drivers/mtd/nand/raw/gpmi-nand/gpmi-nand.c
-> +++ b/drivers/mtd/nand/raw/gpmi-nand/gpmi-nand.c
-> @@ -15,6 +15,7 @@
->  #include <linux/of.h>
->  #include <linux/of_device.h>
->  #include <linux/pm_runtime.h>
-> +#include <linux/pinctrl/consumer.h>
->  #include <linux/dma/mxs-dma.h>
->  #include "gpmi-nand.h"
->  #include "gpmi-regs.h"
-> @@ -2692,6 +2693,7 @@ static int gpmi_pm_suspend(struct device *dev)
->  {
->  	int ret;
->  
-> +	pinctrl_pm_select_sleep_state(dev);
->  	ret = pm_runtime_force_suspend(dev);
->  
->  	return ret;
-> @@ -2708,6 +2710,8 @@ static int gpmi_pm_resume(struct device *dev)
->  		return ret;
->  	}
->  
-> +	pinctrl_pm_select_default_state(dev);
-> +
->  	/* re-init the GPMI registers */
->  	ret = gpmi_init(this);
->  	if (ret) {
+> That way it would be easier to grasp which channel is used for what
+> purpose by only looking under /sys/class/dma/ and no need to check the
+> slave device.
 
-Acked-by: Esben Haabendal <esben@geanix.com>
+Would this really provide more information?
+The device name is already provided in the target of the symlink:
+
+root@koelsch:~# readlink
+/sys/devices/platform/soc/e6720000.dma-controller/dma/dma1chan2/slave
+../../../ee140000.sd
+
+> >   2. A "dma:<name>" symlink slave device to DMA channel.
+> > When the channel is released, the symlinks are removed again.
+> > The latter requires keeping track of the slave device and the channel
+> > name in the dma_chan structure.
+> >
+> > Note that this is limited to channel request functions for requesting an
+> > exclusive slave channel that take a device pointer (dma_request_chan()
+> > and dma_request_slave_channel*()).
+> >
+> > Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+> > ---
+> > v2:
+> >   - Add DMA_SLAVE_NAME macro,
+> >   - Also handle channels from FIXME,
+> >   - Add backlinks from slave device to DMA channel,
+> >
+> > On r8a7791/koelsch, the following new symlinks are created:
+> >
+> >     /sys/devices/platform/soc/
+> >     ├── e6700000.dma-controller/dma/dma0chan0/slave -> ../../../e6e20000.spi
+> >     ├── e6700000.dma-controller/dma/dma0chan1/slave -> ../../../e6e20000.spi
+> >     ├── e6700000.dma-controller/dma/dma0chan2/slave -> ../../../ee100000.sd
+> >     ├── e6700000.dma-controller/dma/dma0chan3/slave -> ../../../ee100000.sd
+> >     ├── e6700000.dma-controller/dma/dma0chan4/slave -> ../../../ee160000.sd
+> >     ├── e6700000.dma-controller/dma/dma0chan5/slave -> ../../../ee160000.sd
+> >     ├── e6700000.dma-controller/dma/dma0chan6/slave -> ../../../e6e68000.serial
+> >     ├── e6700000.dma-controller/dma/dma0chan7/slave -> ../../../e6e68000.serial
+> >     ├── e6720000.dma-controller/dma/dma1chan0/slave -> ../../../e6b10000.spi
+> >     ├── e6720000.dma-controller/dma/dma1chan1/slave -> ../../../e6b10000.spi
+> >     ├── e6720000.dma-controller/dma/dma1chan2/slave -> ../../../ee140000.sd
+> >     ├── e6720000.dma-controller/dma/dma1chan3/slave -> ../../../ee140000.sd
+> >     ├── e6b10000.spi/dma:rx -> ../e6720000.dma-controller/dma/dma1chan1
+> >     ├── e6b10000.spi/dma:tx -> ../e6720000.dma-controller/dma/dma1chan0
+> >     ├── e6e20000.spi/dma:rx -> ../e6700000.dma-controller/dma/dma0chan1
+> >     ├── e6e20000.spi/dma:tx -> ../e6700000.dma-controller/dma/dma0chan0
+> >     ├── e6e68000.serial/dma:rx -> ../e6700000.dma-controller/dma/dma0chan7
+> >     ├── e6e68000.serial/dma:tx -> ../e6700000.dma-controller/dma/dma0chan6
+> >     ├── ee100000.sd/dma:rx -> ../e6700000.dma-controller/dma/dma0chan3
+> >     ├── ee100000.sd/dma:tx -> ../e6700000.dma-controller/dma/dma0chan2
+> >     ├── ee140000.sd/dma:rx -> ../e6720000.dma-controller/dma/dma1chan3
+> >     ├── ee140000.sd/dma:tx -> ../e6720000.dma-controller/dma/dma1chan2
+> >     ├── ee160000.sd/dma:rx -> ../e6700000.dma-controller/dma/dma0chan5
+> >     └── ee160000.sd/dma:tx -> ../e6700000.dma-controller/dma/dma0chan4
+
+
+Gr{oetje,eeting}s,
+
+                        Geert
+
+-- 
+Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
+
+In personal conversations with technical people, I call myself a hacker. But
+when I'm talking to journalists I just say "programmer" or something like that.
+                                -- Linus Torvalds
