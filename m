@@ -2,70 +2,78 @@ Return-Path: <SRS0=78CF=3K=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.1 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 28BC8C2D0CE
-	for <dmaengine@archiver.kernel.org>; Tue, 21 Jan 2020 09:23:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E30F4C2D0CE
+	for <dmaengine@archiver.kernel.org>; Tue, 21 Jan 2020 09:33:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id EBCC724125
-	for <dmaengine@archiver.kernel.org>; Tue, 21 Jan 2020 09:23:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1579598589;
-	bh=wZZNyw6+oSP85Yme6UFz+brQhhEAm7nf6YggeNNFXbk=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:List-ID:From;
-	b=ZPSc37Zbm+MkHHAAjfYAE/llI0q/NHCCFt8WPseHUnFNtNPbKls8F8WVtLHAis0en
-	 cjdwdhaqhJhcj29vWAKEuIVlBe30juHK/062yfpKFjGWbwNTgzJaWANRDgoTG1EH69
-	 kmICXsoPG22C1EKYNi42Rh8QWQ6u0P9HmDTH+JAU=
+	by mail.kernel.org (Postfix) with ESMTP id B57E822522
+	for <dmaengine@archiver.kernel.org>; Tue, 21 Jan 2020 09:33:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727360AbgAUJXI (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 21 Jan 2020 04:23:08 -0500
-Received: from mail.kernel.org ([198.145.29.99]:38694 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725789AbgAUJXI (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Tue, 21 Jan 2020 04:23:08 -0500
-Received: from localhost (unknown [171.76.119.14])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id E467222522;
-        Tue, 21 Jan 2020 09:23:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1579598587;
-        bh=wZZNyw6+oSP85Yme6UFz+brQhhEAm7nf6YggeNNFXbk=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=hD0mrIThL3GK+lN3Da5Lcqodqf9BQLQ723AJxKcFmJbqXTzxWFURHsvF2cR2CemS7
-         6G1Ngi1Mf3iubDjp8y2elwS0n5J11S9qQpivGpUf6ivaRDb2Wym53Jhi/h2TWc3fYC
-         jrnVKBluZKmM0HCSNA4GF7f0djMZCzeMNn1w1uDU=
-Date:   Tue, 21 Jan 2020 14:53:03 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Geert Uytterhoeven <geert+renesas@glider.be>
+        id S1728682AbgAUJd5 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 21 Jan 2020 04:33:57 -0500
+Received: from mail-ot1-f68.google.com ([209.85.210.68]:45102 "EHLO
+        mail-ot1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727220AbgAUJd5 (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Tue, 21 Jan 2020 04:33:57 -0500
+Received: by mail-ot1-f68.google.com with SMTP id 59so2300193otp.12;
+        Tue, 21 Jan 2020 01:33:57 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Qj5VbwsxDuvi6Lzh2JzA8IRCPYG3njmnwC8KpSoN7Fo=;
+        b=Q9ddjvG4F10/oPJhrPZSLZPl6xpzubsP5a8MauU8U0mMqPWquJJzUAabI9Gl3b6rL6
+         VCPEgd+xdTbYILya/UjEreEu1bXHZMZzWq2k0/vMxEOstyNG1hmY4DNgPzwtstZxKBae
+         gacOGmoHEevTWHZsU3ed1U+9UlkjdUmfBRa5M69t5XEZ7FDiLNDME5VaZ2N6/3bNLwaE
+         nNyVVzckUOZ6pLkpnDREzzpZIAiSUu8FzqVsTC/zqrPvsMWMZIUyKtR09BNXJQRWGL5A
+         ZS56toNZyLztXImgxOP/jRi1NBgUfPgIkSCizYvkJDdQiiF50XNUhX+NZTWEsNIZ0a4w
+         yyqA==
+X-Gm-Message-State: APjAAAVRYtFmDCsBBdA27Lq6xXIES/c+Ayavn98j4Em3bOVLKGtwwHYP
+        7H1VgBT2JIFor5ZeXSsf8zCtlGAn0AJUZ8lZHr4=
+X-Google-Smtp-Source: APXvYqxhBfAirvha1jNyHcG9Wj357aKqFNFvum/Vm4ne3rqK1ZgfHgEvQ8rv4ewYeH7Yc9GdPstY3m6KPf+b0CnOlwk=
+X-Received: by 2002:a9d:dc1:: with SMTP id 59mr2869459ots.250.1579599236621;
+ Tue, 21 Jan 2020 01:33:56 -0800 (PST)
+MIME-Version: 1.0
+References: <20200117152933.31175-1-geert+renesas@glider.be> <20200121092303.GI2841@vkoul-mobl>
+In-Reply-To: <20200121092303.GI2841@vkoul-mobl>
+From:   Geert Uytterhoeven <geert@linux-m68k.org>
+Date:   Tue, 21 Jan 2020 10:33:45 +0100
+Message-ID: <CAMuHMdW39YMNixAkCKZexE2QZNxy5HoMGNtMGtRJ5n5rR-3FHA@mail.gmail.com>
+Subject: Re: [PATCH 0/3] dmaengine: Miscellaneous cleanups
+To:     Vinod Koul <vkoul@kernel.org>
 Cc:     Dan Williams <dan.j.williams@intel.com>,
         Lars-Peter Clausen <lars@metafoo.de>,
         Matt Porter <mporter@konsulko.com>,
         Arnd Bergmann <arnd@arndb.de>, dmaengine@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 0/3] dmaengine: Miscellaneous cleanups
-Message-ID: <20200121092303.GI2841@vkoul-mobl>
-References: <20200117152933.31175-1-geert+renesas@glider.be>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200117152933.31175-1-geert+renesas@glider.be>
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On 17-01-20, 16:29, Geert Uytterhoeven wrote:
-> 	Hi all,
-> 
-> This patch series contains a few miscellaneous cleanups for the DMA
-> engine code and API.
+Hi Vinod,
 
-This looks good, thanks for the cleanup. But it fails to apply, can you
-please rebase and resend
+On Tue, Jan 21, 2020 at 10:23 AM Vinod Koul <vkoul@kernel.org> wrote:
+> On 17-01-20, 16:29, Geert Uytterhoeven wrote:
+> > This patch series contains a few miscellaneous cleanups for the DMA
+> > engine code and API.
+>
+> This looks good, thanks for the cleanup. But it fails to apply, can you
+> please rebase and resend
 
-Thanks
+Done.
+
+Gr{oetje,eeting}s,
+
+                        Geert
+
 -- 
-~Vinod
+Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
+
+In personal conversations with technical people, I call myself a hacker. But
+when I'm talking to journalists I just say "programmer" or something like that.
+                                -- Linus Torvalds
