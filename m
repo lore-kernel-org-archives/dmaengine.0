@@ -4,30 +4,30 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-9.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
+	USER_AGENT_GIT autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4032DC2D0CE
-	for <dmaengine@archiver.kernel.org>; Tue, 21 Jan 2020 09:34:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 26953C2D0CE
+	for <dmaengine@archiver.kernel.org>; Tue, 21 Jan 2020 09:34:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 16FF024655
-	for <dmaengine@archiver.kernel.org>; Tue, 21 Jan 2020 09:34:19 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0585A22522
+	for <dmaengine@archiver.kernel.org>; Tue, 21 Jan 2020 09:34:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728741AbgAUJeS (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 21 Jan 2020 04:34:18 -0500
-Received: from albert.telenet-ops.be ([195.130.137.90]:46846 "EHLO
-        albert.telenet-ops.be" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729122AbgAUJeQ (ORCPT
+        id S1729117AbgAUJe2 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 21 Jan 2020 04:34:28 -0500
+Received: from xavier.telenet-ops.be ([195.130.132.52]:37226 "EHLO
+        xavier.telenet-ops.be" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729107AbgAUJeQ (ORCPT
         <rfc822;dmaengine@vger.kernel.org>); Tue, 21 Jan 2020 04:34:16 -0500
 Received: from ramsan ([84.195.182.253])
-        by albert.telenet-ops.be with bizsmtp
-        id sxaD2100M5USYZQ06xaDCK; Tue, 21 Jan 2020 10:34:14 +0100
+        by xavier.telenet-ops.be with bizsmtp
+        id sxaD2100H5USYZQ01xaDZk; Tue, 21 Jan 2020 10:34:14 +0100
 Received: from rox.of.borg ([192.168.97.57])
         by ramsan with esmtp (Exim 4.90_1)
         (envelope-from <geert@linux-m68k.org>)
-        id 1itpvI-0008IS-KR; Tue, 21 Jan 2020 10:34:12 +0100
+        id 1itpvI-0008IS-FH; Tue, 21 Jan 2020 10:34:12 +0100
 Received: from geert by rox.of.borg with local (Exim 4.90_1)
         (envelope-from <geert@linux-m68k.org>)
-        id 1itpuM-0007Ss-21; Tue, 21 Jan 2020 10:33:14 +0100
+        id 1itpuM-0007Sy-3L; Tue, 21 Jan 2020 10:33:14 +0100
 From:   Geert Uytterhoeven <geert+renesas@glider.be>
 To:     Vinod Koul <vkoul@kernel.org>
 Cc:     Dan Williams <dan.j.williams@intel.com>,
@@ -36,9 +36,9 @@ Cc:     Dan Williams <dan.j.williams@intel.com>,
         Arnd Bergmann <arnd@arndb.de>, dmaengine@vger.kernel.org,
         linux-kernel@vger.kernel.org,
         Geert Uytterhoeven <geert+renesas@glider.be>
-Subject: [PATCH v2 1/3] dmaengine: Remove dma_device_satisfies_mask() wrapper
-Date:   Tue, 21 Jan 2020 10:33:09 +0100
-Message-Id: <20200121093311.28639-2-geert+renesas@glider.be>
+Subject: [PATCH v2 3/3] dmaengine: Move dma_get_{,any_}slave_channel() to private dmaengine.h
+Date:   Tue, 21 Jan 2020 10:33:11 +0100
+Message-Id: <20200121093311.28639-4-geert+renesas@glider.be>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20200121093311.28639-1-geert+renesas@glider.be>
 References: <20200121093311.28639-1-geert+renesas@glider.be>
@@ -47,13 +47,10 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Commit aa1e6f1a385eb2b0 ("dmaengine: kill struct dma_client and
-supporting infrastructure") removed the last user of the
-dma_device_satisfies_mask() wrapper.
-
-Remove the wrapper, and rename __dma_device_satisfies_mask() to
-dma_device_satisfies_mask(), to get rid of one more function starting
-with a double underscore.
+The functions dma_get_slave_channel() and dma_get_any_slave_channel()
+are called from DMA engine drivers only.  Hence move their declarations
+from the public header file <linux/dmaengine.h> to the private header
+file drivers/dma/dmaengine.h.
 
 Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
 Acked-by: Arnd Bergmann <arnd@arndb.de>
@@ -62,36 +59,49 @@ v2:
   - Add Acked-by,
   - Rebase on top of today's slave-dma/next.
 ---
- drivers/dma/dmaengine.c | 9 +++------
- 1 file changed, 3 insertions(+), 6 deletions(-)
+ drivers/dma/dmaengine.h   | 3 +++
+ drivers/dma/of-dma.c      | 2 ++
+ include/linux/dmaengine.h | 2 --
+ 3 files changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/dma/dmaengine.c b/drivers/dma/dmaengine.c
-index 158aeb1b6a8abd7f..7550dbdf548833ed 100644
---- a/drivers/dma/dmaengine.c
-+++ b/drivers/dma/dmaengine.c
-@@ -308,11 +308,8 @@ static void dma_channel_rebalance(void)
- 		}
+diff --git a/drivers/dma/dmaengine.h b/drivers/dma/dmaengine.h
+index b0b97475707a789f..e8a320c9e57c2d74 100644
+--- a/drivers/dma/dmaengine.h
++++ b/drivers/dma/dmaengine.h
+@@ -179,4 +179,7 @@ dmaengine_desc_callback_valid(struct dmaengine_desc_callback *cb)
+ 	return (cb->callback) ? true : false;
  }
  
--#define dma_device_satisfies_mask(device, mask) \
--	__dma_device_satisfies_mask((device), &(mask))
--static int
--__dma_device_satisfies_mask(struct dma_device *device,
--			    const dma_cap_mask_t *want)
-+static int dma_device_satisfies_mask(struct dma_device *device,
-+				     const dma_cap_mask_t *want)
- {
- 	dma_cap_mask_t has;
++struct dma_chan *dma_get_slave_channel(struct dma_chan *chan);
++struct dma_chan *dma_get_any_slave_channel(struct dma_device *device);
++
+ #endif
+diff --git a/drivers/dma/of-dma.c b/drivers/dma/of-dma.c
+index c2d779daa4b51ac8..b2c2b5e8093cf0d7 100644
+--- a/drivers/dma/of-dma.c
++++ b/drivers/dma/of-dma.c
+@@ -15,6 +15,8 @@
+ #include <linux/of.h>
+ #include <linux/of_dma.h>
  
-@@ -531,7 +528,7 @@ static struct dma_chan *private_candidate(const dma_cap_mask_t *mask,
- {
- 	struct dma_chan *chan;
++#include "dmaengine.h"
++
+ static LIST_HEAD(of_dma_list);
+ static DEFINE_MUTEX(of_dma_lock);
  
--	if (mask && !__dma_device_satisfies_mask(dev, mask)) {
-+	if (mask && !dma_device_satisfies_mask(dev, mask)) {
- 		dev_dbg(dev->dev, "%s: wrong capabilities\n", __func__);
- 		return NULL;
- 	}
+diff --git a/include/linux/dmaengine.h b/include/linux/dmaengine.h
+index 230d50ef7360ecee..9cc0e70e7c3543a9 100644
+--- a/include/linux/dmaengine.h
++++ b/include/linux/dmaengine.h
+@@ -1522,8 +1522,6 @@ int dma_async_device_register(struct dma_device *device);
+ int dmaenginem_async_device_register(struct dma_device *device);
+ void dma_async_device_unregister(struct dma_device *device);
+ void dma_run_dependencies(struct dma_async_tx_descriptor *tx);
+-struct dma_chan *dma_get_slave_channel(struct dma_chan *chan);
+-struct dma_chan *dma_get_any_slave_channel(struct dma_device *device);
+ #define dma_request_channel(mask, x, y) \
+ 	__dma_request_channel(&(mask), x, y, NULL)
+ 
 -- 
 2.17.1
 
