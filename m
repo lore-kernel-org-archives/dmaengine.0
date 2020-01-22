@@ -2,116 +2,185 @@ Return-Path: <SRS0=UiUh=3L=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.1 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+X-Spam-Status: No, score=-1.0 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URI_HEX
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1319FC2D0DB
-	for <dmaengine@archiver.kernel.org>; Wed, 22 Jan 2020 08:46:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8EF91C3F68F
+	for <dmaengine@archiver.kernel.org>; Wed, 22 Jan 2020 09:49:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id DB1592467E
-	for <dmaengine@archiver.kernel.org>; Wed, 22 Jan 2020 08:46:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 672752468D
+	for <dmaengine@archiver.kernel.org>; Wed, 22 Jan 2020 09:49:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1579682781;
-	bh=AepTZQnS41aFGnPgtfnFssNsH20gZiJLcFaGD27PRV0=;
+	s=default; t=1579686558;
+	bh=k2bF29vbO4gdaC0R6XuDL1eqr9ESgfDtamKRRnvdJSU=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:List-ID:From;
-	b=yjdumTGz/H2GfbH0rwfZznMFus2IyaHdgjxi/HBL+nwnIZdkLh7RW4M2kiychsZlO
-	 /kohAY16dw1Jo//Y5ok2iF92zZ6C0/yLkYAXs3LBtcgESZAdHw6v6hCLmjyFLTsd6G
-	 f5UlUdyAaduPYvcr/NxlRwov9rYMZ1biGwX0PA18=
+	b=Mgy06vrFpDoW40SmFHcJAsFtU/PAxZPZqbWYVGY189sQKQr2Mt5jiaLCdqXAAsYHY
+	 0Wo68HtzkScRIg6B4IRT20a/RR1akeIol8oI0QPQ3lxGMJhcIaGmCupxgLFCNyaB2L
+	 QUzXZI5zGq5VkFSunNzYZ2EXuKVkd1Uu1ki9gG9U=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728981AbgAVIqV (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 22 Jan 2020 03:46:21 -0500
-Received: from mail.kernel.org ([198.145.29.99]:45216 "EHLO mail.kernel.org"
+        id S1733311AbgAVJkJ (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 22 Jan 2020 04:40:09 -0500
+Received: from mail.kernel.org ([198.145.29.99]:58680 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726004AbgAVIqV (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Wed, 22 Jan 2020 03:46:21 -0500
-Received: from localhost (lfbn-tou-1-1502-76.w90-89.abo.wanadoo.fr [90.89.68.76])
+        id S2387405AbgAVJkI (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Wed, 22 Jan 2020 04:40:08 -0500
+Received: from localhost (unknown [122.178.236.243])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 412962465A;
-        Wed, 22 Jan 2020 08:46:20 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 1B55C24684;
+        Wed, 22 Jan 2020 09:40:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1579682780;
-        bh=AepTZQnS41aFGnPgtfnFssNsH20gZiJLcFaGD27PRV0=;
+        s=default; t=1579686007;
+        bh=k2bF29vbO4gdaC0R6XuDL1eqr9ESgfDtamKRRnvdJSU=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=lKE/jqr5coHc/wWfyg1XVzfBMwoTN0AhXWs9DT60kBanKLjyBiFKr2fllB1806A74
-         +Rr8FQ5616OSPdnCwWeNrWpuI1lXV/wnZDKg0ZJtiGrakIj12v0wYeNSe7WEiV7AHQ
-         6vIdT8z4Tfao3vHQoSBrDVNtmR0OUVIwCurppQHU=
-Date:   Wed, 22 Jan 2020 09:46:17 +0100
-From:   Maxime Ripard <mripard@kernel.org>
-To:     Mark Brown <broonie@kernel.org>
-Cc:     Stefan Mavrodiev <stefan@olimex.com>,
+        b=HVrFrHiw4x2TulvgoJcp0AK51hGJ3DGtBt28CAp3cmmMAYFgRKuS5J3YwayzbRy05
+         nzPk9BYdzU60kzXXVG84/dfEF6+bPNg7PsZQK/oUqsbmyWmI1+Pf9izkflwW7eFpBh
+         oYw9Le46eQc2a6BLizw4/WCsfD88dRi6bcRlQxD8=
+Date:   Wed, 22 Jan 2020 15:10:02 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Geert Uytterhoeven <geert@linux-m68k.org>
+Cc:     Peter Ujfalusi <peter.ujfalusi@ti.com>,
         Dan Williams <dan.j.williams@intel.com>,
-        Vinod Koul <vkoul@kernel.org>, Chen-Yu Tsai <wens@csie.org>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        open list <linux-kernel@vger.kernel.org>,
-        "open list:DMA GENERIC OFFLOAD ENGINE SUBSYSTEM" 
-        <dmaengine@vger.kernel.org>,
-        "moderated list:ARM/Allwinner sunXi SoC support" 
-        <linux-arm-kernel@lists.infradead.org>,
-        "open list:DRM DRIVERS FOR ALLWINNER A10" 
-        <dri-devel@lists.freedesktop.org>, linux-sunxi@googlegroups.com
-Subject: Re: [PATCH v2 2/2] drm: sun4i: hdmi: Add support for sun4i HDMI
- encoder audio
-Message-ID: <20200122084617.s2n4dqhwanmaxuch@gilmour.lan>
-References: <20200120123326.30743-1-stefan@olimex.com>
- <20200120123326.30743-3-stefan@olimex.com>
- <20200121182905.pxs72ojqx5fz2gi3@gilmour.lan>
- <20200121182937.2ak72e4eklk4za2u@gilmour.lan>
- <20200121183247.GL4656@sirena.org.uk>
+        dmaengine@vger.kernel.org,
+        Linux-Renesas <linux-renesas-soc@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v2] dmaengine: Create symlinks between DMA channels and
+ slaves
+Message-ID: <20200122094002.GS2841@vkoul-mobl>
+References: <20200117153056.31363-1-geert+renesas@glider.be>
+ <d2b669e7-a5d4-20ec-5b54-103b71df7407@ti.com>
+ <CAMuHMdVzQCWvH-LJ9ME5dRyafudZBHQLaJQzkSCPnughv_q2aA@mail.gmail.com>
+ <1cdc4f71-f365-8c9e-4634-408c59e6a3f9@ti.com>
+ <CAMuHMdU=-Eo29=DQmq96OegdYAvW7Vw9PpgNWSTfjDWVF5jd-A@mail.gmail.com>
+ <f7bbb132-1278-7030-7f40-b89733bcbd83@ti.com>
+ <CAMuHMdXDiwTomiKp8Kaw0NvMNpg78-M88F0mNTWBOz5MLE4LtQ@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-        protocol="application/pgp-signature"; boundary="eo44jwmgblwjtd3w"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20200121183247.GL4656@sirena.org.uk>
+In-Reply-To: <CAMuHMdXDiwTomiKp8Kaw0NvMNpg78-M88F0mNTWBOz5MLE4LtQ@mail.gmail.com>
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
+Hey Geert,
 
---eo44jwmgblwjtd3w
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+On 21-01-20, 21:22, Geert Uytterhoeven wrote:
+> On Mon, Jan 20, 2020 at 1:06 PM Peter Ujfalusi <peter.ujfalusi@ti.com> wrote:
+> > On 20/01/2020 12.51, Geert Uytterhoeven wrote:
+> > > On Mon, Jan 20, 2020 at 11:16 AM Peter Ujfalusi <peter.ujfalusi@ti.com> wrote:
+> > >> On 20/01/2020 11.01, Geert Uytterhoeven wrote:
+> > >>> On Fri, Jan 17, 2020 at 9:08 PM Peter Ujfalusi <peter.ujfalusi@ti.com> wrote:
+> > >>>> On 1/17/20 5:30 PM, Geert Uytterhoeven wrote:
+> > >>>>> Currently it is not easy to find out which DMA channels are in use, and
+> > >>>>> which slave devices are using which channels.
+> > >>>>>
+> > >>>>> Fix this by creating two symlinks between the DMA channel and the actual
+> > >>>>> slave device when a channel is requested:
+> > >>>>>   1. A "slave" symlink from DMA channel to slave device,
+> > >>>>
+> > >>>> Have you considered similar link name as on the slave device:
+> > >>>> slave:<name>
+> > >>>>
+> > >>>> That way it would be easier to grasp which channel is used for what
+> > >>>> purpose by only looking under /sys/class/dma/ and no need to check the
+> > >>>> slave device.
+> > >>>
+> > >>> Would this really provide more information?
+> > >>> The device name is already provided in the target of the symlink:
+> > >>>
+> > >>> root@koelsch:~# readlink
+> > >>> /sys/devices/platform/soc/e6720000.dma-controller/dma/dma1chan2/slave
+> > >>> ../../../ee140000.sd
+> > >>
+> > >> e6720000.dma-controller/dma/dma1chan2/slave -> ../../../ee140000.sd
+> > >> e6720000.dma-controller/dma/dma1chan3/slave -> ../../../ee140000.sd
+> > >>
+> > >> It is hard to tell which one is the tx and RX channel without looking
+> > >> under the ee140000.sd:
+> > >>
+> > >> ee140000.sd/dma:rx -> ../e6720000.dma-controller/dma/dma1chan3
+> > >> ee140000.sd/dma:tx -> ../e6720000.dma-controller/dma/dma1chan2
+> > >
+> > > Oh, you meant the name of the channel, not the name of the device.
+> > > My mistake.
+> > >
+> > > As this name is a property of the slave device, not of the DMA channel,
+> > > I don't think it belongs under dma*chan*.
+> >
+> > Right, but it gives me only half the information I need to be a link useful.
+> > I know that device X is using two channels but I need to check the
+> > device X's directory to know which channel is used for what purpose.
 
-On Tue, Jan 21, 2020 at 06:32:47PM +0000, Mark Brown wrote:
-> On Tue, Jan 21, 2020 at 07:29:37PM +0100, Maxime Ripard wrote:
->
-> > > Mark, our issue here is that we have a driver tied to a device that is
-> > > an HDMI encoder. Obviously, we'll want to register into DRM, which is
-> > > what we were doing so far, with the usual case where at remove /
-> > > unbind time, in order to free the resources, we just retrieve our
-> > > pointer to our private structure using the device's drvdata.
->
-> > > Now, snd_soc_register_card also sets that pointer to the card we try
-> > > to register, which is problematic. It seems that it's used to handle
-> > > suspend / resume automatically, which in this case would be also not
-> > > really fit for us (or rather, we would need to do more that just
-> > > suspend the audio part).
->
-> There's a drvdata field in the snd_soc_card for cases like this - would
-> that work for you?
+I gave the patch a spin on my board, I like some things and I dont like
+few things :)
 
-Ah, right, we could just retrieve the snd_soc_card in the unbind, and
-the retrieve our structure that way. That's pretty simple :)
+Having name of slaves is a good thing, but i had to resort to search of
+channels, the controller I have has 18 channels and only 4 were in use,
+so took a bit of time to find things.
 
-Stefan, I guess this is the easiest solution, we should just make sure
-that there's a comment to explain why we retrieve snd_soc_card in the
-unbind, since it's somewhat unusual.
+Start with /sys/class/dma/ to find the controller node
+then from controller node find the channels with slave
+and then get to the clients!
 
-Thanks!
-Maxime
+So i would say it is better than what we have today, but we could do
+better :)
 
---eo44jwmgblwjtd3w
-Content-Type: application/pgp-signature; name="signature.asc"
+> >
+> > >> Another option would be to not have symlinks, but a debugfs file where
+> > >> this information can be extracted and would only compiled if debugfs is
+> > >> enabled.
+> > >
+> > > Like /proc/interrupts?
+> >
+> > More like /sys/kernel/debug/gpio
+> >
+> > > That brings the complexity of traversing all channels etc.
+> >
+> > Sure, but only when the file is read.
+> > You can add
+> > #ifdef CONFIG_DEBUG_FS
+> > #endif
+> >
+> > around the slave_device and name in struct dma_chan {}
+> >
+> > and when user reads the file you print out something like this:
+> > cat /sys/kernel/debug/dmaengine
+> >
+> > e6700000.dma-controller:
+> > dma0chan0               e6e20000.spi:tx
+> > dma0chan1               e6e20000.spi:rx
+> > dma0chan2               ee100000.sd:tx
+> > dma0chan3               ee100000.sd:rx
+> > ...
+> > dma0chan14              non slave
+> > ...
+> >
+> > e6720000.dma-controller:
+> > dma1chan0               e6b10000.spi:tx
+> > dma1chan1               e6b10000.spi:rx
+> > ...
 
------BEGIN PGP SIGNATURE-----
+I like the idea of adding this in debugfs and giving more info, I would
+actually love to add bytes_transferred and few more info (descriptors
+submitted etc) to it...
 
-iHUEABYIAB0WIQRcEzekXsqa64kGDp7j7w1vZxhRxQUCXigL2QAKCRDj7w1vZxhR
-xWq1AP43hh7O1drKmKw4LWDcFL1e3jFnbiNLxBGwUtUAsT8hwwEA505uGh0lTCPZ
-1dpI8BQYcJ5Zzjp9JGkU9Pm1KCyZMQA=
-=vZhm
------END PGP SIGNATURE-----
+> > This way we will have all the information in one place, easy to look up
+> > and you don't need to manage symlinks dynamically, just check all
+> > channels if they have slave_device/name when they are in_use (in_use w/o
+> > slave_device is 'non slave')
+> >
+> > Some drivers are requesting and releasing the DMA channel per transfer
+> > or when they are opened/closed or other variations.
+> >
+> > > What do other people think?
+> 
+> Vinod: do you have some guidance for your minions? ;-)
 
---eo44jwmgblwjtd3w--
+
+That said, I am not against merging this patch while we add more
+(debugfs)... So do my minions agree or they have better ideas :-)
+
+-- 
+~Vinod
