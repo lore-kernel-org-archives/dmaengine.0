@@ -2,45 +2,44 @@ Return-Path: <SRS0=bLat=3M=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-7.0 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,UNWANTED_LANGUAGE_BODY,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BE37FC33CBA
-	for <dmaengine@archiver.kernel.org>; Thu, 23 Jan 2020 02:30:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6BAA4C32771
+	for <dmaengine@archiver.kernel.org>; Thu, 23 Jan 2020 02:30:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 94FC424676
-	for <dmaengine@archiver.kernel.org>; Thu, 23 Jan 2020 02:30:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3980724676
+	for <dmaengine@archiver.kernel.org>; Thu, 23 Jan 2020 02:30:06 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b="Uc0ljCJF"
+	dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b="En2snttY"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726054AbgAWCaD (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 22 Jan 2020 21:30:03 -0500
+        id S1726099AbgAWCaG (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 22 Jan 2020 21:30:06 -0500
 Received: from perceval.ideasonboard.com ([213.167.242.64]:59068 "EHLO
         perceval.ideasonboard.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725943AbgAWCaD (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Wed, 22 Jan 2020 21:30:03 -0500
+        with ESMTP id S1726083AbgAWCaF (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Wed, 22 Jan 2020 21:30:05 -0500
 Received: from pendragon.bb.dnainternet.fi (81-175-216-236.bb.dnainternet.fi [81.175.216.236])
-        by perceval.ideasonboard.com (Postfix) with ESMTPSA id 2BB4D9C2;
-        Thu, 23 Jan 2020 03:30:00 +0100 (CET)
+        by perceval.ideasonboard.com (Postfix) with ESMTPSA id 2EF081228;
+        Thu, 23 Jan 2020 03:30:02 +0100 (CET)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
-        s=mail; t=1579746600;
-        bh=mw7rfcZjYlgNDtZIDmgGI7XjMY4QNyPE/raHuj89oTs=;
+        s=mail; t=1579746602;
+        bh=MktafxUEhyCCPUJUg8yuDA263Q7rlUD1MU9sC04rBWc=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=Uc0ljCJFOL09aRg9uU6hh1JnlgJLcL4u843REzgSyHt3NgafiUiQ2hoMLHXj+dluT
-         sDk9WH7qSk0yFiUxhqIUfTcQgo282O0kTTMUnEwDfGfIrIoZmmzad+dkKTQaRotq6j
-         JXw+mot/xq2T4nG3vFU0bvx7PmQtsQyn8PHllcAc=
+        b=En2snttYcJQSZsF6OHpXDHK6RrV1zVCQEkeWVJckKAo/1Zz+vW9l8cx/GnVnPmXns
+         7SzNHeyvi3oOF1ImSSZ4ot45A2isJu6ZQ5yGo0FySSCskD6HUu+yNFVNL+NUZo8+dY
+         sYFLgRUwd37L2GqGG6DTdwfhsDbDIksYXknq1c48=
 From:   Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 To:     dmaengine@vger.kernel.org
 Cc:     Michal Simek <michal.simek@xilinx.com>,
         Hyun Kwon <hyun.kwon@xilinx.com>,
         Tejas Upadhyay <tejasu@xilinx.com>,
-        Satish Kumar Nagireddy <SATISHNA@xilinx.com>,
-        Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH v3 2/6] dmaengine: Add interleaved cyclic transaction type
-Date:   Thu, 23 Jan 2020 04:29:35 +0200
-Message-Id: <20200123022939.9739-3-laurent.pinchart@ideasonboard.com>
+        Satish Kumar Nagireddy <SATISHNA@xilinx.com>
+Subject: [PATCH v3 5/6] dmaengine: xilinx: dpdma: Add debugfs support
+Date:   Thu, 23 Jan 2020 04:29:38 +0200
+Message-Id: <20200123022939.9739-6-laurent.pinchart@ideasonboard.com>
 X-Mailer: git-send-email 2.24.1
 In-Reply-To: <20200123022939.9739-1-laurent.pinchart@ideasonboard.com>
 References: <20200123022939.9739-1-laurent.pinchart@ideasonboard.com>
@@ -51,87 +50,278 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-The new interleaved cyclic transaction type combines interleaved and
-cycle transactions. It is designed for DMA engines that back display
-controllers, where the same 2D frame needs to be output to the display
-until a new frame is available.
+Expose statistics to debugfs when available. This helps debugging issues
+with the DPDMA driver.
 
-Suggested-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Hyun Kwon <hyun.kwon@xilinx.com>
 Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 ---
- drivers/dma/dmaengine.c   |  8 +++++++-
- include/linux/dmaengine.h | 18 ++++++++++++++++++
- 2 files changed, 25 insertions(+), 1 deletion(-)
+Changes since v2:
 
-diff --git a/drivers/dma/dmaengine.c b/drivers/dma/dmaengine.c
-index 03ac4b96117c..4ffb98a47f31 100644
---- a/drivers/dma/dmaengine.c
-+++ b/drivers/dma/dmaengine.c
-@@ -981,7 +981,13 @@ int dma_async_device_register(struct dma_device *device)
- 			"DMA_INTERLEAVE");
- 		return -EIO;
- 	}
--
-+	if (dma_has_cap(DMA_INTERLEAVE_CYCLIC, device->cap_mask) &&
-+	    !device->device_prep_interleaved_cyclic) {
-+		dev_err(device->dev,
-+			"Device claims capability %s, but op is not defined\n",
-+			"DMA_INTERLEAVE_CYCLIC");
-+		return -EIO;
-+	}
- 
- 	if (!device->device_tx_status) {
- 		dev_err(device->dev, "Device tx_status is not defined\n");
-diff --git a/include/linux/dmaengine.h b/include/linux/dmaengine.h
-index 8fcdee1c0cf9..e9af3bf835cb 100644
---- a/include/linux/dmaengine.h
-+++ b/include/linux/dmaengine.h
-@@ -61,6 +61,7 @@ enum dma_transaction_type {
- 	DMA_SLAVE,
- 	DMA_CYCLIC,
- 	DMA_INTERLEAVE,
-+	DMA_INTERLEAVE_CYCLIC,
- /* last transaction type for creation of the capabilities mask */
- 	DMA_TX_TYPE_END,
+- Refactor debugfs code
+---
+ drivers/dma/xilinx/xilinx_dpdma.c | 227 ++++++++++++++++++++++++++++++
+ 1 file changed, 227 insertions(+)
+
+diff --git a/drivers/dma/xilinx/xilinx_dpdma.c b/drivers/dma/xilinx/xilinx_dpdma.c
+index 15ba85aa63d9..a0df729e2034 100644
+--- a/drivers/dma/xilinx/xilinx_dpdma.c
++++ b/drivers/dma/xilinx/xilinx_dpdma.c
+@@ -10,6 +10,7 @@
+ #include <linux/bitfield.h>
+ #include <linux/bits.h>
+ #include <linux/clk.h>
++#include <linux/debugfs.h>
+ #include <linux/delay.h>
+ #include <linux/dmaengine.h>
+ #include <linux/dmapool.h>
+@@ -265,6 +266,228 @@ struct xilinx_dpdma_device {
+ 	bool ext_addr;
  };
-@@ -701,6 +702,10 @@ struct dma_filter {
-  *	The function takes a buffer of size buf_len. The callback function will
-  *	be called after period_len bytes have been transferred.
-  * @device_prep_interleaved_dma: Transfer expression in a generic way.
-+ * @device_prep_interleaved_cyclic: prepares an interleaved cyclic transfer.
-+ *	This is similar to @device_prep_interleaved_dma, but the transfer is
-+ *	repeated until a new transfer is issued. This transfer type is meant
-+ *	for display.
-  * @device_prep_dma_imm_data: DMA's 8 byte immediate data to the dst address
-  * @device_config: Pushes a new configuration to a channel, return 0 or an error
-  *	code
-@@ -785,6 +790,9 @@ struct dma_device {
- 	struct dma_async_tx_descriptor *(*device_prep_interleaved_dma)(
- 		struct dma_chan *chan, struct dma_interleaved_template *xt,
- 		unsigned long flags);
-+	struct dma_async_tx_descriptor *(*device_prep_interleaved_cyclic)(
-+		struct dma_chan *chan, struct dma_interleaved_template *xt,
-+		unsigned long flags);
- 	struct dma_async_tx_descriptor *(*device_prep_dma_imm_data)(
- 		struct dma_chan *chan, dma_addr_t dst, u64 data,
- 		unsigned long flags);
-@@ -880,6 +888,16 @@ static inline struct dma_async_tx_descriptor *dmaengine_prep_interleaved_dma(
- 	return chan->device->device_prep_interleaved_dma(chan, xt, flags);
- }
  
-+static inline struct dma_async_tx_descriptor *dmaengine_prep_interleaved_cyclic(
-+		struct dma_chan *chan, struct dma_interleaved_template *xt,
-+		unsigned long flags)
-+{
-+	if (!chan || !chan->device || !chan->device->device_prep_interleaved_cyclic)
-+		return NULL;
++/* -----------------------------------------------------------------------------
++ * DebugFS
++ */
 +
-+	return chan->device->device_prep_interleaved_cyclic(chan, xt, flags);
++#ifdef CONFIG_DEBUG_FS
++
++#define XILINX_DPDMA_DEBUGFS_READ_MAX_SIZE	32
++#define XILINX_DPDMA_DEBUGFS_UINT16_MAX_STR	"65535"
++
++/* Match xilinx_dpdma_testcases vs dpdma_debugfs_reqs[] entry */
++enum xilinx_dpdma_testcases {
++	DPDMA_TC_INTR_DONE,
++	DPDMA_TC_NONE
++};
++
++struct xilinx_dpdma_debugfs {
++	enum xilinx_dpdma_testcases testcase;
++	u16 xilinx_dpdma_irq_done_count;
++	unsigned int chan_id;
++};
++
++static struct xilinx_dpdma_debugfs dpdma_debugfs;
++struct xilinx_dpdma_debugfs_request {
++	const char *name;
++	enum xilinx_dpdma_testcases tc;
++	ssize_t (*read)(char *buf);
++	int (*write)(char *args);
++};
++
++static void xilinx_dpdma_debugfs_desc_done_irq(struct xilinx_dpdma_chan *chan)
++{
++	if (chan->id == dpdma_debugfs.chan_id)
++		dpdma_debugfs.xilinx_dpdma_irq_done_count++;
 +}
 +
- static inline struct dma_async_tx_descriptor *dmaengine_prep_dma_memset(
- 		struct dma_chan *chan, dma_addr_t dest, int value, size_t len,
- 		unsigned long flags)
++static ssize_t xilinx_dpdma_debugfs_desc_done_irq_read(char *buf)
++{
++	size_t out_str_len;
++
++	dpdma_debugfs.testcase = DPDMA_TC_NONE;
++
++	out_str_len = strlen(XILINX_DPDMA_DEBUGFS_UINT16_MAX_STR);
++	out_str_len = min_t(size_t, XILINX_DPDMA_DEBUGFS_READ_MAX_SIZE,
++			    out_str_len);
++	snprintf(buf, out_str_len, "%d",
++		 dpdma_debugfs.xilinx_dpdma_irq_done_count);
++
++	return 0;
++}
++
++static int xilinx_dpdma_debugfs_desc_done_irq_write(char *args)
++{
++	char *arg;
++	int ret;
++	u32 id;
++
++	arg = strsep(&args, " ");
++	if (!arg || strncasecmp(arg, "start", 5))
++		return -EINVAL;
++
++	arg = strsep(&args, " ");
++	if (!arg)
++		return -EINVAL;
++
++	ret = kstrtou32(arg, 0, &id);
++	if (ret < 0)
++		return ret;
++
++	if (id < ZYNQMP_DPDMA_VIDEO0 || id > ZYNQMP_DPDMA_AUDIO1)
++		return -EINVAL;
++
++	dpdma_debugfs.testcase = DPDMA_TC_INTR_DONE;
++	dpdma_debugfs.xilinx_dpdma_irq_done_count = 0;
++	dpdma_debugfs.chan_id = id;
++
++	return 0;
++}
++
++/* Match xilinx_dpdma_testcases vs dpdma_debugfs_reqs[] entry */
++struct xilinx_dpdma_debugfs_request dpdma_debugfs_reqs[] = {
++	{
++		.name = "DESCRIPTOR_DONE_INTR",
++		.tc = DPDMA_TC_INTR_DONE,
++		.read = xilinx_dpdma_debugfs_desc_done_irq_read,
++		.write = xilinx_dpdma_debugfs_desc_done_irq_write,
++	},
++};
++
++static ssize_t xilinx_dpdma_debugfs_read(struct file *f, char __user *buf,
++					 size_t size, loff_t *pos)
++{
++	enum xilinx_dpdma_testcases testcase;
++	char *kern_buff;
++	int ret;
++
++	if (*pos != 0 || size <= 0)
++		return -EINVAL;
++
++	kern_buff = kzalloc(XILINX_DPDMA_DEBUGFS_READ_MAX_SIZE, GFP_KERNEL);
++	if (!kern_buff) {
++		dpdma_debugfs.testcase = DPDMA_TC_NONE;
++		return -ENOMEM;
++	}
++
++	testcase = READ_ONCE(dpdma_debugfs.testcase);
++	if (testcase != DPDMA_TC_NONE) {
++		ret = dpdma_debugfs_reqs[testcase].read(kern_buff);
++		if (ret < 0)
++			goto done;
++	} else {
++		strlcpy(kern_buff, "No testcase executed",
++			XILINX_DPDMA_DEBUGFS_READ_MAX_SIZE);
++	}
++
++	size = min(size, strlen(kern_buff));
++	ret = copy_to_user(buf, kern_buff, size);
++
++done:
++	kfree(kern_buff);
++	if (ret)
++		return ret;
++
++	*pos = size + 1;
++	return size;
++}
++
++static ssize_t xilinx_dpdma_debugfs_write(struct file *f,
++					  const char __user *buf, size_t size,
++					  loff_t *pos)
++{
++	char *kern_buff, *kern_buff_start;
++	char *testcase;
++	unsigned int i;
++	int ret;
++
++	if (*pos != 0 || size <= 0)
++		return -EINVAL;
++
++	/* Supporting single instance of test as of now. */
++	if (dpdma_debugfs.testcase != DPDMA_TC_NONE)
++		return -EBUSY;
++
++	kern_buff = kzalloc(size, GFP_KERNEL);
++	if (!kern_buff)
++		return -ENOMEM;
++	kern_buff_start = kern_buff;
++
++	ret = strncpy_from_user(kern_buff, buf, size);
++	if (ret < 0)
++		goto done;
++
++	/* Read the testcase name from a user request. */
++	testcase = strsep(&kern_buff, " ");
++
++	for (i = 0; i < ARRAY_SIZE(dpdma_debugfs_reqs); i++) {
++		if (!strcasecmp(testcase, dpdma_debugfs_reqs[i].name))
++			break;
++	}
++
++	if (i == ARRAY_SIZE(dpdma_debugfs_reqs)) {
++		ret = -EINVAL;
++		goto done;
++	}
++
++	ret = dpdma_debugfs_reqs[i].write(kern_buff);
++	if (ret < 0)
++		goto done;
++
++	ret = size;
++
++done:
++	kfree(kern_buff_start);
++	return ret;
++}
++
++static const struct file_operations fops_xilinx_dpdma_dbgfs = {
++	.owner = THIS_MODULE,
++	.read = xilinx_dpdma_debugfs_read,
++	.write = xilinx_dpdma_debugfs_write,
++};
++
++static int xilinx_dpdma_debugfs_init(struct device *dev)
++{
++	int err;
++	struct dentry *xilinx_dpdma_debugfs_dir, *xilinx_dpdma_debugfs_file;
++
++	dpdma_debugfs.testcase = DPDMA_TC_NONE;
++
++	xilinx_dpdma_debugfs_dir = debugfs_create_dir("dpdma", NULL);
++	if (!xilinx_dpdma_debugfs_dir) {
++		dev_err(dev, "debugfs_create_dir failed\n");
++		return -ENODEV;
++	}
++
++	xilinx_dpdma_debugfs_file =
++		debugfs_create_file("testcase", 0444,
++				    xilinx_dpdma_debugfs_dir, NULL,
++				    &fops_xilinx_dpdma_dbgfs);
++	if (!xilinx_dpdma_debugfs_file) {
++		dev_err(dev, "debugfs_create_file testcase failed\n");
++		err = -ENODEV;
++		goto err_dbgfs;
++	}
++	return 0;
++
++err_dbgfs:
++	debugfs_remove_recursive(xilinx_dpdma_debugfs_dir);
++	xilinx_dpdma_debugfs_dir = NULL;
++	return err;
++}
++
++#else
++static int xilinx_dpdma_debugfs_init(struct device *dev)
++{
++	return 0;
++}
++
++static void xilinx_dpdma_debugfs_desc_done_irq(struct xilinx_dpdma_chan *chan)
++{
++}
++#endif /* CONFIG_DEBUG_FS */
++
+ /* -----------------------------------------------------------------------------
+  * I/O Accessors
+  */
+@@ -840,6 +1063,8 @@ static void xilinx_dpdma_chan_done_irq(struct xilinx_dpdma_chan *chan)
+ 
+ 	spin_lock_irqsave(&chan->lock, flags);
+ 
++	xilinx_dpdma_debugfs_desc_done_irq(chan);
++
+ 	if (active)
+ 		vchan_cyclic_callback(&active->vdesc);
+ 	else
+@@ -1469,6 +1694,8 @@ static int xilinx_dpdma_probe(struct platform_device *pdev)
+ 
+ 	xilinx_dpdma_enable_irq(xdev);
+ 
++	xilinx_dpdma_debugfs_init(&pdev->dev);
++
+ 	dev_info(&pdev->dev, "Xilinx DPDMA engine is probed\n");
+ 
+ 	return 0;
 -- 
 Regards,
 
