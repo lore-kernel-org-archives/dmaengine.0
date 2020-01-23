@@ -7,39 +7,40 @@ X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 955F3C33CB8
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BE37FC33CBA
 	for <dmaengine@archiver.kernel.org>; Thu, 23 Jan 2020 02:30:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 69ED02467A
+	by mail.kernel.org (Postfix) with ESMTP id 94FC424676
 	for <dmaengine@archiver.kernel.org>; Thu, 23 Jan 2020 02:30:03 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b="iUi1N9US"
+	dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b="Uc0ljCJF"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726061AbgAWCaD (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        id S1726054AbgAWCaD (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
         Wed, 22 Jan 2020 21:30:03 -0500
-Received: from perceval.ideasonboard.com ([213.167.242.64]:59070 "EHLO
+Received: from perceval.ideasonboard.com ([213.167.242.64]:59068 "EHLO
         perceval.ideasonboard.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726054AbgAWCaD (ORCPT
+        with ESMTP id S1725943AbgAWCaD (ORCPT
         <rfc822;dmaengine@vger.kernel.org>); Wed, 22 Jan 2020 21:30:03 -0500
 Received: from pendragon.bb.dnainternet.fi (81-175-216-236.bb.dnainternet.fi [81.175.216.236])
-        by perceval.ideasonboard.com (Postfix) with ESMTPSA id C58801219;
+        by perceval.ideasonboard.com (Postfix) with ESMTPSA id 2BB4D9C2;
         Thu, 23 Jan 2020 03:30:00 +0100 (CET)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
-        s=mail; t=1579746601;
-        bh=rSa5auWNfNmTORl9aRSBcdkULJQm5KD5n6LxiFwQ9/0=;
+        s=mail; t=1579746600;
+        bh=mw7rfcZjYlgNDtZIDmgGI7XjMY4QNyPE/raHuj89oTs=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=iUi1N9USlq8oAyzI5BmzGkgPSyIapK8Q9m/1fKtbPIhKcHVik3JRpwBTjtPzg2aaN
-         OdIi4P8gkBYPTTaaty0yISifvcaOKm1E3rhwjPPne+BfMo3XjoB7gGwPhv7W9Yudgk
-         AcNDyj5W4aIIPDgpck0dEr5MwiJnGCOhZYf+0ens=
+        b=Uc0ljCJFOL09aRg9uU6hh1JnlgJLcL4u843REzgSyHt3NgafiUiQ2hoMLHXj+dluT
+         sDk9WH7qSk0yFiUxhqIUfTcQgo282O0kTTMUnEwDfGfIrIoZmmzad+dkKTQaRotq6j
+         JXw+mot/xq2T4nG3vFU0bvx7PmQtsQyn8PHllcAc=
 From:   Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 To:     dmaengine@vger.kernel.org
 Cc:     Michal Simek <michal.simek@xilinx.com>,
         Hyun Kwon <hyun.kwon@xilinx.com>,
         Tejas Upadhyay <tejasu@xilinx.com>,
-        Satish Kumar Nagireddy <SATISHNA@xilinx.com>
-Subject: [PATCH v3 3/6] dmaengine: virt-dma: Use lockdep to check locking requirements
-Date:   Thu, 23 Jan 2020 04:29:36 +0200
-Message-Id: <20200123022939.9739-4-laurent.pinchart@ideasonboard.com>
+        Satish Kumar Nagireddy <SATISHNA@xilinx.com>,
+        Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH v3 2/6] dmaengine: Add interleaved cyclic transaction type
+Date:   Thu, 23 Jan 2020 04:29:35 +0200
+Message-Id: <20200123022939.9739-3-laurent.pinchart@ideasonboard.com>
 X-Mailer: git-send-email 2.24.1
 In-Reply-To: <20200123022939.9739-1-laurent.pinchart@ideasonboard.com>
 References: <20200123022939.9739-1-laurent.pinchart@ideasonboard.com>
@@ -50,99 +51,87 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-A few virt-dma functions are documented as requiring the vc.lock to be
-held by the caller. Check this with lockdep.
+The new interleaved cyclic transaction type combines interleaved and
+cycle transactions. It is designed for DMA engines that back display
+controllers, where the same 2D frame needs to be output to the display
+until a new frame is available.
 
-The vchan_vdesc_fini() and vchan_find_desc() functions gain a lockdep
-check as well, because, even though they are not documented with this
-requirement (and not documented at all for the latter), they touch
-fields documented as protected by vc.lock. All callers have been
-manually inspected to verify they call the functions with the lock held.
-
+Suggested-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 ---
- drivers/dma/virt-dma.c |  2 ++
- drivers/dma/virt-dma.h | 14 ++++++++++++++
- 2 files changed, 16 insertions(+)
+ drivers/dma/dmaengine.c   |  8 +++++++-
+ include/linux/dmaengine.h | 18 ++++++++++++++++++
+ 2 files changed, 25 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/dma/virt-dma.c b/drivers/dma/virt-dma.c
-index ec4adf4260a0..9b59bc1c6a55 100644
---- a/drivers/dma/virt-dma.c
-+++ b/drivers/dma/virt-dma.c
-@@ -68,6 +68,8 @@ struct virt_dma_desc *vchan_find_desc(struct virt_dma_chan *vc,
- {
- 	struct virt_dma_desc *vd;
+diff --git a/drivers/dma/dmaengine.c b/drivers/dma/dmaengine.c
+index 03ac4b96117c..4ffb98a47f31 100644
+--- a/drivers/dma/dmaengine.c
++++ b/drivers/dma/dmaengine.c
+@@ -981,7 +981,13 @@ int dma_async_device_register(struct dma_device *device)
+ 			"DMA_INTERLEAVE");
+ 		return -EIO;
+ 	}
+-
++	if (dma_has_cap(DMA_INTERLEAVE_CYCLIC, device->cap_mask) &&
++	    !device->device_prep_interleaved_cyclic) {
++		dev_err(device->dev,
++			"Device claims capability %s, but op is not defined\n",
++			"DMA_INTERLEAVE_CYCLIC");
++		return -EIO;
++	}
  
-+	lockdep_assert_held(&vc->lock);
-+
- 	list_for_each_entry(vd, &vc->desc_issued, node)
- 		if (vd->tx.cookie == cookie)
- 			return vd;
-diff --git a/drivers/dma/virt-dma.h b/drivers/dma/virt-dma.h
-index ab158bac03a7..942493e36666 100644
---- a/drivers/dma/virt-dma.h
-+++ b/drivers/dma/virt-dma.h
-@@ -81,6 +81,8 @@ static inline struct dma_async_tx_descriptor *vchan_tx_prep(struct virt_dma_chan
-  */
- static inline bool vchan_issue_pending(struct virt_dma_chan *vc)
- {
-+	lockdep_assert_held(&vc->lock);
-+
- 	list_splice_tail_init(&vc->desc_submitted, &vc->desc_issued);
- 	return !list_empty(&vc->desc_issued);
+ 	if (!device->device_tx_status) {
+ 		dev_err(device->dev, "Device tx_status is not defined\n");
+diff --git a/include/linux/dmaengine.h b/include/linux/dmaengine.h
+index 8fcdee1c0cf9..e9af3bf835cb 100644
+--- a/include/linux/dmaengine.h
++++ b/include/linux/dmaengine.h
+@@ -61,6 +61,7 @@ enum dma_transaction_type {
+ 	DMA_SLAVE,
+ 	DMA_CYCLIC,
+ 	DMA_INTERLEAVE,
++	DMA_INTERLEAVE_CYCLIC,
+ /* last transaction type for creation of the capabilities mask */
+ 	DMA_TX_TYPE_END,
+ };
+@@ -701,6 +702,10 @@ struct dma_filter {
+  *	The function takes a buffer of size buf_len. The callback function will
+  *	be called after period_len bytes have been transferred.
+  * @device_prep_interleaved_dma: Transfer expression in a generic way.
++ * @device_prep_interleaved_cyclic: prepares an interleaved cyclic transfer.
++ *	This is similar to @device_prep_interleaved_dma, but the transfer is
++ *	repeated until a new transfer is issued. This transfer type is meant
++ *	for display.
+  * @device_prep_dma_imm_data: DMA's 8 byte immediate data to the dst address
+  * @device_config: Pushes a new configuration to a channel, return 0 or an error
+  *	code
+@@ -785,6 +790,9 @@ struct dma_device {
+ 	struct dma_async_tx_descriptor *(*device_prep_interleaved_dma)(
+ 		struct dma_chan *chan, struct dma_interleaved_template *xt,
+ 		unsigned long flags);
++	struct dma_async_tx_descriptor *(*device_prep_interleaved_cyclic)(
++		struct dma_chan *chan, struct dma_interleaved_template *xt,
++		unsigned long flags);
+ 	struct dma_async_tx_descriptor *(*device_prep_dma_imm_data)(
+ 		struct dma_chan *chan, dma_addr_t dst, u64 data,
+ 		unsigned long flags);
+@@ -880,6 +888,16 @@ static inline struct dma_async_tx_descriptor *dmaengine_prep_interleaved_dma(
+ 	return chan->device->device_prep_interleaved_dma(chan, xt, flags);
  }
-@@ -96,6 +98,8 @@ static inline void vchan_cookie_complete(struct virt_dma_desc *vd)
- 	struct virt_dma_chan *vc = to_virt_chan(vd->tx.chan);
- 	dma_cookie_t cookie;
  
-+	lockdep_assert_held(&vc->lock);
++static inline struct dma_async_tx_descriptor *dmaengine_prep_interleaved_cyclic(
++		struct dma_chan *chan, struct dma_interleaved_template *xt,
++		unsigned long flags)
++{
++	if (!chan || !chan->device || !chan->device->device_prep_interleaved_cyclic)
++		return NULL;
 +
- 	cookie = vd->tx.cookie;
- 	dma_cookie_complete(&vd->tx);
- 	dev_vdbg(vc->chan.device->dev, "txd %p[%x]: marked complete\n",
-@@ -108,11 +112,15 @@ static inline void vchan_cookie_complete(struct virt_dma_desc *vd)
- /**
-  * vchan_vdesc_fini - Free or reuse a descriptor
-  * @vd: virtual descriptor to free/reuse
-+ *
-+ * vc.lock must be held by caller
-  */
- static inline void vchan_vdesc_fini(struct virt_dma_desc *vd)
- {
- 	struct virt_dma_chan *vc = to_virt_chan(vd->tx.chan);
- 
-+	lockdep_assert_held(&vc->lock);
++	return chan->device->device_prep_interleaved_cyclic(chan, xt, flags);
++}
 +
- 	if (dmaengine_desc_test_reuse(&vd->tx))
- 		list_add(&vd->node, &vc->desc_allocated);
- 	else
-@@ -141,6 +149,8 @@ static inline void vchan_terminate_vdesc(struct virt_dma_desc *vd)
- {
- 	struct virt_dma_chan *vc = to_virt_chan(vd->tx.chan);
- 
-+	lockdep_assert_held(&vc->lock);
-+
- 	/* free up stuck descriptor */
- 	if (vc->vd_terminated)
- 		vchan_vdesc_fini(vc->vd_terminated);
-@@ -158,6 +168,8 @@ static inline void vchan_terminate_vdesc(struct virt_dma_desc *vd)
-  */
- static inline struct virt_dma_desc *vchan_next_desc(struct virt_dma_chan *vc)
- {
-+	lockdep_assert_held(&vc->lock);
-+
- 	return list_first_entry_or_null(&vc->desc_issued,
- 					struct virt_dma_desc, node);
- }
-@@ -175,6 +187,8 @@ static inline struct virt_dma_desc *vchan_next_desc(struct virt_dma_chan *vc)
- static inline void vchan_get_all_descriptors(struct virt_dma_chan *vc,
- 	struct list_head *head)
- {
-+	lockdep_assert_held(&vc->lock);
-+
- 	list_splice_tail_init(&vc->desc_allocated, head);
- 	list_splice_tail_init(&vc->desc_submitted, head);
- 	list_splice_tail_init(&vc->desc_issued, head);
+ static inline struct dma_async_tx_descriptor *dmaengine_prep_dma_memset(
+ 		struct dma_chan *chan, dma_addr_t dest, int value, size_t len,
+ 		unsigned long flags)
 -- 
 Regards,
 
