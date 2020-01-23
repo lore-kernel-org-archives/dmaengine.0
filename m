@@ -2,158 +2,131 @@ Return-Path: <SRS0=bLat=3M=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.0
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=unavailable
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6DE53C2D0DB
-	for <dmaengine@archiver.kernel.org>; Thu, 23 Jan 2020 14:03:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 68778C33CAF
+	for <dmaengine@archiver.kernel.org>; Thu, 23 Jan 2020 23:10:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 38B6A21835
-	for <dmaengine@archiver.kernel.org>; Thu, 23 Jan 2020 14:03:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3345D21835
+	for <dmaengine@archiver.kernel.org>; Thu, 23 Jan 2020 23:10:51 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=microchiptechnology.onmicrosoft.com header.i=@microchiptechnology.onmicrosoft.com header.b="bPwfCk+V"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fNhkObiS"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729138AbgAWODU (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Thu, 23 Jan 2020 09:03:20 -0500
-Received: from esa6.microchip.iphmx.com ([216.71.154.253]:59663 "EHLO
-        esa6.microchip.iphmx.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726232AbgAWODR (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Thu, 23 Jan 2020 09:03:17 -0500
-Received-SPF: Pass (esa6.microchip.iphmx.com: domain of
-  Tudor.Ambarus@microchip.com designates 198.175.253.82 as
-  permitted sender) identity=mailfrom;
-  client-ip=198.175.253.82; receiver=esa6.microchip.iphmx.com;
-  envelope-from="Tudor.Ambarus@microchip.com";
-  x-sender="Tudor.Ambarus@microchip.com";
-  x-conformance=spf_only; x-record-type="v=spf1";
-  x-record-text="v=spf1 mx a:ushub1.microchip.com
-  a:smtpout.microchip.com -exists:%{i}.spf.microchip.iphmx.com
-  include:servers.mcsv.net include:mktomail.com
-  include:spf.protection.outlook.com ~all"
-Received-SPF: None (esa6.microchip.iphmx.com: no sender
-  authenticity information available from domain of
-  postmaster@email.microchip.com) identity=helo;
-  client-ip=198.175.253.82; receiver=esa6.microchip.iphmx.com;
-  envelope-from="Tudor.Ambarus@microchip.com";
-  x-sender="postmaster@email.microchip.com";
-  x-conformance=spf_only
-Authentication-Results: esa6.microchip.iphmx.com; spf=Pass smtp.mailfrom=Tudor.Ambarus@microchip.com; spf=None smtp.helo=postmaster@email.microchip.com; dkim=pass (signature verified) header.i=@microchiptechnology.onmicrosoft.com; dmarc=pass (p=none dis=none) d=microchip.com
-IronPort-SDR: J+UCl9oqSXh5h+b1AqlEGWYJjur7WYRFlz2R8DJnh5/NE5hpi345CBA3+U+8X4j2Zbscyyv+vk
- RPt5NsxMN3JyYeORpr3tbj2umbrq/0qDOnW5RAuD06tfn9doOsK8zaNJ1B2Xj9nY/Ssvi88BiY
- 1FcNrPoRP8KwEVKyppbbX41+QYSDHJy+kA6nNj2vYbXneFn/lgcitqgEsQTlqQo2LGavAu8ioE
- wsHemhz3gOGuO2xjbtfWPUzY4Rnd/TDZWoESX8k9G8ZWnj7hz7VO7iJ6hWW+r6VnG5+zYmeeuf
- Itw=
-X-IronPort-AV: E=Sophos;i="5.70,354,1574146800"; 
-   d="scan'208";a="61795150"
-Received: from smtpout.microchip.com (HELO email.microchip.com) ([198.175.253.82])
-  by esa6.microchip.iphmx.com with ESMTP/TLS/AES256-SHA256; 23 Jan 2020 07:03:16 -0700
-Received: from chn-vm-ex02.mchp-main.com (10.10.85.144) by
- chn-vm-ex03.mchp-main.com (10.10.85.151) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.1713.5; Thu, 23 Jan 2020 07:03:14 -0700
-Received: from NAM12-MW2-obe.outbound.protection.outlook.com (10.10.215.89) by
- email.microchip.com (10.10.87.72) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.1713.5 via Frontend
- Transport; Thu, 23 Jan 2020 07:03:14 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=dw21m/CkNl4dDtFUjnbVGd5VljIlSvd2ZkJrKhSv8LarPdaJikqbe/YH/XxHCM4GhmRBuPEurgC9zCs4yxVXZPnuEyJqLzCggxoqbaE7eQ74fQHfV+vNCuNztsRBDa8WDab+SuZgkl2NZQxtlcnQRd7HVV1/OZwsLPDXoXfIUPYdpcjh2OKnDWfGT0Li7y96r9mqumT3PpWP8QQxyQszLCutFM1/mqmatUutQQuQX5pTV8ruIZuk0saCicSvo3Yesnm7GYa6QHAns8um7j5gp+frDk+DJyMdNgzMayESUBhuDCYDDyOakCoUzV70UMh8I5Vqkqrk1qCtwd8jh6XDIg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=jvJaVMeAjvnduoZnVGPo0vCM73snETi768FFqnDBLb4=;
- b=JYJkNIv60pNkQFRjlDNegG7gqpGnBN/Wu3vm5i7TmCRYDAHlVXs5sQcFk95mM33J2vCrt/xAi/xfy2tAIE7LCKdXghn581QbHFQTNxG66y4CLsLZp1T0GiGjgUospHT6sg0ixWZFRmOOQGOawY81+vJBfSZ4ChqyOL0DybK4y+dgtGDLIjCEjjmO07ZnTpKuWdC8iyOlCSL4tcLeO1cEKrL/P9K7yRo9kfxNspjE5v1Ya5bN4iiMB6EAYMQYpDPMNI0flQcpFscvIQyKqjCuO8wNVB1ToVRBRn6tAj9Zt+4BsJaGQ6UELe7q3TMjnbcSojhOxP1in7/9d2vvA7T4Ng==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=microchip.com; dmarc=pass action=none
- header.from=microchip.com; dkim=pass header.d=microchip.com; arc=none
+        id S1729782AbgAWXKr (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Thu, 23 Jan 2020 18:10:47 -0500
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:45333 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729505AbgAWXKq (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Thu, 23 Jan 2020 18:10:46 -0500
+Received: by mail-wr1-f67.google.com with SMTP id j42so5147367wrj.12;
+        Thu, 23 Jan 2020 15:10:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=microchiptechnology.onmicrosoft.com;
- s=selector2-microchiptechnology-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=jvJaVMeAjvnduoZnVGPo0vCM73snETi768FFqnDBLb4=;
- b=bPwfCk+VLLErIfeF+tMWyckYNG+AKdXkGe9/kLQtIm6Fnz1qv3SGSAV5VPtGZeR8oBvKgnDbM0YypOXFEQmZ6MUp3qhctIo2zUYnXujEQSvSkuIb2FFjRw1j20tnx9+LK5uP4m+5F+jRyqmcqhMBj0iWG/8dAavWZjSF7DJWcyQ=
-Received: from MN2PR11MB4448.namprd11.prod.outlook.com (52.135.39.157) by
- MN2PR11MB3582.namprd11.prod.outlook.com (20.178.251.28) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.2644.20; Thu, 23 Jan 2020 14:03:12 +0000
-Received: from MN2PR11MB4448.namprd11.prod.outlook.com
- ([fe80::3c8f:7a55:cbd:adfb]) by MN2PR11MB4448.namprd11.prod.outlook.com
- ([fe80::3c8f:7a55:cbd:adfb%5]) with mapi id 15.20.2644.027; Thu, 23 Jan 2020
- 14:03:12 +0000
-From:   <Tudor.Ambarus@microchip.com>
-To:     <Ludovic.Desroches@microchip.com>, <dan.j.williams@intel.com>,
-        <vkoul@kernel.org>
-CC:     <dmaengine@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <Tudor.Ambarus@microchip.com>
-Subject: [PATCH 07/10] dmaengine: at_xdmac: Drop always true check
-Thread-Topic: [PATCH 07/10] dmaengine: at_xdmac: Drop always true check
-Thread-Index: AQHV0fXZBZaAhMQN4EGCBG7fYIqIiQ==
-Date:   Thu, 23 Jan 2020 14:03:12 +0000
-Message-ID: <20200123140237.125799-7-tudor.ambarus@microchip.com>
-References: <20200123140237.125799-1-tudor.ambarus@microchip.com>
-In-Reply-To: <20200123140237.125799-1-tudor.ambarus@microchip.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [94.177.32.156]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 9103a7d8-17b3-4b3f-895c-08d7a00cfc39
-x-ms-traffictypediagnostic: MN2PR11MB3582:
-x-ms-exchange-transport-forked: True
-x-microsoft-antispam-prvs: <MN2PR11MB35821D457303C2B17CD24EECF00F0@MN2PR11MB3582.namprd11.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:6108;
-x-forefront-prvs: 029174C036
-x-forefront-antispam-report: SFV:NSPM;SFS:(10009020)(376002)(346002)(396003)(366004)(39860400002)(136003)(189003)(199004)(2616005)(6486002)(316002)(26005)(36756003)(4326008)(81156014)(186003)(54906003)(110136005)(81166006)(6512007)(5660300002)(478600001)(8676002)(66946007)(64756008)(66476007)(76116006)(91956017)(66446008)(66556008)(1076003)(2906002)(4744005)(6506007)(107886003)(8936002)(71200400001)(86362001);DIR:OUT;SFP:1101;SCL:1;SRVR:MN2PR11MB3582;H:MN2PR11MB4448.namprd11.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;MX:1;A:1;
-received-spf: None (protection.outlook.com: microchip.com does not designate
- permitted sender hosts)
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: YQJCu0j2QHQn5m1YQOH2HvtI1tWfxYk8RKe3uHM+C46Mynt3ManzdXW2fwbcE9ir12ybRv7s6mjWH8MZfdojlV7zQnt51iBko+Ki89NT1JWoRZPcN4bLFOyTS7o5Pai3SJAy2pyn1+pGVYoePftGUuQdPnzoMcqpmXYPiJX9zvOBpWanw/bwKOWAGLDIxpPhgIyj/F3XsFiLHLHuS2QQNQQSgC8sTMI8aMw3z2ipTj4O5ROQtGm/h7bKbBCxd+a/UWdmwNgAr7fBkRTfoDkfD4DSFnYhESR0d8W5Nt1x1MuH9kLLC7ZiZon8GF/9OUWtA3B60UtEpWlIOr34AfpMJMbz003i+XSTxYsmuAHqyL1mYt6YxFE8/4VAqcmclE4SeOM9M12cVAl3Zigr26G+Tsgcl4Xdry1leajqDbXM057ok7kogI7onvUyKZG3fbwf
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=v3aEWiKiUIKlnyGDWrJTtogZVkNTJgIo6DWcgGLcpCo=;
+        b=fNhkObiSjJhnzK5SIwdLnHYXfNxS+e+5gd4Jp12j/u4Q6WPoAX/s1EBaCABGIoeDTG
+         xaJD/AUJ7VARy/nUlYVTmE1VbJKY9M3GfOMrgQ3abqPohuQHqFYEd1eEmHHzvy2i2uAb
+         tRD1yGEe/d+w2oEg5EsWjZqhCq6KLgKvo7TrA/iJtIJHwm5erUcz+WGwUDc9fzPJ7Lop
+         zwsEJNfWs6Xobe60qBwk3nJuHjHv4hZ3LebJutyJ5PgJr50dY0+e1U6AFLt2Vv1KcPhB
+         lMJ8g/l6k3WB8O3EG0IhC9y3zxv3QxVw8oFAb02HQtWhV1x6akLV89Bbwm/3uDQ6Y5rI
+         Q5zw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=v3aEWiKiUIKlnyGDWrJTtogZVkNTJgIo6DWcgGLcpCo=;
+        b=FBvtxh6oYxRJ9qmrugrQXddpnu5TCQI9f+Vs140vOhjA/Gw84CZpSBszv6mbJdHCFi
+         1Z16uH4YmNt2PEtudW2m+qszYy7EeKvbU8I+o+sfppmFO3dKP1sOlfIdVhkcY8l3Uhq6
+         ag9mkKRE5G+TXHXktXwXVAyaduD+/WwRlhoEDpQ1idnMch8trrJu+RmBsB8tnayrkrKv
+         HhkAEQZ7aUnGvnyGNc2H14eSkHeEhcwzb1AuMlqYa0rVKZW86eXhVVZgCV369xnX1aJs
+         pzv3VkUaLB6zYyEA6E9PWGgTD+AF5Qic9M3dBQ1SfHDCwiML5m+wR5my/Z8rNpEG3Wqe
+         ZkbQ==
+X-Gm-Message-State: APjAAAXnwk51qwAL8aaRKXCSbfzoK5aqrDZoWSm04le9LdsiSxHL7urK
+        JXNhUjBmOTKTjsaNbN1aO9s=
+X-Google-Smtp-Source: APXvYqz+62yqIUxusIadJGkOBozJ4OlPot3yyml+aaBeZ0EEj/V9RTEJVTnYhkfMhC5kRIaUEtIADA==
+X-Received: by 2002:adf:eb8e:: with SMTP id t14mr447622wrn.384.1579821044601;
+        Thu, 23 Jan 2020 15:10:44 -0800 (PST)
+Received: from localhost.localdomain (79-139-233-37.dynamic.spd-mgts.ru. [79.139.233.37])
+        by smtp.gmail.com with ESMTPSA id z6sm5105552wrw.36.2020.01.23.15.10.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 23 Jan 2020 15:10:44 -0800 (PST)
+From:   Dmitry Osipenko <digetx@gmail.com>
+To:     Laxman Dewangan <ldewangan@nvidia.com>,
+        Vinod Koul <vkoul@kernel.org>,
+        Dan Williams <dan.j.williams@intel.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        =?UTF-8?q?Micha=C5=82=20Miros=C5=82aw?= <mirq-linux@rere.qmqm.pl>
+Cc:     dmaengine@vger.kernel.org, linux-tegra@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH v5 01/14] dmaengine: tegra-apb: Fix use-after-free
+Date:   Fri, 24 Jan 2020 02:03:12 +0300
+Message-Id: <20200123230325.3037-2-digetx@gmail.com>
+X-Mailer: git-send-email 2.24.0
+In-Reply-To: <20200123230325.3037-1-digetx@gmail.com>
+References: <20200123230325.3037-1-digetx@gmail.com>
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-Network-Message-Id: 9103a7d8-17b3-4b3f-895c-08d7a00cfc39
-X-MS-Exchange-CrossTenant-originalarrivaltime: 23 Jan 2020 14:03:12.6856
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 3f4057f3-b418-4d4e-ba84-d55b4e897d88
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: F4waPFdTJ3QHf44ZeBEzncLiBbiJ9IE+1f779T9shBt2LG/wEyrgQh6RsMAx6mwJP2QjzVkbsjKxSW2TQte0mfsW0190MLOTuldE0KZIl54=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN2PR11MB3582
+Content-Transfer-Encoding: 8bit
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-From: Tudor Ambarus <tudor.ambarus@microchip.com>
+I was doing some experiments with I2C and noticed that Tegra APB DMA
+driver crashes sometime after I2C DMA transfer termination. The crash
+happens because tegra_dma_terminate_all() bails out immediately if pending
+list is empty, thus it doesn't release the half-completed descriptors
+which are getting re-used before ISR tasklet kicks-in.
 
-The code in cause is already in the else case of
-'if (at_xdmac_chan_is_cyclic(atchan))', drop the redundant check.
+ tegra-i2c 7000c400.i2c: DMA transfer timeout
+ elants_i2c 0-0010: elants_i2c_irq: failed to read data: -110
+ ------------[ cut here ]------------
+ WARNING: CPU: 0 PID: 142 at lib/list_debug.c:45 __list_del_entry_valid+0x45/0xac
+ list_del corruption, ddbaac44->next is LIST_POISON1 (00000100)
+ Modules linked in:
+ CPU: 0 PID: 142 Comm: kworker/0:2 Not tainted 5.5.0-rc2-next-20191220-00175-gc3605715758d-dirty #538
+ Hardware name: NVIDIA Tegra SoC (Flattened Device Tree)
+ Workqueue: events_freezable_power_ thermal_zone_device_check
+ [<c010e5c5>] (unwind_backtrace) from [<c010a1c5>] (show_stack+0x11/0x14)
+ [<c010a1c5>] (show_stack) from [<c0973925>] (dump_stack+0x85/0x94)
+ [<c0973925>] (dump_stack) from [<c011f529>] (__warn+0xc1/0xc4)
+ [<c011f529>] (__warn) from [<c011f7e9>] (warn_slowpath_fmt+0x61/0x78)
+ [<c011f7e9>] (warn_slowpath_fmt) from [<c042497d>] (__list_del_entry_valid+0x45/0xac)
+ [<c042497d>] (__list_del_entry_valid) from [<c047a87f>] (tegra_dma_tasklet+0x5b/0x154)
+ [<c047a87f>] (tegra_dma_tasklet) from [<c0124799>] (tasklet_action_common.constprop.0+0x41/0x7c)
+ [<c0124799>] (tasklet_action_common.constprop.0) from [<c01022ab>] (__do_softirq+0xd3/0x2a8)
+ [<c01022ab>] (__do_softirq) from [<c0124683>] (irq_exit+0x7b/0x98)
+ [<c0124683>] (irq_exit) from [<c0168c19>] (__handle_domain_irq+0x45/0x80)
+ [<c0168c19>] (__handle_domain_irq) from [<c043e429>] (gic_handle_irq+0x45/0x7c)
+ [<c043e429>] (gic_handle_irq) from [<c0101aa5>] (__irq_svc+0x65/0x94)
+ Exception stack(0xde2ebb90 to 0xde2ebbd8)
 
-Signed-off-by: Tudor Ambarus <tudor.ambarus@microchip.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Dmitry Osipenko <digetx@gmail.com>
 ---
- drivers/dma/at_xdmac.c | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ drivers/dma/tegra20-apb-dma.c | 4 ----
+ 1 file changed, 4 deletions(-)
 
-diff --git a/drivers/dma/at_xdmac.c b/drivers/dma/at_xdmac.c
-index f71c9f77d405..3d6e84def7a6 100644
---- a/drivers/dma/at_xdmac.c
-+++ b/drivers/dma/at_xdmac.c
-@@ -1656,11 +1656,9 @@ static void at_xdmac_tasklet(unsigned long data)
- 		at_xdmac_remove_xfer(atchan, desc);
- 		spin_unlock(&atchan->lock);
-=20
--		if (!at_xdmac_chan_is_cyclic(atchan)) {
--			dma_cookie_complete(txd);
--			if (txd->flags & DMA_PREP_INTERRUPT)
--				dmaengine_desc_get_callback_invoke(txd, NULL);
--		}
-+		dma_cookie_complete(txd);
-+		if (txd->flags & DMA_PREP_INTERRUPT)
-+			dmaengine_desc_get_callback_invoke(txd, NULL);
-=20
- 		dma_run_dependencies(txd);
-=20
---=20
-2.23.0
+diff --git a/drivers/dma/tegra20-apb-dma.c b/drivers/dma/tegra20-apb-dma.c
+index 3a45079d11ec..319f31d27014 100644
+--- a/drivers/dma/tegra20-apb-dma.c
++++ b/drivers/dma/tegra20-apb-dma.c
+@@ -756,10 +756,6 @@ static int tegra_dma_terminate_all(struct dma_chan *dc)
+ 	bool was_busy;
+ 
+ 	spin_lock_irqsave(&tdc->lock, flags);
+-	if (list_empty(&tdc->pending_sg_req)) {
+-		spin_unlock_irqrestore(&tdc->lock, flags);
+-		return 0;
+-	}
+ 
+ 	if (!tdc->busy)
+ 		goto skip_dma_stop;
+-- 
+2.24.0
+
