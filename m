@@ -2,49 +2,47 @@ Return-Path: <SRS0=xpdn=3R=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=unavailable
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_GIT autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7AEBAC35246
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D9A7DC33CB3
 	for <dmaengine@archiver.kernel.org>; Tue, 28 Jan 2020 09:42:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 50AAD24687
+	by mail.kernel.org (Postfix) with ESMTP id A6DD22468E
 	for <dmaengine@archiver.kernel.org>; Tue, 28 Jan 2020 09:42:40 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=st.com header.i=@st.com header.b="weScv0Px"
+	dkim=pass (2048-bit key) header.d=st.com header.i=@st.com header.b="L75TFrdw"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726254AbgA1Jmd (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 28 Jan 2020 04:42:33 -0500
-Received: from mx07-00178001.pphosted.com ([62.209.51.94]:4856 "EHLO
-        mx07-00178001.pphosted.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726142AbgA1Jm1 (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Tue, 28 Jan 2020 04:42:27 -0500
-Received: from pps.filterd (m0046037.ppops.net [127.0.0.1])
-        by mx07-00178001.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id 00S9X0HB000609;
+        id S1725937AbgA1Jm1 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 28 Jan 2020 04:42:27 -0500
+Received: from mx08-00178001.pphosted.com ([91.207.212.93]:1512 "EHLO
+        mx07-00178001.pphosted.com" rhost-flags-OK-OK-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1726141AbgA1Jm0 (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Tue, 28 Jan 2020 04:42:26 -0500
+Received: from pps.filterd (m0046660.ppops.net [127.0.0.1])
+        by mx07-00178001.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id 00S9XRJJ026097;
         Tue, 28 Jan 2020 10:42:11 +0100
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=st.com; h=from : to : cc : subject
- : date : message-id : in-reply-to : references : mime-version :
- content-type; s=STMicroelectronics;
- bh=q0/ZRftGwXUvPNBAcTtwgWBj7A7urGK8v4Z7CD9K7Jo=;
- b=weScv0PxU3WhSRqruB7mNIdHIvaRB4mta0p5p/YpScu9AIZBWDtOaCkX+JVDFX27LoxQ
- EDKrP0KdR75kLDwtjDwJyE1+OIli04hY1NSF//hgI/GrvkUXpwcDMTY9mdi9X3oQsJNr
- h1gJjnMB5634/IhUTmtFO4JdCCZjuUKT7foW8+fw6Mc8YbGXwFW/VvAoQA+I1zTHl4nj
- un5HdOBWLhCgbJkr3p/mdlAVRzEqycUH5SfEDx9MeP3y0EVEm42aXLTazhY3EG8NG9lq
- FJ+ZENon9dQa9vjx8J9TLjhhn1JzpAs0p51hejrRdA2hii3e/SX0YzTZzPwarnyzKjV1 2A== 
+ : date : message-id : mime-version : content-type; s=STMicroelectronics;
+ bh=Kmmsnt0GP19LNEdrBchAyZ2FdgB00aCxXbF9RNsjpVY=;
+ b=L75TFrdwxinDcyog/Ny+M12HWHDQn6p/hu+wpK++jUkFR3mHiXuSzx1jJUgXOLmowAly
+ SbpW6ULAXjmvz8CVKMRvE5OmhJH5990xBQaD/dfxgKbksxwsm6MaALEd1S20HQeE5TES
+ aEXQ9UL3jNu6m7zFcU7XvXRIcsyg7VoVviwEE3ky8D69BEiI1hUoqGNRb3owDfq2h9KE
+ jsImpwzSBBEMEDDxr0Mb1NQQEh7MBOLYGeGmF/eolceW84EvpOkHIS4kvdn4e/5mHmlG
+ 38Cx7W3ogTGatTcYpMp8+qkOvs2KQzjeo9+YiXPIbpwDPeJrTlmyHTyIUx6k5j+lsITO sg== 
 Received: from beta.dmz-eu.st.com (beta.dmz-eu.st.com [164.129.1.35])
-        by mx07-00178001.pphosted.com with ESMTP id 2xrcaxw22c-1
+        by mx07-00178001.pphosted.com with ESMTP id 2xrbpaw9xb-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
         Tue, 28 Jan 2020 10:42:11 +0100
 Received: from euls16034.sgp.st.com (euls16034.sgp.st.com [10.75.44.20])
-        by beta.dmz-eu.st.com (STMicroelectronics) with ESMTP id D4A6310002A;
-        Tue, 28 Jan 2020 10:42:10 +0100 (CET)
+        by beta.dmz-eu.st.com (STMicroelectronics) with ESMTP id C18FD100034;
+        Tue, 28 Jan 2020 10:42:07 +0100 (CET)
 Received: from Webmail-eu.st.com (sfhdag3node2.st.com [10.75.127.8])
-        by euls16034.sgp.st.com (STMicroelectronics) with ESMTP id C990A21D3C0;
-        Tue, 28 Jan 2020 10:42:10 +0100 (CET)
-Received: from localhost (10.75.127.44) by SFHDAG3NODE2.st.com (10.75.127.8)
- with Microsoft SMTP Server (TLS) id 15.0.1347.2; Tue, 28 Jan 2020 10:42:10
+        by euls16034.sgp.st.com (STMicroelectronics) with ESMTP id B396921D3C0;
+        Tue, 28 Jan 2020 10:42:07 +0100 (CET)
+Received: from localhost (10.75.127.45) by SFHDAG3NODE2.st.com (10.75.127.8)
+ with Microsoft SMTP Server (TLS) id 15.0.1347.2; Tue, 28 Jan 2020 10:42:07
  +0100
 From:   Amelie Delaunay <amelie.delaunay@st.com>
 To:     Vinod Koul <vkoul@kernel.org>,
@@ -57,15 +55,13 @@ CC:     <dmaengine@vger.kernel.org>,
         <linux-kernel@vger.kernel.org>,
         Amelie Delaunay <amelie.delaunay@st.com>,
         Pierre-Yves MORDRET <pierre-yves.mordret@st.com>
-Subject: [PATCH 4/4] dmaengine: stm32-dmamux: driver defers probe for clock and reset
-Date:   Tue, 28 Jan 2020 10:41:58 +0100
-Message-ID: <20200128094158.20361-5-amelie.delaunay@st.com>
+Subject: [PATCH 0/4] STM32 DMAMUX driver fixes and improvements
+Date:   Tue, 28 Jan 2020 10:41:54 +0100
+Message-ID: <20200128094158.20361-1-amelie.delaunay@st.com>
 X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20200128094158.20361-1-amelie.delaunay@st.com>
-References: <20200128094158.20361-1-amelie.delaunay@st.com>
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Originating-IP: [10.75.127.44]
+X-Originating-IP: [10.75.127.45]
 X-ClientProxiedBy: SFHDAG6NODE2.st.com (10.75.127.17) To SFHDAG3NODE2.st.com
  (10.75.127.8)
 X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.138,18.0.572
@@ -75,62 +71,20 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-From: Etienne Carriere <etienne.carriere@st.com>
+This series brings improvements to the DMAMUX driver with support of power
+management and probe function gets a cleanup.
 
-Changes STM32 DMAMUX driver to defer its probe operation when
-reset controller is expected but has not been probed yet.
+Etienne Carriere (3):
+  dmaengine: stm32-dmamux: fix clock handling in probe sequence
+  dmaengine: stm32-dmamux: use reset controller only at probe time
+  dmaengine: stm32-dmamux: driver defers probe for clock and reset
 
-Changes error traces when failing to get a system resource so that
-it is not printed on failure with deferred probing.
+Pierre-Yves MORDRET (1):
+  dmaengine: stm32-dmamux: add suspend/resume power management support
 
-Signed-off-by: Etienne Carriere <etienne.carriere@st.com>
-Signed-off-by: Amelie Delaunay <amelie.delaunay@st.com>
----
- drivers/dma/stm32-dmamux.c | 17 +++++++++++++----
- 1 file changed, 13 insertions(+), 4 deletions(-)
+ drivers/dma/stm32-dmamux.c | 93 +++++++++++++++++++++++++++++++-------
+ 1 file changed, 77 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/dma/stm32-dmamux.c b/drivers/dma/stm32-dmamux.c
-index 1dfecbac64cf..12f7637e13a1 100644
---- a/drivers/dma/stm32-dmamux.c
-+++ b/drivers/dma/stm32-dmamux.c
-@@ -254,8 +254,8 @@ static int stm32_dmamux_probe(struct platform_device *pdev)
- 	stm32_dmamux->clk = devm_clk_get(&pdev->dev, NULL);
- 	if (IS_ERR(stm32_dmamux->clk)) {
- 		ret = PTR_ERR(stm32_dmamux->clk);
--		if (ret == -EPROBE_DEFER)
--			dev_info(&pdev->dev, "Missing controller clock\n");
-+		if (ret != -EPROBE_DEFER)
-+			dev_err(&pdev->dev, "Missing clock controller\n");
- 		return ret;
- 	}
- 
-@@ -266,7 +266,11 @@ static int stm32_dmamux_probe(struct platform_device *pdev)
- 	}
- 
- 	rst = devm_reset_control_get(&pdev->dev, NULL);
--	if (!IS_ERR(rst)) {
-+	if (IS_ERR(rst)) {
-+		ret = PTR_ERR(rst);
-+		if (ret == -EPROBE_DEFER)
-+			goto err_clk;
-+	} else {
- 		reset_control_assert(rst);
- 		udelay(2);
- 		reset_control_deassert(rst);
-@@ -291,7 +295,12 @@ static int stm32_dmamux_probe(struct platform_device *pdev)
- 	ret = of_dma_router_register(node, stm32_dmamux_route_allocate,
- 				     &stm32_dmamux->dmarouter);
- 	if (ret)
--		clk_disable_unprepare(stm32_dmamux->clk);
-+		goto err_clk;
-+
-+	return 0;
-+
-+err_clk:
-+	clk_disable_unprepare(stm32_dmamux->clk);
- 
- 	return ret;
- }
 -- 
 2.17.1
 
