@@ -2,132 +2,158 @@ Return-Path: <SRS0=xpdn=3R=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.4 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=unavailable
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 961FDC33CB3
-	for <dmaengine@archiver.kernel.org>; Tue, 28 Jan 2020 07:53:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F39ECC33CB3
+	for <dmaengine@archiver.kernel.org>; Tue, 28 Jan 2020 09:42:33 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 6A4EA24681
-	for <dmaengine@archiver.kernel.org>; Tue, 28 Jan 2020 07:53:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C59C520CC7
+	for <dmaengine@archiver.kernel.org>; Tue, 28 Jan 2020 09:42:33 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b="d/UvB+j8"
+	dkim=pass (2048-bit key) header.d=st.com header.i=@st.com header.b="OZPFB8fO"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725844AbgA1HxW (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 28 Jan 2020 02:53:22 -0500
-Received: from fllv0016.ext.ti.com ([198.47.19.142]:43642 "EHLO
-        fllv0016.ext.ti.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725810AbgA1HxW (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Tue, 28 Jan 2020 02:53:22 -0500
-Received: from fllv0034.itg.ti.com ([10.64.40.246])
-        by fllv0016.ext.ti.com (8.15.2/8.15.2) with ESMTP id 00S7qwsh032869;
-        Tue, 28 Jan 2020 01:52:58 -0600
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
-        s=ti-com-17Q1; t=1580197978;
-        bh=nDdLPYZ6LprTv2NjVWGFnvSMmFg46W0Ix7XgkSNJ8EY=;
-        h=Subject:To:CC:References:From:Date:In-Reply-To;
-        b=d/UvB+j8pNRgH37eFe3kuwKD0BAbukWFdtwrecsE/2l1bXd64J0e4b9QYHtjxaUPy
-         11s0Zq9X2odVsawhOPTRqfO0GzLmj1WHKC63LGAh7XAM+CJ5VhhyohIH/mjTQM91fR
-         Kx+AU9NJG9N9U6NcKEYJRGny7lpKBOuaQLmaCTsM=
-Received: from DFLE100.ent.ti.com (dfle100.ent.ti.com [10.64.6.21])
-        by fllv0034.itg.ti.com (8.15.2/8.15.2) with ESMTPS id 00S7qwCT050697
-        (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
-        Tue, 28 Jan 2020 01:52:58 -0600
-Received: from DFLE111.ent.ti.com (10.64.6.32) by DFLE100.ent.ti.com
- (10.64.6.21) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1847.3; Tue, 28
- Jan 2020 01:52:57 -0600
-Received: from lelv0326.itg.ti.com (10.180.67.84) by DFLE111.ent.ti.com
- (10.64.6.32) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1847.3 via
- Frontend Transport; Tue, 28 Jan 2020 01:52:57 -0600
-Received: from [192.168.2.6] (ileax41-snat.itg.ti.com [10.172.224.153])
-        by lelv0326.itg.ti.com (8.15.2/8.15.2) with ESMTP id 00S7qtWf064227;
-        Tue, 28 Jan 2020 01:52:55 -0600
-Subject: Re: [PATCH] dma: ti: dma-crossbar: convert to
- devm_platform_ioremap_resource()
-To:     <qiwuchen55@gmail.com>, <vkoul@kernel.org>,
-        <dan.j.williams@intel.com>, <allison@lohutok.net>,
-        <kstewart@linuxfoundation.org>
-CC:     <tglx@linutronix.de>, <wenwen@cs.uga.edu>,
-        <dmaengine@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        chenqiwu <chenqiwu@xiaomi.com>
-References: <1580189746-2864-1-git-send-email-qiwuchen55@gmail.com>
-From:   Peter Ujfalusi <peter.ujfalusi@ti.com>
-Message-ID: <2d85b488-6cc1-f062-c926-b17d1165bde1@ti.com>
-Date:   Tue, 28 Jan 2020 09:53:42 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.0
+        id S1726166AbgA1Jm1 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 28 Jan 2020 04:42:27 -0500
+Received: from mx08-00178001.pphosted.com ([91.207.212.93]:36502 "EHLO
+        mx07-00178001.pphosted.com" rhost-flags-OK-OK-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1725271AbgA1Jm0 (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Tue, 28 Jan 2020 04:42:26 -0500
+Received: from pps.filterd (m0046661.ppops.net [127.0.0.1])
+        by mx07-00178001.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id 00S9WY2Y031223;
+        Tue, 28 Jan 2020 10:42:11 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=st.com; h=from : to : cc : subject
+ : date : message-id : in-reply-to : references : mime-version :
+ content-type; s=STMicroelectronics;
+ bh=+sBJ5wscdYLYeiF4DeuorI/LsDqHFHp2G8EwB/5qkCw=;
+ b=OZPFB8fOFpQ0iagujnOK0ewnRVGKCKaqL3mAGlE+IZkMVt9HEPM5Qxy915L+cPzmFnyp
+ GEcHANaXEDp/7t7OZFXVZOy6Q8B7Y3lRBAS0BQvl9mKHp8/kV0y8vPfWpGvywrG1sUrL
+ 3iyRS2U229GhPZu/iCI3dnEBVJD+bOvnFt5JgKquriv4wYXUaWDh2mrj2dppixVkHpOi
+ eFbilKrzu0HM8ipZbckUeQ8ROnlKn7p8ojYtmvkqn34B+jd4I9OArJ4xNhWIv5uIGnZ9
+ WU4C994/o3vN2RGIWv/BBs3SKyyxSzNVdcAI2BNOgG+6NX+q0uPT1Wxj8611hRtBE9cA pw== 
+Received: from beta.dmz-eu.st.com (beta.dmz-eu.st.com [164.129.1.35])
+        by mx07-00178001.pphosted.com with ESMTP id 2xrdekd0me-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 28 Jan 2020 10:42:11 +0100
+Received: from euls16034.sgp.st.com (euls16034.sgp.st.com [10.75.44.20])
+        by beta.dmz-eu.st.com (STMicroelectronics) with ESMTP id 16B5110003E;
+        Tue, 28 Jan 2020 10:42:08 +0100 (CET)
+Received: from Webmail-eu.st.com (sfhdag3node2.st.com [10.75.127.8])
+        by euls16034.sgp.st.com (STMicroelectronics) with ESMTP id 0B10521D3C0;
+        Tue, 28 Jan 2020 10:42:08 +0100 (CET)
+Received: from localhost (10.75.127.44) by SFHDAG3NODE2.st.com (10.75.127.8)
+ with Microsoft SMTP Server (TLS) id 15.0.1347.2; Tue, 28 Jan 2020 10:42:07
+ +0100
+From:   Amelie Delaunay <amelie.delaunay@st.com>
+To:     Vinod Koul <vkoul@kernel.org>,
+        Dan Williams <dan.j.williams@intel.com>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        Alexandre Torgue <alexandre.torgue@st.com>
+CC:     <dmaengine@vger.kernel.org>,
+        <linux-stm32@st-md-mailman.stormreply.com>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>,
+        Amelie Delaunay <amelie.delaunay@st.com>,
+        Pierre-Yves MORDRET <pierre-yves.mordret@st.com>
+Subject: [PATCH 1/4] dmaengine: stm32-dmamux: add suspend/resume power management support
+Date:   Tue, 28 Jan 2020 10:41:55 +0100
+Message-ID: <20200128094158.20361-2-amelie.delaunay@st.com>
+X-Mailer: git-send-email 2.17.1
+In-Reply-To: <20200128094158.20361-1-amelie.delaunay@st.com>
+References: <20200128094158.20361-1-amelie.delaunay@st.com>
 MIME-Version: 1.0
-In-Reply-To: <1580189746-2864-1-git-send-email-qiwuchen55@gmail.com>
-Content-Type: text/plain; charset="utf-8"
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-EXCLAIMER-MD-CONFIG: e1e8a2fd-e40a-4ac6-ac9b-f7e9cc9ee180
+Content-Type: text/plain
+X-Originating-IP: [10.75.127.44]
+X-ClientProxiedBy: SFHDAG4NODE2.st.com (10.75.127.11) To SFHDAG3NODE2.st.com
+ (10.75.127.8)
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.138,18.0.572
+ definitions=2020-01-28_02:2020-01-24,2020-01-28 signatures=0
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
+From: Pierre-Yves MORDRET <pierre-yves.mordret@st.com>
 
+Add suspend/resume power management relying on PM Runtime engine.
 
-On 28/01/2020 7.35, qiwuchen55@gmail.com wrote:
-> From: chenqiwu <chenqiwu@xiaomi.com>
-> 
-> Use a new API devm_platform_ioremap_resource() to simplify code.
+Signed-off-by: Pierre-Yves MORDRET <pierre-yves.mordret@st.com>
+Signed-off-by: Amelie Delaunay <amelie.delaunay@st.com>
+---
+ drivers/dma/stm32-dmamux.c | 50 ++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 50 insertions(+)
 
-Acked-by: Peter Ujfalusi <peter.ujfalusi@ti.com>
+diff --git a/drivers/dma/stm32-dmamux.c b/drivers/dma/stm32-dmamux.c
+index 3c89bd39e096..08d2395c8943 100644
+--- a/drivers/dma/stm32-dmamux.c
++++ b/drivers/dma/stm32-dmamux.c
+@@ -41,6 +41,9 @@ struct stm32_dmamux_data {
+ 	u32 dmamux_requests; /* Number of DMA requests routed toward DMAs */
+ 	spinlock_t lock; /* Protects register access */
+ 	unsigned long *dma_inuse; /* Used DMA channel */
++	u32 ccr[STM32_DMAMUX_MAX_DMA_REQUESTS]; /* Used to backup CCR register
++						 * in suspend
++						 */
+ 	u32 dma_reqs[]; /* Number of DMA Request per DMA masters.
+ 			 *  [0] holds number of DMA Masters.
+ 			 *  To be kept at very end end of this structure
+@@ -318,7 +321,54 @@ static int stm32_dmamux_runtime_resume(struct device *dev)
+ }
+ #endif
+ 
++#ifdef CONFIG_PM_SLEEP
++static int stm32_dmamux_suspend(struct device *dev)
++{
++	struct platform_device *pdev = to_platform_device(dev);
++	struct stm32_dmamux_data *stm32_dmamux = platform_get_drvdata(pdev);
++	int i, ret;
++
++	ret = pm_runtime_get_sync(dev);
++	if (ret < 0)
++		return ret;
++
++	for (i = 0; i < stm32_dmamux->dma_requests; i++)
++		stm32_dmamux->ccr[i] = stm32_dmamux_read(stm32_dmamux->iomem,
++							 STM32_DMAMUX_CCR(i));
++
++	pm_runtime_put_sync(dev);
++
++	pm_runtime_force_suspend(dev);
++
++	return 0;
++}
++
++static int stm32_dmamux_resume(struct device *dev)
++{
++	struct platform_device *pdev = to_platform_device(dev);
++	struct stm32_dmamux_data *stm32_dmamux = platform_get_drvdata(pdev);
++	int i, ret;
++
++	ret = pm_runtime_force_resume(dev);
++	if (ret < 0)
++		return ret;
++
++	ret = pm_runtime_get_sync(dev);
++	if (ret < 0)
++		return ret;
++
++	for (i = 0; i < stm32_dmamux->dma_requests; i++)
++		stm32_dmamux_write(stm32_dmamux->iomem, STM32_DMAMUX_CCR(i),
++				   stm32_dmamux->ccr[i]);
++
++	pm_runtime_put_sync(dev);
++
++	return 0;
++}
++#endif
++
+ static const struct dev_pm_ops stm32_dmamux_pm_ops = {
++	SET_SYSTEM_SLEEP_PM_OPS(stm32_dmamux_suspend, stm32_dmamux_resume)
+ 	SET_RUNTIME_PM_OPS(stm32_dmamux_runtime_suspend,
+ 			   stm32_dmamux_runtime_resume, NULL)
+ };
+-- 
+2.17.1
 
-> Signed-off-by: chenqiwu <chenqiwu@xiaomi.com>
-> ---
->  drivers/dma/ti/dma-crossbar.c | 8 ++------
->  1 file changed, 2 insertions(+), 6 deletions(-)
-> 
-> diff --git a/drivers/dma/ti/dma-crossbar.c b/drivers/dma/ti/dma-crossbar.c
-> index f255056..4ba8fa5 100644
-> --- a/drivers/dma/ti/dma-crossbar.c
-> +++ b/drivers/dma/ti/dma-crossbar.c
-> @@ -133,7 +133,6 @@ static int ti_am335x_xbar_probe(struct platform_device *pdev)
->  	const struct of_device_id *match;
->  	struct device_node *dma_node;
->  	struct ti_am335x_xbar_data *xbar;
-> -	struct resource *res;
->  	void __iomem *iomem;
->  	int i, ret;
->  
-> @@ -173,8 +172,7 @@ static int ti_am335x_xbar_probe(struct platform_device *pdev)
->  		xbar->xbar_events = TI_AM335X_XBAR_LINES;
->  	}
->  
-> -	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-> -	iomem = devm_ioremap_resource(&pdev->dev, res);
-> +	iomem = devm_platform_ioremap_resource(pdev, 0);
->  	if (IS_ERR(iomem))
->  		return PTR_ERR(iomem);
->  
-> @@ -323,7 +321,6 @@ static int ti_dra7_xbar_probe(struct platform_device *pdev)
->  	struct device_node *dma_node;
->  	struct ti_dra7_xbar_data *xbar;
->  	struct property *prop;
-> -	struct resource *res;
->  	u32 safe_val;
->  	int sz;
->  	void __iomem *iomem;
-> @@ -403,8 +400,7 @@ static int ti_dra7_xbar_probe(struct platform_device *pdev)
->  		kfree(rsv_events);
->  	}
->  
-> -	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-> -	iomem = devm_ioremap_resource(&pdev->dev, res);
-> +	iomem = devm_platform_ioremap_resource(pdev, 0);
->  	if (IS_ERR(iomem))
->  		return PTR_ERR(iomem);
->  
-> 
-
-- Péter
-
-Texas Instruments Finland Oy, Porkkalankatu 22, 00180 Helsinki.
-Y-tunnus/Business ID: 0615521-4. Kotipaikka/Domicile: Helsinki
