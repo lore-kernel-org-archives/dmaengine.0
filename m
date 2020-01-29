@@ -7,44 +7,44 @@ X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C6B96C2D0DB
-	for <dmaengine@archiver.kernel.org>; Wed, 29 Jan 2020 15:36:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 96FCEC47409
+	for <dmaengine@archiver.kernel.org>; Wed, 29 Jan 2020 15:37:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 9D74C2070E
-	for <dmaengine@archiver.kernel.org>; Wed, 29 Jan 2020 15:36:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6B902214DB
+	for <dmaengine@archiver.kernel.org>; Wed, 29 Jan 2020 15:37:09 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=st.com header.i=@st.com header.b="nm7n2Cr4"
+	dkim=pass (2048-bit key) header.d=st.com header.i=@st.com header.b="DDpHNdKJ"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726911AbgA2Pg5 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 29 Jan 2020 10:36:57 -0500
-Received: from mx07-00178001.pphosted.com ([62.209.51.94]:29528 "EHLO
+        id S1727035AbgA2PhJ (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 29 Jan 2020 10:37:09 -0500
+Received: from mx07-00178001.pphosted.com ([62.209.51.94]:48539 "EHLO
         mx07-00178001.pphosted.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726840AbgA2Pg4 (ORCPT
+        by vger.kernel.org with ESMTP id S1726842AbgA2Pg4 (ORCPT
         <rfc822;dmaengine@vger.kernel.org>); Wed, 29 Jan 2020 10:36:56 -0500
 Received: from pps.filterd (m0046037.ppops.net [127.0.0.1])
-        by mx07-00178001.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id 00TFNArm019435;
-        Wed, 29 Jan 2020 16:36:40 +0100
+        by mx07-00178001.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id 00TFNBY8019444;
+        Wed, 29 Jan 2020 16:36:37 +0100
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=st.com; h=from : to : cc : subject
  : date : message-id : in-reply-to : references : mime-version :
  content-type; s=STMicroelectronics;
- bh=vGtBudjNx6L0Bif2GlT7GRdzDPa/Yv2/z0Y5HH4v5qQ=;
- b=nm7n2Cr43o+71a44OQNGZea0xkO4CYasOZfS080j2NeTorJxpdBswUuvJPUx2t33cSZN
- J0amRXk72bn6UXTbyP+4udi2p6wBWsJU3t/7utE0OphCdR1oTDNudbAgurah/rManvqG
- i/1rIUUwjl02EIDIMIXceqWNzZG08Ov8TOI/xVwE+4DiV0LZONiqiN0U2c28xtMLr/dI
- Zo1u3qi7CKeMpcpf1ezM0HdlMrPIxPmS2qXjtdwP6Ir015mS1KqiVILjQ4/5KFLFgrRs
- HlIL5ymie/2ZuqFtepdZ71FaeUW2ZnGaJLR9stpCzQlFLlT4jaQnjHa0WPJ53tF/Bf7q 2w== 
+ bh=AftG5z+N17+/aKK5rA8xT7aJNL2Vyvyl7T7R+UeirkA=;
+ b=DDpHNdKJ02FAGVPens/IbVD4G5USzy1RxDXJLEQ55d/zr6gldzhDUX3PizE9xvyUlzJw
+ cWDF+fjHZXHq8SDKPlB4jiJ4uhuCebTVzh681T3oun0q+JTqtUPZgaGGErk411egmX1C
+ 9pjOE96zV/gX6o1nLLzF+eMh7jvySoqOmADVbChz4I3IxpeqKzaCMwkTYQddjU65cW5E
+ BrZp7Qa4BYjDfUgaalLPMp2yv8IBvVuT2hCmOLvDYCw5F1iRNXmMwRj+T9PER5XJoUTq
+ FZvav89dlKtRxFpoP3JiWgjcCqP8RJtcLznnwpmf8k3ZrXXXq+3Nhc+68Wx9flQ480Y5 /A== 
 Received: from beta.dmz-eu.st.com (beta.dmz-eu.st.com [164.129.1.35])
-        by mx07-00178001.pphosted.com with ESMTP id 2xrcay3vbb-1
+        by mx07-00178001.pphosted.com with ESMTP id 2xrcay3vb4-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 29 Jan 2020 16:36:40 +0100
+        Wed, 29 Jan 2020 16:36:37 +0100
 Received: from euls16034.sgp.st.com (euls16034.sgp.st.com [10.75.44.20])
-        by beta.dmz-eu.st.com (STMicroelectronics) with ESMTP id 9A22C10002A;
-        Wed, 29 Jan 2020 16:36:39 +0100 (CET)
+        by beta.dmz-eu.st.com (STMicroelectronics) with ESMTP id 1DF04100034;
+        Wed, 29 Jan 2020 16:36:37 +0100 (CET)
 Received: from Webmail-eu.st.com (sfhdag3node2.st.com [10.75.127.8])
-        by euls16034.sgp.st.com (STMicroelectronics) with ESMTP id 899062BC7C2;
-        Wed, 29 Jan 2020 16:36:39 +0100 (CET)
-Received: from localhost (10.75.127.45) by SFHDAG3NODE2.st.com (10.75.127.8)
- with Microsoft SMTP Server (TLS) id 15.0.1347.2; Wed, 29 Jan 2020 16:36:39
+        by euls16034.sgp.st.com (STMicroelectronics) with ESMTP id 10CD72BC7C2;
+        Wed, 29 Jan 2020 16:36:37 +0100 (CET)
+Received: from localhost (10.75.127.46) by SFHDAG3NODE2.st.com (10.75.127.8)
+ with Microsoft SMTP Server (TLS) id 15.0.1347.2; Wed, 29 Jan 2020 16:36:36
  +0100
 From:   Amelie Delaunay <amelie.delaunay@st.com>
 To:     Vinod Koul <vkoul@kernel.org>,
@@ -57,16 +57,16 @@ CC:     <dmaengine@vger.kernel.org>,
         <linux-kernel@vger.kernel.org>,
         Amelie Delaunay <amelie.delaunay@st.com>,
         Pierre-Yves MORDRET <pierre-yves.mordret@st.com>
-Subject: [PATCH 8/8] dmaengine: stm32-dma: use vchan_terminate_vdesc() in .terminate_all
-Date:   Wed, 29 Jan 2020 16:36:28 +0100
-Message-ID: <20200129153628.29329-9-amelie.delaunay@st.com>
+Subject: [PATCH 4/8] dmaengine: stm32-dma: enable descriptor_reuse
+Date:   Wed, 29 Jan 2020 16:36:24 +0100
+Message-ID: <20200129153628.29329-5-amelie.delaunay@st.com>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20200129153628.29329-1-amelie.delaunay@st.com>
 References: <20200129153628.29329-1-amelie.delaunay@st.com>
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Originating-IP: [10.75.127.45]
-X-ClientProxiedBy: SFHDAG8NODE2.st.com (10.75.127.23) To SFHDAG3NODE2.st.com
+X-Originating-IP: [10.75.127.46]
+X-ClientProxiedBy: SFHDAG2NODE2.st.com (10.75.127.5) To SFHDAG3NODE2.st.com
  (10.75.127.8)
 X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.138,18.0.572
  definitions=2020-01-29_03:2020-01-28,2020-01-29 signatures=0
@@ -75,51 +75,37 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-To avoid race with vchan_complete, use the race free way to terminate
-running transfer.
+From: Pierre-Yves MORDRET <pierre-yves.mordret@st.com>
 
-Move vdesc->node list_del in stm32_dma_start_transfer instead of in
-stm32_mdma_chan_complete to avoid another race in vchan_dma_desc_free_list.
+Enable client to resubmit already processed descriptors
+in order to save descriptor creation time.
 
+Signed-off-by: Pierre-Yves MORDRET <pierre-yves.mordret@st.com>
 Signed-off-by: Amelie Delaunay <amelie.delaunay@st.com>
 ---
- drivers/dma/stm32-dma.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/dma/stm32-dma.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
 diff --git a/drivers/dma/stm32-dma.c b/drivers/dma/stm32-dma.c
-index b585e11c2168..0ddbaa4b4f0b 100644
+index c8bbe08b8e32..25f7281932bd 100644
 --- a/drivers/dma/stm32-dma.c
 +++ b/drivers/dma/stm32-dma.c
-@@ -478,8 +478,10 @@ static int stm32_dma_terminate_all(struct dma_chan *c)
+@@ -554,6 +554,7 @@ static void stm32_dma_start_transfer(struct stm32_dma_chan *chan)
+ 	sg_req = &chan->desc->sg_req[chan->next_sg];
+ 	reg = &sg_req->chan_reg;
  
- 	spin_lock_irqsave(&chan->vchan.lock, flags);
++	reg->dma_scr &= ~STM32_DMA_SCR_EN;
+ 	stm32_dma_write(dmadev, STM32_DMA_SCR(chan->id), reg->dma_scr);
+ 	stm32_dma_write(dmadev, STM32_DMA_SPAR(chan->id), reg->dma_spar);
+ 	stm32_dma_write(dmadev, STM32_DMA_SM0AR(chan->id), reg->dma_sm0ar);
+@@ -1343,6 +1344,7 @@ static int stm32_dma_probe(struct platform_device *pdev)
+ 	dd->directions = BIT(DMA_DEV_TO_MEM) | BIT(DMA_MEM_TO_DEV);
+ 	dd->residue_granularity = DMA_RESIDUE_GRANULARITY_BURST;
+ 	dd->max_burst = STM32_DMA_MAX_BURST;
++	dd->descriptor_reuse = true;
+ 	dd->dev = &pdev->dev;
+ 	INIT_LIST_HEAD(&dd->channels);
  
--	if (chan->busy) {
--		stm32_dma_stop(chan);
-+	if (chan->desc) {
-+		vchan_terminate_vdesc(&chan->desc->vdesc);
-+		if (chan->busy)
-+			stm32_dma_stop(chan);
- 		chan->desc = NULL;
- 	}
- 
-@@ -535,6 +537,8 @@ static void stm32_dma_start_transfer(struct stm32_dma_chan *chan)
- 		if (!vdesc)
- 			return;
- 
-+		list_del(&vdesc->node);
-+
- 		chan->desc = to_stm32_dma_desc(vdesc);
- 		chan->next_sg = 0;
- 	}
-@@ -613,7 +617,6 @@ static void stm32_dma_handle_chan_done(struct stm32_dma_chan *chan)
- 		} else {
- 			chan->busy = false;
- 			if (chan->next_sg == chan->desc->num_sgs) {
--				list_del(&chan->desc->vdesc.node);
- 				vchan_cookie_complete(&chan->desc->vdesc);
- 				chan->desc = NULL;
- 			}
 -- 
 2.17.1
 
