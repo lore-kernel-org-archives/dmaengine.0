@@ -2,141 +2,156 @@ Return-Path: <SRS0=UDx8=3T=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=unavailable
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.4 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A763BC33C9E
-	for <dmaengine@archiver.kernel.org>; Thu, 30 Jan 2020 12:54:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 67765C2D0DB
+	for <dmaengine@archiver.kernel.org>; Thu, 30 Jan 2020 13:18:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 72CF72083E
-	for <dmaengine@archiver.kernel.org>; Thu, 30 Jan 2020 12:54:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 27B862083E
+	for <dmaengine@archiver.kernel.org>; Thu, 30 Jan 2020 13:18:27 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=xilinx.onmicrosoft.com header.i=@xilinx.onmicrosoft.com header.b="C6d/mbcj"
+	dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b="NjFFBuHQ"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727275AbgA3Myq (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Thu, 30 Jan 2020 07:54:46 -0500
-Received: from mail-mw2nam12on2046.outbound.protection.outlook.com ([40.107.244.46]:16582
-        "EHLO NAM12-MW2-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1727165AbgA3Myp (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Thu, 30 Jan 2020 07:54:45 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=OSc2J0OZq1eH4o07babSHq9r1hnSZEoPh31UHCoi1+4FzzOxIg7Zdyusp94pLeK4kT59EheQeaZPnWqvPtAUEMancqH4z0P7qmxzG1fyBavW5lVWyKAhPmz106A721KOSp3CsuqixkAK8CKxH/USH3el7kgk79LGmD/2th+yKFDYRJ88mXJcec2wSVO3jfiqXNxKTiSyVIubd9zn8LoYEunuU691cqf8AbIgharC+8VUHxNU3wYL/J5K2SUJpv2d2xjF4BarR5zdIDOHMvCsT+/Xz4fu4qn+1YqQTF8nsZbZXwwO8NHptzI/RHmUCzoRgdEzKji3n87/vKbflkWU0A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=qJSMS+NLJIeszLfKL3SmPUfLLD/5iNiwQeDHJQIxpu4=;
- b=FgegFda8MMSE3Uz0wvmCUrcVkBTs4JP1jYe64bD3Mv5rH0p0KCBT9mhzeKd6aEzYRkaO3oDzH8ql/A47V3kuwL9yrXvIVTHJ5l5qa1IljdfrMLYG3jstYVmYy5UJbN6KNP516HO97HRIV52ktwm1CK3o1c6GhUKV8DD8CT1u6650jxoJgVJaisA7Js0FtkhkRwGj1Atr7+X6Vrzgapr8OrbLlBsDY/ZHxUAQIZEFVOORRY1aW99plWuN4gUA+1a4aXTjlMMjzOZkazLzxu5cpZ3qsObUrbcZbAqVWHTITZDzQVr7Nvvl4BqOz4edyGlQco7zdVtSuB2mC2/yRnbBew==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none (sender ip is
- 149.199.60.83) smtp.rcpttodomain=vger.kernel.org
- smtp.mailfrom=xhdpunnaia40.localdomain; dmarc=none action=none
- header.from=xilinx.com; dkim=none (message not signed); arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=xilinx.onmicrosoft.com; s=selector2-xilinx-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=qJSMS+NLJIeszLfKL3SmPUfLLD/5iNiwQeDHJQIxpu4=;
- b=C6d/mbcjTdIT0/d+UtX9t7tw+jGy30MKXP40lKEmrckyZSQDgCg80ZqyayCv9PvRF17EaAgkZWkM+BHokLpF7hRMF7TDndvwKxOVJb3lL6zbrAK/OpTcbxSVP+5QQRXys/ubxjROvMZxyHCNtOOh8vEYBrshakacopcLzbfpmr4=
-Received: from BYAPR02CA0067.namprd02.prod.outlook.com (2603:10b6:a03:54::44)
- by SN6PR02MB3983.namprd02.prod.outlook.com (2603:10b6:805:2c::31) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.2665.23; Thu, 30 Jan
- 2020 12:54:41 +0000
-Received: from CY1NAM02FT021.eop-nam02.prod.protection.outlook.com
- (2a01:111:f400:7e45::204) by BYAPR02CA0067.outlook.office365.com
- (2603:10b6:a03:54::44) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.2686.27 via Frontend
- Transport; Thu, 30 Jan 2020 12:54:41 +0000
-Authentication-Results: spf=none (sender IP is 149.199.60.83)
- smtp.mailfrom=xhdpunnaia40.localdomain; vger.kernel.org; dkim=none (message
- not signed) header.d=none;vger.kernel.org; dmarc=none action=none
- header.from=xilinx.com;
-Received-SPF: None (protection.outlook.com: xhdpunnaia40.localdomain does not
- designate permitted sender hosts)
-Received: from xsj-pvapsmtpgw01 (149.199.60.83) by
- CY1NAM02FT021.mail.protection.outlook.com (10.152.75.187) with Microsoft SMTP
- Server (version=TLS1_0, cipher=TLS_RSA_WITH_AES_256_CBC_SHA) id 15.20.2686.25
- via Frontend Transport; Thu, 30 Jan 2020 12:54:40 +0000
-Received: from unknown-38-66.xilinx.com ([149.199.38.66] helo=xsj-pvapsmtp01)
-        by xsj-pvapsmtpgw01 with esmtp (Exim 4.63)
-        (envelope-from <radheys@xhdpunnaia40.localdomain>)
-        id 1ix9LD-0004Lj-7O; Thu, 30 Jan 2020 04:54:39 -0800
-Received: from [127.0.0.1] (helo=xsj-smtp-dlp1.xlnx.xilinx.com)
-        by xsj-pvapsmtp01 with esmtp (Exim 4.63)
-        (envelope-from <radheys@xhdpunnaia40.localdomain>)
-        id 1ix9L7-0000i2-G9; Thu, 30 Jan 2020 04:54:33 -0800
-Received: from xsj-pvapsmtp01 (xsj-mail.xilinx.com [149.199.38.66])
-        by xsj-smtp-dlp1.xlnx.xilinx.com (8.13.8/8.13.1) with ESMTP id 00UCsWmW005663;
-        Thu, 30 Jan 2020 04:54:32 -0800
-Received: from [10.140.184.180] (helo=xhdpunnaia40.localdomain)
-        by xsj-pvapsmtp01 with esmtp (Exim 4.63)
-        (envelope-from <radheys@xhdpunnaia40.localdomain>)
-        id 1ix9L5-0000hf-Sy; Thu, 30 Jan 2020 04:54:32 -0800
-Received: by xhdpunnaia40.localdomain (Postfix, from userid 13245)
-        id 17E6AFF8A7; Thu, 30 Jan 2020 18:24:31 +0530 (IST)
-From:   Radhey Shyam Pandey <radhey.shyam.pandey@xilinx.com>
-To:     vkoul@kernel.org, dan.j.williams@intel.com,
-        michal.simek@xilinx.com, nick.graumann@gmail.com,
-        andrea.merello@gmail.com, appana.durga.rao@xilinx.com,
-        mcgrof@kernel.org
-Cc:     dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
-        git@xilinx.com,
-        Radhey Shyam Pandey <radhey.shyam.pandey@xilinx.com>
-Subject: [PATCH -next 0/2] dmaengine: xilinx_dma: In dma channel probe fix node order dependency
-Date:   Thu, 30 Jan 2020 18:24:23 +0530
-Message-Id: <1580388865-9960-1-git-send-email-radhey.shyam.pandey@xilinx.com>
-X-Mailer: git-send-email 2.7.4
-X-RCIS-Action: ALLOW
-X-TM-AS-Product-Ver: IMSS-7.1.0.1224-8.2.0.1013-23620.005
-X-TM-AS-Result: No--2.382-7.0-31-1
-X-imss-scan-details: No--2.382-7.0-31-1;No--2.382-5.0-31-1
-X-TM-AS-User-Approved-Sender: No;No
-X-TM-AS-Result-Xfilter: Match text exemption rules:No
-X-EOPAttributedMessage: 0
-X-MS-Office365-Filtering-HT: Tenant
-X-Forefront-Antispam-Report: CIP:149.199.60.83;IPV:;CTRY:US;EFV:NLI;SFV:NSPM;SFS:(10009020)(4636009)(136003)(346002)(376002)(396003)(39860400002)(428003)(249900001)(189003)(199004)(316002)(42186006)(356004)(6666004)(70586007)(36756003)(70206006)(2616005)(5660300002)(26005)(2906002)(498600001)(336012)(42882007)(8676002)(107886003)(6266002)(4744005)(82310400001)(81156014)(8936002)(81166006)(450100002)(4326008)(966005);DIR:OUT;SFP:1101;SCL:1;SRVR:SN6PR02MB3983;H:xsj-pvapsmtpgw01;FPR:;SPF:None;LANG:en;PTR:unknown-60-83.xilinx.com;MX:0;A:0;
+        id S1727184AbgA3NS0 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Thu, 30 Jan 2020 08:18:26 -0500
+Received: from fllv0015.ext.ti.com ([198.47.19.141]:58398 "EHLO
+        fllv0015.ext.ti.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727142AbgA3NS0 (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Thu, 30 Jan 2020 08:18:26 -0500
+Received: from lelv0265.itg.ti.com ([10.180.67.224])
+        by fllv0015.ext.ti.com (8.15.2/8.15.2) with ESMTP id 00UDIMfD014767;
+        Thu, 30 Jan 2020 07:18:22 -0600
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
+        s=ti-com-17Q1; t=1580390302;
+        bh=YnPpRPOJrB54TzCkERn6g/npDkn6RNuSyqEisfLG/PQ=;
+        h=Subject:From:To:CC:References:Date:In-Reply-To;
+        b=NjFFBuHQJKynAWsmbgOnUSKHq+khfmsy7P2YloBOh0fEjFT5zUpFH5ALlLOOm37WX
+         xTYd/4FE7MKYpP66cjIBKNATY5lVxfJWK/9mqtpNCfoYY88YI+2dIA9UkYtSofVUON
+         t3zmAnvThDcuYO+TXacEglIev/tSwx8wRHo03gmA=
+Received: from DLEE109.ent.ti.com (dlee109.ent.ti.com [157.170.170.41])
+        by lelv0265.itg.ti.com (8.15.2/8.15.2) with ESMTPS id 00UDIMbV051928
+        (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
+        Thu, 30 Jan 2020 07:18:22 -0600
+Received: from DLEE105.ent.ti.com (157.170.170.35) by DLEE109.ent.ti.com
+ (157.170.170.41) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1847.3; Thu, 30
+ Jan 2020 07:18:22 -0600
+Received: from lelv0327.itg.ti.com (10.180.67.183) by DLEE105.ent.ti.com
+ (157.170.170.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1847.3 via
+ Frontend Transport; Thu, 30 Jan 2020 07:18:21 -0600
+Received: from [192.168.2.6] (ileax41-snat.itg.ti.com [10.172.224.153])
+        by lelv0327.itg.ti.com (8.15.2/8.15.2) with ESMTP id 00UDIKiZ049941;
+        Thu, 30 Jan 2020 07:18:20 -0600
+Subject: Re: [PATCH for-next 0/4] dmaengine: ti: k3-udma: Updates for next
+From:   Peter Ujfalusi <peter.ujfalusi@ti.com>
+To:     Vinod Koul <vkoul@kernel.org>
+CC:     <dmaengine@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <dan.j.williams@intel.com>, <grygorii.strashko@ti.com>,
+        <vigneshr@ti.com>
+References: <20200127132111.20464-1-peter.ujfalusi@ti.com>
+ <41c53cc4-fa3e-1ab1-32b8-1d516cda7341@ti.com>
+ <20200128115006.GT2841@vkoul-mobl>
+ <fbe5a971-650d-de58-cee2-0a80eca5c1cd@ti.com>
+Message-ID: <5d25f5f1-f6a1-0f5a-b715-0e3e0031bb99@ti.com>
+Date:   Thu, 30 Jan 2020 15:19:08 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: 97ee8bc1-48ff-476c-6ce8-08d7a5839244
-X-MS-TrafficTypeDiagnostic: SN6PR02MB3983:
-X-Microsoft-Antispam-PRVS: <SN6PR02MB398374063500E00037E32E1DD5040@SN6PR02MB3983.namprd02.prod.outlook.com>
-X-Auto-Response-Suppress: DR, RN, NRN, OOF, AutoReply
-X-MS-Oob-TLC-OOBClassifiers: OLM:8273;
-X-Forefront-PRVS: 02981BE340
-X-MS-Exchange-SenderADCheck: 1
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: kThNGl4H7rqbjh8fuAQ1+dY55qI1ReA5I0aO1DJB0R6O8BRSJYLWZYMUJX0+ZGJA5oScSqf5RfKHMy77KGZD2ioCHSKA+ETjfU8B6Waqgr4pskqNRZsnidgl/T7yFWyfrIMhrqwH5l1tCUH0iyqsxmXzJ3nB1hzZOQHlmrmHOsKfj/7sEngoQFsT3CNt2DvdczmIZHkEESyF12RYR+2EzZviyYDH+RlfasNrksJ4unGK94iKaRd9EIVeyN6PKEy1AGGJ4sQXT4DVkgSQ+0oJIhqUxKVYPJuqp7VvZfleizXPKlbBD/dn3X/bbeUbHqJrEjQCr3S+XmBC0mS+swE5qDxSQqKQO9r2XkPYOexpyMZTAQOJLqH6lay99Uv+UKB/fi6xQ3p/vUJVxAKwtIjAXnW+xA0fgwWhHoKvfXadDB9/mDPLeHqKUJ7C1AC9sCCahvorNKNHOtMUwJjeBJLANCODraGnRK+F1mKl/dBmB53yJuobj1hA2V7op0i4xD+Jfg00ZCTMQ4SSqHIGGv8sBQ==
-X-OriginatorOrg: xilinx.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 Jan 2020 12:54:40.8920
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 97ee8bc1-48ff-476c-6ce8-08d7a5839244
-X-MS-Exchange-CrossTenant-Id: 657af505-d5df-48d0-8300-c31994686c5c
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=657af505-d5df-48d0-8300-c31994686c5c;Ip=[149.199.60.83];Helo=[xsj-pvapsmtpgw01]
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN6PR02MB3983
+In-Reply-To: <fbe5a971-650d-de58-cee2-0a80eca5c1cd@ti.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-EXCLAIMER-MD-CONFIG: e1e8a2fd-e40a-4ac6-ac9b-f7e9cc9ee180
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-In overlay application[1] we noticed that channel DT nodes are inverted and
-as a sideffect of this behaviour the axidmatest client fails.
+Hi Vinod,
 
-In general driver should not assume specific DT probe order. So to fix this
-failure remove channel node ordering restriction from the xilinx dma driver.
+On 28/01/2020 14.37, Peter Ujfalusi wrote:
+> Hi Vinod,
+> 
+> On 28/01/2020 13.50, Vinod Koul wrote:
+>> On 28-01-20, 12:15, Peter Ujfalusi wrote:
+>>> Vinod,
+>>>
+>>> On 27/01/2020 15.21, Peter Ujfalusi wrote:
+>>>> Hi Vinod,
+>>>>
+>>>> Based on customer reports we have identified two issues with the UDMA driver:
+>>>>
+>>>> TX completion (1st patch):
+>>>> The scheduled work based workaround for checking for completion worked well for
+>>>> UART, but it had significant impact on SPI performance.
+>>>> The underlying issue is coming from the fact that we have split data movement
+>>>> architecture.
+>>>> In order to know that the transfer is really done we need to check the remote
+>>>> end's (PDMA) byte counter.
+>>>>
+>>>> RX channel teardown with stale data in PDMA (2nd patch):
+>>>> If we try to stop the RX DMA channel (teardown) then PDMA is trying to flush the
+>>>> data is might received from a peripheral, but if UDMA does not have a packet to
+>>>> use for this draining than it is going to push back on the PDMA and the flush
+>>>> will never completes.
+>>>> The workaround is to use a dummy descriptor for flush purposes when the channel
+>>>> is terminated and we did not have active transfer (no descriptor for UDMA).
+>>>> This allows UDMA to drain the data and the teardown can complete.
+>>>>
+>>>> The last two patch is to use common code to set up the TR parameters for
+>>>> slave_sg, cyclic and memcpy. The setup code is the same as we used for memcpy
+>>>> with the change we can handle 4.2GB sg elements and periods in case of cyclic.
+>>>> It is also nice that we have single function to do the configuration.
+>>>
+>>> I have marked these patches as for-next as 5.5 was not released yet.
+>>> Would it be possible to have these as fixes for 5.6?
+>>
+>> Sure but are they really fixes, why cant they go for next release :)
+>>
+>> They seem to improve things for sure, but do we want to call them as
+>> fixes..?
+> 
+> I would say that the first two patch is a fix:
+> TX completion check is fixing the performance hit by the early TX
+> completion workaround which used jiffies+work.
+> 
+> The second patch is fixing a case when we have stale data during RX and
+> no active transfer. For example when UART reads 1000 bytes, but the
+> other end is 'streaming' the data and after the 1000 bytes the UART+PDMA
+> receives data.
+> Recovering from this state is not easy and it might not even succeed in
+> HW level.
+> 
+> The last two is I agree, it is not fixing much, it does corrects the
+> slave_sg TR setup (and improves the cyclic as well).
+> With that I could send the ASoC platform wrapper for UDMA with
+> period_bytes_max = 4.2GB ;)
+> I have SZ_512K in there atm, with the old calculation SZ_64K is the
+> maximum, not a big issue.
 
-[1]: https://github.com/raspberrypi/linux/issues/2416
+Actually this also fixes a real bug in the driver for the slave_sg_tr case:
+if the sg_dma_len(sgent) is not multiple of (burst * dev_width) then we
+end up with missing bits as the counters are not set up correctly.
+The client driver which we tested the slave_sg_tr was always giving
+sg_len == 1 and the buffer was aligned, but when I tuned the client to
+pass a list, things got broken.
 
-Radhey Shyam Pandey (2):
-  dmaengine: xilinx_dma: Extend dma_config structure to store max
-    channel count
-  dmaengine: xilinx_dma: In dma channel probe fix node order dependency
+> 
+> I think the first two patch is a fix candidate as they fix regression
+> (albeit regression between the series's) and a real world channel lockup
+> discovered too late for the initial driver.
+> 
+> - Péter
+> 
+> Texas Instruments Finland Oy, Porkkalankatu 22, 00180 Helsinki.
+> Y-tunnus/Business ID: 0615521-4. Kotipaikka/Domicile: Helsinki
+> 
 
- drivers/dma/xilinx/xilinx_dma.c | 48 +++++++++++++++++++++--------------------
- 1 file changed, 25 insertions(+), 23 deletions(-)
+- Péter
 
--- 
-2.7.4
-
+Texas Instruments Finland Oy, Porkkalankatu 22, 00180 Helsinki.
+Y-tunnus/Business ID: 0615521-4. Kotipaikka/Domicile: Helsinki
