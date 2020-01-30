@@ -2,105 +2,125 @@ Return-Path: <SRS0=UDx8=3T=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=unavailable
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_GIT autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 24394C33C9E
-	for <dmaengine@archiver.kernel.org>; Thu, 30 Jan 2020 04:42:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9693CC33C9E
+	for <dmaengine@archiver.kernel.org>; Thu, 30 Jan 2020 05:27:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id EBF7222522
-	for <dmaengine@archiver.kernel.org>; Thu, 30 Jan 2020 04:42:14 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="tAXPvMTC"
+	by mail.kernel.org (Postfix) with ESMTP id 75DA9206F0
+	for <dmaengine@archiver.kernel.org>; Thu, 30 Jan 2020 05:27:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727502AbgA3EmI (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 29 Jan 2020 23:42:08 -0500
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:37335 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726774AbgA3ElS (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Wed, 29 Jan 2020 23:41:18 -0500
-Received: by mail-wm1-f65.google.com with SMTP id f129so2583760wmf.2;
-        Wed, 29 Jan 2020 20:41:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=ZP2sBFBGkO5bsS7Y1zFf5pSNHFa7vlci0txeV2iOQs8=;
-        b=tAXPvMTCrcqvRg6DMs4qAACn1NEWJid5v0kQH5SF5VgGTN/xj3GGOaQ8kvUKHayg2v
-         De9yU6DvJ3iePTh39yziabf0/fHH+s9zKgE+wP6txQ5xH10buVKbLVcRLieCM408An83
-         4BdlXbJFzZpNpevaGS1y3bWO2eaiRbp+0WPp1iTxXEtM9+XrVoeyVYpwExb+MImP5XSQ
-         8qLBfn5CslXP7bMLUeoayjukOdgtgGvVKBETYa3AU7yACh8CdPuvcd1cZ7D8wZ5CkD4t
-         glH2eXYayRge+OuW6culmBAJS+opwF70p1WA+6rwcg6OE5vFTGH8dB+rsDZf79lJ4a2q
-         QNHw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=ZP2sBFBGkO5bsS7Y1zFf5pSNHFa7vlci0txeV2iOQs8=;
-        b=cBmLCQVQtaqlJUHqRbMgmmd6Zge9JSRYUNOjFUxCd4aqXZ6Sj0bnLxVvkNABoDTmsH
-         IwRXpkBjwnBqG9NvA5ajab+shppaBR3jXLhItolpi6v8FZDY7GGpKeGDOmdkiC8gIYop
-         Knd/xr/mASzsxviSDpLIWyMyUK+7XftTWMCGpxBpv1EvVIPXoRozmVJukUlHPyRj2gvR
-         CJYQSvJS5jxsLt98ahWec7tu4Q4doCPHIHnk683iWS/sRUM5xWCSHN+pN0PPORcP40u7
-         HDewPrh8CVI+an9XO+5vX22nF93wIfFSbvF2GUz3N0l7yuRLc3ZMiARwpjZLamXs0AkO
-         v2Dw==
-X-Gm-Message-State: APjAAAXJGkOjLbXUjRHbqwOoGRHBxnEtTuvyZgVYSPpAPXkB2jD8tlg/
-        L9uCpObjcna/3BGKP6liiLeikbJ/
-X-Google-Smtp-Source: APXvYqxjG7C8ZCuesf3lZQJXPgxsRAJzh4HtA8uJJsu8/cX1SnVRf98iVX9ukNflN1geDJrkRKTGxQ==
-X-Received: by 2002:a1c:a381:: with SMTP id m123mr2876157wme.158.1580359275874;
-        Wed, 29 Jan 2020 20:41:15 -0800 (PST)
-Received: from localhost.localdomain (79-139-233-37.dynamic.spd-mgts.ru. [79.139.233.37])
-        by smtp.gmail.com with ESMTPSA id g128sm4494672wme.47.2020.01.29.20.41.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 29 Jan 2020 20:41:15 -0800 (PST)
-From:   Dmitry Osipenko <digetx@gmail.com>
-To:     Laxman Dewangan <ldewangan@nvidia.com>,
-        Vinod Koul <vkoul@kernel.org>,
+        id S1726881AbgA3F1r (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Thu, 30 Jan 2020 00:27:47 -0500
+Received: from mx.socionext.com ([202.248.49.38]:25270 "EHLO mx.socionext.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725923AbgA3F1q (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Thu, 30 Jan 2020 00:27:46 -0500
+Received: from unknown (HELO iyokan-ex.css.socionext.com) ([172.31.9.54])
+  by mx.socionext.com with ESMTP; 30 Jan 2020 14:27:43 +0900
+Received: from mail.mfilter.local (m-filter-1 [10.213.24.61])
+        by iyokan-ex.css.socionext.com (Postfix) with ESMTP id 2135A603AB;
+        Thu, 30 Jan 2020 14:27:44 +0900 (JST)
+Received: from 172.31.9.51 (172.31.9.51) by m-FILTER with ESMTP; Thu, 30 Jan 2020 14:28:48 +0900
+Received: from plum.e01.socionext.com (unknown [10.213.132.32])
+        by kinkan.css.socionext.com (Postfix) with ESMTP id 60CBE1A04C1;
+        Thu, 30 Jan 2020 14:27:43 +0900 (JST)
+From:   Kunihiko Hayashi <hayashi.kunihiko@socionext.com>
+To:     Vinod Koul <vkoul@kernel.org>,
         Dan Williams <dan.j.williams@intel.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        =?UTF-8?q?Micha=C5=82=20Miros=C5=82aw?= <mirq-linux@rere.qmqm.pl>
-Cc:     dmaengine@vger.kernel.org, linux-tegra@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH v6 04/16] dmaengine: tegra-apb: Prevent race conditions on channel's freeing
-Date:   Thu, 30 Jan 2020 07:37:52 +0300
-Message-Id: <20200130043804.32243-5-digetx@gmail.com>
-X-Mailer: git-send-email 2.24.0
-In-Reply-To: <20200130043804.32243-1-digetx@gmail.com>
-References: <20200130043804.32243-1-digetx@gmail.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        Masahiro Yamada <yamada.masahiro@socionext.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>
+Cc:     dmaengine@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        Masami Hiramatsu <masami.hiramatsu@linaro.org>,
+        Jassi Brar <jaswinder.singh@linaro.org>,
+        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>
+Subject: [PATCH v2 1/2] dt-bindings: dmaengine: Add UniPhier external DMA controller bindings
+Date:   Thu, 30 Jan 2020 14:27:27 +0900
+Message-Id: <1580362048-28455-2-git-send-email-hayashi.kunihiko@socionext.com>
+X-Mailer: git-send-email 2.7.4
+In-Reply-To: <1580362048-28455-1-git-send-email-hayashi.kunihiko@socionext.com>
+References: <1580362048-28455-1-git-send-email-hayashi.kunihiko@socionext.com>
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-It's incorrect to check the channel's "busy" state without taking a lock.
-That shouldn't cause any real troubles, nevertheless it's always better
-not to have any race conditions in the code.
+Add devicetree binding documentation for external DMA controller
+implemented on Socionext UniPhier SoCs.
 
-Acked-by: Jon Hunter <jonathanh@nvidia.com>
-Signed-off-by: Dmitry Osipenko <digetx@gmail.com>
+Signed-off-by: Kunihiko Hayashi <hayashi.kunihiko@socionext.com>
 ---
- drivers/dma/tegra20-apb-dma.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ .../bindings/dma/socionext,uniphier-xdmac.yaml     | 57 ++++++++++++++++++++++
+ 1 file changed, 57 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/dma/socionext,uniphier-xdmac.yaml
 
-diff --git a/drivers/dma/tegra20-apb-dma.c b/drivers/dma/tegra20-apb-dma.c
-index f56881500a23..766c2c9eac8e 100644
---- a/drivers/dma/tegra20-apb-dma.c
-+++ b/drivers/dma/tegra20-apb-dma.c
-@@ -1294,8 +1294,7 @@ static void tegra_dma_free_chan_resources(struct dma_chan *dc)
- 
- 	dev_dbg(tdc2dev(tdc), "Freeing channel %d\n", tdc->id);
- 
--	if (tdc->busy)
--		tegra_dma_terminate_all(dc);
-+	tegra_dma_terminate_all(dc);
- 
- 	spin_lock_irqsave(&tdc->lock, flags);
- 	list_splice_init(&tdc->pending_sg_req, &sg_req_list);
+diff --git a/Documentation/devicetree/bindings/dma/socionext,uniphier-xdmac.yaml b/Documentation/devicetree/bindings/dma/socionext,uniphier-xdmac.yaml
+new file mode 100644
+index 00000000..32abf18
+--- /dev/null
++++ b/Documentation/devicetree/bindings/dma/socionext,uniphier-xdmac.yaml
+@@ -0,0 +1,57 @@
++# SPDX-License-Identifier: GPL-2.0
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/dma/socionext,uniphier-xdmac.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Socionext UniPhier external DMA controller
++
++description: |
++  This describes the devicetree bindings for an external DMA engine to perform
++  memory-to-memory or peripheral-to-memory data transfer capable of supporting
++  16 channels, implemented in Socionext UniPhier SoCs.
++
++maintainers:
++  - Kunihiko Hayashi <hayashi.kunihiko@socionext.com>
++
++allOf:
++  - $ref: "dma-controller.yaml#"
++
++properties:
++  compatible:
++    items:
++      - const: socionext,uniphier-xdmac
++
++  reg:
++    minItems: 1
++    maxItems: 2
++
++  interrupts:
++    maxItems: 1
++
++  "#dma-cells":
++    const: 2
++    description: |
++      DMA request from clients consists of 2 cells:
++        1. Channel index
++        2. Transfer request factor number, If no transfer factor, use 0.
++           The number is SoC-specific, and this should be specified with
++           relation to the device to use the DMA controller.
++
++required:
++  - compatible
++  - reg
++  - interrupts
++  - "#dma-cells"
++
++examples:
++  - |
++    xdmac: dma-controller@5fc10000 {
++        compatible = "socionext,uniphier-xdmac";
++        reg = <0x5fc10000 0x1000>, <0x5fc20000 0x800>;
++        interrupts = <0 188 4>;
++        #dma-cells = <2>;
++        dma-channels = <16>;
++    };
++
++...
 -- 
-2.24.0
+2.7.4
 
