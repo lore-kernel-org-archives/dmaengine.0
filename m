@@ -5,56 +5,56 @@ X-Spam-Level:
 X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=unavailable
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=unavailable
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DA135C3524B
-	for <dmaengine@archiver.kernel.org>; Sun,  2 Feb 2020 22:30:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8C0C9C35249
+	for <dmaengine@archiver.kernel.org>; Sun,  2 Feb 2020 22:30:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id ABDDD20679
-	for <dmaengine@archiver.kernel.org>; Sun,  2 Feb 2020 22:30:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 611E820679
+	for <dmaengine@archiver.kernel.org>; Sun,  2 Feb 2020 22:30:52 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PY3MH52l"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NLHV/wiP"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727170AbgBBWaq (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Sun, 2 Feb 2020 17:30:46 -0500
-Received: from mail-lj1-f194.google.com ([209.85.208.194]:34386 "EHLO
-        mail-lj1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727198AbgBBWaA (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Sun, 2 Feb 2020 17:30:00 -0500
-Received: by mail-lj1-f194.google.com with SMTP id x7so12652548ljc.1;
-        Sun, 02 Feb 2020 14:29:58 -0800 (PST)
+        id S1727180AbgBBW34 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Sun, 2 Feb 2020 17:29:56 -0500
+Received: from mail-lf1-f66.google.com ([209.85.167.66]:33009 "EHLO
+        mail-lf1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727154AbgBBW34 (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Sun, 2 Feb 2020 17:29:56 -0500
+Received: by mail-lf1-f66.google.com with SMTP id n25so8399886lfl.0;
+        Sun, 02 Feb 2020 14:29:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=EA2aX2gMwFfc16iv548oZvQgKjYnmWGj0LmTyLTJTmM=;
-        b=PY3MH52l9pxtCP2F/2ZmM5mlLagJFgJiTefeZGJoQMoBPuVbi7vYq6n3gXWPJPMhim
-         gcni1v88jLTz8wgYv1reUV8H/24N7pQTa6AIj31bASbU36AEwbpjBHZ0+MrJ3apoEaF8
-         hmCoiU7jUkQy3sb+BJUcpxORpjYCWsJ0XzMfm/V90Reej94N2FNXPl22J6TnaZQTIIts
-         XhDKzQYbFnYFBalh0yMmhN+ajRf4PojQBjGmbympQZa7rxvL+fxjgUu+7WGOFz/CAFT7
-         O7vNK8Q7npEXCa4/CCp5402LyfR0tmdS2W19SQCDkPxJIpA7LoWwAxpFPewOspyzdf1N
-         fMsw==
+        bh=yfyyd1gAYNfQRVTzzie9M6MUShefAhN4x9LLDsJ6WIA=;
+        b=NLHV/wiPfZzmPrjZ1UyodOf2ossRUjX/7bposBEtIXVb6CA0pF8w6INGEI8OcJ07fr
+         OARfQNa2FTBLSgWGhTTP4vSuTG9VLOjGIbMruLYJ9R5GMXCeJ+fDYhRaos/0nh8XVLMm
+         KIL0Zud/paO0xVGkS+/477OJO4GiUOzpyptVdRQm7ESQgMeb5uzjNndXc2OExGFATXmY
+         Y83fwcj74H/0Roiopun2TvvYV4juWdnjxN/rU78V/GE8YK76+wLoQbSsog936sY721VO
+         srbKk1PgeLZixc9RT0EvdbP6c5ZeuiIShp/On8rcM2e4zd1M+e6mHB+YOMLyGu9M1XTB
+         c55A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=EA2aX2gMwFfc16iv548oZvQgKjYnmWGj0LmTyLTJTmM=;
-        b=A+cPCu0mD8oONzBQ3heAfkPfdQKNhQUThN7S4hd+I7Vo9tq/WX8QVRCYWkYB96CbGQ
-         Y1/jaDOWGyzctZ/LF+yvGUcEH+VZPROIPjF4vvgMcvfQD5Sr8e5LATAAvsSNBuWDfO5Q
-         kdPLdNDOmrHpfeoOD9N22mjn3uQG8jskZiX01N85o/Z/GIu9eCnrtIEuIA0YgEtW36tZ
-         x3oFEtuvhxzhzXEBGDduf4yiH4suEh/eYwEH3yz4JxE2E4QmNdeRVFbZnvrmtJUyzUz4
-         yyCH5LeGnN3z8KEpt26y+8VtmRzX964dbtLA//5FyJ98m45rM3ektiCKe+mYOmSIVQdX
-         Nxpg==
-X-Gm-Message-State: APjAAAUsxNZymN8dGjrxQ9b3QCmsfYH+Sk9QYR751OrHG+5WlrmpCgTm
-        m7hh4in1+CfoqcnbENoeZgc=
-X-Google-Smtp-Source: APXvYqxfaRoK07R8BsmkSfRO2NTdt3KR7Wc3WMNRtUOVfpnGcFBRbxNRX/hsfF53N1ljiGppDSg0rg==
-X-Received: by 2002:a2e:5304:: with SMTP id h4mr12169905ljb.75.1580682598234;
-        Sun, 02 Feb 2020 14:29:58 -0800 (PST)
+        bh=yfyyd1gAYNfQRVTzzie9M6MUShefAhN4x9LLDsJ6WIA=;
+        b=YXchHGkO1jMwfyieXbX6Krt1M8lzgaNwLCYDS3X8ABIe9GXxsdnBa8n8OEGI6rq/Hr
+         cLY4NE6J++e6p1SOE1QZHEbnLQqfX9mImwl1cgIc8BUfDux7LwaI7rJve4Zq3gAfw1p0
+         oadJQd54CB6OHGfpnkv1BUQsZVWx2dRoqxB2vjOqipLXiLb+c9F258W1OfmnOyyLh9w8
+         Gbe4xOg4J3e/l0fvDiyjSz6jEm+DyHnB2v2F8TO6iCx+20ihjGXqJgUIK8tQQJ8dB4PL
+         tggUIjAuaG0ppzSWy01KXqdkveb/5PFd3IIUnTlojDHCKTuCsAAjgNFCcsPRhXkkI1Xk
+         3zMA==
+X-Gm-Message-State: APjAAAWSIU6Cc2bXVa7Z3mBUBu7hqWq91kOCWMIzYVE7MuycgJWIDZrk
+        uTfn5E18UXMDzqP32mA104s=
+X-Google-Smtp-Source: APXvYqz/Kq8S6eLWP0lHLgJKcP5oQESWIj/ZoJu9Ky6H6wxILPV/RTvgQ6kf/894RJRKrsAVKbQgJA==
+X-Received: by 2002:ac2:4849:: with SMTP id 9mr10303996lfy.11.1580682594100;
+        Sun, 02 Feb 2020 14:29:54 -0800 (PST)
 Received: from localhost.localdomain (79-139-233-37.dynamic.spd-mgts.ru. [79.139.233.37])
-        by smtp.gmail.com with ESMTPSA id b190sm8050307lfd.39.2020.02.02.14.29.57
+        by smtp.gmail.com with ESMTPSA id b190sm8050307lfd.39.2020.02.02.14.29.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 02 Feb 2020 14:29:57 -0800 (PST)
+        Sun, 02 Feb 2020 14:29:53 -0800 (PST)
 From:   Dmitry Osipenko <digetx@gmail.com>
 To:     Laxman Dewangan <ldewangan@nvidia.com>,
         Vinod Koul <vkoul@kernel.org>,
@@ -64,9 +64,9 @@ To:     Laxman Dewangan <ldewangan@nvidia.com>,
         =?UTF-8?q?Micha=C5=82=20Miros=C5=82aw?= <mirq-linux@rere.qmqm.pl>
 Cc:     dmaengine@vger.kernel.org, linux-tegra@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: [PATCH v7 10/19] dmaengine: tegra-apb: Remove assumptions about unavailable runtime PM
-Date:   Mon,  3 Feb 2020 01:28:45 +0300
-Message-Id: <20200202222854.18409-11-digetx@gmail.com>
+Subject: [PATCH v7 06/19] dmaengine: tegra-apb: Use devm_platform_ioremap_resource
+Date:   Mon,  3 Feb 2020 01:28:41 +0300
+Message-Id: <20200202222854.18409-7-digetx@gmail.com>
 X-Mailer: git-send-email 2.24.0
 In-Reply-To: <20200202222854.18409-1-digetx@gmail.com>
 References: <20200202222854.18409-1-digetx@gmail.com>
@@ -77,52 +77,28 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-The runtime PM is always available on all Tegra SoCs since the commit
-40b2bb1b132a ("ARM: tegra: enforce PM requirement"), so there is no
-need to handle the case of unavailable RPM in the code anymore.
+Use devm_platform_ioremap_resource to keep code cleaner a tad.
 
+Acked-by: Jon Hunter <jonathanh@nvidia.com>
 Signed-off-by: Dmitry Osipenko <digetx@gmail.com>
 ---
- drivers/dma/tegra20-apb-dma.c | 10 +---------
- 1 file changed, 1 insertion(+), 9 deletions(-)
+ drivers/dma/tegra20-apb-dma.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
 diff --git a/drivers/dma/tegra20-apb-dma.c b/drivers/dma/tegra20-apb-dma.c
-index 7158bd3145c4..22b88ccff05d 100644
+index aafad50d075e..f44291207928 100644
 --- a/drivers/dma/tegra20-apb-dma.c
 +++ b/drivers/dma/tegra20-apb-dma.c
-@@ -1429,11 +1429,8 @@ static int tegra_dma_probe(struct platform_device *pdev)
- 	spin_lock_init(&tdma->global_lock);
+@@ -1402,8 +1402,7 @@ static int tegra_dma_probe(struct platform_device *pdev)
+ 	tdma->chip_data = cdata;
+ 	platform_set_drvdata(pdev, tdma);
  
- 	pm_runtime_enable(&pdev->dev);
--	if (!pm_runtime_enabled(&pdev->dev))
--		ret = tegra_dma_runtime_resume(&pdev->dev);
--	else
--		ret = pm_runtime_get_sync(&pdev->dev);
+-	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+-	tdma->base_addr = devm_ioremap_resource(&pdev->dev, res);
++	tdma->base_addr = devm_platform_ioremap_resource(pdev, 0);
+ 	if (IS_ERR(tdma->base_addr))
+ 		return PTR_ERR(tdma->base_addr);
  
-+	ret = pm_runtime_get_sync(&pdev->dev);
- 	if (ret < 0)
- 		goto err_pm_disable;
- 
-@@ -1546,8 +1543,6 @@ static int tegra_dma_probe(struct platform_device *pdev)
- 
- err_pm_disable:
- 	pm_runtime_disable(&pdev->dev);
--	if (!pm_runtime_status_suspended(&pdev->dev))
--		tegra_dma_runtime_suspend(&pdev->dev);
- 
- 	return ret;
- }
-@@ -1557,10 +1552,7 @@ static int tegra_dma_remove(struct platform_device *pdev)
- 	struct tegra_dma *tdma = platform_get_drvdata(pdev);
- 
- 	dma_async_device_unregister(&tdma->dma_dev);
--
- 	pm_runtime_disable(&pdev->dev);
--	if (!pm_runtime_status_suspended(&pdev->dev))
--		tegra_dma_runtime_suspend(&pdev->dev);
- 
- 	return 0;
- }
 -- 
 2.24.0
 
