@@ -8,53 +8,53 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=unavailable
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 79612C352A4
-	for <dmaengine@archiver.kernel.org>; Sun,  9 Feb 2020 16:42:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D98AFC35250
+	for <dmaengine@archiver.kernel.org>; Sun,  9 Feb 2020 16:42:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 5202620715
-	for <dmaengine@archiver.kernel.org>; Sun,  9 Feb 2020 16:42:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B043B20715
+	for <dmaengine@archiver.kernel.org>; Sun,  9 Feb 2020 16:42:11 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="vZ11QHCv"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cK7VAG/L"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728018AbgBIQl7 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Sun, 9 Feb 2020 11:41:59 -0500
-Received: from mail-lj1-f193.google.com ([209.85.208.193]:44892 "EHLO
-        mail-lj1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728009AbgBIQlg (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Sun, 9 Feb 2020 11:41:36 -0500
-Received: by mail-lj1-f193.google.com with SMTP id q8so4365049ljj.11;
-        Sun, 09 Feb 2020 08:41:34 -0800 (PST)
+        id S1727999AbgBIQlc (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Sun, 9 Feb 2020 11:41:32 -0500
+Received: from mail-lj1-f195.google.com ([209.85.208.195]:46673 "EHLO
+        mail-lj1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727973AbgBIQlb (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Sun, 9 Feb 2020 11:41:31 -0500
+Received: by mail-lj1-f195.google.com with SMTP id x14so4360102ljd.13;
+        Sun, 09 Feb 2020 08:41:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=9/WTniiOO2X2m80SkKX+NZuwJfpEeKG/rQODBJmhOvY=;
-        b=vZ11QHCvSNIXXBRKgbQ0LSMg2i6m04zUnJamAofATaKXc1HArN/MVt/URNU8vJiV9t
-         JxVKQbSWif8YXxLDlzjBZlRqHT65vs/YpT9Xtcxykd8wYMdjSVC8Odft9VPUH0nTjXBz
-         wBQWjpENBhHt/94gz0k+OVnsoWh83lds7+Dbem9iT1G6hA1mbVKF0z83RuBmtS37yM86
-         XjnT/u8EIONuPeLrpIZrGvwbD3qcqkepPqL5Ssj/WjrG/4ahueveLIKA//JFLWscMgpz
-         EoPHn/ogNli6PMczX98AooXL/OjtjAuyPTv+StuIyDeUafGxUfy43np68J6a6gWVkHFY
-         GGPA==
+        bh=zVFUklfHD48WiyaHqn5Vu2aXZlgCxqhFWuMeCStOnrY=;
+        b=cK7VAG/LNChw2Yh22dWPK+/4bC+Q30JkkGuLZujOfP40FmzJ+IBLn4X9QOacjFsxdi
+         MZO8cRi5D9fyQHthGnOhzA0W4u5HHBcg9PClXTvBkcXJfVHONEzHOPqY+ozYBm2GczGa
+         Q8wgWww8PgVLc4WJLDNOpSCqDEVxxItiJ/wsT/AuNI8dt3xZG3qWwNQ/811H4vPX6SQS
+         rhaO/iA9PNelKWf3VRd0GmpMYP2tlSYhiZkqo28DwCd9eb1O88CstGrByQi6EFARGVog
+         VJtnL6rg0cV15tWa26gZ5xXeHRvZ7Y3EMeissGDROkSOiVTZ5SNlnrvDg/vfcyLAXO1I
+         GhXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=9/WTniiOO2X2m80SkKX+NZuwJfpEeKG/rQODBJmhOvY=;
-        b=cDFTJnn+C/y6STeWgKBZDat/XG900t/rGlxF9Tkw18HfgfR0k/GIEDsYTPnjb3nPD2
-         F/Vn1oB8IiGxs4ukYIcBhPG8uoI3HiQESfFqosbPbOgAV4eJRFQb/PuoXLjpzMaGGGvX
-         GKhT1lVKgLqizznOO6rr+AmsJqIR+n936Lp+AJJBtth0tiHlziEYP2bcFT3g+XoE6RLn
-         ipKx8rYSMqcdndQbTJu7RSCgmgrvBGh1rAE6q2OxARXcePU28f1r/ygKDGlyX+QORbIc
-         wW3IWpluxcHg+HMmvkRjca4Yv3lTyGaHug7kCAzpJLIeER4pDfeloslLEnuMUJQt8hUZ
-         y92w==
-X-Gm-Message-State: APjAAAXqohijns2ULDAC7KS8N7EHBB+ksGmkJ/wq+ep2eicOwiBYxZdZ
-        NraDH42xfx7FTt4aivYWJf+WDChx
-X-Google-Smtp-Source: APXvYqyaK/Y9BG1jYe4IAZUAIekomo8Q7PtGNmf3DZv4gSVGBdZwzPO00Sdwk5eYpnQHuGWZeS2yZQ==
-X-Received: by 2002:a2e:7315:: with SMTP id o21mr5546306ljc.276.1581266494150;
-        Sun, 09 Feb 2020 08:41:34 -0800 (PST)
+        bh=zVFUklfHD48WiyaHqn5Vu2aXZlgCxqhFWuMeCStOnrY=;
+        b=p0fv6eTLR8VmAEVzJcVBsSargLERy80BR3QBgVbyIqP0y08dXhF4D6Dx/WpxQ0uoKq
+         167J246MmscJ8zWPTmZh47yTZiLZkG2X9eOUgInYbohVE4f4yjpjUPkH43iANxHZl1HU
+         6wen/oEyypiA9B3LztxvJ7Rk1qM3HnZiGZHFO/jfwchgV6m7GgxHvrcpX4Igp14jyJHg
+         dW/fGr/sEN8gn6O0HRfS4g1uLKI6S0dzIeZKhfUnxto+unLA9CHp4kjbWveF+weLOOCt
+         iVVdaoAmAfk09+MfQD67UiE4muhrWdH99k5xp/HhlUnTRpg4MBBLSFCAtjYTxOvM3+GU
+         Pplg==
+X-Gm-Message-State: APjAAAWXsXQxJDF2LSHn4lM3av7PmpbEcvkbF0DsnfbofLMX0V0umFhG
+        y+KDHMSlvYiUGz0Xq7315f8=
+X-Google-Smtp-Source: APXvYqxw51aDGXoQcyXUuWpGsTMkqehq6EZmr9xBTeB/1TP7NmlQ0PPnIldbXmVocWMjwg8N/X0i8w==
+X-Received: by 2002:a2e:99da:: with SMTP id l26mr5395679ljj.272.1581266488104;
+        Sun, 09 Feb 2020 08:41:28 -0800 (PST)
 Received: from localhost.localdomain (79-139-233-37.dynamic.spd-mgts.ru. [79.139.233.37])
-        by smtp.gmail.com with ESMTPSA id g21sm4941826ljj.53.2020.02.09.08.41.33
+        by smtp.gmail.com with ESMTPSA id g21sm4941826ljj.53.2020.02.09.08.41.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 09 Feb 2020 08:41:33 -0800 (PST)
+        Sun, 09 Feb 2020 08:41:27 -0800 (PST)
 From:   Dmitry Osipenko <digetx@gmail.com>
 To:     Laxman Dewangan <ldewangan@nvidia.com>,
         Vinod Koul <vkoul@kernel.org>,
@@ -64,9 +64,9 @@ To:     Laxman Dewangan <ldewangan@nvidia.com>,
         =?UTF-8?q?Micha=C5=82=20Miros=C5=82aw?= <mirq-linux@rere.qmqm.pl>
 Cc:     dmaengine@vger.kernel.org, linux-tegra@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: [PATCH v8 18/19] dmaengine: tegra-apb: Remove unused function argument
-Date:   Sun,  9 Feb 2020 19:33:55 +0300
-Message-Id: <20200209163356.6439-19-digetx@gmail.com>
+Subject: [PATCH v8 12/19] dmaengine: tegra-apb: Keep clock enabled only during of DMA transfer
+Date:   Sun,  9 Feb 2020 19:33:49 +0300
+Message-Id: <20200209163356.6439-13-digetx@gmail.com>
 X-Mailer: git-send-email 2.24.0
 In-Reply-To: <20200209163356.6439-1-digetx@gmail.com>
 References: <20200209163356.6439-1-digetx@gmail.com>
@@ -77,34 +77,151 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Remove unused function argument from handle_continuous_head_request().
+It's a bit impractical to enable hardware's clock at the time of DMA
+channel's allocation because most of DMA client drivers allocate DMA
+channel at the time of the driver's probing, and thus, DMA clock is kept
+always-enabled in practice, defeating the whole purpose of runtime PM.
 
 Signed-off-by: Dmitry Osipenko <digetx@gmail.com>
 ---
- drivers/dma/tegra20-apb-dma.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/dma/tegra20-apb-dma.c | 36 ++++++++++++++++++++++++-----------
+ 1 file changed, 25 insertions(+), 11 deletions(-)
 
 diff --git a/drivers/dma/tegra20-apb-dma.c b/drivers/dma/tegra20-apb-dma.c
-index 7b9d59bbd2c1..3e0373b89195 100644
+index 049e98ae1240..6e057a9f0e46 100644
 --- a/drivers/dma/tegra20-apb-dma.c
 +++ b/drivers/dma/tegra20-apb-dma.c
-@@ -553,7 +553,6 @@ static void tegra_dma_abort_all(struct tegra_dma_channel *tdc)
+@@ -569,6 +569,7 @@ static bool handle_continuous_head_request(struct tegra_dma_channel *tdc,
+ 	hsgreq = list_first_entry(&tdc->pending_sg_req, typeof(*hsgreq), node);
+ 	if (!hsgreq->configured) {
+ 		tegra_dma_stop(tdc);
++		pm_runtime_put(tdc->tdma->dev);
+ 		dev_err(tdc2dev(tdc), "Error in DMA transfer, aborting DMA\n");
+ 		tegra_dma_abort_all(tdc);
+ 		return false;
+@@ -604,9 +605,14 @@ static void handle_once_dma_done(struct tegra_dma_channel *tdc,
+ 	list_add_tail(&sgreq->node, &tdc->free_sg_req);
+ 
+ 	/* Do not start DMA if it is going to be terminate */
+-	if (to_terminate || list_empty(&tdc->pending_sg_req))
++	if (to_terminate)
+ 		return;
+ 
++	if (list_empty(&tdc->pending_sg_req)) {
++		pm_runtime_put(tdc->tdma->dev);
++		return;
++	}
++
+ 	tdc_start_head_req(tdc);
  }
  
- static bool handle_continuous_head_request(struct tegra_dma_channel *tdc,
--					   struct tegra_dma_sg_req *last_sg_req,
- 					   bool to_terminate)
+@@ -712,6 +718,7 @@ static void tegra_dma_issue_pending(struct dma_chan *dc)
  {
- 	struct tegra_dma_sg_req *hsgreq;
-@@ -638,7 +637,7 @@ static void handle_cont_sngl_cycle_dma_done(struct tegra_dma_channel *tdc,
- 	if (!list_is_last(&sgreq->node, &tdc->pending_sg_req)) {
- 		list_move_tail(&sgreq->node, &tdc->pending_sg_req);
- 		sgreq->configured = false;
--		st = handle_continuous_head_request(tdc, sgreq, to_terminate);
-+		st = handle_continuous_head_request(tdc, to_terminate);
- 		if (!st)
- 			dma_desc->dma_status = DMA_ERROR;
+ 	struct tegra_dma_channel *tdc = to_tegra_dma_chan(dc);
+ 	unsigned long flags;
++	int err;
+ 
+ 	spin_lock_irqsave(&tdc->lock, flags);
+ 	if (list_empty(&tdc->pending_sg_req)) {
+@@ -719,6 +726,12 @@ static void tegra_dma_issue_pending(struct dma_chan *dc)
+ 		goto end;
  	}
+ 	if (!tdc->busy) {
++		err = pm_runtime_get_sync(tdc->tdma->dev);
++		if (err < 0) {
++			dev_err(tdc2dev(tdc), "Failed to enable DMA\n");
++			goto end;
++		}
++
+ 		tdc_start_head_req(tdc);
+ 
+ 		/* Continuous single mode: Configure next req */
+@@ -774,6 +787,8 @@ static int tegra_dma_terminate_all(struct dma_chan *dc)
+ 	}
+ 	tegra_dma_resume(tdc);
+ 
++	pm_runtime_put(tdc->tdma->dev);
++
+ skip_dma_stop:
+ 	tegra_dma_abort_all(tdc);
+ 
+@@ -1268,22 +1283,15 @@ tegra_dma_prep_dma_cyclic(struct dma_chan *dc, dma_addr_t buf_addr,
+ static int tegra_dma_alloc_chan_resources(struct dma_chan *dc)
+ {
+ 	struct tegra_dma_channel *tdc = to_tegra_dma_chan(dc);
+-	struct tegra_dma *tdma = tdc->tdma;
+-	int ret;
+ 
+ 	dma_cookie_init(&tdc->dma_chan);
+ 
+-	ret = pm_runtime_get_sync(tdma->dev);
+-	if (ret < 0)
+-		return ret;
+-
+ 	return 0;
+ }
+ 
+ static void tegra_dma_free_chan_resources(struct dma_chan *dc)
+ {
+ 	struct tegra_dma_channel *tdc = to_tegra_dma_chan(dc);
+-	struct tegra_dma *tdma = tdc->tdma;
+ 	struct tegra_dma_desc *dma_desc;
+ 	struct tegra_dma_sg_req *sg_req;
+ 	struct list_head dma_desc_list;
+@@ -1316,7 +1324,6 @@ static void tegra_dma_free_chan_resources(struct dma_chan *dc)
+ 		list_del(&sg_req->node);
+ 		kfree(sg_req);
+ 	}
+-	pm_runtime_put(tdma->dev);
+ 
+ 	tdc->slave_id = TEGRA_APBDMA_SLAVE_ID_INVALID;
+ }
+@@ -1416,6 +1423,11 @@ static int tegra_dma_probe(struct platform_device *pdev)
+ 
+ 	spin_lock_init(&tdma->global_lock);
+ 
++	ret = clk_prepare(tdma->dma_clk);
++	if (ret)
++		return ret;
++
++	pm_runtime_irq_safe(&pdev->dev);
+ 	pm_runtime_enable(&pdev->dev);
+ 
+ 	ret = pm_runtime_get_sync(&pdev->dev);
+@@ -1531,6 +1543,7 @@ static int tegra_dma_probe(struct platform_device *pdev)
+ 
+ err_pm_disable:
+ 	pm_runtime_disable(&pdev->dev);
++	clk_unprepare(tdma->dma_clk);
+ 
+ 	return ret;
+ }
+@@ -1541,6 +1554,7 @@ static int tegra_dma_remove(struct platform_device *pdev)
+ 
+ 	dma_async_device_unregister(&tdma->dma_dev);
+ 	pm_runtime_disable(&pdev->dev);
++	clk_unprepare(tdma->dma_clk);
+ 
+ 	return 0;
+ }
+@@ -1569,7 +1583,7 @@ static int tegra_dma_runtime_suspend(struct device *dev)
+ 						  TEGRA_APBDMA_CHAN_WCOUNT);
+ 	}
+ 
+-	clk_disable_unprepare(tdma->dma_clk);
++	clk_disable(tdma->dma_clk);
+ 
+ 	return 0;
+ }
+@@ -1580,7 +1594,7 @@ static int tegra_dma_runtime_resume(struct device *dev)
+ 	unsigned int i;
+ 	int ret;
+ 
+-	ret = clk_prepare_enable(tdma->dma_clk);
++	ret = clk_enable(tdma->dma_clk);
+ 	if (ret < 0) {
+ 		dev_err(dev, "clk_enable failed: %d\n", ret);
+ 		return ret;
 -- 
 2.24.0
 
