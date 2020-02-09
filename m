@@ -1,201 +1,207 @@
-Return-Path: <SRS0=86Ki=33=vger.kernel.org=dmaengine-owner@kernel.org>
+Return-Path: <SRS0=C2jR=35=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.3 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
-	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_GIT autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2BECFC04EB5
-	for <dmaengine@archiver.kernel.org>; Fri,  7 Feb 2020 15:10:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 15A4BC35250
+	for <dmaengine@archiver.kernel.org>; Sun,  9 Feb 2020 16:41:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 001AF20838
-	for <dmaengine@archiver.kernel.org>; Fri,  7 Feb 2020 15:10:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D21242080C
+	for <dmaengine@archiver.kernel.org>; Sun,  9 Feb 2020 16:41:19 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b="SdSeG0vK"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="p8I8G1rh"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727303AbgBGPK2 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 7 Feb 2020 10:10:28 -0500
-Received: from lelv0142.ext.ti.com ([198.47.23.249]:39934 "EHLO
-        lelv0142.ext.ti.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726951AbgBGPK2 (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Fri, 7 Feb 2020 10:10:28 -0500
-Received: from fllv0034.itg.ti.com ([10.64.40.246])
-        by lelv0142.ext.ti.com (8.15.2/8.15.2) with ESMTP id 017FAOeA099790;
-        Fri, 7 Feb 2020 09:10:24 -0600
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
-        s=ti-com-17Q1; t=1581088224;
-        bh=FWCsQ1bHbnOLiHiGcLjm5xkgDGwTlbJvPmVGtfA/qE8=;
-        h=Subject:From:To:CC:References:Date:In-Reply-To;
-        b=SdSeG0vKPY6aMFZ8I965yc3yw/lz6zDD6MF8rKbyFHlZM+9RxjmxkoALd/cB7N8nx
-         subRT9mSIrXzQ8k9W114+YpiQBDKq5iNgvzcdysPXXwNPM255+Rfm/avAbKcx5ynfk
-         dkLV75O3j4V5rWeILaEm42HZ3H2+1sGdKKokA+Kk=
-Received: from DFLE115.ent.ti.com (dfle115.ent.ti.com [10.64.6.36])
-        by fllv0034.itg.ti.com (8.15.2/8.15.2) with ESMTPS id 017FAN1d125773
-        (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
-        Fri, 7 Feb 2020 09:10:24 -0600
-Received: from DFLE102.ent.ti.com (10.64.6.23) by DFLE115.ent.ti.com
- (10.64.6.36) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1847.3; Fri, 7 Feb
- 2020 09:10:23 -0600
-Received: from fllv0039.itg.ti.com (10.64.41.19) by DFLE102.ent.ti.com
- (10.64.6.23) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1847.3 via
- Frontend Transport; Fri, 7 Feb 2020 09:10:23 -0600
-Received: from [192.168.2.6] (ileax41-snat.itg.ti.com [10.172.224.153])
-        by fllv0039.itg.ti.com (8.15.2/8.15.2) with ESMTP id 017FAMvl082283;
-        Fri, 7 Feb 2020 09:10:22 -0600
-Subject: Re: [PATCH] dmaengine: ti: edma: Support for interleaved mem to mem
- transfer
-From:   Peter Ujfalusi <peter.ujfalusi@ti.com>
-To:     <vkoul@kernel.org>
-CC:     <dmaengine@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <dan.j.williams@intel.com>
-References: <20200207142000.14605-1-peter.ujfalusi@ti.com>
-Message-ID: <32b3cc79-f808-a3b6-608f-993f0e4774fa@ti.com>
-Date:   Fri, 7 Feb 2020 17:10:23 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.0
+        id S1727787AbgBIQlT (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Sun, 9 Feb 2020 11:41:19 -0500
+Received: from mail-lj1-f195.google.com ([209.85.208.195]:44873 "EHLO
+        mail-lj1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727698AbgBIQlT (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Sun, 9 Feb 2020 11:41:19 -0500
+Received: by mail-lj1-f195.google.com with SMTP id q8so4364612ljj.11;
+        Sun, 09 Feb 2020 08:41:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=KbxZDQJWMCGHWOArnpx4pPEVmGQqDBDsYcbt5c6buwc=;
+        b=p8I8G1rhDFQq9uZWaDj5c4zk2fQ8Emc+ieqMlV28mRQeKRIfVIpWVIjO5/CA2oYfX4
+         APBiVH1omBlPPt4CpEVWUoiAkl6ql+pk0zMKIJPG8LRiA2pJdz/RaWTT9mwJI3gQ/vwB
+         OlnovM/KJ5YLdKYuYsjeRVn8Oix6IlErexbMGKTTPfpvhzYPIRBe8YYgQKuP+2yYddMD
+         4KUKRnp+elGcEu676YRjZX7UuzbaU+PR5t9555ucJ84SwY87ugbA/Z2FXNc5w96kL5Pe
+         Yp/da1MO/oJfV5+EMyX2z8eH+5Rka2W/SytM3bGj+xd/PWjA+feBA/gPJYfZUB9HKqfh
+         /UFQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=KbxZDQJWMCGHWOArnpx4pPEVmGQqDBDsYcbt5c6buwc=;
+        b=SwWZe2pruZsz4USCdZWJ0coVz3ehMwmi0sEYmzgHcd2bcs05PBrMO3RqcrYIqhmOFs
+         nGKF8hHdoEJe9vAAygR1KGELoPo4A3JlNwb1y5Qws1OoneBUFJdSPMdN1I0hP+ToDIto
+         p6OZJlnQUdHNt1gbWVnv2vDsD6gVh/Q6ZN0qS7E0A61Wsrzxy311KypyKC0p24SX6pQS
+         Nei6X9f4PRBNSVBNBDjgc66NhOcIHdb+btfzufuLylg0PgaAdJ9LTxsBKQ+5IHlRiaTb
+         Jic9eYqZoG7BFkJODNIDgKLhVQxpemYjDL+BIfgv0cCGQ2pTAvgzkUptAn0WsN5nCPvo
+         t3bA==
+X-Gm-Message-State: APjAAAX7cjqAVK6x7/UPTC7iG3wHQcwLkwffH7Bz1vn1RUgCrpUuj2Mc
+        gax+SEsx8Bgq1kEr5yTqZ8Q=
+X-Google-Smtp-Source: APXvYqwFlY/u4zSexkD4WaEh3fXgSTOGtb9CdtpOkiCb7WOWylgPm7/7LlOfaMz9zdRGdDD9sy0pLQ==
+X-Received: by 2002:a2e:8e84:: with SMTP id z4mr5344711ljk.207.1581266476392;
+        Sun, 09 Feb 2020 08:41:16 -0800 (PST)
+Received: from localhost.localdomain (79-139-233-37.dynamic.spd-mgts.ru. [79.139.233.37])
+        by smtp.gmail.com with ESMTPSA id g21sm4941826ljj.53.2020.02.09.08.41.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 09 Feb 2020 08:41:15 -0800 (PST)
+From:   Dmitry Osipenko <digetx@gmail.com>
+To:     Laxman Dewangan <ldewangan@nvidia.com>,
+        Vinod Koul <vkoul@kernel.org>,
+        Dan Williams <dan.j.williams@intel.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        =?UTF-8?q?Micha=C5=82=20Miros=C5=82aw?= <mirq-linux@rere.qmqm.pl>
+Cc:     dmaengine@vger.kernel.org, linux-tegra@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH v8 00/19] NVIDIA Tegra APB DMA driver fixes and improvements
+Date:   Sun,  9 Feb 2020 19:33:37 +0300
+Message-Id: <20200209163356.6439-1-digetx@gmail.com>
+X-Mailer: git-send-email 2.24.0
 MIME-Version: 1.0
-In-Reply-To: <20200207142000.14605-1-peter.ujfalusi@ti.com>
-Content-Type: text/plain; charset="utf-8"
-Content-Language: en-US
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-EXCLAIMER-MD-CONFIG: e1e8a2fd-e40a-4ac6-ac9b-f7e9cc9ee180
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Hi,
+Hello,
 
-On 07/02/2020 16.20, Peter Ujfalusi wrote:
-> Add basic interleaved support via EDMA.
-> 
-> Signed-off-by: Peter Ujfalusi <peter.ujfalusi@ti.com>
-> ---
->  drivers/dma/ti/edma.c | 80 +++++++++++++++++++++++++++++++++++++++++++
->  1 file changed, 80 insertions(+)
-> 
-> diff --git a/drivers/dma/ti/edma.c b/drivers/dma/ti/edma.c
-> index 03a7f647f7b2..c291e72260bd 100644
-> --- a/drivers/dma/ti/edma.c
-> +++ b/drivers/dma/ti/edma.c
-> @@ -1275,6 +1275,82 @@ static struct dma_async_tx_descriptor *edma_prep_dma_memcpy(
->  	return vchan_tx_prep(&echan->vchan, &edesc->vdesc, tx_flags);
->  }
->  
-> +static struct dma_async_tx_descriptor *
-> +edma_prep_dma_interleaved(struct dma_chan *chan,
-> +			  struct dma_interleaved_template *xt,
-> +			  unsigned long tx_flags)
-> +{
-> +	struct device *dev = chan->device->dev;
-> +	struct edma_chan *echan = to_edma_chan(chan);
-> +	struct edmacc_param *param;
-> +	struct edma_desc *edesc;
-> +	size_t src_icg, dst_icg;
-> +	int src_bidx, dst_bidx;
-> +
-> +	/* Slave mode is not supported */
-> +	if (is_slave_direction(xt->dir))
-> +		return NULL;
-> +
-> +	if (xt->frame_size != 1 || xt->numf == 0)
-> +		return NULL;
-> +
-> +	if (xt->sgl[0].size > SZ_64K || xt->numf > SZ_64K)
-> +		return NULL;
-> +
-> +	src_icg = dmaengine_get_src_icg(xt, &xt->sgl[0]);
-> +	if (src_icg) {
-> +		src_bidx = src_icg + xt->sgl[0].size;
-> +	} else if (xt->src_inc) {
-> +		src_bidx = xt->sgl[0].size;
-> +	} else {
-> +		dev_err(dev, "%s: SRC constant addressing is not supported\n",
-> +			__func__);
-> +		return NULL;
-> +	}
-> +
-> +	dst_icg = dmaengine_get_dst_icg(xt, &xt->sgl[0]);
-> +	if (dst_icg) {
-> +		dst_bidx = dst_icg + xt->sgl[0].size;
-> +	} else if (xt->dst_inc) {
-> +		dst_bidx = xt->sgl[0].size;
-> +	} else {
-> +		dev_err(dev, "%s: DST constant addressing is not supported\n",
-> +			__func__);
-> +		return NULL;
-> +	}
-> +
-> +	if (src_bidx > SZ_64K || dst_bidx > SZ_64K)
-> +		return NULL;
-> +
-> +	edesc = kzalloc(struct_size(edesc, pset, 1), GFP_ATOMIC);
-> +	if (!edesc)
-> +		return NULL;
-> +
-> +	edesc->direction = DMA_MEM_TO_MEM;
-> +	edesc->echan = echan;
-> +	edesc->pset_nr = 1;
-> +
-> +	param = &edesc->pset[0].param;
-> +
-> +	param->src = xt->src_start;
-> +	param->dst = xt->dst_start;
-> +	param->a_b_cnt = xt->numf << 16 | xt->sgl[0].size;
-> +	param->ccnt = 1;
-> +	param->src_dst_bidx = (dst_bidx << 16) | src_bidx;
-> +	param->src_dst_cidx = 0;
-> +	param->link_bcntrld = 0xffffffff;
+This series fixes some problems that I spotted recently, secondly the
+driver's code gets a cleanup. Please review and apply, thanks in advance!
 
-The BCNTRLD should be 0 and only the link needs to be 0xffff.
-BCNTRLD basically a don't care in this setup as CCNT is 1, but to be
-precise it is better to leave it as 0.
+Changelog:
 
-I'll resend the patch on Monday.
+v8: - Added RPM-put after every tegra_dma_stop(), like it was suggested by
+      Jon Hunter in a review comments to v6/v7. Dropped this patch in a
+      result:
 
-> +
-> +	param->opt = EDMA_TCC(EDMA_CHAN_SLOT(echan->ch_num));
-> +	param->opt |= ITCCHEN;
-> +	/* Enable transfer complete interrupt if requested */
-> +	if (tx_flags & DMA_PREP_INTERRUPT)
-> +		param->opt |= TCINTEN;
-> +	else
-> +		edesc->polled = true;
-> +
-> +	return vchan_tx_prep(&echan->vchan, &edesc->vdesc, tx_flags);
-> +}
-> +
->  static struct dma_async_tx_descriptor *edma_prep_dma_cyclic(
->  	struct dma_chan *chan, dma_addr_t buf_addr, size_t buf_len,
->  	size_t period_len, enum dma_transfer_direction direction,
-> @@ -1917,7 +1993,9 @@ static void edma_dma_init(struct edma_cc *ecc, bool legacy_mode)
->  			 "Legacy memcpy is enabled, things might not work\n");
->  
->  		dma_cap_set(DMA_MEMCPY, s_ddev->cap_mask);
-> +		dma_cap_set(DMA_INTERLEAVE, m_ddev->cap_mask);
->  		s_ddev->device_prep_dma_memcpy = edma_prep_dma_memcpy;
-> +		s_ddev->device_prep_interleaved_dma = edma_prep_dma_interleaved;
->  		s_ddev->directions = BIT(DMA_MEM_TO_MEM);
->  	}
->  
-> @@ -1953,8 +2031,10 @@ static void edma_dma_init(struct edma_cc *ecc, bool legacy_mode)
->  
->  		dma_cap_zero(m_ddev->cap_mask);
->  		dma_cap_set(DMA_MEMCPY, m_ddev->cap_mask);
-> +		dma_cap_set(DMA_INTERLEAVE, m_ddev->cap_mask);
->  
->  		m_ddev->device_prep_dma_memcpy = edma_prep_dma_memcpy;
-> +		m_ddev->device_prep_interleaved_dma = edma_prep_dma_interleaved;
->  		m_ddev->device_alloc_chan_resources = edma_alloc_chan_resources;
->  		m_ddev->device_free_chan_resources = edma_free_chan_resources;
->  		m_ddev->device_issue_pending = edma_issue_pending;
-> 
+        dmaengine: tegra-apb: Don't stop cyclic DMA in a case of error condition
 
-- Péter
+    - Squashed all removals of duplicated pending_sg_req-list-empty checks
+      into a single patch and added another removal which was suggested by
+      Jon Hunter during review of v7:
 
-Texas Instruments Finland Oy, Porkkalankatu 22, 00180 Helsinki.
-Y-tunnus/Business ID: 0615521-4. Kotipaikka/Domicile: Helsinki
+        dmaengine: tegra-apb: Remove duplicated pending_sg_req checks
+
+    - Added patch to improve error message about DMA underflow condition,
+      which was suggested by Jon Hunter in a review comment to v7:
+
+        dmaengine: tegra-apb: Improve error message about DMA underflow
+
+    - Added another new minor cleanup-patch:
+
+        dmaengine: tegra-apb: Remove unused function argument
+
+v7: - Updated patch "Keep clock enabled only during of DMA transfer" by
+      fixing RPM refcount problem of v6 that should happen if oneshot
+      transfer is terminated with EOC being set. The patch was change in
+      accordance to Jon's Hunter recommendation. In a result there are
+      these new small additional patches:
+
+        dmaengine: tegra-apb: Remove handling of unrealistic error condition
+        dmaengine: tegra-apb: Don't stop cyclic DMA in a case of error condition
+
+    - Updated commit's message of the "Clean up suspend-resume" patch in
+      accordance to Jon's request, now saying that channel's pausing isn't
+      supported by the driver.
+
+    - Added new very minor patch to clean up tdc_start_head_req():
+
+        dmaengine: tegra-apb: Remove pending_sg_req checking from tdc_start_head_req
+
+v6: - Added stable tag and changed order of the patch "Prevent race
+      conditions of tasklet vs free list", making it patch #2, as was
+      requested by Jon Hunter in the review comment to v5.
+
+    - Factored out the tdc->config_init cleanup into separate patch, as was
+      requested by Jon Hunter in the review comment to v5:
+
+        dmaengine: tegra-apb: Remove unneeded initialization of tdc->config_init
+
+    - Added new very minor patch to enable compile-testing for the driver:
+
+        dmaengine: tegra-apb: Support COMPILE_TEST
+
+v5: - Fixed touching hardware registers after RPM-suspending in the patch
+      "Keep clock enabled only during of DMA transfer", now RPM is kept
+      resumed in the tegra_dma_terminate_all() while needed. Thanks to
+      Jon Hunter for pointing at this problem in a review comment to v4.
+
+    - The "Clean up runtime PM teardown" patch is replaced with the "Remove
+      assumptions about unavailable runtime PM" patch because I recalled that
+      now RPM is always available on all Tegra SoCs.
+
+    - The "Clean up suspend-resume" patch got a minor improvement, now
+      tasklet_kill() is invoked before checking of the busy state in
+      tegra_dma_dev_suspend(), this should allow us to catch problems if DMA
+      callback issues a new DMA transfer.
+
+    - Added Jon's acks to the reviewed patches.
+
+v4: - Addressed Jon's request to *not* remove the runtime PM usage, instead
+      there is now new patch that makes RPM more practical:
+
+        dmaengine: tegra-apb: Keep clock enabled only during of DMA transfer
+
+    - Added new minor patch to clean up RPM's teardown:
+
+        dmaengine: tegra-apb: Clean up runtime PM teardown
+
+v3: - In the review comment to v1 Michał Mirosław suggested that "Prevent
+      race conditions on channel's freeing" does changes that deserve to
+      be separated into two patches. I factored out and improved tasklet
+      releasing into this new patch:
+
+        dmaengine: tegra-apb: Clean up tasklet releasing
+
+    - The "Fix use-after-free" patch got an improved commit message.
+
+v2: - I took another look at the driver and spotted few more things that
+      could be improved, which resulted in these new patches:
+
+        dmaengine: tegra-apb: Remove runtime PM usage
+        dmaengine: tegra-apb: Clean up suspend-resume
+        dmaengine: tegra-apb: Add missing of_dma_controller_free
+        dmaengine: tegra-apb: Allow to compile as a loadable kernel module
+        dmaengine: tegra-apb: Remove MODULE_ALIAS
+
+Dmitry Osipenko (19):
+  dmaengine: tegra-apb: Fix use-after-free
+  dmaengine: tegra-apb: Prevent race conditions of tasklet vs free list
+  dmaengine: tegra-apb: Implement synchronization hook
+  dmaengine: tegra-apb: Prevent race conditions on channel's freeing
+  dmaengine: tegra-apb: Clean up tasklet releasing
+  dmaengine: tegra-apb: Use devm_platform_ioremap_resource
+  dmaengine: tegra-apb: Use devm_request_irq
+  dmaengine: tegra-apb: Fix coding style problems
+  dmaengine: tegra-apb: Remove unneeded initialization of
+    tdc->config_init
+  dmaengine: tegra-apb: Remove assumptions about unavailable runtime PM
+  dmaengine: tegra-apb: Remove duplicated pending_sg_req checks
+  dmaengine: tegra-apb: Keep clock enabled only during of DMA transfer
+  dmaengine: tegra-apb: Clean up suspend-resume
+  dmaengine: tegra-apb: Add missing of_dma_controller_free
+  dmaengine: tegra-apb: Allow to compile as a loadable kernel module
+  dmaengine: tegra-apb: Remove MODULE_ALIAS
+  dmaengine: tegra-apb: Support COMPILE_TEST
+  dmaengine: tegra-apb: Remove unused function argument
+  dmaengine: tegra-apb: Improve error message about DMA underflow
+
+ drivers/dma/Kconfig           |   4 +-
+ drivers/dma/tegra20-apb-dma.c | 514 +++++++++++++++++-----------------
+ 2 files changed, 255 insertions(+), 263 deletions(-)
+
+-- 
+2.24.0
+
