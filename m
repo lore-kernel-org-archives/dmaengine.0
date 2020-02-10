@@ -1,133 +1,193 @@
-Return-Path: <SRS0=C2jR=35=vger.kernel.org=dmaengine-owner@kernel.org>
+Return-Path: <SRS0=OtPq=36=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=unavailable
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.9 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F4146C35250
-	for <dmaengine@archiver.kernel.org>; Sun,  9 Feb 2020 16:42:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EB605C352A4
+	for <dmaengine@archiver.kernel.org>; Mon, 10 Feb 2020 09:44:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id CAB6120715
-	for <dmaengine@archiver.kernel.org>; Sun,  9 Feb 2020 16:42:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C0875214DB
+	for <dmaengine@archiver.kernel.org>; Mon, 10 Feb 2020 09:44:59 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NunZwNi8"
+	dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b="wZ7K49XD"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727698AbgBIQlU (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Sun, 9 Feb 2020 11:41:20 -0500
-Received: from mail-lf1-f67.google.com ([209.85.167.67]:35192 "EHLO
-        mail-lf1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727761AbgBIQlT (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Sun, 9 Feb 2020 11:41:19 -0500
-Received: by mail-lf1-f67.google.com with SMTP id z18so2500593lfe.2;
-        Sun, 09 Feb 2020 08:41:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=pIr+hEI5jiVDIpgzntOp1SJ5U4uzX7Mt42pGHqVvxOQ=;
-        b=NunZwNi8jqSHedUzdE41W+JuiPPI6UoCKu9MBG1lzuIqpOm9r0YwxbsStsODf1aNQh
-         es5AvyGSTCBijsA1ikZycPMt5En8xz0JcBLe0vv+rdm10/+842TraNQDjm6Nppb1T9iz
-         U/JZIF4YhA75lmBEtyTkyS0obizOiHmU/6PNZWs6favPuRdKeDhFbJDF4mzvSxPxDOxB
-         azjIvop3/Jo82q5GTGSi5nKO7DYtOF20CJnX2JyV6Vs4sJZ9ROPa+2s8A6rsQ632V44p
-         ZOmXoV1/Au2Fo+jHl2wwpz1hXQThzCzcptfEviZMLW/rImCjYNNPHxLci1XPypAyXBtO
-         T/cA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=pIr+hEI5jiVDIpgzntOp1SJ5U4uzX7Mt42pGHqVvxOQ=;
-        b=U8tUehMv0lMynInVm4N+k3ilMZuIf++i7q+bK5NCo2o9N3ulzxkuIqgULhKesE+2nH
-         6nmmJi38WJK74iyyVAXXp0gcxmsLeuVfBsDEoet0RtJ4WQsLYYNE//CIbhjHUDomgP9w
-         jUmwu/Cy8F/DBhe7Y0po3hv2zjwvLkiWVmVY8r4WB+ABVK0kKfdpWen5D+S3BOPMXWsp
-         0JvRe67hje6npT1XbqIYFo8BXbvjX8WDsDh0/2hswOdey82XbH4CP4mRod9WPzNqTUPl
-         SpnXC9jdp71jGQ7MJS9VxMUUZHkRWgl153RhGu50pzaLcfcnibiqCotch0bBImmpf7qm
-         srXA==
-X-Gm-Message-State: APjAAAWIvHVO5mwVIX0NzxnKDZKG+Kgz+sZFnnOKfWNc01T/4oRIm6Qg
-        kUJsYJwDdty0WeJKm8e5mcg=
-X-Google-Smtp-Source: APXvYqySUlsdDslSk/IfFxU6LCFrS/eb2BbW+cx0+iGs6bPiNjSdDtTkTajzAGwG+vRKP+lqPahKPg==
-X-Received: by 2002:a19:a07:: with SMTP id 7mr4078896lfk.66.1581266477509;
-        Sun, 09 Feb 2020 08:41:17 -0800 (PST)
-Received: from localhost.localdomain (79-139-233-37.dynamic.spd-mgts.ru. [79.139.233.37])
-        by smtp.gmail.com with ESMTPSA id g21sm4941826ljj.53.2020.02.09.08.41.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 09 Feb 2020 08:41:16 -0800 (PST)
-From:   Dmitry Osipenko <digetx@gmail.com>
-To:     Laxman Dewangan <ldewangan@nvidia.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        Dan Williams <dan.j.williams@intel.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        =?UTF-8?q?Micha=C5=82=20Miros=C5=82aw?= <mirq-linux@rere.qmqm.pl>
-Cc:     dmaengine@vger.kernel.org, linux-tegra@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH v8 01/19] dmaengine: tegra-apb: Fix use-after-free
-Date:   Sun,  9 Feb 2020 19:33:38 +0300
-Message-Id: <20200209163356.6439-2-digetx@gmail.com>
-X-Mailer: git-send-email 2.24.0
-In-Reply-To: <20200209163356.6439-1-digetx@gmail.com>
-References: <20200209163356.6439-1-digetx@gmail.com>
+        id S1726961AbgBJJo7 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 10 Feb 2020 04:44:59 -0500
+Received: from fllv0016.ext.ti.com ([198.47.19.142]:51382 "EHLO
+        fllv0016.ext.ti.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726950AbgBJJo7 (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Mon, 10 Feb 2020 04:44:59 -0500
+Received: from lelv0265.itg.ti.com ([10.180.67.224])
+        by fllv0016.ext.ti.com (8.15.2/8.15.2) with ESMTP id 01A9it1U115612;
+        Mon, 10 Feb 2020 03:44:55 -0600
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
+        s=ti-com-17Q1; t=1581327895;
+        bh=WHA5f9aeIK94W7O4raqyi6TRpxmBTofuV51Iz7NuefM=;
+        h=From:To:CC:Subject:Date;
+        b=wZ7K49XDF6AaTNOmbFo6PdeM3f9n5AAeaZ4xLlD8tcdGycAx5Bo+U7uiWsg42rlEm
+         zi636AxUq6yOHh8yA9kOyn6lPfe2mhOrgwsPQJHiQwrg9nXZdWFYe2DN8BSCnzCZM6
+         awdnbVTd8+CEaXVRgV4RxRJydsG/tUMEG2FobrKM=
+Received: from DLEE102.ent.ti.com (dlee102.ent.ti.com [157.170.170.32])
+        by lelv0265.itg.ti.com (8.15.2/8.15.2) with ESMTPS id 01A9itT3116199
+        (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
+        Mon, 10 Feb 2020 03:44:55 -0600
+Received: from DLEE112.ent.ti.com (157.170.170.23) by DLEE102.ent.ti.com
+ (157.170.170.32) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1847.3; Mon, 10
+ Feb 2020 03:44:53 -0600
+Received: from fllv0040.itg.ti.com (10.64.41.20) by DLEE112.ent.ti.com
+ (157.170.170.23) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1847.3 via
+ Frontend Transport; Mon, 10 Feb 2020 03:44:53 -0600
+Received: from feketebors.ti.com (ileax41-snat.itg.ti.com [10.172.224.153])
+        by fllv0040.itg.ti.com (8.15.2/8.15.2) with ESMTP id 01A9ipdK126723;
+        Mon, 10 Feb 2020 03:44:52 -0600
+From:   Peter Ujfalusi <peter.ujfalusi@ti.com>
+To:     <vkoul@kernel.org>
+CC:     <dmaengine@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <dan.j.williams@intel.com>
+Subject: [PATCH v2] dmaengine: ti: edma: Support for interleaved mem to mem transfer
+Date:   Mon, 10 Feb 2020 11:44:55 +0200
+Message-ID: <20200210094455.3615-1-peter.ujfalusi@ti.com>
+X-Mailer: git-send-email 2.25.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-EXCLAIMER-MD-CONFIG: e1e8a2fd-e40a-4ac6-ac9b-f7e9cc9ee180
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-I was doing some experiments with I2C and noticed that Tegra APB DMA
-driver crashes sometime after I2C DMA transfer termination. The crash
-happens because tegra_dma_terminate_all() bails out immediately if pending
-list is empty, and thus, it doesn't release the half-completed descriptors
-which are getting re-used before ISR tasklet kicks-in.
+Add basic interleaved support via EDMA.
 
- tegra-i2c 7000c400.i2c: DMA transfer timeout
- elants_i2c 0-0010: elants_i2c_irq: failed to read data: -110
- ------------[ cut here ]------------
- WARNING: CPU: 0 PID: 142 at lib/list_debug.c:45 __list_del_entry_valid+0x45/0xac
- list_del corruption, ddbaac44->next is LIST_POISON1 (00000100)
- Modules linked in:
- CPU: 0 PID: 142 Comm: kworker/0:2 Not tainted 5.5.0-rc2-next-20191220-00175-gc3605715758d-dirty #538
- Hardware name: NVIDIA Tegra SoC (Flattened Device Tree)
- Workqueue: events_freezable_power_ thermal_zone_device_check
- [<c010e5c5>] (unwind_backtrace) from [<c010a1c5>] (show_stack+0x11/0x14)
- [<c010a1c5>] (show_stack) from [<c0973925>] (dump_stack+0x85/0x94)
- [<c0973925>] (dump_stack) from [<c011f529>] (__warn+0xc1/0xc4)
- [<c011f529>] (__warn) from [<c011f7e9>] (warn_slowpath_fmt+0x61/0x78)
- [<c011f7e9>] (warn_slowpath_fmt) from [<c042497d>] (__list_del_entry_valid+0x45/0xac)
- [<c042497d>] (__list_del_entry_valid) from [<c047a87f>] (tegra_dma_tasklet+0x5b/0x154)
- [<c047a87f>] (tegra_dma_tasklet) from [<c0124799>] (tasklet_action_common.constprop.0+0x41/0x7c)
- [<c0124799>] (tasklet_action_common.constprop.0) from [<c01022ab>] (__do_softirq+0xd3/0x2a8)
- [<c01022ab>] (__do_softirq) from [<c0124683>] (irq_exit+0x7b/0x98)
- [<c0124683>] (irq_exit) from [<c0168c19>] (__handle_domain_irq+0x45/0x80)
- [<c0168c19>] (__handle_domain_irq) from [<c043e429>] (gic_handle_irq+0x45/0x7c)
- [<c043e429>] (gic_handle_irq) from [<c0101aa5>] (__irq_svc+0x65/0x94)
- Exception stack(0xde2ebb90 to 0xde2ebbd8)
-
-Cc: <stable@vger.kernel.org>
-Acked-by: Jon Hunter <jonathanh@nvidia.com>
-Signed-off-by: Dmitry Osipenko <digetx@gmail.com>
+Signed-off-by: Peter Ujfalusi <peter.ujfalusi@ti.com>
 ---
- drivers/dma/tegra20-apb-dma.c | 4 ----
- 1 file changed, 4 deletions(-)
+Hi,
 
-diff --git a/drivers/dma/tegra20-apb-dma.c b/drivers/dma/tegra20-apb-dma.c
-index 3a45079d11ec..319f31d27014 100644
---- a/drivers/dma/tegra20-apb-dma.c
-+++ b/drivers/dma/tegra20-apb-dma.c
-@@ -756,10 +756,6 @@ static int tegra_dma_terminate_all(struct dma_chan *dc)
- 	bool was_busy;
+Changes since v1:
+- No need to configure link_bcntrld as the link is set in edma_execute
+
+Regards,
+Peter
+
+ drivers/dma/ti/edma.c | 79 +++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 79 insertions(+)
+
+diff --git a/drivers/dma/ti/edma.c b/drivers/dma/ti/edma.c
+index 03a7f647f7b2..2b1fdd438e7f 100644
+--- a/drivers/dma/ti/edma.c
++++ b/drivers/dma/ti/edma.c
+@@ -1275,6 +1275,81 @@ static struct dma_async_tx_descriptor *edma_prep_dma_memcpy(
+ 	return vchan_tx_prep(&echan->vchan, &edesc->vdesc, tx_flags);
+ }
  
- 	spin_lock_irqsave(&tdc->lock, flags);
--	if (list_empty(&tdc->pending_sg_req)) {
--		spin_unlock_irqrestore(&tdc->lock, flags);
--		return 0;
--	}
++static struct dma_async_tx_descriptor *
++edma_prep_dma_interleaved(struct dma_chan *chan,
++			  struct dma_interleaved_template *xt,
++			  unsigned long tx_flags)
++{
++	struct device *dev = chan->device->dev;
++	struct edma_chan *echan = to_edma_chan(chan);
++	struct edmacc_param *param;
++	struct edma_desc *edesc;
++	size_t src_icg, dst_icg;
++	int src_bidx, dst_bidx;
++
++	/* Slave mode is not supported */
++	if (is_slave_direction(xt->dir))
++		return NULL;
++
++	if (xt->frame_size != 1 || xt->numf == 0)
++		return NULL;
++
++	if (xt->sgl[0].size > SZ_64K || xt->numf > SZ_64K)
++		return NULL;
++
++	src_icg = dmaengine_get_src_icg(xt, &xt->sgl[0]);
++	if (src_icg) {
++		src_bidx = src_icg + xt->sgl[0].size;
++	} else if (xt->src_inc) {
++		src_bidx = xt->sgl[0].size;
++	} else {
++		dev_err(dev, "%s: SRC constant addressing is not supported\n",
++			__func__);
++		return NULL;
++	}
++
++	dst_icg = dmaengine_get_dst_icg(xt, &xt->sgl[0]);
++	if (dst_icg) {
++		dst_bidx = dst_icg + xt->sgl[0].size;
++	} else if (xt->dst_inc) {
++		dst_bidx = xt->sgl[0].size;
++	} else {
++		dev_err(dev, "%s: DST constant addressing is not supported\n",
++			__func__);
++		return NULL;
++	}
++
++	if (src_bidx > SZ_64K || dst_bidx > SZ_64K)
++		return NULL;
++
++	edesc = kzalloc(struct_size(edesc, pset, 1), GFP_ATOMIC);
++	if (!edesc)
++		return NULL;
++
++	edesc->direction = DMA_MEM_TO_MEM;
++	edesc->echan = echan;
++	edesc->pset_nr = 1;
++
++	param = &edesc->pset[0].param;
++
++	param->src = xt->src_start;
++	param->dst = xt->dst_start;
++	param->a_b_cnt = xt->numf << 16 | xt->sgl[0].size;
++	param->ccnt = 1;
++	param->src_dst_bidx = (dst_bidx << 16) | src_bidx;
++	param->src_dst_cidx = 0;
++
++	param->opt = EDMA_TCC(EDMA_CHAN_SLOT(echan->ch_num));
++	param->opt |= ITCCHEN;
++	/* Enable transfer complete interrupt if requested */
++	if (tx_flags & DMA_PREP_INTERRUPT)
++		param->opt |= TCINTEN;
++	else
++		edesc->polled = true;
++
++	return vchan_tx_prep(&echan->vchan, &edesc->vdesc, tx_flags);
++}
++
+ static struct dma_async_tx_descriptor *edma_prep_dma_cyclic(
+ 	struct dma_chan *chan, dma_addr_t buf_addr, size_t buf_len,
+ 	size_t period_len, enum dma_transfer_direction direction,
+@@ -1917,7 +1992,9 @@ static void edma_dma_init(struct edma_cc *ecc, bool legacy_mode)
+ 			 "Legacy memcpy is enabled, things might not work\n");
  
- 	if (!tdc->busy)
- 		goto skip_dma_stop;
+ 		dma_cap_set(DMA_MEMCPY, s_ddev->cap_mask);
++		dma_cap_set(DMA_INTERLEAVE, m_ddev->cap_mask);
+ 		s_ddev->device_prep_dma_memcpy = edma_prep_dma_memcpy;
++		s_ddev->device_prep_interleaved_dma = edma_prep_dma_interleaved;
+ 		s_ddev->directions = BIT(DMA_MEM_TO_MEM);
+ 	}
+ 
+@@ -1953,8 +2030,10 @@ static void edma_dma_init(struct edma_cc *ecc, bool legacy_mode)
+ 
+ 		dma_cap_zero(m_ddev->cap_mask);
+ 		dma_cap_set(DMA_MEMCPY, m_ddev->cap_mask);
++		dma_cap_set(DMA_INTERLEAVE, m_ddev->cap_mask);
+ 
+ 		m_ddev->device_prep_dma_memcpy = edma_prep_dma_memcpy;
++		m_ddev->device_prep_interleaved_dma = edma_prep_dma_interleaved;
+ 		m_ddev->device_alloc_chan_resources = edma_alloc_chan_resources;
+ 		m_ddev->device_free_chan_resources = edma_free_chan_resources;
+ 		m_ddev->device_issue_pending = edma_issue_pending;
 -- 
-2.24.0
+Peter
+
+Texas Instruments Finland Oy, Porkkalankatu 22, 00180 Helsinki.
+Y-tunnus/Business ID: 0615521-4. Kotipaikka/Domicile: Helsinki
 
