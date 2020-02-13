@@ -4,30 +4,30 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-13.1 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
-	autolearn=unavailable autolearn_force=no version=3.4.0
+	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
+	USER_AGENT_SANE_1 autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0FE6CC352A4
-	for <dmaengine@archiver.kernel.org>; Thu, 13 Feb 2020 00:58:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 05740C352A4
+	for <dmaengine@archiver.kernel.org>; Thu, 13 Feb 2020 01:01:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id D338420714
-	for <dmaengine@archiver.kernel.org>; Thu, 13 Feb 2020 00:58:19 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C5A9F21734
+	for <dmaengine@archiver.kernel.org>; Thu, 13 Feb 2020 01:01:30 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=embeddedor.com header.i=@embeddedor.com header.b="rdqPEorI"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=embeddedor.com header.i=@embeddedor.com header.b="fQnu/Lyj"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729185AbgBMA6T (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 12 Feb 2020 19:58:19 -0500
-Received: from gateway24.websitewelcome.com ([192.185.51.202]:23864 "EHLO
-        gateway24.websitewelcome.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1729132AbgBMA6T (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Wed, 12 Feb 2020 19:58:19 -0500
-X-Greylist: delayed 1359 seconds by postgrey-1.27 at vger.kernel.org; Wed, 12 Feb 2020 19:58:18 EST
-Received: from cm10.websitewelcome.com (cm10.websitewelcome.com [100.42.49.4])
-        by gateway24.websitewelcome.com (Postfix) with ESMTP id 27CA026620
-        for <dmaengine@vger.kernel.org>; Wed, 12 Feb 2020 18:35:39 -0600 (CST)
+        id S1729276AbgBMBBa (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 12 Feb 2020 20:01:30 -0500
+Received: from gateway20.websitewelcome.com ([192.185.60.19]:16065 "EHLO
+        gateway20.websitewelcome.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1729132AbgBMBBa (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Wed, 12 Feb 2020 20:01:30 -0500
+X-Greylist: delayed 1376 seconds by postgrey-1.27 at vger.kernel.org; Wed, 12 Feb 2020 20:01:29 EST
+Received: from cm11.websitewelcome.com (cm11.websitewelcome.com [100.42.49.5])
+        by gateway20.websitewelcome.com (Postfix) with ESMTP id EA22E400C7695
+        for <dmaengine@vger.kernel.org>; Wed, 12 Feb 2020 17:23:29 -0600 (CST)
 Received: from gator4166.hostgator.com ([108.167.133.22])
         by cmsmtp with SMTP
-        id 22Tijc0kpEfyq22Tjjlf1B; Wed, 12 Feb 2020 18:35:39 -0600
+        id 22V9jicYNSl8q22V9jRJTS; Wed, 12 Feb 2020 18:37:07 -0600
 X-Authority-Reason: nr=8
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
         d=embeddedor.com; s=default; h=Content-Type:MIME-Version:Message-ID:Subject:
@@ -35,27 +35,25 @@ DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
         Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
         :Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
         List-Subscribe:List-Post:List-Owner:List-Archive;
-        bh=fj1EsM7KBtbLu9zEu9J4LZPmGuqoK3e/mqA04voGYHM=; b=rdqPEorIYVAWijtrjXYLTv7gxJ
-        bUbshf+azRdrdo4/l5HJo9EST8kvqO+WPoCpoTxXEp6YdOib1G7B7Pf404o9JEr9Jn/r7RkmdeBb4
-        VV/ED7hO1B4eVQ1djz9gDGy+17mPhlNq9VXJaw6V3TDlmbbFziNWJa0UO2G/IPOxZBlqmDI7b9Wj2
-        jG1r42X5XQOnBnFYACDMVJJ2klKSIyEECne1QOw3ARe3DNSKLTJr6eGd7nup0v3WtXQBaxaIa9RLi
-        Aum6exNjXQiTfdnxRAmHnCaQa8+F/4T/4CTPl398yaQmDhicm9mGbzSYoBYnP+qi9GhBetsC8klC5
-        N2pmV64w==;
-Received: from [200.68.141.42] (port=21619 helo=embeddedor)
+        bh=kKJv0kn/8CiWYuFmMyB4I0SAO11rL/+DS9oRFWOs7DQ=; b=fQnu/LyjuKg3u/C06g61MYjHat
+        +RqeUElmb2EEKpk3+M64szLExX29wDkSAz0fH+N4Otq+AQuEtAYPcOrvbdzGhWG3pjRpnGjCGw6sA
+        Ymod/f4dxLsqEtxlFLzTmdnu9U6wpxp5CcB3YeIOixwSSQXOVY8KnKMh9hI2dIMa7DozH8LsQfAU4
+        JSB+K2BC7Po0KuaLWhMynciE6zphMJ0hjR3Y3GNKYS2goqpnF+d1+Q93vY789nNTYRuz29og0psY4
+        GuJ0KLNtQ9KvpAozAFkVHZIn5dWw+4Z0AMWk1mNojN+6wLo52ielfmuJq8FWqjH8OibikFZ8NA/L8
+        AdOawVzA==;
+Received: from [200.68.141.42] (port=25707 helo=embeddedor)
         by gator4166.hostgator.com with esmtpa (Exim 4.92)
         (envelope-from <gustavo@embeddedor.com>)
-        id 1j22Th-003f1y-39; Wed, 12 Feb 2020 18:35:37 -0600
-Date:   Wed, 12 Feb 2020 18:35:35 -0600
+        id 1j22V7-003fvN-Ib; Wed, 12 Feb 2020 18:37:06 -0600
+Date:   Wed, 12 Feb 2020 18:37:03 -0600
 From:   "Gustavo A. R. Silva" <gustavo@embeddedor.com>
 To:     Dan Williams <dan.j.williams@intel.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        Masahiro Yamada <yamada.masahiro@socionext.com>
-Cc:     dmaengine@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-kernel@vger.kernel.org,
+        Vinod Koul <vkoul@kernel.org>
+Cc:     dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
         "Gustavo A. R. Silva" <gustavo@embeddedor.com>
-Subject: [PATCH] dmaengine: uniphier-mdmac: replace zero-length array with
+Subject: [PATCH] dmaengine: bcm-sba-raid: Replace zero-length array with
  flexible-array member
-Message-ID: <20200213003535.GA3269@embeddedor.com>
+Message-ID: <20200213003703.GA4177@embeddedor.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
@@ -68,13 +66,13 @@ X-AntiAbuse: Sender Address Domain - embeddedor.com
 X-BWhitelist: no
 X-Source-IP: 200.68.141.42
 X-Source-L: No
-X-Exim-ID: 1j22Th-003f1y-39
+X-Exim-ID: 1j22V7-003fvN-Ib
 X-Source: 
 X-Source-Args: 
 X-Source-Dir: 
-X-Source-Sender: (embeddedor) [200.68.141.42]:21619
+X-Source-Sender: (embeddedor) [200.68.141.42]:25707
 X-Source-Auth: gustavo@embeddedor.com
-X-Email-Count: 45
+X-Email-Count: 50
 X-Source-Cap: Z3V6aWRpbmU7Z3V6aWRpbmU7Z2F0b3I0MTY2Lmhvc3RnYXRvci5jb20=
 X-Local-Domain: yes
 Sender: dmaengine-owner@vger.kernel.org
@@ -112,22 +110,22 @@ This issue was found with the help of Coccinelle.
 
 Signed-off-by: Gustavo A. R. Silva <gustavo@embeddedor.com>
 ---
- drivers/dma/uniphier-mdmac.c | 2 +-
+ drivers/dma/bcm-sba-raid.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/dma/uniphier-mdmac.c b/drivers/dma/uniphier-mdmac.c
-index 21b8f1131d55..618839df0748 100644
---- a/drivers/dma/uniphier-mdmac.c
-+++ b/drivers/dma/uniphier-mdmac.c
-@@ -68,7 +68,7 @@ struct uniphier_mdmac_device {
- 	struct dma_device ddev;
- 	struct clk *clk;
- 	void __iomem *reg_base;
--	struct uniphier_mdmac_chan channels[0];
-+	struct uniphier_mdmac_chan channels[];
+diff --git a/drivers/dma/bcm-sba-raid.c b/drivers/dma/bcm-sba-raid.c
+index 275e90fa829d..64239da02e74 100644
+--- a/drivers/dma/bcm-sba-raid.c
++++ b/drivers/dma/bcm-sba-raid.c
+@@ -120,7 +120,7 @@ struct sba_request {
+ 	struct brcm_message msg;
+ 	struct dma_async_tx_descriptor tx;
+ 	/* SBA commands */
+-	struct brcm_sba_command cmds[0];
++	struct brcm_sba_command cmds[];
  };
  
- static struct uniphier_mdmac_chan *
+ enum sba_version {
 -- 
 2.23.0
 
