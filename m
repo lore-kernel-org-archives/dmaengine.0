@@ -2,340 +2,131 @@ Return-Path: <SRS0=3f10=4C=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.9 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+X-Spam-Status: No, score=-8.4 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
-	autolearn=unavailable autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C66B2C3B196
-	for <dmaengine@archiver.kernel.org>; Fri, 14 Feb 2020 09:15:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 47F70C2BA83
+	for <dmaengine@archiver.kernel.org>; Fri, 14 Feb 2020 14:13:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 9152C2086A
-	for <dmaengine@archiver.kernel.org>; Fri, 14 Feb 2020 09:15:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1BFDE217F4
+	for <dmaengine@archiver.kernel.org>; Fri, 14 Feb 2020 14:13:19 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b="okVPyoMV"
+	dkim=pass (2048-bit key) header.d=nvidia.com header.i=@nvidia.com header.b="SvpVi1rm"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729017AbgBNJOq (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 14 Feb 2020 04:14:46 -0500
-Received: from fllv0015.ext.ti.com ([198.47.19.141]:54402 "EHLO
-        fllv0015.ext.ti.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728422AbgBNJOp (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Fri, 14 Feb 2020 04:14:45 -0500
-Received: from fllv0034.itg.ti.com ([10.64.40.246])
-        by fllv0015.ext.ti.com (8.15.2/8.15.2) with ESMTP id 01E9Egqw041694;
-        Fri, 14 Feb 2020 03:14:42 -0600
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
-        s=ti-com-17Q1; t=1581671682;
-        bh=y78xSIuHzdAwwROj7T1USmG5wMQgDcQjT7ar5Rw9eCk=;
-        h=From:To:CC:Subject:Date:In-Reply-To:References;
-        b=okVPyoMVQsB9qfQ9oehBkVJDhPnsXyf6QXWCuyra+4yGWSlvNdbhREngSAcjhwVu6
-         uzULwHO14TUZxcWdnAd4YPZ6EPaKo7SfENxm5o4QRORijvtPw04cPyL6xq3N5S+h2L
-         qFN2RGz9TZBhU+7dGMQZqqAGwyKUG3eoUVffWxMc=
-Received: from DLEE108.ent.ti.com (dlee108.ent.ti.com [157.170.170.38])
-        by fllv0034.itg.ti.com (8.15.2/8.15.2) with ESMTPS id 01E9Eg4V013478
-        (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
-        Fri, 14 Feb 2020 03:14:42 -0600
-Received: from DLEE115.ent.ti.com (157.170.170.26) by DLEE108.ent.ti.com
- (157.170.170.38) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1847.3; Fri, 14
- Feb 2020 03:14:42 -0600
-Received: from lelv0327.itg.ti.com (10.180.67.183) by DLEE115.ent.ti.com
- (157.170.170.26) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1847.3 via
- Frontend Transport; Fri, 14 Feb 2020 03:14:42 -0600
-Received: from feketebors.ti.com (ileax41-snat.itg.ti.com [10.172.224.153])
-        by lelv0327.itg.ti.com (8.15.2/8.15.2) with ESMTP id 01E9Ea3w043021;
-        Fri, 14 Feb 2020 03:14:40 -0600
-From:   Peter Ujfalusi <peter.ujfalusi@ti.com>
-To:     <vkoul@kernel.org>
-CC:     <dmaengine@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <dan.j.williams@intel.com>, <grygorii.strashko@ti.com>,
-        <vigneshr@ti.com>
-Subject: [PATCH v2 2/6] dmaengine: ti: k3-udma: Workaround for RX teardown with stale data in peer
-Date:   Fri, 14 Feb 2020 11:14:37 +0200
-Message-ID: <20200214091441.27535-3-peter.ujfalusi@ti.com>
-X-Mailer: git-send-email 2.25.0
-In-Reply-To: <20200214091441.27535-1-peter.ujfalusi@ti.com>
-References: <20200214091441.27535-1-peter.ujfalusi@ti.com>
+        id S1729256AbgBNONS (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 14 Feb 2020 09:13:18 -0500
+Received: from hqnvemgate25.nvidia.com ([216.228.121.64]:16233 "EHLO
+        hqnvemgate25.nvidia.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729102AbgBNONS (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Fri, 14 Feb 2020 09:13:18 -0500
+Received: from hqpgpgate101.nvidia.com (Not Verified[216.228.121.13]) by hqnvemgate25.nvidia.com (using TLS: TLSv1.2, DES-CBC3-SHA)
+        id <B5e46aae00001>; Fri, 14 Feb 2020 06:12:48 -0800
+Received: from hqmail.nvidia.com ([172.20.161.6])
+  by hqpgpgate101.nvidia.com (PGP Universal service);
+  Fri, 14 Feb 2020 06:13:17 -0800
+X-PGP-Universal: processed;
+        by hqpgpgate101.nvidia.com on Fri, 14 Feb 2020 06:13:17 -0800
+Received: from [10.21.133.51] (10.124.1.5) by HQMAIL107.nvidia.com
+ (172.20.187.13) with Microsoft SMTP Server (TLS) id 15.0.1473.3; Fri, 14 Feb
+ 2020 14:13:15 +0000
+Subject: Re: [PATCH v8 11/19] dmaengine: tegra-apb: Remove duplicated
+ pending_sg_req checks
+To:     Dmitry Osipenko <digetx@gmail.com>,
+        Laxman Dewangan <ldewangan@nvidia.com>,
+        Vinod Koul <vkoul@kernel.org>,
+        Dan Williams <dan.j.williams@intel.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        =?UTF-8?B?TWljaGHFgiBNaXJvc8WCYXc=?= <mirq-linux@rere.qmqm.pl>
+CC:     <dmaengine@vger.kernel.org>, <linux-tegra@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <20200209163356.6439-1-digetx@gmail.com>
+ <20200209163356.6439-12-digetx@gmail.com>
+From:   Jon Hunter <jonathanh@nvidia.com>
+Message-ID: <81d0f76a-8391-f8ee-c713-b699188d1856@nvidia.com>
+Date:   Fri, 14 Feb 2020 14:13:13 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.4.1
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-EXCLAIMER-MD-CONFIG: e1e8a2fd-e40a-4ac6-ac9b-f7e9cc9ee180
+In-Reply-To: <20200209163356.6439-12-digetx@gmail.com>
+X-Originating-IP: [10.124.1.5]
+X-ClientProxiedBy: HQMAIL101.nvidia.com (172.20.187.10) To
+ HQMAIL107.nvidia.com (172.20.187.13)
+Content-Type: text/plain; charset="utf-8"
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nvidia.com; s=n1;
+        t=1581689568; bh=Rh0gsvOb9X8sIihgsHGuy6sNYCz4koy1dG9PxBQP0qo=;
+        h=X-PGP-Universal:Subject:To:CC:References:From:Message-ID:Date:
+         User-Agent:MIME-Version:In-Reply-To:X-Originating-IP:
+         X-ClientProxiedBy:Content-Type:Content-Language:
+         Content-Transfer-Encoding;
+        b=SvpVi1rmKJ5GQytWBi88Sc73RmCCn8V5h/rRWxUhTiNn+lsI4QqUhAHx/mSx6c0/v
+         7zWwxFpY/pR3tBvc+7qxesirE2Sp0dN0crFPH8hWSmNl9QGuZoaUFuPETNt3jNFtir
+         qSRKkFQ1h3Kt9nhyZHOPI8YcsLoDK9hHCgt6wdd7qrO07hRULIOqkshueTZ5yLb2+Y
+         as8BFwQU8zMXH5Yid8GGLr5tLfANrq9dwi3saDT7HW5XuI0VrRP5Mo5PTipU7kTyPe
+         FUDe5kV9z+9trGpTe4wQpiBSSyHUoLcy0mqc2R/e2cczCoW+n9XGN3v5TZM7XnlWQh
+         I4g1TJQKYFjcg==
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-When a channel is asked to be stopped (teardown) and we do not have active
-descriptor to receive stale data buffered on the remote side then the
-teardown will not complete as UDMA needs a descriptor to be able to flush
-out the DMA pipe.
-The peer is trying to push the data to UDMA in teardown, but UDMA is
-pushing back because it has no descriptor which would allow it to drain the
-data.
 
-The workaround is to create 1K 'trashcan' to receive the discarded data and
-set up descriptors for packet and TR mode channels.
-When a channel is stopped and there is no active descriptor then a
-descriptor is pushed to the ring for UDMA before the teardown is initiated.
+On 09/02/2020 16:33, Dmitry Osipenko wrote:
+> There are few place in the code which check whether pending_sg_req list is
+> empty despite of the check already being done. Let's remove the duplicated
+> checks to keep code clean.
+> 
+> Signed-off-by: Dmitry Osipenko <digetx@gmail.com>
+> ---
+>  drivers/dma/tegra20-apb-dma.c | 12 ------------
+>  1 file changed, 12 deletions(-)
+> 
+> diff --git a/drivers/dma/tegra20-apb-dma.c b/drivers/dma/tegra20-apb-dma.c
+> index 22b88ccff05d..049e98ae1240 100644
+> --- a/drivers/dma/tegra20-apb-dma.c
+> +++ b/drivers/dma/tegra20-apb-dma.c
+> @@ -504,9 +504,6 @@ static void tdc_start_head_req(struct tegra_dma_channel *tdc)
+>  {
+>  	struct tegra_dma_sg_req *sg_req;
+>  
+> -	if (list_empty(&tdc->pending_sg_req))
+> -		return;
+> -
+>  	sg_req = list_first_entry(&tdc->pending_sg_req, typeof(*sg_req), node);
+>  	tegra_dma_start(tdc, sg_req);
+>  	sg_req->configured = true;
+> @@ -518,9 +515,6 @@ static void tdc_configure_next_head_desc(struct tegra_dma_channel *tdc)
+>  {
+>  	struct tegra_dma_sg_req *hsgreq, *hnsgreq;
+>  
+> -	if (list_empty(&tdc->pending_sg_req))
+> -		return;
+> -
+>  	hsgreq = list_first_entry(&tdc->pending_sg_req, typeof(*hsgreq), node);
+>  	if (!list_is_last(&hsgreq->node, &tdc->pending_sg_req)) {
+>  		hnsgreq = list_first_entry(&hsgreq->node, typeof(*hnsgreq),
+> @@ -567,12 +561,6 @@ static bool handle_continuous_head_request(struct tegra_dma_channel *tdc,
+>  {
+>  	struct tegra_dma_sg_req *hsgreq;
+>  
+> -	if (list_empty(&tdc->pending_sg_req)) {
+> -		dev_err(tdc2dev(tdc), "DMA is running without req\n");
+> -		tegra_dma_stop(tdc);
+> -		return false;
+> -	}
+> -
+>  	/*
+>  	 * Check that head req on list should be in flight.
+>  	 * If it is not in flight then abort transfer as
+> 
 
-Signed-off-by: Peter Ujfalusi <peter.ujfalusi@ti.com>
----
- drivers/dma/ti/k3-udma.c | 168 +++++++++++++++++++++++++++++++++++----
- 1 file changed, 151 insertions(+), 17 deletions(-)
+Acked-by: Jon Hunter <jonathanh@nvidia.com>
 
-diff --git a/drivers/dma/ti/k3-udma.c b/drivers/dma/ti/k3-udma.c
-index fb59c869a6a7..cb9259e104b4 100644
---- a/drivers/dma/ti/k3-udma.c
-+++ b/drivers/dma/ti/k3-udma.c
-@@ -97,6 +97,24 @@ struct udma_match_data {
- 	u32 level_start_idx[];
- };
- 
-+struct udma_hwdesc {
-+	size_t cppi5_desc_size;
-+	void *cppi5_desc_vaddr;
-+	dma_addr_t cppi5_desc_paddr;
-+
-+	/* TR descriptor internal pointers */
-+	void *tr_req_base;
-+	struct cppi5_tr_resp_t *tr_resp_base;
-+};
-+
-+struct udma_rx_flush {
-+	struct udma_hwdesc hwdescs[2];
-+
-+	size_t buffer_size;
-+	void *buffer_vaddr;
-+	dma_addr_t buffer_paddr;
-+};
-+
- struct udma_dev {
- 	struct dma_device ddev;
- 	struct device *dev;
-@@ -113,6 +131,8 @@ struct udma_dev {
- 	struct list_head desc_to_purge;
- 	spinlock_t lock;
- 
-+	struct udma_rx_flush rx_flush;
-+
- 	int tchan_cnt;
- 	int echan_cnt;
- 	int rchan_cnt;
-@@ -131,16 +151,6 @@ struct udma_dev {
- 	u32 psil_base;
- };
- 
--struct udma_hwdesc {
--	size_t cppi5_desc_size;
--	void *cppi5_desc_vaddr;
--	dma_addr_t cppi5_desc_paddr;
--
--	/* TR descriptor internal pointers */
--	void *tr_req_base;
--	struct cppi5_tr_resp_t *tr_resp_base;
--};
--
- struct udma_desc {
- 	struct virt_dma_desc vd;
- 
-@@ -552,12 +562,17 @@ static void udma_sync_for_device(struct udma_chan *uc, int idx)
- 	}
- }
- 
-+static inline dma_addr_t udma_get_rx_flush_hwdesc_paddr(struct udma_chan *uc)
-+{
-+	return uc->ud->rx_flush.hwdescs[uc->config.pkt_mode].cppi5_desc_paddr;
-+}
-+
- static int udma_push_to_ring(struct udma_chan *uc, int idx)
- {
- 	struct udma_desc *d = uc->desc;
--
- 	struct k3_ring *ring = NULL;
--	int ret = -EINVAL;
-+	dma_addr_t paddr;
-+	int ret;
- 
- 	switch (uc->config.dir) {
- 	case DMA_DEV_TO_MEM:
-@@ -568,21 +583,37 @@ static int udma_push_to_ring(struct udma_chan *uc, int idx)
- 		ring = uc->tchan->t_ring;
- 		break;
- 	default:
--		break;
-+		return -EINVAL;
- 	}
- 
--	if (ring) {
--		dma_addr_t desc_addr = udma_curr_cppi5_desc_paddr(d, idx);
-+	/* RX flush packet: idx == -1 is only passed in case of DEV_TO_MEM */
-+	if (idx == -1) {
-+		paddr = udma_get_rx_flush_hwdesc_paddr(uc);
-+	} else {
-+		paddr = udma_curr_cppi5_desc_paddr(d, idx);
- 
- 		wmb(); /* Ensure that writes are not moved over this point */
- 		udma_sync_for_device(uc, idx);
--		ret = k3_ringacc_ring_push(ring, &desc_addr);
--		uc->in_ring_cnt++;
- 	}
- 
-+	ret = k3_ringacc_ring_push(ring, &paddr);
-+	if (!ret)
-+		uc->in_ring_cnt++;
-+
- 	return ret;
- }
- 
-+static bool udma_desc_is_rx_flush(struct udma_chan *uc, dma_addr_t addr)
-+{
-+	if (uc->config.dir != DMA_DEV_TO_MEM)
-+		return false;
-+
-+	if (addr == udma_get_rx_flush_hwdesc_paddr(uc))
-+		return true;
-+
-+	return false;
-+}
-+
- static int udma_pop_from_ring(struct udma_chan *uc, dma_addr_t *addr)
- {
- 	struct k3_ring *ring = NULL;
-@@ -611,6 +642,10 @@ static int udma_pop_from_ring(struct udma_chan *uc, dma_addr_t *addr)
- 		if (cppi5_desc_is_tdcm(*addr))
- 			return ret;
- 
-+		/* Check for flush descriptor */
-+		if (udma_desc_is_rx_flush(uc, *addr))
-+			return -ENOENT;
-+
- 		d = udma_udma_desc_from_paddr(uc, *addr);
- 
- 		if (d)
-@@ -891,6 +926,9 @@ static int udma_stop(struct udma_chan *uc)
- 
- 	switch (uc->config.dir) {
- 	case DMA_DEV_TO_MEM:
-+		if (!uc->cyclic && !uc->desc)
-+			udma_push_to_ring(uc, -1);
-+
- 		udma_rchanrt_write(uc->rchan, UDMA_RCHAN_RT_PEER_RT_EN_REG,
- 				   UDMA_PEER_RT_EN_ENABLE |
- 				   UDMA_PEER_RT_EN_TEARDOWN);
-@@ -3274,6 +3312,98 @@ static int udma_setup_resources(struct udma_dev *ud)
- 	return ch_count;
- }
- 
-+static int udma_setup_rx_flush(struct udma_dev *ud)
-+{
-+	struct udma_rx_flush *rx_flush = &ud->rx_flush;
-+	struct cppi5_desc_hdr_t *tr_desc;
-+	struct cppi5_tr_type1_t *tr_req;
-+	struct cppi5_host_desc_t *desc;
-+	struct device *dev = ud->dev;
-+	struct udma_hwdesc *hwdesc;
-+	size_t tr_size;
-+
-+	/* Allocate 1K buffer for discarded data on RX channel teardown */
-+	rx_flush->buffer_size = SZ_1K;
-+	rx_flush->buffer_vaddr = devm_kzalloc(dev, rx_flush->buffer_size,
-+					      GFP_KERNEL);
-+	if (!rx_flush->buffer_vaddr)
-+		return -ENOMEM;
-+
-+	rx_flush->buffer_paddr = dma_map_single(dev, rx_flush->buffer_vaddr,
-+						rx_flush->buffer_size,
-+						DMA_TO_DEVICE);
-+	if (dma_mapping_error(dev, rx_flush->buffer_paddr))
-+		return -ENOMEM;
-+
-+	/* Set up descriptor to be used for TR mode */
-+	hwdesc = &rx_flush->hwdescs[0];
-+	tr_size = sizeof(struct cppi5_tr_type1_t);
-+	hwdesc->cppi5_desc_size = cppi5_trdesc_calc_size(tr_size, 1);
-+	hwdesc->cppi5_desc_size = ALIGN(hwdesc->cppi5_desc_size,
-+					ud->desc_align);
-+
-+	hwdesc->cppi5_desc_vaddr = devm_kzalloc(dev, hwdesc->cppi5_desc_size,
-+						GFP_KERNEL);
-+	if (!hwdesc->cppi5_desc_vaddr)
-+		return -ENOMEM;
-+
-+	hwdesc->cppi5_desc_paddr = dma_map_single(dev, hwdesc->cppi5_desc_vaddr,
-+						  hwdesc->cppi5_desc_size,
-+						  DMA_TO_DEVICE);
-+	if (dma_mapping_error(dev, hwdesc->cppi5_desc_paddr))
-+		return -ENOMEM;
-+
-+	/* Start of the TR req records */
-+	hwdesc->tr_req_base = hwdesc->cppi5_desc_vaddr + tr_size;
-+	/* Start address of the TR response array */
-+	hwdesc->tr_resp_base = hwdesc->tr_req_base + tr_size;
-+
-+	tr_desc = hwdesc->cppi5_desc_vaddr;
-+	cppi5_trdesc_init(tr_desc, 1, tr_size, 0, 0);
-+	cppi5_desc_set_pktids(tr_desc, 0, CPPI5_INFO1_DESC_FLOWID_DEFAULT);
-+	cppi5_desc_set_retpolicy(tr_desc, 0, 0);
-+
-+	tr_req = hwdesc->tr_req_base;
-+	cppi5_tr_init(&tr_req->flags, CPPI5_TR_TYPE1, false, false,
-+		      CPPI5_TR_EVENT_SIZE_COMPLETION, 0);
-+	cppi5_tr_csf_set(&tr_req->flags, CPPI5_TR_CSF_SUPR_EVT);
-+
-+	tr_req->addr = rx_flush->buffer_paddr;
-+	tr_req->icnt0 = rx_flush->buffer_size;
-+	tr_req->icnt1 = 1;
-+
-+	/* Set up descriptor to be used for packet mode */
-+	hwdesc = &rx_flush->hwdescs[1];
-+	hwdesc->cppi5_desc_size = ALIGN(sizeof(struct cppi5_host_desc_t) +
-+					CPPI5_INFO0_HDESC_EPIB_SIZE +
-+					CPPI5_INFO0_HDESC_PSDATA_MAX_SIZE,
-+					ud->desc_align);
-+
-+	hwdesc->cppi5_desc_vaddr = devm_kzalloc(dev, hwdesc->cppi5_desc_size,
-+						GFP_KERNEL);
-+	if (!hwdesc->cppi5_desc_vaddr)
-+		return -ENOMEM;
-+
-+	hwdesc->cppi5_desc_paddr = dma_map_single(dev, hwdesc->cppi5_desc_vaddr,
-+						  hwdesc->cppi5_desc_size,
-+						  DMA_TO_DEVICE);
-+	if (dma_mapping_error(dev, hwdesc->cppi5_desc_paddr))
-+		return -ENOMEM;
-+
-+	desc = hwdesc->cppi5_desc_vaddr;
-+	cppi5_hdesc_init(desc, 0, 0);
-+	cppi5_desc_set_pktids(&desc->hdr, 0, CPPI5_INFO1_DESC_FLOWID_DEFAULT);
-+	cppi5_desc_set_retpolicy(&desc->hdr, 0, 0);
-+
-+	cppi5_hdesc_attach_buf(desc,
-+			       rx_flush->buffer_paddr, rx_flush->buffer_size,
-+			       rx_flush->buffer_paddr, rx_flush->buffer_size);
-+
-+	dma_sync_single_for_device(dev, hwdesc->cppi5_desc_paddr,
-+				   hwdesc->cppi5_desc_size, DMA_TO_DEVICE);
-+	return 0;
-+}
-+
- #define TI_UDMAC_BUSWIDTHS	(BIT(DMA_SLAVE_BUSWIDTH_1_BYTE) | \
- 				 BIT(DMA_SLAVE_BUSWIDTH_2_BYTES) | \
- 				 BIT(DMA_SLAVE_BUSWIDTH_3_BYTES) | \
-@@ -3387,6 +3517,10 @@ static int udma_probe(struct platform_device *pdev)
- 	if (ud->desc_align < dma_get_cache_alignment())
- 		ud->desc_align = dma_get_cache_alignment();
- 
-+	ret = udma_setup_rx_flush(ud);
-+	if (ret)
-+		return ret;
-+
- 	for (i = 0; i < ud->tchan_cnt; i++) {
- 		struct udma_tchan *tchan = &ud->tchans[i];
- 
+Thanks
+Jon
+
 -- 
-Peter
-
-Texas Instruments Finland Oy, Porkkalankatu 22, 00180 Helsinki.
-Y-tunnus/Business ID: 0615521-4. Kotipaikka/Domicile: Helsinki
-
+nvpublic
