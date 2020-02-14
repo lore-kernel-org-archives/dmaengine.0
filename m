@@ -7,26 +7,27 @@ X-Spam-Status: No, score=-13.1 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
 	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
 	autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9A7E6C2BA83
-	for <dmaengine@archiver.kernel.org>; Fri, 14 Feb 2020 18:00:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DC837C3B1B1
+	for <dmaengine@archiver.kernel.org>; Fri, 14 Feb 2020 18:00:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 7382520848
-	for <dmaengine@archiver.kernel.org>; Fri, 14 Feb 2020 18:00:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B4D1F20848
+	for <dmaengine@archiver.kernel.org>; Fri, 14 Feb 2020 18:00:18 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=embeddedor.com header.i=@embeddedor.com header.b="OpQNwq3c"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=embeddedor.com header.i=@embeddedor.com header.b="H6W/Fiys"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390800AbgBNSAM (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 14 Feb 2020 13:00:12 -0500
-Received: from gateway31.websitewelcome.com ([192.185.143.40]:17742 "EHLO
+        id S2388666AbgBNSAS (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 14 Feb 2020 13:00:18 -0500
+Received: from gateway31.websitewelcome.com ([192.185.143.40]:26227 "EHLO
         gateway31.websitewelcome.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S2390784AbgBNSAL (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Fri, 14 Feb 2020 13:00:11 -0500
+        by vger.kernel.org with ESMTP id S2390670AbgBNSAJ (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Fri, 14 Feb 2020 13:00:09 -0500
+X-Greylist: delayed 1502 seconds by postgrey-1.27 at vger.kernel.org; Fri, 14 Feb 2020 13:00:09 EST
 Received: from cm14.websitewelcome.com (cm14.websitewelcome.com [100.42.49.7])
-        by gateway31.websitewelcome.com (Postfix) with ESMTP id 7B4913B32D
-        for <dmaengine@vger.kernel.org>; Fri, 14 Feb 2020 11:14:21 -0600 (CST)
+        by gateway31.websitewelcome.com (Postfix) with ESMTP id C0986F43A
+        for <dmaengine@vger.kernel.org>; Fri, 14 Feb 2020 11:10:25 -0600 (CST)
 Received: from gator4166.hostgator.com ([108.167.133.22])
         by cmsmtp with SMTP
-        id 2eXljU3tKXVkQ2eXljroNJ; Fri, 14 Feb 2020 11:14:21 -0600
+        id 2eTxjTyZVXVkQ2eTxjrj5J; Fri, 14 Feb 2020 11:10:25 -0600
 X-Authority-Reason: nr=8
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
         d=embeddedor.com; s=default; h=Content-Type:MIME-Version:Message-ID:Subject:
@@ -34,29 +35,25 @@ DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
         Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
         :Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
         List-Subscribe:List-Post:List-Owner:List-Archive;
-        bh=k+QU65CHLZoLG7AfwTnQ5YtDbA20JGLnCMfo7U4sik4=; b=OpQNwq3cCqz8SZD6hAvLref+Y6
-        lMllw7ioVUPsYynpCRVpJGfyWvhnsmOA+BrGswNXwTMNRi7yD6i0AXXYikW7kjcOIlx5A39W9SSMP
-        5Q5VGYluBnUMY5C7vzBaU2Ep6ryr74VmdSO+sQutg4Tlc/ouI/YHh6XAvTXxYmqZBinqu7r5HmVbZ
-        iFQM8+f+Qhgj/1HAzMYj8rRSONhIBxAkUJniCHe6TVCNwU1OpEg8p3p5SWuU9bW6SQG3/r9o4KUDO
-        cJOKrMw5ZVqS45ItrIgxaucsN8gWZwmimFtkfRR9SKyu+uS3p/gJoAB9HBlKSoStWvHif21BAvKIL
-        7zOktwHQ==;
-Received: from [200.68.140.137] (port=25415 helo=embeddedor)
+        bh=BuEqONPSEjbS6nR+nsgUPfM1v5+Y+62xNXlUsAnUd/c=; b=H6W/Fiysye58hDJxiiYBMewzcd
+        VBQLgnSAN28NP/JizT+q1WA/GLkUQjzDs71ZQcSDWPJUJqAbUNFgGTYDntMRyHou+3dCqT14qCXC1
+        PV27mRIl/oku9JMFvMq9eND7VNgLR6LBjVIw/Bse2pmxb84plypHp+xPIw9Ud2kHzlcCKobwbEBAq
+        NYTs04MyY8ZSjljzrOCrBd3dMLne3zhsOKcySI0/KQTemQmjT4hT8qBufqJOqJ50JWsU5HhLEIVRr
+        KT3SBt059LMfSFeiQEbZWgaHOdC6z8m5x3/Y/to+zL8qH1SXjaYVnEXSlNl4XfRwI1E6NiP+Y+WTa
+        fhWfo0oA==;
+Received: from [200.68.140.137] (port=41921 helo=embeddedor)
         by gator4166.hostgator.com with esmtpa (Exim 4.92)
         (envelope-from <gustavo@embeddedor.com>)
-        id 1j2eXj-003fsi-RY; Fri, 14 Feb 2020 11:14:20 -0600
-Date:   Fri, 14 Feb 2020 11:16:57 -0600
+        id 1j2eTw-003don-BC; Fri, 14 Feb 2020 11:10:24 -0600
+Date:   Fri, 14 Feb 2020 11:13:02 -0600
 From:   "Gustavo A. R. Silva" <gustavo@embeddedor.com>
-To:     Laxman Dewangan <ldewangan@nvidia.com>,
-        Jon Hunter <jonathanh@nvidia.com>,
-        Dan Williams <dan.j.williams@intel.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        Thierry Reding <thierry.reding@gmail.com>
-Cc:     dmaengine@vger.kernel.org, linux-tegra@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
+To:     Vinod Koul <vkoul@kernel.org>,
+        Dan Williams <dan.j.williams@intel.com>
+Cc:     dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
         "Gustavo A. R. Silva" <gustavo@embeddedor.com>
-Subject: [PATCH] dmaengine: tegra210-adma: Replace zero-length array with
+Subject: [PATCH] dmanegine: ioat/dca: Replace zero-length array with
  flexible-array member
-Message-ID: <20200214171657.GA25663@embeddedor>
+Message-ID: <20200214171302.GA20586@embeddedor>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
@@ -69,13 +66,13 @@ X-AntiAbuse: Sender Address Domain - embeddedor.com
 X-BWhitelist: no
 X-Source-IP: 200.68.140.137
 X-Source-L: No
-X-Exim-ID: 1j2eXj-003fsi-RY
+X-Exim-ID: 1j2eTw-003don-BC
 X-Source: 
 X-Source-Args: 
 X-Source-Dir: 
-X-Source-Sender: (embeddedor) [200.68.140.137]:25415
+X-Source-Sender: (embeddedor) [200.68.140.137]:41921
 X-Source-Auth: gustavo@embeddedor.com
-X-Email-Count: 21
+X-Email-Count: 3
 X-Source-Cap: Z3V6aWRpbmU7Z3V6aWRpbmU7Z2F0b3I0MTY2Lmhvc3RnYXRvci5jb20=
 X-Local-Domain: yes
 Sender: dmaengine-owner@vger.kernel.org
@@ -113,22 +110,22 @@ This issue was found with the help of Coccinelle.
 
 Signed-off-by: Gustavo A. R. Silva <gustavo@embeddedor.com>
 ---
- drivers/dma/tegra210-adma.c | 2 +-
+ drivers/dma/ioat/dca.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/dma/tegra210-adma.c b/drivers/dma/tegra210-adma.c
-index 6e1268552f74..c4ce5dfb149b 100644
---- a/drivers/dma/tegra210-adma.c
-+++ b/drivers/dma/tegra210-adma.c
-@@ -164,7 +164,7 @@ struct tegra_adma {
- 	const struct tegra_adma_chip_data *cdata;
- 
- 	/* Last member of the structure */
--	struct tegra_adma_chan		channels[0];
-+	struct tegra_adma_chan		channels[];
+diff --git a/drivers/dma/ioat/dca.c b/drivers/dma/ioat/dca.c
+index be61c32a876f..0be385587c4c 100644
+--- a/drivers/dma/ioat/dca.c
++++ b/drivers/dma/ioat/dca.c
+@@ -102,7 +102,7 @@ struct ioat_dca_priv {
+ 	int			 max_requesters;
+ 	int			 requester_count;
+ 	u8			 tag_map[IOAT_TAG_MAP_LEN];
+-	struct ioat_dca_slot 	 req_slots[0];
++	struct ioat_dca_slot	 req_slots[];
  };
  
- static inline void tdma_write(struct tegra_adma *tdma, u32 reg, u32 val)
+ static int ioat_dca_dev_managed(struct dca_provider *dca,
 -- 
 2.25.0
 
