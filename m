@@ -4,48 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-10.1 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=unavailable
-	autolearn_force=no version=3.4.0
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E81E5C2BA83
-	for <dmaengine@archiver.kernel.org>; Fri, 14 Feb 2020 18:18:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7D432C3B1B9
+	for <dmaengine@archiver.kernel.org>; Fri, 14 Feb 2020 18:22:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id B7BE32168B
-	for <dmaengine@archiver.kernel.org>; Fri, 14 Feb 2020 18:18:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 479A4222C2
+	for <dmaengine@archiver.kernel.org>; Fri, 14 Feb 2020 18:22:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1581704301;
-	bh=WuG/B6lmBEnh3GUKDiqWFqR3zitCFb14UJnbGdNR6mY=;
+	s=default; t=1581704578;
+	bh=r7FkUelilDY8E2lxOEaBeUfq44C8QuYUFKAVBdViqps=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:List-ID:From;
-	b=19Fs2mKQpzz5TiwNszjZIDkQIMCxIdViNce4QMaYweyxch5OSK+RtObq1CMi5Bm2F
-	 x8NUfr1TKvX/QVIT74dG16KvA7vySnnx174DIElHdtLyfVpIJDDDuBRUDnQMPmvg4S
-	 la5yuFJ2yLiiPtRYgEDYamTqq0yoXZ4P2NrQS7K0=
+	b=rlYTeKWSAc9+GNOEuCTTt01K2CBlkVW673ujCsR1ZbGMkeaZfiCBzD0VQLfgfsJ46
+	 QGe0ZPWlAYcMg0M3WpD5hjV315Wk61vz963YTridsoww46eemdKRG/T1k4qI9S7hhJ
+	 AJHtRlAkrRnL2mMbrCktQdEbTVHjjh9Dyt2n80No=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389750AbgBNSSQ (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 14 Feb 2020 13:18:16 -0500
-Received: from mail.kernel.org ([198.145.29.99]:55332 "EHLO mail.kernel.org"
+        id S2404675AbgBNSW5 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 14 Feb 2020 13:22:57 -0500
+Received: from mail.kernel.org ([198.145.29.99]:52388 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1730567AbgBNPuv (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Fri, 14 Feb 2020 10:50:51 -0500
+        id S1729928AbgBNPt2 (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Fri, 14 Feb 2020 10:49:28 -0500
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id E751F24650;
-        Fri, 14 Feb 2020 15:50:49 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 910542467D;
+        Fri, 14 Feb 2020 15:49:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1581695450;
-        bh=WuG/B6lmBEnh3GUKDiqWFqR3zitCFb14UJnbGdNR6mY=;
+        s=default; t=1581695367;
+        bh=r7FkUelilDY8E2lxOEaBeUfq44C8QuYUFKAVBdViqps=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=daLgdDO6JEOx4JHVBBwIXPJ0xIWxggThVpiVKOWlHBgdDTA9Q0C7S+qSb6lzcYyla
-         uO6zw6Mj52kqjyVlQjzMmYUprVY0c1O4E4krkiBKCdS2RMfAG8JymSyaAOk8H98J9X
-         ydcvAsPi449ZF21ks2X2uaQOKGV0ksD9on0NLT8U=
+        b=jRJ5UO7nzNkI3B2FsvFqQf+sN5/rxQj4qoCBwv8nm6VIGmX8opWj79+aC+PGoIKKK
+         YL54AliVyABbmqSNbIgfQqD3QV6KFmlXqqk68MUYe92vzuTBO0KRetoqIACJleIbkV
+         lViqfoV7UwCAxrGBu6i76I9ihPi5DXlhw2dTwcoQ=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Chen Zhou <chenzhou10@huawei.com>, Peng Ma <peng.ma@nxp.com>,
+Cc:     Wei Yongjun <weiyongjun1@huawei.com>,
+        Peter Ujfalusi <peter.ujfalusi@ti.com>,
         Vinod Koul <vkoul@kernel.org>, Sasha Levin <sashal@kernel.org>,
         dmaengine@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.5 090/542] dmaengine: fsl-qdma: fix duplicated argument to &&
-Date:   Fri, 14 Feb 2020 10:41:22 -0500
-Message-Id: <20200214154854.6746-90-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 5.5 025/542] dmaengine: ti: edma: Fix error return code in edma_probe()
+Date:   Fri, 14 Feb 2020 10:40:17 -0500
+Message-Id: <20200214154854.6746-25-sashal@kernel.org>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20200214154854.6746-1-sashal@kernel.org>
 References: <20200214154854.6746-1-sashal@kernel.org>
@@ -58,39 +59,39 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-From: Chen Zhou <chenzhou10@huawei.com>
+From: Wei Yongjun <weiyongjun1@huawei.com>
 
-[ Upstream commit 4b048178854da11656596d36a107577d66fd1e08 ]
+[ Upstream commit d1fd03a35efc6285e43f4ef35ef04dbf2c9389c6 ]
 
-There is duplicated argument to && in function fsl_qdma_free_chan_resources,
-which looks like a typo, pointer fsl_queue->desc_pool also needs NULL check,
-fix it.
-Detected with coccinelle.
+Fix to return negative error code -ENOMEM from the error handling
+case instead of 0, as done elsewhere in this function.
 
-Fixes: b092529e0aa0 ("dmaengine: fsl-qdma: Add qDMA controller driver for Layerscape SoCs")
-Signed-off-by: Chen Zhou <chenzhou10@huawei.com>
-Reviewed-by: Peng Ma <peng.ma@nxp.com>
-Tested-by: Peng Ma <peng.ma@nxp.com>
-Link: https://lore.kernel.org/r/20200120125843.34398-1-chenzhou10@huawei.com
+Fixes: 2a03c1314506 ("dmaengine: ti: edma: add missed operations")
+Signed-off-by: Wei Yongjun <weiyongjun1@huawei.com>
+Acked-by: Peter Ujfalusi <peter.ujfalusi@ti.com>
+Link: https://lore.kernel.org/r/20191212114622.127322-1-weiyongjun1@huawei.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/fsl-qdma.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/dma/ti/edma.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/dma/fsl-qdma.c b/drivers/dma/fsl-qdma.c
-index 89792083d62c5..95cc0256b3878 100644
---- a/drivers/dma/fsl-qdma.c
-+++ b/drivers/dma/fsl-qdma.c
-@@ -304,7 +304,7 @@ static void fsl_qdma_free_chan_resources(struct dma_chan *chan)
+diff --git a/drivers/dma/ti/edma.c b/drivers/dma/ti/edma.c
+index 0628ee4bf1b41..03a7f647f7b2c 100644
+--- a/drivers/dma/ti/edma.c
++++ b/drivers/dma/ti/edma.c
+@@ -2342,8 +2342,10 @@ static int edma_probe(struct platform_device *pdev)
+ 	ecc->channels_mask = devm_kcalloc(dev,
+ 					   BITS_TO_LONGS(ecc->num_channels),
+ 					   sizeof(unsigned long), GFP_KERNEL);
+-	if (!ecc->slave_chans || !ecc->slot_inuse || !ecc->channels_mask)
++	if (!ecc->slave_chans || !ecc->slot_inuse || !ecc->channels_mask) {
++		ret = -ENOMEM;
+ 		goto err_disable_pm;
++	}
  
- 	vchan_dma_desc_free_list(&fsl_chan->vchan, &head);
- 
--	if (!fsl_queue->comp_pool && !fsl_queue->comp_pool)
-+	if (!fsl_queue->comp_pool && !fsl_queue->desc_pool)
- 		return;
- 
- 	list_for_each_entry_safe(comp_temp, _comp_temp,
+ 	/* Mark all channels available initially */
+ 	bitmap_fill(ecc->channels_mask, ecc->num_channels);
 -- 
 2.20.1
 
