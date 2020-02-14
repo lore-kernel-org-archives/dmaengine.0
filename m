@@ -2,134 +2,96 @@ Return-Path: <SRS0=3f10=4C=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.1 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=unavailable
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A28F2C3B1A4
-	for <dmaengine@archiver.kernel.org>; Fri, 14 Feb 2020 16:52:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 61BCDC2BA83
+	for <dmaengine@archiver.kernel.org>; Fri, 14 Feb 2020 16:54:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 7B8482067D
-	for <dmaengine@archiver.kernel.org>; Fri, 14 Feb 2020 16:52:55 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1581699175;
-	bh=xHtMxxoPF/hZUvPjSzLSqsgIEzYTBbxy7+bvmauwNsA=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:List-ID:From;
-	b=pV3KGrIS8AWxI7M0Yy3kNA1tBAkEqa4JpF/aW+dXfLg4r1KpJ0gDSVNnuJjJXev2H
-	 NiRWa33v37jxrHz0e3S4bz3j4J0KGxN1NKkjLDroHeUrISbSp9ygshZxSeGfkK7+Mp
-	 pnWfoL20VRVb85kkSE9IvCosU8OskzYHq1Ka2BzM=
+	by mail.kernel.org (Postfix) with ESMTP id 39D0124650
+	for <dmaengine@archiver.kernel.org>; Fri, 14 Feb 2020 16:54:45 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qdWAeOGF"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2404947AbgBNQTN (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 14 Feb 2020 11:19:13 -0500
-Received: from mail.kernel.org ([198.145.29.99]:52216 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2392781AbgBNQTN (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Fri, 14 Feb 2020 11:19:13 -0500
-Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id C9CB72470B;
-        Fri, 14 Feb 2020 16:19:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1581697151;
-        bh=xHtMxxoPF/hZUvPjSzLSqsgIEzYTBbxy7+bvmauwNsA=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=Kiilyk5p2rZO/LoYXBnJLXZAlkbpKv7VyR0+GbOlZOKNe8ScQLAWkZzRwLxZzK4Uy
-         qc8xVGey48yVgyY3NIVLhuCKdBkxNBpQWv0RlEhlkIvXcKx0aW4S2tzwqTjUeRe1gz
-         xPYVrCdRVebsO8VyOHBRYOeYdDGLWn0Cl10YlxjA=
-From:   Sasha Levin <sashal@kernel.org>
-To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Logan Gunthorpe <logang@deltatee.com>,
-        Vinod Koul <vkoul@kernel.org>, Sasha Levin <sashal@kernel.org>,
-        dmaengine@vger.kernel.org
-Subject: [PATCH AUTOSEL 4.14 090/186] dmaengine: Store module owner in dma_device struct
-Date:   Fri, 14 Feb 2020 11:15:39 -0500
-Message-Id: <20200214161715.18113-90-sashal@kernel.org>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20200214161715.18113-1-sashal@kernel.org>
-References: <20200214161715.18113-1-sashal@kernel.org>
+        id S2405752AbgBNQyo (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 14 Feb 2020 11:54:44 -0500
+Received: from mail-lj1-f193.google.com ([209.85.208.193]:35362 "EHLO
+        mail-lj1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2406842AbgBNQyn (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Fri, 14 Feb 2020 11:54:43 -0500
+Received: by mail-lj1-f193.google.com with SMTP id q8so11492282ljb.2;
+        Fri, 14 Feb 2020 08:54:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=M+xcBhgbl/QZucNqUQYoyGs+ziRhICQEGd1M8X6NrGI=;
+        b=qdWAeOGFDeOv5wfAKoUl5Jh5aIfShyW/vDnFB2Tlc2qILXY/JENzB13kx6M6Vkmlx0
+         UhHdujnOrzAF40kToU3Hy8YmDfhFaVp2kLx+BdffV6ukghYBSnbpj1IA44vb7Ig8H76R
+         hupUzDBpkRUjQ7a1Nv9CvbpN6ACN046Ij9cuT4M2J4pI5hYgNnaDz5Q9xGl9T625Pu0l
+         lqNacWBs3GyaLGcqngjNLtJgcaztbJ5kMkqDLKhJE9C5MmauboNn87Mu9Ts/rOwHWhLa
+         lNspxcKNd/luThLR2iyhvIUwjNmdQ5zVq5Oixd+N5zHR2JKhvhfkafKhjdMvyx+YGtfV
+         LPCw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=M+xcBhgbl/QZucNqUQYoyGs+ziRhICQEGd1M8X6NrGI=;
+        b=BWuQh9J5mX/aDKLLB6WFFaz3FAouqlS6w87VkvABEEru6yOIOc4opr1IYh+sVW1vkm
+         EFCL7/i0Au/0CWjmuTAwAKpCNngzf32bSe4FyEK8rmBWHF69Cqb924IfBx2qprMwX7bn
+         b/G481ryJKs92CJCzkpx2TZT+R6uTk6j0n3GXpDg6P1eEJpbFT+v/cwi1qBNlRQGW3/W
+         GmCjZYSCpNiWqk/h22oTblyoJNuNrjYagfIyteMMuLuW+3HBxagxf1SCPyxqFc3adL4H
+         gLnSrUCCbbJa3j10NyN1ziUlOCMXCcpsFSSPsDlHPnELmbKIcfG85MNGTCylqJvG6mWJ
+         O9kA==
+X-Gm-Message-State: APjAAAU01Tg2Cw+vvJnU4/UQtsBdb6At0V4NfNYuk4iEIn6wvB8Cnqda
+        W8OvP+HLKCY5+maTihIS5Z9hU6pH
+X-Google-Smtp-Source: APXvYqzda8qC12k53RKnJkNfCJ72RN8KGm4vqHZRZS17lW5MdtXW5KQ3q7U329LktiiBDc6QK23MbQ==
+X-Received: by 2002:a2e:58c:: with SMTP id 134mr2615105ljf.12.1581699280824;
+        Fri, 14 Feb 2020 08:54:40 -0800 (PST)
+Received: from [192.168.2.145] (79-139-233-37.dynamic.spd-mgts.ru. [79.139.233.37])
+        by smtp.googlemail.com with ESMTPSA id f5sm3244423lfh.32.2020.02.14.08.54.39
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 14 Feb 2020 08:54:40 -0800 (PST)
+Subject: Re: [PATCH v8 18/19] dmaengine: tegra-apb: Remove unused function
+ argument
+To:     Jon Hunter <jonathanh@nvidia.com>,
+        Laxman Dewangan <ldewangan@nvidia.com>,
+        Vinod Koul <vkoul@kernel.org>,
+        Dan Williams <dan.j.williams@intel.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        =?UTF-8?B?TWljaGHFgiBNaXJvc8WCYXc=?= <mirq-linux@rere.qmqm.pl>
+Cc:     dmaengine@vger.kernel.org, linux-tegra@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20200209163356.6439-1-digetx@gmail.com>
+ <20200209163356.6439-19-digetx@gmail.com>
+ <d9a1bd6a-bd26-36ad-7d94-57801a2aa616@nvidia.com>
+From:   Dmitry Osipenko <digetx@gmail.com>
+Message-ID: <392ccaf4-3cc9-e8af-130c-fa068cc56527@gmail.com>
+Date:   Fri, 14 Feb 2020 19:54:39 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.3.0
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
+In-Reply-To: <d9a1bd6a-bd26-36ad-7d94-57801a2aa616@nvidia.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-From: Logan Gunthorpe <logang@deltatee.com>
+14.02.2020 17:16, Jon Hunter пишет:
+...
+> Acked-by: Jon Hunter <jonathanh@nvidia.com>
+> 
+> Thanks!
+> Jon
+> 
 
-[ Upstream commit dae7a589c18a4d979d5f14b09374e871b995ceb1 ]
+Jon, thank you very much!
 
-dma_chan_to_owner() dereferences the driver from the struct device to
-obtain the owner and call module_[get|put](). However, if the backing
-device is unbound before the dma_device is unregistered, the driver
-will be cleared and this will cause a NULL pointer dereference.
-
-Instead, store a pointer to the owner module in the dma_device struct
-so the module reference can be properly put when the channel is put, even
-if the backing device was destroyed first.
-
-This change helps to support a safer unbind of DMA engines.
-If the dma_device is unregistered in the driver's remove function,
-there's no guarantee that there are no existing clients and a users
-action may trigger the WARN_ONCE in dma_async_device_unregister()
-which is unlikely to leave the system in a consistent state.
-Instead, a better approach is to allow the backing driver to go away
-and fail any subsequent requests to it.
-
-Signed-off-by: Logan Gunthorpe <logang@deltatee.com>
-Link: https://lore.kernel.org/r/20191216190120.21374-2-logang@deltatee.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- drivers/dma/dmaengine.c   | 4 +++-
- include/linux/dmaengine.h | 2 ++
- 2 files changed, 5 insertions(+), 1 deletion(-)
-
-diff --git a/drivers/dma/dmaengine.c b/drivers/dma/dmaengine.c
-index b451354735d3d..faaaf10311ec0 100644
---- a/drivers/dma/dmaengine.c
-+++ b/drivers/dma/dmaengine.c
-@@ -192,7 +192,7 @@ __dma_device_satisfies_mask(struct dma_device *device,
- 
- static struct module *dma_chan_to_owner(struct dma_chan *chan)
- {
--	return chan->device->dev->driver->owner;
-+	return chan->device->owner;
- }
- 
- /**
-@@ -928,6 +928,8 @@ int dma_async_device_register(struct dma_device *device)
- 		return -EIO;
- 	}
- 
-+	device->owner = device->dev->driver->owner;
-+
- 	if (dma_has_cap(DMA_MEMCPY, device->cap_mask) && !device->device_prep_dma_memcpy) {
- 		dev_err(device->dev,
- 			"Device claims capability %s, but op is not defined\n",
-diff --git a/include/linux/dmaengine.h b/include/linux/dmaengine.h
-index 087cbe7768680..8089e28539f16 100644
---- a/include/linux/dmaengine.h
-+++ b/include/linux/dmaengine.h
-@@ -677,6 +677,7 @@ struct dma_filter {
-  * @fill_align: alignment shift for memset operations
-  * @dev_id: unique device ID
-  * @dev: struct device reference for dma mapping api
-+ * @owner: owner module (automatically set based on the provided dev)
-  * @src_addr_widths: bit mask of src addr widths the device supports
-  * @dst_addr_widths: bit mask of dst addr widths the device supports
-  * @directions: bit mask of slave direction the device supports since
-@@ -738,6 +739,7 @@ struct dma_device {
- 
- 	int dev_id;
- 	struct device *dev;
-+	struct module *owner;
- 
- 	u32 src_addr_widths;
- 	u32 dst_addr_widths;
--- 
-2.20.1
-
+In the patchwork I see that you acked all the patches, but my Gmail
+missed 2 of 4 emails, maybe the missing emails will arrive a day later :)
