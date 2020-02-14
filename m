@@ -7,53 +7,53 @@ X-Spam-Status: No, score=-9.9 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
 	autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DA562C3B18F
-	for <dmaengine@archiver.kernel.org>; Fri, 14 Feb 2020 09:14:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A8DBFC2BA83
+	for <dmaengine@archiver.kernel.org>; Fri, 14 Feb 2020 09:15:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id A12AC24649
-	for <dmaengine@archiver.kernel.org>; Fri, 14 Feb 2020 09:14:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 74A03222C2
+	for <dmaengine@archiver.kernel.org>; Fri, 14 Feb 2020 09:15:02 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b="Jz6a5+3C"
+	dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b="fj2/m+vq"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729099AbgBNJOv (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 14 Feb 2020 04:14:51 -0500
-Received: from lelv0142.ext.ti.com ([198.47.23.249]:39928 "EHLO
-        lelv0142.ext.ti.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729098AbgBNJOu (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Fri, 14 Feb 2020 04:14:50 -0500
+        id S1729139AbgBNJO4 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 14 Feb 2020 04:14:56 -0500
+Received: from lelv0143.ext.ti.com ([198.47.23.248]:53920 "EHLO
+        lelv0143.ext.ti.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729123AbgBNJOz (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Fri, 14 Feb 2020 04:14:55 -0500
 Received: from lelv0266.itg.ti.com ([10.180.67.225])
-        by lelv0142.ext.ti.com (8.15.2/8.15.2) with ESMTP id 01E9ElVe046092;
-        Fri, 14 Feb 2020 03:14:47 -0600
+        by lelv0143.ext.ti.com (8.15.2/8.15.2) with ESMTP id 01E9EoiG111864;
+        Fri, 14 Feb 2020 03:14:50 -0600
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
-        s=ti-com-17Q1; t=1581671687;
-        bh=9HVWCPU2xE0B3O6Indfhx0OQYVbHUJfuMYDi/jTeREs=;
+        s=ti-com-17Q1; t=1581671691;
+        bh=OzHgH5nWkKfcQlJ+YZ/ZYmveXJLzjgDJI2DOc610CdM=;
         h=From:To:CC:Subject:Date:In-Reply-To:References;
-        b=Jz6a5+3CgS+8aO3G1o1A49x7Ug6osRPbKEPRHwN7WbqShYCvspzipOnwSMxCTy1hd
-         qx0f2gT2HrYu5uwCYfw/k8Ldsgw/7D20SJnU10wpNNaJ3HFnbFszwG0lS2Dnoul1KY
-         qGNFc4v8N8C8AWpP6O8iWIrbVqpPuZo5/Q56xlbw=
-Received: from DFLE114.ent.ti.com (dfle114.ent.ti.com [10.64.6.35])
-        by lelv0266.itg.ti.com (8.15.2/8.15.2) with ESMTPS id 01E9ElnJ076795
+        b=fj2/m+vqeHwlobG7670Ae3pCfFkNWkBoySACbhTOCs+CRmd/t3odMB4UaGqOYXSru
+         /fn0llcgHkb4mR2820vf+8d7cumlOo9A5VALwPDlinOaNrWUJNktHyWk5eXz+myB3H
+         w8MgMX9dC2VnWiRh+h+vnoNCMUHuv782jFyphrLA=
+Received: from DFLE111.ent.ti.com (dfle111.ent.ti.com [10.64.6.32])
+        by lelv0266.itg.ti.com (8.15.2/8.15.2) with ESMTPS id 01E9EoYD076831
         (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
-        Fri, 14 Feb 2020 03:14:47 -0600
-Received: from DFLE106.ent.ti.com (10.64.6.27) by DFLE114.ent.ti.com
- (10.64.6.35) with Microsoft SMTP Server (version=TLS1_2,
+        Fri, 14 Feb 2020 03:14:50 -0600
+Received: from DFLE115.ent.ti.com (10.64.6.36) by DFLE111.ent.ti.com
+ (10.64.6.32) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1847.3; Fri, 14
- Feb 2020 03:14:46 -0600
-Received: from lelv0327.itg.ti.com (10.180.67.183) by DFLE106.ent.ti.com
- (10.64.6.27) with Microsoft SMTP Server (version=TLS1_2,
+ Feb 2020 03:14:50 -0600
+Received: from lelv0327.itg.ti.com (10.180.67.183) by DFLE115.ent.ti.com
+ (10.64.6.36) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1847.3 via
- Frontend Transport; Fri, 14 Feb 2020 03:14:46 -0600
+ Frontend Transport; Fri, 14 Feb 2020 03:14:50 -0600
 Received: from feketebors.ti.com (ileax41-snat.itg.ti.com [10.172.224.153])
-        by lelv0327.itg.ti.com (8.15.2/8.15.2) with ESMTP id 01E9Ea40043021;
-        Fri, 14 Feb 2020 03:14:44 -0600
+        by lelv0327.itg.ti.com (8.15.2/8.15.2) with ESMTP id 01E9Ea42043021;
+        Fri, 14 Feb 2020 03:14:48 -0600
 From:   Peter Ujfalusi <peter.ujfalusi@ti.com>
 To:     <vkoul@kernel.org>
 CC:     <dmaengine@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
         <dan.j.williams@intel.com>, <grygorii.strashko@ti.com>,
         <vigneshr@ti.com>
-Subject: [PATCH v2 4/6] dmaengine: ti: k3-udma: Use the TR counter helper for slave_sg and cyclic
-Date:   Fri, 14 Feb 2020 11:14:39 +0200
-Message-ID: <20200214091441.27535-5-peter.ujfalusi@ti.com>
+Subject: [PATCH v2 6/6] dmaengine: ti: k3-udma: Fix terminated transfer handling
+Date:   Fri, 14 Feb 2020 11:14:41 +0200
+Message-ID: <20200214091441.27535-7-peter.ujfalusi@ti.com>
 X-Mailer: git-send-email 2.25.0
 In-Reply-To: <20200214091441.27535-1-peter.ujfalusi@ti.com>
 References: <20200214091441.27535-1-peter.ujfalusi@ti.com>
@@ -66,209 +66,75 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Use the generic TR setup function to get the TR counters for both cyclic
-and slave_sg transfers.
-This way the period_size for cyclic and sg_dma_len() for slave_sg can be
-as large as (SZ_64K - 1) * (SZ_64K - 1) and we can handle cases when the
-length is >SZ_64K and a prime number.
+When we receive back the descriptor of the terminated transfer the cookie
+must be marked as completed to make sure that the accounting is correct.
 
+In udma_tx_status() the status should be marked as completed if the channel
+is no longer running (it can only happen if the channel is not yet started
+for the first time, or after a channel termination).
+
+Fixes: 25dcb5dd7b7ce ("dmaengine: ti: New driver for K3 UDMA")
 Signed-off-by: Peter Ujfalusi <peter.ujfalusi@ti.com>
 ---
- drivers/dma/ti/k3-udma.c | 130 ++++++++++++++++++++++++++-------------
- 1 file changed, 88 insertions(+), 42 deletions(-)
+ drivers/dma/ti/k3-udma.c | 29 +++++++++++++++--------------
+ 1 file changed, 15 insertions(+), 14 deletions(-)
 
 diff --git a/drivers/dma/ti/k3-udma.c b/drivers/dma/ti/k3-udma.c
-index 9b00013d6f63..1dba47c662c4 100644
+index 9b4e1e5fa849..0536866a58ce 100644
 --- a/drivers/dma/ti/k3-udma.c
 +++ b/drivers/dma/ti/k3-udma.c
-@@ -2079,31 +2079,31 @@ udma_prep_slave_sg_tr(struct udma_chan *uc, struct scatterlist *sgl,
- 		      unsigned int sglen, enum dma_transfer_direction dir,
- 		      unsigned long tx_flags, void *context)
- {
--	enum dma_slave_buswidth dev_width;
- 	struct scatterlist *sgent;
- 	struct udma_desc *d;
--	size_t tr_size;
- 	struct cppi5_tr_type1_t *tr_req = NULL;
-+	u16 tr0_cnt0, tr0_cnt1, tr1_cnt0;
- 	unsigned int i;
--	u32 burst;
-+	size_t tr_size;
-+	int num_tr = 0;
-+	int tr_idx = 0;
+@@ -1097,29 +1097,27 @@ static irqreturn_t udma_ring_irq_handler(int irq, void *data)
+ 			goto out;
+ 		}
  
--	if (dir == DMA_DEV_TO_MEM) {
--		dev_width = uc->cfg.src_addr_width;
--		burst = uc->cfg.src_maxburst;
--	} else if (dir == DMA_MEM_TO_DEV) {
--		dev_width = uc->cfg.dst_addr_width;
--		burst = uc->cfg.dst_maxburst;
--	} else {
--		dev_err(uc->ud->dev, "%s: bad direction?\n", __func__);
-+	if (!is_slave_direction(dir)) {
-+		dev_err(uc->ud->dev, "Only slave cyclic is supported\n");
- 		return NULL;
+-		if (uc->cyclic) {
+-			/* push the descriptor back to the ring */
+-			if (d == uc->desc) {
++		if (d == uc->desc) {
++			/* active descriptor */
++			if (uc->cyclic) {
+ 				udma_cyclic_packet_elapsed(uc);
+ 				vchan_cyclic_callback(&d->vd);
+-			}
+-		} else {
+-			bool desc_done = false;
+-
+-			if (d == uc->desc) {
+-				desc_done = udma_is_desc_really_done(uc, d);
+-
+-				if (desc_done) {
++			} else {
++				if (udma_is_desc_really_done(uc, d)) {
+ 					uc->bcnt += d->residue;
+ 					udma_start(uc);
++					vchan_cookie_complete(&d->vd);
+ 				} else {
+ 					schedule_delayed_work(&uc->tx_drain.work,
+ 							      0);
+ 				}
+ 			}
+-
+-			if (desc_done)
+-				vchan_cookie_complete(&d->vd);
++		} else {
++			/*
++			 * terminated descriptor, mark the descriptor as
++			 * completed to update the channel's cookie marker
++			 */
++			dma_cookie_complete(&d->vd.tx);
+ 		}
  	}
+ out:
+@@ -2769,6 +2767,9 @@ static enum dma_status udma_tx_status(struct dma_chan *chan,
  
--	if (!burst)
--		burst = 1;
-+	/* estimate the number of TRs we will need */
-+	for_each_sg(sgl, sgent, sglen, i) {
-+		if (sg_dma_len(sgent) < SZ_64K)
-+			num_tr++;
-+		else
-+			num_tr += 2;
-+	}
+ 	ret = dma_cookie_status(chan, cookie, txstate);
  
- 	/* Now allocate and setup the descriptor. */
- 	tr_size = sizeof(struct cppi5_tr_type1_t);
--	d = udma_alloc_tr_desc(uc, tr_size, sglen, dir);
-+	d = udma_alloc_tr_desc(uc, tr_size, num_tr, dir);
- 	if (!d)
- 		return NULL;
- 
-@@ -2111,19 +2111,46 @@ udma_prep_slave_sg_tr(struct udma_chan *uc, struct scatterlist *sgl,
- 
- 	tr_req = d->hwdesc[0].tr_req_base;
- 	for_each_sg(sgl, sgent, sglen, i) {
--		d->residue += sg_dma_len(sgent);
-+		dma_addr_t sg_addr = sg_dma_address(sgent);
++	if (!udma_is_chan_running(uc))
++		ret = DMA_COMPLETE;
 +
-+		num_tr = udma_get_tr_counters(sg_dma_len(sgent), __ffs(sg_addr),
-+					      &tr0_cnt0, &tr0_cnt1, &tr1_cnt0);
-+		if (num_tr < 0) {
-+			dev_err(uc->ud->dev, "size %u is not supported\n",
-+				sg_dma_len(sgent));
-+			udma_free_hwdesc(uc, d);
-+			kfree(d);
-+			return NULL;
-+		}
+ 	if (ret == DMA_IN_PROGRESS && udma_is_chan_paused(uc))
+ 		ret = DMA_PAUSED;
  
- 		cppi5_tr_init(&tr_req[i].flags, CPPI5_TR_TYPE1, false, false,
- 			      CPPI5_TR_EVENT_SIZE_COMPLETION, 0);
- 		cppi5_tr_csf_set(&tr_req[i].flags, CPPI5_TR_CSF_SUPR_EVT);
- 
--		tr_req[i].addr = sg_dma_address(sgent);
--		tr_req[i].icnt0 = burst * dev_width;
--		tr_req[i].dim1 = burst * dev_width;
--		tr_req[i].icnt1 = sg_dma_len(sgent) / tr_req[i].icnt0;
-+		tr_req[tr_idx].addr = sg_addr;
-+		tr_req[tr_idx].icnt0 = tr0_cnt0;
-+		tr_req[tr_idx].icnt1 = tr0_cnt1;
-+		tr_req[tr_idx].dim1 = tr0_cnt0;
-+		tr_idx++;
-+
-+		if (num_tr == 2) {
-+			cppi5_tr_init(&tr_req[tr_idx].flags, CPPI5_TR_TYPE1,
-+				      false, false,
-+				      CPPI5_TR_EVENT_SIZE_COMPLETION, 0);
-+			cppi5_tr_csf_set(&tr_req[tr_idx].flags,
-+					 CPPI5_TR_CSF_SUPR_EVT);
-+
-+			tr_req[tr_idx].addr = sg_addr + tr0_cnt1 * tr0_cnt0;
-+			tr_req[tr_idx].icnt0 = tr1_cnt0;
-+			tr_req[tr_idx].icnt1 = 1;
-+			tr_req[tr_idx].dim1 = tr1_cnt0;
-+			tr_idx++;
-+		}
-+
-+		d->residue += sg_dma_len(sgent);
- 	}
- 
--	cppi5_tr_csf_set(&tr_req[i - 1].flags, CPPI5_TR_CSF_EOP);
-+	cppi5_tr_csf_set(&tr_req[tr_idx - 1].flags, CPPI5_TR_CSF_EOP);
- 
- 	return d;
- }
-@@ -2428,47 +2455,66 @@ udma_prep_dma_cyclic_tr(struct udma_chan *uc, dma_addr_t buf_addr,
- 			size_t buf_len, size_t period_len,
- 			enum dma_transfer_direction dir, unsigned long flags)
- {
--	enum dma_slave_buswidth dev_width;
- 	struct udma_desc *d;
--	size_t tr_size;
-+	size_t tr_size, period_addr;
- 	struct cppi5_tr_type1_t *tr_req;
--	unsigned int i;
- 	unsigned int periods = buf_len / period_len;
--	u32 burst;
-+	u16 tr0_cnt0, tr0_cnt1, tr1_cnt0;
-+	unsigned int i;
-+	int num_tr;
- 
--	if (dir == DMA_DEV_TO_MEM) {
--		dev_width = uc->cfg.src_addr_width;
--		burst = uc->cfg.src_maxburst;
--	} else if (dir == DMA_MEM_TO_DEV) {
--		dev_width = uc->cfg.dst_addr_width;
--		burst = uc->cfg.dst_maxburst;
--	} else {
--		dev_err(uc->ud->dev, "%s: bad direction?\n", __func__);
-+	if (!is_slave_direction(dir)) {
-+		dev_err(uc->ud->dev, "Only slave cyclic is supported\n");
- 		return NULL;
- 	}
- 
--	if (!burst)
--		burst = 1;
-+	num_tr = udma_get_tr_counters(period_len, __ffs(buf_addr), &tr0_cnt0,
-+				      &tr0_cnt1, &tr1_cnt0);
-+	if (num_tr < 0) {
-+		dev_err(uc->ud->dev, "size %zu is not supported\n",
-+			period_len);
-+		return NULL;
-+	}
- 
- 	/* Now allocate and setup the descriptor. */
- 	tr_size = sizeof(struct cppi5_tr_type1_t);
--	d = udma_alloc_tr_desc(uc, tr_size, periods, dir);
-+	d = udma_alloc_tr_desc(uc, tr_size, periods * num_tr, dir);
- 	if (!d)
- 		return NULL;
- 
- 	tr_req = d->hwdesc[0].tr_req_base;
-+	period_addr = buf_addr;
- 	for (i = 0; i < periods; i++) {
--		cppi5_tr_init(&tr_req[i].flags, CPPI5_TR_TYPE1, false, false,
--			      CPPI5_TR_EVENT_SIZE_COMPLETION, 0);
-+		int tr_idx = i * num_tr;
- 
--		tr_req[i].addr = buf_addr + period_len * i;
--		tr_req[i].icnt0 = dev_width;
--		tr_req[i].icnt1 = period_len / dev_width;
--		tr_req[i].dim1 = dev_width;
-+		cppi5_tr_init(&tr_req[tr_idx].flags, CPPI5_TR_TYPE1, false,
-+			      false, CPPI5_TR_EVENT_SIZE_COMPLETION, 0);
-+
-+		tr_req[tr_idx].addr = period_addr;
-+		tr_req[tr_idx].icnt0 = tr0_cnt0;
-+		tr_req[tr_idx].icnt1 = tr0_cnt1;
-+		tr_req[tr_idx].dim1 = tr0_cnt0;
-+
-+		if (num_tr == 2) {
-+			cppi5_tr_csf_set(&tr_req[tr_idx].flags,
-+					 CPPI5_TR_CSF_SUPR_EVT);
-+			tr_idx++;
-+
-+			cppi5_tr_init(&tr_req[tr_idx].flags, CPPI5_TR_TYPE1,
-+				      false, false,
-+				      CPPI5_TR_EVENT_SIZE_COMPLETION, 0);
-+
-+			tr_req[tr_idx].addr = period_addr + tr0_cnt1 * tr0_cnt0;
-+			tr_req[tr_idx].icnt0 = tr1_cnt0;
-+			tr_req[tr_idx].icnt1 = 1;
-+			tr_req[tr_idx].dim1 = tr1_cnt0;
-+		}
- 
- 		if (!(flags & DMA_PREP_INTERRUPT))
--			cppi5_tr_csf_set(&tr_req[i].flags,
-+			cppi5_tr_csf_set(&tr_req[tr_idx].flags,
- 					 CPPI5_TR_CSF_SUPR_EVT);
-+
-+		period_addr += period_len;
- 	}
- 
- 	return d;
 -- 
 Peter
 
