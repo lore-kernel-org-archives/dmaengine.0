@@ -1,189 +1,130 @@
-Return-Path: <SRS0=3f10=4C=vger.kernel.org=dmaengine-owner@kernel.org>
+Return-Path: <SRS0=qCC7=4F=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.1 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=unavailable
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-11.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C0DB6C3B1B9
-	for <dmaengine@archiver.kernel.org>; Fri, 14 Feb 2020 18:24:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 447AFC7619B
+	for <dmaengine@archiver.kernel.org>; Mon, 17 Feb 2020 01:55:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 9443C2168B
-	for <dmaengine@archiver.kernel.org>; Fri, 14 Feb 2020 18:24:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1581704669;
-	bh=gy6cSk/mJ9DL3eoxl/R33L4+8ze4UUWArDMHb+InQKI=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:List-ID:From;
-	b=pUXj00qQXGos3ys6GBEYyOMNk0Q0kW65v5t6sTtaxd50KRhbSg93TuLlZY2orf3/+
-	 1AnToMyznHkEG4QAR6jVVxy8yOyl8vWkcQj+hvdvvcIAWKQAMHL1HsmmwXO3n4BenZ
-	 megn6q47Ogh21KzTdvbnvnqoUHBD2ZagNw5w7xf4=
+	by mail.kernel.org (Postfix) with ESMTP id 1D8282072C
+	for <dmaengine@archiver.kernel.org>; Mon, 17 Feb 2020 01:55:31 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fGMnmElS"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729661AbgBNPtN (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 14 Feb 2020 10:49:13 -0500
-Received: from mail.kernel.org ([198.145.29.99]:51830 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729804AbgBNPtN (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Fri, 14 Feb 2020 10:49:13 -0500
-Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 0657B217F4;
-        Fri, 14 Feb 2020 15:49:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1581695352;
-        bh=gy6cSk/mJ9DL3eoxl/R33L4+8ze4UUWArDMHb+InQKI=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=eYkIDO7Hbs5dKI6M2CECkVcEgualeKP24JIOVXXQh1XY4X6UCXF5loMyhpfJQyopv
-         0Ia9gFT4QqZ+7j0ITkEJnJ5zlEzSLbQRkGyGX0pfqdDGyR2ttJ4xgw+dTGplPDlR9L
-         loQVbknkyyy0DZauk0FGl9WtrbNfwN4Mdpc8BIfo=
-From:   Sasha Levin <sashal@kernel.org>
-To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Chuhong Yuan <hslester96@gmail.com>,
-        Peter Ujfalusi <peter.ujfalusi@ti.com>,
-        Vinod Koul <vkoul@kernel.org>, Sasha Levin <sashal@kernel.org>,
-        dmaengine@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.5 014/542] dmaengine: ti: edma: add missed operations
-Date:   Fri, 14 Feb 2020 10:40:06 -0500
-Message-Id: <20200214154854.6746-14-sashal@kernel.org>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20200214154854.6746-1-sashal@kernel.org>
-References: <20200214154854.6746-1-sashal@kernel.org>
+        id S1726717AbgBQBza (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Sun, 16 Feb 2020 20:55:30 -0500
+Received: from mail-qt1-f195.google.com ([209.85.160.195]:34605 "EHLO
+        mail-qt1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726551AbgBQBza (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Sun, 16 Feb 2020 20:55:30 -0500
+Received: by mail-qt1-f195.google.com with SMTP id l16so6388772qtq.1;
+        Sun, 16 Feb 2020 17:55:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=/qDOmCXFTgruSYsln27jvW69b87aN/svbpuiBXSYyss=;
+        b=fGMnmElS8wotL0yxqURfAcjh9g48StpNQichZx9J6ytEfLAWg+yn2Ps/V9HpduoOPM
+         fEY7USeLncQDj4SAvHyhCrHSxuqHPM3qBHpZ2VHXYdPqPJDgsQp+NBHSJw9PsVfWzeUI
+         JkHl4xnILKYj3qKt0Br6v2WHKlFWrtGrxxuC6ZfwhfPJB2N1RUPY82uCGjoAr6OAVsO7
+         SGOaE02pKi57j7Rv9/FDX2vCg5pLFYYMi/4jGDiwHZywLZf3rbzUPmrs3T+wI87XNK12
+         RF41cHCDGjB60WxIsWPbcRrWnETTIoM5cU0fxM/JriptNyujA6NsjUOmF/kIB6A5T2R4
+         3OAw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=/qDOmCXFTgruSYsln27jvW69b87aN/svbpuiBXSYyss=;
+        b=kavsNIzLC8IwyPRyH8azIAuZpcr9mUbgFXv2Yw6jyU6zi/Pryz0f/JOeS7Tbd87dWM
+         wffPETGDVKygkbOcTc1IhmYdYH+CsasEUm1Mt6DTLwdRuKpgAsHiHdZpY6bMDothyfYm
+         /J5q02Tx4qJ3fQkjgOLPnplJyVIq1ZqU2j6GhKD8tyO1ifRQuZ9z/L74j+EbAb/XSNCx
+         u0pV68Tvs/eyUR4dPwWChBQJtbvnFJcmy92dIjtcQgiY28p2wdizSiGQnQpXRVXBObG6
+         l/YBrQB2FGfZdgc2OcAYTiFKVIlDL81VhT5It0v8q43gLmk2RQK4qIsOvqSPEwkJ+6s+
+         QBRw==
+X-Gm-Message-State: APjAAAV+pid8DDfrWIMmjLVxqwa01Jn77u2vblq1MlvUZBY/xi1obGnX
+        Yp/rCoTbzOu/q27ev35vbcaoUONqnTKun0YR5qrwKn4+
+X-Google-Smtp-Source: APXvYqyv1gfJ0LbH1O5DNLLzXVZ1UT0EvQ8/jiCTwYsJeHfOHBmflFZOAM9c+S7Rcw7de1oOMCwZt+0N0BkRe6umPCk=
+X-Received: by 2002:aed:2202:: with SMTP id n2mr11926482qtc.4.1581904529345;
+ Sun, 16 Feb 2020 17:55:29 -0800 (PST)
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-Content-Transfer-Encoding: 8bit
+References: <20200214171536.GA24077@embeddedor>
+In-Reply-To: <20200214171536.GA24077@embeddedor>
+From:   Baolin Wang <baolin.wang7@gmail.com>
+Date:   Mon, 17 Feb 2020 09:55:17 +0800
+Message-ID: <CADBw62qTu2dGL+dGgC6WzsSusVfDKxUdd57f_1jn_A-Vf1-rrQ@mail.gmail.com>
+Subject: Re: [PATCH] dmaengine: sprd: Replace zero-length array with
+ flexible-array member
+To:     "Gustavo A. R. Silva" <gustavo@embeddedor.com>
+Cc:     Vinod Koul <vkoul@kernel.org>,
+        Dan Williams <dan.j.williams@intel.com>,
+        Orson Zhai <orsonzhai@gmail.com>,
+        Chunyan Zhang <zhang.lyra@gmail.com>,
+        dmaengine@vger.kernel.org, LKML <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-From: Chuhong Yuan <hslester96@gmail.com>
+Hi,
 
-[ Upstream commit 2a03c1314506557277829562dd2ec5c11a6ea914 ]
+On Sat, Feb 15, 2020 at 2:04 AM Gustavo A. R. Silva
+<gustavo@embeddedor.com> wrote:
+>
+> The current codebase makes use of the zero-length array language
+> extension to the C90 standard, but the preferred mechanism to declare
+> variable-length types such as these ones is a flexible array member[1][2],
+> introduced in C99:
+>
+> struct foo {
+>         int stuff;
+>         struct boo array[];
+> };
+>
+> By making use of the mechanism above, we will get a compiler warning
+> in case the flexible array does not occur last in the structure, which
+> will help us prevent some kind of undefined behavior bugs from being
+> inadvertently introduced[3] to the codebase from now on.
+>
+> Also, notice that, dynamic memory allocations won't be affected by
+> this change:
+>
+> "Flexible array members have incomplete type, and so the sizeof operator
+> may not be applied. As a quirk of the original implementation of
+> zero-length arrays, sizeof evaluates to zero."[1]
+>
+> This issue was found with the help of Coccinelle.
+>
+> [1] https://gcc.gnu.org/onlinedocs/gcc/Zero-Length.html
+> [2] https://github.com/KSPP/linux/issues/21
+> [3] commit 76497732932f ("cxgb3/l2t: Fix undefined behaviour")
 
-The driver forgets to call pm_runtime_disable and pm_runtime_put_sync in
-probe failure and remove.
-Add the calls and modify probe failure handling to fix it.
+Looks good to me. Thanks.
+Reviewed-by: Baolin Wang <baolin.wang7@gmail.com>
 
-To simplify the fix, the patch adjusts the calling order and merges checks
-for devm_kcalloc.
-
-Fixes: 2b6b3b742019 ("ARM/dmaengine: edma: Merge the two drivers under drivers/dma/")
-Signed-off-by: Chuhong Yuan <hslester96@gmail.com>
-Acked-by: Peter Ujfalusi <peter.ujfalusi@ti.com>
-Link: https://lore.kernel.org/r/20191124052855.6472-1-hslester96@gmail.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- drivers/dma/ti/edma.c | 37 ++++++++++++++++++++-----------------
- 1 file changed, 20 insertions(+), 17 deletions(-)
-
-diff --git a/drivers/dma/ti/edma.c b/drivers/dma/ti/edma.c
-index 756a3c951dc72..0628ee4bf1b41 100644
---- a/drivers/dma/ti/edma.c
-+++ b/drivers/dma/ti/edma.c
-@@ -2289,13 +2289,6 @@ static int edma_probe(struct platform_device *pdev)
- 	if (!info)
- 		return -ENODEV;
- 
--	pm_runtime_enable(dev);
--	ret = pm_runtime_get_sync(dev);
--	if (ret < 0) {
--		dev_err(dev, "pm_runtime_get_sync() failed\n");
--		return ret;
--	}
--
- 	ret = dma_set_mask_and_coherent(dev, DMA_BIT_MASK(32));
- 	if (ret)
- 		return ret;
-@@ -2326,27 +2319,31 @@ static int edma_probe(struct platform_device *pdev)
- 
- 	platform_set_drvdata(pdev, ecc);
- 
-+	pm_runtime_enable(dev);
-+	ret = pm_runtime_get_sync(dev);
-+	if (ret < 0) {
-+		dev_err(dev, "pm_runtime_get_sync() failed\n");
-+		pm_runtime_disable(dev);
-+		return ret;
-+	}
-+
- 	/* Get eDMA3 configuration from IP */
- 	ret = edma_setup_from_hw(dev, info, ecc);
- 	if (ret)
--		return ret;
-+		goto err_disable_pm;
- 
- 	/* Allocate memory based on the information we got from the IP */
- 	ecc->slave_chans = devm_kcalloc(dev, ecc->num_channels,
- 					sizeof(*ecc->slave_chans), GFP_KERNEL);
--	if (!ecc->slave_chans)
--		return -ENOMEM;
- 
- 	ecc->slot_inuse = devm_kcalloc(dev, BITS_TO_LONGS(ecc->num_slots),
- 				       sizeof(unsigned long), GFP_KERNEL);
--	if (!ecc->slot_inuse)
--		return -ENOMEM;
- 
- 	ecc->channels_mask = devm_kcalloc(dev,
- 					   BITS_TO_LONGS(ecc->num_channels),
- 					   sizeof(unsigned long), GFP_KERNEL);
--	if (!ecc->channels_mask)
--		return -ENOMEM;
-+	if (!ecc->slave_chans || !ecc->slot_inuse || !ecc->channels_mask)
-+		goto err_disable_pm;
- 
- 	/* Mark all channels available initially */
- 	bitmap_fill(ecc->channels_mask, ecc->num_channels);
-@@ -2388,7 +2385,7 @@ static int edma_probe(struct platform_device *pdev)
- 				       ecc);
- 		if (ret) {
- 			dev_err(dev, "CCINT (%d) failed --> %d\n", irq, ret);
--			return ret;
-+			goto err_disable_pm;
- 		}
- 		ecc->ccint = irq;
- 	}
-@@ -2404,7 +2401,7 @@ static int edma_probe(struct platform_device *pdev)
- 				       ecc);
- 		if (ret) {
- 			dev_err(dev, "CCERRINT (%d) failed --> %d\n", irq, ret);
--			return ret;
-+			goto err_disable_pm;
- 		}
- 		ecc->ccerrint = irq;
- 	}
-@@ -2412,7 +2409,8 @@ static int edma_probe(struct platform_device *pdev)
- 	ecc->dummy_slot = edma_alloc_slot(ecc, EDMA_SLOT_ANY);
- 	if (ecc->dummy_slot < 0) {
- 		dev_err(dev, "Can't allocate PaRAM dummy slot\n");
--		return ecc->dummy_slot;
-+		ret = ecc->dummy_slot;
-+		goto err_disable_pm;
- 	}
- 
- 	queue_priority_mapping = info->queue_priority_mapping;
-@@ -2512,6 +2510,9 @@ static int edma_probe(struct platform_device *pdev)
- 
- err_reg1:
- 	edma_free_slot(ecc, ecc->dummy_slot);
-+err_disable_pm:
-+	pm_runtime_put_sync(dev);
-+	pm_runtime_disable(dev);
- 	return ret;
- }
- 
-@@ -2542,6 +2543,8 @@ static int edma_remove(struct platform_device *pdev)
- 	if (ecc->dma_memcpy)
- 		dma_async_device_unregister(ecc->dma_memcpy);
- 	edma_free_slot(ecc, ecc->dummy_slot);
-+	pm_runtime_put_sync(dev);
-+	pm_runtime_disable(dev);
- 
- 	return 0;
- }
--- 
-2.20.1
-
+> Signed-off-by: Gustavo A. R. Silva <gustavo@embeddedor.com>
+> ---
+>  drivers/dma/sprd-dma.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/drivers/dma/sprd-dma.c b/drivers/dma/sprd-dma.c
+> index 9a31a315dbef..954eff32cc05 100644
+> --- a/drivers/dma/sprd-dma.c
+> +++ b/drivers/dma/sprd-dma.c
+> @@ -212,7 +212,7 @@ struct sprd_dma_dev {
+>         struct clk              *ashb_clk;
+>         int                     irq;
+>         u32                     total_chns;
+> -       struct sprd_dma_chn     channels[0];
+> +       struct sprd_dma_chn     channels[];
+>  };
+>
+>  static void sprd_dma_free_desc(struct virt_dma_desc *vd);
+> --
+> 2.25.0
+>
