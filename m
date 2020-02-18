@@ -2,135 +2,112 @@ Return-Path: <SRS0=dJ4N=4G=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.1 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS
-	autolearn=unavailable autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 16098C34022
-	for <dmaengine@archiver.kernel.org>; Tue, 18 Feb 2020 01:34:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 664C0C34026
+	for <dmaengine@archiver.kernel.org>; Tue, 18 Feb 2020 14:31:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id DF33A20801
-	for <dmaengine@archiver.kernel.org>; Tue, 18 Feb 2020 01:34:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1581989685;
-	bh=3BzT6RmcZZj5eSlHT2DLI4ExcRF4k9v31POx0RmC3MI=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:List-ID:From;
-	b=cKpRCwaWw4F4wVyZnyErtYbxBkX5ab+z/uJhLOUw4aWcwNZRmr5+0S/SaJ6jDYgcX
-	 SAhzvRJTnEOkEVlU/NR0pBQViz5lhiRoHuzfQze2M3Xdr6Wap6OFuRgHT/XNNc0SnV
-	 LCTecTCy481u3CBcA57IcLsUKFiYb5PQepfRcHzY=
+	by mail.kernel.org (Postfix) with ESMTP id 3C1182464E
+	for <dmaengine@archiver.kernel.org>; Tue, 18 Feb 2020 14:31:28 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b="b2pdloQ7"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726097AbgBRBep (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 17 Feb 2020 20:34:45 -0500
-Received: from condef-09.nifty.com ([202.248.20.74]:56158 "EHLO
-        condef-09.nifty.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726182AbgBRBep (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Mon, 17 Feb 2020 20:34:45 -0500
-X-Greylist: delayed 305 seconds by postgrey-1.27 at vger.kernel.org; Mon, 17 Feb 2020 20:34:43 EST
-Received: from conssluserg-06.nifty.com ([10.126.8.85])by condef-09.nifty.com with ESMTP id 01I1QQFF025679
-        for <dmaengine@vger.kernel.org>; Tue, 18 Feb 2020 10:26:26 +0900
-Received: from mail-vs1-f47.google.com (mail-vs1-f47.google.com [209.85.217.47]) (authenticated)
-        by conssluserg-06.nifty.com with ESMTP id 01I1QD7N019766;
-        Tue, 18 Feb 2020 10:26:13 +0900
-DKIM-Filter: OpenDKIM Filter v2.10.3 conssluserg-06.nifty.com 01I1QD7N019766
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nifty.com;
-        s=dec2015msa; t=1581989173;
-        bh=DFo5bZ5Bm4QsGsx8r/W+4n6QGw47HateZtKF1IqGjK4=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=jp8Y9Unk0X+nZxx/4xNp0bdyquwZdI2uguxEiL1thKibD01TDUQchfpR8tzH9qo54
-         ebqsDP1nPj2QrD86PyvvbtgtDZ8+GiPD1y5RNNa6TGQb56nqw213MaBrl/ua5uUOxU
-         5DgFbeS7eoU+ayS6eMsbL5jSguqEf93I5A31J7oZ1wYAGR5ojC7dKyrDGv00Cngfqv
-         iT2QgcdCBSG0oK5tLSXvBgDlhX0dsPlOMUfK8JtSI8F5ZV+NyZIQxGvqxdkZit3/wz
-         E3LUSTLD5c77SzuZHnSt3ucM4iXEOsnInbp7Gg7ExPHJF4YNry6LYvdUFi/EjL6m5E
-         7JX8AjBphg6hQ==
-X-Nifty-SrcIP: [209.85.217.47]
-Received: by mail-vs1-f47.google.com with SMTP id b79so11619638vsd.9;
-        Mon, 17 Feb 2020 17:26:13 -0800 (PST)
-X-Gm-Message-State: APjAAAXDw3l+2liVfeoZoOSWVq0aQOuWwLZcHtyuN26YGAH5hwNeh+Lo
-        fk08zvlMAvRr8imthlwwaLkWMfoNfS1LlR46Lmo=
-X-Google-Smtp-Source: APXvYqxSiKTUTozFX1mDbJzMmvg2TfqQRp6FqoGdjnaYvvmSAf4Wg9j1N4gyQ+nadCxh2KhQZghaCZKnVejvMtBs3tE=
-X-Received: by 2002:a05:6102:190:: with SMTP id r16mr9552896vsq.215.1581989172430;
- Mon, 17 Feb 2020 17:26:12 -0800 (PST)
+        id S1726422AbgBROb1 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 18 Feb 2020 09:31:27 -0500
+Received: from fllv0016.ext.ti.com ([198.47.19.142]:50142 "EHLO
+        fllv0016.ext.ti.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726116AbgBROb1 (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Tue, 18 Feb 2020 09:31:27 -0500
+Received: from fllv0034.itg.ti.com ([10.64.40.246])
+        by fllv0016.ext.ti.com (8.15.2/8.15.2) with ESMTP id 01IEVL7d078364;
+        Tue, 18 Feb 2020 08:31:21 -0600
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
+        s=ti-com-17Q1; t=1582036281;
+        bh=82b+GU41j6/ZUJlCKcQWhnK8ypPA4+6ZqSrNcaCLVjI=;
+        h=From:To:CC:Subject:Date;
+        b=b2pdloQ7Oy5dzKqhKxVB+Ai2KlO0KfgQ246uuv69Q5YSJlX9WnIzYZZAiH5xhuwij
+         SQfNOWG1PR0DOYU6qh/V70wxru0id4y2KrtyJNDn48Kw78dpc86Spag7zxtSyMnGmK
+         V18i8z3+4aVWoM6oK1L+PNsu/RREl9I4lSeJL36M=
+Received: from DFLE108.ent.ti.com (dfle108.ent.ti.com [10.64.6.29])
+        by fllv0034.itg.ti.com (8.15.2/8.15.2) with ESMTPS id 01IEVK1R108705
+        (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
+        Tue, 18 Feb 2020 08:31:21 -0600
+Received: from DFLE108.ent.ti.com (10.64.6.29) by DFLE108.ent.ti.com
+ (10.64.6.29) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1847.3; Tue, 18
+ Feb 2020 08:31:20 -0600
+Received: from lelv0327.itg.ti.com (10.180.67.183) by DFLE108.ent.ti.com
+ (10.64.6.29) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1847.3 via
+ Frontend Transport; Tue, 18 Feb 2020 08:31:20 -0600
+Received: from feketebors.ti.com (ileax41-snat.itg.ti.com [10.172.224.153])
+        by lelv0327.itg.ti.com (8.15.2/8.15.2) with ESMTP id 01IEVHXJ098737;
+        Tue, 18 Feb 2020 08:31:18 -0600
+From:   Peter Ujfalusi <peter.ujfalusi@ti.com>
+To:     <vkoul@kernel.org>, <robh+dt@kernel.org>, <mark.rutland@arm.com>
+CC:     <dmaengine@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <dan.j.williams@intel.com>, <grygorii.strashko@ti.com>,
+        <devicetree@vger.kernel.org>
+Subject: [PATCH 0/2] dmaengine: ti: k3-udma: Support for per channel atype
+Date:   Tue, 18 Feb 2020 16:31:24 +0200
+Message-ID: <20200218143126.11361-1-peter.ujfalusi@ti.com>
+X-Mailer: git-send-email 2.25.0
 MIME-Version: 1.0
-References: <20200213003535.GA3269@embeddedor.com>
-In-Reply-To: <20200213003535.GA3269@embeddedor.com>
-From:   Masahiro Yamada <masahiroy@kernel.org>
-Date:   Tue, 18 Feb 2020 10:25:36 +0900
-X-Gmail-Original-Message-ID: <CAK7LNAS8TomJow4_3T++3u+eo=KhRMP9V5X=urWNRPUE93NOvQ@mail.gmail.com>
-Message-ID: <CAK7LNAS8TomJow4_3T++3u+eo=KhRMP9V5X=urWNRPUE93NOvQ@mail.gmail.com>
-Subject: Re: [PATCH] dmaengine: uniphier-mdmac: replace zero-length array with
- flexible-array member
-To:     "Gustavo A. R. Silva" <gustavo@embeddedor.com>
-Cc:     Dan Williams <dan.j.williams@intel.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        "open list:DMA GENERIC OFFLOAD ENGINE SUBSYSTEM" 
-        <dmaengine@vger.kernel.org>,
-        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-EXCLAIMER-MD-CONFIG: e1e8a2fd-e40a-4ac6-ac9b-f7e9cc9ee180
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On Thu, Feb 13, 2020 at 9:35 AM Gustavo A. R. Silva
-<gustavo@embeddedor.com> wrote:
->
-> The current codebase makes use of the zero-length array language
-> extension to the C90 standard, but the preferred mechanism to declare
-> variable-length types such as these ones is a flexible array member[1][2],
-> introduced in C99:
->
-> struct foo {
->         int stuff;
->         struct boo array[];
-> };
->
-> By making use of the mechanism above, we will get a compiler warning
-> in case the flexible array does not occur last in the structure, which
-> will help us prevent some kind of undefined behavior bugs from being
-> inadvertently introduced[3] to the codebase from now on.
->
-> Also, notice that, dynamic memory allocations won't be affected by
-> this change:
->
-> "Flexible array members have incomplete type, and so the sizeof operator
-> may not be applied. As a quirk of the original implementation of
-> zero-length arrays, sizeof evaluates to zero."[1]
->
-> This issue was found with the help of Coccinelle.
->
-> [1] https://gcc.gnu.org/onlinedocs/gcc/Zero-Length.html
-> [2] https://github.com/KSPP/linux/issues/21
-> [3] commit 76497732932f ("cxgb3/l2t: Fix undefined behaviour")
->
-> Signed-off-by: Gustavo A. R. Silva <gustavo@embeddedor.com>
+Hi,
 
-Acked-by: Masahiro Yamada <yamada.masahiro@socionext.com>
+The series is on top of the 5.6 update patches:
+https://lore.kernel.org/lkml/20200214091441.27535-1-peter.ujfalusi@ti.com/
 
+UDMA channels have ATYPE property which tells UDMA on how to treat the pointers
+within descriptors (and TRs).
+The ATYPE defined for j721e are:
+0: pointers are physical addresses (no translation)
+1: pointers are intermediate addresses (PVU)
+2: pointers are virtual addresses (SMMU)
 
-> ---
->  drivers/dma/uniphier-mdmac.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/drivers/dma/uniphier-mdmac.c b/drivers/dma/uniphier-mdmac.c
-> index 21b8f1131d55..618839df0748 100644
-> --- a/drivers/dma/uniphier-mdmac.c
-> +++ b/drivers/dma/uniphier-mdmac.c
-> @@ -68,7 +68,7 @@ struct uniphier_mdmac_device {
->         struct dma_device ddev;
->         struct clk *clk;
->         void __iomem *reg_base;
-> -       struct uniphier_mdmac_chan channels[0];
-> +       struct uniphier_mdmac_chan channels[];
->  };
->
->  static struct uniphier_mdmac_chan *
-> --
-> 2.23.0
->
+When Linux is booting within a virtualized environment channels must have the
+ATYPE configured correctly to be able to access memory (ATYPE == 0 is not
+allowed).
+The ATYPE can be different for channels and their ATYPE depends on which
+endpoint they are servicing, but it is not hardwired.
 
+In order to be able to tell the driver the ATYPE for the channel we need to
+extend the dma-cells in case the device is going to be used in virtualized
+setup.
+
+Non virtualized setups can still use dma-cells == 1.
+
+If dma-cells == 2, then the UDMA node must have ti,udma-atype property which
+is used for non slave channels (where no DT binding is exist for a channel).
+
+Regards,
+Peter
+---
+Peter Ujfalusi (2):
+  dt-bindings: dma: ti: k3-udma: Update for atype support
+    (virtualization)
+  dmaengine: ti: k3-udma: Implement support for atype (for
+    virtualization)
+
+ .../devicetree/bindings/dma/ti/k3-udma.yaml   | 19 ++++++-
+ drivers/dma/ti/k3-udma-glue.c                 | 18 ++++++-
+ drivers/dma/ti/k3-udma.c                      | 50 ++++++++++++++++---
+ 3 files changed, 76 insertions(+), 11 deletions(-)
 
 -- 
-Best Regards
-Masahiro Yamada
+Peter
+
+Texas Instruments Finland Oy, Porkkalankatu 22, 00180 Helsinki.
+Y-tunnus/Business ID: 0615521-4. Kotipaikka/Domicile: Helsinki
+
