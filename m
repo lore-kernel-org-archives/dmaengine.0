@@ -2,31 +2,31 @@ Return-Path: <SRS0=+vnI=4H=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.7 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ECFFBC34031
-	for <dmaengine@archiver.kernel.org>; Wed, 19 Feb 2020 01:52:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 56B4AC34031
+	for <dmaengine@archiver.kernel.org>; Wed, 19 Feb 2020 01:52:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id C15CA24654
-	for <dmaengine@archiver.kernel.org>; Wed, 19 Feb 2020 01:52:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3AC0C24654
+	for <dmaengine@archiver.kernel.org>; Wed, 19 Feb 2020 01:52:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727936AbgBSBwZ (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 18 Feb 2020 20:52:25 -0500
+        id S1727635AbgBSBw2 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 18 Feb 2020 20:52:28 -0500
 Received: from mx.socionext.com ([202.248.49.38]:19789 "EHLO mx.socionext.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726698AbgBSBwZ (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Tue, 18 Feb 2020 20:52:25 -0500
-Received: from unknown (HELO iyokan-ex.css.socionext.com) ([172.31.9.54])
-  by mx.socionext.com with ESMTP; 19 Feb 2020 10:52:24 +0900
-Received: from mail.mfilter.local (m-filter-2 [10.213.24.62])
-        by iyokan-ex.css.socionext.com (Postfix) with ESMTP id 43C04603AC;
-        Wed, 19 Feb 2020 10:52:24 +0900 (JST)
-Received: from 172.31.9.51 (172.31.9.51) by m-FILTER with ESMTP; Wed, 19 Feb 2020 10:52:24 +0900
+        id S1727944AbgBSBw0 (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Tue, 18 Feb 2020 20:52:26 -0500
+Received: from unknown (HELO kinkan-ex.css.socionext.com) ([172.31.9.52])
+  by mx.socionext.com with ESMTP; 19 Feb 2020 10:52:25 +0900
+Received: from mail.mfilter.local (m-filter-1 [10.213.24.61])
+        by kinkan-ex.css.socionext.com (Postfix) with ESMTP id 5A079180BCF;
+        Wed, 19 Feb 2020 10:52:25 +0900 (JST)
+Received: from 172.31.9.51 (172.31.9.51) by m-FILTER with ESMTP; Wed, 19 Feb 2020 10:52:25 +0900
 Received: from plum.e01.socionext.com (unknown [10.213.132.32])
-        by kinkan.css.socionext.com (Postfix) with ESMTP id CD6A11A01BB;
-        Wed, 19 Feb 2020 10:52:23 +0900 (JST)
+        by kinkan.css.socionext.com (Postfix) with ESMTP id E31021A01BB;
+        Wed, 19 Feb 2020 10:52:24 +0900 (JST)
 From:   Kunihiko Hayashi <hayashi.kunihiko@socionext.com>
 To:     Vinod Koul <vkoul@kernel.org>,
         Dan Williams <dan.j.williams@intel.com>,
@@ -38,41 +38,95 @@ Cc:     dmaengine@vger.kernel.org, devicetree@vger.kernel.org,
         Masami Hiramatsu <masami.hiramatsu@linaro.org>,
         Jassi Brar <jaswinder.singh@linaro.org>,
         Kunihiko Hayashi <hayashi.kunihiko@socionext.com>
-Subject: [PATCH v3 0/2] dmaengine: Add UniPhier XDMAC driver
-Date:   Wed, 19 Feb 2020 10:52:19 +0900
-Message-Id: <1582077141-16793-1-git-send-email-hayashi.kunihiko@socionext.com>
+Subject: [PATCH v3 1/2] dt-bindings: dmaengine: Add UniPhier external DMA controller bindings
+Date:   Wed, 19 Feb 2020 10:52:20 +0900
+Message-Id: <1582077141-16793-2-git-send-email-hayashi.kunihiko@socionext.com>
 X-Mailer: git-send-email 2.7.4
+In-Reply-To: <1582077141-16793-1-git-send-email-hayashi.kunihiko@socionext.com>
+References: <1582077141-16793-1-git-send-email-hayashi.kunihiko@socionext.com>
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Add support for UniPhier external DMA controller (XDMAC), that is
-implemented in Pro4, Pro5, PXs2, LD11, LD20 and PXs3 SoCs.
+Add devicetree binding documentation for external DMA controller
+implemented on Socionext UniPhier SOCs.
 
-Changes since v2:
-- dt-bindings: Fix SPDX and some properties
-- Fix iteration count calculation for memcpy
-- Replace zero-length array with flexible-array member in struct
-  uniphier_xdmac_device.
-
-Changes since v1:
-- dt-bindings: Rewrite with DT schema.
-- Change return type of uniphier_xdmac_chan_init() to void,
-  and remove error return in probe.
-
-Kunihiko Hayashi (2):
-  dt-bindings: dmaengine: Add UniPhier external DMA controller bindings
-  dmaengine: uniphier-xdmac: Add UniPhier external DMA controller driver
-
- .../bindings/dma/socionext,uniphier-xdmac.yaml     |  63 +++
- drivers/dma/Kconfig                                |  11 +
- drivers/dma/Makefile                               |   1 +
- drivers/dma/uniphier-xdmac.c                       | 611 +++++++++++++++++++++
- 4 files changed, 686 insertions(+)
+Signed-off-by: Kunihiko Hayashi <hayashi.kunihiko@socionext.com>
+---
+ .../bindings/dma/socionext,uniphier-xdmac.yaml     | 63 ++++++++++++++++++++++
+ 1 file changed, 63 insertions(+)
  create mode 100644 Documentation/devicetree/bindings/dma/socionext,uniphier-xdmac.yaml
- create mode 100644 drivers/dma/uniphier-xdmac.c
 
+diff --git a/Documentation/devicetree/bindings/dma/socionext,uniphier-xdmac.yaml b/Documentation/devicetree/bindings/dma/socionext,uniphier-xdmac.yaml
+new file mode 100644
+index 00000000..dc7c477
+--- /dev/null
++++ b/Documentation/devicetree/bindings/dma/socionext,uniphier-xdmac.yaml
+@@ -0,0 +1,63 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/dma/socionext,uniphier-xdmac.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Socionext UniPhier external DMA controller
++
++description: |
++  This describes the devicetree bindings for an external DMA engine to perform
++  memory-to-memory or peripheral-to-memory data transfer capable of supporting
++  16 channels, implemented in Socionext UniPhier SoCs.
++
++maintainers:
++  - Kunihiko Hayashi <hayashi.kunihiko@socionext.com>
++
++allOf:
++  - $ref: "dma-controller.yaml#"
++
++properties:
++  compatible:
++    const: socionext,uniphier-xdmac
++
++  reg:
++    items:
++      - description: XDMAC base register region (offset and length)
++      - description: XDMAC extension register region (offset and length)
++
++  interrupts:
++    maxItems: 1
++
++  "#dma-cells":
++    const: 2
++    description: |
++      DMA request from clients consists of 2 cells:
++        1. Channel index
++        2. Transfer request factor number, If no transfer factor, use 0.
++           The number is SoC-specific, and this should be specified with
++           relation to the device to use the DMA controller.
++
++  dma-channels:
++    minimum: 1
++    maximum: 16
++
++additinalProperties: false
++
++required:
++  - compatible
++  - reg
++  - interrupts
++  - "#dma-cells"
++
++examples:
++  - |
++    xdmac: dma-controller@5fc10000 {
++        compatible = "socionext,uniphier-xdmac";
++        reg = <0x5fc10000 0x1000>, <0x5fc20000 0x800>;
++        interrupts = <0 188 4>;
++        #dma-cells = <2>;
++        dma-channels = <16>;
++    };
++
++...
 -- 
 2.7.4
 
