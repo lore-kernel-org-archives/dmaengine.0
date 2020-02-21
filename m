@@ -2,98 +2,103 @@ Return-Path: <SRS0=qvc2=4J=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 93ABAC35640
-	for <dmaengine@archiver.kernel.org>; Fri, 21 Feb 2020 08:49:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5C91EC35656
+	for <dmaengine@archiver.kernel.org>; Fri, 21 Feb 2020 14:51:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 6939920722
-	for <dmaengine@archiver.kernel.org>; Fri, 21 Feb 2020 08:49:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3068624656
+	for <dmaengine@archiver.kernel.org>; Fri, 21 Feb 2020 14:51:05 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="tCMstupy"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388376AbgBUIty (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 21 Feb 2020 03:49:54 -0500
-Received: from mx.socionext.com ([202.248.49.38]:50873 "EHLO mx.socionext.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727993AbgBUHoa (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Fri, 21 Feb 2020 02:44:30 -0500
-Received: from unknown (HELO iyokan-ex.css.socionext.com) ([172.31.9.54])
-  by mx.socionext.com with ESMTP; 21 Feb 2020 16:44:28 +0900
-Received: from mail.mfilter.local (m-filter-1 [10.213.24.61])
-        by iyokan-ex.css.socionext.com (Postfix) with ESMTP id BE6F5603AB;
-        Fri, 21 Feb 2020 16:44:28 +0900 (JST)
-Received: from 172.31.9.53 (172.31.9.53) by m-FILTER with ESMTP; Fri, 21 Feb 2020 16:44:28 +0900
-Received: from yuzu.css.socionext.com (yuzu [172.31.8.45])
-        by iyokan.css.socionext.com (Postfix) with ESMTP id 4FCED403B2;
-        Fri, 21 Feb 2020 16:44:28 +0900 (JST)
-Received: from [10.213.132.48] (unknown [10.213.132.48])
-        by yuzu.css.socionext.com (Postfix) with ESMTP id 1AC8E12047F;
-        Fri, 21 Feb 2020 16:44:28 +0900 (JST)
-Date:   Fri, 21 Feb 2020 16:44:28 +0900
-From:   Kunihiko Hayashi <hayashi.kunihiko@socionext.com>
-To:     Vinod Koul <vkoul@kernel.org>,
-        Dan Williams <dan.j.williams@intel.com>,
-        Masahiro Yamada <yamada.masahiro@socionext.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>
-Subject: Re: [PATCH v4 0/2] dmaengine: Add UniPhier XDMAC driver
-Cc:     <dmaengine@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>,
-        Masami Hiramatsu <masami.hiramatsu@linaro.org>,
-        Jassi Brar <jaswinder.singh@linaro.org>
-In-Reply-To: <1582270646-29161-1-git-send-email-hayashi.kunihiko@socionext.com>
-References: <1582270646-29161-1-git-send-email-hayashi.kunihiko@socionext.com>
-Message-Id: <20200221164427.32C3.4A936039@socionext.com>
+        id S1728754AbgBUOvF (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 21 Feb 2020 09:51:05 -0500
+Received: from mail-lf1-f68.google.com ([209.85.167.68]:36319 "EHLO
+        mail-lf1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728436AbgBUOvE (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Fri, 21 Feb 2020 09:51:04 -0500
+Received: by mail-lf1-f68.google.com with SMTP id f24so1696443lfh.3
+        for <dmaengine@vger.kernel.org>; Fri, 21 Feb 2020 06:51:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=yKqmcZOBwxiEAbBJOHWncpbYAIXiIAogkuJKwmYUhEY=;
+        b=tCMstupyfCqlZhYVCygX4hPFog/myrUm3gRLohSV71o7UYXSx/R3guaTKMrl4p+JID
+         ngi05ngbeIbeW3O+dOx6JMMjEynwS9v9/HlUZTf8qmGuHkUyIAQLNuceAW7wZlvnPGce
+         gA+iQPAMEbAeddw3aC6Qb+jJ+uLLdi7gvRSJ7hqI/VhLqnceykQv2vRMilxL4yuXEjl3
+         bpXPYoGeZo2MMMnnFdBMorCyJXJ6X4SLuCkDoDGD8tMAnQa5en3FAeYyfhNVUC/7GdQS
+         5wAr+Azwq5ryL3FG+Oo6c8J1OSQxJ/5M7bRRFAn6+ztMpvBW4cPVbabzH2bw//HtYIwM
+         ++7Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=yKqmcZOBwxiEAbBJOHWncpbYAIXiIAogkuJKwmYUhEY=;
+        b=TZSq57VcvoqpeEmvA/O7//O1QSB2iL2YbmF3Wd5Nb/ZNtKcadZTY4EXIADPty7ODa7
+         3GOlMuRnt2Tau2Pu6pV6r7zXgTUgA/bMNrFPihjHKnvaevroBJ/wPn1z0hfj9N0ykFXw
+         9kE/24csJXl52W8/PuCdGcO/hCr6VUVDvO6bVNnucgddpgSf+5dQ9U7++jlJkTThwqJY
+         Yf9XYKWfVG58MO75VzyY9Onnk3A1C4tJ61guthuiVOXCQK1wBcP+jIhxKuXCaC+WkzsI
+         MXVLRsIk4v345q21bMbD0G299qU21J9klr/TdxQGGpamS4ALbCqkaZIVL1Q5Vhh2Q+Af
+         NGwA==
+X-Gm-Message-State: APjAAAWwATzmfwBIPOjNnU3O4/rD3o8rhaXiINF1g6z04SS7J98oYVjS
+        7O5MK5qaAYk2VdSZkmNziiMMBbh3hIQJ5GwiR96URg==
+X-Google-Smtp-Source: APXvYqzWFuIhBhU7rksYnB4UoqU/fxy/g8S3+M1vXFr85vf43QcoeKUFnva1cAl5yphXzmBkSOGnUkKRz3OG0X6DpQA=
+X-Received: by 2002:ac2:44a5:: with SMTP id c5mr8193005lfm.4.1582296662570;
+ Fri, 21 Feb 2020 06:51:02 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Becky! ver. 2.70 [ja]
+References: <20200217144050.3i4ymbytogod4ijn@kili.mountain>
+ <CAMuHMdWaCqZ_zcHuBetAQu4kmoffNw5jvHM5ciTi29MAxL70bg@mail.gmail.com> <20200219091754.GE2618@vkoul-mobl>
+In-Reply-To: <20200219091754.GE2618@vkoul-mobl>
+From:   Linus Walleij <linus.walleij@linaro.org>
+Date:   Fri, 21 Feb 2020 15:50:51 +0100
+Message-ID: <CACRpkdZ94VYtADCP9VXbNPsRkCacGFOYedd9dwXQw0Jve1HRjw@mail.gmail.com>
+Subject: Re: [PATCH] dmaengine: coh901318: Fix a double lock bug in dma_tc_handle()
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     Geert Uytterhoeven <geert@linux-m68k.org>,
+        Dan Carpenter <dan.carpenter@oracle.com>,
+        kernel-janitors@vger.kernel.org,
+        Jia-Ju Bai <baijiaju1990@gmail.com>,
+        dmaengine <dmaengine@vger.kernel.org>,
+        Dan Williams <dan.j.williams@intel.com>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Sorry for my mistake in this v4.
+On Wed, Feb 19, 2020 at 10:17 AM Vinod Koul <vkoul@kernel.org> wrote:
+> On 17-02-20, 23:24, Geert Uytterhoeven wrote:
+> > On Mon, Feb 17, 2020 at 3:41 PM Dan Carpenter <dan.carpenter@oracle.com> wrote:
+> > > The caller is already holding the lock so this will deadlock.
+> > >
+> > > Fixes: 0b58828c923e ("DMAENGINE: COH 901 318 remove irq counting")
+> > > Signed-off-by: Dan Carpenter <dan.carpenter@oracle.com>
+> > > ---
+> > > This is the second double lock bug found using static analysis.  The
+> > > previous one was commit 627469e4445b ("dmaengine: coh901318: Fix a
+> > > double-lock bug").
+> > >
+> > > The fact that this has been broken for ten years suggests that no one
+> > > has the hardware.
+> >
+> > Or this only runs CONFIG_SMP=n kernels?
+> > This seems to be used in arch/arm/boot/dts/ste-u300.dts only, and
+> > CONFIG_ARCH_U300 is a ARCH_MULTI_V5 platform, which looks like
+> > it doesn't support SMP?
+>
+> Should we drop the driver then..?
 
-I'll resend it.
+I still have the hardware and it still works if that is the question :D
 
-On Fri, 21 Feb 2020 16:37:24 +0900 <hayashi.kunihiko@socionext.com> wrote:
+And yeah it only has one CPU, but still has a DMA engine.
 
-> Add support for UniPhier external DMA controller (XDMAC), that is
-> implemented in Pro4, Pro5, PXs2, LD11, LD20 and PXs3 SoCs.
-> 
-> Changes since v3:
-> - dt-bindings: Fix typo
-> 
-> Changes since v2:
-> - dt-bindings: Fix SPDX and some properties
-> - Fix iteration count calculation for memcpy
-> - Replace zero-length array with flexible-array member in struct
->   uniphier_xdmac_device.
-> 
-> Changes since v1:
-> - dt-bindings: Rewrite with DT schema.
-> - Change return type of uniphier_xdmac_chan_init() to void,
->   and remove error return in probe.
-> 
-> Kunihiko Hayashi (2):
->   dt-bindings: dmaengine: Add UniPhier external DMA controller bindings
->   dmaengine: uniphier-xdmac: Add UniPhier external DMA controller driver
-> 
->  .../bindings/dma/socionext,uniphier-xdmac.yaml     |  63 +++
->  drivers/dma/Kconfig                                |  11 +
->  drivers/dma/Makefile                               |   1 +
->  drivers/dma/uniphier-xdmac.c                       | 611 +++++++++++++++++++++
->  4 files changed, 686 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/dma/socionext,uniphier-xdmac.yaml
->  create mode 100644 drivers/dma/uniphier-xdmac.c
-> 
-> -- 
-> 2.7.4
+The patch is fine to apply because it fixes a bug, should the same
+hardware block be used on SMP.
 
----
-Best Regards,
-Kunihiko Hayashi
-
+Yours,
+Linus Walleij
