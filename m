@@ -1,175 +1,108 @@
-Return-Path: <SRS0=PsH8=4K=vger.kernel.org=dmaengine-owner@kernel.org>
+Return-Path: <SRS0=PmSK=4L=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
-	version=3.4.0
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=unavailable
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 65CB6C35666
-	for <dmaengine@archiver.kernel.org>; Sat, 22 Feb 2020 11:21:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 31DCFC35673
+	for <dmaengine@archiver.kernel.org>; Sun, 23 Feb 2020 23:18:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 3978F208C3
-	for <dmaengine@archiver.kernel.org>; Sat, 22 Feb 2020 11:21:17 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 08BC420880
+	for <dmaengine@archiver.kernel.org>; Sun, 23 Feb 2020 23:18:50 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=nifty.com header.i=@nifty.com header.b="tND51qjy"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GCLwLyyF"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726836AbgBVLVQ (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Sat, 22 Feb 2020 06:21:16 -0500
-Received: from conuserg-12.nifty.com ([210.131.2.79]:29551 "EHLO
-        conuserg-12.nifty.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726726AbgBVLVQ (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Sat, 22 Feb 2020 06:21:16 -0500
-X-Greylist: delayed 118522 seconds by postgrey-1.27 at vger.kernel.org; Sat, 22 Feb 2020 06:21:14 EST
-Received: from grover.flets-west.jp (softbank126093102113.bbtec.net [126.93.102.113]) (authenticated)
-        by conuserg-12.nifty.com with ESMTP id 01MBKjen004488;
-        Sat, 22 Feb 2020 20:20:46 +0900
-DKIM-Filter: OpenDKIM Filter v2.10.3 conuserg-12.nifty.com 01MBKjen004488
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nifty.com;
-        s=dec2015msa; t=1582370446;
-        bh=Fm1qChr6ZbZLhdE3dP5bKvN2cnwWcGsLh5GHdABxVyE=;
-        h=From:To:Cc:Subject:Date:From;
-        b=tND51qjySwpbpvelT1nqARk2V3PBmw+G/91f5VL+7kQ8U6lzFvobKmL4ivpI3tTZR
-         Y/OjJTFSMLPAggU5pvKARW8Xw3YdLeCQAwX/h3Vfob1Y6IAUMLe1pez7DeBazDmt1X
-         m8Csj6062CPiy6sgOUKnB0K4EsShKp+mU9ISVC9ANX6ZxbImQovZcdEqqAGdqL2nUQ
-         xIh1PYOOFIgKcttm1GxTOyRZNJibjW8xfol4nS+jy13eIBvzT9X5ke7ynxf8io/q6K
-         baxH+4UFcdsw+llaa38eluyvX5mP5LGjwgzr+SPRdfhQ1+XavGSOnPLBwKMmyft4fZ
-         ZP/EEdXZCwkBA==
-X-Nifty-SrcIP: [126.93.102.113]
-From:   Masahiro Yamada <yamada.masahiro@socionext.com>
-To:     Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org
-Cc:     linux-kernel@vger.kernel.org, masahiroy@kernel.org,
-        Masahiro Yamada <yamada.masahiro@socionext.com>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Vinod Koul <vkoul@kernel.org>, dmaengine@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org
-Subject: [PATCH v2] dt-bindings: dma: Convert UniPhier MIO DMA controller to json-schema
-Date:   Sat, 22 Feb 2020 20:20:42 +0900
-Message-Id: <20200222112042.32345-1-yamada.masahiro@socionext.com>
-X-Mailer: git-send-email 2.17.1
+        id S1727785AbgBWXS3 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Sun, 23 Feb 2020 18:18:29 -0500
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:55566 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727151AbgBWXS0 (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Sun, 23 Feb 2020 18:18:26 -0500
+Received: by mail-wm1-f66.google.com with SMTP id q9so7177675wmj.5;
+        Sun, 23 Feb 2020 15:18:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=D226Q712hm4RRuLjuRLwvzFIxXTYHeeP4FIQmGcb/n4=;
+        b=GCLwLyyF5ZoS6d1OmnyDt1cTIkPYcFUnQewizYiPNQ5Ombi1m0z17U0Krh/rOyOkn4
+         n/Lc0hrlyUSfl3Fwv+bRNjPqgyHv8WnWsf2K36q9iXs4xQBQFhovuQH4CyTn8DWIp6WY
+         AVdnQxUK2GhvjAlHrepv5euNhFIhhlxmSN4b3/7PIHcAFnT5wmB41qb2SDo45QOfBVWi
+         RfO+9IF/OYARyUrm1WbG9pkWGpdEEz6OH0f2w8i1kM0zZAkFN5LmzTa9Y7iuxa/nDnAS
+         ZhA3AFm6+1JRxWw0c+3J6/saRBfwGeI+cLXUGPf5tOtREVUIAD8EGjMKzp0KAED2OP4o
+         ViUA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=D226Q712hm4RRuLjuRLwvzFIxXTYHeeP4FIQmGcb/n4=;
+        b=VgY4x1uKfMT9EpSgGUPN6h2TMgyMWcoDK86GZBRPRfqXTgGG0jplICfPxBukOdcLeZ
+         ZZpHLp6pEbO2KiqeCvBOFx6RI4/+pZLhu6CVcfHPJQkjukeEEbhQl/LWGiDrDG+ti+8O
+         8uel0U2tJN9Uu0erWa4ZE2ZK546rGGZ/I9PzxnZzUnJFy3neMjn/u7CydVOEjmSz8X+T
+         RZHv+X8A5/RwWe6sJylXMwKeWiWhnE3Musa8SCjcfQ4VSeKTFBo5Ww6tYs1ugohVilk8
+         +cvH8FDbb08QHUET21Ze93rDTN9LX+4WH135Ea++pyaTipUiNRQH8q0XOCt2pnFKFh+W
+         I47Q==
+X-Gm-Message-State: APjAAAUwWJPhq+0/lmjFCSeVKw8q70ui/LMDGjIyKvCVZuxF42T5XprR
+        1vNkn1BWKpxJeawXRFpZhw==
+X-Google-Smtp-Source: APXvYqxbSpeNGF2MlyRcH36FppSj1XVmUcZHhQGSkPs2u0+P5CusVXHN5m8U3eJCh0HQtgoHaUvzpA==
+X-Received: by 2002:a05:600c:414e:: with SMTP id h14mr17871964wmm.179.1582499904465;
+        Sun, 23 Feb 2020 15:18:24 -0800 (PST)
+Received: from ninjahost.lan (host-2-102-13-223.as13285.net. [2.102.13.223])
+        by smtp.googlemail.com with ESMTPSA id q6sm8968203wrf.67.2020.02.23.15.18.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 23 Feb 2020 15:18:24 -0800 (PST)
+From:   Jules Irenge <jbi.octave@gmail.com>
+To:     boqun.feng@gmail.com
+Cc:     jbi.octave@gmail.com, linux-kernel@vger.kernel.org,
+        Sudeep Dutt <sudeep.dutt@intel.com>,
+        Ashutosh Dixit <ashutosh.dixit@intel.com>,
+        Vinod Koul <vkoul@kernel.org>,
+        Dan Williams <dan.j.williams@intel.com>,
+        dmaengine@vger.kernel.org (open list:DMA GENERIC OFFLOAD ENGINE
+        SUBSYSTEM)
+Subject: [PATCH 24/30] dmaengine: mic_x100_dma: Add missing annotation for mic_dma_tx_submit_unlock()
+Date:   Sun, 23 Feb 2020 23:17:05 +0000
+Message-Id: <20200223231711.157699-25-jbi.octave@gmail.com>
+X-Mailer: git-send-email 2.24.1
+In-Reply-To: <20200223231711.157699-1-jbi.octave@gmail.com>
+References: <0/30>
+ <20200223231711.157699-1-jbi.octave@gmail.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Convert the UniPhier MIO (Media I/O) DMA controller binding to DT
-schema format.
+Sparse reports a warning dma_cookie_t mic_dma_tx_submit_unlock()
 
-While I was here, I added the resets property.
+warning: context imbalance in  mic_dma_tx_submit_unlock()
+	- unexpected unlock
 
-Signed-off-by: Masahiro Yamada <yamada.masahiro@socionext.com>
+The root cause is the missing annotation at  mic_dma_tx_submit_unlock()
+Add the missing annotation __releases(&mic_ch->prep_lock)
+
+Signed-off-by: Jules Irenge <jbi.octave@gmail.com>
 ---
+ drivers/dma/mic_x100_dma.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-Changes in v2:
- - add 'resets'
-
- .../dma/socionext,uniphier-mio-dmac.yaml      | 63 +++++++++++++++++++
- .../bindings/dma/uniphier-mio-dmac.txt        | 25 --------
- 2 files changed, 63 insertions(+), 25 deletions(-)
- create mode 100644 Documentation/devicetree/bindings/dma/socionext,uniphier-mio-dmac.yaml
- delete mode 100644 Documentation/devicetree/bindings/dma/uniphier-mio-dmac.txt
-
-diff --git a/Documentation/devicetree/bindings/dma/socionext,uniphier-mio-dmac.yaml b/Documentation/devicetree/bindings/dma/socionext,uniphier-mio-dmac.yaml
-new file mode 100644
-index 000000000000..e7bf6dd7da29
---- /dev/null
-+++ b/Documentation/devicetree/bindings/dma/socionext,uniphier-mio-dmac.yaml
-@@ -0,0 +1,63 @@
-+# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/dma/socionext,uniphier-mio-dmac.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: UniPhier Media IO DMA controller
-+
-+description: |
-+  This works as an external DMA engine for SD/eMMC controllers etc.
-+  found in UniPhier LD4, Pro4, sLD8 SoCs.
-+
-+maintainers:
-+  - Masahiro Yamada <yamada.masahiro@socionext.com>
-+
-+allOf:
-+  - $ref: "dma-controller.yaml#"
-+
-+properties:
-+  compatible:
-+    const: socionext,uniphier-mio-dmac
-+
-+  reg:
-+    maxItems: 1
-+
-+  interrupts:
-+    description: |
-+      A list of interrupt specifiers associated with the DMA channels.
-+      The number of interrupt lines is SoC-dependent.
-+
-+  clocks:
-+    maxItems: 1
-+
-+  resets:
-+    maxItems: 1
-+
-+  '#dma-cells':
-+    description: The single cell represents the channel index.
-+    const: 1
-+
-+required:
-+  - compatible
-+  - reg
-+  - interrupts
-+  - clocks
-+  - '#dma-cells'
-+
-+additionalProperties: false
-+
-+examples:
-+  - |
-+    // In the example below, "interrupts = <0 68 4>, <0 68 4>, ..." is not a
-+    // typo. The first two channels share a single interrupt line.
-+
-+    dmac: dma-controller@5a000000 {
-+        compatible = "socionext,uniphier-mio-dmac";
-+        reg = <0x5a000000 0x1000>;
-+        interrupts = <0 68 4>, <0 68 4>, <0 69 4>, <0 70 4>,
-+                     <0 71 4>, <0 72 4>, <0 73 4>, <0 74 4>;
-+        clocks = <&mio_clk 7>;
-+        resets = <&mio_rst 7>;
-+        #dma-cells = <1>;
-+    };
-diff --git a/Documentation/devicetree/bindings/dma/uniphier-mio-dmac.txt b/Documentation/devicetree/bindings/dma/uniphier-mio-dmac.txt
-deleted file mode 100644
-index b12388dc7eac..000000000000
---- a/Documentation/devicetree/bindings/dma/uniphier-mio-dmac.txt
-+++ /dev/null
-@@ -1,25 +0,0 @@
--UniPhier Media IO DMA controller
--
--This works as an external DMA engine for SD/eMMC controllers etc.
--found in UniPhier LD4, Pro4, sLD8 SoCs.
--
--Required properties:
--- compatible: should be "socionext,uniphier-mio-dmac".
--- reg: offset and length of the register set for the device.
--- interrupts: a list of interrupt specifiers associated with the DMA channels.
--- clocks: a single clock specifier.
--- #dma-cells: should be <1>. The single cell represents the channel index.
--
--Example:
--	dmac: dma-controller@5a000000 {
--		compatible = "socionext,uniphier-mio-dmac";
--		reg = <0x5a000000 0x1000>;
--		interrupts = <0 68 4>, <0 68 4>, <0 69 4>, <0 70 4>,
--			     <0 71 4>, <0 72 4>, <0 73 4>, <0 74 4>;
--		clocks = <&mio_clk 7>;
--		#dma-cells = <1>;
--	};
--
--Note:
--In the example above, "interrupts = <0 68 4>, <0 68 4>, ..." is not a typo.
--The first two channels share a single interrupt line.
+diff --git a/drivers/dma/mic_x100_dma.c b/drivers/dma/mic_x100_dma.c
+index fea8608a7810..d15c41151d09 100644
+--- a/drivers/dma/mic_x100_dma.c
++++ b/drivers/dma/mic_x100_dma.c
+@@ -236,6 +236,7 @@ static inline void mic_dma_update_pending(struct mic_dma_chan *ch)
+ }
+ 
+ static dma_cookie_t mic_dma_tx_submit_unlock(struct dma_async_tx_descriptor *tx)
++	__releases(&mic_ch->prep_lock)
+ {
+ 	struct mic_dma_chan *mic_ch = to_mic_dma_chan(tx->chan);
+ 	dma_cookie_t cookie;
 -- 
-2.17.1
+2.24.1
 
