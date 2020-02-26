@@ -2,90 +2,71 @@ Return-Path: <SRS0=Ogb6=4O=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.6 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=unavailable autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-9.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_GIT autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A71CBC4BA18
-	for <dmaengine@archiver.kernel.org>; Wed, 26 Feb 2020 17:28:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3EE91C4BA24
+	for <dmaengine@archiver.kernel.org>; Wed, 26 Feb 2020 18:59:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 6F15124680
-	for <dmaengine@archiver.kernel.org>; Wed, 26 Feb 2020 17:28:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1582738083;
-	bh=nQh/Bo/NBb5ljRBYa8nIGyLcht5dYXUQX4KXscm8GX8=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:List-ID:From;
-	b=M/zC19snrMNjA7G/Q3DxEhYeZ5Xv7iNx7zR9MBDj9RegBPhKx0F5vv85JYG6hWPLN
-	 QhYJPcGvwyehvI3gVwz0K0d759EkP6XOy+BQ7m9qHwDuO8r1+9p3P88q4uyolp/l27
-	 GVoec7g9JkrKlkbB/a3Ng7kd4fSNSWdi3CpTezJY=
+	by mail.kernel.org (Postfix) with ESMTP id 20BED20714
+	for <dmaengine@archiver.kernel.org>; Wed, 26 Feb 2020 18:59:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726695AbgBZR2D (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 26 Feb 2020 12:28:03 -0500
-Received: from mail-oi1-f195.google.com ([209.85.167.195]:34845 "EHLO
-        mail-oi1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726579AbgBZR2D (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Wed, 26 Feb 2020 12:28:03 -0500
-Received: by mail-oi1-f195.google.com with SMTP id b18so320428oie.2;
-        Wed, 26 Feb 2020 09:28:02 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=t83+nB3W6oXdApXXRMLwz8oHqiI3quakZhUjW8Nn9Jk=;
-        b=R41L2VqiNyX3+m+mSoyCgp6ENq3oZAPp5TSB2pozKHwaFhYlfYEqrgX3z8RwEbS4Yy
-         QVEej2EX+Igyj1P7kJOhN0VQaq6XfAQ+tJmvRyML/Uac8y3syGBqv9Tv11VbF3EkzThF
-         0DKm8Q92/2AUv9ldHvZwm6QcgNED9KUNK8H2wjQ74PoIB23SfCrcVn4IZCwv/mmmPU4g
-         VzWFrDCjHuwwBbQt49uj5g3pUdxC+TkCGDsGqATwuMqKuOA3Td+gUEVZJrb/6EuFeLV5
-         xlSP+vgsZ7IEhfYyNXcj5hIfNYfFlhVyVlt0XsO6tTPC0t/JEnaW3TZk/8mZueC8HqKU
-         Z/ag==
-X-Gm-Message-State: APjAAAWMDZDeQyEsvVEiEa7CFQpiO/kLPsrx2msSdBlzQlnBtMWsYBId
-        +gixTDbYmUrt8XtSZaSGlg==
-X-Google-Smtp-Source: APXvYqxIZscytpwpjUEBs4aKZOxXofyE3s8jmDy1RE4Sc6pXr02J+2XwFazqn2VQDBxT94r/V+dHvw==
-X-Received: by 2002:a05:6808:aa8:: with SMTP id r8mr50338oij.7.1582738082288;
-        Wed, 26 Feb 2020 09:28:02 -0800 (PST)
-Received: from rob-hp-laptop (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.gmail.com with ESMTPSA id v134sm1004026oia.38.2020.02.26.09.28.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 26 Feb 2020 09:28:01 -0800 (PST)
-Received: (nullmailer pid 10384 invoked by uid 1000);
-        Wed, 26 Feb 2020 17:28:00 -0000
-Date:   Wed, 26 Feb 2020 11:28:00 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Kunihiko Hayashi <hayashi.kunihiko@socionext.com>
-Cc:     Vinod Koul <vkoul@kernel.org>,
-        Dan Williams <dan.j.williams@intel.com>,
-        Masahiro Yamada <yamada.masahiro@socionext.com>,
-        Mark Rutland <mark.rutland@arm.com>, dmaengine@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-kernel@vger.kernel.org,
-        Masami Hiramatsu <masami.hiramatsu@linaro.org>,
-        Jassi Brar <jaswinder.singh@linaro.org>,
-        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>
-Subject: Re: [RESEND PATCH v4 1/2] dt-bindings: dmaengine: Add UniPhier
- external DMA controller bindings
-Message-ID: <20200226172800.GA10328@bogus>
-References: <1582271550-3403-1-git-send-email-hayashi.kunihiko@socionext.com>
- <1582271550-3403-2-git-send-email-hayashi.kunihiko@socionext.com>
+        id S1727221AbgBZS71 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 26 Feb 2020 13:59:27 -0500
+Received: from youngberry.canonical.com ([91.189.89.112]:57732 "EHLO
+        youngberry.canonical.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727189AbgBZS71 (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Wed, 26 Feb 2020 13:59:27 -0500
+Received: from 1.general.cking.uk.vpn ([10.172.193.212] helo=localhost)
+        by youngberry.canonical.com with esmtpsa (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+        (Exim 4.86_2)
+        (envelope-from <colin.king@canonical.com>)
+        id 1j71tx-0005OH-Rj; Wed, 26 Feb 2020 18:59:21 +0000
+From:   Colin King <colin.king@canonical.com>
+To:     Dan Williams <dan.j.williams@intel.com>,
+        Vinod Koul <vkoul@kernel.org>,
+        Peter Ujfalusi <peter.ujfalusi@ti.com>,
+        dmaengine@vger.kernel.org
+Cc:     kernel-janitors@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH][next] dmaengine: ti: edma: fix null dereference because of a typo in pointer name
+Date:   Wed, 26 Feb 2020 18:59:21 +0000
+Message-Id: <20200226185921.351693-1-colin.king@canonical.com>
+X-Mailer: git-send-email 2.25.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1582271550-3403-2-git-send-email-hayashi.kunihiko@socionext.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On Fri, 21 Feb 2020 16:52:29 +0900, Kunihiko Hayashi wrote:
-> Add devicetree binding documentation for external DMA controller
-> implemented on Socionext UniPhier SOCs.
-> 
-> Signed-off-by: Kunihiko Hayashi <hayashi.kunihiko@socionext.com>
-> ---
->  .../bindings/dma/socionext,uniphier-xdmac.yaml     | 63 ++++++++++++++++++++++
->  1 file changed, 63 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/dma/socionext,uniphier-xdmac.yaml
-> 
+From: Colin Ian King <colin.king@canonical.com>
 
-Reviewed-by: Rob Herring <robh@kernel.org>
+Currently there is a dereference of the null pointer m_ddev.  This appears
+to be a typo on the pointer, I believe s_ddev should be used instead.
+Fix this by using the correct pointer.
+
+Addresses-Coverity: ("Explicit null dereferenced")
+Fixes: eb0249d50153 ("dmaengine: ti: edma: Support for interleaved mem to mem transfer")
+Signed-off-by: Colin Ian King <colin.king@canonical.com>
+---
+ drivers/dma/ti/edma.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/dma/ti/edma.c b/drivers/dma/ti/edma.c
+index 2b1fdd438e7f..c4a5c170c1f9 100644
+--- a/drivers/dma/ti/edma.c
++++ b/drivers/dma/ti/edma.c
+@@ -1992,7 +1992,7 @@ static void edma_dma_init(struct edma_cc *ecc, bool legacy_mode)
+ 			 "Legacy memcpy is enabled, things might not work\n");
+ 
+ 		dma_cap_set(DMA_MEMCPY, s_ddev->cap_mask);
+-		dma_cap_set(DMA_INTERLEAVE, m_ddev->cap_mask);
++		dma_cap_set(DMA_INTERLEAVE, s_ddev->cap_mask);
+ 		s_ddev->device_prep_dma_memcpy = edma_prep_dma_memcpy;
+ 		s_ddev->device_prep_interleaved_dma = edma_prep_dma_interleaved;
+ 		s_ddev->directions = BIT(DMA_MEM_TO_MEM);
+-- 
+2.25.0
+
