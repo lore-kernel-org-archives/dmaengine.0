@@ -6,40 +6,38 @@ X-Spam-Status: No, score=-9.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
 	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3E4E8C4BA11
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 63E6CC4BA10
 	for <dmaengine@archiver.kernel.org>; Wed, 26 Feb 2020 10:18:46 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 204B32467B
+	by mail.kernel.org (Postfix) with ESMTP id 4519C24676
 	for <dmaengine@archiver.kernel.org>; Wed, 26 Feb 2020 10:18:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727451AbgBZKSp (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 26 Feb 2020 05:18:45 -0500
-Received: from mga09.intel.com ([134.134.136.24]:55567 "EHLO mga09.intel.com"
+        id S1727339AbgBZKSq (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 26 Feb 2020 05:18:46 -0500
+Received: from mga14.intel.com ([192.55.52.115]:4280 "EHLO mga14.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727339AbgBZKSp (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        id S1726927AbgBZKSp (ORCPT <rfc822;dmaengine@vger.kernel.org>);
         Wed, 26 Feb 2020 05:18:45 -0500
 X-Amp-Result: SKIPPED(no attachment in message)
 X-Amp-File-Uploaded: False
-Received: from fmsmga001.fm.intel.com ([10.253.24.23])
-  by orsmga102.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 26 Feb 2020 02:18:45 -0800
+Received: from orsmga008.jf.intel.com ([10.7.209.65])
+  by fmsmga103.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 26 Feb 2020 02:18:45 -0800
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="5.70,487,1574150400"; 
-   d="scan'208";a="350356714"
+   d="scan'208";a="231351574"
 Received: from black.fi.intel.com ([10.237.72.28])
-  by fmsmga001.fm.intel.com with ESMTP; 26 Feb 2020 02:18:43 -0800
+  by orsmga008.jf.intel.com with ESMTP; 26 Feb 2020 02:18:43 -0800
 Received: by black.fi.intel.com (Postfix, from userid 1003)
-        id A47B044B; Wed, 26 Feb 2020 12:18:42 +0200 (EET)
+        id 82605252; Wed, 26 Feb 2020 12:18:42 +0200 (EET)
 From:   Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 To:     Vinod Koul <vkoul@kernel.org>, dmaengine@vger.kernel.org,
         Dan Williams <dan.j.williams@intel.com>,
         Peter Ujfalusi <peter.ujfalusi@ti.com>
 Cc:     Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Subject: [PATCH v1 4/4] dmaengine: consistently return string literal from switch-case
-Date:   Wed, 26 Feb 2020 12:18:41 +0200
-Message-Id: <20200226101842.29426-4-andriy.shevchenko@linux.intel.com>
+Subject: [PATCH v1 1/4] dmaengine: Refactor dmaengine_check_align() to be bit operations only
+Date:   Wed, 26 Feb 2020 12:18:38 +0200
+Message-Id: <20200226101842.29426-1-andriy.shevchenko@linux.intel.com>
 X-Mailer: git-send-email 2.25.0
-In-Reply-To: <20200226101842.29426-1-andriy.shevchenko@linux.intel.com>
-References: <20200226101842.29426-1-andriy.shevchenko@linux.intel.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: dmaengine-owner@vger.kernel.org
@@ -47,30 +45,34 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-There is no need to have 'break;' statement in the default case followed by
-return certain string literal when all other cases have returned the string
-literals. So, refactor it accordingly.
+There is no need to have branch and temporary variable in the function.
+Simple convert it to be a set of bit and arithmetic operations.
 
 Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 ---
- include/linux/dmaengine.h | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ include/linux/dmaengine.h | 9 +--------
+ 1 file changed, 1 insertion(+), 8 deletions(-)
 
 diff --git a/include/linux/dmaengine.h b/include/linux/dmaengine.h
-index 1bb5477ef7ec..d3672f065a64 100644
+index 64461fc64e1b..9f3f5582816a 100644
 --- a/include/linux/dmaengine.h
 +++ b/include/linux/dmaengine.h
-@@ -1560,9 +1560,7 @@ dmaengine_get_direction_text(enum dma_transfer_direction dir)
- 	case DMA_DEV_TO_DEV:
- 		return "DEV_TO_DEV";
- 	default:
--		break;
-+		return "invalid";
- 	}
+@@ -1155,14 +1155,7 @@ static inline dma_cookie_t dmaengine_submit(struct dma_async_tx_descriptor *desc
+ static inline bool dmaengine_check_align(enum dmaengine_alignment align,
+ 					 size_t off1, size_t off2, size_t len)
+ {
+-	size_t mask;
 -
--	return "invalid";
+-	if (!align)
+-		return true;
+-	mask = (1 << align) - 1;
+-	if (mask & (off1 | off2 | len))
+-		return false;
+-	return true;
++	return !(((1 << align) - 1) & (off1 | off2 | len));
  }
- #endif /* DMAENGINE_H */
+ 
+ static inline bool is_dma_copy_aligned(struct dma_device *dev, size_t off1,
 -- 
 2.25.0
 
