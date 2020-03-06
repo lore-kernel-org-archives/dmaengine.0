@@ -2,258 +2,203 @@ Return-Path: <SRS0=Ziga=4X=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.9 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.4 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 471DCC10F00
-	for <dmaengine@archiver.kernel.org>; Fri,  6 Mar 2020 14:28:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 81EDFC10DCE
+	for <dmaengine@archiver.kernel.org>; Fri,  6 Mar 2020 14:49:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 2139120717
-	for <dmaengine@archiver.kernel.org>; Fri,  6 Mar 2020 14:28:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4F4D9208CD
+	for <dmaengine@archiver.kernel.org>; Fri,  6 Mar 2020 14:49:07 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b="PU5mIBIW"
+	dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b="M/QsGReJ"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726957AbgCFO2u (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 6 Mar 2020 09:28:50 -0500
-Received: from lelv0142.ext.ti.com ([198.47.23.249]:36248 "EHLO
+        id S1726182AbgCFOtH (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 6 Mar 2020 09:49:07 -0500
+Received: from lelv0142.ext.ti.com ([198.47.23.249]:38150 "EHLO
         lelv0142.ext.ti.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726905AbgCFO2t (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Fri, 6 Mar 2020 09:28:49 -0500
-Received: from fllv0035.itg.ti.com ([10.64.41.0])
-        by lelv0142.ext.ti.com (8.15.2/8.15.2) with ESMTP id 026ESgxs098546;
-        Fri, 6 Mar 2020 08:28:42 -0600
+        with ESMTP id S1726054AbgCFOtG (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Fri, 6 Mar 2020 09:49:06 -0500
+Received: from lelv0265.itg.ti.com ([10.180.67.224])
+        by lelv0142.ext.ti.com (8.15.2/8.15.2) with ESMTP id 026En3AQ103047;
+        Fri, 6 Mar 2020 08:49:03 -0600
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
-        s=ti-com-17Q1; t=1583504922;
-        bh=OITFFRLOH8KD3i4gmWrMnsXTS5ds8KPSs5gJ3HOYsEI=;
-        h=From:To:CC:Subject:Date:In-Reply-To:References;
-        b=PU5mIBIWEdsh9E9YQZQE1goP2XoodDB/MmprQPhXW/2JdhqEo4Ap0v2O8sq/XMKJr
-         IoBX5/gid0Z/JDoQAK3FUETlUY2RjymfnRguqJPl+DC33DqATcW3ok7P7QLoJp3XqA
-         ALhApTgVl02wdKdXjX2DvqjgFUPUQAdAOyit8JX8=
-Received: from DFLE103.ent.ti.com (dfle103.ent.ti.com [10.64.6.24])
-        by fllv0035.itg.ti.com (8.15.2/8.15.2) with ESMTP id 026ESguL117630;
-        Fri, 6 Mar 2020 08:28:42 -0600
-Received: from DFLE110.ent.ti.com (10.64.6.31) by DFLE103.ent.ti.com
- (10.64.6.24) with Microsoft SMTP Server (version=TLS1_2,
+        s=ti-com-17Q1; t=1583506143;
+        bh=Ojdue2/HqCAWX6KVQYEIjLRmgy46HesemuPvWi0Tj9g=;
+        h=Subject:To:CC:References:From:Date:In-Reply-To;
+        b=M/QsGReJvy6L9qMXR0c1uL765kaDwVPJw5qDOY1irIYl3kiTSUZvoomJQEknVoMTI
+         AQAgBKT+CwvWjxX88NyRfJdBgpkkwViYdJTmHPzEj0TdvJl80UYjIvmX5Q9yErZ7hR
+         3lx3Ggl/4XiWsZn5iS8ETCmjj4F0F7IJNIQTAdik=
+Received: from DFLE101.ent.ti.com (dfle101.ent.ti.com [10.64.6.22])
+        by lelv0265.itg.ti.com (8.15.2/8.15.2) with ESMTPS id 026En2a8005086
+        (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
+        Fri, 6 Mar 2020 08:49:02 -0600
+Received: from DFLE109.ent.ti.com (10.64.6.30) by DFLE101.ent.ti.com
+ (10.64.6.22) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1847.3; Fri, 6 Mar
- 2020 08:28:41 -0600
-Received: from lelv0327.itg.ti.com (10.180.67.183) by DFLE110.ent.ti.com
- (10.64.6.31) with Microsoft SMTP Server (version=TLS1_2,
+ 2020 08:49:01 -0600
+Received: from lelv0327.itg.ti.com (10.180.67.183) by DFLE109.ent.ti.com
+ (10.64.6.30) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1847.3 via
- Frontend Transport; Fri, 6 Mar 2020 08:28:41 -0600
-Received: from feketebors.ti.com (ileax41-snat.itg.ti.com [10.172.224.153])
-        by lelv0327.itg.ti.com (8.15.2/8.15.2) with ESMTP id 026ESbUZ115246;
-        Fri, 6 Mar 2020 08:28:40 -0600
+ Frontend Transport; Fri, 6 Mar 2020 08:49:01 -0600
+Received: from [192.168.2.6] (ileax41-snat.itg.ti.com [10.172.224.153])
+        by lelv0327.itg.ti.com (8.15.2/8.15.2) with ESMTP id 026EmxQB020080;
+        Fri, 6 Mar 2020 08:49:00 -0600
+Subject: Re: [PATCH v3 2/6] dmaengine: Add interleaved cyclic transaction type
+To:     Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+        Vinod Koul <vkoul@kernel.org>
+CC:     <dmaengine@vger.kernel.org>,
+        Michal Simek <michal.simek@xilinx.com>,
+        Hyun Kwon <hyun.kwon@xilinx.com>,
+        Tejas Upadhyay <tejasu@xilinx.com>,
+        Satish Kumar Nagireddy <SATISHNA@xilinx.com>
+References: <becf8212-7fe6-9fb6-eb2c-7a03a9b286b1@ti.com>
+ <20200219092514.GG2618@vkoul-mobl>
+ <20200226163011.GE4770@pendragon.ideasonboard.com>
+ <20200302034735.GD4148@vkoul-mobl>
+ <20200302073728.GB9177@pendragon.ideasonboard.com>
+ <20200303043254.GN4148@vkoul-mobl>
+ <20200303192255.GN11333@pendragon.ideasonboard.com>
+ <20200304051301.GS4148@vkoul-mobl>
+ <20200304080128.GA4712@pendragon.ideasonboard.com>
+ <20200304153718.GU4148@vkoul-mobl>
+ <20200304160016.GB4712@pendragon.ideasonboard.com>
 From:   Peter Ujfalusi <peter.ujfalusi@ti.com>
-To:     <vkoul@kernel.org>
-CC:     <dmaengine@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <dan.j.williams@intel.com>, <geert@linux-m68k.org>
-Subject: [PATCH v5 1/3] dmaengine: Add basic debugfs support
-Date:   Fri, 6 Mar 2020 16:28:37 +0200
-Message-ID: <20200306142839.17910-2-peter.ujfalusi@ti.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20200306142839.17910-1-peter.ujfalusi@ti.com>
-References: <20200306142839.17910-1-peter.ujfalusi@ti.com>
+Message-ID: <aa7addf1-f7cf-c89f-9bf8-e937fe84f213@ti.com>
+Date:   Fri, 6 Mar 2020 16:49:01 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.0
 MIME-Version: 1.0
+In-Reply-To: <20200304160016.GB4712@pendragon.ideasonboard.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
 X-EXCLAIMER-MD-CONFIG: e1e8a2fd-e40a-4ac6-ac9b-f7e9cc9ee180
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Via the /sys/kernel/debug/dmaengine/summary users can get information
-about the DMA devices and the used channels.
+Laureant,
 
-Example output on am654-evm with audio using two channels and after running
-dmatest on 4 channels:
+On 04/03/2020 18.00, Laurent Pinchart wrote:
+> I still think this is a different API. We'll have
+> 
+> 1. Existing .issue_pending(), queueing the next transfer for non-cyclic
+>    cases, and being a no-op for cyclic cases.
+> 2. New .terminate_cookie(AT_END_OF_TRANSFER), being a no-op for
+>    non-cyclic cases, and moving to the next transfer for cyclic cases.
+> 3. New .terminate_cookie(ABORT_IMMEDIATELY), applicable to both cyclic
+>    and non-cyclic cases.
+> 
+> 3. is an API I don't need, and can't easily test. I agree that it can
+> have use cases (provided the DMA device can abort an ongoing transfer
+> *and* still support DMA_RESIDUE_GRANULARITY_BURST in that case).
+> 
+> I'm troubled by my inability to convince you that 1. and 2. are really
+> the same, with 1. addressing the non-cyclic case and 2. addressing the
+> cyclic case :-) This is why I think they should both be implemeted using
+> .issue_pending() (no other option for 1., that's what it uses today).
+> This wouldn't prevent implementing 3. with a new .terminate_cookie()
+> operation, that wouldn't need to take a flag as it would always operate
+> in ABORT_IMMEDIATELY mode. There would also be no need to report a new
+> capability for 3., as the presence of the .terminate_cookie() handler
+> would be enough to tell clients that the API is supported. Only a new
+> capability for 2. would be needed.
 
-dma0 (285c0000.dma-controller): number of channels: 96
+Let's see the two cases, AT_END_OF_TRANSFER and ABORT_IMMEDIATELY
+against cyclic and slave for simplicity:
+- AT_END_OF_TRANSFER
+...
+issue_pending(1)
+issue_pending(2)
+terminate_cookie(AT_END_OF_TRANSFER)
 
-dma1 (31150000.dma-controller): number of channels: 267
- dma1chan0    | 2b00000.mcasp:tx
- dma1chan1    | 2b00000.mcasp:rx
- dma1chan2    | in-use
- dma1chan3    | in-use
- dma1chan4    | in-use
- dma1chan5    | in-use
+In case of cyclic:
+When cookie1 finishes a tx cookie2 will start.
 
-For slave channels we can show the device and the channel name a given
-channel is requested.
-For non slave devices the only information we know is that the channel is
-in use.
+Same sequence in case of slave:
+When cookie1 finishes a tx cookie2 will start.
+ Yes, terminate_cookie(AT_END_OF_TRANSFER) is NOP
 
-DMA drivers can implement the optional dbg_summary_show callback to
-provide controller specific information instead of the generic one.
+- ABORT_IMMEDIATELY
+...
+issue_pending(1)
+issue_pending(2)
+terminate_cookie(ABORT_IMMEDIATELY)
 
-It is easy to extend the generic dmaengine_summary_show() to print
-additional information about the used channels.
+In case of cyclic and slave:
+Abort cookie1 right away and start cookie2.
 
-I have taken the idea from gpiolib and clk subsystems.
+In case of cyclic:
+When cookie1 finishes a tx cookie2 will start.
 
-Signed-off-by: Peter Ujfalusi <peter.ujfalusi@ti.com>
----
- drivers/dma/dmaengine.c   | 76 ++++++++++++++++++++++++++++++++++++++-
- include/linux/dmaengine.h | 13 ++++++-
- 2 files changed, 87 insertions(+), 2 deletions(-)
+True, we have NOP operation, but as you can see the semantics of the two
+cases are well defined and consistent among different operations.
 
-diff --git a/drivers/dma/dmaengine.c b/drivers/dma/dmaengine.c
-index c3b1283b6d31..509abc8e8378 100644
---- a/drivers/dma/dmaengine.c
-+++ b/drivers/dma/dmaengine.c
-@@ -58,6 +58,65 @@ static DEFINE_IDA(dma_ida);
- static LIST_HEAD(dma_device_list);
- static long dmaengine_ref_count;
- 
-+/* --- debugfs implementation --- */
-+#ifdef CONFIG_DEBUG_FS
-+#include <linux/debugfs.h>
-+
-+static void dmaengine_dbg_summary_show(struct seq_file *s,
-+				       struct dma_device *dma_dev)
-+{
-+	struct dma_chan *chan;
-+
-+	list_for_each_entry(chan, &dma_dev->channels, device_node) {
-+		if (chan->client_count) {
-+			seq_printf(s, " %-13s| %s", dma_chan_name(chan),
-+				   chan->dbg_client_name ?: "in-use");
-+
-+			if (chan->router)
-+				seq_printf(s, " (via router: %s)\n",
-+					dev_name(chan->router->dev));
-+			else
-+				seq_puts(s, "\n");
-+		}
-+	}
-+}
-+
-+static int dmaengine_summary_show(struct seq_file *s, void *data)
-+{
-+	struct dma_device *dma_dev = NULL;
-+
-+	mutex_lock(&dma_list_mutex);
-+	list_for_each_entry(dma_dev, &dma_device_list, global_node) {
-+		seq_printf(s, "dma%d (%s): number of channels: %u\n",
-+			   dma_dev->dev_id, dev_name(dma_dev->dev),
-+			   dma_dev->chancnt);
-+
-+		if (dma_dev->dbg_summary_show)
-+			dma_dev->dbg_summary_show(s, dma_dev);
-+		else
-+			dmaengine_dbg_summary_show(s, dma_dev);
-+
-+		if (!list_is_last(&dma_dev->global_node, &dma_device_list))
-+			seq_puts(s, "\n");
-+	}
-+	mutex_unlock(&dma_list_mutex);
-+
-+	return 0;
-+}
-+DEFINE_SHOW_ATTRIBUTE(dmaengine_summary);
-+
-+static void __init dmaengine_debugfs_init(void)
-+{
-+	struct dentry *rootdir = debugfs_create_dir("dmaengine", NULL);
-+
-+	/* /sys/kernel/debug/dmaengine/summary */
-+	debugfs_create_file("summary", 0444, rootdir, NULL,
-+			    &dmaengine_summary_fops);
-+}
-+#else
-+static inline void dmaengine_debugfs_init(void) { }
-+#endif	/* DEBUG_FS */
-+
- /* --- sysfs implementation --- */
- 
- #define DMA_SLAVE_NAME	"slave"
-@@ -760,6 +819,11 @@ struct dma_chan *dma_request_chan(struct device *dev, const char *name)
- 		return chan ? chan : ERR_PTR(-EPROBE_DEFER);
- 
- found:
-+#ifdef CONFIG_DEBUG_FS
-+	chan->dbg_client_name = kasprintf(GFP_KERNEL, "%s:%s", dev_name(dev),
-+					  name);
-+#endif
-+
- 	chan->name = kasprintf(GFP_KERNEL, "dma:%s", name);
- 	if (!chan->name)
- 		return chan;
-@@ -837,6 +901,11 @@ void dma_release_channel(struct dma_chan *chan)
- 		chan->name = NULL;
- 		chan->slave = NULL;
- 	}
-+
-+#ifdef CONFIG_DEBUG_FS
-+	kfree(chan->dbg_client_name);
-+	chan->dbg_client_name = NULL;
-+#endif
- 	mutex_unlock(&dma_list_mutex);
- }
- EXPORT_SYMBOL_GPL(dma_release_channel);
-@@ -1559,6 +1628,11 @@ static int __init dma_bus_init(void)
- 
- 	if (err)
- 		return err;
--	return class_register(&dma_devclass);
-+
-+	err = class_register(&dma_devclass);
-+	if (!err)
-+		dmaengine_debugfs_init();
-+
-+	return err;
- }
- arch_initcall(dma_bus_init);
-diff --git a/include/linux/dmaengine.h b/include/linux/dmaengine.h
-index d3672f065a64..72920b5cf2d7 100644
---- a/include/linux/dmaengine.h
-+++ b/include/linux/dmaengine.h
-@@ -300,6 +300,8 @@ struct dma_router {
-  * @chan_id: channel ID for sysfs
-  * @dev: class device for sysfs
-  * @name: backlink name for sysfs
-+ * @dbg_client_name: slave name for debugfs in format:
-+ *	dev_name(requester's dev):channel name, for example: "2b00000.mcasp:tx"
-  * @device_node: used to add this to the device chan list
-  * @local: per-cpu pointer to a struct dma_chan_percpu
-  * @client_count: how many clients are using this channel
-@@ -318,6 +320,9 @@ struct dma_chan {
- 	int chan_id;
- 	struct dma_chan_dev *dev;
- 	const char *name;
-+#ifdef CONFIG_DEBUG_FS
-+	char *dbg_client_name;
-+#endif
- 
- 	struct list_head device_node;
- 	struct dma_chan_percpu __percpu *local;
-@@ -806,7 +811,9 @@ struct dma_filter {
-  *     called and there are no further references to this structure. This
-  *     must be implemented to free resources however many existing drivers
-  *     do not and are therefore not safe to unbind while in use.
-- *
-+ * @dbg_summary_show: optional routine to show contents in debugfs; default code
-+ *     will be used when this is omitted, but custom code can show extra,
-+ *     controller specific information.
-  */
- struct dma_device {
- 	struct kref ref;
-@@ -892,6 +899,10 @@ struct dma_device {
- 					    struct dma_tx_state *txstate);
- 	void (*device_issue_pending)(struct dma_chan *chan);
- 	void (*device_release)(struct dma_device *dev);
-+	/* debugfs support */
-+#ifdef CONFIG_DEBUG_FS
-+	void (*dbg_summary_show)(struct seq_file *s, struct dma_device *dev);
-+#endif
- };
- 
- static inline int dmaengine_slave_config(struct dma_chan *chan,
--- 
-Peter
+Imho the only thing which is not really defined is the
+AT_END_OF_TRANSFER, is it after the current period, or when finishing
+the buffer / after a frame or all frames are consumed in the current tx
+for interleaved.
+
+
+>>>> And with this I think it would make sense to also add this to
+>>>> capabilities :)
+>>>
+>>> I'll repeat the comment I made to Peter: you want me to implement a
+>>> feature that you think would be useful, but is completely unrelated to
+>>> my use case, while there's a more natural way to handle my issue with
+>>> the current API, without precluding in any way the addition of your new
+>>> feature in the future. Not fair.
+>>
+>> So from API design pov, I would like this to support both the features.
+>> This helps us to not rework the API again for the immediate abort.
+>>
+>> I am not expecting this to be implemented by you if your hw doesn't
+>> support it. The core changes are pretty minimal and callback in the
+>> driver is the one which does the job and yours wont do this
+> 
+> Xilinx DMA drivers don't support DMA_RESIDUE_GRANULARITY_BURST so I
+> can't test this indeed.
+
+All TI DMA supports it ;)
+
+> 
+>>>>>> So, the .terminate_cookie() should be a feature for all type of txn's.
+>>>>>> If for some reason (dont discount what hw designers can do) a controller
+>>>>>> supports this for some specific type(s), then they should return
+>>>>>> -ENOTSUPP for cookies that do not support and let the caller know.
+>>>>>
+>>>>> But then the caller can't know ahead of time, it will only find out when
+>>>>> it's too late, and can't decide not to use the DMA engine if it doesn't
+>>>>> support the feature. I don't think that's a very good option.
+>>>>
+>>>> Agreed so lets go with adding these in caps.
+>>>
+>>> So if there's a need for caps anyway, why not a cap that marks
+>>> .issue_pending() as moving from the current cyclic transfer to the next
+>>> one ? 
+>>
+>> Is the overhead really too much on that :) If you like I can send the
+>> core patches and you would need to implement the driver side?
+> 
+> We can try that as a compromise. One of main concerns with developing
+> the core patches myself is that the .terminate_cookie() API still seems
+> ill-defined to me, so it would be much more efficient if you translate
+> the idea you have in your idea into code than trying to communicate it
+> to me in all details (one of the grey areas is what should
+> .terminate_cookie() do if the cookie passed to the function corresponds
+> to an already terminated or, more tricky from a completion callback
+> point of view, an issued but not-yet-started transfer, or also a
+> submitted but not issued transfer). If you implement the core part, then
+> that problem will go away.
+> 
+> How about the implementation in virt-dma.[ch] by the way ?
+> 
+
+- Péter
 
 Texas Instruments Finland Oy, Porkkalankatu 22, 00180 Helsinki.
 Y-tunnus/Business ID: 0615521-4. Kotipaikka/Domicile: Helsinki
-
