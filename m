@@ -2,47 +2,33 @@ Return-Path: <SRS0=Ziga=4X=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.1 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AF5D1C10DCE
-	for <dmaengine@archiver.kernel.org>; Fri,  6 Mar 2020 13:43:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 99451C10DCE
+	for <dmaengine@archiver.kernel.org>; Fri,  6 Mar 2020 13:48:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 83B1720848
-	for <dmaengine@archiver.kernel.org>; Fri,  6 Mar 2020 13:43:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1583502197;
-	bh=/FRMCH/2Aozcr11mGr2dYvfp97yiKC9ojfj5aDNFTnI=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:List-ID:From;
-	b=H9qljUQdxpQl/pcGMEmcILo+eZllB4AhQABhlE8JWDcurjzy6iGVLVQ785RzSfXCR
-	 OsuZnk1udhLFaC4jwdPDv/hMDc8lOz6ckFwaoRT748lrA7EC/bTYD5yy1tc0efrgFr
-	 pRe+XOyW5BHY6Jz3/XmCsCmkktFErrbHNYYzj6Nc=
+	by mail.kernel.org (Postfix) with ESMTP id 73AF7208C3
+	for <dmaengine@archiver.kernel.org>; Fri,  6 Mar 2020 13:48:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726382AbgCFNnR (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 6 Mar 2020 08:43:17 -0500
-Received: from mail.kernel.org ([198.145.29.99]:58858 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726307AbgCFNnR (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Fri, 6 Mar 2020 08:43:17 -0500
-Received: from localhost (unknown [122.178.250.113])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 32F742072D;
-        Fri,  6 Mar 2020 13:43:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1583502196;
-        bh=/FRMCH/2Aozcr11mGr2dYvfp97yiKC9ojfj5aDNFTnI=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=fLWyJmosr/DjDVlSdDo65STseH2BUvxWVhqdL7ieiMMtJeV6Pyi/eJYnw4rL53/i5
-         qFTqPgN75HOPJks/FX1ubsDa9yypYdkP1sH5K4WkPJkUIXMWZ+MJkWLdPIw5LjOYZB
-         rkIVOSPF6B40CIqtKncdAi2tqAyBhJlNg5vcoRfA=
-Date:   Fri, 6 Mar 2020 19:13:12 +0530
-From:   Vinod Koul <vkoul@kernel.org>
+        id S1726162AbgCFNsc (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 6 Mar 2020 08:48:32 -0500
+Received: from mail.baikalelectronics.com ([87.245.175.226]:37330 "EHLO
+        mail.baikalelectronics.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726090AbgCFNsb (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Fri, 6 Mar 2020 08:48:31 -0500
+Received: from localhost (unknown [127.0.0.1])
+        by mail.baikalelectronics.ru (Postfix) with ESMTP id 342F4803087C;
+        Fri,  6 Mar 2020 13:48:29 +0000 (UTC)
+X-Virus-Scanned: amavisd-new at baikalelectronics.ru
+Received: from mail.baikalelectronics.ru ([127.0.0.1])
+        by localhost (mail.baikalelectronics.ru [127.0.0.1]) (amavisd-new, port 10024)
+        with ESMTP id 5oI_7TdojgQv; Fri,  6 Mar 2020 16:48:28 +0300 (MSK)
+Date:   Fri, 6 Mar 2020 16:47:20 +0300
+From:   Sergey Semin <Sergey.Semin@baikalelectronics.ru>
 To:     Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Cc:     Sergey.Semin@baikalelectronics.ru,
-        Serge Semin <fancer.lancer@gmail.com>,
-        Alexey Malahov <Alexey.Malahov@baikalelectronics.ru>,
+CC:     Alexey Malahov <Alexey.Malahov@baikalelectronics.ru>,
         Maxim Kaurkin <Maxim.Kaurkin@baikalelectronics.ru>,
         Pavel Parkhomenko <Pavel.Parkhomenko@baikalelectronics.ru>,
         Ramil Zaripov <Ramil.Zaripov@baikalelectronics.ru>,
@@ -53,25 +39,28 @@ Cc:     Sergey.Semin@baikalelectronics.ru,
         Ralf Baechle <ralf@linux-mips.org>,
         Viresh Kumar <vireshk@kernel.org>,
         Dan Williams <dan.j.williams@intel.com>,
+        Vinod Koul <vkoul@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>, dmaengine@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+        Mark Rutland <mark.rutland@arm.com>,
+        <dmaengine@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
 Subject: Re: [PATCH 0/5] dmaengine: dw: Take Baikal-T1 SoC DW DMAC
  peculiarities into account
-Message-ID: <20200306134312.GK4148@vkoul-mobl>
 References: <20200306131048.ADBE18030797@mail.baikalelectronics.ru>
  <20200306132912.GA1748204@smile.fi.intel.com>
- <20200306133035.GB1748204@smile.fi.intel.com>
+ <20200306133756.0F74C8030793@mail.baikalelectronics.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset="us-ascii"
 Content-Disposition: inline
-In-Reply-To: <20200306133035.GB1748204@smile.fi.intel.com>
+In-Reply-To: <20200306133756.0F74C8030793@mail.baikalelectronics.ru>
+X-ClientProxiedBy: MAIL.baikal.int (192.168.51.25) To mail (192.168.51.25)
+Message-Id: <20200306134829.342F4803087C@mail.baikalelectronics.ru>
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On 06-03-20, 15:30, Andy Shevchenko wrote:
+On Fri, Mar 06, 2020 at 03:30:35PM +0200, Andy Shevchenko wrote:
 > On Fri, Mar 06, 2020 at 03:29:12PM +0200, Andy Shevchenko wrote:
 > > On Fri, Mar 06, 2020 at 04:10:29PM +0300, Sergey.Semin@baikalelectronics.ru wrote:
 > > > From: Serge Semin <fancer.lancer@gmail.com>
@@ -114,16 +103,37 @@ On 06-03-20, 15:30, Andy Shevchenko wrote:
 > > I'll definitely review it, but it will take time. So, I think due to late
 > > submission this is material at least for v5.8.
 > 
+
+Hello Andy,
+Thanks for the quick response. Looking forward to get the patches
+reviewed and move on with the next patchset I'll send after this. It concerns
+DW APB SSI driver, which uses the changes introduced by this one. So the
+sooner we finished with this patchset the better. Although I understand
+that it may take some time. I've just sent over 12 patchset, which have a lot
+of fixups and new drivers.)
+
 > One thing that I can tell immediately is the broken email thread in this series.
 > Whenever you do a series, use `git format-patch --cover-letter --thread ...`,
 > so, it will link the mail properly.
+> 
 
-And all the dmaengine specific patches should be sent to dmaengine list,
-I see only few of them on the list.. that confuses tools like
-patchwork..
+I've got thread=true in my gitconfig file, so each email should have
+the proper reference and in-reply-to to the cover-letter (I see it from
+the log). The problem popped up from a different place. For some reason the
+automatic CC/To list extraction command didn't do the job right, so we ended
+up with lacking of mailing lists in Cc's in this patchset. The command look like
+this:
 
-Pls fix these and resubmit
+git send-email --cc-cmd "scripts/get_maintainer.pl --separator , --nokeywords --nogit --nogit-fallback --norolestats --nom" \
+                   --to-cmd "scripts/get_maintainer.pl --separator , --nokeywords --nogit --nogit-fallback --norolestats --nol" \
+                   --from "Serge Semin <Sergey.Semin at baikalelectronics.ru>" \
+                   --smtp-server-option="-abaikal" --cover-letter -5
 
-Thanks
--- 
-~Vinod
+Regards,
+-Sergey
+
+> -- 
+> With Best Regards,
+> Andy Shevchenko
+> 
+> 
