@@ -1,70 +1,93 @@
-Return-Path: <SRS0=p7ka=4W=vger.kernel.org=dmaengine-owner@kernel.org>
+Return-Path: <SRS0=Ziga=4X=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.1 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-6.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS
+	autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7A60BC3F2D1
-	for <dmaengine@archiver.kernel.org>; Thu,  5 Mar 2020 18:45:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5FEE6C10DCE
+	for <dmaengine@archiver.kernel.org>; Fri,  6 Mar 2020 13:18:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 5045620848
-	for <dmaengine@archiver.kernel.org>; Thu,  5 Mar 2020 18:45:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1583433907;
-	bh=U0CsulG0KR9S7mXPcMNAR1Zo+aU00ZDiFT4nfyMvi38=;
-	h=Subject:From:In-Reply-To:References:Date:To:Cc:List-ID:From;
-	b=cmgCeh5xIeNg1g0E18KD0RZZpsSiIiC7Cq89zHf1DrOixIVwvhDflWvVznUziTh3Q
-	 +nAiMkgNiEopN2emaBvFqLBs6rlX186ARcbhwec9cipHVWfveOwwueXYMLsDBvinnp
-	 1fedImbUrbv7kdYzK6wjGu/p0Z2hfY2eA13stnn4=
+	by mail.kernel.org (Postfix) with ESMTP id 3D1CA208C3
+	for <dmaengine@archiver.kernel.org>; Fri,  6 Mar 2020 13:18:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725989AbgCESpH (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Thu, 5 Mar 2020 13:45:07 -0500
-Received: from mail.kernel.org ([198.145.29.99]:45712 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726007AbgCESpG (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Thu, 5 Mar 2020 13:45:06 -0500
-Subject: Re: [GIT PULL]: dmaengine fixes for v5.6-rc5
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1583433906;
-        bh=U0CsulG0KR9S7mXPcMNAR1Zo+aU00ZDiFT4nfyMvi38=;
-        h=From:In-Reply-To:References:Date:To:Cc:From;
-        b=GLSFagPbVOmGADE8UNHOSYNouVXpBf6aCcTyqwERp4mQv/7M005eBS8fTYAUS86Kg
-         X17EfkJaoRTHxhES5OU5d6P+/gII0Y8GZ6N9SUBTF6ngaFth627bfDFK4gl87Msvam
-         OaseQXlumSaoCLWW/ykKLtXO7ckkUbSJM5ynqKTI=
-From:   pr-tracker-bot@kernel.org
-In-Reply-To: <20200305084304.GY4148@vkoul-mobl>
-References: <20200305084304.GY4148@vkoul-mobl>
-X-PR-Tracked-List-Id: <linux-kernel.vger.kernel.org>
-X-PR-Tracked-Message-Id: <20200305084304.GY4148@vkoul-mobl>
-X-PR-Tracked-Remote: git://git.infradead.org/users/vkoul/slave-dma.git
- tags/dmaengine-fix-5.6-rc5
-X-PR-Tracked-Commit-Id: 25962e1a7f1d522f1b57ead2f266fab570042a70
-X-PR-Merge-Tree: torvalds/linux.git
-X-PR-Merge-Refname: refs/heads/master
-X-PR-Merge-Commit-Id: 6fd145da21af43dd069463d83d89aefcc6675eba
-Message-Id: <158343390636.15864.9207705971798256638.pr-tracker-bot@kernel.org>
-Date:   Thu, 05 Mar 2020 18:45:06 +0000
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Linus Torvalds <torvalds@linux-foundation.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        dma <dmaengine@vger.kernel.org>
+        id S1726524AbgCFNSD (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 6 Mar 2020 08:18:03 -0500
+Received: from mail.baikalelectronics.com ([87.245.175.226]:36634 "EHLO
+        mail.baikalelectronics.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726090AbgCFNSC (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Fri, 6 Mar 2020 08:18:02 -0500
+X-Greylist: delayed 432 seconds by postgrey-1.27 at vger.kernel.org; Fri, 06 Mar 2020 08:18:01 EST
+Received: from localhost (unknown [127.0.0.1])
+        by mail.baikalelectronics.ru (Postfix) with ESMTP id 37EDD8030708;
+        Fri,  6 Mar 2020 13:10:49 +0000 (UTC)
+X-Virus-Scanned: amavisd-new at baikalelectronics.ru
+Received: from mail.baikalelectronics.ru ([127.0.0.1])
+        by localhost (mail.baikalelectronics.ru [127.0.0.1]) (amavisd-new, port 10024)
+        with ESMTP id PnQUZGPfEfnN; Fri,  6 Mar 2020 16:10:48 +0300 (MSK)
+From:   <Sergey.Semin@baikalelectronics.ru>
+To:     Vinod Koul <vkoul@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>
+CC:     Serge Semin <Sergey.Semin@baikalelectronics.ru>,
+        Serge Semin <fancer.lancer@gmail.com>,
+        Alexey Malahov <Alexey.Malahov@baikalelectronics.ru>,
+        Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+        Paul Burton <paulburton@kernel.org>,
+        Ralf Baechle <ralf@linux-mips.org>,
+        <dmaengine@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+Subject: [PATCH 2/5] dt-bindings: dma: dw: Add max burst transaction length property bindings
+Date:   Fri, 6 Mar 2020 16:10:31 +0300
+In-Reply-To: <20200306131035.10937-1-Sergey.Semin@baikalelectronics.ru>
+References: <20200306131035.10937-1-Sergey.Semin@baikalelectronics.ru>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7BIT
+Content-Type:   text/plain; charset=US-ASCII
+X-ClientProxiedBy: MAIL.baikal.int (192.168.51.25) To mail (192.168.51.25)
+Message-Id: <20200306131049.37EDD8030708@mail.baikalelectronics.ru>
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-The pull request you sent on Thu, 5 Mar 2020 14:13:04 +0530:
+From: Serge Semin <Sergey.Semin@baikalelectronics.ru>
 
-> git://git.infradead.org/users/vkoul/slave-dma.git tags/dmaengine-fix-5.6-rc5
+This array property is used to indicate the maximum burst transaction
+length supported by each DMA channel.
 
-has been merged into torvalds/linux.git:
-https://git.kernel.org/torvalds/c/6fd145da21af43dd069463d83d89aefcc6675eba
+Signed-off-by: Serge Semin <Sergey.Semin@baikalelectronics.ru>
+Signed-off-by: Alexey Malahov <Alexey.Malahov@baikalelectronics.ru>
+Cc: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Cc: Paul Burton <paulburton@kernel.org>
+Cc: Ralf Baechle <ralf@linux-mips.org>
+---
+ .../devicetree/bindings/dma/snps,dma-spear1340.yaml  | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-Thank you!
-
+diff --git a/Documentation/devicetree/bindings/dma/snps,dma-spear1340.yaml b/Documentation/devicetree/bindings/dma/snps,dma-spear1340.yaml
+index d7f9383ceb8f..308ec6482064 100644
+--- a/Documentation/devicetree/bindings/dma/snps,dma-spear1340.yaml
++++ b/Documentation/devicetree/bindings/dma/snps,dma-spear1340.yaml
+@@ -126,6 +126,18 @@ properties:
+           enum: [0, 1]
+           default: 0
+ 
++  snps,max-burst-len:
++    description: |
++      Maximum length of burst transactions supported by hardware.
++      It's an array property with one cell per channel in units of
++      CTLx register SRC_TR_WIDTH/DST_TR_WIDTH field.
++    allOf:
++      - $ref: /schemas/types.yaml#/definitions/uint32-array
++      - maxItems: 8
++        items:
++          enum: [4, 8, 16, 32, 64, 128, 256]
++          default: 0
++
+   snps,dma-protection-control:
+     description: |
+       Bits one-to-one passed to the AHB HPROT[3:1] bus. Each bit setting
 -- 
-Deet-doot-dot, I am a bot.
-https://korg.wiki.kernel.org/userdoc/prtracker
+2.25.1
+
