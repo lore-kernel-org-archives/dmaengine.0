@@ -2,87 +2,65 @@ Return-Path: <SRS0=k+Z1=44=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.1 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-1.1 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 51D10C10F27
-	for <dmaengine@archiver.kernel.org>; Wed, 11 Mar 2020 09:34:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AC16BC10F27
+	for <dmaengine@archiver.kernel.org>; Wed, 11 Mar 2020 09:39:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 1EEE32146E
-	for <dmaengine@archiver.kernel.org>; Wed, 11 Mar 2020 09:34:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8387621655
+	for <dmaengine@archiver.kernel.org>; Wed, 11 Mar 2020 09:39:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1583919248;
-	bh=ApeadzLweGY/ff2YbQDLmBknTg/Dae6mZE6PM07a5H4=;
+	s=default; t=1583919562;
+	bh=/LRiph60URpGfe2dBdVz+L3xl44yNut/zMZ2qYpXMrE=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:List-ID:From;
-	b=BpB9gLDRepP9GxSeZVUAdxrskomRir84rAfDnPqUFHjQ/CzE758KhxLVrFVDiALm0
-	 Qedg+GVvnVXcSLk03m1L9t44iLcR3dRNMtwdoqnOJQg4mdXeh7rZWYqBK8c4ShQ3Hn
-	 wgzkDZ6zjbnqnWtlivWOml5COKZvbCCJdvBkU7DY=
+	b=juXWWz+4CMuOl6GRr9Qn17iigsHHuAOm7q7hAYTmUxCgOffRV6ULMgX8vNfdgvtv0
+	 ByKiwgZhpGg22dGPNfRVaKqiwU//O5v/jMoqCBpk/rFecQDLertgu8+hIrGhsIDo07
+	 NMIEErKrkjCET0wZhCflPL3POEWJYP10j8oZqcnI=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728671AbgCKJeH (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 11 Mar 2020 05:34:07 -0400
-Received: from mail.kernel.org ([198.145.29.99]:33932 "EHLO mail.kernel.org"
+        id S1728255AbgCKJjW (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 11 Mar 2020 05:39:22 -0400
+Received: from mail.kernel.org ([198.145.29.99]:37014 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728610AbgCKJeH (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Wed, 11 Mar 2020 05:34:07 -0400
+        id S1726160AbgCKJjW (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Wed, 11 Mar 2020 05:39:22 -0400
 Received: from localhost (unknown [106.201.105.99])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 834192146E;
-        Wed, 11 Mar 2020 09:34:05 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id AA52D2146E;
+        Wed, 11 Mar 2020 09:39:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1583919247;
-        bh=ApeadzLweGY/ff2YbQDLmBknTg/Dae6mZE6PM07a5H4=;
+        s=default; t=1583919561;
+        bh=/LRiph60URpGfe2dBdVz+L3xl44yNut/zMZ2qYpXMrE=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=nixXeKUWuovkgQW/RcVwa2/n8nq5gvCCoy2iEpUr2cMqP8yJXn6HtxOv3QsPCof8b
-         bYr46Nbt8F9laNNGfvTVrsYHAdz/N1Zj4rJi/td7EEGjZVsxSDXuEAhgXIZicpS+wH
-         9aLOZRXwPyU12buKXj817rYkpZS008wte9v0g/Fc=
-Date:   Wed, 11 Mar 2020 15:04:01 +0530
+        b=wyIS9TPnhw3y4zEgP+xph0aC6+rpytI/DiTrR3k67D5Qxlf17vU+G7Q5CJejHvi1M
+         4CJAYL3IoWdz60oLQ30y0/LJ1aphRqqqje4wzJzTSigruImLOcT0/RblM8sKIgfZYs
+         SHMYuseufsYyYRXEvmEuGzXor/UIh/cfMhiA6tzw=
+Date:   Wed, 11 Mar 2020 15:09:16 +0530
 From:   Vinod Koul <vkoul@kernel.org>
 To:     Dave Jiang <dave.jiang@intel.com>
 Cc:     dmaengine@vger.kernel.org
-Subject: Re: [PATCH] dmaengine: idxd: fix off by one on cdev dwq refcount
-Message-ID: <20200311093401.GO4885@vkoul-mobl>
-References: <158385554998.72352.12513554686212831620.stgit@djiang5-desk3.ch.intel.com>
+Subject: Re: [PATCH] dmaengine: idxd: reflect shadow copy of traffic class
+ programming
+Message-ID: <20200311093916.GP4885@vkoul-mobl>
+References: <158386263076.10898.4586509576813094559.stgit@djiang5-desk3.ch.intel.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <158385554998.72352.12513554686212831620.stgit@djiang5-desk3.ch.intel.com>
+In-Reply-To: <158386263076.10898.4586509576813094559.stgit@djiang5-desk3.ch.intel.com>
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On 10-03-20, 08:52, Dave Jiang wrote:
-> The refcount check for dedicuated workqueue (dwq) is off by one and allows
-                        
-s/dedicuated/dedicated
+On 10-03-20, 10:50, Dave Jiang wrote:
+> The traffic class are set to -1 at initialization until the user programs
+> them. If the user choose not to, the driver will program appropriate
+> defaults. The driver also needs to update the shadowed copies of the values
+> after doing the programming.
 
-> more than 1 user to open the char device. Fix check so only a single user
-> can open the device.
-> 
-> Fixes: 42d279f9137a ("dmaengine: idxd: add char driver to expose submission portal to userland")
-> Signed-off-by: Dave Jiang <dave.jiang@intel.com>
-> ---
->  drivers/dma/idxd/cdev.c |    4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/drivers/dma/idxd/cdev.c b/drivers/dma/idxd/cdev.c
-> index e4379ba04a9a..f5e43f65a5ed 100644
-> --- a/drivers/dma/idxd/cdev.c
-> +++ b/drivers/dma/idxd/cdev.c
-> @@ -84,9 +84,9 @@ static int idxd_cdev_open(struct inode *inode, struct file *filp)
->  	dev = &idxd->pdev->dev;
->  	idxd_cdev = &wq->idxd_cdev;
->  
-> -	dev_dbg(dev, "%s called\n", __func__);
-> +	dev_dbg(dev, "%s called: %d\n", __func__, idxd_wq_refcount(wq));
->  
-> -	if (idxd_wq_refcount(wq) > 1 && wq_dedicated(wq))
-> +	if (idxd_wq_refcount(wq) > 0 && wq_dedicated(wq))
->  		return -EBUSY;
->  
->  	ctx = kzalloc(sizeof(*ctx), GFP_KERNEL);
+Applied, thanks
 
 -- 
 ~Vinod
