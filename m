@@ -2,72 +2,87 @@ Return-Path: <SRS0=k+Z1=44=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.1 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.1 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B6472C10F27
-	for <dmaengine@archiver.kernel.org>; Wed, 11 Mar 2020 09:30:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 51D10C10F27
+	for <dmaengine@archiver.kernel.org>; Wed, 11 Mar 2020 09:34:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 8EC3921D7E
-	for <dmaengine@archiver.kernel.org>; Wed, 11 Mar 2020 09:30:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1EEE32146E
+	for <dmaengine@archiver.kernel.org>; Wed, 11 Mar 2020 09:34:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1583919010;
-	bh=2FUHCqW2t4fYOxAPSeOyaauGmNpMQoDtDDJi5ocXgU8=;
+	s=default; t=1583919248;
+	bh=ApeadzLweGY/ff2YbQDLmBknTg/Dae6mZE6PM07a5H4=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:List-ID:From;
-	b=vI67Ul2oWNjPUM9wXbAR3rv8HcN/7R5sJzeDNdFIq06UDd4rawvhIW7SuLnwZqaTN
-	 +q0BzDGhvcq3R3wMxpD84jqFWO2V2QMCmfAiGLQXObCFvbRuAsGySzm6SE/FjGEmeF
-	 QnMG1+FZF4yql0rrRTSqe0urb7y0HCg5D0opl9jE=
+	b=BpB9gLDRepP9GxSeZVUAdxrskomRir84rAfDnPqUFHjQ/CzE758KhxLVrFVDiALm0
+	 Qedg+GVvnVXcSLk03m1L9t44iLcR3dRNMtwdoqnOJQg4mdXeh7rZWYqBK8c4ShQ3Hn
+	 wgzkDZ6zjbnqnWtlivWOml5COKZvbCCJdvBkU7DY=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728704AbgCKJaH (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 11 Mar 2020 05:30:07 -0400
-Received: from mail.kernel.org ([198.145.29.99]:60014 "EHLO mail.kernel.org"
+        id S1728671AbgCKJeH (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 11 Mar 2020 05:34:07 -0400
+Received: from mail.kernel.org ([198.145.29.99]:33932 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728349AbgCKJaH (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Wed, 11 Mar 2020 05:30:07 -0400
+        id S1728610AbgCKJeH (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Wed, 11 Mar 2020 05:34:07 -0400
 Received: from localhost (unknown [106.201.105.99])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id AB7CE20828;
-        Wed, 11 Mar 2020 09:30:05 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 834192146E;
+        Wed, 11 Mar 2020 09:34:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1583919006;
-        bh=2FUHCqW2t4fYOxAPSeOyaauGmNpMQoDtDDJi5ocXgU8=;
+        s=default; t=1583919247;
+        bh=ApeadzLweGY/ff2YbQDLmBknTg/Dae6mZE6PM07a5H4=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=S2gvekh43x5kX8cOIsE8hTMTtUNMSUEYAjd/5vEWZiw0IzTzEKz+h1zaKPU3znKo5
-         DGLJC755JpM5vSrIszko6IYhHqQ8w4CKBUAcSTYMPpvbkqGZCfyKapivgGRG2Vaoim
-         f1npNR9h9/yxdtE7FW923AhUYRDXBXi+YcK2Uc9o=
-Date:   Wed, 11 Mar 2020 15:00:02 +0530
+        b=nixXeKUWuovkgQW/RcVwa2/n8nq5gvCCoy2iEpUr2cMqP8yJXn6HtxOv3QsPCof8b
+         bYr46Nbt8F9laNNGfvTVrsYHAdz/N1Zj4rJi/td7EEGjZVsxSDXuEAhgXIZicpS+wH
+         9aLOZRXwPyU12buKXj817rYkpZS008wte9v0g/Fc=
+Date:   Wed, 11 Mar 2020 15:04:01 +0530
 From:   Vinod Koul <vkoul@kernel.org>
-To:     Lukas Bulwahn <lukas.bulwahn@gmail.com>
-Cc:     Dave Jiang <dave.jiang@intel.com>, dmaengine@vger.kernel.org,
-        Joe Perches <joe@perches.com>, kernel-janitors@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] MAINTAINERS: rectify the INTEL IADX DRIVER entry
-Message-ID: <20200311093002.GN4885@vkoul-mobl>
-References: <20200307205737.5829-1-lukas.bulwahn@gmail.com>
+To:     Dave Jiang <dave.jiang@intel.com>
+Cc:     dmaengine@vger.kernel.org
+Subject: Re: [PATCH] dmaengine: idxd: fix off by one on cdev dwq refcount
+Message-ID: <20200311093401.GO4885@vkoul-mobl>
+References: <158385554998.72352.12513554686212831620.stgit@djiang5-desk3.ch.intel.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20200307205737.5829-1-lukas.bulwahn@gmail.com>
+In-Reply-To: <158385554998.72352.12513554686212831620.stgit@djiang5-desk3.ch.intel.com>
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On 07-03-20, 21:57, Lukas Bulwahn wrote:
-> Commit bfe1d56091c1 ("dmaengine: idxd: Init and probe for Intel data
-> accelerators") added the INTEL IADX DRIVER entry in MAINTAINERS, which
-> mentions include/linux/idxd.h as file entry. However, this header file was
-> not added in this commit, nor in any later one.
-> 
-> Hence, since then, ./scripts/get_maintainer.pl --self-test complains:
-> 
->   warning: no file matches F: include/linux/idxd.h
-> 
-> Drop the file entry to the non-existing file in INTEL IADX DRIVER now.
+On 10-03-20, 08:52, Dave Jiang wrote:
+> The refcount check for dedicuated workqueue (dwq) is off by one and allows
+                        
+s/dedicuated/dedicated
 
-Applied, thanks
+> more than 1 user to open the char device. Fix check so only a single user
+> can open the device.
+> 
+> Fixes: 42d279f9137a ("dmaengine: idxd: add char driver to expose submission portal to userland")
+> Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+> ---
+>  drivers/dma/idxd/cdev.c |    4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/dma/idxd/cdev.c b/drivers/dma/idxd/cdev.c
+> index e4379ba04a9a..f5e43f65a5ed 100644
+> --- a/drivers/dma/idxd/cdev.c
+> +++ b/drivers/dma/idxd/cdev.c
+> @@ -84,9 +84,9 @@ static int idxd_cdev_open(struct inode *inode, struct file *filp)
+>  	dev = &idxd->pdev->dev;
+>  	idxd_cdev = &wq->idxd_cdev;
+>  
+> -	dev_dbg(dev, "%s called\n", __func__);
+> +	dev_dbg(dev, "%s called: %d\n", __func__, idxd_wq_refcount(wq));
+>  
+> -	if (idxd_wq_refcount(wq) > 1 && wq_dedicated(wq))
+> +	if (idxd_wq_refcount(wq) > 0 && wq_dedicated(wq))
+>  		return -EBUSY;
+>  
+>  	ctx = kzalloc(sizeof(*ctx), GFP_KERNEL);
 
 -- 
 ~Vinod
