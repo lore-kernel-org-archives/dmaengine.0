@@ -1,175 +1,95 @@
-Return-Path: <SRS0=jYDP=5E=vger.kernel.org=dmaengine-owner@kernel.org>
+Return-Path: <SRS0=CVQz=5F=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=unavailable
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DE0ECC4332D
-	for <dmaengine@archiver.kernel.org>; Thu, 19 Mar 2020 21:26:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 04DD3C4332B
+	for <dmaengine@archiver.kernel.org>; Fri, 20 Mar 2020 07:14:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id B071720772
-	for <dmaengine@archiver.kernel.org>; Thu, 19 Mar 2020 21:26:08 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YCr4LtsX"
+	by mail.kernel.org (Postfix) with ESMTP id D754620777
+	for <dmaengine@archiver.kernel.org>; Fri, 20 Mar 2020 07:14:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727102AbgCSV0E (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Thu, 19 Mar 2020 17:26:04 -0400
-Received: from mail-lj1-f193.google.com ([209.85.208.193]:37935 "EHLO
-        mail-lj1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725895AbgCSV0D (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Thu, 19 Mar 2020 17:26:03 -0400
-Received: by mail-lj1-f193.google.com with SMTP id w1so4224891ljh.5;
-        Thu, 19 Mar 2020 14:26:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=W81z2712/lsE16oa/wUCtdkr9O7SpuC8HdK7sVnpBuA=;
-        b=YCr4LtsXbY+j9Mu+UKGLAVyheYWc4A9sf4TyM+53RvhgsOefh2kAWLATvFt2Qs5DJC
-         E9eDCxi6ePlc6W6wmzqwgUnUtK9XMzVcsZvuen46kWIre39h29FqmzOj2lzoQPPVciVM
-         TE5Nv4sw/ZA6CltouBy29rOPWYqHnWk3Bx5R1UYko9a1HUxM6sek084H8L12iyRqJo22
-         bRuwkzttpgwBcO83lPBJnhFf/Ru76LdQBwgldsdyCtfvDorHKAIHp7csPhLutxaLiTOE
-         JCKO4a+QFM21qSVyacJ+nctMYM5tgI0iMHQIW3qoknkQVYazbO3/Thf9uF6H6N1KLZDg
-         0Usg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=W81z2712/lsE16oa/wUCtdkr9O7SpuC8HdK7sVnpBuA=;
-        b=jP9t0707TG6dj+iNdC5atFAjAKZRqoTnuwalI/Z+YwqG4hGyvIJfbnqt1cglYGKQdW
-         O8My2s4kt2g0JcrupmI8gHK1JoWFAUr6elaPfpLRMhcBp6nNpSX9gaKm13meGSGYEhzq
-         qa/QKb6AtkJgzdLOSM0Ma0SKEY/aRPf7GDEID0sUDJ7X3tqEr79tuL/5H6j94WYRX8MR
-         nvkvWFsWDZwois9sELhglMtSb55geLSpMu95nj867e/gaEOccGYScNFthSHLpupXgJqa
-         ZWcQx+gSkjV89ERfzplpXLXXLI4rPTRq0MAZ/wjJ/CaB1uOPUfuxlaFYfc3Z1QU8WjWv
-         1vTQ==
-X-Gm-Message-State: ANhLgQ3lHqrsej747mWdEbpErd77F4/1VGG/fkVYdlYyelnDzq4LUqSa
-        /bAqKeWrLpxOgLjI8I+F898=
-X-Google-Smtp-Source: ADFU+vvuZ11n+CSlzYp2aiIGYP25euKNdsnajGEsOijGFD2PWVpYzI0izyM9RuLR1ARTBSOg3MsC1Q==
-X-Received: by 2002:a05:651c:10e:: with SMTP id a14mr3385178ljb.134.1584653161240;
-        Thu, 19 Mar 2020 14:26:01 -0700 (PDT)
-Received: from localhost.localdomain (94-29-39-224.dynamic.spd-mgts.ru. [94.29.39.224])
-        by smtp.gmail.com with ESMTPSA id c20sm2284868lfb.60.2020.03.19.14.26.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 19 Mar 2020 14:26:00 -0700 (PDT)
-From:   Dmitry Osipenko <digetx@gmail.com>
-To:     Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Laxman Dewangan <ldewangan@nvidia.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        Dan Williams <dan.j.williams@intel.com>
-Cc:     Wolfram Sang <wsa@the-dreams.de>, linux-i2c@vger.kernel.org,
-        linux-tegra@vger.kernel.org, dmaengine@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH v2 2/2] dmaengine: tegra-apb: Improve DMA synchronization
-Date:   Fri, 20 Mar 2020 00:23:21 +0300
-Message-Id: <20200319212321.3297-2-digetx@gmail.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20200319212321.3297-1-digetx@gmail.com>
-References: <20200319212321.3297-1-digetx@gmail.com>
+        id S1726614AbgCTHOl (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 20 Mar 2020 03:14:41 -0400
+Received: from szxga05-in.huawei.com ([45.249.212.191]:12169 "EHLO huawei.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1725802AbgCTHOl (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Fri, 20 Mar 2020 03:14:41 -0400
+Received: from DGGEMS404-HUB.china.huawei.com (unknown [172.30.72.58])
+        by Forcepoint Email with ESMTP id 2D561D47507366A7B8F7;
+        Fri, 20 Mar 2020 15:14:32 +0800 (CST)
+Received: from localhost (10.173.223.234) by DGGEMS404-HUB.china.huawei.com
+ (10.3.19.204) with Microsoft SMTP Server id 14.3.487.0; Fri, 20 Mar 2020
+ 15:14:25 +0800
+From:   YueHaibing <yuehaibing@huawei.com>
+To:     <ldewangan@nvidia.com>, <jonathanh@nvidia.com>,
+        <dan.j.williams@intel.com>, <vkoul@kernel.org>,
+        <thierry.reding@gmail.com>, <swarren@wwwdotorg.org>
+CC:     <dmaengine@vger.kernel.org>, <linux-tegra@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <digetx@gmail.com>,
+        YueHaibing <yuehaibing@huawei.com>
+Subject: [PATCH -next] dmaengine: tegra-apb: mark PM functions as __maybe_unused
+Date:   Fri, 20 Mar 2020 15:13:37 +0800
+Message-ID: <20200320071337.59756-1-yuehaibing@huawei.com>
+X-Mailer: git-send-email 2.10.2.windows.1
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.173.223.234]
+X-CFilter-Loop: Reflected
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Boot CPU0 always handles DMA interrupts and under some rare circumstances
-it could stuck in uninterruptible state for a significant time (like in a
-case of KASAN + NFS root). In this case sibling CPU, which waits for DMA
-transfer completion, will get a DMA transfer timeout. In order to handle
-this rare condition, interrupt status needs to be polled until interrupt
-is handled.
+When CONFIG_PM is disabled, gcc warning this:
 
-Signed-off-by: Dmitry Osipenko <digetx@gmail.com>
+drivers/dma/tegra20-apb-dma.c:1587:12: warning: 'tegra_dma_runtime_resume' defined but not used [-Wunused-function]
+drivers/dma/tegra20-apb-dma.c:1578:12: warning: 'tegra_dma_runtime_suspend' defined but not used [-Wunused-function]
+
+Make it as __maybe_unused to fix the warnings,
+also remove unneeded function declarations.
+
+Fixes: ec8a1586780c ("dma: tegra: add dmaengine based dma driver")
+Signed-off-by: YueHaibing <yuehaibing@huawei.com>
 ---
-
-Changelog:
-
-v2: Added forgotten wake_up_all() to tegra_dma_terminate_all(), which
-    will wake up waiting threads after transfer's abortion.
-
- drivers/dma/tegra20-apb-dma.c | 25 +++++++++++++++++++++++++
- 1 file changed, 25 insertions(+)
+ drivers/dma/tegra20-apb-dma.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/dma/tegra20-apb-dma.c b/drivers/dma/tegra20-apb-dma.c
-index 26f427e02369..733fda4e7e45 100644
+index 4e295d121be6..b33000976f66 100644
 --- a/drivers/dma/tegra20-apb-dma.c
 +++ b/drivers/dma/tegra20-apb-dma.c
-@@ -24,6 +24,7 @@
- #include <linux/pm_runtime.h>
- #include <linux/reset.h>
- #include <linux/slab.h>
-+#include <linux/wait.h>
+@@ -263,8 +263,6 @@ static inline struct device *tdc2dev(struct tegra_dma_channel *tdc)
+ }
  
- #include "dmaengine.h"
+ static dma_cookie_t tegra_dma_tx_submit(struct dma_async_tx_descriptor *tx);
+-static int tegra_dma_runtime_suspend(struct device *dev);
+-static int tegra_dma_runtime_resume(struct device *dev);
  
-@@ -202,6 +203,8 @@ struct tegra_dma_channel {
- 	unsigned int slave_id;
- 	struct dma_slave_config dma_sconfig;
- 	struct tegra_dma_channel_regs channel_reg;
-+
-+	struct wait_queue_head wq;
- };
- 
- /* tegra_dma: Tegra DMA specific information */
-@@ -682,6 +685,7 @@ static irqreturn_t tegra_dma_isr(int irq, void *dev_id)
- 		tdc_write(tdc, TEGRA_APBDMA_CHAN_STATUS, status);
- 		tdc->isr_handler(tdc, false);
- 		tasklet_schedule(&tdc->tasklet);
-+		wake_up_all(&tdc->wq);
- 		spin_unlock(&tdc->lock);
- 		return IRQ_HANDLED;
- 	}
-@@ -783,6 +787,7 @@ static int tegra_dma_terminate_all(struct dma_chan *dc)
- 	tegra_dma_resume(tdc);
- 
- 	pm_runtime_put(tdc->tdma->dev);
-+	wake_up_all(&tdc->wq);
- 
- skip_dma_stop:
- 	tegra_dma_abort_all(tdc);
-@@ -798,10 +803,29 @@ static int tegra_dma_terminate_all(struct dma_chan *dc)
+ /* Get DMA desc from free list, if not there then allocate it.  */
+ static struct tegra_dma_desc *tegra_dma_desc_get(struct tegra_dma_channel *tdc)
+@@ -1575,7 +1573,7 @@ static int tegra_dma_remove(struct platform_device *pdev)
  	return 0;
  }
  
-+static bool tegra_dma_eoc_interrupt_deasserted(struct tegra_dma_channel *tdc)
-+{
-+	unsigned long flags;
-+	u32 status;
-+
-+	spin_lock_irqsave(&tdc->lock, flags);
-+	status = tdc_read(tdc, TEGRA_APBDMA_CHAN_STATUS);
-+	spin_unlock_irqrestore(&tdc->lock, flags);
-+
-+	return !(status & TEGRA_APBDMA_STATUS_ISE_EOC);
-+}
-+
- static void tegra_dma_synchronize(struct dma_chan *dc)
+-static int tegra_dma_runtime_suspend(struct device *dev)
++static int __maybe_unused tegra_dma_runtime_suspend(struct device *dev)
  {
- 	struct tegra_dma_channel *tdc = to_tegra_dma_chan(dc);
+ 	struct tegra_dma *tdma = dev_get_drvdata(dev);
  
-+	/*
-+	 * CPU, which handles interrupt, could be busy in
-+	 * uninterruptible state, in this case sibling CPU
-+	 * should wait until interrupt is handled.
-+	 */
-+	wait_event(tdc->wq, tegra_dma_eoc_interrupt_deasserted(tdc));
-+
- 	tasklet_kill(&tdc->tasklet);
+@@ -1584,7 +1582,7 @@ static int tegra_dma_runtime_suspend(struct device *dev)
+ 	return 0;
  }
  
-@@ -1495,6 +1519,7 @@ static int tegra_dma_probe(struct platform_device *pdev)
- 		tasklet_init(&tdc->tasklet, tegra_dma_tasklet,
- 			     (unsigned long)tdc);
- 		spin_lock_init(&tdc->lock);
-+		init_waitqueue_head(&tdc->wq);
+-static int tegra_dma_runtime_resume(struct device *dev)
++static int __maybe_unused tegra_dma_runtime_resume(struct device *dev)
+ {
+ 	struct tegra_dma *tdma = dev_get_drvdata(dev);
  
- 		INIT_LIST_HEAD(&tdc->pending_sg_req);
- 		INIT_LIST_HEAD(&tdc->free_sg_req);
 -- 
-2.25.1
+2.17.1
+
 
