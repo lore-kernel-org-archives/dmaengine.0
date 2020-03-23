@@ -2,84 +2,87 @@ Return-Path: <SRS0=KqRe=5I=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.1 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-5.6 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=unavailable autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 56841C3F2CD
-	for <dmaengine@archiver.kernel.org>; Mon, 23 Mar 2020 17:20:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0A8CAC4332E
+	for <dmaengine@archiver.kernel.org>; Mon, 23 Mar 2020 19:44:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 1916A20771
-	for <dmaengine@archiver.kernel.org>; Mon, 23 Mar 2020 17:20:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C0D2C2073C
+	for <dmaengine@archiver.kernel.org>; Mon, 23 Mar 2020 19:44:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1584984005;
-	bh=jm8InWEtaTJ96zgFHkskp9C24p/HBzTUp+cVOeiyDFU=;
-	h=From:To:Cc:Subject:Date:List-ID:From;
-	b=Ndlpri1YQoZNAljEtDEhySgRWMX8KdflW/LuTIZ8F0YcbM0Ln/cXdXevnkKA+jY2N
-	 M4QWTtnM2sx4lWqibRm1k2NPkgIi8kf+TEPH3KxWTiPhVNZrY71vfxaO+HcQsxUiwL
-	 1RPfDc7u7wfvOVnLtW9G+mWVu/9SzSywzR0p8Xsc=
+	s=default; t=1584992643;
+	bh=ybjCvacjEGd/Q6jtpvM6CKxHbtDZvPBosD9QOKBwDF0=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:List-ID:From;
+	b=zJNHHCp4/VI5NHUWXGGZDB+bEX5ZIUbtQN3+cReuFepfaLM2l07YGBp68pgC8InKI
+	 bKj0UyG5GdwqPoKkTCLlRE2o3ONs4rQwR7QoKZHa9NhER1JgYoXtJiCqBZs4xZZM9y
+	 dbo1cfion8DZHvWK/QzaxSNVPbzNB3pRiiVlOsEc=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727811AbgCWRUD (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 23 Mar 2020 13:20:03 -0400
-Received: from mail.kernel.org ([198.145.29.99]:51740 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727801AbgCWRUD (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Mon, 23 Mar 2020 13:20:03 -0400
-Received: from localhost.localdomain (unknown [122.178.205.141])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 0AE652072D;
-        Mon, 23 Mar 2020 17:19:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1584984003;
-        bh=jm8InWEtaTJ96zgFHkskp9C24p/HBzTUp+cVOeiyDFU=;
-        h=From:To:Cc:Subject:Date:From;
-        b=dz6Y39hqDD9ok6G8I6v5ow45EqBGyV/9kSkTm5AJx4Arix4300e/j4aIJGXQP8kf3
-         /F+QpNVy6ILBnACdPpNvilpR8q4PetK2NHsCi75VAr2wMKMiah2DZ+HZ126e4j6q/3
-         tMXYoCqnPNm6D46cVPnByPzdikoLLIukacLc6n5w=
-From:   Vinod Koul <vkoul@kernel.org>
-To:     dmaengine@vger.kernel.org
-Cc:     Vinod Koul <vkoul@kernel.org>,
-        Masahiro Yamada <yamada.masahiro@socionext.com>,
-        kbuild test robot <lkp@intel.com>
-Subject: [PATCH] dmaengine: uniphier-xdmac: Remove redandant error log for platform_get_irq
-Date:   Mon, 23 Mar 2020 22:49:28 +0530
-Message-Id: <20200323171928.424223-1-vkoul@kernel.org>
-X-Mailer: git-send-email 2.25.1
+        id S1725877AbgCWToD (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 23 Mar 2020 15:44:03 -0400
+Received: from mail-il1-f196.google.com ([209.85.166.196]:43089 "EHLO
+        mail-il1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725839AbgCWToD (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Mon, 23 Mar 2020 15:44:03 -0400
+Received: by mail-il1-f196.google.com with SMTP id g15so5374271ilj.10;
+        Mon, 23 Mar 2020 12:44:02 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=z6kwnFs0niH7E9Kzv2VbHKH5UoBOgvaVsFLxKybIkRI=;
+        b=ZYABjhIYNmMp5VOtv/owH/83m5HG4ILhBjgX+mX8I99XNdc7r0Mb7Vkq2CnC/beiqX
+         3LIkpPKErnAu8GOIFACUleZqr0m2u2PIkXfx/OhyqWS16QLRt8bcs4NYvdub8zQMu4fR
+         wr1BEdEX6VtSCc/GzBb5JNr7svHpez+ZjrH1tewkUgsNprEK1IIujewAwlxEKWdqV9Yg
+         VkWRObMZTxJORyU7AszH0h5nGe5CaRMCFuh/NPxST+dog7hv2cd4xWCjYBNkeMXzrM9S
+         NL0kujO//kTDQJu9mvd0phXcbFEg5zVyDTDti2HYQo1ZRSirF0gtemLU/4azGZnT7JLm
+         clig==
+X-Gm-Message-State: ANhLgQ2RJnDKuc+5oLcdTZ9mgup1LITXUPGMcOZHEPsAR5lyYvcvk4wH
+        opfQs6/lrt28of5ZcMQmBw==
+X-Google-Smtp-Source: ADFU+vut6tX/rjj5bh3lZRotPsHXc27nCWaaqY0ASQCB3Fp2ukLJeY95a9TfwnFEy1qAMy5Jtjs3LA==
+X-Received: by 2002:a92:aa87:: with SMTP id p7mr21088780ill.63.1584992641642;
+        Mon, 23 Mar 2020 12:44:01 -0700 (PDT)
+Received: from rob-hp-laptop ([64.188.179.250])
+        by smtp.gmail.com with ESMTPSA id n26sm4568483ioo.9.2020.03.23.12.44.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 23 Mar 2020 12:44:00 -0700 (PDT)
+Received: (nullmailer pid 19776 invoked by uid 1000);
+        Mon, 23 Mar 2020 19:43:58 -0000
+Date:   Mon, 23 Mar 2020 13:43:58 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Michael Walle <michael@walle.cc>
+Cc:     dmaengine@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        Vinod Koul <vkoul@kernel.org>, Li Yang <leoyang.li@nxp.com>,
+        Peng Ma <peng.ma@nxp.com>, Michael Walle <michael@walle.cc>
+Subject: Re: [PATCH 1/2] dt-bindings: dma: fsl-edma: fix ls1028a-edma
+ compatible
+Message-ID: <20200323194358.GA19737@bogus>
+References: <20200306205403.29881-1-michael@walle.cc>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200306205403.29881-1-michael@walle.cc>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-platform_get_irq prints the error on failure, so there is no need to
-have caller add a log.
-Remove the log in uniphier_xdmac_probe() for platform_get_irq() failure
+On Fri,  6 Mar 2020 21:54:02 +0100, Michael Walle wrote:
+> The bootloader will fix up the IOMMU entries only on nodes with the
+> compatible "fsl,vf610-edma". Thus make this compatible string mandatory
+> for the ls1028a-edma.
+> 
+> While at it, fix the "fsl,fsl," typo.
+> 
+> Signed-off-by: Michael Walle <michael@walle.cc>
+> Fixes: d8c1bdb5288d ("dt-bindings: dma: fsl-edma: add new fsl,fsl,ls1028a-edma")
+> ---
+>  Documentation/devicetree/bindings/dma/fsl-edma.txt | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
+> 
 
-Reported-by: kbuild test robot <lkp@intel.com>
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
----
- drivers/dma/uniphier-xdmac.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
-
-diff --git a/drivers/dma/uniphier-xdmac.c b/drivers/dma/uniphier-xdmac.c
-index 2f6fd518d180..7b2f8a8c2d31 100644
---- a/drivers/dma/uniphier-xdmac.c
-+++ b/drivers/dma/uniphier-xdmac.c
-@@ -525,10 +525,8 @@ static int uniphier_xdmac_probe(struct platform_device *pdev)
- 		uniphier_xdmac_chan_init(xdev, i);
- 
- 	irq = platform_get_irq(pdev, 0);
--	if (irq < 0) {
--		dev_err(dev, "Failed to get IRQ\n");
-+	if (irq < 0)
- 		return irq;
--	}
- 
- 	ret = devm_request_irq(dev, irq, uniphier_xdmac_irq_handler,
- 			       IRQF_SHARED, "xdmac", xdev);
--- 
-2.25.1
-
+Reviewed-by: Rob Herring <robh@kernel.org>
