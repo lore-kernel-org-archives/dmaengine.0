@@ -2,98 +2,164 @@ Return-Path: <SRS0=JHcw=5P=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.2 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 79EB8C43331
-	for <dmaengine@archiver.kernel.org>; Mon, 30 Mar 2020 06:59:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 23334C43331
+	for <dmaengine@archiver.kernel.org>; Mon, 30 Mar 2020 21:26:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 4BF9A20732
-	for <dmaengine@archiver.kernel.org>; Mon, 30 Mar 2020 06:59:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EA9D320774
+	for <dmaengine@archiver.kernel.org>; Mon, 30 Mar 2020 21:26:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728957AbgC3G7f (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 30 Mar 2020 02:59:35 -0400
-Received: from szxga07-in.huawei.com ([45.249.212.35]:37560 "EHLO huawei.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1728489AbgC3G7e (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Mon, 30 Mar 2020 02:59:34 -0400
-Received: from DGGEMS402-HUB.china.huawei.com (unknown [172.30.72.59])
-        by Forcepoint Email with ESMTP id A0189230DE2128303A08;
-        Mon, 30 Mar 2020 14:59:15 +0800 (CST)
-Received: from [127.0.0.1] (10.173.223.234) by DGGEMS402-HUB.china.huawei.com
- (10.3.19.202) with Microsoft SMTP Server id 14.3.487.0; Mon, 30 Mar 2020
- 14:59:09 +0800
-Subject: Re: [PATCH -next] dmaengine: hisilicon: Fix build error without
- PCI_MSI
-To:     Zhou Wang <wangzhou1@hisilicon.com>, <dan.j.williams@intel.com>,
-        <vkoul@kernel.org>, <qiuzhenfa@hisilicon.com>
-References: <20200328114133.17560-1-yuehaibing@huawei.com>
- <5E815BDD.8050908@hisilicon.com>
-CC:     <dmaengine@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-From:   Yuehaibing <yuehaibing@huawei.com>
-Message-ID: <16ccc33f-d394-b59a-b3ee-65488595580f@huawei.com>
-Date:   Mon, 30 Mar 2020 14:59:09 +0800
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.2.0
+        id S1728754AbgC3V0u (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 30 Mar 2020 17:26:50 -0400
+Received: from mga02.intel.com ([134.134.136.20]:41438 "EHLO mga02.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728407AbgC3V0u (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Mon, 30 Mar 2020 17:26:50 -0400
+IronPort-SDR: dpo5ufSHwsMQXSGBtsZvtd37b9JT4QYhf3/Au0Olmy6Ym2DOfshmcakjDEhWrAUN5kbLCoT49X
+ aVlpH8ALMEWA==
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga002.jf.intel.com ([10.7.209.21])
+  by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Mar 2020 14:26:49 -0700
+IronPort-SDR: 7OseBlbYnckWzzWxFUuPK5S1UVxpiaR16v9WTpXluCfZ/N6FX4iRn4zmNTuwO56cl1TQnmZ3E/
+ 05dztNm0fOGA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.72,325,1580803200"; 
+   d="scan'208";a="267064542"
+Received: from djiang5-desk3.ch.intel.com ([143.182.136.137])
+  by orsmga002.jf.intel.com with ESMTP; 30 Mar 2020 14:26:48 -0700
+Subject: [PATCH 0/6] Add shared workqueue support for idxd driver
+From:   Dave Jiang <dave.jiang@intel.com>
+To:     vkoul@kernel.org, tglx@linutronix.de, mingo@redhat.com,
+        bp@alien8.de, hpa@zytor.com, bhelgaas@google.com,
+        gregkh@linuxfoundation.org, arnd@arndb.de
+Cc:     linux-kernel@vger.kernel.org, x86@kernel.org,
+        dmaengine@vger.kernel.org, dan.j.williams@intel.com,
+        ashok.raj@intel.com, fenghua.yu@intel.com,
+        linux-pci@vger.kernel.org, tony.luck@intel.com, jing.lin@intel.com,
+        sanjay.k.kumar@intel.com
+Date:   Mon, 30 Mar 2020 14:26:48 -0700
+Message-ID: <158560290392.6059.16921214463585182874.stgit@djiang5-desk3.ch.intel.com>
+User-Agent: StGit/unknown-version
 MIME-Version: 1.0
-In-Reply-To: <5E815BDD.8050908@hisilicon.com>
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.173.223.234]
-X-CFilter-Loop: Reflected
+Content-Transfer-Encoding: 7bit
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On 2020/3/30 10:39, Zhou Wang wrote:
-> On 2020/3/28 19:41, YueHaibing wrote:
->> If PCI_MSI is not set, building fais:
->>
->> drivers/dma/hisi_dma.c: In function ‘hisi_dma_free_irq_vectors’:
->> drivers/dma/hisi_dma.c:138:2: error: implicit declaration of function ‘pci_free_irq_vectors’;
->>  did you mean ‘pci_alloc_irq_vectors’? [-Werror=implicit-function-declaration]
->>   pci_free_irq_vectors(data);
->>   ^~~~~~~~~~~~~~~~~~~~
->>
->> Make HISI_DMA depends on PCI_MSI to fix this.
-> 
-> In ARM64, it will appear this compile error if PCI disables.
-> How about adding depends on PCI && PCI_MSI here?
+The patch series breaks down into following parts:
+Patch 1: x86 arch, add a new I/O accessor based on ENQCMDS
+Patches 2,3: PCI
+Patch 4: device
+Patches 5,6: idxd driver shared WQ support
 
-PCI_MSI depends on PCI， while PCI is not set, PCI_MSI will never be set
+Driver stage 1 postings for context: [1]
 
-so depends on PCI_MSI is enough.
+This patch series is dependent on Fenghua's "Tag application address space
+for devices" patch series for the ENQCMD CPU command enumeration and the
+PASID MSR support. [2]
 
-> 
-> Best,
-> Zhou
-> 
->>
->> Fixes: e9f08b65250d ("dmaengine: hisilicon: Add Kunpeng DMA engine support")
->> Signed-off-by: YueHaibing <yuehaibing@huawei.com>
->> ---
->>  drivers/dma/Kconfig | 3 ++-
->>  1 file changed, 2 insertions(+), 1 deletion(-)
->>
->> diff --git a/drivers/dma/Kconfig b/drivers/dma/Kconfig
->> index 092483644315..023db6883d05 100644
->> --- a/drivers/dma/Kconfig
->> +++ b/drivers/dma/Kconfig
->> @@ -241,7 +241,8 @@ config FSL_RAID
->>  
->>  config HISI_DMA
->>  	tristate "HiSilicon DMA Engine support"
->> -	depends on ARM64 || (COMPILE_TEST && PCI_MSI)
->> +	depends on ARM64 || COMPILE_TEST
->> +	depends on PCI_MSI
->>  	select DMA_ENGINE
->>  	select DMA_VIRTUAL_CHANNELS
->>  	help
->>
-> 
-> 
-> .
-> 
+This patch series introduces support for shared workqueue (swq) for the
+idxd driver that is supported by the Intel Data Streaming Accelerator (DSA). In
+the stage 1 patch series posting, only dedicated workqueues (dwq) are
+supported. Another major feature being introduced is Shared Virtual Memory (SVM)
+support.
 
+In this patch series, we introduce the iosubmit_cmds512_sync() command.
+This function enables the calling of the new ENQCMDS CPU instruction on the
+Intel CPU. ENQCMDS is a ring0 CPU instruction that performs similar function as
+the ENQCMD. The CPUID capability bit will enumerate ENQCMD is supported,
+which implies that ENQCMDS is supported as well. The instruction creates a
+non-posted write command on the PCIe bus and atomically writes all 64 bytes of a
+command descriptor to the accelerator device's special BAR address. The device can
+reject the command by using the zero flag. See Intel SDM [2] for additional
+details. The ENQCMDS instruction is used for submitting command descriptors
+to the swq. With this instruction, multiple "users" in the kernel can submit
+to the swq with the synchronization done by the hardware. When the swq is
+full, a 1 will be returned indicate the wq being busy. This is different than a
+dwq where the command will be silently dropped without response. The dwq
+requires the software to track the queue depth of a dwq.
+
+The attribute of cmdmem device capability is being introduced to the PCI
+device with ongoing discussion of adding the ability to enumerate PCIe capability
+that provides the support of such device MMIO regions. A
+device_supports_cmdmem(struct device *) helper function is introduced to
+initially support devices that has this capability. Since the standardized
+way to detect such capability is not available yet, a PCI quirk is defined
+for the DSA device.
+
+ENQCMDS moves a command descriptor (64 bytes) from memory to specific MMIO
+regions on a device that supports this capability. Like MMIO, the "handle"
+for these queues is just a pointer to the address of the queue in MMIO memory.
+These specific MMIO regions on the device are called portals. To support
+these portals, wrappers functions are introduced for ioremap() to make it clear
+that the special MMIO regions that expects a response from a non-posted PCI
+write are being ioremaped.
+
+The support of SVM is done through Process Address Space ID (PASID). With
+SVM support, the DMA descriptors can be programmed with virtual address for
+source and destination addresses. When a page fault is encountered, the device can
+fault in the memory page needed to complete the operation through the
+IOMMU.  This makes calling the dma_(un)map_* API calls unnecessary which reduces
+some software latencies. Both swq and dwq can support SVM.
+
+Swq enabling has been added to the idxd char device driver to allow
+exposure of the swq to the user space. User apps can call ENQCMD to submit
+descriptors directly to a swq after calling mmap() on the portal. ENQCMD is
+similar to the ENQCMDS instruction, but is only available to ring3
+(application) code. The primary difference is that ENQCMD obtains the PASID for the
+request from the IA32_PASID MSR to ensure that all virtual addresses specified by
+the user are interpreted in the address space of the process that executed
+ENQCMD. With the SVM enabling, the user no longer has to pin the memory and program
+IO Virtual Address (IOVA) as source and address. Virtual addresses can be
+programmed in the command descriptor and be submitted to the device. The
+SVM handling is done through the usage of PASID. For more detailed explanation
+on how ENQCMD and PASID interaction works please refer to Fenghua's submission
+cover letter [6]. Multiple user apps can easily share a swq with the ENQCMD
+instruction without needing software sychronization.
+
+[1]: https://lore.kernel.org/lkml/157965011794.73301.15960052071729101309.stgit@djiang5-desk3.ch.intel.com/
+[2]: https://lore.kernel.org/lkml/1585596788-193989-1-git-send-email-fenghua.yu@intel.com/
+[3]: https://software.intel.com/en-us/articles/intel-sdm
+[4]: https://software.intel.com/en-us/download/intel-scalable-io-virtualization-technical-specification
+[5]: https://software.intel.com/en-us/download/intel-data-streaming-accelerator-preliminary-architecture-specification
+[6]: https://01.org/blogs/2019/introducing-intel-data-streaming-accelerator
+[7]: https://intel.github.io/idxd/
+[8]: https://github.com/intel/idxd-driver idxd-stage2
+
+---
+
+Dave Jiang (6):
+      x86/asm: add iosubmit_cmds512_sync() based on enqcmds
+      device/pci: add cmdmem cap to pci_dev
+      pci: add PCI quirk cmdmem fixup for Intel DSA device
+      device: add cmdmem support for MMIO address
+      dmaengine: idxd: add shared workqueue support
+      dmaengine: idxd: add ABI documentation for shared wq
+
+
+ Documentation/ABI/stable/sysfs-driver-dma-idxd |   14 ++
+ arch/x86/include/asm/io.h                      |   37 ++++++
+ drivers/base/core.c                            |   13 ++
+ drivers/dma/Kconfig                            |    4 +
+ drivers/dma/idxd/cdev.c                        |   46 +++++++-
+ drivers/dma/idxd/device.c                      |  122 ++++++++++++++++++--
+ drivers/dma/idxd/dma.c                         |    2 
+ drivers/dma/idxd/idxd.h                        |   13 ++
+ drivers/dma/idxd/init.c                        |   92 ++++++++++++---
+ drivers/dma/idxd/irq.c                         |  147 ++++++++++++++++++++++--
+ drivers/dma/idxd/submit.c                      |  119 ++++++++++++++-----
+ drivers/dma/idxd/sysfs.c                       |  133 ++++++++++++++++++++++
+ drivers/pci/quirks.c                           |   11 ++
+ include/linux/device.h                         |    2 
+ include/linux/io.h                             |    4 +
+ include/linux/pci.h                            |    1 
+ lib/devres.c                                   |   36 ++++++
+ 17 files changed, 721 insertions(+), 75 deletions(-)
+
+--
