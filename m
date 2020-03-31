@@ -2,138 +2,97 @@ Return-Path: <SRS0=xjqg=5Q=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=unavailable
+X-Spam-Status: No, score=-2.3 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D2677C2D0EE
-	for <dmaengine@archiver.kernel.org>; Tue, 31 Mar 2020 18:39:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DF377C43331
+	for <dmaengine@archiver.kernel.org>; Tue, 31 Mar 2020 21:44:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id AC27921473
-	for <dmaengine@archiver.kernel.org>; Tue, 31 Mar 2020 18:39:02 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="cW0Tj1W3"
+	by mail.kernel.org (Postfix) with ESMTP id AFB78208E0
+	for <dmaengine@archiver.kernel.org>; Tue, 31 Mar 2020 21:44:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728087AbgCaSix (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 31 Mar 2020 14:38:53 -0400
-Received: from mail-lf1-f66.google.com ([209.85.167.66]:34346 "EHLO
-        mail-lf1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726194AbgCaSix (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Tue, 31 Mar 2020 14:38:53 -0400
-Received: by mail-lf1-f66.google.com with SMTP id e7so18219389lfq.1
-        for <dmaengine@vger.kernel.org>; Tue, 31 Mar 2020 11:38:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=ef53u72gwX154C7xAMYz+wCT3OMfVTWwHYstmLaCNlc=;
-        b=cW0Tj1W36bWIKjTQK8D9mJ/96C2vkHPZEcGEzeHzqpZy67M9jPUIyXRV5YA1X2DaHZ
-         Nzpvr5UpM29BGo6lks/pgSsnJES6sPStXAo9uafNp0/NlfHr3bJpYjCISQ8jc5IydKuv
-         iHi7rqNqMiHP+rAsoHJW6SVRpUMNK/RhN1BJmik/agnq4A1zJm38xhfmtxsDxu/c/PYf
-         KNl0mzd8Klq3O9ErQheYvhlwcsAQ4RCIuLEvbAx+wakyHiycLj6pt8B00BtM7cBGB0Ac
-         wuqLoq169V2kl68TDfQyIlc5tkHPXYmP1QNVQrAI2ij9lp2xx6LLurbGqM9Jaes8Dvlv
-         3IgA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=ef53u72gwX154C7xAMYz+wCT3OMfVTWwHYstmLaCNlc=;
-        b=JYcL4CEgv6TkA43mUYZipNrGIbwZyqcLalEkDtjf0TguxkHjL4tJJ6P79DQLx+Ssro
-         bFoVj66Iq1hVoSRAJxOMC1/AL5WHH0jg42V5a7S7ckXArzTca3y9gY7HyZHxM8e8S+O3
-         KxthwUB8IGdpfZawdU+e37Y5UJaoLC871XpVl3s11BxCV3ax9xlae94dLOrfd7LXg5ZE
-         D9NZ7YACvhApd+8FWellUdae2LTqd+ch2I9z+NwhGKMacSRcqVQVwmaBesr+B9JsHgy5
-         GTrHOnYuuD/O5XlnnQ1EfzqmiJSc55C+xo1cF6QH4H38HfEUPmQBfcq+fnWLSRPNIS56
-         Ut6g==
-X-Gm-Message-State: AGi0PuY7h8DUILcRxBuo9MITvC1WAdebtpJUfABG6RyUDrTFcscd6WMq
-        nXD+ZU5Auwb2Jba/NnxJlNlFTw==
-X-Google-Smtp-Source: APiQypJlHBdy85VzPZtpSqUGdPox7hK2Nb2Ow9qHdh0GVGjkZIEzlPooZMXhxhreWPUR3bq6fB+QZA==
-X-Received: by 2002:a19:c507:: with SMTP id w7mr11146673lfe.131.1585679930697;
-        Tue, 31 Mar 2020 11:38:50 -0700 (PDT)
-Received: from localhost.localdomain (h-158-174-22-210.NA.cust.bahnhof.se. [158.174.22.210])
-        by smtp.gmail.com with ESMTPSA id b28sm10331849ljp.90.2020.03.31.11.38.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 31 Mar 2020 11:38:49 -0700 (PDT)
-From:   Ulf Hansson <ulf.hansson@linaro.org>
-To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        "Rafael J . Wysocki" <rafael@kernel.org>,
-        linux-kernel@vger.kernel.org
-Cc:     Arnd Bergmann <arnd@arndb.de>, Christoph Hellwig <hch@lst.de>,
-        Russell King <linux@armlinux.org.uk>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Vinod Koul <vkoul@kernel.org>, Haibo Chen <haibo.chen@nxp.com>,
-        Ludovic Barre <ludovic.barre@st.com>,
-        linux-arm-kernel@lists.infradead.org, dmaengine@vger.kernel.org,
-        Ulf Hansson <ulf.hansson@linaro.org>, stable@vger.kernel.org
-Subject: [PATCH v2 1/2] driver core: platform: Initialize dma_parms for platform devices
-Date:   Tue, 31 Mar 2020 20:38:43 +0200
-Message-Id: <20200331183844.30488-2-ulf.hansson@linaro.org>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20200331183844.30488-1-ulf.hansson@linaro.org>
-References: <20200331183844.30488-1-ulf.hansson@linaro.org>
+        id S1728493AbgCaVoW (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 31 Mar 2020 17:44:22 -0400
+Received: from mga01.intel.com ([192.55.52.88]:49441 "EHLO mga01.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728245AbgCaVoW (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Tue, 31 Mar 2020 17:44:22 -0400
+IronPort-SDR: Iy3uAk8PDG1b9WYDPs+Db9CzPTI0QqGYFZOxx2QG981W6oBv1UhlL2n33ykXiX9ek8esfd7ntK
+ vTDDXiP9tafw==
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from fmsmga007.fm.intel.com ([10.253.24.52])
+  by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 31 Mar 2020 14:44:21 -0700
+IronPort-SDR: ZCpEvb3x6ajjAIVOyJOO4PJc2/P9QWnShp0oYi8QoJIZklgsg+TQa9CV5ggOCWNpfEt6qxirJo
+ 9o398wmqiIRg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.72,329,1580803200"; 
+   d="scan'208";a="240258902"
+Received: from djiang5-mobl1.amr.corp.intel.com (HELO [10.251.20.204]) ([10.251.20.204])
+  by fmsmga007.fm.intel.com with ESMTP; 31 Mar 2020 14:44:19 -0700
+Subject: Re: [PATCH 2/6] device/pci: add cmdmem cap to pci_dev
+To:     Bjorn Helgaas <helgaas@kernel.org>
+Cc:     vkoul@kernel.org, tglx@linutronix.de, mingo@redhat.com,
+        bp@alien8.de, hpa@zytor.com, gregkh@linuxfoundation.org,
+        arnd@arndb.de, linux-kernel@vger.kernel.org, x86@kernel.org,
+        dmaengine@vger.kernel.org, dan.j.williams@intel.com,
+        ashok.raj@intel.com, fenghua.yu@intel.com,
+        linux-pci@vger.kernel.org, tony.luck@intel.com, jing.lin@intel.com,
+        sanjay.k.kumar@intel.com
+References: <20200331160309.GA194762@google.com>
+From:   Dave Jiang <dave.jiang@intel.com>
+Message-ID: <e94b0403-ba68-4984-973b-6a4c5162df74@intel.com>
+Date:   Tue, 31 Mar 2020 14:44:19 -0700
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.6.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <20200331160309.GA194762@google.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-It's currently the platform driver's responsibility to initialize the
-pointer, dma_parms, for its corresponding struct device. The benefit with
-this approach allows us to avoid the initialization and to not waste memory
-for the struct device_dma_parameters, as this can be decided on a case by
-case basis.
 
-However, it has turned out that this approach is not very practical.  Not
-only does it lead to open coding, but also to real errors. In principle
-callers of dma_set_max_seg_size() doesn't check the error code, but just
-assumes it succeeds.
 
-For these reasons, let's do the initialization from the common platform bus
-at the device registration point. This also follows the way the PCI devices
-are being managed, see pci_device_add().
+On 3/31/2020 9:03 AM, Bjorn Helgaas wrote:
+> On Mon, Mar 30, 2020 at 02:27:00PM -0700, Dave Jiang wrote:
+>> Since the current accelerator devices do not have standard PCIe capability
+>> enumeration for accepting ENQCMDS yet, for now an attribute of pdev->cmdmem has
+>> been added to struct pci_dev.  Currently a PCI quirk must be used for the
+>> devices that have such cap until the PCI cap is standardized. Add a helper
+>> function to provide the check if a device supports the cmdmem capability.
+>>
+>> Such capability is expected to be added to PCIe device cap enumeration in
+>> the future.
 
-Suggested-by: Christoph Hellwig <hch@lst.de>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Re-send. My misconfigured mail client caused mailing lists to bounce the 
+send.
 
----
+> 
+> This needs some sort of thumbnail description of what "synchronous
+> write notification" and "cmdmem" mean.
 
-Changes in v2:
-	- Move initialization to setup_pdev_dma_masks(). This means the
-	initialization is done also in the OF path.
+I will add more explanation.
 
----
- drivers/base/platform.c         | 2 ++
- include/linux/platform_device.h | 1 +
- 2 files changed, 3 insertions(+)
+> 
+> Do you have a pointer to a PCI-SIG ECR or similar?
 
-diff --git a/drivers/base/platform.c b/drivers/base/platform.c
-index b5ce7b085795..c81b68d5d66d 100644
---- a/drivers/base/platform.c
-+++ b/drivers/base/platform.c
-@@ -361,6 +361,8 @@ struct platform_object {
-  */
- static void setup_pdev_dma_masks(struct platform_device *pdev)
- {
-+	pdev->dev.dma_parms = &pdev->dma_parms;
-+
- 	if (!pdev->dev.coherent_dma_mask)
- 		pdev->dev.coherent_dma_mask = DMA_BIT_MASK(32);
- 	if (!pdev->dev.dma_mask) {
-diff --git a/include/linux/platform_device.h b/include/linux/platform_device.h
-index 041bfa412aa0..81900b3cbe37 100644
---- a/include/linux/platform_device.h
-+++ b/include/linux/platform_device.h
-@@ -25,6 +25,7 @@ struct platform_device {
- 	bool		id_auto;
- 	struct device	dev;
- 	u64		platform_dma_mask;
-+	struct device_dma_parameters dma_parms;
- 	u32		num_resources;
- 	struct resource	*resource;
- 
--- 
-2.20.1
 
+
+Deferrable Memory Write (DMWr) ECR
+
+
+https://members.pcisig.com/wg/PCI-SIG/document/13747
+
+ From what I'm told it should be available for public review by EOW.
+
+> 
+> Your window size seems to be 85 or so.  It would be easier if you used
+> 80 and wrapped the commit log to fit in 75 columns so it looks decent
+> when "git log" indents it by 4.
+> 
+Ok I will fix.
