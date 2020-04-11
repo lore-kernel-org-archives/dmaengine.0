@@ -4,48 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-10.1 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
-	version=3.4.0
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=unavailable
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 355EAC2BA19
-	for <dmaengine@archiver.kernel.org>; Sat, 11 Apr 2020 23:42:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DE895C2BB86
+	for <dmaengine@archiver.kernel.org>; Sat, 11 Apr 2020 23:43:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 0E8AD20709
-	for <dmaengine@archiver.kernel.org>; Sat, 11 Apr 2020 23:42:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B7E03206A1
+	for <dmaengine@archiver.kernel.org>; Sat, 11 Apr 2020 23:43:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1586648574;
-	bh=0SPryoYmUi+Ig0ImQ453oQJ0Z9MhCZSQAku6YWUmkKo=;
+	s=default; t=1586648605;
+	bh=f09a1w7fNlXQ8Ts8ys9hzmXwKs22qUSqpWGXW9bs7b0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:List-ID:From;
-	b=dTzJdKNssxQNtdrK6mAAM1ZcNSIAfGlgAKvx2YTsjpMY3JT6n9PqZtU0MDm4tPpsW
-	 uekYHepHx0XjLu8QtIdGw+EpCJiksovf5gPot9jgMXGFfJ4dyEnbS/NsEKX/EGH6oV
-	 5H5fsoktJqZya4w57OQR+WV/LdPizPg2Ry0TEWRQ=
+	b=eLa1Vp9NFql9dgPD+fo8szmD/hSI1mxAntHNGwEefUgsctEqm2CvWQLbRov5B03X/
+	 nuo9j3sQhcwRcKD8CGKNIgmmmCC+OpzmYG3SV8JmJxIHeMONqTsyuG065GEwljr67Q
+	 jhKYSekS2/Sv79BCsnwRo02lJheebSDrC8DgZBRI=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727909AbgDKXmw (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Sat, 11 Apr 2020 19:42:52 -0400
-Received: from mail.kernel.org ([198.145.29.99]:41930 "EHLO mail.kernel.org"
+        id S1728384AbgDKXnQ (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Sat, 11 Apr 2020 19:43:16 -0400
+Received: from mail.kernel.org ([198.145.29.99]:41572 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728437AbgDKXGb (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Sat, 11 Apr 2020 19:06:31 -0400
+        id S1727221AbgDKXGV (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Sat, 11 Apr 2020 19:06:21 -0400
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 7DC6E20787;
-        Sat, 11 Apr 2020 23:06:30 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id B213821924;
+        Sat, 11 Apr 2020 23:06:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1586646391;
-        bh=0SPryoYmUi+Ig0ImQ453oQJ0Z9MhCZSQAku6YWUmkKo=;
+        s=default; t=1586646381;
+        bh=f09a1w7fNlXQ8Ts8ys9hzmXwKs22qUSqpWGXW9bs7b0=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=2fBEObkAJ35wKc3ZZj6xzc8uZ2qM03sWwkfAP1OMGpq7xcK2k2b9DLg8Em3IEnAUh
-         a35PQw/qij4T2/ank3eDTRv84qgrr1EN1igmACLYP8H4BcVOt0WTyn9MZ+CzrldMcr
-         G3yvyeJQWWUBjquXFJTois8BpV6jZN4CwGGS3170=
+        b=PhfIw2LKYniMN2Ogk88+g1jg8fdNj2zFLKzJ3H07ZgfFepf0WSIScmwRocNosC1H+
+         jeorckTFuIc/b71nx5FZvqLy39jdgSa1l/tkUNztjIk4u/AeuB3SJF8SNPyhcdes5k
+         hIlZWBmPh5ssS9+MjpaALrttNiF+maLjXDzFEC0s=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     YueHaibing <yuehaibing@huawei.com>, Hulk Robot <hulkci@huawei.com>,
-        Vinod Koul <vkoul@kernel.org>, Sasha Levin <sashal@kernel.org>,
-        dmaengine@vger.kernel.org, linux-arm-kernel@lists.infradead.org
-Subject: [PATCH AUTOSEL 5.6 130/149] dmaengine: sun4i: use 'linear_mode' in sun4i_dma_prep_dma_cyclic
-Date:   Sat, 11 Apr 2020 19:03:27 -0400
-Message-Id: <20200411230347.22371-130-sashal@kernel.org>
+Cc:     Dave Jiang <dave.jiang@intel.com>, Vinod Koul <vkoul@kernel.org>,
+        Sasha Levin <sashal@kernel.org>, dmaengine@vger.kernel.org
+Subject: [PATCH AUTOSEL 5.6 122/149] dmaengine: idxd: check return result from check_vma() in cdev
+Date:   Sat, 11 Apr 2020 19:03:19 -0400
+Message-Id: <20200411230347.22371-122-sashal@kernel.org>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20200411230347.22371-1-sashal@kernel.org>
 References: <20200411230347.22371-1-sashal@kernel.org>
@@ -58,43 +57,36 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-From: YueHaibing <yuehaibing@huawei.com>
+From: Dave Jiang <dave.jiang@intel.com>
 
-[ Upstream commit 6ebb827f7aad504ea438d0d2903293bd6f904463 ]
+[ Upstream commit b391554c61cb353c279523a706734b090aaf9000 ]
 
-drivers/dma/sun4i-dma.c: In function sun4i_dma_prep_dma_cyclic:
-drivers/dma/sun4i-dma.c:672:24: warning:
- variable linear_mode set but not used [-Wunused-but-set-variable]
+The returned result from the check_vma() function in the cdev ->mmap() call
+needs to be handled. Add the check and returning error.
 
-commit ffc079a4accc ("dmaengine: sun4i: Add support for cyclic requests with dedicated DMA")
-involved this, explicitly using the value makes the code more readable.
-
-Reported-by: Hulk Robot <hulkci@huawei.com>
-Signed-off-by: YueHaibing <yuehaibing@huawei.com>
-Link: https://lore.kernel.org/r/20200207024445.44600-1-yuehaibing@huawei.com
+Fixes: 42d279f9137a ("dmaengine: idxd: add char driver to expose submission portal to userland")
+Reported-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+Link: https://lore.kernel.org/r/158264926659.9387.14325163515683047959.stgit@djiang5-desk3.ch.intel.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/sun4i-dma.c | 2 ++
+ drivers/dma/idxd/cdev.c | 2 ++
  1 file changed, 2 insertions(+)
 
-diff --git a/drivers/dma/sun4i-dma.c b/drivers/dma/sun4i-dma.c
-index bbc2bda3b902f..e87fc7c460dd4 100644
---- a/drivers/dma/sun4i-dma.c
-+++ b/drivers/dma/sun4i-dma.c
-@@ -698,10 +698,12 @@ sun4i_dma_prep_dma_cyclic(struct dma_chan *chan, dma_addr_t buf, size_t len,
- 		endpoints = SUN4I_DMA_CFG_DST_DRQ_TYPE(vchan->endpoint) |
- 			    SUN4I_DMA_CFG_DST_ADDR_MODE(io_mode) |
- 			    SUN4I_DMA_CFG_SRC_DRQ_TYPE(ram_type);
-+			    SUN4I_DMA_CFG_SRC_ADDR_MODE(linear_mode);
- 	} else {
- 		src = sconfig->src_addr;
- 		dest = buf;
- 		endpoints = SUN4I_DMA_CFG_DST_DRQ_TYPE(ram_type) |
-+			    SUN4I_DMA_CFG_DST_ADDR_MODE(linear_mode) |
- 			    SUN4I_DMA_CFG_SRC_DRQ_TYPE(vchan->endpoint) |
- 			    SUN4I_DMA_CFG_SRC_ADDR_MODE(io_mode);
- 	}
+diff --git a/drivers/dma/idxd/cdev.c b/drivers/dma/idxd/cdev.c
+index 989b7a25ca614..677ccbe6261f4 100644
+--- a/drivers/dma/idxd/cdev.c
++++ b/drivers/dma/idxd/cdev.c
+@@ -139,6 +139,8 @@ static int idxd_cdev_mmap(struct file *filp, struct vm_area_struct *vma)
+ 
+ 	dev_dbg(&pdev->dev, "%s called\n", __func__);
+ 	rc = check_vma(wq, vma, __func__);
++	if (rc < 0)
++		return rc;
+ 
+ 	vma->vm_flags |= VM_DONTCOPY;
+ 	pfn = (base + idxd_get_wq_portal_full_offset(wq->id,
 -- 
 2.20.1
 
