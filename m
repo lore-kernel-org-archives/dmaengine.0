@@ -7,37 +7,37 @@ X-Spam-Status: No, score=-10.1 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=unavailable
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BC52FC2BA19
-	for <dmaengine@archiver.kernel.org>; Sat, 11 Apr 2020 23:13:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 80C3FC2BB86
+	for <dmaengine@archiver.kernel.org>; Sat, 11 Apr 2020 23:16:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 8A690217D8
-	for <dmaengine@archiver.kernel.org>; Sat, 11 Apr 2020 23:13:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5171420757
+	for <dmaengine@archiver.kernel.org>; Sat, 11 Apr 2020 23:16:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1586646794;
-	bh=biaprx8Yc5sJmohey7+0X3wBw157H0uUbUm0/m8ms5g=;
+	s=default; t=1586647005;
+	bh=r3rcW8UxOIXGqFfRKnVQDFiF74TQaFMEpm5Of950k9Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:List-ID:From;
-	b=SZJnEnZb4kTShuRUldh/OTZl0ODUKhIog708pMWL7EdgZXTPbAtl5FXcUR7r6A0Gb
-	 yfJ3KF1jC2WTCMlkETRDlt1JCTNtIkyMLQNgsl3HkOe9OmsqAptpJ5udAcV6mIo1kX
-	 Gzx2Ud+5UKWT6w6t7CbSNqpLicoYMJTb/Od36QQk=
+	b=EgEdH41gDgdu0cDy/TRUpJHWgew7sUbJ8d8/kQcL5H81tk4gQCCcYduD0VrHsC8iv
+	 l27EPclBefAdTNESriOF2LXbmb1yHjAZZEhAbAGTTVVn3GxgnR30VQ44hCBkWvYFTQ
+	 XAUxUlPFVWuODmbDJ0pMemIKskJxtRDh+VcpSUEU=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727620AbgDKXNN (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Sat, 11 Apr 2020 19:13:13 -0400
-Received: from mail.kernel.org ([198.145.29.99]:54128 "EHLO mail.kernel.org"
+        id S1728339AbgDKXQi (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Sat, 11 Apr 2020 19:16:38 -0400
+Received: from mail.kernel.org ([198.145.29.99]:56632 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1730358AbgDKXNM (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Sat, 11 Apr 2020 19:13:12 -0400
+        id S1730835AbgDKXOl (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Sat, 11 Apr 2020 19:14:41 -0400
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 9C48B21974;
-        Sat, 11 Apr 2020 23:13:11 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id E12D821744;
+        Sat, 11 Apr 2020 23:14:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1586646792;
-        bh=biaprx8Yc5sJmohey7+0X3wBw157H0uUbUm0/m8ms5g=;
+        s=default; t=1586646881;
+        bh=r3rcW8UxOIXGqFfRKnVQDFiF74TQaFMEpm5Of950k9Q=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=Ge4eLeMqPzVbYEn0C6Mxm9953FLBsZsJtVAcgBBICo2dukU48m3Nt1oNB9SwMUGen
-         LtR0l/Whm+QLefFoAYq4hKpmIHLeZXEy3SDPMpwvyH/daBmOyvkqC2wUE7sE/TM95q
-         mYWoMUM/KMzsrGorHZVqZ7cDeGNMg5DNXFdi6hnY=
+        b=m2a/CkCfcougFMj3zlEWB0nk9XLTZ2fkLxZZ1UZ+xrlgCv+vVPjlGBn6iRQ7ZkR+v
+         EaYxsz7Oj599EM0bleqbEs2/WizvXP5JzMS+CXJp4kkQfi6JWwYwLszfq4pbAuFhH6
+         mW6nAZwGD3BSrGD3WhcowmJ4GXiQ3wGSOwfy/eNc=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Cc:     Etienne Carriere <etienne.carriere@st.com>,
@@ -46,12 +46,12 @@ Cc:     Etienne Carriere <etienne.carriere@st.com>,
         dmaengine@vger.kernel.org,
         linux-stm32@st-md-mailman.stormreply.com,
         linux-arm-kernel@lists.infradead.org
-Subject: [PATCH AUTOSEL 4.19 56/66] dmaengine: stm32-dma: use reset controller only at probe time
-Date:   Sat, 11 Apr 2020 19:11:53 -0400
-Message-Id: <20200411231203.25933-56-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 4.9 23/26] dmaengine: stm32-dma: use reset controller only at probe time
+Date:   Sat, 11 Apr 2020 19:14:10 -0400
+Message-Id: <20200411231413.26911-23-sashal@kernel.org>
 X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20200411231203.25933-1-sashal@kernel.org>
-References: <20200411231203.25933-1-sashal@kernel.org>
+In-Reply-To: <20200411231413.26911-1-sashal@kernel.org>
+References: <20200411231413.26911-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
@@ -78,10 +78,10 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 5 insertions(+), 5 deletions(-)
 
 diff --git a/drivers/dma/stm32-dma.c b/drivers/dma/stm32-dma.c
-index 4903a408fc146..e58cee8ec2410 100644
+index ae3f60be7759e..f0f82f466ec62 100644
 --- a/drivers/dma/stm32-dma.c
 +++ b/drivers/dma/stm32-dma.c
-@@ -207,7 +207,6 @@ struct stm32_dma_device {
+@@ -176,7 +176,6 @@ struct stm32_dma_device {
  	struct dma_device ddev;
  	void __iomem *base;
  	struct clk *clk;
@@ -89,7 +89,7 @@ index 4903a408fc146..e58cee8ec2410 100644
  	bool mem2mem;
  	struct stm32_dma_chan chan[STM32_DMA_MAX_CHANNELS];
  };
-@@ -1215,6 +1214,7 @@ static int stm32_dma_probe(struct platform_device *pdev)
+@@ -1006,6 +1005,7 @@ static int stm32_dma_probe(struct platform_device *pdev)
  	struct dma_device *dd;
  	const struct of_device_id *match;
  	struct resource *res;
@@ -97,7 +97,7 @@ index 4903a408fc146..e58cee8ec2410 100644
  	int i, ret;
  
  	match = of_match_device(stm32_dma_of_match, &pdev->dev);
-@@ -1243,11 +1243,11 @@ static int stm32_dma_probe(struct platform_device *pdev)
+@@ -1034,11 +1034,11 @@ static int stm32_dma_probe(struct platform_device *pdev)
  	dmadev->mem2mem = of_property_read_bool(pdev->dev.of_node,
  						"st,mem2mem");
  
