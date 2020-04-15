@@ -3,60 +3,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-1.1 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	DKIM_VALID,DKIM_VALID_AU,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 59DE6C2BA19
-	for <dmaengine@archiver.kernel.org>; Wed, 15 Apr 2020 16:16:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 77EC6C2BA19
+	for <dmaengine@archiver.kernel.org>; Wed, 15 Apr 2020 16:17:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 31D77206F9
-	for <dmaengine@archiver.kernel.org>; Wed, 15 Apr 2020 16:16:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5552E206F9
+	for <dmaengine@archiver.kernel.org>; Wed, 15 Apr 2020 16:17:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1586967372;
-	bh=QB4mrJlnOHdWx6xcWQ3bgKLDC0djAowm6CN2swhUgAU=;
+	s=default; t=1586967472;
+	bh=zP3lZ8cIaF1xN3mOhhjx+SXGY2uwLZfMaLq+cugMpB0=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:List-ID:From;
-	b=JRqI21k/977aWOWgzRcuACEARVpX5wNz1WUJNoXFeo5VeWwg52lOQRBmKY5WLIgwJ
-	 ENd/Pl8pey96d6gbwkfn8Sq+ux2tK0XvBUvlnvdRC9YszP2IzkLCONLdHhnRaqtnlL
-	 pD2N0QUcz8KkazKmTIJFXpx9IsSJdby/yLnSkrPo=
+	b=RwvLFD6PQjpJGGg6jCvfIxh6zzSirfWGh2ejJTwZ57BY5bZown9B1afTiMSwN2LeS
+	 vMGLDZbkaVtgTUHRID5NMcL6AYMiJRWIDn0P9i6Ke7jJDe9eGgzcLVcA7ytlQ/OFvn
+	 CPUSvLBObql/RNQH75HZnhP5H5nLSCaMNe6VD2K8=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1415204AbgDOQQK (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 15 Apr 2020 12:16:10 -0400
-Received: from mail.kernel.org ([198.145.29.99]:33800 "EHLO mail.kernel.org"
+        id S2407022AbgDOQRv (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 15 Apr 2020 12:17:51 -0400
+Received: from mail.kernel.org ([198.145.29.99]:34636 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1415030AbgDOQQI (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Wed, 15 Apr 2020 12:16:08 -0400
+        id S2406838AbgDOQRu (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Wed, 15 Apr 2020 12:17:50 -0400
 Received: from localhost (unknown [106.201.106.187])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 37523206F9;
-        Wed, 15 Apr 2020 16:16:06 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id EBD3120656;
+        Wed, 15 Apr 2020 16:17:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1586967368;
-        bh=QB4mrJlnOHdWx6xcWQ3bgKLDC0djAowm6CN2swhUgAU=;
+        s=default; t=1586967470;
+        bh=zP3lZ8cIaF1xN3mOhhjx+SXGY2uwLZfMaLq+cugMpB0=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=CUA5ezWyshgzOZhu8futGHv425Kc4sK7tph+I65jlqCAnNOBN27id/xh4f9c0+iTk
-         cC427/zhcBlwWTuupq6M3+4ovf2dUx+vCFCLk0xaEwBL2+BKV8CBh3NCehpKMKxD4n
-         2EQKEchO5L8JGeI9gcvFZ5LsWbke8LwC6kX7BRnI=
-Date:   Wed, 15 Apr 2020 21:45:59 +0530
+        b=gUWW7cntAUTAnTbxd/cZ2tr4jipCWJRHbreDzAm/RrO6G0pC0G0fkjNsc7VZv3zEQ
+         orfWsfIwk65UF8ptT7MIcEnP662Df60Na1D5U4Iame0Cg/inAMto6HOojbRnZmaGoT
+         smTtPa5RDe4yS9gEKhO5dkvLL8IRFkxpRAo+K4Cs=
+Date:   Wed, 15 Apr 2020 21:47:39 +0530
 From:   Vinod Koul <vkoul@kernel.org>
-To:     Maciej Grochowski <maciek.grochowski@gmail.com>
-Cc:     dan.j.williams@intel.com,
-        Maciej Grochowski <maciej.grochowski@pm.me>,
-        dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] include/linux/dmaengine: Typos fixes in API documentation
-Message-ID: <20200415161559.GZ72691@vkoul-mobl>
-References: <20200414041703.6661-1-maciek.grochowski@gmail.com>
+To:     Masahiro Yamada <yamada.masahiro@socionext.com>
+Cc:     dmaengine@vger.kernel.org,
+        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] dt-bindings: dma: uniphier-xdmac: switch to single reg
+ region
+Message-ID: <20200415161739.GA72691@vkoul-mobl>
+References: <20200401032150.19767-1-yamada.masahiro@socionext.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20200414041703.6661-1-maciek.grochowski@gmail.com>
+In-Reply-To: <20200401032150.19767-1-yamada.masahiro@socionext.com>
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On 14-04-20, 00:17, Maciej Grochowski wrote:
-> From: Maciej Grochowski <maciej.grochowski@pm.me>
+On 01-04-20, 12:21, Masahiro Yamada wrote:
+> The reg in the example "<0x5fc10000 0x1000>, <0x5fc20000 0x800>"
+> is wrong. The register region of this controller is much smaller,
+> and there is no other hardware register interleaved. There is no
+> good reason to split it into two regions.
+> 
+> Just use a single, contiguous register region.
+> 
+> While I am here, I made the 'dma-channels' property mandatory because
+> otherwise there is no way to determine the number of the channels.
+> 
+> Please note the original binding was merged recently. Since there
+> is no user yet, this change has no actual impact.
 
 Applied, thanks
 
