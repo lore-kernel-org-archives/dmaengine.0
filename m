@@ -2,114 +2,100 @@ Return-Path: <SRS0=H4t5=57=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.7 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.1 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 65DC0C2BB55
-	for <dmaengine@archiver.kernel.org>; Wed, 15 Apr 2020 13:10:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5943BC2BA19
+	for <dmaengine@archiver.kernel.org>; Wed, 15 Apr 2020 13:17:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4D1A720737
-	for <dmaengine@archiver.kernel.org>; Wed, 15 Apr 2020 13:10:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2DEDB20575
+	for <dmaengine@archiver.kernel.org>; Wed, 15 Apr 2020 13:17:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=default; t=1586956637;
+	bh=xnctP96IABKORGoIgvVEM+OiiZ2hWkTGMixUA2d1amo=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:List-ID:From;
+	b=r/IXHGmBa1NplxlID22HoH4lSTIJhL9VR/152wuHBTsUvLaSGoTosxUJK9V/PVP+x
+	 6sYUriK+vR3mgezuNOGjDyom8CzSeeNd+FUPWJ3NsUK7/5yk5ERsyxZkuSW0OKjmp0
+	 s7aZ+0xb7GIGuno8EoRX2u0kAaSH5S3mAhWq0TAs=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2506003AbgDONKV (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 15 Apr 2020 09:10:21 -0400
-Received: from mail-ot1-f65.google.com ([209.85.210.65]:40984 "EHLO
-        mail-ot1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2504628AbgDONKD (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Wed, 15 Apr 2020 09:10:03 -0400
-Received: by mail-ot1-f65.google.com with SMTP id f52so3283019otf.8;
-        Wed, 15 Apr 2020 06:10:02 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=V9qFaonjPRW9YmEnwpksQX2HJ6Eu2laaNELJr4ZepKs=;
-        b=UsRMem+4nQ//2nHIUdfqW5L2C/Wo3qHzMPnrfFDOf9VpxNpGGGFiGoP2Hvbwb5BFBS
-         1ptvSCRn/kAi00NBjpAjmcpbGVz5BQFAIaqsGvrBxpiGgK4MuCR/UJrzqIuaq2pmuAnS
-         XNJk2xi71wSNQhm4W5OjDMwk1xvsuskidrhToY5+IMVvl2ta2m63Oqhe0HkHDUtL7BFB
-         a/sU/OayLZHK+rj42xjGUl+0V6g1p3oMY+6p63RxnOlvkUzxTEG8SpeYU4bndpFbVhIU
-         LdmIPT8dNVCoww0kgPbEIJ70WbZ/05TJpNkRwQxH3UwRn//gWBjZl2b7mDmkX5NAm+Ib
-         gRTg==
-X-Gm-Message-State: AGi0PuYiGLo7txRGJrJrpozJJfSNCf1p06mOj3AuAA9ICZ93U8dQldFs
-        rDD8Gfu3H8wPWB/X7R6XMedaY3lZoukEDUYngiQ=
-X-Google-Smtp-Source: APiQypLShKZQeszRkfUd4JX09QyAsJLhw1FNdbkBHMtLuShW145jHc+V4wPdNtNpXwRXxnGu4ITkOPujBryR9ze8Mnc=
-X-Received: by 2002:a4a:e1af:: with SMTP id 15mr1097315ooy.40.1586956201952;
- Wed, 15 Apr 2020 06:10:01 -0700 (PDT)
+        id S2506232AbgDONRM (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 15 Apr 2020 09:17:12 -0400
+Received: from mail.kernel.org ([198.145.29.99]:54634 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2897019AbgDOLfG (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Wed, 15 Apr 2020 07:35:06 -0400
+Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 6785920936;
+        Wed, 15 Apr 2020 11:35:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1586950506;
+        bh=xnctP96IABKORGoIgvVEM+OiiZ2hWkTGMixUA2d1amo=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=AJopUODkknX24E3yiKAgNzwUGy1sT4l3nA65naGYPyX6nQimsZWczvPRrhqkXY3ET
+         Akk3I6Hgt6ik6kn3JmSJqGTd0Xulyv5MTG7MkmOtpItXysmg7Ld4/humvY4poYZs5G
+         yqlrYYKaOm9VzEuKltnNiwh83lmm/I/sf2yKDPxs=
+From:   Sasha Levin <sashal@kernel.org>
+To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
+Cc:     Dave Jiang <dave.jiang@intel.com>,
+        Yixin Zhang <yixin.zhang@intel.com>,
+        Vinod Koul <vkoul@kernel.org>, Sasha Levin <sashal@kernel.org>,
+        dmaengine@vger.kernel.org
+Subject: [PATCH AUTOSEL 5.6 017/129] dmaengine: idxd: reflect shadow copy of traffic class programming
+Date:   Wed, 15 Apr 2020 07:32:52 -0400
+Message-Id: <20200415113445.11881-17-sashal@kernel.org>
+X-Mailer: git-send-email 2.20.1
+In-Reply-To: <20200415113445.11881-1-sashal@kernel.org>
+References: <20200415113445.11881-1-sashal@kernel.org>
 MIME-Version: 1.0
-References: <1586512923-21739-1-git-send-email-yoshihiro.shimoda.uh@renesas.com>
- <1586512923-21739-2-git-send-email-yoshihiro.shimoda.uh@renesas.com>
-In-Reply-To: <1586512923-21739-2-git-send-email-yoshihiro.shimoda.uh@renesas.com>
-From:   Geert Uytterhoeven <geert@linux-m68k.org>
-Date:   Wed, 15 Apr 2020 15:09:49 +0200
-Message-ID: <CAMuHMdULExMNnKJWsjAonR1sVeTyQCH0shwO--Wo6dLzrWV_tQ@mail.gmail.com>
-Subject: Re: [PATCH 1/2] dt-bindings: dma: renesas,rcar-dmac: convert bindings
- to json-schema
-To:     Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
-Cc:     Vinod <vkoul@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        dmaengine <dmaengine@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        Linux-Renesas <linux-renesas-soc@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+X-stable: review
+X-Patchwork-Hint: Ignore
+Content-Transfer-Encoding: 8bit
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Hi Shimoda-san,
+From: Dave Jiang <dave.jiang@intel.com>
 
-On Fri, Apr 10, 2020 at 12:02 PM Yoshihiro Shimoda
-<yoshihiro.shimoda.uh@renesas.com> wrote:
-> Convert Renesas R-Car and RZ/G DMA Controller bindings
-> documentation to json-schema.
->
-> Signed-off-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
+[ Upstream commit a1fcaf07ec718bb1f11e29e952c9a4cb733d57a5 ]
 
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+The traffic class are set to -1 at initialization until the user programs
+them. If the user choose not to, the driver will program appropriate
+defaults. The driver also needs to update the shadowed copies of the values
+after doing the programming.
 
-One question below...
+Fixes: c52ca478233c ("dmaengine: idxd: add configuration component of driver")
+Reported-by: Yixin Zhang <yixin.zhang@intel.com>
+Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+Link: https://lore.kernel.org/r/158386263076.10898.4586509576813094559.stgit@djiang5-desk3.ch.intel.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ drivers/dma/idxd/device.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/dma/renesas,rcar-dmac.yaml
-
-> +  interrupt-names:
-> +    minItems: 9
-> +    maxItems: 17
-> +    items:
-> +      - const: error
-> +      - pattern: "^ch([0-9]|1[0-5])$"
-> +      - pattern: "^ch([0-9]|1[0-5])$"
-> +      - pattern: "^ch([0-9]|1[0-5])$"
-> +      - pattern: "^ch([0-9]|1[0-5])$"
-> +      - pattern: "^ch([0-9]|1[0-5])$"
-> +      - pattern: "^ch([0-9]|1[0-5])$"
-> +      - pattern: "^ch([0-9]|1[0-5])$"
-> +      - pattern: "^ch([0-9]|1[0-5])$"
-> +      - pattern: "^ch([0-9]|1[0-5])$"
-> +      - pattern: "^ch([0-9]|1[0-5])$"
-> +      - pattern: "^ch([0-9]|1[0-5])$"
-> +      - pattern: "^ch([0-9]|1[0-5])$"
-> +      - pattern: "^ch([0-9]|1[0-5])$"
-> +      - pattern: "^ch([0-9]|1[0-5])$"
-> +      - pattern: "^ch([0-9]|1[0-5])$"
-> +      - pattern: "^ch([0-9]|1[0-5])$"
-
-Would it make sense to just put the actual names here?
-
-    - const: error
-    - const: ch0
-    - const: ch1
-      [...]
-    - const: ch 15
-
-Gr{oetje,eeting}s,
-
-                        Geert
-
+diff --git a/drivers/dma/idxd/device.c b/drivers/dma/idxd/device.c
+index ada69e722f84a..f6f49f0f6fae2 100644
+--- a/drivers/dma/idxd/device.c
++++ b/drivers/dma/idxd/device.c
+@@ -584,11 +584,11 @@ static void idxd_group_flags_setup(struct idxd_device *idxd)
+ 		struct idxd_group *group = &idxd->groups[i];
+ 
+ 		if (group->tc_a == -1)
+-			group->grpcfg.flags.tc_a = 0;
++			group->tc_a = group->grpcfg.flags.tc_a = 0;
+ 		else
+ 			group->grpcfg.flags.tc_a = group->tc_a;
+ 		if (group->tc_b == -1)
+-			group->grpcfg.flags.tc_b = 1;
++			group->tc_b = group->grpcfg.flags.tc_b = 1;
+ 		else
+ 			group->grpcfg.flags.tc_b = group->tc_b;
+ 		group->grpcfg.flags.use_token_limit = group->use_token_limit;
 -- 
-Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
+2.20.1
 
-In personal conversations with technical people, I call myself a hacker. But
-when I'm talking to journalists I just say "programmer" or something like that.
-                                -- Linus Torvalds
