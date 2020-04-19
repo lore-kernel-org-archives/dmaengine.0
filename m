@@ -6,28 +6,28 @@ X-Spam-Status: No, score=-9.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
 	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F081DC38A30
-	for <dmaengine@archiver.kernel.org>; Sun, 19 Apr 2020 16:49:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5AB14C54F70
+	for <dmaengine@archiver.kernel.org>; Sun, 19 Apr 2020 16:49:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D629A214D8
-	for <dmaengine@archiver.kernel.org>; Sun, 19 Apr 2020 16:49:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 45AD722202
+	for <dmaengine@archiver.kernel.org>; Sun, 19 Apr 2020 16:49:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726774AbgDSQt3 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Sun, 19 Apr 2020 12:49:29 -0400
+        id S1726791AbgDSQtg (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Sun, 19 Apr 2020 12:49:36 -0400
 Received: from v6.sk ([167.172.42.174]:43706 "EHLO v6.sk"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725793AbgDSQt1 (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Sun, 19 Apr 2020 12:49:27 -0400
+        id S1726798AbgDSQte (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Sun, 19 Apr 2020 12:49:34 -0400
 Received: from localhost (v6.sk [IPv6:::1])
-        by v6.sk (Postfix) with ESMTP id 7E003610AB;
-        Sun, 19 Apr 2020 16:49:26 +0000 (UTC)
+        by v6.sk (Postfix) with ESMTP id AA569610AE;
+        Sun, 19 Apr 2020 16:49:33 +0000 (UTC)
 From:   Lubomir Rintel <lkundrak@v3.sk>
 To:     Vinod Koul <vkoul@kernel.org>
 Cc:     Dan Williams <dan.j.williams@intel.com>, dmaengine@vger.kernel.org,
         linux-kernel@vger.kernel.org, Lubomir Rintel <lkundrak@v3.sk>
-Subject: [PATCH 4/7] dmaengine: mmp_tdma: Reset channel error on release
-Date:   Sun, 19 Apr 2020 18:49:09 +0200
-Message-Id: <20200419164912.670973-5-lkundrak@v3.sk>
+Subject: [PATCH 7/7] dmaengine: mmp_tdma: Remove the MMP_SRAM dependency
+Date:   Sun, 19 Apr 2020 18:49:12 +0200
+Message-Id: <20200419164912.670973-8-lkundrak@v3.sk>
 X-Mailer: git-send-email 2.26.0
 In-Reply-To: <20200419164912.670973-1-lkundrak@v3.sk>
 References: <20200419164912.670973-1-lkundrak@v3.sk>
@@ -38,32 +38,34 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-When a channel configuration fails, the status of the channel is set to
-DEV_ERROR so that an attempt to submit it fails. However, this status
-sticks until the heat end of the universe, making it impossible to
-recover from the error.
+A generic SRAM will driver for Device Tree enabled platforms will do as
+well.
 
-Let's reset it when the channel is released so that further use of the
-channel with correct configuration is not impacted.
+The non-DT drivers that use mmp_tdma to transfer audio samples to and from
+the audio SRAM should depend on MMP_SRAM themselves.
 
 Signed-off-by: Lubomir Rintel <lkundrak@v3.sk>
 ---
- drivers/dma/mmp_tdma.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/dma/Kconfig | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/drivers/dma/mmp_tdma.c b/drivers/dma/mmp_tdma.c
-index d574641791598..0b1aa6eab1801 100644
---- a/drivers/dma/mmp_tdma.c
-+++ b/drivers/dma/mmp_tdma.c
-@@ -370,6 +370,8 @@ static void mmp_tdma_free_descriptor(struct mmp_tdma_chan *tdmac)
- 		gen_pool_free(gpool, (unsigned long)tdmac->desc_arr,
- 				size);
- 	tdmac->desc_arr = NULL;
-+	if (tdmac->status == DMA_ERROR)
-+		tdmac->status = DMA_COMPLETE;
+diff --git a/drivers/dma/Kconfig b/drivers/dma/Kconfig
+index 0924836443152..bd0b6abd32fd3 100644
+--- a/drivers/dma/Kconfig
++++ b/drivers/dma/Kconfig
+@@ -394,12 +394,10 @@ config MMP_TDMA
+ 	bool "MMP Two-Channel DMA support"
+ 	depends on ARCH_MMP || COMPILE_TEST
+ 	select DMA_ENGINE
+-	select MMP_SRAM if ARCH_MMP
+ 	select GENERIC_ALLOCATOR
+ 	help
+ 	  Support the MMP Two-Channel DMA engine.
+ 	  This engine used for MMP Audio DMA and pxa910 SQU.
+-	  It needs sram driver under mach-mmp.
  
- 	return;
- }
+ config MOXART_DMA
+ 	tristate "MOXART DMA support"
 -- 
 2.26.0
 
