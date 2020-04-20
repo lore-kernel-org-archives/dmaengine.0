@@ -1,84 +1,131 @@
-Return-Path: <SRS0=Jtx1=6D=vger.kernel.org=dmaengine-owner@kernel.org>
+Return-Path: <SRS0=QI84=6E=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-1.1 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B6E74C38A30
-	for <dmaengine@archiver.kernel.org>; Sun, 19 Apr 2020 16:49:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AFFA1C3A5A0
+	for <dmaengine@archiver.kernel.org>; Mon, 20 Apr 2020 09:14:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A0A5C22240
-	for <dmaengine@archiver.kernel.org>; Sun, 19 Apr 2020 16:49:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8A13521473
+	for <dmaengine@archiver.kernel.org>; Mon, 20 Apr 2020 09:14:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=default; t=1587374079;
+	bh=+x/OfWUtv6vxKKGVV82g7KQURoCOuxYGmr6C4EACaJc=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:List-ID:From;
+	b=c84tS770VXHzDmNoIHgId10jwH3ip+4qCRXGE8NirDOe8wzr8mgAugGEk0b+loc+G
+	 Wus3evMnFK49gBoS/2pldM3OSNxb3j9AWaOLZ9npPDEh6s4Ek1OPQoAt2yyqM04YKV
+	 jjhTX5Vb+JYJrl01V0K6BI42xrgiOsLd8pF4+Fjk=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726731AbgDSQtx (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Sun, 19 Apr 2020 12:49:53 -0400
-Received: from v6.sk ([167.172.42.174]:43732 "EHLO v6.sk"
+        id S1726017AbgDTJOg (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 20 Apr 2020 05:14:36 -0400
+Received: from mail.kernel.org ([198.145.29.99]:41434 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726651AbgDSQtx (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Sun, 19 Apr 2020 12:49:53 -0400
-Received: from localhost (v6.sk [IPv6:::1])
-        by v6.sk (Postfix) with ESMTP id 987D5610A9;
-        Sun, 19 Apr 2020 16:49:21 +0000 (UTC)
-From:   Lubomir Rintel <lkundrak@v3.sk>
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Dan Williams <dan.j.williams@intel.com>, dmaengine@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Lubomir Rintel <lkundrak@v3.sk>
-Subject: [PATCH 2/7] dmaengine: mmp_tdma: Drop "mmp_tdma: from error messages
-Date:   Sun, 19 Apr 2020 18:49:07 +0200
-Message-Id: <20200419164912.670973-3-lkundrak@v3.sk>
-X-Mailer: git-send-email 2.26.0
-In-Reply-To: <20200419164912.670973-1-lkundrak@v3.sk>
-References: <20200419164912.670973-1-lkundrak@v3.sk>
+        id S1725865AbgDTJOg (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Mon, 20 Apr 2020 05:14:36 -0400
+Received: from disco-boy.misterjones.org (disco-boy.misterjones.org [51.254.78.96])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 08C692078E;
+        Mon, 20 Apr 2020 09:14:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1587374075;
+        bh=+x/OfWUtv6vxKKGVV82g7KQURoCOuxYGmr6C4EACaJc=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=FWW6qJ6ZX323VPf6/ew/Zd9S7mctMMY46H2fDfg6+6MVwlnMW76TITYkYxo17RpuL
+         1bkpH9ag5tCOybB9eJk99eMNiFqz+tcvkaCwHFFRwYDLMhmDlX+zxfz7nWQVw9LsSr
+         QT+T6VJIQgoHmE4wiM2NUAwghoGg872domNLa8OQ=
+Received: from disco-boy.misterjones.org ([51.254.78.96] helo=www.loen.fr)
+        by disco-boy.misterjones.org with esmtpsa (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+        (Exim 4.92)
+        (envelope-from <maz@kernel.org>)
+        id 1jQSVd-004osT-CU; Mon, 20 Apr 2020 10:14:33 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Mon, 20 Apr 2020 10:14:33 +0100
+From:   Marc Zyngier <maz@kernel.org>
+To:     Gustavo Pimentel <Gustavo.Pimentel@synopsys.com>,
+        Alan Mikhak <alan.mikhak@sifive.com>
+Cc:     linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org,
+        linux-pci@vger.kernel.org, tglx@linutronix.de, kishon@ti.com,
+        paul.walmsley@sifive.com
+Subject: Re: [PATCH] genirq/msi: Check null pointer before copying struct
+ msi_msg
+In-Reply-To: <CY4PR12MB1271277CEE4F1FE06B71DDE8DAD60@CY4PR12MB1271.namprd12.prod.outlook.com>
+References: <1587149322-28104-1-git-send-email-alan.mikhak@sifive.com>
+ <20200418122123.10157ddd@why>
+ <CY4PR12MB1271277CEE4F1FE06B71DDE8DAD60@CY4PR12MB1271.namprd12.prod.outlook.com>
+Message-ID: <8a03b55223b118c6fc605d7204e01460@kernel.org>
+X-Sender: maz@kernel.org
+User-Agent: Roundcube Webmail/1.3.10
+X-SA-Exim-Connect-IP: 51.254.78.96
+X-SA-Exim-Rcpt-To: Gustavo.Pimentel@synopsys.com, alan.mikhak@sifive.com, linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org, linux-pci@vger.kernel.org, tglx@linutronix.de, kishon@ti.com, paul.walmsley@sifive.com
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Drop a redundant "mmp_tdma:" from some error messages. The dev_err()
-appends mostly the same thing for us:
+On 2020-04-18 16:19, Gustavo Pimentel wrote:
+> Hi Marc and Alan,
+> 
+>> I'm not convinced by this. If you know that, by construction, these
+>> interrupts are not associated with an underlying MSI, why calling
+>> get_cached_msi_msg() the first place?
+>> 
+>> There seem to be some assumptions in the DW EDMA driver that the
+>> signaling would be MSI based, so maybe someone from Synopsys 
+>> (Gustavo?)
+>> could clarify that. From my own perspective, running on an endpoint
+>> device means that it is *generating* interrupts, and I'm not sure what
+>> the MSIs represent here.
+> 
+> Giving a little context to this topic.
+> 
+> The eDMA IP present on the Synopsys DesignWare PCIe Endpoints can be
+> configured and triggered *remotely* as well *locally*.
+> For the sake of simplicity let's assume for now the eDMA was 
+> implemented
+> on the EP and that is the IP that we want to configure and use.
+> 
+> When I say *remotely* I mean that this IP can be configurable through 
+> the
+> RC/CPU side, however, for that, it requires the eDMA registers to be
+> exposed through a PCIe BAR on the EP. This will allow setting the SAR,
+> DAR and other settings, also need(s) the interrupt(s) address(es) to be
+> set as well (MSI or MSI-X only) so that it can signal through PCIe (to
+> the RC and consecutively the associated EP driver) if the data transfer
+> has been completed, aborted or if the Linked List consumer algorithm 
+> has
+> passed in some linked element marked with a watermark.
+> 
+> It was based on this case that the eDMA driver was exclusively 
+> developed.
+> 
+> However, Alan, wants to expand a little more this, by being able to use
+> this driver on the EP side (through
+> pcitest/pci_endpoint_test/pci_epf_test) so that he can configure this 
+> IP
+> *locally*.
+> In fact, when doing this, he doesn't need to configure the interrupt
+> address (MSI or MSI-X), because this IP provides a local interrupt line
+> so that be connected to other blocks on the EP side.
 
-  [  120.756530] mmp-tdma d42a0800.adma: mmp_tdma: unknown burst size.
+Right, so this confirms my hunch that the driver is being used in
+a way that doesn't reflect the expected use case. Rather than
+papering over the problem by hacking the core code, I'd rather see
+the eDMA driver be updated to support both host and endpoint cases.
+This probably boils down to a PCI vs non-PCI set of helpers.
 
-Signed-off-by: Lubomir Rintel <lkundrak@v3.sk>
----
- drivers/dma/mmp_tdma.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+Alan, could you confirm whether we got it right?
 
-diff --git a/drivers/dma/mmp_tdma.c b/drivers/dma/mmp_tdma.c
-index 51e08c16756ae..d559bb4d6a31d 100644
---- a/drivers/dma/mmp_tdma.c
-+++ b/drivers/dma/mmp_tdma.c
-@@ -235,7 +235,7 @@ static int mmp_tdma_config_chan(struct dma_chan *chan)
- 			tdcr |= TDCR_BURSTSZ_128B;
- 			break;
- 		default:
--			dev_err(tdmac->dev, "mmp_tdma: unknown burst size.\n");
-+			dev_err(tdmac->dev, "unknown burst size.\n");
- 			return -EINVAL;
- 		}
- 
-@@ -250,7 +250,7 @@ static int mmp_tdma_config_chan(struct dma_chan *chan)
- 			tdcr |= TDCR_SSZ_32_BITS;
- 			break;
- 		default:
--			dev_err(tdmac->dev, "mmp_tdma: unknown bus size.\n");
-+			dev_err(tdmac->dev, "unknown bus size.\n");
- 			return -EINVAL;
- 		}
- 	} else if (tdmac->type == PXA910_SQU) {
-@@ -276,7 +276,7 @@ static int mmp_tdma_config_chan(struct dma_chan *chan)
- 			tdcr |= TDCR_BURSTSZ_SQU_32B;
- 			break;
- 		default:
--			dev_err(tdmac->dev, "mmp_tdma: unknown burst size.\n");
-+			dev_err(tdmac->dev, "unknown burst size.\n");
- 			return -EINVAL;
- 		}
- 	}
+Thanks,
+
+         M.
 -- 
-2.26.0
-
+Jazz is not dead. It just smells funny...
