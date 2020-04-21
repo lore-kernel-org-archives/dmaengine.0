@@ -6,32 +6,32 @@ X-Spam-Status: No, score=-6.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
 	URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6D56DC55189
-	for <dmaengine@archiver.kernel.org>; Tue, 21 Apr 2020 23:34:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1E782C55186
+	for <dmaengine@archiver.kernel.org>; Tue, 21 Apr 2020 23:35:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 51D0A20753
-	for <dmaengine@archiver.kernel.org>; Tue, 21 Apr 2020 23:34:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E809720679
+	for <dmaengine@archiver.kernel.org>; Tue, 21 Apr 2020 23:35:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726522AbgDUXee (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 21 Apr 2020 19:34:34 -0400
-Received: from mga03.intel.com ([134.134.136.65]:32263 "EHLO mga03.intel.com"
+        id S1726613AbgDUXe6 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 21 Apr 2020 19:34:58 -0400
+Received: from mga12.intel.com ([192.55.52.136]:36000 "EHLO mga12.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726523AbgDUXed (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Tue, 21 Apr 2020 19:34:33 -0400
-IronPort-SDR: XKt8+CmwbvTeu8YVOgtiBR8DD53e4OzgN+fdN9Cs9ufwlCyu1p5qx+BVBN1nP1gvKIXkiRQ5iV
- GLxkJD4UtHMw==
+        id S1726608AbgDUXe6 (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Tue, 21 Apr 2020 19:34:58 -0400
+IronPort-SDR: nQxz2siVnq6U5jfEJ6lYrNfbk3goRjfrwLQmiMaLDtKbw4+4E+DD7FbAZTyhy3NnMeElgXnYq3
+ 90vAkjJX5Diw==
 X-Amp-Result: SKIPPED(no attachment in message)
 X-Amp-File-Uploaded: False
-Received: from fmsmga004.fm.intel.com ([10.253.24.48])
-  by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Apr 2020 16:34:31 -0700
-IronPort-SDR: LzDL2DAv1j0ko+h7VF5KExRDU0seEEepGKoH05bc3fs903vHwy6jPKea6VkgpiuFEy+/iBa+Ar
- uypCG7CXjgoA==
+Received: from orsmga005.jf.intel.com ([10.7.209.41])
+  by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Apr 2020 16:34:57 -0700
+IronPort-SDR: ZJmjtUUbcxGue18s2Ks9zSrgfRaeub7hlTKbqDKmzcFFNV/DSQhrPt2L2rN1SpJVJ6r9/tWBYA
+ mvfERpA1QQBw==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="5.72,411,1580803200"; 
-   d="scan'208";a="279818733"
+   d="scan'208";a="429701097"
 Received: from djiang5-desk3.ch.intel.com ([143.182.136.137])
-  by fmsmga004.fm.intel.com with ESMTP; 21 Apr 2020 16:34:30 -0700
-Subject: [PATCH RFC 07/15] Documentation: Interrupt Message store
+  by orsmga005.jf.intel.com with ESMTP; 21 Apr 2020 16:34:56 -0700
+Subject: [PATCH RFC 11/15] dmaengine: idxd: add IMS support in base driver
 From:   Dave Jiang <dave.jiang@intel.com>
 To:     vkoul@kernel.org, megha.dey@linux.intel.com, maz@kernel.org,
         bhelgaas@google.com, rafael@kernel.org, gregkh@linuxfoundation.org,
@@ -43,250 +43,538 @@ To:     vkoul@kernel.org, megha.dey@linux.intel.com, maz@kernel.org,
         eric.auger@redhat.com, parav@mellanox.com
 Cc:     dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
         x86@kernel.org, linux-pci@vger.kernel.org, kvm@vger.kernel.org
-Date:   Tue, 21 Apr 2020 16:34:30 -0700
-Message-ID: <158751207000.36773.18208950543781892.stgit@djiang5-desk3.ch.intel.com>
+Date:   Tue, 21 Apr 2020 16:34:55 -0700
+Message-ID: <158751209583.36773.15917761221672315662.stgit@djiang5-desk3.ch.intel.com>
 In-Reply-To: <158751095889.36773.6009825070990637468.stgit@djiang5-desk3.ch.intel.com>
 References: <158751095889.36773.6009825070990637468.stgit@djiang5-desk3.ch.intel.com>
 User-Agent: StGit/unknown-version
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-From: Megha Dey <megha.dey@linux.intel.com>
+In preparation for support of VFIO mediated device for idxd driver, the
+enabling for Interrupt Message Store (IMS) interrupts is added for the idxd
+base driver. Until now, the maximum number of interrupts a device could
+support was 2048 (MSI-X). With IMS, the maximum number of interrupts can be
+significantly expanded for guest support. This commit only provides the
+support functions in the base driver and not the VFIO mdev code
+utilization.
 
-Add documentation for interrupt message store. This documentation
-describes the basics of Interrupt Message Store (IMS), the need to
-introduce a new interrupt mechanism, implementation details in the
-kernel, driver changes required to support IMS and the general
-misconceptions and FAQs associated with IMS.
+See Intel SIOV spec for more details:
+https://software.intel.com/en-us/download/intel-scalable-io-virtualization-technical-specification
 
-Currently the only consumer of the newly introduced IMS APIs is
-Intel's Data Streaming Accelerator.
-
-Signed-off-by: Megha Dey <megha.dey@linux.intel.com>
+Signed-off-by: Dave Jiang <dave.jiang@intel.com>
 ---
- Documentation/ims-howto.rst |  210 +++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 210 insertions(+)
- create mode 100644 Documentation/ims-howto.rst
+ drivers/dma/Kconfig       |    1 
+ drivers/dma/idxd/Makefile |    2 -
+ drivers/dma/idxd/cdev.c   |    3 +
+ drivers/dma/idxd/idxd.h   |   21 ++++-
+ drivers/dma/idxd/init.c   |   46 +++++++++++-
+ drivers/dma/idxd/mdev.c   |  179 +++++++++++++++++++++++++++++++++++++++++++++
+ drivers/dma/idxd/mdev.h   |   82 +++++++++++++++++++++
+ drivers/dma/idxd/submit.c |    3 +
+ drivers/dma/idxd/sysfs.c  |   11 +++
+ 9 files changed, 340 insertions(+), 8 deletions(-)
+ create mode 100644 drivers/dma/idxd/mdev.c
+ create mode 100644 drivers/dma/idxd/mdev.h
 
-diff --git a/Documentation/ims-howto.rst b/Documentation/ims-howto.rst
+diff --git a/drivers/dma/Kconfig b/drivers/dma/Kconfig
+index 71ea9f24a8f9..9e7d9eafb1f5 100644
+--- a/drivers/dma/Kconfig
++++ b/drivers/dma/Kconfig
+@@ -290,6 +290,7 @@ config INTEL_IDXD
+ 	select PCI_PRI
+ 	select PCI_PASID
+ 	select PCI_IOV
++	select MSI_IMS
+ 	help
+ 	  Enable support for the Intel(R) data accelerators present
+ 	  in Intel Xeon CPU.
+diff --git a/drivers/dma/idxd/Makefile b/drivers/dma/idxd/Makefile
+index 8978b898d777..308e12869f96 100644
+--- a/drivers/dma/idxd/Makefile
++++ b/drivers/dma/idxd/Makefile
+@@ -1,2 +1,2 @@
+ obj-$(CONFIG_INTEL_IDXD) += idxd.o
+-idxd-y := init.o irq.o device.o sysfs.o submit.o dma.o cdev.o
++idxd-y := init.o irq.o device.o sysfs.o submit.o dma.o cdev.o mdev.o
+diff --git a/drivers/dma/idxd/cdev.c b/drivers/dma/idxd/cdev.c
+index 27be9250606d..ddd3ce16620d 100644
+--- a/drivers/dma/idxd/cdev.c
++++ b/drivers/dma/idxd/cdev.c
+@@ -186,7 +186,8 @@ static int idxd_cdev_mmap(struct file *filp, struct vm_area_struct *vma)
+ 
+ 	vma->vm_flags |= VM_DONTCOPY | VM_DONTEXPAND | VM_WIPEONFORK;
+ 	pfn = (base + idxd_get_wq_portal_full_offset(wq->id,
+-				IDXD_PORTAL_LIMITED)) >> PAGE_SHIFT;
++				IDXD_PORTAL_LIMITED,
++				IDXD_IRQ_MSIX)) >> PAGE_SHIFT;
+ 	vma->vm_page_prot = pgprot_noncached(vma->vm_page_prot);
+ 	vma->vm_private_data = ctx;
+ 
+diff --git a/drivers/dma/idxd/idxd.h b/drivers/dma/idxd/idxd.h
+index 82a9b6035722..3a942e9c5980 100644
+--- a/drivers/dma/idxd/idxd.h
++++ b/drivers/dma/idxd/idxd.h
+@@ -172,6 +172,7 @@ struct idxd_device {
+ 
+ 	int num_groups;
+ 
++	u32 ims_offset;
+ 	u32 msix_perm_offset;
+ 	u32 wqcfg_offset;
+ 	u32 grpcfg_offset;
+@@ -179,6 +180,7 @@ struct idxd_device {
+ 
+ 	u64 max_xfer_bytes;
+ 	u32 max_batch_size;
++	int ims_size;
+ 	int max_groups;
+ 	int max_engines;
+ 	int max_tokens;
+@@ -194,6 +196,9 @@ struct idxd_device {
+ 	struct idxd_irq_entry *irq_entries;
+ 
+ 	struct dma_device dma_dev;
++
++	atomic_t num_allocated_ims;
++	struct sbitmap ims_sbmap;
+ };
+ 
+ /* IDXD software descriptor */
+@@ -224,15 +229,23 @@ enum idxd_portal_prot {
+ 	IDXD_PORTAL_LIMITED,
+ };
+ 
+-static inline int idxd_get_wq_portal_offset(enum idxd_portal_prot prot)
++enum idxd_interrupt_type {
++	IDXD_IRQ_MSIX = 0,
++	IDXD_IRQ_IMS,
++};
++
++static inline int idxd_get_wq_portal_offset(enum idxd_portal_prot prot,
++					    enum idxd_interrupt_type irq_type)
+ {
+-	return prot * 0x1000;
++	return prot * 0x1000 + irq_type * 0x2000;
+ }
+ 
+ static inline int idxd_get_wq_portal_full_offset(int wq_id,
+-						 enum idxd_portal_prot prot)
++						 enum idxd_portal_prot prot,
++						 enum idxd_interrupt_type irq_type)
+ {
+-	return ((wq_id * 4) << PAGE_SHIFT) + idxd_get_wq_portal_offset(prot);
++	return ((wq_id * 4) << PAGE_SHIFT) +
++		idxd_get_wq_portal_offset(prot, irq_type);
+ }
+ 
+ static inline void idxd_set_type(struct idxd_device *idxd)
+diff --git a/drivers/dma/idxd/init.c b/drivers/dma/idxd/init.c
+index c0fd796e9dce..15b3ef73cac3 100644
+--- a/drivers/dma/idxd/init.c
++++ b/drivers/dma/idxd/init.c
+@@ -231,10 +231,42 @@ static void idxd_read_table_offsets(struct idxd_device *idxd)
+ 	idxd->msix_perm_offset = offsets.msix_perm * 0x100;
+ 	dev_dbg(dev, "IDXD MSIX Permission Offset: %#x\n",
+ 		idxd->msix_perm_offset);
++	idxd->ims_offset = offsets.ims * 0x100;
++	dev_dbg(dev, "IDXD IMS Offset: %#x\n", idxd->ims_offset);
+ 	idxd->perfmon_offset = offsets.perfmon * 0x100;
+ 	dev_dbg(dev, "IDXD Perfmon Offset: %#x\n", idxd->perfmon_offset);
+ }
+ 
++static int device_supports_ims(struct pci_dev *pdev)
++{
++	int dvsec;
++	u16 val16;
++	u32 val32;
++
++	dvsec = pci_find_ext_capability(pdev, 0x23);
++	pci_read_config_word(pdev, dvsec + 0x4, &val16);
++	if (val16 != 0x8086) {
++		dev_dbg(&pdev->dev, "DVSEC vendor id is not Intel\n");
++		return -EOPNOTSUPP;
++	}
++
++	pci_read_config_word(pdev, dvsec + 0x8, &val16);
++	if (val16 != 0x5) {
++		dev_dbg(&pdev->dev, "DVSEC ID is not SIOV\n");
++		return -EOPNOTSUPP;
++	}
++
++	pci_read_config_dword(pdev, dvsec + 0x14, &val32);
++	if (val32 & 0x1) {
++		dev_dbg(&pdev->dev, "IMS supported for device\n");
++		return 0;
++	}
++
++	dev_dbg(&pdev->dev, "IMS unsupported for device\n");
++
++	return -EOPNOTSUPP;
++}
++
+ static void idxd_read_caps(struct idxd_device *idxd)
+ {
+ 	struct device *dev = &idxd->pdev->dev;
+@@ -247,9 +279,11 @@ static void idxd_read_caps(struct idxd_device *idxd)
+ 	dev_dbg(dev, "max xfer size: %llu bytes\n", idxd->max_xfer_bytes);
+ 	idxd->max_batch_size = 1U << idxd->hw.gen_cap.max_batch_shift;
+ 	dev_dbg(dev, "max batch size: %u\n", idxd->max_batch_size);
++	if (device_supports_ims(idxd->pdev) == 0)
++		idxd->ims_size = idxd->hw.gen_cap.max_ims_mult * 256ULL;
++	dev_dbg(dev, "IMS size: %u\n", idxd->ims_size);
+ 	if (idxd->hw.gen_cap.config_en)
+ 		set_bit(IDXD_FLAG_CONFIGURABLE, &idxd->flags);
+-
+ 	/* reading group capabilities */
+ 	idxd->hw.group_cap.bits =
+ 		ioread64(idxd->reg_base + IDXD_GRPCAP_OFFSET);
+@@ -294,6 +328,7 @@ static struct idxd_device *idxd_alloc(struct pci_dev *pdev)
+ 
+ 	idxd->pdev = pdev;
+ 	spin_lock_init(&idxd->dev_lock);
++	atomic_set(&idxd->num_allocated_ims, 0);
+ 
+ 	return idxd;
+ }
+@@ -389,9 +424,18 @@ static int idxd_probe(struct idxd_device *idxd)
+ 
+ 	idxd->major = idxd_cdev_get_major(idxd);
+ 
++	rc = sbitmap_init_node(&idxd->ims_sbmap, idxd->ims_size, -1,
++			       GFP_KERNEL, dev_to_node(dev));
++	if (rc < 0)
++		goto sbitmap_fail;
++
+ 	dev_dbg(dev, "IDXD device %d probed successfully\n", idxd->id);
+ 	return 0;
+ 
++ sbitmap_fail:
++	mutex_lock(&idxd_idr_lock);
++	idr_remove(&idxd_idrs[idxd->type], idxd->id);
++	mutex_unlock(&idxd_idr_lock);
+  err_idr_fail:
+ 	idxd_mask_error_interrupts(idxd);
+ 	idxd_mask_msix_vectors(idxd);
+diff --git a/drivers/dma/idxd/mdev.c b/drivers/dma/idxd/mdev.c
 new file mode 100644
-index 000000000000..a18de152b393
+index 000000000000..2cf0cdf149b7
 --- /dev/null
-+++ b/Documentation/ims-howto.rst
-@@ -0,0 +1,210 @@
-+.. SPDX-License-Identifier: GPL-2.0
-+.. include:: <isonum.txt>
++++ b/drivers/dma/idxd/mdev.c
+@@ -0,0 +1,179 @@
++// SPDX-License-Identifier: GPL-2.0
++/* Copyright(c) 2019,2020 Intel Corporation. All rights rsvd. */
++#include <linux/init.h>
++#include <linux/kernel.h>
++#include <linux/module.h>
++#include <linux/pci.h>
++#include <linux/device.h>
++#include <linux/io-64-nonatomic-lo-hi.h>
++#include <linux/msi.h>
++#include <linux/mdev.h>
++#include <linux/vfio.h>
++#include "../../vfio/pci/vfio_pci_private.h"
++#include <uapi/linux/idxd.h>
++#include "registers.h"
++#include "idxd.h"
++#include "mdev.h"
 +
-+==========================
-+The IMS Driver Guide HOWTO
-+==========================
++static void idxd_free_ims_index(struct idxd_device *idxd,
++				unsigned long ims_idx)
++{
++	sbitmap_clear_bit(&idxd->ims_sbmap, ims_idx);
++	atomic_dec(&idxd->num_allocated_ims);
++}
 +
-+:Authors: Megha Dey
++static int vidxd_free_ims_entries(struct vdcm_idxd *vidxd)
++{
++	struct idxd_device *idxd = vidxd->idxd;
++	struct ims_irq_entry *irq_entry;
++	struct mdev_device *mdev = vidxd->vdev.mdev;
++	struct device *dev = mdev_dev(mdev);
++	struct msi_desc *desc;
++	int i = 0;
++	struct platform_msi_group_entry *platform_msi_group;
 +
-+:Copyright: 2020 Intel Corporation
++	for_each_platform_msi_entry_in_group(desc, platform_msi_group, 0, dev) {
++		irq_entry = &vidxd->irq_entries[i];
++		devm_free_irq(dev, desc->irq, irq_entry);
++		i++;
++	}
 +
-+About this guide
-+================
++	platform_msi_domain_free_irqs(dev);
 +
-+This guide describes the basics of Interrupt Message Store (IMS), the
-+need to introduce a new interrupt mechanism, implementation details of
-+IMS in the kernel, driver changes required to support IMS and the general
-+misconceptions and FAQs associated with IMS.
++	for (i = 0; i < vidxd->num_wqs; i++)
++		idxd_free_ims_index(idxd, vidxd->ims_index[i]);
++	return 0;
++}
 +
-+What is IMS?
-+============
++static int idxd_alloc_ims_index(struct idxd_device *idxd)
++{
++	int index;
 +
-+Intel has introduced the Scalable I/O virtualization (SIOV)[1] which
-+provides a scalable and lightweight approach to hardware assisted I/O
-+virtualization by overcoming many of the shortcomings of SR-IOV.
++	index = sbitmap_get(&idxd->ims_sbmap, 0, false);
++	if (index < 0)
++		return -ENOSPC;
++	return index;
++}
 +
-+SIOV shares I/O devices at a much finer granularity, the minimal sharable
-+resource being the 'Assignable Device Interface' or ADI. Each ADI can
-+support multiple interrupt messages and thus, we need a matching scalable
-+interrupt mechanism to process these ADI interrupts. Interrupt Message
-+Store or IMS is a new interrupt mechanism to meet such a demand.
++static unsigned int idxd_ims_irq_mask(struct msi_desc *desc)
++{
++	int ims_offset;
++	u32 mask_bits = desc->platform.masked;
++	struct device *dev = desc->dev;
++	struct mdev_device *mdev = mdev_from_dev(dev);
++	struct vdcm_idxd *vidxd = mdev_get_drvdata(mdev);
++	struct idxd_device *idxd = vidxd->idxd;
++	void __iomem *base;
++	int ims_id = desc->platform.msi_index;
 +
-+Why use IMS?
-+============
++	dev_dbg(dev, "idxd irq mask: %d\n", ims_id);
 +
-+Until now, the maximum number of interrupts a device could support was 2048
-+(using MSI-X). With IMS, there is no such restriction. A device can report
-+support for SIOV(and hence IMS) to the kernel through the host device
-+driver. Alternatively, if the kernel needs a generic way to discover these
-+capabilities without host driver dependency, the PCIE Designated Vendor
-+specific Extended capability(DVSEC) can be used. ([1]Section 3.7)
++	mask_bits |= PCI_MSIX_ENTRY_CTRL_MASKBIT;
++	ims_offset = idxd->ims_offset + vidxd->ims_index[ims_id] * 0x10;
++	base = idxd->reg_base + ims_offset;
++	iowrite32(mask_bits, base + PCI_MSIX_ENTRY_VECTOR_CTRL);
 +
-+IMS is device-specific which means that the programming of the interrupt
-+messages (address/data pairs) is done in some device specific way, and not
-+by using a standard like PCI. Also, by using IMS, the device is free to
-+choose where it wants to store the interrupt messages. This makes IMS
-+highly flexible. Some devices may organise IMS as a table in device memory
-+(like MSI-X) which can be accessed through one or more memory mapped system
-+pages, some device implementations may organise it in a distributed/
-+replicated fashion at each of the “engines” in the device (with future
-+multi-tile devices) while context based devices (GPUs for instance),
-+can have it stored/located in memory (as part of supervisory state of a
-+command/context), that the hosting function can fetch and cache on demand
-+at the device. Since the number of contexts cannot be determined at boot
-+time, there cannot be a standard enumeration of the IMS size during boot.
-+In any approach, devices may implement IMS as either one unified storage
-+structure or de-centralized per ADI storage structures.
++	return mask_bits;
++}
 +
-+Even though the IMS storage organisation is device-specific, IMS entries
-+store and generate interrupts using the same interrupt message address and
-+data format as the PCI Express MSI-X table entries, a DWORD size data
-+payload and a 64-bit address. Interrupt messages are expected to be
-+programmed only by the host driver. All the IMS interrupt messages are
-+stored in the remappable format. Hence, if a driver enables IMS, interrupt
-+remapping is also enabled by default.
++static unsigned int idxd_ims_irq_unmask(struct msi_desc *desc)
++{
++	int ims_offset;
++	u32 mask_bits = desc->platform.masked;
++	struct device *dev = desc->dev;
++	struct mdev_device *mdev = mdev_from_dev(dev);
++	struct vdcm_idxd *vidxd = mdev_get_drvdata(mdev);
++	struct idxd_device *idxd = vidxd->idxd;
++	void __iomem *base;
++	int ims_id = desc->platform.msi_index;
 +
-+A device can support both MSI-X and IMS entries simultaneously, each being
-+used for a different purpose. E.g., MSI-X can be used to report device level
-+errors while IMS for software constructed devices created for native or
-+guest use.
++	dev_dbg(dev, "idxd irq unmask: %d\n", ims_id);
 +
-+Implementation of IMS in the kernel
-+===================================
++	mask_bits &= ~PCI_MSIX_ENTRY_CTRL_MASKBIT;
++	ims_offset = idxd->ims_offset + vidxd->ims_index[ims_id] * 0x10;
++	base = idxd->reg_base + ims_offset;
++	iowrite32(mask_bits, base + PCI_MSIX_ENTRY_VECTOR_CTRL);
 +
-+The Linux kernel today already provides a generic mechanism to support
-+non-PCI compliant MSI interrupts for platform devices (platform-msi.c).
-+To support IMS interrupts, we create a new IMS IRQ domain and extend the
-+existing infrastructure. Dynamic allocation of IMS vectors is a requirement
-+for devices which support Scalable I/O Virtualization. A driver can allocate
-+and free vectors not just once during probe (as was the case with MSI/MSI-X)
-+but also in the post probe phase where actual demand is available. Thus, a
-+new API, platform_msi_domain_alloc_irqs_group is introduced which drivers
-+using IMS would be able to call multiple times. The vectors allocated each
-+time this API is called are associated with a group ID. To free the vectors
-+associated with a particular group, the platform_msi_domain_free_irqs_group
-+API can be called. The existing drivers using platform-msi infrastructure
-+will continue to use the existing alloc (platform_msi_domain_alloc_irqs)
-+and free (platform_msi_domain_free_irqs) APIs and are assigned a default
-+group ID of 0.
++	return mask_bits;
++}
 +
-+Thus, platform-msi.c provides the generic methods which can be used by any
-+non-pci MSI interrupt type while the newly created ims-msi.c provides IMS
-+specific callbacks that can be used by drivers capable of generating IMS
-+interrupts. Intel has introduced data streaming accelerator (DSA)[2] device
-+which supports SIOV and thus supports IMS. Currently, only Intel's Data
-+Accelerator (idxd) driver is a consumer of this feature.
++static void idxd_ims_write_msg(struct msi_desc *desc, struct msi_msg *msg)
++{
++	int ims_offset;
++	struct device *dev = desc->dev;
++	struct mdev_device *mdev = mdev_from_dev(dev);
++	struct vdcm_idxd *vidxd = mdev_get_drvdata(mdev);
++	struct idxd_device *idxd = vidxd->idxd;
++	void __iomem *base;
++	int ims_id = desc->platform.msi_index;
 +
-+FAQs and general misconceptions:
-+================================
++	dev_dbg(dev, "ims_write: %d %x\n", ims_id, msg->address_lo);
 +
-+** There were some concerns raised by Thomas Gleixner and Marc Zyngier
-+during Linux plumbers conference 2019:
++	ims_offset = idxd->ims_offset + vidxd->ims_index[ims_id] * 0x10;
++	base = idxd->reg_base + ims_offset;
++	iowrite32(msg->address_lo, base + PCI_MSIX_ENTRY_LOWER_ADDR);
++	iowrite32(msg->address_hi, base + PCI_MSIX_ENTRY_UPPER_ADDR);
++	iowrite32(msg->data, base + PCI_MSIX_ENTRY_DATA);
++}
 +
-+1. Enumeration of IMS needs to be done by PCI core code and not by
-+   individual device drivers:
++static struct platform_msi_ops idxd_ims_ops  = {
++	.irq_mask		= idxd_ims_irq_mask,
++	.irq_unmask		= idxd_ims_irq_unmask,
++	.write_msg		= idxd_ims_write_msg,
++};
 +
-+   Currently, if the kernel needs a generic way to discover IMS capability
-+   without host driver dependency, the PCIE Designated Vendor specific
++static irqreturn_t idxd_guest_wq_completion_interrupt(int irq, void *data)
++{
++	/* send virtual interrupt */
++	return IRQ_HANDLED;
++}
 +
-+   However, we cannot have a standard way of enumerating the IMS size
-+   because for context based devices, the interrupt message is part of
-+   the context itself which is managed entirely by the driver. Since
-+   context creation is done on demand, there is no way to tell during boot
-+   time, the maximum number of contexts (and hence the number of interrupt
-+   messages)that the device can support.
++static int vidxd_setup_ims_entries(struct vdcm_idxd *vidxd)
++{
++	struct idxd_device *idxd = vidxd->idxd;
++	struct ims_irq_entry *irq_entry;
++	struct mdev_device *mdev = vidxd->vdev.mdev;
++	struct device *dev = mdev_dev(mdev);
++	struct msi_desc *desc;
++	int err, i = 0;
++	int group;
++	struct platform_msi_group_entry *platform_msi_group;
 +
-+   Also, this seems redundant (given only the driver will use this
-+   information). Hence, we thought it may suffice to enumerate it as part
-+   of driver callback interfaces. In the current linux code, even with
-+   MSI-X, the size reported by MSI-X capability is used only to cross check
-+   if the driver is asking more than that or not (and if so, fail the call).
++	if (!atomic_add_unless(&idxd->num_allocated_ims, vidxd->num_wqs,
++			       idxd->ims_size))
++		return -ENOSPC;
 +
-+   Although, if you believe it would be useful, we can add the IMS size
-+   enumeration to the SIOV DVSEC capability.
++	vidxd->ims_index[0] = idxd_alloc_ims_index(idxd);
 +
-+   Perhaps there is a misunderstanding on what IMS serves. IMS is not a
-+   system-wide interrupt solution which serves all devices; it is a
-+   self-serving device level interrupt mechanism (other than using system
-+   vector resources). Since both producer and consumer of IMS belong to
-+   the same device driver, there wouldn't be any ordering problem. Whereas,
-+   if IMS service is provided by one driver which serves multiple drivers,
-+   there would be ordering problems to solve.
++	err = platform_msi_domain_alloc_irqs_group(dev, vidxd->num_wqs,
++						   &idxd_ims_ops, &group);
++	if (err < 0) {
++		dev_dbg(dev, "Enabling IMS entry! %d\n", err);
++		return err;
++	}
 +
-+Some other commonly asked questions about IMS are as follows:
++	i = 0;
++	for_each_platform_msi_entry_in_group(desc, platform_msi_group, group, dev) {
++		irq_entry = &vidxd->irq_entries[i];
++		irq_entry->vidxd = vidxd;
++		irq_entry->int_src = i;
++		err = devm_request_irq(dev, desc->irq,
++				       idxd_guest_wq_completion_interrupt, 0,
++				       "idxd-ims", irq_entry);
++		if (err)
++			break;
++		i++;
++	}
 +
-+1. Does all SIOV devices support MSI-X (even if they have IMS)?
++	if (err) {
++		i = 0;
++		for_each_platform_msi_entry_in_group(desc, platform_msi_group, group, dev) {
++			irq_entry = &vidxd->irq_entries[i];
++			devm_free_irq(dev, desc->irq, irq_entry);
++			i++;
++		}
++		platform_msi_domain_free_irqs_group(dev, group);
++	}
 +
-+   Yes, all SIOV hosting functions are expected to have MSI-X capability
-+   (irrespective of whether it supports IMS or not). This is done for
-+   compatibility reasons, because a SIOV hosting function can be used
-+   without enabling any SIOV capabilities as a standard PCIe PF.
++	return 0;
++}
+diff --git a/drivers/dma/idxd/mdev.h b/drivers/dma/idxd/mdev.h
+new file mode 100644
+index 000000000000..5b05b6cb2b7b
+--- /dev/null
++++ b/drivers/dma/idxd/mdev.h
+@@ -0,0 +1,82 @@
++/* SPDX-License-Identifier: GPL-2.0 */
++/* Copyright(c) 2019 Intel Corporation. All rights rsvd. */
 +
-+2. Why is Intel designing a new interrupt mechanism rather than extending
-+   MSI-X to address its limitations? Isn't 2048 device interrupts enough?
++#ifndef _IDXD_MDEV_H_
++#define _IDXD_MDEV_H_
 +
-+   MSI-X has a rigid definition of one-table and on-device storage and does
-+   not provide the full flexibility required for future multi-tile
-+   accelerator designs.
-+   IMS was envisioned to be used with large number of ADIs in devices where
-+   each will need unique interrupt resources. For example, a DSA shared
-+   work queue can support large number of clients where each client can
-+   have its own interrupt. In future, with user interrupts, we expect the
-+   demand for messages to increase further.
++/* two 64-bit BARs implemented */
++#define VIDXD_MAX_BARS 2
++#define VIDXD_MAX_CFG_SPACE_SZ 4096
++#define VIDXD_MSIX_TBL_SZ_OFFSET 0x42
++#define VIDXD_CAP_CTRL_SZ 0x100
++#define VIDXD_GRP_CTRL_SZ 0x100
++#define VIDXD_WQ_CTRL_SZ 0x100
++#define VIDXD_WQ_OCPY_INT_SZ 0x20
++#define VIDXD_MSIX_TBL_SZ 0x90
++#define VIDXD_MSIX_PERM_TBL_SZ 0x48
 +
-+3. Will there be devices which only support IMS in the future?
++#define VIDXD_MSIX_TABLE_OFFSET 0x600
++#define VIDXD_MSIX_PERM_OFFSET 0x300
++#define VIDXD_GRPCFG_OFFSET 0x400
++#define VIDXD_WQCFG_OFFSET 0x500
++#define VIDXD_IMS_OFFSET 0x1000
 +
-+   No. All Scalable IOV devices will support MSI-X. But the number of MSI-X
-+   table entries may be limited compared to number of IMS entries. Device
-+   designs can restrict the number of interrupt messages supported with
-+   MSI-X (e.g., support only what is required for the base PF function
-+   without SIOV), and offer the interrupt message scalability only through
-+   IMS. For e.g., DSA supports only 9 messages with MSI-X and 2K messages
-+   with IMS.
++#define VIDXD_BAR0_SIZE  0x2000
++#define VIDXD_BAR2_SIZE  0x20000
++#define VIDXD_MAX_MSIX_ENTRIES  (VIDXD_MSIX_TBL_SZ / 0x10)
++#define VIDXD_MAX_WQS	1
 +
-+Device Driver Changes:
-+=====================
++#define	VIDXD_ATS_OFFSET 0x100
++#define	VIDXD_PRS_OFFSET 0x110
++#define VIDXD_PASID_OFFSET 0x120
++#define VIDXD_MSIX_PBA_OFFSET 0x700
 +
-+1. platform_msi_domain_alloc_irqs_group (struct device *dev, unsigned int
-+   nvec, const struct platform_msi_ops *platform_ops, int *group_id)
-+   to allocate IMS interrupts, where:
++struct vdcm_idxd_pci_bar0 {
++	u8 cap_ctrl_regs[VIDXD_CAP_CTRL_SZ];
++	u8 grp_ctrl_regs[VIDXD_GRP_CTRL_SZ];
++	u8 wq_ctrl_regs[VIDXD_WQ_CTRL_SZ];
++	u8 wq_ocpy_int_regs[VIDXD_WQ_OCPY_INT_SZ];
++	u8 msix_table[VIDXD_MSIX_TBL_SZ];
++	u8 msix_perm_table[VIDXD_MSIX_PERM_TBL_SZ];
++	unsigned long msix_pba;
++};
 +
-+   dev: The device for which to allocate interrupts
-+   nvec: The number of interrupts to allocate
-+   platform_ops: Callbacks for platform MSI ops (to be provided by driver)
-+   group_id: returned by the call, to be used to free IRQs of a certain type
++struct ims_irq_entry {
++	struct vdcm_idxd *vidxd;
++	int int_src;
++};
 +
-+   eg: static struct platform_msi_ops ims_ops  = {
-+        .irq_mask               = ims_irq_mask,
-+        .irq_unmask             = ims_irq_unmask,
-+        .write_msg              = ims_write_msg,
-+        };
++struct idxd_vdev {
++	struct mdev_device *mdev;
++	struct eventfd_ctx *msix_trigger[VIDXD_MAX_MSIX_ENTRIES];
++	struct notifier_block group_notifier;
++	struct kvm *kvm;
++	struct work_struct release_work;
++	atomic_t released;
++};
 +
-+        int group;
-+        platform_msi_domain_alloc_irqs_group (dev, nvec, platform_ops, &group)
++struct vdcm_idxd {
++	struct idxd_device *idxd;
++	struct idxd_wq *wq;
++	struct idxd_vdev vdev;
++	struct vdcm_idxd_type *type;
++	int num_wqs;
++	unsigned long handle;
++	u64 ims_index[VIDXD_MAX_WQS];
++	struct msix_entry ims_entry;
++	struct ims_irq_entry irq_entries[VIDXD_MAX_WQS];
 +
-+   where, struct platform_msi_ops:
-+   irq_mask:   mask an interrupt source
-+   irq_unmask: unmask an interrupt source
-+   irq_write_msi_msg: write message content
++	/* For VM use case */
++	u64 bar_val[VIDXD_MAX_BARS];
++	u64 bar_size[VIDXD_MAX_BARS];
++	u8 cfg[VIDXD_MAX_CFG_SPACE_SZ];
++	struct vdcm_idxd_pci_bar0 bar0;
++	struct list_head list;
++};
 +
-+   This API can be called multiple times. Every time a new group will be
-+   associated with the allocated vectors. Group ID starts from 0.
++static inline struct vdcm_idxd *to_vidxd(struct idxd_vdev *vdev)
++{
++	return container_of(vdev, struct vdcm_idxd, vdev);
++}
 +
-+2. platform_msi_domain_free_irqs_group(struct device *dev, int group) to
-+   free IMS interrupts from a particular group
++#endif
+diff --git a/drivers/dma/idxd/submit.c b/drivers/dma/idxd/submit.c
+index 741bc3aa7267..bdcac933bb28 100644
+--- a/drivers/dma/idxd/submit.c
++++ b/drivers/dma/idxd/submit.c
+@@ -123,7 +123,8 @@ int idxd_submit_desc(struct idxd_wq *wq, struct idxd_desc *desc,
+ 		return -EIO;
+ 
+ 	portal = wq->portal +
+-		 idxd_get_wq_portal_offset(IDXD_PORTAL_UNLIMITED);
++		 idxd_get_wq_portal_offset(IDXD_PORTAL_UNLIMITED,
++					   IDXD_IRQ_MSIX);
+ 	if (wq_dedicated(wq)) {
+ 		/*
+ 		 * The wmb() flushes writes to coherent DMA data before
+diff --git a/drivers/dma/idxd/sysfs.c b/drivers/dma/idxd/sysfs.c
+index 1dd3ade2e438..07bad4f6c7fb 100644
+--- a/drivers/dma/idxd/sysfs.c
++++ b/drivers/dma/idxd/sysfs.c
+@@ -1282,6 +1282,16 @@ static ssize_t numa_node_show(struct device *dev,
+ }
+ static DEVICE_ATTR_RO(numa_node);
+ 
++static ssize_t ims_size_show(struct device *dev,
++			     struct device_attribute *attr, char *buf)
++{
++	struct idxd_device *idxd =
++		container_of(dev, struct idxd_device, conf_dev);
 +
-+3. To traverse the msi_descs associated with a group:
-+        struct device *device;
-+        struct msi_desc *desc;
-+        struct platform_msi_group_entry *platform_msi_group;
-+        int group;
++	return sprintf(buf, "%u\n", idxd->ims_size);
++}
++static DEVICE_ATTR_RO(ims_size);
 +
-+        for_each_platform_msi_entry_in_group(desc, platform_msi_group, group, dev) {
-+        }
-+
-+References:
-+===========
-+
-+[1]https://software.intel.com/en-us/download/intel-scalable-io-virtualization-technical-specification
-+[2]https://software.intel.com/en-us/download/intel-data-streaming-accelerator-preliminary-architecture-specification
+ static ssize_t max_batch_size_show(struct device *dev,
+ 				   struct device_attribute *attr, char *buf)
+ {
+@@ -1467,6 +1477,7 @@ static struct attribute *idxd_device_attributes[] = {
+ 	&dev_attr_max_work_queues_size.attr,
+ 	&dev_attr_max_engines.attr,
+ 	&dev_attr_numa_node.attr,
++	&dev_attr_ims_size.attr,
+ 	&dev_attr_max_batch_size.attr,
+ 	&dev_attr_max_transfer_size.attr,
+ 	&dev_attr_op_cap.attr,
 
