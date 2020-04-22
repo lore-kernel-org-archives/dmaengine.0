@@ -2,96 +2,92 @@ Return-Path: <SRS0=52Dt=6G=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.7 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_GIT autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A03F8C55186
-	for <dmaengine@archiver.kernel.org>; Wed, 22 Apr 2020 09:42:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BFBE4C5518C
+	for <dmaengine@archiver.kernel.org>; Wed, 22 Apr 2020 10:30:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7C8192076B
-	for <dmaengine@archiver.kernel.org>; Wed, 22 Apr 2020 09:42:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 961AB2075A
+	for <dmaengine@archiver.kernel.org>; Wed, 22 Apr 2020 10:30:28 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=st.com header.i=@st.com header.b="Y8XWGA98"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726023AbgDVJmm (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 22 Apr 2020 05:42:42 -0400
-Received: from mout.kundenserver.de ([212.227.126.130]:35319 "EHLO
-        mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725912AbgDVJml (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Wed, 22 Apr 2020 05:42:41 -0400
-Received: from mail-qk1-f174.google.com ([209.85.222.174]) by
- mrelayeu.kundenserver.de (mreue009 [212.227.15.129]) with ESMTPSA (Nemesis)
- id 1Mq2vS-1ioIer3XkY-00n9PS; Wed, 22 Apr 2020 11:42:40 +0200
-Received: by mail-qk1-f174.google.com with SMTP id b188so91078qkd.9;
-        Wed, 22 Apr 2020 02:42:39 -0700 (PDT)
-X-Gm-Message-State: AGi0PubM0Ba3/xw6lyC7pKnhEUWBk8gpJR9KO/ZvyTFLJOd90ZYf3o4o
-        zW34phKCJ86TzuyqNK0hq8MA4HZLpjkmweVUGD4=
-X-Google-Smtp-Source: APiQypI/ymCJliens2rTL4tEYpO0RaBvdBKJfx9PjnWISDf1IJDrLKMK8cr9T1HxGv56n49gXQdFjqLshcI2cTE/yOY=
-X-Received: by 2002:a37:ba47:: with SMTP id k68mr25543488qkf.394.1587548558376;
- Wed, 22 Apr 2020 02:42:38 -0700 (PDT)
+        id S1731071AbgDVKa2 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 22 Apr 2020 06:30:28 -0400
+Received: from mx08-00178001.pphosted.com ([91.207.212.93]:56194 "EHLO
+        mx07-00178001.pphosted.com" rhost-flags-OK-OK-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1730705AbgDVK31 (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Wed, 22 Apr 2020 06:29:27 -0400
+Received: from pps.filterd (m0046661.ppops.net [127.0.0.1])
+        by mx07-00178001.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id 03MASQ2q005974;
+        Wed, 22 Apr 2020 12:29:13 +0200
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=st.com; h=from : to : cc : subject
+ : date : message-id : mime-version : content-type; s=STMicroelectronics;
+ bh=vQkeoE76rBPKloDNcJgTTXfaQgVxBlx3RLBb7ovXc8k=;
+ b=Y8XWGA98J3xPyW/eIsQk9ygDZWdawKRSfYio+swui0AiC6SpFpp8cpPWZUnTBlBtnNZh
+ 6hKcjgxVlW5dHtgK/UB21EPoAwyxJT0cultqFUipXBYDQm3QTYgFdvpvwX1IA1M2h9q8
+ hSycRVFBRw4vnqhXnrpe38Z1On8XSSBh184g5pW5lVkPVcq16o65XGYhNRiYVHuqw9fW
+ 3FwERQeJBvShyTWyUL8gcE57gPm4qGV1hQORtHTg3yrsn0bzl7sgc3AfbcXW5tEcHmj0
+ p6THGMF+WbaCg/VgkEJghUHMXgZqGM915WED2aYHOWFVLPM2VOxdlovL+jWcu49AzR8R Fg== 
+Received: from beta.dmz-eu.st.com (beta.dmz-eu.st.com [164.129.1.35])
+        by mx07-00178001.pphosted.com with ESMTP id 30fregnra1-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 22 Apr 2020 12:29:13 +0200
+Received: from euls16034.sgp.st.com (euls16034.sgp.st.com [10.75.44.20])
+        by beta.dmz-eu.st.com (STMicroelectronics) with ESMTP id E7A3710002A;
+        Wed, 22 Apr 2020 12:29:12 +0200 (CEST)
+Received: from Webmail-eu.st.com (sfhdag3node2.st.com [10.75.127.8])
+        by euls16034.sgp.st.com (STMicroelectronics) with ESMTP id D2CB92A9560;
+        Wed, 22 Apr 2020 12:29:12 +0200 (CEST)
+Received: from localhost (10.75.127.45) by SFHDAG3NODE2.st.com (10.75.127.8)
+ with Microsoft SMTP Server (TLS) id 15.0.1347.2; Wed, 22 Apr 2020 12:29:12
+ +0200
+From:   Amelie Delaunay <amelie.delaunay@st.com>
+To:     Vinod Koul <vkoul@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        Dan Williams <dan.j.williams@intel.com>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        Alexandre Torgue <alexandre.torgue@st.com>
+CC:     <dmaengine@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-stm32@st-md-mailman.stormreply.com>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>,
+        Amelie Delaunay <amelie.delaunay@st.com>,
+        Pierre-Yves Mordret <pierre-yves.mordret@st.com>
+Subject: [PATCH 0/2] STM32 DMA Direct mode
+Date:   Wed, 22 Apr 2020 12:29:02 +0200
+Message-ID: <20200422102904.1448-1-amelie.delaunay@st.com>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-References: <20200331183844.30488-1-ulf.hansson@linaro.org> <20200331183844.30488-3-ulf.hansson@linaro.org>
-In-Reply-To: <20200331183844.30488-3-ulf.hansson@linaro.org>
-From:   Arnd Bergmann <arnd@arndb.de>
-Date:   Wed, 22 Apr 2020 11:42:22 +0200
-X-Gmail-Original-Message-ID: <CAK8P3a2n7O0-jHLASdu9scgrG7iqETJV7Un843+fW3Yt4q=UhA@mail.gmail.com>
-Message-ID: <CAK8P3a2n7O0-jHLASdu9scgrG7iqETJV7Un843+fW3Yt4q=UhA@mail.gmail.com>
-Subject: Re: [PATCH v2 2/2] amba: Initialize dma_parms for amba devices
-To:     Ulf Hansson <ulf.hansson@linaro.org>
-Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        "Rafael J . Wysocki" <rafael@kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        Christoph Hellwig <hch@lst.de>,
-        Russell King <linux@armlinux.org.uk>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Vinod Koul <vkoul@kernel.org>, Haibo Chen <haibo.chen@nxp.com>,
-        Ludovic Barre <ludovic.barre@st.com>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        dmaengine@vger.kernel.org, "# 3.4.x" <stable@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Provags-ID: V03:K1:IpJyPZ9YBAl88UI2HJR5kQYmnDmW08TgqsV+OQjKOowGbohVjnD
- ii7n7Y5DOK1sN2B4v+bLcNrtDlkCkmvXwmnOKkumRw4j2FT/7I2fPFDH42UgRdiu1XqCrrp
- WA2NHTjUJF35g/zH0OhUhc137HHVrAluaM0z2t0TeYD2ruHZkBLC4S13TujU8aH9sc+psfp
- ZGY0yP/zCguOyVfHo4oNw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:HawH5AsHXXY=:E+b9brVrsc23wamVONBRqz
- bbg/iXJldYC8tI3huGwcyai7iHTbI5A90q9VtamjnUvRxGUDq/K2fS7ehWGBbH+3q4dcd4UUp
- be4G1dvcGHiEElQ8ae+g2OfjAaKQ93ZtS1ugSycZ+XCjJ+Fo8xxECFr2iaK4dJpLjvKo4gy//
- qgyGttThQHXW6+vQUQGWux/puHUcC08BLS9isWX4vFeL/B5ce3nom1CFocLF4alPx2eDMzmpY
- rzudb1MT/Qmgd4lzZjrwouB4mT98/X2hDKQpWeUrRJ9TBh0XW6SvdRAYSNDwTyYAB6vS79b9l
- UhXOPqRGG3B/vB60Y1swlZdYCzthNOEsTt3+RS4BjFxTrbw67cGlYP+A+5PpduAjGMHJOAWKx
- zjmDielINiLOtXgrksflJ7KH3aFoj6mw+6b73FvlVy0645GDygpoOQjS5lsjZNc5AEj7iN9S2
- zKqAUaSQa3iBxeK6QBFqM6tJJN7y+n0mXTR5ungacj7vWD73/TBpNFYrP7uLCvAL6+xBtQrEX
- z/6xbTUxpH6RcY9bw7lgP/sa0OtGZHDFOI+gqc+471xHLrQHp+iyvBqhV7S0oi8eWra989BRF
- e4lyNcQ9X4Z/cyzd3Gzie+bC+d6e6c1cHXLs+l+NLUQ5aOIMDlFdGoDhTzdJ/OS8qTj/aJI70
- Wd0ec5+EmULhNJbhFeures05auGRALI9kX8dpc208rFnCmgotWLq7x/ZoT4vwhLHM4hFFEVOF
- bfirkaW89wbnq+eja8vBZikMap8Sobe+EOcTWhRu0f6nZ2NxYFgTfbfGXwluE72mkq4+EIlqy
- ZZnAo8O/Kbp8SHSOa+lZL0xoGUrdtYRdvb4lonxBkLD484QR14=
+Content-Type: text/plain
+X-Originating-IP: [10.75.127.45]
+X-ClientProxiedBy: SFHDAG2NODE2.st.com (10.75.127.5) To SFHDAG3NODE2.st.com
+ (10.75.127.8)
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.138,18.0.676
+ definitions=2020-04-22_03:2020-04-22,2020-04-22 signatures=0
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On Tue, Mar 31, 2020 at 8:38 PM Ulf Hansson <ulf.hansson@linaro.org> wrote:
->
-> It's currently the amba driver's responsibility to initialize the pointer,
-> dma_parms, for its corresponding struct device. The benefit with this
-> approach allows us to avoid the initialization and to not waste memory for
-> the struct device_dma_parameters, as this can be decided on a case by case
-> basis.
->
-> However, it has turned out that this approach is not very practical. Not
-> only does it lead to open coding, but also to real errors. In principle
-> callers of dma_set_max_seg_size() doesn't check the error code, but just
-> assumes it succeeds.
->
-> For these reasons, let's do the initialization from the common amba bus at
-> the device registration point. This also follows the way the PCI devices
-> are being managed, see pci_device_add().
->
-> Suggested-by: Christoph Hellwig <hch@lst.de>
-> Cc: Russell King <linux@armlinux.org.uk>
-> Cc: <stable@vger.kernel.org>
-> Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
-> ---
+By default, the driver compute if the FIFO must operate in direct mode or with
+FIFO threshold. Direct mode is allowed only if computed source burst and
+destination burst are disabled. But with memory source or destination, burst
+is always > 0.
+Direct mode is useful when the peripheral requires an immediate and single
+transfer to or from the memory after each DMA request.
+This patchset adds a way to force Direct mode through device tree.
 
-Reviewed-by: Arnd Bergmann <arnd@arndb.de>
+Amelie Delaunay (2):
+  dt-bindings: dma: add direct mode support through device tree in
+    stm32-dma
+  dmaengine: stm32-dma: direct mode support through device tree
+
+ .../devicetree/bindings/dma/st,stm32-dma.yaml |  5 +++
+ drivers/dma/stm32-dma.c                       | 41 ++++++++++++++-----
+ 2 files changed, 36 insertions(+), 10 deletions(-)
+
+-- 
+2.17.1
+
