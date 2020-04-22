@@ -2,134 +2,151 @@ Return-Path: <SRS0=52Dt=6G=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=unavailable autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
+	TVD_RCVD_SPACE_BRACKET,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D9FB3C5518A
-	for <dmaengine@archiver.kernel.org>; Wed, 22 Apr 2020 10:52:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 52778C55189
+	for <dmaengine@archiver.kernel.org>; Wed, 22 Apr 2020 11:22:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B6E7420787
-	for <dmaengine@archiver.kernel.org>; Wed, 22 Apr 2020 10:52:27 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 306F420781
+	for <dmaengine@archiver.kernel.org>; Wed, 22 Apr 2020 11:22:58 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="gz85oKII"
+	dkim=pass (2048-bit key) header.d=dell.com header.i=@dell.com header.b="cqzdB8E5"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728959AbgDVKKM (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 22 Apr 2020 06:10:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33416 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728958AbgDVKKK (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Wed, 22 Apr 2020 06:10:10 -0400
-Received: from mail-lj1-x242.google.com (mail-lj1-x242.google.com [IPv6:2a00:1450:4864:20::242])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA52CC03C1AA
-        for <dmaengine@vger.kernel.org>; Wed, 22 Apr 2020 03:10:09 -0700 (PDT)
-Received: by mail-lj1-x242.google.com with SMTP id j3so1624213ljg.8
-        for <dmaengine@vger.kernel.org>; Wed, 22 Apr 2020 03:10:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=eVpuV9906kTdH8kjynNF6G4cMp3xW329yIZR2pMpgr4=;
-        b=gz85oKIIWH5onOAX7yHN644ZgaDeGOH22z4QW3dFCjsQm4l+4JWTJo7PfmpPjDGFft
-         XxBdaYeN7nKECc8t3WmGqFz9zW/uu77kGEPXIXhk0gE8OGEr3yOg7k2tIG7VHqppeC0z
-         dHqFUUbvhKyF4nocekpBRtF9JXkOquUcuduNq/gUnjyNc9NYUb2P7lBZJQNoMuUijcTA
-         piOcMylf1fKLEnNbPRvbYVUxvcQ58xJqizUGxJ6eTO5JPsQWZqYBk+gmA21gbh8J3Fys
-         r0+fdE782jU5LP9EtKfg3RXEWGWp8RrxcyqN1KHxk+RmZ0rKSpm1/5LITPymBGkcKBFb
-         U+fA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=eVpuV9906kTdH8kjynNF6G4cMp3xW329yIZR2pMpgr4=;
-        b=fi8nidloeCLzPDfca08UD8mYYtWtiOGIHYwBfSFwuUObb42NKScKAD2JWy/27mR8wP
-         se1MkqYgGqnk0oYBEIj5qBghd2yPcnFpnATYiAduTd07cg0yzaJuKMH1vI1blqd++vx1
-         5gp7X5i23DWKjiWa/t/zoiQjlGmYl0jN/yk4/3w+GlpdgE3Pp5EjQbYAE/nYWBjI2DH/
-         e5vqNnteK1r6EJzEApZ1ysPgmwxHCsrjnPoLhpI95dv6WMj8SHamL469RVcJCwLaAiMw
-         F0eAAQ1fNFoSFwDkr5vcg05NuzcNVI8mBx+TzxdN/dqj1VPXX4x3Lg222BhYb5fJHUUp
-         HKvw==
-X-Gm-Message-State: AGi0PuZFupgP5bKmuhYFmZBTRPa3yGS0OP/Im70joGOk8UOsPPebKEhy
-        DKAUNqZlIBJeZtl3d7fzcjlEFw==
-X-Google-Smtp-Source: APiQypLzg0y5Fg8LOd4XLWjOORnygZbpUDG7xZWJc87sQhB/LR5OrVVWb/3kGnX6Jb5WRwXKr//wGQ==
-X-Received: by 2002:a2e:5746:: with SMTP id r6mr15361642ljd.15.1587550208106;
-        Wed, 22 Apr 2020 03:10:08 -0700 (PDT)
-Received: from localhost.localdomain (h-98-128-181-7.NA.cust.bahnhof.se. [98.128.181.7])
-        by smtp.gmail.com with ESMTPSA id v18sm4649962lfd.0.2020.04.22.03.10.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 22 Apr 2020 03:10:07 -0700 (PDT)
-From:   Ulf Hansson <ulf.hansson@linaro.org>
-To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        "Rafael J . Wysocki" <rafael@kernel.org>,
+        id S1726271AbgDVLW6 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 22 Apr 2020 07:22:58 -0400
+Received: from mx0a-00154904.pphosted.com ([148.163.133.20]:30822 "EHLO
+        mx0a-00154904.pphosted.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726192AbgDVLW5 (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Wed, 22 Apr 2020 07:22:57 -0400
+Received: from pps.filterd (m0170393.ppops.net [127.0.0.1])
+        by mx0a-00154904.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id 03MBH7T4031363;
+        Wed, 22 Apr 2020 07:22:46 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=dell.com; h=from : to : cc :
+ subject : date : message-id : in-reply-to : references; s=smtpout1;
+ bh=51JALZmJ9EhYQ3O125NgFZ6HIO2CHxeW0BnTFPrbfa0=;
+ b=cqzdB8E5piSTd2X09Vd4cKofDJmYpZKNzvXAcBoGUn1DqIeGHAA1+fUBtLz6I3OO5wc6
+ IC1sn9s8dlyGtT9re9OKoSqL4NMmQ9oPNfNusTpbNbXqV1UbyogJ8vjSRxtbbOQBsGUO
+ DoPjU81HBeewYx5JHuZfwbVEEa9TW2RG8P8xR3V7ANUIHOC2d6PeokWurryOh598Y7sW
+ aknby7r+2F8WzMMr8FbuOhQ+o45Uni2aeSCDGrZf3v+lJTNYhdcffIL4bdP5RI3+Q7Vy
+ pFrPG7PjtGlDZ5MljvegQ//LZoCNSBMGkbsZbYExab5KT0ib0l6413UWWm/ZnJ6jUSg9 NA== 
+Received: from mx0b-00154901.pphosted.com (mx0b-00154901.pphosted.com [67.231.157.37])
+        by mx0a-00154904.pphosted.com with ESMTP id 30fvvhpqf4-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 22 Apr 2020 07:22:46 -0400
+Received: from pps.filterd (m0134318.ppops.net [127.0.0.1])
+        by mx0a-00154901.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id 03MBMjvL124744;
+        Wed, 22 Apr 2020 07:22:45 -0400
+Received: from mailuogwdur.emc.com (mailuogwdur-nat.lss.emc.com [128.221.224.79] (may be forged))
+        by mx0a-00154901.pphosted.com with ESMTP id 30fv6fpbws-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=FAIL);
+        Wed, 22 Apr 2020 07:22:45 -0400
+Received: from emc.com (localhost [127.0.0.1])
+        by mailuogwprd52.lss.emc.com (Sentrion-MTA-4.3.1/Sentrion-MTA-4.3.0) with ESMTP id 03MBMdpW022475;
+        Wed, 22 Apr 2020 07:22:39 -0400
+Received: from mailsyshubprd56.lss.emc.com ([mailsyshubprd56.lss.emc.com [10.106.48.138]]) by mailuogwprd52.lss.emc.com with ESMTP id 03MBMV9X022362 ;
+          Wed, 22 Apr 2020 07:22:32 -0400
+Received: from vd-leonidr.xiolab.lab.emc.com (vd-leonidr.xiolab.lab.emc.com [10.76.212.243])
+        by mailsyshubprd56.lss.emc.com (Sentrion-MTA-4.3.1/Sentrion-MTA-4.3.0) with ESMTP id 03MBMK2b011459;
+        Wed, 22 Apr 2020 07:22:29 -0400
+From:   leonid.ravich@dell.com
+To:     dmaengine@vger.kernel.org
+Cc:     lravich@gmail.com, Leonid Ravich <Leonid.Ravich@dell.com>,
+        Vinod Koul <vkoul@kernel.org>,
+        Dan Williams <dan.j.williams@intel.com>,
+        Dave Jiang <dave.jiang@intel.com>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Allison Randal <allison@lohutok.net>,
+        "Alexander.Barabash@dell.com" <Alexander.Barabash@dell.com>,
         linux-kernel@vger.kernel.org
-Cc:     Arnd Bergmann <arnd@arndb.de>, Christoph Hellwig <hch@lst.de>,
-        Russell King <linux@armlinux.org.uk>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Vinod Koul <vkoul@kernel.org>, Haibo Chen <haibo.chen@nxp.com>,
-        Ludovic Barre <ludovic.barre@st.com>,
-        linux-arm-kernel@lists.infradead.org, dmaengine@vger.kernel.org,
-        Ulf Hansson <ulf.hansson@linaro.org>, stable@vger.kernel.org
-Subject: [RESEND PATCH v2 1/2] driver core: platform: Initialize dma_parms for platform devices
-Date:   Wed, 22 Apr 2020 12:09:54 +0200
-Message-Id: <20200422100954.31211-1-ulf.hansson@linaro.org>
-X-Mailer: git-send-email 2.20.1
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Subject: [PATCH 2/3] dmaengine: ioat: remove unnesesery double complition timer modification.
+Date:   Wed, 22 Apr 2020 14:22:06 +0300
+Message-Id: <1587554529-29839-2-git-send-email-leonid.ravich@dell.com>
+X-Mailer: git-send-email 1.9.3
+In-Reply-To: <1587554529-29839-1-git-send-email-leonid.ravich@dell.com>
+References: <1587554529-29839-1-git-send-email-leonid.ravich@dell.com>
+X-Sentrion-Hostname: mailuogwprd52.lss.emc.com
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.138,18.0.676
+ definitions=2020-04-22_03:2020-04-22,2020-04-22 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 phishscore=0
+ mlxlogscore=491 bulkscore=0 clxscore=1011 suspectscore=13 impostorscore=0
+ adultscore=0 priorityscore=1501 lowpriorityscore=0 spamscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2003020000 definitions=main-2004220091
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0 mlxscore=0 spamscore=0
+ bulkscore=0 priorityscore=1501 lowpriorityscore=0 suspectscore=13
+ malwarescore=0 clxscore=1015 mlxlogscore=575 adultscore=0 impostorscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2003020000
+ definitions=main-2004220090
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-It's currently the platform driver's responsibility to initialize the
-pointer, dma_parms, for its corresponding struct device. The benefit with
-this approach allows us to avoid the initialization and to not waste memory
-for the struct device_dma_parameters, as this can be decided on a case by
-case basis.
+From: Leonid Ravich <Leonid.Ravich@emc.com>
 
-However, it has turned out that this approach is not very practical.  Not
-only does it lead to open coding, but also to real errors. In principle
-callers of dma_set_max_seg_size() doesn't check the error code, but just
-assumes it succeeds.
+removing unnecessary mod_timer from timeout handler
+incase of ioat_cleanup_preamble() is true  for cleaner code
 
-For these reasons, let's do the initialization from the common platform bus
-at the device registration point. This also follows the way the PCI devices
-are being managed, see pci_device_add().
-
-Suggested-by: Christoph Hellwig <hch@lst.de>
-Cc: <stable@vger.kernel.org>
-Tested-by: Haibo Chen <haibo.chen@nxp.com>
-Reviewed-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Leonid Ravich <Leonid.Ravich@emc.com>
 ---
- drivers/base/platform.c         | 2 ++
- include/linux/platform_device.h | 1 +
- 2 files changed, 3 insertions(+)
+ drivers/dma/ioat/dma.c | 25 ++++++++++++++++---------
+ 1 file changed, 16 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/base/platform.c b/drivers/base/platform.c
-index 5255550b7c34..b27d0f6c18c9 100644
---- a/drivers/base/platform.c
-+++ b/drivers/base/platform.c
-@@ -380,6 +380,8 @@ struct platform_object {
-  */
- static void setup_pdev_dma_masks(struct platform_device *pdev)
- {
-+	pdev->dev.dma_parms = &pdev->dma_parms;
+diff --git a/drivers/dma/ioat/dma.c b/drivers/dma/ioat/dma.c
+index da59b28..55a8cf1 100644
+--- a/drivers/dma/ioat/dma.c
++++ b/drivers/dma/ioat/dma.c
+@@ -922,17 +922,23 @@ void ioat_timer_event(struct timer_list *t)
+ 		spin_lock_bh(&ioat_chan->prep_lock);
+ 		check_active(ioat_chan);
+ 		spin_unlock_bh(&ioat_chan->prep_lock);
+-		spin_unlock_bh(&ioat_chan->cleanup_lock);
+-		return;
++		goto unlock_out;
++	}
 +
- 	if (!pdev->dev.coherent_dma_mask)
- 		pdev->dev.coherent_dma_mask = DMA_BIT_MASK(32);
- 	if (!pdev->dev.dma_mask) {
-diff --git a/include/linux/platform_device.h b/include/linux/platform_device.h
-index bdc35753ef7c..77a2aada106d 100644
---- a/include/linux/platform_device.h
-+++ b/include/linux/platform_device.h
-@@ -25,6 +25,7 @@ struct platform_device {
- 	bool		id_auto;
- 	struct device	dev;
- 	u64		platform_dma_mask;
-+	struct device_dma_parameters dma_parms;
- 	u32		num_resources;
- 	struct resource	*resource;
++	/* handle the missed cleanup case */
++	if (ioat_cleanup_preamble(ioat_chan, &phys_complete)) {
++		/* timer restarted in ioat_cleanup_preamble
++		 * and IOAT_COMPLETION_ACK cleared
++		 */
++		__cleanup(ioat_chan, phys_complete);
++		goto unlock_out;
+ 	}
+ 
+ 	/* if we haven't made progress and we have already
+ 	 * acknowledged a pending completion once, then be more
+ 	 * forceful with a restart
+ 	 */
+-	if (ioat_cleanup_preamble(ioat_chan, &phys_complete))
+-		__cleanup(ioat_chan, phys_complete);
+-	else if (test_bit(IOAT_COMPLETION_ACK, &ioat_chan->state)) {
++	if (test_bit(IOAT_COMPLETION_ACK, &ioat_chan->state)) {
+ 		u32 chanerr;
+ 
+ 		chanerr = readl(ioat_chan->reg_base + IOAT_CHANERR_OFFSET);
+@@ -945,12 +951,13 @@ void ioat_timer_event(struct timer_list *t)
+ 			ioat_ring_active(ioat_chan));
+ 
+ 		ioat_reboot_chan(ioat_chan);
+-		spin_unlock_bh(&ioat_chan->cleanup_lock);
+-		return;
+-	} else
+-		set_bit(IOAT_COMPLETION_ACK, &ioat_chan->state);
+ 
++		goto unlock_out;
++	}
++
++	set_bit(IOAT_COMPLETION_ACK, &ioat_chan->state);
+ 	mod_timer(&ioat_chan->timer, jiffies + COMPLETION_TIMEOUT);
++unlock_out:
+ 	spin_unlock_bh(&ioat_chan->cleanup_lock);
+ }
  
 -- 
-2.20.1
+1.9.3
 
