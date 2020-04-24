@@ -6,40 +6,41 @@ X-Spam-Status: No, score=-9.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
 	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7BF5BC54FCB
-	for <dmaengine@archiver.kernel.org>; Fri, 24 Apr 2020 16:12:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2F780C54FD0
+	for <dmaengine@archiver.kernel.org>; Fri, 24 Apr 2020 16:12:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5B6AE2071E
-	for <dmaengine@archiver.kernel.org>; Fri, 24 Apr 2020 16:12:00 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0D87A2071E
+	for <dmaengine@archiver.kernel.org>; Fri, 24 Apr 2020 16:12:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727089AbgDXQMA (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 24 Apr 2020 12:12:00 -0400
-Received: from mga04.intel.com ([192.55.52.120]:16772 "EHLO mga04.intel.com"
+        id S1728110AbgDXQMG (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 24 Apr 2020 12:12:06 -0400
+Received: from mga09.intel.com ([134.134.136.24]:1826 "EHLO mga09.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726813AbgDXQMA (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Fri, 24 Apr 2020 12:12:00 -0400
-IronPort-SDR: 2mNv7eCwoRFOh6e2ll618jgbjI8MYlKUWmDwrmVLkPmmyavFF2GJTB0lwABkrLEtXYz+7O2aAt
- eTnESG2XyXUA==
+        id S1726813AbgDXQMG (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Fri, 24 Apr 2020 12:12:06 -0400
+IronPort-SDR: xxWzeNxn0kFkJVKsWFEIbgalMiwJnaHO7oZtdVER60DO3bWvXRqtlcJUjJqzJz/JWIazi1CIrr
+ X/uTM1OKEoFQ==
 X-Amp-Result: SKIPPED(no attachment in message)
 X-Amp-File-Uploaded: False
-Received: from fmsmga002.fm.intel.com ([10.253.24.26])
-  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Apr 2020 09:11:49 -0700
-IronPort-SDR: 8sI4YBKU/ObRl8UYsbg4K4vGNuciL3ChjUhbCOd284kb4zsY+GpoaxMx4YkkubuTnKoaKr1H7B
- oXNvRb8O1rlg==
+Received: from orsmga001.jf.intel.com ([10.7.209.18])
+  by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Apr 2020 09:12:06 -0700
+IronPort-SDR: fLQxW8RmQdMac9KaQDrdlQjV+6kxih36OunwMAZ5adSOGglXzSY/QlrHH+oQL5JJXdADd8Pybu
+ NuZGjUmdqTtQ==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="5.73,311,1583222400"; 
-   d="scan'208";a="291607275"
+   d="scan'208";a="335386242"
 Received: from black.fi.intel.com ([10.237.72.28])
-  by fmsmga002.fm.intel.com with ESMTP; 24 Apr 2020 09:11:48 -0700
+  by orsmga001.jf.intel.com with ESMTP; 24 Apr 2020 09:11:48 -0700
 Received: by black.fi.intel.com (Postfix, from userid 1003)
-        id C6D7D130; Fri, 24 Apr 2020 19:11:47 +0300 (EEST)
+        id BA7EE1D9; Fri, 24 Apr 2020 19:11:47 +0300 (EEST)
 From:   Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 To:     Dan Williams <dan.j.williams@intel.com>,
         Vinod Koul <vkoul@kernel.org>, dmaengine@vger.kernel.org
-Cc:     Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Subject: [PATCH v1 5/6] dmaengine: dmatest: Describe members of struct dmatest_params
-Date:   Fri, 24 Apr 2020 19:11:46 +0300
-Message-Id: <20200424161147.16895-5-andriy.shevchenko@linux.intel.com>
+Cc:     Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+        Gary Hook <Gary.Hook@amd.com>
+Subject: [PATCH v1 3/6] Revert "dmaengine: dmatest: timeout value of -1 should specify infinite wait"
+Date:   Fri, 24 Apr 2020 19:11:44 +0300
+Message-Id: <20200424161147.16895-3-andriy.shevchenko@linux.intel.com>
 X-Mailer: git-send-email 2.26.2
 In-Reply-To: <20200424161147.16895-1-andriy.shevchenko@linux.intel.com>
 References: <20200424161147.16895-1-andriy.shevchenko@linux.intel.com>
@@ -50,52 +51,48 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Kernel documentation validator complains that not all members of
-struct dmatest_params are being described. Describe them all.
+This reverts commit ed04b7c57c3383ed4573f1d1d1dbdc1108ba0bed.
 
+While it gives a good description what happens, the approach seems too
+confusing. Let's fix it in the following patch.
+
+Cc: Gary Hook <Gary.Hook@amd.com>
 Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 ---
- drivers/dma/dmatest.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ drivers/dma/dmatest.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/dma/dmatest.c b/drivers/dma/dmatest.c
-index 123b4bd41a085..946b03859cdec 100644
+index 307622e765996..a521067751651 100644
 --- a/drivers/dma/dmatest.c
 +++ b/drivers/dma/dmatest.c
-@@ -72,10 +72,6 @@ static bool norandom;
- module_param(norandom, bool, 0644);
- MODULE_PARM_DESC(norandom, "Disable random offset setup (default: random)");
+@@ -62,7 +62,7 @@ MODULE_PARM_DESC(pq_sources,
+ static int timeout = 3000;
+ module_param(timeout, uint, S_IRUGO | S_IWUSR);
+ MODULE_PARM_DESC(timeout, "Transfer Timeout in msec (default: 3000), "
+-		 "Pass 0xFFFFFFFF (4294967295) for maximum timeout");
++		 "Pass -1 for infinite timeout");
  
--static bool polled;
--module_param(polled, bool, S_IRUGO | S_IWUSR);
--MODULE_PARM_DESC(polled, "Use polling for completion instead of interrupts");
--
- static bool verbose;
- module_param(verbose, bool, S_IRUGO | S_IWUSR);
- MODULE_PARM_DESC(verbose, "Enable \"success\" result messages (default: off)");
-@@ -88,6 +84,10 @@ static unsigned int transfer_size;
- module_param(transfer_size, uint, 0644);
- MODULE_PARM_DESC(transfer_size, "Optional custom transfer size in bytes (default: not used (0))");
- 
-+static bool polled;
-+module_param(polled, bool, S_IRUGO | S_IWUSR);
-+MODULE_PARM_DESC(polled, "Use polling for completion instead of interrupts");
-+
- /**
-  * struct dmatest_params - test parameters.
-  * @buf_size:		size of the memcpy test buffer
-@@ -99,6 +99,11 @@ MODULE_PARM_DESC(transfer_size, "Optional custom transfer size in bytes (default
+ static bool noverify;
+ module_param(noverify, bool, S_IRUGO | S_IWUSR);
+@@ -98,7 +98,7 @@ MODULE_PARM_DESC(transfer_size, "Optional custom transfer size in bytes (default
+  * @iterations:		iterations before stopping test
   * @xor_sources:	number of xor source buffers
   * @pq_sources:		number of p+q source buffers
-  * @timeout:		transfer timeout in msec, -1 for infinite timeout
-+ * @noverify:		disable data verification
-+ * @norandom:		disable random offset setup
-+ * @alignment:		custom data address alignment taken as 2^alignment
-+ * @transfer_size:	custom transfer size in bytes
-+ * @polled:		use polling for completion instead of interrupts
+- * @timeout:		transfer timeout in msec, 0 - 0xFFFFFFFF (4294967295)
++ * @timeout:		transfer timeout in msec, -1 for infinite timeout
   */
  struct dmatest_params {
  	unsigned int	buf_size;
+@@ -109,7 +109,7 @@ struct dmatest_params {
+ 	unsigned int	iterations;
+ 	unsigned int	xor_sources;
+ 	unsigned int	pq_sources;
+-	unsigned int	timeout;
++	int		timeout;
+ 	bool		noverify;
+ 	bool		norandom;
+ 	int		alignment;
 -- 
 2.26.2
 
