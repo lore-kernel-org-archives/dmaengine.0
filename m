@@ -2,178 +2,136 @@ Return-Path: <SRS0=IgV5=6L=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.1 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7E422C5519A
-	for <dmaengine@archiver.kernel.org>; Mon, 27 Apr 2020 03:44:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 77FDBC54FD0
+	for <dmaengine@archiver.kernel.org>; Mon, 27 Apr 2020 08:10:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5835B214AF
-	for <dmaengine@archiver.kernel.org>; Mon, 27 Apr 2020 03:44:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 529942063A
+	for <dmaengine@archiver.kernel.org>; Mon, 27 Apr 2020 08:10:05 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="HmIgmO/k"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=microchip.com header.i=@microchip.com header.b="LYNheoUM"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726378AbgD0DoM (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Sun, 26 Apr 2020 23:44:12 -0400
-Received: from us-smtp-2.mimecast.com ([207.211.31.81]:55273 "EHLO
-        us-smtp-delivery-1.mimecast.com" rhost-flags-OK-OK-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1726431AbgD0DoL (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Sun, 26 Apr 2020 23:44:11 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1587959049;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=DBEUXWUXNpw/sxGPzp5z9UjnZg0452gbfsNvSnWcap8=;
-        b=HmIgmO/klJs2YWFdZW9KCIvQzUmDR4IaaliUi0eOTFGjMkMWbtXyXvzLHQxUbwbMHv2Fcv
-        JAe0cP2lx+nnQ91jRov3s0U7uGaiOPWRGP3XLmM3MjK6jXS97XiT8afu3MbRS32Y6q7E2L
-        B5xeiOyrDBQsjO2nOPE9VSi5OvnwOjg=
-Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
- [209.132.183.4]) (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-287-pbMyTdOTPh20o3V3rN2nZQ-1; Sun, 26 Apr 2020 23:44:05 -0400
-X-MC-Unique: pbMyTdOTPh20o3V3rN2nZQ-1
-Received: from smtp.corp.redhat.com (int-mx08.intmail.prod.int.phx2.redhat.com [10.5.11.23])
-        (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        by mimecast-mx01.redhat.com (Postfix) with ESMTPS id DFA021800F97;
-        Mon, 27 Apr 2020 03:44:01 +0000 (UTC)
-Received: from x1.home (ovpn-112-162.phx2.redhat.com [10.3.112.162])
-        by smtp.corp.redhat.com (Postfix) with ESMTP id B68B319C58;
-        Mon, 27 Apr 2020 03:43:55 +0000 (UTC)
-Date:   Sun, 26 Apr 2020 21:43:55 -0600
-From:   Alex Williamson <alex.williamson@redhat.com>
-To:     Jason Gunthorpe <jgg@mellanox.com>
-Cc:     "Tian, Kevin" <kevin.tian@intel.com>,
-        "Raj, Ashok" <ashok.raj@intel.com>,
-        "Jiang, Dave" <dave.jiang@intel.com>,
-        "vkoul@kernel.org" <vkoul@kernel.org>,
-        "megha.dey@linux.intel.com" <megha.dey@linux.intel.com>,
-        "maz@kernel.org" <maz@kernel.org>,
-        "bhelgaas@google.com" <bhelgaas@google.com>,
-        "rafael@kernel.org" <rafael@kernel.org>,
-        "gregkh@linuxfoundation.org" <gregkh@linuxfoundation.org>,
-        "tglx@linutronix.de" <tglx@linutronix.de>,
-        "hpa@zytor.com" <hpa@zytor.com>,
-        "Pan, Jacob jun" <jacob.jun.pan@intel.com>,
-        "Liu, Yi L" <yi.l.liu@intel.com>, "Lu, Baolu" <baolu.lu@intel.com>,
-        "Kumar, Sanjay K" <sanjay.k.kumar@intel.com>,
-        "Luck, Tony" <tony.luck@intel.com>,
-        "Lin, Jing" <jing.lin@intel.com>,
-        "Williams, Dan J" <dan.j.williams@intel.com>,
-        "kwankhede@nvidia.com" <kwankhede@nvidia.com>,
-        "eric.auger@redhat.com" <eric.auger@redhat.com>,
-        "parav@mellanox.com" <parav@mellanox.com>,
-        "dmaengine@vger.kernel.org" <dmaengine@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "x86@kernel.org" <x86@kernel.org>,
-        "linux-pci@vger.kernel.org" <linux-pci@vger.kernel.org>,
-        "kvm@vger.kernel.org" <kvm@vger.kernel.org>
-Subject: Re: [PATCH RFC 00/15] Add VFIO mediated device support and IMS
- support for the idxd driver.
-Message-ID: <20200426214355.29e19d33@x1.home>
-In-Reply-To: <20200426191357.GB13640@mellanox.com>
-References: <20200421235442.GO11945@mellanox.com>
-        <AADFC41AFE54684AB9EE6CBC0274A5D19D86EE26@SHSMSX104.ccr.corp.intel.com>
-        <20200422115017.GQ11945@mellanox.com>
-        <20200422211436.GA103345@otc-nc-03>
-        <20200423191217.GD13640@mellanox.com>
-        <AADFC41AFE54684AB9EE6CBC0274A5D19D8960F9@SHSMSX104.ccr.corp.intel.com>
-        <20200424124444.GJ13640@mellanox.com>
-        <AADFC41AFE54684AB9EE6CBC0274A5D19D8A808B@SHSMSX104.ccr.corp.intel.com>
-        <20200424181203.GU13640@mellanox.com>
-        <AADFC41AFE54684AB9EE6CBC0274A5D19D8C5486@SHSMSX104.ccr.corp.intel.com>
-        <20200426191357.GB13640@mellanox.com>
-Organization: Red Hat
+        id S1726349AbgD0IKF (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 27 Apr 2020 04:10:05 -0400
+Received: from esa6.microchip.iphmx.com ([216.71.154.253]:59928 "EHLO
+        esa6.microchip.iphmx.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726339AbgD0IKE (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Mon, 27 Apr 2020 04:10:04 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
+  d=microchip.com; i=@microchip.com; q=dns/txt; s=mchp;
+  t=1587975004; x=1619511004;
+  h=subject:to:references:from:message-id:date:mime-version:
+   in-reply-to:content-transfer-encoding;
+  bh=Ii4utWJZKx5C6ggFxLHhkB/YHca1PFdjSmjKRJoP2zc=;
+  b=LYNheoUMPvvmapOBOulenNF1pP55salR3VTHKRjahT//pKMADXXba0Bw
+   +VD39Tnxx5YMc8MwuVE8iUloOy/NqIYqKuQs1+tcCsJkTYuVdEz+wrNlg
+   T8twAoEop9coyQ1ag74IsIF7tyxZP/EV8qv8ujbzTzBAUZofgmmek/lUK
+   LqR3NeHXW2EXPuvwsFeaaEIQcNcNkBUV6+LtmxfPSbDlV6OKqRqwlK3k2
+   xbBb+ghKsMU4Hx9giD10yNn+C/yaDd6NJHS48UA1FMSR3KV/aALB6llWA
+   sCUYxjc+nyIS0wn4BYax9EKLRvKIf21gR3gmhdqdi/uXoSa8J3F0k+Jtd
+   A==;
+IronPort-SDR: SX6vU4nClwnN86DhvVaurxAH0g6FAExyiYwoVRcgGo1oIn7ic9wTn3oefV8kWfzIBvS3eBOOd2
+ xMuC+JiL7ztAx5VEWHeXa4tmJE7pyrIsBiKXNMezUhnSrMXHqelMVNtz6dFb9uPdUhHFGAYngO
+ pvOsRu9YAqoM9Ct+kjKTVFJvLXPSiOIFVb/dT9L3vLgC/f5DdIL/XIMhmIq+SXIfX6zTEH2AZp
+ GPI0YkdvDtbxcEDIAxNEGN78V87Fzelvm5NoEdFDLu53OGKXBBdFOk7slZQalSrlBvlp6Gipvx
+ Pwg=
+X-IronPort-AV: E=Sophos;i="5.73,323,1583218800"; 
+   d="scan'208";a="10479798"
+Received: from smtpout.microchip.com (HELO email.microchip.com) ([198.175.253.82])
+  by esa6.microchip.iphmx.com with ESMTP/TLS/AES256-SHA256; 27 Apr 2020 01:10:03 -0700
+Received: from chn-vm-ex03.mchp-main.com (10.10.85.151) by
+ chn-vm-ex01.mchp-main.com (10.10.85.143) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.1713.5; Mon, 27 Apr 2020 01:10:04 -0700
+Received: from [10.205.29.78] (10.10.115.15) by chn-vm-ex03.mchp-main.com
+ (10.10.85.151) with Microsoft SMTP Server id 15.1.1713.5 via Frontend
+ Transport; Mon, 27 Apr 2020 01:10:01 -0700
+Subject: Re: [PATCH v1 1/6] dmaengine: dmatest: Fix iteration non-stop logic
+To:     Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+        Dan Williams <dan.j.williams@intel.com>,
+        Vinod Koul <vkoul@kernel.org>, <dmaengine@vger.kernel.org>
+References: <20200424161147.16895-1-andriy.shevchenko@linux.intel.com>
+From:   Nicolas Ferre <nicolas.ferre@microchip.com>
+Organization: microchip
+Message-ID: <3b031f47-5ebf-4bff-9103-e3b57fa33848@microchip.com>
+Date:   Mon, 27 Apr 2020 10:09:59 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+In-Reply-To: <20200424161147.16895-1-andriy.shevchenko@linux.intel.com>
+Content-Type: text/plain; charset="windows-1252"; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 7bit
-X-Scanned-By: MIMEDefang 2.84 on 10.5.11.23
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On Sun, 26 Apr 2020 16:13:57 -0300
-Jason Gunthorpe <jgg@mellanox.com> wrote:
+Andy,
 
-> On Sun, Apr 26, 2020 at 05:18:59AM +0000, Tian, Kevin wrote:
+On 24/04/2020 at 18:11, Andy Shevchenko wrote:
+> Under some circumstances, i.e. when test is still running and about to
+> time out and user runs, for example,
 > 
-> > > > I think providing an unified abstraction to userspace is also important,
-> > > > which is what VFIO provides today. The merit of using one set of VFIO
-> > > > API to manage all kinds of mediated devices and VF devices is a major
-> > > > gain. Instead, inventing a new vDPA-like interface for every Scalable-IOV
-> > > > or equivalent device is just overkill and doesn't scale. Also the actual
-> > > > emulation code in idxd driver is actually small, if putting aside the PCI
-> > > > config space part for which I already explained most logic could be shared
-> > > > between mdev device drivers.  
-> > > 
-> > > If it was just config space you might have an argument, VFIO already
-> > > does some config space mangling, but emulating BAR space is out of
-> > > scope of VFIO, IMHO.  
-> > 
-> > out of scope of vfio-pci, but in scope of vfio-mdev. btw I feel that most
-> > of your objections are actually related to the general idea of
-> > vfio-mdev.  
+>          grep -H . /sys/module/dmatest/parameters/*
 > 
-> There have been several abusive proposals of vfio-mdev, everything
-> from a way to create device drivers to this kind of generic emulation
-> framework.
+> the iterations parameter is not respected and test is going on and on until
+> user gives
 > 
-> > Scalable IOV just uses PASID to harden DMA isolation in mediated
-> > pass-through usage which vfio-mdev enables. Then are you just opposing
-> > the whole vfio-mdev? If not, I'm curious about the criteria in your mind 
-> > about when using vfio-mdev is good...  
+>          echo 0 > /sys/module/dmatest/parameters/run
 > 
-> It is appropriate when non-PCI standard techniques are needed to do
-> raw device assignment, just like VFIO.
+> This is not what expected.
 > 
-> Basically if vfio-pci is already doing it then it seems reasonable
-> that vfio-mdev should do the same. This mission creep where vfio-mdev
-> gains functionality far beyond VFIO is the problem.
+> The history of this bug is interesting. I though that the commit
+>    2d88ce76eb98 ("dmatest: add a 'wait' parameter")
+> is a culprit, but looking closer to the code I think it simple revealed the
+> broken logic from the day one, i.e. in the commit
+>    0a2ff57d6fba ("dmaengine: dmatest: add a maximum number of test iterations")
+> which adds iterations parameter.
+> 
+> So, to the point, the conditional of checking the thread to be stopped being
+> first part of conjunction logic prevents to check iterations. Thus, we have to
+> always check both conditions to be able to stop after given iterations.
+> 
+> Since it wasn't visible before second commit appeared, I add a respective
+> Fixes tag.
+> 
+> Fixes: 2d88ce76eb98 ("dmatest: add a 'wait' parameter")
+> Cc: Dan Williams <dan.j.williams@intel.com>
+> Cc: Nicolas Ferre <nicolas.ferre@microchip.com>
 
-Ehm, vfio-pci emulates BARs too.  We also emulate FLR, power
-management, DisINTx, and VPD.  FLR, PM, and VPD all have device
-specific quirks in the host kernel, and I've generally taken the stance
-that would should take advantage of those quirks, not duplicate them in
-userspace and not invent new access mechanisms/ioctls for each of them.
-Emulating DisINTx is convenient since we must have a mechanism to mask
-INTx, whether it's at the device or the APIC, so we can pretend the
-hardware supports it.  BAR emulation is really too trivial to argue
-about, the BARs mean nothing to the physical device mapping, they're
-simply scratch registers that we mask out the alignment bits on read.
-vfio-pci is a mix of things that we decide are too complicated or
-irrelevant to emulate in the kernel and things that take advantage of
-shared quirks or are just too darn easy to worry about.  BARs fall into
-that latter category, any sort of mapping into VM address spaces is
-necessarily done in userspace, but scratch registers that are masked on
-read, *shrug*, vfio-pci does that.  Thanks,
+Yes, makes sense indeed:
+Acked-by: Nicolas Ferre <nicolas.ferre@microchip.com>
 
-Alex
- 
-> > technically Scalable IOV is definitely different from SR-IOV. It's 
-> > simpler in hardware. And we're not emulating SR-IOV. The point
-> > is just in usage-wise we want to present a consistent user 
-> > experience just like passing through a PCI endpoint (PF or VF) device
-> > through vfio eco-system, including various userspace VMMs (Qemu,
-> > firecracker, rust-vmm, etc.), middleware (Libvirt), and higher level 
-> > management stacks.   
+
+> Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+> ---
+>   drivers/dma/dmatest.c | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
 > 
-> Yes, I understand your desire, but at the same time we have not been
-> doing device emulation in the kernel. You should at least be
-> forthwright about that major change in the cover letters/etc.
->  
-> > > The only thing we get out of this is someone doesn't have to write a
-> > > idxd emulation driver in qemu, instead they have to write it in the
-> > > kernel. I don't see how that is a win for the ecosystem.  
-> > 
-> > No. The clear win is on leveraging classic VFIO iommu and its eco-system
-> > as explained above.  
+> diff --git a/drivers/dma/dmatest.c b/drivers/dma/dmatest.c
+> index a2cadfa2e6d78..4993e3e5c5b01 100644
+> --- a/drivers/dma/dmatest.c
+> +++ b/drivers/dma/dmatest.c
+> @@ -662,8 +662,8 @@ static int dmatest_func(void *data)
+>                  flags = DMA_CTRL_ACK | DMA_PREP_INTERRUPT;
 > 
-> vdpa had no problem implementing iommu support without VFIO. This was
-> their original argument too, it turned out to be erroneous.
-> 
-> Jason
+>          ktime = ktime_get();
+> -       while (!kthread_should_stop()
+> -              && !(params->iterations && total_tests >= params->iterations)) {
+> +       while (!(kthread_should_stop() ||
+> +              (params->iterations && total_tests >= params->iterations))) {
+>                  struct dma_async_tx_descriptor *tx = NULL;
+>                  struct dmaengine_unmap_data *um;
+>                  dma_addr_t *dsts;
+> --
+> 2.26.2
 > 
 
+
+-- 
+Nicolas Ferre
