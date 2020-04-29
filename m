@@ -2,90 +2,81 @@ Return-Path: <SRS0=UCgm=6N=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.3 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,UNPARSEABLE_RELAY,
-	URIBL_BLOCKED,USER_AGENT_SANE_2 autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 353FDC83003
-	for <dmaengine@archiver.kernel.org>; Wed, 29 Apr 2020 03:53:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6D95FC83004
+	for <dmaengine@archiver.kernel.org>; Wed, 29 Apr 2020 07:15:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DA5A020757
-	for <dmaengine@archiver.kernel.org>; Wed, 29 Apr 2020 03:53:08 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=mediatek.com header.i=@mediatek.com header.b="pum+Q+O5"
+	by mail.kernel.org (Postfix) with ESMTP id 545F720731
+	for <dmaengine@archiver.kernel.org>; Wed, 29 Apr 2020 07:15:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726560AbgD2DxI (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 28 Apr 2020 23:53:08 -0400
-Received: from mailgw02.mediatek.com ([210.61.82.184]:27427 "EHLO
-        mailgw02.mediatek.com" rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1726548AbgD2DxI (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Tue, 28 Apr 2020 23:53:08 -0400
-X-UUID: b3b0f4c0bfa34ad5b826e995e7092c8a-20200429
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mediatek.com; s=dk;
-        h=Content-Transfer-Encoding:MIME-Version:Content-Type:References:In-Reply-To:Date:CC:To:From:Subject:Message-ID; bh=OiZgzIWXliTigMWS4ngHmC2XsFCzxE9JvxbFZlR5Y5A=;
-        b=pum+Q+O5Zp2uxHclGYj9cXsT8SoFWIVRHAE44jy8rMaHtkwvzjTDHCVLKwZDxTSDb9/VXfQbXXqfMb/sFnS8IwTzQxOfFEMzLMCCbzxrLdhCmoEpAwYW4XAhWRMBQea5tVJnzld4V7EYuEZkaxp8o5jG722jRxyzcdvLg8/vvIA=;
-X-UUID: b3b0f4c0bfa34ad5b826e995e7092c8a-20200429
-Received: from mtkcas08.mediatek.inc [(172.21.101.126)] by mailgw02.mediatek.com
-        (envelope-from <eastl.lee@mediatek.com>)
-        (Cellopoint E-mail Firewall v4.1.10 Build 0809 with TLS)
-        with ESMTP id 915013963; Wed, 29 Apr 2020 11:53:05 +0800
-Received: from mtkcas08.mediatek.inc (172.21.101.126) by
- mtkmbs01n2.mediatek.inc (172.21.101.79) with Microsoft SMTP Server (TLS) id
- 15.0.1497.2; Wed, 29 Apr 2020 11:53:03 +0800
-Received: from [172.21.77.33] (172.21.77.33) by mtkcas08.mediatek.inc
- (172.21.101.73) with Microsoft SMTP Server id 15.0.1497.2 via Frontend
- Transport; Wed, 29 Apr 2020 11:53:02 +0800
-Message-ID: <1588132383.16498.2.camel@mtkswgap22>
-Subject: Re: [PATCH v3 1/2] dt-bindings: dmaengine: Add MediaTek
- Command-Queue DMA controller bindings
-From:   EastL <EastL.Lee@mediatek.com>
-To:     Rob Herring <robh@kernel.org>
-CC:     Sean Wang <sean.wang@mediatek.com>, <vkoul@kernel.org>,
-        <robh+dt@kernel.org>, <mark.rutland@arm.com>,
-        <matthias.bgg@gmail.com>, <dmaengine@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-mediatek@lists.infradead.org>, <devicetree@vger.kernel.org>,
-        <wsd_upstream@mediatek.com>
-Date:   Wed, 29 Apr 2020 11:53:03 +0800
-In-Reply-To: <1588125274311004.11906.seg@mailgw02.mediatek.com>
-References: <1587955977-17207-1-git-send-email-EastL.Lee@mediatek.com>
-         <1587955977-17207-2-git-send-email-EastL.Lee@mediatek.com>
-         <1588125274311004.11906.seg@mailgw02.mediatek.com>
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.2.3-0ubuntu6 
+        id S1726430AbgD2HP5 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 29 Apr 2020 03:15:57 -0400
+Received: from foss.arm.com ([217.140.110.172]:34806 "EHLO foss.arm.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726366AbgD2HP4 (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Wed, 29 Apr 2020 03:15:56 -0400
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 475B51FB;
+        Wed, 29 Apr 2020 00:15:56 -0700 (PDT)
+Received: from login2.euhpc.arm.com. (login2.euhpc.arm.com [10.6.27.34])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPA id 8E1E53F305;
+        Wed, 29 Apr 2020 00:15:55 -0700 (PDT)
+From:   Vladimir Murzin <vladimir.murzin@arm.com>
+To:     dmaengine@vger.kernel.org
+Cc:     vkoul@kernel.org, seraj.alijan@sondrel.com, vladimir.murzin@arm.com
+Subject: [PATCH] dmaengine: dmatest: Restore default for channel
+Date:   Wed, 29 Apr 2020 08:15:22 +0100
+Message-Id: <20200429071522.58148-1-vladimir.murzin@arm.com>
+X-Mailer: git-send-email 2.24.0
 MIME-Version: 1.0
-X-TM-SNTS-SMTP: EA5880C4AA2B61D894C249225ED43DB19CC852CE1078F1987B00AF67E97FC2DB2000:8
-X-MTK:  N
-Content-Transfer-Encoding: base64
+Content-Transfer-Encoding: 8bit
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-T24gTW9uLCAyMDIwLTA0LTI3IGF0IDE2OjMyIC0wNTAwLCBSb2IgSGVycmluZyB3cm90ZToNCj4g
-T24gTW9uLCAyNyBBcHIgMjAyMCAxMDo1Mjo1NiArMDgwMCwgRWFzdEwgd3JvdGU6DQo+ID4gRG9j
-dW1lbnQgdGhlIGRldmljZXRyZWUgYmluZGluZ3MgZm9yIE1lZGlhVGVrIENvbW1hbmQtUXVldWUg
-RE1BIGNvbnRyb2xsZXINCj4gPiB3aGljaCBjb3VsZCBiZSBmb3VuZCBvbiBNVDY3NzkgU29DIG9y
-IG90aGVyIHNpbWlsYXIgTWVkaWF0ZWsgU29Dcy4NCj4gPiANCj4gPiBTaWduZWQtb2ZmLWJ5OiBF
-YXN0TCA8RWFzdEwuTGVlQG1lZGlhdGVrLmNvbT4NCj4gPiAtLS0NCj4gPiAgLi4uL2RldmljZXRy
-ZWUvYmluZGluZ3MvZG1hL210ay1jcWRtYS55YW1sICAgICAgICAgfCA5OCArKysrKysrKysrKysr
-KysrKysrKysrDQo+ID4gIDEgZmlsZSBjaGFuZ2VkLCA5OCBpbnNlcnRpb25zKCspDQo+ID4gIGNy
-ZWF0ZSBtb2RlIDEwMDY0NCBEb2N1bWVudGF0aW9uL2RldmljZXRyZWUvYmluZGluZ3MvZG1hL210
-ay1jcWRtYS55YW1sDQo+ID4gDQo+IA0KPiBNeSBib3QgZm91bmQgZXJyb3JzIHJ1bm5pbmcgJ21h
-a2UgZHRfYmluZGluZ19jaGVjaycgb24geW91ciBwYXRjaDoNCj4gDQo+IC9idWlsZHMvcm9iaGVy
-cmluZy9saW51eC1kdC1yZXZpZXcvRG9jdW1lbnRhdGlvbi9kZXZpY2V0cmVlL2JpbmRpbmdzL2Rt
-YS9tdGstY3FkbWEuZXhhbXBsZS5kdC55YW1sOiBkbWEtY29udHJvbGxlckAxMDIxMjAwMDogaW50
-ZXJydXB0czogW1swLCAxMzksIDhdLCBbMCwgMTQwLCA4XSwgWzAsIDE0MSwgOF1dIGlzIHRvbyBz
-aG9ydA0KPiAvYnVpbGRzL3JvYmhlcnJpbmcvbGludXgtZHQtcmV2aWV3L0RvY3VtZW50YXRpb24v
-ZGV2aWNldHJlZS9iaW5kaW5ncy9kbWEvbXRrLWNxZG1hLmV4YW1wbGUuZHQueWFtbDogZG1hLWNv
-bnRyb2xsZXJAMTAyMTIwMDA6IHJlZzogW1swLCAyNzA2MDYzMzYsIDAsIDEyOF0sIFswLCAyNzA2
-MDY0NjQsIDAsIDEyOF0sIFswLCAyNzA2MDY1OTIsIDAsIDEyOF1dIGlzIHRvbyBzaG9ydA0KPiAN
-Cj4gU2VlIGh0dHBzOi8vcGF0Y2h3b3JrLm96bGFicy5vcmcvcGF0Y2gvMTI3NzI5Mg0KPiANCj4g
-SWYgeW91IGFscmVhZHkgcmFuICdtYWtlIGR0X2JpbmRpbmdfY2hlY2snIGFuZCBkaWRuJ3Qgc2Vl
-IHRoZSBhYm92ZQ0KPiBlcnJvcihzKSwgdGhlbiBtYWtlIHN1cmUgZHQtc2NoZW1hIGlzIHVwIHRv
-IGRhdGU6DQo+IA0KPiBwaXAzIGluc3RhbGwgZ2l0K2h0dHBzOi8vZ2l0aHViLmNvbS9kZXZpY2V0
-cmVlLW9yZy9kdC1zY2hlbWEuZ2l0QG1hc3RlciAtLXVwZ3JhZGUNCj4gDQo+IFBsZWFzZSBjaGVj
-ayBhbmQgcmUtc3VibWl0Lg0KDQpPSywgSSdsbCBmaXggaXQgaW4gbmV4dCB2ZXJzaW9uLg0KDQo=
+In case of dmatest is built-in and no channel was configured test
+doesn't run with:
+
+dmatest: Could not start test, no channels configured
+
+Even though description to "channel" parameter claims that default is
+any.
+
+Add default channel back as it used to be rather than reject test with
+no channel configuration.
+
+Fixes: d53513d5dc285d9a95a534fc41c5c08af6b60eac ("dmaengine: dmatest: Add support for multi channel testing)
+
+Reported-by: Dijil Mohan <Dijil.Mohan@arm.com>
+Signed-off-by: Vladimir Murzin <vladimir.murzin@arm.com>
+---
+ drivers/dma/dmatest.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
+
+diff --git a/drivers/dma/dmatest.c b/drivers/dma/dmatest.c
+index a2cadfa..5e1fff9 100644
+--- a/drivers/dma/dmatest.c
++++ b/drivers/dma/dmatest.c
+@@ -1166,10 +1166,11 @@ static int dmatest_run_set(const char *val, const struct kernel_param *kp)
+ 		mutex_unlock(&info->lock);
+ 		return ret;
+ 	} else if (dmatest_run) {
+-		if (is_threaded_test_pending(info))
+-			start_threaded_tests(info);
+-		else
+-			pr_info("Could not start test, no channels configured\n");
++		if (!is_threaded_test_pending(info)){
++			pr_info("No channels configured, continue with any\n");
++			add_threaded_test(info);
++		}
++		start_threaded_tests(info);
+ 	} else {
+ 		stop_threaded_test(info);
+ 	}
+-- 
+2.7.4
 
