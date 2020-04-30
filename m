@@ -2,185 +2,105 @@ Return-Path: <SRS0=1eip=6O=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.1 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=unavailable
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.7 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D7680C4724C
-	for <dmaengine@archiver.kernel.org>; Thu, 30 Apr 2020 16:20:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DE9C2C4724C
+	for <dmaengine@archiver.kernel.org>; Thu, 30 Apr 2020 18:35:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B5FD520873
-	for <dmaengine@archiver.kernel.org>; Thu, 30 Apr 2020 16:20:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1588263602;
-	bh=ugCY3y9aPneko9xp0OW8Y5PqnnRdwIA6ZnhjiQw0pbg=;
-	h=From:To:Cc:Subject:Date:List-ID:From;
-	b=fTY7XwKEyVSM/bEPrKHa5hmJ+0DruNGYuPBZe0X0oSNTXlGIJStZCp9qCaA82vN01
-	 SBd+hw9tRkWy6kjoycMopBfGUCLNvSWDpUydEVGt4a/lISWRv4bASuBPtPbbgDHUFP
-	 J+A5cgDxWOhUnziSiCimciubQ/W3hqfboim9zqGQ=
+	by mail.kernel.org (Postfix) with ESMTP id B65F320787
+	for <dmaengine@archiver.kernel.org>; Thu, 30 Apr 2020 18:35:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728134AbgD3QSj (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Thu, 30 Apr 2020 12:18:39 -0400
-Received: from mail.kernel.org ([198.145.29.99]:58600 "EHLO mail.kernel.org"
+        id S1726318AbgD3Sft (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Thu, 30 Apr 2020 14:35:49 -0400
+Received: from mga04.intel.com ([192.55.52.120]:29832 "EHLO mga04.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726431AbgD3QSi (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Thu, 30 Apr 2020 12:18:38 -0400
-Received: from mail.kernel.org (ip5f5ad5c5.dynamic.kabel-deutschland.de [95.90.213.197])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id A7673208D5;
-        Thu, 30 Apr 2020 16:18:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1588263517;
-        bh=ugCY3y9aPneko9xp0OW8Y5PqnnRdwIA6ZnhjiQw0pbg=;
-        h=From:To:Cc:Subject:Date:From;
-        b=jkbiKuotKQWoJifXoYaYKWd4u1OUCkFJTCeaJ2hFfc8Mmzm6hL99xXi+5i8oLaR6e
-         GJ1b6u5OLXCuKZdQPYYbqcEoGl4qcjUVxJHvEaPOc1nGKIjtw42GlkxhXUFJCRfzBO
-         IWB28xT442895dIcuie8By96F883CyyppOigyJ4o=
-Received: from mchehab by mail.kernel.org with local (Exim 4.92.3)
-        (envelope-from <mchehab@kernel.org>)
-        id 1jUBtT-00Axgb-Pl; Thu, 30 Apr 2020 18:18:35 +0200
-From:   Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-To:     Linux Doc Mailing List <linux-doc@vger.kernel.org>
-Cc:     Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
-        linux-kernel@vger.kernel.org, Jonathan Corbet <corbet@lwn.net>,
-        linux-pm@vger.kernel.org, keyrings@vger.kernel.org,
-        linux-crypto@vger.kernel.org, dmaengine@vger.kernel.org,
-        linux-pci@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linuxppc-dev@lists.ozlabs.org, linux-sh@vger.kernel.org,
-        kvm@vger.kernel.org
-Subject: [PATCH v4 00/19] Manually convert  thermal, crypto and misc devices to ReST
-Date:   Thu, 30 Apr 2020 18:18:14 +0200
-Message-Id: <cover.1588263270.git.mchehab+huawei@kernel.org>
-X-Mailer: git-send-email 2.25.4
+        id S1726272AbgD3Sft (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Thu, 30 Apr 2020 14:35:49 -0400
+IronPort-SDR: ooMhMp2tFT6UtToL0pEC6ofg00mKYILBH5FyiclY1lO5Whsv+EZGxDIE3+DxD82PaUHC6zDIgB
+ e3bf/Ris22KQ==
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from fmsmga001.fm.intel.com ([10.253.24.23])
+  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Apr 2020 11:35:47 -0700
+IronPort-SDR: 2F86vwcAAs7TgIBPIOpku4OWpq5AhrwHFrRn6AxsmAU+LlyIp4BqAHZGnz9DXRGFDYdDeq+AWJ
+ Z3OHhvxDnvJw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.73,336,1583222400"; 
+   d="scan'208";a="368236384"
+Received: from djiang5-desk3.ch.intel.com ([143.182.136.137])
+  by fmsmga001.fm.intel.com with ESMTP; 30 Apr 2020 11:35:47 -0700
+Subject: [PATCH] dmaengine: cookie bypass for out of order completion
+From:   Dave Jiang <dave.jiang@intel.com>
+To:     vkoul@kernel.org
+Cc:     dmaengine@vger.kernel.org, swathi.kovvuri@intel.com
+Date:   Thu, 30 Apr 2020 11:35:47 -0700
+Message-ID: <158827174736.34343.16479132955205930987.stgit@djiang5-desk3.ch.intel.com>
+User-Agent: StGit/unknown-version
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Manually convert some files from thermal, crypto and misc-devices
-to ReST format.
+The cookie tracking in dmaengine expects all submissions completed in
+order. Some DMA devices like Intel DSA can complete submissions out of
+order, especially if configured with a work queue sharing multiple DMA
+engines. Add a status DMA_OUT_OF_ORDER that tx_status can be returned for
+those DMA devices. The user should use callbacks to track the completion
+rather than the DMA cookie. This would address the issue of dmatest
+complaining that descriptors are "busy" when the cookie count goes
+backwards due to out of order completion.
 
-This series is against linux-next 20200430 tag (as I rebased it, in order
-to check if some patch were already merged via some other tree),
-but it should very likely merge fine against docs-next.
+Reported-by: Swathi Kovvuri <swathi.kovvuri@intel.com>
+Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+Tested-by: Swathi Kovvuri <swathi.kovvuri@intel.com>
+---
+ drivers/dma/dmatest.c     |    3 ++-
+ drivers/dma/idxd/dma.c    |    2 +-
+ include/linux/dmaengine.h |    1 +
+ 3 files changed, 4 insertions(+), 2 deletions(-)
 
-The full series (including those ones) are at:
-
-	https://git.linuxtv.org/mchehab/experimental.git/log/?h=misc-docs
-
-The documents touched on this patch, converted to HTML via the 
-building system are at (together with patches from other series):
-
-	https://www.infradead.org/~mchehab/kernel_docs/
-
-
-v4:
-
-- added some acks.
-
-v3:
-
-- removed the cpu-freq patches from this series, as Rafael should
-  be applying it on his tree.
-
-v2: 
-
-- a small change at patch 2 to avoid uneeded whitespace changes;
-- added 13 new patches at the end
-
-
-Mauro Carvalho Chehab (19):
-  docs: thermal: convert cpu-idle-cooling.rst to ReST
-  docs: crypto: convert asymmetric-keys.txt to ReST
-  docs: crypto: convert api-intro.txt to ReST format
-  docs: crypto: convert async-tx-api.txt to ReST format
-  docs: crypto: descore-readme.txt: convert to ReST format
-  docs: misc-devices/spear-pcie-gadget.txt: convert to ReST
-  docs: misc-devices/pci-endpoint-test.txt: convert to ReST
-  docs: misc-devices/pci-endpoint-test.txt: convert to ReST
-  docs: misc-devices/c2port.txt: convert to ReST format
-  docs: misc-devices/bh1770glc.txt: convert to ReST
-  docs: misc-devices/apds990x.txt: convert to ReST format
-  docs: pci: endpoint/function/binding/pci-test.txt convert to ReST
-  docs: arm64: convert perf.txt to ReST format
-  docs: powerpc: convert vcpudispatch_stats.txt to ReST
-  docs: sh: convert new-machine.txt to ReST
-  docs: sh: convert register-banks.txt to ReST
-  docs: trace: ring-buffer-design.txt: convert to ReST format
-  docs: kvm: get read of devices/README
-  docs: misc-devices: add uacce to the index.rst
-
- .../endpoint/function/binding/pci-test.rst    |  26 +
- .../endpoint/function/binding/pci-test.txt    |  19 -
- Documentation/PCI/endpoint/index.rst          |   2 +
- Documentation/arm64/index.rst                 |   1 +
- Documentation/arm64/{perf.txt => perf.rst}    |   7 +-
- .../crypto/{api-intro.txt => api-intro.rst}   | 186 ++--
- ...symmetric-keys.txt => asymmetric-keys.rst} |  91 +-
- .../{async-tx-api.txt => async-tx-api.rst}    | 253 +++---
- ...{descore-readme.txt => descore-readme.rst} | 152 +++-
- Documentation/crypto/index.rst                |   5 +
- Documentation/driver-api/dmaengine/client.rst |   2 +-
- .../driver-api/dmaengine/provider.rst         |   2 +-
- .../driver-api/thermal/cpu-idle-cooling.rst   |  18 +-
- Documentation/driver-api/thermal/index.rst    |   1 +
- .../{ad525x_dpot.txt => ad525x_dpot.rst}      |  24 +-
- .../{apds990x.txt => apds990x.rst}            |  31 +-
- .../{bh1770glc.txt => bh1770glc.rst}          |  45 +-
- .../misc-devices/{c2port.txt => c2port.rst}   |  58 +-
- Documentation/misc-devices/index.rst          |   7 +
- .../misc-devices/pci-endpoint-test.rst        |  56 ++
- .../misc-devices/pci-endpoint-test.txt        |  41 -
- .../misc-devices/spear-pcie-gadget.rst        | 170 ++++
- .../misc-devices/spear-pcie-gadget.txt        | 130 ---
- Documentation/powerpc/index.rst               |   1 +
- ...patch_stats.txt => vcpudispatch_stats.rst} |  17 +-
- Documentation/security/keys/core.rst          |   2 +-
- Documentation/sh/index.rst                    |   6 +
- .../sh/{new-machine.txt => new-machine.rst}   | 195 +++--
- ...{register-banks.txt => register-banks.rst} |  13 +-
- Documentation/trace/index.rst                 |   1 +
- ...ffer-design.txt => ring-buffer-design.rst} | 802 ++++++++++--------
- Documentation/virt/kvm/devices/README         |   1 -
- Documentation/virt/kvm/devices/index.rst      |   3 +
- MAINTAINERS                                   |   4 +-
- arch/sh/Kconfig.cpu                           |   2 +-
- crypto/asymmetric_keys/asymmetric_type.c      |   2 +-
- crypto/asymmetric_keys/public_key.c           |   2 +-
- crypto/asymmetric_keys/signature.c            |   2 +-
- drivers/misc/Kconfig                          |   2 +-
- drivers/misc/ad525x_dpot.c                    |   2 +-
- include/crypto/public_key.h                   |   2 +-
- include/keys/asymmetric-parser.h              |   2 +-
- include/keys/asymmetric-subtype.h             |   2 +-
- include/keys/asymmetric-type.h                |   2 +-
- 44 files changed, 1358 insertions(+), 1034 deletions(-)
- create mode 100644 Documentation/PCI/endpoint/function/binding/pci-test.rst
- delete mode 100644 Documentation/PCI/endpoint/function/binding/pci-test.txt
- rename Documentation/arm64/{perf.txt => perf.rst} (95%)
- rename Documentation/crypto/{api-intro.txt => api-intro.rst} (70%)
- rename Documentation/crypto/{asymmetric-keys.txt => asymmetric-keys.rst} (91%)
- rename Documentation/crypto/{async-tx-api.txt => async-tx-api.rst} (55%)
- rename Documentation/crypto/{descore-readme.txt => descore-readme.rst} (81%)
- rename Documentation/misc-devices/{ad525x_dpot.txt => ad525x_dpot.rst} (85%)
- rename Documentation/misc-devices/{apds990x.txt => apds990x.rst} (86%)
- rename Documentation/misc-devices/{bh1770glc.txt => bh1770glc.rst} (83%)
- rename Documentation/misc-devices/{c2port.txt => c2port.rst} (59%)
- create mode 100644 Documentation/misc-devices/pci-endpoint-test.rst
- delete mode 100644 Documentation/misc-devices/pci-endpoint-test.txt
- create mode 100644 Documentation/misc-devices/spear-pcie-gadget.rst
- delete mode 100644 Documentation/misc-devices/spear-pcie-gadget.txt
- rename Documentation/powerpc/{vcpudispatch_stats.txt => vcpudispatch_stats.rst} (94%)
- rename Documentation/sh/{new-machine.txt => new-machine.rst} (73%)
- rename Documentation/sh/{register-banks.txt => register-banks.rst} (88%)
- rename Documentation/trace/{ring-buffer-design.txt => ring-buffer-design.rst} (55%)
- delete mode 100644 Documentation/virt/kvm/devices/README
-
--- 
-2.25.4
-
+diff --git a/drivers/dma/dmatest.c b/drivers/dma/dmatest.c
+index a2cadfa2e6d7..60a4a9cec3c8 100644
+--- a/drivers/dma/dmatest.c
++++ b/drivers/dma/dmatest.c
+@@ -821,7 +821,8 @@ static int dmatest_func(void *data)
+ 			result("test timed out", total_tests, src->off, dst->off,
+ 			       len, 0);
+ 			goto error_unmap_continue;
+-		} else if (status != DMA_COMPLETE) {
++		} else if (status != DMA_COMPLETE &&
++			   status != DMA_OUT_OF_ORDER) {
+ 			result(status == DMA_ERROR ?
+ 			       "completion error status" :
+ 			       "completion busy status", total_tests, src->off,
+diff --git a/drivers/dma/idxd/dma.c b/drivers/dma/idxd/dma.c
+index c64c1429d160..3f54826abc12 100644
+--- a/drivers/dma/idxd/dma.c
++++ b/drivers/dma/idxd/dma.c
+@@ -133,7 +133,7 @@ static enum dma_status idxd_dma_tx_status(struct dma_chan *dma_chan,
+ 					  dma_cookie_t cookie,
+ 					  struct dma_tx_state *txstate)
+ {
+-	return dma_cookie_status(dma_chan, cookie, txstate);
++	return DMA_OUT_OF_ORDER;
+ }
+ 
+ /*
+diff --git a/include/linux/dmaengine.h b/include/linux/dmaengine.h
+index 21065c04c4ac..a0c130131e45 100644
+--- a/include/linux/dmaengine.h
++++ b/include/linux/dmaengine.h
+@@ -39,6 +39,7 @@ enum dma_status {
+ 	DMA_IN_PROGRESS,
+ 	DMA_PAUSED,
+ 	DMA_ERROR,
++	DMA_OUT_OF_ORDER,
+ };
+ 
+ /**
 
