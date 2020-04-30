@@ -6,44 +6,44 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7BFB0C47253
-	for <dmaengine@archiver.kernel.org>; Thu, 30 Apr 2020 13:49:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 27090C4724C
+	for <dmaengine@archiver.kernel.org>; Thu, 30 Apr 2020 13:56:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 59DA42082E
-	for <dmaengine@archiver.kernel.org>; Thu, 30 Apr 2020 13:49:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0F38724959
+	for <dmaengine@archiver.kernel.org>; Thu, 30 Apr 2020 13:56:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726832AbgD3Ntb (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Thu, 30 Apr 2020 09:49:31 -0400
-Received: from mail-oi1-f195.google.com ([209.85.167.195]:39240 "EHLO
-        mail-oi1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726577AbgD3Nta (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Thu, 30 Apr 2020 09:49:30 -0400
-Received: by mail-oi1-f195.google.com with SMTP id m10so5241960oie.6;
-        Thu, 30 Apr 2020 06:49:29 -0700 (PDT)
+        id S1729241AbgD3N42 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Thu, 30 Apr 2020 09:56:28 -0400
+Received: from mail-oi1-f193.google.com ([209.85.167.193]:38495 "EHLO
+        mail-oi1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727846AbgD3N41 (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Thu, 30 Apr 2020 09:56:27 -0400
+Received: by mail-oi1-f193.google.com with SMTP id r66so5275000oie.5;
+        Thu, 30 Apr 2020 06:56:26 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=rjrzO+MFhCxKv5bAtNJEkkZ3+0bygxPZ8Xsyxb6NgPo=;
-        b=mDjuEXlnoEV+mzDCJO25nafMr2d5g5Wu+2lZGKiiSoBU55DgFl92jc5iO3aQ85sMG4
-         Ti6dd24snDqO9DeWpTHgvwgTIL0QozeW5x2GsAmULoG1TR5tloMQDwX+OlqaydXJDf9a
-         jKgzsq/hy1REwN9eQW7JFjooaw93PwV8Jfoi82DOnB4FRBHRTJt3mj896qbnjUcA8ixq
-         450qaPfHtlUZOXWKv+Ol4zb+n02v2H2Se+Phq0ixsSjORkZks0nSmzfz5tKJCHO/SMPt
-         WDZZkEr++oj1IKlGa0zzj+tR9p7BglaV0yD/dbmmi7qUmUm0RgnaCwxMdt1xhcZWc4g3
-         m6CQ==
-X-Gm-Message-State: AGi0PubNweEegZZF7/K8BYd2cdBPTaBDfR2EXx63GFPTFyUs4CSsMW+W
-        Ulum02gGf/5XAEIl0f/QPUrOzpCNU4uN5G+nhZk=
-X-Google-Smtp-Source: APiQypLKYEdDONP0TBzThQv78/9Ygy1b6alSM4Yc0B+LRdJxCQZdxj0F0voJal5X/EWZDKQ3nzYUXD+H8+a8j7LvATM=
-X-Received: by 2002:aca:d50f:: with SMTP id m15mr1837989oig.54.1588254569157;
- Thu, 30 Apr 2020 06:49:29 -0700 (PDT)
+        bh=J0BdSY6aYGuZTCeF5gOrkfhmzXUO5QbPbC35o2A29hs=;
+        b=A5bRAUkVit7A9Q67nBb0D6LjEHNWr5O8oTtDn7WlefMt19SjeAW7pDUGNvL+j1D+/G
+         lOAb37JXd0umrybksFPSbudPdAe7IaruY9oxP8Lxm5zi0qLiTLAq/rPUMU/S1y+kfDKr
+         wKMnJlDctXfI169wqMlRrN6dC9+ugfrVBbE+DIMdNwpOQYItOYppG4pOu6Ge4Ik/uodF
+         YRxjLo1c1IHN2+GCQWCzv9+ajbVr95DaReI1mZx88BJH284wiCkug9He/iSDPCumrjQQ
+         7YNkFxFnB4smVZa3TstLQiLuMOs6ErlCMZSv3OOX/kdXUSoXlElQNSKiPrb+nHGHVbfO
+         oJAw==
+X-Gm-Message-State: AGi0PuaHq/SZj8kdIujY5MO1wVQ2/nMa4paWr1+pNuobNLDfBGRHASCK
+        hcqDhlgKa8cIepye7Gcgdeokf/M8qb1Ool9We/E=
+X-Google-Smtp-Source: APiQypKEYGGNvKQoS3yHrfZA1ZqB91++Kmari2arpNNAHltBPFXklTXvWPxfYoN3XHTdW9bxVOsPDs6q+I2XoirDHdk=
+X-Received: by 2002:aca:895:: with SMTP id 143mr1736708oii.153.1588254986270;
+ Thu, 30 Apr 2020 06:56:26 -0700 (PDT)
 MIME-Version: 1.0
 References: <1588197415-13747-1-git-send-email-prabhakar.mahadev-lad.rj@bp.renesas.com>
- <1588197415-13747-8-git-send-email-prabhakar.mahadev-lad.rj@bp.renesas.com>
-In-Reply-To: <1588197415-13747-8-git-send-email-prabhakar.mahadev-lad.rj@bp.renesas.com>
+ <1588197415-13747-11-git-send-email-prabhakar.mahadev-lad.rj@bp.renesas.com>
+In-Reply-To: <1588197415-13747-11-git-send-email-prabhakar.mahadev-lad.rj@bp.renesas.com>
 From:   Geert Uytterhoeven <geert@linux-m68k.org>
-Date:   Thu, 30 Apr 2020 15:49:17 +0200
-Message-ID: <CAMuHMdU90pqCVd=jombH-JMomoCDe1tA8Lq=m0urACK67ZNYuw@mail.gmail.com>
-Subject: Re: [PATCH 07/18] ARM: dts: r8a7742: Initial SoC device tree
+Date:   Thu, 30 Apr 2020 15:56:15 +0200
+Message-ID: <CAMuHMdVY8HOe=R82Z=ymnSiq_zUXDyZNbDYy2RwaPD9hVkkQrA@mail.gmail.com>
+Subject: Re: [PATCH 10/18] dt-bindings: rcar-dmac: Document r8a7742 support
 To:     Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
 Cc:     Magnus Damm <magnus.damm@gmail.com>,
         Rob Herring <robh+dt@kernel.org>,
@@ -72,123 +72,32 @@ X-Mailing-List: dmaengine@vger.kernel.org
 
 Hi Prabhakar,
 
-Thanks for your patch!
-
 On Wed, Apr 29, 2020 at 11:58 PM Lad Prabhakar
 <prabhakar.mahadev-lad.rj@bp.renesas.com> wrote:
-> Basic support for the RZ/G1H (R8A7742) SoC. Added placeholders
-> for the peripherals supported by the SoC which will be filled up
-> by incremental patches.
-
-Please remove the placeholders, as there is nothing that depends on their
-presence.
-
+> Renesas RZ/G SoC also have the R-Car gen2/3 compatible DMA controllers.
+> Document RZ/G1H (also known as R8A7742) SoC bindings.
+>
 > Signed-off-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
 > Reviewed-by: Marian-Cristian Rotariu <marian-cristian.rotariu.rb@bp.renesas.com>
 
-> --- /dev/null
-> +++ b/arch/arm/boot/dts/r8a7742.dtsi
-> @@ -0,0 +1,715 @@
-> +// SPDX-License-Identifier: GPL-2.0
-> +/*
-> + * Device Tree Source for the r8a7742 SoC
-> + *
-> + * Copyright (C) 2020 Renesas Electronics Corp.
-> + */
-> +
-> +#include <dt-bindings/interrupt-controller/irq.h>
-> +#include <dt-bindings/interrupt-controller/arm-gic.h>
-> +#include <dt-bindings/clock/r8a7742-cpg-mssr.h>
-> +#include <dt-bindings/power/r8a7742-sysc.h>
-> +
-> +/ {
-> +       compatible = "renesas,r8a7742";
-> +       #address-cells = <2>;
-> +       #size-cells = <2>;
-> +
-> +       /*
-> +        * The external audio clocks are configured as 0 Hz fixed frequency
-> +        * clocks by default.
-> +        * Boards that provide audio clocks should override them.
-> +        */
-> +       audio_clk_a: audio_clk_a {
-> +               compatible = "fixed-clock";
-> +               #clock-cells = <0>;
-> +               clock-frequency = <0>;
-> +       };
-> +
-> +       audio_clk_b: audio_clk_b {
-> +               compatible = "fixed-clock";
-> +               #clock-cells = <0>;
-> +               clock-frequency = <0>;
-> +       };
-> +
-> +       audio_clk_c: audio_clk_c {
-> +               compatible = "fixed-clock";
-> +               #clock-cells = <0>;
-> +               clock-frequency = <0>;
-> +       };
-> +
-> +       /* External CAN clock */
-> +       can_clk: can {
-> +               compatible = "fixed-clock";
-> +               #clock-cells = <0>;
-> +               /* This value must be overridden by the board. */
-> +               clock-frequency = <0>;
-> +       };
+Thanks for your patch!
 
-Please drop the audio and CAN clocks for now, as they are not used.
+> --- a/Documentation/devicetree/bindings/dma/renesas,rcar-dmac.txt
+> +++ b/Documentation/devicetree/bindings/dma/renesas,rcar-dmac.txt
 
-> +       /* External root clock */
-> +       extal_clk: extal {
-> +               compatible = "fixed-clock";
-> +               #clock-cells = <0>;
-> +               /* This value must be overridden by the board. */
-> +               clock-frequency = <0>;
-> +       };
-> +
-> +       /* External PCIe clock - can be overridden by the board */
-> +       pcie_bus_clk: pcie_bus {
-> +               compatible = "fixed-clock";
-> +               #clock-cells = <0>;
-> +               clock-frequency = <0>;
-> +       };
+This file has been replaced by renesas,rcar-dmac.yaml.
 
-Please drop the PCI clock for now, as it is not used.
+> @@ -16,6 +16,7 @@ Required Properties:
+>
+>  - compatible: "renesas,dmac-<soctype>", "renesas,rcar-dmac" as fallback.
+>               Examples with soctypes are:
+> +               - "renesas,dmac-r8a7742" (RZ/G1H)
+>                 - "renesas,dmac-r8a7743" (RZ/G1M)
+>                 - "renesas,dmac-r8a7744" (RZ/G1N)
+>                 - "renesas,dmac-r8a7745" (RZ/G1E)
 
-> +
-> +       /* External SCIF clock */
-> +       scif_clk: scif {
-> +               compatible = "fixed-clock";
-> +               #clock-cells = <0>;
-> +               /* This value must be overridden by the board. */
-> +               clock-frequency = <0>;
-> +       };
-
-This should be used (see below).
-
-> +
-> +       /* External USB clock - can be overridden by the board */
-> +       usb_extal_clk: usb_extal {
-> +               compatible = "fixed-clock";
-> +               #clock-cells = <0>;
-> +               clock-frequency = <48000000>;
-> +       };
-> +
-> +       cpus {
-
-Please sort nodes by unit-address (if present) per type, or alphabetically.
-
-> +       soc {
-
-> +               scifa2: serial@e6c60000 {
-> +                       reg = <0 0xe6c60000 0 0x40>;
-> +                       /* placeholder */
-> +               };
-
-I prefer to see a real node for the serial console, so the system can at
-least be boot tested to a console prompt.
-Note that this requires adding a minimal board DTS, too.
+For the logical change:
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
 
 Gr{oetje,eeting}s,
 
