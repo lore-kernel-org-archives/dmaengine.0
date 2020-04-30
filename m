@@ -6,45 +6,44 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6F5ADC47247
-	for <dmaengine@archiver.kernel.org>; Thu, 30 Apr 2020 14:08:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D2BE6C4724C
+	for <dmaengine@archiver.kernel.org>; Thu, 30 Apr 2020 14:27:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4FBDB2076D
-	for <dmaengine@archiver.kernel.org>; Thu, 30 Apr 2020 14:08:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B21B020870
+	for <dmaengine@archiver.kernel.org>; Thu, 30 Apr 2020 14:27:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728389AbgD3Nw0 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Thu, 30 Apr 2020 09:52:26 -0400
-Received: from mail-oi1-f195.google.com ([209.85.167.195]:44755 "EHLO
-        mail-oi1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726858AbgD3NwZ (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Thu, 30 Apr 2020 09:52:25 -0400
-Received: by mail-oi1-f195.google.com with SMTP id a2so5238016oia.11;
-        Thu, 30 Apr 2020 06:52:25 -0700 (PDT)
+        id S1726962AbgD3O1y (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Thu, 30 Apr 2020 10:27:54 -0400
+Received: from mail-qk1-f194.google.com ([209.85.222.194]:40803 "EHLO
+        mail-qk1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726743AbgD3O1y (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Thu, 30 Apr 2020 10:27:54 -0400
+Received: by mail-qk1-f194.google.com with SMTP id l78so5851460qke.7;
+        Thu, 30 Apr 2020 07:27:53 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=Bx1vrsVZq+IbNA++2G08z1rg1sNLX2BQVibyI5UB8Yg=;
-        b=lH0pEzPedzQYe54e/QhwJ+TjQpDzCj1O4CrBLiPR7pvi31yXn/5yCrK0K4L7ZOKiYe
-         SQC53y7lwWi14j9qc/4BJRjqsSnxPjcKfutF8HQypAQoI17Hm2q23olFmon9ctEzWfMX
-         o2oZsVxgvPoAJsghyh+3HgLrnvRRrgkAqdEj1HWB/0obrjXqWtF16S7ki5Da3tzPMPrL
-         HrihePowIK95gIE07+4Ca2Is3CX23N4nICM9jcRGwc+McScSewwEUV31FWj75C8lBNOy
-         oM80wt8eVDufCffs+h4DsnjLGwbK7WohC+z/SFG/9DzzMzaIMuDvU5nGnXyJFGoXHISI
-         awmg==
-X-Gm-Message-State: AGi0Pua9r+tfpQPyDdhMnecU2jStf9HFz5xC6zrG9pvaz5U58+HQ07Um
-        1KfeyONVCncdu859280qaEASi7UFC8jqqcPw5ms=
-X-Google-Smtp-Source: APiQypJUGpqJbnxexd7dqOJmSTBNVdW9VYTDdyYVHeV3l6YnMiahGYWRXjyWK2Vresb0767EYyF1hnGyTnD1yoW3ZW8=
-X-Received: by 2002:aca:d50f:: with SMTP id m15mr1848055oig.54.1588254742783;
- Thu, 30 Apr 2020 06:52:22 -0700 (PDT)
+        bh=O/0HPBsHNU1Zz63ikLSaiq1tEsUfgo674JZFS5/Kd2o=;
+        b=uBtuzKpeFF8JpOG5cdUp4saRLGn1bxt4ywT1Fnfcl+F6ZFHI6g8Go0hMHDlgRH+EAr
+         kTLoYyzkjcO6DlQrj9Wdc0oC6vews6BcvI5DKQac8LEJGt6FNGaucWjo9lbMdIRqjcms
+         fnCrZo6nwNLL8/RB8/7RF+LbnV0cYK178eLTZNTd4JpGvPVYcfGy5zGRw1QJc4zp02v+
+         IXuayvyCLUT6QWOABTcbeSJmy2Y/q3pXR9tVXj0PO9hdJm50VjybRDdTM4lIbBFJnajX
+         y+aWD2OxzthVoaW1te6/X2L/NMOAxz7ucW7z3AneGA1w0K0w3lq+8ASFVr/WdkGrjKMO
+         GLMA==
+X-Gm-Message-State: AGi0PuZ5oaXAOXe+6XvJWCTjlJ2r+ArfUKSxkKYDvOu1Cad0XIWrxibW
+        oVmdmrm5gwQGVqguEc3z3JtSNrEfd0ttSV4G+3AVgWOM
+X-Google-Smtp-Source: APiQypJ0wnfqNBtvV5DRJQ7B2RPuH0aK38BLyizTr8I4v1YozRfr0aHWKl2U/Ir3VfckqinVYAjVYSuNmzb4FyxwrlE=
+X-Received: by 2002:a37:a212:: with SMTP id l18mr3494398qke.428.1588256872560;
+ Thu, 30 Apr 2020 07:27:52 -0700 (PDT)
 MIME-Version: 1.0
 References: <1588197415-13747-1-git-send-email-prabhakar.mahadev-lad.rj@bp.renesas.com>
- <1588197415-13747-9-git-send-email-prabhakar.mahadev-lad.rj@bp.renesas.com>
-In-Reply-To: <1588197415-13747-9-git-send-email-prabhakar.mahadev-lad.rj@bp.renesas.com>
+ <1588197415-13747-17-git-send-email-prabhakar.mahadev-lad.rj@bp.renesas.com>
+In-Reply-To: <1588197415-13747-17-git-send-email-prabhakar.mahadev-lad.rj@bp.renesas.com>
 From:   Geert Uytterhoeven <geert@linux-m68k.org>
-Date:   Thu, 30 Apr 2020 15:52:10 +0200
-Message-ID: <CAMuHMdVTwEFeRKLaK_0_xTkaTV=vVPtu7bhZPz5_UZ++L=n8rw@mail.gmail.com>
-Subject: Re: [PATCH 08/18] dt-bindings: irqchip: renesas-irqc: Document
- r8a7742 bindings
+Date:   Thu, 30 Apr 2020 16:27:40 +0200
+Message-ID: <CAMuHMdX=Y49D+zP4-6oxsu7c1gsMbQC-Wb34uJqrPmxRxZp7JA@mail.gmail.com>
+Subject: Re: [PATCH 16/18] ARM: dts: r8a7742: Add [H]SCIF{A|B} support
 To:     Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
 Cc:     Magnus Damm <magnus.damm@gmail.com>,
         Rob Herring <robh+dt@kernel.org>,
@@ -73,7 +72,7 @@ X-Mailing-List: dmaengine@vger.kernel.org
 
 On Wed, Apr 29, 2020 at 11:58 PM Lad Prabhakar
 <prabhakar.mahadev-lad.rj@bp.renesas.com> wrote:
-> Document SoC specific bindings for RZ/G1H (r8a7742) SoC.
+> Describe [H]SCIF{|A|B} ports in the R8A7742 device tree.
 >
 > Signed-off-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
 > Reviewed-by: Marian-Cristian Rotariu <marian-cristian.rotariu.rb@bp.renesas.com>
