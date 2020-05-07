@@ -1,163 +1,115 @@
-Return-Path: <SRS0=Lb+V=6U=vger.kernel.org=dmaengine-owner@kernel.org>
+Return-Path: <SRS0=m8NG=6V=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.1 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BED19C28CBC
-	for <dmaengine@archiver.kernel.org>; Wed,  6 May 2020 14:50:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A7A15C38A24
+	for <dmaengine@archiver.kernel.org>; Thu,  7 May 2020 14:27:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9B73E208E4
-	for <dmaengine@archiver.kernel.org>; Wed,  6 May 2020 14:50:17 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7B95A20A8B
+	for <dmaengine@archiver.kernel.org>; Thu,  7 May 2020 14:27:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=default; t=1588861655;
+	bh=nldiJ+MHYYN+kjgAX5mo6jUIk7pC/Xc/j4g2G7Uco6Y=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:List-ID:From;
+	b=NlR+9r4aVOXD4XInYYHoWwS26FgII2YvrRX1w5fJu2cvlX9ZfKUE9H1KLrTaJXtvo
+	 ltOWvCo5MTbUZOhVHp4Vlp5hsdZHHKAkCrd4duH6Dcx4bbxz3GTZuup6REbuecDwJb
+	 7eW2O/4iA6V2h8HoLUSoZvbMk2ILBIWdgXYPIdPM=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728784AbgEFOuR (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 6 May 2020 10:50:17 -0400
-Received: from mga09.intel.com ([134.134.136.24]:30351 "EHLO mga09.intel.com"
+        id S1726771AbgEGO1e (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Thu, 7 May 2020 10:27:34 -0400
+Received: from mail.kernel.org ([198.145.29.99]:53284 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726114AbgEFOuR (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Wed, 6 May 2020 10:50:17 -0400
-IronPort-SDR: 1PmeYZarF4DYQJ2PTGqbS8qX26NpM9OyU1lcAfC9HjZ5D6jwS8wKQfhNng2DpZNj0U9+EjaFI1
- O7EgPn9pIoCg==
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from orsmga003.jf.intel.com ([10.7.209.27])
-  by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 May 2020 07:50:16 -0700
-IronPort-SDR: dSOkBUpGvNLTA9DQqg26Ph/wfMjXWY+4fo9BX80AZ21bwvV6plHjBGOyAwXtpvPab0fWHGAzO9
- 6OoamVemsubQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.73,359,1583222400"; 
-   d="scan'208";a="260127737"
-Received: from djiang5-desk3.ch.intel.com ([143.182.136.137])
-  by orsmga003.jf.intel.com with ESMTP; 06 May 2020 07:50:16 -0700
-Subject: [PATCH v3] dmaengine: cookie bypass for out of order completion
-From:   Dave Jiang <dave.jiang@intel.com>
-To:     vkoul@kernel.org
-Cc:     dmaengine@vger.kernel.org, swathi.kovvuri@intel.com
-Date:   Wed, 06 May 2020 07:50:16 -0700
-Message-ID: <158877653369.51303.5331705116646956272.stgit@djiang5-desk3.ch.intel.com>
-User-Agent: StGit/unknown-version
+        id S1726742AbgEGO1e (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Thu, 7 May 2020 10:27:34 -0400
+Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 798162083B;
+        Thu,  7 May 2020 14:27:32 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1588861653;
+        bh=nldiJ+MHYYN+kjgAX5mo6jUIk7pC/Xc/j4g2G7Uco6Y=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=e0s4o+5EI+KKTv1EgVraZSnAfNcypP9onwpJf01GmePNVCzCRa9kHDOdp2JmKvYAR
+         QtzvVzwnfVW3XUo6M556Gizb5EI8oMj9cvYjDBNL59gnAAmOwQK3XM/R7wVj+WZJUZ
+         eA8cU4ZevAU/7OzP0/EfaWKkx4XzjRT8pJYN7l+g=
+From:   Sasha Levin <sashal@kernel.org>
+To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
+Cc:     Sebastian von Ohr <vonohr@smaract.com>,
+        Radhey Shyam Pandey <radhey.shyam.pandey@xilinx.com>,
+        Vinod Koul <vkoul@kernel.org>, Sasha Levin <sashal@kernel.org>,
+        dmaengine@vger.kernel.org, linux-arm-kernel@lists.infradead.org
+Subject: [PATCH AUTOSEL 5.6 05/50] dmaengine: xilinx_dma: Add missing check for empty list
+Date:   Thu,  7 May 2020 10:26:41 -0400
+Message-Id: <20200507142726.25751-5-sashal@kernel.org>
+X-Mailer: git-send-email 2.20.1
+In-Reply-To: <20200507142726.25751-1-sashal@kernel.org>
+References: <20200507142726.25751-1-sashal@kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
+X-stable: review
+X-Patchwork-Hint: Ignore
+Content-Transfer-Encoding: 8bit
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-The cookie tracking in dmaengine expects all submissions completed in
-order. Some DMA devices like Intel DSA can complete submissions out of
-order, especially if configured with a work queue sharing multiple DMA
-engines. Add a status DMA_OUT_OF_ORDER that tx_status can be returned for
-those DMA devices. The user should use callbacks to track the completion
-rather than the DMA cookie. This would address the issue of dmatest
-complaining that descriptors are "busy" when the cookie count goes
-backwards due to out of order completion. Add DMA_NO_COMPLETION_ORDER
-DMA capability to allow the driver to flag the device's ability to complete
-operations out of order.
+From: Sebastian von Ohr <vonohr@smaract.com>
 
-Reported-by: Swathi Kovvuri <swathi.kovvuri@intel.com>
-Signed-off-by: Dave Jiang <dave.jiang@intel.com>
-Tested-by: Swathi Kovvuri <swathi.kovvuri@intel.com>
+[ Upstream commit b269426011bcfd97b7c3101abfe1a99147b6f40b ]
+
+The DMA transfer might finish just after checking the state with
+dma_cookie_status, but before the lock is acquired. Not checking
+for an empty list in xilinx_dma_tx_status may result in reading
+random data or data corruption when desc is written to. This can
+be reliably triggered by using dma_sync_wait to wait for DMA
+completion.
+
+Signed-off-by: Sebastian von Ohr <vonohr@smaract.com>
+Tested-by: Radhey Shyam Pandey <radhey.shyam.pandey@xilinx.com>
+Link: https://lore.kernel.org/r/20200303130518.333-1-vonohr@smaract.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
+ drivers/dma/xilinx/xilinx_dma.c | 20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
-v3:
-- v2 mailed wrong patch
-v2:
-- Add DMA capability (vinod)
-- Add documentation (vinod)
-
- Documentation/driver-api/dmaengine/provider.rst |   11 +++++++++++
- drivers/dma/dmatest.c                           |    5 ++++-
- drivers/dma/idxd/dma.c                          |    3 ++-
- include/linux/dmaengine.h                       |    2 ++
- 4 files changed, 19 insertions(+), 2 deletions(-)
-
-diff --git a/Documentation/driver-api/dmaengine/provider.rst b/Documentation/driver-api/dmaengine/provider.rst
-index 56e5833e8a07..783ca141e147 100644
---- a/Documentation/driver-api/dmaengine/provider.rst
-+++ b/Documentation/driver-api/dmaengine/provider.rst
-@@ -239,6 +239,14 @@ Currently, the types available are:
-     want to transfer a portion of uncompressed data directly to the
-     display to print it
+diff --git a/drivers/dma/xilinx/xilinx_dma.c b/drivers/dma/xilinx/xilinx_dma.c
+index a9c5d5cc9f2bd..5d5f1d0ce16cb 100644
+--- a/drivers/dma/xilinx/xilinx_dma.c
++++ b/drivers/dma/xilinx/xilinx_dma.c
+@@ -1229,16 +1229,16 @@ static enum dma_status xilinx_dma_tx_status(struct dma_chan *dchan,
+ 		return ret;
  
-+- DMA_COMPLETION_NO_ORDER
-+
-+  - The device supports out of order completion of the operations.
-+
-+  - The driver should return DMA_OUT_OF_ORDER for device_tx_status if
-+    the device supports out of order completion and the completion is
-+    is expected to be completed out of order.
-+
- These various types will also affect how the source and destination
- addresses change over time.
+ 	spin_lock_irqsave(&chan->lock, flags);
+-
+-	desc = list_last_entry(&chan->active_list,
+-			       struct xilinx_dma_tx_descriptor, node);
+-	/*
+-	 * VDMA and simple mode do not support residue reporting, so the
+-	 * residue field will always be 0.
+-	 */
+-	if (chan->has_sg && chan->xdev->dma_config->dmatype != XDMA_TYPE_VDMA)
+-		residue = xilinx_dma_get_residue(chan, desc);
+-
++	if (!list_empty(&chan->active_list)) {
++		desc = list_last_entry(&chan->active_list,
++				       struct xilinx_dma_tx_descriptor, node);
++		/*
++		 * VDMA and simple mode do not support residue reporting, so the
++		 * residue field will always be 0.
++		 */
++		if (chan->has_sg && chan->xdev->dma_config->dmatype != XDMA_TYPE_VDMA)
++			residue = xilinx_dma_get_residue(chan, desc);
++	}
+ 	spin_unlock_irqrestore(&chan->lock, flags);
  
-@@ -399,6 +407,9 @@ supported.
-   - In the case of a cyclic transfer, it should only take into
-     account the current period.
- 
-+  - Should return DMA_OUT_OF_ORDER if the device supports out of order
-+    completion and is completing the operation out of order.
-+
-   - This function can be called in an interrupt context.
- 
- - device_config
-diff --git a/drivers/dma/dmatest.c b/drivers/dma/dmatest.c
-index a2cadfa2e6d7..8953e096a05c 100644
---- a/drivers/dma/dmatest.c
-+++ b/drivers/dma/dmatest.c
-@@ -821,7 +821,10 @@ static int dmatest_func(void *data)
- 			result("test timed out", total_tests, src->off, dst->off,
- 			       len, 0);
- 			goto error_unmap_continue;
--		} else if (status != DMA_COMPLETE) {
-+		} else if (status != DMA_COMPLETE &&
-+			   !(dma_has_cap(DMA_COMPLETION_NO_ORDER,
-+					 dev->cap_mask) &&
-+			     status == DMA_OUT_OF_ORDER)) {
- 			result(status == DMA_ERROR ?
- 			       "completion error status" :
- 			       "completion busy status", total_tests, src->off,
-diff --git a/drivers/dma/idxd/dma.c b/drivers/dma/idxd/dma.c
-index c64c1429d160..0c892cbd72e0 100644
---- a/drivers/dma/idxd/dma.c
-+++ b/drivers/dma/idxd/dma.c
-@@ -133,7 +133,7 @@ static enum dma_status idxd_dma_tx_status(struct dma_chan *dma_chan,
- 					  dma_cookie_t cookie,
- 					  struct dma_tx_state *txstate)
- {
--	return dma_cookie_status(dma_chan, cookie, txstate);
-+	return DMA_OUT_OF_ORDER;
- }
- 
- /*
-@@ -174,6 +174,7 @@ int idxd_register_dma_device(struct idxd_device *idxd)
- 	INIT_LIST_HEAD(&dma->channels);
- 	dma->dev = &idxd->pdev->dev;
- 
-+	dma_cap_set(DMA_COMPLETION_NO_ORDER, dma->cap_mask);
- 	dma->device_release = idxd_dma_release;
- 
- 	if (idxd->hw.opcap.bits[0] & IDXD_OPCAP_MEMMOVE) {
-diff --git a/include/linux/dmaengine.h b/include/linux/dmaengine.h
-index 21065c04c4ac..1123f4d15bae 100644
---- a/include/linux/dmaengine.h
-+++ b/include/linux/dmaengine.h
-@@ -39,6 +39,7 @@ enum dma_status {
- 	DMA_IN_PROGRESS,
- 	DMA_PAUSED,
- 	DMA_ERROR,
-+	DMA_OUT_OF_ORDER,
- };
- 
- /**
-@@ -61,6 +62,7 @@ enum dma_transaction_type {
- 	DMA_SLAVE,
- 	DMA_CYCLIC,
- 	DMA_INTERLEAVE,
-+	DMA_COMPLETION_NO_ORDER,
- /* last transaction type for creation of the capabilities mask */
- 	DMA_TX_TYPE_END,
- };
+ 	dma_set_residue(txstate, residue);
+-- 
+2.20.1
 
