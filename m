@@ -4,50 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-10.1 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=unavailable
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B1B6CC54E49
-	for <dmaengine@archiver.kernel.org>; Thu,  7 May 2020 14:31:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 74954C38A24
+	for <dmaengine@archiver.kernel.org>; Thu,  7 May 2020 14:31:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 929FF20936
-	for <dmaengine@archiver.kernel.org>; Thu,  7 May 2020 14:31:27 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4A91F2083B
+	for <dmaengine@archiver.kernel.org>; Thu,  7 May 2020 14:31:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1588861887;
-	bh=SidZoqgetficBoEQ+pFJdTPueOa3f7WDXc6jNL+f5Qg=;
+	s=default; t=1588861894;
+	bh=21RvU87suyQJ5Bno2TZaPg+6cnc/R8INOsdBybhJ+a4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:List-ID:From;
-	b=blj98JJPEO0nnsbEmQIVb3L9RZZ8r2akNkYFycv660JYN7vuNi1imVYOh+uD2iGkp
-	 sa0bB7VKoofOZc8i74AZzDA6hE0NaupJ+Gu3YjayLoo15iFq7BIJAvg0w6SpzVUQHF
-	 PMLNV8vItFiKU4v3dxWlz6tQ+ulvZCihlDS/UINU=
+	b=C7oXIjxNK7LbWOOCTV3qhw8SlKMUrz+gZtIE64zvxAXcFnbB+H8Kws7xcPXH5ThU1
+	 OPgRDPgAiFN5VeWQOXsYoPys3BRhZrEkezE412Gd7oNX8M9E+c93pfSroU3/2VbsJc
+	 NxJktfS5+3bPOQGpjRLWeAg6zrwXyqfyK6nh9w7M=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728058AbgEGOb1 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Thu, 7 May 2020 10:31:27 -0400
-Received: from mail.kernel.org ([198.145.29.99]:59334 "EHLO mail.kernel.org"
+        id S1728820AbgEGOaY (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Thu, 7 May 2020 10:30:24 -0400
+Received: from mail.kernel.org ([198.145.29.99]:59198 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728750AbgEGOa1 (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Thu, 7 May 2020 10:30:27 -0400
+        id S1728815AbgEGOaW (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Thu, 7 May 2020 10:30:22 -0400
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id F071E20936;
-        Thu,  7 May 2020 14:30:25 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id AB3F520936;
+        Thu,  7 May 2020 14:30:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1588861826;
-        bh=SidZoqgetficBoEQ+pFJdTPueOa3f7WDXc6jNL+f5Qg=;
+        s=default; t=1588861822;
+        bh=21RvU87suyQJ5Bno2TZaPg+6cnc/R8INOsdBybhJ+a4=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=1ctMo8QDu0JxlK5stY9T5xK0LWTl5VVl/dFp0000V2uihn/8kCqsGqE27xeuH4QkT
-         YP1hghnilfiXddLHN1bRu7xNQeoMc+UI6AGVBiDXKm+p62cltq5uXBm2IWM5xf/zU4
-         +gzvoq/JS7KoyJYGhjPhEbauNPbx1ObWBMspLeMA=
+        b=vRM0RLH3vH3Y5pmm7WpKQt8PkiRTXJJ9X5OyTIeW6xT90bHnsXudMbGxOtT5iF44r
+         a7k4XbnemjG0mL+cXfMKT/nvZh1/q19+vbH+vTVje9eYS8q1+OqhnvJo4zvtpe6GL2
+         FIxD4IDi11jM/uP9zt9EFf7ZDZZZ5CIurYd2dD14=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-        Dan Williams <dan.j.williams@intel.com>,
-        Nicolas Ferre <nicolas.ferre@microchip.com>,
+Cc:     Madhuparna Bhowmik <madhuparnabhowmik10@gmail.com>,
         Vinod Koul <vkoul@kernel.org>, Sasha Levin <sashal@kernel.org>,
         dmaengine@vger.kernel.org
-Subject: [PATCH AUTOSEL 4.4 7/9] dmaengine: dmatest: Fix iteration non-stop logic
-Date:   Thu,  7 May 2020 10:30:16 -0400
-Message-Id: <20200507143018.27195-7-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 4.4 3/9] dmaengine: pch_dma.c: Avoid data race between probe and irq handler
+Date:   Thu,  7 May 2020 10:30:12 -0400
+Message-Id: <20200507143018.27195-3-sashal@kernel.org>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20200507143018.27195-1-sashal@kernel.org>
 References: <20200507143018.27195-1-sashal@kernel.org>
@@ -60,63 +58,45 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Madhuparna Bhowmik <madhuparnabhowmik10@gmail.com>
 
-[ Upstream commit b9f960201249f20deea586b4ec814669b4c6b1c0 ]
+[ Upstream commit 2e45676a4d33af47259fa186ea039122ce263ba9 ]
 
-Under some circumstances, i.e. when test is still running and about to
-time out and user runs, for example,
+pd->dma.dev is read in irq handler pd_irq().
+However, it is set to pdev->dev after request_irq().
+Therefore, set pd->dma.dev to pdev->dev before request_irq() to
+avoid data race between pch_dma_probe() and pd_irq().
 
-	grep -H . /sys/module/dmatest/parameters/*
+Found by Linux Driver Verification project (linuxtesting.org).
 
-the iterations parameter is not respected and test is going on and on until
-user gives
-
-	echo 0 > /sys/module/dmatest/parameters/run
-
-This is not what expected.
-
-The history of this bug is interesting. I though that the commit
-  2d88ce76eb98 ("dmatest: add a 'wait' parameter")
-is a culprit, but looking closer to the code I think it simple revealed the
-broken logic from the day one, i.e. in the commit
-  0a2ff57d6fba ("dmaengine: dmatest: add a maximum number of test iterations")
-which adds iterations parameter.
-
-So, to the point, the conditional of checking the thread to be stopped being
-first part of conjunction logic prevents to check iterations. Thus, we have to
-always check both conditions to be able to stop after given iterations.
-
-Since it wasn't visible before second commit appeared, I add a respective
-Fixes tag.
-
-Fixes: 2d88ce76eb98 ("dmatest: add a 'wait' parameter")
-Cc: Dan Williams <dan.j.williams@intel.com>
-Cc: Nicolas Ferre <nicolas.ferre@microchip.com>
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Acked-by: Nicolas Ferre <nicolas.ferre@microchip.com>
-Link: https://lore.kernel.org/r/20200424161147.16895-1-andriy.shevchenko@linux.intel.com
+Signed-off-by: Madhuparna Bhowmik <madhuparnabhowmik10@gmail.com>
+Link: https://lore.kernel.org/r/20200416062335.29223-1-madhuparnabhowmik10@gmail.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/dmatest.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/dma/pch_dma.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/dma/dmatest.c b/drivers/dma/dmatest.c
-index 884aecebb249b..79c131746caa6 100644
---- a/drivers/dma/dmatest.c
-+++ b/drivers/dma/dmatest.c
-@@ -491,8 +491,8 @@ static int dmatest_func(void *data)
- 	flags = DMA_CTRL_ACK | DMA_PREP_INTERRUPT;
+diff --git a/drivers/dma/pch_dma.c b/drivers/dma/pch_dma.c
+index 113605f6fe208..32517003e118e 100644
+--- a/drivers/dma/pch_dma.c
++++ b/drivers/dma/pch_dma.c
+@@ -877,6 +877,7 @@ static int pch_dma_probe(struct pci_dev *pdev,
+ 	}
  
- 	ktime = ktime_get();
--	while (!kthread_should_stop()
--	       && !(params->iterations && total_tests >= params->iterations)) {
-+	while (!(kthread_should_stop() ||
-+	       (params->iterations && total_tests >= params->iterations))) {
- 		struct dma_async_tx_descriptor *tx = NULL;
- 		struct dmaengine_unmap_data *um;
- 		dma_addr_t srcs[src_cnt];
+ 	pci_set_master(pdev);
++	pd->dma.dev = &pdev->dev;
+ 
+ 	err = request_irq(pdev->irq, pd_irq, IRQF_SHARED, DRV_NAME, pd);
+ 	if (err) {
+@@ -892,7 +893,6 @@ static int pch_dma_probe(struct pci_dev *pdev,
+ 		goto err_free_irq;
+ 	}
+ 
+-	pd->dma.dev = &pdev->dev;
+ 
+ 	INIT_LIST_HEAD(&pd->dma.channels);
+ 
 -- 
 2.20.1
 
