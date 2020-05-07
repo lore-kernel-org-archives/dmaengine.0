@@ -7,46 +7,46 @@ X-Spam-Status: No, score=-10.1 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A7A15C38A24
-	for <dmaengine@archiver.kernel.org>; Thu,  7 May 2020 14:27:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9F110C54E4A
+	for <dmaengine@archiver.kernel.org>; Thu,  7 May 2020 14:28:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7B95A20A8B
-	for <dmaengine@archiver.kernel.org>; Thu,  7 May 2020 14:27:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6A61620870
+	for <dmaengine@archiver.kernel.org>; Thu,  7 May 2020 14:28:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1588861655;
-	bh=nldiJ+MHYYN+kjgAX5mo6jUIk7pC/Xc/j4g2G7Uco6Y=;
+	s=default; t=1588861682;
+	bh=7CkQnNZfsU7aQLh+3AkvnkG7zJqkrL6uPMNK2DHvRSw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:List-ID:From;
-	b=NlR+9r4aVOXD4XInYYHoWwS26FgII2YvrRX1w5fJu2cvlX9ZfKUE9H1KLrTaJXtvo
-	 ltOWvCo5MTbUZOhVHp4Vlp5hsdZHHKAkCrd4duH6Dcx4bbxz3GTZuup6REbuecDwJb
-	 7eW2O/4iA6V2h8HoLUSoZvbMk2ILBIWdgXYPIdPM=
+	b=L5PfsC84Yv5h9nSvHBpTKwKxVvlLwyx3ujAMQ3CVtMP+qAEQfADRvRoWj64rpCyep
+	 Cfy0AkmcjIFBcWeJBN32v2yHRioZYkRDDdfZl29dFy4I/wME66S4Llem5Y1Jddwir5
+	 tcQtDzCSfTjQ0KpNzoJRFKEB5m/rJzlkfTW65lrA=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726771AbgEGO1e (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Thu, 7 May 2020 10:27:34 -0400
-Received: from mail.kernel.org ([198.145.29.99]:53284 "EHLO mail.kernel.org"
+        id S1727922AbgEGO2B (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Thu, 7 May 2020 10:28:01 -0400
+Received: from mail.kernel.org ([198.145.29.99]:54058 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726742AbgEGO1e (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Thu, 7 May 2020 10:27:34 -0400
+        id S1727902AbgEGO2B (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Thu, 7 May 2020 10:28:01 -0400
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 798162083B;
-        Thu,  7 May 2020 14:27:32 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 83AEC20870;
+        Thu,  7 May 2020 14:27:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1588861653;
-        bh=nldiJ+MHYYN+kjgAX5mo6jUIk7pC/Xc/j4g2G7Uco6Y=;
+        s=default; t=1588861680;
+        bh=7CkQnNZfsU7aQLh+3AkvnkG7zJqkrL6uPMNK2DHvRSw=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=e0s4o+5EI+KKTv1EgVraZSnAfNcypP9onwpJf01GmePNVCzCRa9kHDOdp2JmKvYAR
-         QtzvVzwnfVW3XUo6M556Gizb5EI8oMj9cvYjDBNL59gnAAmOwQK3XM/R7wVj+WZJUZ
-         eA8cU4ZevAU/7OzP0/EfaWKkx4XzjRT8pJYN7l+g=
+        b=AuD2x5g7Xhbd2Vx9IY3c7Mr1NC+x250gQRXpRXpMj5xY4VFDSglUOKLoHRXZV7ZCK
+         oqgzb9z22RHqXDOhqRHdaVDq9miUumjIhryHtOQqqjJxXCs0fcJS4z4Q482TrFSBWf
+         +pRNAF+tKW+lJ2TGOKF8hBsP68bQnduVdmto77W8=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Sebastian von Ohr <vonohr@smaract.com>,
-        Radhey Shyam Pandey <radhey.shyam.pandey@xilinx.com>,
+Cc:     Dave Jiang <dave.jiang@intel.com>,
+        Yixin Zhang <yixin.zhang@intel.com>,
         Vinod Koul <vkoul@kernel.org>, Sasha Levin <sashal@kernel.org>,
-        dmaengine@vger.kernel.org, linux-arm-kernel@lists.infradead.org
-Subject: [PATCH AUTOSEL 5.6 05/50] dmaengine: xilinx_dma: Add missing check for empty list
-Date:   Thu,  7 May 2020 10:26:41 -0400
-Message-Id: <20200507142726.25751-5-sashal@kernel.org>
+        dmaengine@vger.kernel.org
+Subject: [PATCH AUTOSEL 5.6 27/50] dmaengine: fix channel index enumeration
+Date:   Thu,  7 May 2020 10:27:03 -0400
+Message-Id: <20200507142726.25751-27-sashal@kernel.org>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20200507142726.25751-1-sashal@kernel.org>
 References: <20200507142726.25751-1-sashal@kernel.org>
@@ -59,57 +59,202 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-From: Sebastian von Ohr <vonohr@smaract.com>
+From: Dave Jiang <dave.jiang@intel.com>
 
-[ Upstream commit b269426011bcfd97b7c3101abfe1a99147b6f40b ]
+[ Upstream commit 0821009445a8261ac4d32a6df4b83938e007c765 ]
 
-The DMA transfer might finish just after checking the state with
-dma_cookie_status, but before the lock is acquired. Not checking
-for an empty list in xilinx_dma_tx_status may result in reading
-random data or data corruption when desc is written to. This can
-be reliably triggered by using dma_sync_wait to wait for DMA
-completion.
+When the channel register code was changed to allow hotplug operations,
+dynamic indexing wasn't taken into account. When channels are randomly
+plugged and unplugged out of order, the serial indexing breaks. Convert
+channel indexing to using IDA tracking in order to allow dynamic
+assignment. The previous code does not cause any regression bug for
+existing channel allocation besides idxd driver since the hotplug usage
+case is only used by idxd at this point.
 
-Signed-off-by: Sebastian von Ohr <vonohr@smaract.com>
-Tested-by: Radhey Shyam Pandey <radhey.shyam.pandey@xilinx.com>
-Link: https://lore.kernel.org/r/20200303130518.333-1-vonohr@smaract.com
+With this change, the chan->idr_ref is also not needed any longer. We can
+have a device with no channels registered due to hot plug. The channel
+device release code no longer should attempt to free the dma device id on
+the last channel release.
+
+Fixes: e81274cd6b52 ("dmaengine: add support to dynamic register/unregister of channels")
+
+Reported-by: Yixin Zhang <yixin.zhang@intel.com>
+Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+Tested-by: Yixin Zhang <yixin.zhang@intel.com>
+Link: https://lore.kernel.org/r/158679961260.7674.8485924270472851852.stgit@djiang5-desk3.ch.intel.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/xilinx/xilinx_dma.c | 20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+ drivers/dma/dmaengine.c   | 60 +++++++++++++++++----------------------
+ include/linux/dmaengine.h |  4 +--
+ 2 files changed, 28 insertions(+), 36 deletions(-)
 
-diff --git a/drivers/dma/xilinx/xilinx_dma.c b/drivers/dma/xilinx/xilinx_dma.c
-index a9c5d5cc9f2bd..5d5f1d0ce16cb 100644
---- a/drivers/dma/xilinx/xilinx_dma.c
-+++ b/drivers/dma/xilinx/xilinx_dma.c
-@@ -1229,16 +1229,16 @@ static enum dma_status xilinx_dma_tx_status(struct dma_chan *dchan,
- 		return ret;
+diff --git a/drivers/dma/dmaengine.c b/drivers/dma/dmaengine.c
+index 17909fd1820ff..b5c4926aa76e1 100644
+--- a/drivers/dma/dmaengine.c
++++ b/drivers/dma/dmaengine.c
+@@ -151,10 +151,6 @@ static void chan_dev_release(struct device *dev)
+ 	struct dma_chan_dev *chan_dev;
  
- 	spin_lock_irqsave(&chan->lock, flags);
+ 	chan_dev = container_of(dev, typeof(*chan_dev), device);
+-	if (atomic_dec_and_test(chan_dev->idr_ref)) {
+-		ida_free(&dma_ida, chan_dev->dev_id);
+-		kfree(chan_dev->idr_ref);
+-	}
+ 	kfree(chan_dev);
+ }
+ 
+@@ -952,27 +948,9 @@ static int get_dma_id(struct dma_device *device)
+ }
+ 
+ static int __dma_async_device_channel_register(struct dma_device *device,
+-					       struct dma_chan *chan,
+-					       int chan_id)
++					       struct dma_chan *chan)
+ {
+ 	int rc = 0;
+-	int chancnt = device->chancnt;
+-	atomic_t *idr_ref;
+-	struct dma_chan *tchan;
 -
--	desc = list_last_entry(&chan->active_list,
--			       struct xilinx_dma_tx_descriptor, node);
--	/*
--	 * VDMA and simple mode do not support residue reporting, so the
--	 * residue field will always be 0.
--	 */
--	if (chan->has_sg && chan->xdev->dma_config->dmatype != XDMA_TYPE_VDMA)
--		residue = xilinx_dma_get_residue(chan, desc);
+-	tchan = list_first_entry_or_null(&device->channels,
+-					 struct dma_chan, device_node);
+-	if (!tchan)
+-		return -ENODEV;
 -
-+	if (!list_empty(&chan->active_list)) {
-+		desc = list_last_entry(&chan->active_list,
-+				       struct xilinx_dma_tx_descriptor, node);
-+		/*
-+		 * VDMA and simple mode do not support residue reporting, so the
-+		 * residue field will always be 0.
-+		 */
-+		if (chan->has_sg && chan->xdev->dma_config->dmatype != XDMA_TYPE_VDMA)
-+			residue = xilinx_dma_get_residue(chan, desc);
+-	if (tchan->dev) {
+-		idr_ref = tchan->dev->idr_ref;
+-	} else {
+-		idr_ref = kmalloc(sizeof(*idr_ref), GFP_KERNEL);
+-		if (!idr_ref)
+-			return -ENOMEM;
+-		atomic_set(idr_ref, 0);
+-	}
+ 
+ 	chan->local = alloc_percpu(typeof(*chan->local));
+ 	if (!chan->local)
+@@ -988,29 +966,36 @@ static int __dma_async_device_channel_register(struct dma_device *device,
+ 	 * When the chan_id is a negative value, we are dynamically adding
+ 	 * the channel. Otherwise we are static enumerating.
+ 	 */
+-	chan->chan_id = chan_id < 0 ? chancnt : chan_id;
++	mutex_lock(&device->chan_mutex);
++	chan->chan_id = ida_alloc(&device->chan_ida, GFP_KERNEL);
++	mutex_unlock(&device->chan_mutex);
++	if (chan->chan_id < 0) {
++		pr_err("%s: unable to alloc ida for chan: %d\n",
++		       __func__, chan->chan_id);
++		goto err_out;
 +	}
- 	spin_unlock_irqrestore(&chan->lock, flags);
++
+ 	chan->dev->device.class = &dma_devclass;
+ 	chan->dev->device.parent = device->dev;
+ 	chan->dev->chan = chan;
+-	chan->dev->idr_ref = idr_ref;
+ 	chan->dev->dev_id = device->dev_id;
+-	atomic_inc(idr_ref);
+ 	dev_set_name(&chan->dev->device, "dma%dchan%d",
+ 		     device->dev_id, chan->chan_id);
+-
+ 	rc = device_register(&chan->dev->device);
+ 	if (rc)
+-		goto err_out;
++		goto err_out_ida;
+ 	chan->client_count = 0;
+-	device->chancnt = chan->chan_id + 1;
++	device->chancnt++;
  
- 	dma_set_residue(txstate, residue);
+ 	return 0;
+ 
++ err_out_ida:
++	mutex_lock(&device->chan_mutex);
++	ida_free(&device->chan_ida, chan->chan_id);
++	mutex_unlock(&device->chan_mutex);
+  err_out:
+ 	free_percpu(chan->local);
+ 	kfree(chan->dev);
+-	if (atomic_dec_return(idr_ref) == 0)
+-		kfree(idr_ref);
+ 	return rc;
+ }
+ 
+@@ -1019,7 +1004,7 @@ int dma_async_device_channel_register(struct dma_device *device,
+ {
+ 	int rc;
+ 
+-	rc = __dma_async_device_channel_register(device, chan, -1);
++	rc = __dma_async_device_channel_register(device, chan);
+ 	if (rc < 0)
+ 		return rc;
+ 
+@@ -1039,6 +1024,9 @@ static void __dma_async_device_channel_unregister(struct dma_device *device,
+ 	device->chancnt--;
+ 	chan->dev->chan = NULL;
+ 	mutex_unlock(&dma_list_mutex);
++	mutex_lock(&device->chan_mutex);
++	ida_free(&device->chan_ida, chan->chan_id);
++	mutex_unlock(&device->chan_mutex);
+ 	device_unregister(&chan->dev->device);
+ 	free_percpu(chan->local);
+ }
+@@ -1061,7 +1049,7 @@ EXPORT_SYMBOL_GPL(dma_async_device_channel_unregister);
+  */
+ int dma_async_device_register(struct dma_device *device)
+ {
+-	int rc, i = 0;
++	int rc;
+ 	struct dma_chan* chan;
+ 
+ 	if (!device)
+@@ -1166,9 +1154,12 @@ int dma_async_device_register(struct dma_device *device)
+ 	if (rc != 0)
+ 		return rc;
+ 
++	mutex_init(&device->chan_mutex);
++	ida_init(&device->chan_ida);
++
+ 	/* represent channels in sysfs. Probably want devs too */
+ 	list_for_each_entry(chan, &device->channels, device_node) {
+-		rc = __dma_async_device_channel_register(device, chan, i++);
++		rc = __dma_async_device_channel_register(device, chan);
+ 		if (rc < 0)
+ 			goto err_out;
+ 	}
+@@ -1239,6 +1230,7 @@ void dma_async_device_unregister(struct dma_device *device)
+ 	 */
+ 	dma_cap_set(DMA_PRIVATE, device->cap_mask);
+ 	dma_channel_rebalance();
++	ida_free(&dma_ida, device->dev_id);
+ 	dma_device_put(device);
+ 	mutex_unlock(&dma_list_mutex);
+ }
+diff --git a/include/linux/dmaengine.h b/include/linux/dmaengine.h
+index 64461fc64e1bd..7adc007f2023f 100644
+--- a/include/linux/dmaengine.h
++++ b/include/linux/dmaengine.h
+@@ -336,13 +336,11 @@ struct dma_chan {
+  * @chan: driver channel device
+  * @device: sysfs device
+  * @dev_id: parent dma_device dev_id
+- * @idr_ref: reference count to gate release of dma_device dev_id
+  */
+ struct dma_chan_dev {
+ 	struct dma_chan *chan;
+ 	struct device device;
+ 	int dev_id;
+-	atomic_t *idr_ref;
+ };
+ 
+ /**
+@@ -827,6 +825,8 @@ struct dma_device {
+ 	int dev_id;
+ 	struct device *dev;
+ 	struct module *owner;
++	struct ida chan_ida;
++	struct mutex chan_mutex;	/* to protect chan_ida */
+ 
+ 	u32 src_addr_widths;
+ 	u32 dst_addr_widths;
 -- 
 2.20.1
 
