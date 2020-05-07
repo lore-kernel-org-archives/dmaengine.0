@@ -4,50 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-10.1 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=unavailable
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6A48EC38A2A
-	for <dmaengine@archiver.kernel.org>; Thu,  7 May 2020 14:35:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 641B8C38A2A
+	for <dmaengine@archiver.kernel.org>; Thu,  7 May 2020 14:37:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 41AF7208D6
-	for <dmaengine@archiver.kernel.org>; Thu,  7 May 2020 14:35:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 406F920659
+	for <dmaengine@archiver.kernel.org>; Thu,  7 May 2020 14:37:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1588862122;
-	bh=vjM1O94rgx2tx7HK6gBqTpJ9GjaQq+alA5IdlOKPtJg=;
+	s=default; t=1588862228;
+	bh=b1s7I7MQRORTqaB8/KOfE25r43ZKqozH8LCVeScbEHw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:List-ID:From;
-	b=zeb7N7ShaDATV7O3HoAoSudegdRb3ZYELiFpwqqxRi4gWzSkmVFdWW5B6+kH594l0
-	 qmS9MJUFTvhfNJ6YMOG+a6Anu5D/cJ9aNEBIfnEwmSR7Th6vM7vunaSNY5xPt0qALU
-	 FsOnA2U4h0Q6zcI6r3WwCU/UQbWzYsEu3tS8Jylw=
+	b=u59j4c9Grxr0ioLAKLS4b+Ql7NNLKlvij7frIPxq+pGJlW2Gorki3wFWgs5TINTbS
+	 KIl4Ftp9kehBkWNvujREnen4YfxtMQagvNxH2ZkvaI+2Zy5dXHzhoJoCyHurkKRiSP
+	 d+xAPFbop83jNXGolzM5xhd31WwehQmPz91oGiTA=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728267AbgEGOfU (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Thu, 7 May 2020 10:35:20 -0400
-Received: from mail.kernel.org ([198.145.29.99]:55644 "EHLO mail.kernel.org"
+        id S1727953AbgEGO2G (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Thu, 7 May 2020 10:28:06 -0400
+Received: from mail.kernel.org ([198.145.29.99]:54258 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728275AbgEGO2r (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Thu, 7 May 2020 10:28:47 -0400
+        id S1727945AbgEGO2F (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Thu, 7 May 2020 10:28:05 -0400
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id D6B84208DB;
-        Thu,  7 May 2020 14:28:45 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id A3FDE20936;
+        Thu,  7 May 2020 14:28:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1588861726;
-        bh=vjM1O94rgx2tx7HK6gBqTpJ9GjaQq+alA5IdlOKPtJg=;
+        s=default; t=1588861685;
+        bh=b1s7I7MQRORTqaB8/KOfE25r43ZKqozH8LCVeScbEHw=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=u2FMk5mOkmYwVySTCS9Q1BB8tH52b8+iAInF/vdHOWAegIFSgKc2j188WC9rSuvap
-         cnZ4xLkHBPG0wn6AE7kR6B6yADvzewFFnEOZJioR94R5dmlW30/zBdmxngM8pSWif6
-         afAKMRmoV5qMFN33xW/bVSlznIcpfYVvYzEb9sBM=
+        b=s5J0jykQaT6xmLnZIHfqVaIpyDmB9ThbHV10MDtAAPLU4GfM9VuNuOWHqZ/QRFZt8
+         amh1AGwF0oGfKrEVFxQyNPHuLKokDmUYx96UyeCP8aU7kGP8MNf7SPQK2/mBNJVTVm
+         ex1RfDPEt0Mms69gWGxC1edNq6hPW/U/kYhQF2So=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Lubomir Rintel <lkundrak@v3.sk>, Vinod Koul <vkoul@kernel.org>,
-        Sasha Levin <sashal@kernel.org>, dmaengine@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.4 12/35] dmaengine: mmp_tdma: Do not ignore slave config validation errors
-Date:   Thu,  7 May 2020 10:28:06 -0400
-Message-Id: <20200507142830.26239-12-sashal@kernel.org>
+Cc:     Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+        Seraj Alijan <seraj.alijan@sondrel.com>,
+        Vinod Koul <vkoul@kernel.org>, Sasha Levin <sashal@kernel.org>,
+        dmaengine@vger.kernel.org
+Subject: [PATCH AUTOSEL 5.6 31/50] dmaengine: dmatest: Fix process hang when reading 'wait' parameter
+Date:   Thu,  7 May 2020 10:27:07 -0400
+Message-Id: <20200507142726.25751-31-sashal@kernel.org>
 X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20200507142830.26239-1-sashal@kernel.org>
-References: <20200507142830.26239-1-sashal@kernel.org>
+In-Reply-To: <20200507142726.25751-1-sashal@kernel.org>
+References: <20200507142726.25751-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
@@ -57,38 +59,58 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-From: Lubomir Rintel <lkundrak@v3.sk>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit 363c32701c7fdc8265a84b21a6a4f45d1202b9ca ]
+[ Upstream commit aa72f1d20ee973d68f26d46fce5e1cf6f9b7e1ca ]
 
-With an invalid dma_slave_config set previously,
-mmp_tdma_prep_dma_cyclic() would detect an error whilst configuring the
-channel, but proceed happily on:
+If we do
 
-  [  120.756530] mmp-tdma d42a0800.adma: mmp_tdma: unknown burst size.
+  % echo 1 > /sys/module/dmatest/parameters/run
+  [  115.851124] dmatest: Could not start test, no channels configured
 
-Signed-off-by: Lubomir Rintel <lkundrak@v3.sk>
-Link: https://lore.kernel.org/r/20200419164912.670973-2-lkundrak@v3.sk
+  % echo dma8chan7 > /sys/module/dmatest/parameters/channel
+  [  127.563872] dmatest: Added 1 threads using dma8chan7
+
+  % cat /sys/module/dmatest/parameters/wait
+  ... !!! HANG !!! ...
+
+The culprit is the commit 6138f967bccc
+
+  ("dmaengine: dmatest: Use fixed point div to calculate iops")
+
+which makes threads not to run, but pending and being kicked off by writing
+to the 'run' node. However, it forgot to consider 'wait' routine to avoid
+above mentioned case.
+
+In order to fix this, check for really running threads, i.e. with pending
+and done flags unset.
+
+It's pity the culprit commit hadn't updated documentation and tested all
+possible scenarios.
+
+Fixes: 6138f967bccc ("dmaengine: dmatest: Use fixed point div to calculate iops")
+Cc: Seraj Alijan <seraj.alijan@sondrel.com>
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://lore.kernel.org/r/20200428113518.70620-1-andriy.shevchenko@linux.intel.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/mmp_tdma.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/dma/dmatest.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/dma/mmp_tdma.c b/drivers/dma/mmp_tdma.c
-index e7d1e12bf4643..4d5b987e4841a 100644
---- a/drivers/dma/mmp_tdma.c
-+++ b/drivers/dma/mmp_tdma.c
-@@ -443,7 +443,8 @@ static struct dma_async_tx_descriptor *mmp_tdma_prep_dma_cyclic(
- 	if (!desc)
- 		goto err_out;
+diff --git a/drivers/dma/dmatest.c b/drivers/dma/dmatest.c
+index 4993e3e5c5b01..364dd34799d45 100644
+--- a/drivers/dma/dmatest.c
++++ b/drivers/dma/dmatest.c
+@@ -240,7 +240,7 @@ static bool is_threaded_test_run(struct dmatest_info *info)
+ 		struct dmatest_thread *thread;
  
--	mmp_tdma_config_write(chan, direction, &tdmac->slave_config);
-+	if (mmp_tdma_config_write(chan, direction, &tdmac->slave_config))
-+		goto err_out;
- 
- 	while (buf < buf_len) {
- 		desc = &tdmac->desc_arr[i];
+ 		list_for_each_entry(thread, &dtc->threads, node) {
+-			if (!thread->done)
++			if (!thread->done && !thread->pending)
+ 				return true;
+ 		}
+ 	}
 -- 
 2.20.1
 
