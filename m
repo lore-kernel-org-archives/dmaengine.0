@@ -4,48 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-10.1 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=unavailable
-	autolearn_force=no version=3.4.0
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 59E25C38A2A
-	for <dmaengine@archiver.kernel.org>; Thu,  7 May 2020 14:38:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6EC22C38A2A
+	for <dmaengine@archiver.kernel.org>; Thu,  7 May 2020 14:38:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2EDAF2083B
-	for <dmaengine@archiver.kernel.org>; Thu,  7 May 2020 14:38:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3BF6920575
+	for <dmaengine@archiver.kernel.org>; Thu,  7 May 2020 14:38:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1588862289;
-	bh=1nnHsVdBrNbkfWBXxTVXXxkC6uk3Re/8JIIgBHmsfGw=;
+	s=default; t=1588862327;
+	bh=qLMtgJ8/c8TWxpBnHlwaeabkMU4VuzzyZFVVfNFrxxM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:List-ID:From;
-	b=OxxnEUIOj/CaC4FTYYGhiL592zHBxkY6tSFJEezUwkv1duDpNvkj7Qo6pLE4jvh3P
-	 +jEr7d25CPW2rFOFWwZuyhB1A2+YSdQT/EvE+Q68+H1FK+8lfjM1e7IYqBma8h4Gmq
-	 e3eVGUg6lOir8eUM3NSFd2VGHRm7qGjmdXsx6L2o=
+	b=H2RUX8/BBRIF2Nf/Tty2/qMQseos63yQPXH72jMVnC6j3jBz14XwZcApG18SrnC32
+	 8e9gnUrmZCCoMCHb+1/bgY3F1xrTNrQCmot073GVY1KOQdiG7nyvXv69G2fQ368PWr
+	 FXhCso/grxQXHB99Y5JOU6AFUa/+KiH1dmQ4yaRU=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727774AbgEGOiI (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Thu, 7 May 2020 10:38:08 -0400
-Received: from mail.kernel.org ([198.145.29.99]:53666 "EHLO mail.kernel.org"
+        id S1728032AbgEGOiq (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Thu, 7 May 2020 10:38:46 -0400
+Received: from mail.kernel.org ([198.145.29.99]:53226 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727122AbgEGO1r (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Thu, 7 May 2020 10:27:47 -0400
+        id S1726661AbgEGO1c (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Thu, 7 May 2020 10:27:32 -0400
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 6B20520857;
-        Thu,  7 May 2020 14:27:46 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 53B362084D;
+        Thu,  7 May 2020 14:27:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1588861667;
-        bh=1nnHsVdBrNbkfWBXxTVXXxkC6uk3Re/8JIIgBHmsfGw=;
+        s=default; t=1588861652;
+        bh=qLMtgJ8/c8TWxpBnHlwaeabkMU4VuzzyZFVVfNFrxxM=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=Mtys2fGIWBhcPHHUFTC2newjJ2J0Fy5FeV9gkE4OqGt0B83ggnKe5RX78j+tIvLx9
-         Z6PXFQt5gf8WvYUdbQXkSLTSKLkFX6G1C6P/z2kbdHXRVvQkLC4HaypGt+vka2B0Mq
-         UtjREbSBLCfeCHtgooq6Ok9I/teb/woM41PNkR7s=
+        b=dqEKIpu7v7wHdJl4Zjv6W9EdmzWExlFLABijIF/AdIZLjyPQTBcA867VAGWZdbJBg
+         I+naw1oUVVBs2eQ6CLdB4bSzjZ/AGlO14Qc7ii6dwA5IYpswVukwFGHoSfNB9//y1m
+         r0m9jmhp5BbnAhmzWOXGN7hhymBaxhw+PgH0GOHA=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Madhuparna Bhowmik <madhuparnabhowmik10@gmail.com>,
+Cc:     Grygorii Strashko <grygorii.strashko@ti.com>,
+        Peter Ujfalusi <peter.ujfalusi@ti.com>,
         Vinod Koul <vkoul@kernel.org>, Sasha Levin <sashal@kernel.org>,
         dmaengine@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.6 16/50] dmaengine: pch_dma.c: Avoid data race between probe and irq handler
-Date:   Thu,  7 May 2020 10:26:52 -0400
-Message-Id: <20200507142726.25751-16-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 5.6 04/50] dmaengine: ti: k3-psil: fix deadlock on error path
+Date:   Thu,  7 May 2020 10:26:40 -0400
+Message-Id: <20200507142726.25751-4-sashal@kernel.org>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20200507142726.25751-1-sashal@kernel.org>
 References: <20200507142726.25751-1-sashal@kernel.org>
@@ -58,45 +59,35 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-From: Madhuparna Bhowmik <madhuparnabhowmik10@gmail.com>
+From: Grygorii Strashko <grygorii.strashko@ti.com>
 
-[ Upstream commit 2e45676a4d33af47259fa186ea039122ce263ba9 ]
+[ Upstream commit 172d59ecd61b89f535ad99a7e531c0f111453b9a ]
 
-pd->dma.dev is read in irq handler pd_irq().
-However, it is set to pdev->dev after request_irq().
-Therefore, set pd->dma.dev to pdev->dev before request_irq() to
-avoid data race between pch_dma_probe() and pd_irq().
+The mutex_unlock() is missed on error path of psil_get_ep_config()
+which causes deadlock, so add missed mutex_unlock().
 
-Found by Linux Driver Verification project (linuxtesting.org).
-
-Signed-off-by: Madhuparna Bhowmik <madhuparnabhowmik10@gmail.com>
-Link: https://lore.kernel.org/r/20200416062335.29223-1-madhuparnabhowmik10@gmail.com
+Fixes: 8c6bb62f6b4a ("dmaengine: ti: k3 PSI-L remote endpoint configuration")
+Signed-off-by: Grygorii Strashko <grygorii.strashko@ti.com>
+Acked-by: Peter Ujfalusi <peter.ujfalusi@ti.com>
+Link: https://lore.kernel.org/r/20200408185501.30776-1-grygorii.strashko@ti.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/pch_dma.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/dma/ti/k3-psil.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/dma/pch_dma.c b/drivers/dma/pch_dma.c
-index 581e7a290d98e..a3b0b4c56a190 100644
---- a/drivers/dma/pch_dma.c
-+++ b/drivers/dma/pch_dma.c
-@@ -865,6 +865,7 @@ static int pch_dma_probe(struct pci_dev *pdev,
- 	}
- 
- 	pci_set_master(pdev);
-+	pd->dma.dev = &pdev->dev;
- 
- 	err = request_irq(pdev->irq, pd_irq, IRQF_SHARED, DRV_NAME, pd);
- 	if (err) {
-@@ -880,7 +881,6 @@ static int pch_dma_probe(struct pci_dev *pdev,
- 		goto err_free_irq;
- 	}
- 
--	pd->dma.dev = &pdev->dev;
- 
- 	INIT_LIST_HEAD(&pd->dma.channels);
- 
+diff --git a/drivers/dma/ti/k3-psil.c b/drivers/dma/ti/k3-psil.c
+index d7b965049ccb1..fb7c8150b0d1d 100644
+--- a/drivers/dma/ti/k3-psil.c
++++ b/drivers/dma/ti/k3-psil.c
+@@ -27,6 +27,7 @@ struct psil_endpoint_config *psil_get_ep_config(u32 thread_id)
+ 			soc_ep_map = &j721e_ep_map;
+ 		} else {
+ 			pr_err("PSIL: No compatible machine found for map\n");
++			mutex_unlock(&ep_map_mutex);
+ 			return ERR_PTR(-ENOTSUPP);
+ 		}
+ 		pr_debug("%s: Using map for %s\n", __func__, soc_ep_map->name);
 -- 
 2.20.1
 
