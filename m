@@ -2,118 +2,61 @@ Return-Path: <SRS0=dfSN=6W=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.6 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
-	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.2 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 474B5C38A2A
-	for <dmaengine@archiver.kernel.org>; Fri,  8 May 2020 21:02:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3A666C38A2A
+	for <dmaengine@archiver.kernel.org>; Fri,  8 May 2020 21:57:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1CA95217BA
-	for <dmaengine@archiver.kernel.org>; Fri,  8 May 2020 21:02:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1588971762;
-	bh=y3FP7YDdmJObHtYuLlASoDfQ6AYJiXDdMFXW8X469gU=;
-	h=Date:From:To:Cc:Subject:List-ID:From;
-	b=UFQ7elYQbqcMn2puVWYGgk3Z2/ZestKuVwSuVlU/pmV+E6ilMK+7sM9hbMzv83mSY
-	 ZaL5eB1AokMz9KeHU3+tNrn02NyoQ9iFayvh9ybpee2078HpSlVr0zWi1gRSbhxxQb
-	 aS7xx946eeDKk0/1YrSm/h+f7pufAOcRns1hTnf8=
+	by mail.kernel.org (Postfix) with ESMTP id 1E7A02173E
+	for <dmaengine@archiver.kernel.org>; Fri,  8 May 2020 21:57:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727095AbgEHVCl (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 8 May 2020 17:02:41 -0400
-Received: from mail.kernel.org ([198.145.29.99]:59968 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726817AbgEHVCl (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Fri, 8 May 2020 17:02:41 -0400
-Received: from embeddedor (unknown [189.207.59.248])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 2361E2173E;
-        Fri,  8 May 2020 21:02:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1588971760;
-        bh=y3FP7YDdmJObHtYuLlASoDfQ6AYJiXDdMFXW8X469gU=;
-        h=Date:From:To:Cc:Subject:From;
-        b=ICO4guylj57FjvVLT+yGfZuLeZo88/jGrEjq1XnHFgVJ9EH7tg/kK00lvAwmK8a2f
-         J0szkaa+NY9Qi7TTpM+QkYYrDc4NzdYGxCoxoJ0L7YAxcjydZ4KHd3olXdIV3HXgAQ
-         D6U5gDWY8VE6fQkwxbyNbBVY3WTqkSclf58EAV+g=
-Date:   Fri, 8 May 2020 16:07:07 -0500
-From:   "Gustavo A. R. Silva" <gustavoars@kernel.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Dan Williams <dan.j.williams@intel.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        Jeffrey Hugo <jhugo@codeaurora.org>
-Cc:     linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        "Gustavo A. R. Silva" <gustavo@embeddedor.com>
-Subject: [PATCH] dmaengine: qcom: bam_dma: Replace zero-length array with
- flexible-array
-Message-ID: <20200508210707.GA24136@embeddedor>
+        id S1727778AbgEHV5l (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 8 May 2020 17:57:41 -0400
+Received: from mail2-relais-roc.national.inria.fr ([192.134.164.83]:36138 "EHLO
+        mail2-relais-roc.national.inria.fr" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727774AbgEHV5l (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Fri, 8 May 2020 17:57:41 -0400
+X-IronPort-AV: E=Sophos;i="5.73,369,1583190000"; 
+   d="scan'208";a="448862514"
+Received: from abo-173-121-68.mrs.modulonet.fr (HELO hadrien) ([85.68.121.173])
+  by mail2-relais-roc.national.inria.fr with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 08 May 2020 23:57:17 +0200
+Date:   Fri, 8 May 2020 23:57:17 +0200 (CEST)
+From:   Julia Lawall <julia.lawall@inria.fr>
+X-X-Sender: jll@hadrien
+To:     sean.wang@mediatek.com, vkoul@kernel.org, matthias.bgg@gmail.com
+cc:     dmaengine@vger.kernel.org, linux-mediatek@lists.infradead.org,
+        Nic Volanschi <eugene.volanschi@inria.fr>
+Subject: question about drivers/dma/mediatek/mtk-cqdma.c
+Message-ID: <alpine.DEB.2.21.2005082352340.6525@hadrien>
+User-Agent: Alpine 2.21 (DEB 202 2017-01-01)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.9.4 (2018-02-28)
+Content-Type: text/plain; charset=US-ASCII
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-The current codebase makes use of the zero-length array language
-extension to the C90 standard, but the preferred mechanism to declare
-variable-length types such as these ones is a flexible array member[1][2],
-introduced in C99:
+Hello,
 
-struct foo {
-        int stuff;
-        struct boo array[];
-};
+The function mtk_cqdma_find_active_desc contains the following code:
 
-By making use of the mechanism above, we will get a compiler warning
-in case the flexible array does not occur last in the structure, which
-will help us prevent some kind of undefined behavior bugs from being
-inadvertently introduced[3] to the codebase from now on.
+        struct virt_dma_desc *vd;
+        unsigned long flags;
 
-Also, notice that, dynamic memory allocations won't be affected by
-this change:
+        spin_lock_irqsave(&cvc->pc->lock, flags);
+        list_for_each_entry(vd, &cvc->pc->queue, node)
+                if (vd->tx.cookie == cookie) {
+                        spin_unlock_irqrestore(&cvc->pc->lock, flags);
+                        return vd;
+                }
 
-"Flexible array members have incomplete type, and so the sizeof operator
-may not be applied. As a quirk of the original implementation of
-zero-length arrays, sizeof evaluates to zero."[1]
+That is, from a &cvc->pc->queue there is an iteration over elements of
+type virt_dma_desc.  But other uses of &cvc->pc->queue, such as in
+mtk_cqdma_is_vchan_active, seem to indicate that the elements of this list
+have type mtk_cqdma_vdesc.  It is not clear to me how the body of the loop
+should be updated to account for this.
 
-sizeof(flexible-array-member) triggers a warning because flexible array
-members have incomplete type[1]. There are some instances of code in
-which the sizeof operator is being incorrectly/erroneously applied to
-zero-length arrays and the result is zero. Such instances may be hiding
-some bugs. So, this work (flexible-array member conversions) will also
-help to get completely rid of those sorts of issues.
-
-This issue was found with the help of Coccinelle.
-
-[1] https://gcc.gnu.org/onlinedocs/gcc/Zero-Length.html
-[2] https://github.com/KSPP/linux/issues/21
-[3] commit 76497732932f ("cxgb3/l2t: Fix undefined behaviour")
-
-Reviewed-by: Jeffrey Hugo <jhugo@codeaurora.org>
-Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
----
- drivers/dma/qcom/bam_dma.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/drivers/dma/qcom/bam_dma.c b/drivers/dma/qcom/bam_dma.c
-index ef73f65224b1..5a08dd0d3388 100644
---- a/drivers/dma/qcom/bam_dma.c
-+++ b/drivers/dma/qcom/bam_dma.c
-@@ -74,7 +74,7 @@ struct bam_async_desc {
- 	struct list_head desc_node;
- 	enum dma_transfer_direction dir;
- 	size_t length;
--	struct bam_desc_hw desc[0];
-+	struct bam_desc_hw desc[];
- };
- 
- enum bam_reg {
--- 
-2.26.2
-
+thanks,
+julia
