@@ -2,249 +2,127 @@ Return-Path: <SRS0=p+He=6Z=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.4 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5092AC47255
-	for <dmaengine@archiver.kernel.org>; Mon, 11 May 2020 15:29:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8E0B5C54E8D
+	for <dmaengine@archiver.kernel.org>; Mon, 11 May 2020 17:44:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2023420675
-	for <dmaengine@archiver.kernel.org>; Mon, 11 May 2020 15:29:42 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="o+le0p8g"
+	by mail.kernel.org (Postfix) with ESMTP id 6FBA5207DD
+	for <dmaengine@archiver.kernel.org>; Mon, 11 May 2020 17:44:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=default; t=1589219066;
+	bh=TyqQgXbRU7CHTNnWXo92tDp4bkKKH+QHCcrcrAeZ0Xg=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:List-ID:From;
+	b=ESgIYF4jdd27HENz2eH414imyI2XthtW605C1at5DBJqd6CcPnMPT+x+DWhuvm+ud
+	 im8Vfx0fSL7AAjGjDVQE0GiMu7aaQr2MCHxNBeiCoir1IpFtBY1CiqIdfqjuBTs6NP
+	 1uf2BvB7t4wJMErcsZluYhep6AwbBFMoLCBd+wzI=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727093AbgEKP3l (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 11 May 2020 11:29:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48946 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1726934AbgEKP3l (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Mon, 11 May 2020 11:29:41 -0400
-Received: from mail-pg1-x542.google.com (mail-pg1-x542.google.com [IPv6:2607:f8b0:4864:20::542])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05942C061A0C
-        for <dmaengine@vger.kernel.org>; Mon, 11 May 2020 08:29:40 -0700 (PDT)
-Received: by mail-pg1-x542.google.com with SMTP id f6so4723856pgm.1
-        for <dmaengine@vger.kernel.org>; Mon, 11 May 2020 08:29:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=y/V0wcoxC/Yk3CV9Ny72KgJNadmz9KFuZ61yQV7Ioak=;
-        b=o+le0p8g5d/nvE3pzywPAZJpoIzOEmlpxN4Sow/q0VQ0QPFnUNKO3GCJZXABsT8kiu
-         45bmA1W0/PY04u/CF5DEvBlWWogZwMOD+4v5iRBJZxWW61zr5u7/t/aibMPEj0TI7Y5J
-         MGAKDOtUi35Rip0Z0Jqi5oRQBPX0mI5Ewpgiw0l6+cb72hGVJa2QS6+y8ddjJNz/UPdh
-         w9h/1eSZ7tN5++f87W+3DrlTwG7T2KKvA55KeE+piTOrAib+leIymvWshHf0bYTXWfEK
-         6y6v8OFu1YoRueD1I2O8XHyGDEmvGPtohynwLNxLB/9TX+HCMwUn1+A4nBQXWX4ynnps
-         WtQg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=y/V0wcoxC/Yk3CV9Ny72KgJNadmz9KFuZ61yQV7Ioak=;
-        b=CM2bI8ey4OyrEgW1sWZE2lr/Ru2bRPDRJ6pkjzcDUSqNrx2eyvtVOfCtz54jJdaHC+
-         DPPublVimj3ZQ/XQP1Y6NKQ3GAuz0u/zv+FD/p/C1omMAOdh1yHrfA9IfNtiUgjvaXql
-         J8MKA0vWz2R5m8o80JSdxwLLfGVTatbFThpy2PRJyxiX0tow5Stbc6UA5NUlnhwHMupe
-         4fnNAAshaQ1EsU6jjK21nBmJ/y31iiZXMBsMUXM0EU5vm8r/YHQSoXKGzgEqkw26Qbpd
-         NI+Fz9ndHjuj4W1p0xl/6wqCvrycgPlarOwNk4X6Xq+ODj04GFIcWwvzmvQekRiaBPKf
-         2IlQ==
-X-Gm-Message-State: AGi0PuaEC6Wrcq/wPOwQ1Ky/utE8zUt8iz3Mvx27QsTkYSBVd0iIDyMT
-        rqOngJQbvVaWLIPe6KAoH3Iy
-X-Google-Smtp-Source: APiQypLyFwhYqdaWIHUXhMcandw2Ds1EIzw/MYLXIpDgFhOYsgqj0h7AN5YikFI6HeX1TtAh5mWmyA==
-X-Received: by 2002:a63:dd0e:: with SMTP id t14mr14918193pgg.226.1589210979329;
-        Mon, 11 May 2020 08:29:39 -0700 (PDT)
-Received: from Mani-XPS-13-9360 ([2409:4072:28b:647d:9464:e66e:7157:1965])
-        by smtp.gmail.com with ESMTPSA id g9sm3204412pgh.52.2020.05.11.08.29.32
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 11 May 2020 08:29:38 -0700 (PDT)
-Date:   Mon, 11 May 2020 20:59:29 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     =?iso-8859-1?Q?Andr=E9?= Przywara <andre.przywara@arm.com>
-Cc:     Amit Tomer <amittomer25@gmail.com>, vkoul@kernel.org,
-        Andreas =?iso-8859-1?Q?F=E4rber?= <afaerber@suse.de>,
-        dan.j.williams@intel.com, cristian.ciocaltea@gmail.com,
-        dmaengine@vger.kernel.org,
-        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>,
-        linux-actions@lists.infradead.org
-Subject: Re: [PATCH RFC 1/8] dmaengine: Actions: get rid of bit fields from
- dma descriptor
-Message-ID: <20200511152929.GB6865@Mani-XPS-13-9360>
-References: <1588761371-9078-1-git-send-email-amittomer25@gmail.com>
- <1588761371-9078-2-git-send-email-amittomer25@gmail.com>
- <20200510155159.GA27924@Mani-XPS-13-9360>
- <CABHD4K_h7wc1gc3wvya1PRTRjMRkDPW==yrAWSk7cCF9ghkUjg@mail.gmail.com>
- <20200511112014.GA3322@Mani-XPS-13-9360>
- <87569683-509e-96e6-17f9-c1734a8b32d4@arm.com>
- <20200511120458.GB3322@Mani-XPS-13-9360>
- <68aa739c-f2fe-a739-f8ed-5683cba90b23@arm.com>
+        id S1726946AbgEKRoS (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 11 May 2020 13:44:18 -0400
+Received: from mail.kernel.org ([198.145.29.99]:41816 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726661AbgEKRoS (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Mon, 11 May 2020 13:44:18 -0400
+Received: from localhost (fw-tnat.cambridge.arm.com [217.140.96.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 8A81E206D6;
+        Mon, 11 May 2020 17:44:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1589219057;
+        bh=TyqQgXbRU7CHTNnWXo92tDp4bkKKH+QHCcrcrAeZ0Xg=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=M5M0yr01sJrjR4NQQHjYco8Zm2A79QvQoS+JgFLzt3UtWZozf/K5RaXdDLDwpsV4n
+         wQ4Llyx/KGkvcaEaZuIe/aT5WnmIVgxYInVSxRkj1xyI6x7VQqYBwTQcCt1+Wq38K2
+         eFbuTzTTMJ7pHQiH04ug7PF5ar1YT8bmqKYk6agc=
+Date:   Mon, 11 May 2020 18:44:14 +0100
+From:   Mark Brown <broonie@kernel.org>
+To:     Serge Semin <Sergey.Semin@baikalelectronics.ru>
+Cc:     Serge Semin <fancer.lancer@gmail.com>,
+        Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+        Vinod Koul <vkoul@kernel.org>,
+        Viresh Kumar <vireshk@kernel.org>,
+        Dan Williams <dan.j.williams@intel.com>,
+        Alexey Malahov <Alexey.Malahov@baikalelectronics.ru>,
+        Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+        Paul Burton <paulburton@kernel.org>,
+        Ralf Baechle <ralf@linux-mips.org>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Rob Herring <robh+dt@kernel.org>, linux-mips@vger.kernel.org,
+        devicetree@vger.kernel.org, dmaengine@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 4/6] dmaengine: dw: Print warning if multi-block is
+ unsupported
+Message-ID: <20200511174414.GL8216@sirena.org.uk>
+References: <20200306131048.ADBE18030797@mail.baikalelectronics.ru>
+ <20200508105304.14065-1-Sergey.Semin@baikalelectronics.ru>
+ <20200508105304.14065-5-Sergey.Semin@baikalelectronics.ru>
+ <20200508112604.GJ185537@smile.fi.intel.com>
+ <20200508115334.GE4820@sirena.org.uk>
+ <20200511021016.wptcgnc3iq3kadgz@mobilestation>
+ <20200511115813.GG8216@sirena.org.uk>
+ <20200511134502.hjbu5evkiuh75chr@mobilestation>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="W/+CTqSGWdiRg+8j"
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <68aa739c-f2fe-a739-f8ed-5683cba90b23@arm.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+In-Reply-To: <20200511134502.hjbu5evkiuh75chr@mobilestation>
+X-Cookie: TANSTAAFL
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On Mon, May 11, 2020 at 01:48:41PM +0100, André Przywara wrote:
-> On 11/05/2020 13:04, Manivannan Sadhasivam wrote:
-> 
-> Hi,
-> 
-> > On Mon, May 11, 2020 at 12:44:26PM +0100, André Przywara wrote:
-> >> On 11/05/2020 12:20, Manivannan Sadhasivam wrote:
-> >>
-> >> Hi,
-> >>
-> >>> On Mon, May 11, 2020 at 04:15:57PM +0530, Amit Tomer wrote:
-> >>>> Hi
-> >>>>
-> >>>> Thanks for the reply.
-> >>>>
-> >>>>> I'm in favor of getting rid of bitfields due to its not so defined way of
-> >>>>> working (and forgive me for using it in first place) but I don't quite like
-> >>>>> the current approach.
-> >>>>
-> >>>> Because , its less readable the way we are writing to those different fields ?
-> >>>> But this can be made more verbose by adding some comments around .
-> >>>>
-> >>>
-> >>> I don't like the way the hw linked lists are accessed (using an array with
-> >>> enums).
-> >>
-> >> But honestly this is the most sane way of doing this, see below.
-> >>
-> >>>>> Rather I'd like to have custom bitmasks (S900/S700/S500?) for writing to those
-> >>>>> fields.
-> >>>>>
-> >>>> I think S900 and S500 are same as pointed out by Cristian. and I didn't get by
-> >>>> creating custom bitmasks for it ?
-> >>>>
-> >>>> Did you mean function like:
-> >>>>
-> >>>> lli->hw[OWL_DMADESC_FLEN]= llc_hw_FLEN(len, FCNT_VALUE, FCNT_SHIFT);
-> >>>>
-> >>>
-> >>> I meant to keep using old struct for accessing the linked list and replacing
-> >>> bitfields with masks as below:
-> >>>
-> >>> struct owl_dma_lli_hw {
-> >>> 	...
-> >>>         u32     flen;
-> >>>         u32     fcnt;
-> >>> 	...
-> >>> };
-> >>
-> >> And is think this is the wrong way of modelling hardware defined
-> >> register fields. C structs have no guarantee of not introducing padding
-> >> in between fields, the only guarantee you get is that the first member
-> >> has no padding *before* it:
-> >> C standard, section 6.7.2.1, end of paragraph 15:
-> >> "There may be unnamed padding within a structure object, but not at its
-> >> beginning."
-> >>
-> >> Arrays in C on the contrary have very much this guarantee: The members
-> >> are next to each other, no padding.
-> >>
-> >> I see that structs are sometimes used in this function, but it's much
-> >> less common in the kernel than in other projects (U-Boot comes to mind).
-> >> It typically works, because common compiler *implementations* provide
-> >> this guarantee, but we should not rely on this.
-> >>
-> >> So:
-> >> Using enums for the keys provides a natural way of increasing indices,
-> >> without gaps. Also you get this nice and automatic size value by making
-> >> this the last member of the enum.
-> >> Arrays provide the guarantee of consecutive allocation.
-> >>
-> > 
-> > I agree with your concerns of using struct for defining registers. But we can
-> > safely live with the existing implementation since all fields are u32 and if
-> 
-> But why, actually? I can understand that this is done in existing code,
-> because this was done in the past and apparently never challenged. And
-> since it seems to work, at least, there is probably not much reason to
-> change it, just for the sake of it.
-> But if we need to rework this anyway, we should do the right thing. This
-> is especially true in the Linux kernel, which is highly critical and
-> privileged code and also aims to be very portable. We should take no
-> chances here.
-> 
 
-I gave it a spin and I think it makes sense to stick to arrays. I do talk to
-a compiler guy internally and he recommended to not trust compilers to do the
-right thing for non standard behaviour like this.
+--W/+CTqSGWdiRg+8j
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-> Honestly I don't understand the advantage of using a struct here,
-> especially if you need to play some tricks (__packed__) to make it work.
-> So why is:
-> 	hw->flen
-> so much better than
-> 	hw[DMA_FLEN]
+On Mon, May 11, 2020 at 04:45:02PM +0300, Serge Semin wrote:
+> On Mon, May 11, 2020 at 12:58:13PM +0100, Mark Brown wrote:
 
-To be honest this looks ugly to me and that's why I was reluctant. But lets not
-worry about it :)
+> > That sounds like you need to also impose a limit on the maximum message
+> > size as well then, with that you should be able to handle messages up
+> > to whatever that limit is.  There's code for that bit already, so long
+> > as the limit is not too low it should be fine for most devices and
+> > client drivers can see the limit so they can be updated to work with it
+> > if needed.
 
-> that it justifies to introduce dodgy code?
-> 
-> In think in general we should be much more careful when using C language
-> constructs to access hardware or hardware defined data structures, and
-> be it to not give people the wrong idea about this.
-> I think with the advance of more optimising compilers (and, somewhat
-> related, more out-of-order CPUs) the chance of breakage becomes much
-> higher here.
-> 
+> Hmm, this might work. The problem will be with imposing such limitation through
+> the DW APB SSI driver. In order to do this I need to know:
 
-Only way it can go wrong is, if a nasty compiler adds padding eventhough the
-struct is homogeneous. And yeah, let's be on the safe side.
+> 1) Whether multi-block LLP is supported by the DW DMA controller.
+> 2) Maximum DW DMA transfer block size.
 
-Sorry for stretching this so long!
+There is a constraint enumeration interface in the DMA API which you
+should be able to extend for this if it doesn't already support what you
+need.
 
-Thanks,
-Mani
+> Then I'll be able to use this information in the can_dma() callback to enable
+> the DMA xfers only for the safe transfers. Did you mean something like this when
+> you said "There's code for that bit already" ? If you meant the max_dma_len
+> parameter, then setting it won't work, because it just limits the SG items size
+> not the total length of a single transfer.
 
-> Cheers,
-> Andre.
-> 
-> > needed we can also add '__packed' flag to it to avoid padding for any cases.
-> > 
-> > The reason why I prefer to stick to this is, this is a hardware linked list and
-> > by defining it as an array and accessing the fields using enums looks awful to
-> > me. Other than that there is no real justification to shy away.
-> > 
-> > When you are modelling a plain register bank (which we are also doing in this
-> > driver), I'd prefer to use the defines directly.
-> > 
-> >> We can surely have a look at the masking problem, but this would need to
-> >> be runtime determined masks, which tend to become "wordy". There can be
-> >> simplifications, for instance I couldn't find where the frame length is
-> >> really limited for the S900 (it must be less than 1MB). Since the S700
-> >> supports *more* than that, there is no need to limit this differently.
-> > 
-> > I was just giving an example of how to handle the bitmasks for different
-> > SoCs if needed. So yeah if it can be avoided, feel free to drop it.
-> > 
-> > Thanks,
-> > Mani
-> > 
-> >>
-> >> Cheers,
-> >> Andre.
-> >>
-> >>
-> >>>
-> >>> hw->flen = len & OWL_S900_DMA_FLEN_MASK;
-> >>> hw->fcnt = 1 & OWL_S900_DMA_FCNT_MASK;
-> >>>
-> >>> Then you can use different masks for S700/S900 based on the compatible.
-> >>>
-> >>> Thanks,
-> >>> Mani
-> >>>
-> >>>> Thanks
-> >>>> -Amit
-> >>
-> 
+You can set max_transfer_size and/or max_message_size in the SPI driver
+- you should be able to do this on probe.
+
+--W/+CTqSGWdiRg+8j
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAl65ju0ACgkQJNaLcl1U
+h9BWuwf9GYDZfT9SEAR6UO5jhJk6RWwFsHU3BhxdAnvDK/l2K93uI+11WQq2An8H
+yiMiIaTllJPZmNs7mg1+lxpT1gRmKbmoXqb3DFml9K4gKxVJMXoIAPyhTL6wLqaV
+wiCzkwszsZsVvzFiQyPNAau0qzkaOC+wHPr8PUiEFxZIRUxEsThin07HXK7X0APj
+7LoKnOaB28MWVN/ezndCECaxoOgexp8LZ6jhVMMg/Kpd8UMCaJwB8yEz80uBFL+q
+mglQQesF6cb/dQZcynpOyCWm2dZhnCdd5yvyHWH1d2rVbcfi3xoTq+tWfPMLbW12
+45bciv1TxBU7iqLX1sF/YYO33YIO1Q==
+=HGPI
+-----END PGP SIGNATURE-----
+
+--W/+CTqSGWdiRg+8j--
