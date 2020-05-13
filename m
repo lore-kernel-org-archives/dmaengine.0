@@ -2,35 +2,35 @@ Return-Path: <SRS0=uSda=63=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-7.0 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,UNWANTED_LANGUAGE_BODY,URIBL_BLOCKED,
+	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3CF97C433DF
-	for <dmaengine@archiver.kernel.org>; Wed, 13 May 2020 16:59:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 42BE4C433DF
+	for <dmaengine@archiver.kernel.org>; Wed, 13 May 2020 17:00:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9B5AD20690
-	for <dmaengine@archiver.kernel.org>; Wed, 13 May 2020 16:59:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9AB212065D
+	for <dmaengine@archiver.kernel.org>; Wed, 13 May 2020 17:00:07 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b="kEEu895n"
+	dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b="cU1nHI+e"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389749AbgEMQ76 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 13 May 2020 12:59:58 -0400
+        id S2389790AbgEMRAG (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 13 May 2020 13:00:06 -0400
 Received: from perceval.ideasonboard.com ([213.167.242.64]:37070 "EHLO
         perceval.ideasonboard.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389737AbgEMQ76 (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Wed, 13 May 2020 12:59:58 -0400
+        with ESMTP id S2389737AbgEMRAB (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Wed, 13 May 2020 13:00:01 -0400
 Received: from pendragon.bb.dnainternet.fi (81-175-216-236.bb.dnainternet.fi [81.175.216.236])
-        by perceval.ideasonboard.com (Postfix) with ESMTPSA id 8018FD9D;
-        Wed, 13 May 2020 18:59:54 +0200 (CEST)
+        by perceval.ideasonboard.com (Postfix) with ESMTPSA id F1E28E7C;
+        Wed, 13 May 2020 18:59:55 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
-        s=mail; t=1589389195;
-        bh=+hbbt2PHJ4Bzx/QCeWIifwTcciMvD8u7nzUKHpowWsY=;
+        s=mail; t=1589389196;
+        bh=nSluapx2XqFpYLnoDc2pSVvdgDfdRkbUwljKhyPahpo=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=kEEu895nu+XDUEBY4D5dItbEINeImKU7ZbLmnNr3+jSTMAObEvHgs1zYV9uMhQM5t
-         3GkPNlS63639nDiN44WlbxNTcAeJOaqQeEzqWDs0n/UY50HmDY17Sd8krPIiY/qO1P
-         8MZM3TrZDpdyiRhQ3ZcjZUOnuPvSzyPACQDtq000=
+        b=cU1nHI+ewaCuld+VgiYDFjYC+wkBWHYqKEy+ZDtcPNFS7ZgaUuIC4qO7oDQuQO5hM
+         DIaHZ8VYRJT4hLWPVezYZui2O+uPTKHhIVE77B7tYIlqGZgpcyK/aGYgYCcNkCZIiT
+         qsYHkux43NKDdb31capidFPweSt3/nd+m1emRSjY=
 From:   Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 To:     dmaengine@vger.kernel.org
 Cc:     Michal Simek <michal.simek@xilinx.com>,
@@ -39,9 +39,9 @@ Cc:     Michal Simek <michal.simek@xilinx.com>,
         Satish Kumar Nagireddy <SATISHNA@xilinx.com>,
         Vinod Koul <vkoul@kernel.org>,
         Peter Ujfalusi <peter.ujfalusi@ti.com>
-Subject: [PATCH v4 3/6] dmaengine: Add support for repeating transactions
-Date:   Wed, 13 May 2020 19:59:40 +0300
-Message-Id: <20200513165943.25120-4-laurent.pinchart@ideasonboard.com>
+Subject: [PATCH v4 5/6] dmaengine: xilinx: dpdma: Add debugfs support
+Date:   Wed, 13 May 2020 19:59:42 +0300
+Message-Id: <20200513165943.25120-6-laurent.pinchart@ideasonboard.com>
 X-Mailer: git-send-email 2.26.2
 In-Reply-To: <20200513165943.25120-1-laurent.pinchart@ideasonboard.com>
 References: <20200513165943.25120-1-laurent.pinchart@ideasonboard.com>
@@ -52,79 +52,283 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-DMA engines used with displays perform 2D interleaved transfers to read
-framebuffers from memory and feed the data to the display engine. As the
-same framebuffer can be displayed for multiple frames, the DMA
-transactions need to be repeated until a new framebuffer replaces the
-current one. This feature is implemented natively by some DMA engines
-that have the ability to repeat transactions and switch to a new
-transaction at the end of a transfer without any race condition or frame
-loss.
+Expose statistics to debugfs when available. This helps debugging issues
+with the DPDMA driver.
 
-This patch implements support for this feature in the DMA engine API. A
-new DMA_PREP_REPEAT transaction flag allows DMA clients to instruct the
-DMA channel to repeat the transaction automatically until one or more
-new transactions are issued on the channel (or until all active DMA
-transfers are explicitly terminated with the dmaengine_terminate_*()
-functions). A new DMA_REPEAT transaction type is also added for DMA
-engine drivers to report their support of the DMA_PREP_REPEAT flag.
-
-The DMA_PREP_REPEAT flag is currently supported for interleaved
-transactions only. Its usage can easily be extended to cover more
-transaction types simply by adding an appropriate check in the
-corresponding dmaengine_prep_*() function.
-
+Signed-off-by: Hyun Kwon <hyun.kwon@xilinx.com>
 Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 ---
-If this approach is accepted I can send a new version that updates
-documentation in Documentation/driver-api/dmaengine/, and extend support
-of DMA_PREP_REPEAT to the other transaction types, if desired already.
+Changes since v3:
 
- include/linux/dmaengine.h | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+- Return -EFAULT instead of bytes remaining after copy_to_user()
 
-diff --git a/include/linux/dmaengine.h b/include/linux/dmaengine.h
-index 64461fc64e1b..9fa00bdbf583 100644
---- a/include/linux/dmaengine.h
-+++ b/include/linux/dmaengine.h
-@@ -61,6 +61,7 @@ enum dma_transaction_type {
- 	DMA_SLAVE,
- 	DMA_CYCLIC,
- 	DMA_INTERLEAVE,
-+	DMA_REPEAT,
- /* last transaction type for creation of the capabilities mask */
- 	DMA_TX_TYPE_END,
+Changes since v2:
+
+- Refactor debugfs code
+---
+ drivers/dma/xilinx/xilinx_dpdma.c | 228 ++++++++++++++++++++++++++++++
+ 1 file changed, 228 insertions(+)
+
+diff --git a/drivers/dma/xilinx/xilinx_dpdma.c b/drivers/dma/xilinx/xilinx_dpdma.c
+index de28c63afc7d..77febfe54cfb 100644
+--- a/drivers/dma/xilinx/xilinx_dpdma.c
++++ b/drivers/dma/xilinx/xilinx_dpdma.c
+@@ -10,6 +10,7 @@
+ #include <linux/bitfield.h>
+ #include <linux/bits.h>
+ #include <linux/clk.h>
++#include <linux/debugfs.h>
+ #include <linux/delay.h>
+ #include <linux/dmaengine.h>
+ #include <linux/dmapool.h>
+@@ -265,6 +266,229 @@ struct xilinx_dpdma_device {
+ 	bool ext_addr;
  };
-@@ -176,6 +177,11 @@ struct dma_interleaved_template {
-  * @DMA_PREP_CMD: tell the driver that the data passed to DMA API is command
-  *  data and the descriptor should be in different format from normal
-  *  data descriptors.
-+ * @DMA_PREP_REPEAT: tell the driver that the transaction shall be automatically
-+ *  repeated when it ends if no other transaction has been issued on the same
-+ *  channel. If other transactions have been issued, this transaction completes
-+ *  normally. This flag is only applicable to interleaved transactions and is
-+ *  ignored for all other transaction types.
+ 
++/* -----------------------------------------------------------------------------
++ * DebugFS
++ */
++
++#ifdef CONFIG_DEBUG_FS
++
++#define XILINX_DPDMA_DEBUGFS_READ_MAX_SIZE	32
++#define XILINX_DPDMA_DEBUGFS_UINT16_MAX_STR	"65535"
++
++/* Match xilinx_dpdma_testcases vs dpdma_debugfs_reqs[] entry */
++enum xilinx_dpdma_testcases {
++	DPDMA_TC_INTR_DONE,
++	DPDMA_TC_NONE
++};
++
++struct xilinx_dpdma_debugfs {
++	enum xilinx_dpdma_testcases testcase;
++	u16 xilinx_dpdma_irq_done_count;
++	unsigned int chan_id;
++};
++
++static struct xilinx_dpdma_debugfs dpdma_debugfs;
++struct xilinx_dpdma_debugfs_request {
++	const char *name;
++	enum xilinx_dpdma_testcases tc;
++	ssize_t (*read)(char *buf);
++	int (*write)(char *args);
++};
++
++static void xilinx_dpdma_debugfs_desc_done_irq(struct xilinx_dpdma_chan *chan)
++{
++	if (chan->id == dpdma_debugfs.chan_id)
++		dpdma_debugfs.xilinx_dpdma_irq_done_count++;
++}
++
++static ssize_t xilinx_dpdma_debugfs_desc_done_irq_read(char *buf)
++{
++	size_t out_str_len;
++
++	dpdma_debugfs.testcase = DPDMA_TC_NONE;
++
++	out_str_len = strlen(XILINX_DPDMA_DEBUGFS_UINT16_MAX_STR);
++	out_str_len = min_t(size_t, XILINX_DPDMA_DEBUGFS_READ_MAX_SIZE,
++			    out_str_len);
++	snprintf(buf, out_str_len, "%d",
++		 dpdma_debugfs.xilinx_dpdma_irq_done_count);
++
++	return 0;
++}
++
++static int xilinx_dpdma_debugfs_desc_done_irq_write(char *args)
++{
++	char *arg;
++	int ret;
++	u32 id;
++
++	arg = strsep(&args, " ");
++	if (!arg || strncasecmp(arg, "start", 5))
++		return -EINVAL;
++
++	arg = strsep(&args, " ");
++	if (!arg)
++		return -EINVAL;
++
++	ret = kstrtou32(arg, 0, &id);
++	if (ret < 0)
++		return ret;
++
++	if (id < ZYNQMP_DPDMA_VIDEO0 || id > ZYNQMP_DPDMA_AUDIO1)
++		return -EINVAL;
++
++	dpdma_debugfs.testcase = DPDMA_TC_INTR_DONE;
++	dpdma_debugfs.xilinx_dpdma_irq_done_count = 0;
++	dpdma_debugfs.chan_id = id;
++
++	return 0;
++}
++
++/* Match xilinx_dpdma_testcases vs dpdma_debugfs_reqs[] entry */
++struct xilinx_dpdma_debugfs_request dpdma_debugfs_reqs[] = {
++	{
++		.name = "DESCRIPTOR_DONE_INTR",
++		.tc = DPDMA_TC_INTR_DONE,
++		.read = xilinx_dpdma_debugfs_desc_done_irq_read,
++		.write = xilinx_dpdma_debugfs_desc_done_irq_write,
++	},
++};
++
++static ssize_t xilinx_dpdma_debugfs_read(struct file *f, char __user *buf,
++					 size_t size, loff_t *pos)
++{
++	enum xilinx_dpdma_testcases testcase;
++	char *kern_buff;
++	int ret = 0;
++
++	if (*pos != 0 || size <= 0)
++		return -EINVAL;
++
++	kern_buff = kzalloc(XILINX_DPDMA_DEBUGFS_READ_MAX_SIZE, GFP_KERNEL);
++	if (!kern_buff) {
++		dpdma_debugfs.testcase = DPDMA_TC_NONE;
++		return -ENOMEM;
++	}
++
++	testcase = READ_ONCE(dpdma_debugfs.testcase);
++	if (testcase != DPDMA_TC_NONE) {
++		ret = dpdma_debugfs_reqs[testcase].read(kern_buff);
++		if (ret < 0)
++			goto done;
++	} else {
++		strlcpy(kern_buff, "No testcase executed",
++			XILINX_DPDMA_DEBUGFS_READ_MAX_SIZE);
++	}
++
++	size = min(size, strlen(kern_buff));
++	if (copy_to_user(buf, kern_buff, size))
++		ret = -EFAULT;
++
++done:
++	kfree(kern_buff);
++	if (ret)
++		return ret;
++
++	*pos = size + 1;
++	return size;
++}
++
++static ssize_t xilinx_dpdma_debugfs_write(struct file *f,
++					  const char __user *buf, size_t size,
++					  loff_t *pos)
++{
++	char *kern_buff, *kern_buff_start;
++	char *testcase;
++	unsigned int i;
++	int ret;
++
++	if (*pos != 0 || size <= 0)
++		return -EINVAL;
++
++	/* Supporting single instance of test as of now. */
++	if (dpdma_debugfs.testcase != DPDMA_TC_NONE)
++		return -EBUSY;
++
++	kern_buff = kzalloc(size, GFP_KERNEL);
++	if (!kern_buff)
++		return -ENOMEM;
++	kern_buff_start = kern_buff;
++
++	ret = strncpy_from_user(kern_buff, buf, size);
++	if (ret < 0)
++		goto done;
++
++	/* Read the testcase name from a user request. */
++	testcase = strsep(&kern_buff, " ");
++
++	for (i = 0; i < ARRAY_SIZE(dpdma_debugfs_reqs); i++) {
++		if (!strcasecmp(testcase, dpdma_debugfs_reqs[i].name))
++			break;
++	}
++
++	if (i == ARRAY_SIZE(dpdma_debugfs_reqs)) {
++		ret = -EINVAL;
++		goto done;
++	}
++
++	ret = dpdma_debugfs_reqs[i].write(kern_buff);
++	if (ret < 0)
++		goto done;
++
++	ret = size;
++
++done:
++	kfree(kern_buff_start);
++	return ret;
++}
++
++static const struct file_operations fops_xilinx_dpdma_dbgfs = {
++	.owner = THIS_MODULE,
++	.read = xilinx_dpdma_debugfs_read,
++	.write = xilinx_dpdma_debugfs_write,
++};
++
++static int xilinx_dpdma_debugfs_init(struct device *dev)
++{
++	int err;
++	struct dentry *xilinx_dpdma_debugfs_dir, *xilinx_dpdma_debugfs_file;
++
++	dpdma_debugfs.testcase = DPDMA_TC_NONE;
++
++	xilinx_dpdma_debugfs_dir = debugfs_create_dir("dpdma", NULL);
++	if (!xilinx_dpdma_debugfs_dir) {
++		dev_err(dev, "debugfs_create_dir failed\n");
++		return -ENODEV;
++	}
++
++	xilinx_dpdma_debugfs_file =
++		debugfs_create_file("testcase", 0444,
++				    xilinx_dpdma_debugfs_dir, NULL,
++				    &fops_xilinx_dpdma_dbgfs);
++	if (!xilinx_dpdma_debugfs_file) {
++		dev_err(dev, "debugfs_create_file testcase failed\n");
++		err = -ENODEV;
++		goto err_dbgfs;
++	}
++	return 0;
++
++err_dbgfs:
++	debugfs_remove_recursive(xilinx_dpdma_debugfs_dir);
++	xilinx_dpdma_debugfs_dir = NULL;
++	return err;
++}
++
++#else
++static int xilinx_dpdma_debugfs_init(struct device *dev)
++{
++	return 0;
++}
++
++static void xilinx_dpdma_debugfs_desc_done_irq(struct xilinx_dpdma_chan *chan)
++{
++}
++#endif /* CONFIG_DEBUG_FS */
++
+ /* -----------------------------------------------------------------------------
+  * I/O Accessors
   */
- enum dma_ctrl_flags {
- 	DMA_PREP_INTERRUPT = (1 << 0),
-@@ -186,6 +192,7 @@ enum dma_ctrl_flags {
- 	DMA_PREP_FENCE = (1 << 5),
- 	DMA_CTRL_REUSE = (1 << 6),
- 	DMA_PREP_CMD = (1 << 7),
-+	DMA_PREP_REPEAT = (1 << 8),
- };
+@@ -840,6 +1064,8 @@ static void xilinx_dpdma_chan_done_irq(struct xilinx_dpdma_chan *chan)
  
- /**
-@@ -967,6 +974,9 @@ static inline struct dma_async_tx_descriptor *dmaengine_prep_interleaved_dma(
- {
- 	if (!chan || !chan->device || !chan->device->device_prep_interleaved_dma)
- 		return NULL;
-+	if (flags & DMA_PREP_REPEAT &&
-+	    !test_bit(DMA_REPEAT, chan->device->cap_mask.bits))
-+		return NULL;
+ 	spin_lock_irqsave(&chan->lock, flags);
  
- 	return chan->device->device_prep_interleaved_dma(chan, xt, flags);
- }
++	xilinx_dpdma_debugfs_desc_done_irq(chan);
++
+ 	if (active)
+ 		vchan_cyclic_callback(&active->vdesc);
+ 	else
+@@ -1485,6 +1711,8 @@ static int xilinx_dpdma_probe(struct platform_device *pdev)
+ 
+ 	xilinx_dpdma_enable_irq(xdev);
+ 
++	xilinx_dpdma_debugfs_init(&pdev->dev);
++
+ 	dev_info(&pdev->dev, "Xilinx DPDMA engine is probed\n");
+ 
+ 	return 0;
 -- 
 Regards,
 
