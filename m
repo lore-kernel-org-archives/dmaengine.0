@@ -4,54 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-6.3 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 11832C4345A
-	for <dmaengine@archiver.kernel.org>; Wed, 13 May 2020 15:05:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EB01BC433E9
+	for <dmaengine@archiver.kernel.org>; Wed, 13 May 2020 15:05:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B885F221F7
-	for <dmaengine@archiver.kernel.org>; Wed, 13 May 2020 14:56:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CADED22226
+	for <dmaengine@archiver.kernel.org>; Wed, 13 May 2020 14:56:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1589381776;
+	s=default; t=1589381794;
 	bh=8SmbnrZ5qW6mVaqqlcGDrJ3tZhpY+ZYEC2ysujal7jE=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:List-ID:From;
-	b=v+bp4JUcNC+wfawnN+lbTxtYpuPi2q7WdlBB+5DUTdQ3PEETfw/V5XVoDeDQrOyjq
-	 9HR4fDrzmMtVNdvXf0ezv3LV2tRN/V4e4RluVdKOL06AL7AlL5kUGRefYpyQ2IyOhQ
-	 zOWNJlP9UeMBPtcQwhXVpOzoByw+z1d1HnHwrePI=
+	b=GG6215nW2zlLK0mFgl4kdQlms9uNQ1ZkVzU/k622MvOQLl1XoJFdKx/2li8G6Y9Ru
+	 f70Cqx+W1NOevnijocASsyHwy4bU6TI9dMv/pRu6oHnh6wh8ueKYzMVFaenAMpdY2p
+	 Xk9IkJIc/KhwAR/vtq3TXEsXIWPnAP/3Mm76w4N0=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728692AbgEMO4Q (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 13 May 2020 10:56:16 -0400
-Received: from mail.kernel.org ([198.145.29.99]:49198 "EHLO mail.kernel.org"
+        id S2388954AbgEMO43 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 13 May 2020 10:56:29 -0400
+Received: from mail.kernel.org ([198.145.29.99]:49498 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728568AbgEMO4Q (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Wed, 13 May 2020 10:56:16 -0400
+        id S1728568AbgEMO42 (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Wed, 13 May 2020 10:56:28 -0400
 Received: from localhost (unknown [106.200.233.149])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id C38E421897;
-        Wed, 13 May 2020 14:56:14 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 8B1EE221E6;
+        Wed, 13 May 2020 14:56:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1589381775;
+        s=default; t=1589381788;
         bh=8SmbnrZ5qW6mVaqqlcGDrJ3tZhpY+ZYEC2ysujal7jE=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=hEIaUiuBgsCnSQK5g+xIUyPPXcNFW2pQrMQ6AyC+U9qbRIOJRPQ+4bzTxjgKYzJRU
-         uaAqcEB2jJJNGP6Pr2vyiNDGArE8MPcGbnlpjRlH4WB+DNqx1UmrhEgYjjKnhbz6Eb
-         sqLje5dPSBgOMyxPp776j//znTuRnHtRiMqmtCMU=
-Date:   Wed, 13 May 2020 20:26:11 +0530
+        b=l4mRGFNZDs1RO7j/ngnkH16aePO1WvI/3rJkpo0/bOqGBn+zq90/znJcuC3NGZKTu
+         qNSI7KkiyyzXV4E6Yg1UrgZMXzyeIrvdG/iStQWx+x7Wz+aQnWosrPzMIp73qeck4f
+         eRdMLpxjBQ3RWdNMW0mCsJ6Abq7tMpCUQi1rnv5U=
+Date:   Wed, 13 May 2020 20:26:24 +0530
 From:   Vinod Koul <vkoul@kernel.org>
 To:     "Gustavo A. R. Silva" <gustavoars@kernel.org>
 Cc:     Ludovic Desroches <ludovic.desroches@microchip.com>,
         linux-arm-kernel@lists.infradead.org, dmaengine@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] dmaengine: at_hdmac: Replace zero-length array with
+Subject: Re: [PATCH] dmaengine: at_xdmac: Replace zero-length array with
  flexible-array
-Message-ID: <20200513145611.GL14092@vkoul-mobl>
-References: <20200507190038.GA15272@embeddedor>
+Message-ID: <20200513145624.GM14092@vkoul-mobl>
+References: <20200507190046.GA15298@embeddedor>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20200507190038.GA15272@embeddedor>
+In-Reply-To: <20200507190046.GA15298@embeddedor>
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
