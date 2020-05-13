@@ -2,99 +2,67 @@ Return-Path: <SRS0=uSda=63=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.3 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-1.3 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 345A5C2D0FA
-	for <dmaengine@archiver.kernel.org>; Wed, 13 May 2020 11:30:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 18EB4CA90AF
+	for <dmaengine@archiver.kernel.org>; Wed, 13 May 2020 11:32:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 08D3920753
-	for <dmaengine@archiver.kernel.org>; Wed, 13 May 2020 11:30:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DC43920753
+	for <dmaengine@archiver.kernel.org>; Wed, 13 May 2020 11:32:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1589369456;
-	bh=JkZKKNBGFWDwpNuFyBv0vrcVXr+0dJ8oVfOopQ4awrg=;
+	s=default; t=1589369547;
+	bh=yt2oTtk3DAQ2TBz+mJVtLGeNnrAuw0cG11zANkU/Q38=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:List-ID:From;
-	b=UtSRtA1PEyBEFiuWt1PvRKQxFDJkF+b0SRDM6uXatgi1ADZbyObALW4bhU6l/Tgw6
-	 LHsqlFSt5m7NeF/Us3nm1HUk8GOmoKRyGypRyWWI0bwunOVA4I0GIMqpdYLogoRAjX
-	 4nnon1Ata6aFR+04PSXKG291mn2Nl19EhmLe+uu0=
+	b=zm74fdsZ8HUTUM1VusSV/Ad6ZmZXSmuYCiQxlWnQ7YJooLNwYzZ10fC60n2AWvbWc
+	 bpEoqqa5yfz0kyR1u8dMbUzWgi3GeeV38kCr/MAyOBBGW5zGASCswmcpBUiX0zllZB
+	 wZKYbsIeDn+U3mp8b2+Djc1nNaCfcncMBC6My8aA=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730801AbgEMLaz (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 13 May 2020 07:30:55 -0400
-Received: from mail.kernel.org ([198.145.29.99]:58410 "EHLO mail.kernel.org"
+        id S1730865AbgEMLc1 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 13 May 2020 07:32:27 -0400
+Received: from mail.kernel.org ([198.145.29.99]:59518 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1730064AbgEMLax (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Wed, 13 May 2020 07:30:53 -0400
+        id S1730057AbgEMLc1 (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Wed, 13 May 2020 07:32:27 -0400
 Received: from localhost (unknown [106.200.233.149])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 9660C206D6;
-        Wed, 13 May 2020 11:30:52 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 38048206D6;
+        Wed, 13 May 2020 11:32:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1589369453;
-        bh=JkZKKNBGFWDwpNuFyBv0vrcVXr+0dJ8oVfOopQ4awrg=;
+        s=default; t=1589369547;
+        bh=yt2oTtk3DAQ2TBz+mJVtLGeNnrAuw0cG11zANkU/Q38=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=RNH/hAxvcdvPY8RVAOjb3eTqhE03823T7AKDl+K8CbL0L2VEH5oqsapmTb6/cfAbj
-         a3h7P/z4TTwMVuZhuEBYyJdbClDAAxLJ/TBXxPyLxysTijbEJvS5pulRn6LKl1Cz57
-         xfzrnJZWj+uVxiaWsNX0tSgs/W4d2F/5Zs+/BIxg=
-Date:   Wed, 13 May 2020 17:00:49 +0530
+        b=jRgjKmMS/bGTaOQ30XwWSSgGjWKO/LPqih6o7hC8Ju8ziLbHInawgo5iszTrZIZK+
+         ZgOOr+hmNPk1+bctnBho+Loo0EAH8F5cmE6mZzU8Kg8eLzb+uiWu5cd2fGLKAwNJl8
+         lgfIA8krFpRhMCWrbhiIu6Y5ENltBBUgDDIXikVQ=
+Date:   Wed, 13 May 2020 17:02:23 +0530
 From:   Vinod Koul <vkoul@kernel.org>
-To:     Vladimir Murzin <vladimir.murzin@arm.com>
-Cc:     dmaengine@vger.kernel.org, seraj.alijan@sondrel.com
-Subject: Re: [PATCH] dmaengine: dmatest: Restore default for channel
-Message-ID: <20200513113049.GE14092@vkoul-mobl>
-References: <20200429071522.58148-1-vladimir.murzin@arm.com>
+To:     Jason Yan <yanaijie@huawei.com>
+Cc:     okaya@kernel.org, agross@kernel.org, bjorn.andersson@linaro.org,
+        dan.j.williams@intel.com, linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] dmaengine: qcom_hidma: use true,false for bool variable
+Message-ID: <20200513113223.GF14092@vkoul-mobl>
+References: <20200504113406.41530-1-yanaijie@huawei.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20200429071522.58148-1-vladimir.murzin@arm.com>
+In-Reply-To: <20200504113406.41530-1-yanaijie@huawei.com>
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On 29-04-20, 08:15, Vladimir Murzin wrote:
-> In case of dmatest is built-in and no channel was configured test
-> doesn't run with:
+On 04-05-20, 19:34, Jason Yan wrote:
+> Fix the following coccicheck warning:
 > 
-> dmatest: Could not start test, no channels configured
-> 
-> Even though description to "channel" parameter claims that default is
-> any.
-> 
-> Add default channel back as it used to be rather than reject test with
-> no channel configuration.
-> 
-> Fixes: d53513d5dc285d9a95a534fc41c5c08af6b60eac ("dmaengine: dmatest: Add support for multi channel testing)
-> 
+> drivers/dma/qcom/hidma.c:553:1-17: WARNING: Assignment of 0/1 to bool
+> variable
 
-no need for blank line here
-
-> Reported-by: Dijil Mohan <Dijil.Mohan@arm.com>
-> Signed-off-by: Vladimir Murzin <vladimir.murzin@arm.com>
-> ---
->  drivers/dma/dmatest.c | 9 +++++----
->  1 file changed, 5 insertions(+), 4 deletions(-)
-> 
-> diff --git a/drivers/dma/dmatest.c b/drivers/dma/dmatest.c
-> index a2cadfa..5e1fff9 100644
-> --- a/drivers/dma/dmatest.c
-> +++ b/drivers/dma/dmatest.c
-> @@ -1166,10 +1166,11 @@ static int dmatest_run_set(const char *val, const struct kernel_param *kp)
->  		mutex_unlock(&info->lock);
->  		return ret;
->  	} else if (dmatest_run) {
-> -		if (is_threaded_test_pending(info))
-> -			start_threaded_tests(info);
-> -		else
-> -			pr_info("Could not start test, no channels configured\n");
-> +		if (!is_threaded_test_pending(info)){
-
-We need space before {
-
-That is why we need to run checkpatch before sending patches.
-
-I have fixed that up and applied this
+Applied, thanks
 
 -- 
 ~Vinod
