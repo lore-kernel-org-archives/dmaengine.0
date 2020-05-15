@@ -6,59 +6,59 @@ X-Spam-Status: No, score=-1.1 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 75F1DC433DF
-	for <dmaengine@archiver.kernel.org>; Fri, 15 May 2020 05:52:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D8083C433E0
+	for <dmaengine@archiver.kernel.org>; Fri, 15 May 2020 05:54:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4AB462075F
-	for <dmaengine@archiver.kernel.org>; Fri, 15 May 2020 05:52:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A166020728
+	for <dmaengine@archiver.kernel.org>; Fri, 15 May 2020 05:54:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1589521977;
-	bh=BQHvKwNQzpnlROsgq/uHuHlCEp7lx8JwC/lskmlPpk0=;
+	s=default; t=1589522041;
+	bh=VKwr3Ys1tdYFnPbyiHMP3OqauYhohGtNZnC03ZD/gyk=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:List-ID:From;
-	b=XEzKKWOgOlBlB8nqHu4kUJgl4yTMXa+FZLzB3ha061SSgcLxf7i6CGtyXNtpxamxs
-	 5UZLSYvWggEzOhI/dsM1xWPVxQh5RMyZNthJANLWeUGsF22qH9sN9Q5KwgyNT78+pu
-	 9o/aB8oDPEvcFtIXSLH1aFybfBG1zpsRPNQT6ySE=
+	b=OxFKa6orHwMYcmyGGYWlkf5tG3zrPb8z2oO08M5U1UIryKoz5JRhI6rm9o3ieX/ao
+	 l5HV4r4x6CxwEnu0yhYnS/yUE4/Nf1JA/tJWMjojXVk1+0wFucNcGwjas2+S0U66do
+	 vgJzf5qJmZJr8J4vJVDJ7/DUzumapBOasZTH50dg=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726711AbgEOFw5 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 15 May 2020 01:52:57 -0400
-Received: from mail.kernel.org ([198.145.29.99]:53066 "EHLO mail.kernel.org"
+        id S1726953AbgEOFyB (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 15 May 2020 01:54:01 -0400
+Received: from mail.kernel.org ([198.145.29.99]:53576 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725899AbgEOFw4 (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Fri, 15 May 2020 01:52:56 -0400
+        id S1726945AbgEOFyB (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Fri, 15 May 2020 01:54:01 -0400
 Received: from localhost (unknown [122.178.196.30])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id C29E42054F;
-        Fri, 15 May 2020 05:52:55 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id DCD122054F;
+        Fri, 15 May 2020 05:53:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1589521976;
-        bh=BQHvKwNQzpnlROsgq/uHuHlCEp7lx8JwC/lskmlPpk0=;
+        s=default; t=1589522040;
+        bh=VKwr3Ys1tdYFnPbyiHMP3OqauYhohGtNZnC03ZD/gyk=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=I8m3nDSJvCTyW+Y+sFxmr3ratMCbZfTHyz0NpSZIrBXSIRQZftr0OoJuobD6kcKkQ
-         qVMkW8NcD3WOYH11XX/ghnNLzipqTSgU4cGfqf9L6CQPH9sy1MFx9C8iD3TYWQay00
-         mne5eJrAkwvYZy4e4NdWK0SdPqhnipRggvCByFOw=
-Date:   Fri, 15 May 2020 11:22:52 +0530
+        b=AiVePCoy4HCL3e/8kKhw+jlK2diI70dSoKaKorRg1LO6/JnYf++muDMp3tdzd7JCl
+         fqbWbewNjRylzoyvi+0d4QDmGLXL/metO21sy83AqKTRfhr46JG/3UOBbNHD3EpzUm
+         p4GJws7tLvcZ29EodJ0hUi70vyp9m6JtfquoFe1A=
+Date:   Fri, 15 May 2020 11:23:56 +0530
 From:   Vinod Koul <vkoul@kernel.org>
 To:     Peter Ujfalusi <peter.ujfalusi@ti.com>
 Cc:     dmaengine@vger.kernel.org, dan.j.williams@intel.com
-Subject: Re: [PATCH] dmaengine: ti: k3-udma: Use proper return code in
- alloc_chan_resources
-Message-ID: <20200515055252.GB333670@vkoul-mobl>
-References: <20200512134519.5642-1-peter.ujfalusi@ti.com>
+Subject: Re: [PATCH] dmaengine: ti: k3-udma: Fix TR mode flags for slave_sg
+ and memcpy
+Message-ID: <20200515055356.GC333670@vkoul-mobl>
+References: <20200512134531.5742-1-peter.ujfalusi@ti.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20200512134519.5642-1-peter.ujfalusi@ti.com>
+In-Reply-To: <20200512134531.5742-1-peter.ujfalusi@ti.com>
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
 On 12-05-20, 16:45, Peter Ujfalusi wrote:
-> In udma_alloc_chan_resources() if the channel is not willing to stop then
-> the function should return with error code.
+> cppi5_tr_csf_set() clears previously set Configuration Specific Flags.
+> Setting the EOP flag clears the SUPR_EVT flag for the last TR which is not
+> desirable as we do not want to have events from the TR.
 
-Applied, thanks
-
+Applied to fixes, thanks
 -- 
 ~Vinod
