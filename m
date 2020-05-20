@@ -1,227 +1,69 @@
-Return-Path: <SRS0=3QXw=7B=vger.kernel.org=dmaengine-owner@kernel.org>
+Return-Path: <SRS0=P5vd=7C=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-9.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D8F16C433E0
-	for <dmaengine@archiver.kernel.org>; Tue, 19 May 2020 18:21:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 287AAC433E2
+	for <dmaengine@archiver.kernel.org>; Wed, 20 May 2020 06:56:33 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AD3D92075F
-	for <dmaengine@archiver.kernel.org>; Tue, 19 May 2020 18:21:10 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CRZ1Qd9b"
+	by mail.kernel.org (Postfix) with ESMTP id 1275320756
+	for <dmaengine@archiver.kernel.org>; Wed, 20 May 2020 06:56:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729244AbgESSVK (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 19 May 2020 14:21:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36504 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728188AbgESSVK (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Tue, 19 May 2020 14:21:10 -0400
-Received: from mail-pl1-x644.google.com (mail-pl1-x644.google.com [IPv6:2607:f8b0:4864:20::644])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05399C08C5C0;
-        Tue, 19 May 2020 11:21:10 -0700 (PDT)
-Received: by mail-pl1-x644.google.com with SMTP id d3so240088pln.1;
-        Tue, 19 May 2020 11:21:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=ZU4MX3UuVlqXR/LqdfzQjV8hf24XkFU0arC2pFCvdx0=;
-        b=CRZ1Qd9bL4SgMCmIHoWAyaEgvD+PATSf1u6oi8Fwp2croHKpTPjS7Aa63C/7cyYAA4
-         tRuY6uc26ofGXL1DAdlW8CSTe6/MBDUsUqrcerYDII6WoYrP0VSWFA/trbeP0+IjCj4s
-         vd/gRxEXdVsqRpDJYcnOL6RHLvZqrXNM3fzuecZGTn3iduNN2SCva2O2OCn8MySuDPR0
-         vai8Fvh++sOQzwe62N5GYQaBfDOQm0OZ85bqWNP48gXR+4EqwFUm21ub0bDt1ZQwTWET
-         el+lM27xtkukd9907iV62fE86iqs4EQScasr3OmhAWMOild/4YxcaaeqNpwUhZMGTX9Q
-         wxJQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=ZU4MX3UuVlqXR/LqdfzQjV8hf24XkFU0arC2pFCvdx0=;
-        b=hSzSzpb3B3iTC5hTsXPXmmZnab4jbHxngrWbsbuFt6MJiUcwI94mp6DfuL/mBiRCLr
-         uKoy5m+tlF0xcBrR1+jzlBourXtzOyHsoncoBwI8+4zuINCMZ3bhr3uGCnjuEn2Hhwvz
-         xqlOm9xcmYQC6fUGgVtTYmTN4nS3XKBRw9gnpJtFW2Ucb4bTZ6qXDFBVoTLS+dLEmwab
-         FDdqNc/2Bxk5i16nRgQyJCLcVWgBfb5tSCRWZ/xKu/PdsxlPk5XSEdpGiDUN3k6HOJT3
-         dQ2mUFYjq/c4t8f1VvfCAiLW1cLlDwOExLfKODCs5MMk9dpmMp71oshWfFtIoUMnuSPl
-         bP5w==
-X-Gm-Message-State: AOAM533KyqWgyM8lEcYqH39IMwBOoodVs/z6Aw4lh1k6M1z3Ser5a80N
-        +qrFbOWVrbQ3hptBDErR578=
-X-Google-Smtp-Source: ABdhPJwcoJ5+Ok8NG2eNQY3+AYvdKQyz3dw8tmuaR0DfLxvayvZXzaXxDAmhFV+FwQHAND4SlfXCig==
-X-Received: by 2002:a17:90b:20b:: with SMTP id fy11mr890107pjb.142.1589912469430;
-        Tue, 19 May 2020 11:21:09 -0700 (PDT)
-Received: from localhost.localdomain ([223.235.145.232])
-        by smtp.gmail.com with ESMTPSA id p2sm148399pgh.25.2020.05.19.11.20.58
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 19 May 2020 11:21:08 -0700 (PDT)
-From:   Amit Singh Tomar <amittomer25@gmail.com>
-To:     andre.przywara@arm.com, vkoul@kernel.org, afaerber@suse.de,
-        manivannan.sadhasivam@linaro.org
-Cc:     dan.j.williams@intel.com, cristian.ciocaltea@gmail.com,
-        dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-actions@lists.infradead.org
-Subject: [PATCH v2 02/10] dmaengine: Actions: Add support for S700 DMA engine
-Date:   Tue, 19 May 2020 23:49:20 +0530
-Message-Id: <1589912368-480-3-git-send-email-amittomer25@gmail.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1589912368-480-1-git-send-email-amittomer25@gmail.com>
-References: <1589912368-480-1-git-send-email-amittomer25@gmail.com>
+        id S1725998AbgETG4c (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 20 May 2020 02:56:32 -0400
+Received: from v6.sk ([167.172.42.174]:59870 "EHLO v6.sk"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726401AbgETG4c (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Wed, 20 May 2020 02:56:32 -0400
+Received: from localhost (v6.sk [IPv6:::1])
+        by v6.sk (Postfix) with ESMTP id F17D161300;
+        Wed, 20 May 2020 06:56:29 +0000 (UTC)
+From:   Lubomir Rintel <lkundrak@v3.sk>
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     Dan Williams <dan.j.williams@intel.com>, dmaengine@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Lubomir Rintel <lkundrak@v3.sk>
+Subject: [PATCH] dmaengine: mmp_pdma: Do not warn when IRQ is shared by all chans
+Date:   Wed, 20 May 2020 08:56:26 +0200
+Message-Id: <20200520065626.2119120-1-lkundrak@v3.sk>
+X-Mailer: git-send-email 2.26.2
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-DMA controller present on S700 SoC is compatible with the one on S900
-(as most of registers are same), but it has different DMA descriptor
-structure where registers "fcnt" and "ctrlb" uses different encoding.
+When there's a single interrupt for all the DMA channels, the
+unsuccessful attempt to request separate IRQs emits useless warnings:
 
-For instance, on S900 "fcnt" starts at offset 0x0c and uses upper 12
-bits whereas on S700, it starts at offset 0x1c and uses lower 12 bits.
+  [    1.370381] mmp-pdma d4000000.dma: IRQ index 1 not found
+  ...
+  [    1.412398] mmp-pdma d4000000.dma: IRQ index 15 not found
+  [    1.418308] mmp-pdma d4000000.dma: initialized 16 channels
 
-This commit adds support for DMA controller present on S700.
+Avoid that, treating the IRQs as optional.
 
-Signed-off-by: Amit Singh Tomar <amittomer25@gmail.com>
+Signed-off-by: Lubomir Rintel <lkundrak@v3.sk>
 ---
-Changes since v1:
-	* Moved llc_hw_flen() to patch 1/9
-	* provided comments about dma descriptor difference 
-	  between S700 and S900.
-Changes since RFC:
-	* Added accessor function to get the frame lenght.
-        * Removed the SoC specific check in IRQ routine.
----
- drivers/dma/owl-dma.c | 46 +++++++++++++++++++++++++++++++++++++---------
- 1 file changed, 37 insertions(+), 9 deletions(-)
+ drivers/dma/mmp_pdma.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/dma/owl-dma.c b/drivers/dma/owl-dma.c
-index dd85c205454e..17d2fc2d568b 100644
---- a/drivers/dma/owl-dma.c
-+++ b/drivers/dma/owl-dma.c
-@@ -137,6 +137,11 @@ enum owl_dmadesc_offsets {
- 	OWL_DMADESC_SIZE
- };
+diff --git a/drivers/dma/mmp_pdma.c b/drivers/dma/mmp_pdma.c
+index ad06f260e907..41c542eaa23a 100644
+--- a/drivers/dma/mmp_pdma.c
++++ b/drivers/dma/mmp_pdma.c
+@@ -1060,7 +1060,7 @@ static int mmp_pdma_probe(struct platform_device *op)
+ 	pdev->dma_channels = dma_channels;
  
-+enum owl_dma_id {
-+	S900_DMA,
-+	S700_DMA,
-+};
-+
- /**
-  * struct owl_dma_lli - Link list for dma transfer
-  * @hw: hardware link list
-@@ -203,6 +208,7 @@ struct owl_dma_vchan {
-  * @pchans: array of data for the physical channels
-  * @nr_vchans: the number of physical channels
-  * @vchans: array of data for the physical channels
-+ * @devid: device id based on OWL SoC
-  */
- struct owl_dma {
- 	struct dma_device	dma;
-@@ -217,6 +223,7 @@ struct owl_dma {
+ 	for (i = 0; i < dma_channels; i++) {
+-		if (platform_get_irq(op, i) > 0)
++		if (platform_get_irq_optional(op, i) > 0)
+ 			irq_num++;
+ 	}
  
- 	unsigned int		nr_vchans;
- 	struct owl_dma_vchan	*vchans;
-+	enum owl_dma_id		devid;
- };
- 
- static void pchan_update(struct owl_dma_pchan *pchan, u32 reg,
-@@ -306,6 +313,11 @@ static inline u32 llc_hw_ctrlb(u32 int_ctl)
- {
- 	u32 ctl;
- 
-+	/*
-+	 * Irrespective of the SoC, ctrlb value starts filling from
-+	 * bit 18.
-+	 */
-+
- 	ctl = BIT_FIELD(int_ctl, 7, 0, 18);
- 
- 	return ctl;
-@@ -362,6 +374,7 @@ static inline int owl_dma_cfg_lli(struct owl_dma_vchan *vchan,
- 				  struct dma_slave_config *sconfig,
- 				  bool is_cyclic)
- {
-+	struct owl_dma *od = to_owl_dma(vchan->vc.chan.device);
- 	u32 mode, ctrlb;
- 
- 	mode = OWL_DMA_MODE_PW(0);
-@@ -417,8 +430,18 @@ static inline int owl_dma_cfg_lli(struct owl_dma_vchan *vchan,
- 	lli->hw[OWL_DMADESC_DADDR] = dst;
- 	lli->hw[OWL_DMADESC_SRC_STRIDE] = 0;
- 	lli->hw[OWL_DMADESC_DST_STRIDE] = 0;
--	lli->hw[OWL_DMADESC_FLEN] = len | FCNT_VAL << 20;
--	lli->hw[OWL_DMADESC_CTRLB] = ctrlb;
-+
-+	/*
-+	 * S700 put flen and fcnt at offset 0x0c and 0x1c respectively,
-+	 * whereas S900 put flen and fcnt at offset 0x0c.
-+	 */
-+	if (od->devid == S700_DMA) {
-+		lli->hw[OWL_DMADESC_FLEN] = len;
-+		lli->hw[OWL_DMADESC_CTRLB] = FCNT_VAL | ctrlb;
-+	} else {
-+		lli->hw[OWL_DMADESC_FLEN] = len | FCNT_VAL << 20;
-+		lli->hw[OWL_DMADESC_CTRLB] = ctrlb;
-+	}
- 
- 	return 0;
- }
-@@ -580,7 +603,7 @@ static irqreturn_t owl_dma_interrupt(int irq, void *dev_id)
- 
- 		global_irq_pending = dma_readl(od, OWL_DMA_IRQ_PD0);
- 
--		if (chan_irq_pending && !(global_irq_pending & BIT(i)))	{
-+		if (chan_irq_pending && !(global_irq_pending & BIT(i))) {
- 			dev_dbg(od->dma.dev,
- 				"global and channel IRQ pending match err\n");
- 
-@@ -1038,11 +1061,20 @@ static struct dma_chan *owl_dma_of_xlate(struct of_phandle_args *dma_spec,
- 	return chan;
- }
- 
-+static const struct of_device_id owl_dma_match[] = {
-+	{ .compatible = "actions,s900-dma", .data = (void *)S900_DMA,},
-+	{ .compatible = "actions,s700-dma", .data = (void *)S700_DMA,},
-+	{ /* sentinel */ },
-+};
-+MODULE_DEVICE_TABLE(of, owl_dma_match);
-+
- static int owl_dma_probe(struct platform_device *pdev)
- {
- 	struct device_node *np = pdev->dev.of_node;
- 	struct owl_dma *od;
- 	int ret, i, nr_channels, nr_requests;
-+	const struct of_device_id *of_id =
-+				of_match_device(owl_dma_match, &pdev->dev);
- 
- 	od = devm_kzalloc(&pdev->dev, sizeof(*od), GFP_KERNEL);
- 	if (!od)
-@@ -1067,6 +1099,8 @@ static int owl_dma_probe(struct platform_device *pdev)
- 	dev_info(&pdev->dev, "dma-channels %d, dma-requests %d\n",
- 		 nr_channels, nr_requests);
- 
-+	od->devid = (enum owl_dma_id)of_id->data;
-+
- 	od->nr_pchans = nr_channels;
- 	od->nr_vchans = nr_requests;
- 
-@@ -1199,12 +1233,6 @@ static int owl_dma_remove(struct platform_device *pdev)
- 	return 0;
- }
- 
--static const struct of_device_id owl_dma_match[] = {
--	{ .compatible = "actions,s900-dma", },
--	{ /* sentinel */ }
--};
--MODULE_DEVICE_TABLE(of, owl_dma_match);
--
- static struct platform_driver owl_dma_driver = {
- 	.probe	= owl_dma_probe,
- 	.remove	= owl_dma_remove,
 -- 
-2.7.4
+2.26.2
 
