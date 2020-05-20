@@ -2,69 +2,109 @@ Return-Path: <SRS0=P5vd=7C=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.9 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 73003C433E0
-	for <dmaengine@archiver.kernel.org>; Wed, 20 May 2020 06:56:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D047EC433DF
+	for <dmaengine@archiver.kernel.org>; Wed, 20 May 2020 11:22:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 460122065F
-	for <dmaengine@archiver.kernel.org>; Wed, 20 May 2020 06:56:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 981E7207C4
+	for <dmaengine@archiver.kernel.org>; Wed, 20 May 2020 11:22:03 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b="whl06eR5"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726528AbgETG4z (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 20 May 2020 02:56:55 -0400
-Received: from v6.sk ([167.172.42.174]:59872 "EHLO v6.sk"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726401AbgETG4y (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Wed, 20 May 2020 02:56:54 -0400
-Received: from localhost (v6.sk [IPv6:::1])
-        by v6.sk (Postfix) with ESMTP id 37DF6610A8;
-        Wed, 20 May 2020 06:56:23 +0000 (UTC)
-From:   Lubomir Rintel <lkundrak@v3.sk>
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Dan Williams <dan.j.williams@intel.com>, dmaengine@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Lubomir Rintel <lkundrak@v3.sk>
-Subject: [PATCH] dmaengine: mmp_tdma: share the IRQ line
-Date:   Wed, 20 May 2020 08:56:17 +0200
-Message-Id: <20200520065617.2119028-1-lkundrak@v3.sk>
+        id S1726510AbgETLWD (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 20 May 2020 07:22:03 -0400
+Received: from fllv0015.ext.ti.com ([198.47.19.141]:44506 "EHLO
+        fllv0015.ext.ti.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726435AbgETLWD (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Wed, 20 May 2020 07:22:03 -0400
+Received: from fllv0034.itg.ti.com ([10.64.40.246])
+        by fllv0015.ext.ti.com (8.15.2/8.15.2) with ESMTP id 04KBM07t031584;
+        Wed, 20 May 2020 06:22:00 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
+        s=ti-com-17Q1; t=1589973720;
+        bh=qy9P9aMzN0C/xCRLZwZvXukaEjFqWsGHsK3cJOnMCAw=;
+        h=From:To:CC:Subject:Date;
+        b=whl06eR5NBsABPA6ewy/CfshQIQxI/iX9zixLv2KZnythnC4G9Rtq7EakPU1waajG
+         Ouv6Ha5YyO/mfeD2E8u02ycyAdR/YDhrQ2KPQFQJtNt39SNps6mAkcI7c53Mpfxg8e
+         BFeu594TUXoVnF2pWTzw4YRKxCd5RmpVu4UjMsas=
+Received: from DFLE101.ent.ti.com (dfle101.ent.ti.com [10.64.6.22])
+        by fllv0034.itg.ti.com (8.15.2/8.15.2) with ESMTPS id 04KBM0Qh125359
+        (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
+        Wed, 20 May 2020 06:22:00 -0500
+Received: from DFLE100.ent.ti.com (10.64.6.21) by DFLE101.ent.ti.com
+ (10.64.6.22) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1979.3; Wed, 20
+ May 2020 06:21:59 -0500
+Received: from lelv0326.itg.ti.com (10.180.67.84) by DFLE100.ent.ti.com
+ (10.64.6.21) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1979.3 via
+ Frontend Transport; Wed, 20 May 2020 06:21:59 -0500
+Received: from feketebors.ti.com (ileax41-snat.itg.ti.com [10.172.224.153])
+        by lelv0326.itg.ti.com (8.15.2/8.15.2) with ESMTP id 04KBLvYc107754;
+        Wed, 20 May 2020 06:21:58 -0500
+From:   Peter Ujfalusi <peter.ujfalusi@ti.com>
+To:     <vkoul@kernel.org>
+CC:     <dmaengine@vger.kernel.org>, <dan.j.williams@intel.com>,
+        <tomi.valkeinen@ti.com>
+Subject: [PATCH] dmaengine: ti: k3-udma: Fix delayed_work usage for tx drain workaround
+Date:   Wed, 20 May 2020 14:22:33 +0300
+Message-ID: <20200520112233.26807-1-peter.ujfalusi@ti.com>
 X-Mailer: git-send-email 2.26.2
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-EXCLAIMER-MD-CONFIG: e1e8a2fd-e40a-4ac6-ac9b-f7e9cc9ee180
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On a MMP2, the DMA interrupt is shared by all channels of the peripheral
-DMA controller and the audio DMA controller. Both drivers can identify
-their interrupts, but only the PDMA driver marks the line shared:
+INIT_DELAYED_WORK_ONSTACK() must be used with on-stack delayed work, which
+is not the case here.
+Use normal delayed_work for the channels instead.
 
-  [    1.185782] mmp-pdma d4000000.dma: initialized 16 channels
-  [    1.186808] mmp-tdma d42a0800.adma: IRQ index 1 not found
-  [    1.194317] genirq: Flags mismatch irq 64. 00000000 (tdma) vs. 00000080 (pdma)
-  [    1.197894] mmp-tdma: probe of d42a0800.adma failed with error -16
-
-Let's turn on IRQF_SHARED in the ADMA driver as well.
-
-Signed-off-by: Lubomir Rintel <lkundrak@v3.sk>
+Fixes: 25dcb5dd7b7c ("dmaengine: ti: New driver for K3 UDMA")
+Reported-by: Tomi Valkeinen <tomi.valkeinen@ti.com>
 ---
- drivers/dma/mmp_tdma.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/dma/ti/k3-udma.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/dma/mmp_tdma.c b/drivers/dma/mmp_tdma.c
-index dbc6a48424fa..960c7c40aef7 100644
---- a/drivers/dma/mmp_tdma.c
-+++ b/drivers/dma/mmp_tdma.c
-@@ -682,7 +682,7 @@ static int mmp_tdma_probe(struct platform_device *pdev)
- 	if (irq_num != chan_num) {
- 		irq = platform_get_irq(pdev, 0);
- 		ret = devm_request_irq(&pdev->dev, irq,
--			mmp_tdma_int_handler, 0, "tdma", tdev);
-+			mmp_tdma_int_handler, IRQF_SHARED, "tdma", tdev);
- 		if (ret)
- 			return ret;
+diff --git a/drivers/dma/ti/k3-udma.c b/drivers/dma/ti/k3-udma.c
+index c91e2dc1bb72..87554e093a3b 100644
+--- a/drivers/dma/ti/k3-udma.c
++++ b/drivers/dma/ti/k3-udma.c
+@@ -1906,8 +1906,6 @@ static int udma_alloc_chan_resources(struct dma_chan *chan)
+ 
+ 	udma_reset_rings(uc);
+ 
+-	INIT_DELAYED_WORK_ONSTACK(&uc->tx_drain.work,
+-				  udma_check_tx_completion);
+ 	return 0;
+ 
+ err_irq_free:
+@@ -3019,7 +3017,6 @@ static void udma_free_chan_resources(struct dma_chan *chan)
  	}
+ 
+ 	cancel_delayed_work_sync(&uc->tx_drain.work);
+-	destroy_delayed_work_on_stack(&uc->tx_drain.work);
+ 
+ 	if (uc->irq_num_ring > 0) {
+ 		free_irq(uc->irq_num_ring, uc);
+@@ -3711,6 +3708,7 @@ static int udma_probe(struct platform_device *pdev)
+ 		tasklet_init(&uc->vc.task, udma_vchan_complete,
+ 			     (unsigned long)&uc->vc);
+ 		init_completion(&uc->teardown_completed);
++		INIT_DELAYED_WORK(&uc->tx_drain.work, udma_check_tx_completion);
+ 	}
+ 
+ 	ret = dma_async_device_register(&ud->ddev);
 -- 
-2.26.2
+Peter
+
+Texas Instruments Finland Oy, Porkkalankatu 22, 00180 Helsinki.
+Y-tunnus/Business ID: 0615521-4. Kotipaikka/Domicile: Helsinki
 
