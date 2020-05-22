@@ -1,70 +1,84 @@
-Return-Path: <SRS0=HcDV=7D=vger.kernel.org=dmaengine-owner@kernel.org>
+Return-Path: <SRS0=Z62g=7E=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.1 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-9.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8EE4FC433DF
-	for <dmaengine@archiver.kernel.org>; Thu, 21 May 2020 20:55:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1C0E5C433E3
+	for <dmaengine@archiver.kernel.org>; Fri, 22 May 2020 05:32:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5F13620823
-	for <dmaengine@archiver.kernel.org>; Thu, 21 May 2020 20:55:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1590094504;
-	bh=7iGNOrc13huB/bF3AMhbWuoQe34FHKR2s4DsvfhVVgA=;
-	h=Subject:From:In-Reply-To:References:Date:To:Cc:List-ID:From;
-	b=ZWwhtuSr1UcXF0xJzM6GbR6nj45/u5KHAvQ83/C4mg2Oklnwb2CbukPanFCp8tRUu
-	 Qwq3nuokd8RNHdMEE+4Fjj80/Mz/uROfOpYCOQjWQaTBps2n7CXnWtnyhn4WF2mCcX
-	 BC+T+W942qMRNlISB1CVaDaVt44ZmiEaihNM3moM=
+	by mail.kernel.org (Postfix) with ESMTP id EE7C420757
+	for <dmaengine@archiver.kernel.org>; Fri, 22 May 2020 05:32:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730327AbgEUUzE (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Thu, 21 May 2020 16:55:04 -0400
-Received: from mail.kernel.org ([198.145.29.99]:35534 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728778AbgEUUzD (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Thu, 21 May 2020 16:55:03 -0400
-Subject: Re: [GIT PULL]: dmaengine fixes for v5.7-rc7
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1590094503;
-        bh=7iGNOrc13huB/bF3AMhbWuoQe34FHKR2s4DsvfhVVgA=;
-        h=From:In-Reply-To:References:Date:To:Cc:From;
-        b=FxF0RSEVSzWcLDnC0mUonYVZ726tZQkyEyNXsA2n/LW0kghzbqpCe4IeMbp/8Zvsk
-         lsPlNN9gM2pkVbBB9dv/RJ1p1DI3s8f610PYmRyUbDG5CNNQxtYh8K/ZZqprahB4Rp
-         qsUUIxXtop96PtMRtlD8Ium+UA4JE6AaIQMCENJw=
-From:   pr-tracker-bot@kernel.org
-In-Reply-To: <20200521143521.GC374218@vkoul-mobl.Dlink>
-References: <20200521143521.GC374218@vkoul-mobl.Dlink>
-X-PR-Tracked-List-Id: <linux-kernel.vger.kernel.org>
-X-PR-Tracked-Message-Id: <20200521143521.GC374218@vkoul-mobl.Dlink>
-X-PR-Tracked-Remote: git://git.infradead.org/users/vkoul/slave-dma.git
- tags/dmaengine-fix-5.7-rc7
-X-PR-Tracked-Commit-Id: 3a5fd0dbd87853f8bd2ea275a5b3b41d6686e761
-X-PR-Merge-Tree: torvalds/linux.git
-X-PR-Merge-Refname: refs/heads/master
-X-PR-Merge-Commit-Id: cedd54f713368d32c902befc3714b91afdec1084
-Message-Id: <159009450355.9071.17759578303074194234.pr-tracker-bot@kernel.org>
-Date:   Thu, 21 May 2020 20:55:03 +0000
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Linus Torvalds <torvalds@linux-foundation.org>,
-        dma <dmaengine@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>
+        id S1727903AbgEVFcL (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 22 May 2020 01:32:11 -0400
+Received: from mail.zju.edu.cn ([61.164.42.155]:24072 "EHLO zju.edu.cn"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1726421AbgEVFcL (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Fri, 22 May 2020 01:32:11 -0400
+Received: from localhost.localdomain (unknown [222.205.77.158])
+        by mail-app3 (Coremail) with SMTP id cC_KCgD3_4vLY8deAmnvAA--.23586S4;
+        Fri, 22 May 2020 13:32:02 +0800 (CST)
+From:   Dinghao Liu <dinghao.liu@zju.edu.cn>
+To:     dinghao.liu@zju.edu.cn, kjlu@umn.edu
+Cc:     Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>,
+        Dan Williams <dan.j.williams@intel.com>,
+        Vinod Koul <vkoul@kernel.org>, dmaengine@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH] dmaengine: dw-axi-dmac: Fix runtime PM imbalance on error
+Date:   Fri, 22 May 2020 13:31:53 +0800
+Message-Id: <20200522053154.5951-1-dinghao.liu@zju.edu.cn>
+X-Mailer: git-send-email 2.17.1
+X-CM-TRANSID: cC_KCgD3_4vLY8deAmnvAA--.23586S4
+X-Coremail-Antispam: 1UD129KBjvdXoWrKw4UCw4UCF45tr1xAFWrXwb_yoWfXrb_Cw
+        1UWF43WrsYq3WkKw4YyFnxZrWS9r95WFs2gr4xtFZIy3y5Wr1DJ3ykZrWkJw13Z3yUCFWD
+        CFsrXrW3CF43AjkaLaAFLSUrUUUUUb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
+        9fnUUIcSsGvfJTRUUUbIkFc2x0x2IEx4CE42xK8VAvwI8IcIk0rVWrJVCq3wAFIxvE14AK
+        wVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK021l84ACjcxK6xIIjxv20x
+        vE14v26w1j6s0DM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26r4UJVWxJr1l84ACjcxK6I8E
+        87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_GcCE3s1le2I262IYc4CY6c
+        8Ij28IcVAaY2xG8wAqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_JF0_
+        Jw1lYx0Ex4A2jsIE14v26r4j6F4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvY0x0EwI
+        xGrwACjI8F5VA0II8E6IAqYI8I648v4I1lc2xSY4AK67AK6r4rMxAIw28IcxkI7VAKI48J
+        MxAIw28IcVCjz48v1sIEY20_GFWkJr1UJwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c
+        02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_
+        Jw1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7
+        CjxVAFwI0_Gr0_Cr1lIxAIcVCF04k26cxKx2IYs7xG6rWUJVWrZr1UMIIF0xvEx4A2jsIE
+        14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIdaVFxhVjvjDU0xZFpf
+        9x0JUh6pPUUUUU=
+X-CM-SenderInfo: qrrzjiaqtzq6lmxovvfxof0/1tbiAgoIBlZdtOQLzwABsY
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-The pull request you sent on Thu, 21 May 2020 20:05:21 +0530:
+When axi_dma_resume() returns an error code, a pairing
+runtime PM usage counter decrement is needed to keep the
+counter balanced.
 
-> git://git.infradead.org/users/vkoul/slave-dma.git tags/dmaengine-fix-5.7-rc7
+Signed-off-by: Dinghao Liu <dinghao.liu@zju.edu.cn>
+---
+ drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-has been merged into torvalds/linux.git:
-https://git.kernel.org/torvalds/c/cedd54f713368d32c902befc3714b91afdec1084
-
-Thank you!
-
+diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
+index 14c1ac26f866..a368d01170f1 100644
+--- a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
++++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
+@@ -924,8 +924,10 @@ static int dw_probe(struct platform_device *pdev)
+ 	 */
+ 	pm_runtime_get_noresume(chip->dev);
+ 	ret = axi_dma_resume(chip);
+-	if (ret < 0)
++	if (ret < 0) {
++		pm_runtime_put(chip->dev);
+ 		goto err_pm_disable;
++	}
+ 
+ 	axi_dma_hw_init(chip);
+ 
 -- 
-Deet-doot-dot, I am a bot.
-https://korg.wiki.kernel.org/userdoc/prtracker
+2.17.1
+
