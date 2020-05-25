@@ -1,74 +1,153 @@
-Return-Path: <SRS0=SJiu=7G=vger.kernel.org=dmaengine-owner@kernel.org>
+Return-Path: <SRS0=sVAk=7H=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_GIT autolearn=unavailable autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.4 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E0DD4C433EB
-	for <dmaengine@archiver.kernel.org>; Sun, 24 May 2020 21:40:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2F24FC433E0
+	for <dmaengine@archiver.kernel.org>; Mon, 25 May 2020 08:40:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B60D0204EF
-	for <dmaengine@archiver.kernel.org>; Sun, 24 May 2020 21:40:27 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0EC922070A
+	for <dmaengine@archiver.kernel.org>; Mon, 25 May 2020 08:40:06 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b="vFKa0VHJ"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388387AbgEXVj7 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Sun, 24 May 2020 17:39:59 -0400
-Received: from relmlor2.renesas.com ([210.160.252.172]:17462 "EHLO
-        relmlie6.idc.renesas.com" rhost-flags-OK-OK-OK-FAIL)
-        by vger.kernel.org with ESMTP id S2387879AbgEXVj7 (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Sun, 24 May 2020 17:39:59 -0400
-X-IronPort-AV: E=Sophos;i="5.73,431,1583161200"; 
-   d="scan'208";a="47678197"
-Received: from unknown (HELO relmlir6.idc.renesas.com) ([10.200.68.152])
-  by relmlie6.idc.renesas.com with ESMTP; 25 May 2020 06:39:57 +0900
-Received: from localhost.localdomain (unknown [10.226.36.204])
-        by relmlir6.idc.renesas.com (Postfix) with ESMTP id 3CB9E40E3D5C;
-        Mon, 25 May 2020 06:39:54 +0900 (JST)
-From:   Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
-To:     Geert Uytterhoeven <geert+renesas@glider.be>,
-        Vinod Koul <vkoul@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Magnus Damm <magnus.damm@gmail.com>
-Cc:     dmaengine@vger.kernel.org, linux-pci@vger.kernel.org,
-        linux-usb@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Prabhakar <prabhakar.csengg@gmail.com>,
-        Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
-Subject: [PATCH 3/8] dt-bindings: usb: renesas,usbhs: Add support for r8a7742
-Date:   Sun, 24 May 2020 22:37:52 +0100
-Message-Id: <1590356277-19993-4-git-send-email-prabhakar.mahadev-lad.rj@bp.renesas.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1590356277-19993-1-git-send-email-prabhakar.mahadev-lad.rj@bp.renesas.com>
-References: <1590356277-19993-1-git-send-email-prabhakar.mahadev-lad.rj@bp.renesas.com>
+        id S2389169AbgEYIj7 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 25 May 2020 04:39:59 -0400
+Received: from lelv0142.ext.ti.com ([198.47.23.249]:47302 "EHLO
+        lelv0142.ext.ti.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2389150AbgEYIj6 (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Mon, 25 May 2020 04:39:58 -0400
+Received: from fllv0035.itg.ti.com ([10.64.41.0])
+        by lelv0142.ext.ti.com (8.15.2/8.15.2) with ESMTP id 04P8dc1I094599;
+        Mon, 25 May 2020 03:39:38 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
+        s=ti-com-17Q1; t=1590395978;
+        bh=OSCkiAD2IFkkJP3tRwqM8iW2l1NIjDCioO7eEpIzpvY=;
+        h=Subject:To:CC:References:From:Date:In-Reply-To;
+        b=vFKa0VHJvOvgu0dLyavgKOovxQPhaIA7v5km3lRvnkZj4cjsncfrZ/Bcrl+hLXVCb
+         4MFrzh6edErc4BBnU2WuURj9hYbfAjTvmiZ/6RJ9ki229jnXuJ4Fs9VYbcPtDYqQSx
+         yGzkMusvsCnEMTs77knDlmkDGCANawyiU/hYn1zk=
+Received: from DFLE105.ent.ti.com (dfle105.ent.ti.com [10.64.6.26])
+        by fllv0035.itg.ti.com (8.15.2/8.15.2) with ESMTP id 04P8dc92093629;
+        Mon, 25 May 2020 03:39:38 -0500
+Received: from DFLE108.ent.ti.com (10.64.6.29) by DFLE105.ent.ti.com
+ (10.64.6.26) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1979.3; Mon, 25
+ May 2020 03:39:38 -0500
+Received: from lelv0327.itg.ti.com (10.180.67.183) by DFLE108.ent.ti.com
+ (10.64.6.29) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1979.3 via
+ Frontend Transport; Mon, 25 May 2020 03:39:38 -0500
+Received: from [192.168.2.6] (ileax41-snat.itg.ti.com [10.172.224.153])
+        by lelv0327.itg.ti.com (8.15.2/8.15.2) with ESMTP id 04P8dZQD037639;
+        Mon, 25 May 2020 03:39:36 -0500
+Subject: Re: [PATCH] dmaengine: ti: edma: Fix runtime PM imbalance on error
+To:     Dinghao Liu <dinghao.liu@zju.edu.cn>, <kjlu@umn.edu>
+CC:     Vinod Koul <vkoul@kernel.org>,
+        Dan Williams <dan.j.williams@intel.com>,
+        Chuhong Yuan <hslester96@gmail.com>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Colin Ian King <colin.king@canonical.com>,
+        YueHaibing <yuehaibing@huawei.com>, <dmaengine@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <20200521084634.31966-1-dinghao.liu@zju.edu.cn>
+From:   Peter Ujfalusi <peter.ujfalusi@ti.com>
+X-Pep-Version: 2.0
+Message-ID: <cec177bf-3465-01a5-febb-00d78e8e27b0@ti.com>
+Date:   Mon, 25 May 2020 11:40:14 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.8.0
+MIME-Version: 1.0
+In-Reply-To: <20200521084634.31966-1-dinghao.liu@zju.edu.cn>
+Content-Type: multipart/mixed;
+        boundary="------------C46E6AC2967E360ECC53D2DA"
+Content-Language: en-US
+X-EXCLAIMER-MD-CONFIG: e1e8a2fd-e40a-4ac6-ac9b-f7e9cc9ee180
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Document support for RZ/G1H (R8A7742) SoC.
+--------------C46E6AC2967E360ECC53D2DA
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
 
-Signed-off-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
-Reviewed-by: Marian-Cristian Rotariu <marian-cristian.rotariu.rb@bp.renesas.com>
----
- Documentation/devicetree/bindings/usb/renesas,usbhs.yaml | 1 +
- 1 file changed, 1 insertion(+)
 
-diff --git a/Documentation/devicetree/bindings/usb/renesas,usbhs.yaml b/Documentation/devicetree/bindings/usb/renesas,usbhs.yaml
-index 469affa..32ade41 100644
---- a/Documentation/devicetree/bindings/usb/renesas,usbhs.yaml
-+++ b/Documentation/devicetree/bindings/usb/renesas,usbhs.yaml
-@@ -22,6 +22,7 @@ properties:
- 
-       - items:
-           - enum:
-+              - renesas,usbhs-r8a7742  # RZ/G1H
-               - renesas,usbhs-r8a7743  # RZ/G1M
-               - renesas,usbhs-r8a7744  # RZ/G1N
-               - renesas,usbhs-r8a7745  # RZ/G1E
--- 
-2.7.4
 
+On 21/05/2020 11.46, Dinghao Liu wrote:
+> pm_runtime_get_sync() increments the runtime PM usage counter even
+> when it returns an error code. Thus a pairing decrement is needed on
+> the error handling path to keep the counter balanced.
+
+Thank you for the patch!
+
+Acked-by: Peter Ujfalusi <peter.ujfalusi@ti.com>
+
+> Signed-off-by: Dinghao Liu <dinghao.liu@zju.edu.cn>
+> ---
+>  drivers/dma/ti/edma.c | 3 +--
+>  1 file changed, 1 insertion(+), 2 deletions(-)
+>=20
+> diff --git a/drivers/dma/ti/edma.c b/drivers/dma/ti/edma.c
+> index c4a5c170c1f9..609ce2607eb7 100644
+> --- a/drivers/dma/ti/edma.c
+> +++ b/drivers/dma/ti/edma.c
+> @@ -2402,8 +2402,7 @@ static int edma_probe(struct platform_device *pde=
+v)
+>  	ret =3D pm_runtime_get_sync(dev);
+>  	if (ret < 0) {
+>  		dev_err(dev, "pm_runtime_get_sync() failed\n");
+> -		pm_runtime_disable(dev);
+> -		return ret;
+> +		goto err_disable_pm;
+>  	}
+> =20
+>  	/* Get eDMA3 configuration from IP */
+>=20
+
+- P=C3=A9ter
+
+Texas Instruments Finland Oy, Porkkalankatu 22, 00180 Helsinki.
+Y-tunnus/Business ID: 0615521-4. Kotipaikka/Domicile: Helsinki
+
+--------------C46E6AC2967E360ECC53D2DA
+Content-Type: application/pgp-keys; name="pEpkey.asc"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: attachment; filename="pEpkey.asc"
+
+-----BEGIN PGP PUBLIC KEY BLOCK-----
+
+mQENBFki4nsBCAD3BM+Ogt951JlaDloruEjoZk/Z+/37CjP0fY2mqLhBOzkpx95u
+X1Fquf0KfVk+ZzCd25XGOZEtpZNlXfbxRr2iRWPS5RW2FeLYGvg2TTJCpSr+ugKu
+OOec6KECCUotGbGhpYwBrbarJNEwDcAzPK7UJYa1rhWOmkpZJ1hXF1hUghB84q35
+8DmN4sGLcsIbVdRFZ1tWFh4vGBFV9LsoDZIrnnANb6/XMX78s+tr3RG3GZBaFPl8
+jO5IIv0UIGNUKaYlNVFYthjGCzOqtstHchWuK9eQkR7m1+Vc+ezh1qK0VJydIcjn
+OtoMZZL7RAz13LB9vmcJjbQPnI7dJojz/M7zABEBAAG0JlBldGVyIFVqZmFsdXNp
+IDxwZXRlci51amZhbHVzaUB0aS5jb20+iQFOBBMBCAA4FiEE+dBcpRFvJjZw+uta
+LCayis85LN4FAlki4nsCGwMFCwkIBwIGFQgJCgsCBBYCAwECHgECF4AACgkQLCay
+is85LN4QjggAzxxxXqiWpA3vuj9yrlGLft3BeGKWqF8+RzdeRvshtNdpGeIFf+r5
+AJVR71R1w89Qeb4DGXus7qsKiafdFGG7yxbuhw8a5wUm+ZncBXA+ETn3OyVtl8g8
+r/ZcPX420jClBNTVuL0sSnyqDFDrt5f+uAFOIwsnHdpns174Zu9QhgYxdvdZ+jMh
+Psb745O9EVeNvdfUIRdrVjb4IhJKNIzkb0Tulsz5xeCJReUYpxZU1jzEq3YZqIou
++fi+oS4wlJuSoxKKTmIXtSeEy/weStF1XHMo6vLYqzaK4FyIuclqeuYUYSVy2425
+7TMXugaI+O85AEI6KW8MCcu1NucSfAWUabkBDQRZIuJ7AQgAypKq8iIugpHxWA2c
+Ck6MQdPBT6cOEVK0tjeHaHAVOUPiw9Pq+ssMifdIkDdqXNZ3RLH/X2svYvd8c81C
+egqshfB8nkJ5EKmQc9d7s0EwnYT8OwsoVb3c2WXnsdcKEyu2nHgyeJEUpPpMPyLc
++PWhoREifttab4sOPktepdnUbvrDK/gkjHmiG6+L2owSn637N+Apo3/eQuDajfEu
+kybxK19ReRcp6dbqWSBGSeNB32c/zv1ka37bTMNVUY39Rl+/8lA/utLfrMeACHRO
+FGO1BexMASKUdmlB0v9n4BaJFGrAJYAFJBNHLCDemqkU7gjaiimuHSjwuP0Wk7Ct
+KQJfVQARAQABiQE2BBgBCAAgFiEE+dBcpRFvJjZw+utaLCayis85LN4FAlki4nsC
+GwwACgkQLCayis85LN7kCwgAoy9r3ZQfJNOXO1q/YQfpEELHn0p8LpwliSDUS1xL
+sswyxtZS8LlW8PjlTXuBLu38Vfr0vGav7oyV7TkhnKT3oBOLXanyZqwgyZSKNEGB
+PB4v3Fo7YTzpfSofiwuz03uyfjTxiMGjonxSb+YxM7HBHfzjrOKKlg02fK+lWNZo
+m5lXugeWD7U6JJguNdYfr+U4zYIblelUImcIE+wnR0oLzUEVDIWSpVrl/OqS3Rzo
+mw8wBsHksTHrbgUnKL0SCzYc90BTeKbyjEBnVDr+dlfbxRxkB8h9RMPMdjodvXzS
+Gfsa9V/k4XAsh7iX9EUVBbnmjA61ySxU/w98h96jMuteTg=3D=3D
+=3DeQmw
+-----END PGP PUBLIC KEY BLOCK-----
+
+--------------C46E6AC2967E360ECC53D2DA--
