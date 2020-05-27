@@ -2,57 +2,59 @@ Return-Path: <SRS0=ZDLz=7J=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.9 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
+	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A9F2EC433E0
-	for <dmaengine@archiver.kernel.org>; Wed, 27 May 2020 07:05:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C513BC433DF
+	for <dmaengine@archiver.kernel.org>; Wed, 27 May 2020 07:05:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 748FE206F1
-	for <dmaengine@archiver.kernel.org>; Wed, 27 May 2020 07:05:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9B9EB206F1
+	for <dmaengine@archiver.kernel.org>; Wed, 27 May 2020 07:05:38 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b="mnIXT+jx"
+	dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b="MxmMlxtH"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728111AbgE0HFh (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 27 May 2020 03:05:37 -0400
-Received: from lelv0143.ext.ti.com ([198.47.23.248]:54886 "EHLO
+        id S1728303AbgE0HFi (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 27 May 2020 03:05:38 -0400
+Received: from lelv0143.ext.ti.com ([198.47.23.248]:54890 "EHLO
         lelv0143.ext.ti.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726025AbgE0HFh (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Wed, 27 May 2020 03:05:37 -0400
+        with ESMTP id S1726025AbgE0HFi (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Wed, 27 May 2020 03:05:38 -0400
 Received: from lelv0266.itg.ti.com ([10.180.67.225])
-        by lelv0143.ext.ti.com (8.15.2/8.15.2) with ESMTP id 04R75Whg119008;
-        Wed, 27 May 2020 02:05:32 -0500
+        by lelv0143.ext.ti.com (8.15.2/8.15.2) with ESMTP id 04R75Z9d119022;
+        Wed, 27 May 2020 02:05:35 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
-        s=ti-com-17Q1; t=1590563132;
-        bh=hSAacH1oEtaDr7QkGQnzb6d551jntUqFz6ToF0+BYHs=;
-        h=From:To:CC:Subject:Date;
-        b=mnIXT+jxVlEmtjfauVd+sf/BH/nyWtas14GPM/TKhSWE7zfQWuHp2BsxPNVJBMLxD
-         quTdgIV3DoA5mjR1FZv0CQ3d1HJrDY40hGhR5OVmT7iOYH/vYfBPVgcKhqlTqcXrvj
-         O7KcjmjeZ8/IGIMnzQUEFZbkMCXAyuhJnxMIXQJU=
-Received: from DFLE102.ent.ti.com (dfle102.ent.ti.com [10.64.6.23])
-        by lelv0266.itg.ti.com (8.15.2/8.15.2) with ESMTPS id 04R75WIe115795
+        s=ti-com-17Q1; t=1590563135;
+        bh=sezBODDlFoQDRRA5rGxNZgNFx87UJqeBJPxyRXFruWg=;
+        h=From:To:CC:Subject:Date:In-Reply-To:References;
+        b=MxmMlxtHrV2/06pXxZTcOq/nAdILKc50tZTpTcatWgLUMl9Vb9yuo6f3vtziQa3oD
+         BbLK1/0hBvTsF8zYxpJlu4BEa+zORzXq7UyNMRNnQmO+F3YAgjuNyZJwBL0Y2X/+7Y
+         EwrvG//0nqNfzYbZ0A2IRZm4Tf8d8IagbMyl6U+I=
+Received: from DLEE100.ent.ti.com (dlee100.ent.ti.com [157.170.170.30])
+        by lelv0266.itg.ti.com (8.15.2/8.15.2) with ESMTPS id 04R75Zte115863
         (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
-        Wed, 27 May 2020 02:05:32 -0500
-Received: from DFLE106.ent.ti.com (10.64.6.27) by DFLE102.ent.ti.com
- (10.64.6.23) with Microsoft SMTP Server (version=TLS1_2,
+        Wed, 27 May 2020 02:05:35 -0500
+Received: from DLEE106.ent.ti.com (157.170.170.36) by DLEE100.ent.ti.com
+ (157.170.170.30) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1979.3; Wed, 27
- May 2020 02:05:32 -0500
-Received: from fllv0039.itg.ti.com (10.64.41.19) by DFLE106.ent.ti.com
- (10.64.6.27) with Microsoft SMTP Server (version=TLS1_2,
+ May 2020 02:05:34 -0500
+Received: from fllv0039.itg.ti.com (10.64.41.19) by DLEE106.ent.ti.com
+ (157.170.170.36) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1979.3 via
- Frontend Transport; Wed, 27 May 2020 02:05:31 -0500
+ Frontend Transport; Wed, 27 May 2020 02:05:34 -0500
 Received: from feketebors.ti.com (ileax41-snat.itg.ti.com [10.172.224.153])
-        by fllv0039.itg.ti.com (8.15.2/8.15.2) with ESMTP id 04R75UF4065430;
-        Wed, 27 May 2020 02:05:30 -0500
+        by fllv0039.itg.ti.com (8.15.2/8.15.2) with ESMTP id 04R75UF6065430;
+        Wed, 27 May 2020 02:05:33 -0500
 From:   Peter Ujfalusi <peter.ujfalusi@ti.com>
 To:     <vkoul@kernel.org>
 CC:     <dmaengine@vger.kernel.org>, <dan.j.williams@intel.com>
-Subject: [PATCH 0/2] dmaengine: ti: k3-udma: Fixes for alloc_chan_resources
-Date:   Wed, 27 May 2020 10:06:10 +0300
-Message-ID: <20200527070612.636-1-peter.ujfalusi@ti.com>
+Subject: [PATCH 2/2] dmaengine: ti: k3-udma: Fix the running channel handling in alloc_chan_resources
+Date:   Wed, 27 May 2020 10:06:12 +0300
+Message-ID: <20200527070612.636-3-peter.ujfalusi@ti.com>
 X-Mailer: git-send-email 2.26.2
+In-Reply-To: <20200527070612.636-1-peter.ujfalusi@ti.com>
+References: <20200527070612.636-1-peter.ujfalusi@ti.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
@@ -62,27 +64,29 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Hi,
+In the unlikely case when the channel is running (RT enabled) during
+alloc_chan_resources then we should use udma_reset_chan() and not
+udma_stop() as the later is trying to initiate a teardown on the channel,
+which is not valid at this point.
 
-It turned out that udma_stop() can not be used to stop the channel which was
-left enabled during boot (missing cleanup in early boot) since it would initiate
-teardown. This is not supported on non configured channels.
-Simply reset the running channel instead fixes the issue.
-
-While looking at this issue I have noticed that the cleanup path misses
-resources if the error happens early.
-
-Regards,
-Peter
+Signed-off-by: Peter Ujfalusi <peter.ujfalusi@ti.com>
 ---
-Peter Ujfalusi (2):
-  dmaengine: ti: k3-udma: Fix cleanup code for alloc_chan_resources
-  dmaengine: ti: k3-udma: Fix the running channel handling in
-    alloc_chan_resources
+ drivers/dma/ti/k3-udma.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
- drivers/dma/ti/k3-udma.c | 33 +++++++++++++++++----------------
- 1 file changed, 17 insertions(+), 16 deletions(-)
-
+diff --git a/drivers/dma/ti/k3-udma.c b/drivers/dma/ti/k3-udma.c
+index 502d7f2edd8a..0d5fb154b8e2 100644
+--- a/drivers/dma/ti/k3-udma.c
++++ b/drivers/dma/ti/k3-udma.c
+@@ -1848,7 +1848,7 @@ static int udma_alloc_chan_resources(struct dma_chan *chan)
+ 
+ 	if (udma_is_chan_running(uc)) {
+ 		dev_warn(ud->dev, "chan%d: is running!\n", uc->id);
+-		udma_stop(uc);
++		udma_reset_chan(uc, false);
+ 		if (udma_is_chan_running(uc)) {
+ 			dev_err(ud->dev, "chan%d: won't stop!\n", uc->id);
+ 			ret = -EBUSY;
 -- 
 Peter
 
