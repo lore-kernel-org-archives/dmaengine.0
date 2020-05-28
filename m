@@ -2,106 +2,209 @@ Return-Path: <SRS0=6+jZ=7K=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.7 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 533A5C433DF
-	for <dmaengine@archiver.kernel.org>; Thu, 28 May 2020 20:38:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 672F3C433E1
+	for <dmaengine@archiver.kernel.org>; Thu, 28 May 2020 22:24:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 32EA12088E
-	for <dmaengine@archiver.kernel.org>; Thu, 28 May 2020 20:38:51 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="I1cMDUG4"
+	by mail.kernel.org (Postfix) with ESMTP id 43E30208A7
+	for <dmaengine@archiver.kernel.org>; Thu, 28 May 2020 22:24:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2407324AbgE1Uir (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Thu, 28 May 2020 16:38:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43336 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2407218AbgE1Uip (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Thu, 28 May 2020 16:38:45 -0400
-Received: from mail-pg1-x544.google.com (mail-pg1-x544.google.com [IPv6:2607:f8b0:4864:20::544])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9010CC08C5C6;
-        Thu, 28 May 2020 13:38:45 -0700 (PDT)
-Received: by mail-pg1-x544.google.com with SMTP id d10so143813pgn.4;
-        Thu, 28 May 2020 13:38:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=uUmAHxoLCci70CIyQKHJVkgQVBujsUNyRL0aI0R0aqo=;
-        b=I1cMDUG4Wbl6ZX/z5HWJTm2du5yh0gMU/JPmyLOA29gjDIaqZCuFlq1Akwl3x2elMt
-         ocKJz6UFSs9RV8uUTGDo6qDUWd3ujnAqcC0wVQzxSf5C4KAdnYFrC2ux/mp9wHzQoU3I
-         8sxF6hLFmWwdrvdGrJQR23vCVeXjvY3uf4ee+i0j7VVO7ldGgG6UHkEwvEs7NSJvucXr
-         u/HX7g9A/JHwTmtNm/pizzgaEFtaHRhTXL/OSQZU6alHCgQkzALi5i6A9EqjaPivx4Ho
-         YuugbZTUH2NeinzeiTFXp2XiO++0eeSonK5SMIVAiaoA3IMaWw/M6AJvPgZqSbvhlFLk
-         lFIQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=uUmAHxoLCci70CIyQKHJVkgQVBujsUNyRL0aI0R0aqo=;
-        b=IxfjS8uS3RD4gupLgRT3aQi0J1qxkiIQW8burB1ym+nuF6AbCWIJwtbFL5h1xsBNH+
-         eU7ycey3at/NcmDQMpKsMYM9IRqMz0hdNjD2ZioW6pdWdPIA3I9jWc6o6jDHcJKOjWBS
-         rt53vx1V3BJy53ODlDc/PZI5jwN/5xYVVY4OgnGjTZrceKGGDQr57eVXaUhc7qvxCcll
-         M00oitiocwwMAQo3gs4HvIiLoLzLlBElYDyG0JBOa2tbxZPs2WrJkKYREhUp3yC/s0Zv
-         hLGh0bJwK5Ja+mUXQQCrhqZqCXS1WaIxjKFmYc8VQDwqaXqKGvolOWD4C6BS6uWG1ec1
-         A1nA==
-X-Gm-Message-State: AOAM531wGp0ZtG3xBvNfUpzdu9rBHP+Pd5VibI6KiUHzhzTmvCl5wPr5
-        bgzA1RdRMbH5Iu2FxCh4FvYL6UwO90DnPSm0Qfc=
-X-Google-Smtp-Source: ABdhPJwe8DmfXiHurV89f6av71936kl+HM4lp/ZzAxpMRXlN2Qv/GB4+dYblIxf4soDqHWyWkLuJ27OfLk4KVGGMVXw=
-X-Received: by 2002:aa7:99c8:: with SMTP id v8mr5137217pfi.36.1590698325132;
- Thu, 28 May 2020 13:38:45 -0700 (PDT)
-MIME-Version: 1.0
-References: <20200526225022.20405-1-Sergey.Semin@baikalelectronics.ru>
- <20200526225022.20405-10-Sergey.Semin@baikalelectronics.ru>
- <20200528145224.GT1634618@smile.fi.intel.com> <20200528154022.3reghhjcd4dnsr3g@mobilestation>
-In-Reply-To: <20200528154022.3reghhjcd4dnsr3g@mobilestation>
-From:   Andy Shevchenko <andy.shevchenko@gmail.com>
-Date:   Thu, 28 May 2020 23:38:28 +0300
-Message-ID: <CAHp75VcPVO6yOmyrSBfjVk5eSYhC4J0QXAfOhjRXGd4=FemezA@mail.gmail.com>
-Subject: Re: [PATCH v3 09/10] dmaengine: dw: Introduce max burst length hw config
-To:     Serge Semin <Sergey.Semin@baikalelectronics.ru>
-Cc:     Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+        id S2437130AbgE1WYV (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Thu, 28 May 2020 18:24:21 -0400
+Received: from mail.baikalelectronics.com ([87.245.175.226]:44684 "EHLO
+        mail.baikalelectronics.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2437114AbgE1WYU (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Thu, 28 May 2020 18:24:20 -0400
+Received: from localhost (unknown [127.0.0.1])
+        by mail.baikalelectronics.ru (Postfix) with ESMTP id AEE19803077A;
+        Thu, 28 May 2020 22:24:15 +0000 (UTC)
+X-Virus-Scanned: amavisd-new at baikalelectronics.ru
+Received: from mail.baikalelectronics.ru ([127.0.0.1])
+        by localhost (mail.baikalelectronics.ru [127.0.0.1]) (amavisd-new, port 10024)
+        with ESMTP id SnxYG2pkT2E8; Fri, 29 May 2020 01:24:14 +0300 (MSK)
+From:   Serge Semin <Sergey.Semin@baikalelectronics.ru>
+To:     Vinod Koul <vkoul@kernel.org>, Viresh Kumar <vireshk@kernel.org>,
+        Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+        Dan Williams <dan.j.williams@intel.com>
+CC:     Serge Semin <Sergey.Semin@baikalelectronics.ru>,
         Serge Semin <fancer.lancer@gmail.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        Viresh Kumar <vireshk@kernel.org>,
-        Dan Williams <dan.j.williams@intel.com>,
         Alexey Malahov <Alexey.Malahov@baikalelectronics.ru>,
         Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
         Arnd Bergmann <arnd@arndb.de>,
-        Rob Herring <robh+dt@kernel.org>, linux-mips@vger.kernel.org,
-        devicetree <devicetree@vger.kernel.org>,
-        dmaengine <dmaengine@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        Rob Herring <robh+dt@kernel.org>, <linux-mips@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <dmaengine@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+Subject: [PATCH v4 10/11] dmaengine: dw: Introduce max burst length hw config
+Date:   Fri, 29 May 2020 01:24:00 +0300
+Message-ID: <20200528222401.26941-11-Sergey.Semin@baikalelectronics.ru>
+In-Reply-To: <20200528222401.26941-1-Sergey.Semin@baikalelectronics.ru>
+References: <20200528222401.26941-1-Sergey.Semin@baikalelectronics.ru>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7BIT
+Content-Type:   text/plain; charset=US-ASCII
+X-ClientProxiedBy: MAIL.baikal.int (192.168.51.25) To mail (192.168.51.25)
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On Thu, May 28, 2020 at 6:43 PM Serge Semin
-<Sergey.Semin@baikalelectronics.ru> wrote:
-> On Thu, May 28, 2020 at 05:52:24PM +0300, Andy Shevchenko wrote:
-> > On Wed, May 27, 2020 at 01:50:20AM +0300, Serge Semin wrote:
+IP core of the DW DMA controller may be synthesized with different
+max burst length of the transfers per each channel. According to Synopsis
+having the fixed maximum burst transactions length may provide some
+performance gain. At the same time setting up the source and destination
+multi size exceeding the max burst length limitation may cause a serious
+problems. In our case the DMA transaction just hangs up. In order to fix
+this lets introduce the max burst length platform config of the DW DMA
+controller device and don't let the DMA channels configuration code
+exceed the burst length hardware limitation.
 
-...
+Note the maximum burst length parameter can be detected either in runtime
+from the DWC parameter registers or from the dedicated DT property.
+Depending on the IP core configuration the maximum value can vary from
+channel to channel so by overriding the channel slave max_burst capability
+we make sure a DMA consumer will get the channel-specific max burst
+length.
 
-> > Perhaps,
-> >
-> >       /* DesignWare DMA supports burst value from 0 */
-> >       caps->min_burst = 0;
->
-> Regarding min_burst being zero. I don't fully understand what it means.
-> It means no burst or burst with minimum length or what?
-> In fact DW DMA burst length starts from 1. Remember the burst-length run-time
-> parameter we were arguing about? Anyway the driver makes sure that both
-> 0 and 1 requested burst length are setup as burst length of 1 in the
-> CTLx.SRC_MSIZE, CTLx.DST_MSIZE fields.
+Signed-off-by: Serge Semin <Sergey.Semin@baikalelectronics.ru>
+Cc: Alexey Malahov <Alexey.Malahov@baikalelectronics.ru>
+Cc: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Cc: Arnd Bergmann <arnd@arndb.de>
+Cc: Rob Herring <robh+dt@kernel.org>
+Cc: linux-mips@vger.kernel.org
+Cc: devicetree@vger.kernel.org
 
-Yeah, I also thought about it after I sent a message. 1 sounds better.
+---
 
+Changelog v2:
+- Rearrange SoBs.
+- Discard dwc_get_maxburst() accessor. It's enough to have a clamping
+  guard against exceeding the hardware max burst limitation.
+
+Changelog v3:
+- Override the slave channel max_burst capability instead of calculating
+  the minimum value of max burst lengths and setting the DMA-device
+  generic capability.
+
+Changelog v4:
+- Clamp the dst and src burst lengths in the generic dwc_config() method
+  instead of doing that in the encode_maxburst() callback.
+- Define max_burst with u32 type in struct dw_dma_platform_data.
+- Perform of_property_read_u32_array() directly into the platform data
+  max_burst member.
+---
+ drivers/dma/dw/core.c                | 10 ++++++++++
+ drivers/dma/dw/of.c                  |  5 +++++
+ drivers/dma/dw/regs.h                |  2 ++
+ include/linux/platform_data/dma-dw.h |  4 ++++
+ 4 files changed, 21 insertions(+)
+
+diff --git a/drivers/dma/dw/core.c b/drivers/dma/dw/core.c
+index a8cebb1dbb68..60ef779fc5e0 100644
+--- a/drivers/dma/dw/core.c
++++ b/drivers/dma/dw/core.c
+@@ -791,6 +791,11 @@ static int dwc_config(struct dma_chan *chan, struct dma_slave_config *sconfig)
+ 
+ 	memcpy(&dwc->dma_sconfig, sconfig, sizeof(*sconfig));
+ 
++	dwc->dma_sconfig.src_maxburst =
++		clamp(dwc->dma_sconfig.src_maxburst, 0U, dwc->max_burst);
++	dwc->dma_sconfig.dst_maxburst =
++		clamp(dwc->dma_sconfig.dst_maxburst, 0U, dwc->max_burst);
++
+ 	dw->encode_maxburst(dwc, &dwc->dma_sconfig.src_maxburst);
+ 	dw->encode_maxburst(dwc, &dwc->dma_sconfig.dst_maxburst);
+ 
+@@ -1051,7 +1056,9 @@ static void dwc_free_chan_resources(struct dma_chan *chan)
+ 
+ static void dwc_caps(struct dma_chan *chan, struct dma_slave_caps *caps)
+ {
++	struct dw_dma_chan *dwc = to_dw_dma_chan(chan);
+ 
++	caps->max_burst = dwc->max_burst;
+ }
+ 
+ int do_dma_probe(struct dw_dma_chip *chip)
+@@ -1194,9 +1201,12 @@ int do_dma_probe(struct dw_dma_chip *chip)
+ 			dwc->nollp =
+ 				(dwc_params >> DWC_PARAMS_MBLK_EN & 0x1) == 0 ||
+ 				(dwc_params >> DWC_PARAMS_HC_LLP & 0x1) == 1;
++			dwc->max_burst =
++				(0x4 << (dwc_params >> DWC_PARAMS_MSIZE & 0x7));
+ 		} else {
+ 			dwc->block_size = pdata->block_size;
+ 			dwc->nollp = !pdata->multi_block[i];
++			dwc->max_burst = pdata->max_burst[i] ?: DW_DMA_MAX_BURST;
+ 		}
+ 	}
+ 
+diff --git a/drivers/dma/dw/of.c b/drivers/dma/dw/of.c
+index 9e27831dee32..1474b3817ef4 100644
+--- a/drivers/dma/dw/of.c
++++ b/drivers/dma/dw/of.c
+@@ -98,6 +98,11 @@ struct dw_dma_platform_data *dw_dma_parse_dt(struct platform_device *pdev)
+ 			pdata->multi_block[tmp] = 1;
+ 	}
+ 
++	if (of_property_read_u32_array(np, "snps,max-burst-len", pdata->max_burst,
++				       nr_channels)) {
++		memset32(pdata->max_burst, DW_DMA_MAX_BURST, nr_channels);
++	}
++
+ 	if (!of_property_read_u32(np, "snps,dma-protection-control", &tmp)) {
+ 		if (tmp > CHAN_PROTCTL_MASK)
+ 			return NULL;
+diff --git a/drivers/dma/dw/regs.h b/drivers/dma/dw/regs.h
+index 1ab840b06e79..76654bd13c1a 100644
+--- a/drivers/dma/dw/regs.h
++++ b/drivers/dma/dw/regs.h
+@@ -126,6 +126,7 @@ struct dw_dma_regs {
+ /* Bitfields in DWC_PARAMS */
+ #define DWC_PARAMS_MBLK_EN	11		/* multi block transfer */
+ #define DWC_PARAMS_HC_LLP	13		/* set LLP register to zero */
++#define DWC_PARAMS_MSIZE	16		/* max group transaction size */
+ 
+ /* bursts size */
+ enum dw_dma_msize {
+@@ -284,6 +285,7 @@ struct dw_dma_chan {
+ 	/* hardware configuration */
+ 	unsigned int		block_size;
+ 	bool			nollp;
++	u32			max_burst;
+ 
+ 	/* custom slave configuration */
+ 	struct dw_dma_slave	dws;
+diff --git a/include/linux/platform_data/dma-dw.h b/include/linux/platform_data/dma-dw.h
+index f3eaf9ec00a1..29c484da2979 100644
+--- a/include/linux/platform_data/dma-dw.h
++++ b/include/linux/platform_data/dma-dw.h
+@@ -12,6 +12,7 @@
+ 
+ #define DW_DMA_MAX_NR_MASTERS	4
+ #define DW_DMA_MAX_NR_CHANNELS	8
++#define DW_DMA_MAX_BURST	256
+ 
+ /**
+  * struct dw_dma_slave - Controller-specific information about a slave
+@@ -42,6 +43,8 @@ struct dw_dma_slave {
+  * @data_width: Maximum data width supported by hardware per AHB master
+  *		(in bytes, power of 2)
+  * @multi_block: Multi block transfers supported by hardware per channel.
++ * @max_burst: Maximum value of burst transaction size supported by hardware
++ *	       per channel (in units of CTL.SRC_TR_WIDTH/CTL.DST_TR_WIDTH).
+  * @protctl: Protection control signals setting per channel.
+  */
+ struct dw_dma_platform_data {
+@@ -56,6 +59,7 @@ struct dw_dma_platform_data {
+ 	unsigned char	nr_masters;
+ 	unsigned char	data_width[DW_DMA_MAX_NR_MASTERS];
+ 	unsigned char	multi_block[DW_DMA_MAX_NR_CHANNELS];
++	u32		max_burst[DW_DMA_MAX_NR_CHANNELS];
+ #define CHAN_PROTCTL_PRIVILEGED		BIT(0)
+ #define CHAN_PROTCTL_BUFFERABLE		BIT(1)
+ #define CHAN_PROTCTL_CACHEABLE		BIT(2)
 -- 
-With Best Regards,
-Andy Shevchenko
+2.26.2
+
