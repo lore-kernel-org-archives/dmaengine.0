@@ -4,42 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-6.7 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
+	URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 388A9C433E1
-	for <dmaengine@archiver.kernel.org>; Fri, 29 May 2020 14:41:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D5137C433E5
+	for <dmaengine@archiver.kernel.org>; Fri, 29 May 2020 14:41:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 214192100A
-	for <dmaengine@archiver.kernel.org>; Fri, 29 May 2020 14:41:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BD9662071A
+	for <dmaengine@archiver.kernel.org>; Fri, 29 May 2020 14:41:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727108AbgE2OlE (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 29 May 2020 10:41:04 -0400
-Received: from mail.baikalelectronics.com ([87.245.175.226]:48846 "EHLO
+        id S1727113AbgE2OlM (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 29 May 2020 10:41:12 -0400
+Received: from mail.baikalelectronics.com ([87.245.175.226]:48958 "EHLO
         mail.baikalelectronics.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726939AbgE2OlE (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Fri, 29 May 2020 10:41:04 -0400
+        with ESMTP id S1727787AbgE2OlL (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Fri, 29 May 2020 10:41:11 -0400
 Received: from localhost (unknown [127.0.0.1])
-        by mail.baikalelectronics.ru (Postfix) with ESMTP id 9353A803077A;
-        Fri, 29 May 2020 14:41:00 +0000 (UTC)
+        by mail.baikalelectronics.ru (Postfix) with ESMTP id 1A7A98029EA3;
+        Fri, 29 May 2020 14:41:06 +0000 (UTC)
 X-Virus-Scanned: amavisd-new at baikalelectronics.ru
 Received: from mail.baikalelectronics.ru ([127.0.0.1])
         by localhost (mail.baikalelectronics.ru [127.0.0.1]) (amavisd-new, port 10024)
-        with ESMTP id Ocl0qMsTQRXG; Fri, 29 May 2020 17:40:59 +0300 (MSK)
+        with ESMTP id VioAOvQ-z7cs; Fri, 29 May 2020 17:41:05 +0300 (MSK)
 From:   Serge Semin <Sergey.Semin@baikalelectronics.ru>
 To:     Vinod Koul <vkoul@kernel.org>, Viresh Kumar <vireshk@kernel.org>,
+        Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
         Dan Williams <dan.j.williams@intel.com>
 CC:     Serge Semin <Sergey.Semin@baikalelectronics.ru>,
         Serge Semin <fancer.lancer@gmail.com>,
-        Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
         Alexey Malahov <Alexey.Malahov@baikalelectronics.ru>,
         Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
         Arnd Bergmann <arnd@arndb.de>,
         Rob Herring <robh+dt@kernel.org>, <linux-mips@vger.kernel.org>,
         <devicetree@vger.kernel.org>, <dmaengine@vger.kernel.org>,
         <linux-kernel@vger.kernel.org>
-Subject: [PATCH v5 03/11] dmaengine: Introduce min burst length capability
-Date:   Fri, 29 May 2020 17:40:46 +0300
-Message-ID: <20200529144054.4251-4-Sergey.Semin@baikalelectronics.ru>
+Subject: [PATCH v5 10/11] dmaengine: dw: Introduce max burst length hw config
+Date:   Fri, 29 May 2020 17:40:53 +0300
+Message-ID: <20200529144054.4251-11-Sergey.Semin@baikalelectronics.ru>
 In-Reply-To: <20200529144054.4251-1-Sergey.Semin@baikalelectronics.ru>
 References: <20200529144054.4251-1-Sergey.Semin@baikalelectronics.ru>
 MIME-Version: 1.0
@@ -51,10 +51,22 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Some hardware aside from default 0/1 may have greater minimum burst
-transactions length constraints. Here we introduce the DMA device
-and slave capability, which if required can be initialized by the DMA
-engine driver with the device-specific value.
+IP core of the DW DMA controller may be synthesized with different
+max burst length of the transfers per each channel. According to Synopsis
+having the fixed maximum burst transactions length may provide some
+performance gain. At the same time setting up the source and destination
+multi size exceeding the max burst length limitation may cause a serious
+problems. In our case the DMA transaction just hangs up. In order to fix
+this lets introduce the max burst length platform config of the DW DMA
+controller device and don't let the DMA channels configuration code
+exceed the burst length hardware limitation.
+
+Note the maximum burst length parameter can be detected either in runtime
+from the DWC parameter registers or from the dedicated DT property.
+Depending on the IP core configuration the maximum value can vary from
+channel to channel so by overriding the channel slave max_burst capability
+we make sure a DMA consumer will get the channel-specific max burst
+length.
 
 Signed-off-by: Serge Semin <Sergey.Semin@baikalelectronics.ru>
 Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
@@ -67,62 +79,128 @@ Cc: devicetree@vger.kernel.org
 
 ---
 
-Changelog v3:
-- This is a new patch created as a result of the discussion with Vinud and
-  Andy in the framework of DW DMA burst and LLP capabilities.
----
- drivers/dma/dmaengine.c   | 1 +
- include/linux/dmaengine.h | 4 ++++
- 2 files changed, 5 insertions(+)
+Changelog v2:
+- Rearrange SoBs.
+- Discard dwc_get_maxburst() accessor. It's enough to have a clamping
+  guard against exceeding the hardware max burst limitation.
 
-diff --git a/drivers/dma/dmaengine.c b/drivers/dma/dmaengine.c
-index d31076d9ef25..b332ffe52780 100644
---- a/drivers/dma/dmaengine.c
-+++ b/drivers/dma/dmaengine.c
-@@ -590,6 +590,7 @@ int dma_get_slave_caps(struct dma_chan *chan, struct dma_slave_caps *caps)
- 	caps->src_addr_widths = device->src_addr_widths;
- 	caps->dst_addr_widths = device->dst_addr_widths;
- 	caps->directions = device->directions;
-+	caps->min_burst = device->min_burst;
- 	caps->max_burst = device->max_burst;
- 	caps->residue_granularity = device->residue_granularity;
- 	caps->descriptor_reuse = device->descriptor_reuse;
-diff --git a/include/linux/dmaengine.h b/include/linux/dmaengine.h
-index e1c03339918f..0c7403b27133 100644
---- a/include/linux/dmaengine.h
-+++ b/include/linux/dmaengine.h
-@@ -465,6 +465,7 @@ enum dma_residue_granularity {
-  *	Since the enum dma_transfer_direction is not defined as bit flag for
-  *	each type, the dma controller should set BIT(<TYPE>) and same
-  *	should be checked by controller as well
-+ * @min_burst: min burst capability per-transfer
-  * @max_burst: max burst capability per-transfer
-  * @cmd_pause: true, if pause is supported (i.e. for reading residue or
-  *	       for resume later)
-@@ -478,6 +479,7 @@ struct dma_slave_caps {
- 	u32 src_addr_widths;
- 	u32 dst_addr_widths;
- 	u32 directions;
-+	u32 min_burst;
- 	u32 max_burst;
- 	bool cmd_pause;
- 	bool cmd_resume;
-@@ -769,6 +771,7 @@ struct dma_filter {
-  *	Since the enum dma_transfer_direction is not defined as bit flag for
-  *	each type, the dma controller should set BIT(<TYPE>) and same
-  *	should be checked by controller as well
-+ * @min_burst: min burst capability per-transfer
-  * @max_burst: max burst capability per-transfer
-  * @residue_granularity: granularity of the transfer residue reported
-  *	by tx_status
-@@ -839,6 +842,7 @@ struct dma_device {
- 	u32 src_addr_widths;
- 	u32 dst_addr_widths;
- 	u32 directions;
-+	u32 min_burst;
- 	u32 max_burst;
- 	bool descriptor_reuse;
- 	enum dma_residue_granularity residue_granularity;
+Changelog v3:
+- Override the slave channel max_burst capability instead of calculating
+  the minimum value of max burst lengths and setting the DMA-device
+  generic capability.
+
+Changelog v5:
+- Clamp the dst and src burst lengths in the generic dwc_config() method
+  instead of doing that in the encode_maxburst() callback.
+- Define max_burst with u32 type in struct dw_dma_platform_data.
+- Perform of_property_read_u32_array() directly into the platform data
+  max_burst member.
+
+Changelog v6:
+- Move DW_DMA_MAX_BURST macro definition to the previous patch.
+---
+ drivers/dma/dw/core.c                | 10 ++++++++++
+ drivers/dma/dw/of.c                  |  5 +++++
+ drivers/dma/dw/regs.h                |  2 ++
+ include/linux/platform_data/dma-dw.h |  3 +++
+ 4 files changed, 20 insertions(+)
+
+diff --git a/drivers/dma/dw/core.c b/drivers/dma/dw/core.c
+index 4887aa2fc73c..588b9bae827c 100644
+--- a/drivers/dma/dw/core.c
++++ b/drivers/dma/dw/core.c
+@@ -791,6 +791,11 @@ static int dwc_config(struct dma_chan *chan, struct dma_slave_config *sconfig)
+ 
+ 	memcpy(&dwc->dma_sconfig, sconfig, sizeof(*sconfig));
+ 
++	dwc->dma_sconfig.src_maxburst =
++		clamp(dwc->dma_sconfig.src_maxburst, 0U, dwc->max_burst);
++	dwc->dma_sconfig.dst_maxburst =
++		clamp(dwc->dma_sconfig.dst_maxburst, 0U, dwc->max_burst);
++
+ 	dw->encode_maxburst(dwc, &dwc->dma_sconfig.src_maxburst);
+ 	dw->encode_maxburst(dwc, &dwc->dma_sconfig.dst_maxburst);
+ 
+@@ -1051,7 +1056,9 @@ static void dwc_free_chan_resources(struct dma_chan *chan)
+ 
+ static void dwc_caps(struct dma_chan *chan, struct dma_slave_caps *caps)
+ {
++	struct dw_dma_chan *dwc = to_dw_dma_chan(chan);
+ 
++	caps->max_burst = dwc->max_burst;
+ }
+ 
+ int do_dma_probe(struct dw_dma_chip *chip)
+@@ -1194,9 +1201,12 @@ int do_dma_probe(struct dw_dma_chip *chip)
+ 			dwc->nollp =
+ 				(dwc_params >> DWC_PARAMS_MBLK_EN & 0x1) == 0 ||
+ 				(dwc_params >> DWC_PARAMS_HC_LLP & 0x1) == 1;
++			dwc->max_burst =
++				(0x4 << (dwc_params >> DWC_PARAMS_MSIZE & 0x7));
+ 		} else {
+ 			dwc->block_size = pdata->block_size;
+ 			dwc->nollp = !pdata->multi_block[i];
++			dwc->max_burst = pdata->max_burst[i] ?: DW_DMA_MAX_BURST;
+ 		}
+ 	}
+ 
+diff --git a/drivers/dma/dw/of.c b/drivers/dma/dw/of.c
+index 9e27831dee32..1474b3817ef4 100644
+--- a/drivers/dma/dw/of.c
++++ b/drivers/dma/dw/of.c
+@@ -98,6 +98,11 @@ struct dw_dma_platform_data *dw_dma_parse_dt(struct platform_device *pdev)
+ 			pdata->multi_block[tmp] = 1;
+ 	}
+ 
++	if (of_property_read_u32_array(np, "snps,max-burst-len", pdata->max_burst,
++				       nr_channels)) {
++		memset32(pdata->max_burst, DW_DMA_MAX_BURST, nr_channels);
++	}
++
+ 	if (!of_property_read_u32(np, "snps,dma-protection-control", &tmp)) {
+ 		if (tmp > CHAN_PROTCTL_MASK)
+ 			return NULL;
+diff --git a/drivers/dma/dw/regs.h b/drivers/dma/dw/regs.h
+index 1ab840b06e79..76654bd13c1a 100644
+--- a/drivers/dma/dw/regs.h
++++ b/drivers/dma/dw/regs.h
+@@ -126,6 +126,7 @@ struct dw_dma_regs {
+ /* Bitfields in DWC_PARAMS */
+ #define DWC_PARAMS_MBLK_EN	11		/* multi block transfer */
+ #define DWC_PARAMS_HC_LLP	13		/* set LLP register to zero */
++#define DWC_PARAMS_MSIZE	16		/* max group transaction size */
+ 
+ /* bursts size */
+ enum dw_dma_msize {
+@@ -284,6 +285,7 @@ struct dw_dma_chan {
+ 	/* hardware configuration */
+ 	unsigned int		block_size;
+ 	bool			nollp;
++	u32			max_burst;
+ 
+ 	/* custom slave configuration */
+ 	struct dw_dma_slave	dws;
+diff --git a/include/linux/platform_data/dma-dw.h b/include/linux/platform_data/dma-dw.h
+index 369e41e9dcc9..4f681df85c27 100644
+--- a/include/linux/platform_data/dma-dw.h
++++ b/include/linux/platform_data/dma-dw.h
+@@ -44,6 +44,8 @@ struct dw_dma_slave {
+  * @data_width: Maximum data width supported by hardware per AHB master
+  *		(in bytes, power of 2)
+  * @multi_block: Multi block transfers supported by hardware per channel.
++ * @max_burst: Maximum value of burst transaction size supported by hardware
++ *	       per channel (in units of CTL.SRC_TR_WIDTH/CTL.DST_TR_WIDTH).
+  * @protctl: Protection control signals setting per channel.
+  */
+ struct dw_dma_platform_data {
+@@ -58,6 +60,7 @@ struct dw_dma_platform_data {
+ 	unsigned char	nr_masters;
+ 	unsigned char	data_width[DW_DMA_MAX_NR_MASTERS];
+ 	unsigned char	multi_block[DW_DMA_MAX_NR_CHANNELS];
++	u32		max_burst[DW_DMA_MAX_NR_CHANNELS];
+ #define CHAN_PROTCTL_PRIVILEGED		BIT(0)
+ #define CHAN_PROTCTL_BUFFERABLE		BIT(1)
+ #define CHAN_PROTCTL_CACHEABLE		BIT(2)
 -- 
 2.26.2
 
