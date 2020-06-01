@@ -1,105 +1,105 @@
-Return-Path: <SRS0=ANbA=7L=vger.kernel.org=dmaengine-owner@kernel.org>
+Return-Path: <SRS0=XMSC=7O=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.1 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.3 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=unavailable
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4700CC433DF
-	for <dmaengine@archiver.kernel.org>; Fri, 29 May 2020 21:24:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D4FD1C433DF
+	for <dmaengine@archiver.kernel.org>; Mon,  1 Jun 2020 04:20:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 18F1420810
-	for <dmaengine@archiver.kernel.org>; Fri, 29 May 2020 21:24:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1590787464;
-	bh=YWyIq/178DCdspHNjqPNAh5CzI4dPnsCJP3BOTj/Fs8=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:List-ID:From;
-	b=PcdNasqc4PO+F64Syq+GLmtQJq3pFF9iHvzx38EGU9ZloOdtDyOrxW04jcU0ECGUU
-	 EMq+0wt/DdtbX1V6qaie78OGP3HdnRLYtwOIiNkiLhRWKPFs9J4Se4Howc84VIZmuu
-	 /KN/R7Re30YdZLZ0uwHxaD28JasJypmE9s6jmLUs=
+	by mail.kernel.org (Postfix) with ESMTP id A93E5206C3
+	for <dmaengine@archiver.kernel.org>; Mon,  1 Jun 2020 04:20:52 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="yEeMkr8V"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728086AbgE2VYU (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 29 May 2020 17:24:20 -0400
-Received: from mail-il1-f195.google.com ([209.85.166.195]:40789 "EHLO
-        mail-il1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727879AbgE2VYU (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Fri, 29 May 2020 17:24:20 -0400
-Received: by mail-il1-f195.google.com with SMTP id t8so3376693ilm.7;
-        Fri, 29 May 2020 14:24:19 -0700 (PDT)
+        id S1725283AbgFAEUw (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 1 Jun 2020 00:20:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49944 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725765AbgFAEUv (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Mon, 1 Jun 2020 00:20:51 -0400
+Received: from mail-pl1-x641.google.com (mail-pl1-x641.google.com [IPv6:2607:f8b0:4864:20::641])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C8C5CC08C5C9
+        for <dmaengine@vger.kernel.org>; Sun, 31 May 2020 21:20:51 -0700 (PDT)
+Received: by mail-pl1-x641.google.com with SMTP id x11so3710207plv.9
+        for <dmaengine@vger.kernel.org>; Sun, 31 May 2020 21:20:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=hMKh+B5RDPq+o7Oive8w/r87Zbfpk7DQQkXRUfW4IOg=;
+        b=yEeMkr8V1c7yN+4qOTxaNQ2aaHNewu0hEjwsE4ztlBYLaxeAoUTDgbzHG/eNwqpA/P
+         ADC6E0J1xwDpDPCI3hzLDl7hJc3DjP2FcwWAMTtAChrAFq2fzvIp6o2P4yHYNjEucjby
+         2aa/lx1bNvFNzOasCR3b6SXbaqGnLqDHgqMDqKGnpAx0iCGMUcM+C54w12zv1ywDzbpB
+         ZZGv6z+3pmzCiZplGNcXZZUySenCxB2gXecX/wJxb49TcOM+nyCZJwij1F0qCVM5mb/d
+         wYMIC57zxKxJQp58gqL7cVOXdtkGbfVuvswMC8yXpR865usDWXl7UpqwjCLkn1J1mOSh
+         PvMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=uowho2igbLeYdvcPX3pvLRT9zcMohs3wO1m6OZGWISE=;
-        b=ay2ADklElmDDyXLi5yyOTViBj6iRx8/zrpc2D5rhziKm75c7+aIfclTiT2LVzJVbKt
-         BfUB2H4CEDK0Xqt1Bx184YmLotCyOfF03p+jB2QPEwrHvtSH1PlxZmofSbBQP8XoOFrm
-         qRPq+w1J8ppBqx3p1tg4enaBAUcAof0rbzgLmZwg58/02YFjiYnwMddMv+ZHaSNpWKlx
-         lfRXkZSORAYeMdwuinzSIN6Rk4UpXIdsDuqRz7ovp8R8bXKhpAh5KIKKzIELgT0RChEt
-         tk3mB09X48eaj4ykyBbCKpAW7PRhvCa9BeUlcyrIVHFsuKGsmlvvduUIMswO/Gd3Kl1J
-         N7JA==
-X-Gm-Message-State: AOAM530tSpBWNyPkpiNPIcnFxjBV5pXzQZDa+jhfVLxVK4cLIqqwE1PB
-        PVXgKJ/71zwlNQP9WaJdug==
-X-Google-Smtp-Source: ABdhPJz/qLHW9IoKyI+iX/bqpRWeziSYW8gFNNZGjEIqFx7OXO5F0hX1+RCCulHWqGa35KT8U1Cm4g==
-X-Received: by 2002:a92:5fda:: with SMTP id i87mr7186744ill.292.1590787459003;
-        Fri, 29 May 2020 14:24:19 -0700 (PDT)
-Received: from xps15 ([64.188.179.252])
-        by smtp.gmail.com with ESMTPSA id i10sm5312514ilp.28.2020.05.29.14.24.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 29 May 2020 14:24:18 -0700 (PDT)
-Received: (nullmailer pid 2994336 invoked by uid 1000);
-        Fri, 29 May 2020 21:24:13 -0000
-Date:   Fri, 29 May 2020 15:24:13 -0600
-From:   Rob Herring <robh@kernel.org>
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=hMKh+B5RDPq+o7Oive8w/r87Zbfpk7DQQkXRUfW4IOg=;
+        b=ObbOBKdqEj9VLcTdDEXq6AB/S7YZ6f46D7+V9hDwczEvIld5DU3Rsks9vMIFW2/eOh
+         Ob1ghA67fgAgCiZVbDhP1Wfx7VgRAeFdRQ1J3ihPh4zu/kBuLTVkr1/KG/BI2wEHpDiF
+         jBE4mebopljVxsjaqCwesIwcMMCjc8lD8ywykvsZu/hrQqN2fLnwLgRKAU4/5Z0cinwU
+         mMvo9bLf96Gw4oR+QcgpDM9Pj+5Az6o9WmWs7GTEp+5aqJtngX3Sv//BQ9HrN3BeCeJ8
+         5FXP9o7wTqEZJwJ2V/KjJmDAbcIuqDCRo4r2ee+ju9pf28ZROD0JX+6nptPWwDhSCPuM
+         iFNg==
+X-Gm-Message-State: AOAM531c5y24NY8utd6Fl2wcJ5OBv8eaR+2F40kUnRkqCwWeQoiQqI8A
+        b/ymCfOhEs0NeslRH6jatA08yQ==
+X-Google-Smtp-Source: ABdhPJyaIPN0AabB07SDvg8FYmCd2w+PPO/BCoqJqMkvufUjUsRbWQviG1tVmqdXzOsE/DE1c0k1RA==
+X-Received: by 2002:a17:90b:888:: with SMTP id bj8mr21322762pjb.148.1590985251318;
+        Sun, 31 May 2020 21:20:51 -0700 (PDT)
+Received: from localhost ([122.172.62.209])
+        by smtp.gmail.com with ESMTPSA id x132sm12983751pfd.214.2020.05.31.21.20.50
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 31 May 2020 21:20:50 -0700 (PDT)
+Date:   Mon, 1 Jun 2020 09:50:48 +0530
+From:   Viresh Kumar <viresh.kumar@linaro.org>
 To:     Serge Semin <Sergey.Semin@baikalelectronics.ru>
-Cc:     linux-mips@vger.kernel.org, Serge Semin <fancer.lancer@gmail.com>,
-        dmaengine@vger.kernel.org, Arnd Bergmann <arnd@arndb.de>,
-        Alexey Malahov <Alexey.Malahov@baikalelectronics.ru>,
+Cc:     Vinod Koul <vkoul@kernel.org>, Viresh Kumar <vireshk@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
         Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-        devicetree@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
-        Viresh Kumar <vireshk@kernel.org>,
-        linux-kernel@vger.kernel.org,
+        Serge Semin <fancer.lancer@gmail.com>,
+        Rob Herring <robh@kernel.org>,
+        Alexey Malahov <Alexey.Malahov@baikalelectronics.ru>,
         Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
-        Vinod Koul <vkoul@kernel.org>
-Subject: Re: [PATCH v5 02/11] dt-bindings: dma: dw: Add max burst transaction
- length property
-Message-ID: <20200529212413.GA2994283@bogus>
+        Arnd Bergmann <arnd@arndb.de>, linux-mips@vger.kernel.org,
+        dmaengine@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v5 01/11] dt-bindings: dma: dw: Convert DW DMAC to DT
+ binding
+Message-ID: <20200601042048.hk73khbz4wipevct@vireshk-i7>
 References: <20200529144054.4251-1-Sergey.Semin@baikalelectronics.ru>
- <20200529144054.4251-3-Sergey.Semin@baikalelectronics.ru>
+ <20200529144054.4251-2-Sergey.Semin@baikalelectronics.ru>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20200529144054.4251-3-Sergey.Semin@baikalelectronics.ru>
+In-Reply-To: <20200529144054.4251-2-Sergey.Semin@baikalelectronics.ru>
+User-Agent: NeoMutt/20180716-391-311a52
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On Fri, 29 May 2020 17:40:45 +0300, Serge Semin wrote:
-> This array property is used to indicate the maximum burst transaction
-> length supported by each DMA channel.
+On 29-05-20, 17:40, Serge Semin wrote:
+> Modern device tree bindings are supposed to be created as YAML-files
+> in accordance with dt-schema. This commit replaces the Synopsis
+> Designware DMA controller legacy bare text bindings with YAML file.
+> The only required prorties are "compatible", "reg", "#dma-cells" and
+> "interrupts", which will be used by the driver to correctly find the
+> controller memory region and handle its events. The rest of the properties
+> are optional, since in case if either "dma-channels" or "dma-masters" isn't
+> specified, the driver will attempt to auto-detect the IP core
+> configuration.
 > 
 > Signed-off-by: Serge Semin <Sergey.Semin@baikalelectronics.ru>
-> Cc: Alexey Malahov <Alexey.Malahov@baikalelectronics.ru>
-> Cc: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-> Cc: Arnd Bergmann <arnd@arndb.de>
-> Cc: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-> Cc: linux-mips@vger.kernel.org
-> 
-> ---
-> 
-> Changelog v2:
-> - Rearrange SoBs.
-> - Move $ref to the root level of the properties. So do with the
->   constraints.
-> - Set default max-burst-len to 256 TR-WIDTH words.
-> 
-> Changelog v3:
-> - Add more details into the property description about what limitations
->   snps,max-burst-len defines.
-> ---
->  .../bindings/dma/snps,dma-spear1340.yaml          | 15 +++++++++++++++
->  1 file changed, 15 insertions(+)
-> 
+> Reviewed-by: Rob Herring <robh@kernel.org>
 
-Reviewed-by: Rob Herring <robh@kernel.org>
+Acked-by: Viresh Kumar <viresh.kumar@linaro.org>
+
+-- 
+viresh
