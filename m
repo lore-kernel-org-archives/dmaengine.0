@@ -2,94 +2,147 @@ Return-Path: <SRS0=t1uF=7W=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.1 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=unavailable
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.7 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D7627C433E0
-	for <dmaengine@archiver.kernel.org>; Tue,  9 Jun 2020 00:38:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B9AF6C433E0
+	for <dmaengine@archiver.kernel.org>; Tue,  9 Jun 2020 01:14:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AC184206C3
-	for <dmaengine@archiver.kernel.org>; Tue,  9 Jun 2020 00:38:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1591663136;
-	bh=oeO3JbRNlXL4jdzpWTfG5jkpwsKeAcZJoppud5H82L0=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:List-ID:From;
-	b=Yd1lHVkSTGl5WQeGG9i3H0IIzlXAFUeDmcovaFdkUWSjm9ZjB5f1crBVSHkl+pR84
-	 NHMtsewz7Q1tZT1GUl61SFuKoCi5FzyZDLja5MtpNZgZMYLPN8Q5x+eCN/gBdII36l
-	 hT+aQSKfZIfhSa6aWmnsnyo/SOB+Et8TOUt9pSnY=
+	by mail.kernel.org (Postfix) with ESMTP id 8939B2078C
+	for <dmaengine@archiver.kernel.org>; Tue,  9 Jun 2020 01:14:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729678AbgFIAis (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 8 Jun 2020 20:38:48 -0400
-Received: from mail.kernel.org ([198.145.29.99]:33320 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727872AbgFHXNb (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Mon, 8 Jun 2020 19:13:31 -0400
-Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id B24E521527;
-        Mon,  8 Jun 2020 23:13:30 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1591658011;
-        bh=oeO3JbRNlXL4jdzpWTfG5jkpwsKeAcZJoppud5H82L0=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=xZUjzrbr7MdhLg80t2akgpSvhK/nJRCvSms7yhenVHt2LgL0Jh9NIVzVlcsHoZ5Mu
-         YY4EuukTidnAteP0dS155WoD0EA+l43EVDczCzcsHZPP5T86xBGzhTi4nZmSA2YbUw
-         7GQXN2UmYWOAlpRVPCpumGmHyYQtx5T/BLNvYL14=
-From:   Sasha Levin <sashal@kernel.org>
-To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Michael Walle <michael@walle.cc>, Shawn Guo <shawnguo@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        dmaengine@vger.kernel.org, devicetree@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.6 066/606] dt-bindings: dma: fsl-edma: fix ls1028a-edma compatible
-Date:   Mon,  8 Jun 2020 19:03:11 -0400
-Message-Id: <20200608231211.3363633-66-sashal@kernel.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20200608231211.3363633-1-sashal@kernel.org>
-References: <20200608231211.3363633-1-sashal@kernel.org>
-MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-Content-Transfer-Encoding: 8bit
+        id S1726746AbgFIBOt (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 8 Jun 2020 21:14:49 -0400
+Received: from lucky1.263xmail.com ([211.157.147.131]:53284 "EHLO
+        lucky1.263xmail.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726803AbgFIBOt (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Mon, 8 Jun 2020 21:14:49 -0400
+Received: from localhost (unknown [192.168.167.32])
+        by lucky1.263xmail.com (Postfix) with ESMTP id 7ABB3AD7D9;
+        Tue,  9 Jun 2020 09:14:45 +0800 (CST)
+X-MAIL-GRAY: 0
+X-MAIL-DELIVERY: 1
+X-ADDR-CHECKED4: 1
+X-ANTISPAM-LEVEL: 2
+X-ABS-CHECKED: 0
+Received: from localhost.localdomain (unknown [58.22.7.114])
+        by smtp.263.net (postfix) whith ESMTP id P3328T139696397076224S1591665277471272_;
+        Tue, 09 Jun 2020 09:14:45 +0800 (CST)
+X-IP-DOMAINF: 1
+X-UNIQUE-TAG: <71cb5e1613a1d627514ec9d43b8b166b>
+X-RL-SENDER: sugar.zhang@rock-chips.com
+X-SENDER: zxg@rock-chips.com
+X-LOGIN-NAME: sugar.zhang@rock-chips.com
+X-FST-TO: vkoul@kernel.org
+X-SENDER-IP: 58.22.7.114
+X-ATTACHMENT-NUM: 0
+X-DNS-TYPE: 0
+X-System-Flag: 0
+From:   Sugar Zhang <sugar.zhang@rock-chips.com>
+To:     Vinod Koul <vkoul@kernel.org>, Heiko Stuebner <heiko@sntech.de>
+Cc:     linux-rockchip@lists.infradead.org,
+        Sugar Zhang <sugar.zhang@rock-chips.com>,
+        Dan Williams <dan.j.williams@intel.com>,
+        dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH v2 01/13] dmaengine: pl330: Remove the burst limit for quirk 'NO-FLUSHP'
+Date:   Tue,  9 Jun 2020 09:14:15 +0800
+Message-Id: <1591665267-37713-2-git-send-email-sugar.zhang@rock-chips.com>
+X-Mailer: git-send-email 2.7.4
+In-Reply-To: <1591665267-37713-1-git-send-email-sugar.zhang@rock-chips.com>
+References: <1591665267-37713-1-git-send-email-sugar.zhang@rock-chips.com>
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-From: Michael Walle <michael@walle.cc>
+There is no reason to limit the performance on the 'NO-FLUSHP' SoCs,
+cuz these platforms are just that the 'FLUSHP' instruction is broken.
+so, remove the limit to improve the efficiency.
 
-commit d94a05f87327143f94f67dd256932163ac2bcd65 upstream.
-
-The bootloader will fix up the IOMMU entries only on nodes with the
-compatible "fsl,vf610-edma". Thus make this compatible string mandatory
-for the ls1028a-edma.
-
-While at it, fix the "fsl,fsl," typo.
-
-Signed-off-by: Michael Walle <michael@walle.cc>
-Fixes: d8c1bdb5288d ("dt-bindings: dma: fsl-edma: add new fsl,fsl,ls1028a-edma")
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sugar Zhang <sugar.zhang@rock-chips.com>
 ---
- Documentation/devicetree/bindings/dma/fsl-edma.txt | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/devicetree/bindings/dma/fsl-edma.txt b/Documentation/devicetree/bindings/dma/fsl-edma.txt
-index e77b08ebcd06..ee1754739b4b 100644
---- a/Documentation/devicetree/bindings/dma/fsl-edma.txt
-+++ b/Documentation/devicetree/bindings/dma/fsl-edma.txt
-@@ -10,7 +10,8 @@ Required properties:
- - compatible :
- 	- "fsl,vf610-edma" for eDMA used similar to that on Vybrid vf610 SoC
- 	- "fsl,imx7ulp-edma" for eDMA2 used similar to that on i.mx7ulp
--	- "fsl,fsl,ls1028a-edma" for eDMA used similar to that on Vybrid vf610 SoC
-+	- "fsl,ls1028a-edma" followed by "fsl,vf610-edma" for eDMA used on the
-+	  LS1028A SoC.
- - reg : Specifies base physical address(s) and size of the eDMA registers.
- 	The 1st region is eDMA control register's address and size.
- 	The 2nd and the 3rd regions are programmable channel multiplexing
+Changes in v2: None
+
+ drivers/dma/pl330.c | 34 ++++++++++++++++++++++------------
+ 1 file changed, 22 insertions(+), 12 deletions(-)
+
+diff --git a/drivers/dma/pl330.c b/drivers/dma/pl330.c
+index 6a158ee..ff0a91f 100644
+--- a/drivers/dma/pl330.c
++++ b/drivers/dma/pl330.c
+@@ -1183,9 +1183,6 @@ static inline int _ldst_peripheral(struct pl330_dmac *pl330,
+ {
+ 	int off = 0;
+ 
+-	if (pl330->quirks & PL330_QUIRK_BROKEN_NO_FLUSHP)
+-		cond = BURST;
+-
+ 	/*
+ 	 * do FLUSHP at beginning to clear any stale dma requests before the
+ 	 * first WFP.
+@@ -1231,8 +1228,9 @@ static int _bursts(struct pl330_dmac *pl330, unsigned dry_run, u8 buf[],
+ }
+ 
+ /*
+- * transfer dregs with single transfers to peripheral, or a reduced size burst
+- * for mem-to-mem.
++ * only the unaligned bursts transfers have the dregs.
++ * transfer dregs with a reduced size burst to peripheral,
++ * or a reduced size burst for mem-to-mem.
+  */
+ static int _dregs(struct pl330_dmac *pl330, unsigned int dry_run, u8 buf[],
+ 		const struct _xfer_spec *pxs, int transfer_length)
+@@ -1247,8 +1245,23 @@ static int _dregs(struct pl330_dmac *pl330, unsigned int dry_run, u8 buf[],
+ 	case DMA_MEM_TO_DEV:
+ 		/* fall through */
+ 	case DMA_DEV_TO_MEM:
+-		off += _ldst_peripheral(pl330, dry_run, &buf[off], pxs,
+-			transfer_length, SINGLE);
++		/*
++		 * dregs_len = (total bytes - BURST_TO_BYTE(bursts, ccr)) /
++		 *             BRST_SIZE(ccr)
++		 * the dregs len must be smaller than burst len,
++		 * so, for higher efficiency, we can modify CCR
++		 * to use a reduced size burst len for the dregs.
++		 */
++		dregs_ccr = pxs->ccr;
++		dregs_ccr &= ~((0xf << CC_SRCBRSTLEN_SHFT) |
++			(0xf << CC_DSTBRSTLEN_SHFT));
++		dregs_ccr |= (((transfer_length - 1) & 0xf) <<
++			CC_SRCBRSTLEN_SHFT);
++		dregs_ccr |= (((transfer_length - 1) & 0xf) <<
++			CC_DSTBRSTLEN_SHFT);
++		off += _emit_MOV(dry_run, &buf[off], CCR, dregs_ccr);
++		off += _ldst_peripheral(pl330, dry_run, &buf[off], pxs, 1,
++					BURST);
+ 		break;
+ 
+ 	case DMA_MEM_TO_MEM:
+@@ -2221,9 +2234,7 @@ static bool pl330_prep_slave_fifo(struct dma_pl330_chan *pch,
+ 
+ static int fixup_burst_len(int max_burst_len, int quirks)
+ {
+-	if (quirks & PL330_QUIRK_BROKEN_NO_FLUSHP)
+-		return 1;
+-	else if (max_burst_len > PL330_MAX_BURST)
++	if (max_burst_len > PL330_MAX_BURST)
+ 		return PL330_MAX_BURST;
+ 	else if (max_burst_len < 1)
+ 		return 1;
+@@ -3128,8 +3139,7 @@ pl330_probe(struct amba_device *adev, const struct amba_id *id)
+ 	pd->dst_addr_widths = PL330_DMA_BUSWIDTHS;
+ 	pd->directions = BIT(DMA_DEV_TO_MEM) | BIT(DMA_MEM_TO_DEV);
+ 	pd->residue_granularity = DMA_RESIDUE_GRANULARITY_BURST;
+-	pd->max_burst = ((pl330->quirks & PL330_QUIRK_BROKEN_NO_FLUSHP) ?
+-			 1 : PL330_MAX_BURST);
++	pd->max_burst = PL330_MAX_BURST;
+ 
+ 	ret = dma_async_device_register(pd);
+ 	if (ret) {
 -- 
-2.25.1
+2.7.4
+
+
 
