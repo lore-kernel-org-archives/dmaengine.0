@@ -2,500 +2,118 @@ Return-Path: <SRS0=XcVU=74=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.1 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
+X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=unavailable
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E1213C433E4
-	for <dmaengine@archiver.kernel.org>; Mon, 15 Jun 2020 06:51:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F0159C433E1
+	for <dmaengine@archiver.kernel.org>; Mon, 15 Jun 2020 08:32:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B2B272067B
-	for <dmaengine@archiver.kernel.org>; Mon, 15 Jun 2020 06:51:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1592203877;
-	bh=gbxLAm2pmKn+Ygc663Cu6jxaGOAjeyh+1OyJFNy9r9I=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:List-ID:From;
-	b=GvXxYYvGzix1AUAD7BZ3kxbPnxFX+zHeQ29F35e6yRKLr2W2qOR3qtLo12L+RiLnS
-	 WXA3WlTYKv7QagKVwX8q7vMYJZ1hgSfJDMQu5dvIlhHVrbmjotFYjkPMmofC1eCpAW
-	 0Lx3hTfS5A7g+8Sxfcz8f7eU0nLcPBNHVwyHq7e8=
+	by mail.kernel.org (Postfix) with ESMTP id D128020738
+	for <dmaengine@archiver.kernel.org>; Mon, 15 Jun 2020 08:32:20 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iAth882o"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728665AbgFOGvO (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 15 Jun 2020 02:51:14 -0400
-Received: from mail.kernel.org ([198.145.29.99]:36712 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728477AbgFOGug (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Mon, 15 Jun 2020 02:50:36 -0400
-Received: from mail.kernel.org (ip5f5ad5c5.dynamic.kabel-deutschland.de [95.90.213.197])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 021BB2078E;
-        Mon, 15 Jun 2020 06:50:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1592203832;
-        bh=gbxLAm2pmKn+Ygc663Cu6jxaGOAjeyh+1OyJFNy9r9I=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=pNd6L/LvKy4728PiOw1DVXgentnItWopCGb0+0N1uos4hArg7AJES2yXwC9PopYZC
-         JaJUCDDTBgMLvm6bddiY5LUA/jOpuzwFIixgIL9DZUuymKa8KEpsRoXMsOiC9R8pgE
-         A/5saKnYFplOxHzYW91FckO3z77cuANuAjBJa94M=
-Received: from mchehab by mail.kernel.org with local (Exim 4.93)
-        (envelope-from <mchehab@kernel.org>)
-        id 1jkiww-009o5i-0A; Mon, 15 Jun 2020 08:50:30 +0200
-From:   Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-To:     Linux Doc Mailing List <linux-doc@vger.kernel.org>
-Cc:     Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
-        linux-kernel@vger.kernel.org, Jonathan Corbet <corbet@lwn.net>,
-        Dan Williams <dan.j.williams@intel.com>,
-        Herbert Xu <herbert@gondor.apana.org.au>,
-        "David S. Miller" <davem@davemloft.net>,
-        Vinod Koul <vkoul@kernel.org>, linux-crypto@vger.kernel.org,
-        dmaengine@vger.kernel.org
-Subject: [PATCH 05/22] docs: crypto: convert async-tx-api.txt to ReST format
-Date:   Mon, 15 Jun 2020 08:50:10 +0200
-Message-Id: <98977242130efe86d1200f7a167299d4c1c205c5.1592203650.git.mchehab+huawei@kernel.org>
-X-Mailer: git-send-email 2.26.2
-In-Reply-To: <cover.1592203650.git.mchehab+huawei@kernel.org>
-References: <cover.1592203650.git.mchehab+huawei@kernel.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        id S1729035AbgFOIcR (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 15 Jun 2020 04:32:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39122 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728162AbgFOIcN (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Mon, 15 Jun 2020 04:32:13 -0400
+Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41F75C061A0E;
+        Mon, 15 Jun 2020 01:32:13 -0700 (PDT)
+Received: by mail-wr1-x441.google.com with SMTP id c3so16090319wru.12;
+        Mon, 15 Jun 2020 01:32:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=LhYq3ErTARnN8M2y3YfDyaUAiF9DdChbWeaq0FOKRSE=;
+        b=iAth882ot48k+1hVxs2N7dKisLYLFY15sfEjKljaix/MP7NhyZkJnNqvQIQdA/RFHN
+         xoasva4/H9ZHoHRiTydzkdZfExNxJrgbe4KXfoIiPl+5y7jGS4fxWHtd3pdsDayb1NVk
+         phF1qbUyyV7Cv1Wa9Taqnjee2Un2UqqOnXyieCToPVOxYJgESkzIuHyTyXLZBsi//ZPJ
+         etNN5douj8ntVKOi9ac6mOTUSz8cpJH7JQCErUoIxMi1Vaq1io+Il8Up5OkPHweBWcck
+         Hg6EehHHD8Gq377nepRnWrXzLjE1ireVXu3V1RWbHdTWShK3adK6VVBeaDuhnPJz3V/a
+         mhdg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=LhYq3ErTARnN8M2y3YfDyaUAiF9DdChbWeaq0FOKRSE=;
+        b=sirZBdp5upWY7EFS92Tn92ZH42VMlQ+q0rd5h4rO8C45+8ZaGI+P+KlU2ZNLeiqKoS
+         mK9qkszVduIYATlN0d+c5bsAeZEOtmCq1wB16r2Z+2RskfkygstFQtd3SdwEiC3sqvJd
+         RCuu/KyUCJwa8OARd1Fpri5WrXP9qItITEhwbz9yaRoNGeZ+ANfIKrrCI4mxxNee6+wT
+         eg2BgEV9W+vRDZqoKjZIq8d8yNz2yAdXQrSo6VlctaMWs3xCSk4Yqt9lXxHXuttQvl7F
+         CyMOhtksxtEJZFVAjiLOSVoYUNUcldsCIBd3QfKFD6/dIu7WBwT03ekJKNlJhzgoE6eK
+         kL9Q==
+X-Gm-Message-State: AOAM533WHtOldtZ8r2T4g0NUSoALed90EPVMEvlGcYMwRobHuG4bx7iZ
+        g4eP0ybq/OrkSoCLqqDM+is=
+X-Google-Smtp-Source: ABdhPJyVpcmhLb92L22CTkhQXirzPyFYPKxH7q0JUBoAhTgmjAwOEGO/IzLwbRaAtJ7n5HAteFfw7g==
+X-Received: by 2002:adf:f205:: with SMTP id p5mr29480211wro.302.1592209931903;
+        Mon, 15 Jun 2020 01:32:11 -0700 (PDT)
+Received: from net.saheed (54006BB0.dsl.pool.telekom.hu. [84.0.107.176])
+        by smtp.gmail.com with ESMTPSA id z206sm21954745wmg.30.2020.06.15.01.32.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 15 Jun 2020 01:32:11 -0700 (PDT)
+From:   refactormyself@gmail.com
+To:     helgaas@kernel.org
+Cc:     Bolarinwa Olayemi Saheed <refactormyself@gmail.com>,
+        bjorn@helgaas.com, linux-pci@vger.kernel.org,
+        skhan@linuxfoundation.org, Vinod Koul <vkoul@kernel.org>,
+        dmaengine@vger.kernel.org,
+        linux-kernel-mentees@lists.linuxfoundation.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH v2 1/8] dmaengine: ioatdma: Convert PCIBIOS_* errors to generic -E* errors
+Date:   Mon, 15 Jun 2020 09:32:18 +0200
+Message-Id: <20200615073225.24061-2-refactormyself@gmail.com>
+X-Mailer: git-send-email 2.18.2
+In-Reply-To: <20200615073225.24061-1-refactormyself@gmail.com>
+References: <20200615073225.24061-1-refactormyself@gmail.com>
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-- Place the txt index inside a comment;
-- Use title and chapter markups;
-- Adjust markups for numbered list;
-- Mark literal blocks as such;
-- Use tables markup.
-- Adjust indentation when needed.
+From: Bolarinwa Olayemi Saheed <refactormyself@gmail.com>
 
-Acked-By: Vinod Koul <vkoul@kernel.org> # dmaengine
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+ioat3_dma_probe() returns PCIBIOS_ error codes from PCIe capability
+accessors.
+
+PCIBIOS_ error codes have positive values. Passing on these values is
+inconsistent with functions which return only a negative value on failure.
+
+Before passing on the return value of PCIe capability accessors, call
+pcibios_err_to_errno() to convert any positive PCIBIOS_ error codes to
+negative generic error values.
+
+Suggested-by: Bjorn Helgaas <bjorn@helgaas.com>
+Signed-off-by: Bolarinwa Olayemi Saheed <refactormyself@gmail.com>
 ---
- .../{async-tx-api.txt => async-tx-api.rst}    | 253 +++++++++++-------
- Documentation/crypto/index.rst                |   2 +
- Documentation/driver-api/dmaengine/client.rst |   2 +-
- .../driver-api/dmaengine/provider.rst         |   2 +-
- MAINTAINERS                                   |   2 +-
- 5 files changed, 154 insertions(+), 107 deletions(-)
- rename Documentation/crypto/{async-tx-api.txt => async-tx-api.rst} (55%)
+ drivers/dma/ioat/init.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/crypto/async-tx-api.txt b/Documentation/crypto/async-tx-api.rst
-similarity index 55%
-rename from Documentation/crypto/async-tx-api.txt
-rename to Documentation/crypto/async-tx-api.rst
-index 7bf1be20d93a..bfc773991bdc 100644
---- a/Documentation/crypto/async-tx-api.txt
-+++ b/Documentation/crypto/async-tx-api.rst
-@@ -1,27 +1,32 @@
--		 Asynchronous Transfers/Transforms API
-+.. SPDX-License-Identifier: GPL-2.0
+diff --git a/drivers/dma/ioat/init.c b/drivers/dma/ioat/init.c
+index 60e9afbb896c..fc8889c2a88f 100644
+--- a/drivers/dma/ioat/init.c
++++ b/drivers/dma/ioat/init.c
+@@ -1195,13 +1195,13 @@ static int ioat3_dma_probe(struct ioatdma_device *ioat_dma, int dca)
+ 	/* disable relaxed ordering */
+ 	err = pcie_capability_read_word(pdev, IOAT_DEVCTRL_OFFSET, &val16);
+ 	if (err)
+-		return err;
++		return pcibios_err_to_errno(err);
  
--1 INTRODUCTION
-+=====================================
-+Asynchronous Transfers/Transforms API
-+=====================================
+ 	/* clear relaxed ordering enable */
+ 	val16 &= ~IOAT_DEVCTRL_ROE;
+ 	err = pcie_capability_write_word(pdev, IOAT_DEVCTRL_OFFSET, val16);
+ 	if (err)
+-		return err;
++		return pcibios_err_to_errno(err);
  
--2 GENEALOGY
-+.. Contents
- 
--3 USAGE
--3.1 General format of the API
--3.2 Supported operations
--3.3 Descriptor management
--3.4 When does the operation execute?
--3.5 When does the operation complete?
--3.6 Constraints
--3.7 Example
-+  1. INTRODUCTION
- 
--4 DMAENGINE DRIVER DEVELOPER NOTES
--4.1 Conformance points
--4.2 "My application needs exclusive control of hardware channels"
-+  2 GENEALOGY
- 
--5 SOURCE
-+  3 USAGE
-+  3.1 General format of the API
-+  3.2 Supported operations
-+  3.3 Descriptor management
-+  3.4 When does the operation execute?
-+  3.5 When does the operation complete?
-+  3.6 Constraints
-+  3.7 Example
- 
-----
-+  4 DMAENGINE DRIVER DEVELOPER NOTES
-+  4.1 Conformance points
-+  4.2 "My application needs exclusive control of hardware channels"
- 
--1 INTRODUCTION
-+  5 SOURCE
-+
-+1. Introduction
-+===============
- 
- The async_tx API provides methods for describing a chain of asynchronous
- bulk memory transfers/transforms with support for inter-transactional
-@@ -31,7 +36,8 @@ that is written to the API can optimize for asynchronous operation and
- the API will fit the chain of operations to the available offload
- resources.
- 
--2 GENEALOGY
-+2.Genealogy
-+===========
- 
- The API was initially designed to offload the memory copy and
- xor-parity-calculations of the md-raid5 driver using the offload engines
-@@ -39,40 +45,52 @@ present in the Intel(R) Xscale series of I/O processors.  It also built
- on the 'dmaengine' layer developed for offloading memory copies in the
- network stack using Intel(R) I/OAT engines.  The following design
- features surfaced as a result:
--1/ implicit synchronous path: users of the API do not need to know if
-+
-+1. implicit synchronous path: users of the API do not need to know if
-    the platform they are running on has offload capabilities.  The
-    operation will be offloaded when an engine is available and carried out
-    in software otherwise.
--2/ cross channel dependency chains: the API allows a chain of dependent
-+2. cross channel dependency chains: the API allows a chain of dependent
-    operations to be submitted, like xor->copy->xor in the raid5 case.  The
-    API automatically handles cases where the transition from one operation
-    to another implies a hardware channel switch.
--3/ dmaengine extensions to support multiple clients and operation types
-+3. dmaengine extensions to support multiple clients and operation types
-    beyond 'memcpy'
- 
--3 USAGE
-+3. Usage
-+========
- 
--3.1 General format of the API:
--struct dma_async_tx_descriptor *
--async_<operation>(<op specific parameters>, struct async_submit ctl *submit)
-+3.1 General format of the API
-+-----------------------------
- 
--3.2 Supported operations:
--memcpy  - memory copy between a source and a destination buffer
--memset  - fill a destination buffer with a byte value
--xor     - xor a series of source buffers and write the result to a
-+::
-+
-+  struct dma_async_tx_descriptor *
-+  async_<operation>(<op specific parameters>, struct async_submit ctl *submit)
-+
-+3.2 Supported operations
-+------------------------
-+
-+========  ====================================================================
-+memcpy    memory copy between a source and a destination buffer
-+memset    fill a destination buffer with a byte value
-+xor       xor a series of source buffers and write the result to a
- 	  destination buffer
--xor_val - xor a series of source buffers and set a flag if the
-+xor_val   xor a series of source buffers and set a flag if the
- 	  result is zero.  The implementation attempts to prevent
- 	  writes to memory
--pq	- generate the p+q (raid6 syndrome) from a series of source buffers
--pq_val  - validate that a p and or q buffer are in sync with a given series of
-+pq	  generate the p+q (raid6 syndrome) from a series of source buffers
-+pq_val    validate that a p and or q buffer are in sync with a given series of
- 	  sources
--datap	- (raid6_datap_recov) recover a raid6 data block and the p block
-+datap	  (raid6_datap_recov) recover a raid6 data block and the p block
- 	  from the given sources
--2data	- (raid6_2data_recov) recover 2 raid6 data blocks from the given
-+2data	  (raid6_2data_recov) recover 2 raid6 data blocks from the given
- 	  sources
-+========  ====================================================================
-+
-+3.3 Descriptor management
-+-------------------------
- 
--3.3 Descriptor management:
- The return value is non-NULL and points to a 'descriptor' when the operation
- has been queued to execute asynchronously.  Descriptors are recycled
- resources, under control of the offload engine driver, to be reused as
-@@ -82,12 +100,15 @@ before the dependency is submitted.  This requires that all descriptors be
- acknowledged by the application before the offload engine driver is allowed to
- recycle (or free) the descriptor.  A descriptor can be acked by one of the
- following methods:
--1/ setting the ASYNC_TX_ACK flag if no child operations are to be submitted
--2/ submitting an unacknowledged descriptor as a dependency to another
-+
-+1. setting the ASYNC_TX_ACK flag if no child operations are to be submitted
-+2. submitting an unacknowledged descriptor as a dependency to another
-    async_tx call will implicitly set the acknowledged state.
--3/ calling async_tx_ack() on the descriptor.
-+3. calling async_tx_ack() on the descriptor.
- 
- 3.4 When does the operation execute?
-+------------------------------------
-+
- Operations do not immediately issue after return from the
- async_<operation> call.  Offload engine drivers batch operations to
- improve performance by reducing the number of mmio cycles needed to
-@@ -98,12 +119,15 @@ channels since the application has no knowledge of channel to operation
- mapping.
- 
- 3.5 When does the operation complete?
-+-------------------------------------
-+
- There are two methods for an application to learn about the completion
- of an operation.
--1/ Call dma_wait_for_async_tx().  This call causes the CPU to spin while
-+
-+1. Call dma_wait_for_async_tx().  This call causes the CPU to spin while
-    it polls for the completion of the operation.  It handles dependency
-    chains and issuing pending operations.
--2/ Specify a completion callback.  The callback routine runs in tasklet
-+2. Specify a completion callback.  The callback routine runs in tasklet
-    context if the offload engine driver supports interrupts, or it is
-    called in application context if the operation is carried out
-    synchronously in software.  The callback can be set in the call to
-@@ -111,83 +135,95 @@ of an operation.
-    unknown length it can use the async_trigger_callback() routine to set a
-    completion interrupt/callback at the end of the chain.
- 
--3.6 Constraints:
--1/ Calls to async_<operation> are not permitted in IRQ context.  Other
-+3.6 Constraints
-+---------------
-+
-+1. Calls to async_<operation> are not permitted in IRQ context.  Other
-    contexts are permitted provided constraint #2 is not violated.
--2/ Completion callback routines cannot submit new operations.  This
-+2. Completion callback routines cannot submit new operations.  This
-    results in recursion in the synchronous case and spin_locks being
-    acquired twice in the asynchronous case.
- 
--3.7 Example:
-+3.7 Example
-+-----------
-+
- Perform a xor->copy->xor operation where each operation depends on the
--result from the previous operation:
--
--void callback(void *param)
--{
--	struct completion *cmp = param;
--
--	complete(cmp);
--}
--
--void run_xor_copy_xor(struct page **xor_srcs,
--		      int xor_src_cnt,
--		      struct page *xor_dest,
--		      size_t xor_len,
--		      struct page *copy_src,
--		      struct page *copy_dest,
--		      size_t copy_len)
--{
--	struct dma_async_tx_descriptor *tx;
--	addr_conv_t addr_conv[xor_src_cnt];
--	struct async_submit_ctl submit;
--	addr_conv_t addr_conv[NDISKS];
--	struct completion cmp;
--
--	init_async_submit(&submit, ASYNC_TX_XOR_DROP_DST, NULL, NULL, NULL,
--			  addr_conv);
--	tx = async_xor(xor_dest, xor_srcs, 0, xor_src_cnt, xor_len, &submit)
--
--	submit->depend_tx = tx;
--	tx = async_memcpy(copy_dest, copy_src, 0, 0, copy_len, &submit);
--
--	init_completion(&cmp);
--	init_async_submit(&submit, ASYNC_TX_XOR_DROP_DST | ASYNC_TX_ACK, tx,
--			  callback, &cmp, addr_conv);
--	tx = async_xor(xor_dest, xor_srcs, 0, xor_src_cnt, xor_len, &submit);
--
--	async_tx_issue_pending_all();
--
--	wait_for_completion(&cmp);
--}
-+result from the previous operation::
-+
-+    void callback(void *param)
-+    {
-+	    struct completion *cmp = param;
-+
-+	    complete(cmp);
-+    }
-+
-+    void run_xor_copy_xor(struct page **xor_srcs,
-+			int xor_src_cnt,
-+			struct page *xor_dest,
-+			size_t xor_len,
-+			struct page *copy_src,
-+			struct page *copy_dest,
-+			size_t copy_len)
-+    {
-+	    struct dma_async_tx_descriptor *tx;
-+	    addr_conv_t addr_conv[xor_src_cnt];
-+	    struct async_submit_ctl submit;
-+	    addr_conv_t addr_conv[NDISKS];
-+	    struct completion cmp;
-+
-+	    init_async_submit(&submit, ASYNC_TX_XOR_DROP_DST, NULL, NULL, NULL,
-+			    addr_conv);
-+	    tx = async_xor(xor_dest, xor_srcs, 0, xor_src_cnt, xor_len, &submit)
-+
-+	    submit->depend_tx = tx;
-+	    tx = async_memcpy(copy_dest, copy_src, 0, 0, copy_len, &submit);
-+
-+	    init_completion(&cmp);
-+	    init_async_submit(&submit, ASYNC_TX_XOR_DROP_DST | ASYNC_TX_ACK, tx,
-+			    callback, &cmp, addr_conv);
-+	    tx = async_xor(xor_dest, xor_srcs, 0, xor_src_cnt, xor_len, &submit);
-+
-+	    async_tx_issue_pending_all();
-+
-+	    wait_for_completion(&cmp);
-+    }
- 
- See include/linux/async_tx.h for more information on the flags.  See the
- ops_run_* and ops_complete_* routines in drivers/md/raid5.c for more
- implementation examples.
- 
--4 DRIVER DEVELOPMENT NOTES
-+4. Driver Development Notes
-+===========================
-+
-+4.1 Conformance points
-+----------------------
- 
--4.1 Conformance points:
- There are a few conformance points required in dmaengine drivers to
- accommodate assumptions made by applications using the async_tx API:
--1/ Completion callbacks are expected to happen in tasklet context
--2/ dma_async_tx_descriptor fields are never manipulated in IRQ context
--3/ Use async_tx_run_dependencies() in the descriptor clean up path to
-+
-+1. Completion callbacks are expected to happen in tasklet context
-+2. dma_async_tx_descriptor fields are never manipulated in IRQ context
-+3. Use async_tx_run_dependencies() in the descriptor clean up path to
-    handle submission of dependent operations
- 
- 4.2 "My application needs exclusive control of hardware channels"
-+-----------------------------------------------------------------
-+
- Primarily this requirement arises from cases where a DMA engine driver
- is being used to support device-to-memory operations.  A channel that is
- performing these operations cannot, for many platform specific reasons,
- be shared.  For these cases the dma_request_channel() interface is
- provided.
- 
--The interface is:
--struct dma_chan *dma_request_channel(dma_cap_mask_t mask,
--				     dma_filter_fn filter_fn,
--				     void *filter_param);
-+The interface is::
- 
--Where dma_filter_fn is defined as:
--typedef bool (*dma_filter_fn)(struct dma_chan *chan, void *filter_param);
-+  struct dma_chan *dma_request_channel(dma_cap_mask_t mask,
-+				       dma_filter_fn filter_fn,
-+				       void *filter_param);
-+
-+Where dma_filter_fn is defined as::
-+
-+  typedef bool (*dma_filter_fn)(struct dma_chan *chan, void *filter_param);
- 
- When the optional 'filter_fn' parameter is set to NULL
- dma_request_channel simply returns the first channel that satisfies the
-@@ -207,19 +243,28 @@ private.  Alternatively, it is set when dma_request_channel() finds an
- unused "public" channel.
- 
- A couple caveats to note when implementing a driver and consumer:
--1/ Once a channel has been privately allocated it will no longer be
-+
-+1. Once a channel has been privately allocated it will no longer be
-    considered by the general-purpose allocator even after a call to
-    dma_release_channel().
--2/ Since capabilities are specified at the device level a dma_device
-+2. Since capabilities are specified at the device level a dma_device
-    with multiple channels will either have all channels public, or all
-    channels private.
- 
--5 SOURCE
-+5. Source
-+---------
- 
--include/linux/dmaengine.h: core header file for DMA drivers and api users
--drivers/dma/dmaengine.c: offload engine channel management routines
--drivers/dma/: location for offload engine drivers
--include/linux/async_tx.h: core header file for the async_tx api
--crypto/async_tx/async_tx.c: async_tx interface to dmaengine and common code
--crypto/async_tx/async_memcpy.c: copy offload
--crypto/async_tx/async_xor.c: xor and xor zero sum offload
-+include/linux/dmaengine.h:
-+    core header file for DMA drivers and api users
-+drivers/dma/dmaengine.c:
-+    offload engine channel management routines
-+drivers/dma/:
-+    location for offload engine drivers
-+include/linux/async_tx.h:
-+    core header file for the async_tx api
-+crypto/async_tx/async_tx.c:
-+    async_tx interface to dmaengine and common code
-+crypto/async_tx/async_memcpy.c:
-+    copy offload
-+crypto/async_tx/async_xor.c:
-+    xor and xor zero sum offload
-diff --git a/Documentation/crypto/index.rst b/Documentation/crypto/index.rst
-index b2eeab3c8631..22a6870bf356 100644
---- a/Documentation/crypto/index.rst
-+++ b/Documentation/crypto/index.rst
-@@ -19,6 +19,8 @@ for cryptographic use cases, as well as programming examples.
-    intro
-    api-intro
-    architecture
-+
-+   async-tx-api
-    asymmetric-keys
-    devel-algos
-    userspace-if
-diff --git a/Documentation/driver-api/dmaengine/client.rst b/Documentation/driver-api/dmaengine/client.rst
-index 2104830a99ae..b0f32cfc38c2 100644
---- a/Documentation/driver-api/dmaengine/client.rst
-+++ b/Documentation/driver-api/dmaengine/client.rst
-@@ -5,7 +5,7 @@ DMA Engine API Guide
- Vinod Koul <vinod dot koul at intel.com>
- 
- .. note:: For DMA Engine usage in async_tx please see:
--          ``Documentation/crypto/async-tx-api.txt``
-+          ``Documentation/crypto/async-tx-api.rst``
- 
- 
- Below is a guide to device driver writers on how to use the Slave-DMA API of the
-diff --git a/Documentation/driver-api/dmaengine/provider.rst b/Documentation/driver-api/dmaengine/provider.rst
-index 56e5833e8a07..954422c2b704 100644
---- a/Documentation/driver-api/dmaengine/provider.rst
-+++ b/Documentation/driver-api/dmaengine/provider.rst
-@@ -95,7 +95,7 @@ accommodates that API in some cases, and made some design choices to
- ensure that it stayed compatible.
- 
- For more information on the Async TX API, please look the relevant
--documentation file in Documentation/crypto/async-tx-api.txt.
-+documentation file in Documentation/crypto/async-tx-api.rst.
- 
- DMAEngine APIs
- ==============
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 84eabb5f0a5d..805309399939 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -2837,7 +2837,7 @@ ASYNCHRONOUS TRANSFERS/TRANSFORMS (IOAT) API
- R:	Dan Williams <dan.j.williams@intel.com>
- S:	Odd fixes
- W:	http://sourceforge.net/projects/xscaleiop
--F:	Documentation/crypto/async-tx-api.txt
-+F:	Documentation/crypto/async-tx-api.rst
- F:	crypto/async_tx/
- F:	drivers/dma/
- F:	include/linux/async_tx.h
+ 	if (ioat_dma->cap & IOAT_CAP_DPS)
+ 		writeb(ioat_pending_level + 1,
 -- 
-2.26.2
+2.18.2
 
