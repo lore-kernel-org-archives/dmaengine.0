@@ -1,269 +1,159 @@
-Return-Path: <SRS0=XcVU=74=vger.kernel.org=dmaengine-owner@kernel.org>
+Return-Path: <SRS0=2hur=75=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.7 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B6025C433DF
-	for <dmaengine@archiver.kernel.org>; Mon, 15 Jun 2020 20:54:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3D6A1C433E0
+	for <dmaengine@archiver.kernel.org>; Tue, 16 Jun 2020 06:31:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8FD5E20768
-	for <dmaengine@archiver.kernel.org>; Mon, 15 Jun 2020 20:54:33 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1815D2082F
+	for <dmaengine@archiver.kernel.org>; Tue, 16 Jun 2020 06:31:45 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=renesasgroup.onmicrosoft.com header.i=@renesasgroup.onmicrosoft.com header.b="aNYQyWhU"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731596AbgFOUyd (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 15 Jun 2020 16:54:33 -0400
-Received: from mga02.intel.com ([134.134.136.20]:1381 "EHLO mga02.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726207AbgFOUyd (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Mon, 15 Jun 2020 16:54:33 -0400
-IronPort-SDR: nu3Wqum2Prg7wEUkclWYiVTGmdkpTt6ijTtlEOdzLGf9tDUvuj4hDkZbJXcZ0A8mv0SjqfW0hb
- J87M7jWsC03A==
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from fmsmga008.fm.intel.com ([10.253.24.58])
-  by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Jun 2020 13:54:32 -0700
-IronPort-SDR: 3P6JEfA1uNuklyncvhEf5pR5+NdBQQkecdmpHSZUdH/96NTDTaFzYZFTGe463vdlka/LYvg9IJ
- g8BD0TfbCPoA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.73,516,1583222400"; 
-   d="scan'208";a="262820157"
-Received: from djiang5-desk3.ch.intel.com ([143.182.136.137])
-  by fmsmga008.fm.intel.com with ESMTP; 15 Jun 2020 13:54:31 -0700
-Subject: [PATCH] dmaengine: idxd: add leading / for sysfspath in ABI
- documentation
-From:   Dave Jiang <dave.jiang@intel.com>
-To:     vkoul@kernel.org
-Cc:     Dan Williams <dan.j.williams@intel.com>, dmaengine@vger.kernel.org
-Date:   Mon, 15 Jun 2020 13:54:31 -0700
-Message-ID: <159225447176.68253.2922149693913698177.stgit@djiang5-desk3.ch.intel.com>
-User-Agent: StGit/unknown-version
+        id S1725775AbgFPGbo (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 16 Jun 2020 02:31:44 -0400
+Received: from mail-eopbgr1300095.outbound.protection.outlook.com ([40.107.130.95]:17536
+        "EHLO APC01-HK2-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1725768AbgFPGbo (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Tue, 16 Jun 2020 02:31:44 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=WNr13y2ORt16hzGnCVUT5s0JRTGhNKsM8r+1DsXXX6tDdcLap6fBeqWt/B/7ZSOiYhe0QeG5BYd6V0KM7FsrsbPOWTUvjAVT829pm8TfEiD58cfPYKridXtk14ELUN5i/u9wXD/lotu0T4C1jZQ+tyOJInqWkPmxpTJiYPBoKDe65SNflkW1nTErbfNVtHt4ZyTNCx/vltfglqXZyBFwQpsbFLxoJnLlKspLuDs5bbLI0OLKXnfpJCJNPZ33pVchijCDOAgyL3FV+73ksPxdEtmDFVaOqKNQrV/jlPVKN0pIif9b0CHjr7NWSmjReH3aEigFoCOhf1Y7e0fQKNXTyA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=efI6N3xhX8T8hHm1Yeu332yn+0joB3CVIf4DzG8t/iU=;
+ b=bozZ4lXpGPwwUWWehdO5W3KpzMl64uBqZXwGTYldLkP3ABDmikCK5wcixpXDGnqcFEW2hJGiAyEQGrfCvzABeMtlnQUk1JZxkQ9AR+3k1x8m9fUI/HeA4em5osSeIbSrGKO+HE/3pmEGq0K0SaRSODTBya23Ca6Y3/0X+UmX1lFQw7hjmue0QMHNXuDD0yY+6OVgoTJc5+hHgAsY38OBtoOkVg/gVlWi8Fd1a4S7YUQSGsPnJmEVBViRhZ+7qyMgY/PeA4gAFMMesqM6aOAauU5f0Kv0XMLhjFrjCXKgCZPC39qz7/cUZASerZT/oyhM61DdqQZMZdxU/wndT1BpsQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=renesas.com; dmarc=pass action=none header.from=renesas.com;
+ dkim=pass header.d=renesas.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=renesasgroup.onmicrosoft.com; s=selector2-renesasgroup-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=efI6N3xhX8T8hHm1Yeu332yn+0joB3CVIf4DzG8t/iU=;
+ b=aNYQyWhUyPGbaclIoRDbUPfUehE5lqgrISs08/ZZ51HzW8voPT4drU7rIRXnYPoopqzSJf4Ytr8bc6RgNLNHDTVNnJJEpgFtiPgPiGX08DMwfe9lGixnNh9GjgmbC3/RpTRP6iK5mGZJJMlLFlC7y917+Ds1cNSFvZlrdDCWx/s=
+Received: from TY2PR01MB3692.jpnprd01.prod.outlook.com (2603:1096:404:d5::22)
+ by TY2PR01MB4681.jpnprd01.prod.outlook.com (2603:1096:404:11a::16) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3088.24; Tue, 16 Jun
+ 2020 06:31:39 +0000
+Received: from TY2PR01MB3692.jpnprd01.prod.outlook.com
+ ([fe80::2da1:bdb7:9089:7f43]) by TY2PR01MB3692.jpnprd01.prod.outlook.com
+ ([fe80::2da1:bdb7:9089:7f43%3]) with mapi id 15.20.3088.028; Tue, 16 Jun 2020
+ 06:31:39 +0000
+From:   Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
+To:     "vkoul@kernel.org" <vkoul@kernel.org>
+CC:     "dmaengine@vger.kernel.org" <dmaengine@vger.kernel.org>,
+        "linux-renesas-soc@vger.kernel.org" 
+        <linux-renesas-soc@vger.kernel.org>
+Subject: RE: [PATCH] dma: sh: usb-dmac: Fix residue after the commit
+ 24461d9792c2
+Thread-Topic: [PATCH] dma: sh: usb-dmac: Fix residue after the commit
+ 24461d9792c2
+Thread-Index: AQHWL2V2RkH5colCb0+zPor5o0eqOaja8C6w
+Date:   Tue, 16 Jun 2020 06:31:39 +0000
+Message-ID: <TY2PR01MB3692DB1B26735A02D8BCAB4FD89D0@TY2PR01MB3692.jpnprd01.prod.outlook.com>
+References: <1590061573-12576-1-git-send-email-yoshihiro.shimoda.uh@renesas.com>
+In-Reply-To: <1590061573-12576-1-git-send-email-yoshihiro.shimoda.uh@renesas.com>
+Accept-Language: ja-JP, en-US
+Content-Language: ja-JP
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: kernel.org; dkim=none (message not signed)
+ header.d=none;kernel.org; dmarc=none action=none header.from=renesas.com;
+x-originating-ip: [124.210.22.195]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-ht: Tenant
+x-ms-office365-filtering-correlation-id: 9621c738-45b3-4d28-6da2-08d811beed15
+x-ms-traffictypediagnostic: TY2PR01MB4681:
+x-microsoft-antispam-prvs: <TY2PR01MB4681A74A26826460DCA75349D89D0@TY2PR01MB4681.jpnprd01.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:9508;
+x-forefront-prvs: 04362AC73B
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: B/DVTCZdd8r05kCXvAgu5zsBp2h9IMnUTy4DyJjbADsEm8BljkFEhUf6WbgrCkD+2XtIc46726l0kuit2zq86wKLHjaFf+AIweTZ9qcIpdLXLIJ7MWkScyUyQJonKRDQL9dA557WHlTdXv4YyHv/XE9s+i1d7wwR6uIYAQeX6uPYAlKCqdT+iEgp0m5mFF2+XiPqa+1kvGnfUvykR4u/GBVJ3jKLkdmbepOSjUg4aMLQKhHv6fo4ejMNTEafZHz6hjS+8kCiFjmST8Zim1HXOPYHJRJss30j83/plmKVmiChazU5j6Qk8tNtMQoiXyk2mpDILWt5XH82Lxdxwgdriw==
+x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:TY2PR01MB3692.jpnprd01.prod.outlook.com;PTR:;CAT:NONE;SFTY:;SFS:(4636009)(39860400002)(376002)(346002)(396003)(136003)(366004)(83380400001)(8936002)(5660300002)(52536014)(8676002)(55016002)(9686003)(316002)(54906003)(478600001)(6506007)(7696005)(55236004)(186003)(26005)(71200400001)(2906002)(66446008)(66476007)(4326008)(76116006)(33656002)(64756008)(66556008)(86362001)(6916009)(66946007);DIR:OUT;SFP:1102;
+x-ms-exchange-antispam-messagedata: s+IZVxcRI404DYduKIjqekO2hCjklZwGWX7jq8SHMum7t8xb9ISEUQ/4txdKS3hSWCx7FlIOllG5LKfcBWb1HnQedcECVdvicAQN5seL8lNFRHwUF1fkPc7xx8VMG1KoIsMABCaHowtn6cq+NfcimtOOfhTGz+4FjE/2z/gSBnxDa72HSYUj2ywKwh8K7Cm7BrQfOvSThVj2QtblpD+j2uW7Wi6cRBO8dZ75u08xplVLni92gCem8F4OiWXxP3HF0YIInmmOfSEMXQEa+ikGT4OVxU6eyvRs+mpn+LV74h5SGW7JDNdwBH58cbqH0UFP6Aw66yF17sMm2VDITYfQQoL+s+Hbi2JCs0PtYIdl3nY3A2JKHYMqVBCeRQuXX7MOHr53t8csy6UYzy5ojyPrG8nHcW3TJxX9HnBWpAfqy87BWiBdJeuPE8HlIYVECJ5I92lbanXJlMzDG8MQQmYLaQxgA53ywdPeAN05D02OTHbYXq7aJ0cZqM8QHzQihnyK
+x-ms-exchange-transport-forked: True
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
+X-OriginatorOrg: renesas.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 9621c738-45b3-4d28-6da2-08d811beed15
+X-MS-Exchange-CrossTenant-originalarrivaltime: 16 Jun 2020 06:31:39.1048
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 53d82571-da19-47e4-9cb4-625a166a4a2a
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: dbYmhLTgLyNQ9z8VK+xAbNg6rD0jTGr1sMzZfrQQAYtSBsBkloPCOLZcEnz0dtB7yU4Qj0ivUAg2IvMzpUrbLrN7g45oolguV9/C6D4CbXFUNTk8QMAhM3/Wss9CenLT
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TY2PR01MB4681
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Correct to standard convention. All sysfs paths seem to be missing leading
-/.
+Hi Vinod,
 
-Fixes: b131ad593884 ("dmaengine: idxd: add sysfs ABI for idxd driver")
+> From: Yoshihiro Shimoda, Sent: Thursday, May 21, 2020 8:46 PM
+>=20
+> This driver assumed that freed descriptors have "done_cookie".
+> But, after the commit 24461d9792c2 ("dmaengine: virt-dma: Fix
+> access after free in vchan_complete()"), since the desc is freed
+> after callback function was called, this driver could not
+> match any done_cookie when a client driver (renesas_usbhs driver)
+> calls dmaengine_tx_status() in the callback function.
+> So, add to check both descriptor types (freed and got) to fix
+> the issue.
+>=20
+> Reported-by: Hien Dang <hien.dang.eb@renesas.com>
+> Fixes: 24461d9792c2 ("dmaengine: virt-dma: Fix access after free in vchan=
+_complete()")
+> Signed-off-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
 
-Signed-off-by: Dave Jiang <dave.jiang@intel.com>
-Reviewed-by: Dan Williams <dan.j.williams@intel.com>
----
- Documentation/ABI/stable/sysfs-driver-dma-idxd |   56 ++++++++++++------------
- 1 file changed, 28 insertions(+), 28 deletions(-)
+I'm afraid, but would you review this patch?
+I confirmed this patch still can be applied to v5.8-rc1.
 
-diff --git a/Documentation/ABI/stable/sysfs-driver-dma-idxd b/Documentation/ABI/stable/sysfs-driver-dma-idxd
-index b5bebf642db6..1af9c4175213 100644
---- a/Documentation/ABI/stable/sysfs-driver-dma-idxd
-+++ b/Documentation/ABI/stable/sysfs-driver-dma-idxd
-@@ -1,47 +1,47 @@
--What:		sys/bus/dsa/devices/dsa<m>/version
-+What:		/sys/bus/dsa/devices/dsa<m>/version
- Date:		Apr 15, 2020
- KernelVersion:	5.8.0
- Contact:	dmaengine@vger.kernel.org
- Description:	The hardware version number.
- 
--What:           sys/bus/dsa/devices/dsa<m>/cdev_major
-+What:           /sys/bus/dsa/devices/dsa<m>/cdev_major
- Date:           Oct 25, 2019
--KernelVersion: 	5.6.0
-+KernelVersion:  5.6.0
- Contact:        dmaengine@vger.kernel.org
- Description:	The major number that the character device driver assigned to
- 		this device.
- 
--What:           sys/bus/dsa/devices/dsa<m>/errors
-+What:           /sys/bus/dsa/devices/dsa<m>/errors
- Date:           Oct 25, 2019
- KernelVersion:  5.6.0
- Contact:        dmaengine@vger.kernel.org
- Description:    The error information for this device.
- 
--What:           sys/bus/dsa/devices/dsa<m>/max_batch_size
-+What:           /sys/bus/dsa/devices/dsa<m>/max_batch_size
- Date:           Oct 25, 2019
- KernelVersion:  5.6.0
- Contact:        dmaengine@vger.kernel.org
- Description:    The largest number of work descriptors in a batch.
- 
--What:           sys/bus/dsa/devices/dsa<m>/max_work_queues_size
-+What:           /sys/bus/dsa/devices/dsa<m>/max_work_queues_size
- Date:           Oct 25, 2019
- KernelVersion:  5.6.0
- Contact:        dmaengine@vger.kernel.org
- Description:    The maximum work queue size supported by this device.
- 
--What:           sys/bus/dsa/devices/dsa<m>/max_engines
-+What:           /sys/bus/dsa/devices/dsa<m>/max_engines
- Date:           Oct 25, 2019
- KernelVersion:  5.6.0
- Contact:        dmaengine@vger.kernel.org
- Description:    The maximum number of engines supported by this device.
- 
--What:           sys/bus/dsa/devices/dsa<m>/max_groups
-+What:           /sys/bus/dsa/devices/dsa<m>/max_groups
- Date:           Oct 25, 2019
- KernelVersion:  5.6.0
- Contact:        dmaengine@vger.kernel.org
- Description:    The maximum number of groups can be created under this device.
- 
--What:           sys/bus/dsa/devices/dsa<m>/max_tokens
-+What:           /sys/bus/dsa/devices/dsa<m>/max_tokens
- Date:           Oct 25, 2019
- KernelVersion:  5.6.0
- Contact:        dmaengine@vger.kernel.org
-@@ -50,7 +50,7 @@ Description:    The total number of bandwidth tokens supported by this device.
- 		implementation, and these resources are allocated by engines to
- 		support operations.
- 
--What:           sys/bus/dsa/devices/dsa<m>/max_transfer_size
-+What:           /sys/bus/dsa/devices/dsa<m>/max_transfer_size
- Date:           Oct 25, 2019
- KernelVersion:  5.6.0
- Contact:        dmaengine@vger.kernel.org
-@@ -58,57 +58,57 @@ Description:    The number of bytes to be read from the source address to
- 		perform the operation. The maximum transfer size is dependent on
- 		the workqueue the descriptor was submitted to.
- 
--What:           sys/bus/dsa/devices/dsa<m>/max_work_queues
-+What:           /sys/bus/dsa/devices/dsa<m>/max_work_queues
- Date:           Oct 25, 2019
- KernelVersion:  5.6.0
- Contact:        dmaengine@vger.kernel.org
- Description:    The maximum work queue number that this device supports.
- 
--What:           sys/bus/dsa/devices/dsa<m>/numa_node
-+What:           /sys/bus/dsa/devices/dsa<m>/numa_node
- Date:           Oct 25, 2019
- KernelVersion:  5.6.0
- Contact:        dmaengine@vger.kernel.org
- Description:    The numa node number for this device.
- 
--What:           sys/bus/dsa/devices/dsa<m>/op_cap
-+What:           /sys/bus/dsa/devices/dsa<m>/op_cap
- Date:           Oct 25, 2019
- KernelVersion:  5.6.0
- Contact:        dmaengine@vger.kernel.org
- Description:    The operation capability bit mask specify the operation types
- 		supported by the this device.
- 
--What:           sys/bus/dsa/devices/dsa<m>/state
-+What:           /sys/bus/dsa/devices/dsa<m>/state
- Date:           Oct 25, 2019
- KernelVersion:  5.6.0
- Contact:        dmaengine@vger.kernel.org
- Description:    The state information of this device. It can be either enabled
- 		or disabled.
- 
--What:           sys/bus/dsa/devices/dsa<m>/group<m>.<n>
-+What:           /sys/bus/dsa/devices/dsa<m>/group<m>.<n>
- Date:           Oct 25, 2019
- KernelVersion:  5.6.0
- Contact:        dmaengine@vger.kernel.org
- Description:    The assigned group under this device.
- 
--What:           sys/bus/dsa/devices/dsa<m>/engine<m>.<n>
-+What:           /sys/bus/dsa/devices/dsa<m>/engine<m>.<n>
- Date:           Oct 25, 2019
- KernelVersion:  5.6.0
- Contact:        dmaengine@vger.kernel.org
- Description:    The assigned engine under this device.
- 
--What:           sys/bus/dsa/devices/dsa<m>/wq<m>.<n>
-+What:           /sys/bus/dsa/devices/dsa<m>/wq<m>.<n>
- Date:           Oct 25, 2019
- KernelVersion:  5.6.0
- Contact:        dmaengine@vger.kernel.org
- Description:    The assigned work queue under this device.
- 
--What:           sys/bus/dsa/devices/dsa<m>/configurable
-+What:           /sys/bus/dsa/devices/dsa<m>/configurable
- Date:           Oct 25, 2019
- KernelVersion:  5.6.0
- Contact:        dmaengine@vger.kernel.org
- Description:    To indicate if this device is configurable or not.
- 
--What:           sys/bus/dsa/devices/dsa<m>/token_limit
-+What:           /sys/bus/dsa/devices/dsa<m>/token_limit
- Date:           Oct 25, 2019
- KernelVersion:  5.6.0
- Contact:        dmaengine@vger.kernel.org
-@@ -116,19 +116,19 @@ Description:    The maximum number of bandwidth tokens that may be in use at
- 		one time by operations that access low bandwidth memory in the
- 		device.
- 
--What:           sys/bus/dsa/devices/wq<m>.<n>/group_id
-+What:           /sys/bus/dsa/devices/wq<m>.<n>/group_id
- Date:           Oct 25, 2019
- KernelVersion:  5.6.0
- Contact:        dmaengine@vger.kernel.org
- Description:    The group id that this work queue belongs to.
- 
--What:           sys/bus/dsa/devices/wq<m>.<n>/size
-+What:           /sys/bus/dsa/devices/wq<m>.<n>/size
- Date:           Oct 25, 2019
- KernelVersion:  5.6.0
- Contact:        dmaengine@vger.kernel.org
- Description:    The work queue size for this work queue.
- 
--What:           sys/bus/dsa/devices/wq<m>.<n>/type
-+What:           /sys/bus/dsa/devices/wq<m>.<n>/type
- Date:           Oct 25, 2019
- KernelVersion:  5.6.0
- Contact:        dmaengine@vger.kernel.org
-@@ -136,20 +136,20 @@ Description:    The type of this work queue, it can be "kernel" type for work
- 		queue usages in the kernel space or "user" type for work queue
- 		usages by applications in user space.
- 
--What:           sys/bus/dsa/devices/wq<m>.<n>/cdev_minor
-+What:           /sys/bus/dsa/devices/wq<m>.<n>/cdev_minor
- Date:           Oct 25, 2019
- KernelVersion:  5.6.0
- Contact:        dmaengine@vger.kernel.org
- Description:    The minor number assigned to this work queue by the character
- 		device driver.
- 
--What:           sys/bus/dsa/devices/wq<m>.<n>/mode
-+What:           /sys/bus/dsa/devices/wq<m>.<n>/mode
- Date:           Oct 25, 2019
- KernelVersion:  5.6.0
- Contact:        dmaengine@vger.kernel.org
- Description:    The work queue mode type for this work queue.
- 
--What:           sys/bus/dsa/devices/wq<m>.<n>/priority
-+What:           /sys/bus/dsa/devices/wq<m>.<n>/priority
- Date:           Oct 25, 2019
- KernelVersion:  5.6.0
- Contact:        dmaengine@vger.kernel.org
-@@ -157,20 +157,20 @@ Description:    The priority value of this work queue, it is a vlue relative to
- 		other work queue in the same group to control quality of service
- 		for dispatching work from multiple workqueues in the same group.
- 
--What:           sys/bus/dsa/devices/wq<m>.<n>/state
-+What:           /sys/bus/dsa/devices/wq<m>.<n>/state
- Date:           Oct 25, 2019
- KernelVersion:  5.6.0
- Contact:        dmaengine@vger.kernel.org
- Description:    The current state of the work queue.
- 
--What:           sys/bus/dsa/devices/wq<m>.<n>/threshold
-+What:           /sys/bus/dsa/devices/wq<m>.<n>/threshold
- Date:           Oct 25, 2019
- KernelVersion:  5.6.0
- Contact:        dmaengine@vger.kernel.org
- Description:    The number of entries in this work queue that may be filled
- 		via a limited portal.
- 
--What:           sys/bus/dsa/devices/engine<m>.<n>/group_id
-+What:           /sys/bus/dsa/devices/engine<m>.<n>/group_id
- Date:           Oct 25, 2019
- KernelVersion:  5.6.0
- Contact:        dmaengine@vger.kernel.org
+Best regards,
+Yoshihiro Shimoda
+
+> ---
+>  drivers/dma/sh/usb-dmac.c | 13 +++++++------
+>  1 file changed, 7 insertions(+), 6 deletions(-)
+>=20
+> diff --git a/drivers/dma/sh/usb-dmac.c b/drivers/dma/sh/usb-dmac.c
+> index b218a01..c0adc1c8 100644
+> --- a/drivers/dma/sh/usb-dmac.c
+> +++ b/drivers/dma/sh/usb-dmac.c
+> @@ -488,16 +488,17 @@ static u32 usb_dmac_chan_get_residue_if_complete(st=
+ruct usb_dmac_chan *chan,
+>  						 dma_cookie_t cookie)
+>  {
+>  	struct usb_dmac_desc *desc;
+> -	u32 residue =3D 0;
+>=20
+> +	list_for_each_entry_reverse(desc, &chan->desc_got, node) {
+> +		if (desc->done_cookie =3D=3D cookie)
+> +			return desc->residue;
+> +	}
+>  	list_for_each_entry_reverse(desc, &chan->desc_freed, node) {
+> -		if (desc->done_cookie =3D=3D cookie) {
+> -			residue =3D desc->residue;
+> -			break;
+> -		}
+> +		if (desc->done_cookie =3D=3D cookie)
+> +			return desc->residue;
+>  	}
+>=20
+> -	return residue;
+> +	return 0;
+>  }
+>=20
+>  static u32 usb_dmac_chan_get_residue(struct usb_dmac_chan *chan,
+> --
+> 2.7.4
 
