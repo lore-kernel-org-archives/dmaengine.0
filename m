@@ -2,95 +2,109 @@ Return-Path: <SRS0=7pNL=76=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.6 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-6.7 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 18331C433DF
-	for <dmaengine@archiver.kernel.org>; Wed, 17 Jun 2020 21:06:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DA073C433E1
+	for <dmaengine@archiver.kernel.org>; Wed, 17 Jun 2020 23:40:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DDD43218AC
-	for <dmaengine@archiver.kernel.org>; Wed, 17 Jun 2020 21:06:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1592427975;
-	bh=PxleSRdzxhbBNA5Z6VGYwX4pwZygLkPhy8QDrAX3jCk=;
-	h=Date:From:To:Cc:Subject:List-ID:From;
-	b=PlkctPTNA/9RfmJQVNtSsKrOzGDnUJ0vcl/KkmBTnncPwgU9T4f8keGNJrwsZf7WE
-	 ub+XWTjnzBseZYcUxtfUCh/CVuEqScMAC6FkfOyapSfIcI+W1jOdLXWsiQYqLYKQK5
-	 2aHMJs9dbOUDQ6RdqlPEK+lCKGBtDHYkU2mWQUao=
+	by mail.kernel.org (Postfix) with ESMTP id C3FB3208D5
+	for <dmaengine@archiver.kernel.org>; Wed, 17 Jun 2020 23:40:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726868AbgFQVGP (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 17 Jun 2020 17:06:15 -0400
-Received: from mail.kernel.org ([198.145.29.99]:43942 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726761AbgFQVGP (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Wed, 17 Jun 2020 17:06:15 -0400
-Received: from embeddedor (unknown [189.207.59.248])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 7F8CE2186A;
-        Wed, 17 Jun 2020 21:06:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1592427975;
-        bh=PxleSRdzxhbBNA5Z6VGYwX4pwZygLkPhy8QDrAX3jCk=;
-        h=Date:From:To:Cc:Subject:From;
-        b=zBAD2pPyr5zueEtIkpdCXgi7IRAM+MnOtTEf0cFRMdnBMiDG6HfNpnK76KbKhg5rY
-         nL9uhthDQKlT/UphVgxG81qqyn4Q9UCBABeqek8Om/jsddbJ0cGZyPSl1rCKFPUmoD
-         2bKIGoBBqDcN4Wm5z+YGkK1H4c1f34HUfl1WHbbc=
-Date:   Wed, 17 Jun 2020 16:11:35 -0500
-From:   "Gustavo A. R. Silva" <gustavoars@kernel.org>
-To:     Zhou Wang <wangzhou1@hisilicon.com>,
-        Dan Williams <dan.j.williams@intel.com>,
-        Vinod Koul <vkoul@kernel.org>
-Cc:     dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
-        "Gustavo A. R. Silva" <gustavo@embeddedor.com>
-Subject: [PATCH][next] dmaengine: hisilicon: Use struct_size() in
- devm_kzalloc()
-Message-ID: <20200617211135.GA8660@embeddedor>
+        id S1726913AbgFQXko (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 17 Jun 2020 19:40:44 -0400
+Received: from mail.baikalelectronics.com ([87.245.175.226]:57786 "EHLO
+        mail.baikalelectronics.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726848AbgFQXko (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Wed, 17 Jun 2020 19:40:44 -0400
+Received: from localhost (unknown [127.0.0.1])
+        by mail.baikalelectronics.ru (Postfix) with ESMTP id 9C82580045E5;
+        Wed, 17 Jun 2020 23:40:41 +0000 (UTC)
+X-Virus-Scanned: amavisd-new at baikalelectronics.ru
+Received: from mail.baikalelectronics.ru ([127.0.0.1])
+        by localhost (mail.baikalelectronics.ru [127.0.0.1]) (amavisd-new, port 10024)
+        with ESMTP id 5XwaylCJVy4X; Thu, 18 Jun 2020 02:40:39 +0300 (MSK)
+From:   Serge Semin <Sergey.Semin@baikalelectronics.ru>
+To:     Vinod Koul <vkoul@kernel.org>, Viresh Kumar <vireshk@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>
+CC:     Serge Semin <Sergey.Semin@baikalelectronics.ru>,
+        Serge Semin <fancer.lancer@gmail.com>,
+        Rob Herring <robh@kernel.org>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        Alexey Malahov <Alexey.Malahov@baikalelectronics.ru>,
+        Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+        <linux-mips@vger.kernel.org>, <dmaengine@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+Subject: [PATCH v6 2/9] dt-bindings: dma: dw: Add max burst transaction length property
+Date:   Thu, 18 Jun 2020 02:40:21 +0300
+Message-ID: <20200617234028.25808-3-Sergey.Semin@baikalelectronics.ru>
+In-Reply-To: <20200617234028.25808-1-Sergey.Semin@baikalelectronics.ru>
+References: <20200617234028.25808-1-Sergey.Semin@baikalelectronics.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.9.4 (2018-02-28)
+Content-Transfer-Encoding: 7BIT
+Content-Type:   text/plain; charset=US-ASCII
+X-ClientProxiedBy: MAIL.baikal.int (192.168.51.25) To mail (192.168.51.25)
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Make use of the struct_size() helper instead of an open-coded version
-in order to avoid any potential type mistakes.
+This array property is used to indicate the maximum burst transaction
+length supported by each DMA channel.
 
-This code was detected with the help of Coccinelle and, audited and
-fixed manually.
+Signed-off-by: Serge Semin <Sergey.Semin@baikalelectronics.ru>
+Reviewed-by: Rob Herring <robh@kernel.org>
+Acked-by: Viresh Kumar <viresh.kumar@linaro.org>
+Cc: Alexey Malahov <Alexey.Malahov@baikalelectronics.ru>
+Cc: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Cc: Arnd Bergmann <arnd@arndb.de>
+Cc: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Cc: linux-mips@vger.kernel.org
 
-Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
 ---
- drivers/dma/hisi_dma.c | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
 
-diff --git a/drivers/dma/hisi_dma.c b/drivers/dma/hisi_dma.c
-index ed3619266a48..e1a958ae7925 100644
---- a/drivers/dma/hisi_dma.c
-+++ b/drivers/dma/hisi_dma.c
-@@ -511,7 +511,6 @@ static int hisi_dma_probe(struct pci_dev *pdev, const struct pci_device_id *id)
- 	struct device *dev = &pdev->dev;
- 	struct hisi_dma_dev *hdma_dev;
- 	struct dma_device *dma_dev;
--	size_t dev_size;
- 	int ret;
+Changelog v2:
+- Rearrange SoBs.
+- Move $ref to the root level of the properties. So do with the
+  constraints.
+- Set default max-burst-len to 256 TR-WIDTH words.
+
+Changelog v3:
+- Add more details into the property description about what limitations
+  snps,max-burst-len defines.
+---
+ .../bindings/dma/snps,dma-spear1340.yaml          | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
+
+diff --git a/Documentation/devicetree/bindings/dma/snps,dma-spear1340.yaml b/Documentation/devicetree/bindings/dma/snps,dma-spear1340.yaml
+index e7611840a7cf..20870f5c14dd 100644
+--- a/Documentation/devicetree/bindings/dma/snps,dma-spear1340.yaml
++++ b/Documentation/devicetree/bindings/dma/snps,dma-spear1340.yaml
+@@ -120,6 +120,21 @@ properties:
+         enum: [0, 1]
+         default: 1
  
- 	ret = pcim_enable_device(pdev);
-@@ -534,9 +533,7 @@ static int hisi_dma_probe(struct pci_dev *pdev, const struct pci_device_id *id)
- 	if (ret)
- 		return ret;
- 
--	dev_size = sizeof(struct hisi_dma_chan) * HISI_DMA_CHAN_NUM +
--		   sizeof(*hdma_dev);
--	hdma_dev = devm_kzalloc(dev, dev_size, GFP_KERNEL);
-+	hdma_dev = devm_kzalloc(dev, struct_size(hdma_dev, chan, HISI_DMA_CHAN_NUM), GFP_KERNEL);
- 	if (!hdma_dev)
- 		return -EINVAL;
- 
++  snps,max-burst-len:
++    $ref: /schemas/types.yaml#/definitions/uint32-array
++    description: |
++      Maximum length of the burst transactions supported by the controller.
++      This property defines the upper limit of the run-time burst setting
++      (CTLx.SRC_MSIZE/CTLx.DST_MSIZE fields) so the allowed burst length
++      will be from 1 to max-burst-len words. It's an array property with one
++      cell per channel in the units determined by the value set in the
++      CTLx.SRC_TR_WIDTH/CTLx.DST_TR_WIDTH fields (data width).
++    items:
++      maxItems: 8
++      items:
++        enum: [4, 8, 16, 32, 64, 128, 256]
++        default: 256
++
+   snps,dma-protection-control:
+     $ref: /schemas/types.yaml#definitions/uint32
+     description: |
 -- 
-2.27.0
+2.26.2
 
