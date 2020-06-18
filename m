@@ -2,68 +2,109 @@ Return-Path: <SRS0=AlLT=77=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.4 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E7CA1C433E0
-	for <dmaengine@archiver.kernel.org>; Thu, 18 Jun 2020 13:00:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F0633C433DF
+	for <dmaengine@archiver.kernel.org>; Thu, 18 Jun 2020 19:32:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CA8852082F
-	for <dmaengine@archiver.kernel.org>; Thu, 18 Jun 2020 13:00:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C15F7208C7
+	for <dmaengine@archiver.kernel.org>; Thu, 18 Jun 2020 19:32:26 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=nvidia.com header.i=@nvidia.com header.b="deWdH0mi"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725953AbgFRNAH (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Thu, 18 Jun 2020 09:00:07 -0400
-Received: from szxga06-in.huawei.com ([45.249.212.32]:47972 "EHLO huawei.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1725898AbgFRNAH (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Thu, 18 Jun 2020 09:00:07 -0400
-Received: from DGGEMS405-HUB.china.huawei.com (unknown [172.30.72.58])
-        by Forcepoint Email with ESMTP id 1BF1FF9C323EE1E6F0DE;
-        Thu, 18 Jun 2020 21:00:05 +0800 (CST)
-Received: from huawei.com (10.175.127.227) by DGGEMS405-HUB.china.huawei.com
- (10.3.19.205) with Microsoft SMTP Server id 14.3.487.0; Thu, 18 Jun 2020
- 20:59:53 +0800
-From:   Yu Kuai <yukuai3@huawei.com>
-To:     <vkoul@kernel.org>, <dan.j.williams@intel.com>,
-        <peter.ujfalusi@ti.com>, <grygorii.strashko@ti.com>
-CC:     <dmaengine@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <yukuai3@huawei.com>, <yi.zhang@huawei.com>
-Subject: [PATCH] dmaengine: ti: k3-udma: add missing put_device() call in of_xudma_dev_get()
-Date:   Thu, 18 Jun 2020 21:01:10 +0800
-Message-ID: <20200618130110.582543-1-yukuai3@huawei.com>
-X-Mailer: git-send-email 2.25.4
+        id S1728157AbgFRTc0 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Thu, 18 Jun 2020 15:32:26 -0400
+Received: from hqnvemgate25.nvidia.com ([216.228.121.64]:13996 "EHLO
+        hqnvemgate25.nvidia.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726940AbgFRTc0 (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Thu, 18 Jun 2020 15:32:26 -0400
+Received: from hqpgpgate101.nvidia.com (Not Verified[216.228.121.13]) by hqnvemgate25.nvidia.com (using TLS: TLSv1.2, DES-CBC3-SHA)
+        id <B5eebc1170000>; Thu, 18 Jun 2020 12:31:35 -0700
+Received: from hqmail.nvidia.com ([172.20.161.6])
+  by hqpgpgate101.nvidia.com (PGP Universal service);
+  Thu, 18 Jun 2020 12:32:26 -0700
+X-PGP-Universal: processed;
+        by hqpgpgate101.nvidia.com on Thu, 18 Jun 2020 12:32:26 -0700
+Received: from [10.26.72.215] (172.20.13.39) by HQMAIL107.nvidia.com
+ (172.20.187.13) with Microsoft SMTP Server (TLS) id 15.0.1473.3; Thu, 18 Jun
+ 2020 19:32:20 +0000
+Subject: Re: [PATCH] [v3] dmaengine: tegra210-adma: Fix runtime PM imbalance
+ on error
+To:     Dinghao Liu <dinghao.liu@zju.edu.cn>, <kjlu@umn.edu>
+CC:     Laxman Dewangan <ldewangan@nvidia.com>,
+        Dan Williams <dan.j.williams@intel.com>,
+        Vinod Koul <vkoul@kernel.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        <dmaengine@vger.kernel.org>, <linux-tegra@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <20200618105727.14669-1-dinghao.liu@zju.edu.cn>
+From:   Jon Hunter <jonathanh@nvidia.com>
+Message-ID: <9f7684d9-7a75-497d-db1c-75cf0991a072@nvidia.com>
+Date:   Thu, 18 Jun 2020 20:32:18 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.8.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7BIT
-Content-Type:   text/plain; charset=US-ASCII
-X-Originating-IP: [10.175.127.227]
-X-CFilter-Loop: Reflected
+In-Reply-To: <20200618105727.14669-1-dinghao.liu@zju.edu.cn>
+X-Originating-IP: [172.20.13.39]
+X-ClientProxiedBy: HQMAIL107.nvidia.com (172.20.187.13) To
+ HQMAIL107.nvidia.com (172.20.187.13)
+Content-Type: text/plain; charset="utf-8"
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nvidia.com; s=n1;
+        t=1592508695; bh=Y+el/msl5X9o1BlFounYqeYclLOqf6T/QsJDITBZXqk=;
+        h=X-PGP-Universal:Subject:To:CC:References:From:Message-ID:Date:
+         User-Agent:MIME-Version:In-Reply-To:X-Originating-IP:
+         X-ClientProxiedBy:Content-Type:Content-Language:
+         Content-Transfer-Encoding;
+        b=deWdH0miSgiOPdDQJ4OdfEkBzZtj5uvIgYtqy0VRrej0fpBcWv4OgSSNsAkXZ44cZ
+         sQwLVUR0zOQG0C9Ni7x2gjlXCC2QqO7QxhmEC0ELlZ6nfNogu7aqat97o7AMLLveUB
+         WF9z1HKm5RI9OgPjua0UjGpfD12GDfPcfT3IFss1/Y+sa32zgXo4moxutyDc9AtEne
+         BTedBct5s/uHjZB7xuM/UiYciUloab81OHgAxc0UqAgCWTUEB08FXYn7wtW901TqLV
+         QuKBruUbzVr+W3PlKxIsF8PqarvyqGWdUWePMhKU79xqHpsOUrOcBFl5sihmEbnrW3
+         EGuIBEezjmI3Q==
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-if of_find_device_by_node() succeed and platform_get_drvdata() failed,
-of_xudma_dev_get() will return without put_device(), which will leak
-the memory.
 
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
----
- drivers/dma/ti/k3-udma-private.c | 1 +
- 1 file changed, 1 insertion(+)
+On 18/06/2020 11:57, Dinghao Liu wrote:
+> pm_runtime_get_sync() increments the runtime PM usage counter even
+> when it returns an error code. Thus a pairing decrement is needed on
+> the error handling path to keep the counter balanced.
+> 
+> Signed-off-by: Dinghao Liu <dinghao.liu@zju.edu.cn>
+> ---
+> 
+> Changelog:
+> 
+> v2: - Merge two patches that fix runtime PM imbalance in
+>       tegra_adma_probe() and tegra_adma_alloc_chan_resources()
+>       respectively.
+> 
+> v3: - Use pm_runtime_put_noidle() instead of pm_runtime_put_sync()
+>       in tegra_adma_alloc_chan_resources().
+> ---
+>  drivers/dma/tegra210-adma.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/dma/tegra210-adma.c b/drivers/dma/tegra210-adma.c
+> index db58d7e4f9fe..bfa8800dfb4c 100644
+> --- a/drivers/dma/tegra210-adma.c
+> +++ b/drivers/dma/tegra210-adma.c
+> @@ -658,6 +658,7 @@ static int tegra_adma_alloc_chan_resources(struct dma_chan *dc)
+>  
+>  	ret = pm_runtime_get_sync(tdc2dev(tdc));
+>  	if (ret < 0) {
+> +		pm_runtime_put_noidle(tdc2dev(tdc));
 
-diff --git a/drivers/dma/ti/k3-udma-private.c b/drivers/dma/ti/k3-udma-private.c
-index 0b8f3dd6b146..77e8e67d995b 100644
---- a/drivers/dma/ti/k3-udma-private.c
-+++ b/drivers/dma/ti/k3-udma-private.c
-@@ -42,6 +42,7 @@ struct udma_dev *of_xudma_dev_get(struct device_node *np, const char *property)
- 	ud = platform_get_drvdata(pdev);
- 	if (!ud) {
- 		pr_debug("UDMA has not been probed\n");
-+		put_device(&pdev->dev);
- 		return ERR_PTR(-EPROBE_DEFER);
- 	}
- 
+Why noidle?
+
+Jon
+
 -- 
-2.25.4
-
+nvpublic
