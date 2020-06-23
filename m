@@ -2,125 +2,77 @@ Return-Path: <SRS0=bNmE=AE=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.6 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-15.1 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
+	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AAE64C433E1
-	for <dmaengine@archiver.kernel.org>; Tue, 23 Jun 2020 12:25:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 911DCC433DF
+	for <dmaengine@archiver.kernel.org>; Tue, 23 Jun 2020 14:37:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 877E420781
-	for <dmaengine@archiver.kernel.org>; Tue, 23 Jun 2020 12:25:28 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=nvidia.com header.i=@nvidia.com header.b="aHCKS8W1"
+	by mail.kernel.org (Postfix) with ESMTP id 7211F20720
+	for <dmaengine@archiver.kernel.org>; Tue, 23 Jun 2020 14:37:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=default; t=1592923063;
+	bh=LxiQVVinhBQKbOzwTpLWbfRK5z2E0I1fmXbEPivqF7E=;
+	h=From:To:Cc:Subject:Date:List-ID:From;
+	b=f8P2J7QM2gUD/15kMwiszPijFbn6lyZ12ZD7rbRClc7pgfuQNY+4/7OSjXHHbY9a3
+	 ErgJTbkSgA6Ko/cM42l+KFNjC3QwGlFldVidlxwRnQhL9rV8PrWIKoHVji+5UC9cr5
+	 6BAGUxLQelf2OVfKlO/UDnbRJ71fS15N06URCLU0=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732584AbgFWMZ1 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 23 Jun 2020 08:25:27 -0400
-Received: from hqnvemgate25.nvidia.com ([216.228.121.64]:8027 "EHLO
-        hqnvemgate25.nvidia.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732511AbgFWMZ0 (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Tue, 23 Jun 2020 08:25:26 -0400
-Received: from hqpgpgate102.nvidia.com (Not Verified[216.228.121.13]) by hqnvemgate25.nvidia.com (using TLS: TLSv1.2, DES-CBC3-SHA)
-        id <B5ef1f4880001>; Tue, 23 Jun 2020 05:24:40 -0700
-Received: from hqmail.nvidia.com ([172.20.161.6])
-  by hqpgpgate102.nvidia.com (PGP Universal service);
-  Tue, 23 Jun 2020 05:25:26 -0700
-X-PGP-Universal: processed;
-        by hqpgpgate102.nvidia.com on Tue, 23 Jun 2020 05:25:26 -0700
-Received: from [10.26.75.236] (10.124.1.5) by HQMAIL107.nvidia.com
- (172.20.187.13) with Microsoft SMTP Server (TLS) id 15.0.1473.3; Tue, 23 Jun
- 2020 12:25:22 +0000
-Subject: Re: [PATCH] [v4] dmaengine: tegra210-adma: Fix runtime PM imbalance
- on error
-To:     Geert Uytterhoeven <geert@linux-m68k.org>
-CC:     Dinghao Liu <dinghao.liu@zju.edu.cn>, Kangjie Lu <kjlu@umn.edu>,
-        "Laxman Dewangan" <ldewangan@nvidia.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        Dan Williams <dan.j.williams@intel.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        dmaengine <dmaengine@vger.kernel.org>,
-        linux-tegra <linux-tegra@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-References: <20200621054710.9915-1-dinghao.liu@zju.edu.cn>
- <44d7771e-5600-19c2-888a-dd226cbc4b50@nvidia.com>
- <CAMuHMdVu=Tm4UTN1GAc3_uy00UhYYJ7ZPyq1qPCXQ+iP3hksfg@mail.gmail.com>
-From:   Jon Hunter <jonathanh@nvidia.com>
-Message-ID: <a1357f1f-63d9-93e9-ea7d-e594ba9fc219@nvidia.com>
-Date:   Tue, 23 Jun 2020 13:25:20 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.8.0
+        id S1732754AbgFWOhn (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 23 Jun 2020 10:37:43 -0400
+Received: from mail.kernel.org ([198.145.29.99]:57270 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1732835AbgFWOhm (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Tue, 23 Jun 2020 10:37:42 -0400
+Received: from localhost.localdomain (unknown [171.61.66.58])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 555E6206EB;
+        Tue, 23 Jun 2020 14:37:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1592923062;
+        bh=LxiQVVinhBQKbOzwTpLWbfRK5z2E0I1fmXbEPivqF7E=;
+        h=From:To:Cc:Subject:Date:From;
+        b=KWmHHVNewecJReWi3cvU5ePHXSdfNeV4szsOGTLoU1NIvU2Z1oo8BbrzH74R+3tdx
+         UukOkmBIFDzlUjQZxiNsSGLoh5OmeZ2wdLMk5kJ0iO3DrEa3H0TCKuqakmx+uCKpN0
+         hl18QPkVVXErOlBxxRjOMu1wtxnIk6TOu2CatMhw=
+From:   Vinod Koul <vkoul@kernel.org>
+To:     dmaengine@vger.kernel.org
+Cc:     Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH] MAINTAINERS: switch dmaengine tree to kernel.org
+Date:   Tue, 23 Jun 2020 20:07:29 +0530
+Message-Id: <20200623143729.781403-1-vkoul@kernel.org>
+X-Mailer: git-send-email 2.26.2
 MIME-Version: 1.0
-In-Reply-To: <CAMuHMdVu=Tm4UTN1GAc3_uy00UhYYJ7ZPyq1qPCXQ+iP3hksfg@mail.gmail.com>
-X-Originating-IP: [10.124.1.5]
-X-ClientProxiedBy: HQMAIL111.nvidia.com (172.20.187.18) To
- HQMAIL107.nvidia.com (172.20.187.13)
-Content-Type: text/plain; charset="utf-8"
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nvidia.com; s=n1;
-        t=1592915080; bh=/mxJgXkpwkrXVLzjqF5kjYdPo9eAp3xBgryscNpKjzY=;
-        h=X-PGP-Universal:Subject:To:CC:References:From:Message-ID:Date:
-         User-Agent:MIME-Version:In-Reply-To:X-Originating-IP:
-         X-ClientProxiedBy:Content-Type:Content-Language:
-         Content-Transfer-Encoding;
-        b=aHCKS8W1gQCRe/AiErUzoJZrnE0vCWXqCiwH4pFs66T0K2DzlrPKMR5pIWRC+Nf7C
-         +hVYiGlYPUipQ8Rvy7CnyPGW2RtyCaLbiKZUCbrQGaEuxUDthj0xBZCRo97Aq0YpiD
-         QZV0zj6V8/TfDTfk2FZp0I2mpeSVg5fsFYTOYeocVkhzvUArcMPuBmd87Y7dzmJzpS
-         tP9QWwSHEg1gfd7D/S/av6Z/7+k/O/54nvTUyebvv76/3R+XEosfOLJzZnNAUh4DqZ
-         0JFvG1Bq77fr74oJAY6eV5DPUQsQhuL6ocIsLwU2xFhX3h6eJ+Np2FN2GiJVBtkAiZ
-         IZ6+6wHXOJpDA==
+Content-Transfer-Encoding: 8bit
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Hi Geert,
+I have switched DMAengine tree to kernel.org now, so update in
+MAINTAINERS file
 
-On 23/06/2020 13:08, Geert Uytterhoeven wrote:
-> Hi Jon,
-> 
-> More stirring in the cesspool ;-)
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+---
+ MAINTAINERS | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Ha! Indeed.
-
-> On Tue, Jun 23, 2020 at 12:13 PM Jon Hunter <jonathanh@nvidia.com> wrote:
->> On 21/06/2020 06:47, Dinghao Liu wrote:
->>> pm_runtime_get_sync() increments the runtime PM usage counter even
->>> when it returns an error code. Thus a pairing decrement is needed on
->>> the error handling path to keep the counter balanced.
->>
->> So you have not mentioned here why you are using _noidle and not _put.
->> Furthermore, in this patch [0] you are not using _noidle to fix the same
->> problem in another driver. We should fix this in a consistent manner
->> across all drivers, otherwise it leads to more confusion.
->>
->> Finally, Rafael mentions we should just use _put [0] and so I think we
->> should follow his recommendation.
->>
->> Jon
->>
->> [0] https://lkml.org/lkml/2020/5/21/601
-> 
-> "_noidle() is the simplest one and it is sufficient."
-> https://lore.kernel.org/linux-i2c/CAJZ5v0i87NGcy9+kxubScdPDyByr8ypQWcGgBFn+V-wDd69BHQ@mail.gmail.com/
-
-Good to know. This detail should be spelled out in the changelog so that
-it is clear why we are using _noidle and not _put. I did take a look and
-it did seem to handle the usage_count OK, but I was concerned if there
-could be something else in the _put path that may get missed.
-
-Anyway, I am fine with the change, but with an updated changelog on why
-_noidle is being used.
-
-> You never know what additional things the other put* variants
-> will start doing in the future...
-
-Hopefully not, as that would be a breakage of the API itself. From what
-Rafael said that all _put calls should work and if at some point in the
-future they don't, then that seems like a regression.
-
-Jon
-
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 68f21d46614c..49d096742d5d 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -5111,7 +5111,7 @@ M:	Vinod Koul <vkoul@kernel.org>
+ L:	dmaengine@vger.kernel.org
+ S:	Maintained
+ Q:	https://patchwork.kernel.org/project/linux-dmaengine/list/
+-T:	git git://git.infradead.org/users/vkoul/slave-dma.git
++T:	git git://git.kernel.org/pub/scm/linux/kernel/git/vkoul/dmaengine.git
+ F:	Documentation/devicetree/bindings/dma/
+ F:	Documentation/driver-api/dmaengine/
+ F:	drivers/dma/
 -- 
-nvpublic
+2.26.2
+
