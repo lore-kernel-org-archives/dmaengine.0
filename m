@@ -2,104 +2,76 @@ Return-Path: <SRS0=BNS2=AF=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.0 required=3.0
-	tests=HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS
-	autolearn=unavailable autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-1.1 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C230EC433DF
-	for <dmaengine@archiver.kernel.org>; Wed, 24 Jun 2020 06:03:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A3830C433DF
+	for <dmaengine@archiver.kernel.org>; Wed, 24 Jun 2020 06:05:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A31072085B
-	for <dmaengine@archiver.kernel.org>; Wed, 24 Jun 2020 06:03:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7FF6F20B1F
+	for <dmaengine@archiver.kernel.org>; Wed, 24 Jun 2020 06:05:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=default; t=1592978719;
+	bh=qghxJVkkiMtbRfQ/7Mj6wJLlOvY1Uw7KdE34MrVEL8U=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:List-ID:From;
+	b=Bvm0SfwHAZBqiGAMJ1jzv1/950poeRinI85Podn9NJH5VY54Ou7w8vZB8J5GPS+7U
+	 UMFqOpp3CpdfXW9WNueMKeSRVpXLAqwwORwnRcQLfwFXN5PgtW0DuF9uWi1XjJPds/
+	 eeR7PH7K6RnIvJTdACA3uJs4nZ4+4AJMAyGlz9dU=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388307AbgFXGDx (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 24 Jun 2020 02:03:53 -0400
-Received: from smtprelay0133.hostedemail.com ([216.40.44.133]:47660 "EHLO
-        smtprelay.hostedemail.com" rhost-flags-OK-OK-OK-FAIL)
-        by vger.kernel.org with ESMTP id S2388164AbgFXGDx (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Wed, 24 Jun 2020 02:03:53 -0400
-X-Greylist: delayed 437 seconds by postgrey-1.27 at vger.kernel.org; Wed, 24 Jun 2020 02:03:53 EDT
-Received: from smtprelay.hostedemail.com (10.5.19.251.rfc1918.com [10.5.19.251])
-        by smtpgrave02.hostedemail.com (Postfix) with ESMTP id 6248B18009133
-        for <dmaengine@vger.kernel.org>; Wed, 24 Jun 2020 05:56:36 +0000 (UTC)
-Received: from filter.hostedemail.com (clb03-v110.bra.tucows.net [216.40.38.60])
-        by smtprelay03.hostedemail.com (Postfix) with ESMTP id EF110837F24A;
-        Wed, 24 Jun 2020 05:56:34 +0000 (UTC)
-X-Session-Marker: 6A6F6540706572636865732E636F6D
-X-HE-Tag: cap36_5b0ffc026e41
-X-Filterd-Recvd-Size: 2586
-Received: from XPS-9350.home (unknown [47.151.133.149])
-        (Authenticated sender: joe@perches.com)
-        by omf18.hostedemail.com (Postfix) with ESMTPA;
-        Wed, 24 Jun 2020 05:56:33 +0000 (UTC)
-Message-ID: <fa304f0ef1dba4fcf5e495f3c2feb4d3816f20ac.camel@perches.com>
-Subject: Re: [PATCH][next] dmaengine: ti: k3-udma: Use struct_size() in
- kzalloc()
-From:   Joe Perches <joe@perches.com>
-To:     Vinod Koul <vkoul@kernel.org>,
-        "Gustavo A. R. Silva" <gustavoars@kernel.org>,
-        Peter Ujfalusi <peter.ujfalusi@ti.com>
-Cc:     Dan Williams <dan.j.williams@intel.com>, dmaengine@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        "Gustavo A. R. Silva" <gustavo@embeddedor.com>
-Date:   Tue, 23 Jun 2020 22:56:32 -0700
-In-Reply-To: <20200624055535.GX2324254@vkoul-mobl>
-References: <20200619224334.GA7857@embeddedor>
-         <20200624055535.GX2324254@vkoul-mobl>
-Content-Type: text/plain; charset="ISO-8859-1"
-User-Agent: Evolution 3.36.2-0ubuntu1 
+        id S2389017AbgFXGFT (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 24 Jun 2020 02:05:19 -0400
+Received: from mail.kernel.org ([198.145.29.99]:34860 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2388164AbgFXGFS (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Wed, 24 Jun 2020 02:05:18 -0400
+Received: from localhost (unknown [171.61.66.58])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 965B9207DD;
+        Wed, 24 Jun 2020 06:05:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1592978718;
+        bh=qghxJVkkiMtbRfQ/7Mj6wJLlOvY1Uw7KdE34MrVEL8U=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=SAfLleMJAysulcapubK8TBWNSkbmmaZZwroyqS+YlQaAb+NTEx+zhW6JqVVoI79rh
+         KRL4tufD9YkGtQodvTLF/PTCgY0mFzvyRwNQ3swQB6tGC3MS0hM61HuY/DY7SSLWmY
+         /KKwvpmWdFsgRHH3DviBEs7eQ+UyjKoKxdymSlcw=
+Date:   Wed, 24 Jun 2020 11:35:14 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
+Cc:     dmaengine@vger.kernel.org, linux-renesas-soc@vger.kernel.org
+Subject: Re: [PATCH v2] dmaengine: sh: usb-dmac: set tx_result parameters
+Message-ID: <20200624060514.GC2324254@vkoul-mobl>
+References: <1592482053-19433-1-git-send-email-yoshihiro.shimoda.uh@renesas.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1592482053-19433-1-git-send-email-yoshihiro.shimoda.uh@renesas.com>
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On Wed, 2020-06-24 at 11:25 +0530, Vinod Koul wrote:
-> On 19-06-20, 17:43, Gustavo A. R. Silva wrote:
-> > Make use of the struct_size() helper instead of an open-coded version
-> > in order to avoid any potential type mistakes.
-> > 
-> > This code was detected with the help of Coccinelle and, audited and
-> > fixed manually.
-> > 
-> > Addresses-KSPP-ID: https://github.com/KSPP/linux/issues/83
-
-Is this odd tag really useful?
-
-> > Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
-> > ---
-> >  drivers/dma/ti/k3-udma.c | 4 ++--
-> >  1 file changed, 2 insertions(+), 2 deletions(-)
-> > 
-> > diff --git a/drivers/dma/ti/k3-udma.c b/drivers/dma/ti/k3-udma.c
-> > index 0d5fb154b8e2..411c54b86ba8 100644
-> > --- a/drivers/dma/ti/k3-udma.c
-> > +++ b/drivers/dma/ti/k3-udma.c
-> > @@ -2209,7 +2209,7 @@ udma_prep_slave_sg_pkt(struct udma_chan *uc, struct scatterlist *sgl,
-> >  	u32 ring_id;
-> >  	unsigned int i;
-> >  
-> > -	d = kzalloc(sizeof(*d) + sglen * sizeof(d->hwdesc[0]), GFP_NOWAIT);
-> > +	d = kzalloc(struct_size(d, hwdesc, sglen), GFP_NOWAIT);
+On 18-06-20, 21:07, Yoshihiro Shimoda wrote:
+> A client driver (renesas_usbhs) assumed that
+> dmaengine_tx_status() could return the residue even if
+> the transfer was completed. However, this was not correct
+> usage [1] and this caused to break getting the residue after
+> the commit 24461d9792c2 ("dmaengine: virt-dma: Fix access after
+> free in vchan_complete()") actually. So, this is possible to get
+> wrong received size if the usb controller gets a short packet.
+> For example, g_zero driver causes "bad OUT byte" errors.
 > 
-> struct_size() is a * b + c but here we need, a + b * c.. the trailing
-> struct is N times here..
+> To use the tx_result from the renesas_usbhs driver when
+> the transfer is completed, set the tx_result parameters.
 > 
+> Notes that the renesas_usbhs driver needs to update for it.
 > 
-> >  	if (!d)
-> >  		return NULL;
-> >  
-> > @@ -2525,7 +2525,7 @@ udma_prep_dma_cyclic_pkt(struct udma_chan *uc, dma_addr_t buf_addr,
-> >  	if (period_len >= SZ_4M)
-> >  		return NULL;
-> >  
-> > -	d = kzalloc(sizeof(*d) + periods * sizeof(d->hwdesc[0]), GFP_NOWAIT);
-> > +	d = kzalloc(struct_size(d, hwdesc, periods), GFP_NOWAIT);
-> >  	if (!d)
-> >  		return NULL;
-> >  
-> > -- 
-> > 2.27.0
+> [1]
+> https://lore.kernel.org/dmaengine/20200616165550.GP2324254@vkoul-mobl/
 
+Applied, thanks
+
+-- 
+~Vinod
