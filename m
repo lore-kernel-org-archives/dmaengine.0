@@ -6,63 +6,58 @@ X-Spam-Status: No, score=-1.1 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0D77DC433DF
-	for <dmaengine@archiver.kernel.org>; Wed, 24 Jun 2020 05:56:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8824DC433E0
+	for <dmaengine@archiver.kernel.org>; Wed, 24 Jun 2020 05:58:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DC83420899
-	for <dmaengine@archiver.kernel.org>; Wed, 24 Jun 2020 05:56:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 646582085B
+	for <dmaengine@archiver.kernel.org>; Wed, 24 Jun 2020 05:58:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1592978201;
-	bh=T9HGZgQSFhYHhphxCCK/tAU7Drx348osXhVkKUhD8AU=;
+	s=default; t=1592978334;
+	bh=PABbC3O7XUVzGvcFflGzTZABRmWlQuF9vZO/Moc36pY=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:List-ID:From;
-	b=N6U6mfKtM/0bq3cAc6JBLrPmtpS1SlgwhFiVdXt3tRCwIyqoT5MjH5+YlReOFvXc+
-	 ydUZsU3RiWE9NVyZju0kHfkVHFpl4t3SwtASyyttEkUdQTZ7/zhnfA9oRZVusdEj6d
-	 lyP5jFw+CkMx2yFuHyGaNUi9q+8hvfyj42yg7F2c=
+	b=Z0uLe6BqimYpX9snvvvcrXhPsVe9Cbh96GyD602IAxnD9MVzSXlQ6g1T5Mz1oIrWd
+	 ETpxUVT4KSrC4y0NMe1Sf4O634GYnBjbCOh0BJxf0DUDj2Szyou+wencAaElpMl3sV
+	 AZhHIzHOVQq/nkr1MPGvWki6D/iogh9oz1fZo0q0=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389084AbgFXF4h (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 24 Jun 2020 01:56:37 -0400
-Received: from mail.kernel.org ([198.145.29.99]:59414 "EHLO mail.kernel.org"
+        id S2388632AbgFXF6y (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 24 Jun 2020 01:58:54 -0400
+Received: from mail.kernel.org ([198.145.29.99]:60154 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2388854AbgFXF4h (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Wed, 24 Jun 2020 01:56:37 -0400
+        id S2388307AbgFXF6x (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Wed, 24 Jun 2020 01:58:53 -0400
 Received: from localhost (unknown [171.61.66.58])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 479F2207DD;
-        Wed, 24 Jun 2020 05:56:35 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id A80852085B;
+        Wed, 24 Jun 2020 05:58:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1592978197;
-        bh=T9HGZgQSFhYHhphxCCK/tAU7Drx348osXhVkKUhD8AU=;
+        s=default; t=1592978333;
+        bh=PABbC3O7XUVzGvcFflGzTZABRmWlQuF9vZO/Moc36pY=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=sb0bLB0DmCTNrKV6F2FraehEKEMOkcrzAAYSYexm7OAEXPPZDuOD7NLhJkzIYsypn
-         Zbn1lnR2tnb+aQNldKxBinmXX27vWFI2FBKYkkRnU+ZBo7KGw5t2sFFtPIaOcIqnlm
-         2gyFyB9DSyH0ysHUu2b8ljunJvWBiWxTVInddTeQ=
-Date:   Wed, 24 Jun 2020 11:26:33 +0530
+        b=eHS3hGLXuYS9U9fGigK2wUtPCN+Ex+Kv2PHrMkgALFCBaamaJ3QNZop0OJJ2cVTE5
+         FhRrk8J2WU+vfqGsvjSR4zX99Pd49mFSVlbsUs01LJeld2TvqshVu7cgQYKjVIBQ7Y
+         9jeEz6G8+YdHY+m1R/9fE6h6AH8qxq8wQZ1J9TmU=
+Date:   Wed, 24 Jun 2020 11:28:49 +0530
 From:   Vinod Koul <vkoul@kernel.org>
-To:     "Gustavo A. R. Silva" <gustavoars@kernel.org>
-Cc:     Zhou Wang <wangzhou1@hisilicon.com>,
-        Dan Williams <dan.j.williams@intel.com>,
-        dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
-        "Gustavo A. R. Silva" <gustavo@embeddedor.com>
-Subject: Re: [PATCH][next] dmaengine: hisilicon: Use struct_size() in
- devm_kzalloc()
-Message-ID: <20200624055633.GY2324254@vkoul-mobl>
-References: <20200617211135.GA8660@embeddedor>
+To:     Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Cc:     Dan Williams <dan.j.williams@intel.com>, dmaengine@vger.kernel.org
+Subject: Re: [PATCH v2] dmaengine: acpi: Drop double check for ACPI companion
+ device
+Message-ID: <20200624055849.GZ2324254@vkoul-mobl>
+References: <20200622181311.67649-1-andriy.shevchenko@linux.intel.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20200617211135.GA8660@embeddedor>
+In-Reply-To: <20200622181311.67649-1-andriy.shevchenko@linux.intel.com>
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On 17-06-20, 16:11, Gustavo A. R. Silva wrote:
-> Make use of the struct_size() helper instead of an open-coded version
-> in order to avoid any potential type mistakes.
-> 
-> This code was detected with the help of Coccinelle and, audited and
-> fixed manually.
+On 22-06-20, 21:13, Andy Shevchenko wrote:
+> acpi_dev_get_resources() does perform the NULL pointer check against
+> ACPI companion device which is given as function parameter. Thus,
+> there is no need to duplicate this check in the caller.
 
 Applied, thanks
 
