@@ -3,73 +3,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-1.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E2E17C433E2
-	for <dmaengine@archiver.kernel.org>; Mon, 29 Jun 2020 21:04:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 86413C433DF
+	for <dmaengine@archiver.kernel.org>; Mon, 29 Jun 2020 21:05:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C17B5206A1
-	for <dmaengine@archiver.kernel.org>; Mon, 29 Jun 2020 21:04:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6760520768
+	for <dmaengine@archiver.kernel.org>; Mon, 29 Jun 2020 21:05:51 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ifgI6FKo"
+	dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b="YkQ23763"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388068AbgF2VEY (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 29 Jun 2020 17:04:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43394 "EHLO
+        id S2390284AbgF2VFi (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 29 Jun 2020 17:05:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43356 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731119AbgF2TMp (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Mon, 29 Jun 2020 15:12:45 -0400
-Received: from mail-ed1-x543.google.com (mail-ed1-x543.google.com [IPv6:2a00:1450:4864:20::543])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E03DEC0149DD;
-        Mon, 29 Jun 2020 01:19:50 -0700 (PDT)
-Received: by mail-ed1-x543.google.com with SMTP id n2so3034499edr.5;
-        Mon, 29 Jun 2020 01:19:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Di4X3kO1NLhqcaNYFfndVe6TZWk4Eo5zmSmqMBqgXsg=;
-        b=ifgI6FKoFI1Vj1Y+nGO/as8ZauW+sydv5qFWLvnktrrd+l8EjoY0z7O5zApRcfIIhS
-         RlFN/y8e0n51H6cEehMPylM946Wx/H+jVJ0pcLlzNtIjppj07NZgbpXUKfZwniLoheTJ
-         +NqBBpp60z8OjGiY+u+rHkgHRpnakZLyZ4FcOtEW27C0twNv5XWpiq/hzTMfHlHG/sHA
-         CDZxrFFX3QUyQWfR05S5EDvntl5pAG1dWlfA2WGfhx8moL20Cxsh6pF+G9SJqXzlCuFZ
-         S1EHIkwV0NgK0NSIQv6MqeIR8kcmdm6hzDAasfCewAia06Ur4YxsWrj4MjjLwaCuC0DU
-         Vj6w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Di4X3kO1NLhqcaNYFfndVe6TZWk4Eo5zmSmqMBqgXsg=;
-        b=kXVGdwDXTTcFOO1mrtsXznf2AEZYjwXFk/CiYKOyRMMpJ2b3FtJGDVMUNIvqrpJGYP
-         v2dSQU1ak1anx5pkkM80dhvmihpvwNCeG6vqILpDFaUGFi+r0Q51FVPvbeIaXnZdBmAj
-         r4ts1BnKGkT754+b0Wlxaf8bIunD+kyq6VatxrMa0F6rPmmEkPRI1o36Nia7zR+2NNgY
-         GX42SW9eF6GPXGYSWAbpxHWRqqKAcj6GNTduo82cYcT1GbPKZtsWXBweorH/4IrKV8A7
-         GPE0oKJqGjCxs8arPWHBtKM/u+EYWtX70nHiRKzQ8L66Pix7IwSY9E9CqUYI3z2rosHX
-         jWDQ==
-X-Gm-Message-State: AOAM532PV9giwIHwEYpRJOGWdoeRo7od23UwYitwoOUOtnkiKC94UjGp
-        ZjMRGXQckmynb7hnhG5aUpOirzJ9bJpBpLvRlSI=
-X-Google-Smtp-Source: ABdhPJwfdt2m13rVluP61KSXjdS/shN0vv951DCdcYyHLuk5BLxsJ+nzlopMzbt3IgLYif0iqkr1O0q0o+EFuSIip/o=
-X-Received: by 2002:a50:fe94:: with SMTP id d20mr15868605edt.254.1593418789481;
- Mon, 29 Jun 2020 01:19:49 -0700 (PDT)
-MIME-Version: 1.0
-References: <1591697830-16311-1-git-send-email-amittomer25@gmail.com>
- <1591697830-16311-3-git-send-email-amittomer25@gmail.com> <20200624061529.GF2324254@vkoul-mobl>
-In-Reply-To: <20200624061529.GF2324254@vkoul-mobl>
-From:   Amit Tomer <amittomer25@gmail.com>
-Date:   Mon, 29 Jun 2020 13:49:13 +0530
-Message-ID: <CABHD4K-Z7_MkG-j1uAt6XGnz4zWzNYeuEgq=BwE=NXPwY6gb6g@mail.gmail.com>
-Subject: Re: [PATCH v4 02/10] dmaengine: Actions: Add support for S700 DMA engine
+        with ESMTP id S1731089AbgF2TMn (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Mon, 29 Jun 2020 15:12:43 -0400
+Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [IPv6:2001:4b98:dc2:55:216:3eff:fef7:d647])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E3A60C0086D8
+        for <dmaengine@vger.kernel.org>; Mon, 29 Jun 2020 02:30:46 -0700 (PDT)
+Received: from pendragon.ideasonboard.com (81-175-216-236.bb.dnainternet.fi [81.175.216.236])
+        by perceval.ideasonboard.com (Postfix) with ESMTPSA id 6DD5F2B3;
+        Mon, 29 Jun 2020 11:30:44 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
+        s=mail; t=1593423044;
+        bh=Saol7L3H0VGdy6cAigbabBK4AhIm5QXCZUaNt34Hsxs=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=YkQ23763M9Bn+dZyMWRVqUBepaFiZ6q60PPx624H5LdsIrbDUv2LMV8H+iYaSJPht
+         zbX2Xo//wIuuXWFACpW3dt6OVeWIQuMD0lfC394Utt79CsxiWdnh6sUVKDdkX9py3p
+         dCHgGY1GaU4q2I3EM5ai6Rv0Cc5IYEDKtgIgA0kU=
+Date:   Mon, 29 Jun 2020 12:30:41 +0300
+From:   Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Andre Przywara <andre.przywara@arm.com>,
-        =?UTF-8?Q?Andreas_F=C3=A4rber?= <afaerber@suse.de>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        dan.j.williams@intel.com, cristian.ciocaltea@gmail.com,
-        dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>,
-        linux-actions@lists.infradead.org
-Content-Type: text/plain; charset="UTF-8"
+Cc:     dmaengine@vger.kernel.org, Michal Simek <michal.simek@xilinx.com>,
+        Hyun Kwon <hyun.kwon@xilinx.com>,
+        Tejas Upadhyay <tejasu@xilinx.com>,
+        Satish Kumar Nagireddy <SATISHNA@xilinx.com>,
+        Peter Ujfalusi <peter.ujfalusi@ti.com>,
+        Greg KH <gregkh@linuxfoundation.org>
+Subject: Re: [PATCH v5 0/6] dma: Add Xilinx ZynqMP DPDMA driver
+Message-ID: <20200629093041.GE6012@pendragon.ideasonboard.com>
+References: <20200528025228.31638-1-laurent.pinchart@ideasonboard.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20200528025228.31638-1-laurent.pinchart@ideasonboard.com>
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
@@ -77,41 +56,55 @@ X-Mailing-List: dmaengine@vger.kernel.org
 
 Hi Vinod,
 
-Thanks for having a look and providing the comments.
+CC'ing Greg.
 
-> Is the .compatible documented, Documentation patch should come before
-> the driver use patch in a series
+The first version of this patch series I've posted dates back from early
+November last year. Could you please help getting it merged ?
 
-Yes, this new compatible string is documented in patch (05/10).
-I would make it as a patch (1/10).
+On Thu, May 28, 2020 at 05:52:22AM +0300, Laurent Pinchart wrote:
+> Hello,
+> 
+> This patch series adds a new driver for the DPDMA engine found in the
+> Xilinx ZynqMP.
+> 
+> The previous version can be found at [1]. All review comments have been
+> taken into account. The only change is the addition of the
+> DMA_PREP_LOAD_EOT transaction flag (and the corresponding DMA_LOAD_EOT
+> capability bit), as requested during the review of v4. Please see the
+> discussions from v4 for the rationale.
+> 
+> The driver has been successfully tested with the ZynqMP DisplayPort
+> subsystem DRM driver.
+> 
+> [1] https://lore.kernel.org/dmaengine/20200513165943.25120-1-laurent.pinchart@ideasonboard.com/
+> 
+> Hyun Kwon (1):
+>   dmaengine: xilinx: dpdma: Add the Xilinx DisplayPort DMA engine driver
+> 
+> Laurent Pinchart (5):
+>   dt: bindings: dma: xilinx: dpdma: DT bindings for Xilinx DPDMA
+>   dmaengine: virt-dma: Use lockdep to check locking requirements
+>   dmaengine: Add support for repeating transactions
+>   dmaengine: xilinx: dpdma: Add debugfs support
+>   arm64: dts: zynqmp: Add DPDMA node
+> 
+>  .../dma/xilinx/xlnx,zynqmp-dpdma.yaml         |   68 +
+>  MAINTAINERS                                   |    9 +
+>  .../arm64/boot/dts/xilinx/zynqmp-clk-ccf.dtsi |    4 +
+>  arch/arm64/boot/dts/xilinx/zynqmp.dtsi        |   10 +
+>  drivers/dma/Kconfig                           |   10 +
+>  drivers/dma/virt-dma.c                        |    2 +
+>  drivers/dma/virt-dma.h                        |   10 +
+>  drivers/dma/xilinx/Makefile                   |    1 +
+>  drivers/dma/xilinx/xilinx_dpdma.c             | 1782 +++++++++++++++++
+>  include/dt-bindings/dma/xlnx-zynqmp-dpdma.h   |   16 +
+>  include/linux/dmaengine.h                     |   19 +
+>  11 files changed, 1931 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/dma/xilinx/xlnx,zynqmp-dpdma.yaml
+>  create mode 100644 drivers/dma/xilinx/xilinx_dpdma.c
+>  create mode 100644 include/dt-bindings/dma/xlnx-zynqmp-dpdma.h
 
-> >  static int owl_dma_probe(struct platform_device *pdev)
-> >  {
-> >       struct device_node *np = pdev->dev.of_node;
-> >       struct owl_dma *od;
-> >       int ret, i, nr_channels, nr_requests;
-> > +     const struct of_device_id *of_id =
-> > +                             of_match_device(owl_dma_match, &pdev->dev);
->
-> You care about driver_data rather than of_id, so using
-> of_device_get_match_data() would be better..
+-- 
+Regards,
 
-Okay. would take care of it in next version.
-
-> >       od = devm_kzalloc(&pdev->dev, sizeof(*od), GFP_KERNEL);
-> >       if (!od)
-> > @@ -1083,6 +1116,8 @@ static int owl_dma_probe(struct platform_device *pdev)
-> >       dev_info(&pdev->dev, "dma-channels %d, dma-requests %d\n",
-> >                nr_channels, nr_requests);
-> >
-> > +     od->devid = (enum owl_dma_id)(uintptr_t)of_id->data;
->
-> Funny casts, I dont think you need uintptr_t!
-
-But without this cast, clang compiler emits following warning:
-
-warning: cast to smaller integer type 'enum owl_dma_id' from 'const void *'
-          [-Wvoid-pointer-to-enum-cast]
-
-Thanks
--Amit
+Laurent Pinchart
