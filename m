@@ -2,109 +2,133 @@ Return-Path: <SRS0=1HPK=AK=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-1.1 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 86413C433DF
-	for <dmaengine@archiver.kernel.org>; Mon, 29 Jun 2020 21:05:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 45176C433E3
+	for <dmaengine@archiver.kernel.org>; Mon, 29 Jun 2020 21:35:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6760520768
-	for <dmaengine@archiver.kernel.org>; Mon, 29 Jun 2020 21:05:51 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b="YkQ23763"
+	by mail.kernel.org (Postfix) with ESMTP id 2761E207F9
+	for <dmaengine@archiver.kernel.org>; Mon, 29 Jun 2020 21:35:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=default; t=1593466505;
+	bh=d9CswmNYtUVd7rQ5C33DkmLgs5/8ixaRznCpZfb770M=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:List-ID:From;
+	b=okUesGvtnGvtnHI6eCmVCx4w72J/IlNqMHSqOqD21HNvMsONTAByS6FOGYWFPuta+
+	 EdeUXXfcyGzGYrssEkUqxlpHTmGpYWHIiZ/9kZ0mgW26aRc3DTE2FyNzZ4HRGCzudl
+	 xR9d8TaGChObTcRmyA7hzPD7snUQlTvYZrZCH9fg=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390284AbgF2VFi (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 29 Jun 2020 17:05:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43356 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731089AbgF2TMn (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Mon, 29 Jun 2020 15:12:43 -0400
-Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [IPv6:2001:4b98:dc2:55:216:3eff:fef7:d647])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E3A60C0086D8
-        for <dmaengine@vger.kernel.org>; Mon, 29 Jun 2020 02:30:46 -0700 (PDT)
-Received: from pendragon.ideasonboard.com (81-175-216-236.bb.dnainternet.fi [81.175.216.236])
-        by perceval.ideasonboard.com (Postfix) with ESMTPSA id 6DD5F2B3;
-        Mon, 29 Jun 2020 11:30:44 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
-        s=mail; t=1593423044;
-        bh=Saol7L3H0VGdy6cAigbabBK4AhIm5QXCZUaNt34Hsxs=;
+        id S2391294AbgF2Vez (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 29 Jun 2020 17:34:55 -0400
+Received: from mail.kernel.org ([198.145.29.99]:60648 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728579AbgF2Skz (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Mon, 29 Jun 2020 14:40:55 -0400
+Received: from localhost (unknown [122.182.251.219])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 5570023730;
+        Mon, 29 Jun 2020 09:54:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1593424490;
+        bh=d9CswmNYtUVd7rQ5C33DkmLgs5/8ixaRznCpZfb770M=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=YkQ23763M9Bn+dZyMWRVqUBepaFiZ6q60PPx624H5LdsIrbDUv2LMV8H+iYaSJPht
-         zbX2Xo//wIuuXWFACpW3dt6OVeWIQuMD0lfC394Utt79CsxiWdnh6sUVKDdkX9py3p
-         dCHgGY1GaU4q2I3EM5ai6Rv0Cc5IYEDKtgIgA0kU=
-Date:   Mon, 29 Jun 2020 12:30:41 +0300
-From:   Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     dmaengine@vger.kernel.org, Michal Simek <michal.simek@xilinx.com>,
-        Hyun Kwon <hyun.kwon@xilinx.com>,
-        Tejas Upadhyay <tejasu@xilinx.com>,
-        Satish Kumar Nagireddy <SATISHNA@xilinx.com>,
-        Peter Ujfalusi <peter.ujfalusi@ti.com>,
-        Greg KH <gregkh@linuxfoundation.org>
-Subject: Re: [PATCH v5 0/6] dma: Add Xilinx ZynqMP DPDMA driver
-Message-ID: <20200629093041.GE6012@pendragon.ideasonboard.com>
-References: <20200528025228.31638-1-laurent.pinchart@ideasonboard.com>
+        b=rdiiVUtr2B4Jn/9WPFpFAjzyjBo7eHShwryL9SW0kTb3828GO77StQ5Zi+Zm7eE3V
+         kf8sKV1rJsy9nfLP6HOhMssH6ECWJxEaAJyaTyqhAVNiVq4YbMPrhqKE1ujbLkvV6n
+         iA2v1je6E1s66VQQkcWcFy8DDb6uFDKPHRat6hc4=
+Date:   Mon, 29 Jun 2020 15:24:46 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     =?iso-8859-1?Q?Andr=E9?= Przywara <andre.przywara@arm.com>
+Cc:     Amit Singh Tomar <amittomer25@gmail.com>, afaerber@suse.de,
+        manivannan.sadhasivam@linaro.org, dan.j.williams@intel.com,
+        cristian.ciocaltea@gmail.com, dmaengine@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-actions@lists.infradead.org
+Subject: Re: [PATCH v4 02/10] dmaengine: Actions: Add support for S700 DMA
+ engine
+Message-ID: <20200629095446.GH2599@vkoul-mobl>
+References: <1591697830-16311-1-git-send-email-amittomer25@gmail.com>
+ <1591697830-16311-3-git-send-email-amittomer25@gmail.com>
+ <20200624061529.GF2324254@vkoul-mobl>
+ <75d154d0-2962-99e6-a7c7-bf0928ec8b2a@arm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <20200528025228.31638-1-laurent.pinchart@ideasonboard.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <75d154d0-2962-99e6-a7c7-bf0928ec8b2a@arm.com>
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Hi Vinod,
+On 24-06-20, 10:35, André Przywara wrote:
+> On 24/06/2020 07:15, Vinod Koul wrote:
+> > On 09-06-20, 15:47, Amit Singh Tomar wrote:
+> > 
+> >> @@ -372,6 +383,7 @@ static inline int owl_dma_cfg_lli(struct owl_dma_vchan *vchan,
+> >>  				  struct dma_slave_config *sconfig,
+> >>  				  bool is_cyclic)
+> >>  {
+> >> +	struct owl_dma *od = to_owl_dma(vchan->vc.chan.device);
+> >>  	u32 mode, ctrlb;
+> >>  
+> >>  	mode = OWL_DMA_MODE_PW(0);
+> >> @@ -427,14 +439,26 @@ static inline int owl_dma_cfg_lli(struct owl_dma_vchan *vchan,
+> >>  	lli->hw[OWL_DMADESC_DADDR] = dst;
+> >>  	lli->hw[OWL_DMADESC_SRC_STRIDE] = 0;
+> >>  	lli->hw[OWL_DMADESC_DST_STRIDE] = 0;
+> >> -	/*
+> >> -	 * Word starts from offset 0xC is shared between frame length
+> >> -	 * (max frame length is 1MB) and frame count, where first 20
+> >> -	 * bits are for frame length and rest of 12 bits are for frame
+> >> -	 * count.
+> >> -	 */
+> >> -	lli->hw[OWL_DMADESC_FLEN] = len | FCNT_VAL << 20;
+> >> -	lli->hw[OWL_DMADESC_CTRLB] = ctrlb;
+> >> +
+> >> +	if (od->devid == S700_DMA) {
+> >> +		/* Max frame length is 1MB */
+> >> +		lli->hw[OWL_DMADESC_FLEN] = len;
+> >> +		/*
+> >> +		 * On S700, word starts from offset 0x1C is shared between
+> >> +		 * frame count and ctrlb, where first 12 bits are for frame
+> >> +		 * count and rest of 20 bits are for ctrlb.
+> >> +		 */
+> >> +		lli->hw[OWL_DMADESC_CTRLB] = FCNT_VAL | ctrlb;
+> >> +	} else {
+> >> +		/*
+> >> +		 * On S900, word starts from offset 0xC is shared between
+> >> +		 * frame length (max frame length is 1MB) and frame count,
+> >> +		 * where first 20 bits are for frame length and rest of
+> >> +		 * 12 bits are for frame count.
+> >> +		 */
+> >> +		lli->hw[OWL_DMADESC_FLEN] = len | FCNT_VAL << 20;
+> >> +		lli->hw[OWL_DMADESC_CTRLB] = ctrlb;
+> > 
+> > Unfortunately this wont scale, we will keep adding new conditions for
+> > newer SoC's! So rather than this why not encode max frame length in
+> > driver_data rather than S900_DMA/S700_DMA.. In future one can add values
+> > for newer SoC and not code above logic again.
+> 
+> What newer SoCs? I don't think we should try to guess the future here.
 
-CC'ing Greg.
+In a patch for adding new SoC, quite ironical I would say!
 
-The first version of this patch series I've posted dates back from early
-November last year. Could you please help getting it merged ?
+> We can always introduce further abstractions later, once we actually
+> *know* what we are looking at.
 
-On Thu, May 28, 2020 at 05:52:22AM +0300, Laurent Pinchart wrote:
-> Hello,
-> 
-> This patch series adds a new driver for the DPDMA engine found in the
-> Xilinx ZynqMP.
-> 
-> The previous version can be found at [1]. All review comments have been
-> taken into account. The only change is the addition of the
-> DMA_PREP_LOAD_EOT transaction flag (and the corresponding DMA_LOAD_EOT
-> capability bit), as requested during the review of v4. Please see the
-> discussions from v4 for the rationale.
-> 
-> The driver has been successfully tested with the ZynqMP DisplayPort
-> subsystem DRM driver.
-> 
-> [1] https://lore.kernel.org/dmaengine/20200513165943.25120-1-laurent.pinchart@ideasonboard.com/
-> 
-> Hyun Kwon (1):
->   dmaengine: xilinx: dpdma: Add the Xilinx DisplayPort DMA engine driver
-> 
-> Laurent Pinchart (5):
->   dt: bindings: dma: xilinx: dpdma: DT bindings for Xilinx DPDMA
->   dmaengine: virt-dma: Use lockdep to check locking requirements
->   dmaengine: Add support for repeating transactions
->   dmaengine: xilinx: dpdma: Add debugfs support
->   arm64: dts: zynqmp: Add DPDMA node
-> 
->  .../dma/xilinx/xlnx,zynqmp-dpdma.yaml         |   68 +
->  MAINTAINERS                                   |    9 +
->  .../arm64/boot/dts/xilinx/zynqmp-clk-ccf.dtsi |    4 +
->  arch/arm64/boot/dts/xilinx/zynqmp.dtsi        |   10 +
->  drivers/dma/Kconfig                           |   10 +
->  drivers/dma/virt-dma.c                        |    2 +
->  drivers/dma/virt-dma.h                        |   10 +
->  drivers/dma/xilinx/Makefile                   |    1 +
->  drivers/dma/xilinx/xilinx_dpdma.c             | 1782 +++++++++++++++++
->  include/dt-bindings/dma/xlnx-zynqmp-dpdma.h   |   16 +
->  include/linux/dmaengine.h                     |   19 +
->  11 files changed, 1931 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/dma/xilinx/xlnx,zynqmp-dpdma.yaml
->  create mode 100644 drivers/dma/xilinx/xilinx_dpdma.c
->  create mode 100644 include/dt-bindings/dma/xlnx-zynqmp-dpdma.h
+Rather if we know we are adding abstractions, why not add in a way that
+makes it scale better rather than rework again
+
+> Besides, I don't understand what you are after. The max frame length is
+> 1MB in both cases, it's just a matter of where to put FCNT_VAL, either
+> in FLEN or in CTRLB. And having an extra flag for that in driver data
+> sounds a bit over the top at the moment.
+
+Maybe, maybe not. I would rather make it support N SoC when adding
+support for second one rather than keep adding everytime a new SoC is
+added...
 
 -- 
-Regards,
-
-Laurent Pinchart
+~Vinod
