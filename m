@@ -6,44 +6,44 @@ X-Spam-Status: No, score=-1.1 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 101D5C433DF
-	for <dmaengine@archiver.kernel.org>; Thu,  2 Jul 2020 13:32:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E705FC433DF
+	for <dmaengine@archiver.kernel.org>; Thu,  2 Jul 2020 13:33:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DEE4520890
-	for <dmaengine@archiver.kernel.org>; Thu,  2 Jul 2020 13:32:32 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C0A172088E
+	for <dmaengine@archiver.kernel.org>; Thu,  2 Jul 2020 13:33:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1593696752;
+	s=default; t=1593696784;
 	bh=vj7wd7OF+NrWJiycl03hhQbSuzSILLZMCrXgUPrR8no=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:List-ID:From;
-	b=rW/f/oQK66Kjj3AmBuqA/UrHUarXaEG0Ep1ymU5FTMRIzcn/mTnyO741dCYoYJDCR
-	 WmLqgVRMxuyrFmNJCbf0d7HgA6eBgle+8Dc1Z3S1ix8vqCetw1jlk6QkpHWASBDtjY
-	 1CHG++uz6HWxArQA0d2JLG+alm6fBfiJ1DtfzLeA=
+	b=q/IZvmlXrY+39HMD03X/TazmW98Rl4bhZ3VU5P0Vd0H98SUHrwf30XFODjsaV+Wol
+	 NpWhqTQ/3smcwbbfoaZ5qfvuGlertLtkutlpn5zkocFcvMnvoaLcCR1wn49WcocY+l
+	 9aRoka2sHFyeAt4a1xLjKi91+IJmQ2hLjYWFk2/c=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729171AbgGBNcc (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Thu, 2 Jul 2020 09:32:32 -0400
-Received: from mail.kernel.org ([198.145.29.99]:34174 "EHLO mail.kernel.org"
+        id S1729119AbgGBNdE (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Thu, 2 Jul 2020 09:33:04 -0400
+Received: from mail.kernel.org ([198.145.29.99]:34326 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729119AbgGBNcc (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Thu, 2 Jul 2020 09:32:32 -0400
+        id S1729115AbgGBNdE (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Thu, 2 Jul 2020 09:33:04 -0400
 Received: from localhost (unknown [122.182.251.219])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 27F3820780;
-        Thu,  2 Jul 2020 13:32:30 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 43F522088E;
+        Thu,  2 Jul 2020 13:33:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1593696752;
+        s=default; t=1593696784;
         bh=vj7wd7OF+NrWJiycl03hhQbSuzSILLZMCrXgUPrR8no=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=ZiNMZ0/VRBDmP4fUk4V4mdIVM3ogCYNF59adLOrmZn7MPnxvLw/nm6zyLaPqh74Jx
-         YitRBbMMzsQHqUPNWwP6g5ZxwCf+4RrxKqPRIX3wEJfZaNb0nQW9PXRRSRxmSH2AeB
-         /QjX09nDRuRiHESHkkoKQLM1v7fDJ4KNV77m1uoI=
-Date:   Thu, 2 Jul 2020 19:02:28 +0530
+        b=iyvPtTVdxOHd23seQVvfE8Zbq3Ob9RZEDZby1FGolvQRWjb9jo4y2Cu7/H1yqk9Cs
+         nkwrN/eZmOcLOPYwRR391D0mLDeUZbKM3PWhsscSknKy84/dnGAvsJwbGM6Fc4jLHF
+         JaqGIbTYiQSB9JM1zvh/CHR1TsefLl7YdwcDe74g=
+Date:   Thu, 2 Jul 2020 19:03:00 +0530
 From:   Vinod Koul <vkoul@kernel.org>
 To:     Dave Jiang <dave.jiang@intel.com>
 Cc:     dmaengine@vger.kernel.org
 Subject: Re: [PATCH v2] dmaengine: idxd: fix misc interrupt handler thread
  unmasking
-Message-ID: <20200702133228.GC273932@vkoul-mobl>
+Message-ID: <20200702133300.GD273932@vkoul-mobl>
 References: <159311256528.855.11527922406329728512.stgit@djiang5-desk3.ch.intel.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
