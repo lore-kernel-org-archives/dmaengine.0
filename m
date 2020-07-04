@@ -1,147 +1,90 @@
-Return-Path: <SRS0=KBwJ=AO=vger.kernel.org=dmaengine-owner@kernel.org>
+Return-Path: <SRS0=I8Iw=AP=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.1 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_GIT autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3A6A5C433E0
-	for <dmaengine@archiver.kernel.org>; Fri,  3 Jul 2020 17:54:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 88898C433E2
+	for <dmaengine@archiver.kernel.org>; Sat,  4 Jul 2020 03:45:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1A1A320870
-	for <dmaengine@archiver.kernel.org>; Fri,  3 Jul 2020 17:54:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1593798887;
-	bh=4m0PViQ/Nrwo0Ws6ige4Mv9sTN5pXwpay1ML7OApsPM=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:List-ID:From;
-	b=dq36XEsH19DkT36xEx8oh/zdk409raKsc4W6DOb5yIWBCFMiM7+oKDQi+YupIfiMg
-	 jJmZUL420excLhy4aJ1iyaodhFzvnVuoghPcTOo5kUMvzI5dxS1IdOatawKB7U4+yW
-	 mvNJnjecxdYkjCr5D9JZ7mfNbLZDZ6Wdd0dHqPr4=
+	by mail.kernel.org (Postfix) with ESMTP id 59732208C7
+	for <dmaengine@archiver.kernel.org>; Sat,  4 Jul 2020 03:45:17 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="poKqFqzy"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726178AbgGCRyq (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 3 Jul 2020 13:54:46 -0400
-Received: from mail.kernel.org ([198.145.29.99]:55338 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726157AbgGCRyq (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Fri, 3 Jul 2020 13:54:46 -0400
-Received: from localhost (unknown [122.182.251.219])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 8937620782;
-        Fri,  3 Jul 2020 17:54:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1593798885;
-        bh=4m0PViQ/Nrwo0Ws6ige4Mv9sTN5pXwpay1ML7OApsPM=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=S4SaR/dlB+uAH6CHL7q3Ze3d66VUBs0WcwPDxzf2qCGXdxfPHNgH1btxFUEXg36GC
-         LPrcqoFDnpnvyjfzC7s9rkDnDhBUikdKv1DHd+fxJNzCxL6EmHm5aAugdAUg9B5y/n
-         YFaw+MqYiJ9v2+xAqpw30SQs3PmT2PSyi3dWwET8=
-Date:   Fri, 3 Jul 2020 23:24:41 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Cc:     dmaengine@vger.kernel.org, Michal Simek <michal.simek@xilinx.com>,
-        Hyun Kwon <hyun.kwon@xilinx.com>,
-        Tejas Upadhyay <tejasu@xilinx.com>,
-        Satish Kumar Nagireddy <SATISHNA@xilinx.com>,
-        Peter Ujfalusi <peter.ujfalusi@ti.com>
-Subject: Re: [PATCH v5 3/6] dmaengine: Add support for repeating transactions
-Message-ID: <20200703175441.GR273932@vkoul-mobl>
-References: <20200528025228.31638-1-laurent.pinchart@ideasonboard.com>
- <20200528025228.31638-4-laurent.pinchart@ideasonboard.com>
- <20200703171039.GO273932@vkoul-mobl>
- <20200703172242.GC14282@pendragon.ideasonboard.com>
- <20200703173710.GQ273932@vkoul-mobl>
- <20200703174713.GE14282@pendragon.ideasonboard.com>
+        id S1727115AbgGDDpQ (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 3 Jul 2020 23:45:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52512 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726746AbgGDDpP (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Fri, 3 Jul 2020 23:45:15 -0400
+Received: from casper.infradead.org (casper.infradead.org [IPv6:2001:8b0:10b:1236::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 78D12C061794;
+        Fri,  3 Jul 2020 20:45:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=infradead.org; s=casper.20170209; h=Content-Transfer-Encoding:MIME-Version:
+        References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:Sender:Reply-To:
+        Content-Type:Content-ID:Content-Description;
+        bh=cfuMtEE7aLNsTWKrfmSLBZiVov+0MQq3QCFMWag3GnA=; b=poKqFqzyZYsZV/s9ZcbOe5p0/E
+        YQRhrHdTpIgWrm9jdD+AcSJi8nWKFsktCg96n2jVBrA5NPjK7nFn+3cPxt9gI89iFbLBqSOjJ9J44
+        BnTgPWt2Vxg+A1LTYLRK5dCMwJxvCyb1Nyczq6lScDORAnhB6pLkQpvP+8JXd5j6NWs1kypdPYPuO
+        beeIefvHuzMOndhAaROWvf3UVxqPWkvP2U2DOoeRNL7Jhcd8T0wTqlC1+WpRc1osfE0grZpc9ODKY
+        kT52GGrivXHQK/CiWI0eIILr9iqcLk2pMwJOtem2DtcAArS+ddJC1p+dsxkMdgWY6guRTnxzkYAvi
+        OSAgyBMg==;
+Received: from [2601:1c0:6280:3f0::19c2] (helo=smtpauth.infradead.org)
+        by casper.infradead.org with esmtpsa (Exim 4.92.3 #3 (Red Hat Linux))
+        id 1jrZ73-0001Xb-CK; Sat, 04 Jul 2020 03:45:14 +0000
+From:   Randy Dunlap <rdunlap@infradead.org>
+To:     linux-kernel@vger.kernel.org
+Cc:     Randy Dunlap <rdunlap@infradead.org>,
+        Jonathan Corbet <corbet@lwn.net>, linux-doc@vger.kernel.org,
+        Vinod Koul <vkoul@kernel.org>, dmaengine@vger.kernel.org,
+        Luis Chamberlain <mcgrof@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        William Breathitt Gray <vilhelm.gray@gmail.com>,
+        linux-iio@vger.kernel.org,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        linux-media@vger.kernel.org, Jon Mason <jdmason@kudzu.us>,
+        Dave Jiang <dave.jiang@intel.com>,
+        Allen Hubbe <allenbh@gmail.com>, linux-ntb@googlegroups.com,
+        Dan Williams <dan.j.williams@intel.com>,
+        Vishal Verma <vishal.l.verma@intel.com>,
+        Ira Weiny <ira.weiny@intel.com>, linux-nvdimm@lists.01.org,
+        linux-usb@vger.kernel.org, Eli Billauer <eli.billauer@gmail.com>
+Subject: [PATCH 01/17] Documentation/driver-api: dmaengine/provider: drop doubled word
+Date:   Fri,  3 Jul 2020 20:44:46 -0700
+Message-Id: <20200704034502.17199-2-rdunlap@infradead.org>
+X-Mailer: git-send-email 2.26.2
+In-Reply-To: <20200704034502.17199-1-rdunlap@infradead.org>
+References: <20200704034502.17199-1-rdunlap@infradead.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200703174713.GE14282@pendragon.ideasonboard.com>
+Content-Transfer-Encoding: 8bit
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-HI Laurent,
+Drop the doubled word "has".
 
-On 03-07-20, 20:47, Laurent Pinchart wrote:
-> On Fri, Jul 03, 2020 at 11:07:10PM +0530, Vinod Koul wrote:
-> > On 03-07-20, 20:22, Laurent Pinchart wrote:
-> > > On Fri, Jul 03, 2020 at 10:40:39PM +0530, Vinod Koul wrote:
-> > > > On 28-05-20, 05:52, Laurent Pinchart wrote:
-> > > > 
-> > > > > @@ -176,6 +178,18 @@ struct dma_interleaved_template {
-> > > > >   * @DMA_PREP_CMD: tell the driver that the data passed to DMA API is command
-> > > > >   *  data and the descriptor should be in different format from normal
-> > > > >   *  data descriptors.
-> > > > > + * @DMA_PREP_REPEAT: tell the driver that the transaction shall be automatically
-> > > > > + *  repeated when it ends if no other transaction has been issued on the same
-> > > > > + *  channel. If other transactions have been issued, this transaction completes
-> > > > > + *  normally. This flag is only applicable to interleaved transactions and is
-> > > > > + *  ignored for all other transaction types.
-> > > > 
-> > > > 1. Let us not restrict this to only interleave (hint we can in future
-> > > > replace cyclic API)
-> > > 
-> > > Peter wanted to already implement support for DMA_PREP_REPEAT in other
-> > > transaction types, and you replied that you would prefer not enabling
-> > > APIs without users, waiting for the first user of DMA_PREP_REPEAT with a
-> > > non-interleaved transaction to do so. Your comment here seems to
-> > > contract that. Which way do you want to go ?
-> > 
-> > I would like to change the language of the explanation to not forbid
-> > other uses, but they would be enabled in txn when we have users..
-> 
-> The documentation isn't set in stone, it can be updated when support for
-> DMA_PREP_REPEAT will be enabled in other transaction types. I think it's
-> better to have the documentation and code match, the documentation
-> should describe the current implementation. I can add an additional
-> sentence at the end of the paragraph to state "Support for this flag in
-> other transaction types may be added in the future if the need arises."
-> if that makes you feel better about it.
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Cc: Jonathan Corbet <corbet@lwn.net>
+Cc: linux-doc@vger.kernel.org
+Cc: Vinod Koul <vkoul@kernel.org>
+Cc: dmaengine@vger.kernel.org
+---
+ Documentation/driver-api/dmaengine/provider.rst |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Okay I will be okay with that caveat
-
-> > > > 2. DMA_PREP_REPEAT telling the transaction shall be automatically
-> > > > repeated is okay. No issues with that
-> > > > 
-> > > > > + * @DMA_PREP_LOAD_EOT: tell the driver that the transaction shall replaced any
-> > > > 
-> > > > s/replaced/replace
-> > > > 
-> > > > > + *  active repeated (as indicated by DMA_PREP_REPEAT) transaction when the
-> > > > > + *  repeated transaction terminate. Not setting this flag when the previously
-> > > > > + *  queued transaction is marked with DMA_PREP_REPEAT will cause the new
-> > > > > + *  transaction to never be processed and stay in the issued queue forever.
-> > > > > + *  The flag is ignored if the previous transaction is not a repeated
-> > > > > + *  transaction.
-> > > > 
-> > > > I am happy with this bit, I think we dont need to specify something like
-> > > > DMA_PREP_LOAD_NEXT given the explanation here, so adding
-> > > > DMA_PREP_LOAD_EOT would mean that.
-> > > 
-> > > Just to clarify, does that mean I don't need to add a DMA_PREP_LOAD_NEXT
-> > > flag in the API ?
-> > > 
-> > > > Can we add a corresponding EOB as well to complete this
-> > > 
-> > > What's EOB ?
-> > 
-> > End of Burst, DMA would complete current burst and then terminate. I do
-> > understand it is not applicable for your case as your hw doesn't support
-> > it and would be unused but this is another case which would be useful so
-> > for completeness we should add this
-> 
-> Why not add it when we'll have a user for it ? How can you otherwise
-> guarantee that it's a correct API if there's not even a single user that
-> we can test the design with ?
-
-Okay lets not add but add a note that additional flags can be added when
-required like EOB
-
-Also can we add a note in Documentation about these flags and how they
-should be used for repeating transactions.
-
-Thanks
--- 
-~Vinod
+--- linux-next-20200701.orig/Documentation/driver-api/dmaengine/provider.rst
++++ linux-next-20200701/Documentation/driver-api/dmaengine/provider.rst
+@@ -507,7 +507,7 @@ dma_cookie_t
+ DMA_CTRL_ACK
+ 
+ - If clear, the descriptor cannot be reused by provider until the
+-  client acknowledges receipt, i.e. has has a chance to establish any
++  client acknowledges receipt, i.e. has a chance to establish any
+   dependency chains
+ 
+ - This can be acked by invoking async_tx_ack()
