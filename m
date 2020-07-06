@@ -6,60 +6,58 @@ X-Spam-Status: No, score=-1.1 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 71DCFC433DF
-	for <dmaengine@archiver.kernel.org>; Mon,  6 Jul 2020 04:51:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 310C6C433DF
+	for <dmaengine@archiver.kernel.org>; Mon,  6 Jul 2020 04:55:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4D30320739
-	for <dmaengine@archiver.kernel.org>; Mon,  6 Jul 2020 04:51:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 01E032074F
+	for <dmaengine@archiver.kernel.org>; Mon,  6 Jul 2020 04:55:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1594011080;
-	bh=IBp8tyBnj3Y2L0swdhp+79ynA2bQ68n3mPtdQrODtRU=;
+	s=default; t=1594011308;
+	bh=HHgEftdtnQQatB3lKRzyT3NI4qdImGN8X7SFOatjkh8=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:List-ID:From;
-	b=BPUwspWJ+FUN5r5KOkj62J9SrJ2NS7o0a9aPxlF/PTrQDa+JLj3QE5bRhEY0Dv6Dn
-	 Aa7+GzPzJSIw5yRcFia2Q7OwWoSuwxDpahazMXGpp4SkB1K8K/4t2KLuf6NwmN4Afs
-	 oRSQFcRUBZ8KAHJRpb9iH7qfmvXvgzAG9AIBgREE=
+	b=M7NnRcOrlg4B99jNUXwCisRWalDXaswsw87mlLP/5vWsRAUtBlrfL8hhgLfnEuMXu
+	 0TpR/Xszi3p7OiYKzfzkooOZOnK4lW8wizU5yp7xh05+USUYVt1OR8kOQjTex9ezV4
+	 HQsBYPGqf4sT2s2Sf4q6niJ8NUlsXDjEv3a+RVj8=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728723AbgGFEvU (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 6 Jul 2020 00:51:20 -0400
-Received: from mail.kernel.org ([198.145.29.99]:43926 "EHLO mail.kernel.org"
+        id S1728555AbgGFEzH (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 6 Jul 2020 00:55:07 -0400
+Received: from mail.kernel.org ([198.145.29.99]:44324 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728362AbgGFEvU (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Mon, 6 Jul 2020 00:51:20 -0400
+        id S1726979AbgGFEzH (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Mon, 6 Jul 2020 00:55:07 -0400
 Received: from localhost (unknown [122.182.251.219])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 9F77120739;
-        Mon,  6 Jul 2020 04:51:18 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 52AAA20739;
+        Mon,  6 Jul 2020 04:55:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1594011079;
-        bh=IBp8tyBnj3Y2L0swdhp+79ynA2bQ68n3mPtdQrODtRU=;
+        s=default; t=1594011307;
+        bh=HHgEftdtnQQatB3lKRzyT3NI4qdImGN8X7SFOatjkh8=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=TJkEHH2San4T44pjglxmA92z9tSBwJE1pkqPTDKMFCMLmiFnBOzWKsph7HiVpWavG
-         2uMjxlfUybdG0xjkQYrxpPJ9ovygbpeHdavo/xKvmu4lp1yiQjMViejRwZ2bKsslLX
-         1lXu7s7lLXwuvwIfDD2rkshFn8mbCHmbEJgCiWFQ=
-Date:   Mon, 6 Jul 2020 10:21:15 +0530
+        b=VuxmuESHGN4XvhOe+RxCqCnFO71kDipLYuiY282gq06SbYZitrK5kqbe43uuKZjx4
+         zMQJEesksmcHslzNJbnHKU4TecuU31wtFDELPfCzG9Tweqsepqxdwsit2W5A8hC4Yr
+         4E15ouQymuMLlEwdMCyjNfLpGWjuyuucvJdda9zY=
+Date:   Mon, 6 Jul 2020 10:25:03 +0530
 From:   Vinod Koul <vkoul@kernel.org>
-To:     Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Cc:     Viresh Kumar <vireshk@kernel.org>, dmaengine@vger.kernel.org,
-        Tsuchiya Yuto <kitakar@gmail.com>
-Subject: Re: [PATCH v1] dmaengine: dw: Initialize channel before each transfer
-Message-ID: <20200706045115.GC633187@vkoul-mobl>
-References: <20200705115620.51929-1-andriy.shevchenko@linux.intel.com>
+To:     Robin Gong <yibin.gong@nxp.com>
+Cc:     dan.j.williams@intel.com, angelo@sysam.it,
+        dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-imx@nxp.com
+Subject: Re: [PATCH v1] dmaengine: fsl-edma-common: correct DSIZE_32BYTE
+Message-ID: <20200706045503.GD633187@vkoul-mobl>
+References: <1593449998-32091-1-git-send-email-yibin.gong@nxp.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20200705115620.51929-1-andriy.shevchenko@linux.intel.com>
+In-Reply-To: <1593449998-32091-1-git-send-email-yibin.gong@nxp.com>
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On 05-07-20, 14:56, Andy Shevchenko wrote:
-> In some cases DMA can be used only with a consumer which does runtime power
-> management and on the platforms, that have DMA auto power gating logic
-> (see comments in the drivers/acpi/acpi_lpss.c), may result in DMA losing
-> its context. Simple mitigation of this issue is to initialize channel
-> each time the consumer initiates a transfer.
+On 30-06-20, 00:59, Robin Gong wrote:
+> Correct EDMA_TCD_ATTR_DSIZE_32BYTE define since it's broken by the below:
+> '0x0005 --> BIT(3) | BIT(0))'
 
 Applied, thanks
 
