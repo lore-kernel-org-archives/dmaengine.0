@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
 	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5F5AFC433E1
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D9B1AC433DF
 	for <dmaengine@archiver.kernel.org>; Tue,  7 Jul 2020 09:09:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3F69920663
+	by mail.kernel.org (Postfix) with ESMTP id B2BCB20857
 	for <dmaengine@archiver.kernel.org>; Tue,  7 Jul 2020 09:09:45 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b="GD6NqUS/"
+	dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b="W7Z8wrp8"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726805AbgGGJJp (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        id S1725825AbgGGJJp (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
         Tue, 7 Jul 2020 05:09:45 -0400
-Received: from lelv0142.ext.ti.com ([198.47.23.249]:60476 "EHLO
-        lelv0142.ext.ti.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725825AbgGGJJo (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Tue, 7 Jul 2020 05:09:44 -0400
-Received: from lelv0266.itg.ti.com ([10.180.67.225])
-        by lelv0142.ext.ti.com (8.15.2/8.15.2) with ESMTP id 06799fZL049829;
+Received: from lelv0143.ext.ti.com ([198.47.23.248]:45094 "EHLO
+        lelv0143.ext.ti.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726802AbgGGJJp (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Tue, 7 Jul 2020 05:09:45 -0400
+Received: from fllv0034.itg.ti.com ([10.64.40.246])
+        by lelv0143.ext.ti.com (8.15.2/8.15.2) with ESMTP id 06799ft9094812;
         Tue, 7 Jul 2020 04:09:41 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
         s=ti-com-17Q1; t=1594112981;
-        bh=pmiAoMPT2Jn0ftgcwU5NoB6hnpkce0XQLrDZsXfC6sA=;
+        bh=Knn8MS+IxPJTYQZE5VMCRUM0NbX02VIMpCObQt4lc6g=;
         h=From:To:CC:Subject:Date:In-Reply-To:References;
-        b=GD6NqUS/bZT0FwEEcj8ODA/hgg9simrnajY3Jmpxvrxf+vCakxxbkrZ8AtxKcYFlz
-         PYxO8Rz4jIOyLEi0E1Pa2MI/S7B7wg7ncA3igeHGzJjT8opfQHUPG04oJS9M27XJHE
-         8v8Gg2H8IqKrDgIdKwV73uT5RFu4qA8lu4QnjIwU=
-Received: from DFLE115.ent.ti.com (dfle115.ent.ti.com [10.64.6.36])
-        by lelv0266.itg.ti.com (8.15.2/8.15.2) with ESMTPS id 06799arT076026
+        b=W7Z8wrp8pHUsCefyt4J96V0BVfLnDv63pnVOO96oAKMXSHWSIuy6qFAO56HcoFIHi
+         VPl0e+ROxoVirH0q9Hs5Lf25P2oxDop8ZSXzEQI5FIDGJBS/xaKryfSh+BSTdX/a1q
+         Oq5W6JFsBst6L5cLJrI+K7HQGOlS6nrbRIaoVJno=
+Received: from DLEE115.ent.ti.com (dlee115.ent.ti.com [157.170.170.26])
+        by fllv0034.itg.ti.com (8.15.2/8.15.2) with ESMTPS id 06799fbo023170
         (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
         Tue, 7 Jul 2020 04:09:41 -0500
-Received: from DFLE105.ent.ti.com (10.64.6.26) by DFLE115.ent.ti.com
- (10.64.6.36) with Microsoft SMTP Server (version=TLS1_2,
+Received: from DLEE106.ent.ti.com (157.170.170.36) by DLEE115.ent.ti.com
+ (157.170.170.26) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1979.3; Tue, 7 Jul
- 2020 04:09:37 -0500
-Received: from lelv0327.itg.ti.com (10.180.67.183) by DFLE105.ent.ti.com
- (10.64.6.26) with Microsoft SMTP Server (version=TLS1_2,
+ 2020 04:09:40 -0500
+Received: from lelv0327.itg.ti.com (10.180.67.183) by DLEE106.ent.ti.com
+ (157.170.170.36) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1979.3 via
- Frontend Transport; Tue, 7 Jul 2020 04:09:37 -0500
+ Frontend Transport; Tue, 7 Jul 2020 04:09:40 -0500
 Received: from feketebors.ti.com (ileax41-snat.itg.ti.com [10.172.224.153])
-        by lelv0327.itg.ti.com (8.15.2/8.15.2) with ESMTP id 06799RGn052457;
-        Tue, 7 Jul 2020 04:09:36 -0500
+        by lelv0327.itg.ti.com (8.15.2/8.15.2) with ESMTP id 06799RGp052457;
+        Tue, 7 Jul 2020 04:09:39 -0500
 From:   Peter Ujfalusi <peter.ujfalusi@ti.com>
 To:     <vkoul@kernel.org>
 CC:     <dmaengine@vger.kernel.org>, <dan.j.williams@intel.com>,
         <grygorii.strashko@ti.com>
-Subject: [PATCH 2/5] dmaengine: ti: k3-udma: Do not use ring_get_occ in udma_pop_from_ring
-Date:   Tue, 7 Jul 2020 12:10:28 +0300
-Message-ID: <20200707091031.10411-3-peter.ujfalusi@ti.com>
+Subject: [PATCH 4/5] dmaengine: ti: k3-udma-private: Use udma_read/write for register access
+Date:   Tue, 7 Jul 2020 12:10:30 +0300
+Message-ID: <20200707091031.10411-5-peter.ujfalusi@ti.com>
 X-Mailer: git-send-email 2.27.0
 In-Reply-To: <20200707091031.10411-1-peter.ujfalusi@ti.com>
 References: <20200707091031.10411-1-peter.ujfalusi@ti.com>
@@ -65,68 +65,41 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-The ring_get_occ is redundant as the k3_ringacc_ring_pop() is also
-checking the occ of the ring.
+Instead of using higher level wrappers (udma_rchanrt/tchanrt read/write),
+use the underlying register access functions directly.
 
-With removing the ring_get_occ, the function can be simplified as well.
+This will allow changes in the higher level wrappers within the DMAengine
+driver.
 
 Signed-off-by: Peter Ujfalusi <peter.ujfalusi@ti.com>
 ---
- drivers/dma/ti/k3-udma.c | 28 +++++++++++++---------------
- 1 file changed, 13 insertions(+), 15 deletions(-)
+ drivers/dma/ti/k3-udma-private.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/dma/ti/k3-udma.c b/drivers/dma/ti/k3-udma.c
-index 919669634d87..c2b3792bed54 100644
---- a/drivers/dma/ti/k3-udma.c
-+++ b/drivers/dma/ti/k3-udma.c
-@@ -588,7 +588,7 @@ static bool udma_desc_is_rx_flush(struct udma_chan *uc, dma_addr_t addr)
- static int udma_pop_from_ring(struct udma_chan *uc, dma_addr_t *addr)
- {
- 	struct k3_ring *ring = NULL;
--	int ret = -ENOENT;
-+	int ret;
- 
- 	switch (uc->config.dir) {
- 	case DMA_DEV_TO_MEM:
-@@ -599,26 +599,24 @@ static int udma_pop_from_ring(struct udma_chan *uc, dma_addr_t *addr)
- 		ring = uc->tchan->tc_ring;
- 		break;
- 	default:
--		break;
-+		return -ENOENT;
- 	}
- 
--	if (ring && k3_ringacc_ring_get_occ(ring)) {
--		ret = k3_ringacc_ring_pop(ring, addr);
--		if (ret)
--			return ret;
-+	ret = k3_ringacc_ring_pop(ring, addr);
-+	if (ret)
-+		return ret;
- 
--		rmb(); /* Ensure that reads are not moved before this point */
-+	rmb(); /* Ensure that reads are not moved before this point */
- 
--		/* Teardown completion */
--		if (cppi5_desc_is_tdcm(*addr))
--			return ret;
-+	/* Teardown completion */
-+	if (cppi5_desc_is_tdcm(*addr))
-+		return 0;
- 
--		/* Check for flush descriptor */
--		if (udma_desc_is_rx_flush(uc, *addr))
--			return -ENOENT;
--	}
-+	/* Check for flush descriptor */
-+	if (udma_desc_is_rx_flush(uc, *addr))
-+		return -ENOENT;
- 
--	return ret;
-+	return 0;
- }
- 
- static void udma_reset_rings(struct udma_chan *uc)
+diff --git a/drivers/dma/ti/k3-udma-private.c b/drivers/dma/ti/k3-udma-private.c
+index 77e8e67d995b..aa24e554f7b4 100644
+--- a/drivers/dma/ti/k3-udma-private.c
++++ b/drivers/dma/ti/k3-udma-private.c
+@@ -121,13 +121,17 @@ XUDMA_GET_RESOURCE_ID(rflow);
+ #define XUDMA_RT_IO_FUNCTIONS(res)					\
+ u32 xudma_##res##rt_read(struct udma_##res *p, int reg)			\
+ {									\
+-	return udma_##res##rt_read(p, reg);				\
++	if (!p)								\
++		return 0;						\
++	return udma_read(p->reg_rt, reg);				\
+ }									\
+ EXPORT_SYMBOL(xudma_##res##rt_read);					\
+ 									\
+ void xudma_##res##rt_write(struct udma_##res *p, int reg, u32 val)	\
+ {									\
+-	udma_##res##rt_write(p, reg, val);				\
++	if (!p)								\
++		return;							\
++	udma_write(p->reg_rt, reg, val);				\
+ }									\
+ EXPORT_SYMBOL(xudma_##res##rt_write)
+ XUDMA_RT_IO_FUNCTIONS(tchan);
 -- 
 Peter
 
