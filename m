@@ -2,58 +2,60 @@ Return-Path: <SRS0=cdZb=AS=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.9 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-9.9 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DF6E1C433DF
-	for <dmaengine@archiver.kernel.org>; Tue,  7 Jul 2020 10:22:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3E5E7C433E1
+	for <dmaengine@archiver.kernel.org>; Tue,  7 Jul 2020 10:22:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B72BC2065F
-	for <dmaengine@archiver.kernel.org>; Tue,  7 Jul 2020 10:22:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1E41C2065F
+	for <dmaengine@archiver.kernel.org>; Tue,  7 Jul 2020 10:22:56 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b="CbiUg8mR"
+	dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b="ioZ5B3Vl"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727120AbgGGKWz (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        id S1725874AbgGGKWz (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
         Tue, 7 Jul 2020 06:22:55 -0400
-Received: from fllv0016.ext.ti.com ([198.47.19.142]:49020 "EHLO
-        fllv0016.ext.ti.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725874AbgGGKWy (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Tue, 7 Jul 2020 06:22:54 -0400
-Received: from lelv0266.itg.ti.com ([10.180.67.225])
-        by fllv0016.ext.ti.com (8.15.2/8.15.2) with ESMTP id 067AMqEv100838;
+Received: from lelv0143.ext.ti.com ([198.47.23.248]:54250 "EHLO
+        lelv0143.ext.ti.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727116AbgGGKWz (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Tue, 7 Jul 2020 06:22:55 -0400
+Received: from lelv0265.itg.ti.com ([10.180.67.224])
+        by lelv0143.ext.ti.com (8.15.2/8.15.2) with ESMTP id 067AMq8W114151;
         Tue, 7 Jul 2020 05:22:52 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
         s=ti-com-17Q1; t=1594117372;
-        bh=p55srPkiWShQ/y3GHNa9zh+BxMez95V447YS/4kxZHI=;
-        h=From:To:CC:Subject:Date;
-        b=CbiUg8mRKPktppE3dxnSQgYEnFIqlD0di21+RLxcSrqFb6j4pBa6lHv7MDB2VRaC3
-         gHxIXuB9Rm+aEQuOI924Xsy4apTn8bIst8y/B6gNOeeKKo5Bcp2nOn95SywFWla9uv
-         z7Zv1yqPoW9M50gbNaumyYj3z5Mj9Z8NZ2BlLeDo=
-Received: from DLEE108.ent.ti.com (dlee108.ent.ti.com [157.170.170.38])
-        by lelv0266.itg.ti.com (8.15.2/8.15.2) with ESMTPS id 067AMqXs057425
+        bh=apBcm8KT8pPXFkAQ+4y0dISm+b7P0iqDl7j3ffEUMtE=;
+        h=From:To:CC:Subject:Date:In-Reply-To:References;
+        b=ioZ5B3VlY6DL9yF9cZXyfX7x1ymk6lol7Q/hhi9uJtXKg+nVYYmnuXWLTWuo/7W2d
+         UVuPrkTkisNTyEyJFcXhtzg6SpsXWRolYGKEmhju02uCphRP4mHDBuK2eAgwByxLJ7
+         J4ib/JHV3hSh5JjOaqQ0uCrX62nn0OKrL2cmYKto=
+Received: from DFLE100.ent.ti.com (dfle100.ent.ti.com [10.64.6.21])
+        by lelv0265.itg.ti.com (8.15.2/8.15.2) with ESMTPS id 067AMqd1063200
         (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
         Tue, 7 Jul 2020 05:22:52 -0500
-Received: from DLEE103.ent.ti.com (157.170.170.33) by DLEE108.ent.ti.com
- (157.170.170.38) with Microsoft SMTP Server (version=TLS1_2,
+Received: from DFLE114.ent.ti.com (10.64.6.35) by DFLE100.ent.ti.com
+ (10.64.6.21) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1979.3; Tue, 7 Jul
- 2020 05:22:50 -0500
-Received: from lelv0327.itg.ti.com (10.180.67.183) by DLEE103.ent.ti.com
- (157.170.170.33) with Microsoft SMTP Server (version=TLS1_2,
+ 2020 05:22:52 -0500
+Received: from lelv0327.itg.ti.com (10.180.67.183) by DFLE114.ent.ti.com
+ (10.64.6.35) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1979.3 via
- Frontend Transport; Tue, 7 Jul 2020 05:22:50 -0500
+ Frontend Transport; Tue, 7 Jul 2020 05:22:52 -0500
 Received: from feketebors.ti.com (ileax41-snat.itg.ti.com [10.172.224.153])
-        by lelv0327.itg.ti.com (8.15.2/8.15.2) with ESMTP id 067AMmab054798;
-        Tue, 7 Jul 2020 05:22:49 -0500
+        by lelv0327.itg.ti.com (8.15.2/8.15.2) with ESMTP id 067AMmac054798;
+        Tue, 7 Jul 2020 05:22:50 -0500
 From:   Peter Ujfalusi <peter.ujfalusi@ti.com>
 To:     <vkoul@kernel.org>
 CC:     <dmaengine@vger.kernel.org>, <dan.j.williams@intel.com>,
         <grygorii.strashko@ti.com>
-Subject: [PATCH v2 0/5] dmaengine: ti: k3-udma: cleanups for 5.8
-Date:   Tue, 7 Jul 2020 13:23:47 +0300
-Message-ID: <20200707102352.28773-1-peter.ujfalusi@ti.com>
+Subject: [PATCH v2 1/5] dmaengine: ti: k3-udma: Remove dma_sync_single calls for descriptors
+Date:   Tue, 7 Jul 2020 13:23:48 +0300
+Message-ID: <20200707102352.28773-2-peter.ujfalusi@ti.com>
 X-Mailer: git-send-email 2.27.0
+In-Reply-To: <20200707102352.28773-1-peter.ujfalusi@ti.com>
+References: <20200707102352.28773-1-peter.ujfalusi@ti.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
@@ -63,40 +65,88 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Hi Vinod,
+The descriptors are allocated via wither dma_pool or dma_alloc_coherent.
 
-Changes since v1:
-- drop the check against NULL for uc in the IO functions as pointed out by
-  Grygorii
+There is no need for the dma_sync_singel_* calls.
 
-Tested on top of linux-next, but they apply (with offsets) on top of
-dmaengine/next.
-
-Few patches to clean up the code mostly with the exception of removing the use
-of ring_get_occ() from udma_pop_from_ring().
-
-This series should not conflict with Grygorii's ringacc update patch, they touch
-the code in different areas.
-
-Regards,
-Peter
+Signed-off-by: Peter Ujfalusi <peter.ujfalusi@ti.com>
 ---
-Peter Ujfalusi (5):
-  dmaengine: ti: k3-udma: Remove dma_sync_single calls for descriptors
-  dmaengine: ti: k3-udma: Do not use ring_get_occ in udma_pop_from_ring
-  dmaengine: ti: k3-udma: Use common defines for TCHANRT/RCHANRT
-    registers
-  dmaengine: ti: k3-udma-private: Use udma_read/write for register
-    access
-  dmaengine: ti: k3-udma: Use udma_chan instead of tchan/rchan for IO
-    functions
+ drivers/dma/ti/k3-udma.c | 37 ++-----------------------------------
+ 1 file changed, 2 insertions(+), 35 deletions(-)
 
- drivers/dma/ti/k3-udma-glue.c    |  79 +++++------
- drivers/dma/ti/k3-udma-private.c |   8 +-
- drivers/dma/ti/k3-udma.c         | 236 +++++++++++++------------------
- drivers/dma/ti/k3-udma.h         |  61 +++-----
- 4 files changed, 161 insertions(+), 223 deletions(-)
-
+diff --git a/drivers/dma/ti/k3-udma.c b/drivers/dma/ti/k3-udma.c
+index 6c879a734360..919669634d87 100644
+--- a/drivers/dma/ti/k3-udma.c
++++ b/drivers/dma/ti/k3-udma.c
+@@ -539,30 +539,6 @@ static bool udma_is_chan_paused(struct udma_chan *uc)
+ 	return false;
+ }
+ 
+-static void udma_sync_for_device(struct udma_chan *uc, int idx)
+-{
+-	struct udma_desc *d = uc->desc;
+-
+-	if (uc->cyclic && uc->config.pkt_mode) {
+-		dma_sync_single_for_device(uc->ud->dev,
+-					   d->hwdesc[idx].cppi5_desc_paddr,
+-					   d->hwdesc[idx].cppi5_desc_size,
+-					   DMA_TO_DEVICE);
+-	} else {
+-		int i;
+-
+-		for (i = 0; i < d->hwdesc_count; i++) {
+-			if (!d->hwdesc[i].cppi5_desc_vaddr)
+-				continue;
+-
+-			dma_sync_single_for_device(uc->ud->dev,
+-						d->hwdesc[i].cppi5_desc_paddr,
+-						d->hwdesc[i].cppi5_desc_size,
+-						DMA_TO_DEVICE);
+-		}
+-	}
+-}
+-
+ static inline dma_addr_t udma_get_rx_flush_hwdesc_paddr(struct udma_chan *uc)
+ {
+ 	return uc->ud->rx_flush.hwdescs[uc->config.pkt_mode].cppi5_desc_paddr;
+@@ -593,7 +569,6 @@ static int udma_push_to_ring(struct udma_chan *uc, int idx)
+ 		paddr = udma_curr_cppi5_desc_paddr(d, idx);
+ 
+ 		wmb(); /* Ensure that writes are not moved over this point */
+-		udma_sync_for_device(uc, idx);
+ 	}
+ 
+ 	return k3_ringacc_ring_push(ring, &paddr);
+@@ -628,12 +603,12 @@ static int udma_pop_from_ring(struct udma_chan *uc, dma_addr_t *addr)
+ 	}
+ 
+ 	if (ring && k3_ringacc_ring_get_occ(ring)) {
+-		struct udma_desc *d = NULL;
+-
+ 		ret = k3_ringacc_ring_pop(ring, addr);
+ 		if (ret)
+ 			return ret;
+ 
++		rmb(); /* Ensure that reads are not moved before this point */
++
+ 		/* Teardown completion */
+ 		if (cppi5_desc_is_tdcm(*addr))
+ 			return ret;
+@@ -641,14 +616,6 @@ static int udma_pop_from_ring(struct udma_chan *uc, dma_addr_t *addr)
+ 		/* Check for flush descriptor */
+ 		if (udma_desc_is_rx_flush(uc, *addr))
+ 			return -ENOENT;
+-
+-		d = udma_udma_desc_from_paddr(uc, *addr);
+-
+-		if (d)
+-			dma_sync_single_for_cpu(uc->ud->dev, *addr,
+-						d->hwdesc[0].cppi5_desc_size,
+-						DMA_FROM_DEVICE);
+-		rmb(); /* Ensure that reads are not moved before this point */
+ 	}
+ 
+ 	return ret;
 -- 
 Peter
 
