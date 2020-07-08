@@ -2,35 +2,35 @@ Return-Path: <SRS0=sqXi=AT=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-7.0 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,UNWANTED_LANGUAGE_BODY,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7D89CC433DF
-	for <dmaengine@archiver.kernel.org>; Wed,  8 Jul 2020 20:19:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8179AC433E0
+	for <dmaengine@archiver.kernel.org>; Wed,  8 Jul 2020 20:19:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5EBFC20708
-	for <dmaengine@archiver.kernel.org>; Wed,  8 Jul 2020 20:19:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5F4AB20672
+	for <dmaengine@archiver.kernel.org>; Wed,  8 Jul 2020 20:19:25 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b="iIivDMLG"
+	dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b="MQEw+r38"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726265AbgGHUTX (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 8 Jul 2020 16:19:23 -0400
+        id S1726336AbgGHUTZ (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 8 Jul 2020 16:19:25 -0400
 Received: from perceval.ideasonboard.com ([213.167.242.64]:41740 "EHLO
         perceval.ideasonboard.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726208AbgGHUTW (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Wed, 8 Jul 2020 16:19:22 -0400
+        with ESMTP id S1726208AbgGHUTZ (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Wed, 8 Jul 2020 16:19:25 -0400
 Received: from pendragon.bb.dnainternet.fi (81-175-216-236.bb.dnainternet.fi [81.175.216.236])
-        by perceval.ideasonboard.com (Postfix) with ESMTPSA id 27A8CFD1;
-        Wed,  8 Jul 2020 22:19:17 +0200 (CEST)
+        by perceval.ideasonboard.com (Postfix) with ESMTPSA id 749C3FDE;
+        Wed,  8 Jul 2020 22:19:18 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
-        s=mail; t=1594239557;
-        bh=zadiGrmIK4RPFmXNcRX1aZwa0CtbrTe0VAYQPDiAEkI=;
+        s=mail; t=1594239559;
+        bh=0fKSgm8wGv5WWcg6pgldddn6AeotrX1V6XeIMJY+z0Q=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=iIivDMLG2i5h5s/z1FBL4xgKJAnpP84oyQuk/4SmkiqpA4ninA5diUXvj5VXIPb6a
-         V4qfWvoTp9grwBFIE2ECGuZNYRUurSzzOblArQ4dZkwGbiQ4XGY1b+tVl8k8uw5x2Z
-         BKWwirRz6KhP8mQEv/iB7dMshLOZjq1+anBbTSbQ=
+        b=MQEw+r38dNte9Sdfz0VvFn1yn1LvhRwarAHbErpAEhA7dv+mjzE9kRLrUMeJQQF1M
+         0sOC/ECddEYUPY97Sn7WLdrCdSlqERMd+UmhL17tMIh9myHZ1dqC13wwz86TcOJh3T
+         LL/QRSASUHD9PH4DOo/H0QXOOj0XeZqed/NBbXTc=
 From:   Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 To:     dmaengine@vger.kernel.org
 Cc:     Michal Simek <michal.simek@xilinx.com>,
@@ -39,9 +39,9 @@ Cc:     Michal Simek <michal.simek@xilinx.com>,
         Satish Kumar Nagireddy <SATISHNA@xilinx.com>,
         Vinod Koul <vkoul@kernel.org>,
         Peter Ujfalusi <peter.ujfalusi@ti.com>
-Subject: [PATCH v6 3/6] dmaengine: Add support for repeating transactions
-Date:   Wed,  8 Jul 2020 23:19:03 +0300
-Message-Id: <20200708201906.4546-4-laurent.pinchart@ideasonboard.com>
+Subject: [PATCH v6 5/6] dmaengine: xilinx: dpdma: Add debugfs support
+Date:   Wed,  8 Jul 2020 23:19:05 +0300
+Message-Id: <20200708201906.4546-6-laurent.pinchart@ideasonboard.com>
 X-Mailer: git-send-email 2.27.0
 In-Reply-To: <20200708201906.4546-1-laurent.pinchart@ideasonboard.com>
 References: <20200708201906.4546-1-laurent.pinchart@ideasonboard.com>
@@ -52,183 +52,283 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-DMA engines used with displays perform 2D interleaved transfers to read
-framebuffers from memory and feed the data to the display engine. As the
-same framebuffer can be displayed for multiple frames, the DMA
-transactions need to be repeated until a new framebuffer replaces the
-current one. This feature is implemented natively by some DMA engines
-that have the ability to repeat transactions and switch to a new
-transaction at the end of a transfer without any race condition or frame
-loss.
+Expose statistics to debugfs when available. This helps debugging issues
+with the DPDMA driver.
 
-This patch implements support for this feature in the DMA engine API. A
-new DMA_PREP_REPEAT transaction flag allows DMA clients to instruct the
-DMA channel to repeat the transaction automatically until one or more
-new transactions are issued on the channel (or until all active DMA
-transfers are explicitly terminated with the dmaengine_terminate_*()
-functions). A new DMA_REPEAT transaction type is also added for DMA
-engine drivers to report their support of the DMA_PREP_REPEAT flag.
-
-A new DMA_PREP_LOAD_EOT transaction flag is also introduced (with a
-corresponding DMA_LOAD_EOT capability bit), as requested during the
-review of v4. The flag instructs the DMA channel that the transaction
-being queued should replace the active repeated transaction when the
-latter terminates (at End Of Transaction). Not setting the flag will
-result in the active repeated transaction to continue being repeated,
-and the new transaction being silently ignored.
-
-The DMA_PREP_REPEAT flag is currently supported for interleaved
-transactions only. Its usage can easily be extended to cover more
-transaction types simply by adding an appropriate check in the
-corresponding dmaengine_prep_*() function.
-
+Signed-off-by: Hyun Kwon <hyun.kwon@xilinx.com>
 Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 ---
-Changes since v5:
+Changes since v3:
 
-- Document the API in Documentation/driver-api/dmaengine/
-- Small improvements to documentation in header file
+- Return -EFAULT instead of bytes remaining after copy_to_user()
 
-Changes since v4:
+Changes since v2:
 
-- Add DMA_LOAD_EOT and DMA_PREP_LOAD_EOT flags
+- Refactor debugfs code
 ---
- Documentation/driver-api/dmaengine/client.rst |  4 +-
- .../driver-api/dmaengine/provider.rst         | 49 +++++++++++++++++++
- include/linux/dmaengine.h                     | 17 +++++++
- 3 files changed, 69 insertions(+), 1 deletion(-)
+ drivers/dma/xilinx/xilinx_dpdma.c | 228 ++++++++++++++++++++++++++++++
+ 1 file changed, 228 insertions(+)
 
-diff --git a/Documentation/driver-api/dmaengine/client.rst b/Documentation/driver-api/dmaengine/client.rst
-index 2104830a99ae..41938aa2bdeb 100644
---- a/Documentation/driver-api/dmaengine/client.rst
-+++ b/Documentation/driver-api/dmaengine/client.rst
-@@ -86,7 +86,9 @@ The details of these operations are:
-   - interleaved_dma: This is common to Slave as well as M2M clients. For slave
-     address of devices' fifo could be already known to the driver.
-     Various types of operations could be expressed by setting
--    appropriate values to the 'dma_interleaved_template' members.
-+    appropriate values to the 'dma_interleaved_template' members. Cyclic
-+    interleaved DMA transfers are also possible if supported by the channel by
-+    setting the DMA_PREP_REPEAT transfer flag.
- 
-   A non-NULL return of this transfer API represents a "descriptor" for
-   the given transaction.
-diff --git a/Documentation/driver-api/dmaengine/provider.rst b/Documentation/driver-api/dmaengine/provider.rst
-index 56e5833e8a07..f896acccdfee 100644
---- a/Documentation/driver-api/dmaengine/provider.rst
-+++ b/Documentation/driver-api/dmaengine/provider.rst
-@@ -239,6 +239,27 @@ Currently, the types available are:
-     want to transfer a portion of uncompressed data directly to the
-     display to print it
- 
-+- DMA_REPEAT
-+
-+  - The device supports repeated transfers. A repeated transfer, indicated by
-+    the DMA_PREP_REPEAT transfer flag, is similar to a cyclic transfer in that
-+    it gets automatically repeated when it ends, but can additionally be
-+    replaced by the client.
-+
-+  - This feature is limited to interleaved transfers, this flag should thus not
-+    be set if the DMA_INTERLEAVE flag isn't set. This limitation is based on
-+    the current needs of DMA clients, support for additional transfer types
-+    should be added in the future if and when the need arises.
-+
-+- DMA_LOAD_EOT
-+
-+  - The device supports replacing repeated transfers at end of transfer (EOT)
-+    by queuing a new transfer with the DMA_PREP_LOAD_EOT flag set.
-+
-+  - Support for replacing a currently running transfer at another point (such
-+    as end of burst instead of end of transfer) will be added in the future
-+    based on DMA clients needs, if and when the need arises.
-+
- These various types will also affect how the source and destination
- addresses change over time.
- 
-@@ -531,6 +552,34 @@ DMA_CTRL_REUSE
-     writes for which the descriptor should be in different format from
-     normal data descriptors.
- 
-+- DMA_PREP_REPEAT
-+
-+  - If set, the transfer will be automatically repeated when it ends until a
-+    new transfer is queued on the same channel with the DMA_PREP_LOAD_EOT flag.
-+    If the next transfer to be queued on the channel does not have the
-+    DMA_PREP_LOAD_EOT flag set, the current transfer will be repeated until the
-+    client terminates all transfers.
-+
-+  - This flag is only supported if the channel reports the DMA_REPEAT
-+    capability.
-+
-+- DMA_PREP_LOAD_EOT
-+
-+  - If set, the transfer will replace the transfer currently being executed at
-+    the end of the transfer.
-+
-+  - This is the default behaviour for non-repeated transfers, specifying
-+    DMA_PREP_LOAD_EOT for non-repeated transfers will thus make no difference.
-+
-+  - When using repeated transfers, DMA clients will usually need to set the
-+    DMA_PREP_LOAD_EOT flag on all transfers, otherwise the channel will keep
-+    repeating the last repeated transfer and ignore the new transfers being
-+    queued. Failure to set DMA_PREP_LOAD_EOT will appear as if the channel was
-+    stuck on the previous transfer.
-+
-+  - This flag is only supported if the channel reports the DMA_LOAD_EOT
-+    capability.
-+
- General Design Notes
- ====================
- 
-diff --git a/include/linux/dmaengine.h b/include/linux/dmaengine.h
-index e1c03339918f..328e3aca7f51 100644
---- a/include/linux/dmaengine.h
-+++ b/include/linux/dmaengine.h
-@@ -61,6 +61,8 @@ enum dma_transaction_type {
- 	DMA_SLAVE,
- 	DMA_CYCLIC,
- 	DMA_INTERLEAVE,
-+	DMA_REPEAT,
-+	DMA_LOAD_EOT,
- /* last transaction type for creation of the capabilities mask */
- 	DMA_TX_TYPE_END,
+diff --git a/drivers/dma/xilinx/xilinx_dpdma.c b/drivers/dma/xilinx/xilinx_dpdma.c
+index fc2a4402ce48..38ef21f18dfb 100644
+--- a/drivers/dma/xilinx/xilinx_dpdma.c
++++ b/drivers/dma/xilinx/xilinx_dpdma.c
+@@ -10,6 +10,7 @@
+ #include <linux/bitfield.h>
+ #include <linux/bits.h>
+ #include <linux/clk.h>
++#include <linux/debugfs.h>
+ #include <linux/delay.h>
+ #include <linux/dmaengine.h>
+ #include <linux/dmapool.h>
+@@ -265,6 +266,229 @@ struct xilinx_dpdma_device {
+ 	bool ext_addr;
  };
-@@ -176,6 +178,16 @@ struct dma_interleaved_template {
-  * @DMA_PREP_CMD: tell the driver that the data passed to DMA API is command
-  *  data and the descriptor should be in different format from normal
-  *  data descriptors.
-+ * @DMA_PREP_REPEAT: tell the driver that the transaction shall be automatically
-+ *  repeated when it ends until a transaction is issued on the same channel
-+ *  with the DMA_PREP_LOAD_EOT flag set. This flag is only applicable to
-+ *  interleaved transactions and is ignored for all other transaction types.
-+ * @DMA_PREP_LOAD_EOT: tell the driver that the transaction shall replace any
-+ *  active repeated (as indicated by DMA_PREP_REPEAT) transaction when the
-+ *  repeated transaction ends. Not setting this flag when the previously queued
-+ *  transaction is marked with DMA_PREP_REPEAT will cause the new transaction
-+ *  to never be processed and stay in the issued queue forever. The flag is
-+ *  ignored if the previous transaction is not a repeated transaction.
+ 
++/* -----------------------------------------------------------------------------
++ * DebugFS
++ */
++
++#ifdef CONFIG_DEBUG_FS
++
++#define XILINX_DPDMA_DEBUGFS_READ_MAX_SIZE	32
++#define XILINX_DPDMA_DEBUGFS_UINT16_MAX_STR	"65535"
++
++/* Match xilinx_dpdma_testcases vs dpdma_debugfs_reqs[] entry */
++enum xilinx_dpdma_testcases {
++	DPDMA_TC_INTR_DONE,
++	DPDMA_TC_NONE
++};
++
++struct xilinx_dpdma_debugfs {
++	enum xilinx_dpdma_testcases testcase;
++	u16 xilinx_dpdma_irq_done_count;
++	unsigned int chan_id;
++};
++
++static struct xilinx_dpdma_debugfs dpdma_debugfs;
++struct xilinx_dpdma_debugfs_request {
++	const char *name;
++	enum xilinx_dpdma_testcases tc;
++	ssize_t (*read)(char *buf);
++	int (*write)(char *args);
++};
++
++static void xilinx_dpdma_debugfs_desc_done_irq(struct xilinx_dpdma_chan *chan)
++{
++	if (chan->id == dpdma_debugfs.chan_id)
++		dpdma_debugfs.xilinx_dpdma_irq_done_count++;
++}
++
++static ssize_t xilinx_dpdma_debugfs_desc_done_irq_read(char *buf)
++{
++	size_t out_str_len;
++
++	dpdma_debugfs.testcase = DPDMA_TC_NONE;
++
++	out_str_len = strlen(XILINX_DPDMA_DEBUGFS_UINT16_MAX_STR);
++	out_str_len = min_t(size_t, XILINX_DPDMA_DEBUGFS_READ_MAX_SIZE,
++			    out_str_len);
++	snprintf(buf, out_str_len, "%d",
++		 dpdma_debugfs.xilinx_dpdma_irq_done_count);
++
++	return 0;
++}
++
++static int xilinx_dpdma_debugfs_desc_done_irq_write(char *args)
++{
++	char *arg;
++	int ret;
++	u32 id;
++
++	arg = strsep(&args, " ");
++	if (!arg || strncasecmp(arg, "start", 5))
++		return -EINVAL;
++
++	arg = strsep(&args, " ");
++	if (!arg)
++		return -EINVAL;
++
++	ret = kstrtou32(arg, 0, &id);
++	if (ret < 0)
++		return ret;
++
++	if (id < ZYNQMP_DPDMA_VIDEO0 || id > ZYNQMP_DPDMA_AUDIO1)
++		return -EINVAL;
++
++	dpdma_debugfs.testcase = DPDMA_TC_INTR_DONE;
++	dpdma_debugfs.xilinx_dpdma_irq_done_count = 0;
++	dpdma_debugfs.chan_id = id;
++
++	return 0;
++}
++
++/* Match xilinx_dpdma_testcases vs dpdma_debugfs_reqs[] entry */
++struct xilinx_dpdma_debugfs_request dpdma_debugfs_reqs[] = {
++	{
++		.name = "DESCRIPTOR_DONE_INTR",
++		.tc = DPDMA_TC_INTR_DONE,
++		.read = xilinx_dpdma_debugfs_desc_done_irq_read,
++		.write = xilinx_dpdma_debugfs_desc_done_irq_write,
++	},
++};
++
++static ssize_t xilinx_dpdma_debugfs_read(struct file *f, char __user *buf,
++					 size_t size, loff_t *pos)
++{
++	enum xilinx_dpdma_testcases testcase;
++	char *kern_buff;
++	int ret = 0;
++
++	if (*pos != 0 || size <= 0)
++		return -EINVAL;
++
++	kern_buff = kzalloc(XILINX_DPDMA_DEBUGFS_READ_MAX_SIZE, GFP_KERNEL);
++	if (!kern_buff) {
++		dpdma_debugfs.testcase = DPDMA_TC_NONE;
++		return -ENOMEM;
++	}
++
++	testcase = READ_ONCE(dpdma_debugfs.testcase);
++	if (testcase != DPDMA_TC_NONE) {
++		ret = dpdma_debugfs_reqs[testcase].read(kern_buff);
++		if (ret < 0)
++			goto done;
++	} else {
++		strlcpy(kern_buff, "No testcase executed",
++			XILINX_DPDMA_DEBUGFS_READ_MAX_SIZE);
++	}
++
++	size = min(size, strlen(kern_buff));
++	if (copy_to_user(buf, kern_buff, size))
++		ret = -EFAULT;
++
++done:
++	kfree(kern_buff);
++	if (ret)
++		return ret;
++
++	*pos = size + 1;
++	return size;
++}
++
++static ssize_t xilinx_dpdma_debugfs_write(struct file *f,
++					  const char __user *buf, size_t size,
++					  loff_t *pos)
++{
++	char *kern_buff, *kern_buff_start;
++	char *testcase;
++	unsigned int i;
++	int ret;
++
++	if (*pos != 0 || size <= 0)
++		return -EINVAL;
++
++	/* Supporting single instance of test as of now. */
++	if (dpdma_debugfs.testcase != DPDMA_TC_NONE)
++		return -EBUSY;
++
++	kern_buff = kzalloc(size, GFP_KERNEL);
++	if (!kern_buff)
++		return -ENOMEM;
++	kern_buff_start = kern_buff;
++
++	ret = strncpy_from_user(kern_buff, buf, size);
++	if (ret < 0)
++		goto done;
++
++	/* Read the testcase name from a user request. */
++	testcase = strsep(&kern_buff, " ");
++
++	for (i = 0; i < ARRAY_SIZE(dpdma_debugfs_reqs); i++) {
++		if (!strcasecmp(testcase, dpdma_debugfs_reqs[i].name))
++			break;
++	}
++
++	if (i == ARRAY_SIZE(dpdma_debugfs_reqs)) {
++		ret = -EINVAL;
++		goto done;
++	}
++
++	ret = dpdma_debugfs_reqs[i].write(kern_buff);
++	if (ret < 0)
++		goto done;
++
++	ret = size;
++
++done:
++	kfree(kern_buff_start);
++	return ret;
++}
++
++static const struct file_operations fops_xilinx_dpdma_dbgfs = {
++	.owner = THIS_MODULE,
++	.read = xilinx_dpdma_debugfs_read,
++	.write = xilinx_dpdma_debugfs_write,
++};
++
++static int xilinx_dpdma_debugfs_init(struct device *dev)
++{
++	int err;
++	struct dentry *xilinx_dpdma_debugfs_dir, *xilinx_dpdma_debugfs_file;
++
++	dpdma_debugfs.testcase = DPDMA_TC_NONE;
++
++	xilinx_dpdma_debugfs_dir = debugfs_create_dir("dpdma", NULL);
++	if (!xilinx_dpdma_debugfs_dir) {
++		dev_err(dev, "debugfs_create_dir failed\n");
++		return -ENODEV;
++	}
++
++	xilinx_dpdma_debugfs_file =
++		debugfs_create_file("testcase", 0444,
++				    xilinx_dpdma_debugfs_dir, NULL,
++				    &fops_xilinx_dpdma_dbgfs);
++	if (!xilinx_dpdma_debugfs_file) {
++		dev_err(dev, "debugfs_create_file testcase failed\n");
++		err = -ENODEV;
++		goto err_dbgfs;
++	}
++	return 0;
++
++err_dbgfs:
++	debugfs_remove_recursive(xilinx_dpdma_debugfs_dir);
++	xilinx_dpdma_debugfs_dir = NULL;
++	return err;
++}
++
++#else
++static int xilinx_dpdma_debugfs_init(struct device *dev)
++{
++	return 0;
++}
++
++static void xilinx_dpdma_debugfs_desc_done_irq(struct xilinx_dpdma_chan *chan)
++{
++}
++#endif /* CONFIG_DEBUG_FS */
++
+ /* -----------------------------------------------------------------------------
+  * I/O Accessors
   */
- enum dma_ctrl_flags {
- 	DMA_PREP_INTERRUPT = (1 << 0),
-@@ -186,6 +198,8 @@ enum dma_ctrl_flags {
- 	DMA_PREP_FENCE = (1 << 5),
- 	DMA_CTRL_REUSE = (1 << 6),
- 	DMA_PREP_CMD = (1 << 7),
-+	DMA_PREP_REPEAT = (1 << 8),
-+	DMA_PREP_LOAD_EOT = (1 << 9),
- };
+@@ -850,6 +1074,8 @@ static void xilinx_dpdma_chan_done_irq(struct xilinx_dpdma_chan *chan)
  
- /**
-@@ -980,6 +994,9 @@ static inline struct dma_async_tx_descriptor *dmaengine_prep_interleaved_dma(
- {
- 	if (!chan || !chan->device || !chan->device->device_prep_interleaved_dma)
- 		return NULL;
-+	if (flags & DMA_PREP_REPEAT &&
-+	    !test_bit(DMA_REPEAT, chan->device->cap_mask.bits))
-+		return NULL;
+ 	spin_lock_irqsave(&chan->lock, flags);
  
- 	return chan->device->device_prep_interleaved_dma(chan, xt, flags);
- }
++	xilinx_dpdma_debugfs_desc_done_irq(chan);
++
+ 	if (active)
+ 		vchan_cyclic_callback(&active->vdesc);
+ 	else
+@@ -1485,6 +1711,8 @@ static int xilinx_dpdma_probe(struct platform_device *pdev)
+ 
+ 	xilinx_dpdma_enable_irq(xdev);
+ 
++	xilinx_dpdma_debugfs_init(&pdev->dev);
++
+ 	dev_info(&pdev->dev, "Xilinx DPDMA engine is probed\n");
+ 
+ 	return 0;
 -- 
 Regards,
 
