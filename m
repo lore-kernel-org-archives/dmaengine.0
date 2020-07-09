@@ -6,25 +6,25 @@ X-Spam-Status: No, score=-6.7 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
 	URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8A56DC433E3
-	for <dmaengine@archiver.kernel.org>; Thu,  9 Jul 2020 22:47:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 68407C433E4
+	for <dmaengine@archiver.kernel.org>; Thu,  9 Jul 2020 22:47:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6FB0F2070E
-	for <dmaengine@archiver.kernel.org>; Thu,  9 Jul 2020 22:47:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 50DEE2083B
+	for <dmaengine@archiver.kernel.org>; Thu,  9 Jul 2020 22:47:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727916AbgGIWq4 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Thu, 9 Jul 2020 18:46:56 -0400
-Received: from mail.baikalelectronics.com ([87.245.175.226]:48196 "EHLO
+        id S1727909AbgGIWqz (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Thu, 9 Jul 2020 18:46:55 -0400
+Received: from mail.baikalelectronics.com ([87.245.175.226]:48126 "EHLO
         mail.baikalelectronics.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726889AbgGIWqR (ORCPT
+        with ESMTP id S1727047AbgGIWqR (ORCPT
         <rfc822;dmaengine@vger.kernel.org>); Thu, 9 Jul 2020 18:46:17 -0400
 Received: from localhost (unknown [127.0.0.1])
-        by mail.baikalelectronics.ru (Postfix) with ESMTP id 045D5803202F;
-        Thu,  9 Jul 2020 22:46:13 +0000 (UTC)
+        by mail.baikalelectronics.ru (Postfix) with ESMTP id 9B2D38030833;
+        Thu,  9 Jul 2020 22:46:11 +0000 (UTC)
 X-Virus-Scanned: amavisd-new at baikalelectronics.ru
 Received: from mail.baikalelectronics.ru ([127.0.0.1])
         by localhost (mail.baikalelectronics.ru [127.0.0.1]) (amavisd-new, port 10024)
-        with ESMTP id NzAlM3y_o2Qn; Fri, 10 Jul 2020 01:46:12 +0300 (MSK)
+        with ESMTP id 5L-29FhGSQ6Q; Fri, 10 Jul 2020 01:46:10 +0300 (MSK)
 From:   Serge Semin <Sergey.Semin@baikalelectronics.ru>
 To:     Vinod Koul <vkoul@kernel.org>, Viresh Kumar <vireshk@kernel.org>,
         Dan Williams <dan.j.williams@intel.com>
@@ -37,9 +37,9 @@ CC:     Serge Semin <Sergey.Semin@baikalelectronics.ru>,
         Rob Herring <robh+dt@kernel.org>, <linux-mips@vger.kernel.org>,
         <devicetree@vger.kernel.org>, <dmaengine@vger.kernel.org>,
         <linux-kernel@vger.kernel.org>
-Subject: [PATCH v7 05/11] dmaengine: Introduce DMA-device device_caps callback
-Date:   Fri, 10 Jul 2020 01:45:44 +0300
-Message-ID: <20200709224550.15539-6-Sergey.Semin@baikalelectronics.ru>
+Subject: [PATCH v7 03/11] dmaengine: Introduce min burst length capability
+Date:   Fri, 10 Jul 2020 01:45:42 +0300
+Message-ID: <20200709224550.15539-4-Sergey.Semin@baikalelectronics.ru>
 In-Reply-To: <20200709224550.15539-1-Sergey.Semin@baikalelectronics.ru>
 References: <20200709224550.15539-1-Sergey.Semin@baikalelectronics.ru>
 MIME-Version: 1.0
@@ -51,19 +51,16 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-There are DMA devices (like ours version of Synopsys DW DMAC) which have
-DMA capabilities non-uniformly redistributed between the device channels.
-In order to provide a way of exposing the channel-specific parameters to
-the DMA engine consumers, we introduce a new DMA-device callback. In case
-if provided it gets called from the dma_get_slave_caps() method and is
-able to override the generic DMA-device capabilities.
+Some hardware aside from default 0/1 may have greater minimum burst
+transactions length constraints. Here we introduce the DMA device
+and slave capability, which if required can be initialized by the DMA
+engine driver with the device-specific value.
 
 Signed-off-by: Serge Semin <Sergey.Semin@baikalelectronics.ru>
 Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 Cc: Alexey Malahov <Alexey.Malahov@baikalelectronics.ru>
 Cc: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Cc: Arnd Bergmann <arnd@arndb.de>
-Cc: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 Cc: Rob Herring <robh+dt@kernel.org>
 Cc: linux-mips@vger.kernel.org
 Cc: devicetree@vger.kernel.org
@@ -71,60 +68,61 @@ Cc: devicetree@vger.kernel.org
 ---
 
 Changelog v3:
-- This is a new patch created as a result of the discussion with Vinod and
+- This is a new patch created as a result of the discussion with Vinud and
   Andy in the framework of DW DMA burst and LLP capabilities.
-
-Changelog v5:
-- Add in-line comment at the point of the device_caps callback invocation.
-- Add doc-comment for the device_caps member of struct dma_device.
 ---
- drivers/dma/dmaengine.c   | 10 ++++++++++
- include/linux/dmaengine.h |  4 ++++
- 2 files changed, 14 insertions(+)
+ drivers/dma/dmaengine.c   | 1 +
+ include/linux/dmaengine.h | 4 ++++
+ 2 files changed, 5 insertions(+)
 
 diff --git a/drivers/dma/dmaengine.c b/drivers/dma/dmaengine.c
-index ad56ad58932c..ed1fd376f1a5 100644
+index d31076d9ef25..b332ffe52780 100644
 --- a/drivers/dma/dmaengine.c
 +++ b/drivers/dma/dmaengine.c
-@@ -599,6 +599,16 @@ int dma_get_slave_caps(struct dma_chan *chan, struct dma_slave_caps *caps)
- 	caps->cmd_resume = !!device->device_resume;
- 	caps->cmd_terminate = !!device->device_terminate_all;
- 
-+	/*
-+	 * DMA engine device might be configured with non-uniformly
-+	 * distributed slave capabilities per device channels. In this
-+	 * case the corresponding driver may provide the device_caps
-+	 * callback to override the generic capabilities with
-+	 * channel-specific ones.
-+	 */
-+	if (device->device_caps)
-+		device->device_caps(chan, caps);
-+
- 	return 0;
- }
- EXPORT_SYMBOL_GPL(dma_get_slave_caps);
+@@ -590,6 +590,7 @@ int dma_get_slave_caps(struct dma_chan *chan, struct dma_slave_caps *caps)
+ 	caps->src_addr_widths = device->src_addr_widths;
+ 	caps->dst_addr_widths = device->dst_addr_widths;
+ 	caps->directions = device->directions;
++	caps->min_burst = device->min_burst;
+ 	caps->max_burst = device->max_burst;
+ 	caps->residue_granularity = device->residue_granularity;
+ 	caps->descriptor_reuse = device->descriptor_reuse;
 diff --git a/include/linux/dmaengine.h b/include/linux/dmaengine.h
-index a7e4d8dfdd19..298b721c8b9f 100644
+index e1c03339918f..0c7403b27133 100644
 --- a/include/linux/dmaengine.h
 +++ b/include/linux/dmaengine.h
-@@ -799,6 +799,8 @@ struct dma_filter {
-  *	be called after period_len bytes have been transferred.
-  * @device_prep_interleaved_dma: Transfer expression in a generic way.
-  * @device_prep_dma_imm_data: DMA's 8 byte immediate data to the dst address
-+ * @device_caps: May be used to override the generic DMA slave capabilities
-+ *	with per-channel specific ones
-  * @device_config: Pushes a new configuration to a channel, return 0 or an error
-  *	code
-  * @device_pause: Pauses any transfer happening on a channel. Returns
-@@ -899,6 +901,8 @@ struct dma_device {
- 		struct dma_chan *chan, dma_addr_t dst, u64 data,
- 		unsigned long flags);
- 
-+	void (*device_caps)(struct dma_chan *chan,
-+			    struct dma_slave_caps *caps);
- 	int (*device_config)(struct dma_chan *chan,
- 			     struct dma_slave_config *config);
- 	int (*device_pause)(struct dma_chan *chan);
+@@ -465,6 +465,7 @@ enum dma_residue_granularity {
+  *	Since the enum dma_transfer_direction is not defined as bit flag for
+  *	each type, the dma controller should set BIT(<TYPE>) and same
+  *	should be checked by controller as well
++ * @min_burst: min burst capability per-transfer
+  * @max_burst: max burst capability per-transfer
+  * @cmd_pause: true, if pause is supported (i.e. for reading residue or
+  *	       for resume later)
+@@ -478,6 +479,7 @@ struct dma_slave_caps {
+ 	u32 src_addr_widths;
+ 	u32 dst_addr_widths;
+ 	u32 directions;
++	u32 min_burst;
+ 	u32 max_burst;
+ 	bool cmd_pause;
+ 	bool cmd_resume;
+@@ -769,6 +771,7 @@ struct dma_filter {
+  *	Since the enum dma_transfer_direction is not defined as bit flag for
+  *	each type, the dma controller should set BIT(<TYPE>) and same
+  *	should be checked by controller as well
++ * @min_burst: min burst capability per-transfer
+  * @max_burst: max burst capability per-transfer
+  * @residue_granularity: granularity of the transfer residue reported
+  *	by tx_status
+@@ -839,6 +842,7 @@ struct dma_device {
+ 	u32 src_addr_widths;
+ 	u32 dst_addr_widths;
+ 	u32 directions;
++	u32 min_burst;
+ 	u32 max_burst;
+ 	bool descriptor_reuse;
+ 	enum dma_residue_granularity residue_granularity;
 -- 
 2.26.2
 
