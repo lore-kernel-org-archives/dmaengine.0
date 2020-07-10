@@ -1,35 +1,58 @@
-Return-Path: <SRS0=Wixg=AU=vger.kernel.org=dmaengine-owner@kernel.org>
+Return-Path: <SRS0=41UI=AV=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.7 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.3 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
+	USER_AGENT_SANE_1 autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 68407C433E4
-	for <dmaengine@archiver.kernel.org>; Thu,  9 Jul 2020 22:47:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9CDC7C433DF
+	for <dmaengine@archiver.kernel.org>; Fri, 10 Jul 2020 08:31:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 50DEE2083B
-	for <dmaengine@archiver.kernel.org>; Thu,  9 Jul 2020 22:47:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6DB8A207DF
+	for <dmaengine@archiver.kernel.org>; Fri, 10 Jul 2020 08:31:15 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b="rY863hSG"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727909AbgGIWqz (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Thu, 9 Jul 2020 18:46:55 -0400
-Received: from mail.baikalelectronics.com ([87.245.175.226]:48126 "EHLO
-        mail.baikalelectronics.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727047AbgGIWqR (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Thu, 9 Jul 2020 18:46:17 -0400
-Received: from localhost (unknown [127.0.0.1])
-        by mail.baikalelectronics.ru (Postfix) with ESMTP id 9B2D38030833;
-        Thu,  9 Jul 2020 22:46:11 +0000 (UTC)
-X-Virus-Scanned: amavisd-new at baikalelectronics.ru
-Received: from mail.baikalelectronics.ru ([127.0.0.1])
-        by localhost (mail.baikalelectronics.ru [127.0.0.1]) (amavisd-new, port 10024)
-        with ESMTP id 5L-29FhGSQ6Q; Fri, 10 Jul 2020 01:46:10 +0300 (MSK)
-From:   Serge Semin <Sergey.Semin@baikalelectronics.ru>
-To:     Vinod Koul <vkoul@kernel.org>, Viresh Kumar <vireshk@kernel.org>,
+        id S1726921AbgGJIbP (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 10 Jul 2020 04:31:15 -0400
+Received: from lelv0143.ext.ti.com ([198.47.23.248]:57176 "EHLO
+        lelv0143.ext.ti.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726816AbgGJIbO (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Fri, 10 Jul 2020 04:31:14 -0400
+Received: from fllv0034.itg.ti.com ([10.64.40.246])
+        by lelv0143.ext.ti.com (8.15.2/8.15.2) with ESMTP id 06A8Uj5W051326;
+        Fri, 10 Jul 2020 03:30:45 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
+        s=ti-com-17Q1; t=1594369845;
+        bh=aASjBaynNGHy9YdF4r1xWy8RE/lfoom+1VXoKmsjynU=;
+        h=Subject:To:CC:References:From:Date:In-Reply-To;
+        b=rY863hSGr3T9f1kgsDiKQ375WtTBh+aeC0eOEp9Mj04P/Yxa3nZxHgELd350a8TRY
+         19EGMjWn0sDwHciPLMQCmesYJL5qDGdBJ2sFsrOi4+/1LXa+xHPZMW+BKQWcLZIDJb
+         HvHodxqEc/KRu/7jR14UpQtxR5AHnUnLNZgVliNI=
+Received: from DLEE115.ent.ti.com (dlee115.ent.ti.com [157.170.170.26])
+        by fllv0034.itg.ti.com (8.15.2/8.15.2) with ESMTPS id 06A8Uj5O067706
+        (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
+        Fri, 10 Jul 2020 03:30:45 -0500
+Received: from DLEE111.ent.ti.com (157.170.170.22) by DLEE115.ent.ti.com
+ (157.170.170.26) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1979.3; Fri, 10
+ Jul 2020 03:30:45 -0500
+Received: from fllv0040.itg.ti.com (10.64.41.20) by DLEE111.ent.ti.com
+ (157.170.170.22) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1979.3 via
+ Frontend Transport; Fri, 10 Jul 2020 03:30:45 -0500
+Received: from [192.168.2.6] (ileax41-snat.itg.ti.com [10.172.224.153])
+        by fllv0040.itg.ti.com (8.15.2/8.15.2) with ESMTP id 06A8UgXj109862;
+        Fri, 10 Jul 2020 03:30:42 -0500
+Subject: Re: [PATCH v7 04/11] dmaengine: Introduce max SG list entries
+ capability
+To:     Serge Semin <Sergey.Semin@baikalelectronics.ru>,
+        Vinod Koul <vkoul@kernel.org>,
+        Viresh Kumar <vireshk@kernel.org>,
         Dan Williams <dan.j.williams@intel.com>
-CC:     Serge Semin <Sergey.Semin@baikalelectronics.ru>,
-        Serge Semin <fancer.lancer@gmail.com>,
+CC:     Serge Semin <fancer.lancer@gmail.com>,
         Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
         Alexey Malahov <Alexey.Malahov@baikalelectronics.ru>,
         Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
@@ -37,92 +60,165 @@ CC:     Serge Semin <Sergey.Semin@baikalelectronics.ru>,
         Rob Herring <robh+dt@kernel.org>, <linux-mips@vger.kernel.org>,
         <devicetree@vger.kernel.org>, <dmaengine@vger.kernel.org>,
         <linux-kernel@vger.kernel.org>
-Subject: [PATCH v7 03/11] dmaengine: Introduce min burst length capability
-Date:   Fri, 10 Jul 2020 01:45:42 +0300
-Message-ID: <20200709224550.15539-4-Sergey.Semin@baikalelectronics.ru>
-In-Reply-To: <20200709224550.15539-1-Sergey.Semin@baikalelectronics.ru>
 References: <20200709224550.15539-1-Sergey.Semin@baikalelectronics.ru>
+ <20200709224550.15539-5-Sergey.Semin@baikalelectronics.ru>
+From:   Peter Ujfalusi <peter.ujfalusi@ti.com>
+X-Pep-Version: 2.0
+Message-ID: <d667adda-6576-623d-6976-30f60ab3c3dc@ti.com>
+Date:   Fri, 10 Jul 2020 11:31:47 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7BIT
-Content-Type:   text/plain; charset=US-ASCII
-X-ClientProxiedBy: MAIL.baikal.int (192.168.51.25) To mail (192.168.51.25)
+In-Reply-To: <20200709224550.15539-5-Sergey.Semin@baikalelectronics.ru>
+Content-Type: text/plain; charset="utf-8"
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
+X-EXCLAIMER-MD-CONFIG: e1e8a2fd-e40a-4ac6-ac9b-f7e9cc9ee180
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Some hardware aside from default 0/1 may have greater minimum burst
-transactions length constraints. Here we introduce the DMA device
-and slave capability, which if required can be initialized by the DMA
-engine driver with the device-specific value.
 
-Signed-off-by: Serge Semin <Sergey.Semin@baikalelectronics.ru>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Cc: Alexey Malahov <Alexey.Malahov@baikalelectronics.ru>
-Cc: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Cc: Arnd Bergmann <arnd@arndb.de>
-Cc: Rob Herring <robh+dt@kernel.org>
-Cc: linux-mips@vger.kernel.org
-Cc: devicetree@vger.kernel.org
 
----
+On 10/07/2020 1.45, Serge Semin wrote:
+> Some devices may lack the support of the hardware accelerated SG list
+> entries automatic walking through and execution. In this case a burden =
+of
+> the SG list traversal and DMA engine re-initialization lies on the
+> DMA engine driver (normally implemented by using a DMA transfer complet=
+ion
+> IRQ to recharge the DMA device with a next SG list entry). But such
+> solution may not be suitable for some DMA consumers. In particular SPI
+> devices need both Tx and Rx DMA channels work synchronously in order
+> to avoid the Rx FIFO overflow. In case if Rx DMA channel is paused for
+> some time while the Tx DMA channel works implicitly pulling data into t=
+he
+> Rx FIFO, the later will be eventually overflown, which will cause the d=
+ata
+> loss. So if SG list entries aren't automatically fetched by the DMA
+> engine, but are one-by-one manually selected for execution in the
+> ISRs/deferred work/etc., such problem will eventually happen due to the=
 
-Changelog v3:
-- This is a new patch created as a result of the discussion with Vinud and
-  Andy in the framework of DW DMA burst and LLP capabilities.
----
- drivers/dma/dmaengine.c   | 1 +
- include/linux/dmaengine.h | 4 ++++
- 2 files changed, 5 insertions(+)
+> non-deterministic latencies of the service execution.
 
-diff --git a/drivers/dma/dmaengine.c b/drivers/dma/dmaengine.c
-index d31076d9ef25..b332ffe52780 100644
---- a/drivers/dma/dmaengine.c
-+++ b/drivers/dma/dmaengine.c
-@@ -590,6 +590,7 @@ int dma_get_slave_caps(struct dma_chan *chan, struct dma_slave_caps *caps)
- 	caps->src_addr_widths = device->src_addr_widths;
- 	caps->dst_addr_widths = device->dst_addr_widths;
- 	caps->directions = device->directions;
-+	caps->min_burst = device->min_burst;
- 	caps->max_burst = device->max_burst;
- 	caps->residue_granularity = device->residue_granularity;
- 	caps->descriptor_reuse = device->descriptor_reuse;
-diff --git a/include/linux/dmaengine.h b/include/linux/dmaengine.h
-index e1c03339918f..0c7403b27133 100644
---- a/include/linux/dmaengine.h
-+++ b/include/linux/dmaengine.h
-@@ -465,6 +465,7 @@ enum dma_residue_granularity {
-  *	Since the enum dma_transfer_direction is not defined as bit flag for
-  *	each type, the dma controller should set BIT(<TYPE>) and same
-  *	should be checked by controller as well
-+ * @min_burst: min burst capability per-transfer
-  * @max_burst: max burst capability per-transfer
-  * @cmd_pause: true, if pause is supported (i.e. for reading residue or
-  *	       for resume later)
-@@ -478,6 +479,7 @@ struct dma_slave_caps {
- 	u32 src_addr_widths;
- 	u32 dst_addr_widths;
- 	u32 directions;
-+	u32 min_burst;
- 	u32 max_burst;
- 	bool cmd_pause;
- 	bool cmd_resume;
-@@ -769,6 +771,7 @@ struct dma_filter {
-  *	Since the enum dma_transfer_direction is not defined as bit flag for
-  *	each type, the dma controller should set BIT(<TYPE>) and same
-  *	should be checked by controller as well
-+ * @min_burst: min burst capability per-transfer
-  * @max_burst: max burst capability per-transfer
-  * @residue_granularity: granularity of the transfer residue reported
-  *	by tx_status
-@@ -839,6 +842,7 @@ struct dma_device {
- 	u32 src_addr_widths;
- 	u32 dst_addr_widths;
- 	u32 directions;
-+	u32 min_burst;
- 	u32 max_burst;
- 	bool descriptor_reuse;
- 	enum dma_residue_granularity residue_granularity;
--- 
-2.26.2
+It is not really the number of sg nents which is the problem, but the
+combination of total number of bytes _and_ the number of nents used to
+map them.
+Obviously the TX and RX number of bytes must match in duplex case and at
+the same time neither nents should be over the number of SGs the DMA
+device can handle without interruption (linking, chaining, or whatever
+means).
+
+The EDMA from TI have similar limitation (we set the limit to 20 nents).
+Longer lists will be broken up to maximum of 20 segment transfers.
+This setup has bigger impact on audio (cyclic) as we need to limit the
+number of periods to not exceed this limit of 20.
+
+The sDMA on the other hand has different limits. Earlier versions
+without linking support can execute one SG chunk at the time and needs
+to reconfigure for the next one -> max_sg_nents is 1 for the older sDMAs.=
+=2E.
+
+> In order to let the DMA consumer know about the DMA device capabilities=
+
+> regarding the hardware accelerated SG list traversal we introduce the
+> max_sg_list capability. It is supposed to be initialized by the DMA eng=
+ine
+> driver with 0 if there is no limitation for the number of SG entries
+> atomically executed and with non-zero value if there is such constraint=
+s,
+> so the upper limit is determined by the number set to the property.
+>=20
+> Suggested-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+> Signed-off-by: Serge Semin <Sergey.Semin@baikalelectronics.ru>
+> Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+> Cc: Alexey Malahov <Alexey.Malahov@baikalelectronics.ru>
+> Cc: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+> Cc: Arnd Bergmann <arnd@arndb.de>
+> Cc: Rob Herring <robh+dt@kernel.org>
+> Cc: linux-mips@vger.kernel.org
+> Cc: devicetree@vger.kernel.org
+>=20
+> ---
+>=20
+> Changelog v3:
+> - This is a new patch created as a result of the discussion with Vinud =
+and
+>   Andy in the framework of DW DMA burst and LLP capabilities.
+>=20
+> Changelog v4:
+> - Fix of->if typo. It should be definitely of.
+> ---
+>  drivers/dma/dmaengine.c   | 1 +
+>  include/linux/dmaengine.h | 8 ++++++++
+>  2 files changed, 9 insertions(+)
+>=20
+> diff --git a/drivers/dma/dmaengine.c b/drivers/dma/dmaengine.c
+> index b332ffe52780..ad56ad58932c 100644
+> --- a/drivers/dma/dmaengine.c
+> +++ b/drivers/dma/dmaengine.c
+> @@ -592,6 +592,7 @@ int dma_get_slave_caps(struct dma_chan *chan, struc=
+t dma_slave_caps *caps)
+>  	caps->directions =3D device->directions;
+>  	caps->min_burst =3D device->min_burst;
+>  	caps->max_burst =3D device->max_burst;
+> +	caps->max_sg_nents =3D device->max_sg_nents;
+>  	caps->residue_granularity =3D device->residue_granularity;
+>  	caps->descriptor_reuse =3D device->descriptor_reuse;
+>  	caps->cmd_pause =3D !!device->device_pause;
+> diff --git a/include/linux/dmaengine.h b/include/linux/dmaengine.h
+> index 0c7403b27133..a7e4d8dfdd19 100644
+> --- a/include/linux/dmaengine.h
+> +++ b/include/linux/dmaengine.h
+> @@ -467,6 +467,9 @@ enum dma_residue_granularity {
+>   *	should be checked by controller as well
+>   * @min_burst: min burst capability per-transfer
+>   * @max_burst: max burst capability per-transfer
+> + * @max_sg_nents: max number of SG list entries executed in a single a=
+tomic
+> + *	DMA tansaction with no intermediate IRQ for reinitialization. Zero
+> + *	value means unlimited number of entries.
+
+Without looking at the comment the name max_sg_nents implies that the
+DMA can not handle longer lists, but it is not really true.
+max_sg_nents_burst might be a bit cleaner for the first look?
+
+>   * @cmd_pause: true, if pause is supported (i.e. for reading residue o=
+r
+>   *	       for resume later)
+>   * @cmd_resume: true, if resume is supported
+> @@ -481,6 +484,7 @@ struct dma_slave_caps {
+>  	u32 directions;
+>  	u32 min_burst;
+>  	u32 max_burst;
+> +	u32 max_sg_nents;
+>  	bool cmd_pause;
+>  	bool cmd_resume;
+>  	bool cmd_terminate;
+> @@ -773,6 +777,9 @@ struct dma_filter {
+>   *	should be checked by controller as well
+>   * @min_burst: min burst capability per-transfer
+>   * @max_burst: max burst capability per-transfer
+> + * @max_sg_nents: max number of SG list entries executed in a single a=
+tomic
+> + *	DMA tansaction with no intermediate IRQ for reinitialization. Zero
+> + *	value means unlimited number of entries.
+>   * @residue_granularity: granularity of the transfer residue reported
+>   *	by tx_status
+>   * @device_alloc_chan_resources: allocate resources and return the
+> @@ -844,6 +851,7 @@ struct dma_device {
+>  	u32 directions;
+>  	u32 min_burst;
+>  	u32 max_burst;
+> +	u32 max_sg_nents;
+>  	bool descriptor_reuse;
+>  	enum dma_residue_granularity residue_granularity;
+> =20
+>=20
+
+- P=C3=A9ter
+
+Texas Instruments Finland Oy, Porkkalankatu 22, 00180 Helsinki.
+Y-tunnus/Business ID: 0615521-4. Kotipaikka/Domicile: Helsinki
 
