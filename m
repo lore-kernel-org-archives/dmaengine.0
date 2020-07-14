@@ -1,85 +1,87 @@
-Return-Path: <SRS0=+RRz=AY=vger.kernel.org=dmaengine-owner@kernel.org>
+Return-Path: <SRS0=Z0e2=AZ=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.0 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_GIT autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.3 required=3.0 tests=BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=unavailable
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9C402C43470
-	for <dmaengine@archiver.kernel.org>; Mon, 13 Jul 2020 21:36:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8F147C433DF
+	for <dmaengine@archiver.kernel.org>; Tue, 14 Jul 2020 06:35:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 816E020BED
-	for <dmaengine@archiver.kernel.org>; Mon, 13 Jul 2020 21:36:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5EF8721D93
+	for <dmaengine@archiver.kernel.org>; Tue, 14 Jul 2020 06:35:48 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="kr3lngVS"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726630AbgGMVf2 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 13 Jul 2020 17:35:28 -0400
-Received: from relmlor2.renesas.com ([210.160.252.172]:43762 "EHLO
-        relmlie6.idc.renesas.com" rhost-flags-OK-OK-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1726150AbgGMVf2 (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Mon, 13 Jul 2020 17:35:28 -0400
-X-IronPort-AV: E=Sophos;i="5.75,348,1589209200"; 
-   d="scan'208";a="51803346"
-Received: from unknown (HELO relmlir6.idc.renesas.com) ([10.200.68.152])
-  by relmlie6.idc.renesas.com with ESMTP; 14 Jul 2020 06:35:26 +0900
-Received: from localhost.localdomain (unknown [10.226.36.204])
-        by relmlir6.idc.renesas.com (Postfix) with ESMTP id 8094940F7FC8;
-        Tue, 14 Jul 2020 06:35:22 +0900 (JST)
-From:   Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
-To:     Geert Uytterhoeven <geert+renesas@glider.be>,
-        Vinod Koul <vkoul@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Bartosz Golaszewski <bgolaszewski@baylibre.com>,
-        Joerg Roedel <joro@8bytes.org>,
-        Sergei Shtylyov <sergei.shtylyov@gmail.com>,
-        "David S. Miller" <davem@davemloft.net>,
-        Jakub Kicinski <kuba@kernel.org>
-Cc:     Magnus Damm <magnus.damm@gmail.com>,
-        Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-        dmaengine@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-gpio@vger.kernel.org, iommu@lists.linux-foundation.org,
-        netdev@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Prabhakar <prabhakar.csengg@gmail.com>
-Subject: [PATCH 0/9] R8A774E1 SoC enable support for IPMMU, DMAC, GPIO and AVB
-Date:   Mon, 13 Jul 2020 22:35:11 +0100
-Message-Id: <1594676120-5862-1-git-send-email-prabhakar.mahadev-lad.rj@bp.renesas.com>
-X-Mailer: git-send-email 2.7.4
+        id S1725977AbgGNGfs (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 14 Jul 2020 02:35:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37154 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725876AbgGNGfs (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Tue, 14 Jul 2020 02:35:48 -0400
+Received: from merlin.infradead.org (merlin.infradead.org [IPv6:2001:8b0:10b:1231::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE18DC061755;
+        Mon, 13 Jul 2020 23:35:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=infradead.org; s=merlin.20170209; h=Content-Transfer-Encoding:Content-Type:
+        MIME-Version:Date:Message-ID:Subject:From:Cc:To:Sender:Reply-To:Content-ID:
+        Content-Description:In-Reply-To:References;
+        bh=894nJfbdHHUH/ylIpUbkkJ24k6/ppZVJBHTRyT/kui4=; b=kr3lngVSlsG3f4Lw6SDU3Y81LY
+        aV/H6hj1kW2Bsrp8p7+L9EzPewSaD2+fJmHeg9kFe4AuCFyVIsZpylNVdYHHkAdZ08+1k67hzx3bq
+        itseW3uxwfUa3uPAFPsiBv7NzPD7H69F2GAB0mbuefd279ut3e3PgiOybaElIUAl7O7n+KY2a4Bt4
+        U3mhqvS2nTORQal+hdH9bGnmxrZzTOcInsv2rGyDBCZGfW6gXdNRynrVAIDh5O9uj82oha/x+LD7g
+        AE5BliNO1p2/T5R6VZq4DEQfRxbxw96QEC6JwkeBRBFs2ElpXT9yJSfABYGiOMm7/3YOC8IevL3xf
+        xmlP5BQA==;
+Received: from [2601:1c0:6280:3f0::19c2]
+        by merlin.infradead.org with esmtpsa (Exim 4.92.3 #3 (Red Hat Linux))
+        id 1jvEXX-00064C-Ct; Tue, 14 Jul 2020 06:35:43 +0000
+To:     LKML <linux-kernel@vger.kernel.org>,
+        "dmaengine@vger.kernel.org" <dmaengine@vger.kernel.org>
+Cc:     Dave Jiang <dave.jiang@intel.com>, Vinod Koul <vkoul@kernel.org>
+From:   Randy Dunlap <rdunlap@infradead.org>
+Subject: [PATCH -next] dmaengine: idxd: fix PCI_MSI build errors
+Message-ID: <9dee3f46-70d9-ea75-10cb-5527ab297d1d@infradead.org>
+Date:   Mon, 13 Jul 2020 23:35:39 -0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.9.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Hi All,
+From: Randy Dunlap <rdunlap@infradead.org>
 
-This patch series adds device nodes for IPMMU, DMAC, GPIO
-and AVB nodes for RZ/G2H (R8A774E1) SoC.
+Fix build errors when CONFIG_PCI_MSI is not enabled by making the
+driver depend on PCI_MSI:
 
-Cheers,
-Prabhakar
+ld: drivers/dma/idxd/device.o: in function `idxd_mask_msix_vector':
+device.c:(.text+0x26f): undefined reference to `pci_msi_mask_irq'
+ld: drivers/dma/idxd/device.o: in function `idxd_unmask_msix_vector':
+device.c:(.text+0x2af): undefined reference to `pci_msi_unmask_irq'
 
-Lad Prabhakar (3):
-  dt-bindings: iommu: renesas,ipmmu-vmsa: Add r8a774e1 support
-  dt-bindings: dma: renesas,rcar-dmac: Document R8A774E1 bindings
-  dt-bindings: gpio: renesas,rcar-gpio: Add r8a774e1 support
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Cc: Dave Jiang <dave.jiang@intel.com>
+Cc: dmaengine@vger.kernel.org
+Cc: Vinod Koul <vkoul@kernel.org>
+---
+ drivers/dma/Kconfig |    1 +
+ 1 file changed, 1 insertion(+)
 
-Marian-Cristian Rotariu (6):
-  iommu/ipmmu-vmsa: Hook up R8A774E1 DT matching code
-  arm64: dts: renesas: r8a774e1: Add IPMMU device nodes
-  arm64: dts: renesas: r8a774e1: Add SYS-DMAC device nodes
-  arm64: dts: renesas: r8a774e1: Add GPIO device nodes
-  dt-bindings: net: renesas,ravb: Add support for r8a774e1 SoC
-  arm64: dts: renesas: r8a774e1: Add Ethernet AVB node
+--- mmotm-2020-0713-1949.orig/drivers/dma/Kconfig
++++ mmotm-2020-0713-1949/drivers/dma/Kconfig
+@@ -285,6 +285,7 @@ config INTEL_IDMA64
+ config INTEL_IDXD
+ 	tristate "Intel Data Accelerators support"
+ 	depends on PCI && X86_64
++	depends on PCI_MSI
+ 	depends on SBITMAP
+ 	select DMA_ENGINE
+ 	help
 
- .../bindings/dma/renesas,rcar-dmac.yaml       |   1 +
- .../bindings/gpio/renesas,rcar-gpio.yaml      |   1 +
- .../bindings/iommu/renesas,ipmmu-vmsa.yaml    |   1 +
- .../devicetree/bindings/net/renesas,ravb.txt  |   1 +
- arch/arm64/boot/dts/renesas/r8a774e1.dtsi     | 361 +++++++++++++++++-
- drivers/iommu/ipmmu-vmsa.c                    |   4 +
- 6 files changed, 350 insertions(+), 19 deletions(-)
-
--- 
-2.17.1
 
