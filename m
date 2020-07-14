@@ -7,66 +7,66 @@ X-Spam-Status: No, score=-13.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
 	USER_AGENT_GIT autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E95A0C433E3
-	for <dmaengine@archiver.kernel.org>; Tue, 14 Jul 2020 11:16:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5A299C433DF
+	for <dmaengine@archiver.kernel.org>; Tue, 14 Jul 2020 11:16:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C52A722208
-	for <dmaengine@archiver.kernel.org>; Tue, 14 Jul 2020 11:16:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2EF4522208
+	for <dmaengine@archiver.kernel.org>; Tue, 14 Jul 2020 11:16:56 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="RfZ/Kz3I"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="SdnZRHxr"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727891AbgGNLQm (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 14 Jul 2020 07:16:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52124 "EHLO
+        id S1727858AbgGNLQz (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 14 Jul 2020 07:16:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52252 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727118AbgGNLPw (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Tue, 14 Jul 2020 07:15:52 -0400
-Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 27844C08C5DB
-        for <dmaengine@vger.kernel.org>; Tue, 14 Jul 2020 04:15:52 -0700 (PDT)
-Received: by mail-wr1-x442.google.com with SMTP id k6so20883208wrn.3
-        for <dmaengine@vger.kernel.org>; Tue, 14 Jul 2020 04:15:52 -0700 (PDT)
+        with ESMTP id S1727850AbgGNLQk (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Tue, 14 Jul 2020 07:16:40 -0400
+Received: from mail-wm1-x341.google.com (mail-wm1-x341.google.com [IPv6:2a00:1450:4864:20::341])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 334EBC08C5E0
+        for <dmaengine@vger.kernel.org>; Tue, 14 Jul 2020 04:15:54 -0700 (PDT)
+Received: by mail-wm1-x341.google.com with SMTP id w3so5008032wmi.4
+        for <dmaengine@vger.kernel.org>; Tue, 14 Jul 2020 04:15:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=J5xJlzZ+5aNa1GB1o6zmShj2PdHMF5lWE0KYZLpqibo=;
-        b=RfZ/Kz3I91qMv/2m0Zf4ivjprRznfDKxRo5ZqPfQhhX9PSZaThHJo6P+kCgKU3rr8P
-         ch5dX9+quX9ibe+sKu0v+Q+oiCV4mvt9tXT+dOpTZlx3dlk3pFSFYEBV9GrqzAU5e/qZ
-         2wuJ02QboJI8XWG+i9e/liAXGaPAVnPv3+356DXkW9YOG6Yu1G48GvrBl69d/svmIOHf
-         M7goBeDf5RKNAnR9LAsrJsJn/VUl7itgVGaOdoTZU7JX7at3D701oJQUMpkJOWv5dSvN
-         Vqzrln1AVz6HaXiepPBW+suT8kz9j6tWg2CRXWblQOSODD48YjXUIjfkxnM1sVlC2Ha0
-         P9zw==
+        bh=1JX6Y3K2cqUwU/GGZOaVZUng81gC2+PNbg79UPVm7pA=;
+        b=SdnZRHxrdki/679eF7FPi+/jeTt1n4vu5QCRmxeDf6qNUzYvM7bS2wL2e0ozSfTlDM
+         tARtuX6tX/rbJL0nOjGxOz1EtxEWgSJNBrFZwRThgWXp5Kl5a6eD/wFnCjhIw+jzzB7/
+         pa4ZdykY/E568sV/yKFbCQxdcbcvMthgP72Nu27IdlPvdnWn5ftPWOFl2iZSTN1CLks5
+         jCbJHl6gQERwh+F3BClZBDXiW2ATsNlEyVQiw6QRQl3Zs4s0/giQC73/rqp6wSLML6mF
+         zYRMnkFtGmDat2lWvacTNArmkiOZWN/S+hRGD0VkR7xu8KkSelzdOD+GdqTV8/pI3av1
+         6uAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=J5xJlzZ+5aNa1GB1o6zmShj2PdHMF5lWE0KYZLpqibo=;
-        b=j5P6iC8Tb1iW5Q5k5aX5HKzzkWHTR0JvXO+e/fgZbUrjBs29b5P/tAnWnUzTt5Zn9h
-         ZvXX0OyAVx4dNL8GKKyrrviKNc6RJnCBEJSZPKhAyYDxM8RejJ94lZwIsHJmrDJN+twR
-         FTSm4k8woB64NaKhNRA7IEg6U/VC5886EuLODn8OVdWBU1tM93mgBLn8N842AutJnf9P
-         qI3ECOO+OYyJj8sxqo8U4KwV942TtfRBAGdD278IKcwdqVzS/U96t/urpFycdu8cWxF8
-         Zt9HU7NDoOdKlq3aUytffNWCtrRDKI0TLl/0w4kxBySlDb6+933L90now1TpiUL1V+Nr
-         GU3g==
-X-Gm-Message-State: AOAM5330ZxQcCM6BWE7ygLc3MikkQgQrV2RDz3bH/ppD4m2rBF2IHxRK
-        CjpkPXcP61vqUuSZur9XpLP4ToCdPuk=
-X-Google-Smtp-Source: ABdhPJy+IpSkDvt0gKhCLe7N/pHcRPdSZRSy6u7pwrYXAu5aBo0g8In969/7Eo5zqi8LjXxj6Yj/1w==
-X-Received: by 2002:adf:f388:: with SMTP id m8mr4799959wro.338.1594725350794;
-        Tue, 14 Jul 2020 04:15:50 -0700 (PDT)
+        bh=1JX6Y3K2cqUwU/GGZOaVZUng81gC2+PNbg79UPVm7pA=;
+        b=N9P2V3XpF8iyXmfEyY6zQKrosOUasKV6w4SYKOFhEDe0+3B3PkuT72rXbJPQa5poBC
+         QvMlSvtL/+m/9T7cu8cHoon6G9q8wZCBLuME9pqI1o29uKJkj0cvzeF309wzqCxz5WEM
+         RUzWXRX1n1rJ0e7kABNpOhMQvKOC/xNKfsKKdNVocdC6i5jJkdBsh8jnEEaCV33Qj4yf
+         eHISnDF5FpVBOtz07l1FyUtSeyuFWeXmBKxOdmcjE15LybDJ8g4+X5tCaNsHN/mFA3lf
+         fE+XN0BO794/+zcSjCZeEgAn0/3hNdBufUeqV+h+3rS9sMhJ42lhyHLqfL6nOTA5s3Sz
+         a92w==
+X-Gm-Message-State: AOAM531ZYLjvNINTsTS3Vm/Sjgot2QrZg98GJ7EZm7koZCKg3eQh1X1n
+        9kDqiZJ0fZg7LgXT+OPCFIzt4A==
+X-Google-Smtp-Source: ABdhPJzIAm8WUFOAz5PhBWJ+LR0cHqt9Te+7GSve6DdRDT8JFwjK99lQq5ArJTTuSWYWI8WtVeWu0w==
+X-Received: by 2002:a1c:a4c6:: with SMTP id n189mr3714749wme.173.1594725352930;
+        Tue, 14 Jul 2020 04:15:52 -0700 (PDT)
 Received: from localhost.localdomain ([2.31.163.61])
-        by smtp.gmail.com with ESMTPSA id l8sm28566052wrq.15.2020.07.14.04.15.49
+        by smtp.gmail.com with ESMTPSA id l8sm28566052wrq.15.2020.07.14.04.15.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Jul 2020 04:15:50 -0700 (PDT)
+        Tue, 14 Jul 2020 04:15:52 -0700 (PDT)
 From:   Lee Jones <lee.jones@linaro.org>
 To:     dan.j.williams@intel.com, vkoul@kernel.org
 Cc:     linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
         dmaengine@vger.kernel.org, Lee Jones <lee.jones@linaro.org>,
-        Sean Wang <sean.wang@mediatek.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        linux-mediatek@lists.infradead.org
-Subject: [PATCH 01/17] dma: mediatek: mtk-hsdma: Fix formatting in 'struct mtk_hsdma_pdesc' doc block
-Date:   Tue, 14 Jul 2020 12:15:30 +0100
-Message-Id: <20200714111546.1755231-2-lee.jones@linaro.org>
+        Lennert Buytenhek <buytenh@wantstofly.org>,
+        Ryan Mallon <rmallon@gmail.com>,
+        Mika Westerberg <mika.westerberg@iki.fi>
+Subject: [PATCH 03/17] dma: ep93xx_dma: Provide some missing struct attribute documentation
+Date:   Tue, 14 Jul 2020 12:15:32 +0100
+Message-Id: <20200714111546.1755231-4-lee.jones@linaro.org>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20200714111546.1755231-1-lee.jones@linaro.org>
 References: <20200714111546.1755231-1-lee.jones@linaro.org>
@@ -77,43 +77,41 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Struct attribute names must be an exact match or the kerneldoc checker
-gets confused.
+A couple of entries were missed, causing kerneldoc to complain.
 
 Fixes the following W=1 kernel build warning(s):
 
- drivers/dma/mediatek/mtk-hsdma.c:120: warning: Function parameter or member 'desc1' not described in 'mtk_hsdma_pdesc'
- drivers/dma/mediatek/mtk-hsdma.c:120: warning: Function parameter or member 'desc2' not described in 'mtk_hsdma_pdesc'
- drivers/dma/mediatek/mtk-hsdma.c:120: warning: Function parameter or member 'desc3' not described in 'mtk_hsdma_pdesc'
- drivers/dma/mediatek/mtk-hsdma.c:120: warning: Function parameter or member 'desc4' not described in 'mtk_hsdma_pdesc'
+ drivers/dma/ep93xx_dma.c:183: warning: Function parameter or member 'slave_config' not described in 'ep93xx_dma_chan'
+ drivers/dma/ep93xx_dma.c:215: warning: Function parameter or member 'hw_synchronize' not described in 'ep93xx_dma_engine'
 
-Cc: Sean Wang <sean.wang@mediatek.com>
-Cc: Matthias Brugger <matthias.bgg@gmail.com>
-Cc: linux-mediatek@lists.infradead.org
+Cc: Lennert Buytenhek <buytenh@wantstofly.org>
+Cc: Ryan Mallon <rmallon@gmail.com>
+Cc: Mika Westerberg <mika.westerberg@iki.fi>
 Signed-off-by: Lee Jones <lee.jones@linaro.org>
 ---
- drivers/dma/mediatek/mtk-hsdma.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/dma/ep93xx_dma.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/dma/mediatek/mtk-hsdma.c b/drivers/dma/mediatek/mtk-hsdma.c
-index 4c58da7421432..f133ae8dece16 100644
---- a/drivers/dma/mediatek/mtk-hsdma.c
-+++ b/drivers/dma/mediatek/mtk-hsdma.c
-@@ -107,10 +107,10 @@ enum mtk_hsdma_vdesc_flag {
-  * struct mtk_hsdma_pdesc - This is the struct holding info describing physical
-  *			    descriptor (PD) and its placement must be kept at
-  *			    4-bytes alignment in little endian order.
-- * @desc[1-4]:		    The control pad used to indicate hardware how to
-- *			    deal with the descriptor such as source and
-- *			    destination address and data length. The maximum
-- *			    data length each pdesc can handle is 0x3f80 bytes
-+ * @desc1:		    | The control pad used to indicate hardware how to
-+ * @desc2:		    | deal with the descriptor such as source and
-+ * @desc3:		    | destination address and data length. The maximum
-+ * @desc4:		    | data length each pdesc can handle is 0x3f80 bytes
-  */
- struct mtk_hsdma_pdesc {
- 	__le32 desc1;
+diff --git a/drivers/dma/ep93xx_dma.c b/drivers/dma/ep93xx_dma.c
+index 9c8b4d35cf03d..87a246012629f 100644
+--- a/drivers/dma/ep93xx_dma.c
++++ b/drivers/dma/ep93xx_dma.c
+@@ -147,6 +147,7 @@ struct ep93xx_dma_desc {
+  *                is set via .device_config before slave operation is
+  *                prepared
+  * @runtime_ctrl: M2M runtime values for the control register.
++ * @slave_config: slave configuration
+  *
+  * As EP93xx DMA controller doesn't support real chained DMA descriptors we
+  * will have slightly different scheme here: @active points to a head of
+@@ -187,6 +188,7 @@ struct ep93xx_dma_chan {
+  * @dma_dev: holds the dmaengine device
+  * @m2m: is this an M2M or M2P device
+  * @hw_setup: method which sets the channel up for operation
++ * @hw_synchronize: synchronizes DMA channel termination to current context
+  * @hw_shutdown: shuts the channel down and flushes whatever is left
+  * @hw_submit: pushes active descriptor(s) to the hardware
+  * @hw_interrupt: handle the interrupt
 -- 
 2.25.1
 
