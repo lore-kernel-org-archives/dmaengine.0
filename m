@@ -2,251 +2,136 @@ Return-Path: <SRS0=Z0e2=AZ=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.2 required=3.0 tests=BAYES_00,
-	DATE_IN_FUTURE_06_12,DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MSGID_FROM_MTA_HEADER,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
-	USER_AGENT_GIT autolearn=unavailable autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1E4FCC433E7
-	for <dmaengine@archiver.kernel.org>; Tue, 14 Jul 2020 09:28:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 29E28C433E2
+	for <dmaengine@archiver.kernel.org>; Tue, 14 Jul 2020 11:16:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EC87F208C3
-	for <dmaengine@archiver.kernel.org>; Tue, 14 Jul 2020 09:28:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 04B0E21D90
+	for <dmaengine@archiver.kernel.org>; Tue, 14 Jul 2020 11:16:42 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=nxp.com header.i=@nxp.com header.b="cw8BMMlL"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="yBJE8KjJ"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727081AbgGNJ17 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 14 Jul 2020 05:27:59 -0400
-Received: from mail-eopbgr50075.outbound.protection.outlook.com ([40.107.5.75]:34030
-        "EHLO EUR03-VE1-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1727034AbgGNJ16 (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Tue, 14 Jul 2020 05:27:58 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=Rf9q0FSJLgvEybv09Tl0MptE7KFMXeGhzHATb9ZfQo4AHD9ipgSpNkta3894R2wYRmyAKvdFFSTLqN+X94axDegzJvJu/BJBf6s+rW5dAQlwZm670+R7KrDcNAb21oE7CjhC2LY+YTbLxzuIIhxZo1qd+I+A2akeDFqXKQ77gAXM+24zVEmBfzfP6EweHd9myNeIWq2PynAJUja9B31iBE7MEId7mRSnpVzdZ7BKmcHOnBKGeVgOB3DW5KVyIC6WMgVDaxUdqdhkUqoztzQwvyR2vO93BRVQ0KTJpOYUDLPtpsIRVnyHRTmVjZimErCKWzC7cdIDePqfe0V/3e1THw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=ofN97a3mDisiE0ZvD0xBvk5pLhZNGrCxQ+kYMd6BnfU=;
- b=BwslpmCKVnLQByfY34lElkPcz6SOnkHcRB11XyQubD/Ndv0ThrMw3eZcvECyGQB8NoMvFgGKgbmys12oGgMPHwDB3oIrp7qqTDrj9xXdgbw2GNM4nqzuJJH2gCrNsPt5a88Af2/+zXXjgFyP3W2rU4+/RV5qHuYKKHCRhNN3QDX6EMRZLe8g6JNLdptSGv0HArfSOjFstCQK6paKEsLXg0e2/RSohgW3aLYTfetC97NFTz6kmPV2/qFloW6OkCaQ4vKXwAhxse1Inl6/UyBhz8LSe+m+BDNMMyq80Ik9ufcHb55aW7qAwdfgYC79HGAdURSJbveho4/JY+9PGm2M8w==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
- header.d=nxp.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=ofN97a3mDisiE0ZvD0xBvk5pLhZNGrCxQ+kYMd6BnfU=;
- b=cw8BMMlLMYCJtaFQlihgy94ib7DHaDhvziZvdQdXREzdis3N4kh0EtVEHaazHjQe59gE/pVRfKzv23PLmT6EngDXAxUPlXxIpoSkbM76WVso8+C8YhT1FzWMSubq+UpfGReDlRw+lhI5nxGKznetkQOVnq6TmQzSdqzvpHv+RDk=
-Authentication-Results: kernel.org; dkim=none (message not signed)
- header.d=none;kernel.org; dmarc=none action=none header.from=nxp.com;
-Received: from VE1PR04MB6638.eurprd04.prod.outlook.com (2603:10a6:803:119::15)
- by VI1PR04MB6270.eurprd04.prod.outlook.com (2603:10a6:803:fb::14) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3174.21; Tue, 14 Jul
- 2020 09:27:45 +0000
-Received: from VE1PR04MB6638.eurprd04.prod.outlook.com
- ([fe80::5cc4:23a5:ca17:da7d]) by VE1PR04MB6638.eurprd04.prod.outlook.com
- ([fe80::5cc4:23a5:ca17:da7d%6]) with mapi id 15.20.3174.025; Tue, 14 Jul 2020
- 09:27:45 +0000
-From:   Robin Gong <yibin.gong@nxp.com>
-To:     vkoul@kernel.org, robh+dt@kernel.org, shawnguo@kernel.org,
-        s.hauer@pengutronix.de, festevam@gmail.com,
-        catalin.marinas@arm.com, will@kernel.org, dan.j.williams@intel.com,
-        angelo@sysam.it
-Cc:     kernel@pengutronix.de, linux-imx@nxp.com,
-        dmaengine@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org
-Subject: [PATCH v2 6/9] dt-bindings: dma: add fsl-edma3 yaml
-Date:   Wed, 15 Jul 2020 01:41:45 +0800
-Message-Id: <1594748508-22179-7-git-send-email-yibin.gong@nxp.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1594748508-22179-1-git-send-email-yibin.gong@nxp.com>
-References: <1594748508-22179-1-git-send-email-yibin.gong@nxp.com>
-Content-Type: text/plain
-X-ClientProxiedBy: SG2PR01CA0092.apcprd01.prod.exchangelabs.com
- (2603:1096:3:15::18) To VE1PR04MB6638.eurprd04.prod.outlook.com
- (2603:10a6:803:119::15)
+        id S1727867AbgGNLQl (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 14 Jul 2020 07:16:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52116 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727115AbgGNLPv (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Tue, 14 Jul 2020 07:15:51 -0400
+Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F10FCC061794
+        for <dmaengine@vger.kernel.org>; Tue, 14 Jul 2020 04:15:50 -0700 (PDT)
+Received: by mail-wr1-x442.google.com with SMTP id q5so20898692wru.6
+        for <dmaengine@vger.kernel.org>; Tue, 14 Jul 2020 04:15:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=dg33bFZj/pX2p8X7OxPHlMst/L5EH8g1IuDjLVgf1/4=;
+        b=yBJE8KjJ6NEYCDwv9wNX8ZXYdU6hPPbpWM1MaN9ieShRfvwSuASVoer1Ihb+eIWjtK
+         UzSIa+xB0bDjytLVDLErLy7rarcj4dViPg3TEFJdBaaN01b+/Y9rcoi9K13Ya/nLIj2O
+         RPJp2p3e2v9tkZ14wLXYfQjwrZNc9oDvFcQDfYiQ3FU4hz7JGF0g2YW/c6qUSTguN7Ft
+         AqgzYQccKJ9gjfHQlW+xlUJYVwn+AtRaqQPrJp3t/q7rR3jvYUGRI5X4qdC7RyEbM+Ta
+         I5KnfqbFqg2fxEQ4jkstLmZfvDzrZVwlyuSkKPROjYhcVEJ8bDDShUkBejVuRzoQsJEO
+         ytgQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=dg33bFZj/pX2p8X7OxPHlMst/L5EH8g1IuDjLVgf1/4=;
+        b=rOFRjhqU/LRjMxgXLRCGj6x3fgvJNlJXOxNTC2+I0eB7lVqExcvU/SjXAJU/bI2LwL
+         Zr+VHjZKvieaeyd7vNTPoRnZb/dD1MPUmYZOmv4tI1YDza7bbbB3XtWL/EDBjK4DrNfM
+         cxgwfEvh0ir1U0ONJX5LtIpKNIRMr4G1cb0hQwGnnUjEiPsNmOEmWz7lpK9X31mKsdBr
+         AR/HZoHxr9/pjnWV8Rw8jQJQNRF49WtgBVamFkhRrjX5oICCgqIYp+yjQqVGfJq+DDaI
+         pwTtIlHSafS7YSLIeZFFRifDUuJhRHzDMOxWvuLbZ5oc69aeA13DaNcjlS5Lu97c91yy
+         48nw==
+X-Gm-Message-State: AOAM532mRBE8OACkp/dNqsGWdvTr4ZpwjdrIRUTDactj3hlqSvdptUWt
+        S78E+1MkfelGJCbYEvCo596awA==
+X-Google-Smtp-Source: ABdhPJyc/Cos2QXFAWOsJJhYX0QbQtXR3o/JuBqfk4bb+hio6dotMso+h9vRFegmjWcVlmEDFyXRFA==
+X-Received: by 2002:a5d:43d2:: with SMTP id v18mr4597136wrr.196.1594725349633;
+        Tue, 14 Jul 2020 04:15:49 -0700 (PDT)
+Received: from localhost.localdomain ([2.31.163.61])
+        by smtp.gmail.com with ESMTPSA id l8sm28566052wrq.15.2020.07.14.04.15.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 14 Jul 2020 04:15:48 -0700 (PDT)
+From:   Lee Jones <lee.jones@linaro.org>
+To:     dan.j.williams@intel.com, vkoul@kernel.org
+Cc:     linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        dmaengine@vger.kernel.org, Lee Jones <lee.jones@linaro.org>
+Subject: [PATCH 00/17] Rid W=1 warnings in DMA
+Date:   Tue, 14 Jul 2020 12:15:29 +0100
+Message-Id: <20200714111546.1755231-1-lee.jones@linaro.org>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-Received: from robin-OptiPlex-790.ap.freescale.net (119.31.174.67) by SG2PR01CA0092.apcprd01.prod.exchangelabs.com (2603:1096:3:15::18) with Microsoft SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256) id 15.20.3195.17 via Frontend Transport; Tue, 14 Jul 2020 09:27:40 +0000
-X-Mailer: git-send-email 2.7.4
-X-Originating-IP: [119.31.174.67]
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-HT: Tenant
-X-MS-Office365-Filtering-Correlation-Id: 9fc8d088-fbf8-4793-5a8f-08d827d82a2d
-X-MS-TrafficTypeDiagnostic: VI1PR04MB6270:
-X-MS-Exchange-Transport-Forked: True
-X-Microsoft-Antispam-PRVS: <VI1PR04MB6270306D64C55A91007EB57489610@VI1PR04MB6270.eurprd04.prod.outlook.com>
-X-MS-Oob-TLC-OOBClassifiers: OLM:3513;
-X-MS-Exchange-SenderADCheck: 1
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: o1qlbYCNWTv1/itaP9TuLEWG8Hlgvfm/zQ7AX1lFgaBm9tf6hy2crvr3lgIrYY0G3gVkYc7DA91NSgTEpNcKZqskyMpGhAYIeXczPZa0TQipx/qZiRaGwGRJmMkyTzNo2BnDihfxrFJFFgFDLB4WsGJVH8kW3JKP3iN+pDShf9qhANR0o+m9I7ld2vufUYEUvDGHN1TkMRvXzo55q0eOTSs3p1ui8zzhy8iL3lS04QfhDk+dxyWLA0YmwPju1DAwrkPTrsKBMyih4D+wctffJiEDM+8iAM5fQirZKhGtC43IJGhtDKXIwO9ukUPIuRkb+fqsJHyZ4HH9WV7yElIgKZsvtwKxzWdNf5GJ+UVsdGjqUAd1aKcFeW4rqOhsUVAqswJMGVbvwSZ1Il9IEpyAWw==
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:VE1PR04MB6638.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFTY:;SFS:(4636009)(39860400002)(366004)(396003)(136003)(346002)(376002)(66946007)(6486002)(6512007)(66476007)(66556008)(8936002)(4326008)(86362001)(966005)(2906002)(6506007)(83380400001)(478600001)(36756003)(16526019)(956004)(2616005)(186003)(26005)(5660300002)(8676002)(52116002)(7416002)(316002);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData: doSfS9r6F2djQCPSNeeffu/GFIB838wq8Ij4iOk1VisMg7WyAhbPwbzIB4WSnJ6741dONIC0UCd7VOoxKd0N6LXL69GHCY+l1Xi5yZoElh6oA9xHfoSWZfuD5C+fPADZ6mvU16fbl3lMLZhfEKO2fBB3FFbeY1dXvIWxUSPIjuPr0cxYsjMG5/L6bWuU1UAXF1ARkJfvHrPKwXgL3SrgPftO+f481qJDaU8BuwfOJXtabVeb8pBi+sG2D9x4vxucVFERiPHS5xyi2xTgNT5gs2bi9zWDPsCs6oFEx02wFt3vhP9VUvJ3diPI9YA43jdqwTpztVYokPZXLy17huFW0Um2MbUv7OIw7d6PlY/MuqnShQ3Sm1X2KxG7+KQrNRAAewSyNCzyBhzlaTjGDhOqxYFxFY6rIdCmW+xj+Mdo+RCX7IfgrD2n2WPSwmRVZTVJzKgJjhnNiKg29YQymJbGJtp6zLeSJPE0OxJgJP5a974=
-X-OriginatorOrg: nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 9fc8d088-fbf8-4793-5a8f-08d827d82a2d
-X-MS-Exchange-CrossTenant-AuthSource: VE1PR04MB6638.eurprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Jul 2020 09:27:45.0387
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: opAgyVhKZBK2Rj4gnuFnF6XVCNezKBd73g58xlWFBTP4P7Zilb7ohk2ixSxFfpO0Z7T2gAEK7rZEuszWuUkPjg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: VI1PR04MB6270
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Add device binding doc for fsl-edma3 driver.
+This set is part of a larger effort attempting to clean-up W=1
+kernel builds, which are currently overwhelmingly riddled with
+niggly little warnings.
 
-Signed-off-by: Robin Gong <yibin.gong@nxp.com>
----
- .../devicetree/bindings/dma/nxp,fsl-edma3.yaml     | 134 +++++++++++++++++++++
- 1 file changed, 134 insertions(+)
- create mode 100644 Documentation/devicetree/bindings/dma/nxp,fsl-edma3.yaml
+After these patches are applied, the build system no longer
+complains about any W=0 nor W=1 level warnings in drivers/dma.
 
-diff --git a/Documentation/devicetree/bindings/dma/nxp,fsl-edma3.yaml b/Documentation/devicetree/bindings/dma/nxp,fsl-edma3.yaml
-new file mode 100644
-index 00000000..ebdad90
---- /dev/null
-+++ b/Documentation/devicetree/bindings/dma/nxp,fsl-edma3.yaml
-@@ -0,0 +1,134 @@
-+# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/dma/nxp,fsl-edma3.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: NXP eDMA3 Controller
-+
-+maintainers:
-+  - Robin Gong <yibin.gong@nxp.com>
-+
-+allOf:
-+  - $ref: "dma-controller.yaml#"
-+
-+properties:
-+  compatible:
-+    items:
-+      - enum:
-+          - fsl,imx8qm-edma  # i.mx8qm/qxp
-+
-+  reg:
-+    minItems: 2
-+    maxItems: 32
-+
-+  interrupts:
-+    minItems: 2
-+    maxItems: 32
-+
-+  interrupt-names:
-+    minItems: 2
-+    maxItems: 32
-+    items:
-+      - pattern: "^edma[0-2]-chan([0-9]|[1-2][0-9]|3[0-1])-tx|rx+$"
-+      - pattern: "^edma[0-2]-chan([0-9]|[1-2][0-9]|3[0-1])-tx|rx+$"
-+      - pattern: "^edma[0-2]-chan([0-9]|[1-2][0-9]|3[0-1])-tx|rx+$"
-+      - pattern: "^edma[0-2]-chan([0-9]|[1-2][0-9]|3[0-1])-tx|rx+$"
-+      - pattern: "^edma[0-2]-chan([0-9]|[1-2][0-9]|3[0-1])-tx|rx+$"
-+      - pattern: "^edma[0-2]-chan([0-9]|[1-2][0-9]|3[0-1])-tx|rx+$"
-+      - pattern: "^edma[0-2]-chan([0-9]|[1-2][0-9]|3[0-1])-tx|rx+$"
-+      - pattern: "^edma[0-2]-chan([0-9]|[1-2][0-9]|3[0-1])-tx|rx+$"
-+
-+  '#dma-cells':
-+    const: 3
-+    description: |
-+      The 1st cell specifies the channel ID.
-+
-+      The 2nd cell specifies the channel priority.
-+
-+      The 3rd cell specifies the channel attributes:
-+        bit0 transmit or receive.
-+          0 = transmit
-+          1 = receive
-+        bit1 local or remote access.
-+          0 = local
-+          1 = remote
-+        bit2 dualfifo case or not(only in Audio cyclic now).
-+          0 = not dual fifo case
-+          1 =  dualfifo case.
-+
-+  dma-channels:
-+    minimum: 2
-+    maximum: 32
-+
-+  power-domains:
-+    minItems: 2
-+    maxItems: 32
-+
-+  power-domain-names:
-+    minItems: 2
-+    maxItems: 32
-+    items:
-+      - pattern: "^edma[0-2]-chan([0-9]|[1-2][0-9]|3[0-1])+$"
-+      - pattern: "^edma[0-2]-chan([0-9]|[1-2][0-9]|3[0-1])+$"
-+      - pattern: "^edma[0-2]-chan([0-9]|[1-2][0-9]|3[0-1])+$"
-+      - pattern: "^edma[0-2]-chan([0-9]|[1-2][0-9]|3[0-1])+$"
-+      - pattern: "^edma[0-2]-chan([0-9]|[1-2][0-9]|3[0-1])+$"
-+      - pattern: "^edma[0-2]-chan([0-9]|[1-2][0-9]|3[0-1])+$"
-+      - pattern: "^edma[0-2]-chan([0-9]|[1-2][0-9]|3[0-1])+$"
-+      - pattern: "^edma[0-2]-chan([0-9]|[1-2][0-9]|3[0-1])+$"
-+
-+required:
-+  - compatible
-+  - reg
-+  - interrupts
-+  - interrupt-names
-+  - '#dma-cells'
-+  - dma-channels
-+  - power-domains
-+  - power-domain-names
-+
-+additionalProperties: false
-+
-+examples:
-+  - |
-+    #include <dt-bindings/firmware/imx/rsrc.h>
-+    #include <dt-bindings/interrupt-controller/arm-gic.h>
-+
-+    edma2: dma-controller@5a1f0000 {
-+        compatible = "fsl,imx8qm-edma";
-+        reg = <0x5a280000 0x10000>, /* channel8 UART0 rx */
-+              <0x5a290000 0x10000>, /* channel9 UART0 tx */
-+              <0x5a2a0000 0x10000>, /* channel10 UART1 rx */
-+              <0x5a2b0000 0x10000>, /* channel11 UART1 tx */
-+              <0x5a2c0000 0x10000>, /* channel12 UART2 rx */
-+              <0x5a2d0000 0x10000>, /* channel13 UART2 tx */
-+              <0x5a2e0000 0x10000>, /* channel14 UART3 rx */
-+              <0x5a2f0000 0x10000>; /* channel15 UART3 tx */
-+        #dma-cells = <3>;
-+        dma-channels = <8>;
-+        interrupts = <GIC_SPI 434 IRQ_TYPE_LEVEL_HIGH>,
-+                     <GIC_SPI 435 IRQ_TYPE_LEVEL_HIGH>,
-+                     <GIC_SPI 436 IRQ_TYPE_LEVEL_HIGH>,
-+                     <GIC_SPI 437 IRQ_TYPE_LEVEL_HIGH>,
-+                     <GIC_SPI 438 IRQ_TYPE_LEVEL_HIGH>,
-+                     <GIC_SPI 439 IRQ_TYPE_LEVEL_HIGH>,
-+                     <GIC_SPI 440 IRQ_TYPE_LEVEL_HIGH>,
-+                     <GIC_SPI 441 IRQ_TYPE_LEVEL_HIGH>;
-+       interrupt-names = "edma2-chan8-rx", "edma2-chan9-tx",
-+                         "edma2-chan10-rx", "edma2-chan11-tx",
-+                         "edma2-chan12-rx", "edma2-chan13-tx",
-+                         "edma2-chan14-rx", "edma2-chan15-tx";
-+       power-domains = <&pd IMX_SC_R_DMA_2_CH8>,
-+                       <&pd IMX_SC_R_DMA_2_CH9>,
-+                       <&pd IMX_SC_R_DMA_2_CH10>,
-+                       <&pd IMX_SC_R_DMA_2_CH11>,
-+                       <&pd IMX_SC_R_DMA_2_CH12>,
-+                       <&pd IMX_SC_R_DMA_2_CH13>,
-+                       <&pd IMX_SC_R_DMA_2_CH14>,
-+                       <&pd IMX_SC_R_DMA_2_CH15>;
-+       power-domain-names = "edma2-chan8", "edma2-chan9",
-+                            "edma2-chan10", "edma2-chan11",
-+                            "edma2-chan12", "edma2-chan13",
-+                            "edma2-chan14", "edma2-chan15";
-+    };
+Hurrah!
+
+Lee Jones (17):
+  dma: mediatek: mtk-hsdma: Fix formatting in 'struct mtk_hsdma_pdesc'
+    doc block
+  dma: of-dma: Fix misspellings/formatting issues in some function
+    headers
+  dma: ep93xx_dma: Provide some missing struct attribute documentation
+  dma: mmp_pdma: Demote obvious misuse of kerneldoc to standard comment
+    blocks
+  dma: pl330: Demote obvious misuse of kerneldoc to standard comment
+    block
+  dma: ste_dma40: Supply 2 missing struct attribute descriptions
+  dma: altera-msgdma: Fix struct documentation blocks
+  dma: at_hdmac: Repair parameter misspelling and demote non-kerneldoc
+    headers
+  dma: sun4i-dma: Demote obvious misuse of kerneldoc to standard comment
+    blocks
+  dma: fsl-qdma: Fix 'struct fsl_qdma_format' formatting issue
+  dma: imx-sdma: Correct formatting issue and provide 2 new descriptions
+  dma: iop-adma: Function parameter documentation must adhere to correct
+    formatting
+  dma: nbpfaxi: Provide some missing attribute docs and split out slave
+    info
+  dma: xgene-dma: Provide descriptions for 'dev' and 'clk' in device's
+    ddata
+  dma: mv_xor_v2: Supply some missing 'struct mv_xor_v2_device'
+    attribute docs
+  dma: ioat: init: Correct misspelling of function parameter 'c' for
+    channel
+  dma: ioat: dma: Fix some parameter misspelling and provide description
+    for phys_complete
+
+ drivers/dma/altera-msgdma.c      |  6 ++++--
+ drivers/dma/at_hdmac.c           |  6 +++---
+ drivers/dma/ep93xx_dma.c         |  2 ++
+ drivers/dma/fsl-qdma.c           |  2 +-
+ drivers/dma/imx-sdma.c           |  4 +++-
+ drivers/dma/ioat/dma.c           |  7 ++++---
+ drivers/dma/ioat/init.c          |  2 +-
+ drivers/dma/iop-adma.c           |  3 +--
+ drivers/dma/mediatek/mtk-hsdma.c |  8 ++++----
+ drivers/dma/mmp_pdma.c           |  6 +++---
+ drivers/dma/mv_xor_v2.c          |  6 +++++-
+ drivers/dma/nbpfaxi.c            | 13 ++++++++++---
+ drivers/dma/of-dma.c             |  8 ++++----
+ drivers/dma/pl330.c              |  2 +-
+ drivers/dma/ste_dma40.c          |  2 ++
+ drivers/dma/sun4i-dma.c          | 12 ++++++------
+ drivers/dma/xgene-dma.c          |  2 ++
+ 17 files changed, 56 insertions(+), 35 deletions(-)
+
 -- 
-2.7.4
+2.25.1
 
