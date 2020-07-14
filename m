@@ -7,63 +7,64 @@ X-Spam-Status: No, score=-13.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
 	USER_AGENT_GIT autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0BB68C433E8
-	for <dmaengine@archiver.kernel.org>; Tue, 14 Jul 2020 11:17:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E3E73C433E2
+	for <dmaengine@archiver.kernel.org>; Tue, 14 Jul 2020 11:18:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D11362220C
-	for <dmaengine@archiver.kernel.org>; Tue, 14 Jul 2020 11:17:00 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BCB992220D
+	for <dmaengine@archiver.kernel.org>; Tue, 14 Jul 2020 11:18:44 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="sx/RKyQ9"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="lRnHD6+n"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727965AbgGNLRA (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 14 Jul 2020 07:17:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52248 "EHLO
+        id S1727898AbgGNLSm (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 14 Jul 2020 07:18:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52270 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726041AbgGNLQk (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Tue, 14 Jul 2020 07:16:40 -0400
-Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 08825C08C5DE
-        for <dmaengine@vger.kernel.org>; Tue, 14 Jul 2020 04:15:53 -0700 (PDT)
-Received: by mail-wr1-x442.google.com with SMTP id b6so20886296wrs.11
-        for <dmaengine@vger.kernel.org>; Tue, 14 Jul 2020 04:15:52 -0700 (PDT)
+        with ESMTP id S1727899AbgGNLQm (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Tue, 14 Jul 2020 07:16:42 -0400
+Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8D7ECC08C5F4
+        for <dmaengine@vger.kernel.org>; Tue, 14 Jul 2020 04:15:58 -0700 (PDT)
+Received: by mail-wr1-x444.google.com with SMTP id b6so20886752wrs.11
+        for <dmaengine@vger.kernel.org>; Tue, 14 Jul 2020 04:15:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=8AHNAOGxoWBX3bXCs6Dh5/0gSXTq0LMXanlZCN8dNwA=;
-        b=sx/RKyQ9jzgAwx3JUl7dyzFreyfVZjEL/DUHRuGpwSBUKhEE64OoYSqxjGFVirc7Gk
-         sryFAxXibssYup3dVrT2uC4aq0mcmalkbq93JYSCp+BwRLD89Pv+5kz4oOojBTVD6WrI
-         ahvJMu6FY2XT9T7OraeUW0dHR9cOdvO/2/IlNgYTkZD69LmCXDobV3qC8Noc5zlOMwgv
-         c8k9E73fAGNjkpPwVPp4//NZ/4D4LjQ+03Bry7q7c7JxzRjVhem6LUJ20JsV5NOal6eh
-         /ghvlJF4oOsqxuRZCbzwXiSGso3UnKH7O7X45+VT50Cn4Ete91et4bDQ6N+ZMBcH0aiX
-         q0lw==
+        bh=xDspo//ZGGv62/k8vhH8b8dLXko1WA1DYqLJUY7Z0pU=;
+        b=lRnHD6+n0Kjyezcw88EVB0+8py6DiaAYhCbxlABYw2m8o9Zqwb0e0UYsTQn6UzdoyM
+         Ai/Lwf+avt/HMmYhCR2/TG+yz4ONmkQc2lUl56ky4FIDgvtg1bdsR8ab93IYufj3BDun
+         i0WFD7NuGJNJDoZQohH34gqSOOdzQKa+D1J8sCzkxCvJV+Jwbn1/J2Scn0vFBzHdFMU4
+         yHlh6N9RzslpQaPG35aqpOqxYCtYF2Q9jqYGfdLmmosobj45f6BOMGXsaHWrN8m60dsA
+         vBG+Cnm/FE0W+t1lyKdF9znSpMDeukw6cl5PVzqvlV6+4bcIri+v2g7Y5SvFnTWu1qFI
+         jtFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=8AHNAOGxoWBX3bXCs6Dh5/0gSXTq0LMXanlZCN8dNwA=;
-        b=NW3iyBEs9ES2oxQck7VDLX2y16qlVSVi/LCrhRY1t6JIw8m1tUSvzrDSoJBoPKgYlL
-         VfLdC7/7aT+otPqqIQaXJZlYPPD3xRAdrQyRLnfjDdVQC7943RYZXD3XoWKlwyI2gpWe
-         ALm/tWaZThZLQJNTWi2JRyb5vsbSxUW8/y73AsS5cEmiujSVS88v5yBs79nlvr1Q567C
-         5S2VM5FGS1IsjeL5ta/Yra16CgOUnUSRdi1iPIWFPhOdM0Br3JRI6GSMVizpi4AE1vXM
-         3lqs/oXnC4vpz2hgx3989dyDQmG72uqAx1ezIdnA3vAH/LKGHdKm9NWHTdK6hygO1eAL
-         SFeA==
-X-Gm-Message-State: AOAM5319g8UMcOKQdpmgZNyJGeE4TdpiHh62gHtSx4WkZk5KBUOs7Fm1
-        IVsRtSA+B3LAyFPrkbDI9rOpDg==
-X-Google-Smtp-Source: ABdhPJz+RcOyEJB9HyBPqs6LMXrDgN6dj+1DlUqwXuNalPd8xjE66KHEGwQS5Q1S0C8zFN0qvlHVrg==
-X-Received: by 2002:a05:6000:cf:: with SMTP id q15mr4734329wrx.203.1594725351797;
-        Tue, 14 Jul 2020 04:15:51 -0700 (PDT)
+        bh=xDspo//ZGGv62/k8vhH8b8dLXko1WA1DYqLJUY7Z0pU=;
+        b=Ci0U6ykrymbip/82IL9upFixHN2UcVIz6acm4QWQ0KrP+On0JFBUv9Uew6PB6i2EKt
+         c0UiOmPU5iJBxh5jTDthup/PKKkhp1Mt4p75YhIsSpnfZzAXmuFx2oTRNoc5KqHiJPlW
+         TWLJ8ZaoxGu68f4iZOxdnspn2HYt6A6y3jNqtrPN60POZHA9Qc5dPCMuHiIgkiTYNqQp
+         1UuDYmU6FHKmIfthDjmopDXHJXxG6IaLwsBU89Q6OXEWL0hO8ZaF0zAH0KZ+sRiB7tLF
+         lF+n1o5ld6xdVoOAnGwcFZFP5VlsPO0UCF4klgnF0S5Anihi0WMBxfIjrC2IQLTPwp73
+         SJuQ==
+X-Gm-Message-State: AOAM5328QT8c0SlAmRZr++U2tqyMk40NmPQ60YlUbP68amF68AmrsYFM
+        P68X7x6BPUPP0ctbQRPegdHFiw==
+X-Google-Smtp-Source: ABdhPJzIzSvAOB3xgad3Sen6dlJzxBYaenPpru9T4eTefZSfzMtOdkfpSmMn9BuJRx6p9P4nOKO/4A==
+X-Received: by 2002:a5d:6a90:: with SMTP id s16mr4580377wru.8.1594725357328;
+        Tue, 14 Jul 2020 04:15:57 -0700 (PDT)
 Received: from localhost.localdomain ([2.31.163.61])
-        by smtp.gmail.com with ESMTPSA id l8sm28566052wrq.15.2020.07.14.04.15.50
+        by smtp.gmail.com with ESMTPSA id l8sm28566052wrq.15.2020.07.14.04.15.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Jul 2020 04:15:51 -0700 (PDT)
+        Tue, 14 Jul 2020 04:15:56 -0700 (PDT)
 From:   Lee Jones <lee.jones@linaro.org>
 To:     dan.j.williams@intel.com, vkoul@kernel.org
 Cc:     linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        dmaengine@vger.kernel.org, Lee Jones <lee.jones@linaro.org>
-Subject: [PATCH 02/17] dma: of-dma: Fix misspellings/formatting issues in some function headers
-Date:   Tue, 14 Jul 2020 12:15:31 +0100
-Message-Id: <20200714111546.1755231-3-lee.jones@linaro.org>
+        dmaengine@vger.kernel.org, Lee Jones <lee.jones@linaro.org>,
+        Stefan Roese <sr@denx.de>
+Subject: [PATCH 07/17] dma: altera-msgdma: Fix struct documentation blocks
+Date:   Tue, 14 Jul 2020 12:15:36 +0100
+Message-Id: <20200714111546.1755231-8-lee.jones@linaro.org>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20200714111546.1755231-1-lee.jones@linaro.org>
 References: <20200714111546.1755231-1-lee.jones@linaro.org>
@@ -74,61 +75,72 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
+Fix some misspelling/description issues, demote non-kerneldoc header
+to standard comment block and provide a new description for
+msgdma_desc_config()'s 'stride' parameter.
+
 Fixes the following W=1 kernel build warning(s):
 
- drivers/dma/of-dma.c:57: warning: Function parameter or member 'ofdma' not described in 'of_dma_router_xlate'
- drivers/dma/of-dma.c:57: warning: Excess function parameter 'of_dma' description in 'of_dma_router_xlate'
- drivers/dma/of-dma.c:107: warning: Function parameter or member 'data' not described in 'of_dma_controller_register'
- drivers/dma/of-dma.c:308: warning: Function parameter or member 'ofdma' not described in 'of_dma_simple_xlate'
- drivers/dma/of-dma.c:308: warning: Excess function parameter 'of_dma' description in 'of_dma_simple_xlate'
- drivers/dma/of-dma.c:338: warning: Function parameter or member 'ofdma' not described in 'of_dma_xlate_by_chan_id'
- drivers/dma/of-dma.c:338: warning: Excess function parameter 'of_dma' description in 'of_dma_xlate_by_chan_id'
+ drivers/dma/altera-msgdma.c:163: warning: Function parameter or member 'node' not described in 'msgdma_sw_desc'
+ drivers/dma/altera-msgdma.c:163: warning: Function parameter or member 'tx_list' not described in 'msgdma_sw_desc'
+ drivers/dma/altera-msgdma.c:197: warning: Function parameter or member 'lock' not described in 'msgdma_device'
+ drivers/dma/altera-msgdma.c:197: warning: Function parameter or member 'dev' not described in 'msgdma_device'
+ drivers/dma/altera-msgdma.c:197: warning: Function parameter or member 'irq_tasklet' not described in 'msgdma_device'
+ drivers/dma/altera-msgdma.c:197: warning: Function parameter or member 'pending_list' not described in 'msgdma_device'
+ drivers/dma/altera-msgdma.c:197: warning: Function parameter or member 'free_list' not described in 'msgdma_device'
+ drivers/dma/altera-msgdma.c:197: warning: Function parameter or member 'active_list' not described in 'msgdma_device'
+ drivers/dma/altera-msgdma.c:197: warning: Function parameter or member 'done_list' not described in 'msgdma_device'
+ drivers/dma/altera-msgdma.c:197: warning: Function parameter or member 'desc_free_cnt' not described in 'msgdma_device'
+ drivers/dma/altera-msgdma.c:197: warning: Function parameter or member 'idle' not described in 'msgdma_device'
+ drivers/dma/altera-msgdma.c:197: warning: Function parameter or member 'dmadev' not described in 'msgdma_device'
+ drivers/dma/altera-msgdma.c:197: warning: Function parameter or member 'dmachan' not described in 'msgdma_device'
+ drivers/dma/altera-msgdma.c:197: warning: Function parameter or member 'hw_desq' not described in 'msgdma_device'
+ drivers/dma/altera-msgdma.c:197: warning: Function parameter or member 'sw_desq' not described in 'msgdma_device'
+ drivers/dma/altera-msgdma.c:197: warning: Function parameter or member 'npendings' not described in 'msgdma_device'
+ drivers/dma/altera-msgdma.c:197: warning: Function parameter or member 'slave_cfg' not described in 'msgdma_device'
+ drivers/dma/altera-msgdma.c:197: warning: Function parameter or member 'irq' not described in 'msgdma_device'
+ drivers/dma/altera-msgdma.c:197: warning: Function parameter or member 'csr' not described in 'msgdma_device'
+ drivers/dma/altera-msgdma.c:197: warning: Function parameter or member 'desc' not described in 'msgdma_device'
+ drivers/dma/altera-msgdma.c:197: warning: Function parameter or member 'resp' not described in 'msgdma_device'
+ drivers/dma/altera-msgdma.c:265: warning: Function parameter or member 'stride' not described in 'msgdma_desc_config'
 
+Cc: Stefan Roese <sr@denx.de>
 Signed-off-by: Lee Jones <lee.jones@linaro.org>
 ---
- drivers/dma/of-dma.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/dma/altera-msgdma.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/dma/of-dma.c b/drivers/dma/of-dma.c
-index b2c2b5e8093cf..863f2aaf5c8f7 100644
---- a/drivers/dma/of-dma.c
-+++ b/drivers/dma/of-dma.c
-@@ -46,7 +46,7 @@ static struct of_dma *of_dma_find_controller(struct of_phandle_args *dma_spec)
- /**
-  * of_dma_router_xlate - translation function for router devices
-  * @dma_spec:	pointer to DMA specifier as found in the device tree
-- * @of_dma:	pointer to DMA controller data (router information)
-+ * @ofdma:	pointer to DMA controller data (router information)
-  *
-  * The function creates new dma_spec to be passed to the router driver's
-  * of_dma_route_allocate() function to prepare a dma_spec which will be used
-@@ -92,7 +92,7 @@ static struct dma_chan *of_dma_router_xlate(struct of_phandle_args *dma_spec,
-  * @np:			device node of DMA controller
-  * @of_dma_xlate:	translation function which converts a phandle
-  *			arguments list into a dma_chan structure
-- * @data		pointer to controller specific data to be used by
-+ * @data:		pointer to controller specific data to be used by
-  *			translation function
-  *
-  * Returns 0 on success or appropriate errno value on error.
-@@ -295,7 +295,7 @@ EXPORT_SYMBOL_GPL(of_dma_request_slave_channel);
- /**
-  * of_dma_simple_xlate - Simple DMA engine translation function
-  * @dma_spec:	pointer to DMA specifier as found in the device tree
-- * @of_dma:	pointer to DMA controller data
-+ * @ofdma:	pointer to DMA controller data
-  *
-  * A simple translation function for devices that use a 32-bit value for the
-  * filter_param when calling the DMA engine dma_request_channel() function.
-@@ -323,7 +323,7 @@ EXPORT_SYMBOL_GPL(of_dma_simple_xlate);
- /**
-  * of_dma_xlate_by_chan_id - Translate dt property to DMA channel by channel id
-  * @dma_spec:	pointer to DMA specifier as found in the device tree
-- * @of_dma:	pointer to DMA controller data
-+ * @ofdma:	pointer to DMA controller data
-  *
-  * This function can be used as the of xlate callback for DMA driver which wants
-  * to match the channel based on the channel id. When using this xlate function
+diff --git a/drivers/dma/altera-msgdma.c b/drivers/dma/altera-msgdma.c
+index 539e785039cac..321ac3a7aa418 100644
+--- a/drivers/dma/altera-msgdma.c
++++ b/drivers/dma/altera-msgdma.c
+@@ -153,7 +153,8 @@ struct msgdma_extended_desc {
+  * struct msgdma_sw_desc - implements a sw descriptor
+  * @async_tx: support for the async_tx api
+  * @hw_desc: assosiated HW descriptor
+- * @free_list: node of the free SW descriprots list
++ * @node: node to move from the free list to the tx list
++ * @tx_list: transmit list node
+  */
+ struct msgdma_sw_desc {
+ 	struct dma_async_tx_descriptor async_tx;
+@@ -162,7 +163,7 @@ struct msgdma_sw_desc {
+ 	struct list_head tx_list;
+ };
+ 
+-/**
++/*
+  * struct msgdma_device - DMA device structure
+  */
+ struct msgdma_device {
+@@ -258,6 +259,7 @@ static void msgdma_free_desc_list(struct msgdma_device *mdev,
+  * @dst: Destination buffer address
+  * @src: Source buffer address
+  * @len: Transfer length
++ * @stride: Read/write stride value to set
+  */
+ static void msgdma_desc_config(struct msgdma_extended_desc *desc,
+ 			       dma_addr_t dst, dma_addr_t src, size_t len,
 -- 
 2.25.1
 
