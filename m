@@ -7,64 +7,72 @@ X-Spam-Status: No, score=-13.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
 	USER_AGENT_GIT autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3D2B7C433EA
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 54A0EC433E7
 	for <dmaengine@archiver.kernel.org>; Tue, 14 Jul 2020 11:20:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1054D21D90
+	by mail.kernel.org (Postfix) with ESMTP id 2FB002220F
 	for <dmaengine@archiver.kernel.org>; Tue, 14 Jul 2020 11:20:30 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="pbKjjlMz"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="b1sAb44W"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727858AbgGNLUU (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        id S1727971AbgGNLUU (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
         Tue, 14 Jul 2020 07:20:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52282 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52264 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728157AbgGNLSr (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Tue, 14 Jul 2020 07:18:47 -0400
-Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E7F6C08E8AA
-        for <dmaengine@vger.kernel.org>; Tue, 14 Jul 2020 04:16:09 -0700 (PDT)
-Received: by mail-wr1-x441.google.com with SMTP id f2so20826588wrp.7
-        for <dmaengine@vger.kernel.org>; Tue, 14 Jul 2020 04:16:09 -0700 (PDT)
+        with ESMTP id S1727858AbgGNLSm (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Tue, 14 Jul 2020 07:18:42 -0400
+Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D28DEC08E81E
+        for <dmaengine@vger.kernel.org>; Tue, 14 Jul 2020 04:16:05 -0700 (PDT)
+Received: by mail-wr1-x442.google.com with SMTP id z13so20887461wrw.5
+        for <dmaengine@vger.kernel.org>; Tue, 14 Jul 2020 04:16:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=NWVbeI3JQ64+Db8G4vi0TII3jbdljajswVKqeX2AaNk=;
-        b=pbKjjlMz+yuId3GnPdr+6e7242L15C8zpZ8cI32mV6xd6AgENPK00kT71vMS4zOEUQ
-         BZiKrF66/XjLDH28yMZs8xHjFIparf2OgetsOT625Mif3xJ1q8QNLhyQtuK7TGfZUNIr
-         CCj18IDVn978g2dBSbIwr5b38Pq9EwmlS120Y77bC8ePRFzM8Q56ZfUktL7RchA2vkT5
-         u5WCyG9mExt5AiqtFF84SoZFQZZshdlOkMoEgh6kK8rhIdvqnnVvWrj3OTAyPe9rWQLc
-         ErVVxOlolsFySUFnE8kq65UQFNT1RnKfPw0BhzkytqrRJQZNY7Rt5ThFUPrGUW6rf9Ea
-         d7wA==
+        bh=z/zoKcrmx2IW2qZYN8v07zqfWyovJdKlsFhRtVJoj8Y=;
+        b=b1sAb44WGmZFCdVAFpOnOB6gjm1ZuIfnH5qfH6jEl7r1V5Ot0bj2a/haai/zLlbGwZ
+         jyft/gXpKRKwhcAmBF6N1E3tVUv3FpyxaQDJbEMA+kzxFOdi5i/iC+SuVdGwUK3S7lkC
+         JCMyVtDbRUfFVhAZkbBSmtUupdpqKKxXkUPJTaoOYPu5dPFvyg6Blg9WrDMzB/cseVM+
+         rhmyyRlfWyztEMer+eWo6n3Do/AXv5WhKdZaS+4tgq6H2R8pELz1fQ3yZJcDDG53AKI8
+         o6mlh08h6jJhiGMzg1aEP83hrtSL2JwTrrM/lGjoC5Bpn1y65cxU+TAsW9GNOLI5/kNh
+         tUSw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=NWVbeI3JQ64+Db8G4vi0TII3jbdljajswVKqeX2AaNk=;
-        b=ME7dMnCwAv06RtcTydQuE/XXgvLwI5NftnNzENfXh9HPtkQ0W5so4u2wV9CU5XSzVT
-         7g2yhxrZ6FHSGmeKWLDJjauOu6z6hCo/nhdg9gwW7V0A8vmE/TQRSiaCkhVqbmDbWNpY
-         T7th0HvbN2xlWvRpmUXKviiLgW+VmDDyuo8KUHV+EWi0NK+mLu3LFeb8eYd0nJa+sirM
-         /+hJkY5Uk+Be3cDACuX7xCNcZqoDFep9Iaxaibjrlub1BUXq5LVhrITfvlqb1cguiAkp
-         8sjE66MqebxRqelAvf5x2S30BmwjmnKh9czNoSqC4PZY9GZCyEL7aiPRPeNmGGf47A77
-         4gvA==
-X-Gm-Message-State: AOAM532R5AOWr02t4HvrLlnIp4YCZjyjSL78EjW5NwXTxE8ZkwvkFOPy
-        6THbeKnZoAGhUhgxtkg5JZgKdQ==
-X-Google-Smtp-Source: ABdhPJy/Z9vM5I8MKYqwiF/ImZ+zlunr0KhgAAKurSmz0v7+QqjmsliobL9ygI2dqTBBUF+btm1W9g==
-X-Received: by 2002:a5d:4a84:: with SMTP id o4mr4756252wrq.104.1594725368354;
-        Tue, 14 Jul 2020 04:16:08 -0700 (PDT)
+        bh=z/zoKcrmx2IW2qZYN8v07zqfWyovJdKlsFhRtVJoj8Y=;
+        b=C/qmRVplk8FX5cMggCBQU0MrqgUBYo1suMjoCKJwVpASeO6eivHSeAHIjpNUc6chsC
+         CxkBF5P7mScdbc5KIEfu2jOO4bN/wKSyNqL+3FTjdiG8XWOZAp10mBOX69USHwiUrwrO
+         za+/pod+oNmK2SpdpAmaipg3Qe0IwXi/Ys/E5SPJm4n8eneRwWHUYH1fMKp25TZuHyKr
+         KxVg10k+1zJGjQ9XSvjLvEImyY8wn1oOsRDbZwX6LKap0JPEHGIPSkIgMKVEMzRGyrFf
+         Sfk9Nto0PzbKUCiEmuD6+L24sD4Cc4pFDXl64sTimSKHsA5SfYz3uK7Y4wrBS16XnOyZ
+         qCTg==
+X-Gm-Message-State: AOAM5313L2qLWKtuvqU37+RtgCSB0iCCptIyO9r4pigLk2IKHDElCfS+
+        c8U9LpH15aBG6VZMSs37svL/8Q==
+X-Google-Smtp-Source: ABdhPJyAUbTKcS5Sll5KxkNhZWdfScOwNs01z+UT0g/DeH+FLBo8B9AbZI4twgzB3lN+ZB/l5mfLmQ==
+X-Received: by 2002:a5d:698e:: with SMTP id g14mr4923996wru.301.1594725364528;
+        Tue, 14 Jul 2020 04:16:04 -0700 (PDT)
 Received: from localhost.localdomain ([2.31.163.61])
-        by smtp.gmail.com with ESMTPSA id l8sm28566052wrq.15.2020.07.14.04.16.07
+        by smtp.gmail.com with ESMTPSA id l8sm28566052wrq.15.2020.07.14.04.16.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Jul 2020 04:16:07 -0700 (PDT)
+        Tue, 14 Jul 2020 04:16:03 -0700 (PDT)
 From:   Lee Jones <lee.jones@linaro.org>
 To:     dan.j.williams@intel.com, vkoul@kernel.org
 Cc:     linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
         dmaengine@vger.kernel.org, Lee Jones <lee.jones@linaro.org>,
-        Logan Gunthorpe <logang@deltatee.com>
-Subject: [PATCH 16/17] dma: ioat: init: Correct misspelling of function parameter 'c' for channel
-Date:   Tue, 14 Jul 2020 12:15:45 +0100
-Message-Id: <20200714111546.1755231-17-lee.jones@linaro.org>
+        Alexei Starovoitov <ast@kernel.org>,
+        Daniel Borkmann <daniel@iogearbox.net>,
+        Martin KaFai Lau <kafai@fb.com>,
+        Song Liu <songliubraving@fb.com>, Yonghong Song <yhs@fb.com>,
+        Andrii Nakryiko <andriin@fb.com>,
+        John Fastabend <john.fastabend@gmail.com>,
+        KP Singh <kpsingh@chromium.org>,
+        Guennadi Liakhovetski <g.liakhovetski@gmx.de>,
+        netdev@vger.kernel.org, bpf@vger.kernel.org
+Subject: [PATCH 13/17] dma: nbpfaxi: Provide some missing attribute docs and split out slave info
+Date:   Tue, 14 Jul 2020 12:15:42 +0100
+Message-Id: <20200714111546.1755231-14-lee.jones@linaro.org>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20200714111546.1755231-1-lee.jones@linaro.org>
 References: <20200714111546.1755231-1-lee.jones@linaro.org>
@@ -77,28 +85,75 @@ X-Mailing-List: dmaengine@vger.kernel.org
 
 Fixes the following W=1 kernel build warning(s):
 
- drivers/dma/ioat/init.c:608: warning: Function parameter or member 'c' not described in 'ioat_free_chan_resources'
- drivers/dma/ioat/init.c:608: warning: Excess function parameter 'chan' description in 'ioat_free_chan_resources'
+ drivers/dma/nbpfaxi.c:157: warning: Function parameter or member 'chan' not described in 'nbpf_desc'
+ drivers/dma/nbpfaxi.c:220: warning: Function parameter or member 'tasklet' not described in 'nbpf_channel'
+ drivers/dma/nbpfaxi.c:220: warning: Function parameter or member 'slave_src_addr' not described in 'nbpf_channel'
+ drivers/dma/nbpfaxi.c:220: warning: Function parameter or member 'slave_src_width' not described in 'nbpf_channel'
+ drivers/dma/nbpfaxi.c:220: warning: Function parameter or member 'slave_src_burst' not described in 'nbpf_channel'
+ drivers/dma/nbpfaxi.c:220: warning: Function parameter or member 'slave_dst_addr' not described in 'nbpf_channel'
+ drivers/dma/nbpfaxi.c:220: warning: Function parameter or member 'slave_dst_width' not described in 'nbpf_channel'
+ drivers/dma/nbpfaxi.c:220: warning: Function parameter or member 'slave_dst_burst' not described in 'nbpf_channel'
+ drivers/dma/nbpfaxi.c:220: warning: Function parameter or member 'running' not described in 'nbpf_channel'
+ drivers/dma/nbpfaxi.c:220: warning: Function parameter or member 'paused' not described in 'nbpf_channel'
 
-Cc: Logan Gunthorpe <logang@deltatee.com>
+Cc: Alexei Starovoitov <ast@kernel.org>
+Cc: Daniel Borkmann <daniel@iogearbox.net>
+Cc: Martin KaFai Lau <kafai@fb.com>
+Cc: Song Liu <songliubraving@fb.com>
+Cc: Yonghong Song <yhs@fb.com>
+Cc: Andrii Nakryiko <andriin@fb.com>
+Cc: John Fastabend <john.fastabend@gmail.com>
+Cc: KP Singh <kpsingh@chromium.org>
+Cc: Guennadi Liakhovetski <g.liakhovetski@gmx.de>
+Cc: netdev@vger.kernel.org
+Cc: bpf@vger.kernel.org
 Signed-off-by: Lee Jones <lee.jones@linaro.org>
 ---
- drivers/dma/ioat/init.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/dma/nbpfaxi.c | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/dma/ioat/init.c b/drivers/dma/ioat/init.c
-index 20a4f36a2f6ea..8a53f5c96b168 100644
---- a/drivers/dma/ioat/init.c
-+++ b/drivers/dma/ioat/init.c
-@@ -602,7 +602,7 @@ static void ioat_enumerate_channels(struct ioatdma_device *ioat_dma)
- 
- /**
-  * ioat_free_chan_resources - release all the descriptors
-- * @chan: the channel to be cleaned
-+ * @c: the channel to be cleaned
+diff --git a/drivers/dma/nbpfaxi.c b/drivers/dma/nbpfaxi.c
+index 594409a6e9752..74df621402e10 100644
+--- a/drivers/dma/nbpfaxi.c
++++ b/drivers/dma/nbpfaxi.c
+@@ -144,6 +144,7 @@ struct nbpf_link_desc {
+  * @async_tx:	dmaengine object
+  * @user_wait:	waiting for a user ack
+  * @length:	total transfer length
++ * @chan:	associated DMAC channel
+  * @sg:		list of hardware descriptors, represented by struct nbpf_link_desc
+  * @node:	member in channel descriptor lists
   */
- static void ioat_free_chan_resources(struct dma_chan *c)
- {
+@@ -174,13 +175,17 @@ struct nbpf_desc_page {
+ /**
+  * struct nbpf_channel - one DMAC channel
+  * @dma_chan:	standard dmaengine channel object
++ * @tasklet:	channel specific tasklet used for callbacks
+  * @base:	register address base
+  * @nbpf:	DMAC
+  * @name:	IRQ name
+  * @irq:	IRQ number
+- * @slave_addr:	address for slave DMA
+- * @slave_width:slave data size in bytes
+- * @slave_burst:maximum slave burst size in bytes
++ * @slave_src_addr:	source address for slave DMA
++ * @slave_src_width:	source slave data size in bytes
++ * @slave_src_burst:	maximum source slave burst size in bytes
++ * @slave_dst_addr:	destination address for slave DMA
++ * @slave_dst_width:	destination slave data size in bytes
++ * @slave_dst_burst:	maximum destination slave burst size in bytes
+  * @terminal:	DMA terminal, assigned to this channel
+  * @dmarq_cfg:	DMA request line configuration - high / low, edge / level for NBPF_CHAN_CFG
+  * @flags:	configuration flags from DT
+@@ -191,6 +196,8 @@ struct nbpf_desc_page {
+  * @active:	list of descriptors, scheduled for processing
+  * @done:	list of completed descriptors, waiting post-processing
+  * @desc_page:	list of additionally allocated descriptor pages - if any
++ * @running:	linked descriptor of running transaction
++ * @paused:	are translations on this channel paused?
+  */
+ struct nbpf_channel {
+ 	struct dma_chan dma_chan;
 -- 
 2.25.1
 
