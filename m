@@ -6,45 +6,44 @@ X-Spam-Status: No, score=-7.0 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,
 	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5E63BC433FE
-	for <dmaengine@archiver.kernel.org>; Tue, 14 Jul 2020 07:39:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E3D23C433E6
+	for <dmaengine@archiver.kernel.org>; Tue, 14 Jul 2020 08:00:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 47B3420857
-	for <dmaengine@archiver.kernel.org>; Tue, 14 Jul 2020 07:39:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C44A6217A0
+	for <dmaengine@archiver.kernel.org>; Tue, 14 Jul 2020 08:00:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727798AbgGNHjl (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 14 Jul 2020 03:39:41 -0400
-Received: from mail-oi1-f193.google.com ([209.85.167.193]:41212 "EHLO
-        mail-oi1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727119AbgGNHjk (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Tue, 14 Jul 2020 03:39:40 -0400
-Received: by mail-oi1-f193.google.com with SMTP id y22so13188853oie.8;
-        Tue, 14 Jul 2020 00:39:39 -0700 (PDT)
+        id S1725981AbgGNIAR (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 14 Jul 2020 04:00:17 -0400
+Received: from mail-oi1-f196.google.com ([209.85.167.196]:43998 "EHLO
+        mail-oi1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725816AbgGNIAR (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Tue, 14 Jul 2020 04:00:17 -0400
+Received: by mail-oi1-f196.google.com with SMTP id x83so13224780oif.10;
+        Tue, 14 Jul 2020 01:00:16 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=dCYnWiBfrUG0V4QV9bfy3mtM9Gw/6z5cymsRyqfOxPU=;
-        b=qH/1FIlN+DJH4FNmhUoS7tmmK6M/URGpHYWNJAy3Mb44wZiS8hmILq834C2QfxiBev
-         5wxeR/tplU0cLeQwL7TOwORTx/No9dbYn/O12Ben4/WH6T2x+l7f2jjmmyc7cV+gykT2
-         7lGobbFVkO0qGam55RFFxM/fv/oNdLJDtwqYjoI/oEivY9y2xdGNE2KML9la63CrzeQ9
-         EbiBQWVhMZSafn2O0Mv6Ub1fZQgMymQ8dmBXLuU9UygADKTYbbz+YzsyeNdDlw1TiCM+
-         wfYhL2VoViWMzpQGMCmYq12J3CQILK5yXMWscylb8Te0URo+EaSkWnnc09LMK0nZHfAh
-         EIAg==
-X-Gm-Message-State: AOAM53284iKjupKdrQ1a0mF9Os3HxzeD1yPYYctW9K9oAaD0F2TfCtv7
-        VM0H6Z96FW4XYXy3kqjsG8ftuuzCC9n/hgIgt9A=
-X-Google-Smtp-Source: ABdhPJx5dphEyeiFZMm6iXlEYQPyjm7HBBuh4FxBXEBpFTIMln0CZySUEMQ/80bez3KevRXtht7yiFFsC0OTtXhX8oU=
-X-Received: by 2002:aca:5c41:: with SMTP id q62mr2546599oib.148.1594712379512;
- Tue, 14 Jul 2020 00:39:39 -0700 (PDT)
+        bh=QnTe4sZ/BVwx3aWuIY96pK3amPI3OQSt3QidovW9MDg=;
+        b=DVnbWK+//JZKX9DIxxeWG9G3CRQTZot4ixyDa7eabiimpmY8Jmd3b3JcQCLaqJWlLL
+         9cI3Gai+0CZ2a7c99Sw/7/Nz1rdtm7pgVuGqkyh1CAdhfFRi1Y1muUGDx8maCsU1uBKa
+         3d7+RpX2vdD+HjInfwsGg8G++eqfFOt0QcmvJSiWdk6DUevApz1Ew81diTE1mvncr1HF
+         6AwD9O7fZqSu0p7D9TWSMn7aua6H09sDRXAJrrXMBYFbW0InbblFsvW/nP/UXmo3Wx51
+         sP1GaOizDtns1TqUkL77JPBI4JY3cpXiYQh5GSt+VFX+H3c6uETPatGp9gS+x/DOUNjS
+         H4ow==
+X-Gm-Message-State: AOAM532bqYv+p9TB+7+q0mpttynDvxj53q7fymfcDVVYTJ0Wm/VNHlQh
+        I/3tDl7kcBPjP/B44dNqow3JKphhcnKWO4vHy9g=
+X-Google-Smtp-Source: ABdhPJyzIvtstGtIjvnC0xOdHX2BDAwrtjW5pB4zYT3uHZkIF8+JNHYsqpLcM1Tt8jiPySfbt+KukaiWmW7ArIQFH7w=
+X-Received: by 2002:a05:6808:64a:: with SMTP id z10mr2722714oih.54.1594713616158;
+ Tue, 14 Jul 2020 01:00:16 -0700 (PDT)
 MIME-Version: 1.0
 References: <1594676120-5862-1-git-send-email-prabhakar.mahadev-lad.rj@bp.renesas.com>
- <1594676120-5862-5-git-send-email-prabhakar.mahadev-lad.rj@bp.renesas.com>
-In-Reply-To: <1594676120-5862-5-git-send-email-prabhakar.mahadev-lad.rj@bp.renesas.com>
+ <1594676120-5862-7-git-send-email-prabhakar.mahadev-lad.rj@bp.renesas.com>
+In-Reply-To: <1594676120-5862-7-git-send-email-prabhakar.mahadev-lad.rj@bp.renesas.com>
 From:   Geert Uytterhoeven <geert@linux-m68k.org>
-Date:   Tue, 14 Jul 2020 09:39:28 +0200
-Message-ID: <CAMuHMdVyJTZ2-YS-WvjAr0ca_EfNdLk3+PEOSK8L5vShd97VWg@mail.gmail.com>
-Subject: Re: [PATCH 4/9] dt-bindings: dma: renesas,rcar-dmac: Document
- R8A774E1 bindings
+Date:   Tue, 14 Jul 2020 10:00:05 +0200
+Message-ID: <CAMuHMdUZx56wWTMdpmXhbvJV6_M=jDhQUVvD6b0-5xU-jrGsAA@mail.gmail.com>
+Subject: Re: [PATCH 6/9] dt-bindings: gpio: renesas,rcar-gpio: Add r8a774e1 support
 To:     Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
 Cc:     Vinod Koul <vkoul@kernel.org>, Rob Herring <robh+dt@kernel.org>,
         Linus Walleij <linus.walleij@linaro.org>,
@@ -72,8 +71,8 @@ X-Mailing-List: dmaengine@vger.kernel.org
 
 On Mon, Jul 13, 2020 at 11:35 PM Lad Prabhakar
 <prabhakar.mahadev-lad.rj@bp.renesas.com> wrote:
-> Renesas RZ/G2H (R8A774E1) SoC also has the R-Car gen3 compatible
-> DMA controllers, therefore document RZ/G2H specific bindings.
+> Document Renesas RZ/G2H (R8A774E1) GPIO blocks compatibility within the
+> relevant dt-bindings.
 >
 > Signed-off-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
 
