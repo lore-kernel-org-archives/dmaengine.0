@@ -4,121 +4,166 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-13.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
-	USER_AGENT_GIT autolearn=unavailable autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
+	autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E7E15C433E7
-	for <dmaengine@archiver.kernel.org>; Tue, 14 Jul 2020 11:18:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 54EFFC433F4
+	for <dmaengine@archiver.kernel.org>; Tue, 14 Jul 2020 11:19:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C5C3D2220C
-	for <dmaengine@archiver.kernel.org>; Tue, 14 Jul 2020 11:18:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2EEDF22208
+	for <dmaengine@archiver.kernel.org>; Tue, 14 Jul 2020 11:19:16 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="NQ/hVm91"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="pHR0K+KI"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727931AbgGNLSw (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 14 Jul 2020 07:18:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52258 "EHLO
+        id S1726928AbgGNLTP (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 14 Jul 2020 07:19:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52284 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727930AbgGNLQs (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Tue, 14 Jul 2020 07:16:48 -0400
-Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 73E1BC08C5FD
-        for <dmaengine@vger.kernel.org>; Tue, 14 Jul 2020 04:16:03 -0700 (PDT)
-Received: by mail-wr1-x441.google.com with SMTP id r12so20829689wrj.13
-        for <dmaengine@vger.kernel.org>; Tue, 14 Jul 2020 04:16:03 -0700 (PDT)
+        with ESMTP id S1727919AbgGNLQr (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Tue, 14 Jul 2020 07:16:47 -0400
+Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C8ACC08C5F8
+        for <dmaengine@vger.kernel.org>; Tue, 14 Jul 2020 04:16:01 -0700 (PDT)
+Received: by mail-wr1-x444.google.com with SMTP id r12so20829525wrj.13
+        for <dmaengine@vger.kernel.org>; Tue, 14 Jul 2020 04:16:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=NnI1Hr8cN1xgbEvUxkhLUJ4OsaPQfVlLvMmqI8pCO3s=;
-        b=NQ/hVm91tDxmABEPbH0rNFSS8NGb/3PLnnApSOyHhscglrmoLOMyFWz5wtrlv5WEAc
-         w7NAY2gdTBxkp94u7rS0Tgl3QOcWWldpWa1sZatsmBy4bkojuQ84zuqlGEmm43TZlNhe
-         7e3tzwADI4qKPfm21AmneVuYTXCGvYdl6nXLIBiAbNSxYm48Go5/XJhJbknaO85600l/
-         TzbhOUwbnb14+TgiQxeYmoqM4xnXjKW+V62qGrdsT14LaW6eknTWW9U8wx+FLbneGpIQ
-         tr/AyMKX9X+pZ6WHkzUes84iQtVh7eyenP5X+cqfAeZa6IUYaorMUth/P/mYblGq+9S0
-         DidQ==
+        bh=AREbkFQeq62jMhEbsCGiKpcIyUmzmEoBeESlFrgp8DE=;
+        b=pHR0K+KIKxD5EhQKwXJRi/S4mxtDdDxisRS89L6rsYWjar6xsf8yjwNVsm+/g1upct
+         IjWqNYsequpP4EokGC40Vu6cXEx/yZuCdZaq0N3/OFVgliYwoxdDkSpoT0u76/HuKY6U
+         MUbzo7YLYjjS7/pll5iVgV7Q58ymHgPYlsRuP2liz2R5WxN22Oi1Kk4KwrQO9/oZusKt
+         OQkwybdZ3gHPd3FOQszTItGnFNRuTo22n7TnlJGNSowr7quZ7wNDgooiGSqS4dtCo1t5
+         8Tcq5cilV0VQoGtWhZTw8JfUhrmhODcrz7h4EDAXTRcu12wQcylbZ4ozZzb2AmspBtFl
+         XHAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=NnI1Hr8cN1xgbEvUxkhLUJ4OsaPQfVlLvMmqI8pCO3s=;
-        b=fpr91/BuibXWeX9ZnX15ver0wsgTvQ0BGCoxshuo/OSUrDKnCOXX0GapKawOxWjkmQ
-         dQ80piTlENRhM2Mz7NADQsXiY2QCe//PKM50EzNYEi2kkZI2XiLkoWjPIwWevNiMwEpj
-         4XWmbBjncqphHHb1FPzoCxRAtxf3rgPhk+6CIfJdTDAh/2IsHwH9Qy0IHjKD1xI4ZfE9
-         +gpw1gH2ZBIWKXXDxSzYMd1OrCppNMnBicWBIeGjH44lxF29ZQ8zwLFOJr+Ppw5iEEz3
-         Nce0xOiQWCBRELbQDkHeXLKpJyJQD1KTtrTmGW9onoGSYNXgPypMMU0fNdalhR3zEUrb
-         i2Nw==
-X-Gm-Message-State: AOAM531cON0JrWIKz0h/Eoha1gKbeHuxcAH3zLphG5cDmS2Wl6m4SNyk
-        5lF6MgPPAGHu7vtzZzEP9dc5+w==
-X-Google-Smtp-Source: ABdhPJzYlJ+XLLzRSmvIFCs1WJ2WYX+Cwdno9y3SVmnqqB4jRMVHTnl+GSY47lUzMwCDxwwOni3Ziw==
-X-Received: by 2002:adf:db86:: with SMTP id u6mr4773505wri.27.1594725362227;
-        Tue, 14 Jul 2020 04:16:02 -0700 (PDT)
+        bh=AREbkFQeq62jMhEbsCGiKpcIyUmzmEoBeESlFrgp8DE=;
+        b=sxXqBfjcoq6u0/Hb5rBuTLG7D0N+6zUKLAE/ArLzret52Sio6ZAxQsD7WLSEUIz1sp
+         BYYCEBc0nlADbZRRabtTItsSzzjXr7yEw5qg4wl1H70VoZfzuddvDWETsS0k3sGTHexZ
+         F7s5wF7oux2OByIiKx8baVxk27//2QCh083BTFI3CyEeePBPTBJlQlXqN5HXGHMe8/78
+         2i7spFlfi2ZyWxwItD4G1obAx77zP71nzlqtaLyChEzt5lc0iMLzvnkUAib2sqy/KYXv
+         Pms1GWhtNCHDqI4N+LyB23/FFPAGJWUn5vRz+qq91fxGRRS7O+nn086ykNAQ1wJRHvJb
+         6IeA==
+X-Gm-Message-State: AOAM532zmM48aFjxb8VODNmU0GAStq1jEmefEZGOlZQmkkkPyqcuLnRE
+        dd2eJlIH6Nsr9KjJ23mEDrE+sg==
+X-Google-Smtp-Source: ABdhPJyAH8JGNWD20qUSqWUGbGK+bbNu7uHkKBBKvWNRnQi1cZAEQOcb1acarwwp6TN9Ch6DTWsG9A==
+X-Received: by 2002:a5d:420b:: with SMTP id n11mr4591674wrq.91.1594725359812;
+        Tue, 14 Jul 2020 04:15:59 -0700 (PDT)
 Received: from localhost.localdomain ([2.31.163.61])
-        by smtp.gmail.com with ESMTPSA id l8sm28566052wrq.15.2020.07.14.04.16.01
+        by smtp.gmail.com with ESMTPSA id l8sm28566052wrq.15.2020.07.14.04.15.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Jul 2020 04:16:01 -0700 (PDT)
+        Tue, 14 Jul 2020 04:15:59 -0700 (PDT)
 From:   Lee Jones <lee.jones@linaro.org>
 To:     dan.j.williams@intel.com, vkoul@kernel.org
 Cc:     linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
         dmaengine@vger.kernel.org, Lee Jones <lee.jones@linaro.org>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        NXP Linux Team <linux-imx@nxp.com>
-Subject: [PATCH 11/17] dma: imx-sdma: Correct formatting issue and provide 2 new descriptions
-Date:   Tue, 14 Jul 2020 12:15:40 +0100
-Message-Id: <20200714111546.1755231-12-lee.jones@linaro.org>
+        Maxime Ripard <mripard@kernel.org>,
+        Chen-Yu Tsai <wens@csie.org>,
+        =?UTF-8?q?Emilio=20L=C3=B3pez?= <emilio@elopez.com.ar>
+Subject: [PATCH 09/17] dma: sun4i-dma: Demote obvious misuse of kerneldoc to standard comment blocks
+Date:   Tue, 14 Jul 2020 12:15:38 +0100
+Message-Id: <20200714111546.1755231-10-lee.jones@linaro.org>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20200714111546.1755231-1-lee.jones@linaro.org>
 References: <20200714111546.1755231-1-lee.jones@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
+No attempt has been made to document any of the demoted functions here.
+
 Fixes the following W=1 kernel build warning(s):
 
- drivers/dma/imx-sdma.c:383: warning: Function parameter or member 'slave_config' not described in 'sdma_channel'
- drivers/dma/imx-sdma.c:383: warning: Function parameter or member 'context_loaded' not described in 'sdma_channel'
- drivers/dma/imx-sdma.c:383: warning: Function parameter or member 'terminate_worker' not described in 'sdma_channel'
+ drivers/dma/sun4i-dma.c:321: warning: Function parameter or member 'priv' not described in '__execute_vchan_pending'
+ drivers/dma/sun4i-dma.c:321: warning: Function parameter or member 'vchan' not described in '__execute_vchan_pending'
+ drivers/dma/sun4i-dma.c:435: warning: Function parameter or member 'chan' not described in 'generate_ndma_promise'
+ drivers/dma/sun4i-dma.c:435: warning: Function parameter or member 'src' not described in 'generate_ndma_promise'
+ drivers/dma/sun4i-dma.c:435: warning: Function parameter or member 'dest' not described in 'generate_ndma_promise'
+ drivers/dma/sun4i-dma.c:435: warning: Function parameter or member 'len' not described in 'generate_ndma_promise'
+ drivers/dma/sun4i-dma.c:435: warning: Function parameter or member 'sconfig' not described in 'generate_ndma_promise'
+ drivers/dma/sun4i-dma.c:435: warning: Function parameter or member 'direction' not described in 'generate_ndma_promise'
+ drivers/dma/sun4i-dma.c:501: warning: Function parameter or member 'chan' not described in 'generate_ddma_promise'
+ drivers/dma/sun4i-dma.c:501: warning: Function parameter or member 'src' not described in 'generate_ddma_promise'
+ drivers/dma/sun4i-dma.c:501: warning: Function parameter or member 'dest' not described in 'generate_ddma_promise'
+ drivers/dma/sun4i-dma.c:501: warning: Function parameter or member 'len' not described in 'generate_ddma_promise'
+ drivers/dma/sun4i-dma.c:501: warning: Function parameter or member 'sconfig' not described in 'generate_ddma_promise'
+ drivers/dma/sun4i-dma.c:577: warning: Function parameter or member 'contract' not described in 'get_next_cyclic_promise'
+ drivers/dma/sun4i-dma.c:596: warning: Function parameter or member 'vd' not described in 'sun4i_dma_free_contract'
 
-Cc: Shawn Guo <shawnguo@kernel.org>
-Cc: Sascha Hauer <s.hauer@pengutronix.de>
-Cc: Pengutronix Kernel Team <kernel@pengutronix.de>
-Cc: Fabio Estevam <festevam@gmail.com>
-Cc: NXP Linux Team <linux-imx@nxp.com>
+Cc: Maxime Ripard <mripard@kernel.org>
+Cc: Chen-Yu Tsai <wens@csie.org>
+Cc: "Emilio López" <emilio@elopez.com.ar>
 Signed-off-by: Lee Jones <lee.jones@linaro.org>
 ---
- drivers/dma/imx-sdma.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/dma/sun4i-dma.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/dma/imx-sdma.c b/drivers/dma/imx-sdma.c
-index 270992c4fe475..4f8d8f5e11329 100644
---- a/drivers/dma/imx-sdma.c
-+++ b/drivers/dma/imx-sdma.c
-@@ -335,7 +335,7 @@ struct sdma_desc {
-  * @sdma:		pointer to the SDMA engine for this channel
-  * @channel:		the channel number, matches dmaengine chan_id + 1
-  * @direction:		transfer type. Needed for setting SDMA script
-- * @slave_config	Slave configuration
-+ * @slave_config:	Slave configuration
-  * @peripheral_type:	Peripheral type. Needed for setting SDMA script
-  * @event_id0:		aka dma request line
-  * @event_id1:		for channels that use 2 events
-@@ -354,8 +354,10 @@ struct sdma_desc {
-  * @shp_addr:		value for gReg[6]
-  * @per_addr:		value for gReg[2]
-  * @status:		status of dma channel
-+ * @context_loaded:	ensure context is only loaded once
-  * @data:		specific sdma interface structure
-  * @bd_pool:		dma_pool for bd
-+ * @terminate_worker:	used to call back into terminate work function
+diff --git a/drivers/dma/sun4i-dma.c b/drivers/dma/sun4i-dma.c
+index e7ff09a5031db..e8b6633ae6612 100644
+--- a/drivers/dma/sun4i-dma.c
++++ b/drivers/dma/sun4i-dma.c
+@@ -307,7 +307,7 @@ static void set_pchan_interrupt(struct sun4i_dma_dev *priv,
+ 	spin_unlock_irqrestore(&priv->lock, flags);
+ }
+ 
+-/**
++/*
+  * Execute pending operations on a vchan
+  *
+  * When given a vchan, this function will try to acquire a suitable
+@@ -419,7 +419,7 @@ static int sanitize_config(struct dma_slave_config *sconfig,
+ 	return 0;
+ }
+ 
+-/**
++/*
+  * Generate a promise, to be used in a normal DMA contract.
+  *
+  * A NDMA promise contains all the information required to program the
+@@ -486,7 +486,7 @@ generate_ndma_promise(struct dma_chan *chan, dma_addr_t src, dma_addr_t dest,
+ 	return NULL;
+ }
+ 
+-/**
++/*
+  * Generate a promise, to be used in a dedicated DMA contract.
+  *
+  * A DDMA promise contains all the information required to program the
+@@ -543,7 +543,7 @@ generate_ddma_promise(struct dma_chan *chan, dma_addr_t src, dma_addr_t dest,
+ 	return NULL;
+ }
+ 
+-/**
++/*
+  * Generate a contract
+  *
+  * Contracts function as DMA descriptors. As our hardware does not support
+@@ -565,7 +565,7 @@ static struct sun4i_dma_contract *generate_dma_contract(void)
+ 	return contract;
+ }
+ 
+-/**
++/*
+  * Get next promise on a cyclic transfer
+  *
+  * Cyclic contracts contain a series of promises which are executed on a
+@@ -589,7 +589,7 @@ get_next_cyclic_promise(struct sun4i_dma_contract *contract)
+ 	return promise;
+ }
+ 
+-/**
++/*
+  * Free a contract and all its associated promises
   */
- struct sdma_channel {
- 	struct virt_dma_chan		vc;
+ static void sun4i_dma_free_contract(struct virt_dma_desc *vd)
 -- 
 2.25.1
 
