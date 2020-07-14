@@ -7,65 +7,63 @@ X-Spam-Status: No, score=-13.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
 	USER_AGENT_GIT autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C8EF8C433ED
-	for <dmaengine@archiver.kernel.org>; Tue, 14 Jul 2020 11:19:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 03B1FC433E4
+	for <dmaengine@archiver.kernel.org>; Tue, 14 Jul 2020 11:20:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A018B22208
-	for <dmaengine@archiver.kernel.org>; Tue, 14 Jul 2020 11:19:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D593D206F0
+	for <dmaengine@archiver.kernel.org>; Tue, 14 Jul 2020 11:20:19 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="lnvYu/8j"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="r07S7f0J"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727829AbgGNLTQ (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 14 Jul 2020 07:19:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52282 "EHLO
+        id S1727989AbgGNLUT (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 14 Jul 2020 07:20:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52270 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726252AbgGNLQq (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Tue, 14 Jul 2020 07:16:46 -0400
-Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA5F0C08C5F6
-        for <dmaengine@vger.kernel.org>; Tue, 14 Jul 2020 04:15:59 -0700 (PDT)
-Received: by mail-wr1-x442.google.com with SMTP id q5so20899529wru.6
-        for <dmaengine@vger.kernel.org>; Tue, 14 Jul 2020 04:15:59 -0700 (PDT)
+        with ESMTP id S1728144AbgGNLSm (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Tue, 14 Jul 2020 07:18:42 -0400
+Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 531D2C08E8A0
+        for <dmaengine@vger.kernel.org>; Tue, 14 Jul 2020 04:16:08 -0700 (PDT)
+Received: by mail-wr1-x444.google.com with SMTP id j4so20884339wrp.10
+        for <dmaengine@vger.kernel.org>; Tue, 14 Jul 2020 04:16:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=HLIjy5aQCoym5Mm/hCfDKR0dFhPfvd31LPr0bmAaNkI=;
-        b=lnvYu/8jdk95UwX9IoDefntQmNZ+TclIUQ6X2+ECk2EmyNfMBSnJ+i5mPNOqb7kmeM
-         fLy4ysPmpsGjO8sriBthSrL7udGqmt9/nuZ5l7zKTopOVTfaks9NXyO0gV74aG5K40sk
-         x5bxKd00883pryu8HmCJch6RB7XfgGh5Ne39TcCPPFPZ84VnYZOnl3F9aFfqj45OnhBl
-         zh+xG9CZrFaicAU4SyVU3j3xTIGosE7bPvvrO4l7S71upbFK2rurlyQHcVSY14RqCI4Q
-         E+qz9npM2rYERwSBflKs0s8CrvBk5r0P8pPmgAnq/cKLuvv/eO8TGROqdG4/raMbpw5k
-         hYgw==
+        bh=ewSSWUW/45nS/yx3Bple4Rafu63cuthV60wjjsFm31o=;
+        b=r07S7f0JSGNo1Nt9IZFRGGvi9Lp2WCC0rUzVkAvOq5O5uuetYvLH26mbxDtnyAveOz
+         frcZe2zibwjQUBdEtszl73MgfdEyhSWZPApwvfZbtovOiVCL+WQ62RhmhxnQcZamm8Xu
+         3/+y9QgaGUFjp0zbF74w49tY4gMxtfrYEhyvpwi1E5zAnvOXnxeahcfETAjZ8zxWDFQR
+         y8d4IbJ64kqiAxtEplpKCvRtSMPMDLwDzaSZYdo7ZjIcV83l6ES2n2CSsfPa7S0tsFm2
+         WaARQ9l+CbHGQ1v3IShviPOp0RquLwYS1UYGGtDANowawECxzEayp2QTi3YOTEl+9InD
+         KT1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=HLIjy5aQCoym5Mm/hCfDKR0dFhPfvd31LPr0bmAaNkI=;
-        b=XGZmLUSiTLccFH4hw4NxkWOCwAxHsZnca5nsiQt2kfyclm5ZXCgRqQslNQYfm/QZ+n
-         MdDWmgoazhxw46sLgsliRuEatQHtS6ZH7BwQCG/wfajn/HMP1luvwCbwjiAbN+WiVsu8
-         QIixcny3nfpDUcO7nppz8OZtlsoMyBhcKrciVZ8bo9Y/oc+5luCJliRM1S0iVJt5TxPn
-         VLAlHeA1uxQWwgwCj2GUGO4uPBbezcRrcUHVk5C46cfpdr1T8FdtVoi0dTi5tPUdyXAy
-         97QRqFdKS3+tBb9TjrqQOrITa23i+rcV67+1w9f/97hhpjxsrzv1iUN/g3V99FJgjjgP
-         U2cg==
-X-Gm-Message-State: AOAM533KoFP38Py6Q8In4X86HDHCtQZGF02Qa9JKMiur3keVDFKIMJpM
-        vQ9a0YqbAWShCaDNXxgK2jKQkA==
-X-Google-Smtp-Source: ABdhPJyPj59yNtEMPOQ/nf0KvMrMzW5MAG6d1mHgCW2Smzjhseeu55XTnni31ER4NoiwLyYXa+7vOw==
-X-Received: by 2002:adf:b190:: with SMTP id q16mr4666971wra.356.1594725358605;
-        Tue, 14 Jul 2020 04:15:58 -0700 (PDT)
+        bh=ewSSWUW/45nS/yx3Bple4Rafu63cuthV60wjjsFm31o=;
+        b=s2QVfiZAZwghiNqiH1t4UCpFZN/UAuRmr0vLqDmv12mqlSAzyvRoLiRph1AYWDThq+
+         fUJYzpkKxd4KN2CvTX1ZhKNVsOPqg6Tq9kzp4RJMA8mqCbVjeExbDHP4ausgVI6qHABT
+         wMBFcYoOYG3ZhLahyyIBVUH1TSWtGTi7Wetos0nYwHtA4lBISmmN3NGP0+53z9z4BXyv
+         j6+ceZbqEILkwMdkdoqs3864EpFJvdVuZ94tnpi22H82sT5lJt9ep4oighTaOcCrfFU5
+         ZnXsj6+7iYVDknNitk9L6bEDaqr0smy8EY4+NTKd9eF0tKb/UKwqj0j8Fj7nyC7ArspE
+         Uu0g==
+X-Gm-Message-State: AOAM532n6xJIrHpoc46cxyLZq2Ixmy07zlEsp6ZCP78NBvIPphg1kSZK
+        tIkCVIAu7uvxukjQ/fenfADh8A==
+X-Google-Smtp-Source: ABdhPJwOpZLkCp6n4syZLc9H9p9CNZPkWXr22M9kvz71NJK/JQzp8BLfmFRHWp3bAZgklkl2RAAp0Q==
+X-Received: by 2002:a5d:4a42:: with SMTP id v2mr4330551wrs.33.1594725367098;
+        Tue, 14 Jul 2020 04:16:07 -0700 (PDT)
 Received: from localhost.localdomain ([2.31.163.61])
-        by smtp.gmail.com with ESMTPSA id l8sm28566052wrq.15.2020.07.14.04.15.57
+        by smtp.gmail.com with ESMTPSA id l8sm28566052wrq.15.2020.07.14.04.16.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Jul 2020 04:15:57 -0700 (PDT)
+        Tue, 14 Jul 2020 04:16:06 -0700 (PDT)
 From:   Lee Jones <lee.jones@linaro.org>
 To:     dan.j.williams@intel.com, vkoul@kernel.org
 Cc:     linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        dmaengine@vger.kernel.org, Lee Jones <lee.jones@linaro.org>,
-        Ludovic Desroches <ludovic.desroches@microchip.com>,
-        Nicolas Ferre <nicolas.ferre@atmel.com>
-Subject: [PATCH 08/17] dma: at_hdmac: Repair parameter misspelling and demote non-kerneldoc headers
-Date:   Tue, 14 Jul 2020 12:15:37 +0100
-Message-Id: <20200714111546.1755231-9-lee.jones@linaro.org>
+        dmaengine@vger.kernel.org, Lee Jones <lee.jones@linaro.org>
+Subject: [PATCH 15/17] dma: mv_xor_v2: Supply some missing 'struct mv_xor_v2_device' attribute docs
+Date:   Tue, 14 Jul 2020 12:15:44 +0100
+Message-Id: <20200714111546.1755231-16-lee.jones@linaro.org>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20200714111546.1755231-1-lee.jones@linaro.org>
 References: <20200714111546.1755231-1-lee.jones@linaro.org>
@@ -78,57 +76,43 @@ X-Mailing-List: dmaengine@vger.kernel.org
 
 Fixes the following W=1 kernel build warning(s):
 
- drivers/dma/at_hdmac.c:666: warning: Function parameter or member 'tx' not described in 'atc_tx_submit'
- drivers/dma/at_hdmac.c:666: warning: Excess function parameter 'desc' description in 'atc_tx_submit'
- drivers/dma/at_hdmac.c:1206: warning: Function parameter or member 'reg_width' not described in 'atc_dma_cyclic_check_values'
- drivers/dma/at_hdmac.c:1206: warning: Function parameter or member 'buf_addr' not described in 'atc_dma_cyclic_check_values'
- drivers/dma/at_hdmac.c:1206: warning: Function parameter or member 'period_len' not described in 'atc_dma_cyclic_check_values'
- drivers/dma/at_hdmac.c:1228: warning: Function parameter or member 'chan' not described in 'atc_dma_cyclic_fill_desc'
- drivers/dma/at_hdmac.c:1228: warning: Function parameter or member 'desc' not described in 'atc_dma_cyclic_fill_desc'
- drivers/dma/at_hdmac.c:1228: warning: Function parameter or member 'period_index' not described in 'atc_dma_cyclic_fill_desc'
- drivers/dma/at_hdmac.c:1228: warning: Function parameter or member 'buf_addr' not described in 'atc_dma_cyclic_fill_desc'
- drivers/dma/at_hdmac.c:1228: warning: Function parameter or member 'reg_width' not described in 'atc_dma_cyclic_fill_desc'
- drivers/dma/at_hdmac.c:1228: warning: Function parameter or member 'period_len' not described in 'atc_dma_cyclic_fill_desc'
- drivers/dma/at_hdmac.c:1228: warning: Function parameter or member 'direction' not described in 'atc_dma_cyclic_fill_desc'
+ drivers/dma/mv_xor_v2.c:168: warning: Function parameter or member 'clk' not described in 'mv_xor_v2_device'
+ drivers/dma/mv_xor_v2.c:168: warning: Function parameter or member 'reg_clk' not described in 'mv_xor_v2_device'
+ drivers/dma/mv_xor_v2.c:168: warning: Function parameter or member 'irq_tasklet' not described in 'mv_xor_v2_device'
+ drivers/dma/mv_xor_v2.c:168: warning: Function parameter or member 'hw_queue_idx' not described in 'mv_xor_v2_device'
+ drivers/dma/mv_xor_v2.c:168: warning: Function parameter or member 'msi_desc' not described in 'mv_xor_v2_device'
 
-Cc: Ludovic Desroches <ludovic.desroches@microchip.com>
-Cc: Nicolas Ferre <nicolas.ferre@atmel.com>
 Signed-off-by: Lee Jones <lee.jones@linaro.org>
 ---
- drivers/dma/at_hdmac.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/dma/mv_xor_v2.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/dma/at_hdmac.c b/drivers/dma/at_hdmac.c
-index 73a20780744bf..45bbcd6146fd2 100644
---- a/drivers/dma/at_hdmac.c
-+++ b/drivers/dma/at_hdmac.c
-@@ -656,7 +656,7 @@ static irqreturn_t at_dma_interrupt(int irq, void *dev_id)
- 
+diff --git a/drivers/dma/mv_xor_v2.c b/drivers/dma/mv_xor_v2.c
+index 157c959311eaf..9225f08dfee92 100644
+--- a/drivers/dma/mv_xor_v2.c
++++ b/drivers/dma/mv_xor_v2.c
+@@ -135,9 +135,11 @@ struct mv_xor_v2_descriptor {
  /**
-  * atc_tx_submit - set the prepared descriptor(s) to be executed by the engine
-- * @desc: descriptor at the head of the transaction chain
-+ * @tx: descriptor at the head of the transaction chain
-  *
-  * Queue chain if DMA engine is working already
-  *
-@@ -1196,7 +1196,7 @@ atc_prep_slave_sg(struct dma_chan *chan, struct scatterlist *sgl,
- 	return NULL;
- }
- 
--/**
-+/*
-  * atc_dma_cyclic_check_values
-  * Check for too big/unaligned periods and unaligned DMA buffer
+  * struct mv_xor_v2_device - implements a xor device
+  * @lock: lock for the engine
++ * @clk: reference to the 'core' clock
++ * @reg_clk: reference to the 'reg' clock
+  * @dma_base: memory mapped DMA register base
+  * @glob_base: memory mapped global register base
+- * @irq_tasklet:
++ * @irq_tasklet: tasklet used for IRQ handling call-backs
+  * @free_sw_desc: linked list of free SW descriptors
+  * @dmadev: dma device
+  * @dmachan: dma channel
+@@ -146,6 +148,8 @@ struct mv_xor_v2_descriptor {
+  * @sw_desq: SW descriptors queue
+  * @desc_size: HW descriptor size
+  * @npendings: number of pending descriptors (for which tx_submit has
++ * @hw_queue_idx: HW queue index
++ * @msi_desc: local interrupt descriptor information
+  * been called, but not yet issue_pending)
   */
-@@ -1217,7 +1217,7 @@ atc_dma_cyclic_check_values(unsigned int reg_width, dma_addr_t buf_addr,
- 	return -EINVAL;
- }
- 
--/**
-+/*
-  * atc_dma_cyclic_fill_desc - Fill one period descriptor
-  */
- static int
+ struct mv_xor_v2_device {
 -- 
 2.25.1
 
