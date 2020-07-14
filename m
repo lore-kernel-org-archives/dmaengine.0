@@ -7,64 +7,64 @@ X-Spam-Status: No, score=-13.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
 	USER_AGENT_GIT autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5DBEAC433E5
-	for <dmaengine@archiver.kernel.org>; Tue, 14 Jul 2020 11:20:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3D2B7C433EA
+	for <dmaengine@archiver.kernel.org>; Tue, 14 Jul 2020 11:20:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 387FF206F0
-	for <dmaengine@archiver.kernel.org>; Tue, 14 Jul 2020 11:20:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1054D21D90
+	for <dmaengine@archiver.kernel.org>; Tue, 14 Jul 2020 11:20:30 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Fqu+JGaF"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="pbKjjlMz"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728010AbgGNLUT (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 14 Jul 2020 07:20:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52268 "EHLO
+        id S1727858AbgGNLUU (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 14 Jul 2020 07:20:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52282 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727971AbgGNLSm (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Tue, 14 Jul 2020 07:18:42 -0400
-Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com [IPv6:2a00:1450:4864:20::343])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D0D82C08E886
-        for <dmaengine@vger.kernel.org>; Tue, 14 Jul 2020 04:16:06 -0700 (PDT)
-Received: by mail-wm1-x343.google.com with SMTP id 17so5003771wmo.1
-        for <dmaengine@vger.kernel.org>; Tue, 14 Jul 2020 04:16:06 -0700 (PDT)
+        with ESMTP id S1728157AbgGNLSr (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Tue, 14 Jul 2020 07:18:47 -0400
+Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E7F6C08E8AA
+        for <dmaengine@vger.kernel.org>; Tue, 14 Jul 2020 04:16:09 -0700 (PDT)
+Received: by mail-wr1-x441.google.com with SMTP id f2so20826588wrp.7
+        for <dmaengine@vger.kernel.org>; Tue, 14 Jul 2020 04:16:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=tHvsPtXMawqhgTlXf8i2jhQs/B2cBsj2Ks/fZJOcmHY=;
-        b=Fqu+JGaFSRh7vRRPgR/HabR8IBZaeLvvr2EcwSrSv7QCI/6fOnODRUdqwt90J3g5C8
-         0s7/ZkCY/MC07cLGz5P6eZPk8H0sOh7MIQCT3wT/fmUP0dZZvRlB6+ROihSuNTcRcnrn
-         3f/KQJT0rXlJvq27p2T59AjfgIz20tp6gxCQwiRj2g3DFceT0HNj5P5tLxs2F3WUfGUr
-         BCztbiua/SQvCo0rqC98vsPQJ6hLsJvnB5rS2qxatc4pm34FHMoA/X6H2H78RvRzapwC
-         7c22y4tqYny0qVqhSNYiSLAngITlsOr2bNM3rVNtPcNOiSxaFmQjsg/AEf1VCrEiPz2W
-         p5Bg==
+        bh=NWVbeI3JQ64+Db8G4vi0TII3jbdljajswVKqeX2AaNk=;
+        b=pbKjjlMz+yuId3GnPdr+6e7242L15C8zpZ8cI32mV6xd6AgENPK00kT71vMS4zOEUQ
+         BZiKrF66/XjLDH28yMZs8xHjFIparf2OgetsOT625Mif3xJ1q8QNLhyQtuK7TGfZUNIr
+         CCj18IDVn978g2dBSbIwr5b38Pq9EwmlS120Y77bC8ePRFzM8Q56ZfUktL7RchA2vkT5
+         u5WCyG9mExt5AiqtFF84SoZFQZZshdlOkMoEgh6kK8rhIdvqnnVvWrj3OTAyPe9rWQLc
+         ErVVxOlolsFySUFnE8kq65UQFNT1RnKfPw0BhzkytqrRJQZNY7Rt5ThFUPrGUW6rf9Ea
+         d7wA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=tHvsPtXMawqhgTlXf8i2jhQs/B2cBsj2Ks/fZJOcmHY=;
-        b=HPJryujxIm0l8lVQG2WqWsfKeRaLAKj3mj1TzKBeqUTbk5JJgBnFucjXUycMa829Qo
-         pl0A6iEPt/u6CW9q8v73/S9fJrwj7Zhq93fnoikCzq/WLo+EG35+YyRjBdRiFRfyq91G
-         XDtLO3QRsHUHgoCsId8Q1UNXgDbJKIKIhUxcHJMaZmMmEuayyC75Reqg67Utp2VQbBMK
-         wNS5LXrAX3JPVqPI3HGCfZyPr5LQyoVKeNe5Wcg6+HLbRmofXySftLrwFaIRzYJ7juNn
-         bhYDHaBZls4b20BeADXXvzaJa/GdoKkOYh1qHeoSr/UnmKUSjAMKO5O/SUOHj/FW2bdH
-         7YPg==
-X-Gm-Message-State: AOAM531SJR9bDT5MZNhozF6FRCaxEL3m0lhrkLrA5ZK14Zjgua15XP7s
-        JwBky/6S8euPlftS4kw66I5Zhw==
-X-Google-Smtp-Source: ABdhPJxVoSxX2N3tawtWC/yLdMqtT4pktyn2twbJ8qTyWyZpqmkc6sC5zihRJLY5WtskmmQJi5EWrw==
-X-Received: by 2002:a05:600c:2116:: with SMTP id u22mr3778571wml.82.1594725365560;
-        Tue, 14 Jul 2020 04:16:05 -0700 (PDT)
+        bh=NWVbeI3JQ64+Db8G4vi0TII3jbdljajswVKqeX2AaNk=;
+        b=ME7dMnCwAv06RtcTydQuE/XXgvLwI5NftnNzENfXh9HPtkQ0W5so4u2wV9CU5XSzVT
+         7g2yhxrZ6FHSGmeKWLDJjauOu6z6hCo/nhdg9gwW7V0A8vmE/TQRSiaCkhVqbmDbWNpY
+         T7th0HvbN2xlWvRpmUXKviiLgW+VmDDyuo8KUHV+EWi0NK+mLu3LFeb8eYd0nJa+sirM
+         /+hJkY5Uk+Be3cDACuX7xCNcZqoDFep9Iaxaibjrlub1BUXq5LVhrITfvlqb1cguiAkp
+         8sjE66MqebxRqelAvf5x2S30BmwjmnKh9czNoSqC4PZY9GZCyEL7aiPRPeNmGGf47A77
+         4gvA==
+X-Gm-Message-State: AOAM532R5AOWr02t4HvrLlnIp4YCZjyjSL78EjW5NwXTxE8ZkwvkFOPy
+        6THbeKnZoAGhUhgxtkg5JZgKdQ==
+X-Google-Smtp-Source: ABdhPJy/Z9vM5I8MKYqwiF/ImZ+zlunr0KhgAAKurSmz0v7+QqjmsliobL9ygI2dqTBBUF+btm1W9g==
+X-Received: by 2002:a5d:4a84:: with SMTP id o4mr4756252wrq.104.1594725368354;
+        Tue, 14 Jul 2020 04:16:08 -0700 (PDT)
 Received: from localhost.localdomain ([2.31.163.61])
-        by smtp.gmail.com with ESMTPSA id l8sm28566052wrq.15.2020.07.14.04.16.04
+        by smtp.gmail.com with ESMTPSA id l8sm28566052wrq.15.2020.07.14.04.16.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Jul 2020 04:16:05 -0700 (PDT)
+        Tue, 14 Jul 2020 04:16:07 -0700 (PDT)
 From:   Lee Jones <lee.jones@linaro.org>
 To:     dan.j.williams@intel.com, vkoul@kernel.org
 Cc:     linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
         dmaengine@vger.kernel.org, Lee Jones <lee.jones@linaro.org>,
-        Prasad Sahu <rsahu@apm.com>, Loc Ho <lho@apm.com>
-Subject: [PATCH 14/17] dma: xgene-dma: Provide descriptions for 'dev' and 'clk' in device's ddata
-Date:   Tue, 14 Jul 2020 12:15:43 +0100
-Message-Id: <20200714111546.1755231-15-lee.jones@linaro.org>
+        Logan Gunthorpe <logang@deltatee.com>
+Subject: [PATCH 16/17] dma: ioat: init: Correct misspelling of function parameter 'c' for channel
+Date:   Tue, 14 Jul 2020 12:15:45 +0100
+Message-Id: <20200714111546.1755231-17-lee.jones@linaro.org>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20200714111546.1755231-1-lee.jones@linaro.org>
 References: <20200714111546.1755231-1-lee.jones@linaro.org>
@@ -77,29 +77,28 @@ X-Mailing-List: dmaengine@vger.kernel.org
 
 Fixes the following W=1 kernel build warning(s):
 
- drivers/dma/xgene-dma.c:310: warning: Function parameter or member 'dev' not described in 'xgene_dma'
- drivers/dma/xgene-dma.c:310: warning: Function parameter or member 'clk' not described in 'xgene_dma'
+ drivers/dma/ioat/init.c:608: warning: Function parameter or member 'c' not described in 'ioat_free_chan_resources'
+ drivers/dma/ioat/init.c:608: warning: Excess function parameter 'chan' description in 'ioat_free_chan_resources'
 
-Cc: Prasad Sahu <rsahu@apm.com>
-Cc: Loc Ho <lho@apm.com>
+Cc: Logan Gunthorpe <logang@deltatee.com>
 Signed-off-by: Lee Jones <lee.jones@linaro.org>
 ---
- drivers/dma/xgene-dma.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/dma/ioat/init.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/dma/xgene-dma.c b/drivers/dma/xgene-dma.c
-index cd60fa6d67501..4f733d37a22e2 100644
---- a/drivers/dma/xgene-dma.c
-+++ b/drivers/dma/xgene-dma.c
-@@ -287,6 +287,8 @@ struct xgene_dma_chan {
+diff --git a/drivers/dma/ioat/init.c b/drivers/dma/ioat/init.c
+index 20a4f36a2f6ea..8a53f5c96b168 100644
+--- a/drivers/dma/ioat/init.c
++++ b/drivers/dma/ioat/init.c
+@@ -602,7 +602,7 @@ static void ioat_enumerate_channels(struct ioatdma_device *ioat_dma)
  
  /**
-  * struct xgene_dma - internal representation of an X-Gene DMA device
-+ * @dev: reference to this device's struct device
-+ * @clk: reference to this device's clock
-  * @err_irq: DMA error irq number
-  * @ring_num: start id number for DMA ring
-  * @csr_dma: base for DMA register access
+  * ioat_free_chan_resources - release all the descriptors
+- * @chan: the channel to be cleaned
++ * @c: the channel to be cleaned
+  */
+ static void ioat_free_chan_resources(struct dma_chan *c)
+ {
 -- 
 2.25.1
 
