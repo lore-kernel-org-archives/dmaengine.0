@@ -2,86 +2,102 @@ Return-Path: <SRS0=oHFp=A2=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-13.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=unavailable
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 86BB4C433E3
-	for <dmaengine@archiver.kernel.org>; Wed, 15 Jul 2020 12:01:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EF745C433E0
+	for <dmaengine@archiver.kernel.org>; Wed, 15 Jul 2020 13:01:33 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5DC5520658
-	for <dmaengine@archiver.kernel.org>; Wed, 15 Jul 2020 12:01:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C03432071B
+	for <dmaengine@archiver.kernel.org>; Wed, 15 Jul 2020 13:01:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1594814516;
-	bh=Asm2zKeo6RUzv3qZh0M/yLSCpflT44ffhplUnINxP60=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:List-ID:From;
-	b=kgIIKJXcQX2ZAp+nQU6tiU8dEvyQdKyygpPIInuOExrx2uIhJikkJrxlCPDnbnhYk
-	 oS/jKKEnIL2xLAoqrtM+ekgbe/MM8HC3Bilf8Jb0uVdicBIO7nUN8EX7fRuzSYDZI2
-	 8KAM+7nSEjFX9sfGP5GUjRIkzEMRbRGOP4bNXrQo=
+	s=default; t=1594818093;
+	bh=SZ93HvN5hT6+SbAbEMCbWN+cCEkXYiCiaxjJCORj4vA=;
+	h=From:To:Cc:Subject:Date:List-ID:From;
+	b=umk8QtOxsA1If6Z7btJtLhxYNjjj5rvn9LFu4kgFg68HGkn+jMr+uNgQ4o0tBWfSI
+	 Vh4/CsfJIfKd3IOLOZaPTmtMRmPq39Nf47TFdIic/NpX4dJk3lOQVKOpNzyWrXy7CC
+	 qOPTacPVJbYAkEVrLGG7m/EH9kInKHAUgtlxlQc4=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730553AbgGOMBx (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 15 Jul 2020 08:01:53 -0400
-Received: from mail.kernel.org ([198.145.29.99]:53960 "EHLO mail.kernel.org"
+        id S1729900AbgGONBd (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 15 Jul 2020 09:01:33 -0400
+Received: from mail.kernel.org ([198.145.29.99]:55442 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728263AbgGOMBw (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Wed, 15 Jul 2020 08:01:52 -0400
-Received: from localhost (unknown [122.171.202.192])
+        id S1726335AbgGONBd (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Wed, 15 Jul 2020 09:01:33 -0400
+Received: from localhost.localdomain (unknown [122.171.202.192])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id CAD1C20658;
-        Wed, 15 Jul 2020 12:01:51 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 4A59220657;
+        Wed, 15 Jul 2020 13:01:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1594814512;
-        bh=Asm2zKeo6RUzv3qZh0M/yLSCpflT44ffhplUnINxP60=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=KW3gGmQZA89N4eAtDMQ9aeeHQkuGpSOV0nlqEqLD+4oUyFPWRlcZMmhEp1sQBvei+
-         6Mc8nfFxVskvuvwh4Ag5QXE4NSOBrV6QSBbPZ5uhXBGXaYRRyZ0k/0YbnMYyfzML9l
-         QJUAQVvrmhHBKXcDYB1xPq+V6y4LRB53IDboT1VA=
-Date:   Wed, 15 Jul 2020 17:31:45 +0530
+        s=default; t=1594818092;
+        bh=SZ93HvN5hT6+SbAbEMCbWN+cCEkXYiCiaxjJCORj4vA=;
+        h=From:To:Cc:Subject:Date:From;
+        b=mFkrVXx991rb6Q2Vgw0Woxo9kEiRRm1FatgxdV6hQS+atmhVJff5VMbjD85Wuve8/
+         BEx8NtB50ySWa5YVzAd/brMyKLe1yDOiSMYIb8zBp2ReOMvxZMlMKqHnvXxYfnzprH
+         l4jZo7RviEbInXImJgWynSLywuBbXe7ZLaS+ZK94=
 From:   Vinod Koul <vkoul@kernel.org>
-To:     Serge Semin <Sergey.Semin@baikalelectronics.ru>
-Cc:     Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-        Viresh Kumar <vireshk@kernel.org>,
-        Dan Williams <dan.j.williams@intel.com>,
-        Alexey Malahov <Alexey.Malahov@baikalelectronics.ru>,
-        Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Rob Herring <robh+dt@kernel.org>, linux-mips@vger.kernel.org,
-        devicetree@vger.kernel.org, dmaengine@vger.kernel.org,
+To:     dmaengine@vger.kernel.org
+Cc:     Vinod Koul <vkoul@kernel.org>, Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
         linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v7 08/11] dmaengine: dw: Add dummy device_caps callback
-Message-ID: <20200715120145.GL34333@vkoul-mobl>
-References: <20200709224550.15539-1-Sergey.Semin@baikalelectronics.ru>
- <20200709224550.15539-9-Sergey.Semin@baikalelectronics.ru>
- <20200710085123.GF3703480@smile.fi.intel.com>
- <20200710094510.j6ugxygkadxex53c@mobilestation>
+Subject: [PATCH] dmaengine: imx-sdma: remove always true comparisons
+Date:   Wed, 15 Jul 2020 18:31:22 +0530
+Message-Id: <20200715130122.39873-1-vkoul@kernel.org>
+X-Mailer: git-send-email 2.26.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200710094510.j6ugxygkadxex53c@mobilestation>
+Content-Transfer-Encoding: 8bit
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On 10-07-20, 12:45, Serge Semin wrote:
-> On Fri, Jul 10, 2020 at 11:51:23AM +0300, Andy Shevchenko wrote:
-> > On Fri, Jul 10, 2020 at 01:45:47AM +0300, Serge Semin wrote:
-> > > Since some DW DMA controllers (like one installed on Baikal-T1 SoC) may
-> > > have non-uniform DMA capabilities per device channels, let's add
-> > > the DW DMA specific device_caps callback to expose that specifics up to
-> > > the DMA consumer. It's a dummy function for now. We'll fill it in with
-> > > capabilities overrides in the next commits.
-> > 
-> 
-> > Just a reminder (mainly to Vinod) of my view to this.
-> > Unneeded churn, should be folded to patch 9.
-> 
-> Just to remind (mainly to Vinod). That's Andy's bikeshedding.
-> This isn't a churn, since it's totally normal to design the patchset in this way:
-> introduce a callback, then fill it in with functionality.
+sdmac->event_id0 is of type unsigned int and hence can never be less
+than zero. Driver compares this at couple of places with greater than or
+equal to zero, these are always true so should be dropped
 
-Looking at both patches, they do one thing, so please fold them in..
+drivers/dma/imx-sdma.c:1336:23: warning: comparison of unsigned expression >= 0 is always true [-Wtype-limits]
+drivers/dma/imx-sdma.c:1637:23: warning: comparison of unsigned expression >= 0 is always true [-Wtype-limits]
 
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+---
+ drivers/dma/imx-sdma.c | 11 ++++-------
+ 1 file changed, 4 insertions(+), 7 deletions(-)
+
+diff --git a/drivers/dma/imx-sdma.c b/drivers/dma/imx-sdma.c
+index b8cfc9d5f1a2..4f8d8f5e1132 100644
+--- a/drivers/dma/imx-sdma.c
++++ b/drivers/dma/imx-sdma.c
+@@ -1333,8 +1333,7 @@ static void sdma_free_chan_resources(struct dma_chan *chan)
+ 
+ 	sdma_channel_synchronize(chan);
+ 
+-	if (sdmac->event_id0 >= 0)
+-		sdma_event_disable(sdmac, sdmac->event_id0);
++	sdma_event_disable(sdmac, sdmac->event_id0);
+ 	if (sdmac->event_id1)
+ 		sdma_event_disable(sdmac, sdmac->event_id1);
+ 
+@@ -1634,11 +1633,9 @@ static int sdma_config(struct dma_chan *chan,
+ 	memcpy(&sdmac->slave_config, dmaengine_cfg, sizeof(*dmaengine_cfg));
+ 
+ 	/* Set ENBLn earlier to make sure dma request triggered after that */
+-	if (sdmac->event_id0 >= 0) {
+-		if (sdmac->event_id0 >= sdmac->sdma->drvdata->num_events)
+-			return -EINVAL;
+-		sdma_event_enable(sdmac, sdmac->event_id0);
+-	}
++	if (sdmac->event_id0 >= sdmac->sdma->drvdata->num_events)
++		return -EINVAL;
++	sdma_event_enable(sdmac, sdmac->event_id0);
+ 
+ 	if (sdmac->event_id1) {
+ 		if (sdmac->event_id1 >= sdmac->sdma->drvdata->num_events)
 -- 
-~Vinod
+2.26.2
+
