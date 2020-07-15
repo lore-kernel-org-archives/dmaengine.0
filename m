@@ -2,102 +2,89 @@ Return-Path: <SRS0=oHFp=A2=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=unavailable
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-12.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EF745C433E0
-	for <dmaengine@archiver.kernel.org>; Wed, 15 Jul 2020 13:01:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 64688C433E1
+	for <dmaengine@archiver.kernel.org>; Wed, 15 Jul 2020 13:17:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C03432071B
-	for <dmaengine@archiver.kernel.org>; Wed, 15 Jul 2020 13:01:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1594818093;
-	bh=SZ93HvN5hT6+SbAbEMCbWN+cCEkXYiCiaxjJCORj4vA=;
-	h=From:To:Cc:Subject:Date:List-ID:From;
-	b=umk8QtOxsA1If6Z7btJtLhxYNjjj5rvn9LFu4kgFg68HGkn+jMr+uNgQ4o0tBWfSI
-	 Vh4/CsfJIfKd3IOLOZaPTmtMRmPq39Nf47TFdIic/NpX4dJk3lOQVKOpNzyWrXy7CC
-	 qOPTacPVJbYAkEVrLGG7m/EH9kInKHAUgtlxlQc4=
+	by mail.kernel.org (Postfix) with ESMTP id 34F5B20720
+	for <dmaengine@archiver.kernel.org>; Wed, 15 Jul 2020 13:17:12 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="m8sYgo1T"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729900AbgGONBd (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 15 Jul 2020 09:01:33 -0400
-Received: from mail.kernel.org ([198.145.29.99]:55442 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726335AbgGONBd (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Wed, 15 Jul 2020 09:01:33 -0400
-Received: from localhost.localdomain (unknown [122.171.202.192])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 4A59220657;
-        Wed, 15 Jul 2020 13:01:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1594818092;
-        bh=SZ93HvN5hT6+SbAbEMCbWN+cCEkXYiCiaxjJCORj4vA=;
-        h=From:To:Cc:Subject:Date:From;
-        b=mFkrVXx991rb6Q2Vgw0Woxo9kEiRRm1FatgxdV6hQS+atmhVJff5VMbjD85Wuve8/
-         BEx8NtB50ySWa5YVzAd/brMyKLe1yDOiSMYIb8zBp2ReOMvxZMlMKqHnvXxYfnzprH
-         l4jZo7RviEbInXImJgWynSLywuBbXe7ZLaS+ZK94=
-From:   Vinod Koul <vkoul@kernel.org>
-To:     dmaengine@vger.kernel.org
-Cc:     Vinod Koul <vkoul@kernel.org>, Shawn Guo <shawnguo@kernel.org>,
+        id S1731399AbgGONRL (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 15 Jul 2020 09:17:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40168 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729900AbgGONRL (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Wed, 15 Jul 2020 09:17:11 -0400
+Received: from mail-lj1-x243.google.com (mail-lj1-x243.google.com [IPv6:2a00:1450:4864:20::243])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 331F5C061755;
+        Wed, 15 Jul 2020 06:17:11 -0700 (PDT)
+Received: by mail-lj1-x243.google.com with SMTP id q7so2581197ljm.1;
+        Wed, 15 Jul 2020 06:17:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=bEwgMBO4CkCRyPxAj0lTdV+4ATE/erDN2sSnoSXTtQw=;
+        b=m8sYgo1TlWX73BM93okyH8xj7WUttmC11x9qEIUo/zibifo1nh5ZcQsERHeJaJewjW
+         tcgNo3ORhZc2suTAPZcukRdt1TnTSw4IiTQtgZvuVd+pc66IdMGJs3IdJOqgmgA5e6cx
+         SY7KgjSV2aEuDXsg7mCElRk+6SK+oYJ6k78rICT7lf+B5CxV6mduxkT2xJ9Ni+bLUOnp
+         e876KK6GVcetbSKDa31pyoOvNYomMm9ob6arRuwqLB2rXer9C32yuTqIcdhXdT73fU1x
+         S8bVioJjWZAFx+j+Hcd32CZJiOtff5yUY5apMLajgSvXpiKFEi5lhvPcFNghv/Eatan2
+         8ukg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=bEwgMBO4CkCRyPxAj0lTdV+4ATE/erDN2sSnoSXTtQw=;
+        b=GVB3TNVvWyKUcDzAtEUm2DmS0pUMNht6dnblSRFE7liqwvEuchU0n882x9XkRvV55F
+         qxmeo+5YZ8JCEHmcr7E/zERj7Ohzo5dQP01AV0r9RfG3qBfkdMqwijLar+kPXJq2Kijb
+         9xLkZ5H8E6RwKg/ebgDSmMGhvZVqFfbZ98tTQdG8njbQHpFoG+SdmA4h+3a1ut3OOYeZ
+         XTwHYJECswjRx1U31Igzkl1p7t2H1wTFyCjMdrfQm7rcpSxqKYej1uC67yjAjBvTmnMZ
+         WL5nT7okdXZ6/DT9sa6ai598BH0DBLvsOjRGA0bFbUFhtDovtD/kMuJbZ86t9U8JXS7o
+         Swew==
+X-Gm-Message-State: AOAM530aqUf+rXvTmZ+UDpn2FlhPvfcHnlm+ySNg6tOzIDNelm23sSIH
+        r5F1t+EjyYNtWuN/jyv0hkMULIsVpWB7yv/zXPx0RaIvCmw=
+X-Google-Smtp-Source: ABdhPJx4jWJ6/8Zsae7+H8le5CB8WlKJdlAF874+/MJXg1hFkx4IQSi6sMt//gt8ycigBncbc7AhHnUCB18TyxVQu5U=
+X-Received: by 2002:a2e:808d:: with SMTP id i13mr4926068ljg.452.1594819029474;
+ Wed, 15 Jul 2020 06:17:09 -0700 (PDT)
+MIME-Version: 1.0
+References: <20200715130122.39873-1-vkoul@kernel.org>
+In-Reply-To: <20200715130122.39873-1-vkoul@kernel.org>
+From:   Fabio Estevam <festevam@gmail.com>
+Date:   Wed, 15 Jul 2020 10:16:57 -0300
+Message-ID: <CAOMZO5AYWKw2RBjt+sEveejzwmD1o0768FiCfa9ObHupENsweQ@mail.gmail.com>
+Subject: Re: [PATCH] dmaengine: imx-sdma: remove always true comparisons
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     dmaengine@vger.kernel.org, Shawn Guo <shawnguo@kernel.org>,
         Sascha Hauer <s.hauer@pengutronix.de>,
         Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
         NXP Linux Team <linux-imx@nxp.com>,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH] dmaengine: imx-sdma: remove always true comparisons
-Date:   Wed, 15 Jul 2020 18:31:22 +0530
-Message-Id: <20200715130122.39873-1-vkoul@kernel.org>
-X-Mailer: git-send-email 2.26.2
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        linux-kernel <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-sdmac->event_id0 is of type unsigned int and hence can never be less
-than zero. Driver compares this at couple of places with greater than or
-equal to zero, these are always true so should be dropped
+Hi Vinod,
 
-drivers/dma/imx-sdma.c:1336:23: warning: comparison of unsigned expression >= 0 is always true [-Wtype-limits]
-drivers/dma/imx-sdma.c:1637:23: warning: comparison of unsigned expression >= 0 is always true [-Wtype-limits]
+On Wed, Jul 15, 2020 at 10:01 AM Vinod Koul <vkoul@kernel.org> wrote:
+>
+> sdmac->event_id0 is of type unsigned int and hence can never be less
+> than zero. Driver compares this at couple of places with greater than or
+> equal to zero, these are always true so should be dropped
+>
+> drivers/dma/imx-sdma.c:1336:23: warning: comparison of unsigned expression >= 0 is always true [-Wtype-limits]
+> drivers/dma/imx-sdma.c:1637:23: warning: comparison of unsigned expression >= 0 is always true [-Wtype-limits]
+>
+> Signed-off-by: Vinod Koul <vkoul@kernel.org>
 
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
----
- drivers/dma/imx-sdma.c | 11 ++++-------
- 1 file changed, 4 insertions(+), 7 deletions(-)
-
-diff --git a/drivers/dma/imx-sdma.c b/drivers/dma/imx-sdma.c
-index b8cfc9d5f1a2..4f8d8f5e1132 100644
---- a/drivers/dma/imx-sdma.c
-+++ b/drivers/dma/imx-sdma.c
-@@ -1333,8 +1333,7 @@ static void sdma_free_chan_resources(struct dma_chan *chan)
- 
- 	sdma_channel_synchronize(chan);
- 
--	if (sdmac->event_id0 >= 0)
--		sdma_event_disable(sdmac, sdmac->event_id0);
-+	sdma_event_disable(sdmac, sdmac->event_id0);
- 	if (sdmac->event_id1)
- 		sdma_event_disable(sdmac, sdmac->event_id1);
- 
-@@ -1634,11 +1633,9 @@ static int sdma_config(struct dma_chan *chan,
- 	memcpy(&sdmac->slave_config, dmaengine_cfg, sizeof(*dmaengine_cfg));
- 
- 	/* Set ENBLn earlier to make sure dma request triggered after that */
--	if (sdmac->event_id0 >= 0) {
--		if (sdmac->event_id0 >= sdmac->sdma->drvdata->num_events)
--			return -EINVAL;
--		sdma_event_enable(sdmac, sdmac->event_id0);
--	}
-+	if (sdmac->event_id0 >= sdmac->sdma->drvdata->num_events)
-+		return -EINVAL;
-+	sdma_event_enable(sdmac, sdmac->event_id0);
- 
- 	if (sdmac->event_id1) {
- 		if (sdmac->event_id1 >= sdmac->sdma->drvdata->num_events)
--- 
-2.26.2
-
+I have already fixed this problem and you have already applied my patch:
+https://git.kernel.org/pub/scm/linux/kernel/git/vkoul/dmaengine.git/commit/?h=next&id=2f57b8d57673af2c2caf8c2c7bef01be940a5c2c
