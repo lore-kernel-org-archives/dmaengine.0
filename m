@@ -7,49 +7,49 @@ X-Spam-Status: No, score=-13.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 08808C4347E
-	for <dmaengine@archiver.kernel.org>; Mon, 20 Jul 2020 21:41:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1A096C3A5A9
+	for <dmaengine@archiver.kernel.org>; Mon, 20 Jul 2020 21:42:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D1047208E4
-	for <dmaengine@archiver.kernel.org>; Mon, 20 Jul 2020 21:41:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D0CE722C7B
+	for <dmaengine@archiver.kernel.org>; Mon, 20 Jul 2020 21:42:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1595281303;
-	bh=HE1tTQZPf/uXLBnCJG+o1pp+WMQMH2wEqncDBLCC6p8=;
+	s=default; t=1595281334;
+	bh=LBn9Xwobhg/JDOcAvZgo6y0lgAMYmGyI+0wKy31ZQCA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:List-ID:From;
-	b=QGAQh1ZHgvznpobJIL4xFocbaL6I0bgMWW9RREFZbKLGV6aCvqfYs9YmiiwxpZuMc
-	 Spaw7SyNkOTTx3OQDXJe59E6tUeXjlJW7gRVEtEvLY8b2SWu4ExCFF6c3y7laTGlup
-	 bHJ5E7xqQqxa47uLcmxmqEpFtmK6ly8NphwW9Yo0=
+	b=hQlCaTx3APsQCvaPYtoo0u8yWVhPYt7OQeMsNhw27QptmJaMlIqEHDrBfewRDOAHR
+	 42LKX/8GMDUtrYyLWblZqlNJSEH49QGzvoogeALHam+d1kW/gcUzoKnir8F7XOW5Ge
+	 XenWr6lktpXKNMwCBaa06eoPqLZ5i9/TVU8Cj0cY=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728468AbgGTVj1 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 20 Jul 2020 17:39:27 -0400
-Received: from mail.kernel.org ([198.145.29.99]:59020 "EHLO mail.kernel.org"
+        id S1728766AbgGTVmN (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 20 Jul 2020 17:42:13 -0400
+Received: from mail.kernel.org ([198.145.29.99]:58162 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728456AbgGTVj0 (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Mon, 20 Jul 2020 17:39:26 -0400
+        id S1728333AbgGTVjE (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Mon, 20 Jul 2020 17:39:04 -0400
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id B66D022CBB;
-        Mon, 20 Jul 2020 21:39:24 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 281A5207FC;
+        Mon, 20 Jul 2020 21:39:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1595281165;
-        bh=HE1tTQZPf/uXLBnCJG+o1pp+WMQMH2wEqncDBLCC6p8=;
+        s=default; t=1595281143;
+        bh=LBn9Xwobhg/JDOcAvZgo6y0lgAMYmGyI+0wKy31ZQCA=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=NWs8h0UG0XNPhWNqzzFoard324nVeAgw6945E8GtkDVnasSdCVsNXHN9sETj+QjyE
-         TcXZ1f8s7y92H7rzIzxpYUMCMwYJi0T22/ot8sjC18uOj0Bl4+HluiC/BjtIe6wMhY
-         kQthyg06NcPu93pzM2ySNlmC6gY7lMHpKDxz5Doo=
+        b=U1R7nSIlwr8tmLR+NRHQFAqygZPMFRR28AiIBUyLNVOqyTBqP6cbpIsUeMAoeLPdP
+         Z+0jakSruLq2SI/bxwLQadr39WKQ0VKDfTYKiwrNV+GP5kxfvPVsS0TKiASlPb7DMX
+         3hbTIkPks6LYzmVk14Vh1+VxtIxDGvzCntUuv2pY=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Cc:     Leonid Ravich <Leonid.Ravich@emc.com>,
         Dave Jiang <dave.jiang@intel.com>,
         Vinod Koul <vkoul@kernel.org>, Sasha Levin <sashal@kernel.org>,
         dmaengine@vger.kernel.org
-Subject: [PATCH AUTOSEL 4.14 08/13] dmaengine: ioat setting ioat timeout as module parameter
-Date:   Mon, 20 Jul 2020 17:39:09 -0400
-Message-Id: <20200720213914.407919-8-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 4.19 10/19] dmaengine: ioat setting ioat timeout as module parameter
+Date:   Mon, 20 Jul 2020 17:38:41 -0400
+Message-Id: <20200720213851.407715-10-sashal@kernel.org>
 X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20200720213914.407919-1-sashal@kernel.org>
-References: <20200720213914.407919-1-sashal@kernel.org>
+In-Reply-To: <20200720213851.407715-1-sashal@kernel.org>
+References: <20200720213851.407715-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
@@ -78,7 +78,7 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  2 files changed, 12 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/dma/ioat/dma.c b/drivers/dma/ioat/dma.c
-index e3899ae429e0f..4c2b41beaf638 100644
+index b94cece58b984..890cadf3ec5d8 100644
 --- a/drivers/dma/ioat/dma.c
 +++ b/drivers/dma/ioat/dma.c
 @@ -38,6 +38,18 @@
@@ -101,7 +101,7 @@ index e3899ae429e0f..4c2b41beaf638 100644
  	"DMA Transfer Source Address Error",
  	"DMA Transfer Destination Address Error",
 diff --git a/drivers/dma/ioat/dma.h b/drivers/dma/ioat/dma.h
-index 56200eefcf5ee..01f9299572303 100644
+index 1ab42ec2b7ff1..b061db2013324 100644
 --- a/drivers/dma/ioat/dma.h
 +++ b/drivers/dma/ioat/dma.h
 @@ -111,8 +111,6 @@ struct ioatdma_chan {
