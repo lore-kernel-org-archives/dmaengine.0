@@ -7,46 +7,46 @@ X-Spam-Status: No, score=-13.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 915F5C433E4
-	for <dmaengine@archiver.kernel.org>; Mon, 20 Jul 2020 21:45:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7C732C432C3
+	for <dmaengine@archiver.kernel.org>; Mon, 20 Jul 2020 21:45:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 612FE208E4
-	for <dmaengine@archiver.kernel.org>; Mon, 20 Jul 2020 21:45:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 50650206E9
+	for <dmaengine@archiver.kernel.org>; Mon, 20 Jul 2020 21:45:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1595281547;
-	bh=eejwkf5aLP13LBU3eN1eFu50Bc9f75o89K27gI+G6Oo=;
+	s=default; t=1595281556;
+	bh=V5OWNkTgdBCyEL+REiwW5x93P/nnXPsdFaS/dcNSbK4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:List-ID:From;
-	b=Kp1w+8UGlCFqxqISIL8+wh233t8ZcWplPe5aazAC3v+UdGjb2JVjaWBR2twVc5IcT
-	 mS/xE3Escd+ops0llswnuZ7Lxpz5OHAmRA6XqbEuMKIUO3I2go6CZWypVMs6f8qHj5
-	 rCImAmMchPDdVB6lShEhoGZrLoOpzeFO9wxKX/dg=
+	b=2OHg3dRNn4qhTcefUrhqHIwXZPkmVrn/XeKsACOJG2Gm/tA21ROV6HeiT9rypQTKL
+	 HM4kCdVWnuCKt85BWuOmjkO9lsgrjbJmxyDD8BmBb6l7j55DLDc5cWNBZsWaDIXULi
+	 vxhPMP8xtIxCSFLZSTQz87s80fSpwMAxSo8mWt+s=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726988AbgGTVpq (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 20 Jul 2020 17:45:46 -0400
-Received: from mail.kernel.org ([198.145.29.99]:55300 "EHLO mail.kernel.org"
+        id S1728582AbgGTVpv (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 20 Jul 2020 17:45:51 -0400
+Received: from mail.kernel.org ([198.145.29.99]:55222 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726998AbgGTVh1 (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Mon, 20 Jul 2020 17:37:27 -0400
+        id S1726959AbgGTVhZ (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Mon, 20 Jul 2020 17:37:25 -0400
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 3EE7022D08;
-        Mon, 20 Jul 2020 21:37:26 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id C70F522BF5;
+        Mon, 20 Jul 2020 21:37:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1595281047;
-        bh=eejwkf5aLP13LBU3eN1eFu50Bc9f75o89K27gI+G6Oo=;
+        s=default; t=1595281044;
+        bh=V5OWNkTgdBCyEL+REiwW5x93P/nnXPsdFaS/dcNSbK4=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=0D8U8EmxGuO40Qy0mZaiknZcdlAUCXro8BwQrn8XpUm8wJVB4fHptzm8L2p3rrhKS
-         WGp7oNIAdopMurE5Z+Jsoz23/YCVCNUrlh01ehpUP6FOX1VP6o0VEg9LXxNdUBVX9z
-         gbz+joY22vR6JavgSZUa3U+mZ4ZJ/uBRlVWNOjwA=
+        b=No8mhGNAWIozYCkZNZfAlyZtihUAzmn5Lgl2+8p+FttA1HaaHwjfOXb+WLTY/T88t
+         PG5hZMyxcNDqSK/TNRCPJCxAYyt0rZPneGZNAypoJl71T4u0QBJoCn9QNnZZYPZbma
+         FMMPTZl4/gT6Q2OXqmVi9CxZ+U5nrkuEPCPC/iPc=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Dinghao Liu <dinghao.liu@zju.edu.cn>,
-        Jon Hunter <jonathanh@nvidia.com>,
+Cc:     Dave Jiang <dave.jiang@intel.com>,
+        Mona Hossain <mona.hossain@intel.com>,
         Vinod Koul <vkoul@kernel.org>, Sasha Levin <sashal@kernel.org>,
-        dmaengine@vger.kernel.org, linux-tegra@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.7 09/40] dmaengine: tegra210-adma: Fix runtime PM imbalance on error
-Date:   Mon, 20 Jul 2020 17:36:44 -0400
-Message-Id: <20200720213715.406997-9-sashal@kernel.org>
+        dmaengine@vger.kernel.org
+Subject: [PATCH AUTOSEL 5.7 07/40] dmaengine: idxd: fix hw descriptor fields for delta record
+Date:   Mon, 20 Jul 2020 17:36:42 -0400
+Message-Id: <20200720213715.406997-7-sashal@kernel.org>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20200720213715.406997-1-sashal@kernel.org>
 References: <20200720213715.406997-1-sashal@kernel.org>
@@ -59,47 +59,39 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-From: Dinghao Liu <dinghao.liu@zju.edu.cn>
+From: Dave Jiang <dave.jiang@intel.com>
 
-[ Upstream commit 5b78fac4b1ba731cf4177fdbc1e3a4661521bcd0 ]
+[ Upstream commit 0b8975bdc0cc5310d48d9bdd871cefebe1f94c99 ]
 
-pm_runtime_get_sync() increments the runtime PM usage counter even
-when it returns an error code. Thus a pairing decrement is needed on
-the error handling path to keep the counter balanced.
+Fix the hw descriptor fields for delta record in user exported idxd.h
+header. Missing the "expected result mask" field.
 
-Signed-off-by: Dinghao Liu <dinghao.liu@zju.edu.cn>
-Reviewed-by: Jon Hunter <jonathanh@nvidia.com>
-Link: https://lore.kernel.org/r/20200624064626.19855-1-dinghao.liu@zju.edu.cn
+Reported-by: Mona Hossain <mona.hossain@intel.com>
+Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+Link: https://lore.kernel.org/r/159120526866.65385.536565786678052944.stgit@djiang5-desk3.ch.intel.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/tegra210-adma.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ include/uapi/linux/idxd.h | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/dma/tegra210-adma.c b/drivers/dma/tegra210-adma.c
-index db58d7e4f9fec..c5fa2ef74abc7 100644
---- a/drivers/dma/tegra210-adma.c
-+++ b/drivers/dma/tegra210-adma.c
-@@ -658,6 +658,7 @@ static int tegra_adma_alloc_chan_resources(struct dma_chan *dc)
- 
- 	ret = pm_runtime_get_sync(tdc2dev(tdc));
- 	if (ret < 0) {
-+		pm_runtime_put_noidle(tdc2dev(tdc));
- 		free_irq(tdc->irq, tdc);
- 		return ret;
- 	}
-@@ -869,8 +870,10 @@ static int tegra_adma_probe(struct platform_device *pdev)
- 	pm_runtime_enable(&pdev->dev);
- 
- 	ret = pm_runtime_get_sync(&pdev->dev);
--	if (ret < 0)
-+	if (ret < 0) {
-+		pm_runtime_put_noidle(&pdev->dev);
- 		goto rpm_disable;
-+	}
- 
- 	ret = tegra_adma_init(tdma);
- 	if (ret)
+diff --git a/include/uapi/linux/idxd.h b/include/uapi/linux/idxd.h
+index 1f412fbf561bb..e103c1434e4b0 100644
+--- a/include/uapi/linux/idxd.h
++++ b/include/uapi/linux/idxd.h
+@@ -110,9 +110,12 @@ struct dsa_hw_desc {
+ 	uint16_t	rsvd1;
+ 	union {
+ 		uint8_t		expected_res;
++		/* create delta record */
+ 		struct {
+ 			uint64_t	delta_addr;
+ 			uint32_t	max_delta_size;
++			uint32_t 	delt_rsvd;
++			uint8_t 	expected_res_mask;
+ 		};
+ 		uint32_t	delta_rec_size;
+ 		uint64_t	dest2;
 -- 
 2.25.1
 
