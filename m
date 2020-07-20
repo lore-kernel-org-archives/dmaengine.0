@@ -7,44 +7,45 @@ X-Spam-Status: No, score=-13.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=unavailable
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A72B4C4332E
-	for <dmaengine@archiver.kernel.org>; Mon, 20 Jul 2020 21:46:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1C489C388CD
+	for <dmaengine@archiver.kernel.org>; Mon, 20 Jul 2020 21:46:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 862FF22C7B
-	for <dmaengine@archiver.kernel.org>; Mon, 20 Jul 2020 21:46:00 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E78CF206E9
+	for <dmaengine@archiver.kernel.org>; Mon, 20 Jul 2020 21:46:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1595281560;
-	bh=aDH47WXYmEoiCKBRtSqqp2kH1h4RsMqOn8BGWaxOkZc=;
+	s=default; t=1595281562;
+	bh=7ZwDsZ4nwQfIt3+eLbx/QoRboCYzk9f4FbCuTpaHnAQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:List-ID:From;
-	b=knbXU10wCTBQ2GhojhDkVV23+crzwNSuGk7ZKZVtNVyWTr5Mgv5oKlZvLXyJoacBV
-	 7VURLqM/o6dwXryqyQATbVwr1nYL3/0E8GjGuC0wHneTh6Coh04AaIooBuscAYJpUh
-	 82/ysjHznSsrs6qjjHRyNMhNBP213rMsQhOQevmk=
+	b=ZRSdnIV7+epp3WHfoLsoG1c96e4rnA9GW7ESFSlVdT4DTCEF4FEZPin3lzP/9nTaX
+	 zRnjLvmorM4cobAQPncPkcVV/6sADX4aLJ3+sKn8r0xUEI+ErNjaFHbKgF/AuFhIsW
+	 BjSocCaTJzq1YR99plRQfCOXgN+YzU4rGWE9Q2sA=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726964AbgGTVhZ (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 20 Jul 2020 17:37:25 -0400
-Received: from mail.kernel.org ([198.145.29.99]:55208 "EHLO mail.kernel.org"
+        id S1726933AbgGTVhW (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 20 Jul 2020 17:37:22 -0400
+Received: from mail.kernel.org ([198.145.29.99]:55108 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726428AbgGTVhX (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Mon, 20 Jul 2020 17:37:23 -0400
+        id S1726884AbgGTVhU (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Mon, 20 Jul 2020 17:37:20 -0400
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id A914722BEF;
-        Mon, 20 Jul 2020 21:37:22 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 3CA0A20717;
+        Mon, 20 Jul 2020 21:37:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1595281043;
-        bh=aDH47WXYmEoiCKBRtSqqp2kH1h4RsMqOn8BGWaxOkZc=;
+        s=default; t=1595281039;
+        bh=7ZwDsZ4nwQfIt3+eLbx/QoRboCYzk9f4FbCuTpaHnAQ=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=rGTJPkjytxr6zjmp1387xvCN1CvTC9uHqw18iAjQSHzgGZnDQdPknHR7sHUyhURpr
-         HTyuCgBn/SWKEnBEaL0jaXfkxReyIpvptKzg4L5LeyPbggC1GSaMiKMN3Peul2WPE8
-         1Wj5N7v0zIXYFFoFdxShsUr+iHW3RC9fSeItpMaw=
+        b=Z2vVCrezLctDF648m20M1F3O2vRqkie9uIFPWeaqqFwc8FQ9HXir/+Sqeg+BzEvJQ
+         wZ1jU4npi87KpOmTAFy+HXIndEVpPa1xNZgD1PDAsqqtVYMZGIvd6WBAi4saeecykY
+         hbuH4ZdHEWyVr1fyTvr0/m7YBALP+SJp0UUDztAM=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Yu Kuai <yukuai3@huawei.com>, Vinod Koul <vkoul@kernel.org>,
-        Sasha Levin <sashal@kernel.org>, dmaengine@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.7 06/40] dmaengine: ti: k3-udma: add missing put_device() call in of_xudma_dev_get()
-Date:   Mon, 20 Jul 2020 17:36:41 -0400
-Message-Id: <20200720213715.406997-6-sashal@kernel.org>
+Cc:     Peter Ujfalusi <peter.ujfalusi@ti.com>,
+        Vinod Koul <vkoul@kernel.org>, Sasha Levin <sashal@kernel.org>,
+        dmaengine@vger.kernel.org
+Subject: [PATCH AUTOSEL 5.7 03/40] dmaengine: ti: k3-udma: Fix cleanup code for alloc_chan_resources
+Date:   Mon, 20 Jul 2020 17:36:38 -0400
+Message-Id: <20200720213715.406997-3-sashal@kernel.org>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20200720213715.406997-1-sashal@kernel.org>
 References: <20200720213715.406997-1-sashal@kernel.org>
@@ -57,34 +58,105 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-From: Yu Kuai <yukuai3@huawei.com>
+From: Peter Ujfalusi <peter.ujfalusi@ti.com>
 
-[ Upstream commit 1438cde8fe9cb709b569f5829c4c892c0f3f15b3 ]
+[ Upstream commit 5a9377cc7421b59b13c9b90b8dc0aca332a1c958 ]
 
-if of_find_device_by_node() succeed and platform_get_drvdata() failed,
-of_xudma_dev_get() will return without put_device(), which will leak
-the memory.
+Some of the earlier errors should be sent to the error cleanup path to
+make sure that the uchan struct is reset, the dma_pool (if allocated) is
+released and memcpy channel pairs are released in a correct way.
 
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-Link: https://lore.kernel.org/r/20200618130110.582543-1-yukuai3@huawei.com
+Signed-off-by: Peter Ujfalusi <peter.ujfalusi@ti.com>
+Link: https://lore.kernel.org/r/20200527070612.636-2-peter.ujfalusi@ti.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/ti/k3-udma-private.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/dma/ti/k3-udma.c | 31 ++++++++++++++++---------------
+ 1 file changed, 16 insertions(+), 15 deletions(-)
 
-diff --git a/drivers/dma/ti/k3-udma-private.c b/drivers/dma/ti/k3-udma-private.c
-index 0b8f3dd6b1463..77e8e67d995b3 100644
---- a/drivers/dma/ti/k3-udma-private.c
-+++ b/drivers/dma/ti/k3-udma-private.c
-@@ -42,6 +42,7 @@ struct udma_dev *of_xudma_dev_get(struct device_node *np, const char *property)
- 	ud = platform_get_drvdata(pdev);
- 	if (!ud) {
- 		pr_debug("UDMA has not been probed\n");
-+		put_device(&pdev->dev);
- 		return ERR_PTR(-EPROBE_DEFER);
+diff --git a/drivers/dma/ti/k3-udma.c b/drivers/dma/ti/k3-udma.c
+index a90e154b0ae0d..2e20fab413b94 100644
+--- a/drivers/dma/ti/k3-udma.c
++++ b/drivers/dma/ti/k3-udma.c
+@@ -1773,7 +1773,8 @@ static int udma_alloc_chan_resources(struct dma_chan *chan)
+ 			dev_err(ud->ddev.dev,
+ 				"Descriptor pool allocation failed\n");
+ 			uc->use_dma_pool = false;
+-			return -ENOMEM;
++			ret = -ENOMEM;
++			goto err_cleanup;
+ 		}
  	}
  
+@@ -1793,16 +1794,18 @@ static int udma_alloc_chan_resources(struct dma_chan *chan)
+ 
+ 		ret = udma_get_chan_pair(uc);
+ 		if (ret)
+-			return ret;
++			goto err_cleanup;
+ 
+ 		ret = udma_alloc_tx_resources(uc);
+-		if (ret)
+-			return ret;
++		if (ret) {
++			udma_put_rchan(uc);
++			goto err_cleanup;
++		}
+ 
+ 		ret = udma_alloc_rx_resources(uc);
+ 		if (ret) {
+ 			udma_free_tx_resources(uc);
+-			return ret;
++			goto err_cleanup;
+ 		}
+ 
+ 		uc->config.src_thread = ud->psil_base + uc->tchan->id;
+@@ -1820,10 +1823,8 @@ static int udma_alloc_chan_resources(struct dma_chan *chan)
+ 			uc->id);
+ 
+ 		ret = udma_alloc_tx_resources(uc);
+-		if (ret) {
+-			uc->config.remote_thread_id = -1;
+-			return ret;
+-		}
++		if (ret)
++			goto err_cleanup;
+ 
+ 		uc->config.src_thread = ud->psil_base + uc->tchan->id;
+ 		uc->config.dst_thread = uc->config.remote_thread_id;
+@@ -1840,10 +1841,8 @@ static int udma_alloc_chan_resources(struct dma_chan *chan)
+ 			uc->id);
+ 
+ 		ret = udma_alloc_rx_resources(uc);
+-		if (ret) {
+-			uc->config.remote_thread_id = -1;
+-			return ret;
+-		}
++		if (ret)
++			goto err_cleanup;
+ 
+ 		uc->config.src_thread = uc->config.remote_thread_id;
+ 		uc->config.dst_thread = (ud->psil_base + uc->rchan->id) |
+@@ -1858,7 +1857,9 @@ static int udma_alloc_chan_resources(struct dma_chan *chan)
+ 		/* Can not happen */
+ 		dev_err(uc->ud->dev, "%s: chan%d invalid direction (%u)\n",
+ 			__func__, uc->id, uc->config.dir);
+-		return -EINVAL;
++		ret = -EINVAL;
++		goto err_cleanup;
++
+ 	}
+ 
+ 	/* check if the channel configuration was successful */
+@@ -1938,7 +1939,7 @@ static int udma_alloc_chan_resources(struct dma_chan *chan)
+ err_res_free:
+ 	udma_free_tx_resources(uc);
+ 	udma_free_rx_resources(uc);
+-
++err_cleanup:
+ 	udma_reset_uchan(uc);
+ 
+ 	if (uc->use_dma_pool) {
 -- 
 2.25.1
 
