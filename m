@@ -2,78 +2,104 @@ Return-Path: <SRS0=cHls=A7=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.0 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-13.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
+	autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C726AC433E2
-	for <dmaengine@archiver.kernel.org>; Mon, 20 Jul 2020 16:37:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4DEDCC4161F
+	for <dmaengine@archiver.kernel.org>; Mon, 20 Jul 2020 21:39:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B1B392176B
-	for <dmaengine@archiver.kernel.org>; Mon, 20 Jul 2020 16:37:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 24D5122D00
+	for <dmaengine@archiver.kernel.org>; Mon, 20 Jul 2020 21:39:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=default; t=1595281161;
+	bh=iEtFf7QMN19S5dmrOUJonugb+EIs3TYktwEmUKejVvI=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:List-ID:From;
+	b=UxjXUVEkPNVCraqcYau7ojtBidB+NncaiT2O2/1OZpW4TgdgxGDkeqzYpK0mT5fPD
+	 z0UrUmt6r3NrBHz/6KiZh/BprLnRJq6Sksz62aqqPnMM5MSxokDX3unHiehvlB257W
+	 Wr6QwHjoeR6I/p0ep2F6tRLgtgVtcl6CkeGTO1Ec=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731179AbgGTPvA (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 20 Jul 2020 11:51:00 -0400
-Received: from mga18.intel.com ([134.134.136.126]:15587 "EHLO mga18.intel.com"
+        id S1728426AbgGTVjU (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 20 Jul 2020 17:39:20 -0400
+Received: from mail.kernel.org ([198.145.29.99]:58738 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1731172AbgGTPu7 (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Mon, 20 Jul 2020 11:50:59 -0400
-IronPort-SDR: eA60C773CO9td2lPSQDdkd1Bf9YR/NhxASPGHMJQXntcO2UoiqAt+I/SZisu2NdBbzvRn/1mgh
- sFXgi4OR3KMw==
-X-IronPort-AV: E=McAfee;i="6000,8403,9688"; a="137422012"
-X-IronPort-AV: E=Sophos;i="5.75,375,1589266800"; 
-   d="scan'208";a="137422012"
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from orsmga002.jf.intel.com ([10.7.209.21])
-  by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Jul 2020 08:50:58 -0700
-IronPort-SDR: OI/9aKeP+ePuJtuh/0sVddO3NXzYVl4fJ4VniBbUWxRlDr3tYA7tGA0YSiyRuAB84FzwIT4+xg
- oTmnt836+Rqw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.75,375,1589266800"; 
-   d="scan'208";a="301306692"
-Received: from djiang5-desk3.ch.intel.com ([143.182.136.137])
-  by orsmga002.jf.intel.com with ESMTP; 20 Jul 2020 08:50:58 -0700
-Subject: [PATCH] dmaengine: idxd: add missing invalid flags field to
- completion
-From:   Dave Jiang <dave.jiang@intel.com>
-To:     vkoul@kernel.org
-Cc:     Nikhil Rao <nikhil.rao@intel.com>, dmaengine@vger.kernel.org
-Date:   Mon, 20 Jul 2020 08:50:58 -0700
-Message-ID: <159526025819.49266.13176787210106133664.stgit@djiang5-desk3.ch.intel.com>
-User-Agent: StGit/unknown-version
+        id S1728242AbgGTVjT (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Mon, 20 Jul 2020 17:39:19 -0400
+Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 4605622D07;
+        Mon, 20 Jul 2020 21:39:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1595281159;
+        bh=iEtFf7QMN19S5dmrOUJonugb+EIs3TYktwEmUKejVvI=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=VyCXWOadmWW1u6N3vcIAmG/GzMUpHUMWcU9D6sqL3lHOdrgpudS7gD0/laa5l9KuD
+         ZgeYdOeKgj1REt5Wp9CDAorag/GLuPGG9ZxZ8xDzJda0KlLqVfKScpLlDbFdfuCnXm
+         fu6XK4DTzwWG2FCLDezSQutEKnln4RTutYArhCqA=
+From:   Sasha Levin <sashal@kernel.org>
+To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
+Cc:     Dinghao Liu <dinghao.liu@zju.edu.cn>,
+        Jon Hunter <jonathanh@nvidia.com>,
+        Vinod Koul <vkoul@kernel.org>, Sasha Levin <sashal@kernel.org>,
+        dmaengine@vger.kernel.org, linux-tegra@vger.kernel.org
+Subject: [PATCH AUTOSEL 4.14 03/13] dmaengine: tegra210-adma: Fix runtime PM imbalance on error
+Date:   Mon, 20 Jul 2020 17:39:04 -0400
+Message-Id: <20200720213914.407919-3-sashal@kernel.org>
+X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20200720213914.407919-1-sashal@kernel.org>
+References: <20200720213914.407919-1-sashal@kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
+X-stable: review
+X-Patchwork-Hint: Ignore
+Content-Transfer-Encoding: 8bit
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Add missing "invalid flags" field to completion record struct.
+From: Dinghao Liu <dinghao.liu@zju.edu.cn>
 
-Reported-by: Nikhil Rao <nikhil.rao@intel.com>
-Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+[ Upstream commit 5b78fac4b1ba731cf4177fdbc1e3a4661521bcd0 ]
+
+pm_runtime_get_sync() increments the runtime PM usage counter even
+when it returns an error code. Thus a pairing decrement is needed on
+the error handling path to keep the counter balanced.
+
+Signed-off-by: Dinghao Liu <dinghao.liu@zju.edu.cn>
+Reviewed-by: Jon Hunter <jonathanh@nvidia.com>
+Link: https://lore.kernel.org/r/20200624064626.19855-1-dinghao.liu@zju.edu.cn
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/uapi/linux/idxd.h |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/dma/tegra210-adma.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/include/uapi/linux/idxd.h b/include/uapi/linux/idxd.h
-index e103c1434e4b..fdcdfe414223 100644
---- a/include/uapi/linux/idxd.h
-+++ b/include/uapi/linux/idxd.h
-@@ -181,6 +181,12 @@ struct dsa_completion_record {
- 	uint32_t		bytes_completed;
- 	uint64_t		fault_addr;
- 	union {
-+		/* common record */
-+		struct {
-+			uint32_t	invalid_flags:24;
-+			uint32_t	rsvd2:8;
-+		};
-+
- 		uint16_t	delta_rec_size;
- 		uint16_t	crc_val;
+diff --git a/drivers/dma/tegra210-adma.c b/drivers/dma/tegra210-adma.c
+index 045351f3549c1..86b45198fb962 100644
+--- a/drivers/dma/tegra210-adma.c
++++ b/drivers/dma/tegra210-adma.c
+@@ -583,6 +583,7 @@ static int tegra_adma_alloc_chan_resources(struct dma_chan *dc)
  
+ 	ret = pm_runtime_get_sync(tdc2dev(tdc));
+ 	if (ret < 0) {
++		pm_runtime_put_noidle(tdc2dev(tdc));
+ 		free_irq(tdc->irq, tdc);
+ 		return ret;
+ 	}
+@@ -764,8 +765,10 @@ static int tegra_adma_probe(struct platform_device *pdev)
+ 	pm_runtime_enable(&pdev->dev);
+ 
+ 	ret = pm_runtime_get_sync(&pdev->dev);
+-	if (ret < 0)
++	if (ret < 0) {
++		pm_runtime_put_noidle(&pdev->dev);
+ 		goto rpm_disable;
++	}
+ 
+ 	ret = tegra_adma_init(tdma);
+ 	if (ret)
+-- 
+2.25.1
 
