@@ -7,46 +7,46 @@ X-Spam-Status: No, score=-13.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 17A44C46466
-	for <dmaengine@archiver.kernel.org>; Mon, 20 Jul 2020 21:41:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 05273C4709E
+	for <dmaengine@archiver.kernel.org>; Mon, 20 Jul 2020 21:41:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DC90022BEF
-	for <dmaengine@archiver.kernel.org>; Mon, 20 Jul 2020 21:41:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D64EA22BEF
+	for <dmaengine@archiver.kernel.org>; Mon, 20 Jul 2020 21:41:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1595281276;
-	bh=vaM/NckY/1bulk+3pEPHiNnLx88iOZqkYgq2IUR8Qtw=;
+	s=default; t=1595281278;
+	bh=9JKDfUhdeddyJ9Fqh2SV91QEs3A3JERW2Zy48paEr1M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:List-ID:From;
-	b=RERJhOSiM4NUtLrXzmNvF0SjRh9ca5dw3aqwD6Bks8glzxw9Wi/SCCiFQ9XOr249O
-	 S4pZraAfPz30vLgJlskD1Ett1059m/WaqKg3qbvogq5+EWt9KGjRmQHat3j0fjTQhO
-	 I9sX/pTFQ+hIAg0r6W4oqi0sKRIUaZ4dEOGhr8SM=
+	b=MvaLnzlU6FOwxqi1IldcPDX1k8zfgcwlOb25dH/AhOjSSye8u48ZvRV53jbg0hyRL
+	 OX+g1TI1TO2jd2JbCp8p8EbIzLSJuux9hfT9wAfZ2anB76O3ezoxL35f7SJo8NcT4P
+	 DnQOOKpOwo6vdeWW2dx08fCXLY+Zlt6Rp3oFfQjg=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728731AbgGTVlH (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 20 Jul 2020 17:41:07 -0400
-Received: from mail.kernel.org ([198.145.29.99]:59546 "EHLO mail.kernel.org"
+        id S1728531AbgGTVji (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 20 Jul 2020 17:39:38 -0400
+Received: from mail.kernel.org ([198.145.29.99]:59448 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728533AbgGTVjj (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Mon, 20 Jul 2020 17:39:39 -0400
+        id S1728515AbgGTVjg (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Mon, 20 Jul 2020 17:39:36 -0400
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 1358D22CAF;
-        Mon, 20 Jul 2020 21:39:37 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id A1D5322BF5;
+        Mon, 20 Jul 2020 21:39:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1595281178;
-        bh=vaM/NckY/1bulk+3pEPHiNnLx88iOZqkYgq2IUR8Qtw=;
+        s=default; t=1595281176;
+        bh=9JKDfUhdeddyJ9Fqh2SV91QEs3A3JERW2Zy48paEr1M=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=TTS3L4lsPxPy+3Q6uh46s79q7NNrwsOYTxUgDund37/q4f43OVE0q/YGBajgQdJX/
-         5czt1yTm23TmzUctAP+zbwD5LRtqMob3ZiMB8wPTDnfrEbmED7pLLvn1dJe4NDlFoF
-         ep4cHgNWW39j07Q5FpX1s5jD8C/vI7VXQyJrkElM=
+        b=NhU1n7ifpEfNuKClFm4Eypgk4YgwtHJN6UTCuwoo3KDQvjiiMhQCw6qMV9DT6sHVY
+         Zea9hyTO/VC9b4X8yW+oglLOVzJALHozaulfGPeasWsTy/r8wwc2K3wIO9PKDGN6yP
+         KR/IkF87KusVLEsDnAF7XSRsoDQful7WLkSSKPdU=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Leonid Ravich <Leonid.Ravich@emc.com>,
-        Dave Jiang <dave.jiang@intel.com>,
+Cc:     Dinghao Liu <dinghao.liu@zju.edu.cn>,
+        Jon Hunter <jonathanh@nvidia.com>,
         Vinod Koul <vkoul@kernel.org>, Sasha Levin <sashal@kernel.org>,
-        dmaengine@vger.kernel.org
-Subject: [PATCH AUTOSEL 4.9 5/9] dmaengine: ioat setting ioat timeout as module parameter
-Date:   Mon, 20 Jul 2020 17:39:28 -0400
-Message-Id: <20200720213932.408089-5-sashal@kernel.org>
+        dmaengine@vger.kernel.org, linux-tegra@vger.kernel.org
+Subject: [PATCH AUTOSEL 4.9 3/9] dmaengine: tegra210-adma: Fix runtime PM imbalance on error
+Date:   Mon, 20 Jul 2020 17:39:26 -0400
+Message-Id: <20200720213932.408089-3-sashal@kernel.org>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20200720213932.408089-1-sashal@kernel.org>
 References: <20200720213932.408089-1-sashal@kernel.org>
@@ -59,60 +59,47 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-From: Leonid Ravich <Leonid.Ravich@emc.com>
+From: Dinghao Liu <dinghao.liu@zju.edu.cn>
 
-[ Upstream commit 87730ccbddcb48478b1b88e88b14e73424130764 ]
+[ Upstream commit 5b78fac4b1ba731cf4177fdbc1e3a4661521bcd0 ]
 
-DMA transaction time to completion is a function of PCI bandwidth,
-transaction size and a queue depth.  So hard coded value for timeouts
-might be wrong for some scenarios.
+pm_runtime_get_sync() increments the runtime PM usage counter even
+when it returns an error code. Thus a pairing decrement is needed on
+the error handling path to keep the counter balanced.
 
-Signed-off-by: Leonid Ravich <Leonid.Ravich@emc.com>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Link: https://lore.kernel.org/r/20200701184816.29138-1-leonid.ravich@dell.com
+Signed-off-by: Dinghao Liu <dinghao.liu@zju.edu.cn>
+Reviewed-by: Jon Hunter <jonathanh@nvidia.com>
+Link: https://lore.kernel.org/r/20200624064626.19855-1-dinghao.liu@zju.edu.cn
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/ioat/dma.c | 12 ++++++++++++
- drivers/dma/ioat/dma.h |  2 --
- 2 files changed, 12 insertions(+), 2 deletions(-)
+ drivers/dma/tegra210-adma.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/dma/ioat/dma.c b/drivers/dma/ioat/dma.c
-index 1389f0582e29b..c5a45c57b8b8d 100644
---- a/drivers/dma/ioat/dma.c
-+++ b/drivers/dma/ioat/dma.c
-@@ -38,6 +38,18 @@
+diff --git a/drivers/dma/tegra210-adma.c b/drivers/dma/tegra210-adma.c
+index c16c06b3dd2f4..54296e262deab 100644
+--- a/drivers/dma/tegra210-adma.c
++++ b/drivers/dma/tegra210-adma.c
+@@ -583,6 +583,7 @@ static int tegra_adma_alloc_chan_resources(struct dma_chan *dc)
  
- #include "../dmaengine.h"
+ 	ret = pm_runtime_get_sync(tdc2dev(tdc));
+ 	if (ret < 0) {
++		pm_runtime_put_noidle(tdc2dev(tdc));
+ 		free_irq(tdc->irq, tdc);
+ 		return ret;
+ 	}
+@@ -764,8 +765,10 @@ static int tegra_adma_probe(struct platform_device *pdev)
+ 	pm_runtime_enable(&pdev->dev);
  
-+int completion_timeout = 200;
-+module_param(completion_timeout, int, 0644);
-+MODULE_PARM_DESC(completion_timeout,
-+		"set ioat completion timeout [msec] (default 200 [msec])");
-+int idle_timeout = 2000;
-+module_param(idle_timeout, int, 0644);
-+MODULE_PARM_DESC(idle_timeout,
-+		"set ioat idel timeout [msec] (default 2000 [msec])");
-+
-+#define IDLE_TIMEOUT msecs_to_jiffies(idle_timeout)
-+#define COMPLETION_TIMEOUT msecs_to_jiffies(completion_timeout)
-+
- static char *chanerr_str[] = {
- 	"DMA Transfer Destination Address Error",
- 	"Next Descriptor Address Error",
-diff --git a/drivers/dma/ioat/dma.h b/drivers/dma/ioat/dma.h
-index a9bc1a15b0d16..b0152288983bc 100644
---- a/drivers/dma/ioat/dma.h
-+++ b/drivers/dma/ioat/dma.h
-@@ -111,8 +111,6 @@ struct ioatdma_chan {
- 	#define IOAT_RUN 5
- 	#define IOAT_CHAN_ACTIVE 6
- 	struct timer_list timer;
--	#define COMPLETION_TIMEOUT msecs_to_jiffies(100)
--	#define IDLE_TIMEOUT msecs_to_jiffies(2000)
- 	#define RESET_DELAY msecs_to_jiffies(100)
- 	struct ioatdma_device *ioat_dma;
- 	dma_addr_t completion_dma;
+ 	ret = pm_runtime_get_sync(&pdev->dev);
+-	if (ret < 0)
++	if (ret < 0) {
++		pm_runtime_put_noidle(&pdev->dev);
+ 		goto rpm_disable;
++	}
+ 
+ 	ret = tegra_adma_init(tdma);
+ 	if (ret)
 -- 
 2.25.1
 
