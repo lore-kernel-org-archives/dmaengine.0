@@ -2,330 +2,105 @@ Return-Path: <SRS0=CKwQ=BC=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.0 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-5.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,UNPARSEABLE_RELAY,USER_AGENT_SANE_2 autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5B229C4345D
-	for <dmaengine@archiver.kernel.org>; Thu, 23 Jul 2020 00:59:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B2CEDC433E4
+	for <dmaengine@archiver.kernel.org>; Thu, 23 Jul 2020 02:34:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3E62420825
-	for <dmaengine@archiver.kernel.org>; Thu, 23 Jul 2020 00:59:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9107C2084D
+	for <dmaengine@archiver.kernel.org>; Thu, 23 Jul 2020 02:34:15 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=mediatek.com header.i=@mediatek.com header.b="arU8Ru/y"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387571AbgGWA7X (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 22 Jul 2020 20:59:23 -0400
-Received: from mail.baikalelectronics.com ([87.245.175.226]:60862 "EHLO
-        mail.baikalelectronics.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387457AbgGWA66 (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Wed, 22 Jul 2020 20:58:58 -0400
-Received: from localhost (unknown [127.0.0.1])
-        by mail.baikalelectronics.ru (Postfix) with ESMTP id 3F9AA8030816;
-        Thu, 23 Jul 2020 00:58:52 +0000 (UTC)
-X-Virus-Scanned: amavisd-new at baikalelectronics.ru
-Received: from mail.baikalelectronics.ru ([127.0.0.1])
-        by localhost (mail.baikalelectronics.ru [127.0.0.1]) (amavisd-new, port 10024)
-        with ESMTP id Yf9c7L0uX4Av; Thu, 23 Jul 2020 03:58:50 +0300 (MSK)
-From:   Serge Semin <Sergey.Semin@baikalelectronics.ru>
-To:     Vinod Koul <vkoul@kernel.org>, Viresh Kumar <vireshk@kernel.org>,
-        Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-        Rob Herring <robh+dt@kernel.org>
-CC:     Serge Semin <Sergey.Semin@baikalelectronics.ru>,
-        Serge Semin <fancer.lancer@gmail.com>,
-        Alexey Malahov <Alexey.Malahov@baikalelectronics.ru>,
-        Pavel Parkhomenko <Pavel.Parkhomenko@baikalelectronics.ru>,
-        Peter Ujfalusi <peter.ujfalusi@ti.com>,
-        Andy Shevchenko <andy.shevchenko@gmail.com>,
-        <dmaengine@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, Rob Herring <robh@kernel.org>,
-        Viresh Kumar <viresh.kumar@linaro.org>
-Subject: [PATCH v8 01/10] dt-bindings: dma: dw: Convert DW DMAC to DT binding
-Date:   Thu, 23 Jul 2020 03:58:39 +0300
-Message-ID: <20200723005848.31907-2-Sergey.Semin@baikalelectronics.ru>
-In-Reply-To: <20200723005848.31907-1-Sergey.Semin@baikalelectronics.ru>
-References: <20200723005848.31907-1-Sergey.Semin@baikalelectronics.ru>
+        id S1733221AbgGWCeP (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 22 Jul 2020 22:34:15 -0400
+Received: from mailgw01.mediatek.com ([210.61.82.183]:24787 "EHLO
+        mailgw01.mediatek.com" rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1728914AbgGWCeO (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Wed, 22 Jul 2020 22:34:14 -0400
+X-UUID: c259162778874c56bb613c025876b752-20200723
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mediatek.com; s=dk;
+        h=Content-Transfer-Encoding:MIME-Version:Content-Type:References:In-Reply-To:Date:CC:To:From:Subject:Message-ID; bh=9hTIinPJ/86OaOzsDAjqdA+TQ7VtOw4pAcixEozya7A=;
+        b=arU8Ru/yuG0TpypuMhw6gbzfQiwEpS2Xq1YELHCSXKxHg//a1tsTOMYL9l1knqpJgtOP+vfOvScdQ8CaypLJmo7poMls//PwavUwLbCNVRIQoI0L6Q+8BFccV9/AAdCf6NBCfVnauxXoCTReJmAGdWnPxEL3D93nZblyBPsklwE=;
+X-UUID: c259162778874c56bb613c025876b752-20200723
+Received: from mtkcas08.mediatek.inc [(172.21.101.126)] by mailgw01.mediatek.com
+        (envelope-from <eastl.lee@mediatek.com>)
+        (Cellopoint E-mail Firewall v4.1.10 Build 0809 with TLS)
+        with ESMTP id 1258688521; Thu, 23 Jul 2020 10:34:11 +0800
+Received: from MTKCAS06.mediatek.inc (172.21.101.30) by
+ mtkmbs01n1.mediatek.inc (172.21.101.68) with Microsoft SMTP Server (TLS) id
+ 15.0.1497.2; Thu, 23 Jul 2020 10:34:10 +0800
+Received: from [172.21.77.33] (172.21.77.33) by MTKCAS06.mediatek.inc
+ (172.21.101.73) with Microsoft SMTP Server id 15.0.1497.2 via Frontend
+ Transport; Thu, 23 Jul 2020 10:34:07 +0800
+Message-ID: <1595471650.22392.12.camel@mtkswgap22>
+Subject: Re: [PATCH v6 2/4] dmaengine: mediatek-cqdma: remove redundant
+ queue structure
+From:   EastL <EastL.Lee@mediatek.com>
+To:     Vinod Koul <vkoul@kernel.org>
+CC:     Sean Wang <sean.wang@mediatek.com>, <robh+dt@kernel.org>,
+        <mark.rutland@arm.com>, <matthias.bgg@gmail.com>,
+        <dmaengine@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-mediatek@lists.infradead.org>, <devicetree@vger.kernel.org>,
+        <wsd_upstream@mediatek.com>, <cc.hwang@mediatek.com>
+Date:   Thu, 23 Jul 2020 10:34:10 +0800
+In-Reply-To: <20200715061957.GA34333@vkoul-mobl>
+References: <1593673564-4425-1-git-send-email-EastL.Lee@mediatek.com>
+         <1593673564-4425-3-git-send-email-EastL.Lee@mediatek.com>
+         <20200715061957.GA34333@vkoul-mobl>
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.2.3-0ubuntu6 
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7BIT
-Content-Type:   text/plain; charset=US-ASCII
-X-ClientProxiedBy: MAIL.baikal.int (192.168.51.25) To mail (192.168.51.25)
+X-MTK:  N
+Content-Transfer-Encoding: base64
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Modern device tree bindings are supposed to be created as YAML-files
-in accordance with dt-schema. This commit replaces the Synopsis
-Designware DMA controller legacy bare text bindings with YAML file.
-The only required prorties are "compatible", "reg", "#dma-cells" and
-"interrupts", which will be used by the driver to correctly find the
-controller memory region and handle its events. The rest of the properties
-are optional, since in case if either "dma-channels" or "dma-masters" isn't
-specified, the driver will attempt to auto-detect the IP core
-configuration.
-
-Signed-off-by: Serge Semin <Sergey.Semin@baikalelectronics.ru>
-Reviewed-by: Rob Herring <robh@kernel.org>
-Acked-by: Viresh Kumar <viresh.kumar@linaro.org>
-
----
-
-Changelog v2:
-- Rearrange SoBs.
-- Move $ref to the root level of the properties. So do do with the
-  constraints.
-- Discard default settings defined out of the property enum constraint.
-- Replace "additionalProperties: false" with "unevaluatedProperties: false"
-  property.
-- Remove a label definition from the binding example.
----
- .../bindings/dma/snps,dma-spear1340.yaml      | 161 ++++++++++++++++++
- .../devicetree/bindings/dma/snps-dma.txt      |  69 --------
- 2 files changed, 161 insertions(+), 69 deletions(-)
- create mode 100644 Documentation/devicetree/bindings/dma/snps,dma-spear1340.yaml
- delete mode 100644 Documentation/devicetree/bindings/dma/snps-dma.txt
-
-diff --git a/Documentation/devicetree/bindings/dma/snps,dma-spear1340.yaml b/Documentation/devicetree/bindings/dma/snps,dma-spear1340.yaml
-new file mode 100644
-index 000000000000..e7611840a7cf
---- /dev/null
-+++ b/Documentation/devicetree/bindings/dma/snps,dma-spear1340.yaml
-@@ -0,0 +1,161 @@
-+# SPDX-License-Identifier: GPL-2.0-only
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/dma/snps,dma-spear1340.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Synopsys Designware DMA Controller
-+
-+maintainers:
-+  - Viresh Kumar <vireshk@kernel.org>
-+  - Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-+
-+allOf:
-+  - $ref: "dma-controller.yaml#"
-+
-+properties:
-+  compatible:
-+    const: snps,dma-spear1340
-+
-+  "#dma-cells":
-+    const: 3
-+    description: |
-+      First cell is a phandle pointing to the DMA controller. Second one is
-+      the DMA request line number. Third cell is the memory master identifier
-+      for transfers on dynamically allocated channel. Fourth cell is the
-+      peripheral master identifier for transfers on an allocated channel.
-+
-+  reg:
-+    maxItems: 1
-+
-+  interrupts:
-+    maxItems: 1
-+
-+  clocks:
-+    maxItems: 1
-+
-+  clock-names:
-+    description: AHB interface reference clock.
-+    const: hclk
-+
-+  dma-channels:
-+    description: |
-+      Number of DMA channels supported by the controller. In case if
-+      not specified the driver will try to auto-detect this and
-+      the rest of the optional parameters.
-+    minimum: 1
-+    maximum: 8
-+
-+  dma-requests:
-+    minimum: 1
-+    maximum: 16
-+
-+  dma-masters:
-+    $ref: /schemas/types.yaml#definitions/uint32
-+    description: |
-+      Number of DMA masters supported by the controller. In case if
-+      not specified the driver will try to auto-detect this and
-+      the rest of the optional parameters.
-+    minimum: 1
-+    maximum: 4
-+
-+  chan_allocation_order:
-+    $ref: /schemas/types.yaml#definitions/uint32
-+    description: |
-+      DMA channels allocation order specifier. Zero means ascending order
-+      (first free allocated), while one - descending (last free allocated).
-+    default: 0
-+    enum: [0, 1]
-+
-+  chan_priority:
-+    $ref: /schemas/types.yaml#definitions/uint32
-+    description: |
-+      DMA channels priority order. Zero means ascending channels priority
-+      so the very first channel has the highest priority. While 1 means
-+      descending priority (the last channel has the highest priority).
-+    default: 0
-+    enum: [0, 1]
-+
-+  block_size:
-+    $ref: /schemas/types.yaml#definitions/uint32
-+    description: Maximum block size supported by the DMA controller.
-+    enum: [3, 7, 15, 31, 63, 127, 255, 511, 1023, 2047, 4095]
-+
-+  data-width:
-+    $ref: /schemas/types.yaml#/definitions/uint32-array
-+    description: Data bus width per each DMA master in bytes.
-+    items:
-+      maxItems: 4
-+      items:
-+        enum: [4, 8, 16, 32]
-+
-+  data_width:
-+    $ref: /schemas/types.yaml#/definitions/uint32-array
-+    deprecated: true
-+    description: |
-+      Data bus width per each DMA master in (2^n * 8) bits. This property is
-+      deprecated. It' usage is discouraged in favor of data-width one. Moreover
-+      the property incorrectly permits to define data-bus width of 8 and 16
-+      bits, which is impossible in accordance with DW DMAC IP-core data book.
-+    items:
-+      maxItems: 4
-+      items:
-+        enum:
-+          - 0 # 8 bits
-+          - 1 # 16 bits
-+          - 2 # 32 bits
-+          - 3 # 64 bits
-+          - 4 # 128 bits
-+          - 5 # 256 bits
-+        default: 0
-+
-+  multi-block:
-+    $ref: /schemas/types.yaml#/definitions/uint32-array
-+    description: |
-+      LLP-based multi-block transfer supported by hardware per
-+      each DMA channel.
-+    items:
-+      maxItems: 8
-+      items:
-+        enum: [0, 1]
-+        default: 1
-+
-+  snps,dma-protection-control:
-+    $ref: /schemas/types.yaml#definitions/uint32
-+    description: |
-+      Bits one-to-one passed to the AHB HPROT[3:1] bus. Each bit setting
-+      indicates the following features: bit 0 - privileged mode,
-+      bit 1 - DMA is bufferable, bit 2 - DMA is cacheable.
-+    default: 0
-+    minimum: 0
-+    maximum: 7
-+
-+unevaluatedProperties: false
-+
-+required:
-+  - compatible
-+  - "#dma-cells"
-+  - reg
-+  - interrupts
-+
-+examples:
-+  - |
-+    dma-controller@fc000000 {
-+      compatible = "snps,dma-spear1340";
-+      reg = <0xfc000000 0x1000>;
-+      interrupt-parent = <&vic1>;
-+      interrupts = <12>;
-+
-+      dma-channels = <8>;
-+      dma-requests = <16>;
-+      dma-masters = <4>;
-+      #dma-cells = <3>;
-+
-+      chan_allocation_order = <1>;
-+      chan_priority = <1>;
-+      block_size = <0xfff>;
-+      data-width = <8 8>;
-+      multi-block = <0 0 0 0 0 0 0 0>;
-+      snps,max-burst-len = <16 16 4 4 4 4 4 4>;
-+    };
-+...
-diff --git a/Documentation/devicetree/bindings/dma/snps-dma.txt b/Documentation/devicetree/bindings/dma/snps-dma.txt
-deleted file mode 100644
-index 0bedceed1963..000000000000
---- a/Documentation/devicetree/bindings/dma/snps-dma.txt
-+++ /dev/null
-@@ -1,69 +0,0 @@
--* Synopsys Designware DMA Controller
--
--Required properties:
--- compatible: "snps,dma-spear1340"
--- reg: Address range of the DMAC registers
--- interrupt: Should contain the DMAC interrupt number
--- dma-channels: Number of channels supported by hardware
--- dma-requests: Number of DMA request lines supported, up to 16
--- dma-masters: Number of AHB masters supported by the controller
--- #dma-cells: must be <3>
--- chan_allocation_order: order of allocation of channel, 0 (default): ascending,
--  1: descending
--- chan_priority: priority of channels. 0 (default): increase from chan 0->n, 1:
--  increase from chan n->0
--- block_size: Maximum block size supported by the controller
--- data-width: Maximum data width supported by hardware per AHB master
--  (in bytes, power of 2)
--
--
--Deprecated properties:
--- data_width: Maximum data width supported by hardware per AHB master
--  (0 - 8bits, 1 - 16bits, ..., 5 - 256bits)
--
--
--Optional properties:
--- multi-block: Multi block transfers supported by hardware. Array property with
--  one cell per channel. 0: not supported, 1 (default): supported.
--- snps,dma-protection-control: AHB HPROT[3:1] protection setting.
--  The default value is 0 (for non-cacheable, non-buffered,
--  unprivileged data access).
--  Refer to include/dt-bindings/dma/dw-dmac.h for possible values.
--
--Example:
--
--	dmahost: dma@fc000000 {
--		compatible = "snps,dma-spear1340";
--		reg = <0xfc000000 0x1000>;
--		interrupt-parent = <&vic1>;
--		interrupts = <12>;
--
--		dma-channels = <8>;
--		dma-requests = <16>;
--		dma-masters = <2>;
--		#dma-cells = <3>;
--		chan_allocation_order = <1>;
--		chan_priority = <1>;
--		block_size = <0xfff>;
--		data-width = <8 8>;
--	};
--
--DMA clients connected to the Designware DMA controller must use the format
--described in the dma.txt file, using a four-cell specifier for each channel.
--The four cells in order are:
--
--1. A phandle pointing to the DMA controller
--2. The DMA request line number
--3. Memory master for transfers on allocated channel
--4. Peripheral master for transfers on allocated channel
--
--Example:
--	
--	serial@e0000000 {
--		compatible = "arm,pl011", "arm,primecell";
--		reg = <0xe0000000 0x1000>;
--		interrupts = <0 35 0x4>;
--		dmas = <&dmahost 12 0 1>,
--			<&dmahost 13 1 0>;
--		dma-names = "rx", "rx";
--	};
--- 
-2.26.2
+T24gV2VkLCAyMDIwLTA3LTE1IGF0IDExOjQ5ICswNTMwLCBWaW5vZCBLb3VsIHdyb3RlOg0KPiBP
+biAwMi0wNy0yMCwgMTU6MDYsIEVhc3RMIExlZSB3cm90ZToNCj4gDQo+ID4gIHN0YXRpYyBlbnVt
+IGRtYV9zdGF0dXMgbXRrX2NxZG1hX3R4X3N0YXR1cyhzdHJ1Y3QgZG1hX2NoYW4gKmMsDQo+ID4g
+IAkJCQkJICAgZG1hX2Nvb2tpZV90IGNvb2tpZSwNCj4gPiAgCQkJCQkgICBzdHJ1Y3QgZG1hX3R4
+X3N0YXRlICp0eHN0YXRlKQ0KPiA+ICB7DQo+ID4gLQlzdHJ1Y3QgbXRrX2NxZG1hX3ZjaGFuICpj
+dmMgPSB0b19jcWRtYV92Y2hhbihjKTsNCj4gPiAtCXN0cnVjdCBtdGtfY3FkbWFfdmRlc2MgKmN2
+ZDsNCj4gPiAtCXN0cnVjdCB2aXJ0X2RtYV9kZXNjICp2ZDsNCj4gPiAtCWVudW0gZG1hX3N0YXR1
+cyByZXQ7DQo+ID4gLQl1bnNpZ25lZCBsb25nIGZsYWdzOw0KPiA+IC0Jc2l6ZV90IGJ5dGVzID0g
+MDsNCj4gPiAtDQo+ID4gLQlyZXQgPSBkbWFfY29va2llX3N0YXR1cyhjLCBjb29raWUsIHR4c3Rh
+dGUpOw0KPiA+IC0JaWYgKHJldCA9PSBETUFfQ09NUExFVEUgfHwgIXR4c3RhdGUpDQo+ID4gLQkJ
+cmV0dXJuIHJldDsNCj4gPiAtDQo+ID4gLQlzcGluX2xvY2tfaXJxc2F2ZSgmY3ZjLT52Yy5sb2Nr
+LCBmbGFncyk7DQo+ID4gLQl2ZCA9IG10a19jcWRtYV9maW5kX2FjdGl2ZV9kZXNjKGMsIGNvb2tp
+ZSk7DQo+ID4gLQlzcGluX3VubG9ja19pcnFyZXN0b3JlKCZjdmMtPnZjLmxvY2ssIGZsYWdzKTsN
+Cj4gPiAtDQo+ID4gLQlpZiAodmQpIHsNCj4gPiAtCQljdmQgPSB0b19jcWRtYV92ZGVzYyh2ZCk7
+DQo+ID4gLQkJYnl0ZXMgPSBjdmQtPnJlc2lkdWU7DQo+ID4gLQl9DQo+ID4gLQ0KPiA+IC0JZG1h
+X3NldF9yZXNpZHVlKHR4c3RhdGUsIGJ5dGVzKTsNCj4gDQo+IGFueSByZWFzb24gd2h5IHlvdSB3
+YW50IHRvIHJlbW92ZSBzZXR0aW5nIHJlc2lkdWU/DQpCZWNhdXNlIE1lZGlhdGVrIENRRE1BIEhX
+IGNhbid0IHN1cHBvcnQgcmVzaWR1ZS4NCj4gDQo+ID4gLXN0YXRpYyB2b2lkIG10a19jcWRtYV9m
+cmVlX2FjdGl2ZV9kZXNjKHN0cnVjdCBkbWFfY2hhbiAqYykNCj4gPiArc3RhdGljIGludCBtdGtf
+Y3FkbWFfdGVybWluYXRlX2FsbChzdHJ1Y3QgZG1hX2NoYW4gKmMpDQo+ID4gIHsNCj4gPiAgCXN0
+cnVjdCBtdGtfY3FkbWFfdmNoYW4gKmN2YyA9IHRvX2NxZG1hX3ZjaGFuKGMpOw0KPiA+IC0JYm9v
+bCBzeW5jX25lZWRlZCA9IGZhbHNlOw0KPiA+ICsJc3RydWN0IHZpcnRfZG1hX2NoYW4gKnZjID0g
+dG9fdmlydF9jaGFuKGMpOw0KPiA+ICAJdW5zaWduZWQgbG9uZyBwY19mbGFnczsNCj4gPiAgCXVu
+c2lnbmVkIGxvbmcgdmNfZmxhZ3M7DQo+ID4gKwlMSVNUX0hFQUQoaGVhZCk7DQo+ID4gKw0KPiA+
+ICsJLyogd2FpdCBmb3IgdGhlIFZDIHRvIGJlIGluYWN0aXZlICAqLw0KPiA+ICsJaWYgKCF3YWl0
+X2Zvcl9jb21wbGV0aW9uX3RpbWVvdXQoJmN2Yy0+Y21wLCBtc2Vjc190b19qaWZmaWVzKDMwMDAp
+KSkNCj4gPiArCQlyZXR1cm4gLUVBR0FJTjsNCj4gPiAgDQo+ID4gIAkvKiBhY3F1aXJlIFBDJ3Mg
+bG9jayBmaXJzdCBkdWUgdG8gbG9jayBkZXBlbmRlbmN5IGluIGRtYSBJU1IgKi8NCj4gPiAgCXNw
+aW5fbG9ja19pcnFzYXZlKCZjdmMtPnBjLT5sb2NrLCBwY19mbGFncyk7DQo+ID4gIAlzcGluX2xv
+Y2tfaXJxc2F2ZSgmY3ZjLT52Yy5sb2NrLCB2Y19mbGFncyk7DQo+ID4gIA0KPiA+IC0JLyogc3lu
+Y2hyb25pemF0aW9uIGlzIHJlcXVpcmVkIGlmIHRoaXMgVkMgaXMgYWN0aXZlICovDQo+ID4gLQlp
+ZiAobXRrX2NxZG1hX2lzX3ZjaGFuX2FjdGl2ZShjdmMpKSB7DQo+ID4gLQkJY3ZjLT5pc3N1ZV9z
+eW5jaHJvbml6ZSA9IHRydWU7DQo+ID4gLQkJc3luY19uZWVkZWQgPSB0cnVlOw0KPiA+IC0JfQ0K
+PiA+ICsJLyogZ2V0IFZEcyBmcm9tIGxpc3RzICovDQo+ID4gKwl2Y2hhbl9nZXRfYWxsX2Rlc2Ny
+aXB0b3JzKHZjLCAmaGVhZCk7DQo+ID4gKw0KPiA+ICsJLyogZnJlZSBhbGwgdGhlIFZEcyAqLw0K
+PiA+ICsJdmNoYW5fZG1hX2Rlc2NfZnJlZV9saXN0KHZjLCAmaGVhZCk7DQo+ID4gIA0KPiA+ICAJ
+c3Bpbl91bmxvY2tfaXJxcmVzdG9yZSgmY3ZjLT52Yy5sb2NrLCB2Y19mbGFncyk7DQo+ID4gIAlz
+cGluX3VubG9ja19pcnFyZXN0b3JlKCZjdmMtPnBjLT5sb2NrLCBwY19mbGFncyk7DQo+IA0KPiBH
+b29kIGNsZWFudXAsIGRvIHlvdSBuZWVkIGJvdGggdGhlc2UgbG9ja3M/DQpZZXMsIGJlY2F1c2Ug
+d2Ugd2lsbCBoYXZlIG11bHRpcGxlIHZjIHRvIHBjLCBpdCB3aWxsIG5lZWQgYm90aCBsb2NrLg0K
+DQo=
 
