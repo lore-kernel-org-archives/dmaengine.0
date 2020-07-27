@@ -6,97 +6,70 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 74133C433E3
-	for <dmaengine@archiver.kernel.org>; Mon, 27 Jul 2020 09:07:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8EC66C433E8
+	for <dmaengine@archiver.kernel.org>; Mon, 27 Jul 2020 09:14:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4867320714
-	for <dmaengine@archiver.kernel.org>; Mon, 27 Jul 2020 09:07:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6BB1820786
+	for <dmaengine@archiver.kernel.org>; Mon, 27 Jul 2020 09:14:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1595840846;
-	bh=K6RQC+ajywY34zdeP2+jgr6UKjQUY6swoVf9n8j35Jg=;
+	s=default; t=1595841246;
+	bh=MwMnaIFboN0zZbE7OkzcmNZC9GFnkloDFRLVAA63i1I=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:List-ID:From;
-	b=PedB0bJw5BsC8W+ul15btbmv3CJ/VbRYQwKgjU2t/v0LGk5mMDFAosBpxV4Zq8cE/
-	 mxJF2pZz+bqwY1RQF43mDylSya4oM+7vsptOONFNyBHgkqAx9AIZCNRltini9zLfq9
-	 5yZ4VX+Sj2NNrX/8wraX8cbSz/SguInYVJ1kESyM=
+	b=Z1h2acadu4PH3AMlfaEfbVQO5XRkf7vj1ZBHghllBEZu4e3PfDjpbYCNMP5x2C3RQ
+	 N+ine46msCfnlu0VAexD3lcjg0I1JCKr2XZSdwXVKauPrv3Bv1oEP0gewM3Jw8W8O2
+	 om9s9Yh1Kvu3DYobaEyewqummTap2JTnZ0Kz8rwk=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727889AbgG0JHW (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 27 Jul 2020 05:07:22 -0400
-Received: from mail.kernel.org ([198.145.29.99]:41804 "EHLO mail.kernel.org"
+        id S1726555AbgG0JOG (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 27 Jul 2020 05:14:06 -0400
+Received: from mail.kernel.org ([198.145.29.99]:45896 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728022AbgG0JHP (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Mon, 27 Jul 2020 05:07:15 -0400
+        id S1726196AbgG0JOF (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Mon, 27 Jul 2020 05:14:05 -0400
 Received: from localhost (unknown [122.171.202.192])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 87E7220714;
-        Mon, 27 Jul 2020 09:07:14 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id A162120714;
+        Mon, 27 Jul 2020 09:14:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1595840835;
-        bh=K6RQC+ajywY34zdeP2+jgr6UKjQUY6swoVf9n8j35Jg=;
+        s=default; t=1595841245;
+        bh=MwMnaIFboN0zZbE7OkzcmNZC9GFnkloDFRLVAA63i1I=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=UB3qgBOwuPNQb27NTD9csVxte0kbDywOrkYLfeUMb+NbFLJJdE2blymLmEEIbwOiC
-         Jd1mGs50efeCkFDwi/DCs3QMUo5p1tm/fVmeEjEyKwrR12thToifCOeb1IQ1qkm5x/
-         UkJaINx4C0vZieTb8EPplP3DpcdfvUunkcvKtcJw=
-Date:   Mon, 27 Jul 2020 14:37:11 +0530
+        b=sSK916jNG/m0MTggY2pyZGqTBTrty4JhmGtTiFb1XuoKddz4j4qfQNJBDaAtyF00o
+         68b7ThshqhrlD+75pKE0SWvHKcMzfl+dhfOoc9fpxmo+wIUllw2XyM1T//HqqA4t6i
+         NZvpG0CHKjHQpKayPg0eYvAjfaUjxJH9DAT+jt9o=
+Date:   Mon, 27 Jul 2020 14:44:01 +0530
 From:   Vinod Koul <vkoul@kernel.org>
-To:     Rajesh Gumasta <rgumasta@nvidia.com>
-Cc:     ldewangan@nvidia.com, jonathanh@nvidia.com,
-        dan.j.williams@intel.com, thierry.reding@gmail.com,
-        p.zabel@pengutronix.de, dmaengine@vger.kernel.org,
-        linux-tegra@vger.kernel.org, linux-kernel@vger.kernel.org,
-        kyarlagadda@nvidia.com, Pavan Kunapuli <pkunapuli@nvidia.com>
-Subject: Re: [Patch v1 2/4] dma: tegra: Adding Tegra GPC DMA controller driver
-Message-ID: <20200727090711.GN12965@vkoul-mobl>
-References: <1595226856-19241-1-git-send-email-rgumasta@nvidia.com>
- <1595226856-19241-3-git-send-email-rgumasta@nvidia.com>
+To:     Amit Singh Tomar <amittomer25@gmail.com>
+Cc:     andre.przywara@arm.com, afaerber@suse.de,
+        manivannan.sadhasivam@linaro.org, dan.j.williams@intel.com,
+        cristian.ciocaltea@gmail.com, dmaengine@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-actions@lists.infradead.org
+Subject: Re: [PATCH v7 02/10] dmaengine: Actions: get rid of bit fields from
+ dma descriptor
+Message-ID: <20200727091401.GQ12965@vkoul-mobl>
+References: <1595180527-11320-1-git-send-email-amittomer25@gmail.com>
+ <1595180527-11320-3-git-send-email-amittomer25@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1595226856-19241-3-git-send-email-rgumasta@nvidia.com>
+In-Reply-To: <1595180527-11320-3-git-send-email-amittomer25@gmail.com>
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On 20-07-20, 12:04, Rajesh Gumasta wrote:
-> v4 changes: Removed pending dma desc list and other unused
-> data structures
+On 19-07-20, 23:11, Amit Singh Tomar wrote:
+> At the moment, Driver uses bit fields to describe registers of the DMA
+> descriptor structure that makes it less portable and maintainable, and
+> Andre suugested(and even sketched important bits for it) to make use of
+> array to describe this DMA descriptors instead. It gives the flexibility
+> while extending support for other platform such as Actions S700.
 > 
-> v3 changes: Removed free list for dma_desc and sg
+> This commit removes the "owl_dma_lli_hw" (that includes bit-fields) and
+> uses array to describe DMA descriptor.
 
-This is v1 patch and we have v3/v4 stuff! Anyway this can go after the
-marker succeeding sob line or cover!
+Applied, thanks
 
-> 
-> Adding GPC DMA controller driver for Tegra186 and Tegra194. The driver
-> supports dma transfers between memory to memory, IO to memory and
-> memory to IO.
-
-This is dmaengine subsystem, so please tag to appropriately
-
-> +/* MMIO sequence register */
-> +#define TEGRA_GPCDMA_CHAN_MMIOSEQ		0x01c
-> +#define TEGRA_GPCDMA_MMIOSEQ_DBL_BUF		BIT(31)
-> +#define TEGRA_GPCDMA_MMIOSEQ_BUS_WIDTH_8	(0 << 28)
-> +#define TEGRA_GPCDMA_MMIOSEQ_BUS_WIDTH_16	(1 << 28)
-> +#define TEGRA_GPCDMA_MMIOSEQ_BUS_WIDTH_32	(2 << 28)
-> +#define TEGRA_GPCDMA_MMIOSEQ_BUS_WIDTH_64	(3 << 28)
-> +#define TEGRA_GPCDMA_MMIOSEQ_BUS_WIDTH_128	(4 << 28)
-
-GENMASK for these please
-
-> +static int tegra_dma_slave_config(struct dma_chan *dc,
-> +		struct dma_slave_config *sconfig)
-> +{
-> +	struct tegra_dma_channel *tdc = to_tegra_dma_chan(dc);
-> +
-> +	if (!list_empty(&tdc->pending_sg_req)) {
-> +		dev_err(tdc2dev(tdc), "Configuration not allowed\n");
-
-why is that?
-
-Also run checkpatch --strict on this before sending.
-
-Thanks
 -- 
 ~Vinod
