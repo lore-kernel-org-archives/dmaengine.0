@@ -2,34 +2,32 @@ Return-Path: <SRS0=ybRm=BJ=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.0 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=unavailable autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.0 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 10270C433E4
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C13CCC433E8
 	for <dmaengine@archiver.kernel.org>; Thu, 30 Jul 2020 15:46:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id ED2A22082E
-	for <dmaengine@archiver.kernel.org>; Thu, 30 Jul 2020 15:46:17 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AA3ED20838
+	for <dmaengine@archiver.kernel.org>; Thu, 30 Jul 2020 15:46:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729975AbgG3Pp5 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        id S1729966AbgG3Pp5 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
         Thu, 30 Jul 2020 11:45:57 -0400
-Received: from mail.baikalelectronics.com ([87.245.175.226]:57362 "EHLO
+Received: from mail.baikalelectronics.com ([87.245.175.226]:57340 "EHLO
         mail.baikalelectronics.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726581AbgG3Pp5 (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Thu, 30 Jul 2020 11:45:57 -0400
+        with ESMTP id S1729945AbgG3Ppz (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Thu, 30 Jul 2020 11:45:55 -0400
 Received: from localhost (unknown [127.0.0.1])
-        by mail.baikalelectronics.ru (Postfix) with ESMTP id E541B8030866;
-        Thu, 30 Jul 2020 15:45:54 +0000 (UTC)
+        by mail.baikalelectronics.ru (Postfix) with ESMTP id F04418040A69;
+        Thu, 30 Jul 2020 15:45:52 +0000 (UTC)
 X-Virus-Scanned: amavisd-new at baikalelectronics.ru
 Received: from mail.baikalelectronics.ru ([127.0.0.1])
         by localhost (mail.baikalelectronics.ru [127.0.0.1]) (amavisd-new, port 10024)
-        with ESMTP id ubn64PjSapSu; Thu, 30 Jul 2020 18:45:53 +0300 (MSK)
+        with ESMTP id KJ0HO7bzAbyZ; Thu, 30 Jul 2020 18:45:51 +0300 (MSK)
 From:   Serge Semin <Sergey.Semin@baikalelectronics.ru>
 To:     Vinod Koul <vkoul@kernel.org>, Viresh Kumar <vireshk@kernel.org>,
-        Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-        Dan Williams <dan.j.williams@intel.com>
+        Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 CC:     Serge Semin <Sergey.Semin@baikalelectronics.ru>,
         Serge Semin <fancer.lancer@gmail.com>,
         Alexey Malahov <Alexey.Malahov@baikalelectronics.ru>,
@@ -38,11 +36,9 @@ CC:     Serge Semin <Sergey.Semin@baikalelectronics.ru>,
         Andy Shevchenko <andy.shevchenko@gmail.com>,
         Rob Herring <robh+dt@kernel.org>, <dmaengine@vger.kernel.org>,
         <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-Subject: [PATCH 2/5] dmaengine: dw: Activate FIFO-mode for memory peripherals only
-Date:   Thu, 30 Jul 2020 18:45:42 +0300
-Message-ID: <20200730154545.3965-3-Sergey.Semin@baikalelectronics.ru>
-In-Reply-To: <20200730154545.3965-1-Sergey.Semin@baikalelectronics.ru>
-References: <20200730154545.3965-1-Sergey.Semin@baikalelectronics.ru>
+Subject: [PATCH 0/5] dmaengine: dw: Introduce non-mem peripherals optimizations
+Date:   Thu, 30 Jul 2020 18:45:40 +0300
+Message-ID: <20200730154545.3965-1-Sergey.Semin@baikalelectronics.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 7BIT
 Content-Type:   text/plain; charset=US-ASCII
@@ -52,61 +48,70 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-CFGx.FIFO_MODE field controls a DMA-controller "FIFO readiness" criterion.
-In other words it determines when to start pushing data out of a DW
-DMAC channel FIFO to a destination peripheral or from a source
-peripheral to the DW DMAC channel FIFO. Currently FIFO-mode is set to one
-for all DW DMAC channels. It means they are tuned to flush data out of
-FIFO (to a memory peripheral or by accepting the burst transaction
-requests) when FIFO is at least half-full (except at the end of the block
-transfer, when FIFO-flush mode is activated) and are configured to get
-data to the FIFO when it's at least half-empty.
+After a lot of tests and thorough DW DMAC databook studying we've
+discovered that the driver can be optimized especially when it comes to
+working with non-memory peripherals.
 
-Such configuration is a good choice when there is no slave device involved
-in the DMA transfers. In that case the number of bursts per block is less
-than when CFGx.FIFO_MODE = 0 and, hence, the bus utilization will improve.
-But the latency of DMA transfers may increase when CFGx.FIFO_MODE = 1,
-since DW DMAC will wait for the channel FIFO contents to be either
-half-full or half-empty depending on having the destination or the source
-transfers. Such latencies might be dangerous in case if the DMA transfers
-are expected to be performed from/to a slave device. Since normally
-peripheral devices keep data in internal FIFOs, any latency at some
-critical moment may cause one being overflown and consequently losing
-data. This especially concerns a case when either a peripheral device is
-relatively fast or the DW DMAC engine is relatively slow with respect to
-the incoming data pace.
+First of all we've found out that since each DW DMAC channel can
+be synthesized with different parameters, then even when two of them
+are configured to perform the same DMA transactions they may execute them
+with different performance. Since some DMA client devices might be
+sensitive to such important parameter as performance, then it is a good
+idea to let them request only suitable DMA channels. In this patchset we
+introduce a functionality, which makes it possible by passing the DMA
+channels mask either over the "dmas" DT property or in the dw_dma_slave
+platform data descriptor.
 
-In order to solve problems, which might be caused by the latencies
-described above, let's enable the FIFO half-full/half-empty "FIFO
-readiness" criterion only for DMA transfers with no slave device involved.
-Thanks to the commit ???????????? ("dmaengine: dw: Initialize channel
-before each transfer") we can freely do that in the generic
-dw_dma_initialize_chan() method.
+Secondly FIFO-mode of the "FIFO readiness" criterion is more suitable for
+the pure memory DMA transfers, since it minimizes the system bus
+utilization, but causes some performance drop. When it comes to working with
+non-memory peripherals the DMA engine performance comes to the first
+place. Since normally DMA client devices keep data in internal FIFOs, any
+latency at some critical moment may cause a FIFO being overflown and
+consequently losing data. So in order to minimize a chance of the DW DMAC
+internal FIFO being a bottle neck during the DMA transfers to and from
+non-memory peripherals we propose not to use FIFO-mode for them.
+
+Thirdly it has been discovered that using a DMA transaction length is
+redundant when calculating the destination transfer width for the
+dev-to-mem DMA communications. That shall increase performance of the DMA
+transfers with unaligned data length.
+
+Finally there is a small optimization in the burst length setting. In
+particular we've found out, that according to the DW DMAC databoot it's
+pointless to set one for the memory peripherals since they don't have
+handshaking interface connected to the DMA controller. So we suggest to
+just ignore the burst length config when it comes to setting the memory
+peripherals up.
+
+Note this patchset is supposed to be applied on top of the series:
+Link: https://lore.kernel.org/dmaengine/20200723005848.31907-1-Sergey.Semin@baikalelectronics.ru
 
 Signed-off-by: Serge Semin <Sergey.Semin@baikalelectronics.ru>
+Cc: Alexey Malahov <Alexey.Malahov@baikalelectronics.ru>
+Cc: Pavel Parkhomenko <Pavel.Parkhomenko@baikalelectronics.ru>
+Cc: Peter Ujfalusi <peter.ujfalusi@ti.com>
+Cc: Andy Shevchenko <andy.shevchenko@gmail.com>
+Cc: Rob Herring <robh+dt@kernel.org>
+Cc: dmaengine@vger.kernel.org
+Cc: devicetree@vger.kernel.org
+Cc: linux-kernel@vger.kernel.org
 
----
+Serge Semin (5):
+  dt-bindings: dma: dw: Add optional DMA-channels mask cell support
+  dmaengine: dw: Activate FIFO-mode for memory peripherals only
+  dmaengine: dw: Discard dlen from the dev-to-mem xfer width calculation
+  dmaengine: dw: Ignore burst setting for memory peripherals
+  dmaengine: dw: Add DMA-channels mask cell support
 
-Note the DMA-engine repository git.infradead.org/users/vkoul/slave-dma.git
-isn't accessible. So I couldn't find out the Andy' commit hash to use it in
-the log.
----
- drivers/dma/dw/dw.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../devicetree/bindings/dma/snps,dma-spear1340.yaml        | 7 +++++--
+ drivers/dma/dw/core.c                                      | 6 +++++-
+ drivers/dma/dw/dw.c                                        | 7 +++----
+ drivers/dma/dw/idma32.c                                    | 5 ++---
+ drivers/dma/dw/of.c                                        | 7 +++++--
+ include/linux/platform_data/dma-dw.h                       | 3 +++
+ 6 files changed, 23 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/dma/dw/dw.c b/drivers/dma/dw/dw.c
-index 7a085b3c1854..d9810980920a 100644
---- a/drivers/dma/dw/dw.c
-+++ b/drivers/dma/dw/dw.c
-@@ -14,7 +14,7 @@
- static void dw_dma_initialize_chan(struct dw_dma_chan *dwc)
- {
- 	struct dw_dma *dw = to_dw_dma(dwc->chan.device);
--	u32 cfghi = DWC_CFGH_FIFO_MODE;
-+	u32 cfghi = is_slave_direction(dwc->direction) ? 0 : DWC_CFGH_FIFO_MODE;
- 	u32 cfglo = DWC_CFGL_CH_PRIOR(dwc->priority);
- 	bool hs_polarity = dwc->dws.hs_polarity;
- 
 -- 
 2.27.0
 
