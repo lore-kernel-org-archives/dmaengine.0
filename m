@@ -4,42 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-10.0 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D5D7BC433E4
-	for <dmaengine@archiver.kernel.org>; Fri, 31 Jul 2020 20:08:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6A346C433DF
+	for <dmaengine@archiver.kernel.org>; Fri, 31 Jul 2020 20:09:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BEBB422B43
-	for <dmaengine@archiver.kernel.org>; Fri, 31 Jul 2020 20:08:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 54FBE208E4
+	for <dmaengine@archiver.kernel.org>; Fri, 31 Jul 2020 20:09:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727772AbgGaUIx (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 31 Jul 2020 16:08:53 -0400
-Received: from mail.baikalelectronics.com ([87.245.175.226]:33470 "EHLO
+        id S1726981AbgGaUIo (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 31 Jul 2020 16:08:44 -0400
+Received: from mail.baikalelectronics.com ([87.245.175.226]:33400 "EHLO
         mail.baikalelectronics.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726968AbgGaUIp (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Fri, 31 Jul 2020 16:08:45 -0400
+        with ESMTP id S1726821AbgGaUIn (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Fri, 31 Jul 2020 16:08:43 -0400
 Received: from localhost (unknown [127.0.0.1])
-        by mail.baikalelectronics.ru (Postfix) with ESMTP id 6B1428040A6B;
-        Fri, 31 Jul 2020 20:08:42 +0000 (UTC)
+        by mail.baikalelectronics.ru (Postfix) with ESMTP id 54B3A8040A6A;
+        Fri, 31 Jul 2020 20:08:40 +0000 (UTC)
 X-Virus-Scanned: amavisd-new at baikalelectronics.ru
 Received: from mail.baikalelectronics.ru ([127.0.0.1])
         by localhost (mail.baikalelectronics.ru [127.0.0.1]) (amavisd-new, port 10024)
-        with ESMTP id F02ocnSSBzsJ; Fri, 31 Jul 2020 23:08:41 +0300 (MSK)
+        with ESMTP id 5FUthJxAUr7r; Fri, 31 Jul 2020 23:08:39 +0300 (MSK)
 From:   Serge Semin <Sergey.Semin@baikalelectronics.ru>
 To:     Vinod Koul <vkoul@kernel.org>, Viresh Kumar <vireshk@kernel.org>,
         Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-        Dan Williams <dan.j.williams@intel.com>
+        Rob Herring <robh+dt@kernel.org>
 CC:     Serge Semin <Sergey.Semin@baikalelectronics.ru>,
         Serge Semin <fancer.lancer@gmail.com>,
         Alexey Malahov <Alexey.Malahov@baikalelectronics.ru>,
         Pavel Parkhomenko <Pavel.Parkhomenko@baikalelectronics.ru>,
         Peter Ujfalusi <peter.ujfalusi@ti.com>,
         Andy Shevchenko <andy.shevchenko@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>, <dmaengine@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-Subject: [PATCH v2 4/5] dmaengine: dw: Ignore burst setting for memory peripherals
-Date:   Fri, 31 Jul 2020 23:08:25 +0300
-Message-ID: <20200731200826.9292-5-Sergey.Semin@baikalelectronics.ru>
+        <dmaengine@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+Subject: [PATCH v2 1/5] dt-bindings: dma: dw: Add optional DMA-channels mask cell support
+Date:   Fri, 31 Jul 2020 23:08:22 +0300
+Message-ID: <20200731200826.9292-2-Sergey.Semin@baikalelectronics.ru>
 In-Reply-To: <20200731200826.9292-1-Sergey.Semin@baikalelectronics.ru>
 References: <20200731200826.9292-1-Sergey.Semin@baikalelectronics.ru>
 MIME-Version: 1.0
@@ -51,64 +52,50 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-According to the DW DMA controller Databook 2.18b (page 40 "3.5 Memory
-Peripherals") memory peripherals don't have handshaking interface
-connected to the controller, therefore they can never be a flow
-controller. Since the CTLx.SRC_MSIZE and CTLx.DEST_MSIZE are properties
-valid only for peripherals with a handshaking interface, we can freely
-zero these fields out if the memory peripheral is selected to be the
-source or the destination of the DMA transfers.
+Each DW DMA controller channel can be synthesized with different
+parameters like maximum burst-length, multi-block support, maximum data
+width, etc. Most of these parameters determine the DW DMAC channels
+performance in its own aspect. On the other hand these parameters can
+be implicitly responsible for the channels performance degradation
+(for instance multi-block support is a very useful feature, but having
+it disabled during the DW DMAC synthesize will provide a more optimized
+core). Since DMA slave devices may have critical dependency on the DMA
+engine performance, let's provide a way for the slave devices to have
+the DMA-channels allocated from a pool of the channels, which according
+to the system engineer fulfill their performance requirements.
 
-Note according to the databook, length of burst transfers to memory is
-always equal to the number of data items available in a channel FIFO or
-data items required to complete the block transfer, whichever is smaller;
-length of burst transfers from memory is always equal to the space
-available in a channel FIFO or number of data items required to complete
-the block transfer, whichever is smaller.
+The pool is determined by a mask optionally specified in the fifth
+DMA-cell of the DMA DT-property. If the fifth cell is omitted from the
+phandle arguments or the mask is zero, then the allocation will be
+performed from a set of all channels provided by the DMA controller.
 
 Signed-off-by: Serge Semin <Sergey.Semin@baikalelectronics.ru>
-
 ---
+ .../devicetree/bindings/dma/snps,dma-spear1340.yaml        | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-Changelog v2:
-- Add Databook version to the commit log.
----
- drivers/dma/dw/dw.c     | 5 ++---
- drivers/dma/dw/idma32.c | 5 ++---
- 2 files changed, 4 insertions(+), 6 deletions(-)
-
-diff --git a/drivers/dma/dw/dw.c b/drivers/dma/dw/dw.c
-index d9810980920a..a4862263ff14 100644
---- a/drivers/dma/dw/dw.c
-+++ b/drivers/dma/dw/dw.c
-@@ -67,9 +67,8 @@ static size_t dw_dma_block2bytes(struct dw_dma_chan *dwc, u32 block, u32 width)
- static u32 dw_dma_prepare_ctllo(struct dw_dma_chan *dwc)
- {
- 	struct dma_slave_config	*sconfig = &dwc->dma_sconfig;
--	bool is_slave = is_slave_direction(dwc->direction);
--	u8 smsize = is_slave ? sconfig->src_maxburst : DW_DMA_MSIZE_16;
--	u8 dmsize = is_slave ? sconfig->dst_maxburst : DW_DMA_MSIZE_16;
-+	u8 smsize = (dwc->direction == DMA_DEV_TO_MEM) ? sconfig->src_maxburst : 0;
-+	u8 dmsize = (dwc->direction == DMA_MEM_TO_DEV) ? sconfig->dst_maxburst : 0;
- 	u8 p_master = dwc->dws.p_master;
- 	u8 m_master = dwc->dws.m_master;
- 	u8 dms = (dwc->direction == DMA_MEM_TO_DEV) ? p_master : m_master;
-diff --git a/drivers/dma/dw/idma32.c b/drivers/dma/dw/idma32.c
-index f00657308811..3ce44de25d33 100644
---- a/drivers/dma/dw/idma32.c
-+++ b/drivers/dma/dw/idma32.c
-@@ -73,9 +73,8 @@ static size_t idma32_block2bytes(struct dw_dma_chan *dwc, u32 block, u32 width)
- static u32 idma32_prepare_ctllo(struct dw_dma_chan *dwc)
- {
- 	struct dma_slave_config	*sconfig = &dwc->dma_sconfig;
--	bool is_slave = is_slave_direction(dwc->direction);
--	u8 smsize = is_slave ? sconfig->src_maxburst : IDMA32_MSIZE_8;
--	u8 dmsize = is_slave ? sconfig->dst_maxburst : IDMA32_MSIZE_8;
-+	u8 smsize = (dwc->direction == DMA_DEV_TO_MEM) ? sconfig->src_maxburst : 0;
-+	u8 dmsize = (dwc->direction == DMA_MEM_TO_DEV) ? sconfig->dst_maxburst : 0;
+diff --git a/Documentation/devicetree/bindings/dma/snps,dma-spear1340.yaml b/Documentation/devicetree/bindings/dma/snps,dma-spear1340.yaml
+index 20870f5c14dd..ef1d6879c158 100644
+--- a/Documentation/devicetree/bindings/dma/snps,dma-spear1340.yaml
++++ b/Documentation/devicetree/bindings/dma/snps,dma-spear1340.yaml
+@@ -18,12 +18,15 @@ properties:
+     const: snps,dma-spear1340
  
- 	return DWC_CTLL_LLP_D_EN | DWC_CTLL_LLP_S_EN |
- 	       DWC_CTLL_DST_MSIZE(dmsize) | DWC_CTLL_SRC_MSIZE(smsize);
+   "#dma-cells":
+-    const: 3
++    minimum: 3
++    maximum: 4
+     description: |
+       First cell is a phandle pointing to the DMA controller. Second one is
+       the DMA request line number. Third cell is the memory master identifier
+       for transfers on dynamically allocated channel. Fourth cell is the
+-      peripheral master identifier for transfers on an allocated channel.
++      peripheral master identifier for transfers on an allocated channel. Fifth
++      cell is an optional mask of the DMA channels permitted to be allocated
++      for the corresponding client device.
+ 
+   reg:
+     maxItems: 1
 -- 
 2.27.0
 
