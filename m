@@ -2,34 +2,32 @@ Return-Path: <SRS0=qvxS=BK=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.0 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-7.0 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A3C0AC433E0
-	for <dmaengine@archiver.kernel.org>; Fri, 31 Jul 2020 20:09:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4638AC433E3
+	for <dmaengine@archiver.kernel.org>; Fri, 31 Jul 2020 20:09:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 92CBC208E4
-	for <dmaengine@archiver.kernel.org>; Fri, 31 Jul 2020 20:09:00 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 351A7208E4
+	for <dmaengine@archiver.kernel.org>; Fri, 31 Jul 2020 20:09:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726971AbgGaUIo (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 31 Jul 2020 16:08:44 -0400
-Received: from mail.baikalelectronics.com ([87.245.175.226]:33454 "EHLO
+        id S1727824AbgGaUJA (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 31 Jul 2020 16:09:00 -0400
+Received: from mail.baikalelectronics.com ([87.245.175.226]:33422 "EHLO
         mail.baikalelectronics.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726824AbgGaUIn (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Fri, 31 Jul 2020 16:08:43 -0400
+        with ESMTP id S1726257AbgGaUIo (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Fri, 31 Jul 2020 16:08:44 -0400
 Received: from localhost (unknown [127.0.0.1])
-        by mail.baikalelectronics.ru (Postfix) with ESMTP id B12D08040A69;
-        Fri, 31 Jul 2020 20:08:41 +0000 (UTC)
+        by mail.baikalelectronics.ru (Postfix) with ESMTP id B1008803202D;
+        Fri, 31 Jul 2020 20:08:40 +0000 (UTC)
 X-Virus-Scanned: amavisd-new at baikalelectronics.ru
 Received: from mail.baikalelectronics.ru ([127.0.0.1])
         by localhost (mail.baikalelectronics.ru [127.0.0.1]) (amavisd-new, port 10024)
-        with ESMTP id GKT3SX5obPrY; Fri, 31 Jul 2020 23:08:41 +0300 (MSK)
+        with ESMTP id dTHP2IOxhPcs; Fri, 31 Jul 2020 23:08:39 +0300 (MSK)
 From:   Serge Semin <Sergey.Semin@baikalelectronics.ru>
 To:     Vinod Koul <vkoul@kernel.org>, Viresh Kumar <vireshk@kernel.org>,
-        Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-        Dan Williams <dan.j.williams@intel.com>
+        Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 CC:     Serge Semin <Sergey.Semin@baikalelectronics.ru>,
         Serge Semin <fancer.lancer@gmail.com>,
         Alexey Malahov <Alexey.Malahov@baikalelectronics.ru>,
@@ -38,11 +36,9 @@ CC:     Serge Semin <Sergey.Semin@baikalelectronics.ru>,
         Andy Shevchenko <andy.shevchenko@gmail.com>,
         Rob Herring <robh+dt@kernel.org>, <dmaengine@vger.kernel.org>,
         <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-Subject: [PATCH v2 3/5] dmaengine: dw: Discard dlen from the dev-to-mem xfer width calculation
-Date:   Fri, 31 Jul 2020 23:08:24 +0300
-Message-ID: <20200731200826.9292-4-Sergey.Semin@baikalelectronics.ru>
-In-Reply-To: <20200731200826.9292-1-Sergey.Semin@baikalelectronics.ru>
-References: <20200731200826.9292-1-Sergey.Semin@baikalelectronics.ru>
+Subject: [PATCH v2 0/5] dmaengine: dw: Introduce non-mem peripherals optimizations
+Date:   Fri, 31 Jul 2020 23:08:21 +0300
+Message-ID: <20200731200826.9292-1-Sergey.Semin@baikalelectronics.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 7BIT
 Content-Type:   text/plain; charset=US-ASCII
@@ -52,55 +48,75 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Indeed in case of the DMA_DEV_TO_MEM DMA transfers it's enough to take the
-destination memory address and the destination master data width into
-account to calculate the CTLx.DST_TR_WIDTH setting of the memory
-peripheral. According to the DW DMAC IP-core Databook 2.18b (page 66,
-Example 5) at the and of a DMA transfer when the DMA-channel internal FIFO
-is left with data less than for a single destination burst transaction,
-the destination peripheral will enter the Single Transaction Region where
-the DW DMA controller can complete a block transfer to the destination
-using single transactions (non-burst transaction of CTLx.DST_TR_WIDTH
-bytes). If there is no enough data in the DMA-channel internal FIFO for
-even a single non-burst transaction of CTLx.DST_TR_WIDTH bytes, then the
-channel enters "FIFO flush mode". That mode is activated to empty the FIFO
-and flush the leftovers out to the memory peripheral. The flushing
-procedure is simple.  The data is sent to the memory by means of a set of
-single transaction of CTLx.SRC_TR_WIDTH bytes. To sum up it's redundant to
-use the LLPs length to find out the CTLx.DST_TR_WIDTH parameter value,
-since each DMA transfer will be completed with the CTLx.SRC_TR_WIDTH bytes
-transaction if it is required.
+After a lot of tests and thorough DW DMAC databook studying we've
+discovered that the driver can be optimized especially when it comes to
+working with non-memory peripherals.
 
-We suggest to remove the LLP entry length from the statement which
-calculates the memory peripheral DMA transaction width since it's
-redundant due to the feature described above. By doing so we'll improve
-the memory bus utilization and speed up the DMA-channel performance for
-DMA_DEV_TO_MEM DMA-transfers.
+First of all we've found out that since each DW DMAC channel can
+be synthesized with different parameters, then even when two of them
+are configured to perform the same DMA transactions they may execute them
+with different performance. Since some DMA client devices might be
+sensitive to such important parameter as performance, then it is a good
+idea to let them request only suitable DMA channels. In this patchset we
+introduce a functionality, which makes it possible by passing the DMA
+channels mask either over the "dmas" DT property or in the dw_dma_slave
+platform data descriptor.
+
+Secondly FIFO-mode of the "FIFO readiness" criterion is more suitable for
+the pure memory DMA transfers, since it minimizes the system bus
+utilization, but causes some performance drop. When it comes to working with
+non-memory peripherals the DMA engine performance comes to the first
+place. Since normally DMA client devices keep data in internal FIFOs, any
+latency at some critical moment may cause a FIFO being overflown and
+consequently losing data. So in order to minimize a chance of the DW DMAC
+internal FIFO being a bottle neck during the DMA transfers to and from
+non-memory peripherals we propose not to use FIFO-mode for them.
+
+Thirdly it has been discovered that using a DMA transaction length is
+redundant when calculating the destination transfer width for the
+dev-to-mem DMA communications. That shall increase performance of the DMA
+transfers with unaligned data length.
+
+Finally there is a small optimization in the burst length setting. In
+particular we've found out, that according to the DW DMAC databoot it's
+pointless to set one for the memory peripherals since they don't have
+handshaking interface connected to the DMA controller. So we suggest to
+just ignore the burst length config when it comes to setting the memory
+peripherals up.
+
+Link: https://lore.kernel.org/dmaengine/20200730154545.3965-1-Sergey.Semin@baikalelectronics.ru
+Changelog v2:
+- Add Databook version to the commits log.
+- Use the statement "slave.channels >= BIT(dw->pdata->nr_channels)" to
+  make sure the permitted DMA-channels pool is valid.
+- Describe new DW DMAC "channels" mask in a single line even though it
+  gets out of 80 columns limit.
 
 Signed-off-by: Serge Semin <Sergey.Semin@baikalelectronics.ru>
-Acked-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Cc: Alexey Malahov <Alexey.Malahov@baikalelectronics.ru>
+Cc: Pavel Parkhomenko <Pavel.Parkhomenko@baikalelectronics.ru>
+Cc: Peter Ujfalusi <peter.ujfalusi@ti.com>
+Cc: Andy Shevchenko <andy.shevchenko@gmail.com>
+Cc: Rob Herring <robh+dt@kernel.org>
+Cc: dmaengine@vger.kernel.org
+Cc: devicetree@vger.kernel.org
+Cc: linux-kernel@vger.kernel.org
 
----
+Serge Semin (5):
+  dt-bindings: dma: dw: Add optional DMA-channels mask cell support
+  dmaengine: dw: Activate FIFO-mode for memory peripherals only
+  dmaengine: dw: Discard dlen from the dev-to-mem xfer width calculation
+  dmaengine: dw: Ignore burst setting for memory peripherals
+  dmaengine: dw: Add DMA-channels mask cell support
 
-Changelog v2:
-- Add Databook version to the commit log.
----
- drivers/dma/dw/core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../devicetree/bindings/dma/snps,dma-spear1340.yaml        | 7 +++++--
+ drivers/dma/dw/core.c                                      | 6 +++++-
+ drivers/dma/dw/dw.c                                        | 7 +++----
+ drivers/dma/dw/idma32.c                                    | 5 ++---
+ drivers/dma/dw/of.c                                        | 7 +++++--
+ include/linux/platform_data/dma-dw.h                       | 2 ++
+ 6 files changed, 22 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/dma/dw/core.c b/drivers/dma/dw/core.c
-index 4700f2e87a62..3da0aea9fe25 100644
---- a/drivers/dma/dw/core.c
-+++ b/drivers/dma/dw/core.c
-@@ -723,7 +723,7 @@ dwc_prep_slave_sg(struct dma_chan *chan, struct scatterlist *sgl,
- 			lli_write(desc, sar, reg);
- 			lli_write(desc, dar, mem);
- 			lli_write(desc, ctlhi, ctlhi);
--			mem_width = __ffs(data_width | mem | dlen);
-+			mem_width = __ffs(data_width | mem);
- 			lli_write(desc, ctllo, ctllo | DWC_CTLL_DST_WIDTH(mem_width));
- 			desc->len = dlen;
- 
 -- 
 2.27.0
 
