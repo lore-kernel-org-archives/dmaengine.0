@@ -2,107 +2,106 @@ Return-Path: <SRS0=qvxS=BK=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.0 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6BFD6C433DF
-	for <dmaengine@archiver.kernel.org>; Fri, 31 Jul 2020 18:55:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 251F5C433DF
+	for <dmaengine@archiver.kernel.org>; Fri, 31 Jul 2020 20:08:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 52AB622CA1
-	for <dmaengine@archiver.kernel.org>; Fri, 31 Jul 2020 18:55:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1596221725;
-	bh=nUOUGxAYjfPAHHoeEEsLHJs20XIL9pXPoCLX1bjL5Po=;
-	h=Date:From:To:Cc:In-Reply-To:References:Subject:List-ID:From;
-	b=phy3Q8Z2fyAp7AQiII4yRz1YilR09yu29TdHNImRJxbCe0GX3fcgWbwyYoTJYZ00v
-	 D9qN1p/eGLxZx/AMowT6LnQfa+03UWNTz6H7WIavLGrAkg3kntMHG+yK+JKgXxEHwL
-	 fNa2/Z98GG1Wpp8vhfR+Lg8xqoJ9itBVNos5NMkE=
+	by mail.kernel.org (Postfix) with ESMTP id 1020B22CB2
+	for <dmaengine@archiver.kernel.org>; Fri, 31 Jul 2020 20:08:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387899AbgGaSzZ (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 31 Jul 2020 14:55:25 -0400
-Received: from mail.kernel.org ([198.145.29.99]:53530 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2387897AbgGaSzY (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Fri, 31 Jul 2020 14:55:24 -0400
-Received: from localhost (fw-tnat.cambridge.arm.com [217.140.96.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 7395822BF5;
-        Fri, 31 Jul 2020 18:55:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1596221724;
-        bh=nUOUGxAYjfPAHHoeEEsLHJs20XIL9pXPoCLX1bjL5Po=;
-        h=Date:From:To:Cc:In-Reply-To:References:Subject:From;
-        b=jYdTi6uPWxT4EShIFZjJhuqh5KXQ/rOVhaDyoKihD1XYy01iLpr9HPeJ5yIdNzMuT
-         JHrFlYEN4bl6332pCt4WG2OtjSJxnIM5eCsOLBSe/2zmXfX/gnY7v9HnhJmlOkkZdR
-         A7GduGAtoaWFl/55toSNuMS3SmiO++kpJsa3HlxQ=
-Date:   Fri, 31 Jul 2020 19:55:04 +0100
-From:   Mark Brown <broonie@kernel.org>
-To:     alsa-devel@alsa-project.org,
-        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-        dmaengine@vger.kernel.org, dri-devel@lists.freedesktop.org
-Cc:     Hyun Kwon <hyun.kwon@xilinx.com>, Vinod Koul <vkoul@kernel.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Randy Dunlap <rdunlap@infradead.org>,
-        Alexandre Bounine <alex.bou9@gmail.com>,
-        Michal Simek <michal.simek@xilinx.com>,
-        Matt Porter <mporter@kernel.crashing.org>
-In-Reply-To: <20200731152433.1297-1-laurent.pinchart@ideasonboard.com>
-References: <20200731152433.1297-1-laurent.pinchart@ideasonboard.com>
-Subject: Re: [PATCH v2 0/3] Fix Kconfig dependency issue with DMAENGINES selection
-Message-Id: <159622167150.22822.5591654578876381807.b4-ty@kernel.org>
+        id S1726916AbgGaUIm (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 31 Jul 2020 16:08:42 -0400
+Received: from mail.baikalelectronics.com ([87.245.175.226]:33436 "EHLO
+        mail.baikalelectronics.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726751AbgGaUIm (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Fri, 31 Jul 2020 16:08:42 -0400
+Received: from localhost (unknown [127.0.0.1])
+        by mail.baikalelectronics.ru (Postfix) with ESMTP id 153928030808;
+        Fri, 31 Jul 2020 20:08:41 +0000 (UTC)
+X-Virus-Scanned: amavisd-new at baikalelectronics.ru
+Received: from mail.baikalelectronics.ru ([127.0.0.1])
+        by localhost (mail.baikalelectronics.ru [127.0.0.1]) (amavisd-new, port 10024)
+        with ESMTP id fMG0FJN5piFD; Fri, 31 Jul 2020 23:08:40 +0300 (MSK)
+From:   Serge Semin <Sergey.Semin@baikalelectronics.ru>
+To:     Vinod Koul <vkoul@kernel.org>, Viresh Kumar <vireshk@kernel.org>,
+        Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+        Dan Williams <dan.j.williams@intel.com>
+CC:     Serge Semin <Sergey.Semin@baikalelectronics.ru>,
+        Serge Semin <fancer.lancer@gmail.com>,
+        Alexey Malahov <Alexey.Malahov@baikalelectronics.ru>,
+        Pavel Parkhomenko <Pavel.Parkhomenko@baikalelectronics.ru>,
+        Peter Ujfalusi <peter.ujfalusi@ti.com>,
+        Andy Shevchenko <andy.shevchenko@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>, <dmaengine@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+Subject: [PATCH v2 2/5] dmaengine: dw: Activate FIFO-mode for memory peripherals only
+Date:   Fri, 31 Jul 2020 23:08:23 +0300
+Message-ID: <20200731200826.9292-3-Sergey.Semin@baikalelectronics.ru>
+In-Reply-To: <20200731200826.9292-1-Sergey.Semin@baikalelectronics.ru>
+References: <20200731200826.9292-1-Sergey.Semin@baikalelectronics.ru>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7BIT
+Content-Type:   text/plain; charset=US-ASCII
+X-ClientProxiedBy: MAIL.baikal.int (192.168.51.25) To mail (192.168.51.25)
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On Fri, 31 Jul 2020 18:24:30 +0300, Laurent Pinchart wrote:
-> This small series fixes a Kconfig dependency issue with the recently
-> merged Xilixn DPSUB DRM/KMS driver. The fix is in patch 3/3, but
-> requires a separate fixes in patches 1/3 and 2/3 to avoid circular
-> dependencies:
-> 
->         drivers/i2c/Kconfig:8:error: recursive dependency detected!
->         drivers/i2c/Kconfig:8:  symbol I2C is selected by FB_DDC
->         drivers/video/fbdev/Kconfig:63: symbol FB_DDC depends on FB
->         drivers/video/fbdev/Kconfig:12: symbol FB is selected by DRM_KMS_FB_HELPER
->         drivers/gpu/drm/Kconfig:80:     symbol DRM_KMS_FB_HELPER depends on DRM_KMS_HELPER
->         drivers/gpu/drm/Kconfig:74:     symbol DRM_KMS_HELPER is selected by DRM_ZYNQMP_DPSUB
->         drivers/gpu/drm/xlnx/Kconfig:1: symbol DRM_ZYNQMP_DPSUB depends on DMA_ENGINE
->         drivers/dma/Kconfig:44: symbol DMA_ENGINE depends on DMADEVICES
->         drivers/dma/Kconfig:6:  symbol DMADEVICES is selected by SND_SOC_SH4_SIU
->         sound/soc/sh/Kconfig:30:        symbol SND_SOC_SH4_SIU is selected by SND_SIU_MIGOR
->         sound/soc/sh/Kconfig:60:        symbol SND_SIU_MIGOR depends on I2C
->         For a resolution refer to Documentation/kbuild/kconfig-language.rst
->         subsection "Kconfig recursive dependency limitations"
-> 
-> [...]
+CFGx.FIFO_MODE field controls a DMA-controller "FIFO readiness" criterion.
+In other words it determines when to start pushing data out of a DW
+DMAC channel FIFO to a destination peripheral or from a source
+peripheral to the DW DMAC channel FIFO. Currently FIFO-mode is set to one
+for all DW DMAC channels. It means they are tuned to flush data out of
+FIFO (to a memory peripheral or by accepting the burst transaction
+requests) when FIFO is at least half-full (except at the end of the block
+transfer, when FIFO-flush mode is activated) and are configured to get
+data to the FIFO when it's at least half-empty.
 
-Applied to
+Such configuration is a good choice when there is no slave device involved
+in the DMA transfers. In that case the number of bursts per block is less
+than when CFGx.FIFO_MODE = 0 and, hence, the bus utilization will improve.
+But the latency of DMA transfers may increase when CFGx.FIFO_MODE = 1,
+since DW DMAC will wait for the channel FIFO contents to be either
+half-full or half-empty depending on having the destination or the source
+transfers. Such latencies might be dangerous in case if the DMA transfers
+are expected to be performed from/to a slave device. Since normally
+peripheral devices keep data in internal FIFOs, any latency at some
+critical moment may cause one being overflown and consequently losing
+data. This especially concerns a case when either a peripheral device is
+relatively fast or the DW DMAC engine is relatively slow with respect to
+the incoming data pace.
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next
+In order to solve problems, which might be caused by the latencies
+described above, let's enable the FIFO half-full/half-empty "FIFO
+readiness" criterion only for DMA transfers with no slave device involved.
+Thanks to the commit 99ba8b9b0d97 ("dmaengine: dw: Initialize channel
+before each transfer") we can freely do that in the generic
+dw_dma_initialize_chan() method.
 
-Thanks!
+Signed-off-by: Serge Semin <Sergey.Semin@baikalelectronics.ru>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+---
+ drivers/dma/dw/dw.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-[1/1] ASoC: sh: Replace 'select' DMADEVICES 'with depends on'
-      commit: 2dbf11ec7d3a63ebde946b5747ad6bd74d45adb1
+diff --git a/drivers/dma/dw/dw.c b/drivers/dma/dw/dw.c
+index 7a085b3c1854..d9810980920a 100644
+--- a/drivers/dma/dw/dw.c
++++ b/drivers/dma/dw/dw.c
+@@ -14,7 +14,7 @@
+ static void dw_dma_initialize_chan(struct dw_dma_chan *dwc)
+ {
+ 	struct dw_dma *dw = to_dw_dma(dwc->chan.device);
+-	u32 cfghi = DWC_CFGH_FIFO_MODE;
++	u32 cfghi = is_slave_direction(dwc->direction) ? 0 : DWC_CFGH_FIFO_MODE;
+ 	u32 cfglo = DWC_CFGL_CH_PRIOR(dwc->priority);
+ 	bool hs_polarity = dwc->dws.hs_polarity;
+ 
+-- 
+2.27.0
 
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
-
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
-
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
-
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
-
-Thanks,
-Mark
