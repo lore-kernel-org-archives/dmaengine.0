@@ -1,102 +1,120 @@
-Return-Path: <SRS0=qvxS=BK=vger.kernel.org=dmaengine-owner@kernel.org>
+Return-Path: <SRS0=l9mA=BL=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-13.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=unavailable
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6579FC433DF
-	for <dmaengine@archiver.kernel.org>; Fri, 31 Jul 2020 22:42:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7C393C433DF
+	for <dmaengine@archiver.kernel.org>; Sat,  1 Aug 2020 12:25:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 41EC622B42
-	for <dmaengine@archiver.kernel.org>; Fri, 31 Jul 2020 22:42:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1596235339;
-	bh=GM7w4fSGA5eLJWWTIwyAIzVxBjrnBapL6vLov6nQa2Q=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:List-ID:From;
-	b=RFfb2kGFUK7wSZQw6XUxY2CIcWqLAYgiUncakPKw2W5GGErNmQhU9xzag5LZXp0f6
-	 14xx3k8Tvb5Pc3Q4hR9WhjPugI5qeQdAPdPa11KrVJnGCWhXmZvO/Ab5DnsNSIkR4k
-	 MVYUqOlcxncoLXdufvsBdHFRvBkz2IWdnQb6v67o=
+	by mail.kernel.org (Postfix) with ESMTP id 57BEB2080C
+	for <dmaengine@archiver.kernel.org>; Sat,  1 Aug 2020 12:25:29 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="M6ZCfvut"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726215AbgGaWmQ (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 31 Jul 2020 18:42:16 -0400
-Received: from mail-io1-f66.google.com ([209.85.166.66]:44593 "EHLO
-        mail-io1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726099AbgGaWmP (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Fri, 31 Jul 2020 18:42:15 -0400
-Received: by mail-io1-f66.google.com with SMTP id v6so17940088iow.11;
-        Fri, 31 Jul 2020 15:42:15 -0700 (PDT)
+        id S1729026AbgHAMYg (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Sat, 1 Aug 2020 08:24:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54198 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729007AbgHAMYd (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Sat, 1 Aug 2020 08:24:33 -0400
+Received: from mail-ej1-x641.google.com (mail-ej1-x641.google.com [IPv6:2a00:1450:4864:20::641])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C1F2CC061756;
+        Sat,  1 Aug 2020 05:24:31 -0700 (PDT)
+Received: by mail-ej1-x641.google.com with SMTP id o23so6562832ejr.1;
+        Sat, 01 Aug 2020 05:24:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=4KwHv6QMJMXsH8yaJc8FAm3bwHGuyv+DgGa3tEGDGbc=;
+        b=M6ZCfvutD7TU/pOV2RNFZ9MidUceEEom3Nv3cE806feUIRVqBJG/pIaUprqT1xhcje
+         WdFRwEFWFMhXxFz9OgdZ1Gkc2To7DRldejROIxZU6c5ReUp9u6fMtabD/bp4nvv/xOZ1
+         gEJrQOJUtdKdJ1QlchgC8PcfGkZLKme+Hi3QCWETI9t5oBQZyeKu/wRZdwIN4fw+6/p2
+         aP/w5sc4rsYwGAOX8KMKUcMaGtvOVbby2SRPvd52QpVeN1oD1/I8CIBqPGmZsXStVK34
+         LWU73hZRIlZwQmIZU0I3USachekVwyf51qlBk3yWeO3Owwoptvz+TI+cen849fVsnjFy
+         6R5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=soM3XiGlqMF6wRO5kAd80dwyaXMFhHTLobhFQyhs1VA=;
-        b=i+RGnrcuC2hsYROT/ugS4m/8mErVz0A1C87rw8b6CdneVCSPYntNncZ3m+o/e/HeJ2
-         O1VYa20E0EZ7I6IVJTyAjs7g2RPvE0jv217+cVpy21PBQiKPiXF6L4RAL64BdqaRflHT
-         acbGUcs5jEWmhzIbkz1DC+aMfgK4cIEaY94GLzGxW2OOKO0DvNiQZxlYuyn/fDkWP468
-         8Dfc8gqYfNgNoXTS40tdqxl7H1p8qUrOl/SBmtkiPk4qe2LJLZVuauu2WBiN8C12px5Z
-         cWjmgRqiqWs50ntyqnaHRmOJz2AXUuuIBD3sE/t8DljwOJAh4CRbv3N3u4WBocmkMFlg
-         mrNQ==
-X-Gm-Message-State: AOAM532dE/KGLgMISlxevweUw7s1bI0VSdZjU+lAu6piw5X18aeqYq5y
-        gCkKKFSXDYSKVvFG0t0/cQ==
-X-Google-Smtp-Source: ABdhPJzCLkAb9cmGZT9KOsWAc2uFkDU6xbg3zFNhGW9fmSZ0oPYORZm5j3NYhoSrUh/mtFccShqV6w==
-X-Received: by 2002:a02:3e13:: with SMTP id s19mr7569352jas.95.1596235334866;
-        Fri, 31 Jul 2020 15:42:14 -0700 (PDT)
-Received: from xps15 ([64.188.179.252])
-        by smtp.gmail.com with ESMTPSA id x12sm5715381ile.14.2020.07.31.15.42.13
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=4KwHv6QMJMXsH8yaJc8FAm3bwHGuyv+DgGa3tEGDGbc=;
+        b=YLVC4rbM2SimPmRemE6dbeQ1ES8J8pTZ5TVo9zuqQLNaUp4NChsTrOnOMF8s4ut1Ts
+         f6fuSyp+H8WumrXW+4IhXOH0fWZnEO+EWiTDJBJqqlh6e6Zf5F8p8uCny4YZGOPmdUtB
+         nshFafUTJYAVzlLyQ2lgxosnZVtlXBl14WINvSruWtKCcX4Pxao8hD92LTL8cXVp11bG
+         HQB5al8vjPVxuTE57gXC5o+DEGc/yNWA4Dqy4Rk6VduqvJVYuWo4xsmeiPoSyPqq2xTp
+         /8asu7ee8zsqbj/VJjx5iHaTeyog6zgsqWkzjaEgjD/kwcun/GQ+wC5lkYu0FgNiAujQ
+         MSBA==
+X-Gm-Message-State: AOAM531PcsKvuwmUhQy5ZuZByzCBlEy0+uiaGY3N8w1qh5fmOQnQWmUA
+        cjs6UIA+YWA8LjiJdBZ288g=
+X-Google-Smtp-Source: ABdhPJyP/Khv/zO4ruS71OwrBP8neVvwznKuE/Wo/7tG658TgIhiZlq1Bl/1qqyQW8Ic4CfQutik3A==
+X-Received: by 2002:a17:906:694b:: with SMTP id c11mr8314854ejs.232.1596284670556;
+        Sat, 01 Aug 2020 05:24:30 -0700 (PDT)
+Received: from net.saheed (95C84E0A.dsl.pool.telekom.hu. [149.200.78.10])
+        by smtp.gmail.com with ESMTPSA id a101sm12083131edf.76.2020.08.01.05.24.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 31 Jul 2020 15:42:14 -0700 (PDT)
-Received: (nullmailer pid 941715 invoked by uid 1000);
-        Fri, 31 Jul 2020 22:42:13 -0000
-Date:   Fri, 31 Jul 2020 16:42:13 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Serge Semin <Sergey.Semin@baikalelectronics.ru>
-Cc:     Alexey Malahov <Alexey.Malahov@baikalelectronics.ru>,
-        linux-kernel@vger.kernel.org, Viresh Kumar <vireshk@kernel.org>,
-        devicetree@vger.kernel.org, Vinod Koul <vkoul@kernel.org>,
-        Pavel Parkhomenko <Pavel.Parkhomenko@baikalelectronics.ru>,
-        Andy Shevchenko <andy.shevchenko@gmail.com>,
-        dmaengine@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
-        Peter Ujfalusi <peter.ujfalusi@ti.com>,
-        Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-        Serge Semin <fancer.lancer@gmail.com>
-Subject: Re: [PATCH 1/5] dt-bindings: dma: dw: Add optional DMA-channels mask
- cell support
-Message-ID: <20200731224213.GA941640@bogus>
-References: <20200730154545.3965-1-Sergey.Semin@baikalelectronics.ru>
- <20200730154545.3965-2-Sergey.Semin@baikalelectronics.ru>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200730154545.3965-2-Sergey.Semin@baikalelectronics.ru>
+        Sat, 01 Aug 2020 05:24:30 -0700 (PDT)
+From:   "Saheed O. Bolarinwa" <refactormyself@gmail.com>
+To:     helgaas@kernel.org, Vinod Koul <vkoul@kernel.org>,
+        Dan Williams <dan.j.williams@intel.com>
+Cc:     "Saheed O. Bolarinwa" <refactormyself@gmail.com>,
+        bjorn@helgaas.com, skhan@linuxfoundation.org,
+        linux-kernel-mentees@lists.linuxfoundation.org,
+        linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
+        dmaengine@vger.kernel.org
+Subject: [RFC PATCH 05/17] dmaengine: ioat: Drop uses of pci_read_config_*() return value
+Date:   Sat,  1 Aug 2020 13:24:34 +0200
+Message-Id: <20200801112446.149549-6-refactormyself@gmail.com>
+X-Mailer: git-send-email 2.18.4
+In-Reply-To: <20200801112446.149549-1-refactormyself@gmail.com>
+References: <20200801112446.149549-1-refactormyself@gmail.com>
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On Thu, 30 Jul 2020 18:45:41 +0300, Serge Semin wrote:
-> Each DW DMA controller channel can be synthesized with different
-> parameters like maximum burst-length, multi-block support, maximum data
-> width, etc. Most of these parameters determine the DW DMAC channels
-> performance in its own aspect. On the other hand these parameters can
-> be implicitly responsible for the channels performance degradation
-> (for instance multi-block support is a very useful feature, but having
-> it disabled during the DW DMAC synthesize will provide a more optimized
-> core). Since DMA slave devices may have critical dependency on the DMA
-> engine performance, let's provide a way for the slave devices to have
-> the DMA-channels allocated from a pool of the channels, which according
-> to the system engineer fulfill their performance requirements.
-> 
-> The pool is determined by a mask optionally specified in the fifth
-> DMA-cell of the DMA DT-property. If the fifth cell is omitted from the
-> phandle arguments or the mask is zero, then the allocation will be
-> performed from a set of all channels provided by the DMA controller.
-> 
-> Signed-off-by: Serge Semin <Sergey.Semin@baikalelectronics.ru>
-> ---
->  .../devicetree/bindings/dma/snps,dma-spear1340.yaml        | 7 +++++--
->  1 file changed, 5 insertions(+), 2 deletions(-)
-> 
+The return value of pci_read_config_*() may not indicate a device error.
+However, the value read by these functions is more likely to indicate
+this kind of error. This presents two overlapping ways of reporting
+errors and complicates error checking.
 
-Reviewed-by: Rob Herring <robh@kernel.org>
+It is possible to move to one single way of checking for error if the
+dependency on the return value of these functions is removed, then it
+can later be made to return void.
+
+Remove all uses of the return value of pci_read_config_*().
+Check the actual value read for ~0. In this case, ~0 is an invalid
+value thus it indicates some kind of error.
+
+Suggested-by: Bjorn Helgaas <bjorn@helgaas.com>
+Signed-off-by: Saheed O. Bolarinwa <refactormyself@gmail.com>
+---
+ drivers/dma/ioat/dma.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/drivers/dma/ioat/dma.c b/drivers/dma/ioat/dma.c
+index fd782aee02d9..e51418cf93b6 100644
+--- a/drivers/dma/ioat/dma.c
++++ b/drivers/dma/ioat/dma.c
+@@ -1016,12 +1016,12 @@ int ioat_reset_hw(struct ioatdma_chan *ioat_chan)
+ 
+ 	if (ioat_dma->version < IOAT_VER_3_3) {
+ 		/* clear any pending errors */
+-		err = pci_read_config_dword(pdev,
++		pci_read_config_dword(pdev,
+ 				IOAT_PCI_CHANERR_INT_OFFSET, &chanerr);
+-		if (err) {
++		if (chanerr == (u32)~0) {
+ 			dev_err(&pdev->dev,
+ 				"channel error register unreachable\n");
+-			return err;
++			return -ENODEV;
+ 		}
+ 		pci_write_config_dword(pdev,
+ 				IOAT_PCI_CHANERR_INT_OFFSET, chanerr);
+-- 
+2.18.4
+
