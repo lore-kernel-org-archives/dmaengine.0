@@ -2,126 +2,107 @@ Return-Path: <SRS0=VS9U=BN=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED,USER_AGENT_GIT autolearn=unavailable autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-13.0 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9D776C433E1
-	for <dmaengine@archiver.kernel.org>; Mon,  3 Aug 2020 12:56:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D1A25C433DF
+	for <dmaengine@archiver.kernel.org>; Mon,  3 Aug 2020 14:11:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7CA5A206D7
-	for <dmaengine@archiver.kernel.org>; Mon,  3 Aug 2020 12:56:11 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b="NZmQYsuS"
+	by mail.kernel.org (Postfix) with ESMTP id AC74C206DA
+	for <dmaengine@archiver.kernel.org>; Mon,  3 Aug 2020 14:11:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729542AbgHCM4D (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 3 Aug 2020 08:56:03 -0400
-Received: from fllv0016.ext.ti.com ([198.47.19.142]:44170 "EHLO
-        fllv0016.ext.ti.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728052AbgHCM4C (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Mon, 3 Aug 2020 08:56:02 -0400
-Received: from lelv0265.itg.ti.com ([10.180.67.224])
-        by fllv0016.ext.ti.com (8.15.2/8.15.2) with ESMTP id 073Ctue3090762;
-        Mon, 3 Aug 2020 07:55:56 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
-        s=ti-com-17Q1; t=1596459356;
-        bh=M7fbrOCkpFwR/FeIsiMk/YC7KZBBAbDACKy28Ayd6xs=;
-        h=From:To:CC:Subject:Date:In-Reply-To:References;
-        b=NZmQYsuSDDE65PX+LgUrb9qJ2p3JzH0+48F46nUc18YoMwEYFVeZxp6kVh+B2thDM
-         ucqmsrgc1U8SevtR/isYoDDKH/PnYKEVkUlV7Fzi6BEmHPKGKASicwOuNdNa1tzxar
-         Wv3Y/gAB3wgkfWBJTRljolCEUBnZ+HhXA12YLpWI=
-Received: from DLEE106.ent.ti.com (dlee106.ent.ti.com [157.170.170.36])
-        by lelv0265.itg.ti.com (8.15.2/8.15.2) with ESMTPS id 073CtuPK054767
-        (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
-        Mon, 3 Aug 2020 07:55:56 -0500
-Received: from DLEE100.ent.ti.com (157.170.170.30) by DLEE106.ent.ti.com
- (157.170.170.36) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1979.3; Mon, 3 Aug
- 2020 07:55:55 -0500
-Received: from lelv0326.itg.ti.com (10.180.67.84) by DLEE100.ent.ti.com
- (157.170.170.30) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1979.3 via
- Frontend Transport; Mon, 3 Aug 2020 07:55:56 -0500
-Received: from feketebors.ti.com (ileax41-snat.itg.ti.com [10.172.224.153])
-        by lelv0326.itg.ti.com (8.15.2/8.15.2) with ESMTP id 073CtoMi090290;
-        Mon, 3 Aug 2020 07:55:53 -0500
-From:   Peter Ujfalusi <peter.ujfalusi@ti.com>
-To:     <vkoul@kernel.org>
-CC:     <dmaengine@vger.kernel.org>, <dan.j.williams@intel.com>,
-        <linux-arm-kernel@lists.infradead.org>, <nm@ti.com>,
-        <grygorii.strashko@ti.com>, <lokeshvutla@ti.com>, <nsekhar@ti.com>,
-        <kishon@ti.com>, <linux-kernel@vger.kernel.org>
-Subject: [PATCH v2 1/2] dmaengine: ti: k3-psil: Use soc_device_match to get the psil map
-Date:   Mon, 3 Aug 2020 15:57:12 +0300
-Message-ID: <20200803125713.17829-2-peter.ujfalusi@ti.com>
-X-Mailer: git-send-email 2.28.0
-In-Reply-To: <20200803125713.17829-1-peter.ujfalusi@ti.com>
-References: <20200803125713.17829-1-peter.ujfalusi@ti.com>
+        id S1728272AbgHCOLF (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 3 Aug 2020 10:11:05 -0400
+Received: from szxga04-in.huawei.com ([45.249.212.190]:9322 "EHLO huawei.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1728258AbgHCOLE (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Mon, 3 Aug 2020 10:11:04 -0400
+Received: from DGGEMS410-HUB.china.huawei.com (unknown [172.30.72.59])
+        by Forcepoint Email with ESMTP id 5974070981FE9D8A1FCC;
+        Mon,  3 Aug 2020 22:10:58 +0800 (CST)
+Received: from localhost (10.174.179.108) by DGGEMS410-HUB.china.huawei.com
+ (10.3.19.210) with Microsoft SMTP Server id 14.3.487.0; Mon, 3 Aug 2020
+ 22:10:48 +0800
+From:   YueHaibing <yuehaibing@huawei.com>
+To:     <dan.j.williams@intel.com>, <vkoul@kernel.org>
+CC:     <dmaengine@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        YueHaibing <yuehaibing@huawei.com>
+Subject: [PATCH -next] dmaengine: iop-adma: Fix -Wint-to-pointer-cast build warning
+Date:   Mon, 3 Aug 2020 22:10:35 +0800
+Message-ID: <20200803141035.45284-1-yuehaibing@huawei.com>
+X-Mailer: git-send-email 2.10.2.windows.1
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-EXCLAIMER-MD-CONFIG: e1e8a2fd-e40a-4ac6-ac9b-f7e9cc9ee180
+X-Originating-IP: [10.174.179.108]
+X-CFilter-Loop: Reflected
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Instead of separate of_machine_is_compatible() it is better to use
-soc_device_match() and soc_device_attribute struct to get the PSI-L map
-for the booted device.
+drivers/dma/iop-adma.c:447:13: warning: cast to pointer from integer of different size [-Wint-to-pointer-cast]
+drivers/dma/iop-adma.c:449:4: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+drivers/dma/iop-adma.c:1301:3: warning: cast to pointer from integer of different size [-Wint-to-pointer-cast]
 
-By using soc_device_match() it is easier to add support for new devices.
+Use void* for dma_desc_pool_virt, dma_addr_t for dma_desc_pool,
+and use %pad to print dma_addr_t.
 
-Signed-off-by: Peter Ujfalusi <peter.ujfalusi@ti.com>
+Signed-off-by: YueHaibing <yuehaibing@huawei.com>
 ---
- drivers/dma/ti/k3-psil.c | 18 +++++++++++++-----
- 1 file changed, 13 insertions(+), 5 deletions(-)
+ drivers/dma/iop-adma.c | 17 ++++++++---------
+ 1 file changed, 8 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/dma/ti/k3-psil.c b/drivers/dma/ti/k3-psil.c
-index fb7c8150b0d1..fa106e8bd56b 100644
---- a/drivers/dma/ti/k3-psil.c
-+++ b/drivers/dma/ti/k3-psil.c
-@@ -9,11 +9,18 @@
- #include <linux/init.h>
- #include <linux/mutex.h>
- #include <linux/of.h>
-+#include <linux/sys_soc.h>
- 
- #include "k3-psil-priv.h"
- 
- static DEFINE_MUTEX(ep_map_mutex);
--static struct psil_ep_map *soc_ep_map;
-+static const struct psil_ep_map *soc_ep_map;
-+
-+static const struct soc_device_attribute k3_soc_devices[] = {
-+	{ .family = "AM65X", .data = &am654_ep_map },
-+	{ .family = "J721E", .data = &j721e_ep_map },
-+	{ /* sentinel */ }
-+};
- 
- struct psil_endpoint_config *psil_get_ep_config(u32 thread_id)
+diff --git a/drivers/dma/iop-adma.c b/drivers/dma/iop-adma.c
+index 3350bffb2e93..8e17e4405959 100644
+--- a/drivers/dma/iop-adma.c
++++ b/drivers/dma/iop-adma.c
+@@ -415,7 +415,8 @@ static void iop_chan_start_null_xor(struct iop_adma_chan *iop_chan);
+  * */
+ static int iop_adma_alloc_chan_resources(struct dma_chan *chan)
  {
-@@ -21,10 +28,11 @@ struct psil_endpoint_config *psil_get_ep_config(u32 thread_id)
+-	char *hw_desc;
++	void *hw_desc;
++	dma_addr_t dma_desc;
+ 	int idx;
+ 	struct iop_adma_chan *iop_chan = to_iop_adma_chan(chan);
+ 	struct iop_adma_desc_slot *slot = NULL;
+@@ -436,17 +437,16 @@ static int iop_adma_alloc_chan_resources(struct dma_chan *chan)
+ 				" %d descriptor slots", idx);
+ 			break;
+ 		}
+-		hw_desc = (char *) iop_chan->device->dma_desc_pool_virt;
+-		slot->hw_desc = (void *) &hw_desc[idx * IOP_ADMA_SLOT_SIZE];
++		hw_desc = iop_chan->device->dma_desc_pool_virt;
++		slot->hw_desc = hw_desc + idx * IOP_ADMA_SLOT_SIZE;
  
- 	mutex_lock(&ep_map_mutex);
- 	if (!soc_ep_map) {
--		if (of_machine_is_compatible("ti,am654")) {
--			soc_ep_map = &am654_ep_map;
--		} else if (of_machine_is_compatible("ti,j721e")) {
--			soc_ep_map = &j721e_ep_map;
-+		const struct soc_device_attribute *soc;
-+
-+		soc = soc_device_match(k3_soc_devices);
-+		if (soc) {
-+			soc_ep_map = soc->data;
- 		} else {
- 			pr_err("PSIL: No compatible machine found for map\n");
- 			mutex_unlock(&ep_map_mutex);
+ 		dma_async_tx_descriptor_init(&slot->async_tx, chan);
+ 		slot->async_tx.tx_submit = iop_adma_tx_submit;
+ 		INIT_LIST_HEAD(&slot->tx_list);
+ 		INIT_LIST_HEAD(&slot->chain_node);
+ 		INIT_LIST_HEAD(&slot->slot_node);
+-		hw_desc = (char *) iop_chan->device->dma_desc_pool;
+-		slot->async_tx.phys =
+-			(dma_addr_t) &hw_desc[idx * IOP_ADMA_SLOT_SIZE];
++		dma_desc = iop_chan->device->dma_desc_pool;
++		slot->async_tx.phys = dma_desc + idx * IOP_ADMA_SLOT_SIZE;
+ 		slot->idx = idx;
+ 
+ 		spin_lock_bh(&iop_chan->lock);
+@@ -1296,9 +1296,8 @@ static int iop_adma_probe(struct platform_device *pdev)
+ 		goto err_free_adev;
+ 	}
+ 
+-	dev_dbg(&pdev->dev, "%s: allocated descriptor pool virt %p phys %p\n",
+-		__func__, adev->dma_desc_pool_virt,
+-		(void *) adev->dma_desc_pool);
++	dev_dbg(&pdev->dev, "%s: allocated descriptor pool virt %p phys %pad\n",
++		__func__, adev->dma_desc_pool_virt, &adev->dma_desc_pool);
+ 
+ 	adev->id = plat_data->hw_id;
+ 
 -- 
-Peter
+2.17.1
 
-Texas Instruments Finland Oy, Porkkalankatu 22, 00180 Helsinki.
-Y-tunnus/Business ID: 0615521-4. Kotipaikka/Domicile: Helsinki
 
