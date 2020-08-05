@@ -2,101 +2,173 @@ Return-Path: <SRS0=kD8Z=BP=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9DFB1C433E0
-	for <dmaengine@archiver.kernel.org>; Wed,  5 Aug 2020 20:11:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 610CEC433DF
+	for <dmaengine@archiver.kernel.org>; Wed,  5 Aug 2020 20:19:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 69CDD22B42
-	for <dmaengine@archiver.kernel.org>; Wed,  5 Aug 2020 20:11:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1596658317;
-	bh=UmJlgXnRIbkpWEb4+GJWusTxQMcaZd+VjLiPMxf0RoE=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:List-ID:From;
-	b=NRuGygJ2Gz0tQd61+gWpH3iH593mLJIVdx8ER8JK4DJdgZUf6495D4Xl1SFqdWln2
-	 DwqB9wPXV8kRNEXkDmqA6+tlRkOrs6bc3OVTiaEE+QmVm5Yr9ENCTojJsIjWx1UpU6
-	 JpDw6FlY3FeiD+zZZH3sZBVl9ndIImd4RiyaWVE8=
+	by mail.kernel.org (Postfix) with ESMTP id 4905B22CAD
+	for <dmaengine@archiver.kernel.org>; Wed,  5 Aug 2020 20:19:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729653AbgHEULj (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 5 Aug 2020 16:11:39 -0400
-Received: from mail.kernel.org ([198.145.29.99]:49486 "EHLO mail.kernel.org"
+        id S1726399AbgHEUTj convert rfc822-to-8bit (ORCPT
+        <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 5 Aug 2020 16:19:39 -0400
+Received: from mga12.intel.com ([192.55.52.136]:63556 "EHLO mga12.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726393AbgHEQ1m (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Wed, 5 Aug 2020 12:27:42 -0400
-Received: from localhost (unknown [122.171.202.192])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 1699E22D06;
-        Wed,  5 Aug 2020 11:32:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1596627161;
-        bh=UmJlgXnRIbkpWEb4+GJWusTxQMcaZd+VjLiPMxf0RoE=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=bKfYLGeL4sk3PaNTyYcFVHFQJ1R5LtEjDS+g5xCfn8oIH1gcjpsfcxSdctodlhZVV
-         SLRSKAGz2ZtLWVabntzLUhnn0sjLlBfo+0MQlBqq+ITL/t48N86l3vymtRCPsUSAMC
-         msElrEF7e9enPeNSNKvrmqKdS3g0NSNrW9SNYw7o=
-Date:   Wed, 5 Aug 2020 17:02:37 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Peter Ujfalusi <peter.ujfalusi@ti.com>
-Cc:     ssantosh@kernel.org, santosh.shilimkar@oracle.com,
-        linux-arm-kernel@lists.infradead.org, grygorii.strashko@ti.com,
-        linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org
-Subject: Re: [PATCH] dmaengine: ti: k3-udma-glue: Fix parameters for rx ring
- pair request
-Message-ID: <20200805113237.GX12965@vkoul-mobl>
-References: <20200805112746.15475-1-peter.ujfalusi@ti.com>
+        id S1726128AbgHEUTi (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Wed, 5 Aug 2020 16:19:38 -0400
+IronPort-SDR: jRg6g+aihljhKVo7IYgeHbtq/vxkD9PLlw7GqoDD5LgS2Pxs/4edTf5QWjmOs6aOllXRuZDjeL
+ k0x+5YqCH5Cw==
+X-IronPort-AV: E=McAfee;i="6000,8403,9704"; a="132211385"
+X-IronPort-AV: E=Sophos;i="5.75,438,1589266800"; 
+   d="scan'208";a="132211385"
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga005.jf.intel.com ([10.7.209.41])
+  by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Aug 2020 13:19:38 -0700
+IronPort-SDR: w9VSCNrISXm96GGjOlNyk4yJ4AZEqjxtdap/DxRUPdcHd6GR7/SdzO2DGKE9Nih3CrBJdlNu3m
+ RCa+339YsD3A==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.75,438,1589266800"; 
+   d="scan'208";a="467585502"
+Received: from orsmsx604.amr.corp.intel.com ([10.22.229.17])
+  by orsmga005.jf.intel.com with ESMTP; 05 Aug 2020 13:19:37 -0700
+Received: from orsmsx611.amr.corp.intel.com (10.22.229.24) by
+ ORSMSX604.amr.corp.intel.com (10.22.229.17) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.1713.5; Wed, 5 Aug 2020 13:19:37 -0700
+Received: from orsmsx612.amr.corp.intel.com (10.22.229.25) by
+ ORSMSX611.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.1713.5; Wed, 5 Aug 2020 13:19:36 -0700
+Received: from orsmsx612.amr.corp.intel.com ([10.22.229.25]) by
+ ORSMSX612.amr.corp.intel.com ([10.22.229.25]) with mapi id 15.01.1713.004;
+ Wed, 5 Aug 2020 13:19:36 -0700
+From:   "Dey, Megha" <megha.dey@intel.com>
+To:     Jason Gunthorpe <jgg@mellanox.com>
+CC:     "Jiang, Dave" <dave.jiang@intel.com>,
+        "vkoul@kernel.org" <vkoul@kernel.org>,
+        "maz@kernel.org" <maz@kernel.org>,
+        "bhelgaas@google.com" <bhelgaas@google.com>,
+        "rafael@kernel.org" <rafael@kernel.org>,
+        "gregkh@linuxfoundation.org" <gregkh@linuxfoundation.org>,
+        "tglx@linutronix.de" <tglx@linutronix.de>,
+        "hpa@zytor.com" <hpa@zytor.com>,
+        "alex.williamson@redhat.com" <alex.williamson@redhat.com>,
+        "Pan, Jacob jun" <jacob.jun.pan@intel.com>,
+        "Raj, Ashok" <ashok.raj@intel.com>,
+        "Liu, Yi L" <yi.l.liu@intel.com>, "Lu, Baolu" <baolu.lu@intel.com>,
+        "Tian, Kevin" <kevin.tian@intel.com>,
+        "Kumar, Sanjay K" <sanjay.k.kumar@intel.com>,
+        "Luck, Tony" <tony.luck@intel.com>,
+        "Lin, Jing" <jing.lin@intel.com>,
+        "Williams, Dan J" <dan.j.williams@intel.com>,
+        "kwankhede@nvidia.com" <kwankhede@nvidia.com>,
+        "eric.auger@redhat.com" <eric.auger@redhat.com>,
+        "parav@mellanox.com" <parav@mellanox.com>,
+        "Hansen, Dave" <dave.hansen@intel.com>,
+        "netanelg@mellanox.com" <netanelg@mellanox.com>,
+        "shahafs@mellanox.com" <shahafs@mellanox.com>,
+        "yan.y.zhao@linux.intel.com" <yan.y.zhao@linux.intel.com>,
+        "pbonzini@redhat.com" <pbonzini@redhat.com>,
+        "Ortiz, Samuel" <samuel.ortiz@intel.com>,
+        "Hossain, Mona" <mona.hossain@intel.com>,
+        "dmaengine@vger.kernel.org" <dmaengine@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        "x86@kernel.org" <x86@kernel.org>,
+        "linux-pci@vger.kernel.org" <linux-pci@vger.kernel.org>,
+        "kvm@vger.kernel.org" <kvm@vger.kernel.org>
+Subject: RE: [PATCH RFC v2 04/18] irq/dev-msi: Introduce APIs to allocate/free
+ dev-msi interrupts
+Thread-Topic: [PATCH RFC v2 04/18] irq/dev-msi: Introduce APIs to
+ allocate/free dev-msi interrupts
+Thread-Index: AQHWX3heqXf8B+7kfUafGS9cbpYfH6kSrV6AgAExB0iAFi3TEA==
+Date:   Wed, 5 Aug 2020 20:19:36 +0000
+Message-ID: <8cdfef10438047f5ae7fc81770d32351@intel.com>
+References: <159534667974.28840.2045034360240786644.stgit@djiang5-desk3.ch.intel.com>
+ <159534736176.28840.5547007059232964457.stgit@djiang5-desk3.ch.intel.com>
+ <20200721162501.GC2021248@mellanox.com>
+ <b3bc68b3-937e-4b64-e1c7-84942d7ba60c@intel.com>
+ <20200722173515.GL2021248@mellanox.com>
+In-Reply-To: <20200722173515.GL2021248@mellanox.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+dlp-product: dlpe-windows
+dlp-reaction: no-action
+dlp-version: 11.5.1.3
+x-originating-ip: [10.22.254.132]
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200805112746.15475-1-peter.ujfalusi@ti.com>
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On 05-08-20, 14:27, Peter Ujfalusi wrote:
-> The original commit mixed up the forward and completion ring IDs for the
-> rx flow configuration.
+Hi Jason,
 
-Acked-By: Vinod Koul <vkoul@kernel.org>
+> -----Original Message-----
+> From: Jason Gunthorpe <jgg@mellanox.com>
+> Sent: Wednesday, July 22, 2020 10:35 AM
+> To: Dey, Megha <megha.dey@intel.com>
+> Cc: Jiang, Dave <dave.jiang@intel.com>; vkoul@kernel.org; maz@kernel.org;
+> bhelgaas@google.com; rafael@kernel.org; gregkh@linuxfoundation.org;
+> tglx@linutronix.de; hpa@zytor.com; alex.williamson@redhat.com; Pan, Jacob
+> jun <jacob.jun.pan@intel.com>; Raj, Ashok <ashok.raj@intel.com>; Liu, Yi L
+> <yi.l.liu@intel.com>; Lu, Baolu <baolu.lu@intel.com>; Tian, Kevin
+> <kevin.tian@intel.com>; Kumar, Sanjay K <sanjay.k.kumar@intel.com>; Luck,
+> Tony <tony.luck@intel.com>; Lin, Jing <jing.lin@intel.com>; Williams, Dan J
+> <dan.j.williams@intel.com>; kwankhede@nvidia.com; eric.auger@redhat.com;
+> parav@mellanox.com; Hansen, Dave <dave.hansen@intel.com>;
+> netanelg@mellanox.com; shahafs@mellanox.com; yan.y.zhao@linux.intel.com;
+> pbonzini@redhat.com; Ortiz, Samuel <samuel.ortiz@intel.com>; Hossain, Mona
+> <mona.hossain@intel.com>; dmaengine@vger.kernel.org; linux-
+> kernel@vger.kernel.org; x86@kernel.org; linux-pci@vger.kernel.org;
+> kvm@vger.kernel.org
+> Subject: Re: [PATCH RFC v2 04/18] irq/dev-msi: Introduce APIs to allocate/free
+> dev-msi interrupts
+> 
+> On Wed, Jul 22, 2020 at 10:05:52AM -0700, Dey, Megha wrote:
+> >
+> >
+> > On 7/21/2020 9:25 AM, Jason Gunthorpe wrote:
+> > > On Tue, Jul 21, 2020 at 09:02:41AM -0700, Dave Jiang wrote:
+> > > > From: Megha Dey <megha.dey@intel.com>
+> > > >
+> > > > The dev-msi interrupts are to be allocated/freed only for custom
+> > > > devices, not standard PCI-MSIX devices.
+> > > >
+> > > > These interrupts are device-defined and they are distinct from the
+> > > > already existing msi interrupts:
+> > > > pci-msi: Standard PCI MSI/MSI-X setup format
+> > > > platform-msi: Platform custom, but device-driver opaque MSI
+> > > > setup/control
+> > > > arch-msi: fallback for devices not assigned to the generic PCI
+> > > > domain
+> > > > dev-msi: device defined IRQ domain for ancillary devices. For e.g.
+> > > > DSA portal devices use device specific IMS(Interrupt message store)
+> interrupts.
+> > > >
+> > > > dev-msi interrupts are represented by their own device-type. That
+> > > > means
+> > > > dev->msi_list is never contended for different interrupt types. It
+> > > > will either be all PCI-MSI or all device-defined.
+> > >
+> > > Not sure I follow this, where is the enforcement that only dev-msi
+> > > or normal MSI is being used at one time on a single struct device?
+> > >
+> >
+> > So, in the dev_msi_alloc_irqs, I first check if the dev_is_pci..
+> > If it is a pci device, it is forbidden to use dev-msi and must use the
+> > pci subsystem calls. dev-msi is to be used for all other custom
+> > devices, mdev or otherwise.
+> 
+> What prevents creating a dev-msi directly on the struct pci_device ?
 
+In the next patchset, I have explicitly added code which denies PCI devices from using the dev_msi alloc/free APIS
 > 
-> Fixes: 4927b1ab2047 ("dmaengine: ti: k3-udma: Switch to k3_ringacc_request_rings_pair")
-> Signed-off-by: Peter Ujfalusi <peter.ujfalusi@ti.com>
-> ---
-> Hi Santosh, Vinod,
-> 
-> the offending patch was queued via ti SoC tree.
-> Santosh, can you pick up this fix also?
-> 
-> Regards,
-> Peter
-> 
->  drivers/dma/ti/k3-udma-glue.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/drivers/dma/ti/k3-udma-glue.c b/drivers/dma/ti/k3-udma-glue.c
-> index 3a5d33ea5ebe..12da38a92218 100644
-> --- a/drivers/dma/ti/k3-udma-glue.c
-> +++ b/drivers/dma/ti/k3-udma-glue.c
-> @@ -579,8 +579,8 @@ static int k3_udma_glue_cfg_rx_flow(struct k3_udma_glue_rx_channel *rx_chn,
->  
->  	/* request and cfg rings */
->  	ret =  k3_ringacc_request_rings_pair(rx_chn->common.ringacc,
-> -					     flow_cfg->ring_rxq_id,
->  					     flow_cfg->ring_rxfdq0_id,
-> +					     flow_cfg->ring_rxq_id,
->  					     &flow->ringrxfdq,
->  					     &flow->ringrx);
->  	if (ret) {
-> -- 
-> Peter
-> 
-> Texas Instruments Finland Oy, Porkkalankatu 22, 00180 Helsinki.
-> Y-tunnus/Business ID: 0615521-4. Kotipaikka/Domicile: Helsinki
-
--- 
-~Vinod
+> Jason
