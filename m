@@ -2,98 +2,129 @@ Return-Path: <SRS0=kD8Z=BP=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.4 required=3.0 tests=BAYES_00,DATE_IN_PAST_03_06,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4442BC433E3
-	for <dmaengine@archiver.kernel.org>; Wed,  5 Aug 2020 19:25:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8720BC433DF
+	for <dmaengine@archiver.kernel.org>; Wed,  5 Aug 2020 20:09:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0EF392084D
-	for <dmaengine@archiver.kernel.org>; Wed,  5 Aug 2020 19:25:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 52C3B22CA1
+	for <dmaengine@archiver.kernel.org>; Wed,  5 Aug 2020 20:09:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=default; t=1596658154;
+	bh=sLKCC1QjgtJmAuERFbBWWP9fB/9Lhbpc7SgboYEp2z8=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:List-ID:From;
+	b=SBLPUACmA/RiCisMaBmOuVnVSAGRBuQSgqmO0jilxLnzWDffhhSYMcU7cObFbFaiL
+	 0BEbloJ0l6ounDCziIMWFEYr3wMDy8f501eejhEqpl7+2fMq0OfGUkGZjjOtxof9gl
+	 f4IBBWkgsENPXdOH+j1Shyje8qaaPvZYtapPZ2K0=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728669AbgHETZK (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 5 Aug 2020 15:25:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52822 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728577AbgHERZG (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Wed, 5 Aug 2020 13:25:06 -0400
-Received: from mail-oi1-x244.google.com (mail-oi1-x244.google.com [IPv6:2607:f8b0:4864:20::244])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2DA5BC0086A6;
-        Wed,  5 Aug 2020 07:46:41 -0700 (PDT)
-Received: by mail-oi1-x244.google.com with SMTP id v13so23174659oiv.13;
-        Wed, 05 Aug 2020 07:46:41 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=a747GTvzdj8BhTC99m/ltqffKPbWLknrH4UGCy7e+04=;
-        b=rx4G6ali42qaP1XHM/3dxNM9N32RXYC90XDH13dCFvCuQE5nEC2SKndrWA1Ie0QM7S
-         ezkvzSM2i8lafkAgtm1zUyLUZf3GeD4Vd0ts1FW+G6aOiCuLMKVX9g3yrcVAaWb25Q1/
-         UuEbBKFc18FoVVCVauRntkumg7dcVHp+khSrm6YNG+h44L31cZ/P4g8/iFP0WY7iWNEP
-         tSORMkowazJHMGpHn7YGoId8llCJWyuVhcjSSGiKJMQJW6fqBUxIWdgWJGQfLtkwsGdU
-         cJDqr9WWtb64EhtmBX9uAw0gm8IsXtKmLeVhSZheEL8nKT7dqasoc7/lWyTq54nXtgNY
-         hOOw==
-X-Gm-Message-State: AOAM530bfeRays6JRYcl9Jh6UofxignYBe8JLo4m2ms3N+Db/oZU/M6V
-        Lb/RFB32tjmPRPwFHpoYvaPE/S9lp36FDTsWnBY0Qg==
-X-Google-Smtp-Source: ABdhPJxOLh0H5vKRdwT+SgNB4/VJFY79xxN/fk4jyCR22Pxw8fbAj3AqGa5onUuCO90I+Y+bzEmqLPTLGI8ksjYr6g8=
-X-Received: by 2002:aca:b742:: with SMTP id h63mr2149267oif.148.1596625738500;
- Wed, 05 Aug 2020 04:08:58 -0700 (PDT)
+        id S1727001AbgHEUJD (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 5 Aug 2020 16:09:03 -0400
+Received: from mail.kernel.org ([198.145.29.99]:49488 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726676AbgHEQce (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Wed, 5 Aug 2020 12:32:34 -0400
+Received: from localhost (unknown [122.171.202.192])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id D03A322D71;
+        Wed,  5 Aug 2020 13:12:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1596633130;
+        bh=sLKCC1QjgtJmAuERFbBWWP9fB/9Lhbpc7SgboYEp2z8=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=qa76cu0k9JFT6Ep1vcMTDDSxNDUx8rkcmQTEoTyj2Yfn3MNeejXJcDLWqLr/2eprq
+         LWlVGdOpwZX00VbkLmmoD0MsamOzJ0N9d1L6XIzhRmpVPel5+M9VurA4NaX0HJsSdU
+         Vt1+jO3PBNqZWNu5eQAt9Hp5muY6A1tka5hysA3E=
+Date:   Wed, 5 Aug 2020 18:42:05 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     YueHaibing <yuehaibing@huawei.com>
+Cc:     dan.j.williams@intel.com, dmaengine@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH -next] dmaengine: iop-adma: Fix -Wint-to-pointer-cast
+ build warning
+Message-ID: <20200805131205.GY12965@vkoul-mobl>
+References: <20200803141035.45284-1-yuehaibing@huawei.com>
 MIME-Version: 1.0
-References: <1594919915-5225-1-git-send-email-prabhakar.mahadev-lad.rj@bp.renesas.com>
- <1594919915-5225-3-git-send-email-prabhakar.mahadev-lad.rj@bp.renesas.com>
-In-Reply-To: <1594919915-5225-3-git-send-email-prabhakar.mahadev-lad.rj@bp.renesas.com>
-From:   Geert Uytterhoeven <geert@linux-m68k.org>
-Date:   Wed, 5 Aug 2020 13:08:47 +0200
-Message-ID: <CAMuHMdVNrbi2twUoJ1wB4DY++M+VgsLVQXxS_NTK9YtExF8BBg@mail.gmail.com>
-Subject: Re: [PATCH 02/20] arm64: dts: renesas: r8a774e1: Add PCIe device nodes
-To:     Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
-Cc:     Jens Axboe <axboe@kernel.dk>, Rob Herring <robh+dt@kernel.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Marek Vasut <marek.vasut+renesas@gmail.com>,
-        Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-        Mark Brown <broonie@kernel.org>,
-        Niklas <niklas.soderlund@ragnatech.se>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Magnus Damm <magnus.damm@gmail.com>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, linux-ide@vger.kernel.org,
-        dmaengine <dmaengine@vger.kernel.org>,
-        Linux I2C <linux-i2c@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Linux Media Mailing List <linux-media@vger.kernel.org>,
-        linux-pci <linux-pci@vger.kernel.org>,
-        ALSA Development Mailing List <alsa-devel@alsa-project.org>,
-        Linux-Renesas <linux-renesas-soc@vger.kernel.org>,
-        USB list <linux-usb@vger.kernel.org>,
-        Prabhakar <prabhakar.csengg@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200803141035.45284-1-yuehaibing@huawei.com>
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On Thu, Jul 16, 2020 at 7:18 PM Lad Prabhakar
-<prabhakar.mahadev-lad.rj@bp.renesas.com> wrote:
-> Add PCIe{0,1} device nodes for R8A774E1 SoC.
->
-> Signed-off-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
-> Reviewed-by: Marian-Cristian Rotariu <marian-cristian.rotariu.rb@bp.renesas.com>
+On 03-08-20, 22:10, YueHaibing wrote:
+> drivers/dma/iop-adma.c:447:13: warning: cast to pointer from integer of different size [-Wint-to-pointer-cast]
+> drivers/dma/iop-adma.c:449:4: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+> drivers/dma/iop-adma.c:1301:3: warning: cast to pointer from integer of different size [-Wint-to-pointer-cast]
+> 
+> Use void* for dma_desc_pool_virt, dma_addr_t for dma_desc_pool,
+> and use %pad to print dma_addr_t.
+> 
+> Signed-off-by: YueHaibing <yuehaibing@huawei.com>
+> ---
+>  drivers/dma/iop-adma.c | 17 ++++++++---------
+>  1 file changed, 8 insertions(+), 9 deletions(-)
+> 
+> diff --git a/drivers/dma/iop-adma.c b/drivers/dma/iop-adma.c
+> index 3350bffb2e93..8e17e4405959 100644
+> --- a/drivers/dma/iop-adma.c
+> +++ b/drivers/dma/iop-adma.c
+> @@ -415,7 +415,8 @@ static void iop_chan_start_null_xor(struct iop_adma_chan *iop_chan);
+>   * */
+>  static int iop_adma_alloc_chan_resources(struct dma_chan *chan)
+>  {
+> -	char *hw_desc;
+> +	void *hw_desc;
+> +	dma_addr_t dma_desc;
+>  	int idx;
+>  	struct iop_adma_chan *iop_chan = to_iop_adma_chan(chan);
+>  	struct iop_adma_desc_slot *slot = NULL;
+> @@ -436,17 +437,16 @@ static int iop_adma_alloc_chan_resources(struct dma_chan *chan)
+>  				" %d descriptor slots", idx);
+>  			break;
+>  		}
+> -		hw_desc = (char *) iop_chan->device->dma_desc_pool_virt;
+> -		slot->hw_desc = (void *) &hw_desc[idx * IOP_ADMA_SLOT_SIZE];
+> +		hw_desc = iop_chan->device->dma_desc_pool_virt;
+> +		slot->hw_desc = hw_desc + idx * IOP_ADMA_SLOT_SIZE;
 
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-i.e. will queue in renesas-devel for v5.10.
+So you want to pointer arithmetic on a void pointer !
 
-Gr{oetje,eeting}s,
+Are you sure math is correct here and will work on different compilers?
 
-                        Geert
+>  
+>  		dma_async_tx_descriptor_init(&slot->async_tx, chan);
+>  		slot->async_tx.tx_submit = iop_adma_tx_submit;
+>  		INIT_LIST_HEAD(&slot->tx_list);
+>  		INIT_LIST_HEAD(&slot->chain_node);
+>  		INIT_LIST_HEAD(&slot->slot_node);
+> -		hw_desc = (char *) iop_chan->device->dma_desc_pool;
+> -		slot->async_tx.phys =
+> -			(dma_addr_t) &hw_desc[idx * IOP_ADMA_SLOT_SIZE];
+> +		dma_desc = iop_chan->device->dma_desc_pool;
+> +		slot->async_tx.phys = dma_desc + idx * IOP_ADMA_SLOT_SIZE;
+>  		slot->idx = idx;
+>  
+>  		spin_lock_bh(&iop_chan->lock);
+> @@ -1296,9 +1296,8 @@ static int iop_adma_probe(struct platform_device *pdev)
+>  		goto err_free_adev;
+>  	}
+>  
+> -	dev_dbg(&pdev->dev, "%s: allocated descriptor pool virt %p phys %p\n",
+> -		__func__, adev->dma_desc_pool_virt,
+> -		(void *) adev->dma_desc_pool);
+> +	dev_dbg(&pdev->dev, "%s: allocated descriptor pool virt %p phys %pad\n",
+> +		__func__, adev->dma_desc_pool_virt, &adev->dma_desc_pool);
+>  
+>  	adev->id = plat_data->hw_id;
+>  
+> -- 
+> 2.17.1
+> 
 
 -- 
-Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
-
-In personal conversations with technical people, I call myself a hacker. But
-when I'm talking to journalists I just say "programmer" or something like that.
-                                -- Linus Torvalds
+~Vinod
