@@ -2,49 +2,51 @@ Return-Path: <SRS0=kD8Z=BP=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.5 required=3.0 tests=BAYES_00,DATE_IN_PAST_06_12,
+X-Spam-Status: No, score=-5.4 required=3.0 tests=BAYES_00,DATE_IN_PAST_03_06,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,
 	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2B386C433E1
-	for <dmaengine@archiver.kernel.org>; Wed,  5 Aug 2020 17:41:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 91676C433DF
+	for <dmaengine@archiver.kernel.org>; Wed,  5 Aug 2020 18:58:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1452F206B6
-	for <dmaengine@archiver.kernel.org>; Wed,  5 Aug 2020 17:41:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6CD0C23158
+	for <dmaengine@archiver.kernel.org>; Wed,  5 Aug 2020 18:58:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728903AbgHERlk (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 5 Aug 2020 13:41:40 -0400
-Received: from mail-ot1-f68.google.com ([209.85.210.68]:43119 "EHLO
-        mail-ot1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728707AbgHERdc (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Wed, 5 Aug 2020 13:33:32 -0400
-Received: by mail-ot1-f68.google.com with SMTP id r21so23438915ota.10;
-        Wed, 05 Aug 2020 10:33:32 -0700 (PDT)
+        id S1727829AbgHES6r (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 5 Aug 2020 14:58:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38762 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728233AbgHES4m (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Wed, 5 Aug 2020 14:56:42 -0400
+Received: from mail-yb1-xb42.google.com (mail-yb1-xb42.google.com [IPv6:2607:f8b0:4864:20::b42])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2F57BC008693;
+        Wed,  5 Aug 2020 07:33:53 -0700 (PDT)
+Received: by mail-yb1-xb42.google.com with SMTP id p191so7703246ybg.0;
+        Wed, 05 Aug 2020 07:33:53 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=nGe/Je8IarDkuCxG/u56QffSTYctpnR0YPw4MQUjy6A=;
-        b=rST3AuFgwVSXUW3gEpFnjQUuP+b9s0ZTn6PGbKOKO0OK/j1Bz2VXk0llZOWxlZuVO0
-         9oIMGAghTHl7Je5+n5+2DXDu/GznsnJ4YNQOMq5PtIygh1yiaj8pArkwAmdJGmw8t7vV
-         y8yVoeNhoS3DYIqAsy4Gt6Y1yh5ITWzLCzU1shD/pXIGj70jEE7glN6xEDbz2IORtivs
-         WWjD+NIisqKh2drx89yWWNp/pgChSLiBCf9nJaimJgGRP2okuj6v03kDhH2XQucahukI
-         6ZDcExgwrTEUAt5FKxmlIh2ncsblVHaIKbyGltSkjVye87qelLo/EG/OHkS4skdvIjpS
-         +5RQ==
-X-Gm-Message-State: AOAM530uffkeniOlIrjfH8CawBS6dbRM7pQSfv6ViYuOMMS6DLOMtgfK
-        /66F6f4Ls6S2Wp3IhNdRu6md7VSYEPbJdtBJFCPm8E5j
-X-Google-Smtp-Source: ABdhPJy6BJnijQ4U9574JZCK6kDHqx7/zV93wpejrM8Eh19/YBjLybIlzjjbGdFEBSswTARB1GJ4M2QmhRRIOA+7jHM=
-X-Received: by 2002:a9d:1b0d:: with SMTP id l13mr2076468otl.145.1596625795521;
- Wed, 05 Aug 2020 04:09:55 -0700 (PDT)
+        bh=GhwGBb3og4FBqTm6+fj02zyv7weIuiKRDAujBvepcdQ=;
+        b=fch6LB7KMtoU3ydFD3x7lOUc816sn1DTq0b2HNj9twAMga3EBXvQdvMsHrkfPKS4jA
+         uazXvHSW7mG00Dl3XKr58t6jr8EBxhTHSTnuRfGIiD5GyECH26bslPfhbFYhbtu82MAY
+         2Q0GucivfIHZWvsJWi05WKA64nxxs+rTDAVDz9CuV00E4FewnxKDvVwibVnN/0Psu1cY
+         VTfNWD3V2pvwMp2i9ssSkE8ew9aCLuweBQRmiEwkvoQ38JD6sWL2DO6s9aWIuwFGitMe
+         +/Z8/nqZ0tA+8vF78a8eml0NsVGBf0c0Bdn7dh8feKNv3TqsLzJgSYmr4EGtEOpf8qgZ
+         uMjA==
+X-Gm-Message-State: AOAM532T925N06vt1YjS95QmTDSXnaxD/9Mjq6ncaejqcd7jdURcMvRQ
+        pgAdlXUBfOPh2Zwx7GYd9J2ONA4jcxNJ0tLDoU5HyuwK
+X-Google-Smtp-Source: ABdhPJy6Few2JSpX34d8UWs2mHs62Jj4zoFqif/HtRZNiG9fgu0Yy1ArYH3I3/SVye0G2Oxi4tcy3VslWxu2yq+qpJs=
+X-Received: by 2002:a05:6830:1b79:: with SMTP id d25mr2025587ote.107.1596625767021;
+ Wed, 05 Aug 2020 04:09:27 -0700 (PDT)
 MIME-Version: 1.0
 References: <1594919915-5225-1-git-send-email-prabhakar.mahadev-lad.rj@bp.renesas.com>
- <1594919915-5225-7-git-send-email-prabhakar.mahadev-lad.rj@bp.renesas.com>
-In-Reply-To: <1594919915-5225-7-git-send-email-prabhakar.mahadev-lad.rj@bp.renesas.com>
+ <1594919915-5225-5-git-send-email-prabhakar.mahadev-lad.rj@bp.renesas.com>
+In-Reply-To: <1594919915-5225-5-git-send-email-prabhakar.mahadev-lad.rj@bp.renesas.com>
 From:   Geert Uytterhoeven <geert@linux-m68k.org>
-Date:   Wed, 5 Aug 2020 13:09:43 +0200
-Message-ID: <CAMuHMdWhmQS56j4vkZhK94qQVkVhCA1eceZRNW1XipX-Sr6+8A@mail.gmail.com>
-Subject: Re: [PATCH 06/20] arm64: dts: renesas: r8a774e1: Add USB2.0 phy and
- host (EHCI/OHCI) device nodes
+Date:   Wed, 5 Aug 2020 13:09:14 +0200
+Message-ID: <CAMuHMdVTBWuDVueW4OJff5kC+=PF+Q5OnKAo5-M4+7g9WB-adA@mail.gmail.com>
+Subject: Re: [PATCH 04/20] arm64: dts: renesas: r8a774e1: Add SATA controller node
 To:     Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
 Cc:     Jens Axboe <axboe@kernel.dk>, Rob Herring <robh+dt@kernel.org>,
         Vinod Koul <vkoul@kernel.org>,
@@ -77,7 +79,7 @@ X-Mailing-List: dmaengine@vger.kernel.org
 
 On Thu, Jul 16, 2020 at 7:19 PM Lad Prabhakar
 <prabhakar.mahadev-lad.rj@bp.renesas.com> wrote:
-> Add USB2.0 phy and host (EHCI/OHCI) device nodes on RZ/G2H SoC dtsi.
+> Add the SATA controller node to the RZ/G2H SoC specific dtsi.
 >
 > Signed-off-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
 > Reviewed-by: Marian-Cristian Rotariu <marian-cristian.rotariu.rb@bp.renesas.com>
