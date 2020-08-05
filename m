@@ -2,98 +2,262 @@ Return-Path: <SRS0=kD8Z=BP=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.4 required=3.0 tests=BAYES_00,DATE_IN_PAST_03_06,
+X-Spam-Status: No, score=-7.0 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,
 	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F3B28C433E0
-	for <dmaengine@archiver.kernel.org>; Wed,  5 Aug 2020 18:58:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8455AC433E0
+	for <dmaengine@archiver.kernel.org>; Wed,  5 Aug 2020 19:04:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CCF9323131
-	for <dmaengine@archiver.kernel.org>; Wed,  5 Aug 2020 18:58:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6995F22D01
+	for <dmaengine@archiver.kernel.org>; Wed,  5 Aug 2020 19:04:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728233AbgHES6s (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 5 Aug 2020 14:58:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38766 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728753AbgHES4m (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Wed, 5 Aug 2020 14:56:42 -0400
-Received: from mail-oo1-xc42.google.com (mail-oo1-xc42.google.com [IPv6:2607:f8b0:4864:20::c42])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0EC18C008691;
-        Wed,  5 Aug 2020 07:33:09 -0700 (PDT)
-Received: by mail-oo1-xc42.google.com with SMTP id x1so6635989oox.6;
-        Wed, 05 Aug 2020 07:33:09 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=tpO2xc5Co4QKfwe/fUkQqUFFAe1WeeGtz1oyCqUMySo=;
-        b=LhYz9i6I5AM4ZFtxHd+I9u1ASrO4rAxTxI/t4siugm6WhxTGylbyg693lSH2SkAJZg
-         IIGDv8cuq2Atkg6a/memP/3ZxkHNwXGhTlhzGgql3a+l8cb4BSqpY41/FoS2Dey738US
-         HNY7oS82tp4qxK0zU5KSG+5wR25XkLh17nddtBS+6isamMTdOSpgHAG7z+Dv3ZLvYKSj
-         WGny2c2fiRFPZvJ/1bYdsySXuQgp4q5b00waN4/XfIO6UGXfbhT3GB3aIdI6DdpTqwQf
-         PttRBBuebLldZ7pofLVcvbU+u/4I905HPTm1+H9J+KjyGphDBVlO8Qd1DI2oAJ/StVAp
-         dTsA==
-X-Gm-Message-State: AOAM533LjPC09EQ93J7+rqUEO7o2QGimyEUznlys74pspdXXuJB5yAAR
-        UXzpdrWWpUaJ+hWv1tXbOuarwbxyZUyw1hXSS06MMhU6
-X-Google-Smtp-Source: ABdhPJxign8Uk2fIcUs7RpIodong0uS1bWU72pwITdrYewzbK7L9StNz09TcvScLc02ZC/yaUnpVr8Fq/+75ppivh0g=
-X-Received: by 2002:a4a:9d19:: with SMTP id w25mr2320144ooj.11.1596626166283;
- Wed, 05 Aug 2020 04:16:06 -0700 (PDT)
+        id S1726226AbgHETEI convert rfc822-to-8bit (ORCPT
+        <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 5 Aug 2020 15:04:08 -0400
+Received: from mga04.intel.com ([192.55.52.120]:38938 "EHLO mga04.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726641AbgHETDb (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Wed, 5 Aug 2020 15:03:31 -0400
+IronPort-SDR: Bjr0eIBEThAAu5Pa0JaT/CbbgMMwnPs0CnH9UwSvZopieoKLfOhX2fiHleWlDGJwoImBN1sxBJ
+ t3YbOaJwvnTw==
+X-IronPort-AV: E=McAfee;i="6000,8403,9704"; a="150096648"
+X-IronPort-AV: E=Sophos;i="5.75,438,1589266800"; 
+   d="scan'208";a="150096648"
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga007.jf.intel.com ([10.7.209.58])
+  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Aug 2020 12:02:36 -0700
+IronPort-SDR: kOtcuMG4gMNIrsxRtpbD/fpRoVv/3BIlO6dAqrNrVpZQd0S6BdorrqFLwriXDE1FgTBhlMPwyU
+ oG4b/XX9ymPA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.75,438,1589266800"; 
+   d="scan'208";a="332937302"
+Received: from orsmsx601.amr.corp.intel.com ([10.22.229.14])
+  by orsmga007.jf.intel.com with ESMTP; 05 Aug 2020 12:02:36 -0700
+Received: from orsmsx611.amr.corp.intel.com (10.22.229.24) by
+ ORSMSX601.amr.corp.intel.com (10.22.229.14) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.1713.5; Wed, 5 Aug 2020 12:02:36 -0700
+Received: from orsmsx612.amr.corp.intel.com (10.22.229.25) by
+ ORSMSX611.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.1713.5; Wed, 5 Aug 2020 12:02:35 -0700
+Received: from orsmsx612.amr.corp.intel.com ([10.22.229.25]) by
+ ORSMSX612.amr.corp.intel.com ([10.22.229.25]) with mapi id 15.01.1713.004;
+ Wed, 5 Aug 2020 12:02:35 -0700
+From:   "Dey, Megha" <megha.dey@intel.com>
+To:     Thomas Gleixner <tglx@linutronix.de>,
+        "Jiang, Dave" <dave.jiang@intel.com>,
+        "vkoul@kernel.org" <vkoul@kernel.org>,
+        "maz@kernel.org" <maz@kernel.org>,
+        "bhelgaas@google.com" <bhelgaas@google.com>,
+        "rafael@kernel.org" <rafael@kernel.org>,
+        "gregkh@linuxfoundation.org" <gregkh@linuxfoundation.org>,
+        "hpa@zytor.com" <hpa@zytor.com>,
+        "alex.williamson@redhat.com" <alex.williamson@redhat.com>,
+        "Pan, Jacob jun" <jacob.jun.pan@intel.com>,
+        "Raj, Ashok" <ashok.raj@intel.com>,
+        "jgg@mellanox.com" <jgg@mellanox.com>,
+        "Liu, Yi L" <yi.l.liu@intel.com>, "Lu, Baolu" <baolu.lu@intel.com>,
+        "Tian, Kevin" <kevin.tian@intel.com>,
+        "Kumar, Sanjay K" <sanjay.k.kumar@intel.com>,
+        "Luck, Tony" <tony.luck@intel.com>,
+        "Lin, Jing" <jing.lin@intel.com>,
+        "Williams, Dan J" <dan.j.williams@intel.com>,
+        "kwankhede@nvidia.com" <kwankhede@nvidia.com>,
+        "eric.auger@redhat.com" <eric.auger@redhat.com>,
+        "parav@mellanox.com" <parav@mellanox.com>,
+        "jgg@mellanox.com" <jgg@mellanox.com>,
+        "rafael@kernel.org" <rafael@kernel.org>,
+        "Hansen, Dave" <dave.hansen@intel.com>,
+        "netanelg@mellanox.com" <netanelg@mellanox.com>,
+        "shahafs@mellanox.com" <shahafs@mellanox.com>,
+        "yan.y.zhao@linux.intel.com" <yan.y.zhao@linux.intel.com>,
+        "pbonzini@redhat.com" <pbonzini@redhat.com>,
+        "Ortiz, Samuel" <samuel.ortiz@intel.com>,
+        "Hossain, Mona" <mona.hossain@intel.com>
+CC:     "dmaengine@vger.kernel.org" <dmaengine@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        "x86@kernel.org" <x86@kernel.org>,
+        "linux-pci@vger.kernel.org" <linux-pci@vger.kernel.org>,
+        "kvm@vger.kernel.org" <kvm@vger.kernel.org>
+Subject: RE: [PATCH RFC v2 03/18] irq/dev-msi: Create IR-DEV-MSI irq domain
+Thread-Topic: [PATCH RFC v2 03/18] irq/dev-msi: Create IR-DEV-MSI irq domain
+Thread-Index: AQHWX3hgPPNI1mxfxEuTvl+wlEh0s6kUiEyAgBVtKUA=
+Date:   Wed, 5 Aug 2020 19:02:35 +0000
+Message-ID: <ec81670539674beea58c9a6c4104b26b@intel.com>
+References: <159534667974.28840.2045034360240786644.stgit@djiang5-desk3.ch.intel.com>
+ <159534735519.28840.10435935598386192252.stgit@djiang5-desk3.ch.intel.com>
+ <87lfjbz3cs.fsf@nanos.tec.linutronix.de>
+In-Reply-To: <87lfjbz3cs.fsf@nanos.tec.linutronix.de>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+dlp-product: dlpe-windows
+dlp-reaction: no-action
+dlp-version: 11.5.1.3
+x-originating-ip: [10.22.254.132]
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
 MIME-Version: 1.0
-References: <1594919915-5225-1-git-send-email-prabhakar.mahadev-lad.rj@bp.renesas.com>
- <1594919915-5225-16-git-send-email-prabhakar.mahadev-lad.rj@bp.renesas.com>
-In-Reply-To: <1594919915-5225-16-git-send-email-prabhakar.mahadev-lad.rj@bp.renesas.com>
-From:   Geert Uytterhoeven <geert@linux-m68k.org>
-Date:   Wed, 5 Aug 2020 13:15:54 +0200
-Message-ID: <CAMuHMdWzwQpjhOeVDkj1b1L7mJuxnLpVMO-3WMMLF3oJMzgAmg@mail.gmail.com>
-Subject: Re: [PATCH 15/20] arm64: dts: renesas: r8a774e1: Add audio support
-To:     Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
-Cc:     Jens Axboe <axboe@kernel.dk>, Rob Herring <robh+dt@kernel.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Marek Vasut <marek.vasut+renesas@gmail.com>,
-        Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-        Mark Brown <broonie@kernel.org>,
-        Niklas <niklas.soderlund@ragnatech.se>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Magnus Damm <magnus.damm@gmail.com>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, linux-ide@vger.kernel.org,
-        dmaengine <dmaengine@vger.kernel.org>,
-        Linux I2C <linux-i2c@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Linux Media Mailing List <linux-media@vger.kernel.org>,
-        linux-pci <linux-pci@vger.kernel.org>,
-        ALSA Development Mailing List <alsa-devel@alsa-project.org>,
-        Linux-Renesas <linux-renesas-soc@vger.kernel.org>,
-        USB list <linux-usb@vger.kernel.org>,
-        Prabhakar <prabhakar.csengg@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On Thu, Jul 16, 2020 at 7:20 PM Lad Prabhakar
-<prabhakar.mahadev-lad.rj@bp.renesas.com> wrote:
-> Add sound support for the RZ/G2H SoC (a.k.a. R8A774E1).
->
-> Signed-off-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
-> Reviewed-by: Marian-Cristian Rotariu <marian-cristian.rotariu.rb@bp.renesas.com>
+Hi Thomas,
 
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-i.e. will queue in renesas-devel for v5.10.
+> -----Original Message-----
+> From: Thomas Gleixner <tglx@linutronix.de>
+> Sent: Wednesday, July 22, 2020 1:45 PM
+> To: Jiang, Dave <dave.jiang@intel.com>; vkoul@kernel.org; Dey, Megha
+> <megha.dey@intel.com>; maz@kernel.org; bhelgaas@google.com;
+> rafael@kernel.org; gregkh@linuxfoundation.org; hpa@zytor.com;
+> alex.williamson@redhat.com; Pan, Jacob jun <jacob.jun.pan@intel.com>; Raj,
+> Ashok <ashok.raj@intel.com>; jgg@mellanox.com; Liu, Yi L <yi.l.liu@intel.com>;
+> Lu, Baolu <baolu.lu@intel.com>; Tian, Kevin <kevin.tian@intel.com>; Kumar,
+> Sanjay K <sanjay.k.kumar@intel.com>; Luck, Tony <tony.luck@intel.com>; Lin,
+> Jing <jing.lin@intel.com>; Williams, Dan J <dan.j.williams@intel.com>;
+> kwankhede@nvidia.com; eric.auger@redhat.com; parav@mellanox.com;
+> jgg@mellanox.com; rafael@kernel.org; Hansen, Dave
+> <dave.hansen@intel.com>; netanelg@mellanox.com; shahafs@mellanox.com;
+> yan.y.zhao@linux.intel.com; pbonzini@redhat.com; Ortiz, Samuel
+> <samuel.ortiz@intel.com>; Hossain, Mona <mona.hossain@intel.com>
+> Cc: dmaengine@vger.kernel.org; linux-kernel@vger.kernel.org;
+> x86@kernel.org; linux-pci@vger.kernel.org; kvm@vger.kernel.org
+> Subject: Re: [PATCH RFC v2 03/18] irq/dev-msi: Create IR-DEV-MSI irq domain
+> 
+> Dave Jiang <dave.jiang@intel.com> writes:
+> > From: Megha Dey <megha.dey@intel.com>
+> >
+> > When DEV_MSI is enabled, the dev_msi_default_domain is updated to the
+> > base DEV-MSI irq  domain. If interrupt remapping is enabled, we create
+> 
+> s/we//
 
-Gr{oetje,eeting}s,
+ok
+> 
+> > a new IR-DEV-MSI irq domain and update the dev_msi_default domain to
+> > the same.
+> >
+> > For X86, introduce a new irq_alloc_type which will be used by the
+> > interrupt remapping driver.
+> >
+> > Reviewed-by: Dan Williams <dan.j.williams@intel.com>
+> > Signed-off-by: Megha Dey <megha.dey@intel.com>
+> > Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+> > ---
+> >  arch/x86/include/asm/hw_irq.h       |    1 +
+> >  arch/x86/kernel/apic/msi.c          |   12 ++++++
+> >  drivers/base/dev-msi.c              |   66 +++++++++++++++++++++++++++++++----
+> >  drivers/iommu/intel/irq_remapping.c |   11 +++++-
+> >  include/linux/intel-iommu.h         |    1 +
+> >  include/linux/irqdomain.h           |   11 ++++++
+> >  include/linux/msi.h                 |    3 ++
+> 
+> Why is this mixing generic code, x86 core code and intel specific driver code?
+> This is new functionality so:
+> 
+>       1) Provide the infrastructure
+>       2) Add support to architecture specific parts
+>       3) Enable it
 
-                        Geert
+Ok, I will try to adhere to the layering next time around..
+> 
+> > +
+> > +#ifdef CONFIG_DEV_MSI
+> > +int dev_msi_prepare(struct irq_domain *domain, struct device *dev,
+> > +			   int nvec, msi_alloc_info_t *arg) {
+> > +	memset(arg, 0, sizeof(*arg));
+> > +
+> > +	arg->type = X86_IRQ_ALLOC_TYPE_DEV_MSI;
+> > +
+> > +	return 0;
+> > +}
+> > +#endif
+> 
+> What is this? Tons of new lines for taking up more space and not a single
+> comment.
 
--- 
-Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
+Hmm, I will add a comment..
+> 
+> > -static int dev_msi_prepare(struct irq_domain *domain, struct device
+> > *dev,
+> > +int __weak dev_msi_prepare(struct irq_domain *domain, struct device
+> > +*dev,
+> >  			   int nvec, msi_alloc_info_t *arg)  {
+> >  	memset(arg, 0, sizeof(*arg));
+> 
+> Oh well. So every architecure which needs to override this and I assume all
+> which are eventually going to support it need to do the memset() in their
+> override.
+> 
+>        memset(arg,,,);
+>        arch_dev_msi_prepare();
+> 
+> 
+Per you suggestion, I have introduced arch_dev_msi_prepare which returns 0 by default unless
+overridden by arch code in the next patch set.
 
-In personal conversations with technical people, I call myself a hacker. But
-when I'm talking to journalists I just say "programmer" or something like that.
-                                -- Linus Torvalds
+> > -	dev_msi_default_domain = msi_create_irq_domain(fn,
+> &dev_msi_domain_info, parent);
+> > +	/*
+> > +	 * This initcall may come after remap code is initialized. Ensure that
+> > +	 * dev_msi_default domain is updated correctly.
+> 
+> What? No, this is a disgusting hack. Get your ordering straight, that's not rocket
+> science.
+> 
+
+Hmm yeah, actually I realized we don't really need to have 2 new IRQ domains for dev-msi 
+(with and without interrupt remapping enabled). Hence all this will go away in the next round
+of patches.
+
+> > +#ifdef CONFIG_IRQ_REMAP
+> 
+> IRQ_REMAP is x86 specific. Is this file x86 only or intended to be for general use?
+> If it's x86 only, then this should be clearly documented. If not, then these
+> x86'isms have no place here.
+
+True, I will take care of this in the next patch set.
+> 
+> > +struct irq_domain *create_remap_dev_msi_irq_domain(struct irq_domain
+> *parent,
+> > +						   const char *name)
+> 
+> So we have msi_create_irq_domain() and this is about dev_msi, right? So can
+> you please stick with a consistent naming scheme?
+
+sure
+> 
+> > +{
+> > +	struct fwnode_handle *fn;
+> > +	struct irq_domain *domain;
+> > +
+> > +	fn = irq_domain_alloc_named_fwnode(name);
+> > +	if (!fn)
+> > +		return NULL;
+> > +
+> > +	domain = msi_create_irq_domain(fn, &dev_msi_ir_domain_info,
+> parent);
+> > +	if (!domain) {
+> > +		pr_warn("failed to initialize irqdomain for IR-DEV-MSI.\n");
+> > +		return ERR_PTR(-ENXIO);
+> > +	}
+> > +
+> > +	irq_domain_update_bus_token(domain,
+> DOMAIN_BUS_PLATFORM_MSI);
+> > +
+> > +	if (!dev_msi_default_domain)
+> > +		dev_msi_default_domain = domain;
+> 
+> Can this be called several times? If so, then this lacks a comment. If not, then
+> this condition is useless.
+
+Hmm this will go way in the next patch set, thank you for your input!
+> 
+> Thanks,
+> 
+>         tglx
