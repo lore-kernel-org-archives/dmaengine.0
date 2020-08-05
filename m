@@ -2,25 +2,25 @@ Return-Path: <SRS0=kD8Z=BP=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-8.6 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,NICE_REPLY_A,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7C02BC433E0
-	for <dmaengine@archiver.kernel.org>; Wed,  5 Aug 2020 17:08:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 29844C433E1
+	for <dmaengine@archiver.kernel.org>; Wed,  5 Aug 2020 17:20:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 451C922D2C
-	for <dmaengine@archiver.kernel.org>; Wed,  5 Aug 2020 17:08:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F406E2177B
+	for <dmaengine@archiver.kernel.org>; Wed,  5 Aug 2020 17:20:10 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=ti.com header.i=@ti.com header.b="fb84QEiz"
+	dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b="fb84QEiz"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727909AbgHERFP (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 5 Aug 2020 13:05:15 -0400
-Received: from fllv0015.ext.ti.com ([198.47.19.141]:48988 "EHLO
+        id S1728743AbgHERUD (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 5 Aug 2020 13:20:03 -0400
+Received: from fllv0015.ext.ti.com ([198.47.19.141]:51030 "EHLO
         fllv0015.ext.ti.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728433AbgHERDD (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Wed, 5 Aug 2020 13:03:03 -0400
+        with ESMTP id S1728714AbgHERSk (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Wed, 5 Aug 2020 13:18:40 -0400
 Received: from lelv0265.itg.ti.com ([10.180.67.224])
         by fllv0015.ext.ti.com (8.15.2/8.15.2) with ESMTP id 075DHV9M072287;
         Wed, 5 Aug 2020 08:17:31 -0500
@@ -70,5 +70,32 @@ Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
+Message-ID: <20200805131724.iLQwOKIO8a72NDeztKEEBMOyUtN2eeNFfxJKV0yn3A0@z>
 
 
+
+On 05/08/2020 14:32, Vinod Koul wrote:
+> On 05-08-20, 14:27, Peter Ujfalusi wrote:
+>> The original commit mixed up the forward and completion ring IDs for the
+>> rx flow configuration.
+> 
+> Acked-By: Vinod Koul <vkoul@kernel.org>
+> 
+>>
+>> Fixes: 4927b1ab2047 ("dmaengine: ti: k3-udma: Switch to k3_ringacc_request_rings_pair")
+>> Signed-off-by: Peter Ujfalusi <peter.ujfalusi@ti.com>
+>> ---
+>> Hi Santosh, Vinod,
+>>
+>> the offending patch was queued via ti SoC tree.
+>> Santosh, can you pick up this fix also?
+
+Thank you Peter for catching this - it's valid issue.
+but I'd like to note that issue was discovered with private code and
+nothing is broken in Master.
+
+Reviewed-by: Grygorii Strashko <grygorii.strashko@ti.com>
+
+-- 
+Best regards,
+grygorii
