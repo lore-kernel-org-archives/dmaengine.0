@@ -1,105 +1,94 @@
-Return-Path: <SRS0=VS9U=BN=vger.kernel.org=dmaengine-owner@kernel.org>
+Return-Path: <SRS0=kD8Z=BP=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-7.0 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9E209C433E3
-	for <dmaengine@archiver.kernel.org>; Mon,  3 Aug 2020 21:51:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 65993C433DF
+	for <dmaengine@archiver.kernel.org>; Wed,  5 Aug 2020 08:48:46 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AD64820792
-	for <dmaengine@archiver.kernel.org>; Mon,  3 Aug 2020 21:51:55 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1596491515;
-	bh=NGcDR1KaNhU41LcBuXJG16Vb08XHmxYCOBXL5/HWb0s=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:List-ID:From;
-	b=pazOkJGSC3F6s6MdTpvBzK954Dugvocu8XoWbLVUTcfZ/nTDMpgJxMzzLIbVww426
-	 RZE0m5HK/i96qP0ZF1y2C9PQfeWuNbANbW/YBqLkDGOMU7VjnIWpdweC58FrfZbjLu
-	 xmu/b+v8gK4QBXOM8n9y8eDgpKEZx69TSiALYnhQ=
+	by mail.kernel.org (Postfix) with ESMTP id 5244722BF3
+	for <dmaengine@archiver.kernel.org>; Wed,  5 Aug 2020 08:48:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725863AbgHCVvv (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 3 Aug 2020 17:51:51 -0400
-Received: from mail-io1-f65.google.com ([209.85.166.65]:43107 "EHLO
-        mail-io1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727003AbgHCVvv (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Mon, 3 Aug 2020 17:51:51 -0400
-Received: by mail-io1-f65.google.com with SMTP id k23so40077726iom.10;
-        Mon, 03 Aug 2020 14:51:50 -0700 (PDT)
+        id S1728193AbgHEIso (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 5 Aug 2020 04:48:44 -0400
+Received: from mail-oi1-f193.google.com ([209.85.167.193]:41326 "EHLO
+        mail-oi1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726104AbgHEIsm (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Wed, 5 Aug 2020 04:48:42 -0400
+Received: by mail-oi1-f193.google.com with SMTP id b22so12986544oic.8;
+        Wed, 05 Aug 2020 01:48:41 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=rTTd0JLEQIircW3THThScxa603LDzD4tC7cJBVnxw/8=;
-        b=PS9Vc/RaXghQo6qgZra6AA1HZaUeqqdzy5Sh+gGZDDLwLd3xw0hXBc2A9kgZ/p+kD3
-         CxamUkzPr2Zak69584gWpoPi9bHPd6T9g72y66RME3WGe88T/Kh56wOcNmPXqT8gWhPv
-         5Im1tAD/UlEefCQKXdrge5C73h1hnM0VY3cDkQ+o9vCylwNZaGvbI5PLwz+/m451yFcf
-         oNkSvqUHFncWrRWYCmRRpW+tz9Af23KH0RlIlcbNgs+TGoAQiE3GUjAYsuIZCp+g0Qg1
-         VoyIwUKcoZ4t7wN5Bs9uFL6sJd1MDBwzDXBwAkL7Thw87/1uHBONB7VHcXfgIptX6hnD
-         QJRA==
-X-Gm-Message-State: AOAM5300fO1gBZf1ZnUCqVxG8GxXcmb2qCFUISiVFzUjAB0gUBUsN0y5
-        cl3PoegjrrHTgpDYSZst3Q==
-X-Google-Smtp-Source: ABdhPJwk9JxW57b/cc2Ai3TSARPfqnml762G9Vu/UjF/k0tep6wviRYkAv+/P4mTcChWZ7hQ2RQBRg==
-X-Received: by 2002:a6b:dd12:: with SMTP id f18mr1938079ioc.109.1596491510169;
-        Mon, 03 Aug 2020 14:51:50 -0700 (PDT)
-Received: from xps15 ([64.188.179.252])
-        by smtp.gmail.com with ESMTPSA id v63sm5891342ilk.67.2020.08.03.14.51.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 03 Aug 2020 14:51:49 -0700 (PDT)
-Received: (nullmailer pid 3201910 invoked by uid 1000);
-        Mon, 03 Aug 2020 21:51:47 -0000
-Date:   Mon, 3 Aug 2020 15:51:47 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Serge Semin <Sergey.Semin@baikalelectronics.ru>
-Cc:     Serge Semin <fancer.lancer@gmail.com>,
-        Viresh Kumar <vireshk@kernel.org>,
-        Alexey Malahov <Alexey.Malahov@baikalelectronics.ru>,
-        dmaengine@vger.kernel.org, devicetree@vger.kernel.org,
-        Rob Herring <robh+dt@kernel.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Peter Ujfalusi <peter.ujfalusi@ti.com>,
-        Andy Shevchenko <andy.shevchenko@gmail.com>,
-        Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-        linux-kernel@vger.kernel.org,
-        Pavel Parkhomenko <Pavel.Parkhomenko@baikalelectronics.ru>
-Subject: Re: [PATCH v2 1/5] dt-bindings: dma: dw: Add optional DMA-channels
- mask cell support
-Message-ID: <20200803215147.GA3201744@bogus>
-References: <20200731200826.9292-1-Sergey.Semin@baikalelectronics.ru>
- <20200731200826.9292-2-Sergey.Semin@baikalelectronics.ru>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=1mrXzxi9uxOAW3sW2InYWxrD30ehGwVVOP3HqfzhRdk=;
+        b=ac8PtcXxGfZXOJRiBTYhlU1K0kRNtHc9Qpq2jv81kcZYZwgoljWqD+/7yrmxToLqCG
+         Sy7TBdKOMG99Q6tDrTbr4Yj+oF4elOTvyd2nv6mNBxkWs9wxyyjKYddVuNNa0qNoh0/Y
+         LdoveLh1tS52S0r/4qTehIuqF8O2qsUg/KD5KvMAI5EH1X3NdkFISVT6aZz9ls+IWa97
+         RYTyiSa7kO0Z7F9O4iY2q3yPhNi4RvyFTdmzHNQneE9w66n74Ztv33aVB6/XmUzpQbB/
+         s5Ispt87lxXU0w+dWKderoL4i8R8fRiCDaZ1FRsjuJ3ZzNtiiK2iy0k2HrTNumgIF1Km
+         Z8ig==
+X-Gm-Message-State: AOAM531Eem8/H2sOCSKCvuFcP+2uMJIWfhjwzR70cXCfQzI8KQEuyuUf
+        XFiFKJKXoaxA52F99mdxHyNpuvyIbm+sowZfUrs=
+X-Google-Smtp-Source: ABdhPJytnGMFscI/4Vj10JBqUQ7Wgi/Lqycodf6cBlV8PTnw+Znw95/OXOULRQVW5Ng30YOlYqbpGAXWXSVGKdV5pP0=
+X-Received: by 2002:aca:adc4:: with SMTP id w187mr1785208oie.153.1596617320906;
+ Wed, 05 Aug 2020 01:48:40 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200731200826.9292-2-Sergey.Semin@baikalelectronics.ru>
+References: <1594919915-5225-1-git-send-email-prabhakar.mahadev-lad.rj@bp.renesas.com>
+ <1594919915-5225-4-git-send-email-prabhakar.mahadev-lad.rj@bp.renesas.com>
+In-Reply-To: <1594919915-5225-4-git-send-email-prabhakar.mahadev-lad.rj@bp.renesas.com>
+From:   Geert Uytterhoeven <geert@linux-m68k.org>
+Date:   Wed, 5 Aug 2020 10:48:29 +0200
+Message-ID: <CAMuHMdXOvVkbhXXmaugHe4fo5vUK3x7bYFHPYHESPWqVdDJBjg@mail.gmail.com>
+Subject: Re: [PATCH 03/20] dt-bindings: ata: renesas,rcar-sata: Add r8a774e1 support
+To:     Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+Cc:     Jens Axboe <axboe@kernel.dk>, Rob Herring <robh+dt@kernel.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Marek Vasut <marek.vasut+renesas@gmail.com>,
+        Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+        Mark Brown <broonie@kernel.org>,
+        Niklas <niklas.soderlund@ragnatech.se>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Magnus Damm <magnus.damm@gmail.com>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, linux-ide@vger.kernel.org,
+        dmaengine <dmaengine@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Linux Media Mailing List <linux-media@vger.kernel.org>,
+        linux-pci <linux-pci@vger.kernel.org>,
+        ALSA Development Mailing List <alsa-devel@alsa-project.org>,
+        Linux-Renesas <linux-renesas-soc@vger.kernel.org>,
+        USB list <linux-usb@vger.kernel.org>,
+        Prabhakar <prabhakar.csengg@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On Fri, 31 Jul 2020 23:08:22 +0300, Serge Semin wrote:
-> Each DW DMA controller channel can be synthesized with different
-> parameters like maximum burst-length, multi-block support, maximum data
-> width, etc. Most of these parameters determine the DW DMAC channels
-> performance in its own aspect. On the other hand these parameters can
-> be implicitly responsible for the channels performance degradation
-> (for instance multi-block support is a very useful feature, but having
-> it disabled during the DW DMAC synthesize will provide a more optimized
-> core). Since DMA slave devices may have critical dependency on the DMA
-> engine performance, let's provide a way for the slave devices to have
-> the DMA-channels allocated from a pool of the channels, which according
-> to the system engineer fulfill their performance requirements.
-> 
-> The pool is determined by a mask optionally specified in the fifth
-> DMA-cell of the DMA DT-property. If the fifth cell is omitted from the
-> phandle arguments or the mask is zero, then the allocation will be
-> performed from a set of all channels provided by the DMA controller.
-> 
-> Signed-off-by: Serge Semin <Sergey.Semin@baikalelectronics.ru>
-> ---
->  .../devicetree/bindings/dma/snps,dma-spear1340.yaml        | 7 +++++--
->  1 file changed, 5 insertions(+), 2 deletions(-)
-> 
+On Thu, Jul 16, 2020 at 7:19 PM Lad Prabhakar
+<prabhakar.mahadev-lad.rj@bp.renesas.com> wrote:
+> Document SATA support for the RZ/G2H, no driver change required.
+>
+> Signed-off-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+> Reviewed-by: Marian-Cristian Rotariu <marian-cristian.rotariu.rb@bp.renesas.com>
 
-Reviewed-by: Rob Herring <robh@kernel.org>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+
+Gr{oetje,eeting}s,
+
+                        Geert
+
+-- 
+Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
+
+In personal conversations with technical people, I call myself a hacker. But
+when I'm talking to journalists I just say "programmer" or something like that.
+                                -- Linus Torvalds
