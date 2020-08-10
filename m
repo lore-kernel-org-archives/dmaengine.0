@@ -2,111 +2,98 @@ Return-Path: <SRS0=2s5r=BU=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.5 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=unavailable
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DF176C433E4
-	for <dmaengine@archiver.kernel.org>; Mon, 10 Aug 2020 13:06:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F0FA4C433DF
+	for <dmaengine@archiver.kernel.org>; Mon, 10 Aug 2020 21:46:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C72692073A
-	for <dmaengine@archiver.kernel.org>; Mon, 10 Aug 2020 13:06:31 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C5AEF206B5
+	for <dmaengine@archiver.kernel.org>; Mon, 10 Aug 2020 21:46:48 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="GZZxwgrv";
+	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="65vt/Uja"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726726AbgHJNG2 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 10 Aug 2020 09:06:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42662 "EHLO
+        id S1726606AbgHJVqs (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 10 Aug 2020 17:46:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37968 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726723AbgHJNG2 (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Mon, 10 Aug 2020 09:06:28 -0400
-Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 32628C061756
-        for <dmaengine@vger.kernel.org>; Mon, 10 Aug 2020 06:06:28 -0700 (PDT)
-Received: from pty.hi.pengutronix.de ([2001:67c:670:100:1d::c5])
-        by metis.ext.pengutronix.de with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.92)
-        (envelope-from <rsc@pengutronix.de>)
-        id 1k57VC-0000Hr-Uy; Mon, 10 Aug 2020 15:06:10 +0200
-Received: from rsc by pty.hi.pengutronix.de with local (Exim 4.89)
-        (envelope-from <rsc@pengutronix.de>)
-        id 1k57V7-0005lY-Bf; Mon, 10 Aug 2020 15:06:05 +0200
-Date:   Mon, 10 Aug 2020 15:06:05 +0200
-From:   Robert Schwebel <r.schwebel@pengutronix.de>
-To:     Robin Gong <yibin.gong@nxp.com>
-Cc:     Frieder Schrempf <frieder.schrempf@kontron.de>,
-        "mark.rutland@arm.com" <mark.rutland@arm.com>,
-        "broonie@kernel.org" <broonie@kernel.org>,
-        "robh+dt@kernel.org" <robh+dt@kernel.org>,
-        "catalin.marinas@arm.com" <catalin.marinas@arm.com>,
-        "vkoul@kernel.org" <vkoul@kernel.org>,
-        "will.deacon@arm.com" <will.deacon@arm.com>,
-        "shawnguo@kernel.org" <shawnguo@kernel.org>,
-        "festevam@gmail.com" <festevam@gmail.com>,
-        "s.hauer@pengutronix.de" <s.hauer@pengutronix.de>,
-        "martin.fuzzey@flowbird.group" <martin.fuzzey@flowbird.group>,
-        "u.kleine-koenig@pengutronix.de" <u.kleine-koenig@pengutronix.de>,
-        "dan.j.williams@intel.com" <dan.j.williams@intel.com>,
-        "matthias.schiffer@ew.tq-group.com" 
-        <matthias.schiffer@ew.tq-group.com>,
-        "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "linux-spi@vger.kernel.org" <linux-spi@vger.kernel.org>,
-        dl-linux-imx <linux-imx@nxp.com>,
-        "kernel@pengutronix.de" <kernel@pengutronix.de>,
-        "dmaengine@vger.kernel.org" <dmaengine@vger.kernel.org>,
-        "linux-arm-kernel@lists.infradead.org" 
-        <linux-arm-kernel@lists.infradead.org>
-Subject: Re: [PATCH v11 12/12] dmaengine: imx-sdma: add uart rom script
-Message-ID: <20200810130605.mwruri44ebw5o4ye@pengutronix.de>
-References: <1595616685-9987-1-git-send-email-yibin.gong@nxp.com>
- <1595616685-9987-13-git-send-email-yibin.gong@nxp.com>
- <89946dc6-6c0f-b3d5-9c9a-517f1ed7b5e1@kontron.de>
- <VE1PR04MB6638F057BC8F7F38E954316F89440@VE1PR04MB6638.eurprd04.prod.outlook.com>
+        with ESMTP id S1726517AbgHJVqs (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Mon, 10 Aug 2020 17:46:48 -0400
+Received: from galois.linutronix.de (Galois.linutronix.de [IPv6:2a0a:51c0:0:12e:550::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B277C061756;
+        Mon, 10 Aug 2020 14:46:48 -0700 (PDT)
+From:   Thomas Gleixner <tglx@linutronix.de>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
+        s=2020; t=1597096006;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=ZTc7qzlDDZI94ZkS5x0rnSOmtfpFDDsiHIxpgjl1fsM=;
+        b=GZZxwgrvXibFJZcaS2R22LnxTO30X96DmFeX8HkungAaeXusRMeaI+cMy8HRudLp8lC370
+        COMhOoc+iX/XSzM8k7eiWcZYSS6CBbg/+1WB5c/UGPHJn9H+2MtJDlQFsFMp4bdnZNN/Hx
+        bKXqnFwPx5LC9mkOYr0JZvPnzNKOJZH5rmbb5oW5JDkdG4A06mugZ0GVxkpfD3Jbk+AAQz
+        bP8dAyGsgaYuHXE5B1YcNBA0tfcxRuB8lAhZ+FX7Bz4nQkuhd2q3daKUJql6z6ppago522
+        bTvybQ+2/5SPBCt/c1sw47DlGLMNGlt2kUkiVwEgE6P0s/tj8eRkupZ4r3helQ==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
+        s=2020e; t=1597096006;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=ZTc7qzlDDZI94ZkS5x0rnSOmtfpFDDsiHIxpgjl1fsM=;
+        b=65vt/Uja35O19qQR/79tEWmhzsWgvL/QYtGqTWTJlMytEjKBQDIDRXrDXClI2DLPV1oRz/
+        GVWzrFvyTO6dqnCQ==
+To:     "Dey\, Megha" <megha.dey@intel.com>,
+        Jason Gunthorpe <jgg@nvidia.com>,
+        "gregkh\@linuxfoundation.org" <gregkh@linuxfoundation.org>
+Cc:     Marc Zyngier <maz@kernel.org>,
+        "Jiang\, Dave" <dave.jiang@intel.com>,
+        "vkoul\@kernel.org" <vkoul@kernel.org>,
+        "bhelgaas\@google.com" <bhelgaas@google.com>,
+        "rafael\@kernel.org" <rafael@kernel.org>,
+        "hpa\@zytor.com" <hpa@zytor.com>,
+        "alex.williamson\@redhat.com" <alex.williamson@redhat.com>,
+        "Pan\, Jacob jun" <jacob.jun.pan@intel.com>,
+        "Raj\, Ashok" <ashok.raj@intel.com>,
+        "Liu\, Yi L" <yi.l.liu@intel.com>,
+        "Lu\, Baolu" <baolu.lu@intel.com>,
+        "Tian\, Kevin" <kevin.tian@intel.com>,
+        "Kumar\, Sanjay K" <sanjay.k.kumar@intel.com>,
+        "Luck\, Tony" <tony.luck@intel.com>,
+        "Lin\, Jing" <jing.lin@intel.com>,
+        "Williams\, Dan J" <dan.j.williams@intel.com>,
+        "kwankhede\@nvidia.com" <kwankhede@nvidia.com>,
+        "eric.auger\@redhat.com" <eric.auger@redhat.com>,
+        "parav\@mellanox.com" <parav@mellanox.com>,
+        "Hansen\, Dave" <dave.hansen@intel.com>,
+        "netanelg\@mellanox.com" <netanelg@mellanox.com>,
+        "shahafs\@mellanox.com" <shahafs@mellanox.com>,
+        "yan.y.zhao\@linux.intel.com" <yan.y.zhao@linux.intel.com>,
+        "pbonzini\@redhat.com" <pbonzini@redhat.com>,
+        "Ortiz\, Samuel" <samuel.ortiz@intel.com>,
+        "Hossain\, Mona" <mona.hossain@intel.com>,
+        "dmaengine\@vger.kernel.org" <dmaengine@vger.kernel.org>,
+        "linux-kernel\@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        "x86\@kernel.org" <x86@kernel.org>,
+        "linux-pci\@vger.kernel.org" <linux-pci@vger.kernel.org>,
+        "kvm\@vger.kernel.org" <kvm@vger.kernel.org>
+Subject: Re: [PATCH RFC v2 02/18] irq/dev-msi: Add support for a new DEV_MSI irq domain
+In-Reply-To: <87h7tcgbs2.fsf@nanos.tec.linutronix.de>
+References: <87h7tcgbs2.fsf@nanos.tec.linutronix.de>
+Date:   Mon, 10 Aug 2020 23:46:45 +0200
+Message-ID: <87ft8uxjga.fsf@nanos>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <VE1PR04MB6638F057BC8F7F38E954316F89440@VE1PR04MB6638.eurprd04.prod.outlook.com>
-X-Sent-From: Pengutronix Hildesheim
-X-URL:  http://www.pengutronix.de/
-X-IRC:  #ptxdist @freenode
-X-Accept-Language: de,en
-X-Accept-Content-Type: text/plain
-X-Uptime: 15:05:33 up 269 days,  4:24, 260 users,  load average: 0,22, 0,14,
- 0,13
-User-Agent: NeoMutt/20170113 (1.7.2)
-X-SA-Exim-Connect-IP: 2001:67c:670:100:1d::c5
-X-SA-Exim-Mail-From: rsc@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: dmaengine@vger.kernel.org
+Content-Type: text/plain
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On Mon, Aug 10, 2020 at 10:57:42AM +0000, Robin Gong wrote:
-> diff --git a/drivers/dma/imx-sdma.c b/drivers/dma/imx-sdma.c
-> index 5900e32..4db55b9 100644
-> --- a/drivers/dma/imx-sdma.c
-> +++ b/drivers/dma/imx-sdma.c
-> @@ -1754,6 +1754,19 @@ static void sdma_add_scripts(struct sdma_engine *sdma,
->         for (i = 0; i < sdma->script_number; i++)
->                 if (addr_arr[i] > 0)
->                         saddr_arr[i] = addr_arr[i];
-> +
-> +       /*
-> +        * get uart_2_mcu_addr/uartsh_2_mcu_addr rom script specially because
-> +        * they are now replaced by uart_2_mcu_ram_addr/uartsh_2_mcu_ram_addr
-> +        * to be compatible with legacy freescal/nxp sdma firmware, and they
+Thomas Gleixner <tglx@linutronix.de> writes:
+> The infrastructure itself is not more than a thin wrapper around the
+> existing msi domain infrastructure and might even share code with
+> platform-msi.
 
-freescale
-
-> +        * are located in the bottom part of sdma_script_start_addrs which are
-> +        * beyond the SDMA_SCRIPT_ADDRS_ARRAY_SIZE_V1.
-> +        */
-
-rsc
--- 
-Pengutronix e.K.                           | Dipl.-Ing. Robert Schwebel  |
-Steuerwalder Str. 21                       | https://www.pengutronix.de/ |
-31137 Hildesheim, Germany                  | Phone: +49-5121-206917-0    |
-Amtsgericht Hildesheim, HRA 2686           | Fax:   +49-5121-206917-9    |
+And the annoying fact that you need XEN support which opens another can
+of worms...
