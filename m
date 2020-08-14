@@ -1,134 +1,91 @@
-Return-Path: <SRS0=mZfU=BX=vger.kernel.org=dmaengine-owner@kernel.org>
+Return-Path: <SRS0=Fomg=BY=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.0 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_GIT autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8780BC433DF
-	for <dmaengine@archiver.kernel.org>; Thu, 13 Aug 2020 20:41:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2D301C433DF
+	for <dmaengine@archiver.kernel.org>; Fri, 14 Aug 2020 05:26:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 35D092078B
-	for <dmaengine@archiver.kernel.org>; Thu, 13 Aug 2020 20:41:56 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b="PZmnYyT6"
+	by mail.kernel.org (Postfix) with ESMTP id 0872720774
+	for <dmaengine@archiver.kernel.org>; Fri, 14 Aug 2020 05:26:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726499AbgHMUl4 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Thu, 13 Aug 2020 16:41:56 -0400
-Received: from mailout1.w1.samsung.com ([210.118.77.11]:53098 "EHLO
-        mailout1.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726192AbgHMUlz (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Thu, 13 Aug 2020 16:41:55 -0400
-Received: from eucas1p1.samsung.com (unknown [182.198.249.206])
-        by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20200813204153euoutp017e4f352c23db6498b32d39535cae1b71~q7o51jVnC1018010180euoutp01U
-        for <dmaengine@vger.kernel.org>; Thu, 13 Aug 2020 20:41:53 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20200813204153euoutp017e4f352c23db6498b32d39535cae1b71~q7o51jVnC1018010180euoutp01U
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1597351313;
-        bh=3nZADrUFUgfGPQxdSrhWsZX6s3iqEwBwc14jXbAEU28=;
-        h=From:To:Cc:Subject:Date:References:From;
-        b=PZmnYyT6XUGmRxe9UpnjPY7BkzuslvEkHUs0vsTfToXFuQS1Jvc15VaIYLyy0FZWH
-         fRv3vumQ/NbeplwCxDWRHqtOlCA1p0cZquds83sup6RBw15g/6+PD3V4UftWpFNVIc
-         HkxBv2oI6RKNZXfhWiq7mxLxyz0mc7IlZdTNm1/k=
-Received: from eusmges2new.samsung.com (unknown [203.254.199.244]) by
-        eucas1p1.samsung.com (KnoxPortal) with ESMTP id
-        20200813204152eucas1p131a31edbcf91bd44cd4db544d617a3f8~q7o40NSWe1357313573eucas1p1l;
-        Thu, 13 Aug 2020 20:41:52 +0000 (GMT)
-Received: from eucas1p1.samsung.com ( [182.198.249.206]) by
-        eusmges2new.samsung.com (EUCPMTA) with SMTP id 52.B1.05997.095A53F5; Thu, 13
-        Aug 2020 21:41:52 +0100 (BST)
-Received: from eusmtrp1.samsung.com (unknown [182.198.249.138]) by
-        eucas1p1.samsung.com (KnoxPortal) with ESMTPA id
-        20200813204151eucas1p1c64a0880ba83013f87d0ca41242e533a~q7o4CdKQy0951509515eucas1p1t;
-        Thu, 13 Aug 2020 20:41:51 +0000 (GMT)
-Received: from eusmgms1.samsung.com (unknown [182.198.249.179]) by
-        eusmtrp1.samsung.com (KnoxPortal) with ESMTP id
-        20200813204151eusmtrp1f40391b21178da748681535f7007829a~q7o4BtnFN2785827858eusmtrp1v;
-        Thu, 13 Aug 2020 20:41:51 +0000 (GMT)
-X-AuditID: cbfec7f4-677ff7000000176d-4e-5f35a5908250
-Received: from eusmtip2.samsung.com ( [203.254.199.222]) by
-        eusmgms1.samsung.com (EUCPMTA) with SMTP id DF.C9.06314.F85A53F5; Thu, 13
-        Aug 2020 21:41:51 +0100 (BST)
-Received: from localhost (unknown [106.120.51.46]) by eusmtip2.samsung.com
-        (KnoxPortal) with ESMTPA id
-        20200813204151eusmtip27cc4eb74b070be0244cd11152ea33af5~q7o34_tnp1027010270eusmtip2x;
-        Thu, 13 Aug 2020 20:41:51 +0000 (GMT)
-From:   =?UTF-8?q?=C5=81ukasz=20Stelmach?= <l.stelmach@samsung.com>
-To:     Dan Williams <dan.j.williams@intel.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     b.zolnierkie@samsung.com,
-        =?UTF-8?q?=C5=81ukasz=20Stelmach?= <l.stelmach@samsung.com>
-Subject: [PATCH] dmaengine: pl330: fix instruction dump formatting
-Date:   Thu, 13 Aug 2020 22:41:23 +0200
-Message-Id: <20200813204123.19044-1-l.stelmach@samsung.com>
-X-Mailer: git-send-email 2.26.2
-MIME-Version: 1.0
-Organization: Samsung R&D Institute Poland
-Content-Transfer-Encoding: 8bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprFKsWRmVeSWpSXmKPExsWy7djPc7oTlprGG7xfJGaxccZ6VovpUy8w
-        Wqye+pfV4uahFYwWl3fNYbO4e+8Ei8XOOyeYHdg9Fu95yeSxaVUnm0f/XwOPvi2rGD0+b5IL
-        YI3isklJzcksSy3St0vgylh68zZ7wUvWis1rp7I1MF5g6WLk5JAQMJHonLadCcQWEljBKHHg
-        lm4XIxeQ/YVRYsr138wQic+MEgteOcM03J7ezQZRtJxR4vHqqcwQznNGiR/NnxhBqtgEHCX6
-        l55gBUmICKxnlNjZeQlsFLNAtETvlbdg+4QFnCS+/brKCmKzCKhKNG5cxw5i8wpYS2z7uI0Z
-        Yp28RPvy7WwQcUGJkzOfgN3NL6AlsabpOgvETHmJ5q2zoeqns0t0L7aGsF0k5vw9CvWnsMSr
-        41vYIWwZidOTe4DiHEB2vcTkSWYgd0oI9DBKbJvzA6reWuLOuV9sIDXMApoS63fpQ5Q7Sjxo
-        M4Aw+SRuvBWEOIBPYtK26cwQYV6JjjYhiBkqEuv690DNk5LofbWCEcL2kPh3cAvTBEbFWUje
-        moXklVkIaxcwMq9iFE8tLc5NTy02ykst1ytOzC0uzUvXS87P3cQITDGn/x3/soNx15+kQ4wC
-        HIxKPLwRDqbxQqyJZcWVuYcYJTiYlUR4nc6ejhPiTUmsrEotyo8vKs1JLT7EKM3BoiTOa7zo
-        ZayQQHpiSWp2ampBahFMlomDU6qBUeRgcneVhNhByT9JzBOXG7Z9c2M9eHJDfC5DoaHptSel
-        YoWT5M7ZHHMrCI45rOh4NuxaiPFX17VSxx7Ulgo8fK0f/f5Uwo15H21OMraWL1J7Gr3gaqal
-        9WmuVQvmF648ocC+/fUv5sq4/XlF3W5+CcwGsQvj5FtNO60nzBGT2HKuW4SF+WWAEktxRqKh
-        FnNRcSIA+AbSZi0DAAA=
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprCIsWRmVeSWpSXmKPExsVy+t/xe7r9S03jDc4vkbfYOGM9q8X0qRcY
-        LVZP/ctqcfPQCkaLy7vmsFncvXeCxWLnnRPMDuwei/e8ZPLYtKqTzaP/r4FH35ZVjB6fN8kF
-        sEbp2RTll5akKmTkF5fYKkUbWhjpGVpa6BmZWOoZGpvHWhmZKunb2aSk5mSWpRbp2yXoZSy9
-        eZu94CVrxea1U9kaGC+wdDFyckgImEjcnt7N1sXIxSEksJRR4tOcF0xdjBxACSmJlXPTIWqE
-        Jf5c62IDsYUEnjJKPNvNB2KzCThK9C89wQpiiwhsZpT4dTYcxGYWiJaY/Ws5WFxYwEni26+r
-        YDaLgKpE48Z17CA2r4C1xLaP25gh5stLtC/fzgYRF5Q4OfMJC8gJzALqEuvnCYGE+QW0JNY0
-        XWeBGC8v0bx1NvMERoFZSDpmIXTMQlK1gJF5FaNIamlxbnpusaFecWJucWleul5yfu4mRmCM
-        bDv2c/MOxksbgw8xCnAwKvHwRjiYxguxJpYVV+YeYpTgYFYS4XU6ezpOiDclsbIqtSg/vqg0
-        J7X4EKMp0DsTmaVEk/OB8ZtXEm9oamhuYWlobmxubGahJM7bIXAwRkggPbEkNTs1tSC1CKaP
-        iYNTqoGxOm37kUiegH0LvhzY0VL66nx0wCuTdYJt0zZ7hz5KeKAhG/7klMPrrRfXz04Xf/g3
-        /u3foB8LI2671LMwZyTIz+HbUKh2n9vj9NXHn44Jvb6x8TJL1R0p8bBI5QMKO44mZTQvE/KZ
-        0jwhIvL8dneLK0kFr7Xe/X6h+MWMc57TQuNLy4VfZq3fqcRSnJFoqMVcVJwIADDQ6sunAgAA
-X-CMS-MailID: 20200813204151eucas1p1c64a0880ba83013f87d0ca41242e533a
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-X-RootMTR: 20200813204151eucas1p1c64a0880ba83013f87d0ca41242e533a
-X-EPHeader: CA
-CMS-TYPE: 201P
-X-CMS-RootMailID: 20200813204151eucas1p1c64a0880ba83013f87d0ca41242e533a
-References: <CGME20200813204151eucas1p1c64a0880ba83013f87d0ca41242e533a@eucas1p1.samsung.com>
+        id S1726091AbgHNF0T (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 14 Aug 2020 01:26:19 -0400
+Received: from mga01.intel.com ([192.55.52.88]:55320 "EHLO mga01.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726006AbgHNF0T (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Fri, 14 Aug 2020 01:26:19 -0400
+IronPort-SDR: Iwt1zagFxcft1F42k4+W7zDW6nqCmZcAV8V5sqrDYOZYDXMhc+7shhHEnzFTyZ5r+UQSF4p+ur
+ cWJUMFX9dyzw==
+X-IronPort-AV: E=McAfee;i="6000,8403,9712"; a="172407432"
+X-IronPort-AV: E=Sophos;i="5.76,311,1592895600"; 
+   d="scan'208";a="172407432"
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from fmsmga007.fm.intel.com ([10.253.24.52])
+  by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Aug 2020 22:26:18 -0700
+IronPort-SDR: I1UZJv6Mw/hmmkU8I2qKAU6YkZWvIpCuZwUZ0y8MTAQd2PZY/ks4gs5DqTRlOXM259S3MBMNKc
+ x2G3Q6Y0EKyA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.76,311,1592895600"; 
+   d="scan'208";a="277042360"
+Received: from sgsxdev004.isng.intel.com (HELO localhost) ([10.226.88.13])
+  by fmsmga007.fm.intel.com with ESMTP; 13 Aug 2020 22:26:16 -0700
+From:   Amireddy Mallikarjuna reddy <mallikarjunax.reddy@linux.intel.com>
+To:     dmaengine@vger.kernel.org, vkoul@kernel.org,
+        devicetree@vger.kernel.org, robh+dt@kernel.org
+Cc:     linux-kernel@vger.kernel.org, andriy.shevchenko@intel.com,
+        cheol.yong.kim@intel.com, qi-ming.wu@intel.com,
+        chuanhua.lei@linux.intel.com, mallikarjunax.reddy@linux.intel.com,
+        malliamireddy009@gmail.com
+Subject: [PATCH v5 0/2] Add Intel LGM soc DMA support
+Date:   Fri, 14 Aug 2020 13:26:08 +0800
+Message-Id: <cover.1597381889.git.mallikarjunax.reddy@linux.intel.com>
+X-Mailer: git-send-email 2.11.0
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Instruction dump uses two printk() in a row to print one instruction. Use
-KERN_CONT to prevent breaking the output in the middle.
+Add DMA controller driver for Lightning Mountain(LGM) family of SoCs.
 
-Signed-off-by: Łukasz Stelmach <l.stelmach@samsung.com>
----
- drivers/dma/pl330.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+The main function of the DMA controller is the transfer of data from/to any
+DPlus compliant peripheral to/from the memory. A memory to memory copy
+capability can also be configured.
+This ldma driver is used for configure the device and channnels for data
+and control paths.
 
-diff --git a/drivers/dma/pl330.c b/drivers/dma/pl330.c
-index 88b884cbb7c1..e1af6a470453 100644
---- a/drivers/dma/pl330.c
-+++ b/drivers/dma/pl330.c
-@@ -254,7 +254,7 @@ enum pl330_byteswap {
- static unsigned cmd_line;
- #define PL330_DBGCMD_DUMP(off, x...)	do { \
- 						printk("%x:", cmd_line); \
--						printk(x); \
-+						printk(KERN_CONT x); \
- 						cmd_line += off; \
- 					} while (0)
- #define PL330_DBGMC_START(addr)		(cmd_line = addr)
+These controllers provide DMA capabilities for a variety of on-chip
+devices such as SSC, HSNAND and GSWIP.
+
+-------------
+Future Plans:
+-------------
+LGM SOC also supports Hardware Memory Copy engine.
+The role of the HW Memory copy engine is to offload memory copy operations
+from the CPU.
+
+Amireddy Mallikarjuna reddy (2):
+  dt-bindings: dma: Add bindings for intel LGM SOC
+  Add Intel LGM soc DMA support.
+
+ .../devicetree/bindings/dma/intel,ldma.yaml        |  319 ++++
+ drivers/dma/Kconfig                                |    2 +
+ drivers/dma/Makefile                               |    1 +
+ drivers/dma/lgm/Kconfig                            |    9 +
+ drivers/dma/lgm/Makefile                           |    2 +
+ drivers/dma/lgm/lgm-dma.c                          | 1944 ++++++++++++++++++++
+ include/linux/dma/lgm_dma.h                        |   27 +
+ 7 files changed, 2304 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/dma/intel,ldma.yaml
+ create mode 100644 drivers/dma/lgm/Kconfig
+ create mode 100644 drivers/dma/lgm/Makefile
+ create mode 100644 drivers/dma/lgm/lgm-dma.c
+ create mode 100644 include/linux/dma/lgm_dma.h
+
 -- 
-2.26.2
+2.11.0
 
