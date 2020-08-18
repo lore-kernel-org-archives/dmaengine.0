@@ -2,70 +2,67 @@ Return-Path: <SRS0=d8mK=B4=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-14.2 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+X-Spam-Status: No, score=-8.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,SIGNED_OFF_BY,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=3.4.0
+	MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C11D9C433DF
-	for <dmaengine@archiver.kernel.org>; Tue, 18 Aug 2020 10:23:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 88185C433E1
+	for <dmaengine@archiver.kernel.org>; Tue, 18 Aug 2020 10:27:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9F4CD20786
-	for <dmaengine@archiver.kernel.org>; Tue, 18 Aug 2020 10:23:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6A70620674
+	for <dmaengine@archiver.kernel.org>; Tue, 18 Aug 2020 10:27:47 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b="oH9b+EKQ"
+	dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b="BlejnWNN"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726203AbgHRKX3 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 18 Aug 2020 06:23:29 -0400
-Received: from fllv0015.ext.ti.com ([198.47.19.141]:57504 "EHLO
-        fllv0015.ext.ti.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726145AbgHRKX3 (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Tue, 18 Aug 2020 06:23:29 -0400
-Received: from lelv0265.itg.ti.com ([10.180.67.224])
-        by fllv0015.ext.ti.com (8.15.2/8.15.2) with ESMTP id 07IANF5g118045;
-        Tue, 18 Aug 2020 05:23:15 -0500
+        id S1726420AbgHRK1r (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 18 Aug 2020 06:27:47 -0400
+Received: from lelv0142.ext.ti.com ([198.47.23.249]:40654 "EHLO
+        lelv0142.ext.ti.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726336AbgHRK1q (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Tue, 18 Aug 2020 06:27:46 -0400
+Received: from fllv0035.itg.ti.com ([10.64.41.0])
+        by lelv0142.ext.ti.com (8.15.2/8.15.2) with ESMTP id 07IAReZO003390;
+        Tue, 18 Aug 2020 05:27:40 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
-        s=ti-com-17Q1; t=1597746195;
-        bh=FUWhHboZZuWmjWhQJksLmLFzMVPHa+vMd0FTYbNVw+w=;
-        h=Subject:To:CC:References:From:Date:In-Reply-To;
-        b=oH9b+EKQBgt8lV+tmLGer/vk5OUAKHoTOxex9bMp6MOiOQ5hb8RQLDtiUy+ompyYT
-         lT/sp7QMMW0pOtt/Usb0lYckzGhQXZ9D+8RxjpO5hjTqKn/WL3RAvjG7Xj4SVuWAiz
-         UXI18wQpvX97oZkaPavYlzu32tu0DsMlOcMWBQhQ=
-Received: from DFLE113.ent.ti.com (dfle113.ent.ti.com [10.64.6.34])
-        by lelv0265.itg.ti.com (8.15.2/8.15.2) with ESMTPS id 07IANFuj073622
-        (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
-        Tue, 18 Aug 2020 05:23:15 -0500
-Received: from DFLE103.ent.ti.com (10.64.6.24) by DFLE113.ent.ti.com
- (10.64.6.34) with Microsoft SMTP Server (version=TLS1_2,
+        s=ti-com-17Q1; t=1597746460;
+        bh=8xkBadz85cSC+Zl1n9wGXqzdc8DH2yqT3Qiku2kAblw=;
+        h=Subject:From:To:CC:References:Date:In-Reply-To;
+        b=BlejnWNNhXfa2jmfFm5+Gu9xiQFI5A98q/H1lZVldl6GAy/Oi1m5IsPFRdbjW5Vpi
+         MHGr7oy7vKwnat4RaZwpxih/DBIdRyrzMBsXwTCChBtDu+hvHFW2QoFXoHnw0ptwwu
+         83Ya/fJ/l2wop6gc1uYBWeUygoD0tlbd2Qj/Ea18=
+Received: from DFLE104.ent.ti.com (dfle104.ent.ti.com [10.64.6.25])
+        by fllv0035.itg.ti.com (8.15.2/8.15.2) with ESMTP id 07IAReWK096463;
+        Tue, 18 Aug 2020 05:27:40 -0500
+Received: from DFLE104.ent.ti.com (10.64.6.25) by DFLE104.ent.ti.com
+ (10.64.6.25) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1979.3; Tue, 18
- Aug 2020 05:23:15 -0500
-Received: from lelv0327.itg.ti.com (10.180.67.183) by DFLE103.ent.ti.com
- (10.64.6.24) with Microsoft SMTP Server (version=TLS1_2,
+ Aug 2020 05:27:40 -0500
+Received: from lelv0327.itg.ti.com (10.180.67.183) by DFLE104.ent.ti.com
+ (10.64.6.25) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1979.3 via
- Frontend Transport; Tue, 18 Aug 2020 05:23:15 -0500
+ Frontend Transport; Tue, 18 Aug 2020 05:27:40 -0500
 Received: from [192.168.2.6] (ileax41-snat.itg.ti.com [10.172.224.153])
-        by lelv0327.itg.ti.com (8.15.2/8.15.2) with ESMTP id 07IANCBm051072;
-        Tue, 18 Aug 2020 05:23:12 -0500
-Subject: Re: [PATCH 35/35] dma: k3-udma: convert tasklets to use new
- tasklet_setup() API
-To:     Allen Pais <allen.lkml@gmail.com>, <vkoul@kernel.org>,
-        <linus.walleij@linaro.org>, <vireshk@kernel.org>,
-        <leoyang.li@nxp.com>, <zw@zh-kernel.org>, <shawnguo@kernel.org>,
-        <s.hauer@pengutronix.de>, <matthias.bgg@gmail.com>,
-        <agross@kernel.org>, <bjorn.andersson@linaro.org>,
-        <baohua@kernel.org>, <wens@csie.org>
-CC:     <dmaengine@vger.kernel.org>
-References: <20200818090638.26362-1-allen.lkml@gmail.com>
- <20200818090638.26362-36-allen.lkml@gmail.com>
+        by lelv0327.itg.ti.com (8.15.2/8.15.2) with ESMTP id 07IARbcJ057381;
+        Tue, 18 Aug 2020 05:27:38 -0500
+Subject: Re: [PATCH v5 2/2] Add Intel LGM soc DMA support.
 From:   Peter Ujfalusi <peter.ujfalusi@ti.com>
+To:     Amireddy Mallikarjuna reddy <mallikarjunax.reddy@linux.intel.com>,
+        <dmaengine@vger.kernel.org>, <vkoul@kernel.org>,
+        <devicetree@vger.kernel.org>, <robh+dt@kernel.org>
+CC:     <linux-kernel@vger.kernel.org>, <andriy.shevchenko@intel.com>,
+        <cheol.yong.kim@intel.com>, <qi-ming.wu@intel.com>,
+        <chuanhua.lei@linux.intel.com>, <malliamireddy009@gmail.com>
+References: <cover.1597381889.git.mallikarjunax.reddy@linux.intel.com>
+ <cdd26d104000c060d85a0c5f8abe8492e4103de5.1597381889.git.mallikarjunax.reddy@linux.intel.com>
+ <fbc98cdb-3b50-cbcc-0e90-c9d6116566d1@ti.com>
 X-Pep-Version: 2.0
-Message-ID: <2dedd6a2-7a75-4001-57c5-17cde4d998d3@ti.com>
-Date:   Tue, 18 Aug 2020 13:24:46 +0300
+Message-ID: <70848117-ec29-d293-6603-cbf47dec35d4@ti.com>
+Date:   Tue, 18 Aug 2020 13:29:12 +0300
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
  Thunderbird/68.11.0
 MIME-Version: 1.0
-In-Reply-To: <20200818090638.26362-36-allen.lkml@gmail.com>
+In-Reply-To: <fbc98cdb-3b50-cbcc-0e90-c9d6116566d1@ti.com>
 Content-Type: text/plain; charset="utf-8"
 Content-Language: en-US
 Content-Transfer-Encoding: quoted-printable
@@ -75,50 +72,52 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Hi Allen,
 
-On 18/08/2020 12.06, Allen Pais wrote:
-> In preparation for unconditionally passing the
-> struct tasklet_struct pointer to all tasklet
-> callbacks, switch to using the new tasklet_setup()
-> and from_tasklet() to pass the tasklet pointer explicitly.
 
-Acked-by: Peter Ujfalusi <peter.ujfalusi@ti.com>
+On 18/08/2020 13.16, Peter Ujfalusi wrote:
 
-> Signed-off-by: Allen Pais <allen.lkml@gmail.com>
-> ---
->  drivers/dma/ti/k3-udma.c | 7 +++----
->  1 file changed, 3 insertions(+), 4 deletions(-)
+=2E..
+
+>> +static void dma_issue_pending(struct dma_chan *chan)
+>> +{
+>> +	struct ldma_chan *c =3D to_ldma_chan(chan);
+>> +	struct ldma_dev *d =3D to_ldma_dev(c->vchan.chan.device);
+>> +	unsigned long flags;
+>> +
+>> +	if (d->ver =3D=3D DMA_VER22) {
+>> +		spin_lock_irqsave(&c->vchan.lock, flags);
+>> +		if (vchan_issue_pending(&c->vchan)) {
+>> +			struct virt_dma_desc *vdesc;
+>> +
+>> +			/* Get the next descriptor */
+>> +			vdesc =3D vchan_next_desc(&c->vchan);
+>> +			if (!vdesc) {
+>> +				c->ds =3D NULL;
+>> +				return;
+>> +			}
+>> +			list_del(&vdesc->node);
+>> +			c->ds =3D to_lgm_dma_desc(vdesc);
 >=20
-> diff --git a/drivers/dma/ti/k3-udma.c b/drivers/dma/ti/k3-udma.c
-> index c14e6cb105cd..59cd8770334c 100644
-> --- a/drivers/dma/ti/k3-udma.c
-> +++ b/drivers/dma/ti/k3-udma.c
-> @@ -2914,9 +2914,9 @@ static void udma_desc_pre_callback(struct virt_dm=
-a_chan *vc,
->   * This tasklet handles the completion of a DMA descriptor by
->   * calling its callback and freeing it.
->   */
-> -static void udma_vchan_complete(unsigned long arg)
-> +static void udma_vchan_complete(struct tasklet_struct *t)
->  {
-> -	struct virt_dma_chan *vc =3D (struct virt_dma_chan *)arg;
-> +	struct virt_dma_chan *vc =3D from_tasklet(vc, t, task);
->  	struct virt_dma_desc *vd, *_vd;
->  	struct dmaengine_desc_callback cb;
->  	LIST_HEAD(head);
-> @@ -3649,8 +3649,7 @@ static int udma_probe(struct platform_device *pde=
-v)
-> =20
->  		vchan_init(&uc->vc, &ud->ddev);
->  		/* Use custom vchan completion handling */
-> -		tasklet_init(&uc->vc.task, udma_vchan_complete,
-> -			     (unsigned long)&uc->vc);
-> +		tasklet_setup(&uc->vc.task, udma_vchan_complete);
->  		init_completion(&uc->teardown_completed);
->  		INIT_DELAYED_WORK(&uc->tx_drain.work, udma_check_tx_completion);
->  	}
+> you have set c->ds in dma_prep_slave_sg and the only way I can see that=
+
+> you will not leak memory is that the client must terminate_sync() after=
+
+> each transfer so that the synchronize callback is invoked between each
+> prep_sg/issue_pending/competion.
 >=20
+>> +			spin_unlock_irqrestore(&c->vchan.lock, flags);
+>> +			ldma_chan_desc_hw_cfg(c, c->ds->desc_phys, c->ds->desc_cnt);
+>> +			ldma_chan_irq_en(c);
+>> +		}
+>=20
+> If there is nothing pending, you will leave the spinlock wide open...
+
+you leave it locked...
+
+>=20
+>> +	}
+>> +	ldma_chan_on(c);
+>> +}
 
 - P=C3=A9ter
 
