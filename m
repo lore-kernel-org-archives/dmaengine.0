@@ -2,41 +2,40 @@ Return-Path: <SRS0=d8mK=B4=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MIME_BASE64_TEXT,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
-	UNPARSEABLE_RELAY,URIBL_BLOCKED,USER_AGENT_GIT autolearn=unavailable
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	MIME_BASE64_TEXT,SPF_HELO_NONE,SPF_PASS,UNPARSEABLE_RELAY,USER_AGENT_GIT
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BDBCCC433E4
-	for <dmaengine@archiver.kernel.org>; Tue, 18 Aug 2020 03:04:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5A701C433E4
+	for <dmaengine@archiver.kernel.org>; Tue, 18 Aug 2020 03:04:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9C9502078E
-	for <dmaengine@archiver.kernel.org>; Tue, 18 Aug 2020 03:04:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2FA332076D
+	for <dmaengine@archiver.kernel.org>; Tue, 18 Aug 2020 03:04:30 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=mediatek.com header.i=@mediatek.com header.b="qP61zNLv"
+	dkim=pass (1024-bit key) header.d=mediatek.com header.i=@mediatek.com header.b="rhgOsNBe"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726598AbgHRDEN (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 17 Aug 2020 23:04:13 -0400
-Received: from mailgw01.mediatek.com ([210.61.82.183]:42987 "EHLO
-        mailgw01.mediatek.com" rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1726365AbgHRDEL (ORCPT
+        id S1726651AbgHRDEW (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 17 Aug 2020 23:04:22 -0400
+Received: from mailgw02.mediatek.com ([210.61.82.184]:53059 "EHLO
+        mailgw02.mediatek.com" rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1726583AbgHRDEL (ORCPT
         <rfc822;dmaengine@vger.kernel.org>); Mon, 17 Aug 2020 23:04:11 -0400
-X-UUID: 105bf3c2538f4840a8358350a7e1071c-20200818
+X-UUID: ccb16292f9334147aa0fb1d2597a1b34-20200818
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mediatek.com; s=dk;
-        h=Content-Transfer-Encoding:Content-Type:MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:CC:To:From; bh=ahbWRcPcWQCgNbqrlq91xsX5/hkLrfZyOxN384yVm+I=;
-        b=qP61zNLvFgfdN7yrjoLUecdRhb+3Dy7uLGoU5BzbKPt+dgWycMaELUTLXDeQ/Q0pYNGUA0BKDkkcV0eeYELe2TCA7v1ymTLM7LaZ02lOemn7C4036V73d6bN331Nj47IvnVs1CUqZTD9j0BcBrrC4k2S2GPq1nHYFxoqV6d7L3M=;
-X-UUID: 105bf3c2538f4840a8358350a7e1071c-20200818
-Received: from mtkcas06.mediatek.inc [(172.21.101.30)] by mailgw01.mediatek.com
+        h=Content-Transfer-Encoding:Content-Type:MIME-Version:Message-ID:Date:Subject:CC:To:From; bh=xBoe6gt6wxqIzbSLaemhxTBncfJ0ORMMg2skOSe8MSA=;
+        b=rhgOsNBe53VNvhORlgJDR5uzkww/bGNSfyNXs/8HODj8FnuafiWu54n5fxbQupJqZJ+1eG0N4yN4Yk1ONz1JRqQX+4/AnKNsJ0Ce7GZyfeRlqjk9ogwwF5pizXGWRKWOYEltcIG5Lzj8TVUjtPuX163h5t8OFXtyqmxXfo3oTig=;
+X-UUID: ccb16292f9334147aa0fb1d2597a1b34-20200818
+Received: from mtkcas07.mediatek.inc [(172.21.101.84)] by mailgw02.mediatek.com
         (envelope-from <eastl.lee@mediatek.com>)
         (Cellopoint E-mail Firewall v4.1.10 Build 0809 with TLS)
-        with ESMTP id 2066810986; Tue, 18 Aug 2020 11:04:04 +0800
+        with ESMTP id 1383409060; Tue, 18 Aug 2020 11:04:02 +0800
 Received: from mtkcas07.mediatek.inc (172.21.101.84) by
- mtkmbs02n1.mediatek.inc (172.21.101.77) with Microsoft SMTP Server (TLS) id
- 15.0.1497.2; Tue, 18 Aug 2020 11:04:02 +0800
+ mtkmbs01n2.mediatek.inc (172.21.101.79) with Microsoft SMTP Server (TLS) id
+ 15.0.1497.2; Tue, 18 Aug 2020 11:03:59 +0800
 Received: from mtkswgap22.mediatek.inc (172.21.77.33) by mtkcas07.mediatek.inc
  (172.21.101.73) with Microsoft SMTP Server id 15.0.1497.2 via Frontend
- Transport; Tue, 18 Aug 2020 11:04:02 +0800
+ Transport; Tue, 18 Aug 2020 11:03:59 +0800
 From:   EastL Lee <EastL.Lee@mediatek.com>
 To:     Sean Wang <sean.wang@mediatek.com>
 CC:     <vkoul@kernel.org>, <robh+dt@kernel.org>, <mark.rutland@arm.com>,
@@ -44,16 +43,14 @@ CC:     <vkoul@kernel.org>, <robh+dt@kernel.org>, <mark.rutland@arm.com>,
         <linux-kernel@vger.kernel.org>,
         <linux-arm-kernel@lists.infradead.org>,
         <linux-mediatek@lists.infradead.org>, <devicetree@vger.kernel.org>,
-        <wsd_upstream@mediatek.com>, <cc.hwang@mediatek.com>,
-        EastL Lee <EastL.Lee@mediatek.com>
-Subject: [PATCH v7 3/4] dmaengine: mediatek-cqdma: add dma mask for capability
-Date:   Tue, 18 Aug 2020 11:03:53 +0800
-Message-ID: <1597719834-6675-4-git-send-email-EastL.Lee@mediatek.com>
+        <wsd_upstream@mediatek.com>, <cc.hwang@mediatek.com>
+Subject: [PATCH v7] dmaengine: mediatek-cqdma: add dt-bindings and remove redundant queue 
+Date:   Tue, 18 Aug 2020 11:03:50 +0800
+Message-ID: <1597719834-6675-1-git-send-email-EastL.Lee@mediatek.com>
 X-Mailer: git-send-email 1.9.1
-In-Reply-To: <1597719834-6675-1-git-send-email-EastL.Lee@mediatek.com>
-References: <1597719834-6675-1-git-send-email-EastL.Lee@mediatek.com>
 MIME-Version: 1.0
 Content-Type: text/plain
+X-TM-SNTS-SMTP: AAEC054072CFE97947F8CDF899EAE91679FC3A35881BA561C49E25310D7FF1332000:8
 X-MTK:  N
 Content-Transfer-Encoding: base64
 Sender: dmaengine-owner@vger.kernel.org
@@ -61,35 +58,15 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-VGhpcyBwYXRjaCBhZGQgZG1hIG1hc2sgZm9yIGNhcGFiaWxpdHkuDQoNClNpZ25lZC1vZmYtYnk6
-IEVhc3RMIExlZSA8RWFzdEwuTGVlQG1lZGlhdGVrLmNvbT4NClJldmlld2VkLWJ5OiBNYXR0aGlh
-cyBCcnVnZ2VyIDxtYXR0aGlhcy5iZ2dAZ21haWwuY29tPg0KLS0tDQogZHJpdmVycy9kbWEvbWVk
-aWF0ZWsvbXRrLWNxZG1hLmMgfCAxNyArKysrKysrKysrKysrKysrKw0KIDEgZmlsZSBjaGFuZ2Vk
-LCAxNyBpbnNlcnRpb25zKCspDQoNCmRpZmYgLS1naXQgYS9kcml2ZXJzL2RtYS9tZWRpYXRlay9t
-dGstY3FkbWEuYyBiL2RyaXZlcnMvZG1hL21lZGlhdGVrL210ay1jcWRtYS5jDQppbmRleCA5MDVi
-YmNiLi4xNjEwNjMyIDEwMDY0NA0KLS0tIGEvZHJpdmVycy9kbWEvbWVkaWF0ZWsvbXRrLWNxZG1h
-LmMNCisrKyBiL2RyaXZlcnMvZG1hL21lZGlhdGVrL210ay1jcWRtYS5jDQpAQCAtMTE3LDYgKzEx
-Nyw3IEBAIHN0cnVjdCBtdGtfY3FkbWFfdmNoYW4gew0KICAqIEBjbGs6ICAgICAgICAgICAgICAg
-ICAgICBUaGUgY2xvY2sgdGhhdCBkZXZpY2UgaW50ZXJuYWwgaXMgdXNpbmcNCiAgKiBAZG1hX3Jl
-cXVlc3RzOiAgICAgICAgICAgVGhlIG51bWJlciBvZiBWQ3MgdGhlIGRldmljZSBzdXBwb3J0cyB0
-bw0KICAqIEBkbWFfY2hhbm5lbHM6ICAgICAgICAgICBUaGUgbnVtYmVyIG9mIFBDcyB0aGUgZGV2
-aWNlIHN1cHBvcnRzIHRvDQorICogQGRtYV9tYXNrOiAgICAgICAgICAgICAgIEEgbWFzayBmb3Ig
-RE1BIGNhcGFiaWxpdHkNCiAgKiBAdmM6ICAgICAgICAgICAgICAgICAgICAgVGhlIHBvaW50ZXIg
-dG8gYWxsIGF2YWlsYWJsZSBWQ3MNCiAgKiBAcGM6ICAgICAgICAgICAgICAgICAgICAgVGhlIHBv
-aW50ZXIgdG8gYWxsIHRoZSB1bmRlcmx5aW5nIFBDcw0KICAqLw0KQEAgLTEyNiw2ICsxMjcsNyBA
-QCBzdHJ1Y3QgbXRrX2NxZG1hX2RldmljZSB7DQogDQogCXUzMiBkbWFfcmVxdWVzdHM7DQogCXUz
-MiBkbWFfY2hhbm5lbHM7DQorCXUzMiBkbWFfbWFzazsNCiAJc3RydWN0IG10a19jcWRtYV92Y2hh
-biAqdmM7DQogCXN0cnVjdCBtdGtfY3FkbWFfcGNoYW4gKipwYzsNCiB9Ow0KQEAgLTYwNyw2ICs2
-MDksMjEgQEAgc3RhdGljIGludCBtdGtfY3FkbWFfcHJvYmUoc3RydWN0IHBsYXRmb3JtX2Rldmlj
-ZSAqcGRldikNCiAJCWNxZG1hLT5kbWFfY2hhbm5lbHMgPSBNVEtfQ1FETUFfTlJfUENIQU5TOw0K
-IAl9DQogDQorCWlmIChwZGV2LT5kZXYub2Zfbm9kZSkNCisJCWVyciA9IG9mX3Byb3BlcnR5X3Jl
-YWRfdTMyKHBkZXYtPmRldi5vZl9ub2RlLA0KKwkJCQkJICAgImRtYS1jaGFubmVsLW1hc2siLA0K
-KwkJCQkJICAgJmNxZG1hLT5kbWFfbWFzayk7DQorCWlmIChlcnIpIHsNCisJCWRldl93YXJuKCZw
-ZGV2LT5kZXYsDQorCQkJICJVc2luZyAwIGFzIG1pc3NpbmcgZG1hLWNoYW5uZWwtbWFzayBwcm9w
-ZXJ0eVxuIik7DQorCQljcWRtYS0+ZG1hX21hc2sgPSAwOw0KKwl9DQorDQorCWlmIChkbWFfc2V0
-X21hc2soJnBkZXYtPmRldiwgRE1BX0JJVF9NQVNLKGNxZG1hLT5kbWFfbWFzaykpKSB7DQorCQlk
-ZXZfd2FybigmcGRldi0+ZGV2LCAiRE1BIHNldCBtYXNrIGZhaWxlZFxuIik7DQorCQlyZXR1cm4g
-LUVJTlZBTDsNCisJfQ0KKw0KIAljcWRtYS0+cGMgPSBkZXZtX2tjYWxsb2MoJnBkZXYtPmRldiwg
-Y3FkbWEtPmRtYV9jaGFubmVscywNCiAJCQkJIHNpemVvZigqY3FkbWEtPnBjKSwgR0ZQX0tFUk5F
-TCk7DQogCWlmICghY3FkbWEtPnBjKQ0KLS0gDQoxLjkuMQ0K
+VGhpcyBwYXRjaCBzZXQgYWRkcyBkb2N1bWVudCB0aGUgZGV2aWNldHJlZSBiaW5kaW5ncyBmb3Ig
+TWVkaWFUZWsgQ29tbWFuZC1RdWV1ZSBETUEgY29udHJvbGxlciwNCmFuZCByZW1vdmUgcmVkdW5k
+YW50IHF1ZXVlIHN0cnVjdHVyZS4NCg0KaGFuZ2VzIHNpbmNlIHY2Og0KLSBmaXggZHQgYmluZGlu
+ZyBmb3JtYXQNCg0KaGFuZ2VzIHNpbmNlIHY1Og0KLSBmaXggZnVsbCBuYW1lDQoNCmhhbmdlcyBz
+aW5jZSB2NDoNCi0gZml4IHlhbWwgJiBkbWEtbWFzayBjb2RlIGZsb3cNCg0KaGFuZ2VzIHNpbmNl
+IHYzOg0KLSBmaXggZHRfYmluZGluZ19jaGVjayBlcnJvcnMNCg0KQ2hhbmdlcyBzaW5jZSB2MjoN
+Ci0gYWRkIGRldmljZXRyZWUgYmluZGluZ3MgZm9yIE1lZGlhVGVrIENvbW1hbmQtUXVldWUgRE1B
+IGNvbnRyb2xsZXINCg0KQ2hhbmdlcyBzaW5jZSB2MToNCi0gcmVtb3ZlIHJlZHVuZGFudCBxdWV1
+ZSBzdHJ1Y3R1cmUNCi0gZml4IHdyb25nIGRlc2NyaXB0aW9uIGFuZCB0YWdzIGluIHRoZSBlYXJs
+aWVyIHBhdGNoDQotIGFkZCBkbWEtY2hhbm5lbC1tYXNrIGZvciBETUEgY2FwYWJpbGl0eQ0KLSBm
+aXggY29tcGF0aWJsZSBmb3IgY29tbW9uDQoNCg==
 
