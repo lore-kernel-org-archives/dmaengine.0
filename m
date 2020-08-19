@@ -2,84 +2,105 @@ Return-Path: <SRS0=8F/d=B5=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D8646C433DF
-	for <dmaengine@archiver.kernel.org>; Wed, 19 Aug 2020 04:29:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7735AC433E1
+	for <dmaengine@archiver.kernel.org>; Wed, 19 Aug 2020 07:16:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B5327207BB
-	for <dmaengine@archiver.kernel.org>; Wed, 19 Aug 2020 04:29:31 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1597811371;
-	bh=yZCa1YE/YNd1E5AUvE8c/6qe+ChwGp2Dizx/VHpBxUI=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:List-ID:From;
-	b=wyj7L1vjfhKuGvx9zlCjg4PYpCrV2G84naItEE3H4wN670+XQ3+LDMULnYG6gu8jR
-	 2LMofQOMZ2EcaFq4Cv1iEsWbvUgh9umKcoXnV49fBIvkfiiOWglKUHA9epN8DtnBDC
-	 jksdXnobDrI2ZxNN7hcTKiNToyaYqEgi3O6Irrb4=
+	by mail.kernel.org (Postfix) with ESMTP id 615AC207DA
+	for <dmaengine@archiver.kernel.org>; Wed, 19 Aug 2020 07:16:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725601AbgHSE3b (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 19 Aug 2020 00:29:31 -0400
-Received: from mail.kernel.org ([198.145.29.99]:42834 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725306AbgHSE33 (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Wed, 19 Aug 2020 00:29:29 -0400
-Received: from localhost (unknown [122.171.38.130])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 92DB020772;
-        Wed, 19 Aug 2020 04:29:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1597811369;
-        bh=yZCa1YE/YNd1E5AUvE8c/6qe+ChwGp2Dizx/VHpBxUI=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=mY+oDC8FnwqCbFUslcsKZZWYmn5dArjnpojyMev05c9N0UbhAAE28IJNi7TuEU1Qs
-         OnauKYb7oH+ox4MpnlD1HFDimRdWOe7SfN9Mfp0udCvy15FSRXPMGNk+wVgv/GN8hM
-         W5CF7hTLEvGrZifbeFUC5ebOwjo8Z2j87Yt29mX4=
-Date:   Wed, 19 Aug 2020 09:59:25 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Yu Kuai <yukuai3@huawei.com>
-Cc:     ludovic.desroches@microchip.com, tudor.ambarus@microchip.com,
-        dan.j.williams@intel.com, nicolas.ferre@microchip.com,
-        plagnioj@jcrosoft.com, arnd@arndb.de,
-        linux-arm-kernel@lists.infradead.org, dmaengine@vger.kernel.org,
-        linux-kernel@vger.kernel.org, yi.zhang@huawei.com
-Subject: Re: [PATCH V2 0/3] do exception handling appropriately in
- at_dma_xlate()
-Message-ID: <20200819042925.GC2639@vkoul-mobl>
-References: <20200817115728.1706719-1-yukuai3@huawei.com>
+        id S1726716AbgHSHQF (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 19 Aug 2020 03:16:05 -0400
+Received: from mx0a-00128a01.pphosted.com ([148.163.135.77]:25516 "EHLO
+        mx0a-00128a01.pphosted.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726711AbgHSHQE (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Wed, 19 Aug 2020 03:16:04 -0400
+Received: from pps.filterd (m0167088.ppops.net [127.0.0.1])
+        by mx0a-00128a01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id 07J7FHPD002384;
+        Wed, 19 Aug 2020 03:15:49 -0400
+Received: from nwd2mta3.analog.com ([137.71.173.56])
+        by mx0a-00128a01.pphosted.com with ESMTP id 3304n5cf77-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 19 Aug 2020 03:15:49 -0400
+Received: from ASHBMBX9.ad.analog.com (ashbmbx9.ad.analog.com [10.64.17.10])
+        by nwd2mta3.analog.com (8.14.7/8.14.7) with ESMTP id 07J7FmpK059848
+        (version=TLSv1/SSLv3 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=FAIL);
+        Wed, 19 Aug 2020 03:15:48 -0400
+Received: from ASHBMBX9.ad.analog.com (10.64.17.10) by ASHBMBX9.ad.analog.com
+ (10.64.17.10) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.1779.2; Wed, 19 Aug
+ 2020 03:15:47 -0400
+Received: from zeus.spd.analog.com (10.66.68.11) by ASHBMBX9.ad.analog.com
+ (10.64.17.10) with Microsoft SMTP Server id 15.1.1779.2 via Frontend
+ Transport; Wed, 19 Aug 2020 03:15:47 -0400
+Received: from localhost.localdomain ([10.48.65.12])
+        by zeus.spd.analog.com (8.15.1/8.15.1) with ESMTP id 07J7Fg8v020449;
+        Wed, 19 Aug 2020 03:15:45 -0400
+From:   Alexandru Ardelean <alexandru.ardelean@analog.com>
+To:     <dmaengine@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+CC:     <vkoul@kernel.org>, <lars@metafoo.de>, <dan.j.williams@intel.com>,
+        <ardeleanalex@gmail.com>,
+        Alexandru Ardelean <alexandru.ardelean@analog.com>
+Subject: [PATCH 2/5] dmaengine: axi-dmac: move clock enable earlier
+Date:   Wed, 19 Aug 2020 10:16:30 +0300
+Message-ID: <20200819071633.76494-2-alexandru.ardelean@analog.com>
+X-Mailer: git-send-email 2.17.1
+In-Reply-To: <20200819071633.76494-1-alexandru.ardelean@analog.com>
+References: <20200819071633.76494-1-alexandru.ardelean@analog.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200817115728.1706719-1-yukuai3@huawei.com>
+Content-Type: text/plain
+X-ADIRoutedOnPrem: True
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.235,18.0.687
+ definitions=2020-08-19_04:2020-08-18,2020-08-19 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 malwarescore=0
+ lowpriorityscore=0 bulkscore=0 suspectscore=25 clxscore=1011 phishscore=0
+ priorityscore=1501 mlxlogscore=732 spamscore=0 impostorscore=0
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2006250000 definitions=main-2008190061
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On 17-08-20, 19:57, Yu Kuai wrote:
-> changes from V1:
-> -separate different changes to different patches, as suggested by Vinod.
+The clock may also be required to read registers from the IP core (if it is
+provided and the driver needs to control it).
+So, move it earlier in the probe.
 
-Please write proper cover letter explaining the patch series and also
-the changes from v1..
+Signed-off-by: Alexandru Ardelean <alexandru.ardelean@analog.com>
+---
+ drivers/dma/dma-axi-dmac.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-I have applied the patches.
-
-Thanks
-
-> Yu Kuai (3):
->   dmaengine: at_hdmac: check return value of of_find_device_by_node() in
->     at_dma_xlate()
->   dmaengine: at_hdmac: add missing put_device() call in at_dma_xlate()
->   dmaengine: at_hdmac: add missing kfree() call in at_dma_xlate()
-> 
->  drivers/dma/at_hdmac.c | 11 +++++++++--
->  1 file changed, 9 insertions(+), 2 deletions(-)
-> 
-> -- 
-> 2.25.4
-
+diff --git a/drivers/dma/dma-axi-dmac.c b/drivers/dma/dma-axi-dmac.c
+index 088c79137398..07665c60c21b 100644
+--- a/drivers/dma/dma-axi-dmac.c
++++ b/drivers/dma/dma-axi-dmac.c
+@@ -850,6 +850,10 @@ static int axi_dmac_probe(struct platform_device *pdev)
+ 	if (IS_ERR(dmac->clk))
+ 		return PTR_ERR(dmac->clk);
+ 
++	ret = clk_prepare_enable(dmac->clk);
++	if (ret < 0)
++		return ret;
++
+ 	INIT_LIST_HEAD(&dmac->chan.active_descs);
+ 
+ 	of_channels = of_get_child_by_name(pdev->dev.of_node, "adi,channels");
+@@ -892,10 +896,6 @@ static int axi_dmac_probe(struct platform_device *pdev)
+ 	dmac->chan.vchan.desc_free = axi_dmac_desc_free;
+ 	vchan_init(&dmac->chan.vchan, dma_dev);
+ 
+-	ret = clk_prepare_enable(dmac->clk);
+-	if (ret < 0)
+-		return ret;
+-
+ 	version = axi_dmac_read(dmac, ADI_AXI_REG_VERSION);
+ 
+ 	ret = axi_dmac_detect_caps(dmac, version);
 -- 
-~Vinod
+2.17.1
+
