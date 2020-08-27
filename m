@@ -2,117 +2,105 @@ Return-Path: <SRS0=mAMK=CF=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9B05EC433E3
-	for <dmaengine@archiver.kernel.org>; Thu, 27 Aug 2020 14:51:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5C465C433E1
+	for <dmaengine@archiver.kernel.org>; Thu, 27 Aug 2020 16:40:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7815022B4E
-	for <dmaengine@archiver.kernel.org>; Thu, 27 Aug 2020 14:51:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 38F6622B4D
+	for <dmaengine@archiver.kernel.org>; Thu, 27 Aug 2020 16:40:52 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=sifive.com header.i=@sifive.com header.b="IhgkZQ6y"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="un7kjnEQ"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728061AbgH0OvX (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Thu, 27 Aug 2020 10:51:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48438 "EHLO
+        id S1728075AbgH0QkP (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Thu, 27 Aug 2020 12:40:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50416 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727939AbgH0N2S (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Thu, 27 Aug 2020 09:28:18 -0400
-Received: from mail-pj1-x1044.google.com (mail-pj1-x1044.google.com [IPv6:2607:f8b0:4864:20::1044])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 17017C061264
-        for <dmaengine@vger.kernel.org>; Thu, 27 Aug 2020 06:28:16 -0700 (PDT)
-Received: by mail-pj1-x1044.google.com with SMTP id ds1so2634495pjb.1
-        for <dmaengine@vger.kernel.org>; Thu, 27 Aug 2020 06:28:16 -0700 (PDT)
+        with ESMTP id S1728027AbgH0QkN (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Thu, 27 Aug 2020 12:40:13 -0400
+Received: from mail-yb1-xb42.google.com (mail-yb1-xb42.google.com [IPv6:2607:f8b0:4864:20::b42])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4432BC061264;
+        Thu, 27 Aug 2020 09:40:13 -0700 (PDT)
+Received: by mail-yb1-xb42.google.com with SMTP id x2so3289974ybf.12;
+        Thu, 27 Aug 2020 09:40:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=sifive.com; s=google;
-        h=from:to:cc:subject:date:message-id;
-        bh=+qrEHr0zTCzeXf8VFLq2nBPA0b+vvbkTtN5icyLM91U=;
-        b=IhgkZQ6y0Njxu1Iu8jk8jvm+r075xrVo7JM6srWU6dPjUzU/fFR1tR9NmdBrWP4JxB
-         tlZraI6C33yMOP43RxMggSt4u1mYeNNpFeZuyh7AprGUaKX0daV8RLaLue3+AoR0/UtQ
-         jf0LBekJM09TkKnee2/7AnVGhMpKS05ykdfm6vge6uKMHKz4ezWy/EfMmrMo3ubr1XmB
-         CWUuVmeH9iM4KWK1+FdsJsqiDLdO/XBHPWZve8hnVx6C0pXYfpnJ+5HrF1hhdZueOiiE
-         +EqRK/vTPID8jgq6IBO+LBaAHErCWaw0yE/IikRnsHZYWA8UZNcPxgQpTTfPYLcq/JZo
-         daMQ==
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=WYSs0Dku1zdRA2KBaI0ZluOi6UmY5Y9GrXFeF+fDRFw=;
+        b=un7kjnEQ+aqsO+z8jtw8rj5enqEblNxAaBGnKPz5YF1M/H5UYX4IB2itVqzx4F9M+A
+         4Iw61Lgg+T2/csniC5jvZ46vzCXwe+6ucpfL//IIr2N4fzxId6yxup8IcTBmIH9J1wxH
+         xmgaggsssg9MRIaVUt4/uLPzY6xuiGzR9l3f6wTubw05+rhnAtN3ucwXRVkyO/E+iL2c
+         Jv+81bmqvmke2b2srFFNR6de7skjpZkTrzLADYU47UvUFd5kFw73lM1gHC3O60ILOWxW
+         I4ZCr2cSWmKOElAxgXNe3UVqleDnJSO5F8AP+wHoBbyarZgklem/skA1eZo7nJRMkMI8
+         wO1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=+qrEHr0zTCzeXf8VFLq2nBPA0b+vvbkTtN5icyLM91U=;
-        b=oi0KfqwJXPQnN8eVDHOrtxREuSJuyIW7l1OLOyUdZV9IOWhDViWaqGaTPlFE2mPnYt
-         zHDrH2KGm9UdszUyBXvyrqRI3xOe/0CfI/qrOti0c7IorjJqAIkeOYeldpxgr13JEOnS
-         gizogaAM/MAVQu7EwAxHl6xkvVGsg2CYxMig0Emkv4Enj4dl91SzOFYjwTBddbeIT/Ke
-         5sRokaZ/XkGd5mIddHkeJYuNrJVoMBAhpHZV2i1OmltebN6RK/rj3e5Ayvh0ScHnLJcW
-         zTAna2tMPzl/VRyWjWk7jamuaD4g125oCjWdYEGyGXRMiEeUbxqpvTLm+nwwkfMLHWzH
-         jz5g==
-X-Gm-Message-State: AOAM533m4wfJpeiRDch72OjGddci9UTG8Uh61q2ZPbKrM7OQx/E2LqpD
-        CrZGL5C1m4scimTivXKI9Fk6og==
-X-Google-Smtp-Source: ABdhPJzvSj0UZI8tXiF6fV2xhoJMXviX5pNLRRCVI22EgnbDbkVEmTKfRv01FjBHLxjYO2G2t9CUCQ==
-X-Received: by 2002:a17:90a:a792:: with SMTP id f18mr11144061pjq.65.1598534894383;
-        Thu, 27 Aug 2020 06:28:14 -0700 (PDT)
-Received: from localhost.localdomain ([210.91.70.133])
-        by smtp.gmail.com with ESMTPSA id p11sm2815313pfn.109.2020.08.27.06.28.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 27 Aug 2020 06:28:13 -0700 (PDT)
-From:   Brad Kim <brad.kim@sifive.com>
-X-Google-Original-From: Brad Kim <brad.kim@semifive.com>
-To:     green.wan@sifive.com, koul@kernel.org
-Cc:     dmaengine@vger.kernel.org, Brad Kim <brad.kim@semifive.com>
-Subject: [PATCH] dmaengine: sf-pdma: Fix an error that calls callback twice
-Date:   Thu, 27 Aug 2020 22:27:49 +0900
-Message-Id: <20200827132749.17259-1-brad.kim@semifive.com>
-X-Mailer: git-send-email 2.17.1
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=WYSs0Dku1zdRA2KBaI0ZluOi6UmY5Y9GrXFeF+fDRFw=;
+        b=LknddWT94iGwy0TUuCFh4aLqFIfCjoDmqKnHuHRzAe3mBhxYE3N6pyN+K+hCo1ayhi
+         GISOETSch4gSBSmQfx2ezhAqfv72V4vOx4lhUehDRAbgmmhvFg/y39Uwb6xu/HQf/b1W
+         Xmmg3a7dXIydDk3QosNJBQrWfhv6K2Ohx4clTluOWNXf72cQcDUwVWjTC0aDV5Xn5Bf/
+         g3gA4O29cVgNrnEwz7+5Hm23SFCbqnp9gjo1wlEADOrIQwkLSti03udpArwC96EhBLsP
+         Oer5G2WVSiwYQWWUkGaP+Oe+ZAPtoQdQvITRhweqsgwL4NQyP8cpNPtawYeTwiwEHHPh
+         TIdA==
+X-Gm-Message-State: AOAM530j74d+cEuCNcQqM+Xpqex1b3UPzFhssKPkriQiZ4qFaFR8W1Pm
+        FkRB+bTBL1O6UYjXUI11MSyKhNqjiUnx7te1ntZ3ebl1odM=
+X-Google-Smtp-Source: ABdhPJxrvVPIJbZVxMNdYQbfcSKbpYNpnY4WH7M5vvvn2G4XY4Uv7BI34VoTls0DSRQbKIiloMf4ZMzXPy4YgYSJnGI=
+X-Received: by 2002:a25:2f4d:: with SMTP id v74mr28209467ybv.401.1598546412501;
+ Thu, 27 Aug 2020 09:40:12 -0700 (PDT)
+MIME-Version: 1.0
+References: <1594676120-5862-1-git-send-email-prabhakar.mahadev-lad.rj@bp.renesas.com>
+ <1594676120-5862-7-git-send-email-prabhakar.mahadev-lad.rj@bp.renesas.com>
+In-Reply-To: <1594676120-5862-7-git-send-email-prabhakar.mahadev-lad.rj@bp.renesas.com>
+From:   "Lad, Prabhakar" <prabhakar.csengg@gmail.com>
+Date:   Thu, 27 Aug 2020 17:39:46 +0100
+Message-ID: <CA+V-a8tZAp_oTpG2MsdC47TtGP7=oM6CubCnjBoR6UhV4=opNg@mail.gmail.com>
+Subject: Re: [PATCH 6/9] dt-bindings: gpio: renesas,rcar-gpio: Add r8a774e1 support
+To:     Linus Walleij <linus.walleij@linaro.org>,
+        Bartosz Golaszewski <bgolaszewski@baylibre.com>
+Cc:     Geert Uytterhoeven <geert+renesas@glider.be>,
+        Vinod Koul <vkoul@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Joerg Roedel <joro@8bytes.org>,
+        Sergei Shtylyov <sergei.shtylyov@gmail.com>,
+        "David S. Miller" <davem@davemloft.net>,
+        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Magnus Damm <magnus.damm@gmail.com>,
+        Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+        dmaengine <dmaengine@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        Linux IOMMU <iommu@lists.linux-foundation.org>,
+        netdev <netdev@vger.kernel.org>,
+        Linux-Renesas <linux-renesas-soc@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Because a callback is called twice when DMA transfer complete
-the second callback may be possible to access a freed memory
-if the first callback routines perform the dma_release_channel function.
-So this patch serialized the callback functions
+Hi Linus and Bartosz,
 
-Signed-off-by: Brad Kim <brad.kim@semifive.com>
----
- drivers/dma/sf-pdma/sf-pdma.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+On Mon, Jul 13, 2020 at 10:35 PM Lad Prabhakar
+<prabhakar.mahadev-lad.rj@bp.renesas.com> wrote:
+>
+> Document Renesas RZ/G2H (R8A774E1) GPIO blocks compatibility within the
+> relevant dt-bindings.
+>
+> Signed-off-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+> ---
+>  Documentation/devicetree/bindings/gpio/renesas,rcar-gpio.yaml | 1 +
+>  1 file changed, 1 insertion(+)
+>
+Gentle ping.
 
-diff --git a/drivers/dma/sf-pdma/sf-pdma.c b/drivers/dma/sf-pdma/sf-pdma.c
-index 6e530dca6d9e..754994087e5f 100644
---- a/drivers/dma/sf-pdma/sf-pdma.c
-+++ b/drivers/dma/sf-pdma/sf-pdma.c
-@@ -295,7 +295,10 @@ static void sf_pdma_donebh_tasklet(unsigned long arg)
- 	}
- 	spin_unlock_irqrestore(&chan->lock, flags);
- 
--	dmaengine_desc_get_callback_invoke(desc->async_tx, NULL);
-+	spin_lock_irqsave(&chan->vchan.lock, flags);
-+	list_del(&chan->desc->vdesc.node);
-+	vchan_cookie_complete(&chan->desc->vdesc);
-+	spin_unlock_irqrestore(&chan->vchan.lock, flags);
- }
- 
- static void sf_pdma_errbh_tasklet(unsigned long arg)
-@@ -332,8 +335,7 @@ static irqreturn_t sf_pdma_done_isr(int irq, void *dev_id)
- 	residue = readq(regs->residue);
- 
- 	if (!residue) {
--		list_del(&chan->desc->vdesc.node);
--		vchan_cookie_complete(&chan->desc->vdesc);
-+		tasklet_hi_schedule(&chan->done_tasklet);
- 	} else {
- 		/* submit next trascatioin if possible */
- 		struct sf_pdma_desc *desc = chan->desc;
-@@ -347,8 +349,6 @@ static irqreturn_t sf_pdma_done_isr(int irq, void *dev_id)
- 
- 	spin_unlock_irqrestore(&chan->vchan.lock, flags);
- 
--	tasklet_hi_schedule(&chan->done_tasklet);
--
- 	return IRQ_HANDLED;
- }
- 
--- 
-2.17.1
-
+Cheers,
+Prabhakar
