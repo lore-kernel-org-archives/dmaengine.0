@@ -5,51 +5,51 @@ X-Spam-Level:
 X-Spam-Status: No, score=-13.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,INCLUDES_PATCH,MAILING_LIST_MULTI,
 	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+	autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D7CE4C433E2
-	for <dmaengine@archiver.kernel.org>; Mon, 31 Aug 2020 15:35:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0F893C433E6
+	for <dmaengine@archiver.kernel.org>; Mon, 31 Aug 2020 15:36:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B3F9621556
-	for <dmaengine@archiver.kernel.org>; Mon, 31 Aug 2020 15:35:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E18DB2064B
+	for <dmaengine@archiver.kernel.org>; Mon, 31 Aug 2020 15:36:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1598888111;
+	s=default; t=1598888195;
 	bh=ZjKWjBFa8jx2a1LkBVVi50zo2hxUJAg7OKt/hGAhRLg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:List-ID:From;
-	b=PyWZwtYDFk+h/NyFib8uLPhSkm+q4uvN6t9nZRYocjJLY4y+BYUfuCV19no8Z9jso
-	 e4QzuNkKALsx2fcjWSwDtMuYsL3dpHeC7GR7otih84y42sm27HxfItE7y96cR/Aw/R
-	 io6DAr4p/sOduRJtMhKUSz44Rt6Du0BFUqOho6I4=
+	b=xBu0cDHXu98GlnoTSERgM3vpBeW3+1xOUMbagmZFus8f8WeZt2vfbjtPqHfGNtJ1R
+	 Yc7n7yZMOEVHdb1dcTPAAEood0nTnPcZ/aY46h0EdayKAvlIJESw2YPYLveviA6BXG
+	 ghoZlPtLVOyon4RqXOosgwYyv/ukBjbjtP0o1vDw=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729037AbgHaPfI (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 31 Aug 2020 11:35:08 -0400
-Received: from mail.kernel.org ([198.145.29.99]:41904 "EHLO mail.kernel.org"
+        id S1729299AbgHaPgf (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 31 Aug 2020 11:36:35 -0400
+Received: from mail.kernel.org ([198.145.29.99]:40404 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728830AbgHaPbR (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Mon, 31 Aug 2020 11:31:17 -0400
+        id S1728596AbgHaPaj (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Mon, 31 Aug 2020 11:30:39 -0400
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 832A321707;
-        Mon, 31 Aug 2020 15:31:15 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 20EF021527;
+        Mon, 31 Aug 2020 15:30:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1598887876;
+        s=default; t=1598887838;
         bh=ZjKWjBFa8jx2a1LkBVVi50zo2hxUJAg7OKt/hGAhRLg=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=PuoAeAil8Y4zzuBODnsoaCqvLj2gf+B/QIn9aHT765aodtkdI4qsPZCYzNpS/CLIK
-         XwnwJQfhFlj8fmad0Ezh/ndlrX89SQrU9WHbvrixP6Y1jUCp0eWA+BdwMEOmDNjnxq
-         ubB40tarI7PmgTCzXQzb+UYVHt4ctZOeYYrb2hJ4=
+        b=pIpne26ARZRZ1AzeM8M0zger2+AVlH4O8PX24rUlBFVrGl7DB/dAV1jTo6aibOdDA
+         QQQzu5B90zyWkeiSHLm7dUeSl2dMxsWR9klHLApnW9VdHyw7XV1FDYsfkLcVLmFiGz
+         Tebz7Lu7gCii7HAATY6CoTg3QzLfTUFMt8gVkFnw=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Cc:     Linus Torvalds <torvalds@linux-foundation.org>,
         Guenter Roeck <linux@roeck-us.net>,
         Sasha Levin <sashal@kernel.org>, linuxppc-dev@lists.ozlabs.org,
         dmaengine@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.4 23/23] fsldma: fix very broken 32-bit ppc ioread64 functionality
-Date:   Mon, 31 Aug 2020 11:30:39 -0400
-Message-Id: <20200831153039.1024302-23-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 5.8 42/42] fsldma: fix very broken 32-bit ppc ioread64 functionality
+Date:   Mon, 31 Aug 2020 11:29:34 -0400
+Message-Id: <20200831152934.1023912-42-sashal@kernel.org>
 X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20200831153039.1024302-1-sashal@kernel.org>
-References: <20200831153039.1024302-1-sashal@kernel.org>
+In-Reply-To: <20200831152934.1023912-1-sashal@kernel.org>
+References: <20200831152934.1023912-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
