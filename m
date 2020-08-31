@@ -8,56 +8,56 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3B453C433E6
-	for <dmaengine@archiver.kernel.org>; Mon, 31 Aug 2020 10:37:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9183AC433E2
+	for <dmaengine@archiver.kernel.org>; Mon, 31 Aug 2020 10:37:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1C0572083E
-	for <dmaengine@archiver.kernel.org>; Mon, 31 Aug 2020 10:37:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 715D92083E
+	for <dmaengine@archiver.kernel.org>; Mon, 31 Aug 2020 10:37:39 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hngzz/vp"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MQyEA9/7"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726446AbgHaKh3 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 31 Aug 2020 06:37:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37472 "EHLO
+        id S1726467AbgHaKhi (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 31 Aug 2020 06:37:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37500 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726520AbgHaKhQ (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Mon, 31 Aug 2020 06:37:16 -0400
-Received: from mail-pl1-x643.google.com (mail-pl1-x643.google.com [IPv6:2607:f8b0:4864:20::643])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63CB5C061755
-        for <dmaengine@vger.kernel.org>; Mon, 31 Aug 2020 03:37:16 -0700 (PDT)
-Received: by mail-pl1-x643.google.com with SMTP id t11so2829180plr.5
-        for <dmaengine@vger.kernel.org>; Mon, 31 Aug 2020 03:37:16 -0700 (PDT)
+        with ESMTP id S1726384AbgHaKh1 (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Mon, 31 Aug 2020 06:37:27 -0400
+Received: from mail-pj1-x1043.google.com (mail-pj1-x1043.google.com [IPv6:2607:f8b0:4864:20::1043])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E07AFC061573
+        for <dmaengine@vger.kernel.org>; Mon, 31 Aug 2020 03:37:26 -0700 (PDT)
+Received: by mail-pj1-x1043.google.com with SMTP id q1so2747952pjd.1
+        for <dmaengine@vger.kernel.org>; Mon, 31 Aug 2020 03:37:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=tOTI1twXkR9IST37RK4t1NWadLD5UjwHaqtPbpGaV5Y=;
-        b=hngzz/vpDdBMejfS7dkv8Y2KTe879hj3q+vK+GU5pRWgBjR1DTkeyy9QtIi4IxzBNe
-         GLK12RGsHJciSM4ci2Btz3fQX1qXRdnZGe/QM/cpkGrm/YTwA7so2SbOj9QoiXEbi1Fj
-         42653u59nIoCNpi/RoEYXQrKNxF5aNcOhPYthSK59RK9Jb2FV5QHWTAdJqVKCrLCUPuj
-         fM/TU4GpbmXGBJRCfqnVL2Df3MknR4HeE9ehixXHBHdrXJ8jIwDg8mCFA0hU3WXbTlLr
-         M4gQ65iwQIjLu6zDYG0vXCdqOGquz9qJ+C3a5UuHuUzasNWBdHR9DTOApeZP4G6QVqDk
-         klUw==
+        bh=3YQfJ+Sb0Q5/2M2e0heN4P//qipJlVXjh7n6mVCID2I=;
+        b=MQyEA9/779ut0htXTcYvI5VFs1Tdz9xiEN9mEFxUNzn9O0fm1KveFOdThZga4bpHJU
+         J4BdB0o5IJnEsSX77vNyHz/DTE4JJuBH1o3ljMOAtn7Ly7bM0KeSyXR/kupYcwmgEyEQ
+         paBhNBj811e04fmye3L18DsYm4e/KSlDJrV6+i0c9Mj+sy5/yz9vnTJuugeR6JV1Lm2b
+         86u2Bi444gUq49RcdOH8d7fE2b2DAoDV1K7+qMlACtLnrHb7G4ywBjcUB/bX7G5tYonf
+         wKOfFbSjamj8remMAbzNQXdebBjBUdtwNy4mxtXVpA6LWUdcdcvSqwSU1dp0ijXE/UUa
+         +nww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=tOTI1twXkR9IST37RK4t1NWadLD5UjwHaqtPbpGaV5Y=;
-        b=STOmpLkoUfBvUg448guHQYgFcsVJ/9va6gdCWkz2TlcpDu05jdS2YuvAuvqPgI9vNe
-         mc5rgl36HzDTKCpOa1MabkpdHs3B7euMqZeqPSEgU96SAOvrWcRKvsszOv+nCMi8cgYP
-         FeoMwzZr4cV+FkhkqnkiHPzahc4E82zNBxT6/psrGESQTT0VNiie4LscCG4LmoCjIXQa
-         MyGUr7zr5d3o6TE9b6Efoz6V2DnrEm656fd3ZVMkQeL13zev+NFi2RMg2vtYJTmBve5e
-         QqRieq15PT7Y//FlRL/ld0bLIjoBa7p+dqzQf2zzIj0hSlBNHeELFKDe8sO5ztVyTV1u
-         8ygg==
-X-Gm-Message-State: AOAM533t5vSYk54AKepIBm+PuhBRhKVja+yzKa6Gz4ZgBKM1jCvh+7Mr
-        xWRemYtsrSYBtkTfRBsjApc=
-X-Google-Smtp-Source: ABdhPJw7k9FOSDCeHu2T1iadTJtQZCQmdo0QD3KOBd+tErrN8DzZGP9fig5YZnHnS+uz545VLFeM0g==
-X-Received: by 2002:a17:90a:f28a:: with SMTP id fs10mr744943pjb.219.1598870236000;
-        Mon, 31 Aug 2020 03:37:16 -0700 (PDT)
+        bh=3YQfJ+Sb0Q5/2M2e0heN4P//qipJlVXjh7n6mVCID2I=;
+        b=ErNIL24Mhik+0TKDyLpByhw/zbIiDQKOdP/GCKZeLBKX9vqbQVZXwZvz+yQR6tIwBc
+         d9PLdLKm7TMc2WY1EumiXWTsje8KDZDh+0B52icMgc/jfHCq4I5JpZf4ZvZk+xdWMzqr
+         91FJ6uCXRLEi9BSimgzVSbTYsTynNkCkehL1LXXDFN0VM/xsIEZs7ve88xpkNB19EZf1
+         6Pby81n9HggZWsFh8a6aEiIIghgVISkKi/lUnyXbye2I0NVOU4Y56HjrS+gRteo8yD1B
+         6NRCEJbXCJGQlnwOSAg8GZJZsStb7QHXEMmQ373w0RppafHZGe458v53K/HhQzpD5v7Y
+         Hrtw==
+X-Gm-Message-State: AOAM533gcTkVobg2gNMZWwRsO/OD2PfDd2BulCNtFIyVyD79bRkHCS6M
+        ZIsn1rPwXklUp2KUDu4XRy8=
+X-Google-Smtp-Source: ABdhPJyIzXh4jnJwAt13ZHTLy+A2PmL7plvF8w1Q8Y2ufyENs+NFdWiNqimko0msQg947NQ0Ar1+RQ==
+X-Received: by 2002:a17:90b:885:: with SMTP id bj5mr739857pjb.133.1598870246454;
+        Mon, 31 Aug 2020 03:37:26 -0700 (PDT)
 Received: from localhost.localdomain ([49.207.204.90])
-        by smtp.gmail.com with ESMTPSA id x6sm6895449pge.61.2020.08.31.03.37.11
+        by smtp.gmail.com with ESMTPSA id x6sm6895449pge.61.2020.08.31.03.37.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 31 Aug 2020 03:37:15 -0700 (PDT)
+        Mon, 31 Aug 2020 03:37:26 -0700 (PDT)
 From:   Allen Pais <allen.lkml@gmail.com>
 To:     vkoul@kernel.org
 Cc:     linus.walleij@linaro.org, vireshk@kernel.org, leoyang.li@nxp.com,
@@ -68,9 +68,9 @@ Cc:     linus.walleij@linaro.org, vireshk@kernel.org, leoyang.li@nxp.com,
         wens@csie.org, dmaengine@vger.kernel.org,
         Allen Pais <allen.lkml@gmail.com>,
         Romain Perier <romain.perier@gmail.com>
-Subject: [PATCH v3 14/35] dmaengine: mmp: convert tasklets to use new tasklet_setup() API
-Date:   Mon, 31 Aug 2020 16:05:21 +0530
-Message-Id: <20200831103542.305571-15-allen.lkml@gmail.com>
+Subject: [PATCH v3 16/35] dmaengine: mv_xor: convert tasklets to use new tasklet_setup() API
+Date:   Mon, 31 Aug 2020 16:05:23 +0530
+Message-Id: <20200831103542.305571-17-allen.lkml@gmail.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20200831103542.305571-1-allen.lkml@gmail.com>
 References: <20200831103542.305571-1-allen.lkml@gmail.com>
@@ -89,60 +89,63 @@ and from_tasklet() to pass the tasklet pointer explicitly.
 Signed-off-by: Romain Perier <romain.perier@gmail.com>
 Signed-off-by: Allen Pais <allen.lkml@gmail.com>
 ---
- drivers/dma/mmp_pdma.c | 6 +++---
- drivers/dma/mmp_tdma.c | 6 +++---
- 2 files changed, 6 insertions(+), 6 deletions(-)
+ drivers/dma/mv_xor.c    | 7 +++----
+ drivers/dma/mv_xor_v2.c | 8 ++++----
+ 2 files changed, 7 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/dma/mmp_pdma.c b/drivers/dma/mmp_pdma.c
-index f42f792db277..b84303be8edf 100644
---- a/drivers/dma/mmp_pdma.c
-+++ b/drivers/dma/mmp_pdma.c
-@@ -873,9 +873,9 @@ static void mmp_pdma_issue_pending(struct dma_chan *dchan)
-  * Do call back
-  * Start pending list
+diff --git a/drivers/dma/mv_xor.c b/drivers/dma/mv_xor.c
+index 0ac8e7b34e12..00cd1335eeba 100644
+--- a/drivers/dma/mv_xor.c
++++ b/drivers/dma/mv_xor.c
+@@ -336,9 +336,9 @@ static void mv_chan_slot_cleanup(struct mv_xor_chan *mv_chan)
+ 		mv_chan->dmachan.completed_cookie = cookie;
+ }
+ 
+-static void mv_xor_tasklet(unsigned long data)
++static void mv_xor_tasklet(struct tasklet_struct *t)
+ {
+-	struct mv_xor_chan *chan = (struct mv_xor_chan *) data;
++	struct mv_xor_chan *chan = from_tasklet(chan, t, irq_tasklet);
+ 
+ 	spin_lock(&chan->lock);
+ 	mv_chan_slot_cleanup(chan);
+@@ -1097,8 +1097,7 @@ mv_xor_channel_add(struct mv_xor_device *xordev,
+ 
+ 	mv_chan->mmr_base = xordev->xor_base;
+ 	mv_chan->mmr_high_base = xordev->xor_high_base;
+-	tasklet_init(&mv_chan->irq_tasklet, mv_xor_tasklet, (unsigned long)
+-		     mv_chan);
++	tasklet_setup(&mv_chan->irq_tasklet, mv_xor_tasklet);
+ 
+ 	/* clear errors before enabling interrupts */
+ 	mv_chan_clear_err_status(mv_chan);
+diff --git a/drivers/dma/mv_xor_v2.c b/drivers/dma/mv_xor_v2.c
+index 9225f08dfee9..2753a6b916f6 100644
+--- a/drivers/dma/mv_xor_v2.c
++++ b/drivers/dma/mv_xor_v2.c
+@@ -553,9 +553,10 @@ int mv_xor_v2_get_pending_params(struct mv_xor_v2_device *xor_dev,
+ /*
+  * handle the descriptors after HW process
   */
--static void dma_do_tasklet(unsigned long data)
-+static void dma_do_tasklet(struct tasklet_struct *t)
+-static void mv_xor_v2_tasklet(unsigned long data)
++static void mv_xor_v2_tasklet(struct tasklet_struct *t)
  {
--	struct mmp_pdma_chan *chan = (struct mmp_pdma_chan *)data;
-+	struct mmp_pdma_chan *chan = from_tasklet(chan, t, tasklet);
- 	struct mmp_pdma_desc_sw *desc, *_desc;
- 	LIST_HEAD(chain_cleanup);
- 	unsigned long flags;
-@@ -993,7 +993,7 @@ static int mmp_pdma_chan_init(struct mmp_pdma_device *pdev, int idx, int irq)
- 	spin_lock_init(&chan->desc_lock);
- 	chan->dev = pdev->dev;
- 	chan->chan.device = &pdev->device;
--	tasklet_init(&chan->tasklet, dma_do_tasklet, (unsigned long)chan);
-+	tasklet_setup(&chan->tasklet, dma_do_tasklet);
- 	INIT_LIST_HEAD(&chan->chain_pending);
- 	INIT_LIST_HEAD(&chan->chain_running);
+-	struct mv_xor_v2_device *xor_dev = (struct mv_xor_v2_device *) data;
++	struct mv_xor_v2_device *xor_dev = from_tasklet(xor_dev, t,
++							irq_tasklet);
+ 	int pending_ptr, num_of_pending, i;
+ 	struct mv_xor_v2_sw_desc *next_pending_sw_desc = NULL;
  
-diff --git a/drivers/dma/mmp_tdma.c b/drivers/dma/mmp_tdma.c
-index 960c7c40aef7..a262e0eb4cc9 100644
---- a/drivers/dma/mmp_tdma.c
-+++ b/drivers/dma/mmp_tdma.c
-@@ -346,9 +346,9 @@ static irqreturn_t mmp_tdma_int_handler(int irq, void *dev_id)
- 		return IRQ_NONE;
- }
+@@ -780,8 +781,7 @@ static int mv_xor_v2_probe(struct platform_device *pdev)
+ 	if (ret)
+ 		goto free_msi_irqs;
  
--static void dma_do_tasklet(unsigned long data)
-+static void dma_do_tasklet(struct tasklet_struct *t)
- {
--	struct mmp_tdma_chan *tdmac = (struct mmp_tdma_chan *)data;
-+	struct mmp_tdma_chan *tdmac = from_tasklet(tdmac, t, tasklet);
+-	tasklet_init(&xor_dev->irq_tasklet, mv_xor_v2_tasklet,
+-		     (unsigned long) xor_dev);
++	tasklet_setup(&xor_dev->irq_tasklet, mv_xor_v2_tasklet);
  
- 	dmaengine_desc_get_callback_invoke(&tdmac->desc, NULL);
- }
-@@ -586,7 +586,7 @@ static int mmp_tdma_chan_init(struct mmp_tdma_device *tdev,
- 	tdmac->pool	   = pool;
- 	tdmac->status = DMA_COMPLETE;
- 	tdev->tdmac[tdmac->idx] = tdmac;
--	tasklet_init(&tdmac->tasklet, dma_do_tasklet, (unsigned long)tdmac);
-+	tasklet_setup(&tdmac->tasklet, dma_do_tasklet);
+ 	xor_dev->desc_size = mv_xor_v2_set_desc_size(xor_dev);
  
- 	/* add the channel to tdma_chan list */
- 	list_add_tail(&tdmac->chan.device_node,
 -- 
 2.25.1
 
