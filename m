@@ -6,66 +6,61 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6AC7FC433E2
-	for <dmaengine@archiver.kernel.org>; Thu,  3 Sep 2020 07:09:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 47516C433E7
+	for <dmaengine@archiver.kernel.org>; Thu,  3 Sep 2020 07:10:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4772E20737
-	for <dmaengine@archiver.kernel.org>; Thu,  3 Sep 2020 07:09:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1503C206E7
+	for <dmaengine@archiver.kernel.org>; Thu,  3 Sep 2020 07:10:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1599116958;
-	bh=7O6LZSJ9P380GPex1U3QdItSeAXgCMO7Rcd1lexDl78=;
+	s=default; t=1599117029;
+	bh=bZRYAqXkgiT0s+oz2ZdjXapNFmBNr5z1Dj3rLu7IiSQ=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:List-ID:From;
-	b=iDR+oQH73lKgx/gHdJzKWypmC2V9RVupvavU65wZp/hfVEHW3cZUXnfAnBIWirDon
-	 GD72aAPbPQHH+ZYGAyT4jOdxOmVLBLEJHJnNMWElc+Y2a036SqglJ7OnVQfE2JS0BY
-	 B0cuCPl9QStUnCsBoFj3Q/pFa/g7032CchIZBQSc=
+	b=QIv/PDIo4rxg3k8XE3Cc7cBPGrgW0mofI52B/Kqid6DrfXLUf+zqGfrlq/OT2Lkbr
+	 b16TbGj/uAJM1wodlAu3OVko1Cti5jZJonReTa1s/idwJiWeEZ2lWbvMyf0zhqj/ne
+	 oUKeBfXksV6HP9zAL4vzxvYvEoQM4wLIvnEQ3voA=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726022AbgICHJR (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Thu, 3 Sep 2020 03:09:17 -0400
-Received: from mail.kernel.org ([198.145.29.99]:46520 "EHLO mail.kernel.org"
+        id S1725943AbgICHK2 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Thu, 3 Sep 2020 03:10:28 -0400
+Received: from mail.kernel.org ([198.145.29.99]:47218 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725943AbgICHJR (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Thu, 3 Sep 2020 03:09:17 -0400
+        id S1725919AbgICHK1 (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Thu, 3 Sep 2020 03:10:27 -0400
 Received: from localhost (unknown [122.171.179.172])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id C9A6720716;
-        Thu,  3 Sep 2020 07:09:15 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id DE9182071B;
+        Thu,  3 Sep 2020 07:10:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1599116956;
-        bh=7O6LZSJ9P380GPex1U3QdItSeAXgCMO7Rcd1lexDl78=;
+        s=default; t=1599117026;
+        bh=bZRYAqXkgiT0s+oz2ZdjXapNFmBNr5z1Dj3rLu7IiSQ=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=qNcf1Y2gDZiqYKgu636dhCSh4wtKac8RC3bRtxW98ulKg686+FR9Bz60nCNJT18uS
-         IZ/nQByj4fTgJyuzdsQc+I74b8omGBZb2rziC14zFMeiRRUVfsPMAn4iz6LQH4enPd
-         NikdMzGZH0XHnS2av8GZXHOZmt7V5ZkcLsLO1uG0=
-Date:   Thu, 3 Sep 2020 12:39:12 +0530
+        b=RvT7xd+/rD1ig09623V8sF/yt3G8NmN3Zzpe3Xdg5h95D5OSNri8V0NzqoeI5cH6H
+         I1DncGSzwmConUxZ6cgrF/4/qlEoXleDVxV73n3HV2n4sRcLa704DgB0I/GC257Bv5
+         XwwlOFQIbC2X+A40RGd+tOwCwq1uuoNtsKjtq87o=
+Date:   Thu, 3 Sep 2020 12:40:22 +0530
 From:   Vinod Koul <vkoul@kernel.org>
-To:     Krzysztof Kozlowski <krzk@kernel.org>
-Cc:     Dan Williams <dan.j.williams@intel.com>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@st.com>,
-        Michal Simek <michal.simek@xilinx.com>,
-        Radhey Shyam Pandey <radhey.shyam.pandey@xilinx.com>,
-        Nicholas Graumann <nick.graumann@gmail.com>,
-        dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-arm-kernel@lists.infradead.org
-Subject: Re: [PATCH 1/3] dmaengine: pl330: Simplify with dev_err_probe()
-Message-ID: <20200903070912.GH2639@vkoul-mobl>
-References: <20200828152637.16903-1-krzk@kernel.org>
+To:     Dave Jiang <dave.jiang@intel.com>
+Cc:     dmaengine@vger.kernel.org
+Subject: Re: [PATCH v2 1/2] dmaengine: idxd: add support for configurable max
+ wq xfer size
+Message-ID: <20200903071022.GI2639@vkoul-mobl>
+References: <159865265404.29141.3049399618578194052.stgit@djiang5-desk3.ch.intel.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20200828152637.16903-1-krzk@kernel.org>
+In-Reply-To: <159865265404.29141.3049399618578194052.stgit@djiang5-desk3.ch.intel.com>
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On 28-08-20, 17:26, Krzysztof Kozlowski wrote:
-> Common pattern of handling deferred probe can be simplified with
-> dev_err_probe().  Less code and the error value gets printed.
+On 28-08-20, 15:12, Dave Jiang wrote:
+> Add sysfs attribute max_xfer_size to wq in order to allow the max xfer
+> size configured on a per wq basis. Add support code to configure
+> the valid user input on wq enable. This is a performance tuning
+> parameter.
 
-Applied all, thanks
+Applied, thanks
 
 -- 
 ~Vinod
