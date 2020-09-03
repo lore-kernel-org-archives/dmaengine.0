@@ -7,30 +7,30 @@ X-Spam-Status: No, score=-13.0 required=3.0 tests=BAYES_00,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7B9BAC2D0A8
-	for <dmaengine@archiver.kernel.org>; Thu,  3 Sep 2020 20:26:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B9C61C2D0E1
+	for <dmaengine@archiver.kernel.org>; Thu,  3 Sep 2020 20:26:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6AF7420722
-	for <dmaengine@archiver.kernel.org>; Thu,  3 Sep 2020 20:26:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 97FF720709
+	for <dmaengine@archiver.kernel.org>; Thu,  3 Sep 2020 20:26:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729088AbgICU0X (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Thu, 3 Sep 2020 16:26:23 -0400
-Received: from foss.arm.com ([217.140.110.172]:40190 "EHLO foss.arm.com"
+        id S1729096AbgICU0Z (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Thu, 3 Sep 2020 16:26:25 -0400
+Received: from foss.arm.com ([217.140.110.172]:40206 "EHLO foss.arm.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729036AbgICU0W (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Thu, 3 Sep 2020 16:26:22 -0400
+        id S1729059AbgICU0Y (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Thu, 3 Sep 2020 16:26:24 -0400
 Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id A88D7143B;
-        Thu,  3 Sep 2020 13:26:21 -0700 (PDT)
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 28C17113E;
+        Thu,  3 Sep 2020 13:26:24 -0700 (PDT)
 Received: from e121345-lin.cambridge.arm.com (e121345-lin.cambridge.arm.com [10.1.196.37])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPA id BE62B3F71F;
-        Thu,  3 Sep 2020 13:26:20 -0700 (PDT)
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPA id 3B7563F71F;
+        Thu,  3 Sep 2020 13:26:23 -0700 (PDT)
 From:   Robin Murphy <robin.murphy@arm.com>
 To:     vkoul@kernel.org
 Cc:     dmaengine@vger.kernel.org, linux-arm-kernel@lists.infradead.org
-Subject: [PATCH 6/9] dmaengine: rcar-dmac: Drop local dma_parms
-Date:   Thu,  3 Sep 2020 21:25:50 +0100
-Message-Id: <23d40e15af10aad4724a2770ec18b4b28c1b8a71.1599164692.git.robin.murphy@arm.com>
+Subject: [PATCH 8/9] dmaengine: qcom: bam_dma: Drop local dma_parms
+Date:   Thu,  3 Sep 2020 21:25:52 +0100
+Message-Id: <60ac2ef17e242dbf631db29ebde9d64d6df67030.1599164692.git.robin.murphy@arm.com>
 X-Mailer: git-send-email 2.28.0.dirty
 In-Reply-To: <cover.1599164692.git.robin.murphy@arm.com>
 References: <cover.1599164692.git.robin.murphy@arm.com>
@@ -47,29 +47,29 @@ dma_parms structure, so we can save allocating another one.
 
 Signed-off-by: Robin Murphy <robin.murphy@arm.com>
 ---
- drivers/dma/sh/rcar-dmac.c | 2 --
+ drivers/dma/qcom/bam_dma.c | 2 --
  1 file changed, 2 deletions(-)
 
-diff --git a/drivers/dma/sh/rcar-dmac.c b/drivers/dma/sh/rcar-dmac.c
-index 59b36ab5d684..4b8a876adedb 100644
---- a/drivers/dma/sh/rcar-dmac.c
-+++ b/drivers/dma/sh/rcar-dmac.c
-@@ -199,7 +199,6 @@ struct rcar_dmac {
- 	struct dma_device engine;
+diff --git a/drivers/dma/qcom/bam_dma.c b/drivers/dma/qcom/bam_dma.c
+index 5a08dd0d3388..773e60c82b20 100644
+--- a/drivers/dma/qcom/bam_dma.c
++++ b/drivers/dma/qcom/bam_dma.c
+@@ -381,7 +381,6 @@ struct bam_device {
+ 	void __iomem *regs;
  	struct device *dev;
- 	void __iomem *iomem;
--	struct device_dma_parameters parms;
+ 	struct dma_device common;
+-	struct device_dma_parameters dma_parms;
+ 	struct bam_chan *channels;
+ 	u32 num_channels;
+ 	u32 num_ees;
+@@ -1316,7 +1315,6 @@ static int bam_dma_probe(struct platform_device *pdev)
  
- 	unsigned int n_channels;
- 	struct rcar_dmac_chan *channels;
-@@ -1845,7 +1844,6 @@ static int rcar_dmac_probe(struct platform_device *pdev)
- 
- 	dmac->dev = &pdev->dev;
- 	platform_set_drvdata(pdev, dmac);
--	dmac->dev->dma_parms = &dmac->parms;
- 	dma_set_max_seg_size(dmac->dev, RCAR_DMATCR_MASK);
- 	dma_set_mask_and_coherent(dmac->dev, DMA_BIT_MASK(40));
- 
+ 	/* set max dma segment size */
+ 	bdev->common.dev = bdev->dev;
+-	bdev->common.dev->dma_parms = &bdev->dma_parms;
+ 	ret = dma_set_max_seg_size(bdev->common.dev, BAM_FIFO_SIZE);
+ 	if (ret) {
+ 		dev_err(bdev->dev, "cannot set maximum segment size\n");
 -- 
 2.28.0.dirty
 
