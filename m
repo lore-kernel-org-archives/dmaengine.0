@@ -7,30 +7,30 @@ X-Spam-Status: No, score=-13.0 required=3.0 tests=BAYES_00,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 96930C433E9
-	for <dmaengine@archiver.kernel.org>; Thu,  3 Sep 2020 20:26:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B9CE1C2D0A6
+	for <dmaengine@archiver.kernel.org>; Thu,  3 Sep 2020 20:26:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8100C206C0
-	for <dmaengine@archiver.kernel.org>; Thu,  3 Sep 2020 20:26:19 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A3522206C0
+	for <dmaengine@archiver.kernel.org>; Thu,  3 Sep 2020 20:26:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728358AbgICU0S (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Thu, 3 Sep 2020 16:26:18 -0400
-Received: from foss.arm.com ([217.140.110.172]:40168 "EHLO foss.arm.com"
+        id S1729042AbgICU0V (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Thu, 3 Sep 2020 16:26:21 -0400
+Received: from foss.arm.com ([217.140.110.172]:40182 "EHLO foss.arm.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728975AbgICU0R (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Thu, 3 Sep 2020 16:26:17 -0400
+        id S1729036AbgICU0U (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Thu, 3 Sep 2020 16:26:20 -0400
 Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id AE227113E;
-        Thu,  3 Sep 2020 13:26:16 -0700 (PDT)
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 6BD251424;
+        Thu,  3 Sep 2020 13:26:20 -0700 (PDT)
 Received: from e121345-lin.cambridge.arm.com (e121345-lin.cambridge.arm.com [10.1.196.37])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPA id CF2B43F71F;
-        Thu,  3 Sep 2020 13:26:15 -0700 (PDT)
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPA id 80E363F71F;
+        Thu,  3 Sep 2020 13:26:19 -0700 (PDT)
 From:   Robin Murphy <robin.murphy@arm.com>
 To:     vkoul@kernel.org
 Cc:     dmaengine@vger.kernel.org, linux-arm-kernel@lists.infradead.org
-Subject: [PATCH 2/9] dmaengine: bcm2835: Drop local dma_parms
-Date:   Thu,  3 Sep 2020 21:25:46 +0100
-Message-Id: <116927330a4a66aac579ad38ddbc3b538cd9524c.1599164692.git.robin.murphy@arm.com>
+Subject: [PATCH 5/9] dmaengine: mxs: Drop local dma_parms
+Date:   Thu,  3 Sep 2020 21:25:49 +0100
+Message-Id: <dc0fb6963067b9c799873d761661ed6dce1426ec.1599164692.git.robin.murphy@arm.com>
 X-Mailer: git-send-email 2.28.0.dirty
 In-Reply-To: <cover.1599164692.git.robin.murphy@arm.com>
 References: <cover.1599164692.git.robin.murphy@arm.com>
@@ -47,36 +47,29 @@ dma_parms structure, so we can save allocating another one.
 
 Signed-off-by: Robin Murphy <robin.murphy@arm.com>
 ---
- drivers/dma/bcm2835-dma.c | 3 ---
- 1 file changed, 3 deletions(-)
+ drivers/dma/mxs-dma.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/drivers/dma/bcm2835-dma.c b/drivers/dma/bcm2835-dma.c
-index 4768ef26013b..630dfbb01a40 100644
---- a/drivers/dma/bcm2835-dma.c
-+++ b/drivers/dma/bcm2835-dma.c
-@@ -41,14 +41,12 @@
-  * struct bcm2835_dmadev - BCM2835 DMA controller
-  * @ddev: DMA device
-  * @base: base address of register map
-- * @dma_parms: DMA parameters (to convey 1 GByte max segment size to clients)
-  * @zero_page: bus address of zero page (to detect transactions copying from
-  *	zero page and avoid accessing memory if so)
-  */
- struct bcm2835_dmadev {
- 	struct dma_device ddev;
- 	void __iomem *base;
--	struct device_dma_parameters dma_parms;
- 	dma_addr_t zero_page;
- };
+diff --git a/drivers/dma/mxs-dma.c b/drivers/dma/mxs-dma.c
+index 3039bba0e4d5..eb60eb72632e 100644
+--- a/drivers/dma/mxs-dma.c
++++ b/drivers/dma/mxs-dma.c
+@@ -141,7 +141,6 @@ struct mxs_dma_engine {
+ 	void __iomem			*base;
+ 	struct clk			*clk;
+ 	struct dma_device		dma_device;
+-	struct device_dma_parameters	dma_parms;
+ 	struct mxs_dma_chan		mxs_chans[MXS_DMA_CHANNELS];
+ 	struct platform_device		*pdev;
+ 	unsigned int			nr_channels;
+@@ -829,7 +828,6 @@ static int __init mxs_dma_probe(struct platform_device *pdev)
+ 	mxs_dma->dma_device.dev = &pdev->dev;
  
-@@ -902,7 +900,6 @@ static int bcm2835_dma_probe(struct platform_device *pdev)
- 	if (!od)
- 		return -ENOMEM;
+ 	/* mxs_dma gets 65535 bytes maximum sg size */
+-	mxs_dma->dma_device.dev->dma_parms = &mxs_dma->dma_parms;
+ 	dma_set_max_seg_size(mxs_dma->dma_device.dev, MAX_XFER_BYTES);
  
--	pdev->dev.dma_parms = &od->dma_parms;
- 	dma_set_max_seg_size(&pdev->dev, 0x3FFFFFFF);
- 
- 	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+ 	mxs_dma->dma_device.device_alloc_chan_resources = mxs_dma_alloc_chan_resources;
 -- 
 2.28.0.dirty
 
