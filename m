@@ -2,80 +2,68 @@ Return-Path: <SRS0=MLMT=CM=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.0 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=unavailable
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7146FC433E7
-	for <dmaengine@archiver.kernel.org>; Thu,  3 Sep 2020 07:38:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 65027C43461
+	for <dmaengine@archiver.kernel.org>; Thu,  3 Sep 2020 08:27:32 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 42FD120BED
-	for <dmaengine@archiver.kernel.org>; Thu,  3 Sep 2020 07:38:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 306A120767
+	for <dmaengine@archiver.kernel.org>; Thu,  3 Sep 2020 08:27:32 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=default; t=1599121652;
+	bh=AbWFhSZrSoYx6Fp+YWywGEU0EqwcOSISwNIHxOF/xrE=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:List-ID:From;
+	b=PU0indJ5gm6LsZeIjpdTvNWtZmIW8mj9yzAC2qbWtt6xZ/8H1yx5XfcBtYyFMPo/5
+	 p/SUa5qCN79w9pJv33ClCWe0dpzAI7LrUT5iMEWQtVr03mt9T3RsKve/4f2XWcjDa8
+	 73iYJJZUEzf++Vp5a8e3WjMbkhX+sne5GtK3nxBU=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728027AbgICHiU (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Thu, 3 Sep 2020 03:38:20 -0400
-Received: from relmlor2.renesas.com ([210.160.252.172]:34171 "EHLO
-        relmlie6.idc.renesas.com" rhost-flags-OK-OK-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1726054AbgICHiS (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Thu, 3 Sep 2020 03:38:18 -0400
-X-IronPort-AV: E=Sophos;i="5.76,385,1592838000"; 
-   d="scan'208";a="56050743"
-Received: from unknown (HELO relmlir6.idc.renesas.com) ([10.200.68.152])
-  by relmlie6.idc.renesas.com with ESMTP; 03 Sep 2020 16:38:16 +0900
-Received: from localhost.localdomain (unknown [10.226.36.204])
-        by relmlir6.idc.renesas.com (Postfix) with ESMTP id 751D641F27AD;
-        Thu,  3 Sep 2020 16:38:14 +0900 (JST)
-From:   Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
-To:     Vinod Koul <vkoul@kernel.org>
+        id S1728287AbgICI1W (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Thu, 3 Sep 2020 04:27:22 -0400
+Received: from mail.kernel.org ([198.145.29.99]:60056 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725984AbgICI1V (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Thu, 3 Sep 2020 04:27:21 -0400
+Received: from localhost (unknown [122.171.179.172])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id E96F0208C7;
+        Thu,  3 Sep 2020 08:27:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1599121640;
+        bh=AbWFhSZrSoYx6Fp+YWywGEU0EqwcOSISwNIHxOF/xrE=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=CShokF7yy0Q2skhvanCrcL8gLouFzuDy52Ps63kiiLEPBULkR4dAY07e/OXPSjQ7P
+         ZSxHU3SPp8vlg1wgh8K38DKz5BwfSbZr+YX3tMCaMdGrGsJJP/bNiEJEIFtJOPfJkm
+         +4gDX0yPWjBuP/oVs6/UAKME6cI9pQWKJtTwVoo4=
+Date:   Thu, 3 Sep 2020 13:57:16 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
 Cc:     Rob Herring <robh+dt@kernel.org>,
         Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
         Geert Uytterhoeven <geert+renesas@glider.be>,
         dmaengine@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
-        Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
         Prabhakar <prabhakar.csengg@gmail.com>
-Subject: [RESEND PATCH v2] dt-bindings: renesas,rcar-dmac: Document r8a7742 support
-Date:   Thu,  3 Sep 2020 08:38:13 +0100
-Message-Id: <20200903073813.4490-1-prabhakar.mahadev-lad.rj@bp.renesas.com>
-X-Mailer: git-send-email 2.17.1
+Subject: Re: [RESEND PATCH v2] dt-bindings: renesas,rcar-dmac: Document
+ r8a7742 support
+Message-ID: <20200903082716.GM2639@vkoul-mobl>
+References: <20200903073813.4490-1-prabhakar.mahadev-lad.rj@bp.renesas.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200903073813.4490-1-prabhakar.mahadev-lad.rj@bp.renesas.com>
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Renesas RZ/G SoC also have the R-Car gen2/3 compatible DMA controllers.
-Document RZ/G1H (also known as R8A7742) SoC bindings.
+On 03-09-20, 08:38, Lad Prabhakar wrote:
+> Renesas RZ/G SoC also have the R-Car gen2/3 compatible DMA controllers.
+> Document RZ/G1H (also known as R8A7742) SoC bindings.
 
-Signed-off-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
-Reviewed-by: Marian-Cristian Rotariu <marian-cristian.rotariu.rb@bp.renesas.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Acked-by: Rob Herring <robh@kernel.org>
----
-Hi Vinod,
+Applied, thanks
 
-As requested I am resending just the DT documentation patch.
-
-v2 - https://patchwork.kernel.org/patch/11524771/
-
-Cheers,
-Prabhakar
----
- Documentation/devicetree/bindings/dma/renesas,rcar-dmac.yaml | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/Documentation/devicetree/bindings/dma/renesas,rcar-dmac.yaml b/Documentation/devicetree/bindings/dma/renesas,rcar-dmac.yaml
-index 13f1a46be40d..b548e4723936 100644
---- a/Documentation/devicetree/bindings/dma/renesas,rcar-dmac.yaml
-+++ b/Documentation/devicetree/bindings/dma/renesas,rcar-dmac.yaml
-@@ -16,6 +16,7 @@ properties:
-   compatible:
-     items:
-       - enum:
-+          - renesas,dmac-r8a7742  # RZ/G1H
-           - renesas,dmac-r8a7743  # RZ/G1M
-           - renesas,dmac-r8a7744  # RZ/G1N
-           - renesas,dmac-r8a7745  # RZ/G1E
 -- 
-2.17.1
-
+~Vinod
