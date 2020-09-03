@@ -2,77 +2,70 @@ Return-Path: <SRS0=MLMT=CM=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D076BC433E7
-	for <dmaengine@archiver.kernel.org>; Thu,  3 Sep 2020 06:23:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AA987C433E7
+	for <dmaengine@archiver.kernel.org>; Thu,  3 Sep 2020 06:51:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id ABC9F20758
-	for <dmaengine@archiver.kernel.org>; Thu,  3 Sep 2020 06:23:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8669320737
+	for <dmaengine@archiver.kernel.org>; Thu,  3 Sep 2020 06:51:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1599114182;
-	bh=WvdWpfp4yGs/OG6vxMqXYw0dclAmH6PLGk5akCtgnLo=;
+	s=default; t=1599115910;
+	bh=zFFH5ijjXx/9/g9VnmjQZzmuX1E42UObUA1luskXeVI=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:List-ID:From;
-	b=KklWpZS7YSv67aAdlTk0aqA0WfFm5GZw+69g4Qyxipch9l4yqd8G1eBp6r+BFqWtR
-	 AqXmUd0L4Z2EljeGBwwfQ9f6pAciGHvlXEs9AnEvPJMRIS3s6bkv1Nr1sUaCySGlsK
-	 E2rOyJafnDdjfY163D5tNvIui6R9NNwqDNUcXgY4=
+	b=tYT9a1IOFf2QUGlL7ryu2H9ls3FK1y0e/DGwZrKnF592+B8uum2GDWEE7s/FjBQYD
+	 ItQAWj+On45JonxSO/2s9C5ISIii+A5f8EgKAR4Et5o0CB7KEkuRBjQJ0KmJC+N3ce
+	 ZyQgPoITqpCj3xu85lWa/DhYF6nniQOwmxmhxY/Y=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725967AbgICGXC (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Thu, 3 Sep 2020 02:23:02 -0400
-Received: from mail.kernel.org ([198.145.29.99]:59158 "EHLO mail.kernel.org"
+        id S1725943AbgICGvu (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Thu, 3 Sep 2020 02:51:50 -0400
+Received: from mail.kernel.org ([198.145.29.99]:40192 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725943AbgICGXB (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Thu, 3 Sep 2020 02:23:01 -0400
+        id S1725919AbgICGvt (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Thu, 3 Sep 2020 02:51:49 -0400
 Received: from localhost (unknown [122.171.179.172])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 4C8D620737;
-        Thu,  3 Sep 2020 06:23:00 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id B3D3C2071B;
+        Thu,  3 Sep 2020 06:51:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1599114181;
-        bh=WvdWpfp4yGs/OG6vxMqXYw0dclAmH6PLGk5akCtgnLo=;
+        s=default; t=1599115909;
+        bh=zFFH5ijjXx/9/g9VnmjQZzmuX1E42UObUA1luskXeVI=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=bvF6UsRHtjegha6BStVkGgJX+G2qghxgaTFHsUbAUqT3P9nw8/j8HEX/tMVXJIpTp
-         SuWTwMQKqLpyLUI1f620ktsgHwLO/5Es+CeUY7BWeLeodfV0q4+yql2wD+C/e9PDdb
-         lXYc9RFgmKSA/EeK7LtUFaT7t7qrXLw16V/fgfFc=
-Date:   Thu, 3 Sep 2020 11:52:57 +0530
+        b=mk2etaz+5KErHJgg8iv9HxYh97mxJCiyFiXckORgFiV1I9wrwUWey3RuE+WQEA8n7
+         HKG6wf8vrifwJ+Semcv2CbnKr0nH1PmsSrKFEZgRJE1JZEQAjlCjdwNTixibUGnnJk
+         2+zM5AHSgsgXAQN1WZ6OAfWpb8/vvwDVdTbNGnlw=
+Date:   Thu, 3 Sep 2020 12:21:45 +0530
 From:   Vinod Koul <vkoul@kernel.org>
-To:     Brad Kim <brad.kim@sifive.com>
-Cc:     green.wan@sifive.com, dmaengine@vger.kernel.org,
-        Brad Kim <brad.kim@semifive.com>
-Subject: Re: [PATCH] dmaengine: sf-pdma: Fix an error that calls callback
- twice
-Message-ID: <20200903062257.GE2639@vkoul-mobl>
-References: <20200827133309.17362-1-brad.kim@semifive.com>
+To:     Peter Ujfalusi <peter.ujfalusi@ti.com>
+Cc:     dmaengine@vger.kernel.org, dan.j.williams@intel.com,
+        linux-kernel@vger.kernel.org, andy.shevchenko@gmail.com
+Subject: Re: [PATCH] dmaengine: Mark dma_request_slave_channel() deprecated
+Message-ID: <20200903065145.GF2639@vkoul-mobl>
+References: <20200828110507.22407-1-peter.ujfalusi@ti.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20200827133309.17362-1-brad.kim@semifive.com>
+In-Reply-To: <20200828110507.22407-1-peter.ujfalusi@ti.com>
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Hello Brad,
-
-On 27-08-20, 22:33, Brad Kim wrote:
-> Because a callback is called twice when DMA transfer complete
-> the second callback may be possible to access a freed memory
-> if the first callback routines perform the dma_release_channel function.
-> So this patch serialized the callback functions
+On 28-08-20, 14:05, Peter Ujfalusi wrote:
+> New drivers should use dma_request_chan() instead
+> dma_request_slave_channel()
 > 
-> Signed-off-by: Brad Kim <brad.kim@semifive.com>
+> dma_request_slave_channel() is a simple wrapper for dma_request_chan()
+> eating up the error code for channel request failure and makes deferred
+> probing impossible.
+> 
+> Move the dma_request_slave_channel() into the header as inline function,
+> mark it as deprecated.
 
-The patch came from Brad Kim <brad.kim@sifive.com> but was s-o-b brad.kim@semifive.com
-
-I am not sure which one is correct but DCO clearly states that patch
-author Brad Kim <brad.kim@sifive.com> should sign off! You can add
-additional sign offs but that one is mandatory!
-
-Thanks
+Applied, thanks
 
 -- 
 ~Vinod
