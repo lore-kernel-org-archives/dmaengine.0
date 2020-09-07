@@ -7,49 +7,49 @@ X-Spam-Status: No, score=-13.2 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 678B3C433E2
-	for <dmaengine@archiver.kernel.org>; Mon,  7 Sep 2020 17:01:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 894D7C2BB84
+	for <dmaengine@archiver.kernel.org>; Mon,  7 Sep 2020 17:12:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 32E0F208C7
-	for <dmaengine@archiver.kernel.org>; Mon,  7 Sep 2020 17:01:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 55CB121532
+	for <dmaengine@archiver.kernel.org>; Mon,  7 Sep 2020 17:12:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1599498089;
-	bh=b8RGyXcP6g9WqOwCH5gMQQmDdR7oyUfGaniALTLI0+A=;
+	s=default; t=1599498756;
+	bh=FHTcrPnwNgdAZABEN21HVNkT3V+T3gP6yMDMA/0pYuA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:List-ID:From;
-	b=ritewcp/ypp/JPhxaRwv5Iak5BbyRxPWOxRi9C7iyErzYejJepipJdnEeOu07TM8G
-	 E2UHx/eEIxahIwBMP+yIHbvoB4ac2Rk1+RwSWZq6eJPOfdpfGbmp12GZnvmP4eAsrH
-	 +ScsXRS5uDZegMT9RtOQYPAKBNwkf/SwGnGMa6XM=
+	b=eqqreCHD+wIYr6ROBnnXtesO0E34II1TUjSzKN4SQAtIIRGOk/Y8GLQ/nh1+g6kDk
+	 KPShU3sNJkTNRkXWnsOM9Rtkx1pjgkddTmw9I9cmLaJOdeZ3OUuhk2klCwE+5n5wXu
+	 A0zfpEMnM+J3UlfPBTKA+d687AlGGeFBS/jMRFbw=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730705AbgIGQdp (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 7 Sep 2020 12:33:45 -0400
-Received: from mail.kernel.org ([198.145.29.99]:47458 "EHLO mail.kernel.org"
+        id S1729843AbgIGRLy (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 7 Sep 2020 13:11:54 -0400
+Received: from mail.kernel.org ([198.145.29.99]:46526 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1730473AbgIGQdn (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Mon, 7 Sep 2020 12:33:43 -0400
+        id S1729847AbgIGQck (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Mon, 7 Sep 2020 12:32:40 -0400
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 551BF21974;
-        Mon,  7 Sep 2020 16:33:42 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id EE56821556;
+        Mon,  7 Sep 2020 16:32:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1599496423;
-        bh=b8RGyXcP6g9WqOwCH5gMQQmDdR7oyUfGaniALTLI0+A=;
+        s=default; t=1599496357;
+        bh=FHTcrPnwNgdAZABEN21HVNkT3V+T3gP6yMDMA/0pYuA=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=MFVHHJRGHPbs94InQYz+yvj16Xih48GqhLRibkDFd4T1O2N/chDEwR426szcpbTZt
-         hXFTtwwNJwW639qW1eC6/C3bfecRojKBHp/1grHbPHbM9TywLuEcPPCgh9pR3mcI7L
-         rGV8TL1z5S/DOQnHuIYhZEtZExkqKdKf/YHMxG7I=
+        b=HHoci7QySEdpYa8Ne/qnSi9sXQGRcqWhh5Sl40UWOnwW3mafxZFfy9TwzCGk1zha5
+         /VsrhAnm0exAESggc98MVokTQoWZigsGdbXZ1rs5P530/EaXFwUZUYamw7o2vQfGip
+         /tGRtAX7mDqGU7J2sYxNQ0uWdYaMLaySsDU4zDMw=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Cc:     Madhuparna Bhowmik <madhuparnabhowmik10@gmail.com>,
         Paul Cercueil <paul@crapouillou.net>,
         Vinod Koul <vkoul@kernel.org>, Sasha Levin <sashal@kernel.org>,
         dmaengine@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.4 10/43] drivers/dma/dma-jz4780: Fix race condition between probe and irq handler
-Date:   Mon,  7 Sep 2020 12:32:56 -0400
-Message-Id: <20200907163329.1280888-10-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 5.8 13/53] drivers/dma/dma-jz4780: Fix race condition between probe and irq handler
+Date:   Mon,  7 Sep 2020 12:31:39 -0400
+Message-Id: <20200907163220.1280412-13-sashal@kernel.org>
 X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20200907163329.1280888-1-sashal@kernel.org>
-References: <20200907163329.1280888-1-sashal@kernel.org>
+In-Reply-To: <20200907163220.1280412-1-sashal@kernel.org>
+References: <20200907163220.1280412-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
@@ -79,10 +79,10 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 19 insertions(+), 19 deletions(-)
 
 diff --git a/drivers/dma/dma-jz4780.c b/drivers/dma/dma-jz4780.c
-index bf95f1d551c51..0ecb724b394f5 100644
+index 448f663da89c6..8beed91428bd6 100644
 --- a/drivers/dma/dma-jz4780.c
 +++ b/drivers/dma/dma-jz4780.c
-@@ -885,24 +885,11 @@ static int jz4780_dma_probe(struct platform_device *pdev)
+@@ -879,24 +879,11 @@ static int jz4780_dma_probe(struct platform_device *pdev)
  		return -EINVAL;
  	}
  
@@ -108,7 +108,7 @@ index bf95f1d551c51..0ecb724b394f5 100644
  	}
  
  	clk_prepare_enable(jzdma->clk);
-@@ -955,10 +942,23 @@ static int jz4780_dma_probe(struct platform_device *pdev)
+@@ -949,10 +936,23 @@ static int jz4780_dma_probe(struct platform_device *pdev)
  		jzchan->vchan.desc_free = jz4780_dma_desc_free;
  	}
  
@@ -133,7 +133,7 @@ index bf95f1d551c51..0ecb724b394f5 100644
  	}
  
  	/* Register with OF DMA helpers. */
-@@ -966,17 +966,17 @@ static int jz4780_dma_probe(struct platform_device *pdev)
+@@ -960,17 +960,17 @@ static int jz4780_dma_probe(struct platform_device *pdev)
  					 jzdma);
  	if (ret) {
  		dev_err(dev, "failed to register OF DMA controller\n");
