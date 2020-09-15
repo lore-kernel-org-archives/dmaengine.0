@@ -2,136 +2,102 @@ Return-Path: <SRS0=i/ze=CY=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C4DF9C43461
-	for <dmaengine@archiver.kernel.org>; Tue, 15 Sep 2020 22:12:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 26323C43461
+	for <dmaengine@archiver.kernel.org>; Tue, 15 Sep 2020 23:27:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7F09D20936
-	for <dmaengine@archiver.kernel.org>; Tue, 15 Sep 2020 22:12:52 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b="jMbZnOZS"
+	by mail.kernel.org (Postfix) with ESMTP id E08A920936
+	for <dmaengine@archiver.kernel.org>; Tue, 15 Sep 2020 23:27:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727780AbgIOWMt (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 15 Sep 2020 18:12:49 -0400
-Received: from lelv0142.ext.ti.com ([198.47.23.249]:60022 "EHLO
-        lelv0142.ext.ti.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727781AbgIOQmO (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Tue, 15 Sep 2020 12:42:14 -0400
-Received: from fllv0035.itg.ti.com ([10.64.41.0])
-        by lelv0142.ext.ti.com (8.15.2/8.15.2) with ESMTP id 08FGfxId105841;
-        Tue, 15 Sep 2020 11:41:59 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
-        s=ti-com-17Q1; t=1600188119;
-        bh=tTmPCwqRfmvgpzkRiQk3JseeSp0Po4Mic5Xi+11jGFw=;
-        h=From:To:CC:Subject:Date;
-        b=jMbZnOZSXqhaGC7Sj+hUtUnMRXerscAZYD68xFmTlAbIGsd4dy95ALq1bb/MWvaNT
-         XHNuDI10+ZaizxPccUY4jokdv8r2hQiH4wrZGUT25Q+tK4KLZpAr1bFQ2KU+PSmRAa
-         pLs6uy4owxDaZotSf8yEUXwTpRoQwNejmu3+CR9I=
-Received: from DFLE114.ent.ti.com (dfle114.ent.ti.com [10.64.6.35])
-        by fllv0035.itg.ti.com (8.15.2/8.15.2) with ESMTP id 08FGfxrA089950;
-        Tue, 15 Sep 2020 11:41:59 -0500
-Received: from DFLE100.ent.ti.com (10.64.6.21) by DFLE114.ent.ti.com
- (10.64.6.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1979.3; Tue, 15
- Sep 2020 11:41:59 -0500
-Received: from lelv0327.itg.ti.com (10.180.67.183) by DFLE100.ent.ti.com
- (10.64.6.21) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1979.3 via
- Frontend Transport; Tue, 15 Sep 2020 11:41:59 -0500
-Received: from localhost (ileax41-snat.itg.ti.com [10.172.224.153])
-        by lelv0327.itg.ti.com (8.15.2/8.15.2) with ESMTP id 08FGfwP8008323;
-        Tue, 15 Sep 2020 11:41:58 -0500
-From:   Grygorii Strashko <grygorii.strashko@ti.com>
-To:     Vinod Koul <vkoul@kernel.org>,
-        Peter Ujfalusi <peter.ujfalusi@ti.com>,
-        <dmaengine@vger.kernel.org>
-CC:     Sekhar Nori <nsekhar@ti.com>, <linux-kernel@vger.kernel.org>,
-        Vignesh Raghavendra <vigneshr@ti.com>,
-        Grygorii Strashko <grygorii.strashko@ti.com>
-Subject: [PATCH] dmaengine: ti: k3-udma-glue: fix channel enable functions
-Date:   Tue, 15 Sep 2020 19:41:49 +0300
-Message-ID: <20200915164149.22123-1-grygorii.strashko@ti.com>
-X-Mailer: git-send-email 2.17.1
+        id S1727253AbgIOX1y (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 15 Sep 2020 19:27:54 -0400
+Received: from mga05.intel.com ([192.55.52.43]:50317 "EHLO mga05.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727225AbgIOX1w (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Tue, 15 Sep 2020 19:27:52 -0400
+IronPort-SDR: FAblg7oGQ+AJnrtvj1/AP6GZFWRYCNZRM/DqeoCGYquiVCdHGP60tihI4j/tmNACRgvgEWJfT0
+ YO/EXmiF9wCw==
+X-IronPort-AV: E=McAfee;i="6000,8403,9745"; a="244200209"
+X-IronPort-AV: E=Sophos;i="5.76,430,1592895600"; 
+   d="scan'208";a="244200209"
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga004.jf.intel.com ([10.7.209.38])
+  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Sep 2020 16:27:51 -0700
+IronPort-SDR: YQADHup6O6rIdY3Au4rbDBvjquOi5gXEiGEv70TOm3Hk+GGW0CzJ7zfiyj39vZM7OT/n3bF8d5
+ mYLhwifju0XQ==
+X-IronPort-AV: E=Sophos;i="5.76,430,1592895600"; 
+   d="scan'208";a="451619391"
+Received: from djiang5-desk3.ch.intel.com ([143.182.136.137])
+  by orsmga004-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Sep 2020 16:27:49 -0700
+Subject: [PATCH v3 02/18] iommu/vt-d: Add DEV-MSI support
+From:   Dave Jiang <dave.jiang@intel.com>
+To:     vkoul@kernel.org, megha.dey@intel.com, maz@kernel.org,
+        bhelgaas@google.com, tglx@linutronix.de,
+        alex.williamson@redhat.com, jacob.jun.pan@intel.com,
+        ashok.raj@intel.com, jgg@mellanox.com, yi.l.liu@intel.com,
+        baolu.lu@intel.com, kevin.tian@intel.com, sanjay.k.kumar@intel.com,
+        tony.luck@intel.com, jing.lin@intel.com, dan.j.williams@intel.com,
+        kwankhede@nvidia.com, eric.auger@redhat.com, parav@mellanox.com,
+        jgg@mellanox.com, rafael@kernel.org, netanelg@mellanox.com,
+        shahafs@mellanox.com, yan.y.zhao@linux.intel.com,
+        pbonzini@redhat.com, samuel.ortiz@intel.com, mona.hossain@intel.com
+Cc:     dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
+        x86@kernel.org, linux-pci@vger.kernel.org, kvm@vger.kernel.org
+Date:   Tue, 15 Sep 2020 16:27:49 -0700
+Message-ID: <160021246905.67751.1674517279122764758.stgit@djiang5-desk3.ch.intel.com>
+In-Reply-To: <160021207013.67751.8220471499908137671.stgit@djiang5-desk3.ch.intel.com>
+References: <160021207013.67751.8220471499908137671.stgit@djiang5-desk3.ch.intel.com>
+User-Agent: StGit/unknown-version
 MIME-Version: 1.0
-Content-Type: text/plain
-X-EXCLAIMER-MD-CONFIG: e1e8a2fd-e40a-4ac6-ac9b-f7e9cc9ee180
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Now the K3 UDMA glue layer enable functions perform RMW operation on UDMA
-RX/TX RT_CTL registers to set EN bit and enable channel, which is
-incorrect, because only EN bit has to be set in those registers to enable
-channel (all other bits should be cleared 0).
-More over, this causes issues when bootloader leaves UDMA channel RX/TX
-RT_CTL registers in incorrect state - TDOWN bit set, for example. As
-result, UDMA channel will just perform teardown right after it's enabled.
+From: Megha Dey <megha.dey@intel.com>
 
-Hence, fix it by writing correct values (EN=1) directly in UDMA channel
-RX/TX RT_CTL registers in k3_udma_glue_enable_tx/rx_chn() functions.
+Add required support in the interrupt remapping driver for devices
+which generate dev-msi interrupts and use the intel remapping
+domain as the parent domain.
 
-Fixes: d70241913413 ("dmaengine: ti: k3-udma: Add glue layer for non DMAengine users")
-Signed-off-by: Grygorii Strashko <grygorii.strashko@ti.com>
+Signed-off-by: Megha Dey <megha.dey@intel.com>
+Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+Reviewed-by: Ashok Raj <ashok.raj@intel.com>
 ---
- drivers/dma/ti/k3-udma-glue.c | 15 +++------------
- 1 file changed, 3 insertions(+), 12 deletions(-)
+ drivers/iommu/intel/irq_remapping.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/dma/ti/k3-udma-glue.c b/drivers/dma/ti/k3-udma-glue.c
-index dc03880f021a..37d706cf3ba9 100644
---- a/drivers/dma/ti/k3-udma-glue.c
-+++ b/drivers/dma/ti/k3-udma-glue.c
-@@ -370,7 +370,6 @@ EXPORT_SYMBOL_GPL(k3_udma_glue_pop_tx_chn);
+diff --git a/drivers/iommu/intel/irq_remapping.c b/drivers/iommu/intel/irq_remapping.c
+index 0cfce1d3b7bb..75e388263b78 100644
+--- a/drivers/iommu/intel/irq_remapping.c
++++ b/drivers/iommu/intel/irq_remapping.c
+@@ -1303,9 +1303,10 @@ static void intel_irq_remapping_prepare_irte(struct intel_ir_data *data,
+ 	case X86_IRQ_ALLOC_TYPE_HPET:
+ 	case X86_IRQ_ALLOC_TYPE_PCI_MSI:
+ 	case X86_IRQ_ALLOC_TYPE_PCI_MSIX:
++	case X86_IRQ_ALLOC_TYPE_DEV_MSI:
+ 		if (info->type == X86_IRQ_ALLOC_TYPE_HPET)
+ 			set_hpet_sid(irte, info->devid);
+-		else
++		else if (info->type != X86_IRQ_ALLOC_TYPE_DEV_MSI)
+ 			set_msi_sid(irte, msi_desc_to_pci_dev(info->desc));
  
- int k3_udma_glue_enable_tx_chn(struct k3_udma_glue_tx_channel *tx_chn)
- {
--	u32 txrt_ctl;
- 	int ret;
+ 		msg->address_hi = MSI_ADDR_BASE_HI;
+@@ -1358,7 +1359,8 @@ static int intel_irq_remapping_alloc(struct irq_domain *domain,
+ 	if (!info || !iommu)
+ 		return -EINVAL;
+ 	if (nr_irqs > 1 && info->type != X86_IRQ_ALLOC_TYPE_PCI_MSI &&
+-	    info->type != X86_IRQ_ALLOC_TYPE_PCI_MSIX)
++	    info->type != X86_IRQ_ALLOC_TYPE_PCI_MSIX &&
++	    info->type != X86_IRQ_ALLOC_TYPE_DEV_MSI)
+ 		return -EINVAL;
  
- 	ret = xudma_navss_psil_pair(tx_chn->common.udmax,
-@@ -383,15 +382,11 @@ int k3_udma_glue_enable_tx_chn(struct k3_udma_glue_tx_channel *tx_chn)
- 
- 	tx_chn->psil_paired = true;
- 
--	txrt_ctl = UDMA_PEER_RT_EN_ENABLE;
- 	xudma_tchanrt_write(tx_chn->udma_tchanx, UDMA_CHAN_RT_PEER_RT_EN_REG,
--			    txrt_ctl);
-+			    UDMA_PEER_RT_EN_ENABLE);
- 
--	txrt_ctl = xudma_tchanrt_read(tx_chn->udma_tchanx,
--				      UDMA_CHAN_RT_CTL_REG);
--	txrt_ctl |= UDMA_CHAN_RT_CTL_EN;
- 	xudma_tchanrt_write(tx_chn->udma_tchanx, UDMA_CHAN_RT_CTL_REG,
--			    txrt_ctl);
-+			    UDMA_CHAN_RT_CTL_EN);
- 
- 	k3_udma_glue_dump_tx_rt_chn(tx_chn, "txchn en");
- 	return 0;
-@@ -1059,7 +1054,6 @@ EXPORT_SYMBOL_GPL(k3_udma_glue_rx_flow_disable);
- 
- int k3_udma_glue_enable_rx_chn(struct k3_udma_glue_rx_channel *rx_chn)
- {
--	u32 rxrt_ctl;
- 	int ret;
- 
- 	if (rx_chn->remote)
-@@ -1078,11 +1072,8 @@ int k3_udma_glue_enable_rx_chn(struct k3_udma_glue_rx_channel *rx_chn)
- 
- 	rx_chn->psil_paired = true;
- 
--	rxrt_ctl = xudma_rchanrt_read(rx_chn->udma_rchanx,
--				      UDMA_CHAN_RT_CTL_REG);
--	rxrt_ctl |= UDMA_CHAN_RT_CTL_EN;
- 	xudma_rchanrt_write(rx_chn->udma_rchanx, UDMA_CHAN_RT_CTL_REG,
--			    rxrt_ctl);
-+			    UDMA_CHAN_RT_CTL_EN);
- 
- 	xudma_rchanrt_write(rx_chn->udma_rchanx, UDMA_CHAN_RT_PEER_RT_EN_REG,
- 			    UDMA_PEER_RT_EN_ENABLE);
--- 
-2.17.1
+ 	/*
 
