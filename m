@@ -1,259 +1,109 @@
-Return-Path: <SRS0=i/ze=CY=vger.kernel.org=dmaengine-owner@kernel.org>
+Return-Path: <SRS0=CotQ=CZ=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-8.3 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 288DFC43461
-	for <dmaengine@archiver.kernel.org>; Tue, 15 Sep 2020 23:34:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7172DC433E2
+	for <dmaengine@archiver.kernel.org>; Wed, 16 Sep 2020 00:01:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id F1F7B2078D
-	for <dmaengine@archiver.kernel.org>; Tue, 15 Sep 2020 23:34:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3ED6720756
+	for <dmaengine@archiver.kernel.org>; Wed, 16 Sep 2020 00:01:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727413AbgIOXd5 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 15 Sep 2020 19:33:57 -0400
-Received: from mga04.intel.com ([192.55.52.120]:49245 "EHLO mga04.intel.com"
+        id S1727198AbgIPABv (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 15 Sep 2020 20:01:51 -0400
+Received: from foss.arm.com ([217.140.110.172]:36958 "EHLO foss.arm.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727384AbgIOXdx (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Tue, 15 Sep 2020 19:33:53 -0400
-IronPort-SDR: VgODABpb8S4k8shmihF3PkVC1Twr7k0L1EwKZMHVSZEZ6NzmTnF3bOIy5YR1AcVyzaggpQ9Sql
- LoiGlSYAE+Qg==
-X-IronPort-AV: E=McAfee;i="6000,8403,9745"; a="156755448"
-X-IronPort-AV: E=Sophos;i="5.76,430,1592895600"; 
-   d="scan'208";a="156755448"
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from fmsmga004.fm.intel.com ([10.253.24.48])
-  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Sep 2020 16:29:07 -0700
-IronPort-SDR: Y7PK3s13NhBfmBJ+aALMybqzoVdKYxWv79Priv4kBofwVhB/TfhIAoa+AyXQvb/g1zMMdvkk2c
- 1hk1f9mXVKaA==
-X-IronPort-AV: E=Sophos;i="5.76,430,1592895600"; 
-   d="scan'208";a="331439472"
-Received: from djiang5-desk3.ch.intel.com ([143.182.136.137])
-  by fmsmga004-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Sep 2020 16:29:05 -0700
-Subject: [PATCH v3 13/18] dmaengine: idxd: add dedicated wq mdev type
-From:   Dave Jiang <dave.jiang@intel.com>
-To:     vkoul@kernel.org, megha.dey@intel.com, maz@kernel.org,
-        bhelgaas@google.com, tglx@linutronix.de,
-        alex.williamson@redhat.com, jacob.jun.pan@intel.com,
-        ashok.raj@intel.com, jgg@mellanox.com, yi.l.liu@intel.com,
-        baolu.lu@intel.com, kevin.tian@intel.com, sanjay.k.kumar@intel.com,
-        tony.luck@intel.com, jing.lin@intel.com, dan.j.williams@intel.com,
-        kwankhede@nvidia.com, eric.auger@redhat.com, parav@mellanox.com,
-        jgg@mellanox.com, rafael@kernel.org, netanelg@mellanox.com,
-        shahafs@mellanox.com, yan.y.zhao@linux.intel.com,
-        pbonzini@redhat.com, samuel.ortiz@intel.com, mona.hossain@intel.com
-Cc:     dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
-        x86@kernel.org, linux-pci@vger.kernel.org, kvm@vger.kernel.org
-Date:   Tue, 15 Sep 2020 16:29:04 -0700
-Message-ID: <160021254470.67751.9829487993127571356.stgit@djiang5-desk3.ch.intel.com>
-In-Reply-To: <160021207013.67751.8220471499908137671.stgit@djiang5-desk3.ch.intel.com>
-References: <160021207013.67751.8220471499908137671.stgit@djiang5-desk3.ch.intel.com>
-User-Agent: StGit/unknown-version
+        id S1727007AbgIOOaQ (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Tue, 15 Sep 2020 10:30:16 -0400
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id A74F231B;
+        Tue, 15 Sep 2020 07:19:37 -0700 (PDT)
+Received: from [10.57.18.138] (unknown [10.57.18.138])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 9727A3F68F;
+        Tue, 15 Sep 2020 07:19:36 -0700 (PDT)
+Subject: Re: 6b41030fdc790 broke dmatest badly
+To:     Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Cc:     dmaengine@vger.kernel.org, Vinod Koul <vkoul@kernel.org>,
+        Dan Williams <dan.j.williams@intel.com>,
+        Peter Ujfalusi <peter.ujfalusi@ti.com>
+References: <20200904173401.GH1891694@smile.fi.intel.com>
+ <d95f1b54-2a62-7b79-c53c-c8179324e935@arm.com>
+ <20200907120440.GC1891694@smile.fi.intel.com>
+ <004640d8-e236-4b75-1bfd-cc386bbf08a6@arm.com>
+ <20200907140502.GK1891694@smile.fi.intel.com>
+ <54ba60c3-9a04-51ac-688c-425b85202b18@arm.com>
+ <578f9c4d-3d29-d1f3-17f7-94dfe24403c4@arm.com>
+ <20200915123537.GU3956970@smile.fi.intel.com>
+ <d2d43434-d75a-a6cd-c6f9-daaa20260e58@arm.com>
+ <20200915134625.GZ3956970@smile.fi.intel.com>
+ <20200915135659.GA3956970@smile.fi.intel.com>
+From:   Vladimir Murzin <vladimir.murzin@arm.com>
+Message-ID: <63be07b9-721b-44fe-14f5-a52ab36ce954@arm.com>
+Date:   Tue, 15 Sep 2020 15:20:11 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+In-Reply-To: <20200915135659.GA3956970@smile.fi.intel.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
 Content-Transfer-Encoding: 7bit
 Sender: dmaengine-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Add the support code for "1dwq" mdev type. This mdev type follows the
-standard VFIO mdev flow. The "1dwq" type will export a single dedicated wq
-to the mdev. The dwq will have read-only configuration that is configured
-by the host. The mdev type does not support PASID and SVA and will match
-the stage 1 driver in functional support. For backward compatibility, the
-mdev will maintain the DSA spec definition of this mdev type once the
-commit goes upstream.
+On 9/15/20 2:56 PM, Andy Shevchenko wrote:
+> On Tue, Sep 15, 2020 at 04:46:25PM +0300, Andy Shevchenko wrote:
+>> On Tue, Sep 15, 2020 at 01:46:12PM +0100, Vladimir Murzin wrote:
+>>> On 9/15/20 1:35 PM, Andy Shevchenko wrote:
+>>>> On Fri, Sep 11, 2020 at 09:34:04AM +0100, Vladimir Murzin wrote:
+>>>>> On 9/7/20 5:52 PM, Vladimir Murzin wrote:
+>>
+>> ...
+>>
+>>>>> An update on this?
+>>>>
+>>>> Sorry for delay. I have tested your patch and it works for my case. Though I
+>>>> would amend it a bit (commit message is still a due).
+>>>
+>>>
+>>> That's good, but what about behaviour prior d53513d5dc28? Did you (or somebody
+>>> else) have a chance to confirm that it won't run with plain defaults?
+> 
+> Yes, I may confirm this. I have taken dmatest just before that commit as of
+>   % git checkout 3f3c75541ffe -- drivers/dma/dmatest.c
+> and it simple returns 0 and nothing happens.
 
-Signed-off-by: Dave Jiang <dave.jiang@intel.com>
----
- drivers/dma/idxd/mdev.c |  142 ++++++++++++++++++++++++++++++++++++++++++++---
- 1 file changed, 133 insertions(+), 9 deletions(-)
+Thanks a lot for confirmation!
 
-diff --git a/drivers/dma/idxd/mdev.c b/drivers/dma/idxd/mdev.c
-index 6b91abd4d8d9..2d3ff1a50d39 100644
---- a/drivers/dma/idxd/mdev.c
-+++ b/drivers/dma/idxd/mdev.c
-@@ -99,21 +99,58 @@ static void idxd_vdcm_release(struct mdev_device *mdev)
- 	mutex_unlock(&vidxd->dev_lock);
- }
- 
-+static struct idxd_wq *find_any_dwq(struct idxd_device *idxd)
-+{
-+	int i;
-+	struct idxd_wq *wq;
-+	unsigned long flags;
-+
-+	spin_lock_irqsave(&idxd->dev_lock, flags);
-+	for (i = 0; i < idxd->max_wqs; i++) {
-+		wq = &idxd->wqs[i];
-+
-+		if (wq->state != IDXD_WQ_ENABLED)
-+			continue;
-+
-+		if (!wq_dedicated(wq))
-+			continue;
-+
-+		if (idxd_wq_refcount(wq) != 0)
-+			continue;
-+
-+		spin_unlock_irqrestore(&idxd->dev_lock, flags);
-+		mutex_lock(&wq->wq_lock);
-+		if (idxd_wq_refcount(wq)) {
-+			spin_lock_irqsave(&idxd->dev_lock, flags);
-+			continue;
-+		}
-+
-+		idxd_wq_get(wq);
-+		mutex_unlock(&wq->wq_lock);
-+		return wq;
-+	}
-+
-+	spin_unlock_irqrestore(&idxd->dev_lock, flags);
-+	return NULL;
-+}
-+
- static struct vdcm_idxd *vdcm_vidxd_create(struct idxd_device *idxd, struct mdev_device *mdev,
- 					   struct vdcm_idxd_type *type)
- {
- 	struct vdcm_idxd *vidxd;
- 	struct idxd_wq *wq = NULL;
--	int i;
--
--	/* PLACEHOLDER, wq matching comes later */
-+	int i, rc;
- 
-+	if (type->type == IDXD_MDEV_TYPE_1_DWQ)
-+		wq = find_any_dwq(idxd);
- 	if (!wq)
- 		return ERR_PTR(-ENODEV);
- 
- 	vidxd = kzalloc(sizeof(*vidxd), GFP_KERNEL);
--	if (!vidxd)
--		return ERR_PTR(-ENOMEM);
-+	if (!vidxd) {
-+		rc = -ENOMEM;
-+		goto err;
-+	}
- 
- 	mutex_init(&vidxd->dev_lock);
- 	vidxd->idxd = idxd;
-@@ -127,14 +164,23 @@ static struct vdcm_idxd *vdcm_vidxd_create(struct idxd_device *idxd, struct mdev
- 		vidxd->ims_index[i] = -1;
- 
- 	idxd_vdcm_init(vidxd);
--	mutex_lock(&wq->wq_lock);
--	idxd_wq_get(wq);
--	mutex_unlock(&wq->wq_lock);
- 
- 	return vidxd;
-+
-+ err:
-+	mutex_lock(&wq->wq_lock);
-+	idxd_wq_put(wq);
-+	mutex_unlock(&wq->wq_lock);
-+	return ERR_PTR(rc);
- }
- 
--static struct vdcm_idxd_type idxd_mdev_types[IDXD_MDEV_TYPES];
-+static struct vdcm_idxd_type idxd_mdev_types[IDXD_MDEV_TYPES] = {
-+	{
-+		.name = "1dwq-v1",
-+		.description = "IDXD MDEV with 1 dedicated workqueue",
-+		.type = IDXD_MDEV_TYPE_1_DWQ,
-+	},
-+};
- 
- static struct vdcm_idxd_type *idxd_vdcm_find_vidxd_type(struct device *dev,
- 							const char *name)
-@@ -910,7 +956,85 @@ static long idxd_vdcm_ioctl(struct mdev_device *mdev, unsigned int cmd,
- 	return rc;
- }
- 
-+static ssize_t name_show(struct kobject *kobj, struct device *dev, char *buf)
-+{
-+	struct vdcm_idxd_type *type;
-+
-+	type = idxd_vdcm_find_vidxd_type(dev, kobject_name(kobj));
-+
-+	if (type)
-+		return sprintf(buf, "%s\n", type->description);
-+
-+	return -EINVAL;
-+}
-+static MDEV_TYPE_ATTR_RO(name);
-+
-+static int find_available_mdev_instances(struct idxd_device *idxd, struct vdcm_idxd_type *type)
-+{
-+	int count = 0, i;
-+	unsigned long flags;
-+
-+	if (type->type != IDXD_MDEV_TYPE_1_DWQ)
-+		return 0;
-+
-+	spin_lock_irqsave(&idxd->dev_lock, flags);
-+	for (i = 0; i < idxd->max_wqs; i++) {
-+		struct idxd_wq *wq;
-+
-+		wq = &idxd->wqs[i];
-+		if (!is_idxd_wq_mdev(wq) || !wq_dedicated(wq) || idxd_wq_refcount(wq))
-+			continue;
-+
-+		count++;
-+	}
-+	spin_unlock_irqrestore(&idxd->dev_lock, flags);
-+
-+	return count;
-+}
-+
-+static ssize_t available_instances_show(struct kobject *kobj,
-+					struct device *dev, char *buf)
-+{
-+	int count;
-+	struct idxd_device *idxd = dev_get_drvdata(dev);
-+	struct vdcm_idxd_type *type;
-+
-+	type = idxd_vdcm_find_vidxd_type(dev, kobject_name(kobj));
-+	if (!type)
-+		return -EINVAL;
-+
-+	count = find_available_mdev_instances(idxd, type);
-+
-+	return sprintf(buf, "%d\n", count);
-+}
-+static MDEV_TYPE_ATTR_RO(available_instances);
-+
-+static ssize_t device_api_show(struct kobject *kobj, struct device *dev,
-+			       char *buf)
-+{
-+	return sprintf(buf, "%s\n", VFIO_DEVICE_API_PCI_STRING);
-+}
-+static MDEV_TYPE_ATTR_RO(device_api);
-+
-+static struct attribute *idxd_mdev_types_attrs[] = {
-+	&mdev_type_attr_name.attr,
-+	&mdev_type_attr_device_api.attr,
-+	&mdev_type_attr_available_instances.attr,
-+	NULL,
-+};
-+
-+static struct attribute_group idxd_mdev_type_group0 = {
-+	.name = "1dwq-v1",
-+	.attrs = idxd_mdev_types_attrs,
-+};
-+
-+static struct attribute_group *idxd_mdev_type_groups[] = {
-+	&idxd_mdev_type_group0,
-+	NULL,
-+};
-+
- static const struct mdev_parent_ops idxd_vdcm_ops = {
-+	.supported_type_groups	= idxd_mdev_type_groups,
- 	.create			= idxd_vdcm_create,
- 	.remove			= idxd_vdcm_remove,
- 	.open			= idxd_vdcm_open,
+> 
+> So, please provide a commit message to your fix, I'll incorporate it and send as a part of the series.
+> 
+
+dmaengine: dmatest: Fix regression in run command with mis-configured channel
+
+Andy reported that commit 6b41030fdc79 ("dmaengine: dmatest:
+Restore default for channel") broke his scripts for the case
+where "busy" channel is used for configuration with expectation
+that run command would do nothing (and return 0). Instead,
+behavior was (unintentionally) changed to treat such case as
+under-configuration and progress with defaults, i.e. run command
+would start a test with default setting for channel (which would
+use all channels).
+
+Restore original behavior with tracking status of channel setter
+so we can distinguish between mis-configured and under-configured
+cases in run command and act accordingly.
+
+Fixes: 6b41030fdc79086db5d673c5ed7169f3ee8c13b9 ("dmaengine: dmatest: Restore default for channel")
+Reported-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Tested-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Signed-off-by: Signed-off-by: Vladimir Murzin <vladimir.murzin@arm.com>
+
+Cheers
+Vladimir
 
