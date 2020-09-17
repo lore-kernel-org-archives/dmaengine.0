@@ -2,109 +2,91 @@ Return-Path: <SRS0=BOy8=C2=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4E484C43461
-	for <dmaengine@archiver.kernel.org>; Thu, 17 Sep 2020 18:09:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D56CAC35264
+	for <dmaengine@archiver.kernel.org>; Thu, 17 Sep 2020 18:38:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DCCFD21D7F
-	for <dmaengine@archiver.kernel.org>; Thu, 17 Sep 2020 18:09:44 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="IeIgZ/2g"
+	by mail.kernel.org (Postfix) with ESMTP id 828E721973
+	for <dmaengine@archiver.kernel.org>; Thu, 17 Sep 2020 18:38:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726385AbgIQSJk (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Thu, 17 Sep 2020 14:09:40 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([63.128.21.124]:33763 "EHLO
-        us-smtp-delivery-124.mimecast.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726472AbgIQRbM (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Thu, 17 Sep 2020 13:31:12 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1600363830;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=JDy+vxvRfZGmnu6cg8GKuFwx7k+u4v4T4TYyDPV/nUE=;
-        b=IeIgZ/2g/ePIYaLY7usR4r9Cw5GY+IfTgN7KlqSnFAjD4Rk8pD6HdXUhFSBx8Pp7NypUS3
-        haL/AGG6X73HSFAoF0qZP17Q0IFgr+YJeKt8BEvrFwYrY3cnkce6eshK0Wl9XuEBlzmdVs
-        pbzsSRqoDyoRrAQHEC5NzDk7FKi2jkM=
-Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
- [209.132.183.4]) (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-212-vjKounHvMB-E6fZzxPGr2w-1; Thu, 17 Sep 2020 13:30:26 -0400
-X-MC-Unique: vjKounHvMB-E6fZzxPGr2w-1
-Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.phx2.redhat.com [10.5.11.12])
-        (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        by mimecast-mx01.redhat.com (Postfix) with ESMTPS id 92E0C8015C6;
-        Thu, 17 Sep 2020 17:30:22 +0000 (UTC)
-Received: from x1.home (ovpn-112-71.phx2.redhat.com [10.3.112.71])
-        by smtp.corp.redhat.com (Postfix) with ESMTP id 5522160BEC;
-        Thu, 17 Sep 2020 17:30:17 +0000 (UTC)
-Date:   Thu, 17 Sep 2020 11:30:16 -0600
-From:   Alex Williamson <alex.williamson@redhat.com>
-To:     Dave Jiang <dave.jiang@intel.com>
-Cc:     Jason Gunthorpe <jgg@nvidia.com>, vkoul@kernel.org,
-        megha.dey@intel.com, maz@kernel.org, bhelgaas@google.com,
-        tglx@linutronix.de, jacob.jun.pan@intel.com, ashok.raj@intel.com,
-        yi.l.liu@intel.com, baolu.lu@intel.com, kevin.tian@intel.com,
-        sanjay.k.kumar@intel.com, tony.luck@intel.com, jing.lin@intel.com,
-        dan.j.williams@intel.com, kwankhede@nvidia.com,
-        eric.auger@redhat.com, parav@mellanox.com, rafael@kernel.org,
-        netanelg@mellanox.com, shahafs@mellanox.com,
+        id S1726466AbgIQRZo (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Thu, 17 Sep 2020 13:25:44 -0400
+Received: from mga17.intel.com ([192.55.52.151]:18415 "EHLO mga17.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726192AbgIQRZg (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Thu, 17 Sep 2020 13:25:36 -0400
+X-Greylist: delayed 531 seconds by postgrey-1.27 at vger.kernel.org; Thu, 17 Sep 2020 13:24:40 EDT
+IronPort-SDR: W8aiqw4mkzlHLXz5QxbMNIN05J7T7inNnDLPY+r2FgFiSMoUcA1Y36/e48I/GNoRaHtMjzoKWa
+ OdSiv3spRsSg==
+X-IronPort-AV: E=McAfee;i="6000,8403,9747"; a="139750307"
+X-IronPort-AV: E=Sophos;i="5.77,271,1596524400"; 
+   d="scan'208";a="139750307"
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from fmsmga007.fm.intel.com ([10.253.24.52])
+  by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Sep 2020 10:15:29 -0700
+IronPort-SDR: RA7L5wTJFENSj9aj9zv5UwUQj1QaPo2BOH7baLD4WB+F7Jd8xCbwCzwwWSovervwInN7w1nizZ
+ r8ga1TIhji0Q==
+X-IronPort-AV: E=Sophos;i="5.77,271,1596524400"; 
+   d="scan'208";a="287659895"
+Received: from djiang5-mobl1.amr.corp.intel.com (HELO [10.212.200.158]) ([10.212.200.158])
+  by fmsmga007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Sep 2020 10:15:27 -0700
+Subject: Re: [PATCH v3 00/18] Add VFIO mediated device support and DEV-MSI
+ support for the idxd driver
+To:     Jason Gunthorpe <jgg@nvidia.com>
+Cc:     vkoul@kernel.org, megha.dey@intel.com, maz@kernel.org,
+        bhelgaas@google.com, tglx@linutronix.de,
+        alex.williamson@redhat.com, jacob.jun.pan@intel.com,
+        ashok.raj@intel.com, yi.l.liu@intel.com, baolu.lu@intel.com,
+        kevin.tian@intel.com, sanjay.k.kumar@intel.com,
+        tony.luck@intel.com, jing.lin@intel.com, dan.j.williams@intel.com,
+        kwankhede@nvidia.com, eric.auger@redhat.com, parav@mellanox.com,
+        rafael@kernel.org, netanelg@mellanox.com, shahafs@mellanox.com,
         yan.y.zhao@linux.intel.com, pbonzini@redhat.com,
         samuel.ortiz@intel.com, mona.hossain@intel.com,
         dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
         x86@kernel.org, linux-pci@vger.kernel.org, kvm@vger.kernel.org
-Subject: Re: [PATCH v3 00/18] Add VFIO mediated device support and DEV-MSI
- support for the idxd driver
-Message-ID: <20200917113016.425dcde7@x1.home>
-In-Reply-To: <f4a085f1-f6de-2539-12fe-c7308d243a4a@intel.com>
 References: <160021207013.67751.8220471499908137671.stgit@djiang5-desk3.ch.intel.com>
-        <20200917150641.GM3699@nvidia.com>
-        <f4a085f1-f6de-2539-12fe-c7308d243a4a@intel.com>
-Organization: Red Hat
+ <20200917150641.GM3699@nvidia.com>
+From:   Dave Jiang <dave.jiang@intel.com>
+Message-ID: <f4a085f1-f6de-2539-12fe-c7308d243a4a@intel.com>
+Date:   Thu, 17 Sep 2020 10:15:24 -0700
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.12.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+In-Reply-To: <20200917150641.GM3699@nvidia.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 7bit
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.12
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On Thu, 17 Sep 2020 10:15:24 -0700
-Dave Jiang <dave.jiang@intel.com> wrote:
 
-> On 9/17/2020 8:06 AM, Jason Gunthorpe wrote:
-> > On Tue, Sep 15, 2020 at 04:27:35PM -0700, Dave Jiang wrote:  
-> >>   drivers/dma/idxd/idxd.h                            |   65 +
-> >>   drivers/dma/idxd/init.c                            |  100 ++
-> >>   drivers/dma/idxd/irq.c                             |    6
-> >>   drivers/dma/idxd/mdev.c                            | 1089 ++++++++++++++++++++
-> >>   drivers/dma/idxd/mdev.h                            |  118 ++  
-> > 
-> > It is common that drivers of a subsystem will be under that
-> > subsystem's directory tree. This allows the subsystem community to
-> > manage pages related to their subsystem and it's drivers.
-> > 
-> > Should the mdev parts be moved there?  
+
+On 9/17/2020 8:06 AM, Jason Gunthorpe wrote:
+> On Tue, Sep 15, 2020 at 04:27:35PM -0700, Dave Jiang wrote:
+>>   drivers/dma/idxd/idxd.h                            |   65 +
+>>   drivers/dma/idxd/init.c                            |  100 ++
+>>   drivers/dma/idxd/irq.c                             |    6
+>>   drivers/dma/idxd/mdev.c                            | 1089 ++++++++++++++++++++
+>>   drivers/dma/idxd/mdev.h                            |  118 ++
 > 
-> I personally don't have a preference. I'll defer to Alex or Kirti to provide 
-> that guidance. It may make certains things like dealing with dma fault regions 
-> and etc easier using vfio calls from vfio_pci_private.h later on for vSVM 
-> support. It also may be the better code review and maintenance domain and 
-> alleviate Vinod having to deal with that portion since it's not dmaengine domain.
+> It is common that drivers of a subsystem will be under that
+> subsystem's directory tree. This allows the subsystem community to
+> manage pages related to their subsystem and it's drivers.
+> 
+> Should the mdev parts be moved there?
 
-TBH, I'd expect an mdev driver to be co-located with the remainder of
-its parent driver.  It's hopefully sharing more code with that driver
-than anything in mdev of vfio (either of which should be exported for
-the vendor driver).  mdev support is largely expected to be a feature of
-a driver, much like it is for i915, not necessarily its sole purpose for
-existing (see the rejected fpga mdev driver).  Also being nearby
-vfio_pci_private shouldn't invite anyone other than vfio_pci to make
-use of that header.  Thanks,
+I personally don't have a preference. I'll defer to Alex or Kirti to provide 
+that guidance. It may make certains things like dealing with dma fault regions 
+and etc easier using vfio calls from vfio_pci_private.h later on for vSVM 
+support. It also may be the better code review and maintenance domain and 
+alleviate Vinod having to deal with that portion since it's not dmaengine domain.
 
-Alex
-
+> 
+> Jason
+> 
