@@ -2,66 +2,91 @@ Return-Path: <SRS0=veQE=C3=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-13.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4AC3BC43463
-	for <dmaengine@archiver.kernel.org>; Fri, 18 Sep 2020 07:03:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5B47CC43464
+	for <dmaengine@archiver.kernel.org>; Fri, 18 Sep 2020 07:10:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1935021734
-	for <dmaengine@archiver.kernel.org>; Fri, 18 Sep 2020 07:03:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1248A206FC
+	for <dmaengine@archiver.kernel.org>; Fri, 18 Sep 2020 07:10:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1600412585;
-	bh=7dCO+MgzUJBfhAuxZ7aK0yShgDW6KFq+EN2MVT6l+lM=;
+	s=default; t=1600413051;
+	bh=UcFYRiojSL4wjmOqdsdUtVNUDrkP8yA+FquGKhTMmMg=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:List-ID:From;
-	b=r8t8DE2lX/o4/Rcx2VxYUJHgTt0CEFNk1c0fPftGkBhlVQn6xLfqyLaLtpp1B1tD1
-	 pSthg4YQd8h3+6wTH4WmbGzTCKn5FJtpYhtfLumih0DXeO1AoO4oeGoBUL1yjeEO49
-	 dZrJRUNEtNeVu9GFNnKgZN1hFqPZFJkZqWCd9x5o=
+	b=an+QsLvU5K5dDkZZ10xiUnTAKipkZDZ8ZhMsrBfFlF1+cT52IxuVN2REgF4nrg/VS
+	 TLErjtdxJtvP9c2qrFJds8Uq0C8GFOlgerWlUht7ZkwZKeuKZFDHRMerHzwiRb/RAN
+	 uwk5E2bUm7I7FWHyVdziEpeojUrdFljXtscO4exA=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726134AbgIRHDE (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 18 Sep 2020 03:03:04 -0400
-Received: from mail.kernel.org ([198.145.29.99]:43330 "EHLO mail.kernel.org"
+        id S1726427AbgIRHKu (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 18 Sep 2020 03:10:50 -0400
+Received: from mail.kernel.org ([198.145.29.99]:46620 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726109AbgIRHDE (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Fri, 18 Sep 2020 03:03:04 -0400
+        id S1726170AbgIRHKu (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Fri, 18 Sep 2020 03:10:50 -0400
 Received: from localhost (unknown [136.185.124.244])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 497A721534;
-        Fri, 18 Sep 2020 07:03:02 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 349012067C;
+        Fri, 18 Sep 2020 07:10:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1600412584;
-        bh=7dCO+MgzUJBfhAuxZ7aK0yShgDW6KFq+EN2MVT6l+lM=;
+        s=default; t=1600413050;
+        bh=UcFYRiojSL4wjmOqdsdUtVNUDrkP8yA+FquGKhTMmMg=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=vdyWkWcjuyPX1kQxOIZE6DsYreOwnYJYVh2KRLhmSIVa1U4QOWmiipjDEiLgaiH6w
-         c9Gpai48JfitOAosliHC3HlP0vC7PKNKIDEMKAaM3Z40Ga1aT+6j30kDnB8fUzNak5
-         1TcNES3E9w8grkVlnPHOM0hFR9F/t8RYBRFj/WRE=
-Date:   Fri, 18 Sep 2020 12:33:00 +0530
+        b=Vut+RtHhYZhvozfiLBoHsSxyTjcIT1/9PjLXqwo2o/qNkudvWcRrhMwK5SB119O4L
+         HW2OZZkG2JLDDkDFU01WMt9EBvfJSEY0oHBH4y0b5Ec2xakNqmTYY9jfMbhkNDroES
+         VdyC+Ni/GVjxZQpzx7O2tBGBaNKsjGV7mZ/l2mHQ=
+Date:   Fri, 18 Sep 2020 12:40:46 +0530
 From:   Vinod Koul <vkoul@kernel.org>
 To:     Liu Shixin <liushixin2@huawei.com>
-Cc:     Sean Wang <sean.wang@mediatek.com>,
+Cc:     Green Wan <green.wan@sifive.com>,
         Dan Williams <dan.j.williams@intel.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        dmaengine@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-mediatek@lists.infradead.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH -next] dmaengine: mediatek: simplify the return
- expression of mtk_uart_apdma_runtime_resume()
-Message-ID: <20200918070300.GH2968@vkoul-mobl>
-References: <20200915032622.1772309-1-liushixin2@huawei.com>
+        dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH -next] dmaengine: sf-pdma: Remove set but not used
+ variable "desc"
+Message-ID: <20200918071046.GI2968@vkoul-mobl>
+References: <20200917071756.1915449-1-liushixin2@huawei.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20200915032622.1772309-1-liushixin2@huawei.com>
+In-Reply-To: <20200917071756.1915449-1-liushixin2@huawei.com>
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On 15-09-20, 11:26, Liu Shixin wrote:
-> Simplify the return expression.
+On 17-09-20, 15:17, Liu Shixin wrote:
+> Fixes gcc '-Wunused-but-set-variable' warning:
 > 
+> drivers/dma/sf-pdma/sf-pdma.c: In function 'sf_pdma_donebh_tasklet':
+> drivers/dma/sf-pdma/sf-pdma.c:287:23: warning: unused variable 'desc' [-Wunused-variable]
+> 
+> After commit 8f6b6d060602 ("dmaengine: sf-pdma: Fix an error that calls callback twice"),
+> variable 'desc' is never used. Remove it to avoid build warning.
 
-Applied, thanks
+This was already reported by SFR and patch posted, so picked that one
+
+> 
+> Signed-off-by: Liu Shixin <liushixin2@huawei.com>
+> ---
+>  drivers/dma/sf-pdma/sf-pdma.c | 1 -
+>  1 file changed, 1 deletion(-)
+> 
+> diff --git a/drivers/dma/sf-pdma/sf-pdma.c b/drivers/dma/sf-pdma/sf-pdma.c
+> index 754994087e5f..1e66c6990d81 100644
+> --- a/drivers/dma/sf-pdma/sf-pdma.c
+> +++ b/drivers/dma/sf-pdma/sf-pdma.c
+> @@ -284,7 +284,6 @@ static void sf_pdma_free_desc(struct virt_dma_desc *vdesc)
+>  static void sf_pdma_donebh_tasklet(unsigned long arg)
+>  {
+>  	struct sf_pdma_chan *chan = (struct sf_pdma_chan *)arg;
+> -	struct sf_pdma_desc *desc = chan->desc;
+>  	unsigned long flags;
+>  
+>  	spin_lock_irqsave(&chan->lock, flags);
+> -- 
+> 2.25.1
 
 -- 
 ~Vinod
