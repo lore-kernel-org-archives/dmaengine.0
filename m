@@ -5,51 +5,50 @@ X-Spam-Level:
 X-Spam-Status: No, score=-16.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,INCLUDES_PATCH,MAILING_LIST_MULTI,
 	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=unavailable autolearn_force=no version=3.4.0
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 58287C43464
-	for <dmaengine@archiver.kernel.org>; Fri, 18 Sep 2020 02:34:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8D456C43466
+	for <dmaengine@archiver.kernel.org>; Fri, 18 Sep 2020 02:46:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1BDDD22208
-	for <dmaengine@archiver.kernel.org>; Fri, 18 Sep 2020 02:34:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4C4C5235F8
+	for <dmaengine@archiver.kernel.org>; Fri, 18 Sep 2020 02:46:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1600396499;
-	bh=qFgC6457DI4DR0BkQRI6sC0Q4iXFaMCeFOu+hKsflFg=;
+	s=default; t=1600397196;
+	bh=Mmmn4O9DHxEkZ0A4g/zA5vFLwhO4s+XICS06F85x+Wo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:List-ID:From;
-	b=LIsAHat0vJL5Sz5PNoLAaEcvBCeXL4LiGSSSHzD+aldM0NN/0aY8rY1WXhIPClawb
-	 WRGU34Mflf3k327Xn/nh07ARQD7RphVJuVtsuTt+Doa75rDZH1MdM1hgnuQ41OGPnl
-	 1tOkyjZLspHuhcX5+QVJWFuGUQvfuAdffWooYHv8=
+	b=TUaJyW5+NZusJNFO/RMDyyjT5ftcZxzvCn6zxwglz+PqZoSOO8M7GbsUI6L1KuoTG
+	 xZkqWoC3tLFT9BBOthnp9AHe2vrhWK5nd69TmDoq3Dr78LA5GFEgf/dmN3eI/GgXXM
+	 maJyxriB5uQCaQQ53dSKRfkXWQNLVvgG5xHpPqtI=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728939AbgIRCN2 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Thu, 17 Sep 2020 22:13:28 -0400
-Received: from mail.kernel.org ([198.145.29.99]:40694 "EHLO mail.kernel.org"
+        id S1730061AbgIRCqf (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Thu, 17 Sep 2020 22:46:35 -0400
+Received: from mail.kernel.org ([198.145.29.99]:33720 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728394AbgIRCN1 (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Thu, 17 Sep 2020 22:13:27 -0400
+        id S1728368AbgIRCJu (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Thu, 17 Sep 2020 22:09:50 -0400
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 55E64208E4;
-        Fri, 18 Sep 2020 02:13:24 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id DC93F23976;
+        Fri, 18 Sep 2020 02:09:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1600395205;
-        bh=qFgC6457DI4DR0BkQRI6sC0Q4iXFaMCeFOu+hKsflFg=;
+        s=default; t=1600394989;
+        bh=Mmmn4O9DHxEkZ0A4g/zA5vFLwhO4s+XICS06F85x+Wo=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=DDjs8IXVWl3tOnqxqtWev+2L3aU2FJ35AB2Vv0LbUFZlKwBnSJ87QpB/zc9cyGdq5
-         maHI3Uc9KCk6CQv/DOnBSJJh1/KD3eRsbxh6S0EjD8SnuAL3a/WNEmG4rU9IQPXfMn
-         fCOno6YY0PlRhvC5IXJW9q1L5zvYlZGv6G0yXeEU=
+        b=ZgMwOnuOl3+7zn4pTZ8F9KCZuCR58kQv5uX0rP2GJUYsKkoG23iHMJtOz52O36xKJ
+         cLSfaPweJZz7PwLcCpfsXr4C9ZsPWWaybZpv++ZgFju40h+Ano2d4T/HUskmE7ZB+c
+         4ctxZEDk523kaqvU4Yjt5SLw22wZt6OToGnfNBKE=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Dmitry Osipenko <digetx@gmail.com>,
-        Jon Hunter <jonathanh@nvidia.com>,
+Cc:     Amelie Delaunay <amelie.delaunay@st.com>,
         Vinod Koul <vkoul@kernel.org>, Sasha Levin <sashal@kernel.org>,
-        dmaengine@vger.kernel.org, linux-tegra@vger.kernel.org
-Subject: [PATCH AUTOSEL 4.14 054/127] dmaengine: tegra-apb: Prevent race conditions on channel's freeing
-Date:   Thu, 17 Sep 2020 22:11:07 -0400
-Message-Id: <20200918021220.2066485-54-sashal@kernel.org>
+        dmaengine@vger.kernel.org, linux-arm-kernel@lists.infradead.org
+Subject: [PATCH AUTOSEL 4.19 088/206] dmaengine: stm32-dma: use vchan_terminate_vdesc() in .terminate_all
+Date:   Thu, 17 Sep 2020 22:06:04 -0400
+Message-Id: <20200918020802.2065198-88-sashal@kernel.org>
 X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20200918021220.2066485-1-sashal@kernel.org>
-References: <20200918021220.2066485-1-sashal@kernel.org>
+In-Reply-To: <20200918020802.2065198-1-sashal@kernel.org>
+References: <20200918020802.2065198-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
@@ -58,37 +57,58 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-From: Dmitry Osipenko <digetx@gmail.com>
+From: Amelie Delaunay <amelie.delaunay@st.com>
 
-[ Upstream commit 8e84172e372bdca20c305d92d51d33640d2da431 ]
+[ Upstream commit d80cbef35bf89b763f06e03bb4ff8f933bf012c5 ]
 
-It's incorrect to check the channel's "busy" state without taking a lock.
-That shouldn't cause any real troubles, nevertheless it's always better
-not to have any race conditions in the code.
+To avoid race with vchan_complete, use the race free way to terminate
+running transfer.
 
-Signed-off-by: Dmitry Osipenko <digetx@gmail.com>
-Acked-by: Jon Hunter <jonathanh@nvidia.com>
-Link: https://lore.kernel.org/r/20200209163356.6439-5-digetx@gmail.com
+Move vdesc->node list_del in stm32_dma_start_transfer instead of in
+stm32_mdma_chan_complete to avoid another race in vchan_dma_desc_free_list.
+
+Signed-off-by: Amelie Delaunay <amelie.delaunay@st.com>
+Link: https://lore.kernel.org/r/20200129153628.29329-9-amelie.delaunay@st.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/tegra20-apb-dma.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/dma/stm32-dma.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/dma/tegra20-apb-dma.c b/drivers/dma/tegra20-apb-dma.c
-index 3402494cadf99..78e098b4bd89e 100644
---- a/drivers/dma/tegra20-apb-dma.c
-+++ b/drivers/dma/tegra20-apb-dma.c
-@@ -1208,8 +1208,7 @@ static void tegra_dma_free_chan_resources(struct dma_chan *dc)
+diff --git a/drivers/dma/stm32-dma.c b/drivers/dma/stm32-dma.c
+index 4903a408fc146..ac7af440f8658 100644
+--- a/drivers/dma/stm32-dma.c
++++ b/drivers/dma/stm32-dma.c
+@@ -494,8 +494,10 @@ static int stm32_dma_terminate_all(struct dma_chan *c)
  
- 	dev_dbg(tdc2dev(tdc), "Freeing channel %d\n", tdc->id);
+ 	spin_lock_irqsave(&chan->vchan.lock, flags);
  
--	if (tdc->busy)
--		tegra_dma_terminate_all(dc);
-+	tegra_dma_terminate_all(dc);
+-	if (chan->busy) {
+-		stm32_dma_stop(chan);
++	if (chan->desc) {
++		vchan_terminate_vdesc(&chan->desc->vdesc);
++		if (chan->busy)
++			stm32_dma_stop(chan);
+ 		chan->desc = NULL;
+ 	}
  
- 	spin_lock_irqsave(&tdc->lock, flags);
- 	list_splice_init(&tdc->pending_sg_req, &sg_req_list);
+@@ -551,6 +553,8 @@ static void stm32_dma_start_transfer(struct stm32_dma_chan *chan)
+ 		if (!vdesc)
+ 			return;
+ 
++		list_del(&vdesc->node);
++
+ 		chan->desc = to_stm32_dma_desc(vdesc);
+ 		chan->next_sg = 0;
+ 	}
+@@ -628,7 +632,6 @@ static void stm32_dma_handle_chan_done(struct stm32_dma_chan *chan)
+ 		} else {
+ 			chan->busy = false;
+ 			if (chan->next_sg == chan->desc->num_sgs) {
+-				list_del(&chan->desc->vdesc.node);
+ 				vchan_cookie_complete(&chan->desc->vdesc);
+ 				chan->desc = NULL;
+ 			}
 -- 
 2.25.1
 
