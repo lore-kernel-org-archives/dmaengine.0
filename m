@@ -4,48 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-16.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=unavailable
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8E93AC43465
-	for <dmaengine@archiver.kernel.org>; Fri, 18 Sep 2020 02:47:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ABD11C43464
+	for <dmaengine@archiver.kernel.org>; Fri, 18 Sep 2020 02:51:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 59C0823770
-	for <dmaengine@archiver.kernel.org>; Fri, 18 Sep 2020 02:47:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 691702078B
+	for <dmaengine@archiver.kernel.org>; Fri, 18 Sep 2020 02:51:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1600397222;
-	bh=elcW+3rFUndpO2AS3fsDWk3P0VNT7odMINnacH0N4jk=;
+	s=default; t=1600397483;
+	bh=sg7epVYCVAfK5hYDK+fLeVuPfNx226rOe/GTMCdMnvs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:List-ID:From;
-	b=1pNrhDy+WUVAkGIgunh+RgU8obMfKHa8xU7I0lTFYjdoyqoTKxWu3E+Aowx81tzWG
-	 2JmELQ4n7rS+wcaX69/1cTRs9JLlt9nFAXTMWl7Q01el4iWIJvD2pivBP9c1njA/oX
-	 uVV2jmIFIfmKK6drS2so1dywRWPOLxIu+0wDdk98=
+	b=EJhqkS7+BtYp3/xNAwgM7HpNKr+hicFELmAP901u1jm8sjDfaI0ioyFs4+BdBy8FU
+	 gwAxGHxECEOrl3MQ+OKg+mR9QcZvwdHdxEsvGOY3gqO3wQbFz4hLZ7BOgPPE7ovYOy
+	 9FhwUsNbD5uT/w1J25Be8MrmVdj1ebn17aH33I5A=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728038AbgIRCrB (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Thu, 17 Sep 2020 22:47:01 -0400
-Received: from mail.kernel.org ([198.145.29.99]:33608 "EHLO mail.kernel.org"
+        id S1728129AbgIRCvH (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Thu, 17 Sep 2020 22:51:07 -0400
+Received: from mail.kernel.org ([198.145.29.99]:60028 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727782AbgIRCJp (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Thu, 17 Sep 2020 22:09:45 -0400
+        id S1727514AbgIRCIg (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Thu, 17 Sep 2020 22:08:36 -0400
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 2D67E23977;
-        Fri, 18 Sep 2020 02:09:44 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 343EC23977;
+        Fri, 18 Sep 2020 02:08:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1600394984;
-        bh=elcW+3rFUndpO2AS3fsDWk3P0VNT7odMINnacH0N4jk=;
+        s=default; t=1600394915;
+        bh=sg7epVYCVAfK5hYDK+fLeVuPfNx226rOe/GTMCdMnvs=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=qxmWh2MYQkZ98u3j6f67Pj661wR32bvm7aYP4iA6HsR6eyB4A+nVHKQ5lGwNGeZKN
-         PFcKSWyUTdeY5dm2D/2VwIkeyw/EEG+JNg3G51kmfpG5H505ROXG+hhLZXlp2lQEGs
-         Oo1uK38hnqfgyM8vTu0Bt4QFrjF7l5L3WwvgXCcs=
+        b=KedcawEyty8F/KxKiriytfR5DKucm0IymXYqywr5x/fK789xoE2q3mCZ5bU20mXn1
+         VIuZBS2NglizChJbHu/T4YE7XkrLq+Q9fk2+QjYM8DU23mb1It3pNAYEAiKBuB22Ym
+         j/HId/XK1Zk1hVBj8yT751PCIo9usrKWQ0NNzeV0=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Amelie Delaunay <amelie.delaunay@st.com>,
+Cc:     Satendra Singh Thakur <sst2005@gmail.com>,
         Vinod Koul <vkoul@kernel.org>, Sasha Levin <sashal@kernel.org>,
-        dmaengine@vger.kernel.org, linux-arm-kernel@lists.infradead.org
-Subject: [PATCH AUTOSEL 4.19 084/206] dmaengine: stm32-mdma: use vchan_terminate_vdesc() in .terminate_all
-Date:   Thu, 17 Sep 2020 22:06:00 -0400
-Message-Id: <20200918020802.2065198-84-sashal@kernel.org>
+        dmaengine@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-mediatek@lists.infradead.org
+Subject: [PATCH AUTOSEL 4.19 027/206] dmaengine: mediatek: hsdma_probe: fixed a memory leak when devm_request_irq fails
+Date:   Thu, 17 Sep 2020 22:05:03 -0400
+Message-Id: <20200918020802.2065198-27-sashal@kernel.org>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20200918020802.2065198-1-sashal@kernel.org>
 References: <20200918020802.2065198-1-sashal@kernel.org>
@@ -57,58 +58,45 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-From: Amelie Delaunay <amelie.delaunay@st.com>
+From: Satendra Singh Thakur <sst2005@gmail.com>
 
-[ Upstream commit dfc708812a2acfc0ca56f56233b3c3e7b0d4ffe7 ]
+[ Upstream commit 1ff95243257fad07290dcbc5f7a6ad79d6e703e2 ]
 
-To avoid race with vchan_complete, use the race free way to terminate
-running transfer.
+When devm_request_irq fails, currently, the function
+dma_async_device_unregister gets called. This doesn't free
+the resources allocated by of_dma_controller_register.
+Therefore, we have called of_dma_controller_free for this purpose.
 
-Move vdesc->node list_del in stm32_mdma_start_transfer instead of in
-stm32_mdma_xfer_end to avoid another race in vchan_dma_desc_free_list.
-
-Signed-off-by: Amelie Delaunay <amelie.delaunay@st.com>
-Link: https://lore.kernel.org/r/20200127085334.13163-7-amelie.delaunay@st.com
+Signed-off-by: Satendra Singh Thakur <sst2005@gmail.com>
+Link: https://lore.kernel.org/r/20191109113523.6067-1-sst2005@gmail.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/stm32-mdma.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/dma/mediatek/mtk-hsdma.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/dma/stm32-mdma.c b/drivers/dma/stm32-mdma.c
-index 8c3c3e5b812a8..9c6867916e890 100644
---- a/drivers/dma/stm32-mdma.c
-+++ b/drivers/dma/stm32-mdma.c
-@@ -1137,6 +1137,8 @@ static void stm32_mdma_start_transfer(struct stm32_mdma_chan *chan)
- 		return;
+diff --git a/drivers/dma/mediatek/mtk-hsdma.c b/drivers/dma/mediatek/mtk-hsdma.c
+index b7ec56ae02a6e..fca232b1d4a64 100644
+--- a/drivers/dma/mediatek/mtk-hsdma.c
++++ b/drivers/dma/mediatek/mtk-hsdma.c
+@@ -997,7 +997,7 @@ static int mtk_hsdma_probe(struct platform_device *pdev)
+ 	if (err) {
+ 		dev_err(&pdev->dev,
+ 			"request_irq failed with err %d\n", err);
+-		goto err_unregister;
++		goto err_free;
  	}
  
-+	list_del(&vdesc->node);
-+
- 	chan->desc = to_stm32_mdma_desc(vdesc);
- 	hwdesc = chan->desc->node[0].hwdesc;
- 	chan->curr_hwdesc = 0;
-@@ -1252,8 +1254,10 @@ static int stm32_mdma_terminate_all(struct dma_chan *c)
- 	LIST_HEAD(head);
+ 	platform_set_drvdata(pdev, hsdma);
+@@ -1006,6 +1006,8 @@ static int mtk_hsdma_probe(struct platform_device *pdev)
  
- 	spin_lock_irqsave(&chan->vchan.lock, flags);
--	if (chan->busy) {
--		stm32_mdma_stop(chan);
-+	if (chan->desc) {
-+		vchan_terminate_vdesc(&chan->desc->vdesc);
-+		if (chan->busy)
-+			stm32_mdma_stop(chan);
- 		chan->desc = NULL;
- 	}
- 	vchan_get_all_descriptors(&chan->vchan, &head);
-@@ -1341,7 +1345,6 @@ static enum dma_status stm32_mdma_tx_status(struct dma_chan *c,
+ 	return 0;
  
- static void stm32_mdma_xfer_end(struct stm32_mdma_chan *chan)
- {
--	list_del(&chan->desc->vdesc.node);
- 	vchan_cookie_complete(&chan->desc->vdesc);
- 	chan->desc = NULL;
- 	chan->busy = false;
++err_free:
++	of_dma_controller_free(pdev->dev.of_node);
+ err_unregister:
+ 	dma_async_device_unregister(dd);
+ 
 -- 
 2.25.1
 
