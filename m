@@ -7,49 +7,49 @@ X-Spam-Status: No, score=-16.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CD14AC43465
-	for <dmaengine@archiver.kernel.org>; Fri, 18 Sep 2020 02:22:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 62097C43467
+	for <dmaengine@archiver.kernel.org>; Fri, 18 Sep 2020 02:27:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8B1F123447
-	for <dmaengine@archiver.kernel.org>; Fri, 18 Sep 2020 02:22:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2B29623730
+	for <dmaengine@archiver.kernel.org>; Fri, 18 Sep 2020 02:27:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1600395744;
-	bh=YdD/Nvo27G+e8nrcZ5gaxYJze7xGEk/EPg48EyObEbQ=;
+	s=default; t=1600396049;
+	bh=rj7yRVaJIwSD5WJDYwBMe73pX5P8cizRUn1JdT5yIl8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:List-ID:From;
-	b=xb2PjVkWPLNCsF7oyDWhfDmlwDXU3q1uG3rMdHAU9aa7jDxR4N3vQLaFK1yFwbPKd
-	 P849jX/HgoKA6OcmpvDIV055pdjLikIXjsBg+fMFtM90K104aPjZMTTlh47zG+dSB/
-	 WS1hoZTC6qFVquoZR6ELRd7wGEWoowwb5NxFbGcA=
+	b=Zo4Y22LZqw1RZK/WaujGcpjLeHgAdhJQwSpbJeWihbeGjDtvqacPYspwoFpyoiaZU
+	 M+5/OZItNnuVwY+xaLqxPBXF9IMiUOlcjF5G7xIrLEa7j1ZQpYCDOo0+lztsr6bqAU
+	 esn38IkZ6TZi69/VcMGlb96q6VMozDdK5maTMnqQ=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728955AbgIRCWJ (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Thu, 17 Sep 2020 22:22:09 -0400
-Received: from mail.kernel.org ([198.145.29.99]:48014 "EHLO mail.kernel.org"
+        id S1727294AbgIRC1J (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Thu, 17 Sep 2020 22:27:09 -0400
+Received: from mail.kernel.org ([198.145.29.99]:45040 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728051AbgIRCRY (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Thu, 17 Sep 2020 22:17:24 -0400
+        id S1729291AbgIRCPu (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Thu, 17 Sep 2020 22:15:50 -0400
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 4D59423A02;
-        Fri, 18 Sep 2020 02:17:18 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 41BBE239D0;
+        Fri, 18 Sep 2020 02:15:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1600395439;
-        bh=YdD/Nvo27G+e8nrcZ5gaxYJze7xGEk/EPg48EyObEbQ=;
+        s=default; t=1600395348;
+        bh=rj7yRVaJIwSD5WJDYwBMe73pX5P8cizRUn1JdT5yIl8=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=boYhox2MjhW2L4KYPNyqw96EC858rsb5ekoc2XWgoRhNGzTqiUdJ6fEjAG8UeAeky
-         +cjBaJjY6oXYga4/LLYm86YFcl9sHgzuERKKpKe61oo9unJmAg76+hN+/rIbEemNg1
-         Y/xgWrtvVBRlcd0rn8PmBu9kp96FXBXVtG1YQQKU=
+        b=xCVEuYSVhcuzAWW9z0Ihpc9hkN3u6Bdo/HGYf6CtNnXSiNKeQVAbZy/Z40WKE7JqQ
+         K2xQkB6atriPv7mQPWKJ4qCDJFuQeKbSdst4Rc2ZY3jM4gaZc9Mvor1tyvczXLtbfi
+         57dg99SjQRH9r7rXzLhoxIQB4shgh6ME16bQzcto=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Cc:     Dmitry Osipenko <digetx@gmail.com>,
         Jon Hunter <jonathanh@nvidia.com>,
         Vinod Koul <vkoul@kernel.org>, Sasha Levin <sashal@kernel.org>,
         dmaengine@vger.kernel.org, linux-tegra@vger.kernel.org
-Subject: [PATCH AUTOSEL 4.4 28/64] dmaengine: tegra-apb: Prevent race conditions on channel's freeing
-Date:   Thu, 17 Sep 2020 22:16:07 -0400
-Message-Id: <20200918021643.2067895-28-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 4.9 43/90] dmaengine: tegra-apb: Prevent race conditions on channel's freeing
+Date:   Thu, 17 Sep 2020 22:14:08 -0400
+Message-Id: <20200918021455.2067301-43-sashal@kernel.org>
 X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20200918021643.2067895-1-sashal@kernel.org>
-References: <20200918021643.2067895-1-sashal@kernel.org>
+In-Reply-To: <20200918021455.2067301-1-sashal@kernel.org>
+References: <20200918021455.2067301-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
@@ -76,10 +76,10 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 1 insertion(+), 2 deletions(-)
 
 diff --git a/drivers/dma/tegra20-apb-dma.c b/drivers/dma/tegra20-apb-dma.c
-index b5cf5d36de2b4..68c460a2b16ea 100644
+index 4eaf92b2b8868..909739426f78c 100644
 --- a/drivers/dma/tegra20-apb-dma.c
 +++ b/drivers/dma/tegra20-apb-dma.c
-@@ -1207,8 +1207,7 @@ static void tegra_dma_free_chan_resources(struct dma_chan *dc)
+@@ -1208,8 +1208,7 @@ static void tegra_dma_free_chan_resources(struct dma_chan *dc)
  
  	dev_dbg(tdc2dev(tdc), "Freeing channel %d\n", tdc->id);
  
