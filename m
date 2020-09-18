@@ -5,50 +5,51 @@ X-Spam-Level:
 X-Spam-Status: No, score=-16.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,INCLUDES_PATCH,MAILING_LIST_MULTI,
 	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+	autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5B161C43463
-	for <dmaengine@archiver.kernel.org>; Fri, 18 Sep 2020 02:12:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CD14AC43465
+	for <dmaengine@archiver.kernel.org>; Fri, 18 Sep 2020 02:22:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 257B523787
-	for <dmaengine@archiver.kernel.org>; Fri, 18 Sep 2020 02:12:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8B1F123447
+	for <dmaengine@archiver.kernel.org>; Fri, 18 Sep 2020 02:22:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1600395177;
-	bh=+bQuNrwBC+2CCwgy9Vn+XlWdoQkontIttZ1dYvINHiU=;
+	s=default; t=1600395744;
+	bh=YdD/Nvo27G+e8nrcZ5gaxYJze7xGEk/EPg48EyObEbQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:List-ID:From;
-	b=ODIvB36iezQ8lA/5vXtOw3kcD2NZuJXsYyzzUW7U1UGa3VzJYySLoHCbcZxlbWcjV
-	 qwOlXboiUF9ZfnP1nvycEI6AkAMKAc8pJXUofWZs/CR1uQWdxwXZv+X9a78z3i+k2K
-	 Rw+epTA9QNgzg5DcF49d9nQeTd0s9ytdk2gvD0C8=
+	b=xb2PjVkWPLNCsF7oyDWhfDmlwDXU3q1uG3rMdHAU9aa7jDxR4N3vQLaFK1yFwbPKd
+	 P849jX/HgoKA6OcmpvDIV055pdjLikIXjsBg+fMFtM90K104aPjZMTTlh47zG+dSB/
+	 WS1hoZTC6qFVquoZR6ELRd7wGEWoowwb5NxFbGcA=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728848AbgIRCM4 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Thu, 17 Sep 2020 22:12:56 -0400
-Received: from mail.kernel.org ([198.145.29.99]:39660 "EHLO mail.kernel.org"
+        id S1728955AbgIRCWJ (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Thu, 17 Sep 2020 22:22:09 -0400
+Received: from mail.kernel.org ([198.145.29.99]:48014 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728382AbgIRCMz (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Thu, 17 Sep 2020 22:12:55 -0400
+        id S1728051AbgIRCRY (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Thu, 17 Sep 2020 22:17:24 -0400
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id A20252388D;
-        Fri, 18 Sep 2020 02:12:53 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 4D59423A02;
+        Fri, 18 Sep 2020 02:17:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1600395174;
-        bh=+bQuNrwBC+2CCwgy9Vn+XlWdoQkontIttZ1dYvINHiU=;
+        s=default; t=1600395439;
+        bh=YdD/Nvo27G+e8nrcZ5gaxYJze7xGEk/EPg48EyObEbQ=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=n2+3s9oPL7ZzWKUt5a8q//Q1tNZfCplvPCZX+AkGS1+GIVCXDduJCp4Aw9nEVoGUI
-         zpprunLXscb8NNJzSa7bj7DC8syUfll36lk5B2cEAtKARbMvEAV3rPHUhFb+O1EIve
-         nlpyhzsUhHEBbAyylF7KvbupnL3iw6HtiuTpvoAM=
+        b=boYhox2MjhW2L4KYPNyqw96EC858rsb5ekoc2XWgoRhNGzTqiUdJ6fEjAG8UeAeky
+         +cjBaJjY6oXYga4/LLYm86YFcl9sHgzuERKKpKe61oo9unJmAg76+hN+/rIbEemNg1
+         Y/xgWrtvVBRlcd0rn8PmBu9kp96FXBXVtG1YQQKU=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Matthias Fend <matthias.fend@wolfvision.net>,
+Cc:     Dmitry Osipenko <digetx@gmail.com>,
+        Jon Hunter <jonathanh@nvidia.com>,
         Vinod Koul <vkoul@kernel.org>, Sasha Levin <sashal@kernel.org>,
-        dmaengine@vger.kernel.org, linux-arm-kernel@lists.infradead.org
-Subject: [PATCH AUTOSEL 4.14 030/127] dmaengine: zynqmp_dma: fix burst length configuration
-Date:   Thu, 17 Sep 2020 22:10:43 -0400
-Message-Id: <20200918021220.2066485-30-sashal@kernel.org>
+        dmaengine@vger.kernel.org, linux-tegra@vger.kernel.org
+Subject: [PATCH AUTOSEL 4.4 28/64] dmaengine: tegra-apb: Prevent race conditions on channel's freeing
+Date:   Thu, 17 Sep 2020 22:16:07 -0400
+Message-Id: <20200918021643.2067895-28-sashal@kernel.org>
 X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20200918021220.2066485-1-sashal@kernel.org>
-References: <20200918021220.2066485-1-sashal@kernel.org>
+In-Reply-To: <20200918021643.2067895-1-sashal@kernel.org>
+References: <20200918021643.2067895-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
@@ -57,89 +58,37 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-From: Matthias Fend <matthias.fend@wolfvision.net>
+From: Dmitry Osipenko <digetx@gmail.com>
 
-[ Upstream commit cc88525ebffc757e00cc5a5d61da6271646c7f5f ]
+[ Upstream commit 8e84172e372bdca20c305d92d51d33640d2da431 ]
 
-Since the dma engine expects the burst length register content as
-power of 2 value, the burst length needs to be converted first.
-Additionally add a burst length range check to avoid corrupting unrelated
-register bits.
+It's incorrect to check the channel's "busy" state without taking a lock.
+That shouldn't cause any real troubles, nevertheless it's always better
+not to have any race conditions in the code.
 
-Signed-off-by: Matthias Fend <matthias.fend@wolfvision.net>
-Link: https://lore.kernel.org/r/20200115102249.24398-1-matthias.fend@wolfvision.net
+Signed-off-by: Dmitry Osipenko <digetx@gmail.com>
+Acked-by: Jon Hunter <jonathanh@nvidia.com>
+Link: https://lore.kernel.org/r/20200209163356.6439-5-digetx@gmail.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/xilinx/zynqmp_dma.c | 24 +++++++++++++++---------
- 1 file changed, 15 insertions(+), 9 deletions(-)
+ drivers/dma/tegra20-apb-dma.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/dma/xilinx/zynqmp_dma.c b/drivers/dma/xilinx/zynqmp_dma.c
-index 6d86d05e53aa1..66d6640766ed8 100644
---- a/drivers/dma/xilinx/zynqmp_dma.c
-+++ b/drivers/dma/xilinx/zynqmp_dma.c
-@@ -125,10 +125,12 @@
- /* Max transfer size per descriptor */
- #define ZYNQMP_DMA_MAX_TRANS_LEN	0x40000000
+diff --git a/drivers/dma/tegra20-apb-dma.c b/drivers/dma/tegra20-apb-dma.c
+index b5cf5d36de2b4..68c460a2b16ea 100644
+--- a/drivers/dma/tegra20-apb-dma.c
++++ b/drivers/dma/tegra20-apb-dma.c
+@@ -1207,8 +1207,7 @@ static void tegra_dma_free_chan_resources(struct dma_chan *dc)
  
-+/* Max burst lengths */
-+#define ZYNQMP_DMA_MAX_DST_BURST_LEN    32768U
-+#define ZYNQMP_DMA_MAX_SRC_BURST_LEN    32768U
-+
- /* Reset values for data attributes */
- #define ZYNQMP_DMA_AXCACHE_VAL		0xF
--#define ZYNQMP_DMA_ARLEN_RST_VAL	0xF
--#define ZYNQMP_DMA_AWLEN_RST_VAL	0xF
+ 	dev_dbg(tdc2dev(tdc), "Freeing channel %d\n", tdc->id);
  
- #define ZYNQMP_DMA_SRC_ISSUE_RST_VAL	0x1F
+-	if (tdc->busy)
+-		tegra_dma_terminate_all(dc);
++	tegra_dma_terminate_all(dc);
  
-@@ -527,17 +529,19 @@ static void zynqmp_dma_handle_ovfl_int(struct zynqmp_dma_chan *chan, u32 status)
- 
- static void zynqmp_dma_config(struct zynqmp_dma_chan *chan)
- {
--	u32 val;
-+	u32 val, burst_val;
- 
- 	val = readl(chan->regs + ZYNQMP_DMA_CTRL0);
- 	val |= ZYNQMP_DMA_POINT_TYPE_SG;
- 	writel(val, chan->regs + ZYNQMP_DMA_CTRL0);
- 
- 	val = readl(chan->regs + ZYNQMP_DMA_DATA_ATTR);
-+	burst_val = __ilog2_u32(chan->src_burst_len);
- 	val = (val & ~ZYNQMP_DMA_ARLEN) |
--		(chan->src_burst_len << ZYNQMP_DMA_ARLEN_OFST);
-+		((burst_val << ZYNQMP_DMA_ARLEN_OFST) & ZYNQMP_DMA_ARLEN);
-+	burst_val = __ilog2_u32(chan->dst_burst_len);
- 	val = (val & ~ZYNQMP_DMA_AWLEN) |
--		(chan->dst_burst_len << ZYNQMP_DMA_AWLEN_OFST);
-+		((burst_val << ZYNQMP_DMA_AWLEN_OFST) & ZYNQMP_DMA_AWLEN);
- 	writel(val, chan->regs + ZYNQMP_DMA_DATA_ATTR);
- }
- 
-@@ -551,8 +555,10 @@ static int zynqmp_dma_device_config(struct dma_chan *dchan,
- {
- 	struct zynqmp_dma_chan *chan = to_chan(dchan);
- 
--	chan->src_burst_len = config->src_maxburst;
--	chan->dst_burst_len = config->dst_maxburst;
-+	chan->src_burst_len = clamp(config->src_maxburst, 1U,
-+		ZYNQMP_DMA_MAX_SRC_BURST_LEN);
-+	chan->dst_burst_len = clamp(config->dst_maxburst, 1U,
-+		ZYNQMP_DMA_MAX_DST_BURST_LEN);
- 
- 	return 0;
- }
-@@ -873,8 +879,8 @@ static int zynqmp_dma_chan_probe(struct zynqmp_dma_device *zdev,
- 		return PTR_ERR(chan->regs);
- 
- 	chan->bus_width = ZYNQMP_DMA_BUS_WIDTH_64;
--	chan->dst_burst_len = ZYNQMP_DMA_AWLEN_RST_VAL;
--	chan->src_burst_len = ZYNQMP_DMA_ARLEN_RST_VAL;
-+	chan->dst_burst_len = ZYNQMP_DMA_MAX_DST_BURST_LEN;
-+	chan->src_burst_len = ZYNQMP_DMA_MAX_SRC_BURST_LEN;
- 	err = of_property_read_u32(node, "xlnx,bus-width", &chan->bus_width);
- 	if (err < 0) {
- 		dev_err(&pdev->dev, "missing xlnx,bus-width property\n");
+ 	spin_lock_irqsave(&tdc->lock, flags);
+ 	list_splice_init(&tdc->pending_sg_req, &sg_req_list);
 -- 
 2.25.1
 
