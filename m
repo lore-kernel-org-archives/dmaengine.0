@@ -2,144 +2,84 @@ Return-Path: <SRS0=veQE=C3=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-16.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=unavailable autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9AF8CC43464
-	for <dmaengine@archiver.kernel.org>; Fri, 18 Sep 2020 03:09:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E0FD4C43463
+	for <dmaengine@archiver.kernel.org>; Fri, 18 Sep 2020 06:30:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 40B54206DB
-	for <dmaengine@archiver.kernel.org>; Fri, 18 Sep 2020 03:09:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 928D421534
+	for <dmaengine@archiver.kernel.org>; Fri, 18 Sep 2020 06:30:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1600398547;
-	bh=MnnWDFyrkqvG3zkn6qDUnnMZ34RE9hdHGsEeA+0Snow=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:List-ID:From;
-	b=rsOqh13b40JQC8q54U3J89n0hcHpd7mSGXLhSTmSmGsGGcu5HtbAo+nq8xCQC9OKO
-	 akLAFSnIrJ6AGgE3D4m0n+DFLQdXdtzxFD4EBdrLZZQ1FQEjvoc+CokV+G9At8TQZt
-	 DFt2w+FLTu8SAhz+KQdO/0kNUKFeNKMOssVU8y9c=
+	s=default; t=1600410617;
+	bh=f+UJt77FBOV84lPqPvwhu9odrmdgbM8zk/JtwKt07OY=;
+	h=From:To:Cc:Subject:Date:List-ID:From;
+	b=ioqLLVAKscQQxotiDoLnJKYdAToOzvwA7P7QxzhEfLH2YU6A84DeakuPWEK1mDSr8
+	 1lrv1lX5lZ3Ho0/5WU4NzN2tZKcxAkijh/1aeM77Z9dFdot2fRHlVp/l8l4A191Ycz
+	 b1yFeyO6pcFidNE+V0u7nZ6BEJzgwArfousrctI8=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726126AbgIRDJG (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Thu, 17 Sep 2020 23:09:06 -0400
-Received: from mail.kernel.org ([198.145.29.99]:49082 "EHLO mail.kernel.org"
+        id S1726218AbgIRGaR (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 18 Sep 2020 02:30:17 -0400
+Received: from mail.kernel.org ([198.145.29.99]:33090 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726983AbgIRCDK (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Thu, 17 Sep 2020 22:03:10 -0400
-Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        id S1725886AbgIRGaR (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Fri, 18 Sep 2020 02:30:17 -0400
+Received: from localhost.localdomain (unknown [136.185.124.244])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 355DD235F9;
-        Fri, 18 Sep 2020 02:03:09 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id C0D2E20DD4;
+        Fri, 18 Sep 2020 06:30:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1600394590;
-        bh=MnnWDFyrkqvG3zkn6qDUnnMZ34RE9hdHGsEeA+0Snow=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=IfYIaZmTlqqE0gK5urk+oFW6pyAWbxFraGflfSPUrlqA8xBRJTw2WK7tGJz0sokBB
-         cXhu2k6WDameBgHCr3saNGrmC7QjEfYxJQg7E7O9fsE/ERigPb9habp0qoizMmfmcF
-         JHEcY2MUvcHN99q2HJMCX8uSinLCIkK+HJAKqhtQ=
-From:   Sasha Levin <sashal@kernel.org>
-To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Matthias Fend <matthias.fend@wolfvision.net>,
-        Vinod Koul <vkoul@kernel.org>, Sasha Levin <sashal@kernel.org>,
-        dmaengine@vger.kernel.org, linux-arm-kernel@lists.infradead.org
-Subject: [PATCH AUTOSEL 5.4 098/330] dmaengine: zynqmp_dma: fix burst length configuration
-Date:   Thu, 17 Sep 2020 21:57:18 -0400
-Message-Id: <20200918020110.2063155-98-sashal@kernel.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20200918020110.2063155-1-sashal@kernel.org>
-References: <20200918020110.2063155-1-sashal@kernel.org>
+        s=default; t=1600410616;
+        bh=f+UJt77FBOV84lPqPvwhu9odrmdgbM8zk/JtwKt07OY=;
+        h=From:To:Cc:Subject:Date:From;
+        b=trVJbqszaKuIBUzrb1htkXECCg/C4bCqnlp8I5XWN493UuKcIlx9WF6MZfouw4Rtg
+         D6vfqDHqP3ynJBdQC1zqwuXiuqGqRLMFwRLAbcvsoc0p7hg9AFgphvA1lrJVdMcqbz
+         m3nXpJ/DoLgV/Dzz8CwCIyE7CdDi7cWWjTmTDjzI=
+From:   Vinod Koul <vkoul@kernel.org>
+To:     dmaengine@vger.kernel.org
+Cc:     Vinod Koul <vkoul@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Peter Ujfalusi <peter.ujfalusi@ti.com>
+Subject: [PATCH v2 0/3] dmaengine: Add support for QCOM GSI dma controller
+Date:   Fri, 18 Sep 2020 11:59:52 +0530
+Message-Id: <20200918062955.2095156-1-vkoul@kernel.org>
+X-Mailer: git-send-email 2.26.2
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-From: Matthias Fend <matthias.fend@wolfvision.net>
+This series adds support for Qcom GSI dma controller found on Qualcomm SoCs.
+This controller can program the peripheral configuration so we add
+additional parameters in dma_slave_config for configuring the peripherals
+like spi and i2c.
 
-[ Upstream commit cc88525ebffc757e00cc5a5d61da6271646c7f5f ]
+Changes in v2:
+ - Update the binding and drop qcom specific properties
+ - Move peripheral configuration as a pointer
+ - Move submit queue for transactions to issue_pending
 
-Since the dma engine expects the burst length register content as
-power of 2 value, the burst length needs to be converted first.
-Additionally add a burst length range check to avoid corrupting unrelated
-register bits.
+Vinod Koul (3):
+  dt-bindings: dmaengine: Document qcom,gpi dma binding
+  dmaengine: add peripheral configuration
+  dmaengine: qcom: Add GPI dma driver
 
-Signed-off-by: Matthias Fend <matthias.fend@wolfvision.net>
-Link: https://lore.kernel.org/r/20200115102249.24398-1-matthias.fend@wolfvision.net
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- drivers/dma/xilinx/zynqmp_dma.c | 24 +++++++++++++++---------
- 1 file changed, 15 insertions(+), 9 deletions(-)
+ .../devicetree/bindings/dma/qcom,gpi.yaml     |   86 +
+ drivers/dma/qcom/Kconfig                      |   12 +
+ drivers/dma/qcom/Makefile                     |    1 +
+ drivers/dma/qcom/gpi.c                        | 2280 +++++++++++++++++
+ include/dt-bindings/dma/qcom-gpi.h            |   11 +
+ include/linux/dmaengine.h                     |   90 +
+ 6 files changed, 2480 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/dma/qcom,gpi.yaml
+ create mode 100644 drivers/dma/qcom/gpi.c
+ create mode 100644 include/dt-bindings/dma/qcom-gpi.h
 
-diff --git a/drivers/dma/xilinx/zynqmp_dma.c b/drivers/dma/xilinx/zynqmp_dma.c
-index 9c845c07b107c..d47749a35863f 100644
---- a/drivers/dma/xilinx/zynqmp_dma.c
-+++ b/drivers/dma/xilinx/zynqmp_dma.c
-@@ -123,10 +123,12 @@
- /* Max transfer size per descriptor */
- #define ZYNQMP_DMA_MAX_TRANS_LEN	0x40000000
- 
-+/* Max burst lengths */
-+#define ZYNQMP_DMA_MAX_DST_BURST_LEN    32768U
-+#define ZYNQMP_DMA_MAX_SRC_BURST_LEN    32768U
-+
- /* Reset values for data attributes */
- #define ZYNQMP_DMA_AXCACHE_VAL		0xF
--#define ZYNQMP_DMA_ARLEN_RST_VAL	0xF
--#define ZYNQMP_DMA_AWLEN_RST_VAL	0xF
- 
- #define ZYNQMP_DMA_SRC_ISSUE_RST_VAL	0x1F
- 
-@@ -534,17 +536,19 @@ static void zynqmp_dma_handle_ovfl_int(struct zynqmp_dma_chan *chan, u32 status)
- 
- static void zynqmp_dma_config(struct zynqmp_dma_chan *chan)
- {
--	u32 val;
-+	u32 val, burst_val;
- 
- 	val = readl(chan->regs + ZYNQMP_DMA_CTRL0);
- 	val |= ZYNQMP_DMA_POINT_TYPE_SG;
- 	writel(val, chan->regs + ZYNQMP_DMA_CTRL0);
- 
- 	val = readl(chan->regs + ZYNQMP_DMA_DATA_ATTR);
-+	burst_val = __ilog2_u32(chan->src_burst_len);
- 	val = (val & ~ZYNQMP_DMA_ARLEN) |
--		(chan->src_burst_len << ZYNQMP_DMA_ARLEN_OFST);
-+		((burst_val << ZYNQMP_DMA_ARLEN_OFST) & ZYNQMP_DMA_ARLEN);
-+	burst_val = __ilog2_u32(chan->dst_burst_len);
- 	val = (val & ~ZYNQMP_DMA_AWLEN) |
--		(chan->dst_burst_len << ZYNQMP_DMA_AWLEN_OFST);
-+		((burst_val << ZYNQMP_DMA_AWLEN_OFST) & ZYNQMP_DMA_AWLEN);
- 	writel(val, chan->regs + ZYNQMP_DMA_DATA_ATTR);
- }
- 
-@@ -560,8 +564,10 @@ static int zynqmp_dma_device_config(struct dma_chan *dchan,
- {
- 	struct zynqmp_dma_chan *chan = to_chan(dchan);
- 
--	chan->src_burst_len = config->src_maxburst;
--	chan->dst_burst_len = config->dst_maxburst;
-+	chan->src_burst_len = clamp(config->src_maxburst, 1U,
-+		ZYNQMP_DMA_MAX_SRC_BURST_LEN);
-+	chan->dst_burst_len = clamp(config->dst_maxburst, 1U,
-+		ZYNQMP_DMA_MAX_DST_BURST_LEN);
- 
- 	return 0;
- }
-@@ -887,8 +893,8 @@ static int zynqmp_dma_chan_probe(struct zynqmp_dma_device *zdev,
- 		return PTR_ERR(chan->regs);
- 
- 	chan->bus_width = ZYNQMP_DMA_BUS_WIDTH_64;
--	chan->dst_burst_len = ZYNQMP_DMA_AWLEN_RST_VAL;
--	chan->src_burst_len = ZYNQMP_DMA_ARLEN_RST_VAL;
-+	chan->dst_burst_len = ZYNQMP_DMA_MAX_DST_BURST_LEN;
-+	chan->src_burst_len = ZYNQMP_DMA_MAX_SRC_BURST_LEN;
- 	err = of_property_read_u32(node, "xlnx,bus-width", &chan->bus_width);
- 	if (err < 0) {
- 		dev_err(&pdev->dev, "missing xlnx,bus-width property\n");
 -- 
-2.25.1
+2.26.2
 
