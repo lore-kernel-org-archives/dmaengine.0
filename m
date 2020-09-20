@@ -2,87 +2,77 @@ Return-Path: <SRS0=0QqC=C5=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.2 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=unavailable
+X-Spam-Status: No, score=-9.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=unavailable
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1A8CEC43465
-	for <dmaengine@archiver.kernel.org>; Sun, 20 Sep 2020 08:38:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0CC86C43465
+	for <dmaengine@archiver.kernel.org>; Sun, 20 Sep 2020 12:16:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DC50423119
-	for <dmaengine@archiver.kernel.org>; Sun, 20 Sep 2020 08:38:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DC18321531
+	for <dmaengine@archiver.kernel.org>; Sun, 20 Sep 2020 12:16:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726376AbgITIi0 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Sun, 20 Sep 2020 04:38:26 -0400
-Received: from jabberwock.ucw.cz ([46.255.230.98]:59824 "EHLO
-        jabberwock.ucw.cz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726370AbgITIi0 (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Sun, 20 Sep 2020 04:38:26 -0400
-Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
-        id BE7501C0B94; Sun, 20 Sep 2020 10:28:39 +0200 (CEST)
-Date:   Sun, 20 Sep 2020 10:28:38 +0200
-From:   Pavel Machek <pavel@ucw.cz>
-To:     linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, dan.j.williams@intel.com,
-        vkoul@kernel.org, ludovic.desroches@microchip.com,
-        stable@vger.kernel.org, Greg KH <greg@kroah.com>
-Subject: [PATCH 4.19] dmaengine: at_hdmac: Fix memory leak
-Message-ID: <20200920082838.GA813@amd>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-        protocol="application/pgp-signature"; boundary="XsQoSWH+UP9D9v3l"
-Content-Disposition: inline
-User-Agent: Mutt/1.5.23 (2014-03-12)
+        id S1726441AbgITMQZ (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Sun, 20 Sep 2020 08:16:25 -0400
+Received: from mail2-relais-roc.national.inria.fr ([192.134.164.83]:33987 "EHLO
+        mail2-relais-roc.national.inria.fr" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726390AbgITMQY (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Sun, 20 Sep 2020 08:16:24 -0400
+X-Greylist: delayed 431 seconds by postgrey-1.27 at vger.kernel.org; Sun, 20 Sep 2020 08:16:20 EDT
+X-IronPort-AV: E=Sophos;i="5.77,282,1596492000"; 
+   d="scan'208";a="468612190"
+Received: from palace.lip6.fr ([132.227.105.202])
+  by mail2-relais-roc.national.inria.fr with ESMTP/TLS/AES256-SHA256; 20 Sep 2020 14:08:58 +0200
+From:   Julia Lawall <Julia.Lawall@inria.fr>
+To:     Dan Williams <dan.j.williams@intel.com>
+Cc:     kernel-janitors@vger.kernel.org, Vinod Koul <vkoul@kernel.org>,
+        dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH 04/14] dmaengine: sh: drop double zeroing
+Date:   Sun, 20 Sep 2020 13:26:16 +0200
+Message-Id: <1600601186-7420-5-git-send-email-Julia.Lawall@inria.fr>
+X-Mailer: git-send-email 1.9.1
+In-Reply-To: <1600601186-7420-1-git-send-email-Julia.Lawall@inria.fr>
+References: <1600601186-7420-1-git-send-email-Julia.Lawall@inria.fr>
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
+sg_init_table zeroes its first argument, so the allocation of that argument
+doesn't have to.
 
---XsQoSWH+UP9D9v3l
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+the semantic patch that makes this change is as follows:
+(http://coccinelle.lip6.fr/)
 
+// <smpl>
+@@
+expression x,n,flags;
+@@
 
-This fixes memory leak in at_hdmac. Mainline does not have the same
-problem.
+x = 
+- kcalloc
++ kmalloc_array
+  (n,sizeof(*x),flags)
+...
+sg_init_table(x,n)
+// </smpl>
 
-Signed-off-by: Pavel Machek (CIP) <pavel@denx.de>
+Signed-off-by: Julia Lawall <Julia.Lawall@inria.fr>
 
-diff --git a/drivers/dma/at_hdmac.c b/drivers/dma/at_hdmac.c
-index 86427f6ba78c..0847b2055857 100644
---- a/drivers/dma/at_hdmac.c
-+++ b/drivers/dma/at_hdmac.c
-@@ -1714,8 +1714,10 @@ static struct dma_chan *at_dma_xlate(struct of_phand=
-le_args *dma_spec,
- 	atslave->dma_dev =3D &dmac_pdev->dev;
-=20
- 	chan =3D dma_request_channel(mask, at_dma_filter, atslave);
--	if (!chan)
-+	if (!chan) {
-+		kfree(atslave);
+---
+ drivers/dma/sh/shdma-base.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff -u -p a/drivers/dma/sh/shdma-base.c b/drivers/dma/sh/shdma-base.c
+--- a/drivers/dma/sh/shdma-base.c
++++ b/drivers/dma/sh/shdma-base.c
+@@ -728,7 +728,7 @@ static struct dma_async_tx_descriptor *s
+ 	 * Allocate the sg list dynamically as it would consumer too much stack
+ 	 * space.
+ 	 */
+-	sgl = kcalloc(sg_len, sizeof(*sgl), GFP_KERNEL);
++	sgl = kmalloc_array(sg_len, sizeof(*sgl), GFP_KERNEL);
+ 	if (!sgl)
  		return NULL;
-+	}
-=20
- 	atchan =3D to_at_dma_chan(chan);
- 	atchan->per_if =3D dma_spec->args[0] & 0xff;
+ 
 
---=20
-(english) http://www.livejournal.com/~pavelmachek
-(cesky, pictures) http://atrey.karlin.mff.cuni.cz/~pavel/picture/horses/blo=
-g.html
-
---XsQoSWH+UP9D9v3l
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iEYEARECAAYFAl9nErYACgkQMOfwapXb+vI9BACgw3g6qlJ65PvDed0Jfrfa0voB
-nFMAoIHRW+dHA2qeUSnIg4WPsR58F/K2
-=U2YD
------END PGP SIGNATURE-----
-
---XsQoSWH+UP9D9v3l--
