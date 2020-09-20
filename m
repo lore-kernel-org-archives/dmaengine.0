@@ -2,63 +2,100 @@ Return-Path: <SRS0=0QqC=C5=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_GIT autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BFF33C43468
-	for <dmaengine@archiver.kernel.org>; Sun, 20 Sep 2020 12:16:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 624BAC43463
+	for <dmaengine@archiver.kernel.org>; Sun, 20 Sep 2020 14:08:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 93BC021531
-	for <dmaengine@archiver.kernel.org>; Sun, 20 Sep 2020 12:16:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 16351235FA
+	for <dmaengine@archiver.kernel.org>; Sun, 20 Sep 2020 14:08:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=default; t=1600610881;
+	bh=5Nu/Q5V28hWJU3Crt7+FLHDN+lSqZIJn2t8MycJ4Kfc=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:List-ID:From;
+	b=AM8RlKCkRj0kNCECy/fjRmu8CquMcwmsBzJbSSOt2bq2712jonHt5A+enAD3YuFkL
+	 IRHb1t8mCC2dUlfLq6fve8aoqCNsjlMyPZ4GLIj9eQ9BDQHNxkNljVLK4dc4BmGxw3
+	 jFRdCd3c07arhXhI9k1kL+0wRvvwCBg/sd/ERBhk=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726382AbgITMQX (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Sun, 20 Sep 2020 08:16:23 -0400
-Received: from mail2-relais-roc.national.inria.fr ([192.134.164.83]:33987 "EHLO
-        mail2-relais-roc.national.inria.fr" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726273AbgITMQX (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Sun, 20 Sep 2020 08:16:23 -0400
-X-Greylist: delayed 431 seconds by postgrey-1.27 at vger.kernel.org; Sun, 20 Sep 2020 08:16:20 EDT
-X-IronPort-AV: E=Sophos;i="5.77,282,1596492000"; 
-   d="scan'208";a="468612186"
-Received: from palace.lip6.fr ([132.227.105.202])
-  by mail2-relais-roc.national.inria.fr with ESMTP/TLS/AES256-SHA256; 20 Sep 2020 14:08:58 +0200
-From:   Julia Lawall <Julia.Lawall@inria.fr>
-To:     linux-spi@vger.kernel.org
-Cc:     kernel-janitors@vger.kernel.org, rds-devel@oss.oracle.com,
-        linux-rdma@vger.kernel.org, Yossi Leybovich <sleybo@amazon.com>,
-        netdev@vger.kernel.org, linux-serial@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-scsi@vger.kernel.org,
-        target-devel@vger.kernel.org,
-        Dan Williams <dan.j.williams@intel.com>,
-        dmaengine@vger.kernel.org, linux-block@vger.kernel.org,
-        linux-nfs@vger.kernel.org, linux-wireless@vger.kernel.org,
-        linux-media@vger.kernel.org, linux-pci@vger.kernel.org
-Subject: [PATCH 00/14] drop double zeroing
-Date:   Sun, 20 Sep 2020 13:26:12 +0200
-Message-Id: <1600601186-7420-1-git-send-email-Julia.Lawall@inria.fr>
-X-Mailer: git-send-email 1.9.1
+        id S1726306AbgITOIA (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Sun, 20 Sep 2020 10:08:00 -0400
+Received: from mail.kernel.org ([198.145.29.99]:34010 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726290AbgITOIA (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Sun, 20 Sep 2020 10:08:00 -0400
+Received: from localhost (83-86-74-64.cable.dynamic.v4.ziggo.nl [83.86.74.64])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id C05FC21531;
+        Sun, 20 Sep 2020 14:07:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1600610879;
+        bh=5Nu/Q5V28hWJU3Crt7+FLHDN+lSqZIJn2t8MycJ4Kfc=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=my7AamuI0IRhPPpTH8LoiNnx+5ToKW4tisR+RYX62c0lCpubPnNVu35GdWXBc2RqE
+         BncX3ahljtB9G9+fJyoK6vnft7jC2L8PKTHeIHBUJ0hLizAQty/w7wk5tOL0RQd562
+         xvfzpRl+X/f0CbrhiyMVi/j5k1OB0ObMhpYkNLEE=
+Date:   Sun, 20 Sep 2020 16:08:24 +0200
+From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To:     "Lad, Prabhakar" <prabhakar.csengg@gmail.com>
+Cc:     Geert Uytterhoeven <geert+renesas@glider.be>,
+        Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
+        Jens Axboe <axboe@kernel.dk>, Rob Herring <robh+dt@kernel.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Marek Vasut <marek.vasut+renesas@gmail.com>,
+        Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+        Mark Brown <broonie@kernel.org>,
+        Niklas <niklas.soderlund@ragnatech.se>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Magnus Damm <magnus.damm@gmail.com>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, linux-ide@vger.kernel.org,
+        dmaengine <dmaengine@vger.kernel.org>,
+        Linux I2C <linux-i2c@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        linux-media <linux-media@vger.kernel.org>,
+        linux-pci <linux-pci@vger.kernel.org>,
+        alsa-devel <alsa-devel@alsa-project.org>,
+        Linux-Renesas <linux-renesas-soc@vger.kernel.org>,
+        USB list <linux-usb@vger.kernel.org>
+Subject: Re: [PATCH 07/20] dt-bindings: usb: renesas,usb3-peri: Document
+ r8a774e1 support
+Message-ID: <20200920140824.GA2915460@kroah.com>
+References: <1594919915-5225-1-git-send-email-prabhakar.mahadev-lad.rj@bp.renesas.com>
+ <1594919915-5225-8-git-send-email-prabhakar.mahadev-lad.rj@bp.renesas.com>
+ <CA+V-a8vJ2n3KEL8P+XmVob2zjoWaX+s4a6c1TV_WoPFkwdkZmA@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CA+V-a8vJ2n3KEL8P+XmVob2zjoWaX+s4a6c1TV_WoPFkwdkZmA@mail.gmail.com>
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-sg_init_table zeroes its first argument, so the allocation of that argument
-doesn't have to.
+On Sat, Sep 19, 2020 at 11:50:07AM +0100, Lad, Prabhakar wrote:
+> Hi Greg,
+> 
+> On Thu, Jul 16, 2020 at 6:19 PM Lad Prabhakar
+> <prabhakar.mahadev-lad.rj@bp.renesas.com> wrote:
+> >
+> > Document RZ/G2H (R8A774E1) SoC bindings.
+> >
+> > Signed-off-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+> > Reviewed-by: Marian-Cristian Rotariu <marian-cristian.rotariu.rb@bp.renesas.com>
+> > ---
+> >  Documentation/devicetree/bindings/usb/renesas,usb3-peri.yaml | 1 +
+> >  1 file changed, 1 insertion(+)
+> >
+> Could you please pick this patch.
 
----
+Don't DT patches have to be acked by a DT maintainer first?
 
- block/bsg-lib.c                                  |    2 +-
- drivers/dma/sh/rcar-dmac.c                       |    2 +-
- drivers/dma/sh/shdma-base.c                      |    2 +-
- drivers/infiniband/hw/efa/efa_verbs.c            |    2 +-
- drivers/media/common/saa7146/saa7146_core.c      |    2 +-
- drivers/misc/mic/scif/scif_nodeqp.c              |    2 +-
- drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.c |    2 +-
- drivers/net/wireless/intel/iwlwifi/fw/dbg.c      |    2 +-
- drivers/pci/p2pdma.c                             |    2 +-
- drivers/spi/spi-topcliff-pch.c                   |    4 ++--
- drivers/target/target_core_rd.c                  |    2 +-
- drivers/tty/serial/pch_uart.c                    |    2 +-
- net/rds/rdma.c                                   |    2 +-
- net/sunrpc/xprtrdma/frwr_ops.c                   |    2 +-
- 14 files changed, 15 insertions(+), 15 deletions(-)
+thanks,
+
+greg k-h
