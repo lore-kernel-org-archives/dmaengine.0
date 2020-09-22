@@ -2,91 +2,92 @@ Return-Path: <SRS0=rv+v=C7=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A4FAEC2D0E2
-	for <dmaengine@archiver.kernel.org>; Tue, 22 Sep 2020 11:58:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BC916C2D0E2
+	for <dmaengine@archiver.kernel.org>; Tue, 22 Sep 2020 11:58:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5BD092399A
-	for <dmaengine@archiver.kernel.org>; Tue, 22 Sep 2020 11:58:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 756BC2395C
+	for <dmaengine@archiver.kernel.org>; Tue, 22 Sep 2020 11:58:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726531AbgIVL6E (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 22 Sep 2020 07:58:04 -0400
-Received: from mga12.intel.com ([192.55.52.136]:10008 "EHLO mga12.intel.com"
+        id S1726533AbgIVL6v (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 22 Sep 2020 07:58:51 -0400
+Received: from mga14.intel.com ([192.55.52.115]:20059 "EHLO mga14.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726522AbgIVL6D (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Tue, 22 Sep 2020 07:58:03 -0400
-IronPort-SDR: F4LNkLofkUxzh6ObvKq4MJV4bEKEsArDfM+8CnJDaTvhlVPpXHd09sSOL7KlqC31p2MAUVR2No
- 7fHz54mTBJ0g==
-X-IronPort-AV: E=McAfee;i="6000,8403,9751"; a="140065266"
+        id S1726522AbgIVL6v (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Tue, 22 Sep 2020 07:58:51 -0400
+IronPort-SDR: 5LCEebTDri5tZuu1b6Ub3nKb7MZYP9e1PHDXPAUeYx6VDgjex81r6UPc5EblbDsVOB81vRHAdR
+ wzjfWQHN9A2Q==
+X-IronPort-AV: E=McAfee;i="6000,8403,9751"; a="159875894"
 X-IronPort-AV: E=Sophos;i="5.77,290,1596524400"; 
-   d="scan'208";a="140065266"
+   d="scan'208";a="159875894"
 X-Amp-Result: SKIPPED(no attachment in message)
 X-Amp-File-Uploaded: False
-Received: from orsmga008.jf.intel.com ([10.7.209.65])
-  by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Sep 2020 04:58:03 -0700
-IronPort-SDR: gtIw4TkoGmsPaxjaEx3JK2CLJquLAVlTDOEJ0iz108AtW8SwHgBYOuvQji+Fr9Amp8pazPcqcV
- 09Ta7yRtdlXw==
+Received: from fmsmga002.fm.intel.com ([10.253.24.26])
+  by fmsmga103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Sep 2020 04:58:50 -0700
+IronPort-SDR: H6xQVAtSobNRjl5LKAYnh08FLJHIOK0yX+FfGDT0zPy8nUH83B+/0Ug1KUvhkcJ46qa95Lq27P
+ 89vaTWqOgYZQ==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="5.77,290,1596524400"; 
-   d="scan'208";a="338271893"
-Received: from smile.fi.intel.com (HELO smile) ([10.237.68.40])
-  by orsmga008.jf.intel.com with ESMTP; 22 Sep 2020 04:58:02 -0700
-Received: from andy by smile with local (Exim 4.94)
-        (envelope-from <andriy.shevchenko@linux.intel.com>)
-        id 1kKgth-0015E7-9Z; Tue, 22 Sep 2020 14:55:49 +0300
-Date:   Tue, 22 Sep 2020 14:55:49 +0300
+   d="scan'208";a="341995097"
+Received: from black.fi.intel.com ([10.237.72.28])
+  by fmsmga002.fm.intel.com with ESMTP; 22 Sep 2020 04:58:49 -0700
+Received: by black.fi.intel.com (Postfix, from userid 1003)
+        id 369231B4; Tue, 22 Sep 2020 14:58:48 +0300 (EEST)
 From:   Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Dan Williams <dan.j.williams@intel.com>, dmaengine@vger.kernel.org,
-        Vladimir Murzin <vladimir.murzin@arm.com>
-Subject: Re: [PATCH v1 1/3] dmaengine: dmatest: Fix regression when run
- command on misconfigured channel
-Message-ID: <20200922115549.GQ3956970@smile.fi.intel.com>
-References: <20200916133456.79280-1-andriy.shevchenko@linux.intel.com>
- <20200917103034.GZ2968@vkoul-mobl>
- <20200922114722.GO3956970@smile.fi.intel.com>
+To:     Dan Williams <dan.j.williams@intel.com>, dmaengine@vger.kernel.org,
+        Vinod Koul <vkoul@kernel.org>
+Cc:     Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+        Vladimir Murzin <vladimir.murzin@arm.com>,
+        Peter Ujfalusi <peter.ujfalusi@ti.com>
+Subject: [PATCH v2 3/3] dmaengine: dmatest: Return boolean result directly in filter()
+Date:   Tue, 22 Sep 2020 14:58:47 +0300
+Message-Id: <20200922115847.30100-3-andriy.shevchenko@linux.intel.com>
+X-Mailer: git-send-email 2.28.0
+In-Reply-To: <20200922115847.30100-1-andriy.shevchenko@linux.intel.com>
+References: <20200922115847.30100-1-andriy.shevchenko@linux.intel.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200922114722.GO3956970@smile.fi.intel.com>
-Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On Tue, Sep 22, 2020 at 02:47:22PM +0300, Andy Shevchenko wrote:
-> On Thu, Sep 17, 2020 at 04:00:34PM +0530, Vinod Koul wrote:
-> > On 16-09-20, 16:34, Andy Shevchenko wrote:
-> > > From: Vladimir Murzin <vladimir.murzin@arm.com>
+There is no need to have a conditional for boolean expression when
+function returns bool. Drop unnecessary code and return boolean
+result directly.
 
-> > > Andy reported that commit 6b41030fdc79 ("dmaengine: dmatest:
-> > > Restore default for channel") broke his scripts for the case
-> > > where "busy" channel is used for configuration with expectation
-> > > that run command would do nothing (and return 0). Instead,
-> > > behavior was (unintentionally) changed to treat such case as
-> > > under-configuration and progress with defaults, i.e. run command
-> > > would start a test with default setting for channel (which would
-> > > use all channels).
-> > 
-> > but a mis-configured channel returning success and doing nothing does
-> > not look as a good behaviour, I agree it broke Andy's script but the
-> > behaviour was not good to start with ;)
-> 
-> Which used to be a previous behaviour. I don't understand what should I do here
-> as after this patch (and even after the initial multi-channel support patch)
-> the behaviour is like you desire.
+While at it, drop unneeded casting from void *.
 
-Okay, I have dropped the part '(and return 0)' to avoid ambiguity.
+Cc: Vladimir Murzin <vladimir.murzin@arm.com>
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Tested-by: Peter Ujfalusi <peter.ujfalusi@ti.com>
+---
+v2: added tag (Peter)
+ drivers/dma/dmatest.c | 8 +-------
+ 1 file changed, 1 insertion(+), 7 deletions(-)
 
-> > > Restore original behavior with tracking status of channel setter
-> > > so we can distinguish between misconfigured and under-configured
-> > > cases in run command and act accordingly.
-
+diff --git a/drivers/dma/dmatest.c b/drivers/dma/dmatest.c
+index f04f32bdf8f7..2575c8128d95 100644
+--- a/drivers/dma/dmatest.c
++++ b/drivers/dma/dmatest.c
+@@ -1070,13 +1070,7 @@ static int dmatest_add_channel(struct dmatest_info *info,
+ 
+ static bool filter(struct dma_chan *chan, void *param)
+ {
+-	struct dmatest_params *params = param;
+-
+-	if (!dmatest_match_channel(params, chan) ||
+-	    !dmatest_match_device(params, chan->device))
+-		return false;
+-	else
+-		return true;
++	return dmatest_match_channel(param, chan) && dmatest_match_device(param, chan->device);
+ }
+ 
+ static void request_channels(struct dmatest_info *info,
 -- 
-With Best Regards,
-Andy Shevchenko
-
+2.28.0
 
