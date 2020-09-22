@@ -2,103 +2,82 @@ Return-Path: <SRS0=rv+v=C7=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.6 required=3.0 tests=BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.6 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 43DF8C2D0E2
-	for <dmaengine@archiver.kernel.org>; Tue, 22 Sep 2020 20:57:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B46DCC2D0E2
+	for <dmaengine@archiver.kernel.org>; Tue, 22 Sep 2020 23:32:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CCC9523600
-	for <dmaengine@archiver.kernel.org>; Tue, 22 Sep 2020 20:57:41 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=deltatee.com header.i=@deltatee.com header.b="KW7paQGH"
+	by mail.kernel.org (Postfix) with ESMTP id 8305122206
+	for <dmaengine@archiver.kernel.org>; Tue, 22 Sep 2020 23:32:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=default; t=1600817536;
+	bh=QSFujodw9ifGIZ6PeLfTIFMub9ySNEr6uuLFxQLEyQ4=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:List-ID:From;
+	b=XncFcOzseygFCG2NDZ9ZIpa8sH/+FuW6NXjNmg7bthW8HXUmjQ60Yc1JjpHWOR2n7
+	 EF8YB3Oli+YxkSD3nvELa0+Lhjd8DWyOM7+ZgKS/QNL3nCO9HonUQFQoXU3gWbK31s
+	 Ab8KA6dUH+mxebdbG+GtFBu3y6DQsj82fU1Ratvo=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726650AbgIVU5l (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 22 Sep 2020 16:57:41 -0400
-Received: from ale.deltatee.com ([204.191.154.188]:49992 "EHLO
-        ale.deltatee.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726448AbgIVU5l (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Tue, 22 Sep 2020 16:57:41 -0400
-X-Greylist: delayed 2926 seconds by postgrey-1.27 at vger.kernel.org; Tue, 22 Sep 2020 16:57:41 EDT
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=deltatee.com; s=20200525; h=Subject:Content-Transfer-Encoding:MIME-Version:
-        Message-Id:Date:Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:
-        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-        :Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
-        List-Subscribe:List-Post:List-Owner:List-Archive;
-        bh=79PSozI9m8qEzrG9Klfx1TLRdoa057EVPadwK1EgUac=; b=KW7paQGHjjmNPAK1+iHprV2RrP
-        Pjyn36ukSG61uAPUratvBrwg0QAQLCIhj6j+CwQVXDCNBhi5cV99jqm2aBMwI+AAWfQPrViRkAHR0
-        S3sV51L7gORzwW5hSB3WDY8YFodZWDAVdtxrwwzH62oMjvEtkrDF3gyyOAqallQSAU2lkWtFbpjB9
-        0LbFszfeaKVc21J5NhCNk8z5ZxFqw6G5XD9eLCQ85jmwTqMlfuiSsI4CFbY3N+wEZ8aEH3eHWUg3f
-        AGghPAgk93qR9h8EvEtkoNh7B7YtfiStvUuhXoNsAP8Tr86tFQtwt7f9DQrQ95ApiRsFEOhDNCoyF
-        at4/8fww==;
-Received: from cgy1-donard.priv.deltatee.com ([172.16.1.31])
-        by ale.deltatee.com with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.92)
-        (envelope-from <gunthorp@deltatee.com>)
-        id 1kKoar-00058z-R0; Tue, 22 Sep 2020 14:08:55 -0600
-Received: from gunthorp by cgy1-donard.priv.deltatee.com with local (Exim 4.92)
-        (envelope-from <gunthorp@deltatee.com>)
-        id 1kKoaq-0000mq-D4; Tue, 22 Sep 2020 14:08:52 -0600
-From:   Logan Gunthorpe <logang@deltatee.com>
-To:     dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     Logan Gunthorpe <logang@deltatee.com>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        Dave Jiang <dave.jiang@intel.com>,
-        Dan Williams <dan.j.williams@intel.com>
-Date:   Tue, 22 Sep 2020 14:08:44 -0600
-Message-Id: <20200922200844.2982-1-logang@deltatee.com>
-X-Mailer: git-send-email 2.20.1
+        id S1726846AbgIVXcQ (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 22 Sep 2020 19:32:16 -0400
+Received: from mail-il1-f193.google.com ([209.85.166.193]:43252 "EHLO
+        mail-il1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726448AbgIVXcQ (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Tue, 22 Sep 2020 19:32:16 -0400
+Received: by mail-il1-f193.google.com with SMTP id a19so19028513ilq.10;
+        Tue, 22 Sep 2020 16:32:15 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=Gyrc98ZgV4x+9B5E4O+c+sLjhPjwOSAXbPDmcGuQo/U=;
+        b=eDgHEkZFaqkeQ90qVli/+A0Mq6KVgdt8loUiXQNXB8ZB7LM7MbNpirkqVbpXfi9mh+
+         pps47KdazM/zpIJ9QCfjHcjUcyQY2xmlTiSiFtTmQzBJZlvUZNBwdZoKJPgx/4h/IxTj
+         nms/BYU+LX/P08JKE5p0aQHrm6oNp9mWgltLAwpnN/RiJq6gGBsSSXcpx0NGpxTQTdvD
+         NTQk3irN8FUCIduTZF+9PRt38MUQKx4U6R3pUTpPbQBbivgGCXQhKQAOsoCxCnfhn+D/
+         WyuRjHtZg3tZ+VuPwEPlsfVMCWtBkAtS66vkddQoAfTm9EQsgRQGvoPjf+AaIAnc58/+
+         GLEQ==
+X-Gm-Message-State: AOAM533lJsMpd4JCgWbPzSAPyzZsIP+my3EKY1d6cAZraskN+4kUgc49
+        2W4wqJ1WHxIAAPwAoUL9pA==
+X-Google-Smtp-Source: ABdhPJwY5X76W8rcHZ93k4PfVIA6o/kBwLSeB++S/ieSCyHvQk6KhuUFTSvcoBoQQhVf1Nd+1p6sxA==
+X-Received: by 2002:a05:6e02:c8b:: with SMTP id b11mr6037370ile.149.1600817535247;
+        Tue, 22 Sep 2020 16:32:15 -0700 (PDT)
+Received: from xps15 ([64.188.179.253])
+        by smtp.gmail.com with ESMTPSA id b24sm9954806ill.68.2020.09.22.16.32.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 22 Sep 2020 16:32:14 -0700 (PDT)
+Received: (nullmailer pid 3474429 invoked by uid 1000);
+        Tue, 22 Sep 2020 23:32:13 -0000
+Date:   Tue, 22 Sep 2020 17:32:13 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Eugen Hristev <eugen.hristev@microchip.com>
+Cc:     tudor.ambarus@microchip.com, devicetree@vger.kernel.org,
+        dmaengine@vger.kernel.org, ludovic.desroches@microchip.com,
+        robh+dt@kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-kernel@vger.kernel.org, vkoul@kernel.org,
+        nicolas.ferre@microchip.com
+Subject: Re: [PATCH 3/7] dt-bindings: dmaengine: at_xdmac: add compatible
+ with microchip,sama7g5
+Message-ID: <20200922233213.GA3474374@bogus>
+References: <20200914140956.221432-1-eugen.hristev@microchip.com>
+ <20200914140956.221432-4-eugen.hristev@microchip.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: 172.16.1.31
-X-SA-Exim-Rcpt-To: dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org, logang@deltatee.com, robin.murphy@arm.com, vkoul@kernel.org, dave.jiang@intel.com, dan.j.williams@intel.com
-X-SA-Exim-Mail-From: gunthorp@deltatee.com
-Subject: [PATCH] dmaengine: ioat: Allocate correct size for descriptor chunk
-X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
-X-SA-Exim-Scanned: Yes (on ale.deltatee.com)
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200914140956.221432-4-eugen.hristev@microchip.com>
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-dma_alloc_coherent() is called with a fixed SZ_2M size, but frees happen
-with IOAT_CHUNK_SIZE. Recently, IOAT_CHUNK_SIZE was reduced to 512M but
-the allocation did not change. To fix, change to using the
-IOAT_CHUNK_SIZE define.
+On Mon, 14 Sep 2020 17:09:52 +0300, Eugen Hristev wrote:
+> Add compatible to sama7g5 SoC.
+> 
+> Signed-off-by: Eugen Hristev <eugen.hristev@microchip.com>
+> ---
+>  Documentation/devicetree/bindings/dma/atmel-xdma.txt | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
+> 
 
-This was caught with the upcoming patchset for converting Intel platforms to the
-dma-iommu implementation. It has a warning when the unmapped size differs from
-the mapped size.
-
-Fixes: a02254f8a676 ("dmaengine: ioat: Decreasing allocation chunk size 2M->512K")
-Link: https://lore.kernel.org/intel-gfx/776771a2-247a-d1be-d882-bee02d919ae0@deltatee.com/
-Suggested-by: Robin Murphy <robin.murphy@arm.com>
-Signed-off-by: Logan Gunthorpe <logang@deltatee.com>
-Cc: Vinod Koul <vkoul@kernel.org>
-Cc: Dave Jiang <dave.jiang@intel.com>
-Cc: Dan Williams <dan.j.williams@intel.com>
----
- drivers/dma/ioat/dma.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/drivers/dma/ioat/dma.c b/drivers/dma/ioat/dma.c
-index a814b200299b..07296171e2bb 100644
---- a/drivers/dma/ioat/dma.c
-+++ b/drivers/dma/ioat/dma.c
-@@ -389,7 +389,7 @@ ioat_alloc_ring(struct dma_chan *c, int order, gfp_t flags)
- 		struct ioat_descs *descs = &ioat_chan->descs[i];
- 
- 		descs->virt = dma_alloc_coherent(to_dev(ioat_chan),
--						 SZ_2M, &descs->hw, flags);
-+					IOAT_CHUNK_SIZE, &descs->hw, flags);
- 		if (!descs->virt) {
- 			int idx;
- 
-
-base-commit: ba4f184e126b751d1bffad5897f263108befc780
--- 
-2.20.1
-
+Acked-by: Rob Herring <robh@kernel.org>
