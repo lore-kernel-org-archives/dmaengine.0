@@ -2,67 +2,56 @@ Return-Path: <SRS0=cXJo=DA=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.4 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
-	autolearn=unavailable autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.3 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=unavailable
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 79760C47426
-	for <dmaengine@archiver.kernel.org>; Wed, 23 Sep 2020 15:22:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1A2F3C4727E
+	for <dmaengine@archiver.kernel.org>; Wed, 23 Sep 2020 15:43:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 34112221E7
-	for <dmaengine@archiver.kernel.org>; Wed, 23 Sep 2020 15:22:51 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=reintjes.nrw header.i=@reintjes.nrw header.b="mKq3yxzI"
+	by mail.kernel.org (Postfix) with ESMTP id C81442223E
+	for <dmaengine@archiver.kernel.org>; Wed, 23 Sep 2020 15:43:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726647AbgIWPWm (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 23 Sep 2020 11:22:42 -0400
-Received: from mo4-p01-ob.smtp.rzone.de ([85.215.255.54]:34512 "EHLO
-        mo4-p01-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726687AbgIWPWm (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Wed, 23 Sep 2020 11:22:42 -0400
-X-Greylist: delayed 713 seconds by postgrey-1.27 at vger.kernel.org; Wed, 23 Sep 2020 11:22:39 EDT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1600874558;
-        s=strato-dkim-0002; d=reintjes.nrw;
-        h=In-Reply-To:Date:Message-ID:From:References:Cc:To:Subject:
-        X-RZG-CLASS-ID:X-RZG-AUTH:From:Subject:Sender;
-        bh=R7hI6d/NmZuNcg1vUXN4expafaD5dS9k1NOlJgVsfQ0=;
-        b=mKq3yxzIBoK6eXKDjSaCRr3BwBIqpDKeJr75f5YQmPBPRRn9qdkRISKeudlw+eJUaN
-        i9j0YoD7Nd07ieGLh8UqSmYZ1Ccml4PGsZ2Mglopdz9Hz5rLCJkN670J1l7AKyk9w16x
-        a5x5cVcgZWQk6FXpa0G8mlW7WSJEKPFpozzrnE9Mqlay09jPyJDrOXyUKIYtt6nlhpnO
-        Iws66XTKRoaWIH3voDt0xHa2loKeKKkr2KuI9gRfjll43rW7LApn0Q1chdN5eLyO3daW
-        Z1KVrRhdU65Y8/6yfAJtnadI1+vhAkdCKhH0qGquacG5znElBXtRT3qPa76R5ygpIUbq
-        FhJQ==
-X-RZG-AUTH: ":IGUXYVP6Ne1lB7nQNv+YSUx4qaxF0YAcTeeZr8criwvl+4OoAsy1YB7b8FzONHo5ckdw3KGGkZZ/Zu8="
-X-RZG-CLASS-ID: mo00
-Received: from [192.168.0.198]
-        by smtp.strato.de (RZmta 46.10.7 DYNA|AUTH)
-        with ESMTPSA id Y04b60w8NFAYy22
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-        (Client did not present a certificate);
-        Wed, 23 Sep 2020 17:10:34 +0200 (CEST)
-Subject: Re: [PATCH 00/14] drop double zeroing
-To:     Mark Brown <broonie@kernel.org>, linux-spi@vger.kernel.org,
-        Julia Lawall <Julia.Lawall@inria.fr>
-Cc:     linux-serial@vger.kernel.org, linux-scsi@vger.kernel.org,
-        target-devel@vger.kernel.org, kernel-janitors@vger.kernel.org,
-        linux-media@vger.kernel.org, linux-block@vger.kernel.org,
-        Yossi Leybovich <sleybo@amazon.com>,
-        linux-kernel@vger.kernel.org, linux-nfs@vger.kernel.org,
-        dmaengine@vger.kernel.org, linux-pci@vger.kernel.org,
-        netdev@vger.kernel.org, linux-wireless@vger.kernel.org,
-        linux-rdma@vger.kernel.org,
-        Dan Williams <dan.j.williams@intel.com>,
-        rds-devel@oss.oracle.com
-References: <1600601186-7420-1-git-send-email-Julia.Lawall@inria.fr>
- <160070750168.56292.17961674601916397869.b4-ty@kernel.org>
-From:   Rolf Reintjes <lists2.rolf@reintjes.nrw>
-Message-ID: <c3b33526-936d-ffa4-c301-4d0485822be1@reintjes.nrw>
-Date:   Wed, 23 Sep 2020 17:10:33 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+        id S1726504AbgIWPnQ (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 23 Sep 2020 11:43:16 -0400
+Received: from mga02.intel.com ([134.134.136.20]:1063 "EHLO mga02.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726156AbgIWPnN (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Wed, 23 Sep 2020 11:43:13 -0400
+IronPort-SDR: Dt5xNlbbQCH4XqrBZziEIPiHRifNNRg9bZwDqXVp9AUPg9joRUBK71fYiWpuz4y6AxXnke+1qf
+ JGj8jzOqp3rQ==
+X-IronPort-AV: E=McAfee;i="6000,8403,9753"; a="148579461"
+X-IronPort-AV: E=Sophos;i="5.77,293,1596524400"; 
+   d="scan'208";a="148579461"
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga005.jf.intel.com ([10.7.209.41])
+  by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Sep 2020 08:43:13 -0700
+IronPort-SDR: 2AZ0m9Y2dPtWynb9Gm8YNyv4Ff5NKf4Ice95TNKKFoyEmiLaf1Xakefnk5FaCt2nZ19EOCjGdU
+ K3HQV1dscf3A==
+X-IronPort-AV: E=Sophos;i="5.77,293,1596524400"; 
+   d="scan'208";a="486484542"
+Received: from djiang5-mobl1.amr.corp.intel.com (HELO [10.212.218.1]) ([10.212.218.1])
+  by orsmga005-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Sep 2020 08:43:12 -0700
+Subject: Re: [PATCH v4 1/5] x86/asm: move the raw asm in iosubmit_cmds512() to
+ special_insns.h
+To:     Borislav Petkov <bp@alien8.de>
+Cc:     vkoul@kernel.org, tglx@linutronix.de, mingo@redhat.com,
+        dan.j.williams@intel.com, tony.luck@intel.com, jing.lin@intel.com,
+        ashok.raj@intel.com, sanjay.k.kumar@intel.com,
+        fenghua.yu@intel.com, kevin.tian@intel.com,
+        dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <160037680630.3777.16356270178889649944.stgit@djiang5-desk3.ch.intel.com>
+ <160037731654.3777.18071122574577972463.stgit@djiang5-desk3.ch.intel.com>
+ <20200923104158.GG28545@zn.tnic>
+From:   Dave Jiang <dave.jiang@intel.com>
+Message-ID: <c38406b7-f1d1-35d8-8015-bacce7a52226@intel.com>
+Date:   Wed, 23 Sep 2020 08:43:11 -0700
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
  Thunderbird/68.12.0
 MIME-Version: 1.0
-In-Reply-To: <160070750168.56292.17961674601916397869.b4-ty@kernel.org>
+In-Reply-To: <20200923104158.GG28545@zn.tnic>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -70,45 +59,53 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Hello Mark,
 
-On 21.09.20 18:58, Mark Brown wrote:
-> On Sun, 20 Sep 2020 13:26:12 +0200, Julia Lawall wrote:
->> sg_init_table zeroes its first argument, so the allocation of that argument
->> doesn't have to.
-> 
-> Applied to
-> 
->     https://git.kernel.org/pub/scm/linux/kernel/git/broonie/spi.git for-next
-> 
-> Thanks!
 
-I do not understand which of the 14 patches you applied. Your mail 
-responds to the 00/14 mail.
+On 9/23/2020 3:41 AM, Borislav Petkov wrote:
+>> Subject: Re: [PATCH v4 1/5] x86/asm: move the raw asm in iosubmit_cmds512() to special_insns.h
+> 
+> Start patch name with a capital letter: "Move the asm definition.."
+> 
+> Also, calling stuff "raw" and "core" is misleading in the kernel context
+> - you wanna say simply: "Carve out a generic movdir64b() helper... "
 
-Rolf
+Ok I will update
 
 > 
-> [1/1] spi/topcliff-pch: drop double zeroing
->        commit: ca03dba30f2b8ff45a2972c6691e4c96d8c52b3b
+> On Thu, Sep 17, 2020 at 02:15:16PM -0700, Dave Jiang wrote:
+>> diff --git a/arch/x86/include/asm/special_insns.h b/arch/x86/include/asm/special_insns.h
+>> index 59a3e13204c3..7bc8e714f37e 100644
+>> --- a/arch/x86/include/asm/special_insns.h
+>> +++ b/arch/x86/include/asm/special_insns.h
+>> @@ -234,6 +234,23 @@ static inline void clwb(volatile void *__p)
+>>   
+>>   #define nop() asm volatile ("nop")
+>>   
+>> +static inline void movdir64b(void *__dst, const void *src)
 > 
-> All being well this means that it will be integrated into the linux-next
-> tree (usually sometime in the next 24 hours) and sent to Linus during
-> the next merge window (or sooner if it is a bug fix), however if
-> problems are discovered then the patch may be dropped or reverted.
-> 
-> You may get further e-mails resulting from automated or manual testing
-> and review of the tree, please engage with people reporting problems and
-> send followup patches addressing any issues that are reported if needed.
-> 
-> If any updates are required or you are submitting further changes they
-> should be sent as incremental updates against current git, existing
-> patches will not be replaced.
-> 
-> Please add any relevant lists and maintainers to the CCs when replying
-> to this mail.
-> 
-> Thanks,
-> Mark
-> 
+> Make __dst be the function local variable name and keep "dst", i.e.,
+> without the underscores, the function parameter name.
 
+Ok will fix
+
+> 
+>> +	/*
+>> +	 * Note that this isn't an "on-stack copy", just definition of "dst"
+>> +	 * as a pointer to 64-bytes of stuff that is going to be overwritten.
+>> +	 * In the MOVDIR64B case that may be needed as you can use the
+>> +	 * MOVDIR64B instruction to copy arbitrary memory around. This trick
+>> +	 * lets the compiler know how much gets clobbered.
+>> +	 */
+>> +	volatile struct { char _[64]; } *dst = __dst;
+>> +
+>> +	/* MOVDIR64B [rdx], rax */
+>> +	asm volatile(".byte 0x66, 0x0f, 0x38, 0xf8, 0x02"
+>> +		     : "=m" (dst)
+>> +		     : "d" (src), "a" (dst));
+>> +}
+>> +
+>>   #endif /* __KERNEL__ */
+>>   
+>>   #endif /* _ASM_X86_SPECIAL_INSNS_H */
+>>
+> 
