@@ -7,39 +7,39 @@ X-Spam-Status: No, score=-9.8 required=3.0 tests=BAYES_00,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7793CC2D0A8
-	for <dmaengine@archiver.kernel.org>; Wed, 23 Sep 2020 23:35:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B7354C4727E
+	for <dmaengine@archiver.kernel.org>; Wed, 23 Sep 2020 23:35:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4FE2120888
-	for <dmaengine@archiver.kernel.org>; Wed, 23 Sep 2020 23:35:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8EBA8206C3
+	for <dmaengine@archiver.kernel.org>; Wed, 23 Sep 2020 23:35:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726620AbgIWXfN (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 23 Sep 2020 19:35:13 -0400
-Received: from mga07.intel.com ([134.134.136.100]:39739 "EHLO mga07.intel.com"
+        id S1726706AbgIWXfi (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 23 Sep 2020 19:35:38 -0400
+Received: from mga03.intel.com ([134.134.136.65]:8363 "EHLO mga03.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726596AbgIWXfI (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Wed, 23 Sep 2020 19:35:08 -0400
-IronPort-SDR: KHijUnqgKh9lvn53wnozlDKTlLLGxBTsuJ7968XBj8HFwjmu5kS2F8zuOCuFGJFq5LNVQBdL8m
- D80RZ8aExEfQ==
-X-IronPort-AV: E=McAfee;i="6000,8403,9753"; a="225177341"
+        id S1726703AbgIWXfb (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Wed, 23 Sep 2020 19:35:31 -0400
+IronPort-SDR: WVb9FmyAziZ7uy3LUqgQd2PC2TGXq7OPMA0iDMWltcqKUVlVaGk4EphotKvnDYQyVihYNbqVQP
+ W0/2mKeQqOHg==
+X-IronPort-AV: E=McAfee;i="6000,8403,9753"; a="161120735"
 X-IronPort-AV: E=Sophos;i="5.77,295,1596524400"; 
-   d="scan'208";a="225177341"
+   d="scan'208";a="161120735"
 X-Amp-Result: SKIPPED(no attachment in message)
 X-Amp-File-Uploaded: False
-Received: from fmsmga004.fm.intel.com ([10.253.24.48])
-  by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Sep 2020 16:35:07 -0700
-IronPort-SDR: ffVCwNLmC2oSbtMtzbpABS1Qk/BUxEgESw51hL4TBoDmq6yth3JMuliujOyhR6XwLyY07dC7tf
- zXs6ZpTkZn7Q==
+Received: from orsmga004.jf.intel.com ([10.7.209.38])
+  by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Sep 2020 16:35:30 -0700
+IronPort-SDR: OyNXONausTIoxuZjz1HDsPRyZ+f9E7fG+Cp88XJXlCJAraGn6Qpz9pNVQFrqIXLxSYiAVVx6WG
+ zHQzygatg8hQ==
 X-IronPort-AV: E=Sophos;i="5.77,295,1596524400"; 
-   d="scan'208";a="335696642"
+   d="scan'208";a="455105643"
 Received: from djiang5-desk3.ch.intel.com ([143.182.136.137])
-  by fmsmga004-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Sep 2020 16:35:07 -0700
-Subject: [PATCH resend v5 1/5] x86/asm: Carve out a generic movdir64b()
- helper for general usage
+  by orsmga004-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Sep 2020 16:35:30 -0700
+Subject: [PATCH resend v5 5/5] dmaengine: idxd: Add ABI documentation for
+ shared wq
 From:   Dave Jiang <dave.jiang@intel.com>
 To:     dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
-Date:   Wed, 23 Sep 2020 16:35:06 -0700
-Message-ID: <160090410685.45290.18178329260065780041.stgit@djiang5-desk3.ch.intel.com>
+Date:   Wed, 23 Sep 2020 16:35:30 -0700
+Message-ID: <160090413022.45290.8355233148714703356.stgit@djiang5-desk3.ch.intel.com>
 In-Reply-To: <160090402526.45290.468202328615149643.stgit@djiang5-desk3.ch.intel.com>
 References: <160090402526.45290.468202328615149643.stgit@djiang5-desk3.ch.intel.com>
 User-Agent: StGit/unknown-version
@@ -50,86 +50,46 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-The MOVDIR64B instruction can be used by other wrapper instructions. Move
-the asm code to special_insns.h and have iosubmit_cmds512() call the
-asm function.
+Add the sysfs attribute bits in ABI/stable for shared wq support.
 
+Signed-off-by: Jing Lin <jing.lin@intel.com>
 Signed-off-by: Dave Jiang <dave.jiang@intel.com>
 Reviewed-by: Tony Luck <tony.luck@intel.com>
+Reviewed-by: Dan Williams <dan.j.williams@intel.com>
 ---
- arch/x86/include/asm/io.h            |   17 +++--------------
- arch/x86/include/asm/special_insns.h |   19 +++++++++++++++++++
- 2 files changed, 22 insertions(+), 14 deletions(-)
+ Documentation/ABI/stable/sysfs-driver-dma-idxd |   14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-diff --git a/arch/x86/include/asm/io.h b/arch/x86/include/asm/io.h
-index e1aa17a468a8..d726459d08e5 100644
---- a/arch/x86/include/asm/io.h
-+++ b/arch/x86/include/asm/io.h
-@@ -401,7 +401,7 @@ extern bool phys_mem_access_encrypted(unsigned long phys_addr,
+diff --git a/Documentation/ABI/stable/sysfs-driver-dma-idxd b/Documentation/ABI/stable/sysfs-driver-dma-idxd
+index b44183880935..42d3dc03ffea 100644
+--- a/Documentation/ABI/stable/sysfs-driver-dma-idxd
++++ b/Documentation/ABI/stable/sysfs-driver-dma-idxd
+@@ -77,6 +77,13 @@ Contact:        dmaengine@vger.kernel.org
+ Description:    The operation capability bit mask specify the operation types
+ 		supported by the this device.
  
- /**
-  * iosubmit_cmds512 - copy data to single MMIO location, in 512-bit units
-- * @__dst: destination, in MMIO space (must be 512-bit aligned)
-+ * @dst: destination, in MMIO space (must be 512-bit aligned)
-  * @src: source
-  * @count: number of 512 bits quantities to submit
-  *
-@@ -412,25 +412,14 @@ extern bool phys_mem_access_encrypted(unsigned long phys_addr,
-  * Warning: Do not use this helper unless your driver has checked that the CPU
-  * instruction is supported on the platform.
-  */
--static inline void iosubmit_cmds512(void __iomem *__dst, const void *src,
-+static inline void iosubmit_cmds512(void __iomem *dst, const void *src,
- 				    size_t count)
- {
--	/*
--	 * Note that this isn't an "on-stack copy", just definition of "dst"
--	 * as a pointer to 64-bytes of stuff that is going to be overwritten.
--	 * In the MOVDIR64B case that may be needed as you can use the
--	 * MOVDIR64B instruction to copy arbitrary memory around. This trick
--	 * lets the compiler know how much gets clobbered.
--	 */
--	volatile struct { char _[64]; } *dst = __dst;
- 	const u8 *from = src;
- 	const u8 *end = from + count * 64;
- 
- 	while (from < end) {
--		/* MOVDIR64B [rdx], rax */
--		asm volatile(".byte 0x66, 0x0f, 0x38, 0xf8, 0x02"
--			     : "=m" (dst)
--			     : "d" (from), "a" (dst));
-+		movdir64b(dst, from);
- 		from += 64;
- 	}
- }
-diff --git a/arch/x86/include/asm/special_insns.h b/arch/x86/include/asm/special_insns.h
-index 59a3e13204c3..2a5abd27bb86 100644
---- a/arch/x86/include/asm/special_insns.h
-+++ b/arch/x86/include/asm/special_insns.h
-@@ -234,6 +234,25 @@ static inline void clwb(volatile void *__p)
- 
- #define nop() asm volatile ("nop")
- 
-+/* The dst parameter must be 64-bytes aligned */
-+static inline void movdir64b(void *dst, const void *src)
-+{
-+	/*
-+	 * Note that this isn't an "on-stack copy", just definition of "dst"
-+	 * as a pointer to 64-bytes of stuff that is going to be overwritten.
-+	 * In the MOVDIR64B case that may be needed as you can use the
-+	 * MOVDIR64B instruction to copy arbitrary memory around. This trick
-+	 * lets the compiler know how much gets clobbered.
-+	 */
-+	volatile struct { char _[64]; } *__dst = dst;
++What:		/sys/bus/dsa/devices/dsa<m>/pasid_enabled
++Date:		Sep 17, 2020
++KernelVersion:	5.10.0
++Contact:	dmaengine@vger.kernel.org
++Description:	To indicate if PASID (process address space identifier) is
++		enabled or not for this device.
 +
-+	/* MOVDIR64B [rdx], rax */
-+	asm volatile(".byte 0x66, 0x0f, 0x38, 0xf8, 0x02"
-+		     :
-+		     : "m" (*(struct { char _[64];} **)src), "a" (__dst)
-+		     : "memory");
-+}
-+
- #endif /* __KERNEL__ */
+ What:           /sys/bus/dsa/devices/dsa<m>/state
+ Date:           Oct 25, 2019
+ KernelVersion:  5.6.0
+@@ -122,6 +129,13 @@ KernelVersion:	5.10.0
+ Contact:	dmaengine@vger.kernel.org
+ Description:	The last executed device administrative command's status/error.
  
- #endif /* _ASM_X86_SPECIAL_INSNS_H */
++What:		/sys/bus/dsa/devices/wq<m>.<n>/block_on_fault
++Date:		Sept 17, 2020
++KernelVersion:	5.10.0
++Contact:	dmaengine@vger.kernel.org
++Description:	To indicate block on fault is allowed or not for the work queue
++		to support on demand paging.
++
+ What:           /sys/bus/dsa/devices/wq<m>.<n>/group_id
+ Date:           Oct 25, 2019
+ KernelVersion:  5.6.0
 
