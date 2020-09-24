@@ -1,4 +1,4 @@
-Return-Path: <SRS0=cXJo=DA=vger.kernel.org=dmaengine-owner@kernel.org>
+Return-Path: <SRS0=gQRy=DB=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
@@ -7,317 +7,114 @@ X-Spam-Status: No, score=-9.8 required=3.0 tests=BAYES_00,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C9CA2C4363D
-	for <dmaengine@archiver.kernel.org>; Wed, 23 Sep 2020 23:35:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 62A41C4346E
+	for <dmaengine@archiver.kernel.org>; Thu, 24 Sep 2020 08:25:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9D1CF206C3
-	for <dmaengine@archiver.kernel.org>; Wed, 23 Sep 2020 23:35:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 34F7D208B8
+	for <dmaengine@archiver.kernel.org>; Thu, 24 Sep 2020 08:25:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726723AbgIWXf1 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 23 Sep 2020 19:35:27 -0400
-Received: from mga18.intel.com ([134.134.136.126]:9877 "EHLO mga18.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726703AbgIWXf0 (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Wed, 23 Sep 2020 19:35:26 -0400
-IronPort-SDR: 7jgCdhNWxJJSjqyep/19AZ54sSp/E4FZiEvE8N8bfT46pXybBc9OKne1yorgL5AkWYdPSNQYiR
- gqgy3X0E5zFw==
-X-IronPort-AV: E=McAfee;i="6000,8403,9753"; a="148789457"
-X-IronPort-AV: E=Sophos;i="5.77,295,1596524400"; 
-   d="scan'208";a="148789457"
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from orsmga003.jf.intel.com ([10.7.209.27])
-  by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Sep 2020 16:35:25 -0700
-IronPort-SDR: 8TblYPooXX9rFE79r7hoG3HWRR5mcxmxOXjFpllJoX0bPR5brdi1zsPH6+52c7XqGjzBj2aDzL
- atVMzw5eVr4w==
-X-IronPort-AV: E=Sophos;i="5.77,295,1596524400"; 
-   d="scan'208";a="305578691"
-Received: from djiang5-desk3.ch.intel.com ([143.182.136.137])
-  by orsmga003-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Sep 2020 16:35:24 -0700
-Subject: [PATCH resend v5 4/5] dmaengine: idxd: Clean up descriptors with
- fault error
-From:   Dave Jiang <dave.jiang@intel.com>
-To:     dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
-Date:   Wed, 23 Sep 2020 16:35:24 -0700
-Message-ID: <160090412450.45290.7985221037842190119.stgit@djiang5-desk3.ch.intel.com>
-In-Reply-To: <160090402526.45290.468202328615149643.stgit@djiang5-desk3.ch.intel.com>
-References: <160090402526.45290.468202328615149643.stgit@djiang5-desk3.ch.intel.com>
-User-Agent: StGit/unknown-version
+        id S1727061AbgIXIZx (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Thu, 24 Sep 2020 04:25:53 -0400
+Received: from eu-smtp-delivery-151.mimecast.com ([207.82.80.151]:39274 "EHLO
+        eu-smtp-delivery-151.mimecast.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726979AbgIXIZx (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Thu, 24 Sep 2020 04:25:53 -0400
+Received: from AcuMS.aculab.com (156.67.243.126 [156.67.243.126]) (Using
+ TLS) by relay.mimecast.com with ESMTP id
+ uk-mta-95-VXUOEVhfMDqraFBgS_BjUQ-1; Thu, 24 Sep 2020 09:24:47 +0100
+X-MC-Unique: VXUOEVhfMDqraFBgS_BjUQ-1
+Received: from AcuMS.Aculab.com (fd9f:af1c:a25b:0:43c:695e:880f:8750) by
+ AcuMS.aculab.com (fd9f:af1c:a25b:0:43c:695e:880f:8750) with Microsoft SMTP
+ Server (TLS) id 15.0.1347.2; Thu, 24 Sep 2020 09:24:46 +0100
+Received: from AcuMS.Aculab.com ([fe80::43c:695e:880f:8750]) by
+ AcuMS.aculab.com ([fe80::43c:695e:880f:8750%12]) with mapi id 15.00.1347.000;
+ Thu, 24 Sep 2020 09:24:46 +0100
+From:   David Laight <David.Laight@ACULAB.COM>
+To:     'Dave Jiang' <dave.jiang@intel.com>,
+        "vkoul@kernel.org" <vkoul@kernel.org>,
+        "tglx@linutronix.de" <tglx@linutronix.de>,
+        "mingo@redhat.com" <mingo@redhat.com>,
+        "bp@alien8.de" <bp@alien8.de>,
+        "dan.j.williams@intel.com" <dan.j.williams@intel.com>,
+        "tony.luck@intel.com" <tony.luck@intel.com>,
+        "jing.lin@intel.com" <jing.lin@intel.com>,
+        "ashok.raj@intel.com" <ashok.raj@intel.com>,
+        "sanjay.k.kumar@intel.com" <sanjay.k.kumar@intel.com>,
+        "fenghua.yu@intel.com" <fenghua.yu@intel.com>,
+        "kevin.tian@intel.com" <kevin.tian@intel.com>,
+        "dmaengine@vger.kernel.org" <dmaengine@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
+Subject: RE: [PATCH v5 1/5] x86/asm: Carve out a generic movdir64b() helper
+ for general usage
+Thread-Topic: [PATCH v5 1/5] x86/asm: Carve out a generic movdir64b() helper
+ for general usage
+Thread-Index: AQHWkf7GVv/Eui5H70ijlKVH2OrKB6l3b2tw
+Date:   Thu, 24 Sep 2020 08:24:46 +0000
+Message-ID: <a8c81da06df2471296b663d40b186c92@AcuMS.aculab.com>
+References: <160090233730.44288.4446779116422752486.stgit@djiang5-desk3.ch.intel.com>
+ <160090264332.44288.7575027054245105525.stgit@djiang5-desk3.ch.intel.com>
+In-Reply-To: <160090264332.44288.7575027054245105525.stgit@djiang5-desk3.ch.intel.com>
+Accept-Language: en-GB, en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-exchange-transport-fromentityheader: Hosted
+x-originating-ip: [10.202.205.107]
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
+Authentication-Results: relay.mimecast.com;
+        auth=pass smtp.auth=C51A453 smtp.mailfrom=david.laight@aculab.com
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: aculab.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: base64
+Content-Language: en-US
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Add code to "complete" a descriptor when the descriptor or its completion
-address hit a fault error when SVA mode is being used. This error can be
-triggered due to bad programming by the user. A lock is introduced in order
-to protect the descriptor completion lists since the fault handler will run
-from the system work queue after being scheduled in the interrupt handler.
-
-Signed-off-by: Dave Jiang <dave.jiang@intel.com>
-Reviewed-by: Tony Luck <tony.luck@intel.com>
-Reviewed-by: Dan Williams <dan.j.williams@intel.com>
----
- drivers/dma/idxd/idxd.h |    5 ++
- drivers/dma/idxd/init.c |    1 
- drivers/dma/idxd/irq.c  |  143 +++++++++++++++++++++++++++++++++++++++++++----
- 3 files changed, 137 insertions(+), 12 deletions(-)
-
-diff --git a/drivers/dma/idxd/idxd.h b/drivers/dma/idxd/idxd.h
-index 43a216c42d25..b64b6266ca97 100644
---- a/drivers/dma/idxd/idxd.h
-+++ b/drivers/dma/idxd/idxd.h
-@@ -34,6 +34,11 @@ struct idxd_irq_entry {
- 	int id;
- 	struct llist_head pending_llist;
- 	struct list_head work_list;
-+	/*
-+	 * Lock to protect access between irq thread process descriptor
-+	 * and irq thread processing error descriptor.
-+	 */
-+	spinlock_t list_lock;
- };
- 
- struct idxd_group {
-diff --git a/drivers/dma/idxd/init.c b/drivers/dma/idxd/init.c
-index 626401a71fdd..1bb7637b02eb 100644
---- a/drivers/dma/idxd/init.c
-+++ b/drivers/dma/idxd/init.c
-@@ -97,6 +97,7 @@ static int idxd_setup_interrupts(struct idxd_device *idxd)
- 	for (i = 0; i < msixcnt; i++) {
- 		idxd->irq_entries[i].id = i;
- 		idxd->irq_entries[i].idxd = idxd;
-+		spin_lock_init(&idxd->irq_entries[i].list_lock);
- 	}
- 
- 	msix = &idxd->msix_entries[0];
-diff --git a/drivers/dma/idxd/irq.c b/drivers/dma/idxd/irq.c
-index 17a65a13fb64..9e6cc55ad22f 100644
---- a/drivers/dma/idxd/irq.c
-+++ b/drivers/dma/idxd/irq.c
-@@ -11,6 +11,24 @@
- #include "idxd.h"
- #include "registers.h"
- 
-+enum irq_work_type {
-+	IRQ_WORK_NORMAL = 0,
-+	IRQ_WORK_PROCESS_FAULT,
-+};
-+
-+struct idxd_fault {
-+	struct work_struct work;
-+	u64 addr;
-+	struct idxd_device *idxd;
-+};
-+
-+static int irq_process_work_list(struct idxd_irq_entry *irq_entry,
-+				 enum irq_work_type wtype,
-+				 int *processed, u64 data);
-+static int irq_process_pending_llist(struct idxd_irq_entry *irq_entry,
-+				     enum irq_work_type wtype,
-+				     int *processed, u64 data);
-+
- static void idxd_device_reinit(struct work_struct *work)
- {
- 	struct idxd_device *idxd = container_of(work, struct idxd_device, work);
-@@ -44,6 +62,46 @@ static void idxd_device_reinit(struct work_struct *work)
- 	idxd_device_wqs_clear_state(idxd);
- }
- 
-+static void idxd_device_fault_work(struct work_struct *work)
-+{
-+	struct idxd_fault *fault = container_of(work, struct idxd_fault, work);
-+	struct idxd_irq_entry *ie;
-+	int i;
-+	int processed;
-+	int irqcnt = fault->idxd->num_wq_irqs + 1;
-+
-+	for (i = 1; i < irqcnt; i++) {
-+		ie = &fault->idxd->irq_entries[i];
-+		irq_process_work_list(ie, IRQ_WORK_PROCESS_FAULT,
-+				      &processed, fault->addr);
-+		if (processed)
-+			break;
-+
-+		irq_process_pending_llist(ie, IRQ_WORK_PROCESS_FAULT,
-+					  &processed, fault->addr);
-+		if (processed)
-+			break;
-+	}
-+
-+	kfree(fault);
-+}
-+
-+static int idxd_device_schedule_fault_process(struct idxd_device *idxd,
-+					      u64 fault_addr)
-+{
-+	struct idxd_fault *fault;
-+
-+	fault = kmalloc(sizeof(*fault), GFP_ATOMIC);
-+	if (!fault)
-+		return -ENOMEM;
-+
-+	fault->addr = fault_addr;
-+	fault->idxd = idxd;
-+	INIT_WORK(&fault->work, idxd_device_fault_work);
-+	queue_work(idxd->wq, &fault->work);
-+	return 0;
-+}
-+
- irqreturn_t idxd_irq_handler(int vec, void *data)
- {
- 	struct idxd_irq_entry *irq_entry = data;
-@@ -125,6 +183,16 @@ irqreturn_t idxd_misc_thread(int vec, void *data)
- 	if (!err)
- 		goto out;
- 
-+	/*
-+	 * This case should rarely happen and typically is due to software
-+	 * programming error by the driver.
-+	 */
-+	if (idxd->sw_err.valid &&
-+	    idxd->sw_err.desc_valid &&
-+	    idxd->sw_err.fault_addr)
-+		idxd_device_schedule_fault_process(idxd,
-+						   idxd->sw_err.fault_addr);
-+
- 	gensts.bits = ioread32(idxd->reg_base + IDXD_GENSTATS_OFFSET);
- 	if (gensts.state == IDXD_DEVICE_STATE_HALT) {
- 		idxd->state = IDXD_DEV_HALTED;
-@@ -152,57 +220,106 @@ irqreturn_t idxd_misc_thread(int vec, void *data)
- 	return IRQ_HANDLED;
- }
- 
-+static bool process_fault(struct idxd_desc *desc, u64 fault_addr)
-+{
-+	if ((u64)desc->hw == fault_addr ||
-+	    (u64)desc->completion == fault_addr) {
-+		idxd_dma_complete_txd(desc, IDXD_COMPLETE_DEV_FAIL);
-+		return true;
-+	}
-+
-+	return false;
-+}
-+
-+static bool complete_desc(struct idxd_desc *desc)
-+{
-+	if (desc->completion->status) {
-+		idxd_dma_complete_txd(desc, IDXD_COMPLETE_NORMAL);
-+		return true;
-+	}
-+
-+	return false;
-+}
-+
- static int irq_process_pending_llist(struct idxd_irq_entry *irq_entry,
--				     int *processed)
-+				     enum irq_work_type wtype,
-+				     int *processed, u64 data)
- {
- 	struct idxd_desc *desc, *t;
- 	struct llist_node *head;
- 	int queued = 0;
-+	bool completed = false;
-+	unsigned long flags;
- 
- 	*processed = 0;
- 	head = llist_del_all(&irq_entry->pending_llist);
- 	if (!head)
--		return 0;
-+		goto out;
- 
- 	llist_for_each_entry_safe(desc, t, head, llnode) {
--		if (desc->completion->status) {
--			idxd_dma_complete_txd(desc, IDXD_COMPLETE_NORMAL);
-+		if (wtype == IRQ_WORK_NORMAL)
-+			completed = complete_desc(desc);
-+		else if (wtype == IRQ_WORK_PROCESS_FAULT)
-+			completed = process_fault(desc, data);
-+
-+		if (completed) {
- 			idxd_free_desc(desc->wq, desc);
- 			(*processed)++;
-+			if (wtype == IRQ_WORK_PROCESS_FAULT)
-+				break;
- 		} else {
--			list_add_tail(&desc->list, &irq_entry->work_list);
-+			spin_lock_irqsave(&irq_entry->list_lock, flags);
-+			list_add_tail(&desc->list,
-+				      &irq_entry->work_list);
-+			spin_unlock_irqrestore(&irq_entry->list_lock, flags);
- 			queued++;
- 		}
- 	}
- 
-+ out:
- 	return queued;
- }
- 
- static int irq_process_work_list(struct idxd_irq_entry *irq_entry,
--				 int *processed)
-+				 enum irq_work_type wtype,
-+				 int *processed, u64 data)
- {
- 	struct list_head *node, *next;
- 	int queued = 0;
-+	bool completed = false;
-+	unsigned long flags;
- 
- 	*processed = 0;
-+	spin_lock_irqsave(&irq_entry->list_lock, flags);
- 	if (list_empty(&irq_entry->work_list))
--		return 0;
-+		goto out;
- 
- 	list_for_each_safe(node, next, &irq_entry->work_list) {
- 		struct idxd_desc *desc =
- 			container_of(node, struct idxd_desc, list);
- 
--		if (desc->completion->status) {
-+		spin_unlock_irqrestore(&irq_entry->list_lock, flags);
-+		if (wtype == IRQ_WORK_NORMAL)
-+			completed = complete_desc(desc);
-+		else if (wtype == IRQ_WORK_PROCESS_FAULT)
-+			completed = process_fault(desc, data);
-+
-+		if (completed) {
-+			spin_lock_irqsave(&irq_entry->list_lock, flags);
- 			list_del(&desc->list);
--			/* process and callback */
--			idxd_dma_complete_txd(desc, IDXD_COMPLETE_NORMAL);
-+			spin_unlock_irqrestore(&irq_entry->list_lock, flags);
- 			idxd_free_desc(desc->wq, desc);
- 			(*processed)++;
-+			if (wtype == IRQ_WORK_PROCESS_FAULT)
-+				return queued;
- 		} else {
- 			queued++;
- 		}
-+		spin_lock_irqsave(&irq_entry->list_lock, flags);
- 	}
- 
-+ out:
-+	spin_unlock_irqrestore(&irq_entry->list_lock, flags);
- 	return queued;
- }
- 
-@@ -230,12 +347,14 @@ static int idxd_desc_process(struct idxd_irq_entry *irq_entry)
- 	 * 5. Repeat until no more descriptors.
- 	 */
- 	do {
--		rc = irq_process_work_list(irq_entry, &processed);
-+		rc = irq_process_work_list(irq_entry, IRQ_WORK_NORMAL,
-+					   &processed, 0);
- 		total += processed;
- 		if (rc != 0)
- 			continue;
- 
--		rc = irq_process_pending_llist(irq_entry, &processed);
-+		rc = irq_process_pending_llist(irq_entry, IRQ_WORK_NORMAL,
-+					       &processed, 0);
- 		total += processed;
- 	} while (rc != 0);
- 
+RnJvbTogRGF2ZSBKaWFuZw0KPiBTZW50OiAyNCBTZXB0ZW1iZXIgMjAyMCAwMDoxMQ0KPg0KPiBU
+aGUgTU9WRElSNjRCIGluc3RydWN0aW9uIGNhbiBiZSB1c2VkIGJ5IG90aGVyIHdyYXBwZXIgaW5z
+dHJ1Y3Rpb25zLiBNb3ZlDQo+IHRoZSBhc20gY29kZSB0byBzcGVjaWFsX2luc25zLmggYW5kIGhh
+dmUgaW9zdWJtaXRfY21kczUxMigpIGNhbGwgdGhlDQo+IGFzbSBmdW5jdGlvbi4NCj4gDQo+IFNp
+Z25lZC1vZmYtYnk6IERhdmUgSmlhbmcgPGRhdmUuamlhbmdAaW50ZWwuY29tPg0KPiBSZXZpZXdl
+ZC1ieTogVG9ueSBMdWNrIDx0b255Lmx1Y2tAaW50ZWwuY29tPg0KPiAtLS0NCj4gIGFyY2gveDg2
+L2luY2x1ZGUvYXNtL2lvLmggICAgICAgICAgICB8ICAgMTcgKysrLS0tLS0tLS0tLS0tLS0NCj4g
+IGFyY2gveDg2L2luY2x1ZGUvYXNtL3NwZWNpYWxfaW5zbnMuaCB8ICAgMTkgKysrKysrKysrKysr
+KysrKysrKw0KPiAgMiBmaWxlcyBjaGFuZ2VkLCAyMiBpbnNlcnRpb25zKCspLCAxNCBkZWxldGlv
+bnMoLSkNCj4gDQo+IGRpZmYgLS1naXQgYS9hcmNoL3g4Ni9pbmNsdWRlL2FzbS9pby5oIGIvYXJj
+aC94ODYvaW5jbHVkZS9hc20vaW8uaA0KPiBpbmRleCBlMWFhMTdhNDY4YTguLmQ3MjY0NTlkMDhl
+NSAxMDA2NDQNCj4gLS0tIGEvYXJjaC94ODYvaW5jbHVkZS9hc20vaW8uaA0KPiArKysgYi9hcmNo
+L3g4Ni9pbmNsdWRlL2FzbS9pby5oDQouLi4NCj4gZGlmZiAtLWdpdCBhL2FyY2gveDg2L2luY2x1
+ZGUvYXNtL3NwZWNpYWxfaW5zbnMuaCBiL2FyY2gveDg2L2luY2x1ZGUvYXNtL3NwZWNpYWxfaW5z
+bnMuaA0KPiBpbmRleCA1OWEzZTEzMjA0YzMuLjJhNWFiZDI3YmI4NiAxMDA2NDQNCj4gLS0tIGEv
+YXJjaC94ODYvaW5jbHVkZS9hc20vc3BlY2lhbF9pbnNucy5oDQo+ICsrKyBiL2FyY2gveDg2L2lu
+Y2x1ZGUvYXNtL3NwZWNpYWxfaW5zbnMuaA0KPiBAQCAtMjM0LDYgKzIzNCwyNSBAQCBzdGF0aWMg
+aW5saW5lIHZvaWQgY2x3Yih2b2xhdGlsZSB2b2lkICpfX3ApDQo+IA0KPiAgI2RlZmluZSBub3Ao
+KSBhc20gdm9sYXRpbGUgKCJub3AiKQ0KPiANCj4gKy8qIFRoZSBkc3QgcGFyYW1ldGVyIG11c3Qg
+YmUgNjQtYnl0ZXMgYWxpZ25lZCAqLw0KPiArc3RhdGljIGlubGluZSB2b2lkIG1vdmRpcjY0Yih2
+b2lkICpkc3QsIGNvbnN0IHZvaWQgKnNyYykNCj4gK3sNCj4gKwkvKg0KPiArCSAqIE5vdGUgdGhh
+dCB0aGlzIGlzbid0IGFuICJvbi1zdGFjayBjb3B5IiwganVzdCBkZWZpbml0aW9uIG9mICJkc3Qi
+DQo+ICsJICogYXMgYSBwb2ludGVyIHRvIDY0LWJ5dGVzIG9mIHN0dWZmIHRoYXQgaXMgZ29pbmcg
+dG8gYmUgb3ZlcndyaXR0ZW4uDQo+ICsJICogSW4gdGhlIE1PVkRJUjY0QiBjYXNlIHRoYXQgbWF5
+IGJlIG5lZWRlZCBhcyB5b3UgY2FuIHVzZSB0aGUNCj4gKwkgKiBNT1ZESVI2NEIgaW5zdHJ1Y3Rp
+b24gdG8gY29weSBhcmJpdHJhcnkgbWVtb3J5IGFyb3VuZC4gVGhpcyB0cmljaw0KPiArCSAqIGxl
+dHMgdGhlIGNvbXBpbGVyIGtub3cgaG93IG11Y2ggZ2V0cyBjbG9iYmVyZWQuDQo+ICsJICovDQo+
+ICsJdm9sYXRpbGUgc3RydWN0IHsgY2hhciBfWzY0XTsgfSAqX19kc3QgPSBkc3Q7DQo+ICsNCj4g
+KwkvKiBNT1ZESVI2NEIgW3JkeF0sIHJheCAqLw0KPiArCWFzbSB2b2xhdGlsZSgiLmJ5dGUgMHg2
+NiwgMHgwZiwgMHgzOCwgMHhmOCwgMHgwMiINCj4gKwkJICAgICA6DQo+ICsJCSAgICAgOiAibSIg
+KCooc3RydWN0IHsgY2hhciBfWzY0XTt9ICoqKXNyYyksICJhIiAoX19kc3QpDQo+ICsJCSAgICAg
+OiAibWVtb3J5Iik7DQo+ICt9DQo+ICsNCj4gICNlbmRpZiAvKiBfX0tFUk5FTF9fICovDQoNCllv
+dSd2ZSBsb3N0IHRoZSAiZCIgKHNyYykuDQpZb3UgZG9uJ3QgbmVlZCB0aGUgJ21lbW9yeScgY2xv
+YmJlciwganVzdDoNCg0Kc3RhdGljIGlubGluZSB2b2lkIG1vdmRpcjY0Yih2b2lkICpkc3QsIGNv
+bnN0IHZvaWQgKnNyYykNCnsNCgkvKg0KCSAqIDY0IGJ5dGVzIGZyb20gZHN0IGFyZSBtYXJrZWQg
+YXMgbW9kaWZpZWQgZm9yIGNvbXBsZXRlbmVzcy4NCgkgKiBTaW5jZSB0aGUgd3JpdGVzIGJ5cGFz
+cyB0aGUgY2FjaGUgbGF0ZXIgcmVhZHMgbWF5IHJldHVybg0KCSAqIG9sZCBkYXRhIGFueXdheS4N
+CgkgKi8NCgkvKiBNT1ZESVI2NEIgW3JkeF0sIHJheCAqLw0KCWFzbSB2b2xhdGlsZSAoIi5ieXRl
+IDB4NjYsIDB4MGYsIDB4MzgsIDB4ZjgsIDB4MDIiDQoJICAgICA6ICI9bSIgKChzdHJ1Y3QgeyBj
+aGFyIF9bNjRdO30gKilkc3QpLA0KCSAgICAgOiAibSIgKChzdHJ1Y3QgeyBjaGFyIF9bNjRdO30g
+KilzcmMpLCAiZCIgKHNyYyksICJhIiAoZHN0KSk7DQp9DQoNCkkndmUgY2hlY2tlZCB0aGF0IHRo
+ZSAibSIgY29uc3RyYWludCBvbiBzcmMgZG9lcyBmb3JjZSAoYXQgbGVhc3Qgb25lDQp2ZXJzaW9u
+IG9mKSBnY2MgdG8gYWN0dWFsbHkgd3JpdGUgdG8gdGhlIHN1cHBsaWVkIGJ1ZmZlci4NCg0KCURh
+dmlkDQoNCi0NClJlZ2lzdGVyZWQgQWRkcmVzcyBMYWtlc2lkZSwgQnJhbWxleSBSb2FkLCBNb3Vu
+dCBGYXJtLCBNaWx0b24gS2V5bmVzLCBNSzEgMVBULCBVSw0KUmVnaXN0cmF0aW9uIE5vOiAxMzk3
+Mzg2IChXYWxlcykNCg==
 
