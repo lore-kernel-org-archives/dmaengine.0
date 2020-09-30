@@ -7,45 +7,45 @@ X-Spam-Status: No, score=-13.6 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
 	URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E883EC4742A
-	for <dmaengine@archiver.kernel.org>; Wed, 30 Sep 2020 09:15:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9DD18C47430
+	for <dmaengine@archiver.kernel.org>; Wed, 30 Sep 2020 09:15:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 96DA42075F
-	for <dmaengine@archiver.kernel.org>; Wed, 30 Sep 2020 09:15:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4CC1D20739
+	for <dmaengine@archiver.kernel.org>; Wed, 30 Sep 2020 09:15:29 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b="RfwzJkNp"
+	dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b="QHBZHH6w"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729068AbgI3JPW (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 30 Sep 2020 05:15:22 -0400
-Received: from fllv0015.ext.ti.com ([198.47.19.141]:35132 "EHLO
+        id S1729009AbgI3JP2 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 30 Sep 2020 05:15:28 -0400
+Received: from fllv0015.ext.ti.com ([198.47.19.141]:35110 "EHLO
         fllv0015.ext.ti.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729038AbgI3JOb (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Wed, 30 Sep 2020 05:14:31 -0400
-Received: from lelv0265.itg.ti.com ([10.180.67.224])
-        by fllv0015.ext.ti.com (8.15.2/8.15.2) with ESMTP id 08U9EQdL035044;
-        Wed, 30 Sep 2020 04:14:26 -0500
+        with ESMTP id S1728983AbgI3JO0 (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Wed, 30 Sep 2020 05:14:26 -0400
+Received: from fllv0034.itg.ti.com ([10.64.40.246])
+        by fllv0015.ext.ti.com (8.15.2/8.15.2) with ESMTP id 08U9EKCw034993;
+        Wed, 30 Sep 2020 04:14:20 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
-        s=ti-com-17Q1; t=1601457266;
-        bh=pcsvG8Wes2t4bU1KP19bSuHVD+XfFqvrO0hd8Cj0z4U=;
+        s=ti-com-17Q1; t=1601457260;
+        bh=I4tVn3WwDtzTGz5dMWdQmFJs/TmE1NGcX6lzD1o0+zs=;
         h=From:To:CC:Subject:Date:In-Reply-To:References;
-        b=RfwzJkNpPssNDkanfcY42/t66tnWUa7mRrhWRncw3Ew6NNWZDhenUa9uxzBbyBAZd
-         CAPRv5WiaxySFS3t3C1Pwk0XBHhN9HTRDb34LEQNotdqL45x8adl0YvL59p/u/7O+2
-         PXqt3fQRZZfeuTjmaJNKYRd7LDmgeUzLu/SRWe2c=
-Received: from DFLE104.ent.ti.com (dfle104.ent.ti.com [10.64.6.25])
-        by lelv0265.itg.ti.com (8.15.2/8.15.2) with ESMTPS id 08U9EQfa111915
+        b=QHBZHH6wF8OXRU84imH323vEmXocJqQW4UejvauIrILaIxyFlA74MlfbSRFOhJFzD
+         CrQd/9aQil0X+vC2vks4wnXB9ZmiJvyaGiUs1c6IEBtaa9FkIZIsi1k9vdEvBJfibX
+         u/ds/MFkUvKXZwvzh7ZzvYqa3nvtdBbYFmtdwSjE=
+Received: from DLEE113.ent.ti.com (dlee113.ent.ti.com [157.170.170.24])
+        by fllv0034.itg.ti.com (8.15.2/8.15.2) with ESMTPS id 08U9EKVj099858
         (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
-        Wed, 30 Sep 2020 04:14:26 -0500
-Received: from DFLE114.ent.ti.com (10.64.6.35) by DFLE104.ent.ti.com
- (10.64.6.25) with Microsoft SMTP Server (version=TLS1_2,
+        Wed, 30 Sep 2020 04:14:20 -0500
+Received: from DLEE104.ent.ti.com (157.170.170.34) by DLEE113.ent.ti.com
+ (157.170.170.24) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1979.3; Wed, 30
- Sep 2020 04:14:25 -0500
-Received: from fllv0039.itg.ti.com (10.64.41.19) by DFLE114.ent.ti.com
- (10.64.6.35) with Microsoft SMTP Server (version=TLS1_2,
+ Sep 2020 04:14:19 -0500
+Received: from fllv0039.itg.ti.com (10.64.41.19) by DLEE104.ent.ti.com
+ (157.170.170.34) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1979.3 via
- Frontend Transport; Wed, 30 Sep 2020 04:14:25 -0500
+ Frontend Transport; Wed, 30 Sep 2020 04:14:20 -0500
 Received: from feketebors.ti.com (ileax41-snat.itg.ti.com [10.172.224.153])
-        by fllv0039.itg.ti.com (8.15.2/8.15.2) with ESMTP id 08U9DuJg116385;
-        Wed, 30 Sep 2020 04:14:23 -0500
+        by fllv0039.itg.ti.com (8.15.2/8.15.2) with ESMTP id 08U9DuJe116385;
+        Wed, 30 Sep 2020 04:14:17 -0500
 From:   Peter Ujfalusi <peter.ujfalusi@ti.com>
 To:     <vkoul@kernel.org>, <nm@ti.com>, <ssantosh@kernel.org>,
         <robh+dt@kernel.org>, <vigneshr@ti.com>
@@ -53,9 +53,9 @@ CC:     <dan.j.williams@intel.com>, <t-kristo@ti.com>,
         <lokeshvutla@ti.com>, <linux-arm-kernel@lists.infradead.org>,
         <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
         <dmaengine@vger.kernel.org>
-Subject: [PATCH 09/18] dt-bindings: dma: ti: Add document for K3 BCDMA
-Date:   Wed, 30 Sep 2020 12:14:03 +0300
-Message-ID: <20200930091412.8020-10-peter.ujfalusi@ti.com>
+Subject: [PATCH 07/18] dmaengine: ti: k3-udma-glue: Add function to get device pointer for DMA API
+Date:   Wed, 30 Sep 2020 12:14:01 +0300
+Message-ID: <20200930091412.8020-8-peter.ujfalusi@ti.com>
 X-Mailer: git-send-email 2.28.0
 In-Reply-To: <20200930091412.8020-1-peter.ujfalusi@ti.com>
 References: <20200930091412.8020-1-peter.ujfalusi@ti.com>
@@ -67,206 +67,97 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-New binding document for
-Texas Instruments K3 Block Copy DMA (BCDMA).
-
-BCDMA is introduced as part of AM64.
+Glue layer users should use the device of the DMA for DMA mapping and
+allocations as it is the DMA which accesses to descriptors and buffers,
+not the clients
 
 Signed-off-by: Peter Ujfalusi <peter.ujfalusi@ti.com>
 ---
- .../devicetree/bindings/dma/ti/k3-bcdma.yaml  | 183 ++++++++++++++++++
- 1 file changed, 183 insertions(+)
- create mode 100644 Documentation/devicetree/bindings/dma/ti/k3-bcdma.yaml
+ drivers/dma/ti/k3-udma-glue.c    | 14 ++++++++++++++
+ drivers/dma/ti/k3-udma-private.c |  6 ++++++
+ drivers/dma/ti/k3-udma.h         |  1 +
+ include/linux/dma/k3-udma-glue.h |  4 ++++
+ 4 files changed, 25 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/dma/ti/k3-bcdma.yaml b/Documentation/devicetree/bindings/dma/ti/k3-bcdma.yaml
-new file mode 100644
-index 000000000000..c84fb641738f
---- /dev/null
-+++ b/Documentation/devicetree/bindings/dma/ti/k3-bcdma.yaml
-@@ -0,0 +1,183 @@
-+# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/dma/ti/k3-bcdma.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
+diff --git a/drivers/dma/ti/k3-udma-glue.c b/drivers/dma/ti/k3-udma-glue.c
+index a367584f0d7b..a53bc4707ae8 100644
+--- a/drivers/dma/ti/k3-udma-glue.c
++++ b/drivers/dma/ti/k3-udma-glue.c
+@@ -487,6 +487,13 @@ int k3_udma_glue_tx_get_irq(struct k3_udma_glue_tx_channel *tx_chn)
+ }
+ EXPORT_SYMBOL_GPL(k3_udma_glue_tx_get_irq);
+ 
++struct device *
++	k3_udma_glue_tx_get_dma_device(struct k3_udma_glue_tx_channel *tx_chn)
++{
++	return xudma_get_device(tx_chn->common.udmax);
++}
++EXPORT_SYMBOL_GPL(k3_udma_glue_tx_get_dma_device);
 +
-+title: Texas Instruments K3 DMSS BCDMA Device Tree Bindings
+ static int k3_udma_glue_cfg_rx_chn(struct k3_udma_glue_rx_channel *rx_chn)
+ {
+ 	const struct udma_tisci_rm *tisci_rm = rx_chn->common.tisci_rm;
+@@ -1189,3 +1196,10 @@ int k3_udma_glue_rx_get_irq(struct k3_udma_glue_rx_channel *rx_chn,
+ 	return flow->virq;
+ }
+ EXPORT_SYMBOL_GPL(k3_udma_glue_rx_get_irq);
 +
-+maintainers:
-+  - Peter Ujfalusi <peter.ujfalusi@ti.com>
++struct device *
++	k3_udma_glue_rx_get_dma_device(struct k3_udma_glue_rx_channel *rx_chn)
++{
++	return xudma_get_device(rx_chn->common.udmax);
++}
++EXPORT_SYMBOL_GPL(k3_udma_glue_rx_get_dma_device);
+diff --git a/drivers/dma/ti/k3-udma-private.c b/drivers/dma/ti/k3-udma-private.c
+index aa24e554f7b4..8ff7a264be03 100644
+--- a/drivers/dma/ti/k3-udma-private.c
++++ b/drivers/dma/ti/k3-udma-private.c
+@@ -50,6 +50,12 @@ struct udma_dev *of_xudma_dev_get(struct device_node *np, const char *property)
+ }
+ EXPORT_SYMBOL(of_xudma_dev_get);
+ 
++struct device *xudma_get_device(struct udma_dev *ud)
++{
++	return ud->dev;
++}
++EXPORT_SYMBOL(xudma_get_device);
 +
-+description: |
-+  The Block Copy DMA (BCDMA) is intended to perform similar functions as the TR
-+  mode channels of K3 UDMA-P.
-+  BCDMA includes block copy channels and Split channels.
-+
-+  Block copy channels mainly used for memory to memory transfers, but with
-+  optional triggers a block copy channel can service peripherals by accessing
-+  directly to memory mapped registers or area.
-+
-+  Split channels can be used to service PSI-L based peripherals.
-+  The peripherals can be PSI-L native or legacy, non PSI-L native peripherals
-+  with PDMAs. PDMA is tasked to act as a bridge between the PSI-L fabric and the
-+  legacy peripheral.
-+
-+  PDMAs can be configured via BCDMA split channel's peer registers to match with
-+  the configuration of the legacy peripheral.
-+
-+allOf:
-+  - $ref: /schemas/dma/dma-controller.yaml#
-+
-+properties:
-+  "#dma-cells":
-+    const: 3
-+    description: |
-+      cell 1: type of the BCDMA channel to be used to service the peripheral:
-+        0 - split channel
-+        1 - block copy channel using global trigger 1
-+        2 - block copy channel using global trigger 2
-+        3 - block copy channel using local trigger
-+
-+      cell 2: parameter for the channel:
-+        if cell 1 is 0 (split channel):
-+          PSI-L thread ID of the remote (to BCDMA) end.
-+          Valid ranges for thread ID depends on the data movement direction:
-+          for source thread IDs (rx): 0 - 0x7fff
-+          for destination thread IDs (tx): 0x8000 - 0xffff
-+
-+          Please refer to the device documentation for the PSI-L thread map and
-+          also the PSI-L peripheral chapter for the correct thread ID.
-+        if cell 1 is 1 or 2 (block copy channel using global trigger):
-+          Unused, ignored
-+
-+          The trigger must be configured for the channel externally to BCDMA,
-+          channels using global triggers should not be requested directly, but
-+          via DMA event router.
-+        if cell 1 is 3 (block copy channel using local trigger):
-+          bchan number of the locally triggered channel
-+
-+      cell 3: ASEL value for the channel
-+
-+  compatible:
-+    enum:
-+      - ti,am64-dmss-bcdma
-+
-+  "#address-cells":
-+    const: 2
-+
-+  "#size-cells":
-+    const: 2
-+
-+  reg:
-+    maxItems: 5
-+
-+  reg-names:
-+   items:
-+     - const: gcfg
-+     - const: bchanrt
-+     - const: rchanrt
-+     - const: tchanrt
-+     - const: ringrt
-+
-+  msi-parent: true
-+
-+  ti,sci:
-+    description: phandle to TI-SCI compatible System controller node
-+    allOf:
-+      - $ref: /schemas/types.yaml#/definitions/phandle
-+
-+  ti,sci-dev-id:
-+    description: TI-SCI device id of BCDMA
-+    allOf:
-+      - $ref: /schemas/types.yaml#/definitions/uint32
-+
-+  ti,asel:
-+    description: ASEL value for non slave channels
-+    allOf:
-+      - $ref: /schemas/types.yaml#/definitions/uint32
-+
-+  ti,sci-rm-range-bchan:
-+    description: |
-+      Array of BCDMA block-copy channel resource subtypes for resource
-+      allocation for this host
-+    allOf:
-+      - $ref: /schemas/types.yaml#/definitions/uint32-array
-+    minItems: 1
-+    # Should be enough
-+    maxItems: 255
-+
-+  ti,sci-rm-range-tchan:
-+    description: |
-+      Array of BCDMA split tx channel resource subtypes for resource allocation
-+      for this host
-+    allOf:
-+      - $ref: /schemas/types.yaml#/definitions/uint32-array
-+    minItems: 1
-+    # Should be enough
-+    maxItems: 255
-+
-+  ti,sci-rm-range-rchan:
-+    description: |
-+      Array of BCDMA split rx channel resource subtypes for resource allocation
-+      for this host
-+    allOf:
-+      - $ref: /schemas/types.yaml#/definitions/uint32-array
-+    minItems: 1
-+    # Should be enough
-+    maxItems: 255
-+
-+required:
-+  - compatible
-+  - "#address-cells"
-+  - "#size-cells"
-+  - "#dma-cells"
-+  - reg
-+  - reg-names
-+  - msi-parent
-+  - ti,sci
-+  - ti,sci-dev-id
-+  - ti,sci-rm-range-bchan
-+  - ti,sci-rm-range-tchan
-+  - ti,sci-rm-range-rchan
-+
-+additionalProperties: false
-+
-+examples:
-+  - |+
-+    cbass_main {
-+        #address-cells = <2>;
-+        #size-cells = <2>;
-+
-+        main_dmss {
-+            compatible = "simple-mfd";
-+            #address-cells = <2>;
-+            #size-cells = <2>;
-+            dma-ranges;
-+            ranges;
-+
-+            ti,sci-dev-id = <25>;
-+
-+            main_bcdma: dma-controller@485c0100 {
-+                compatible = "ti,am64-dmss-bcdma";
-+                #address-cells = <2>;
-+                #size-cells = <2>;
-+
-+                reg = <0x0 0x485c0100 0x0 0x100>,
-+                      <0x0 0x4c000000 0x0 0x20000>,
-+                      <0x0 0x4a820000 0x0 0x20000>,
-+                      <0x0 0x4aa40000 0x0 0x20000>,
-+                      <0x0 0x4bc00000 0x0 0x100000>;
-+                reg-names = "gcfg", "bchanrt", "rchanrt", "tchanrt", "ringrt";
-+                msi-parent = <&inta_main_dmss>;
-+                #dma-cells = <3>;
-+
-+                ti,sci = <&dmsc>;
-+                ti,sci-dev-id = <26>;
-+
-+                ti,sci-rm-range-bchan = <0x20>; /* BLOCK_COPY_CHAN */
-+                ti,sci-rm-range-rchan = <0x21>; /* SPLIT_TR_RX_CHAN */
-+                ti,sci-rm-range-tchan = <0x22>; /* SPLIT_TR_TX_CHAN */
-+            };
-+        };
-+    };
+ u32 xudma_dev_get_psil_base(struct udma_dev *ud)
+ {
+ 	return ud->psil_base;
+diff --git a/drivers/dma/ti/k3-udma.h b/drivers/dma/ti/k3-udma.h
+index 09c4529e013d..d1cace0cb43b 100644
+--- a/drivers/dma/ti/k3-udma.h
++++ b/drivers/dma/ti/k3-udma.h
+@@ -112,6 +112,7 @@ int xudma_navss_psil_unpair(struct udma_dev *ud, u32 src_thread,
+ 			    u32 dst_thread);
+ 
+ struct udma_dev *of_xudma_dev_get(struct device_node *np, const char *property);
++struct device *xudma_get_device(struct udma_dev *ud);
+ void xudma_dev_put(struct udma_dev *ud);
+ u32 xudma_dev_get_psil_base(struct udma_dev *ud);
+ struct udma_tisci_rm *xudma_dev_get_tisci_rm(struct udma_dev *ud);
+diff --git a/include/linux/dma/k3-udma-glue.h b/include/linux/dma/k3-udma-glue.h
+index 5eb34ad973a7..d7c12f31377c 100644
+--- a/include/linux/dma/k3-udma-glue.h
++++ b/include/linux/dma/k3-udma-glue.h
+@@ -41,6 +41,8 @@ void k3_udma_glue_reset_tx_chn(struct k3_udma_glue_tx_channel *tx_chn,
+ u32 k3_udma_glue_tx_get_hdesc_size(struct k3_udma_glue_tx_channel *tx_chn);
+ u32 k3_udma_glue_tx_get_txcq_id(struct k3_udma_glue_tx_channel *tx_chn);
+ int k3_udma_glue_tx_get_irq(struct k3_udma_glue_tx_channel *tx_chn);
++struct device *
++	k3_udma_glue_tx_get_dma_device(struct k3_udma_glue_tx_channel *tx_chn);
+ 
+ enum {
+ 	K3_UDMA_GLUE_SRC_TAG_LO_KEEP = 0,
+@@ -130,5 +132,7 @@ int k3_udma_glue_rx_flow_enable(struct k3_udma_glue_rx_channel *rx_chn,
+ 				u32 flow_idx);
+ int k3_udma_glue_rx_flow_disable(struct k3_udma_glue_rx_channel *rx_chn,
+ 				 u32 flow_idx);
++struct device *
++	k3_udma_glue_rx_get_dma_device(struct k3_udma_glue_rx_channel *rx_chn);
+ 
+ #endif /* K3_UDMA_GLUE_H_ */
 -- 
 Peter
 
