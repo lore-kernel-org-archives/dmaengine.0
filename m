@@ -8,45 +8,44 @@ X-Spam-Status: No, score=-13.6 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	URIBL_BLOCKED,USER_AGENT_GIT autolearn=unavailable autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 67F91C47420
-	for <dmaengine@archiver.kernel.org>; Wed, 30 Sep 2020 09:15:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4C22FC47426
+	for <dmaengine@archiver.kernel.org>; Wed, 30 Sep 2020 09:15:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id F11D32071E
-	for <dmaengine@archiver.kernel.org>; Wed, 30 Sep 2020 09:15:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EC6FC20739
+	for <dmaengine@archiver.kernel.org>; Wed, 30 Sep 2020 09:15:13 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b="ecm+sxAu"
+	dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b="YXaWa3Jf"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728673AbgI3JPF (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 30 Sep 2020 05:15:05 -0400
-Received: from fllv0016.ext.ti.com ([198.47.19.142]:53174 "EHLO
-        fllv0016.ext.ti.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729041AbgI3JPB (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Wed, 30 Sep 2020 05:15:01 -0400
-Received: from lelv0265.itg.ti.com ([10.180.67.224])
-        by fllv0016.ext.ti.com (8.15.2/8.15.2) with ESMTP id 08U9El54067480;
-        Wed, 30 Sep 2020 04:14:47 -0500
+        id S1729078AbgI3JOe (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 30 Sep 2020 05:14:34 -0400
+Received: from fllv0015.ext.ti.com ([198.47.19.141]:35120 "EHLO
+        fllv0015.ext.ti.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725872AbgI3JO2 (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Wed, 30 Sep 2020 05:14:28 -0400
+Received: from fllv0035.itg.ti.com ([10.64.41.0])
+        by fllv0015.ext.ti.com (8.15.2/8.15.2) with ESMTP id 08U9ENoI035023;
+        Wed, 30 Sep 2020 04:14:23 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
-        s=ti-com-17Q1; t=1601457287;
-        bh=+dtb+GLQmyLWMPm0Yi5m4W7j+Wt9ST2MHyGH0n4G2AY=;
+        s=ti-com-17Q1; t=1601457263;
+        bh=F1UBBxuJBBt4i9B5EabYSjDpVXsLLY8WCh/WDwvs4ko=;
         h=From:To:CC:Subject:Date:In-Reply-To:References;
-        b=ecm+sxAuDlAqERQJXK2IN+mxwgHV9cRrnY9Gbx45hVjPQp9QLUdvSbTahmNpaQall
-         g4f2IoyyqxGBfJs4XNFMSlCE+OJYWzbtdqPi6fB4wrDCqv+MbLgT2h14towxJzubE4
-         HIwOW+mCvza3zZBCKqw/+fyDG0gE59RVj5ewGt60=
-Received: from DLEE105.ent.ti.com (dlee105.ent.ti.com [157.170.170.35])
-        by lelv0265.itg.ti.com (8.15.2/8.15.2) with ESMTPS id 08U9El0S112137
-        (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
-        Wed, 30 Sep 2020 04:14:47 -0500
-Received: from DLEE101.ent.ti.com (157.170.170.31) by DLEE105.ent.ti.com
- (157.170.170.35) with Microsoft SMTP Server (version=TLS1_2,
+        b=YXaWa3Jf0MhiprwqLEwVg4A5Jr59PfudNiFSsnKL52m5t8a+SG3ZT/iRpyL3wHQbc
+         64hQangtImQ41T/BPQuDQ1BxfbQx7mwO4GyFz9gdqTOJTtEzot4b55cd9hfyfYmFbL
+         wO6Be1UVoG0OBfYQ5BE/r/wtcGGiIB8hl0JudUAQ=
+Received: from DFLE104.ent.ti.com (dfle104.ent.ti.com [10.64.6.25])
+        by fllv0035.itg.ti.com (8.15.2/8.15.2) with ESMTP id 08U9EN6X122184;
+        Wed, 30 Sep 2020 04:14:23 -0500
+Received: from DFLE101.ent.ti.com (10.64.6.22) by DFLE104.ent.ti.com
+ (10.64.6.25) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1979.3; Wed, 30
- Sep 2020 04:14:47 -0500
-Received: from fllv0039.itg.ti.com (10.64.41.19) by DLEE101.ent.ti.com
- (157.170.170.31) with Microsoft SMTP Server (version=TLS1_2,
+ Sep 2020 04:14:22 -0500
+Received: from fllv0039.itg.ti.com (10.64.41.19) by DFLE101.ent.ti.com
+ (10.64.6.22) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1979.3 via
- Frontend Transport; Wed, 30 Sep 2020 04:14:47 -0500
+ Frontend Transport; Wed, 30 Sep 2020 04:14:22 -0500
 Received: from feketebors.ti.com (ileax41-snat.itg.ti.com [10.172.224.153])
-        by fllv0039.itg.ti.com (8.15.2/8.15.2) with ESMTP id 08U9DuJn116385;
-        Wed, 30 Sep 2020 04:14:44 -0500
+        by fllv0039.itg.ti.com (8.15.2/8.15.2) with ESMTP id 08U9DuJf116385;
+        Wed, 30 Sep 2020 04:14:20 -0500
 From:   Peter Ujfalusi <peter.ujfalusi@ti.com>
 To:     <vkoul@kernel.org>, <nm@ti.com>, <ssantosh@kernel.org>,
         <robh+dt@kernel.org>, <vigneshr@ti.com>
@@ -54,9 +53,9 @@ CC:     <dan.j.williams@intel.com>, <t-kristo@ti.com>,
         <lokeshvutla@ti.com>, <linux-arm-kernel@lists.infradead.org>,
         <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
         <dmaengine@vger.kernel.org>
-Subject: [PATCH 16/18] dmaengine: ti: k3-udma: Add support for BCDMA channel TPL handling
-Date:   Wed, 30 Sep 2020 12:14:10 +0300
-Message-ID: <20200930091412.8020-17-peter.ujfalusi@ti.com>
+Subject: [PATCH 08/18] dmaengine: ti: k3-udma-glue: Configure the dma_dev for rings
+Date:   Wed, 30 Sep 2020 12:14:02 +0300
+Message-ID: <20200930091412.8020-9-peter.ujfalusi@ti.com>
 X-Mailer: git-send-email 2.28.0
 In-Reply-To: <20200930091412.8020-1-peter.ujfalusi@ti.com>
 References: <20200930091412.8020-1-peter.ujfalusi@ti.com>
@@ -68,242 +67,44 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Unlike UDMAP the BCDMA defines the channel TPL levels per channel type.
-In UDMAP the number of high and ultra-high channels applies to both tchan
-and rchan.
+Rings in RING mode should be using the DMA device for DMA API as in this
+mode the ringacc will not access the ring memory in any ways, but the DMA
+is.
 
-BCDMA defines the TPL per channel types: bchan, tchan and rchan can have
-different number of high and ultra-high channels.
-
-In order to support BCDMA channel TPL we need to move the tpl information
-as per channel type property for the DMAs.
+Fix up the ring configuration and set the dma_dev unconditionally and let
+the ringacc driver to select the correct device to use for DMA API.
 
 Signed-off-by: Peter Ujfalusi <peter.ujfalusi@ti.com>
 ---
- drivers/dma/ti/k3-udma.c | 122 ++++++++++++++++++++++++++-------------
- drivers/dma/ti/k3-udma.h |   6 ++
- 2 files changed, 89 insertions(+), 39 deletions(-)
+ drivers/dma/ti/k3-udma-glue.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/dma/ti/k3-udma.c b/drivers/dma/ti/k3-udma.c
-index a342e89a4bae..69f2c43354d4 100644
---- a/drivers/dma/ti/k3-udma.c
-+++ b/drivers/dma/ti/k3-udma.c
-@@ -146,6 +146,11 @@ struct udma_rx_flush {
- 	dma_addr_t buffer_paddr;
- };
- 
-+struct udma_tpl {
-+	u8 levels;
-+	u32 start_idx[3];
-+};
-+
- struct udma_dev {
- 	struct dma_device ddev;
- 	struct device *dev;
-@@ -153,8 +158,9 @@ struct udma_dev {
- 	const struct udma_match_data *match_data;
- 	const struct udma_soc_data *soc_data;
- 
--	u8 tpl_levels;
--	u32 tpl_start_idx[3];
-+	struct udma_tpl bchan_tpl;
-+	struct udma_tpl tchan_tpl;
-+	struct udma_tpl rchan_tpl;
- 
- 	size_t desc_align; /* alignment to use for descriptors */
- 
-@@ -1278,10 +1284,10 @@ static struct udma_##res *__udma_reserve_##res(struct udma_dev *ud,	\
- 	} else {							\
- 		int start;						\
- 									\
--		if (tpl >= ud->tpl_levels)				\
--			tpl = ud->tpl_levels - 1;			\
-+		if (tpl >= ud->res##_tpl.levels)			\
-+			tpl = ud->res##_tpl.levels - 1;			\
- 									\
--		start = ud->tpl_start_idx[tpl];				\
-+		start = ud->res##_tpl.start_idx[tpl];			\
- 									\
- 		id = find_next_zero_bit(ud->res##_map, ud->res##_cnt,	\
- 					start);				\
-@@ -1294,29 +1300,14 @@ static struct udma_##res *__udma_reserve_##res(struct udma_dev *ud,	\
- 	return &ud->res##s[id];						\
- }
- 
-+UDMA_RESERVE_RESOURCE(bchan);
- UDMA_RESERVE_RESOURCE(tchan);
- UDMA_RESERVE_RESOURCE(rchan);
- 
--static struct udma_bchan *__bcdma_reserve_bchan(struct udma_dev *ud, int id)
--{
--	if (id >= 0) {
--		if (test_bit(id, ud->bchan_map)) {
--			dev_err(ud->dev, "bchan%d is in use\n", id);
--			return ERR_PTR(-ENOENT);
--		}
--	} else {
--		id = find_next_zero_bit(ud->bchan_map, ud->bchan_cnt, 0);
--		if (id == ud->bchan_cnt)
--			return ERR_PTR(-ENOENT);
--	}
--
--	set_bit(id, ud->bchan_map);
--	return &ud->bchans[id];
--}
--
- static int bcdma_get_bchan(struct udma_chan *uc)
- {
- 	struct udma_dev *ud = uc->ud;
-+	enum udma_tp_level tpl;
- 
- 	if (uc->bchan) {
- 		dev_dbg(ud->dev, "chan%d: already have bchan%d allocated\n",
-@@ -1324,7 +1315,16 @@ static int bcdma_get_bchan(struct udma_chan *uc)
- 		return 0;
+diff --git a/drivers/dma/ti/k3-udma-glue.c b/drivers/dma/ti/k3-udma-glue.c
+index a53bc4707ae8..f39825ce288a 100644
+--- a/drivers/dma/ti/k3-udma-glue.c
++++ b/drivers/dma/ti/k3-udma-glue.c
+@@ -280,6 +280,10 @@ struct k3_udma_glue_tx_channel *k3_udma_glue_request_tx_chn(struct device *dev,
+ 		goto err;
  	}
  
--	uc->bchan = __bcdma_reserve_bchan(ud, -1);
-+	/*
-+	 * Use normal channels for peripherals, and highest TPL channel for
-+	 * mem2mem
-+	 */
-+	if (uc->config.tr_trigger_type)
-+		tpl = 0;
-+	else
-+		tpl = ud->bchan_tpl.levels - 1;
++	/* Set the dma_dev for the rings to be configured */
++	cfg->tx_cfg.dma_dev = k3_udma_glue_tx_get_dma_device(tx_chn);
++	cfg->txcq_cfg.dma_dev = cfg->tx_cfg.dma_dev;
 +
-+	uc->bchan = __udma_reserve_bchan(ud, tpl, -1);
- 	if (IS_ERR(uc->bchan))
- 		return PTR_ERR(uc->bchan);
- 
-@@ -1386,8 +1386,11 @@ static int udma_get_chan_pair(struct udma_chan *uc)
- 
- 	/* Can be optimized, but let's have it like this for now */
- 	end = min(ud->tchan_cnt, ud->rchan_cnt);
--	/* Try to use the highest TPL channel pair for MEM_TO_MEM channels */
--	chan_id = ud->tpl_start_idx[ud->tpl_levels - 1];
-+	/*
-+	 * Try to use the highest TPL channel pair for MEM_TO_MEM channels
-+	 * Note: in UDMAP the channel TPL is symmetric between tchan and rchan
-+	 */
-+	chan_id = ud->tchan_tpl.start_idx[ud->tchan_tpl.levels - 1];
- 	for (; chan_id < end; chan_id++) {
- 		if (!test_bit(chan_id, ud->tchan_map) &&
- 		    !test_bit(chan_id, ud->rchan_map))
-@@ -4043,24 +4046,28 @@ static int udma_setup_resources(struct udma_dev *ud)
- 	cap3 = udma_read(ud->mmrs[MMR_GCFG], 0x2c);
- 	if (of_device_is_compatible(dev->of_node,
- 				    "ti,am654-navss-main-udmap")) {
--		ud->tpl_levels = 2;
--		ud->tpl_start_idx[0] = 8;
-+		ud->tchan_tpl.levels = 2;
-+		ud->tchan_tpl.start_idx[0] = 8;
- 	} else if (of_device_is_compatible(dev->of_node,
- 					   "ti,am654-navss-mcu-udmap")) {
--		ud->tpl_levels = 2;
--		ud->tpl_start_idx[0] = 2;
-+		ud->tchan_tpl.levels = 2;
-+		ud->tchan_tpl.start_idx[0] = 2;
- 	} else if (UDMA_CAP3_UCHAN_CNT(cap3)) {
--		ud->tpl_levels = 3;
--		ud->tpl_start_idx[1] = UDMA_CAP3_UCHAN_CNT(cap3);
--		ud->tpl_start_idx[0] = ud->tpl_start_idx[1] +
--				       UDMA_CAP3_HCHAN_CNT(cap3);
-+		ud->tchan_tpl.levels = 3;
-+		ud->tchan_tpl.start_idx[1] = UDMA_CAP3_UCHAN_CNT(cap3);
-+		ud->tchan_tpl.start_idx[0] = ud->tchan_tpl.start_idx[1] +
-+					       UDMA_CAP3_HCHAN_CNT(cap3);
- 	} else if (UDMA_CAP3_HCHAN_CNT(cap3)) {
--		ud->tpl_levels = 2;
--		ud->tpl_start_idx[0] = UDMA_CAP3_HCHAN_CNT(cap3);
-+		ud->tchan_tpl.levels = 2;
-+		ud->tchan_tpl.start_idx[0] = UDMA_CAP3_HCHAN_CNT(cap3);
- 	} else {
--		ud->tpl_levels = 1;
-+		ud->tchan_tpl.levels = 1;
+ 	ret = k3_ringacc_ring_cfg(tx_chn->ringtx, &cfg->tx_cfg);
+ 	if (ret) {
+ 		dev_err(dev, "Failed to cfg ringtx %d\n", ret);
+@@ -589,6 +593,10 @@ static int k3_udma_glue_cfg_rx_flow(struct k3_udma_glue_rx_channel *rx_chn,
+ 		goto err_rflow_put;
  	}
  
-+	ud->rchan_tpl.levels = ud->tchan_tpl.levels;
-+	ud->rchan_tpl.start_idx[0] = ud->tchan_tpl.start_idx[0];
-+	ud->rchan_tpl.start_idx[1] = ud->tchan_tpl.start_idx[1];
++	/* Set the dma_dev for the rings to be configured */
++	flow_cfg->rx_cfg.dma_dev = k3_udma_glue_rx_get_dma_device(rx_chn);
++	flow_cfg->rxfdq_cfg.dma_dev = flow_cfg->rx_cfg.dma_dev;
 +
- 	ud->tchan_map = devm_kmalloc_array(dev, BITS_TO_LONGS(ud->tchan_cnt),
- 					   sizeof(unsigned long), GFP_KERNEL);
- 	ud->tchans = devm_kcalloc(dev, ud->tchan_cnt, sizeof(*ud->tchans),
-@@ -4182,6 +4189,46 @@ static int bcdma_setup_resources(struct udma_dev *ud)
- 	struct ti_sci_resource *rm_res, irq_res;
- 	struct udma_tisci_rm *tisci_rm = &ud->tisci_rm;
- 	const struct udma_oes_offsets *oes = &ud->soc_data->oes;
-+	u32 cap;
-+
-+	/* Set up the throughput level start indexes */
-+	cap = udma_read(ud->mmrs[MMR_GCFG], 0x2c);
-+	if (BCDMA_CAP3_UBCHAN_CNT(cap)) {
-+		ud->bchan_tpl.levels = 3;
-+		ud->bchan_tpl.start_idx[1] = BCDMA_CAP3_UBCHAN_CNT(cap);
-+		ud->bchan_tpl.start_idx[0] = ud->bchan_tpl.start_idx[0] +
-+					       BCDMA_CAP3_HBCHAN_CNT(cap);
-+	} else if (BCDMA_CAP3_HBCHAN_CNT(cap)) {
-+		ud->bchan_tpl.levels = 2;
-+		ud->bchan_tpl.start_idx[0] = BCDMA_CAP3_HBCHAN_CNT(cap);
-+	} else {
-+		ud->bchan_tpl.levels = 1;
-+	}
-+
-+	cap = udma_read(ud->mmrs[MMR_GCFG], 0x30);
-+	if (BCDMA_CAP4_URCHAN_CNT(cap)) {
-+		ud->rchan_tpl.levels = 3;
-+		ud->rchan_tpl.start_idx[1] = BCDMA_CAP4_URCHAN_CNT(cap);
-+		ud->rchan_tpl.start_idx[0] = ud->rchan_tpl.start_idx[1] +
-+					       BCDMA_CAP4_HRCHAN_CNT(cap);
-+	} else if (BCDMA_CAP4_HRCHAN_CNT(cap)) {
-+		ud->rchan_tpl.levels = 2;
-+		ud->rchan_tpl.start_idx[0] = BCDMA_CAP4_HRCHAN_CNT(cap);
-+	} else {
-+		ud->rchan_tpl.levels = 1;
-+	}
-+
-+	if (BCDMA_CAP4_UTCHAN_CNT(cap)) {
-+		ud->tchan_tpl.levels = 3;
-+		ud->tchan_tpl.start_idx[1] = BCDMA_CAP4_UTCHAN_CNT(cap);
-+		ud->tchan_tpl.start_idx[0] = ud->tchan_tpl.start_idx[1] +
-+					       BCDMA_CAP4_HTCHAN_CNT(cap);
-+	} else if (BCDMA_CAP4_HTCHAN_CNT(cap)) {
-+		ud->tchan_tpl.levels = 2;
-+		ud->tchan_tpl.start_idx[0] = BCDMA_CAP4_HTCHAN_CNT(cap);
-+	} else {
-+		ud->tchan_tpl.levels = 1;
-+	}
- 
- 	ud->bchan_map = devm_kmalloc_array(dev, BITS_TO_LONGS(ud->bchan_cnt),
- 					   sizeof(unsigned long), GFP_KERNEL);
-@@ -4207,9 +4254,6 @@ static int bcdma_setup_resources(struct udma_dev *ud)
- 	    !ud->rflows)
- 		return -ENOMEM;
- 
--	/* TPL is not yet supported for BCDMA */
--	ud->tpl_levels = 1;
--
- 	/* Get resource ranges from tisci */
- 	for (i = 0; i < RM_RANGE_LAST; i++) {
- 		if (i == RM_RANGE_RFLOW)
-diff --git a/drivers/dma/ti/k3-udma.h b/drivers/dma/ti/k3-udma.h
-index bf78ad94354a..8cb32681afaf 100644
---- a/drivers/dma/ti/k3-udma.h
-+++ b/drivers/dma/ti/k3-udma.h
-@@ -48,6 +48,12 @@
- #define BCDMA_CAP2_BCHAN_CNT(val)	((val) & 0x1ff)
- #define BCDMA_CAP2_TCHAN_CNT(val)	(((val) >> 9) & 0x1ff)
- #define BCDMA_CAP2_RCHAN_CNT(val)	(((val) >> 18) & 0x1ff)
-+#define BCDMA_CAP3_HBCHAN_CNT(val)	(((val) >> 14) & 0x1ff)
-+#define BCDMA_CAP3_UBCHAN_CNT(val)	(((val) >> 23) & 0x1ff)
-+#define BCDMA_CAP4_HRCHAN_CNT(val)	((val) & 0xff)
-+#define BCDMA_CAP4_URCHAN_CNT(val)	(((val) >> 8) & 0xff)
-+#define BCDMA_CAP4_HTCHAN_CNT(val)	(((val) >> 16) & 0xff)
-+#define BCDMA_CAP4_UTCHAN_CNT(val)	(((val) >> 24) & 0xff)
- 
- /* UDMA_CHAN_RT_CTL_REG */
- #define UDMA_CHAN_RT_CTL_EN		BIT(31)
+ 	ret = k3_ringacc_ring_cfg(flow->ringrx, &flow_cfg->rx_cfg);
+ 	if (ret) {
+ 		dev_err(dev, "Failed to cfg ringrx %d\n", ret);
 -- 
 Peter
 
