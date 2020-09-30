@@ -2,164 +2,130 @@ Return-Path: <SRS0=+u/s=DH=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+X-Spam-Status: No, score=-13.6 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
-	autolearn=no autolearn_force=no version=3.4.0
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7CAA2C4727F
-	for <dmaengine@archiver.kernel.org>; Wed, 30 Sep 2020 05:46:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5C1C2C4727F
+	for <dmaengine@archiver.kernel.org>; Wed, 30 Sep 2020 09:14:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 41D282076B
-	for <dmaengine@archiver.kernel.org>; Wed, 30 Sep 2020 05:46:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0EBC820739
+	for <dmaengine@archiver.kernel.org>; Wed, 30 Sep 2020 09:14:11 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b="SMtFQgid"
+	dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b="hAI/eQIp"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725779AbgI3Fqu (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 30 Sep 2020 01:46:50 -0400
-Received: from fllv0016.ext.ti.com ([198.47.19.142]:38628 "EHLO
-        fllv0016.ext.ti.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725306AbgI3Fqu (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Wed, 30 Sep 2020 01:46:50 -0400
-Received: from fllv0034.itg.ti.com ([10.64.40.246])
-        by fllv0016.ext.ti.com (8.15.2/8.15.2) with ESMTP id 08U5kldp121649;
-        Wed, 30 Sep 2020 00:46:47 -0500
+        id S1728676AbgI3JOK (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 30 Sep 2020 05:14:10 -0400
+Received: from fllv0015.ext.ti.com ([198.47.19.141]:35008 "EHLO
+        fllv0015.ext.ti.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725779AbgI3JOJ (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Wed, 30 Sep 2020 05:14:09 -0400
+Received: from lelv0265.itg.ti.com ([10.180.67.224])
+        by fllv0015.ext.ti.com (8.15.2/8.15.2) with ESMTP id 08U9E35X034882;
+        Wed, 30 Sep 2020 04:14:03 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
-        s=ti-com-17Q1; t=1601444807;
-        bh=IcGXwcmno1GcBhj0sPJ2RIbIjTWcrrKuQT9aId1ObFU=;
-        h=Subject:From:To:CC:References:Date:In-Reply-To;
-        b=SMtFQgid/ACN2r2E6N9nXv45AdHeDw6Vzts/AsWt3j1DwBMmskpNtdPaGGIum2CCl
-         /SruN+o0/yy97tiTQ16PZFZ51ROV6VycRgECT97f5XMrp2lyZSvY/Yt4BLuLmvedDt
-         llBFlIhf3Xq/H0NtTBZAzZIIdU/lxob9tKZ2E/lE=
-Received: from DLEE104.ent.ti.com (dlee104.ent.ti.com [157.170.170.34])
-        by fllv0034.itg.ti.com (8.15.2/8.15.2) with ESMTPS id 08U5klFl036470
+        s=ti-com-17Q1; t=1601457243;
+        bh=5ridk5920UfMB0nCEIpCyF/07n7stscwVpGaO1rQQhA=;
+        h=From:To:CC:Subject:Date:In-Reply-To:References;
+        b=hAI/eQIpcwJQUk0v9xFVj0B/6YmQCfL80Xrg/yduhWEsIRKVXZOIKXFFDi5MX11gu
+         uP1TDOA+UeSEcvhtZ0zLj21Vy8JquVYtCfA16JaiksmhnfxFXsgIUZAGcHggrtQffr
+         cr9QI/UlAe+cvcSFFMlZvY1qtlL9mbyyk6jh9tUg=
+Received: from DLEE106.ent.ti.com (dlee106.ent.ti.com [157.170.170.36])
+        by lelv0265.itg.ti.com (8.15.2/8.15.2) with ESMTPS id 08U9E2CL111169
         (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
-        Wed, 30 Sep 2020 00:46:47 -0500
-Received: from DLEE112.ent.ti.com (157.170.170.23) by DLEE104.ent.ti.com
- (157.170.170.34) with Microsoft SMTP Server (version=TLS1_2,
+        Wed, 30 Sep 2020 04:14:02 -0500
+Received: from DLEE106.ent.ti.com (157.170.170.36) by DLEE106.ent.ti.com
+ (157.170.170.36) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1979.3; Wed, 30
- Sep 2020 00:46:47 -0500
-Received: from lelv0327.itg.ti.com (10.180.67.183) by DLEE112.ent.ti.com
- (157.170.170.23) with Microsoft SMTP Server (version=TLS1_2,
+ Sep 2020 04:14:02 -0500
+Received: from fllv0039.itg.ti.com (10.64.41.19) by DLEE106.ent.ti.com
+ (157.170.170.36) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1979.3 via
- Frontend Transport; Wed, 30 Sep 2020 00:46:47 -0500
-Received: from [192.168.2.6] (ileax41-snat.itg.ti.com [10.172.224.153])
-        by lelv0327.itg.ti.com (8.15.2/8.15.2) with ESMTP id 08U5kjjQ047716;
-        Wed, 30 Sep 2020 00:46:45 -0500
-Subject: Re: [PATCH v3 2/3] dmaengine: add peripheral configuration
+ Frontend Transport; Wed, 30 Sep 2020 04:14:02 -0500
+Received: from feketebors.ti.com (ileax41-snat.itg.ti.com [10.172.224.153])
+        by fllv0039.itg.ti.com (8.15.2/8.15.2) with ESMTP id 08U9DuJY116385;
+        Wed, 30 Sep 2020 04:13:59 -0500
 From:   Peter Ujfalusi <peter.ujfalusi@ti.com>
-To:     Vinod Koul <vkoul@kernel.org>, <dmaengine@vger.kernel.org>
-CC:     Rob Herring <robh+dt@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <20200923063410.3431917-1-vkoul@kernel.org>
- <20200923063410.3431917-3-vkoul@kernel.org>
- <29f95fff-c484-0131-d1fe-b06e3000fb9f@ti.com>
-X-Pep-Version: 2.0
-Message-ID: <aaa3f7df-3625-1b65-aeaa-33dc43566c99@ti.com>
-Date:   Wed, 30 Sep 2020 08:47:01 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.12.0
+To:     <vkoul@kernel.org>, <nm@ti.com>, <ssantosh@kernel.org>,
+        <robh+dt@kernel.org>, <vigneshr@ti.com>
+CC:     <dan.j.williams@intel.com>, <t-kristo@ti.com>,
+        <lokeshvutla@ti.com>, <linux-arm-kernel@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <dmaengine@vger.kernel.org>
+Subject: [PATCH 01/18] dmaengine: of-dma: Add support for optional router configuration callback
+Date:   Wed, 30 Sep 2020 12:13:55 +0300
+Message-ID: <20200930091412.8020-2-peter.ujfalusi@ti.com>
+X-Mailer: git-send-email 2.28.0
+In-Reply-To: <20200930091412.8020-1-peter.ujfalusi@ti.com>
+References: <20200930091412.8020-1-peter.ujfalusi@ti.com>
 MIME-Version: 1.0
-In-Reply-To: <29f95fff-c484-0131-d1fe-b06e3000fb9f@ti.com>
-Content-Type: text/plain; charset="utf-8"
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 X-EXCLAIMER-MD-CONFIG: e1e8a2fd-e40a-4ac6-ac9b-f7e9cc9ee180
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Hi Vinod,
+Additional configuration for the DMA event router might be needed for a
+channel which can not be done during device_alloc_chan_resources callback
+since the router information is not yet present for the drivers.
 
-On 29/09/2020 11.06, Peter Ujfalusi wrote:
->=20
-> I know that you want this to be as generic as much as it is possible,
-> but do we really want to?
-> GPIv2 will also handle I2S peripheral, other vendor's similar solution
-> would require different sets of parameters unique to their IPs?
->=20
-> How we are going to handle similar setups for DMA which is used for
-> networking, SPI/I2C/I2S/NAND/display/capture, etc?
->=20
-> Imho these settings are really part of the peripheral's domain and not
-> the DMA. It is just a small detail that instead of direct register
-> writes, your setup is using the DMA descriptors to write.
-> It is similar to what I use as metadata (part of the descriptor belongs=
+If there is a need for additional configuration for the channel if DMA
+router is in use, then the driver can implement the device_router_config
+callback.
 
-> and owned by the client driver).
->=20
-> I think it would be better to have:
->=20
-> enum dmaengine_peripheral {
-> 	DMAENGINE_PERIPHERAL_GPI_SPI =3D 1,
-> 	DMAENGINE_PERIPHERAL_GPI_UART,
-> 	DMAENGINE_PERIPHERAL_GPI_I2C,
-> 	DMAENGINE_PERIPHERAL_XYZ_SPI,
-> 	DMAENGINE_PERIPHERAL_XYZ_AASRC,
-> 	DMAENGINE_PERIPHERAL_ABC_CAM,
-> 	...
-> 	DMAENGINE_PERIPHERAL_LAST,
-> };
->=20
-> enum dmaengine_peripheral peripheral_type;
-> void *peripheral_config;
+Signed-off-by: Peter Ujfalusi <peter.ujfalusi@ti.com>
+---
+ drivers/dma/of-dma.c      | 10 ++++++++++
+ include/linux/dmaengine.h |  2 ++
+ 2 files changed, 12 insertions(+)
 
-TI have an AASRC (Audio Asynchronous Sample Rate Converted) in j721e and
-to configure the DMA side (AASRC_PDMA) we need special configuration
-parameters passed from the AASRC driver to the DMA channel.
-This peripheral config extension would be perfect for it, but the
-parameters I would need is not generic in any ways.
-
-The other thing which might need to be considered is to have src/dst
-pair of this. When we do DMA_DEV_TO_DEV, it would help to figure out
-which side we should apply which config (if you have the same type of
-device on both ends with different config?).
-
-
-> and that's it. The set_config is specific to GPI.
-> It can be debated where the structs should be defined, in the generic
-> dmaengine.h or in include/linux/dma/ as controller specific
-> (gpi_peripheral.h) or a generic one, like dmaengine_peripheral.h
->=20
-> The SPI/I2C/UART client of yours would pass the GPI specific struct as
-> in any case it has to know what is the DMA it is serviced by.
->=20
->> +};
->>  /**
->>   * struct dma_slave_config - dma slave channel runtime config
->>   * @direction: whether the data shall go in or out on this slave
->> @@ -418,6 +506,8 @@ enum dma_slave_buswidth {
->>   * @slave_id: Slave requester id. Only valid for slave channels. The =
-dma
->>   * slave peripheral will have unique id as dma requester which need t=
-o be
->>   * pass as slave config.
->> + * @peripheral: peripheral configuration for programming peripheral f=
-or
->> + * dmaengine transfer
->>   *
->>   * This struct is passed in as configuration data to a DMA engine
->>   * in order to set up a certain channel for DMA transport at runtime.=
-
->> @@ -443,6 +533,7 @@ struct dma_slave_config {
->>  	u32 dst_port_window_size;
->>  	bool device_fc;
->>  	unsigned int slave_id;
->> +	struct dmaengine_peripheral_config *peripheral;
->>  };
->> =20
->>  /**
->>
->=20
-> - P=C3=A9ter
->=20
-> Texas Instruments Finland Oy, Porkkalankatu 22, 00180 Helsinki.
-> Y-tunnus/Business ID: 0615521-4. Kotipaikka/Domicile: Helsinki
->=20
-
-- P=C3=A9ter
+diff --git a/drivers/dma/of-dma.c b/drivers/dma/of-dma.c
+index 8a4f608904b9..ec00b20ae8e4 100644
+--- a/drivers/dma/of-dma.c
++++ b/drivers/dma/of-dma.c
+@@ -75,8 +75,18 @@ static struct dma_chan *of_dma_router_xlate(struct of_phandle_args *dma_spec,
+ 		ofdma->dma_router->route_free(ofdma->dma_router->dev,
+ 					      route_data);
+ 	} else {
++		int ret = 0;
++
+ 		chan->router = ofdma->dma_router;
+ 		chan->route_data = route_data;
++
++		if (chan->device->device_router_config)
++			ret = chan->device->device_router_config(chan);
++
++		if (ret) {
++			dma_release_channel(chan);
++			chan = ERR_PTR(ret);
++		}
+ 	}
+ 
+ 	/*
+diff --git a/include/linux/dmaengine.h b/include/linux/dmaengine.h
+index dd357a747780..d6197fe875af 100644
+--- a/include/linux/dmaengine.h
++++ b/include/linux/dmaengine.h
+@@ -800,6 +800,7 @@ struct dma_filter {
+  *	by tx_status
+  * @device_alloc_chan_resources: allocate resources and return the
+  *	number of allocated descriptors
++ * @device_router_config: optional callback for DMA router configuration
+  * @device_free_chan_resources: release DMA channel's resources
+  * @device_prep_dma_memcpy: prepares a memcpy operation
+  * @device_prep_dma_xor: prepares a xor operation
+@@ -874,6 +875,7 @@ struct dma_device {
+ 	enum dma_residue_granularity residue_granularity;
+ 
+ 	int (*device_alloc_chan_resources)(struct dma_chan *chan);
++	int (*device_router_config)(struct dma_chan *chan);
+ 	void (*device_free_chan_resources)(struct dma_chan *chan);
+ 
+ 	struct dma_async_tx_descriptor *(*device_prep_dma_memcpy)(
+-- 
+Peter
 
 Texas Instruments Finland Oy, Porkkalankatu 22, 00180 Helsinki.
 Y-tunnus/Business ID: 0615521-4. Kotipaikka/Domicile: Helsinki
