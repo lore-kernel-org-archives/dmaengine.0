@@ -2,318 +2,397 @@ Return-Path: <SRS0=hjok=DM=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=unavailable
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_GIT autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B7FC2C4363D
-	for <dmaengine@archiver.kernel.org>; Mon,  5 Oct 2020 15:12:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7AAACC46466
+	for <dmaengine@archiver.kernel.org>; Mon,  5 Oct 2020 18:38:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6A0312078A
-	for <dmaengine@archiver.kernel.org>; Mon,  5 Oct 2020 15:12:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1D64621707
+	for <dmaengine@archiver.kernel.org>; Mon,  5 Oct 2020 18:38:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=default; t=1601923121;
+	bh=e/H5OM1Kgb96wWg+sXU8irWdRIPHP+Tm8rfMRY7B90Y=;
+	h=From:To:Cc:Subject:Date:List-ID:From;
+	b=1jqHaR8pMIRvIx00hPfNZl6PyqajZcxJ/faVJ/otPIxCK9iIKXansjbK/6In2txbb
+	 GIlSCK8z5EiRm4mbBvilbDzF1bN9gJAKjTyIipDMRv2MMP1dOwJM5ohJl10+KnGHaH
+	 lAVWBRTlqQ5KSPAo87PaTZt37IEEbX0YbX3d831U=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727143AbgJEPLy (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 5 Oct 2020 11:11:54 -0400
-Received: from mail.kernel.org ([198.145.29.99]:41828 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727136AbgJEPLt (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Mon, 5 Oct 2020 11:11:49 -0400
-Received: from localhost (unknown [192.55.55.41])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 663BA20774;
-        Mon,  5 Oct 2020 15:11:48 +0000 (UTC)
-From:   Dave Jiang <dave.jiang@intel.com>
-To:     vkoul@kernel.org, bp@alien8.de, dan.j.williams@intel.com,
-        tony.luck@intel.com, ashok.raj@intel.com, kevin.tian@intel.com,
-        fenghua.yu@intel.com
-Cc:     dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v7 4/5] dmaengine: idxd: Clean up descriptors with fault error
-Date:   Mon,  5 Oct 2020 08:11:25 -0700
-Message-Id: <20201005151126.657029-5-dave.jiang@intel.com>
-X-Mailer: git-send-email 2.26.2
-In-Reply-To: <20201005151126.657029-1-dave.jiang@intel.com>
-References: <20201005151126.657029-1-dave.jiang@intel.com>
+        id S1727119AbgJESik (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 5 Oct 2020 14:38:40 -0400
+Received: from mail-oi1-f193.google.com ([209.85.167.193]:35257 "EHLO
+        mail-oi1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725940AbgJESik (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Mon, 5 Oct 2020 14:38:40 -0400
+Received: by mail-oi1-f193.google.com with SMTP id w141so9706420oia.2;
+        Mon, 05 Oct 2020 11:38:36 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=FKBuvtLQAdMRryG6abzok93hEZkfxfk1NvbdtZDThTc=;
+        b=bDK75CryujMO76IjbGfXVn3NMjUDRV7I4OLzQAONqY7A1asItWuGsGw1ge1m3Wl+tH
+         mdm8Vr+7+odoC8NpnKJKmMTRcS9JWvP4c4MFz8HnmqY54UGwUmm7dbSO5DZTVpExMxsd
+         ihuo4hUM+0nSKwDlJwZI0TrJmhvY8iVajwhlgNqMd2AG+H7AYpqFq+dJbMnYhezJt37r
+         8EaMuOrmOTnyM4NrsmRee0eX7DF24KMgRRhN6PUb0J2tPGOPf0A1QCGHJZZWNy6EyxFs
+         3hVssrxSxJ+V7+R+464rXfqvVkG4r0OFuDZ9RBHOEr2HluU8Y0qcSxk+5i6p2+uVJw3I
+         4SFQ==
+X-Gm-Message-State: AOAM532Z6hwvunkSQ1ckEkZp2o3GvhXNL76YTzTSxp3kYXv2R/csYiSF
+        0LActFl2druxp4twqBkV04nTJDUQDGbZ
+X-Google-Smtp-Source: ABdhPJwtSa8Y/I6DT15kFb+c+yKVzbdUj3v7XcBfx5+TPJ0mpN3ESYoYQunOScJs66Yn+dcB/iKTAA==
+X-Received: by 2002:aca:50d2:: with SMTP id e201mr416333oib.31.1601923115204;
+        Mon, 05 Oct 2020 11:38:35 -0700 (PDT)
+Received: from xps15.herring.priv (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
+        by smtp.googlemail.com with ESMTPSA id z25sm143140otq.31.2020.10.05.11.38.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 05 Oct 2020 11:38:34 -0700 (PDT)
+From:   Rob Herring <robh@kernel.org>
+To:     devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     Albert Ou <aou@eecs.berkeley.edu>,
+        Alessandro Zummo <a.zummo@towertech.it>,
+        Andrew Lunn <andrew@lunn.ch>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Chanwoo Choi <cw00.choi@samsung.com>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        "David S. Miller" <davem@davemloft.net>, dmaengine@vger.kernel.org,
+        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+        dri-devel@lists.freedesktop.org,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Heiner Kallweit <hkallweit1@gmail.com>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Jason Cooper <jason@lakedaemon.net>,
+        Jens Axboe <axboe@kernel.dk>,
+        Jonathan Cameron <jic23@kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Lars-Peter Clausen <lars@metafoo.de>,
+        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+        Lee Jones <lee.jones@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Marc Kleine-Budde <mkl@pengutronix.de>,
+        Marc Zyngier <maz@kernel.org>, Mark Brown <broonie@kernel.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Miquel Raynal <miquel.raynal@bootlin.com>,
+        MyungJoo Ham <myungjoo.ham@samsung.com>,
+        Palmer Dabbelt <palmer@dabbelt.com>,
+        Paul Walmsley <paul.walmsley@sifive.com>,
+        Pavel Machek <pavel@ucw.cz>,
+        Peter Meerwald-Stadler <pmeerw@pmeerw.net>,
+        Richard Weinberger <richard@nod.at>,
+        Sam Ravnborg <sam@ravnborg.org>,
+        Sebastian Reichel <sre@kernel.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Vignesh Raghavendra <vigneshr@ti.com>,
+        Vinod Koul <vkoul@kernel.org>,
+        Viresh Kumar <vireshk@kernel.org>,
+        Vivien Didelot <vivien.didelot@gmail.com>,
+        Wim Van Sebroeck <wim@linux-watchdog.org>,
+        Wolfgang Grandegger <wg@grandegger.com>,
+        Zhang Rui <rui.zhang@intel.com>,
+        linux-arm-kernel@lists.infradead.org, linux-can@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-gpio@vger.kernel.org,
+        linux-hwmon@vger.kernel.org, linux-i2c@vger.kernel.org,
+        linux-ide@vger.kernel.org, linux-iio@vger.kernel.org,
+        linux-input@vger.kernel.org, linux-leds@vger.kernel.org,
+        linux-media@vger.kernel.org, linux-mips@vger.kernel.org,
+        linux-mmc@vger.kernel.org, linux-mtd@lists.infradead.org,
+        linux-pci@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-pwm@vger.kernel.org, linux-riscv@lists.infradead.org,
+        linux-rtc@vger.kernel.org, linux-serial@vger.kernel.org,
+        linux-spi@vger.kernel.org, linux-usb@vger.kernel.org,
+        linux-watchdog@vger.kernel.org
+Subject: [PATCH 0/4] dt-bindings: additional/unevaluatedProperties clean-ups
+Date:   Mon,  5 Oct 2020 13:38:26 -0500
+Message-Id: <20201005183830.486085-1-robh@kernel.org>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Add code to "complete" a descriptor when the descriptor or its completion
-address hit a fault error when SVA mode is being used. This error can be
-triggered due to bad programming by the user. A lock is introduced in order
-to protect the descriptor completion lists since the fault handler will run
-from the system work queue after being scheduled in the interrupt handler.
+The default behavior for json-schema is any unknown property is allowed.
+That is generally not the behavior we want for DT. In order to disallow
+extra properties, schemas need to define 'additionalProperties: false'
+typically. Ideally, we'd just add that automatically with the tools, but
+there are some exceptions so only making things explicit everywhere
+really works. Missing 'additionalProperties' or 'unevaluatedProperties'
+has been a constant source of review comments, so a meta-schema check is
+really needed here.
 
-Signed-off-by: Dave Jiang <dave.jiang@intel.com>
-Reviewed-by: Tony Luck <tony.luck@intel.com>
-Reviewed-by: Dan Williams <dan.j.williams@intel.com>
----
- drivers/dma/idxd/idxd.h |   5 ++
- drivers/dma/idxd/init.c |   1 +
- drivers/dma/idxd/irq.c  | 146 ++++++++++++++++++++++++++++++++++++----
- 3 files changed, 140 insertions(+), 12 deletions(-)
+Once this series is in place, the meta-schema can be updated with a
+check. The rule is if there's a $ref to another schema, then either
+'additionalProperties' or 'unevaluatedProperties' is required. If not,
+then 'additionalProperties' is required.
 
-diff --git a/drivers/dma/idxd/idxd.h b/drivers/dma/idxd/idxd.h
-index 43a216c42d25..b64b6266ca97 100644
---- a/drivers/dma/idxd/idxd.h
-+++ b/drivers/dma/idxd/idxd.h
-@@ -34,6 +34,11 @@ struct idxd_irq_entry {
- 	int id;
- 	struct llist_head pending_llist;
- 	struct list_head work_list;
-+	/*
-+	 * Lock to protect access between irq thread process descriptor
-+	 * and irq thread processing error descriptor.
-+	 */
-+	spinlock_t list_lock;
- };
- 
- struct idxd_group {
-diff --git a/drivers/dma/idxd/init.c b/drivers/dma/idxd/init.c
-index 626401a71fdd..1bb7637b02eb 100644
---- a/drivers/dma/idxd/init.c
-+++ b/drivers/dma/idxd/init.c
-@@ -97,6 +97,7 @@ static int idxd_setup_interrupts(struct idxd_device *idxd)
- 	for (i = 0; i < msixcnt; i++) {
- 		idxd->irq_entries[i].id = i;
- 		idxd->irq_entries[i].idxd = idxd;
-+		spin_lock_init(&idxd->irq_entries[i].list_lock);
- 	}
- 
- 	msix = &idxd->msix_entries[0];
-diff --git a/drivers/dma/idxd/irq.c b/drivers/dma/idxd/irq.c
-index 17a65a13fb64..593a2f6ed16c 100644
---- a/drivers/dma/idxd/irq.c
-+++ b/drivers/dma/idxd/irq.c
-@@ -11,6 +11,24 @@
- #include "idxd.h"
- #include "registers.h"
- 
-+enum irq_work_type {
-+	IRQ_WORK_NORMAL = 0,
-+	IRQ_WORK_PROCESS_FAULT,
-+};
-+
-+struct idxd_fault {
-+	struct work_struct work;
-+	u64 addr;
-+	struct idxd_device *idxd;
-+};
-+
-+static int irq_process_work_list(struct idxd_irq_entry *irq_entry,
-+				 enum irq_work_type wtype,
-+				 int *processed, u64 data);
-+static int irq_process_pending_llist(struct idxd_irq_entry *irq_entry,
-+				     enum irq_work_type wtype,
-+				     int *processed, u64 data);
-+
- static void idxd_device_reinit(struct work_struct *work)
- {
- 	struct idxd_device *idxd = container_of(work, struct idxd_device, work);
-@@ -44,6 +62,46 @@ static void idxd_device_reinit(struct work_struct *work)
- 	idxd_device_wqs_clear_state(idxd);
- }
- 
-+static void idxd_device_fault_work(struct work_struct *work)
-+{
-+	struct idxd_fault *fault = container_of(work, struct idxd_fault, work);
-+	struct idxd_irq_entry *ie;
-+	int i;
-+	int processed;
-+	int irqcnt = fault->idxd->num_wq_irqs + 1;
-+
-+	for (i = 1; i < irqcnt; i++) {
-+		ie = &fault->idxd->irq_entries[i];
-+		irq_process_work_list(ie, IRQ_WORK_PROCESS_FAULT,
-+				      &processed, fault->addr);
-+		if (processed)
-+			break;
-+
-+		irq_process_pending_llist(ie, IRQ_WORK_PROCESS_FAULT,
-+					  &processed, fault->addr);
-+		if (processed)
-+			break;
-+	}
-+
-+	kfree(fault);
-+}
-+
-+static int idxd_device_schedule_fault_process(struct idxd_device *idxd,
-+					      u64 fault_addr)
-+{
-+	struct idxd_fault *fault;
-+
-+	fault = kmalloc(sizeof(*fault), GFP_ATOMIC);
-+	if (!fault)
-+		return -ENOMEM;
-+
-+	fault->addr = fault_addr;
-+	fault->idxd = idxd;
-+	INIT_WORK(&fault->work, idxd_device_fault_work);
-+	queue_work(idxd->wq, &fault->work);
-+	return 0;
-+}
-+
- irqreturn_t idxd_irq_handler(int vec, void *data)
- {
- 	struct idxd_irq_entry *irq_entry = data;
-@@ -125,6 +183,15 @@ irqreturn_t idxd_misc_thread(int vec, void *data)
- 	if (!err)
- 		goto out;
- 
-+	/*
-+	 * This case should rarely happen and typically is due to software
-+	 * programming error by the driver.
-+	 */
-+	if (idxd->sw_err.valid &&
-+	    idxd->sw_err.desc_valid &&
-+	    idxd->sw_err.fault_addr)
-+		idxd_device_schedule_fault_process(idxd, idxd->sw_err.fault_addr);
-+
- 	gensts.bits = ioread32(idxd->reg_base + IDXD_GENSTATS_OFFSET);
- 	if (gensts.state == IDXD_DEVICE_STATE_HALT) {
- 		idxd->state = IDXD_DEV_HALTED;
-@@ -152,57 +219,110 @@ irqreturn_t idxd_misc_thread(int vec, void *data)
- 	return IRQ_HANDLED;
- }
- 
-+static bool process_fault(struct idxd_desc *desc, u64 fault_addr)
-+{
-+	/*
-+	 * Completion address can be bad as well. Check fault address match for descriptor
-+	 * and completion address.
-+	 */
-+	if ((u64)desc->hw == fault_addr ||
-+	    (u64)desc->completion == fault_addr) {
-+		idxd_dma_complete_txd(desc, IDXD_COMPLETE_DEV_FAIL);
-+		return true;
-+	}
-+
-+	return false;
-+}
-+
-+static bool complete_desc(struct idxd_desc *desc)
-+{
-+	if (desc->completion->status) {
-+		idxd_dma_complete_txd(desc, IDXD_COMPLETE_NORMAL);
-+		return true;
-+	}
-+
-+	return false;
-+}
-+
- static int irq_process_pending_llist(struct idxd_irq_entry *irq_entry,
--				     int *processed)
-+				     enum irq_work_type wtype,
-+				     int *processed, u64 data)
- {
- 	struct idxd_desc *desc, *t;
- 	struct llist_node *head;
- 	int queued = 0;
-+	bool completed = false;
-+	unsigned long flags;
- 
- 	*processed = 0;
- 	head = llist_del_all(&irq_entry->pending_llist);
- 	if (!head)
--		return 0;
-+		goto out;
- 
- 	llist_for_each_entry_safe(desc, t, head, llnode) {
--		if (desc->completion->status) {
--			idxd_dma_complete_txd(desc, IDXD_COMPLETE_NORMAL);
-+		if (wtype == IRQ_WORK_NORMAL)
-+			completed = complete_desc(desc);
-+		else if (wtype == IRQ_WORK_PROCESS_FAULT)
-+			completed = process_fault(desc, data);
-+
-+		if (completed) {
- 			idxd_free_desc(desc->wq, desc);
- 			(*processed)++;
-+			if (wtype == IRQ_WORK_PROCESS_FAULT)
-+				break;
- 		} else {
--			list_add_tail(&desc->list, &irq_entry->work_list);
-+			spin_lock_irqsave(&irq_entry->list_lock, flags);
-+			list_add_tail(&desc->list,
-+				      &irq_entry->work_list);
-+			spin_unlock_irqrestore(&irq_entry->list_lock, flags);
- 			queued++;
- 		}
- 	}
- 
-+ out:
- 	return queued;
- }
- 
- static int irq_process_work_list(struct idxd_irq_entry *irq_entry,
--				 int *processed)
-+				 enum irq_work_type wtype,
-+				 int *processed, u64 data)
- {
- 	struct list_head *node, *next;
- 	int queued = 0;
-+	bool completed = false;
-+	unsigned long flags;
- 
- 	*processed = 0;
-+	spin_lock_irqsave(&irq_entry->list_lock, flags);
- 	if (list_empty(&irq_entry->work_list))
--		return 0;
-+		goto out;
- 
- 	list_for_each_safe(node, next, &irq_entry->work_list) {
- 		struct idxd_desc *desc =
- 			container_of(node, struct idxd_desc, list);
- 
--		if (desc->completion->status) {
-+		spin_unlock_irqrestore(&irq_entry->list_lock, flags);
-+		if (wtype == IRQ_WORK_NORMAL)
-+			completed = complete_desc(desc);
-+		else if (wtype == IRQ_WORK_PROCESS_FAULT)
-+			completed = process_fault(desc, data);
-+
-+		if (completed) {
-+			spin_lock_irqsave(&irq_entry->list_lock, flags);
- 			list_del(&desc->list);
--			/* process and callback */
--			idxd_dma_complete_txd(desc, IDXD_COMPLETE_NORMAL);
-+			spin_unlock_irqrestore(&irq_entry->list_lock, flags);
- 			idxd_free_desc(desc->wq, desc);
- 			(*processed)++;
-+			if (wtype == IRQ_WORK_PROCESS_FAULT)
-+				return queued;
- 		} else {
- 			queued++;
- 		}
-+		spin_lock_irqsave(&irq_entry->list_lock, flags);
- 	}
- 
-+ out:
-+	spin_unlock_irqrestore(&irq_entry->list_lock, flags);
- 	return queued;
- }
- 
-@@ -230,12 +350,14 @@ static int idxd_desc_process(struct idxd_irq_entry *irq_entry)
- 	 * 5. Repeat until no more descriptors.
- 	 */
- 	do {
--		rc = irq_process_work_list(irq_entry, &processed);
-+		rc = irq_process_work_list(irq_entry, IRQ_WORK_NORMAL,
-+					   &processed, 0);
- 		total += processed;
- 		if (rc != 0)
- 			continue;
- 
--		rc = irq_process_pending_llist(irq_entry, &processed);
-+		rc = irq_process_pending_llist(irq_entry, IRQ_WORK_NORMAL,
-+					       &processed, 0);
- 		total += processed;
- 	} while (rc != 0);
- 
--- 
-2.26.2
+Rob
 
+
+Rob Herring (4):
+  dt-bindings: Add missing 'unevaluatedProperties'
+  dt-bindings: Use 'additionalProperties' instead of
+    'unevaluatedProperties'
+  dt-bindings: Explicitly allow additional properties in board/SoC
+    schemas
+  dt-bindings: Explicitly allow additional properties in common schemas
+
+ Documentation/devicetree/bindings/arm/actions.yaml     |  2 ++
+ Documentation/devicetree/bindings/arm/altera.yaml      |  3 +++
+ Documentation/devicetree/bindings/arm/amazon,al.yaml   |  2 ++
+ Documentation/devicetree/bindings/arm/amlogic.yaml     |  3 +++
+ .../devicetree/bindings/arm/arm,integrator.yaml        |  2 ++
+ .../devicetree/bindings/arm/arm,realview.yaml          |  2 ++
+ .../devicetree/bindings/arm/arm,versatile.yaml         |  2 ++
+ .../devicetree/bindings/arm/arm,vexpress-juno.yaml     |  2 ++
+ Documentation/devicetree/bindings/arm/atmel-at91.yaml  |  2 ++
+ Documentation/devicetree/bindings/arm/axxia.yaml       |  2 ++
+ Documentation/devicetree/bindings/arm/bcm/bcm2835.yaml |  2 ++
+ .../devicetree/bindings/arm/bcm/brcm,bcm11351.yaml     |  2 ++
+ .../devicetree/bindings/arm/bcm/brcm,bcm21664.yaml     |  2 ++
+ .../devicetree/bindings/arm/bcm/brcm,bcm23550.yaml     |  2 ++
+ .../devicetree/bindings/arm/bcm/brcm,bcm4708.yaml      |  3 +++
+ .../devicetree/bindings/arm/bcm/brcm,cygnus.yaml       |  2 ++
+ .../devicetree/bindings/arm/bcm/brcm,hr2.yaml          |  2 ++
+ .../devicetree/bindings/arm/bcm/brcm,ns2.yaml          |  2 ++
+ .../devicetree/bindings/arm/bcm/brcm,nsp.yaml          |  2 ++
+ .../devicetree/bindings/arm/bcm/brcm,stingray.yaml     |  2 ++
+ .../devicetree/bindings/arm/bcm/brcm,vulcan-soc.yaml   |  2 ++
+ Documentation/devicetree/bindings/arm/bitmain.yaml     |  3 +++
+ Documentation/devicetree/bindings/arm/calxeda.yaml     |  2 ++
+ .../devicetree/bindings/arm/coresight-cti.yaml         |  2 ++
+ Documentation/devicetree/bindings/arm/cpus.yaml        |  2 ++
+ Documentation/devicetree/bindings/arm/digicolor.yaml   |  2 ++
+ Documentation/devicetree/bindings/arm/fsl.yaml         |  2 ++
+ .../devicetree/bindings/arm/hisilicon/hisilicon.yaml   |  3 +++
+ .../devicetree/bindings/arm/intel,keembay.yaml         |  3 +++
+ .../devicetree/bindings/arm/intel-ixp4xx.yaml          |  2 ++
+ .../bindings/arm/keystone/ti,k3-sci-common.yaml        |  2 ++
+ .../devicetree/bindings/arm/marvell/armada-7k-8k.yaml  |  2 ++
+ Documentation/devicetree/bindings/arm/mediatek.yaml    |  3 +++
+ .../devicetree/bindings/arm/microchip,sparx5.yaml      |  2 ++
+ Documentation/devicetree/bindings/arm/moxart.yaml      |  1 +
+ Documentation/devicetree/bindings/arm/mrvl/mrvl.yaml   |  3 +++
+ Documentation/devicetree/bindings/arm/mstar/mstar.yaml |  2 ++
+ .../bindings/arm/nvidia,tegra194-ccplex.yaml           |  2 ++
+ Documentation/devicetree/bindings/arm/nxp/lpc32xx.yaml |  2 ++
+ Documentation/devicetree/bindings/arm/qcom.yaml        |  2 ++
+ Documentation/devicetree/bindings/arm/rda.yaml         |  2 ++
+ Documentation/devicetree/bindings/arm/realtek.yaml     |  3 +++
+ Documentation/devicetree/bindings/arm/renesas.yaml     |  2 ++
+ Documentation/devicetree/bindings/arm/rockchip.yaml    |  3 +++
+ .../bindings/arm/samsung/samsung-boards.yaml           |  2 ++
+ Documentation/devicetree/bindings/arm/sirf.yaml        |  3 +++
+ .../devicetree/bindings/arm/socionext/milbeaut.yaml    |  3 +++
+ .../devicetree/bindings/arm/socionext/uniphier.yaml    |  2 ++
+ Documentation/devicetree/bindings/arm/spear.yaml       |  3 +++
+ Documentation/devicetree/bindings/arm/sprd/sprd.yaml   |  2 ++
+ Documentation/devicetree/bindings/arm/sti.yaml         |  3 +++
+ .../devicetree/bindings/arm/stm32/st,mlahb.yaml        |  2 ++
+ Documentation/devicetree/bindings/arm/stm32/stm32.yaml |  3 +++
+ Documentation/devicetree/bindings/arm/sunxi.yaml       |  2 ++
+ Documentation/devicetree/bindings/arm/tegra.yaml       |  2 ++
+ Documentation/devicetree/bindings/arm/ti/nspire.yaml   |  3 +++
+ .../devicetree/bindings/arm/ti/ti,davinci.yaml         |  3 +++
+ Documentation/devicetree/bindings/arm/ux500.yaml       |  2 ++
+ Documentation/devicetree/bindings/arm/vt8500.yaml      |  3 +++
+ Documentation/devicetree/bindings/arm/xilinx.yaml      |  2 ++
+ Documentation/devicetree/bindings/arm/zte.yaml         |  2 ++
+ .../devicetree/bindings/ata/faraday,ftide010.yaml      |  2 ++
+ Documentation/devicetree/bindings/ata/pata-common.yaml |  2 ++
+ Documentation/devicetree/bindings/ata/sata-common.yaml |  2 ++
+ Documentation/devicetree/bindings/bus/renesas,bsc.yaml |  2 ++
+ .../devicetree/bindings/bus/simple-pm-bus.yaml         |  2 ++
+ .../bindings/chrome/google,cros-ec-typec.yaml          |  2 ++
+ .../devicetree/bindings/clock/baikal,bt1-ccu-div.yaml  |  6 +++++-
+ .../devicetree/bindings/clock/baikal,bt1-ccu-pll.yaml  |  2 +-
+ .../devicetree/bindings/clock/imx8m-clock.yaml         |  2 +-
+ .../devicetree/bindings/connector/usb-connector.yaml   |  2 ++
+ .../bindings/display/bridge/snps,dw-mipi-dsi.yaml      |  2 ++
+ .../devicetree/bindings/display/dsi-controller.yaml    |  2 ++
+ .../devicetree/bindings/display/panel/lvds.yaml        |  2 ++
+ .../bindings/display/panel/panel-common.yaml           |  2 ++
+ .../devicetree/bindings/display/panel/tpo,tpg110.yaml  |  2 ++
+ Documentation/devicetree/bindings/dma/dma-common.yaml  |  2 ++
+ .../devicetree/bindings/dma/dma-controller.yaml        |  2 ++
+ Documentation/devicetree/bindings/dma/dma-router.yaml  |  2 ++
+ Documentation/devicetree/bindings/dma/ingenic,dma.yaml |  2 ++
+ .../devicetree/bindings/dma/st,stm32-dma.yaml          |  2 ++
+ .../devicetree/bindings/dma/st,stm32-dmamux.yaml       |  2 ++
+ .../devicetree/bindings/dma/st,stm32-mdma.yaml         |  2 ++
+ Documentation/devicetree/bindings/dma/ti/k3-udma.yaml  |  2 ++
+ .../devicetree/bindings/extcon/wlf,arizona.yaml        |  2 ++
+ .../devicetree/bindings/hwmon/baikal,bt1-pvt.yaml      |  4 ++--
+ .../devicetree/bindings/i2c/amlogic,meson6-i2c.yaml    |  2 ++
+ .../devicetree/bindings/i2c/cdns,i2c-r1p10.yaml        |  2 ++
+ Documentation/devicetree/bindings/i2c/i2c-gpio.yaml    |  2 ++
+ Documentation/devicetree/bindings/i2c/i2c-rk3x.yaml    |  2 ++
+ .../bindings/i2c/socionext,uniphier-fi2c.yaml          |  2 ++
+ .../bindings/i2c/socionext,uniphier-i2c.yaml           |  2 ++
+ .../devicetree/bindings/i2c/st,stm32-i2c.yaml          |  2 ++
+ .../devicetree/bindings/i2c/xlnx,xps-iic-2.00.a.yaml   |  2 ++
+ .../devicetree/bindings/iio/accel/adi,adis16240.yaml   |  4 ++++
+ .../devicetree/bindings/iio/accel/adi,adxl345.yaml     |  4 ++++
+ .../devicetree/bindings/iio/accel/adi,adxl372.yaml     |  4 ++++
+ .../devicetree/bindings/iio/adc/adi,ad7124.yaml        |  4 ++++
+ .../devicetree/bindings/iio/adc/adi,ad7192.yaml        |  4 ++++
+ .../devicetree/bindings/iio/adc/adi,ad7292.yaml        |  4 ++++
+ .../devicetree/bindings/iio/adc/adi,ad7606.yaml        |  6 ++++++
+ .../devicetree/bindings/iio/adc/adi,ad7923.yaml        |  4 ++++
+ .../devicetree/bindings/iio/adc/maxim,max1241.yaml     |  4 ++++
+ .../bindings/iio/adc/samsung,exynos-adc.yaml           |  5 ++++-
+ Documentation/devicetree/bindings/iio/common.yaml      |  2 ++
+ .../devicetree/bindings/iio/dac/adi,ad5770r.yaml       | 10 ++++++++++
+ .../devicetree/bindings/iio/frequency/adf4371.yaml     |  4 ++++
+ .../devicetree/bindings/iio/imu/adi,adis16460.yaml     |  4 ++++
+ .../devicetree/bindings/iio/imu/adi,adis16475.yaml     |  2 ++
+ .../devicetree/bindings/iio/imu/bosch,bmi160.yaml      |  4 ++++
+ .../devicetree/bindings/iio/imu/nxp,fxos8700.yaml      |  4 ++++
+ .../devicetree/bindings/input/fsl,mpr121-touchkey.yaml |  2 ++
+ Documentation/devicetree/bindings/input/input.yaml     |  2 ++
+ .../devicetree/bindings/input/matrix-keymap.yaml       |  2 ++
+ .../bindings/input/touchscreen/touchscreen.yaml        |  2 ++
+ .../bindings/interrupt-controller/loongson,htpic.yaml  |  2 ++
+ .../interrupt-controller/loongson,liointc.yaml         |  2 ++
+ .../bindings/interrupt-controller/mti,gic.yaml         |  2 +-
+ Documentation/devicetree/bindings/leds/common.yaml     |  2 ++
+ .../bindings/leds/leds-class-multicolor.yaml           |  3 +++
+ .../devicetree/bindings/leds/trigger-source.yaml       |  2 ++
+ Documentation/devicetree/bindings/media/rc.yaml        |  2 ++
+ .../bindings/memory-controllers/renesas,rpc-if.yaml    |  2 ++
+ .../devicetree/bindings/mfd/cirrus,lochnagar.yaml      | 10 +++++++++-
+ Documentation/devicetree/bindings/mfd/syscon.yaml      |  2 +-
+ .../bindings/mfd/ti,j721e-system-controller.yaml       |  5 ++++-
+ .../devicetree/bindings/mips/ingenic/devices.yaml      |  3 +++
+ .../devicetree/bindings/mips/loongson/devices.yaml     |  3 +++
+ .../devicetree/bindings/misc/olpc,xo1.75-ec.yaml       |  4 +++-
+ .../devicetree/bindings/mmc/amlogic,meson-mx-sdhc.yaml |  2 ++
+ Documentation/devicetree/bindings/mmc/cdns,sdhci.yaml  |  2 ++
+ Documentation/devicetree/bindings/mmc/ingenic,mmc.yaml |  2 ++
+ .../devicetree/bindings/mmc/mmc-controller.yaml        |  2 ++
+ Documentation/devicetree/bindings/mmc/owl-mmc.yaml     |  2 ++
+ .../devicetree/bindings/mmc/rockchip-dw-mshc.yaml      |  2 ++
+ Documentation/devicetree/bindings/mmc/sdhci-pxa.yaml   |  2 ++
+ .../devicetree/bindings/mmc/socionext,uniphier-sd.yaml |  2 ++
+ .../bindings/mmc/synopsys-dw-mshc-common.yaml          |  2 ++
+ .../devicetree/bindings/mmc/synopsys-dw-mshc.yaml      |  2 ++
+ Documentation/devicetree/bindings/mtd/denali,nand.yaml |  2 ++
+ .../devicetree/bindings/mtd/ingenic,nand.yaml          |  2 ++
+ .../devicetree/bindings/mtd/nand-controller.yaml       |  2 ++
+ .../devicetree/bindings/mtd/st,stm32-fmc2-nand.yaml    |  2 ++
+ Documentation/devicetree/bindings/net/adi,adin.yaml    |  2 ++
+ .../devicetree/bindings/net/amlogic,meson-dwmac.yaml   |  2 ++
+ .../devicetree/bindings/net/aspeed,ast2600-mdio.yaml   |  2 ++
+ .../devicetree/bindings/net/can/can-transceiver.yaml   |  2 ++
+ Documentation/devicetree/bindings/net/dsa/dsa.yaml     |  2 ++
+ .../devicetree/bindings/net/ethernet-controller.yaml   |  2 ++
+ .../devicetree/bindings/net/ethernet-phy.yaml          |  2 ++
+ .../devicetree/bindings/net/marvell,mvusb.yaml         |  2 ++
+ Documentation/devicetree/bindings/net/mdio.yaml        |  2 ++
+ .../devicetree/bindings/net/mediatek,star-emac.yaml    |  2 ++
+ Documentation/devicetree/bindings/net/nxp,tja11xx.yaml |  2 ++
+ Documentation/devicetree/bindings/net/qca,ar71xx.yaml  |  2 ++
+ Documentation/devicetree/bindings/net/qca,ar803x.yaml  |  2 ++
+ .../devicetree/bindings/net/qcom,ipq4019-mdio.yaml     |  2 ++
+ .../devicetree/bindings/net/qcom,ipq8064-mdio.yaml     |  2 ++
+ .../devicetree/bindings/net/renesas,ether.yaml         |  2 ++
+ Documentation/devicetree/bindings/net/snps,dwmac.yaml  |  2 ++
+ Documentation/devicetree/bindings/net/stm32-dwmac.yaml |  2 ++
+ .../devicetree/bindings/net/ti,davinci-mdio.yaml       |  2 ++
+ Documentation/devicetree/bindings/net/ti,dp83867.yaml  |  2 ++
+ Documentation/devicetree/bindings/net/ti,dp83869.yaml  |  2 ++
+ Documentation/devicetree/bindings/nvmem/imx-ocotp.yaml |  2 ++
+ .../devicetree/bindings/nvmem/nvmem-consumer.yaml      |  2 ++
+ Documentation/devicetree/bindings/nvmem/nvmem.yaml     |  2 ++
+ .../devicetree/bindings/nvmem/qcom,qfprom.yaml         |  2 ++
+ .../devicetree/bindings/nvmem/qcom,spmi-sdam.yaml      |  2 ++
+ .../devicetree/bindings/nvmem/rockchip-efuse.yaml      |  2 ++
+ .../devicetree/bindings/nvmem/st,stm32-romem.yaml      |  2 ++
+ .../opp/allwinner,sun50i-h6-operating-points.yaml      |  4 +++-
+ .../devicetree/bindings/pci/cdns,cdns-pcie-ep.yaml     |  2 ++
+ .../devicetree/bindings/pci/cdns,cdns-pcie-host.yaml   |  2 ++
+ .../devicetree/bindings/pci/cdns-pcie-ep.yaml          |  2 ++
+ .../devicetree/bindings/pci/cdns-pcie-host.yaml        |  2 ++
+ Documentation/devicetree/bindings/pci/cdns-pcie.yaml   |  2 ++
+ .../devicetree/bindings/pci/host-generic-pci.yaml      |  2 ++
+ Documentation/devicetree/bindings/pci/loongson.yaml    |  2 ++
+ Documentation/devicetree/bindings/pci/pci-ep.yaml      |  2 ++
+ .../devicetree/bindings/pci/ti,j721e-pci-ep.yaml       |  2 ++
+ .../devicetree/bindings/pci/ti,j721e-pci-host.yaml     |  2 ++
+ Documentation/devicetree/bindings/pci/versatile.yaml   |  2 ++
+ .../devicetree/bindings/pinctrl/cirrus,madera.yaml     |  2 ++
+ .../devicetree/bindings/pinctrl/pincfg-node.yaml       |  2 ++
+ .../devicetree/bindings/pinctrl/pinmux-node.yaml       |  2 ++
+ .../devicetree/bindings/power/pd-samsung.yaml          |  2 ++
+ .../devicetree/bindings/power/power-domain.yaml        |  2 ++
+ .../devicetree/bindings/power/supply/power-supply.yaml |  2 ++
+ Documentation/devicetree/bindings/pwm/pwm.yaml         |  2 ++
+ .../devicetree/bindings/regulator/fixed-regulator.yaml |  2 ++
+ .../bindings/regulator/google,cros-ec-regulator.yaml   |  2 ++
+ .../devicetree/bindings/regulator/gpio-regulator.yaml  |  2 ++
+ .../bindings/regulator/qcom-labibb-regulator.yaml      |  2 +-
+ .../devicetree/bindings/regulator/regulator.yaml       |  2 ++
+ .../bindings/regulator/st,stm32-booster.yaml           |  2 ++
+ .../bindings/regulator/st,stm32-vrefbuf.yaml           |  2 ++
+ .../bindings/regulator/vqmmc-ipq4019-regulator.yaml    |  2 ++
+ .../devicetree/bindings/regulator/wlf,arizona.yaml     |  2 ++
+ Documentation/devicetree/bindings/riscv/cpus.yaml      |  2 ++
+ Documentation/devicetree/bindings/riscv/sifive.yaml    |  3 +++
+ Documentation/devicetree/bindings/rtc/ingenic,rtc.yaml |  2 ++
+ Documentation/devicetree/bindings/rtc/rtc.yaml         |  2 ++
+ Documentation/devicetree/bindings/rtc/s3c-rtc.yaml     |  2 ++
+ .../devicetree/bindings/serial/ingenic,uart.yaml       |  5 +++++
+ .../devicetree/bindings/serial/renesas,hscif.yaml      |  2 ++
+ .../devicetree/bindings/serial/renesas,sci.yaml        |  2 ++
+ .../devicetree/bindings/serial/renesas,scif.yaml       |  2 ++
+ .../devicetree/bindings/serial/renesas,scifa.yaml      |  2 ++
+ .../devicetree/bindings/serial/renesas,scifb.yaml      |  2 ++
+ Documentation/devicetree/bindings/serial/rs485.yaml    |  3 +++
+ Documentation/devicetree/bindings/serial/serial.yaml   |  2 ++
+ .../devicetree/bindings/serial/snps-dw-apb-uart.yaml   |  2 ++
+ .../devicetree/bindings/soc/imx/fsl,aips-bus.yaml      |  2 ++
+ .../devicetree/bindings/sound/amlogic,aiu.yaml         |  2 ++
+ .../devicetree/bindings/sound/cirrus,madera.yaml       |  2 ++
+ .../bindings/sound/nvidia,tegra210-ahub.yaml           |  3 +++
+ .../devicetree/bindings/sound/wlf,arizona.yaml         |  2 ++
+ .../bindings/soundwire/soundwire-controller.yaml       |  2 ++
+ .../bindings/spi/amlogic,meson-gx-spicc.yaml           |  2 ++
+ .../devicetree/bindings/spi/amlogic,meson6-spifc.yaml  |  2 ++
+ .../devicetree/bindings/spi/mikrotik,rb4xx-spi.yaml    |  2 ++
+ .../devicetree/bindings/spi/qca,ar934x-spi.yaml        |  2 ++
+ .../devicetree/bindings/spi/qcom,spi-qcom-qspi.yaml    |  2 ++
+ .../devicetree/bindings/spi/renesas,hspi.yaml          |  2 ++
+ .../devicetree/bindings/spi/renesas,rspi.yaml          |  2 ++
+ .../devicetree/bindings/spi/renesas,sh-msiof.yaml      |  2 ++
+ .../bindings/spi/socionext,uniphier-spi.yaml           |  2 ++
+ .../devicetree/bindings/spi/spi-controller.yaml        |  2 ++
+ Documentation/devicetree/bindings/spi/spi-gpio.yaml    |  2 ++
+ Documentation/devicetree/bindings/spi/spi-mux.yaml     |  2 ++
+ Documentation/devicetree/bindings/spi/spi-pl022.yaml   |  2 ++
+ .../devicetree/bindings/spi/spi-rockchip.yaml          |  2 ++
+ Documentation/devicetree/bindings/spi/spi-sifive.yaml  |  2 ++
+ .../devicetree/bindings/spi/st,stm32-qspi.yaml         |  2 ++
+ .../devicetree/bindings/spi/st,stm32-spi.yaml          |  2 ++
+ Documentation/devicetree/bindings/spmi/spmi.yaml       |  2 ++
+ .../bindings/thermal/thermal-cooling-devices.yaml      |  2 ++
+ .../devicetree/bindings/thermal/thermal-sensor.yaml    |  2 ++
+ .../devicetree/bindings/timer/snps,dw-apb-timer.yaml   |  2 +-
+ Documentation/devicetree/bindings/usb/ti,tps6598x.yaml |  2 ++
+ Documentation/devicetree/bindings/usb/usb-hcd.yaml     |  2 ++
+ .../bindings/watchdog/amlogic,meson-gxbb-wdt.yaml      |  2 ++
+ .../devicetree/bindings/watchdog/arm-smc-wdt.yaml      |  2 ++
+ .../devicetree/bindings/watchdog/qcom-wdt.yaml         |  2 ++
+ .../devicetree/bindings/watchdog/samsung-wdt.yaml      |  2 ++
+ .../devicetree/bindings/watchdog/st,stm32-iwdg.yaml    |  2 ++
+ .../devicetree/bindings/watchdog/ti,rti-wdt.yaml       |  2 ++
+ .../devicetree/bindings/watchdog/watchdog.yaml         |  2 ++
+ 249 files changed, 570 insertions(+), 14 deletions(-)
+
+--
+2.25.1
