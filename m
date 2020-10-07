@@ -2,72 +2,102 @@ Return-Path: <SRS0=s11Q=DO=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 08409C4363C
-	for <dmaengine@archiver.kernel.org>; Wed,  7 Oct 2020 10:04:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 73E30C4363C
+	for <dmaengine@archiver.kernel.org>; Wed,  7 Oct 2020 11:28:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 730B020872
-	for <dmaengine@archiver.kernel.org>; Wed,  7 Oct 2020 10:04:37 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=alien8.de header.i=@alien8.de header.b="rpgL/fpc"
+	by mail.kernel.org (Postfix) with ESMTP id 16CF320870
+	for <dmaengine@archiver.kernel.org>; Wed,  7 Oct 2020 11:28:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=default; t=1602070093;
+	bh=kY5VsQub9YBuVn954F0Hvvtht7ZySDXQRDsJceie9iM=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:List-ID:From;
+	b=HC8YPZErhfE9BVIoDvgQwwDMDRhWTPf6R2vT+bzMR6A9yGr535EAaTVsYDAF+JPV3
+	 r8qZli/XxyLiqbWzsKs63wcD4kDObWA1RLP6pBSO1uerLVZ/HP6PgtPkwhnmI1MnYV
+	 kzS68/wkyXiDJ/uCcKCE6lYYq5ne+WR9CYBF7PRY=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727562AbgJGKEh (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 7 Oct 2020 06:04:37 -0400
-Received: from mail.skyhub.de ([5.9.137.197]:37832 "EHLO mail.skyhub.de"
+        id S1727749AbgJGL2M (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 7 Oct 2020 07:28:12 -0400
+Received: from mail.kernel.org ([198.145.29.99]:55406 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727257AbgJGKEg (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Wed, 7 Oct 2020 06:04:36 -0400
-Received: from zn.tnic (p200300ec2f091000acdeda0e0c7556d4.dip0.t-ipconnect.de [IPv6:2003:ec:2f09:1000:acde:da0e:c75:56d4])
+        id S1727741AbgJGL2M (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Wed, 7 Oct 2020 07:28:12 -0400
+Received: from localhost (unknown [122.171.222.162])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.skyhub.de (SuperMail on ZX Spectrum 128k) with ESMTPSA id 9927F1EC0266;
-        Wed,  7 Oct 2020 12:04:35 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=dkim;
-        t=1602065075;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:in-reply-to:in-reply-to:  references:references;
-        bh=/hE/7UxzjG6+51BYRJlMG+kD5c521uFN7WfItXkkBhs=;
-        b=rpgL/fpc7TTly62n08xRcjjX1BRQOBViwB74t41qFbilaVR25FEubsTwpN2seurCtbGlev
-        3gTSqJtKDdudagSYYnHNhYxKwRpjdA1zfbYFndARKqHK/4vDp/6h9vs/Q7l0kGrFIARU+a
-        2+ETgnM/5QDYmUW4xEAQUBpDsm6eOBY=
-Date:   Wed, 7 Oct 2020 12:04:26 +0200
-From:   Borislav Petkov <bp@alien8.de>
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Dave Jiang <dave.jiang@intel.com>, dan.j.williams@intel.com,
-        tony.luck@intel.com, ashok.raj@intel.com, kevin.tian@intel.com,
-        fenghua.yu@intel.com, dmaengine@vger.kernel.org,
+        by mail.kernel.org (Postfix) with ESMTPSA id BBA29206F7;
+        Wed,  7 Oct 2020 11:28:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1602070091;
+        bh=kY5VsQub9YBuVn954F0Hvvtht7ZySDXQRDsJceie9iM=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=dyt9iTFp03B8OwcY9z0GcHlfMNqCME8N04SBzD7esK8Pm2JFale4d/4z2ph/5yT9C
+         t80gyqdDHIz8cu62TOX2P5E5rRtJ6TKuBckoqsqUtPmRgOcnau30z5pFvCWTfnyj5V
+         jMaDPW9bG1EXTIGpYGxNRii5J8OlE3SOtaC6KdKU=
+Date:   Wed, 7 Oct 2020 16:58:07 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Peter Ujfalusi <peter.ujfalusi@ti.com>
+Cc:     dmaengine@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v7 0/5] Add shared workqueue support for idxd driver
-Message-ID: <20201007100426.GF5607@zn.tnic>
-References: <20201005151126.657029-1-dave.jiang@intel.com>
- <20201007070132.GT2968@vkoul-mobl>
- <20201007084856.GE5607@zn.tnic>
- <20201007095313.GV2968@vkoul-mobl>
+Subject: Re: [PATCH v3 2/3] dmaengine: add peripheral configuration
+Message-ID: <20201007112807.GW2968@vkoul-mobl>
+References: <20200923063410.3431917-1-vkoul@kernel.org>
+ <20200923063410.3431917-3-vkoul@kernel.org>
+ <29f95fff-c484-0131-d1fe-b06e3000fb9f@ti.com>
+ <20201001112307.GX2968@vkoul-mobl>
+ <f063ae03-41da-480a-19ba-d061e140e4d2@ti.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20201007095313.GV2968@vkoul-mobl>
+In-Reply-To: <f063ae03-41da-480a-19ba-d061e140e4d2@ti.com>
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On Wed, Oct 07, 2020 at 03:23:13PM +0530, Vinod Koul wrote:
-> Right my build failed for x86 and I have dropped these now. I would have
-> expected the dependency to be a signed tag to be cross merged when I was
-> asked to merge this.
+Hi Peter,
 
-I can give you a signed tag is you prefer but that's usually not
-necessary. You can simply merge tip's x86/pasid branch, then apply those
-ontop and test.
+On 02-10-20, 11:48, Peter Ujfalusi wrote:
 
-HTH.
+> It depends which is best for the use case.
+> I see the metadata useful when you need to send different
+> metadata/configuration with each transfer.
+> It can be also useful when you need it seldom, but for your use case and
+> setup the dma_slave_config extended with
+> 
+> enum dmaengine_peripheral peripheral_type;
+> void *peripheral_config;
+> 
+> would be a bit more explicit.
+> 
+> I would then deal with the peripheral config in this way:
+> when the DMA driver's device_config is called, I would take the
+> parameters and set a flag that the config needs to be processed as it
+> has changed.
+> In the next prep_slave_sg() then I would prepare the TREs with the
+> config and clear the flag that the next transfer does not need the
+> configuration anymore.
+> 
+> In this way each dmaengine_slave_config() will trigger at the next
+> prep_slave_sg time configuration update for the peripheral to be
+> included in the TREs.
+> The set_config would be internal to the DMA driver, clients just need to
+> update the configuration when they need to and everything is taken care of.
+
+Ok I am going to drop the dmaengine_peripheral and make
+peripheral_config as as you proposed.
+
+So will add following to dma_slave_config:
+        void *peripheral_config;
+
+Driver can define the config they would like and use.
+
+We can eventually look at common implementations and try to unify once
+we have more users
 
 -- 
-Regards/Gruss,
-    Boris.
-
-https://people.kernel.org/tglx/notes-about-netiquette
+~Vinod
