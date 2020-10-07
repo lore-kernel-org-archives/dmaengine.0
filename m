@@ -2,82 +2,100 @@ Return-Path: <SRS0=s11Q=DO=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=unavailable
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B15A4C4727E
-	for <dmaengine@archiver.kernel.org>; Wed,  7 Oct 2020 16:16:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 180A4C41604
+	for <dmaengine@archiver.kernel.org>; Wed,  7 Oct 2020 16:50:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 51802216C4
-	for <dmaengine@archiver.kernel.org>; Wed,  7 Oct 2020 16:16:38 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=alien8.de header.i=@alien8.de header.b="OhJZPhpD"
+	by mail.kernel.org (Postfix) with ESMTP id BCC3520739
+	for <dmaengine@archiver.kernel.org>; Wed,  7 Oct 2020 16:50:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729140AbgJGQQe (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 7 Oct 2020 12:16:34 -0400
-Received: from mail.skyhub.de ([5.9.137.197]:41744 "EHLO mail.skyhub.de"
+        id S1727965AbgJGQuU (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 7 Oct 2020 12:50:20 -0400
+Received: from mga04.intel.com ([192.55.52.120]:9895 "EHLO mga04.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727379AbgJGQQe (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Wed, 7 Oct 2020 12:16:34 -0400
-Received: from zn.tnic (p200300ec2f09100045b18ec36a87abe5.dip0.t-ipconnect.de [IPv6:2003:ec:2f09:1000:45b1:8ec3:6a87:abe5])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.skyhub.de (SuperMail on ZX Spectrum 128k) with ESMTPSA id F39881EC047F;
-        Wed,  7 Oct 2020 18:16:32 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=dkim;
-        t=1602087393;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:in-reply-to:in-reply-to:  references:references;
-        bh=RK/FM1J5z6Yq/QqKfIPaEHuwK9y4bwMYdy7n1YYA+AU=;
-        b=OhJZPhpDDhLDN5BFbuEOOk74zimiGpGcnVhi9h2TX2w8gCnrDIKu/chPPMRba3c5cQgvGw
-        qO9fd/tZ73TZo9nBFaV2LNI5RRxwKjEVb8elRSs5npO20xHy2ak4W+QdkLDlexagVWvvQB
-        ewc4z0bxTFK9v3VXms4LafRVgllOGv8=
-Date:   Wed, 7 Oct 2020 18:16:25 +0200
-From:   Borislav Petkov <bp@alien8.de>
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Dave Jiang <dave.jiang@intel.com>, dan.j.williams@intel.com,
-        tony.luck@intel.com, ashok.raj@intel.com, kevin.tian@intel.com,
-        fenghua.yu@intel.com, dmaengine@vger.kernel.org,
-        linux-kernel@vger.kernel.org
+        id S1727958AbgJGQuU (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Wed, 7 Oct 2020 12:50:20 -0400
+IronPort-SDR: 7SKj03YEsZi8siPJ2A1AVVwwOLGlDr3+9+Du9rjDk13OLA2WrbiqCW1gaijhiCcAJoLyy+OhwI
+ ZNw4srPX4WQg==
+X-IronPort-AV: E=McAfee;i="6000,8403,9767"; a="162398123"
+X-IronPort-AV: E=Sophos;i="5.77,347,1596524400"; 
+   d="scan'208";a="162398123"
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga003.jf.intel.com ([10.7.209.27])
+  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Oct 2020 09:50:19 -0700
+IronPort-SDR: JrC6QF5/odrbn7CHDLJIcwmsP3AqDxNK02WJ+trXcOUzbJi0697Tne5mMaR9MpX4PfTWVixQ51
+ Qwd/An4C/C6A==
+X-IronPort-AV: E=Sophos;i="5.77,347,1596524400"; 
+   d="scan'208";a="311818876"
+Received: from djiang5-mobl1.amr.corp.intel.com (HELO [10.212.241.84]) ([10.212.241.84])
+  by orsmga003-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Oct 2020 09:50:18 -0700
 Subject: Re: [PATCH v7 0/5] Add shared workqueue support for idxd driver
-Message-ID: <20201007161625.GH5607@zn.tnic>
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     bp@alien8.de, dan.j.williams@intel.com, tony.luck@intel.com,
+        ashok.raj@intel.com, kevin.tian@intel.com, fenghua.yu@intel.com,
+        dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
 References: <20201005151126.657029-1-dave.jiang@intel.com>
  <20201007070132.GT2968@vkoul-mobl>
- <20201007084856.GE5607@zn.tnic>
- <20201007095313.GV2968@vkoul-mobl>
- <20201007100426.GF5607@zn.tnic>
- <20201007145733.GX2968@vkoul-mobl>
+From:   Dave Jiang <dave.jiang@intel.com>
+Message-ID: <c25b11ce-4588-6663-c9d6-b1177c627c98@intel.com>
+Date:   Wed, 7 Oct 2020 09:50:17 -0700
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.12.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20201007145733.GX2968@vkoul-mobl>
+In-Reply-To: <20201007070132.GT2968@vkoul-mobl>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On Wed, Oct 07, 2020 at 08:27:33PM +0530, Vinod Koul wrote:
-> That would be better, signed tags are preferred
 
-...
 
-> While at it, it would be good if x86 patches of this series come from
-> your tree, that makes more sense if we are doing a cross merge
+On 10/7/2020 12:01 AM, Vinod Koul wrote:
+> On 05-10-20, 08:11, Dave Jiang wrote:
+> 
+>> == Background ==
+>> A typical DMA device requires the driver to translate application buffers to hardware addresses,
+>> and a kernel-user transition to notify the hardware of new work. Shared Virtual Addressing (SVA)
+>> allows the processor and device to use the same virtual addresses without requiring software to
+>> translate between the address spaces. ENQCMD is a new instruction on Intel Platforms that allows
+>> user applications to directly notify hardware of new work, much like how doorbells are used in
+>> some hardware, but it carries a payload along with it. ENQCMDS is the supervisor version (ring0)
+>> of ENQCMD.
+>>
+>> == ENQCMDS ==
+>> Introduce enqcmds(), a helper funciton that copies an input payload to a 64B aligned
+>> destination and confirms whether the payload was accepted by the device or not.
+>> enqcmds() wraps the new ENQCMDS CPU instruction. The ENQCMDS is a ring 0 CPU instruction that
+>> performs similar to the ENQCMD instruction. Descriptor submission must use ENQCMD(S) for shared
+>> workqueues (swq) on an Intel DSA device.
+>>
+>> == Shared WQ support ==
+>> Introduce shared workqueue (swq) support for the idxd driver. The current idxd driver contains
+>> dedicated workqueue (dwq) support only. A dwq accepts descriptors from a MOVDIR64B instruction.
+>> MOVDIR64B is a posted instruction on the PCIe bus, it does not wait for any response from the
+>> device. If the wq is full, submitted descriptors are dropped. A swq utilizes the ENQCMDS in
+>> ring 0, which is a non-posted instruction. The zero flag would be set to 1 if the device rejects
+>> the descriptor or if the wq is full. A swq can be shared between multiple users
+>> (kernel or userspace) due to not having to keep track of the wq full condition for submission.
+>> A swq requires PASID and can only run with SVA support.
+>>
+>> == IDXD SVA support ==
+>> Add utilization of PASID to support Shared Virtual Addressing (SVA). With PASID support,
+>> the descriptors can be programmed with host virtual address (HVA) rather than IOVA.
+>> The hardware will work with the IOMMU in fulfilling page requests. With SVA support,
+>> a user app using the char device interface can now submit descriptors without having to pin the
+>> virtual memory range it wants to DMA in its own address space.
+>>
+>> The series does not add SVA support for the dmaengine subsystem. That support is coming at a
+>> later time.
+> 
+> Applied, thanks
+> 
 
-All done, here it is:
-
-https://git.kernel.org/pub/scm/linux/kernel/git/tip/tip.git/tag/?h=x86_pasid_for_5.10
-
-That's going to be the tag I send to Linus next week too. I'll send it
-on Monday when the merge window opens so that he can merge it before
-your branch.
-
-HTH.
-
--- 
-Regards/Gruss,
-    Boris.
-
-https://people.kernel.org/tglx/notes-about-netiquette
+Thanks Vinod!
