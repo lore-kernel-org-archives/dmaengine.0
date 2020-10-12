@@ -1,100 +1,101 @@
-Return-Path: <SRS0=mVlT=DQ=vger.kernel.org=dmaengine-owner@kernel.org>
+Return-Path: <SRS0=/uu1=DT=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_GIT autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C798FC433E7
-	for <dmaengine@archiver.kernel.org>; Fri,  9 Oct 2020 16:02:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7CE91C433DF
+	for <dmaengine@archiver.kernel.org>; Mon, 12 Oct 2020 04:38:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7B04622284
-	for <dmaengine@archiver.kernel.org>; Fri,  9 Oct 2020 16:02:54 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="PZXU42J+";
-	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="w1fJ/MJL"
+	by mail.kernel.org (Postfix) with ESMTP id 3F88C206E5
+	for <dmaengine@archiver.kernel.org>; Mon, 12 Oct 2020 04:38:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389443AbgJIQCy (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 9 Oct 2020 12:02:54 -0400
-Received: from Galois.linutronix.de ([193.142.43.55]:58854 "EHLO
-        galois.linutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389135AbgJIQCx (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Fri, 9 Oct 2020 12:02:53 -0400
-From:   Thomas Gleixner <tglx@linutronix.de>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-        s=2020; t=1602259371;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=ZHt8XKpvOg8gA4nFcOb4ywxF5VhRSTiXsFiBgkwu8B8=;
-        b=PZXU42J+noDD0cxK0VwzkFTB1O1ZMlVR4ciJrWmGNNjCW7z+U6/fPdM/VrIK5jn891zfRF
-        zsZySS/8mYik/JuGzKmmWWbEya2Zwm3ZS4siFcm+rWM0kbLOX2SVR0ClM3ytOeJvQr7QZh
-        dAcxQ5R6F6FknxrG9JuOt07A8eUCSza53Cv5AuC+hlpDhlrxB51jXTgZVtlzqteqGKToAP
-        AP/Y2z83BB+TMGZL6Bs2yRDuYy581E6ItMpfV1UcXhLxmcNOEf/iGEWUwFN4Cxv135AYmk
-        FTgQgJNVyUhJD+vIFuFMk2+g0f9SGIOwu6wLNAJ/T5b2Qfyths1T+PSzw1DNXw==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-        s=2020e; t=1602259371;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=ZHt8XKpvOg8gA4nFcOb4ywxF5VhRSTiXsFiBgkwu8B8=;
-        b=w1fJ/MJLSeMBuSGG0nDlKWfzrPoFMaZhljKfwDjF06uVySTctoTPsdDTaJTQNfblBx2kFS
-        umsjrxsBGffaBqDw==
-To:     Jason Gunthorpe <jgg@nvidia.com>
-Cc:     Dave Jiang <dave.jiang@intel.com>, vkoul@kernel.org,
-        megha.dey@intel.com, maz@kernel.org, bhelgaas@google.com,
-        alex.williamson@redhat.com, jacob.jun.pan@intel.com,
-        ashok.raj@intel.com, yi.l.liu@intel.com, baolu.lu@intel.com,
-        kevin.tian@intel.com, sanjay.k.kumar@intel.com,
-        tony.luck@intel.com, jing.lin@intel.com, dan.j.williams@intel.com,
-        kwankhede@nvidia.com, eric.auger@redhat.com, parav@mellanox.com,
-        rafael@kernel.org, netanelg@mellanox.com, shahafs@mellanox.com,
-        yan.y.zhao@linux.intel.com, pbonzini@redhat.com,
-        samuel.ortiz@intel.com, mona.hossain@intel.com,
-        dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
-        x86@kernel.org, linux-pci@vger.kernel.org, kvm@vger.kernel.org
-Subject: Re: [PATCH v3 11/18] dmaengine: idxd: ims setup for the vdcm
-In-Reply-To: <20201009145236.GM4734@nvidia.com>
-References: <160021207013.67751.8220471499908137671.stgit@djiang5-desk3.ch.intel.com> <160021253189.67751.12686144284999931703.stgit@djiang5-desk3.ch.intel.com> <87mu17ghr1.fsf@nanos.tec.linutronix.de> <0f9bdae0-73d7-1b4e-b478-3cbd05c095f4@intel.com> <87r1q92mkx.fsf@nanos.tec.linutronix.de> <44e19c5d-a0d2-0ade-442c-61727701f4d8@intel.com> <87y2kgux2l.fsf@nanos.tec.linutronix.de> <20201008233210.GH4734@nvidia.com> <87v9fjtq5w.fsf@nanos.tec.linutronix.de> <20201009145236.GM4734@nvidia.com>
-Date:   Fri, 09 Oct 2020 18:02:51 +0200
-Message-ID: <87d01rtmj8.fsf@nanos.tec.linutronix.de>
-MIME-Version: 1.0
-Content-Type: text/plain
+        id S1726130AbgJLEiT (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 12 Oct 2020 00:38:19 -0400
+Received: from mga14.intel.com ([192.55.52.115]:21513 "EHLO mga14.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725941AbgJLEiT (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Mon, 12 Oct 2020 00:38:19 -0400
+IronPort-SDR: 6Kene1N9kHGpDkOZ3uIjzPhXPGn7uic1qFJGPFmWzphyguEL1+AtBagmLRZMtVU8ZutciHWE1L
+ l1dcqnb7HFQg==
+X-IronPort-AV: E=McAfee;i="6000,8403,9771"; a="164903132"
+X-IronPort-AV: E=Sophos;i="5.77,365,1596524400"; 
+   d="scan'208";a="164903132"
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga003.jf.intel.com ([10.7.209.27])
+  by fmsmga103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Oct 2020 21:38:17 -0700
+IronPort-SDR: 2RtJkiEYP4oqc/OHa2AdFzu946jGikQAqm6ihRt1VhNWO1Qy6wXeKdrWPMBWk4xEN+PDC6T61d
+ BphOttrHWhqQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.77,365,1596524400"; 
+   d="scan'208";a="313321163"
+Received: from unknown (HELO jsia-HP-Z620-Workstation.png.intel.com) ([10.221.118.135])
+  by orsmga003.jf.intel.com with ESMTP; 11 Oct 2020 21:38:16 -0700
+From:   Sia Jee Heng <jee.heng.sia@intel.com>
+To:     vkoul@kernel.org, Eugeniy.Paltsev@synopsys.com
+Cc:     andriy.shevchenko@linux.intel.com, dmaengine@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH 00/15] dmaengine: dw-axi-dmac: support Intel KeemBay AxiDMA
+Date:   Mon, 12 Oct 2020 12:21:45 +0800
+Message-Id: <20201012042200.29787-1-jee.heng.sia@intel.com>
+X-Mailer: git-send-email 2.18.0
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On Fri, Oct 09 2020 at 11:52, Jason Gunthorpe wrote:
-> On Fri, Oct 09, 2020 at 04:44:27PM +0200, Thomas Gleixner wrote:
->> > This is really not that different from what I was describing for queue
->> > contexts - the queue context needs to be assigned to the irq # before
->> > it can be used in the irq chip other wise there is no idea where to
->> > write the msg to. Just like pasid here.
->> 
->> Not really. In the IDXD case the storage is known when the host device
->> and the irq domain is initialized which is not the case for your variant
->> and it neither needs to send a magic command to the device to update the
->> data.
->
-> I mean, needing the PASID vs needing the memory address before the IRQ
-> can be use are basically the same issue. Data needs to be attached to
-> the IRQ before it can be programmed.. In this case programming with
-> the wrong PASID could lead to a security issue.
+The below patch series are to support AxiDMA running on Intel KeemBay SoC.
+The base driver is dw-axi-dmac but code refactoring is needed, for example:
+- Support YAML Schemas DT binding.
+- Replacing Linked List with virtual descriptor management.
+- Remove unrelated hw desc stuff from dma memory pool.
+- Manage dma memory pool alloc/destroy based on channel activity.
+- Support dmaengine device_sync() callback.
+- Support dmaengine device_config().
+- Support dmaegnine device_prep_slave_sg().
+- Support dmaengine device_prep_dma_cyclic().
+- Support of_dma_controller_register().
+- Support burst residue granularity.
+- Support Intel KeemBay AxiDMA registers.
+- Support Intel KeemBay AxiDMA device handshake.
+- Support Intel KeemBay AxiDMA BYTE and HALFWORD device operation.
+- Add constraint to Max segment size.
 
-Yeah. I looked at doing it similar to the callback I added for
-retrieving the shadow storage pointer, but the PASID is not necessarily
-established at that point.
+This patch set is to replace the patch series submitted at:
+https://lore.kernel.org/dmaengine/1599213094-30144-1-git-send-email-jee.heng.sia@intel.com/
 
->> I agree that irq_set_auxdata() is not the most elegant thing, but the
->> alternative solutions I looked at are just worse.
->
-> It seems reasonable, but quite an obfuscated way to tell a driver they
-> need to hold irq_get_desc_buslock() when touching data shared with the
-> irqchip ops.. Not that I have a better suggestion
+This patch series are tested on Intel KeemBay platform.
 
-It's an obfuscated way to make obfuscated hardware supported :)
 
-Thanks,
+Sia Jee Heng (15):
+  dt-bindings: dma: Add YAML schemas for dw-axi-dmac
+  dmaengine: dw-axi-dmac: simplify descriptor management
+  dmaengine: dw-axi-dmac: move dma_pool_create() to
+    alloc_chan_resources()
+  dmaengine: dw-axi-dmac: Add device_synchronize() callback
+  dmaengine: dw-axi-dmac: Add device_config operation
+  dmaengine: dw-axi-dmac: Support device_prep_slave_sg
+  dmaegine: dw-axi-dmac: Support device_prep_dma_cyclic()
+  dmaengine: dw-axi-dmac: Support of_dma_controller_register()
+  dmaengine: dw-axi-dmac: Support burst residue granularity
+  dmaengine: dw-axi-dmac: Add Intel KeemBay AxiDMA support
+  dt-binding: dma: dw-axi-dmac: Add support for Intel KeemBay AxiDMA
+  dmaengine: dw-axi-dmac: Add Intel KeemBay DMA register fields
+  dmaengine: dw-axi-dmac: Add Intel KeemBay AxiDMA handshake
+  dmaengine: dw-axi-dmac: Add Intel KeemBay AxiDMA BYTE and HALFWORD
+    registers
+  dmaengine: dw-axi-dmac: Set constraint to the Max segment size
 
-        tglx
+ .../bindings/dma/snps,dw-axi-dmac.txt         |  39 -
+ .../bindings/dma/snps,dw-axi-dmac.yaml        | 149 ++++
+ .../dma/dw-axi-dmac/dw-axi-dmac-platform.c    | 696 +++++++++++++++---
+ drivers/dma/dw-axi-dmac/dw-axi-dmac.h         |  33 +-
+ 4 files changed, 783 insertions(+), 134 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/dma/snps,dw-axi-dmac.txt
+ create mode 100644 Documentation/devicetree/bindings/dma/snps,dw-axi-dmac.yaml
+
+-- 
+2.18.0
+
