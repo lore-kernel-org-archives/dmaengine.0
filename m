@@ -4,44 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=unavailable
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 70DCFC433E7
-	for <dmaengine@archiver.kernel.org>; Mon, 12 Oct 2020 04:39:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DFE97C43457
+	for <dmaengine@archiver.kernel.org>; Mon, 12 Oct 2020 04:39:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 456082073A
-	for <dmaengine@archiver.kernel.org>; Mon, 12 Oct 2020 04:39:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B5EBD20780
+	for <dmaengine@archiver.kernel.org>; Mon, 12 Oct 2020 04:39:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726128AbgJLEjd (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 12 Oct 2020 00:39:33 -0400
-Received: from mga14.intel.com ([192.55.52.115]:21620 "EHLO mga14.intel.com"
+        id S1726236AbgJLEjx (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 12 Oct 2020 00:39:53 -0400
+Received: from mga14.intel.com ([192.55.52.115]:21608 "EHLO mga14.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726434AbgJLEjd (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Mon, 12 Oct 2020 00:39:33 -0400
-IronPort-SDR: a6FhDFqRueJBQ07LeM1CabZ8g75lW0fvi4vyTKualZRFGH95d+SnbAcMiKbQXsQ4agdVGQAb0U
- lKSE3csQr6gw==
-X-IronPort-AV: E=McAfee;i="6000,8403,9771"; a="164903196"
+        id S1726621AbgJLEjT (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Mon, 12 Oct 2020 00:39:19 -0400
+IronPort-SDR: EKzDV9484Di13sXrNEKR2IUnFUPqf6o3Irty4kEFUlbS2Q3by9GkN8WpL36KJLVnRsPGMn3REz
+ e+k2TE5m5s+Q==
+X-IronPort-AV: E=McAfee;i="6000,8403,9771"; a="164903180"
 X-IronPort-AV: E=Sophos;i="5.77,365,1596524400"; 
-   d="scan'208";a="164903196"
+   d="scan'208";a="164903180"
 X-Amp-Result: SKIPPED(no attachment in message)
 X-Amp-File-Uploaded: False
 Received: from orsmga003.jf.intel.com ([10.7.209.27])
-  by fmsmga103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Oct 2020 21:39:28 -0700
-IronPort-SDR: qCRmf6767gjNHtYDkwT40e1uxIsxgmJ9+znNFZ2WhhRglxD0g5CLA+LdtMGs1+RHw8ks1PM9kq
- m57HQ9S9eMTA==
+  by fmsmga103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Oct 2020 21:39:18 -0700
+IronPort-SDR: hj9F4b8xh2hfrkEPm9aNVSDK1h29ihFGinCOGFrl8AIGuiyJUbwq4XPstwQXhfffgHvOP3iYT5
+ JVRCRL4d+84A==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="5.77,365,1596524400"; 
-   d="scan'208";a="313321378"
+   d="scan'208";a="313321333"
 Received: from unknown (HELO jsia-HP-Z620-Workstation.png.intel.com) ([10.221.118.135])
-  by orsmga003.jf.intel.com with ESMTP; 11 Oct 2020 21:39:27 -0700
+  by orsmga003.jf.intel.com with ESMTP; 11 Oct 2020 21:39:17 -0700
 From:   Sia Jee Heng <jee.heng.sia@intel.com>
 To:     vkoul@kernel.org, Eugeniy.Paltsev@synopsys.com
 Cc:     andriy.shevchenko@linux.intel.com, dmaengine@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: [PATCH 13/15] dmaengine: dw-axi-dmac: Add Intel KeemBay AxiDMA handshake
-Date:   Mon, 12 Oct 2020 12:21:58 +0800
-Message-Id: <20201012042200.29787-14-jee.heng.sia@intel.com>
+Subject: [PATCH 09/15] dmaengine: dw-axi-dmac: Support burst residue granularity
+Date:   Mon, 12 Oct 2020 12:21:54 +0800
+Message-Id: <20201012042200.29787-10-jee.heng.sia@intel.com>
 X-Mailer: git-send-email 2.18.0
 In-Reply-To: <20201012042200.29787-1-jee.heng.sia@intel.com>
 References: <20201012042200.29787-1-jee.heng.sia@intel.com>
@@ -49,101 +49,151 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Add support for Intel KeemBay AxiDMA device handshake programming.
-Device handshake number passed in to the AxiDMA shall be written to
-the Intel KeemBay AxiDMA hardware handshake registers before DMA
-operations are started.
+Add support for DMA_RESIDUE_GRANULARITY_BURST so that AxiDMA can report
+DMA residue.
+
+Existing AxiDMA driver only support data transfer between
+memory to memory operation, therefore reporting DMA residue
+to the DMA clients is not supported.
+
+Reporting DMA residue to the DMA clients is important as DMA clients
+shall invoke dmaengine_tx_status() to understand the number of bytes
+been transferred so that the buffer pointer can be updated accordingly.
 
 Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 Signed-off-by: Sia Jee Heng <jee.heng.sia@intel.com>
 ---
- .../dma/dw-axi-dmac/dw-axi-dmac-platform.c    | 52 +++++++++++++++++++
- 1 file changed, 52 insertions(+)
+ .../dma/dw-axi-dmac/dw-axi-dmac-platform.c    | 44 ++++++++++++++++---
+ drivers/dma/dw-axi-dmac/dw-axi-dmac.h         |  2 +
+ 2 files changed, 39 insertions(+), 7 deletions(-)
 
 diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-index 19806c586e81..0f40b41fd5c0 100644
+index 011cf7134f25..cd99557a716c 100644
 --- a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
 +++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-@@ -445,6 +445,48 @@ static void dma_chan_free_chan_resources(struct dma_chan *dchan)
- 	pm_runtime_put(chan->chip->dev);
+@@ -265,14 +265,36 @@ dma_chan_tx_status(struct dma_chan *dchan, dma_cookie_t cookie,
+ 		  struct dma_tx_state *txstate)
+ {
+ 	struct axi_dma_chan *chan = dchan_to_axi_dma_chan(dchan);
+-	enum dma_status ret;
++	struct virt_dma_desc *vdesc;
++	enum dma_status status;
++	u32 completed_length;
++	unsigned long flags;
++	u32 completed_blocks;
++	size_t bytes = 0;
++	u32 length;
++	u32 len;
+ 
+-	ret = dma_cookie_status(dchan, cookie, txstate);
++	status = dma_cookie_status(dchan, cookie, txstate);
++	if (status == DMA_COMPLETE)
++		return status;
+ 
+-	if (chan->is_paused && ret == DMA_IN_PROGRESS)
+-		ret = DMA_PAUSED;
++	spin_lock_irqsave(&chan->vc.lock, flags);
+ 
+-	return ret;
++	vdesc = vchan_find_desc(&chan->vc, cookie);
++	if (vdesc) {
++		length = vd_to_axi_desc(vdesc)->length;
++		completed_blocks = vd_to_axi_desc(vdesc)->completed_blocks;
++		len = vd_to_axi_desc(vdesc)->hw_desc[0].len;
++		completed_length = completed_blocks * len;
++		bytes = length - completed_length;
++	} else {
++		bytes = vd_to_axi_desc(vdesc)->length;
++	}
++
++	spin_unlock_irqrestore(&chan->vc.lock, flags);
++	dma_set_residue(txstate, bytes);
++
++	return status;
  }
  
-+static int dw_axi_dma_set_hw_channel(struct axi_dma_chip *chip, u32 hs_number,
-+				     bool set)
-+{
-+	unsigned long start = 0;
-+	unsigned long reg_value;
-+	unsigned long reg_mask;
-+	unsigned long reg_set;
-+	unsigned long mask;
-+	unsigned long val;
-+
-+	if (!chip->apb_regs)
-+		return -ENODEV;
-+
-+	/*
-+	 * An unused DMA channel has a default value of 0x3F.
-+	 * Lock the DMA channel by assign a handshake number to the channel.
-+	 * Unlock the DMA channel by assign 0x3F to the channel.
-+	 */
-+	if (set) {
-+		reg_set = UNUSED_CHANNEL;
-+		val = hs_number;
-+	} else {
-+		reg_set = hs_number;
-+		val = UNUSED_CHANNEL;
-+	}
-+
-+	reg_value = lo_hi_readq(chip->apb_regs + DMAC_APB_HW_HS_SEL_0);
-+
-+	for_each_set_clump8(start, reg_mask, &reg_value, 64) {
-+		if (reg_mask == reg_set) {
-+			mask = GENMASK_ULL(start + 7, start);
-+			reg_value &= ~mask;
-+			reg_value |= rol64(val, start);
-+			lo_hi_writeq(reg_value,
-+				     chip->apb_regs + DMAC_APB_HW_HS_SEL_0);
-+			break;
-+		}
-+	}
-+
-+	return 0;
-+}
-+
- /*
-  * If DW_axi_dmac sees CHx_CTL.ShadowReg_Or_LLI_Last bit of the fetched LLI
-  * as 1, it understands that the current block is the final block in the
-@@ -725,6 +767,9 @@ dw_axi_dma_chan_prep_cyclic(struct dma_chan *dchan, dma_addr_t dma_addr,
- 		llp = hw_desc->llp;
- 	} while (num_periods);
+ static void write_desc_llp(struct axi_dma_hw_desc *desc, dma_addr_t adr)
+@@ -497,6 +519,7 @@ dma_chan_prep_dma_memcpy(struct dma_chan *dchan, dma_addr_t dst_adr,
  
-+	if (dw_axi_dma_set_hw_channel(chan->chip, chan->hw_hs_num, true))
-+		goto err_desc_get;
-+
- 	return vchan_tx_prep(&chan->vc, &desc->vd, flags);
+ 	desc->chan = chan;
+ 	num = 0;
++	desc->length = 0;
+ 	while (len) {
+ 		xfer_len = len;
  
- err_desc_get:
-@@ -851,6 +896,9 @@ dw_axi_dma_chan_prep_slave_sg(struct dma_chan *dchan, struct scatterlist *sgl,
- 		llp = hw_desc->llp;
- 	} while (sg_len);
+@@ -549,7 +572,8 @@ dma_chan_prep_dma_memcpy(struct dma_chan *dchan, dma_addr_t dst_adr,
+ 		set_desc_src_master(hw_desc);
+ 		set_desc_dest_master(hw_desc, desc);
  
-+	if (dw_axi_dma_set_hw_channel(chan->chip, chan->hw_hs_num, true))
-+		goto err_desc_get;
-+
- 	return vchan_tx_prep(&chan->vc, &desc->vd, flags);
+-
++		hw_desc->len = xfer_len;
++		desc->length += hw_desc->len;
+ 		/* update the length and addresses for the next loop cycle */
+ 		len -= xfer_len;
+ 		dst_adr += xfer_len;
+@@ -612,6 +636,7 @@ dw_axi_dma_chan_prep_cyclic(struct dma_chan *dchan, dma_addr_t dma_addr,
+ 	chan->direction = direction;
+ 	desc->chan = chan;
+ 	chan->cyclic = true;
++	desc->length = 0;
  
- err_desc_get:
-@@ -1019,6 +1067,10 @@ static int dma_chan_terminate_all(struct dma_chan *dchan)
- 		dev_warn(dchan2dev(dchan),
- 			 "%s failed to stop\n", axi_chan_name(chan));
+ 	switch (direction) {
+ 	case DMA_MEM_TO_DEV:
+@@ -677,6 +702,8 @@ dw_axi_dma_chan_prep_cyclic(struct dma_chan *dchan, dma_addr_t dma_addr,
  
-+	if (chan->direction != DMA_MEM_TO_MEM)
-+		dw_axi_dma_set_hw_channel(chan->chip,
-+					  chan->hw_hs_num, false);
-+
- 	spin_lock_irqsave(&chan->vc.lock, flags);
+ 		set_desc_src_master(hw_desc);
  
- 	vchan_get_all_descriptors(&chan->vc, &head);
++		hw_desc->len = period_len;
++		desc->length += hw_desc->len;
+ 		/*
+ 		 * Set end-of-link to the linked descriptor, so that cyclic
+ 		 * callback function can be triggered during interrupt.
+@@ -757,6 +784,7 @@ dw_axi_dma_chan_prep_slave_sg(struct dma_chan *dchan, struct scatterlist *sgl,
+ 	}
+ 
+ 	desc->chan = chan;
++	desc->length = 0;
+ 
+ 	for_each_sg(sgl, sg, sg_len, i) {
+ 		mem = sg_dma_address(sg);
+@@ -806,6 +834,8 @@ dw_axi_dma_chan_prep_slave_sg(struct dma_chan *dchan, struct scatterlist *sgl,
+ 		hw_desc->lli->ctl_lo = cpu_to_le32(ctllo);
+ 
+ 		set_desc_src_master(hw_desc);
++		hw_desc->len = len;
++		desc->length += hw_desc->len;
+ 	}
+ 
+ 	if (unlikely(!desc))
+@@ -1269,7 +1299,7 @@ static int dw_probe(struct platform_device *pdev)
+ 	dw->dma.dst_addr_widths = AXI_DMA_BUSWIDTHS;
+ 	dw->dma.directions = BIT(DMA_MEM_TO_MEM);
+ 	dw->dma.directions |= BIT(DMA_MEM_TO_DEV) | BIT(DMA_DEV_TO_MEM);
+-	dw->dma.residue_granularity = DMA_RESIDUE_GRANULARITY_DESCRIPTOR;
++	dw->dma.residue_granularity = DMA_RESIDUE_GRANULARITY_BURST;
+ 
+ 	dw->dma.dev = chip->dev;
+ 	dw->dma.device_tx_status = dma_chan_tx_status;
+diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac.h b/drivers/dma/dw-axi-dmac/dw-axi-dmac.h
+index 651874e5c88f..bdb66d775125 100644
+--- a/drivers/dma/dw-axi-dmac/dw-axi-dmac.h
++++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac.h
+@@ -88,6 +88,7 @@ struct __packed axi_dma_lli {
+ struct axi_dma_hw_desc {
+ 	struct axi_dma_lli	*lli;
+ 	dma_addr_t		llp;
++	u32			len;
+ };
+ 
+ struct axi_dma_desc {
+@@ -96,6 +97,7 @@ struct axi_dma_desc {
+ 	struct virt_dma_desc		vd;
+ 	struct axi_dma_chan		*chan;
+ 	u32				completed_blocks;
++	u32				length;
+ };
+ 
+ static inline struct device *dchan2dev(struct dma_chan *dchan)
 -- 
 2.18.0
 
