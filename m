@@ -7,31 +7,30 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6121CC43467
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 403C0C43457
 	for <dmaengine@archiver.kernel.org>; Fri, 16 Oct 2020 00:03:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2196920B1F
-	for <dmaengine@archiver.kernel.org>; Fri, 16 Oct 2020 00:03:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DEDC92084C
+	for <dmaengine@archiver.kernel.org>; Fri, 16 Oct 2020 00:03:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728307AbgJPADC (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        id S1728332AbgJPADC (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
         Thu, 15 Oct 2020 20:03:02 -0400
-Received: from szxga04-in.huawei.com ([45.249.212.190]:15298 "EHLO huawei.com"
+Received: from szxga04-in.huawei.com ([45.249.212.190]:15297 "EHLO huawei.com"
         rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1727930AbgJPADC (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        id S1728307AbgJPADC (ORCPT <rfc822;dmaengine@vger.kernel.org>);
         Thu, 15 Oct 2020 20:03:02 -0400
 Received: from DGGEMS413-HUB.china.huawei.com (unknown [172.30.72.59])
-        by Forcepoint Email with ESMTP id 4080FE96A5827965AF21;
+        by Forcepoint Email with ESMTP id 3CA216A8521B5D29EB7F;
         Fri, 16 Oct 2020 08:03:00 +0800 (CST)
 Received: from SWX921481.china.huawei.com (10.126.203.187) by
  DGGEMS413-HUB.china.huawei.com (10.3.19.213) with Microsoft SMTP Server id
- 14.3.487.0; Fri, 16 Oct 2020 08:02:53 +0800
+ 14.3.487.0; Fri, 16 Oct 2020 08:02:49 +0800
 From:   Barry Song <song.bao.hua@hisilicon.com>
 To:     <vkoul@kernel.org>, <dmaengine@vger.kernel.org>
-CC:     Barry Song <song.bao.hua@hisilicon.com>,
-        Green Wan <green.wan@sifive.com>
-Subject: [PATCH 03/10] dmaengine: sf-pdma: remove redundant irqsave and irqrestore in hardIRQ
-Date:   Fri, 16 Oct 2020 12:59:14 +1300
-Message-ID: <20201015235921.21224-4-song.bao.hua@hisilicon.com>
+CC:     Barry Song <song.bao.hua@hisilicon.com>
+Subject: [PATCH 01/10] dmaengine: ipu_idmac: remove redundant irqsave and restore in hardIRQ
+Date:   Fri, 16 Oct 2020 12:59:12 +1300
+Message-ID: <20201015235921.21224-2-song.bao.hua@hisilicon.com>
 X-Mailer: git-send-email 2.21.0.windows.1
 In-Reply-To: <20201015235921.21224-1-song.bao.hua@hisilicon.com>
 References: <20201015235921.21224-1-song.bao.hua@hisilicon.com>
@@ -46,51 +45,61 @@ X-Mailing-List: dmaengine@vger.kernel.org
 
 Running in hardIRQ, disabling IRQ is redundant.
 
-Cc: Green Wan <green.wan@sifive.com>
 Signed-off-by: Barry Song <song.bao.hua@hisilicon.com>
 ---
- drivers/dma/sf-pdma/sf-pdma.c | 10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+ drivers/dma/ipu/ipu_idmac.c | 11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/dma/sf-pdma/sf-pdma.c b/drivers/dma/sf-pdma/sf-pdma.c
-index 528deb5d9f31..981ddcc42d70 100644
---- a/drivers/dma/sf-pdma/sf-pdma.c
-+++ b/drivers/dma/sf-pdma/sf-pdma.c
-@@ -326,10 +326,9 @@ static irqreturn_t sf_pdma_done_isr(int irq, void *dev_id)
- {
- 	struct sf_pdma_chan *chan = dev_id;
- 	struct pdma_regs *regs = &chan->regs;
+diff --git a/drivers/dma/ipu/ipu_idmac.c b/drivers/dma/ipu/ipu_idmac.c
+index 38036db284cb..104ad420abbe 100644
+--- a/drivers/dma/ipu/ipu_idmac.c
++++ b/drivers/dma/ipu/ipu_idmac.c
+@@ -1160,14 +1160,13 @@ static irqreturn_t idmac_interrupt(int irq, void *dev_id)
+ 	struct idmac_tx_desc *desc, *descnew;
+ 	bool done = false;
+ 	u32 ready0, ready1, curbuf, err;
 -	unsigned long flags;
- 	u64 residue;
+ 	struct dmaengine_desc_callback cb;
  
--	spin_lock_irqsave(&chan->vchan.lock, flags);
-+	spin_lock(&chan->vchan.lock);
- 	writel((readl(regs->ctrl)) & ~PDMA_DONE_STATUS_MASK, regs->ctrl);
- 	residue = readq(regs->residue);
+ 	/* IDMAC has cleared the respective BUFx_RDY bit, we manage the buffer */
  
-@@ -346,7 +345,7 @@ static irqreturn_t sf_pdma_done_isr(int irq, void *dev_id)
- 		sf_pdma_xfer_desc(chan);
+ 	dev_dbg(dev, "IDMAC irq %d, buf %d\n", irq, ichan->active_buffer);
+ 
+-	spin_lock_irqsave(&ipu_data.lock, flags);
++	spin_lock(&ipu_data.lock);
+ 
+ 	ready0	= idmac_read_ipureg(&ipu_data, IPU_CHA_BUF0_RDY);
+ 	ready1	= idmac_read_ipureg(&ipu_data, IPU_CHA_BUF1_RDY);
+@@ -1176,7 +1175,7 @@ static irqreturn_t idmac_interrupt(int irq, void *dev_id)
+ 
+ 	if (err & (1 << chan_id)) {
+ 		idmac_write_ipureg(&ipu_data, 1 << chan_id, IPU_INT_STAT_4);
+-		spin_unlock_irqrestore(&ipu_data.lock, flags);
++		spin_unlock(&ipu_data.lock);
+ 		/*
+ 		 * Doing this
+ 		 * ichan->sg[0] = ichan->sg[1] = NULL;
+@@ -1188,7 +1187,7 @@ static irqreturn_t idmac_interrupt(int irq, void *dev_id)
+ 			 chan_id, ready0, ready1, curbuf);
+ 		return IRQ_HANDLED;
  	}
+-	spin_unlock_irqrestore(&ipu_data.lock, flags);
++	spin_unlock(&ipu_data.lock);
  
--	spin_unlock_irqrestore(&chan->vchan.lock, flags);
-+	spin_unlock(&chan->vchan.lock);
- 
- 	return IRQ_HANDLED;
- }
-@@ -355,11 +354,10 @@ static irqreturn_t sf_pdma_err_isr(int irq, void *dev_id)
- {
- 	struct sf_pdma_chan *chan = dev_id;
- 	struct pdma_regs *regs = &chan->regs;
--	unsigned long flags;
- 
--	spin_lock_irqsave(&chan->lock, flags);
-+	spin_lock(&chan->lock);
- 	writel((readl(regs->ctrl)) & ~PDMA_ERR_STATUS_MASK, regs->ctrl);
--	spin_unlock_irqrestore(&chan->lock, flags);
-+	spin_unlock(&chan->lock);
- 
- 	tasklet_schedule(&chan->err_tasklet);
- 
+ 	/* Other interrupts do not interfere with this channel */
+ 	spin_lock(&ichan->lock);
+@@ -1251,9 +1250,9 @@ static irqreturn_t idmac_interrupt(int irq, void *dev_id)
+ 		if (unlikely(sgnew)) {
+ 			ipu_submit_buffer(ichan, descnew, sgnew, !ichan->active_buffer);
+ 		} else {
+-			spin_lock_irqsave(&ipu_data.lock, flags);
++			spin_lock(&ipu_data.lock);
+ 			ipu_ic_disable_task(&ipu_data, chan_id);
+-			spin_unlock_irqrestore(&ipu_data.lock, flags);
++			spin_unlock(&ipu_data.lock);
+ 			ichan->status = IPU_CHANNEL_READY;
+ 			/* Continue to check for complete descriptor */
+ 		}
 -- 
 2.25.1
 
