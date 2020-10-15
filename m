@@ -7,33 +7,30 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AB8F5C43467
-	for <dmaengine@archiver.kernel.org>; Fri, 16 Oct 2020 00:03:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4A450C43457
+	for <dmaengine@archiver.kernel.org>; Fri, 16 Oct 2020 00:03:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 683942083B
-	for <dmaengine@archiver.kernel.org>; Fri, 16 Oct 2020 00:03:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0C4F72087D
+	for <dmaengine@archiver.kernel.org>; Fri, 16 Oct 2020 00:03:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727930AbgJPADI (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Thu, 15 Oct 2020 20:03:08 -0400
-Received: from szxga07-in.huawei.com ([45.249.212.35]:59268 "EHLO huawei.com"
+        id S1733028AbgJPADM (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Thu, 15 Oct 2020 20:03:12 -0400
+Received: from szxga04-in.huawei.com ([45.249.212.190]:15299 "EHLO huawei.com"
         rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1730479AbgJPADH (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Thu, 15 Oct 2020 20:03:07 -0400
-Received: from DGGEMS413-HUB.china.huawei.com (unknown [172.30.72.59])
-        by Forcepoint Email with ESMTP id 7FC2CDA817BEFA42357C;
-        Fri, 16 Oct 2020 08:03:05 +0800 (CST)
+        id S1730479AbgJPADM (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Thu, 15 Oct 2020 20:03:12 -0400
+Received: from DGGEMS413-HUB.china.huawei.com (unknown [172.30.72.58])
+        by Forcepoint Email with ESMTP id 5C93440114D4F8046D04;
+        Fri, 16 Oct 2020 08:03:10 +0800 (CST)
 Received: from SWX921481.china.huawei.com (10.126.203.187) by
  DGGEMS413-HUB.china.huawei.com (10.3.19.213) with Microsoft SMTP Server id
- 14.3.487.0; Fri, 16 Oct 2020 08:02:55 +0800
+ 14.3.487.0; Fri, 16 Oct 2020 08:03:01 +0800
 From:   Barry Song <song.bao.hua@hisilicon.com>
 To:     <vkoul@kernel.org>, <dmaengine@vger.kernel.org>
-CC:     Barry Song <song.bao.hua@hisilicon.com>,
-        Laxman Dewangan <ldewangan@nvidia.com>,
-        Jon Hunter <jonathanh@nvidia.com>,
-        Thierry Reding <thierry.reding@gmail.com>
-Subject: [PATCH 04/10] dmaengine: tegra210-adma: remove redundant irqsave and irqrestore in hardIRQ
-Date:   Fri, 16 Oct 2020 12:59:15 +1300
-Message-ID: <20201015235921.21224-5-song.bao.hua@hisilicon.com>
+CC:     Barry Song <song.bao.hua@hisilicon.com>
+Subject: [PATCH 08/10] dmaengine: moxart-dma: remove redundant irqsave and irqrestore in hardIRQ
+Date:   Fri, 16 Oct 2020 12:59:19 +1300
+Message-ID: <20201015235921.21224-9-song.bao.hua@hisilicon.com>
 X-Mailer: git-send-email 2.21.0.windows.1
 In-Reply-To: <20201015235921.21224-1-song.bao.hua@hisilicon.com>
 References: <20201015235921.21224-1-song.bao.hua@hisilicon.com>
@@ -48,41 +45,40 @@ X-Mailing-List: dmaengine@vger.kernel.org
 
 Running in hardIRQ, disabling IRQ is redundant.
 
-Cc: Laxman Dewangan <ldewangan@nvidia.com>
-Cc: Jon Hunter <jonathanh@nvidia.com>
-Cc: Thierry Reding <thierry.reding@gmail.com>
 Signed-off-by: Barry Song <song.bao.hua@hisilicon.com>
 ---
- drivers/dma/tegra210-adma.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ drivers/dma/moxart-dma.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/dma/tegra210-adma.c b/drivers/dma/tegra210-adma.c
-index c5fa2ef74abc..4735742e826d 100644
---- a/drivers/dma/tegra210-adma.c
-+++ b/drivers/dma/tegra210-adma.c
-@@ -408,19 +408,18 @@ static irqreturn_t tegra_adma_isr(int irq, void *dev_id)
- {
- 	struct tegra_adma_chan *tdc = dev_id;
- 	unsigned long status;
+diff --git a/drivers/dma/moxart-dma.c b/drivers/dma/moxart-dma.c
+index 347146a6e1d0..74755093e14b 100644
+--- a/drivers/dma/moxart-dma.c
++++ b/drivers/dma/moxart-dma.c
+@@ -524,7 +524,6 @@ static irqreturn_t moxart_dma_interrupt(int irq, void *devid)
+ 	struct moxart_dmadev *mc = devid;
+ 	struct moxart_chan *ch = &mc->slave_chans[0];
+ 	unsigned int i;
 -	unsigned long flags;
+ 	u32 ctrl;
  
--	spin_lock_irqsave(&tdc->vc.lock, flags);
-+	spin_lock(&tdc->vc.lock);
+ 	dev_dbg(chan2dev(&ch->vc.chan), "%s\n", __func__);
+@@ -541,14 +540,14 @@ static irqreturn_t moxart_dma_interrupt(int irq, void *devid)
+ 		if (ctrl & APB_DMA_FIN_INT_STS) {
+ 			ctrl &= ~APB_DMA_FIN_INT_STS;
+ 			if (ch->desc) {
+-				spin_lock_irqsave(&ch->vc.lock, flags);
++				spin_lock(&ch->vc.lock);
+ 				if (++ch->sgidx < ch->desc->sglen) {
+ 					moxart_dma_start_sg(ch, ch->sgidx);
+ 				} else {
+ 					vchan_cookie_complete(&ch->desc->vd);
+ 					moxart_dma_start_desc(&ch->vc.chan);
+ 				}
+-				spin_unlock_irqrestore(&ch->vc.lock, flags);
++				spin_unlock(&ch->vc.lock);
+ 			}
+ 		}
  
- 	status = tegra_adma_irq_clear(tdc);
- 	if (status == 0 || !tdc->desc) {
--		spin_unlock_irqrestore(&tdc->vc.lock, flags);
-+		spin_unlock(&tdc->vc.lock);
- 		return IRQ_NONE;
- 	}
- 
- 	vchan_cyclic_callback(&tdc->desc->vd);
- 
--	spin_unlock_irqrestore(&tdc->vc.lock, flags);
-+	spin_unlock(&tdc->vc.lock);
- 
- 	return IRQ_HANDLED;
- }
 -- 
 2.25.1
 
