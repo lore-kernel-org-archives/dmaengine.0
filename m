@@ -2,187 +2,96 @@ Return-Path: <SRS0=E1jm=DW=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 12F6FC433DF
-	for <dmaengine@archiver.kernel.org>; Thu, 15 Oct 2020 07:31:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3CAFBC433E7
+	for <dmaengine@archiver.kernel.org>; Thu, 15 Oct 2020 12:33:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BF24E22249
-	for <dmaengine@archiver.kernel.org>; Thu, 15 Oct 2020 07:31:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1602747118;
-	bh=OntA+LWhL7f5z0uBEaaPch3mqbF3WVBFeZgkfkwuK8w=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:List-ID:From;
-	b=1bOlxqGrqBuh/0iwwgcJzB1sSs0sv3vjoyVH+aDKG7MMbHxwWhK5N6HVaA2slNLup
-	 n2M0X1k0uDIIA5YjQbIoeFXRu8Bm5TmVFg4HGeDxnIAUTMzKOgSrNaz0+L2G6d/l7R
-	 V41ZYkooUol6euqERAT0gWsQcQXDtA9ZohHjemCA=
+	by mail.kernel.org (Postfix) with ESMTP id CC0AE2225C
+	for <dmaengine@archiver.kernel.org>; Thu, 15 Oct 2020 12:33:21 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=baylibre-com.20150623.gappssmtp.com header.i=@baylibre-com.20150623.gappssmtp.com header.b="phvyFg4x"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727942AbgJOHb6 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Thu, 15 Oct 2020 03:31:58 -0400
-Received: from mail.kernel.org ([198.145.29.99]:47678 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726103AbgJOHb6 (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Thu, 15 Oct 2020 03:31:58 -0400
-Received: from localhost.localdomain (unknown [122.171.209.54])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id D2E7122243;
-        Thu, 15 Oct 2020 07:31:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1602747118;
-        bh=OntA+LWhL7f5z0uBEaaPch3mqbF3WVBFeZgkfkwuK8w=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=T/bqtc5vjLOxSa7uio+xsNEBQNOUv1uScxcP2SZsmSUC58XlpQlIMdM12UvdDBSv+
-         38d8/W6wdOLnhyo9mIMx1/7M1hDEF70QN6v6F1IdlrE03s7Oaq+KSAJ2qLoUZZYKi/
-         4LkftNXahKWR0hmZi1yOAx130ygx0YYEHytcJHj4=
-From:   Vinod Koul <vkoul@kernel.org>
-To:     dmaengine@vger.kernel.org
-Cc:     Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 4/4] dmaengine: core: update to use peripheral term
-Date:   Thu, 15 Oct 2020 13:01:32 +0530
-Message-Id: <20201015073132.3571684-5-vkoul@kernel.org>
-X-Mailer: git-send-email 2.26.2
-In-Reply-To: <20201015073132.3571684-1-vkoul@kernel.org>
-References: <20201015073132.3571684-1-vkoul@kernel.org>
+        id S1728558AbgJOMdV (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Thu, 15 Oct 2020 08:33:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39114 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728543AbgJOMdV (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Thu, 15 Oct 2020 08:33:21 -0400
+Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B95E4C061755
+        for <dmaengine@vger.kernel.org>; Thu, 15 Oct 2020 05:33:20 -0700 (PDT)
+Received: by mail-wm1-x344.google.com with SMTP id q5so3459669wmq.0
+        for <dmaengine@vger.kernel.org>; Thu, 15 Oct 2020 05:33:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=baylibre-com.20150623.gappssmtp.com; s=20150623;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=0gAf5fB5iQjUkbZE2PNnBqlTvtlb0W+hOlezFL2z0t0=;
+        b=phvyFg4xjOGamHGSk/i05nAsDluAs0yWPaT2/eZkZDWz6fh0DSNW+CxmypNWD3fgle
+         8AC8w0CuYMtRyP2XvJCqOl7LznkwXyw+cmbpYGi9Qvqk8v4qgD+YVngklOb1YPlZNUpY
+         PUWRaFKto7ziGDDuVUXqr9Gw9rozNF27/AkXBF4b5bOmiDhfX6B8+YubTpadSuWCYwie
+         5taGkWoqWKn2JjKsSHJby4S6ytLFCNrBGBbw946DYXamCF6ZEmR3PIZB5q+GCgpnYqgd
+         xZCtA59kD753+zU0S0xYgVc8jfTVBYa3C4BjN1b3+U879tXdYkKFu/JEEAjFabYwHVHo
+         Vfdw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=0gAf5fB5iQjUkbZE2PNnBqlTvtlb0W+hOlezFL2z0t0=;
+        b=Q2SfDVyRka1hDYTsbPW7fEFc/wrmn+Oqq/Po+Gs1w5H4YJNSu6Pfc1MOv9ES7+u/68
+         ytqgUKtszm1pP/wer1DEUEShjB+XAuE1azrqI0zId0afxawRxBcIQGs45e7RHI5v7KW4
+         t659Qkq2Hp0wuj0xAWyX6/H8ts/strmg6DG7VHBb/QwY+fn8S8oL5nIorOgYLskyR2G9
+         aduDBJMwH5GXMl6YrGUQH4Nts1g4wHm7SzJS2ahnhhfyaNHqXUg/Mn9pfHn6/Jr5F3tS
+         sUWYLgzxNZgwMM8mJtpbOeSGCLGw8j0Q2JFxUfEu/+DEKdbOALSZ/rzal9ViDpn4kdlv
+         A5Ug==
+X-Gm-Message-State: AOAM531+VOfMe1LkXbQ5dCs7pmeFY7vTf3I6DxZfbvIUpCz/0jxrMvhk
+        I6C0/+5LQ+o5VvVJYH4wP6Ue6sdsswM8vA==
+X-Google-Smtp-Source: ABdhPJwMWmhzac8KOGYrXil1jcjuEazEomj2N1xyRdOMuoCb7xSRa3SeIB2Z0+rBWSrgh8MElOQYdQ==
+X-Received: by 2002:a05:600c:2905:: with SMTP id i5mr3815469wmd.9.1602765199464;
+        Thu, 15 Oct 2020 05:33:19 -0700 (PDT)
+Received: from localhost.localdomain (129.163.185.81.rev.sfr.net. [81.185.163.129])
+        by smtp.gmail.com with ESMTPSA id j7sm4017406wmc.7.2020.10.15.05.33.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 15 Oct 2020 05:33:18 -0700 (PDT)
+From:   Fabien Parent <fparent@baylibre.com>
+To:     linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-mediatek@lists.infradead.org,
+        linux-arm-kernel@lists.infradead.org, dmaengine@vger.kernel.org
+Cc:     matthias.bgg@gmail.com, robh+dt@kernel.org, vkoul@kernel.org,
+        sean.wang@mediatek.com, Fabien Parent <fparent@baylibre.com>
+Subject: [PATCH 1/2] dt-bindings: dma: mtk-apdma: add bindings for MT8516 SOC
+Date:   Thu, 15 Oct 2020 14:33:14 +0200
+Message-Id: <20201015123315.334919-1-fparent@baylibre.com>
+X-Mailer: git-send-email 2.28.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-dmaengine history has a non inclusive terminology of dmaengine slave, I
-feel it is time to replace that.
+Add bindings to APDMA for MT8516 SoC. MT8516 is compatible with MT6577.
 
-This moves dmaengine file to use peripheral instead of slave in comments
-and updates to use the newly add inclusive names for enums/struct/apis
-
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Fabien Parent <fparent@baylibre.com>
 ---
- drivers/dma/dmaengine.c | 36 ++++++++++++++++++------------------
- 1 file changed, 18 insertions(+), 18 deletions(-)
+ Documentation/devicetree/bindings/dma/mtk-uart-apdma.txt | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/dma/dmaengine.c b/drivers/dma/dmaengine.c
-index 3b796081a5e4..9041f4f10ea3 100644
---- a/drivers/dma/dmaengine.c
-+++ b/drivers/dma/dmaengine.c
-@@ -143,7 +143,7 @@ static inline void dmaengine_debug_unregister(struct dma_device *dma_dev) { }
+diff --git a/Documentation/devicetree/bindings/dma/mtk-uart-apdma.txt b/Documentation/devicetree/bindings/dma/mtk-uart-apdma.txt
+index 2117db0ce4f2..fef9c1eeb264 100644
+--- a/Documentation/devicetree/bindings/dma/mtk-uart-apdma.txt
++++ b/Documentation/devicetree/bindings/dma/mtk-uart-apdma.txt
+@@ -4,6 +4,7 @@ Required properties:
+ - compatible should contain:
+   * "mediatek,mt2712-uart-dma" for MT2712 compatible APDMA
+   * "mediatek,mt6577-uart-dma" for MT6577 and all of the above
++  * "mediatek,mt8516-uart-dma", "mediatek,mt6577" for MT8516 SoC
  
- /* --- sysfs implementation --- */
+ - reg: The base address of the APDMA register bank.
  
--#define DMA_SLAVE_NAME	"slave"
-+#define DMA_PERIPHERAL_NAME	"peripheral"
- 
- /**
-  * dev_to_dma_chan - convert a device pointer to its sysfs container object
-@@ -266,13 +266,13 @@ static int __init dma_channel_table_init(void)
- 
- 	bitmap_fill(dma_cap_mask_all.bits, DMA_TX_TYPE_END);
- 
--	/* 'interrupt', 'private', and 'slave' are channel capabilities,
-+	/* 'interrupt', 'private', and 'peripheral' are channel capabilities,
- 	 * but are not associated with an operation so they do not need
- 	 * an entry in the channel_table
- 	 */
- 	clear_bit(DMA_INTERRUPT, dma_cap_mask_all.bits);
- 	clear_bit(DMA_PRIVATE, dma_cap_mask_all.bits);
--	clear_bit(DMA_SLAVE, dma_cap_mask_all.bits);
-+	clear_bit(DMA_PERIPHERAL, dma_cap_mask_all.bits);
- 
- 	for_each_dma_cap_mask(cap, dma_cap_mask_all) {
- 		channel_table[cap] = alloc_percpu(struct dma_chan_tbl_ent);
-@@ -576,15 +576,15 @@ int dma_get_slave_caps(struct dma_chan *chan, struct dma_slave_caps *caps)
- 
- 	device = chan->device;
- 
--	/* check if the channel supports slave transactions */
--	if (!(test_bit(DMA_SLAVE, device->cap_mask.bits) ||
-+	/* check if the channel supports peripheral transactions */
-+	if (!(test_bit(DMA_PERIPHERAL, device->cap_mask.bits) ||
- 	      test_bit(DMA_CYCLIC, device->cap_mask.bits)))
- 		return -ENXIO;
- 
- 	/*
--	 * Check whether it reports it uses the generic slave
-+	 * Check whether it reports it uses the generic peripheral
- 	 * capabilities, if not, that means it doesn't support any
--	 * kind of slave capabilities reporting.
-+	 * kind of peripheral capabilities reporting.
- 	 */
- 	if (!device->directions)
- 		return -ENXIO;
-@@ -603,7 +603,7 @@ int dma_get_slave_caps(struct dma_chan *chan, struct dma_slave_caps *caps)
- 
- 	/*
- 	 * DMA engine device might be configured with non-uniformly
--	 * distributed slave capabilities per device channels. In this
-+	 * distributed capabilities per device channels. In this
- 	 * case the corresponding driver may provide the device_caps
- 	 * callback to override the generic capabilities with
- 	 * channel-specific ones.
-@@ -783,9 +783,9 @@ struct dma_chan *__dma_request_channel(const dma_cap_mask_t *mask,
- }
- EXPORT_SYMBOL_GPL(__dma_request_channel);
- 
--static const struct dma_slave_map *dma_filter_match(struct dma_device *device,
--						    const char *name,
--						    struct device *dev)
-+static const struct dma_peripheral_map *dma_filter_match(struct dma_device *device,
-+						         const char *name,
-+						         struct device *dev)
- {
- 	int i;
- 
-@@ -804,9 +804,9 @@ static const struct dma_slave_map *dma_filter_match(struct dma_device *device,
- }
- 
- /**
-- * dma_request_chan - try to allocate an exclusive slave channel
-+ * dma_request_chan - try to allocate an exclusive peripheral channel
-  * @dev:	pointer to client device structure
-- * @name:	slave channel name
-+ * @name:	peripheral channel name
-  *
-  * Returns pointer to appropriate DMA channel on success or an error pointer.
-  */
-@@ -833,13 +833,13 @@ struct dma_chan *dma_request_chan(struct device *dev, const char *name)
- 	mutex_lock(&dma_list_mutex);
- 	list_for_each_entry_safe(d, _d, &dma_device_list, global_node) {
- 		dma_cap_mask_t mask;
--		const struct dma_slave_map *map = dma_filter_match(d, name, dev);
-+		const struct dma_peripheral_map *map = dma_filter_match(d, name, dev);
- 
- 		if (!map)
- 			continue;
- 
- 		dma_cap_zero(mask);
--		dma_cap_set(DMA_SLAVE, mask);
-+		dma_cap_set(DMA_PERIPHERAL, mask);
- 
- 		chan = find_candidate(d, &mask, d->filter.fn, map->param);
- 		if (!IS_ERR(chan))
-@@ -864,8 +864,8 @@ struct dma_chan *dma_request_chan(struct device *dev, const char *name)
- 	chan->peripheral = dev;
- 
- 	if (sysfs_create_link(&chan->dev->device.kobj, &dev->kobj,
--			      DMA_SLAVE_NAME))
--		dev_warn(dev, "Cannot create DMA %s symlink\n", DMA_SLAVE_NAME);
-+			      DMA_PERIPHERAL_NAME))
-+		dev_warn(dev, "Cannot create DMA %s symlink\n", DMA_PERIPHERAL_NAME);
- 	if (sysfs_create_link(&dev->kobj, &chan->dev->device.kobj, chan->name))
- 		dev_warn(dev, "Cannot create DMA %s symlink\n", chan->name);
- 
-@@ -911,7 +911,7 @@ void dma_release_channel(struct dma_chan *chan)
- 		dma_cap_clear(DMA_PRIVATE, chan->device->cap_mask);
- 
- 	if (chan->peripheral) {
--		sysfs_remove_link(&chan->dev->device.kobj, DMA_SLAVE_NAME);
-+		sysfs_remove_link(&chan->dev->device.kobj, DMA_PERIPHERAL_NAME);
- 		sysfs_remove_link(&chan->peripheral->kobj, chan->name);
- 		kfree(chan->name);
- 		chan->name = NULL;
 -- 
-2.26.2
+2.28.0
 
