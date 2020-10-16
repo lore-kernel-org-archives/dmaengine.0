@@ -2,161 +2,208 @@ Return-Path: <SRS0=64ix=DX=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D8A9BC43457
-	for <dmaengine@archiver.kernel.org>; Fri, 16 Oct 2020 10:32:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8FC49C433DF
+	for <dmaengine@archiver.kernel.org>; Fri, 16 Oct 2020 14:51:33 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 587922084C
-	for <dmaengine@archiver.kernel.org>; Fri, 16 Oct 2020 10:32:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 067B620B1F
+	for <dmaengine@archiver.kernel.org>; Fri, 16 Oct 2020 14:51:32 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b="MxkWOPsG"
+	dkim=pass (2048-bit key) header.d=synopsys.com header.i=@synopsys.com header.b="ZphByjoZ";
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=synopsys.com header.i=@synopsys.com header.b="li0X727v"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2395316AbgJPKcM (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 16 Oct 2020 06:32:12 -0400
-Received: from mailout2.samsung.com ([203.254.224.25]:51607 "EHLO
-        mailout2.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2395317AbgJPKcK (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Fri, 16 Oct 2020 06:32:10 -0400
-Received: from epcas5p4.samsung.com (unknown [182.195.41.42])
-        by mailout2.samsung.com (KnoxPortal) with ESMTP id 20201016103207epoutp02581c7129bac48a0406cfdeaea5cf1314~_cmxpmTCC1758017580epoutp02v
-        for <dmaengine@vger.kernel.org>; Fri, 16 Oct 2020 10:32:07 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.samsung.com 20201016103207epoutp02581c7129bac48a0406cfdeaea5cf1314~_cmxpmTCC1758017580epoutp02v
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1602844327;
-        bh=CoMBFzjjQTDKAU3AQQ0ee2Ct+wTe7TkGcgrKQcC1XCU=;
-        h=From:To:Cc:In-Reply-To:Subject:Date:References:From;
-        b=MxkWOPsGIA2N2kdSVsn2MlkaAQDKyK4F1WqhRZBG+Z1G3zUVnhLuefVRECzBtYBPq
-         fKwkycwo51NRZAO9FdXIefDiYSv1DbqxuqXHJnK5zXJAVfajrUlbLlv8+36d0ARnfh
-         coFEOrIvuEt61wpahRxooHZ/7e/Ic8bjU7WttMIk=
-Received: from epsmges5p1new.samsung.com (unknown [182.195.42.73]) by
-        epcas5p3.samsung.com (KnoxPortal) with ESMTP id
-        20201016103206epcas5p39b95136b060a5d93cc04b2f12af0d567~_cmxHhcMx1427314273epcas5p3S;
-        Fri, 16 Oct 2020 10:32:06 +0000 (GMT)
-Received: from epcas5p3.samsung.com ( [182.195.41.41]) by
-        epsmges5p1new.samsung.com (Symantec Messaging Gateway) with SMTP id
-        1D.F2.09573.6A6798F5; Fri, 16 Oct 2020 19:32:06 +0900 (KST)
-Received: from epsmtrp1.samsung.com (unknown [182.195.40.13]) by
-        epcas5p4.samsung.com (KnoxPortal) with ESMTPA id
-        20201016103055epcas5p468331470587e3640d9596ae92211f42e~_cluX8U3_0775007750epcas5p4g;
-        Fri, 16 Oct 2020 10:30:55 +0000 (GMT)
-Received: from epsmgms1p2.samsung.com (unknown [182.195.42.42]) by
-        epsmtrp1.samsung.com (KnoxPortal) with ESMTP id
-        20201016103055epsmtrp1fac513e911d78dd9a9b8955900bd4022~_cluXScnM1161511615epsmtrp1O;
-        Fri, 16 Oct 2020 10:30:55 +0000 (GMT)
-X-AuditID: b6c32a49-a7dff70000002565-33-5f8976a6f28d
-Received: from epsmtip1.samsung.com ( [182.195.34.30]) by
-        epsmgms1p2.samsung.com (Symantec Messaging Gateway) with SMTP id
-        CA.D2.08745.E56798F5; Fri, 16 Oct 2020 19:30:54 +0900 (KST)
-Received: from RWINDS2E175 (unknown [10.218.224.178]) by
-        epsmtip1.samsung.com (KnoxPortal) with ESMTPA id
-        20201016103054epsmtip1ee105f750d6ca33d322e0115b94af5c1~_cltmCHd42862028620epsmtip1y;
-        Fri, 16 Oct 2020 10:30:54 +0000 (GMT)
-From:   "Surendran K" <surendran.k@samsung.com>
-To:     "'Vinod Koul'" <vkoul@kernel.org>
-Cc:     <dmaengine@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <shaik.ameer@samsung.com>, <alim.akhtar@samsung.com>,
-        <pankaj.dubey@samsung.com>
-In-Reply-To: <20201014043933.GQ2968@vkoul-mobl>
-Subject: RE: [PATCH] DMA: PL330: Remove unreachable code
-Date:   Fri, 16 Oct 2020 03:30:53 -0700
-Message-ID: <0cc501d6a3a7$6d9203c0$48b60b40$@samsung.com>
+        id S2409082AbgJPOvc (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 16 Oct 2020 10:51:32 -0400
+Received: from smtprelay-out1.synopsys.com ([149.117.73.133]:35990 "EHLO
+        smtprelay-out1.synopsys.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S2409071AbgJPOvc (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Fri, 16 Oct 2020 10:51:32 -0400
+Received: from mailhost.synopsys.com (badc-mailhost3.synopsys.com [10.192.0.81])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
+        (No client certificate requested)
+        by smtprelay-out1.synopsys.com (Postfix) with ESMTPS id 665B14069A;
+        Fri, 16 Oct 2020 14:51:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=synopsys.com; s=mail;
+        t=1602859891; bh=TpkaKdnKTZRmT/r7nztjhL5SYuSft3fSVybRLZZE8DM=;
+        h=From:To:CC:Subject:Date:References:In-Reply-To:From;
+        b=ZphByjoZBdswMcFNr1BZytR28doQUMsKFScCTjBwp+JxzJXpB37PgylYgZuOoV078
+         Q0lCH7Eu+5UsFI94XY7HgSl6tMrdMRvRusDskGMybGPKjAecGA+ziCEYUAl4dgRAet
+         CE/lMrGCLFK099WtF0ABozlsgdEI269M9YZPhyJC3i9hT/gz+oRWWOF2y1G4L42HHV
+         8kwSfwRRRuRZw3gBgSvSi8LyLeM2LgCDD49/b2QfzMRKfELMYbukrua60Zzzs22bey
+         5bXRgVob1ShYDIp/j4jXkToV+9OqV6ZM7i9oR50UXrz+QLg19+4usQITIRTcx6QPbq
+         EmqfO7ZPP0FrA==
+Received: from o365relay-in.synopsys.com (sv2-o365relay1.synopsys.com [10.202.1.137])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mailhost.synopsys.com (Postfix) with ESMTPS id 21AA9A0063;
+        Fri, 16 Oct 2020 14:51:31 +0000 (UTC)
+Received: from NAM12-DM6-obe.outbound.protection.outlook.com (mail-dm6nam12lp2172.outbound.protection.outlook.com [104.47.59.172])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (Client CN "mail.protection.outlook.com", Issuer "GlobalSign Organization Validation CA - SHA256 - G3" (verified OK))
+        by o365relay-in.synopsys.com (Postfix) with ESMTPS id 7AD5540044;
+        Fri, 16 Oct 2020 14:51:30 +0000 (UTC)
+Authentication-Results: o365relay-in.synopsys.com; dmarc=pass (p=reject dis=none) header.from=synopsys.com
+Authentication-Results: o365relay-in.synopsys.com; spf=pass smtp.mailfrom=paltsev@synopsys.com
+Authentication-Results: o365relay-in.synopsys.com;
+        dkim=pass (1024-bit key; unprotected) header.d=synopsys.com header.i=@synopsys.com header.b="li0X727v";
+        dkim-atps=neutral
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=HATQ6wi0h3RAEHPR/zd7llo0Ax9tYkggg9iHBeHpNJ7HGT4XaEEWJvG6QxtEzMMEAD678ppQ9YC990hqHmbvG5bFBjZ1RvyVJqVjpD3L0ph6a/Y7OTfCq5EGHMwJ2yra7CGfedFMCSFeuA8Adm2vDxvK8BgW3e6sQghw6HU1oqZsG5YXvbAYvFSLPBpuEhbEP2xBkhtJ1zKTE0S+BpCgKrrb3WuCYrDgmL4VKu2EoFjSPWvs2zdT0N/kr0AIvZ/DBjt4iwZqZc2G46JtC0CwebX/gwoRhQPlUzjZ8RuT88WljeKZPnKncWl/7cQWcGVIdBes7d3wHbjlYfofWM5nlA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=tgsrhNOg3UOcVXR6FtcYpZxh0y2cn7mzRYo2XDVk1yQ=;
+ b=M5kNLlErXXAiPVGPP0glw3UXZRncqsHoM95Ka8q0txP2nxXc5nIDEqNx8FRU6gVxhS+sTKf/e9qc6VdQgcQjc5Djhwapzt/HFBwPKiOD9VXTotmbEC0pEPsehojuihual2h/o0+3s7qKFQZGzNTK4gs0LzeF/eazriZgk/EiXkk9/AZ0fi/kZ+E+crf3CyHaoHXe3UV2s4mtCZoeUyLEnsCEwupQAsSTP7REHSfqJMpGruJF8KzFftZ6aI0Dj3OkOp5Db7LxnHZR/lCQKALZEiW7bRItu3PdEqVhL+QiowHefpTy/1rhr8riuzJHR5x9cIrw7H7R5DhLIvxrn0oTXw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=synopsys.com; dmarc=pass action=none header.from=synopsys.com;
+ dkim=pass header.d=synopsys.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=synopsys.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=tgsrhNOg3UOcVXR6FtcYpZxh0y2cn7mzRYo2XDVk1yQ=;
+ b=li0X727vXvqbbZk/mgivuxFmQ5w1Pp68A5Gn3hZjXn9FLyejVSplmAX3kL5dQcb7//srRxjjYm/fA/I2cvHxo4gaRhJdjdioNKMz5Pt1JlvaGhOGQ/oX7kSb0wyaE6vKEA7DGtrTTl4njyIHKbfjVgkSu1/7AMRdqtGYpzkqsSE=
+Received: from MWHPR12MB1806.namprd12.prod.outlook.com (2603:10b6:300:10d::21)
+ by MW3PR12MB4555.namprd12.prod.outlook.com (2603:10b6:303:59::20) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3477.25; Fri, 16 Oct
+ 2020 14:51:29 +0000
+Received: from MWHPR12MB1806.namprd12.prod.outlook.com
+ ([fe80::3980:da08:bf18:e34e]) by MWHPR12MB1806.namprd12.prod.outlook.com
+ ([fe80::3980:da08:bf18:e34e%2]) with mapi id 15.20.3455.031; Fri, 16 Oct 2020
+ 14:51:29 +0000
+X-SNPS-Relay: synopsys.com
+From:   Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>
+To:     Sia Jee Heng <jee.heng.sia@intel.com>
+CC:     "andriy.shevchenko@linux.intel.com" 
+        <andriy.shevchenko@linux.intel.com>,
+        "dmaengine@vger.kernel.org" <dmaengine@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        "vkoul@kernel.org" <vkoul@kernel.org>,
+        Alexey Brodkin <Alexey.Brodkin@synopsys.com>
+Subject: Re: [PATCH 00/15] dmaengine: dw-axi-dmac: support Intel KeemBay
+ AxiDMA
+Thread-Topic: [PATCH 00/15] dmaengine: dw-axi-dmac: support Intel KeemBay
+ AxiDMA
+Thread-Index: AQHWoFGD7e2+t8tiGkuS8ZJ5cJ0zdKmaVo9N
+Date:   Fri, 16 Oct 2020 14:51:28 +0000
+Message-ID: <MWHPR12MB18065E87CEE3FD28868EBB9BDE030@MWHPR12MB1806.namprd12.prod.outlook.com>
+References: <20201012042200.29787-1-jee.heng.sia@intel.com>
+In-Reply-To: <20201012042200.29787-1-jee.heng.sia@intel.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: intel.com; dkim=none (message not signed)
+ header.d=none;intel.com; dmarc=none action=none header.from=synopsys.com;
+x-originating-ip: [5.18.244.205]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 345a830d-86ba-47ff-c1bf-08d871e2f6e4
+x-ms-traffictypediagnostic: MW3PR12MB4555:
+x-ms-exchange-transport-forked: True
+x-microsoft-antispam-prvs: <MW3PR12MB4555D055A1DBF2D2086F7E4FDE030@MW3PR12MB4555.namprd12.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:6790;
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: pknRPi/AZhWFxlW8STIaTrGMPwFmYSO8r9dvjrkcNO/NTrbbuQWBHqCmg3GPGSyKSZQGCk1TkIjR8BmQbCw5Ek1UFFFWhyuM8NGYZkeA2nmcLypciuYnY5V6XnRjht7UMV0z3Y726KxLnWcEfpJIybmW7IZaveh/wBf0GHbs7JIWqpYfsQvBdQ8e7yHRZeD3ccahyn6SXyRYLIdv1wlsUn9QB5Z5lOVD6DoGuOiNodsYpMLIaNNYS8MZ4t9vjquXInfKzEE9rD1wtyw0GpZsBq1+EGwGNaxfkc5tRwVDNfEu4gEJ5nqAxu04jb4zuAx5VQXz3B35q4llTCDwGLhQIStPGgN4DMRF4c2VNYncOPmCe3f5NlLE+KA0BgumQ7pBu7lgTdwABYn8fJ0pTHKAzQ==
+x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MWHPR12MB1806.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(4636009)(366004)(376002)(136003)(346002)(39860400002)(396003)(316002)(54906003)(107886003)(4326008)(5660300002)(26005)(9686003)(55016002)(66476007)(186003)(6916009)(66556008)(66946007)(64756008)(7696005)(66446008)(478600001)(52536014)(91956017)(76116006)(2906002)(86362001)(8676002)(8936002)(33656002)(6506007)(53546011)(71200400001)(83380400001)(966005);DIR:OUT;SFP:1102;
+x-ms-exchange-antispam-messagedata: g4bsFIyf0uLQXeR6Hyfz6qSiXy5+uXBzGDYy5/R9v4Z9iCkkz6Ks4JYNYYhpC3Duu2rs8TmgJPVG6A0fL5hNa5DAbTVac1kBowrI6JztjqSvUPIyqJTpgSlZtHyiHMr6MgEa5CVus+CTpQHec5DViZmZdDiF9wMJnbfXyRXz/+ScYmlsqTgVll+r5YI9feVTJVVAMX9dwA7kR4Ivs+vkD43Sy7b70cYXPecVhOClesDDSy1t3C5N/vy0ZK3tt7EG52yISGsRlGBWB+h/BuwHSyitcB3oE6FANMYqQGRyF7Fssi4Lb94QQQZordu1JtbHDhoxxT8NAW9VpgK2W0kxHyMdvz6f7+J7uZ5YKMn4imA1E36iwEvMLemF6wlCO6HDxmpGNJWYldcPnxC0jATAFlxocbFtOjGEoUTk4BB6KbRpBU5qTtcot3eOaxPUGVmH15OMuS87Zb3+YWC4nIJ3It8rDvDVYu9KVaUcpuSAUFLYkT53imUrHQSR2hCbvrGSC6w3rFrTVMR6Lm8vV7Z6yOWG80A0ScCJcZrWg5pQjW3DJ25Ki90r08rYZW82uW4FUhHhDy8D3XHoPf8HQm93YHxGFIvF7eabzh8oO3eOa9Au0myrTLR9FVXEl1aY2FfL/PXcBY49X14vgVfXpAzw+Q==
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQEWfHRKKVMIDHyIT6p/8HKRN/8LDAIA6c1hAtDW/C2q88bboA==
-Content-Language: en-us
-X-Brightmail-Tracker: H4sIAAAAAAAAA02Sa0hTcRjG++9sZ8fh6mgD3xxlzi4o5KULLNQs64MJRhTRBWyuPF5Sp21L
-        TaLMUnKmrVBrS2c30qZZram1pGxZaibdZi00maWJC9E5M8W02o6R337v9XkfeAnM/TzLk0iU
-        yCmpRJwswDnM+me+vqtupueLAn+qVwgtmnpcWF0yzRK+N5Thwmt1Y2xhc+8jtvBhdyu2EY/Q
-        afPxiCK9FkXYdUu2Y/s4IbFUcmI6JQ3YEMNJaP+Qx0xr4WQOmHtQNmomFMiFAHItVCprkAJx
-        CHfyEYLqbBWbDkYRdD2+hNGBHUH5mU5cgQjniPLSUjpvQDCts7LowIrAPNnPcuzFyVVgUzRg
-        DuaRy0HfZ8EdTRhZguBuVwtyFFzIAGhrGWM7eCEpBFVZlXOA+XfAYO1xLuKS62Hg89Qsu0Gb
-        qo/pYIz0goahMow2sRQm+2+yHNfxyHD4VEfRLR4w+LzZaQfIXAImGisQ3b8Fhk53MmheCNYW
-        PZtmTxg8lzfLSWAeOceiORM05h6c5jBoMpUxHVoY6Qt3DAF0ejGUvKxl0LrzoXCqb3Y9Fx5o
-        /vFyaPs9MXsyH0y1T1hKJFDPcaae40w9x4L6v9oVxNSiRVSaLCWekq1LC5JQGf4ycYrsiCTe
-        /2Bqig45v8Zv6wP02TLib0QMAhkREJiAx7Xy80Tu3Fjx0SxKmiqSHkmmZEbEJ5gCD65g4tV+
-        dzJeLKeSKCqNkv6rMggXz2yG9ldK+ZribZHfumpd6xNfvK8tnjKyfTptka1Bla8beVHFM0WS
-        Bm83N+/p6IJ9FcqI3bebReGpX0pdc+wX3uZ+Fe+F0W7jPcaKmbqPFb2xt+UrhwJKD/1O5lcF
-        te1ad1emjP6xedONuOCcmo6sfOkBdcPT1dOaqzNRpsAd2320Nluhdaf9sIV3+EWHZvKE3lBU
-        sN87tN3UGGyTdzy5ZUkaeha8gNPkMm6pepMbqIpzXSQqUjZVDSRYrpw8G9V9fHCe5PrqPZJl
-        Bv13vSAmpHjY08S9lZ96DIYr+iubxF6hDy/fK6y2Z9yP020eFxj3vAs7pdj5doFZ3l7NvzgY
-        Xhdo2ypgyhLEQX6YVCb+AxIbLGakAwAA
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrELMWRmVeSWpSXmKPExsWy7bCSnG5cWWe8wbc2S4sH87axWaye+pfV
-        4vKuOWwWi7Z+Ybc48nA3u8XOOyeYHdg8Nq3qZPPo27KK0ePzJrkA5igum5TUnMyy1CJ9uwSu
-        jNPX2lgKjnNVPL9xj7GB8QhHFyMHh4SAicSEGQpdjFwcQgI7GCWm75nF0sXICRSXlvh4fjcz
-        hC0ssfLfc3aIoheMErM+PGUHSbAJ6Ep87NoOViQioCqx5ckDNpAiZoGZjBJX2++yQHRsZJRY
-        sfg3WBWngL7EyeNfwLqFBSwkZs5ZARZnAere9eoeK4jNK2Ap8fzubyhbUOLkzCcsIKcyC+hJ
-        tG1kBAkzC8hLbH87B+o6BYmfT5exgpSICDhJ3NyaClEiLvHy6BH2CYzCs5AMmoUwaBaSQbOQ
-        dCxgZFnFKJlaUJybnltsWGCUl1quV5yYW1yal66XnJ+7iREcLVpaOxj3rPqgd4iRiYPxEKME
-        B7OSCO8r6bZ4Id6UxMqq1KL8+KLSnNTiQ4zSHCxK4rxfZy2MExJITyxJzU5NLUgtgskycXBK
-        NTCd/r0wS5PtWJlFWq2Ds/79y05lkre2T2hkK0wsX+bw2Xjjs126n9weObecZJg952K707se
-        paf7RZYWndz5pyfsVORR77dzVV4zuqrbP0jLuaMR1vX4cP+jr7EOORUBOzQ/8+td3Cr3vvSz
-        55/S5/cTZwmwFG7a83tif/yU4pKIazpq3vcqn/q51yvZnZ0gnxTx8+++vDNm1X8/Vjnf3OLz
-        a1apa4rMtpP5bJ2dURqKGb/mHHvPu9huQuyNaXtaluwvTeN5m27N/izBMUV3kZ28vea/9003
-        SjdIGF7lF63MZNQvNIvRaN6wJTFG/IJnv+PSJpfNR2wu2k39sm9rKLve/fMnGS5lL3kXzN7n
-        y6/EUpyRaKjFXFScCABFOBl5BQMAAA==
-X-CMS-MailID: 20201016103055epcas5p468331470587e3640d9596ae92211f42e
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-X-Sendblock-Type: REQ_APPROVE
-CMS-TYPE: 105P
-X-CMS-RootMailID: 20201013122030epcas5p2e576d5a2ebfaf9df8078e6ee70f3765c
-References: <CGME20201013122030epcas5p2e576d5a2ebfaf9df8078e6ee70f3765c@epcas5p2.samsung.com>
-        <20201013114713.28754-1-surendran.k@samsung.com>
-        <20201014043933.GQ2968@vkoul-mobl>
+X-OriginatorOrg: synopsys.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: MWHPR12MB1806.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 345a830d-86ba-47ff-c1bf-08d871e2f6e4
+X-MS-Exchange-CrossTenant-originalarrivaltime: 16 Oct 2020 14:51:28.9640
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: c33c9f88-1eb7-4099-9700-16013fd9e8aa
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: Yr7i5fO3mJeosiSVdFGpulhG+oz4A3zYndC32D0YgSgbryIfsO+7dc6Ea3iWZYi9m63rkNH//DWa2VdgNnYjCg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW3PR12MB4555
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Hi Vinod,
-Thanks for pointing it out, I missed it. Will send V2 with correction.
-
-Regards,
-Surendran.
-
------Original Message-----
-From: Vinod Koul [mailto:vkoul@kernel.org] 
-Sent: Tuesday, October 13, 2020 9:40 PM
-To: Surendran K <surendran.k@samsung.com>
-Cc: dmaengine@vger.kernel.org; linux-kernel@vger.kernel.org;
-shaik.ameer@samsung.com; alim.akhtar@samsung.com; pankaj.dubey@samsung.com
-Subject: Re: [PATCH] DMA: PL330: Remove unreachable code
-
-On 13-10-20, 17:17, Surendran K wrote:
-> _setup_req(..) never returns negative value.
-> Hence the condition ret < 0 is never met
-
-The subsystem is "dmaengine", git log would tell you the tags to use
-
-
-> 
-> Signed-off-by: Surendran K <surendran.k@samsung.com>
-> ---
->  drivers/dma/pl330.c | 2 --
->  1 file changed, 2 deletions(-)
-> 
-> diff --git a/drivers/dma/pl330.c b/drivers/dma/pl330.c index 
-> e9f0101d92fa..8355586c9788 100644
-> --- a/drivers/dma/pl330.c
-> +++ b/drivers/dma/pl330.c
-> @@ -1527,8 +1527,6 @@ static int pl330_submit_req(struct pl330_thread 
-> *thrd,
->  
->  	/* First dry run to check if req is acceptable */
->  	ret = _setup_req(pl330, 1, thrd, idx, &xs);
-> -	if (ret < 0)
-> -		goto xfer_exit;
->  
->  	if (ret > pl330->mcbufsz / 2) {
->  		dev_info(pl330->ddma.dev, "%s:%d Try increasing mcbufsz
-(%i/%i)\n",
-> --
-> 2.17.1
-
---
-~Vinod
-
+Hi Sia,=0A=
+=0A=
+Is this patch series available in some public git repo?=0A=
+I want to test it on our HW with DW AXI DMAC.=0A=
+=0A=
+Thanks.=0A=
+---=0A=
+ Eugeniy Paltsev=0A=
+=0A=
+=0A=
+________________________________________=0A=
+From: Sia Jee Heng <jee.heng.sia@intel.com>=0A=
+Sent: Monday, October 12, 2020 07:21=0A=
+To: vkoul@kernel.org; Eugeniy Paltsev=0A=
+Cc: andriy.shevchenko@linux.intel.com; dmaengine@vger.kernel.org; linux-ker=
+nel@vger.kernel.org=0A=
+Subject: [PATCH 00/15] dmaengine: dw-axi-dmac: support Intel KeemBay AxiDMA=
+=0A=
+=0A=
+The below patch series are to support AxiDMA running on Intel KeemBay SoC.=
+=0A=
+The base driver is dw-axi-dmac but code refactoring is needed, for example:=
+=0A=
+- Support YAML Schemas DT binding.=0A=
+- Replacing Linked List with virtual descriptor management.=0A=
+- Remove unrelated hw desc stuff from dma memory pool.=0A=
+- Manage dma memory pool alloc/destroy based on channel activity.=0A=
+- Support dmaengine device_sync() callback.=0A=
+- Support dmaengine device_config().=0A=
+- Support dmaegnine device_prep_slave_sg().=0A=
+- Support dmaengine device_prep_dma_cyclic().=0A=
+- Support of_dma_controller_register().=0A=
+- Support burst residue granularity.=0A=
+- Support Intel KeemBay AxiDMA registers.=0A=
+- Support Intel KeemBay AxiDMA device handshake.=0A=
+- Support Intel KeemBay AxiDMA BYTE and HALFWORD device operation.=0A=
+- Add constraint to Max segment size.=0A=
+=0A=
+This patch set is to replace the patch series submitted at:=0A=
+https://urldefense.com/v3/__https://lore.kernel.org/dmaengine/1599213094-30=
+144-1-git-send-email-jee.heng.sia@intel.com/__;!!A4F2R9G_pg!Nemc1rSHID2X4d8=
+pr0LNF0nD9Odrn425GRV8MSTPDvPwE6a3iWPeylAJSaxwqXjfPapMO4U$=0A=
+=0A=
+This patch series are tested on Intel KeemBay platform.=0A=
+=0A=
+=0A=
+Sia Jee Heng (15):=0A=
+  dt-bindings: dma: Add YAML schemas for dw-axi-dmac=0A=
+  dmaengine: dw-axi-dmac: simplify descriptor management=0A=
+  dmaengine: dw-axi-dmac: move dma_pool_create() to=0A=
+    alloc_chan_resources()=0A=
+  dmaengine: dw-axi-dmac: Add device_synchronize() callback=0A=
+  dmaengine: dw-axi-dmac: Add device_config operation=0A=
+  dmaengine: dw-axi-dmac: Support device_prep_slave_sg=0A=
+  dmaegine: dw-axi-dmac: Support device_prep_dma_cyclic()=0A=
+  dmaengine: dw-axi-dmac: Support of_dma_controller_register()=0A=
+  dmaengine: dw-axi-dmac: Support burst residue granularity=0A=
+  dmaengine: dw-axi-dmac: Add Intel KeemBay AxiDMA support=0A=
+  dt-binding: dma: dw-axi-dmac: Add support for Intel KeemBay AxiDMA=0A=
+  dmaengine: dw-axi-dmac: Add Intel KeemBay DMA register fields=0A=
+  dmaengine: dw-axi-dmac: Add Intel KeemBay AxiDMA handshake=0A=
+  dmaengine: dw-axi-dmac: Add Intel KeemBay AxiDMA BYTE and HALFWORD=0A=
+    registers=0A=
+  dmaengine: dw-axi-dmac: Set constraint to the Max segment size=0A=
+=0A=
+ .../bindings/dma/snps,dw-axi-dmac.txt         |  39 -=0A=
+ .../bindings/dma/snps,dw-axi-dmac.yaml        | 149 ++++=0A=
+ .../dma/dw-axi-dmac/dw-axi-dmac-platform.c    | 696 +++++++++++++++---=0A=
+ drivers/dma/dw-axi-dmac/dw-axi-dmac.h         |  33 +-=0A=
+ 4 files changed, 783 insertions(+), 134 deletions(-)=0A=
+ delete mode 100644 Documentation/devicetree/bindings/dma/snps,dw-axi-dmac.=
+txt=0A=
+ create mode 100644 Documentation/devicetree/bindings/dma/snps,dw-axi-dmac.=
+yaml=0A=
+=0A=
+--=0A=
+2.18.0=0A=
+=0A=
