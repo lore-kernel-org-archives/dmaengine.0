@@ -4,51 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-13.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=unavailable
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 18424C433DF
-	for <dmaengine@archiver.kernel.org>; Sun, 18 Oct 2020 19:41:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3CE75C433DF
+	for <dmaengine@archiver.kernel.org>; Sun, 18 Oct 2020 19:47:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D8DB6207DE
-	for <dmaengine@archiver.kernel.org>; Sun, 18 Oct 2020 19:41:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F3492206ED
+	for <dmaengine@archiver.kernel.org>; Sun, 18 Oct 2020 19:47:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1603050090;
+	s=default; t=1603050440;
 	bh=WLnf6TZZfMo2UufkeOxaHmltYlQFMUdzlIPoCuCQyGs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:List-ID:From;
-	b=I0SbqX0ApxxlRwL2AQFibT+XDsF/do+01LFQySJzfh/XRMUYyGXhZEZzjkhE+Rqbr
-	 0hBeab2642dkl1xkvVw40eH1YSiL+iQWEzWFCRLCpfvxSZZ6+tqerY4SX3EKi7fvmV
-	 I/eFuO+OqrDZVEgp8TG99kU0HsIAVlo36RyqnNXI=
+	b=uagxcffYWROMYV/Nx7rFaHnrz++Hd2Gq8QzoKNAAwZJGXf90M768wF300lImmHZqC
+	 U2xXTx9qboNlMc1bJghC1FxY2oGAgeLggoM3BiUYrdc8AxJbqJIFIplO/om4iHF9We
+	 33d96sNaHB4UJTv9wC+h3ESTe6yKu/oj6TmetLeo=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731757AbgJRTla (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Sun, 18 Oct 2020 15:41:30 -0400
-Received: from mail.kernel.org ([198.145.29.99]:38068 "EHLO mail.kernel.org"
+        id S2387585AbgJRTrP (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Sun, 18 Oct 2020 15:47:15 -0400
+Received: from mail.kernel.org ([198.145.29.99]:35210 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1730645AbgJRTYL (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Sun, 18 Oct 2020 15:24:11 -0400
+        id S1729852AbgJRTW2 (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Sun, 18 Oct 2020 15:22:28 -0400
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id CAFFE20791;
-        Sun, 18 Oct 2020 19:24:09 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id CD5682225F;
+        Sun, 18 Oct 2020 19:22:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1603049050;
+        s=default; t=1603048947;
         bh=WLnf6TZZfMo2UufkeOxaHmltYlQFMUdzlIPoCuCQyGs=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=h3C2siDAKKTe5hcxf75rhre+vX+nJ6T1a+STUvn7iqAoK3642qo2Jkp9IU1I1XYNh
-         c1Y1HFifYNLLe3b2GMc+9xBZEPyQOSH9C7XSXLr6BbKvTkCHiNNPa7zstL4fWMcSMe
-         AvgfXSWC5/eQw5jS3o1jGzF8Q3WlQavubk/q9tqY=
+        b=rIZqcpxRqMKaUrFc7DXQj3ma1BHBggCxPTwmpHSbjryH9Zl9Ol2EZxuYZf0Wj9G8b
+         bB1FN33iuOh2XwyIBLpBnp6hqj+uvcnADiVZXnqwgQoPVrNGT2ueDV4ZQPQtWAxMzm
+         5yrk5Ot88+vJS1+EJdVDHDfKrsU3Id0az2VeZKg0=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Cc:     Serge Semin <Sergey.Semin@baikalelectronics.ru>,
         Vinod Koul <vkoul@kernel.org>, Sasha Levin <sashal@kernel.org>,
         dmaengine@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.4 78/80] dmaengine: dw: Add DMA-channels mask cell support
-Date:   Sun, 18 Oct 2020 15:22:29 -0400
-Message-Id: <20201018192231.4054535-78-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 5.8 099/101] dmaengine: dw: Add DMA-channels mask cell support
+Date:   Sun, 18 Oct 2020 15:20:24 -0400
+Message-Id: <20201018192026.4053674-99-sashal@kernel.org>
 X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20201018192231.4054535-1-sashal@kernel.org>
-References: <20201018192231.4054535-1-sashal@kernel.org>
+In-Reply-To: <20201018192026.4053674-1-sashal@kernel.org>
+References: <20201018192026.4053674-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
