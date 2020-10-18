@@ -5,51 +5,51 @@ X-Spam-Level:
 X-Spam-Status: No, score=-13.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,INCLUDES_PATCH,MAILING_LIST_MULTI,
 	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+	autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4B7D5C43457
-	for <dmaengine@archiver.kernel.org>; Sun, 18 Oct 2020 19:22:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 18ADBC433E7
+	for <dmaengine@archiver.kernel.org>; Sun, 18 Oct 2020 19:41:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1901C2225F
-	for <dmaengine@archiver.kernel.org>; Sun, 18 Oct 2020 19:22:31 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DE58522267
+	for <dmaengine@archiver.kernel.org>; Sun, 18 Oct 2020 19:41:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1603048951;
+	s=default; t=1603050088;
 	bh=X3yF2WEk7jjodg1N+eVjY14Uiapn2eIHGyzVg1Pa178=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:List-ID:From;
-	b=JhFZq6awBS2mWPbM8NAXE9dNA71Ou7y14AZbk+sffECxjcDQse7kSTfeikftAqi0N
-	 7M6etqajSRVsu5m/hDw05dWO5z02nNP3YIztrFrDMFwzWnXIveQuCGl+nJTRx/PowV
-	 xo0P+n5zyphjj5/lbKcMi8UkIMKyBmc8QRzPNC0s=
+	b=upF45sbMsw6QRC6WAYuaixlC3SZs3r+RV296D7VlwQ4qSSAPFz93XCBhqJT5ArCax
+	 qpyDLrHCKR6PycMC/TeLRYMEpPFncmmiDs1OgHZs82qpDqcGPpU3zYkBIRk24ezA0l
+	 vjseKeJaEr9nV3bE1UZHDcY+uiCRRCPooBQ3+9Jw=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729869AbgJRTW3 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Sun, 18 Oct 2020 15:22:29 -0400
-Received: from mail.kernel.org ([198.145.29.99]:35250 "EHLO mail.kernel.org"
+        id S1733183AbgJRTlX (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Sun, 18 Oct 2020 15:41:23 -0400
+Received: from mail.kernel.org ([198.145.29.99]:38116 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729860AbgJRTW3 (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Sun, 18 Oct 2020 15:22:29 -0400
+        id S1730650AbgJRTYM (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Sun, 18 Oct 2020 15:24:12 -0400
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id E0FA72137B;
-        Sun, 18 Oct 2020 19:22:27 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id D81F0222E7;
+        Sun, 18 Oct 2020 19:24:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1603048948;
+        s=default; t=1603049051;
         bh=X3yF2WEk7jjodg1N+eVjY14Uiapn2eIHGyzVg1Pa178=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=QPH/XSA02XRkuqIiD//Dimzm61hMOepzpHzv1mFysaxBlZ5vo7AgLzDVzyA7F1I3I
-         opQCyTRrUzaaaKTQnjEpNbvF/EqxZqWM5kTfgProbnvEJn2DoNxvQ80qjKtfy7fFxy
-         PsaBKbolqzgj1k2OgCdpL2fHSjyWsVKs8EJtyJ6w=
+        b=rDgn3OaKdJ4za5s+H0K85tDRcObRkC3mW3as4Jq4cnJXq9qHOzKwCUbQ3jIkELmku
+         n2nlz3HBnGq/SwkCBNBoWUzSjXSOrnZLrInsgVXJ5ZEqyZnem3qi8MYFCEMHTOCKk+
+         sEpWGijXMByihlt5K1jlB4h+yHfvP4kdaoUkudSM=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Cc:     Serge Semin <Sergey.Semin@baikalelectronics.ru>,
         Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
         Vinod Koul <vkoul@kernel.org>, Sasha Levin <sashal@kernel.org>,
         dmaengine@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.8 100/101] dmaengine: dw: Activate FIFO-mode for memory peripherals only
-Date:   Sun, 18 Oct 2020 15:20:25 -0400
-Message-Id: <20201018192026.4053674-100-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 5.4 79/80] dmaengine: dw: Activate FIFO-mode for memory peripherals only
+Date:   Sun, 18 Oct 2020 15:22:30 -0400
+Message-Id: <20201018192231.4054535-79-sashal@kernel.org>
 X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20201018192026.4053674-1-sashal@kernel.org>
-References: <20201018192026.4053674-1-sashal@kernel.org>
+In-Reply-To: <20201018192231.4054535-1-sashal@kernel.org>
+References: <20201018192231.4054535-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
