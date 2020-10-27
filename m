@@ -7,41 +7,41 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=unavailable
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 15E8AC56201
-	for <dmaengine@archiver.kernel.org>; Tue, 27 Oct 2020 06:55:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C1762C4363A
+	for <dmaengine@archiver.kernel.org>; Tue, 27 Oct 2020 06:55:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CD8362225E
-	for <dmaengine@archiver.kernel.org>; Tue, 27 Oct 2020 06:55:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7EF832225E
+	for <dmaengine@archiver.kernel.org>; Tue, 27 Oct 2020 06:55:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2506943AbgJ0Gzm (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 27 Oct 2020 02:55:42 -0400
+        id S2506902AbgJ0Gze (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 27 Oct 2020 02:55:34 -0400
 Received: from mga02.intel.com ([134.134.136.20]:42071 "EHLO mga02.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2506930AbgJ0Gzl (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Tue, 27 Oct 2020 02:55:41 -0400
-IronPort-SDR: XKkLEyHtBYSgq+qCM+5kfYTMO1jJsq4OKh3rulbv0jY4kTSDUlpZV6yEpMX71Y9YeHbIpf0Rkl
- FQbfRbvMhSEg==
-X-IronPort-AV: E=McAfee;i="6000,8403,9786"; a="155004166"
+        id S2506906AbgJ0Gzc (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Tue, 27 Oct 2020 02:55:32 -0400
+IronPort-SDR: OejG2p/D1XzDdN+bN/yHT3ar04UoET0eEEetvfzIc8K0SHrXiEyXqRm21KiYXtEVC1kaj/FA0t
+ WNEeHZr5krVg==
+X-IronPort-AV: E=McAfee;i="6000,8403,9786"; a="155004151"
 X-IronPort-AV: E=Sophos;i="5.77,422,1596524400"; 
-   d="scan'208";a="155004166"
+   d="scan'208";a="155004151"
 X-Amp-Result: SKIPPED(no attachment in message)
 X-Amp-File-Uploaded: False
 Received: from orsmga008.jf.intel.com ([10.7.209.65])
-  by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Oct 2020 23:55:40 -0700
-IronPort-SDR: FZ2k/FPrj9MvP0pJJjFLbxAzxPB61vUE6kXqpndHFNi5se9f8ecnQ1tCN6o8AoiImn3NZ43g+m
- GrJRDHDLnCBg==
+  by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Oct 2020 23:55:32 -0700
+IronPort-SDR: AzfNElvIe+6ZAVFltlPpCPBijUmDhPs3fOgJlUkdVffGwbIWsR/EI+6p+L69OpPrZYSXTYvSEL
+ cqo1+3qV81ig==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="5.77,422,1596524400"; 
-   d="scan'208";a="350175865"
+   d="scan'208";a="350175852"
 Received: from jsia-hp-z620-workstation.png.intel.com ([10.221.118.135])
-  by orsmga008.jf.intel.com with ESMTP; 26 Oct 2020 23:55:38 -0700
+  by orsmga008.jf.intel.com with ESMTP; 26 Oct 2020 23:55:30 -0700
 From:   Sia Jee Heng <jee.heng.sia@intel.com>
 To:     vkoul@kernel.org, Eugeniy.Paltsev@synopsys.com
 Cc:     andriy.shevchenko@linux.intel.com, dmaengine@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: [PATCH v2 08/15] dmaengine: dw-axi-dmac: Support of_dma_controller_register()
-Date:   Tue, 27 Oct 2020 14:38:51 +0800
-Message-Id: <20201027063858.4877-9-jee.heng.sia@intel.com>
+Subject: [PATCH v2 05/15] dmaengine: dw-axi-dmac: Add device_config operation
+Date:   Tue, 27 Oct 2020 14:38:48 +0800
+Message-Id: <20201027063858.4877-6-jee.heng.sia@intel.com>
 X-Mailer: git-send-email 2.18.0
 In-Reply-To: <20201027063858.4877-1-jee.heng.sia@intel.com>
 References: <20201027063858.4877-1-jee.heng.sia@intel.com>
@@ -49,93 +49,61 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Add support for of_dma_controller_register() so that DMA clients
-can pass in device handshake number to the AxiDMA driver.
+Add device_config() callback function so that the device address
+can be passed to the dma driver.
 
-DMA clients shall code the device handshake number in the Device tree.
-When DMA activities are needed, DMA clients shall invoke OF helper
-function to pass in the device handshake number to the AxiDMA.
-
-Without register to the of_dma_controller_register(), data transfer
-between memory to device and device to memory operations would failed.
+DMA clients use this interface to pass in the device address to the
+AxiDMA. Without this interface, data transfer between device to memory
+and memory to device would failed.
 
 Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 Signed-off-by: Sia Jee Heng <jee.heng.sia@intel.com>
 ---
- .../dma/dw-axi-dmac/dw-axi-dmac-platform.c    | 26 +++++++++++++++++++
- drivers/dma/dw-axi-dmac/dw-axi-dmac.h         |  1 +
- 2 files changed, 27 insertions(+)
+ drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c | 11 +++++++++++
+ drivers/dma/dw-axi-dmac/dw-axi-dmac.h          |  1 +
+ 2 files changed, 12 insertions(+)
 
 diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-index 9e574753aaf0..011cf7134f25 100644
+index 56b213211341..16e6934ae9a1 100644
 --- a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
 +++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-@@ -20,6 +20,7 @@
- #include <linux/kernel.h>
- #include <linux/module.h>
- #include <linux/of.h>
-+#include <linux/of_dma.h>
- #include <linux/platform_device.h>
- #include <linux/pm_runtime.h>
- #include <linux/property.h>
-@@ -1103,6 +1104,22 @@ static int __maybe_unused axi_dma_runtime_resume(struct device *dev)
- 	return axi_dma_resume(chip);
+@@ -559,6 +559,16 @@ dma_chan_prep_dma_memcpy(struct dma_chan *dchan, dma_addr_t dst_adr,
+ 	return NULL;
  }
  
-+static struct dma_chan *dw_axi_dma_of_xlate(struct of_phandle_args *dma_spec,
-+					    struct of_dma *ofdma)
++static int dw_axi_dma_chan_slave_config(struct dma_chan *dchan,
++					struct dma_slave_config *config)
 +{
-+	struct dw_axi_dma *dw = ofdma->of_dma_data;
-+	struct axi_dma_chan *chan;
-+	struct dma_chan *dchan;
++	struct axi_dma_chan *chan = dchan_to_axi_dma_chan(dchan);
 +
-+	dchan = dma_get_any_slave_channel(&dw->dma);
-+	if (!dchan)
-+		return NULL;
++	memcpy(&chan->config, config, sizeof(*config));
 +
-+	chan = dchan_to_axi_dma_chan(dchan);
-+	chan->hw_hs_num = dma_spec->args[0];
-+	return dchan;
++	return 0;
 +}
 +
- static int parse_device_properties(struct axi_dma_chip *chip)
+ static void axi_chan_dump_lli(struct axi_dma_chan *chan,
+ 			      struct axi_dma_hw_desc *desc)
  {
- 	struct device *dev = chip->dev;
-@@ -1292,6 +1309,13 @@ static int dw_probe(struct platform_device *pdev)
- 	if (ret)
- 		goto err_pm_disable;
+@@ -948,6 +958,7 @@ static int dw_probe(struct platform_device *pdev)
  
-+	/* Register with OF helpers for DMA lookups */
-+	ret = of_dma_controller_register(pdev->dev.of_node,
-+					 dw_axi_dma_of_xlate, dw);
-+	if (ret < 0)
-+		dev_warn(&pdev->dev,
-+			 "Failed to register OF DMA controller, fallback to MEM_TO_MEM mode\n");
-+
- 	dev_info(chip->dev, "DesignWare AXI DMA Controller, %d channels\n",
- 		 dw->hdata->nr_channels);
+ 	dw->dma.device_prep_dma_memcpy = dma_chan_prep_dma_memcpy;
+ 	dw->dma.device_synchronize = dw_axi_dma_synchronize;
++	dw->dma.device_config = dw_axi_dma_chan_slave_config;
  
-@@ -1325,6 +1349,8 @@ static int dw_remove(struct platform_device *pdev)
+ 	platform_set_drvdata(pdev, chip);
  
- 	devm_free_irq(chip->dev, chip->irq, chip);
- 
-+	of_dma_controller_free(chip->dev->of_node);
-+
- 	list_for_each_entry_safe(chan, _chan, &dw->dma.channels,
- 			vc.chan.device_node) {
- 		list_del(&chan->vc.chan.device_node);
 diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac.h b/drivers/dma/dw-axi-dmac/dw-axi-dmac.h
-index a26b0a242a93..651874e5c88f 100644
+index f886b2bb75de..a75b921d6b1a 100644
 --- a/drivers/dma/dw-axi-dmac/dw-axi-dmac.h
 +++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac.h
-@@ -37,6 +37,7 @@ struct axi_dma_chan {
- 	struct axi_dma_chip		*chip;
- 	void __iomem			*chan_regs;
- 	u8				id;
-+	u8				hw_hs_num;
- 	atomic_t			descs_allocated;
+@@ -43,6 +43,7 @@ struct axi_dma_chan {
+ 	struct virt_dma_chan		vc;
  
- 	struct dma_pool			*desc_pool;
+ 	struct axi_dma_desc		*desc;
++	struct dma_slave_config		config;
+ 	/* these other elements are all protected by vc.lock */
+ 	bool				is_paused;
+ };
 -- 
 2.18.0
 
