@@ -2,111 +2,125 @@ Return-Path: <SRS0=4eMl=EC=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=unavailable
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-13.5 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,SIGNED_OFF_BY,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 92CE0C388F9
-	for <dmaengine@archiver.kernel.org>; Tue, 27 Oct 2020 06:56:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DCD0EC4363A
+	for <dmaengine@archiver.kernel.org>; Tue, 27 Oct 2020 07:02:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5CCE12225E
-	for <dmaengine@archiver.kernel.org>; Tue, 27 Oct 2020 06:56:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 76D4121655
+	for <dmaengine@archiver.kernel.org>; Tue, 27 Oct 2020 07:02:02 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b="AjuetEnr"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730472AbgJ0G4P (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 27 Oct 2020 02:56:15 -0400
-Received: from mga17.intel.com ([192.55.52.151]:5231 "EHLO mga17.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2506996AbgJ0G4N (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Tue, 27 Oct 2020 02:56:13 -0400
-IronPort-SDR: TAuasfnn6ObRiAeZAaKFqpsil9pB8YCRBN9ghkvEG90zneZ4GM5nJfiVrNW4uvw4lcBFlqdfGX
- /XqwZWJ7f1iQ==
-X-IronPort-AV: E=McAfee;i="6000,8403,9786"; a="147890896"
-X-IronPort-AV: E=Sophos;i="5.77,422,1596524400"; 
-   d="scan'208";a="147890896"
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from orsmga008.jf.intel.com ([10.7.209.65])
-  by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Oct 2020 23:56:13 -0700
-IronPort-SDR: XSRBr7nTaYqROSWhGIdLiCZcnnvUfXmRZpS1hSRMRdtGX0Hue8BFfNvSLRNrWPDXGJTGlk0YZL
- b9sVq21gRvoQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.77,422,1596524400"; 
-   d="scan'208";a="350175984"
-Received: from jsia-hp-z620-workstation.png.intel.com ([10.221.118.135])
-  by orsmga008.jf.intel.com with ESMTP; 26 Oct 2020 23:56:12 -0700
-From:   Sia Jee Heng <jee.heng.sia@intel.com>
-To:     vkoul@kernel.org, Eugeniy.Paltsev@synopsys.com
-Cc:     andriy.shevchenko@linux.intel.com, dmaengine@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH v2 12/15] dmaengine: dw-axi-dmac: Add Intel KeemBay DMA register fields
-Date:   Tue, 27 Oct 2020 14:38:55 +0800
-Message-Id: <20201027063858.4877-13-jee.heng.sia@intel.com>
-X-Mailer: git-send-email 2.18.0
-In-Reply-To: <20201027063858.4877-1-jee.heng.sia@intel.com>
-References: <20201027063858.4877-1-jee.heng.sia@intel.com>
+        id S1731092AbgJ0HCC (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 27 Oct 2020 03:02:02 -0400
+Received: from fllv0016.ext.ti.com ([198.47.19.142]:43578 "EHLO
+        fllv0016.ext.ti.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730446AbgJ0HCB (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Tue, 27 Oct 2020 03:02:01 -0400
+Received: from lelv0265.itg.ti.com ([10.180.67.224])
+        by fllv0016.ext.ti.com (8.15.2/8.15.2) with ESMTP id 09R71kda057937;
+        Tue, 27 Oct 2020 02:01:46 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
+        s=ti-com-17Q1; t=1603782106;
+        bh=Gvm0rHZv6ZytyaW+fToZnnx5xhB6hxH+duasZbvDz+4=;
+        h=Subject:To:CC:References:From:Date:In-Reply-To;
+        b=AjuetEnr/G8X3j36GCztIXk9lbZ0zhDKZGea/WjIbs0vkAhREwUD2CH9V8zgVjUjm
+         4wzRkDwtumeqOt/wR+KKk+x19+unVpZYk+5GNYbaCrtmpGvNvVEQ9kw3iyUTrHEgqo
+         S/3tUqe8LgcxnYGkJKyZJVcb59a+0P2SxrKHcZIU=
+Received: from DLEE114.ent.ti.com (dlee114.ent.ti.com [157.170.170.25])
+        by lelv0265.itg.ti.com (8.15.2/8.15.2) with ESMTPS id 09R71kx5041212
+        (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
+        Tue, 27 Oct 2020 02:01:46 -0500
+Received: from DLEE107.ent.ti.com (157.170.170.37) by DLEE114.ent.ti.com
+ (157.170.170.25) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1979.3; Tue, 27
+ Oct 2020 02:01:46 -0500
+Received: from lelv0327.itg.ti.com (10.180.67.183) by DLEE107.ent.ti.com
+ (157.170.170.37) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1979.3 via
+ Frontend Transport; Tue, 27 Oct 2020 02:01:46 -0500
+Received: from [192.168.2.6] (ileax41-snat.itg.ti.com [10.172.224.153])
+        by lelv0327.itg.ti.com (8.15.2/8.15.2) with ESMTP id 09R71iUR028399;
+        Tue, 27 Oct 2020 02:01:45 -0500
+Subject: Re: [PATCH] dmaengine: ti: k3-udma: fix -Wenum-conversion warning
+To:     Arnd Bergmann <arnd@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+        Grygorii Strashko <grygorii.strashko@ti.com>
+CC:     Arnd Bergmann <arnd@arndb.de>,
+        Dan Williams <dan.j.williams@intel.com>,
+        Yu Kuai <yukuai3@huawei.com>, <dmaengine@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <20201026160123.3704531-1-arnd@kernel.org>
+From:   Peter Ujfalusi <peter.ujfalusi@ti.com>
+Message-ID: <2bf8a179-9dad-97b9-2295-31d27eefdbb7@ti.com>
+Date:   Tue, 27 Oct 2020 09:02:18 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.4.0
+MIME-Version: 1.0
+In-Reply-To: <20201026160123.3704531-1-arnd@kernel.org>
+Content-Type: text/plain; charset="utf-8"
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-EXCLAIMER-MD-CONFIG: e1e8a2fd-e40a-4ac6-ac9b-f7e9cc9ee180
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Add support for Intel KeemBay DMA registers. These registers are required
-to run data transfer between device to memory and memory to device on Intel
-KeemBay SoC.
 
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Signed-off-by: Sia Jee Heng <jee.heng.sia@intel.com>
----
- drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c |  4 ++++
- drivers/dma/dw-axi-dmac/dw-axi-dmac.h          | 14 ++++++++++++++
- 2 files changed, 18 insertions(+)
 
-diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-index ce89b4dee1dc..19806c586e81 100644
---- a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-+++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-@@ -1252,6 +1252,10 @@ static int dw_probe(struct platform_device *pdev)
- 	if (IS_ERR(chip->regs))
- 		return PTR_ERR(chip->regs);
- 
-+	chip->apb_regs = devm_platform_ioremap_resource(pdev, 1);
-+	if (IS_ERR(chip->apb_regs))
-+		dev_warn(&pdev->dev, "apb_regs not supported\n");
-+
- 	chip->core_clk = devm_clk_get(chip->dev, "core-clk");
- 	if (IS_ERR(chip->core_clk))
- 		return PTR_ERR(chip->core_clk);
-diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac.h b/drivers/dma/dw-axi-dmac/dw-axi-dmac.h
-index bdb66d775125..f64e8d33b127 100644
---- a/drivers/dma/dw-axi-dmac/dw-axi-dmac.h
-+++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac.h
-@@ -63,6 +63,7 @@ struct axi_dma_chip {
- 	struct device		*dev;
- 	int			irq;
- 	void __iomem		*regs;
-+	void __iomem		*apb_regs;
- 	struct clk		*core_clk;
- 	struct clk		*cfgr_clk;
- 	struct dw_axi_dma	*dw;
-@@ -169,6 +170,19 @@ static inline struct axi_dma_chan *dchan_to_axi_dma_chan(struct dma_chan *dchan)
- #define CH_INTSIGNAL_ENA	0x090 /* R/W Chan Interrupt Signal Enable */
- #define CH_INTCLEAR		0x098 /* W Chan Interrupt Clear */
- 
-+/* Apb slave registers */
-+#define DMAC_APB_CFG		0x000 /* DMAC Apb Configuration Register */
-+#define DMAC_APB_STAT		0x004 /* DMAC Apb Status Register */
-+#define DMAC_APB_DEBUG_STAT_0	0x008 /* DMAC Apb Debug Status Register 0 */
-+#define DMAC_APB_DEBUG_STAT_1	0x00C /* DMAC Apb Debug Status Register 1 */
-+#define DMAC_APB_HW_HS_SEL_0	0x010 /* DMAC Apb HW HS register 0 */
-+#define DMAC_APB_HW_HS_SEL_1	0x014 /* DMAC Apb HW HS register 1 */
-+#define DMAC_APB_LPI		0x018 /* DMAC Apb Low Power Interface Reg */
-+#define DMAC_APB_BYTE_WR_CH_EN	0x01C /* DMAC Apb Byte Write Enable */
-+#define DMAC_APB_HALFWORD_WR_CH_EN	0x020 /* DMAC Halfword write enables */
-+
-+#define UNUSED_CHANNEL		0x3F /* Set unused DMA channel to 0x3F */
-+#define MAX_BLOCK_SIZE		0x1000 /* 1024 blocks * 4 bytes data width */
- 
- /* DMAC_CFG */
- #define DMAC_EN_POS			0
--- 
-2.18.0
+On 26/10/2020 18.01, Arnd Bergmann wrote:
+> From: Arnd Bergmann <arnd@arndb.de>
+> 
+> gcc warns about a mismatch argument type when passing
+> 'false' into a function that expects an enum:
 
+Strange enough, but my gcc does not warn me (Gentoo 10.2.0-r2 p3).
+
+> drivers/dma/ti/k3-udma-private.c: In function 'xudma_tchan_get':
+> drivers/dma/ti/k3-udma-private.c:86:34: warning: implicit conversion from 'enum <anonymous>' to 'enum udma_tp_level' [-Wenum-conversion]
+>   86 |  return __udma_reserve_##res(ud, false, id);   \
+>      |                                  ^~~~~
+> drivers/dma/ti/k3-udma-private.c:95:1: note: in expansion of macro 'XUDMA_GET_PUT_RESOURCE'
+>    95 | XUDMA_GET_PUT_RESOURCE(tchan);
+>       | ^~~~~~~~~~~~~~~~~~~~~~
+
+But this is valid. The Throughput Levels got expanded with j721e from 2
+to three and I failed to update this.
+
+> In this case, false has the same numerical value as
+> UDMA_TP_NORMAL, so passing that is most likely the correct
+> way to avoid the warning without changing the behavior.
+
+Yes, that's correct, thanks for fixing it!
+
+Acked-by: Peter Ujfalusi <peter.ujfalusi@ti.com>
+
+> Fixes: d70241913413 ("dmaengine: ti: k3-udma: Add glue layer for non DMAengine users")
+> Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+> ---
+>  drivers/dma/ti/k3-udma-private.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/drivers/dma/ti/k3-udma-private.c b/drivers/dma/ti/k3-udma-private.c
+> index aa24e554f7b4..8563a392f30b 100644
+> --- a/drivers/dma/ti/k3-udma-private.c
+> +++ b/drivers/dma/ti/k3-udma-private.c
+> @@ -83,7 +83,7 @@ EXPORT_SYMBOL(xudma_rflow_is_gp);
+>  #define XUDMA_GET_PUT_RESOURCE(res)					\
+>  struct udma_##res *xudma_##res##_get(struct udma_dev *ud, int id)	\
+>  {									\
+> -	return __udma_reserve_##res(ud, false, id);			\
+> +	return __udma_reserve_##res(ud, UDMA_TP_NORMAL, id);		\
+>  }									\
+>  EXPORT_SYMBOL(xudma_##res##_get);					\
+>  									\
+> 
+
+- Péter
+
+Texas Instruments Finland Oy, Porkkalankatu 22, 00180 Helsinki.
+Y-tunnus/Business ID: 0615521-4. Kotipaikka/Domicile: Helsinki
