@@ -7,30 +7,30 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B0230C388F9
-	for <dmaengine@archiver.kernel.org>; Tue, 27 Oct 2020 21:56:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 670BBC4363A
+	for <dmaengine@archiver.kernel.org>; Tue, 27 Oct 2020 21:57:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 68B00221FB
-	for <dmaengine@archiver.kernel.org>; Tue, 27 Oct 2020 21:56:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3029A2222C
+	for <dmaengine@archiver.kernel.org>; Tue, 27 Oct 2020 21:57:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S374676AbgJ0V45 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 27 Oct 2020 17:56:57 -0400
-Received: from szxga07-in.huawei.com ([45.249.212.35]:6430 "EHLO
-        szxga07-in.huawei.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S374670AbgJ0V44 (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Tue, 27 Oct 2020 17:56:56 -0400
-Received: from DGGEMS407-HUB.china.huawei.com (unknown [172.30.72.59])
-        by szxga07-in.huawei.com (SkyGuard) with ESMTP id 4CLQXV0CN0z6yKD;
-        Wed, 28 Oct 2020 05:56:58 +0800 (CST)
+        id S374680AbgJ0V5A (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 27 Oct 2020 17:57:00 -0400
+Received: from szxga04-in.huawei.com ([45.249.212.190]:6180 "EHLO
+        szxga04-in.huawei.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S374670AbgJ0V5A (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Tue, 27 Oct 2020 17:57:00 -0400
+Received: from DGGEMS407-HUB.china.huawei.com (unknown [172.30.72.58])
+        by szxga04-in.huawei.com (SkyGuard) with ESMTP id 4CLQXZ4wnHz15NHD;
+        Wed, 28 Oct 2020 05:57:02 +0800 (CST)
 Received: from SWX921481.china.huawei.com (10.126.200.153) by
  DGGEMS407-HUB.china.huawei.com (10.3.19.207) with Microsoft SMTP Server id
- 14.3.487.0; Wed, 28 Oct 2020 05:56:43 +0800
+ 14.3.487.0; Wed, 28 Oct 2020 05:56:48 +0800
 From:   Barry Song <song.bao.hua@hisilicon.com>
 To:     <vkoul@kernel.org>, <dmaengine@vger.kernel.org>
 CC:     <linuxarm@huawei.com>, Barry Song <song.bao.hua@hisilicon.com>
-Subject: [PATCH v2 05/10] dmaengine: milbeaut-xdmac: remove redundant irqsave and irqrestore in hardIRQ
-Date:   Wed, 28 Oct 2020 10:52:47 +1300
-Message-ID: <20201027215252.25820-6-song.bao.hua@hisilicon.com>
+Subject: [PATCH v2 08/10] dmaengine: moxart-dma: remove redundant irqsave and irqrestore in hardIRQ
+Date:   Wed, 28 Oct 2020 10:52:50 +1300
+Message-ID: <20201027215252.25820-9-song.bao.hua@hisilicon.com>
 X-Mailer: git-send-email 2.21.0.windows.1
 In-Reply-To: <20201027215252.25820-1-song.bao.hua@hisilicon.com>
 References: <20201027215252.25820-1-song.bao.hua@hisilicon.com>
@@ -49,33 +49,37 @@ cycles.
 
 Signed-off-by: Barry Song <song.bao.hua@hisilicon.com>
 ---
- drivers/dma/milbeaut-xdmac.c | 5 ++---
+ drivers/dma/moxart-dma.c | 5 ++---
  1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/dma/milbeaut-xdmac.c b/drivers/dma/milbeaut-xdmac.c
-index 85a597228fb0..584c931e807a 100644
---- a/drivers/dma/milbeaut-xdmac.c
-+++ b/drivers/dma/milbeaut-xdmac.c
-@@ -160,10 +160,9 @@ static irqreturn_t milbeaut_xdmac_interrupt(int irq, void *dev_id)
- {
- 	struct milbeaut_xdmac_chan *mc = dev_id;
- 	struct milbeaut_xdmac_desc *md;
+diff --git a/drivers/dma/moxart-dma.c b/drivers/dma/moxart-dma.c
+index 347146a6e1d0..74755093e14b 100644
+--- a/drivers/dma/moxart-dma.c
++++ b/drivers/dma/moxart-dma.c
+@@ -524,7 +524,6 @@ static irqreturn_t moxart_dma_interrupt(int irq, void *devid)
+ 	struct moxart_dmadev *mc = devid;
+ 	struct moxart_chan *ch = &mc->slave_chans[0];
+ 	unsigned int i;
 -	unsigned long flags;
- 	u32 val;
+ 	u32 ctrl;
  
--	spin_lock_irqsave(&mc->vc.lock, flags);
-+	spin_lock(&mc->vc.lock);
- 
- 	/* Ack and Stop */
- 	val = FIELD_PREP(M10V_XDDSD_IS_MASK, 0x0);
-@@ -177,7 +176,7 @@ static irqreturn_t milbeaut_xdmac_interrupt(int irq, void *dev_id)
- 
- 	milbeaut_xdmac_start(mc);
- out:
--	spin_unlock_irqrestore(&mc->vc.lock, flags);
-+	spin_unlock(&mc->vc.lock);
- 	return IRQ_HANDLED;
- }
+ 	dev_dbg(chan2dev(&ch->vc.chan), "%s\n", __func__);
+@@ -541,14 +540,14 @@ static irqreturn_t moxart_dma_interrupt(int irq, void *devid)
+ 		if (ctrl & APB_DMA_FIN_INT_STS) {
+ 			ctrl &= ~APB_DMA_FIN_INT_STS;
+ 			if (ch->desc) {
+-				spin_lock_irqsave(&ch->vc.lock, flags);
++				spin_lock(&ch->vc.lock);
+ 				if (++ch->sgidx < ch->desc->sglen) {
+ 					moxart_dma_start_sg(ch, ch->sgidx);
+ 				} else {
+ 					vchan_cookie_complete(&ch->desc->vd);
+ 					moxart_dma_start_desc(&ch->vc.chan);
+ 				}
+-				spin_unlock_irqrestore(&ch->vc.lock, flags);
++				spin_unlock(&ch->vc.lock);
+ 			}
+ 		}
  
 -- 
 2.25.1
