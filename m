@@ -6,63 +6,62 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2F7A8C388F7
-	for <dmaengine@archiver.kernel.org>; Thu, 29 Oct 2020 00:55:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0F60FC55179
+	for <dmaengine@archiver.kernel.org>; Thu, 29 Oct 2020 00:55:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D6E6520790
-	for <dmaengine@archiver.kernel.org>; Thu, 29 Oct 2020 00:55:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BD0B920724
+	for <dmaengine@archiver.kernel.org>; Thu, 29 Oct 2020 00:55:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1603932945;
-	bh=gzosteGez+/wyh3KkqsORUm0XHXn7trWdT/tSA8zO5c=;
+	s=default; t=1603932954;
+	bh=Q5PR0wLT1H2AcknQT63o0IF3Mnaw82WXKZ0oGBO+vRU=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:List-ID:From;
-	b=mYow213qEidzC4WNllV8WkrCUDj0udqc67Aue92tRp4Fg1+n+PpiEXxylM6cs8d74
-	 lzV0HLq5Ibhprpx3fCO1ieQdC/YI1GljvEVXhJyD0wq6KzxVPqmEmgevGO8EbxzLl/
-	 PF4Z265vN2y910dKTaRHDu04mV/pKgI1i8QK7fio=
+	b=CEzDcf+kQDfvJzBOqx0DPvqQVlFh/AQ/K0hJ4nOGS0n/tyY9+p06Pc0uajYJzhZK5
+	 sHCPPzA8Z+whY0T8RhBhcwPYVeBmVroTTNJJ1OJkTJj43gqx0v3BtJfBNN/mTjn7Y9
+	 /nA5qP7Cmf/PxUZOSEQDcUmubYCzUstB06iwqY5M=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726354AbgJ2AzN (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 28 Oct 2020 20:55:13 -0400
-Received: from mail.kernel.org ([198.145.29.99]:60508 "EHLO mail.kernel.org"
+        id S1725901AbgJ2Azx (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 28 Oct 2020 20:55:53 -0400
+Received: from mail.kernel.org ([198.145.29.99]:60528 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1731660AbgJ1WRk (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        id S1731668AbgJ1WRk (ORCPT <rfc822;dmaengine@vger.kernel.org>);
         Wed, 28 Oct 2020 18:17:40 -0400
 Received: from localhost (unknown [122.171.163.58])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 5D97322202;
-        Wed, 28 Oct 2020 06:22:09 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 301EB2224A;
+        Wed, 28 Oct 2020 05:33:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1603866130;
-        bh=gzosteGez+/wyh3KkqsORUm0XHXn7trWdT/tSA8zO5c=;
+        s=default; t=1603863183;
+        bh=Q5PR0wLT1H2AcknQT63o0IF3Mnaw82WXKZ0oGBO+vRU=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=ztXFBNZlejzPGglUMn8+MiHggOZPjpi4OWmbhoTViQOOyZu5IjRSd+8lzLloe0N9J
-         HAwE5vwnS+6UhZnTSB/0lsgARMG+pZmGLUZmkKgfkyzn4WdA1B00h3h0H0XB5CxScn
-         0yInRNyATpN5ZSEibURHRliFholg7w8OljSPABlg=
-Date:   Wed, 28 Oct 2020 11:52:06 +0530
+        b=tRWz1CXgaqh+JnC0I8GTAB1SYcrMszwibufzqfCVGUF9fYP4X/NyhfxbjDooZx3Af
+         6jHFnhXJAcJ7fp/AIqPqrVuPfnG/ZK8fWJGwVKAUfoAnTawD8ZBcch81gHTYh7EDFJ
+         Kv5HzOeCEMP2ETwZnznT9fhgu+N7lV7FGuafz4Bc=
+Date:   Wed, 28 Oct 2020 11:02:58 +0530
 From:   Vinod Koul <vkoul@kernel.org>
-To:     Eugen Hristev <eugen.hristev@microchip.com>
-Cc:     robh+dt@kernel.org, nicolas.ferre@microchip.com,
-        tudor.ambarus@microchip.com, dmaengine@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-kernel@vger.kernel.org, Rob Herring <robh@kernel.org>
-Subject: Re: [PATCH v2 1/4] dt-bindings: dmaengine: at_xdmac: add compatible
- with microchip,sama7g5
-Message-ID: <20201028062206.GM3550@vkoul-mobl>
-References: <20201016081754.288488-1-eugen.hristev@microchip.com>
+To:     Dave Jiang <dave.jiang@intel.com>
+Cc:     dmaengine@vger.kernel.org
+Subject: Re: [PATCH] dmaengine: idxd: fix wq config registers offset
+ programming
+Message-ID: <20201028053258.GF3550@vkoul-mobl>
+References: <160383444959.48058.14249265538404901781.stgit@djiang5-desk3.ch.intel.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20201016081754.288488-1-eugen.hristev@microchip.com>
+In-Reply-To: <160383444959.48058.14249265538404901781.stgit@djiang5-desk3.ch.intel.com>
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On 16-10-20, 11:17, Eugen Hristev wrote:
-> Add compatible to sama7g5 SoC.
+On 27-10-20, 14:34, Dave Jiang wrote:
+> DSA spec v1.1 [1] updated to include a stride size register for WQ
+> configuration that will specify how much space is reserved for the WQ
+> configuration register set. This change is expected to be in the final
+> gen1 DSA hardware. Fix the driver to use WQCFG_OFFSET() for all WQ
+> offset calculation and fixup WQCFG_OFFSET() to use the new calculated
+> wq size.
 
-Applied all, thanks
-
-Btw the threading was broken in this series, please do ensure that
-patches are threaded properly.
+Applied, thanks
 
 -- 
 ~Vinod
