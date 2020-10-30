@@ -1,78 +1,122 @@
-Return-Path: <SRS0=0Nna=EE=vger.kernel.org=dmaengine-owner@kernel.org>
+Return-Path: <SRS0=Ai0a=EF=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.7 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 84A60C2D0A3
-	for <dmaengine@archiver.kernel.org>; Thu, 29 Oct 2020 20:58:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E3161C4741F
+	for <dmaengine@archiver.kernel.org>; Fri, 30 Oct 2020 15:49:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 112FA20796
-	for <dmaengine@archiver.kernel.org>; Thu, 29 Oct 2020 20:58:33 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 97A1A2151B
+	for <dmaengine@archiver.kernel.org>; Fri, 30 Oct 2020 15:49:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725862AbgJ2U6c (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Thu, 29 Oct 2020 16:58:32 -0400
-Received: from szxga01-in.huawei.com ([45.249.212.187]:2049 "EHLO
-        szxga01-in.huawei.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725780AbgJ2U6c (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Thu, 29 Oct 2020 16:58:32 -0400
-Received: from DGGEMM406-HUB.china.huawei.com (unknown [172.30.72.56])
-        by szxga01-in.huawei.com (SkyGuard) with ESMTP id 4CMd854mFZzVhLG;
-        Fri, 30 Oct 2020 04:58:29 +0800 (CST)
-Received: from dggemi760-chm.china.huawei.com (10.1.198.146) by
- DGGEMM406-HUB.china.huawei.com (10.3.20.214) with Microsoft SMTP Server (TLS)
- id 14.3.487.0; Fri, 30 Oct 2020 04:58:29 +0800
-Received: from dggemi761-chm.china.huawei.com (10.1.198.147) by
- dggemi760-chm.china.huawei.com (10.1.198.146) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id
- 15.1.1913.5; Fri, 30 Oct 2020 04:58:29 +0800
-Received: from dggemi761-chm.china.huawei.com ([10.9.49.202]) by
- dggemi761-chm.china.huawei.com ([10.9.49.202]) with mapi id 15.01.1913.007;
- Fri, 30 Oct 2020 04:58:29 +0800
-From:   "Song Bao Hua (Barry Song)" <song.bao.hua@hisilicon.com>
-To:     Linus Walleij <linus.walleij@linaro.org>
-CC:     Vinod Koul <vkoul@kernel.org>,
-        dmaengine <dmaengine@vger.kernel.org>
-Subject: RE: [PATCH 09/10] dmaengine: ste_dma40: remove redundant irqsave and
- irqrestore in hardIRQ
-Thread-Topic: [PATCH 09/10] dmaengine: ste_dma40: remove redundant irqsave and
- irqrestore in hardIRQ
-Thread-Index: AQHWrfwFd4bsoLTQpkWaKvTb/BCJ/qmvDjPw
-Date:   Thu, 29 Oct 2020 20:58:29 +0000
-Message-ID: <e5c2894d4fce4f9d9adf508b9dee776c@hisilicon.com>
-References: <20201015235921.21224-1-song.bao.hua@hisilicon.com>
- <20201015235921.21224-10-song.bao.hua@hisilicon.com>
- <CACRpkdYObFW77kCv5sRb+Dx_Gxfvw+YkPB5joYXTw_i-ag34kQ@mail.gmail.com>
-In-Reply-To: <CACRpkdYObFW77kCv5sRb+Dx_Gxfvw+YkPB5joYXTw_i-ag34kQ@mail.gmail.com>
-Accept-Language: en-GB, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.126.202.117]
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+        id S1727165AbgJ3PtJ (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 30 Oct 2020 11:49:09 -0400
+Received: from mga02.intel.com ([134.134.136.20]:53025 "EHLO mga02.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727164AbgJ3PtI (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Fri, 30 Oct 2020 11:49:08 -0400
+IronPort-SDR: DzgPRznBFrkw8TiPBMYo+tbNCIm/0RinWCZWLwSXVsEz1cnCr0r4L9fabyT2nELaeqvvKomO1d
+ tk3JrDjY5oXQ==
+X-IronPort-AV: E=McAfee;i="6000,8403,9790"; a="155600055"
+X-IronPort-AV: E=Sophos;i="5.77,433,1596524400"; 
+   d="scan'208";a="155600055"
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga005.jf.intel.com ([10.7.209.41])
+  by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Oct 2020 08:49:07 -0700
+IronPort-SDR: FsUT04zulXywCZ2g8JjlUsRTJr0KnxbjQvZTvO1EtZ2OFywKQaRDRGTFoBPFrXF6q88pU/q4bB
+ zNiBd3kYE3Yg==
+X-IronPort-AV: E=Sophos;i="5.77,433,1596524400"; 
+   d="scan'208";a="537107551"
+Received: from djiang5-desk3.ch.intel.com ([143.182.136.137])
+  by orsmga005-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Oct 2020 08:49:07 -0700
+Subject: [PATCH] dmaengine: idxd: Update calculation of group offset to be
+ more readable
+From:   Dave Jiang <dave.jiang@intel.com>
+To:     vkoul@kernel.org
+Cc:     dmaengine@vger.kernel.org
+Date:   Fri, 30 Oct 2020 08:49:06 -0700
+Message-ID: <160407294683.839093.10740868559754142070.stgit@djiang5-desk3.ch.intel.com>
+User-Agent: StGit/0.23-29-ga622f1
 MIME-Version: 1.0
-X-CFilter-Loop: Reflected
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-DQoNCj4gLS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0NCj4gRnJvbTogTGludXMgV2FsbGVpaiBb
-bWFpbHRvOmxpbnVzLndhbGxlaWpAbGluYXJvLm9yZ10NCj4gU2VudDogRnJpZGF5LCBPY3RvYmVy
-IDMwLCAyMDIwIDM6MDEgQU0NCj4gVG86IFNvbmcgQmFvIEh1YSAoQmFycnkgU29uZykgPHNvbmcu
-YmFvLmh1YUBoaXNpbGljb24uY29tPg0KPiBDYzogVmlub2QgS291bCA8dmtvdWxAa2VybmVsLm9y
-Zz47IGRtYWVuZ2luZSA8ZG1hZW5naW5lQHZnZXIua2VybmVsLm9yZz4NCj4gU3ViamVjdDogUmU6
-IFtQQVRDSCAwOS8xMF0gZG1hZW5naW5lOiBzdGVfZG1hNDA6IHJlbW92ZSByZWR1bmRhbnQgaXJx
-c2F2ZQ0KPiBhbmQgaXJxcmVzdG9yZSBpbiBoYXJkSVJRDQo+IA0KPiBPbiBGcmksIE9jdCAxNiwg
-MjAyMCBhdCAyOjAzIEFNIEJhcnJ5IFNvbmcgPHNvbmcuYmFvLmh1YUBoaXNpbGljb24uY29tPg0K
-PiB3cm90ZToNCj4gDQo+ID4gUnVubmluZyBpbiBoYXJkSVJRLCBkaXNhYmxpbmcgSVJRIGlzIHJl
-ZHVuZGFudC4NCj4gPg0KPiA+IENjOiBMaW51cyBXYWxsZWlqIDxsaW51cy53YWxsZWlqQGxpbmFy
-by5vcmc+DQo+ID4gU2lnbmVkLW9mZi1ieTogQmFycnkgU29uZyA8c29uZy5iYW8uaHVhQGhpc2ls
-aWNvbi5jb20+DQo+IA0KPiBUaGF0J3MgcmlnaHQhDQo+IFJldmlld2VkLWJ5OiBMaW51cyBXYWxs
-ZWlqIDxsaW51cy53YWxsZWlqQGxpbmFyby5vcmc+DQoNClRoYW5rcywgTGludXMuDQpJIGd1ZXNz
-IHlvdSBtaXNzZWQgdjIgaW4gd2hpY2ggeW91IGFjdHVhbGx5IHNob3VsZCBoYXZlIGFja2VkIDot
-KQ0KDQpodHRwczovL2xvcmUua2VybmVsLm9yZy9kbWFlbmdpbmUvMjAyMDEwMjcyMTUyNTIuMjU4
-MjAtMTAtc29uZy5iYW8uaHVhQGhpc2lsaWNvbi5jb20vDQoNClRoYW5rcw0KQmFycnkNCg0KPiAN
-Cj4gWW91cnMsDQo+IExpbnVzIFdhbGxlaWoNCg==
+Create helper macros to make group offset calculation more readable.
+
+Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+---
+ drivers/dma/idxd/device.c    |   12 +++++-------
+ drivers/dma/idxd/registers.h |   18 ++++++++++++++++++
+ 2 files changed, 23 insertions(+), 7 deletions(-)
+
+diff --git a/drivers/dma/idxd/device.c b/drivers/dma/idxd/device.c
+index 2f09eb89a906..d6f551dcbcb6 100644
+--- a/drivers/dma/idxd/device.c
++++ b/drivers/dma/idxd/device.c
+@@ -543,24 +543,22 @@ static void idxd_group_config_write(struct idxd_group *group)
+ 	dev_dbg(dev, "Writing group %d cfg registers\n", group->id);
+ 
+ 	/* setup GRPWQCFG */
+-	for (i = 0; i < 4; i++) {
+-		grpcfg_offset = idxd->grpcfg_offset +
+-			group->id * 64 + i * sizeof(u64);
+-		iowrite64(group->grpcfg.wqs[i],
+-			  idxd->reg_base + grpcfg_offset);
++	for (i = 0; i < GRPWQCFG_STRIDES; i++) {
++		grpcfg_offset = GRPWQCFG_OFFSET(idxd, group->id, i);
++		iowrite64(group->grpcfg.wqs[i], idxd->reg_base + grpcfg_offset);
+ 		dev_dbg(dev, "GRPCFG wq[%d:%d: %#x]: %#llx\n",
+ 			group->id, i, grpcfg_offset,
+ 			ioread64(idxd->reg_base + grpcfg_offset));
+ 	}
+ 
+ 	/* setup GRPENGCFG */
+-	grpcfg_offset = idxd->grpcfg_offset + group->id * 64 + 32;
++	grpcfg_offset = GRPENGCFG_OFFSET(idxd, group->id);
+ 	iowrite64(group->grpcfg.engines, idxd->reg_base + grpcfg_offset);
+ 	dev_dbg(dev, "GRPCFG engs[%d: %#x]: %#llx\n", group->id,
+ 		grpcfg_offset, ioread64(idxd->reg_base + grpcfg_offset));
+ 
+ 	/* setup GRPFLAGS */
+-	grpcfg_offset = idxd->grpcfg_offset + group->id * 64 + 40;
++	grpcfg_offset = GRPFLGCFG_OFFSET(idxd, group->id);
+ 	iowrite32(group->grpcfg.flags.bits, idxd->reg_base + grpcfg_offset);
+ 	dev_dbg(dev, "GRPFLAGS flags[%d: %#x]: %#x\n",
+ 		group->id, grpcfg_offset,
+diff --git a/drivers/dma/idxd/registers.h b/drivers/dma/idxd/registers.h
+index 1041c2779f9b..6f2f736097e5 100644
+--- a/drivers/dma/idxd/registers.h
++++ b/drivers/dma/idxd/registers.h
+@@ -356,4 +356,22 @@ union wqcfg {
+ 
+ #define WQCFG_STRIDES(_idxd_dev) ((_idxd_dev)->wqcfg_size / sizeof(u32))
+ 
++#define GRPCFG_SIZE		64
++#define GRPWQCFG_STRIDES	4
++
++/*
++ * This macro calculates the offset into the GRPCFG register
++ * idxd - struct idxd *
++ * n - wq id
++ * ofs - the index of the 32b dword for the config register
++ *
++ * The WQCFG register block is divided into groups per each wq. The n index
++ * allows us to move to the register group that's for that particular wq.
++ * Each register is 32bits. The ofs gives us the number of register to access.
++ */
++#define GRPWQCFG_OFFSET(idxd_dev, n, ofs) ((idxd_dev)->grpcfg_offset +\
++					   (n) * GRPCFG_SIZE + sizeof(u64) * (ofs))
++#define GRPENGCFG_OFFSET(idxd_dev, n) ((idxd_dev)->grpcfg_offset + (n) * GRPCFG_SIZE + 32)
++#define GRPFLGCFG_OFFSET(idxd_dev, n) ((idxd_dev)->grpcfg_offset + (n) * GRPCFG_SIZE + 40)
++
+ #endif
+
+
