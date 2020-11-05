@@ -1,111 +1,127 @@
-Return-Path: <SRS0=g5l9=EK=vger.kernel.org=dmaengine-owner@kernel.org>
+Return-Path: <SRS0=S3SG=EL=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED,USER_AGENT_GIT autolearn=unavailable autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 10F00C2D0A3
-	for <dmaengine@archiver.kernel.org>; Wed,  4 Nov 2020 19:02:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D34D3C4742C
+	for <dmaengine@archiver.kernel.org>; Thu,  5 Nov 2020 10:24:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A7B9F206D9
-	for <dmaengine@archiver.kernel.org>; Wed,  4 Nov 2020 19:02:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1604516563;
-	bh=sjWhlw9Gwp0mlQybws497FQ5PS86FmJ7bg0lhndbPSI=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:List-ID:From;
-	b=EtlEnVGkaQ8aRXKNI5lYkKHPMerdHefoJtbl/x6cZnzDjCWtWhmM+zUpFMRaZ9UUm
-	 jz3myQgT256/cIHfV+IJwCIIrNTO/4YLgOhljYZo9TPUReq50yw+mK/JSYHibAPxtx
-	 AVKjf8m4LpARzF5oxHyRfQRrPnKy00O6BS2ThY4w=
+	by mail.kernel.org (Postfix) with ESMTP id 78FB820BED
+	for <dmaengine@archiver.kernel.org>; Thu,  5 Nov 2020 10:24:54 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=nvidia.com header.i=@nvidia.com header.b="VH1i8h8e"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730796AbgKDTCe (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 4 Nov 2020 14:02:34 -0500
-Received: from mail-oo1-f66.google.com ([209.85.161.66]:41325 "EHLO
-        mail-oo1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729555AbgKDTBC (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Wed, 4 Nov 2020 14:01:02 -0500
-Received: by mail-oo1-f66.google.com with SMTP id n2so5336764ooo.8;
-        Wed, 04 Nov 2020 11:01:01 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=28TSBEACDPg4TOixmPv6qTaMuTlZjdSzlb52Hl2/KaM=;
-        b=P6G3lXBXhx8x3TCJh5uvkqZefXs9JBabj6BcAArpScYQ+JwqRDDnJlw9NGAWBm3flY
-         6bTttaHmOaekTK7CXdD06V9/v3/bjMdJxg7RMiBhs/vqNc9QJmRPKAGYFY+asIyXSfog
-         PtT+W+rWwuSLfQnsO5xKcZcS0stflqu6TEWVYZWAhje+a3rinslj0efDWJ9BlTr81obQ
-         U20gIjfwiAfKxeFvXM0I2dxCfdcOwLHSpPUyaNw2xoPhxou22Ynm+R4a/1UyhdewlvnN
-         wxjTG9/NyFUnPymtMk1yq9f4DpOa0Bi/p0w8UQlxJmd7LVfLw2EYe31yodfANjXRO3UZ
-         cIAA==
-X-Gm-Message-State: AOAM530nUdyZD8ssMi/R2jGZgPJyCUJIKgbd0C0gxV2bUE2Wz8SNmjqA
-        CC5rshp/KePfxIisbaCmd/KQrqgwuQ==
-X-Google-Smtp-Source: ABdhPJzsluuC2hERxHZwZe3UQMIR6GG4OMT2RUm6D2mmZ79HE7zUD6ZJS1WAdGIgSYPCRrhTzr6AIg==
-X-Received: by 2002:a4a:d554:: with SMTP id q20mr19826886oos.23.1604516461232;
-        Wed, 04 Nov 2020 11:01:01 -0800 (PST)
-Received: from xps15 (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.gmail.com with ESMTPSA id b92sm654957otc.70.2020.11.04.11.01.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 04 Nov 2020 11:01:00 -0800 (PST)
-Received: (nullmailer pid 3952952 invoked by uid 1000);
-        Wed, 04 Nov 2020 19:00:59 -0000
-Date:   Wed, 4 Nov 2020 13:00:59 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        dmaengine@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Peter Ujfalusi <peter.ujfalusi@ti.com>,
-        Rob Herring <robh+dt@kernel.org>
-Subject: Re: [PATCH v5 1/3] dt-bindings: dmaengine: Document qcom,gpi dma
- binding
-Message-ID: <20201104190059.GA3950437@bogus>
-References: <20201103112544.674566-1-vkoul@kernel.org>
- <20201103112544.674566-2-vkoul@kernel.org>
+        id S1729790AbgKEKYw (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Thu, 5 Nov 2020 05:24:52 -0500
+Received: from hqnvemgate24.nvidia.com ([216.228.121.143]:17698 "EHLO
+        hqnvemgate24.nvidia.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729227AbgKEKYv (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Thu, 5 Nov 2020 05:24:51 -0500
+Received: from hqmail.nvidia.com (Not Verified[216.228.121.13]) by hqnvemgate24.nvidia.com (using TLS: TLSv1.2, AES256-SHA)
+        id <B5fa3d2f40000>; Thu, 05 Nov 2020 02:24:52 -0800
+Received: from HQMAIL101.nvidia.com (172.20.187.10) by HQMAIL111.nvidia.com
+ (172.20.187.18) with Microsoft SMTP Server (TLS) id 15.0.1473.3; Thu, 5 Nov
+ 2020 10:24:50 +0000
+Received: from audio.nvidia.com (10.124.1.5) by mail.nvidia.com
+ (172.20.187.10) with Microsoft SMTP Server id 15.0.1473.3 via Frontend
+ Transport; Thu, 5 Nov 2020 10:24:46 +0000
+From:   Sameer Pujar <spujar@nvidia.com>
+To:     <robh+dt@kernel.org>, <devicetree@vger.kernel.org>
+CC:     <thierry.reding@gmail.com>, <jonathanh@nvidia.com>,
+        <vkoul@kernel.org>, <tglx@linutronix.de>, <jason@lakedaemon.net>,
+        <maz@kernel.org>, <linux-tegra@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <dmaengine@vger.kernel.org>,
+        Sameer Pujar <spujar@nvidia.com>
+Subject: [PATCH 1/4] arm64: tegra: Rename ADMA device nodes for Tegra210
+Date:   Thu, 5 Nov 2020 15:54:03 +0530
+Message-ID: <1604571846-14037-2-git-send-email-spujar@nvidia.com>
+X-Mailer: git-send-email 2.7.4
+In-Reply-To: <1604571846-14037-1-git-send-email-spujar@nvidia.com>
+References: <1604571846-14037-1-git-send-email-spujar@nvidia.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20201103112544.674566-2-vkoul@kernel.org>
+Content-Type: text/plain
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nvidia.com; s=n1;
+        t=1604571892; bh=zb891QpXLeXZXfTv5XnBODNkkVbDqOwpv9kH7oIWm3w=;
+        h=From:To:CC:Subject:Date:Message-ID:X-Mailer:In-Reply-To:
+         References:MIME-Version:Content-Type;
+        b=VH1i8h8e3kmsHk6WDokbFoT2V5VWFyNT7MnCXST/NCbatvcpJDwDKqvpvgDytOLh7
+         LlhNkBt+akiM29eGuH3k6NChS+amDTbKnycpn/ARzauAUJM15TtY3j6FL9q5YDpjrj
+         agvsHhdVXPAYbxplHQVMAqyCmNbOP0It4Rlz60ZJBScuBBpRqtLZiDCxcUQmJM/x2v
+         IWnbZwJeUtiWuPwkdcesjT8QcmbVEdD/7f5XsvaM+FoVMHFihAe5KWnVWwpkul0h9P
+         IPMZxjw5GgzMFWllWADfpYnI9Hmi05IK/MgvEtTU0GtFXDg9TR5FzcS3lffQooFguI
+         Zgxz//rUPVI1Q==
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On Tue, 03 Nov 2020 16:55:42 +0530, Vinod Koul wrote:
-> Add devicetree binding documentation for GPI DMA controller
-> implemented on Qualcomm SoCs
-> 
-> Reviewed-by: Rob Herring <robh@kernel.org>
-> Signed-off-by: Vinod Koul <vkoul@kernel.org>
-> ---
->  .../devicetree/bindings/dma/qcom,gpi.yaml     | 90 +++++++++++++++++++
->  include/dt-bindings/dma/qcom-gpi.h            | 11 +++
->  2 files changed, 101 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/dma/qcom,gpi.yaml
->  create mode 100644 include/dt-bindings/dma/qcom-gpi.h
-> 
+DMA device nodes should follow regex pattern of "^dma-controller(@.*)?$".
+This is a preparatory patch to use YAML doc format for ADMA.
 
+Signed-off-by: Sameer Pujar <spujar@nvidia.com>
+---
+ arch/arm64/boot/dts/nvidia/tegra210-p2371-2180.dts | 2 +-
+ arch/arm64/boot/dts/nvidia/tegra210-p3450-0000.dts | 2 +-
+ arch/arm64/boot/dts/nvidia/tegra210-smaug.dts      | 2 +-
+ arch/arm64/boot/dts/nvidia/tegra210.dtsi           | 2 +-
+ 4 files changed, 4 insertions(+), 4 deletions(-)
 
-My bot found errors running 'make dt_binding_check' on your patch:
-
-yamllint warnings/errors:
-
-dtschema/dtc warnings/errors:
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/dma/qcom,gpi.yaml: properties: {'enum': ['$ref', 'additionalItems', 'additionalProperties', 'allOf', 'anyOf', 'const', 'contains', 'default', 'dependencies', 'deprecated', 'description', 'else', 'enum', 'if', 'items', 'maxItems', 'maximum', 'minItems', 'minimum', 'multipleOf', 'not', 'oneOf', 'pattern', 'patternProperties', 'properties', 'propertyNames', 'required', 'then', 'unevaluatedProperties']} is not allowed for 'additionalProperties'
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/dma/qcom,gpi.yaml: ignoring, error in schema: properties
-warning: no schema found in file: ./Documentation/devicetree/bindings/dma/qcom,gpi.yaml
-
-
-See https://patchwork.ozlabs.org/patch/1392940
-
-The base for the patch is generally the last rc1. Any dependencies
-should be noted.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit.
+diff --git a/arch/arm64/boot/dts/nvidia/tegra210-p2371-2180.dts b/arch/arm64/boot/dts/nvidia/tegra210-p2371-2180.dts
+index dab24b4..e9f8410 100644
+--- a/arch/arm64/boot/dts/nvidia/tegra210-p2371-2180.dts
++++ b/arch/arm64/boot/dts/nvidia/tegra210-p2371-2180.dts
+@@ -120,7 +120,7 @@
+ 	aconnect@702c0000 {
+ 		status = "okay";
+ 
+-		dma@702e2000 {
++		dma-controller@702e2000 {
+ 			status = "okay";
+ 		};
+ 
+diff --git a/arch/arm64/boot/dts/nvidia/tegra210-p3450-0000.dts b/arch/arm64/boot/dts/nvidia/tegra210-p3450-0000.dts
+index 1216b65c8..f8e8bcf 100644
+--- a/arch/arm64/boot/dts/nvidia/tegra210-p3450-0000.dts
++++ b/arch/arm64/boot/dts/nvidia/tegra210-p3450-0000.dts
+@@ -630,7 +630,7 @@
+ 	aconnect@702c0000 {
+ 		status = "okay";
+ 
+-		dma@702e2000 {
++		dma-controller@702e2000 {
+ 			status = "okay";
+ 		};
+ 
+diff --git a/arch/arm64/boot/dts/nvidia/tegra210-smaug.dts b/arch/arm64/boot/dts/nvidia/tegra210-smaug.dts
+index bd78378..131c064 100644
+--- a/arch/arm64/boot/dts/nvidia/tegra210-smaug.dts
++++ b/arch/arm64/boot/dts/nvidia/tegra210-smaug.dts
+@@ -1717,7 +1717,7 @@
+ 	aconnect@702c0000 {
+ 		status = "okay";
+ 
+-		dma@702e2000 {
++		dma-controller@702e2000 {
+ 			status = "okay";
+ 		};
+ 
+diff --git a/arch/arm64/boot/dts/nvidia/tegra210.dtsi b/arch/arm64/boot/dts/nvidia/tegra210.dtsi
+index d47c889..d41eb12 100644
+--- a/arch/arm64/boot/dts/nvidia/tegra210.dtsi
++++ b/arch/arm64/boot/dts/nvidia/tegra210.dtsi
+@@ -1344,7 +1344,7 @@
+ 		ranges = <0x702c0000 0x0 0x702c0000 0x00040000>;
+ 		status = "disabled";
+ 
+-		adma: dma@702e2000 {
++		adma: dma-controller@702e2000 {
+ 			compatible = "nvidia,tegra210-adma";
+ 			reg = <0x702e2000 0x2000>;
+ 			interrupt-parent = <&agic>;
+-- 
+2.7.4
 
