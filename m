@@ -2,85 +2,84 @@ Return-Path: <SRS0=S3SG=EL=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.9 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=no
+X-Spam-Status: No, score=-6.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E231AC4742C
-	for <dmaengine@archiver.kernel.org>; Thu,  5 Nov 2020 10:25:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 50990C4741F
+	for <dmaengine@archiver.kernel.org>; Thu,  5 Nov 2020 13:48:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 83E102087D
-	for <dmaengine@archiver.kernel.org>; Thu,  5 Nov 2020 10:25:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D7DB22074B
+	for <dmaengine@archiver.kernel.org>; Thu,  5 Nov 2020 13:48:39 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=nvidia.com header.i=@nvidia.com header.b="iGG32dca"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="SxOVA+TB"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729748AbgKEKYt (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Thu, 5 Nov 2020 05:24:49 -0500
-Received: from hqnvemgate25.nvidia.com ([216.228.121.64]:5881 "EHLO
-        hqnvemgate25.nvidia.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729481AbgKEKYr (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Thu, 5 Nov 2020 05:24:47 -0500
-Received: from hqmail.nvidia.com (Not Verified[216.228.121.13]) by hqnvemgate25.nvidia.com (using TLS: TLSv1.2, AES256-SHA)
-        id <B5fa3d2ed0000>; Thu, 05 Nov 2020 02:24:45 -0800
-Received: from HQMAIL101.nvidia.com (172.20.187.10) by HQMAIL105.nvidia.com
- (172.20.187.12) with Microsoft SMTP Server (TLS) id 15.0.1473.3; Thu, 5 Nov
- 2020 10:24:46 +0000
-Received: from audio.nvidia.com (10.124.1.5) by mail.nvidia.com
- (172.20.187.10) with Microsoft SMTP Server id 15.0.1473.3 via Frontend
- Transport; Thu, 5 Nov 2020 10:24:43 +0000
-From:   Sameer Pujar <spujar@nvidia.com>
-To:     <robh+dt@kernel.org>, <devicetree@vger.kernel.org>
-CC:     <thierry.reding@gmail.com>, <jonathanh@nvidia.com>,
-        <vkoul@kernel.org>, <tglx@linutronix.de>, <jason@lakedaemon.net>,
-        <maz@kernel.org>, <linux-tegra@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <dmaengine@vger.kernel.org>,
-        Sameer Pujar <spujar@nvidia.com>
-Subject: [PATCH 0/4] Convert few Tegra docs to json-schema
-Date:   Thu, 5 Nov 2020 15:54:02 +0530
-Message-ID: <1604571846-14037-1-git-send-email-spujar@nvidia.com>
-X-Mailer: git-send-email 2.7.4
+        id S1730200AbgKENsj (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Thu, 5 Nov 2020 08:48:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38026 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725468AbgKENsj (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Thu, 5 Nov 2020 08:48:39 -0500
+Received: from mail-lf1-x141.google.com (mail-lf1-x141.google.com [IPv6:2a00:1450:4864:20::141])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC37EC0613CF
+        for <dmaengine@vger.kernel.org>; Thu,  5 Nov 2020 05:48:38 -0800 (PST)
+Received: by mail-lf1-x141.google.com with SMTP id b1so2359195lfp.11
+        for <dmaengine@vger.kernel.org>; Thu, 05 Nov 2020 05:48:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=2fVeXIJ0876AEfr9hIKe+DXuB9n1FMNqvYDL5m03TSw=;
+        b=SxOVA+TBJpL1xCpTZUu8dNY0KGk0MQXvOP4ST3EmrSDZciLFq78pE0zHOuXxTqANbb
+         5uslBzv5xQiwqNtpRMHSh4/pDauV/VsA3YBWAE28d7c7cZaR1c6ZIEa9otrx21/Adwrt
+         KxzxCOaWFecAgzWhJ53j0P11RBREjdUEah9dc6iAqNtHMS2M/tT1TMjGkS86aqHIGvgf
+         GuJcQQEgI3Hu2pvjf2Emyl72vOB6UHkaSWSq7Xe3Ur5V0tTFPcC3wfexMEVwVI+U8hFm
+         +MKS3SoS1Q5mFhOgAw60z57rRFo/Pw3w7BTR28q6dQOFMVlaBsY6nqQlH5iludv6zzYE
+         95Sg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=2fVeXIJ0876AEfr9hIKe+DXuB9n1FMNqvYDL5m03TSw=;
+        b=p4yBZE0WX3lzlR6mHXN9Xq6IgokveTeanwqyyhg1NIjyfOZc095D8P48vydF9yRh48
+         3CTJxC3vTC6onfdkumswrwzxhImqKIR2iWiP8Ng0/n17MxiupqRMlO1sRk4ZtzfbDuRh
+         TzTdPumiv6DfuoyHIOL3mDhHXiNunXUOuIbD4hVsB2YUaW1rkd+V+eyCjzYpVgGlaCdz
+         VtE2y4eCzsaiMstuYOpRbmmhBhF+qrV/NebwJq6hLh6IEMIG2PTqCadgIZIGZSKrtbK3
+         enzsKqoVwkz8xXwpO5lUhKy0ZcR9KppQvmAKZ44ntJpwuEhmOulnumVVNBDnSFcVLqq3
+         3EHw==
+X-Gm-Message-State: AOAM530DhG+lEbc/NywQw538MDVUk9Luc0ip/baJIorf8oRrw4mcdw8O
+        l35UntONLVVZ7fb801UEHTmffGeO0j6iy1NJeQuKHA==
+X-Google-Smtp-Source: ABdhPJwzjs5syk0dfgzFhFDFIHEl82EjRYEROHavZW2jlq8edIhNPMsAJQtKh4SOBOD3NAEGz/2ZCWsFEbGDYhrkygU=
+X-Received: by 2002:a19:824f:: with SMTP id e76mr964964lfd.572.1604584117393;
+ Thu, 05 Nov 2020 05:48:37 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nvidia.com; s=n1;
-        t=1604571885; bh=Mz88rgJiAM8warC9rJqbKLXNRMKQw4aydqvOqWr7W5w=;
-        h=From:To:CC:Subject:Date:Message-ID:X-Mailer:MIME-Version:
-         Content-Type;
-        b=iGG32dcaL0h8qSKjazs3ZV2XOKZOiyIMM3qKIh5SN/CaC5wPM2YwcBpzoKaof+3+r
-         YNX9T9RsDa9fK4BtXsPynO48qNH+eAmI4QKDjy2bCezObwWFpP70USwYbfCh44pqLr
-         MkQCBrsYMXXU0T06A4mdNYkTSnRXnbrIv6OS9J5gOkWRm3Cox56vG6tkvt73SVdzci
-         10DBoOtkIJzDljflpUN5qN0wG+UeJI4VOQI61TlbfAPiag6/EY83g/ARiD51FUVpsQ
-         1gUR9RNBLmMG/CF3ys6AIbJmsbyymPJkPIezryiyeC6MluKeLsWsTYaBcscpjHUxst
-         I2IOR91gwEOyQ==
+References: <20201027215252.25820-1-song.bao.hua@hisilicon.com> <20201027215252.25820-10-song.bao.hua@hisilicon.com>
+In-Reply-To: <20201027215252.25820-10-song.bao.hua@hisilicon.com>
+From:   Linus Walleij <linus.walleij@linaro.org>
+Date:   Thu, 5 Nov 2020 14:48:26 +0100
+Message-ID: <CACRpkdZKdtiJA4aDYhRfZBXhFeVfZEnoZfQ+xA+pSQtjMOfbGQ@mail.gmail.com>
+Subject: Re: [PATCH v2 09/10] dmaengine: ste_dma40: remove redundant irqsave
+ and irqrestore in hardIRQ
+To:     Barry Song <song.bao.hua@hisilicon.com>
+Cc:     Vinod Koul <vkoul@kernel.org>,
+        dmaengine <dmaengine@vger.kernel.org>,
+        Linuxarm <linuxarm@huawei.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Following are the summary of changes.
-* Update ADMA device node names for some of Tegra210 DT files.
-* Convert ADMA, AGIC and ACONNECT docs to YAML.
+On Tue, Oct 27, 2020 at 10:57 PM Barry Song <song.bao.hua@hisilicon.com> wrote:
 
-Sameer Pujar (4):
-  arm64: tegra: Rename ADMA device nodes for Tegra210
-  dt-bindings: dma: Convert ADMA doc to json-schema
-  dt-bindings: interrupt-controller: arm,gic: Update Tegra compatibles
-  dt-bindings: bus: Convert ACONNECT doc to json-schema
+> Running in hardIRQ, disabling IRQ is redundant since hardIRQ has disabled
+> IRQ. This patch removes the irqsave and irqstore to save some instruction
+> cycles.
+>
+> Cc: Linus Walleij <linus.walleij@linaro.org>
+> Signed-off-by: Barry Song <song.bao.hua@hisilicon.com>
 
- .../bindings/bus/nvidia,tegra210-aconnect.txt      | 44 ----------
- .../bindings/bus/nvidia,tegra210-aconnect.yaml     | 86 ++++++++++++++++++++
- .../bindings/dma/nvidia,tegra210-adma.txt          | 56 -------------
- .../bindings/dma/nvidia,tegra210-adma.yaml         | 95 ++++++++++++++++++++++
- .../bindings/interrupt-controller/arm,gic.yaml     |  9 +-
- arch/arm64/boot/dts/nvidia/tegra210-p2371-2180.dts |  2 +-
- arch/arm64/boot/dts/nvidia/tegra210-p3450-0000.dts |  2 +-
- arch/arm64/boot/dts/nvidia/tegra210-smaug.dts      |  2 +-
- arch/arm64/boot/dts/nvidia/tegra210.dtsi           |  2 +-
- 9 files changed, 193 insertions(+), 105 deletions(-)
- delete mode 100644 Documentation/devicetree/bindings/bus/nvidia,tegra210-aconnect.txt
- create mode 100644 Documentation/devicetree/bindings/bus/nvidia,tegra210-aconnect.yaml
- delete mode 100644 Documentation/devicetree/bindings/dma/nvidia,tegra210-adma.txt
- create mode 100644 Documentation/devicetree/bindings/dma/nvidia,tegra210-adma.yaml
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
 
--- 
-2.7.4
-
+Yours,
+Linus Walleij
