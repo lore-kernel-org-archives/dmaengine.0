@@ -2,111 +2,118 @@ Return-Path: <SRS0=OqA0=EN=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,UNPARSEABLE_RELAY,USER_AGENT_GIT autolearn=unavailable
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E1E85C4741F
-	for <dmaengine@archiver.kernel.org>; Sat,  7 Nov 2020 01:42:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1071EC388F7
+	for <dmaengine@archiver.kernel.org>; Sat,  7 Nov 2020 12:22:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 87B3B20853
-	for <dmaengine@archiver.kernel.org>; Sat,  7 Nov 2020 01:42:46 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel-com.20150623.gappssmtp.com header.i=@intel-com.20150623.gappssmtp.com header.b="Q5f2DNkI"
+	by mail.kernel.org (Postfix) with ESMTP id C407620719
+	for <dmaengine@archiver.kernel.org>; Sat,  7 Nov 2020 12:22:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727394AbgKGBmn (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 6 Nov 2020 20:42:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36614 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728110AbgKGBmm (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Fri, 6 Nov 2020 20:42:42 -0500
-Received: from mail-ej1-x644.google.com (mail-ej1-x644.google.com [IPv6:2a00:1450:4864:20::644])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7732DC0613D4
-        for <dmaengine@vger.kernel.org>; Fri,  6 Nov 2020 17:42:42 -0800 (PST)
-Received: by mail-ej1-x644.google.com with SMTP id za3so4465477ejb.5
-        for <dmaengine@vger.kernel.org>; Fri, 06 Nov 2020 17:42:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=intel-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=AAhKBkCmEXM9Yi0i53SdXI+qBrNsxTbz7k8CU/bDcxE=;
-        b=Q5f2DNkIqXGoWxDYREtewdyEbZUybPhjCmtZWiOs07KT59R+F8HvZmDkmeiHpMIHZ7
-         q0TC1JEW66CpLHwoFY5rkjCg1Zfgx+gz2vWz+4vAHmprlCjrjguRm2rAAcmyavS+Dc6a
-         1hxpnTl0eFa/qeKJgQydyBmSXTnfC9S+GI8YrUVtEpiiavNEEgHiPzS1M3VOXANrRMQX
-         3ch02mlhVpzhVIb4A1C32dAt0fG2PF9mXxHaEcijBAkHvV0L/IhEnOVuHwYpkKB9id82
-         kQhyZveB+JXyoLJYMcRvhgmwKFLdQ4jpdDKervjjCZcjqGzUSC4NRyaXBW3oia07bw/Y
-         jYJw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=AAhKBkCmEXM9Yi0i53SdXI+qBrNsxTbz7k8CU/bDcxE=;
-        b=YX50AMlq2oicPH7DraP1rXu2CYSzqtLrvVJCmBrN3UvMssqmD5lFy15K0PgSNLu4we
-         2QGMZ00P/OazhwBDobLxxv5QThKhzYmI2zNtOiWgpgwevs+2M4bN6eL/tsZvDrN/2XQz
-         EETZRUh+NXKUzF64+qoNnLt/hT1JfwkGBlm58O4c9LTiCf/hV9jI09dc28tPz6SkjUOK
-         ePCWTwko7RWMpkDdS0/XgAuA4dpletQNI91abVzW26EVZYGD1FwPk/KD4ol4w9CSynAh
-         44Kcc1/kyY+3vtMgwi3b/z4ofkcsPG+9rXIURSRtmYBf0m565eHYZeMK7MRjoc9QP8QT
-         5jYg==
-X-Gm-Message-State: AOAM530R9eEPVSV+bMZ6r8V+8PUhwpXfxBA8vNtbAq/K62c+vLy09bqX
-        po4wXVp/w+V4cviJMtgBWNrheWFLu2iANUQ1YPxs4w==
-X-Google-Smtp-Source: ABdhPJzEd/8ZnfumsYWdUvKYbtgyhZ6rEI5Gf3Kp1ROzCvGK7kQhLkgAhO25jWgDP1kq1OpwiV+3HUJrMEWDbkDVxaQ=
-X-Received: by 2002:a17:906:70cf:: with SMTP id g15mr4788410ejk.323.1604713360965;
- Fri, 06 Nov 2020 17:42:40 -0800 (PST)
+        id S1727494AbgKGMWH (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Sat, 7 Nov 2020 07:22:07 -0500
+Received: from out28-98.mail.aliyun.com ([115.124.28.98]:42510 "EHLO
+        out28-98.mail.aliyun.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727975AbgKGMVo (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Sat, 7 Nov 2020 07:21:44 -0500
+X-Alimail-AntiSpam: AC=CONTINUE;BC=0.07986468|-1;CH=green;DM=|CONTINUE|false|;DS=CONTINUE|ham_regular_dialog|0.0399064-0.000837473-0.959256;FP=0|0|0|0|0|-1|-1|-1;HT=ay29a033018047205;MF=zhouyanjie@wanyeetech.com;NM=1;PH=DS;RN=13;RT=13;SR=0;TI=SMTPD_---.ItnhwiJ_1604751644;
+Received: from localhost.localdomain(mailfrom:zhouyanjie@wanyeetech.com fp:SMTPD_---.ItnhwiJ_1604751644)
+          by smtp.aliyun-inc.com(10.147.40.7);
+          Sat, 07 Nov 2020 20:20:53 +0800
+From:   =?UTF-8?q?=E5=91=A8=E7=90=B0=E6=9D=B0=20=28Zhou=20Yanjie=29?= 
+        <zhouyanjie@wanyeetech.com>
+To:     Zubair.Kakakhel@imgtec.com, vkoul@kernel.org, paul@crapouillou.net,
+        robh+dt@kernel.org
+Cc:     linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        dmaengine@vger.kernel.org, dongsheng.qiu@ingenic.com,
+        aric.pzqi@ingenic.com, rick.tyliu@ingenic.com,
+        yanfei.li@ingenic.com, sernia.zhou@foxmail.com,
+        zhenwenjin@gmail.com
+Subject: [PATCH RESEND 2/2] dt-bindings: dmaengine: Add X2000 bindings.
+Date:   Sat,  7 Nov 2020 20:20:16 +0800
+Message-Id: <20201107122016.89859-3-zhouyanjie@wanyeetech.com>
+X-Mailer: git-send-email 2.11.0
+In-Reply-To: <20201107122016.89859-1-zhouyanjie@wanyeetech.com>
+References: <20201107122016.89859-1-zhouyanjie@wanyeetech.com>
 MIME-Version: 1.0
-References: <20201103124351.GM2620339@nvidia.com> <MWHPR11MB164544C9CFCC3F162C1C6FC18CEF0@MWHPR11MB1645.namprd11.prod.outlook.com>
- <20201104124017.GW2620339@nvidia.com> <MWHPR11MB1645862A8F7CF7FB8DD011778CEF0@MWHPR11MB1645.namprd11.prod.outlook.com>
- <20201104135415.GX2620339@nvidia.com> <MWHPR11MB1645524BDEDF8899914F32AE8CED0@MWHPR11MB1645.namprd11.prod.outlook.com>
- <20201106131415.GT2620339@nvidia.com> <20201106164850.GA85879@otc-nc-03>
- <20201106175131.GW2620339@nvidia.com> <CAPcyv4iYHA1acfo=+fTk+U_TrLbSWJjA6v4oeTXgVYDTrnCoGw@mail.gmail.com>
- <20201107001207.GA2620339@nvidia.com>
-In-Reply-To: <20201107001207.GA2620339@nvidia.com>
-From:   Dan Williams <dan.j.williams@intel.com>
-Date:   Fri, 6 Nov 2020 17:42:29 -0800
-Message-ID: <CAPcyv4hEYLVn_RmYjvfCaEtnvqrBAd0V9KgHmjQuBLy4GEw+_A@mail.gmail.com>
-Subject: Re: [PATCH v4 06/17] PCI: add SIOV and IMS capability detection
-To:     Jason Gunthorpe <jgg@nvidia.com>
-Cc:     "Raj, Ashok" <ashok.raj@intel.com>,
-        "Tian, Kevin" <kevin.tian@intel.com>,
-        "Jiang, Dave" <dave.jiang@intel.com>,
-        Bjorn Helgaas <helgaas@kernel.org>,
-        "vkoul@kernel.org" <vkoul@kernel.org>,
-        "Dey, Megha" <megha.dey@intel.com>,
-        "maz@kernel.org" <maz@kernel.org>,
-        "bhelgaas@google.com" <bhelgaas@google.com>,
-        "tglx@linutronix.de" <tglx@linutronix.de>,
-        "alex.williamson@redhat.com" <alex.williamson@redhat.com>,
-        "Pan, Jacob jun" <jacob.jun.pan@intel.com>,
-        "Liu, Yi L" <yi.l.liu@intel.com>, "Lu, Baolu" <baolu.lu@intel.com>,
-        "Kumar, Sanjay K" <sanjay.k.kumar@intel.com>,
-        "Luck, Tony" <tony.luck@intel.com>,
-        "jing.lin@intel.com" <jing.lin@intel.com>,
-        "kwankhede@nvidia.com" <kwankhede@nvidia.com>,
-        "eric.auger@redhat.com" <eric.auger@redhat.com>,
-        "parav@mellanox.com" <parav@mellanox.com>,
-        "rafael@kernel.org" <rafael@kernel.org>,
-        "netanelg@mellanox.com" <netanelg@mellanox.com>,
-        "shahafs@mellanox.com" <shahafs@mellanox.com>,
-        "yan.y.zhao@linux.intel.com" <yan.y.zhao@linux.intel.com>,
-        "pbonzini@redhat.com" <pbonzini@redhat.com>,
-        "Ortiz, Samuel" <samuel.ortiz@intel.com>,
-        "Hossain, Mona" <mona.hossain@intel.com>,
-        "dmaengine@vger.kernel.org" <dmaengine@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "linux-pci@vger.kernel.org" <linux-pci@vger.kernel.org>,
-        "kvm@vger.kernel.org" <kvm@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On Fri, Nov 6, 2020 at 4:12 PM Jason Gunthorpe <jgg@nvidia.com> wrote:
->
-> On Fri, Nov 06, 2020 at 03:47:00PM -0800, Dan Williams wrote:
-[..]
-> The only sane way to implement this generically is for the VMM to
-> provide a hypercall to obtain a real *working* addr/data pair(s) and
-> then have the platform hand those out from
-> pci_subdevice_msi_create_irq_domain().
+Add the dmaengine bindings for the X2000 SoC from Ingenic.
 
-Yeah, that seems a logical attach point for this magic. Appreciate you
-taking the time to lay it out.
+Signed-off-by: 周琰杰 (Zhou Yanjie) <zhouyanjie@wanyeetech.com>
+Acked-by: Rob Herring <robh@kernel.org>
+---
+ include/dt-bindings/dma/x2000-dma.h | 54 +++++++++++++++++++++++++++++++++++++
+ 1 file changed, 54 insertions(+)
+ create mode 100644 include/dt-bindings/dma/x2000-dma.h
+
+diff --git a/include/dt-bindings/dma/x2000-dma.h b/include/dt-bindings/dma/x2000-dma.h
+new file mode 100644
+index 000000000000..db2cd4830b00
+--- /dev/null
++++ b/include/dt-bindings/dma/x2000-dma.h
+@@ -0,0 +1,54 @@
++/* SPDX-License-Identifier: GPL-2.0-only */
++/*
++ * This header provides macros for X2000 DMA bindings.
++ *
++ * Copyright (c) 2020 周琰杰 (Zhou Yanjie) <zhouyanjie@wanyeetech.com>
++ */
++
++#ifndef __DT_BINDINGS_DMA_X2000_DMA_H__
++#define __DT_BINDINGS_DMA_X2000_DMA_H__
++
++/*
++ * Request type numbers for the X2000 DMA controller (written to the DRTn
++ * register for the channel).
++ */
++#define X2000_DMA_AUTO		0x8
++#define X2000_DMA_UART5_TX	0xa
++#define X2000_DMA_UART5_RX	0xb
++#define X2000_DMA_UART4_TX	0xc
++#define X2000_DMA_UART4_RX	0xd
++#define X2000_DMA_UART3_TX	0xe
++#define X2000_DMA_UART3_RX	0xf
++#define X2000_DMA_UART2_TX	0x10
++#define X2000_DMA_UART2_RX	0x11
++#define X2000_DMA_UART1_TX	0x12
++#define X2000_DMA_UART1_RX	0x13
++#define X2000_DMA_UART0_TX	0x14
++#define X2000_DMA_UART0_RX	0x15
++#define X2000_DMA_SSI0_TX	0x16
++#define X2000_DMA_SSI0_RX	0x17
++#define X2000_DMA_SSI1_TX	0x18
++#define X2000_DMA_SSI1_RX	0x19
++#define X2000_DMA_I2C0_TX	0x24
++#define X2000_DMA_I2C0_RX	0x25
++#define X2000_DMA_I2C1_TX	0x26
++#define X2000_DMA_I2C1_RX	0x27
++#define X2000_DMA_I2C2_TX	0x28
++#define X2000_DMA_I2C2_RX	0x29
++#define X2000_DMA_I2C3_TX	0x2a
++#define X2000_DMA_I2C3_RX	0x2b
++#define X2000_DMA_I2C4_TX	0x2c
++#define X2000_DMA_I2C4_RX	0x2d
++#define X2000_DMA_I2C5_TX	0x2e
++#define X2000_DMA_I2C5_RX	0x2f
++#define X2000_DMA_UART6_TX	0x30
++#define X2000_DMA_UART6_RX	0x31
++#define X2000_DMA_UART7_TX	0x32
++#define X2000_DMA_UART7_RX	0x33
++#define X2000_DMA_UART8_TX	0x34
++#define X2000_DMA_UART8_RX	0x35
++#define X2000_DMA_UART9_TX	0x36
++#define X2000_DMA_UART9_RX	0x37
++#define X2000_DMA_SADC_RX	0x38
++
++#endif /* __DT_BINDINGS_DMA_X2000_DMA_H__ */
+-- 
+2.11.0
+
