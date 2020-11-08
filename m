@@ -1,59 +1,190 @@
-Return-Path: <SRS0=OqA0=EN=vger.kernel.org=dmaengine-owner@kernel.org>
+Return-Path: <SRS0=ka6q=EO=vger.kernel.org=dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.7 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-5.2 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	UNPARSEABLE_RELAY,USER_AGENT_GIT autolearn=no autolearn_force=no version=3.4.0
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 32020C5517A
-	for <dmaengine@archiver.kernel.org>; Sat,  7 Nov 2020 12:27:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EEB7FC388F9
+	for <dmaengine@archiver.kernel.org>; Sun,  8 Nov 2020 18:11:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 006ED20704
-	for <dmaengine@archiver.kernel.org>; Sat,  7 Nov 2020 12:27:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BDD4D2067C
+	for <dmaengine@archiver.kernel.org>; Sun,  8 Nov 2020 18:11:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727863AbgKGMWH (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Sat, 7 Nov 2020 07:22:07 -0500
-Received: from out28-219.mail.aliyun.com ([115.124.28.219]:53595 "EHLO
-        out28-219.mail.aliyun.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727950AbgKGMVo (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Sat, 7 Nov 2020 07:21:44 -0500
-X-Alimail-AntiSpam: AC=CONTINUE;BC=0.2194764|-1;CH=green;DM=|CONTINUE|false|;DS=CONTINUE|ham_news_journal|0.0117215-0.00453429-0.983744;FP=0|0|0|0|0|-1|-1|-1;HT=ay29a033018047193;MF=zhouyanjie@wanyeetech.com;NM=1;PH=DS;RN=13;RT=13;SR=0;TI=SMTPD_---.ItnhwiJ_1604751644;
-Received: from localhost.localdomain(mailfrom:zhouyanjie@wanyeetech.com fp:SMTPD_---.ItnhwiJ_1604751644)
-          by smtp.aliyun-inc.com(10.147.40.7);
-          Sat, 07 Nov 2020 20:20:51 +0800
-From:   =?UTF-8?q?=E5=91=A8=E7=90=B0=E6=9D=B0=20=28Zhou=20Yanjie=29?= 
-        <zhouyanjie@wanyeetech.com>
-To:     Zubair.Kakakhel@imgtec.com, vkoul@kernel.org, paul@crapouillou.net,
-        robh+dt@kernel.org
-Cc:     linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        dmaengine@vger.kernel.org, dongsheng.qiu@ingenic.com,
-        aric.pzqi@ingenic.com, rick.tyliu@ingenic.com,
-        yanfei.li@ingenic.com, sernia.zhou@foxmail.com,
-        zhenwenjin@gmail.com
-Subject: [PATCH RESEND 0/2] Add dmaengine bindings for the JZ4775 and the X2000 SoCs.
-Date:   Sat,  7 Nov 2020 20:20:14 +0800
-Message-Id: <20201107122016.89859-1-zhouyanjie@wanyeetech.com>
-X-Mailer: git-send-email 2.11.0
+        id S1728611AbgKHSL2 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Sun, 8 Nov 2020 13:11:28 -0500
+Received: from mga07.intel.com ([134.134.136.100]:18592 "EHLO mga07.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727844AbgKHSL1 (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Sun, 8 Nov 2020 13:11:27 -0500
+IronPort-SDR: EfPVu36ysq5Td0Tw1dAV9JFnxGXOFNeaWA6OyyvGcDpXC7CR05Wjt8iZoi4ZlHH/+PAoQnRXLO
+ 73O9kyxOx6HQ==
+X-IronPort-AV: E=McAfee;i="6000,8403,9799"; a="233885667"
+X-IronPort-AV: E=Sophos;i="5.77,461,1596524400"; 
+   d="scan'208";a="233885667"
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga002.jf.intel.com ([10.7.209.21])
+  by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Nov 2020 10:11:26 -0800
+IronPort-SDR: snAiSoKHM3lhdxi1hfsMQwzD4qjdTA45HE9GgUWWWz/q17iHgOpfCIVe/1ipo2pqbu4ZCeT06B
+ +LY+WfYWpHXQ==
+X-IronPort-AV: E=Sophos;i="5.77,461,1596524400"; 
+   d="scan'208";a="338134689"
+Received: from araj-mobl1.jf.intel.com ([10.255.230.111])
+  by orsmga002-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Nov 2020 10:11:25 -0800
+Date:   Sun, 8 Nov 2020 10:11:24 -0800
+From:   "Raj, Ashok" <ashok.raj@intel.com>
+To:     Jason Gunthorpe <jgg@nvidia.com>
+Cc:     Dan Williams <dan.j.williams@intel.com>,
+        "Tian, Kevin" <kevin.tian@intel.com>,
+        "Jiang, Dave" <dave.jiang@intel.com>,
+        Bjorn Helgaas <helgaas@kernel.org>,
+        "vkoul@kernel.org" <vkoul@kernel.org>,
+        "Dey, Megha" <megha.dey@intel.com>,
+        "maz@kernel.org" <maz@kernel.org>,
+        "bhelgaas@google.com" <bhelgaas@google.com>,
+        "tglx@linutronix.de" <tglx@linutronix.de>,
+        "alex.williamson@redhat.com" <alex.williamson@redhat.com>,
+        "Pan, Jacob jun" <jacob.jun.pan@intel.com>,
+        "Liu, Yi L" <yi.l.liu@intel.com>, "Lu, Baolu" <baolu.lu@intel.com>,
+        "Kumar, Sanjay K" <sanjay.k.kumar@intel.com>,
+        "Luck, Tony" <tony.luck@intel.com>,
+        "jing.lin@intel.com" <jing.lin@intel.com>,
+        "kwankhede@nvidia.com" <kwankhede@nvidia.com>,
+        "eric.auger@redhat.com" <eric.auger@redhat.com>,
+        "parav@mellanox.com" <parav@mellanox.com>,
+        "rafael@kernel.org" <rafael@kernel.org>,
+        "netanelg@mellanox.com" <netanelg@mellanox.com>,
+        "shahafs@mellanox.com" <shahafs@mellanox.com>,
+        "yan.y.zhao@linux.intel.com" <yan.y.zhao@linux.intel.com>,
+        "pbonzini@redhat.com" <pbonzini@redhat.com>,
+        "Ortiz, Samuel" <samuel.ortiz@intel.com>,
+        "Hossain, Mona" <mona.hossain@intel.com>,
+        "dmaengine@vger.kernel.org" <dmaengine@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        "linux-pci@vger.kernel.org" <linux-pci@vger.kernel.org>,
+        "kvm@vger.kernel.org" <kvm@vger.kernel.org>,
+        Ashok Raj <ashok.raj@intel.com>
+Subject: Re: [PATCH v4 06/17] PCI: add SIOV and IMS capability detection
+Message-ID: <20201108181124.GA28173@araj-mobl1.jf.intel.com>
+References: <MWHPR11MB164544C9CFCC3F162C1C6FC18CEF0@MWHPR11MB1645.namprd11.prod.outlook.com>
+ <20201104124017.GW2620339@nvidia.com>
+ <MWHPR11MB1645862A8F7CF7FB8DD011778CEF0@MWHPR11MB1645.namprd11.prod.outlook.com>
+ <20201104135415.GX2620339@nvidia.com>
+ <MWHPR11MB1645524BDEDF8899914F32AE8CED0@MWHPR11MB1645.namprd11.prod.outlook.com>
+ <20201106131415.GT2620339@nvidia.com>
+ <20201106164850.GA85879@otc-nc-03>
+ <20201106175131.GW2620339@nvidia.com>
+ <CAPcyv4iYHA1acfo=+fTk+U_TrLbSWJjA6v4oeTXgVYDTrnCoGw@mail.gmail.com>
+ <20201107001207.GA2620339@nvidia.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20201107001207.GA2620339@nvidia.com>
+User-Agent: Mutt/1.9.1 (2017-09-22)
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Add the dmaengine bindings for the JZ4775 SoC and the X2000 SoC from Ingenic.
+Hi Jason
 
-周琰杰 (Zhou Yanjie) (2):
-  dt-bindings: dmaengine: Add JZ4775 bindings.
-  dt-bindings: dmaengine: Add X2000 bindings.
+Thanks, its now clear what you had mentioned earlier.
 
- include/dt-bindings/dma/jz4775-dma.h | 44 +++++++++++++++++++++++++++++
- include/dt-bindings/dma/x2000-dma.h  | 54 ++++++++++++++++++++++++++++++++++++
- 2 files changed, 98 insertions(+)
- create mode 100644 include/dt-bindings/dma/jz4775-dma.h
- create mode 100644 include/dt-bindings/dma/x2000-dma.h
+I had couple questions/clarifications below. Thanks for working 
+through this.
 
--- 
-2.11.0
+On Fri, Nov 06, 2020 at 08:12:07PM -0400, Jason Gunthorpe wrote:
+> On Fri, Nov 06, 2020 at 03:47:00PM -0800, Dan Williams wrote:
+> 
+> > Also feel free to straighten me out (Jason or Ashok) if I've botched
+> > the understanding of this.
+> 
+> It is pretty simple when you get down to it.
+> 
+> We have a new kernel API that Thomas added:
+> 
+>   pci_subdevice_msi_create_irq_domain()
+> 
+> This creates an IRQ domain that hands out addr/data pairs that
+> trigger interrupts.
+> 
+> On bare metal the addr/data pairs from the IRQ domain are programmed
+> into the HW in some HW specific way by the device driver that calls
+> the above function.
+> 
+> On (kvm) virtualization the addr/data pair the IRQ domain hands out
+> doesn't work. It is some fake thing.
 
+Is it really some fake thing? I thought the vCPU and vector are real
+for a guest, and VMM ensures when interrupts are delivered they are either.
+
+1. Handled by VMM first and then injected to guest
+2. Handled in a Posted Interrupt manner, and injected to guest
+   when it resumes. It can be delivered directly if guest was running
+   when the interrupt arrived.
+
+> 
+> To make this work on normal MSI/MSI-X the VMM implements emulation of
+> the standard MSI/MSI-X programming and swaps the fake addr/data pair
+> for a real one obtained from the hypervisor IRQ domain.
+> 
+> To "deal" with this issue the SIOV spec suggests to add a per-device
+> PCI Capability that says "IMS works". Which means either:
+>  - This is bare metal, so of course it works
+>  - The VMM is trapping and emulating whatever the device specific IMS
+>    programming is.
+> 
+> The idea being that a VMM can never advertise the IMS cap flag to the
+> guest unles the VMM provides a device specific driver that does device
+> specific emulation to capture the addr/data pair. Remeber IMS doesn't
+> say how to program the addr/data pair! Every device is unique!
+> 
+> On something like IDXD this emulation is not so hard, on something
+> like mlx5 this is completely unworkable. Further we never do
+> emulation on our devices, they always pass native hardware through,
+> even for SIOV-like cases.
+
+So is that true for interrupts too? Possibly you have the interrupt
+entries sitting in memory resident on the device? Don't we need the 
+VMM to ensure they are brokered by VMM in either one of the two ways 
+above? What if the guest creates some addr in the 0xfee... range
+how do we take care of interrupt remapping and such without any VMM 
+assist?
+
+Its probably a gap in my understanding. 
+
+> 
+> In the end pci_subdevice_msi_create_irq_domain() is a platform
+> function. Either it should work completely on every device with no
+> device-specific emulation required in the VMM, or it should not work
+> at all and return -EOPNOTSUPP.
+> 
+> The only sane way to implement this generically is for the VMM to
+> provide a hypercall to obtain a real *working* addr/data pair(s) and
+> then have the platform hand those out from
+> pci_subdevice_msi_create_irq_domain(). 
+> 
+> All IMS device drivers will work correctly. No VMM device emulation is
+> ever needed to translate addr/data pairs.
+> 
+
+That's true. Probably this can work the same even for MSIx types too then?
+
+When we do interrupt remapping support in guest which would be required 
+if we support x2apic in guest, I think this is something we should look into more 
+carefully to make this work.
+
+One criteria that we generally tried to follow is driver that runs in host
+and guest are the same, and if needed they need some functionality make it
+work around some capability  detection so the alternate path can be plummed in
+a generic way. 
+
+I agree with the overall idea and we should certainly take that into consideration
+when we need IMS in guest support and in context of interrupt remapping.
+
+Hopefully I understood the overall concept. If I mis-understood any of this
+please let me know.
+
+Cheers,
+Ashok
