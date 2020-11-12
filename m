@@ -2,247 +2,236 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=unavailable
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	MSGID_FROM_MTA_HEADER,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 86CBDC2D0A3
-	for <dmaengine@archiver.kernel.org>; Thu, 12 Nov 2020 05:42:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CEC9EC2D0A3
+	for <dmaengine@archiver.kernel.org>; Thu, 12 Nov 2020 05:43:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3C468221E9
-	for <dmaengine@archiver.kernel.org>; Thu, 12 Nov 2020 05:42:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5867121534
+	for <dmaengine@archiver.kernel.org>; Thu, 12 Nov 2020 05:43:20 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=amdcloud.onmicrosoft.com header.i=@amdcloud.onmicrosoft.com header.b="1RHuzg5T"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727085AbgKLFlr (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Thu, 12 Nov 2020 00:41:47 -0500
-Received: from mga05.intel.com ([192.55.52.43]:20962 "EHLO mga05.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729544AbgKLFi5 (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Thu, 12 Nov 2020 00:38:57 -0500
-IronPort-SDR: DKEHRmoZMt90kovjt58uC8ENKbk9V+8Se3BoA4npUHhHnUDsUH1iuQnq0R5wJCIjk+4xYLMapy
- Zh+xRc0w6qlQ==
-X-IronPort-AV: E=McAfee;i="6000,8403,9802"; a="254969916"
-X-IronPort-AV: E=Sophos;i="5.77,471,1596524400"; 
-   d="scan'208";a="254969916"
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from fmsmga003.fm.intel.com ([10.253.24.29])
-  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Nov 2020 21:38:56 -0800
-IronPort-SDR: g4TjtMzSpZXtRZuZQadpN2McsDizaeVs6U8nLXU/r7mkyCKD2f+S2EkMoV2xBXPCvNaNN6Aptb
- 9A3bDJTvIWrQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.77,471,1596524400"; 
-   d="scan'208";a="366203065"
-Received: from sgsxdev004.isng.intel.com (HELO localhost) ([10.226.88.13])
-  by FMSMGA003.fm.intel.com with ESMTP; 11 Nov 2020 21:38:53 -0800
-From:   Amireddy Mallikarjuna reddy <mallikarjunax.reddy@linux.intel.com>
-To:     dmaengine@vger.kernel.org, vkoul@kernel.org,
-        devicetree@vger.kernel.org, robh+dt@kernel.org
-Cc:     linux-kernel@vger.kernel.org, andriy.shevchenko@intel.com,
-        chuanhua.lei@linux.intel.com, cheol.yong.kim@intel.com,
-        qi-ming.wu@intel.com, mallikarjunax.reddy@linux.intel.com,
-        malliamireddy009@gmail.com, peter.ujfalusi@ti.com
-Subject: [PATCH v9 1/2] dt-bindings: dma: Add bindings for Intel LGM SoC
-Date:   Thu, 12 Nov 2020 13:38:45 +0800
-Message-Id: <bfe586ac62080d14759bda22ebf1de1a1fa9c09d.1605158930.git.mallikarjunax.reddy@linux.intel.com>
-X-Mailer: git-send-email 2.11.0
-In-Reply-To: <cover.1605158930.git.mallikarjunax.reddy@linux.intel.com>
-References: <cover.1605158930.git.mallikarjunax.reddy@linux.intel.com>
-In-Reply-To: <cover.1605158930.git.mallikarjunax.reddy@linux.intel.com>
-References: <cover.1605158930.git.mallikarjunax.reddy@linux.intel.com>
+        id S1726101AbgKLFnT (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Thu, 12 Nov 2020 00:43:19 -0500
+Received: from mail-dm6nam12on2048.outbound.protection.outlook.com ([40.107.243.48]:45152
+        "EHLO NAM12-DM6-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1728055AbgKLFm3 (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Thu, 12 Nov 2020 00:42:29 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=l9MongGIS4vM+vhd/r1FAdRvVPLAMV5jmHB6ovgyW2f/XZvqaAEPpKFeOgT/jBN2ZbB5Nji9Lsd54TbxgsX4yvZe90O7S/pjCjPpa8+gph5idc1A6wJGigKN1fmbG3ImTF6DsblzVpCkZ+58RsuOzil5E/qGzirXxaU60FdkCBbvBYnJHq5dkChG/VYWkgJII59Pfc3ixr2brwI+z0LtFSO0wLtpU96MTgdyYgt8KLTHExb7Rd7IZrisKjTR6cAgZ2ap598hPNlvSXDkfCspGD3vqqyuScrvzzgoVF1WnHOBj7GNHO1CtXbWSNHThGJuEy4kA5I/OFJ3UoZbWwSzMQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=7r+SO8I1eBJWgkJ4QEr2IXtyl49BFbel1GY1IGpAAxY=;
+ b=arZ9M8+zxBhBVI9o5NPBiArxT15gogD4UtZf73YzUSSMZV10DfVK579piaK2X9XNMAqaN3hBJl9SIaIm0Y695BGVBe3RT71DrJaDKSnrTpPKfEx+uMX5ymLNTRrjTYtqujjgjvISXXs7xNYtBYf1P/ezS6f7/l8mc1z0JsTBJHobut/kVTvxzTnVGJKC/wGJa7LHFSeVuuYF+1jypQenBUxUieUyCzGt34RUq8eITGz+ih8dsh06Pbu75Bdawp7A/eK/0eAAza2Xj3baGo1njidkwAPcjsFGaIuG7qyB7K6OlqjA3+w0lHpaVx7kJ/9BHtWqlFQbhmXgnjuzF7vVrA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=amdcloud.onmicrosoft.com; s=selector2-amdcloud-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=7r+SO8I1eBJWgkJ4QEr2IXtyl49BFbel1GY1IGpAAxY=;
+ b=1RHuzg5TBpRU5nkHy6apPDVLy26eY45xw8P2HthvhsxvgKI2voaUF99s025ok7PnHUHrw5sX8S4uY6JuA0kGdfBcY7zKn7kpJ25UdAOAWd1d0boRPBcgI6n+JkRHX2p5ubLGRif4jJ/HXeE0P9t6EP5+7NUFw/ZgnBetM/LpKLI=
+Authentication-Results: vger.kernel.org; dkim=none (message not signed)
+ header.d=none;vger.kernel.org; dmarc=none action=none header.from=amd.com;
+Received: from BY5PR12MB3956.namprd12.prod.outlook.com (2603:10b6:a03:1ab::17)
+ by BYAPR12MB2757.namprd12.prod.outlook.com (2603:10b6:a03:69::18) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3541.25; Thu, 12 Nov
+ 2020 05:42:24 +0000
+Received: from BY5PR12MB3956.namprd12.prod.outlook.com
+ ([fe80::9c0d:9f7b:9600:9c31]) by BY5PR12MB3956.namprd12.prod.outlook.com
+ ([fe80::9c0d:9f7b:9600:9c31%5]) with mapi id 15.20.3541.025; Thu, 12 Nov 2020
+ 05:42:24 +0000
+Subject: Re: [PATCH v7 0/3] Add support for AMD PTDMA controller driver
+To:     Sanjay R Mehta <Sanju.Mehta@amd.com>, vkoul@kernel.org
+Cc:     gregkh@linuxfoundation.org, dan.j.williams@intel.com,
+        Thomas.Lendacky@amd.com, Shyam-sundar.S-k@amd.com,
+        Nehal-bakulchandra.Shah@amd.com, robh@kernel.org,
+        mchehab+samsung@kernel.org, davem@davemloft.net,
+        linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org
+References: <1602833947-82021-1-git-send-email-Sanju.Mehta@amd.com>
+From:   Sanjay R Mehta <sanmehta@amd.com>
+Message-ID: <d89783d2-6b60-a603-aaa7-3d06cf5ac770@amd.com>
+Date:   Thu, 12 Nov 2020 11:12:11 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.4.2
+In-Reply-To: <1602833947-82021-1-git-send-email-Sanju.Mehta@amd.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [2406:7400:70:98ca::1]
+X-ClientProxiedBy: BM1PR01CA0112.INDPRD01.PROD.OUTLOOK.COM (2603:1096:b00::28)
+ To BY5PR12MB3956.namprd12.prod.outlook.com (2603:10b6:a03:1ab::17)
+MIME-Version: 1.0
+X-MS-Exchange-MessageSentRepresentingType: 1
+Received: from [IPv6:2406:7400:70:98ca::1] (2406:7400:70:98ca::1) by BM1PR01CA0112.INDPRD01.PROD.OUTLOOK.COM (2603:1096:b00::28) with Microsoft SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3541.21 via Frontend Transport; Thu, 12 Nov 2020 05:42:19 +0000
+X-MS-PublicTrafficType: Email
+X-MS-Office365-Filtering-HT: Tenant
+X-MS-Office365-Filtering-Correlation-Id: aac07a22-68d6-44a4-8662-08d886cdbae5
+X-MS-TrafficTypeDiagnostic: BYAPR12MB2757:
+X-MS-Exchange-Transport-Forked: True
+X-Microsoft-Antispam-PRVS: <BYAPR12MB2757FD4521A5EBEA2566C5B0E5E70@BYAPR12MB2757.namprd12.prod.outlook.com>
+X-MS-Oob-TLC-OOBClassifiers: OLM:7691;
+X-MS-Exchange-SenderADCheck: 1
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: rv8eyJPAtFVgZbdLlwEelUoq/3ZkajftFSPY7ST8UATI70eQ2+FRe/iOWn4ovkLC0FmotwAcKiwlZOnme0ingfo59nDPEztJSYEjSpf9s0sJsG6WO27/uoZyrLYvECuxxHty0787rkWR6PDzHpRfTXv0F9dAEikECw95HrVxJTukGin6AW70EQZrLatXQ89bH1OopwbQGdBisT9YUnCDsxv5yvKAvwTPLFEH1SwDinoUwPOKCAWnoO7EiHxVg7ZPv6zr0qYlbjEKUpHlx3eIBTRNQV+pE0gNWCH/EVUlLfptlIwXI2XyiGynp7zaMRt/B6tWVMvAbSCGCq1temRoEDW4Vt8dXmiDj4V522vW/QdhQz+tnk1EkaqKOXKsOsGlsinW7MyTDAOt/ZGNgklkSMz/wNfp2uzpNVjGDrQ+b78iwGsg5pgcop/Yg/QtpDwbgg4f5REYVVz0HkIpk+KQDA==
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BY5PR12MB3956.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(4636009)(136003)(376002)(39860400002)(346002)(366004)(396003)(52116002)(966005)(8936002)(66946007)(478600001)(36756003)(2906002)(53546011)(8676002)(31686004)(2616005)(4326008)(6486002)(5660300002)(31696002)(83380400001)(6666004)(66556008)(66476007)(186003)(16526019)(316002)(43740500002);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData: kvE4JoKKL8aVKVtZru9usUWnUpk0E6POjRgSkDlzhtvTxD+Qef7zqbqsRjvlAD9xYQPvUA2+u+dI9UzR68coQpEkNbz8gNQI066Pvjq0QZ1ho6HRqY23ip/4bJxklXKRq0yKCIBQp/jimaICuGdapKdWk8iqAdbrP+b188+D1K1nskCc8W+3uim9DmQZ4NqcET99pJfaPIZTvcPn5F+U1qLcH2AFKxD4jwruwg0UkEiWtQnLfSKv2W+G0H38yl2A1pjwg7LtzrOZt+fupZ4lQW+yW0vvNKHdM0BMaDsqtdVp5RUj/CJ120s/dK7C9NjSRRCtBrJ4YhJ5QejTOAzba94ztbj5pzlsMGY66VE4GEhIk+lfDN9FvFLl1V5s4qh6ugxl4w4APmkifoqyzLQayiB5+uJUgCNp5RmnAHhW8pPS9/H3M/olwH0c3fDwIFYOFzzaSaRSddhro246dcGdembJ6jtZUBRC3IzITeT6fbQAJ2KAtvnHkmAOIdBP8YqUChayFgM+is9WmPXY0pHGFoAhUX6OxogGrxYBcZ08aJ8mxc8YF0baISyZrGiwOkWLnGa5XrZ/mF+cNXTsShTGGKNwI1p1HJAFgp+LGkOHzpqou4lpfvvhTJ4zDXMmwELPjRCtLf4vUc26dZo9O+tBUhjMO5m9j2dMQEDbNVtVYeoRvkHvzwwIxiHAIwt5z/aSBpJj55OPTo8uRyxhoZtjz3qKWYGKctjQXAPyLwiSlkJrYpMUFNtecPQGRoJ6NsG9tOn/gLkhR+0gqGgA8T32yhy589m0z9r2hmu+lE0GPFz6PAf3R6q5HgrWUJsC+xhgkQJH75JMKqKIt5rI0xcxvoNLWL3nws1qJZAodNDmc7W868vtVdUtsHSQsmRBjG4kFJBSISZxleL3MFIxXYUNA4wF9n4B8l7mF8VUIMIN3kY=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: aac07a22-68d6-44a4-8662-08d886cdbae5
+X-MS-Exchange-CrossTenant-AuthSource: BY5PR12MB3956.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Nov 2020 05:42:23.9224
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: ddPKW8ZQM8n0nmvwmbnxdZgnSIsKzawrzxygYaL1RT8LpPguIdSXeraS0Jjr4szGT3ZuuPCCVEKF/Fvwd8CGCw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BYAPR12MB2757
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Add DT bindings YAML schema for DMA controller driver
-of Lightning Mountain (LGM) SoC.
 
-Signed-off-by: Amireddy Mallikarjuna reddy <mallikarjunax.reddy@linux.intel.com>
----
-v1:
-- Initial version.
+On 10/16/2020 1:09 PM, Sanjay R Mehta wrote:
+> From: Sanjay R Mehta <sanju.mehta@amd.com>
+> 
+> This patch series adds support for AMD PTDMA controller which
+> performs high bandwidth memory-to-memory and IO copy operation,
+> performs DMA transfer through queue based descriptor management.
+> 
+> AMD Processor has multiple ptdma device instances with each controller
+> having single queue. The driver also adds support for for multiple PTDMA
+> instances, each device will get an unique identifier and uniquely
+> named resources.
+> 
+> v7:
+> 	- Fixed module warnings reported ( by kernel test robot <lkp@intel.com> ).
+> 
+> v6:
+> 	- Removed debug artifacts and made the suggested cosmetic changes.
+> 	- implemented and used to_pt_chan and to_pt_desc inline functions.
+> 	- Removed src and dst address check as framework does this.
+> 	- Removed devm_kcalloc() usage and used devm_kzalloc() api.
+> 	- Using framework debugfs directory to store dma info.
+> 
+> v5:
+> 	- modified code to submit next tranction in ISR itself and removed the tasklet.
+> 	- implemented .device_synchronize API.
+> 	- converted debugfs code by using DEFINE_SHOW_ATTRIBUTE()
+> 	- using dbg_dev_root for debugfs root directory.
+> 	- removed dma_status from pt_dma_chan
+> 	- removed module parameter cmd_queue_lenght.
+> 	- removed global device list for multiple devics.
+> 	- removed code related to dynamic adding/deleting to device list
+> 	- removed pt_add_device and pt_del_device functions
+> 
+> v4:
+> 	- modified DMA channel and descriptor management using virt-dma layer
+> 	  instead of list based management.
+> 	- return only status of the cookie from pt_tx_status
+> 	- copyright year changed from 2019 to 2020
+> 	- removed dummy code for suspend & resume
+> 	- used bitmask and genmask
+> 
+> v3:
+>         - Fixed the sparse warnings.
+> 
+> v2:
+>         - Added controller description in cover letter
+>         - Removed "default m" from Kconfig
+>         - Replaced low_address() and high_address() functions with kernel
+>           API's lower_32_bits & upper_32_bits().
+>         - Removed the BH handler function pt_core_irq_bh() and instead
+>           handling transaction in irq handler itself.
+>         - Moved presetting of command queue registers into new function
+>           "init_cmdq_regs()"
+>         - Removed the kernel thread dependency to submit transaction.
+>         - Increased the hardware command queue size to 32 and adding it
+>           as a module parameter.
+>         - Removed backlog command queue handling mechanism.
+>         - Removed software command queue handling and instead submitting
+>           transaction command directly to
+>           hardware command queue.
+>         - Added tasklet structure variable in "struct pt_device".
+>           This is used to invoke pt_do_cmd_complete() upon receiving interrupt
+>           for command completion.
+>         - pt_core_perform_passthru() function parameters are modified and it is
+>           now used to submit command directly to hardware from dmaengine framew
+>         - Removed below structures, enums, macros and functions, as these value
+>           constants. Making command submission simple,
+>            - Removed "union pt_function"  and several macros like PT_VERSION,
+>              PT_BYTESWAP, PT_CMD_* etc..
+>            - enum pt_passthru_bitwise, enum pt_passthru_byteswap, enum pt_memty
+>              struct pt_dma_info, struct pt_data, struct pt_mem, struct pt_passt
+>              struct pt_op,
+> 
+> Links of the review comments for v5:
+> 1. https://lkml.org/lkml/2020/7/3/154
+> 2. https://lkml.org/lkml/2020/8/25/431
+> 3. https://lkml.org/lkml/2020/7/3/177
+> 4. https://lkml.org/lkml/2020/7/3/186
+> 
+> Links of the review comments for v5:
+> 1. https://lkml.org/lkml/2020/5/4/42
+> 2. https://lkml.org/lkml/2020/5/4/45
+> 3. https://lkml.org/lkml/2020/5/4/38
+> 4. https://lkml.org/lkml/2020/5/26/70
+> 
+> Links of the review comments for v4:
+> 1. https://lkml.org/lkml/2020/1/24/12
+> 2. https://lkml.org/lkml/2020/1/24/17
+> 
+> Links of the review comments for v2:
+> 1https://lkml.org/lkml/2019/12/27/630
+> 2. https://lkml.org/lkml/2020/1/3/23
+> 3. https://lkml.org/lkml/2020/1/3/314
+> 4. https://lkml.org/lkml/2020/1/10/100
+> 
+> Links of the review comments for v1:
+> 1. https://lkml.org/lkml/2019/9/24/490
+> 2. https://lkml.org/lkml/2019/9/24/399
+> 3. https://lkml.org/lkml/2019/9/24/862
+> 4. https://lkml.org/lkml/2019/9/24/122
+> 
+> Sanjay R Mehta (3):
+>   dmaengine: ptdma: Initial driver for the AMD PTDMA
+>   dmaengine: ptdma: register PTDMA controller as a DMA resource
+>   dmaengine: ptdma: Add debugfs entries for PTDMA information
+> 
+>  MAINTAINERS                         |   6 +
+>  drivers/dma/Kconfig                 |   2 +
+>  drivers/dma/Makefile                |   1 +
+>  drivers/dma/ptdma/Kconfig           |  13 +
+>  drivers/dma/ptdma/Makefile          |  10 +
+>  drivers/dma/ptdma/ptdma-debugfs.c   | 115 ++++++++
+>  drivers/dma/ptdma/ptdma-dev.c       | 333 ++++++++++++++++++++++
+>  drivers/dma/ptdma/ptdma-dmaengine.c | 554 ++++++++++++++++++++++++++++++++++++
+>  drivers/dma/ptdma/ptdma-pci.c       | 252 ++++++++++++++++
+>  drivers/dma/ptdma/ptdma.h           | 352 +++++++++++++++++++++++
+>  10 files changed, 1638 insertions(+)
+>  create mode 100644 drivers/dma/ptdma/Kconfig
+>  create mode 100644 drivers/dma/ptdma/Makefile
+>  create mode 100644 drivers/dma/ptdma/ptdma-debugfs.c
+>  create mode 100644 drivers/dma/ptdma/ptdma-dev.c
+>  create mode 100644 drivers/dma/ptdma/ptdma-dmaengine.c
+>  create mode 100644 drivers/dma/ptdma/ptdma-pci.c
+>  create mode 100644 drivers/dma/ptdma/ptdma.h
 
-v2:
-- Fix bot errors.
+Hey Vinod,
 
-v3:
-- No change.
+Hope you are doing good.
 
-v4:
-- Address Thomas langer comments
-  - use node name pattern as dma-controller as in common binding.
-  - Remove "_" (underscore) in instance name.
-  - Remove "port-" and "chan-" in attribute name for both 'dma-ports' & 'dma-channels' child nodes.
+I had submitted this patch series 3 weeks ago with the suggested changes.
+Did you got chance to review?
 
-v5:
-- Moved some of the attributes in 'dma-ports' & 'dma-channels' child nodes to dma client/consumer side as cells in 'dmas' properties.
+Thanks,
+Sanjay
 
-v6:
-- Add additionalProperties: false
-- completely removed 'dma-ports' and 'dma-channels' child nodes.
-- Moved channel dt properties to client side dmas.
-- Use standard dma-channels and dma-channel-mask properties.
-- Documented reset-names
-- Add description for dma-cells
-
-v7:
-- modified compatible to oneof
-- Reduced number of dma-cells to 3
-- Fine tune the description of some properties.
-
-v7-resend:
-- rebase to 5.10-rc1
-
-v8:
-- rebased to 5.10-rc3
-- Fixing the bot issues (wrong indentation)
-
-v9:
-- rebased to 5.10-rc3
-- Use 'enum' instead of oneOf+const
-- Drop '#dma-cells' in required:, already covered in dma-common.yaml
-- Drop nodename Already covered by dma-controller.yaml
----
- .../devicetree/bindings/dma/intel,ldma.yaml        | 130 +++++++++++++++++++++
- 1 file changed, 130 insertions(+)
- create mode 100644 Documentation/devicetree/bindings/dma/intel,ldma.yaml
-
-diff --git a/Documentation/devicetree/bindings/dma/intel,ldma.yaml b/Documentation/devicetree/bindings/dma/intel,ldma.yaml
-new file mode 100644
-index 000000000000..c06281a10178
---- /dev/null
-+++ b/Documentation/devicetree/bindings/dma/intel,ldma.yaml
-@@ -0,0 +1,130 @@
-+# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/dma/intel,ldma.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Lightning Mountain centralized low speed DMA and high speed DMA controllers.
-+
-+maintainers:
-+  - chuanhua.lei@intel.com
-+  - mallikarjunax.reddy@intel.com
-+
-+allOf:
-+  - $ref: "dma-controller.yaml#"
-+
-+properties:
-+  compatible:
-+    enum:
-+      - intel,lgm-cdma
-+      - intel,lgm-dma2tx
-+      - intel,lgm-dma1rx
-+      - intel,lgm-dma1tx
-+      - intel,lgm-dma0tx
-+      - intel,lgm-dma3
-+      - intel,lgm-toe-dma30
-+      - intel,lgm-toe-dma31
-+
-+  reg:
-+    maxItems: 1
-+
-+  "#dma-cells":
-+    const: 3
-+    description:
-+      The first cell is the peripheral's DMA request line.
-+      The second cell is the peripheral's (port) number corresponding to the channel.
-+      The third cell is the burst length of the channel.
-+
-+  dma-channels:
-+    minimum: 1
-+    maximum: 16
-+
-+  dma-channel-mask:
-+    maxItems: 1
-+
-+  clocks:
-+    maxItems: 1
-+
-+  resets:
-+    maxItems: 1
-+
-+  reset-names:
-+    items:
-+      - const: ctrl
-+
-+  interrupts:
-+    maxItems: 1
-+
-+  intel,dma-poll-cnt:
-+    $ref: /schemas/types.yaml#definitions/uint32
-+    description:
-+      DMA descriptor polling counter is used to control the poling mechanism
-+      for the descriptor fetching for all channels.
-+
-+  intel,dma-byte-en:
-+    type: boolean
-+    description:
-+      DMA byte enable is only valid for DMA write(RX).
-+      Byte enable(1) means DMA write will be based on the number of dwords
-+      instead of the whole burst.
-+
-+  intel,dma-drb:
-+    type: boolean
-+    description:
-+      DMA descriptor read back to make sure data and desc synchronization.
-+
-+  intel,dma-desc-in-sram:
-+    type: boolean
-+    description:
-+      DMA descritpors in SRAM or not. Some old controllers descriptors
-+      can be in DRAM or SRAM. The new ones are all in SRAM.
-+
-+  intel,dma-orrc:
-+    $ref: /schemas/types.yaml#definitions/uint32
-+    description:
-+      DMA outstanding read counter value determine the number of
-+      ORR-Outstanding Read Request. The maximum value is 16.
-+
-+  intel,dma-dburst-wr:
-+    type: boolean
-+    description:
-+      Enable RX dynamic burst write. When it is enabled, the DMA does RX dynamic burst;
-+      if it is disabled, the DMA RX will still support programmable fixed burst size of 2,4,8,16.
-+      It only applies to RX DMA and memcopy DMA.
-+
-+required:
-+  - compatible
-+  - reg
-+
-+additionalProperties: false
-+
-+examples:
-+  - |
-+    dma0: dma-controller@e0e00000 {
-+      compatible = "intel,lgm-cdma";
-+      reg = <0xe0e00000 0x1000>;
-+      #dma-cells = <3>;
-+      dma-channels = <16>;
-+      dma-channel-mask = <0xFFFF>;
-+      interrupt-parent = <&ioapic1>;
-+      interrupts = <82 1>;
-+      resets = <&rcu0 0x30 0>;
-+      reset-names = "ctrl";
-+      clocks = <&cgu0 80>;
-+      intel,dma-poll-cnt = <4>;
-+      intel,dma-byte-en;
-+      intel,dma-drb;
-+    };
-+  - |
-+    dma3: dma-controller@ec800000 {
-+      compatible = "intel,lgm-dma3";
-+      reg = <0xec800000 0x1000>;
-+      clocks = <&cgu0 71>;
-+      resets = <&rcu0 0x10 9>;
-+      #dma-cells = <3>;
-+      intel,dma-poll-cnt = <16>;
-+      intel,dma-desc-in-sram;
-+      intel,dma-orrc = <16>;
-+      intel,dma-byte-en;
-+      intel,dma-dburst-wr;
-+    };
--- 
-2.11.0
-
+> 
