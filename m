@@ -2,55 +2,43 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A6E36C55ABD
-	for <dmaengine@archiver.kernel.org>; Fri, 13 Nov 2020 16:12:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0369CC388F7
+	for <dmaengine@archiver.kernel.org>; Fri, 13 Nov 2020 17:38:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 776F922248
-	for <dmaengine@archiver.kernel.org>; Fri, 13 Nov 2020 16:12:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9BA5622242
+	for <dmaengine@archiver.kernel.org>; Fri, 13 Nov 2020 17:38:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727007AbgKMQMl convert rfc822-to-8bit (ORCPT
-        <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 13 Nov 2020 11:12:41 -0500
-Received: from mga09.intel.com ([134.134.136.24]:9889 "EHLO mga09.intel.com"
+        id S1726260AbgKMRis (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 13 Nov 2020 12:38:48 -0500
+Received: from mga05.intel.com ([192.55.52.43]:3880 "EHLO mga05.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726701AbgKMQMl (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Fri, 13 Nov 2020 11:12:41 -0500
-IronPort-SDR: 2JCoDOsGs5Ui6G3G+2dCVYHCJkBW34L6tlE2HLqKIt8tbtLiyYg+QVNQqkf6Und6ltFjiCHhtu
- 65kK4cz9bgYA==
-X-IronPort-AV: E=McAfee;i="6000,8403,9804"; a="170663097"
-X-IronPort-AV: E=Sophos;i="5.77,475,1596524400"; 
-   d="scan'208";a="170663097"
+        id S1726070AbgKMRir (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Fri, 13 Nov 2020 12:38:47 -0500
+IronPort-SDR: Uj9oh9jS+PtkILYfAkOvBcRkoF8QhkfQtqf7BCFMhLW0klZ1FgXLUoAw2/E1aPRXxOyXreCZ85
+ xOMre2FPSftQ==
+X-IronPort-AV: E=McAfee;i="6000,8403,9804"; a="255216823"
+X-IronPort-AV: E=Sophos;i="5.77,476,1596524400"; 
+   d="scan'208";a="255216823"
 X-Amp-Result: SKIPPED(no attachment in message)
 X-Amp-File-Uploaded: False
-Received: from fmsmga007.fm.intel.com ([10.253.24.52])
-  by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Nov 2020 08:12:40 -0800
-IronPort-SDR: /EpiTz+ObiUYe2Tt61ei7Ih9ue4JXLvOFzFoszIGlTLqqqn3EIvramoTCldkoiD6eB957e0ac+
- RaNWbkQmbfHQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.77,475,1596524400"; 
-   d="scan'208";a="309655009"
-Received: from fmsmsx606.amr.corp.intel.com ([10.18.126.86])
-  by fmsmga007.fm.intel.com with ESMTP; 13 Nov 2020 08:12:40 -0800
-Received: from fmsmsx610.amr.corp.intel.com (10.18.126.90) by
- fmsmsx606.amr.corp.intel.com (10.18.126.86) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.1713.5; Fri, 13 Nov 2020 08:12:39 -0800
-Received: from fmsmsx610.amr.corp.intel.com (10.18.126.90) by
- fmsmsx610.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.1713.5; Fri, 13 Nov 2020 08:12:39 -0800
-Received: from fmsmsx610.amr.corp.intel.com ([10.18.126.90]) by
- fmsmsx610.amr.corp.intel.com ([10.18.126.90]) with mapi id 15.01.1713.004;
- Fri, 13 Nov 2020 08:12:39 -0800
-From:   "Luck, Tony" <tony.luck@intel.com>
-To:     Thomas Gleixner <tglx@linutronix.de>,
+Received: from orsmga006.jf.intel.com ([10.7.209.51])
+  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Nov 2020 09:38:47 -0800
+IronPort-SDR: 8YZt70b5Kok964sqPXYAd2YuJ8I69VgCBCLM9LupaRtam992OkvRrHqLdrX5WeFkzZ3qtU7ymG
+ bCYIE6b55efw==
+X-IronPort-AV: E=Sophos;i="5.77,476,1596524400"; 
+   d="scan'208";a="328941426"
+Received: from otc-nc-03.jf.intel.com (HELO otc-nc-03) ([10.54.39.36])
+  by orsmga006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Nov 2020 09:38:46 -0800
+Date:   Fri, 13 Nov 2020 09:38:45 -0800
+From:   "Raj, Ashok" <ashok.raj@intel.com>
+To:     "Luck, Tony" <tony.luck@intel.com>
+Cc:     Thomas Gleixner <tglx@linutronix.de>,
         "Tian, Kevin" <kevin.tian@intel.com>,
-        "Wilk, Konrad" <konrad.wilk@oracle.com>
-CC:     "Raj, Ashok" <ashok.raj@intel.com>,
+        "Wilk, Konrad" <konrad.wilk@oracle.com>,
         Jason Gunthorpe <jgg@nvidia.com>,
         "Williams, Dan J" <dan.j.williams@intel.com>,
         "Jiang, Dave" <dave.jiang@intel.com>,
@@ -77,50 +65,104 @@ CC:     "Raj, Ashok" <ashok.raj@intel.com>,
         "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
         "linux-pci@vger.kernel.org" <linux-pci@vger.kernel.org>,
         "kvm@vger.kernel.org" <kvm@vger.kernel.org>,
-        Marc Zyngier <maz@kernel.org>
-Subject: RE: [PATCH v4 06/17] PCI: add SIOV and IMS capability detection
-Thread-Topic: [PATCH v4 06/17] PCI: add SIOV and IMS capability detection
-Thread-Index: AQHWru2wVqYDq8zCAUGd/W1dOZWHUKmxA7+AgAAYm4CAABfkAIAAARAAgAQpOgCAAOGcgIAAphOAgAD60ICAAJaGgIAADwsAgAAFn4CAAuAFAIAAOXiAgAA79ACAABGDgIAAY1MAgAAHBICAAsnwAIAAVwYAgAC+sACAAGcnAIAAVyaAgABtcgCAAFeIgIAAPx6AgAEdLoCAAmDAgIAANQ0AgABC2gCAALXJAP//pWBA
-Date:   Fri, 13 Nov 2020 16:12:39 +0000
-Message-ID: <30928722afe64104b5abba09de4f74dd@intel.com>
-References: <20201107001207.GA2620339@nvidia.com>
- <87pn4nk7nn.fsf@nanos.tec.linutronix.de>
- <20201108235852.GC32074@araj-mobl1.jf.intel.com>
- <874klykc7h.fsf@nanos.tec.linutronix.de>
- <20201109173034.GG2620339@nvidia.com>
- <87pn4mi23u.fsf@nanos.tec.linutronix.de> <20201110051412.GA20147@otc-nc-03>
- <875z6dik1a.fsf@nanos.tec.linutronix.de> <20201110141323.GB22336@otc-nc-03>
+        Ashok Raj <ashok.raj@intel.com>, andrew.cooper3@citrix.com
+Subject: Re: [PATCH v4 06/17] PCI: add SIOV and IMS capability detection
+Message-ID: <20201113173845.GA53733@otc-nc-03>
+References: <87pn4mi23u.fsf@nanos.tec.linutronix.de>
+ <20201110051412.GA20147@otc-nc-03>
+ <875z6dik1a.fsf@nanos.tec.linutronix.de>
+ <20201110141323.GB22336@otc-nc-03>
  <MWHPR11MB16455B594B1B48B6E3C97C108CE80@MWHPR11MB1645.namprd11.prod.outlook.com>
  <20201112193253.GG19638@char.us.oracle.com>
  <877dqqmc2h.fsf@nanos.tec.linutronix.de>
  <MWHPR11MB1645F27808F1F5E79646A3A88CE60@MWHPR11MB1645.namprd11.prod.outlook.com>
  <874kltmlfr.fsf@nanos.tec.linutronix.de>
-In-Reply-To: <874kltmlfr.fsf@nanos.tec.linutronix.de>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-dlp-product: dlpe-windows
-dlp-reaction: no-action
-dlp-version: 11.5.1.3
-x-originating-ip: [10.22.254.132]
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
+ <30928722afe64104b5abba09de4f74dd@intel.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <30928722afe64104b5abba09de4f74dd@intel.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-> Of course is this not only an x86 problem. Every architecture which
-> supports virtualization has the same issue. ARM(64) has no way to tell
-> for sure whether the machine runs bare metal either. No idea about the
-> other architectures.
+On Fri, Nov 13, 2020 at 08:12:39AM -0800, Luck, Tony wrote:
+> > Of course is this not only an x86 problem. Every architecture which
+> > supports virtualization has the same issue. ARM(64) has no way to tell
+> > for sure whether the machine runs bare metal either. No idea about the
+> > other architectures.
+> 
+> Sounds like a hypervisor problem. If the VMM provides perfect emulation
+> of every weird quirk of h/w, then it is OK to let the guest believe that it is
+> running on bare metal.
 
-Sounds like a hypervisor problem. If the VMM provides perfect emulation
-of every weird quirk of h/w, then it is OK to let the guest believe that it is
-running on bare metal.
+That's true, which is why there isn't an immutable bit in cpuid or
+otherwise telling you are running under a hypervisor. Providing something
+like that would make certain features not virtualizable. Apparently before we
+had faulting cpuid, what you had in guest was the real raw cpuid. 
 
-If it isn't perfect, then it should make sure the guest knows *for sure*, so that
-the guest can take appropriate actions to avoid the sharp edges.
+Waiver: I'm not saying this is perfect, I'm just replaying the reason
+behind it. Not trying to defend it... flames > /dev/null
+> 
+> If it isn't perfect, then it should make sure the guest knows *for sure*, so that
+> the guest can take appropriate actions to avoid the sharp edges.
+> 
 
--Tony
+There are indeed 2 problems to solve.
+
+1. How does device driver know if device is IMS capable.
+
+   IMS is a device attribute. Each vendor can provide its own method to
+   provide that indication. One such mechanism is the DVSEC.SIOV.IMS
+   property. Some might believe this is for use only by Intel. For DVSEC I
+   don't believe there is such a connection as in device vendor id in
+   standard header. TBH, there are other device vendors using the exact
+   same method to indicate SIOV and IMS propeties. What a DVSEC vendor ID
+   states is "As defined by Vendor X". 
+
+   Why we choose a config vs something in device specific mmio is because
+   today VFIO being that one common mechanism, it only exposes known
+   standard and some extended headers to guest. When we expose a full PF,
+   the guest doens't see the DVSEC, so drivers know this isn't available.
+
+   This is our mechanism to stop drivers from calling
+   pci_ims_array_create_msi_irq_domain(). It may not be perfect for all
+   devices, it is a device specific mechanism. For devices under
+   consideration following the SIOV spec it meets the sprit of the
+   requirement even without #2 below. When devices have no way to detect
+   this, #2 is required as a second way to block IMS.
+
+2. How does platform component (IOMMU) inform if they can support all forms
+   of IMS. (On device, or in memory). 
+   
+   On device would require some form trap/emulate. Legacy MSIx already has
+   that solved, but for device specific store you need some additional
+   work.
+
+   When its system memory (say IMS is in GPA space), you need some form of
+   hypercall. There is no way around it since we can't intercept. Yes, you
+   can maybe map those as RO and trap, but its not pretty.
+
+   To solve this rather than a generic platform capability, maybe we should
+   flip this to IOMMU instead, because that's the one that offers this
+   capability today.
+
+   iommu_ims_supported() 
+   	When platform has no IOMMU or no hypervisor calls, it returns
+	false. So device driver can tell, even if it supports IMS
+	capability deduction, does the platform support IMS.
+   
+        On platforms where iommu supports capability.
+
+	Either there is a vIOMMU with a Virtual Command Register that can
+	provide a way to get the interrupt handle similar to what you would
+	get from an hypercall for instance. Or there is a real hypercall
+	that supports giving the guest OS the physical IRTE handle. 
+
+
+-- 
+Cheers,
+Ashok
+
+[Forgiveness is the attribute of the STRONG - Gandhi]
