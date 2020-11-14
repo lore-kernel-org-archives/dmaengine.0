@@ -2,160 +2,143 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,
+	DATE_IN_FUTURE_06_12,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
+	USER_AGENT_GIT autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F12C1C55ABD
-	for <dmaengine@archiver.kernel.org>; Fri, 13 Nov 2020 15:36:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 10B2CC63697
+	for <dmaengine@archiver.kernel.org>; Fri, 13 Nov 2020 16:09:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9FADA208D5
-	for <dmaengine@archiver.kernel.org>; Fri, 13 Nov 2020 15:36:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D4E7422226
+	for <dmaengine@archiver.kernel.org>; Fri, 13 Nov 2020 16:09:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726759AbgKMPcX (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 13 Nov 2020 10:32:23 -0500
-Received: from new2-smtp.messagingengine.com ([66.111.4.224]:39133 "EHLO
-        new2-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726731AbgKMPcU (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Fri, 13 Nov 2020 10:32:20 -0500
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.46])
-        by mailnew.nyi.internal (Postfix) with ESMTP id E042F58032D;
-        Fri, 13 Nov 2020 10:32:18 -0500 (EST)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute6.internal (MEProxy); Fri, 13 Nov 2020 10:32:18 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cerno.tech; h=
-        from:date:to:cc:subject:message-id:references:mime-version
-        :content-type:in-reply-to; s=fm1; bh=iQvsGPPa0tYF2NuoRivcownR9ft
-        NLwLD3BYTJEqiN68=; b=lSysGwVB7uEO/OD640HhdDjd1HDZweo4kZul3xT9ZZb
-        0QhyoL6zjbLQenu11bkjQ56NKvcFI9Vin1bBd06Uud3+PwXKy6qKeCQcaCiX3Nix
-        TqBIn+WPVvZDm7sw6drhgyS+vbLOqc6pZ+KKyHPx4xGi3A/Y/+VcNYzG+y0uuovn
-        5rWeeiiqERqhOAyiEo9akMy8TUZX4MQSkLMPkTCjY8kgFtCV5ssoWbVnXJlGmYXc
-        FRSmpXdBhD0XhpoR69kEMXizqVKgjJafS27ff3o5CRM5X79G+ONZPXg3ydPFSfut
-        6UtqsHXrQkJ6k4VqqCW68LFZLZ8z6wNmqdC7s/dPBYg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:content-type:date:from:in-reply-to
-        :message-id:mime-version:references:subject:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=iQvsGP
-        Pa0tYF2NuoRivcownR9ftNLwLD3BYTJEqiN68=; b=EJEe7fiMO/W7hIRq1R4VkM
-        Zit5RF0UHiDUTx6SfZKALDBAWTFgnK20cOfruzgTloS29toHAzz9N+GEz7rq/zx8
-        yLPixecY5+AXwqbZ7sCzmo0LOcrfL29ODL89uzAJlA56HyssX9qrta4NPZnMoxbz
-        I5q3M4mPKf0MwE9V4tdYhZRPJEikPDzVC5fdpaacyloLcIJOJyoKpti/64rdTwAj
-        /Gv0s9sL1Qg5aK/CboQnGKNUvqEFnTN5B0fgsQHfGoUtsPl8nhnsBVKE6eQDVxXH
-        SQ2rJ3EJVfbLNEFd3b+oFJvyjudcxqFG0onlp35JDRt7IALKPWoEbWk3YjcrD3gg
-        ==
-X-ME-Sender: <xms:AKeuXzhp5yOZuzx_8jABAGLEMIARQ5xo40fJkpSR4FuyWLt-6jzgAw>
-    <xme:AKeuXwA5pgknbzpFZOXlJtT48gdkLWQj5Td8uDZtGkQWAl8sQgDry2t8w2V5qT_XX
-    Eeuk1BzA1nEqMDoPDA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedujedruddvhedgjeejucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhephfffvffukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpehmrgigihhm
-    vgestggvrhhnohdrthgvtghhnecuggftrfgrthhtvghrnhephffffffgteejgeeiteelue
-    dvkeffudekjeejheevleekgffggfekkedvhfeigefgnecukfhppeeltddrkeelrdeikedr
-    jeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepmh
-    grgihimhgvsegtvghrnhhordhtvggthh
-X-ME-Proxy: <xmx:AKeuXzGdXPY-QZyakhb_12fR12Jd5ZHQl-EScwayMt7F4680Um_lDw>
-    <xmx:AKeuXwRguMbGG6BXUiUDFA9shhP9V3h4cjovwPpd_fCwkqtq-yjcbg>
-    <xmx:AKeuXww-uHpJSrMnSdsgyDrytpFfi7fDFWSH7WxmiJVs-U6ojPrIlw>
-    <xmx:AqeuX9jrNtkIa69VlNHt4vbw5TVITyxF4-jAagikg_6BBmBDNV88dA>
-Received: from localhost (lfbn-tou-1-1502-76.w90-89.abo.wanadoo.fr [90.89.68.76])
-        by mail.messagingengine.com (Postfix) with ESMTPA id BE0853064AAE;
-        Fri, 13 Nov 2020 10:32:15 -0500 (EST)
-From:   maxime@cerno.tech
-Date:   Tue, 10 Nov 2020 13:55:36 +0100
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Frank Lee <tiny.windzz@gmail.com>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Frank Lee <frank@allwinnertech.com>,
-        Rob Herring <robh+dt@kernel.org>, Chen-Yu Tsai <wens@csie.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>, kishon@ti.com,
-        wim@linux-watchdog.org, Guenter Roeck <linux@roeck-us.net>,
-        dan.j.williams@intel.com, Linus Walleij <linus.walleij@linaro.org>,
-        wsa+renesas@sang-engineering.com, dianders@chromium.org,
-        marex@denx.de, Colin King <colin.king@canonical.com>,
-        rdunlap@infradead.org,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        =?utf-8?Q?Ond=C5=99ej?= Jirman <megous@megous.com>,
-        rikard.falkeborn@gmail.com, dmaengine@vger.kernel.org,
-        devicetree <devicetree@vger.kernel.org>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        "open list:SECURE DIGITAL HO..." <linux-mmc@vger.kernel.org>,
-        linux-watchdog@vger.kernel.org,
-        linux-gpio <linux-gpio@vger.kernel.org>
-Subject: Re: [PATCH 00/19] Second step support for A100
-Message-ID: <20201110125536.gxxbgzkh3tlmn2ze@gilmour.lan>
-65;6201;1cFrom: Maxime Ripard <maxime@cerno.tech>
-References: <20201110040553.1381-1-frank@allwinnertech.com>
- <CAEExFWsc4Rx2U+BVuqTJkL0wj-gdNcF=emJRcStQ2Uq=FQEx1g@mail.gmail.com>
- <CAJKOXPf4ARNnSnvDpn7vVC0kGNd+m_dkfgKkmH_bca2AZ_Osyg@mail.gmail.com>
- <CAEExFWv2o9aTfUVM5NzZz10kAO_Ya8VJvJrmyjh55=U_5G8RJw@mail.gmail.com>
- <20201110124829.GB161013@vkoul-mobl>
+        id S1726691AbgKMQJl (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 13 Nov 2020 11:09:41 -0500
+Received: from szxga04-in.huawei.com ([45.249.212.190]:7238 "EHLO
+        szxga04-in.huawei.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726336AbgKMQJl (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Fri, 13 Nov 2020 11:09:41 -0500
+Received: from DGGEMS413-HUB.china.huawei.com (unknown [172.30.72.58])
+        by szxga04-in.huawei.com (SkyGuard) with ESMTP id 4CXk1b1Mtfzkk74;
+        Sat, 14 Nov 2020 00:09:23 +0800 (CST)
+Received: from huawei.com (10.151.151.249) by DGGEMS413-HUB.china.huawei.com
+ (10.3.19.213) with Microsoft SMTP Server id 14.3.487.0; Sat, 14 Nov 2020
+ 00:09:34 +0800
+From:   Dongjiu Geng <gengdongjiu@huawei.com>
+To:     <vkoul@kernel.org>, <robh+dt@kernel.org>,
+        <dan.j.williams@intel.com>, <p.zabel@pengutronix.de>,
+        <dmaengine@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+Subject: [PATCH 1/2] dt: bindings: dma: Add DT bindings for HiSilicon Hiedma Controller
+Date:   Sat, 14 Nov 2020 00:34:08 +0000
+Message-ID: <20201114003409.36406-1-gengdongjiu@huawei.com>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-        protocol="application/pgp-signature"; boundary="dakuxhxxqpi2fsmh"
-Content-Disposition: inline
-In-Reply-To: <20201110124829.GB161013@vkoul-mobl>
+Content-Type: text/plain
+X-Originating-IP: [10.151.151.249]
+X-CFilter-Loop: Reflected
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
+The Hiedma Controller v310 Provides eight DMA channels, each
+channel can be configured for one-way transfer. The data can
+be transferred in 8-bit, 16-bit, 32-bit, or 64-bit mode. This
+documentation describes DT bindings of this controller.
 
---dakuxhxxqpi2fsmh
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Signed-off-by: Dongjiu Geng <gengdongjiu@huawei.com>
+---
+ .../bindings/dma/hisilicon,hiedmacv310.yaml   | 80 +++++++++++++++++++
+ 1 file changed, 80 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/dma/hisilicon,hiedmacv310.yaml
 
-On Tue, Nov 10, 2020 at 06:18:29PM +0530, Vinod Koul wrote:
-> On 10-11-20, 16:51, Frank Lee wrote:
-> > On Tue, Nov 10, 2020 at 4:43 PM Krzysztof Kozlowski <krzk@kernel.org> w=
-rote:
-> > >
-> > > On Tue, 10 Nov 2020 at 07:00, Frank Lee <tiny.windzz@gmail.com> wrote:
-> > > >
-> > > > It seems that sending too many e-mails at one time will cause some
-> > > > emails to fail to be sent out. I will try again.
-> > >
-> > > Hi,
-> > >
-> > > Instead please reduce the address list to relevant people, as pointed
-> > > out by scripts/get_maintainer.pl. Don't Cc irrelevant developers
-> > > unless a file is abandoned and you need to get as much audience as
-> > > possible... but sunxi is not abandoned.
-> >=20
-> > Thank you for the reminder. I resend the version in the afternoon,
-> > only CC the relevant people. I'm not sure. Should the cover be copied
-> > to everyone?
->=20
-> Any reason why this should be a single series.. why not split it to
-> bunch of chunks, one per subsystem like pinctrl, phy, dmaengine, etc...
-> And then DTS parts and CC relevant list and maintainers. I do not think
-> there is any dependency, right?
+diff --git a/Documentation/devicetree/bindings/dma/hisilicon,hiedmacv310.yaml b/Documentation/devicetree/bindings/dma/hisilicon,hiedmacv310.yaml
+new file mode 100644
+index 000000000000..c04603316b40
+--- /dev/null
++++ b/Documentation/devicetree/bindings/dma/hisilicon,hiedmacv310.yaml
+@@ -0,0 +1,80 @@
++# SPDX-License-Identifier: GPL-2.0-only
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/dma/hisilicon,hiedmacv310.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: HiSilicon Hiedma Controller v310 Device Tree Bindings
++
++description: |
++  These bindings describe the DMA engine included in the HiSilicon Hiedma
++  Controller v310 Device.
++
++maintainers:
++  - Dongjiu Geng <gengdongjiu@huawei.com>
++
++allOf:
++  - $ref: "dma-controller.yaml#"
++
++properties:
++  "#dma-cells":
++    const: 2
++
++  compatible:
++    const: hisilicon,hiedmacv310_n
++
++  reg:
++    maxItems: 1
++
++  interrupts:
++    maxItems: 1
++
++  clocks:
++    items:
++      - description: apb clock
++      - description: axi clock
++
++  clock-names:
++    items:
++      - const: apb_pclk
++      - const: axi_aclk
++
++required:
++  - "#dma-cells"
++  - "#clock-cells"
++  - compatible
++  - reg
++  - interrupts
++  - clocks
++  - clock-names
++  - resets
++  - reset-names
++  - dma-requests
++  - dma-channels
++  - devid
++
++additionalProperties: false
++
++examples:
++  - |
++    #include <dt-bindings/interrupt-controller/arm-gic.h>
++    #include <dt-bindings/clock/hi3559av100-clock.h>
++
++    dma: dma-controller@10040000 {
++      compatible = "hisilicon,hiedmacv310_n";
++      reg = <0x10040000 0x1000>;
++      misc_regmap = <&misc_ctrl>;
++      misc_ctrl_base = <0x144>;
++      interrupts = <0 82 4>;
++      clocks = <&clock HI3559AV100_EDMAC1_CLK>, <&clock HI3559AV100_EDMAC1_AXICLK>;
++      clock-names = "apb_pclk", "axi_aclk";
++      #clock-cells = <2>;
++      resets = <&clock 0x16c 7>;
++      reset-names = "dma-reset";
++      dma-requests = <32>;
++      dma-channels = <8>;
++      devid = <1>;
++      #dma-cells = <2>;
++    };
++
++...
+-- 
+2.17.1
 
-Yeah, I agree.
-
-One series should be about one topic, so you should have at least:
-  - One for the pinctrl fixes
-  - One for the DMA controller and related DT patches
-  - One for the MMC controller and related DT patches
-  - One for the USB controllers and related DT patches
-    * And for the PHY, the enable_pmu_unk1 and devm_* patches should be
-      sent independently as well
-  - One for the watchdog
-  - And the PMU patch should be sent independently too
-
-Maxime
-
---dakuxhxxqpi2fsmh
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYIAB0WIQRcEzekXsqa64kGDp7j7w1vZxhRxQUCX6qNyAAKCRDj7w1vZxhR
-xZhsAQDnDysv0PDMRF+pQ9Aae6T48f6wAJcVf1ozDJ6SaYxctQEAjoXFWWcwmX5u
-DkWVsDJgDp4anqqJj/n9YqMwDCBJ9Q0=
-=LbiZ
------END PGP SIGNATURE-----
-
---dakuxhxxqpi2fsmh--
