@@ -2,108 +2,189 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0562CC63777
-	for <dmaengine@archiver.kernel.org>; Tue, 17 Nov 2020 09:21:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7F06DC63798
+	for <dmaengine@archiver.kernel.org>; Tue, 17 Nov 2020 10:56:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 97C9B24682
-	for <dmaengine@archiver.kernel.org>; Tue, 17 Nov 2020 09:21:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2C21624654
+	for <dmaengine@archiver.kernel.org>; Tue, 17 Nov 2020 10:56:45 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="DwBmeWJS";
-	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="YCVL+0Qr"
+	dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b="SMRzKQXp"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727202AbgKQJV4 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 17 Nov 2020 04:21:56 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50712 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726561AbgKQJVz (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Tue, 17 Nov 2020 04:21:55 -0500
-Received: from galois.linutronix.de (Galois.linutronix.de [IPv6:2a0a:51c0:0:12e:550::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 84ACCC0613CF;
-        Tue, 17 Nov 2020 01:21:55 -0800 (PST)
-From:   Thomas Gleixner <tglx@linutronix.de>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-        s=2020; t=1605604913;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=+oNN0MQgkiBnCbtfwugoj2ueCMN1m2mxEsnINrDLEe0=;
-        b=DwBmeWJShTfSxI7/bv9yMVNbyXuplY6dNWaJqhWyEBj0NEoUnDzm/Q61zBRx/jvfVqMab3
-        YqSSqciJOklmsPQhLhvFcAhDaCgdtLjlgDx1WVoEJhofYrTb+HZOhHdBmFYZ8sOC2J+3rF
-        kkEshToFTkEciOfblmWCrEZp5P6IbtwlfRxWHlsTJbeLlyWYtXZ7SdaRZeP8Ae+vxzSOqK
-        eStnMibR6Ryujt1YDKfPzB2cupuDgeXiLMpjrk89EkPjUsUGpsAGsIueuBeEINhXacrsmY
-        QdeJkh0tBpaCWJVw6wHbr0zQo5UbpJ4Qszu9RndP91TowUjpuEanGAb23BvW1w==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-        s=2020e; t=1605604913;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=+oNN0MQgkiBnCbtfwugoj2ueCMN1m2mxEsnINrDLEe0=;
-        b=YCVL+0Qrok4yb6+AmGU6uun36CXW4zeVISlAXjUYay+MYF25xqVx1q5xsECe4BULShPhcB
-        gQiiXXhWd1DZjrAg==
-To:     "Tian\, Kevin" <kevin.tian@intel.com>,
-        Jason Gunthorpe <jgg@nvidia.com>
-Cc:     "Raj\, Ashok" <ashok.raj@intel.com>,
-        Christoph Hellwig <hch@infradead.org>,
-        "Wilk\, Konrad" <konrad.wilk@oracle.com>,
-        "Williams\, Dan J" <dan.j.williams@intel.com>,
-        "Jiang\, Dave" <dave.jiang@intel.com>,
-        Bjorn Helgaas <helgaas@kernel.org>,
-        "vkoul\@kernel.org" <vkoul@kernel.org>,
-        "Dey\, Megha" <megha.dey@intel.com>,
-        "maz\@kernel.org" <maz@kernel.org>,
-        "bhelgaas\@google.com" <bhelgaas@google.com>,
-        "alex.williamson\@redhat.com" <alex.williamson@redhat.com>,
-        "Pan\, Jacob jun" <jacob.jun.pan@intel.com>,
-        "Liu\, Yi L" <yi.l.liu@intel.com>,
-        "Lu\, Baolu" <baolu.lu@intel.com>,
-        "Kumar\, Sanjay K" <sanjay.k.kumar@intel.com>,
-        "Luck\, Tony" <tony.luck@intel.com>,
-        "kwankhede\@nvidia.com" <kwankhede@nvidia.com>,
-        "eric.auger\@redhat.com" <eric.auger@redhat.com>,
-        "parav\@mellanox.com" <parav@mellanox.com>,
-        "rafael\@kernel.org" <rafael@kernel.org>,
-        "netanelg\@mellanox.com" <netanelg@mellanox.com>,
-        "shahafs\@mellanox.com" <shahafs@mellanox.com>,
-        "yan.y.zhao\@linux.intel.com" <yan.y.zhao@linux.intel.com>,
-        "pbonzini\@redhat.com" <pbonzini@redhat.com>,
-        "Ortiz\, Samuel" <samuel.ortiz@intel.com>,
-        "Hossain\, Mona" <mona.hossain@intel.com>,
-        "dmaengine\@vger.kernel.org" <dmaengine@vger.kernel.org>,
-        "linux-kernel\@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "linux-pci\@vger.kernel.org" <linux-pci@vger.kernel.org>,
-        "kvm\@vger.kernel.org" <kvm@vger.kernel.org>
-Subject: RE: [PATCH v4 06/17] PCI: add SIOV and IMS capability detection
-In-Reply-To: <MWHPR11MB1645E87DBEFFCC017C4849CC8CE30@MWHPR11MB1645.namprd11.prod.outlook.com>
-References: <877dqqmc2h.fsf@nanos.tec.linutronix.de> <20201114103430.GA9810@infradead.org> <20201114211837.GB12197@araj-mobl1.jf.intel.com> <877dqmamjl.fsf@nanos.tec.linutronix.de> <20201115193156.GB14750@araj-mobl1.jf.intel.com> <875z665kz4.fsf@nanos.tec.linutronix.de> <20201116002232.GA2440@araj-mobl1.jf.intel.com> <MWHPR11MB164539B8FDE63D5CBDA300E18CE30@MWHPR11MB1645.namprd11.prod.outlook.com> <20201116154635.GK917484@nvidia.com> <87y2j1xk1a.fsf@nanos.tec.linutronix.de> <20201116180241.GP917484@nvidia.com> <MWHPR11MB1645E87DBEFFCC017C4849CC8CE30@MWHPR11MB1645.namprd11.prod.outlook.com>
-Date:   Tue, 17 Nov 2020 10:21:52 +0100
-Message-ID: <875z64xrrj.fsf@nanos.tec.linutronix.de>
+        id S1728011AbgKQK40 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 17 Nov 2020 05:56:26 -0500
+Received: from fllv0015.ext.ti.com ([198.47.19.141]:59616 "EHLO
+        fllv0015.ext.ti.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727993AbgKQK4Z (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Tue, 17 Nov 2020 05:56:25 -0500
+Received: from fllv0034.itg.ti.com ([10.64.40.246])
+        by fllv0015.ext.ti.com (8.15.2/8.15.2) with ESMTP id 0AHAuJPA019540;
+        Tue, 17 Nov 2020 04:56:19 -0600
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
+        s=ti-com-17Q1; t=1605610579;
+        bh=Qm1lw36/mMXKb0+Q2tfyWktKFazIJEYt1QeJaMROv28=;
+        h=From:To:CC:Subject:Date:In-Reply-To:References;
+        b=SMRzKQXpVj5wy9T6BX952pP/fQGcXLhqury0w+shuJC3hcWYHUqRdYVEaBnl0KpdB
+         muYnaNU3PMEcLGQZOlai0V+YwcEGUilVMjgxhrmi5jqsMVYtzAwTgo2saCCUxfUX90
+         FcloXYb8gkaODMhCmOc1JTAkHZu/FQBH332Ruq2c=
+Received: from DLEE105.ent.ti.com (dlee105.ent.ti.com [157.170.170.35])
+        by fllv0034.itg.ti.com (8.15.2/8.15.2) with ESMTPS id 0AHAuJKL009963
+        (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
+        Tue, 17 Nov 2020 04:56:19 -0600
+Received: from DLEE108.ent.ti.com (157.170.170.38) by DLEE105.ent.ti.com
+ (157.170.170.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1979.3; Tue, 17
+ Nov 2020 04:56:18 -0600
+Received: from lelv0327.itg.ti.com (10.180.67.183) by DLEE108.ent.ti.com
+ (157.170.170.38) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1979.3 via
+ Frontend Transport; Tue, 17 Nov 2020 04:56:18 -0600
+Received: from feketebors.ti.com (ileax41-snat.itg.ti.com [10.172.224.153])
+        by lelv0327.itg.ti.com (8.15.2/8.15.2) with ESMTP id 0AHAu6tn087311;
+        Tue, 17 Nov 2020 04:56:16 -0600
+From:   Peter Ujfalusi <peter.ujfalusi@ti.com>
+To:     <vkoul@kernel.org>, <nm@ti.com>, <ssantosh@kernel.org>,
+        <robh+dt@kernel.org>
+CC:     <dan.j.williams@intel.com>, <t-kristo@ti.com>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <dmaengine@vger.kernel.org>, <vigneshr@ti.com>,
+        <grygorii.strashko@ti.com>
+Subject: [PATCH v2 03/19] dmaengine: ti: k3-udma: Add support for second resource range from sysfw
+Date:   Tue, 17 Nov 2020 12:56:40 +0200
+Message-ID: <20201117105656.5236-4-peter.ujfalusi@ti.com>
+X-Mailer: git-send-email 2.29.2
+In-Reply-To: <20201117105656.5236-1-peter.ujfalusi@ti.com>
+References: <20201117105656.5236-1-peter.ujfalusi@ti.com>
 MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
+X-EXCLAIMER-MD-CONFIG: e1e8a2fd-e40a-4ac6-ac9b-f7e9cc9ee180
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On Mon, Nov 16 2020 at 23:51, Kevin Tian wrote:
->> From: Jason Gunthorpe <jgg@nvidia.com>
-> btw Jason/Thomas, how do you think about the proposal down in this
-> thread (ims=[auto|on|off])? Does it sound a good tradeoff to move forward?
+Resource allocation via sysfw can use up to two ranges per resource subtype
+to support more complex resource assignment, mainly for DMA channels.
 
-What does it solve? It defaults to auto and then you still need to solve
-the problem of figuring out whether it's safe to use it or not.
+Take the second range also into consideration when setting up the maps for
+available resources.
 
-The command line option is not a solution per se. It's the last resort
-when the logic which decides whether IMS can be used or not fails to do
-the right thing. Nothing more.
+Signed-off-by: Peter Ujfalusi <peter.ujfalusi@ti.com>
+---
+ drivers/dma/ti/k3-udma.c | 55 ++++++++++++++++++++++------------------
+ 1 file changed, 31 insertions(+), 24 deletions(-)
 
-We clearly have outlined what needs to be done and you can come up with
-as many magic bullets you want, they won't make the real problems go
-away.
+diff --git a/drivers/dma/ti/k3-udma.c b/drivers/dma/ti/k3-udma.c
+index eee43757e774..b89afa602532 100644
+--- a/drivers/dma/ti/k3-udma.c
++++ b/drivers/dma/ti/k3-udma.c
+@@ -3174,12 +3174,22 @@ static int udma_get_mmrs(struct platform_device *pdev, struct udma_dev *ud)
+ 	return 0;
+ }
+ 
++static void udma_mark_resource_ranges(struct udma_dev *ud, unsigned long *map,
++				      struct ti_sci_resource_desc *rm_desc,
++				      char *name)
++{
++	bitmap_clear(map, rm_desc->start, rm_desc->num);
++	bitmap_clear(map, rm_desc->start_sec, rm_desc->num_sec);
++	dev_dbg(ud->dev, "ti_sci resource range for %s: %d:%d | %d:%d\n", name,
++		rm_desc->start, rm_desc->num, rm_desc->start_sec,
++		rm_desc->num_sec);
++}
++
+ static int udma_setup_resources(struct udma_dev *ud)
+ {
+ 	struct device *dev = ud->dev;
+ 	int ch_count, ret, i, j;
+ 	u32 cap2, cap3;
+-	struct ti_sci_resource_desc *rm_desc;
+ 	struct ti_sci_resource *rm_res, irq_res;
+ 	struct udma_tisci_rm *tisci_rm = &ud->tisci_rm;
+ 	static const char * const range_names[] = { "ti,sci-rm-range-tchan",
+@@ -3264,13 +3274,9 @@ static int udma_setup_resources(struct udma_dev *ud)
+ 		bitmap_zero(ud->tchan_map, ud->tchan_cnt);
+ 	} else {
+ 		bitmap_fill(ud->tchan_map, ud->tchan_cnt);
+-		for (i = 0; i < rm_res->sets; i++) {
+-			rm_desc = &rm_res->desc[i];
+-			bitmap_clear(ud->tchan_map, rm_desc->start,
+-				     rm_desc->num);
+-			dev_dbg(dev, "ti-sci-res: tchan: %d:%d\n",
+-				rm_desc->start, rm_desc->num);
+-		}
++		for (i = 0; i < rm_res->sets; i++)
++			udma_mark_resource_ranges(ud, ud->tchan_map,
++						  &rm_res->desc[i], "tchan");
+ 	}
+ 	irq_res.sets = rm_res->sets;
+ 
+@@ -3280,13 +3286,9 @@ static int udma_setup_resources(struct udma_dev *ud)
+ 		bitmap_zero(ud->rchan_map, ud->rchan_cnt);
+ 	} else {
+ 		bitmap_fill(ud->rchan_map, ud->rchan_cnt);
+-		for (i = 0; i < rm_res->sets; i++) {
+-			rm_desc = &rm_res->desc[i];
+-			bitmap_clear(ud->rchan_map, rm_desc->start,
+-				     rm_desc->num);
+-			dev_dbg(dev, "ti-sci-res: rchan: %d:%d\n",
+-				rm_desc->start, rm_desc->num);
+-		}
++		for (i = 0; i < rm_res->sets; i++)
++			udma_mark_resource_ranges(ud, ud->rchan_map,
++						  &rm_res->desc[i], "rchan");
+ 	}
+ 
+ 	irq_res.sets += rm_res->sets;
+@@ -3295,12 +3297,21 @@ static int udma_setup_resources(struct udma_dev *ud)
+ 	for (i = 0; i < rm_res->sets; i++) {
+ 		irq_res.desc[i].start = rm_res->desc[i].start;
+ 		irq_res.desc[i].num = rm_res->desc[i].num;
++		irq_res.desc[i].start_sec = rm_res->desc[i].start_sec;
++		irq_res.desc[i].num_sec = rm_res->desc[i].num_sec;
+ 	}
+ 	rm_res = tisci_rm->rm_ranges[RM_RANGE_RCHAN];
+ 	for (j = 0; j < rm_res->sets; j++, i++) {
+-		irq_res.desc[i].start = rm_res->desc[j].start +
++		if (rm_res->desc[j].num) {
++			irq_res.desc[i].start = rm_res->desc[j].start +
+ 					ud->soc_data->rchan_oes_offset;
+-		irq_res.desc[i].num = rm_res->desc[j].num;
++			irq_res.desc[i].num = rm_res->desc[j].num;
++		}
++		if (rm_res->desc[j].num_sec) {
++			irq_res.desc[i].start_sec = rm_res->desc[j].start_sec +
++					ud->soc_data->rchan_oes_offset;
++			irq_res.desc[i].num_sec = rm_res->desc[j].num_sec;
++		}
+ 	}
+ 	ret = ti_sci_inta_msi_domain_alloc_irqs(ud->dev, &irq_res);
+ 	kfree(irq_res.desc);
+@@ -3316,13 +3327,9 @@ static int udma_setup_resources(struct udma_dev *ud)
+ 		bitmap_clear(ud->rflow_gp_map, ud->rchan_cnt,
+ 			     ud->rflow_cnt - ud->rchan_cnt);
+ 	} else {
+-		for (i = 0; i < rm_res->sets; i++) {
+-			rm_desc = &rm_res->desc[i];
+-			bitmap_clear(ud->rflow_gp_map, rm_desc->start,
+-				     rm_desc->num);
+-			dev_dbg(dev, "ti-sci-res: rflow: %d:%d\n",
+-				rm_desc->start, rm_desc->num);
+-		}
++		for (i = 0; i < rm_res->sets; i++)
++			udma_mark_resource_ranges(ud, ud->rflow_gp_map,
++						  &rm_res->desc[i], "gp-rflow");
+ 	}
+ 
+ 	ch_count -= bitmap_weight(ud->tchan_map, ud->tchan_cnt);
+-- 
+Peter
 
-Thanks,
+Texas Instruments Finland Oy, Porkkalankatu 22, 00180 Helsinki.
+Y-tunnus/Business ID: 0615521-4. Kotipaikka/Domicile: Helsinki
 
-        tglx
