@@ -5,48 +5,47 @@ X-Spam-Level:
 X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED,USER_AGENT_GIT autolearn=unavailable autolearn_force=no
-	version=3.4.0
+	URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DEA29C6379F
-	for <dmaengine@archiver.kernel.org>; Tue, 17 Nov 2020 10:57:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D084EC64E7B
+	for <dmaengine@archiver.kernel.org>; Tue, 17 Nov 2020 10:57:33 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8331120781
-	for <dmaengine@archiver.kernel.org>; Tue, 17 Nov 2020 10:57:32 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8148E20781
+	for <dmaengine@archiver.kernel.org>; Tue, 17 Nov 2020 10:57:33 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b="bsUeR3Gn"
+	dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b="DNy/+n2i"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728190AbgKQK4y (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 17 Nov 2020 05:56:54 -0500
-Received: from fllv0016.ext.ti.com ([198.47.19.142]:34146 "EHLO
+        id S1728209AbgKQK5A (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 17 Nov 2020 05:57:00 -0500
+Received: from fllv0016.ext.ti.com ([198.47.19.142]:34160 "EHLO
         fllv0016.ext.ti.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728186AbgKQK4x (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Tue, 17 Nov 2020 05:56:53 -0500
-Received: from fllv0035.itg.ti.com ([10.64.41.0])
-        by fllv0016.ext.ti.com (8.15.2/8.15.2) with ESMTP id 0AHAuhXd117362;
-        Tue, 17 Nov 2020 04:56:43 -0600
+        with ESMTP id S1728186AbgKQK5A (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Tue, 17 Nov 2020 05:57:00 -0500
+Received: from lelv0266.itg.ti.com ([10.180.67.225])
+        by fllv0016.ext.ti.com (8.15.2/8.15.2) with ESMTP id 0AHAunrt117383;
+        Tue, 17 Nov 2020 04:56:49 -0600
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
-        s=ti-com-17Q1; t=1605610603;
-        bh=9o/pzPysNXhm8GFEdjeTAg4i/9Rt9N3Tow0i0r4/gwM=;
+        s=ti-com-17Q1; t=1605610609;
+        bh=gWwHItEoo4DJVr7FXCMLBP6bV/xJktpY4mjYFaYMosU=;
         h=From:To:CC:Subject:Date:In-Reply-To:References;
-        b=bsUeR3Gn+IGU3jE9BJayFDTZj5M3q84+32Tpo5n5CPSe/An08ZVU+66Uu61Nd2ms4
-         JXLiTeyJpuFkRd4Sz+9QEeXZpo+PcArsM1p9RDRnJNaMexLo0IHtPhvtAhZig0UD7b
-         yHvijep5PeL4HcLzJet9D6zfm5JLkyBEkSxSjaKA=
-Received: from DLEE103.ent.ti.com (dlee103.ent.ti.com [157.170.170.33])
-        by fllv0035.itg.ti.com (8.15.2/8.15.2) with ESMTPS id 0AHAuh0V019659
+        b=DNy/+n2iOuq8bLOtdTYZ9s6iDVtaEBKjzTxV5pbvDHy6mIeyKD67L+orRkP7lulbS
+         1tzWXw461y8QpetKN+wEfNo4/1nhl5iL8r5nYcnNbn4l0d8Stpw44CyShOR3ZNhYBY
+         WiLAHXhx+pUJon2TatAdFaht37VEqg1k75kNul7M=
+Received: from DFLE100.ent.ti.com (dfle100.ent.ti.com [10.64.6.21])
+        by lelv0266.itg.ti.com (8.15.2/8.15.2) with ESMTPS id 0AHAunVd085888
         (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
-        Tue, 17 Nov 2020 04:56:43 -0600
-Received: from DLEE114.ent.ti.com (157.170.170.25) by DLEE103.ent.ti.com
- (157.170.170.33) with Microsoft SMTP Server (version=TLS1_2,
+        Tue, 17 Nov 2020 04:56:49 -0600
+Received: from DFLE103.ent.ti.com (10.64.6.24) by DFLE100.ent.ti.com
+ (10.64.6.21) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1979.3; Tue, 17
- Nov 2020 04:56:43 -0600
-Received: from lelv0327.itg.ti.com (10.180.67.183) by DLEE114.ent.ti.com
- (157.170.170.25) with Microsoft SMTP Server (version=TLS1_2,
+ Nov 2020 04:56:49 -0600
+Received: from lelv0327.itg.ti.com (10.180.67.183) by DFLE103.ent.ti.com
+ (10.64.6.24) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1979.3 via
- Frontend Transport; Tue, 17 Nov 2020 04:56:43 -0600
+ Frontend Transport; Tue, 17 Nov 2020 04:56:49 -0600
 Received: from feketebors.ti.com (ileax41-snat.itg.ti.com [10.172.224.153])
-        by lelv0327.itg.ti.com (8.15.2/8.15.2) with ESMTP id 0AHAu6tv087311;
-        Tue, 17 Nov 2020 04:56:40 -0600
+        by lelv0327.itg.ti.com (8.15.2/8.15.2) with ESMTP id 0AHAu6tx087311;
+        Tue, 17 Nov 2020 04:56:46 -0600
 From:   Peter Ujfalusi <peter.ujfalusi@ti.com>
 To:     <vkoul@kernel.org>, <nm@ti.com>, <ssantosh@kernel.org>,
         <robh+dt@kernel.org>
@@ -55,9 +54,9 @@ CC:     <dan.j.williams@intel.com>, <t-kristo@ti.com>,
         <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
         <dmaengine@vger.kernel.org>, <vigneshr@ti.com>,
         <grygorii.strashko@ti.com>
-Subject: [PATCH v2 11/19] dt-bindings: dma: ti: Add document for K3 PKTDMA
-Date:   Tue, 17 Nov 2020 12:56:48 +0200
-Message-ID: <20201117105656.5236-12-peter.ujfalusi@ti.com>
+Subject: [PATCH v2 13/19] dmaengine: ti: k3-psil: Add initial map for AM64
+Date:   Tue, 17 Nov 2020 12:56:50 +0200
+Message-ID: <20201117105656.5236-14-peter.ujfalusi@ti.com>
 X-Mailer: git-send-email 2.29.2
 In-Reply-To: <20201117105656.5236-1-peter.ujfalusi@ti.com>
 References: <20201117105656.5236-1-peter.ujfalusi@ti.com>
@@ -69,206 +68,133 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-New binding document for
-Texas Instruments K3 Packet DMA (PKTDMA).
-
-PKTDMA is introduced as part of AM64.
+Add initial PSI-L map file for AM64.
 
 Signed-off-by: Peter Ujfalusi <peter.ujfalusi@ti.com>
 ---
- .../devicetree/bindings/dma/ti/k3-pktdma.yaml | 183 ++++++++++++++++++
- 1 file changed, 183 insertions(+)
- create mode 100644 Documentation/devicetree/bindings/dma/ti/k3-pktdma.yaml
+ drivers/dma/ti/Makefile       |  3 +-
+ drivers/dma/ti/k3-psil-am64.c | 75 +++++++++++++++++++++++++++++++++++
+ drivers/dma/ti/k3-psil-priv.h |  1 +
+ drivers/dma/ti/k3-psil.c      |  1 +
+ 4 files changed, 79 insertions(+), 1 deletion(-)
+ create mode 100644 drivers/dma/ti/k3-psil-am64.c
 
-diff --git a/Documentation/devicetree/bindings/dma/ti/k3-pktdma.yaml b/Documentation/devicetree/bindings/dma/ti/k3-pktdma.yaml
+diff --git a/drivers/dma/ti/Makefile b/drivers/dma/ti/Makefile
+index 0c67254caee6..bd496efadff7 100644
+--- a/drivers/dma/ti/Makefile
++++ b/drivers/dma/ti/Makefile
+@@ -7,5 +7,6 @@ obj-$(CONFIG_TI_K3_UDMA_GLUE_LAYER) += k3-udma-glue.o
+ obj-$(CONFIG_TI_K3_PSIL) += k3-psil.o \
+ 			    k3-psil-am654.o \
+ 			    k3-psil-j721e.o \
+-			    k3-psil-j7200.o
++			    k3-psil-j7200.o \
++			    k3-psil-am64.o
+ obj-$(CONFIG_TI_DMA_CROSSBAR) += dma-crossbar.o
+diff --git a/drivers/dma/ti/k3-psil-am64.c b/drivers/dma/ti/k3-psil-am64.c
 new file mode 100644
-index 000000000000..bf49b0135fbe
+index 000000000000..e88f57a36ac1
 --- /dev/null
-+++ b/Documentation/devicetree/bindings/dma/ti/k3-pktdma.yaml
-@@ -0,0 +1,183 @@
-+# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/dma/ti/k3-pktdma.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
++++ b/drivers/dma/ti/k3-psil-am64.c
+@@ -0,0 +1,75 @@
++// SPDX-License-Identifier: GPL-2.0
++/*
++ *  Copyright (C) 2020 Texas Instruments Incorporated - https://www.ti.com
++ *  Author: Peter Ujfalusi <peter.ujfalusi@ti.com>
++ */
 +
-+title: Texas Instruments K3 DMSS PKTDMA Device Tree Bindings
++#include <linux/kernel.h>
 +
-+maintainers:
-+  - Peter Ujfalusi <peter.ujfalusi@ti.com>
++#include "k3-psil-priv.h"
 +
-+description: |
-+  The Packet DMA (PKTDMA) is intended to perform similar functions as the packet
-+  mode channels of K3 UDMA-P.
-+  PKTDMA only includes Split channels to service PSI-L based peripherals.
++#define PSIL_ETHERNET(x, ch, flow_base, flow_cnt)		\
++	{							\
++		.thread_id = x,					\
++		.ep_config = {					\
++			.ep_type = PSIL_EP_NATIVE,		\
++			.pkt_mode = 1,				\
++			.needs_epib = 1,			\
++			.psd_size = 16,				\
++			.mapped_channel_id = ch,		\
++			.flow_start = flow_base,		\
++			.flow_num = flow_cnt,			\
++			.default_flow_id = flow_base,		\
++		},						\
++	}
 +
-+  The peripherals can be PSI-L native or legacy, non PSI-L native peripherals
-+  with PDMAs. PDMA is tasked to act as a bridge between the PSI-L fabric and the
-+  legacy peripheral.
++#define PSIL_SAUL(x, ch, flow_base, flow_cnt, default_flow, tx)	\
++	{							\
++		.thread_id = x,					\
++		.ep_config = {					\
++			.ep_type = PSIL_EP_NATIVE,		\
++			.pkt_mode = 1,				\
++			.needs_epib = 1,			\
++			.psd_size = 64,				\
++			.mapped_channel_id = ch,		\
++			.flow_start = flow_base,		\
++			.flow_num = flow_cnt,			\
++			.default_flow_id = default_flow,	\
++			.notdpkt = tx,				\
++		},						\
++	}
 +
-+  PDMAs can be configured via PKTDMA split channel's peer registers to match
-+  with the configuration of the legacy peripheral.
++/* PSI-L source thread IDs, used for RX (DMA_DEV_TO_MEM) */
++static struct psil_ep am64_src_ep_map[] = {
++	/* SA2UL */
++	PSIL_SAUL(0x4000, 17, 32, 8, 32, 0),
++	PSIL_SAUL(0x4001, 18, 32, 8, 33, 0),
++	PSIL_SAUL(0x4002, 19, 40, 8, 40, 0),
++	PSIL_SAUL(0x4003, 20, 40, 8, 41, 0),
++	/* CPSW3G */
++	PSIL_ETHERNET(0x4500, 16, 16, 16),
++};
 +
-+allOf:
-+  - $ref: /schemas/dma/dma-controller.yaml#
++/* PSI-L destination thread IDs, used for TX (DMA_MEM_TO_DEV) */
++static struct psil_ep am64_dst_ep_map[] = {
++	/* SA2UL */
++	PSIL_SAUL(0xc000, 24, 80, 8, 80, 1),
++	PSIL_SAUL(0xc001, 25, 88, 8, 88, 1),
++	/* CPSW3G */
++	PSIL_ETHERNET(0xc500, 16, 16, 8),
++	PSIL_ETHERNET(0xc501, 17, 24, 8),
++	PSIL_ETHERNET(0xc502, 18, 32, 8),
++	PSIL_ETHERNET(0xc503, 19, 40, 8),
++	PSIL_ETHERNET(0xc504, 20, 48, 8),
++	PSIL_ETHERNET(0xc505, 21, 56, 8),
++	PSIL_ETHERNET(0xc506, 22, 64, 8),
++	PSIL_ETHERNET(0xc507, 23, 72, 8),
++};
 +
-+properties:
-+  "#dma-cells":
-+    const: 2
-+    description: |
-+      The first cell is the PSI-L  thread ID of the remote (to PKTDMA) end.
-+      Valid ranges for thread ID depends on the data movement direction:
-+      for source thread IDs (rx): 0 - 0x7fff
-+      for destination thread IDs (tx): 0x8000 - 0xffff
-+
-+      Please refer to the device documentation for the PSI-L thread map and also
-+      the PSI-L peripheral chapter for the correct thread ID.
-+
-+      The second cell is the ASEL value for the channel
-+
-+  compatible:
-+    enum:
-+      - ti,am64-dmss-pktdma
-+
-+  "#address-cells":
-+    const: 2
-+
-+  "#size-cells":
-+    const: 2
-+
-+  reg:
-+    maxItems: 4
-+
-+  reg-names:
-+    items:
-+      - const: gcfg
-+      - const: rchanrt
-+      - const: tchanrt
-+      - const: ringrt
-+
-+  msi-parent: true
-+
-+  ti,sci-rm-range-tchan:
-+    $ref: /schemas/types.yaml#/definitions/uint32-array
-+    description: |
-+      Array of PKTDMA split tx channel resource subtypes for resource allocation
-+      for this host
-+    minItems: 1
-+    # Should be enough
-+    maxItems: 255
-+    items:
-+      maximum: 0x3f
-+
-+  ti,sci-rm-range-tflow:
-+    $ref: /schemas/types.yaml#/definitions/uint32-array
-+    description: |
-+      Array of PKTDMA split tx flow resource subtypes for resource allocation
-+      for this host
-+    minItems: 1
-+    # Should be enough
-+    maxItems: 255
-+    items:
-+      maximum: 0x3f
-+
-+  ti,sci-rm-range-rchan:
-+    $ref: /schemas/types.yaml#/definitions/uint32-array
-+    description: |
-+      Array of PKTDMA split rx channel resource subtypes for resource allocation
-+      for this host
-+    minItems: 1
-+    # Should be enough
-+    maxItems: 255
-+    items:
-+      maximum: 0x3f
-+
-+  ti,sci-rm-range-rflow:
-+    $ref: /schemas/types.yaml#/definitions/uint32-array
-+    description: |
-+      Array of PKTDMA split rx flow resource subtypes for resource allocation
-+      for this host
-+    minItems: 1
-+    # Should be enough
-+    maxItems: 255
-+    items:
-+      maximum: 0x3f
-+
-+required:
-+  - compatible
-+  - "#address-cells"
-+  - "#size-cells"
-+  - "#dma-cells"
-+  - reg
-+  - reg-names
-+  - msi-parent
-+  - ti,sci
-+  - ti,sci-dev-id
-+  - ti,sci-rm-range-tchan
-+  - ti,sci-rm-range-tflow
-+  - ti,sci-rm-range-rchan
-+  - ti,sci-rm-range-rflow
-+
-+unevaluatedProperties: false
-+
-+examples:
-+  - |+
-+    cbass_main {
-+        #address-cells = <2>;
-+        #size-cells = <2>;
-+
-+        main_dmss {
-+            compatible = "simple-mfd";
-+            #address-cells = <2>;
-+            #size-cells = <2>;
-+            dma-ranges;
-+            ranges;
-+
-+            ti,sci-dev-id = <25>;
-+
-+            main_pktdma: dma-controller@485c0000 {
-+                compatible = "ti,am64-dmss-pktdma";
-+                #address-cells = <2>;
-+                #size-cells = <2>;
-+
-+                reg = <0x0 0x485c0000 0x0 0x100>,
-+                      <0x0 0x4a800000 0x0 0x20000>,
-+                      <0x0 0x4aa00000 0x0 0x40000>,
-+                      <0x0 0x4b800000 0x0 0x400000>;
-+                reg-names = "gcfg", "rchanrt", "tchanrt", "ringrt";
-+                msi-parent = <&inta_main_dmss>;
-+                #dma-cells = <2>;
-+
-+                ti,sci = <&dmsc>;
-+                ti,sci-dev-id = <30>;
-+
-+                ti,sci-rm-range-tchan = <0x23>, /* UNMAPPED_TX_CHAN */
-+                                        <0x24>, /* CPSW_TX_CHAN */
-+                                        <0x25>, /* SAUL_TX_0_CHAN */
-+                                        <0x26>, /* SAUL_TX_1_CHAN */
-+                                        <0x27>, /* ICSSG_0_TX_CHAN */
-+                                        <0x28>; /* ICSSG_1_TX_CHAN */
-+                ti,sci-rm-range-tflow = <0x10>, /* RING_UNMAPPED_TX_CHAN */
-+                                        <0x11>, /* RING_CPSW_TX_CHAN */
-+                                        <0x12>, /* RING_SAUL_TX_0_CHAN */
-+                                        <0x13>, /* RING_SAUL_TX_1_CHAN */
-+                                        <0x14>, /* RING_ICSSG_0_TX_CHAN */
-+                                        <0x15>; /* RING_ICSSG_1_TX_CHAN */
-+                ti,sci-rm-range-rchan = <0x29>, /* UNMAPPED_RX_CHAN */
-+                                        <0x2b>, /* CPSW_RX_CHAN */
-+                                        <0x2d>, /* SAUL_RX_0_CHAN */
-+                                        <0x2f>, /* SAUL_RX_1_CHAN */
-+                                        <0x31>, /* SAUL_RX_2_CHAN */
-+                                        <0x33>, /* SAUL_RX_3_CHAN */
-+                                        <0x35>, /* ICSSG_0_RX_CHAN */
-+                                        <0x37>; /* ICSSG_1_RX_CHAN */
-+                ti,sci-rm-range-rflow = <0x2a>, /* FLOW_UNMAPPED_RX_CHAN */
-+                                        <0x2c>, /* FLOW_CPSW_RX_CHAN */
-+                                        <0x2e>, /* FLOW_SAUL_RX_0/1_CHAN */
-+                                        <0x32>, /* FLOW_SAUL_RX_2/3_CHAN */
-+                                        <0x36>, /* FLOW_ICSSG_0_RX_CHAN */
-+                                        <0x38>; /* FLOW_ICSSG_1_RX_CHAN */
-+            };
-+        };
-+    };
++struct psil_ep_map am64_ep_map = {
++	.name = "am64",
++	.src = am64_src_ep_map,
++	.src_count = ARRAY_SIZE(am64_src_ep_map),
++	.dst = am64_dst_ep_map,
++	.dst_count = ARRAY_SIZE(am64_dst_ep_map),
++};
+diff --git a/drivers/dma/ti/k3-psil-priv.h b/drivers/dma/ti/k3-psil-priv.h
+index b4b0fb359eff..b74e192e3c2d 100644
+--- a/drivers/dma/ti/k3-psil-priv.h
++++ b/drivers/dma/ti/k3-psil-priv.h
+@@ -40,5 +40,6 @@ struct psil_endpoint_config *psil_get_ep_config(u32 thread_id);
+ extern struct psil_ep_map am654_ep_map;
+ extern struct psil_ep_map j721e_ep_map;
+ extern struct psil_ep_map j7200_ep_map;
++extern struct psil_ep_map am64_ep_map;
+ 
+ #endif /* K3_PSIL_PRIV_H_ */
+diff --git a/drivers/dma/ti/k3-psil.c b/drivers/dma/ti/k3-psil.c
+index 837853aab95a..13ce7367d870 100644
+--- a/drivers/dma/ti/k3-psil.c
++++ b/drivers/dma/ti/k3-psil.c
+@@ -20,6 +20,7 @@ static const struct soc_device_attribute k3_soc_devices[] = {
+ 	{ .family = "AM65X", .data = &am654_ep_map },
+ 	{ .family = "J721E", .data = &j721e_ep_map },
+ 	{ .family = "J7200", .data = &j7200_ep_map },
++	{ .family = "AM64X", .data = &am64_ep_map },
+ 	{ /* sentinel */ }
+ };
+ 
 -- 
 Peter
 
