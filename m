@@ -5,47 +5,48 @@ X-Spam-Level:
 X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
+	URIBL_BLOCKED,USER_AGENT_GIT autolearn=unavailable autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7F06DC63798
-	for <dmaengine@archiver.kernel.org>; Tue, 17 Nov 2020 10:56:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A2C3BC64EBC
+	for <dmaengine@archiver.kernel.org>; Tue, 17 Nov 2020 10:56:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2C21624654
-	for <dmaengine@archiver.kernel.org>; Tue, 17 Nov 2020 10:56:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 47D092467A
+	for <dmaengine@archiver.kernel.org>; Tue, 17 Nov 2020 10:56:48 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b="SMRzKQXp"
+	dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b="TAcq2xYG"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728011AbgKQK40 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 17 Nov 2020 05:56:26 -0500
-Received: from fllv0015.ext.ti.com ([198.47.19.141]:59616 "EHLO
+        id S1728161AbgKQK4n (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 17 Nov 2020 05:56:43 -0500
+Received: from fllv0015.ext.ti.com ([198.47.19.141]:59676 "EHLO
         fllv0015.ext.ti.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727993AbgKQK4Z (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Tue, 17 Nov 2020 05:56:25 -0500
-Received: from fllv0034.itg.ti.com ([10.64.40.246])
-        by fllv0015.ext.ti.com (8.15.2/8.15.2) with ESMTP id 0AHAuJPA019540;
-        Tue, 17 Nov 2020 04:56:19 -0600
+        with ESMTP id S1728143AbgKQK4m (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Tue, 17 Nov 2020 05:56:42 -0500
+Received: from lelv0266.itg.ti.com ([10.180.67.225])
+        by fllv0015.ext.ti.com (8.15.2/8.15.2) with ESMTP id 0AHAubbf019703;
+        Tue, 17 Nov 2020 04:56:37 -0600
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
-        s=ti-com-17Q1; t=1605610579;
-        bh=Qm1lw36/mMXKb0+Q2tfyWktKFazIJEYt1QeJaMROv28=;
+        s=ti-com-17Q1; t=1605610597;
+        bh=GcxwvtwaXqOgpXBurlcj+/JKCfjnKyirXPuoynaLPoY=;
         h=From:To:CC:Subject:Date:In-Reply-To:References;
-        b=SMRzKQXpVj5wy9T6BX952pP/fQGcXLhqury0w+shuJC3hcWYHUqRdYVEaBnl0KpdB
-         muYnaNU3PMEcLGQZOlai0V+YwcEGUilVMjgxhrmi5jqsMVYtzAwTgo2saCCUxfUX90
-         FcloXYb8gkaODMhCmOc1JTAkHZu/FQBH332Ruq2c=
-Received: from DLEE105.ent.ti.com (dlee105.ent.ti.com [157.170.170.35])
-        by fllv0034.itg.ti.com (8.15.2/8.15.2) with ESMTPS id 0AHAuJKL009963
+        b=TAcq2xYGthmxVcAL6NttUJ5xWlNx77AiYGz0+ZjOyMZ4jCgdu3xivWwBhG8kQ9tUG
+         wiad2hI3bM3ZYCv1QghkW5lXWz+o+5tz+htRq+NJsFT2IxfITXZbgb4a4PW3xDqxfg
+         1epq3PkZfZumUXsyuIoEtwFsFrS1X+CsiWhtbu9A=
+Received: from DLEE106.ent.ti.com (dlee106.ent.ti.com [157.170.170.36])
+        by lelv0266.itg.ti.com (8.15.2/8.15.2) with ESMTPS id 0AHAubVA085702
         (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
-        Tue, 17 Nov 2020 04:56:19 -0600
-Received: from DLEE108.ent.ti.com (157.170.170.38) by DLEE105.ent.ti.com
- (157.170.170.35) with Microsoft SMTP Server (version=TLS1_2,
+        Tue, 17 Nov 2020 04:56:37 -0600
+Received: from DLEE104.ent.ti.com (157.170.170.34) by DLEE106.ent.ti.com
+ (157.170.170.36) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1979.3; Tue, 17
- Nov 2020 04:56:18 -0600
-Received: from lelv0327.itg.ti.com (10.180.67.183) by DLEE108.ent.ti.com
- (157.170.170.38) with Microsoft SMTP Server (version=TLS1_2,
+ Nov 2020 04:56:37 -0600
+Received: from lelv0327.itg.ti.com (10.180.67.183) by DLEE104.ent.ti.com
+ (157.170.170.34) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1979.3 via
- Frontend Transport; Tue, 17 Nov 2020 04:56:18 -0600
+ Frontend Transport; Tue, 17 Nov 2020 04:56:37 -0600
 Received: from feketebors.ti.com (ileax41-snat.itg.ti.com [10.172.224.153])
-        by lelv0327.itg.ti.com (8.15.2/8.15.2) with ESMTP id 0AHAu6tn087311;
-        Tue, 17 Nov 2020 04:56:16 -0600
+        by lelv0327.itg.ti.com (8.15.2/8.15.2) with ESMTP id 0AHAu6tt087311;
+        Tue, 17 Nov 2020 04:56:34 -0600
 From:   Peter Ujfalusi <peter.ujfalusi@ti.com>
 To:     <vkoul@kernel.org>, <nm@ti.com>, <ssantosh@kernel.org>,
         <robh+dt@kernel.org>
@@ -54,9 +55,9 @@ CC:     <dan.j.williams@intel.com>, <t-kristo@ti.com>,
         <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
         <dmaengine@vger.kernel.org>, <vigneshr@ti.com>,
         <grygorii.strashko@ti.com>
-Subject: [PATCH v2 03/19] dmaengine: ti: k3-udma: Add support for second resource range from sysfw
-Date:   Tue, 17 Nov 2020 12:56:40 +0200
-Message-ID: <20201117105656.5236-4-peter.ujfalusi@ti.com>
+Subject: [PATCH v2 09/19] dmaengine: dmatest: Use dmaengine_get_dma_device
+Date:   Tue, 17 Nov 2020 12:56:46 +0200
+Message-ID: <20201117105656.5236-10-peter.ujfalusi@ti.com>
 X-Mailer: git-send-email 2.29.2
 In-Reply-To: <20201117105656.5236-1-peter.ujfalusi@ti.com>
 References: <20201117105656.5236-1-peter.ujfalusi@ti.com>
@@ -68,120 +69,70 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Resource allocation via sysfw can use up to two ranges per resource subtype
-to support more complex resource assignment, mainly for DMA channels.
-
-Take the second range also into consideration when setting up the maps for
-available resources.
+By using the dmaengine_get_dma_device() to get the device for
+dma_api use, the dmatest can support per channel coherency if it is
+supported by the DMA controller.
 
 Signed-off-by: Peter Ujfalusi <peter.ujfalusi@ti.com>
 ---
- drivers/dma/ti/k3-udma.c | 55 ++++++++++++++++++++++------------------
- 1 file changed, 31 insertions(+), 24 deletions(-)
+ drivers/dma/dmatest.c | 13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/dma/ti/k3-udma.c b/drivers/dma/ti/k3-udma.c
-index eee43757e774..b89afa602532 100644
---- a/drivers/dma/ti/k3-udma.c
-+++ b/drivers/dma/ti/k3-udma.c
-@@ -3174,12 +3174,22 @@ static int udma_get_mmrs(struct platform_device *pdev, struct udma_dev *ud)
- 	return 0;
- }
- 
-+static void udma_mark_resource_ranges(struct udma_dev *ud, unsigned long *map,
-+				      struct ti_sci_resource_desc *rm_desc,
-+				      char *name)
-+{
-+	bitmap_clear(map, rm_desc->start, rm_desc->num);
-+	bitmap_clear(map, rm_desc->start_sec, rm_desc->num_sec);
-+	dev_dbg(ud->dev, "ti_sci resource range for %s: %d:%d | %d:%d\n", name,
-+		rm_desc->start, rm_desc->num, rm_desc->start_sec,
-+		rm_desc->num_sec);
-+}
+diff --git a/drivers/dma/dmatest.c b/drivers/dma/dmatest.c
+index a3a172173e34..f696246f57fd 100644
+--- a/drivers/dma/dmatest.c
++++ b/drivers/dma/dmatest.c
+@@ -573,6 +573,7 @@ static int dmatest_func(void *data)
+ 	struct dmatest_params	*params;
+ 	struct dma_chan		*chan;
+ 	struct dma_device	*dev;
++	struct device		*dma_dev;
+ 	unsigned int		error_count;
+ 	unsigned int		failed_tests = 0;
+ 	unsigned int		total_tests = 0;
+@@ -606,6 +607,8 @@ static int dmatest_func(void *data)
+ 	params = &info->params;
+ 	chan = thread->chan;
+ 	dev = chan->device;
++	dma_dev = dmaengine_get_dma_device(chan);
 +
- static int udma_setup_resources(struct udma_dev *ud)
- {
- 	struct device *dev = ud->dev;
- 	int ch_count, ret, i, j;
- 	u32 cap2, cap3;
--	struct ti_sci_resource_desc *rm_desc;
- 	struct ti_sci_resource *rm_res, irq_res;
- 	struct udma_tisci_rm *tisci_rm = &ud->tisci_rm;
- 	static const char * const range_names[] = { "ti,sci-rm-range-tchan",
-@@ -3264,13 +3274,9 @@ static int udma_setup_resources(struct udma_dev *ud)
- 		bitmap_zero(ud->tchan_map, ud->tchan_cnt);
- 	} else {
- 		bitmap_fill(ud->tchan_map, ud->tchan_cnt);
--		for (i = 0; i < rm_res->sets; i++) {
--			rm_desc = &rm_res->desc[i];
--			bitmap_clear(ud->tchan_map, rm_desc->start,
--				     rm_desc->num);
--			dev_dbg(dev, "ti-sci-res: tchan: %d:%d\n",
--				rm_desc->start, rm_desc->num);
--		}
-+		for (i = 0; i < rm_res->sets; i++)
-+			udma_mark_resource_ranges(ud, ud->tchan_map,
-+						  &rm_res->desc[i], "tchan");
- 	}
- 	irq_res.sets = rm_res->sets;
+ 	src = &thread->src;
+ 	dst = &thread->dst;
+ 	if (thread->type == DMA_MEMCPY) {
+@@ -730,7 +733,7 @@ static int dmatest_func(void *data)
+ 			filltime = ktime_add(filltime, diff);
+ 		}
  
-@@ -3280,13 +3286,9 @@ static int udma_setup_resources(struct udma_dev *ud)
- 		bitmap_zero(ud->rchan_map, ud->rchan_cnt);
- 	} else {
- 		bitmap_fill(ud->rchan_map, ud->rchan_cnt);
--		for (i = 0; i < rm_res->sets; i++) {
--			rm_desc = &rm_res->desc[i];
--			bitmap_clear(ud->rchan_map, rm_desc->start,
--				     rm_desc->num);
--			dev_dbg(dev, "ti-sci-res: rchan: %d:%d\n",
--				rm_desc->start, rm_desc->num);
--		}
-+		for (i = 0; i < rm_res->sets; i++)
-+			udma_mark_resource_ranges(ud, ud->rchan_map,
-+						  &rm_res->desc[i], "rchan");
- 	}
+-		um = dmaengine_get_unmap_data(dev->dev, src->cnt + dst->cnt,
++		um = dmaengine_get_unmap_data(dma_dev, src->cnt + dst->cnt,
+ 					      GFP_KERNEL);
+ 		if (!um) {
+ 			failed_tests++;
+@@ -745,10 +748,10 @@ static int dmatest_func(void *data)
+ 			struct page *pg = virt_to_page(buf);
+ 			unsigned long pg_off = offset_in_page(buf);
  
- 	irq_res.sets += rm_res->sets;
-@@ -3295,12 +3297,21 @@ static int udma_setup_resources(struct udma_dev *ud)
- 	for (i = 0; i < rm_res->sets; i++) {
- 		irq_res.desc[i].start = rm_res->desc[i].start;
- 		irq_res.desc[i].num = rm_res->desc[i].num;
-+		irq_res.desc[i].start_sec = rm_res->desc[i].start_sec;
-+		irq_res.desc[i].num_sec = rm_res->desc[i].num_sec;
- 	}
- 	rm_res = tisci_rm->rm_ranges[RM_RANGE_RCHAN];
- 	for (j = 0; j < rm_res->sets; j++, i++) {
--		irq_res.desc[i].start = rm_res->desc[j].start +
-+		if (rm_res->desc[j].num) {
-+			irq_res.desc[i].start = rm_res->desc[j].start +
- 					ud->soc_data->rchan_oes_offset;
--		irq_res.desc[i].num = rm_res->desc[j].num;
-+			irq_res.desc[i].num = rm_res->desc[j].num;
-+		}
-+		if (rm_res->desc[j].num_sec) {
-+			irq_res.desc[i].start_sec = rm_res->desc[j].start_sec +
-+					ud->soc_data->rchan_oes_offset;
-+			irq_res.desc[i].num_sec = rm_res->desc[j].num_sec;
-+		}
- 	}
- 	ret = ti_sci_inta_msi_domain_alloc_irqs(ud->dev, &irq_res);
- 	kfree(irq_res.desc);
-@@ -3316,13 +3327,9 @@ static int udma_setup_resources(struct udma_dev *ud)
- 		bitmap_clear(ud->rflow_gp_map, ud->rchan_cnt,
- 			     ud->rflow_cnt - ud->rchan_cnt);
- 	} else {
--		for (i = 0; i < rm_res->sets; i++) {
--			rm_desc = &rm_res->desc[i];
--			bitmap_clear(ud->rflow_gp_map, rm_desc->start,
--				     rm_desc->num);
--			dev_dbg(dev, "ti-sci-res: rflow: %d:%d\n",
--				rm_desc->start, rm_desc->num);
--		}
-+		for (i = 0; i < rm_res->sets; i++)
-+			udma_mark_resource_ranges(ud, ud->rflow_gp_map,
-+						  &rm_res->desc[i], "gp-rflow");
- 	}
+-			um->addr[i] = dma_map_page(dev->dev, pg, pg_off,
++			um->addr[i] = dma_map_page(dma_dev, pg, pg_off,
+ 						   um->len, DMA_TO_DEVICE);
+ 			srcs[i] = um->addr[i] + src->off;
+-			ret = dma_mapping_error(dev->dev, um->addr[i]);
++			ret = dma_mapping_error(dma_dev, um->addr[i]);
+ 			if (ret) {
+ 				result("src mapping error", total_tests,
+ 				       src->off, dst->off, len, ret);
+@@ -763,9 +766,9 @@ static int dmatest_func(void *data)
+ 			struct page *pg = virt_to_page(buf);
+ 			unsigned long pg_off = offset_in_page(buf);
  
- 	ch_count -= bitmap_weight(ud->tchan_map, ud->tchan_cnt);
+-			dsts[i] = dma_map_page(dev->dev, pg, pg_off, um->len,
++			dsts[i] = dma_map_page(dma_dev, pg, pg_off, um->len,
+ 					       DMA_BIDIRECTIONAL);
+-			ret = dma_mapping_error(dev->dev, dsts[i]);
++			ret = dma_mapping_error(dma_dev, dsts[i]);
+ 			if (ret) {
+ 				result("dst mapping error", total_tests,
+ 				       src->off, dst->off, len, ret);
 -- 
 Peter
 
