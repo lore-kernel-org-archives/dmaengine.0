@@ -4,44 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=unavailable
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EAEB0C64E7B
-	for <dmaengine@archiver.kernel.org>; Tue, 17 Nov 2020 02:39:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 991DCC83008
+	for <dmaengine@archiver.kernel.org>; Tue, 17 Nov 2020 02:39:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C8C302469C
-	for <dmaengine@archiver.kernel.org>; Tue, 17 Nov 2020 02:39:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 81FE4246A3
+	for <dmaengine@archiver.kernel.org>; Tue, 17 Nov 2020 02:39:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727365AbgKQCjO (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 16 Nov 2020 21:39:14 -0500
+        id S1727245AbgKQCjW (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 16 Nov 2020 21:39:22 -0500
 Received: from mga04.intel.com ([192.55.52.120]:52576 "EHLO mga04.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727245AbgKQCjN (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Mon, 16 Nov 2020 21:39:13 -0500
-IronPort-SDR: b0dP7t1Fw1yxNpUuoRjYOSUQ75KgiqL6O8aCHadGrKzYOXcKjeP+zX1Zjflkf0BRhAzYhAsDrF
- 3iJwAw/bGT7w==
-X-IronPort-AV: E=McAfee;i="6000,8403,9807"; a="168274090"
+        id S1727482AbgKQCjV (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Mon, 16 Nov 2020 21:39:21 -0500
+IronPort-SDR: /xA9FKZGDqeHnnjoTiBji70tZTNmqo1VTspbzeFWHaaW9jsEzA8PjC6/acOd1gVkuB7VQYznWT
+ tA/d/GxRlwEQ==
+X-IronPort-AV: E=McAfee;i="6000,8403,9807"; a="168274110"
 X-IronPort-AV: E=Sophos;i="5.77,484,1596524400"; 
-   d="scan'208";a="168274090"
+   d="scan'208";a="168274110"
 X-Amp-Result: SKIPPED(no attachment in message)
 X-Amp-File-Uploaded: False
 Received: from fmsmga004.fm.intel.com ([10.253.24.48])
-  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Nov 2020 18:39:12 -0800
-IronPort-SDR: 0Ca/+r/gydtH1I2Tgq7071JLqcYZ+x7cvigyqlI0YWV2GZZ04gdBNi5+plqOs8bdraxRFkmBvj
- wwp4FzNFp3aQ==
+  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Nov 2020 18:39:20 -0800
+IronPort-SDR: Zorn/uKGA/B+7BhCStMIvLnNFPjA/hwJArsIhYFGGqWG3Z5adf4J9j7gTAlmXMFamxK4wAjLUO
+ wEITtqgunySw==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="5.77,484,1596524400"; 
-   d="scan'208";a="358706114"
+   d="scan'208";a="358706149"
 Received: from jsia-hp-z620-workstation.png.intel.com ([10.221.118.135])
-  by fmsmga004.fm.intel.com with ESMTP; 16 Nov 2020 18:39:10 -0800
+  by fmsmga004.fm.intel.com with ESMTP; 16 Nov 2020 18:39:18 -0800
 From:   Sia Jee Heng <jee.heng.sia@intel.com>
 To:     vkoul@kernel.org, Eugeniy.Paltsev@synopsys.com, robh+dt@kernel.org
 Cc:     andriy.shevchenko@linux.intel.com, dmaengine@vger.kernel.org,
         linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
-Subject: [PATCH v4 11/15] dmaengine: dw-axi-dmac: Add Intel KeemBay DMA register fields
-Date:   Tue, 17 Nov 2020 10:22:11 +0800
-Message-Id: <20201117022215.2461-12-jee.heng.sia@intel.com>
+Subject: [PATCH v4 14/15] dmaengine: dw-axi-dmac: Add Intel KeemBay AxiDMA BYTE and HALFWORD registers
+Date:   Tue, 17 Nov 2020 10:22:14 +0800
+Message-Id: <20201117022215.2461-15-jee.heng.sia@intel.com>
 X-Mailer: git-send-email 2.18.0
 In-Reply-To: <20201117022215.2461-1-jee.heng.sia@intel.com>
 References: <20201117022215.2461-1-jee.heng.sia@intel.com>
@@ -49,64 +49,100 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Add support for Intel KeemBay DMA registers. These registers are required
-to run data transfer between device to memory and memory to device on Intel
-KeemBay SoC.
+Add support for Intel KeemBay AxiDMA BYTE and HALFWORD registers
+programming.
+
+Intel KeemBay AxiDMA supports data transfer between device to memory
+and memory to device operations.
+
+This code is needed by I2C, I3C, I2S, SPI and UART which uses FIFO
+size of 8bits and 16bits to perform memory to device data transfer
+operation. 0-padding functionality is provided to avoid
+pre-processing of data on CPU.
 
 Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 Signed-off-by: Sia Jee Heng <jee.heng.sia@intel.com>
 ---
- drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c |  4 ++++
- drivers/dma/dw-axi-dmac/dw-axi-dmac.h          | 14 ++++++++++++++
- 2 files changed, 18 insertions(+)
+ .../dma/dw-axi-dmac/dw-axi-dmac-platform.c    | 44 ++++++++++++++++---
+ 1 file changed, 39 insertions(+), 5 deletions(-)
 
 diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-index 7c97b58206bf..9f7f908b89d8 100644
+index d44a5c9eb9c1..cc05f66c7a4f 100644
 --- a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
 +++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-@@ -1192,6 +1192,10 @@ static int dw_probe(struct platform_device *pdev)
- 	if (IS_ERR(chip->regs))
- 		return PTR_ERR(chip->regs);
+@@ -312,7 +312,7 @@ static void axi_chan_block_xfer_start(struct axi_dma_chan *chan,
+ 				      struct axi_dma_desc *first)
+ {
+ 	u32 priority = chan->chip->dw->hdata->priority[chan->id];
+-	u32 reg, irq_mask;
++	u32 reg, irq_mask, reg_width, offset, val;
+ 	u8 lms = 0; /* Select AXI0 master for LLI fetching */
  
-+	chip->apb_regs = devm_platform_ioremap_resource(pdev, 1);
-+	if (IS_ERR(chip->apb_regs))
-+		dev_warn(&pdev->dev, "apb_regs not supported\n");
+ 	if (unlikely(axi_chan_is_hw_enable(chan))) {
+@@ -334,6 +334,25 @@ static void axi_chan_block_xfer_start(struct axi_dma_chan *chan,
+ 	       DWAXIDMAC_HS_SEL_HW << CH_CFG_H_HS_SEL_SRC_POS);
+ 	switch (chan->direction) {
+ 	case DMA_MEM_TO_DEV:
++		if (chan->chip->apb_regs) {
++			reg_width = __ffs(chan->config.dst_addr_width);
++			/*
++			 * Configure Byte and Halfword register
++			 * for MEM_TO_DEV only.
++			 */
++			if (reg_width == DWAXIDMAC_TRANS_WIDTH_16) {
++				offset = DMAC_APB_HALFWORD_WR_CH_EN;
++				val = ioread32(chan->chip->apb_regs + offset);
++				val |= BIT(chan->id);
++				iowrite32(val, chan->chip->apb_regs + offset);
++			} else if (reg_width == DWAXIDMAC_TRANS_WIDTH_8) {
++				offset = DMAC_APB_BYTE_WR_CH_EN;
++				val = ioread32(chan->chip->apb_regs + offset);
++				val |= BIT(chan->id);
++				iowrite32(val, chan->chip->apb_regs + offset);
++			}
++		}
 +
- 	chip->core_clk = devm_clk_get(chip->dev, "core-clk");
- 	if (IS_ERR(chip->core_clk))
- 		return PTR_ERR(chip->core_clk);
-diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac.h b/drivers/dma/dw-axi-dmac/dw-axi-dmac.h
-index bdb66d775125..f64e8d33b127 100644
---- a/drivers/dma/dw-axi-dmac/dw-axi-dmac.h
-+++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac.h
-@@ -63,6 +63,7 @@ struct axi_dma_chip {
- 	struct device		*dev;
- 	int			irq;
- 	void __iomem		*regs;
-+	void __iomem		*apb_regs;
- 	struct clk		*core_clk;
- 	struct clk		*cfgr_clk;
- 	struct dw_axi_dma	*dw;
-@@ -169,6 +170,19 @@ static inline struct axi_dma_chan *dchan_to_axi_dma_chan(struct dma_chan *dchan)
- #define CH_INTSIGNAL_ENA	0x090 /* R/W Chan Interrupt Signal Enable */
- #define CH_INTCLEAR		0x098 /* W Chan Interrupt Clear */
+ 		reg |= (chan->config.device_fc ?
+ 			DWAXIDMAC_TT_FC_MEM_TO_PER_DST :
+ 			DWAXIDMAC_TT_FC_MEM_TO_PER_DMAC)
+@@ -994,8 +1013,9 @@ static int dma_chan_terminate_all(struct dma_chan *dchan)
+ {
+ 	struct axi_dma_chan *chan = dchan_to_axi_dma_chan(dchan);
+ 	u32 chan_active = BIT(chan->id) << DMAC_CHAN_EN_SHIFT;
++	u32 reg_width = __ffs(chan->config.dst_addr_width);
+ 	unsigned long flags;
+-	u32 val;
++	u32 offset, val;
+ 	int ret;
+ 	LIST_HEAD(head);
  
-+/* Apb slave registers */
-+#define DMAC_APB_CFG		0x000 /* DMAC Apb Configuration Register */
-+#define DMAC_APB_STAT		0x004 /* DMAC Apb Status Register */
-+#define DMAC_APB_DEBUG_STAT_0	0x008 /* DMAC Apb Debug Status Register 0 */
-+#define DMAC_APB_DEBUG_STAT_1	0x00C /* DMAC Apb Debug Status Register 1 */
-+#define DMAC_APB_HW_HS_SEL_0	0x010 /* DMAC Apb HW HS register 0 */
-+#define DMAC_APB_HW_HS_SEL_1	0x014 /* DMAC Apb HW HS register 1 */
-+#define DMAC_APB_LPI		0x018 /* DMAC Apb Low Power Interface Reg */
-+#define DMAC_APB_BYTE_WR_CH_EN	0x01C /* DMAC Apb Byte Write Enable */
-+#define DMAC_APB_HALFWORD_WR_CH_EN	0x020 /* DMAC Halfword write enables */
-+
-+#define UNUSED_CHANNEL		0x3F /* Set unused DMA channel to 0x3F */
-+#define MAX_BLOCK_SIZE		0x1000 /* 1024 blocks * 4 bytes data width */
+@@ -1007,9 +1027,23 @@ static int dma_chan_terminate_all(struct dma_chan *dchan)
+ 		dev_warn(dchan2dev(dchan),
+ 			 "%s failed to stop\n", axi_chan_name(chan));
  
- /* DMAC_CFG */
- #define DMAC_EN_POS			0
+-	if (chan->direction != DMA_MEM_TO_MEM)
+-		dw_axi_dma_set_hw_channel(chan->chip,
+-					  chan->hw_hs_num, false);
++	if (chan->direction != DMA_MEM_TO_MEM) {
++		ret = dw_axi_dma_set_hw_channel(chan->chip,
++						chan->hw_hs_num, false);
++		if (ret == 0 && chan->direction == DMA_MEM_TO_DEV) {
++			if (reg_width == DWAXIDMAC_TRANS_WIDTH_8) {
++				offset = DMAC_APB_BYTE_WR_CH_EN;
++				val = ioread32(chan->chip->apb_regs + offset);
++				val &= ~BIT(chan->id);
++				iowrite32(val, chan->chip->apb_regs + offset);
++			} else if (reg_width == DWAXIDMAC_TRANS_WIDTH_16) {
++				offset = DMAC_APB_HALFWORD_WR_CH_EN;
++				val = ioread32(chan->chip->apb_regs + offset);
++				val &= ~BIT(chan->id);
++				iowrite32(val, chan->chip->apb_regs + offset);
++			}
++		}
++	}
+ 
+ 	spin_lock_irqsave(&chan->vc.lock, flags);
+ 
 -- 
 2.18.0
 
