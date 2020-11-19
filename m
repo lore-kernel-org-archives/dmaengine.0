@@ -2,104 +2,138 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.2 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
-	USER_AGENT_SANE_1 autolearn=unavailable autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DE53CC63798
-	for <dmaengine@archiver.kernel.org>; Thu, 19 Nov 2020 11:40:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4A5E0C388F9
+	for <dmaengine@archiver.kernel.org>; Thu, 19 Nov 2020 23:56:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8C17C246F1
-	for <dmaengine@archiver.kernel.org>; Thu, 19 Nov 2020 11:40:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C9B3D22248
+	for <dmaengine@archiver.kernel.org>; Thu, 19 Nov 2020 23:56:17 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EkbjJ9Go"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727069AbgKSLkr (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Thu, 19 Nov 2020 06:40:47 -0500
-Received: from szxga03-in.huawei.com ([45.249.212.189]:2376 "EHLO
-        szxga03-in.huawei.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726848AbgKSLkr (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Thu, 19 Nov 2020 06:40:47 -0500
-Received: from dggeme755-chm.china.huawei.com (unknown [172.30.72.53])
-        by szxga03-in.huawei.com (SkyGuard) with ESMTP id 4CcHmS0PkXz53nl;
-        Thu, 19 Nov 2020 19:40:24 +0800 (CST)
-Received: from [10.140.157.68] (10.140.157.68) by
- dggeme755-chm.china.huawei.com (10.3.19.101) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id
- 15.1.1913.5; Thu, 19 Nov 2020 19:40:43 +0800
-Subject: Re: [PATCH 1/2] dt: bindings: dma: Add DT bindings for HiSilicon
- Hiedma Controller
-To:     Rob Herring <robh@kernel.org>
-CC:     <dmaengine@vger.kernel.org>, <robh+dt@kernel.org>,
-        <dan.j.williams@intel.com>, <devicetree@vger.kernel.org>,
-        <p.zabel@pengutronix.de>, <vkoul@kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <20201114003440.36458-1-gengdongjiu@huawei.com>
- <20201116152725.GB1646380@bogus>
-From:   Dongjiu Geng <gengdongjiu@huawei.com>
-Message-ID: <230b73c0-3240-13ce-a115-6c3bdc1e476a@huawei.com>
-Date:   Thu, 19 Nov 2020 19:40:42 +0800
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.6.0
+        id S1726255AbgKSX4R (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Thu, 19 Nov 2020 18:56:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38520 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726172AbgKSX4R (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Thu, 19 Nov 2020 18:56:17 -0500
+Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B1290C0613CF;
+        Thu, 19 Nov 2020 15:56:16 -0800 (PST)
+Received: by mail-ed1-x52a.google.com with SMTP id cf17so4134871edb.2;
+        Thu, 19 Nov 2020 15:56:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=pmDTWYXXAk9rfP2LbwV/8yIbCru45LKAEEkD+ofPX5E=;
+        b=EkbjJ9GokRz5usrPgW17OoisIs6dAWdNKJZU5o8gn2o0QHRgN7SskQcx4OjgOyUgFe
+         N4xiiLedBp0lL/rV9DNnSsDq6VWKCLfJqtFDt0Qqi+m2VHj5FX2B9NY2yBIHyvw9DsVn
+         jn5euztmRelV9WdCk767SGmEAUrV+5apj3e2MqDXrnlYPsuOKZ3DTkc8aPfim4LvwOfn
+         gEa+o6wCabkMUn2yqVD7jlPiSTxMZzbVNR4qb0C8LuyYjILzcL1Cb2EwVu2MPT0AwnD+
+         X3XcafbDdjIm135ofjkju8iU6y3i+NZQEZmtd9UVtrd2v7G8LpUSg31n9I6I9jaRA1sf
+         W11g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=pmDTWYXXAk9rfP2LbwV/8yIbCru45LKAEEkD+ofPX5E=;
+        b=IbpSYZKkgrs2zUq+lVkh567mbBHA/GAZ/Zq+RCZf3D7t9KjvlVTSomFAVXlDkU1VSA
+         le6842MjpA31rcfM4shiJ8NCrqOsfyvxMe6Xz2YzSr3IkllZmhcEWqQeLahLlix3JdJm
+         r2QVNZZyPd0eNxXKUNtrf8kIXEV/tmfgeJJhk68p/YbWPxeW25v+0WEVql9nnakcj1z2
+         q9BarM9+Li5dRaYCnVrUYH9LMMG4RsspAO/cZjiFBOQ86XIOg7Ew6DrRJdHodWhiGLJc
+         nmGapE3Y18U+7961BHiTiT5BCG5qEHKVtXj6T+s8YyURp589orCReAH8d5x3mKBtKRDN
+         o4cg==
+X-Gm-Message-State: AOAM5333zQjHJKWuOF8KIbIurdUi489QounVWvSaMGD8eryC8993dzFg
+        YurfuqEt0/n26Wr52PNRHTg=
+X-Google-Smtp-Source: ABdhPJxDHcZc79WpJHYk5EfMzTr4tT47zWZU5ploN70wNJfVhLr8bg0dD5Saqhv+hjpxXO2JqaiyHw==
+X-Received: by 2002:a05:6402:b8b:: with SMTP id cf11mr33095904edb.74.1605830175070;
+        Thu, 19 Nov 2020 15:56:15 -0800 (PST)
+Received: from localhost.localdomain ([188.24.159.61])
+        by smtp.gmail.com with ESMTPSA id i3sm452987ejh.80.2020.11.19.15.56.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 19 Nov 2020 15:56:14 -0800 (PST)
+From:   Cristian Ciocaltea <cristian.ciocaltea@gmail.com>
+To:     Rob Herring <robh+dt@kernel.org>,
+        =?UTF-8?q?Andreas=20F=C3=A4rber?= <afaerber@suse.de>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>, Wolfram Sang <wsa@kernel.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Dan Williams <dan.j.williams@intel.com>
+Cc:     devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-actions@lists.infradead.org, linux-kernel@vger.kernel.org,
+        dmaengine@vger.kernel.org, linux-i2c@vger.kernel.org,
+        linux-mmc@vger.kernel.org
+Subject: [PATCH v2 00/18] Add CMU/RMU/DMA/MMC/I2C support for Actions Semi S500 SoCs
+Date:   Fri, 20 Nov 2020 01:55:54 +0200
+Message-Id: <cover.1605823502.git.cristian.ciocaltea@gmail.com>
+X-Mailer: git-send-email 2.29.2
 MIME-Version: 1.0
-In-Reply-To: <20201116152725.GB1646380@bogus>
-Content-Type: text/plain; charset="utf-8"
-Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.140.157.68]
-X-ClientProxiedBy: dggeme709-chm.china.huawei.com (10.1.199.105) To
- dggeme755-chm.china.huawei.com (10.3.19.101)
-X-CFilter-Loop: Reflected
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On 2020/11/16 23:27, Rob Herring wrote:
-> On Sat, 14 Nov 2020 00:34:39 +0000, Dongjiu Geng wrote:
->> The Hiedma Controller v310 Provides eight DMA channels, each
->> channel can be configured for one-way transfer. The data can
->> be transferred in 8-bit, 16-bit, 32-bit, or 64-bit mode. This
->> documentation describes DT bindings of this controller.
->>
->> Signed-off-by: Dongjiu Geng <gengdongjiu@huawei.com>
->> ---
->>  .../bindings/dma/hisilicon,hiedmacv310.yaml   | 80 +++++++++++++++++++
->>  1 file changed, 80 insertions(+)
->>  create mode 100644 Documentation/devicetree/bindings/dma/hisilicon,hiedmacv310.yaml
->>
-> 
-> 
-> My bot found errors running 'make dt_binding_check' on your patch:
-> 
-> yamllint warnings/errors:
-> 
-> dtschema/dtc warnings/errors:
-> Documentation/devicetree/bindings/dma/hisilicon,hiedmacv310.example.dts:20:18: fatal error: dt-bindings/clock/hi3559av100-clock.h: No such file or directory
->    20 |         #include <dt-bindings/clock/hi3559av100-clock.h>
->       |                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-> compilation terminated.
-> make[1]: *** [scripts/Makefile.lib:342: Documentation/devicetree/bindings/dma/hisilicon,hiedmacv310.example.dt.yaml] Error 1
-> make[1]: *** Waiting for unfinished jobs....
-> make: *** [Makefile:1364: dt_binding_check] Error 2
+Hi,
 
-Rob,
-  Because it needs to include“#include <dt-bindings/clock/hi3559av100-clock.h>”, so I combine the new modified series patches to this series "[PATCH v4 0/4] Enable Hi3559A SOC clock and HiSilicon Hiedma Controller"
+This patchset brings a series of improvements for the Actions Semi S500
+SoCs family, by adding support for Clock & Reset Management Units, DMA,
+MMC, I2C & SIRQ controllers.
 
-See https://lore.kernel.org/patchwork/cover/1341544/
+Please note the patches consist mostly of DTS and bindings/compatibles
+changes, since all the work they depend on has been already merged,
+i.e. clock fixes/additions, pinctrl driver, sirq driver.
 
-> 
-> 
-> See https://patchwork.ozlabs.org/patch/1399915
-> 
-> The base for the patch is generally the last rc1. Any dependencies
-> should be noted.
-> 
-> If you already ran 'make dt_binding_check' and didn't see the above
-> error(s), then make sure 'yamllint' is installed and dt-schema is up to
-> date:
-> 
-> pip3 install dtschema --upgrade
-> 
-> Please check and re-submit.
-> 
-> .
-> 
+For the moment, I have only enabled the features I could test on
+RoseapplePi SBC.
+
+Thanks,
+Cristi
+
+Changes in v2:
+- Added new bindings/compatibles for S500 DMA, MMC & I2C controllers
+- Added support for the SIRQ controller
+- Added new entries in MAINTAINERS
+- Updated naming of some patches in v1
+
+Cristian Ciocaltea (18):
+  arm: dts: owl-s500: Add Clock Management Unit
+  arm: dts: owl-s500: Set CMU clocks for UARTs
+  arm: dts: owl-s500: Add Reset controller
+  dt-bindings: dma: owl: Add compatible string for Actions Semi S500 SoC
+  dmaengine: owl: Add compatible for the Actions Semi S500 DMA
+    controller
+  arm: dts: owl-s500: Add DMA controller
+  arm: dts: owl-s500: Add pinctrl & GPIO support
+  dt-bindings: mmc: owl: Add compatible string for Actions Semi S500 SoC
+  arm: dts: owl-s500: Add MMC support
+  dt-bindings: i2c: owl: Convert Actions Semi Owl binding to a schema
+  MAINTAINERS: Update entry for Actions Semi Owl I2C binding
+  i2c: owl: Add compatible for the Actions Semi S500 I2C controller
+  arm: dts: owl-s500: Add I2C support
+  arm: dts: owl-s500: Add SIRQ controller
+  arm: dts: owl-s500-roseapplepi: Use UART clock from CMU
+  arm: dts: owl-s500-roseapplepi: Add uSD support
+  arm: dts: owl-s500-roseapplepi: Add I2C pinctrl configuration
+  MAINTAINERS: Add linux-actions ML for Actions Semi Arch
+
+ .../devicetree/bindings/dma/owl-dma.yaml      |   5 +-
+ .../devicetree/bindings/i2c/i2c-owl.txt       |  29 ----
+ .../devicetree/bindings/i2c/i2c-owl.yaml      |  62 ++++++++
+ .../devicetree/bindings/mmc/owl-mmc.yaml      |   4 +-
+ MAINTAINERS                                   |   3 +-
+ arch/arm/boot/dts/owl-s500-roseapplepi.dts    |  97 +++++++++++-
+ arch/arm/boot/dts/owl-s500.dtsi               | 140 ++++++++++++++++++
+ drivers/dma/owl-dma.c                         |   1 +
+ drivers/i2c/busses/i2c-owl.c                  |   1 +
+ 9 files changed, 304 insertions(+), 38 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/i2c/i2c-owl.txt
+ create mode 100644 Documentation/devicetree/bindings/i2c/i2c-owl.yaml
+
+-- 
+2.29.2
+
