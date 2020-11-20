@@ -2,48 +2,49 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
-	autolearn=unavailable autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
+	USER_AGENT_GIT autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1DE3CC64E7B
-	for <dmaengine@archiver.kernel.org>; Fri, 20 Nov 2020 14:34:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E687CC6379F
+	for <dmaengine@archiver.kernel.org>; Fri, 20 Nov 2020 14:34:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CF2F422272
+	by mail.kernel.org (Postfix) with ESMTP id 9B6C622253
 	for <dmaengine@archiver.kernel.org>; Fri, 20 Nov 2020 14:34:07 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=st.com header.i=@st.com header.b="wPHkOlhH"
+	dkim=pass (2048-bit key) header.d=st.com header.i=@st.com header.b="syq32dy8"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727904AbgKTOdo (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 20 Nov 2020 09:33:44 -0500
-Received: from mx08-00178001.pphosted.com ([91.207.212.93]:51276 "EHLO
+        id S1728010AbgKTOdt (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 20 Nov 2020 09:33:49 -0500
+Received: from mx08-00178001.pphosted.com ([91.207.212.93]:23978 "EHLO
         mx07-00178001.pphosted.com" rhost-flags-OK-OK-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1727560AbgKTOdn (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Fri, 20 Nov 2020 09:33:43 -0500
-Received: from pps.filterd (m0046661.ppops.net [127.0.0.1])
-        by mx07-00178001.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id 0AKEW5S9018622;
-        Fri, 20 Nov 2020 15:33:27 +0100
+        by vger.kernel.org with ESMTP id S1727682AbgKTOdo (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Fri, 20 Nov 2020 09:33:44 -0500
+Received: from pps.filterd (m0046660.ppops.net [127.0.0.1])
+        by mx07-00178001.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id 0AKEXHHZ018448;
+        Fri, 20 Nov 2020 15:33:31 +0100
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=st.com; h=from : to : cc : subject
- : date : message-id : mime-version : content-type; s=STMicroelectronics;
- bh=Q/Gjr3ITiryqY9OUE5GqxlvOOPrVt6lzWL9Ty4Gmi2g=;
- b=wPHkOlhHS0IAw6vqlLmel19PYgB1hRbX1z5NozqpBgD3kCmPSY6+dR3OhrF5gOTMDs3V
- XD0KKea6xmgB77RzuzD0OzLlJUMMHAR5b8oiBm68ZlOpVvW5ndd11slLW2utkToiW78O
- hvdx8KJQmNMRIYoLfBPRTrvgwYgOUw9eYFyCFiuStMxzB7GKOFQhC9xB716dA/3vRWOT
- NQZkj9d6l0AXIK82KD68XtOF1bSEVVBo/oaXNsvGQOUGG4PnHW0KXUmZx6bA0Mfn9lcW
- dGzqdLx0ZCvQpbkAIVjfpFBE48f1mx3ihNn2rxYpv7q/9R5LHqisJV3jatJVCgmPKY+N Gw== 
+ : date : message-id : in-reply-to : references : mime-version :
+ content-type; s=STMicroelectronics;
+ bh=E9kJGNt1mLYDS6pj2G2ES1qpvtEVVewRXb6bBj3rbxA=;
+ b=syq32dy8KOR8+W6S9XbTrUN8OtoTFu9XbAt95eZKm3nxu/LOC7xqleI7LiEsnxZZJoOD
+ E74I2UcMKSEUNe43XwKH+5eOb6K/AJ/mZsMoZt/7FJcvkxRV4OXoG4OIa22pnQ6WsEbt
+ WCuiZjFeIip7oFAsDBVgCYvvPeqQpJKZC5PLc+xpUCXK9o4dtM5tpRM7/RCkbZzEjP2u
+ /5/ec6CeI6bACw5ZihM5rOvoEauDAvshtks78TCC/oMQMa3i14ueNHWTi9bdni7IcKjn
+ O40bhlxxX3d4H5UGbuUBkGJ5mUcORIogyvm9N5HPMeoRo6xy5cFDlft4yD/GKfUyBZjH WQ== 
 Received: from beta.dmz-eu.st.com (beta.dmz-eu.st.com [164.129.1.35])
-        by mx07-00178001.pphosted.com with ESMTP id 34t70h7n0c-1
+        by mx07-00178001.pphosted.com with ESMTP id 34t58d7ufa-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 20 Nov 2020 15:33:27 +0100
+        Fri, 20 Nov 2020 15:33:31 +0100
 Received: from euls16034.sgp.st.com (euls16034.sgp.st.com [10.75.44.20])
-        by beta.dmz-eu.st.com (STMicroelectronics) with ESMTP id 6A24E10002A;
-        Fri, 20 Nov 2020 15:33:26 +0100 (CET)
+        by beta.dmz-eu.st.com (STMicroelectronics) with ESMTP id EEDB910002A;
+        Fri, 20 Nov 2020 15:33:30 +0100 (CET)
 Received: from Webmail-eu.st.com (sfhdag3node2.st.com [10.75.127.8])
-        by euls16034.sgp.st.com (STMicroelectronics) with ESMTP id 5A49A2777DE;
-        Fri, 20 Nov 2020 15:33:26 +0100 (CET)
-Received: from localhost (10.75.127.47) by SFHDAG3NODE2.st.com (10.75.127.8)
- with Microsoft SMTP Server (TLS) id 15.0.1473.3; Fri, 20 Nov 2020 15:33:25
+        by euls16034.sgp.st.com (STMicroelectronics) with ESMTP id E31FE2777DE;
+        Fri, 20 Nov 2020 15:33:30 +0100 (CET)
+Received: from localhost (10.75.127.45) by SFHDAG3NODE2.st.com (10.75.127.8)
+ with Microsoft SMTP Server (TLS) id 15.0.1473.3; Fri, 20 Nov 2020 15:33:30
  +0100
 From:   Amelie Delaunay <amelie.delaunay@st.com>
 To:     Vinod Koul <vkoul@kernel.org>,
@@ -56,14 +57,16 @@ CC:     <dmaengine@vger.kernel.org>,
         <linux-kernel@vger.kernel.org>,
         Amelie Delaunay <amelie.delaunay@st.com>,
         Pierre-Yves MORDRET <pierre-yves.mordret@st.com>
-Subject: [PATCH 0/4] Bunch of improvements for STM32 DMA controllers
-Date:   Fri, 20 Nov 2020 15:33:16 +0100
-Message-ID: <20201120143320.30367-1-amelie.delaunay@st.com>
+Subject: [PATCH 4/4] dmaengine: stm32-mdma: rework interrupt handler
+Date:   Fri, 20 Nov 2020 15:33:20 +0100
+Message-ID: <20201120143320.30367-5-amelie.delaunay@st.com>
 X-Mailer: git-send-email 2.17.1
+In-Reply-To: <20201120143320.30367-1-amelie.delaunay@st.com>
+References: <20201120143320.30367-1-amelie.delaunay@st.com>
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Originating-IP: [10.75.127.47]
-X-ClientProxiedBy: SFHDAG3NODE3.st.com (10.75.127.9) To SFHDAG3NODE2.st.com
+X-Originating-IP: [10.75.127.45]
+X-ClientProxiedBy: SFHDAG1NODE1.st.com (10.75.127.1) To SFHDAG3NODE2.st.com
  (10.75.127.8)
 X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.312,18.0.737
  definitions=2020-11-20_07:2020-11-20,2020-11-20 signatures=0
@@ -71,22 +74,128 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-This series brings 3 patches for STM32 DMA and 1 for STM32 MDMA.
-They increase the reliability and the efficiency of the transfers.
+To avoid multiple entries in MDMA interrupt handler for each flag&interrupt
+enable, manage all flags set at once.
 
-Amelie Delaunay (4):
-  dmaengine: stm32-dma: rework irq handler to manage error before xfer
-    events
-  dmaengine: stm32-dma: clean channel configuration when channel is
-    freed
-  dmaengine: stm32-dma: take address into account when computing max
-    width
-  dmaengine: stm32-mdma: rework interrupt handler
-
- drivers/dma/stm32-dma.c  | 47 +++++++++++++++++++----------
+Signed-off-by: Amelie Delaunay <amelie.delaunay@st.com>
+---
  drivers/dma/stm32-mdma.c | 64 +++++++++++++++++++++-------------------
- 2 files changed, 65 insertions(+), 46 deletions(-)
+ 1 file changed, 34 insertions(+), 30 deletions(-)
 
+diff --git a/drivers/dma/stm32-mdma.c b/drivers/dma/stm32-mdma.c
+index 29e5e30524bb..e4637ec786d3 100644
+--- a/drivers/dma/stm32-mdma.c
++++ b/drivers/dma/stm32-mdma.c
+@@ -1346,7 +1346,7 @@ static irqreturn_t stm32_mdma_irq_handler(int irq, void *devid)
+ {
+ 	struct stm32_mdma_device *dmadev = devid;
+ 	struct stm32_mdma_chan *chan = devid;
+-	u32 reg, id, ien, status, flag;
++	u32 reg, id, ccr, ien, status;
+ 
+ 	/* Find out which channel generates the interrupt */
+ 	status = readl_relaxed(dmadev->base + STM32_MDMA_GISR0);
+@@ -1368,67 +1368,71 @@ static irqreturn_t stm32_mdma_irq_handler(int irq, void *devid)
+ 
+ 	chan = &dmadev->chan[id];
+ 	if (!chan) {
+-		dev_dbg(mdma2dev(dmadev), "MDMA channel not initialized\n");
+-		goto exit;
++		dev_warn(mdma2dev(dmadev), "MDMA channel not initialized\n");
++		return IRQ_NONE;
+ 	}
+ 
+ 	/* Handle interrupt for the channel */
+ 	spin_lock(&chan->vchan.lock);
+-	status = stm32_mdma_read(dmadev, STM32_MDMA_CISR(chan->id));
+-	ien = stm32_mdma_read(dmadev, STM32_MDMA_CCR(chan->id));
+-	ien &= STM32_MDMA_CCR_IRQ_MASK;
+-	ien >>= 1;
++	status = stm32_mdma_read(dmadev, STM32_MDMA_CISR(id));
++	/* Mask Channel ReQuest Active bit which can be set in case of MEM2MEM */
++	status &= ~STM32_MDMA_CISR_CRQA;
++	ccr = stm32_mdma_read(dmadev, STM32_MDMA_CCR(id));
++	ien = (ccr & STM32_MDMA_CCR_IRQ_MASK) >> 1;
+ 
+ 	if (!(status & ien)) {
+ 		spin_unlock(&chan->vchan.lock);
+-		dev_dbg(chan2dev(chan),
+-			"spurious it (status=0x%04x, ien=0x%04x)\n",
+-			status, ien);
++		dev_warn(chan2dev(chan),
++			 "spurious it (status=0x%04x, ien=0x%04x)\n",
++			 status, ien);
+ 		return IRQ_NONE;
+ 	}
+ 
+-	flag = __ffs(status & ien);
+-	reg = STM32_MDMA_CIFCR(chan->id);
++	reg = STM32_MDMA_CIFCR(id);
+ 
+-	switch (1 << flag) {
+-	case STM32_MDMA_CISR_TEIF:
+-		id = chan->id;
+-		status = readl_relaxed(dmadev->base + STM32_MDMA_CESR(id));
+-		dev_err(chan2dev(chan), "Transfer Err: stat=0x%08x\n", status);
++	if (status & STM32_MDMA_CISR_TEIF) {
++		dev_err(chan2dev(chan), "Transfer Err: stat=0x%08x\n",
++			readl_relaxed(dmadev->base + STM32_MDMA_CESR(id)));
+ 		stm32_mdma_set_bits(dmadev, reg, STM32_MDMA_CIFCR_CTEIF);
+-		break;
++		status &= ~STM32_MDMA_CISR_TEIF;
++	}
+ 
+-	case STM32_MDMA_CISR_CTCIF:
++	if (status & STM32_MDMA_CISR_CTCIF) {
+ 		stm32_mdma_set_bits(dmadev, reg, STM32_MDMA_CIFCR_CCTCIF);
++		status &= ~STM32_MDMA_CISR_CTCIF;
+ 		stm32_mdma_xfer_end(chan);
+-		break;
++	}
+ 
+-	case STM32_MDMA_CISR_BRTIF:
++	if (status & STM32_MDMA_CISR_BRTIF) {
+ 		stm32_mdma_set_bits(dmadev, reg, STM32_MDMA_CIFCR_CBRTIF);
+-		break;
++		status &= ~STM32_MDMA_CISR_BRTIF;
++	}
+ 
+-	case STM32_MDMA_CISR_BTIF:
++	if (status & STM32_MDMA_CISR_BTIF) {
+ 		stm32_mdma_set_bits(dmadev, reg, STM32_MDMA_CIFCR_CBTIF);
++		status &= ~STM32_MDMA_CISR_BTIF;
+ 		chan->curr_hwdesc++;
+ 		if (chan->desc && chan->desc->cyclic) {
+ 			if (chan->curr_hwdesc == chan->desc->count)
+ 				chan->curr_hwdesc = 0;
+ 			vchan_cyclic_callback(&chan->desc->vdesc);
+ 		}
+-		break;
++	}
+ 
+-	case STM32_MDMA_CISR_TCIF:
++	if (status & STM32_MDMA_CISR_TCIF) {
+ 		stm32_mdma_set_bits(dmadev, reg, STM32_MDMA_CIFCR_CLTCIF);
+-		break;
++		status &= ~STM32_MDMA_CISR_TCIF;
++	}
+ 
+-	default:
+-		dev_err(chan2dev(chan), "it %d unhandled (status=0x%04x)\n",
+-			1 << flag, status);
++	if (status) {
++		stm32_mdma_set_bits(dmadev, reg, status);
++		dev_err(chan2dev(chan), "DMA error: status=0x%08x\n", status);
++		if (!(ccr & STM32_MDMA_CCR_EN))
++			dev_err(chan2dev(chan), "chan disabled by HW\n");
+ 	}
+ 
+ 	spin_unlock(&chan->vchan.lock);
+ 
+-exit:
+ 	return IRQ_HANDLED;
+ }
+ 
 -- 
 2.17.1
 
