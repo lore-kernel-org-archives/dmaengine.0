@@ -2,291 +2,101 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.3 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
-	USER_AGENT_SANE_1 autolearn=unavailable autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
+	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 89BDDC5519F
-	for <dmaengine@archiver.kernel.org>; Fri, 20 Nov 2020 11:31:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D1682C5519F
+	for <dmaengine@archiver.kernel.org>; Fri, 20 Nov 2020 14:33:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3270C22253
-	for <dmaengine@archiver.kernel.org>; Fri, 20 Nov 2020 11:31:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 58DAB2224C
+	for <dmaengine@archiver.kernel.org>; Fri, 20 Nov 2020 14:33:44 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=st.com header.i=@st.com header.b="HKy1giFa"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727882AbgKTLau (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 20 Nov 2020 06:30:50 -0500
-Received: from mga03.intel.com ([134.134.136.65]:26990 "EHLO mga03.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726882AbgKTLau (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Fri, 20 Nov 2020 06:30:50 -0500
-IronPort-SDR: 6TLanbbYOxng2xSm1TH18AB/lnlsS/99nG6frdNDHA3tI/gxoUmTvRQIDWuE6yT4Mh8nFYE2AO
- 54HJwVUJdpAg==
-X-IronPort-AV: E=McAfee;i="6000,8403,9810"; a="171555409"
-X-IronPort-AV: E=Sophos;i="5.78,356,1599548400"; 
-   d="scan'208";a="171555409"
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from orsmga004.jf.intel.com ([10.7.209.38])
-  by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Nov 2020 03:30:48 -0800
-IronPort-SDR: TeKYm0yw7vmRnD5pABbfMtIiaSNSFYey/5glR73060/rWhhQ3KRBNiNDcvM0Hj0BNTnJC1V1BU
- A16s8ny2unng==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.78,356,1599548400"; 
-   d="scan'208";a="477198269"
-Received: from linux.intel.com ([10.54.29.200])
-  by orsmga004.jf.intel.com with ESMTP; 20 Nov 2020 03:30:48 -0800
-Received: from [10.255.161.204] (mreddy3x-MOBL.gar.corp.intel.com [10.255.161.204])
-        by linux.intel.com (Postfix) with ESMTP id 87F7E58082E;
-        Fri, 20 Nov 2020 03:30:45 -0800 (PST)
-Subject: Re: [PATCH v9 1/2] dt-bindings: dma: Add bindings for Intel LGM SoC
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     dmaengine@vger.kernel.org, devicetree@vger.kernel.org,
-        robh+dt@kernel.org, linux-kernel@vger.kernel.org,
-        andriy.shevchenko@intel.com, chuanhua.lei@linux.intel.com,
-        cheol.yong.kim@intel.com, qi-ming.wu@intel.com,
-        malliamireddy009@gmail.com, peter.ujfalusi@ti.com
-References: <cover.1605158930.git.mallikarjunax.reddy@linux.intel.com>
- <bfe586ac62080d14759bda22ebf1de1a1fa9c09d.1605158930.git.mallikarjunax.reddy@linux.intel.com>
- <20201118155552.GV50232@vkoul-mobl>
-From:   "Reddy, MallikarjunaX" <mallikarjunax.reddy@linux.intel.com>
-Message-ID: <44fba7c3-37a9-7168-3c19-eeb5068b7063@linux.intel.com>
-Date:   Fri, 20 Nov 2020 19:30:44 +0800
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.4.3
+        id S1727788AbgKTOdo (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 20 Nov 2020 09:33:44 -0500
+Received: from mx08-00178001.pphosted.com ([91.207.212.93]:51274 "EHLO
+        mx07-00178001.pphosted.com" rhost-flags-OK-OK-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1726255AbgKTOdn (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Fri, 20 Nov 2020 09:33:43 -0500
+Received: from pps.filterd (m0046661.ppops.net [127.0.0.1])
+        by mx07-00178001.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id 0AKEW42p018604;
+        Fri, 20 Nov 2020 15:33:29 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=st.com; h=from : to : cc : subject
+ : date : message-id : in-reply-to : references : mime-version :
+ content-type; s=STMicroelectronics;
+ bh=2CM4NCa/CuP7klYZNKzVeHsDDN4tvYCHKHpkT+tePN8=;
+ b=HKy1giFa6V4VB353LW3+rD6EdT20SS3QdDPJeyB5Ur3qFqZtuspzMPzSni43wUu7Wy3z
+ DVSnLKhmauuYb+25mXBug6kG2U/Ac1JmkCQNkXwFELbJeE56MEqLOdeEdcWOfNaXP2Am
+ XE7KrnFIO3fod+aYY8ZaKpZJ8LUeYot1oL3pZQYEEnomfqm1jncLU90G0MWYFQwM2RHS
+ 3Xfo+zTO83v7jLLYRw77+xaTpr2HzA3hnU16KjWL9YaCmlYo3TJXCxVKahEqw1ZwqBQ4
+ 9mQ0x/bwkciixr22uMk8PYNRBhC/VhCv0AUHtvd+ta9eIzodugIDNNW6FISTul3Hjh/z fw== 
+Received: from beta.dmz-eu.st.com (beta.dmz-eu.st.com [164.129.1.35])
+        by mx07-00178001.pphosted.com with ESMTP id 34t70h7n0e-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 20 Nov 2020 15:33:29 +0100
+Received: from euls16034.sgp.st.com (euls16034.sgp.st.com [10.75.44.20])
+        by beta.dmz-eu.st.com (STMicroelectronics) with ESMTP id A38F010002A;
+        Fri, 20 Nov 2020 15:33:28 +0100 (CET)
+Received: from Webmail-eu.st.com (sfhdag3node2.st.com [10.75.127.8])
+        by euls16034.sgp.st.com (STMicroelectronics) with ESMTP id 970A92777DE;
+        Fri, 20 Nov 2020 15:33:28 +0100 (CET)
+Received: from localhost (10.75.127.46) by SFHDAG3NODE2.st.com (10.75.127.8)
+ with Microsoft SMTP Server (TLS) id 15.0.1473.3; Fri, 20 Nov 2020 15:33:28
+ +0100
+From:   Amelie Delaunay <amelie.delaunay@st.com>
+To:     Vinod Koul <vkoul@kernel.org>,
+        Dan Williams <dan.j.williams@intel.com>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        Alexandre Torgue <alexandre.torgue@st.com>
+CC:     <dmaengine@vger.kernel.org>,
+        <linux-stm32@st-md-mailman.stormreply.com>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>,
+        Amelie Delaunay <amelie.delaunay@st.com>,
+        Pierre-Yves MORDRET <pierre-yves.mordret@st.com>
+Subject: [PATCH 2/4] dmaengine: stm32-dma: clean channel configuration when channel is freed
+Date:   Fri, 20 Nov 2020 15:33:18 +0100
+Message-ID: <20201120143320.30367-3-amelie.delaunay@st.com>
+X-Mailer: git-send-email 2.17.1
+In-Reply-To: <20201120143320.30367-1-amelie.delaunay@st.com>
+References: <20201120143320.30367-1-amelie.delaunay@st.com>
 MIME-Version: 1.0
-In-Reply-To: <20201118155552.GV50232@vkoul-mobl>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+Content-Type: text/plain
+X-Originating-IP: [10.75.127.46]
+X-ClientProxiedBy: SFHDAG3NODE1.st.com (10.75.127.7) To SFHDAG3NODE2.st.com
+ (10.75.127.8)
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.312,18.0.737
+ definitions=2020-11-20_07:2020-11-20,2020-11-20 signatures=0
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Hi Vinod,
-Thanks for the review. My comments inline.
+When dma_channel_release is called, it means that the channel won't be used
+anymore with the configuration it had. To ensure a future client can safely
+use the channel after it has been released, clean the configuration done
+when channel was requested.
 
-On 11/18/2020 11:55 PM, Vinod Koul wrote:
-> On 12-11-20, 13:38, Amireddy Mallikarjuna reddy wrote:
->> Add DT bindings YAML schema for DMA controller driver
->> of Lightning Mountain (LGM) SoC.
->>
->> Signed-off-by: Amireddy Mallikarjuna reddy <mallikarjunax.reddy@linux.intel.com>
->> ---
->> v1:
->> - Initial version.
->>
->> v2:
->> - Fix bot errors.
->>
->> v3:
->> - No change.
->>
->> v4:
->> - Address Thomas langer comments
->>    - use node name pattern as dma-controller as in common binding.
->>    - Remove "_" (underscore) in instance name.
->>    - Remove "port-" and "chan-" in attribute name for both 'dma-ports' & 'dma-channels' child nodes.
->>
->> v5:
->> - Moved some of the attributes in 'dma-ports' & 'dma-channels' child nodes to dma client/consumer side as cells in 'dmas' properties.
->>
->> v6:
->> - Add additionalProperties: false
->> - completely removed 'dma-ports' and 'dma-channels' child nodes.
->> - Moved channel dt properties to client side dmas.
->> - Use standard dma-channels and dma-channel-mask properties.
->> - Documented reset-names
->> - Add description for dma-cells
->>
->> v7:
->> - modified compatible to oneof
->> - Reduced number of dma-cells to 3
->> - Fine tune the description of some properties.
->>
->> v7-resend:
->> - rebase to 5.10-rc1
->>
->> v8:
->> - rebased to 5.10-rc3
->> - Fixing the bot issues (wrong indentation)
->>
->> v9:
->> - rebased to 5.10-rc3
->> - Use 'enum' instead of oneOf+const
->> - Drop '#dma-cells' in required:, already covered in dma-common.yaml
->> - Drop nodename Already covered by dma-controller.yaml
->> ---
->>   .../devicetree/bindings/dma/intel,ldma.yaml        | 130 +++++++++++++++++++++
->>   1 file changed, 130 insertions(+)
->>   create mode 100644 Documentation/devicetree/bindings/dma/intel,ldma.yaml
->>
->> diff --git a/Documentation/devicetree/bindings/dma/intel,ldma.yaml b/Documentation/devicetree/bindings/dma/intel,ldma.yaml
->> new file mode 100644
->> index 000000000000..c06281a10178
->> --- /dev/null
->> +++ b/Documentation/devicetree/bindings/dma/intel,ldma.yaml
->> @@ -0,0 +1,130 @@
->> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
->> +%YAML 1.2
->> +---
->> +$id: http://devicetree.org/schemas/dma/intel,ldma.yaml#
->> +$schema: http://devicetree.org/meta-schemas/core.yaml#
->> +
->> +title: Lightning Mountain centralized low speed DMA and high speed DMA controllers.
->> +
->> +maintainers:
->> +  - chuanhua.lei@intel.com
->> +  - mallikarjunax.reddy@intel.com
->> +
->> +allOf:
->> +  - $ref: "dma-controller.yaml#"
->> +
->> +properties:
->> +  compatible:
->> +    enum:
->> +      - intel,lgm-cdma
->> +      - intel,lgm-dma2tx
->> +      - intel,lgm-dma1rx
->> +      - intel,lgm-dma1tx
->> +      - intel,lgm-dma0tx
->> +      - intel,lgm-dma3
->> +      - intel,lgm-toe-dma30
->> +      - intel,lgm-toe-dma31
->> +
->> +  reg:
->> +    maxItems: 1
->> +
->> +  "#dma-cells":
->> +    const: 3
->> +    description:
->> +      The first cell is the peripheral's DMA request line.
->> +      The second cell is the peripheral's (port) number corresponding to the channel.
->> +      The third cell is the burst length of the channel.
->> +
->> +  dma-channels:
->> +    minimum: 1
->> +    maximum: 16
->> +
->> +  dma-channel-mask:
->> +    maxItems: 1
->> +
->> +  clocks:
->> +    maxItems: 1
->> +
->> +  resets:
->> +    maxItems: 1
->> +
->> +  reset-names:
->> +    items:
->> +      - const: ctrl
->> +
->> +  interrupts:
->> +    maxItems: 1
->> +
->> +  intel,dma-poll-cnt:
->> +    $ref: /schemas/types.yaml#definitions/uint32
->> +    description:
->> +      DMA descriptor polling counter is used to control the poling mechanism
-> s/poling/polling
-Ok, Thanks.
->
->> +      for the descriptor fetching for all channels.
->> +
->> +  intel,dma-byte-en:
->> +    type: boolean
->> +    description:
->> +      DMA byte enable is only valid for DMA write(RX).
->> +      Byte enable(1) means DMA write will be based on the number of dwords
->> +      instead of the whole burst.
-> Can you explain this, also sounds you could use _maxburst values..?
-when dma-byte-en = 0 (disabled) DMA write will be in terms of burst 
-length, dma-byte-en = 1 (enabled) write will be in terms of Dwords.
+Signed-off-by: Amelie Delaunay <amelie.delaunay@st.com>
+---
+ drivers/dma/stm32-dma.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-Byte enable = 0 (Disabled) means that DMA write will be based on the 
-burst length, even if it only transmits one byte.
-Byte enable = 1(enabled) means that DMA write will be based on the 
-number of Dwords, instead of the whole burst.
+diff --git a/drivers/dma/stm32-dma.c b/drivers/dma/stm32-dma.c
+index 55a6bd381219..62501e5d9e9d 100644
+--- a/drivers/dma/stm32-dma.c
++++ b/drivers/dma/stm32-dma.c
+@@ -1220,6 +1220,8 @@ static void stm32_dma_free_chan_resources(struct dma_chan *c)
+ 	pm_runtime_put(dmadev->ddev.dev);
+ 
+ 	vchan_free_chan_resources(to_virt_chan(c));
++	stm32_dma_clear_reg(&chan->chan_reg);
++	chan->threshold = 0;
+ }
+ 
+ static void stm32_dma_desc_free(struct virt_dma_desc *vdesc)
+-- 
+2.17.1
 
->
->> +
->> +  intel,dma-drb:
->> +    type: boolean
->> +    description:
->> +      DMA descriptor read back to make sure data and desc synchronization.
->> +
->> +  intel,dma-desc-in-sram:
->> +    type: boolean
->> +    description:
->> +      DMA descritpors in SRAM or not. Some old controllers descriptors
->> +      can be in DRAM or SRAM. The new ones are all in SRAM.
-> should that not be decided by driver..? Or is this a hw property?
-This is DMA controller capability. It can be decided from driver also. i 
-will change accordingly.
->
->> +
->> +  intel,dma-orrc:
->> +    $ref: /schemas/types.yaml#definitions/uint32
->> +    description:
->> +      DMA outstanding read counter value determine the number of
->> +      ORR-Outstanding Read Request. The maximum value is 16.
-> How would this be used by folks..?
-A register bit will be used to enable/disable the ORR feature.
-
-Outstanding Read Capability introduce CMD FIFO to support up to 16 
-outstanding reads for different packet in same channel.
-
-For large packets up to 16 OR can be issued, the number of OR is 
-configurable.
->
->> +
->> +  intel,dma-dburst-wr:
->> +    type: boolean
->> +    description:
->> +      Enable RX dynamic burst write. When it is enabled, the DMA does RX dynamic burst;
->> +      if it is disabled, the DMA RX will still support programmable fixed burst size of 2,4,8,16.
->> +      It only applies to RX DMA and memcopy DMA.
->> +
->> +required:
->> +  - compatible
->> +  - reg
-> So only two are mandatory, what about the bunch of intel properties you
-> added above..?
-Some of the properties are DMA capabilities, Enabling from device tree.
-other properties will use default values from driver if we dont pass it 
-from device tree.
->
->> +
->> +additionalProperties: false
->> +
->> +examples:
->> +  - |
->> +    dma0: dma-controller@e0e00000 {
->> +      compatible = "intel,lgm-cdma";
->> +      reg = <0xe0e00000 0x1000>;
->> +      #dma-cells = <3>;
->> +      dma-channels = <16>;
->> +      dma-channel-mask = <0xFFFF>;
->> +      interrupt-parent = <&ioapic1>;
->> +      interrupts = <82 1>;
->> +      resets = <&rcu0 0x30 0>;
->> +      reset-names = "ctrl";
->> +      clocks = <&cgu0 80>;
->> +      intel,dma-poll-cnt = <4>;
->> +      intel,dma-byte-en;
->> +      intel,dma-drb;
->> +    };
->> +  - |
->> +    dma3: dma-controller@ec800000 {
->> +      compatible = "intel,lgm-dma3";
->> +      reg = <0xec800000 0x1000>;
->> +      clocks = <&cgu0 71>;
->> +      resets = <&rcu0 0x10 9>;
->> +      #dma-cells = <3>;
->> +      intel,dma-poll-cnt = <16>;
->> +      intel,dma-desc-in-sram;
->> +      intel,dma-orrc = <16>;
->> +      intel,dma-byte-en;
->> +      intel,dma-dburst-wr;
->> +    };
->> -- 
->> 2.11.0
