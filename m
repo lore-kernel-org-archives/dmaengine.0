@@ -2,81 +2,204 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-19.0 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+X-Spam-Status: No, score=-16.0 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A1D69C64EBC
-	for <dmaengine@archiver.kernel.org>; Fri, 20 Nov 2020 16:23:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E7F6EC388F9
+	for <dmaengine@archiver.kernel.org>; Sat, 21 Nov 2020 12:17:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5C8FF238E6
-	for <dmaengine@archiver.kernel.org>; Fri, 20 Nov 2020 16:23:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9EFE422254
+	for <dmaengine@archiver.kernel.org>; Sat, 21 Nov 2020 12:17:28 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=kernel.org header.i=@kernel.org header.b="o0H6rNWp"
+	dkim=pass (1024-bit key) header.d=kernel.org header.i=@kernel.org header.b="Tpov4aTs"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729694AbgKTQXl (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 20 Nov 2020 11:23:41 -0500
-Received: from mail.kernel.org ([198.145.29.99]:41542 "EHLO mail.kernel.org"
+        id S1727672AbgKUMRH (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Sat, 21 Nov 2020 07:17:07 -0500
+Received: from mail.kernel.org ([198.145.29.99]:44686 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729660AbgKTQXS (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Fri, 20 Nov 2020 11:23:18 -0500
-Received: from localhost.localdomain (adsl-84-226-167-205.adslplus.ch [84.226.167.205])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        id S1727651AbgKUMRG (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Sat, 21 Nov 2020 07:17:06 -0500
+Received: from localhost (unknown [122.171.203.152])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id D8B372240B;
-        Fri, 20 Nov 2020 16:23:16 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id CC93222226;
+        Sat, 21 Nov 2020 12:17:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1605889398;
-        bh=rmaDY9nYXHbucnp1zbru/h6Fjyr4l11wnGIr71foVYA=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=o0H6rNWpJo7LGr8vsmCu46FAHcCAYg2XoLjiauh9GqqlERlHyAa9w47c9nqWGw1Zy
-         llJmRHJAAB4oN94hKv2J6K13GT50n0X/K7KpdVCghqF7qhk2rCZqFoIeH4UEB+OXV2
-         KitU28DOev8rDPUJJ4O6MpqFhP10YQ9P7/SbM6/Y=
-From:   Krzysztof Kozlowski <krzk@kernel.org>
-To:     linux-kernel@vger.kernel.org,
-        Dan Williams <dan.j.williams@intel.com>,
-        Vinod Koul <vkoul@kernel.org>, dmaengine@vger.kernel.org
-Cc:     Krzysztof Kozlowski <krzk@kernel.org>
-Subject: [PATCH 3/6] dmaengine: mv_xor: drop of_match_ptr from of_device_id table
-Date:   Fri, 20 Nov 2020 17:23:00 +0100
-Message-Id: <20201120162303.482126-3-krzk@kernel.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20201120162303.482126-1-krzk@kernel.org>
-References: <20201120162303.482126-1-krzk@kernel.org>
+        s=default; t=1605961025;
+        bh=CLnmJwu1qyLfSMMDkimhjgKa6ddTmVUxgKHdclcvknA=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=Tpov4aTsM8kVAnl2bn/v7/48hpp/4UO7vVc5z2OOGrpqU8cfRrGxZ1wLfn+2LHN57
+         q1kjoD0b1fwmF91i0SisCFZdlumJG+PAyOr+12g7iHcGsKwRpUMNTXG6jb6ES3ygMs
+         ulf35z3aKMB87J5IoxXzQghzszEZf7Q6QUmsSdmg=
+Date:   Sat, 21 Nov 2020 17:47:01 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     "Reddy, MallikarjunaX" <mallikarjunax.reddy@linux.intel.com>
+Cc:     dmaengine@vger.kernel.org, devicetree@vger.kernel.org,
+        robh+dt@kernel.org, linux-kernel@vger.kernel.org,
+        andriy.shevchenko@intel.com, chuanhua.lei@linux.intel.com,
+        cheol.yong.kim@intel.com, qi-ming.wu@intel.com,
+        malliamireddy009@gmail.com, peter.ujfalusi@ti.com
+Subject: Re: [PATCH v9 2/2] Add Intel LGM SoC DMA support.
+Message-ID: <20201121121701.GB8403@vkoul-mobl>
+References: <cover.1605158930.git.mallikarjunax.reddy@linux.intel.com>
+ <67be905aa3bcb9faac424f2a134e88d076700419.1605158930.git.mallikarjunax.reddy@linux.intel.com>
+ <20201118173840.GW50232@vkoul-mobl>
+ <a4ea240f-b121-5bc9-a046-95bbcff87553@linux.intel.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <a4ea240f-b121-5bc9-a046-95bbcff87553@linux.intel.com>
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-The driver can match only via the DT table so the table should be always
-used and the of_match_ptr does not have any sense (this also allows ACPI
-matching via PRP0001, even though it is not relevant here).  This fixes
-compile warning (!CONFIG_OF on x86_64):
+On 20-11-20, 19:30, Reddy, MallikarjunaX wrote:
+> Hi Vinod,
+> 
+> Thanks for the review. My comments inline.
+> 
+> On 11/19/2020 1:38 AM, Vinod Koul wrote:
+> > On 12-11-20, 13:38, Amireddy Mallikarjuna reddy wrote:
+> > > Add DMA controller driver for Lightning Mountain (LGM) family of SoCs.
+> > > 
+> > > The main function of the DMA controller is the transfer of data from/to any
+> > > peripheral to/from the memory. A memory to memory copy capability can also
+> > > be configured.
+> > > 
+> > > This ldma driver is used for configure the device and channnels for data
+> > > and control paths.
+> > > 
+> > > Signed-off-by: Amireddy Mallikarjuna reddy <mallikarjunax.reddy@linux.intel.com>
+> > > ---
+> > > v1:
+> > > - Initial version.
+> > You have a cover letter, use that to keep track of these changes
+> ok.
+> > 
+> > > +++ b/drivers/dma/lgm/Kconfig
+> > > @@ -0,0 +1,9 @@
+> > > +# SPDX-License-Identifier: GPL-2.0-only
+> > > +config INTEL_LDMA
+> > > +	bool "Lightning Mountain centralized low speed DMA and high speed DMA controllers"
+> > Do we have any other speeds :D
+> No other speeds :-)
 
-    drivers/dma/mv_xor.c:1281:34: warning:
-        ‘mv_xor_dt_ids’ defined but not used [-Wunused-const-variable=]
+Right, so possibly drop the speed characterization here!
 
-Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
----
- drivers/dma/mv_xor.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+> > 
+> > > +++ b/drivers/dma/lgm/lgm-dma.c
+> > > @@ -0,0 +1,1742 @@
+> > > +// SPDX-License-Identifier: GPL-2.0
+> > > +/*
+> > > + * Lightning Mountain centralized low speed and high speed DMA controller driver
+> > > + *
+> > > + * Copyright (c) 2016 ~ 2020 Intel Corporation.
+> > I think you mean 2016 - 2020, a dash which refers to duration
+> ok.
+> > 
+> > > +struct dw2_desc {
+> > > +	struct {
+> > > +		u32 len		:16;
+> > > +		u32 res0	:7;
+> > > +		u32 bofs	:2;
+> > > +		u32 res1	:3;
+> > > +		u32 eop		:1;
+> > > +		u32 sop		:1;
+> > > +		u32 c		:1;
+> > > +		u32 own		:1;
+> > > +	} __packed field;
+> > Another one, looks like folks adding dmaengine patches love this
+> > approach, second one for the day..
+> > 
+> > Now why do you need the bit fields, why not use register defines and
+> > helpers in bitfield.h to help configure the fields See FIELD_GET,
+> > FIELD_PREP etc
+> Let me check on this...
+> > 
+> > > +struct dma_dev_ops {
+> > > +	int (*device_alloc_chan_resources)(struct dma_chan *chan);
+> > > +	void (*device_free_chan_resources)(struct dma_chan *chan);
+> > > +	int (*device_config)(struct dma_chan *chan,
+> > > +			     struct dma_slave_config *config);
+> > > +	int (*device_pause)(struct dma_chan *chan);
+> > > +	int (*device_resume)(struct dma_chan *chan);
+> > > +	int (*device_terminate_all)(struct dma_chan *chan);
+> > > +	void (*device_synchronize)(struct dma_chan *chan);
+> > > +	enum dma_status (*device_tx_status)(struct dma_chan *chan,
+> > > +					    dma_cookie_t cookie,
+> > > +					    struct dma_tx_state *txstate);
+> > > +	struct dma_async_tx_descriptor *(*device_prep_slave_sg)
+> > > +		(struct dma_chan *chan, struct scatterlist *sgl,
+> > > +		unsigned int sg_len, enum dma_transfer_direction direction,
+> > > +		unsigned long flags, void *context);
+> > > +	void (*device_issue_pending)(struct dma_chan *chan);
+> > > +};
+> > Heh! why do you have a copy of dmaengine ops here?
+> Ok, i will remove the ops and update the code accordingly.
+> > 
+> > > +static int ldma_chan_desc_cfg(struct ldma_chan *c, dma_addr_t desc_base,
+> > > +			      int desc_num)
+> > > +{
+> > > +	struct ldma_dev *d = to_ldma_dev(c->vchan.chan.device);
+> > > +
+> > > +	if (!desc_num) {
+> > > +		dev_err(d->dev, "Channel %d must allocate descriptor first\n",
+> > > +			c->nr);
+> > > +		return -EINVAL;
+> > > +	}
+> > > +
+> > > +	if (desc_num > DMA_MAX_DESC_NUM) {
+> > > +		dev_err(d->dev, "Channel %d descriptor number out of range %d\n",
+> > > +			c->nr, desc_num);
+> > > +		return -EINVAL;
+> > > +	}
+> > > +
+> > > +	ldma_chan_desc_hw_cfg(c, desc_base, desc_num);
+> > > +
+> > > +	c->flags |= DMA_HW_DESC;
+> > > +	c->desc_cnt = desc_num;
+> > > +	c->desc_phys = desc_base;
+> > So you have a custom API which is used to configure this flag, a number
+> > and an address. The question is why, can you please help explain this?
+> LDMA used as general purpose dma(ver == DMA_VER22) and also supports DMA
+> capability for GSWIP in their network packet processing.( ver > DMA_VER22)
 
-diff --git a/drivers/dma/mv_xor.c b/drivers/dma/mv_xor.c
-index 00cd1335eeba..23b232b57518 100644
---- a/drivers/dma/mv_xor.c
-+++ b/drivers/dma/mv_xor.c
-@@ -1455,7 +1455,7 @@ static struct platform_driver mv_xor_driver = {
- 	.resume         = mv_xor_resume,
- 	.driver		= {
- 		.name	        = MV_XOR_NAME,
--		.of_match_table = of_match_ptr(mv_xor_dt_ids),
-+		.of_match_table = mv_xor_dt_ids,
- 	},
- };
- 
+Whats GSWIP?
+
+> 
+> Each Ingress(IGP) & Egress(EGP) ports of CQM use a dma channel.
+
+CQM?
+
+> desc needs to be configure for each dma channel and the remapped address of
+> the IGP & EGP is desc base adress.
+
+Why should this address not passed as src_addr/dst_addr?
+
+> CQM client is using ldma_chan_desc_cfg() to configure the descriptior.
+> > 
+> > > +static void dma_issue_pending(struct dma_chan *chan)
+> > > +{
+> > > +	struct ldma_chan *c = to_ldma_chan(chan);
+> > > +	struct ldma_dev *d = to_ldma_dev(c->vchan.chan.device);
+> > > +	unsigned long flags;
+> > > +
+> > > +	if (d->ver == DMA_VER22) {
+> > why is this specific to this version?
+> Only dma0 instance (ver == DMA_VER22) is used as a general purpose slave
+> DMA. we set both control and datapath here.
+> Other instances (ver > DMA_VER22) we set only control path. data path is
+> taken care by dma client(GSWIP).
+> Only thing needs to do is get the channel, set the descriptor and just 'ON'
+> the channel.
+> 
+> CQM is highly low level register configurable/programmable take care about
+> the the packet processing through the register configurations.
+
+DMAengine fwk take care of channel management for clients and
+transaction management, if you not going to do transactions then why
+bother with dmaengine ?
 -- 
-2.25.1
-
+~Vinod
