@@ -2,91 +2,81 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-19.0 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.0 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 98BC1C8300E
-	for <dmaengine@archiver.kernel.org>; Wed, 25 Nov 2020 15:44:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 35910C63798
+	for <dmaengine@archiver.kernel.org>; Thu, 26 Nov 2020 04:50:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 445F6206CA
-	for <dmaengine@archiver.kernel.org>; Wed, 25 Nov 2020 15:44:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D6EC62173E
+	for <dmaengine@archiver.kernel.org>; Thu, 26 Nov 2020 04:50:56 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=kernel.org header.i=@kernel.org header.b="mYi655Bf"
+	dkim=pass (1024-bit key) header.d=kernel.org header.i=@kernel.org header.b="Rg0nz22T"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729690AbgKYPm5 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 25 Nov 2020 10:42:57 -0500
-Received: from mail.kernel.org ([198.145.29.99]:53458 "EHLO mail.kernel.org"
+        id S2387685AbgKZEuk (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 25 Nov 2020 23:50:40 -0500
+Received: from mail.kernel.org ([198.145.29.99]:36890 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1730354AbgKYPgE (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Wed, 25 Nov 2020 10:36:04 -0500
-Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        id S2387684AbgKZEuk (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Wed, 25 Nov 2020 23:50:40 -0500
+Received: from localhost (unknown [122.179.79.180])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id E332420857;
-        Wed, 25 Nov 2020 15:36:01 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 010B82145D;
+        Thu, 26 Nov 2020 04:50:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1606318562;
-        bh=oB9+iQFPwSRpfKRYDu4lhJbolyTBNVjtkPe2QzPJE/M=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=mYi655Bf0Ur1muW/AOUfDnhfZdLIlf8WX6r59CVw31J2/LQEm10PcLyniGmeRq6Ib
-         19J4zZtrHCHALSjXTBDjM7chUUcbSUVMMEy/Hm4TVj9oUrLujBfcWuejU6n/oNMbbF
-         0bFFCT8carWVfYZ84WhKBPGp+VyQUZSbOrR+Pm1Y=
-From:   Sasha Levin <sashal@kernel.org>
-To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Marc Ferland <ferlandm@amotus.ca>,
-        Radhey Shyam Pandey <radhey.shyam.pandey@xilinx.com>,
-        Vinod Koul <vkoul@kernel.org>, Sasha Levin <sashal@kernel.org>,
-        dmaengine@vger.kernel.org, linux-arm-kernel@lists.infradead.org
-Subject: [PATCH AUTOSEL 5.9 09/33] dmaengine: xilinx_dma: use readl_poll_timeout_atomic variant
-Date:   Wed, 25 Nov 2020 10:35:26 -0500
-Message-Id: <20201125153550.810101-9-sashal@kernel.org>
-X-Mailer: git-send-email 2.27.0
-In-Reply-To: <20201125153550.810101-1-sashal@kernel.org>
-References: <20201125153550.810101-1-sashal@kernel.org>
+        s=default; t=1606366240;
+        bh=t8TaVfhJXLJs3qX8q4hwu4FUKcPn1ZUAgVG39jnLMz0=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=Rg0nz22TB9YyMCDBgxlFqiZLPKGX10kdP0XYWmwet/TPpJtqXhzMhdTgcp27DaVEC
+         0Ji/jqmGLa2v5ojhaN6fRc/NktWSsxjGlzBD2JamDl7MnhUjEgXrq7PDKDD2cPaRLA
+         o1sa+aiWI273/Q5t2Fho8Wb7Vjb1OlAOVXk43Xo4=
+Date:   Thu, 26 Nov 2020 10:20:35 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     "Reddy, MallikarjunaX" <mallikarjunax.reddy@linux.intel.com>
+Cc:     dmaengine@vger.kernel.org, devicetree@vger.kernel.org,
+        robh+dt@kernel.org, linux-kernel@vger.kernel.org,
+        andriy.shevchenko@intel.com, chuanhua.lei@linux.intel.com,
+        cheol.yong.kim@intel.com, qi-ming.wu@intel.com,
+        malliamireddy009@gmail.com, peter.ujfalusi@ti.com
+Subject: Re: [PATCH v9 2/2] Add Intel LGM SoC DMA support.
+Message-ID: <20201126045035.GI8403@vkoul-mobl>
+References: <cover.1605158930.git.mallikarjunax.reddy@linux.intel.com>
+ <67be905aa3bcb9faac424f2a134e88d076700419.1605158930.git.mallikarjunax.reddy@linux.intel.com>
+ <20201118173840.GW50232@vkoul-mobl>
+ <a4ea240f-b121-5bc9-a046-95bbcff87553@linux.intel.com>
+ <20201121121701.GB8403@vkoul-mobl>
+ <dc8c5f27-bce6-d276-af0b-93c6e63e85a1@linux.intel.com>
+ <20201124172149.GT8403@vkoul-mobl>
+ <ee275d37-5dda-205a-a897-7a61ad13b536@linux.intel.com>
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ee275d37-5dda-205a-a897-7a61ad13b536@linux.intel.com>
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-From: Marc Ferland <ferlandm@amotus.ca>
+On 25-11-20, 18:39, Reddy, MallikarjunaX wrote:
 
-[ Upstream commit 0ba2df09f1500d3f27398a3382b86d39c3e6abe2 ]
+> > > > > desc needs to be configure for each dma channel and the remapped address of
+> > > > > the IGP & EGP is desc base adress.
+> > > > Why should this address not passed as src_addr/dst_addr?
+> > > src_addr/dst_addr is the data pointer. Data pointer indicates address
+> > > pointer of data buffer.
+> > > 
+> > > ldma_chan_desc_cfg() carries the descriptor address.
+> > > 
+> > > The descriptor list entry contains the data pointer, which points to the
+> > > data section in the memory.
+> > > 
+> > > So we should not use src_addr/dst_addr as desc base address.
+> > Okay sounds reasonable. why is this using in API here?
+> descriptor base address needs to be write into the dma register (DMA_CDBA).
 
-The xilinx_dma_poll_timeout macro is sometimes called while holding a
-spinlock (see xilinx_dma_issue_pending() for an example) this means we
-shouldn't sleep when polling the dma channel registers. To address it
-in xilinx poll timeout macro use readl_poll_timeout_atomic instead of
-readl_poll_timeout variant.
+Why cant descriptor be allocated by damenegine driver, passed to client
+as we normally do in prep_* callbacks ? Why do you need a custom API
 
-Signed-off-by: Marc Ferland <ferlandm@amotus.ca>
-Signed-off-by: Radhey Shyam Pandey <radhey.shyam.pandey@xilinx.com>
-Link: https://lore.kernel.org/r/1604473206-32573-2-git-send-email-radhey.shyam.pandey@xilinx.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- drivers/dma/xilinx/xilinx_dma.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/drivers/dma/xilinx/xilinx_dma.c b/drivers/dma/xilinx/xilinx_dma.c
-index 0fc432567b857..993297d585c01 100644
---- a/drivers/dma/xilinx/xilinx_dma.c
-+++ b/drivers/dma/xilinx/xilinx_dma.c
-@@ -517,8 +517,8 @@ struct xilinx_dma_device {
- #define to_dma_tx_descriptor(tx) \
- 	container_of(tx, struct xilinx_dma_tx_descriptor, async_tx)
- #define xilinx_dma_poll_timeout(chan, reg, val, cond, delay_us, timeout_us) \
--	readl_poll_timeout(chan->xdev->regs + chan->ctrl_offset + reg, val, \
--			   cond, delay_us, timeout_us)
-+	readl_poll_timeout_atomic(chan->xdev->regs + chan->ctrl_offset + reg, \
-+				  val, cond, delay_us, timeout_us)
- 
- /* IO accessors */
- static inline u32 dma_read(struct xilinx_dma_chan *chan, u32 reg)
 -- 
-2.27.0
-
+~Vinod
