@@ -7,24 +7,24 @@ X-Spam-Status: No, score=-16.7 required=3.0 tests=BAYES_00,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7D282C83010
-	for <dmaengine@archiver.kernel.org>; Fri, 27 Nov 2020 09:41:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E893EC8300E
+	for <dmaengine@archiver.kernel.org>; Fri, 27 Nov 2020 09:41:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 36E1321527
-	for <dmaengine@archiver.kernel.org>; Fri, 27 Nov 2020 09:41:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A95BC20B80
+	for <dmaengine@archiver.kernel.org>; Fri, 27 Nov 2020 09:41:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729175AbgK0JlW (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 27 Nov 2020 04:41:22 -0500
-Received: from szxga06-in.huawei.com ([45.249.212.32]:8436 "EHLO
-        szxga06-in.huawei.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728056AbgK0JlW (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Fri, 27 Nov 2020 04:41:22 -0500
-Received: from DGGEMS402-HUB.china.huawei.com (unknown [172.30.72.60])
-        by szxga06-in.huawei.com (SkyGuard) with ESMTP id 4Cj8l413vfzhgR2;
-        Fri, 27 Nov 2020 17:41:04 +0800 (CST)
+        id S1729107AbgK0JlS (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 27 Nov 2020 04:41:18 -0500
+Received: from szxga04-in.huawei.com ([45.249.212.190]:8131 "EHLO
+        szxga04-in.huawei.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728056AbgK0JlS (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Fri, 27 Nov 2020 04:41:18 -0500
+Received: from DGGEMS402-HUB.china.huawei.com (unknown [172.30.72.58])
+        by szxga04-in.huawei.com (SkyGuard) with ESMTP id 4Cj8ks6T81z15TQ7;
+        Fri, 27 Nov 2020 17:40:53 +0800 (CST)
 Received: from localhost.localdomain.localdomain (10.175.113.25) by
  DGGEMS402-HUB.china.huawei.com (10.3.19.202) with Microsoft SMTP Server id
- 14.3.487.0; Fri, 27 Nov 2020 17:41:10 +0800
+ 14.3.487.0; Fri, 27 Nov 2020 17:41:09 +0800
 From:   Qinglang Miao <miaoqinglang@huawei.com>
 To:     Vinod Koul <vkoul@kernel.org>,
         Dan Williams <dan.j.williams@intel.com>,
@@ -35,9 +35,9 @@ CC:     <dmaengine@vger.kernel.org>,
         <linux-arm-kernel@lists.infradead.org>,
         <linux-kernel@vger.kernel.org>,
         Qinglang Miao <miaoqinglang@huawei.com>
-Subject: [PATCH 2/3] dmaengine: stm32-dmamux: fix reference leak in stm32_dmamux
-Date:   Fri, 27 Nov 2020 17:45:24 +0800
-Message-ID: <20201127094525.121388-3-miaoqinglang@huawei.com>
+Subject: [PATCH 1/3] dmaengine: stm32-dma: fix reference leak in stm32_dma
+Date:   Fri, 27 Nov 2020 17:45:23 +0800
+Message-ID: <20201127094525.121388-2-miaoqinglang@huawei.com>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20201127094525.121388-1-miaoqinglang@huawei.com>
 References: <20201127094525.121388-1-miaoqinglang@huawei.com>
@@ -60,38 +60,29 @@ leak by replacing it with new funtion.
 
 [0] dd8088d5a896 ("PM: runtime: Add  pm_runtime_resume_and_get to deal with usage counter")
 
-Fixes: f65c2e14b096 ("dmaengine: stm32-dmamux: add suspend/resume power management support")
+Fixes: 05f8740a0e6f ("dmaengine: stm32-dma: add suspend/resume power management support")
 Reported-by: Hulk Robot <hulkci@huawei.com>
 Signed-off-by: Qinglang Miao <miaoqinglang@huawei.com>
 ---
- drivers/dma/stm32-dmamux.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/dma/stm32-dma.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/dma/stm32-dmamux.c b/drivers/dma/stm32-dmamux.c
-index a10ccd964..bddd3b23f 100644
---- a/drivers/dma/stm32-dmamux.c
-+++ b/drivers/dma/stm32-dmamux.c
-@@ -137,7 +137,7 @@ static void *stm32_dmamux_route_allocate(struct of_phandle_args *dma_spec,
+diff --git a/drivers/dma/stm32-dma.c b/drivers/dma/stm32-dma.c
+index d0055d2f0..1150aa90e 100644
+--- a/drivers/dma/stm32-dma.c
++++ b/drivers/dma/stm32-dma.c
+@@ -1187,7 +1187,7 @@ static int stm32_dma_alloc_chan_resources(struct dma_chan *c)
  
- 	/* Set dma request */
- 	spin_lock_irqsave(&dmamux->lock, flags);
--	ret = pm_runtime_get_sync(&pdev->dev);
-+	ret = pm_runtime_resume_and_get(&pdev->dev);
- 	if (ret < 0) {
- 		spin_unlock_irqrestore(&dmamux->lock, flags);
- 		goto error;
-@@ -336,7 +336,7 @@ static int stm32_dmamux_suspend(struct device *dev)
- 	struct stm32_dmamux_data *stm32_dmamux = platform_get_drvdata(pdev);
- 	int i, ret;
+ 	chan->config_init = false;
  
--	ret = pm_runtime_get_sync(dev);
-+	ret = pm_runtime_resume_and_get(dev);
+-	ret = pm_runtime_get_sync(dmadev->ddev.dev);
++	ret = pm_runtime_resume_and_get(dmadev->ddev.dev);
  	if (ret < 0)
  		return ret;
  
-@@ -361,7 +361,7 @@ static int stm32_dmamux_resume(struct device *dev)
- 	if (ret < 0)
- 		return ret;
+@@ -1455,7 +1455,7 @@ static int stm32_dma_suspend(struct device *dev)
+ 	struct stm32_dma_device *dmadev = dev_get_drvdata(dev);
+ 	int id, ret, scr;
  
 -	ret = pm_runtime_get_sync(dev);
 +	ret = pm_runtime_resume_and_get(dev);
