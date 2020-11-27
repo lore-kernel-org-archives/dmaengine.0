@@ -5,34 +5,37 @@ X-Spam-Level:
 X-Spam-Status: No, score=-16.7 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+	autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8F8EBC64E7A
-	for <dmaengine@archiver.kernel.org>; Fri, 27 Nov 2020 09:40:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 88FE1C8300C
+	for <dmaengine@archiver.kernel.org>; Fri, 27 Nov 2020 09:41:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 345CF21D81
-	for <dmaengine@archiver.kernel.org>; Fri, 27 Nov 2020 09:40:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 537C721973
+	for <dmaengine@archiver.kernel.org>; Fri, 27 Nov 2020 09:41:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727009AbgK0Jk0 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 27 Nov 2020 04:40:26 -0500
-Received: from szxga06-in.huawei.com ([45.249.212.32]:7998 "EHLO
-        szxga06-in.huawei.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726719AbgK0JkY (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Fri, 27 Nov 2020 04:40:24 -0500
-Received: from DGGEMS404-HUB.china.huawei.com (unknown [172.30.72.59])
-        by szxga06-in.huawei.com (SkyGuard) with ESMTP id 4Cj8jx4FG7zhjCX;
-        Fri, 27 Nov 2020 17:40:05 +0800 (CST)
+        id S1727841AbgK0Jka (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 27 Nov 2020 04:40:30 -0500
+Received: from szxga05-in.huawei.com ([45.249.212.191]:8600 "EHLO
+        szxga05-in.huawei.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727039AbgK0Jk0 (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Fri, 27 Nov 2020 04:40:26 -0500
+Received: from DGGEMS406-HUB.china.huawei.com (unknown [172.30.72.58])
+        by szxga05-in.huawei.com (SkyGuard) with ESMTP id 4Cj8jm3gW5zLtDZ;
+        Fri, 27 Nov 2020 17:39:56 +0800 (CST)
 Received: from localhost.localdomain.localdomain (10.175.113.25) by
- DGGEMS404-HUB.china.huawei.com (10.3.19.204) with Microsoft SMTP Server id
- 14.3.487.0; Fri, 27 Nov 2020 17:40:13 +0800
+ DGGEMS406-HUB.china.huawei.com (10.3.19.206) with Microsoft SMTP Server id
+ 14.3.487.0; Fri, 27 Nov 2020 17:40:18 +0800
 From:   Qinglang Miao <miaoqinglang@huawei.com>
-To:     Dan Williams <dan.j.williams@intel.com>,
-        Vinod Koul <vkoul@kernel.org>
-CC:     <dmaengine@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+To:     Vinod Koul <vkoul@kernel.org>,
+        Dan Williams <dan.j.williams@intel.com>,
+        Michal Simek <michal.simek@xilinx.com>
+CC:     <dmaengine@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>,
         Qinglang Miao <miaoqinglang@huawei.com>
-Subject: [PATCH] dmaengine: rcar-dmac: fix reference leak in rcar_dmac_probe
-Date:   Fri, 27 Nov 2020 17:44:29 +0800
-Message-ID: <20201127094429.120680-1-miaoqinglang@huawei.com>
+Subject: [PATCH] dmaengine: zynqmp_dma: fix reference leak in zynqmp_dma_alloc_chan_resources
+Date:   Fri, 27 Nov 2020 17:44:34 +0800
+Message-ID: <20201127094434.120861-1-miaoqinglang@huawei.com>
 X-Mailer: git-send-email 2.20.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 7BIT
@@ -53,26 +56,26 @@ leak by replacing it with new funtion.
 
 [0] dd8088d5a896 ("PM: runtime: Add  pm_runtime_resume_and_get to deal with usage counter")
 
-Fixes: 87244fe5abdf ("dmaengine: rcar-dmac: Add Renesas R-Car Gen2 DMA Controller (DMAC) driver")
+Fixes: 64c6f7da8c2c ("dmaengine: zynqmp_dma: Add runtime pm support")
 Reported-by: Hulk Robot <hulkci@huawei.com>
 Signed-off-by: Qinglang Miao <miaoqinglang@huawei.com>
 ---
- drivers/dma/sh/rcar-dmac.c | 2 +-
+ drivers/dma/xilinx/zynqmp_dma.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/dma/sh/rcar-dmac.c b/drivers/dma/sh/rcar-dmac.c
-index a57705356..991a7b5da 100644
---- a/drivers/dma/sh/rcar-dmac.c
-+++ b/drivers/dma/sh/rcar-dmac.c
-@@ -1874,7 +1874,7 @@ static int rcar_dmac_probe(struct platform_device *pdev)
+diff --git a/drivers/dma/xilinx/zynqmp_dma.c b/drivers/dma/xilinx/zynqmp_dma.c
+index d8419565b..5fecf5aa6 100644
+--- a/drivers/dma/xilinx/zynqmp_dma.c
++++ b/drivers/dma/xilinx/zynqmp_dma.c
+@@ -468,7 +468,7 @@ static int zynqmp_dma_alloc_chan_resources(struct dma_chan *dchan)
+ 	struct zynqmp_dma_desc_sw *desc;
+ 	int i, ret;
  
- 	/* Enable runtime PM and initialize the device. */
- 	pm_runtime_enable(&pdev->dev);
--	ret = pm_runtime_get_sync(&pdev->dev);
-+	ret = pm_runtime_resume_and_get(&pdev->dev);
- 	if (ret < 0) {
- 		dev_err(&pdev->dev, "runtime PM get sync failed (%d)\n", ret);
+-	ret = pm_runtime_get_sync(chan->dev);
++	ret = pm_runtime_resume_and_get(chan->dev);
+ 	if (ret < 0)
  		return ret;
+ 
 -- 
 2.23.0
 
