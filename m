@@ -2,28 +2,29 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-16.7 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C2FC2C63777
-	for <dmaengine@archiver.kernel.org>; Fri, 27 Nov 2020 09:41:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7D282C83010
+	for <dmaengine@archiver.kernel.org>; Fri, 27 Nov 2020 09:41:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 82B6921527
-	for <dmaengine@archiver.kernel.org>; Fri, 27 Nov 2020 09:41:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 36E1321527
+	for <dmaengine@archiver.kernel.org>; Fri, 27 Nov 2020 09:41:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729081AbgK0JlS (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 27 Nov 2020 04:41:18 -0500
-Received: from szxga06-in.huawei.com ([45.249.212.32]:8435 "EHLO
+        id S1729175AbgK0JlW (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 27 Nov 2020 04:41:22 -0500
+Received: from szxga06-in.huawei.com ([45.249.212.32]:8436 "EHLO
         szxga06-in.huawei.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729051AbgK0JlR (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Fri, 27 Nov 2020 04:41:17 -0500
-Received: from DGGEMS402-HUB.china.huawei.com (unknown [172.30.72.59])
-        by szxga06-in.huawei.com (SkyGuard) with ESMTP id 4Cj8kz3KGnzhhmw;
-        Fri, 27 Nov 2020 17:40:59 +0800 (CST)
+        with ESMTP id S1728056AbgK0JlW (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Fri, 27 Nov 2020 04:41:22 -0500
+Received: from DGGEMS402-HUB.china.huawei.com (unknown [172.30.72.60])
+        by szxga06-in.huawei.com (SkyGuard) with ESMTP id 4Cj8l413vfzhgR2;
+        Fri, 27 Nov 2020 17:41:04 +0800 (CST)
 Received: from localhost.localdomain.localdomain (10.175.113.25) by
  DGGEMS402-HUB.china.huawei.com (10.3.19.202) with Microsoft SMTP Server id
- 14.3.487.0; Fri, 27 Nov 2020 17:41:08 +0800
+ 14.3.487.0; Fri, 27 Nov 2020 17:41:10 +0800
 From:   Qinglang Miao <miaoqinglang@huawei.com>
 To:     Vinod Koul <vkoul@kernel.org>,
         Dan Williams <dan.j.williams@intel.com>,
@@ -34,10 +35,12 @@ CC:     <dmaengine@vger.kernel.org>,
         <linux-arm-kernel@lists.infradead.org>,
         <linux-kernel@vger.kernel.org>,
         Qinglang Miao <miaoqinglang@huawei.com>
-Subject: [PATCH 0/3] dmaengine: stm32: fix reference leak
-Date:   Fri, 27 Nov 2020 17:45:22 +0800
-Message-ID: <20201127094525.121388-1-miaoqinglang@huawei.com>
+Subject: [PATCH 2/3] dmaengine: stm32-dmamux: fix reference leak in stm32_dmamux
+Date:   Fri, 27 Nov 2020 17:45:24 +0800
+Message-ID: <20201127094525.121388-3-miaoqinglang@huawei.com>
 X-Mailer: git-send-email 2.20.1
+In-Reply-To: <20201127094525.121388-1-miaoqinglang@huawei.com>
+References: <20201127094525.121388-1-miaoqinglang@huawei.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 7BIT
 Content-Type:   text/plain; charset=US-ASCII
@@ -49,20 +52,52 @@ X-Mailing-List: dmaengine@vger.kernel.org
 
 pm_runtime_get_sync will increment pm usage counter even it
 failed. Forgetting to putting operation will result in a
-reference leak here. 
+reference leak here.
 
-Use pm_runtime_resume_and_get to fix it.
+A new function pm_runtime_resume_and_get is introduced in
+[0] to keep usage counter balanced. So We fix the reference
+leak by replacing it with new funtion.
 
-Qinglang Miao (3):
-  dmaengine: stm32-dma: fix reference leak in stm32_dma
-  dmaengine: stm32-dmamux: fix reference leak in stm32_dmamux
-  dmaengine: stm32-mdma: fix reference leak in stm32-mdma
+[0] dd8088d5a896 ("PM: runtime: Add  pm_runtime_resume_and_get to deal with usage counter")
 
- drivers/dma/stm32-dma.c    | 4 ++--
+Fixes: f65c2e14b096 ("dmaengine: stm32-dmamux: add suspend/resume power management support")
+Reported-by: Hulk Robot <hulkci@huawei.com>
+Signed-off-by: Qinglang Miao <miaoqinglang@huawei.com>
+---
  drivers/dma/stm32-dmamux.c | 6 +++---
- drivers/dma/stm32-mdma.c   | 4 ++--
- 3 files changed, 7 insertions(+), 7 deletions(-)
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
+diff --git a/drivers/dma/stm32-dmamux.c b/drivers/dma/stm32-dmamux.c
+index a10ccd964..bddd3b23f 100644
+--- a/drivers/dma/stm32-dmamux.c
++++ b/drivers/dma/stm32-dmamux.c
+@@ -137,7 +137,7 @@ static void *stm32_dmamux_route_allocate(struct of_phandle_args *dma_spec,
+ 
+ 	/* Set dma request */
+ 	spin_lock_irqsave(&dmamux->lock, flags);
+-	ret = pm_runtime_get_sync(&pdev->dev);
++	ret = pm_runtime_resume_and_get(&pdev->dev);
+ 	if (ret < 0) {
+ 		spin_unlock_irqrestore(&dmamux->lock, flags);
+ 		goto error;
+@@ -336,7 +336,7 @@ static int stm32_dmamux_suspend(struct device *dev)
+ 	struct stm32_dmamux_data *stm32_dmamux = platform_get_drvdata(pdev);
+ 	int i, ret;
+ 
+-	ret = pm_runtime_get_sync(dev);
++	ret = pm_runtime_resume_and_get(dev);
+ 	if (ret < 0)
+ 		return ret;
+ 
+@@ -361,7 +361,7 @@ static int stm32_dmamux_resume(struct device *dev)
+ 	if (ret < 0)
+ 		return ret;
+ 
+-	ret = pm_runtime_get_sync(dev);
++	ret = pm_runtime_resume_and_get(dev);
+ 	if (ret < 0)
+ 		return ret;
+ 
 -- 
 2.23.0
 
