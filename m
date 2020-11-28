@@ -2,94 +2,121 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.3 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=unavailable
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8CD3EC56201
-	for <dmaengine@archiver.kernel.org>; Sat, 28 Nov 2020 04:34:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 93B4CC63777
+	for <dmaengine@archiver.kernel.org>; Sat, 28 Nov 2020 21:50:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4650821973
-	for <dmaengine@archiver.kernel.org>; Sat, 28 Nov 2020 04:34:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3FB0022240
+	for <dmaengine@archiver.kernel.org>; Sat, 28 Nov 2020 21:50:57 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="i1rtn+mc"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732249AbgK1Eb5 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 27 Nov 2020 23:31:57 -0500
-Received: from szxga08-in.huawei.com ([45.249.212.255]:2317 "EHLO
-        szxga08-in.huawei.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731107AbgK1EbZ (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Fri, 27 Nov 2020 23:31:25 -0500
-Received: from dggeme755-chm.china.huawei.com (unknown [172.30.72.53])
-        by szxga08-in.huawei.com (SkyGuard) with ESMTP id 4CjdHN68zHz13NCK;
-        Sat, 28 Nov 2020 12:07:12 +0800 (CST)
-Received: from [10.140.157.68] (10.140.157.68) by
- dggeme755-chm.china.huawei.com (10.3.19.101) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id
- 15.1.1913.5; Sat, 28 Nov 2020 12:07:52 +0800
-Subject: Re: [PATCH v5 0/4] Enable Hi3559A SOC clock and HiSilicon Hiedma
- Controller
-To:     <mturquette@baylibre.com>, <sboyd@kernel.org>,
-        <robh+dt@kernel.org>, <vkoul@kernel.org>,
-        <dan.j.williams@intel.com>, <p.zabel@pengutronix.de>,
-        <devicetree@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <dmaengine@vger.kernel.org>
-References: <20201119200129.28532-1-gengdongjiu@huawei.com>
-From:   Dongjiu Geng <gengdongjiu@huawei.com>
-Message-ID: <bac15a2e-b9db-b7b0-6004-ad76fa8c5be5@huawei.com>
-Date:   Sat, 28 Nov 2020 12:07:51 +0800
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.6.0
+        id S1731554AbgK1Vul (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Sat, 28 Nov 2020 16:50:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43378 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732191AbgK1S71 (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Sat, 28 Nov 2020 13:59:27 -0500
+Received: from mail-pg1-x541.google.com (mail-pg1-x541.google.com [IPv6:2607:f8b0:4864:20::541])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4DCDDC09426E
+        for <dmaengine@vger.kernel.org>; Fri, 27 Nov 2020 23:31:43 -0800 (PST)
+Received: by mail-pg1-x541.google.com with SMTP id 34so6024536pgp.10
+        for <dmaengine@vger.kernel.org>; Fri, 27 Nov 2020 23:31:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=ZnxKHrct1cvxNtNqNcl6uCXJBiv2C9CvIc5DUO6nA0I=;
+        b=i1rtn+mcaF7kkwH3qlZfzxUllj9ZlZibQvsjMw2wgYuZ9DHIsKUG3IRerfc1nzIjDG
+         /PZhUuOYtmmJ7qxCoP+85IDg6dycqqDaYuGrY1scw34/SpKsRp+E0GDRMiXXPxaTRgm2
+         W/IgWUpq5c/dX/mavlWt17RDGr6VKxb8jvNK2zCbnuLBVmcSeScUs780rafWTSAlEeDb
+         p44nAbOD1PwiLpTDZrCCna219Liz7/K3xYal3yRkdhDufjOY6j4dKan9HuLRuHINWLFJ
+         TN1qaziXWoCUlfFBUu9e6/5fIbkuNEQbuZlNy/hWvWEbGYZlH9cajIx9hUCTXISBXoE5
+         OxnQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=ZnxKHrct1cvxNtNqNcl6uCXJBiv2C9CvIc5DUO6nA0I=;
+        b=aGw4qjqQPkQv2+3UMBi7ATA5YW9uWOjioNRUDP/F8obVPyG7BAHn5x9dx7k32AnNNn
+         MF70l/8FY1koJuJb7yWprhqp1FHgavjHeIOaOT0YduOQsXYlbv1CTT8to7C97MdMHTkV
+         bH/iBJ1VvHDDFrpaUGexC3pTlqOKbs5vJIgA2iifjKcMPsbaoYnLV8xKzuLXAU2Lki+X
+         pgqzDR8IK/JSpmmF3lZzXegWohGZz8P6Ew/vyTUykrv2yWuyXqj4yUtIVozGPB14ZpxJ
+         5QBqneqLDppGTnf3vNOuS6CIaYQoWZaz2GklaFXmht6usUHJs12Eh2uDXG9Da6ydj0hN
+         Rd9g==
+X-Gm-Message-State: AOAM532HrSViuGOcQQh+sKXYxAEYixTbIMFbeSfyMmt3UlNV+rWTpnuQ
+        y4WyQh5Hn3kv3GKLtey0xZ+R
+X-Google-Smtp-Source: ABdhPJx1BNlR0UDn+00ASz2EXwou3WLBK0ieiGY2VCQLyhXFuUl4w8LWp7KbcZfFA+/WNob66zOb6w==
+X-Received: by 2002:a17:90b:4b87:: with SMTP id lr7mr14379315pjb.40.1606548702794;
+        Fri, 27 Nov 2020 23:31:42 -0800 (PST)
+Received: from thinkpad ([2409:4072:15:c612:48ab:f1cc:6b16:2820])
+        by smtp.gmail.com with ESMTPSA id fu5sm13564487pjb.11.2020.11.27.23.31.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 27 Nov 2020 23:31:42 -0800 (PST)
+Date:   Sat, 28 Nov 2020 13:01:34 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Cristian Ciocaltea <cristian.ciocaltea@gmail.com>
+Cc:     Andreas =?iso-8859-1?Q?F=E4rber?= <afaerber@suse.de>,
+        Rob Herring <robh+dt@kernel.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Dan Williams <dan.j.williams@intel.com>,
+        devicetree@vger.kernel.org, dmaengine@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-actions@lists.infradead.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 06/18] arm: dts: owl-s500: Add DMA controller
+Message-ID: <20201128073134.GV3077@thinkpad>
+References: <cover.1605823502.git.cristian.ciocaltea@gmail.com>
+ <543eadc1e3005ecdca780266ef148518b5091377.1605823502.git.cristian.ciocaltea@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <20201119200129.28532-1-gengdongjiu@huawei.com>
-Content-Type: text/plain; charset="utf-8"
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.140.157.68]
-X-ClientProxiedBy: dggeme718-chm.china.huawei.com (10.1.199.114) To
- dggeme755-chm.china.huawei.com (10.3.19.101)
-X-CFilter-Loop: Reflected
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <543eadc1e3005ecdca780266ef148518b5091377.1605823502.git.cristian.ciocaltea@gmail.com>
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-ping, sorry for the noise.
+On Fri, Nov 20, 2020 at 01:56:00AM +0200, Cristian Ciocaltea wrote:
+> Add DMA controller node for Actions Semi S500 SoC.
+> 
+> Signed-off-by: Cristian Ciocaltea <cristian.ciocaltea@gmail.com>
 
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-On 2020/11/20 4:01, Dongjiu Geng wrote:
-> v4->v5:
-> 1. change the patch author mail name
+Thanks,
+Mani
+
+> ---
+>  arch/arm/boot/dts/owl-s500.dtsi | 14 ++++++++++++++
+>  1 file changed, 14 insertions(+)
 > 
-> v3->v4:
-> 1. fix the 'make dt_binding_check' issues.
-> 2. Combine the 'Enable HiSilicon Hiedma Controller' series patches to this series.
-> 3. fix the 'make dt_binding_check' issues in 'Enable HiSilicon Hiedma Controller' patchset
-> 
-> 
-> v2->v3:
-> 1. change dt-bindings documents from txt to yaml format.
-> 2. Add SHUB clock to access the devices of m7
-> 
-> Dongjiu Geng (4):
->   dt-bindings: Document the hi3559a clock bindings
->   clk: hisilicon: Add clock driver for hi3559A SoC
->   dt: bindings: dma: Add DT bindings for HiSilicon Hiedma Controller
->   dmaengine: dma: Add Hiedma Controller v310 Device Driver
-> 
->  .../clock/hisilicon,hi3559av100-clock.yaml    |   66 +
->  .../bindings/dma/hisilicon,hiedmacv310.yaml   |  103 ++
->  drivers/clk/hisilicon/Kconfig                 |    7 +
->  drivers/clk/hisilicon/Makefile                |    1 +
->  drivers/clk/hisilicon/clk-hi3559a.c           |  865 ++++++++++
->  drivers/dma/Kconfig                           |   14 +
->  drivers/dma/Makefile                          |    1 +
->  drivers/dma/hiedmacv310.c                     | 1441 +++++++++++++++++
->  drivers/dma/hiedmacv310.h                     |  136 ++
->  include/dt-bindings/clock/hi3559av100-clock.h |  165 ++
->  10 files changed, 2799 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/clock/hisilicon,hi3559av100-clock.yaml
->  create mode 100644 Documentation/devicetree/bindings/dma/hisilicon,hiedmacv310.yaml
->  create mode 100644 drivers/clk/hisilicon/clk-hi3559a.c
->  create mode 100644 drivers/dma/hiedmacv310.c
->  create mode 100644 drivers/dma/hiedmacv310.h
->  create mode 100644 include/dt-bindings/clock/hi3559av100-clock.h
+> diff --git a/arch/arm/boot/dts/owl-s500.dtsi b/arch/arm/boot/dts/owl-s500.dtsi
+> index a57ce7d6d745..449e9807c4ec 100644
+> --- a/arch/arm/boot/dts/owl-s500.dtsi
+> +++ b/arch/arm/boot/dts/owl-s500.dtsi
+> @@ -207,5 +207,19 @@ sps: power-controller@b01b0100 {
+>  			reg = <0xb01b0100 0x100>;
+>  			#power-domain-cells = <1>;
+>  		};
+> +
+> +		dma: dma-controller@b0260000 {
+> +			compatible = "actions,s500-dma";
+> +			reg = <0xb0260000 0xd00>;
+> +			interrupts = <GIC_SPI 57 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 58 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 59 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 60 IRQ_TYPE_LEVEL_HIGH>;
+> +			#dma-cells = <1>;
+> +			dma-channels = <12>;
+> +			dma-requests = <46>;
+> +			clocks = <&cmu CLK_DMAC>;
+> +			power-domains = <&sps S500_PD_DMA>;
+> +		};
+>  	};
+>  };
+> -- 
+> 2.29.2
 > 
