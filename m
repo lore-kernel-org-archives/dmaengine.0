@@ -2,120 +2,126 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-15.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
+	USER_AGENT_SANE_1 autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BA2A4C71156
-	for <dmaengine@archiver.kernel.org>; Sat, 28 Nov 2020 21:50:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E90DBC63798
+	for <dmaengine@archiver.kernel.org>; Sat, 28 Nov 2020 22:04:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 744E62222C
-	for <dmaengine@archiver.kernel.org>; Sat, 28 Nov 2020 21:50:57 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="NWTqQMuf"
+	by mail.kernel.org (Postfix) with ESMTP id C0CC22344C
+	for <dmaengine@archiver.kernel.org>; Sat, 28 Nov 2020 22:04:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732583AbgK1Vum (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        id S1732596AbgK1Vum (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
         Sat, 28 Nov 2020 16:50:42 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43502 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732606AbgK1TCX (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Sat, 28 Nov 2020 14:02:23 -0500
-Received: from mail-pg1-x544.google.com (mail-pg1-x544.google.com [IPv6:2607:f8b0:4864:20::544])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6CB61C094266
-        for <dmaengine@vger.kernel.org>; Fri, 27 Nov 2020 23:29:12 -0800 (PST)
-Received: by mail-pg1-x544.google.com with SMTP id m9so6048794pgb.4
-        for <dmaengine@vger.kernel.org>; Fri, 27 Nov 2020 23:29:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=PNFbFA5RGzfZOj+MBiAXZSekQwevqv53Dq3RaeUKuto=;
-        b=NWTqQMufLvI4eZFxM1vC2tffYMvnOJQF6SGj73jnc6k0oZCgkSas51hrL2wE2nvXVk
-         +nTu2HoQ1QB8mB71Gj7BdmNnXJadESrIgWmGHpI73m9q9cFsRFRJL87+D5U1nndMnXye
-         B7GrlYWdxERU1M1whEkxxtrLXPcKzxaplz1pTgr6/NB0d8rUfvedbrHyOIsRhsIqp0Sv
-         CB180mCtLyX0o9boUhsuYOXkSf1sid+jw2a0Pl5krHMkZ/FlqVArZtq3NlJXaWsyJ3Nd
-         CfGenel5ksl8D44rcPCYOn/izFRTCxBn+3l5ydVBh4GfdA0aW+WaadcrR6v+Dky0In2a
-         ehGA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=PNFbFA5RGzfZOj+MBiAXZSekQwevqv53Dq3RaeUKuto=;
-        b=CEvchtDhHg9dTnrxnzBZufH7cs4xP1oIGBkyJ0MCKnoOeHuyDz8VvmS43xwfFQYa18
-         JEBBjvtVS/YcX+AaowISay9vQ1VYnO6ttBkdk10q4lqcGJpVksVlyEG8t3L3debMurjC
-         Tuyl9+GIg/GY1uPad/QkFw4w/GY0W71+ENEDE9H1dYb/BEUuAqhjnHM0RJsVYwUHh9/K
-         HrlBrC+l6UihMuh96/pO4i9aXROzfjCvINTgBLutWn67Kq0sZAFo/9RAwuFjcxI6MjJ2
-         PlnJyVLVyrl7PkF5/K85jPAviOjFmKh29/PZmzNQE0s/HbjL9syKQV0PTHIwslU0EX6Q
-         RfJA==
-X-Gm-Message-State: AOAM533WCZoM8i84aXZigoQsTUVxG32f9QfJzM9soZBJfYjtWmEuliMB
-        fBdnCZ0mIvxOS+SVgUpo7Qtu
-X-Google-Smtp-Source: ABdhPJwsU9/nHpLX4mcKfP6FAuf9e9r7zGbuaF+oP1qRuDhyqZOqBmn1/nntCcQ4J8BLW4TRC/GVyg==
-X-Received: by 2002:a17:90b:224a:: with SMTP id hk10mr14386423pjb.81.1606548551916;
-        Fri, 27 Nov 2020 23:29:11 -0800 (PST)
-Received: from thinkpad ([2409:4072:15:c612:48ab:f1cc:6b16:2820])
-        by smtp.gmail.com with ESMTPSA id 12sm13431696pjn.19.2020.11.27.23.29.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 27 Nov 2020 23:29:11 -0800 (PST)
-Date:   Sat, 28 Nov 2020 12:59:02 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Cristian Ciocaltea <cristian.ciocaltea@gmail.com>
-Cc:     Rob Herring <robh+dt@kernel.org>, Vinod Koul <vkoul@kernel.org>,
-        Andreas =?iso-8859-1?Q?F=E4rber?= <afaerber@suse.de>,
-        dmaengine@vger.kernel.org, devicetree@vger.kernel.org,
+Received: from foss.arm.com ([217.140.110.172]:37658 "EHLO foss.arm.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2387707AbgK1Ucz (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Sat, 28 Nov 2020 15:32:55 -0500
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 6043730E;
+        Sat, 28 Nov 2020 12:32:09 -0800 (PST)
+Received: from [192.168.2.22] (unknown [172.31.20.19])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 0D7793F23F;
+        Sat, 28 Nov 2020 12:32:07 -0800 (PST)
+Subject: Re: [RESEND PATCH 05/19] dmaengine: sun6i: Add support for A100 DMA
+To:     Frank Lee <frank@allwinnertech.com>, tiny.windzz@gmail.com
+Cc:     linux-kernel@vger.kernel.org, Maxime Ripard <mripard@kernel.org>,
+        Vinod Koul <vkoul@kernel.org>, dmaengine@vger.kernel.org,
+        Dan Williams <dan.j.williams@intel.com>,
+        Chen-Yu Tsai <wens@csie.org>,
         linux-arm-kernel@lists.infradead.org,
-        linux-actions@lists.infradead.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 04/18] dt-bindings: dma: owl: Add compatible string
- for Actions Semi S500 SoC
-Message-ID: <20201128072902.GS3077@thinkpad>
-References: <cover.1605823502.git.cristian.ciocaltea@gmail.com>
- <0e79dffdf105ded2bb336ab38dc39b4986667683.1605823502.git.cristian.ciocaltea@gmail.com>
+        Jernej Skrabec <jernej.skrabec@siol.net>
+References: <cover.1604988979.git.frank@allwinnertech.com>
+ <719852c6a9a597bd2e82d01a268ca02b9dee826c.1604988979.git.frank@allwinnertech.com>
+From:   =?UTF-8?Q?Andr=c3=a9_Przywara?= <andre.przywara@arm.com>
+Organization: ARM Ltd.
+Message-ID: <29e575b6-14cb-73f1-512d-9f0f934490ea@arm.com>
+Date:   Sat, 28 Nov 2020 20:31:52 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.12.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <0e79dffdf105ded2bb336ab38dc39b4986667683.1605823502.git.cristian.ciocaltea@gmail.com>
+In-Reply-To: <719852c6a9a597bd2e82d01a268ca02b9dee826c.1604988979.git.frank@allwinnertech.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On Fri, Nov 20, 2020 at 01:55:58AM +0200, Cristian Ciocaltea wrote:
-> Add a new compatible string corresponding to the DMA controller found
-> in the S500 variant of the Actions Semi Owl SoCs family.
+On 10/11/2020 06:28, Frank Lee wrote:
+
+Hi,
+
+> From: Yangtao Li <frank@allwinnertech.com>
 > 
-> Signed-off-by: Cristian Ciocaltea <cristian.ciocaltea@gmail.com>
+> The dma of a100 is similar to h6, with some minor changes to
+> support greater addressing capabilities.
 
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+So apparently those changes are backwards compatible, right?
+Why do we need then a new struct now, when this is actually identical to
+the existing H6 one?
 
-Thanks,
-Mani
+So as this seems to work with the same settings as the H6, I think we
+don't need any change in the driver at the moment, just using the H6
+compatible as a fallback in the .dtsi.
 
+Cheers,
+Andre
+
+P.S. I understand that Vinod already applied it, and it doesn't hurt to
+have that in at the moment, if we fix the compatible usage.
+
+> 
+> Add support for it.>
+> Signed-off-by: Yangtao Li <frank@allwinnertech.com>
 > ---
->  Documentation/devicetree/bindings/dma/owl-dma.yaml | 5 +++--
->  1 file changed, 3 insertions(+), 2 deletions(-)
+>  drivers/dma/sun6i-dma.c | 25 +++++++++++++++++++++++++
+>  1 file changed, 25 insertions(+)
 > 
-> diff --git a/Documentation/devicetree/bindings/dma/owl-dma.yaml b/Documentation/devicetree/bindings/dma/owl-dma.yaml
-> index 256d62af2c64..f085f0e42d2c 100644
-> --- a/Documentation/devicetree/bindings/dma/owl-dma.yaml
-> +++ b/Documentation/devicetree/bindings/dma/owl-dma.yaml
-> @@ -8,8 +8,8 @@ title: Actions Semi Owl SoCs DMA controller
+> diff --git a/drivers/dma/sun6i-dma.c b/drivers/dma/sun6i-dma.c
+> index f5f9c86c50bc..5cadd4d2b824 100644
+> --- a/drivers/dma/sun6i-dma.c
+> +++ b/drivers/dma/sun6i-dma.c
+> @@ -1173,6 +1173,30 @@ static struct sun6i_dma_config sun50i_a64_dma_cfg = {
+>  			     BIT(DMA_SLAVE_BUSWIDTH_8_BYTES),
+>  };
 >  
->  description: |
->    The OWL DMA is a general-purpose direct memory access controller capable of
-> -  supporting 10 and 12 independent DMA channels for S700 and S900 SoCs
-> -  respectively.
-> +  supporting 10 independent DMA channels for the Actions Semi S700 SoC and 12
-> +  independent DMA channels for the S500 and S900 SoC variants.
->  
->  maintainers:
->    - Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> @@ -22,6 +22,7 @@ properties:
->      enum:
->        - actions,s900-dma
->        - actions,s700-dma
-> +      - actions,s500-dma
->  
->    reg:
->      maxItems: 1
-> -- 
-> 2.29.2
+> +/*
+> + * TODO: Add support for more than 4g physical addressing.
+> + *
+> + * The A100 binding uses the number of dma channels from the
+> + * device tree node.
+> + */
+> +static struct sun6i_dma_config sun50i_a100_dma_cfg = {
+> +	.clock_autogate_enable = sun6i_enable_clock_autogate_h3,
+> +	.set_burst_length = sun6i_set_burst_length_h3,
+> +	.set_drq          = sun6i_set_drq_h6,
+> +	.set_mode         = sun6i_set_mode_h6,
+> +	.src_burst_lengths = BIT(1) | BIT(4) | BIT(8) | BIT(16),
+> +	.dst_burst_lengths = BIT(1) | BIT(4) | BIT(8) | BIT(16),
+> +	.src_addr_widths   = BIT(DMA_SLAVE_BUSWIDTH_1_BYTE) |
+> +			     BIT(DMA_SLAVE_BUSWIDTH_2_BYTES) |
+> +			     BIT(DMA_SLAVE_BUSWIDTH_4_BYTES) |
+> +			     BIT(DMA_SLAVE_BUSWIDTH_8_BYTES),
+> +	.dst_addr_widths   = BIT(DMA_SLAVE_BUSWIDTH_1_BYTE) |
+> +			     BIT(DMA_SLAVE_BUSWIDTH_2_BYTES) |
+> +			     BIT(DMA_SLAVE_BUSWIDTH_4_BYTES) |
+> +			     BIT(DMA_SLAVE_BUSWIDTH_8_BYTES),
+> +	.has_mbus_clk = true,
+> +};
+> +
+>  /*
+>   * The H6 binding uses the number of dma channels from the
+>   * device tree node.
+> @@ -1225,6 +1249,7 @@ static const struct of_device_id sun6i_dma_match[] = {
+>  	{ .compatible = "allwinner,sun8i-h3-dma", .data = &sun8i_h3_dma_cfg },
+>  	{ .compatible = "allwinner,sun8i-v3s-dma", .data = &sun8i_v3s_dma_cfg },
+>  	{ .compatible = "allwinner,sun50i-a64-dma", .data = &sun50i_a64_dma_cfg },
+> +	{ .compatible = "allwinner,sun50i-a100-dma", .data = &sun50i_a100_dma_cfg },
+>  	{ .compatible = "allwinner,sun50i-h6-dma", .data = &sun50i_h6_dma_cfg },
+>  	{ /* sentinel */ }
+>  };
 > 
+
