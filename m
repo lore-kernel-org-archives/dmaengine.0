@@ -7,43 +7,43 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
 	URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1D438C4361B
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 44CC8C433FE
 	for <dmaengine@archiver.kernel.org>; Tue,  8 Dec 2020 09:06:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B724123A7F
+	by mail.kernel.org (Postfix) with ESMTP id F270D23A82
 	for <dmaengine@archiver.kernel.org>; Tue,  8 Dec 2020 09:06:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728868AbgLHJGJ (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 8 Dec 2020 04:06:09 -0500
-Received: from fllv0016.ext.ti.com ([198.47.19.142]:52076 "EHLO
-        fllv0016.ext.ti.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728840AbgLHJGI (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Tue, 8 Dec 2020 04:06:08 -0500
+        id S1728872AbgLHJGK (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 8 Dec 2020 04:06:10 -0500
+Received: from fllv0015.ext.ti.com ([198.47.19.141]:34542 "EHLO
+        fllv0015.ext.ti.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728866AbgLHJGJ (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Tue, 8 Dec 2020 04:06:09 -0500
 Received: from fllv0035.itg.ti.com ([10.64.41.0])
-        by fllv0016.ext.ti.com (8.15.2/8.15.2) with ESMTP id 0B894vvU130580;
-        Tue, 8 Dec 2020 03:04:57 -0600
+        by fllv0015.ext.ti.com (8.15.2/8.15.2) with ESMTP id 0B894QLA002920;
+        Tue, 8 Dec 2020 03:04:26 -0600
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
-        s=ti-com-17Q1; t=1607418297;
-        bh=LcQswzKWJCg+tD/H5T5AuLAB61C9h2aWDzo58pi62aA=;
+        s=ti-com-17Q1; t=1607418266;
+        bh=/HVwglcPZXx1QtJNin2Ol+OcupdDjfpEvJyJTw5mWLY=;
         h=From:To:CC:Subject:Date:In-Reply-To:References;
-        b=HRLTCV70UvTmCNWFepkYQCmTSTAaYRdpTOHxdk7ITHLyM4rW1csvrQm50R2gGipB0
-         i0j4Di2pk0XzFIa9VEjkOlw5vlJ1MdwlME++KfE5TrJ1BzvmNSgw9cIIsEnVIUypbp
-         znJF8XV9HpF9TuLY+VWyPg9r/B2/HT9IdPwhAQdk=
-Received: from DFLE109.ent.ti.com (dfle109.ent.ti.com [10.64.6.30])
-        by fllv0035.itg.ti.com (8.15.2/8.15.2) with ESMTPS id 0B894vbY096135
+        b=fQYNruU0X9J93tQyLnhTDehLfMskwQ0wfaovBGY0dNoEl8nIP9Ev3RvpOnK6ZfYjU
+         Fh3JH5B5ZOeU+o66VIwswnz/H/47O6xoX0egOiFl9S3fSK0PYfA9qO/CUm9ViAtHP5
+         15UEIb5uTQ02cgSWboyvwJvwOJozJEsAxgbyJa+c=
+Received: from DLEE109.ent.ti.com (dlee109.ent.ti.com [157.170.170.41])
+        by fllv0035.itg.ti.com (8.15.2/8.15.2) with ESMTPS id 0B894Qs4095689
         (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
-        Tue, 8 Dec 2020 03:04:57 -0600
-Received: from DFLE106.ent.ti.com (10.64.6.27) by DFLE109.ent.ti.com
- (10.64.6.30) with Microsoft SMTP Server (version=TLS1_2,
+        Tue, 8 Dec 2020 03:04:26 -0600
+Received: from DLEE100.ent.ti.com (157.170.170.30) by DLEE109.ent.ti.com
+ (157.170.170.41) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1979.3; Tue, 8 Dec
- 2020 03:04:57 -0600
-Received: from fllv0040.itg.ti.com (10.64.41.20) by DFLE106.ent.ti.com
- (10.64.6.27) with Microsoft SMTP Server (version=TLS1_2,
+ 2020 03:04:25 -0600
+Received: from fllv0040.itg.ti.com (10.64.41.20) by DLEE100.ent.ti.com
+ (157.170.170.30) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1979.3 via
- Frontend Transport; Tue, 8 Dec 2020 03:04:57 -0600
+ Frontend Transport; Tue, 8 Dec 2020 03:04:25 -0600
 Received: from feketebors.ti.com (ileax41-snat.itg.ti.com [10.172.224.153])
-        by fllv0040.itg.ti.com (8.15.2/8.15.2) with ESMTP id 0B893dcN120112;
-        Tue, 8 Dec 2020 03:04:54 -0600
+        by fllv0040.itg.ti.com (8.15.2/8.15.2) with ESMTP id 0B893dcG120112;
+        Tue, 8 Dec 2020 03:04:23 -0600
 From:   Peter Ujfalusi <peter.ujfalusi@ti.com>
 To:     <vkoul@kernel.org>, <nm@ti.com>, <ssantosh@kernel.org>,
         <robh+dt@kernel.org>
@@ -52,9 +52,9 @@ CC:     <dan.j.williams@intel.com>, <t-kristo@ti.com>,
         <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
         <dmaengine@vger.kernel.org>, <vigneshr@ti.com>,
         <grygorii.strashko@ti.com>
-Subject: [PATCH v3 18/20] dmaengine: ti: k3-udma: Add support for BCDMA channel TPL handling
-Date:   Tue, 8 Dec 2020 11:04:38 +0200
-Message-ID: <20201208090440.31792-19-peter.ujfalusi@ti.com>
+Subject: [PATCH v3 11/20] dt-bindings: dma: ti: Add document for K3 BCDMA
+Date:   Tue, 8 Dec 2020 11:04:31 +0200
+Message-ID: <20201208090440.31792-12-peter.ujfalusi@ti.com>
 X-Mailer: git-send-email 2.29.2
 In-Reply-To: <20201208090440.31792-1-peter.ujfalusi@ti.com>
 References: <20201208090440.31792-1-peter.ujfalusi@ti.com>
@@ -66,237 +66,187 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Unlike UDMAP the BCDMA defines the channel TPL levels per channel type.
-In UDMAP the number of high and ultra-high channels applies to both tchan
-and rchan.
+New binding document for
+Texas Instruments K3 Block Copy DMA (BCDMA).
 
-BCDMA defines the TPL per channel types: bchan, tchan and rchan can have
-different number of high and ultra-high channels.
-
-In order to support BCDMA channel TPL we need to move the tpl information
-as per channel type property for the DMAs.
+BCDMA is introduced as part of AM64.
 
 Signed-off-by: Peter Ujfalusi <peter.ujfalusi@ti.com>
 ---
- drivers/dma/ti/k3-udma.c | 117 ++++++++++++++++++++++++++-------------
- drivers/dma/ti/k3-udma.h |   6 ++
- 2 files changed, 85 insertions(+), 38 deletions(-)
+ .../devicetree/bindings/dma/ti/k3-bcdma.yaml  | 164 ++++++++++++++++++
+ 1 file changed, 164 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/dma/ti/k3-bcdma.yaml
 
-diff --git a/drivers/dma/ti/k3-udma.c b/drivers/dma/ti/k3-udma.c
-index f327d436f8ad..0dc3430fea40 100644
---- a/drivers/dma/ti/k3-udma.c
-+++ b/drivers/dma/ti/k3-udma.c
-@@ -146,6 +146,11 @@ struct udma_rx_flush {
- 	dma_addr_t buffer_paddr;
- };
- 
-+struct udma_tpl {
-+	u8 levels;
-+	u32 start_idx[3];
-+};
+diff --git a/Documentation/devicetree/bindings/dma/ti/k3-bcdma.yaml b/Documentation/devicetree/bindings/dma/ti/k3-bcdma.yaml
+new file mode 100644
+index 000000000000..b15f68c499cb
+--- /dev/null
++++ b/Documentation/devicetree/bindings/dma/ti/k3-bcdma.yaml
+@@ -0,0 +1,164 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/dma/ti/k3-bcdma.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
 +
- struct udma_dev {
- 	struct dma_device ddev;
- 	struct device *dev;
-@@ -153,8 +158,9 @@ struct udma_dev {
- 	const struct udma_match_data *match_data;
- 	const struct udma_soc_data *soc_data;
- 
--	u8 tpl_levels;
--	u32 tpl_start_idx[3];
-+	struct udma_tpl bchan_tpl;
-+	struct udma_tpl tchan_tpl;
-+	struct udma_tpl rchan_tpl;
- 
- 	size_t desc_align; /* alignment to use for descriptors */
- 
-@@ -1276,10 +1282,10 @@ static struct udma_##res *__udma_reserve_##res(struct udma_dev *ud,	\
- 	} else {							\
- 		int start;						\
- 									\
--		if (tpl >= ud->tpl_levels)				\
--			tpl = ud->tpl_levels - 1;			\
-+		if (tpl >= ud->res##_tpl.levels)			\
-+			tpl = ud->res##_tpl.levels - 1;			\
- 									\
--		start = ud->tpl_start_idx[tpl];				\
-+		start = ud->res##_tpl.start_idx[tpl];			\
- 									\
- 		id = find_next_zero_bit(ud->res##_map, ud->res##_cnt,	\
- 					start);				\
-@@ -1292,29 +1298,14 @@ static struct udma_##res *__udma_reserve_##res(struct udma_dev *ud,	\
- 	return &ud->res##s[id];						\
- }
- 
-+UDMA_RESERVE_RESOURCE(bchan);
- UDMA_RESERVE_RESOURCE(tchan);
- UDMA_RESERVE_RESOURCE(rchan);
- 
--static struct udma_bchan *__bcdma_reserve_bchan(struct udma_dev *ud, int id)
--{
--	if (id >= 0) {
--		if (test_bit(id, ud->bchan_map)) {
--			dev_err(ud->dev, "bchan%d is in use\n", id);
--			return ERR_PTR(-ENOENT);
--		}
--	} else {
--		id = find_next_zero_bit(ud->bchan_map, ud->bchan_cnt, 0);
--		if (id == ud->bchan_cnt)
--			return ERR_PTR(-ENOENT);
--	}
--
--	set_bit(id, ud->bchan_map);
--	return &ud->bchans[id];
--}
--
- static int bcdma_get_bchan(struct udma_chan *uc)
- {
- 	struct udma_dev *ud = uc->ud;
-+	enum udma_tp_level tpl;
- 
- 	if (uc->bchan) {
- 		dev_dbg(ud->dev, "chan%d: already have bchan%d allocated\n",
-@@ -1322,7 +1313,16 @@ static int bcdma_get_bchan(struct udma_chan *uc)
- 		return 0;
- 	}
- 
--	uc->bchan = __bcdma_reserve_bchan(ud, -1);
-+	/*
-+	 * Use normal channels for peripherals, and highest TPL channel for
-+	 * mem2mem
-+	 */
-+	if (uc->config.tr_trigger_type)
-+		tpl = 0;
-+	else
-+		tpl = ud->bchan_tpl.levels - 1;
++title: Texas Instruments K3 DMSS BCDMA Device Tree Bindings
 +
-+	uc->bchan = __udma_reserve_bchan(ud, tpl, -1);
- 	if (IS_ERR(uc->bchan))
- 		return PTR_ERR(uc->bchan);
- 
-@@ -1384,8 +1384,11 @@ static int udma_get_chan_pair(struct udma_chan *uc)
- 
- 	/* Can be optimized, but let's have it like this for now */
- 	end = min(ud->tchan_cnt, ud->rchan_cnt);
--	/* Try to use the highest TPL channel pair for MEM_TO_MEM channels */
--	chan_id = ud->tpl_start_idx[ud->tpl_levels - 1];
-+	/*
-+	 * Try to use the highest TPL channel pair for MEM_TO_MEM channels
-+	 * Note: in UDMAP the channel TPL is symmetric between tchan and rchan
-+	 */
-+	chan_id = ud->tchan_tpl.start_idx[ud->tchan_tpl.levels - 1];
- 	for (; chan_id < end; chan_id++) {
- 		if (!test_bit(chan_id, ud->tchan_map) &&
- 		    !test_bit(chan_id, ud->rchan_map))
-@@ -4036,23 +4039,27 @@ static int udma_setup_resources(struct udma_dev *ud)
- 	cap3 = udma_read(ud->mmrs[MMR_GCFG], 0x2c);
- 	if (of_device_is_compatible(dev->of_node,
- 				    "ti,am654-navss-main-udmap")) {
--		ud->tpl_levels = 2;
--		ud->tpl_start_idx[0] = 8;
-+		ud->tchan_tpl.levels = 2;
-+		ud->tchan_tpl.start_idx[0] = 8;
- 	} else if (of_device_is_compatible(dev->of_node,
- 					   "ti,am654-navss-mcu-udmap")) {
--		ud->tpl_levels = 2;
--		ud->tpl_start_idx[0] = 2;
-+		ud->tchan_tpl.levels = 2;
-+		ud->tchan_tpl.start_idx[0] = 2;
- 	} else if (UDMA_CAP3_UCHAN_CNT(cap3)) {
--		ud->tpl_levels = 3;
--		ud->tpl_start_idx[1] = UDMA_CAP3_UCHAN_CNT(cap3);
--		ud->tpl_start_idx[0] = UDMA_CAP3_HCHAN_CNT(cap3);
-+		ud->tchan_tpl.levels = 3;
-+		ud->tchan_tpl.start_idx[1] = UDMA_CAP3_UCHAN_CNT(cap3);
-+		ud->tchan_tpl.start_idx[0] = UDMA_CAP3_HCHAN_CNT(cap3);
- 	} else if (UDMA_CAP3_HCHAN_CNT(cap3)) {
--		ud->tpl_levels = 2;
--		ud->tpl_start_idx[0] = UDMA_CAP3_HCHAN_CNT(cap3);
-+		ud->tchan_tpl.levels = 2;
-+		ud->tchan_tpl.start_idx[0] = UDMA_CAP3_HCHAN_CNT(cap3);
- 	} else {
--		ud->tpl_levels = 1;
-+		ud->tchan_tpl.levels = 1;
- 	}
- 
-+	ud->rchan_tpl.levels = ud->tchan_tpl.levels;
-+	ud->rchan_tpl.start_idx[0] = ud->tchan_tpl.start_idx[0];
-+	ud->rchan_tpl.start_idx[1] = ud->tchan_tpl.start_idx[1];
++maintainers:
++  - Peter Ujfalusi <peter.ujfalusi@ti.com>
 +
- 	ud->tchan_map = devm_kmalloc_array(dev, BITS_TO_LONGS(ud->tchan_cnt),
- 					   sizeof(unsigned long), GFP_KERNEL);
- 	ud->tchans = devm_kcalloc(dev, ud->tchan_cnt, sizeof(*ud->tchans),
-@@ -4174,6 +4181,43 @@ static int bcdma_setup_resources(struct udma_dev *ud)
- 	struct ti_sci_resource *rm_res, irq_res;
- 	struct udma_tisci_rm *tisci_rm = &ud->tisci_rm;
- 	const struct udma_oes_offsets *oes = &ud->soc_data->oes;
-+	u32 cap;
++description: |
++  The Block Copy DMA (BCDMA) is intended to perform similar functions as the TR
++  mode channels of K3 UDMA-P.
++  BCDMA includes block copy channels and Split channels.
 +
-+	/* Set up the throughput level start indexes */
-+	cap = udma_read(ud->mmrs[MMR_GCFG], 0x2c);
-+	if (BCDMA_CAP3_UBCHAN_CNT(cap)) {
-+		ud->bchan_tpl.levels = 3;
-+		ud->bchan_tpl.start_idx[1] = BCDMA_CAP3_UBCHAN_CNT(cap);
-+		ud->bchan_tpl.start_idx[0] = BCDMA_CAP3_HBCHAN_CNT(cap);
-+	} else if (BCDMA_CAP3_HBCHAN_CNT(cap)) {
-+		ud->bchan_tpl.levels = 2;
-+		ud->bchan_tpl.start_idx[0] = BCDMA_CAP3_HBCHAN_CNT(cap);
-+	} else {
-+		ud->bchan_tpl.levels = 1;
-+	}
++  Block copy channels mainly used for memory to memory transfers, but with
++  optional triggers a block copy channel can service peripherals by accessing
++  directly to memory mapped registers or area.
 +
-+	cap = udma_read(ud->mmrs[MMR_GCFG], 0x30);
-+	if (BCDMA_CAP4_URCHAN_CNT(cap)) {
-+		ud->rchan_tpl.levels = 3;
-+		ud->rchan_tpl.start_idx[1] = BCDMA_CAP4_URCHAN_CNT(cap);
-+		ud->rchan_tpl.start_idx[0] = BCDMA_CAP4_HRCHAN_CNT(cap);
-+	} else if (BCDMA_CAP4_HRCHAN_CNT(cap)) {
-+		ud->rchan_tpl.levels = 2;
-+		ud->rchan_tpl.start_idx[0] = BCDMA_CAP4_HRCHAN_CNT(cap);
-+	} else {
-+		ud->rchan_tpl.levels = 1;
-+	}
++  Split channels can be used to service PSI-L based peripherals.
++  The peripherals can be PSI-L native or legacy, non PSI-L native peripherals
++  with PDMAs. PDMA is tasked to act as a bridge between the PSI-L fabric and the
++  legacy peripheral.
 +
-+	if (BCDMA_CAP4_UTCHAN_CNT(cap)) {
-+		ud->tchan_tpl.levels = 3;
-+		ud->tchan_tpl.start_idx[1] = BCDMA_CAP4_UTCHAN_CNT(cap);
-+		ud->tchan_tpl.start_idx[0] = BCDMA_CAP4_HTCHAN_CNT(cap);
-+	} else if (BCDMA_CAP4_HTCHAN_CNT(cap)) {
-+		ud->tchan_tpl.levels = 2;
-+		ud->tchan_tpl.start_idx[0] = BCDMA_CAP4_HTCHAN_CNT(cap);
-+	} else {
-+		ud->tchan_tpl.levels = 1;
-+	}
- 
- 	ud->bchan_map = devm_kmalloc_array(dev, BITS_TO_LONGS(ud->bchan_cnt),
- 					   sizeof(unsigned long), GFP_KERNEL);
-@@ -4199,9 +4243,6 @@ static int bcdma_setup_resources(struct udma_dev *ud)
- 	    !ud->rflows)
- 		return -ENOMEM;
- 
--	/* TPL is not yet supported for BCDMA */
--	ud->tpl_levels = 1;
--
- 	/* Get resource ranges from tisci */
- 	for (i = 0; i < RM_RANGE_LAST; i++) {
- 		if (i == RM_RANGE_RFLOW)
-diff --git a/drivers/dma/ti/k3-udma.h b/drivers/dma/ti/k3-udma.h
-index c97ed5271fd9..3ec38b383b76 100644
---- a/drivers/dma/ti/k3-udma.h
-+++ b/drivers/dma/ti/k3-udma.h
-@@ -48,6 +48,12 @@
- #define BCDMA_CAP2_BCHAN_CNT(val)	((val) & 0x1ff)
- #define BCDMA_CAP2_TCHAN_CNT(val)	(((val) >> 9) & 0x1ff)
- #define BCDMA_CAP2_RCHAN_CNT(val)	(((val) >> 18) & 0x1ff)
-+#define BCDMA_CAP3_HBCHAN_CNT(val)	(((val) >> 14) & 0x1ff)
-+#define BCDMA_CAP3_UBCHAN_CNT(val)	(((val) >> 23) & 0x1ff)
-+#define BCDMA_CAP4_HRCHAN_CNT(val)	((val) & 0xff)
-+#define BCDMA_CAP4_URCHAN_CNT(val)	(((val) >> 8) & 0xff)
-+#define BCDMA_CAP4_HTCHAN_CNT(val)	(((val) >> 16) & 0xff)
-+#define BCDMA_CAP4_UTCHAN_CNT(val)	(((val) >> 24) & 0xff)
- 
- /* UDMA_CHAN_RT_CTL_REG */
- #define UDMA_CHAN_RT_CTL_EN		BIT(31)
++  PDMAs can be configured via BCDMA split channel's peer registers to match with
++  the configuration of the legacy peripheral.
++
++allOf:
++  - $ref: /schemas/dma/dma-controller.yaml#
++
++properties:
++  compatible:
++    const: ti,am64-dmss-bcdma
++
++  "#dma-cells":
++    const: 3
++    description: |
++      cell 1: type of the BCDMA channel to be used to service the peripheral:
++        0 - split channel
++        1 - block copy channel using global trigger 1
++        2 - block copy channel using global trigger 2
++        3 - block copy channel using local trigger
++
++      cell 2: parameter for the channel:
++        if cell 1 is 0 (split channel):
++          PSI-L thread ID of the remote (to BCDMA) end.
++          Valid ranges for thread ID depends on the data movement direction:
++          for source thread IDs (rx): 0 - 0x7fff
++          for destination thread IDs (tx): 0x8000 - 0xffff
++
++          Please refer to the device documentation for the PSI-L thread map and
++          also the PSI-L peripheral chapter for the correct thread ID.
++        if cell 1 is 1 or 2 (block copy channel using global trigger):
++          Unused, ignored
++
++          The trigger must be configured for the channel externally to BCDMA,
++          channels using global triggers should not be requested directly, but
++          via DMA event router.
++        if cell 1 is 3 (block copy channel using local trigger):
++          bchan number of the locally triggered channel
++
++      cell 3: ASEL value for the channel
++
++  reg:
++    maxItems: 5
++
++  reg-names:
++    items:
++      - const: gcfg
++      - const: bchanrt
++      - const: rchanrt
++      - const: tchanrt
++      - const: ringrt
++
++  msi-parent: true
++
++  ti,asel:
++    $ref: /schemas/types.yaml#/definitions/uint32
++    description: ASEL value for non slave channels
++
++  ti,sci-rm-range-bchan:
++    $ref: /schemas/types.yaml#/definitions/uint32-array
++    description: |
++      Array of BCDMA block-copy channel resource subtypes for resource
++      allocation for this host
++    minItems: 1
++    # Should be enough
++    maxItems: 255
++    items:
++      maximum: 0x3f
++
++  ti,sci-rm-range-tchan:
++    $ref: /schemas/types.yaml#/definitions/uint32-array
++    description: |
++      Array of BCDMA split tx channel resource subtypes for resource allocation
++      for this host
++    minItems: 1
++    # Should be enough
++    maxItems: 255
++    items:
++      maximum: 0x3f
++
++  ti,sci-rm-range-rchan:
++    $ref: /schemas/types.yaml#/definitions/uint32-array
++    description: |
++      Array of BCDMA split rx channel resource subtypes for resource allocation
++      for this host
++    minItems: 1
++    # Should be enough
++    maxItems: 255
++    items:
++      maximum: 0x3f
++
++required:
++  - compatible
++  - "#dma-cells"
++  - reg
++  - reg-names
++  - msi-parent
++  - ti,sci
++  - ti,sci-dev-id
++  - ti,sci-rm-range-bchan
++  - ti,sci-rm-range-tchan
++  - ti,sci-rm-range-rchan
++
++unevaluatedProperties: false
++
++examples:
++  - |+
++    cbass_main {
++        #address-cells = <2>;
++        #size-cells = <2>;
++
++        main_dmss {
++            compatible = "simple-mfd";
++            #address-cells = <2>;
++            #size-cells = <2>;
++            dma-ranges;
++            ranges;
++
++            ti,sci-dev-id = <25>;
++
++            main_bcdma: dma-controller@485c0100 {
++                compatible = "ti,am64-dmss-bcdma";
++
++                reg = <0x0 0x485c0100 0x0 0x100>,
++                      <0x0 0x4c000000 0x0 0x20000>,
++                      <0x0 0x4a820000 0x0 0x20000>,
++                      <0x0 0x4aa40000 0x0 0x20000>,
++                      <0x0 0x4bc00000 0x0 0x100000>;
++                reg-names = "gcfg", "bchanrt", "rchanrt", "tchanrt", "ringrt";
++                msi-parent = <&inta_main_dmss>;
++                #dma-cells = <3>;
++
++                ti,sci = <&dmsc>;
++                ti,sci-dev-id = <26>;
++
++                ti,sci-rm-range-bchan = <0x20>; /* BLOCK_COPY_CHAN */
++                ti,sci-rm-range-rchan = <0x21>; /* SPLIT_TR_RX_CHAN */
++                ti,sci-rm-range-tchan = <0x22>; /* SPLIT_TR_TX_CHAN */
++            };
++        };
++    };
 -- 
 Peter
 
