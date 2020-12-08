@@ -5,45 +5,46 @@ X-Spam-Level:
 X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
+	URIBL_BLOCKED,USER_AGENT_GIT autolearn=unavailable autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E2C28C2BB40
-	for <dmaengine@archiver.kernel.org>; Tue,  8 Dec 2020 09:06:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A5F8EC3526C
+	for <dmaengine@archiver.kernel.org>; Tue,  8 Dec 2020 09:06:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9BA7F23A9D
-	for <dmaengine@archiver.kernel.org>; Tue,  8 Dec 2020 09:06:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 72BF023AA7
+	for <dmaengine@archiver.kernel.org>; Tue,  8 Dec 2020 09:06:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728776AbgLHJFq (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 8 Dec 2020 04:05:46 -0500
-Received: from fllv0015.ext.ti.com ([198.47.19.141]:34584 "EHLO
+        id S1728857AbgLHJGH (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 8 Dec 2020 04:06:07 -0500
+Received: from fllv0015.ext.ti.com ([198.47.19.141]:34784 "EHLO
         fllv0015.ext.ti.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728757AbgLHJFn (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Tue, 8 Dec 2020 04:05:43 -0500
-Received: from fllv0034.itg.ti.com ([10.64.40.246])
-        by fllv0015.ext.ti.com (8.15.2/8.15.2) with ESMTP id 0B894kog003021;
-        Tue, 8 Dec 2020 03:04:46 -0600
+        with ESMTP id S1728224AbgLHJGG (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Tue, 8 Dec 2020 04:06:06 -0500
+Received: from fllv0035.itg.ti.com ([10.64.41.0])
+        by fllv0015.ext.ti.com (8.15.2/8.15.2) with ESMTP id 0B8958Gl003211;
+        Tue, 8 Dec 2020 03:05:08 -0600
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
-        s=ti-com-17Q1; t=1607418286;
-        bh=04ntQewbMpysS52IIzuyEvatu/E12auPzB/v6K7FHm0=;
+        s=ti-com-17Q1; t=1607418308;
+        bh=zYAPNtPSNZZCzJwDcQ07wmRtVGyHrFIDawWOL21LivU=;
         h=From:To:CC:Subject:Date:In-Reply-To:References;
-        b=ioNG/3Aj2y2xeEbUy40q5iI2EJEkZiv5jkEtvAuiv0owXtcH2pI8iZHeRqwd38Soe
-         p8+PAGGxHhU3LVKZAFZHq+lO/0rfSCl/X1UwOaHHrwRSE84PdnDNywX7+TCMAtsOai
-         S6MdYEy7xtiEycPE++QHQI6GP9E31PKv/k5uyQ/4=
-Received: from DLEE100.ent.ti.com (dlee100.ent.ti.com [157.170.170.30])
-        by fllv0034.itg.ti.com (8.15.2/8.15.2) with ESMTPS id 0B894kWL044592
+        b=eP2nv/L2m5aww2H4eJj+yi23Z7xnMHMiF8JDpU5TZJPiR+6aVEpMMkMLQnVvnvVZ3
+         oZAm7xgINv7dPfEmu/pLn+NWoNWiYRp5haKLr0G5X3Wxthqhi8WfWayUFQn4YD3yWT
+         bJiFzrSyjkQWlAHzb5zilCCFX8DoYUQOtMqSM+LM=
+Received: from DFLE110.ent.ti.com (dfle110.ent.ti.com [10.64.6.31])
+        by fllv0035.itg.ti.com (8.15.2/8.15.2) with ESMTPS id 0B8957j7097017
         (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
-        Tue, 8 Dec 2020 03:04:46 -0600
-Received: from DLEE113.ent.ti.com (157.170.170.24) by DLEE100.ent.ti.com
- (157.170.170.30) with Microsoft SMTP Server (version=TLS1_2,
+        Tue, 8 Dec 2020 03:05:07 -0600
+Received: from DFLE112.ent.ti.com (10.64.6.33) by DFLE110.ent.ti.com
+ (10.64.6.31) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1979.3; Tue, 8 Dec
- 2020 03:04:45 -0600
-Received: from fllv0040.itg.ti.com (10.64.41.20) by DLEE113.ent.ti.com
- (157.170.170.24) with Microsoft SMTP Server (version=TLS1_2,
+ 2020 03:05:07 -0600
+Received: from fllv0040.itg.ti.com (10.64.41.20) by DFLE112.ent.ti.com
+ (10.64.6.33) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1979.3 via
- Frontend Transport; Tue, 8 Dec 2020 03:04:46 -0600
+ Frontend Transport; Tue, 8 Dec 2020 03:05:07 -0600
 Received: from feketebors.ti.com (ileax41-snat.itg.ti.com [10.172.224.153])
-        by fllv0040.itg.ti.com (8.15.2/8.15.2) with ESMTP id 0B893dcL120112;
-        Tue, 8 Dec 2020 03:04:42 -0600
+        by fllv0040.itg.ti.com (8.15.2/8.15.2) with ESMTP id 0B893dcP120112;
+        Tue, 8 Dec 2020 03:05:02 -0600
 From:   Peter Ujfalusi <peter.ujfalusi@ti.com>
 To:     <vkoul@kernel.org>, <nm@ti.com>, <ssantosh@kernel.org>,
         <robh+dt@kernel.org>
@@ -52,9 +53,9 @@ CC:     <dan.j.williams@intel.com>, <t-kristo@ti.com>,
         <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
         <dmaengine@vger.kernel.org>, <vigneshr@ti.com>,
         <grygorii.strashko@ti.com>
-Subject: [PATCH v3 16/20] soc: ti: k3-ringacc: add AM64 DMA rings support.
-Date:   Tue, 8 Dec 2020 11:04:36 +0200
-Message-ID: <20201208090440.31792-17-peter.ujfalusi@ti.com>
+Subject: [PATCH v3 20/20] dmaengine: ti: k3-udma-glue: Add support for K3 PKTDMA
+Date:   Tue, 8 Dec 2020 11:04:40 +0200
+Message-ID: <20201208090440.31792-21-peter.ujfalusi@ti.com>
 X-Mailer: git-send-email 2.29.2
 In-Reply-To: <20201208090440.31792-1-peter.ujfalusi@ti.com>
 References: <20201208090440.31792-1-peter.ujfalusi@ti.com>
@@ -66,597 +67,649 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-From: Grygorii Strashko <grygorii.strashko@ti.com>
+From: Vignesh Raghavendra <vigneshr@ti.com>
 
-The DMAs in AM64 have built in rings compared to AM654/J721e/J7200 where a
-separate and generic ringacc is used.
+This commit adds support for PKTDMA in k3-udma glue driver. Use new
+psil_endpoint_config struct to get static data for a given channel or a
+flow during setup.  Make sure that the RX flows being mapped to a RX
+channel is within the range of flows that is been allocated to that RX
+channel.
 
-The ring SW interface is similar to ringacc with some major architectural
-differences, like
-
-They are part of the DMA (BCDMA or PKTDMA).
-
-They are dual mode rings are modeled as pair of Rings objects which has
-common configuration and memory buffer, but separate real-time control
-register sets for each direction mem2dev (forward) and dev2mem (reverse).
-
-The ringacc driver must be initialized for DMA rings use with
-k3_ringacc_dmarings_init() as it is not an independent device as ringacc
-is.
-
-AM64 rings must be requested only using k3_ringacc_request_rings_pair(),
-and forward ring must always be initialized/configured. After this any
-other Ringacc APIs can be used without any callers changes.
-
-Signed-off-by: Grygorii Strashko <grygorii.strashko@ti.com>
+Signed-off-by: Vignesh Raghavendra <vigneshr@ti.com>
 Signed-off-by: Peter Ujfalusi <peter.ujfalusi@ti.com>
 ---
- drivers/soc/ti/k3-ringacc.c       | 325 +++++++++++++++++++++++++++++-
- include/linux/soc/ti/k3-ringacc.h |  17 ++
- 2 files changed, 335 insertions(+), 7 deletions(-)
+ drivers/dma/ti/k3-udma-glue.c    | 291 +++++++++++++++++++++++++++----
+ drivers/dma/ti/k3-udma-private.c |  24 +++
+ drivers/dma/ti/k3-udma.h         |   4 +
+ include/linux/dma/k3-udma-glue.h |   8 +
+ 4 files changed, 289 insertions(+), 38 deletions(-)
 
-diff --git a/drivers/soc/ti/k3-ringacc.c b/drivers/soc/ti/k3-ringacc.c
-index 119164abcb41..c88c305ba367 100644
---- a/drivers/soc/ti/k3-ringacc.c
-+++ b/drivers/soc/ti/k3-ringacc.c
-@@ -11,6 +11,7 @@
- #include <linux/of.h>
- #include <linux/platform_device.h>
- #include <linux/sys_soc.h>
-+#include <linux/dma/ti-cppi5.h>
- #include <linux/soc/ti/k3-ringacc.h>
- #include <linux/soc/ti/ti_sci_protocol.h>
- #include <linux/soc/ti/ti_sci_inta_msi.h>
-@@ -21,6 +22,7 @@ static LIST_HEAD(k3_ringacc_list);
- static DEFINE_MUTEX(k3_ringacc_list_lock);
+diff --git a/drivers/dma/ti/k3-udma-glue.c b/drivers/dma/ti/k3-udma-glue.c
+index e6ebcd98c02a..4fdd9f06b723 100644
+--- a/drivers/dma/ti/k3-udma-glue.c
++++ b/drivers/dma/ti/k3-udma-glue.c
+@@ -22,6 +22,7 @@
  
- #define K3_RINGACC_CFG_RING_SIZE_ELCNT_MASK		GENMASK(19, 0)
-+#define K3_DMARING_CFG_RING_SIZE_ELCNT_MASK		GENMASK(15, 0)
- 
- /**
-  * struct k3_ring_rt_regs - The RA realtime Control/Status Registers region
-@@ -43,7 +45,13 @@ struct k3_ring_rt_regs {
- 	u32	hwindx;
- };
- 
--#define K3_RINGACC_RT_REGS_STEP	0x1000
-+#define K3_RINGACC_RT_REGS_STEP			0x1000
-+#define K3_DMARING_RT_REGS_STEP			0x2000
-+#define K3_DMARING_RT_REGS_REVERSE_OFS		0x1000
-+#define K3_RINGACC_RT_OCC_MASK			GENMASK(20, 0)
-+#define K3_DMARING_RT_OCC_TDOWN_COMPLETE	BIT(31)
-+#define K3_DMARING_RT_DB_ENTRY_MASK		GENMASK(7, 0)
-+#define K3_DMARING_RT_DB_TDOWN_ACK		BIT(31)
- 
- /**
-  * struct k3_ring_fifo_regs - The Ring Accelerator Queues Registers region
-@@ -122,6 +130,7 @@ struct k3_ring_state {
- 	u32 occ;
- 	u32 windex;
- 	u32 rindex;
-+	u32 tdown_complete:1;
- };
- 
- /**
-@@ -143,6 +152,7 @@ struct k3_ring_state {
-  * @use_count: Use count for shared rings
-  * @proxy_id: RA Ring Proxy Id (only if @K3_RINGACC_RING_USE_PROXY)
-  * @dma_dev: device to be used for DMA API (allocation, mapping)
-+ * @asel: Address Space Select value for physical addresses
-  */
- struct k3_ring {
- 	struct k3_ring_rt_regs __iomem *rt;
-@@ -157,12 +167,15 @@ struct k3_ring {
- 	u32		flags;
- #define K3_RING_FLAG_BUSY	BIT(1)
- #define K3_RING_FLAG_SHARED	BIT(2)
-+#define K3_RING_FLAG_REVERSE	BIT(3)
- 	struct k3_ring_state state;
- 	u32		ring_id;
- 	struct k3_ringacc	*parent;
- 	u32		use_count;
- 	int		proxy_id;
- 	struct device	*dma_dev;
-+	u32		asel;
-+#define K3_ADDRESS_ASEL_SHIFT	48
- };
- 
- struct k3_ringacc_ops {
-@@ -188,6 +201,7 @@ struct k3_ringacc_ops {
-  * @tisci_ring_ops: ti-sci rings ops
-  * @tisci_dev_id: ti-sci device id
-  * @ops: SoC specific ringacc operation
-+ * @dma_rings: indicate DMA ring (dual ring within BCDMA/PKTDMA)
-  */
- struct k3_ringacc {
+ struct k3_udma_glue_common {
  	struct device *dev;
-@@ -210,6 +224,7 @@ struct k3_ringacc {
- 	u32 tisci_dev_id;
- 
- 	const struct k3_ringacc_ops *ops;
-+	bool dma_rings;
- };
- 
- /**
-@@ -221,6 +236,21 @@ struct k3_ringacc_soc_data {
- 	unsigned dma_ring_reset_quirk:1;
- };
- 
-+static int k3_ringacc_ring_read_occ(struct k3_ring *ring)
-+{
-+	return readl(&ring->rt->occ) & K3_RINGACC_RT_OCC_MASK;
-+}
-+
-+static void k3_ringacc_ring_update_occ(struct k3_ring *ring)
-+{
-+	u32 val;
-+
-+	val = readl(&ring->rt->occ);
-+
-+	ring->state.occ = val & K3_RINGACC_RT_OCC_MASK;
-+	ring->state.tdown_complete = !!(val & K3_DMARING_RT_OCC_TDOWN_COMPLETE);
-+}
-+
- static long k3_ringacc_ring_get_fifo_pos(struct k3_ring *ring)
- {
- 	return K3_RINGACC_FIFO_WINDOW_SIZE_BYTES -
-@@ -234,12 +264,24 @@ static void *k3_ringacc_get_elm_addr(struct k3_ring *ring, u32 idx)
- 
- static int k3_ringacc_ring_push_mem(struct k3_ring *ring, void *elem);
- static int k3_ringacc_ring_pop_mem(struct k3_ring *ring, void *elem);
-+static int k3_dmaring_fwd_pop(struct k3_ring *ring, void *elem);
-+static int k3_dmaring_reverse_pop(struct k3_ring *ring, void *elem);
- 
- static struct k3_ring_ops k3_ring_mode_ring_ops = {
- 		.push_tail = k3_ringacc_ring_push_mem,
- 		.pop_head = k3_ringacc_ring_pop_mem,
- };
- 
-+static struct k3_ring_ops k3_dmaring_fwd_ops = {
-+		.push_tail = k3_ringacc_ring_push_mem,
-+		.pop_head = k3_dmaring_fwd_pop,
-+};
-+
-+static struct k3_ring_ops k3_dmaring_reverse_ops = {
-+		/* Reverse side of the DMA ring can only be popped by SW */
-+		.pop_head = k3_dmaring_reverse_pop,
-+};
-+
- static int k3_ringacc_ring_push_io(struct k3_ring *ring, void *elem);
- static int k3_ringacc_ring_pop_io(struct k3_ring *ring, void *elem);
- static int k3_ringacc_ring_push_head_io(struct k3_ring *ring, void *elem);
-@@ -342,6 +384,40 @@ struct k3_ring *k3_ringacc_request_ring(struct k3_ringacc *ringacc,
- }
- EXPORT_SYMBOL_GPL(k3_ringacc_request_ring);
- 
-+static int k3_dmaring_request_dual_ring(struct k3_ringacc *ringacc, int fwd_id,
-+					struct k3_ring **fwd_ring,
-+					struct k3_ring **compl_ring)
-+{
-+	int ret = 0;
-+
-+	/*
-+	 * DMA rings must be requested by ID, completion ring is the reverse
-+	 * side of the forward ring
-+	 */
-+	if (fwd_id < 0)
-+		return -EINVAL;
-+
-+	mutex_lock(&ringacc->req_lock);
-+
-+	if (test_bit(fwd_id, ringacc->rings_inuse)) {
-+		ret = -EBUSY;
-+		goto error;
-+	}
-+
-+	*fwd_ring = &ringacc->rings[fwd_id];
-+	*compl_ring = &ringacc->rings[fwd_id + ringacc->num_rings];
-+	set_bit(fwd_id, ringacc->rings_inuse);
-+	ringacc->rings[fwd_id].use_count++;
-+	dev_dbg(ringacc->dev, "Giving ring#%d\n", fwd_id);
-+
-+	mutex_unlock(&ringacc->req_lock);
-+	return 0;
-+
-+error:
-+	mutex_unlock(&ringacc->req_lock);
-+	return ret;
-+}
-+
- int k3_ringacc_request_rings_pair(struct k3_ringacc *ringacc,
- 				  int fwd_id, int compl_id,
- 				  struct k3_ring **fwd_ring,
-@@ -352,6 +428,10 @@ int k3_ringacc_request_rings_pair(struct k3_ringacc *ringacc,
- 	if (!fwd_ring || !compl_ring)
- 		return -EINVAL;
- 
-+	if (ringacc->dma_rings)
-+		return k3_dmaring_request_dual_ring(ringacc, fwd_id,
-+						    fwd_ring, compl_ring);
-+
- 	*fwd_ring = k3_ringacc_request_ring(ringacc, fwd_id, 0);
- 	if (!(*fwd_ring))
- 		return -ENODEV;
-@@ -421,7 +501,7 @@ void k3_ringacc_ring_reset_dma(struct k3_ring *ring, u32 occ)
- 		goto reset;
- 
- 	if (!occ)
--		occ = readl(&ring->rt->occ);
-+		occ = k3_ringacc_ring_read_occ(ring);
- 
- 	if (occ) {
- 		u32 db_ring_cnt, db_ring_cnt_cur;
-@@ -496,6 +576,13 @@ int k3_ringacc_ring_free(struct k3_ring *ring)
- 
- 	ringacc = ring->parent;
- 
-+	/*
-+	 * DMA rings: rings shared memory and configuration, only forward ring
-+	 * is configured and reverse ring considered as slave.
-+	 */
-+	if (ringacc->dma_rings && (ring->flags & K3_RING_FLAG_REVERSE))
-+		return 0;
-+
- 	dev_dbg(ring->parent->dev, "flags: 0x%08x\n", ring->flags);
- 
- 	if (!test_bit(ring->ring_id, ringacc->rings_inuse))
-@@ -517,6 +604,8 @@ int k3_ringacc_ring_free(struct k3_ring *ring)
- 	ring->flags = 0;
- 	ring->ops = NULL;
- 	ring->dma_dev = NULL;
-+	ring->asel = 0;
-+
- 	if (ring->proxy_id != K3_RINGACC_PROXY_NOT_USED) {
- 		clear_bit(ring->proxy_id, ringacc->proxy_inuse);
- 		ring->proxy = NULL;
-@@ -581,6 +670,7 @@ static int k3_ringacc_ring_cfg_sci(struct k3_ring *ring)
- 	ring_cfg.count = ring->size;
- 	ring_cfg.mode = ring->mode;
- 	ring_cfg.size = ring->elm_size;
-+	ring_cfg.asel = ring->asel;
- 
- 	ret = ringacc->tisci_ring_ops->set_cfg(ringacc->tisci, &ring_cfg);
- 	if (ret)
-@@ -590,6 +680,90 @@ static int k3_ringacc_ring_cfg_sci(struct k3_ring *ring)
- 	return ret;
- }
- 
-+static int k3_dmaring_cfg(struct k3_ring *ring, struct k3_ring_cfg *cfg)
-+{
-+	struct k3_ringacc *ringacc;
-+	struct k3_ring *reverse_ring;
-+	int ret = 0;
-+
-+	if (cfg->elm_size != K3_RINGACC_RING_ELSIZE_8 ||
-+	    cfg->mode != K3_RINGACC_RING_MODE_RING ||
-+	    cfg->size & ~K3_DMARING_CFG_RING_SIZE_ELCNT_MASK)
-+		return -EINVAL;
-+
-+	ringacc = ring->parent;
-+
-+	/*
-+	 * DMA rings: rings shared memory and configuration, only forward ring
-+	 * is configured and reverse ring considered as slave.
-+	 */
-+	if (ringacc->dma_rings && (ring->flags & K3_RING_FLAG_REVERSE))
-+		return 0;
-+
-+	if (!test_bit(ring->ring_id, ringacc->rings_inuse))
-+		return -EINVAL;
-+
-+	ring->size = cfg->size;
-+	ring->elm_size = cfg->elm_size;
-+	ring->mode = cfg->mode;
-+	ring->asel = cfg->asel;
-+	ring->dma_dev = cfg->dma_dev;
-+	if (!ring->dma_dev) {
-+		dev_warn(ringacc->dev, "dma_dev is not provided for ring%d\n",
-+			 ring->ring_id);
-+		ring->dma_dev = ringacc->dev;
-+	}
-+
-+	memset(&ring->state, 0, sizeof(ring->state));
-+
-+	ring->ops = &k3_dmaring_fwd_ops;
-+
-+	ring->ring_mem_virt = dma_alloc_coherent(ring->dma_dev,
-+						 ring->size * (4 << ring->elm_size),
-+						 &ring->ring_mem_dma, GFP_KERNEL);
-+	if (!ring->ring_mem_virt) {
-+		dev_err(ringacc->dev, "Failed to alloc ring mem\n");
-+		ret = -ENOMEM;
-+		goto err_free_ops;
-+	}
-+
-+	ret = k3_ringacc_ring_cfg_sci(ring);
-+	if (ret)
-+		goto err_free_mem;
-+
-+	ring->flags |= K3_RING_FLAG_BUSY;
-+
-+	k3_ringacc_ring_dump(ring);
-+
-+	/* DMA rings: configure reverse ring */
-+	reverse_ring = &ringacc->rings[ring->ring_id + ringacc->num_rings];
-+	reverse_ring->size = cfg->size;
-+	reverse_ring->elm_size = cfg->elm_size;
-+	reverse_ring->mode = cfg->mode;
-+	reverse_ring->asel = cfg->asel;
-+	memset(&reverse_ring->state, 0, sizeof(reverse_ring->state));
-+	reverse_ring->ops = &k3_dmaring_reverse_ops;
-+
-+	reverse_ring->ring_mem_virt = ring->ring_mem_virt;
-+	reverse_ring->ring_mem_dma = ring->ring_mem_dma;
-+	reverse_ring->flags |= K3_RING_FLAG_BUSY;
-+	k3_ringacc_ring_dump(reverse_ring);
-+
-+	return 0;
-+
-+err_free_mem:
-+	dma_free_coherent(ring->dma_dev,
-+			  ring->size * (4 << ring->elm_size),
-+			  ring->ring_mem_virt,
-+			  ring->ring_mem_dma);
-+err_free_ops:
-+	ring->ops = NULL;
-+	ring->proxy = NULL;
-+	ring->dma_dev = NULL;
-+	ring->asel = 0;
-+	return ret;
-+}
-+
- int k3_ringacc_ring_cfg(struct k3_ring *ring, struct k3_ring_cfg *cfg)
- {
++	struct device chan_dev;
+ 	struct udma_dev *udmax;
+ 	const struct udma_tisci_rm *tisci_rm;
  	struct k3_ringacc *ringacc;
-@@ -597,8 +771,12 @@ int k3_ringacc_ring_cfg(struct k3_ring *ring, struct k3_ring_cfg *cfg)
- 
- 	if (!ring || !cfg)
- 		return -EINVAL;
-+
- 	ringacc = ring->parent;
- 
-+	if (ringacc->dma_rings)
-+		return k3_dmaring_cfg(ring, cfg);
-+
- 	if (cfg->elm_size > K3_RINGACC_RING_ELSIZE_256 ||
- 	    cfg->mode >= K3_RINGACC_RING_MODE_INVALID ||
- 	    cfg->size & ~K3_RINGACC_CFG_RING_SIZE_ELCNT_MASK ||
-@@ -705,7 +883,7 @@ u32 k3_ringacc_ring_get_free(struct k3_ring *ring)
- 		return -EINVAL;
- 
- 	if (!ring->state.free)
--		ring->state.free = ring->size - readl(&ring->rt->occ);
-+		ring->state.free = ring->size - k3_ringacc_ring_read_occ(ring);
- 
- 	return ring->state.free;
- }
-@@ -716,7 +894,7 @@ u32 k3_ringacc_ring_get_occ(struct k3_ring *ring)
- 	if (!ring || !(ring->flags & K3_RING_FLAG_BUSY))
- 		return -EINVAL;
- 
--	return readl(&ring->rt->occ);
-+	return k3_ringacc_ring_read_occ(ring);
- }
- EXPORT_SYMBOL_GPL(k3_ringacc_ring_get_occ);
- 
-@@ -892,6 +1070,72 @@ static int k3_ringacc_ring_pop_tail_io(struct k3_ring *ring, void *elem)
- 					 K3_RINGACC_ACCESS_MODE_POP_HEAD);
- }
- 
-+/*
-+ * The element is 48 bits of address + ASEL bits in the ring.
-+ * ASEL is used by the DMAs and should be removed for the kernel as it is not
-+ * part of the physical memory address.
-+ */
-+static void k3_dmaring_remove_asel_from_elem(u64 *elem)
-+{
-+	*elem &= GENMASK_ULL(K3_ADDRESS_ASEL_SHIFT - 1, 0);
-+}
-+
-+static int k3_dmaring_fwd_pop(struct k3_ring *ring, void *elem)
-+{
-+	void *elem_ptr;
-+	u32 elem_idx;
-+
-+	/*
-+	 * DMA rings: forward ring is always tied DMA channel and HW does not
-+	 * maintain any state data required for POP operation and its unknown
-+	 * how much elements were consumed by HW. So, to actually
-+	 * do POP, the read pointer has to be recalculated every time.
-+	 */
-+	ring->state.occ = k3_ringacc_ring_read_occ(ring);
-+	if (ring->state.windex >= ring->state.occ)
-+		elem_idx = ring->state.windex - ring->state.occ;
-+	else
-+		elem_idx = ring->size - (ring->state.occ - ring->state.windex);
-+
-+	elem_ptr = k3_ringacc_get_elm_addr(ring, elem_idx);
-+	memcpy(elem, elem_ptr, (4 << ring->elm_size));
-+	k3_dmaring_remove_asel_from_elem(elem);
-+
-+	ring->state.occ--;
-+	writel(-1, &ring->rt->db);
-+
-+	dev_dbg(ring->parent->dev, "%s: occ%d Windex%d Rindex%d pos_ptr%px\n",
-+		__func__, ring->state.occ, ring->state.windex, elem_idx,
-+		elem_ptr);
-+	return 0;
-+}
-+
-+static int k3_dmaring_reverse_pop(struct k3_ring *ring, void *elem)
-+{
-+	void *elem_ptr;
-+
-+	elem_ptr = k3_ringacc_get_elm_addr(ring, ring->state.rindex);
-+
-+	if (ring->state.occ) {
-+		memcpy(elem, elem_ptr, (4 << ring->elm_size));
-+		k3_dmaring_remove_asel_from_elem(elem);
-+
-+		ring->state.rindex = (ring->state.rindex + 1) % ring->size;
-+		ring->state.occ--;
-+		writel(-1 & K3_DMARING_RT_DB_ENTRY_MASK, &ring->rt->db);
-+	} else if (ring->state.tdown_complete) {
-+		dma_addr_t *value = elem;
-+
-+		*value = CPPI5_TDCM_MARKER;
-+		writel(K3_DMARING_RT_DB_TDOWN_ACK, &ring->rt->db);
-+		ring->state.tdown_complete = false;
-+	}
-+
-+	dev_dbg(ring->parent->dev, "%s: occ%d index%d pos_ptr%px\n",
-+		__func__, ring->state.occ, ring->state.rindex, elem_ptr);
-+	return 0;
-+}
-+
- static int k3_ringacc_ring_push_mem(struct k3_ring *ring, void *elem)
- {
- 	void *elem_ptr;
-@@ -899,6 +1143,11 @@ static int k3_ringacc_ring_push_mem(struct k3_ring *ring, void *elem)
- 	elem_ptr = k3_ringacc_get_elm_addr(ring, ring->state.windex);
- 
- 	memcpy(elem_ptr, elem, (4 << ring->elm_size));
-+	if (ring->parent->dma_rings) {
-+		u64 *addr = elem_ptr;
-+
-+		*addr |= ((u64)ring->asel << K3_ADDRESS_ASEL_SHIFT);
-+	}
- 
- 	ring->state.windex = (ring->state.windex + 1) % ring->size;
- 	ring->state.free--;
-@@ -975,12 +1224,12 @@ int k3_ringacc_ring_pop(struct k3_ring *ring, void *elem)
- 		return -EINVAL;
- 
- 	if (!ring->state.occ)
--		ring->state.occ = k3_ringacc_ring_get_occ(ring);
-+		k3_ringacc_ring_update_occ(ring);
- 
- 	dev_dbg(ring->parent->dev, "ring_pop: occ%d index%d\n", ring->state.occ,
- 		ring->state.rindex);
- 
--	if (!ring->state.occ)
-+	if (!ring->state.occ && !ring->state.tdown_complete)
- 		return -ENODATA;
- 
- 	if (ring->ops && ring->ops->pop_head)
-@@ -998,7 +1247,7 @@ int k3_ringacc_ring_pop_tail(struct k3_ring *ring, void *elem)
- 		return -EINVAL;
- 
- 	if (!ring->state.occ)
--		ring->state.occ = k3_ringacc_ring_get_occ(ring);
-+		k3_ringacc_ring_update_occ(ring);
- 
- 	dev_dbg(ring->parent->dev, "ring_pop_tail: occ%d index%d\n",
- 		ring->state.occ, ring->state.rindex);
-@@ -1203,6 +1452,68 @@ static const struct of_device_id k3_ringacc_of_match[] = {
- 	{},
+@@ -32,7 +33,8 @@ struct k3_udma_glue_common {
+ 	bool epib;
+ 	u32  psdata_size;
+ 	u32  swdata_size;
+-	u32  atype;
++	u32  atype_asel;
++	struct psil_endpoint_config *ep_config;
  };
  
-+struct k3_ringacc *k3_ringacc_dmarings_init(struct platform_device *pdev,
-+					    struct k3_ringacc_init_data *data)
-+{
-+	struct device *dev = &pdev->dev;
-+	struct k3_ringacc *ringacc;
-+	void __iomem *base_rt;
-+	struct resource *res;
-+	int i;
+ struct k3_udma_glue_tx_channel {
+@@ -53,6 +55,8 @@ struct k3_udma_glue_tx_channel {
+ 	bool tx_filt_einfo;
+ 	bool tx_filt_pswords;
+ 	bool tx_supr_tdpkt;
 +
-+	ringacc = devm_kzalloc(dev, sizeof(*ringacc), GFP_KERNEL);
-+	if (!ringacc)
-+		return ERR_PTR(-ENOMEM);
-+
-+	ringacc->dev = dev;
-+	ringacc->dma_rings = true;
-+	ringacc->num_rings = data->num_rings;
-+	ringacc->tisci = data->tisci;
-+	ringacc->tisci_dev_id = data->tisci_dev_id;
-+
-+	mutex_init(&ringacc->req_lock);
-+
-+	res = platform_get_resource_byname(pdev, IORESOURCE_MEM, "ringrt");
-+	base_rt = devm_ioremap_resource(dev, res);
-+	if (IS_ERR(base_rt))
-+		return base_rt;
-+
-+	ringacc->rings = devm_kzalloc(dev,
-+				      sizeof(*ringacc->rings) *
-+				      ringacc->num_rings * 2,
-+				      GFP_KERNEL);
-+	ringacc->rings_inuse = devm_kcalloc(dev,
-+					    BITS_TO_LONGS(ringacc->num_rings),
-+					    sizeof(unsigned long), GFP_KERNEL);
-+
-+	if (!ringacc->rings || !ringacc->rings_inuse)
-+		return ERR_PTR(-ENOMEM);
-+
-+	for (i = 0; i < ringacc->num_rings; i++) {
-+		struct k3_ring *ring = &ringacc->rings[i];
-+
-+		ring->rt = base_rt + K3_DMARING_RT_REGS_STEP * i;
-+		ring->parent = ringacc;
-+		ring->ring_id = i;
-+		ring->proxy_id = K3_RINGACC_PROXY_NOT_USED;
-+
-+		ring = &ringacc->rings[ringacc->num_rings + i];
-+		ring->rt = base_rt + K3_DMARING_RT_REGS_STEP * i +
-+			   K3_DMARING_RT_REGS_REVERSE_OFS;
-+		ring->parent = ringacc;
-+		ring->ring_id = i;
-+		ring->proxy_id = K3_RINGACC_PROXY_NOT_USED;
-+		ring->flags = K3_RING_FLAG_REVERSE;
-+	}
-+
-+	ringacc->tisci_ring_ops = &ringacc->tisci->ops.rm_ring_ops;
-+
-+	dev_info(dev, "Number of rings: %u\n", ringacc->num_rings);
-+
-+	return ringacc;
-+}
-+EXPORT_SYMBOL_GPL(k3_ringacc_dmarings_init);
-+
- static int k3_ringacc_probe(struct platform_device *pdev)
- {
- 	const struct ringacc_match_data *match_data;
-diff --git a/include/linux/soc/ti/k3-ringacc.h b/include/linux/soc/ti/k3-ringacc.h
-index 658dc71d2901..39b022b92598 100644
---- a/include/linux/soc/ti/k3-ringacc.h
-+++ b/include/linux/soc/ti/k3-ringacc.h
-@@ -70,6 +70,7 @@ struct k3_ring;
-  * @dma_dev: Master device which is using and accessing to the ring
-  *	memory when the mode is K3_RINGACC_RING_MODE_RING. Memory allocations
-  *	should be done using this device.
-+ * @asel: Address Space Select value for physical addresses
-  */
- struct k3_ring_cfg {
- 	u32 size;
-@@ -79,6 +80,7 @@ struct k3_ring_cfg {
- 	u32 flags;
- 
- 	struct device *dma_dev;
-+	u32 asel;
++	int udma_tflow_id;
  };
  
- #define K3_RINGACC_RING_ID_ANY (-1)
-@@ -250,4 +252,19 @@ int k3_ringacc_ring_pop_tail(struct k3_ring *ring, void *elem);
+ struct k3_udma_glue_rx_flow {
+@@ -81,6 +85,16 @@ struct k3_udma_glue_rx_channel {
+ 	u32 flows_ready;
+ };
  
- u32 k3_ringacc_get_tisci_dev_id(struct k3_ring *ring);
- 
-+/* DMA ring support */
-+struct ti_sci_handle;
++static void k3_udma_chan_dev_release(struct device *dev)
++{
++	/* The struct containing the device is devm managed */
++}
 +
-+/**
-+ * struct struct k3_ringacc_init_data - Initialization data for DMA rings
-+ */
-+struct k3_ringacc_init_data {
-+	const struct ti_sci_handle *tisci;
-+	u32 tisci_dev_id;
-+	u32 num_rings;
++static struct class k3_udma_glue_devclass = {
++	.name		= "k3_udma_glue_chan",
++	.dev_release	= k3_udma_chan_dev_release,
 +};
 +
-+struct k3_ringacc *k3_ringacc_dmarings_init(struct platform_device *pdev,
-+					    struct k3_ringacc_init_data *data);
+ #define K3_UDMAX_TDOWN_TIMEOUT_US 1000
+ 
+ static int of_k3_udma_glue_parse(struct device_node *udmax_np,
+@@ -100,7 +114,6 @@ static int of_k3_udma_glue_parse_chn(struct device_node *chn_np,
+ 		const char *name, struct k3_udma_glue_common *common,
+ 		bool tx_chn)
+ {
+-	struct psil_endpoint_config *ep_config;
+ 	struct of_phandle_args dma_spec;
+ 	u32 thread_id;
+ 	int ret = 0;
+@@ -117,15 +130,26 @@ static int of_k3_udma_glue_parse_chn(struct device_node *chn_np,
+ 				       &dma_spec))
+ 		return -ENOENT;
+ 
++	ret = of_k3_udma_glue_parse(dma_spec.np, common);
++	if (ret)
++		goto out_put_spec;
 +
- #endif /* __SOC_TI_K3_RINGACC_API_H_ */
+ 	thread_id = dma_spec.args[0];
+ 	if (dma_spec.args_count == 2) {
+-		if (dma_spec.args[1] > 2) {
++		if (dma_spec.args[1] > 2 && !xudma_is_pktdma(common->udmax)) {
+ 			dev_err(common->dev, "Invalid channel atype: %u\n",
+ 				dma_spec.args[1]);
+ 			ret = -EINVAL;
+ 			goto out_put_spec;
+ 		}
+-		common->atype = dma_spec.args[1];
++		if (dma_spec.args[1] > 15 && xudma_is_pktdma(common->udmax)) {
++			dev_err(common->dev, "Invalid channel asel: %u\n",
++				dma_spec.args[1]);
++			ret = -EINVAL;
++			goto out_put_spec;
++		}
++
++		common->atype_asel = dma_spec.args[1];
+ 	}
+ 
+ 	if (tx_chn && !(thread_id & K3_PSIL_DST_THREAD_ID_OFFSET)) {
+@@ -139,25 +163,23 @@ static int of_k3_udma_glue_parse_chn(struct device_node *chn_np,
+ 	}
+ 
+ 	/* get psil endpoint config */
+-	ep_config = psil_get_ep_config(thread_id);
+-	if (IS_ERR(ep_config)) {
++	common->ep_config = psil_get_ep_config(thread_id);
++	if (IS_ERR(common->ep_config)) {
+ 		dev_err(common->dev,
+ 			"No configuration for psi-l thread 0x%04x\n",
+ 			thread_id);
+-		ret = PTR_ERR(ep_config);
++		ret = PTR_ERR(common->ep_config);
+ 		goto out_put_spec;
+ 	}
+ 
+-	common->epib = ep_config->needs_epib;
+-	common->psdata_size = ep_config->psd_size;
++	common->epib = common->ep_config->needs_epib;
++	common->psdata_size = common->ep_config->psd_size;
+ 
+ 	if (tx_chn)
+ 		common->dst_thread = thread_id;
+ 	else
+ 		common->src_thread = thread_id;
+ 
+-	ret = of_k3_udma_glue_parse(dma_spec.np, common);
+-
+ out_put_spec:
+ 	of_node_put(dma_spec.np);
+ 	return ret;
+@@ -223,7 +245,7 @@ static int k3_udma_glue_cfg_tx_chn(struct k3_udma_glue_tx_channel *tx_chn)
+ 		req.tx_supr_tdpkt = 1;
+ 	req.tx_fetch_size = tx_chn->common.hdesc_size >> 2;
+ 	req.txcq_qnum = k3_ringacc_get_ring_id(tx_chn->ringtxcq);
+-	req.tx_atype = tx_chn->common.atype;
++	req.tx_atype = tx_chn->common.atype_asel;
+ 
+ 	return tisci_rm->tisci_udmap_ops->tx_ch_cfg(tisci_rm->tisci, &req);
+ }
+@@ -255,8 +277,14 @@ struct k3_udma_glue_tx_channel *k3_udma_glue_request_tx_chn(struct device *dev,
+ 						tx_chn->common.psdata_size,
+ 						tx_chn->common.swdata_size);
+ 
++	if (xudma_is_pktdma(tx_chn->common.udmax))
++		tx_chn->udma_tchan_id = tx_chn->common.ep_config->mapped_channel_id;
++	else
++		tx_chn->udma_tchan_id = -1;
++
+ 	/* request and cfg UDMAP TX channel */
+-	tx_chn->udma_tchanx = xudma_tchan_get(tx_chn->common.udmax, -1);
++	tx_chn->udma_tchanx = xudma_tchan_get(tx_chn->common.udmax,
++					      tx_chn->udma_tchan_id);
+ 	if (IS_ERR(tx_chn->udma_tchanx)) {
+ 		ret = PTR_ERR(tx_chn->udma_tchanx);
+ 		dev_err(dev, "UDMAX tchanx get err %d\n", ret);
+@@ -264,11 +292,34 @@ struct k3_udma_glue_tx_channel *k3_udma_glue_request_tx_chn(struct device *dev,
+ 	}
+ 	tx_chn->udma_tchan_id = xudma_tchan_get_id(tx_chn->udma_tchanx);
+ 
++	tx_chn->common.chan_dev.class = &k3_udma_glue_devclass;
++	tx_chn->common.chan_dev.parent = xudma_get_device(tx_chn->common.udmax);
++	dev_set_name(&tx_chn->common.chan_dev, "tchan%d-0x%04x",
++		     tx_chn->udma_tchan_id, tx_chn->common.dst_thread);
++	ret = device_register(&tx_chn->common.chan_dev);
++	if (ret) {
++		dev_err(dev, "Channel Device registration failed %d\n", ret);
++		tx_chn->common.chan_dev.parent = NULL;
++		goto err;
++	}
++
++	if (xudma_is_pktdma(tx_chn->common.udmax)) {
++		/* prepare the channel device as coherent */
++		tx_chn->common.chan_dev.dma_coherent = true;
++		dma_coerce_mask_and_coherent(&tx_chn->common.chan_dev,
++					     DMA_BIT_MASK(48));
++	}
++
+ 	atomic_set(&tx_chn->free_pkts, cfg->txcq_cfg.size);
+ 
++	if (xudma_is_pktdma(tx_chn->common.udmax))
++		tx_chn->udma_tflow_id = tx_chn->common.ep_config->default_flow_id;
++	else
++		tx_chn->udma_tflow_id = tx_chn->udma_tchan_id;
++
+ 	/* request and cfg rings */
+ 	ret =  k3_ringacc_request_rings_pair(tx_chn->common.ringacc,
+-					     tx_chn->udma_tchan_id, -1,
++					     tx_chn->udma_tflow_id, -1,
+ 					     &tx_chn->ringtx,
+ 					     &tx_chn->ringtxcq);
+ 	if (ret) {
+@@ -280,6 +331,12 @@ struct k3_udma_glue_tx_channel *k3_udma_glue_request_tx_chn(struct device *dev,
+ 	cfg->tx_cfg.dma_dev = k3_udma_glue_tx_get_dma_device(tx_chn);
+ 	cfg->txcq_cfg.dma_dev = cfg->tx_cfg.dma_dev;
+ 
++	/* Set the ASEL value for DMA rings of PKTDMA */
++	if (xudma_is_pktdma(tx_chn->common.udmax)) {
++		cfg->tx_cfg.asel = tx_chn->common.atype_asel;
++		cfg->txcq_cfg.asel = tx_chn->common.atype_asel;
++	}
++
+ 	ret = k3_ringacc_ring_cfg(tx_chn->ringtx, &cfg->tx_cfg);
+ 	if (ret) {
+ 		dev_err(dev, "Failed to cfg ringtx %d\n", ret);
+@@ -331,6 +388,11 @@ void k3_udma_glue_release_tx_chn(struct k3_udma_glue_tx_channel *tx_chn)
+ 
+ 	if (tx_chn->ringtx)
+ 		k3_ringacc_ring_free(tx_chn->ringtx);
++
++	if (tx_chn->common.chan_dev.parent) {
++		device_unregister(&tx_chn->common.chan_dev);
++		tx_chn->common.chan_dev.parent = NULL;
++	}
+ }
+ EXPORT_SYMBOL_GPL(k3_udma_glue_release_tx_chn);
+ 
+@@ -443,13 +505,10 @@ void k3_udma_glue_reset_tx_chn(struct k3_udma_glue_tx_channel *tx_chn,
+ 			       void *data,
+ 			       void (*cleanup)(void *data, dma_addr_t desc_dma))
+ {
++	struct device *dev = tx_chn->common.dev;
+ 	dma_addr_t desc_dma;
+ 	int occ_tx, i, ret;
+ 
+-	/* reset TXCQ as it is not input for udma - expected to be empty */
+-	if (tx_chn->ringtxcq)
+-		k3_ringacc_ring_reset(tx_chn->ringtxcq);
+-
+ 	/*
+ 	 * TXQ reset need to be special way as it is input for udma and its
+ 	 * state cached by udma, so:
+@@ -458,17 +517,20 @@ void k3_udma_glue_reset_tx_chn(struct k3_udma_glue_tx_channel *tx_chn,
+ 	 * 3) reset TXQ in a special way
+ 	 */
+ 	occ_tx = k3_ringacc_ring_get_occ(tx_chn->ringtx);
+-	dev_dbg(tx_chn->common.dev, "TX reset occ_tx %u\n", occ_tx);
++	dev_dbg(dev, "TX reset occ_tx %u\n", occ_tx);
+ 
+ 	for (i = 0; i < occ_tx; i++) {
+ 		ret = k3_ringacc_ring_pop(tx_chn->ringtx, &desc_dma);
+ 		if (ret) {
+-			dev_err(tx_chn->common.dev, "TX reset pop %d\n", ret);
++			if (ret != -ENODATA)
++				dev_err(dev, "TX reset pop %d\n", ret);
+ 			break;
+ 		}
+ 		cleanup(data, desc_dma);
+ 	}
+ 
++	/* reset TXCQ as it is not input for udma - expected to be empty */
++	k3_ringacc_ring_reset(tx_chn->ringtxcq);
+ 	k3_ringacc_ring_reset_dma(tx_chn->ringtx, occ_tx);
+ }
+ EXPORT_SYMBOL_GPL(k3_udma_glue_reset_tx_chn);
+@@ -487,7 +549,12 @@ EXPORT_SYMBOL_GPL(k3_udma_glue_tx_get_txcq_id);
+ 
+ int k3_udma_glue_tx_get_irq(struct k3_udma_glue_tx_channel *tx_chn)
+ {
+-	tx_chn->virq = k3_ringacc_get_ring_irq_num(tx_chn->ringtxcq);
++	if (xudma_is_pktdma(tx_chn->common.udmax)) {
++		tx_chn->virq = xudma_pktdma_tflow_get_irq(tx_chn->common.udmax,
++							  tx_chn->udma_tflow_id);
++	} else {
++		tx_chn->virq = k3_ringacc_get_ring_irq_num(tx_chn->ringtxcq);
++	}
+ 
+ 	return tx_chn->virq;
+ }
+@@ -496,10 +563,36 @@ EXPORT_SYMBOL_GPL(k3_udma_glue_tx_get_irq);
+ struct device *
+ 	k3_udma_glue_tx_get_dma_device(struct k3_udma_glue_tx_channel *tx_chn)
+ {
++	if (xudma_is_pktdma(tx_chn->common.udmax) &&
++	    (tx_chn->common.atype_asel == 14 || tx_chn->common.atype_asel == 15))
++		return &tx_chn->common.chan_dev;
++
+ 	return xudma_get_device(tx_chn->common.udmax);
+ }
+ EXPORT_SYMBOL_GPL(k3_udma_glue_tx_get_dma_device);
+ 
++void k3_udma_glue_tx_dma_to_cppi5_addr(struct k3_udma_glue_tx_channel *tx_chn,
++				       dma_addr_t *addr)
++{
++	if (!xudma_is_pktdma(tx_chn->common.udmax) ||
++	    !tx_chn->common.atype_asel)
++		return;
++
++	*addr |= (u64)tx_chn->common.atype_asel << K3_ADDRESS_ASEL_SHIFT;
++}
++EXPORT_SYMBOL_GPL(k3_udma_glue_tx_dma_to_cppi5_addr);
++
++void k3_udma_glue_tx_cppi5_to_dma_addr(struct k3_udma_glue_tx_channel *tx_chn,
++				       dma_addr_t *addr)
++{
++	if (!xudma_is_pktdma(tx_chn->common.udmax) ||
++	    !tx_chn->common.atype_asel)
++		return;
++
++	*addr &= (u64)GENMASK(K3_ADDRESS_ASEL_SHIFT - 1, 0);
++}
++EXPORT_SYMBOL_GPL(k3_udma_glue_tx_cppi5_to_dma_addr);
++
+ static int k3_udma_glue_cfg_rx_chn(struct k3_udma_glue_rx_channel *rx_chn)
+ {
+ 	const struct udma_tisci_rm *tisci_rm = rx_chn->common.tisci_rm;
+@@ -511,8 +604,6 @@ static int k3_udma_glue_cfg_rx_chn(struct k3_udma_glue_rx_channel *rx_chn)
+ 	req.valid_params = TI_SCI_MSG_VALUE_RM_UDMAP_CH_FETCH_SIZE_VALID |
+ 			   TI_SCI_MSG_VALUE_RM_UDMAP_CH_CQ_QNUM_VALID |
+ 			   TI_SCI_MSG_VALUE_RM_UDMAP_CH_CHAN_TYPE_VALID |
+-			   TI_SCI_MSG_VALUE_RM_UDMAP_CH_RX_FLOWID_START_VALID |
+-			   TI_SCI_MSG_VALUE_RM_UDMAP_CH_RX_FLOWID_CNT_VALID |
+ 			   TI_SCI_MSG_VALUE_RM_UDMAP_CH_ATYPE_VALID;
+ 
+ 	req.nav_id = tisci_rm->tisci_dev_id;
+@@ -524,13 +615,16 @@ static int k3_udma_glue_cfg_rx_chn(struct k3_udma_glue_rx_channel *rx_chn)
+ 	 * req.rxcq_qnum = k3_ringacc_get_ring_id(rx_chn->flows[0].ringrx);
+ 	 */
+ 	req.rxcq_qnum = 0xFFFF;
+-	if (rx_chn->flow_num && rx_chn->flow_id_base != rx_chn->udma_rchan_id) {
++	if (!xudma_is_pktdma(rx_chn->common.udmax) && rx_chn->flow_num &&
++	    rx_chn->flow_id_base != rx_chn->udma_rchan_id) {
+ 		/* Default flow + extra ones */
++		req.valid_params |= TI_SCI_MSG_VALUE_RM_UDMAP_CH_RX_FLOWID_START_VALID |
++				    TI_SCI_MSG_VALUE_RM_UDMAP_CH_RX_FLOWID_CNT_VALID;
+ 		req.flowid_start = rx_chn->flow_id_base;
+ 		req.flowid_cnt = rx_chn->flow_num;
+ 	}
+ 	req.rx_chan_type = TI_SCI_RM_UDMAP_CHAN_TYPE_PKT_PBRR;
+-	req.rx_atype = rx_chn->common.atype;
++	req.rx_atype = rx_chn->common.atype_asel;
+ 
+ 	ret = tisci_rm->tisci_udmap_ops->rx_ch_cfg(tisci_rm->tisci, &req);
+ 	if (ret)
+@@ -584,10 +678,18 @@ static int k3_udma_glue_cfg_rx_flow(struct k3_udma_glue_rx_channel *rx_chn,
+ 		goto err_rflow_put;
+ 	}
+ 
++	if (xudma_is_pktdma(rx_chn->common.udmax)) {
++		rx_ringfdq_id = flow->udma_rflow_id +
++				xudma_get_rflow_ring_offset(rx_chn->common.udmax);
++		rx_ring_id = 0;
++	} else {
++		rx_ring_id = flow_cfg->ring_rxq_id;
++		rx_ringfdq_id = flow_cfg->ring_rxfdq0_id;
++	}
++
+ 	/* request and cfg rings */
+ 	ret =  k3_ringacc_request_rings_pair(rx_chn->common.ringacc,
+-					     flow_cfg->ring_rxfdq0_id,
+-					     flow_cfg->ring_rxq_id,
++					     rx_ringfdq_id, rx_ring_id,
+ 					     &flow->ringrxfdq,
+ 					     &flow->ringrx);
+ 	if (ret) {
+@@ -599,6 +701,12 @@ static int k3_udma_glue_cfg_rx_flow(struct k3_udma_glue_rx_channel *rx_chn,
+ 	flow_cfg->rx_cfg.dma_dev = k3_udma_glue_rx_get_dma_device(rx_chn);
+ 	flow_cfg->rxfdq_cfg.dma_dev = flow_cfg->rx_cfg.dma_dev;
+ 
++	/* Set the ASEL value for DMA rings of PKTDMA */
++	if (xudma_is_pktdma(rx_chn->common.udmax)) {
++		flow_cfg->rx_cfg.asel = rx_chn->common.atype_asel;
++		flow_cfg->rxfdq_cfg.asel = rx_chn->common.atype_asel;
++	}
++
+ 	ret = k3_ringacc_ring_cfg(flow->ringrx, &flow_cfg->rx_cfg);
+ 	if (ret) {
+ 		dev_err(dev, "Failed to cfg ringrx %d\n", ret);
+@@ -757,6 +865,7 @@ k3_udma_glue_request_rx_chn_priv(struct device *dev, const char *name,
+ 				 struct k3_udma_glue_rx_channel_cfg *cfg)
+ {
+ 	struct k3_udma_glue_rx_channel *rx_chn;
++	struct psil_endpoint_config *ep_cfg;
+ 	int ret, i;
+ 
+ 	if (cfg->flow_id_num <= 0)
+@@ -784,8 +893,16 @@ k3_udma_glue_request_rx_chn_priv(struct device *dev, const char *name,
+ 						rx_chn->common.psdata_size,
+ 						rx_chn->common.swdata_size);
+ 
++	ep_cfg = rx_chn->common.ep_config;
++
++	if (xudma_is_pktdma(rx_chn->common.udmax))
++		rx_chn->udma_rchan_id = ep_cfg->mapped_channel_id;
++	else
++		rx_chn->udma_rchan_id = -1;
++
+ 	/* request and cfg UDMAP RX channel */
+-	rx_chn->udma_rchanx = xudma_rchan_get(rx_chn->common.udmax, -1);
++	rx_chn->udma_rchanx = xudma_rchan_get(rx_chn->common.udmax,
++					      rx_chn->udma_rchan_id);
+ 	if (IS_ERR(rx_chn->udma_rchanx)) {
+ 		ret = PTR_ERR(rx_chn->udma_rchanx);
+ 		dev_err(dev, "UDMAX rchanx get err %d\n", ret);
+@@ -793,12 +910,48 @@ k3_udma_glue_request_rx_chn_priv(struct device *dev, const char *name,
+ 	}
+ 	rx_chn->udma_rchan_id = xudma_rchan_get_id(rx_chn->udma_rchanx);
+ 
+-	rx_chn->flow_num = cfg->flow_id_num;
+-	rx_chn->flow_id_base = cfg->flow_id_base;
++	rx_chn->common.chan_dev.class = &k3_udma_glue_devclass;
++	rx_chn->common.chan_dev.parent = xudma_get_device(rx_chn->common.udmax);
++	dev_set_name(&rx_chn->common.chan_dev, "rchan%d-0x%04x",
++		     rx_chn->udma_rchan_id, rx_chn->common.src_thread);
++	ret = device_register(&rx_chn->common.chan_dev);
++	if (ret) {
++		dev_err(dev, "Channel Device registration failed %d\n", ret);
++		rx_chn->common.chan_dev.parent = NULL;
++		goto err;
++	}
+ 
+-	/* Use RX channel id as flow id: target dev can't generate flow_id */
+-	if (cfg->flow_id_use_rxchan_id)
+-		rx_chn->flow_id_base = rx_chn->udma_rchan_id;
++	if (xudma_is_pktdma(rx_chn->common.udmax)) {
++		/* prepare the channel device as coherent */
++		rx_chn->common.chan_dev.dma_coherent = true;
++		dma_coerce_mask_and_coherent(&rx_chn->common.chan_dev,
++					     DMA_BIT_MASK(48));
++	}
++
++	if (xudma_is_pktdma(rx_chn->common.udmax)) {
++		int flow_start = cfg->flow_id_base;
++		int flow_end;
++
++		if (flow_start == -1)
++			flow_start = ep_cfg->flow_start;
++
++		flow_end = flow_start + cfg->flow_id_num - 1;
++		if (flow_start < ep_cfg->flow_start ||
++		    flow_end > (ep_cfg->flow_start + ep_cfg->flow_num - 1)) {
++			dev_err(dev, "Invalid flow range requested\n");
++			ret = -EINVAL;
++			goto err;
++		}
++		rx_chn->flow_id_base = flow_start;
++	} else {
++		rx_chn->flow_id_base = cfg->flow_id_base;
++
++		/* Use RX channel id as flow id: target dev can't generate flow_id */
++		if (cfg->flow_id_use_rxchan_id)
++			rx_chn->flow_id_base = rx_chn->udma_rchan_id;
++	}
++
++	rx_chn->flow_num = cfg->flow_id_num;
+ 
+ 	rx_chn->flows = devm_kcalloc(dev, rx_chn->flow_num,
+ 				     sizeof(*rx_chn->flows), GFP_KERNEL);
+@@ -888,6 +1041,24 @@ k3_udma_glue_request_remote_rx_chn(struct device *dev, const char *name,
+ 		goto err;
+ 	}
+ 
++	rx_chn->common.chan_dev.class = &k3_udma_glue_devclass;
++	rx_chn->common.chan_dev.parent = xudma_get_device(rx_chn->common.udmax);
++	dev_set_name(&rx_chn->common.chan_dev, "rchan_remote-0x%04x",
++		     rx_chn->common.src_thread);
++	ret = device_register(&rx_chn->common.chan_dev);
++	if (ret) {
++		dev_err(dev, "Channel Device registration failed %d\n", ret);
++		rx_chn->common.chan_dev.parent = NULL;
++		goto err;
++	}
++
++	if (xudma_is_pktdma(rx_chn->common.udmax)) {
++		/* prepare the channel device as coherent */
++		rx_chn->common.chan_dev.dma_coherent = true;
++		dma_coerce_mask_and_coherent(&rx_chn->common.chan_dev,
++					     DMA_BIT_MASK(48));
++	}
++
+ 	ret = k3_udma_glue_allocate_rx_flows(rx_chn, cfg);
+ 	if (ret)
+ 		goto err;
+@@ -940,6 +1111,11 @@ void k3_udma_glue_release_rx_chn(struct k3_udma_glue_rx_channel *rx_chn)
+ 	if (!IS_ERR_OR_NULL(rx_chn->udma_rchanx))
+ 		xudma_rchan_put(rx_chn->common.udmax,
+ 				rx_chn->udma_rchanx);
++
++	if (rx_chn->common.chan_dev.parent) {
++		device_unregister(&rx_chn->common.chan_dev);
++		rx_chn->common.chan_dev.parent = NULL;
++	}
+ }
+ EXPORT_SYMBOL_GPL(k3_udma_glue_release_rx_chn);
+ 
+@@ -1151,12 +1327,10 @@ void k3_udma_glue_reset_rx_chn(struct k3_udma_glue_rx_channel *rx_chn,
+ 	/* reset RXCQ as it is not input for udma - expected to be empty */
+ 	occ_rx = k3_ringacc_ring_get_occ(flow->ringrx);
+ 	dev_dbg(dev, "RX reset flow %u occ_rx %u\n", flow_num, occ_rx);
+-	if (flow->ringrx)
+-		k3_ringacc_ring_reset(flow->ringrx);
+ 
+ 	/* Skip RX FDQ in case one FDQ is used for the set of flows */
+ 	if (skip_fdq)
+-		return;
++		goto do_reset;
+ 
+ 	/*
+ 	 * RX FDQ reset need to be special way as it is input for udma and its
+@@ -1171,13 +1345,17 @@ void k3_udma_glue_reset_rx_chn(struct k3_udma_glue_rx_channel *rx_chn,
+ 	for (i = 0; i < occ_rx; i++) {
+ 		ret = k3_ringacc_ring_pop(flow->ringrxfdq, &desc_dma);
+ 		if (ret) {
+-			dev_err(dev, "RX reset pop %d\n", ret);
++			if (ret != -ENODATA)
++				dev_err(dev, "RX reset pop %d\n", ret);
+ 			break;
+ 		}
+ 		cleanup(data, desc_dma);
+ 	}
+ 
+ 	k3_ringacc_ring_reset_dma(flow->ringrxfdq, occ_rx);
++
++do_reset:
++	k3_ringacc_ring_reset(flow->ringrx);
+ }
+ EXPORT_SYMBOL_GPL(k3_udma_glue_reset_rx_chn);
+ 
+@@ -1207,7 +1385,12 @@ int k3_udma_glue_rx_get_irq(struct k3_udma_glue_rx_channel *rx_chn,
+ 
+ 	flow = &rx_chn->flows[flow_num];
+ 
+-	flow->virq = k3_ringacc_get_ring_irq_num(flow->ringrx);
++	if (xudma_is_pktdma(rx_chn->common.udmax)) {
++		flow->virq = xudma_pktdma_rflow_get_irq(rx_chn->common.udmax,
++							flow->udma_rflow_id);
++	} else {
++		flow->virq = k3_ringacc_get_ring_irq_num(flow->ringrx);
++	}
+ 
+ 	return flow->virq;
+ }
+@@ -1216,6 +1399,38 @@ EXPORT_SYMBOL_GPL(k3_udma_glue_rx_get_irq);
+ struct device *
+ 	k3_udma_glue_rx_get_dma_device(struct k3_udma_glue_rx_channel *rx_chn)
+ {
++	if (xudma_is_pktdma(rx_chn->common.udmax) &&
++	    (rx_chn->common.atype_asel == 14 || rx_chn->common.atype_asel == 15))
++		return &rx_chn->common.chan_dev;
++
+ 	return xudma_get_device(rx_chn->common.udmax);
+ }
+ EXPORT_SYMBOL_GPL(k3_udma_glue_rx_get_dma_device);
++
++void k3_udma_glue_rx_dma_to_cppi5_addr(struct k3_udma_glue_rx_channel *rx_chn,
++				       dma_addr_t *addr)
++{
++	if (!xudma_is_pktdma(rx_chn->common.udmax) ||
++	    !rx_chn->common.atype_asel)
++		return;
++
++	*addr |= (u64)rx_chn->common.atype_asel << K3_ADDRESS_ASEL_SHIFT;
++}
++EXPORT_SYMBOL_GPL(k3_udma_glue_rx_dma_to_cppi5_addr);
++
++void k3_udma_glue_rx_cppi5_to_dma_addr(struct k3_udma_glue_rx_channel *rx_chn,
++				       dma_addr_t *addr)
++{
++	if (!xudma_is_pktdma(rx_chn->common.udmax) ||
++	    !rx_chn->common.atype_asel)
++		return;
++
++	*addr &= (u64)GENMASK(K3_ADDRESS_ASEL_SHIFT - 1, 0);
++}
++EXPORT_SYMBOL_GPL(k3_udma_glue_rx_cppi5_to_dma_addr);
++
++static int __init k3_udma_glue_class_init(void)
++{
++	return class_register(&k3_udma_glue_devclass);
++}
++arch_initcall(k3_udma_glue_class_init);
+diff --git a/drivers/dma/ti/k3-udma-private.c b/drivers/dma/ti/k3-udma-private.c
+index b8567dace644..aada84f40723 100644
+--- a/drivers/dma/ti/k3-udma-private.c
++++ b/drivers/dma/ti/k3-udma-private.c
+@@ -157,3 +157,27 @@ void xudma_##res##rt_write(struct udma_##res *p, int reg, u32 val)	\
+ EXPORT_SYMBOL(xudma_##res##rt_write)
+ XUDMA_RT_IO_FUNCTIONS(tchan);
+ XUDMA_RT_IO_FUNCTIONS(rchan);
++
++int xudma_is_pktdma(struct udma_dev *ud)
++{
++	return ud->match_data->type == DMA_TYPE_PKTDMA;
++}
++EXPORT_SYMBOL(xudma_is_pktdma);
++
++int xudma_pktdma_tflow_get_irq(struct udma_dev *ud, int udma_tflow_id)
++{
++	const struct udma_oes_offsets *oes = &ud->soc_data->oes;
++
++	return ti_sci_inta_msi_get_virq(ud->dev, udma_tflow_id +
++					oes->pktdma_tchan_flow);
++}
++EXPORT_SYMBOL(xudma_pktdma_tflow_get_irq);
++
++int xudma_pktdma_rflow_get_irq(struct udma_dev *ud, int udma_rflow_id)
++{
++	const struct udma_oes_offsets *oes = &ud->soc_data->oes;
++
++	return ti_sci_inta_msi_get_virq(ud->dev, udma_rflow_id +
++					oes->pktdma_rchan_flow);
++}
++EXPORT_SYMBOL(xudma_pktdma_rflow_get_irq);
+diff --git a/drivers/dma/ti/k3-udma.h b/drivers/dma/ti/k3-udma.h
+index ccb19f286daf..d349c6d482ae 100644
+--- a/drivers/dma/ti/k3-udma.h
++++ b/drivers/dma/ti/k3-udma.h
+@@ -157,4 +157,8 @@ void xudma_rchanrt_write(struct udma_rchan *rchan, int reg, u32 val);
+ bool xudma_rflow_is_gp(struct udma_dev *ud, int id);
+ int xudma_get_rflow_ring_offset(struct udma_dev *ud);
+ 
++int xudma_is_pktdma(struct udma_dev *ud);
++
++int xudma_pktdma_tflow_get_irq(struct udma_dev *ud, int udma_tflow_id);
++int xudma_pktdma_rflow_get_irq(struct udma_dev *ud, int udma_rflow_id);
+ #endif /* K3_UDMA_H_ */
+diff --git a/include/linux/dma/k3-udma-glue.h b/include/linux/dma/k3-udma-glue.h
+index d7c12f31377c..e443be4d3b4b 100644
+--- a/include/linux/dma/k3-udma-glue.h
++++ b/include/linux/dma/k3-udma-glue.h
+@@ -43,6 +43,10 @@ u32 k3_udma_glue_tx_get_txcq_id(struct k3_udma_glue_tx_channel *tx_chn);
+ int k3_udma_glue_tx_get_irq(struct k3_udma_glue_tx_channel *tx_chn);
+ struct device *
+ 	k3_udma_glue_tx_get_dma_device(struct k3_udma_glue_tx_channel *tx_chn);
++void k3_udma_glue_tx_dma_to_cppi5_addr(struct k3_udma_glue_tx_channel *tx_chn,
++				       dma_addr_t *addr);
++void k3_udma_glue_tx_cppi5_to_dma_addr(struct k3_udma_glue_tx_channel *tx_chn,
++				       dma_addr_t *addr);
+ 
+ enum {
+ 	K3_UDMA_GLUE_SRC_TAG_LO_KEEP = 0,
+@@ -134,5 +138,9 @@ int k3_udma_glue_rx_flow_disable(struct k3_udma_glue_rx_channel *rx_chn,
+ 				 u32 flow_idx);
+ struct device *
+ 	k3_udma_glue_rx_get_dma_device(struct k3_udma_glue_rx_channel *rx_chn);
++void k3_udma_glue_rx_dma_to_cppi5_addr(struct k3_udma_glue_rx_channel *rx_chn,
++				       dma_addr_t *addr);
++void k3_udma_glue_rx_cppi5_to_dma_addr(struct k3_udma_glue_rx_channel *rx_chn,
++				       dma_addr_t *addr);
+ 
+ #endif /* K3_UDMA_GLUE_H_ */
 -- 
 Peter
 
