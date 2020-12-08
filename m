@@ -8,43 +8,43 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	URIBL_BLOCKED,USER_AGENT_GIT autolearn=unavailable autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9125AC1B0D9
-	for <dmaengine@archiver.kernel.org>; Tue,  8 Dec 2020 09:05:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 11B77C433FE
+	for <dmaengine@archiver.kernel.org>; Tue,  8 Dec 2020 09:05:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5276323AA1
-	for <dmaengine@archiver.kernel.org>; Tue,  8 Dec 2020 09:05:00 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D76A523A9A
+	for <dmaengine@archiver.kernel.org>; Tue,  8 Dec 2020 09:05:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728447AbgLHJEn (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 8 Dec 2020 04:04:43 -0500
-Received: from fllv0015.ext.ti.com ([198.47.19.141]:34276 "EHLO
-        fllv0015.ext.ti.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728189AbgLHJEn (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Tue, 8 Dec 2020 04:04:43 -0500
-Received: from lelv0265.itg.ti.com ([10.180.67.224])
-        by fllv0015.ext.ti.com (8.15.2/8.15.2) with ESMTP id 0B893k4m002581;
-        Tue, 8 Dec 2020 03:03:46 -0600
+        id S1728667AbgLHJFA (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 8 Dec 2020 04:05:00 -0500
+Received: from fllv0016.ext.ti.com ([198.47.19.142]:51726 "EHLO
+        fllv0016.ext.ti.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728189AbgLHJFA (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Tue, 8 Dec 2020 04:05:00 -0500
+Received: from fllv0035.itg.ti.com ([10.64.41.0])
+        by fllv0016.ext.ti.com (8.15.2/8.15.2) with ESMTP id 0B8945rK130313;
+        Tue, 8 Dec 2020 03:04:05 -0600
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
-        s=ti-com-17Q1; t=1607418226;
-        bh=vOyHJcWQgFd/X5VGt8S3nS+qlpjg6sSRGX+cBw76W44=;
+        s=ti-com-17Q1; t=1607418245;
+        bh=KNHtOiRh0Y2sF99V/npiBOhsYhLCYE7wypMinM3S5uw=;
         h=From:To:CC:Subject:Date:In-Reply-To:References;
-        b=fFkDdCEOaDUf73et7E5jWSD7PxCMneiXeBRLYNRzlbc9pknrPvPa6KveYWQ8FIhWp
-         Wfb9nklwFsX+pO6118mNXrdcbr5X016b3m0MZqL/6Vgj5GPIZKn7K+FWb3Sx97zbn2
-         D61kTHIDgWB3pxBYO+IdP+KggG54JIOVFpN/F5vU=
-Received: from DFLE103.ent.ti.com (dfle103.ent.ti.com [10.64.6.24])
-        by lelv0265.itg.ti.com (8.15.2/8.15.2) with ESMTPS id 0B893kQE116402
+        b=YtGSHgPQE4LbTi+HtLsL5B2DkVplw8Mudd/mttWwVvxK0XYCb0xbD0H+TEHh2rcT+
+         8ays2SIBqTa72Tcy0LE31Q0pxRM08Cfv4J8daSdS3+C0PuhBwhZ/btKsd1/Ep/QZ59
+         tHxD1nTJcl8RIug5hOLQURm1Pve0IeLPnZnmK8qA=
+Received: from DFLE105.ent.ti.com (dfle105.ent.ti.com [10.64.6.26])
+        by fllv0035.itg.ti.com (8.15.2/8.15.2) with ESMTPS id 0B8945mg095309
         (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
-        Tue, 8 Dec 2020 03:03:46 -0600
-Received: from DFLE101.ent.ti.com (10.64.6.22) by DFLE103.ent.ti.com
- (10.64.6.24) with Microsoft SMTP Server (version=TLS1_2,
+        Tue, 8 Dec 2020 03:04:05 -0600
+Received: from DFLE100.ent.ti.com (10.64.6.21) by DFLE105.ent.ti.com
+ (10.64.6.26) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1979.3; Tue, 8 Dec
- 2020 03:03:46 -0600
-Received: from fllv0040.itg.ti.com (10.64.41.20) by DFLE101.ent.ti.com
- (10.64.6.22) with Microsoft SMTP Server (version=TLS1_2,
+ 2020 03:04:05 -0600
+Received: from fllv0040.itg.ti.com (10.64.41.20) by DFLE100.ent.ti.com
+ (10.64.6.21) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1979.3 via
- Frontend Transport; Tue, 8 Dec 2020 03:03:45 -0600
+ Frontend Transport; Tue, 8 Dec 2020 03:04:05 -0600
 Received: from feketebors.ti.com (ileax41-snat.itg.ti.com [10.172.224.153])
-        by fllv0040.itg.ti.com (8.15.2/8.15.2) with ESMTP id 0B893dc6120112;
-        Tue, 8 Dec 2020 03:03:43 -0600
+        by fllv0040.itg.ti.com (8.15.2/8.15.2) with ESMTP id 0B893dcB120112;
+        Tue, 8 Dec 2020 03:04:02 -0600
 From:   Peter Ujfalusi <peter.ujfalusi@ti.com>
 To:     <vkoul@kernel.org>, <nm@ti.com>, <ssantosh@kernel.org>,
         <robh+dt@kernel.org>
@@ -53,9 +53,9 @@ CC:     <dan.j.williams@intel.com>, <t-kristo@ti.com>,
         <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
         <dmaengine@vger.kernel.org>, <vigneshr@ti.com>,
         <grygorii.strashko@ti.com>
-Subject: [PATCH v3 01/20] dmaengine: ti: k3-udma: Correct normal channel offset when uchan_cnt is not 0
-Date:   Tue, 8 Dec 2020 11:04:21 +0200
-Message-ID: <20201208090440.31792-2-peter.ujfalusi@ti.com>
+Subject: [PATCH v3 06/20] dmaengine: ti: k3-udma-glue: Configure the dma_dev for rings
+Date:   Tue, 8 Dec 2020 11:04:26 +0200
+Message-ID: <20201208090440.31792-7-peter.ujfalusi@ti.com>
 X-Mailer: git-send-email 2.29.2
 In-Reply-To: <20201208090440.31792-1-peter.ujfalusi@ti.com>
 References: <20201208090440.31792-1-peter.ujfalusi@ti.com>
@@ -67,30 +67,44 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-According to different sections of the TRM, the hchan_cnt of CAP3 includes
-the number of uchan in UDMA, thus the start offset of the normal channels
-are hchan_cnt.
+Rings in RING mode should be using the DMA device for DMA API as in this
+mode the ringacc will not access the ring memory in any ways, but the DMA
+is.
 
-Fixes: daf4ad0499aa4 ("dmaengine: ti: k3-udma: Query throughput level information from hardware")
+Fix up the ring configuration and set the dma_dev unconditionally and let
+the ringacc driver to select the correct device to use for DMA API.
+
 Signed-off-by: Peter Ujfalusi <peter.ujfalusi@ti.com>
 ---
- drivers/dma/ti/k3-udma.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/dma/ti/k3-udma-glue.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/dma/ti/k3-udma.c b/drivers/dma/ti/k3-udma.c
-index e508280b3d70..0e8426dd18a7 100644
---- a/drivers/dma/ti/k3-udma.c
-+++ b/drivers/dma/ti/k3-udma.c
-@@ -3199,8 +3199,7 @@ static int udma_setup_resources(struct udma_dev *ud)
- 	} else if (UDMA_CAP3_UCHAN_CNT(cap3)) {
- 		ud->tpl_levels = 3;
- 		ud->tpl_start_idx[1] = UDMA_CAP3_UCHAN_CNT(cap3);
--		ud->tpl_start_idx[0] = ud->tpl_start_idx[1] +
--				       UDMA_CAP3_HCHAN_CNT(cap3);
-+		ud->tpl_start_idx[0] = UDMA_CAP3_HCHAN_CNT(cap3);
- 	} else if (UDMA_CAP3_HCHAN_CNT(cap3)) {
- 		ud->tpl_levels = 2;
- 		ud->tpl_start_idx[0] = UDMA_CAP3_HCHAN_CNT(cap3);
+diff --git a/drivers/dma/ti/k3-udma-glue.c b/drivers/dma/ti/k3-udma-glue.c
+index 8a8988be4175..e6ebcd98c02a 100644
+--- a/drivers/dma/ti/k3-udma-glue.c
++++ b/drivers/dma/ti/k3-udma-glue.c
+@@ -276,6 +276,10 @@ struct k3_udma_glue_tx_channel *k3_udma_glue_request_tx_chn(struct device *dev,
+ 		goto err;
+ 	}
+ 
++	/* Set the dma_dev for the rings to be configured */
++	cfg->tx_cfg.dma_dev = k3_udma_glue_tx_get_dma_device(tx_chn);
++	cfg->txcq_cfg.dma_dev = cfg->tx_cfg.dma_dev;
++
+ 	ret = k3_ringacc_ring_cfg(tx_chn->ringtx, &cfg->tx_cfg);
+ 	if (ret) {
+ 		dev_err(dev, "Failed to cfg ringtx %d\n", ret);
+@@ -591,6 +595,10 @@ static int k3_udma_glue_cfg_rx_flow(struct k3_udma_glue_rx_channel *rx_chn,
+ 		goto err_rflow_put;
+ 	}
+ 
++	/* Set the dma_dev for the rings to be configured */
++	flow_cfg->rx_cfg.dma_dev = k3_udma_glue_rx_get_dma_device(rx_chn);
++	flow_cfg->rxfdq_cfg.dma_dev = flow_cfg->rx_cfg.dma_dev;
++
+ 	ret = k3_ringacc_ring_cfg(flow->ringrx, &flow_cfg->rx_cfg);
+ 	if (ret) {
+ 		dev_err(dev, "Failed to cfg ringrx %d\n", ret);
 -- 
 Peter
 
