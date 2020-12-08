@@ -8,43 +8,43 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	URIBL_BLOCKED,USER_AGENT_GIT autolearn=unavailable autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 943D7C3526F
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 15329C3526C
 	for <dmaengine@archiver.kernel.org>; Tue,  8 Dec 2020 09:06:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6EA0E23A7F
-	for <dmaengine@archiver.kernel.org>; Tue,  8 Dec 2020 09:06:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B76A423A82
+	for <dmaengine@archiver.kernel.org>; Tue,  8 Dec 2020 09:06:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728710AbgLHJFb (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 8 Dec 2020 04:05:31 -0500
-Received: from fllv0016.ext.ti.com ([198.47.19.142]:51624 "EHLO
+        id S1728819AbgLHJGA (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 8 Dec 2020 04:06:00 -0500
+Received: from fllv0016.ext.ti.com ([198.47.19.142]:51800 "EHLO
         fllv0016.ext.ti.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728689AbgLHJFa (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Tue, 8 Dec 2020 04:05:30 -0500
+        with ESMTP id S1728794AbgLHJF7 (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Tue, 8 Dec 2020 04:05:59 -0500
 Received: from fllv0034.itg.ti.com ([10.64.40.246])
-        by fllv0016.ext.ti.com (8.15.2/8.15.2) with ESMTP id 0B893nWa130151;
-        Tue, 8 Dec 2020 03:03:49 -0600
+        by fllv0016.ext.ti.com (8.15.2/8.15.2) with ESMTP id 0B894JcZ130400;
+        Tue, 8 Dec 2020 03:04:19 -0600
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
-        s=ti-com-17Q1; t=1607418229;
-        bh=LQWkom4AlDyOMYyG9quYjUCZhb57RJ8vj/xUJWaN+D0=;
+        s=ti-com-17Q1; t=1607418259;
+        bh=9ls1rrDJzgkFi+HLj+7Y+2Kxc/KjoBYF/oSuS633YiQ=;
         h=From:To:CC:Subject:Date:In-Reply-To:References;
-        b=t/7smbS7hKOpZSJ+/N9rlRW4XwqDyMKCYLHlnJeO+EajQrwcUgpj5ITAIFPYjCnp6
-         i5Ok12+xLpMrbpgoYz8xCvEUOU21JgR6CcZXcsh51dHzy3d9AfDJtmztsTXSFoFMFT
-         CO/rrg/RCz1Ja7Jy4vLR2EF5GgeCUvX1RoDBNBpA=
-Received: from DFLE104.ent.ti.com (dfle104.ent.ti.com [10.64.6.25])
-        by fllv0034.itg.ti.com (8.15.2/8.15.2) with ESMTPS id 0B893nPe043566
+        b=NYd9ScEKCnvXEjDt7/t4AOoD7r9DtvliYFb0d+g3bpLbES+YDaHEa7JM2EecCHOaT
+         3rAYOxwbPCpeMmADB5DPukPk+vzjiy4dd5lMIa+16DD1pUuB3Rs/JCuOingZRiD3M6
+         7wlG5mYeOFSzXy81b6v3nf9bVYH0jflvvz3PIV4k=
+Received: from DLEE115.ent.ti.com (dlee115.ent.ti.com [157.170.170.26])
+        by fllv0034.itg.ti.com (8.15.2/8.15.2) with ESMTPS id 0B894JIX044251
         (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
-        Tue, 8 Dec 2020 03:03:49 -0600
-Received: from DFLE112.ent.ti.com (10.64.6.33) by DFLE104.ent.ti.com
- (10.64.6.25) with Microsoft SMTP Server (version=TLS1_2,
+        Tue, 8 Dec 2020 03:04:19 -0600
+Received: from DLEE112.ent.ti.com (157.170.170.23) by DLEE115.ent.ti.com
+ (157.170.170.26) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1979.3; Tue, 8 Dec
- 2020 03:03:49 -0600
-Received: from fllv0040.itg.ti.com (10.64.41.20) by DFLE112.ent.ti.com
- (10.64.6.33) with Microsoft SMTP Server (version=TLS1_2,
+ 2020 03:04:18 -0600
+Received: from fllv0040.itg.ti.com (10.64.41.20) by DLEE112.ent.ti.com
+ (157.170.170.23) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1979.3 via
- Frontend Transport; Tue, 8 Dec 2020 03:03:49 -0600
+ Frontend Transport; Tue, 8 Dec 2020 03:04:18 -0600
 Received: from feketebors.ti.com (ileax41-snat.itg.ti.com [10.172.224.153])
-        by fllv0040.itg.ti.com (8.15.2/8.15.2) with ESMTP id 0B893dc7120112;
-        Tue, 8 Dec 2020 03:03:46 -0600
+        by fllv0040.itg.ti.com (8.15.2/8.15.2) with ESMTP id 0B893dcE120112;
+        Tue, 8 Dec 2020 03:04:15 -0600
 From:   Peter Ujfalusi <peter.ujfalusi@ti.com>
 To:     <vkoul@kernel.org>, <nm@ti.com>, <ssantosh@kernel.org>,
         <robh+dt@kernel.org>
@@ -53,9 +53,9 @@ CC:     <dan.j.williams@intel.com>, <t-kristo@ti.com>,
         <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
         <dmaengine@vger.kernel.org>, <vigneshr@ti.com>,
         <grygorii.strashko@ti.com>
-Subject: [PATCH v3 02/20] dmaengine: ti: k3-udma: Wait for peer teardown completion if supported
-Date:   Tue, 8 Dec 2020 11:04:22 +0200
-Message-ID: <20201208090440.31792-3-peter.ujfalusi@ti.com>
+Subject: [PATCH v3 09/20] dmaengine: doc: client: Update for dmaengine_get_dma_device() usage
+Date:   Tue, 8 Dec 2020 11:04:29 +0200
+Message-ID: <20201208090440.31792-10-peter.ujfalusi@ti.com>
 X-Mailer: git-send-email 2.29.2
 In-Reply-To: <20201208090440.31792-1-peter.ujfalusi@ti.com>
 References: <20201208090440.31792-1-peter.ujfalusi@ti.com>
@@ -67,59 +67,29 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Set the TDTYPE if it is supported on the platform (j721e) which will cause
-UDMAP to wait for the remote peer to finish the teardown before returning
-the teardown completed message.
+Client drivers should use the dmaengine_get_dma_device(chan) to get the
+device pointer which should be used for DMA API for allocations and
+mapping.
 
 Signed-off-by: Peter Ujfalusi <peter.ujfalusi@ti.com>
-Tested-by: Keerthy <j-keerthy@ti.com>
-Reviewed-by: Grygorii Strashko <grygorii.strashko@ti.com>
 ---
- drivers/dma/ti/k3-udma.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ Documentation/driver-api/dmaengine/client.rst | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/dma/ti/k3-udma.c b/drivers/dma/ti/k3-udma.c
-index 0e8426dd18a7..eee43757e774 100644
---- a/drivers/dma/ti/k3-udma.c
-+++ b/drivers/dma/ti/k3-udma.c
-@@ -86,6 +86,7 @@ struct udma_rchan {
+diff --git a/Documentation/driver-api/dmaengine/client.rst b/Documentation/driver-api/dmaengine/client.rst
+index 09a3f66dcd26..bfd057b21a00 100644
+--- a/Documentation/driver-api/dmaengine/client.rst
++++ b/Documentation/driver-api/dmaengine/client.rst
+@@ -120,7 +120,9 @@ The details of these operations are:
  
- #define UDMA_FLAG_PDMA_ACC32		BIT(0)
- #define UDMA_FLAG_PDMA_BURST		BIT(1)
-+#define UDMA_FLAG_TDTYPE		BIT(2)
+   .. code-block:: c
  
- struct udma_match_data {
- 	u32 psil_base;
-@@ -1589,6 +1590,13 @@ static int udma_tisci_tx_channel_config(struct udma_chan *uc)
- 	req_tx.tx_fetch_size = fetch_size >> 2;
- 	req_tx.txcq_qnum = tc_ring;
- 	req_tx.tx_atype = uc->config.atype;
-+	if (uc->config.ep_type == PSIL_EP_PDMA_XY &&
-+	    ud->match_data->flags & UDMA_FLAG_TDTYPE) {
-+		/* wait for peer to complete the teardown for PDMAs */
-+		req_tx.valid_params |=
-+				TI_SCI_MSG_VALUE_RM_UDMAP_CH_TX_TDTYPE_VALID;
-+		req_tx.tx_tdtype = 1;
-+	}
- 
- 	ret = tisci_ops->tx_ch_cfg(tisci_rm->tisci, &req_tx);
- 	if (ret)
-@@ -3105,14 +3113,14 @@ static struct udma_match_data am654_mcu_data = {
- static struct udma_match_data j721e_main_data = {
- 	.psil_base = 0x1000,
- 	.enable_memcpy_support = true,
--	.flags = UDMA_FLAG_PDMA_ACC32 | UDMA_FLAG_PDMA_BURST,
-+	.flags = UDMA_FLAG_PDMA_ACC32 | UDMA_FLAG_PDMA_BURST | UDMA_FLAG_TDTYPE,
- 	.statictr_z_mask = GENMASK(23, 0),
- };
- 
- static struct udma_match_data j721e_mcu_data = {
- 	.psil_base = 0x6000,
- 	.enable_memcpy_support = false, /* MEM_TO_MEM is slow via MCU UDMA */
--	.flags = UDMA_FLAG_PDMA_ACC32 | UDMA_FLAG_PDMA_BURST,
-+	.flags = UDMA_FLAG_PDMA_ACC32 | UDMA_FLAG_PDMA_BURST | UDMA_FLAG_TDTYPE,
- 	.statictr_z_mask = GENMASK(23, 0),
- };
+-     nr_sg = dma_map_sg(chan->device->dev, sgl, sg_len);
++     struct device *dma_dev = dmaengine_get_dma_device(chan);
++
++     nr_sg = dma_map_sg(dma_dev, sgl, sg_len);
+ 	if (nr_sg == 0)
+ 		/* error */
  
 -- 
 Peter
