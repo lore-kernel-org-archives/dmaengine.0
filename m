@@ -2,103 +2,194 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-16.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+X-Spam-Status: No, score=-16.7 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1129FC4167B
-	for <dmaengine@archiver.kernel.org>; Wed,  9 Dec 2020 11:49:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 97FFDC4361B
+	for <dmaengine@archiver.kernel.org>; Thu, 10 Dec 2020 00:57:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D7C282054F
-	for <dmaengine@archiver.kernel.org>; Wed,  9 Dec 2020 11:49:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9961A233EF
+	for <dmaengine@archiver.kernel.org>; Thu, 10 Dec 2020 00:56:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730886AbgLILse (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 9 Dec 2020 06:48:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39756 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730862AbgLILsW (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Wed, 9 Dec 2020 06:48:22 -0500
-Received: from mail-ej1-x643.google.com (mail-ej1-x643.google.com [IPv6:2a00:1450:4864:20::643])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BCA41C061793
-        for <dmaengine@vger.kernel.org>; Wed,  9 Dec 2020 03:47:41 -0800 (PST)
-Received: by mail-ej1-x643.google.com with SMTP id jx16so1662439ejb.10
-        for <dmaengine@vger.kernel.org>; Wed, 09 Dec 2020 03:47:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baylibre-com.20150623.gappssmtp.com; s=20150623;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=rs3z5HiZz52Q+PqaHhfTF1Q+uRexoKTRYXUuslD9bJA=;
-        b=d3T36ZkNR/AUgVDsWMcv+epjmknEjkr1S4/hA5BmOBbmMp3QPmqbQ5+T5urLbZsaZm
-         yddM22Ca/MjmaZ65L9Ziy8Eis/rNNRh6ZWV33tysfBDK99xgKIFsPiG/pLxOIGV2msux
-         3VZ4X/R76YQSx/b/gtQiCbkElRc8FjmqEJZ9snzxdIWHO32LjhfnKFPVl2brKq/cbdPl
-         zpDqtSxW6OC+2JHBCUwRoKYHHWYHCx4jqiOhBquIjUJ4tNKpJzn/IlzziXa4/3PKi8pE
-         aTb57hm0IUn94GQTHu2NhsmG7apvTb2fEUQ2K5isvTgowQlyZ+eEA7pRISQ75ZxcifFr
-         j0UQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=rs3z5HiZz52Q+PqaHhfTF1Q+uRexoKTRYXUuslD9bJA=;
-        b=kkTGTk5M2vwOOP0iypWyEjedi33XDXTfq7Hq+9IXAgb0RTl/yQF7+qfgJo0UWuJqoa
-         /h9SXuiyWDUjlyRgC4ZCQZOIRxSPV8QT/zlX/PQsRxhoNuxTVc9stoiJeMRlXAUw53dL
-         y7GgszE1MtjJTxxwdHADCBwGouISbjDitq21n+XT5EL3l8EZIo+MjEm0l0aU16UqmCei
-         GIQXPJWtNX/XPmYOy1ryLOwW5xVEyx4VgNIgoyAOi2moUyh7SmSGhG6mu5caDD863ohL
-         hjSgBHJWy97mtW9L/xb7fU8h924j0tJ1Z7ZECjQO/U6Tz8Oev/itWsKtattP3BuLCova
-         6RVg==
-X-Gm-Message-State: AOAM530CEuOiZRyntyoRbyvEIjXzAxcYFKp44HXWpoSwvNNTubvfIxo+
-        3mthTxt0iHT4SHJbYNUvX784ig==
-X-Google-Smtp-Source: ABdhPJz4K0kLaWeuPBop0IAkjqejJVnYvx1By/KhxM6pBUYlU2Hn4uST4po7Bl+o5xWrlrVSPgRe1g==
-X-Received: by 2002:a17:906:98d4:: with SMTP id zd20mr1710918ejb.532.1607514460504;
-        Wed, 09 Dec 2020 03:47:40 -0800 (PST)
-Received: from localhost.localdomain ([88.160.162.107])
-        by smtp.gmail.com with ESMTPSA id k23sm1244877ejs.100.2020.12.09.03.47.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Dec 2020 03:47:39 -0800 (PST)
-From:   Fabien Parent <fparent@baylibre.com>
-To:     Sean Wang <sean.wang@mediatek.com>, Vinod Koul <vkoul@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Matthias Brugger <matthias.bgg@gmail.com>
-Cc:     Fabien Parent <fparent@baylibre.com>,
-        Rob Herring <robh@kernel.org>, dmaengine@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-mediatek@lists.infradead.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH v3 1/2] dt-bindings: dma: mtk-apdma: add bindings for MT8516 SOC
-Date:   Wed,  9 Dec 2020 12:47:35 +0100
-Message-Id: <20201209114736.70625-1-fparent@baylibre.com>
-X-Mailer: git-send-email 2.29.2
+        id S1731032AbgLJA4O (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 9 Dec 2020 19:56:14 -0500
+Received: from mga02.intel.com ([134.134.136.20]:11147 "EHLO mga02.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728438AbgLJA4N (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Wed, 9 Dec 2020 19:56:13 -0500
+IronPort-SDR: EB40AqRYvyiZYfSRQF1S+qBk/WRbZjEOxF6U0Wp1oWK+yuzmDK8JKrcwM1okGI2bXO4JmOHlU8
+ htBhc+IrDgXQ==
+X-IronPort-AV: E=McAfee;i="6000,8403,9830"; a="161226432"
+X-IronPort-AV: E=Sophos;i="5.78,407,1599548400"; 
+   d="scan'208";a="161226432"
+Received: from fmsmga001.fm.intel.com ([10.253.24.23])
+  by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Dec 2020 16:54:27 -0800
+IronPort-SDR: MDXlwNbAQ1JCT+K95B+KYpwNKNCAuS13LyV+ICIhcoUiXuEs3nXzfFaqItmkWJeqkTR+ThvX0k
+ 6/91qjkH07zg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.78,407,1599548400"; 
+   d="scan'208";a="438062595"
+Received: from allen-box.sh.intel.com ([10.239.159.28])
+  by fmsmga001.fm.intel.com with ESMTP; 09 Dec 2020 16:54:20 -0800
+From:   Lu Baolu <baolu.lu@linux.intel.com>
+To:     tglx@linutronix.de, ashok.raj@intel.com, kevin.tian@intel.com,
+        dave.jiang@intel.com, megha.dey@intel.com
+Cc:     alex.williamson@redhat.com, bhelgaas@google.com,
+        dan.j.williams@intel.com, dmaengine@vger.kernel.org,
+        eric.auger@redhat.com, jacob.jun.pan@intel.com, jgg@mellanox.com,
+        jing.lin@intel.com, kvm@vger.kernel.org, kwankhede@nvidia.com,
+        linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
+        maz@kernel.org, mona.hossain@intel.com, netanelg@mellanox.com,
+        parav@mellanox.com, pbonzini@redhat.com, rafael@kernel.org,
+        samuel.ortiz@intel.com, sanjay.k.kumar@intel.com,
+        shahafs@mellanox.com, tony.luck@intel.com, vkoul@kernel.org,
+        yan.y.zhao@linux.intel.com, yi.l.liu@intel.com,
+        Lu Baolu <baolu.lu@linux.intel.com>
+Subject: [RFC PATCH 1/1] platform-msi: Add platform check for subdevice irq domain
+Date:   Thu, 10 Dec 2020 08:46:24 +0800
+Message-Id: <20201210004624.345282-1-baolu.lu@linux.intel.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Add bindings to APDMA for MT8516 SoC. MT8516 is compatible with MT6577.
+The pci_subdevice_msi_create_irq_domain() should fail if the underlying
+platform is not able to support IMS (Interrupt Message Storage). Otherwise,
+the isolation of interrupt is not guaranteed.
 
-Signed-off-by: Fabien Parent <fparent@baylibre.com>
-Reviewed-by: Matthias Brugger <matthias.bgg@gmail.com>
-Acked-by: Rob Herring <robh@kernel.org>
+For x86, IMS is only supported on bare metal for now. We could enable it
+in the virtualization environments in the future if interrupt HYPERCALL
+domain is supported or the hardware has the capability of interrupt
+isolation for subdevices.
+
+Suggested-by: Thomas Gleixner <tglx@linutronix.de>
+Link: https://lore.kernel.org/linux-pci/87pn4nk7nn.fsf@nanos.tec.linutronix.de/
+Link: https://lore.kernel.org/linux-pci/877dqrnzr3.fsf@nanos.tec.linutronix.de/
+Link: https://lore.kernel.org/linux-pci/877dqqmc2h.fsf@nanos.tec.linutronix.de/
+Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
 ---
+ arch/x86/pci/common.c       | 43 +++++++++++++++++++++++++++++++++++++
+ drivers/base/platform-msi.c |  8 +++++++
+ include/linux/msi.h         |  1 +
+ 3 files changed, 52 insertions(+)
 
-V3: remove unicode symbol that slips into patch summary
-V2: no change
+Note:
+Learnt from the discussions in this thread:
 
- Documentation/devicetree/bindings/dma/mtk-uart-apdma.txt | 1 +
- 1 file changed, 1 insertion(+)
+https://lore.kernel.org/linux-pci/160408357912.912050.17005584526266191420.stgit@djiang5-desk3.ch.intel.com/
 
-diff --git a/Documentation/devicetree/bindings/dma/mtk-uart-apdma.txt b/Documentation/devicetree/bindings/dma/mtk-uart-apdma.txt
-index 2117db0ce4f2..fef9c1eeb264 100644
---- a/Documentation/devicetree/bindings/dma/mtk-uart-apdma.txt
-+++ b/Documentation/devicetree/bindings/dma/mtk-uart-apdma.txt
-@@ -4,6 +4,7 @@ Required properties:
- - compatible should contain:
-   * "mediatek,mt2712-uart-dma" for MT2712 compatible APDMA
-   * "mediatek,mt6577-uart-dma" for MT6577 and all of the above
-+  * "mediatek,mt8516-uart-dma", "mediatek,mt6577" for MT8516 SoC
+The device IMS (Interrupt Message Storage) should not be enabled in any
+virtualization environments unless there is a HYPERCALL domain which
+makes the changes in the message store managed by the hypervisor.
+
+As the initial step, we allow the IMS to be enabled only if we are
+running on the bare metal. It's easy to enable IMS in the virtualization
+environments if above preconditions are met in the future.
+
+We ever thought about moving probably_on_bare_metal() to a more generic
+file so that it could be well maintained and used. But we need some
+suggestions about where to put it. Your comments are very appreciated.
+
+This patch is only for comments purpose. Please don't merge it. We will
+include it in the Intel IMS implementation later once we reach a
+consensus.
+
+Best regards,
+baolu
+
+diff --git a/arch/x86/pci/common.c b/arch/x86/pci/common.c
+index 3507f456fcd0..2fbebb406cac 100644
+--- a/arch/x86/pci/common.c
++++ b/arch/x86/pci/common.c
+@@ -724,3 +724,46 @@ struct pci_dev *pci_real_dma_dev(struct pci_dev *dev)
+ 	return dev;
+ }
+ #endif
++
++/*
++ * We want to figure out which context we are running in. But the hardware
++ * does not introduce a reliable way (instruction, CPUID leaf, MSR, whatever)
++ * which can be manipulated by the VMM to let the OS figure out where it runs.
++ * So we go with the below probably_on_bare_metal() function as a replacement
++ * for definitely_on_bare_metal() to go forward only for the very simple reason
++ * that this is the only option we have.
++ */
++static const char * const possible_vmm_vendor_name[] = {
++	"QEMU", "Bochs", "KVM", "Xen", "VMware", "VMW", "VMware Inc.",
++	"innotek GmbH", "Oracle Corporation", "Parallels", "BHYVE",
++	"Microsoft Corporation"
++};
++
++static bool probably_on_bare_metal(void)
++{
++	int i;
++
++	if (boot_cpu_has(X86_FEATURE_HYPERVISOR))
++		return false;
++
++	for (i = 0; i < ARRAY_SIZE(possible_vmm_vendor_name); i++)
++		if (dmi_match(DMI_SYS_VENDOR, possible_vmm_vendor_name[i]))
++			return false;
++
++	pr_info("System running on bare metal, report to bugzilla.kernel.org if not the case.");
++
++	return true;
++}
++
++bool arch_support_pci_device_ims(struct pci_dev *pdev)
++{
++	/*
++	 * When we are running in a VMM context, the device IMS could only be
++	 * enabled when the underlying hardware supports interrupt isolation
++	 * of the subdevice, or any mechanism (trap, hypercall) is added so
++	 * that changes in the interrupt message store could be managed by the
++	 * VMM. For now, we only support the device IMS when we are running on
++	 * the bare metal.
++	 */
++	return probably_on_bare_metal();
++}
+diff --git a/drivers/base/platform-msi.c b/drivers/base/platform-msi.c
+index 8432a1bf4e28..88e5fe4dae67 100644
+--- a/drivers/base/platform-msi.c
++++ b/drivers/base/platform-msi.c
+@@ -512,6 +512,11 @@ struct irq_domain *device_msi_create_irq_domain(struct fwnode_handle *fn,
+ #ifdef CONFIG_PCI
+ #include <linux/pci.h>
  
- - reg: The base address of the APDMA register bank.
++bool __weak arch_support_pci_device_ims(struct pci_dev *pdev)
++{
++	return false;
++}
++
+ /**
+  * pci_subdevice_msi_create_irq_domain - Create an irq domain for subdevices
+  * @pdev:	Pointer to PCI device for which the subdevice domain is created
+@@ -523,6 +528,9 @@ struct irq_domain *pci_subdevice_msi_create_irq_domain(struct pci_dev *pdev,
+ 	struct irq_domain *domain, *pdev_msi;
+ 	struct fwnode_handle *fn;
  
++	if (!arch_support_pci_device_ims(pdev))
++		return NULL;
++
+ 	/*
+ 	 * Retrieve the MSI domain of the underlying PCI device's MSI
+ 	 * domain. The PCI device domain's parent domain is also the parent
+diff --git a/include/linux/msi.h b/include/linux/msi.h
+index f319d7c6a4ef..6fda81c4b859 100644
+--- a/include/linux/msi.h
++++ b/include/linux/msi.h
+@@ -478,6 +478,7 @@ struct irq_domain *device_msi_create_irq_domain(struct fwnode_handle *fn,
+ 						struct irq_domain *parent);
+ 
+ # ifdef CONFIG_PCI
++bool arch_support_pci_device_ims(struct pci_dev *pdev);
+ struct irq_domain *pci_subdevice_msi_create_irq_domain(struct pci_dev *pdev,
+ 						       struct msi_domain_info *info);
+ # endif
 -- 
-2.29.2
+2.25.1
 
