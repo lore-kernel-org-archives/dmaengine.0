@@ -7,39 +7,39 @@ X-Spam-Status: No, score=-16.7 required=3.0 tests=BAYES_00,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 22D2BC433FE
-	for <dmaengine@archiver.kernel.org>; Fri, 11 Dec 2020 01:06:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F2FEFC2BBD4
+	for <dmaengine@archiver.kernel.org>; Fri, 11 Dec 2020 01:06:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D461123DE5
-	for <dmaengine@archiver.kernel.org>; Fri, 11 Dec 2020 01:06:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C64AD23E23
+	for <dmaengine@archiver.kernel.org>; Fri, 11 Dec 2020 01:06:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2393705AbgLKBE5 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Thu, 10 Dec 2020 20:04:57 -0500
-Received: from mga12.intel.com ([192.55.52.136]:54564 "EHLO mga12.intel.com"
+        id S2404234AbgLKBGE (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Thu, 10 Dec 2020 20:06:04 -0500
+Received: from mga14.intel.com ([192.55.52.115]:12012 "EHLO mga14.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2387655AbgLKBEd (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Thu, 10 Dec 2020 20:04:33 -0500
-IronPort-SDR: 5oh9kmKQcNrbE4Rer8y1YkjU4gLhVeuUEFHXjH0f7n52dOdO+rHhdXTuqzxpweNbJtkYAA8/4z
- t2r+5K/L64Lg==
-X-IronPort-AV: E=McAfee;i="6000,8403,9831"; a="153592398"
+        id S2394390AbgLKBF4 (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Thu, 10 Dec 2020 20:05:56 -0500
+IronPort-SDR: OwVER0lUZOAd52xj2eWrseLJN34RkTqp9IPuIDBNsSsYGYXnELOgSfzIXjPtEEVUt8IuzkE42Y
+ zXiuEzM331+w==
+X-IronPort-AV: E=McAfee;i="6000,8403,9831"; a="173596146"
 X-IronPort-AV: E=Sophos;i="5.78,409,1599548400"; 
-   d="scan'208";a="153592398"
+   d="scan'208";a="173596146"
 Received: from fmsmga007.fm.intel.com ([10.253.24.52])
-  by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Dec 2020 17:03:52 -0800
-IronPort-SDR: UmvTYQuaz+Kk4zL0Fx8hxhvsvMBe1DZgKlPGzjorpP50o81nx2DJgmjGi5d+oj8fNy8pHOpktn
- t59bpiaDJTHg==
+  by fmsmga103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Dec 2020 17:04:55 -0800
+IronPort-SDR: DIvLHOEqEvK01p03mdJeT5EBqKq+A9S8YNokM6AbEMz1wORU8PG1aLryHCxcwo+/aH6EOs2fzH
+ 5uiQqY4h09VQ==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="5.78,409,1599548400"; 
-   d="scan'208";a="320965660"
+   d="scan'208";a="320965869"
 Received: from jsia-hp-z620-workstation.png.intel.com ([10.221.118.135])
-  by fmsmga007.fm.intel.com with ESMTP; 10 Dec 2020 17:03:50 -0800
+  by fmsmga007.fm.intel.com with ESMTP; 10 Dec 2020 17:04:53 -0800
 From:   Sia Jee Heng <jee.heng.sia@intel.com>
 To:     vkoul@kernel.org, Eugeniy.Paltsev@synopsys.com, robh+dt@kernel.org
 Cc:     andriy.shevchenko@linux.intel.com, dmaengine@vger.kernel.org,
         linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
-Subject: [PATCH v6 04/16] dmaengine: dw-axi-dmac: Add device_synchronize() callback
-Date:   Fri, 11 Dec 2020 08:46:30 +0800
-Message-Id: <20201211004642.25393-5-jee.heng.sia@intel.com>
+Subject: [PATCH v6 14/16] dmaengine: dw-axi-dmac: Add Intel KeemBay AxiDMA BYTE and HALFWORD registers
+Date:   Fri, 11 Dec 2020 08:46:40 +0800
+Message-Id: <20201211004642.25393-15-jee.heng.sia@intel.com>
 X-Mailer: git-send-email 2.18.0
 In-Reply-To: <20201211004642.25393-1-jee.heng.sia@intel.com>
 References: <20201211004642.25393-1-jee.heng.sia@intel.com>
@@ -47,40 +47,99 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Add support for device_synchronize() callback function to sync with
-dmaengine_terminate_sync().
+Add support for Intel KeemBay AxiDMA BYTE and HALFWORD registers
+programming.
+
+Intel KeemBay AxiDMA supports data transfer between device to memory
+and memory to device operations.
+
+This code is needed by I2C, I3C, I2S, SPI and UART which uses FIFO
+size of 8bits and 16bits to perform memory to device data transfer
+operation. 0-padding functionality is provided to avoid
+pre-processing of data on CPU.
 
 Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 Signed-off-by: Sia Jee Heng <jee.heng.sia@intel.com>
 ---
- drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ .../dma/dw-axi-dmac/dw-axi-dmac-platform.c    | 44 ++++++++++++++++---
+ 1 file changed, 39 insertions(+), 5 deletions(-)
 
 diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-index 46e2ba978e20..56b213211341 100644
+index 440f9a8b25da..dc7ddf98fd04 100644
 --- a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
 +++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-@@ -347,6 +347,13 @@ static void dma_chan_issue_pending(struct dma_chan *dchan)
- 	spin_unlock_irqrestore(&chan->vc.lock, flags);
- }
+@@ -312,7 +312,7 @@ static void axi_chan_block_xfer_start(struct axi_dma_chan *chan,
+ 				      struct axi_dma_desc *first)
+ {
+ 	u32 priority = chan->chip->dw->hdata->priority[chan->id];
+-	u32 reg, irq_mask;
++	u32 reg, irq_mask, reg_width, offset, val;
+ 	u8 lms = 0; /* Select AXI0 master for LLI fetching */
  
-+static void dw_axi_dma_synchronize(struct dma_chan *dchan)
-+{
-+	struct axi_dma_chan *chan = dchan_to_axi_dma_chan(dchan);
+ 	if (unlikely(axi_chan_is_hw_enable(chan))) {
+@@ -334,6 +334,25 @@ static void axi_chan_block_xfer_start(struct axi_dma_chan *chan,
+ 	       DWAXIDMAC_HS_SEL_HW << CH_CFG_H_HS_SEL_SRC_POS);
+ 	switch (chan->direction) {
+ 	case DMA_MEM_TO_DEV:
++		if (chan->chip->apb_regs) {
++			reg_width = __ffs(chan->config.dst_addr_width);
++			/*
++			 * Configure Byte and Halfword register
++			 * for MEM_TO_DEV only.
++			 */
++			if (reg_width == DWAXIDMAC_TRANS_WIDTH_16) {
++				offset = DMAC_APB_HALFWORD_WR_CH_EN;
++				val = ioread32(chan->chip->apb_regs + offset);
++				val |= BIT(chan->id);
++				iowrite32(val, chan->chip->apb_regs + offset);
++			} else if (reg_width == DWAXIDMAC_TRANS_WIDTH_8) {
++				offset = DMAC_APB_BYTE_WR_CH_EN;
++				val = ioread32(chan->chip->apb_regs + offset);
++				val |= BIT(chan->id);
++				iowrite32(val, chan->chip->apb_regs + offset);
++			}
++		}
 +
-+	vchan_synchronize(&chan->vc);
-+}
-+
- static int dma_chan_alloc_chan_resources(struct dma_chan *dchan)
+ 		reg |= (chan->config.device_fc ?
+ 			DWAXIDMAC_TT_FC_MEM_TO_PER_DST :
+ 			DWAXIDMAC_TT_FC_MEM_TO_PER_DMAC)
+@@ -994,8 +1013,9 @@ static int dma_chan_terminate_all(struct dma_chan *dchan)
  {
  	struct axi_dma_chan *chan = dchan_to_axi_dma_chan(dchan);
-@@ -940,6 +947,7 @@ static int dw_probe(struct platform_device *pdev)
- 	dw->dma.device_free_chan_resources = dma_chan_free_chan_resources;
+ 	u32 chan_active = BIT(chan->id) << DMAC_CHAN_EN_SHIFT;
++	u32 reg_width = __ffs(chan->config.dst_addr_width);
+ 	unsigned long flags;
+-	u32 val;
++	u32 offset, val;
+ 	int ret;
+ 	LIST_HEAD(head);
  
- 	dw->dma.device_prep_dma_memcpy = dma_chan_prep_dma_memcpy;
-+	dw->dma.device_synchronize = dw_axi_dma_synchronize;
+@@ -1007,9 +1027,23 @@ static int dma_chan_terminate_all(struct dma_chan *dchan)
+ 		dev_warn(dchan2dev(dchan),
+ 			 "%s failed to stop\n", axi_chan_name(chan));
  
- 	platform_set_drvdata(pdev, chip);
+-	if (chan->direction != DMA_MEM_TO_MEM)
+-		dw_axi_dma_set_hw_channel(chan->chip,
+-					  chan->hw_handshake_num, false);
++	if (chan->direction != DMA_MEM_TO_MEM) {
++		ret = dw_axi_dma_set_hw_channel(chan->chip,
++						chan->hw_handshake_num, false);
++		if (ret == 0 && chan->direction == DMA_MEM_TO_DEV) {
++			if (reg_width == DWAXIDMAC_TRANS_WIDTH_8) {
++				offset = DMAC_APB_BYTE_WR_CH_EN;
++				val = ioread32(chan->chip->apb_regs + offset);
++				val &= ~BIT(chan->id);
++				iowrite32(val, chan->chip->apb_regs + offset);
++			} else if (reg_width == DWAXIDMAC_TRANS_WIDTH_16) {
++				offset = DMAC_APB_HALFWORD_WR_CH_EN;
++				val = ioread32(chan->chip->apb_regs + offset);
++				val &= ~BIT(chan->id);
++				iowrite32(val, chan->chip->apb_regs + offset);
++			}
++		}
++	}
+ 
+ 	spin_lock_irqsave(&chan->vc.lock, flags);
  
 -- 
 2.18.0
