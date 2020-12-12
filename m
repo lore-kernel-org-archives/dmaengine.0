@@ -2,102 +2,93 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-16.7 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=unavailable autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.7 required=3.0 tests=BAYES_00,DATE_IN_FUTURE_24_48,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=unavailable
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4213AC0018C
-	for <dmaengine@archiver.kernel.org>; Fri, 11 Dec 2020 01:07:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 982F2C4167B
+	for <dmaengine@archiver.kernel.org>; Fri, 11 Dec 2020 11:55:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id F3A6423DE4
-	for <dmaengine@archiver.kernel.org>; Fri, 11 Dec 2020 01:07:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 62DC123FB3
+	for <dmaengine@archiver.kernel.org>; Fri, 11 Dec 2020 11:55:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2394501AbgLKBGd (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Thu, 10 Dec 2020 20:06:33 -0500
-Received: from mga14.intel.com ([192.55.52.115]:12002 "EHLO mga14.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2394494AbgLKBGF (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Thu, 10 Dec 2020 20:06:05 -0500
-IronPort-SDR: M34OJbCASkXesWRyMbfxa/2KTaYQ98VGTJjdS+cr79yWMGDub4DqOGJ7OQcCTieqxmz2olgTy5
- KaG9kS+hM2hQ==
-X-IronPort-AV: E=McAfee;i="6000,8403,9831"; a="173596150"
-X-IronPort-AV: E=Sophos;i="5.78,409,1599548400"; 
-   d="scan'208";a="173596150"
-Received: from fmsmga007.fm.intel.com ([10.253.24.52])
-  by fmsmga103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Dec 2020 17:04:58 -0800
-IronPort-SDR: z4EMfQzf6MfFze2frUIERYT10GdUEhwvfJk+D2oHWR+N7p9Pj3UGeHlcJfqRpQfxmULGFZc+C4
- DQMe8e1sgHNQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.78,409,1599548400"; 
-   d="scan'208";a="320965873"
-Received: from jsia-hp-z620-workstation.png.intel.com ([10.221.118.135])
-  by fmsmga007.fm.intel.com with ESMTP; 10 Dec 2020 17:04:56 -0800
-From:   Sia Jee Heng <jee.heng.sia@intel.com>
-To:     vkoul@kernel.org, Eugeniy.Paltsev@synopsys.com, robh+dt@kernel.org
-Cc:     andriy.shevchenko@linux.intel.com, dmaengine@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
-Subject: [PATCH v6 15/16] dmaengine: dw-axi-dmac: Set constraint to the Max segment size
-Date:   Fri, 11 Dec 2020 08:46:41 +0800
-Message-Id: <20201211004642.25393-16-jee.heng.sia@intel.com>
-X-Mailer: git-send-email 2.18.0
-In-Reply-To: <20201211004642.25393-1-jee.heng.sia@intel.com>
-References: <20201211004642.25393-1-jee.heng.sia@intel.com>
+        id S2394940AbgLKLyn (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 11 Dec 2020 06:54:43 -0500
+Received: from szxga05-in.huawei.com ([45.249.212.191]:9519 "EHLO
+        szxga05-in.huawei.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2392205AbgLKLyh (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Fri, 11 Dec 2020 06:54:37 -0500
+Received: from DGGEMS408-HUB.china.huawei.com (unknown [172.30.72.60])
+        by szxga05-in.huawei.com (SkyGuard) with ESMTP id 4Csq1C0Bwdzhq2y;
+        Fri, 11 Dec 2020 19:53:19 +0800 (CST)
+Received: from huawei.com (10.151.151.249) by DGGEMS408-HUB.china.huawei.com
+ (10.3.19.208) with Microsoft SMTP Server id 14.3.487.0; Fri, 11 Dec 2020
+ 19:53:42 +0800
+From:   Dongjiu Geng <gengdongjiu@huawei.com>
+To:     <mturquette@baylibre.com>, <sboyd@kernel.org>,
+        <robh+dt@kernel.org>, <vkoul@kernel.org>,
+        <dan.j.williams@intel.com>, <p.zabel@pengutronix.de>,
+        <linux-clk@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <dmaengine@vger.kernel.org>,
+        <gengdongjiu@huawei.com>
+Subject: [PATCH v6 0/4] Enable Hi3559A SOC clock and HiSilicon Hiedma Controller
+Date:   Sat, 12 Dec 2020 13:05:54 +0000
+Message-ID: <20201212130558.49086-1-gengdongjiu@huawei.com>
+X-Mailer: git-send-email 2.17.1
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Originating-IP: [10.151.151.249]
+X-CFilter-Loop: Reflected
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Add support for DMA Scatter-Gather (SG) constraint so that DMA clients can
-handle the AxiDMA limitation.
+From: g00384164 <g00384164@huawei.com>
 
-Without supporting DMA constraint the default Max segment size reported by
-dmaengine is 64KB, which is not supported by Intel KeemBay AxiDMA.
+v5->v6:
+1. Drop #size-cells and #address-cell in the hisilicon,hi3559av100-clock.yaml
+2. Add discription for #reset-cells in the hisilicon,hi3559av100-clock.yaml
+3. Remove #clock-cells in hisilicon,hiedmacv310.yaml 
+4. Merge property misc_ctrl_base and misc_regmap together for hiedmacv310 driver
 
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Signed-off-by: Sia Jee Heng <jee.heng.sia@intel.com>
----
- drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c | 8 ++++++++
- drivers/dma/dw-axi-dmac/dw-axi-dmac.h          | 1 +
- 2 files changed, 9 insertions(+)
+v4->v5:
+1. change the patch author mail name
 
-diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-index dc7ddf98fd04..1a218fcdbb16 100644
---- a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-+++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-@@ -12,6 +12,7 @@
- #include <linux/device.h>
- #include <linux/dmaengine.h>
- #include <linux/dmapool.h>
-+#include <linux/dma-mapping.h>
- #include <linux/err.h>
- #include <linux/interrupt.h>
- #include <linux/io.h>
-@@ -1350,6 +1351,13 @@ static int dw_probe(struct platform_device *pdev)
- 	dw->dma.device_prep_slave_sg = dw_axi_dma_chan_prep_slave_sg;
- 	dw->dma.device_prep_dma_cyclic = dw_axi_dma_chan_prep_cyclic;
- 
-+	/*
-+	 * Synopsis DesignWare AxiDMA datasheet mentioned Maximum
-+	 * supported blocks is 1024. Device register width is 4 bytes.
-+	 * Therefore, set constraint to 1024 * 4.
-+	 */
-+	dw->dma.dev->dma_parms = &dw->dma_parms;
-+	dma_set_max_seg_size(&pdev->dev, MAX_BLOCK_SIZE);
- 	platform_set_drvdata(pdev, chip);
- 
- 	pm_runtime_enable(chip->dev);
-diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac.h b/drivers/dma/dw-axi-dmac/dw-axi-dmac.h
-index 3a357f7fda02..1e937ea2a96d 100644
---- a/drivers/dma/dw-axi-dmac/dw-axi-dmac.h
-+++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac.h
-@@ -54,6 +54,7 @@ struct axi_dma_chan {
- struct dw_axi_dma {
- 	struct dma_device	dma;
- 	struct dw_axi_dma_hcfg	*hdata;
-+	struct device_dma_parameters	dma_parms;
- 
- 	/* channels */
- 	struct axi_dma_chan	*chan;
+v3->v4:
+1. fix the 'make dt_binding_check' issues.
+2. Combine the 'Enable HiSilicon Hiedma Controller' series patches to this series.
+3. fix the 'make dt_binding_check' issues in 'Enable HiSilicon Hiedma Controller' patchset
+
+
+v2->v3:
+1. change dt-bindings documents from txt to yaml format.
+2. Add SHUB clock to access the devices of m7
+
+Dongjiu Geng (4):
+  dt-bindings: Document the hi3559a clock bindings
+  clk: hisilicon: Add clock driver for hi3559A SoC
+  dt: bindings: dma: Add DT bindings for HiSilicon Hiedma Controller
+  dmaengine: dma: Add Hiedma Controller v310 Device Driver
+
+ .../clock/hisilicon,hi3559av100-clock.yaml    |   59 +
+ .../bindings/dma/hisilicon,hiedmacv310.yaml   |   94 ++
+ drivers/clk/hisilicon/Kconfig                 |    7 +
+ drivers/clk/hisilicon/Makefile                |    1 +
+ drivers/clk/hisilicon/clk-hi3559a.c           |  865 ++++++++++
+ drivers/dma/Kconfig                           |   14 +
+ drivers/dma/Makefile                          |    1 +
+ drivers/dma/hiedmacv310.c                     | 1442 +++++++++++++++++
+ drivers/dma/hiedmacv310.h                     |  136 ++
+ include/dt-bindings/clock/hi3559av100-clock.h |  165 ++
+ 10 files changed, 2784 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/clock/hisilicon,hi3559av100-clock.yaml
+ create mode 100644 Documentation/devicetree/bindings/dma/hisilicon,hiedmacv310.yaml
+ create mode 100644 drivers/clk/hisilicon/clk-hi3559a.c
+ create mode 100644 drivers/dma/hiedmacv310.c
+ create mode 100644 drivers/dma/hiedmacv310.h
+ create mode 100644 include/dt-bindings/clock/hi3559av100-clock.h
+
 -- 
-2.18.0
+2.17.1
 
