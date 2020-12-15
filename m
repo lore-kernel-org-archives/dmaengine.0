@@ -2,48 +2,48 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
+	autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 20AD9C4361B
-	for <dmaengine@archiver.kernel.org>; Tue, 15 Dec 2020 13:13:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BC93BC2BB48
+	for <dmaengine@archiver.kernel.org>; Tue, 15 Dec 2020 13:14:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B66342246B
-	for <dmaengine@archiver.kernel.org>; Tue, 15 Dec 2020 13:13:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9746122509
+	for <dmaengine@archiver.kernel.org>; Tue, 15 Dec 2020 13:14:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727685AbgLONNj (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        id S1728501AbgLONNj (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
         Tue, 15 Dec 2020 08:13:39 -0500
-Received: from fllv0016.ext.ti.com ([198.47.19.142]:37528 "EHLO
+Received: from fllv0016.ext.ti.com ([198.47.19.142]:37526 "EHLO
         fllv0016.ext.ti.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727437AbgLONNj (ORCPT
+        with ESMTP id S1727053AbgLONNj (ORCPT
         <rfc822;dmaengine@vger.kernel.org>); Tue, 15 Dec 2020 08:13:39 -0500
 Received: from fllv0034.itg.ti.com ([10.64.40.246])
-        by fllv0016.ext.ti.com (8.15.2/8.15.2) with ESMTP id 0BFDCqlw038064;
-        Tue, 15 Dec 2020 07:12:52 -0600
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
-        s=ti-com-17Q1; t=1608037972;
-        bh=6CpEH4zEcV4+sDTHJ2Gtr/fJNLhzbnJgxMi7aSNIz6A=;
-        h=From:To:CC:Subject:Date:In-Reply-To:References;
-        b=omn4lusPf30t062llsGbEwrAtw0r9QUeGa0grsXyN1hVi5BareK8XNVLatot6JPhm
-         EJWS77bIsb+oNGzM/w5S5eDJ/Ra1HcuIgt7V2R/yE/X4DQaN/MJM6BgLgX/pLh4kZi
-         Ir2uojnt+rhuxFkI1e0ByjIZG9tgWgqD9jPvrteA=
-Received: from DFLE110.ent.ti.com (dfle110.ent.ti.com [10.64.6.31])
-        by fllv0034.itg.ti.com (8.15.2/8.15.2) with ESMTPS id 0BFDCq1V099674
-        (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
-        Tue, 15 Dec 2020 07:12:52 -0600
-Received: from DFLE100.ent.ti.com (10.64.6.21) by DFLE110.ent.ti.com
- (10.64.6.31) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1979.3; Tue, 15
- Dec 2020 07:12:52 -0600
-Received: from lelv0327.itg.ti.com (10.180.67.183) by DFLE100.ent.ti.com
- (10.64.6.21) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1979.3 via
- Frontend Transport; Tue, 15 Dec 2020 07:12:52 -0600
-Received: from feketebors.ti.com (ileax41-snat.itg.ti.com [10.172.224.153])
-        by lelv0327.itg.ti.com (8.15.2/8.15.2) with ESMTP id 0BFDCjku037808;
+        by fllv0016.ext.ti.com (8.15.2/8.15.2) with ESMTP id 0BFDCnIS038054;
         Tue, 15 Dec 2020 07:12:49 -0600
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
+        s=ti-com-17Q1; t=1608037969;
+        bh=EWmVCvimxrwVI8v589mVNvUA9U7qN+JGJthzwW6Yrs8=;
+        h=From:To:CC:Subject:Date;
+        b=zWF2Ucxvvcoi1P7BdYFMRLVLbSYlOMnvXI28cAD6PfLo5NMve+vr/1oV0ph88jTTC
+         xKaLfNGuVnezO4YDsoNqocecqcZQ/0nOIA26jRNjQoXE84LbZVpiUZzaKLdRcYnwze
+         U5SaLh6TtDTiXiqD25Hchjt9ijW24tHijc1Dya40=
+Received: from DLEE109.ent.ti.com (dlee109.ent.ti.com [157.170.170.41])
+        by fllv0034.itg.ti.com (8.15.2/8.15.2) with ESMTPS id 0BFDCneO099628
+        (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
+        Tue, 15 Dec 2020 07:12:49 -0600
+Received: from DLEE102.ent.ti.com (157.170.170.32) by DLEE109.ent.ti.com
+ (157.170.170.41) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1979.3; Tue, 15
+ Dec 2020 07:12:49 -0600
+Received: from lelv0327.itg.ti.com (10.180.67.183) by DLEE102.ent.ti.com
+ (157.170.170.32) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1979.3 via
+ Frontend Transport; Tue, 15 Dec 2020 07:12:49 -0600
+Received: from feketebors.ti.com (ileax41-snat.itg.ti.com [10.172.224.153])
+        by lelv0327.itg.ti.com (8.15.2/8.15.2) with ESMTP id 0BFDCjkt037808;
+        Tue, 15 Dec 2020 07:12:46 -0600
 From:   Peter Ujfalusi <peter.ujfalusi@ti.com>
 To:     <vkoul@kernel.org>, <robh+dt@kernel.org>,
         <peter.ujfalusi@gmail.com>
@@ -52,12 +52,10 @@ CC:     <dan.j.williams@intel.com>, <linux-kernel@vger.kernel.org>,
         <grygorii.strashko@ti.com>, <devicetree@vger.kernel.org>,
         <linux-omap@vger.kernel.org>, <tony@atomide.com>,
         <linux@armlinux.org.uk>, <linux-arm-kernel@lists.infradead.org>
-Subject: [PATCH 1/2] MAINTAINERS: Add entry for Texas Instruments DMA drivers
-Date:   Tue, 15 Dec 2020 15:13:47 +0200
-Message-ID: <20201215131348.11282-2-peter.ujfalusi@ti.com>
+Subject: [PATCH 0/2] dmaengine: ti: Maintainer mail address change
+Date:   Tue, 15 Dec 2020 15:13:46 +0200
+Message-ID: <20201215131348.11282-1-peter.ujfalusi@ti.com>
 X-Mailer: git-send-email 2.29.2
-In-Reply-To: <20201215131348.11282-1-peter.ujfalusi@ti.com>
-References: <20201215131348.11282-1-peter.ujfalusi@ti.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
@@ -66,39 +64,24 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-My employment with TI is coming to an end, it is my intention to look after
-the DMA drivers I have worked with over the years.
+Hi,
 
-Signed-off-by: Peter Ujfalusi <peter.ujfalusi@ti.com>
-Signed-off-by: Peter Ujfalusi <peter.ujfalusi@gmail.com>
+My TI address is going to bounce after Friday (18.12.2020), switch my address to
+my private one for now.
+
+Regards,
+Peter
 ---
- MAINTAINERS | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+Peter Ujfalusi (2):
+  MAINTAINERS: Add entry for Texas Instruments DMA drivers
+  dt-bindings: dma: ti: Update maintainer and author information
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 952731d1e43c..f6e7162241eb 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -17549,6 +17549,19 @@ S:	Supported
- F:	Documentation/devicetree/bindings/iio/dac/ti,dac7612.txt
- F:	drivers/iio/dac/ti-dac7612.c
- 
-+TEXAS INSTRUMENTS DMA DRIVERS
-+M:	Peter Ujfalusi <peter.ujfalusi@gmail.com>
-+L:	dmaengine@vger.kernel.org
-+S:	Maintained
-+F:	Documentation/devicetree/bindings/dma/ti-dma-crossbar.txt
-+F:	Documentation/devicetree/bindings/dma/ti-edma.txt
-+F:	Documentation/devicetree/bindings/dma/ti/
-+F:	drivers/dma/ti/
-+X:	drivers/dma/ti/cppi41.c
-+F:	include/linux/dma/k3-udma-glue.h
-+F:	include/linux/dma/ti-cppi5.h
-+F:	include/linux/dma/k3-psil.h
-+
- TEXAS INSTRUMENTS' SYSTEM CONTROL INTERFACE (TISCI) PROTOCOL DRIVER
- M:	Nishanth Menon <nm@ti.com>
- M:	Tero Kristo <t-kristo@ti.com>
+ .../devicetree/bindings/dma/ti/k3-bcdma.yaml        |  4 +++-
+ .../devicetree/bindings/dma/ti/k3-pktdma.yaml       |  4 +++-
+ .../devicetree/bindings/dma/ti/k3-udma.yaml         |  4 +++-
+ MAINTAINERS                                         | 13 +++++++++++++
+ 4 files changed, 22 insertions(+), 3 deletions(-)
+
 -- 
 Peter
 
