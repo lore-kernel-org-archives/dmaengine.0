@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
+	USER_AGENT_GIT autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AED9CC2BB9A
-	for <dmaengine@archiver.kernel.org>; Tue, 15 Dec 2020 17:32:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 92402C2BB48
+	for <dmaengine@archiver.kernel.org>; Tue, 15 Dec 2020 17:36:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7899822B43
-	for <dmaengine@archiver.kernel.org>; Tue, 15 Dec 2020 17:32:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 38EDF2255F
+	for <dmaengine@archiver.kernel.org>; Tue, 15 Dec 2020 17:36:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731313AbgLORcE (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 15 Dec 2020 12:32:04 -0500
-Received: from smtprelay-out1.synopsys.com ([149.117.87.133]:46062 "EHLO
+        id S1731018AbgLORbr (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 15 Dec 2020 12:31:47 -0500
+Received: from smtprelay-out1.synopsys.com ([149.117.87.133]:46048 "EHLO
         smtprelay-out1.synopsys.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1731296AbgLORbt (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Tue, 15 Dec 2020 12:31:49 -0500
+        by vger.kernel.org with ESMTP id S1731163AbgLORbp (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Tue, 15 Dec 2020 12:31:45 -0500
 Received: from mailhost.synopsys.com (mdc-mailhost1.synopsys.com [10.225.0.209])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
         (No client certificate requested)
-        by smtprelay-out1.synopsys.com (Postfix) with ESMTPS id 3BEC8C04D9;
-        Tue, 15 Dec 2020 17:30:48 +0000 (UTC)
+        by smtprelay-out1.synopsys.com (Postfix) with ESMTPS id 5F5C5C04D4;
+        Tue, 15 Dec 2020 17:30:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=synopsys.com; s=mail;
-        t=1608053448; bh=WnHPY+sRUSSJJQq7Jc0VtKP64lY4iaChTFLji7S/MT0=;
+        t=1608053444; bh=2zvlnfO8mEL0+jPkJwBkzuRWJMiljFKkus2w4yewnww=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:In-Reply-To:
          References:From;
-        b=Tw7puXCYNl+bk6YvaewpFS6pQVFi1Qw5ZiCtKQA4QrNAEQzF/f55ioOwaT5QkU132
-         3zj/KzuxeQY3C5y44F4k6FUqu4vuCjZCNqeAxJucM82PqiK+FRxJ4Tz11p/qgY6DFd
-         bKpet08cZL71sYA+umBoFQQz0dIk2tQqiLLhi++Mp4WiDUEoF5+GOy8SV5uioDx45m
-         zGhIcDfbJc/kG/0Mjsv/oTO7PbwORB2zmQF6jbQngl9dlnkm+rEMY3nBzMCo5bq7zk
-         FRPPtSCflOjxHU9unimmhY74ctJN0cKKQP9RWTSKd/macPZikj3HvFVTKTw46e89bB
-         OFMnZOqu7XBVw==
+        b=CjhLUsSFguuRH+xVBd7BDiykucwKI0FLFQXzcCstuV7dhoMBgkHV4HBRVOv5stFio
+         NKovK4magjehLAphUl0KGxsggOlSlJoEWc/1yJ6hlQfdknVjWEGhTt5UntYX9cn2N7
+         skgcT/6K22SutV4ia6pHx60ArbpAqKbrBy/yd5IUJtttdMSHCyCtBGGhv9MChqsYPN
+         k7wKQPi84ZUoAH8d309QFaIRWFHsfGTkVDR10ORFaABwKH5QyGNBN23v8Ui5IKAEaM
+         D710WuUs/KLAuP6yMrCuLI1sOoYGNXFRIyd1QbmBh/+45eAd1k4YLg+sJ9NAfdsyJn
+         62wRcbwODu1jw==
 Received: from de02dwia024.internal.synopsys.com (de02dwia024.internal.synopsys.com [10.225.19.81])
-        by mailhost.synopsys.com (Postfix) with ESMTP id CFE07A005C;
-        Tue, 15 Dec 2020 17:30:46 +0000 (UTC)
+        by mailhost.synopsys.com (Postfix) with ESMTP id E96E4A024A;
+        Tue, 15 Dec 2020 17:30:42 +0000 (UTC)
 X-SNPS-Relay: synopsys.com
 From:   Gustavo Pimentel <Gustavo.Pimentel@synopsys.com>
 To:     Gustavo Pimentel <Gustavo.Pimentel@synopsys.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        Dan Williams <dan.j.williams@intel.com>
+        Dan Williams <dan.j.williams@intel.com>,
+        Vinod Koul <vkoul@kernel.org>
 Cc:     dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH 14/15] dmaengine: dw-edma: Revert fix scatter-gather address calculation
-Date:   Tue, 15 Dec 2020 18:30:23 +0100
-Message-Id: <4ef952dc04b2831f82b63ec8becd7b04a93a84ca.1608053262.git.gustavo.pimentel@synopsys.com>
+Subject: [PATCH 10/15] dmaengine: dw-edma: Change linked list and data blocks offset and sizes
+Date:   Tue, 15 Dec 2020 18:30:19 +0100
+Message-Id: <0c547e7ce575e7059659a99be1ad64aed4614633.1608053262.git.gustavo.pimentel@synopsys.com>
 X-Mailer: git-send-email 2.7.4
 In-Reply-To: <cover.1608053262.git.gustavo.pimentel@synopsys.com>
 References: <cover.1608053262.git.gustavo.pimentel@synopsys.com>
@@ -55,47 +55,69 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Reverting the applied patch because it caused a regression on
-ARC700 platform (32 bits).
+Changes the linked list and data blocks offset and sizes to follow the
+recommendation given by the hardware team for the IPK solution.
+
+Although the previous data blocks offset and sizes are still valid and
+functional, using them that might present some issues related to the IPK
+solution, since this solution is based on FPGA and might be subjected to
+timmings constrains.
 
 Signed-off-by: Gustavo Pimentel <gustavo.pimentel@synopsys.com>
 ---
- drivers/dma/dw-edma/dw-edma-core.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/dma/dw-edma/dw-edma-pcie.c | 32 ++++++++++++++++----------------
+ 1 file changed, 16 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/dma/dw-edma/dw-edma-core.c b/drivers/dma/dw-edma/dw-edma-core.c
-index a299eed..c198451 100644
---- a/drivers/dma/dw-edma/dw-edma-core.c
-+++ b/drivers/dma/dw-edma/dw-edma-core.c
-@@ -429,7 +429,8 @@ dw_edma_device_transfer(struct dw_edma_transfer *xfer)
- 			if (xfer->type == EDMA_XFER_CYCLIC) {
- 				burst->dar = xfer->xfer.cyclic.paddr;
- 			} else if (xfer->type == EDMA_XFER_SCATTER_GATHER) {
--				burst->dar = dst_addr;
-+				src_addr += sg_dma_len(sg);
-+				burst->dar = sg_dma_address(sg);
- 				/* Unlike the typical assumption by other
- 				 * drivers/IPs the peripheral memory isn't
- 				 * a FIFO memory, in this case, it's a
-@@ -443,7 +444,8 @@ dw_edma_device_transfer(struct dw_edma_transfer *xfer)
- 			if (xfer->type == EDMA_XFER_CYCLIC) {
- 				burst->sar = xfer->xfer.cyclic.paddr;
- 			} else if (xfer->type == EDMA_XFER_SCATTER_GATHER) {
--				burst->sar = src_addr;
-+				dst_addr += sg_dma_len(sg);
-+				burst->sar = sg_dma_address(sg);
- 				/* Unlike the typical assumption by other
- 				 * drivers/IPs the peripheral memory isn't
- 				 * a FIFO memory, in this case, it's a
-@@ -455,8 +457,6 @@ dw_edma_device_transfer(struct dw_edma_transfer *xfer)
- 		}
- 
- 		if (xfer->type == EDMA_XFER_SCATTER_GATHER) {
--			src_addr += sg_dma_len(sg);
--			dst_addr += sg_dma_len(sg);
- 			sg = sg_next(sg);
- 		} else if (xfer->type == EDMA_XFER_INTERLEAVED &&
- 			   xfer->xfer.il->frame_size > 0) {
+diff --git a/drivers/dma/dw-edma/dw-edma-pcie.c b/drivers/dma/dw-edma/dw-edma-pcie.c
+index 8c1b538..1fa43e3 100644
+--- a/drivers/dma/dw-edma/dw-edma-pcie.c
++++ b/drivers/dma/dw-edma/dw-edma-pcie.c
+@@ -59,29 +59,29 @@ static const struct dw_edma_pcie_data snps_edda_data = {
+ 	.rg.sz				= 0x00002000,	/*  8 Kbytes */
+ 	/* eDMA memory linked list location */
+ 	.ll_wr = {
+-		/* Channel 0 - BAR 2, offset 0 Mbytes, size 2 Mbytes */
+-		DW_BLOCK(BAR_2, 0x00000000, 0x00200000)
+-		/* Channel 1 - BAR 2, offset 2 Mbytes, size 2 Mbytes */
+-		DW_BLOCK(BAR_2, 0x00200000, 0x00200000)
++		/* Channel 0 - BAR 2, offset 0 Mbytes, size 2 Kbytes */
++		DW_BLOCK(BAR_2, 0x00000000, 0x00000800)
++		/* Channel 1 - BAR 2, offset 2 Mbytes, size 2 Kbytes */
++		DW_BLOCK(BAR_2, 0x00200000, 0x00000800)
+ 	},
+ 	.ll_rd = {
+-		/* Channel 0 - BAR 2, offset 4 Mbytes, size 2 Mbytes */
+-		DW_BLOCK(BAR_2, 0x00400000, 0x00200000)
+-		/* Channel 1 - BAR 2, offset 6 Mbytes, size 2 Mbytes */
+-		DW_BLOCK(BAR_2, 0x00600000, 0x00200000)
++		/* Channel 0 - BAR 2, offset 4 Mbytes, size 2 Kbytes */
++		DW_BLOCK(BAR_2, 0x00400000, 0x00000800)
++		/* Channel 1 - BAR 2, offset 6 Mbytes, size 2 Kbytes */
++		DW_BLOCK(BAR_2, 0x00600000, 0x00000800)
+ 	},
+ 	/* eDMA memory data location */
+ 	.dt_wr = {
+-		/* Channel 0 - BAR 2, offset 8 Mbytes, size 14 Mbytes */
+-		DW_BLOCK(BAR_2, 0x00800000, 0x00e00000)
+-		/* Channel 1 - BAR 2, offset 22 Mbytes, size 14 Mbytes */
+-		DW_BLOCK(BAR_2, 0x01600000, 0x00e00000)
++		/* Channel 0 - BAR 2, offset 8 Mbytes, size 2 Kbytes */
++		DW_BLOCK(BAR_2, 0x00800000, 0x00000800)
++		/* Channel 1 - BAR 2, offset 9 Mbytes, size 2 Kbytes */
++		DW_BLOCK(BAR_2, 0x00900000, 0x00000800)
+ 	},
+ 	.dt_rd = {
+-		/* Channel 0 - BAR 2, offset 36 Mbytes, size 14 Mbytes */
+-		DW_BLOCK(BAR_2, 0x02400000, 0x00e00000)
+-		/* Channel 1 - BAR 2, offset 50 Mbytes, size 14 Mbytes */
+-		DW_BLOCK(BAR_2, 0x03200000, 0x00e00000)
++		/* Channel 0 - BAR 2, offset 10 Mbytes, size 2 Kbytes */
++		DW_BLOCK(BAR_2, 0x00a00000, 0x00000800)
++		/* Channel 1 - BAR 2, offset 11 Mbytes, size 2 Kbytes */
++		DW_BLOCK(BAR_2, 0x00b00000, 0x00000800)
+ 	},
+ 	/* Other */
+ 	.mf				= EDMA_MF_EDMA_UNROLL,
 -- 
 2.7.4
 
