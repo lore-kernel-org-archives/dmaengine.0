@@ -2,145 +2,118 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED,USER_AGENT_GIT autolearn=unavailable autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
+	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AE524C4361B
-	for <dmaengine@archiver.kernel.org>; Tue, 15 Dec 2020 13:14:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 96806C2BB48
+	for <dmaengine@archiver.kernel.org>; Tue, 15 Dec 2020 17:32:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7871C22225
-	for <dmaengine@archiver.kernel.org>; Tue, 15 Dec 2020 13:14:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 615B922B3B
+	for <dmaengine@archiver.kernel.org>; Tue, 15 Dec 2020 17:32:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726819AbgLONNr (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 15 Dec 2020 08:13:47 -0500
-Received: from fllv0015.ext.ti.com ([198.47.19.141]:33790 "EHLO
-        fllv0015.ext.ti.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727053AbgLONNo (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Tue, 15 Dec 2020 08:13:44 -0500
-Received: from fllv0034.itg.ti.com ([10.64.40.246])
-        by fllv0015.ext.ti.com (8.15.2/8.15.2) with ESMTP id 0BFDCuOB055970;
-        Tue, 15 Dec 2020 07:12:56 -0600
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
-        s=ti-com-17Q1; t=1608037976;
-        bh=fflVV2euO6GX3p6e7gjWU0e5OJmiwk+o75/SeXICdqY=;
-        h=From:To:CC:Subject:Date:In-Reply-To:References;
-        b=Itqw8bJIWMQQvNcKS6etI7VOGKWZXkcVT36/MJAeBJkDYvisTHPvNGEvCV5tlVfMx
-         InFbUsZQPtYEVdPeh7LCwjtugVQhiEkf2d4qQvGcRjjYWIMgu18iDdW3rzfuU91BW+
-         vkETEc7iccaVCTrF3Fu+61UIQ2LXJ0SybBLsU2pI=
-Received: from DLEE114.ent.ti.com (dlee114.ent.ti.com [157.170.170.25])
-        by fllv0034.itg.ti.com (8.15.2/8.15.2) with ESMTPS id 0BFDCtFj099693
-        (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
-        Tue, 15 Dec 2020 07:12:55 -0600
-Received: from DLEE110.ent.ti.com (157.170.170.21) by DLEE114.ent.ti.com
- (157.170.170.25) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1979.3; Tue, 15
- Dec 2020 07:12:55 -0600
-Received: from lelv0327.itg.ti.com (10.180.67.183) by DLEE110.ent.ti.com
- (157.170.170.21) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1979.3 via
- Frontend Transport; Tue, 15 Dec 2020 07:12:55 -0600
-Received: from feketebors.ti.com (ileax41-snat.itg.ti.com [10.172.224.153])
-        by lelv0327.itg.ti.com (8.15.2/8.15.2) with ESMTP id 0BFDCjkv037808;
-        Tue, 15 Dec 2020 07:12:52 -0600
-From:   Peter Ujfalusi <peter.ujfalusi@ti.com>
-To:     <vkoul@kernel.org>, <robh+dt@kernel.org>,
-        <peter.ujfalusi@gmail.com>
-CC:     <dan.j.williams@intel.com>, <linux-kernel@vger.kernel.org>,
-        <dmaengine@vger.kernel.org>, <vigneshr@ti.com>,
-        <grygorii.strashko@ti.com>, <devicetree@vger.kernel.org>,
-        <linux-omap@vger.kernel.org>, <tony@atomide.com>,
-        <linux@armlinux.org.uk>, <linux-arm-kernel@lists.infradead.org>
-Subject: [PATCH 2/2] dt-bindings: dma: ti: Update maintainer and author information
-Date:   Tue, 15 Dec 2020 15:13:48 +0200
-Message-ID: <20201215131348.11282-3-peter.ujfalusi@ti.com>
-X-Mailer: git-send-email 2.29.2
-In-Reply-To: <20201215131348.11282-1-peter.ujfalusi@ti.com>
-References: <20201215131348.11282-1-peter.ujfalusi@ti.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-EXCLAIMER-MD-CONFIG: e1e8a2fd-e40a-4ac6-ac9b-f7e9cc9ee180
+        id S1731309AbgLORb6 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 15 Dec 2020 12:31:58 -0500
+Received: from smtprelay-out1.synopsys.com ([149.117.87.133]:46068 "EHLO
+        smtprelay-out1.synopsys.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1731297AbgLORbt (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Tue, 15 Dec 2020 12:31:49 -0500
+Received: from mailhost.synopsys.com (mdc-mailhost1.synopsys.com [10.225.0.209])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
+        (No client certificate requested)
+        by smtprelay-out1.synopsys.com (Postfix) with ESMTPS id DE665C04DA;
+        Tue, 15 Dec 2020 17:30:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=synopsys.com; s=mail;
+        t=1608053449; bh=ZCFeUiaOqr6nmVdSrA/yeLCZ+L/gs597171/4LwdJCg=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:In-Reply-To:
+         References:From;
+        b=ZaoDvg8wbB8lCJwqvd7TcwYJEpkV+2//cfQTiz+RHVEC+jMYRlc+izTY8ju7EOoA0
+         Ucu4KqBspALgJaI821QKEyJNXNFci8CobzLMbon9298Yco7m+SocDx7HrN8/stwnF9
+         xDA7cekeWAmWICbA87U5jAqTYKd4TbS65SXnZNgMSdCWKefnN4twArukNMdYzgfH+2
+         +E5h93VzSXxiIg26AarKgzS5hgY3P1xNPQeBTQ8SnIeLnVAub7p+2akL1jOK0BdcvI
+         jrfCyWa+S7jeNAGeMQ2M8AUgCDjDOnzE8O2rcqq5X1lgDjEihfB+RnCXPniIlRpozk
+         p0KIKYv9dCBcg==
+Received: from de02dwia024.internal.synopsys.com (de02dwia024.internal.synopsys.com [10.225.19.81])
+        by mailhost.synopsys.com (Postfix) with ESMTP id 73759A024A;
+        Tue, 15 Dec 2020 17:30:47 +0000 (UTC)
+X-SNPS-Relay: synopsys.com
+From:   Gustavo Pimentel <Gustavo.Pimentel@synopsys.com>
+To:     Gustavo Pimentel <Gustavo.Pimentel@synopsys.com>,
+        Vinod Koul <vkoul@kernel.org>,
+        Dan Williams <dan.j.williams@intel.com>
+Cc:     dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH 15/15] dmaengine: dw-edma: Add pcim_iomap_table return checker
+Date:   Tue, 15 Dec 2020 18:30:24 +0100
+Message-Id: <6df68db09ac19b2be8559e848497714ee763d5bd.1608053262.git.gustavo.pimentel@synopsys.com>
+X-Mailer: git-send-email 2.7.4
+In-Reply-To: <cover.1608053262.git.gustavo.pimentel@synopsys.com>
+References: <cover.1608053262.git.gustavo.pimentel@synopsys.com>
+In-Reply-To: <cover.1608053262.git.gustavo.pimentel@synopsys.com>
+References: <cover.1608053262.git.gustavo.pimentel@synopsys.com>
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-My employment with TI is coming to an end, add the copyright and author comments
-as they due and change the maintainer mail address.
+Detected by CoverityScan CID 16555 ("Dereference null return")
 
-Signed-off-by: Peter Ujfalusi <peter.ujfalusi@ti.com>
-Signed-off-by: Peter Ujfalusi <peter.ujfalusi@gmail.com>
+Signed-off-by: Gustavo Pimentel <gustavo.pimentel@synopsys.com>
 ---
- Documentation/devicetree/bindings/dma/ti/k3-bcdma.yaml  | 4 +++-
- Documentation/devicetree/bindings/dma/ti/k3-pktdma.yaml | 4 +++-
- Documentation/devicetree/bindings/dma/ti/k3-udma.yaml   | 4 +++-
- 3 files changed, 9 insertions(+), 3 deletions(-)
+ drivers/dma/dw-edma/dw-edma-pcie.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/dma/ti/k3-bcdma.yaml b/Documentation/devicetree/bindings/dma/ti/k3-bcdma.yaml
-index b15f68c499cb..df29d59d13a8 100644
---- a/Documentation/devicetree/bindings/dma/ti/k3-bcdma.yaml
-+++ b/Documentation/devicetree/bindings/dma/ti/k3-bcdma.yaml
-@@ -1,4 +1,6 @@
- # SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-+# Copyright (C) 2020 Texas Instruments Incorporated
-+# Author: Peter Ujfalusi <peter.ujfalusi@ti.com>
- %YAML 1.2
- ---
- $id: http://devicetree.org/schemas/dma/ti/k3-bcdma.yaml#
-@@ -7,7 +9,7 @@ $schema: http://devicetree.org/meta-schemas/core.yaml#
- title: Texas Instruments K3 DMSS BCDMA Device Tree Bindings
+diff --git a/drivers/dma/dw-edma/dw-edma-pcie.c b/drivers/dma/dw-edma/dw-edma-pcie.c
+index 1fa43e3..b759796 100644
+--- a/drivers/dma/dw-edma/dw-edma-pcie.c
++++ b/drivers/dma/dw-edma/dw-edma-pcie.c
+@@ -238,6 +238,9 @@ static int dw_edma_pcie_probe(struct pci_dev *pdev,
+ 	dw->rd_ch_cnt = vsec_data.rd_ch_cnt;
  
- maintainers:
--  - Peter Ujfalusi <peter.ujfalusi@ti.com>
-+  - Peter Ujfalusi <peter.ujfalusi@gmail.com>
+ 	dw->rg_region.vaddr = pcim_iomap_table(pdev)[vsec_data.rg.bar];
++	if (!dw->rg_region.vaddr)
++		return -ENOMEM;
++
+ 	dw->rg_region.vaddr += vsec_data.rg.off;
+ 	dw->rg_region.paddr = pdev->resource[vsec_data.rg.bar].start;
+ 	dw->rg_region.paddr += vsec_data.rg.off;
+@@ -250,12 +253,18 @@ static int dw_edma_pcie_probe(struct pci_dev *pdev,
+ 		struct dw_edma_block *dt_block = &vsec_data.dt_wr[i];
  
- description: |
-   The Block Copy DMA (BCDMA) is intended to perform similar functions as the TR
-diff --git a/Documentation/devicetree/bindings/dma/ti/k3-pktdma.yaml b/Documentation/devicetree/bindings/dma/ti/k3-pktdma.yaml
-index b13ab60cd740..ea19d12a9337 100644
---- a/Documentation/devicetree/bindings/dma/ti/k3-pktdma.yaml
-+++ b/Documentation/devicetree/bindings/dma/ti/k3-pktdma.yaml
-@@ -1,4 +1,6 @@
- # SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-+# Copyright (C) 2020 Texas Instruments Incorporated
-+# Author: Peter Ujfalusi <peter.ujfalusi@ti.com>
- %YAML 1.2
- ---
- $id: http://devicetree.org/schemas/dma/ti/k3-pktdma.yaml#
-@@ -7,7 +9,7 @@ $schema: http://devicetree.org/meta-schemas/core.yaml#
- title: Texas Instruments K3 DMSS PKTDMA Device Tree Bindings
+ 		ll_region->vaddr = pcim_iomap_table(pdev)[ll_block->bar];
++		if (!ll_region->vaddr)
++			return -ENOMEM;
++
+ 		ll_region->vaddr += ll_block->off;
+ 		ll_region->paddr = pdev->resource[ll_block->bar].start;
+ 		ll_region->paddr += ll_block->off;
+ 		ll_region->sz = ll_block->sz;
  
- maintainers:
--  - Peter Ujfalusi <peter.ujfalusi@ti.com>
-+  - Peter Ujfalusi <peter.ujfalusi@gmail.com>
+ 		dt_region->vaddr = pcim_iomap_table(pdev)[dt_block->bar];
++		if (!dt_region->vaddr)
++			return -ENOMEM;
++
+ 		dt_region->vaddr += dt_block->off;
+ 		dt_region->paddr = pdev->resource[dt_block->bar].start;
+ 		dt_region->paddr += dt_block->off;
+@@ -269,12 +278,18 @@ static int dw_edma_pcie_probe(struct pci_dev *pdev,
+ 		struct dw_edma_block *dt_block = &vsec_data.dt_rd[i];
  
- description: |
-   The Packet DMA (PKTDMA) is intended to perform similar functions as the packet
-diff --git a/Documentation/devicetree/bindings/dma/ti/k3-udma.yaml b/Documentation/devicetree/bindings/dma/ti/k3-udma.yaml
-index 9a87fd9041eb..6a09bbf83d46 100644
---- a/Documentation/devicetree/bindings/dma/ti/k3-udma.yaml
-+++ b/Documentation/devicetree/bindings/dma/ti/k3-udma.yaml
-@@ -1,4 +1,6 @@
- # SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-+# Copyright (C) 2019 Texas Instruments Incorporated
-+# Author: Peter Ujfalusi <peter.ujfalusi@ti.com>
- %YAML 1.2
- ---
- $id: http://devicetree.org/schemas/dma/ti/k3-udma.yaml#
-@@ -7,7 +9,7 @@ $schema: http://devicetree.org/meta-schemas/core.yaml#
- title: Texas Instruments K3 NAVSS Unified DMA Device Tree Bindings
+ 		ll_region->vaddr = pcim_iomap_table(pdev)[ll_block->bar];
++		if (!ll_region->vaddr)
++			return -ENOMEM;
++
+ 		ll_region->vaddr += ll_block->off;
+ 		ll_region->paddr = pdev->resource[ll_block->bar].start;
+ 		ll_region->paddr += ll_block->off;
+ 		ll_region->sz = ll_block->sz;
  
- maintainers:
--  - Peter Ujfalusi <peter.ujfalusi@ti.com>
-+  - Peter Ujfalusi <peter.ujfalusi@gmail.com>
- 
- description: |
-   The UDMA-P is intended to perform similar (but significantly upgraded)
+ 		dt_region->vaddr = pcim_iomap_table(pdev)[dt_block->bar];
++		if (!dt_region->vaddr)
++			return -ENOMEM;
++
+ 		dt_region->vaddr += dt_block->off;
+ 		dt_region->paddr = pdev->resource[dt_block->bar].start;
+ 		dt_region->paddr += dt_block->off;
 -- 
-Peter
-
-Texas Instruments Finland Oy, Porkkalankatu 22, 00180 Helsinki.
-Y-tunnus/Business ID: 0615521-4. Kotipaikka/Domicile: Helsinki
+2.7.4
 
