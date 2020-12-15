@@ -5,47 +5,47 @@ X-Spam-Level:
 X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
-	USER_AGENT_GIT autolearn=unavailable autolearn_force=no version=3.4.0
+	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D65BFC2BB48
-	for <dmaengine@archiver.kernel.org>; Tue, 15 Dec 2020 17:41:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 35203C2BBCD
+	for <dmaengine@archiver.kernel.org>; Tue, 15 Dec 2020 17:41:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9655122ADC
+	by mail.kernel.org (Postfix) with ESMTP id E4BC722ADC
 	for <dmaengine@archiver.kernel.org>; Tue, 15 Dec 2020 17:41:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731138AbgLORbm (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 15 Dec 2020 12:31:42 -0500
-Received: from smtprelay-out1.synopsys.com ([149.117.73.133]:54420 "EHLO
+        id S1729389AbgLORlE (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 15 Dec 2020 12:41:04 -0500
+Received: from smtprelay-out1.synopsys.com ([149.117.87.133]:46032 "EHLO
         smtprelay-out1.synopsys.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1731108AbgLORbk (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Tue, 15 Dec 2020 12:31:40 -0500
+        by vger.kernel.org with ESMTP id S1731136AbgLORbm (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Tue, 15 Dec 2020 12:31:42 -0500
 Received: from mailhost.synopsys.com (mdc-mailhost1.synopsys.com [10.225.0.209])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
         (No client certificate requested)
-        by smtprelay-out1.synopsys.com (Postfix) with ESMTPS id ABEF240442;
-        Tue, 15 Dec 2020 17:30:39 +0000 (UTC)
+        by smtprelay-out1.synopsys.com (Postfix) with ESMTPS id CFBC3C044B;
+        Tue, 15 Dec 2020 17:30:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=synopsys.com; s=mail;
-        t=1608053439; bh=1ivAVxpeQx5tfOmUaqDB9DxxCl8IL2EkAl3Vm7KC/wc=;
+        t=1608053442; bh=26bcMb1hhhSb/6zwC97LYr49GH4oBhX47qSAAxTu+pw=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:In-Reply-To:
          References:From;
-        b=d8tZNL7H/LgC3jxg0ljNYwGn7GOmYBjAwM+/27ntmxz0E/0XFfMq3Q7zMllqIJZT4
-         LLcDPqHbC+3FKyBKcUyh3/WSSUC/XPdyzfh5FcXQAnrfl8uVK5s84i7iIV7QmUrYJu
-         gapxrYH4m9j2SCgGP1oRfgIMyHzeo1sIB6zBV50/65pp0VXzy9Z2k0l5hY5p4mGmiq
-         r0ycdiOWYqVvZbBE/TcW/YlVe7bFr/2hcklDDu+PccoiIi/zJEDlAminbLIHEaaYWs
-         iUZ61wIkwl3HU1+ga4qzsuXmisEr11ZkMikdWr+NlTpv/eqsg+lptJf0ipQb0DFMiT
-         +8emZ6Dhtfuiw==
+        b=NDxkOIyNX0+PjutBwnOVzjkefiXVHwv6yg6ifCUsLyqj7uGBFe49ILrY/hmCJFbZH
+         iWYAl4nvqLGkH15ZNLTZaa2HE4611Rnxq8FadiIA8bHZlwCDmD8EwlAaCsoHSK0X1n
+         cuy0oSv7BWErB/YnlXQXwCtvVBRpEF4hxcrwTpndWLBzG+nihR5Bmz2gSOCgNTMJGk
+         tp35EdHP6D5F7qz9HvKXIFD+KUDjL63cqwRWlqiMb7cr9F1/GNkIh/s3CqGoiVDXu5
+         IgcXwk1GHe3GdYzkufoOKbyLSnXvF3ia3qZGtjuBNgT/1SjAN3NWqpwlFzChhE/L4L
+         L896tCNdb7CBg==
 Received: from de02dwia024.internal.synopsys.com (de02dwia024.internal.synopsys.com [10.225.19.81])
-        by mailhost.synopsys.com (Postfix) with ESMTP id 89959A024B;
-        Tue, 15 Dec 2020 17:30:38 +0000 (UTC)
+        by mailhost.synopsys.com (Postfix) with ESMTP id 6F900A024B;
+        Tue, 15 Dec 2020 17:30:40 +0000 (UTC)
 X-SNPS-Relay: synopsys.com
 From:   Gustavo Pimentel <Gustavo.Pimentel@synopsys.com>
 To:     Gustavo Pimentel <Gustavo.Pimentel@synopsys.com>,
         Dan Williams <dan.j.williams@intel.com>,
         Vinod Koul <vkoul@kernel.org>
 Cc:     dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH 05/15] dmaengine: dw-edma: Add PCIe VSEC data retrieval support
-Date:   Tue, 15 Dec 2020 18:30:14 +0100
-Message-Id: <ab4adcfaaf24999a52b9c79399390630098898f9.1608053262.git.gustavo.pimentel@synopsys.com>
+Subject: [PATCH 07/15] dmaengine: dw-edma: Improve number of channels check
+Date:   Tue, 15 Dec 2020 18:30:16 +0100
+Message-Id: <2d184478b75daf7e829671a14350ae6da5454929.1608053262.git.gustavo.pimentel@synopsys.com>
 X-Mailer: git-send-email 2.7.4
 In-Reply-To: <cover.1608053262.git.gustavo.pimentel@synopsys.com>
 References: <cover.1608053262.git.gustavo.pimentel@synopsys.com>
@@ -55,237 +55,61 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-The latest eDMA IP development implements a Vendor-Specific Extended
-Capability that contains the eDMA BAR, offset, map format, and the
-number of read/write channels available.
+It was added some extra checks to ensure that the driver doesn't try to
+use more DMA channels than actually are available in hardware.
 
 Signed-off-by: Gustavo Pimentel <gustavo.pimentel@synopsys.com>
 ---
- drivers/dma/dw-edma/dw-edma-core.c |  20 ++++---
- drivers/dma/dw-edma/dw-edma-pcie.c | 114 ++++++++++++++++++++++++++++---------
- 2 files changed, 99 insertions(+), 35 deletions(-)
+ drivers/dma/dw-edma/dw-edma-core.c | 21 +++++++++------------
+ drivers/dma/dw-edma/dw-edma-core.h |  2 ++
+ 2 files changed, 11 insertions(+), 12 deletions(-)
 
 diff --git a/drivers/dma/dw-edma/dw-edma-core.c b/drivers/dma/dw-edma/dw-edma-core.c
-index b971505..b65c32e1 100644
+index 0fe3835..5495cf7 100644
 --- a/drivers/dma/dw-edma/dw-edma-core.c
 +++ b/drivers/dma/dw-edma/dw-edma-core.c
-@@ -863,15 +863,19 @@ int dw_edma_probe(struct dw_edma_chip *chip)
+@@ -914,19 +914,16 @@ int dw_edma_probe(struct dw_edma_chip *chip)
  
  	raw_spin_lock_init(&dw->lock);
  
--	/* Find out how many write channels are supported by hardware */
--	dw->wr_ch_cnt = dw_edma_v0_core_ch_count(dw, EDMA_DIR_WRITE);
--	if (!dw->wr_ch_cnt)
--		return -EINVAL;
-+	if (!dw->wr_ch_cnt) {
-+		/* Find out how many write channels are supported by hardware */
-+		dw->wr_ch_cnt = dw_edma_v0_core_ch_count(dw, EDMA_DIR_WRITE);
-+		if (!dw->wr_ch_cnt)
-+			return -EINVAL;
-+	}
+-	if (!dw->wr_ch_cnt) {
+-		/* Find out how many write channels are supported by hardware */
+-		dw->wr_ch_cnt = dw_edma_v0_core_ch_count(dw, EDMA_DIR_WRITE);
+-		if (!dw->wr_ch_cnt)
+-			return -EINVAL;
+-	}
++	dw->wr_ch_cnt = min_t(u16, dw->wr_ch_cnt,
++			      dw_edma_v0_core_ch_count(dw, EDMA_DIR_WRITE));
++	dw->wr_ch_cnt = min_t(u16, dw->wr_ch_cnt, EDMA_MAX_WR_CH);
  
--	/* Find out how many read channels are supported by hardware */
--	dw->rd_ch_cnt = dw_edma_v0_core_ch_count(dw, EDMA_DIR_READ);
--	if (!dw->rd_ch_cnt)
--		return -EINVAL;
-+	if (!dw->rd_ch_cnt) {
-+		/* Find out how many read channels are supported by hardware */
-+		dw->rd_ch_cnt = dw_edma_v0_core_ch_count(dw, EDMA_DIR_READ);
-+		if (!dw->rd_ch_cnt)
-+			return -EINVAL;
-+	}
+-	if (!dw->rd_ch_cnt) {
+-		/* Find out how many read channels are supported by hardware */
+-		dw->rd_ch_cnt = dw_edma_v0_core_ch_count(dw, EDMA_DIR_READ);
+-		if (!dw->rd_ch_cnt)
+-			return -EINVAL;
+-	}
++	dw->rd_ch_cnt = min_t(u16, dw->rd_ch_cnt,
++			      dw_edma_v0_core_ch_count(dw, EDMA_DIR_READ));
++	dw->rd_ch_cnt = min_t(u16, dw->rd_ch_cnt, EDMA_MAX_RD_CH);
++
++	if (!dw->wr_ch_cnt && !dw->rd_ch_cnt)
++		return -EINVAL;
  
  	dev_vdbg(dev, "Channels:\twrite=%d, read=%d\n",
  		 dw->wr_ch_cnt, dw->rd_ch_cnt);
-diff --git a/drivers/dma/dw-edma/dw-edma-pcie.c b/drivers/dma/dw-edma/dw-edma-pcie.c
-index c130549..2bd31b0 100644
---- a/drivers/dma/dw-edma/dw-edma-pcie.c
-+++ b/drivers/dma/dw-edma/dw-edma-pcie.c
-@@ -13,9 +13,16 @@
- #include <linux/dma/edma.h>
- #include <linux/pci-epf.h>
- #include <linux/msi.h>
-+#include <linux/bitfield.h>
+diff --git a/drivers/dma/dw-edma/dw-edma-core.h b/drivers/dma/dw-edma/dw-edma-core.h
+index f72ebaa..650b1c7 100644
+--- a/drivers/dma/dw-edma/dw-edma-core.h
++++ b/drivers/dma/dw-edma/dw-edma-core.h
+@@ -15,6 +15,8 @@
+ #include "../virt-dma.h"
  
- #include "dw-edma-core.h"
+ #define EDMA_LL_SZ					24
++#define EDMA_MAX_WR_CH					8
++#define EDMA_MAX_RD_CH					8
  
-+#define DW_PCIE_VSEC_DMA_ID			0x6
-+#define DW_PCIE_VSEC_DMA_BAR			GENMASK(10, 8)
-+#define DW_PCIE_VSEC_DMA_MAP			GENMASK(2, 0)
-+#define DW_PCIE_VSEC_DMA_RD_CH			GENMASK(25, 16)
-+#define DW_PCIE_VSEC_DMA_WR_CH			GENMASK(9, 0)
-+
- struct dw_edma_pcie_data {
- 	/* eDMA registers location */
- 	enum pci_barno			rg_bar;
-@@ -32,6 +39,8 @@ struct dw_edma_pcie_data {
- 	/* Other */
- 	enum dw_edma_map_format		mf;
- 	u8				irqs;
-+	u16				rd_ch_cnt;
-+	u16				wr_ch_cnt;
- };
- 
- static const struct dw_edma_pcie_data snps_edda_data = {
-@@ -50,6 +59,8 @@ static const struct dw_edma_pcie_data snps_edda_data = {
- 	/* Other */
- 	.mf				= EDMA_MF_EDMA_UNROLL,
- 	.irqs				= 1,
-+	.rd_ch_cnt			= 0,
-+	.wr_ch_cnt			= 0,
- };
- 
- static int dw_edma_pcie_irq_vector(struct device *dev, unsigned int nr)
-@@ -61,10 +72,49 @@ static const struct dw_edma_core_ops dw_edma_pcie_core_ops = {
- 	.irq_vector = dw_edma_pcie_irq_vector,
- };
- 
-+static void dw_edma_pcie_get_vsec_dma_data(struct pci_dev *pdev,
-+					   struct dw_edma_pcie_data *pdata)
-+{
-+	u32 val, map;
-+	int vsec;
-+	u64 off;
-+
-+	vsec = pci_find_vsec_capability(pdev, DW_PCIE_VSEC_DMA_ID);
-+	if (!vsec)
-+		return;
-+
-+	pci_read_config_dword(pdev, vsec + 0x4, &val);
-+	if (PCI_VSEC_CAP_REV(val) != 0x00 || PCI_VSEC_CAP_LEN(val) != 0x18)
-+		return;
-+
-+	pci_dbg(pdev, "Detected PCIe Vendor-Specific Extended Capability DMA\n");
-+	pci_read_config_dword(pdev, vsec + 0x8, &val);
-+	map = FIELD_GET(DW_PCIE_VSEC_DMA_MAP, val);
-+	if (map != EDMA_MF_EDMA_LEGACY &&
-+	    map != EDMA_MF_EDMA_UNROLL &&
-+	    map != EDMA_MF_HDMA_COMPAT)
-+		return;
-+
-+	pdata->mf = map;
-+	pdata->rg_bar = FIELD_GET(DW_PCIE_VSEC_DMA_BAR, val);
-+
-+	pci_read_config_dword(pdev, vsec + 0xc, &val);
-+	pdata->rd_ch_cnt = FIELD_GET(DW_PCIE_VSEC_DMA_RD_CH, val);
-+	pdata->wr_ch_cnt = FIELD_GET(DW_PCIE_VSEC_DMA_WR_CH, val);
-+
-+	pci_read_config_dword(pdev, vsec + 0x14, &val);
-+	off = val;
-+	pci_read_config_dword(pdev, vsec + 0x10, &val);
-+	off <<= 32;
-+	off |= val;
-+	pdata->rg_off = off;
-+}
-+
- static int dw_edma_pcie_probe(struct pci_dev *pdev,
- 			      const struct pci_device_id *pid)
- {
--	const struct dw_edma_pcie_data *pdata = (void *)pid->driver_data;
-+	struct dw_edma_pcie_data *pdata = (void *)pid->driver_data;
-+	struct dw_edma_pcie_data vsec_data;
- 	struct device *dev = &pdev->dev;
- 	struct dw_edma_chip *chip;
- 	struct dw_edma *dw;
-@@ -77,10 +127,18 @@ static int dw_edma_pcie_probe(struct pci_dev *pdev,
- 		return err;
- 	}
- 
-+	memcpy(&vsec_data, pdata, sizeof(struct dw_edma_pcie_data));
-+
-+	/*
-+	 * Tries to find if exists a PCIe Vendor-Specific Extended Capability
-+	 * for the DMA, if exists one, then reconfigures with the new data
-+	 */
-+	dw_edma_pcie_get_vsec_dma_data(pdev, &vsec_data);
-+
- 	/* Mapping PCI BAR regions */
--	err = pcim_iomap_regions(pdev, BIT(pdata->rg_bar) |
--				       BIT(pdata->ll_bar) |
--				       BIT(pdata->dt_bar),
-+	err = pcim_iomap_regions(pdev, BIT(vsec_data.rg_bar) |
-+				       BIT(vsec_data.ll_bar) |
-+				       BIT(vsec_data.dt_bar),
- 				 pci_name(pdev));
- 	if (err) {
- 		pci_err(pdev, "eDMA BAR I/O remapping failed\n");
-@@ -123,7 +181,7 @@ static int dw_edma_pcie_probe(struct pci_dev *pdev,
- 		return -ENOMEM;
- 
- 	/* IRQs allocation */
--	nr_irqs = pci_alloc_irq_vectors(pdev, 1, pdata->irqs,
-+	nr_irqs = pci_alloc_irq_vectors(pdev, 1, vsec_data.irqs,
- 					PCI_IRQ_MSI | PCI_IRQ_MSIX);
- 	if (nr_irqs < 1) {
- 		pci_err(pdev, "fail to alloc IRQ vector (number of IRQs=%u)\n",
-@@ -137,27 +195,29 @@ static int dw_edma_pcie_probe(struct pci_dev *pdev,
- 	chip->id = pdev->devfn;
- 	chip->irq = pdev->irq;
- 
--	dw->rg_region.vaddr = pcim_iomap_table(pdev)[pdata->rg_bar];
--	dw->rg_region.vaddr += pdata->rg_off;
--	dw->rg_region.paddr = pdev->resource[pdata->rg_bar].start;
--	dw->rg_region.paddr += pdata->rg_off;
--	dw->rg_region.sz = pdata->rg_sz;
--
--	dw->ll_region.vaddr = pcim_iomap_table(pdev)[pdata->ll_bar];
--	dw->ll_region.vaddr += pdata->ll_off;
--	dw->ll_region.paddr = pdev->resource[pdata->ll_bar].start;
--	dw->ll_region.paddr += pdata->ll_off;
--	dw->ll_region.sz = pdata->ll_sz;
--
--	dw->dt_region.vaddr = pcim_iomap_table(pdev)[pdata->dt_bar];
--	dw->dt_region.vaddr += pdata->dt_off;
--	dw->dt_region.paddr = pdev->resource[pdata->dt_bar].start;
--	dw->dt_region.paddr += pdata->dt_off;
--	dw->dt_region.sz = pdata->dt_sz;
--
--	dw->mf = pdata->mf;
-+	dw->rg_region.vaddr = pcim_iomap_table(pdev)[vsec_data.rg_bar];
-+	dw->rg_region.vaddr += vsec_data.rg_off;
-+	dw->rg_region.paddr = pdev->resource[vsec_data.rg_bar].start;
-+	dw->rg_region.paddr += vsec_data.rg_off;
-+	dw->rg_region.sz = vsec_data.rg_sz;
-+
-+	dw->ll_region.vaddr = pcim_iomap_table(pdev)[vsec_data.ll_bar];
-+	dw->ll_region.vaddr += vsec_data.ll_off;
-+	dw->ll_region.paddr = pdev->resource[vsec_data.ll_bar].start;
-+	dw->ll_region.paddr += vsec_data.ll_off;
-+	dw->ll_region.sz = vsec_data.ll_sz;
-+
-+	dw->dt_region.vaddr = pcim_iomap_table(pdev)[vsec_data.dt_bar];
-+	dw->dt_region.vaddr += vsec_data.dt_off;
-+	dw->dt_region.paddr = pdev->resource[vsec_data.dt_bar].start;
-+	dw->dt_region.paddr += vsec_data.dt_off;
-+	dw->dt_region.sz = vsec_data.dt_sz;
-+
-+	dw->mf = vsec_data.mf;
- 	dw->nr_irqs = nr_irqs;
- 	dw->ops = &dw_edma_pcie_core_ops;
-+	dw->rd_ch_cnt = vsec_data.rd_ch_cnt;
-+	dw->wr_ch_cnt = vsec_data.wr_ch_cnt;
- 
- 	/* Debug info */
- 	if (dw->mf == EDMA_MF_EDMA_LEGACY)
-@@ -170,15 +230,15 @@ static int dw_edma_pcie_probe(struct pci_dev *pdev,
- 		pci_dbg(pdev, "Version:\tUnknown (0x%x)\n", dw->mf);
- 
- 	pci_dbg(pdev, "Registers:\tBAR=%u, off=0x%.8lx, sz=0x%zx bytes, addr(v=%p, p=%pa)\n",
--		pdata->rg_bar, pdata->rg_off, pdata->rg_sz,
-+		vsec_data.rg_bar, vsec_data.rg_off, vsec_data.rg_sz,
- 		dw->rg_region.vaddr, &dw->rg_region.paddr);
- 
- 	pci_dbg(pdev, "L. List:\tBAR=%u, off=0x%.8lx, sz=0x%zx bytes, addr(v=%p, p=%pa)\n",
--		pdata->ll_bar, pdata->ll_off, pdata->ll_sz,
-+		vsec_data.ll_bar, vsec_data.ll_off, vsec_data.ll_sz,
- 		dw->ll_region.vaddr, &dw->ll_region.paddr);
- 
- 	pci_dbg(pdev, "Data:\tBAR=%u, off=0x%.8lx, sz=0x%zx bytes, addr(v=%p, p=%pa)\n",
--		pdata->dt_bar, pdata->dt_off, pdata->dt_sz,
-+		vsec_data.dt_bar, vsec_data.dt_off, vsec_data.dt_sz,
- 		dw->dt_region.vaddr, &dw->dt_region.paddr);
- 
- 	pci_dbg(pdev, "Nr. IRQs:\t%u\n", dw->nr_irqs);
+ enum dw_edma_dir {
+ 	EDMA_DIR_WRITE = 0,
 -- 
 2.7.4
 
