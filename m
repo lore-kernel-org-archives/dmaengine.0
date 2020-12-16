@@ -2,116 +2,101 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.6 required=3.0 tests=BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=unavailable
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 49B94C2BB9A
-	for <dmaengine@archiver.kernel.org>; Tue, 15 Dec 2020 17:42:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0588CC2BBCF
+	for <dmaengine@archiver.kernel.org>; Wed, 16 Dec 2020 01:52:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E562422B2D
-	for <dmaengine@archiver.kernel.org>; Tue, 15 Dec 2020 17:42:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C8ECC23109
+	for <dmaengine@archiver.kernel.org>; Wed, 16 Dec 2020 01:52:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731055AbgLORbi (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 15 Dec 2020 12:31:38 -0500
-Received: from smtprelay-out1.synopsys.com ([149.117.73.133]:54406 "EHLO
-        smtprelay-out1.synopsys.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1729683AbgLORbe (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Tue, 15 Dec 2020 12:31:34 -0500
-Received: from mailhost.synopsys.com (mdc-mailhost1.synopsys.com [10.225.0.209])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
-        (No client certificate requested)
-        by smtprelay-out1.synopsys.com (Postfix) with ESMTPS id B126F4013F;
-        Tue, 15 Dec 2020 17:30:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=synopsys.com; s=mail;
-        t=1608053433; bh=Rp8f7F2uSWSg/KTfT5SE2X1d3fnriVqX5tGhIffKmcQ=;
-        h=From:To:Cc:Subject:Date:From;
-        b=GjhXQoyIF/y9+gGU/sZNtHmlndMcQ/lGXwh3VcL7bOhRlqhO9moIUNvXDLDSHS/I8
-         mUNCEyeeLyA/L2hmJLqBKFhygi8RoQ7nN2FFLD9yEaRHCJZmBqMfhfcVAp6I27kbFF
-         TXN4nI57f5a1vPzNMSXPC/bWrcGjS4XAC5E7kH2v35Ja8o/RotFMMOfCDH5OEOHWAB
-         DgfLhua+k9DE2Sbft+1GMYvbwmKtHdRcEFsOT6jAMy/ptiSHMsCRu3WP/UWFdz3DUD
-         x8M6GDLgFX5aLpa5uCiRLRcT4/frTVD/efG042YH44UrBSstbmF71ofMcY6KS6FjXi
-         A4FoNoTbfCMNA==
-Received: from de02dwia024.internal.synopsys.com (de02dwia024.internal.synopsys.com [10.225.19.81])
-        by mailhost.synopsys.com (Postfix) with ESMTP id 6C272A024A;
-        Tue, 15 Dec 2020 17:30:30 +0000 (UTC)
-X-SNPS-Relay: synopsys.com
-From:   Gustavo Pimentel <Gustavo.Pimentel@synopsys.com>
-Cc:     Gustavo Pimentel <Gustavo.Pimentel@synopsys.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        Dan Williams <dan.j.williams@intel.com>,
-        Bjorn Helgaas <bhelgaas@google.com>, dmaengine@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org
-Subject: [PATCH 00/15] dmaengine: dw-edma: HDMA support
-Date:   Tue, 15 Dec 2020 18:30:09 +0100
-Message-Id: <cover.1608053262.git.gustavo.pimentel@synopsys.com>
-X-Mailer: git-send-email 2.7.4
-To:     unlisted-recipients:; (no To-header on input)
+        id S1725440AbgLPBwa (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 15 Dec 2020 20:52:30 -0500
+Received: from mga04.intel.com ([192.55.52.120]:46392 "EHLO mga04.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725308AbgLPBwa (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Tue, 15 Dec 2020 20:52:30 -0500
+IronPort-SDR: Y21oJmEbqOJ70vq64bxOixpSPmPNQ64pEtyh51H2oPrFeQWmYQeIGc3CFkjGLx5PD+c0h6MpbQ
+ 8d2HXbxv/QmQ==
+X-IronPort-AV: E=McAfee;i="6000,8403,9836"; a="172415251"
+X-IronPort-AV: E=Sophos;i="5.78,423,1599548400"; 
+   d="scan'208";a="172415251"
+Received: from fmsmga004.fm.intel.com ([10.253.24.48])
+  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Dec 2020 17:50:37 -0800
+IronPort-SDR: cFGv00aXiJSneHIaymsNL0HdVpZyc+g3cbTyNfrD6C6N2Sh644XRJhR7zb7s0lqwLZmcoDLNag
+ O2C504HU8Vzg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.78,423,1599548400"; 
+   d="scan'208";a="384063655"
+Received: from allen-box.sh.intel.com (HELO [10.239.159.28]) ([10.239.159.28])
+  by fmsmga004.fm.intel.com with ESMTP; 15 Dec 2020 17:50:30 -0800
+Cc:     baolu.lu@linux.intel.com, alex.williamson@redhat.com,
+        bhelgaas@google.com, dan.j.williams@intel.com,
+        dmaengine@vger.kernel.org, eric.auger@redhat.com,
+        jacob.jun.pan@intel.com, jgg@mellanox.com, jing.lin@intel.com,
+        kvm@vger.kernel.org, kwankhede@nvidia.com,
+        linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
+        maz@kernel.org, mona.hossain@intel.com, netanelg@mellanox.com,
+        parav@mellanox.com, pbonzini@redhat.com, rafael@kernel.org,
+        samuel.ortiz@intel.com, sanjay.k.kumar@intel.com,
+        shahafs@mellanox.com, tony.luck@intel.com, vkoul@kernel.org,
+        yan.y.zhao@linux.intel.com, yi.l.liu@intel.com
+Subject: Re: [RFC PATCH 1/1] platform-msi: Add platform check for subdevice
+ irq domain
+To:     David Woodhouse <dwmw2@infradead.org>, tglx@linutronix.de,
+        ashok.raj@intel.com, kevin.tian@intel.com, dave.jiang@intel.com,
+        megha.dey@intel.com
+References: <20201210004624.345282-1-baolu.lu@linux.intel.com>
+ <dad0bf6e271532badd84f2a811449be566f537a9.camel@infradead.org>
+From:   Lu Baolu <baolu.lu@linux.intel.com>
+Message-ID: <7729a278-1734-5f3e-6183-50670ddb8820@linux.intel.com>
+Date:   Wed, 16 Dec 2020 09:42:54 +0800
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
+MIME-Version: 1.0
+In-Reply-To: <dad0bf6e271532badd84f2a811449be566f537a9.camel@infradead.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-This patch series adds the HDMA support, as long the IP design has set
-the compatible register map parameter, which allows compatibility at
-some degree for the existing Synopsys DesignWare eDMA driver that is
-already available on the Kernel.
+Hi David,
 
-The HDMA "Hyper-DMA" IP is an enhancement of the eDMA "embedded-DMA" IP.
+On 12/10/20 4:22 PM, David Woodhouse wrote:
+> On Thu, 2020-12-10 at 08:46 +0800, Lu Baolu wrote:
+>> +/*
+>> + * We want to figure out which context we are running in. But the hardware
+>> + * does not introduce a reliable way (instruction, CPUID leaf, MSR, whatever)
+>> + * which can be manipulated by the VMM to let the OS figure out where it runs.
+>> + * So we go with the below probably_on_bare_metal() function as a replacement
+>> + * for definitely_on_bare_metal() to go forward only for the very simple reason
+>> + * that this is the only option we have.
+>> + */
+>> +static const char * const possible_vmm_vendor_name[] = {
+>> +       "QEMU", "Bochs", "KVM", "Xen", "VMware", "VMW", "VMware Inc.",
+>> +       "innotek GmbH", "Oracle Corporation", "Parallels", "BHYVE",
+>> +       "Microsoft Corporation"
+>> +};
+> 
+> People do use SeaBIOS ("Bochs") on bare metal.
 
-This new improvement comes with a PCI DVSEC that allows to the driver
-recognize and switch behavior if it's an eDMA or an HDMA, becoming
-retrocompatible, in the absence of this DVSEC, the driver will assume
-that is an eDMA IP.
+Is there any unique way to distinguish between running on bare metal and
+VM?
 
-It also adds the interleaved support, since it will be similar to the
-current scatter-gather implementation.
+> 
+> You'll also see "Amazon EC2" on virt instances as well as bare metal
+> instances. Although in that case I believe the virt instances do have
+> the 'virtual machine' flag set in bit 4 of the BIOS Characteristics
+> Extension Byte 2, and the bare metal obviously don't.
+> 
 
-As well fixes/improves some abnormal behaviors not detected before, such as:
- - crash on loading/unloading driver
- - memory space definition for the data area and for the linked list space
- - scatter-gather address calculation on 32 bits platforms
- - minor comment and variable reordering
+So for Amazon EC2 case, we can use this byte to distinguish. Can you
+please point me to the references of this Extension Byte (reference
+code/spec or anything else) ?
 
-Cc: Vinod Koul <vkoul@kernel.org>
-Cc: Dan Williams <dan.j.williams@intel.com>
-Cc: Bjorn Helgaas <bhelgaas@google.com>
-Cc: dmaengine@vger.kernel.org
-Cc: linux-kernel@vger.kernel.org
-Cc: linux-pci@vger.kernel.org
-
-Gustavo Pimentel (15):
-  dmaengine: dw-edma: Add writeq() and readq() for 64 bits architectures
-  dmaengine: dw-edma: Fix comments offset characters' alignment
-  dmaengine: dw-edma: Add support for the HDMA feature
-  PCI: Add pci_find_vsec_capability() to find a specific VSEC
-  dmaengine: dw-edma: Add PCIe VSEC data retrieval support
-  dmaengine: dw-edma: Add device_prep_interleave_dma() support
-  dmaengine: dw-edma: Improve number of channels check
-  dmaengine: dw-edma: Reorder variables to keep consistency
-  dmaengine: dw-edma: Improve the linked list and data blocks definition
-  dmaengine: dw-edma: Change linked list and data blocks offset and
-    sizes
-  dmaengine: dw-edma: Move struct dentry variable from static definition
-    into dw_edma struct
-  dmaengine: dw-edma: Fix crash on loading/unloading driver
-  dmaengine: dw-edma: Change DMA abreviation from lower into upper case
-  dmaengine: dw-edma: Revert fix scatter-gather address calculation
-  dmaengine: dw-edma: Add pcim_iomap_table return checker
-
- drivers/dma/dw-edma/dw-edma-core.c       | 178 +++++++++++-------
- drivers/dma/dw-edma/dw-edma-core.h       |  37 ++--
- drivers/dma/dw-edma/dw-edma-pcie.c       | 275 +++++++++++++++++++++-------
- drivers/dma/dw-edma/dw-edma-v0-core.c    | 300 ++++++++++++++++++++++++-------
- drivers/dma/dw-edma/dw-edma-v0-core.h    |   2 +-
- drivers/dma/dw-edma/dw-edma-v0-debugfs.c |  77 ++++----
- drivers/dma/dw-edma/dw-edma-v0-debugfs.h |   4 +-
- drivers/dma/dw-edma/dw-edma-v0-regs.h    | 291 +++++++++++++++++++-----------
- drivers/pci/pci.c                        |  29 +++
- include/linux/pci.h                      |   1 +
- include/uapi/linux/pci_regs.h            |   5 +
- 11 files changed, 844 insertions(+), 355 deletions(-)
-
--- 
-2.7.4
-
+Best regards,
+baolu
