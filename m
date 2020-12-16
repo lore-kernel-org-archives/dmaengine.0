@@ -5,41 +5,41 @@ X-Spam-Level:
 X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=unavailable autolearn_force=no version=3.4.0
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F06FDC3527E
-	for <dmaengine@archiver.kernel.org>; Wed, 16 Dec 2020 02:27:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1B718C4361B
+	for <dmaengine@archiver.kernel.org>; Wed, 16 Dec 2020 02:28:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DA6A823120
-	for <dmaengine@archiver.kernel.org>; Wed, 16 Dec 2020 02:27:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E789923105
+	for <dmaengine@archiver.kernel.org>; Wed, 16 Dec 2020 02:28:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725856AbgLPC1x (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 15 Dec 2020 21:27:53 -0500
-Received: from mga12.intel.com ([192.55.52.136]:43605 "EHLO mga12.intel.com"
+        id S1725843AbgLPC2D (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 15 Dec 2020 21:28:03 -0500
+Received: from mga05.intel.com ([192.55.52.43]:26382 "EHLO mga05.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725287AbgLPC1x (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Tue, 15 Dec 2020 21:27:53 -0500
-IronPort-SDR: 0ws8LtuQeOzG3XfuvJQSrr75HesTfkiqMLGAwZ+u2uSY2Dru76h0EgVp0CgWuvZoG5sra+YBa7
- DoK+LbuApLUw==
-X-IronPort-AV: E=McAfee;i="6000,8403,9836"; a="154220891"
+        id S1725287AbgLPC2C (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Tue, 15 Dec 2020 21:28:02 -0500
+IronPort-SDR: r2wVOrtV3PgaU1AxP9his+xaACv8l+vV3bLCvlvJaRe1231TMwb6RRdYm8PiLJ1RAUbCC0G7EB
+ 933TGSECKK1A==
+X-IronPort-AV: E=McAfee;i="6000,8403,9836"; a="259716467"
 X-IronPort-AV: E=Sophos;i="5.78,423,1599548400"; 
-   d="scan'208";a="154220891"
+   d="scan'208";a="259716467"
 Received: from orsmga005.jf.intel.com ([10.7.209.41])
-  by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Dec 2020 18:27:03 -0800
-IronPort-SDR: BsV7wO4mFqbyR0rrvagDyXfiZ0MTBfUCudIH2cXNbVU4UJmC5ZQkUNQXpSLxs/j8E3+LfqIyEs
- J2Z/wkqIWc1w==
+  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Dec 2020 18:27:09 -0800
+IronPort-SDR: p1bu+TNnzaIikxpv27R8G4XEQRpAe+nKuCxkjUd9mtgyIJrI2FXdpDNXTx90wTnHLDJqv6Dj4b
+ jBnx78QJjV+A==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="5.78,423,1599548400"; 
-   d="scan'208";a="557080762"
+   d="scan'208";a="557080804"
 Received: from jsia-hp-z620-workstation.png.intel.com ([10.221.118.135])
-  by orsmga005.jf.intel.com with ESMTP; 15 Dec 2020 18:26:58 -0800
+  by orsmga005.jf.intel.com with ESMTP; 15 Dec 2020 18:27:07 -0800
 From:   Sia Jee Heng <jee.heng.sia@intel.com>
 To:     vkoul@kernel.org, Eugeniy.Paltsev@synopsys.com, robh+dt@kernel.org
 Cc:     andriy.shevchenko@linux.intel.com, dmaengine@vger.kernel.org,
         linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
-Subject: [PATCH v7 07/16] dmaegine: dw-axi-dmac: Support device_prep_dma_cyclic()
-Date:   Wed, 16 Dec 2020 10:09:54 +0800
-Message-Id: <20201216021003.26911-8-jee.heng.sia@intel.com>
+Subject: [PATCH v7 10/16] dt-binding: dma: dw-axi-dmac: Add support for Intel KeemBay AxiDMA
+Date:   Wed, 16 Dec 2020 10:09:57 +0800
+Message-Id: <20201216021003.26911-11-jee.heng.sia@intel.com>
 X-Mailer: git-send-email 2.18.0
 In-Reply-To: <20201216021003.26911-1-jee.heng.sia@intel.com>
 References: <20201216021003.26911-1-jee.heng.sia@intel.com>
@@ -47,214 +47,46 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Add support for device_prep_dma_cyclic() callback function to benefit
-DMA cyclic client, for example ALSA.
+Add support for Intel KeemBay AxiDMA to the dw-axi-dmac
+Schemas DT binding.
 
-Existing AxiDMA driver only support data transfer between memory to memory.
-Data transfer between device to memory and memory to device in cyclic mode
-would failed if this interface is not supported by the AxiDMA driver.
-
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 Signed-off-by: Sia Jee Heng <jee.heng.sia@intel.com>
+Reviewed-by: Rob Herring <robh@kernel.org>
 ---
- .../dma/dw-axi-dmac/dw-axi-dmac-platform.c    | 111 ++++++++++++++++--
- drivers/dma/dw-axi-dmac/dw-axi-dmac.h         |   2 +
- 2 files changed, 106 insertions(+), 7 deletions(-)
+ Documentation/devicetree/bindings/dma/snps,dw-axi-dmac.yaml | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-index 1674dcb6fc5b..b5f92f9cb2bc 100644
---- a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-+++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-@@ -15,6 +15,8 @@
- #include <linux/err.h>
- #include <linux/interrupt.h>
- #include <linux/io.h>
-+#include <linux/iopoll.h>
-+#include <linux/io-64-nonatomic-lo-hi.h>
- #include <linux/kernel.h>
- #include <linux/module.h>
- #include <linux/of.h>
-@@ -549,6 +551,64 @@ static int dw_axi_dma_set_hw_desc(struct axi_dma_chan *chan,
- 	return 0;
- }
+diff --git a/Documentation/devicetree/bindings/dma/snps,dw-axi-dmac.yaml b/Documentation/devicetree/bindings/dma/snps,dw-axi-dmac.yaml
+index 3d2515463d56..79e241498e25 100644
+--- a/Documentation/devicetree/bindings/dma/snps,dw-axi-dmac.yaml
++++ b/Documentation/devicetree/bindings/dma/snps,dw-axi-dmac.yaml
+@@ -8,6 +8,7 @@ title: Synopsys DesignWare AXI DMA Controller
  
-+static struct dma_async_tx_descriptor *
-+dw_axi_dma_chan_prep_cyclic(struct dma_chan *dchan, dma_addr_t dma_addr,
-+			    size_t buf_len, size_t period_len,
-+			    enum dma_transfer_direction direction,
-+			    unsigned long flags)
-+{
-+	struct axi_dma_chan *chan = dchan_to_axi_dma_chan(dchan);
-+	struct axi_dma_hw_desc *hw_desc = NULL;
-+	struct axi_dma_desc *desc = NULL;
-+	dma_addr_t src_addr = dma_addr;
-+	u32 num_periods = buf_len / period_len;
-+	unsigned int i;
-+	int status;
-+	u64 llp = 0;
-+	u8 lms = 0; /* Select AXI0 master for LLI fetching */
-+
-+	desc = axi_desc_alloc(num_periods);
-+	if (unlikely(!desc))
-+		goto err_desc_get;
-+
-+	chan->direction = direction;
-+	desc->chan = chan;
-+	chan->cyclic = true;
-+
-+	for (i = 0; i < num_periods; i++) {
-+		hw_desc = &desc->hw_desc[i];
-+
-+		status = dw_axi_dma_set_hw_desc(chan, hw_desc, src_addr,
-+						period_len);
-+		if (status < 0)
-+			goto err_desc_get;
-+
-+		/* Set end-of-link to the linked descriptor, so that cyclic
-+		 * callback function can be triggered during interrupt.
-+		 */
-+		set_desc_last(hw_desc);
-+
-+		src_addr += period_len;
-+	}
-+
-+	llp = desc->hw_desc[0].llp;
-+
-+	/* Managed transfer list */
-+	do {
-+		hw_desc = &desc->hw_desc[--num_periods];
-+		write_desc_llp(hw_desc, llp | lms);
-+		llp = hw_desc->llp;
-+	} while (num_periods);
-+
-+	return vchan_tx_prep(&chan->vc, &desc->vd, flags);
-+
-+err_desc_get:
-+	if (desc)
-+		axi_desc_put(desc);
-+
-+	return NULL;
-+}
-+
- static struct dma_async_tx_descriptor *
- dw_axi_dma_chan_prep_slave_sg(struct dma_chan *dchan, struct scatterlist *sgl,
- 			      unsigned int sg_len,
-@@ -773,8 +833,13 @@ static noinline void axi_chan_handle_err(struct axi_dma_chan *chan, u32 status)
+ maintainers:
+   - Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>
++  - Jee Heng Sia <jee.heng.sia@intel.com>
  
- static void axi_chan_block_xfer_complete(struct axi_dma_chan *chan)
- {
-+	int count = atomic_read(&chan->descs_allocated);
-+	struct axi_dma_hw_desc *hw_desc;
-+	struct axi_dma_desc *desc;
- 	struct virt_dma_desc *vd;
- 	unsigned long flags;
-+	u64 llp;
-+	int i;
+ description:
+   Synopsys DesignWare AXI DMA Controller DT Binding
+@@ -19,14 +20,18 @@ properties:
+   compatible:
+     enum:
+       - snps,axi-dma-1.01a
++      - intel,kmb-axi-dma
  
- 	spin_lock_irqsave(&chan->vc.lock, flags);
- 	if (unlikely(axi_chan_is_hw_enable(chan))) {
-@@ -785,12 +850,32 @@ static void axi_chan_block_xfer_complete(struct axi_dma_chan *chan)
+   reg:
++    minItems: 1
+     items:
+       - description: Address range of the DMAC registers
++      - description: Address range of the DMAC APB registers
  
- 	/* The completed descriptor currently is in the head of vc list */
- 	vd = vchan_next_desc(&chan->vc);
--	/* Remove the completed descriptor from issued list before completing */
--	list_del(&vd->node);
--	vchan_cookie_complete(vd);
+   reg-names:
+     items:
+       - const: axidma_ctrl_regs
++      - const: axidma_apb_regs
  
--	/* Submit queued descriptors after processing the completed ones */
--	axi_chan_start_first_queued(chan);
-+	if (chan->cyclic) {
-+		vchan_cyclic_callback(vd);
-+		desc = vd_to_axi_desc(vd);
-+		if (desc) {
-+			llp = lo_hi_readq(chan->chan_regs + CH_LLP);
-+			for (i = 0; i < count; i++) {
-+				hw_desc = &desc->hw_desc[i];
-+				if (hw_desc->llp == llp) {
-+					axi_chan_irq_clear(chan, hw_desc->lli->status_lo);
-+					hw_desc->lli->ctl_hi |= CH_CTL_H_LLI_VALID;
-+					desc->completed_blocks = i;
-+					break;
-+				}
-+			}
-+
-+			axi_chan_enable(chan);
-+		}
-+	} else {
-+		/* Remove the completed descriptor from issued list before completing */
-+		list_del(&vd->node);
-+		vchan_cookie_complete(vd);
-+
-+		/* Submit queued descriptors after processing the completed ones */
-+		axi_chan_start_first_queued(chan);
-+	}
- 
- 	spin_unlock_irqrestore(&chan->vc.lock, flags);
- }
-@@ -830,15 +915,25 @@ static irqreturn_t dw_axi_dma_interrupt(int irq, void *dev_id)
- static int dma_chan_terminate_all(struct dma_chan *dchan)
- {
- 	struct axi_dma_chan *chan = dchan_to_axi_dma_chan(dchan);
-+	u32 chan_active = BIT(chan->id) << DMAC_CHAN_EN_SHIFT;
- 	unsigned long flags;
-+	u32 val;
-+	int ret;
- 	LIST_HEAD(head);
- 
--	spin_lock_irqsave(&chan->vc.lock, flags);
--
- 	axi_chan_disable(chan);
- 
-+	ret = readl_poll_timeout_atomic(chan->chip->regs + DMAC_CHEN, val,
-+					!(val & chan_active), 1000, 10000);
-+	if (ret == -ETIMEDOUT)
-+		dev_warn(dchan2dev(dchan),
-+			 "%s failed to stop\n", axi_chan_name(chan));
-+
-+	spin_lock_irqsave(&chan->vc.lock, flags);
-+
- 	vchan_get_all_descriptors(&chan->vc, &head);
- 
-+	chan->cyclic = false;
- 	spin_unlock_irqrestore(&chan->vc.lock, flags);
- 
- 	vchan_dma_desc_free_list(&chan->vc, &head);
-@@ -1090,6 +1185,7 @@ static int dw_probe(struct platform_device *pdev)
- 	/* Set capabilities */
- 	dma_cap_set(DMA_MEMCPY, dw->dma.cap_mask);
- 	dma_cap_set(DMA_SLAVE, dw->dma.cap_mask);
-+	dma_cap_set(DMA_CYCLIC, dw->dma.cap_mask);
- 
- 	/* DMA capabilities */
- 	dw->dma.chancnt = hdata->nr_channels;
-@@ -1113,6 +1209,7 @@ static int dw_probe(struct platform_device *pdev)
- 	dw->dma.device_synchronize = dw_axi_dma_synchronize;
- 	dw->dma.device_config = dw_axi_dma_chan_slave_config;
- 	dw->dma.device_prep_slave_sg = dw_axi_dma_chan_prep_slave_sg;
-+	dw->dma.device_prep_dma_cyclic = dw_axi_dma_chan_prep_cyclic;
- 
- 	platform_set_drvdata(pdev, chip);
- 
-diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac.h b/drivers/dma/dw-axi-dmac/dw-axi-dmac.h
-index ac49f2e14b0c..a26b0a242a93 100644
---- a/drivers/dma/dw-axi-dmac/dw-axi-dmac.h
-+++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac.h
-@@ -45,6 +45,7 @@ struct axi_dma_chan {
- 	struct axi_dma_desc		*desc;
- 	struct dma_slave_config		config;
- 	enum dma_transfer_direction	direction;
-+	bool				cyclic;
- 	/* these other elements are all protected by vc.lock */
- 	bool				is_paused;
- };
-@@ -93,6 +94,7 @@ struct axi_dma_desc {
- 
- 	struct virt_dma_desc		vd;
- 	struct axi_dma_chan		*chan;
-+	u32				completed_blocks;
- };
- 
- static inline struct device *dchan2dev(struct dma_chan *dchan)
+   interrupts:
+     maxItems: 1
 -- 
 2.18.0
 
