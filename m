@@ -7,39 +7,39 @@ X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
 	autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 91382C43332
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 099E5C4332E
 	for <dmaengine@archiver.kernel.org>; Tue,  5 Jan 2021 01:02:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5298E22B4B
-	for <dmaengine@archiver.kernel.org>; Tue,  5 Jan 2021 01:02:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D17412253A
+	for <dmaengine@archiver.kernel.org>; Tue,  5 Jan 2021 01:02:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728591AbhAEBBi (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 4 Jan 2021 20:01:38 -0500
-Received: from mga05.intel.com ([192.55.52.43]:29963 "EHLO mga05.intel.com"
+        id S1728628AbhAEBBp (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 4 Jan 2021 20:01:45 -0500
+Received: from mga05.intel.com ([192.55.52.43]:29975 "EHLO mga05.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728587AbhAEBBi (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Mon, 4 Jan 2021 20:01:38 -0500
-IronPort-SDR: Nt261fKXRNXpkv0TlW4iJeFJwitncnMYQpwt8wL1e+vLFxCCIYxx5aBpYUs2xOwFYYugM2pFdX
- yMINcyajBuIg==
-X-IronPort-AV: E=McAfee;i="6000,8403,9854"; a="261794146"
+        id S1728627AbhAEBBo (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Mon, 4 Jan 2021 20:01:44 -0500
+IronPort-SDR: IK/y+9rXXT/V7esPDuBagBVdcfukaiENTEq5VTJqRHZltZLBFtK6scchmgdskTUlxASmTTpUd0
+ C3N/G4Dcbcpg==
+X-IronPort-AV: E=McAfee;i="6000,8403,9854"; a="261794153"
 X-IronPort-AV: E=Sophos;i="5.78,475,1599548400"; 
-   d="scan'208";a="261794146"
+   d="scan'208";a="261794153"
 Received: from fmsmga005.fm.intel.com ([10.253.24.32])
-  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Jan 2021 17:00:33 -0800
-IronPort-SDR: ++crcK2pa+MwHHb7JounlN8A2dW+frvj6aUXFAfV65YLQ6KE+oRzaVCNMsApPtG8uUZLv64Ri/
- EFhTzkim22xw==
+  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Jan 2021 17:00:39 -0800
+IronPort-SDR: W86QuTUnuickH6vzX3Y7yXrijLZh3ZiZomJfDgL2uutXDQPUDeSAz3Ndrl5nKBffugVgLvxwdi
+ Kvn7EGcoTRrQ==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="5.78,475,1599548400"; 
-   d="scan'208";a="569540235"
+   d="scan'208";a="569540305"
 Received: from jsia-hp-z620-workstation.png.intel.com ([10.221.118.135])
-  by fmsmga005.fm.intel.com with ESMTP; 04 Jan 2021 17:00:31 -0800
+  by fmsmga005.fm.intel.com with ESMTP; 04 Jan 2021 17:00:37 -0800
 From:   Sia Jee Heng <jee.heng.sia@intel.com>
 To:     vkoul@kernel.org, Eugeniy.Paltsev@synopsys.com, robh+dt@kernel.org
 Cc:     andriy.shevchenko@linux.intel.com, dmaengine@vger.kernel.org,
         linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
-Subject: [PATCH v9 09/16] dmaengine: dw-axi-dmac: Support burst residue granularity
-Date:   Tue,  5 Jan 2021 08:42:59 +0800
-Message-Id: <20210105004306.13588-10-jee.heng.sia@intel.com>
+Subject: [PATCH v9 11/16] dmaengine: dw-axi-dmac: Add Intel KeemBay DMA register fields
+Date:   Tue,  5 Jan 2021 08:43:01 +0800
+Message-Id: <20210105004306.13588-12-jee.heng.sia@intel.com>
 X-Mailer: git-send-email 2.18.0
 In-Reply-To: <20210105004306.13588-1-jee.heng.sia@intel.com>
 References: <20210105004306.13588-1-jee.heng.sia@intel.com>
@@ -47,157 +47,48 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Add support for DMA_RESIDUE_GRANULARITY_BURST so that AxiDMA can report
-DMA residue.
-
-Existing AxiDMA driver only support data transfer between
-memory to memory operation, therefore reporting DMA residue
-to the DMA clients is not supported.
-
-Reporting DMA residue to the DMA clients is important as DMA clients
-shall invoke dmaengine_tx_status() to understand the number of bytes
-been transferred so that the buffer pointer can be updated accordingly.
+Add support for Intel KeemBay DMA registers. These registers are required
+to run data transfer between device to memory and memory to device on Intel
+KeemBay SoC.
 
 Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 Signed-off-by: Sia Jee Heng <jee.heng.sia@intel.com>
 ---
- .../dma/dw-axi-dmac/dw-axi-dmac-platform.c    | 43 ++++++++++++++++---
- drivers/dma/dw-axi-dmac/dw-axi-dmac.h         |  2 +
- 2 files changed, 38 insertions(+), 7 deletions(-)
+ drivers/dma/dw-axi-dmac/dw-axi-dmac.h | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-index a8b6c8c8ef58..830d3de76abd 100644
---- a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-+++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-@@ -265,14 +265,36 @@ dma_chan_tx_status(struct dma_chan *dchan, dma_cookie_t cookie,
- 		  struct dma_tx_state *txstate)
- {
- 	struct axi_dma_chan *chan = dchan_to_axi_dma_chan(dchan);
--	enum dma_status ret;
-+	struct virt_dma_desc *vdesc;
-+	enum dma_status status;
-+	u32 completed_length;
-+	unsigned long flags;
-+	u32 completed_blocks;
-+	size_t bytes = 0;
-+	u32 length;
-+	u32 len;
- 
--	ret = dma_cookie_status(dchan, cookie, txstate);
-+	status = dma_cookie_status(dchan, cookie, txstate);
-+	if (status == DMA_COMPLETE || !txstate)
-+		return status;
- 
--	if (chan->is_paused && ret == DMA_IN_PROGRESS)
--		ret = DMA_PAUSED;
-+	spin_lock_irqsave(&chan->vc.lock, flags);
- 
--	return ret;
-+	vdesc = vchan_find_desc(&chan->vc, cookie);
-+	if (vdesc) {
-+		length = vd_to_axi_desc(vdesc)->length;
-+		completed_blocks = vd_to_axi_desc(vdesc)->completed_blocks;
-+		len = vd_to_axi_desc(vdesc)->hw_desc[0].len;
-+		completed_length = completed_blocks * len;
-+		bytes = length - completed_length;
-+	} else {
-+		bytes = vd_to_axi_desc(vdesc)->length;
-+	}
-+
-+	spin_unlock_irqrestore(&chan->vc.lock, flags);
-+	dma_set_residue(txstate, bytes);
-+
-+	return status;
- }
- 
- static void write_desc_llp(struct axi_dma_hw_desc *desc, dma_addr_t adr)
-@@ -549,6 +571,7 @@ static int dw_axi_dma_set_hw_desc(struct axi_dma_chan *chan,
- 
- 	set_desc_src_master(hw_desc);
- 
-+	hw_desc->len = len;
- 	return 0;
- }
- 
-@@ -575,6 +598,7 @@ dw_axi_dma_chan_prep_cyclic(struct dma_chan *dchan, dma_addr_t dma_addr,
- 	chan->direction = direction;
- 	desc->chan = chan;
- 	chan->cyclic = true;
-+	desc->length = 0;
- 
- 	for (i = 0; i < num_periods; i++) {
- 		hw_desc = &desc->hw_desc[i];
-@@ -584,6 +608,7 @@ dw_axi_dma_chan_prep_cyclic(struct dma_chan *dchan, dma_addr_t dma_addr,
- 		if (status < 0)
- 			goto err_desc_get;
- 
-+		desc->length += hw_desc->len;
- 		/* Set end-of-link to the linked descriptor, so that cyclic
- 		 * callback function can be triggered during interrupt.
- 		 */
-@@ -636,6 +661,7 @@ dw_axi_dma_chan_prep_slave_sg(struct dma_chan *dchan, struct scatterlist *sgl,
- 		goto err_desc_get;
- 
- 	desc->chan = chan;
-+	desc->length = 0;
- 
- 	for_each_sg(sgl, sg, sg_len, i) {
- 		mem = sg_dma_address(sg);
-@@ -645,6 +671,7 @@ dw_axi_dma_chan_prep_slave_sg(struct dma_chan *dchan, struct scatterlist *sgl,
- 		status = dw_axi_dma_set_hw_desc(chan, hw_desc, mem, len);
- 		if (status < 0)
- 			goto err_desc_get;
-+		desc->length += hw_desc->len;
- 	}
- 
- 	/* Set end-of-link to the last link descriptor of list */
-@@ -690,6 +717,7 @@ dma_chan_prep_dma_memcpy(struct dma_chan *dchan, dma_addr_t dst_adr,
- 
- 	desc->chan = chan;
- 	num = 0;
-+	desc->length = 0;
- 	while (len) {
- 		xfer_len = len;
- 
-@@ -742,7 +770,8 @@ dma_chan_prep_dma_memcpy(struct dma_chan *dchan, dma_addr_t dst_adr,
- 		set_desc_src_master(hw_desc);
- 		set_desc_dest_master(hw_desc, desc);
- 
--
-+		hw_desc->len = xfer_len;
-+		desc->length += hw_desc->len;
- 		/* update the length and addresses for the next loop cycle */
- 		len -= xfer_len;
- 		dst_adr += xfer_len;
-@@ -1210,7 +1239,7 @@ static int dw_probe(struct platform_device *pdev)
- 	dw->dma.dst_addr_widths = AXI_DMA_BUSWIDTHS;
- 	dw->dma.directions = BIT(DMA_MEM_TO_MEM);
- 	dw->dma.directions |= BIT(DMA_MEM_TO_DEV) | BIT(DMA_DEV_TO_MEM);
--	dw->dma.residue_granularity = DMA_RESIDUE_GRANULARITY_DESCRIPTOR;
-+	dw->dma.residue_granularity = DMA_RESIDUE_GRANULARITY_BURST;
- 
- 	dw->dma.dev = chip->dev;
- 	dw->dma.device_tx_status = dma_chan_tx_status;
 diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac.h b/drivers/dma/dw-axi-dmac/dw-axi-dmac.h
-index 3498bef5453b..46baf93de617 100644
+index 46baf93de617..3a357f7fda02 100644
 --- a/drivers/dma/dw-axi-dmac/dw-axi-dmac.h
 +++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac.h
-@@ -88,6 +88,7 @@ struct __packed axi_dma_lli {
- struct axi_dma_hw_desc {
- 	struct axi_dma_lli	*lli;
- 	dma_addr_t		llp;
-+	u32			len;
- };
+@@ -63,6 +63,7 @@ struct axi_dma_chip {
+ 	struct device		*dev;
+ 	int			irq;
+ 	void __iomem		*regs;
++	void __iomem		*apb_regs;
+ 	struct clk		*core_clk;
+ 	struct clk		*cfgr_clk;
+ 	struct dw_axi_dma	*dw;
+@@ -169,6 +170,19 @@ static inline struct axi_dma_chan *dchan_to_axi_dma_chan(struct dma_chan *dchan)
+ #define CH_INTSIGNAL_ENA	0x090 /* R/W Chan Interrupt Signal Enable */
+ #define CH_INTCLEAR		0x098 /* W Chan Interrupt Clear */
  
- struct axi_dma_desc {
-@@ -96,6 +97,7 @@ struct axi_dma_desc {
- 	struct virt_dma_desc		vd;
- 	struct axi_dma_chan		*chan;
- 	u32				completed_blocks;
-+	u32				length;
- };
++/* These Apb registers are used by Intel KeemBay SoC */
++#define DMAC_APB_CFG		0x000 /* DMAC Apb Configuration Register */
++#define DMAC_APB_STAT		0x004 /* DMAC Apb Status Register */
++#define DMAC_APB_DEBUG_STAT_0	0x008 /* DMAC Apb Debug Status Register 0 */
++#define DMAC_APB_DEBUG_STAT_1	0x00C /* DMAC Apb Debug Status Register 1 */
++#define DMAC_APB_HW_HS_SEL_0	0x010 /* DMAC Apb HW HS register 0 */
++#define DMAC_APB_HW_HS_SEL_1	0x014 /* DMAC Apb HW HS register 1 */
++#define DMAC_APB_LPI		0x018 /* DMAC Apb Low Power Interface Reg */
++#define DMAC_APB_BYTE_WR_CH_EN	0x01C /* DMAC Apb Byte Write Enable */
++#define DMAC_APB_HALFWORD_WR_CH_EN	0x020 /* DMAC Halfword write enables */
++
++#define UNUSED_CHANNEL		0x3F /* Set unused DMA channel to 0x3F */
++#define MAX_BLOCK_SIZE		0x1000 /* 1024 blocks * 4 bytes data width */
  
- static inline struct device *dchan2dev(struct dma_chan *dchan)
+ /* DMAC_CFG */
+ #define DMAC_EN_POS			0
 -- 
 2.18.0
 
