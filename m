@@ -2,37 +2,36 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=unavailable autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-11.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_GIT autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 42EE7C433E9
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2902CC433E6
 	for <dmaengine@archiver.kernel.org>; Thu,  7 Jan 2021 18:16:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1045223406
-	for <dmaengine@archiver.kernel.org>; Thu,  7 Jan 2021 18:16:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DC6882343B
+	for <dmaengine@archiver.kernel.org>; Thu,  7 Jan 2021 18:16:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729085AbhAGSQN (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Thu, 7 Jan 2021 13:16:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35334 "EHLO
+        id S1729091AbhAGSQI (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Thu, 7 Jan 2021 13:16:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35322 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728066AbhAGSQN (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Thu, 7 Jan 2021 13:16:13 -0500
+        with ESMTP id S1729086AbhAGSQI (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Thu, 7 Jan 2021 13:16:08 -0500
 Received: from xavier.telenet-ops.be (xavier.telenet-ops.be [IPv6:2a02:1800:120:4::f00:14])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E7259C0612FA
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E2B4C0612F9
         for <dmaengine@vger.kernel.org>; Thu,  7 Jan 2021 10:15:28 -0800 (PST)
 Received: from ramsan.of.borg ([84.195.186.194])
         by xavier.telenet-ops.be with bizsmtp
-        id DuFT2400H4C55Sk01uFToz; Thu, 07 Jan 2021 19:15:27 +0100
+        id DuFS2400J4C55Sk01uFSoj; Thu, 07 Jan 2021 19:15:26 +0100
 Received: from rox.of.borg ([192.168.97.57])
         by ramsan.of.borg with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
         (Exim 4.93)
         (envelope-from <geert@linux-m68k.org>)
-        id 1kxZok-001v2p-TK; Thu, 07 Jan 2021 19:15:26 +0100
+        id 1kxZok-001v2j-0N; Thu, 07 Jan 2021 19:15:26 +0100
 Received: from geert by rox.of.borg with local (Exim 4.93)
         (envelope-from <geert@linux-m68k.org>)
-        id 1kxZok-008AZ3-F3; Thu, 07 Jan 2021 19:15:26 +0100
+        id 1kxZoj-008AYq-G1; Thu, 07 Jan 2021 19:15:25 +0100
 From:   Geert Uytterhoeven <geert+renesas@glider.be>
 To:     Vinod Koul <vkoul@kernel.org>, Rob Herring <robh+dt@kernel.org>
 Cc:     Dan Williams <dan.j.williams@intel.com>,
@@ -41,66 +40,47 @@ Cc:     Dan Williams <dan.j.williams@intel.com>,
         dmaengine@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org,
         Geert Uytterhoeven <geert+renesas@glider.be>
-Subject: [PATCH 3/4] dmaengine: rcar-dmac: Add helpers for clearing DMA channel status
-Date:   Thu,  7 Jan 2021 19:15:23 +0100
-Message-Id: <20210107181524.1947173-4-geert+renesas@glider.be>
+Subject: [PATCH 0/4] dmaengine: rcar-dmac: Add support for R-Car V3U
+Date:   Thu,  7 Jan 2021 19:15:20 +0100
+Message-Id: <20210107181524.1947173-1-geert+renesas@glider.be>
 X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20210107181524.1947173-1-geert+renesas@glider.be>
-References: <20210107181524.1947173-1-geert+renesas@glider.be>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Extract the code to clear the status of one or all channels into their
-own helpers, to prepare for the different handling of the R-Car V3U SoC.
+	Hi all,
 
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
----
- drivers/dma/sh/rcar-dmac.c | 15 +++++++++++++--
- 1 file changed, 13 insertions(+), 2 deletions(-)
+This patch series adds support for the Direct Memory Access Controller
+variant in the Renesas R-Car V3U (R8A779A0) SoC, to both DT bindings and
+driver.
 
-diff --git a/drivers/dma/sh/rcar-dmac.c b/drivers/dma/sh/rcar-dmac.c
-index 71cdaf446fcaeba5..990d78849a7de704 100644
---- a/drivers/dma/sh/rcar-dmac.c
-+++ b/drivers/dma/sh/rcar-dmac.c
-@@ -337,6 +337,17 @@ static void rcar_dmac_chan_write(struct rcar_dmac_chan *chan, u32 reg, u32 data)
- 		writel(data, chan->iomem + reg);
- }
- 
-+static void rcar_dmac_chan_clear(struct rcar_dmac *dmac,
-+				 struct rcar_dmac_chan *chan)
-+{
-+	rcar_dmac_write(dmac, RCAR_DMACHCLR, BIT(chan->index));
-+}
-+
-+static void rcar_dmac_chan_clear_all(struct rcar_dmac *dmac)
-+{
-+	rcar_dmac_write(dmac, RCAR_DMACHCLR, dmac->channels_mask);
-+}
-+
- /* -----------------------------------------------------------------------------
-  * Initialization and configuration
-  */
-@@ -452,7 +463,7 @@ static int rcar_dmac_init(struct rcar_dmac *dmac)
- 	u16 dmaor;
- 
- 	/* Clear all channels and enable the DMAC globally. */
--	rcar_dmac_write(dmac, RCAR_DMACHCLR, dmac->channels_mask);
-+	rcar_dmac_chan_clear_all(dmac);
- 	rcar_dmac_write(dmac, RCAR_DMAOR,
- 			RCAR_DMAOR_PRI_FIXED | RCAR_DMAOR_DME);
- 
-@@ -1567,7 +1578,7 @@ static irqreturn_t rcar_dmac_isr_channel(int irq, void *dev)
- 		 * because channel is already stopped in error case.
- 		 * We need to clear register and check DE bit as recovery.
- 		 */
--		rcar_dmac_write(dmac, RCAR_DMACHCLR, 1 << chan->index);
-+		rcar_dmac_chan_clear(dmac, chan);
- 		rcar_dmac_chcr_de_barrier(chan);
- 		reinit = true;
- 		goto spin_lock_end;
+This has been tested on the Renesas Falcon board, using external SPI
+loopback (spi-loopback-test) on MSIOF1 and MSIOF2.
+
+Thanks for your comments!
+
+Geert Uytterhoeven (4):
+  dt-bindings: renesas,rcar-dmac: Add r8a779a0 support
+  dmaengine: rcar-dmac: Add for_each_rcar_dmac_chan() helper
+  dmaengine: rcar-dmac: Add helpers for clearing DMA channel status
+  dmaengine: rcar-dmac: Add support for R-Car V3U
+
+ .../bindings/dma/renesas,rcar-dmac.yaml       |  76 ++++++++-----
+ drivers/dma/sh/rcar-dmac.c                    | 100 ++++++++++++------
+ 2 files changed, 118 insertions(+), 58 deletions(-)
+
 -- 
 2.25.1
 
+Gr{oetje,eeting}s,
+
+						Geert
+
+--
+Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
+
+In personal conversations with technical people, I call myself a hacker. But
+when I'm talking to journalists I just say "programmer" or something like that.
+							    -- Linus Torvalds
