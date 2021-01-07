@@ -2,101 +2,105 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.3 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 740CAC43332
-	for <dmaengine@archiver.kernel.org>; Thu,  7 Jan 2021 16:41:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 42EE7C433E9
+	for <dmaengine@archiver.kernel.org>; Thu,  7 Jan 2021 18:16:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3E07C23403
-	for <dmaengine@archiver.kernel.org>; Thu,  7 Jan 2021 16:41:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1045223406
+	for <dmaengine@archiver.kernel.org>; Thu,  7 Jan 2021 18:16:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728251AbhAGQld (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Thu, 7 Jan 2021 11:41:33 -0500
-Received: from elvis.franken.de ([193.175.24.41]:34782 "EHLO elvis.franken.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727874AbhAGQld (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Thu, 7 Jan 2021 11:41:33 -0500
-Received: from uucp (helo=alpha)
-        by elvis.franken.de with local-bsmtp (Exim 3.36 #1)
-        id 1kxYL4-0000Tv-00; Thu, 07 Jan 2021 17:40:42 +0100
-Received: by alpha.franken.de (Postfix, from userid 1000)
-        id 98E5BC080E; Thu,  7 Jan 2021 17:40:15 +0100 (CET)
-Date:   Thu, 7 Jan 2021 17:40:15 +0100
-From:   Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-To:     Joe Perches <joe@perches.com>
-Cc:     Matt Mackall <mpm@selenic.com>,
-        Herbert Xu <herbert@gondor.apana.org.au>,
-        Dan Williams <dan.j.williams@intel.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        Miquel Raynal <miquel.raynal@bootlin.com>,
-        Richard Weinberger <richard@nod.at>,
-        Vignesh Raghavendra <vigneshr@ti.com>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Alessandro Zummo <a.zummo@towertech.it>,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        Mark Brown <broonie@kernel.org>,
-        Wim Van Sebroeck <wim@linux-watchdog.org>,
-        Guenter Roeck <linux@roeck-us.net>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Jaroslav Kysela <perex@perex.cz>,
-        Takashi Iwai <tiwai@suse.com>, linux-mips@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-crypto@vger.kernel.org,
-        dmaengine@vger.kernel.org, linux-ide@vger.kernel.org,
-        linux-mtd@lists.infradead.org, netdev@vger.kernel.org,
-        linux-rtc@vger.kernel.org, linux-spi@vger.kernel.org,
-        linux-watchdog@vger.kernel.org, alsa-devel@alsa-project.org
-Subject: Re: [PATCH 05/10] dma: tx49 removal
-Message-ID: <20210107164015.GA12533@alpha.franken.de>
-References: <20210105140305.141401-1-tsbogend@alpha.franken.de>
- <20210105140305.141401-6-tsbogend@alpha.franken.de>
- <b84dadc2e98b1986dc800c5f6f202880ed905b38.camel@perches.com>
+        id S1729085AbhAGSQN (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Thu, 7 Jan 2021 13:16:13 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35334 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728066AbhAGSQN (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Thu, 7 Jan 2021 13:16:13 -0500
+Received: from xavier.telenet-ops.be (xavier.telenet-ops.be [IPv6:2a02:1800:120:4::f00:14])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E7259C0612FA
+        for <dmaengine@vger.kernel.org>; Thu,  7 Jan 2021 10:15:28 -0800 (PST)
+Received: from ramsan.of.borg ([84.195.186.194])
+        by xavier.telenet-ops.be with bizsmtp
+        id DuFT2400H4C55Sk01uFToz; Thu, 07 Jan 2021 19:15:27 +0100
+Received: from rox.of.borg ([192.168.97.57])
+        by ramsan.of.borg with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+        (Exim 4.93)
+        (envelope-from <geert@linux-m68k.org>)
+        id 1kxZok-001v2p-TK; Thu, 07 Jan 2021 19:15:26 +0100
+Received: from geert by rox.of.borg with local (Exim 4.93)
+        (envelope-from <geert@linux-m68k.org>)
+        id 1kxZok-008AZ3-F3; Thu, 07 Jan 2021 19:15:26 +0100
+From:   Geert Uytterhoeven <geert+renesas@glider.be>
+To:     Vinod Koul <vkoul@kernel.org>, Rob Herring <robh+dt@kernel.org>
+Cc:     Dan Williams <dan.j.williams@intel.com>,
+        Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+        Phong Hoang <phong.hoang.wz@renesas.com>,
+        dmaengine@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Geert Uytterhoeven <geert+renesas@glider.be>
+Subject: [PATCH 3/4] dmaengine: rcar-dmac: Add helpers for clearing DMA channel status
+Date:   Thu,  7 Jan 2021 19:15:23 +0100
+Message-Id: <20210107181524.1947173-4-geert+renesas@glider.be>
+X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20210107181524.1947173-1-geert+renesas@glider.be>
+References: <20210107181524.1947173-1-geert+renesas@glider.be>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <b84dadc2e98b1986dc800c5f6f202880ed905b38.camel@perches.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On Wed, Jan 06, 2021 at 11:10:38AM -0800, Joe Perches wrote:
-> On Tue, 2021-01-05 at 15:02 +0100, Thomas Bogendoerfer wrote:
-> > Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-> []
-> > diff --git a/drivers/dma/txx9dmac.h b/drivers/dma/txx9dmac.h
-> []
-> > @@ -26,11 +26,6 @@
-> >   * DMA channel.
-> >   */
-> >  
-> > 
-> > -#ifdef CONFIG_MACH_TX49XX
-> > -static inline bool txx9_dma_have_SMPCHN(void)
-> > -{
-> > -	return true;
-> > -}
-> >  #define TXX9_DMA_USE_SIMPLE_CHAIN
-> >  #else
-> >  static inline bool txx9_dma_have_SMPCHN(void)
-> 
-> This doesn't look like it compiles as there's now an #else
-> without an #if
+Extract the code to clear the status of one or all channels into their
+own helpers, to prepare for the different handling of the R-Car V3U SoC.
 
-you are right, no idea what I had in mind while doing that.
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+---
+ drivers/dma/sh/rcar-dmac.c | 15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
 
-Vinod,
-
-as this patch series found a still active user of the platform,
-could you drop the patch from your tree, or do you want a revert
-from me ?
-
-Thomas.
-
+diff --git a/drivers/dma/sh/rcar-dmac.c b/drivers/dma/sh/rcar-dmac.c
+index 71cdaf446fcaeba5..990d78849a7de704 100644
+--- a/drivers/dma/sh/rcar-dmac.c
++++ b/drivers/dma/sh/rcar-dmac.c
+@@ -337,6 +337,17 @@ static void rcar_dmac_chan_write(struct rcar_dmac_chan *chan, u32 reg, u32 data)
+ 		writel(data, chan->iomem + reg);
+ }
+ 
++static void rcar_dmac_chan_clear(struct rcar_dmac *dmac,
++				 struct rcar_dmac_chan *chan)
++{
++	rcar_dmac_write(dmac, RCAR_DMACHCLR, BIT(chan->index));
++}
++
++static void rcar_dmac_chan_clear_all(struct rcar_dmac *dmac)
++{
++	rcar_dmac_write(dmac, RCAR_DMACHCLR, dmac->channels_mask);
++}
++
+ /* -----------------------------------------------------------------------------
+  * Initialization and configuration
+  */
+@@ -452,7 +463,7 @@ static int rcar_dmac_init(struct rcar_dmac *dmac)
+ 	u16 dmaor;
+ 
+ 	/* Clear all channels and enable the DMAC globally. */
+-	rcar_dmac_write(dmac, RCAR_DMACHCLR, dmac->channels_mask);
++	rcar_dmac_chan_clear_all(dmac);
+ 	rcar_dmac_write(dmac, RCAR_DMAOR,
+ 			RCAR_DMAOR_PRI_FIXED | RCAR_DMAOR_DME);
+ 
+@@ -1567,7 +1578,7 @@ static irqreturn_t rcar_dmac_isr_channel(int irq, void *dev)
+ 		 * because channel is already stopped in error case.
+ 		 * We need to clear register and check DE bit as recovery.
+ 		 */
+-		rcar_dmac_write(dmac, RCAR_DMACHCLR, 1 << chan->index);
++		rcar_dmac_chan_clear(dmac, chan);
+ 		rcar_dmac_chcr_de_barrier(chan);
+ 		reinit = true;
+ 		goto spin_lock_end;
 -- 
-Crap can work. Given enough thrust pigs will fly, but it's not necessarily a
-good idea.                                                [ RFC1925, 2.3 ]
+2.25.1
+
