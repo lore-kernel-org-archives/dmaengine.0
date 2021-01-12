@@ -2,35 +2,35 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-19.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+X-Spam-Status: No, score=-19.2 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E9C65C433E6
-	for <dmaengine@archiver.kernel.org>; Tue, 12 Jan 2021 13:09:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6DD53C43333
+	for <dmaengine@archiver.kernel.org>; Tue, 12 Jan 2021 13:12:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AD53622226
-	for <dmaengine@archiver.kernel.org>; Tue, 12 Jan 2021 13:09:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 40C082311D
+	for <dmaengine@archiver.kernel.org>; Tue, 12 Jan 2021 13:12:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729256AbhALNHl (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 12 Jan 2021 08:07:41 -0500
-Received: from mail.kernel.org ([198.145.29.99]:53818 "EHLO mail.kernel.org"
+        id S1730943AbhALNL4 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 12 Jan 2021 08:11:56 -0500
+Received: from mail.kernel.org ([198.145.29.99]:53816 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2388997AbhALM6T (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Tue, 12 Jan 2021 07:58:19 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 3ECDC23333;
-        Tue, 12 Jan 2021 12:57:36 +0000 (UTC)
+        id S2404467AbhALM6C (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Tue, 12 Jan 2021 07:58:02 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPSA id A7FEA2312F;
+        Tue, 12 Jan 2021 12:57:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1610456257;
-        bh=hYeILsnaxK+KNOA/EPB5IzZ+PmRqMc6c+QsaY+EWZpI=;
+        s=k20201202; t=1610456225;
+        bh=1QwLMri3SSpbBR2zKEJETlU4KFc1vge8Amlgwsv0Q4w=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=VBsiv3Cv8BQa+K6hvFMnWjjWFGpVkAiwTWJRTi7mmvJdpRi7sjjE6af3KhfIQZUcR
-         Ohd9E7ur4XSndpAbngM2mKV1J0kVnBxeP+5kovC3gAd31FyojHx8KLn0KrofV9osF3
-         FrrJt18PLjST6VQuuXO9C7lSjvAWh0GXRdjRKA6YPF7/f/GeDzmnVzW50rAjSE+/tI
-         CG84Vs2HWxWstKkbcOp7HHFtlvcbVcplCyuoeu1uMGlkK5GBPfmke+tedgxHNm5a5q
-         nNp7KmKItp2PXrns2NVsbMjMn+4b90zn8dfWZyw+y/jt4KZEJOgHICUQuUpY6WLKbM
-         BZ2hqGrLO2xhQ==
+        b=ggKin2tkgY8CXigN0XEfgXQapLJUP3hsVwGsqjXkpw8RntHZpZqBjOqXAsFDSPlxC
+         QeuUuWL4/3MkWWCRfBikBy2Ax3o6UHXanEIu4lprjfBrP/iSBEaKuodYBeIFeg2yhh
+         213idhxl3G0A9EtJzMdlAVh3LE5MKye/WNlifl0tZHQC8JPKJY6kLeF6EZuVP/EUud
+         k40DckaM8/27TeOFqkfYHh25sL4OXxjckyosyjSrgO8Ey7KmpQY7N3qJE+60aQ7mku
+         q5Au5LMEWWlETFi2px7vbcWibENlKO2vvfFSbx+7FSZ2n2pwOKC+lH+gWjN8qfk24F
+         TefSGCyrKdmJg==
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Cc:     Amelie Delaunay <amelie.delaunay@foss.st.com>,
@@ -38,12 +38,12 @@ Cc:     Amelie Delaunay <amelie.delaunay@foss.st.com>,
         dmaengine@vger.kernel.org,
         linux-stm32@st-md-mailman.stormreply.com,
         linux-arm-kernel@lists.infradead.org
-Subject: [PATCH AUTOSEL 4.19 08/16] dmaengine: stm32-mdma: fix STM32_MDMA_VERY_HIGH_PRIORITY value
-Date:   Tue, 12 Jan 2021 07:57:17 -0500
-Message-Id: <20210112125725.71014-8-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 5.4 15/28] dmaengine: stm32-mdma: fix STM32_MDMA_VERY_HIGH_PRIORITY value
+Date:   Tue, 12 Jan 2021 07:56:31 -0500
+Message-Id: <20210112125645.70739-15-sashal@kernel.org>
 X-Mailer: git-send-email 2.27.0
-In-Reply-To: <20210112125725.71014-1-sashal@kernel.org>
-References: <20210112125725.71014-1-sashal@kernel.org>
+In-Reply-To: <20210112125645.70739-1-sashal@kernel.org>
+References: <20210112125645.70739-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
@@ -67,10 +67,10 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/dma/stm32-mdma.c b/drivers/dma/stm32-mdma.c
-index 9c6867916e890..0681c0fa44cfb 100644
+index ee1cbf3be75d5..718f0779ac598 100644
 --- a/drivers/dma/stm32-mdma.c
 +++ b/drivers/dma/stm32-mdma.c
-@@ -209,7 +209,7 @@
+@@ -199,7 +199,7 @@
  #define STM32_MDMA_MAX_CHANNELS		63
  #define STM32_MDMA_MAX_REQUESTS		256
  #define STM32_MDMA_MAX_BURST		128
