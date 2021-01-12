@@ -2,83 +2,90 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-19.2 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=unavailable autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-19.0 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E0E58C43381
-	for <dmaengine@archiver.kernel.org>; Tue, 12 Jan 2021 13:17:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C86DFC433E6
+	for <dmaengine@archiver.kernel.org>; Tue, 12 Jan 2021 14:15:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B476E22571
-	for <dmaengine@archiver.kernel.org>; Tue, 12 Jan 2021 13:17:33 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6F1E323122
+	for <dmaengine@archiver.kernel.org>; Tue, 12 Jan 2021 14:15:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389912AbhALM5T (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 12 Jan 2021 07:57:19 -0500
-Received: from mail.kernel.org ([198.145.29.99]:53894 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2389896AbhALM5S (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Tue, 12 Jan 2021 07:57:18 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 36A1B23135;
-        Tue, 12 Jan 2021 12:56:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1610456174;
-        bh=wYJJZ/HtArnsWwAlshvCqcvA9V9//VhtLhQMxbX0esU=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=i7ibkV5zAwPA2svHqdnBIMJhHLiplgs3/6CuDQ7LX+x92g+eoYE/F2pvdsEdCIfB7
-         00WFCDHUxhgi6DlZ9FLO89CCTclXBgZtjt8UrAqi+ismjtkq+4NG2bZJgfIYYPF450
-         RxTEEpCCwcquxx326iCbESb+F6YTEat15xGAwt2y9L5TbTxIiN9qVkQm9bdf3Lzx1j
-         QByFtGTFaOCSw6h7hmX3mvKXSsTVfqjsomiGCen751VncB9EXsNEDHph3heVqaqu3d
-         W1U3l03VmVly9oYarbecstgN3V8fBc9yJnths/E6M8wY8aAsuWhz6f3MNIyq5Tz7gZ
-         ouRj16PYP2DGw==
-From:   Sasha Levin <sashal@kernel.org>
-To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Amelie Delaunay <amelie.delaunay@foss.st.com>,
-        Vinod Koul <vkoul@kernel.org>, Sasha Levin <sashal@kernel.org>,
-        dmaengine@vger.kernel.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-arm-kernel@lists.infradead.org
-Subject: [PATCH AUTOSEL 5.10 30/51] dmaengine: stm32-mdma: fix STM32_MDMA_VERY_HIGH_PRIORITY value
-Date:   Tue, 12 Jan 2021 07:55:12 -0500
-Message-Id: <20210112125534.70280-30-sashal@kernel.org>
-X-Mailer: git-send-email 2.27.0
-In-Reply-To: <20210112125534.70280-1-sashal@kernel.org>
-References: <20210112125534.70280-1-sashal@kernel.org>
+        id S1727262AbhALOPG (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 12 Jan 2021 09:15:06 -0500
+Received: from fllv0015.ext.ti.com ([198.47.19.141]:34820 "EHLO
+        fllv0015.ext.ti.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725613AbhALOPG (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Tue, 12 Jan 2021 09:15:06 -0500
+Received: from lelv0265.itg.ti.com ([10.180.67.224])
+        by fllv0015.ext.ti.com (8.15.2/8.15.2) with ESMTP id 10CEEM61083911;
+        Tue, 12 Jan 2021 08:14:22 -0600
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
+        s=ti-com-17Q1; t=1610460862;
+        bh=esTShs76yvdLhD/D3aKWd2PmXrVE3wDszC9rVv+VngA=;
+        h=From:To:CC:Subject:Date;
+        b=wY3yeKCLVpMFnix6k6e7c98qQ+uKeLEm+/io0WkUl871wCmeScOE7D4y2fTyrh+00
+         o4A3A36A4RzjLc2SrQawy4uCGJcvILfkt3/xB65V4eBweluF7PHg1JuRBCnHOU0EIa
+         OwKUjtu0sX2A9b9T/r0lVDVJDsZfbR8BuaPPvbHg=
+Received: from DLEE113.ent.ti.com (dlee113.ent.ti.com [157.170.170.24])
+        by lelv0265.itg.ti.com (8.15.2/8.15.2) with ESMTPS id 10CEEMMO038587
+        (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
+        Tue, 12 Jan 2021 08:14:22 -0600
+Received: from DLEE108.ent.ti.com (157.170.170.38) by DLEE113.ent.ti.com
+ (157.170.170.24) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1979.3; Tue, 12
+ Jan 2021 08:14:22 -0600
+Received: from lelv0327.itg.ti.com (10.180.67.183) by DLEE108.ent.ti.com
+ (157.170.170.38) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1979.3 via
+ Frontend Transport; Tue, 12 Jan 2021 08:14:22 -0600
+Received: from ula0132425.ent.ti.com (ileax41-snat.itg.ti.com [10.172.224.153])
+        by lelv0327.itg.ti.com (8.15.2/8.15.2) with ESMTP id 10CEEJml009102;
+        Tue, 12 Jan 2021 08:14:20 -0600
+From:   Vignesh Raghavendra <vigneshr@ti.com>
+To:     Peter Ujfalusi <peter.ujfalusi@gmail.com>,
+        Vinod Koul <vkoul@kernel.org>
+CC:     Dan Williams <dan.j.williams@intel.com>,
+        <dmaengine@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        Vignesh Raghavendra <vigneshr@ti.com>
+Subject: [PATCH] dmaengine: ti: k3-udma: Set rflow count for BCDMA split channels
+Date:   Tue, 12 Jan 2021 19:44:03 +0530
+Message-ID: <20210112141403.30286-1-vigneshr@ti.com>
+X-Mailer: git-send-email 2.30.0
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-EXCLAIMER-MD-CONFIG: e1e8a2fd-e40a-4ac6-ac9b-f7e9cc9ee180
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-From: Amelie Delaunay <amelie.delaunay@foss.st.com>
+BCDMA RX channels have one flow per channel, therefore set the rflow_cnt
+to rchan_cnt.
 
-[ Upstream commit e1263f9277bad198c2acc8092a41aea1edbea0e4 ]
+Without this patch, request for BCDMA RX channel allocation fails as
+rflow_cnt is 0 thus fails to reserve a rflow for the channel.
 
-STM32_MDMA_VERY_HIGH_PRIORITY is b11 not 0x11, so fix it with 0x3.
-
-Signed-off-by: Amelie Delaunay <amelie.delaunay@foss.st.com>
-Link: https://lore.kernel.org/r/20210104142045.25583-1-amelie.delaunay@foss.st.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 8844898028d4 ("dmaengine: ti: k3-udma: Add support for BCDMA channel TPL handling")
+Signed-off-by: Vignesh Raghavendra <vigneshr@ti.com>
 ---
- drivers/dma/stm32-mdma.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/dma/ti/k3-udma.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/dma/stm32-mdma.c b/drivers/dma/stm32-mdma.c
-index 08cfbfab837bb..ca97cbe433651 100644
---- a/drivers/dma/stm32-mdma.c
-+++ b/drivers/dma/stm32-mdma.c
-@@ -199,7 +199,7 @@
- #define STM32_MDMA_MAX_CHANNELS		63
- #define STM32_MDMA_MAX_REQUESTS		256
- #define STM32_MDMA_MAX_BURST		128
--#define STM32_MDMA_VERY_HIGH_PRIORITY	0x11
-+#define STM32_MDMA_VERY_HIGH_PRIORITY	0x3
- 
- enum stm32_mdma_trigger_mode {
- 	STM32_MDMA_BUFFER,
+diff --git a/drivers/dma/ti/k3-udma.c b/drivers/dma/ti/k3-udma.c
+index 298460438bb4..a1af59d901be 100644
+--- a/drivers/dma/ti/k3-udma.c
++++ b/drivers/dma/ti/k3-udma.c
+@@ -4305,6 +4305,7 @@ static int udma_get_mmrs(struct platform_device *pdev, struct udma_dev *ud)
+ 		ud->bchan_cnt = BCDMA_CAP2_BCHAN_CNT(cap2);
+ 		ud->tchan_cnt = BCDMA_CAP2_TCHAN_CNT(cap2);
+ 		ud->rchan_cnt = BCDMA_CAP2_RCHAN_CNT(cap2);
++		ud->rflow_cnt = ud->rchan_cnt;
+ 		break;
+ 	case DMA_TYPE_PKTDMA:
+ 		cap4 = udma_read(ud->mmrs[MMR_GCFG], 0x30);
 -- 
-2.27.0
+2.30.0
 
