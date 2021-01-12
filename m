@@ -2,60 +2,83 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-19.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
+	autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 20753C433DB
-	for <dmaengine@archiver.kernel.org>; Tue, 12 Jan 2021 12:32:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E9C65C433E6
+	for <dmaengine@archiver.kernel.org>; Tue, 12 Jan 2021 13:09:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D27A722BE9
-	for <dmaengine@archiver.kernel.org>; Tue, 12 Jan 2021 12:32:33 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AD53622226
+	for <dmaengine@archiver.kernel.org>; Tue, 12 Jan 2021 13:09:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728906AbhALMcM (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 12 Jan 2021 07:32:12 -0500
-Received: from mail.kernel.org ([198.145.29.99]:48122 "EHLO mail.kernel.org"
+        id S1729256AbhALNHl (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 12 Jan 2021 08:07:41 -0500
+Received: from mail.kernel.org ([198.145.29.99]:53818 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726758AbhALMcM (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Tue, 12 Jan 2021 07:32:12 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPSA id CCD3F23109;
-        Tue, 12 Jan 2021 12:31:30 +0000 (UTC)
+        id S2388997AbhALM6T (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Tue, 12 Jan 2021 07:58:19 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 3ECDC23333;
+        Tue, 12 Jan 2021 12:57:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1610454692;
-        bh=BtD61F+RAP3Yv3WfEUjwIDVe48zMPhJpisO2OtiId90=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=YuPDxeFiitS2kKFvGgE7iRl8XKs6QeHdTqOebZfJb3wfW499VmSKT6o9Dj7IBeqar
-         WlQEUHtRvVEneCm9zePEkO68iG1Af0Usb6+Rur53obIYiKSjQSzZCiyShkEVceJsOT
-         kKTkqN1OQOP4HOpWdb8UUbKWrxU3czq7+ELhQKEHPfAupzrxNjZOrOPcCewGJIGRjP
-         6vv6THKmCTCribmRuxfig4kmtbCEetXeHP7LYGSwdTH3BiqbIQ/SD5O++GEfMasbfz
-         iAvU5K738yBEu/LH6ehrjG4QyuMxaB1iCDoeY/jLlewp2Cr34NBbf4aDnWwePzoN/0
-         s08pGBtLQGBXw==
-Date:   Tue, 12 Jan 2021 18:01:27 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Cc:     dan.j.williams@intel.com, afaerber@suse.de,
-        manivannan.sadhasivam@linaro.org, dmaengine@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        kernel-janitors@vger.kernel.org
-Subject: Re: [PATCH] dmaengine: owl-dma: Fix a resource leak in the remove
- function
-Message-ID: <20210112123127.GT2771@vkoul-mobl>
-References: <20201212162535.95727-1-christophe.jaillet@wanadoo.fr>
+        s=k20201202; t=1610456257;
+        bh=hYeILsnaxK+KNOA/EPB5IzZ+PmRqMc6c+QsaY+EWZpI=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=VBsiv3Cv8BQa+K6hvFMnWjjWFGpVkAiwTWJRTi7mmvJdpRi7sjjE6af3KhfIQZUcR
+         Ohd9E7ur4XSndpAbngM2mKV1J0kVnBxeP+5kovC3gAd31FyojHx8KLn0KrofV9osF3
+         FrrJt18PLjST6VQuuXO9C7lSjvAWh0GXRdjRKA6YPF7/f/GeDzmnVzW50rAjSE+/tI
+         CG84Vs2HWxWstKkbcOp7HHFtlvcbVcplCyuoeu1uMGlkK5GBPfmke+tedgxHNm5a5q
+         nNp7KmKItp2PXrns2NVsbMjMn+4b90zn8dfWZyw+y/jt4KZEJOgHICUQuUpY6WLKbM
+         BZ2hqGrLO2xhQ==
+From:   Sasha Levin <sashal@kernel.org>
+To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
+Cc:     Amelie Delaunay <amelie.delaunay@foss.st.com>,
+        Vinod Koul <vkoul@kernel.org>, Sasha Levin <sashal@kernel.org>,
+        dmaengine@vger.kernel.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        linux-arm-kernel@lists.infradead.org
+Subject: [PATCH AUTOSEL 4.19 08/16] dmaengine: stm32-mdma: fix STM32_MDMA_VERY_HIGH_PRIORITY value
+Date:   Tue, 12 Jan 2021 07:57:17 -0500
+Message-Id: <20210112125725.71014-8-sashal@kernel.org>
+X-Mailer: git-send-email 2.27.0
+In-Reply-To: <20210112125725.71014-1-sashal@kernel.org>
+References: <20210112125725.71014-1-sashal@kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20201212162535.95727-1-christophe.jaillet@wanadoo.fr>
+X-stable: review
+X-Patchwork-Hint: Ignore
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On 12-12-20, 17:25, Christophe JAILLET wrote:
-> A 'dma_pool_destroy()' call is missing in the remove function.
-> Add it.
-> 
-> This call is already made in the error handling path of the probe function.
+From: Amelie Delaunay <amelie.delaunay@foss.st.com>
 
-Applied, thanks
+[ Upstream commit e1263f9277bad198c2acc8092a41aea1edbea0e4 ]
 
+STM32_MDMA_VERY_HIGH_PRIORITY is b11 not 0x11, so fix it with 0x3.
+
+Signed-off-by: Amelie Delaunay <amelie.delaunay@foss.st.com>
+Link: https://lore.kernel.org/r/20210104142045.25583-1-amelie.delaunay@foss.st.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ drivers/dma/stm32-mdma.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/dma/stm32-mdma.c b/drivers/dma/stm32-mdma.c
+index 9c6867916e890..0681c0fa44cfb 100644
+--- a/drivers/dma/stm32-mdma.c
++++ b/drivers/dma/stm32-mdma.c
+@@ -209,7 +209,7 @@
+ #define STM32_MDMA_MAX_CHANNELS		63
+ #define STM32_MDMA_MAX_REQUESTS		256
+ #define STM32_MDMA_MAX_BURST		128
+-#define STM32_MDMA_VERY_HIGH_PRIORITY	0x11
++#define STM32_MDMA_VERY_HIGH_PRIORITY	0x3
+ 
+ enum stm32_mdma_trigger_mode {
+ 	STM32_MDMA_BUFFER,
 -- 
-~Vinod
+2.27.0
+
