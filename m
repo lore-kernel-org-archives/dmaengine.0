@@ -5,65 +5,65 @@ X-Spam-Level:
 X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=unavailable autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DAE7FC433E0
-	for <dmaengine@archiver.kernel.org>; Wed, 13 Jan 2021 11:48:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3989EC433DB
+	for <dmaengine@archiver.kernel.org>; Wed, 13 Jan 2021 11:48:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 877BE233F7
+	by mail.kernel.org (Postfix) with ESMTP id DCF87233F9
 	for <dmaengine@archiver.kernel.org>; Wed, 13 Jan 2021 11:48:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726507AbhAMLr6 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 13 Jan 2021 06:47:58 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58682 "EHLO
+        id S1726475AbhAMLsD (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 13 Jan 2021 06:48:03 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58692 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726262AbhAMLr5 (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Wed, 13 Jan 2021 06:47:57 -0500
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 11469C061795;
-        Wed, 13 Jan 2021 03:47:17 -0800 (PST)
-Received: by mail-lf1-x12c.google.com with SMTP id m25so2274492lfc.11;
-        Wed, 13 Jan 2021 03:47:16 -0800 (PST)
+        with ESMTP id S1726262AbhAMLsA (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Wed, 13 Jan 2021 06:48:00 -0500
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8A6E8C0617A2;
+        Wed, 13 Jan 2021 03:47:19 -0800 (PST)
+Received: by mail-lf1-x12b.google.com with SMTP id o13so2323183lfr.3;
+        Wed, 13 Jan 2021 03:47:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=XOWDCh1gFoGjCDTknGsRVbOCLHvmp/ljiNTScRqytM8=;
-        b=bXsv/KDma5fzkcKjeibP6rAesSCpsaFY0O0sHDjL8xHARpWNNi0sB4ZUcbq3QKHs2m
-         YX0UhAZZx1FWsqhanGMTe0KuATSHEaZjPqP8mHSD+uQlth4x2TAzNE1m/fdD2N/1bAOD
-         cy0/LLHREUuIAoWut6uEOUl06jpeQHvRipkop5Ff8crKjK9BCRi+NM+TByvkDYUDCbZF
-         9NlKFFzY8AAHXH+Wsty0glTm5QTmHfMbzmNP2Tl4PGi8v/TLUdH35ON0OG3PieRFbQSM
-         4wRCwUyzZbytiNmWcU+MCghO2W/+MNN0WQP+Ar3Mk6pHDlpPwRVBSlkZOqPtZJJ07Vy7
-         mhuw==
+        bh=fDwZd0C6Xpa6Bs5HyRFu6WqGn8vAbpuXSME/AOigppU=;
+        b=LZhlPPBE3UNvtZEExpjfnWBnuXyEyeiPG18huM6EcwxstsEB0h6GNsC9Cf5cmtOAjX
+         69Hj12Rqic7fFHmXUbh4ZNtzl2+dC/jZ6LTjYbcS4TPPf9RlpXksSLRKepHjeZ32nhM8
+         d2+8Yog1HCaY5AxCx8N2cReVzj01Hld42Ikxo8ZhnFfcNnuOHaBr4fPwxX5sP6BmuY82
+         O8oe6v3QTzo8zT0kqRUztc+IF5wDbkqRTlYoWIsmsPGSMoC+LE6rPNPpNP/CsjsqcvrG
+         a3ErF5kBeO+Dcy9JcrrREXOEN13JhI1DyemcnM2eY9bgGLrNmOu7rZ2yeKUAfNFTZpBz
+         QwZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=XOWDCh1gFoGjCDTknGsRVbOCLHvmp/ljiNTScRqytM8=;
-        b=oflDWUA+QaC/V2w5sfNHPw5Nw+0IzYIOc+DGKUzrHHhkMUW+IJEmAgRl5l9kfUTAMy
-         38oa17WyEzLtOonk13MsWRvuys3568UzfYLcCLiR90AMh7qEkzLMqpT5io2rNrqlgj7n
-         zp5Z+Cpz3I3HceLWmTxHQ/c6JxwghTNGWxmZ6ZUPB5XILsEksC9OTgRssre9zM8CTgrX
-         7h65xxyTrvt7cf5ALedn3TEUJUiY/q85SmgjImVwEiQkt15fTUCWP+b0I2zmURcIt3oG
-         cQsoljO1QdM6zUFg4nQYgzBbqJZKJd2CMDs/M7rdQBlFMLyf8YCeK37uAbXdMQ9W1tDZ
-         Rvig==
-X-Gm-Message-State: AOAM532yUYyAlQHWb6hUea8vzzOfCPA+BAbmVEv7fGf9GnOKx1rCNDGr
-        I5FE4Jw+H6ccStk4xf4yh0E=
-X-Google-Smtp-Source: ABdhPJwC8pjwfM8yH2xCMnXs3oCho97D4X+NuIY4CNGJ48fhoppBkEdCMWisSZ3Y+dvAU7AtfRbpgA==
-X-Received: by 2002:a05:6512:21a5:: with SMTP id c5mr699803lft.423.1610538435636;
-        Wed, 13 Jan 2021 03:47:15 -0800 (PST)
+        bh=fDwZd0C6Xpa6Bs5HyRFu6WqGn8vAbpuXSME/AOigppU=;
+        b=X2Uxpfn9PCNqMotGQqslQm7OI3MG9AM0ZcvS4wwYe5hKPRllDgJqeCzJbURMkRok1e
+         4Y27HPjC6/0t9OHY8VwPyLlfPFFF9yZZmzBUG4s5iQJ73LGAEwjyN1Uk+gsiq3UH9CrV
+         jx0JNEQxvz7F/E9sokrDKEkxUKgWVCVeyZ8d5QHMKBjcfsUTDLme8cEEoGNt1lp7n5Pr
+         QjVrp3JO/CR41iB4K23mpxykSM+KbHNzACFo5qkjlqiOTvh/nNDsdhgLaYF7KMAcAFY9
+         lEXo4y5U2PPbU/MbXY3koEJjD2fRqm2tqxgmZBK6YhFzCJDa3pKILk/WTQHRcZrZahxd
+         OQnA==
+X-Gm-Message-State: AOAM533Rk+EBSKaJpkzZ5wxKAvYVhC9C/L3Ze7MCO51u3SovnwlIs4YL
+        KHYJJxTfk8y0MPm73K9uqH8=
+X-Google-Smtp-Source: ABdhPJyHV49q1AH5CNTCnNESmg3AlQiSg17asCYmBkUVU2B/1fDKZdYaqOCxQfVw7XXB3zB7rhL3JQ==
+X-Received: by 2002:a19:48ce:: with SMTP id v197mr723627lfa.359.1610538438059;
+        Wed, 13 Jan 2021 03:47:18 -0800 (PST)
 Received: from localhost.localdomain (91-157-87-152.elisa-laajakaista.fi. [91.157.87.152])
-        by smtp.gmail.com with ESMTPSA id f19sm186489lfc.71.2021.01.13.03.47.14
+        by smtp.gmail.com with ESMTPSA id f19sm186489lfc.71.2021.01.13.03.47.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 13 Jan 2021 03:47:15 -0800 (PST)
+        Wed, 13 Jan 2021 03:47:17 -0800 (PST)
 From:   Peter Ujfalusi <peter.ujfalusi@gmail.com>
 To:     vkoul@kernel.org
 Cc:     dan.j.williams@intel.com, linux-kernel@vger.kernel.org,
         dmaengine@vger.kernel.org, vigneshr@ti.com,
         grygorii.strashko@ti.com, kishon@ti.com
-Subject: [PATCH v2 1/3] dmaengine: Extend the dmaengine_alignment for 128 and 256 bytes
-Date:   Wed, 13 Jan 2021 13:49:21 +0200
-Message-Id: <20210113114923.9231-2-peter.ujfalusi@gmail.com>
+Subject: [PATCH v2 3/3] dmaengine: ti: k3-udma: Do not initialize ret in tisci channel config functions
+Date:   Wed, 13 Jan 2021 13:49:23 +0200
+Message-Id: <20210113114923.9231-4-peter.ujfalusi@gmail.com>
 X-Mailer: git-send-email 2.30.0
 In-Reply-To: <20210113114923.9231-1-peter.ujfalusi@gmail.com>
 References: <20210113114923.9231-1-peter.ujfalusi@gmail.com>
@@ -73,33 +73,81 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-From: Peter Ujfalusi <peter.ujfalusi@ti.com>
+The ret does not need to be initialized to 0 in the tisci channel config
+functions.
 
-Some DMA device can benefit with higher order of alignment than the maximum
-of 64 bytes currently defined.
-
-Define 128 and 256 bytes alignment for these devices.
-
-Signed-off-by: Peter Ujfalusi <peter.ujfalusi@ti.com>
 Signed-off-by: Peter Ujfalusi <peter.ujfalusi@gmail.com>
-Tested-by: Kishon Vijay Abraham I <kishon@ti.com>
 ---
- include/linux/dmaengine.h | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/dma/ti/k3-udma.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/include/linux/dmaengine.h b/include/linux/dmaengine.h
-index 68130f5f599e..004736b6a9c8 100644
---- a/include/linux/dmaengine.h
-+++ b/include/linux/dmaengine.h
-@@ -745,6 +745,8 @@ enum dmaengine_alignment {
- 	DMAENGINE_ALIGN_16_BYTES = 4,
- 	DMAENGINE_ALIGN_32_BYTES = 5,
- 	DMAENGINE_ALIGN_64_BYTES = 6,
-+	DMAENGINE_ALIGN_128_BYTES = 7,
-+	DMAENGINE_ALIGN_256_BYTES = 8,
- };
+diff --git a/drivers/dma/ti/k3-udma.c b/drivers/dma/ti/k3-udma.c
+index 1030c2ff487a..4c0935c6930c 100644
+--- a/drivers/dma/ti/k3-udma.c
++++ b/drivers/dma/ti/k3-udma.c
+@@ -1830,7 +1830,7 @@ static int udma_tisci_m2m_channel_config(struct udma_chan *uc)
+ 	struct udma_tchan *tchan = uc->tchan;
+ 	struct udma_rchan *rchan = uc->rchan;
+ 	u8 burst_size = 0;
+-	int ret = 0;
++	int ret;
+ 	u8 tpl;
  
- /**
+ 	/* Non synchronized - mem to mem type of transfer */
+@@ -1889,7 +1889,7 @@ static int bcdma_tisci_m2m_channel_config(struct udma_chan *uc)
+ 	struct ti_sci_msg_rm_udmap_tx_ch_cfg req_tx = { 0 };
+ 	struct udma_bchan *bchan = uc->bchan;
+ 	u8 burst_size = 0;
+-	int ret = 0;
++	int ret;
+ 	u8 tpl;
+ 
+ 	if (ud->match_data->flags & UDMA_FLAG_BURST_SIZE) {
+@@ -1923,7 +1923,7 @@ static int udma_tisci_tx_channel_config(struct udma_chan *uc)
+ 	int tc_ring = k3_ringacc_get_ring_id(tchan->tc_ring);
+ 	struct ti_sci_msg_rm_udmap_tx_ch_cfg req_tx = { 0 };
+ 	u32 mode, fetch_size;
+-	int ret = 0;
++	int ret;
+ 
+ 	if (uc->config.pkt_mode) {
+ 		mode = TI_SCI_RM_UDMAP_CHAN_TYPE_PKT_PBRR;
+@@ -1964,7 +1964,7 @@ static int bcdma_tisci_tx_channel_config(struct udma_chan *uc)
+ 	const struct ti_sci_rm_udmap_ops *tisci_ops = tisci_rm->tisci_udmap_ops;
+ 	struct udma_tchan *tchan = uc->tchan;
+ 	struct ti_sci_msg_rm_udmap_tx_ch_cfg req_tx = { 0 };
+-	int ret = 0;
++	int ret;
+ 
+ 	req_tx.valid_params = TISCI_BCDMA_TCHAN_VALID_PARAMS;
+ 	req_tx.nav_id = tisci_rm->tisci_dev_id;
+@@ -1997,7 +1997,7 @@ static int udma_tisci_rx_channel_config(struct udma_chan *uc)
+ 	struct ti_sci_msg_rm_udmap_rx_ch_cfg req_rx = { 0 };
+ 	struct ti_sci_msg_rm_udmap_flow_cfg flow_req = { 0 };
+ 	u32 mode, fetch_size;
+-	int ret = 0;
++	int ret;
+ 
+ 	if (uc->config.pkt_mode) {
+ 		mode = TI_SCI_RM_UDMAP_CHAN_TYPE_PKT_PBRR;
+@@ -2074,7 +2074,7 @@ static int bcdma_tisci_rx_channel_config(struct udma_chan *uc)
+ 	const struct ti_sci_rm_udmap_ops *tisci_ops = tisci_rm->tisci_udmap_ops;
+ 	struct udma_rchan *rchan = uc->rchan;
+ 	struct ti_sci_msg_rm_udmap_rx_ch_cfg req_rx = { 0 };
+-	int ret = 0;
++	int ret;
+ 
+ 	req_rx.valid_params = TISCI_BCDMA_RCHAN_VALID_PARAMS;
+ 	req_rx.nav_id = tisci_rm->tisci_dev_id;
+@@ -2094,7 +2094,7 @@ static int pktdma_tisci_rx_channel_config(struct udma_chan *uc)
+ 	const struct ti_sci_rm_udmap_ops *tisci_ops = tisci_rm->tisci_udmap_ops;
+ 	struct ti_sci_msg_rm_udmap_rx_ch_cfg req_rx = { 0 };
+ 	struct ti_sci_msg_rm_udmap_flow_cfg flow_req = { 0 };
+-	int ret = 0;
++	int ret;
+ 
+ 	req_rx.valid_params = TISCI_BCDMA_RCHAN_VALID_PARAMS;
+ 	req_rx.nav_id = tisci_rm->tisci_dev_id;
 -- 
 2.30.0
 
