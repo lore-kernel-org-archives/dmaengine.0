@@ -5,245 +5,75 @@ X-Spam-Level:
 X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=unavailable autolearn_force=no version=3.4.0
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EB932C4332D
-	for <dmaengine@archiver.kernel.org>; Fri, 15 Jan 2021 09:58:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 46605C433E0
+	for <dmaengine@archiver.kernel.org>; Fri, 15 Jan 2021 10:02:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A3516238A1
-	for <dmaengine@archiver.kernel.org>; Fri, 15 Jan 2021 09:58:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EDCEE23403
+	for <dmaengine@archiver.kernel.org>; Fri, 15 Jan 2021 10:02:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728897AbhAOJ6B (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 15 Jan 2021 04:58:01 -0500
-Received: from mga07.intel.com ([134.134.136.100]:10905 "EHLO mga07.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728971AbhAOJ57 (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Fri, 15 Jan 2021 04:57:59 -0500
-IronPort-SDR: /1K4ferONoqXKgUIchnWcrZi1fOgafLiKEGRvwr44G7IhAunkihCo2UOLfjyz27LLmOQL9n9OG
- 8RJDtvVz3tyw==
-X-IronPort-AV: E=McAfee;i="6000,8403,9864"; a="242596629"
-X-IronPort-AV: E=Sophos;i="5.79,349,1602572400"; 
-   d="scan'208";a="242596629"
-Received: from orsmga006.jf.intel.com ([10.7.209.51])
-  by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Jan 2021 01:56:17 -0800
-IronPort-SDR: +pif3MmG5DIcLRHM0k7nhGgfMTA7YLVCbH5BEUwnotP7FuaGBeAOzyXUZH03D3ehozqBeTcX8k
- LNaaveAztJTQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.79,349,1602572400"; 
-   d="scan'208";a="352762504"
-Received: from sgsxdev004.isng.phoenix.local (HELO localhost) ([10.226.81.179])
-  by orsmga006.jf.intel.com with ESMTP; 15 Jan 2021 01:56:14 -0800
-From:   Amireddy Mallikarjuna reddy <mallikarjunax.reddy@linux.intel.com>
-To:     dmaengine@vger.kernel.org, vkoul@kernel.org,
-        devicetree@vger.kernel.org, robh+dt@kernel.org
-Cc:     linux-kernel@vger.kernel.org, andriy.shevchenko@intel.com,
-        chuanhua.lei@linux.intel.com, cheol.yong.kim@intel.com,
-        qi-ming.wu@intel.com, mallikarjunax.reddy@linux.intel.com,
-        malliamireddy009@gmail.com, rtanwar@maxlinear.com,
-        lchuanhua@maxlinear.com
-Subject: [PATCH v11 1/2] dt-bindings: dma: Add bindings for Intel LGM SoC
-Date:   Fri, 15 Jan 2021 17:56:02 +0800
-Message-Id: <0864b9bfa6e2b8b5e7ad9a7a739ca3274f66493c.1610703653.git.mallikarjunax.reddy@linux.intel.com>
+        id S1731428AbhAOKBh (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 15 Jan 2021 05:01:37 -0500
+Received: from smtp25.cstnet.cn ([159.226.251.25]:53784 "EHLO cstnet.cn"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1731351AbhAOKBg (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Fri, 15 Jan 2021 05:01:36 -0500
+Received: from localhost.localdomain (unknown [124.16.141.241])
+        by APP-05 (Coremail) with SMTP id zQCowACHUuPLZwFgY8pSAA--.13705S2;
+        Fri, 15 Jan 2021 18:00:43 +0800 (CST)
+From:   Xu Wang <vulab@iscas.ac.cn>
+To:     agross@kernel.org, bjorn.andersson@linaro.org, vkoul@kernel.org,
+        dan.j.williams@intel.com
+Cc:     linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH] dmaengine: qcom: gpi: Remove unneeded semicolon
+Date:   Fri, 15 Jan 2021 10:00:40 +0000
+Message-Id: <20210115100040.33364-1-vulab@iscas.ac.cn>
 X-Mailer: git-send-email 2.17.1
-In-Reply-To: <cover.1610703653.git.mallikarjunax.reddy@linux.intel.com>
-References: <cover.1610703653.git.mallikarjunax.reddy@linux.intel.com>
-In-Reply-To: <cover.1610703653.git.mallikarjunax.reddy@linux.intel.com>
-References: <cover.1610703653.git.mallikarjunax.reddy@linux.intel.com>
+X-CM-TRANSID: zQCowACHUuPLZwFgY8pSAA--.13705S2
+X-Coremail-Antispam: 1UD129KBjvdXoW7Gw4fXw1DKF1xuw4rCw1fXrb_yoW3GFbEkF
+        4UZryxXr4YkF1q9rnxCrZrAryqv3WUur1ruF4vqrZxtws8Xr90q39rXr1vyw18urZrGFnI
+        kryUXr48JF4SkjkaLaAFLSUrUUUUUb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
+        9fnUUIcSsGvfJTRUUUb2xYjsxI4VW3JwAYFVCjjxCrM7AC8VAFwI0_Gr0_Xr1l1xkIjI8I
+        6I8E6xAIw20EY4v20xvaj40_Wr0E3s1l1IIY67AEw4v_Jr0_Jr4l8cAvFVAK0II2c7xJM2
+        8CjxkF64kEwVA0rcxSw2x7M28EF7xvwVC0I7IYx2IY67AKxVW8JVW5JwA2z4x0Y4vE2Ix0
+        cI8IcVCY1x0267AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIE14v26F4UJVW0owA2z4x0Y4vEx4
+        A2jsIEc7CjxVAFwI0_Cr1j6rxdM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI
+        64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1Y6r17McIj6I8E87Iv67AKxVWxJVW8Jr
+        1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcxkI7VAKI48JMxkIecxEwVAFwVW8twCF04k2
+        0xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E14v26r1j6r18MI
+        8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw1lIxkGc2Ij64vIr41l
+        IxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Gr0_Cr1lIx
+        AIcVCF04k26cxKx2IYs7xG6Fyj6rWUJwCI42IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E
+        87Iv6xkF7I0E14v26r4j6r4UJbIYCTnIWIevJa73UjIFyTuYvjxU75l1DUUUU
+X-Originating-IP: [124.16.141.241]
+X-CM-SenderInfo: pyxotu46lvutnvoduhdfq/1tbiCQcCA102Z3uUPQAAsR
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Add DT bindings YAML schema for DMA controller driver
-of Lightning Mountain (LGM) SoC.
+fix semicolon.cocci warning:
+drivers/dma/qcom/gpi.c:1703:2-3: Unneeded semicolon
 
-Signed-off-by: Amireddy Mallikarjuna reddy <mallikarjunax.reddy@linux.intel.com>
-Reviewed-by: Rob Herring <robh@kernel.org>
+Signed-off-by: Xu Wang <vulab@iscas.ac.cn>
 ---
-v1:
-- Initial version.
+ drivers/dma/qcom/gpi.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-v2:
-- Fix bot errors.
-
-v3:
-- No change.
-
-v4:
-- Address Thomas langer comments
-  - use node name pattern as dma-controller as in common binding.
-  - Remove "_" (underscore) in instance name.
-  - Remove "port-" and "chan-" in attribute name for both 'dma-ports' & 'dma-channels' child nodes.
-
-v5:
-- Moved some of the attributes in 'dma-ports' & 'dma-channels' child nodes to dma client/consumer side as cells in 'dmas' properties.
-
-v6:
-- Add additionalProperties: false
-- completely removed 'dma-ports' and 'dma-channels' child nodes.
-- Moved channel dt properties to client side dmas.
-- Use standard dma-channels and dma-channel-mask properties.
-- Documented reset-names
-- Add description for dma-cells
-
-v7:
-- modified compatible to oneof
-- Reduced number of dma-cells to 3
-- Fine tune the description of some properties.
-
-v7-resend:
-- rebase to 5.10-rc1
-- No change.
-
-v8:
-- rebased to 5.10-rc3
-- Fixing the bot issues (wrong indentation)
-
-v9:
-- Use 'enum' instead of oneOf+const
-- Drop '#dma-cells' in required:, already covered in dma-common.yaml
-- Drop nodename Already covered by dma-controller.yaml
-
-v10:
-- rebased to 5.10-rc6
-- Add Reviewed-by: Rob Herring <robh@kernel.org>
-- Fixed typo.
-- moved property dma-desc-in-sram to driver side.
-- Moved property dma-orrc to driver side.
-
-v10-resend:
-- rebased to 5.10
-- No change
-
-v11:
-- Since v10 was sent, there have been some fixes for JSON pointers and tools check now got this is missing a '/'.
-  Add missing a '/' in '/schemas/types.yaml#definitions/uint32'
----
- .../devicetree/bindings/dma/intel,ldma.yaml   | 116 ++++++++++++++++++
- 1 file changed, 116 insertions(+)
- create mode 100644 Documentation/devicetree/bindings/dma/intel,ldma.yaml
-
-diff --git a/Documentation/devicetree/bindings/dma/intel,ldma.yaml b/Documentation/devicetree/bindings/dma/intel,ldma.yaml
-new file mode 100644
-index 000000000000..a5c4be783593
---- /dev/null
-+++ b/Documentation/devicetree/bindings/dma/intel,ldma.yaml
-@@ -0,0 +1,116 @@
-+# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/dma/intel,ldma.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Lightning Mountain centralized DMA controllers.
-+
-+maintainers:
-+  - chuanhua.lei@intel.com
-+  - mallikarjunax.reddy@intel.com
-+
-+allOf:
-+  - $ref: "dma-controller.yaml#"
-+
-+properties:
-+  compatible:
-+    enum:
-+      - intel,lgm-cdma
-+      - intel,lgm-dma2tx
-+      - intel,lgm-dma1rx
-+      - intel,lgm-dma1tx
-+      - intel,lgm-dma0tx
-+      - intel,lgm-dma3
-+      - intel,lgm-toe-dma30
-+      - intel,lgm-toe-dma31
-+
-+  reg:
-+    maxItems: 1
-+
-+  "#dma-cells":
-+    const: 3
-+    description:
-+      The first cell is the peripheral's DMA request line.
-+      The second cell is the peripheral's (port) number corresponding to the channel.
-+      The third cell is the burst length of the channel.
-+
-+  dma-channels:
-+    minimum: 1
-+    maximum: 16
-+
-+  dma-channel-mask:
-+    maxItems: 1
-+
-+  clocks:
-+    maxItems: 1
-+
-+  resets:
-+    maxItems: 1
-+
-+  reset-names:
-+    items:
-+      - const: ctrl
-+
-+  interrupts:
-+    maxItems: 1
-+
-+  intel,dma-poll-cnt:
-+    $ref: /schemas/types.yaml#/definitions/uint32
-+    description:
-+      DMA descriptor polling counter is used to control the poling mechanism
-+      for the descriptor fetching for all channels.
-+
-+  intel,dma-byte-en:
-+    type: boolean
-+    description:
-+      DMA byte enable is only valid for DMA write(RX).
-+      Byte enable(1) means DMA write will be based on the number of dwords
-+      instead of the whole burst.
-+
-+  intel,dma-drb:
-+    type: boolean
-+    description:
-+      DMA descriptor read back to make sure data and desc synchronization.
-+
-+  intel,dma-dburst-wr:
-+    type: boolean
-+    description:
-+      Enable RX dynamic burst write. When it is enabled, the DMA does RX dynamic burst;
-+      if it is disabled, the DMA RX will still support programmable fixed burst size of 2,4,8,16.
-+      It only applies to RX DMA and memcopy DMA.
-+
-+required:
-+  - compatible
-+  - reg
-+
-+additionalProperties: false
-+
-+examples:
-+  - |
-+    dma0: dma-controller@e0e00000 {
-+      compatible = "intel,lgm-cdma";
-+      reg = <0xe0e00000 0x1000>;
-+      #dma-cells = <3>;
-+      dma-channels = <16>;
-+      dma-channel-mask = <0xFFFF>;
-+      interrupt-parent = <&ioapic1>;
-+      interrupts = <82 1>;
-+      resets = <&rcu0 0x30 0>;
-+      reset-names = "ctrl";
-+      clocks = <&cgu0 80>;
-+      intel,dma-poll-cnt = <4>;
-+      intel,dma-byte-en;
-+      intel,dma-drb;
-+    };
-+  - |
-+    dma3: dma-controller@ec800000 {
-+      compatible = "intel,lgm-dma3";
-+      reg = <0xec800000 0x1000>;
-+      clocks = <&cgu0 71>;
-+      resets = <&rcu0 0x10 9>;
-+      #dma-cells = <3>;
-+      intel,dma-poll-cnt = <16>;
-+      intel,dma-byte-en;
-+      intel,dma-dburst-wr;
-+    };
+diff --git a/drivers/dma/qcom/gpi.c b/drivers/dma/qcom/gpi.c
+index 1a0bf6b0567a..f20b5573fc67 100644
+--- a/drivers/dma/qcom/gpi.c
++++ b/drivers/dma/qcom/gpi.c
+@@ -1700,7 +1700,7 @@ static int gpi_create_i2c_tre(struct gchan *chan, struct gpi_desc *desc,
+ 
+ 		tre->dword[3] = u32_encode_bits(TRE_TYPE_DMA, TRE_FLAGS_TYPE);
+ 		tre->dword[3] |= u32_encode_bits(1, TRE_FLAGS_IEOT);
+-	};
++	}
+ 
+ 	for (i = 0; i < tre_idx; i++)
+ 		dev_dbg(dev, "TRE:%d %x:%x:%x:%x\n", i, desc->tre[i].dword[0],
 -- 
 2.17.1
 
