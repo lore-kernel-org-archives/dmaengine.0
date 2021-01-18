@@ -2,169 +2,119 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,UNWANTED_LANGUAGE_BODY,
-	URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.4 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6C7D7C433E0
-	for <dmaengine@archiver.kernel.org>; Mon, 18 Jan 2021 12:26:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4122BC433E9
+	for <dmaengine@archiver.kernel.org>; Mon, 18 Jan 2021 17:02:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1D37E22286
-	for <dmaengine@archiver.kernel.org>; Mon, 18 Jan 2021 12:26:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1A178222BB
+	for <dmaengine@archiver.kernel.org>; Mon, 18 Jan 2021 17:02:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390859AbhARMZq (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 18 Jan 2021 07:25:46 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54002 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2391257AbhARMSt (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Mon, 18 Jan 2021 07:18:49 -0500
-Received: from mail-qk1-x730.google.com (mail-qk1-x730.google.com [IPv6:2607:f8b0:4864:20::730])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA24DC061573
-        for <dmaengine@vger.kernel.org>; Mon, 18 Jan 2021 04:18:08 -0800 (PST)
-Received: by mail-qk1-x730.google.com with SMTP id 143so18354424qke.10
-        for <dmaengine@vger.kernel.org>; Mon, 18 Jan 2021 04:18:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=67NIDC3WNBkuxGIoq25j/EtjuvLxjb7elhuP9OoWXxc=;
-        b=h90cYGuASoeFj3dW56liUnWvtO1akzZMpjFNsIgl2Flen/vG78Kf/AYQ3+40eMBK+R
-         E7BZmTHg/w6LpHKWdyKTbM3ecXe7+jYiVL4AzbhECF9ivAbsG+GHhDsOTyMI/jlmL+GK
-         k3P+KVXy32w2e2dLHLTxRl0nWLHh63cQXanguUr6PhH1y4wKiQRVTmJJGhX/z3gIYk9v
-         oauvrJEAItodBrIz+09Jze89PHc8tVXXFz8uU0FrPRmgPOHOqMIJnkNZGqX/OgV7FZdr
-         aRMpC8vlN3zWPUsOdjOVzi1agvbhoV7N6+oMsOV9INkL5f+kW0dnWacDTw4AAzhh03TH
-         UWLQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=67NIDC3WNBkuxGIoq25j/EtjuvLxjb7elhuP9OoWXxc=;
-        b=l6072eWssmnqkkeRJSDNhZgkJL2Mk+OEIQiC5X++Zh4VlBrdO9vGDxgHElTWAJc/oa
-         2DR56+VSaRsnLJh7qy89YZJFRkcIuX8pSAdIkWhJTMZp/IK5ANob3Kv9PMn7d8McMrih
-         mB9YsRrWg4M/b4u5LGPWpcsAmDDHS+jYeypKfuQc6TdkG+3REjI1qKyyZoRbdH/ayVxg
-         LQFZWhWEU8fcfH28BH6NRjzZc5v3WEDIEEufbnip+cpBr30EvebIrpn+S/82jDYpqW/J
-         qah7zv9bwB04VMI0fcdc0CupVHo2yE88aa3FD+wtIh3W9Nyluq+c/c5Bni9k8wsHc/1M
-         uRhg==
-X-Gm-Message-State: AOAM532/Zuag0P3gpoIImN5d860ghVhpsrQCYdoWe0JLpF+DBMsZhHRJ
-        kB8TVafOsjIY0q6ZSNzXjQgwLBZQrTs=
-X-Google-Smtp-Source: ABdhPJxxj5AjydSRbrzKv2+tUY5fsPLxhIx5iL5BhmEbhHsi/mIMR40acpbEC/HSk2SiD+vZzhuoGw==
-X-Received: by 2002:a37:a8c4:: with SMTP id r187mr23493137qke.481.1610972288211;
-        Mon, 18 Jan 2021 04:18:08 -0800 (PST)
-Received: from localhost.localdomain ([177.194.79.136])
-        by smtp.gmail.com with ESMTPSA id 74sm10259565qko.59.2021.01.18.04.18.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 18 Jan 2021 04:18:07 -0800 (PST)
-From:   Fabio Estevam <festevam@gmail.com>
-To:     vkoul@kernel.org
-Cc:     shawnguo@kernel.org, kernel@pengutronix.de,
-        dmaengine@vger.kernel.org, Fabio Estevam <festevam@gmail.com>
-Subject: [PATCH 1/2] dmaengine: imx-sdma: Remove platform data support
-Date:   Mon, 18 Jan 2021 09:15:48 -0300
-Message-Id: <20210118121549.1625217-1-festevam@gmail.com>
-X-Mailer: git-send-email 2.25.1
+        id S2406768AbhARRCE (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 18 Jan 2021 12:02:04 -0500
+Received: from mga17.intel.com ([192.55.52.151]:48261 "EHLO mga17.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2406659AbhARRCA (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Mon, 18 Jan 2021 12:02:00 -0500
+IronPort-SDR: ELdoJcUhT5baTFH46lXWdMlrsoBxzXpkA1+1kpcu9oTwF9IYConcT8Fjkjdfg83jVDhBYkjV9V
+ 4qxVw1m3I/9Q==
+X-IronPort-AV: E=McAfee;i="6000,8403,9868"; a="158600039"
+X-IronPort-AV: E=Sophos;i="5.79,356,1602572400"; 
+   d="scan'208";a="158600039"
+Received: from orsmga002.jf.intel.com ([10.7.209.21])
+  by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Jan 2021 09:01:14 -0800
+IronPort-SDR: EYnQgxKrSq+Z8Ni8Y2aUcD4RgtB3yVXfdYZOu7eqOXVEWHvjmQfYHInuj5n0dDOC5Sb+qEoVgN
+ wQw8VIAXNG6g==
+X-IronPort-AV: E=Sophos;i="5.79,356,1602572400"; 
+   d="scan'208";a="365389562"
+Received: from djiang5-mobl1.amr.corp.intel.com (HELO [10.212.181.223]) ([10.212.181.223])
+  by orsmga002-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Jan 2021 09:01:14 -0800
+Subject: Re: Query on dmaengine: add support to dynamic register/unregister of
+ channels patch
+To:     Radhey Shyam Pandey <radheys@xilinx.com>,
+        Vinod Koul <vkoul@kernel.org>,
+        Paul Thomas <pthomas8589@gmail.com>
+Cc:     "dmaengine@vger.kernel.org" <dmaengine@vger.kernel.org>
+References: <BY5PR02MB6520E4FECB26ACD6DB836728C7A40@BY5PR02MB6520.namprd02.prod.outlook.com>
+From:   Dave Jiang <dave.jiang@intel.com>
+Message-ID: <bee9cd1c-c320-28ff-77ca-dfbf73f5a631@intel.com>
+Date:   Mon, 18 Jan 2021 10:01:13 -0700
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.6.1
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <BY5PR02MB6520E4FECB26ACD6DB836728C7A40@BY5PR02MB6520.namprd02.prod.outlook.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Since 5.10-rc1, i.MX has been converted to a devicetree-only platform.
 
-The platform data support in this driver was only used for non-DT
-platforms.
+On 1/18/2021 12:54 AM, Radhey Shyam Pandey wrote:
+> Hi Dave,
+>
+> I have a query on below patch (commit-e81274cd6b52). It causes regression
+> in xilinx_dma driver and there is a reported kernel crash on rmmod.
+>
+> commit e81274cd6b5264809384066e09a5253708822522
+> Author: Dave Jiang <dave.jiang@intel.com>
+> Date:   Tue Jan 21 16:43:53 2020 -0700
+>
+> dmaengine: add support to dynamic register/unregister of channels
+>      
+> With the channel registration routines broken out, now add support code to
+> allow independent registering and unregistering of channels in a hotplug
+> fashion.
+>
+> Crash on the unloading xilinx_dma module is reproducible after e81274cd6b526
+> mainline commit is added in the 5.6 kernel.
+>
+> [   42.142705] Internal error: Oops: 96000044 [#1] SMP
+> [   42.147566] Modules linked in: xilinx_dma(-) clk_xlnx_clock_wizard
+> uio_pdrv_genirq
+> [   42.155139] CPU: 1 PID: 2075 Comm: rmmod Not tainted
+> 5.10.1-00026-g3a2e6dd7a05-dirty #192
+> [   42.163302] Hardware name: Enclustra XU5 SOM (DT)
+> [   42.167992] pstate: 40000005 (nZcv daif -PAN -UAO -TCO BTYPE=--)
+> [   42.173996] pc : xilinx_dma_chan_remove+0x74/0xa0 [xilinx_dma]
+> [   42.179815] lr : xilinx_dma_chan_remove+0x70/0xa0 [xilinx_dma]
+> [   42.185636] sp : ffffffc01112bca0
+> [   42.188935] x29: ffffffc01112bca0 x28: ffffff80402ea640
+>
+>
+> xilinx_dma_chan_remove+0x74/0xa0:
+> __list_del at ./include/linux/list.h:112 (inlined by)
+>   __list_del_entry at./include/linux/list.h:135 (inlined by)
+> list_del at ./include/linux/list.h:146 (inlined by)
+> xilinx_dma_chan_remove at drivers/dma/xilinx/xilinx_dma.c:2546
+>
+> Looking into e81274cd6b526 commit - It deletes channel device_node entry.
+> Same channel device_node entry is also deleted in
+> xilinx_dma_chan_remove as a result we see this crash.
+>
+> @@ -993,12 +1007,22 @@ static
+> void __dma_async_device_channel_unregister(struct dma_device *device,
+>                    "%s called while %d clients hold a reference\n",
+>                    __func__, chan->client_count);
+>          mutex_lock(&dma_list_mutex);
+> +       list_del(&chan->device_node);
+> +       device->chancnt--;
+>
+> I want to know some background for this change.  In dmaengine driver -
+> we are adding channel device node entry so deleting it in the exit
+> the path should be done in dmaengine driver and not in _channel_unregister?
 
-Remove the platform data support as it has no more users.
+Yes you are correct. It seems we need to remove that and push the 
+management to the driver as that seems to be the way. The chancnt will 
+continue to be managed by dmaengine. I'll create a fix.
 
-Signed-off-by: Fabio Estevam <festevam@gmail.com>
----
- drivers/dma/imx-sdma.c                     | 35 +++++++---------------
- include/linux/platform_data/dma-imx-sdma.h | 11 -------
- 2 files changed, 10 insertions(+), 36 deletions(-)
 
-diff --git a/drivers/dma/imx-sdma.c b/drivers/dma/imx-sdma.c
-index 41ba21eea7c8..a68950f80635 100644
---- a/drivers/dma/imx-sdma.c
-+++ b/drivers/dma/imx-sdma.c
-@@ -1961,7 +1961,6 @@ static int sdma_probe(struct platform_device *pdev)
- 	int irq;
- 	struct resource *iores;
- 	struct resource spba_res;
--	struct sdma_platform_data *pdata = dev_get_platdata(&pdev->dev);
- 	int i;
- 	struct sdma_engine *sdma;
- 	s32 *saddr_arr;
-@@ -2063,8 +2062,6 @@ static int sdma_probe(struct platform_device *pdev)
- 
- 	if (sdma->drvdata->script_addrs)
- 		sdma_add_scripts(sdma, sdma->drvdata->script_addrs);
--	if (pdata && pdata->script_addrs)
--		sdma_add_scripts(sdma, pdata->script_addrs);
- 
- 	sdma->dma_device.dev = &pdev->dev;
- 
-@@ -2110,30 +2107,18 @@ static int sdma_probe(struct platform_device *pdev)
- 	}
- 
- 	/*
--	 * Kick off firmware loading as the very last step:
--	 * attempt to load firmware only if we're not on the error path, because
--	 * the firmware callback requires a fully functional and allocated sdma
--	 * instance.
-+	 * Because that device tree does not encode ROM script address,
-+	 * the RAM script in firmware is mandatory for device tree
-+	 * probe, otherwise it fails.
- 	 */
--	if (pdata) {
--		ret = sdma_get_firmware(sdma, pdata->fw_name);
--		if (ret)
--			dev_warn(&pdev->dev, "failed to get firmware from platform data\n");
-+	ret = of_property_read_string(np, "fsl,sdma-ram-script-name",
-+				      &fw_name);
-+	if (ret) {
-+		dev_warn(&pdev->dev, "failed to get firmware name\n");
- 	} else {
--		/*
--		 * Because that device tree does not encode ROM script address,
--		 * the RAM script in firmware is mandatory for device tree
--		 * probe, otherwise it fails.
--		 */
--		ret = of_property_read_string(np, "fsl,sdma-ram-script-name",
--					      &fw_name);
--		if (ret) {
--			dev_warn(&pdev->dev, "failed to get firmware name\n");
--		} else {
--			ret = sdma_get_firmware(sdma, fw_name);
--			if (ret)
--				dev_warn(&pdev->dev, "failed to get firmware from device tree\n");
--		}
-+		ret = sdma_get_firmware(sdma, fw_name);
-+		if (ret)
-+			dev_warn(&pdev->dev, "failed to get firmware from device tree\n");
- 	}
- 
- 	return 0;
-diff --git a/include/linux/platform_data/dma-imx-sdma.h b/include/linux/platform_data/dma-imx-sdma.h
-index 30e676b36b24..725602d9df91 100644
---- a/include/linux/platform_data/dma-imx-sdma.h
-+++ b/include/linux/platform_data/dma-imx-sdma.h
-@@ -57,15 +57,4 @@ struct sdma_script_start_addrs {
- 	/* End of v4 array */
- };
- 
--/**
-- * struct sdma_platform_data - platform specific data for SDMA engine
-- *
-- * @fw_name		The firmware name
-- * @script_addrs	SDMA scripts addresses in SDMA ROM
-- */
--struct sdma_platform_data {
--	char *fw_name;
--	struct sdma_script_start_addrs *script_addrs;
--};
--
- #endif /* __MACH_MXC_SDMA_H__ */
--- 
-2.17.1
-
+>
+> NOTE:  This issue is reported in https://www.spinics.net/lists/dmaengine/msg24923.html
+>
+> Thanks,
+> Radhey
