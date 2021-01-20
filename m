@@ -2,74 +2,88 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.2 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1B38AC433DB
-	for <dmaengine@archiver.kernel.org>; Tue, 19 Jan 2021 21:19:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3AA8EC433E6
+	for <dmaengine@archiver.kernel.org>; Wed, 20 Jan 2021 02:40:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B3C3F22D71
-	for <dmaengine@archiver.kernel.org>; Tue, 19 Jan 2021 21:19:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DE94B23109
+	for <dmaengine@archiver.kernel.org>; Wed, 20 Jan 2021 02:40:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729436AbhASSsH (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 19 Jan 2021 13:48:07 -0500
-Received: from mail.kernel.org ([198.145.29.99]:49902 "EHLO mail.kernel.org"
+        id S1726840AbhATCkA (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 19 Jan 2021 21:40:00 -0500
+Received: from mga06.intel.com ([134.134.136.31]:3913 "EHLO mga06.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1730714AbhASS22 (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Tue, 19 Jan 2021 13:28:28 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 59E1423384;
-        Tue, 19 Jan 2021 16:40:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1611074421;
-        bh=jfIXpXqVZhOWlbrRVnWU9607dhob6RCOtt5MPQ41Jqk=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=S69byIznlukx2mZyChxm9kGqehi2cgTg/eqWONerhv+GVXCOoYMtR24epo9b8jIjI
-         FbVYlnAuHyMrqg+Ln54U8zyvyY6rzo7n0zAF3tkaB3gpYERAqhb72BidxXLL0OLIno
-         ReO2XZ6wFwMh1YoDhMyPcm/sMpHq8dAE1bhz7y9Dty6rFJp7JrbyvtFJjO9/ruMjhz
-         rolwG0fbXQuPn/SeD0bAceZvy9KZku9Ay5SyPz/DLSZ3yGKfbpQd/pRrfF+peBBM/W
-         pzo5lmIHGEZxaJ2udYpejlyTgW5YI4uVmNXngH4grlTuuowtsVFu4IyuDmYY1JhLf+
-         uZd8ns1Fac9Kg==
-Date:   Tue, 19 Jan 2021 22:10:14 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Dave Jiang <dave.jiang@intel.com>
-Cc:     dmaengine@vger.kernel.org, radheys@xilinx.com,
-        pthomas8589@gmail.com
-Subject: Re: [PATCH] dmaengine: move channel device_node deletion to driver
-Message-ID: <20210119164014.GD2771@vkoul-mobl>
-References: <161099092469.2495902.5064826526660062342.stgit@djiang5-desk3.ch.intel.com>
+        id S2387494AbhATCjR (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Tue, 19 Jan 2021 21:39:17 -0500
+IronPort-SDR: mxgiDw+tuMDeHbQB/72JgGLpHagRZOB5POz7dtVacr+C7Txl6hbpBy5CkTnFsF4APipp4u1g/a
+ NCrvlJiigNPA==
+X-IronPort-AV: E=McAfee;i="6000,8403,9869"; a="240572463"
+X-IronPort-AV: E=Sophos;i="5.79,359,1602572400"; 
+   d="scan'208";a="240572463"
+Received: from fmsmga001.fm.intel.com ([10.253.24.23])
+  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Jan 2021 18:37:28 -0800
+IronPort-SDR: Zf119pcf4SzdD8zILodBx/X8amBPPZOTguiV0ZLpdjZZQ36bGoKJg+iArkIY9cx15zg5SnzjF1
+ vEapR4FdF4Wg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.79,359,1602572400"; 
+   d="scan'208";a="466923220"
+Received: from linux.intel.com ([10.54.29.200])
+  by fmsmga001.fm.intel.com with ESMTP; 19 Jan 2021 18:37:28 -0800
+Received: from [10.214.172.191] (unknown [10.214.172.191])
+        by linux.intel.com (Postfix) with ESMTP id 25C1F5807EA;
+        Tue, 19 Jan 2021 18:37:24 -0800 (PST)
+Subject: Re: [PATCH v11 0/2] Add Intel LGM SoC DMA support
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     dmaengine@vger.kernel.org, devicetree@vger.kernel.org,
+        robh+dt@kernel.org, linux-kernel@vger.kernel.org,
+        andriy.shevchenko@intel.com, chuanhua.lei@linux.intel.com,
+        cheol.yong.kim@intel.com, qi-ming.wu@intel.com,
+        malliamireddy009@gmail.com, rtanwar@maxlinear.com,
+        lchuanhua@maxlinear.com
+References: <cover.1610703653.git.mallikarjunax.reddy@linux.intel.com>
+ <20210117055714.GJ2771@vkoul-mobl>
+From:   "Reddy, MallikarjunaX" <mallikarjunax.reddy@linux.intel.com>
+Message-ID: <f624ed42-f1e8-6309-2439-09f1e496015d@linux.intel.com>
+Date:   Wed, 20 Jan 2021 10:37:23 +0800
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.6.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <161099092469.2495902.5064826526660062342.stgit@djiang5-desk3.ch.intel.com>
+In-Reply-To: <20210117055714.GJ2771@vkoul-mobl>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On 18-01-21, 10:28, Dave Jiang wrote:
-> Channel device_node deletion is managed by the device driver rather than
-> the dmaengine core. The deletion was accidentally introduced when making
-> channel unregister dynamic. It causes xilinx_dma module to crash on unload
-> as reported by Radhey. Remove chan->device_node delete in dmaengine and
-> also fix up idxd driver.
-> 
-> [   42.142705] Internal error: Oops: 96000044 [#1] SMP
-> [   42.147566] Modules linked in: xilinx_dma(-) clk_xlnx_clock_wizard uio_pdrv_genirq
-> [   42.155139] CPU: 1 PID: 2075 Comm: rmmod Not tainted 5.10.1-00026-g3a2e6dd7a05-dirty #192
-> [   42.163302] Hardware name: Enclustra XU5 SOM (DT)
-> [   42.167992] pstate: 40000005 (nZcv daif -PAN -UAO -TCO BTYPE=--)
-> [   42.173996] pc : xilinx_dma_chan_remove+0x74/0xa0 [xilinx_dma]
-> [   42.179815] lr : xilinx_dma_chan_remove+0x70/0xa0 [xilinx_dma]
-> [   42.185636] sp : ffffffc01112bca0
-> [   42.188935] x29: ffffffc01112bca0 x28: ffffff80402ea640
-> 
-> xilinx_dma_chan_remove+0x74/0xa0:
-> __list_del at ./include/linux/list.h:112 (inlined by)
-> __list_del_entry at./include/linux/list.h:135 (inlined by)
-> list_del at ./include/linux/list.h:146 (inlined by)
-> xilinx_dma_chan_remove at drivers/dma/xilinx/xilinx_dma.c:2546
+Ok Vinod.
 
-Applied, thanks
+Thanks,
+Mallikarjuna reddy A
 
--- 
-~Vinod
+On 1/17/2021 1:57 PM, Vinod Koul wrote:
+> On 15-01-21, 17:56, Amireddy Mallikarjuna reddy wrote:
+>> Add DMA controller driver for Lightning Mountain (LGM) family of SoCs.
+>>
+>> The main function of the DMA controller is the transfer of data from/to any
+>> peripheral to/from the memory. A memory to memory copy capability can also
+>> be configured. This ldma driver is used for configure the device and channnels
+>> for data and control paths.
+>>
+>> These controllers provide DMA capabilities for a variety of on-chip
+>> devices such as SSC, HSNAND and GSWIP (Gigabit Switch IP).
+>>
+>> -------------
+>> Future Plans:
+>> -------------
+>> LGM SOC also supports Hardware Memory Copy engine.
+>> The role of the HW Memory copy engine is to offload memory copy operations
+>> from the CPU.
+> ??
+>
+> Please send updates against already applied patches and not an updated
+> series!
+>
