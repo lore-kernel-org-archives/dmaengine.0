@@ -5,42 +5,42 @@ X-Spam-Level:
 X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=unavailable autolearn_force=no version=3.4.0
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5522CC4332B
-	for <dmaengine@archiver.kernel.org>; Thu, 21 Jan 2021 10:50:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B3270C433DB
+	for <dmaengine@archiver.kernel.org>; Thu, 21 Jan 2021 10:51:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 166DE239A4
-	for <dmaengine@archiver.kernel.org>; Thu, 21 Jan 2021 10:50:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 51CB223787
+	for <dmaengine@archiver.kernel.org>; Thu, 21 Jan 2021 10:51:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729394AbhAUKsy (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Thu, 21 Jan 2021 05:48:54 -0500
-Received: from mga06.intel.com ([134.134.136.31]:36494 "EHLO mga06.intel.com"
+        id S1729856AbhAUKv2 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Thu, 21 Jan 2021 05:51:28 -0500
+Received: from mga06.intel.com ([134.134.136.31]:36491 "EHLO mga06.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729549AbhAUKsC (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Thu, 21 Jan 2021 05:48:02 -0500
-IronPort-SDR: +rHKiSyVZBObLbq324vIlJyKlaAENt35zvvc+XLV9TE1vowIjcjkEbFe+avknnoKsrCQhzUV2T
- 28Uo9cn30c3w==
-X-IronPort-AV: E=McAfee;i="6000,8403,9870"; a="240790313"
+        id S1729755AbhAUKqR (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Thu, 21 Jan 2021 05:46:17 -0500
+IronPort-SDR: 4lLgXkUo2IxDfwIRwqx9VsUC+z8NKSJHexNBwe8oZ95yk7CrGJDpc8gXRuZM0vwd2p82qGg6GI
+ WdZM+UiS8a8Q==
+X-IronPort-AV: E=McAfee;i="6000,8403,9870"; a="240790267"
 X-IronPort-AV: E=Sophos;i="5.79,363,1602572400"; 
-   d="scan'208";a="240790313"
+   d="scan'208";a="240790267"
 Received: from fmsmga008.fm.intel.com ([10.253.24.58])
-  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Jan 2021 02:45:30 -0800
-IronPort-SDR: 7cQScfLmupPtJURhvd89FTXyH5ZHsxXyYwAmkDZ8G5NKs1ClUaaJkoT/sn/y8DKVB1ygHV41+x
- yAIHzSyhLOgg==
+  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Jan 2021 02:45:05 -0800
+IronPort-SDR: zdAH+/YUYBXCpOzLeXSi2nutI6nZ9FUWMNnFKvviTLn3Qyhq7/V8vV/1vXQcFTAlajDPiT2baD
+ wxJj6niFNV8w==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="5.79,363,1602572400"; 
-   d="scan'208";a="356417764"
+   d="scan'208";a="356417528"
 Received: from jsia-hp-z620-workstation.png.intel.com ([10.221.118.135])
-  by fmsmga008.fm.intel.com with ESMTP; 21 Jan 2021 02:45:28 -0800
+  by fmsmga008.fm.intel.com with ESMTP; 21 Jan 2021 02:45:02 -0800
 From:   Sia Jee Heng <jee.heng.sia@intel.com>
 To:     vkoul@kernel.org, Eugeniy.Paltsev@synopsys.com, robh+dt@kernel.org
 Cc:     andriy.shevchenko@linux.intel.com, jee.heng.sia@intel.com,
         dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
         devicetree@vger.kernel.org
-Subject: [PATCH v11 13/16] dmaengine: dw-axi-dmac: Add Intel KeemBay AxiDMA handshake
-Date:   Thu, 21 Jan 2021 18:27:23 +0800
-Message-Id: <20210121102726.22805-14-jee.heng.sia@intel.com>
+Subject: [PATCH v11 05/16] dmaengine: dw-axi-dmac: Add device_config operation
+Date:   Thu, 21 Jan 2021 18:27:15 +0800
+Message-Id: <20210121102726.22805-6-jee.heng.sia@intel.com>
 X-Mailer: git-send-email 2.18.0
 In-Reply-To: <20210121102726.22805-1-jee.heng.sia@intel.com>
 References: <20210121102726.22805-1-jee.heng.sia@intel.com>
@@ -48,101 +48,63 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Add support for Intel KeemBay AxiDMA device handshake programming.
-Device handshake number passed in to the AxiDMA shall be written to
-the Intel KeemBay AxiDMA hardware handshake registers before DMA
-operations are started.
+Add device_config() callback function so that the device address
+can be passed to the dma driver.
+
+DMA clients use this interface to pass in the device address to the
+AxiDMA. Without this interface, data transfer between device to memory
+and memory to device would failed.
 
 Signed-off-by: Sia Jee Heng <jee.heng.sia@intel.com>
 Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 Reviewed-by: Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>
 Tested-by: Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>
 ---
- .../dma/dw-axi-dmac/dw-axi-dmac-platform.c    | 50 +++++++++++++++++++
- 1 file changed, 50 insertions(+)
+ drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c | 11 +++++++++++
+ drivers/dma/dw-axi-dmac/dw-axi-dmac.h          |  1 +
+ 2 files changed, 12 insertions(+)
 
 diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-index 062d27c61983..e19369f9365a 100644
+index 241ab7a24e2a..eaa7c4c404ca 100644
 --- a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
 +++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-@@ -445,6 +445,48 @@ static void dma_chan_free_chan_resources(struct dma_chan *dchan)
- 	pm_runtime_put(chan->chip->dev);
+@@ -559,6 +559,16 @@ dma_chan_prep_dma_memcpy(struct dma_chan *dchan, dma_addr_t dst_adr,
+ 	return NULL;
  }
  
-+static void dw_axi_dma_set_hw_channel(struct axi_dma_chip *chip,
-+				      u32 handshake_num, bool set)
++static int dw_axi_dma_chan_slave_config(struct dma_chan *dchan,
++					struct dma_slave_config *config)
 +{
-+	unsigned long start = 0;
-+	unsigned long reg_value;
-+	unsigned long reg_mask;
-+	unsigned long reg_set;
-+	unsigned long mask;
-+	unsigned long val;
++	struct axi_dma_chan *chan = dchan_to_axi_dma_chan(dchan);
 +
-+	if (!chip->apb_regs) {
-+		dev_dbg(chip->dev, "apb_regs not initialized\n");
-+		return;
-+	}
++	memcpy(&chan->config, config, sizeof(*config));
 +
-+	/*
-+	 * An unused DMA channel has a default value of 0x3F.
-+	 * Lock the DMA channel by assign a handshake number to the channel.
-+	 * Unlock the DMA channel by assign 0x3F to the channel.
-+	 */
-+	if (set) {
-+		reg_set = UNUSED_CHANNEL;
-+		val = handshake_num;
-+	} else {
-+		reg_set = handshake_num;
-+		val = UNUSED_CHANNEL;
-+	}
-+
-+	reg_value = lo_hi_readq(chip->apb_regs + DMAC_APB_HW_HS_SEL_0);
-+
-+	for_each_set_clump8(start, reg_mask, &reg_value, 64) {
-+		if (reg_mask == reg_set) {
-+			mask = GENMASK_ULL(start + 7, start);
-+			reg_value &= ~mask;
-+			reg_value |= rol64(val, start);
-+			lo_hi_writeq(reg_value,
-+				     chip->apb_regs + DMAC_APB_HW_HS_SEL_0);
-+			break;
-+		}
-+	}
++	return 0;
 +}
 +
- /*
-  * If DW_axi_dmac sees CHx_CTL.ShadowReg_Or_LLI_Last bit of the fetched LLI
-  * as 1, it understands that the current block is the final block in the
-@@ -626,6 +668,8 @@ dw_axi_dma_chan_prep_cyclic(struct dma_chan *dchan, dma_addr_t dma_addr,
- 		llp = hw_desc->llp;
- 	} while (num_periods);
+ static void axi_chan_dump_lli(struct axi_dma_chan *chan,
+ 			      struct axi_dma_hw_desc *desc)
+ {
+@@ -948,6 +958,7 @@ static int dw_probe(struct platform_device *pdev)
  
-+	dw_axi_dma_set_hw_channel(chan->chip, chan->hw_handshake_num, true);
-+
- 	return vchan_tx_prep(&chan->vc, &desc->vd, flags);
+ 	dw->dma.device_prep_dma_memcpy = dma_chan_prep_dma_memcpy;
+ 	dw->dma.device_synchronize = dw_axi_dma_synchronize;
++	dw->dma.device_config = dw_axi_dma_chan_slave_config;
  
- err_desc_get:
-@@ -684,6 +728,8 @@ dw_axi_dma_chan_prep_slave_sg(struct dma_chan *dchan, struct scatterlist *sgl,
- 		llp = hw_desc->llp;
- 	} while (sg_len);
+ 	platform_set_drvdata(pdev, chip);
  
-+	dw_axi_dma_set_hw_channel(chan->chip, chan->hw_handshake_num, true);
-+
- 	return vchan_tx_prep(&chan->vc, &desc->vd, flags);
+diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac.h b/drivers/dma/dw-axi-dmac/dw-axi-dmac.h
+index f886b2bb75de..a75b921d6b1a 100644
+--- a/drivers/dma/dw-axi-dmac/dw-axi-dmac.h
++++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac.h
+@@ -43,6 +43,7 @@ struct axi_dma_chan {
+ 	struct virt_dma_chan		vc;
  
- err_desc_get:
-@@ -959,6 +1005,10 @@ static int dma_chan_terminate_all(struct dma_chan *dchan)
- 		dev_warn(dchan2dev(dchan),
- 			 "%s failed to stop\n", axi_chan_name(chan));
- 
-+	if (chan->direction != DMA_MEM_TO_MEM)
-+		dw_axi_dma_set_hw_channel(chan->chip,
-+					  chan->hw_handshake_num, false);
-+
- 	spin_lock_irqsave(&chan->vc.lock, flags);
- 
- 	vchan_get_all_descriptors(&chan->vc, &head);
+ 	struct axi_dma_desc		*desc;
++	struct dma_slave_config		config;
+ 	/* these other elements are all protected by vc.lock */
+ 	bool				is_paused;
+ };
 -- 
 2.18.0
 
