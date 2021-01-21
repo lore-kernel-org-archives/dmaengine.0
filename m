@@ -2,158 +2,167 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=unavailable autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-11.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_GIT autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0056CC433E0
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 361EDC433E6
 	for <dmaengine@archiver.kernel.org>; Thu, 21 Jan 2021 06:24:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AB6AF238D6
+	by mail.kernel.org (Postfix) with ESMTP id D5895238EE
 	for <dmaengine@archiver.kernel.org>; Thu, 21 Jan 2021 06:24:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726286AbhAUGPW (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Thu, 21 Jan 2021 01:15:22 -0500
-Received: from mga09.intel.com ([134.134.136.24]:11860 "EHLO mga09.intel.com"
+        id S1726431AbhAUGPP (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Thu, 21 Jan 2021 01:15:15 -0500
+Received: from mga05.intel.com ([192.55.52.43]:6383 "EHLO mga05.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725833AbhAUGOz (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Thu, 21 Jan 2021 01:14:55 -0500
-IronPort-SDR: MTGhdT33CIfpyI1+dH44Zfa4GV8+hD5St9rEINVC/2SczdLgObxZV6vW+Y3/QtYfCru6Ue2CAh
- A4ztXE5jNiRg==
-X-IronPort-AV: E=McAfee;i="6000,8403,9870"; a="179374285"
+        id S1726526AbhAUGOy (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Thu, 21 Jan 2021 01:14:54 -0500
+IronPort-SDR: SlxJYQ7xwjL+ygyM1r1bzPtZWDtR+xwuo8w4EilpurOnyGRiExK8+sd5NQiU53vsDhbJ/Pzgdo
+ 2MYnr8a4HVVw==
+X-IronPort-AV: E=McAfee;i="6000,8403,9870"; a="264037502"
 X-IronPort-AV: E=Sophos;i="5.79,363,1602572400"; 
-   d="scan'208";a="179374285"
+   d="scan'208";a="264037502"
 Received: from orsmga001.jf.intel.com ([10.7.209.18])
-  by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Jan 2021 22:14:14 -0800
-IronPort-SDR: GAYV5xUcPeRElyiqfwxJVJ9Nzc3Ym1Vbz062AXfAB2BEmFw36LZDOY9nXF6yAAd0alkpuH49MS
- 720BOCmvUP+g==
+  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Jan 2021 22:14:05 -0800
+IronPort-SDR: ZYIPka8wdOs/s48uyK4fDA0jxqXAVL4RwGdfR/rCbbP9KmKT2MIoWbF50fh8gl2g2wgFbRAVsz
+ 2WntsuXfTDFQ==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="5.79,363,1602572400"; 
-   d="scan'208";a="427201326"
+   d="scan'208";a="427201298"
 Received: from jsia-hp-z620-workstation.png.intel.com ([10.221.118.135])
-  by orsmga001.jf.intel.com with ESMTP; 20 Jan 2021 22:14:12 -0800
+  by orsmga001.jf.intel.com with ESMTP; 20 Jan 2021 22:14:02 -0800
 From:   Sia Jee Heng <jee.heng.sia@intel.com>
 To:     vkoul@kernel.org, Eugeniy.Paltsev@synopsys.com, robh+dt@kernel.org
 Cc:     andriy.shevchenko@linux.intel.com, jee.heng.sia@intel.com,
         dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
         devicetree@vger.kernel.org
-Subject: [PATCH v10 03/16] dmaengine: dw-axi-dmac: move dma_pool_create() to alloc_chan_resources()
-Date:   Thu, 21 Jan 2021 13:56:28 +0800
-Message-Id: <20210121055641.6307-4-jee.heng.sia@intel.com>
+Subject: [PATCH v10 00/16] dmaengine: dw-axi-dmac: support Intel KeemBay AxiDMA
+Date:   Thu, 21 Jan 2021 13:56:25 +0800
+Message-Id: <20210121055641.6307-1-jee.heng.sia@intel.com>
 X-Mailer: git-send-email 2.18.0
-In-Reply-To: <20210121055641.6307-1-jee.heng.sia@intel.com>
-References: <20210121055641.6307-1-jee.heng.sia@intel.com>
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-The DMA memory block is created at driver load time and exist for
-device lifetime. Move the dma_pool_create() to the ->chan_resource()
-callback function allowing the DMA memory blocks to be created as needed
-and destroyed when the channel is freed.
+The below patch series are to support AxiDMA running on Intel KeemBay SoC.
+The base driver is dw-axi-dmac. This driver only support DMA memory copy transfers.
+Code refactoring is needed so that additional features can be supported.
+The features added in this patch series are:
+- Replacing Linked List with virtual descriptor management.
+- Remove unrelated hw desc stuff from dma memory pool.
+- Manage dma memory pool alloc/destroy based on channel activity.
+- Support dmaengine device_sync() callback.
+- Support dmaengine device_config().
+- Support dmaengine device_prep_slave_sg().
+- Support dmaengine device_prep_dma_cyclic().
+- Support of_dma_controller_register().
+- Support burst residue granularity.
+- Support Intel KeemBay AxiDMA registers.
+- Support Intel KeemBay AxiDMA device handshake.
+- Support Intel KeemBay AxiDMA BYTE and HALFWORD device operation.
+- Add constraint to Max segment size.
+- Virtually split the linked-list.
 
-Signed-off-by: Sia Jee Heng <jee.heng.sia@intel.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Reviewed-by: Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>
-Tested-by: Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>
----
- .../dma/dw-axi-dmac/dw-axi-dmac-platform.c    | 24 ++++++++++---------
- drivers/dma/dw-axi-dmac/dw-axi-dmac.h         |  2 +-
- 2 files changed, 14 insertions(+), 12 deletions(-)
+This patch series are tested on Intel KeemBay platform.
+Eugeniy Paltsev has runtime tested this patch series on HSDK SoC/board.
 
-diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-index 350968baaf88..3737e1c3c793 100644
---- a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-+++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-@@ -216,11 +216,10 @@ static struct axi_dma_desc *axi_desc_alloc(u32 num)
- static struct axi_dma_lli *axi_desc_get(struct axi_dma_chan *chan,
- 					dma_addr_t *addr)
- {
--	struct dw_axi_dma *dw = chan->chip->dw;
- 	struct axi_dma_lli *lli;
- 	dma_addr_t phys;
- 
--	lli = dma_pool_zalloc(dw->desc_pool, GFP_NOWAIT, &phys);
-+	lli = dma_pool_zalloc(chan->desc_pool, GFP_NOWAIT, &phys);
- 	if (unlikely(!lli)) {
- 		dev_err(chan2dev(chan), "%s: not enough descriptors available\n",
- 			axi_chan_name(chan));
-@@ -236,14 +235,13 @@ static struct axi_dma_lli *axi_desc_get(struct axi_dma_chan *chan,
- static void axi_desc_put(struct axi_dma_desc *desc)
- {
- 	struct axi_dma_chan *chan = desc->chan;
--	struct dw_axi_dma *dw = chan->chip->dw;
- 	int count = atomic_read(&chan->descs_allocated);
- 	struct axi_dma_hw_desc *hw_desc;
- 	int descs_put;
- 
- 	for (descs_put = 0; descs_put < count; descs_put++) {
- 		hw_desc = &desc->hw_desc[descs_put];
--		dma_pool_free(dw->desc_pool, hw_desc->lli, hw_desc->llp);
-+		dma_pool_free(chan->desc_pool, hw_desc->lli, hw_desc->llp);
- 	}
- 
- 	kfree(desc->hw_desc);
-@@ -360,6 +358,15 @@ static int dma_chan_alloc_chan_resources(struct dma_chan *dchan)
- 		return -EBUSY;
- 	}
- 
-+	/* LLI address must be aligned to a 64-byte boundary */
-+	chan->desc_pool = dma_pool_create(dev_name(chan2dev(chan)),
-+					  chan->chip->dev,
-+					  sizeof(struct axi_dma_lli),
-+					  64, 0);
-+	if (!chan->desc_pool) {
-+		dev_err(chan2dev(chan), "No memory for descriptors\n");
-+		return -ENOMEM;
-+	}
- 	dev_vdbg(dchan2dev(dchan), "%s: allocating\n", axi_chan_name(chan));
- 
- 	pm_runtime_get(chan->chip->dev);
-@@ -381,6 +388,8 @@ static void dma_chan_free_chan_resources(struct dma_chan *dchan)
- 
- 	vchan_free_chan_resources(&chan->vc);
- 
-+	dma_pool_destroy(chan->desc_pool);
-+	chan->desc_pool = NULL;
- 	dev_vdbg(dchan2dev(dchan),
- 		 "%s: free resources, descriptor still allocated: %u\n",
- 		 axi_chan_name(chan), atomic_read(&chan->descs_allocated));
-@@ -896,13 +905,6 @@ static int dw_probe(struct platform_device *pdev)
- 	if (ret)
- 		return ret;
- 
--	/* Lli address must be aligned to a 64-byte boundary */
--	dw->desc_pool = dmam_pool_create(KBUILD_MODNAME, chip->dev,
--					 sizeof(struct axi_dma_lli), 64, 0);
--	if (!dw->desc_pool) {
--		dev_err(chip->dev, "No memory for descriptors dma pool\n");
--		return -ENOMEM;
--	}
- 
- 	INIT_LIST_HEAD(&dw->dma.channels);
- 	for (i = 0; i < hdata->nr_channels; i++) {
-diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac.h b/drivers/dma/dw-axi-dmac/dw-axi-dmac.h
-index 41e775e6e593..f886b2bb75de 100644
---- a/drivers/dma/dw-axi-dmac/dw-axi-dmac.h
-+++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac.h
-@@ -39,6 +39,7 @@ struct axi_dma_chan {
- 	u8				id;
- 	atomic_t			descs_allocated;
- 
-+	struct dma_pool			*desc_pool;
- 	struct virt_dma_chan		vc;
- 
- 	struct axi_dma_desc		*desc;
-@@ -49,7 +50,6 @@ struct axi_dma_chan {
- struct dw_axi_dma {
- 	struct dma_device	dma;
- 	struct dw_axi_dma_hcfg	*hdata;
--	struct dma_pool		*desc_pool;
- 
- 	/* channels */
- 	struct axi_dma_chan	*chan;
+v10:
+- Rebased to kernel v5.11-rc4
+- Added Reviewed-by and Tested-by tag from Eugeniy Paltsev.
+
+v9:
+- Logic checked on apb_regs inside the function.
+- Improved code scalability so that missing of apb_regs wouldn't failed
+  the common callback functions.
+
+v8:
+- Rebased to kernel v5.11-rc1.
+- Added reviewed-by tag from Rob.
+
+v7:
+- Added 'allOf' and '$ref:dma-controller.yaml#' in DT binding.
+- Removed the dma-channels common description in DT binding.
+- Removed the default fields in DT binding.
+
+v6:
+- Removed 'allOf' cases in DT binding.
+- Added '>' at the end of the email address.
+- Removed additional '|' at the start of description.
+- Fixed space indent.
+- Added proper constraint in DT binding.
+- Removed second example in DT binding.
+
+v5:
+- Added comment to the Apb registers used by Intel KeemBay Soc.
+- Renamed "hs_num" to "handshake_num".
+- Conditional check for the compatible property and return error
+  instead of printing warning.
+- Added patch 16th to virtually split the linked-list as per
+  request from ALSA team.
+
+v4:
+- Fixed bot found errors running make_dt_binding_check.
+- Added minItems: 1 to the YAML schemas DT binding.
+- Updated "reg" field to the YAML schemas DT binding.
+
+v3:
+- Added additionalProperties: false to the YAML schemas DT binding.
+- Reordered patch sequence for patch 10th, 11th and 12th so that
+  DT binding come first, follow by adding Intel KeemBay SoC registers
+  and update .compatible field.
+- Checked txstate NULL condition.
+- Created helper function dw_axi_dma_set_hw_desc() to handle common code.
+
+v2:
+- Rebased to v5.10-rc1 kernel.
+- Added support for dmaengine device_config().
+- Added support for dmaengine device_prep_slave_sg().
+- Added support for dmaengine device_prep_dma_cyclic().
+- Added support for of_dma_controller_register().
+- Added support for burst residue granularity.
+- Added support for Intel KeemBay AxiDMA registers.
+- Added support for Intel KeemBay AxiDMA device handshake.
+- Added support for Intel KeemBay AxiDMA BYTE and HALFWORD device operation.
+- Added constraint to Max segment size.
+
+v1:
+- Initial version. Patch on top of dw-axi-dma driver. This version improve
+  the descriptor management by replacing Linked List Item (LLI) with
+  virtual descriptor management, only allocate hardware LLI memories from
+  DMA memory pool, manage DMA memory pool alloc/destroy based on channel
+  activity and to support device_sync callback.
+
+Sia Jee Heng (16):
+  dt-bindings: dma: Add YAML schemas for dw-axi-dmac
+  dmaengine: dw-axi-dmac: simplify descriptor management
+  dmaengine: dw-axi-dmac: move dma_pool_create() to
+    alloc_chan_resources()
+  dmaengine: dw-axi-dmac: Add device_synchronize() callback
+  dmaengine: dw-axi-dmac: Add device_config operation
+  dmaengine: dw-axi-dmac: Support device_prep_slave_sg
+  dmaegine: dw-axi-dmac: Support device_prep_dma_cyclic()
+  dmaengine: dw-axi-dmac: Support of_dma_controller_register()
+  dmaengine: dw-axi-dmac: Support burst residue granularity
+  dt-binding: dma: dw-axi-dmac: Add support for Intel KeemBay AxiDMA
+  dmaengine: dw-axi-dmac: Add Intel KeemBay DMA register fields
+  dmaengine: dw-axi-dmac: Add Intel KeemBay AxiDMA support
+  dmaengine: dw-axi-dmac: Add Intel KeemBay AxiDMA handshake
+  dmaengine: dw-axi-dmac: Add Intel KeemBay AxiDMA BYTE and HALFWORD
+    registers
+  dmaengine: dw-axi-dmac: Set constraint to the Max segment size
+  dmaengine: dw-axi-dmac: Virtually split the linked-list
+
+ .../bindings/dma/snps,dw-axi-dmac.txt         |  39 -
+ .../bindings/dma/snps,dw-axi-dmac.yaml        | 126 ++++
+ .../dma/dw-axi-dmac/dw-axi-dmac-platform.c    | 697 +++++++++++++++---
+ drivers/dma/dw-axi-dmac/dw-axi-dmac.h         |  34 +-
+ 4 files changed, 764 insertions(+), 132 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/dma/snps,dw-axi-dmac.txt
+ create mode 100644 Documentation/devicetree/bindings/dma/snps,dw-axi-dmac.yaml
+
+
+base-commit: 9791581c049c10929e97098374dd1716a81fefcc
 -- 
 2.18.0
 
