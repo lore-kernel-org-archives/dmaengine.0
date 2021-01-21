@@ -7,40 +7,40 @@ X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D23E5C433E6
-	for <dmaengine@archiver.kernel.org>; Thu, 21 Jan 2021 06:18:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0056CC433E0
+	for <dmaengine@archiver.kernel.org>; Thu, 21 Jan 2021 06:24:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7A7FA2396D
-	for <dmaengine@archiver.kernel.org>; Thu, 21 Jan 2021 06:18:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AB6AF238D6
+	for <dmaengine@archiver.kernel.org>; Thu, 21 Jan 2021 06:24:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726837AbhAUGR4 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Thu, 21 Jan 2021 01:17:56 -0500
-Received: from mga11.intel.com ([192.55.52.93]:10408 "EHLO mga11.intel.com"
+        id S1726286AbhAUGPW (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Thu, 21 Jan 2021 01:15:22 -0500
+Received: from mga09.intel.com ([134.134.136.24]:11860 "EHLO mga09.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726702AbhAUGP5 (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Thu, 21 Jan 2021 01:15:57 -0500
-IronPort-SDR: UdnsZct8SYfs7z3WSSBj8ImVEBosefgj+n59CikSl8IU/NblL8Ra7xx3C+sDxkYB0KosHtGDXP
- 4TohsSEOL6lA==
-X-IronPort-AV: E=McAfee;i="6000,8403,9870"; a="175716802"
+        id S1725833AbhAUGOz (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Thu, 21 Jan 2021 01:14:55 -0500
+IronPort-SDR: MTGhdT33CIfpyI1+dH44Zfa4GV8+hD5St9rEINVC/2SczdLgObxZV6vW+Y3/QtYfCru6Ue2CAh
+ A4ztXE5jNiRg==
+X-IronPort-AV: E=McAfee;i="6000,8403,9870"; a="179374285"
 X-IronPort-AV: E=Sophos;i="5.79,363,1602572400"; 
-   d="scan'208";a="175716802"
+   d="scan'208";a="179374285"
 Received: from orsmga001.jf.intel.com ([10.7.209.18])
-  by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Jan 2021 22:14:44 -0800
-IronPort-SDR: yToBH0dYuW7YCxSpLiY76uHw32QDLVjrIN9SyS8jciIiQ6Pdkt4X2J4iCMvbeaCUKY1txg1Akq
- YiEBoJSo5JhA==
+  by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Jan 2021 22:14:14 -0800
+IronPort-SDR: GAYV5xUcPeRElyiqfwxJVJ9Nzc3Ym1Vbz062AXfAB2BEmFw36LZDOY9nXF6yAAd0alkpuH49MS
+ 720BOCmvUP+g==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="5.79,363,1602572400"; 
-   d="scan'208";a="427201433"
+   d="scan'208";a="427201326"
 Received: from jsia-hp-z620-workstation.png.intel.com ([10.221.118.135])
-  by orsmga001.jf.intel.com with ESMTP; 20 Jan 2021 22:14:42 -0800
+  by orsmga001.jf.intel.com with ESMTP; 20 Jan 2021 22:14:12 -0800
 From:   Sia Jee Heng <jee.heng.sia@intel.com>
 To:     vkoul@kernel.org, Eugeniy.Paltsev@synopsys.com, robh+dt@kernel.org
 Cc:     andriy.shevchenko@linux.intel.com, jee.heng.sia@intel.com,
         dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
         devicetree@vger.kernel.org
-Subject: [PATCH v10 12/16] dmaengine: dw-axi-dmac: Add Intel KeemBay AxiDMA support
-Date:   Thu, 21 Jan 2021 13:56:37 +0800
-Message-Id: <20210121055641.6307-13-jee.heng.sia@intel.com>
+Subject: [PATCH v10 03/16] dmaengine: dw-axi-dmac: move dma_pool_create() to alloc_chan_resources()
+Date:   Thu, 21 Jan 2021 13:56:28 +0800
+Message-Id: <20210121055641.6307-4-jee.heng.sia@intel.com>
 X-Mailer: git-send-email 2.18.0
 In-Reply-To: <20210121055641.6307-1-jee.heng.sia@intel.com>
 References: <20210121055641.6307-1-jee.heng.sia@intel.com>
@@ -48,51 +48,112 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Add support for Intel KeemBay AxiDMA to the .compatible field.
-The AxiDMA Apb region will be accessible if the compatible string
-matches the "intel,kmb-axi-dma".
+The DMA memory block is created at driver load time and exist for
+device lifetime. Move the dma_pool_create() to the ->chan_resource()
+callback function allowing the DMA memory blocks to be created as needed
+and destroyed when the channel is freed.
 
 Signed-off-by: Sia Jee Heng <jee.heng.sia@intel.com>
 Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 Reviewed-by: Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>
 Tested-by: Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>
 ---
- drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ .../dma/dw-axi-dmac/dw-axi-dmac-platform.c    | 24 ++++++++++---------
+ drivers/dma/dw-axi-dmac/dw-axi-dmac.h         |  2 +-
+ 2 files changed, 14 insertions(+), 12 deletions(-)
 
 diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-index 830d3de76abd..062d27c61983 100644
+index 350968baaf88..3737e1c3c793 100644
 --- a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
 +++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-@@ -1160,6 +1160,7 @@ static int parse_device_properties(struct axi_dma_chip *chip)
- 
- static int dw_probe(struct platform_device *pdev)
+@@ -216,11 +216,10 @@ static struct axi_dma_desc *axi_desc_alloc(u32 num)
+ static struct axi_dma_lli *axi_desc_get(struct axi_dma_chan *chan,
+ 					dma_addr_t *addr)
  {
-+	struct device_node *node = pdev->dev.of_node;
- 	struct axi_dma_chip *chip;
- 	struct resource *mem;
- 	struct dw_axi_dma *dw;
-@@ -1192,6 +1193,12 @@ static int dw_probe(struct platform_device *pdev)
- 	if (IS_ERR(chip->regs))
- 		return PTR_ERR(chip->regs);
+-	struct dw_axi_dma *dw = chan->chip->dw;
+ 	struct axi_dma_lli *lli;
+ 	dma_addr_t phys;
  
-+	if (of_device_is_compatible(node, "intel,kmb-axi-dma")) {
-+		chip->apb_regs = devm_platform_ioremap_resource(pdev, 1);
-+		if (IS_ERR(chip->apb_regs))
-+			return PTR_ERR(chip->apb_regs);
+-	lli = dma_pool_zalloc(dw->desc_pool, GFP_NOWAIT, &phys);
++	lli = dma_pool_zalloc(chan->desc_pool, GFP_NOWAIT, &phys);
+ 	if (unlikely(!lli)) {
+ 		dev_err(chan2dev(chan), "%s: not enough descriptors available\n",
+ 			axi_chan_name(chan));
+@@ -236,14 +235,13 @@ static struct axi_dma_lli *axi_desc_get(struct axi_dma_chan *chan,
+ static void axi_desc_put(struct axi_dma_desc *desc)
+ {
+ 	struct axi_dma_chan *chan = desc->chan;
+-	struct dw_axi_dma *dw = chan->chip->dw;
+ 	int count = atomic_read(&chan->descs_allocated);
+ 	struct axi_dma_hw_desc *hw_desc;
+ 	int descs_put;
+ 
+ 	for (descs_put = 0; descs_put < count; descs_put++) {
+ 		hw_desc = &desc->hw_desc[descs_put];
+-		dma_pool_free(dw->desc_pool, hw_desc->lli, hw_desc->llp);
++		dma_pool_free(chan->desc_pool, hw_desc->lli, hw_desc->llp);
+ 	}
+ 
+ 	kfree(desc->hw_desc);
+@@ -360,6 +358,15 @@ static int dma_chan_alloc_chan_resources(struct dma_chan *dchan)
+ 		return -EBUSY;
+ 	}
+ 
++	/* LLI address must be aligned to a 64-byte boundary */
++	chan->desc_pool = dma_pool_create(dev_name(chan2dev(chan)),
++					  chan->chip->dev,
++					  sizeof(struct axi_dma_lli),
++					  64, 0);
++	if (!chan->desc_pool) {
++		dev_err(chan2dev(chan), "No memory for descriptors\n");
++		return -ENOMEM;
 +	}
-+
- 	chip->core_clk = devm_clk_get(chip->dev, "core-clk");
- 	if (IS_ERR(chip->core_clk))
- 		return PTR_ERR(chip->core_clk);
-@@ -1336,6 +1343,7 @@ static const struct dev_pm_ops dw_axi_dma_pm_ops = {
+ 	dev_vdbg(dchan2dev(dchan), "%s: allocating\n", axi_chan_name(chan));
  
- static const struct of_device_id dw_dma_of_id_table[] = {
- 	{ .compatible = "snps,axi-dma-1.01a" },
-+	{ .compatible = "intel,kmb-axi-dma" },
- 	{}
- };
- MODULE_DEVICE_TABLE(of, dw_dma_of_id_table);
+ 	pm_runtime_get(chan->chip->dev);
+@@ -381,6 +388,8 @@ static void dma_chan_free_chan_resources(struct dma_chan *dchan)
+ 
+ 	vchan_free_chan_resources(&chan->vc);
+ 
++	dma_pool_destroy(chan->desc_pool);
++	chan->desc_pool = NULL;
+ 	dev_vdbg(dchan2dev(dchan),
+ 		 "%s: free resources, descriptor still allocated: %u\n",
+ 		 axi_chan_name(chan), atomic_read(&chan->descs_allocated));
+@@ -896,13 +905,6 @@ static int dw_probe(struct platform_device *pdev)
+ 	if (ret)
+ 		return ret;
+ 
+-	/* Lli address must be aligned to a 64-byte boundary */
+-	dw->desc_pool = dmam_pool_create(KBUILD_MODNAME, chip->dev,
+-					 sizeof(struct axi_dma_lli), 64, 0);
+-	if (!dw->desc_pool) {
+-		dev_err(chip->dev, "No memory for descriptors dma pool\n");
+-		return -ENOMEM;
+-	}
+ 
+ 	INIT_LIST_HEAD(&dw->dma.channels);
+ 	for (i = 0; i < hdata->nr_channels; i++) {
+diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac.h b/drivers/dma/dw-axi-dmac/dw-axi-dmac.h
+index 41e775e6e593..f886b2bb75de 100644
+--- a/drivers/dma/dw-axi-dmac/dw-axi-dmac.h
++++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac.h
+@@ -39,6 +39,7 @@ struct axi_dma_chan {
+ 	u8				id;
+ 	atomic_t			descs_allocated;
+ 
++	struct dma_pool			*desc_pool;
+ 	struct virt_dma_chan		vc;
+ 
+ 	struct axi_dma_desc		*desc;
+@@ -49,7 +50,6 @@ struct axi_dma_chan {
+ struct dw_axi_dma {
+ 	struct dma_device	dma;
+ 	struct dw_axi_dma_hcfg	*hdata;
+-	struct dma_pool		*desc_pool;
+ 
+ 	/* channels */
+ 	struct axi_dma_chan	*chan;
 -- 
 2.18.0
 
