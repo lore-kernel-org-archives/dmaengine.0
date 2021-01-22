@@ -2,170 +2,142 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
+	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5CEE1C433E0
-	for <dmaengine@archiver.kernel.org>; Thu, 21 Jan 2021 12:24:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 60780C433E0
+	for <dmaengine@archiver.kernel.org>; Fri, 22 Jan 2021 02:53:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 16F782395A
-	for <dmaengine@archiver.kernel.org>; Thu, 21 Jan 2021 12:24:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2102D22C7D
+	for <dmaengine@archiver.kernel.org>; Fri, 22 Jan 2021 02:53:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730421AbhAUMXi (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Thu, 21 Jan 2021 07:23:38 -0500
-Received: from mga05.intel.com ([192.55.52.43]:1666 "EHLO mga05.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727900AbhAUKpc (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Thu, 21 Jan 2021 05:45:32 -0500
-IronPort-SDR: iK5J0kb9pZGcqoCW7frbpLwcVx4x4tEv/SnXNx2dCvHDirUIS2V3dnozK1sMGpwdaZOhK+0SYa
- yYc0AuVXF9cg==
-X-IronPort-AV: E=McAfee;i="6000,8403,9870"; a="264064898"
-X-IronPort-AV: E=Sophos;i="5.79,363,1602572400"; 
-   d="scan'208";a="264064898"
-Received: from fmsmga008.fm.intel.com ([10.253.24.58])
-  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Jan 2021 02:44:46 -0800
-IronPort-SDR: U/BYs4TmlOYrAtGVLsA7+bIfaTy9EHPUgEBoKcsPjK8LMAhldQtUt8//yq1Uy7y/n0191HJrTS
- jG5m0DHJu6Ow==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.79,363,1602572400"; 
-   d="scan'208";a="356417382"
-Received: from jsia-hp-z620-workstation.png.intel.com ([10.221.118.135])
-  by fmsmga008.fm.intel.com with ESMTP; 21 Jan 2021 02:44:43 -0800
-From:   Sia Jee Heng <jee.heng.sia@intel.com>
-To:     vkoul@kernel.org, Eugeniy.Paltsev@synopsys.com, robh+dt@kernel.org
-Cc:     andriy.shevchenko@linux.intel.com, jee.heng.sia@intel.com,
-        dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org
-Subject: [PATCH v11 00/16] dmaengine: dw-axi-dmac: support Intel KeemBay AxiDMA
-Date:   Thu, 21 Jan 2021 18:27:10 +0800
-Message-Id: <20210121102726.22805-1-jee.heng.sia@intel.com>
-X-Mailer: git-send-email 2.18.0
+        id S1726683AbhAVCxe (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Thu, 21 Jan 2021 21:53:34 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43558 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726268AbhAVCxd (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Thu, 21 Jan 2021 21:53:33 -0500
+Received: from mail-qt1-x836.google.com (mail-qt1-x836.google.com [IPv6:2607:f8b0:4864:20::836])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 208E3C06174A
+        for <dmaengine@vger.kernel.org>; Thu, 21 Jan 2021 18:52:53 -0800 (PST)
+Received: by mail-qt1-x836.google.com with SMTP id z22so3186605qto.7
+        for <dmaengine@vger.kernel.org>; Thu, 21 Jan 2021 18:52:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=GKuYChxcbat6wOowZ/luWuFDp05RLb0vBoPsH1W9HLw=;
+        b=fWX1fVnSDfRBs4lvhqIkcuFxJczn4RVcy8W7l7m57JkcWR8brGBrkwyok3ZO5XV3YL
+         3RccD753tIuCIC0P4G1d7mBywZOi/pwihdwRctYeiqSLrd9jVCS+qK9fGTIdbkuLYYCS
+         wmiRwQx4lOEVr6f1M1UMbUV7pdeeceHIKQBdN+13ziDRMeW3A+V/Dx/Fs0WlmOo7SdLo
+         JJYv89XgNZzOZo2HQPNOQZOF04qMh+bCZS9313D0PLJfkSbDKkfKJr/RoCKSqWdreMaW
+         1LXNrQAk6BdJryD72zjbT/O3Uq3Mxe1tWCyoUdVrWzcQIJsXi0z5WjEdMRtU8cQhWeLM
+         a4yw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=GKuYChxcbat6wOowZ/luWuFDp05RLb0vBoPsH1W9HLw=;
+        b=R0N3YFMd0tE/d0TxUYwB/Zasd+vwZ6lYimVYRP+iO00slKxUz9i2Lgj3gGeq94c0Te
+         6Iyartpqt+kSZbD1bIXO6KJZqRADBKZMsQ2usEdZ47J21gWp9qSgOr+4RcgNWMqSzE+f
+         +edmjhAnrqejROwNiJ3r9BFlT7Qr8Qpnklct6OjWuWCalbzo6snHIAePbjS8Bytqcsi+
+         2+FmfWKqrFawk6yKcd/EmN0jYndXiQtCtZLkxiJI0DakyWoaf6mnGsCwIMMB18sJvIbd
+         UuDcUhlzccjxjQOkLoMHneJlE7ZDnIpdZHUWKNT73ChiBV63LXG0Xtnk9aerelyZnOsH
+         1uoA==
+X-Gm-Message-State: AOAM531GmX+u3nsgUoBJnxEk4fsnsA16G3E6fcHRup5ezrSzuczEufpR
+        1H1zL1xxrnvxmTSW4aXni81atg==
+X-Google-Smtp-Source: ABdhPJz0/0z3vN1mwtb/eHobd43pDem3zer8bhWxzdjrhtLzoPfPsWI7C+OqW6A2WNXnrCjLU5m9dg==
+X-Received: by 2002:ac8:718d:: with SMTP id w13mr2513193qto.361.1611283972393;
+        Thu, 21 Jan 2021 18:52:52 -0800 (PST)
+Received: from pop-os.fios-router.home (pool-71-163-245-5.washdc.fios.verizon.net. [71.163.245.5])
+        by smtp.googlemail.com with ESMTPSA id n62sm5414409qkn.125.2021.01.21.18.52.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 21 Jan 2021 18:52:51 -0800 (PST)
+From:   Thara Gopinath <thara.gopinath@linaro.org>
+To:     agross@kernel.org, bjorn.andersson@linaro.org,
+        dan.j.williams@intel.com, vkoul@kernel.org
+Cc:     shawn.guo@linaro.org, srinivas.kandagatla@linaro.org,
+        linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH] drivers: dma: qcom: bam_dma: Manage clocks when controlled_remotely is set
+Date:   Thu, 21 Jan 2021 21:52:51 -0500
+Message-Id: <20210122025251.3501362-1-thara.gopinath@linaro.org>
+X-Mailer: git-send-email 2.25.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-The below patch series are to support AxiDMA running on Intel KeemBay SoC.
-The base driver is dw-axi-dmac. This driver only support DMA memory copy transfers.
-Code refactoring is needed so that additional features can be supported.
-The features added in this patch series are:
-- Replacing Linked List with virtual descriptor management.
-- Remove unrelated hw desc stuff from dma memory pool.
-- Manage dma memory pool alloc/destroy based on channel activity.
-- Support dmaengine device_sync() callback.
-- Support dmaengine device_config().
-- Support dmaengine device_prep_slave_sg().
-- Support dmaengine device_prep_dma_cyclic().
-- Support of_dma_controller_register().
-- Support burst residue granularity.
-- Support Intel KeemBay AxiDMA registers.
-- Support Intel KeemBay AxiDMA device handshake.
-- Support Intel KeemBay AxiDMA BYTE and HALFWORD device operation.
-- Add constraint to Max segment size.
-- Virtually split the linked-list.
+When bam dma is "controlled remotely", thus far clocks were not controlled
+from the Linux. In this scenario, Linux was disabling runtime pm in bam dma
+driver and not doing any clock management in suspend/resume hooks.
 
-This patch series are tested on Intel KeemBay platform.
-Eugeniy Paltsev has runtime tested this patch series on HSDK SoC/board.
+With introduction of crypto engine bam dma, the clock is a rpmh resource
+that can be controlled from both Linux and TZ/remote side.  Now bam dma
+clock is getting enabled during probe even though the bam dma can be
+"controlled remotely". But due to clocks not being handled properly,
+bam_suspend generates a unbalanced clk_unprepare warning during system
+suspend.
 
-v11:
-- Fixed bot build warning.
+To fix the above issue and to enable proper clock-management, this patch
+enables runtim-pm and handles bam dma clocks in suspend/resume hooks if
+the clock node is present irrespective of controlled_remotely property.
 
-v10:
-- Rebased to kernel v5.11-rc4
-- Added Reviewed-by and Tested-by tag from Eugeniy Paltsev.
+Signed-off-by: Thara Gopinath <thara.gopinath@linaro.org>
+---
+ drivers/dma/qcom/bam_dma.c | 20 +++++++++++---------
+ 1 file changed, 11 insertions(+), 9 deletions(-)
 
-v9:
-- Logic checked on apb_regs inside the function.
-- Improved code scalability so that missing of apb_regs wouldn't failed
-  the common callback functions.
-
-v8:
-- Rebased to kernel v5.11-rc1.
-- Added reviewed-by tag from Rob.
-
-v7:
-- Added 'allOf' and '$ref:dma-controller.yaml#' in DT binding.
-- Removed the dma-channels common description in DT binding.
-- Removed the default fields in DT binding.
-
-v6:
-- Removed 'allOf' cases in DT binding.
-- Added '>' at the end of the email address.
-- Removed additional '|' at the start of description.
-- Fixed space indent.
-- Added proper constraint in DT binding.
-- Removed second example in DT binding.
-
-v5:
-- Added comment to the Apb registers used by Intel KeemBay Soc.
-- Renamed "hs_num" to "handshake_num".
-- Conditional check for the compatible property and return error
-  instead of printing warning.
-- Added patch 16th to virtually split the linked-list as per
-  request from ALSA team.
-
-v4:
-- Fixed bot found errors running make_dt_binding_check.
-- Added minItems: 1 to the YAML schemas DT binding.
-- Updated "reg" field to the YAML schemas DT binding.
-
-v3:
-- Added additionalProperties: false to the YAML schemas DT binding.
-- Reordered patch sequence for patch 10th, 11th and 12th so that
-  DT binding come first, follow by adding Intel KeemBay SoC registers
-  and update .compatible field.
-- Checked txstate NULL condition.
-- Created helper function dw_axi_dma_set_hw_desc() to handle common code.
-
-v2:
-- Rebased to v5.10-rc1 kernel.
-- Added support for dmaengine device_config().
-- Added support for dmaengine device_prep_slave_sg().
-- Added support for dmaengine device_prep_dma_cyclic().
-- Added support for of_dma_controller_register().
-- Added support for burst residue granularity.
-- Added support for Intel KeemBay AxiDMA registers.
-- Added support for Intel KeemBay AxiDMA device handshake.
-- Added support for Intel KeemBay AxiDMA BYTE and HALFWORD device operation.
-- Added constraint to Max segment size.
-
-v1:
-- Initial version. Patch on top of dw-axi-dma driver. This version improve
-  the descriptor management by replacing Linked List Item (LLI) with
-  virtual descriptor management, only allocate hardware LLI memories from
-  DMA memory pool, manage DMA memory pool alloc/destroy based on channel
-  activity and to support device_sync callback.
-
-Sia Jee Heng (16):
-  dt-bindings: dma: Add YAML schemas for dw-axi-dmac
-  dmaengine: dw-axi-dmac: simplify descriptor management
-  dmaengine: dw-axi-dmac: move dma_pool_create() to
-    alloc_chan_resources()
-  dmaengine: dw-axi-dmac: Add device_synchronize() callback
-  dmaengine: dw-axi-dmac: Add device_config operation
-  dmaengine: dw-axi-dmac: Support device_prep_slave_sg
-  dmaegine: dw-axi-dmac: Support device_prep_dma_cyclic()
-  dmaengine: dw-axi-dmac: Support of_dma_controller_register()
-  dmaengine: dw-axi-dmac: Support burst residue granularity
-  dt-binding: dma: dw-axi-dmac: Add support for Intel KeemBay AxiDMA
-  dmaengine: dw-axi-dmac: Add Intel KeemBay DMA register fields
-  dmaengine: dw-axi-dmac: Add Intel KeemBay AxiDMA support
-  dmaengine: dw-axi-dmac: Add Intel KeemBay AxiDMA handshake
-  dmaengine: dw-axi-dmac: Add Intel KeemBay AxiDMA BYTE and HALFWORD
-    registers
-  dmaengine: dw-axi-dmac: Set constraint to the Max segment size
-  dmaengine: dw-axi-dmac: Virtually split the linked-list
-
- .../bindings/dma/snps,dw-axi-dmac.txt         |  39 -
- .../bindings/dma/snps,dw-axi-dmac.yaml        | 126 ++++
- .../dma/dw-axi-dmac/dw-axi-dmac-platform.c    | 696 +++++++++++++++---
- drivers/dma/dw-axi-dmac/dw-axi-dmac.h         |  34 +-
- 4 files changed, 763 insertions(+), 132 deletions(-)
- delete mode 100644 Documentation/devicetree/bindings/dma/snps,dw-axi-dmac.txt
- create mode 100644 Documentation/devicetree/bindings/dma/snps,dw-axi-dmac.yaml
-
-
-base-commit: 9791581c049c10929e97098374dd1716a81fefcc
+diff --git a/drivers/dma/qcom/bam_dma.c b/drivers/dma/qcom/bam_dma.c
+index 88579857ca1d..b3a34be63e99 100644
+--- a/drivers/dma/qcom/bam_dma.c
++++ b/drivers/dma/qcom/bam_dma.c
+@@ -1350,7 +1350,7 @@ static int bam_dma_probe(struct platform_device *pdev)
+ 	if (ret)
+ 		goto err_unregister_dma;
+ 
+-	if (bdev->controlled_remotely) {
++	if (!bdev->bamclk) {
+ 		pm_runtime_disable(&pdev->dev);
+ 		return 0;
+ 	}
+@@ -1438,10 +1438,10 @@ static int __maybe_unused bam_dma_suspend(struct device *dev)
+ {
+ 	struct bam_device *bdev = dev_get_drvdata(dev);
+ 
+-	if (!bdev->controlled_remotely)
++	if (bdev->bamclk) {
+ 		pm_runtime_force_suspend(dev);
+-
+-	clk_unprepare(bdev->bamclk);
++		clk_unprepare(bdev->bamclk);
++	}
+ 
+ 	return 0;
+ }
+@@ -1451,12 +1451,14 @@ static int __maybe_unused bam_dma_resume(struct device *dev)
+ 	struct bam_device *bdev = dev_get_drvdata(dev);
+ 	int ret;
+ 
+-	ret = clk_prepare(bdev->bamclk);
+-	if (ret)
+-		return ret;
++	if (bdev->bamclk) {
++		ret = clk_prepare(bdev->bamclk);
++		if (ret)
++			return ret;
+ 
+-	if (!bdev->controlled_remotely)
+-		pm_runtime_force_resume(dev);
++		if (!bdev->controlled_remotely)
++			pm_runtime_force_resume(dev);
++	}
+ 
+ 	return 0;
+ }
 -- 
-2.18.0
+2.25.1
 
