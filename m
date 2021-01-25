@@ -5,259 +5,133 @@ X-Spam-Level:
 X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=unavailable autolearn_force=no version=3.4.0
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 08327C43381
-	for <dmaengine@archiver.kernel.org>; Mon, 25 Jan 2021 02:28:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 95CE3C433DB
+	for <dmaengine@archiver.kernel.org>; Mon, 25 Jan 2021 14:31:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C2E2121D81
-	for <dmaengine@archiver.kernel.org>; Mon, 25 Jan 2021 02:28:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4DFCE2312C
+	for <dmaengine@archiver.kernel.org>; Mon, 25 Jan 2021 14:31:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726826AbhAYC2U (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Sun, 24 Jan 2021 21:28:20 -0500
-Received: from mga11.intel.com ([192.55.52.93]:4255 "EHLO mga11.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726731AbhAYBwK (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Sun, 24 Jan 2021 20:52:10 -0500
-IronPort-SDR: 4la6wcQH5r3/bKoD7ihxfn4vwV2iNPs8hFf0AV+xOKwjl7BMk9Gzx+amlKWTQzpg+pzAoXsqjf
- MOnKHeWD9D+Q==
-X-IronPort-AV: E=McAfee;i="6000,8403,9874"; a="176137818"
-X-IronPort-AV: E=Sophos;i="5.79,372,1602572400"; 
-   d="scan'208";a="176137818"
-Received: from orsmga003.jf.intel.com ([10.7.209.27])
-  by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Jan 2021 17:50:41 -0800
-IronPort-SDR: JMMp/DKr2FLqdfQUFcYXt0gs9ccQPcRQiqsOyD6lsXuJznUWgt16BvsByq9WRMqNi6L7Aunqz3
- rWS66DPqKHhg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.79,372,1602572400"; 
-   d="scan'208";a="352795933"
-Received: from jsia-hp-z620-workstation.png.intel.com ([10.221.118.135])
-  by orsmga003.jf.intel.com with ESMTP; 24 Jan 2021 17:50:39 -0800
-From:   Sia Jee Heng <jee.heng.sia@intel.com>
-To:     vkoul@kernel.org, Eugeniy.Paltsev@synopsys.com, robh+dt@kernel.org
-Cc:     andriy.shevchenko@linux.intel.com, jee.heng.sia@intel.com,
-        dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org
-Subject: [PATCH v12 07/17] dmaegine: dw-axi-dmac: Support device_prep_dma_cyclic()
-Date:   Mon, 25 Jan 2021 09:32:45 +0800
-Message-Id: <20210125013255.25799-8-jee.heng.sia@intel.com>
-X-Mailer: git-send-email 2.18.0
-In-Reply-To: <20210125013255.25799-1-jee.heng.sia@intel.com>
-References: <20210125013255.25799-1-jee.heng.sia@intel.com>
+        id S1729453AbhAYOay (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 25 Jan 2021 09:30:54 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44532 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729469AbhAYO3M (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Mon, 25 Jan 2021 09:29:12 -0500
+Received: from leibniz.telenet-ops.be (leibniz.telenet-ops.be [IPv6:2a02:1800:110:4::f00:d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F2F76C061793
+        for <dmaengine@vger.kernel.org>; Mon, 25 Jan 2021 06:27:21 -0800 (PST)
+Received: from xavier.telenet-ops.be (xavier.telenet-ops.be [IPv6:2a02:1800:120:4::f00:14])
+        by leibniz.telenet-ops.be (Postfix) with ESMTPS id 4DPXG70105zMsJq8
+        for <dmaengine@vger.kernel.org>; Mon, 25 Jan 2021 15:25:35 +0100 (CET)
+Received: from ramsan.of.borg ([84.195.186.194])
+        by xavier.telenet-ops.be with bizsmtp
+        id M2QZ2400E4C55Sk012QZRA; Mon, 25 Jan 2021 15:24:34 +0100
+Received: from rox.of.borg ([192.168.97.57])
+        by ramsan.of.borg with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+        (Exim 4.93)
+        (envelope-from <geert@linux-m68k.org>)
+        id 1l42nA-000eiV-Rv; Mon, 25 Jan 2021 15:24:32 +0100
+Received: from geert by rox.of.borg with local (Exim 4.93)
+        (envelope-from <geert@linux-m68k.org>)
+        id 1l42nA-004P59-6u; Mon, 25 Jan 2021 15:24:32 +0100
+From:   Geert Uytterhoeven <geert+renesas@glider.be>
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     Rob Herring <robh+dt@kernel.org>,
+        Dan Williams <dan.j.williams@intel.com>,
+        Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+        Wolfram Sang <wsa+renesas@sang-engineering.com>,
+        Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
+        dmaengine@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-renesas-soc@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Geert Uytterhoeven <geert+renesas@glider.be>
+Subject: [PATCH v2 2/4] dmaengine: rcar-dmac: Add for_each_rcar_dmac_chan() helper
+Date:   Mon, 25 Jan 2021 15:24:29 +0100
+Message-Id: <20210125142431.1049668-3-geert+renesas@glider.be>
+X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20210125142431.1049668-1-geert+renesas@glider.be>
+References: <20210125142431.1049668-1-geert+renesas@glider.be>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Add support for device_prep_dma_cyclic() callback function to benefit
-DMA cyclic client, for example ALSA.
+Add and helper macro for iterating over all DMAC channels, taking into
+account the channel mask.  Use it where appropriate, to simplify code.
 
-Existing AxiDMA driver only support data transfer between memory to memory.
-Data transfer between device to memory and memory to device in cyclic mode
-would failed if this interface is not supported by the AxiDMA driver.
+Restore "reverse Christmas tree" order of local variables while adding a
+new variable.
 
-Signed-off-by: Sia Jee Heng <jee.heng.sia@intel.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Reviewed-by: Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>
-Tested-by: Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
 ---
- .../dma/dw-axi-dmac/dw-axi-dmac-platform.c    | 111 ++++++++++++++++--
- drivers/dma/dw-axi-dmac/dw-axi-dmac.h         |   2 +
- 2 files changed, 106 insertions(+), 7 deletions(-)
+v2:
+  - Put the full loop control of for_each_rcar_dmac_chan() on a single
+    line, to improve readability.
+---
+ drivers/dma/sh/rcar-dmac.c | 22 ++++++++++------------
+ 1 file changed, 10 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-index 7ff30b0f44ed..a76299360f69 100644
---- a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-+++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-@@ -15,6 +15,8 @@
- #include <linux/err.h>
- #include <linux/interrupt.h>
- #include <linux/io.h>
-+#include <linux/iopoll.h>
-+#include <linux/io-64-nonatomic-lo-hi.h>
- #include <linux/kernel.h>
- #include <linux/module.h>
- #include <linux/of.h>
-@@ -549,6 +551,64 @@ static int dw_axi_dma_set_hw_desc(struct axi_dma_chan *chan,
- 	return 0;
- }
+diff --git a/drivers/dma/sh/rcar-dmac.c b/drivers/dma/sh/rcar-dmac.c
+index a57705356e8bb796..537550b4121bbc22 100644
+--- a/drivers/dma/sh/rcar-dmac.c
++++ b/drivers/dma/sh/rcar-dmac.c
+@@ -209,6 +209,10 @@ struct rcar_dmac {
  
-+static struct dma_async_tx_descriptor *
-+dw_axi_dma_chan_prep_cyclic(struct dma_chan *dchan, dma_addr_t dma_addr,
-+			    size_t buf_len, size_t period_len,
-+			    enum dma_transfer_direction direction,
-+			    unsigned long flags)
-+{
-+	struct axi_dma_chan *chan = dchan_to_axi_dma_chan(dchan);
-+	struct axi_dma_hw_desc *hw_desc = NULL;
-+	struct axi_dma_desc *desc = NULL;
-+	dma_addr_t src_addr = dma_addr;
-+	u32 num_periods = buf_len / period_len;
-+	unsigned int i;
-+	int status;
-+	u64 llp = 0;
-+	u8 lms = 0; /* Select AXI0 master for LLI fetching */
-+
-+	desc = axi_desc_alloc(num_periods);
-+	if (unlikely(!desc))
-+		goto err_desc_get;
-+
-+	chan->direction = direction;
-+	desc->chan = chan;
-+	chan->cyclic = true;
-+
-+	for (i = 0; i < num_periods; i++) {
-+		hw_desc = &desc->hw_desc[i];
-+
-+		status = dw_axi_dma_set_hw_desc(chan, hw_desc, src_addr,
-+						period_len);
-+		if (status < 0)
-+			goto err_desc_get;
-+
-+		/* Set end-of-link to the linked descriptor, so that cyclic
-+		 * callback function can be triggered during interrupt.
-+		 */
-+		set_desc_last(hw_desc);
-+
-+		src_addr += period_len;
-+	}
-+
-+	llp = desc->hw_desc[0].llp;
-+
-+	/* Managed transfer list */
-+	do {
-+		hw_desc = &desc->hw_desc[--num_periods];
-+		write_desc_llp(hw_desc, llp | lms);
-+		llp = hw_desc->llp;
-+	} while (num_periods);
-+
-+	return vchan_tx_prep(&chan->vc, &desc->vd, flags);
-+
-+err_desc_get:
-+	if (desc)
-+		axi_desc_put(desc);
-+
-+	return NULL;
-+}
-+
- static struct dma_async_tx_descriptor *
- dw_axi_dma_chan_prep_slave_sg(struct dma_chan *dchan, struct scatterlist *sgl,
- 			      unsigned int sg_len,
-@@ -773,8 +833,13 @@ static noinline void axi_chan_handle_err(struct axi_dma_chan *chan, u32 status)
+ #define to_rcar_dmac(d)		container_of(d, struct rcar_dmac, engine)
  
- static void axi_chan_block_xfer_complete(struct axi_dma_chan *chan)
++#define for_each_rcar_dmac_chan(i, chan, dmac)						\
++	for (i = 0, chan = &(dmac)->channels[0]; i < (dmac)->n_channels; i++, chan++)	\
++		if (!((dmac)->channels_mask & BIT(i))) continue; else
++
+ /*
+  * struct rcar_dmac_of_data - This driver's OF data
+  * @chan_offset_base: DMAC channels base offset
+@@ -817,15 +821,11 @@ static void rcar_dmac_chan_reinit(struct rcar_dmac_chan *chan)
+ 
+ static void rcar_dmac_stop_all_chan(struct rcar_dmac *dmac)
  {
-+	int count = atomic_read(&chan->descs_allocated);
-+	struct axi_dma_hw_desc *hw_desc;
-+	struct axi_dma_desc *desc;
- 	struct virt_dma_desc *vd;
- 	unsigned long flags;
-+	u64 llp;
-+	int i;
++	struct rcar_dmac_chan *chan;
+ 	unsigned int i;
  
- 	spin_lock_irqsave(&chan->vc.lock, flags);
- 	if (unlikely(axi_chan_is_hw_enable(chan))) {
-@@ -785,12 +850,32 @@ static void axi_chan_block_xfer_complete(struct axi_dma_chan *chan)
- 
- 	/* The completed descriptor currently is in the head of vc list */
- 	vd = vchan_next_desc(&chan->vc);
--	/* Remove the completed descriptor from issued list before completing */
--	list_del(&vd->node);
--	vchan_cookie_complete(vd);
- 
--	/* Submit queued descriptors after processing the completed ones */
--	axi_chan_start_first_queued(chan);
-+	if (chan->cyclic) {
-+		vchan_cyclic_callback(vd);
-+		desc = vd_to_axi_desc(vd);
-+		if (desc) {
-+			llp = lo_hi_readq(chan->chan_regs + CH_LLP);
-+			for (i = 0; i < count; i++) {
-+				hw_desc = &desc->hw_desc[i];
-+				if (hw_desc->llp == llp) {
-+					axi_chan_irq_clear(chan, hw_desc->lli->status_lo);
-+					hw_desc->lli->ctl_hi |= CH_CTL_H_LLI_VALID;
-+					desc->completed_blocks = i;
-+					break;
-+				}
-+			}
-+
-+			axi_chan_enable(chan);
-+		}
-+	} else {
-+		/* Remove the completed descriptor from issued list before completing */
-+		list_del(&vd->node);
-+		vchan_cookie_complete(vd);
-+
-+		/* Submit queued descriptors after processing the completed ones */
-+		axi_chan_start_first_queued(chan);
-+	}
- 
- 	spin_unlock_irqrestore(&chan->vc.lock, flags);
- }
-@@ -830,15 +915,25 @@ static irqreturn_t dw_axi_dma_interrupt(int irq, void *dev_id)
- static int dma_chan_terminate_all(struct dma_chan *dchan)
- {
- 	struct axi_dma_chan *chan = dchan_to_axi_dma_chan(dchan);
-+	u32 chan_active = BIT(chan->id) << DMAC_CHAN_EN_SHIFT;
- 	unsigned long flags;
-+	u32 val;
-+	int ret;
- 	LIST_HEAD(head);
- 
--	spin_lock_irqsave(&chan->vc.lock, flags);
+ 	/* Stop all channels. */
+-	for (i = 0; i < dmac->n_channels; ++i) {
+-		struct rcar_dmac_chan *chan = &dmac->channels[i];
 -
- 	axi_chan_disable(chan);
+-		if (!(dmac->channels_mask & BIT(i)))
+-			continue;
+-
++	for_each_rcar_dmac_chan(i, chan, dmac) {
+ 		/* Stop and reinitialize the channel. */
+ 		spin_lock_irq(&chan->lock);
+ 		rcar_dmac_chan_halt(chan);
+@@ -1828,9 +1828,10 @@ static int rcar_dmac_probe(struct platform_device *pdev)
+ 		DMA_SLAVE_BUSWIDTH_2_BYTES | DMA_SLAVE_BUSWIDTH_4_BYTES |
+ 		DMA_SLAVE_BUSWIDTH_8_BYTES | DMA_SLAVE_BUSWIDTH_16_BYTES |
+ 		DMA_SLAVE_BUSWIDTH_32_BYTES | DMA_SLAVE_BUSWIDTH_64_BYTES;
++	const struct rcar_dmac_of_data *data;
++	struct rcar_dmac_chan *chan;
+ 	struct dma_device *engine;
+ 	struct rcar_dmac *dmac;
+-	const struct rcar_dmac_of_data *data;
+ 	unsigned int i;
+ 	int ret;
  
-+	ret = readl_poll_timeout_atomic(chan->chip->regs + DMAC_CHEN, val,
-+					!(val & chan_active), 1000, 10000);
-+	if (ret == -ETIMEDOUT)
-+		dev_warn(dchan2dev(dchan),
-+			 "%s failed to stop\n", axi_chan_name(chan));
-+
-+	spin_lock_irqsave(&chan->vc.lock, flags);
-+
- 	vchan_get_all_descriptors(&chan->vc, &head);
+@@ -1916,11 +1917,8 @@ static int rcar_dmac_probe(struct platform_device *pdev)
  
-+	chan->cyclic = false;
- 	spin_unlock_irqrestore(&chan->vc.lock, flags);
+ 	INIT_LIST_HEAD(&engine->channels);
  
- 	vchan_dma_desc_free_list(&chan->vc, &head);
-@@ -1090,6 +1185,7 @@ static int dw_probe(struct platform_device *pdev)
- 	/* Set capabilities */
- 	dma_cap_set(DMA_MEMCPY, dw->dma.cap_mask);
- 	dma_cap_set(DMA_SLAVE, dw->dma.cap_mask);
-+	dma_cap_set(DMA_CYCLIC, dw->dma.cap_mask);
- 
- 	/* DMA capabilities */
- 	dw->dma.chancnt = hdata->nr_channels;
-@@ -1113,6 +1209,7 @@ static int dw_probe(struct platform_device *pdev)
- 	dw->dma.device_synchronize = dw_axi_dma_synchronize;
- 	dw->dma.device_config = dw_axi_dma_chan_slave_config;
- 	dw->dma.device_prep_slave_sg = dw_axi_dma_chan_prep_slave_sg;
-+	dw->dma.device_prep_dma_cyclic = dw_axi_dma_chan_prep_cyclic;
- 
- 	platform_set_drvdata(pdev, chip);
- 
-diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac.h b/drivers/dma/dw-axi-dmac/dw-axi-dmac.h
-index ac49f2e14b0c..a26b0a242a93 100644
---- a/drivers/dma/dw-axi-dmac/dw-axi-dmac.h
-+++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac.h
-@@ -45,6 +45,7 @@ struct axi_dma_chan {
- 	struct axi_dma_desc		*desc;
- 	struct dma_slave_config		config;
- 	enum dma_transfer_direction	direction;
-+	bool				cyclic;
- 	/* these other elements are all protected by vc.lock */
- 	bool				is_paused;
- };
-@@ -93,6 +94,7 @@ struct axi_dma_desc {
- 
- 	struct virt_dma_desc		vd;
- 	struct axi_dma_chan		*chan;
-+	u32				completed_blocks;
- };
- 
- static inline struct device *dchan2dev(struct dma_chan *dchan)
+-	for (i = 0; i < dmac->n_channels; ++i) {
+-		if (!(dmac->channels_mask & BIT(i)))
+-			continue;
+-
+-		ret = rcar_dmac_chan_probe(dmac, &dmac->channels[i], data, i);
++	for_each_rcar_dmac_chan(i, chan, dmac) {
++		ret = rcar_dmac_chan_probe(dmac, chan, data, i);
+ 		if (ret < 0)
+ 			goto error;
+ 	}
 -- 
-2.18.0
+2.25.1
 
