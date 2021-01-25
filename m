@@ -5,42 +5,42 @@ X-Spam-Level:
 X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+	autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6317BC433E0
-	for <dmaengine@archiver.kernel.org>; Mon, 25 Jan 2021 01:55:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2BE33C4332E
+	for <dmaengine@archiver.kernel.org>; Mon, 25 Jan 2021 02:24:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2A09D22BEF
-	for <dmaengine@archiver.kernel.org>; Mon, 25 Jan 2021 01:55:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 03F7C2168B
+	for <dmaengine@archiver.kernel.org>; Mon, 25 Jan 2021 02:24:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726944AbhAYBzY (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Sun, 24 Jan 2021 20:55:24 -0500
-Received: from mga11.intel.com ([192.55.52.93]:4250 "EHLO mga11.intel.com"
+        id S1726891AbhAYByz (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Sun, 24 Jan 2021 20:54:55 -0500
+Received: from mga11.intel.com ([192.55.52.93]:4252 "EHLO mga11.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726873AbhAYByv (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Sun, 24 Jan 2021 20:54:51 -0500
-IronPort-SDR: B3ufs60HUikr9KhpHLGh/hc8dFI8m5snTJVRp/TXLLkzZD5pCxcFed601iRMpJhDqSv38Ptbbw
- IEk7vHQWp7iA==
-X-IronPort-AV: E=McAfee;i="6000,8403,9874"; a="176137845"
+        id S1726869AbhAYByj (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Sun, 24 Jan 2021 20:54:39 -0500
+IronPort-SDR: p6V6K6pVAJF/4tkbvFFQCQ1dGoLEWQxRS8H2gLIJQPTwafrznu9wdbgCBTvdb7om+ugWEEoTJk
+ RGjQOFLy1T5A==
+X-IronPort-AV: E=McAfee;i="6000,8403,9874"; a="176137839"
 X-IronPort-AV: E=Sophos;i="5.79,372,1602572400"; 
-   d="scan'208";a="176137845"
+   d="scan'208";a="176137839"
 Received: from orsmga003.jf.intel.com ([10.7.209.27])
-  by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Jan 2021 17:51:10 -0800
-IronPort-SDR: k8U4O8emf+eQNtfAcfU/mj3r4gxfmgMUDZyS1xC+4llgiWrs3iqratf5XyOyl15A+ScxLxnn3r
- mgBb7r6banPA==
+  by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Jan 2021 17:51:07 -0800
+IronPort-SDR: ipso8imZOBgp58ngVvzDRu3rqvMttaPr2HNVyjWHgVoM1qkRMkEXhnpK+3b6Oy0nrw96xMRePU
+ qAFhuITcILEw==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="5.79,372,1602572400"; 
-   d="scan'208";a="352796020"
+   d="scan'208";a="352796010"
 Received: from jsia-hp-z620-workstation.png.intel.com ([10.221.118.135])
-  by orsmga003.jf.intel.com with ESMTP; 24 Jan 2021 17:51:08 -0800
+  by orsmga003.jf.intel.com with ESMTP; 24 Jan 2021 17:51:04 -0800
 From:   Sia Jee Heng <jee.heng.sia@intel.com>
 To:     vkoul@kernel.org, Eugeniy.Paltsev@synopsys.com, robh+dt@kernel.org
 Cc:     andriy.shevchenko@linux.intel.com, jee.heng.sia@intel.com,
         dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
         devicetree@vger.kernel.org
-Subject: [PATCH v12 16/17] dmaengine: dw-axi-dmac: Set constraint to the Max segment size
-Date:   Mon, 25 Jan 2021 09:32:54 +0800
-Message-Id: <20210125013255.25799-17-jee.heng.sia@intel.com>
+Subject: [PATCH v12 15/17] dmaengine: dw-axi-dmac: Add Intel KeemBay AxiDMA BYTE and HALFWORD registers
+Date:   Mon, 25 Jan 2021 09:32:53 +0800
+Message-Id: <20210125013255.25799-16-jee.heng.sia@intel.com>
 X-Mailer: git-send-email 2.18.0
 In-Reply-To: <20210125013255.25799-1-jee.heng.sia@intel.com>
 References: <20210125013255.25799-1-jee.heng.sia@intel.com>
@@ -48,59 +48,76 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Add support for DMA Scatter-Gather (SG) constraint so that DMA clients can
-handle the AxiDMA limitation.
+Add support for Intel KeemBay AxiDMA BYTE and HALFWORD registers
+programming.
 
-Without supporting DMA constraint the default Max segment size reported by
-dmaengine is 64KB, which is not supported by Intel KeemBay AxiDMA.
+Intel KeemBay AxiDMA supports data transfer between device to memory
+and memory to device operations.
+
+This code is needed by I2C, I3C, I2S, SPI and UART which uses FIFO
+size of 8bits and 16bits to perform memory to device data transfer
+operation. 0-padding functionality is provided to avoid
+pre-processing of data on CPU.
 
 Signed-off-by: Sia Jee Heng <jee.heng.sia@intel.com>
 Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 Reviewed-by: Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>
 Tested-by: Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>
 ---
- drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c | 8 ++++++++
- drivers/dma/dw-axi-dmac/dw-axi-dmac.h          | 1 +
- 2 files changed, 9 insertions(+)
+ .../dma/dw-axi-dmac/dw-axi-dmac-platform.c    | 26 +++++++++++++++++++
+ 1 file changed, 26 insertions(+)
 
 diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-index a1dddec95316..88d4923dee6c 100644
+index e19369f9365a..a1dddec95316 100644
 --- a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
 +++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-@@ -12,6 +12,7 @@
- #include <linux/device.h>
- #include <linux/dmaengine.h>
- #include <linux/dmapool.h>
-+#include <linux/dma-mapping.h>
- #include <linux/err.h>
- #include <linux/interrupt.h>
- #include <linux/io.h>
-@@ -1340,6 +1341,13 @@ static int dw_probe(struct platform_device *pdev)
- 	dw->dma.device_prep_slave_sg = dw_axi_dma_chan_prep_slave_sg;
- 	dw->dma.device_prep_dma_cyclic = dw_axi_dma_chan_prep_cyclic;
+@@ -307,6 +307,29 @@ static void write_chan_llp(struct axi_dma_chan *chan, dma_addr_t adr)
+ 	axi_chan_iowrite64(chan, CH_LLP, adr);
+ }
  
-+	/*
-+	 * Synopsis DesignWare AxiDMA datasheet mentioned Maximum
-+	 * supported blocks is 1024. Device register width is 4 bytes.
-+	 * Therefore, set constraint to 1024 * 4.
-+	 */
-+	dw->dma.dev->dma_parms = &dw->dma_parms;
-+	dma_set_max_seg_size(&pdev->dev, MAX_BLOCK_SIZE);
- 	platform_set_drvdata(pdev, chip);
++static void dw_axi_dma_set_byte_halfword(struct axi_dma_chan *chan, bool set)
++{
++	u32 offset = DMAC_APB_BYTE_WR_CH_EN;
++	u32 reg_width, val;
++
++	if (!chan->chip->apb_regs) {
++		dev_dbg(chan->chip->dev, "apb_regs not initialized\n");
++		return;
++	}
++
++	reg_width = __ffs(chan->config.dst_addr_width);
++	if (reg_width == DWAXIDMAC_TRANS_WIDTH_16)
++		offset = DMAC_APB_HALFWORD_WR_CH_EN;
++
++	val = ioread32(chan->chip->apb_regs + offset);
++
++	if (set)
++		val |= BIT(chan->id);
++	else
++		val &= ~BIT(chan->id);
++
++	iowrite32(val, chan->chip->apb_regs + offset);
++}
+ /* Called in chan locked context */
+ static void axi_chan_block_xfer_start(struct axi_dma_chan *chan,
+ 				      struct axi_dma_desc *first)
+@@ -334,6 +357,7 @@ static void axi_chan_block_xfer_start(struct axi_dma_chan *chan,
+ 	       DWAXIDMAC_HS_SEL_HW << CH_CFG_H_HS_SEL_SRC_POS);
+ 	switch (chan->direction) {
+ 	case DMA_MEM_TO_DEV:
++		dw_axi_dma_set_byte_halfword(chan, true);
+ 		reg |= (chan->config.device_fc ?
+ 			DWAXIDMAC_TT_FC_MEM_TO_PER_DST :
+ 			DWAXIDMAC_TT_FC_MEM_TO_PER_DMAC)
+@@ -1008,6 +1032,8 @@ static int dma_chan_terminate_all(struct dma_chan *dchan)
+ 	if (chan->direction != DMA_MEM_TO_MEM)
+ 		dw_axi_dma_set_hw_channel(chan->chip,
+ 					  chan->hw_handshake_num, false);
++	if (chan->direction == DMA_MEM_TO_DEV)
++		dw_axi_dma_set_byte_halfword(chan, false);
  
- 	pm_runtime_enable(chip->dev);
-diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac.h b/drivers/dma/dw-axi-dmac/dw-axi-dmac.h
-index 3a357f7fda02..1e937ea2a96d 100644
---- a/drivers/dma/dw-axi-dmac/dw-axi-dmac.h
-+++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac.h
-@@ -54,6 +54,7 @@ struct axi_dma_chan {
- struct dw_axi_dma {
- 	struct dma_device	dma;
- 	struct dw_axi_dma_hcfg	*hdata;
-+	struct device_dma_parameters	dma_parms;
+ 	spin_lock_irqsave(&chan->vc.lock, flags);
  
- 	/* channels */
- 	struct axi_dma_chan	*chan;
 -- 
 2.18.0
 
