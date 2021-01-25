@@ -4,152 +4,143 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D5A1AC433DB
-	for <dmaengine@archiver.kernel.org>; Mon, 25 Jan 2021 22:14:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8041AC433DB
+	for <dmaengine@archiver.kernel.org>; Tue, 26 Jan 2021 02:52:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A45402068D
-	for <dmaengine@archiver.kernel.org>; Mon, 25 Jan 2021 22:14:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4540C22EBF
+	for <dmaengine@archiver.kernel.org>; Tue, 26 Jan 2021 02:52:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732046AbhAYWId (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 25 Jan 2021 17:08:33 -0500
-Received: from mga18.intel.com ([134.134.136.126]:44199 "EHLO mga18.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1733103AbhAYWGM (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Mon, 25 Jan 2021 17:06:12 -0500
-IronPort-SDR: Wc5jgjOu5RMPR5NymNRuMfy+21rbOZLs6CygARw71IJ7rhthBELhWB0F9skaWn2R+wAWciDZcO
- WnAsVbBgYJIw==
-X-IronPort-AV: E=McAfee;i="6000,8403,9875"; a="167484044"
-X-IronPort-AV: E=Sophos;i="5.79,374,1602572400"; 
-   d="scan'208";a="167484044"
-Received: from fmsmga001.fm.intel.com ([10.253.24.23])
-  by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Jan 2021 14:05:13 -0800
-IronPort-SDR: WKH2VipUhMunVEUwEHWU/zo+O30lZr7qGzyHYbSwYNTfpqPVIXSQc2U02oSUTAiPlHrIeCEqOe
- G0BIzuQDWLuA==
-X-IronPort-AV: E=Sophos;i="5.79,374,1602572400"; 
-   d="scan'208";a="472515304"
-Received: from djiang5-desk3.ch.intel.com ([143.182.136.137])
-  by fmsmga001-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Jan 2021 14:05:13 -0800
-Subject: [PATCH] dmaengine: idxd: check device state before issue command
-From:   Dave Jiang <dave.jiang@intel.com>
-To:     vkoul@kernel.org
-Cc:     Sanjay Kumar <sanjay.k.kumar@intel.com>,
-        Sanjay Kumar <sanjay.k.kumar@intel.com>,
-        dmaengine@vger.kernel.org
-Date:   Mon, 25 Jan 2021 15:05:13 -0700
-Message-ID: <161161231309.406594.6061304765472136401.stgit@djiang5-desk3.ch.intel.com>
-User-Agent: StGit/0.23-29-ga622f1
+        id S1729390AbhAYOV7 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 25 Jan 2021 09:21:59 -0500
+Received: from mail-oi1-f174.google.com ([209.85.167.174]:41040 "EHLO
+        mail-oi1-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729391AbhAYOVq (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Mon, 25 Jan 2021 09:21:46 -0500
+Received: by mail-oi1-f174.google.com with SMTP id m13so6948588oig.8;
+        Mon, 25 Jan 2021 06:21:15 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=o4KyYlby3ix9gWsgIE+54GAeLjjtUdHgSTrB2Z0eyrw=;
+        b=LI+ZX9dcYzclLN2m7h7CjvAWfO329p94IC60huk3tMyZpe78aVF1K5vX79OmnJ8QtY
+         UFr+OlVYYVKacZs4rLbZd+rRa733PJwthJUvyXGkcglWekwxLH1fwsWx+N+cd2RrlDjH
+         1sc25Dizvu1ItjNyQtd6Am2vjp6Sldsoa4kaHakvZ5QxGUEZ4sN8ws01hByRBwV7HCxW
+         sZlXYpWptwCHxqTsC01bZFsaDU0cOzC8y3pj94WcrI68dyazZoPI5QlSVZsMG3Ny4iNh
+         P6IKR8TQKcOphBC/a/BYyT2BoZOavTXPKkH0nsoX9fkVDArKa9AAgnVU3Dt4hJejHC2f
+         9RbQ==
+X-Gm-Message-State: AOAM531oSouNuHHMd+XxkZ9J2ZKiAQAK6/xvKMTgFpOVhevLke7bJ+re
+        c7nmAbIjwGej/ERAFbK79rHZA30eH0T/CrKyTSw=
+X-Google-Smtp-Source: ABdhPJwVtpKcPVKOwYR/zAg3FHVzFS2mssYCbKzz3y5LZbpmHtHzej0Ch/BY6dLBcr0oR62dlxAVLIoJ6k0Quw0KWv4=
+X-Received: by 2002:aca:1219:: with SMTP id 25mr274231ois.54.1611584449552;
+ Mon, 25 Jan 2021 06:20:49 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
+References: <20210107181524.1947173-1-geert+renesas@glider.be>
+ <20210107181524.1947173-5-geert+renesas@glider.be> <20210112103648.GL2771@vkoul-mobl>
+ <CAMuHMdUiQkP4W17ovot29NGRPa0rYgpsDC7zVC2KxxxDfVsd+w@mail.gmail.com> <20210112170415.GU2771@vkoul-mobl>
+In-Reply-To: <20210112170415.GU2771@vkoul-mobl>
+From:   Geert Uytterhoeven <geert@linux-m68k.org>
+Date:   Mon, 25 Jan 2021 15:20:38 +0100
+Message-ID: <CAMuHMdWVD4fc9WHLW9L+rDoqPp4YkRzUjWuy=RmndKcqqq-RnQ@mail.gmail.com>
+Subject: Re: [PATCH 4/4] dmaengine: rcar-dmac: Add support for R-Car V3U
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     Rob Herring <robh+dt@kernel.org>,
+        Dan Williams <dan.j.williams@intel.com>,
+        Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+        Phong Hoang <phong.hoang.wz@renesas.com>,
+        dmaengine <dmaengine@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Add device state check before executing command. Without the check the
-command can be issued while device is in halt state and causes the driver to
-block while waiting for the completion of the command.
+Hi Vinod,
 
-Reported-by: Sanjay Kumar <sanjay.k.kumar@intel.com>
-Signed-off-by: Dave Jiang <dave.jiang@intel.com>
-Tested-by: Sanjay Kumar <sanjay.k.kumar@intel.com>
-Fixes: 0d5c10b4c84d ("dmaengine: idxd: add work queue drain support")
----
- drivers/dma/idxd/device.c |   25 ++++++++++++++++++++++++-
- drivers/dma/idxd/idxd.h   |    2 +-
- drivers/dma/idxd/init.c   |    5 ++++-
- 3 files changed, 29 insertions(+), 3 deletions(-)
+On Tue, Jan 12, 2021 at 6:04 PM Vinod Koul <vkoul@kernel.org> wrote:
+> On 12-01-21, 16:54, Geert Uytterhoeven wrote:
+> > On Tue, Jan 12, 2021 at 11:36 AM Vinod Koul <vkoul@kernel.org> wrote:
+> > > On 07-01-21, 19:15, Geert Uytterhoeven wrote:
+> > > > The DMACs (both SYS-DMAC and RT-DMAC) on R-Car V3U differ slightly from
+> > > > the DMACs on R-Car Gen2 and other R-Car Gen3 SoCs:
+> > > >   1. The per-channel registers are located in a second register block.
+> > > >      Add support for mapping the second block, using the appropriate
+> > > >      offsets and stride.
+> > > >   2. The common Channel Clear Register (DMACHCLR) was replaced by a
+> > > >      per-channel register.
+> > > >      Update rcar_dmac_chan_clear{,_all}() to handle this.
+> > > >      As rcar_dmac_init() needs to clear the status before the individual
+> > > >      channels are probed, channel index and base address initialization
+> > > >      are moved forward.
+> > > >
+> > > > Inspired by a patch in the BSP by Phong Hoang
+> > > > <phong.hoang.wz@renesas.com>.
+> > > >
+> > > > Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+> >
+> > > > --- a/drivers/dma/sh/rcar-dmac.c
+> > > > +++ b/drivers/dma/sh/rcar-dmac.c
+> > > > @@ -189,7 +189,7 @@ struct rcar_dmac_chan {
+> > > >   * struct rcar_dmac - R-Car Gen2 DMA Controller
+> > > >   * @engine: base DMA engine object
+> > > >   * @dev: the hardware device
+> > > > - * @iomem: remapped I/O memory base
+> > > > + * @iomem: remapped I/O memory bases (second is optional)
+> > > >   * @n_channels: number of available channels
+> > > >   * @channels: array of DMAC channels
+> > > >   * @channels_mask: bitfield of which DMA channels are managed by this driver
+> > > > @@ -198,7 +198,7 @@ struct rcar_dmac_chan {
+> > > >  struct rcar_dmac {
+> > > >       struct dma_device engine;
+> > > >       struct device *dev;
+> > > > -     void __iomem *iomem;
+> > > > +     void __iomem *iomem[2];
+> > >
+> > > do you forsee many more memory regions, if not then why not add second
+> >
+> > No I don't. TBH, I didn't foresee this change either; you never know
+> > what the hardware people have on their mind for the next SoC ;-)
+> >
+> > > region, that way changes in this patch will be lesser..?
+> >
+> > I did consider that option.  However, doing so would imply that (a) the
+> > code to map the memory regions can no longer be a loop, but has to be
+> > unrolled manually, and (b) rcar_dmac_of_data.chan_reg_block can no
+> > longer be used to index iomem[], but needs a conditional expression or
+> > statement.
+> >
+> > > and it would be better to refer to a region by its name rather than
+> > > iomem[1]..
+> >
+> >     - * @iomem: remapped I/O memory base
+> >     + * @common_base: remapped common or combined I/O memory base
+> >     + * @channel_base: remapped optional channel I/O memory base
+> >
+> >     -     void __iomem *iomem;
+> >     +     void __iomem *common_base;
+> >     +     void __iomem *channel_base;
+> >
+> > If you still think this is worthwhile, I can make these changes.
+>
+> Either way suits me, TBH it is not a deal breaker, so i would leave it
+> upto you :)
 
-diff --git a/drivers/dma/idxd/device.c b/drivers/dma/idxd/device.c
-index 95f94a3ed6be..45077727ce5b 100644
---- a/drivers/dma/idxd/device.c
-+++ b/drivers/dma/idxd/device.c
-@@ -398,17 +398,33 @@ static inline bool idxd_is_enabled(struct idxd_device *idxd)
- 	return false;
- }
- 
-+static inline bool idxd_device_is_halted(struct idxd_device *idxd)
-+{
-+	union gensts_reg gensts;
-+
-+	gensts.bits = ioread32(idxd->reg_base + IDXD_GENSTATS_OFFSET);
-+
-+	if (gensts.state == IDXD_DEVICE_STATE_HALT)
-+		return true;
-+	return false;
-+}
-+
- /*
-  * This is function is only used for reset during probe and will
-  * poll for completion. Once the device is setup with interrupts,
-  * all commands will be done via interrupt completion.
-  */
--void idxd_device_init_reset(struct idxd_device *idxd)
-+int idxd_device_init_reset(struct idxd_device *idxd)
- {
- 	struct device *dev = &idxd->pdev->dev;
- 	union idxd_command_reg cmd;
- 	unsigned long flags;
- 
-+	if (idxd_device_is_halted(idxd)) {
-+		dev_warn(&idxd->pdev->dev, "Device is HALTED!\n");
-+		return -ENXIO;
-+	}
-+
- 	memset(&cmd, 0, sizeof(cmd));
- 	cmd.cmd = IDXD_CMD_RESET_DEVICE;
- 	dev_dbg(dev, "%s: sending reset for init.\n", __func__);
-@@ -419,6 +435,7 @@ void idxd_device_init_reset(struct idxd_device *idxd)
- 	       IDXD_CMDSTS_ACTIVE)
- 		cpu_relax();
- 	spin_unlock_irqrestore(&idxd->dev_lock, flags);
-+	return 0;
- }
- 
- static void idxd_cmd_exec(struct idxd_device *idxd, int cmd_code, u32 operand,
-@@ -428,6 +445,12 @@ static void idxd_cmd_exec(struct idxd_device *idxd, int cmd_code, u32 operand,
- 	DECLARE_COMPLETION_ONSTACK(done);
- 	unsigned long flags;
- 
-+	if (idxd_device_is_halted(idxd)) {
-+		dev_warn(&idxd->pdev->dev, "Device is HALTED!\n");
-+		*status = IDXD_CMDSTS_HW_ERR;
-+		return;
-+	}
-+
- 	memset(&cmd, 0, sizeof(cmd));
- 	cmd.cmd = cmd_code;
- 	cmd.operand = operand;
-diff --git a/drivers/dma/idxd/idxd.h b/drivers/dma/idxd/idxd.h
-index 5a50e91c71bf..81a0e65fd316 100644
---- a/drivers/dma/idxd/idxd.h
-+++ b/drivers/dma/idxd/idxd.h
-@@ -326,7 +326,7 @@ void idxd_mask_msix_vector(struct idxd_device *idxd, int vec_id);
- void idxd_unmask_msix_vector(struct idxd_device *idxd, int vec_id);
- 
- /* device control */
--void idxd_device_init_reset(struct idxd_device *idxd);
-+int idxd_device_init_reset(struct idxd_device *idxd);
- int idxd_device_enable(struct idxd_device *idxd);
- int idxd_device_disable(struct idxd_device *idxd);
- void idxd_device_reset(struct idxd_device *idxd);
-diff --git a/drivers/dma/idxd/init.c b/drivers/dma/idxd/init.c
-index 2c051e07c34c..fa04acd5582a 100644
---- a/drivers/dma/idxd/init.c
-+++ b/drivers/dma/idxd/init.c
-@@ -335,7 +335,10 @@ static int idxd_probe(struct idxd_device *idxd)
- 	int rc;
- 
- 	dev_dbg(dev, "%s entered and resetting device\n", __func__);
--	idxd_device_init_reset(idxd);
-+	rc = idxd_device_init_reset(idxd);
-+	if (rc < 0)
-+		return rc;
-+
- 	dev_dbg(dev, "IDXD reset complete\n");
- 
- 	if (IS_ENABLED(CONFIG_INTEL_IDXD_SVM)) {
+I managed to use named regions at the expense of only 6 more lines of
+source code, even reducing the resulting binary size.
+So stay ready for v2 ;-)
 
+Gr{oetje,eeting}s,
 
+                        Geert
+
+-- 
+Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
+
+In personal conversations with technical people, I call myself a hacker. But
+when I'm talking to journalists I just say "programmer" or something like that.
+                                -- Linus Torvalds
