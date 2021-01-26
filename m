@@ -2,100 +2,91 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=unavailable
+X-Spam-Status: No, score=-16.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A4D2CC41621
-	for <dmaengine@archiver.kernel.org>; Tue, 26 Jan 2021 17:00:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7649FC433DB
+	for <dmaengine@archiver.kernel.org>; Tue, 26 Jan 2021 21:51:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8FBB123331
-	for <dmaengine@archiver.kernel.org>; Tue, 26 Jan 2021 17:00:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2D92420449
+	for <dmaengine@archiver.kernel.org>; Tue, 26 Jan 2021 21:51:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727959AbhAZGBV (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 26 Jan 2021 01:01:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44534 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729471AbhAYO3L (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Mon, 25 Jan 2021 09:29:11 -0500
-Received: from leibniz.telenet-ops.be (leibniz.telenet-ops.be [IPv6:2a02:1800:110:4::f00:d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 585A9C061794
-        for <dmaengine@vger.kernel.org>; Mon, 25 Jan 2021 06:27:21 -0800 (PST)
-Received: from andre.telenet-ops.be (andre.telenet-ops.be [IPv6:2a02:1800:120:4::f00:15])
-        by leibniz.telenet-ops.be (Postfix) with ESMTPS id 4DPXG703S1zMsJqG
-        for <dmaengine@vger.kernel.org>; Mon, 25 Jan 2021 15:25:35 +0100 (CET)
-Received: from ramsan.of.borg ([84.195.186.194])
-        by andre.telenet-ops.be with bizsmtp
-        id M2QZ240084C55Sk012QZ6k; Mon, 25 Jan 2021 15:24:34 +0100
-Received: from rox.of.borg ([192.168.97.57])
-        by ramsan.of.borg with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-        (Exim 4.93)
-        (envelope-from <geert@linux-m68k.org>)
-        id 1l42nA-000eiT-MP; Mon, 25 Jan 2021 15:24:32 +0100
-Received: from geert by rox.of.borg with local (Exim 4.93)
-        (envelope-from <geert@linux-m68k.org>)
-        id 1l42nA-004P50-4V; Mon, 25 Jan 2021 15:24:32 +0100
-From:   Geert Uytterhoeven <geert+renesas@glider.be>
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Rob Herring <robh+dt@kernel.org>,
-        Dan Williams <dan.j.williams@intel.com>,
-        Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-        Wolfram Sang <wsa+renesas@sang-engineering.com>,
-        Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
-        dmaengine@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-renesas-soc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Geert Uytterhoeven <geert+renesas@glider.be>
-Subject: [PATCH v2 0/4] dmaengine: rcar-dmac: Add support for R-Car V3U
-Date:   Mon, 25 Jan 2021 15:24:27 +0100
-Message-Id: <20210125142431.1049668-1-geert+renesas@glider.be>
-X-Mailer: git-send-email 2.25.1
+        id S1726670AbhAZVuZ (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 26 Jan 2021 16:50:25 -0500
+Received: from mail.kernel.org ([198.145.29.99]:60210 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727650AbhAZRDk (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Tue, 26 Jan 2021 12:03:40 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPSA id C416022EBD;
+        Tue, 26 Jan 2021 17:02:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1611680579;
+        bh=bUosObEPj6sBUrbn1Vw5C/9VJJ2eDmdALlTgxMH/ih0=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=r1Ctjdc16APYIO80/vAyDnXkJOPATRq8vAQ4XGokaXNNwlEHPGjoJjmD5Z5L5pj0A
+         ytk+fyGbUcmuE8VQUk8L3c2h52CB/0x7Z+dHM1/KdDduuFgEUMs19WhzW0b/lSkqAr
+         agj3UnYnx1UzPzAKEjC54N8y8UDWRWg1Dw9p7bMVymhAzidJGd4DV64pDhG7sjoTS3
+         p+Ql5w6ytQtgIWI0TWmQ5rATEKEzcpO4rlAeAvMmCn1RtcuvjyjgHf7hKsHmTX2PQL
+         Q2/alOOKGNQVTbQzdFAqscmYUSxO0FZPJSeqItIBh+GPAMDJCdczAFpTP2hsYgUvm0
+         0ULRhvJ/sQKeA==
+Date:   Tue, 26 Jan 2021 22:32:55 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Dave Jiang <dave.jiang@intel.com>
+Cc:     dmaengine@vger.kernel.org
+Subject: Re: [PATCH] dmaengine: idxd: add module parameter to force disable
+ of SVA
+Message-ID: <20210126170255.GP2771@vkoul-mobl>
+References: <161074811013.2184257.13335125853932003159.stgit@djiang5-desk3.ch.intel.com>
+ <20210117065115.GL2771@vkoul-mobl>
+ <a7b50b40-ee4a-24c3-d4ba-40c770c970f1@intel.com>
+ <20210119163822.GC2771@vkoul-mobl>
+ <425267d2-dd13-5710-65b9-d98beff2b328@intel.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <425267d2-dd13-5710-65b9-d98beff2b328@intel.com>
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-	Hi Vinod,
+On 19-01-21, 12:44, Dave Jiang wrote:
+> 
+> On 1/19/2021 9:38 AM, Vinod Koul wrote:
+> > On 18-01-21, 10:06, Dave Jiang wrote:
+> > > On 1/16/2021 11:51 PM, Vinod Koul wrote:
+> > > > On 15-01-21, 15:01, Dave Jiang wrote:
+> > > > > Add a module parameter that overrides the SVA feature enabling. This keeps
+> > > > > the driver in legacy mode even when intel_iommu=sm_on is set. In this mode,
+> > > > > the descriptor fields must be programmed with dma_addr_t from the Linux DMA
+> > > > > API for source, destination, and completion descriptors.
+> > > > > 
+> > > > > Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+> > > > > ---
+> > > > >    drivers/dma/idxd/init.c |    8 +++++++-
+> > > > >    1 file changed, 7 insertions(+), 1 deletion(-)
+> > > > > 
+> > > > > diff --git a/drivers/dma/idxd/init.c b/drivers/dma/idxd/init.c
+> > > > > index 25cc947c6179..9687a24ff982 100644
+> > > > > --- a/drivers/dma/idxd/init.c
+> > > > > +++ b/drivers/dma/idxd/init.c
+> > > > > @@ -26,6 +26,10 @@ MODULE_VERSION(IDXD_DRIVER_VERSION);
+> > > > >    MODULE_LICENSE("GPL v2");
+> > > > >    MODULE_AUTHOR("Intel Corporation");
+> > > > > +static bool sva = true;
+> > > > > +module_param(sva, bool, 0644);
+> > > > > +MODULE_PARM_DESC(sva, "Toggle SVA support on/off");
+> > > > Documentation for this please..
+> > > Just comments or is there somewhere specific for driver module parameter
+> > > documentations?
+> > All the parameters are supposed to be documented in Documentation/admin-guide/kernel-parameters.txt
+> 
+> It seems to be for core kernel components and subsystems, and not specific
+> device drivers. I'm not seeing any of the dmaengine driver module params
+> being in this doc after grepping in drivers/dma.
 
-This patch series adds support for the Direct Memory Access Controller
-variant in the Renesas R-Car V3U (R8A779A0) SoC, to both DT bindings and
-driver.
-
-Changes compared to v1:
-  - Add Reviewed-by,
-  - Put the full loop control of for_each_rcar_dmac_chan() on a single
-    line, to improve readability,
-  - Use two separate named regions instead of array,
-  - Drop rcar_dmac_of_data.chan_reg_block, check for
-    !rcar_dmac_of_data.chan_offset_base instead,
-  - Precalculate chan_base in rcar_dmac_probe().
-
-This has been tested on the Renesas Falcon board, using external SPI
-loopback (spi-loopback-test) on MSIOF1 and MSIOF2.
-
-Thanks!
-
-Geert Uytterhoeven (4):
-  dt-bindings: renesas,rcar-dmac: Add r8a779a0 support
-  dmaengine: rcar-dmac: Add for_each_rcar_dmac_chan() helper
-  dmaengine: rcar-dmac: Add helpers for clearing DMA channel status
-  dmaengine: rcar-dmac: Add support for R-Car V3U
-
- .../bindings/dma/renesas,rcar-dmac.yaml       |  76 ++++++++-----
- drivers/dma/sh/rcar-dmac.c                    | 105 +++++++++++++-----
- 2 files changed, 123 insertions(+), 58 deletions(-)
+Yeah we should fix that as well :)
 
 -- 
-2.25.1
-
-Gr{oetje,eeting}s,
-
-						Geert
-
---
-Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
-
-In personal conversations with technical people, I call myself a hacker. But
-when I'm talking to journalists I just say "programmer" or something like that.
-							    -- Linus Torvalds
+~Vinod
