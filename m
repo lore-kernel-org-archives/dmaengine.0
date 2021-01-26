@@ -2,155 +2,94 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
+X-Spam-Status: No, score=-8.6 required=3.0 tests=BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 68F8AC433DB
-	for <dmaengine@archiver.kernel.org>; Tue, 26 Jan 2021 02:58:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5E70BC433E9
+	for <dmaengine@archiver.kernel.org>; Tue, 26 Jan 2021 16:20:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1B09F22E03
-	for <dmaengine@archiver.kernel.org>; Tue, 26 Jan 2021 02:58:32 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 35C3E22210
+	for <dmaengine@archiver.kernel.org>; Tue, 26 Jan 2021 16:20:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728788AbhAYNfZ (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 25 Jan 2021 08:35:25 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32898 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728951AbhAYNe1 (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Mon, 25 Jan 2021 08:34:27 -0500
-Received: from mail-qk1-x72a.google.com (mail-qk1-x72a.google.com [IPv6:2607:f8b0:4864:20::72a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 86F3DC06178C
-        for <dmaengine@vger.kernel.org>; Mon, 25 Jan 2021 05:33:24 -0800 (PST)
-Received: by mail-qk1-x72a.google.com with SMTP id a12so2466079qkh.10
-        for <dmaengine@vger.kernel.org>; Mon, 25 Jan 2021 05:33:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=nkYjifaadDKUN2A03i+6Bz+1YtH0jSHjyjWsjSahiSM=;
-        b=mP4LUf21MwAjH4kN4dXyT4fkqKESBIoz/aDvWsKEPt5U34es68aocF+FgswhN73A+a
-         nKf78vrq8s762U/3o/qIFx4Lcse4dn675hz9IpXQ5V1J8W3AwooILanGLuG25qHgVT+V
-         AnghkYYxljpaQh8xTe2EdCTAOTEcG61MJnGBGZpvrekICwUoucgpb13G/GdumPNt4HIe
-         3oldteJ9W0Q+hRsOlUEr86W6o8NsDg4WsJ7m9mMs9OxkW1IH46nRjNiVmLJwVJlRzwo8
-         E57fA5FtRieTA7AnuN63ukVL/XsN7Gdvs8eiWib2OYFR16b5aV6ZCfHO4VHwtYeG7KQn
-         kuNA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=nkYjifaadDKUN2A03i+6Bz+1YtH0jSHjyjWsjSahiSM=;
-        b=fSuPI0fGOqRffvV6eQqiqS6vicg0CawUoGxfHmcJMqh991x3/ELPHAKUBPDu3rZRBE
-         /L/T8o7TePfpP3UNHIxZiT5/sabq8Tk21U8VpnphUEZfvS2WmdIMsFTpw8aolMU3CUXq
-         x9Rw6hVyURjttj9K1RYO97gKu7CCbG7IIFJ1ir5Utzc/WV2aoSbfVu6JwKr3F+BSqMxL
-         gEvDqMnbmE8WkZzircATYXkwSbcF6EshMFWhpCsJHi1IRs03YxcQW7PGkaBaIrs6n/r5
-         4FAc1l8vj62Ho0mFhpeMnhmXb65DthkoHQoW69qBtEqGzUX8Pa8FkmSvwk8s/bDwACpx
-         B/oA==
-X-Gm-Message-State: AOAM532Do7tvIkiWrFJ6uruq1CJ6fUu/uJpZh6BzyvzLsdTLKdFDLWWD
-        Riakssad/G/QlZMcKX3XQCdVhg==
-X-Google-Smtp-Source: ABdhPJztUgDmuOPoaK2+3lrjRYGxsWqSwWTwr1jVgLFFmhxaxk9GQArfwe6Z72+5T+v9iFuPjT8v1Q==
-X-Received: by 2002:a05:620a:4c:: with SMTP id t12mr720564qkt.74.1611581603501;
-        Mon, 25 Jan 2021 05:33:23 -0800 (PST)
-Received: from [192.168.1.93] (pool-71-163-245-5.washdc.fios.verizon.net. [71.163.245.5])
-        by smtp.gmail.com with ESMTPSA id u1sm11537939qth.19.2021.01.25.05.33.19
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 25 Jan 2021 05:33:22 -0800 (PST)
-Subject: Re: [PATCH] drivers: dma: qcom: bam_dma: Manage clocks when
- controlled_remotely is set
-To:     Shawn Guo <shawn.guo@linaro.org>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
-        dan.j.williams@intel.com, vkoul@kernel.org,
-        srinivas.kandagatla@linaro.org, linux-arm-msm@vger.kernel.org,
-        dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20210122025251.3501362-1-thara.gopinath@linaro.org>
- <20210122051013.GE2479@dragon>
- <d1f1724c-39f1-7b6e-8cd4-638a44608d9c@linaro.org>
- <20210123071924.GF2479@dragon>
-From:   Thara Gopinath <thara.gopinath@linaro.org>
-Message-ID: <16da38a6-36a2-2126-c8d5-6618fd9e4814@linaro.org>
-Date:   Mon, 25 Jan 2021 08:33:15 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+        id S2392378AbhAZQTq (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 26 Jan 2021 11:19:46 -0500
+Received: from www.zeus03.de ([194.117.254.33]:33048 "EHLO mail.zeus03.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2392852AbhAZQTd (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Tue, 26 Jan 2021 11:19:33 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=simple; d=sang-engineering.com; h=
+        date:from:to:cc:subject:message-id:references:mime-version
+        :content-type:in-reply-to; s=k1; bh=4ZLkDNc++qocydbWdU4zqKsHkW8m
+        ct9HExq6tc8OORo=; b=INnAyJ92KMmHxdi7Hxoj4hm7w+9OvwfUMiKBdLFHhsI6
+        0ui6fVgvw0WNRhb28XLd6pnlUOVOfMn4Txa5nxk5FkG6KgRYTsx1uXOmDyGIIxTg
+        PbF0Qhe8kBAeQmAErYyiF7raKkAN1DPSXmNNWFPsh8bWgPo/MdaupL4T69/PEuY=
+Received: (qmail 3781773 invoked from network); 26 Jan 2021 17:18:41 +0100
+Received: by mail.zeus03.de with ESMTPSA (TLS_AES_256_GCM_SHA384 encrypted, authenticated); 26 Jan 2021 17:18:41 +0100
+X-UD-Smtp-Session: l3s3148p1@mq28AdC5AOUgAwDPXyX1AEdA8SGgn5QT
+Date:   Tue, 26 Jan 2021 17:18:36 +0100
+From:   Wolfram Sang <wsa+renesas@sang-engineering.com>
+To:     Geert Uytterhoeven <geert+renesas@glider.be>
+Cc:     Vinod Koul <vkoul@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        Dan Williams <dan.j.williams@intel.com>,
+        Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+        Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
+        dmaengine@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-renesas-soc@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 2/4] dmaengine: rcar-dmac: Add
+ for_each_rcar_dmac_chan() helper
+Message-ID: <20210126161836.GA928@ninjato>
+References: <20210125142431.1049668-1-geert+renesas@glider.be>
+ <20210125142431.1049668-3-geert+renesas@glider.be>
 MIME-Version: 1.0
-In-Reply-To: <20210123071924.GF2479@dragon>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="82I3+IH0IqGh5yIs"
+Content-Disposition: inline
+In-Reply-To: <20210125142431.1049668-3-geert+renesas@glider.be>
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Hi Shawn,
 
-On 1/23/21 2:19 AM, Shawn Guo wrote:
-> On Fri, Jan 22, 2021 at 10:44:09AM -0500, Thara Gopinath wrote:
->> Hi Shawn,
->>
->> Thanks for the review
->>
->> On 1/22/21 12:10 AM, Shawn Guo wrote:
->>> On Thu, Jan 21, 2021 at 09:52:51PM -0500, Thara Gopinath wrote:
->>>> When bam dma is "controlled remotely", thus far clocks were not controlled
->>>> from the Linux. In this scenario, Linux was disabling runtime pm in bam dma
->>>> driver and not doing any clock management in suspend/resume hooks.
->>>>
->>>> With introduction of crypto engine bam dma, the clock is a rpmh resource
->>>> that can be controlled from both Linux and TZ/remote side.  Now bam dma
->>>> clock is getting enabled during probe even though the bam dma can be
->>>> "controlled remotely". But due to clocks not being handled properly,
->>>> bam_suspend generates a unbalanced clk_unprepare warning during system
->>>> suspend.
->>>>
->>>> To fix the above issue and to enable proper clock-management, this patch
->>>> enables runtim-pm and handles bam dma clocks in suspend/resume hooks if
->>>> the clock node is present irrespective of controlled_remotely property.
->>>
->>> Shouldn't the following probe code need some update?  Now we have both
->>> controlled_remotely and clocks handle for cryptobam node.  For example,
->>> if devm_clk_get() returns -EPROBE_DEFER, we do not want to continue with
->>> bamclk forcing to be NULL, right?
->>
->> We still will have to set bdev->bamclk to NULL in certain scenarios. For eg
->> slimbus bam dma is controlled-remotely and the clocks are handled by the
->> remote s/w. Linux does not handle the clocks at all and  there is no clock
->> specified in the dt node.This is the norm for the devices that are also
->> controlled by remote s/w. Crypto bam dma is a special case where the clock
->> is actually a rpmh resource and hence can be independently handled from both
->> remote side and Linux by voting. In this case, the dma is controlled
->> remotely but clock can be turned off and on in Linux. Hence the need for
->> this patch.
-> 
-> So is it correct to say that clock is mandatory for !controlled-remotely
-> BAM, while it's optional for controlled-remotely one.  If yes, maybe we
-> can do something like below to make the code a bit easier to read?
+--82I3+IH0IqGh5yIs
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Yes. Sure. I will change it to below.
+On Mon, Jan 25, 2021 at 03:24:29PM +0100, Geert Uytterhoeven wrote:
+> Add and helper macro for iterating over all DMAC channels, taking into
+> account the channel mask.  Use it where appropriate, to simplify code.
+>=20
+> Restore "reverse Christmas tree" order of local variables while adding a
+> new variable.
+>=20
+> Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
 
-> 
-> 	if (controlled-remotely)
-> 		bdev->bamclk = devm_clk_get_optional();
-> 	else
-> 		bdev->bamclk = devm_clk_get();
-> 		
->> Yes, the probe code needs updating to handle -EPROBE_DEFER (esp if the clock
->> driver is built in as a module) I am not sure if the clock framework handles
->> -EPROBE_DEFER properly either. So that
->> might need updating too. This is a separate activity and not part of this
->> patch >
-> 
-> As the patch breaks the assumption that for controlled-remotely BAM
-> there is no clock to be managed, the probe code becomes buggy right
-> away.
+Looks good and works fine with I2C + DMA on V3U:
 
-mmm... not really. Either ways we don't handle -EPROBE_DEFER from clock 
-code. That behavior is not worse because of this patch. I can send a 
-separate patch to fix the -EPROBE_DEFER issue.
+Reviewed-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Tested-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
 
-> 
-> Shawn
-> 
 
--- 
-Warm Regards
-Thara
+--82I3+IH0IqGh5yIs
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAmAQQNgACgkQFA3kzBSg
+KbZsDhAAsC8vs8BUss6fJwgkDZuLlrZvz984Ox/0TUevcI8XmIMEFx5d8uUQ20R5
+1n8RyV1bm02lMEsD2cN/+xFPXZXPzvitfSb2l2vtLPHqn6AeDGbNqGQQ7v3dGk6H
+hUtakdFePtNhsDVc4kmUmM9XGQN8qxL2hlFXLKGkjF5hZHMlC7e9m2J3+74IAi70
+5wiGLtGjNroFwAyFvofd+8NuNrYmQyjyfsaygqQJFNIKBSYKAmVZmN81MWhoYU1w
+NLj59QpjkmKeNeP3b2whjoM9c1m54zcaKsERPMAQBoQpKhPfGk5PguOwEWYT8svk
+jjOgyqUoIfuPP2KOWsLGlDTmHEfoqQXONjZAQqqoWzF82aq4y/V8hT6mPNb93xIB
+Kr4dKji8fVVGBRRoSTGb6EPN1ml3xP69WuxGKiK8ZR2RRKHZ1yj8DcjQGmIxzepD
+nIfk6IWobSWATVO5jElElNEfEHZeXjRWh8atVLkfGQdQXu5isDhaVfQbTT+ik/7o
+aLcAvi9+GL7YJfnaLWR55EZjpvSpKI+9S9MkCWDX04F9uR+BoHHfFc+UPBNioKzd
+VhsH8mxJ+2wPck+0pSelFdxYQRdzbE8kAjiOlc0Gkb3QtDrVXdYlXzx8NHDD1CVG
+4V4OEt1ZdIRrEu/oLp9J0fcGbfjrD1qqEkUTgtjdMjPCb+u8pY4=
+=MZqC
+-----END PGP SIGNATURE-----
+
+--82I3+IH0IqGh5yIs--
