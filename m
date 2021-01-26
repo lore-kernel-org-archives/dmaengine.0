@@ -6,55 +6,54 @@ X-Spam-Status: No, score=-6.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A93A7C433DB
-	for <dmaengine@archiver.kernel.org>; Tue, 26 Jan 2021 21:51:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CC064C433E0
+	for <dmaengine@archiver.kernel.org>; Tue, 26 Jan 2021 21:51:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6EB8E20656
-	for <dmaengine@archiver.kernel.org>; Tue, 26 Jan 2021 21:51:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A1FBF20656
+	for <dmaengine@archiver.kernel.org>; Tue, 26 Jan 2021 21:51:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726793AbhAZVva (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 26 Jan 2021 16:51:30 -0500
-Received: from mail.kernel.org ([198.145.29.99]:34364 "EHLO mail.kernel.org"
+        id S1726884AbhAZVvi (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 26 Jan 2021 16:51:38 -0500
+Received: from mail.kernel.org ([198.145.29.99]:35594 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729419AbhAZRQv (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Tue, 26 Jan 2021 12:16:51 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 115A8230FD;
-        Tue, 26 Jan 2021 17:16:06 +0000 (UTC)
+        id S1726628AbhAZRWj (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Tue, 26 Jan 2021 12:22:39 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 865462083E;
+        Tue, 26 Jan 2021 17:21:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1611681368;
-        bh=ZlMjWTDue1boFQPXRJs+qaamE0yY7UzDgg4PLAB1LAs=;
+        s=k20201202; t=1611681719;
+        bh=TASZTc/3PIsXIGzQfYoIfGjxvFDnMCxL+YR5dhnOxdA=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=qC1CerS4hbhJLOPVLo7DQADgwFjYNmxnwM3yop9BM3tj0quYYv/joaUvrZVyRKHSZ
-         LKBqSRTSgl/2nUeXiVcGjQBIN+LYoyeN/gVYE6dy3meYywpUf1kQTwPQTpTuU7TH8t
-         r6sIdWD95qo8u7lPvc3uY9yzUgXlLJlrlQ8sorIec+Nm8WGBWTxMI9Jw15upzQBQG2
-         p0Mixp307Px8FPwgppi5bOw1pwr/Y5c4Z+OSlwnHR2foVoAvfcdf/9B1JuXDYJdJ7A
-         4MlnNmVuDZpGwzb5sv5IcC4IugZMhS9yrL9GFYGFWuTp4YM65ghOnUwePRld/1tpRj
-         5NrgKQY+PAgvA==
-Date:   Tue, 26 Jan 2021 22:46:01 +0530
+        b=rY70kPhwzGhzX3wkpXcPXTOXTU+h5QgN3te5A0JRcYCtRck2OPXwWj5yk2qkN764u
+         g2qGpFOwXjEMFklMrv7EnmR332hBqTb8kP48tzub4CLvUuHhX9mt59FMc7N+36B1Eb
+         k5ROUrbQJ60S9cpDGV45VpQ8DMJ85BC8kpoPQOxSfEWuLolCEqNHEFhG6Q6mCdOI/v
+         XfygXWSJvHQleMuJwEjCg/TDdKoLU8D3kgbXrfhvsIAez7+uyK4PVw9YbkJZXAEVyi
+         2SYNjc5vUp6HRB6ZaWYs51M7aIJGp5L/rzGrX2A+ZRPDbmfJiWQxksecyT7HXfpQgU
+         bHrjB6Dk4OlmA==
+Date:   Tue, 26 Jan 2021 22:51:55 +0530
 From:   Vinod Koul <vkoul@kernel.org>
-To:     Paul Cercueil <paul@crapouillou.net>
-Cc:     Rob Herring <robh+dt@kernel.org>, od@zcrc.me,
-        dmaengine@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-mips@vger.kernel.org
-Subject: Re: [PATCH 2/2] dma: jz4780: Add support for the JZ4760(B)
-Message-ID: <20210126171601.GS2771@vkoul-mobl>
-References: <20210120105322.16116-1-paul@crapouillou.net>
- <20210120105322.16116-2-paul@crapouillou.net>
+To:     Amireddy Mallikarjuna reddy <mallikarjunax.reddy@linux.intel.com>
+Cc:     dmaengine@vger.kernel.org, devicetree@vger.kernel.org,
+        robh+dt@kernel.org, linux-kernel@vger.kernel.org,
+        chuanhua.lei@linux.intel.com, cheol.yong.kim@intel.com,
+        qi-ming.wu@intel.com, malliamireddy009@gmail.com
+Subject: Re: [PATCH 1/1] dt-bindings: dma: intel-ldma: Fix for JSON pointers
+ syntax error
+Message-ID: <20210126172155.GU2771@vkoul-mobl>
+References: <2c0d0d87352a3af132c4eb18e9e1581e03b03eba.1611202226.git.mallikarjunax.reddy@linux.intel.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20210120105322.16116-2-paul@crapouillou.net>
+In-Reply-To: <2c0d0d87352a3af132c4eb18e9e1581e03b03eba.1611202226.git.mallikarjunax.reddy@linux.intel.com>
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On 20-01-21, 10:53, Paul Cercueil wrote:
-> Add support for the JZ4760 and JZ4760B SoCs.
-> 
-> Both SoCs have only 5 DMA channels per chip. The JZ4760B introduced the
-> DCKES/DCKEC registers.
+On 21-01-21, 12:12, Amireddy Mallikarjuna reddy wrote:
+> There have been some fixes for JSON pointers and tools check now got this is missing a '/'.
+> Add missing a '/' in '/schemas/types.yaml#definitions/uint32'
 
-Applied after fixing subsystem name, thanks
+Already applied patch from Bjorn which came before this
 
 -- 
 ~Vinod
