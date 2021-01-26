@@ -6,51 +6,56 @@ X-Spam-Status: No, score=-6.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 571C4C433E0
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 402B1C433DB
 	for <dmaengine@archiver.kernel.org>; Tue, 26 Jan 2021 21:52:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1EEBE20658
-	for <dmaengine@archiver.kernel.org>; Tue, 26 Jan 2021 21:52:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 06B8720656
+	for <dmaengine@archiver.kernel.org>; Tue, 26 Jan 2021 21:52:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726502AbhAZVw0 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 26 Jan 2021 16:52:26 -0500
-Received: from mail.kernel.org ([198.145.29.99]:36814 "EHLO mail.kernel.org"
+        id S1725944AbhAZVvv (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 26 Jan 2021 16:51:51 -0500
+Received: from mail.kernel.org ([198.145.29.99]:36608 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727623AbhAZR3s (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Tue, 26 Jan 2021 12:29:48 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPSA id E4D7A22795;
-        Tue, 26 Jan 2021 17:29:06 +0000 (UTC)
+        id S1728431AbhAZR3B (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Tue, 26 Jan 2021 12:29:01 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 60E83206D4;
+        Tue, 26 Jan 2021 17:28:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1611682147;
-        bh=l4bwtGIcQS7UjrkXD/wBnpPa72hMJnzodlSlvXmSoBg=;
+        s=k20201202; t=1611682100;
+        bh=ZkiXibUcTj8V0sblKd22isCBEsKuiG4JthiNyAM9pK8=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=Lvmyhw+4d6QygVffknt7PE3OsOppwM2abrpBegs6meg1tz5KmtAiMk85b+42H0UrT
-         p8Q/MfeQ8HRq9LFoXPjl+53jTmUagvvyHdxZeILBAS4bzWFyQBQ80dfuG0GaB4JAJ3
-         ErLaTcOD70QhdsNgHvtZ+SIpcCxaBm0RHWOxgBcgGBj0WyyF/J2z8KrSBvhS4y7KXM
-         ZL2xHFjD/biC8wNKNMLq18YQHucCaUZqllCl8G3G6b17Isr+wJ8oABtRl0/FfvCXCd
-         b2oHjR76rGEB+ZL/SDdUOoRzHwpAu6Zx7+AvbZ5IhZMunXb46WqsU9EAzHFRAO3uXf
-         SkP5acBb8PTaw==
-Date:   Tue, 26 Jan 2021 22:59:03 +0530
+        b=q2vCQZkZb0vypHnuY71QVAycNdPtd3MXwwG40ic3eynp/8/S8lXFYJT3BpzR7tvNV
+         DP6JFwdZDJAOD26QNh1eQg+73ab5giDI/oWQDSwRegSMm+pD4bvpdc+2Jbye58Rph8
+         mCXqni3uf8Ov4gVnKOLZj0lEqX5SSM9pSQxKhGIzhpe1tCe7uxUBiLnGJpJyFwvGHF
+         EmGgZvi8SKQH3zV3PNTlc33r8HiVMYtBJhlcwhBKCHk2r4U3XOPZsJ/oIg4cOC0E4A
+         zaHfJTjQvx/1fv6inYuTcuorjJu4UQjm6dbbQ71er3ldIDYNmob03LLg/z74NJwdDc
+         DWjQRy5hl4Lqw==
+Date:   Tue, 26 Jan 2021 22:58:15 +0530
 From:   Vinod Koul <vkoul@kernel.org>
-To:     Dave Jiang <dave.jiang@intel.com>
-Cc:     dmaengine@vger.kernel.org
-Subject: Re: [PATCH v2] dmaengine: idxd: add module parameter to force
- disable of SVA
-Message-ID: <20210126172903.GX2771@vkoul-mobl>
-References: <161134110457.4005461.13171197785259115852.stgit@djiang5-desk3.ch.intel.com>
+To:     Lubomir Rintel <lkundrak@v3.sk>
+Cc:     linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org
+Subject: Re: [PATCH 0/3] dmaengine: Allow building MMP DMA drivers as modules
+Message-ID: <20210126172815.GW2771@vkoul-mobl>
+References: <20210121110356.1768635-1-lkundrak@v3.sk>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <161134110457.4005461.13171197785259115852.stgit@djiang5-desk3.ch.intel.com>
+In-Reply-To: <20210121110356.1768635-1-lkundrak@v3.sk>
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On 22-01-21, 11:46, Dave Jiang wrote:
-> Add a module parameter that overrides the SVA feature enabling. This keeps
-> the driver in legacy mode even when intel_iommu=sm_on is set. In this mode,
-> the descriptor fields must be programmed with dma_addr_t from the Linux DMA
-> API for source, destination, and completion descriptors.
+On 21-01-21, 12:03, Lubomir Rintel wrote:
+> Hi,
+> 
+> please consider attaching the patches chained to this message.
+> 
+> The last two are straighforward Kconfig changes that allow building mmp_tdma 
+> and mmp_pdma as modules so that distros that will choose to enable the drivers 
+> will not add bloat to their kernels for other platforms.
+> 
+> The first one gets rid of a symbol that would be exported by mmp_pdma,
+> because it is entirely unnecessary.
 
 Applied, thanks
 
