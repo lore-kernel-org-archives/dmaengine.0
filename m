@@ -2,109 +2,110 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.2 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,
-	NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
-	autolearn=unavailable autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-16.7 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,UNPARSEABLE_RELAY,URIBL_BLOCKED,
+	USER_AGENT_GIT autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 00076C433DB
-	for <dmaengine@archiver.kernel.org>; Wed, 27 Jan 2021 08:31:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 43E0EC433E0
+	for <dmaengine@archiver.kernel.org>; Wed, 27 Jan 2021 11:32:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A96082073C
-	for <dmaengine@archiver.kernel.org>; Wed, 27 Jan 2021 08:31:32 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DEB382076D
+	for <dmaengine@archiver.kernel.org>; Wed, 27 Jan 2021 11:32:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229494AbhA0I3c (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 27 Jan 2021 03:29:32 -0500
-Received: from mleia.com ([178.79.152.223]:33394 "EHLO mail.mleia.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232643AbhA0IZI (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Wed, 27 Jan 2021 03:25:08 -0500
-Received: from mail.mleia.com (localhost [127.0.0.1])
-        by mail.mleia.com (Postfix) with ESMTP id 9227042EB56;
-        Wed, 27 Jan 2021 08:12:58 +0000 (UTC)
-Subject: Re: [PATCH v3 4/5] amba: Make the remove callback return void
-To:     =?UTF-8?Q?Uwe_Kleine-K=c3=b6nig?= <u.kleine-koenig@pengutronix.de>
-Cc:     Russell King <linux@armlinux.org.uk>,
-        Matt Mackall <mpm@selenic.com>,
-        Herbert Xu <herbert@gondor.apana.org.au>,
-        Vinod Koul <vkoul@kernel.org>,
-        Dan Williams <dan.j.williams@intel.com>,
-        Eric Anholt <eric@anholt.net>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@st.com>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Alessandro Zummo <a.zummo@towertech.it>,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        Mark Brown <broonie@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Jiri Slaby <jirislaby@kernel.org>,
-        Eric Auger <eric.auger@redhat.com>,
-        Alex Williamson <alex.williamson@redhat.com>,
-        Cornelia Huck <cohuck@redhat.com>,
-        Wim Van Sebroeck <wim@linux-watchdog.org>,
-        Guenter Roeck <linux@roeck-us.net>,
-        Jaroslav Kysela <perex@perex.cz>,
-        Takashi Iwai <tiwai@suse.com>, linux-kernel@vger.kernel.org,
-        kernel@pengutronix.de, Mike Leach <mike.leach@linaro.org>,
-        Leo Yan <leo.yan@linaro.org>, Arnd Bergmann <arnd@arndb.de>,
-        linux-crypto@vger.kernel.org, dmaengine@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, coresight@lists.linaro.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-i2c@vger.kernel.org, linux-input@vger.kernel.org,
-        linux-mmc@vger.kernel.org, linux-rtc@vger.kernel.org,
-        linux-spi@vger.kernel.org, linux-serial@vger.kernel.org,
-        kvm@vger.kernel.org, linux-fbdev@vger.kernel.org,
-        linux-watchdog@vger.kernel.org, alsa-devel@alsa-project.org
-References: <20210126165835.687514-1-u.kleine-koenig@pengutronix.de>
- <20210126165835.687514-5-u.kleine-koenig@pengutronix.de>
-From:   Vladimir Zapolskiy <vz@mleia.com>
-Message-ID: <b9bfa80b-ed5f-50f9-de50-76090007556c@mleia.com>
-Date:   Wed, 27 Jan 2021 10:12:55 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.5.0
+        id S236827AbhA0Lb6 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 27 Jan 2021 06:31:58 -0500
+Received: from mailgw01.mediatek.com ([210.61.82.183]:35838 "EHLO
+        mailgw01.mediatek.com" rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org
+        with ESMTP id S236717AbhA0L3s (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Wed, 27 Jan 2021 06:29:48 -0500
+X-UUID: 7dff87075e6c444089ec717bc6c2c005-20210127
+X-UUID: 7dff87075e6c444089ec717bc6c2c005-20210127
+Received: from mtkcas06.mediatek.inc [(172.21.101.30)] by mailgw01.mediatek.com
+        (envelope-from <eastl.lee@mediatek.com>)
+        (Cellopoint E-mail Firewall v4.1.14 Build 0819 with TLSv1.2 ECDHE-RSA-AES256-SHA384 256/256)
+        with ESMTP id 137809370; Wed, 27 Jan 2021 19:28:52 +0800
+Received: from mtkcas07.mediatek.inc (172.21.101.84) by
+ mtkmbs01n2.mediatek.inc (172.21.101.79) with Microsoft SMTP Server (TLS) id
+ 15.0.1497.2; Wed, 27 Jan 2021 19:28:50 +0800
+Received: from mtkswgap22.mediatek.inc (172.21.77.33) by mtkcas07.mediatek.inc
+ (172.21.101.73) with Microsoft SMTP Server id 15.0.1497.2 via Frontend
+ Transport; Wed, 27 Jan 2021 19:28:50 +0800
+From:   EastL Lee <EastL.Lee@mediatek.com>
+To:     Sean Wang <sean.wang@mediatek.com>
+CC:     <vkoul@kernel.org>, <robh+dt@kernel.org>, <mark.rutland@arm.com>,
+        <matthias.bgg@gmail.com>, <dmaengine@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-mediatek@lists.infradead.org>, <devicetree@vger.kernel.org>,
+        <wsd_upstream@mediatek.com>, <cc.hwang@mediatek.com>,
+        <joane.wang@mediatek.com>, <adrian-cj.hung@mediatek.com>,
+        EastL Lee <EastL.Lee@mediatek.com>
+Subject: [PATCH v1 2/3] arm64: dts: mt6779: add emi node
+Date:   Wed, 27 Jan 2021 19:28:43 +0800
+Message-ID: <1611746924-12287-3-git-send-email-EastL.Lee@mediatek.com>
+X-Mailer: git-send-email 1.9.1
+In-Reply-To: <1611746924-12287-1-git-send-email-EastL.Lee@mediatek.com>
+References: <1611746924-12287-1-git-send-email-EastL.Lee@mediatek.com>
 MIME-Version: 1.0
-In-Reply-To: <20210126165835.687514-5-u.kleine-koenig@pengutronix.de>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-CRM114-Version: 20100106-BlameMichelson ( TRE 0.8.0 (BSD) ) MR-49551924 
-X-CRM114-CacheID: sfid-20210127_081258_639999_D23EB9E2 
-X-CRM114-Status: GOOD (  14.44  )
+Content-Type: text/plain
+X-TM-SNTS-SMTP: C8BF7FB8F1D466F43B7C63376E1CD6C4A3A421856A34155B634B138D7946A9032000:8
+X-MTK:  N
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On 1/26/21 6:58 PM, Uwe Kleine-König wrote:
-> All amba drivers return 0 in their remove callback. Together with the
-> driver core ignoring the return value anyhow, it doesn't make sense to
-> return a value here.
-> 
-> Change the remove prototype to return void, which makes it explicit that
-> returning an error value doesn't work as expected. This simplifies changing
-> the core remove callback to return void, too.
-> 
-> Reviewed-by: Ulf Hansson <ulf.hansson@linaro.org>
-> Reviewed-by: Arnd Bergmann <arnd@arndb.de>
-> Acked-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
-> Acked-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-> Acked-by: Krzysztof Kozlowski <krzk@kernel.org> # for drivers/memory
-> Acked-by: Mark Brown <broonie@kernel.org>
-> Acked-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-> Acked-by: Linus Walleij <linus.walleij@linaro.org>
-> Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+add emicen & emichn & emimpu node
 
-For drivers/memory/pl172.c:
+Signed-off-by: EastL Lee <EastL.Lee@mediatek.com>
+---
+ arch/arm64/boot/dts/mediatek/mt6779.dtsi | 34 ++++++++++++++++++++++++++++++++
+ 1 file changed, 34 insertions(+)
 
-Acked-by: Vladimir Zapolskiy <vz@mleia.com>
+diff --git a/arch/arm64/boot/dts/mediatek/mt6779.dtsi b/arch/arm64/boot/dts/mediatek/mt6779.dtsi
+index 370f309..bb34537 100644
+--- a/arch/arm64/boot/dts/mediatek/mt6779.dtsi
++++ b/arch/arm64/boot/dts/mediatek/mt6779.dtsi
+@@ -267,5 +267,39 @@
+ 			#clock-cells = <1>;
+ 		};
+ 
++		emichn: emichn@10235000 {
++			compatible = "mediatek,mt6779-emichn",
++				"mediatek,common-emichn";
++			reg = <0 0x10235000 0 0x1000>,
++				<0 0x10245000 0 0x1000>;
++		};
++
++		emicen: emicen@10219000 {
++			compatible = "mediatek,mt6779-emicen",
++				"mediatek,common-emicen";
++			reg = <0 0x10219000 0 0x1000>;
++			mediatek,emi-reg = <&emichn>;
++		};
++
++		emimpu:emimpu@10226000 {
++			compatible = "mediatek,mt6779-emimpu",
++				"mediatek,common-emimpu";
++			reg = <0 0x10226000 0 0x1000>;
++			mediatek,emi-reg = <&emicen>;
++			interrupts = <GIC_SPI 189 IRQ_TYPE_LEVEL_HIGH 0>;
++			region_cnt = <32>;
++			domain_cnt = <16>;
++			addr_align = <16>;
++			ap_region = <31>;
++			ap_apc = <0 5 5 5 0 0 6 5>,
++				<0 0 5 0 0 1 5 5>;
++			dump = <0x1f0 0x1f8 0x1fc>;
++			clear = <0x160 0xffffffff 16>,
++				<0x200 0x00000003 16>,
++				<0x1f0 0x80000000 1>;
++			clear_md = <0x1fc 0x80000000 1>;
++			ctrl_intf = <1>;
++			slverr = <0>;
++		};
+ 	};
+ };
+-- 
+1.9.1
 
---
-Best wishes,
-Vladimir
