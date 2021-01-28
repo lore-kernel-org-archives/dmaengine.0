@@ -5,34 +5,34 @@ X-Spam-Level:
 X-Spam-Status: No, score=-16.7 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+	autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D5070C433DB
-	for <dmaengine@archiver.kernel.org>; Thu, 28 Jan 2021 08:47:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 557BDC433E0
+	for <dmaengine@archiver.kernel.org>; Thu, 28 Jan 2021 08:48:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8CA6D64DD6
-	for <dmaengine@archiver.kernel.org>; Thu, 28 Jan 2021 08:47:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0A69E6024A
+	for <dmaengine@archiver.kernel.org>; Thu, 28 Jan 2021 08:48:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231583AbhA1IqR (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Thu, 28 Jan 2021 03:46:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53966 "EHLO
+        id S231745AbhA1Iqm (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Thu, 28 Jan 2021 03:46:42 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53964 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232308AbhA1Ipz (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Thu, 28 Jan 2021 03:45:55 -0500
-Received: from baptiste.telenet-ops.be (baptiste.telenet-ops.be [IPv6:2a02:1800:120:4::f00:13])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C355EC0617AA
-        for <dmaengine@vger.kernel.org>; Thu, 28 Jan 2021 00:45:01 -0800 (PST)
+        with ESMTP id S232304AbhA1Ipu (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Thu, 28 Jan 2021 03:45:50 -0500
+Received: from xavier.telenet-ops.be (xavier.telenet-ops.be [IPv6:2a02:1800:120:4::f00:14])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4CC33C0617AB
+        for <dmaengine@vger.kernel.org>; Thu, 28 Jan 2021 00:45:02 -0800 (PST)
 Received: from ramsan.of.borg ([84.195.186.194])
-        by baptiste.telenet-ops.be with bizsmtp
-        id N8kx2400T4C55Sk018kx74; Thu, 28 Jan 2021 09:44:59 +0100
+        by xavier.telenet-ops.be with bizsmtp
+        id N8kx2400h4C55Sk018kxwB; Thu, 28 Jan 2021 09:45:00 +0100
 Received: from rox.of.borg ([192.168.97.57])
         by ramsan.of.borg with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
         (Exim 4.93)
         (envelope-from <geert@linux-m68k.org>)
-        id 1l52vB-001JYR-E9; Thu, 28 Jan 2021 09:44:57 +0100
+        id 1l52vB-001JYP-EM; Thu, 28 Jan 2021 09:44:57 +0100
 Received: from geert by rox.of.borg with local (Exim 4.93)
         (envelope-from <geert@linux-m68k.org>)
-        id 1l52vB-009O1q-0i; Thu, 28 Jan 2021 09:44:57 +0100
+        id 1l52vA-009O1g-V7; Thu, 28 Jan 2021 09:44:56 +0100
 From:   Geert Uytterhoeven <geert+renesas@glider.be>
 To:     Vinod Koul <vkoul@kernel.org>
 Cc:     Rob Herring <robh+dt@kernel.org>,
@@ -42,10 +42,11 @@ Cc:     Rob Herring <robh+dt@kernel.org>,
         Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
         dmaengine@vger.kernel.org, devicetree@vger.kernel.org,
         linux-renesas-soc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Geert Uytterhoeven <geert+renesas@glider.be>
-Subject: [PATCH v3 3/4] dmaengine: rcar-dmac: Add helpers for clearing DMA channel status
-Date:   Thu, 28 Jan 2021 09:44:54 +0100
-Message-Id: <20210128084455.2237256-4-geert+renesas@glider.be>
+        Geert Uytterhoeven <geert+renesas@glider.be>,
+        Rob Herring <robh@kernel.org>
+Subject: [PATCH v3 1/4] dt-bindings: renesas,rcar-dmac: Add r8a779a0 support
+Date:   Thu, 28 Jan 2021 09:44:52 +0100
+Message-Id: <20210128084455.2237256-2-geert+renesas@glider.be>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20210128084455.2237256-1-geert+renesas@glider.be>
 References: <20210128084455.2237256-1-geert+renesas@glider.be>
@@ -55,63 +56,119 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Extract the code to clear the status of one or all channels into their
-own helpers, to prepare for the different handling of the R-Car V3U SoC.
+Document the compatible value for the Direct Memory Access Controller
+blocks in the Renesas R-Car V3U (R8A779A0) SoC.
+
+The most visible difference with DMAC blocks on other R-Car SoCs is the
+move of the per-channel registers to a separate register block.
 
 Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Reviewed-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Reviewed-by: Rob Herring <robh@kernel.org>
 Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Tested-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
 ---
 v3:
-  - Add Reviewed-by, Tested-by,
+  - Add Reviewed-by,
 
 v2:
-  - No changes.
+  - Add Reviewed-by.
 ---
- drivers/dma/sh/rcar-dmac.c | 15 +++++++++++++--
- 1 file changed, 13 insertions(+), 2 deletions(-)
+ .../bindings/dma/renesas,rcar-dmac.yaml       | 76 ++++++++++++-------
+ 1 file changed, 48 insertions(+), 28 deletions(-)
 
-diff --git a/drivers/dma/sh/rcar-dmac.c b/drivers/dma/sh/rcar-dmac.c
-index 83c9a5bd1077db3a..37e3c6890f8670da 100644
---- a/drivers/dma/sh/rcar-dmac.c
-+++ b/drivers/dma/sh/rcar-dmac.c
-@@ -336,6 +336,17 @@ static void rcar_dmac_chan_write(struct rcar_dmac_chan *chan, u32 reg, u32 data)
- 		writel(data, chan->iomem + reg);
- }
+diff --git a/Documentation/devicetree/bindings/dma/renesas,rcar-dmac.yaml b/Documentation/devicetree/bindings/dma/renesas,rcar-dmac.yaml
+index c07eb6f2fc8d2f12..7f2a54bc732d3a19 100644
+--- a/Documentation/devicetree/bindings/dma/renesas,rcar-dmac.yaml
++++ b/Documentation/devicetree/bindings/dma/renesas,rcar-dmac.yaml
+@@ -14,34 +14,37 @@ allOf:
  
-+static void rcar_dmac_chan_clear(struct rcar_dmac *dmac,
-+				 struct rcar_dmac_chan *chan)
-+{
-+	rcar_dmac_write(dmac, RCAR_DMACHCLR, BIT(chan->index));
-+}
+ properties:
+   compatible:
+-    items:
+-      - enum:
+-          - renesas,dmac-r8a7742  # RZ/G1H
+-          - renesas,dmac-r8a7743  # RZ/G1M
+-          - renesas,dmac-r8a7744  # RZ/G1N
+-          - renesas,dmac-r8a7745  # RZ/G1E
+-          - renesas,dmac-r8a77470 # RZ/G1C
+-          - renesas,dmac-r8a774a1 # RZ/G2M
+-          - renesas,dmac-r8a774b1 # RZ/G2N
+-          - renesas,dmac-r8a774c0 # RZ/G2E
+-          - renesas,dmac-r8a774e1 # RZ/G2H
+-          - renesas,dmac-r8a7790  # R-Car H2
+-          - renesas,dmac-r8a7791  # R-Car M2-W
+-          - renesas,dmac-r8a7792  # R-Car V2H
+-          - renesas,dmac-r8a7793  # R-Car M2-N
+-          - renesas,dmac-r8a7794  # R-Car E2
+-          - renesas,dmac-r8a7795  # R-Car H3
+-          - renesas,dmac-r8a7796  # R-Car M3-W
+-          - renesas,dmac-r8a77961 # R-Car M3-W+
+-          - renesas,dmac-r8a77965 # R-Car M3-N
+-          - renesas,dmac-r8a77970 # R-Car V3M
+-          - renesas,dmac-r8a77980 # R-Car V3H
+-          - renesas,dmac-r8a77990 # R-Car E3
+-          - renesas,dmac-r8a77995 # R-Car D3
+-      - const: renesas,rcar-dmac
+-
+-  reg:
+-    maxItems: 1
++    oneOf:
++      - items:
++          - enum:
++              - renesas,dmac-r8a7742  # RZ/G1H
++              - renesas,dmac-r8a7743  # RZ/G1M
++              - renesas,dmac-r8a7744  # RZ/G1N
++              - renesas,dmac-r8a7745  # RZ/G1E
++              - renesas,dmac-r8a77470 # RZ/G1C
++              - renesas,dmac-r8a774a1 # RZ/G2M
++              - renesas,dmac-r8a774b1 # RZ/G2N
++              - renesas,dmac-r8a774c0 # RZ/G2E
++              - renesas,dmac-r8a774e1 # RZ/G2H
++              - renesas,dmac-r8a7790  # R-Car H2
++              - renesas,dmac-r8a7791  # R-Car M2-W
++              - renesas,dmac-r8a7792  # R-Car V2H
++              - renesas,dmac-r8a7793  # R-Car M2-N
++              - renesas,dmac-r8a7794  # R-Car E2
++              - renesas,dmac-r8a7795  # R-Car H3
++              - renesas,dmac-r8a7796  # R-Car M3-W
++              - renesas,dmac-r8a77961 # R-Car M3-W+
++              - renesas,dmac-r8a77965 # R-Car M3-N
++              - renesas,dmac-r8a77970 # R-Car V3M
++              - renesas,dmac-r8a77980 # R-Car V3H
++              - renesas,dmac-r8a77990 # R-Car E3
++              - renesas,dmac-r8a77995 # R-Car D3
++          - const: renesas,rcar-dmac
 +
-+static void rcar_dmac_chan_clear_all(struct rcar_dmac *dmac)
-+{
-+	rcar_dmac_write(dmac, RCAR_DMACHCLR, dmac->channels_mask);
-+}
++      - items:
++          - const: renesas,dmac-r8a779a0 # R-Car V3U
 +
- /* -----------------------------------------------------------------------------
-  * Initialization and configuration
-  */
-@@ -451,7 +462,7 @@ static int rcar_dmac_init(struct rcar_dmac *dmac)
- 	u16 dmaor;
++  reg: true
  
- 	/* Clear all channels and enable the DMAC globally. */
--	rcar_dmac_write(dmac, RCAR_DMACHCLR, dmac->channels_mask);
-+	rcar_dmac_chan_clear_all(dmac);
- 	rcar_dmac_write(dmac, RCAR_DMAOR,
- 			RCAR_DMAOR_PRI_FIXED | RCAR_DMAOR_DME);
+   interrupts:
+     minItems: 9
+@@ -110,6 +113,23 @@ required:
+   - power-domains
+   - resets
  
-@@ -1566,7 +1577,7 @@ static irqreturn_t rcar_dmac_isr_channel(int irq, void *dev)
- 		 * because channel is already stopped in error case.
- 		 * We need to clear register and check DE bit as recovery.
- 		 */
--		rcar_dmac_write(dmac, RCAR_DMACHCLR, 1 << chan->index);
-+		rcar_dmac_chan_clear(dmac, chan);
- 		rcar_dmac_chcr_de_barrier(chan);
- 		reinit = true;
- 		goto spin_lock_end;
++if:
++  properties:
++    compatible:
++      contains:
++        enum:
++          - renesas,dmac-r8a779a0
++then:
++  properties:
++    reg:
++      items:
++        - description: Base register block
++        - description: Channel register block
++else:
++  properties:
++    reg:
++      maxItems: 1
++
+ additionalProperties: false
+ 
+ examples:
 -- 
 2.25.1
 
