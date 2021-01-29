@@ -2,289 +2,158 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-16.7 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=unavailable autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	MAILING_LIST_MULTI,PDS_BAD_THREAD_QP_64,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C4695C433E0
-	for <dmaengine@archiver.kernel.org>; Thu, 28 Jan 2021 08:56:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 925F4C433E0
+	for <dmaengine@archiver.kernel.org>; Fri, 29 Jan 2021 10:20:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 74BD164D92
-	for <dmaengine@archiver.kernel.org>; Thu, 28 Jan 2021 08:56:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5AB8E64EA2
+	for <dmaengine@archiver.kernel.org>; Fri, 29 Jan 2021 10:20:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232253AbhA1Iy7 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Thu, 28 Jan 2021 03:54:59 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53972 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232252AbhA1Ip3 (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Thu, 28 Jan 2021 03:45:29 -0500
-Received: from andre.telenet-ops.be (andre.telenet-ops.be [IPv6:2a02:1800:120:4::f00:15])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7AEF0C06178A
-        for <dmaengine@vger.kernel.org>; Thu, 28 Jan 2021 00:45:01 -0800 (PST)
-Received: from ramsan.of.borg ([84.195.186.194])
-        by andre.telenet-ops.be with bizsmtp
-        id N8kx2400a4C55Sk018kyDE; Thu, 28 Jan 2021 09:44:59 +0100
-Received: from rox.of.borg ([192.168.97.57])
-        by ramsan.of.borg with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-        (Exim 4.93)
-        (envelope-from <geert@linux-m68k.org>)
-        id 1l52vB-001JYS-F6; Thu, 28 Jan 2021 09:44:57 +0100
-Received: from geert by rox.of.borg with local (Exim 4.93)
-        (envelope-from <geert@linux-m68k.org>)
-        id 1l52vB-009O1v-1g; Thu, 28 Jan 2021 09:44:57 +0100
-From:   Geert Uytterhoeven <geert+renesas@glider.be>
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Rob Herring <robh+dt@kernel.org>,
+        id S232134AbhA2KSp (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 29 Jan 2021 05:18:45 -0500
+Received: from mail-eopbgr1310129.outbound.protection.outlook.com ([40.107.131.129]:20787
+        "EHLO APC01-SG2-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S232210AbhA2KMS (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Fri, 29 Jan 2021 05:12:18 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=H3m/kLttjIJCC65dm/FAsncauVp4c8ln1LCxDTIwiK0/bo2SLBKAS+6BUh2Zer/Pqgx+KUMAfFv7TqAV+wBd3dBd/8D+Yt6pBlixKPy7olLQQPsQRsb7jpI5wp+JpIyOjbHQ/kRv5V2dc7zXRYzcAsg2hlwgeYmOmehb9r9lwsL7d7+x6BOPn9PTJ7pkNkwYrGuu6EEKDHC/UfEQnn/TZMNnA+LGMBipADDLF0jZGXZiaF9Y1faE8hjA1PpyGIwQ4WdFgleNDLfe8jgL4QJvsDCdyiV785znX3+1qeFcJ5q1yxly2JPjyLhWeodHH2JKkEHqZNQvMbVD2IRBLHDfnQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=VG0MeaX754ylcBTMfCuw2wycvMGEtvqNuVaAUxY0QqU=;
+ b=TswkJ9oH/T4vL2G1AP31+vWWm6TvbecicXQ0lU5JoPdL7lK2vVcYj2FFSykLZkpOV1wXTNPRN59iC4VFh0xoRi4Gw6zZGoxPOTII2PMI9P6Wr4s1/hI5QsZxFDEdNwKd24pYM63DBTEzmj52CSWJiYUnGxG3eIacdOpoT4+O1USHpC25nYvZnWwRm5WcXP2udwlcXfB49YAS/LTYO3Krc/4TGnuNHFCS4ZFNOLDfa8Nk6ZJMEEa52h9oK9dY9kksk6rJ0d+eQQvgLTRD7lTkxAD4qN185iE5iG5EzMtgbPOV4gp9Bl+4fo8rFo+7jMBYZrn8Sn0OUsd1DQkKnC+aqQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=renesas.com; dmarc=pass action=none header.from=renesas.com;
+ dkim=pass header.d=renesas.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=renesasgroup.onmicrosoft.com; s=selector2-renesasgroup-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=VG0MeaX754ylcBTMfCuw2wycvMGEtvqNuVaAUxY0QqU=;
+ b=myuvguhp2mDLaaJX4mcGQxdto28/rpKf3sEsSO8/2np6mA8+JEqw333r35elXs3Z0mFX7pzcmI/BA46Ehkgm9MtX/jhHjF34/Ba4Bc3U/BvJV+sLv9vjovTZ9XyxK5hXsohGlBq4e8iX8SBBm4oXIFQqTxeCPibvCbm6TceWDZg=
+Received: from TY2PR01MB3692.jpnprd01.prod.outlook.com (2603:1096:404:d5::22)
+ by TY2PR01MB3292.jpnprd01.prod.outlook.com (2603:1096:404:7a::17) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3784.16; Fri, 29 Jan
+ 2021 08:40:07 +0000
+Received: from TY2PR01MB3692.jpnprd01.prod.outlook.com
+ ([fe80::2023:7ed1:37c3:8037]) by TY2PR01MB3692.jpnprd01.prod.outlook.com
+ ([fe80::2023:7ed1:37c3:8037%5]) with mapi id 15.20.3784.017; Fri, 29 Jan 2021
+ 08:40:07 +0000
+From:   Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
+To:     Geert Uytterhoeven <geert+renesas@glider.be>,
+        Vinod Koul <vkoul@kernel.org>
+CC:     Rob Herring <robh+dt@kernel.org>,
         Dan Williams <dan.j.williams@intel.com>,
         Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
         Wolfram Sang <wsa+renesas@sang-engineering.com>,
-        Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-        dmaengine@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-renesas-soc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Geert Uytterhoeven <geert+renesas@glider.be>
-Subject: [PATCH v3 4/4] dmaengine: rcar-dmac: Add support for R-Car V3U
-Date:   Thu, 28 Jan 2021 09:44:55 +0100
-Message-Id: <20210128084455.2237256-5-geert+renesas@glider.be>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20210128084455.2237256-1-geert+renesas@glider.be>
+        "dmaengine@vger.kernel.org" <dmaengine@vger.kernel.org>,
+        "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
+        "linux-renesas-soc@vger.kernel.org" 
+        <linux-renesas-soc@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
+Subject: RE: [PATCH v3 0/4] dmaengine: rcar-dmac: Add support for R-Car V3U
+Thread-Topic: [PATCH v3 0/4] dmaengine: rcar-dmac: Add support for R-Car V3U
+Thread-Index: AQHW9VHfqcNv1txhjU+jKY2vOCaCOKo+SYlg
+Date:   Fri, 29 Jan 2021 08:40:07 +0000
+Message-ID: <TY2PR01MB3692DFF3B6E414A901ABF30FD8B99@TY2PR01MB3692.jpnprd01.prod.outlook.com>
 References: <20210128084455.2237256-1-geert+renesas@glider.be>
+In-Reply-To: <20210128084455.2237256-1-geert+renesas@glider.be>
+Accept-Language: ja-JP, en-US
+Content-Language: ja-JP
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: glider.be; dkim=none (message not signed)
+ header.d=none;glider.be; dmarc=none action=none header.from=renesas.com;
+x-originating-ip: [240f:60:5f3e:1:e04a:64b2:db4e:d452]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-ht: Tenant
+x-ms-office365-filtering-correlation-id: bc142555-f855-43b5-08bb-08d8c4317b74
+x-ms-traffictypediagnostic: TY2PR01MB3292:
+x-microsoft-antispam-prvs: <TY2PR01MB329246923D9F05A48B01035DD8B99@TY2PR01MB3292.jpnprd01.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:6790;
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: ddSwKfAtx2tRjMdOGt9RI/Tra85cr08y0NQtGrz9SwpbjXgbwpYrw1bEbsg2c95E5MW4oi+zwwyx7tyiir9TiL5VCoVcgWuDsNqniGmQrFqkCdqqMAuUegp2zjJjukNb9hCVs/9YR+9YdZhYy0iCTbW32PU8OVCvqdEaaiUVdbJQzRE1lYDQBanyHPqJ4XOfi4B17OyyrtCljUMUZltF0dOsbLsY65FmuJJnkqHA3izzUgPuQYtOnqyAJZOpv+Dm1lS+EGgnvX4fPFeM5hLkmI9+YwzDd7PYWEkLvhlb04fw6Z+CTIVXy17tOFwGUL2dJiSCDFPGXeDDcqZV8T3GOzZLIf1mS1cC+6uqH4f1SxPfMUbHybj/Czq8VQJO0Yl91flkRPfBZnk6k5ngFxZdvsj01z4ezJOof5AVZQODty+g+mSluTwdvOD/0lUb0ZkAFiH/ew+xNZ+T9njfppSX0OYzI536Vlmp5fPIx3YuATOa3ljUnYvmpZtNGwW429dYjntnGH6gkw9ADMd4CAtENg==
+x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:TY2PR01MB3692.jpnprd01.prod.outlook.com;PTR:;CAT:NONE;SFS:(4636009)(396003)(136003)(376002)(366004)(346002)(39860400002)(5660300002)(52536014)(316002)(478600001)(71200400001)(54906003)(110136005)(8936002)(55016002)(33656002)(7696005)(83380400001)(66476007)(6506007)(86362001)(4326008)(9686003)(66946007)(76116006)(7416002)(66556008)(64756008)(186003)(66446008)(8676002)(2906002);DIR:OUT;SFP:1102;
+x-ms-exchange-antispam-messagedata: =?us-ascii?Q?fhJbXLHgI/d8grC11v2P6jCw7UZ9nIBAvw2oEgRDhgBFXWrPO+gggfAC2e2V?=
+ =?us-ascii?Q?wMZ3C0U1oVfn6UdTO1Ygi1sJhBUQM5xCQh3NwOsWhXvY8ablExjKonq4LJhY?=
+ =?us-ascii?Q?mwBa5C5KQCaIFBb6CVUN1PvnNrEfLkvsVmpqWo8oR+Se0aVUlpf0mtvdW2DV?=
+ =?us-ascii?Q?bJ7o/deXyMjt2zI3jR+Cl33BmIIZeozSa1l97IEBqnf1J5WIGSwWxzsb/hBQ?=
+ =?us-ascii?Q?cnkbKF7Zj2W0l3l3NU3tRfJ0smrLrfC3hIoRzd4zkV6QPij5Bsa1ueALsKdB?=
+ =?us-ascii?Q?nRI7O6Qw+N10Zyp2PDfTd8Uucgrr0FgpnMqgxSLRQl6MAiAOCOlq8FI+ADry?=
+ =?us-ascii?Q?q199GrVYO0Lg+DvIn7/U8w+Rf0QP/uJOwxnR47v+hxcaKdEvKJjVdKAarH4A?=
+ =?us-ascii?Q?KRj8/y8Jdkf5Yi1EypdsolnecQM/41cTCfQE2gE5RA3pOvcKVXWgYHSGEmzl?=
+ =?us-ascii?Q?67cMywLx+24hWZUM3GFfKtnyYqjbAlpg4d/e4krjrDRXsfA0CTjMb2oTG1JV?=
+ =?us-ascii?Q?ByxyvpygjzdifH9ysV5wiMsoH4R96WdDvvLuJ9XHEEHmDws97AJCNdRhcd6t?=
+ =?us-ascii?Q?0KcS/WJHy986yciujM561QppmsTnyzyFLFYGxkAoMKO64AsOZZmhqo2N/u3w?=
+ =?us-ascii?Q?ObQO0PQinIxe8z68O+br8CscqRyIqoDt6x80QU1FALZKlZnxxBx6lMT+aVnE?=
+ =?us-ascii?Q?tqVvttonuGLS3hnTUorDmaEZfyxl86i70AMQjKP9xJqdjG+t+MH6E1NaxMTb?=
+ =?us-ascii?Q?2AmYA45DadzYrOe0FO7GA2z62cPMVx8DfL8Y0Yh79uKKXEXVGIS0PSiASE6l?=
+ =?us-ascii?Q?p68/IXZNcWsbaAFXAQXeUzt+VF6N/DfL5CBQ9f7Z1JPPMbPK1ie6MEqxxHog?=
+ =?us-ascii?Q?rWlcAXjEGk0oEPTCocgCjbtKnCr/kAI5u1Mcl35T0v7MdWSqBIPrko4tJ9fy?=
+ =?us-ascii?Q?3R8+v8q/pbuncfivKZwJ7HwICcOWoQAhZTUtn4+Zh+JcsZBEJ8ph+xgSMO0E?=
+ =?us-ascii?Q?iiMQwJuoCgIa4e4bH6pDhbXUQb2XK+oVo4p6gsqD7JNMdroMvdzO4JIXDtDz?=
+ =?us-ascii?Q?vr0yr8/4Rl7iPcLas2eom4VU7MFNyrIm6vYuK7Kk5tP2LkYlcbM=3D?=
+x-ms-exchange-transport-forked: True
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+X-OriginatorOrg: renesas.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: TY2PR01MB3692.jpnprd01.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: bc142555-f855-43b5-08bb-08d8c4317b74
+X-MS-Exchange-CrossTenant-originalarrivaltime: 29 Jan 2021 08:40:07.2840
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 53d82571-da19-47e4-9cb4-625a166a4a2a
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: HGDGo/pA4T3EoHA/H0GXl6ZeM6FWwLYRS+8apzf87gZb/wlAiJw3R1p9wScglrzhNdY6+njHzEDLYVu58iKsSK4E/1myO58/M2kNdQqCv/0WZARhFzifc+YhcHGHLHMa
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TY2PR01MB3292
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-The DMACs (both SYS-DMAC and RT-DMAC) on R-Car V3U differ slightly from
-the DMACs on R-Car Gen2 and other R-Car Gen3 SoCs:
-  1. The per-channel registers are located in a second register block.
-     Add support for mapping the second block, using the appropriate
-     offsets and stride.
-  2. The common Channel Clear Register (DMACHCLR) was replaced by a
-     per-channel register.
-     Update rcar_dmac_chan_clear{,_all}() to handle this.
-     As rcar_dmac_init() needs to clear the status before the individual
-     channels are probed, channel index and base address initialization
-     are moved forward.
+Hi Geert-san,
 
-Inspired by a patch in the BSP by Phong Hoang
-<phong.hoang.wz@renesas.com>.
+> From: Geert Uytterhoeven, Sent: Thursday, January 28, 2021 5:45 PM
+>=20
+> 	Hi Vinod,
+>=20
+> This patch series adds support for the Direct Memory Access Controller
+> variant in the Renesas R-Car V3U (R8A779A0) SoC, to both DT bindings and
+> driver.
+>=20
+> Changes compared to v2:
+>   - Add Reviewed-by, Tested-by,
+>   - Place iterator after container being iterated,
+>   - Stop passing index to rcar_dmac_chan_probe().
+>=20
+> Changes compared to v1:
+>   - Add Reviewed-by,
+>   - Put the full loop control of for_each_rcar_dmac_chan() on a single
+>     line, to improve readability,
+>   - Use two separate named regions instead of array,
+>   - Drop rcar_dmac_of_data.chan_reg_block, check for
+>     !rcar_dmac_of_data.chan_offset_base instead,
+>   - Precalculate chan_base in rcar_dmac_probe().
+>=20
+> This has been tested on the Renesas Falcon board, using external SPI
+> loopback (spi-loopback-test) on MSIOF1 and MSIOF2.
 
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Tested-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
----
-v3:
-  - Add Tested-by,
-  - Update for for_each_rcar_dmac_chan() parameter order change,
-  - Stop passing index to rcar_dmac_chan_probe(),
+Thank you for the patch!
 
-v2:
-  - Use two separate named regions instead of array,
-  - Drop rcar_dmac_of_data.chan_reg_block, check for
-    !rcar_dmac_of_data.chan_offset_base instead,
-  - Precalculate chan_base in rcar_dmac_probe().
----
- drivers/dma/sh/rcar-dmac.c | 81 +++++++++++++++++++++++++++-----------
- 1 file changed, 58 insertions(+), 23 deletions(-)
+Reviewed-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
 
-diff --git a/drivers/dma/sh/rcar-dmac.c b/drivers/dma/sh/rcar-dmac.c
-index 37e3c6890f8670da..6ea3f1ebfda9f2a0 100644
---- a/drivers/dma/sh/rcar-dmac.c
-+++ b/drivers/dma/sh/rcar-dmac.c
-@@ -189,7 +189,8 @@ struct rcar_dmac_chan {
-  * struct rcar_dmac - R-Car Gen2 DMA Controller
-  * @engine: base DMA engine object
-  * @dev: the hardware device
-- * @iomem: remapped I/O memory base
-+ * @dmac_base: remapped base register block
-+ * @chan_base: remapped channel register block (optional)
-  * @n_channels: number of available channels
-  * @channels: array of DMAC channels
-  * @channels_mask: bitfield of which DMA channels are managed by this driver
-@@ -198,7 +199,8 @@ struct rcar_dmac_chan {
- struct rcar_dmac {
- 	struct dma_device engine;
- 	struct device *dev;
--	void __iomem *iomem;
-+	void __iomem *dmac_base;
-+	void __iomem *chan_base;
- 
- 	unsigned int n_channels;
- 	struct rcar_dmac_chan *channels;
-@@ -234,7 +236,7 @@ struct rcar_dmac_of_data {
- #define RCAR_DMAOR_PRI_ROUND_ROBIN	(3 << 8)
- #define RCAR_DMAOR_AE			(1 << 2)
- #define RCAR_DMAOR_DME			(1 << 0)
--#define RCAR_DMACHCLR			0x0080
-+#define RCAR_DMACHCLR			0x0080	/* Not on R-Car V3U */
- #define RCAR_DMADPSEC			0x00a0
- 
- #define RCAR_DMASAR			0x0000
-@@ -297,6 +299,9 @@ struct rcar_dmac_of_data {
- #define RCAR_DMAFIXDAR			0x0014
- #define RCAR_DMAFIXDPBASE		0x0060
- 
-+/* For R-Car V3U */
-+#define RCAR_V3U_DMACHCLR		0x0100
-+
- /* Hardcode the MEMCPY transfer size to 4 bytes. */
- #define RCAR_DMAC_MEMCPY_XFER_SIZE	4
- 
-@@ -307,17 +312,17 @@ struct rcar_dmac_of_data {
- static void rcar_dmac_write(struct rcar_dmac *dmac, u32 reg, u32 data)
- {
- 	if (reg == RCAR_DMAOR)
--		writew(data, dmac->iomem + reg);
-+		writew(data, dmac->dmac_base + reg);
- 	else
--		writel(data, dmac->iomem + reg);
-+		writel(data, dmac->dmac_base + reg);
- }
- 
- static u32 rcar_dmac_read(struct rcar_dmac *dmac, u32 reg)
- {
- 	if (reg == RCAR_DMAOR)
--		return readw(dmac->iomem + reg);
-+		return readw(dmac->dmac_base + reg);
- 	else
--		return readl(dmac->iomem + reg);
-+		return readl(dmac->dmac_base + reg);
- }
- 
- static u32 rcar_dmac_chan_read(struct rcar_dmac_chan *chan, u32 reg)
-@@ -339,12 +344,23 @@ static void rcar_dmac_chan_write(struct rcar_dmac_chan *chan, u32 reg, u32 data)
- static void rcar_dmac_chan_clear(struct rcar_dmac *dmac,
- 				 struct rcar_dmac_chan *chan)
- {
--	rcar_dmac_write(dmac, RCAR_DMACHCLR, BIT(chan->index));
-+	if (dmac->chan_base)
-+		rcar_dmac_chan_write(chan, RCAR_V3U_DMACHCLR, 1);
-+	else
-+		rcar_dmac_write(dmac, RCAR_DMACHCLR, BIT(chan->index));
- }
- 
- static void rcar_dmac_chan_clear_all(struct rcar_dmac *dmac)
- {
--	rcar_dmac_write(dmac, RCAR_DMACHCLR, dmac->channels_mask);
-+	struct rcar_dmac_chan *chan;
-+	unsigned int i;
-+
-+	if (dmac->chan_base) {
-+		for_each_rcar_dmac_chan(i, dmac, chan)
-+			rcar_dmac_chan_write(chan, RCAR_V3U_DMACHCLR, 1);
-+	} else {
-+		rcar_dmac_write(dmac, RCAR_DMACHCLR, dmac->channels_mask);
-+	}
- }
- 
- /* -----------------------------------------------------------------------------
-@@ -1743,9 +1759,7 @@ static const struct dev_pm_ops rcar_dmac_pm = {
-  */
- 
- static int rcar_dmac_chan_probe(struct rcar_dmac *dmac,
--				struct rcar_dmac_chan *rchan,
--				const struct rcar_dmac_of_data *data,
--				unsigned int index)
-+				struct rcar_dmac_chan *rchan)
- {
- 	struct platform_device *pdev = to_platform_device(dmac->dev);
- 	struct dma_chan *chan = &rchan->chan;
-@@ -1753,9 +1767,6 @@ static int rcar_dmac_chan_probe(struct rcar_dmac *dmac,
- 	char *irqname;
- 	int ret;
- 
--	rchan->index = index;
--	rchan->iomem = dmac->iomem + data->chan_offset_base +
--		       data->chan_offset_stride * index;
- 	rchan->mid_rid = -EINVAL;
- 
- 	spin_lock_init(&rchan->lock);
-@@ -1767,13 +1778,13 @@ static int rcar_dmac_chan_probe(struct rcar_dmac *dmac,
- 	INIT_LIST_HEAD(&rchan->desc.wait);
- 
- 	/* Request the channel interrupt. */
--	sprintf(pdev_irqname, "ch%u", index);
-+	sprintf(pdev_irqname, "ch%u", rchan->index);
- 	rchan->irq = platform_get_irq_byname(pdev, pdev_irqname);
- 	if (rchan->irq < 0)
- 		return -ENODEV;
- 
- 	irqname = devm_kasprintf(dmac->dev, GFP_KERNEL, "%s:%u",
--				 dev_name(dmac->dev), index);
-+				 dev_name(dmac->dev), rchan->index);
- 	if (!irqname)
- 		return -ENOMEM;
- 
-@@ -1842,6 +1853,7 @@ static int rcar_dmac_probe(struct platform_device *pdev)
- 	const struct rcar_dmac_of_data *data;
- 	struct rcar_dmac_chan *chan;
- 	struct dma_device *engine;
-+	void __iomem *chan_base;
- 	struct rcar_dmac *dmac;
- 	unsigned int i;
- 	int ret;
-@@ -1880,9 +1892,24 @@ static int rcar_dmac_probe(struct platform_device *pdev)
- 		return -ENOMEM;
- 
- 	/* Request resources. */
--	dmac->iomem = devm_platform_ioremap_resource(pdev, 0);
--	if (IS_ERR(dmac->iomem))
--		return PTR_ERR(dmac->iomem);
-+	dmac->dmac_base = devm_platform_ioremap_resource(pdev, 0);
-+	if (IS_ERR(dmac->dmac_base))
-+		return PTR_ERR(dmac->dmac_base);
-+
-+	if (!data->chan_offset_base) {
-+		dmac->chan_base = devm_platform_ioremap_resource(pdev, 1);
-+		if (IS_ERR(dmac->chan_base))
-+			return PTR_ERR(dmac->chan_base);
-+
-+		chan_base = dmac->chan_base;
-+	} else {
-+		chan_base = dmac->dmac_base + data->chan_offset_base;
-+	}
-+
-+	for_each_rcar_dmac_chan(i, dmac, chan) {
-+		chan->index = i;
-+		chan->iomem = chan_base + i * data->chan_offset_stride;
-+	}
- 
- 	/* Enable runtime PM and initialize the device. */
- 	pm_runtime_enable(&pdev->dev);
-@@ -1929,7 +1956,7 @@ static int rcar_dmac_probe(struct platform_device *pdev)
- 	INIT_LIST_HEAD(&engine->channels);
- 
- 	for_each_rcar_dmac_chan(i, dmac, chan) {
--		ret = rcar_dmac_chan_probe(dmac, chan, data, i);
-+		ret = rcar_dmac_chan_probe(dmac, chan);
- 		if (ret < 0)
- 			goto error;
- 	}
-@@ -1977,14 +2004,22 @@ static void rcar_dmac_shutdown(struct platform_device *pdev)
- }
- 
- static const struct rcar_dmac_of_data rcar_dmac_data = {
--	.chan_offset_base = 0x8000,
--	.chan_offset_stride = 0x80,
-+	.chan_offset_base	= 0x8000,
-+	.chan_offset_stride	= 0x80,
-+};
-+
-+static const struct rcar_dmac_of_data rcar_v3u_dmac_data = {
-+	.chan_offset_base	= 0x0,
-+	.chan_offset_stride	= 0x1000,
- };
- 
- static const struct of_device_id rcar_dmac_of_ids[] = {
- 	{
- 		.compatible = "renesas,rcar-dmac",
- 		.data = &rcar_dmac_data,
-+	}, {
-+		.compatible = "renesas,dmac-r8a779a0",
-+		.data = &rcar_v3u_dmac_data,
- 	},
- 	{ /* Sentinel */ }
- };
--- 
-2.25.1
+Also, I tested on H3 Salvator-XS and the Falcon board with dmatest driver.
+So,
+
+Tested-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
+
+Best regards,
+Yoshihiro Shimoda
 
