@@ -2,278 +2,162 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-18.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
-	USER_AGENT_GIT autolearn=unavailable autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	INCLUDES_PULL_REQUEST,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DE2ECC433E0
-	for <dmaengine@archiver.kernel.org>; Tue,  2 Feb 2021 12:49:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 76303C433E6
+	for <dmaengine@archiver.kernel.org>; Tue,  2 Feb 2021 14:20:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B097664F4E
-	for <dmaengine@archiver.kernel.org>; Tue,  2 Feb 2021 12:49:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 443A764F4A
+	for <dmaengine@archiver.kernel.org>; Tue,  2 Feb 2021 14:20:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231682AbhBBMs3 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 2 Feb 2021 07:48:29 -0500
-Received: from smtprelay-out1.synopsys.com ([149.117.73.133]:44062 "EHLO
-        smtprelay-out1.synopsys.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S231653AbhBBMlu (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Tue, 2 Feb 2021 07:41:50 -0500
-Received: from mailhost.synopsys.com (mdc-mailhost1.synopsys.com [10.225.0.209])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
-        (No client certificate requested)
-        by smtprelay-out1.synopsys.com (Postfix) with ESMTPS id B9AD8401F1;
-        Tue,  2 Feb 2021 12:40:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=synopsys.com; s=mail;
-        t=1612269650; bh=gCI3nNoPy8dCurab6Uc+GVpEmLeCzjb3I1ubHtDkaBI=;
-        h=From:To:Subject:Date:In-Reply-To:References:In-Reply-To:
-         References:From;
-        b=CAyH7JfPgTAilMgXpuHfj9+VKxmLq670Gq4CBAn//ZK1gOxsIyVGXtyMu7RaL959I
-         XIZ1KFHcHK7zNTzfBQgQ94ZmNYIFnHHuCcbR5S59zOjP3yQCemEv9VnN47L4F5nG6b
-         v1sUSeKil3AZ994K6RcXP4ITBfTaeqtdGmr5Cbrl+NfQec0xcjLFsnBEW1oepag+rT
-         T40Xlb5MEjA57iXuO6rmw6vnwIJXUdUWP149Ruo+GJ4fpMqcjNUumZgtVsT05u63ix
-         uPKexMWn6dMdKgBE86SgUzJB5Vq6z4fYWVxd9Etj4sBtccZgIh9win1UAe1CV8uVp6
-         ccgdQFE1vUV+Q==
-Received: from de02dwia024.internal.synopsys.com (de02dwia024.internal.synopsys.com [10.225.19.81])
-        by mailhost.synopsys.com (Postfix) with ESMTP id 54BF7A024B;
-        Tue,  2 Feb 2021 12:40:48 +0000 (UTC)
-X-SNPS-Relay: synopsys.com
-From:   Gustavo Pimentel <Gustavo.Pimentel@synopsys.com>
-To:     linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
-        dmaengine@vger.kernel.org,
-        Gustavo Pimentel <Gustavo.Pimentel@synopsys.com>,
+        id S233862AbhBBOUA (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 2 Feb 2021 09:20:00 -0500
+Received: from mail.kernel.org ([198.145.29.99]:51458 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231624AbhBBORv (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Tue, 2 Feb 2021 09:17:51 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 2821F64DD5;
+        Tue,  2 Feb 2021 14:06:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+        s=korg; t=1612274769;
+        bh=ucOE/Mmv9i2CWEnQ7wz77HidV63/GBxg2zd12rEmpdc=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=mtk8Q3WRW8e4rAGIMqVSBpBvOYwFo0HFhgAeLGXuNjXjEG35zPmakj7dmP3Hp3Xxb
+         nLQvz66M8T/SeJkpoklGcHv/kplvfAQlGnleUXc+nPaJbcAYzR2bE146XmrkoL8bC8
+         WACPjj7XeQXWdVU5Y4Gh/La16odwgfVrinCkNWdA=
+Date:   Tue, 2 Feb 2021 15:06:05 +0100
+From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To:     Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+        <u.kleine-koenig@pengutronix.de>
+Cc:     Russell King <linux+pull@armlinux.org.uk>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+        linux-fbdev@vger.kernel.org, kvm@vger.kernel.org,
+        alsa-devel@alsa-project.org, dri-devel@lists.freedesktop.org,
+        Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+        <u.kleine-koenig.org@pengutronix.de>, linux-i2c@vger.kernel.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        linux-rtc@vger.kernel.org, linux-serial@vger.kernel.org,
+        linux-input@vger.kernel.org, Mike Leach <mike.leach@linaro.org>,
+        linux-watchdog@vger.kernel.org, Arnd Bergmann <arnd@arndb.de>,
+        coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
+        linux-mmc@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-spi@vger.kernel.org, linux-crypto@vger.kernel.org,
+        kernel@pengutronix.de, Leo Yan <leo.yan@linaro.org>,
+        dmaengine@vger.kernel.org, Matt Mackall <mpm@selenic.com>,
+        Herbert Xu <herbert@gondor.apana.org.au>,
         Vinod Koul <vkoul@kernel.org>,
-        Dan Williams <dan.j.williams@intel.com>
-Subject: [PATCH v2 03/15] dmaengine: dw-edma: Add support for the HDMA feature
-Date:   Tue,  2 Feb 2021 13:40:17 +0100
-Message-Id: <7d871631910ce66cb310b16c98632f41114576a3.1612269537.git.gustavo.pimentel@synopsys.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <cover.1612269536.git.gustavo.pimentel@synopsys.com>
-References: <cover.1612269536.git.gustavo.pimentel@synopsys.com>
-In-Reply-To: <cover.1612269536.git.gustavo.pimentel@synopsys.com>
-References: <cover.1612269536.git.gustavo.pimentel@synopsys.com>
+        Dan Williams <dan.j.williams@intel.com>,
+        Eric Anholt <eric@anholt.net>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        Alexandre Torgue <alexandre.torgue@st.com>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+        Vladimir Zapolskiy <vz@mleia.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Alessandro Zummo <a.zummo@towertech.it>,
+        Alexandre Belloni <alexandre.belloni@bootlin.com>,
+        Mark Brown <broonie@kernel.org>,
+        Jiri Slaby <jirislaby@kernel.org>,
+        Eric Auger <eric.auger@redhat.com>,
+        Alex Williamson <alex.williamson@redhat.com>,
+        Cornelia Huck <cohuck@redhat.com>,
+        Wim Van Sebroeck <wim@linux-watchdog.org>,
+        Guenter Roeck <linux@roeck-us.net>,
+        Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>
+Subject: Re: [GIT PULL] immutable branch for amba changes targeting v5.12-rc1
+Message-ID: <YBlcTXlxemmC2lgr@kroah.com>
+References: <20210126165835.687514-1-u.kleine-koenig@pengutronix.de>
+ <20210202135350.36nj3dmcoq3t7gcf@pengutronix.de>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20210202135350.36nj3dmcoq3t7gcf@pengutronix.de>
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Add support for the HDMA feature.
+On Tue, Feb 02, 2021 at 02:53:50PM +0100, Uwe Kleine-König wrote:
+> Hello,
+> 
+> the following changes since commit 5c8fe583cce542aa0b84adc939ce85293de36e5e:
+> 
+>   Linux 5.11-rc1 (2020-12-27 15:30:22 -0800)
+> 
+> are available in the Git repository at:
+> 
+>   https://git.pengutronix.de/git/ukl/linux tags/amba-make-remove-return-void
+> 
+> for you to fetch changes up to f170b59fedd733b92f58c4d7c8357fbf7601d623:
+> 
+>   amba: Make use of bus_type functions (2021-02-02 14:26:02 +0100)
+> 
+> I expect this tag to be merged by Russell King as amba maintainer and by
+> Mathieu Poirier (or Greg Kroah-Hartman?) for coresight as there are some
+> pending conflicting changes. These are not hard to resolve but also
+> non-trivial. Tell me if you need assistance for resolving, also if it's only a
+> second pair of eyes to judge your resolution.
+> 
+> Best regards,
+> Uwe
+> 
+> ----------------------------------------------------------------
+> Tag for adaptions to struct amba_driver::remove changing prototype
+> 
+> ----------------------------------------------------------------
+> Uwe Kleine-König (5):
+>       amba: Fix resource leak for drivers without .remove
+>       amba: reorder functions
+>       vfio: platform: simplify device removal
+>       amba: Make the remove callback return void
+>       amba: Make use of bus_type functions
+> 
+>  drivers/amba/bus.c                                 | 234 +++++++++++++++++++++++++++++++++------------------------------
+>  drivers/char/hw_random/nomadik-rng.c               |   3 +-
+>  drivers/dma/pl330.c                                |   3 +-
+>  drivers/gpu/drm/pl111/pl111_drv.c                  |   4 +-
+>  drivers/hwtracing/coresight/coresight-catu.c       |   3 +-
+>  drivers/hwtracing/coresight/coresight-cpu-debug.c  |   4 +-
+>  drivers/hwtracing/coresight/coresight-cti-core.c   |   4 +-
+>  drivers/hwtracing/coresight/coresight-etb10.c      |   4 +-
+>  drivers/hwtracing/coresight/coresight-etm3x-core.c |   4 +-
+>  drivers/hwtracing/coresight/coresight-etm4x-core.c |   4 +-
+>  drivers/hwtracing/coresight/coresight-funnel.c     |   4 +-
+>  drivers/hwtracing/coresight/coresight-replicator.c |   4 +-
+>  drivers/hwtracing/coresight/coresight-stm.c        |   4 +-
+>  drivers/hwtracing/coresight/coresight-tmc-core.c   |   4 +-
+>  drivers/hwtracing/coresight/coresight-tpiu.c       |   4 +-
+>  drivers/i2c/busses/i2c-nomadik.c                   |   4 +-
+>  drivers/input/serio/ambakmi.c                      |   3 +-
+>  drivers/memory/pl172.c                             |   4 +-
+>  drivers/memory/pl353-smc.c                         |   4 +-
+>  drivers/mmc/host/mmci.c                            |   4 +-
+>  drivers/rtc/rtc-pl030.c                            |   4 +-
+>  drivers/rtc/rtc-pl031.c                            |   4 +-
+>  drivers/spi/spi-pl022.c                            |   5 +-
+>  drivers/tty/serial/amba-pl010.c                    |   4 +-
+>  drivers/tty/serial/amba-pl011.c                    |   3 +-
+>  drivers/vfio/platform/vfio_amba.c                  |  15 ++--
+>  drivers/video/fbdev/amba-clcd.c                    |   4 +-
+>  drivers/watchdog/sp805_wdt.c                       |   4 +-
+>  include/linux/amba/bus.h                           |   2 +-
+>  sound/arm/aaci.c                                   |   4 +-
+>  30 files changed, 157 insertions(+), 198 deletions(-)
+> 
+> 
 
-This new feature enables the current eDMA IP to use a deeper prefetch
-of the linked list, which reduces the algorithm execution latency
-observed when loading the elements of the list, causing more stable
-and higher data transfer.
 
-Signed-off-by: Gustavo Pimentel <gustavo.pimentel@synopsys.com>
----
- drivers/dma/dw-edma/dw-edma-core.h       | 10 ++++----
- drivers/dma/dw-edma/dw-edma-pcie.c       | 23 ++++++++---------
- drivers/dma/dw-edma/dw-edma-v0-core.c    | 42 +++++++++++++++++++++++++++++---
- drivers/dma/dw-edma/dw-edma-v0-debugfs.c |  9 +++----
- 4 files changed, 60 insertions(+), 24 deletions(-)
+I'm glad to take this through my char/misc tree, as that's where the
+other coresight changes flow through.  So if no one else objects, I will
+do so...
 
-diff --git a/drivers/dma/dw-edma/dw-edma-core.h b/drivers/dma/dw-edma/dw-edma-core.h
-index 31fc50d..3f9593e 100644
---- a/drivers/dma/dw-edma/dw-edma-core.h
-+++ b/drivers/dma/dw-edma/dw-edma-core.h
-@@ -21,9 +21,10 @@ enum dw_edma_dir {
- 	EDMA_DIR_READ
- };
- 
--enum dw_edma_mode {
--	EDMA_MODE_LEGACY = 0,
--	EDMA_MODE_UNROLL
-+enum dw_edma_map_format {
-+	EDMA_MF_EDMA_LEGACY = 0x0,
-+	EDMA_MF_EDMA_UNROLL = 0x1,
-+	EDMA_MF_HDMA_COMPAT = 0x5
- };
- 
- enum dw_edma_request {
-@@ -123,8 +124,7 @@ struct dw_edma {
- 	struct dw_edma_irq		*irq;
- 	int				nr_irqs;
- 
--	u32				version;
--	enum dw_edma_mode		mode;
-+	enum dw_edma_map_format		mf;
- 
- 	struct dw_edma_chan		*chan;
- 	const struct dw_edma_core_ops	*ops;
-diff --git a/drivers/dma/dw-edma/dw-edma-pcie.c b/drivers/dma/dw-edma/dw-edma-pcie.c
-index 1eafc60..c130549 100644
---- a/drivers/dma/dw-edma/dw-edma-pcie.c
-+++ b/drivers/dma/dw-edma/dw-edma-pcie.c
-@@ -30,8 +30,7 @@ struct dw_edma_pcie_data {
- 	off_t				dt_off;
- 	size_t				dt_sz;
- 	/* Other */
--	u32				version;
--	enum dw_edma_mode		mode;
-+	enum dw_edma_map_format		mf;
- 	u8				irqs;
- };
- 
-@@ -49,8 +48,7 @@ static const struct dw_edma_pcie_data snps_edda_data = {
- 	.dt_off				= 0x00800000,	/*  8 Mbytes */
- 	.dt_sz				= 0x03800000,	/* 56 Mbytes */
- 	/* Other */
--	.version			= 0,
--	.mode				= EDMA_MODE_UNROLL,
-+	.mf				= EDMA_MF_EDMA_UNROLL,
- 	.irqs				= 1,
- };
- 
-@@ -69,8 +67,8 @@ static int dw_edma_pcie_probe(struct pci_dev *pdev,
- 	const struct dw_edma_pcie_data *pdata = (void *)pid->driver_data;
- 	struct device *dev = &pdev->dev;
- 	struct dw_edma_chip *chip;
--	int err, nr_irqs;
- 	struct dw_edma *dw;
-+	int err, nr_irqs;
- 
- 	/* Enable PCI device */
- 	err = pcim_enable_device(pdev);
-@@ -157,16 +155,19 @@ static int dw_edma_pcie_probe(struct pci_dev *pdev,
- 	dw->dt_region.paddr += pdata->dt_off;
- 	dw->dt_region.sz = pdata->dt_sz;
- 
--	dw->version = pdata->version;
--	dw->mode = pdata->mode;
-+	dw->mf = pdata->mf;
- 	dw->nr_irqs = nr_irqs;
- 	dw->ops = &dw_edma_pcie_core_ops;
- 
- 	/* Debug info */
--	pci_dbg(pdev, "Version:\t%u\n", dw->version);
--
--	pci_dbg(pdev, "Mode:\t%s\n",
--		dw->mode == EDMA_MODE_LEGACY ? "Legacy" : "Unroll");
-+	if (dw->mf == EDMA_MF_EDMA_LEGACY)
-+		pci_dbg(pdev, "Version:\teDMA Port Logic (0x%x)\n", dw->mf);
-+	else if (dw->mf == EDMA_MF_EDMA_UNROLL)
-+		pci_dbg(pdev, "Version:\teDMA Unroll (0x%x)\n", dw->mf);
-+	else if (dw->mf == EDMA_MF_HDMA_COMPAT)
-+		pci_dbg(pdev, "Version:\tHDMA Compatible (0x%x)\n", dw->mf);
-+	else
-+		pci_dbg(pdev, "Version:\tUnknown (0x%x)\n", dw->mf);
- 
- 	pci_dbg(pdev, "Registers:\tBAR=%u, off=0x%.8lx, sz=0x%zx bytes, addr(v=%p, p=%pa)\n",
- 		pdata->rg_bar, pdata->rg_off, pdata->rg_sz,
-diff --git a/drivers/dma/dw-edma/dw-edma-v0-core.c b/drivers/dma/dw-edma/dw-edma-v0-core.c
-index 7888eda..5b0541a 100644
---- a/drivers/dma/dw-edma/dw-edma-v0-core.c
-+++ b/drivers/dma/dw-edma/dw-edma-v0-core.c
-@@ -96,7 +96,7 @@ static inline struct dw_edma_v0_regs __iomem *__dw_regs(struct dw_edma *dw)
- static inline struct dw_edma_v0_ch_regs __iomem *
- __dw_ch_regs(struct dw_edma *dw, enum dw_edma_dir dir, u16 ch)
- {
--	if (dw->mode == EDMA_MODE_LEGACY)
-+	if (dw->mf == EDMA_MF_EDMA_LEGACY)
- 		return &(__dw_regs(dw)->type.legacy.ch);
- 
- 	if (dir == EDMA_DIR_WRITE)
-@@ -108,7 +108,7 @@ __dw_ch_regs(struct dw_edma *dw, enum dw_edma_dir dir, u16 ch)
- static inline void writel_ch(struct dw_edma *dw, enum dw_edma_dir dir, u16 ch,
- 			     u32 value, void __iomem *addr)
- {
--	if (dw->mode == EDMA_MODE_LEGACY) {
-+	if (dw->mf == EDMA_MF_EDMA_LEGACY) {
- 		u32 viewport_sel;
- 		unsigned long flags;
- 
-@@ -133,7 +133,7 @@ static inline u32 readl_ch(struct dw_edma *dw, enum dw_edma_dir dir, u16 ch,
- {
- 	u32 value;
- 
--	if (dw->mode == EDMA_MODE_LEGACY) {
-+	if (dw->mf == EDMA_MF_EDMA_LEGACY) {
- 		u32 viewport_sel;
- 		unsigned long flags;
- 
-@@ -365,6 +365,42 @@ void dw_edma_v0_core_start(struct dw_edma_chunk *chunk, bool first)
- 	if (first) {
- 		/* Enable engine */
- 		SET_RW_32(dw, chan->dir, engine_en, BIT(0));
-+		if (dw->mf == EDMA_MF_HDMA_COMPAT) {
-+			switch (chan->id) {
-+			case 0:
-+				SET_RW_COMPAT(dw, chan->dir, ch0_pwr_en,
-+					      BIT(0));
-+				break;
-+			case 1:
-+				SET_RW_COMPAT(dw, chan->dir, ch1_pwr_en,
-+					      BIT(0));
-+				break;
-+			case 2:
-+				SET_RW_COMPAT(dw, chan->dir, ch2_pwr_en,
-+					      BIT(0));
-+				break;
-+			case 3:
-+				SET_RW_COMPAT(dw, chan->dir, ch3_pwr_en,
-+					      BIT(0));
-+				break;
-+			case 4:
-+				SET_RW_COMPAT(dw, chan->dir, ch4_pwr_en,
-+					      BIT(0));
-+				break;
-+			case 5:
-+				SET_RW_COMPAT(dw, chan->dir, ch5_pwr_en,
-+					      BIT(0));
-+				break;
-+			case 6:
-+				SET_RW_COMPAT(dw, chan->dir, ch6_pwr_en,
-+					      BIT(0));
-+				break;
-+			case 7:
-+				SET_RW_COMPAT(dw, chan->dir, ch7_pwr_en,
-+					      BIT(0));
-+				break;
-+			}
-+		}
- 		/* Interrupt unmask - done, abort */
- 		tmp = GET_RW_32(dw, chan->dir, int_mask);
- 		tmp &= ~FIELD_PREP(EDMA_V0_DONE_INT_MASK, BIT(chan->id));
-diff --git a/drivers/dma/dw-edma/dw-edma-v0-debugfs.c b/drivers/dma/dw-edma/dw-edma-v0-debugfs.c
-index a5e2783..157dfc2 100644
---- a/drivers/dma/dw-edma/dw-edma-v0-debugfs.c
-+++ b/drivers/dma/dw-edma/dw-edma-v0-debugfs.c
-@@ -55,7 +55,7 @@ struct debugfs_entries {
- static int dw_edma_debugfs_u32_get(void *data, u64 *val)
- {
- 	void __iomem *reg = (void __force __iomem *)data;
--	if (dw->mode == EDMA_MODE_LEGACY &&
-+	if (dw->mf == EDMA_MF_EDMA_LEGACY &&
- 	    reg >= (void __iomem *)&regs->type.legacy.ch) {
- 		void __iomem *ptr = &regs->type.legacy.ch;
- 		u32 viewport_sel = 0;
-@@ -174,7 +174,7 @@ static void dw_edma_debugfs_regs_wr(struct dentry *dir)
- 	nr_entries = ARRAY_SIZE(debugfs_regs);
- 	dw_edma_debugfs_create_x32(debugfs_regs, nr_entries, regs_dir);
- 
--	if (dw->mode == EDMA_MODE_UNROLL) {
-+	if (dw->mf == EDMA_MF_HDMA_COMPAT) {
- 		nr_entries = ARRAY_SIZE(debugfs_unroll_regs);
- 		dw_edma_debugfs_create_x32(debugfs_unroll_regs, nr_entries,
- 					   regs_dir);
-@@ -243,7 +243,7 @@ static void dw_edma_debugfs_regs_rd(struct dentry *dir)
- 	nr_entries = ARRAY_SIZE(debugfs_regs);
- 	dw_edma_debugfs_create_x32(debugfs_regs, nr_entries, regs_dir);
- 
--	if (dw->mode == EDMA_MODE_UNROLL) {
-+	if (dw->mf == EDMA_MF_HDMA_COMPAT) {
- 		nr_entries = ARRAY_SIZE(debugfs_unroll_regs);
- 		dw_edma_debugfs_create_x32(debugfs_unroll_regs, nr_entries,
- 					   regs_dir);
-@@ -297,8 +297,7 @@ void dw_edma_v0_debugfs_on(struct dw_edma_chip *chip)
- 	if (!base_dir)
- 		return;
- 
--	debugfs_create_u32("version", 0444, base_dir, &dw->version);
--	debugfs_create_u32("mode", 0444, base_dir, &dw->mode);
-+	debugfs_create_u32("mf", 0444, base_dir, &dw->mf);
- 	debugfs_create_u16("wr_ch_cnt", 0444, base_dir, &dw->wr_ch_cnt);
- 	debugfs_create_u16("rd_ch_cnt", 0444, base_dir, &dw->rd_ch_cnt);
- 
--- 
-2.7.4
+thanks,
 
+greg k-h
