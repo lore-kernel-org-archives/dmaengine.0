@@ -5,48 +5,48 @@ X-Spam-Level:
 X-Spam-Status: No, score=-18.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
-	USER_AGENT_GIT autolearn=unavailable autolearn_force=no version=3.4.0
+	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 088FCC433E6
-	for <dmaengine@archiver.kernel.org>; Tue,  2 Feb 2021 12:45:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4283DC433E0
+	for <dmaengine@archiver.kernel.org>; Tue,  2 Feb 2021 12:46:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C5EA864E7B
-	for <dmaengine@archiver.kernel.org>; Tue,  2 Feb 2021 12:45:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 11C0564F49
+	for <dmaengine@archiver.kernel.org>; Tue,  2 Feb 2021 12:46:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230499AbhBBMpA (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 2 Feb 2021 07:45:00 -0500
-Received: from smtprelay-out1.synopsys.com ([149.117.87.133]:56154 "EHLO
+        id S231717AbhBBMps (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 2 Feb 2021 07:45:48 -0500
+Received: from smtprelay-out1.synopsys.com ([149.117.87.133]:56142 "EHLO
         smtprelay-out1.synopsys.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S231786AbhBBMmD (ORCPT
+        by vger.kernel.org with ESMTP id S231781AbhBBMmD (ORCPT
         <rfc822;dmaengine@vger.kernel.org>); Tue, 2 Feb 2021 07:42:03 -0500
 Received: from mailhost.synopsys.com (mdc-mailhost1.synopsys.com [10.225.0.209])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
         (No client certificate requested)
-        by smtprelay-out1.synopsys.com (Postfix) with ESMTPS id 5126CC00C5;
-        Tue,  2 Feb 2021 12:41:01 +0000 (UTC)
+        by smtprelay-out1.synopsys.com (Postfix) with ESMTPS id B19EAC00BF;
+        Tue,  2 Feb 2021 12:40:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=synopsys.com; s=mail;
-        t=1612269661; bh=WnHPY+sRUSSJJQq7Jc0VtKP64lY4iaChTFLji7S/MT0=;
+        t=1612269658; bh=0LPtbl9/ClUF4yDOkawYP8loLWswFVdF/V71qFngQe4=;
         h=From:To:Subject:Date:In-Reply-To:References:In-Reply-To:
          References:From;
-        b=BlGtGUiypuMGYD82Dy64f/V6EfJ6SOE1ypA0EnrqpPMP558q6ImCuWWKzkvHtIHSD
-         InacHOTNSt/26dtWlfK102tDIvWkgMeAm1dC+JPiO+ypnLtYzXisz+dAiXGJX0hcIH
-         vCAWEOWSrIi0JWfwCo1f1Mko4Jaatl9H0IqQvg3TpEQt9iHqJxNzGId/WFQz+9k1Fu
-         9cgeclW7MFTtitQ8HecmvlfEmZ+pUcfMrkJop61PetzQ7dJ1j+uf6CzyFHc7dicrYl
-         35SMIQG1mc8LYLPNkhZT5uJI6QycfP3jGZME7ZsCZ2NTFZ+FrTwf4XRSbuFMyP9Nep
-         +YqjYwf+2gkcQ==
+        b=J485gGfds14LAwe+Y4Tecc47Bd751RV24PPVEki+2u/7xJIdJuWW88Lu+WOFOaTGe
+         W3IZ4Ig+XlLMs8AhjHtnWGJpjX0BoFaZgpFWww64dZXrRUyE5bBeuSvjWVqu4zTK7Q
+         vC+z20f4bzV3THxKGU/ZcK3X/1l5kkztGUvb0omE1gaQk65p8CZ81bUEwpkV+fZrii
+         CfGWCgUGQYNOa9lmlfL4BdINXi4wDSvfKsGBkJ7T7te3sU/qz7kIgx5S/4dkQyubaP
+         pAnM9magCOG/gHpBdMHC5Q8gzAxwWUVS2qwzCY4/6962tVqj5luYdafPc8///oBpj4
+         3VH9+dqcxhIdA==
 Received: from de02dwia024.internal.synopsys.com (de02dwia024.internal.synopsys.com [10.225.19.81])
-        by mailhost.synopsys.com (Postfix) with ESMTP id 21ECEA024B;
-        Tue,  2 Feb 2021 12:41:00 +0000 (UTC)
+        by mailhost.synopsys.com (Postfix) with ESMTP id 78226A024A;
+        Tue,  2 Feb 2021 12:40:57 +0000 (UTC)
 X-SNPS-Relay: synopsys.com
 From:   Gustavo Pimentel <Gustavo.Pimentel@synopsys.com>
 To:     linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
         dmaengine@vger.kernel.org,
         Gustavo Pimentel <Gustavo.Pimentel@synopsys.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        Dan Williams <dan.j.williams@intel.com>
-Subject: [PATCH v2 14/15] dmaengine: dw-edma: Revert fix scatter-gather address calculation
-Date:   Tue,  2 Feb 2021 13:40:28 +0100
-Message-Id: <9af4ac8c3833b81325787771476ed4f1ce027979.1612269537.git.gustavo.pimentel@synopsys.com>
+        Dan Williams <dan.j.williams@intel.com>,
+        Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH v2 11/15] dmaengine: dw-edma: Move struct dentry variable from static definition into dw_edma struct
+Date:   Tue,  2 Feb 2021 13:40:25 +0100
+Message-Id: <cb09229ce3aa3f6a3d67f340f45bba14d64719e5.1612269537.git.gustavo.pimentel@synopsys.com>
 X-Mailer: git-send-email 2.7.4
 In-Reply-To: <cover.1612269536.git.gustavo.pimentel@synopsys.com>
 References: <cover.1612269536.git.gustavo.pimentel@synopsys.com>
@@ -56,47 +56,146 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Reverting the applied patch because it caused a regression on
-ARC700 platform (32 bits).
+Move struct dentry variable from static definition (dw-edma-v0-debugfs.c)
+into dw_edma struct (dw-edma-core.h)
+
+Also the variable was renamed from base_dir to debugfs.
 
 Signed-off-by: Gustavo Pimentel <gustavo.pimentel@synopsys.com>
 ---
- drivers/dma/dw-edma/dw-edma-core.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/dma/dw-edma/dw-edma-core.c       |  2 +-
+ drivers/dma/dw-edma/dw-edma-core.h       |  3 +++
+ drivers/dma/dw-edma/dw-edma-v0-core.c    |  4 ++--
+ drivers/dma/dw-edma/dw-edma-v0-core.h    |  2 +-
+ drivers/dma/dw-edma/dw-edma-v0-debugfs.c | 22 +++++++++++++---------
+ drivers/dma/dw-edma/dw-edma-v0-debugfs.h |  4 ++--
+ 6 files changed, 22 insertions(+), 15 deletions(-)
 
 diff --git a/drivers/dma/dw-edma/dw-edma-core.c b/drivers/dma/dw-edma/dw-edma-core.c
-index a299eed..c198451 100644
+index 48887b5..8d8292e 100644
 --- a/drivers/dma/dw-edma/dw-edma-core.c
 +++ b/drivers/dma/dw-edma/dw-edma-core.c
-@@ -429,7 +429,8 @@ dw_edma_device_transfer(struct dw_edma_transfer *xfer)
- 			if (xfer->type == EDMA_XFER_CYCLIC) {
- 				burst->dar = xfer->xfer.cyclic.paddr;
- 			} else if (xfer->type == EDMA_XFER_SCATTER_GATHER) {
--				burst->dar = dst_addr;
-+				src_addr += sg_dma_len(sg);
-+				burst->dar = sg_dma_address(sg);
- 				/* Unlike the typical assumption by other
- 				 * drivers/IPs the peripheral memory isn't
- 				 * a FIFO memory, in this case, it's a
-@@ -443,7 +444,8 @@ dw_edma_device_transfer(struct dw_edma_transfer *xfer)
- 			if (xfer->type == EDMA_XFER_CYCLIC) {
- 				burst->sar = xfer->xfer.cyclic.paddr;
- 			} else if (xfer->type == EDMA_XFER_SCATTER_GATHER) {
--				burst->sar = src_addr;
-+				dst_addr += sg_dma_len(sg);
-+				burst->sar = sg_dma_address(sg);
- 				/* Unlike the typical assumption by other
- 				 * drivers/IPs the peripheral memory isn't
- 				 * a FIFO memory, in this case, it's a
-@@ -455,8 +457,6 @@ dw_edma_device_transfer(struct dw_edma_transfer *xfer)
- 		}
+@@ -1003,7 +1003,7 @@ int dw_edma_remove(struct dw_edma_chip *chip)
+ 	dma_async_device_unregister(&dw->rd_edma);
  
- 		if (xfer->type == EDMA_XFER_SCATTER_GATHER) {
--			src_addr += sg_dma_len(sg);
--			dst_addr += sg_dma_len(sg);
- 			sg = sg_next(sg);
- 		} else if (xfer->type == EDMA_XFER_INTERLEAVED &&
- 			   xfer->xfer.il->frame_size > 0) {
+ 	/* Turn debugfs off */
+-	dw_edma_v0_core_debugfs_off();
++	dw_edma_v0_core_debugfs_off(chip);
+ 
+ 	return 0;
+ }
+diff --git a/drivers/dma/dw-edma/dw-edma-core.h b/drivers/dma/dw-edma/dw-edma-core.h
+index cba5436..60316d4 100644
+--- a/drivers/dma/dw-edma/dw-edma-core.h
++++ b/drivers/dma/dw-edma/dw-edma-core.h
+@@ -137,6 +137,9 @@ struct dw_edma {
+ 	const struct dw_edma_core_ops	*ops;
+ 
+ 	raw_spinlock_t			lock;		/* Only for legacy */
++#ifdef CONFIG_DEBUG_FS
++	struct dentry			*debugfs;
++#endif /* CONFIG_DEBUG_FS */
+ };
+ 
+ struct dw_edma_sg {
+diff --git a/drivers/dma/dw-edma/dw-edma-v0-core.c b/drivers/dma/dw-edma/dw-edma-v0-core.c
+index 5b0541a..329fc2e 100644
+--- a/drivers/dma/dw-edma/dw-edma-v0-core.c
++++ b/drivers/dma/dw-edma/dw-edma-v0-core.c
+@@ -506,7 +506,7 @@ void dw_edma_v0_core_debugfs_on(struct dw_edma_chip *chip)
+ 	dw_edma_v0_debugfs_on(chip);
+ }
+ 
+-void dw_edma_v0_core_debugfs_off(void)
++void dw_edma_v0_core_debugfs_off(struct dw_edma_chip *chip)
+ {
+-	dw_edma_v0_debugfs_off();
++	dw_edma_v0_debugfs_off(chip);
+ }
+diff --git a/drivers/dma/dw-edma/dw-edma-v0-core.h b/drivers/dma/dw-edma/dw-edma-v0-core.h
+index abae152..2afa626 100644
+--- a/drivers/dma/dw-edma/dw-edma-v0-core.h
++++ b/drivers/dma/dw-edma/dw-edma-v0-core.h
+@@ -23,6 +23,6 @@ void dw_edma_v0_core_start(struct dw_edma_chunk *chunk, bool first);
+ int dw_edma_v0_core_device_config(struct dw_edma_chan *chan);
+ /* eDMA debug fs callbacks */
+ void dw_edma_v0_core_debugfs_on(struct dw_edma_chip *chip);
+-void dw_edma_v0_core_debugfs_off(void);
++void dw_edma_v0_core_debugfs_off(struct dw_edma_chip *chip);
+ 
+ #endif /* _DW_EDMA_V0_CORE_H */
+diff --git a/drivers/dma/dw-edma/dw-edma-v0-debugfs.c b/drivers/dma/dw-edma/dw-edma-v0-debugfs.c
+index 157dfc2..4b3bcff 100644
+--- a/drivers/dma/dw-edma/dw-edma-v0-debugfs.c
++++ b/drivers/dma/dw-edma/dw-edma-v0-debugfs.c
+@@ -38,7 +38,6 @@
+ #define CHANNEL_STR				"channel"
+ #define REGISTERS_STR				"registers"
+ 
+-static struct dentry				*base_dir;
+ static struct dw_edma				*dw;
+ static struct dw_edma_v0_regs			__iomem *regs;
+ 
+@@ -272,7 +271,7 @@ static void dw_edma_debugfs_regs(void)
+ 	struct dentry *regs_dir;
+ 	int nr_entries;
+ 
+-	regs_dir = debugfs_create_dir(REGISTERS_STR, base_dir);
++	regs_dir = debugfs_create_dir(REGISTERS_STR, dw->debugfs);
+ 	if (!regs_dir)
+ 		return;
+ 
+@@ -293,18 +292,23 @@ void dw_edma_v0_debugfs_on(struct dw_edma_chip *chip)
+ 	if (!regs)
+ 		return;
+ 
+-	base_dir = debugfs_create_dir(dw->name, NULL);
+-	if (!base_dir)
++	dw->debugfs = debugfs_create_dir(dw->name, NULL);
++	if (!dw->debugfs)
+ 		return;
+ 
+-	debugfs_create_u32("mf", 0444, base_dir, &dw->mf);
+-	debugfs_create_u16("wr_ch_cnt", 0444, base_dir, &dw->wr_ch_cnt);
+-	debugfs_create_u16("rd_ch_cnt", 0444, base_dir, &dw->rd_ch_cnt);
++	debugfs_create_u32("mf", 0444, dw->debugfs, &dw->mf);
++	debugfs_create_u16("wr_ch_cnt", 0444, dw->debugfs, &dw->wr_ch_cnt);
++	debugfs_create_u16("rd_ch_cnt", 0444, dw->debugfs, &dw->rd_ch_cnt);
+ 
+ 	dw_edma_debugfs_regs();
+ }
+ 
+-void dw_edma_v0_debugfs_off(void)
++void dw_edma_v0_debugfs_off(struct dw_edma_chip *chip)
+ {
+-	debugfs_remove_recursive(base_dir);
++	dw = chip->dw;
++	if (!dw)
++		return;
++
++	debugfs_remove_recursive(dw->debugfs);
++	dw->debugfs = NULL;
+ }
+diff --git a/drivers/dma/dw-edma/dw-edma-v0-debugfs.h b/drivers/dma/dw-edma/dw-edma-v0-debugfs.h
+index 5450a0a..d0ff25a 100644
+--- a/drivers/dma/dw-edma/dw-edma-v0-debugfs.h
++++ b/drivers/dma/dw-edma/dw-edma-v0-debugfs.h
+@@ -13,13 +13,13 @@
+ 
+ #ifdef CONFIG_DEBUG_FS
+ void dw_edma_v0_debugfs_on(struct dw_edma_chip *chip);
+-void dw_edma_v0_debugfs_off(void);
++void dw_edma_v0_debugfs_off(struct dw_edma_chip *chip);
+ #else
+ static inline void dw_edma_v0_debugfs_on(struct dw_edma_chip *chip)
+ {
+ }
+ 
+-static inline void dw_edma_v0_debugfs_off(void)
++static inline void dw_edma_v0_debugfs_off(struct dw_edma_chip *chip)
+ {
+ }
+ #endif /* CONFIG_DEBUG_FS */
 -- 
 2.7.4
 
