@@ -2,278 +2,78 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
-	USER_AGENT_GIT autolearn=unavailable autolearn_force=no version=3.4.0
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B0FD3C433E0
-	for <dmaengine@archiver.kernel.org>; Wed,  3 Feb 2021 22:09:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F3EFDC433E0
+	for <dmaengine@archiver.kernel.org>; Wed,  3 Feb 2021 22:11:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7B28164F6B
-	for <dmaengine@archiver.kernel.org>; Wed,  3 Feb 2021 22:09:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B790E64F43
+	for <dmaengine@archiver.kernel.org>; Wed,  3 Feb 2021 22:11:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233006AbhBCWJK (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 3 Feb 2021 17:09:10 -0500
-Received: from smtprelay-out1.synopsys.com ([149.117.73.133]:60246 "EHLO
-        smtprelay-out1.synopsys.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S232564AbhBCV7U (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Wed, 3 Feb 2021 16:59:20 -0500
-Received: from mailhost.synopsys.com (mdc-mailhost1.synopsys.com [10.225.0.209])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
+        id S232400AbhBCWKx (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 3 Feb 2021 17:10:53 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41984 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232947AbhBCWKt (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Wed, 3 Feb 2021 17:10:49 -0500
+Received: from ms.lwn.net (ms.lwn.net [IPv6:2600:3c01:e000:3a1::42])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 54182C061573;
+        Wed,  3 Feb 2021 14:10:09 -0800 (PST)
+Received: from localhost (unknown [IPv6:2601:281:8300:104d::5f6])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by smtprelay-out1.synopsys.com (Postfix) with ESMTPS id 81A6D4048E;
-        Wed,  3 Feb 2021 21:58:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=synopsys.com; s=mail;
-        t=1612389498; bh=gCI3nNoPy8dCurab6Uc+GVpEmLeCzjb3I1ubHtDkaBI=;
-        h=From:To:Subject:Date:In-Reply-To:References:In-Reply-To:
-         References:From;
-        b=PVv+q360sZltUZLf1Cd8zGCG1QuH2saSjRfXVVzpZYPM+uszvMEd3HkQKVLnyGW3y
-         tI5eI6zR2tNL6+sTi1o3hfDpiX+vzBz1jB/hWbQ78+xZl1p7NB8gQ/el/4bpRpd5fc
-         nF1h2whhE8x/ui2quX7C9HsJwgpLyQO/ALhcmbkvkKA2cWoNcRzw3xeTb7I05ZiSzl
-         cGiG5o2dxOxmGv3xL0ZkeMnWG+uaZNBaI8sobcu71t+KsZspXvdBW9vLbyc1UtqYZ1
-         oi+c15+OOvhd4+58RZF/TRPt/CGMoahW3JVKXgCGfBYsGvb8DJ0m8tyV6N9rBvC1AW
-         buKVLUbmsKNMw==
-Received: from de02dwia024.internal.synopsys.com (de02dwia024.internal.synopsys.com [10.225.19.81])
-        by mailhost.synopsys.com (Postfix) with ESMTP id 323AAA024B;
-        Wed,  3 Feb 2021 21:58:17 +0000 (UTC)
-X-SNPS-Relay: synopsys.com
-From:   Gustavo Pimentel <Gustavo.Pimentel@synopsys.com>
-To:     linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
+        by ms.lwn.net (Postfix) with ESMTPSA id 6DBCF6153;
+        Wed,  3 Feb 2021 22:09:10 +0000 (UTC)
+DKIM-Filter: OpenDKIM Filter v2.11.0 ms.lwn.net 6DBCF6153
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=lwn.net; s=20201203;
+        t=1612390150; bh=sqlfgOb0Cgr5vQF+7w1/lZA62jlFey7rGwwspcUhzo4=;
+        h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
+        b=s2x4f3Q/8kxerjzz69mnh1jFTMjhaMAphwUQar6c9NlyXKWjcRLqaEEtxZhOmUo2g
+         TGKTxtRxgsPZA1osVD2d7zo6w+4Jh48Lf8PRp4pPhg3Uc/N7IlQkmydwl7snLWaF07
+         x/dZFpZzCVHZHBXrb6dT8MGcqVojTfWou7K50wUlHSsj92x+UnbpBsYqsb+OmORsUw
+         4XGnuMruUHBFJfUWLwS6/EJdyHaYGbBntnHYhZEpwlrngy1law3apNXPxr0W2BUD7D
+         fPd2TWJU2cvtGZQBFuYNJfGjaOwwladw3xmuT6nu96Y6Isc0dpJRtQj8UpFXSVjxt9
+         2w9bjIFYq+9IA==
+From:   Jonathan Corbet <corbet@lwn.net>
+To:     Gustavo Pimentel <Gustavo.Pimentel@synopsys.com>,
+        linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
         dmaengine@vger.kernel.org, Vinod Koul <vkoul@kernel.org>,
         Dan Williams <dan.j.williams@intel.com>,
         Bjorn Helgaas <bhelgaas@google.com>,
         Gustavo Pimentel <Gustavo.Pimentel@synopsys.com>
-Subject: [PATCH v4 03/15] dmaengine: dw-edma: Add support for the HDMA feature
-Date:   Wed,  3 Feb 2021 22:57:54 +0100
-Message-Id: <7d871631910ce66cb310b16c98632f41114576a3.1612389406.git.gustavo.pimentel@synopsys.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <cover.1612389406.git.gustavo.pimentel@synopsys.com>
-References: <cover.1612389406.git.gustavo.pimentel@synopsys.com>
-In-Reply-To: <cover.1612389406.git.gustavo.pimentel@synopsys.com>
-References: <cover.1612389406.git.gustavo.pimentel@synopsys.com>
+Cc:     linux-doc@vger.kernel.org
+Subject: Re: [PATCH v4 4/6] Documentation: misc-devices: Add Documentation
+ for dw-xdata-pcie driver
+In-Reply-To: <2cc3a3a324d299a096f1d3e682b2039d3537b013.1612389746.git.gustavo.pimentel@synopsys.com>
+References: <cover.1612389746.git.gustavo.pimentel@synopsys.com>
+ <2cc3a3a324d299a096f1d3e682b2039d3537b013.1612389746.git.gustavo.pimentel@synopsys.com>
+Date:   Wed, 03 Feb 2021 15:09:09 -0700
+Message-ID: <87y2g4hkhm.fsf@meer.lwn.net>
+MIME-Version: 1.0
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Add support for the HDMA feature.
+Gustavo Pimentel <Gustavo.Pimentel@synopsys.com> writes:
 
-This new feature enables the current eDMA IP to use a deeper prefetch
-of the linked list, which reduces the algorithm execution latency
-observed when loading the elements of the list, causing more stable
-and higher data transfer.
+> Add Documentation for dw-xdata-pcie driver.
+>
+> Signed-off-by: Gustavo Pimentel <gustavo.pimentel@synopsys.com>
+> ---
+>  Documentation/misc-devices/dw-xdata-pcie.rst | 40 ++++++++++++++++++++++++++++
+>  1 file changed, 40 insertions(+)
+>  create mode 100644 Documentation/misc-devices/dw-xdata-pcie.rst
 
-Signed-off-by: Gustavo Pimentel <gustavo.pimentel@synopsys.com>
----
- drivers/dma/dw-edma/dw-edma-core.h       | 10 ++++----
- drivers/dma/dw-edma/dw-edma-pcie.c       | 23 ++++++++---------
- drivers/dma/dw-edma/dw-edma-v0-core.c    | 42 +++++++++++++++++++++++++++++---
- drivers/dma/dw-edma/dw-edma-v0-debugfs.c |  9 +++----
- 4 files changed, 60 insertions(+), 24 deletions(-)
+If you add a new RST file, you also need to add it to the corresponding
+index.rst so that it gets pulled into the docs build.
 
-diff --git a/drivers/dma/dw-edma/dw-edma-core.h b/drivers/dma/dw-edma/dw-edma-core.h
-index 31fc50d..3f9593e 100644
---- a/drivers/dma/dw-edma/dw-edma-core.h
-+++ b/drivers/dma/dw-edma/dw-edma-core.h
-@@ -21,9 +21,10 @@ enum dw_edma_dir {
- 	EDMA_DIR_READ
- };
- 
--enum dw_edma_mode {
--	EDMA_MODE_LEGACY = 0,
--	EDMA_MODE_UNROLL
-+enum dw_edma_map_format {
-+	EDMA_MF_EDMA_LEGACY = 0x0,
-+	EDMA_MF_EDMA_UNROLL = 0x1,
-+	EDMA_MF_HDMA_COMPAT = 0x5
- };
- 
- enum dw_edma_request {
-@@ -123,8 +124,7 @@ struct dw_edma {
- 	struct dw_edma_irq		*irq;
- 	int				nr_irqs;
- 
--	u32				version;
--	enum dw_edma_mode		mode;
-+	enum dw_edma_map_format		mf;
- 
- 	struct dw_edma_chan		*chan;
- 	const struct dw_edma_core_ops	*ops;
-diff --git a/drivers/dma/dw-edma/dw-edma-pcie.c b/drivers/dma/dw-edma/dw-edma-pcie.c
-index 1eafc60..c130549 100644
---- a/drivers/dma/dw-edma/dw-edma-pcie.c
-+++ b/drivers/dma/dw-edma/dw-edma-pcie.c
-@@ -30,8 +30,7 @@ struct dw_edma_pcie_data {
- 	off_t				dt_off;
- 	size_t				dt_sz;
- 	/* Other */
--	u32				version;
--	enum dw_edma_mode		mode;
-+	enum dw_edma_map_format		mf;
- 	u8				irqs;
- };
- 
-@@ -49,8 +48,7 @@ static const struct dw_edma_pcie_data snps_edda_data = {
- 	.dt_off				= 0x00800000,	/*  8 Mbytes */
- 	.dt_sz				= 0x03800000,	/* 56 Mbytes */
- 	/* Other */
--	.version			= 0,
--	.mode				= EDMA_MODE_UNROLL,
-+	.mf				= EDMA_MF_EDMA_UNROLL,
- 	.irqs				= 1,
- };
- 
-@@ -69,8 +67,8 @@ static int dw_edma_pcie_probe(struct pci_dev *pdev,
- 	const struct dw_edma_pcie_data *pdata = (void *)pid->driver_data;
- 	struct device *dev = &pdev->dev;
- 	struct dw_edma_chip *chip;
--	int err, nr_irqs;
- 	struct dw_edma *dw;
-+	int err, nr_irqs;
- 
- 	/* Enable PCI device */
- 	err = pcim_enable_device(pdev);
-@@ -157,16 +155,19 @@ static int dw_edma_pcie_probe(struct pci_dev *pdev,
- 	dw->dt_region.paddr += pdata->dt_off;
- 	dw->dt_region.sz = pdata->dt_sz;
- 
--	dw->version = pdata->version;
--	dw->mode = pdata->mode;
-+	dw->mf = pdata->mf;
- 	dw->nr_irqs = nr_irqs;
- 	dw->ops = &dw_edma_pcie_core_ops;
- 
- 	/* Debug info */
--	pci_dbg(pdev, "Version:\t%u\n", dw->version);
--
--	pci_dbg(pdev, "Mode:\t%s\n",
--		dw->mode == EDMA_MODE_LEGACY ? "Legacy" : "Unroll");
-+	if (dw->mf == EDMA_MF_EDMA_LEGACY)
-+		pci_dbg(pdev, "Version:\teDMA Port Logic (0x%x)\n", dw->mf);
-+	else if (dw->mf == EDMA_MF_EDMA_UNROLL)
-+		pci_dbg(pdev, "Version:\teDMA Unroll (0x%x)\n", dw->mf);
-+	else if (dw->mf == EDMA_MF_HDMA_COMPAT)
-+		pci_dbg(pdev, "Version:\tHDMA Compatible (0x%x)\n", dw->mf);
-+	else
-+		pci_dbg(pdev, "Version:\tUnknown (0x%x)\n", dw->mf);
- 
- 	pci_dbg(pdev, "Registers:\tBAR=%u, off=0x%.8lx, sz=0x%zx bytes, addr(v=%p, p=%pa)\n",
- 		pdata->rg_bar, pdata->rg_off, pdata->rg_sz,
-diff --git a/drivers/dma/dw-edma/dw-edma-v0-core.c b/drivers/dma/dw-edma/dw-edma-v0-core.c
-index 7888eda..5b0541a 100644
---- a/drivers/dma/dw-edma/dw-edma-v0-core.c
-+++ b/drivers/dma/dw-edma/dw-edma-v0-core.c
-@@ -96,7 +96,7 @@ static inline struct dw_edma_v0_regs __iomem *__dw_regs(struct dw_edma *dw)
- static inline struct dw_edma_v0_ch_regs __iomem *
- __dw_ch_regs(struct dw_edma *dw, enum dw_edma_dir dir, u16 ch)
- {
--	if (dw->mode == EDMA_MODE_LEGACY)
-+	if (dw->mf == EDMA_MF_EDMA_LEGACY)
- 		return &(__dw_regs(dw)->type.legacy.ch);
- 
- 	if (dir == EDMA_DIR_WRITE)
-@@ -108,7 +108,7 @@ __dw_ch_regs(struct dw_edma *dw, enum dw_edma_dir dir, u16 ch)
- static inline void writel_ch(struct dw_edma *dw, enum dw_edma_dir dir, u16 ch,
- 			     u32 value, void __iomem *addr)
- {
--	if (dw->mode == EDMA_MODE_LEGACY) {
-+	if (dw->mf == EDMA_MF_EDMA_LEGACY) {
- 		u32 viewport_sel;
- 		unsigned long flags;
- 
-@@ -133,7 +133,7 @@ static inline u32 readl_ch(struct dw_edma *dw, enum dw_edma_dir dir, u16 ch,
- {
- 	u32 value;
- 
--	if (dw->mode == EDMA_MODE_LEGACY) {
-+	if (dw->mf == EDMA_MF_EDMA_LEGACY) {
- 		u32 viewport_sel;
- 		unsigned long flags;
- 
-@@ -365,6 +365,42 @@ void dw_edma_v0_core_start(struct dw_edma_chunk *chunk, bool first)
- 	if (first) {
- 		/* Enable engine */
- 		SET_RW_32(dw, chan->dir, engine_en, BIT(0));
-+		if (dw->mf == EDMA_MF_HDMA_COMPAT) {
-+			switch (chan->id) {
-+			case 0:
-+				SET_RW_COMPAT(dw, chan->dir, ch0_pwr_en,
-+					      BIT(0));
-+				break;
-+			case 1:
-+				SET_RW_COMPAT(dw, chan->dir, ch1_pwr_en,
-+					      BIT(0));
-+				break;
-+			case 2:
-+				SET_RW_COMPAT(dw, chan->dir, ch2_pwr_en,
-+					      BIT(0));
-+				break;
-+			case 3:
-+				SET_RW_COMPAT(dw, chan->dir, ch3_pwr_en,
-+					      BIT(0));
-+				break;
-+			case 4:
-+				SET_RW_COMPAT(dw, chan->dir, ch4_pwr_en,
-+					      BIT(0));
-+				break;
-+			case 5:
-+				SET_RW_COMPAT(dw, chan->dir, ch5_pwr_en,
-+					      BIT(0));
-+				break;
-+			case 6:
-+				SET_RW_COMPAT(dw, chan->dir, ch6_pwr_en,
-+					      BIT(0));
-+				break;
-+			case 7:
-+				SET_RW_COMPAT(dw, chan->dir, ch7_pwr_en,
-+					      BIT(0));
-+				break;
-+			}
-+		}
- 		/* Interrupt unmask - done, abort */
- 		tmp = GET_RW_32(dw, chan->dir, int_mask);
- 		tmp &= ~FIELD_PREP(EDMA_V0_DONE_INT_MASK, BIT(chan->id));
-diff --git a/drivers/dma/dw-edma/dw-edma-v0-debugfs.c b/drivers/dma/dw-edma/dw-edma-v0-debugfs.c
-index a5e2783..157dfc2 100644
---- a/drivers/dma/dw-edma/dw-edma-v0-debugfs.c
-+++ b/drivers/dma/dw-edma/dw-edma-v0-debugfs.c
-@@ -55,7 +55,7 @@ struct debugfs_entries {
- static int dw_edma_debugfs_u32_get(void *data, u64 *val)
- {
- 	void __iomem *reg = (void __force __iomem *)data;
--	if (dw->mode == EDMA_MODE_LEGACY &&
-+	if (dw->mf == EDMA_MF_EDMA_LEGACY &&
- 	    reg >= (void __iomem *)&regs->type.legacy.ch) {
- 		void __iomem *ptr = &regs->type.legacy.ch;
- 		u32 viewport_sel = 0;
-@@ -174,7 +174,7 @@ static void dw_edma_debugfs_regs_wr(struct dentry *dir)
- 	nr_entries = ARRAY_SIZE(debugfs_regs);
- 	dw_edma_debugfs_create_x32(debugfs_regs, nr_entries, regs_dir);
- 
--	if (dw->mode == EDMA_MODE_UNROLL) {
-+	if (dw->mf == EDMA_MF_HDMA_COMPAT) {
- 		nr_entries = ARRAY_SIZE(debugfs_unroll_regs);
- 		dw_edma_debugfs_create_x32(debugfs_unroll_regs, nr_entries,
- 					   regs_dir);
-@@ -243,7 +243,7 @@ static void dw_edma_debugfs_regs_rd(struct dentry *dir)
- 	nr_entries = ARRAY_SIZE(debugfs_regs);
- 	dw_edma_debugfs_create_x32(debugfs_regs, nr_entries, regs_dir);
- 
--	if (dw->mode == EDMA_MODE_UNROLL) {
-+	if (dw->mf == EDMA_MF_HDMA_COMPAT) {
- 		nr_entries = ARRAY_SIZE(debugfs_unroll_regs);
- 		dw_edma_debugfs_create_x32(debugfs_unroll_regs, nr_entries,
- 					   regs_dir);
-@@ -297,8 +297,7 @@ void dw_edma_v0_debugfs_on(struct dw_edma_chip *chip)
- 	if (!base_dir)
- 		return;
- 
--	debugfs_create_u32("version", 0444, base_dir, &dw->version);
--	debugfs_create_u32("mode", 0444, base_dir, &dw->mode);
-+	debugfs_create_u32("mf", 0444, base_dir, &dw->mf);
- 	debugfs_create_u16("wr_ch_cnt", 0444, base_dir, &dw->wr_ch_cnt);
- 	debugfs_create_u16("rd_ch_cnt", 0444, base_dir, &dw->rd_ch_cnt);
- 
--- 
-2.7.4
+Once you've done that, please build the docs and look at the results,
+you may not get quite what you're expecting :)
 
+Thanks,
+
+jon
