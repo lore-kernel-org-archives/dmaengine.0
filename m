@@ -5,38 +5,38 @@ X-Spam-Level:
 X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
-	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
+	USER_AGENT_GIT autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D1C5AC4332B
-	for <dmaengine@archiver.kernel.org>; Wed,  3 Feb 2021 21:59:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 37907C43331
+	for <dmaengine@archiver.kernel.org>; Wed,  3 Feb 2021 21:59:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9711F64E4E
+	by mail.kernel.org (Postfix) with ESMTP id E63EC64E4E
 	for <dmaengine@archiver.kernel.org>; Wed,  3 Feb 2021 21:59:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232681AbhBCV73 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 3 Feb 2021 16:59:29 -0500
-Received: from smtprelay-out1.synopsys.com ([149.117.73.133]:60262 "EHLO
+        id S232693AbhBCV7d (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 3 Feb 2021 16:59:33 -0500
+Received: from smtprelay-out1.synopsys.com ([149.117.73.133]:60294 "EHLO
         smtprelay-out1.synopsys.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S232578AbhBCV7W (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Wed, 3 Feb 2021 16:59:22 -0500
+        by vger.kernel.org with ESMTP id S232676AbhBCV71 (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Wed, 3 Feb 2021 16:59:27 -0500
 Received: from mailhost.synopsys.com (mdc-mailhost1.synopsys.com [10.225.0.209])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
         (No client certificate requested)
-        by smtprelay-out1.synopsys.com (Postfix) with ESMTPS id A84C040494;
-        Wed,  3 Feb 2021 21:58:21 +0000 (UTC)
+        by smtprelay-out1.synopsys.com (Postfix) with ESMTPS id 88665404A2;
+        Wed,  3 Feb 2021 21:58:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=synopsys.com; s=mail;
-        t=1612389501; bh=26bcMb1hhhSb/6zwC97LYr49GH4oBhX47qSAAxTu+pw=;
+        t=1612389507; bh=RPtJq9pnB6c2RL81eMcBv6mkc0ffZocP1N1iwYCqspQ=;
         h=From:To:Subject:Date:In-Reply-To:References:In-Reply-To:
          References:From;
-        b=ENRW7mrv1cpANCM8T/OohSKUTaRnrXJVIRU8l0Oq1/F7c9kQFfiWwXqDK6J8IkpJO
-         j7I8Gd7Gyn5xxq756bbjdW2krXnF7VYOq/iBim5JjoH7jFGnAIA/s/G1VHr9pQXVKY
-         yHPqLPX1z/g1qCifw72SGedEX5oUfPX7fzikAlIkdhOdsowr8bxVJiUfa9DOl1NbOk
-         wxek/wuFBWjNRcBCAnJSe8lkxS3u5yE/xq44kgjgZzwYkVUNYo4q8lvNnjFSzq91Hm
-         C3kO+ejVK2mgzZgGRdjgmUwoz2CTAHMohFZnzNU9Y7Dp8znKoDH465qtJD5DeMZ+bC
-         WTs1gspPALodw==
+        b=kX3rv6W8jpQMgcUnj1fJtWr7khaXJiGnxuK/XNzQky87qosdjILdZuuZzX2XWHG49
+         z9PUg2lReIHRlQTsJECetpah4VOdnKmzou+QHvpVDANsX2K5o+1cXn+aNJpF6cTMYj
+         3F0sAvlm3+DFitGo1bP/oFAfj73yFKgJPW0yd+JBLqhgF3j4+Xz8R5dgdDEs0vqR29
+         FU2gVJG1UbhlKiUFgcDrQACvUSF7z4D/ohk3ll+HdlyNeOqiHGooaa/9zKJc/nvKOc
+         IBPrUO7Pd6+KVI3K9c1Ys2h30kTXv4ji0TjXAK7jwWRijewCdUxm3EpMthno/FEzVj
+         ZyheGfgmaZbew==
 Received: from de02dwia024.internal.synopsys.com (de02dwia024.internal.synopsys.com [10.225.19.81])
-        by mailhost.synopsys.com (Postfix) with ESMTP id 7B7FDA024A;
-        Wed,  3 Feb 2021 21:58:20 +0000 (UTC)
+        by mailhost.synopsys.com (Postfix) with ESMTP id 60E24A024B;
+        Wed,  3 Feb 2021 21:58:26 +0000 (UTC)
 X-SNPS-Relay: synopsys.com
 From:   Gustavo Pimentel <Gustavo.Pimentel@synopsys.com>
 To:     linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
@@ -44,9 +44,9 @@ To:     linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
         Dan Williams <dan.j.williams@intel.com>,
         Bjorn Helgaas <bhelgaas@google.com>,
         Gustavo Pimentel <Gustavo.Pimentel@synopsys.com>
-Subject: [PATCH v4 07/15] dmaengine: dw-edma: Improve number of channels check
-Date:   Wed,  3 Feb 2021 22:57:58 +0100
-Message-Id: <1a42fc97b18012925454013a64b901e06683c77b.1612389406.git.gustavo.pimentel@synopsys.com>
+Subject: [PATCH v4 15/15] dmaengine: dw-edma: Add pcim_iomap_table return checker
+Date:   Wed,  3 Feb 2021 22:58:06 +0100
+Message-Id: <ceb5eb396e417f9e45d39fd5ef565ba77aae6a63.1612389406.git.gustavo.pimentel@synopsys.com>
 X-Mailer: git-send-email 2.7.4
 In-Reply-To: <cover.1612389406.git.gustavo.pimentel@synopsys.com>
 References: <cover.1612389406.git.gustavo.pimentel@synopsys.com>
@@ -56,61 +56,65 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-It was added some extra checks to ensure that the driver doesn't try to
-use more DMA channels than actually are available in hardware.
+Detected by CoverityScan CID 16555 ("Dereference null return")
 
 Signed-off-by: Gustavo Pimentel <gustavo.pimentel@synopsys.com>
 ---
- drivers/dma/dw-edma/dw-edma-core.c | 21 +++++++++------------
- drivers/dma/dw-edma/dw-edma-core.h |  2 ++
- 2 files changed, 11 insertions(+), 12 deletions(-)
+ drivers/dma/dw-edma/dw-edma-pcie.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-diff --git a/drivers/dma/dw-edma/dw-edma-core.c b/drivers/dma/dw-edma/dw-edma-core.c
-index 0fe3835..5495cf7 100644
---- a/drivers/dma/dw-edma/dw-edma-core.c
-+++ b/drivers/dma/dw-edma/dw-edma-core.c
-@@ -914,19 +914,16 @@ int dw_edma_probe(struct dw_edma_chip *chip)
+diff --git a/drivers/dma/dw-edma/dw-edma-pcie.c b/drivers/dma/dw-edma/dw-edma-pcie.c
+index 686b4ff..7445033 100644
+--- a/drivers/dma/dw-edma/dw-edma-pcie.c
++++ b/drivers/dma/dw-edma/dw-edma-pcie.c
+@@ -238,6 +238,9 @@ static int dw_edma_pcie_probe(struct pci_dev *pdev,
+ 	dw->rd_ch_cnt = vsec_data.rd_ch_cnt;
  
- 	raw_spin_lock_init(&dw->lock);
- 
--	if (!dw->wr_ch_cnt) {
--		/* Find out how many write channels are supported by hardware */
--		dw->wr_ch_cnt = dw_edma_v0_core_ch_count(dw, EDMA_DIR_WRITE);
--		if (!dw->wr_ch_cnt)
--			return -EINVAL;
--	}
-+	dw->wr_ch_cnt = min_t(u16, dw->wr_ch_cnt,
-+			      dw_edma_v0_core_ch_count(dw, EDMA_DIR_WRITE));
-+	dw->wr_ch_cnt = min_t(u16, dw->wr_ch_cnt, EDMA_MAX_WR_CH);
- 
--	if (!dw->rd_ch_cnt) {
--		/* Find out how many read channels are supported by hardware */
--		dw->rd_ch_cnt = dw_edma_v0_core_ch_count(dw, EDMA_DIR_READ);
--		if (!dw->rd_ch_cnt)
--			return -EINVAL;
--	}
-+	dw->rd_ch_cnt = min_t(u16, dw->rd_ch_cnt,
-+			      dw_edma_v0_core_ch_count(dw, EDMA_DIR_READ));
-+	dw->rd_ch_cnt = min_t(u16, dw->rd_ch_cnt, EDMA_MAX_RD_CH);
+ 	dw->rg_region.vaddr = pcim_iomap_table(pdev)[vsec_data.rg.bar];
++	if (!dw->rg_region.vaddr)
++		return -ENOMEM;
 +
-+	if (!dw->wr_ch_cnt && !dw->rd_ch_cnt)
-+		return -EINVAL;
+ 	dw->rg_region.vaddr += vsec_data.rg.off;
+ 	dw->rg_region.paddr = pdev->resource[vsec_data.rg.bar].start;
+ 	dw->rg_region.paddr += vsec_data.rg.off;
+@@ -250,12 +253,18 @@ static int dw_edma_pcie_probe(struct pci_dev *pdev,
+ 		struct dw_edma_block *dt_block = &vsec_data.dt_wr[i];
  
- 	dev_vdbg(dev, "Channels:\twrite=%d, read=%d\n",
- 		 dw->wr_ch_cnt, dw->rd_ch_cnt);
-diff --git a/drivers/dma/dw-edma/dw-edma-core.h b/drivers/dma/dw-edma/dw-edma-core.h
-index f72ebaa..650b1c7 100644
---- a/drivers/dma/dw-edma/dw-edma-core.h
-+++ b/drivers/dma/dw-edma/dw-edma-core.h
-@@ -15,6 +15,8 @@
- #include "../virt-dma.h"
+ 		ll_region->vaddr = pcim_iomap_table(pdev)[ll_block->bar];
++		if (!ll_region->vaddr)
++			return -ENOMEM;
++
+ 		ll_region->vaddr += ll_block->off;
+ 		ll_region->paddr = pdev->resource[ll_block->bar].start;
+ 		ll_region->paddr += ll_block->off;
+ 		ll_region->sz = ll_block->sz;
  
- #define EDMA_LL_SZ					24
-+#define EDMA_MAX_WR_CH					8
-+#define EDMA_MAX_RD_CH					8
+ 		dt_region->vaddr = pcim_iomap_table(pdev)[dt_block->bar];
++		if (!dt_region->vaddr)
++			return -ENOMEM;
++
+ 		dt_region->vaddr += dt_block->off;
+ 		dt_region->paddr = pdev->resource[dt_block->bar].start;
+ 		dt_region->paddr += dt_block->off;
+@@ -269,12 +278,18 @@ static int dw_edma_pcie_probe(struct pci_dev *pdev,
+ 		struct dw_edma_block *dt_block = &vsec_data.dt_rd[i];
  
- enum dw_edma_dir {
- 	EDMA_DIR_WRITE = 0,
+ 		ll_region->vaddr = pcim_iomap_table(pdev)[ll_block->bar];
++		if (!ll_region->vaddr)
++			return -ENOMEM;
++
+ 		ll_region->vaddr += ll_block->off;
+ 		ll_region->paddr = pdev->resource[ll_block->bar].start;
+ 		ll_region->paddr += ll_block->off;
+ 		ll_region->sz = ll_block->sz;
+ 
+ 		dt_region->vaddr = pcim_iomap_table(pdev)[dt_block->bar];
++		if (!dt_region->vaddr)
++			return -ENOMEM;
++
+ 		dt_region->vaddr += dt_block->off;
+ 		dt_region->paddr = pdev->resource[dt_block->bar].start;
+ 		dt_region->paddr += dt_block->off;
 -- 
 2.7.4
 
