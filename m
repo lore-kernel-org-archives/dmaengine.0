@@ -4,36 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-13.7 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6C760C433DB
-	for <dmaengine@archiver.kernel.org>; Fri,  5 Feb 2021 20:56:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 78212C433E0
+	for <dmaengine@archiver.kernel.org>; Fri,  5 Feb 2021 20:57:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 409AF64FB0
-	for <dmaengine@archiver.kernel.org>; Fri,  5 Feb 2021 20:56:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 255E164EE4
+	for <dmaengine@archiver.kernel.org>; Fri,  5 Feb 2021 20:57:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233662AbhBETMa (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 5 Feb 2021 14:12:30 -0500
-Received: from mga17.intel.com ([192.55.52.151]:61557 "EHLO mga17.intel.com"
+        id S233639AbhBETOC (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 5 Feb 2021 14:14:02 -0500
+Received: from mga03.intel.com ([134.134.136.65]:37593 "EHLO mga03.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S233537AbhBETLq (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Fri, 5 Feb 2021 14:11:46 -0500
-IronPort-SDR: gsEoVXZASDEKW9dCeVSI0zZVi4G95fQJ/h/h/GE16XSJfbufKAGjo8+Yn1hs5107zV+/BpwR0s
- FsIShFR3f6mA==
-X-IronPort-AV: E=McAfee;i="6000,8403,9886"; a="161241404"
+        id S233723AbhBETMu (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Fri, 5 Feb 2021 14:12:50 -0500
+IronPort-SDR: fJdkk9BGeDch80PC9/g9WV6BGfHotRP2h5ZzrJm6kJgWVfGGrAabTnpJ2iHQbCg3iQHG6VyTFO
+ SVnuFrIdjT+g==
+X-IronPort-AV: E=McAfee;i="6000,8403,9886"; a="181551601"
 X-IronPort-AV: E=Sophos;i="5.81,156,1610438400"; 
-   d="scan'208";a="161241404"
-Received: from orsmga001.jf.intel.com ([10.7.209.18])
-  by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Feb 2021 12:53:13 -0800
-IronPort-SDR: WQo7t6UA6OS/eq/Jgf1sDDWOvVmnA2Nk9gHdyAJycQg/KlCybzaQhvmK9zrvo8ubBOkTS924/i
- UwXn2QJxvCmg==
+   d="scan'208";a="181551601"
+Received: from fmsmga003.fm.intel.com ([10.253.24.29])
+  by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Feb 2021 12:54:18 -0800
+IronPort-SDR: Cge2ehvW9insyeKyV9XHY3vQmr6/rhDWwyFyeR62HO7mYG20bPdATVecw7vrDZMBAW2P8H5PQu
+ 4LzpDMECI5sw==
 X-IronPort-AV: E=Sophos;i="5.81,156,1610438400"; 
-   d="scan'208";a="434596858"
+   d="scan'208";a="416146008"
 Received: from djiang5-desk3.ch.intel.com ([143.182.136.137])
-  by orsmga001-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Feb 2021 12:53:12 -0800
-Subject: [PATCH v5 03/14] dmaengine: idxd: add device support functions in
- prep for mdev
+  by fmsmga003-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Feb 2021 12:54:17 -0800
+Subject: [PATCH v5 13/14] vfio/mdev: idxd: add new wq state for mdev
 From:   Dave Jiang <dave.jiang@intel.com>
 To:     alex.williamson@redhat.com, kwankhede@nvidia.com,
         tglx@linutronix.de, vkoul@kernel.org
@@ -45,8 +44,8 @@ Cc:     megha.dey@intel.com, jacob.jun.pan@intel.com, ashok.raj@intel.com,
         shahafs@mellanox.com, pbonzini@redhat.com,
         dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
         kvm@vger.kernel.org
-Date:   Fri, 05 Feb 2021 13:53:11 -0700
-Message-ID: <161255839186.339900.4487176195680305351.stgit@djiang5-desk3.ch.intel.com>
+Date:   Fri, 05 Feb 2021 13:54:17 -0700
+Message-ID: <161255845740.339900.10615654311326039119.stgit@djiang5-desk3.ch.intel.com>
 In-Reply-To: <161255810396.339900.7646244556839438765.stgit@djiang5-desk3.ch.intel.com>
 References: <161255810396.339900.7646244556839438765.stgit@djiang5-desk3.ch.intel.com>
 User-Agent: StGit/0.23-29-ga622f1
@@ -57,137 +56,93 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Add device support helper functions in preparation of adding VFIO
-mdev support.
+When a dedicated wq is enabled as mdev, we must disable the wq on the
+device in order to program the pasid to the wq. Introduce a wq state
+IDXD_WQ_LOCKED that is software state only in order to prevent the user
+from modifying the configuration while mdev wq is in this state. While
+in this state, the wq is not in DISABLED state and will prevent any
+modifications to the configuration. It is also not in the ENABLED state
+and therefore prevents any actions allowed in the ENABLED state.
+
+For mdev, the dwq is disabled and set to LOCKED state upon the mdev
+creation. When ->open() is called on the mdev and a pasid is programmed to
+the WQCFG, the dwq is enabled again and goes to the ENABLED state.
 
 Signed-off-by: Dave Jiang <dave.jiang@intel.com>
 ---
- drivers/dma/idxd/device.c    |   61 ++++++++++++++++++++++++++++++++++++++++++
- drivers/dma/idxd/idxd.h      |    4 +++
- drivers/dma/idxd/registers.h |    3 +-
- 3 files changed, 67 insertions(+), 1 deletion(-)
+ drivers/dma/idxd/device.c     |    9 +++++++++
+ drivers/dma/idxd/idxd.h       |    1 +
+ drivers/dma/idxd/sysfs.c      |    2 ++
+ drivers/vfio/mdev/idxd/mdev.c |    4 +++-
+ 4 files changed, 15 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/dma/idxd/device.c b/drivers/dma/idxd/device.c
-index d6c447d09a6f..2491b27c8125 100644
+index c5faa23bd8ce..1cd64a6a60de 100644
 --- a/drivers/dma/idxd/device.c
 +++ b/drivers/dma/idxd/device.c
-@@ -306,6 +306,30 @@ void idxd_wq_unmap_portal(struct idxd_wq *wq)
- 	devm_iounmap(dev, wq->portal);
- }
+@@ -252,6 +252,14 @@ int idxd_wq_disable(struct idxd_wq *wq, u32 *status)
  
-+int idxd_wq_abort(struct idxd_wq *wq)
-+{
-+	struct idxd_device *idxd = wq->idxd;
-+	struct device *dev = &idxd->pdev->dev;
-+	u32 operand, status;
-+
-+	dev_dbg(dev, "Abort WQ %d\n", wq->id);
-+	if (wq->state != IDXD_WQ_ENABLED) {
-+		dev_dbg(dev, "WQ %d not active\n", wq->id);
-+		return -ENXIO;
-+	}
-+
-+	operand = BIT(wq->id % 16) | ((wq->id / 16) << 16);
-+	dev_dbg(dev, "cmd: %u operand: %#x\n", IDXD_CMD_ABORT_WQ, operand);
-+	idxd_cmd_exec(idxd, IDXD_CMD_ABORT_WQ, operand, &status);
-+	if (status != IDXD_CMDSTS_SUCCESS) {
-+		dev_dbg(dev, "WQ abort failed: %#x\n", status);
-+		return -ENXIO;
-+	}
-+
-+	dev_dbg(dev, "WQ %d aborted\n", wq->id);
-+	return 0;
-+}
-+
- int idxd_wq_set_pasid(struct idxd_wq *wq, int pasid)
- {
- 	struct idxd_device *idxd = wq->idxd;
-@@ -412,6 +436,32 @@ void idxd_wq_quiesce(struct idxd_wq *wq)
- 	percpu_ref_exit(&wq->wq_active);
- }
+ 	dev_dbg(dev, "Disabling WQ %d\n", wq->id);
  
-+void idxd_wq_setup_pasid(struct idxd_wq *wq, int pasid)
-+{
-+	struct idxd_device *idxd = wq->idxd;
-+	int offset;
++	/*
++	 * When the wq is in LOCKED state, it means it is disabled but
++	 * also at the same time is "enabled" as far as the user is
++	 * concerned. So a call to disable the hardware can be skipped.
++	 */
++	if (wq->state == IDXD_WQ_LOCKED)
++		goto out;
 +
-+	lockdep_assert_held(&idxd->dev_lock);
-+
-+	/* PASID fields are 8 bytes into the WQCFG register */
-+	offset = WQCFG_OFFSET(idxd, wq->id, WQCFG_PASID_IDX);
-+	wq->wqcfg->pasid = pasid;
-+	iowrite32(wq->wqcfg->bits[WQCFG_PASID_IDX], idxd->reg_base + offset);
-+}
-+
-+void idxd_wq_setup_priv(struct idxd_wq *wq, int priv)
-+{
-+	struct idxd_device *idxd = wq->idxd;
-+	int offset;
-+
-+	lockdep_assert_held(&idxd->dev_lock);
-+
-+	/* priv field is 8 bytes into the WQCFG register */
-+	offset = WQCFG_OFFSET(idxd, wq->id, WQCFG_PRIV_IDX);
-+	wq->wqcfg->priv = !!priv;
-+	iowrite32(wq->wqcfg->bits[WQCFG_PRIV_IDX], idxd->reg_base + offset);
-+}
-+
- /* Device control bits */
- static inline bool idxd_is_enabled(struct idxd_device *idxd)
- {
-@@ -599,6 +649,17 @@ void idxd_device_drain_pasid(struct idxd_device *idxd, int pasid)
- 	dev_dbg(dev, "pasid %d drained\n", pasid);
- }
+ 	if (wq->state != IDXD_WQ_ENABLED) {
+ 		dev_dbg(dev, "WQ %d in wrong state: %d\n", wq->id, wq->state);
+ 		return 0;
+@@ -268,6 +276,7 @@ int idxd_wq_disable(struct idxd_wq *wq, u32 *status)
+ 		return -ENXIO;
+ 	}
  
-+void idxd_device_abort_pasid(struct idxd_device *idxd, int pasid)
-+{
-+	struct device *dev = &idxd->pdev->dev;
-+	u32 operand;
-+
-+	operand = pasid;
-+	dev_dbg(dev, "cmd: %u operand: %#x\n", IDXD_CMD_ABORT_PASID, operand);
-+	idxd_cmd_exec(idxd, IDXD_CMD_ABORT_PASID, operand, NULL);
-+	dev_dbg(dev, "pasid %d aborted\n", pasid);
-+}
-+
- int idxd_device_request_int_handle(struct idxd_device *idxd, int idx, int *handle,
- 				   enum idxd_interrupt_type irq_type)
- {
++ out:
+ 	wq->state = IDXD_WQ_DISABLED;
+ 	dev_dbg(dev, "WQ %d disabled\n", wq->id);
+ 	return 0;
 diff --git a/drivers/dma/idxd/idxd.h b/drivers/dma/idxd/idxd.h
-index 90c9458903e1..a2438b3166db 100644
+index c5ef6ccc9ba6..4afe35385f85 100644
 --- a/drivers/dma/idxd/idxd.h
 +++ b/drivers/dma/idxd/idxd.h
-@@ -350,6 +350,7 @@ void idxd_device_cleanup(struct idxd_device *idxd);
- int idxd_device_config(struct idxd_device *idxd);
- void idxd_device_wqs_clear_state(struct idxd_device *idxd);
- void idxd_device_drain_pasid(struct idxd_device *idxd, int pasid);
-+void idxd_device_abort_pasid(struct idxd_device *idxd, int pasid);
- int idxd_device_load_config(struct idxd_device *idxd);
- int idxd_device_request_int_handle(struct idxd_device *idxd, int idx, int *handle,
- 				   enum idxd_interrupt_type irq_type);
-@@ -369,6 +370,9 @@ int idxd_wq_set_pasid(struct idxd_wq *wq, int pasid);
- int idxd_wq_disable_pasid(struct idxd_wq *wq);
- void idxd_wq_quiesce(struct idxd_wq *wq);
- int idxd_wq_init_percpu_ref(struct idxd_wq *wq);
-+int idxd_wq_abort(struct idxd_wq *wq);
-+void idxd_wq_setup_pasid(struct idxd_wq *wq, int pasid);
-+void idxd_wq_setup_priv(struct idxd_wq *wq, int priv);
+@@ -62,6 +62,7 @@ struct idxd_group {
+ enum idxd_wq_state {
+ 	IDXD_WQ_DISABLED = 0,
+ 	IDXD_WQ_ENABLED,
++	IDXD_WQ_LOCKED,
+ };
  
- /* submission */
- int idxd_submit_desc(struct idxd_wq *wq, struct idxd_desc *desc);
-diff --git a/drivers/dma/idxd/registers.h b/drivers/dma/idxd/registers.h
-index c97f700bcf34..d9a732decdd5 100644
---- a/drivers/dma/idxd/registers.h
-+++ b/drivers/dma/idxd/registers.h
-@@ -347,7 +347,8 @@ union wqcfg {
- 	u32 bits[8];
- } __packed;
+ enum idxd_wq_flag {
+diff --git a/drivers/dma/idxd/sysfs.c b/drivers/dma/idxd/sysfs.c
+index 913ff019fe36..1bce55ac24b9 100644
+--- a/drivers/dma/idxd/sysfs.c
++++ b/drivers/dma/idxd/sysfs.c
+@@ -879,6 +879,8 @@ static ssize_t wq_state_show(struct device *dev,
+ 		return sprintf(buf, "disabled\n");
+ 	case IDXD_WQ_ENABLED:
+ 		return sprintf(buf, "enabled\n");
++	case IDXD_WQ_LOCKED:
++		return sprintf(buf, "locked\n");
+ 	}
  
--#define WQCFG_PASID_IDX                2
-+#define WQCFG_PASID_IDX		2
-+#define WQCFG_PRIV_IDX		2
+ 	return sprintf(buf, "unknown\n");
+diff --git a/drivers/vfio/mdev/idxd/mdev.c b/drivers/vfio/mdev/idxd/mdev.c
+index d59920f78109..60913950a4f5 100644
+--- a/drivers/vfio/mdev/idxd/mdev.c
++++ b/drivers/vfio/mdev/idxd/mdev.c
+@@ -116,8 +116,10 @@ static void idxd_vdcm_init(struct vdcm_idxd *vidxd)
  
- /*
-  * This macro calculates the offset into the WQCFG register
+ 	vidxd_mmio_init(vidxd);
+ 
+-	if (wq_dedicated(wq) && wq->state == IDXD_WQ_ENABLED)
++	if (wq_dedicated(wq) && wq->state == IDXD_WQ_ENABLED) {
+ 		idxd_wq_disable(wq, NULL);
++		wq->state = IDXD_WQ_LOCKED;
++	}
+ }
+ 
+ static void idxd_vdcm_release(struct mdev_device *mdev)
 
 
