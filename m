@@ -7,32 +7,33 @@ X-Spam-Status: No, score=-13.7 required=3.0 tests=BAYES_00,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D0146C433E0
-	for <dmaengine@archiver.kernel.org>; Fri,  5 Feb 2021 21:02:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 074E1C433E0
+	for <dmaengine@archiver.kernel.org>; Fri,  5 Feb 2021 21:02:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 93E5964FB7
-	for <dmaengine@archiver.kernel.org>; Fri,  5 Feb 2021 21:02:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A804064FB7
+	for <dmaengine@archiver.kernel.org>; Fri,  5 Feb 2021 21:02:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232861AbhBETUH (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 5 Feb 2021 14:20:07 -0500
-Received: from mga06.intel.com ([134.134.136.31]:64259 "EHLO mga06.intel.com"
+        id S233150AbhBETUT (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 5 Feb 2021 14:20:19 -0500
+Received: from mga12.intel.com ([192.55.52.136]:30881 "EHLO mga12.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S233625AbhBETMY (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Fri, 5 Feb 2021 14:12:24 -0500
-IronPort-SDR: aHS7M7udBphhDi/cE+F6g9cop7+EqTlEVof6s/vqSscWis+RVl5z9sRvePT2IvLcWaSpXUhOzm
- kw7oLeBs6aQg==
-X-IronPort-AV: E=McAfee;i="6000,8403,9886"; a="242990275"
+        id S233630AbhBETMX (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Fri, 5 Feb 2021 14:12:23 -0500
+IronPort-SDR: gYIR2fB7z72T09LeE127MckFYCBnQlZFDBUfKid/acZojIKGPThDTrvMYuSs0YzYHBAdX+1OD3
+ EYgBoKFqHrXQ==
+X-IronPort-AV: E=McAfee;i="6000,8403,9886"; a="160645235"
 X-IronPort-AV: E=Sophos;i="5.81,156,1610438400"; 
-   d="scan'208";a="242990275"
-Received: from fmsmga002.fm.intel.com ([10.253.24.26])
-  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Feb 2021 12:53:59 -0800
-IronPort-SDR: RqEkyteHsXTYspbPmte1gpuQohms5CGMkStJvpWer1/ZnLC69pZ/0t444vic6+sm/BZWXOAcsl
- jN+Ct6VQW+eA==
+   d="scan'208";a="160645235"
+Received: from orsmga001.jf.intel.com ([10.7.209.18])
+  by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Feb 2021 12:54:25 -0800
+IronPort-SDR: uhZLUkkHEErKzCwzWYQJT5naWnl2dq0WsrMNy1yXXf8wDRsWV5X0cpgNFlAy/5ONLy2smKpGFX
+ KlHEuIJjiBpg==
 X-IronPort-AV: E=Sophos;i="5.81,156,1610438400"; 
-   d="scan'208";a="416374787"
+   d="scan'208";a="434597079"
 Received: from djiang5-desk3.ch.intel.com ([143.182.136.137])
-  by fmsmga002-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Feb 2021 12:53:58 -0800
-Subject: [PATCH v5 10/14] vfio/mdev: idxd: virtual device commands emulation
+  by orsmga001-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Feb 2021 12:54:23 -0800
+Subject: [PATCH v5 14/14] vfio/mdev: idxd: add error notification from host
+ driver to mediated device
 From:   Dave Jiang <dave.jiang@intel.com>
 To:     alex.williamson@redhat.com, kwankhede@nvidia.com,
         tglx@linutronix.de, vkoul@kernel.org
@@ -44,8 +45,8 @@ Cc:     megha.dey@intel.com, jacob.jun.pan@intel.com, ashok.raj@intel.com,
         shahafs@mellanox.com, pbonzini@redhat.com,
         dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
         kvm@vger.kernel.org
-Date:   Fri, 05 Feb 2021 13:53:57 -0700
-Message-ID: <161255843743.339900.10371190228025336137.stgit@djiang5-desk3.ch.intel.com>
+Date:   Fri, 05 Feb 2021 13:54:23 -0700
+Message-ID: <161255846348.339900.12785712530534526428.stgit@djiang5-desk3.ch.intel.com>
 In-Reply-To: <161255810396.339900.7646244556839438765.stgit@djiang5-desk3.ch.intel.com>
 References: <161255810396.339900.7646244556839438765.stgit@djiang5-desk3.ch.intel.com>
 User-Agent: StGit/0.23-29-ga622f1
@@ -56,617 +57,145 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Add all the helper functions that supports the emulation of the commands
-that are submitted to the device command register.
+When a device error occurs, the mediated device need to be notified in
+order to notify the guest of device error. Add support to notify the
+specific mdev when an error is wq specific and broadcast errors to all mdev
+when it's a generic device error.
 
 Signed-off-by: Dave Jiang <dave.jiang@intel.com>
 ---
- drivers/dma/idxd/device.c     |    5 
- drivers/dma/idxd/registers.h  |   16 +
- drivers/vfio/mdev/idxd/mdev.c |    2 
- drivers/vfio/mdev/idxd/mdev.h |    3 
- drivers/vfio/mdev/idxd/vdev.c |  440 +++++++++++++++++++++++++++++++++++++++++
- 5 files changed, 460 insertions(+), 6 deletions(-)
+ drivers/dma/idxd/idxd.h       |    7 +++++++
+ drivers/dma/idxd/irq.c        |    6 ++++++
+ drivers/vfio/mdev/idxd/mdev.c |    5 +++++
+ drivers/vfio/mdev/idxd/vdev.c |   32 ++++++++++++++++++++++++++++++++
+ drivers/vfio/mdev/idxd/vdev.h |    1 +
+ 5 files changed, 51 insertions(+)
 
-diff --git a/drivers/dma/idxd/device.c b/drivers/dma/idxd/device.c
-index 245d576ddc43..c5faa23bd8ce 100644
---- a/drivers/dma/idxd/device.c
-+++ b/drivers/dma/idxd/device.c
-@@ -242,6 +242,7 @@ int idxd_wq_enable(struct idxd_wq *wq, u32 *status)
- 	dev_dbg(dev, "WQ %d enabled\n", wq->id);
- 	return 0;
- }
-+EXPORT_SYMBOL_GPL(idxd_wq_enable);
- 
- int idxd_wq_disable(struct idxd_wq *wq, u32 *status)
- {
-@@ -299,6 +300,7 @@ int idxd_wq_drain(struct idxd_wq *wq, u32 *status)
- 	dev_dbg(dev, "WQ %d drained\n", wq->id);
- 	return 0;
- }
-+EXPORT_SYMBOL_GPL(idxd_wq_drain);
- 
- int idxd_wq_map_portal(struct idxd_wq *wq)
- {
-@@ -351,6 +353,7 @@ int idxd_wq_abort(struct idxd_wq *wq, u32 *status)
- 	dev_dbg(dev, "WQ %d aborted\n", wq->id);
- 	return 0;
- }
-+EXPORT_SYMBOL_GPL(idxd_wq_abort);
- 
- int idxd_wq_set_pasid(struct idxd_wq *wq, int pasid)
- {
-@@ -470,6 +473,7 @@ void idxd_wq_setup_pasid(struct idxd_wq *wq, int pasid)
- 	wq->wqcfg->pasid = pasid;
- 	iowrite32(wq->wqcfg->bits[WQCFG_PASID_IDX], idxd->reg_base + offset);
- }
-+EXPORT_SYMBOL_GPL(idxd_wq_setup_pasid);
- 
- void idxd_wq_setup_priv(struct idxd_wq *wq, int priv)
- {
-@@ -483,6 +487,7 @@ void idxd_wq_setup_priv(struct idxd_wq *wq, int priv)
- 	wq->wqcfg->priv = !!priv;
- 	iowrite32(wq->wqcfg->bits[WQCFG_PRIV_IDX], idxd->reg_base + offset);
- }
-+EXPORT_SYMBOL_GPL(idxd_wq_setup_priv);
- 
- /* Device control bits */
- static inline bool idxd_is_enabled(struct idxd_device *idxd)
-diff --git a/drivers/dma/idxd/registers.h b/drivers/dma/idxd/registers.h
-index 50ea94259c99..0f985787417c 100644
---- a/drivers/dma/idxd/registers.h
-+++ b/drivers/dma/idxd/registers.h
-@@ -120,7 +120,8 @@ union gencfg_reg {
- union genctrl_reg {
- 	struct {
- 		u32 softerr_int_en:1;
--		u32 rsvd:31;
-+		u32 halt_state_int_en:1;
-+		u32 rsvd:30;
- 	};
- 	u32 bits;
- } __packed;
-@@ -142,6 +143,8 @@ enum idxd_device_status_state {
- 	IDXD_DEVICE_STATE_HALT,
+diff --git a/drivers/dma/idxd/idxd.h b/drivers/dma/idxd/idxd.h
+index 4afe35385f85..6016df029ed4 100644
+--- a/drivers/dma/idxd/idxd.h
++++ b/drivers/dma/idxd/idxd.h
+@@ -295,10 +295,17 @@ enum idxd_interrupt_type {
+ 	IDXD_IRQ_IMS,
  };
  
-+#define IDXD_GENSTATS_MASK		0x03
-+
- enum idxd_device_reset_type {
- 	IDXD_DEVICE_RESET_SOFTWARE = 0,
- 	IDXD_DEVICE_RESET_FLR,
-@@ -154,6 +157,7 @@ enum idxd_device_reset_type {
- #define IDXD_INTC_CMD			0x02
- #define IDXD_INTC_OCCUPY			0x04
- #define IDXD_INTC_PERFMON_OVFL		0x08
-+#define IDXD_INTC_HALT_STATE		0x10
- 
- #define IDXD_CMD_OFFSET			0xa0
- union idxd_command_reg {
-@@ -165,6 +169,7 @@ union idxd_command_reg {
- 	};
- 	u32 bits;
- } __packed;
-+#define IDXD_CMD_INT_MASK		0x80000000
- 
- enum idxd_cmd {
- 	IDXD_CMD_ENABLE_DEVICE = 1,
-@@ -228,10 +233,11 @@ enum idxd_cmdsts_err {
- 	/* disable device errors */
- 	IDXD_CMDSTS_ERR_DIS_DEV_EN = 0x31,
- 	/* disable WQ, drain WQ, abort WQ, reset WQ */
--	IDXD_CMDSTS_ERR_DEV_NOT_EN,
-+	IDXD_CMDSTS_ERR_WQ_NOT_EN,
- 	/* request interrupt handle */
- 	IDXD_CMDSTS_ERR_INVAL_INT_IDX = 0x41,
- 	IDXD_CMDSTS_ERR_NO_HANDLE,
-+	IDXD_CMDSTS_ERR_INVAL_INT_IDX_RELEASE,
- };
- 
- #define IDXD_CMDCAP_OFFSET		0xb0
-@@ -353,6 +359,12 @@ union wqcfg {
- 	u32 bits[8];
- } __packed;
- 
-+enum idxd_wq_hw_state {
-+	IDXD_WQ_DEV_DISABLED = 0,
-+	IDXD_WQ_DEV_ENABLED,
-+	IDXD_WQ_DEV_BUSY,
++struct aux_mdev_ops {
++	void (*notify_error)(struct idxd_wq *wq);
 +};
 +
- #define WQCFG_PASID_IDX		2
- #define WQCFG_PRIV_IDX		2
- #define WQCFG_MODE_DEDICATED	1
-diff --git a/drivers/vfio/mdev/idxd/mdev.c b/drivers/vfio/mdev/idxd/mdev.c
-index 67e6b33468cd..7cde707021db 100644
---- a/drivers/vfio/mdev/idxd/mdev.c
-+++ b/drivers/vfio/mdev/idxd/mdev.c
-@@ -52,7 +52,7 @@ static char idxd_iax_1dwq_name[IDXD_MDEV_NAME_LEN];
- static int idxd_vdcm_set_irqs(struct vdcm_idxd *vidxd, uint32_t flags, unsigned int index,
- 			      unsigned int start, unsigned int count, void *data);
- 
--static int idxd_mdev_get_pasid(struct mdev_device *mdev, u32 *pasid)
-+int idxd_mdev_get_pasid(struct mdev_device *mdev, u32 *pasid)
- {
- 	struct vfio_group *vfio_group;
- 	struct iommu_domain *iommu_domain;
-diff --git a/drivers/vfio/mdev/idxd/mdev.h b/drivers/vfio/mdev/idxd/mdev.h
-index 7ca50f054714..8421b4962ac7 100644
---- a/drivers/vfio/mdev/idxd/mdev.h
-+++ b/drivers/vfio/mdev/idxd/mdev.h
-@@ -38,6 +38,7 @@ struct ims_irq_entry {
- 	bool irq_set;
- 	int id;
- 	int irq;
-+	int ims_idx;
+ struct idxd_mdev_aux_drv {
+ 	        struct auxiliary_driver auxiliary_drv;
++		const struct aux_mdev_ops ops;
  };
  
- struct idxd_vdev {
-@@ -112,4 +113,6 @@ static inline u64 get_reg_val(void *buf, int size)
- 	return val;
- }
- 
-+int idxd_mdev_get_pasid(struct mdev_device *mdev, u32 *pasid);
++#define to_mdev_aux_drv(_aux_drv) container_of(_aux_drv, struct idxd_mdev_aux_drv, auxiliary_drv)
 +
- #endif
+ static inline int idxd_get_wq_portal_offset(enum idxd_portal_prot prot,
+ 					    enum idxd_interrupt_type irq_type)
+ {
+diff --git a/drivers/dma/idxd/irq.c b/drivers/dma/idxd/irq.c
+index 090926856df3..9cdd3e789799 100644
+--- a/drivers/dma/idxd/irq.c
++++ b/drivers/dma/idxd/irq.c
+@@ -118,6 +118,8 @@ static int process_misc_interrupts(struct idxd_device *idxd, u32 cause)
+ 	u32 val = 0;
+ 	int i;
+ 	bool err = false;
++	struct auxiliary_driver *auxdrv = to_auxiliary_drv(idxd->mdev_auxdev->dev.driver);
++	struct idxd_mdev_aux_drv *mdevdrv = to_mdev_aux_drv(auxdrv);
+ 
+ 	if (cause & IDXD_INTC_ERR) {
+ 		spin_lock_bh(&idxd->dev_lock);
+@@ -132,6 +134,8 @@ static int process_misc_interrupts(struct idxd_device *idxd, u32 cause)
+ 
+ 			if (wq->type == IDXD_WQT_USER)
+ 				wake_up_interruptible(&wq->idxd_cdev.err_queue);
++			else if (wq->type == IDXD_WQT_MDEV)
++				mdevdrv->ops.notify_error(wq);
+ 		} else {
+ 			int i;
+ 
+@@ -140,6 +144,8 @@ static int process_misc_interrupts(struct idxd_device *idxd, u32 cause)
+ 
+ 				if (wq->type == IDXD_WQT_USER)
+ 					wake_up_interruptible(&wq->idxd_cdev.err_queue);
++				else if (wq->type == IDXD_WQT_MDEV)
++					mdevdrv->ops.notify_error(wq);
+ 			}
+ 		}
+ 
+diff --git a/drivers/vfio/mdev/idxd/mdev.c b/drivers/vfio/mdev/idxd/mdev.c
+index 60913950a4f5..edccaad66c8c 100644
+--- a/drivers/vfio/mdev/idxd/mdev.c
++++ b/drivers/vfio/mdev/idxd/mdev.c
+@@ -1266,12 +1266,17 @@ static const struct auxiliary_device_id idxd_mdev_auxbus_id_table[] = {
+ };
+ MODULE_DEVICE_TABLE(auxiliary, idxd_mdev_auxbus_id_table);
+ 
++static const struct aux_mdev_ops aux_mdev_ops = {
++	.notify_error = idxd_wq_vidxd_send_errors,
++};
++
+ static struct idxd_mdev_aux_drv idxd_mdev_aux_drv = {
+ 	.auxiliary_drv = {
+ 		.id_table = idxd_mdev_auxbus_id_table,
+ 		.probe = idxd_mdev_aux_probe,
+ 		.remove = idxd_mdev_aux_remove,
+ 	},
++	.ops = aux_mdev_ops,
+ };
+ 
+ static int idxd_mdev_auxdev_drv_register(struct idxd_mdev_aux_drv *drv)
 diff --git a/drivers/vfio/mdev/idxd/vdev.c b/drivers/vfio/mdev/idxd/vdev.c
-index 958b09987e5c..766fd98e9eea 100644
+index 8626438a9e54..3aa9d5b870e8 100644
 --- a/drivers/vfio/mdev/idxd/vdev.c
 +++ b/drivers/vfio/mdev/idxd/vdev.c
-@@ -492,17 +492,451 @@ void vidxd_mmio_init(struct vdcm_idxd *vidxd)
- 
- static void idxd_complete_command(struct vdcm_idxd *vidxd, enum idxd_cmdsts_err val)
- {
--	/* PLACEHOLDER */
-+	u8 *bar0 = vidxd->bar0;
-+	u32 *cmd = (u32 *)(bar0 + IDXD_CMD_OFFSET);
-+	u32 *cmdsts = (u32 *)(bar0 + IDXD_CMDSTS_OFFSET);
-+	u32 *intcause = (u32 *)(bar0 + IDXD_INTCAUSE_OFFSET);
-+	struct mdev_device *mdev = vidxd->vdev.mdev;
-+	struct device *dev = mdev_dev(mdev);
-+
-+	*cmdsts = val;
-+	dev_dbg(dev, "%s: cmd: %#x  status: %#x\n", __func__, *cmd, val);
-+
-+	if (*cmd & IDXD_CMD_INT_MASK) {
-+		*intcause |= IDXD_INTC_CMD;
-+		vidxd_send_interrupt(&vidxd->irq_entries[0]);
-+	}
-+}
-+
-+static void vidxd_enable(struct vdcm_idxd *vidxd)
-+{
-+	u8 *bar0 = vidxd->bar0;
-+	union gensts_reg *gensts = (union gensts_reg *)(bar0 + IDXD_GENSTATS_OFFSET);
-+	struct mdev_device *mdev = vidxd->vdev.mdev;
-+	struct device *dev = mdev_dev(mdev);
-+
-+	dev_dbg(dev, "%s\n", __func__);
-+	if (gensts->state == IDXD_DEVICE_STATE_ENABLED)
-+		return idxd_complete_command(vidxd, IDXD_CMDSTS_ERR_DEV_ENABLED);
-+
-+	/* Check PCI configuration */
-+	if (!(vidxd->cfg[PCI_COMMAND] & PCI_COMMAND_MASTER))
-+		return idxd_complete_command(vidxd, IDXD_CMDSTS_ERR_BUSMASTER_EN);
-+
-+	gensts->state = IDXD_DEVICE_STATE_ENABLED;
-+
-+	return idxd_complete_command(vidxd, IDXD_CMDSTS_SUCCESS);
-+}
-+
-+static void vidxd_disable(struct vdcm_idxd *vidxd)
-+{
-+	struct idxd_wq *wq;
-+	union wqcfg *wqcfg;
-+	u8 *bar0 = vidxd->bar0;
-+	union gensts_reg *gensts = (union gensts_reg *)(bar0 + IDXD_GENSTATS_OFFSET);
-+	struct mdev_device *mdev = vidxd->vdev.mdev;
-+	struct device *dev = mdev_dev(mdev);
-+	u32 status;
-+
-+	dev_dbg(dev, "%s\n", __func__);
-+	if (gensts->state == IDXD_DEVICE_STATE_DISABLED) {
-+		idxd_complete_command(vidxd, IDXD_CMDSTS_ERR_DIS_DEV_EN);
-+		return;
-+	}
-+
-+	wqcfg = (union wqcfg *)(bar0 + VIDXD_WQCFG_OFFSET);
-+	wq = vidxd->wq;
-+
-+	/* If it is a DWQ, need to disable the DWQ as well */
-+	if (wq_dedicated(wq)) {
-+		idxd_wq_disable(wq, &status);
-+		if (status) {
-+			dev_warn(dev, "vidxd disable (wq disable) failed: %#x\n", status);
-+			idxd_complete_command(vidxd, IDXD_CMDSTS_ERR_DIS_DEV_EN);
-+			return;
-+		}
-+	} else {
-+		idxd_wq_drain(wq, &status);
-+		if (status)
-+			dev_warn(dev, "vidxd disable (wq drain) failed: %#x\n", status);
-+	}
-+
-+	wqcfg->wq_state = 0;
-+	gensts->state = IDXD_DEVICE_STATE_DISABLED;
-+	idxd_complete_command(vidxd, IDXD_CMDSTS_SUCCESS);
-+}
-+
-+static void vidxd_drain_all(struct vdcm_idxd *vidxd)
-+{
-+	struct mdev_device *mdev = vidxd->vdev.mdev;
-+	struct device *dev = mdev_dev(mdev);
-+	struct idxd_wq *wq = vidxd->wq;
-+
-+	dev_dbg(dev, "%s\n", __func__);
-+
-+	idxd_wq_drain(wq, NULL);
-+	idxd_complete_command(vidxd, IDXD_CMDSTS_SUCCESS);
-+}
-+
-+static void vidxd_wq_drain(struct vdcm_idxd *vidxd, int val)
-+{
-+	struct mdev_device *mdev = vidxd->vdev.mdev;
-+	struct device *dev = mdev_dev(mdev);
-+	u8 *bar0 = vidxd->bar0;
-+	union wqcfg *wqcfg = (union wqcfg *)(bar0 + VIDXD_WQCFG_OFFSET);
-+	struct idxd_wq *wq = vidxd->wq;
-+	u32 status;
-+
-+	dev_dbg(dev, "%s\n", __func__);
-+	if (wqcfg->wq_state != IDXD_WQ_DEV_ENABLED) {
-+		idxd_complete_command(vidxd, IDXD_CMDSTS_ERR_WQ_NOT_EN);
-+		return;
-+	}
-+
-+	idxd_wq_drain(wq, &status);
-+	if (status) {
-+		dev_dbg(dev, "wq drain failed: %#x\n", status);
-+		idxd_complete_command(vidxd, status);
-+		return;
-+	}
-+
-+	idxd_complete_command(vidxd, IDXD_CMDSTS_SUCCESS);
-+}
-+
-+static void vidxd_abort_all(struct vdcm_idxd *vidxd)
-+{
-+	struct mdev_device *mdev = vidxd->vdev.mdev;
-+	struct device *dev = mdev_dev(mdev);
-+	struct idxd_wq *wq = vidxd->wq;
-+
-+	dev_dbg(dev, "%s\n", __func__);
-+	idxd_wq_abort(wq, NULL);
-+	idxd_complete_command(vidxd, IDXD_CMDSTS_SUCCESS);
-+}
-+
-+static void vidxd_wq_abort(struct vdcm_idxd *vidxd, int val)
-+{
-+	struct mdev_device *mdev = vidxd->vdev.mdev;
-+	struct device *dev = mdev_dev(mdev);
-+	u8 *bar0 = vidxd->bar0;
-+	union wqcfg *wqcfg = (union wqcfg *)(bar0 + VIDXD_WQCFG_OFFSET);
-+	struct idxd_wq *wq = vidxd->wq;
-+	u32 status;
-+
-+	dev_dbg(dev, "%s\n", __func__);
-+	if (wqcfg->wq_state != IDXD_WQ_DEV_ENABLED) {
-+		idxd_complete_command(vidxd, IDXD_CMDSTS_ERR_WQ_NOT_EN);
-+		return;
-+	}
-+
-+	idxd_wq_abort(wq, &status);
-+	if (status) {
-+		dev_dbg(dev, "wq abort failed: %#x\n", status);
-+		idxd_complete_command(vidxd, status);
-+		return;
-+	}
-+
-+	idxd_complete_command(vidxd, IDXD_CMDSTS_SUCCESS);
+@@ -980,3 +980,35 @@ void vidxd_do_command(struct vdcm_idxd *vidxd, u32 val)
+ 		break;
+ 	}
  }
- 
- void vidxd_reset(struct vdcm_idxd *vidxd)
- {
--	/* PLACEHOLDER */
-+	struct mdev_device *mdev = vidxd->vdev.mdev;
-+	struct device *dev = mdev_dev(mdev);
-+	u8 *bar0 = vidxd->bar0;
-+	union gensts_reg *gensts = (union gensts_reg *)(bar0 + IDXD_GENSTATS_OFFSET);
-+	struct idxd_wq *wq;
 +
-+	dev_dbg(dev, "%s\n", __func__);
-+	gensts->state = IDXD_DEVICE_STATE_DRAIN;
-+	wq = vidxd->wq;
-+
-+	if (wq->state == IDXD_WQ_ENABLED) {
-+		idxd_wq_abort(wq, NULL);
-+		idxd_wq_disable(wq, NULL);
-+	}
-+
-+	vidxd_mmio_init(vidxd);
-+	gensts->state = IDXD_DEVICE_STATE_DISABLED;
-+	idxd_complete_command(vidxd, IDXD_CMDSTS_SUCCESS);
-+}
-+
-+static void vidxd_wq_reset(struct vdcm_idxd *vidxd, int wq_id_mask)
-+{
-+	struct idxd_wq *wq;
-+	u8 *bar0 = vidxd->bar0;
-+	union wqcfg *wqcfg = (union wqcfg *)(bar0 + VIDXD_WQCFG_OFFSET);
-+	struct mdev_device *mdev = vidxd->vdev.mdev;
-+	struct device *dev = mdev_dev(mdev);
-+	u32 status;
-+
-+	wq = vidxd->wq;
-+	dev_dbg(dev, "vidxd reset wq %u:%u\n", 0, wq->id);
-+
-+	if (wqcfg->wq_state != IDXD_WQ_DEV_ENABLED) {
-+		idxd_complete_command(vidxd, IDXD_CMDSTS_ERR_WQ_NOT_EN);
-+		return;
-+	}
-+
-+	idxd_wq_abort(wq, &status);
-+	if (status) {
-+		dev_dbg(dev, "vidxd reset wq failed to abort: %#x\n", status);
-+		idxd_complete_command(vidxd, status);
-+		return;
-+	}
-+
-+	idxd_wq_disable(wq, &status);
-+	if (status) {
-+		dev_dbg(dev, "vidxd reset wq failed to disable: %#x\n", status);
-+		idxd_complete_command(vidxd, status);
-+		return;
-+	}
-+
-+	wqcfg->wq_state = IDXD_WQ_DEV_DISABLED;
-+	idxd_complete_command(vidxd, IDXD_CMDSTS_SUCCESS);
-+}
-+
-+static void vidxd_alloc_int_handle(struct vdcm_idxd *vidxd, int operand)
-+{
-+	bool ims = !!(operand & CMD_INT_HANDLE_IMS);
-+	u32 cmdsts;
-+	struct mdev_device *mdev = vidxd->vdev.mdev;
-+	struct device *dev = mdev_dev(mdev);
-+	int ims_idx, vidx;
-+
-+	vidx = operand & GENMASK(15, 0);
-+
-+	dev_dbg(dev, "allocating int handle for %d\n", vidx);
-+
-+	/* vidx cannot be 0 since that's emulated and does not require IMS handle */
-+	if (vidx <= 0 || vidx >= VIDXD_MAX_MSIX_ENTRIES) {
-+		idxd_complete_command(vidxd, IDXD_CMDSTS_ERR_INVAL_INT_IDX);
-+		return;
-+	}
-+
-+	if (ims) {
-+		dev_warn(dev, "IMS allocation is not implemented yet\n");
-+		idxd_complete_command(vidxd, IDXD_CMDSTS_ERR_NO_HANDLE);
-+		return;
-+	}
-+
-+	ims_idx = vidxd->irq_entries[vidx].ims_idx;
-+	cmdsts = ims_idx << IDXD_CMDSTS_RES_SHIFT;
-+	dev_dbg(dev, "requested index %d handle %d\n", vidx, ims_idx);
-+	idxd_complete_command(vidxd, cmdsts);
-+}
-+
-+static void vidxd_release_int_handle(struct vdcm_idxd *vidxd, int operand)
-+{
-+	struct mdev_device *mdev = vidxd->vdev.mdev;
-+	struct device *dev = mdev_dev(mdev);
-+	bool ims = !!(operand & CMD_INT_HANDLE_IMS);
-+	int handle, i;
-+	bool found = false;
-+
-+	handle = operand & GENMASK(15, 0);
-+	dev_dbg(dev, "allocating int handle %d\n", handle);
-+
-+	if (ims) {
-+		dev_warn(dev, "IMS allocation is not implemented yet\n");
-+		idxd_complete_command(vidxd, IDXD_CMDSTS_ERR_INVAL_INT_IDX_RELEASE);
-+		return;
-+	}
-+
-+	/* IMS backed entry start at 1, 0 is emulated vector */
-+	for (i = 1; i < VIDXD_MAX_MSIX_ENTRIES; i++) {
-+		if (vidxd->irq_entries[i].ims_idx == handle) {
-+			found = true;
-+			break;
-+		}
-+	}
-+
-+	if (!found) {
-+		dev_warn(dev, "Freeing unallocated int handle.\n");
-+		idxd_complete_command(vidxd, IDXD_CMDSTS_ERR_INVAL_INT_IDX_RELEASE);
-+	}
-+
-+	dev_dbg(dev, "int handle %d released.\n", handle);
-+	idxd_complete_command(vidxd, IDXD_CMDSTS_SUCCESS);
-+}
-+
-+static void vidxd_wq_enable(struct vdcm_idxd *vidxd, int wq_id)
-+{
-+	struct idxd_wq *wq;
-+	u8 *bar0 = vidxd->bar0;
-+	union wq_cap_reg *wqcap;
-+	struct mdev_device *mdev = vidxd->vdev.mdev;
-+	struct device *dev = mdev_dev(mdev);
-+	struct idxd_device *idxd;
-+	union wqcfg *vwqcfg, *wqcfg;
-+	unsigned long flags;
-+	u32 status, wq_pasid;
-+	int priv, rc;
-+
-+	if (wq_id >= VIDXD_MAX_WQS) {
-+		idxd_complete_command(vidxd, IDXD_CMDSTS_INVAL_WQIDX);
-+		return;
-+	}
-+
-+	idxd = vidxd->idxd;
-+	wq = vidxd->wq;
-+
-+	dev_dbg(dev, "%s: wq %u:%u\n", __func__, wq_id, wq->id);
-+
-+	vwqcfg = (union wqcfg *)(bar0 + VIDXD_WQCFG_OFFSET + wq_id * 32);
-+	wqcap = (union wq_cap_reg *)(bar0 + IDXD_WQCAP_OFFSET);
-+	wqcfg = wq->wqcfg;
-+
-+	if (vidxd_state(vidxd) != IDXD_DEVICE_STATE_ENABLED) {
-+		idxd_complete_command(vidxd, IDXD_CMDSTS_ERR_DEV_NOTEN);
-+		return;
-+	}
-+
-+	if (vwqcfg->wq_state != IDXD_WQ_DEV_DISABLED) {
-+		idxd_complete_command(vidxd, IDXD_CMDSTS_ERR_WQ_ENABLED);
-+		return;
-+	}
-+
-+	if (wq_dedicated(wq) && wqcap->dedicated_mode == 0) {
-+		idxd_complete_command(vidxd, IDXD_CMDSTS_ERR_WQ_MODE);
-+		return;
-+	}
-+
-+	priv = 1;
-+	rc = idxd_mdev_get_pasid(mdev, &wq_pasid);
-+	if (rc < 0) {
-+		dev_err(dev, "idxd pasid setup failed wq %d: %d\n", wq->id, rc);
-+		idxd_complete_command(vidxd, IDXD_CMDSTS_ERR_PASID_EN);
-+		return;
-+	}
-+
-+	/* Clear pasid_en, pasid, and priv values */
-+	wqcfg->bits[WQCFG_PASID_IDX] &= ~GENMASK(29, 8);
-+	wqcfg->priv = priv;
-+	wqcfg->pasid_en = 1;
-+	wqcfg->pasid = wq_pasid;
-+	dev_dbg(dev, "program pasid %d in wq %d\n", wq_pasid, wq->id);
-+	spin_lock_irqsave(&idxd->dev_lock, flags);
-+	idxd_wq_setup_pasid(wq, wq_pasid);
-+	idxd_wq_setup_priv(wq, priv);
-+	spin_unlock_irqrestore(&idxd->dev_lock, flags);
-+	idxd_wq_enable(wq, &status);
-+	if (status) {
-+		dev_err(dev, "vidxd enable wq %d failed\n", wq->id);
-+		idxd_complete_command(vidxd, status);
-+		return;
-+	}
-+
-+	vwqcfg->wq_state = IDXD_WQ_DEV_ENABLED;
-+	idxd_complete_command(vidxd, IDXD_CMDSTS_SUCCESS);
-+}
-+
-+static void vidxd_wq_disable(struct vdcm_idxd *vidxd, int wq_id_mask)
-+{
-+	struct idxd_wq *wq;
-+	union wqcfg *wqcfg;
-+	u8 *bar0 = vidxd->bar0;
-+	struct mdev_device *mdev = vidxd->vdev.mdev;
-+	struct device *dev = mdev_dev(mdev);
-+	u32 status;
-+
-+	wq = vidxd->wq;
-+
-+	dev_dbg(dev, "vidxd disable wq %u:%u\n", 0, wq->id);
-+
-+	wqcfg = (union wqcfg *)(bar0 + VIDXD_WQCFG_OFFSET);
-+	if (wqcfg->wq_state != IDXD_WQ_DEV_ENABLED) {
-+		idxd_complete_command(vidxd, IDXD_CMDSTS_ERR_WQ_NOT_EN);
-+		return;
-+	}
-+
-+	/* If it is a DWQ, need to disable the DWQ as well */
-+	if (wq_dedicated(wq)) {
-+		idxd_wq_disable(wq, &status);
-+		if (status) {
-+			dev_warn(dev, "vidxd disable wq failed: %#x\n", status);
-+			idxd_complete_command(vidxd, status);
-+			return;
-+		}
-+	} else {
-+		idxd_wq_drain(wq, &status);
-+		if (status) {
-+			dev_warn(dev, "vidxd disable drain wq failed: %#x\n", status);
-+			idxd_complete_command(vidxd, status);
-+			return;
-+		}
-+	}
-+
-+	wqcfg->wq_state = IDXD_WQ_DEV_DISABLED;
-+	idxd_complete_command(vidxd, IDXD_CMDSTS_SUCCESS);
-+}
-+
-+static bool command_supported(struct vdcm_idxd *vidxd, u32 cmd)
++static void vidxd_send_errors(struct vdcm_idxd *vidxd)
 +{
 +	struct idxd_device *idxd = vidxd->idxd;
++	u8 *bar0 = vidxd->bar0;
++	union sw_err_reg *swerr = (union sw_err_reg *)(bar0 + IDXD_SWERR_OFFSET);
++	union genctrl_reg *genctrl = (union genctrl_reg *)(bar0 + IDXD_GENCTRL_OFFSET);
++	u32 *intcause = (u32 *)(bar0 + IDXD_INTCAUSE_OFFSET);
++	int i;
 +
-+	if (cmd == IDXD_CMD_REQUEST_INT_HANDLE || cmd == IDXD_CMD_RELEASE_INT_HANDLE)
-+		return true;
-+
-+	return !!(idxd->hw.opcap.bits[0] & BIT_ULL(cmd));
- }
- 
- void vidxd_do_command(struct vdcm_idxd *vidxd, u32 val)
- {
--	/* PLACEHOLDER */
-+	union idxd_command_reg *reg = (union idxd_command_reg *)(vidxd->bar0 + IDXD_CMD_OFFSET);
-+	struct mdev_device *mdev = vidxd->vdev.mdev;
-+	struct device *dev = mdev_dev(mdev);
-+
-+	reg->bits = val;
-+
-+	dev_dbg(dev, "%s: cmd code: %u reg: %x\n", __func__, reg->cmd, reg->bits);
-+
-+	if (!command_supported(vidxd, reg->cmd)) {
-+		idxd_complete_command(vidxd, IDXD_CMDSTS_INVAL_CMD);
++	if (swerr->valid) {
++		if (!swerr->overflow)
++			swerr->overflow = 1;
 +		return;
 +	}
 +
-+	switch (reg->cmd) {
-+	case IDXD_CMD_ENABLE_DEVICE:
-+		vidxd_enable(vidxd);
-+		break;
-+	case IDXD_CMD_DISABLE_DEVICE:
-+		vidxd_disable(vidxd);
-+		break;
-+	case IDXD_CMD_DRAIN_ALL:
-+		vidxd_drain_all(vidxd);
-+		break;
-+	case IDXD_CMD_ABORT_ALL:
-+		vidxd_abort_all(vidxd);
-+		break;
-+	case IDXD_CMD_RESET_DEVICE:
-+		vidxd_reset(vidxd);
-+		break;
-+	case IDXD_CMD_ENABLE_WQ:
-+		vidxd_wq_enable(vidxd, reg->operand);
-+		break;
-+	case IDXD_CMD_DISABLE_WQ:
-+		vidxd_wq_disable(vidxd, reg->operand);
-+		break;
-+	case IDXD_CMD_DRAIN_WQ:
-+		vidxd_wq_drain(vidxd, reg->operand);
-+		break;
-+	case IDXD_CMD_ABORT_WQ:
-+		vidxd_wq_abort(vidxd, reg->operand);
-+		break;
-+	case IDXD_CMD_RESET_WQ:
-+		vidxd_wq_reset(vidxd, reg->operand);
-+		break;
-+	case IDXD_CMD_REQUEST_INT_HANDLE:
-+		vidxd_alloc_int_handle(vidxd, reg->operand);
-+		break;
-+	case IDXD_CMD_RELEASE_INT_HANDLE:
-+		vidxd_release_int_handle(vidxd, reg->operand);
-+		break;
-+	default:
-+		idxd_complete_command(vidxd, IDXD_CMDSTS_INVAL_CMD);
-+		break;
-+	}
- }
++	lockdep_assert_held(&idxd->dev_lock);
++	for (i = 0; i < 4; i++)
++		swerr->bits[i] = idxd->sw_err.bits[i];
++
++	*intcause |= IDXD_INTC_ERR;
++	if (genctrl->softerr_int_en)
++		vidxd_send_interrupt(&vidxd->irq_entries[0]);
++}
++
++void idxd_wq_vidxd_send_errors(struct idxd_wq *wq)
++{
++	struct vdcm_idxd *vidxd;
++
++	list_for_each_entry(vidxd, &wq->vdcm_list, list)
++		vidxd_send_errors(vidxd);
++}
+diff --git a/drivers/vfio/mdev/idxd/vdev.h b/drivers/vfio/mdev/idxd/vdev.h
+index fc0f405baa40..00df08f9a963 100644
+--- a/drivers/vfio/mdev/idxd/vdev.h
++++ b/drivers/vfio/mdev/idxd/vdev.h
+@@ -23,5 +23,6 @@ int vidxd_send_interrupt(struct ims_irq_entry *iie);
+ int vidxd_setup_ims_entries(struct vdcm_idxd *vidxd);
+ void vidxd_free_ims_entries(struct vdcm_idxd *vidxd);
+ void vidxd_do_command(struct vdcm_idxd *vidxd, u32 val);
++void idxd_wq_vidxd_send_errors(struct idxd_wq *wq);
  
- int vidxd_setup_ims_entries(struct vdcm_idxd *vidxd)
+ #endif
 
 
