@@ -3,37 +3,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-13.7 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5489BC433E0
-	for <dmaengine@archiver.kernel.org>; Fri,  5 Feb 2021 20:54:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9797DC433E0
+	for <dmaengine@archiver.kernel.org>; Fri,  5 Feb 2021 20:56:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id F2C0C64FBB
-	for <dmaengine@archiver.kernel.org>; Fri,  5 Feb 2021 20:54:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 565FA64E0F
+	for <dmaengine@archiver.kernel.org>; Fri,  5 Feb 2021 20:56:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232591AbhBETL4 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 5 Feb 2021 14:11:56 -0500
-Received: from mga18.intel.com ([134.134.136.126]:6227 "EHLO mga18.intel.com"
+        id S233685AbhBETMd (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 5 Feb 2021 14:12:33 -0500
+Received: from mga05.intel.com ([192.55.52.43]:48413 "EHLO mga05.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S233586AbhBETLO (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Fri, 5 Feb 2021 14:11:14 -0500
-IronPort-SDR: N8rosoZSrIN3n1L1OaA1rrmz/3I1sMiGESLFJLvGQCUPbO1SqGo7NOEy0yfP0bzniR2PHnp91a
- G5ge1YLp5w/Q==
-X-IronPort-AV: E=McAfee;i="6000,8403,9886"; a="169161978"
+        id S233591AbhBETLp (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Fri, 5 Feb 2021 14:11:45 -0500
+IronPort-SDR: 7sjZFwh6TebOO1BZG6/ylT6NgjYTbqDkEkFOiOGU2ctB1OPsAd1gt2f7eXVFUHzW/i97awJXFA
+ ickffDo0HZ9w==
+X-IronPort-AV: E=McAfee;i="6000,8403,9886"; a="266315667"
 X-IronPort-AV: E=Sophos;i="5.81,156,1610438400"; 
-   d="scan'208";a="169161978"
-Received: from fmsmga008.fm.intel.com ([10.253.24.58])
-  by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Feb 2021 12:52:54 -0800
-IronPort-SDR: OydNoMEQySfChi59hrH8Kgse9Penneee+remZqi1CKoDFQuCE2Z7yvqwkvL03iELQlC0BhThJC
- 22Tg/LZqCuRA==
+   d="scan'208";a="266315667"
+Received: from orsmga008.jf.intel.com ([10.7.209.65])
+  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Feb 2021 12:53:19 -0800
+IronPort-SDR: yGfLwh5KGI3BxbgLEyENrsnQ2aQAjVAEa2L1wHDhJ46qjehwkJg1CJCH88EgFG279aUQSi4PS9
+ avlkFONKBG5w==
 X-IronPort-AV: E=Sophos;i="5.81,156,1610438400"; 
-   d="scan'208";a="373680327"
+   d="scan'208";a="394010985"
 Received: from djiang5-desk3.ch.intel.com ([143.182.136.137])
-  by fmsmga008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Feb 2021 12:52:53 -0800
-Subject: [PATCH v5 00/14] Add VFIO mediated device support and DEV-MSI support
- for the idxd driver
+  by orsmga008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Feb 2021 12:53:18 -0800
+Subject: [PATCH v5 04/14] vfio/mdev: idxd: Add auxialary device plumbing for
+ idxd mdev support
 From:   Dave Jiang <dave.jiang@intel.com>
 To:     alex.williamson@redhat.com, kwankhede@nvidia.com,
         tglx@linutronix.de, vkoul@kernel.org
@@ -45,224 +45,325 @@ Cc:     megha.dey@intel.com, jacob.jun.pan@intel.com, ashok.raj@intel.com,
         shahafs@mellanox.com, pbonzini@redhat.com,
         dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
         kvm@vger.kernel.org
-Date:   Fri, 05 Feb 2021 13:52:53 -0700
-Message-ID: <161255810396.339900.7646244556839438765.stgit@djiang5-desk3.ch.intel.com>
+Date:   Fri, 05 Feb 2021 13:53:18 -0700
+Message-ID: <161255839829.339900.16438737078488315104.stgit@djiang5-desk3.ch.intel.com>
+In-Reply-To: <161255810396.339900.7646244556839438765.stgit@djiang5-desk3.ch.intel.com>
+References: <161255810396.339900.7646244556839438765.stgit@djiang5-desk3.ch.intel.com>
 User-Agent: StGit/0.23-29-ga622f1
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-- Thomas, thank you for the previous reviews. I've made the appropriate
-  changes based on your feedback. Please take a look again at patches 5 and
-  11 for IMS setup. I'd really appreciate an ack if they look good.
-- Dan and Vinod, I'd really appreciate it if you can review patches 1-3 for
-  idxd driver bits and provide an ack if they look good.
-- Alex and Kirti, I'd very much appreciate it if you can review the series
-  and consider inclusion for 5.13 kernel if everything looks good.
-Thank you all!
+Add the VFIO mediated device driver as an auxiliary device to the main idxd
+driver. This allows the mdev code to be under VFIO mdev subsystem.
 
-v5:
-- Split out non driver IMS code to its own series.
-- Removed device devsec detection code.
-- Reworked irq_entries for IMS so emulated vector is also included.
-- Reworked vidxd_send_interrupt() to take irq_entry directly (data ready for
-  consumption) (Thomas)
-- Removed pointer to msi_entry in irq_entries (Thomas)
-- Removed irq_domain check on free entries (Thomas)
-- Split out irqbypass management code (Thomas)
-- Fix EXPORT_SYMBOL to EXPORT_SYMBOL_GPL (Thomas)
-- Refactored code to use auxiliary bus (Jason)
-
-v4:
-dev-msi:
-- Make interrupt remapping code more readable (Thomas)
-- Add flush writes to unmask/write and reset ims slots (Thomas)
-- Interrupt Message Storm-> Interrupt Message Store (Thomas)
-- Merge in pasid programming code. (Thomas)
-
-mdev:
-- Fixed up domain assignment (Thomas)
-- Define magic numbers (Thomas)
-- Move siov detection code to PCI common (Thomas)
-- Remove duplicated MSI entry info (Thomas)
-- Convert code to use ims_slot (Thomas)
-- Add explanation of pasid programming for IMS entry (Thomas)
-- Add release int handle release support due to spec 1.1 update.
-
-v3:
-Dev-msi:
-- No need to add support for 2 different dev-msi irq domains, a common
-once can be used for both the cases(with IR enabled/disabled)
-- Add arch specific function to specify additions to msi_prepare callback
-instead of making the callback a weak function
-- Call platform ops directly instead of a wrapper function
-- Make mask/unmask callbacks as void functions
-dev->msi_domain should be updated at the device driver level before
-calling dev_msi_alloc_irqs()
-dev_msi_alloc/free_irqs() cannot be used for PCI devices
-Followed the generic layering scheme: infrastructure bits->arch
-bits->enabling bits
-
-Mdev:
-- Remove set kvm group notifier (Yan Zhao)
-- Fix VFIO irq trigger removal (Yan Zhao)
-- Add mmio read flush to ims mask (Jason)
-
-v2:
-IMS (now dev-msi):
-- With recommendations from Jason/Thomas/Dan on making IMS more generic:
-- Pass a non-pci generic device(struct device) for IMS management instead of
-mdev
-- Remove all references to mdev and symbol_get/put
-- Remove all references to IMS in common code and replace with dev-msi
-- Remove dynamic allocation of platform-msi interrupts: no groups,no
-new msi list or list helpers
-- Create a generic dev-msi domain with and without interrupt remapping
-enabled.
-- Introduce dev_msi_domain_alloc_irqs and dev_msi_domain_free_irqs apis
-
-mdev:
-- Removing unrelated bits from SVA enabling that’s not necessary for
-the submission. (Kevin)
-- Restructured entire mdev driver series to make reviewing easier (Kevin)
-- Made rw emulation more robust (Kevin)
-- Removed uuid wq type and added single dedicated wq type (Kevin)
-- Locking fixes for vdev (Yan Zhao)
-- VFIO MSIX trigger fixes (Yan Zhao)
-
-This code series will match the support of the 5.6 kernel (stage 1) driver
-but on guest.
-
-The code has dependency on IMS enabling code:
-https://lore.kernel.org/linux-pci/1612385805-3412-1-git-send-email-megha.dey@intel.com/T/#t
-
-Stage 1 of the driver has been accepted in v5.6 kernel. It supports dedicated
-workqueue (wq) without Shared Virtual Memory (SVM) support.
-
-Stage 2 of the driver supports shared wq and SVM and has been accepted in
-kernel v5.11.
-
-VFIO mediated device framework allows vendor drivers to wrap a portion of
-device resources into virtual devices (mdev). Each mdev can be assigned
-to different guest using the same set of VFIO uAPIs as assigning a
-physical device. Accessing to the mdev resource is served with mixed
-policies. For example, vendor drivers typically mark data-path interface
-as pass-through for fast guest operations, and then trap-and-mediate the
-control-path interface to avoid undesired interference between mdevs. Some
-level of emulation is necessary behind vfio mdev to compose the virtual
-device interface.
-
-This series brings mdev to idxd driver to enable Intel Scalable IOV
-(SIOV), a hardware-assisted mediated pass-through technology. SIOV makes
-each DSA wq independently assignable through PASID-granular resource/DMA
-isolation. It helps improve scalability and reduces mediation complexity
-against purely software-based mdev implementations. Each assigned wq is
-configured by host and exposed to the guest in a read-only configuration
-mode, which allows the guest to use the wq w/o additional setup. This
-design greatly reduces the emulation bits to focus on handling commands
-from guests.
-
-There are two possible avenues to support virtual device composition:
-1. VFIO mediated device (mdev) or 2. User space DMA through char device
-(or UACCE). Given the small portion of emulation to satisfy our needs
-and VFIO mdev having the infrastructure already to support the device
-passthrough, we feel that VFIO mdev is the better route. For more in depth
-explanation, see documentation in Documents/driver-api/vfio/mdev-idxd.rst.
-
-Introducing mdev types “1dwq-v1” type. This mdev type allows
-allocation of a single dedicated wq from available dedicated wqs. After
-a workqueue (wq) is enabled, the user will generate an uuid. On mdev
-creation, the mdev driver code will find a dwq depending on the mdev
-type. When the create operation is successful, the user generated uuid
-can be passed to qemu. When the guest boots up, it should discover a
-DSA device when doing PCI discovery.
-
-For example of “1dwq-v1” type:
-1. Enable wq with “mdev” wq type
-2. A user generated uuid.
-3. The uuid is written to the mdev class sysfs path:
-echo $UUID > /sys/class/mdev_bus/0000\:00\:0a.0/mdev_supported_types/idxd-1dwq-v1/create
-4. Pass the following parameter to qemu:
-"-device vfio-pci,sysfsdev=/sys/bus/pci/devices/0000:00:0a.0/$UUID"
-
-The wq exported through mdev will have the read only config bit set
-for configuration. This means that the device does not require the
-typical configuration. After enabling the device, the user must set the
-WQ type and name. That is all is necessary to enable the WQ and start
-using it. The single wq configuration is not the only way to create the
-mdev. Multi wqs support for mdev will be in the future works.
-
-The mdev utilizes Interrupt Message Store or IMS[3], a device-specific
-MSI implementation, instead of MSIX for interrupts for the guest. This
-preserves MSIX for host usages and also allows a significantly larger
-number of interrupt vectors for guest usage.
-
-The idxd driver implements IMS as on-device memory mapped unified
-storage. Each interrupt message is stored as a DWORD size data payload
-and a 64-bit address (same as MSI-X). Access to the IMS is through the
-host idxd driver.
-
-The idxd driver makes use of the generic IMS irq chip and domain which
-stores the interrupt messages as an array in device memory. Allocation and
-freeing of interrupts happens via the generic msi_domain_alloc/free_irqs()
-interface. One only needs to ensure the interrupt domain is stored in
-the underlying device struct.
-
-[1]: https://lore.kernel.org/lkml/157965011794.73301.15960052071729101309.stgit@djiang5-desk3.ch.intel.com/
-[2]: https://software.intel.com/en-us/articles/intel-sdm
-[3]: https://software.intel.com/en-us/download/intel-scalable-io-virtualization-technical-specification
-[4]: https://software.intel.com/en-us/download/intel-data-streaming-accelerator-preliminary-architecture-specification
-[5]: https://01.org/blogs/2019/introducing-intel-data-streaming-accelerator
-[6]: https://intel.github.io/idxd/
-[7]: https://github.com/intel/idxd-driver idxd-stage2.5
-
+Signed-off-by: Dave Jiang <dave.jiang@intel.com>
 ---
-
-Dave Jiang (14):
-      vfio/mdev: idxd: add theory of operation documentation for idxd mdev
-      dmaengine: idxd: add IMS detection in base driver
-      dmaengine: idxd: add device support functions in prep for mdev
-      vfio/mdev: idxd: Add auxialary device plumbing for idxd mdev support
-      vfio/mdev: idxd: add basic mdev registration and helper functions
-      vfio/mdev: idxd: add mdev type as a new wq type
-      vfio/mdev: idxd: add 1dwq-v1 mdev type
-      vfio/mdev: idxd: add emulation rw routines
-      vfio/mdev: idxd: prep for virtual device commands
-      vfio/mdev: idxd: virtual device commands emulation
-      vfio/mdev: idxd: ims setup for the vdcm
-      vfio/mdev: idxd: add irq bypass for IMS vectors
-      vfio/mdev: idxd: add new wq state for mdev
-      vfio/mdev: idxd: add error notification from host driver to mediated device
-
-
- .../ABI/stable/sysfs-driver-dma-idxd          |    6 +
- MAINTAINERS                                   |    8 +-
- drivers/dma/idxd/Makefile                     |    2 +
- drivers/dma/idxd/cdev.c                       |    6 +-
- drivers/dma/idxd/device.c                     |  137 +-
- drivers/dma/idxd/idxd.h                       |   48 +-
- drivers/dma/idxd/init.c                       |   98 +-
- drivers/dma/idxd/irq.c                        |    8 +-
- drivers/dma/idxd/registers.h                  |   36 +-
- drivers/dma/idxd/sysfs.c                      |   33 +-
- drivers/vfio/mdev/Kconfig                     |   10 +
- drivers/vfio/mdev/Makefile                    |    1 +
- drivers/vfio/mdev/idxd/Makefile               |    4 +
- drivers/vfio/mdev/idxd/mdev.c                 | 1295 +++++++++++++++++
- drivers/vfio/mdev/idxd/mdev.h                 |  119 ++
- drivers/vfio/mdev/idxd/vdev.c                 | 1014 +++++++++++++
- drivers/vfio/mdev/idxd/vdev.h                 |   28 +
- include/uapi/linux/idxd.h                     |    2 +
- kernel/irq/msi.c                              |    2 +
- 19 files changed, 2814 insertions(+), 43 deletions(-)
+ MAINTAINERS                     |    8 ++++
+ drivers/dma/idxd/Makefile       |    2 +
+ drivers/dma/idxd/idxd.h         |    7 ++++
+ drivers/dma/idxd/init.c         |   77 +++++++++++++++++++++++++++++++++++++++
+ drivers/vfio/mdev/Kconfig       |    9 +++++
+ drivers/vfio/mdev/Makefile      |    1 +
+ drivers/vfio/mdev/idxd/Makefile |    4 ++
+ drivers/vfio/mdev/idxd/mdev.c   |   75 ++++++++++++++++++++++++++++++++++++++
+ 8 files changed, 182 insertions(+), 1 deletion(-)
  create mode 100644 drivers/vfio/mdev/idxd/Makefile
  create mode 100644 drivers/vfio/mdev/idxd/mdev.c
- create mode 100644 drivers/vfio/mdev/idxd/mdev.h
- create mode 100644 drivers/vfio/mdev/idxd/vdev.c
- create mode 100644 drivers/vfio/mdev/idxd/vdev.h
 
---
+diff --git a/MAINTAINERS b/MAINTAINERS
+index ae34b0331eb4..71862e759075 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -8970,7 +8970,6 @@ INTEL IADX DRIVER
+ M:	Dave Jiang <dave.jiang@intel.com>
+ L:	dmaengine@vger.kernel.org
+ S:	Supported
+-F:	Documentation/driver-api/vfio/mdev-idxd.rst
+ F:	drivers/dma/idxd/*
+ F:	include/uapi/linux/idxd.h
+ 
+@@ -18720,6 +18719,13 @@ F:	drivers/vfio/mdev/
+ F:	include/linux/mdev.h
+ F:	samples/vfio-mdev/
+ 
++VFIO MEDIATED DEVICE IDXD DRIVER
++M:	Dave Jiang <dave.jiang@intel.com>
++L:	kvm@vger.kernel.org
++S:	Maintained
++F:	Documentation/driver-api/vfio/mdev-idxd.rst
++F:	drivers/vfio/mdev/idxd/
++
+ VFIO PLATFORM DRIVER
+ M:	Eric Auger <eric.auger@redhat.com>
+ L:	kvm@vger.kernel.org
+diff --git a/drivers/dma/idxd/Makefile b/drivers/dma/idxd/Makefile
+index 8978b898d777..d91d1718efac 100644
+--- a/drivers/dma/idxd/Makefile
++++ b/drivers/dma/idxd/Makefile
+@@ -1,2 +1,4 @@
++ccflags-y += -DDEFAULT_SYMBOL_NAMESPACE=IDXD
++
+ obj-$(CONFIG_INTEL_IDXD) += idxd.o
+ idxd-y := init.o irq.o device.o sysfs.o submit.o dma.o cdev.o
+diff --git a/drivers/dma/idxd/idxd.h b/drivers/dma/idxd/idxd.h
+index a2438b3166db..f02c96164515 100644
+--- a/drivers/dma/idxd/idxd.h
++++ b/drivers/dma/idxd/idxd.h
+@@ -8,6 +8,7 @@
+ #include <linux/percpu-rwsem.h>
+ #include <linux/wait.h>
+ #include <linux/cdev.h>
++#include <linux/auxiliary_bus.h>
+ #include "registers.h"
+ 
+ #define IDXD_DRIVER_VERSION	"1.00"
+@@ -221,6 +222,8 @@ struct idxd_device {
+ 	struct work_struct work;
+ 
+ 	int *int_handles;
++
++	struct auxiliary_device *mdev_auxdev;
+ };
+ 
+ /* IDXD software descriptor */
+@@ -282,6 +285,10 @@ enum idxd_interrupt_type {
+ 	IDXD_IRQ_IMS,
+ };
+ 
++struct idxd_mdev_aux_drv {
++	        struct auxiliary_driver auxiliary_drv;
++};
++
+ static inline int idxd_get_wq_portal_offset(enum idxd_portal_prot prot,
+ 					    enum idxd_interrupt_type irq_type)
+ {
+diff --git a/drivers/dma/idxd/init.c b/drivers/dma/idxd/init.c
+index ee56b92108d8..fd57f39e4b7d 100644
+--- a/drivers/dma/idxd/init.c
++++ b/drivers/dma/idxd/init.c
+@@ -382,6 +382,74 @@ static void idxd_disable_system_pasid(struct idxd_device *idxd)
+ 	idxd->sva = NULL;
+ }
+ 
++static void idxd_remove_mdev_auxdev(struct idxd_device *idxd)
++{
++	if (!IS_ENABLED(CONFIG_VFIO_MDEV_IDXD))
++		return;
++
++	auxiliary_device_delete(idxd->mdev_auxdev);
++	auxiliary_device_uninit(idxd->mdev_auxdev);
++}
++
++static void idxd_auxdev_release(struct device *dev)
++{
++	struct auxiliary_device *auxdev = to_auxiliary_dev(dev);
++	struct idxd_device *idxd = dev_get_drvdata(dev);
++
++	kfree(auxdev->name);
++	kfree(auxdev);
++	idxd->mdev_auxdev = NULL;
++}
++
++static int idxd_setup_mdev_auxdev(struct idxd_device *idxd)
++{
++	struct auxiliary_device *auxdev;
++	struct device *dev = &idxd->pdev->dev;
++	int rc;
++
++	if (!IS_ENABLED(CONFIG_VFIO_MDEV_IDXD))
++		return 0;
++
++	auxdev = kzalloc(sizeof(*auxdev), GFP_KERNEL);
++	if (!auxdev)
++		return -ENOMEM;
++
++	auxdev->name = kasprintf(GFP_KERNEL, "mdev-%s", idxd_name[idxd->type]);
++	if (!auxdev->name) {
++		rc = -ENOMEM;
++		goto err_name;
++	}
++
++	dev_dbg(&idxd->pdev->dev, "aux dev mdev: %s\n", auxdev->name);
++
++	auxdev->dev.parent = dev;
++	auxdev->dev.release = idxd_auxdev_release;
++	auxdev->id = idxd->id;
++
++	rc = auxiliary_device_init(auxdev);
++	if (rc < 0) {
++		dev_err(dev, "Failed to init aux dev: %d\n", rc);
++		goto err_auxdev;
++	}
++
++	rc = auxiliary_device_add(auxdev);
++	if (rc < 0) {
++		dev_err(dev, "Failed to add aux dev: %d\n", rc);
++		goto err_auxdev;
++	}
++
++	idxd->mdev_auxdev = auxdev;
++	dev_set_drvdata(&auxdev->dev, idxd);
++
++	return 0;
++
++ err_auxdev:
++	kfree(auxdev->name);
++ err_name:
++	kfree(auxdev);
++	return rc;
++}
++
+ static int idxd_probe(struct idxd_device *idxd)
+ {
+ 	struct pci_dev *pdev = idxd->pdev;
+@@ -434,11 +502,19 @@ static int idxd_probe(struct idxd_device *idxd)
+ 		goto err_idr_fail;
+ 	}
+ 
++	rc = idxd_setup_mdev_auxdev(idxd);
++	if (rc < 0)
++		goto err_auxdev_fail;
++
+ 	idxd->major = idxd_cdev_get_major(idxd);
+ 
+ 	dev_dbg(dev, "IDXD device %d probed successfully\n", idxd->id);
+ 	return 0;
+ 
++ err_auxdev_fail:
++	mutex_lock(&idxd_idr_lock);
++	idr_remove(&idxd_idrs[idxd->type], idxd->id);
++	mutex_unlock(&idxd_idr_lock);
+  err_idr_fail:
+ 	idxd_mask_error_interrupts(idxd);
+ 	idxd_mask_msix_vectors(idxd);
+@@ -610,6 +686,7 @@ static void idxd_remove(struct pci_dev *pdev)
+ 	dev_dbg(&pdev->dev, "%s called\n", __func__);
+ 	idxd_cleanup_sysfs(idxd);
+ 	idxd_shutdown(pdev);
++	idxd_remove_mdev_auxdev(idxd);
+ 	if (device_pasid_enabled(idxd))
+ 		idxd_disable_system_pasid(idxd);
+ 	mutex_lock(&idxd_idr_lock);
+diff --git a/drivers/vfio/mdev/Kconfig b/drivers/vfio/mdev/Kconfig
+index 5da27f2100f9..e9540e43d1f1 100644
+--- a/drivers/vfio/mdev/Kconfig
++++ b/drivers/vfio/mdev/Kconfig
+@@ -16,3 +16,12 @@ config VFIO_MDEV_DEVICE
+ 	default n
+ 	help
+ 	  VFIO based driver for Mediated devices.
++
++config VFIO_MDEV_IDXD
++	tristate "VFIO Mediated device driver for Intel IDXD"
++	depends on VFIO && VFIO_MDEV && X86_64
++	select AUXILIARY_BUS
++	select IMS_MSI_ARRAY
++	default n
++	help
++	  VFIO based mediated device driver for Intel Accelerator Devices driver.
+diff --git a/drivers/vfio/mdev/Makefile b/drivers/vfio/mdev/Makefile
+index 101516fdf375..338843fa6110 100644
+--- a/drivers/vfio/mdev/Makefile
++++ b/drivers/vfio/mdev/Makefile
+@@ -4,3 +4,4 @@ mdev-y := mdev_core.o mdev_sysfs.o mdev_driver.o
+ 
+ obj-$(CONFIG_VFIO_MDEV) += mdev.o
+ obj-$(CONFIG_VFIO_MDEV_DEVICE) += vfio_mdev.o
++obj-$(CONFIG_VFIO_MDEV_IDXD) += idxd/
+diff --git a/drivers/vfio/mdev/idxd/Makefile b/drivers/vfio/mdev/idxd/Makefile
+new file mode 100644
+index 000000000000..e8f45cb96117
+--- /dev/null
++++ b/drivers/vfio/mdev/idxd/Makefile
+@@ -0,0 +1,4 @@
++ccflags-y += -I$(srctree)/drivers/dma/idxd -DDEFAULT_SYMBOL_NAMESPACE=IDXD
++
++obj-$(CONFIG_VFIO_MDEV_IDXD) += idxd_mdev.o
++idxd_mdev-y := mdev.o
+diff --git a/drivers/vfio/mdev/idxd/mdev.c b/drivers/vfio/mdev/idxd/mdev.c
+new file mode 100644
+index 000000000000..8b9a6adeb606
+--- /dev/null
++++ b/drivers/vfio/mdev/idxd/mdev.c
+@@ -0,0 +1,75 @@
++// SPDX-License-Identifier: GPL-2.0
++/* Copyright(c) 2020 Intel Corporation. All rights rsvd. */
++#include <linux/init.h>
++#include <linux/kernel.h>
++#include <linux/module.h>
++#include <linux/pci.h>
++#include <linux/device.h>
++#include <linux/auxiliary_bus.h>
++#include <uapi/linux/idxd.h>
++#include "registers.h"
++#include "idxd.h"
++
++static int idxd_mdev_host_init(struct idxd_device *idxd)
++{
++	/* FIXME: Fill in later */
++	return 0;
++}
++
++static int idxd_mdev_host_release(struct idxd_device *idxd)
++{
++	/* FIXME: Fill in later */
++	return 0;
++}
++
++static int idxd_mdev_aux_probe(struct auxiliary_device *auxdev,
++			       const struct auxiliary_device_id *id)
++{
++	struct idxd_device *idxd = dev_get_drvdata(&auxdev->dev);
++	int rc;
++
++	rc = idxd_mdev_host_init(idxd);
++	if (rc < 0) {
++		dev_warn(&auxdev->dev, "mdev host init failed: %d\n", rc);
++		return rc;
++	}
++
++	return 0;
++}
++
++static void idxd_mdev_aux_remove(struct auxiliary_device *auxdev)
++{
++	struct idxd_device *idxd = dev_get_drvdata(&auxdev->dev);
++
++	idxd_mdev_host_release(idxd);
++}
++
++static const struct auxiliary_device_id idxd_mdev_auxbus_id_table[] = {
++	{ .name = "idxd.mdev-dsa" },
++	{ .name = "idxd.mdev-iax" },
++	{},
++};
++MODULE_DEVICE_TABLE(auxiliary, idxd_mdev_auxbus_id_table);
++
++static struct idxd_mdev_aux_drv idxd_mdev_aux_drv = {
++	.auxiliary_drv = {
++		.id_table = idxd_mdev_auxbus_id_table,
++		.probe = idxd_mdev_aux_probe,
++		.remove = idxd_mdev_aux_remove,
++	},
++};
++
++static int idxd_mdev_auxdev_drv_register(struct idxd_mdev_aux_drv *drv)
++{
++	return auxiliary_driver_register(&drv->auxiliary_drv);
++}
++
++static void idxd_mdev_auxdev_drv_unregister(struct idxd_mdev_aux_drv *drv)
++{
++	auxiliary_driver_unregister(&drv->auxiliary_drv);
++}
++
++module_driver(idxd_mdev_aux_drv, idxd_mdev_auxdev_drv_register, idxd_mdev_auxdev_drv_unregister);
++
++MODULE_LICENSE("GPL v2");
++MODULE_AUTHOR("Intel Corporation");
+
 
