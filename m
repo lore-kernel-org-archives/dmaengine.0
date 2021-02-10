@@ -2,97 +2,65 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.0 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS,UNWANTED_LANGUAGE_BODY autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 86073C433E0
-	for <dmaengine@archiver.kernel.org>; Wed, 10 Feb 2021 11:37:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 04E93C433E0
+	for <dmaengine@archiver.kernel.org>; Wed, 10 Feb 2021 20:20:32 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 59D3164DAF
-	for <dmaengine@archiver.kernel.org>; Wed, 10 Feb 2021 11:37:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C9F6764F33
+	for <dmaengine@archiver.kernel.org>; Wed, 10 Feb 2021 20:20:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229650AbhBJLh2 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 10 Feb 2021 06:37:28 -0500
-Received: from fllv0016.ext.ti.com ([198.47.19.142]:44928 "EHLO
-        fllv0016.ext.ti.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229944AbhBJLgI (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Wed, 10 Feb 2021 06:36:08 -0500
-Received: from lelv0265.itg.ti.com ([10.180.67.224])
-        by fllv0016.ext.ti.com (8.15.2/8.15.2) with ESMTP id 11ABYhsG084287;
-        Wed, 10 Feb 2021 05:34:43 -0600
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
-        s=ti-com-17Q1; t=1612956883;
-        bh=ZTT5yWAttLg1aAPI3ziGR5Ht0gucArUIncPh/zW+Slo=;
-        h=Subject:To:CC:References:From:Date:In-Reply-To;
-        b=fLrc9Bga7XGx1ykAbm/5P1m4+6987rvctjneHqEbVsSS0IGPFeeyMtWRWjsgS3Ls6
-         AxM85HnMtnEe6AiDd3muA4ZbuxiL8V2HLYJ7ZbGDxV4Vq2/hEpKSPsrQqphOtYEAru
-         xcHHs76MZ4TP3c0PBNA+GbXKqkSTRW5Kf+LVx0Zo=
-Received: from DFLE113.ent.ti.com (dfle113.ent.ti.com [10.64.6.34])
-        by lelv0265.itg.ti.com (8.15.2/8.15.2) with ESMTPS id 11ABYhdl120259
-        (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
-        Wed, 10 Feb 2021 05:34:43 -0600
-Received: from DFLE111.ent.ti.com (10.64.6.32) by DFLE113.ent.ti.com
- (10.64.6.34) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1979.3; Wed, 10
- Feb 2021 05:34:43 -0600
-Received: from lelv0326.itg.ti.com (10.180.67.84) by DFLE111.ent.ti.com
- (10.64.6.32) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1979.3 via
- Frontend Transport; Wed, 10 Feb 2021 05:34:43 -0600
-Received: from [10.250.232.207] (ileax41-snat.itg.ti.com [10.172.224.153])
-        by lelv0326.itg.ti.com (8.15.2/8.15.2) with ESMTP id 11ABYdg2126128;
-        Wed, 10 Feb 2021 05:34:40 -0600
-Subject: Re: [PATCH] dmaengine: ti: k3-udma: Fix NULL pointer dereference
- error
-To:     =?UTF-8?Q?P=c3=a9ter_Ujfalusi?= <peter.ujfalusi@gmail.com>,
-        Dan Williams <dan.j.williams@intel.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        Grygorii Strashko <grygorii.strashko@ti.com>,
-        Vignesh Raghavendra <vigneshr@ti.com>
-CC:     <dmaengine@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <20210209120238.9476-1-kishon@ti.com>
- <8e9954cd-53fa-2c7e-2019-9821e5f9d45a@gmail.com>
-From:   Kishon Vijay Abraham I <kishon@ti.com>
-Message-ID: <30bfe6ef-de01-e019-d2d3-a999d6261fd8@ti.com>
-Date:   Wed, 10 Feb 2021 17:04:39 +0530
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
-MIME-Version: 1.0
-In-Reply-To: <8e9954cd-53fa-2c7e-2019-9821e5f9d45a@gmail.com>
-Content-Type: text/plain; charset="utf-8"
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-EXCLAIMER-MD-CONFIG: e1e8a2fd-e40a-4ac6-ac9b-f7e9cc9ee180
+        id S232439AbhBJUUW (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 10 Feb 2021 15:20:22 -0500
+Received: from mail.kernel.org ([198.145.29.99]:44864 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S232802AbhBJUUF (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Wed, 10 Feb 2021 15:20:05 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPS id 8DE0464EE7;
+        Wed, 10 Feb 2021 20:19:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1612988364;
+        bh=A52N/E4Jr5ACqoxP7TM9+8AxbrFnGYdYr5TGb6wlYVI=;
+        h=Subject:From:In-Reply-To:References:Date:To:Cc:From;
+        b=CyUpSLBrVOfcZLfcx+0jj4vmle238VV1t6dmjCYKcJyssUddn1ggwtIZAFBvkNGOg
+         GYcGUqWiF0b+u/5qlQ53hjNx1Et+fu/0TGN2nKWxAkaHyBa8Si4zB7fL7wSDpvSzl0
+         FFxN1bQbI+bz3jHBgfEaNMuof15yG175h4dre2noGdoebNDC7EJaGoNaio69x+M+wF
+         MuFIeldwG9YeRSQviZWyurCsCaM1ySf5wiHVQROUVJ/vj4L3RHyBRiYcNzzQv+mpgc
+         d8/yFrdN3ggyIepD90WfPSMOXc2langhIfVVi207CQDr0AXA+UNFomMBHxGZGKmYWF
+         ZisRR2MhVDqDQ==
+Subject: Re: [GIT PULL] dmaengine fixes for v5.11
+From:   pr-tracker-bot@kernel.org
+In-Reply-To: <20210210100036.GD2774@vkoul-mobl.Dlink>
+References: <20210210100036.GD2774@vkoul-mobl.Dlink>
+X-PR-Tracked-List-Id: <dmaengine.vger.kernel.org>
+X-PR-Tracked-Message-Id: <20210210100036.GD2774@vkoul-mobl.Dlink>
+X-PR-Tracked-Remote: git://git.kernel.org/pub/scm/linux/kernel/git/vkoul/dmaengine.git tags/dmaengine-fix2-5.11
+X-PR-Tracked-Commit-Id: b6c14d7a83802046f7098e9bae78fbde23affa74
+X-PR-Merge-Tree: torvalds/linux.git
+X-PR-Merge-Refname: refs/heads/master
+X-PR-Merge-Commit-Id: 708c2e41814209e5dde27c61ad032f4c1ed3624b
+Message-Id: <161298836455.25163.2339646608440759813.pr-tracker-bot@kernel.org>
+Date:   Wed, 10 Feb 2021 20:19:24 +0000
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     Linus Torvalds <torvalds@linux-foundation.org>,
+        dma <dmaengine@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Hi Peter,
+The pull request you sent on Wed, 10 Feb 2021 15:30:36 +0530:
 
-On 10/02/21 3:33 pm, Péter Ujfalusi wrote:
-> Hi Kishon,
-> 
-> On 2/9/21 2:02 PM, Kishon Vijay Abraham I wrote:
->> bcdma_get_*() and udma_get_*() checks if bchan/rchan/tchan/rflow is
->> already allocated by checking if it has a NON NULL value. For the
->> error cases, bchan/rchan/tchan/rflow will have error value
->> and bcdma_get_*() and udma_get_*() considers this as already allocated
->> (PASS) since the error values are NON NULL. This results in
->> NULL pointer dereference error while de-referencing
->> bchan/rchan/tchan/rflow.
->>
->> Reset the value of bchan/rchan/tchan/rflow to NULL if the allocation
->> actually fails.
->>
->> Fixes: 017794739702 ("dmaengine: ti: k3-udma: Initial support for K3 BCDMA")
->> Fixes: 25dcb5dd7b7c ("dmaengine: ti: New driver for K3 UDMA")
->> Signed-off-by: Kishon Vijay Abraham I <kishon@ti.com>
-> 
-> Is this the same patch as the other with the similar subject?
+> git://git.kernel.org/pub/scm/linux/kernel/git/vkoul/dmaengine.git tags/dmaengine-fix2-5.11
 
-Right, sorry for the duplicate patch (thought it didn't go out initially).
+has been merged into torvalds/linux.git:
+https://git.kernel.org/torvalds/c/708c2e41814209e5dde27c61ad032f4c1ed3624b
 
-Regards
-Kishon
+Thank you!
+
+-- 
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/prtracker.html
