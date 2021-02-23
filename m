@@ -2,214 +2,300 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	MAILING_LIST_MULTI,PDS_BAD_THREAD_QP_64,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-21.0 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,INCLUDES_PATCH,INCLUDES_PULL_REQUEST,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 27553C433E0
-	for <dmaengine@archiver.kernel.org>; Fri, 19 Feb 2021 01:43:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6B29AC433E0
+	for <dmaengine@archiver.kernel.org>; Tue, 23 Feb 2021 04:16:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BE74164EC7
-	for <dmaengine@archiver.kernel.org>; Fri, 19 Feb 2021 01:43:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0A4C260C41
+	for <dmaengine@archiver.kernel.org>; Tue, 23 Feb 2021 04:16:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229474AbhBSBnN (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Thu, 18 Feb 2021 20:43:13 -0500
-Received: from mga03.intel.com ([134.134.136.65]:48052 "EHLO mga03.intel.com"
+        id S229999AbhBWEQH (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 22 Feb 2021 23:16:07 -0500
+Received: from mail.kernel.org ([198.145.29.99]:45870 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229471AbhBSBnM (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Thu, 18 Feb 2021 20:43:12 -0500
-IronPort-SDR: rQU92St886akbCYbC4XlGNwpM9h15EIqRKlasB33YKKOhQrwJygrGRRebLnKMB21hvaHgAZFtV
- n8uLS38LgsBw==
-X-IronPort-AV: E=McAfee;i="6000,8403,9899"; a="183768966"
-X-IronPort-AV: E=Sophos;i="5.81,187,1610438400"; 
-   d="scan'208";a="183768966"
-Received: from fmsmga002.fm.intel.com ([10.253.24.26])
-  by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Feb 2021 17:42:29 -0800
-IronPort-SDR: Wv0DZAy2BrReKb6Rf0xFM4tquxPjicOyP5MuerqfDBw8TX759J5MEpM0V+72UI+NE5RIXABSFP
- x29gxEEGoYKA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.81,187,1610438400"; 
-   d="scan'208";a="428514274"
-Received: from orsmsx602.amr.corp.intel.com ([10.22.229.15])
-  by fmsmga002.fm.intel.com with ESMTP; 18 Feb 2021 17:42:29 -0800
-Received: from orsmsx611.amr.corp.intel.com (10.22.229.24) by
- ORSMSX602.amr.corp.intel.com (10.22.229.15) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2106.2; Thu, 18 Feb 2021 17:42:28 -0800
-Received: from orsmsx606.amr.corp.intel.com (10.22.229.19) by
- ORSMSX611.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2106.2; Thu, 18 Feb 2021 17:42:28 -0800
-Received: from ORSEDG602.ED.cps.intel.com (10.7.248.7) by
- orsmsx606.amr.corp.intel.com (10.22.229.19) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2106.2
- via Frontend Transport; Thu, 18 Feb 2021 17:42:28 -0800
-Received: from NAM10-DM6-obe.outbound.protection.outlook.com (104.47.58.105)
- by edgegateway.intel.com (134.134.137.103) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2106.2; Thu, 18 Feb 2021 17:42:28 -0800
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=Th98+88UM24pq+W/kXpU3y2a8VbL76OPcT8mcDuNP7iTllxycx6cjNMwKZkdLHTAzZmb5Tffnbam2Naj1ZOhv19SzLjhOU1TKEI7wZBC+92vZz4ZMKOoUYvKyEsIJz5D56jZSvZB9UTCYVFpW+Ijzvjr2VucjEOHgPaYcHWz1Ek2NDne2JSyYFUvSp6LbPDgSB7T+yteY3WSuNRxC94QAMvit5/3NuT+KJRXfm7Veoz5hJZKLtk7kGED8z2b1xK60RoN5hTPTpk2ydQY6A8TmdaaNVb/M98xYLEzlg0voA5oDIsFrPZmG/lCCTCn52p8rIYhCHdIYve0WfWNTiAL0A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=c6tzJJRzGG5qp7qQ/vTnHyKHoD0hD04ZUjWXEVtCNLA=;
- b=YUzn5Gn6nvLBAPu2qRVGjjvbFZ6FZkCiOOVpwwSzZeGwHpFZAGMhP2UuRW8Zc+p7XSWxN/bPjmOZ8rWtY5VW93yujdqtPar3mBSiGa7kV8bgN+1b8Js1MAh2mNvttIeSzwhK7LgaPwUq87y4RMZP1Hy9wYtTMM+v0nf2qvx2et+mRSMrepsx1vYfdnCnH0KVsfj0zO65tTtdfLuo6b1StmHRYpPXXYVHJxwtyrlYKVX9ySdO66N6qIvGCBbP12Wd5D5pWuwh9sQYTErAAMV8LnxdaX3SR5QiReruOd8TQ6mSfglUovo5E0HYN70NCr9Ja1p8YTz7wUh9oHDPYpjudw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=intel.onmicrosoft.com;
- s=selector2-intel-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=c6tzJJRzGG5qp7qQ/vTnHyKHoD0hD04ZUjWXEVtCNLA=;
- b=Phf643UFfgflB/BiXZntfvzGXaLIkPAuOYzbeVv3Than0r/IYpSV0CMknIzdcKgvOOyXZN3Vp7keh7hkq2JN3fLNmwo/yuv4DsesdCLL9opCr1SVvecuXnFKlOoyqm4FpHTWHhH6jsj30+GtG6ObFI04VuBlw1DCAKVAjpjVs2g=
-Received: from MWHPR11MB1886.namprd11.prod.outlook.com (2603:10b6:300:110::9)
- by MW3PR11MB4697.namprd11.prod.outlook.com (2603:10b6:303:2c::15) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3846.29; Fri, 19 Feb
- 2021 01:42:26 +0000
-Received: from MWHPR11MB1886.namprd11.prod.outlook.com
- ([fe80::f1b4:bace:1e44:4a46]) by MWHPR11MB1886.namprd11.prod.outlook.com
- ([fe80::f1b4:bace:1e44:4a46%6]) with mapi id 15.20.3846.042; Fri, 19 Feb 2021
- 01:42:26 +0000
-From:   "Tian, Kevin" <kevin.tian@intel.com>
-To:     Jason Gunthorpe <jgg@nvidia.com>,
-        "Jiang, Dave" <dave.jiang@intel.com>
-CC:     "alex.williamson@redhat.com" <alex.williamson@redhat.com>,
-        "kwankhede@nvidia.com" <kwankhede@nvidia.com>,
-        "tglx@linutronix.de" <tglx@linutronix.de>,
-        "vkoul@kernel.org" <vkoul@kernel.org>,
-        "Dey, Megha" <megha.dey@intel.com>,
-        "Pan, Jacob jun" <jacob.jun.pan@intel.com>,
-        "Raj, Ashok" <ashok.raj@intel.com>,
-        "Liu, Yi L" <yi.l.liu@intel.com>, "Lu, Baolu" <baolu.lu@intel.com>,
-        "Kumar, Sanjay K" <sanjay.k.kumar@intel.com>,
-        "Luck, Tony" <tony.luck@intel.com>,
-        "Williams, Dan J" <dan.j.williams@intel.com>,
-        "eric.auger@redhat.com" <eric.auger@redhat.com>,
-        "parav@mellanox.com" <parav@mellanox.com>,
-        "netanelg@mellanox.com" <netanelg@mellanox.com>,
-        "shahafs@mellanox.com" <shahafs@mellanox.com>,
-        "pbonzini@redhat.com" <pbonzini@redhat.com>,
-        "dmaengine@vger.kernel.org" <dmaengine@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "kvm@vger.kernel.org" <kvm@vger.kernel.org>,
-        "Wang, Zhenyu Z" <zhenyu.z.wang@intel.com>
-Subject: RE: [PATCH v5 05/14] vfio/mdev: idxd: add basic mdev registration and
- helper functions
-Thread-Topic: [PATCH v5 05/14] vfio/mdev: idxd: add basic mdev registration
- and helper functions
-Thread-Index: AQHW/AD4vwz31CjC0UGMFUWiPK3cUqpSGYEAgAkbtoCAAClrAIADaRzg
-Date:   Fri, 19 Feb 2021 01:42:26 +0000
-Message-ID: <MWHPR11MB1886B77D53A77DF32FF938B48C849@MWHPR11MB1886.namprd11.prod.outlook.com>
-References: <161255810396.339900.7646244556839438765.stgit@djiang5-desk3.ch.intel.com>
- <161255840486.339900.5478922203128287192.stgit@djiang5-desk3.ch.intel.com>
- <20210210235924.GJ4247@nvidia.com>
- <8ff16d76-6b36-0da6-03ee-aebec2d1a731@intel.com>
- <20210216213310.GJ4247@nvidia.com>
-In-Reply-To: <20210216213310.GJ4247@nvidia.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-dlp-version: 11.5.1.3
-dlp-product: dlpe-windows
-dlp-reaction: no-action
-authentication-results: nvidia.com; dkim=none (message not signed)
- header.d=none;nvidia.com; dmarc=none action=none header.from=intel.com;
-x-originating-ip: [192.198.147.194]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: cdef6cfb-66c4-430a-bfe5-08d8d4779c85
-x-ms-traffictypediagnostic: MW3PR11MB4697:
-x-ld-processed: 46c98d88-e344-4ed4-8496-4ed7712e255d,ExtAddr,ExtFwd
-x-ms-exchange-transport-forked: True
-x-microsoft-antispam-prvs: <MW3PR11MB4697FB2D5F98C5E9F9C9721A8C849@MW3PR11MB4697.namprd11.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:561;
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: eVY7b7lPQ0ZtzP7y/FjbpWpbzty6K7bG2p9naHRUZqXMtThHLv6mb2+dvHlqm//MHzgv8Y+C/9ieCFusBwoYmOzYH9SnOYXP4xns8tRC9LeHS7rBblQEM4i4/P3eNKmT610haQlGtVG0+ki1aUpe9W5UIdw1KSCzRqutrpcsXf5VZbY1AEwIdx3uhTdHcvUIqn23pBiqDAoFZw4mRVWa1NqEqBBbeAsWAg9lSEVWL/6SwrxmjhvlQOkefq/vFB1T4FhuH4TqvRZYH8kYP3eAOVW2qhWHfppEdcoeIB3D0Mwin7XxtvbuUjdf2xXGz62mqboT77rwB6iEeI7VDKe7r7YuLDAT5wj7WNPtpH5PLEIIdRNLGGpnJybMFmQ879cOd9lUIChlPYm43RF5QPzlYtwNaSNYN9Bbfnig5kpWNZ7/HDjfLRzqsGvU1/rd6uCYvPS9SRFZQXeN35h1+ui2tispJPF1awvVeENwr3gyEhDTu0JrXtSYAb6GxTIK6pILKJUyxvcPASRzR9/YckKgPw==
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MWHPR11MB1886.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(39860400002)(376002)(366004)(346002)(136003)(396003)(6506007)(7416002)(71200400001)(5660300002)(76116006)(66476007)(8676002)(8936002)(6636002)(83380400001)(110136005)(26005)(4326008)(64756008)(66556008)(52536014)(2906002)(186003)(55016002)(7696005)(66446008)(316002)(478600001)(86362001)(54906003)(9686003)(66946007)(33656002);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata: =?us-ascii?Q?QvUFQjIGwSTdYHm5VT7mWitdlRhaF8SYjkq26qI8Yfkrzxk3gJ4emEoMEhob?=
- =?us-ascii?Q?462owimMoSwD4P0CqK8ZoPoOxxb46YxezJ6vFhG092tvrlk0iFm4bxgxJaLl?=
- =?us-ascii?Q?mXiggGtLVQqtVEy5ZQoV59GJxTakK13dEghtsJvp7g52tt2G+zehvswgKUyb?=
- =?us-ascii?Q?w8WBX/SnFYvnhKQQ73LkFwMbTaE6w5+F4KT95Mtle7vpdS7C+8Im/4gBnDR/?=
- =?us-ascii?Q?0GF1i3UpJNsM5eOtM4kJ/nlc7c6xBPouYnMMNmGAg+q+fiYJMB/fpu1atOEf?=
- =?us-ascii?Q?+xVWtOeRKPjfQI9wR19Uul6oRNMRAgGDSG1gzlUn0bLstk3CRY5baciBWCmX?=
- =?us-ascii?Q?AfYxD4LNmPWw/LI9qsmrAOSZjRKnDPmghlIwiSzdiSXQ1jKyMdLS1M0kWfJe?=
- =?us-ascii?Q?gaeQ/Ev9I9LEWf/YBKLLxy7nkOH+GVOqF1r2Mn+dylTsFEhUKTZSO+Tk4AW6?=
- =?us-ascii?Q?h9h4D+yYpnKhnoJ7pgqYMKabtPFnIraSgGHG7MASnnM4SjZwU2QmkHPtJAbn?=
- =?us-ascii?Q?nhiQLoDrbnQNeyWxV4+emwhZcIuzXW9Bd+0dIEuPNdM7oIw4FYR2iQ3IlB2M?=
- =?us-ascii?Q?AEi3aMgoMzhB2ahDrh+AVD8oimLb6t23VYST/3eHBLVV/TsUoVTyLLQShzLB?=
- =?us-ascii?Q?eW8WpZsZP+HTOTVjW1vmIJLYLDhBhRfabWlAnlhxZBCKLGQZqs3w8T3dd9CH?=
- =?us-ascii?Q?rlXcnnF1py8jCgTCFMjbaRfSqkJzeUr2jG272JwzMIoTLELVlSz9+J6E5OC+?=
- =?us-ascii?Q?RQkFngbDzc+IpYpTYiM+STPy5z6KaZJlzDgvOUj+pgNF6VeLu6pYcPtBN9/Y?=
- =?us-ascii?Q?W6vjcuAUtJDY7qu9oWoPXUWOLVfCQz9hWG6LCrUyIo2MC+/u5SLfHoT/v4kT?=
- =?us-ascii?Q?dbPaeFXMr9xZYGxqLmP2DHUz6T9CZR54Id1E+ScNSwXeV8HGIF9OcKuN12Rf?=
- =?us-ascii?Q?u2aFz7KIdTKZtpHrgUHsaGjQXT1zufnRow//N6HGQSH8HcNQJnn5sD5wKCPX?=
- =?us-ascii?Q?DpQrZbnhT38BpWQIXBR+V6lGlK8PVL1NdQl/IUXbuJTUg6+v1+bEyb/N6bj5?=
- =?us-ascii?Q?GuhWm5F6X43VemRQm+tQUjbvJkUvAsOSlEMy3JhzFFOhPctuZ/d1VSM03ogn?=
- =?us-ascii?Q?5YO05f69psav1YESD0EQDMvpz8u8D52XN9Vh0GXLgPr0AFb1S3PVZW5Xc3/1?=
- =?us-ascii?Q?+NHRmtk4Pq7uoCMWBFO3VcSyWz2qYTEIihoQ6FfknJDGjpeLjS8vLBU2QV6o?=
- =?us-ascii?Q?w7uPcxV2C2EwYwQI0k4yIP1znPTzjo7N28p7tyssVs50/fxv0tQcKY5rcHJS?=
- =?us-ascii?Q?zZKx6kBElCOoILr72Nrm0YAK?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+        id S229961AbhBWEQG (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Mon, 22 Feb 2021 23:16:06 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPSA id A3DE764E4B;
+        Tue, 23 Feb 2021 04:15:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1614053724;
+        bh=69lPtH3Y3DLke0tOh7/oO2AGLDk/oyLjQPazIvD+MPM=;
+        h=Date:From:To:Cc:Subject:From;
+        b=qeZsi3HRtH5S62PmOS4ACxw/wNLxtHQluuqjVo3M/A+gAC1uLkl8C4gAKmyJ/giTq
+         puisHj3gn+yMYzHGH5BLEfOAtk/HaBmPVAX5dPkb4X1IUFv2E2t4yXfeRbHpp2lsTB
+         NXhf2ua94CDM0Ts5tvu5dukQhKe0s/5oVJdwZzMfNO0N2ZP0xS516bMeq7xMAha2Bt
+         b+9NUhyDgotBlhGuF+6vXgOq4rTE9HzkvKBVDsr5QbSCBVyh+D+la22Tf9YjJwKUk0
+         OwcSVd45Q+GVP+aVd0pwnCJlKP911SQQwjWjWbWqq7w/n05mC5WVA35ZBCqZOra1sJ
+         ijpKvSW8iWNWA==
+Date:   Tue, 23 Feb 2021 09:45:20 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Linus Torvalds <torvalds@linux-foundation.org>
+Cc:     dma <dmaengine@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>
+Subject: [PULL REQUEST]: dmaengine updates for 5.12-rc1
+Message-ID: <20210223041520.GA2774@vkoul-mobl.Dlink>
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: MWHPR11MB1886.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: cdef6cfb-66c4-430a-bfe5-08d8d4779c85
-X-MS-Exchange-CrossTenant-originalarrivaltime: 19 Feb 2021 01:42:26.3163
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: SSEuA0E7WNkLSYgbRArChdePCEjvYsbfxs6kTdADspTDLKSqeC7kJ15RPyP2y4C+T9384UPe+AI92/CkBrOvbg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW3PR11MB4697
-X-OriginatorOrg: intel.com
+Content-Type: multipart/signed; micalg=pgp-sha256;
+        protocol="application/pgp-signature"; boundary="DiL7RhKs8rK9YGuF"
+Content-Disposition: inline
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-> From: Jason Gunthorpe <jgg@nvidia.com>
-> Sent: Wednesday, February 17, 2021 5:33 AM
->=20
-> On Tue, Feb 16, 2021 at 12:04:55PM -0700, Dave Jiang wrote:
->=20
-> > > > +	return remap_pfn_range(vma, vma->vm_start, pgoff, req_size,
-> pg_prot);
-> > > Nothing validated req_size - did you copy this from the Intel RDMA
-> > > driver? It had a huge security bug just like this.
->=20
-> > Thanks. Will add. Some of the code came from the Intel i915 mdev
-> > driver.
->=20
-> Please make sure it is fixed as well, the security bug is huge.
->=20
 
-It's already been fixed 2yrs ago:
+--DiL7RhKs8rK9YGuF
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-commit 51b00d8509dc69c98740da2ad07308b630d3eb7d
-Author: Zhenyu Wang <zhenyuw@linux.intel.com>
-Date:   Fri Jan 11 13:58:53 2019 +0800
+Hello Linus,
 
-    drm/i915/gvt: Fix mmap range check
+Please consider merging to get dmaengine updates for this cycle. We have
+couple of drivers removed a new driver and bunch of new device support
+and few updates to drivers for this round.
 
-    This is to fix missed mmap range check on vGPU bar2 region
-    and only allow to map vGPU allocated GMADDR range, which means
-    user space should support sparse mmap to get proper offset for
-    mmap vGPU aperture. And this takes care of actual pgoff in mmap
-    request as original code always does from beginning of vGPU
-    aperture.
+The following changes since commit 5c8fe583cce542aa0b84adc939ce85293de36e5e:
 
-    Fixes: 659643f7d814 ("drm/i915/gvt/kvmgt: add vfio/mdev support to KVMG=
-T")
-    Cc: "Monroy, Rodrigo Axel" <rodrigo.axel.monroy@intel.com>
-    Cc: "Orrala Contreras, Alfredo" <alfredo.orrala.contreras@intel.com>
-    Cc: stable@vger.kernel.org # v4.10+
-    Reviewed-by: Hang Yuan <hang.yuan@intel.com>
-    Signed-off-by: Zhenyu Wang <zhenyuw@linux.intel.com>
+  Linux 5.11-rc1 (2020-12-27 15:30:22 -0800)
 
-Thanks
-Kevin
+are available in the Git repository at:
 
+  git://git.kernel.org/pub/scm/linux/kernel/git/vkoul/dmaengine.git tags/dm=
+aengine-5.12-rc1
+
+for you to fetch changes up to eda38ce482b2c88b27e3a7c8aa1ddffa646f3e7f:
+
+  dmaengine: dw-axi-dmac: remove redundant null check on desc (2021-02-08 1=
+7:39:39 +0530)
+
+----------------------------------------------------------------
+dmaengine updates for v5.12-rc1
+
+New drivers/devices
+ - Intel LGM SoC DMA driver
+ - Actions Semi S500 DMA controller
+ - Renesas r8a779a0 dma controller
+ - Ingenic JZ4760(B) dma controller
+ - Intel KeemBay AxiDMA controller
+
+Removed
+ - Coh901318 dma driver
+ - Zte zx dma driver
+ - Sirfsoc dma driver
+
+Updates:
+ - mmp_pdma, mmp_tdma gained module support
+ - imx-sdma become modern and dropped platform data support
+ - dw-axi driver gained slave and cyclic dma support
+
+----------------------------------------------------------------
+Alexandre Belloni (1):
+      dmaengine: at_hdmac: remove platform data header
+
+Amireddy Mallikarjuna reddy (2):
+      dt-bindings: dma: Add bindings for Intel LGM SoC
+      dmaengine: Add Intel LGM SoC DMA support.
+
+Arnd Bergmann (3):
+      dmaengine: remove sirfsoc driver
+      dmaengine: remove zte zx driver
+      dmaengine: remove coh901318 driver
+
+Bjorn Andersson (1):
+      dt-bindings: dma: intel-ldma: Fix $ref specifier
+
+Bjorn Helgaas (1):
+      dmaengine: stedma40: fix 'physical' typo
+
+Christophe JAILLET (3):
+      dmaengine: fsldma: Fix a resource leak in the remove function
+      dmaengine: fsldma: Fix a resource leak in an error handling path of t=
+he probe function
+      dmaengine: owl-dma: Fix a resource leak in the remove function
+
+Colin Ian King (1):
+      dmaengine: dw-axi-dmac: remove redundant null check on desc
+
+Cristian Ciocaltea (2):
+      dt-bindings: dma: owl: Add compatible string for Actions Semi S500 SoC
+      dmaengine: owl: Add compatible for the Actions Semi S500 DMA controll=
+er
+
+Dave Jiang (2):
+      dmaengine: idxd: set DMA channel to be private
+      dmaengine: idxd: add module parameter to force disable of SVA
+
+Fabio Estevam (2):
+      dmaengine: imx-sdma: Remove platform data support
+      dmaengine: imx-sdma: Use of_device_get_match_data()
+
+Ferry Toth (1):
+      dmaengine: hsu: disable spurious interrupt
+
+Geert Uytterhoeven (5):
+      dt-bindings: renesas,rcar-dmac: Add r8a779a0 support
+      dmaengine: rcar-dmac: Add for_each_rcar_dmac_chan() helper
+      dmaengine: rcar-dmac: Add helpers for clearing DMA channel status
+      dmaengine: rcar-dmac: Add support for R-Car V3U
+      dmaengine: INTEL_LDMA should depend on X86
+
+Grygorii Strashko (1):
+      dmaengine: ti: k3-psil: optimize struct psil_endpoint_config for size
+
+Lubomir Rintel (3):
+      dmaengine: mmp_pdma: Remove mmp_pdma_filter_fn()
+      dmaengine: mmp_pdma: Allow building as a module
+      dmaengine: mmp_tdma: Allow building as a module
+
+Nathan Chancellor (1):
+      dmaengine: qcom: Always inline gpi_update_reg
+
+Paul Cercueil (2):
+      dt-bindings: dma: ingenic: Add compatible strings for JZ4760(B) SoCs
+      dmaengine: jz4780: Add support for the JZ4760(B)
+
+Peter Ujfalusi (3):
+      dmaengine: Extend the dmaengine_alignment for 128 and 256 bytes
+      dmaengine: ti: k3-udma: Add support for burst_size configuration for =
+mem2mem
+      dmaengine: ti: k3-udma: Do not initialize ret in tisci channel config=
+ functions
+
+Richard Fitzgerald (1):
+      dmaengine: xilinx_dma: Alloc tx descriptors GFP_NOWAIT
+
+Sia Jee Heng (17):
+      dt-bindings: dma: Add YAML schemas for dw-axi-dmac
+      dmaengine: dw-axi-dmac: simplify descriptor management
+      dmaengine: dw-axi-dmac: move dma_pool_create() to alloc_chan_resource=
+s()
+      dmaengine: dw-axi-dmac: Add device_synchronize() callback
+      dmaengine: dw-axi-dmac: Add device_config operation
+      dmaengine: dw-axi-dmac: Support device_prep_slave_sg
+      dmaegine: dw-axi-dmac: Support device_prep_dma_cyclic()
+      dmaengine: dw-axi-dmac: Support of_dma_controller_register()
+      dmaengine: dw-axi-dmac: Support burst residue granularity
+      dt-binding: dma: dw-axi-dmac: Add support for Intel KeemBay AxiDMA
+      dmaengine: dw-axi-dmac: Add Intel KeemBay DMA register fields
+      dmaengine: drivers: Kconfig: add HAS_IOMEM dependency to DW_AXI_DMAC
+      dmaengine: dw-axi-dmac: Add Intel KeemBay AxiDMA support
+      dmaengine: dw-axi-dmac: Add Intel KeemBay AxiDMA handshake
+      dmaengine: dw-axi-dmac: Add Intel KeemBay AxiDMA BYTE and HALFWORD re=
+gisters
+      dmaengine: dw-axi-dmac: Set constraint to the Max segment size
+      dmaengine: dw-axi-dmac: Virtually split the linked-list
+
+Thara Gopinath (1):
+      dmaengine: qcom: bam_dma: Manage clocks when controlled_remotely is s=
+et
+
+Vignesh Raghavendra (1):
+      dmaengine: ti: k3-udma: Set rflow count for BCDMA split channels
+
+Vinod Koul (2):
+      MAINTAINERS: dmaengine: add header files directory
+      MAINTAINERS: ioat: remove dmaengine susbstem files
+
+Xu Wang (1):
+      dmaengine: qcom: gpi: Remove unneeded semicolon
+
+Zheng Yongjun (1):
+      dma: idxd: use DEFINE_MUTEX() for mutex lock
+
+ Documentation/admin-guide/kernel-parameters.txt    |    6 +
+ .../devicetree/bindings/dma/ingenic,dma.yaml       |    2 +
+ .../devicetree/bindings/dma/intel,ldma.yaml        |  116 +
+ Documentation/devicetree/bindings/dma/owl-dma.yaml |    7 +-
+ .../devicetree/bindings/dma/renesas,rcar-dmac.yaml |   76 +-
+ .../devicetree/bindings/dma/sirfsoc-dma.txt        |   44 -
+ .../devicetree/bindings/dma/snps,dw-axi-dmac.txt   |   39 -
+ .../devicetree/bindings/dma/snps,dw-axi-dmac.yaml  |  126 +
+ .../devicetree/bindings/dma/ste-coh901318.txt      |   32 -
+ Documentation/devicetree/bindings/dma/zxdma.txt    |   38 -
+ MAINTAINERS                                        |    4 +-
+ drivers/dma/Kconfig                                |   30 +-
+ drivers/dma/Makefile                               |    4 +-
+ drivers/dma/at_hdmac.c                             |   19 +
+ drivers/dma/at_hdmac_regs.h                        |   28 +-
+ drivers/dma/coh901318.c                            | 2808 ----------------=
+----
+ drivers/dma/coh901318.h                            |  141 -
+ drivers/dma/coh901318_lli.c                        |  313 ---
+ drivers/dma/dma-jz4780.c                           |   14 +
+ drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c     |  698 ++++-
+ drivers/dma/dw-axi-dmac/dw-axi-dmac.h              |   34 +-
+ drivers/dma/fsldma.c                               |    6 +
+ drivers/dma/hsu/pci.c                              |   21 +-
+ drivers/dma/idxd/dma.c                             |    1 +
+ drivers/dma/idxd/init.c                            |   11 +-
+ drivers/dma/imx-sdma.c                             |   46 +-
+ drivers/dma/lgm/Kconfig                            |   10 +
+ drivers/dma/lgm/Makefile                           |    2 +
+ drivers/dma/lgm/lgm-dma.c                          | 1739 ++++++++++++
+ drivers/dma/mmp_pdma.c                             |   14 -
+ drivers/dma/owl-dma.c                              |    4 +-
+ drivers/dma/qcom/bam_dma.c                         |   29 +-
+ drivers/dma/qcom/gpi.c                             |    4 +-
+ drivers/dma/sh/rcar-dmac.c                         |  112 +-
+ drivers/dma/sirf-dma.c                             | 1170 --------
+ drivers/dma/ste_dma40.c                            |    2 +-
+ drivers/dma/ti/k3-udma.c                           |  131 +-
+ drivers/dma/xilinx/xilinx_dma.c                    |    2 +-
+ drivers/dma/zx_dma.c                               |  941 -------
+ include/linux/dma/k3-psil.h                        |   13 +-
+ include/linux/dma/mmp-pdma.h                       |   16 -
+ include/linux/dmaengine.h                          |    2 +
+ include/linux/platform_data/dma-atmel.h            |   61 -
+ include/linux/platform_data/dma-coh901318.h        |   72 -
+ include/linux/platform_data/dma-imx-sdma.h         |   11 -
+ include/linux/sirfsoc_dma.h                        |    7 -
+ 46 files changed, 3018 insertions(+), 5988 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/dma/intel,ldma.yaml
+ delete mode 100644 Documentation/devicetree/bindings/dma/sirfsoc-dma.txt
+ delete mode 100644 Documentation/devicetree/bindings/dma/snps,dw-axi-dmac.=
+txt
+ create mode 100644 Documentation/devicetree/bindings/dma/snps,dw-axi-dmac.=
+yaml
+ delete mode 100644 Documentation/devicetree/bindings/dma/ste-coh901318.txt
+ delete mode 100644 Documentation/devicetree/bindings/dma/zxdma.txt
+ delete mode 100644 drivers/dma/coh901318.c
+ delete mode 100644 drivers/dma/coh901318.h
+ delete mode 100644 drivers/dma/coh901318_lli.c
+ create mode 100644 drivers/dma/lgm/Kconfig
+ create mode 100644 drivers/dma/lgm/Makefile
+ create mode 100644 drivers/dma/lgm/lgm-dma.c
+ delete mode 100644 drivers/dma/sirf-dma.c
+ delete mode 100644 drivers/dma/zx_dma.c
+ delete mode 100644 include/linux/dma/mmp-pdma.h
+ delete mode 100644 include/linux/platform_data/dma-atmel.h
+ delete mode 100644 include/linux/platform_data/dma-coh901318.h
+ delete mode 100644 include/linux/sirfsoc_dma.h
+
+--=20
+~Vinod
+
+--DiL7RhKs8rK9YGuF
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCAAdFiEE+vs47OPLdNbVcHzyfBQHDyUjg0cFAmA0gVgACgkQfBQHDyUj
+g0dAiw//RPLet/jXNpPznQWGWIahEqFu2xTgzh/gBGFRsjfER8huyCc/NqLy2oS8
+9yzJNxbRrFM+o0UmmzluaHpvaTogQikxJlrK/8padyB0b5LHNyHysNvtNT6vdQnk
+JfyzbQQmk8rzM2k0wJkNt3IypTyP2u5Ub6m+Vz3CVbIZGqBrkAC+LL2+tseehkt+
+4iuswQrlbkL48EStqdU7aQoTPPJ1RNLBxouYmBbGsqEBSGPSkwS7lI6nn0AUhPL9
+dCtEkXk+EOlNz5bKLFCeJpBKID5MTPGD70r359IUKf7FEmxGAldpY+QwbkxTo8Rd
+66ZXUErGOYdRpnIGchezqyYZD7RXPNLB+hztxp2yYGBVbjTgQFq9+vqcHOSlXA2F
+yQqIrwfsI4EZLYD2NUxMDKilnjbBt3jhmT/+hiGRJmUSyJNXLn6bcwAUgcA2DelP
+4E6GwZEkyjUJmZ8hTGpjHhrpN6xW1acKz533UO+p6p25M8UKH+nqR+8eX3Nqh/E2
+y2Bg0/mo/gstm6Riobj5eJLsXfwXwYq+6zB6bcbEwpsXGM+1aKLShwEKApXLBRL/
+HbQPeQM+/ENkEkDT2V7T5dcx/QV/t6LeoMXhOBH7K6fFZeSe99QYm9pyVUlfC0+v
+j0jtOqsF0fuoKuoDcl6vyT8N201xubCEkpFV8f6cGe3MpkrTVuU=
+=WwEw
+-----END PGP SIGNATURE-----
+
+--DiL7RhKs8rK9YGuF--
