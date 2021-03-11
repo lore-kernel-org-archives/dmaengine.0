@@ -2,54 +2,53 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
-	autolearn=unavailable autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-11.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_GIT autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 813A2C4321A
-	for <dmaengine@archiver.kernel.org>; Thu, 11 Mar 2021 15:27:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 65472C4361B
+	for <dmaengine@archiver.kernel.org>; Thu, 11 Mar 2021 15:27:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 56A5B64E59
-	for <dmaengine@archiver.kernel.org>; Thu, 11 Mar 2021 15:27:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3A1F964FAB
+	for <dmaengine@archiver.kernel.org>; Thu, 11 Mar 2021 15:27:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234132AbhCKP02 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Thu, 11 Mar 2021 10:26:28 -0500
-Received: from youngberry.canonical.com ([91.189.89.112]:33925 "EHLO
+        id S234176AbhCKP03 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Thu, 11 Mar 2021 10:26:29 -0500
+Received: from youngberry.canonical.com ([91.189.89.112]:33980 "EHLO
         youngberry.canonical.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234192AbhCKP0B (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Thu, 11 Mar 2021 10:26:01 -0500
-Received: from mail-ed1-f69.google.com ([209.85.208.69])
+        with ESMTP id S234240AbhCKP0F (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Thu, 11 Mar 2021 10:26:05 -0500
+Received: from mail-lj1-f198.google.com ([209.85.208.198])
         by youngberry.canonical.com with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
         (Exim 4.86_2)
         (envelope-from <krzysztof.kozlowski@canonical.com>)
-        id 1lKNCJ-0004tB-GE
-        for dmaengine@vger.kernel.org; Thu, 11 Mar 2021 15:25:59 +0000
-Received: by mail-ed1-f69.google.com with SMTP id t27so10040911edi.2
-        for <dmaengine@vger.kernel.org>; Thu, 11 Mar 2021 07:25:59 -0800 (PST)
+        id 1lKNCN-0004yD-Vp
+        for dmaengine@vger.kernel.org; Thu, 11 Mar 2021 15:26:04 +0000
+Received: by mail-lj1-f198.google.com with SMTP id q13so8693251ljp.23
+        for <dmaengine@vger.kernel.org>; Thu, 11 Mar 2021 07:26:03 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=kUT7ytcjB6VCPdAxIBqG0E5rhLsqE5uC2TbGUeGX+rU=;
-        b=V1fiUs1PWStd3PTLmBilrsb4/2t3UFHWeUeQrA9OguvbHbPxWaf37PecNxcJTE7dyP
-         PW7AiQAm74W4mbE55xc9kPWIlPH2je1rcLClPnhamth3eth2BqFJk80VKTrsDLNMg48Y
-         JC0wizjWTby5KV8gXosYV6l3aJK/csqsWJAbkEzMTR/+grqJzxTuIFQg5RWNyA3AHx70
-         rZpr1g3e4cihB0Xrb3orznDIsysgDcHgZS7XsBD2MIKtWaCwobN8hSzdKbJDI75DeSvp
-         4MfYMzab4Jy+AN8gbhdrxDX2puaJI4X5fIthL1xpy9CcgqagPxjpUlg7KT9JyrUKkoaU
-         YmqQ==
-X-Gm-Message-State: AOAM530JTCbsQAF//uoMBxXYGu7lszxn7rbb5TOSZdtWlaOYqAutcqtB
-        UNRvqsPmf9U/hdFeBkYE0EQnL/uqAnWGzCqhGdp+2GraPuibyzaY1xBZo0cC02LcjRtwIY4iwLe
-        eWzQ78fndysBomuCmZgwajqQxrwyQ50T9O7EXmg==
-X-Received: by 2002:a17:906:894:: with SMTP id n20mr3550501eje.57.1615476359035;
-        Thu, 11 Mar 2021 07:25:59 -0800 (PST)
-X-Google-Smtp-Source: ABdhPJzewwKul+qByKNtSAFVbtVEtU+PJVW0lvuxaGwwO1QNpVsWLj92RBZH/7UiX/uUZip32n7cVA==
-X-Received: by 2002:a17:906:894:: with SMTP id n20mr3550472eje.57.1615476358839;
-        Thu, 11 Mar 2021 07:25:58 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=HH1upFGS1oxbv+vQ09D6VKarsXku0IAuIjEmvH7R4Kk=;
+        b=Ff5+zCN/dPdBm5yPDsTu0I8CnYWHwD0wTrldTms7kvVxlVxdUl6UqQsh4p2RuS/IpM
+         85A4ca3HbXQfNw5UHAUqmwFTXqLmuwpKQgWi7IEilv0GG3SplR3x+d8qT8BhRk0q2eCL
+         TJTJzHofVDkEw6B2i8JMlEpkJhw2cHbRTi4Lh17W7XG/dVA5VNQP4d0+ABmKsAYxqWKb
+         16T6iwCFdXqr4C7rl/d/lquqgN26X7AhnuiRpR9W1iN9eF+tddW7DAVuvqKngBhXVTxG
+         jr6+2z6qEsYzDuUBWAcAfjWbac639emd681HGu4dm9b/m18NYbBQZrvarVAS0cm8R/9J
+         DjVw==
+X-Gm-Message-State: AOAM5319/9JPH+cpz3f8dt/Rd4/GvoWlLSbMPrGY3j5U5hcDPfNUPoNe
+        Xyfua4ag/ejxSzj34oV0dlYTWICfdNOomoeYzDZ6EbSRAkCghXrYGrFfcRlpOcrPf2feX51sLdj
+        lDManSKNWswLup/ssFzcVX28r+89CKAPa797/Tg==
+X-Received: by 2002:a17:906:4f8a:: with SMTP id o10mr3653353eju.484.1615476351083;
+        Thu, 11 Mar 2021 07:25:51 -0800 (PST)
+X-Google-Smtp-Source: ABdhPJwl4COb3xR5+Ql8luerMFoHdUQmjQDr8WhPDVtBN8ZjQzZ5RdBWXObNPvxwoLN6Q/QH+U5+ow==
+X-Received: by 2002:a17:906:4f8a:: with SMTP id o10mr3653311eju.484.1615476350782;
+        Thu, 11 Mar 2021 07:25:50 -0800 (PST)
 Received: from localhost.localdomain (adsl-84-226-167-205.adslplus.ch. [84.226.167.205])
-        by smtp.gmail.com with ESMTPSA id v25sm1517826edr.18.2021.03.11.07.25.57
+        by smtp.gmail.com with ESMTPSA id v25sm1517826edr.18.2021.03.11.07.25.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 11 Mar 2021 07:25:58 -0800 (PST)
+        Thu, 11 Mar 2021 07:25:50 -0800 (PST)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
 List-Id: <soc.lore.kernel.org>
 To:     Russell King <linux@armlinux.org.uk>,
@@ -78,98 +77,123 @@ To:     Russell King <linux@armlinux.org.uk>,
         linux-fpga@vger.kernel.org, linux-i2c@vger.kernel.org,
         netdev@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com
 Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
-Subject: [PATCH v3 07/15] EDAC: altera: merge ARCH_SOCFPGA and ARCH_STRATIX10
-Date:   Thu, 11 Mar 2021 16:25:37 +0100
-Message-Id: <20210311152545.1317581-8-krzysztof.kozlowski@canonical.com>
+Subject: [PATCH v3 00/15] arm64 / clk: socfpga: simplifying, cleanups and compile testing
+Date:   Thu, 11 Mar 2021 16:25:30 +0100
+Message-Id: <20210311152545.1317581-1-krzysztof.kozlowski@canonical.com>
 X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20210311152545.1317581-1-krzysztof.kozlowski@canonical.com>
-References: <20210311152545.1317581-1-krzysztof.kozlowski@canonical.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Simplify 32-bit and 64-bit Intel SoCFPGA Kconfig options by having only
-one for both of them.  This the common practice for other platforms.
-Additionally, the ARCH_SOCFPGA is too generic as SoCFPGA designs come
-from multiple vendors.
+Hi,
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
----
- drivers/edac/Kconfig       |  2 +-
- drivers/edac/altera_edac.c | 17 +++++++++++------
- 2 files changed, 12 insertions(+), 7 deletions(-)
+All three Intel arm64 SoCFPGA architectures (Agilex, N5X and Stratix 10)
+are basically flavors/platforms of the same architecture.  At least from
+the Linux point of view.  Up to a point that N5X and Agilex share DTSI.
+Having three top-level architectures for the same one barely makes
+sense and complicates driver selection.
 
-diff --git a/drivers/edac/Kconfig b/drivers/edac/Kconfig
-index 27d0c4cdc58d..1e836e320edd 100644
---- a/drivers/edac/Kconfig
-+++ b/drivers/edac/Kconfig
-@@ -396,7 +396,7 @@ config EDAC_THUNDERX
- 
- config EDAC_ALTERA
- 	bool "Altera SOCFPGA ECC"
--	depends on EDAC=y && (ARCH_SOCFPGA || ARCH_STRATIX10)
-+	depends on EDAC=y && ARCH_INTEL_SOCFPGA
- 	help
- 	  Support for error detection and correction on the
- 	  Altera SOCs. This is the global enable for the
-diff --git a/drivers/edac/altera_edac.c b/drivers/edac/altera_edac.c
-index e91cf1147a4e..5f7fd79ec82f 100644
---- a/drivers/edac/altera_edac.c
-+++ b/drivers/edac/altera_edac.c
-@@ -1501,8 +1501,13 @@ static int altr_portb_setup(struct altr_edac_device_dev *device)
- 	dci->mod_name = ecc_name;
- 	dci->dev_name = ecc_name;
- 
--	/* Update the PortB IRQs - A10 has 4, S10 has 2, Index accordingly */
--#ifdef CONFIG_ARCH_STRATIX10
-+	/*
-+	 * Update the PortB IRQs - A10 has 4, S10 has 2, Index accordingly
-+	 *
-+	 * FIXME: Instead of ifdefs with different architectures the driver
-+	 *        should properly use compatibles.
-+	 */
-+#ifdef CONFIG_64BIT
- 	altdev->sb_irq = irq_of_parse_and_map(np, 1);
- #else
- 	altdev->sb_irq = irq_of_parse_and_map(np, 2);
-@@ -1521,7 +1526,7 @@ static int altr_portb_setup(struct altr_edac_device_dev *device)
- 		goto err_release_group_1;
- 	}
- 
--#ifdef CONFIG_ARCH_STRATIX10
-+#ifdef CONFIG_64BIT
- 	/* Use IRQ to determine SError origin instead of assigning IRQ */
- 	rc = of_property_read_u32_index(np, "interrupts", 1, &altdev->db_irq);
- 	if (rc) {
-@@ -1931,7 +1936,7 @@ static int altr_edac_a10_device_add(struct altr_arria10_edac *edac,
- 		goto err_release_group1;
- 	}
- 
--#ifdef CONFIG_ARCH_STRATIX10
-+#ifdef CONFIG_64BIT
- 	/* Use IRQ to determine SError origin instead of assigning IRQ */
- 	rc = of_property_read_u32_index(np, "interrupts", 0, &altdev->db_irq);
- 	if (rc) {
-@@ -2016,7 +2021,7 @@ static const struct irq_domain_ops a10_eccmgr_ic_ops = {
- /************** Stratix 10 EDAC Double Bit Error Handler ************/
- #define to_a10edac(p, m) container_of(p, struct altr_arria10_edac, m)
- 
--#ifdef CONFIG_ARCH_STRATIX10
-+#ifdef CONFIG_64BIT
- /* panic routine issues reboot on non-zero panic_timeout */
- extern int panic_timeout;
- 
-@@ -2109,7 +2114,7 @@ static int altr_edac_a10_probe(struct platform_device *pdev)
- 					 altr_edac_a10_irq_handler,
- 					 edac);
- 
--#ifdef CONFIG_ARCH_STRATIX10
-+#ifdef CONFIG_64BIT
- 	{
- 		int dberror, err_addr;
- 
+Additionally it was pointed out that ARCH_SOCFPGA name is too generic.
+There are other vendors making SoC+FPGA designs, so the name should be
+changed to have real vendor (currently: Intel).
+
+
+Dependencies / merging
+======================
+1. Patch 1 is used as base, so other changes depend on its hunks.
+   I put it at beginning as it is something close to a fix, so candidate
+   for stable (even though I did not mark it like that).
+2. Patch 2: everything depends on it.
+
+3. 64-bit path:
+3a. Patches 3-7: depend on patch 2, from 64-bit point of view.
+3b. Patch 8: depends on 2-7 as it finally removes 64-bit ARCH_XXX
+    symbols.
+
+4. 32-bit path:
+4a. Patches 9-14: depend on 2, from 32-bit point of view.
+4b. Patch 15: depends on 9-14 as it finally removes 32-bit ARCH_SOCFPGA
+    symbol.
+
+If the patches look good, proposed merging is via SoC tree (after
+getting acks from everyone). Sharing immutable branches is also a way.
+
+
+Changes since v2
+================
+1. Several new patches and changes.
+2. Rename ARCH_SOCFPGA to ARCH_INTEL_SOCFPGA on 32-bit and 64-bit.
+3. Enable compile testing of 32-bit socfpga clock drivers.
+4. Split changes per subsystems for easier review.
+5. I already received an ack from Lee Jones, but I did not add it as
+   there was big refactoring.  Please kindly ack one more time if it
+   looks good.
+
+Changes since v1
+================
+1. New patch 3: arm64: socfpga: rename ARCH_STRATIX10 to ARCH_SOCFPGA64.
+2. New patch 4: arm64: intel: merge Agilex and N5X into ARCH_SOCFPGA64.
+3. Fix build is.sue reported by kernel test robot (with ARCH_STRATIX10
+   and COMPILE_TEST but without selecting some of the clocks).
+
+
+RFT
+===
+I tested compile builds on few configurations, so I hope kbuild 0-day
+will check more options (please give it few days on the lists).
+I compare the generated autoconf.h and found no issues.  Testing on real
+hardware would be appreciated.
+
+Best regards,
+Krzysztof
+
+Krzysztof Kozlowski (15):
+  clk: socfpga: allow building N5X clocks with ARCH_N5X
+  ARM: socfpga: introduce common ARCH_INTEL_SOCFPGA
+  mfd: altera: merge ARCH_SOCFPGA and ARCH_STRATIX10
+  net: stmmac: merge ARCH_SOCFPGA and ARCH_STRATIX10
+  clk: socfpga: build together Stratix 10, Agilex and N5X clock drivers
+  clk: socfpga: merge ARCH_SOCFPGA and ARCH_STRATIX10
+  EDAC: altera: merge ARCH_SOCFPGA and ARCH_STRATIX10
+  arm64: socfpga: merge Agilex and N5X into ARCH_INTEL_SOCFPGA
+  clk: socfpga: allow compile testing of Stratix 10 / Agilex clocks
+  clk: socfpga: use ARCH_INTEL_SOCFPGA also for 32-bit ARM SoCs (and
+    compile test)
+  dmaengine: socfpga: use ARCH_INTEL_SOCFPGA also for 32-bit ARM SoCs
+  fpga: altera: use ARCH_INTEL_SOCFPGA also for 32-bit ARM SoCs
+  i2c: altera: use ARCH_INTEL_SOCFPGA also for 32-bit ARM SoCs
+  reset: socfpga: use ARCH_INTEL_SOCFPGA also for 32-bit ARM SoCs
+  ARM: socfpga: drop ARCH_SOCFPGA
+
+ arch/arm/Kconfig                            |  2 +-
+ arch/arm/Kconfig.debug                      |  6 +++---
+ arch/arm/Makefile                           |  2 +-
+ arch/arm/boot/dts/Makefile                  |  2 +-
+ arch/arm/configs/multi_v7_defconfig         |  2 +-
+ arch/arm/configs/socfpga_defconfig          |  2 +-
+ arch/arm/mach-socfpga/Kconfig               |  4 ++--
+ arch/arm64/Kconfig.platforms                | 17 ++++-------------
+ arch/arm64/boot/dts/altera/Makefile         |  2 +-
+ arch/arm64/boot/dts/intel/Makefile          |  6 +++---
+ arch/arm64/configs/defconfig                |  3 +--
+ drivers/clk/Kconfig                         |  1 +
+ drivers/clk/Makefile                        |  4 +---
+ drivers/clk/socfpga/Kconfig                 | 19 +++++++++++++++++++
+ drivers/clk/socfpga/Makefile                | 11 +++++------
+ drivers/dma/Kconfig                         |  2 +-
+ drivers/edac/Kconfig                        |  2 +-
+ drivers/edac/altera_edac.c                  | 17 +++++++++++------
+ drivers/firmware/Kconfig                    |  2 +-
+ drivers/fpga/Kconfig                        |  8 ++++----
+ drivers/i2c/busses/Kconfig                  |  2 +-
+ drivers/mfd/Kconfig                         |  4 ++--
+ drivers/net/ethernet/stmicro/stmmac/Kconfig |  4 ++--
+ drivers/reset/Kconfig                       |  6 +++---
+ 24 files changed, 71 insertions(+), 59 deletions(-)
+ create mode 100644 drivers/clk/socfpga/Kconfig
+
 -- 
 2.25.1
 
