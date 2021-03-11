@@ -1,121 +1,230 @@
-Return-Path: <SRS0=Ns8y=IF=vger.kernel.org=dmaengine-owner@kernel.org>
+Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
+	autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 87FE6C433E9
-	for <dmaengine@archiver.kernel.org>; Sun,  7 Mar 2021 04:08:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0645EC433DB
+	for <dmaengine@archiver.kernel.org>; Thu, 11 Mar 2021 15:27:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 576AC6505D
-	for <dmaengine@archiver.kernel.org>; Sun,  7 Mar 2021 04:08:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AF4B264FAB
+	for <dmaengine@archiver.kernel.org>; Thu, 11 Mar 2021 15:26:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230052AbhCGEHZ (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Sat, 6 Mar 2021 23:07:25 -0500
-Received: from perceval.ideasonboard.com ([213.167.242.64]:33374 "EHLO
-        perceval.ideasonboard.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229964AbhCGEHI (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Sat, 6 Mar 2021 23:07:08 -0500
-Received: from pendragon.lan (62-78-145-57.bb.dnainternet.fi [62.78.145.57])
-        by perceval.ideasonboard.com (Postfix) with ESMTPSA id 672213F5;
-        Sun,  7 Mar 2021 05:07:05 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
-        s=mail; t=1615090025;
-        bh=w1OG/ETIzAQ6bB7Dn+DCMdfkPhQRBsNRWVNAckwVagA=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=gPueyWGH103uncoydLtU4CRuQU7urP6ecYL/dql5TFvnMbAyXSSIzTgpUHq62b5Jt
-         pSAeQlyZ+u/6XUTBxIZK9TwMNuTBoNTMUtQPAoGAFbs2BXDwDlX64LOy5A39SLhPOA
-         RMB44aoBA+pOBgE7t1Wbr1FbNUbJrGYma92payQg=
-From:   Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-To:     dmaengine@vger.kernel.org
-Cc:     linux-arm-kernel@lists.infradead.org,
-        Vinod Koul <vkoul@kernel.org>,
-        Michal Simek <michal.simek@xilinx.com>,
-        Rohit Visavalia <RVISAVAL@xilinx.com>
-Subject: [PATCH 1/2] dmaengine: xilinx: dpdma: Fix descriptor issuing on video group
-Date:   Sun,  7 Mar 2021 06:06:28 +0200
-Message-Id: <20210307040629.29308-2-laurent.pinchart@ideasonboard.com>
-X-Mailer: git-send-email 2.28.0
-In-Reply-To: <20210307040629.29308-1-laurent.pinchart@ideasonboard.com>
-References: <20210307040629.29308-1-laurent.pinchart@ideasonboard.com>
+        id S234259AbhCKP01 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Thu, 11 Mar 2021 10:26:27 -0500
+Received: from youngberry.canonical.com ([91.189.89.112]:33825 "EHLO
+        youngberry.canonical.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234071AbhCKPZz (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Thu, 11 Mar 2021 10:25:55 -0500
+Received: from mail-ed1-f71.google.com ([209.85.208.71])
+        by youngberry.canonical.com with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+        (Exim 4.86_2)
+        (envelope-from <krzysztof.kozlowski@canonical.com>)
+        id 1lKNCD-0004m3-ML
+        for dmaengine@vger.kernel.org; Thu, 11 Mar 2021 15:25:53 +0000
+Received: by mail-ed1-f71.google.com with SMTP id p12so10037124edw.9
+        for <dmaengine@vger.kernel.org>; Thu, 11 Mar 2021 07:25:53 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=WNNBQoeYbiaXwIioLMfeHDmEpvN4s0z+f2iELsIEM3g=;
+        b=T3FdkReCBrBOkPW7VDUH2ghfs+W0QiUGqRFFy8/qFbdW4V3qky21fDWt54+s3INX/o
+         99ng34vvYHAOIxxtvp8aFE2zudrWI9kmxRSEQnQ9XoJUPROMmuTt9yrg0OD/cR6XTm87
+         6nDL809J7+NVlbNwmkzsPSfN7jSIYeBIUNx0YXdxKxXWe6xl/M0d3tlBkiRU3y/SXxXJ
+         f7L/exDimBRAYT4YkwdWZVFOZSZJ5mcwZPCyMshvcA6pXDoYTW8IeqhPrk2jIPAlAt17
+         9ZcbNbZPlNfZrEbL+d/mw2RszpAXTE3gWhJBie2H25YA3qOcwTgJ9rsMh0eeRerKgBwy
+         dYYw==
+X-Gm-Message-State: AOAM533Rg2bDunsJNFgaT2knxd35qdeE9jlPoRYnUio54JKgXutmFUHr
+        D5DMZ21yKClFsebN8ZIpA+y52qgXIiqVb7X2YkEdA1VXsTxkU9vvcf9NkHZt6tfDc1hvZHvjYOO
+        menV2++onf+Gt9H9VrROGhkRSZPzybJ8U0YRr4A==
+X-Received: by 2002:a05:6402:2215:: with SMTP id cq21mr9274784edb.281.1615476353414;
+        Thu, 11 Mar 2021 07:25:53 -0800 (PST)
+X-Google-Smtp-Source: ABdhPJz84GEivsrxMtPNo4w3XJQXVZ55xsq/2JYDwU24XYid3WZpGznITM5djSJ6+HC1Qzj5FYXbTw==
+X-Received: by 2002:a05:6402:2215:: with SMTP id cq21mr9274760edb.281.1615476353246;
+        Thu, 11 Mar 2021 07:25:53 -0800 (PST)
+Received: from localhost.localdomain (adsl-84-226-167-205.adslplus.ch. [84.226.167.205])
+        by smtp.gmail.com with ESMTPSA id v25sm1517826edr.18.2021.03.11.07.25.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 11 Mar 2021 07:25:52 -0800 (PST)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+List-Id: <soc.lore.kernel.org>
+To:     Russell King <linux@armlinux.org.uk>,
+        Arnd Bergmann <arnd@arndb.de>, Olof Johansson <olof@lixom.net>,
+        soc@kernel.org, Rob Herring <robh+dt@kernel.org>,
+        Dinh Nguyen <dinguyen@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+        Borislav Petkov <bp@alien8.de>,
+        Tony Luck <tony.luck@intel.com>,
+        James Morse <james.morse@arm.com>,
+        Robert Richter <rric@kernel.org>,
+        Moritz Fischer <mdf@kernel.org>, Tom Rix <trix@redhat.com>,
+        Lee Jones <lee.jones@linaro.org>,
+        Giuseppe Cavallaro <peppe.cavallaro@st.com>,
+        Alexandre Torgue <alexandre.torgue@st.com>,
+        Jose Abreu <joabreu@synopsys.com>,
+        "David S. Miller" <davem@davemloft.net>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-clk@vger.kernel.org,
+        dmaengine@vger.kernel.org, linux-edac@vger.kernel.org,
+        linux-fpga@vger.kernel.org, linux-i2c@vger.kernel.org,
+        netdev@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+Subject: [PATCH v3 02/15] ARM: socfpga: introduce common ARCH_INTEL_SOCFPGA
+Date:   Thu, 11 Mar 2021 16:25:32 +0100
+Message-Id: <20210311152545.1317581-3-krzysztof.kozlowski@canonical.com>
+X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20210311152545.1317581-1-krzysztof.kozlowski@canonical.com>
+References: <20210311152545.1317581-1-krzysztof.kozlowski@canonical.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-When multiple channels are part of a video group, the transfer is
-triggered only when all channels in the group are ready. The logic to do
-so is incorrect, as it causes the descriptors for all channels but the
-last one in a group to not being pushed to the hardware. Fix it.
+Simplify 32-bit and 64-bit Intel SoCFPGA Kconfig options by having only
+one for both of them.  This the common practice for other platforms.
+Additionally, the ARCH_SOCFPGA is too generic as SoCFPGA designs come
+from multiple vendors.
 
-Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
 ---
- drivers/dma/xilinx/xilinx_dpdma.c | 28 +++++++++++++++++-----------
- 1 file changed, 17 insertions(+), 11 deletions(-)
+ arch/arm/Kconfig                    | 2 +-
+ arch/arm/Kconfig.debug              | 6 +++---
+ arch/arm/Makefile                   | 2 +-
+ arch/arm/boot/dts/Makefile          | 2 +-
+ arch/arm/mach-socfpga/Kconfig       | 4 ++++
+ arch/arm64/Kconfig.platforms        | 4 ++++
+ arch/arm64/boot/dts/altera/Makefile | 2 +-
+ 7 files changed, 15 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/dma/xilinx/xilinx_dpdma.c b/drivers/dma/xilinx/xilinx_dpdma.c
-index 55df63dead8d..d504112c609e 100644
---- a/drivers/dma/xilinx/xilinx_dpdma.c
-+++ b/drivers/dma/xilinx/xilinx_dpdma.c
-@@ -839,6 +839,7 @@ static void xilinx_dpdma_chan_queue_transfer(struct xilinx_dpdma_chan *chan)
- 	struct xilinx_dpdma_tx_desc *desc;
- 	struct virt_dma_desc *vdesc;
- 	u32 reg, channels;
-+	bool first_frame;
+diff --git a/arch/arm/Kconfig b/arch/arm/Kconfig
+index 853aab5ab327..37f94cf0cfdb 100644
+--- a/arch/arm/Kconfig
++++ b/arch/arm/Kconfig
+@@ -1320,7 +1320,7 @@ config ARM_PSCI
+ # selected platforms.
+ config ARCH_NR_GPIO
+ 	int
+-	default 2048 if ARCH_SOCFPGA
++	default 2048 if ARCH_INTEL_SOCFPGA
+ 	default 1024 if ARCH_BRCMSTB || ARCH_RENESAS || ARCH_TEGRA || \
+ 		ARCH_ZYNQ || ARCH_ASPEED
+ 	default 512 if ARCH_EXYNOS || ARCH_KEYSTONE || SOC_OMAP5 || \
+diff --git a/arch/arm/Kconfig.debug b/arch/arm/Kconfig.debug
+index 9e0b5e7f12af..36016497b1b3 100644
+--- a/arch/arm/Kconfig.debug
++++ b/arch/arm/Kconfig.debug
+@@ -1087,7 +1087,7 @@ choice
+ 		  on SD5203 UART.
  
- 	lockdep_assert_held(&chan->lock);
+ 	config DEBUG_SOCFPGA_UART0
+-		depends on ARCH_SOCFPGA
++		depends on ARCH_INTEL_SOCFPGA
+ 		bool "Use SOCFPGA UART0 for low-level debug"
+ 		select DEBUG_UART_8250
+ 		help
+@@ -1095,7 +1095,7 @@ choice
+ 		  on SOCFPGA(Cyclone 5 and Arria 5) based platforms.
  
-@@ -852,14 +853,6 @@ static void xilinx_dpdma_chan_queue_transfer(struct xilinx_dpdma_chan *chan)
- 		chan->running = true;
- 	}
+ 	config DEBUG_SOCFPGA_ARRIA10_UART1
+-		depends on ARCH_SOCFPGA
++		depends on ARCH_INTEL_SOCFPGA
+ 		bool "Use SOCFPGA Arria10 UART1 for low-level debug"
+ 		select DEBUG_UART_8250
+ 		help
+@@ -1103,7 +1103,7 @@ choice
+ 		  on SOCFPGA(Arria 10) based platforms.
  
--	if (chan->video_group)
--		channels = xilinx_dpdma_chan_video_group_ready(chan);
--	else
--		channels = BIT(chan->id);
--
--	if (!channels)
--		return;
--
- 	vdesc = vchan_next_desc(&chan->vchan);
- 	if (!vdesc)
- 		return;
-@@ -884,13 +877,26 @@ static void xilinx_dpdma_chan_queue_transfer(struct xilinx_dpdma_chan *chan)
- 			    FIELD_PREP(XILINX_DPDMA_CH_DESC_START_ADDRE_MASK,
- 				       upper_32_bits(sw_desc->dma_addr)));
+ 	config DEBUG_SOCFPGA_CYCLONE5_UART1
+-		depends on ARCH_SOCFPGA
++		depends on ARCH_INTEL_SOCFPGA
+ 		bool "Use SOCFPGA Cyclone 5 UART1 for low-level debug"
+ 		select DEBUG_UART_8250
+ 		help
+diff --git a/arch/arm/Makefile b/arch/arm/Makefile
+index dad5502ecc28..415c3514573a 100644
+--- a/arch/arm/Makefile
++++ b/arch/arm/Makefile
+@@ -209,7 +209,7 @@ machine-$(CONFIG_PLAT_SAMSUNG)		+= s3c
+ machine-$(CONFIG_ARCH_S5PV210)		+= s5pv210
+ machine-$(CONFIG_ARCH_SA1100)		+= sa1100
+ machine-$(CONFIG_ARCH_RENESAS)	 	+= shmobile
+-machine-$(CONFIG_ARCH_SOCFPGA)		+= socfpga
++machine-$(CONFIG_ARCH_INTEL_SOCFPGA)	+= socfpga
+ machine-$(CONFIG_ARCH_STI)		+= sti
+ machine-$(CONFIG_ARCH_STM32)		+= stm32
+ machine-$(CONFIG_ARCH_SUNXI)		+= sunxi
+diff --git a/arch/arm/boot/dts/Makefile b/arch/arm/boot/dts/Makefile
+index 53b6e06bf19a..fe8f7c349f1d 100644
+--- a/arch/arm/boot/dts/Makefile
++++ b/arch/arm/boot/dts/Makefile
+@@ -1033,7 +1033,7 @@ dtb-$(CONFIG_ARCH_S5PV210) += \
+ 	s5pv210-smdkc110.dtb \
+ 	s5pv210-smdkv210.dtb \
+ 	s5pv210-torbreck.dtb
+-dtb-$(CONFIG_ARCH_SOCFPGA) += \
++dtb-$(CONFIG_ARCH_INTEL_SOCFPGA) += \
+ 	socfpga_arria5_socdk.dtb \
+ 	socfpga_arria10_socdk_nand.dtb \
+ 	socfpga_arria10_socdk_qspi.dtb \
+diff --git a/arch/arm/mach-socfpga/Kconfig b/arch/arm/mach-socfpga/Kconfig
+index c3bb68d57cea..e43ed0ca6860 100644
+--- a/arch/arm/mach-socfpga/Kconfig
++++ b/arch/arm/mach-socfpga/Kconfig
+@@ -2,6 +2,7 @@
+ menuconfig ARCH_SOCFPGA
+ 	bool "Altera SOCFPGA family"
+ 	depends on ARCH_MULTI_V7
++	select ARCH_INTEL_SOCFPGA
+ 	select ARCH_SUPPORTS_BIG_ENDIAN
+ 	select ARM_AMBA
+ 	select ARM_GIC
+@@ -20,6 +21,9 @@ menuconfig ARCH_SOCFPGA
+ 	select PL310_ERRATA_769419
  
--	if (chan->first_frame)
-+	first_frame = chan->first_frame;
-+	chan->first_frame = false;
+ if ARCH_SOCFPGA
++config ARCH_INTEL_SOCFPGA
++	bool
 +
-+	if (chan->video_group) {
-+		channels = xilinx_dpdma_chan_video_group_ready(chan);
-+		/*
-+		 * Trigger the transfer only when all channels in the group are
-+		 * ready.
-+		 */
-+		if (!channels)
-+			return;
-+	} else {
-+		channels = BIT(chan->id);
-+	}
+ config SOCFPGA_SUSPEND
+ 	bool "Suspend to RAM on SOCFPGA"
+ 	help
+diff --git a/arch/arm64/Kconfig.platforms b/arch/arm64/Kconfig.platforms
+index cdfd5fed457f..ecab67a1afb8 100644
+--- a/arch/arm64/Kconfig.platforms
++++ b/arch/arm64/Kconfig.platforms
+@@ -256,9 +256,13 @@ config ARCH_SEATTLE
+ 
+ config ARCH_STRATIX10
+ 	bool "Altera's Stratix 10 SoCFPGA Family"
++	select ARCH_INTEL_SOCFPGA
+ 	help
+ 	  This enables support for Altera's Stratix 10 SoCFPGA Family.
+ 
++config ARCH_INTEL_SOCFPGA
++	bool
 +
-+	if (first_frame)
- 		reg = XILINX_DPDMA_GBL_TRIG_MASK(channels);
- 	else
- 		reg = XILINX_DPDMA_GBL_RETRIG_MASK(channels);
+ config ARCH_SYNQUACER
+ 	bool "Socionext SynQuacer SoC Family"
  
--	chan->first_frame = false;
--
- 	dpdma_write(xdev->reg, XILINX_DPDMA_GBL, reg);
- }
- 
+diff --git a/arch/arm64/boot/dts/altera/Makefile b/arch/arm64/boot/dts/altera/Makefile
+index 10119c7ab437..4db83fbeb115 100644
+--- a/arch/arm64/boot/dts/altera/Makefile
++++ b/arch/arm64/boot/dts/altera/Makefile
+@@ -1,3 +1,3 @@
+ # SPDX-License-Identifier: GPL-2.0-only
+-dtb-$(CONFIG_ARCH_STRATIX10) += socfpga_stratix10_socdk.dtb \
++dtb-$(CONFIG_ARCH_INTEL_SOCFPGA) += socfpga_stratix10_socdk.dtb \
+ 				socfpga_stratix10_socdk_nand.dtb
 -- 
-Regards,
-
-Laurent Pinchart
+2.25.1
 
