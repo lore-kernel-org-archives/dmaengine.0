@@ -2,108 +2,59 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.2 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5E823C433DB
-	for <dmaengine@archiver.kernel.org>; Sat, 13 Mar 2021 12:54:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AF6A7C433E6
+	for <dmaengine@archiver.kernel.org>; Tue, 16 Mar 2021 10:46:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 27DB564F1C
-	for <dmaengine@archiver.kernel.org>; Sat, 13 Mar 2021 12:54:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8775064F4C
+	for <dmaengine@archiver.kernel.org>; Tue, 16 Mar 2021 10:46:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232904AbhCMMyD (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Sat, 13 Mar 2021 07:54:03 -0500
-Received: from www381.your-server.de ([78.46.137.84]:36978 "EHLO
-        www381.your-server.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229615AbhCMMxi (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Sat, 13 Mar 2021 07:53:38 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=metafoo.de;
-         s=default2002; h=Content-Transfer-Encoding:MIME-Version:Message-Id:Date:
-        Subject:Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:
-        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-        :Resent-Message-ID:In-Reply-To:References;
-        bh=z3QoH/g4KV9tJ/IP5eIssf5nCa9iLBczLjga/2/t/7s=; b=dGu0ZESZRTq74iMjElUSL56zk8
-        mtTKuJieLFhxHxBhkoh2LETHSvxofZTtw9LFjGKgmPR5ZzAkE0pjv3+2uT5Hrs6FeLnC62Hg+vE6y
-        q0mH82oZdQbu0rO/G22x1m1HUxL6EMa4ZoRA/uBUYa/1xJN6ftX5diPFod7NrQzBlAMIoVKUl4ksz
-        6QCMHeaDf6VY5sEvYOd3dymFosg72zzi/Mc9CG6sgl8f1Bq45S81u21qh7+DxC7qjBtwt6HyK3bRZ
-        c38Dc+xZ5NGMCzFqpVk8AiOHHLr71XhquYS7XbFD9ZVzKWAwczH6YF2p18EWQwhsF2V3NkqXJsetF
-        GkLFgT8w==;
-Received: from sslproxy06.your-server.de ([78.46.172.3])
-        by www381.your-server.de with esmtpsa (TLSv1.3:TLS_AES_256_GCM_SHA384:256)
-        (Exim 4.92.3)
-        (envelope-from <lars@metafoo.de>)
-        id 1lL3lu-0008BT-LG; Sat, 13 Mar 2021 13:53:34 +0100
-Received: from [2001:a61:2aea:a901:9e5c:8eff:fe01:8578] (helo=lars-desktop.fritz.box)
-        by sslproxy06.your-server.de with esmtpsa (TLSv1.3:TLS_AES_256_GCM_SHA384:256)
-        (Exim 4.92)
-        (envelope-from <lars@metafoo.de>)
-        id 1lL3lu-000RmU-Fe; Sat, 13 Mar 2021 13:53:34 +0100
-From:   Lars-Peter Clausen <lars@metafoo.de>
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Michal Simek <michal.simek@xilinx.com>,
-        Radhey Shyam Pandey <radhey.shyam.pandey@xilinx.com>,
-        Shravya Kumbham <shravya.kumbham@xilinx.com>,
-        dmaengine@vger.kernel.org, Lars-Peter Clausen <lars@metafoo.de>
-Subject: [PATCH] dmaengine: xilinx: Introduce synchronize() callback
-Date:   Sat, 13 Mar 2021 13:53:11 +0100
-Message-Id: <20210313125311.4823-1-lars@metafoo.de>
-X-Mailer: git-send-email 2.20.1
+        id S236832AbhCPKq1 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 16 Mar 2021 06:46:27 -0400
+Received: from mail.kernel.org ([198.145.29.99]:43830 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S236920AbhCPKpr (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Tue, 16 Mar 2021 06:45:47 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 8DD9864FA5;
+        Tue, 16 Mar 2021 10:45:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1615891547;
+        bh=QKmVS/i0Fp5R+RNSclCbxIUCB8OvRE2de4v5n8iSv0M=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=m4TDhtG+ACXWnNxOGbEy/62SOIs2hDrKkbg/p8JaNNo3A7YvyET890tLlN9CgGLdG
+         iJe2AE8SHanyDkjxcafg/u1FG1D3xo3iEYxtjib3GoQ47l/1JkbFBeUf7F+dB6uNm7
+         xSf96wUv+imAA17fbvrxaJ/N+n+YBr90TUhDVLSWPLHeJLtq/aCRAVBaXDS1EuC2Q+
+         sCIqpNbh9i4WAew/z2VYeg02wA8xfXgiwgfoAuARSgP1kl9V2ftzc1rPkDW6kZC+zx
+         ZaYFkLPGxKyFZpMf0SzARHXJkofGwyya5mlu7homrWpkKTJXGixau9DsyyE+mlsGix
+         5uBnx2O3F+ooQ==
+Date:   Tue, 16 Mar 2021 16:15:43 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Cc:     dmaengine@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        Michal Simek <michal.simek@xilinx.com>,
+        Rohit Visavalia <RVISAVAL@xilinx.com>
+Subject: Re: [PATCH 0/2] dmaengine: Fix issues in Xilinx dpdma driver
+Message-ID: <YFCMVxsepqFUZz5v@vkoul-mobl>
+References: <20210307040629.29308-1-laurent.pinchart@ideasonboard.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Authenticated-Sender: lars@metafoo.de
-X-Virus-Scanned: Clear (ClamAV 0.102.4/26106/Fri Mar 12 13:03:16 2021)
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210307040629.29308-1-laurent.pinchart@ideasonboard.com>
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-The Xilinx dmaengine driver uses a tasklet to process completed
-descriptors and execute their callbacks.
+On 07-03-21, 06:06, Laurent Pinchart wrote:
+> Hello,
+> 
+> This small patch series fixes two issues I've experienced with the
+> Xilinx dpdma driver. There isn't much to summarize in the cover letter,
+> please see individual patches for details.
 
-Currently consumers of the DMA channel have to no method of synchronization
-against this tasklet when using the Xilinx dmaengine drivers. This can lead
-to race conditions when the consumer frees resources that are accessed in
-the callback before the tasklet has finished running.
+Applied, thanks
 
-It is not enough to just call dmaengine_terminal_all() since on a
-multi-processor system the tasklet can run concurrently to it and might
-call the callback after dmaengine_terminate_all() has already finished.
-
-To mitigate this issue implement the synchronize() callback for the driver,
-which will wait until the tasklet has finished.
-
-Signed-off-by: Lars-Peter Clausen <lars@metafoo.de>
----
- drivers/dma/xilinx/xilinx_dma.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
-
-diff --git a/drivers/dma/xilinx/xilinx_dma.c b/drivers/dma/xilinx/xilinx_dma.c
-index 3aded7861fef..75c0b8e904e5 100644
---- a/drivers/dma/xilinx/xilinx_dma.c
-+++ b/drivers/dma/xilinx/xilinx_dma.c
-@@ -2453,6 +2453,13 @@ static int xilinx_dma_terminate_all(struct dma_chan *dchan)
- 	return 0;
- }
- 
-+static void xilinx_dma_synchronize(struct dma_chan *dchan)
-+{
-+	struct xilinx_dma_chan *chan = to_xilinx_chan(dchan);
-+
-+	tasklet_kill(&chan->tasklet);
-+}
-+
- /**
-  * xilinx_dma_channel_set_config - Configure VDMA channel
-  * Run-time configuration for Axi VDMA, supports:
-@@ -3074,6 +3081,7 @@ static int xilinx_dma_probe(struct platform_device *pdev)
- 	xdev->common.device_free_chan_resources =
- 				xilinx_dma_free_chan_resources;
- 	xdev->common.device_terminate_all = xilinx_dma_terminate_all;
-+	xdev->common.device_synchronize = xilinx_dma_synchronize;
- 	xdev->common.device_tx_status = xilinx_dma_tx_status;
- 	xdev->common.device_issue_pending = xilinx_dma_issue_pending;
- 	if (xdev->dma_config->dmatype == XDMA_TYPE_AXIDMA) {
 -- 
-2.20.1
-
+~Vinod
