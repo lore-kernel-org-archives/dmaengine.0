@@ -7,39 +7,39 @@ X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0E80AC433E0
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2C2B3C433E2
 	for <dmaengine@archiver.kernel.org>; Mon, 22 Mar 2021 23:32:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D0F49619A5
+	by mail.kernel.org (Postfix) with ESMTP id 01748619B1
 	for <dmaengine@archiver.kernel.org>; Mon, 22 Mar 2021 23:32:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230389AbhCVXbj (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 22 Mar 2021 19:31:39 -0400
-Received: from mga02.intel.com ([134.134.136.20]:27401 "EHLO mga02.intel.com"
+        id S230391AbhCVXbk (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 22 Mar 2021 19:31:40 -0400
+Received: from mga04.intel.com ([192.55.52.120]:57513 "EHLO mga04.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230473AbhCVXbX (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Mon, 22 Mar 2021 19:31:23 -0400
-IronPort-SDR: j+9+z+A2XrA71IPSY2ogl4tFtBQgnesbeU7WebTdxPJhRsOCFkIKv5YOyaFye4PNjWRcMYZvCp
- UJiKYC4RhiHQ==
-X-IronPort-AV: E=McAfee;i="6000,8403,9931"; a="177496922"
+        id S230334AbhCVXbd (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Mon, 22 Mar 2021 19:31:33 -0400
+IronPort-SDR: 6cw0aQxcO2aSAOOxg2DY9XkunIdzg802Q0i+N96ujw4jaa1ciSrVe3aUUnWM09Zsy8aSUXzAkM
+ VJrkpDyPKTTQ==
+X-IronPort-AV: E=McAfee;i="6000,8403,9931"; a="188049636"
 X-IronPort-AV: E=Sophos;i="5.81,269,1610438400"; 
-   d="scan'208";a="177496922"
+   d="scan'208";a="188049636"
 Received: from orsmga005.jf.intel.com ([10.7.209.41])
-  by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Mar 2021 16:31:21 -0700
-IronPort-SDR: JUqiQTaTRIWeuVPn/CMyv5INzmMCMiENLmt5/HbzOvlsliDVGkAYwQgYF1FW+Gqlha4QO6FWzB
- AHomdLewxgWg==
+  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Mar 2021 16:31:33 -0700
+IronPort-SDR: m1OXy3VH14XJsMf1sEHMU6clgK8UaU2zSTRcXAugtynsykWrf/fdTKCCtks6aP0T0UXnvFLiLH
+ sBgupY8yiU7w==
 X-IronPort-AV: E=Sophos;i="5.81,269,1610438400"; 
-   d="scan'208";a="592784405"
+   d="scan'208";a="592784464"
 Received: from djiang5-desk3.ch.intel.com ([143.182.136.137])
-  by orsmga005-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Mar 2021 16:31:21 -0700
-Subject: [PATCH v7 1/8] dmaengine: idxd: fix dma device lifetime
+  by orsmga005-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Mar 2021 16:31:32 -0700
+Subject: [PATCH v7 3/8] dmaengine: idxd: removal of pcim managed mmio mapping
 From:   Dave Jiang <dave.jiang@intel.com>
 To:     vkoul@kernel.org
 Cc:     Jason Gunthorpe <jgg@nvidia.com>,
         Dan Williams <dan.j.williams@intel.com>,
         dmaengine@vger.kernel.org, jgg@nvidia.com, dan.j.williams@intel.com
-Date:   Mon, 22 Mar 2021 16:31:20 -0700
-Message-ID: <161645588051.2002542.11826645451671709912.stgit@djiang5-desk3.ch.intel.com>
+Date:   Mon, 22 Mar 2021 16:31:32 -0700
+Message-ID: <161645589203.2002542.15810512674879500154.stgit@djiang5-desk3.ch.intel.com>
 In-Reply-To: <161645534083.2002542.11583610276394664799.stgit@djiang5-desk3.ch.intel.com>
 References: <161645534083.2002542.11583610276394664799.stgit@djiang5-desk3.ch.intel.com>
 User-Agent: StGit/0.23-29-ga622f1
@@ -52,201 +52,105 @@ X-Mailing-List: dmaengine@vger.kernel.org
 
 The devm managed lifetime is incompatible with 'struct device' objects that
 resides in idxd context. This is one of the series that clean up the idxd
-driver 'struct device' lifetime. Remove embedding of dma_device and dma_chan
-in idxd since it's not the only interface that idxd will use. The freeing of
-the dma_device will be managed by the ->release() function.
+driver 'struct device' lifetime. Remove pcim_* management of the PCI device
+and the ioremap of MMIO BAR and replace with unmanaged versions. This is
+for consistency of removing all the pcim/devm based calls.
 
 Reported-by: Jason Gunthorpe <jgg@nvidia.com>
 Fixes: bfe1d56091c1 ("dmaengine: idxd: Init and probe for Intel data accelerators")
 Signed-off-by: Dave Jiang <dave.jiang@intel.com>
 Reviewed-by: Dan Williams <dan.j.williams@intel.com>
 ---
- drivers/dma/idxd/device.c |    2 +
- drivers/dma/idxd/dma.c    |   61 +++++++++++++++++++++++++++++++++++++--------
- drivers/dma/idxd/idxd.h   |   17 +++++++++++--
- 3 files changed, 66 insertions(+), 14 deletions(-)
+ drivers/dma/idxd/init.c |   33 +++++++++++++++++++++++----------
+ 1 file changed, 23 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/dma/idxd/device.c b/drivers/dma/idxd/device.c
-index 84a6ea60ecf0..971a10a60093 100644
---- a/drivers/dma/idxd/device.c
-+++ b/drivers/dma/idxd/device.c
-@@ -186,7 +186,7 @@ int idxd_wq_alloc_resources(struct idxd_wq *wq)
- 		desc->id = i;
- 		desc->wq = wq;
- 		desc->cpu = -1;
--		dma_async_tx_descriptor_init(&desc->txd, &wq->dma_chan);
-+		dma_async_tx_descriptor_init(&desc->txd, &wq->idxd_chan->chan);
- 		desc->txd.tx_submit = idxd_dma_tx_submit;
- 	}
- 
-diff --git a/drivers/dma/idxd/dma.c b/drivers/dma/idxd/dma.c
-index a15e50126434..8cea87f0d42d 100644
---- a/drivers/dma/idxd/dma.c
-+++ b/drivers/dma/idxd/dma.c
-@@ -14,7 +14,10 @@
- 
- static inline struct idxd_wq *to_idxd_wq(struct dma_chan *c)
- {
--	return container_of(c, struct idxd_wq, dma_chan);
-+	struct idxd_dma_chan *idxd_chan;
-+
-+	idxd_chan = container_of(c, struct idxd_dma_chan, chan);
-+	return idxd_chan->wq;
- }
- 
- void idxd_dma_complete_txd(struct idxd_desc *desc,
-@@ -156,14 +159,25 @@ dma_cookie_t idxd_dma_tx_submit(struct dma_async_tx_descriptor *tx)
- 
- static void idxd_dma_release(struct dma_device *device)
- {
-+	struct idxd_dma_dev *idxd_dma = container_of(device, struct idxd_dma_dev, dma);
-+
-+	kfree(idxd_dma);
- }
- 
- int idxd_register_dma_device(struct idxd_device *idxd)
- {
--	struct dma_device *dma = &idxd->dma_dev;
-+	struct idxd_dma_dev *idxd_dma;
-+	struct dma_device *dma;
-+	struct device *dev = &idxd->pdev->dev;
-+	int rc;
-+
-+	idxd_dma = kzalloc_node(sizeof(*idxd_dma), GFP_KERNEL, dev_to_node(dev));
-+	if (!idxd_dma)
-+		return -ENOMEM;
- 
-+	dma = &idxd_dma->dma;
- 	INIT_LIST_HEAD(&dma->channels);
--	dma->dev = &idxd->pdev->dev;
-+	dma->dev = dev;
- 
- 	dma_cap_set(DMA_PRIVATE, dma->cap_mask);
- 	dma_cap_set(DMA_COMPLETION_NO_ORDER, dma->cap_mask);
-@@ -179,35 +193,60 @@ int idxd_register_dma_device(struct idxd_device *idxd)
- 	dma->device_alloc_chan_resources = idxd_dma_alloc_chan_resources;
- 	dma->device_free_chan_resources = idxd_dma_free_chan_resources;
- 
--	return dma_async_device_register(&idxd->dma_dev);
-+	rc = dma_async_device_register(dma);
-+	if (rc < 0) {
-+		kfree(idxd_dma);
-+		return rc;
-+	}
-+
-+	idxd_dma->idxd = idxd;
-+	idxd->idxd_dma = idxd_dma;
-+	return 0;
- }
- 
- void idxd_unregister_dma_device(struct idxd_device *idxd)
- {
--	dma_async_device_unregister(&idxd->dma_dev);
-+	dma_async_device_unregister(&idxd->idxd_dma->dma);
- }
- 
- int idxd_register_dma_channel(struct idxd_wq *wq)
- {
- 	struct idxd_device *idxd = wq->idxd;
--	struct dma_device *dma = &idxd->dma_dev;
--	struct dma_chan *chan = &wq->dma_chan;
-+	struct dma_device *dma = &idxd->idxd_dma->dma;
-+	struct device *dev = &idxd->pdev->dev;
-+	struct idxd_dma_chan *idxd_chan;
-+	struct dma_chan *chan;
+diff --git a/drivers/dma/idxd/init.c b/drivers/dma/idxd/init.c
+index 72f319dd52fc..080d31bf5b33 100644
+--- a/drivers/dma/idxd/init.c
++++ b/drivers/dma/idxd/init.c
+@@ -392,32 +392,36 @@ static int idxd_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+ 	struct idxd_device *idxd;
  	int rc;
  
--	memset(&wq->dma_chan, 0, sizeof(struct dma_chan));
-+	idxd_chan = kzalloc_node(sizeof(*idxd_chan), GFP_KERNEL, dev_to_node(dev));
-+	if (!idxd_chan)
-+		return -ENOMEM;
-+
-+	chan = &idxd_chan->chan;
- 	chan->device = dma;
- 	list_add_tail(&chan->device_node, &dma->channels);
- 	rc = dma_async_device_channel_register(dma, chan);
--	if (rc < 0)
-+	if (rc < 0) {
-+		kfree(idxd_chan);
+-	rc = pcim_enable_device(pdev);
++	rc = pci_enable_device(pdev);
+ 	if (rc)
  		return rc;
+ 
+ 	dev_dbg(dev, "Alloc IDXD context\n");
+ 	idxd = idxd_alloc(pdev);
+-	if (!idxd)
+-		return -ENOMEM;
++	if (!idxd) {
++		rc = -ENOMEM;
++		goto err_idxd_alloc;
 +	}
-+
-+	wq->idxd_chan = idxd_chan;
-+	idxd_chan->wq = wq;
-+	get_device(&wq->conf_dev);
+ 
+ 	dev_dbg(dev, "Mapping BARs\n");
+-	idxd->reg_base = pcim_iomap(pdev, IDXD_MMIO_BAR, 0);
+-	if (!idxd->reg_base)
+-		return -ENOMEM;
++	idxd->reg_base = pci_iomap(pdev, IDXD_MMIO_BAR, 0);
++	if (!idxd->reg_base) {
++		rc = -ENOMEM;
++		goto err_iomap;
++	}
+ 
+ 	dev_dbg(dev, "Set DMA masks\n");
+ 	rc = pci_set_dma_mask(pdev, DMA_BIT_MASK(64));
+ 	if (rc)
+ 		rc = pci_set_dma_mask(pdev, DMA_BIT_MASK(32));
+ 	if (rc)
+-		return rc;
++		goto err;
+ 
+ 	rc = pci_set_consistent_dma_mask(pdev, DMA_BIT_MASK(64));
+ 	if (rc)
+ 		rc = pci_set_consistent_dma_mask(pdev, DMA_BIT_MASK(32));
+ 	if (rc)
+-		return rc;
++		goto err;
+ 
+ 	idxd_set_type(idxd);
+ 
+@@ -431,13 +435,13 @@ static int idxd_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+ 	rc = idxd_probe(idxd);
+ 	if (rc) {
+ 		dev_err(dev, "Intel(R) IDXD DMA Engine init failed\n");
+-		return -ENODEV;
++		goto err;
+ 	}
+ 
+ 	rc = idxd_setup_sysfs(idxd);
+ 	if (rc) {
+ 		dev_err(dev, "IDXD sysfs setup failed\n");
+-		return -ENODEV;
++		goto err;
+ 	}
+ 
+ 	idxd->state = IDXD_DEV_CONF_READY;
+@@ -446,6 +450,13 @@ static int idxd_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+ 		 idxd->hw.version);
  
  	return 0;
++
++ err:
++	pci_iounmap(pdev, idxd->reg_base);
++ err_iomap:
++ err_idxd_alloc:
++	pci_disable_device(pdev);
++	return rc;
  }
  
- void idxd_unregister_dma_channel(struct idxd_wq *wq)
- {
--	struct dma_chan *chan = &wq->dma_chan;
-+	struct idxd_dma_chan *idxd_chan = wq->idxd_chan;
-+	struct dma_chan *chan = &idxd_chan->chan;
-+	struct idxd_dma_dev *idxd_dma = wq->idxd->idxd_dma;
+ static void idxd_flush_pending_llist(struct idxd_irq_entry *ie)
+@@ -500,6 +511,8 @@ static void idxd_shutdown(struct pci_dev *pdev)
+ 	}
  
--	dma_async_device_channel_unregister(&wq->idxd->dma_dev, chan);
-+	dma_async_device_channel_unregister(&idxd_dma->dma, chan);
- 	list_del(&chan->device_node);
-+	kfree(wq->idxd_chan);
-+	wq->idxd_chan = NULL;
-+	put_device(&wq->conf_dev);
+ 	pci_free_irq_vectors(pdev);
++	pci_iounmap(pdev, idxd->reg_base);
++	pci_disable_device(pdev);
+ 	destroy_workqueue(idxd->wq);
  }
-diff --git a/drivers/dma/idxd/idxd.h b/drivers/dma/idxd/idxd.h
-index 81a0e65fd316..40001c46d95c 100644
---- a/drivers/dma/idxd/idxd.h
-+++ b/drivers/dma/idxd/idxd.h
-@@ -14,6 +14,9 @@
  
- extern struct kmem_cache *idxd_desc_pool;
- 
-+struct idxd_device;
-+struct idxd_wq;
-+
- #define IDXD_REG_TIMEOUT	50
- #define IDXD_DRAIN_TIMEOUT	5000
- 
-@@ -96,6 +99,11 @@ enum idxd_complete_type {
- 	IDXD_COMPLETE_DEV_FAIL,
- };
- 
-+struct idxd_dma_chan {
-+	struct dma_chan chan;
-+	struct idxd_wq *wq;
-+};
-+
- struct idxd_wq {
- 	void __iomem *portal;
- 	struct device conf_dev;
-@@ -125,7 +133,7 @@ struct idxd_wq {
- 	int compls_size;
- 	struct idxd_desc **descs;
- 	struct sbitmap_queue sbq;
--	struct dma_chan dma_chan;
-+	struct idxd_dma_chan *idxd_chan;
- 	char name[WQ_NAME_SIZE + 1];
- 	u64 max_xfer_bytes;
- 	u32 max_batch_size;
-@@ -162,6 +170,11 @@ enum idxd_device_flag {
- 	IDXD_FLAG_PASID_ENABLED,
- };
- 
-+struct idxd_dma_dev {
-+	struct idxd_device *idxd;
-+	struct dma_device dma;
-+};
-+
- struct idxd_device {
- 	enum idxd_type type;
- 	struct device conf_dev;
-@@ -210,7 +223,7 @@ struct idxd_device {
- 	int num_wq_irqs;
- 	struct idxd_irq_entry *irq_entries;
- 
--	struct dma_device dma_dev;
-+	struct idxd_dma_dev *idxd_dma;
- 	struct workqueue_struct *wq;
- 	struct work_struct work;
- };
 
 
