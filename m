@@ -2,48 +2,49 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MSGID_FROM_MTA_HEADER,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
-	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-18.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,MSGID_FROM_MTA_HEADER,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 93C2BC433C1
-	for <dmaengine@archiver.kernel.org>; Mon, 22 Mar 2021 05:01:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2BBB9C433E0
+	for <dmaengine@archiver.kernel.org>; Mon, 22 Mar 2021 05:01:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 506C861494
-	for <dmaengine@archiver.kernel.org>; Mon, 22 Mar 2021 05:01:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CE4B461973
+	for <dmaengine@archiver.kernel.org>; Mon, 22 Mar 2021 05:01:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229871AbhCVFAe (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 22 Mar 2021 01:00:34 -0400
-Received: from mail-dm6nam12on2057.outbound.protection.outlook.com ([40.107.243.57]:49718
+        id S229840AbhCVFAf (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 22 Mar 2021 01:00:35 -0400
+Received: from mail-dm6nam12on2040.outbound.protection.outlook.com ([40.107.243.40]:57313
         "EHLO NAM12-DM6-obe.outbound.protection.outlook.com"
         rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S229728AbhCVE76 (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Mon, 22 Mar 2021 00:59:58 -0400
+        id S229771AbhCVFAI (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Mon, 22 Mar 2021 01:00:08 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=aWyYGbD9guoJ16gYL1KZYXnSjanlYLIwTsQsUN7JiOH3rGVQt5hE4Fku+saW1awTRjTBZ+QIEP0Ae58Yyca9E4c1HbCP1th0wo+xiUQCqRtn69nGmrTbuMHuK9CJ4Fb57LLbrzwsCDO4fHxNGUZTPZFx+dUxQXJ2YA7hf+lmihBiDj20HudvwEXeUxH4VgjMkg1mS28RPyLt51h6FDWQ3mqFa/5oevWtIphFMQIhCt70J4+sFVIl//psWN3wPbW6FgEjukFpXGn8aamsOvanrunDUCvVwxegqWlXzLSlxx+ZtmlmFSxJrUi/7FIMnVcyNOFwREMlTvMZ+HLZEtg3SQ==
+ b=cLGl11J4uWirafbjNBQytZAzFV7JvYPi3oMczGMi66ZA7IlPuO36WuT1FrTkkF2MVIzlPLgaxBDZ3YbchLytEfJzCcwivzdH7PwR2dfVWV8E2owEJHuy4YWutNXMIm6Jk/Q4cFTY3KgazbXo45Bzx/cwThL1SSgtss7QTZ/+o2a0HLuconFbx7UPLWD5+62aLxxbAc3aD/sPme1Nhgan1Go2laJnY7oHZJwiZHRUbucRD5jz0fUbk+lIPGyO5K0ANQjv7ARyVSkcSFN5YtERjIohL5SG3MWlNtlay1cFoipYfInyuLITJx1h/VxT+s8lFF9UL5ijPREXGVK1npK7eg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=d3AJAy0iDCAguQUZWnkPePoQ9170CgtjgTJL/SU5l2o=;
- b=VHfoWrJMNxd+S4GBzX74D2likezttjozpL1panLhtI0gKOlQXfJ/pUDG9tg3jsV1G1IjCgILo+vhB47tytezyoVimZvAQTf+vuzwV9UxNqEIz90KLMj5TbIAZSMiRYxeN+dhkD4TiCh2J223ZyrdwyLTtyRADhbKE41FEKI8zOi8I+NzoIZfe5tCoirEapaLNjozd1o9nVoJCqiMtqhrO+HjgH5XPSX/kGPDCUqqY5VaaG2cz9c88qjbvEurP1ib3YBfa2E6mdwmY24fPvYRXAPDIRjr196WYM09e3I16pid/FTga8IDftucCI7e0UeoptAEpscFRHJE5Sz89Uv+Ug==
+ bh=DloJOnupBj3tufQ+HWX2PWEtaAOU2bnlSI177FMrdq4=;
+ b=Of/SAfdCEUP+QscLBu1E7az/UbDkWLthPw2pzBGUoqqlrpeyAVOHHucdIMAGrCLahijrGs+us3oDmRgsPSdSvstJ0l8fW7DlGQg1DTA6jZcYbih6w+SlXKN/bZru0QudBTxrjJBeS76HrSKciiK0IpzpV6CDNECn/LoM4PIdwzxLbTkyq0yQD4uVPapLNS9Qfe/bhY6xkfsfXgYzaqPvOT8I6p4bCAzE/bB0OL92+MGiVpE/l3mm49+Tw0nz2VZzaxWa+g+0IgWY7vPv1p7gpNfm8D8lvhYTRV2r8ZRWQJ91j48jNTqo2vnijEOk7e+SbXDz5bmWyotEK0hppPUPjg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
  header.d=amd.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=d3AJAy0iDCAguQUZWnkPePoQ9170CgtjgTJL/SU5l2o=;
- b=suKUVOM182Q8K5tXDvW2+T+s+rtIan4OsCwTI2BZyCcgbkhDE/aMLv3reshatGzhUzrN+LWZCIswkHwujUa1Ojc0Ok73tdUZ+MW6RGMWvO0WewvUXsPqPFfXa33uGkOJt2DD5CLl1jeUag9mTuYWBh0kxHz/44RUoM3/lHbxI8I=
+ bh=DloJOnupBj3tufQ+HWX2PWEtaAOU2bnlSI177FMrdq4=;
+ b=gMw/NTajdbll6o8/POZFfSLoRVLgqqV+IHKATjgQb69YO/fiWgQ0NbghiO7S3iftnC365uYNZlbo4Aljka63uLPA4fiRv9IJlGt008NDDlWqyx5AGpvQaAfe6hcAw1/5GtFsCxhu28XQIECcX/OlzRzndM21b0456IFstjuyWo4=
 Authentication-Results: kernel.org; dkim=none (message not signed)
  header.d=none;kernel.org; dmarc=none action=none header.from=amd.com;
 Received: from CY4PR1201MB2549.namprd12.prod.outlook.com (10.172.121.10) by
  CY4PR1201MB0040.namprd12.prod.outlook.com (10.172.77.139) with Microsoft SMTP
  Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.3955.18; Mon, 22 Mar 2021 04:59:54 +0000
+ 15.20.3955.18; Mon, 22 Mar 2021 05:00:06 +0000
 Received: from CY4PR1201MB2549.namprd12.prod.outlook.com
  ([fe80::e974:eaaf:2994:ccb6]) by CY4PR1201MB2549.namprd12.prod.outlook.com
  ([fe80::e974:eaaf:2994:ccb6%4]) with mapi id 15.20.3955.025; Mon, 22 Mar 2021
- 04:59:54 +0000
+ 05:00:06 +0000
 From:   Sanjay R Mehta <Sanju.Mehta@amd.com>
 To:     vkoul@kernel.org
 Cc:     gregkh@linuxfoundation.org, dan.j.williams@intel.com,
@@ -52,10 +53,12 @@ Cc:     gregkh@linuxfoundation.org, dan.j.williams@intel.com,
         mchehab+samsung@kernel.org, davem@davemloft.net,
         linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org,
         Sanjay R Mehta <sanju.mehta@amd.com>
-Subject: [PATCH v8 0/3] Add support for AMD PTDMA controller driver
-Date:   Sun, 21 Mar 2021 23:59:29 -0500
-Message-Id: <1616389172-6825-1-git-send-email-Sanju.Mehta@amd.com>
+Subject: [PATCH v8 2/3] dmaengine: ptdma: register PTDMA controller as a DMA resource
+Date:   Sun, 21 Mar 2021 23:59:31 -0500
+Message-Id: <1616389172-6825-3-git-send-email-Sanju.Mehta@amd.com>
 X-Mailer: git-send-email 2.7.4
+In-Reply-To: <1616389172-6825-1-git-send-email-Sanju.Mehta@amd.com>
+References: <1616389172-6825-1-git-send-email-Sanju.Mehta@amd.com>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 X-Originating-IP: [165.204.156.251]
@@ -64,51 +67,51 @@ X-ClientProxiedBy: MA1PR01CA0143.INDPRD01.PROD.OUTLOOK.COM
  (2603:10b6:903:da::10)
 MIME-Version: 1.0
 X-MS-Exchange-MessageSentRepresentingType: 1
-Received: from sanjuamdntb2.amd.com (165.204.156.251) by MA1PR01CA0143.INDPRD01.PROD.OUTLOOK.COM (2603:1096:a00:71::13) with Microsoft SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256) id 15.20.3955.18 via Frontend Transport; Mon, 22 Mar 2021 04:59:50 +0000
+Received: from sanjuamdntb2.amd.com (165.204.156.251) by MA1PR01CA0143.INDPRD01.PROD.OUTLOOK.COM (2603:1096:a00:71::13) with Microsoft SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256) id 15.20.3955.18 via Frontend Transport; Mon, 22 Mar 2021 05:00:02 +0000
 X-MS-PublicTrafficType: Email
 X-MS-Office365-Filtering-HT: Tenant
-X-MS-Office365-Filtering-Correlation-Id: 44ed7ddf-1a6a-428a-56f0-08d8ecef54d8
+X-MS-Office365-Filtering-Correlation-Id: b391ed20-dd6d-415a-0fe7-08d8ecef5beb
 X-MS-TrafficTypeDiagnostic: CY4PR1201MB0040:
 X-MS-Exchange-Transport-Forked: True
-X-Microsoft-Antispam-PRVS: <CY4PR1201MB00400DAFA817A68B9EC52EBEE5659@CY4PR1201MB0040.namprd12.prod.outlook.com>
-X-MS-Oob-TLC-OOBClassifiers: OLM:6430;
+X-Microsoft-Antispam-PRVS: <CY4PR1201MB00404FA6A77CEFF50943580BE5659@CY4PR1201MB0040.namprd12.prod.outlook.com>
+X-MS-Oob-TLC-OOBClassifiers: OLM:154;
 X-MS-Exchange-SenderADCheck: 1
 X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: 1VmbUjHi5Xa84kfGCHmJEZWd+mXh7g50E3UhgRUpc7hNbKvgpTJMG6SaKmhjYoBfV4oUXwgDTWKTMZldcDjW61QGBSJsjdSQryKh5DbL5FlAV0fIeVCCGQiUpakA1LuPaTUBEPtFRyPvg9GEhzgmc5H1KbofXy/n9hBwdbZpxoutrr/Erz8cBZh5Rp9Wued4hn9xnBzYZMu29nfqntRTEPcYn1IHHzD9gjALb4Ox6ml+0HhHd+NRTqAMAzA3qfXuEbb3J6EtLYYkygQealWRcnX31lQewWOtmfgjUfT3podwRn9PMqRIK9IKHEhhidL9nyXr/R84J9BE6KKSXdY6G6JAk58XhNxZwPZuHFLsJ80kma2qqjd/khtLQf/pIBoigfgAd0s2FnzPYgzZs6rSLPtUC8jaybTatcsqskJ0vY8P8nKr0hvpAJIl5yZt5BQsfeXRUZ6LkaYRtUNfZYoj5qV2WhpuQgYWMUwNoCysQTuwp5ma6Vsfhf5wgcTHqzSYOhOrHQdABC+4oQUCV01t7ExYyY95nTgUfqUVoAF9bJg3nuMBQstmUUx611U+/oIrhpvajD2Ac9DWnCQy7Rn7ZyTduV2voiPuz7gNxEGhCHeETbuwDITR8/auBkJVQuUvGVm8/iUWCaNS9o/ejrCfmL2y316CKfRRt81biBDVG9Y70xx1BlRKDGJ8GTT+xMKztdbn58S9woctZyINVXMI82ryXENVvFIPJWbgm3HJhrE=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CY4PR1201MB2549.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(4636009)(366004)(136003)(39860400002)(346002)(376002)(396003)(316002)(966005)(186003)(7696005)(26005)(6666004)(4326008)(2616005)(956004)(2906002)(52116002)(86362001)(6916009)(478600001)(36756003)(6486002)(38100700001)(66946007)(16526019)(5660300002)(8676002)(66556008)(8936002)(83380400001)(66476007);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData: =?us-ascii?Q?ilXmdEvr597QyCcmE+85zYxL+B/0611O01Dr2p0ekvJWsBVldv2ilRFW9cOy?=
- =?us-ascii?Q?q7ZkOS5dhuj7XbIDVvFHAhiP4CH1wa1zlzz1/s/oge+eGHveS0JWC6ygIhk2?=
- =?us-ascii?Q?XXaia8uMiqGGSmgD4cRBh4lxTOA0egwb23Yp7hXilajo/QRbb08CQ4lCvlQg?=
- =?us-ascii?Q?XwuHY2KI9gPEcCLnqNJ/md30XlPn20gLa7EedOVTZZol/syLONEUCvcsVqKN?=
- =?us-ascii?Q?u5uNkeyuF4xd+DOZ0nZwL7MtUr0tIdU+wUolPplK4KbORPBI9OZT1Tfjb1De?=
- =?us-ascii?Q?7AyufGjB16RI/yQwNZnY4G+vHDu0nOVP7lW7ng/WHZOuYYgo1rXjcLmxPfny?=
- =?us-ascii?Q?qI4ayCQZYBY30EM8RyQaU7GMJu0eGhhYS9ZOLXCzNJodVAXaD8cAgWaH+aIm?=
- =?us-ascii?Q?3BN0rZSy7skZtzBu3ewzHBre2YBwicoRirwvBvXrzeyI4SXFp9QMQqn5jBlL?=
- =?us-ascii?Q?AcbR69U0f8DWsG4dgm2YEwOrn14Ujg0X6tit0PUnh9psz8MNG1+sa3WotuFB?=
- =?us-ascii?Q?IafxesBS1xhyNDoM5l1cK+1M9x9syYTj/ZjXHMDoXLxXyoOnPmUL+lkQWHF8?=
- =?us-ascii?Q?vOJ+EywROpLuEOCoDjy8P0ZYBR3jybWgw3kRxnd9MU1ZWuQ3rXPqlRuSgCVB?=
- =?us-ascii?Q?PAdD+hF41nBJ3NOEu/uxtRr+CyGaYPbW/k2e8HH6zJLhfox1nVBsPN3ULAi/?=
- =?us-ascii?Q?tQtlrfhzagNAo+gl1udbPWaboPwqXjEfpg8yWx54EefOtQupnrFvJN5PbqrA?=
- =?us-ascii?Q?rjprKGeilvciRPVhKmQdgtSfFRhkD3DFclBja5PMutr26qSi9po9auQzPd0O?=
- =?us-ascii?Q?7zgH7J1X//g5Z2wPuq9+7xyHjpXSlWXaXsjJI24E6O6TCoiM/h/xeC3wwZ7Q?=
- =?us-ascii?Q?MEeUsF4Gcy4coICTLwq2a3nBILPIb2R7/7nd7g+qM+LpkpTH8Iyr2a2OWED2?=
- =?us-ascii?Q?zlZpHlLACRYBtQ7+xeMFNxzEmpXiMHeWAw+E4bE7qKu5PRrXeDgTsG0udvbR?=
- =?us-ascii?Q?F836ym2pZF6XBXchm2+uat+MXdwjC5gdioXvv755jS0edG9lvc8TZaigPQNx?=
- =?us-ascii?Q?Egd31uOUHZC4aST1YTsrwNOBr7eg6qmWWN0DXrc5cH7HaMQ5vNsjCvuBYpz0?=
- =?us-ascii?Q?M2H1eAtex291jED0tQGQYi5a93lFwDkw4J+2LG0c4BiVwbTPE73u9kLsUOPt?=
- =?us-ascii?Q?Cb/jtmVHyV4vixKum+CECDC2i2sY7vh8xT1unzdbsnF8W09+O1RwnfvUFupK?=
- =?us-ascii?Q?Di3yWr97Tvm2hmUmeZH+8J1hjFAsAecUSwbtyJmT1riMoFEfBm2WXXFVrnU9?=
- =?us-ascii?Q?9IXGf0aFpK6G8/FazL5o/xVa?=
+X-Microsoft-Antispam-Message-Info: rWMW+tZrBb9x9XAQ2E9IUhv8NzjqQTpTRKBCzxg0Bg9pbW0VXSn3joe+RtHDUEumqNy8980ADJg7JI/lO8tzLi0FBTtUBJxHvASxCvYDWoNDOwBhVtr5+7+RUrjYABqvQcu17UCU5aR7IejiRmEsy3eNhF46+HGuf3xvXYC5pkoaL1zXvZzXCbP8H08jLHlT/ukiQimQNsttr0TnsEfyp0Ec0pGf2C4n+SwWnwQoI6W5e9lw3Lg4DrcX096zYUvX6wXDgI7YtO20u49f+ftcdDtc1ZbAqi6ejtXGZiWqY3g2zdqcNVFL+ULrUV7+DjH9xkvTIkUOLcDsxJgqA2vHepUgwHmk0pB7x5/uJkAoD59Ue1Hc1TNfcBzH94Rx3nFBChnQfl7OPfosH3c1HIQChiECIoQRubxkW4wI3BOdPLFLEMe1/EeEK+gsqzuVaRDMraklIUZ6o1OuXq+DqOmpsnC/w4JeYAPjLyyLe+O1k4BemTBEWC5q+eKrMSsnohK9WeUSMhVhJft0XhRBhxFVTJQu0msWkUyY+TKLNrj9rjj+Q4x3CmNI2drfbrwGM6++UyCb7x4vq6kFAsAkhlP7P2Z20vSis8Z9HE7OG+EgtN3twyFYVjtUx3BEkf/BEuh8ILIUD0hxN4CTDXZTyduZgA==
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CY4PR1201MB2549.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(4636009)(396003)(376002)(346002)(39860400002)(136003)(366004)(66946007)(16526019)(5660300002)(30864003)(38100700001)(36756003)(6486002)(66556008)(8936002)(83380400001)(66476007)(8676002)(26005)(4326008)(6666004)(316002)(7696005)(186003)(86362001)(478600001)(6916009)(956004)(2616005)(2906002)(52116002);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData: =?us-ascii?Q?0vCfpxP1dDbl3Fxkj5oh6dhybx1TNRfo9Cvfw/Tui+RkPkgVjgs+TqcP5oQA?=
+ =?us-ascii?Q?4Q5L1GoVBSatQwcmb48YHLKAQdETywR1BoTKQNOR8QIa/UbHcMizC1wDQiQ2?=
+ =?us-ascii?Q?2zIZmOCOlizB1myjNbQo7d+YQ0RHaQH1vG6JMqqGhMkdsfBkstvmuiggBqG7?=
+ =?us-ascii?Q?xTR1mjHrU/7yirsDfNJC3YmVGcNaGImkqFAuyZWrrnwfceWOPBDkJyI3+cQ1?=
+ =?us-ascii?Q?ZsUdA8Z2dwDxRkBCpe6x7pah0WZPK2rzqs84PeAYmM1dGWpnc91qZpVTxMWb?=
+ =?us-ascii?Q?/1qW/ZAzXXz27UkWoQlyrNzM00Z6kBNnULKmhpMZplOoIyYlvv06H3g2qJmg?=
+ =?us-ascii?Q?JqIMTIhJSNBoNvuL+cNR2VzTpvq51ZsZHic9zi/lzgtLwE6qs45cBw9DuQb/?=
+ =?us-ascii?Q?vopiLHD+46LGO036dxZC9Cpp8ZIzlyaZWHZUuAQrxqL90+AJvCVlLCGEVfJM?=
+ =?us-ascii?Q?4kBOgdh/Wjyv4fzd/mZTC7IPIQp8OQOJhjr7/8UKq5dCPoMCN/1/jWyJ9F4A?=
+ =?us-ascii?Q?uRPzJAwq5TAPl3fSdVTvJAGdYpIL+JX0FugzF8+iWyN82tUpSnd3yYmwvcFA?=
+ =?us-ascii?Q?2LmZSKqFwuUx1wXtzgiePumM8vgtUq3hK9bQ2+E1afNV8XYfHWBP4Ccrc57r?=
+ =?us-ascii?Q?6jj3Dxhsxo2E93mkw7o3t0kX5Se2LMvX2PacqbNty8DWIBwkzfIByc9p2Knb?=
+ =?us-ascii?Q?UqCjoHTPZr74x9BYMmuqXQ2Ovv36kNwTgU1A8ynJTHSq0Mnt8dTcSI6aMQYK?=
+ =?us-ascii?Q?FhghR4THaDFkOEibytbPUvWqZi3GUsvj+PdlCBL4RQrh971oSLFVq7G5M6DF?=
+ =?us-ascii?Q?iRwx01gGiSef2JQNmE69u3f8pCV7agG4Gq+lul1MCeJiQScEYdkTY1G3VKKB?=
+ =?us-ascii?Q?fwLEJ5PuLjDl+huEjBCNXZXmpoK1LAtoPMI4K40ZrkJ+KK6rs2CUoZp5DgUx?=
+ =?us-ascii?Q?HUO7jHzSrlST9sGtuYP11nlsAdM5xYn4P3t2IYGYQZiKBbanjTrXvWeCMPZA?=
+ =?us-ascii?Q?1T2pUg5WKlKNBdt0gF7ULa4PuLTircAex2NzWno7xr8+rS1DpZ7LKiLcRHFv?=
+ =?us-ascii?Q?PIif+8VITbNmOIZbacXk8LCFSJaRdmEYYb/jTr3DXJrUSvHNaBOvcz4buNbN?=
+ =?us-ascii?Q?nPsL/B9/wy2zwFpZp1WznW8hOcBNSuavSnAnoWivpZEV7iI6+9O0/7qOK9PX?=
+ =?us-ascii?Q?4U/EPN7fkGRRcE3cmiqoWSaZa5mq/Zpud6i7JbjtNgknYX9x+NdYDEZGgEkz?=
+ =?us-ascii?Q?1e4oPTZFx2/6BBr+WTKM3R/h8Tsegrvxo7EwII1Cpq/KfffVf8bP5GfiVAf1?=
+ =?us-ascii?Q?Idi2/Oan1/3kxsmP4Cor3cOd?=
 X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 44ed7ddf-1a6a-428a-56f0-08d8ecef54d8
+X-MS-Exchange-CrossTenant-Network-Message-Id: b391ed20-dd6d-415a-0fe7-08d8ecef5beb
 X-MS-Exchange-CrossTenant-AuthSource: CY4PR1201MB2549.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Mar 2021 04:59:54.1106
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Mar 2021 05:00:06.0463
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 1QDBGF6j3orTxk8T5FSjmA82toU4VM9yFE0R2GUrddyDJj6I2zRJrQpJhkKkodLl5unuTOTDVQGNetQaT4mEyA==
+X-MS-Exchange-CrossTenant-UserPrincipalName: yBM4mUMqvsCF2CLMp1GWs7z3LCHaK4jUKQW/fvV/SZvIdkWyyymx+2z1eYdPNnjLT2VPpxapXq/8i6igXYKFeA==
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY4PR1201MB0040
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
@@ -116,138 +119,666 @@ X-Mailing-List: dmaengine@vger.kernel.org
 
 From: Sanjay R Mehta <sanju.mehta@amd.com>
 
-This patch series add support for AMD PTDMA controller which
-performs high bandwidth memory-to-memory and IO copy operation,
-performs DMA transfer through queue based descriptor management.
+Register ptdma queue to Linux dmaengine framework as general-purpose
+DMA channels.
 
-AMD Processor has multiple ptdma device instances with each controller
-having single queue. The driver also adds support for for multiple PTDMA
-instances, each device will get an unique identifier and uniquely
-named resources.
-
-v8:
-	- splitted the code into different functions, one to find active desc 
-	  and second to	complete and invoke callback.
-	- used FIELD_PREP & FIELD_GET instead of union struct bitfields.
-	- modified all style fixes as per the comments.
-
-v7:
-	- Fixed module warnings reported ( by kernel test robot <lkp@intel.com> ).
-
-v6:
-	- Removed debug artifacts and made the suggested cosmetic changes.
-	- implemented and used to_pt_chan and to_pt_desc inline functions.
-	- Removed src and dst address check as framework does this.
-	- Removed devm_kcalloc() usage and used devm_kzalloc() api.
-	- Using framework debugfs directory to store dma info.
-
-v5:
-	- modified code to submit next tranction in ISR itself and removed the tasklet.
-	- implemented .device_synchronize API.
-	- converted debugfs code by using DEFINE_SHOW_ATTRIBUTE()
-	- using dbg_dev_root for debugfs root directory.
-	- removed dma_status from pt_dma_chan
-	- removed module parameter cmd_queue_lenght.
-	- removed global device list for multiple devics.
-	- removed code related to dynamic adding/deleting to device list
-	- removed pt_add_device and pt_del_device functions
-
-v4:
-	- modified DMA channel and descriptor management using virt-dma layer
-	  instead of list based management.
-	- return only status of the cookie from pt_tx_status
-	- copyright year changed from 2019 to 2020
-	- removed dummy code for suspend & resume
-	- used bitmask and genmask
-
-v3:
-        - Fixed the sparse warnings.
-
-v2:
-        - Added controller description in cover letter
-        - Removed "default m" from Kconfig
-        - Replaced low_address() and high_address() functions with kernel
-          API's lower_32_bits & upper_32_bits().
-        - Removed the BH handler function pt_core_irq_bh() and instead
-          handling transaction in irq handler itself.
-        - Moved presetting of command queue registers into new function
-          "init_cmdq_regs()"
-        - Removed the kernel thread dependency to submit transaction.
-        - Increased the hardware command queue size to 32 and adding it
-          as a module parameter.
-        - Removed backlog command queue handling mechanism.
-        - Removed software command queue handling and instead submitting
-          transaction command directly to
-          hardware command queue.
-        - Added tasklet structure variable in "struct pt_device".
-          This is used to invoke pt_do_cmd_complete() upon receiving interrupt
-          for command completion.
-        - pt_core_perform_passthru() function parameters are modified and it is
-          now used to submit command directly to hardware from dmaengine framew
-        - Removed below structures, enums, macros and functions, as these value
-          constants. Making command submission simple,
-           - Removed "union pt_function"  and several macros like PT_VERSION,
-             PT_BYTESWAP, PT_CMD_* etc..
-           - enum pt_passthru_bitwise, enum pt_passthru_byteswap, enum pt_memty
-             struct pt_dma_info, struct pt_data, struct pt_mem, struct pt_passt
-             struct pt_op,
-
-Links of the review comments for v7:
-1. https://lkml.org/lkml/2020/11/18/351
-2. https://lkml.org/lkml/2020/11/18/384
-
-Links of the review comments for v5:
-1. https://lkml.org/lkml/2020/7/3/154
-2. https://lkml.org/lkml/2020/8/25/431
-3. https://lkml.org/lkml/2020/7/3/177
-4. https://lkml.org/lkml/2020/7/3/186
-
-Links of the review comments for v5:
-1. https://lkml.org/lkml/2020/5/4/42
-2. https://lkml.org/lkml/2020/5/4/45
-3. https://lkml.org/lkml/2020/5/4/38
-4. https://lkml.org/lkml/2020/5/26/70
-
-Links of the review comments for v4:
-1. https://lkml.org/lkml/2020/1/24/12
-2. https://lkml.org/lkml/2020/1/24/17
-
-Links of the review comments for v2:
-1https://lkml.org/lkml/2019/12/27/630
-2. https://lkml.org/lkml/2020/1/3/23
-3. https://lkml.org/lkml/2020/1/3/314
-4. https://lkml.org/lkml/2020/1/10/100
-
-Links of the review comments for v1:
-1. https://lkml.org/lkml/2019/9/24/490
-2. https://lkml.org/lkml/2019/9/24/399
-3. https://lkml.org/lkml/2019/9/24/862
-4. https://lkml.org/lkml/2019/9/24/122
-
-Sanjay R Mehta (3):
-  dmaengine: ptdma: Initial driver for the AMD PTDMA
-  dmaengine: ptdma: register PTDMA controller as a DMA resource
-  dmaengine: ptdma: Add debugfs entries for PTDMA
-
- MAINTAINERS                         |   6 +
- drivers/dma/Kconfig                 |   2 +
- drivers/dma/Makefile                |   1 +
- drivers/dma/ptdma/Kconfig           |  13 +
- drivers/dma/ptdma/Makefile          |  10 +
- drivers/dma/ptdma/ptdma-debugfs.c   | 115 +++++++++
- drivers/dma/ptdma/ptdma-dev.c       | 327 ++++++++++++++++++++++++
+Signed-off-by: Sanjay R Mehta <sanju.mehta@amd.com>
+---
+ drivers/dma/ptdma/Kconfig           |   2 +
+ drivers/dma/ptdma/Makefile          |   2 +-
+ drivers/dma/ptdma/ptdma-dev.c       |  32 +++
  drivers/dma/ptdma/ptdma-dmaengine.c | 480 ++++++++++++++++++++++++++++++++++++
- drivers/dma/ptdma/ptdma-pci.c       | 251 +++++++++++++++++++
- drivers/dma/ptdma/ptdma.h           | 342 +++++++++++++++++++++++++
- 10 files changed, 1547 insertions(+)
- create mode 100644 drivers/dma/ptdma/Kconfig
- create mode 100644 drivers/dma/ptdma/Makefile
- create mode 100644 drivers/dma/ptdma/ptdma-debugfs.c
- create mode 100644 drivers/dma/ptdma/ptdma-dev.c
+ drivers/dma/ptdma/ptdma.h           |  31 +++
+ 5 files changed, 546 insertions(+), 1 deletion(-)
  create mode 100644 drivers/dma/ptdma/ptdma-dmaengine.c
- create mode 100644 drivers/dma/ptdma/ptdma-pci.c
- create mode 100644 drivers/dma/ptdma/ptdma.h
 
+diff --git a/drivers/dma/ptdma/Kconfig b/drivers/dma/ptdma/Kconfig
+index c4f8c6f..7a6bfcd 100644
+--- a/drivers/dma/ptdma/Kconfig
++++ b/drivers/dma/ptdma/Kconfig
+@@ -2,6 +2,8 @@
+ config AMD_PTDMA
+ 	tristate  "AMD PassThru DMA Engine"
+ 	depends on X86_64 && PCI
++	select DMA_ENGINE
++	select DMA_VIRTUAL_CHANNELS
+ 	help
+ 	  Enable support for the AMD PTDMA controller. This controller
+ 	  provides DMA capabilities to performs high bandwidth memory to
+diff --git a/drivers/dma/ptdma/Makefile b/drivers/dma/ptdma/Makefile
+index 320fa82..a528cb0 100644
+--- a/drivers/dma/ptdma/Makefile
++++ b/drivers/dma/ptdma/Makefile
+@@ -5,6 +5,6 @@
+ 
+ obj-$(CONFIG_AMD_PTDMA) += ptdma.o
+ 
+-ptdma-objs := ptdma-dev.o
++ptdma-objs := ptdma-dev.o ptdma-dmaengine.o
+ 
+ ptdma-$(CONFIG_PCI) += ptdma-pci.o
+diff --git a/drivers/dma/ptdma/ptdma-dev.c b/drivers/dma/ptdma/ptdma-dev.c
+index 4617550..7122933 100644
+--- a/drivers/dma/ptdma/ptdma-dev.c
++++ b/drivers/dma/ptdma/ptdma-dev.c
+@@ -124,6 +124,26 @@ static inline void pt_core_enable_queue_interrupts(struct pt_device *pt)
+ 	iowrite32(SUPPORTED_INTERRUPTS, pt->cmd_q.reg_int_enable);
+ }
+ 
++static void pt_do_cmd_complete(unsigned long data)
++{
++	struct pt_tasklet_data *tdata = (struct pt_tasklet_data *)data;
++	struct pt_cmd *cmd = tdata->cmd;
++	struct pt_cmd_queue *cmd_q = &cmd->pt->cmd_q;
++	u32 tail;
++
++	tail = lower_32_bits(cmd_q->qdma_tail + cmd_q->qidx * Q_DESC_SIZE);
++	if (cmd_q->cmd_error) {
++	       /*
++		* Log the error and flush the queue by
++		* moving the head pointer
++		*/
++		pt_log_error(cmd_q->pt, cmd_q->cmd_error);
++		iowrite32(tail, cmd_q->reg_head_lo);
++	}
++
++	cmd->pt_cmd_callback(cmd->data, cmd->ret);
++}
++
+ static irqreturn_t pt_core_irq_handler(int irq, void *data)
+ {
+ 	struct pt_device *pt = data;
+@@ -147,6 +167,7 @@ static irqreturn_t pt_core_irq_handler(int irq, void *data)
+ 	}
+ 
+ 	pt_core_enable_queue_interrupts(pt);
++	pt_do_cmd_complete((ulong)&pt->tdata);
+ 
+ 	return IRQ_HANDLED;
+ }
+@@ -246,8 +267,16 @@ int pt_core_init(struct pt_device *pt)
+ 
+ 	pt_core_enable_queue_interrupts(pt);
+ 
++	/* Register the DMA engine support */
++	ret = pt_dmaengine_register(pt);
++	if (ret)
++		goto e_dmaengine;
++
+ 	return 0;
+ 
++e_dmaengine:
++	free_irq(pt->pt_irq, pt);
++
+ e_dma_alloc:
+ 	dma_free_coherent(dev, cmd_q->qsize, cmd_q->qbase, cmd_q->qbase_dma);
+ 
+@@ -264,6 +293,9 @@ void pt_core_destroy(struct pt_device *pt)
+ 	struct pt_cmd_queue *cmd_q = &pt->cmd_q;
+ 	struct pt_cmd *cmd;
+ 
++	/* Unregister the DMA engine */
++	pt_dmaengine_unregister(pt);
++
+ 	/* Disable and clear interrupts */
+ 	pt_core_disable_queue_interrupts(pt);
+ 
+diff --git a/drivers/dma/ptdma/ptdma-dmaengine.c b/drivers/dma/ptdma/ptdma-dmaengine.c
+new file mode 100644
+index 0000000..9db9923
+--- /dev/null
++++ b/drivers/dma/ptdma/ptdma-dmaengine.c
+@@ -0,0 +1,480 @@
++// SPDX-License-Identifier: GPL-2.0-only
++/*
++ * AMD Passthrough DMA device driver
++ * -- Based on the CCP driver
++ *
++ * Copyright (C) 2016,2021 Advanced Micro Devices, Inc.
++ *
++ * Author: Sanjay R Mehta <sanju.mehta@amd.com>
++ * Author: Gary R Hook <gary.hook@amd.com>
++ */
++
++#include "ptdma.h"
++#include "../dmaengine.h"
++#include "../virt-dma.h"
++
++static inline struct pt_dma_chan *to_pt_chan(struct dma_chan *dma_chan)
++{
++	return container_of(dma_chan, struct pt_dma_chan, vc.chan);
++}
++
++static inline struct pt_dma_desc *to_pt_desc(struct virt_dma_desc *vd)
++{
++	return container_of(vd, struct pt_dma_desc, vd);
++}
++
++static void pt_free_cmd_resources(struct pt_device *pt,
++				  struct list_head *list)
++{
++	struct pt_dma_cmd *cmd, *ctmp;
++
++	list_for_each_entry_safe(cmd, ctmp, list, entry) {
++		list_del(&cmd->entry);
++		kmem_cache_free(pt->dma_cmd_cache, cmd);
++	}
++}
++
++static void pt_free_chan_resources(struct dma_chan *dma_chan)
++{
++	struct pt_dma_chan *chan = to_pt_chan(dma_chan);
++
++	vchan_free_chan_resources(&chan->vc);
++}
++
++static void pt_synchronize(struct dma_chan *dma_chan)
++{
++	struct pt_dma_chan *chan = to_pt_chan(dma_chan);
++
++	vchan_synchronize(&chan->vc);
++}
++
++static void pt_do_cleanup(struct virt_dma_desc *vd)
++{
++	struct pt_dma_desc *desc = to_pt_desc(vd);
++	struct pt_device *pt = desc->pt;
++
++	pt_free_cmd_resources(pt, &desc->cmdlist);
++	kmem_cache_free(pt->dma_desc_cache, desc);
++}
++
++static int pt_issue_next_cmd(struct pt_dma_desc *desc)
++{
++	struct pt_passthru_engine *pt_engine;
++	struct pt_dma_cmd *cmd;
++	struct pt_device *pt;
++	struct pt_cmd *pt_cmd;
++	struct pt_cmd_queue *cmd_q;
++
++	cmd = list_first_entry(&desc->cmdlist, struct pt_dma_cmd, entry);
++	desc->issued_to_hw = 1;
++
++	pt_cmd = &cmd->pt_cmd;
++	pt = pt_cmd->pt;
++	cmd_q = &pt->cmd_q;
++	pt_engine = &pt_cmd->passthru;
++	pt->tdata.cmd = pt_cmd;
++
++	/* Execute the command */
++	pt_cmd->ret = pt_core_perform_passthru(cmd_q, pt_engine);
++
++	return 0;
++}
++
++static void pt_free_active_cmd(struct pt_dma_desc *desc)
++{
++	struct pt_dma_cmd *cmd = NULL;
++
++	if (desc->issued_to_hw)
++		cmd = list_first_entry_or_null(&desc->cmdlist, struct pt_dma_cmd,
++					       entry);
++	if (!cmd)
++		return;
++
++	list_del(&cmd->entry);
++	kmem_cache_free(desc->pt->dma_cmd_cache, cmd);
++}
++
++static struct pt_dma_desc *pt_next_dma_desc(struct pt_dma_chan *chan)
++{
++	/* Get the next DMA descriptor on the active list */
++	struct virt_dma_desc *vd = vchan_next_desc(&chan->vc);
++
++	return vd ? to_pt_desc(vd) : NULL;
++}
++
++static struct pt_dma_desc *__pt_next_dma_desc(struct pt_dma_chan *chan)
++{
++	/* Get the next DMA descriptor on the active list */
++	struct virt_dma_desc *vd = vchan_next_desc(&chan->vc);
++
++	if (list_empty(&chan->vc.desc_submitted))
++		return NULL;
++
++	vd = list_empty(&chan->vc.desc_issued) ?
++		  list_first_entry(&chan->vc.desc_submitted,
++				   struct virt_dma_desc, node) : NULL;
++
++	vchan_issue_pending(&chan->vc);
++
++	return vd ? to_pt_desc(vd) : NULL;
++}
++
++static struct pt_dma_desc *pt_find_active_desc(struct pt_dma_chan *chan, struct pt_dma_desc *desc)
++{
++	if (desc) {
++		/* Remove the DMA command from the list and free it */
++		pt_free_active_cmd(desc);
++		if (!desc->issued_to_hw) {
++			/* No errors, keep going */
++			if (desc->status != DMA_ERROR)
++				return desc;
++
++			/* Error, free remaining commands and move on */
++			pt_free_cmd_resources(desc->pt, &desc->cmdlist);
++		}
++	}
++
++	return NULL;
++}
++
++static void pt_cmd_to_hw(void *data, int err)
++{
++	struct pt_dma_desc *desc = data;
++	struct dma_chan *dma_chan;
++	struct pt_dma_chan *chan;
++	int ret;
++
++	if (err == -EINPROGRESS)
++		return;
++
++	dma_chan = desc->vd.tx.chan;
++	chan = to_pt_chan(dma_chan);
++
++	if (err)
++		desc->status = DMA_ERROR;
++
++	while (true) {
++		/* Check for DMA descriptor completion */
++		desc = pt_find_active_desc(chan, desc);
++
++		/* Don't submit cmd if no descriptor or DMA is paused */
++		if (!desc)
++			break;
++
++		ret = pt_issue_next_cmd(desc);
++		if (!ret)
++			break;
++
++		desc->status = DMA_ERROR;
++	}
++}
++
++static struct pt_dma_desc *pt_handle_active_desc(struct pt_dma_chan *chan,
++						 struct pt_dma_desc *desc)
++{
++	struct dma_async_tx_descriptor *tx_desc;
++	struct virt_dma_desc *vd;
++	unsigned long flags;
++
++	if (desc) {
++		/* Remove the DMA command from the list and free it */
++		pt_free_active_cmd(desc);
++		tx_desc = &desc->vd.tx;
++		vd = &desc->vd;
++	} else {
++		tx_desc = NULL;
++	}
++
++	if (desc) {
++		if (desc->status != DMA_ERROR)
++			desc->status = DMA_COMPLETE;
++
++		dma_cookie_complete(tx_desc);
++		dma_descriptor_unmap(tx_desc);
++		list_del(&desc->vd.node);
++	}
++
++	spin_unlock_irqrestore(&chan->vc.lock, flags);
++
++	if (tx_desc) {
++		dmaengine_desc_get_callback_invoke(tx_desc, NULL);
++		dma_run_dependencies(tx_desc);
++		vchan_vdesc_fini(vd);
++	}
++
++	return NULL;
++}
++
++static void pt_cmd_callback(void *data, int err)
++{
++	struct pt_dma_desc *desc = data;
++	struct dma_chan *dma_chan;
++	struct pt_dma_chan *chan;
++
++	if (err == -EINPROGRESS)
++		return;
++
++	dma_chan = desc->vd.tx.chan;
++	chan = to_pt_chan(dma_chan);
++
++	if (err)
++		desc->status = DMA_ERROR;
++
++	while (true) {
++		/* Check for DMA descriptor completion */
++		desc = pt_handle_active_desc(chan, desc);
++
++		/* Don't submit cmd if no descriptor or DMA is paused */
++		if (!desc)
++			break;
++	}
++}
++
++static struct pt_dma_cmd *pt_alloc_dma_cmd(struct pt_dma_chan *chan)
++{
++	return kmem_cache_zalloc(chan->pt->dma_cmd_cache, GFP_NOWAIT);
++}
++
++static struct pt_dma_desc *pt_alloc_dma_desc(struct pt_dma_chan *chan,
++					     unsigned long flags)
++{
++	struct pt_dma_desc *desc;
++
++	desc = kmem_cache_zalloc(chan->pt->dma_desc_cache, GFP_NOWAIT);
++	if (!desc)
++		return NULL;
++
++	vchan_tx_prep(&chan->vc, &desc->vd, flags);
++
++	desc->pt = chan->pt;
++	desc->issued_to_hw = 0;
++	INIT_LIST_HEAD(&desc->cmdlist);
++	desc->status = DMA_IN_PROGRESS;
++
++	return desc;
++}
++
++static struct pt_dma_desc *pt_create_desc(struct dma_chan *dma_chan,
++					  dma_addr_t dst,
++					  dma_addr_t src,
++					  unsigned int len,
++					  unsigned long flags)
++{
++	struct pt_dma_chan *chan = to_pt_chan(dma_chan);
++	struct pt_passthru_engine *pt_engine;
++	struct pt_device *pt = chan->pt;
++	struct pt_dma_desc *desc;
++	struct pt_dma_cmd *cmd;
++	struct pt_cmd *pt_cmd;
++
++	desc = pt_alloc_dma_desc(chan, flags);
++	if (!desc)
++		return NULL;
++
++	cmd = pt_alloc_dma_cmd(chan);
++	if (!cmd)
++		goto err;
++
++	pt_cmd = &cmd->pt_cmd;
++	pt_cmd->pt = chan->pt;
++	pt_engine = &pt_cmd->passthru;
++	pt_cmd->engine = PT_ENGINE_PASSTHRU;
++	pt_engine->src_dma = src;
++	pt_engine->dst_dma = dst;
++	pt_engine->src_len = len;
++	pt_cmd->pt_cmd_callback = pt_cmd_callback;
++	pt_cmd->data = desc;
++
++	list_add_tail(&cmd->entry, &desc->cmdlist);
++
++	desc->len = len;
++
++	if (list_empty(&desc->cmdlist))
++		goto err;
++
++	return desc;
++
++err:
++	pt_free_cmd_resources(pt, &desc->cmdlist);
++	kmem_cache_free(pt->dma_desc_cache, desc);
++
++	return NULL;
++}
++
++static struct dma_async_tx_descriptor *
++pt_prep_dma_memcpy(struct dma_chan *dma_chan, dma_addr_t dst,
++		   dma_addr_t src, size_t len, unsigned long flags)
++{
++	struct pt_dma_desc *desc;
++
++	desc = pt_create_desc(dma_chan, dst, src, len, flags);
++	if (!desc)
++		return NULL;
++
++	return &desc->vd.tx;
++}
++
++static struct dma_async_tx_descriptor *
++pt_prep_dma_interrupt(struct dma_chan *dma_chan, unsigned long flags)
++{
++	struct pt_dma_chan *chan = to_pt_chan(dma_chan);
++	struct pt_dma_desc *desc;
++
++	desc = pt_alloc_dma_desc(chan, flags);
++	if (!desc)
++		return NULL;
++
++	return &desc->vd.tx;
++}
++
++static void pt_issue_pending(struct dma_chan *dma_chan)
++{
++	struct pt_dma_chan *chan = to_pt_chan(dma_chan);
++	struct pt_dma_desc *desc;
++	unsigned long flags;
++
++	spin_lock_irqsave(&chan->vc.lock, flags);
++
++	desc = __pt_next_dma_desc(chan);
++
++	/* If there was nothing active, start processing */
++	if (desc)
++		pt_cmd_to_hw(desc, 0);
++}
++
++static int pt_pause(struct dma_chan *dma_chan)
++{
++	struct pt_dma_chan *chan = to_pt_chan(dma_chan);
++	unsigned long flags;
++
++	spin_lock_irqsave(&chan->vc.lock, flags);
++	pt_stop_queue(&chan->pt->cmd_q);
++	spin_unlock_irqrestore(&chan->vc.lock, flags);
++
++	return 0;
++}
++
++static int pt_resume(struct dma_chan *dma_chan)
++{
++	struct pt_dma_chan *chan = to_pt_chan(dma_chan);
++	struct pt_dma_desc *desc = NULL;
++	unsigned long flags;
++
++	spin_lock_irqsave(&chan->vc.lock, flags);
++	pt_start_queue(&chan->pt->cmd_q);
++	desc = __pt_next_dma_desc(chan);
++	spin_unlock_irqrestore(&chan->vc.lock, flags);
++
++	/* If there was something active, re-start */
++	if (desc)
++		pt_cmd_callback(desc, 0);
++
++	return 0;
++}
++
++static int pt_terminate_all(struct dma_chan *dma_chan)
++{
++	struct pt_dma_chan *chan = to_pt_chan(dma_chan);
++
++	vchan_free_chan_resources(&chan->vc);
++
++	return 0;
++}
++
++int pt_dmaengine_register(struct pt_device *pt)
++{
++	struct pt_dma_chan *chan;
++	struct dma_device *dma_dev = &pt->dma_dev;
++	char *cmd_cache_name;
++	char *desc_cache_name;
++	int ret;
++
++	pt->pt_dma_chan = devm_kzalloc(pt->dev, sizeof(*pt->pt_dma_chan),
++				       GFP_KERNEL);
++	if (!pt->pt_dma_chan)
++		return -ENOMEM;
++
++	cmd_cache_name = devm_kasprintf(pt->dev, GFP_KERNEL,
++					"%s-dmaengine-cmd-cache",
++					pt->name);
++	if (!cmd_cache_name)
++		return -ENOMEM;
++
++	pt->dma_cmd_cache = kmem_cache_create(cmd_cache_name,
++					      sizeof(struct pt_dma_cmd),
++					      sizeof(void *),
++					      SLAB_HWCACHE_ALIGN, NULL);
++	if (!pt->dma_cmd_cache)
++		return -ENOMEM;
++
++	desc_cache_name = devm_kasprintf(pt->dev, GFP_KERNEL,
++					 "%s-dmaengine-desc-cache",
++					 pt->name);
++	if (!desc_cache_name) {
++		ret = -ENOMEM;
++		goto err_cache;
++	}
++
++	pt->dma_desc_cache = kmem_cache_create(desc_cache_name,
++					       sizeof(struct pt_dma_desc),
++					       sizeof(void *),
++					       SLAB_HWCACHE_ALIGN, NULL);
++	if (!pt->dma_desc_cache) {
++		ret = -ENOMEM;
++		goto err_cache;
++	}
++
++	dma_dev->dev = pt->dev;
++	dma_dev->src_addr_widths = DMA_SLAVE_BUSWIDTH_64_BYTES;
++	dma_dev->dst_addr_widths = DMA_SLAVE_BUSWIDTH_64_BYTES;
++	dma_dev->directions = DMA_MEM_TO_MEM;
++	dma_dev->residue_granularity = DMA_RESIDUE_GRANULARITY_DESCRIPTOR;
++	dma_cap_set(DMA_MEMCPY, dma_dev->cap_mask);
++	dma_cap_set(DMA_INTERRUPT, dma_dev->cap_mask);
++	dma_cap_set(DMA_PRIVATE, dma_dev->cap_mask);
++
++	INIT_LIST_HEAD(&dma_dev->channels);
++
++	chan = pt->pt_dma_chan;
++	chan->pt = pt;
++
++	/* Set base and prep routines */
++	dma_dev->device_free_chan_resources = pt_free_chan_resources;
++	dma_dev->device_prep_dma_memcpy = pt_prep_dma_memcpy;
++	dma_dev->device_prep_dma_interrupt = pt_prep_dma_interrupt;
++	dma_dev->device_issue_pending = pt_issue_pending;
++	dma_dev->device_tx_status = dma_cookie_status;
++	dma_dev->device_pause = pt_pause;
++	dma_dev->device_resume = pt_resume;
++	dma_dev->device_terminate_all = pt_terminate_all;
++	dma_dev->device_synchronize = pt_synchronize;
++
++	chan->vc.desc_free = pt_do_cleanup;
++	vchan_init(&chan->vc, dma_dev);
++
++	dma_set_mask_and_coherent(pt->dev, DMA_BIT_MASK(64));
++
++	ret = dma_async_device_register(dma_dev);
++	if (ret)
++		goto err_reg;
++
++	return 0;
++
++err_reg:
++	kmem_cache_destroy(pt->dma_desc_cache);
++
++err_cache:
++	kmem_cache_destroy(pt->dma_cmd_cache);
++
++	return ret;
++}
++
++void pt_dmaengine_unregister(struct pt_device *pt)
++{
++	struct dma_device *dma_dev = &pt->dma_dev;
++
++	dma_async_device_unregister(dma_dev);
++
++	kmem_cache_destroy(pt->dma_desc_cache);
++	kmem_cache_destroy(pt->dma_cmd_cache);
++}
+diff --git a/drivers/dma/ptdma/ptdma.h b/drivers/dma/ptdma/ptdma.h
+index a89a74ac..bc6676d 100644
+--- a/drivers/dma/ptdma/ptdma.h
++++ b/drivers/dma/ptdma/ptdma.h
+@@ -14,6 +14,7 @@
+ #define __PT_DEV_H__
+ 
+ #include <linux/device.h>
++#include <linux/dmaengine.h>
+ #include <linux/pci.h>
+ #include <linux/spinlock.h>
+ #include <linux/mutex.h>
+@@ -21,6 +22,8 @@
+ #include <linux/wait.h>
+ #include <linux/dmapool.h>
+ 
++#include "../virt-dma.h"
++
+ #define MAX_PT_NAME_LEN			16
+ #define MAX_DMAPOOL_NAME_LEN		32
+ 
+@@ -173,6 +176,25 @@ struct pt_cmd {
+ 	void *data;
+ };
+ 
++struct pt_dma_cmd {
++	struct list_head entry;
++	struct pt_cmd pt_cmd;
++};
++
++struct pt_dma_desc {
++	struct virt_dma_desc vd;
++	struct pt_device *pt;
++	struct list_head cmdlist;
++	enum dma_status status;
++	size_t len;
++	bool issued_to_hw;
++};
++
++struct pt_dma_chan {
++	struct virt_dma_chan vc;
++	struct pt_device *pt;
++};
++
+ struct pt_cmd_queue {
+ 	struct pt_device *pt;
+ 
+@@ -241,6 +263,12 @@ struct pt_device {
+ 	 */
+ 	struct pt_cmd_queue cmd_q;
+ 
++	/* Support for the DMA Engine capabilities */
++	struct dma_device dma_dev;
++	struct pt_dma_chan *pt_dma_chan;
++	struct kmem_cache *dma_cmd_cache;
++	struct kmem_cache *dma_desc_cache;
++
+ 	wait_queue_head_t lsb_queue;
+ 
+ 	struct pt_tasklet_data tdata;
+@@ -293,6 +321,9 @@ struct pt_dev_vdata {
+ 	const unsigned int bar;
+ };
+ 
++int pt_dmaengine_register(struct pt_device *pt);
++void pt_dmaengine_unregister(struct pt_device *pt);
++
+ int pt_core_init(struct pt_device *pt);
+ void pt_core_destroy(struct pt_device *pt);
+ 
 -- 
 2.7.4
 
