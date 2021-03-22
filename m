@@ -7,40 +7,40 @@ X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 21760C433DB
-	for <dmaengine@archiver.kernel.org>; Mon, 22 Mar 2021 23:32:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4E9D2C433DB
+	for <dmaengine@archiver.kernel.org>; Mon, 22 Mar 2021 23:32:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E536F619A9
-	for <dmaengine@archiver.kernel.org>; Mon, 22 Mar 2021 23:32:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 294FC619AB
+	for <dmaengine@archiver.kernel.org>; Mon, 22 Mar 2021 23:32:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230306AbhCVXbk (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 22 Mar 2021 19:31:40 -0400
-Received: from mga14.intel.com ([192.55.52.115]:50232 "EHLO mga14.intel.com"
+        id S230174AbhCVXcJ (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 22 Mar 2021 19:32:09 -0400
+Received: from mga01.intel.com ([192.55.52.88]:15037 "EHLO mga01.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230476AbhCVXb1 (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Mon, 22 Mar 2021 19:31:27 -0400
-IronPort-SDR: AKZPj33aT+Q3T0gYxt5mXoabbQ7bHsHMJcqsH6clTDMdTddK+SxzOXd/L2Qj8IPQNyZN5wuf9I
- 7gzPLMMHfAmg==
-X-IronPort-AV: E=McAfee;i="6000,8403,9931"; a="189768813"
+        id S230401AbhCVXbn (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Mon, 22 Mar 2021 19:31:43 -0400
+IronPort-SDR: ZMHlfU5qFLr1WFvIvtnnjCFmzLeWY55PpaeupkCAyimV7wsoPi4kvBmWvPq/9R6OPp3crl0hqj
+ CPlb0CNy0acQ==
+X-IronPort-AV: E=McAfee;i="6000,8403,9931"; a="210442896"
 X-IronPort-AV: E=Sophos;i="5.81,269,1610438400"; 
-   d="scan'208";a="189768813"
-Received: from fmsmga004.fm.intel.com ([10.253.24.48])
-  by fmsmga103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Mar 2021 16:31:27 -0700
-IronPort-SDR: btL3SFpmOYntkxmyQRDA2zRJ6F8S2n0wBAeDm1jO9Hqr+VNBShl8IZJdYn5Ex/AU+HrS4l/c/b
- zsA7v5oDqvyQ==
+   d="scan'208";a="210442896"
+Received: from orsmga008.jf.intel.com ([10.7.209.65])
+  by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Mar 2021 16:31:39 -0700
+IronPort-SDR: HNe9frucBQDr3Dm1Se15j3zf147p883K16ONojuNvorbf/shLUeuz1q+z9oB2eX5EWA42FwV+n
+ oZWaZ7jqMdqQ==
 X-IronPort-AV: E=Sophos;i="5.81,269,1610438400"; 
-   d="scan'208";a="435332143"
+   d="scan'208";a="414700269"
 Received: from djiang5-desk3.ch.intel.com ([143.182.136.137])
-  by fmsmga004-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Mar 2021 16:31:26 -0700
-Subject: [PATCH v7 2/8] dmaengine: idxd: cleanup pci interrupt vector
- allocation management
+  by orsmga008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Mar 2021 16:31:38 -0700
+Subject: [PATCH v7 4/8] dmaengine: idxd: fix idxd conf_dev 'struct device'
+ lifetime
 From:   Dave Jiang <dave.jiang@intel.com>
 To:     vkoul@kernel.org
 Cc:     Jason Gunthorpe <jgg@nvidia.com>,
         Dan Williams <dan.j.williams@intel.com>,
         dmaengine@vger.kernel.org, jgg@nvidia.com, dan.j.williams@intel.com
-Date:   Mon, 22 Mar 2021 16:31:26 -0700
-Message-ID: <161645588641.2002542.7353703515217394045.stgit@djiang5-desk3.ch.intel.com>
+Date:   Mon, 22 Mar 2021 16:31:37 -0700
+Message-ID: <161645589786.2002542.14985591762162555739.stgit@djiang5-desk3.ch.intel.com>
 In-Reply-To: <161645534083.2002542.11583610276394664799.stgit@djiang5-desk3.ch.intel.com>
 References: <161645534083.2002542.11583610276394664799.stgit@djiang5-desk3.ch.intel.com>
 User-Agent: StGit/0.23-29-ga622f1
@@ -53,197 +53,274 @@ X-Mailing-List: dmaengine@vger.kernel.org
 
 The devm managed lifetime is incompatible with 'struct device' objects that
 resides in idxd context. This is one of the series that clean up the idxd
-driver 'struct device' lifetime. Remove devm managed pci interrupt vectors
-and replace with unmanged allocators.
+driver 'struct device' lifetime. Fix idxd->conf_dev 'struct device'
+lifetime. Address issues flagged by CONFIG_DEBUG_KOBJECT_RELEASE.
+Add release functions in order to free the allocated memory at the
+appropriate time.
 
 Reported-by: Jason Gunthorpe <jgg@nvidia.com>
 Fixes: bfe1d56091c1 ("dmaengine: idxd: Init and probe for Intel data accelerators")
 Signed-off-by: Dave Jiang <dave.jiang@intel.com>
 Reviewed-by: Dan Williams <dan.j.williams@intel.com>
 ---
- drivers/dma/idxd/device.c |    4 +--
- drivers/dma/idxd/idxd.h   |    2 +
- drivers/dma/idxd/init.c   |   64 +++++++++++++++++++--------------------------
- 3 files changed, 30 insertions(+), 40 deletions(-)
+ drivers/dma/idxd/idxd.h  |   21 ++++++++++++-
+ drivers/dma/idxd/init.c  |   22 ++++++++++----
+ drivers/dma/idxd/sysfs.c |   72 +++++++++++++++++++++++-----------------------
+ 3 files changed, 70 insertions(+), 45 deletions(-)
 
-diff --git a/drivers/dma/idxd/device.c b/drivers/dma/idxd/device.c
-index 971a10a60093..a56af1d8b091 100644
---- a/drivers/dma/idxd/device.c
-+++ b/drivers/dma/idxd/device.c
-@@ -19,7 +19,7 @@ static void idxd_cmd_exec(struct idxd_device *idxd, int cmd_code, u32 operand,
- /* Interrupt control bits */
- void idxd_mask_msix_vector(struct idxd_device *idxd, int vec_id)
- {
--	struct irq_data *data = irq_get_irq_data(idxd->msix_entries[vec_id].vector);
-+	struct irq_data *data = irq_get_irq_data(idxd->irq_entries[vec_id].vector);
- 
- 	pci_msi_mask_irq(data);
- }
-@@ -36,7 +36,7 @@ void idxd_mask_msix_vectors(struct idxd_device *idxd)
- 
- void idxd_unmask_msix_vector(struct idxd_device *idxd, int vec_id)
- {
--	struct irq_data *data = irq_get_irq_data(idxd->msix_entries[vec_id].vector);
-+	struct irq_data *data = irq_get_irq_data(idxd->irq_entries[vec_id].vector);
- 
- 	pci_msi_unmask_irq(data);
- }
 diff --git a/drivers/dma/idxd/idxd.h b/drivers/dma/idxd/idxd.h
-index 40001c46d95c..3409a84b8674 100644
+index 3409a84b8674..f3893a07f6d5 100644
 --- a/drivers/dma/idxd/idxd.h
 +++ b/drivers/dma/idxd/idxd.h
-@@ -36,6 +36,7 @@ struct idxd_device_driver {
- struct idxd_irq_entry {
- 	struct idxd_device *idxd;
- 	int id;
-+	int vector;
- 	struct llist_head pending_llist;
- 	struct list_head work_list;
- 	/*
-@@ -219,7 +220,6 @@ struct idxd_device {
+@@ -255,6 +255,23 @@ extern struct bus_type dsa_bus_type;
+ extern struct bus_type iax_bus_type;
  
- 	union sw_err_reg sw_err;
- 	wait_queue_head_t cmd_waitq;
--	struct msix_entry *msix_entries;
- 	int num_wq_irqs;
- 	struct idxd_irq_entry *irq_entries;
+ extern bool support_enqcmd;
++extern struct device_type dsa_device_type;
++extern struct device_type iax_device_type;
++
++static inline bool is_dsa_dev(struct device *dev)
++{
++	return dev->type == &dsa_device_type;
++}
++
++static inline bool is_iax_dev(struct device *dev)
++{
++	return dev->type == &iax_device_type;
++}
++
++static inline bool is_idxd_dev(struct device *dev)
++{
++	return is_dsa_dev(dev) || is_iax_dev(dev);
++}
  
+ static inline bool wq_dedicated(struct idxd_wq *wq)
+ {
+@@ -322,8 +339,8 @@ static inline int idxd_wq_refcount(struct idxd_wq *wq)
+ const char *idxd_get_dev_name(struct idxd_device *idxd);
+ int idxd_register_bus_type(void);
+ void idxd_unregister_bus_type(void);
+-int idxd_setup_sysfs(struct idxd_device *idxd);
+-void idxd_cleanup_sysfs(struct idxd_device *idxd);
++int idxd_register_devices(struct idxd_device *idxd);
++void idxd_unregister_devices(struct idxd_device *idxd);
+ int idxd_register_driver(void);
+ void idxd_unregister_driver(void);
+ struct bus_type *idxd_get_bus_type(struct idxd_device *idxd);
 diff --git a/drivers/dma/idxd/init.c b/drivers/dma/idxd/init.c
-index 085a0c3b62c6..72f319dd52fc 100644
+index 080d31bf5b33..158f9e0158a3 100644
 --- a/drivers/dma/idxd/init.c
 +++ b/drivers/dma/idxd/init.c
-@@ -61,7 +61,6 @@ static int idxd_setup_interrupts(struct idxd_device *idxd)
- {
- 	struct pci_dev *pdev = idxd->pdev;
- 	struct device *dev = &pdev->dev;
--	struct msix_entry *msix;
- 	struct idxd_irq_entry *irq_entry;
- 	int i, msixcnt;
- 	int rc = 0;
-@@ -70,23 +69,13 @@ static int idxd_setup_interrupts(struct idxd_device *idxd)
- 	msixcnt = pci_msix_vec_count(pdev);
- 	if (msixcnt < 0) {
- 		dev_err(dev, "Not MSI-X interrupt capable.\n");
--		goto err_no_irq;
-+		return -ENOSPC;
- 	}
- 
--	idxd->msix_entries = devm_kzalloc(dev, sizeof(struct msix_entry) *
--			msixcnt, GFP_KERNEL);
--	if (!idxd->msix_entries) {
--		rc = -ENOMEM;
--		goto err_no_irq;
--	}
--
--	for (i = 0; i < msixcnt; i++)
--		idxd->msix_entries[i].entry = i;
--
--	rc = pci_enable_msix_exact(pdev, idxd->msix_entries, msixcnt);
--	if (rc) {
--		dev_err(dev, "Failed enabling %d MSIX entries.\n", msixcnt);
--		goto err_no_irq;
-+	rc = pci_alloc_irq_vectors(pdev, msixcnt, msixcnt, PCI_IRQ_MSIX);
-+	if (rc != msixcnt) {
-+		dev_err(dev, "Failed enabling %d MSIX entries: %d\n", msixcnt, rc);
-+		return -ENOSPC;
- 	}
- 	dev_dbg(dev, "Enabled %d msix vectors\n", msixcnt);
- 
-@@ -99,48 +88,41 @@ static int idxd_setup_interrupts(struct idxd_device *idxd)
- 					 GFP_KERNEL);
+@@ -83,9 +83,8 @@ static int idxd_setup_interrupts(struct idxd_device *idxd)
+ 	 * We implement 1 completion list per MSI-X entry except for
+ 	 * entry 0, which is for errors and others.
+ 	 */
+-	idxd->irq_entries = devm_kcalloc(dev, msixcnt,
+-					 sizeof(struct idxd_irq_entry),
+-					 GFP_KERNEL);
++	idxd->irq_entries = kcalloc_node(msixcnt, sizeof(struct idxd_irq_entry),
++					 GFP_KERNEL, dev_to_node(dev));
  	if (!idxd->irq_entries) {
  		rc = -ENOMEM;
--		goto err_no_irq;
-+		goto err_irq_entries;
- 	}
- 
- 	for (i = 0; i < msixcnt; i++) {
- 		idxd->irq_entries[i].id = i;
- 		idxd->irq_entries[i].idxd = idxd;
-+		idxd->irq_entries[i].vector = pci_irq_vector(pdev, i);
- 		spin_lock_init(&idxd->irq_entries[i].list_lock);
- 	}
- 
--	msix = &idxd->msix_entries[0];
- 	irq_entry = &idxd->irq_entries[0];
--	rc = devm_request_threaded_irq(dev, msix->vector, idxd_irq_handler,
--				       idxd_misc_thread, 0, "idxd-misc",
--				       irq_entry);
-+	rc = request_threaded_irq(irq_entry->vector, idxd_irq_handler, idxd_misc_thread,
-+				  0, "idxd-misc", irq_entry);
- 	if (rc < 0) {
- 		dev_err(dev, "Failed to allocate misc interrupt.\n");
--		goto err_no_irq;
-+		goto err_misc_irq;
- 	}
- 
--	dev_dbg(dev, "Allocated idxd-misc handler on msix vector %d\n",
--		msix->vector);
-+	dev_dbg(dev, "Allocated idxd-misc handler on msix vector %d\n", irq_entry->vector);
- 
- 	/* first MSI-X entry is not for wq interrupts */
- 	idxd->num_wq_irqs = msixcnt - 1;
- 
- 	for (i = 1; i < msixcnt; i++) {
--		msix = &idxd->msix_entries[i];
- 		irq_entry = &idxd->irq_entries[i];
- 
- 		init_llist_head(&idxd->irq_entries[i].pending_llist);
- 		INIT_LIST_HEAD(&idxd->irq_entries[i].work_list);
--		rc = devm_request_threaded_irq(dev, msix->vector,
--					       idxd_irq_handler,
--					       idxd_wq_thread, 0,
--					       "idxd-portal", irq_entry);
-+		rc = request_threaded_irq(irq_entry->vector, idxd_irq_handler,
-+					  idxd_wq_thread, 0, "idxd-portal", irq_entry);
- 		if (rc < 0) {
--			dev_err(dev, "Failed to allocate irq %d.\n",
--				msix->vector);
--			goto err_no_irq;
-+			dev_err(dev, "Failed to allocate irq %d.\n", irq_entry->vector);
-+			goto err_wq_irqs;
- 		}
--		dev_dbg(dev, "Allocated idxd-msix %d for vector %d\n",
--			i, msix->vector);
-+		dev_dbg(dev, "Allocated idxd-msix %d for vector %d\n", i, irq_entry->vector);
- 	}
- 
- 	idxd_unmask_error_interrupts(idxd);
-@@ -154,10 +136,16 @@ static int idxd_setup_interrupts(struct idxd_device *idxd)
- 
- 	return 0;
- 
-- err_no_irq:
-+ err_wq_irqs:
-+	while (--i) {
-+		irq_entry = &idxd->irq_entries[i];
-+		free_irq(irq_entry->vector, irq_entry);
-+	}
-+ err_misc_irq:
+ 		goto err_irq_entries;
+@@ -144,6 +143,7 @@ static int idxd_setup_interrupts(struct idxd_device *idxd)
+  err_misc_irq:
  	/* Disable error interrupt generation */
  	idxd_mask_error_interrupts(idxd);
--	pci_disable_msix(pdev);
-+ err_irq_entries:
-+	pci_free_irq_vectors(pdev);
++	kfree(idxd->irq_entries);
+  err_irq_entries:
+ 	pci_free_irq_vectors(pdev);
  	dev_err(dev, "No usable interrupts\n");
- 	return rc;
- }
-@@ -503,13 +491,15 @@ static void idxd_shutdown(struct pci_dev *pdev)
+@@ -276,7 +276,7 @@ static struct idxd_device *idxd_alloc(struct pci_dev *pdev)
+ 	struct device *dev = &pdev->dev;
+ 	struct idxd_device *idxd;
  
- 	for (i = 0; i < msixcnt; i++) {
- 		irq_entry = &idxd->irq_entries[i];
--		synchronize_irq(idxd->msix_entries[i].vector);
-+		synchronize_irq(irq_entry->vector);
-+		free_irq(irq_entry->vector, irq_entry);
- 		if (i == 0)
- 			continue;
- 		idxd_flush_pending_llist(irq_entry);
- 		idxd_flush_work_list(irq_entry);
+-	idxd = devm_kzalloc(dev, sizeof(struct idxd_device), GFP_KERNEL);
++	idxd = kzalloc_node(sizeof(*idxd), GFP_KERNEL, dev_to_node(dev));
+ 	if (!idxd)
+ 		return NULL;
+ 
+@@ -320,6 +320,11 @@ static void idxd_disable_system_pasid(struct idxd_device *idxd)
+ 	idxd->sva = NULL;
+ }
+ 
++static void idxd_free(struct idxd_device *idxd)
++{
++	kfree(idxd);
++}
++
+ static int idxd_probe(struct idxd_device *idxd)
+ {
+ 	struct pci_dev *pdev = idxd->pdev;
+@@ -438,7 +443,7 @@ static int idxd_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+ 		goto err;
  	}
  
-+	pci_free_irq_vectors(pdev);
- 	destroy_workqueue(idxd->wq);
+-	rc = idxd_setup_sysfs(idxd);
++	rc = idxd_register_devices(idxd);
+ 	if (rc) {
+ 		dev_err(dev, "IDXD sysfs setup failed\n");
+ 		goto err;
+@@ -454,6 +459,7 @@ static int idxd_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+  err:
+ 	pci_iounmap(pdev, idxd->reg_base);
+  err_iomap:
++	idxd_free(idxd);
+  err_idxd_alloc:
+ 	pci_disable_device(pdev);
+ 	return rc;
+@@ -519,15 +525,17 @@ static void idxd_shutdown(struct pci_dev *pdev)
+ static void idxd_remove(struct pci_dev *pdev)
+ {
+ 	struct idxd_device *idxd = pci_get_drvdata(pdev);
++	int id = idxd->id;
++	enum idxd_type type = idxd->type;
+ 
+ 	dev_dbg(&pdev->dev, "%s called\n", __func__);
+-	idxd_cleanup_sysfs(idxd);
+ 	idxd_shutdown(pdev);
+ 	if (device_pasid_enabled(idxd))
+ 		idxd_disable_system_pasid(idxd);
+ 	mutex_lock(&idxd_idr_lock);
+-	idr_remove(&idxd_idrs[idxd->type], idxd->id);
++	idr_remove(&idxd_idrs[type], id);
+ 	mutex_unlock(&idxd_idr_lock);
++	idxd_unregister_devices(idxd);
  }
+ 
+ static struct pci_driver idxd_pci_driver = {
+diff --git a/drivers/dma/idxd/sysfs.c b/drivers/dma/idxd/sysfs.c
+index 4dbb03c545e4..55a92dfe0fad 100644
+--- a/drivers/dma/idxd/sysfs.c
++++ b/drivers/dma/idxd/sysfs.c
+@@ -16,51 +16,26 @@ static char *idxd_wq_type_names[] = {
+ 	[IDXD_WQT_USER]		= "user",
+ };
+ 
+-static void idxd_conf_device_release(struct device *dev)
++static void idxd_conf_sub_device_release(struct device *dev)
+ {
+ 	dev_dbg(dev, "%s for %s\n", __func__, dev_name(dev));
+ }
+ 
+ static struct device_type idxd_group_device_type = {
+ 	.name = "group",
+-	.release = idxd_conf_device_release,
++	.release = idxd_conf_sub_device_release,
+ };
+ 
+ static struct device_type idxd_wq_device_type = {
+ 	.name = "wq",
+-	.release = idxd_conf_device_release,
++	.release = idxd_conf_sub_device_release,
+ };
+ 
+ static struct device_type idxd_engine_device_type = {
+ 	.name = "engine",
+-	.release = idxd_conf_device_release,
+-};
+-
+-static struct device_type dsa_device_type = {
+-	.name = "dsa",
+-	.release = idxd_conf_device_release,
+-};
+-
+-static struct device_type iax_device_type = {
+-	.name = "iax",
+-	.release = idxd_conf_device_release,
++	.release = idxd_conf_sub_device_release,
+ };
+ 
+-static inline bool is_dsa_dev(struct device *dev)
+-{
+-	return dev ? dev->type == &dsa_device_type : false;
+-}
+-
+-static inline bool is_iax_dev(struct device *dev)
+-{
+-	return dev ? dev->type == &iax_device_type : false;
+-}
+-
+-static inline bool is_idxd_dev(struct device *dev)
+-{
+-	return is_dsa_dev(dev) || is_iax_dev(dev);
+-}
+-
+ static inline bool is_idxd_wq_dev(struct device *dev)
+ {
+ 	return dev ? dev->type == &idxd_wq_device_type : false;
+@@ -1643,6 +1618,29 @@ static const struct attribute_group *idxd_attribute_groups[] = {
+ 	NULL,
+ };
+ 
++static void idxd_conf_device_release(struct device *dev)
++{
++	struct idxd_device *idxd = container_of(dev, struct idxd_device, conf_dev);
++
++	kfree(idxd->groups);
++	kfree(idxd->wqs);
++	kfree(idxd->engines);
++	kfree(idxd->irq_entries);
++	kfree(idxd);
++}
++
++struct device_type dsa_device_type = {
++	.name = "dsa",
++	.release = idxd_conf_device_release,
++	.groups = idxd_attribute_groups,
++};
++
++struct device_type iax_device_type = {
++	.name = "iax",
++	.release = idxd_conf_device_release,
++	.groups = idxd_attribute_groups,
++};
++
+ static int idxd_setup_engine_sysfs(struct idxd_device *idxd)
+ {
+ 	struct device *dev = &idxd->pdev->dev;
+@@ -1748,17 +1746,19 @@ static int idxd_setup_device_sysfs(struct idxd_device *idxd)
+ {
+ 	struct device *dev = &idxd->pdev->dev;
+ 	int rc;
+-	char devname[IDXD_NAME_SIZE];
+ 
+-	sprintf(devname, "%s%d", idxd_get_dev_name(idxd), idxd->id);
++	device_initialize(&idxd->conf_dev);
+ 	idxd->conf_dev.parent = dev;
+-	dev_set_name(&idxd->conf_dev, "%s", devname);
+ 	idxd->conf_dev.bus = idxd_get_bus_type(idxd);
+-	idxd->conf_dev.groups = idxd_attribute_groups;
+ 	idxd->conf_dev.type = idxd_get_device_type(idxd);
++	rc = dev_set_name(&idxd->conf_dev, "%s%d", idxd_get_dev_name(idxd), idxd->id);
++	if (rc < 0) {
++		put_device(&idxd->conf_dev);
++		return rc;
++	}
+ 
+ 	dev_dbg(dev, "IDXD device register: %s\n", dev_name(&idxd->conf_dev));
+-	rc = device_register(&idxd->conf_dev);
++	rc = device_add(&idxd->conf_dev);
+ 	if (rc < 0) {
+ 		put_device(&idxd->conf_dev);
+ 		return rc;
+@@ -1767,7 +1767,7 @@ static int idxd_setup_device_sysfs(struct idxd_device *idxd)
+ 	return 0;
+ }
+ 
+-int idxd_setup_sysfs(struct idxd_device *idxd)
++int idxd_register_devices(struct idxd_device *idxd)
+ {
+ 	struct device *dev = &idxd->pdev->dev;
+ 	int rc;
+@@ -1802,7 +1802,7 @@ int idxd_setup_sysfs(struct idxd_device *idxd)
+ 	return 0;
+ }
+ 
+-void idxd_cleanup_sysfs(struct idxd_device *idxd)
++void idxd_unregister_devices(struct idxd_device *idxd)
+ {
+ 	int i;
  
 
 
