@@ -2,43 +2,47 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1C88FC433DB
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2D458C433E1
 	for <dmaengine@archiver.kernel.org>; Thu, 25 Mar 2021 15:55:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D5EF861A28
+	by mail.kernel.org (Postfix) with ESMTP id 01B6561A2B
 	for <dmaengine@archiver.kernel.org>; Thu, 25 Mar 2021 15:55:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229616AbhCYPyq (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        id S229533AbhCYPyq (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
         Thu, 25 Mar 2021 11:54:46 -0400
-Received: from mga18.intel.com ([134.134.136.126]:6378 "EHLO mga18.intel.com"
+Received: from mga04.intel.com ([192.55.52.120]:20706 "EHLO mga04.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229508AbhCYPyc (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Thu, 25 Mar 2021 11:54:32 -0400
-IronPort-SDR: CeHQrDwYNDtt3k1UQfeFfSh91PZZ2MapWSHQSjODYborKa26xnkGQfUAZFPXKUpEqTp31/SkjZ
- GFSqYt05Jm2g==
-X-IronPort-AV: E=McAfee;i="6000,8403,9934"; a="178512096"
+        id S229614AbhCYPyn (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Thu, 25 Mar 2021 11:54:43 -0400
+IronPort-SDR: adtBAgqsB9qrZIkUC6KT99Oy5vfWJDJzWDwFYWuxmhgdkILrbsoq2Ffrf0q+dT9wteI4/LW4nP
+ dzrJkdJyJUyA==
+X-IronPort-AV: E=McAfee;i="6000,8403,9934"; a="188661807"
 X-IronPort-AV: E=Sophos;i="5.81,277,1610438400"; 
-   d="scan'208";a="178512096"
-Received: from orsmga008.jf.intel.com ([10.7.209.65])
-  by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Mar 2021 08:54:32 -0700
-IronPort-SDR: 3He17XBj/y5pi1s610nr/31Ip4DEByfhkjKHM8yLmdgBz8gZgWIhn0ELKOJx5BXS1Pz/Dpi1bX
- TNgU3qlye6Hg==
+   d="scan'208";a="188661807"
+Received: from fmsmga008.fm.intel.com ([10.253.24.58])
+  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Mar 2021 08:54:43 -0700
+IronPort-SDR: DprbwWHuJF+DyewkAllhqekeQhO5ll3gkvRMZU+HfmQHZceo8azf9c6vg/nk/umemg2iA9zNpe
+ pSmOXBmqkpMg==
 X-IronPort-AV: E=Sophos;i="5.81,277,1610438400"; 
-   d="scan'208";a="416062400"
+   d="scan'208";a="409427343"
 Received: from djiang5-desk3.ch.intel.com ([143.182.136.137])
-  by orsmga008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Mar 2021 08:54:31 -0700
-Subject: [PATCH v8 0/8] idxd 'struct device' lifetime handling fixes
+  by fmsmga008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Mar 2021 08:54:43 -0700
+Subject: [PATCH v8 2/8] dmaengine: idxd: cleanup pci interrupt vector
+ allocation management
 From:   Dave Jiang <dave.jiang@intel.com>
 To:     vkoul@kernel.org
-Cc:     Dan Williams <dan.j.williams@intel.com>,
-        Jason Gunthorpe <jgg@nvidia.com>, dmaengine@vger.kernel.org,
-        dan.carpenter@oracle.com
-Date:   Thu, 25 Mar 2021 08:54:31 -0700
-Message-ID: <161668743322.2670112.2302120522403482843.stgit@djiang5-desk3.ch.intel.com>
+Cc:     Jason Gunthorpe <jgg@nvidia.com>,
+        Dan Williams <dan.j.williams@intel.com>,
+        dmaengine@vger.kernel.org, dan.carpenter@oracle.com
+Date:   Thu, 25 Mar 2021 08:54:42 -0700
+Message-ID: <161668768288.2670112.14068379515000177729.stgit@djiang5-desk3.ch.intel.com>
+In-Reply-To: <161668743322.2670112.2302120522403482843.stgit@djiang5-desk3.ch.intel.com>
+References: <161668743322.2670112.2302120522403482843.stgit@djiang5-desk3.ch.intel.com>
 User-Agent: StGit/0.23-29-ga622f1
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
@@ -47,65 +51,199 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-v8:
-- Do not emit negative value for sysfs 'minor' attrib (Dan)
-- Use sysfs_emit() to emit sysfs 'minor' attrib (Jason)
-- Fix interation of unwind cleanup of various allocation. (DanC)
+The devm managed lifetime is incompatible with 'struct device' objects that
+resides in idxd context. This is one of the series that clean up the idxd
+driver 'struct device' lifetime. Remove devm managed pci interrupt vectors
+and replace with unmanged allocators.
 
-v7:
-- Fix up the 'struct device' setup in char device code (Jason)
-- Split out the char dev fixes (Jason)
-- Split out the DMA dev fixes (Dan)
-- Split out the each of the conf_dev fixes
-- Split out removal of the pcim_* calls
-- Split out removal of the devm_* calls
-- Split out the fixes for interrupt config calls
-- Reviewed by Dan.
-
-v6:
-- Fix char dev initialization issues (Jason)
-- Fix other 'struct device' initialization issues.
-
-v5:
-- Rebased against 5.12-rc dmaengine/fixes
-v4:
-- fix up the life time of cdev creation/destruction (Jason)
-- Tested with KASAN and other memory allocation leak detections. (Jason)
-
-v3:
-- Remove devm_* for irq request and cleanup related bits (Jason)
-v2:
-- Remove all devm_* alloc for idxd_device (Jason)
-- Add kref dep for dma_dev (Jason)
-
-Vinod,
-The series fixes the various 'struct device' lifetime handling in the
-idxd driver. The devm managed lifetime is incompatible with 'struct device'
-objects that resides in the idxd context. Tested with
-CONFIG_DEBUG_KOBJECT_RELEASE and address all issues from that.
-
-Please consider for damengine/fixes for the 5.12-rc.
-
+Reported-by: Jason Gunthorpe <jgg@nvidia.com>
+Fixes: bfe1d56091c1 ("dmaengine: idxd: Init and probe for Intel data accelerators")
+Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+Reviewed-by: Dan Williams <dan.j.williams@intel.com>
 ---
+ drivers/dma/idxd/device.c |    4 +--
+ drivers/dma/idxd/idxd.h   |    2 +
+ drivers/dma/idxd/init.c   |   64 +++++++++++++++++++--------------------------
+ 3 files changed, 30 insertions(+), 40 deletions(-)
 
-Dave Jiang (8):
-      dmaengine: idxd: fix dma device lifetime
-      dmaengine: idxd: cleanup pci interrupt vector allocation management
-      dmaengine: idxd: removal of pcim managed mmio mapping
-      dmaengine: idxd: fix idxd conf_dev 'struct device' lifetime
-      dmaengine: idxd: fix wq conf_dev 'struct device' lifetime
-      dmaengine: idxd: fix engine conf_dev lifetime
-      dmaengine: idxd: fix group conf_dev lifetime
-      dmaengine: idxd: fix cdev setup and free device lifetime issues
+diff --git a/drivers/dma/idxd/device.c b/drivers/dma/idxd/device.c
+index 971a10a60093..a56af1d8b091 100644
+--- a/drivers/dma/idxd/device.c
++++ b/drivers/dma/idxd/device.c
+@@ -19,7 +19,7 @@ static void idxd_cmd_exec(struct idxd_device *idxd, int cmd_code, u32 operand,
+ /* Interrupt control bits */
+ void idxd_mask_msix_vector(struct idxd_device *idxd, int vec_id)
+ {
+-	struct irq_data *data = irq_get_irq_data(idxd->msix_entries[vec_id].vector);
++	struct irq_data *data = irq_get_irq_data(idxd->irq_entries[vec_id].vector);
+ 
+ 	pci_msi_mask_irq(data);
+ }
+@@ -36,7 +36,7 @@ void idxd_mask_msix_vectors(struct idxd_device *idxd)
+ 
+ void idxd_unmask_msix_vector(struct idxd_device *idxd, int vec_id)
+ {
+-	struct irq_data *data = irq_get_irq_data(idxd->msix_entries[vec_id].vector);
++	struct irq_data *data = irq_get_irq_data(idxd->irq_entries[vec_id].vector);
+ 
+ 	pci_msi_unmask_irq(data);
+ }
+diff --git a/drivers/dma/idxd/idxd.h b/drivers/dma/idxd/idxd.h
+index 40001c46d95c..3409a84b8674 100644
+--- a/drivers/dma/idxd/idxd.h
++++ b/drivers/dma/idxd/idxd.h
+@@ -36,6 +36,7 @@ struct idxd_device_driver {
+ struct idxd_irq_entry {
+ 	struct idxd_device *idxd;
+ 	int id;
++	int vector;
+ 	struct llist_head pending_llist;
+ 	struct list_head work_list;
+ 	/*
+@@ -219,7 +220,6 @@ struct idxd_device {
+ 
+ 	union sw_err_reg sw_err;
+ 	wait_queue_head_t cmd_waitq;
+-	struct msix_entry *msix_entries;
+ 	int num_wq_irqs;
+ 	struct idxd_irq_entry *irq_entries;
+ 
+diff --git a/drivers/dma/idxd/init.c b/drivers/dma/idxd/init.c
+index 085a0c3b62c6..72f319dd52fc 100644
+--- a/drivers/dma/idxd/init.c
++++ b/drivers/dma/idxd/init.c
+@@ -61,7 +61,6 @@ static int idxd_setup_interrupts(struct idxd_device *idxd)
+ {
+ 	struct pci_dev *pdev = idxd->pdev;
+ 	struct device *dev = &pdev->dev;
+-	struct msix_entry *msix;
+ 	struct idxd_irq_entry *irq_entry;
+ 	int i, msixcnt;
+ 	int rc = 0;
+@@ -70,23 +69,13 @@ static int idxd_setup_interrupts(struct idxd_device *idxd)
+ 	msixcnt = pci_msix_vec_count(pdev);
+ 	if (msixcnt < 0) {
+ 		dev_err(dev, "Not MSI-X interrupt capable.\n");
+-		goto err_no_irq;
++		return -ENOSPC;
+ 	}
+ 
+-	idxd->msix_entries = devm_kzalloc(dev, sizeof(struct msix_entry) *
+-			msixcnt, GFP_KERNEL);
+-	if (!idxd->msix_entries) {
+-		rc = -ENOMEM;
+-		goto err_no_irq;
+-	}
+-
+-	for (i = 0; i < msixcnt; i++)
+-		idxd->msix_entries[i].entry = i;
+-
+-	rc = pci_enable_msix_exact(pdev, idxd->msix_entries, msixcnt);
+-	if (rc) {
+-		dev_err(dev, "Failed enabling %d MSIX entries.\n", msixcnt);
+-		goto err_no_irq;
++	rc = pci_alloc_irq_vectors(pdev, msixcnt, msixcnt, PCI_IRQ_MSIX);
++	if (rc != msixcnt) {
++		dev_err(dev, "Failed enabling %d MSIX entries: %d\n", msixcnt, rc);
++		return -ENOSPC;
+ 	}
+ 	dev_dbg(dev, "Enabled %d msix vectors\n", msixcnt);
+ 
+@@ -99,48 +88,41 @@ static int idxd_setup_interrupts(struct idxd_device *idxd)
+ 					 GFP_KERNEL);
+ 	if (!idxd->irq_entries) {
+ 		rc = -ENOMEM;
+-		goto err_no_irq;
++		goto err_irq_entries;
+ 	}
+ 
+ 	for (i = 0; i < msixcnt; i++) {
+ 		idxd->irq_entries[i].id = i;
+ 		idxd->irq_entries[i].idxd = idxd;
++		idxd->irq_entries[i].vector = pci_irq_vector(pdev, i);
+ 		spin_lock_init(&idxd->irq_entries[i].list_lock);
+ 	}
+ 
+-	msix = &idxd->msix_entries[0];
+ 	irq_entry = &idxd->irq_entries[0];
+-	rc = devm_request_threaded_irq(dev, msix->vector, idxd_irq_handler,
+-				       idxd_misc_thread, 0, "idxd-misc",
+-				       irq_entry);
++	rc = request_threaded_irq(irq_entry->vector, idxd_irq_handler, idxd_misc_thread,
++				  0, "idxd-misc", irq_entry);
+ 	if (rc < 0) {
+ 		dev_err(dev, "Failed to allocate misc interrupt.\n");
+-		goto err_no_irq;
++		goto err_misc_irq;
+ 	}
+ 
+-	dev_dbg(dev, "Allocated idxd-misc handler on msix vector %d\n",
+-		msix->vector);
++	dev_dbg(dev, "Allocated idxd-misc handler on msix vector %d\n", irq_entry->vector);
+ 
+ 	/* first MSI-X entry is not for wq interrupts */
+ 	idxd->num_wq_irqs = msixcnt - 1;
+ 
+ 	for (i = 1; i < msixcnt; i++) {
+-		msix = &idxd->msix_entries[i];
+ 		irq_entry = &idxd->irq_entries[i];
+ 
+ 		init_llist_head(&idxd->irq_entries[i].pending_llist);
+ 		INIT_LIST_HEAD(&idxd->irq_entries[i].work_list);
+-		rc = devm_request_threaded_irq(dev, msix->vector,
+-					       idxd_irq_handler,
+-					       idxd_wq_thread, 0,
+-					       "idxd-portal", irq_entry);
++		rc = request_threaded_irq(irq_entry->vector, idxd_irq_handler,
++					  idxd_wq_thread, 0, "idxd-portal", irq_entry);
+ 		if (rc < 0) {
+-			dev_err(dev, "Failed to allocate irq %d.\n",
+-				msix->vector);
+-			goto err_no_irq;
++			dev_err(dev, "Failed to allocate irq %d.\n", irq_entry->vector);
++			goto err_wq_irqs;
+ 		}
+-		dev_dbg(dev, "Allocated idxd-msix %d for vector %d\n",
+-			i, msix->vector);
++		dev_dbg(dev, "Allocated idxd-msix %d for vector %d\n", i, irq_entry->vector);
+ 	}
+ 
+ 	idxd_unmask_error_interrupts(idxd);
+@@ -154,10 +136,16 @@ static int idxd_setup_interrupts(struct idxd_device *idxd)
+ 
+ 	return 0;
+ 
+- err_no_irq:
++ err_wq_irqs:
++	while (--i) {
++		irq_entry = &idxd->irq_entries[i];
++		free_irq(irq_entry->vector, irq_entry);
++	}
++ err_misc_irq:
+ 	/* Disable error interrupt generation */
+ 	idxd_mask_error_interrupts(idxd);
+-	pci_disable_msix(pdev);
++ err_irq_entries:
++	pci_free_irq_vectors(pdev);
+ 	dev_err(dev, "No usable interrupts\n");
+ 	return rc;
+ }
+@@ -503,13 +491,15 @@ static void idxd_shutdown(struct pci_dev *pdev)
+ 
+ 	for (i = 0; i < msixcnt; i++) {
+ 		irq_entry = &idxd->irq_entries[i];
+-		synchronize_irq(idxd->msix_entries[i].vector);
++		synchronize_irq(irq_entry->vector);
++		free_irq(irq_entry->vector, irq_entry);
+ 		if (i == 0)
+ 			continue;
+ 		idxd_flush_pending_llist(irq_entry);
+ 		idxd_flush_work_list(irq_entry);
+ 	}
+ 
++	pci_free_irq_vectors(pdev);
+ 	destroy_workqueue(idxd->wq);
+ }
+ 
 
-
- drivers/dma/idxd/cdev.c   | 131 +++++++-----------
- drivers/dma/idxd/device.c |  20 +--
- drivers/dma/idxd/idxd.h   |  54 ++++++--
- drivers/dma/idxd/init.c   | 284 +++++++++++++++++++++++++++-----------
- drivers/dma/idxd/irq.c    |  10 +-
- drivers/dma/idxd/sysfs.c  | 241 ++++++++++++++++----------------
- 6 files changed, 439 insertions(+), 301 deletions(-)
-
---
 
