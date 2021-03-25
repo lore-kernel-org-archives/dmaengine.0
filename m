@@ -4,43 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4500DC433E2
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5CBB0C433E4
 	for <dmaengine@archiver.kernel.org>; Thu, 25 Mar 2021 15:55:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1FE7461A1A
+	by mail.kernel.org (Postfix) with ESMTP id 4599E61A2A
 	for <dmaengine@archiver.kernel.org>; Thu, 25 Mar 2021 15:55:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229622AbhCYPzU (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        id S229614AbhCYPzU (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
         Thu, 25 Mar 2021 11:55:20 -0400
-Received: from mga11.intel.com ([192.55.52.93]:38908 "EHLO mga11.intel.com"
+Received: from mga01.intel.com ([192.55.52.88]:42841 "EHLO mga01.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229631AbhCYPzS (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Thu, 25 Mar 2021 11:55:18 -0400
-IronPort-SDR: XxBYCOEeSrWsrMUdVWrlvxUID+7sYv652/0DYlVP9flmkshmVN57c/AvSJWQhyBDrjGWVBywRN
- yNhgEHVwG4Ng==
-X-IronPort-AV: E=McAfee;i="6000,8403,9934"; a="187655825"
+        id S229626AbhCYPzG (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Thu, 25 Mar 2021 11:55:06 -0400
+IronPort-SDR: pDpU/Gliyu6zoRfMf3ta/Dk+08FzHqvf6dNvEO2HlrgcwnI2GPiwQHp87KghVQ1VnlnBeqKTlr
+ weQTmz3AVRog==
+X-IronPort-AV: E=McAfee;i="6000,8403,9934"; a="211094088"
 X-IronPort-AV: E=Sophos;i="5.81,277,1610438400"; 
-   d="scan'208";a="187655825"
+   d="scan'208";a="211094088"
 Received: from fmsmga001.fm.intel.com ([10.253.24.23])
-  by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Mar 2021 08:55:18 -0700
-IronPort-SDR: luHBKWarFox//ROtodioXWU8gUW/M6E3bKhhiHuoYK4IlJLgRcnabT01SDijvjUHgRIV6q0nLC
- 3ngGo6fPJXlw==
+  by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Mar 2021 08:55:06 -0700
+IronPort-SDR: OKOYY8j5z2UP7NUfvSmDJccghaeNcH45bo+yJX/PwfHGKJppxkPN4Gs1QtLnrcIOGd4ItAfe1y
+ fIRE7YI+k2kw==
 X-IronPort-AV: E=Sophos;i="5.81,277,1610438400"; 
-   d="scan'208";a="514688926"
+   d="scan'208";a="514688862"
 Received: from djiang5-desk3.ch.intel.com ([143.182.136.137])
-  by fmsmga001-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Mar 2021 08:55:17 -0700
-Subject: [PATCH v8 8/8] dmaengine: idxd: fix cdev setup and free device
- lifetime issues
+  by fmsmga001-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Mar 2021 08:55:06 -0700
+Subject: [PATCH v8 6/8] dmaengine: idxd: fix engine conf_dev lifetime
 From:   Dave Jiang <dave.jiang@intel.com>
 To:     vkoul@kernel.org
 Cc:     Jason Gunthorpe <jgg@nvidia.com>,
         Dan Williams <dan.j.williams@intel.com>,
         dmaengine@vger.kernel.org, dan.carpenter@oracle.com
-Date:   Thu, 25 Mar 2021 08:55:17 -0700
-Message-ID: <161668771765.2670112.17489245642116109722.stgit@djiang5-desk3.ch.intel.com>
+Date:   Thu, 25 Mar 2021 08:55:06 -0700
+Message-ID: <161668770604.2670112.2579227487355883467.stgit@djiang5-desk3.ch.intel.com>
 In-Reply-To: <161668743322.2670112.2302120522403482843.stgit@djiang5-desk3.ch.intel.com>
 References: <161668743322.2670112.2302120522403482843.stgit@djiang5-desk3.ch.intel.com>
 User-Agent: StGit/0.23-29-ga622f1
@@ -51,304 +50,222 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-The char device setup and cleanup has device lifetime issues regarding when
-parts are initialized and cleaned up. The initialization of struct device is
-done incorrectly. device_initialize() needs to be called on the 'struct
-device' and then additional changes can be added. The ->release() function
-needs to be setup via device_type before dev_set_name() to allow proper
-cleanup. The change re-parents the cdev under the wq->conf_dev to get
-natural reference inheritance. No known dependency on the old device path exists.
+The devm managed lifetime is incompatible with 'struct device' objects that
+resides in idxd context. This is one of the series that clean up the idxd
+driver 'struct device' lifetime. Fix engine->conf_dev 'struct device'
+lifetime. Address issues flagged by CONFIG_DEBUG_KOBJECT_RELEASE.
+Add release functions in order to free the allocated memory at the
+appropriate time.
 
 Reported-by: Jason Gunthorpe <jgg@nvidia.com>
-Fixes: 42d279f9137a ("dmaengine: idxd: add char driver to expose submission portal to userland")
+Fixes: bfe1d56091c1 ("dmaengine: idxd: Init and probe for Intel data accelerators")
 Signed-off-by: Dave Jiang <dave.jiang@intel.com>
 Reviewed-by: Dan Williams <dan.j.williams@intel.com>
 ---
- drivers/dma/idxd/cdev.c  |  131 +++++++++++++++++-----------------------------
- drivers/dma/idxd/idxd.h  |    7 +-
- drivers/dma/idxd/init.c  |    2 -
- drivers/dma/idxd/irq.c   |    4 +
- drivers/dma/idxd/sysfs.c |   10 +++-
- 5 files changed, 65 insertions(+), 89 deletions(-)
+ drivers/dma/idxd/device.c |    2 +-
+ drivers/dma/idxd/idxd.h   |    2 +-
+ drivers/dma/idxd/init.c   |   51 +++++++++++++++++++++++++++++++++++++++------
+ drivers/dma/idxd/sysfs.c  |   44 ++++++++++++++++++++++-----------------
+ 4 files changed, 71 insertions(+), 28 deletions(-)
 
-diff --git a/drivers/dma/idxd/cdev.c b/drivers/dma/idxd/cdev.c
-index 0db9b82ed8cf..b4ff97f93f13 100644
---- a/drivers/dma/idxd/cdev.c
-+++ b/drivers/dma/idxd/cdev.c
-@@ -39,15 +39,15 @@ struct idxd_user_context {
- 	struct iommu_sva *sva;
- };
- 
--enum idxd_cdev_cleanup {
--	CDEV_NORMAL = 0,
--	CDEV_FAILED,
--};
--
- static void idxd_cdev_dev_release(struct device *dev)
- {
--	dev_dbg(dev, "releasing cdev device\n");
--	kfree(dev);
-+	struct idxd_cdev *idxd_cdev = container_of(dev, struct idxd_cdev, dev);
-+	struct idxd_cdev_context *cdev_ctx;
-+	struct idxd_wq *wq = idxd_cdev->wq;
-+
-+	cdev_ctx = &ictx[wq->idxd->type];
-+	ida_simple_remove(&cdev_ctx->minor_ida, idxd_cdev->minor);
-+	kfree(idxd_cdev);
- }
- 
- static struct device_type idxd_cdev_device_type = {
-@@ -62,14 +62,11 @@ static inline struct idxd_cdev *inode_idxd_cdev(struct inode *inode)
- 	return container_of(cdev, struct idxd_cdev, cdev);
- }
- 
--static inline struct idxd_wq *idxd_cdev_wq(struct idxd_cdev *idxd_cdev)
--{
--	return container_of(idxd_cdev, struct idxd_wq, idxd_cdev);
--}
--
- static inline struct idxd_wq *inode_wq(struct inode *inode)
- {
--	return idxd_cdev_wq(inode_idxd_cdev(inode));
-+	struct idxd_cdev *idxd_cdev = inode_idxd_cdev(inode);
-+
-+	return idxd_cdev->wq;
- }
- 
- static int idxd_cdev_open(struct inode *inode, struct file *filp)
-@@ -220,11 +217,10 @@ static __poll_t idxd_cdev_poll(struct file *filp,
- 	struct idxd_user_context *ctx = filp->private_data;
- 	struct idxd_wq *wq = ctx->wq;
- 	struct idxd_device *idxd = wq->idxd;
--	struct idxd_cdev *idxd_cdev = &wq->idxd_cdev;
- 	unsigned long flags;
- 	__poll_t out = 0;
- 
--	poll_wait(filp, &idxd_cdev->err_queue, wait);
-+	poll_wait(filp, &wq->err_queue, wait);
- 	spin_lock_irqsave(&idxd->dev_lock, flags);
- 	if (idxd->sw_err.valid)
- 		out = EPOLLIN | EPOLLRDNORM;
-@@ -246,98 +242,69 @@ int idxd_cdev_get_major(struct idxd_device *idxd)
- 	return MAJOR(ictx[idxd->type].devt);
- }
- 
--static int idxd_wq_cdev_dev_setup(struct idxd_wq *wq)
-+int idxd_wq_add_cdev(struct idxd_wq *wq)
- {
- 	struct idxd_device *idxd = wq->idxd;
--	struct idxd_cdev *idxd_cdev = &wq->idxd_cdev;
--	struct idxd_cdev_context *cdev_ctx;
-+	struct idxd_cdev *idxd_cdev;
-+	struct cdev *cdev;
- 	struct device *dev;
--	int minor, rc;
-+	struct idxd_cdev_context *cdev_ctx;
-+	int rc, minor;
- 
--	idxd_cdev->dev = kzalloc(sizeof(*idxd_cdev->dev), GFP_KERNEL);
--	if (!idxd_cdev->dev)
-+	idxd_cdev = kzalloc(sizeof(*idxd_cdev), GFP_KERNEL);
-+	if (!idxd_cdev)
- 		return -ENOMEM;
- 
--	dev = idxd_cdev->dev;
--	dev->parent = &idxd->pdev->dev;
--	dev_set_name(dev, "%s/wq%u.%u", idxd_get_dev_name(idxd),
--		     idxd->id, wq->id);
--	dev->bus = idxd_get_bus_type(idxd);
--
-+	idxd_cdev->wq = wq;
-+	cdev = &idxd_cdev->cdev;
-+	dev = &idxd_cdev->dev;
- 	cdev_ctx = &ictx[wq->idxd->type];
- 	minor = ida_simple_get(&cdev_ctx->minor_ida, 0, MINORMASK, GFP_KERNEL);
- 	if (minor < 0) {
--		rc = minor;
--		kfree(dev);
--		goto ida_err;
--	}
--
--	dev->devt = MKDEV(MAJOR(cdev_ctx->devt), minor);
--	dev->type = &idxd_cdev_device_type;
--	rc = device_register(dev);
--	if (rc < 0) {
--		dev_err(&idxd->pdev->dev, "device register failed\n");
--		goto dev_reg_err;
-+		kfree(idxd_cdev);
-+		return minor;
- 	}
- 	idxd_cdev->minor = minor;
- 
--	return 0;
--
-- dev_reg_err:
--	ida_simple_remove(&cdev_ctx->minor_ida, MINOR(dev->devt));
--	put_device(dev);
-- ida_err:
--	idxd_cdev->dev = NULL;
--	return rc;
--}
--
--static void idxd_wq_cdev_cleanup(struct idxd_wq *wq,
--				 enum idxd_cdev_cleanup cdev_state)
--{
--	struct idxd_cdev *idxd_cdev = &wq->idxd_cdev;
--	struct idxd_cdev_context *cdev_ctx;
--
--	cdev_ctx = &ictx[wq->idxd->type];
--	if (cdev_state == CDEV_NORMAL)
--		cdev_del(&idxd_cdev->cdev);
--	device_unregister(idxd_cdev->dev);
--	/*
--	 * The device_type->release() will be called on the device and free
--	 * the allocated struct device. We can just forget it.
--	 */
--	ida_simple_remove(&cdev_ctx->minor_ida, idxd_cdev->minor);
--	idxd_cdev->dev = NULL;
--	idxd_cdev->minor = -1;
--}
--
--int idxd_wq_add_cdev(struct idxd_wq *wq)
--{
--	struct idxd_cdev *idxd_cdev = &wq->idxd_cdev;
--	struct cdev *cdev = &idxd_cdev->cdev;
--	struct device *dev;
--	int rc;
-+	device_initialize(dev);
-+	dev->parent = &wq->conf_dev;
-+	dev->bus = idxd_get_bus_type(idxd);
-+	dev->type = &idxd_cdev_device_type;
-+	dev->devt = MKDEV(MAJOR(cdev_ctx->devt), minor);
- 
--	rc = idxd_wq_cdev_dev_setup(wq);
-+	rc = dev_set_name(dev, "%s/wq%u.%u", idxd_get_dev_name(idxd),
-+			  idxd->id, wq->id);
- 	if (rc < 0)
--		return rc;
-+		goto err;
- 
--	dev = idxd_cdev->dev;
-+	wq->idxd_cdev = idxd_cdev;
- 	cdev_init(cdev, &idxd_cdev_fops);
--	cdev_set_parent(cdev, &dev->kobj);
--	rc = cdev_add(cdev, dev->devt, 1);
-+	rc = cdev_device_add(cdev, dev);
- 	if (rc) {
- 		dev_dbg(&wq->idxd->pdev->dev, "cdev_add failed: %d\n", rc);
--		idxd_wq_cdev_cleanup(wq, CDEV_FAILED);
--		return rc;
-+		goto err;
+diff --git a/drivers/dma/idxd/device.c b/drivers/dma/idxd/device.c
+index 2292d7bfef58..d4fa9d2472c1 100644
+--- a/drivers/dma/idxd/device.c
++++ b/drivers/dma/idxd/device.c
+@@ -744,7 +744,7 @@ static int idxd_engines_setup(struct idxd_device *idxd)
  	}
  
--	init_waitqueue_head(&idxd_cdev->err_queue);
- 	return 0;
-+
-+ err:
-+	put_device(dev);
-+	wq->idxd_cdev = NULL;
-+	return rc;
- }
+ 	for (i = 0; i < idxd->max_engines; i++) {
+-		eng = &idxd->engines[i];
++		eng = idxd->engines[i];
+ 		group = eng->group;
  
- void idxd_wq_del_cdev(struct idxd_wq *wq)
- {
--	idxd_wq_cdev_cleanup(wq, CDEV_NORMAL);
-+	struct idxd_cdev *idxd_cdev;
-+	struct idxd_cdev_context *cdev_ctx;
-+
-+	cdev_ctx = &ictx[wq->idxd->type];
-+	mutex_lock(&wq->wq_lock);
-+	idxd_cdev = wq->idxd_cdev;
-+	wq->idxd_cdev = NULL;
-+	mutex_unlock(&wq->wq_lock);
-+	cdev_device_del(&idxd_cdev->cdev, &idxd_cdev->dev);
-+	put_device(&idxd_cdev->dev);
- }
- 
- int idxd_cdev_register(void)
+ 		if (!group)
 diff --git a/drivers/dma/idxd/idxd.h b/drivers/dma/idxd/idxd.h
-index 35bb616f04d5..acb70c3b7e36 100644
+index cd41baeb2bdf..6c217cab383f 100644
 --- a/drivers/dma/idxd/idxd.h
 +++ b/drivers/dma/idxd/idxd.h
-@@ -79,10 +79,10 @@ enum idxd_wq_type {
- };
+@@ -194,7 +194,7 @@ struct idxd_device {
+ 	struct completion *cmd_done;
+ 	struct idxd_group *groups;
+ 	struct idxd_wq **wqs;
+-	struct idxd_engine *engines;
++	struct idxd_engine **engines;
  
- struct idxd_cdev {
-+	struct idxd_wq *wq;
- 	struct cdev cdev;
--	struct device *dev;
-+	struct device dev;
- 	int minor;
--	struct wait_queue_head err_queue;
- };
- 
- #define IDXD_ALLOCATED_BATCH_SIZE	128U
-@@ -108,7 +108,8 @@ struct idxd_dma_chan {
- struct idxd_wq {
- 	void __iomem *portal;
- 	struct device conf_dev;
--	struct idxd_cdev idxd_cdev;
-+	struct idxd_cdev *idxd_cdev;
-+	struct wait_queue_head err_queue;
- 	struct idxd_device *idxd;
- 	int id;
- 	enum idxd_wq_type type;
+ 	struct iommu_sva *sva;
+ 	unsigned int pasid;
 diff --git a/drivers/dma/idxd/init.c b/drivers/dma/idxd/init.c
-index fe9a1aa7c795..4a2eb47be955 100644
+index 1890a1c15977..575b47fd3eca 100644
 --- a/drivers/dma/idxd/init.c
 +++ b/drivers/dma/idxd/init.c
-@@ -273,7 +273,7 @@ static int idxd_setup_internals(struct idxd_device *idxd)
- 		wq->id = i;
- 		wq->idxd = idxd;
- 		mutex_init(&wq->wq_lock);
--		wq->idxd_cdev.minor = -1;
-+		init_waitqueue_head(&wq->err_queue);
- 		wq->max_xfer_bytes = idxd->max_xfer_bytes;
- 		wq->max_batch_size = idxd->max_batch_size;
- 		wq->wqcfg = kzalloc_node(idxd->wqcfg_size, GFP_KERNEL, dev_to_node(dev));
-diff --git a/drivers/dma/idxd/irq.c b/drivers/dma/idxd/irq.c
-index 7b0181532f77..fc0781e3f36d 100644
---- a/drivers/dma/idxd/irq.c
-+++ b/drivers/dma/idxd/irq.c
-@@ -133,7 +133,7 @@ static int process_misc_interrupts(struct idxd_device *idxd, u32 cause)
- 			struct idxd_wq *wq = idxd->wqs[id];
- 
- 			if (wq->type == IDXD_WQT_USER)
--				wake_up_interruptible(&wq->idxd_cdev.err_queue);
-+				wake_up_interruptible(&wq->err_queue);
- 		} else {
- 			int i;
- 
-@@ -141,7 +141,7 @@ static int process_misc_interrupts(struct idxd_device *idxd, u32 cause)
- 				struct idxd_wq *wq = idxd->wqs[i];
- 
- 				if (wq->type == IDXD_WQT_USER)
--					wake_up_interruptible(&wq->idxd_cdev.err_queue);
-+					wake_up_interruptible(&wq->err_queue);
- 			}
- 		}
- 
-diff --git a/drivers/dma/idxd/sysfs.c b/drivers/dma/idxd/sysfs.c
-index 03079ff54889..87b434e7733c 100644
---- a/drivers/dma/idxd/sysfs.c
-+++ b/drivers/dma/idxd/sysfs.c
-@@ -1174,8 +1174,16 @@ static ssize_t wq_cdev_minor_show(struct device *dev,
- 				  struct device_attribute *attr, char *buf)
- {
- 	struct idxd_wq *wq = container_of(dev, struct idxd_wq, conf_dev);
-+	int minor = -1;
- 
--	return sprintf(buf, "%d\n", wq->idxd_cdev.minor);
-+	mutex_lock(&wq->wq_lock);
-+	if (wq->idxd_cdev)
-+		minor = wq->idxd_cdev->minor;
-+	mutex_unlock(&wq->wq_lock);
-+
-+	if (minor == -1)
-+		return -ENXIO;
-+	return sysfs_emit(buf, "%d\n", minor);
+@@ -181,6 +181,37 @@ static int idxd_allocate_wqs(struct idxd_device *idxd)
+ 	return rc;
  }
  
- static struct device_attribute dev_attr_wq_cdev_minor =
++static int idxd_allocate_engines(struct idxd_device *idxd)
++{
++	struct idxd_engine *engine;
++	struct device *dev = &idxd->pdev->dev;
++	int i, rc;
++
++	idxd->engines = kcalloc_node(idxd->max_engines, sizeof(struct idxd_engine *),
++				     GFP_KERNEL, dev_to_node(dev));
++	if (!idxd->engines)
++		return -ENOMEM;
++
++	for (i = 0; i < idxd->max_engines; i++) {
++		engine = kzalloc_node(sizeof(*engine), GFP_KERNEL, dev_to_node(dev));
++		if (!engine) {
++			rc = -ENOMEM;
++			goto err;
++		}
++
++		idxd->engines[i] = engine;
++	}
++
++	return 0;
++
++ err:
++	while (--i >= 0)
++		kfree(idxd->engines[i]);
++	kfree(idxd->engines);
++	idxd->engines = NULL;
++	return rc;
++}
++
+ static int idxd_setup_internals(struct idxd_device *idxd)
+ {
+ 	struct device *dev = &idxd->pdev->dev;
+@@ -217,15 +248,15 @@ static int idxd_setup_internals(struct idxd_device *idxd)
+ 			return -ENOMEM;
+ 	}
+ 
+-	idxd->engines = devm_kcalloc(dev, idxd->max_engines,
+-				     sizeof(struct idxd_engine), GFP_KERNEL);
+-	if (!idxd->engines)
+-		return -ENOMEM;
+-
++	rc = idxd_allocate_engines(idxd);
++	if (rc < 0)
++		return rc;
+ 
+ 	for (i = 0; i < idxd->max_engines; i++) {
+-		idxd->engines[i].idxd = idxd;
+-		idxd->engines[i].id = i;
++		struct idxd_engine *engine = idxd->engines[i];
++
++		engine->idxd = idxd;
++		engine->id = i;
+ 	}
+ 
+ 	idxd->wq = create_workqueue(dev_name(dev));
+@@ -363,6 +394,12 @@ static void idxd_free(struct idxd_device *idxd)
+ 		kfree(idxd->wqs);
+ 	}
+ 
++	if (idxd->engines) {
++		for (i = 0; i < idxd->max_engines; i++)
++			kfree(idxd->engines[i]);
++		kfree(idxd->engines);
++	}
++
+ 	kfree(idxd);
+ }
+ 
+diff --git a/drivers/dma/idxd/sysfs.c b/drivers/dma/idxd/sysfs.c
+index 10ce9b5f2951..021da1752f2a 100644
+--- a/drivers/dma/idxd/sysfs.c
++++ b/drivers/dma/idxd/sysfs.c
+@@ -26,11 +26,6 @@ static struct device_type idxd_group_device_type = {
+ 	.release = idxd_conf_sub_device_release,
+ };
+ 
+-static struct device_type idxd_engine_device_type = {
+-	.name = "engine",
+-	.release = idxd_conf_sub_device_release,
+-};
+-
+ static int idxd_config_bus_match(struct device *dev,
+ 				 struct device_driver *drv)
+ {
+@@ -469,6 +464,19 @@ static const struct attribute_group *idxd_engine_attribute_groups[] = {
+ 	NULL,
+ };
+ 
++static void idxd_conf_engine_release(struct device *dev)
++{
++	struct idxd_engine *engine = container_of(dev, struct idxd_engine, conf_dev);
++
++	kfree(engine);
++}
++
++static struct device_type idxd_engine_device_type = {
++	.name = "engine",
++	.release = idxd_conf_engine_release,
++	.groups = idxd_engine_attribute_groups,
++};
++
+ /* Group attributes */
+ 
+ static void idxd_set_free_tokens(struct idxd_device *idxd)
+@@ -631,7 +639,7 @@ static ssize_t group_engines_show(struct device *dev,
+ 	struct idxd_device *idxd = group->idxd;
+ 
+ 	for (i = 0; i < idxd->max_engines; i++) {
+-		struct idxd_engine *engine = &idxd->engines[i];
++		struct idxd_engine *engine = idxd->engines[i];
+ 
+ 		if (!engine->group)
+ 			continue;
+@@ -1638,30 +1646,28 @@ static int idxd_setup_engine_sysfs(struct idxd_device *idxd)
+ 	int i, rc;
+ 
+ 	for (i = 0; i < idxd->max_engines; i++) {
+-		struct idxd_engine *engine = &idxd->engines[i];
++		struct idxd_engine *engine = idxd->engines[i];
+ 
++		device_initialize(&engine->conf_dev);
+ 		engine->conf_dev.parent = &idxd->conf_dev;
+-		dev_set_name(&engine->conf_dev, "engine%d.%d",
+-			     idxd->id, engine->id);
+ 		engine->conf_dev.bus = idxd_get_bus_type(idxd);
+-		engine->conf_dev.groups = idxd_engine_attribute_groups;
+ 		engine->conf_dev.type = &idxd_engine_device_type;
+-		dev_dbg(dev, "Engine device register: %s\n",
+-			dev_name(&engine->conf_dev));
+-		rc = device_register(&engine->conf_dev);
+-		if (rc < 0) {
+-			put_device(&engine->conf_dev);
++		rc = dev_set_name(&engine->conf_dev, "engine%d.%d", idxd->id, engine->id);
++		if (rc < 0)
++			goto cleanup;
++		dev_dbg(dev, "Engine device register: %s\n", dev_name(&engine->conf_dev));
++		rc = device_add(&engine->conf_dev);
++		if (rc < 0)
+ 			goto cleanup;
+-		}
+ 	}
+ 
+ 	return 0;
+ 
+ cleanup:
+ 	while (i--) {
+-		struct idxd_engine *engine = &idxd->engines[i];
++		struct idxd_engine *engine = idxd->engines[i];
+ 
+-		device_unregister(&engine->conf_dev);
++		put_device(&engine->conf_dev);
+ 	}
+ 	return rc;
+ }
+@@ -1803,7 +1809,7 @@ void idxd_unregister_devices(struct idxd_device *idxd)
+ 	}
+ 
+ 	for (i = 0; i < idxd->max_engines; i++) {
+-		struct idxd_engine *engine = &idxd->engines[i];
++		struct idxd_engine *engine = idxd->engines[i];
+ 
+ 		device_unregister(&engine->conf_dev);
+ 	}
 
 
