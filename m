@@ -2,467 +2,165 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-11.0 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,MSGID_FROM_MTA_HEADER,SPF_HELO_NONE,
+	SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 99AC8C433E3
-	for <dmaengine@archiver.kernel.org>; Thu, 25 Mar 2021 15:55:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 78FE1C433C1
+	for <dmaengine@archiver.kernel.org>; Thu, 25 Mar 2021 16:48:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5AE2D60240
-	for <dmaengine@archiver.kernel.org>; Thu, 25 Mar 2021 15:55:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 50B8D619E8
+	for <dmaengine@archiver.kernel.org>; Thu, 25 Mar 2021 16:48:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229590AbhCYPzT (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Thu, 25 Mar 2021 11:55:19 -0400
-Received: from mga14.intel.com ([192.55.52.115]:2835 "EHLO mga14.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229622AbhCYPzB (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Thu, 25 Mar 2021 11:55:01 -0400
-IronPort-SDR: NxzcUzolZFgG4beL45daJu8c5qhS/A66gzwyYr4M+O1E0cMs6255j3GgCQxBeRafnPv9IoJcrC
- mjrNKw5arpvA==
-X-IronPort-AV: E=McAfee;i="6000,8403,9934"; a="190382726"
-X-IronPort-AV: E=Sophos;i="5.81,277,1610438400"; 
-   d="scan'208";a="190382726"
-Received: from orsmga001.jf.intel.com ([10.7.209.18])
-  by fmsmga103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Mar 2021 08:55:01 -0700
-IronPort-SDR: 6YN0w269Z8b6gma/gw4jwsDVF/1IMWmuSylz3Izdgsu4Pb8x1y2Bf+yY03WSeEYBmp2fjvrYO5
- 798U+EtTJ5dQ==
-X-IronPort-AV: E=Sophos;i="5.81,277,1610438400"; 
-   d="scan'208";a="453131071"
-Received: from djiang5-desk3.ch.intel.com ([143.182.136.137])
-  by orsmga001-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Mar 2021 08:55:00 -0700
-Subject: [PATCH v8 5/8] dmaengine: idxd: fix wq conf_dev 'struct device'
- lifetime
-From:   Dave Jiang <dave.jiang@intel.com>
-To:     vkoul@kernel.org
-Cc:     Jason Gunthorpe <jgg@nvidia.com>,
-        Dan Williams <dan.j.williams@intel.com>,
-        dmaengine@vger.kernel.org, dan.carpenter@oracle.com
-Date:   Thu, 25 Mar 2021 08:55:00 -0700
-Message-ID: <161668770006.2670112.1315353645420208591.stgit@djiang5-desk3.ch.intel.com>
-In-Reply-To: <161668743322.2670112.2302120522403482843.stgit@djiang5-desk3.ch.intel.com>
-References: <161668743322.2670112.2302120522403482843.stgit@djiang5-desk3.ch.intel.com>
-User-Agent: StGit/0.23-29-ga622f1
+        id S229832AbhCYQsZ (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Thu, 25 Mar 2021 12:48:25 -0400
+Received: from mail-dm6nam10on2056.outbound.protection.outlook.com ([40.107.93.56]:20832
+        "EHLO NAM10-DM6-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S230106AbhCYQsM (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Thu, 25 Mar 2021 12:48:12 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=TtH71Au7/VOEq7bUobkp3LyiVc/nG0H/5dSzaE8ZrlmfX3SQ9pznJnEE7qTy5LY1jjRjoLo/wpSz0oUJQ7FBnYM54ShOcsyYWBNURrdW+T/sWKdUx+kVaXMFeDZYcRxaFM8/aaEneQVme1cpV5VPVaOnBTD+E/E1NDFGf3bldI/ozcTkWmHMwQZgN89SDXtpS2JAMqkk7iFRoNwNgdBxyXKCvnMwR/rXkwuAS6hPNioxIv9FuRAVvOYR6u698vD/qbJkK1ZOesHXe8a9QnYNAbagMdmiorE3vyjWwSuXnXoGBToFWg3IFgX+eSN5WkGpWkOcBWP1x3Hh3MVzgVXPEA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=lF5oZOeuxved+GTOyM6SbRpYnVq9o8eGK83w7wK+uQw=;
+ b=T5cjbYQASh2d0Kumeng1Fos9tVlQIexyo7vuOviHY/fQzheDVbln8OcKSKszjCq+PGNR8tLhqdczOEDMLZLdRa1NoV5/XZE3hsf5tanOku8UqMqg91bMq6AXVJCZo2m8XZGQtBXDhvDVSxBxObq8PGhFg1spt4/BWLALHCqG7IN711qNFKIkZcBt1MxFQtDIIfXGYf/7CNPzTaXP2pXnrlHltA08nPhEpf7X5PnVRdqvaqRCj6q7shSOFyKeFvVB9floAnCLo6qv3IInoTnnMk5v1HXsJFbX3SVr/3vmaHhBX6fc+OsbrScdKSGnk4KAghUUk5x4obHrgoIT2kyOTw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=lF5oZOeuxved+GTOyM6SbRpYnVq9o8eGK83w7wK+uQw=;
+ b=QEHMK6DamlkHMFNDsX3SpSEScC2PkyqpL6Is0coNP81cstrcd8BrvFdnDI6533utc/xk1gIoeMFPsZkdXXkin64XrCayur6f+K1FFj5WAbLQZAwR429VGSGJiBO52qEWwbK/U2pdvS0xK+/nR+29ZH/tWPc4jTujUDmbg3pSo8uNZ0MzEHFuwWsm+opknNUCwmaf/hXDzEiKyeA81S5AzYE9Lk1DvNWhGB982eXpzuTGaKg2mQ7gTkWuxSUBAzsywoBkYhtddZAG9X1kyk6hAQUcmxn0RrQmqv0swIO84pbxHKg9pXG42q1S/a0LffsuyDMVgf6FPq0zH25E9trxQA==
+Authentication-Results: intel.com; dkim=none (message not signed)
+ header.d=none;intel.com; dmarc=none action=none header.from=nvidia.com;
+Received: from DM6PR12MB3834.namprd12.prod.outlook.com (2603:10b6:5:14a::12)
+ by DM6PR12MB4513.namprd12.prod.outlook.com (2603:10b6:5:2ad::19) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3977.25; Thu, 25 Mar
+ 2021 16:48:11 +0000
+Received: from DM6PR12MB3834.namprd12.prod.outlook.com
+ ([fe80::1c62:7fa3:617b:ab87]) by DM6PR12MB3834.namprd12.prod.outlook.com
+ ([fe80::1c62:7fa3:617b:ab87%6]) with mapi id 15.20.3977.029; Thu, 25 Mar 2021
+ 16:48:11 +0000
+Date:   Thu, 25 Mar 2021 13:48:09 -0300
+From:   Jason Gunthorpe <jgg@nvidia.com>
+To:     Dan Williams <dan.j.williams@intel.com>
+Cc:     Dan Carpenter <dan.carpenter@oracle.com>,
+        Dave Jiang <dave.jiang@intel.com>,
+        Vinod Koul <vkoul@kernel.org>, dmaengine@vger.kernel.org
+Subject: Re: [PATCH v5] dmaengine: idxd: Do not use devm for 'struct device'
+ object allocation
+Message-ID: <20210325164809.GB2356281@nvidia.com>
+References: <161478326635.3900104.2067961356060195664.stgit@djiang5-desk3.ch.intel.com>
+ <20210304180308.GH4247@nvidia.com>
+ <CAPcyv4ibhLP=sGf3iNwoE8Qtr_5nXqcRr7NTsx648bPFWaJjrg@mail.gmail.com>
+ <20210324115645.GS2356281@nvidia.com>
+ <CAPcyv4jUJa9V1TrcVsEjf3NR6p10x8=0jZ1iCATLNiJ9Tz_YWA@mail.gmail.com>
+ <20210324165246.GK2356281@nvidia.com>
+ <CAPcyv4g2Odzusx621vatPbA041NXMmc1JK_3oSNM-EOPwDaxqA@mail.gmail.com>
+ <20210324195757.GR1667@kadam>
+ <CAPcyv4geTG8M2mxJNxN0wxZsQsLbN0U-mr1jjC=3sjyRWOuwmA@mail.gmail.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAPcyv4geTG8M2mxJNxN0wxZsQsLbN0U-mr1jjC=3sjyRWOuwmA@mail.gmail.com>
+X-Originating-IP: [206.223.160.26]
+X-ClientProxiedBy: YT1PR01CA0135.CANPRD01.PROD.OUTLOOK.COM
+ (2603:10b6:b01:2f::14) To DM6PR12MB3834.namprd12.prod.outlook.com
+ (2603:10b6:5:14a::12)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
+X-MS-Exchange-MessageSentRepresentingType: 1
+Received: from mlx.ziepe.ca (206.223.160.26) by YT1PR01CA0135.CANPRD01.PROD.OUTLOOK.COM (2603:10b6:b01:2f::14) with Microsoft SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3955.24 via Frontend Transport; Thu, 25 Mar 2021 16:48:11 +0000
+Received: from jgg by mlx with local (Exim 4.94)        (envelope-from <jgg@nvidia.com>)        id 1lPT9V-002ih9-T8; Thu, 25 Mar 2021 13:48:09 -0300
+X-MS-PublicTrafficType: Email
+X-MS-Office365-Filtering-Correlation-Id: 8f767eb6-bef6-407b-5db0-08d8efadc67f
+X-MS-TrafficTypeDiagnostic: DM6PR12MB4513:
+X-Microsoft-Antispam-PRVS: <DM6PR12MB45136ED6F4B139BDCC830E2BC2629@DM6PR12MB4513.namprd12.prod.outlook.com>
+X-MS-Oob-TLC-OOBClassifiers: OLM:8882;
+X-MS-Exchange-SenderADCheck: 1
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: qznH2pghpWWOq95pviEqQisPhCG22f0HV2a855wo9QQpT2ujpnU9v5/hyrhTc57j3vA1L60iDBrpF3GrFUpFxF1u6erG6qkWY807fiwIiSXV3sLeM2HZf6zvivJvz68UzS5MJqfL0sE8Y/YkNhpzFPEJLCAOy45xxzolCIMummxKjjYWiY9O2b3hF0zo1uDJDQ+6K8tvuMuXLjXjnkwg2MZ31t3qCZmt/NkAZravC9j+QzV+lqqm5dsZOhmEOUKGTgIpEvCaAMijKPKXqGbd4qpsoEYVqYFCPaBjSkYvoc7RN7xpQ3WJA3I7K+uGsNdQ2IVTTtQJtIgQ3g0lUr7HJRdFTeRU/qh/dow716/sE8cjhpG4Uu7F8EAyAjaL1idmN3UoDgWkzPj5MrdhENXLUUbW3cjR9XgbbSP9qlaBqbgiixKDQ4DsMBR2JVuxChfBTdyG7GRhowtAqHS5Xa0FvZNl5FU94WkA6eqon9vv23POVVUXxeXnVfAKBbGnZkUKUGufB74lYBz9mDDgE8jjIvQGVl4z+CX9Uk0ledYQyAUomeCBWNakKEB5R8tPrbf+aBuugiF22Vfyt5F/xY3iYfDmcUyLSggVzMXa7oydp4+Heo/ptuaoi1drw++GPBGJoiuZE14zGKOnT9BLzvn6SLIaHCRqkN9gR+8idO/Nq9PP9WqOmDQDU8JfAosIhdtGyTULFGpdG/yAZx/Wc9x+nNuH89peaDrVOssszVn4tFPv0LNc5b69idxuSLWkgb5S
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR12MB3834.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(4636009)(39860400002)(376002)(136003)(366004)(396003)(346002)(4326008)(33656002)(26005)(8936002)(316002)(186003)(38100700001)(5660300002)(86362001)(54906003)(9746002)(478600001)(2616005)(426003)(53546011)(66556008)(6916009)(66476007)(966005)(83380400001)(8676002)(1076003)(36756003)(9786002)(2906002)(66946007);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData: =?us-ascii?Q?qAVYdtlcojH8v3YlgGdP937KRYdst2C/zhpHLYOyb3B/nuhyWS02TPysoMqZ?=
+ =?us-ascii?Q?WImLLqhr8ROoGT6xYwddpTNUwyGR+EsIwTTzUx7PudGiBfvmYssnrY5bEfmL?=
+ =?us-ascii?Q?K4Cy46uTElvnm3ZxFFPp8LuwdWpCVAQlbJ33LZDfCOuoVoYvKL3BQEgYdABC?=
+ =?us-ascii?Q?XPLGSlL0ofGLXjUmnaEg7BGPYvoXzdwM+pesbfDD6rIr4KhJ/VRmGSyau+Y0?=
+ =?us-ascii?Q?6v2r8/pv2UkwarNHpLWn+JhoCj0do1KG7IvJx4GzWk/2Hb9bsPEbMxdzJRuo?=
+ =?us-ascii?Q?YrLDGuS3IpC5RM7CBAHbzxTI2KW0CvLt7Zu0UKhvgJMMjolXcRRJXFpwlRoA?=
+ =?us-ascii?Q?9oHPfq+UdM3IrXVWHq0tjn+CXMLHSzNRw4akKSD+tbq0Z1DKQJYK9YJz+pmj?=
+ =?us-ascii?Q?sHBUKKbUN1rUoy1TO86M9QOImgaoDzE2B5v4U/AzCAohuMZULUEgLhAWMy1g?=
+ =?us-ascii?Q?hYhjfSXOwMQvdwkP7eE/xIv0+MUOLHjyErQeNgxe8WryLnXriDrh4gxVHyfz?=
+ =?us-ascii?Q?8ELwr5+l9x+NRGKLDnsI8UxhfMuP4o68GOmy1C3hQaeQor7whfv4sHox1fiI?=
+ =?us-ascii?Q?Wun5BeyBmKXHT0JBkgSoem5Yq0Ll6l7gmvyMkw0O7ryYgNU5Gbm25vdgNhqM?=
+ =?us-ascii?Q?EVrYdL3yKyfUgrJvF7TQKbu2VfadW79IWazyx9KeksuKNa5NlSXOUfSNitt/?=
+ =?us-ascii?Q?ShqNWpYHMNNZ13v32NooTHZtHKZ4ta/X0CMPuxqDZ8htto+bHwYj28MWddOi?=
+ =?us-ascii?Q?OPUxKC41ivacOWbM4kSwGbSB89Am5xTsIml6/ViL6xbD6W2StoFyIr6R2oZl?=
+ =?us-ascii?Q?MEVQ4S7fy4Q14/eTjfQvMxSoGbckaOkFBRwFvS/GO7I2QokaqKo/a9OomdWQ?=
+ =?us-ascii?Q?h8oC5lawzT7WiQlQKOk/H5wE/Q7wYuUx/HqAnNPXJ/nv+sDN1FJVMr1zCWp6?=
+ =?us-ascii?Q?sLEc+7tdCzxtuzX1kN9FVWCna77sVoblEvGwQ50uGq46nqNcXJvPXG5UMzkW?=
+ =?us-ascii?Q?2QwV2Zz0bPgImd9nN3SykV9yjzUJpQxdhjNQPjjyx03/zk3k2MNpXvZ/uCn5?=
+ =?us-ascii?Q?cGZAn7hXdHkHyFD8HMP4m01ldTnIcDwlSU6TTkPzmpAr+4GXgQpYftHkCx2N?=
+ =?us-ascii?Q?+5+qKYagstTiCsJe3i2e7bY6AQ9aVbOdj1gGbfHUpNHvDzVZhq3QD96HlkHy?=
+ =?us-ascii?Q?VpEHhvVMa6v9Vt9xNxqlUT/hCw/comkBwGrPZI8ktyzEQoM2+xkme18DH5BF?=
+ =?us-ascii?Q?GMbCabCu7IdoIn15rhnHwpXJmJMOBg6lFb8/1qMes9qGgOXvUoHY6eVBvGO2?=
+ =?us-ascii?Q?bLZ5fKkxANpNIAKFYES35UFe?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 8f767eb6-bef6-407b-5db0-08d8efadc67f
+X-MS-Exchange-CrossTenant-AuthSource: DM6PR12MB3834.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Mar 2021 16:48:11.4120
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: ZeFHmO8lhUfNkqHQiKs4cn03xDQiAHKp0MPqoXfTWdrnJSYTGsV2GfKdjrmvVnzY
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR12MB4513
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-The devm managed lifetime is incompatible with 'struct device' objects that
-resides in idxd context. This is one of the series that clean up the idxd
-driver 'struct device' lifetime. Fix wq->conf_dev 'struct device'
-lifetime. Address issues flagged by CONFIG_DEBUG_KOBJECT_RELEASE.
-Add release functions in order to free the allocated memory at the
-appropriate time.
+On Wed, Mar 24, 2021 at 01:00:04PM -0700, Dan Williams wrote:
+> On Wed, Mar 24, 2021 at 12:58 PM Dan Carpenter <dan.carpenter@oracle.com> wrote:
+> >
+> > On Wed, Mar 24, 2021 at 10:01:42AM -0700, Dan Williams wrote:
+> > > On Wed, Mar 24, 2021 at 9:52 AM Jason Gunthorpe <jgg@nvidia.com> wrote:
+> > > >
+> > > > On Wed, Mar 24, 2021 at 09:13:35AM -0700, Dan Williams wrote:
+> > > >
+> > > > > Which is just:
+> > > > >
+> > > > > device_initialize()
+> > > > > dev_set_name()
+> > > > >
+> > > > > ...then the name is set as early as the device is ready to filled in
+> > > > > with other details. Just checking for dev_set_name() failures does not
+> > > > > move the api forward in my opinion.
+> > > >
+> > > > This doesn't work either as the release function must be set after
+> > > > initialize but before dev_set_name(), otherwise we both can't and must
+> > > > call put_device() after something like this fails.
+> > >
+> > > Ugh, true.
+> > >
+> > > >
+> > > > I can't see an option other than bite the bullet and fix things.
+> > > >
+> > > > A static tool to look for these special lifetime rules around the
+> > > > driver core would be nice.
+> > >
+> > > It would... it would also trip over the fact the core itself fails to
+> > > check for dev_set_name() failures and also relies on !dev_name() as a
+> >  check after-the-fact.
+> >
+> > Where can I find the !dev_name() check?
+> 
+> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/base/core.c#n3153
 
-Reported-by: Jason Gunthorpe <jgg@nvidia.com>
-Fixes: bfe1d56091c1 ("dmaengine: idxd: Init and probe for Intel data accelerators")
-Signed-off-by: Dave Jiang <dave.jiang@intel.com>
-Reviewed-by: Dan Williams <dan.j.williams@intel.com>
----
- drivers/dma/idxd/device.c |    6 ++--
- drivers/dma/idxd/idxd.h   |   20 ++++++++++++-
- drivers/dma/idxd/init.c   |   71 ++++++++++++++++++++++++++++++++++++---------
- drivers/dma/idxd/irq.c    |    6 ++--
- drivers/dma/idxd/sysfs.c  |   70 +++++++++++++++++++-------------------------
- 5 files changed, 112 insertions(+), 61 deletions(-)
+I would just add error checking here, it seems baffling not to have it
 
-diff --git a/drivers/dma/idxd/device.c b/drivers/dma/idxd/device.c
-index a56af1d8b091..2292d7bfef58 100644
---- a/drivers/dma/idxd/device.c
-+++ b/drivers/dma/idxd/device.c
-@@ -515,7 +515,7 @@ void idxd_device_wqs_clear_state(struct idxd_device *idxd)
- 	lockdep_assert_held(&idxd->dev_lock);
- 
- 	for (i = 0; i < idxd->max_wqs; i++) {
--		struct idxd_wq *wq = &idxd->wqs[i];
-+		struct idxd_wq *wq = idxd->wqs[i];
- 
- 		if (wq->state == IDXD_WQ_ENABLED) {
- 			idxd_wq_disable_cleanup(wq);
-@@ -696,7 +696,7 @@ static int idxd_wqs_config_write(struct idxd_device *idxd)
- 	int i, rc;
- 
- 	for (i = 0; i < idxd->max_wqs; i++) {
--		struct idxd_wq *wq = &idxd->wqs[i];
-+		struct idxd_wq *wq = idxd->wqs[i];
- 
- 		rc = idxd_wq_config_write(wq);
- 		if (rc < 0)
-@@ -774,7 +774,7 @@ static int idxd_wqs_setup(struct idxd_device *idxd)
- 	}
- 
- 	for (i = 0; i < idxd->max_wqs; i++) {
--		wq = &idxd->wqs[i];
-+		wq = idxd->wqs[i];
- 		group = wq->group;
- 
- 		if (!wq->group)
-diff --git a/drivers/dma/idxd/idxd.h b/drivers/dma/idxd/idxd.h
-index f3893a07f6d5..cd41baeb2bdf 100644
---- a/drivers/dma/idxd/idxd.h
-+++ b/drivers/dma/idxd/idxd.h
-@@ -193,7 +193,7 @@ struct idxd_device {
- 	spinlock_t dev_lock;	/* spinlock for device */
- 	struct completion *cmd_done;
- 	struct idxd_group *groups;
--	struct idxd_wq *wqs;
-+	struct idxd_wq **wqs;
- 	struct idxd_engine *engines;
- 
- 	struct iommu_sva *sva;
-@@ -257,6 +257,7 @@ extern struct bus_type iax_bus_type;
- extern bool support_enqcmd;
- extern struct device_type dsa_device_type;
- extern struct device_type iax_device_type;
-+extern struct device_type idxd_wq_device_type;
- 
- static inline bool is_dsa_dev(struct device *dev)
- {
-@@ -273,6 +274,23 @@ static inline bool is_idxd_dev(struct device *dev)
- 	return is_dsa_dev(dev) || is_iax_dev(dev);
- }
- 
-+static inline bool is_idxd_wq_dev(struct device *dev)
-+{
-+	        return dev->type == &idxd_wq_device_type;
-+}
-+
-+static inline bool is_idxd_wq_dmaengine(struct idxd_wq *wq)
-+{
-+	if (wq->type == IDXD_WQT_KERNEL && strcmp(wq->name, "dmaengine") == 0)
-+		return true;
-+	return false;
-+}
-+
-+static inline bool is_idxd_wq_cdev(struct idxd_wq *wq)
-+{
-+	return wq->type == IDXD_WQT_USER;
-+}
-+
- static inline bool wq_dedicated(struct idxd_wq *wq)
- {
- 	return test_bit(WQ_FLAG_DEDICATED, &wq->flags);
-diff --git a/drivers/dma/idxd/init.c b/drivers/dma/idxd/init.c
-index 158f9e0158a3..1890a1c15977 100644
---- a/drivers/dma/idxd/init.c
-+++ b/drivers/dma/idxd/init.c
-@@ -136,7 +136,7 @@ static int idxd_setup_interrupts(struct idxd_device *idxd)
- 	return 0;
- 
-  err_wq_irqs:
--	while (--i) {
-+	while (--i >= 0) {
- 		irq_entry = &idxd->irq_entries[i];
- 		free_irq(irq_entry->vector, irq_entry);
- 	}
-@@ -150,10 +150,41 @@ static int idxd_setup_interrupts(struct idxd_device *idxd)
- 	return rc;
- }
- 
-+static int idxd_allocate_wqs(struct idxd_device *idxd)
-+{
-+	struct device *dev = &idxd->pdev->dev;
-+	struct idxd_wq *wq;
-+	int i, rc;
-+
-+	idxd->wqs = kcalloc_node(idxd->max_wqs, sizeof(struct idxd_wq *),
-+				 GFP_KERNEL, dev_to_node(dev));
-+	if (!idxd->wqs)
-+		return -ENOMEM;
-+
-+	for (i = 0; i < idxd->max_wqs; i++) {
-+		wq = kzalloc_node(sizeof(*wq), GFP_KERNEL, dev_to_node(dev));
-+		if (!wq) {
-+			rc = -ENOMEM;
-+			goto err;
-+		}
-+
-+		idxd->wqs[i] = wq;
-+	}
-+
-+	return 0;
-+
-+ err:
-+	while (--i >= 0)
-+		kfree(idxd->wqs[i]);
-+	kfree(idxd->wqs);
-+	idxd->wqs = NULL;
-+	return rc;
-+}
-+
- static int idxd_setup_internals(struct idxd_device *idxd)
- {
- 	struct device *dev = &idxd->pdev->dev;
--	int i;
-+	int i, rc;
- 
- 	init_waitqueue_head(&idxd->cmd_waitq);
- 	idxd->groups = devm_kcalloc(dev, idxd->max_groups,
-@@ -168,18 +199,12 @@ static int idxd_setup_internals(struct idxd_device *idxd)
- 		idxd->groups[i].tc_b = -1;
- 	}
- 
--	idxd->wqs = devm_kcalloc(dev, idxd->max_wqs, sizeof(struct idxd_wq),
--				 GFP_KERNEL);
--	if (!idxd->wqs)
--		return -ENOMEM;
--
--	idxd->engines = devm_kcalloc(dev, idxd->max_engines,
--				     sizeof(struct idxd_engine), GFP_KERNEL);
--	if (!idxd->engines)
--		return -ENOMEM;
-+	rc = idxd_allocate_wqs(idxd);
-+	if (rc < 0)
-+		return rc;
- 
- 	for (i = 0; i < idxd->max_wqs; i++) {
--		struct idxd_wq *wq = &idxd->wqs[i];
-+		struct idxd_wq *wq = idxd->wqs[i];
- 
- 		wq->id = i;
- 		wq->idxd = idxd;
-@@ -187,11 +212,17 @@ static int idxd_setup_internals(struct idxd_device *idxd)
- 		wq->idxd_cdev.minor = -1;
- 		wq->max_xfer_bytes = idxd->max_xfer_bytes;
- 		wq->max_batch_size = idxd->max_batch_size;
--		wq->wqcfg = devm_kzalloc(dev, idxd->wqcfg_size, GFP_KERNEL);
-+		wq->wqcfg = kzalloc_node(idxd->wqcfg_size, GFP_KERNEL, dev_to_node(dev));
- 		if (!wq->wqcfg)
- 			return -ENOMEM;
- 	}
- 
-+	idxd->engines = devm_kcalloc(dev, idxd->max_engines,
-+				     sizeof(struct idxd_engine), GFP_KERNEL);
-+	if (!idxd->engines)
-+		return -ENOMEM;
-+
-+
- 	for (i = 0; i < idxd->max_engines; i++) {
- 		idxd->engines[i].idxd = idxd;
- 		idxd->engines[i].id = i;
-@@ -322,6 +353,16 @@ static void idxd_disable_system_pasid(struct idxd_device *idxd)
- 
- static void idxd_free(struct idxd_device *idxd)
- {
-+	int i;
-+
-+	if (idxd->wqs) {
-+		for (i = 0; i < idxd->max_wqs; i++) {
-+			kfree(idxd->wqs[i]->wqcfg);
-+			kfree(idxd->wqs[i]);
-+		}
-+		kfree(idxd->wqs);
-+	}
-+
- 	kfree(idxd);
- }
- 
-@@ -357,7 +398,7 @@ static int idxd_probe(struct idxd_device *idxd)
- 
- 	rc = idxd_setup_interrupts(idxd);
- 	if (rc)
--		goto err_setup;
-+		goto err_int;
- 
- 	dev_dbg(dev, "IDXD interrupt setup complete.\n");
- 
-@@ -377,6 +418,8 @@ static int idxd_probe(struct idxd_device *idxd)
-  err_idr_fail:
- 	idxd_mask_error_interrupts(idxd);
- 	idxd_mask_msix_vectors(idxd);
-+ err_int:
-+	idxd_free(idxd);
-  err_setup:
- 	if (device_pasid_enabled(idxd))
- 		idxd_disable_system_pasid(idxd);
-diff --git a/drivers/dma/idxd/irq.c b/drivers/dma/idxd/irq.c
-index f1463fc58112..7b0181532f77 100644
---- a/drivers/dma/idxd/irq.c
-+++ b/drivers/dma/idxd/irq.c
-@@ -45,7 +45,7 @@ static void idxd_device_reinit(struct work_struct *work)
- 		goto out;
- 
- 	for (i = 0; i < idxd->max_wqs; i++) {
--		struct idxd_wq *wq = &idxd->wqs[i];
-+		struct idxd_wq *wq = idxd->wqs[i];
- 
- 		if (wq->state == IDXD_WQ_ENABLED) {
- 			rc = idxd_wq_enable(wq);
-@@ -130,7 +130,7 @@ static int process_misc_interrupts(struct idxd_device *idxd, u32 cause)
- 
- 		if (idxd->sw_err.valid && idxd->sw_err.wq_idx_valid) {
- 			int id = idxd->sw_err.wq_idx;
--			struct idxd_wq *wq = &idxd->wqs[id];
-+			struct idxd_wq *wq = idxd->wqs[id];
- 
- 			if (wq->type == IDXD_WQT_USER)
- 				wake_up_interruptible(&wq->idxd_cdev.err_queue);
-@@ -138,7 +138,7 @@ static int process_misc_interrupts(struct idxd_device *idxd, u32 cause)
- 			int i;
- 
- 			for (i = 0; i < idxd->max_wqs; i++) {
--				struct idxd_wq *wq = &idxd->wqs[i];
-+				struct idxd_wq *wq = idxd->wqs[i];
- 
- 				if (wq->type == IDXD_WQT_USER)
- 					wake_up_interruptible(&wq->idxd_cdev.err_queue);
-diff --git a/drivers/dma/idxd/sysfs.c b/drivers/dma/idxd/sysfs.c
-index 55a92dfe0fad..10ce9b5f2951 100644
---- a/drivers/dma/idxd/sysfs.c
-+++ b/drivers/dma/idxd/sysfs.c
-@@ -26,34 +26,11 @@ static struct device_type idxd_group_device_type = {
- 	.release = idxd_conf_sub_device_release,
- };
- 
--static struct device_type idxd_wq_device_type = {
--	.name = "wq",
--	.release = idxd_conf_sub_device_release,
--};
--
- static struct device_type idxd_engine_device_type = {
- 	.name = "engine",
- 	.release = idxd_conf_sub_device_release,
- };
- 
--static inline bool is_idxd_wq_dev(struct device *dev)
--{
--	return dev ? dev->type == &idxd_wq_device_type : false;
--}
--
--static inline bool is_idxd_wq_dmaengine(struct idxd_wq *wq)
--{
--	if (wq->type == IDXD_WQT_KERNEL &&
--	    strcmp(wq->name, "dmaengine") == 0)
--		return true;
--	return false;
--}
--
--static inline bool is_idxd_wq_cdev(struct idxd_wq *wq)
--{
--	return wq->type == IDXD_WQT_USER;
--}
--
- static int idxd_config_bus_match(struct device *dev,
- 				 struct device_driver *drv)
- {
-@@ -302,7 +279,7 @@ static int idxd_config_bus_remove(struct device *dev)
- 		dev_dbg(dev, "%s removing dev %s\n", __func__,
- 			dev_name(&idxd->conf_dev));
- 		for (i = 0; i < idxd->max_wqs; i++) {
--			struct idxd_wq *wq = &idxd->wqs[i];
-+			struct idxd_wq *wq = idxd->wqs[i];
- 
- 			if (wq->state == IDXD_WQ_DISABLED)
- 				continue;
-@@ -314,7 +291,7 @@ static int idxd_config_bus_remove(struct device *dev)
- 		idxd_unregister_dma_device(idxd);
- 		rc = idxd_device_disable(idxd);
- 		for (i = 0; i < idxd->max_wqs; i++) {
--			struct idxd_wq *wq = &idxd->wqs[i];
-+			struct idxd_wq *wq = idxd->wqs[i];
- 
- 			mutex_lock(&wq->wq_lock);
- 			idxd_wq_disable_cleanup(wq);
-@@ -683,7 +660,7 @@ static ssize_t group_work_queues_show(struct device *dev,
- 	struct idxd_device *idxd = group->idxd;
- 
- 	for (i = 0; i < idxd->max_wqs; i++) {
--		struct idxd_wq *wq = &idxd->wqs[i];
-+		struct idxd_wq *wq = idxd->wqs[i];
- 
- 		if (!wq->group)
- 			continue;
-@@ -940,7 +917,7 @@ static int total_claimed_wq_size(struct idxd_device *idxd)
- 	int wq_size = 0;
- 
- 	for (i = 0; i < idxd->max_wqs; i++) {
--		struct idxd_wq *wq = &idxd->wqs[i];
-+		struct idxd_wq *wq = idxd->wqs[i];
- 
- 		wq_size += wq->size;
- 	}
-@@ -1336,6 +1313,20 @@ static const struct attribute_group *idxd_wq_attribute_groups[] = {
- 	NULL,
- };
- 
-+static void idxd_conf_wq_release(struct device *dev)
-+{
-+	struct idxd_wq *wq = container_of(dev, struct idxd_wq, conf_dev);
-+
-+	kfree(wq->wqcfg);
-+	kfree(wq);
-+}
-+
-+struct device_type idxd_wq_device_type = {
-+	.name = "wq",
-+	.release = idxd_conf_wq_release,
-+	.groups = idxd_wq_attribute_groups,
-+};
-+
- /* IDXD device attribs */
- static ssize_t version_show(struct device *dev, struct device_attribute *attr,
- 			    char *buf)
-@@ -1460,7 +1451,7 @@ static ssize_t clients_show(struct device *dev,
- 
- 	spin_lock_irqsave(&idxd->dev_lock, flags);
- 	for (i = 0; i < idxd->max_wqs; i++) {
--		struct idxd_wq *wq = &idxd->wqs[i];
-+		struct idxd_wq *wq = idxd->wqs[i];
- 
- 		count += wq->client_count;
- 	}
-@@ -1715,29 +1706,28 @@ static int idxd_setup_wq_sysfs(struct idxd_device *idxd)
- 	int i, rc;
- 
- 	for (i = 0; i < idxd->max_wqs; i++) {
--		struct idxd_wq *wq = &idxd->wqs[i];
-+		struct idxd_wq *wq = idxd->wqs[i];
- 
-+		device_initialize(&wq->conf_dev);
- 		wq->conf_dev.parent = &idxd->conf_dev;
--		dev_set_name(&wq->conf_dev, "wq%d.%d", idxd->id, wq->id);
- 		wq->conf_dev.bus = idxd_get_bus_type(idxd);
--		wq->conf_dev.groups = idxd_wq_attribute_groups;
- 		wq->conf_dev.type = &idxd_wq_device_type;
--		dev_dbg(dev, "WQ device register: %s\n",
--			dev_name(&wq->conf_dev));
--		rc = device_register(&wq->conf_dev);
--		if (rc < 0) {
--			put_device(&wq->conf_dev);
-+		rc = dev_set_name(&wq->conf_dev, "wq%d.%d", idxd->id, wq->id);
-+		if (rc < 0)
-+			goto cleanup;
-+		dev_dbg(dev, "WQ device register: %s\n", dev_name(&wq->conf_dev));
-+		rc = device_add(&wq->conf_dev);
-+		if (rc < 0)
- 			goto cleanup;
--		}
- 	}
- 
- 	return 0;
- 
- cleanup:
- 	while (i--) {
--		struct idxd_wq *wq = &idxd->wqs[i];
-+		struct idxd_wq *wq = idxd->wqs[i];
- 
--		device_unregister(&wq->conf_dev);
-+		put_device(&wq->conf_dev);
- 	}
- 	return rc;
- }
-@@ -1807,7 +1797,7 @@ void idxd_unregister_devices(struct idxd_device *idxd)
- 	int i;
- 
- 	for (i = 0; i < idxd->max_wqs; i++) {
--		struct idxd_wq *wq = &idxd->wqs[i];
-+		struct idxd_wq *wq = idxd->wqs[i];
- 
- 		device_unregister(&wq->conf_dev);
- 	}
+Why didn't we use this simple device enumeration stuff for aux bus?
 
-
+Jason
