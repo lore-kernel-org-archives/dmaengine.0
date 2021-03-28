@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5EE3BC433E5
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1B514C433E0
 	for <dmaengine@archiver.kernel.org>; Sun, 28 Mar 2021 23:57:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3EADC61951
-	for <dmaengine@archiver.kernel.org>; Sun, 28 Mar 2021 23:57:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E4F8861949
+	for <dmaengine@archiver.kernel.org>; Sun, 28 Mar 2021 23:57:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231633AbhC1X4m (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        id S230377AbhC1X4m (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
         Sun, 28 Mar 2021 19:56:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53028 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52968 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231562AbhC1X42 (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Sun, 28 Mar 2021 19:56:28 -0400
-Received: from mail-qk1-x736.google.com (mail-qk1-x736.google.com [IPv6:2607:f8b0:4864:20::736])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5805AC061756;
-        Sun, 28 Mar 2021 16:56:28 -0700 (PDT)
-Received: by mail-qk1-x736.google.com with SMTP id q3so10893257qkq.12;
-        Sun, 28 Mar 2021 16:56:28 -0700 (PDT)
+        with ESMTP id S230373AbhC1X4N (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Sun, 28 Mar 2021 19:56:13 -0400
+Received: from mail-qk1-x72a.google.com (mail-qk1-x72a.google.com [IPv6:2607:f8b0:4864:20::72a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3977C061756;
+        Sun, 28 Mar 2021 16:56:13 -0700 (PDT)
+Received: by mail-qk1-x72a.google.com with SMTP id c4so10939023qkg.3;
+        Sun, 28 Mar 2021 16:56:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=b+g6kPIG/jwFitPzoitjd4fSzc6P/hya8rywnHeMN/8=;
-        b=HBBLF/SJTiVQWcLhNqq7bzpHR2fKW9LP6DWRvUsmYI7rcgdhmE09hx9CIxGfTsumKX
-         isRs8nn27xIKkAFpC/ZbyFrFtAkA1tz5NS7xJ3Ovmkz+afQ30TBK5a8we2BRZXGgjxxr
-         z6kTysKHQ1ynwBd9QItRNqLsEpW7uXvoTnvwnv8XkMp+fdf3Uuptl6dTZMalYNMRHWxF
-         NM0QNQoHDeEh0fx03RO8xhl/6Q0tu1MW6TIguY4L/6GIaX3v1qxLcUp3UUYUodE+6H6H
-         XAXaSfBSUy0AypaInMTUVAZebzJYkGqKi/dXcHv+x3xT9jmB94ueRb/JpcSu+XrxdLCF
-         ALaw==
+        bh=QaFxE7xJjw3q1QRzUlhL9vl2FAXABYAZdUNglx88dWM=;
+        b=jp01Oafr+FYiNYOySvz698WmMQzo+I8B2paqvCFTlCTqcAAL37CMJwgpqQlkW5GHW2
+         Dyvbvs+rlqMjPWQuuNHQDuAQ6uVGfCqAuD3H7xHGEPAJOWcAGOy/DrtrhvXYWLU0436d
+         lVRkCgJp9jS4fhNJ0qaUC4akHDDGxNg25koKauz70I2VYZQOmotGc6b2/KGof4mKY6LW
+         1TzvIv956J7EIBeJBzXRcahb54ThW1Yu5eyDfY18Lpqxxr6dAulMcI1wQw2QFXiQ3c2q
+         Ui+ZEYtPOnzUjWjCc71Rex7kRCtuOwcEjgmEOD0DPvlk4vA+pudWfMcYnjP5m3D1ev0S
+         YKbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=b+g6kPIG/jwFitPzoitjd4fSzc6P/hya8rywnHeMN/8=;
-        b=pOdavJ9DxqgpHk0GO3QnDrQhuFJ0g7OmnK4piiyqnu6FmHWnS3wl3KGR/m/kBfdr2o
-         7qsxL/2gXhcd/BJo6Q9xmcYxdsjXu+1TI8rJ2d+N9FcIM0QZ3OgF8l7jCSLGqFWV/gCh
-         8VL9b3njhWsTRnSsuHbO/ATmel5Jvq+GIxXoh93Ffvvi3/9kYaFlwfppv1Q+z0vL1gAF
-         4ekwpTv0/BNtJs+wARo4KTXHZ3g/Hg8sFBuChcweDVmiQ3rRGA4Gd3wZtNMbyFlleW+P
-         XCPKZeKd18nKA0buUv5+ve+Erj/sjvg+PTYjNSNw+okgNUn+5QQxHccjhB5bmAUiCzaS
-         P1sQ==
-X-Gm-Message-State: AOAM532fIAqDWZnW5FuPUybvS0tJXP1ceaEnWoXEtrH/RceYMBa+G4k/
-        7WT3RWPT1N4eg/4e61JV8wNyET0/aYgiWBG6
-X-Google-Smtp-Source: ABdhPJyldMxvnEBh7c5nmTQttLQPp8mr5BNjSHH3pinXqHmSCm2R9IbveYuxti7c4ebHxEhEJg5Pcg==
-X-Received: by 2002:a05:620a:cf4:: with SMTP id c20mr22555044qkj.134.1616975787315;
-        Sun, 28 Mar 2021 16:56:27 -0700 (PDT)
+        bh=QaFxE7xJjw3q1QRzUlhL9vl2FAXABYAZdUNglx88dWM=;
+        b=hTZDZ5hYcN6pekwObguM/+aNfUI6VXrYNf1k8IwwFCUZKlCRa7+bZ7hstnPndyWu9s
+         HI5uP+x9YGgAKcnnL2Cl884/ywhcYP2tAT2HFT77n65vEDSioPBhIVXVXuxJq11TBaFk
+         5Fy83GVMF1n6LPYJJJWBOivkqCbUyc/YTyJzRaF7kpCPlNgxcL5fswIC13mE3JKRdjMf
+         hkafFCysmRUHKNqnlrQdwaLgN6aioHm5VnjiB5E42DHtSRoSOWeNh7v1b0pgrrCvUf0H
+         YkJC1K3aj8+Liew5Ihq0IISIKw6tANnPRuT1ebf7hmyXgc5DvtL1RDb3sjN5L0CZr9Rc
+         AkWg==
+X-Gm-Message-State: AOAM530pWbHo3vHNc6FkgH5REH/AojEeShMvf5pkCcL0sm8/3gQf3u62
+        hUqijpp+tNVy9uEOs9RGSuHM//mo98PWiIUc
+X-Google-Smtp-Source: ABdhPJx0o599PHMcyxzLn8eHnK8YWRJh3bbcuBhN5MPJAY682L8sA466e6YWGWWwK4DIft39eFQPyQ==
+X-Received: by 2002:a37:e110:: with SMTP id c16mr23323591qkm.67.1616975772640;
+        Sun, 28 Mar 2021 16:56:12 -0700 (PDT)
 Received: from localhost.localdomain ([156.146.58.24])
-        by smtp.gmail.com with ESMTPSA id y19sm12153061qky.111.2021.03.28.16.56.22
+        by smtp.gmail.com with ESMTPSA id y19sm12153061qky.111.2021.03.28.16.56.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 28 Mar 2021 16:56:26 -0700 (PDT)
+        Sun, 28 Mar 2021 16:56:12 -0700 (PDT)
 From:   Bhaskar Chowdhury <unixbhaskar@gmail.com>
 To:     dmaengine@vger.kernel.org, dri-devel@lists.freedesktop.org,
         hch@lst.de, iommu@lists.linux-foundation.org,
@@ -63,9 +63,9 @@ To:     dmaengine@vger.kernel.org, dri-devel@lists.freedesktop.org,
         dan.j.williams@intel.com
 Cc:     Bhaskar Chowdhury <unixbhaskar@gmail.com>, rdunlap@infradead.org,
         linux-kernel@vger.kernel.org
-Subject: [PATCH 06/30] idma64.c: Fix couple of typos
-Date:   Mon, 29 Mar 2021 05:23:02 +0530
-Message-Id: <0e722d154cb5b29d8bad59481e74fc4853ee930e.1616971780.git.unixbhaskar@gmail.com>
+Subject: [PATCH 03/30] amba-pl08x.c: Fixed couple of typos
+Date:   Mon, 29 Mar 2021 05:22:59 +0530
+Message-Id: <b96052cd5c14956852fe7fc13ea47dac7b2b40e1.1616971780.git.unixbhaskar@gmail.com>
 X-Mailer: git-send-email 2.26.3
 In-Reply-To: <cover.1616971780.git.unixbhaskar@gmail.com>
 References: <cover.1616971780.git.unixbhaskar@gmail.com>
@@ -75,35 +75,37 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-s/transfered/transferred/  ...two different places
+
+s/busses/buses/
+s/accound/account/
 
 Signed-off-by: Bhaskar Chowdhury <unixbhaskar@gmail.com>
 ---
- drivers/dma/idma64.c | 4 ++--
+ drivers/dma/amba-pl08x.c | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/dma/idma64.c b/drivers/dma/idma64.c
-index f4c07ad3be15..3d0d48b12e28 100644
---- a/drivers/dma/idma64.c
-+++ b/drivers/dma/idma64.c
-@@ -282,7 +282,7 @@ static void idma64_desc_fill(struct idma64_chan *idma64c,
- 		desc->length += hw->len;
- 	} while (i);
+diff --git a/drivers/dma/amba-pl08x.c b/drivers/dma/amba-pl08x.c
+index a24882ba3764..d15182634789 100644
+--- a/drivers/dma/amba-pl08x.c
++++ b/drivers/dma/amba-pl08x.c
+@@ -121,7 +121,7 @@ struct vendor_data {
 
--	/* Trigger an interrupt after the last block is transfered */
-+	/* Trigger an interrupt after the last block is transferred */
- 	lli->ctllo |= IDMA64C_CTLL_INT_EN;
-
- 	/* Disable LLP transfer in the last block */
-@@ -356,7 +356,7 @@ static size_t idma64_active_desc_size(struct idma64_chan *idma64c)
- 	if (!i)
- 		return bytes;
-
--	/* The current chunk is not fully transfered yet */
-+	/* The current chunk is not fully transferred yet */
- 	bytes += desc->hw[--i].len;
-
- 	return bytes - IDMA64C_CTLH_BLOCK_TS(ctlhi);
+ /**
+  * struct pl08x_bus_data - information of source or destination
+- * busses for a transfer
++ * buses for a transfer
+  * @addr: current address
+  * @maxwidth: the maximum width of a transfer on this bus
+  * @buswidth: the width of this bus in bytes: 1, 2 or 4
+@@ -1010,7 +1010,7 @@ static inline u32 pl08x_lli_control_bits(struct pl08x_driver_data *pl08x,
+ 	/*
+ 	 * Remove all src, dst and transfer size bits, then set the
+ 	 * width and size according to the parameters. The bit offsets
+-	 * are different in the FTDMAC020 so we need to accound for this.
++	 * are different in the FTDMAC020 so we need to account for this.
+ 	 */
+ 	if (pl08x->vd->ftdmac020) {
+ 		retbits &= ~FTDMAC020_LLI_DST_WIDTH_MSK;
 --
 2.26.3
 
