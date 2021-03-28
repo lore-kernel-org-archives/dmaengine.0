@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 406A4C433E1
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1ECCDC433DB
 	for <dmaengine@archiver.kernel.org>; Sun, 28 Mar 2021 23:57:46 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1E80661966
-	for <dmaengine@archiver.kernel.org>; Sun, 28 Mar 2021 23:57:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EC6B26195D
+	for <dmaengine@archiver.kernel.org>; Sun, 28 Mar 2021 23:57:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231740AbhC1X5O (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Sun, 28 Mar 2021 19:57:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53124 "EHLO
+        id S231730AbhC1X5N (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Sun, 28 Mar 2021 19:57:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53086 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231613AbhC1X4x (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Sun, 28 Mar 2021 19:56:53 -0400
-Received: from mail-qk1-x734.google.com (mail-qk1-x734.google.com [IPv6:2607:f8b0:4864:20::734])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 26178C061756;
-        Sun, 28 Mar 2021 16:56:53 -0700 (PDT)
-Received: by mail-qk1-x734.google.com with SMTP id y18so10894479qky.11;
-        Sun, 28 Mar 2021 16:56:53 -0700 (PDT)
+        with ESMTP id S231643AbhC1X4n (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Sun, 28 Mar 2021 19:56:43 -0400
+Received: from mail-qv1-xf31.google.com (mail-qv1-xf31.google.com [IPv6:2607:f8b0:4864:20::f31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E391C061756;
+        Sun, 28 Mar 2021 16:56:43 -0700 (PDT)
+Received: by mail-qv1-xf31.google.com with SMTP id o19so5732060qvu.0;
+        Sun, 28 Mar 2021 16:56:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=FFq3P7yiseEEIQs2lgtrYVJcUzd7SMyJml+jQ6mPYF4=;
-        b=uqre0zmSKtKLv++i82S0mbofGjuwskwC3CvMsmMtmcwjGtVJxeycjVJ6RpN1VYBSe+
-         0CQzJMu7PEalUVZXmadGM2px6kQtZ3N7tNZA8m0dvlRcCIAf2qxYblhfj3libS6ly7pM
-         7cP6Y7jQrTC4iCIUP2k8mrM8YO2OpsBVZioO1TYaUyX8FXX33csqU52/jNiOF/7HzRdW
-         h0q2j3ogjbDgvmDtoSNvMcXXBHSfFF65U6v9ngv5ZS5aXjxah14f4OMwQwxkXQDvmGYq
-         AtbeqfKk09GWR+OXgzvinDBtt6Vlb1woQTa7OM74PpgkMbt4TVzXSvTJ5IGTkC59YqDm
-         2KvA==
+        bh=rruIrfqaU4LV0f/3DETW92os/6jYETGIbvTMrRY/HO8=;
+        b=bGnHyBFVOutt4P2ONnjyaSIeJvIRzETak6KwFJ7ir2Nn/GqZgVtFuQhT8cWFVCJCF4
+         nOmS5/3lsk0F21Pui0C1nfch9n42xfmm27QVRq2RUbd469ITaO2YTyoT6yca1dt3kEIA
+         WrrB+5zNMv5REpdJe2JR74UmZr5+PTYnt/XmXcfAg0fv6Fy7GCSeRicj7d/SVnq3Qu/D
+         UKRgx0ggNDlvFtQyqwIWq00SNVHxRapkrohVs+rT8HcJE0cam15uS2VWEv/I+wPd8Sx3
+         oxsNNTD4FAJ8DW0fVQi+ybJ+sHJ776F4pG4SBgFnsTZUI5HwctVd0uJCZQ7w/2oBe12l
+         xa9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=FFq3P7yiseEEIQs2lgtrYVJcUzd7SMyJml+jQ6mPYF4=;
-        b=Qx1lWfytZmRLHtm+3M/f2nVPy8Dj5woBbsbVOut531lrF9qtihvhEvenM3Jl/A0Iya
-         YaDaIPwgI2B7GqHYRexrcRj3MkkxHxQTaLAxx9+nstW52c8wKj8RiwlrmPmepX4TKjjc
-         Px1VEkp5pZquBYFiZJYymchkQuelWSWcL6/Xik8h5k2amjw0TDMUNHvVNRnqqJ9qukYC
-         T/zQB2cf1XJMnesnyTszxZTgg8ayx8KezkHKbY4ffu2f6+AE1+urtofxFOA1Fvx0jMPA
-         FMeP5qFloyT0ZQDHl46EW8CAk+X1yl0Tg79r2K7CZ+sQ5SsX7jfFHXhkjbLlC0flB26+
-         vqrA==
-X-Gm-Message-State: AOAM530c1qB1xYs3hlIOFw8WtghgkAJ5gXohfj8snSn6jW6+75UkE29N
-        alth/aEh3fAvEck/2ApUQMWxHk8iR5kmOGYj
-X-Google-Smtp-Source: ABdhPJyLHhya4uvoU4yUX2xpbMzIUxvQ1LFqJZoKSNEtSVlVs50tStFXatwwOAyjof/U/tKgBPUUrw==
-X-Received: by 2002:a37:a10a:: with SMTP id k10mr22547586qke.171.1616975812145;
-        Sun, 28 Mar 2021 16:56:52 -0700 (PDT)
+        bh=rruIrfqaU4LV0f/3DETW92os/6jYETGIbvTMrRY/HO8=;
+        b=Hk9CZwrQIGsgjifTXJzQTLf5XcORIDZvNb7xwMdcjfEq8myvch+bx4WRPzpQpG2Q3h
+         lw9ExsL5TaZ2QLlCvBEdDptu4VNibPENs/riFYOoWCWMk9WcsyarUDuzJoTuYQHJHRyo
+         ebivQNbflLNlaqJqNCgY3HptTEtovWMApzcfp6SK64P2BVUo4pVjUuq6eyNZgRh5RK3M
+         t3TZrbIs0VwAgbbyrMX/5w1N52idIqG7xScAbvyVIak1pycu5T8wcM+V192Pn/EDI2pr
+         w9V9x9XNHA4wxidrGFdUK89Uv15yYJJfIJcfmA6GF9kYrDjKp7jS0TXwmM7XLHOky1Gy
+         ZzqQ==
+X-Gm-Message-State: AOAM531QrHtE1FzQwr7USU9XBeJxKjhaQwrcDoS/eaVYDOrQD/LlOf7+
+        Sxwn0mFtb9LsDGhwHaft5Ox/sYa/9ax3bHZy
+X-Google-Smtp-Source: ABdhPJwGtK6xTmnuLSPnSFT/2CTh7pV1MaTzw54JyGs6QVwUBLmi4sfOAtAfjo+zm2N6Vm+LRKQfow==
+X-Received: by 2002:ad4:5614:: with SMTP id ca20mr22679724qvb.37.1616975802324;
+        Sun, 28 Mar 2021 16:56:42 -0700 (PDT)
 Received: from localhost.localdomain ([156.146.58.24])
-        by smtp.gmail.com with ESMTPSA id y19sm12153061qky.111.2021.03.28.16.56.47
+        by smtp.gmail.com with ESMTPSA id y19sm12153061qky.111.2021.03.28.16.56.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 28 Mar 2021 16:56:51 -0700 (PDT)
+        Sun, 28 Mar 2021 16:56:41 -0700 (PDT)
 From:   Bhaskar Chowdhury <unixbhaskar@gmail.com>
 To:     dmaengine@vger.kernel.org, dri-devel@lists.freedesktop.org,
         hch@lst.de, iommu@lists.linux-foundation.org,
@@ -63,9 +63,9 @@ To:     dmaengine@vger.kernel.org, dri-devel@lists.freedesktop.org,
         dan.j.williams@intel.com
 Cc:     Bhaskar Chowdhury <unixbhaskar@gmail.com>, rdunlap@infradead.org,
         linux-kernel@vger.kernel.org
-Subject: [PATCH 11/30] nbpfaxi.c: Fixed a typo
-Date:   Mon, 29 Mar 2021 05:23:07 +0530
-Message-Id: <4171b74a36b486ce83fd019e654660d7cbe2dae0.1616971780.git.unixbhaskar@gmail.com>
+Subject: [PATCH 09/30] mv_xor.h: Fixed a typo
+Date:   Mon, 29 Mar 2021 05:23:05 +0530
+Message-Id: <c7ff7a7dbd93aecfc5b97f55a3ccaf23fd8a7c6b.1616971780.git.unixbhaskar@gmail.com>
 X-Mailer: git-send-email 2.26.3
 In-Reply-To: <cover.1616971780.git.unixbhaskar@gmail.com>
 References: <cover.1616971780.git.unixbhaskar@gmail.com>
@@ -75,26 +75,26 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-s/superflous/superfluous/
+s/writen/written/
 
 Signed-off-by: Bhaskar Chowdhury <unixbhaskar@gmail.com>
 ---
- drivers/dma/nbpfaxi.c | 2 +-
+ drivers/dma/mv_xor.h | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/dma/nbpfaxi.c b/drivers/dma/nbpfaxi.c
-index 9c52c57919c6..9eacaa20ddb3 100644
---- a/drivers/dma/nbpfaxi.c
-+++ b/drivers/dma/nbpfaxi.c
-@@ -898,7 +898,7 @@ static int nbpf_config(struct dma_chan *dchan,
- 	/*
- 	 * We could check config->slave_id to match chan->terminal here,
- 	 * but with DT they would be coming from the same source, so
--	 * such a check would be superflous
-+	 * such a check would be superfluous
- 	 */
-
- 	chan->slave_dst_addr = config->dst_addr;
+diff --git a/drivers/dma/mv_xor.h b/drivers/dma/mv_xor.h
+index d86086b05b0e..c87cefd38a07 100644
+--- a/drivers/dma/mv_xor.h
++++ b/drivers/dma/mv_xor.h
+@@ -99,7 +99,7 @@ struct mv_xor_device {
+  * @common: common dmaengine channel object members
+  * @slots_allocated: records the actual size of the descriptor slot pool
+  * @irq_tasklet: bottom half where mv_xor_slot_cleanup runs
+- * @op_in_desc: new mode of driver, each op is writen to descriptor.
++ * @op_in_desc: new mode of driver, each op is written to descriptor.
+  */
+ struct mv_xor_chan {
+ 	int			pending;
 --
 2.26.3
 
