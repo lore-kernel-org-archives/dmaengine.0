@@ -2,60 +2,59 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_GIT autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4FFDDC433E0
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2FA85C433DB
 	for <dmaengine@archiver.kernel.org>; Sun, 28 Mar 2021 23:56:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2688B61949
+	by mail.kernel.org (Postfix) with ESMTP id 0E5766194B
 	for <dmaengine@archiver.kernel.org>; Sun, 28 Mar 2021 23:56:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230248AbhC1X4L (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Sun, 28 Mar 2021 19:56:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52950 "EHLO
+        id S230130AbhC1X4K (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Sun, 28 Mar 2021 19:56:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52914 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230100AbhC1X4I (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Sun, 28 Mar 2021 19:56:08 -0400
-Received: from mail-qv1-xf31.google.com (mail-qv1-xf31.google.com [IPv6:2607:f8b0:4864:20::f31])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A4C45C061756;
-        Sun, 28 Mar 2021 16:56:08 -0700 (PDT)
-Received: by mail-qv1-xf31.google.com with SMTP id o19so5731685qvu.0;
-        Sun, 28 Mar 2021 16:56:08 -0700 (PDT)
+        with ESMTP id S229656AbhC1Xz7 (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Sun, 28 Mar 2021 19:55:59 -0400
+Received: from mail-qk1-x730.google.com (mail-qk1-x730.google.com [IPv6:2607:f8b0:4864:20::730])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0CEFDC061756;
+        Sun, 28 Mar 2021 16:55:59 -0700 (PDT)
+Received: by mail-qk1-x730.google.com with SMTP id i9so10933468qka.2;
+        Sun, 28 Mar 2021 16:55:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=cGEIwK2mIWlt0praWPVjHqx3787sD2c2+ZgIrWeWC10=;
-        b=MHcOVXxwuQq9uqXkVVuBX0gJCRJ7glGGeVEfFXw0gIUK0eSzsVxe1AZARAhuSRj3YZ
-         fN0P0USAorbIlhKL+tBir5YICqCcUJgAHIdtl7kbbjsKMDY4jYibPNUn3NaaV7Q8EWoo
-         SLCd3+axdfEe2JQgQ0IA5JDtmlwwY/78RnCy1OD6/3OYMG9Pi0P4Td5hpINwGDG0ZVHP
-         /wwa+3iDJ6RBYE1AEyFziDbGBYl8YxN7l4N0Nj3tZs04HUgSpxd0XYTb+bpMd7rAFOv/
-         Ka2nQ91BkVfuIiwh7j5oP5m22bSKTwFZz8/56aHeupoIJtY5Q6H7slSTKfgf7lJTmOyP
-         yQHw==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=NUiuzRmCI317NNPwOQd3D4rWQdmGZHrpIjp/qwsCZIQ=;
+        b=uXWQRahp3gbzRLIyyNL0YRXhVCZtEuZiHzn/PIsuzG8877k5bJgwYQURdeOdvHz4vf
+         UtOWDRp8hFHb4tkPHczneiCk1Dp3BAPe8nPUJPWphJIe8eEQsUMHA9EhMcfHmCfBv63h
+         Cc6qgUFx9EvyH/PxY7kVGPUt16C7C6GHqSlgWmk/W3Nlz01gtqMgxdPyzK93UMSj/j8K
+         RPiLrdcZHQGN/UMvJlD5XTJKRT5dQdkBl2Ur7I1OR5KPUc6a7GsZQevDW3l5YxrmCI0z
+         r1yTXrRR5jXQtJQZlSGfd5Ol7iXIub51CMMgWplOjMM8chkK0lsTJMIbROp7cwk4m0P1
+         +qgQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=cGEIwK2mIWlt0praWPVjHqx3787sD2c2+ZgIrWeWC10=;
-        b=neZnDjKCHrNDH4YbU45qa/J9ahvRvUZ2UFc8/NBc/zNbdJzTbMFsTET5QFBp6OC7wR
-         YK49Qw72hsZINxV0K5557nx1izYbrYmIBspmOHPFEb3bmtej1TQVPN0FpQeiluP2IOty
-         1/hFIVmuXygzzrVfBPzIz3u4a8pATbMalfx3hsMPYYRrnmL15rtxW6h7hqZC9mvdeR/k
-         cZjN/qCDlERD/EDHos5viX2fne7MtkuowOGIuC/w75QkCF6NmLElsXexlX94TPOjs+9Q
-         beotPkPLeJvlzm17n8fUrxi1rjlX4EyzRKYMqXL+X6FjSQX0pgkJpuhjLHg+Q1pz4I72
-         eo1Q==
-X-Gm-Message-State: AOAM530jPxkGlBm5V3hMhPInTtXIDIDSm55r9i8VVEhSzaeIFToRY+Tb
-        0ZDytvoqB4os6zW2ao46aFBcauzT+jQSf0Mc
-X-Google-Smtp-Source: ABdhPJzupTYmpyqK8HSRMpnyKZA7fy0qU0f4/K+gj2k9q8PjKZlDEA4s8A98+bzdSWZWkwnQeq1lbQ==
-X-Received: by 2002:a0c:ea81:: with SMTP id d1mr23183110qvp.57.1616975767611;
-        Sun, 28 Mar 2021 16:56:07 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=NUiuzRmCI317NNPwOQd3D4rWQdmGZHrpIjp/qwsCZIQ=;
+        b=EE2Fyaio5GzpTkqIT5AfWXA8m0IVikDDTCIVdIti/DaoNlgvAJLi5yKdX7ZZmB/5BX
+         ksjHIrfsvkKWf6iP87At4mVjJHaXUtkFFnkoWtMFHCjP1FEBP9u1BGTjtFRww9CKfT/N
+         ew09OG26EY3PIYsynzadEJCTXuLv4Yoy9RQbp27ytBixizjcIzenMrSn8mBnLZyG2Ewj
+         WyN7+aHEUSNeSSMzXmkMDs1mma5PVvqmW7lUaAMQXQC+HGDxA0NXRx6JM7n9KVz1uUiF
+         ARsJ8IMkxT9dwYiKw8ixVZdx28iPmw4W1MNFGwPZnLfyklsnxhUW5Zamt6zSwdNOnp0e
+         mc9Q==
+X-Gm-Message-State: AOAM532st9vEkCfGVFL/kOBSnHuZlgzPU89aij0iBb5hqR+Fc2KXVs1R
+        YebtjHSCPeOtjA4YLOkdlxYtvf4qhzSCFSaU
+X-Google-Smtp-Source: ABdhPJyKaE6xu37zVH3z/CjmV3TkU5t17RBcANW7BpVJXHO+pgWwNEwtWueIieluVNk3R4I3c1/mYg==
+X-Received: by 2002:a05:620a:cf4:: with SMTP id c20mr22554064qkj.134.1616975757870;
+        Sun, 28 Mar 2021 16:55:57 -0700 (PDT)
 Received: from localhost.localdomain ([156.146.58.24])
-        by smtp.gmail.com with ESMTPSA id y19sm12153061qky.111.2021.03.28.16.56.03
+        by smtp.gmail.com with ESMTPSA id y19sm12153061qky.111.2021.03.28.16.55.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 28 Mar 2021 16:56:07 -0700 (PDT)
+        Sun, 28 Mar 2021 16:55:57 -0700 (PDT)
 From:   Bhaskar Chowdhury <unixbhaskar@gmail.com>
 To:     dmaengine@vger.kernel.org, dri-devel@lists.freedesktop.org,
         hch@lst.de, iommu@lists.linux-foundation.org,
@@ -63,48 +62,81 @@ To:     dmaengine@vger.kernel.org, dri-devel@lists.freedesktop.org,
         dan.j.williams@intel.com
 Cc:     Bhaskar Chowdhury <unixbhaskar@gmail.com>, rdunlap@infradead.org,
         linux-kernel@vger.kernel.org
-Subject: [PATCH 02/30] altera-msgdma.c: Couple of typos fixed
-Date:   Mon, 29 Mar 2021 05:22:58 +0530
-Message-Id: <c9dc34e16508c7444d3407d775eb6f921ff81f06.1616971780.git.unixbhaskar@gmail.com>
+Subject: [PATCH 00/30] DMA: Mundane typo fixes
+Date:   Mon, 29 Mar 2021 05:22:56 +0530
+Message-Id: <cover.1616971780.git.unixbhaskar@gmail.com>
 X-Mailer: git-send-email 2.26.3
-In-Reply-To: <cover.1616971780.git.unixbhaskar@gmail.com>
-References: <cover.1616971780.git.unixbhaskar@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-s/assosiated/associated/
-s/oder/order/
+This patch series fixes some trivial and rudimentary spellings in the COMMENT
+sections.
 
-Signed-off-by: Bhaskar Chowdhury <unixbhaskar@gmail.com>
----
- drivers/dma/altera-msgdma.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+Bhaskar Chowdhury (30):
+  acpi-dma.c: Fix couple of typos
+  altera-msgdma.c: Couple of typos fixed
+  amba-pl08x.c: Fixed couple of typos
+  bcm-sba-raid.c: Few typos fixed
+  bcm2835-dma.c: Fix a typo
+  idma64.c: Fix couple of typos
+  iop-adma.c: Few typos fixed
+  mv_xor.c: Fix a typo
+  mv_xor.h: Fixed a typo
+  mv_xor_v2.c: Fix a typo
+  nbpfaxi.c: Fixed a typo
+  of-dma.c: Fixed a typo
+  s3c24xx-dma.c: Fix a typo
+  Revert "s3c24xx-dma.c: Fix a typo"
+  s3c24xx-dma.c: Few typos fixed
+  st_fdma.h: Fix couple of typos
+  ste_dma40_ll.h: Fix a typo
+  tegra20-apb-dma.c: Fixed a typo
+  xgene-dma.c: Few spello fixes
+  at_hdmac.c: Quite a few spello fixes
+  owl-dma.c: Fix a typo
+  at_hdmac_regs.h: Couple of typo fixes
+  dma-jz4780.c: Fix a typo
+  Kconfig: Change Synopsys to Synopsis
+  ste_dma40.c: Few spello fixes
+  dw-axi-dmac-platform.c: Few typos fixed
+  dpaa2-qdma.c: Fix a typo
+  usb-dmac.c: Fix a typo
+  edma.c: Fix a typo
+  xilinx_dma.c: Fix a typo
 
-diff --git a/drivers/dma/altera-msgdma.c b/drivers/dma/altera-msgdma.c
-index 9a841ce5f0c5..c3483bf2aaa7 100644
---- a/drivers/dma/altera-msgdma.c
-+++ b/drivers/dma/altera-msgdma.c
-@@ -152,7 +152,7 @@ struct msgdma_extended_desc {
- /**
-  * struct msgdma_sw_desc - implements a sw descriptor
-  * @async_tx: support for the async_tx api
-- * @hw_desc: assosiated HW descriptor
-+ * @hw_desc: associated HW descriptor
-  * @node: node to move from the free list to the tx list
-  * @tx_list: transmit list node
-  */
-@@ -510,7 +510,7 @@ static void msgdma_copy_one(struct msgdma_device *mdev,
- 	 * of the DMA controller. The descriptor will get flushed to the
- 	 * FIFO, once the last word (control word) is written. Since we
- 	 * are not 100% sure that memcpy() writes all word in the "correct"
--	 * oder (address from low to high) on all architectures, we make
-+	 * order (address from low to high) on all architectures, we make
- 	 * sure this control word is written last by single coding it and
- 	 * adding some write-barriers here.
- 	 */
+ drivers/dma/Kconfig                            |  8 ++++----
+ drivers/dma/acpi-dma.c                         |  4 ++--
+ drivers/dma/altera-msgdma.c                    |  4 ++--
+ drivers/dma/amba-pl08x.c                       |  4 ++--
+ drivers/dma/at_hdmac.c                         | 14 +++++++-------
+ drivers/dma/at_hdmac_regs.h                    |  4 ++--
+ drivers/dma/bcm-sba-raid.c                     |  8 ++++----
+ drivers/dma/bcm2835-dma.c                      |  2 +-
+ drivers/dma/dma-jz4780.c                       |  2 +-
+ drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c |  8 ++++----
+ drivers/dma/idma64.c                           |  4 ++--
+ drivers/dma/iop-adma.c                         |  6 +++---
+ drivers/dma/mv_xor.c                           |  2 +-
+ drivers/dma/mv_xor.h                           |  2 +-
+ drivers/dma/mv_xor_v2.c                        |  2 +-
+ drivers/dma/nbpfaxi.c                          |  2 +-
+ drivers/dma/of-dma.c                           |  2 +-
+ drivers/dma/owl-dma.c                          |  2 +-
+ drivers/dma/s3c24xx-dma.c                      |  6 +++---
+ drivers/dma/sh/shdmac.c                        |  2 +-
+ drivers/dma/sh/usb-dmac.c                      |  2 +-
+ drivers/dma/st_fdma.h                          |  4 ++--
+ drivers/dma/ste_dma40.c                        | 10 +++++-----
+ drivers/dma/ste_dma40_ll.h                     |  2 +-
+ drivers/dma/tegra20-apb-dma.c                  |  2 +-
+ drivers/dma/ti/edma.c                          |  2 +-
+ drivers/dma/xgene-dma.c                        |  6 +++---
+ drivers/dma/xilinx/xilinx_dma.c                |  2 +-
+ 28 files changed, 59 insertions(+), 59 deletions(-)
+
 --
 2.26.3
 
