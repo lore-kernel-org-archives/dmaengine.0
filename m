@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D7D29C433DB
-	for <dmaengine@archiver.kernel.org>; Sun, 28 Mar 2021 23:58:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 27679C433C1
+	for <dmaengine@archiver.kernel.org>; Sun, 28 Mar 2021 23:58:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AA08C6194B
+	by mail.kernel.org (Postfix) with ESMTP id F17846194B
 	for <dmaengine@archiver.kernel.org>; Sun, 28 Mar 2021 23:58:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231715AbhC1X5p (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Sun, 28 Mar 2021 19:57:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53200 "EHLO
+        id S231720AbhC1X5r (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Sun, 28 Mar 2021 19:57:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53278 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231721AbhC1X5N (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Sun, 28 Mar 2021 19:57:13 -0400
-Received: from mail-qt1-x834.google.com (mail-qt1-x834.google.com [IPv6:2607:f8b0:4864:20::834])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 08697C061756;
-        Sun, 28 Mar 2021 16:57:13 -0700 (PDT)
-Received: by mail-qt1-x834.google.com with SMTP id c6so8262695qtc.1;
-        Sun, 28 Mar 2021 16:57:12 -0700 (PDT)
+        with ESMTP id S231707AbhC1X5c (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Sun, 28 Mar 2021 19:57:32 -0400
+Received: from mail-qk1-x72a.google.com (mail-qk1-x72a.google.com [IPv6:2607:f8b0:4864:20::72a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A224CC061756;
+        Sun, 28 Mar 2021 16:57:32 -0700 (PDT)
+Received: by mail-qk1-x72a.google.com with SMTP id v70so10932794qkb.8;
+        Sun, 28 Mar 2021 16:57:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=VFtxWE0StKfcC+URsv7nAjsC2Kf78xuu9a0HtqKdSlU=;
-        b=nofPQHYz+R+Oh7tBn2NrHqcJ60wz0I6awH3+nn+VeY57PjK9/aNKapSiLLecIClvPE
-         Wv+VWFlug249FdqQUEnblJ5mnlCINYaNx63BE/qOihUhCU+JaQ/WqSPiCuKhfSjQbhGv
-         sBRNZ9lVKQXJGBC11+kHxahv9pSjNr/fTi0d+YVlFs4PWEH7ZQGtYbkuhE6TF9M1XIi2
-         OaPcpcSIEMOOc32j/1qRcNe0pfEquahJ0sNCoEtLMNpLSu5FueclTvKRvW/OcNHihNtC
-         0IMi3H/cpoMpeAJG9jiZpJyTWlCGbUvhb9/0lczXT1gcHms5Qe+Z9kXEzBI1StWYjMxW
-         2wag==
+        bh=CRQ66svHtz0NbMeMT9Zx0iC/2wAaIP+Km/fepuW/VfI=;
+        b=lhF2PkYeKxZ0OGzjM1bBzGIAbKjSfHQkFcs2C27Ecdb0THCTBERC5T8aj/+CORXigi
+         n616eugbkVpcCcWOibNxul8RyH5dqWEqKKkgEPag7IAtO1wIHraKQFrl6zJF1poQ+l/b
+         l4gr6oRHPIYD9JSm8bV8I4eaJ/HWeZreeqN1heEG18VeXYvPGT7mIxrkvRUKeCBCctG6
+         kwu9TfPac45671YXZgPWyFX6uZIgmzX1lHqm9rWuWRszCfTaoym5DsDyvHsArK4pope4
+         2V++RpddLlJAODW8ec9vU7dCOvdwVpIAwPI0KLCpB4FbC0QCvF/clKntX08Z9XocOVxl
+         t/Cg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=VFtxWE0StKfcC+URsv7nAjsC2Kf78xuu9a0HtqKdSlU=;
-        b=BjiZRxsYDGUo9RXy1oS9qQmquYuq95NCVhypLbmgcG3+tocOC2xmovsj6ntKBwilWV
-         nkpVRgrRXZU63E+i6NytwackW1Q3aA48f+/zNQEjNFMaRf3FkSTUx+wxxmXczMaAlnDc
-         pGtUblgNfNNVU1ngTvFGeiRmNd1H/G53CUYTqtKaV8tsSJUlJyKuhG4ipq1edNo/jZxZ
-         ty/gUCiJCiabeMpwYshDocU18JwK1uoH9JHUIsk7LsFYz5iwbZYaQP36bfFM9nEos0wZ
-         xfZ3Y83eHzrprWsBp2SlQ76MrZxq6Zu2gd6Osbj+WFy4Zc5wDIleskRC7DQ91zsN90gZ
-         mJsw==
-X-Gm-Message-State: AOAM5335vrGK34OFGKSXVnKi963/b7E8H9DKuyWbOytiTxWbFpRZlvcZ
-        E4rklj5KJ/u6ZVt8BsVF38Qb7ewCVSwTOzSj
-X-Google-Smtp-Source: ABdhPJzdepGd4ibSSylbqz3lykO6e7Iu/C1yudQOjI9dZGJHJpjheIp8QepnwzKrjFLrJcsbOfjQlg==
-X-Received: by 2002:ac8:7fcd:: with SMTP id b13mr20277139qtk.68.1616975832021;
-        Sun, 28 Mar 2021 16:57:12 -0700 (PDT)
+        bh=CRQ66svHtz0NbMeMT9Zx0iC/2wAaIP+Km/fepuW/VfI=;
+        b=EU+jswc2geKF0d335LtmvFLLb7qH52B39OpysOJtL8z+qsAnoNm2QF6W1E+XGAgIWf
+         J+cow4+2Zc3re1sxn+oofga3IsLMrqBUpJe4eKNHtTXDtcYcZzpeSISf9+0Jrs7nlvBq
+         YLCQ2U10c1CYd5HsQ0ZCkIVY7hm3SFsNVgYtX2gJqxkYkC92VG3YtnsjSLHaSV8+EScD
+         P8ciqsaN+d6IXsymexouoB9TSU8c7FXq4n93DSjbj9cCfz3UJcB12jSTufukikrdQmCV
+         dJAOQi/jeZf+aQgecgaxl0hejwm33BXJlU1/C9QmdLlQ1U9Weqi/+rbZHZIEoDLh+iAD
+         +j+w==
+X-Gm-Message-State: AOAM530a01jt/MBb7GkvJRGR48wLp1y8hYRmeDpTKoWEQI469U9F3+BC
+        3TgVs3usAcmzaWHkonPE4mBxNJAFVzYgM+NH
+X-Google-Smtp-Source: ABdhPJz562Hr6JC/eu+femI5ulDAe6zWcMiureMKHuCOy+N3i/aJwFXT/YJj4Ol1H2CmKTh/PKph0g==
+X-Received: by 2002:a05:620a:31a:: with SMTP id s26mr23223111qkm.355.1616975851673;
+        Sun, 28 Mar 2021 16:57:31 -0700 (PDT)
 Received: from localhost.localdomain ([156.146.58.24])
-        by smtp.gmail.com with ESMTPSA id y19sm12153061qky.111.2021.03.28.16.57.07
+        by smtp.gmail.com with ESMTPSA id y19sm12153061qky.111.2021.03.28.16.57.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 28 Mar 2021 16:57:11 -0700 (PDT)
+        Sun, 28 Mar 2021 16:57:31 -0700 (PDT)
 From:   Bhaskar Chowdhury <unixbhaskar@gmail.com>
 To:     dmaengine@vger.kernel.org, dri-devel@lists.freedesktop.org,
         hch@lst.de, iommu@lists.linux-foundation.org,
@@ -63,9 +63,9 @@ To:     dmaengine@vger.kernel.org, dri-devel@lists.freedesktop.org,
         dan.j.williams@intel.com
 Cc:     Bhaskar Chowdhury <unixbhaskar@gmail.com>, rdunlap@infradead.org,
         linux-kernel@vger.kernel.org
-Subject: [PATCH 15/30] s3c24xx-dma.c: Few typos fixed
-Date:   Mon, 29 Mar 2021 05:23:11 +0530
-Message-Id: <062bbb694c995aad9ca17a80bbc63716f116fd9f.1616971780.git.unixbhaskar@gmail.com>
+Subject: [PATCH 19/30] xgene-dma.c: Few spello fixes
+Date:   Mon, 29 Mar 2021 05:23:15 +0530
+Message-Id: <4703d96a617c2244e2753d579790edbbb49382ab.1616971780.git.unixbhaskar@gmail.com>
 X-Mailer: git-send-email 2.26.3
 In-Reply-To: <cover.1616971780.git.unixbhaskar@gmail.com>
 References: <cover.1616971780.git.unixbhaskar@gmail.com>
@@ -75,45 +75,45 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-s/transfered/transferred/
-s/desintation/destination/  ...two different places.
+s/definations/definitions/   ....two different places.
+s/Configue/Configure/
 
 Signed-off-by: Bhaskar Chowdhury <unixbhaskar@gmail.com>
 ---
- drivers/dma/s3c24xx-dma.c | 6 +++---
+ drivers/dma/xgene-dma.c | 6 +++---
  1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/dma/s3c24xx-dma.c b/drivers/dma/s3c24xx-dma.c
-index 8e14c72d03f0..045f2f531876 100644
---- a/drivers/dma/s3c24xx-dma.c
-+++ b/drivers/dma/s3c24xx-dma.c
-@@ -156,7 +156,7 @@ struct s3c24xx_sg {
-  * struct s3c24xx_txd - wrapper for struct dma_async_tx_descriptor
-  * @vd: virtual DMA descriptor
-  * @dsg_list: list of children sg's
-- * @at: sg currently being transfered
-+ * @at: sg currently being transferred
-  * @width: transfer width
-  * @disrcc: value for source control register
-  * @didstc: value for destination control register
-@@ -920,7 +920,7 @@ static struct dma_async_tx_descriptor *s3c24xx_dma_prep_dma_cyclic(
- 	}
+diff --git a/drivers/dma/xgene-dma.c b/drivers/dma/xgene-dma.c
+index 3589b4ef50b8..9b0010b6e033 100644
+--- a/drivers/dma/xgene-dma.c
++++ b/drivers/dma/xgene-dma.c
+@@ -23,7 +23,7 @@
 
- 	/*
--	 * Always assume our peripheral desintation is a fixed
-+	 * Always assume our peripheral destination is a fixed
- 	 * address in memory.
- 	 */
- 	hwcfg |= S3C24XX_DISRCC_INC_FIXED;
-@@ -1009,7 +1009,7 @@ static struct dma_async_tx_descriptor *s3c24xx_dma_prep_slave_sg(
- 	}
+ #include "dmaengine.h"
 
- 	/*
--	 * Always assume our peripheral desintation is a fixed
-+	 * Always assume our peripheral destination is a fixed
- 	 * address in memory.
- 	 */
- 	hwcfg |= S3C24XX_DISRCC_INC_FIXED;
+-/* X-Gene DMA ring csr registers and bit definations */
++/* X-Gene DMA ring csr registers and bit definitions */
+ #define XGENE_DMA_RING_CONFIG			0x04
+ #define XGENE_DMA_RING_ENABLE			BIT(31)
+ #define XGENE_DMA_RING_ID			0x08
+@@ -102,7 +102,7 @@
+ #define XGENE_DMA_BLK_MEM_RDY_VAL		0xFFFFFFFF
+ #define XGENE_DMA_RING_CMD_SM_OFFSET		0x8000
+
+-/* X-Gene SoC EFUSE csr register and bit defination */
++/* X-Gene SoC EFUSE csr register and bit definition */
+ #define XGENE_SOC_JTAG1_SHADOW			0x18
+ #define XGENE_DMA_PQ_DISABLE_MASK		BIT(13)
+
+@@ -1741,7 +1741,7 @@ static int xgene_dma_probe(struct platform_device *pdev)
+ 	/* Initialize DMA channels software state */
+ 	xgene_dma_init_channels(pdma);
+
+-	/* Configue DMA rings */
++	/* Configure DMA rings */
+ 	ret = xgene_dma_init_rings(pdma);
+ 	if (ret)
+ 		goto err_clk_enable;
 --
 2.26.3
 
