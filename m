@@ -2,60 +2,59 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2D0D5C433E3
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 78D60C433E4
 	for <dmaengine@archiver.kernel.org>; Sun, 28 Mar 2021 23:57:46 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0BC0C61964
+	by mail.kernel.org (Postfix) with ESMTP id 4AE4A61948
 	for <dmaengine@archiver.kernel.org>; Sun, 28 Mar 2021 23:57:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231741AbhC1X5P (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        id S231748AbhC1X5P (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
         Sun, 28 Mar 2021 19:57:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53146 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53184 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231703AbhC1X46 (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Sun, 28 Mar 2021 19:56:58 -0400
-Received: from mail-qt1-x830.google.com (mail-qt1-x830.google.com [IPv6:2607:f8b0:4864:20::830])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 22265C061756;
-        Sun, 28 Mar 2021 16:56:58 -0700 (PDT)
-Received: by mail-qt1-x830.google.com with SMTP id x9so8203442qto.8;
-        Sun, 28 Mar 2021 16:56:58 -0700 (PDT)
+        with ESMTP id S231708AbhC1X5I (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Sun, 28 Mar 2021 19:57:08 -0400
+Received: from mail-qk1-x72c.google.com (mail-qk1-x72c.google.com [IPv6:2607:f8b0:4864:20::72c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 26017C061756;
+        Sun, 28 Mar 2021 16:57:08 -0700 (PDT)
+Received: by mail-qk1-x72c.google.com with SMTP id q26so10932656qkm.6;
+        Sun, 28 Mar 2021 16:57:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=V731M1ZjoMObeUPxmfQu760ZEmOVyQS5nvVKDsMpRYg=;
-        b=lnZVGx88/Q4RgjL+3hIrxaeLUCknaQO529y1KHYklW+L+nkdj8gpcbnqm8dMc1/+l7
-         f6zSHAW3lnPCPRE6I8Y7+qD6NhajFTxCnWDjvRqS+5YTVtxG9RfzFR2gppG6pd2KUONg
-         x2Ypd6MdyYMDQxXuVr9h1defti29sytWbU8Ue/Li0RmO+WBaY8GzifXSi3Uzw8ctplXy
-         6TXDeusuFr4d4znZtig85zoIyEx6i/oXnzfPQNVFdJWRikFvX9A33V/ZVXPGGkcr9CJy
-         RJnXtSxeb6weKiUSJ+4jqKEIqqXxCR3aOs9fIwYirSfoCpnld2ZyldI5xWdSpa4LevUr
-         PhOg==
+        bh=7ZQIptdaKO+NG6KGHA5S2pjM0OS7naQnCt9zgnNYCE0=;
+        b=Gm9tUcw1/+mThRDpyyzzMTwMHDKH9vZpafertqfrSZ5YO9KbE3sAww3oZ8XGMiAhRt
+         kgtAGKj9dtXo99Szxu7K4JpbuKgBBIZREfyljwoHuiTIM5ZAd/CKQ0umxuj//O71kbxD
+         Eorzfcnc99sIfIq6B+POBj5vgl6pz1tdC7ugns0aQrf9x/NJct0viJIWVNhC6Y2Bw3k5
+         +zV83HR64ZTrH1sIkOEbsmWYi035hsyGGF+Rxz5h3YrJ34Fc/SSZo4abf7eLvn47HyCZ
+         1VehmmjVpqRm3naf7dKNpOzu4sq3YMJBnKtBt196sX4MubPgCqv7idERRFBCAhH7OBQ+
+         GtVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=V731M1ZjoMObeUPxmfQu760ZEmOVyQS5nvVKDsMpRYg=;
-        b=HigLl7wu52l14FFoFWUsHaoWT4YkCfjzvRrC7cwu19MWtT76Uc++bci3Alk4S15sBV
-         CjvROvC2+RbRtqb9tTC3XSf0Qv0FrJn0NVobYya6suSiupgP02fYmqMloOFvVs+vg21V
-         TkdfOQCyGurKonI5otGyVKRGjIrm0Uu1mQZjcOBa+mah479T9ceG7+PZT2DxAHJlxAki
-         V9wI86jaocXfRMmZtYqaYc2yBSJXvvIA3uYR+R97x4MTNnFvKQpjwD/FBcmqWNZ7frr8
-         3gdkbK5P5rXSvL0FPfh5Mrp9v0JaoylXgM+VRPI/AhF2Ywb/wE7MXDvB4VJORAuyyVI8
-         QWMQ==
-X-Gm-Message-State: AOAM532W7XDLtvn9XPQq9CM5TEG8XHrAbBP6sGrAHRXPZ+mELIn5q5EW
-        +Jcejhipy/idsEjUCaMQDGlDj4pyy188VdQR
-X-Google-Smtp-Source: ABdhPJwfkmcNQYJxn4S9wN8jOvwQsIXVBRg1ipQrCtKoJ4PNJU1NU5IafcNZI5PpJzjZHpA0d8+z4w==
-X-Received: by 2002:ac8:1098:: with SMTP id a24mr20071293qtj.291.1616975817116;
-        Sun, 28 Mar 2021 16:56:57 -0700 (PDT)
+        bh=7ZQIptdaKO+NG6KGHA5S2pjM0OS7naQnCt9zgnNYCE0=;
+        b=VhPn/r3h6LWckdEFZNaKiSyEe6DihKsdJWEOo/mk65WEy0cwlkaS/S/sLLZifdIrxx
+         MIgrVo36pScymqImiPkTMCDTHUtjCWGVynqJX9CF2RiPl/7NS/htG2NeDD6Q22j5ZfR5
+         WjJL5wNDg5APu1HYTvuGsVz/RyyjT8goqOMj/9lAKYLTpt37fGJfTckMZhq2sKHBIarE
+         /z1KgkjcqHLZOk3HrtWX1KLAV7WHNVguDjBw8LDIuiFichLzVKdPrUQVcWnqZjOeLQVg
+         kiw5j2nkDJmlmaWT4tL9F3q3G+J8OnMaNaY23jtfqMOIGMwrIajMFKKOiUy204j7Rw+y
+         h1+A==
+X-Gm-Message-State: AOAM531b50Uh3v6L/JgQw9lhyg4n05+/mwhkYet7/WSdUficnw2iG4NO
+        A9bXibAgdyP6CdLIX61+pY6J2Fc+SWpNsQ7J
+X-Google-Smtp-Source: ABdhPJwgPDn63+t8WI0ESglt0cdz3qRSIBNoBZJfy0KnIfKji8LoJbUHTl3eZXAtTJ+tyoAIdpJzMw==
+X-Received: by 2002:a05:620a:cf4:: with SMTP id c20mr22556318qkj.134.1616975827140;
+        Sun, 28 Mar 2021 16:57:07 -0700 (PDT)
 Received: from localhost.localdomain ([156.146.58.24])
-        by smtp.gmail.com with ESMTPSA id y19sm12153061qky.111.2021.03.28.16.56.52
+        by smtp.gmail.com with ESMTPSA id y19sm12153061qky.111.2021.03.28.16.57.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 28 Mar 2021 16:56:56 -0700 (PDT)
+        Sun, 28 Mar 2021 16:57:06 -0700 (PDT)
 From:   Bhaskar Chowdhury <unixbhaskar@gmail.com>
 To:     dmaengine@vger.kernel.org, dri-devel@lists.freedesktop.org,
         hch@lst.de, iommu@lists.linux-foundation.org,
@@ -63,9 +62,9 @@ To:     dmaengine@vger.kernel.org, dri-devel@lists.freedesktop.org,
         dan.j.williams@intel.com
 Cc:     Bhaskar Chowdhury <unixbhaskar@gmail.com>, rdunlap@infradead.org,
         linux-kernel@vger.kernel.org
-Subject: [PATCH 12/30] of-dma.c: Fixed a typo
-Date:   Mon, 29 Mar 2021 05:23:08 +0530
-Message-Id: <0c3e1bd83c63203a0aad27006fbd369090a69dce.1616971780.git.unixbhaskar@gmail.com>
+Subject: [PATCH 14/30] Revert "s3c24xx-dma.c: Fix a typo"
+Date:   Mon, 29 Mar 2021 05:23:10 +0530
+Message-Id: <1d989f71fbebd15de633c187d88cb3be3a0f2723.1616971780.git.unixbhaskar@gmail.com>
 X-Mailer: git-send-email 2.26.3
 In-Reply-To: <cover.1616971780.git.unixbhaskar@gmail.com>
 References: <cover.1616971780.git.unixbhaskar@gmail.com>
@@ -75,26 +74,26 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-s/propety/properly/
+s/transferred/transfered/
 
-Signed-off-by: Bhaskar Chowdhury <unixbhaskar@gmail.com>
+This reverts commit a2ddb8aea8106bd5552f8516ad7a8a26b9282a8f.
 ---
- drivers/dma/of-dma.c | 2 +-
+ drivers/dma/s3c24xx-dma.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/dma/of-dma.c b/drivers/dma/of-dma.c
-index ec00b20ae8e4..e028acff7fe8 100644
---- a/drivers/dma/of-dma.c
-+++ b/drivers/dma/of-dma.c
-@@ -337,7 +337,7 @@ EXPORT_SYMBOL_GPL(of_dma_simple_xlate);
-  *
-  * This function can be used as the of xlate callback for DMA driver which wants
-  * to match the channel based on the channel id. When using this xlate function
-- * the #dma-cells propety of the DMA controller dt node needs to be set to 1.
-+ * the #dma-cells properly of the DMA controller dt node needs to be set to 1.
-  * The data parameter of of_dma_controller_register must be a pointer to the
-  * dma_device struct the function should match upon.
-  *
+diff --git a/drivers/dma/s3c24xx-dma.c b/drivers/dma/s3c24xx-dma.c
+index c98ae73cdcc3..8e14c72d03f0 100644
+--- a/drivers/dma/s3c24xx-dma.c
++++ b/drivers/dma/s3c24xx-dma.c
+@@ -156,7 +156,7 @@ struct s3c24xx_sg {
+  * struct s3c24xx_txd - wrapper for struct dma_async_tx_descriptor
+  * @vd: virtual DMA descriptor
+  * @dsg_list: list of children sg's
+- * @at: sg currently being transferred
++ * @at: sg currently being transfered
+  * @width: transfer width
+  * @disrcc: value for source control register
+  * @didstc: value for destination control register
 --
 2.26.3
 
