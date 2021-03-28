@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1B514C433E0
-	for <dmaengine@archiver.kernel.org>; Sun, 28 Mar 2021 23:57:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F165CC433E0
+	for <dmaengine@archiver.kernel.org>; Sun, 28 Mar 2021 23:57:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E4F8861949
-	for <dmaengine@archiver.kernel.org>; Sun, 28 Mar 2021 23:57:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D01F161950
+	for <dmaengine@archiver.kernel.org>; Sun, 28 Mar 2021 23:57:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230377AbhC1X4m (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Sun, 28 Mar 2021 19:56:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52968 "EHLO
+        id S231735AbhC1X5O (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Sun, 28 Mar 2021 19:57:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53106 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230373AbhC1X4N (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Sun, 28 Mar 2021 19:56:13 -0400
-Received: from mail-qk1-x72a.google.com (mail-qk1-x72a.google.com [IPv6:2607:f8b0:4864:20::72a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3977C061756;
-        Sun, 28 Mar 2021 16:56:13 -0700 (PDT)
-Received: by mail-qk1-x72a.google.com with SMTP id c4so10939023qkg.3;
-        Sun, 28 Mar 2021 16:56:13 -0700 (PDT)
+        with ESMTP id S231686AbhC1X4s (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Sun, 28 Mar 2021 19:56:48 -0400
+Received: from mail-qk1-x72f.google.com (mail-qk1-x72f.google.com [IPv6:2607:f8b0:4864:20::72f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2EB5BC061756;
+        Sun, 28 Mar 2021 16:56:48 -0700 (PDT)
+Received: by mail-qk1-x72f.google.com with SMTP id q26so10932218qkm.6;
+        Sun, 28 Mar 2021 16:56:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=QaFxE7xJjw3q1QRzUlhL9vl2FAXABYAZdUNglx88dWM=;
-        b=jp01Oafr+FYiNYOySvz698WmMQzo+I8B2paqvCFTlCTqcAAL37CMJwgpqQlkW5GHW2
-         Dyvbvs+rlqMjPWQuuNHQDuAQ6uVGfCqAuD3H7xHGEPAJOWcAGOy/DrtrhvXYWLU0436d
-         lVRkCgJp9jS4fhNJ0qaUC4akHDDGxNg25koKauz70I2VYZQOmotGc6b2/KGof4mKY6LW
-         1TzvIv956J7EIBeJBzXRcahb54ThW1Yu5eyDfY18Lpqxxr6dAulMcI1wQw2QFXiQ3c2q
-         Ui+ZEYtPOnzUjWjCc71Rex7kRCtuOwcEjgmEOD0DPvlk4vA+pudWfMcYnjP5m3D1ev0S
-         YKbg==
+        bh=p8tgWIwF1h1UyJsPg+lZdKEi7xs5ze/71DPorsIrKaw=;
+        b=QluZ0Za6bZK99BZdD6eZ6JK4FwNMO4t5rMeypTHxnNI3xBR1C2N9OlpcqyHrjbfiG7
+         Mq+uCBl35SjAQuc4Cd3qJdRpJ8vzBl4D90dLBtuXnvkjJv+cBZgbaWDnKk0zLxPYIS5s
+         yLVuS7nx+qZck+0nJsmLB5ns+K+JwVd6Y6pl1A4EIAd++4AWNUtouvQSF69/S9sHRHtI
+         82eWm4rI6oMz57f/q2nVm5TOpV26u7QBwLLqbGpcE8fk9pIhGRBUJPEzl+czndefkZ/p
+         YmPsBvQP7Bqq6+uK2YKh2oXukU70f0KR3ysooGwavL9tHQRwV60nHxsIuviiOJDcFJf8
+         +KmA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=QaFxE7xJjw3q1QRzUlhL9vl2FAXABYAZdUNglx88dWM=;
-        b=hTZDZ5hYcN6pekwObguM/+aNfUI6VXrYNf1k8IwwFCUZKlCRa7+bZ7hstnPndyWu9s
-         HI5uP+x9YGgAKcnnL2Cl884/ywhcYP2tAT2HFT77n65vEDSioPBhIVXVXuxJq11TBaFk
-         5Fy83GVMF1n6LPYJJJWBOivkqCbUyc/YTyJzRaF7kpCPlNgxcL5fswIC13mE3JKRdjMf
-         hkafFCysmRUHKNqnlrQdwaLgN6aioHm5VnjiB5E42DHtSRoSOWeNh7v1b0pgrrCvUf0H
-         YkJC1K3aj8+Liew5Ihq0IISIKw6tANnPRuT1ebf7hmyXgc5DvtL1RDb3sjN5L0CZr9Rc
-         AkWg==
-X-Gm-Message-State: AOAM530pWbHo3vHNc6FkgH5REH/AojEeShMvf5pkCcL0sm8/3gQf3u62
-        hUqijpp+tNVy9uEOs9RGSuHM//mo98PWiIUc
-X-Google-Smtp-Source: ABdhPJx0o599PHMcyxzLn8eHnK8YWRJh3bbcuBhN5MPJAY682L8sA466e6YWGWWwK4DIft39eFQPyQ==
-X-Received: by 2002:a37:e110:: with SMTP id c16mr23323591qkm.67.1616975772640;
-        Sun, 28 Mar 2021 16:56:12 -0700 (PDT)
+        bh=p8tgWIwF1h1UyJsPg+lZdKEi7xs5ze/71DPorsIrKaw=;
+        b=p+ZiUClWd3XdFWQ1McEem1/YPiJ6smicCCpzHxqy5crYLpI81oxuVeja7fFpBBf/QA
+         0keuTp9zH5HwtmQBJHhkcKjTPsZS1Pfn8+IB1O9+Kg9L6wYt1u9FD1SwUcOxrPArcS26
+         DmxLO2p6hk2VBo2UNWur3+F/0iRYwWHrXQx5cSpC1Bx/jM2lnrPGuYcMRFOxQZwuFwQc
+         i+kquNT1L8dyE7cWt04QhqsTn7nrpwQWQsH5XS3p/Za3kALE/aGZpodo9qkJKn295pEf
+         kASX5m2sPhBKWzTVJ5XsKFXy1GZmOUioh8uM8ALE8VpiR6+kEgvpezG81orAhzkmfTMr
+         vDWg==
+X-Gm-Message-State: AOAM5326avya/FVpYhruEOUtH9YnVPV5BhbsaigzN5sMgDFDi11Vo2jW
+        u3z0SQCgeDt6UVxU3XcFxOnV0yJFgVB8AxZM
+X-Google-Smtp-Source: ABdhPJzpxSRSjtr4pJygkDPBEhRffmMMyfd9P0g2mrERYszZ3+DVR0YWumqOtPLQE4YK+O+8QPuhTQ==
+X-Received: by 2002:a05:620a:2915:: with SMTP id m21mr22225739qkp.147.1616975807180;
+        Sun, 28 Mar 2021 16:56:47 -0700 (PDT)
 Received: from localhost.localdomain ([156.146.58.24])
-        by smtp.gmail.com with ESMTPSA id y19sm12153061qky.111.2021.03.28.16.56.08
+        by smtp.gmail.com with ESMTPSA id y19sm12153061qky.111.2021.03.28.16.56.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 28 Mar 2021 16:56:12 -0700 (PDT)
+        Sun, 28 Mar 2021 16:56:46 -0700 (PDT)
 From:   Bhaskar Chowdhury <unixbhaskar@gmail.com>
 To:     dmaengine@vger.kernel.org, dri-devel@lists.freedesktop.org,
         hch@lst.de, iommu@lists.linux-foundation.org,
@@ -63,9 +63,9 @@ To:     dmaengine@vger.kernel.org, dri-devel@lists.freedesktop.org,
         dan.j.williams@intel.com
 Cc:     Bhaskar Chowdhury <unixbhaskar@gmail.com>, rdunlap@infradead.org,
         linux-kernel@vger.kernel.org
-Subject: [PATCH 03/30] amba-pl08x.c: Fixed couple of typos
-Date:   Mon, 29 Mar 2021 05:22:59 +0530
-Message-Id: <b96052cd5c14956852fe7fc13ea47dac7b2b40e1.1616971780.git.unixbhaskar@gmail.com>
+Subject: [PATCH 10/30] mv_xor_v2.c: Fix a typo
+Date:   Mon, 29 Mar 2021 05:23:06 +0530
+Message-Id: <c2a5a94826aa421f14b4ee7cbf99f74b82f91d32.1616971780.git.unixbhaskar@gmail.com>
 X-Mailer: git-send-email 2.26.3
 In-Reply-To: <cover.1616971780.git.unixbhaskar@gmail.com>
 References: <cover.1616971780.git.unixbhaskar@gmail.com>
@@ -75,37 +75,26 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-
-s/busses/buses/
-s/accound/account/
+s/assosiated/associated/
 
 Signed-off-by: Bhaskar Chowdhury <unixbhaskar@gmail.com>
 ---
- drivers/dma/amba-pl08x.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/dma/mv_xor_v2.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/dma/amba-pl08x.c b/drivers/dma/amba-pl08x.c
-index a24882ba3764..d15182634789 100644
---- a/drivers/dma/amba-pl08x.c
-+++ b/drivers/dma/amba-pl08x.c
-@@ -121,7 +121,7 @@ struct vendor_data {
-
- /**
-  * struct pl08x_bus_data - information of source or destination
-- * busses for a transfer
-+ * buses for a transfer
-  * @addr: current address
-  * @maxwidth: the maximum width of a transfer on this bus
-  * @buswidth: the width of this bus in bytes: 1, 2 or 4
-@@ -1010,7 +1010,7 @@ static inline u32 pl08x_lli_control_bits(struct pl08x_driver_data *pl08x,
- 	/*
- 	 * Remove all src, dst and transfer size bits, then set the
- 	 * width and size according to the parameters. The bit offsets
--	 * are different in the FTDMAC020 so we need to accound for this.
-+	 * are different in the FTDMAC020 so we need to account for this.
- 	 */
- 	if (pl08x->vd->ftdmac020) {
- 		retbits &= ~FTDMAC020_LLI_DST_WIDTH_MSK;
+diff --git a/drivers/dma/mv_xor_v2.c b/drivers/dma/mv_xor_v2.c
+index 9b0d463f89bb..8a45861299a0 100644
+--- a/drivers/dma/mv_xor_v2.c
++++ b/drivers/dma/mv_xor_v2.c
+@@ -175,7 +175,7 @@ struct mv_xor_v2_device {
+  * struct mv_xor_v2_sw_desc - implements a xor SW descriptor
+  * @idx: descriptor index
+  * @async_tx: support for the async_tx api
+- * @hw_desc: assosiated HW descriptor
++ * @hw_desc: associated HW descriptor
+  * @free_list: node of the free SW descriprots list
+ */
+ struct mv_xor_v2_sw_desc {
 --
 2.26.3
 
