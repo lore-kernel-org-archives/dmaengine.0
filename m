@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 957A5C433DB
-	for <dmaengine@archiver.kernel.org>; Sun, 28 Mar 2021 23:58:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BADA0C433E0
+	for <dmaengine@archiver.kernel.org>; Sun, 28 Mar 2021 23:58:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 709AB6192E
-	for <dmaengine@archiver.kernel.org>; Sun, 28 Mar 2021 23:58:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9742F6192E
+	for <dmaengine@archiver.kernel.org>; Sun, 28 Mar 2021 23:58:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231916AbhC1X6R (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Sun, 28 Mar 2021 19:58:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53338 "EHLO
+        id S231767AbhC1X6U (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Sun, 28 Mar 2021 19:58:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53376 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231774AbhC1X5r (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Sun, 28 Mar 2021 19:57:47 -0400
-Received: from mail-qk1-x736.google.com (mail-qk1-x736.google.com [IPv6:2607:f8b0:4864:20::736])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 882E3C061756;
-        Sun, 28 Mar 2021 16:57:47 -0700 (PDT)
-Received: by mail-qk1-x736.google.com with SMTP id g20so10957137qkk.1;
-        Sun, 28 Mar 2021 16:57:47 -0700 (PDT)
+        with ESMTP id S231867AbhC1X56 (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Sun, 28 Mar 2021 19:57:58 -0400
+Received: from mail-qt1-x829.google.com (mail-qt1-x829.google.com [IPv6:2607:f8b0:4864:20::829])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CAC91C061756;
+        Sun, 28 Mar 2021 16:57:57 -0700 (PDT)
+Received: by mail-qt1-x829.google.com with SMTP id i19so8219834qtv.7;
+        Sun, 28 Mar 2021 16:57:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=I1EIk4YVKhOnAZImQsN2ZKDY/BZ5VFtnbICpb2ytuZw=;
-        b=dYzr6KWh4SK2C8ze1rrsjBDcu+hcBxWGkb1HkW+qd+/dV31vd3A3Ee2Vxu4ZavXqnU
-         o8NDQ+MysLv2Em5XbQ1laoO0P8vfDo77vfaElmp1/5MVQKkCU4xkYBZR1Y8MPoqMfo6V
-         0ko2b1t/YU/AM1SxeZ+mvKZbA/x6XJ6/kteEuByX/qo+qxxZ6LTZgy9ICZUMbPMGWoNd
-         UclUSFoR61rQ9kcGDjvMWAIuCwmuY+iSBQs/83RVR6BF2KMyUhMQ4juCkRyTGV1Haspm
-         asUV/RoPmdZFZFpoRySHsNo2MW5LLW2WQLM3f1CKrl3Ao9QZR9avs1tE9a+FJ+MwI3Vx
-         lRIQ==
+        bh=Rk0U560xdi7ATXezYweBgD2EUyZ4bnHBlHOPTcEoREY=;
+        b=ZLnI2Hw3GmiFb+BW4FldFixdVOm0/gTAYYcPGeNweT29zSncqaCxQl2ULX/m3x6yjk
+         FlPvPCq6g1oh13jD6EQyG1JSSdz9G8bm3HGZ2akxZG2GJMQ9BC7QedLKEm34PtSwYA9Q
+         9GLpxWPlLC/j45fuB1CB2u0k+GONoOh9eOlRvew+eCtM4IXd3/dem3muwmJ2LGUvv9pZ
+         rKataNLRCg25wm/swBsArGMvPBDO2BXQknOCELLoUmLYNgIAwbOCOSxAGx2PbdugPEc1
+         E84l/Bt6cNoKU6NHkm/vCejz/HyOc3AwND0Z16aeHxg7CDZpOR9OV5YCqN3yJaJzc09z
+         OoNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=I1EIk4YVKhOnAZImQsN2ZKDY/BZ5VFtnbICpb2ytuZw=;
-        b=XnmJGzEhUPHBCvt6hI3fYgQePiIBy9mbxraxr0go6SqlJmS1X7L1ifFo6EIRjUeVJJ
-         XnQm4n2UevLZ/b4r9rFlM+CSw0HrtnNEd3/PH0SGLm+0RSmVIOhEMMxg5LvkJwujoOUz
-         Uwrwi+8tvoXGbkoijGJJq5+ibD/StKdx0pJGxb4BsR6XEF/q/UmjYCI2NgTqFmuiRYlV
-         /ZvPwO0JbaP+eNiBm4UATGyJ0pD6Gc/ijB8BGwqFNnFMKPAfUcW3qlKJlAa7yYCEeRqg
-         gaQVOG/kB55CVzrbhK5FTIDIv1C8dreTqilyO8pCLyc57fLIfskZOijdDGCYgMJyVh7B
-         yoAw==
-X-Gm-Message-State: AOAM530aVIXEg9mXTFE+jMLcvt6HAIAJzCOdSRyLNUqzaLLui5rr6W8f
-        P+l3D7+oeDmKpQRMcbqGnUTHD6XZ/2M12K1R
-X-Google-Smtp-Source: ABdhPJw/RMK7vmZ45zLUGVxo30c6mvRq7joodocZ04PQOyJJPRklWL/yJc/aDwzeJa2I3aVqupZvhQ==
-X-Received: by 2002:a05:620a:2116:: with SMTP id l22mr22838891qkl.377.1616975866552;
-        Sun, 28 Mar 2021 16:57:46 -0700 (PDT)
+        bh=Rk0U560xdi7ATXezYweBgD2EUyZ4bnHBlHOPTcEoREY=;
+        b=FhwKoDrx1R0gEA3GNYPZ9H0WG6hU8ukCnyN9MU5Z03/G/+GAcG2jvSElVCX7zsGFty
+         zoriabAIIDP5/GiMuQ9CbonPZ6DvmNoAxVJoSIb7pD5pITX7Z0Dqd/ziW1uTJTG6sfoO
+         c06aIOd4MXzDvuWLJJYfQeJfulp++mCQt6925ImwhxQxaauU1iuzZ3gauYVQWKINp/jz
+         65ZGAZM6VRaX7Q24gKUcpPRq+StY0zrRrcKpQg9ey5OWQFPplYcpz+tXnVl48hKvxwtz
+         5ZqPUEVkRi3Vu7OGclwxPo5uTqG7GpmKXgKks1uS6mCobjZsrdJlm0KzS27ps/EVIeOc
+         IDjQ==
+X-Gm-Message-State: AOAM532Cbj1J7PddJjrbaRVlkpCD4upaM8l+d/PErTP/tiN0RzGueIvH
+        JUnUGWpLJ7iG/SEPTxlZhhu+xhLmNJCsK+or
+X-Google-Smtp-Source: ABdhPJzfb/lAvD1VavVqudcTSNWwFXh9v8R3VckD2GeZAMNUEqCjOYPLz+1Z1e0dwqaRcAS+cSxIlw==
+X-Received: by 2002:ac8:7e95:: with SMTP id w21mr19593417qtj.244.1616975876781;
+        Sun, 28 Mar 2021 16:57:56 -0700 (PDT)
 Received: from localhost.localdomain ([156.146.58.24])
-        by smtp.gmail.com with ESMTPSA id y19sm12153061qky.111.2021.03.28.16.57.41
+        by smtp.gmail.com with ESMTPSA id y19sm12153061qky.111.2021.03.28.16.57.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 28 Mar 2021 16:57:46 -0700 (PDT)
+        Sun, 28 Mar 2021 16:57:56 -0700 (PDT)
 From:   Bhaskar Chowdhury <unixbhaskar@gmail.com>
 To:     dmaengine@vger.kernel.org, dri-devel@lists.freedesktop.org,
         hch@lst.de, iommu@lists.linux-foundation.org,
@@ -63,9 +63,9 @@ To:     dmaengine@vger.kernel.org, dri-devel@lists.freedesktop.org,
         dan.j.williams@intel.com
 Cc:     Bhaskar Chowdhury <unixbhaskar@gmail.com>, rdunlap@infradead.org,
         linux-kernel@vger.kernel.org
-Subject: [PATCH 22/30] at_hdmac_regs.h: Couple of typo fixes
-Date:   Mon, 29 Mar 2021 05:23:18 +0530
-Message-Id: <a588f9e9c32c5af24570ea04c4cd460fb3958147.1616971780.git.unixbhaskar@gmail.com>
+Subject: [PATCH 24/30] Kconfig: Change Synopsys to Synopsis
+Date:   Mon, 29 Mar 2021 05:23:20 +0530
+Message-Id: <1262e9e62498f961e5172205e66a9ef7c6f0f69d.1616971780.git.unixbhaskar@gmail.com>
 X-Mailer: git-send-email 2.26.3
 In-Reply-To: <cover.1616971780.git.unixbhaskar@gmail.com>
 References: <cover.1616971780.git.unixbhaskar@gmail.com>
@@ -75,36 +75,48 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-s/availlable/available/
-s/signle/single/
+s/Synopsys/Synopsis/  .....two different places.
+
+..and for some unknown reason it introduce a empty line deleted and added
+back.
 
 Signed-off-by: Bhaskar Chowdhury <unixbhaskar@gmail.com>
 ---
- drivers/dma/at_hdmac_regs.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/dma/Kconfig | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/dma/at_hdmac_regs.h b/drivers/dma/at_hdmac_regs.h
-index 4d1ebc040031..46ecc40edaa8 100644
---- a/drivers/dma/at_hdmac_regs.h
-+++ b/drivers/dma/at_hdmac_regs.h
-@@ -338,7 +338,7 @@ static inline u8 convert_buswidth(enum dma_slave_buswidth addr_width)
-  * @ch_regs: memory mapped register base
-  * @clk: dma controller clock
-  * @save_imr: interrupt mask register that is saved on suspend/resume cycle
-- * @all_chan_mask: all channels availlable in a mask
-+ * @all_chan_mask: all channels available in a mask
-  * @dma_desc_pool: base of DMA descriptor region (DMA address)
-  * @chan: channels table to store at_dma_chan structures
-  */
-@@ -462,7 +462,7 @@ static inline int atc_chan_is_cyclic(struct at_dma_chan *atchan)
+diff --git a/drivers/dma/Kconfig b/drivers/dma/Kconfig
+index 0c2827fd8c19..30e8cc26f43b 100644
+--- a/drivers/dma/Kconfig
++++ b/drivers/dma/Kconfig
+@@ -170,15 +170,15 @@ config DMA_SUN6I
+ 	  Support for the DMA engine first found in Allwinner A31 SoCs.
 
- /**
-  * set_desc_eol - set end-of-link to descriptor so it will end transfer
-- * @desc: descriptor, signle or at the end of a chain, to end chain on
-+ * @desc: descriptor, single or at the end of a chain, to end chain on
-  */
- static void set_desc_eol(struct at_desc *desc)
- {
+ config DW_AXI_DMAC
+-	tristate "Synopsys DesignWare AXI DMA support"
++	tristate "Synopsis DesignWare AXI DMA support"
+ 	depends on OF || COMPILE_TEST
+ 	depends on HAS_IOMEM
+ 	select DMA_ENGINE
+ 	select DMA_VIRTUAL_CHANNELS
+ 	help
+-	  Enable support for Synopsys DesignWare AXI DMA controller.
++	  Enable support for Synopsis DesignWare AXI DMA controller.
+ 	  NOTE: This driver wasn't tested on 64 bit platform because
+-	  of lack 64 bit platform with Synopsys DW AXI DMAC.
++	  of lack 64 bit platform with Synopsis DW AXI DMAC.
+
+ config EP93XX_DMA
+ 	bool "Cirrus Logic EP93xx DMA support"
+@@ -394,7 +394,7 @@ config MOXART_DMA
+ 	select DMA_VIRTUAL_CHANNELS
+ 	help
+ 	  Enable support for the MOXA ART SoC DMA controller.
+-
++
+ 	  Say Y here if you enabled MMP ADMA, otherwise say N.
+
+ config MPC512X_DMA
 --
 2.26.3
 
