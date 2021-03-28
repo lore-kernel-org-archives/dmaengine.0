@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 09463C433C1
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4E9DEC433E3
 	for <dmaengine@archiver.kernel.org>; Sun, 28 Mar 2021 23:57:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CE41461948
-	for <dmaengine@archiver.kernel.org>; Sun, 28 Mar 2021 23:57:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 239DF61966
+	for <dmaengine@archiver.kernel.org>; Sun, 28 Mar 2021 23:57:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231623AbhC1X4m (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Sun, 28 Mar 2021 19:56:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52990 "EHLO
+        id S231635AbhC1X4n (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Sun, 28 Mar 2021 19:56:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53046 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230100AbhC1X4S (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Sun, 28 Mar 2021 19:56:18 -0400
-Received: from mail-qv1-xf2b.google.com (mail-qv1-xf2b.google.com [IPv6:2607:f8b0:4864:20::f2b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 90D6AC061756;
-        Sun, 28 Mar 2021 16:56:18 -0700 (PDT)
-Received: by mail-qv1-xf2b.google.com with SMTP id x27so5714953qvd.2;
-        Sun, 28 Mar 2021 16:56:18 -0700 (PDT)
+        with ESMTP id S231570AbhC1X4d (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Sun, 28 Mar 2021 19:56:33 -0400
+Received: from mail-qk1-x72d.google.com (mail-qk1-x72d.google.com [IPv6:2607:f8b0:4864:20::72d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 498F9C061756;
+        Sun, 28 Mar 2021 16:56:33 -0700 (PDT)
+Received: by mail-qk1-x72d.google.com with SMTP id q3so10893347qkq.12;
+        Sun, 28 Mar 2021 16:56:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=qPii/xX6YhM4hcBO+zp3OVMgz+jDeBjNcGIvzkkQGYk=;
-        b=bObaSHbQgF7HnhhFevByLeRAEjwh9Xgx/6poqOyVrhU9nI9SQbKZibaot0nVJHtdHK
-         o79A8Sp+Gz79oGtGsF5SxsTYB9AMcZOuDAKRePAi8OQlhWEu8LqzdcK18F1hIKWGpwTt
-         +hcuXkQ52IF+FdKd1u3A+2KvczRYSW2FxnhgIJbngK13+y5D665LByLLaOIYq5prJ2BB
-         q0KPV1xmQES9uuwOigJWctcX+oM6I0mAu6NH+RzVkz/A8hrPHIr5VI27yaHxNHMRhJ9S
-         ZkZNPLNBdVtA2r2vkh1TOiWiTBT+BsXGquBT60jgmW2VoagfFPx16zh5v8S/U1Z6V3eJ
-         yCKA==
+        bh=0BnZu67viS33aGYohPjcgklvkVxQfW/8GD9rnxEtwd4=;
+        b=DZtvetYyyMD2lBKzbBM4H/FNDCw5hl88bdIconXcj2qDm/jFPH8aghuq5QsYihTAkF
+         e50DD81/iTN58j6xxgKz550PmMPq8BQ9hEfPPph+WIdC73rdzg8dJ+UXCMCfg/eL6rpL
+         bpYG8Qer1UHLBNEjXOk5LiOfjLy04zj5RiWzpfm0AGaIiSGGdOOUyINW+fPqgXEZLBWI
+         ZJCp/duHr3bDu8WGMaUyF5991YwUfo18A+oY2EylsV72rLburV0Y8KLkYvuhvMNXoarO
+         w5WASyKO9yq4Ox1RbNmZX7VpJeVNZW6LB+RXDNbwuj6DZyPA6KZYbK1dc6YXhqfBkLPO
+         QxGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=qPii/xX6YhM4hcBO+zp3OVMgz+jDeBjNcGIvzkkQGYk=;
-        b=pBXU+S1Zed/wN7RXSBzzyqFDhWS+4jUb4AVoP9UMOklnfE+af8OermVBmPC6hd4LDp
-         N0fl/q/Kphq58ZRs4gn/bFZgIXFdbIkAMahvB3EIPZ3H24Hp3yGYER4kCGU8UzzvzNfD
-         i8354NYDJTJ/97ECj9GRJW/gTdZ73FKs2wbrbktLuAyN3lLpo1T9mta1LCyuSM+N5Qxe
-         /eDsi3g6AwPRbOYtxFVcgl+irzbh1Fh9b8LjDQF2vhZpzVwIHtrlxRmletaCbUP30Wdm
-         TvOlyAEyYeCCR0Ob4Y6YZ0EuLkv4jVPShdDG8iYqp3mCr4kLkBSYMEqfkfc8mQv3I43k
-         oLnw==
-X-Gm-Message-State: AOAM532UR+iePdUjvP0XZfQhzVZ0hk4FrgKhAvKWpzCu4K/eawi8NT2V
-        hbXXOxgFFvbmWODqBtYuBpWH//lTNMzKktYy
-X-Google-Smtp-Source: ABdhPJyIwQh8O82d8qyrfIuUZz0SqJYcgUURzt27W+q5h1fBWMUvMvJGKHkKfG17NwqDAaW/0JNrSg==
-X-Received: by 2002:a05:6214:d85:: with SMTP id e5mr22653184qve.36.1616975777547;
-        Sun, 28 Mar 2021 16:56:17 -0700 (PDT)
+        bh=0BnZu67viS33aGYohPjcgklvkVxQfW/8GD9rnxEtwd4=;
+        b=iAjfXZzRk1alatwTvezH5l1fNfD61sfl9KtqMDOrM18im60IRAca72OOCuYdztmi1i
+         AJ5ZufU1Quy3EVDGROq6BT1cYdiDbJE4V2Hqx2sERFomxg9GKItEWbYNvtwcW6nANV9J
+         xaZQIy/UHwYNe5IO41gplvdbIcLJOHqslVwLx6qzcq9y9Z7bxcRZ0mXWQqNZN6pKmHr7
+         UWzhFIfaN0QsxMZbvMVWwOkKvSBobdoXnZvhWcoTPOMi65oRC/vizHTHXBKVUcDqA1Q1
+         O5G+28NQoRbHwO8ZGDFCPG+U4hJlt9ZiTRXLNnpGrdPdDbBnSA7itv4USDUQO1IrdXZ2
+         7H8g==
+X-Gm-Message-State: AOAM530nHPgeubC3i97VCmHDwCldQfIxRSqpRoKYrxbIxJ0OLrC96jvM
+        qABoGeKRO/uEZ2THK2N89NCvZuKk3TX8zMne
+X-Google-Smtp-Source: ABdhPJyLnsSA7aDZpYL8OgcC6cA3c2KI3g1ctb8AbY5iG8YBuQoLtMdy1CH0E4ijQxDfED6WKrLV5g==
+X-Received: by 2002:a05:620a:31a:: with SMTP id s26mr23221107qkm.355.1616975792270;
+        Sun, 28 Mar 2021 16:56:32 -0700 (PDT)
 Received: from localhost.localdomain ([156.146.58.24])
-        by smtp.gmail.com with ESMTPSA id y19sm12153061qky.111.2021.03.28.16.56.13
+        by smtp.gmail.com with ESMTPSA id y19sm12153061qky.111.2021.03.28.16.56.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 28 Mar 2021 16:56:17 -0700 (PDT)
+        Sun, 28 Mar 2021 16:56:31 -0700 (PDT)
 From:   Bhaskar Chowdhury <unixbhaskar@gmail.com>
 To:     dmaengine@vger.kernel.org, dri-devel@lists.freedesktop.org,
         hch@lst.de, iommu@lists.linux-foundation.org,
@@ -63,9 +63,9 @@ To:     dmaengine@vger.kernel.org, dri-devel@lists.freedesktop.org,
         dan.j.williams@intel.com
 Cc:     Bhaskar Chowdhury <unixbhaskar@gmail.com>, rdunlap@infradead.org,
         linux-kernel@vger.kernel.org
-Subject: [PATCH 04/30] bcm-sba-raid.c: Few typos fixed
-Date:   Mon, 29 Mar 2021 05:23:00 +0530
-Message-Id: <a421c27ea6dc2808edec25b18238941ab5aefcf4.1616971780.git.unixbhaskar@gmail.com>
+Subject: [PATCH 07/30] iop-adma.c: Few typos fixed
+Date:   Mon, 29 Mar 2021 05:23:03 +0530
+Message-Id: <a5e2587318ef5fc4e140caf86cfd89ff01027c72.1616971780.git.unixbhaskar@gmail.com>
 X-Mailer: git-send-email 2.26.3
 In-Reply-To: <cover.1616971780.git.unixbhaskar@gmail.com>
 References: <cover.1616971780.git.unixbhaskar@gmail.com>
@@ -75,56 +75,46 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-s/Maibox/Mailbox/
-s/alloced/allocated/
-s/atleast/"at least"/
-s/parallely/parallel/
+s/asynchrounous/asynchronous/
+s/depedency/dependency/
+s/capabilites/capabilities/
 
 Signed-off-by: Bhaskar Chowdhury <unixbhaskar@gmail.com>
 ---
- drivers/dma/bcm-sba-raid.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/dma/iop-adma.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/dma/bcm-sba-raid.c b/drivers/dma/bcm-sba-raid.c
-index 64239da02e74..fba1585eb7ad 100644
---- a/drivers/dma/bcm-sba-raid.c
-+++ b/drivers/dma/bcm-sba-raid.c
-@@ -25,7 +25,7 @@
-  * number of hardware rings over one or more SBA hardware devices. By
-  * design, the internal buffer size of SBA hardware device is limited
-  * but all offload operations supported by SBA can be broken down into
-- * multiple small size requests and executed parallely on multiple SBA
-+ * multiple small size requests and executed parallel on multiple SBA
-  * hardware devices for achieving high through-put.
-  *
-  * The Broadcom SBA RAID driver does not require any register programming
-@@ -143,7 +143,7 @@ struct sba_device {
- 	u32 max_xor_srcs;
- 	u32 max_resp_pool_size;
- 	u32 max_cmds_pool_size;
--	/* Maibox client and Mailbox channels */
-+	/* Mailbox client and Mailbox channels */
- 	struct mbox_client client;
- 	struct mbox_chan *mchan;
- 	struct device *mbox_dev;
-@@ -328,7 +328,7 @@ static void sba_cleanup_nonpending_requests(struct sba_device *sba)
+diff --git a/drivers/dma/iop-adma.c b/drivers/dma/iop-adma.c
+index 310b899d581f..81f32dc964e2 100644
+--- a/drivers/dma/iop-adma.c
++++ b/drivers/dma/iop-adma.c
+@@ -5,7 +5,7 @@
+  */
 
- 	spin_lock_irqsave(&sba->reqs_lock, flags);
+ /*
+- * This driver supports the asynchrounous DMA copy and RAID engines available
++ * This driver supports the asynchronous DMA copy and RAID engines available
+  * on the Intel Xscale(R) family of I/O Processors (IOP 32x, 33x, 134x)
+  */
 
--	/* Freeup all alloced request */
-+	/* Freeup all allocated request */
- 	list_for_each_entry_safe(req, req1, &sba->reqs_alloc_list, node)
- 		_sba_free_request(sba, req);
+@@ -243,7 +243,7 @@ static void iop_adma_tasklet(struct tasklet_struct *t)
+ 	struct iop_adma_chan *iop_chan = from_tasklet(iop_chan, t,
+ 						      irq_tasklet);
 
-@@ -1633,7 +1633,7 @@ static int sba_probe(struct platform_device *pdev)
- 	sba->dev = &pdev->dev;
- 	platform_set_drvdata(pdev, sba);
+-	/* lockdep will flag depedency submissions as potentially
++	/* lockdep will flag dependency submissions as potentially
+ 	 * recursive locking, this is not the case as a dependency
+ 	 * submission will never recurse a channels submit routine.
+ 	 * There are checks in async_tx.c to prevent this.
+@@ -1302,7 +1302,7 @@ static int iop_adma_probe(struct platform_device *pdev)
 
--	/* Number of mailbox channels should be atleast 1 */
-+	/* Number of mailbox channels should be at least 1 */
- 	ret = of_count_phandle_with_args(pdev->dev.of_node,
- 					 "mboxes", "#mbox-cells");
- 	if (ret <= 0)
+ 	adev->id = plat_data->hw_id;
+
+-	/* discover transaction capabilites from the platform data */
++	/* discover transaction capabilities from the platform data */
+ 	dma_dev->cap_mask = plat_data->cap_mask;
+
+ 	adev->pdev = pdev;
 --
 2.26.3
 
