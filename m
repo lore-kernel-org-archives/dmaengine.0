@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 398FBC433E1
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5EE3BC433E5
 	for <dmaengine@archiver.kernel.org>; Sun, 28 Mar 2021 23:57:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0DC9861954
+	by mail.kernel.org (Postfix) with ESMTP id 3EADC61951
 	for <dmaengine@archiver.kernel.org>; Sun, 28 Mar 2021 23:57:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231640AbhC1X4n (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Sun, 28 Mar 2021 19:56:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53068 "EHLO
+        id S231633AbhC1X4m (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Sun, 28 Mar 2021 19:56:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53028 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231613AbhC1X4i (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Sun, 28 Mar 2021 19:56:38 -0400
+        with ESMTP id S231562AbhC1X42 (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Sun, 28 Mar 2021 19:56:28 -0400
 Received: from mail-qk1-x736.google.com (mail-qk1-x736.google.com [IPv6:2607:f8b0:4864:20::736])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6A4C0C061756;
-        Sun, 28 Mar 2021 16:56:38 -0700 (PDT)
-Received: by mail-qk1-x736.google.com with SMTP id q3so10893459qkq.12;
-        Sun, 28 Mar 2021 16:56:38 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5805AC061756;
+        Sun, 28 Mar 2021 16:56:28 -0700 (PDT)
+Received: by mail-qk1-x736.google.com with SMTP id q3so10893257qkq.12;
+        Sun, 28 Mar 2021 16:56:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=h2CB+oDzRlKTXsQgvZVkoJMCXZMGg7B/MCg4u+Njtv4=;
-        b=DU3fOkSXckynV4e9icZMhz7PfRsCbCFt8b1N3nx+vNJ0YQAtxeW+KmaA1o2ylavs+P
-         G9TimVl49iLForzkyymJxqn2b28D4EzXm+ZI4/+f1dCXrwhbTbfRDX5G0QL1ER3Fhh0x
-         dpDIUd6cWj4XZo/T3/DIaUMXfwdvNDgHGrHnl2tCzUbRq0Jfg/A1B6xXt+lUOwYkWcpB
-         T868H80uh8Oet/UF1dj/OlPzy7hR3Ne9fF8ulO7aD4HXzCovy4cvZLjyK5mn8psXkAyf
-         Suwp4AtV5/4hhTchePwPzbFsv8AI9iWSj9p3cyHx4hXz3hJw06YVnKG5SESwuZzZ6r74
-         UuHg==
+        bh=b+g6kPIG/jwFitPzoitjd4fSzc6P/hya8rywnHeMN/8=;
+        b=HBBLF/SJTiVQWcLhNqq7bzpHR2fKW9LP6DWRvUsmYI7rcgdhmE09hx9CIxGfTsumKX
+         isRs8nn27xIKkAFpC/ZbyFrFtAkA1tz5NS7xJ3Ovmkz+afQ30TBK5a8we2BRZXGgjxxr
+         z6kTysKHQ1ynwBd9QItRNqLsEpW7uXvoTnvwnv8XkMp+fdf3Uuptl6dTZMalYNMRHWxF
+         NM0QNQoHDeEh0fx03RO8xhl/6Q0tu1MW6TIguY4L/6GIaX3v1qxLcUp3UUYUodE+6H6H
+         XAXaSfBSUy0AypaInMTUVAZebzJYkGqKi/dXcHv+x3xT9jmB94ueRb/JpcSu+XrxdLCF
+         ALaw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=h2CB+oDzRlKTXsQgvZVkoJMCXZMGg7B/MCg4u+Njtv4=;
-        b=FcYVujGkkzqsjmdgBBa9eGZKTIGZ8FsMQMewZ2TpMB2PMI3YfyVjvnJODafg/QZ4tU
-         Q3OD/j4EUkYugS5wYSDSG/OJq8CFciKrkGUcU3NHZBMeufnmdfvltBiJHORTF2fyVkgr
-         25gwtCD0iGozHr9fCVQbbGrXK7cl6BZT4BklCYIYsi5fR1CNM0cXnOYPFSsMtjSF2Bzr
-         h92L//vM05sIUOaPpjYa5KYojVSraSWINfvEflumb+SVVZfhJV1OjTs0N1/qUTY4KAJU
-         f5OhjGJ+LTkvhbgTQeyOh35Bdh4rbA69t1zlgf+N50V3TmPwj0SiUl3xsrv8dP35pJNm
-         dNkA==
-X-Gm-Message-State: AOAM533LaM2/H4puWFcj2zsXR0hA5vX7aFxN9lejfzODUKgz+U6vnpyU
-        nlpQr4DrPO/UO/bDCFTgpOcEnTZVNiKA6FW1
-X-Google-Smtp-Source: ABdhPJxvo48SXWkMjNKknPMovLJbk743rE6Sor3y7HvVUau8ciblHI5RRV983LICXWJpgrB6vyRknw==
-X-Received: by 2002:a37:9f4e:: with SMTP id i75mr23450908qke.283.1616975797420;
-        Sun, 28 Mar 2021 16:56:37 -0700 (PDT)
+        bh=b+g6kPIG/jwFitPzoitjd4fSzc6P/hya8rywnHeMN/8=;
+        b=pOdavJ9DxqgpHk0GO3QnDrQhuFJ0g7OmnK4piiyqnu6FmHWnS3wl3KGR/m/kBfdr2o
+         7qsxL/2gXhcd/BJo6Q9xmcYxdsjXu+1TI8rJ2d+N9FcIM0QZ3OgF8l7jCSLGqFWV/gCh
+         8VL9b3njhWsTRnSsuHbO/ATmel5Jvq+GIxXoh93Ffvvi3/9kYaFlwfppv1Q+z0vL1gAF
+         4ekwpTv0/BNtJs+wARo4KTXHZ3g/Hg8sFBuChcweDVmiQ3rRGA4Gd3wZtNMbyFlleW+P
+         XCPKZeKd18nKA0buUv5+ve+Erj/sjvg+PTYjNSNw+okgNUn+5QQxHccjhB5bmAUiCzaS
+         P1sQ==
+X-Gm-Message-State: AOAM532fIAqDWZnW5FuPUybvS0tJXP1ceaEnWoXEtrH/RceYMBa+G4k/
+        7WT3RWPT1N4eg/4e61JV8wNyET0/aYgiWBG6
+X-Google-Smtp-Source: ABdhPJyldMxvnEBh7c5nmTQttLQPp8mr5BNjSHH3pinXqHmSCm2R9IbveYuxti7c4ebHxEhEJg5Pcg==
+X-Received: by 2002:a05:620a:cf4:: with SMTP id c20mr22555044qkj.134.1616975787315;
+        Sun, 28 Mar 2021 16:56:27 -0700 (PDT)
 Received: from localhost.localdomain ([156.146.58.24])
-        by smtp.gmail.com with ESMTPSA id y19sm12153061qky.111.2021.03.28.16.56.32
+        by smtp.gmail.com with ESMTPSA id y19sm12153061qky.111.2021.03.28.16.56.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 28 Mar 2021 16:56:36 -0700 (PDT)
+        Sun, 28 Mar 2021 16:56:26 -0700 (PDT)
 From:   Bhaskar Chowdhury <unixbhaskar@gmail.com>
 To:     dmaengine@vger.kernel.org, dri-devel@lists.freedesktop.org,
         hch@lst.de, iommu@lists.linux-foundation.org,
@@ -63,9 +63,9 @@ To:     dmaengine@vger.kernel.org, dri-devel@lists.freedesktop.org,
         dan.j.williams@intel.com
 Cc:     Bhaskar Chowdhury <unixbhaskar@gmail.com>, rdunlap@infradead.org,
         linux-kernel@vger.kernel.org
-Subject: [PATCH 08/30] mv_xor.c: Fix a typo
-Date:   Mon, 29 Mar 2021 05:23:04 +0530
-Message-Id: <46df86afac6c221e7eda9586db1233750c1c5477.1616971780.git.unixbhaskar@gmail.com>
+Subject: [PATCH 06/30] idma64.c: Fix couple of typos
+Date:   Mon, 29 Mar 2021 05:23:02 +0530
+Message-Id: <0e722d154cb5b29d8bad59481e74fc4853ee930e.1616971780.git.unixbhaskar@gmail.com>
 X-Mailer: git-send-email 2.26.3
 In-Reply-To: <cover.1616971780.git.unixbhaskar@gmail.com>
 References: <cover.1616971780.git.unixbhaskar@gmail.com>
@@ -75,26 +75,35 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-s/capabilites/capabilities/
+s/transfered/transferred/  ...two different places
 
 Signed-off-by: Bhaskar Chowdhury <unixbhaskar@gmail.com>
 ---
- drivers/dma/mv_xor.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/dma/idma64.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/dma/mv_xor.c b/drivers/dma/mv_xor.c
-index 23b232b57518..a43388b6a30d 100644
---- a/drivers/dma/mv_xor.c
-+++ b/drivers/dma/mv_xor.c
-@@ -1074,7 +1074,7 @@ mv_xor_channel_add(struct mv_xor_device *xordev,
- 	if (!mv_chan->dma_desc_pool_virt)
- 		return ERR_PTR(-ENOMEM);
+diff --git a/drivers/dma/idma64.c b/drivers/dma/idma64.c
+index f4c07ad3be15..3d0d48b12e28 100644
+--- a/drivers/dma/idma64.c
++++ b/drivers/dma/idma64.c
+@@ -282,7 +282,7 @@ static void idma64_desc_fill(struct idma64_chan *idma64c,
+ 		desc->length += hw->len;
+ 	} while (i);
 
--	/* discover transaction capabilites from the platform data */
-+	/* discover transaction capabilities from the platform data */
- 	dma_dev->cap_mask = cap_mask;
+-	/* Trigger an interrupt after the last block is transfered */
++	/* Trigger an interrupt after the last block is transferred */
+ 	lli->ctllo |= IDMA64C_CTLL_INT_EN;
 
- 	INIT_LIST_HEAD(&dma_dev->channels);
+ 	/* Disable LLP transfer in the last block */
+@@ -356,7 +356,7 @@ static size_t idma64_active_desc_size(struct idma64_chan *idma64c)
+ 	if (!i)
+ 		return bytes;
+
+-	/* The current chunk is not fully transfered yet */
++	/* The current chunk is not fully transferred yet */
+ 	bytes += desc->hw[--i].len;
+
+ 	return bytes - IDMA64C_CTLH_BLOCK_TS(ctlhi);
 --
 2.26.3
 
