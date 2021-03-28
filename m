@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1ECCDC433DB
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2D0D5C433E3
 	for <dmaengine@archiver.kernel.org>; Sun, 28 Mar 2021 23:57:46 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EC6B26195D
-	for <dmaengine@archiver.kernel.org>; Sun, 28 Mar 2021 23:57:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0BC0C61964
+	for <dmaengine@archiver.kernel.org>; Sun, 28 Mar 2021 23:57:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231730AbhC1X5N (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Sun, 28 Mar 2021 19:57:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53086 "EHLO
+        id S231741AbhC1X5P (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Sun, 28 Mar 2021 19:57:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53146 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231643AbhC1X4n (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Sun, 28 Mar 2021 19:56:43 -0400
-Received: from mail-qv1-xf31.google.com (mail-qv1-xf31.google.com [IPv6:2607:f8b0:4864:20::f31])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E391C061756;
-        Sun, 28 Mar 2021 16:56:43 -0700 (PDT)
-Received: by mail-qv1-xf31.google.com with SMTP id o19so5732060qvu.0;
-        Sun, 28 Mar 2021 16:56:43 -0700 (PDT)
+        with ESMTP id S231703AbhC1X46 (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Sun, 28 Mar 2021 19:56:58 -0400
+Received: from mail-qt1-x830.google.com (mail-qt1-x830.google.com [IPv6:2607:f8b0:4864:20::830])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 22265C061756;
+        Sun, 28 Mar 2021 16:56:58 -0700 (PDT)
+Received: by mail-qt1-x830.google.com with SMTP id x9so8203442qto.8;
+        Sun, 28 Mar 2021 16:56:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=rruIrfqaU4LV0f/3DETW92os/6jYETGIbvTMrRY/HO8=;
-        b=bGnHyBFVOutt4P2ONnjyaSIeJvIRzETak6KwFJ7ir2Nn/GqZgVtFuQhT8cWFVCJCF4
-         nOmS5/3lsk0F21Pui0C1nfch9n42xfmm27QVRq2RUbd469ITaO2YTyoT6yca1dt3kEIA
-         WrrB+5zNMv5REpdJe2JR74UmZr5+PTYnt/XmXcfAg0fv6Fy7GCSeRicj7d/SVnq3Qu/D
-         UKRgx0ggNDlvFtQyqwIWq00SNVHxRapkrohVs+rT8HcJE0cam15uS2VWEv/I+wPd8Sx3
-         oxsNNTD4FAJ8DW0fVQi+ybJ+sHJ776F4pG4SBgFnsTZUI5HwctVd0uJCZQ7w/2oBe12l
-         xa9Q==
+        bh=V731M1ZjoMObeUPxmfQu760ZEmOVyQS5nvVKDsMpRYg=;
+        b=lnZVGx88/Q4RgjL+3hIrxaeLUCknaQO529y1KHYklW+L+nkdj8gpcbnqm8dMc1/+l7
+         f6zSHAW3lnPCPRE6I8Y7+qD6NhajFTxCnWDjvRqS+5YTVtxG9RfzFR2gppG6pd2KUONg
+         x2Ypd6MdyYMDQxXuVr9h1defti29sytWbU8Ue/Li0RmO+WBaY8GzifXSi3Uzw8ctplXy
+         6TXDeusuFr4d4znZtig85zoIyEx6i/oXnzfPQNVFdJWRikFvX9A33V/ZVXPGGkcr9CJy
+         RJnXtSxeb6weKiUSJ+4jqKEIqqXxCR3aOs9fIwYirSfoCpnld2ZyldI5xWdSpa4LevUr
+         PhOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=rruIrfqaU4LV0f/3DETW92os/6jYETGIbvTMrRY/HO8=;
-        b=Hk9CZwrQIGsgjifTXJzQTLf5XcORIDZvNb7xwMdcjfEq8myvch+bx4WRPzpQpG2Q3h
-         lw9ExsL5TaZ2QLlCvBEdDptu4VNibPENs/riFYOoWCWMk9WcsyarUDuzJoTuYQHJHRyo
-         ebivQNbflLNlaqJqNCgY3HptTEtovWMApzcfp6SK64P2BVUo4pVjUuq6eyNZgRh5RK3M
-         t3TZrbIs0VwAgbbyrMX/5w1N52idIqG7xScAbvyVIak1pycu5T8wcM+V192Pn/EDI2pr
-         w9V9x9XNHA4wxidrGFdUK89Uv15yYJJfIJcfmA6GF9kYrDjKp7jS0TXwmM7XLHOky1Gy
-         ZzqQ==
-X-Gm-Message-State: AOAM531QrHtE1FzQwr7USU9XBeJxKjhaQwrcDoS/eaVYDOrQD/LlOf7+
-        Sxwn0mFtb9LsDGhwHaft5Ox/sYa/9ax3bHZy
-X-Google-Smtp-Source: ABdhPJwGtK6xTmnuLSPnSFT/2CTh7pV1MaTzw54JyGs6QVwUBLmi4sfOAtAfjo+zm2N6Vm+LRKQfow==
-X-Received: by 2002:ad4:5614:: with SMTP id ca20mr22679724qvb.37.1616975802324;
-        Sun, 28 Mar 2021 16:56:42 -0700 (PDT)
+        bh=V731M1ZjoMObeUPxmfQu760ZEmOVyQS5nvVKDsMpRYg=;
+        b=HigLl7wu52l14FFoFWUsHaoWT4YkCfjzvRrC7cwu19MWtT76Uc++bci3Alk4S15sBV
+         CjvROvC2+RbRtqb9tTC3XSf0Qv0FrJn0NVobYya6suSiupgP02fYmqMloOFvVs+vg21V
+         TkdfOQCyGurKonI5otGyVKRGjIrm0Uu1mQZjcOBa+mah479T9ceG7+PZT2DxAHJlxAki
+         V9wI86jaocXfRMmZtYqaYc2yBSJXvvIA3uYR+R97x4MTNnFvKQpjwD/FBcmqWNZ7frr8
+         3gdkbK5P5rXSvL0FPfh5Mrp9v0JaoylXgM+VRPI/AhF2Ywb/wE7MXDvB4VJORAuyyVI8
+         QWMQ==
+X-Gm-Message-State: AOAM532W7XDLtvn9XPQq9CM5TEG8XHrAbBP6sGrAHRXPZ+mELIn5q5EW
+        +Jcejhipy/idsEjUCaMQDGlDj4pyy188VdQR
+X-Google-Smtp-Source: ABdhPJwfkmcNQYJxn4S9wN8jOvwQsIXVBRg1ipQrCtKoJ4PNJU1NU5IafcNZI5PpJzjZHpA0d8+z4w==
+X-Received: by 2002:ac8:1098:: with SMTP id a24mr20071293qtj.291.1616975817116;
+        Sun, 28 Mar 2021 16:56:57 -0700 (PDT)
 Received: from localhost.localdomain ([156.146.58.24])
-        by smtp.gmail.com with ESMTPSA id y19sm12153061qky.111.2021.03.28.16.56.37
+        by smtp.gmail.com with ESMTPSA id y19sm12153061qky.111.2021.03.28.16.56.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 28 Mar 2021 16:56:41 -0700 (PDT)
+        Sun, 28 Mar 2021 16:56:56 -0700 (PDT)
 From:   Bhaskar Chowdhury <unixbhaskar@gmail.com>
 To:     dmaengine@vger.kernel.org, dri-devel@lists.freedesktop.org,
         hch@lst.de, iommu@lists.linux-foundation.org,
@@ -63,9 +63,9 @@ To:     dmaengine@vger.kernel.org, dri-devel@lists.freedesktop.org,
         dan.j.williams@intel.com
 Cc:     Bhaskar Chowdhury <unixbhaskar@gmail.com>, rdunlap@infradead.org,
         linux-kernel@vger.kernel.org
-Subject: [PATCH 09/30] mv_xor.h: Fixed a typo
-Date:   Mon, 29 Mar 2021 05:23:05 +0530
-Message-Id: <c7ff7a7dbd93aecfc5b97f55a3ccaf23fd8a7c6b.1616971780.git.unixbhaskar@gmail.com>
+Subject: [PATCH 12/30] of-dma.c: Fixed a typo
+Date:   Mon, 29 Mar 2021 05:23:08 +0530
+Message-Id: <0c3e1bd83c63203a0aad27006fbd369090a69dce.1616971780.git.unixbhaskar@gmail.com>
 X-Mailer: git-send-email 2.26.3
 In-Reply-To: <cover.1616971780.git.unixbhaskar@gmail.com>
 References: <cover.1616971780.git.unixbhaskar@gmail.com>
@@ -75,26 +75,26 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-s/writen/written/
+s/propety/properly/
 
 Signed-off-by: Bhaskar Chowdhury <unixbhaskar@gmail.com>
 ---
- drivers/dma/mv_xor.h | 2 +-
+ drivers/dma/of-dma.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/dma/mv_xor.h b/drivers/dma/mv_xor.h
-index d86086b05b0e..c87cefd38a07 100644
---- a/drivers/dma/mv_xor.h
-+++ b/drivers/dma/mv_xor.h
-@@ -99,7 +99,7 @@ struct mv_xor_device {
-  * @common: common dmaengine channel object members
-  * @slots_allocated: records the actual size of the descriptor slot pool
-  * @irq_tasklet: bottom half where mv_xor_slot_cleanup runs
-- * @op_in_desc: new mode of driver, each op is writen to descriptor.
-+ * @op_in_desc: new mode of driver, each op is written to descriptor.
-  */
- struct mv_xor_chan {
- 	int			pending;
+diff --git a/drivers/dma/of-dma.c b/drivers/dma/of-dma.c
+index ec00b20ae8e4..e028acff7fe8 100644
+--- a/drivers/dma/of-dma.c
++++ b/drivers/dma/of-dma.c
+@@ -337,7 +337,7 @@ EXPORT_SYMBOL_GPL(of_dma_simple_xlate);
+  *
+  * This function can be used as the of xlate callback for DMA driver which wants
+  * to match the channel based on the channel id. When using this xlate function
+- * the #dma-cells propety of the DMA controller dt node needs to be set to 1.
++ * the #dma-cells properly of the DMA controller dt node needs to be set to 1.
+  * The data parameter of of_dma_controller_register must be a pointer to the
+  * dma_device struct the function should match upon.
+  *
 --
 2.26.3
 
