@@ -2,65 +2,124 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.0 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0AA35C433DB
-	for <dmaengine@archiver.kernel.org>; Tue, 30 Mar 2021 17:30:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4F62BC433DB
+	for <dmaengine@archiver.kernel.org>; Tue, 30 Mar 2021 17:35:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CD7B2619C7
-	for <dmaengine@archiver.kernel.org>; Tue, 30 Mar 2021 17:30:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0672F619CF
+	for <dmaengine@archiver.kernel.org>; Tue, 30 Mar 2021 17:35:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232330AbhC3RaY (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 30 Mar 2021 13:30:24 -0400
-Received: from mail.kernel.org ([198.145.29.99]:56144 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231627AbhC3RaC (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Tue, 30 Mar 2021 13:30:02 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 9F5D4619C7;
-        Tue, 30 Mar 2021 17:30:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1617125402;
-        bh=C8O0alZVc/4m1eevRMOdvFYGpb/wNNuDuufNDrLUuQQ=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=YlhQsQQWUsLXlFqsj68qjAmIgwrUB402VoS+aB1erd03q1KOtJUCQb4U3Wqqgs3SB
-         iTOrSWjppww4kGCLWZZI91Y2m/j+eP9OmPXhydxgZgfbLsrqJIkmQNtk8bP0v+jzSx
-         TzeQjHeg5mqpcqD0e+KpcPYJMMteIb4Av6YuXlE+5P7dyrr1LCOjlf1f5O6Lgajas+
-         zNgTDQXLJzHb/6M8m8Mo8XsHxB2fsNF6A4XX0rnAgxxGk8JSqW0GkayeK8I2df+7X1
-         TZxQLOAh6IZUxUJ6H6x7ULZIO+4bNvxITYEnjczyVgn7ZP3pZjCMaZVOqwYTXT0P0y
-         bhWPgaKY+z35Q==
-Date:   Tue, 30 Mar 2021 22:59:58 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Bhaskar Chowdhury <unixbhaskar@gmail.com>
-Cc:     dmaengine@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        hch@lst.de, iommu@lists.linux-foundation.org,
-        linuxppc-dev@lists.ozlabs.org, dave.jiang@intel.com,
-        dan.j.williams@intel.com, rdunlap@infradead.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 14/30] Revert "s3c24xx-dma.c: Fix a typo"
-Message-ID: <YGNgFuLWc91aGoQj@vkoul-mobl.Dlink>
-References: <cover.1616971780.git.unixbhaskar@gmail.com>
- <1d989f71fbebd15de633c187d88cb3be3a0f2723.1616971780.git.unixbhaskar@gmail.com>
+        id S232001AbhC3Rek (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 30 Mar 2021 13:34:40 -0400
+Received: from fllv0015.ext.ti.com ([198.47.19.141]:53056 "EHLO
+        fllv0015.ext.ti.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232298AbhC3Re2 (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Tue, 30 Mar 2021 13:34:28 -0400
+Received: from fllv0035.itg.ti.com ([10.64.41.0])
+        by fllv0015.ext.ti.com (8.15.2/8.15.2) with ESMTP id 12UHY27G080685;
+        Tue, 30 Mar 2021 12:34:02 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
+        s=ti-com-17Q1; t=1617125642;
+        bh=bOoAsGAFt4jk/rid5QKQyQcMiWPMKnzEbnCMJ1Uie3U=;
+        h=From:To:CC:Subject:Date:In-Reply-To:References;
+        b=D7owOXb0KpBrZ0eP/FWeqeYbhDTzvBtSCRPY843Hx9WWHBn4R8/NOUb3c+Avs/l7G
+         7fUsk5Dm1zKqkOG53TNWrhCjXMgcCgX9DL7h2n1MxdSwaPM8HnMdc1x1s3cblH8TMt
+         5QkPe4UF5tnKanDaEwjCKgDMVFfqqE/KI7k4XByQ=
+Received: from DLEE114.ent.ti.com (dlee114.ent.ti.com [157.170.170.25])
+        by fllv0035.itg.ti.com (8.15.2/8.15.2) with ESMTPS id 12UHY229024850
+        (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
+        Tue, 30 Mar 2021 12:34:02 -0500
+Received: from DLEE105.ent.ti.com (157.170.170.35) by DLEE114.ent.ti.com
+ (157.170.170.25) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.2176.2; Tue, 30
+ Mar 2021 12:34:02 -0500
+Received: from lelv0326.itg.ti.com (10.180.67.84) by DLEE105.ent.ti.com
+ (157.170.170.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.2176.2 via
+ Frontend Transport; Tue, 30 Mar 2021 12:34:01 -0500
+Received: from pratyush-OptiPlex-790.dhcp.ti.com (ileax41-snat.itg.ti.com [10.172.224.153])
+        by lelv0326.itg.ti.com (8.15.2/8.15.2) with ESMTP id 12UHXmgi125244;
+        Tue, 30 Mar 2021 12:33:56 -0500
+From:   Pratyush Yadav <p.yadav@ti.com>
+To:     Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Vinod Koul <vkoul@kernel.org>,
+        Peter Ujfalusi <peter.ujfalusi@gmail.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Benoit Parrot <bparrot@ti.com>,
+        Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+        Alexandre Courbot <acourbot@chromium.org>,
+        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        Helen Koike <helen.koike@collabora.com>,
+        Michael Tretter <m.tretter@pengutronix.de>,
+        Peter Chen <peter.chen@nxp.com>,
+        Chunfeng Yun <chunfeng.yun@mediatek.com>,
+        <linux-media@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-phy@lists.infradead.org>,
+        <dmaengine@vger.kernel.org>
+CC:     Pratyush Yadav <p.yadav@ti.com>,
+        Vignesh Raghavendra <vigneshr@ti.com>,
+        Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+Subject: [PATCH 01/16] phy: Distinguish between Rx and Tx for MIPI D-PHY with submodes
+Date:   Tue, 30 Mar 2021 23:03:33 +0530
+Message-ID: <20210330173348.30135-2-p.yadav@ti.com>
+X-Mailer: git-send-email 2.30.0
+In-Reply-To: <20210330173348.30135-1-p.yadav@ti.com>
+References: <20210330173348.30135-1-p.yadav@ti.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1d989f71fbebd15de633c187d88cb3be3a0f2723.1616971780.git.unixbhaskar@gmail.com>
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-EXCLAIMER-MD-CONFIG: e1e8a2fd-e40a-4ac6-ac9b-f7e9cc9ee180
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On 29-03-21, 05:23, Bhaskar Chowdhury wrote:
-> s/transferred/transfered/
-> 
-> This reverts commit a2ddb8aea8106bd5552f8516ad7a8a26b9282a8f.
+From: Paul Kocialkowski <paul.kocialkowski@bootlin.com>
 
-This is not upstream, why not squash in. Also would make sense to write
-sensible changelog and not phrases and use the right subsystem
-conventions!
+As some D-PHY controllers support both Rx and Tx mode, we need a way for
+users to explicitly request one or the other. For instance, Rx mode can
+be used along with MIPI CSI-2 while Tx mode can be used with MIPI DSI.
 
-Droped the series now
+Introduce new MIPI D-PHY PHY submodes to use with PHY_MODE_MIPI_DPHY.
+The default (zero value) is kept to Tx so only the rkisp1 driver, which
+uses D-PHY in Rx mode, needs to be adapted.
 
+Signed-off-by: Paul Kocialkowski <paul.kocialkowski@bootlin.com>
+Signed-off-by: Pratyush Yadav <p.yadav@ti.com>
+---
+ include/linux/phy/phy-mipi-dphy.h | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
+diff --git a/include/linux/phy/phy-mipi-dphy.h b/include/linux/phy/phy-mipi-dphy.h
+index a877ffee845d..0f57ef46a8b5 100644
+--- a/include/linux/phy/phy-mipi-dphy.h
++++ b/include/linux/phy/phy-mipi-dphy.h
+@@ -6,6 +6,19 @@
+ #ifndef __PHY_MIPI_DPHY_H_
+ #define __PHY_MIPI_DPHY_H_
+ 
++/**
++ * enum phy_mipi_dphy_submode - MIPI D-PHY sub-mode
++ *
++ * A MIPI D-PHY can be used to transmit or receive data.
++ * Since some controllers can support both, the direction to enable is specified
++ * with the PHY sub-mode. Transmit is assumed by default with phy_set_mode.
++ */
++
++enum phy_mipi_dphy_submode {
++	PHY_MIPI_DPHY_SUBMODE_TX = 0,
++	PHY_MIPI_DPHY_SUBMODE_RX,
++};
++
+ /**
+  * struct phy_configure_opts_mipi_dphy - MIPI D-PHY configuration set
+  *
 -- 
-~Vinod
+2.30.0
+
