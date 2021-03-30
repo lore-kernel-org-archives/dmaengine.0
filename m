@@ -5,45 +5,46 @@ X-Spam-Level:
 X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
+	URIBL_BLOCKED,USER_AGENT_GIT autolearn=unavailable autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 168DBC433E8
-	for <dmaengine@archiver.kernel.org>; Tue, 30 Mar 2021 17:35:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F0D4FC433E0
+	for <dmaengine@archiver.kernel.org>; Tue, 30 Mar 2021 17:35:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E7985619D3
-	for <dmaengine@archiver.kernel.org>; Tue, 30 Mar 2021 17:35:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BDF5F60235
+	for <dmaengine@archiver.kernel.org>; Tue, 30 Mar 2021 17:35:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232319AbhC3Rem (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 30 Mar 2021 13:34:42 -0400
-Received: from fllv0016.ext.ti.com ([198.47.19.142]:59616 "EHLO
-        fllv0016.ext.ti.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231650AbhC3Red (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Tue, 30 Mar 2021 13:34:33 -0400
-Received: from lelv0266.itg.ti.com ([10.180.67.225])
-        by fllv0016.ext.ti.com (8.15.2/8.15.2) with ESMTP id 12UHYEB8057026;
-        Tue, 30 Mar 2021 12:34:14 -0500
+        id S232543AbhC3RfN (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 30 Mar 2021 13:35:13 -0400
+Received: from fllv0015.ext.ti.com ([198.47.19.141]:53156 "EHLO
+        fllv0015.ext.ti.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232484AbhC3Rep (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Tue, 30 Mar 2021 13:34:45 -0400
+Received: from fllv0034.itg.ti.com ([10.64.40.246])
+        by fllv0015.ext.ti.com (8.15.2/8.15.2) with ESMTP id 12UHYRHJ080786;
+        Tue, 30 Mar 2021 12:34:27 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
-        s=ti-com-17Q1; t=1617125654;
-        bh=1pR43CdbgvQt4BcjIFxp/YBsY0FByo4R7bLIiRN2yqQ=;
+        s=ti-com-17Q1; t=1617125667;
+        bh=91KLtnJPHFYqMOAUrPZa0i0rIGtEKDKLSR7nXt3JQHE=;
         h=From:To:CC:Subject:Date:In-Reply-To:References;
-        b=IixW8RHl+OxFGXLIFDSqgn/T5bdagn3IUcv678zOw27hTEkj1CPbRVpzy+dEce+Kt
-         zmwOcyIyYoUCvaGu9iac+i47FuJpW2YTJAY0qVeLz6uY591y7WNzWV8kz1FBltUJVA
-         ovsLBjhZGJS/l1O7ZDsB/1IZNdplMwmKOuo8GOuE=
-Received: from DFLE114.ent.ti.com (dfle114.ent.ti.com [10.64.6.35])
-        by lelv0266.itg.ti.com (8.15.2/8.15.2) with ESMTPS id 12UHYEv8039233
+        b=MbeuqN1rE/6p/tqXTr0ZFRi4/gNOczP3JvoxYIS/uOl/ftgnzFDQNPzpcr4d9Abkm
+         ww5EK3AWZ9t1WzQLobJVZYVnXI77qithBVAjxPHkzXilnQIyfM76LCaSZ20WQxcSAW
+         QROKVELZbGEqEIzZS1CxVEd6+8yMUUHCnkQjDn0g=
+Received: from DLEE109.ent.ti.com (dlee109.ent.ti.com [157.170.170.41])
+        by fllv0034.itg.ti.com (8.15.2/8.15.2) with ESMTPS id 12UHYRmd068158
         (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
-        Tue, 30 Mar 2021 12:34:14 -0500
-Received: from DFLE102.ent.ti.com (10.64.6.23) by DFLE114.ent.ti.com
- (10.64.6.35) with Microsoft SMTP Server (version=TLS1_2,
+        Tue, 30 Mar 2021 12:34:27 -0500
+Received: from DLEE110.ent.ti.com (157.170.170.21) by DLEE109.ent.ti.com
+ (157.170.170.41) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.2176.2; Tue, 30
- Mar 2021 12:34:14 -0500
-Received: from lelv0326.itg.ti.com (10.180.67.84) by DFLE102.ent.ti.com
- (10.64.6.23) with Microsoft SMTP Server (version=TLS1_2,
+ Mar 2021 12:34:27 -0500
+Received: from lelv0326.itg.ti.com (10.180.67.84) by DLEE110.ent.ti.com
+ (157.170.170.21) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.2176.2 via
- Frontend Transport; Tue, 30 Mar 2021 12:34:14 -0500
+ Frontend Transport; Tue, 30 Mar 2021 12:34:27 -0500
 Received: from pratyush-OptiPlex-790.dhcp.ti.com (ileax41-snat.itg.ti.com [10.172.224.153])
-        by lelv0326.itg.ti.com (8.15.2/8.15.2) with ESMTP id 12UHXmgk125244;
-        Tue, 30 Mar 2021 12:34:08 -0500
+        by lelv0326.itg.ti.com (8.15.2/8.15.2) with ESMTP id 12UHXmgm125244;
+        Tue, 30 Mar 2021 12:34:21 -0500
 From:   Pratyush Yadav <p.yadav@ti.com>
 To:     Mauro Carvalho Chehab <mchehab@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
@@ -66,9 +67,9 @@ To:     Mauro Carvalho Chehab <mchehab@kernel.org>,
 CC:     Pratyush Yadav <p.yadav@ti.com>,
         Vignesh Raghavendra <vigneshr@ti.com>,
         Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-Subject: [PATCH 03/16] phy: cdns-dphy: Allow setting mode
-Date:   Tue, 30 Mar 2021 23:03:35 +0530
-Message-ID: <20210330173348.30135-4-p.yadav@ti.com>
+Subject: [PATCH 05/16] media: cadence: csi2rx: Add external DPHY support
+Date:   Tue, 30 Mar 2021 23:03:37 +0530
+Message-ID: <20210330173348.30135-6-p.yadav@ti.com>
 X-Mailer: git-send-email 2.30.0
 In-Reply-To: <20210330173348.30135-1-p.yadav@ti.com>
 References: <20210330173348.30135-1-p.yadav@ti.com>
@@ -80,62 +81,244 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Allow callers to set the PHY mode. The main mode should always be
-PHY_MODE_MIPI_DPHY but the submode can either be
-PHY_MIPI_DPHY_SUBMODE_RX or PHY_MIPI_DPHY_SUBMODE_TX. Update the ops
-based on the requested submode.
+Some platforms like TI's J721E can have the CSI2RX paired with an
+external DPHY. Add support to enable and configure the DPHY using the
+generic PHY framework.
+
+Get the pixel rate and bpp from the subdev and pass them on to the DPHY
+along with the number of lanes. All other settings are left to their
+default values.
 
 Signed-off-by: Pratyush Yadav <p.yadav@ti.com>
 ---
- drivers/phy/cadence/cdns-dphy.c | 30 ++++++++++++++++++++++++++++++
- 1 file changed, 30 insertions(+)
+ drivers/media/platform/cadence/cdns-csi2rx.c | 147 +++++++++++++++++--
+ 1 file changed, 137 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/phy/cadence/cdns-dphy.c b/drivers/phy/cadence/cdns-dphy.c
-index 8656f2102a91..7d5f7b333893 100644
---- a/drivers/phy/cadence/cdns-dphy.c
-+++ b/drivers/phy/cadence/cdns-dphy.c
-@@ -365,11 +365,41 @@ static int cdns_dphy_configure(struct phy *phy, union phy_configure_opts *opts)
- 	return 0;
- }
+diff --git a/drivers/media/platform/cadence/cdns-csi2rx.c b/drivers/media/platform/cadence/cdns-csi2rx.c
+index c68a3eac62cd..31bd80e3f780 100644
+--- a/drivers/media/platform/cadence/cdns-csi2rx.c
++++ b/drivers/media/platform/cadence/cdns-csi2rx.c
+@@ -30,6 +30,12 @@
+ #define CSI2RX_STATIC_CFG_DLANE_MAP(llane, plane)	((plane) << (16 + (llane) * 4))
+ #define CSI2RX_STATIC_CFG_LANES_MASK			GENMASK(11, 8)
  
-+static int cdns_dphy_set_mode(struct phy *phy, enum phy_mode mode, int submode)
++#define CSI2RX_DPHY_LANE_CTRL_REG		0x40
++#define CSI2RX_DPHY_CL_RST			BIT(16)
++#define CSI2RX_DPHY_DL_RST(i)			BIT((i) + 12)
++#define CSI2RX_DPHY_CL_EN			BIT(4)
++#define CSI2RX_DPHY_DL_EN(i)			BIT(i)
++
+ #define CSI2RX_STREAM_BASE(n)		(((n) + 1) * 0x100)
+ 
+ #define CSI2RX_STREAM_CTRL_REG(n)		(CSI2RX_STREAM_BASE(n) + 0x000)
+@@ -54,6 +60,11 @@ enum csi2rx_pads {
+ 	CSI2RX_PAD_MAX,
+ };
+ 
++struct csi2rx_fmt {
++	u32				code;
++	u8				bpp;
++};
++
+ struct csi2rx_priv {
+ 	struct device			*dev;
+ 	unsigned int			count;
+@@ -85,6 +96,52 @@ struct csi2rx_priv {
+ 	int				source_pad;
+ };
+ 
++static const struct csi2rx_fmt formats[] = {
++	{
++		.code	= MEDIA_BUS_FMT_YUYV8_2X8,
++		.bpp	= 16,
++	},
++	{
++		.code	= MEDIA_BUS_FMT_UYVY8_2X8,
++		.bpp	= 16,
++	},
++	{
++		.code	= MEDIA_BUS_FMT_YVYU8_2X8,
++		.bpp	= 16,
++	},
++	{
++		.code	= MEDIA_BUS_FMT_VYUY8_2X8,
++		.bpp	= 16,
++	},
++};
++
++static u8 csi2rx_get_bpp(u32 code)
 +{
-+	struct cdns_dphy *dphy = phy_get_drvdata(phy);
-+	const struct cdns_dphy_driver_data *ddata;
++	int i;
 +
-+	ddata = of_device_get_match_data(dphy->dev);
-+	if (!ddata)
-+		return -EINVAL;
-+
-+	if (mode != PHY_MODE_MIPI_DPHY)
-+		return -EINVAL;
-+
-+	if (submode == PHY_MIPI_DPHY_SUBMODE_TX) {
-+		if (!ddata->tx)
-+			return -EOPNOTSUPP;
-+
-+		dphy->ops = ddata->tx;
-+	} else if (submode == PHY_MIPI_DPHY_SUBMODE_RX) {
-+		if (!ddata->rx)
-+			return -EOPNOTSUPP;
-+
-+		dphy->ops = ddata->rx;
-+	} else {
-+		return -EOPNOTSUPP;
++	for (i = 0; i < ARRAY_SIZE(formats); i++) {
++		if (formats[i].code == code)
++			return formats[i].bpp;
 +	}
 +
 +	return 0;
 +}
 +
- static const struct phy_ops cdns_dphy_ops = {
- 	.configure	= cdns_dphy_configure,
- 	.validate	= cdns_dphy_validate,
- 	.power_on	= cdns_dphy_power_on,
- 	.power_off	= cdns_dphy_power_off,
-+	.set_mode	= cdns_dphy_set_mode,
- };
++static s64 csi2rx_get_pixel_rate(struct csi2rx_priv *csi2rx)
++{
++	struct v4l2_ctrl *ctrl;
++
++	ctrl = v4l2_ctrl_find(csi2rx->source_subdev->ctrl_handler,
++			      V4L2_CID_PIXEL_RATE);
++	if (!ctrl) {
++		dev_err(csi2rx->dev, "no pixel rate control in subdev: %s\n",
++			csi2rx->source_subdev->name);
++		return -EINVAL;
++	}
++
++	return v4l2_ctrl_g_ctrl_int64(ctrl);
++}
++
+ static inline
+ struct csi2rx_priv *v4l2_subdev_to_csi2rx(struct v4l2_subdev *subdev)
+ {
+@@ -101,6 +158,55 @@ static void csi2rx_reset(struct csi2rx_priv *csi2rx)
+ 	writel(0, csi2rx->base + CSI2RX_SOFT_RESET_REG);
+ }
  
- static int cdns_dphy_probe(struct platform_device *pdev)
++static int csi2rx_configure_external_dphy(struct csi2rx_priv *csi2rx)
++{
++	union phy_configure_opts opts = { };
++	struct phy_configure_opts_mipi_dphy *cfg = &opts.mipi_dphy;
++	struct v4l2_subdev_format sd_fmt;
++	s64 pixel_rate;
++	int ret;
++	u8 bpp;
++
++	sd_fmt.which = V4L2_SUBDEV_FORMAT_ACTIVE;
++	sd_fmt.pad = 0;
++
++	ret = v4l2_subdev_call(csi2rx->source_subdev, pad, get_fmt, NULL,
++			       &sd_fmt);
++	if (ret)
++		return ret;
++
++	bpp = csi2rx_get_bpp(sd_fmt.format.code);
++	if (!bpp)
++		return -EINVAL;
++
++	pixel_rate = csi2rx_get_pixel_rate(csi2rx);
++	if (pixel_rate < 0)
++		return pixel_rate;
++
++	ret = phy_mipi_dphy_get_default_config(pixel_rate, bpp,
++					       csi2rx->num_lanes, cfg);
++	if (ret)
++		return ret;
++
++	ret = phy_set_mode_ext(csi2rx->dphy, PHY_MODE_MIPI_DPHY,
++			       PHY_MIPI_DPHY_SUBMODE_RX);
++	if (ret)
++		return ret;
++
++	ret = phy_power_on(csi2rx->dphy);
++	if (ret)
++		return ret;
++
++	ret = phy_configure(csi2rx->dphy, &opts);
++	if (ret) {
++		/* Can't do anything if it fails. Ignore the return value. */
++		phy_power_off(csi2rx->dphy);
++		return ret;
++	}
++
++	return 0;
++}
++
+ static int csi2rx_start(struct csi2rx_priv *csi2rx)
+ {
+ 	unsigned int i;
+@@ -139,6 +245,17 @@ static int csi2rx_start(struct csi2rx_priv *csi2rx)
+ 	if (ret)
+ 		goto err_disable_pclk;
+ 
++	/* Enable DPHY clk and data lanes. */
++	if (csi2rx->dphy) {
++		reg = CSI2RX_DPHY_CL_EN | CSI2RX_DPHY_CL_RST;
++		for (i = 0; i < csi2rx->num_lanes; i++) {
++			reg |= CSI2RX_DPHY_DL_EN(csi2rx->lanes[i] - 1);
++			reg |= CSI2RX_DPHY_DL_RST(csi2rx->lanes[i] - 1);
++		}
++
++		writel(reg, csi2rx->base + CSI2RX_DPHY_LANE_CTRL_REG);
++	}
++
+ 	/*
+ 	 * Create a static mapping between the CSI virtual channels
+ 	 * and the output stream.
+@@ -169,10 +286,21 @@ static int csi2rx_start(struct csi2rx_priv *csi2rx)
+ 	if (ret)
+ 		goto err_disable_pixclk;
+ 
++	if (csi2rx->dphy) {
++		ret = csi2rx_configure_external_dphy(csi2rx);
++		if (ret) {
++			dev_err(csi2rx->dev,
++				"Failed to configure external DPHY: %d\n", ret);
++			goto err_disable_sysclk;
++		}
++	}
++
+ 	clk_disable_unprepare(csi2rx->p_clk);
+ 
+ 	return 0;
+ 
++err_disable_sysclk:
++	clk_disable_unprepare(csi2rx->sys_clk);
+ err_disable_pixclk:
+ 	for (; i > 0; i--)
+ 		clk_disable_unprepare(csi2rx->pixel_clk[i - 1]);
+@@ -200,6 +328,13 @@ static void csi2rx_stop(struct csi2rx_priv *csi2rx)
+ 
+ 	if (v4l2_subdev_call(csi2rx->source_subdev, video, s_stream, false))
+ 		dev_warn(csi2rx->dev, "Couldn't disable our subdev\n");
++
++	if (csi2rx->dphy) {
++		writel(0, csi2rx->base + CSI2RX_DPHY_LANE_CTRL_REG);
++
++		if (phy_power_off(csi2rx->dphy))
++			dev_warn(csi2rx->dev, "Couldn't power off DPHY\n");
++	}
+ }
+ 
+ static int csi2rx_s_stream(struct v4l2_subdev *subdev, int enable)
+@@ -306,15 +441,6 @@ static int csi2rx_get_resources(struct csi2rx_priv *csi2rx,
+ 		return PTR_ERR(csi2rx->dphy);
+ 	}
+ 
+-	/*
+-	 * FIXME: Once we'll have external D-PHY support, the check
+-	 * will need to be removed.
+-	 */
+-	if (csi2rx->dphy) {
+-		dev_err(&pdev->dev, "External D-PHY not supported yet\n");
+-		return -EINVAL;
+-	}
+-
+ 	clk_prepare_enable(csi2rx->p_clk);
+ 	dev_cfg = readl(csi2rx->base + CSI2RX_DEVICE_CFG_REG);
+ 	clk_disable_unprepare(csi2rx->p_clk);
+@@ -339,7 +465,7 @@ static int csi2rx_get_resources(struct csi2rx_priv *csi2rx,
+ 	 * FIXME: Once we'll have internal D-PHY support, the check
+ 	 * will need to be removed.
+ 	 */
+-	if (csi2rx->has_internal_dphy) {
++	if (!csi2rx->dphy && csi2rx->has_internal_dphy) {
+ 		dev_err(&pdev->dev, "Internal D-PHY not supported yet\n");
+ 		return -EINVAL;
+ 	}
+@@ -460,6 +586,7 @@ static int csi2rx_probe(struct platform_device *pdev)
+ 	dev_info(&pdev->dev,
+ 		 "Probed CSI2RX with %u/%u lanes, %u streams, %s D-PHY\n",
+ 		 csi2rx->num_lanes, csi2rx->max_lanes, csi2rx->max_streams,
++		 csi2rx->dphy ? "external" :
+ 		 csi2rx->has_internal_dphy ? "internal" : "no");
+ 
+ 	return 0;
 -- 
 2.30.0
 
