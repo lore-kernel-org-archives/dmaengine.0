@@ -2,78 +2,191 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5DE03C43462
-	for <dmaengine@archiver.kernel.org>; Thu,  1 Apr 2021 18:45:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8DEA9C433B4
+	for <dmaengine@archiver.kernel.org>; Fri,  2 Apr 2021 10:02:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 358EF60FED
-	for <dmaengine@archiver.kernel.org>; Thu,  1 Apr 2021 18:45:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 630996112F
+	for <dmaengine@archiver.kernel.org>; Fri,  2 Apr 2021 10:02:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235946AbhDASpt (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Thu, 1 Apr 2021 14:45:49 -0400
-Received: from szxga07-in.huawei.com ([45.249.212.35]:16321 "EHLO
-        szxga07-in.huawei.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239363AbhDASkV (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Thu, 1 Apr 2021 14:40:21 -0400
-Received: from DGGEMS405-HUB.china.huawei.com (unknown [172.30.72.58])
-        by szxga07-in.huawei.com (SkyGuard) with ESMTP id 4FB1jC3k75z9vGX;
-        Thu,  1 Apr 2021 19:50:55 +0800 (CST)
-Received: from localhost.localdomain (10.67.165.24) by
- DGGEMS405-HUB.china.huawei.com (10.3.19.205) with Microsoft SMTP Server id
- 14.3.498.0; Thu, 1 Apr 2021 19:52:53 +0800
-From:   Hao Fang <fanghao11@huawei.com>
-To:     <vkoul@kernel.org>, <mchehab@kernel.org>,
-        <zhangfei.gao@linaro.org>, <dmaengine@vger.kernel.org>
-CC:     <linux-kernel@vger.kernel.org>, <prime.zeng@hisilicon.com>,
-        <fanghao11@huawei.com>
-Subject: [PATCH v2] dmaengine: k3dma: use the correct HiSilicon copyright
-Date:   Thu, 1 Apr 2021 19:50:20 +0800
-Message-ID: <1617277820-26971-1-git-send-email-fanghao11@huawei.com>
-X-Mailer: git-send-email 2.8.1
+        id S234984AbhDBKCO (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 2 Apr 2021 06:02:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44682 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234926AbhDBKCJ (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Fri, 2 Apr 2021 06:02:09 -0400
+Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [IPv6:2001:4b98:dc2:55:216:3eff:fef7:d647])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 239B2C0613E6;
+        Fri,  2 Apr 2021 03:02:07 -0700 (PDT)
+Received: from pendragon.ideasonboard.com (62-78-145-57.bb.dnainternet.fi [62.78.145.57])
+        by perceval.ideasonboard.com (Postfix) with ESMTPSA id CAEF72C1;
+        Fri,  2 Apr 2021 12:02:04 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
+        s=mail; t=1617357725;
+        bh=BwK8ADmyN5yPbUxid040ws2OoDNAKB3jwfGdu8fQZu4=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=Q6U9n5vdWLQqcMaG+9TqXJIFsIVakimELdS5Z4Q0CD1sqXzXU/wZzECK/T3glx4Qb
+         RYFYe4xlxpBoHt9Em4McABWRJBPpzbetZ5xp3Qc9rIs63dc1STbbKAKWC2Mo+5BRmu
+         1DLv5hDerBLDJY2N3NBSy04VBkudO9QtsHBZMong=
+Date:   Fri, 2 Apr 2021 13:01:20 +0300
+From:   Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+To:     Pratyush Yadav <p.yadav@ti.com>
+Cc:     Rob Herring <robh@kernel.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Vinod Koul <vkoul@kernel.org>,
+        Peter Ujfalusi <peter.ujfalusi@gmail.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Benoit Parrot <bparrot@ti.com>,
+        Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+        Alexandre Courbot <acourbot@chromium.org>,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        Helen Koike <helen.koike@collabora.com>,
+        Michael Tretter <m.tretter@pengutronix.de>,
+        Peter Chen <peter.chen@nxp.com>,
+        Chunfeng Yun <chunfeng.yun@mediatek.com>,
+        linux-media@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org,
+        dmaengine@vger.kernel.org, Vignesh Raghavendra <vigneshr@ti.com>,
+        Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+Subject: Re: [PATCH 12/16] dt-bindings: media: Add DT bindings for TI CSI2RX
+ driver
+Message-ID: <YGbrcKPA9K8Ws0lv@pendragon.ideasonboard.com>
+References: <20210330173348.30135-1-p.yadav@ti.com>
+ <20210330173348.30135-13-p.yadav@ti.com>
+ <20210401155201.GA488101@robh.at.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.67.165.24]
-X-CFilter-Loop: Reflected
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20210401155201.GA488101@robh.at.kernel.org>
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-s/Hisilicon/HiSilicon/g.
-It should use capital S, according to the official website.
+On Thu, Apr 01, 2021 at 10:52:01AM -0500, Rob Herring wrote:
+> On Tue, Mar 30, 2021 at 11:03:44PM +0530, Pratyush Yadav wrote:
+> > TI's J721E uses the Cadence CSI2RX and DPHY peripherals to facilitate
+> > capture over a CSI-2 bus. The TI CSI2RX platform driver glues all the
+> > parts together.
+> > 
+> > Signed-off-by: Pratyush Yadav <p.yadav@ti.com>
+> > ---
+> >  .../devicetree/bindings/media/ti,csi2rx.yaml  | 70 +++++++++++++++++++
+> >  1 file changed, 70 insertions(+)
+> >  create mode 100644 Documentation/devicetree/bindings/media/ti,csi2rx.yaml
+> > 
+> > diff --git a/Documentation/devicetree/bindings/media/ti,csi2rx.yaml b/Documentation/devicetree/bindings/media/ti,csi2rx.yaml
+> > new file mode 100644
+> > index 000000000000..ebd894364391
+> > --- /dev/null
+> > +++ b/Documentation/devicetree/bindings/media/ti,csi2rx.yaml
+> > @@ -0,0 +1,70 @@
+> > +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> > +%YAML 1.2
+> > +---
+> > +$id: http://devicetree.org/schemas/media/ti,csi2rx.yaml#
+> > +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> > +
+> > +title: TI CSI2RX Wrapper Device Tree Bindings
+> > +
 
-Signed-off-by: Hao Fang <fanghao11@huawei.com>
----
-V2:
- -remove the terms of use link.
----
- drivers/dma/k3dma.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+A description would be useful, especially given that the TRM doesn't
+mention "CSI2RX".
 
-diff --git a/drivers/dma/k3dma.c b/drivers/dma/k3dma.c
-index d0b2e60..ecdaada9 100644
---- a/drivers/dma/k3dma.c
-+++ b/drivers/dma/k3dma.c
-@@ -1,7 +1,7 @@
- // SPDX-License-Identifier: GPL-2.0-only
- /*
-  * Copyright (c) 2013 - 2015 Linaro Ltd.
-- * Copyright (c) 2013 Hisilicon Limited.
-+ * Copyright (c) 2013 HiSilicon Limited.
-  */
- #include <linux/sched.h>
- #include <linux/device.h>
-@@ -1039,6 +1039,6 @@ static struct platform_driver k3_pdma_driver = {
- 
- module_platform_driver(k3_pdma_driver);
- 
--MODULE_DESCRIPTION("Hisilicon k3 DMA Driver");
-+MODULE_DESCRIPTION("HiSilicon k3 DMA Driver");
- MODULE_ALIAS("platform:k3dma");
- MODULE_LICENSE("GPL v2");
+> > +maintainers:
+> > +  - Pratyush Yadav <p.yadav@ti.com>
+> > +
+> > +properties:
+> > +  compatible:
+> > +    items:
+> > +      - const: ti,csi2rx
+> > +
+> > +  dmas:
+> > +    description: RX DMA Channel 0
+> 
+> items:
+>   - description: RX DMA Channel 0
+> 
+> Or just 'maxItems: 1'
+> 
+> > +
+> > +  dma-names:
+> > +    items:
+> > +      - const: rx0
+> > +
+> > +  reg:
+> > +    maxItems: 1
+> > +    description: Base address and size of the TI wrapper registers.
+> 
+> That's all 'reg' properties, drop 'description'.
+
+According to SPRUIL1B, there are four register banks for the CSI_RX_IF,
+and two register banks for the DPHY_RX. What's your plan to support
+these ? Not everything need to be implemented at once, but backward
+compatibility need to be taken into account in the design.
+
+> > +
+> > +  power-domains:
+> > +    maxItems: 1
+> > +    description:
+> > +      PM domain provider node and an args specifier containing
+> > +      the device id value.
+> 
+> Drop.
+> 
+> > +
+> > +  ranges: true
+> > +
+> > +  "#address-cells":
+> > +    const: 2
+> > +
+> > +  "#size-cells":
+> > +    const: 2
+> > +
+> > +patternProperties:
+> > +  "csi-bridge@":
+> 
+> "^csi-bridge@"
+> 
+> > +    type: object
+> > +    description: CSI2 bridge node.
+> 
+> Just an empty node?
+
+Even if the node is optional, it would be useful to include it in the
+example below, to show how it's supposed to be used.
+
+> > +
+> > +required:
+> > +  - compatible
+> > +  - reg
+> > +  - dmas
+> > +  - dma-names
+> > +  - power-domains
+> > +  - "#address-cells"
+> > +  - "#size-cells"
+> > +
+> > +additionalProperties: false
+> > +
+> > +examples:
+> > +  - |
+> > +    #include <dt-bindings/soc/ti,sci_pm_domain.h>
+> > +
+> > +    ti_csi2rx0: ticsi2rx {
+> > +        compatible = "ti,csi2rx";
+> > +        dmas = <&main_udmap 0x4940>;
+> > +        dma-names = "rx0";
+> > +        reg = <0x0 0x4500000 0x0 0x1000>;
+> > +        power-domains = <&k3_pds 26 TI_SCI_PD_EXCLUSIVE>;
+> > +        #address-cells = <2>;
+> > +        #size-cells = <2>;
+> > +    };
+
 -- 
-2.8.1
+Regards,
 
+Laurent Pinchart
