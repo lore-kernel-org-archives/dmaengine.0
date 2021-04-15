@@ -2,64 +2,74 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.0 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BFA74C433ED
-	for <dmaengine@archiver.kernel.org>; Wed, 14 Apr 2021 16:42:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C3F7EC433ED
+	for <dmaengine@archiver.kernel.org>; Thu, 15 Apr 2021 07:06:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9AE3961154
-	for <dmaengine@archiver.kernel.org>; Wed, 14 Apr 2021 16:42:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 83A8E6117A
+	for <dmaengine@archiver.kernel.org>; Thu, 15 Apr 2021 07:06:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231676AbhDNQnS (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 14 Apr 2021 12:43:18 -0400
-Received: from mail.kernel.org ([198.145.29.99]:43684 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230488AbhDNQnR (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Wed, 14 Apr 2021 12:43:17 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPS id 33BBD61154;
-        Wed, 14 Apr 2021 16:42:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1618418576;
-        bh=HiaHo83UxCTv7AY9PP2ko6gjKORB1fnZL6keftudnpI=;
-        h=Subject:From:In-Reply-To:References:Date:To:Cc:From;
-        b=fLMbxWSNeue0x6h/GU5FhS0JATU9RhjhMUo03GlKGwukjWgbJMbhKacdibk658UyP
-         p1eYHnGHEN7sj1tS2xuc2CjsjLp8g4Wr919KTq9xcx1GMNZhJ2b8JG4IKRbWpcYW6U
-         VIQgmU6KOexies1ksT4Hod5bGOjxBDq1/PWPaZ3FOBBhdUznwNa19f/JiKtqEwHwG/
-         UxE7bK+fWB+/pkZ8ZqqsamMilpOL4ckIUz5Cc2CG49+9ATH7MiikO2WZPjfaXYRtmA
-         a1VcTy1z2C3et4luAd7R6GOqPGJOoTHGROt7EbzH09v++Ej5VPpVlfaEb49xrR5uYK
-         A69uxlq+hN4Ag==
-Subject: Re: [GIT PULL]: dmaengine fixes for 5.12
-From:   pr-tracker-bot@kernel.org
-In-Reply-To: <YHcZ2Kylq+RuDzPg@vkoul-mobl.Dlink>
-References: <YHcZ2Kylq+RuDzPg@vkoul-mobl.Dlink>
-X-PR-Tracked-List-Id: <linux-kernel.vger.kernel.org>
-X-PR-Tracked-Message-Id: <YHcZ2Kylq+RuDzPg@vkoul-mobl.Dlink>
-X-PR-Tracked-Remote: git://git.kernel.org/pub/scm/linux/kernel/git/vkoul/dmaengine.git tags/dmaengine-fix-5.12
-X-PR-Tracked-Commit-Id: ea9aadc06a9f10ad20a90edc0a484f1147d88a7a
-X-PR-Merge-Tree: torvalds/linux.git
-X-PR-Merge-Refname: refs/heads/master
-X-PR-Merge-Commit-Id: c17a3066b4c1acdf36fa307faaa391f558ac0420
-Message-Id: <161841857610.15788.3753215321939337130.pr-tracker-bot@kernel.org>
-Date:   Wed, 14 Apr 2021 16:42:56 +0000
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Linus Torvalds <torvalds@linux-foundation.org>,
-        dma <dmaengine@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>
+        id S230481AbhDOHGx (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Thu, 15 Apr 2021 03:06:53 -0400
+Received: from www381.your-server.de ([78.46.137.84]:51512 "EHLO
+        www381.your-server.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229503AbhDOHGw (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Thu, 15 Apr 2021 03:06:52 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=metafoo.de;
+         s=default2002; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:
+        MIME-Version:Date:Message-ID:From:References:Cc:To:Subject:Sender:Reply-To:
+        Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+        Resent-To:Resent-Cc:Resent-Message-ID;
+        bh=GpPC6kjMAScPgOy9gWmvzAqvitQWMheOac8bf5AM7OU=; b=MVjRdroWh7p90PFc+51tvIkr9K
+        5rF2ufksBnKBAKF/7NjjzvDgkpaf02c0VwzlLVv+C37KTg05jtSr4V4dz5fZRhDJicdJvfaZqYH7g
+        ni6MvHdyScuSCU1sLgyTCO6fh2H7CzQDXYeUCGNriJH53TNR6uw9dzAaAMyHVMIstZbwB60x5iMzS
+        FN/fg0UoS6uLdyxmOM+CImCns1dG55lSo0JOJxr3us/TggXzEUZFI0iZAt57cla95avOHwXyr8IXm
+        pi7DXOixVkneDuCsYuwNqsO8VeTvpxMHvUnIDhQh38qs1s+Aoqf/2d7xfZ9RdclMjWnqHROjojIiw
+        X6fsCtuA==;
+Received: from sslproxy05.your-server.de ([78.46.172.2])
+        by www381.your-server.de with esmtpsa (TLSv1.3:TLS_AES_256_GCM_SHA384:256)
+        (Exim 4.92.3)
+        (envelope-from <lars@metafoo.de>)
+        id 1lWw54-000Chl-Lw; Thu, 15 Apr 2021 09:06:26 +0200
+Received: from [2001:a61:2a42:9501:9e5c:8eff:fe01:8578]
+        by sslproxy05.your-server.de with esmtpsa (TLSv1.3:TLS_AES_256_GCM_SHA384:256)
+        (Exim 4.92)
+        (envelope-from <lars@metafoo.de>)
+        id 1lWw54-0003pF-B1; Thu, 15 Apr 2021 09:06:26 +0200
+Subject: Re: [RFC v2 PATCH 0/7] Xilinx DMA enhancements and optimization
+To:     Radhey Shyam Pandey <radhey.shyam.pandey@xilinx.com>,
+        vkoul@kernel.org, robh+dt@kernel.org, michal.simek@xilinx.com
+Cc:     dmaengine@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        git@xilinx.com
+References: <1617990965-35337-1-git-send-email-radhey.shyam.pandey@xilinx.com>
+From:   Lars-Peter Clausen <lars@metafoo.de>
+Message-ID: <0948eae0-b304-79f8-7d9a-543cba78fbe5@metafoo.de>
+Date:   Thu, 15 Apr 2021 09:06:25 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.9.0
+MIME-Version: 1.0
+In-Reply-To: <1617990965-35337-1-git-send-email-radhey.shyam.pandey@xilinx.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
+X-Authenticated-Sender: lars@metafoo.de
+X-Virus-Scanned: Clear (ClamAV 0.102.4/26140/Wed Apr 14 13:10:01 2021)
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-The pull request you sent on Wed, 14 Apr 2021 22:05:36 +0530:
+On 4/9/21 7:55 PM, Radhey Shyam Pandey wrote:
+> Some background about the patch series: Xilinx Axi Ethernet device driver
+> (xilinx_axienet_main.c) currently has axi-dma code inside it. The goal
+> is to refactor axiethernet driver and use existing AXI DMA driver using
+> DMAEngine API.
 
-> git://git.kernel.org/pub/scm/linux/kernel/git/vkoul/dmaengine.git tags/dmaengine-fix-5.12
+This is pretty neat! Do you have the patches that modify the AXI 
+Ethernet driver in a public tree somewhere, so this series can be seen 
+in context?
 
-has been merged into torvalds/linux.git:
-https://git.kernel.org/torvalds/c/c17a3066b4c1acdf36fa307faaa391f558ac0420
-
-Thank you!
-
--- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/prtracker.html
