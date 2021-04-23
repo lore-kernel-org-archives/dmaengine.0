@@ -2,235 +2,122 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-22.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
-	USER_AGENT_GIT autolearn=unavailable autolearn_force=no version=3.4.0
+	INCLUDES_PATCH,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,NICE_REPLY_A,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0F0BFC43461
-	for <dmaengine@archiver.kernel.org>; Fri, 23 Apr 2021 01:30:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 04AFCC433B4
+	for <dmaengine@archiver.kernel.org>; Fri, 23 Apr 2021 06:33:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D49FD61452
-	for <dmaengine@archiver.kernel.org>; Fri, 23 Apr 2021 01:30:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CA917613E1
+	for <dmaengine@archiver.kernel.org>; Fri, 23 Apr 2021 06:33:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240007AbhDWBbO (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Thu, 22 Apr 2021 21:31:14 -0400
-Received: from mx07-00376f01.pphosted.com ([185.132.180.163]:62176 "EHLO
-        mx07-00376f01.pphosted.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S240006AbhDWBbN (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Thu, 22 Apr 2021 21:31:13 -0400
-Received: from pps.filterd (m0168889.ppops.net [127.0.0.1])
-        by mx07-00376f01.pphosted.com (8.16.1.2/8.16.1.2) with SMTP id 13N0xc8B008391;
-        Fri, 23 Apr 2021 02:19:27 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=imgtec.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=dk201812; bh=XlA+4FJwvL4EmuhKI3jEajb+NI7k0i/aj8fKtHDXVuY=;
- b=EiQ+vftHhrWze6/8+KrZfd/wTJyJ2ea2ojkHtonStb4OfZRevfonDJOUv8/KEUffSXIP
- LU4YYViuINwRfzgaZ0Ya8RsuZVIM43kEA9E6OvNjhNeyq8T3GOa6vnLFLf+U6CUAI336
- tsWVj5iOJc7mmOOaCUN7kWckuzClj236rp0Ayg0EeY+LeSBOc7XvePbkPPotkQ4mvOkG
- g19qoklXwTgqoSojUK4Fhg6qGsMO4BazkGn/5RbbI3Uy5lgz4y2YggPxVAIccxZdW/0n
- NAVH/bQOgo7VvNUvP8bPeOsbnXfPX0AXpWhwI0HchCLU4d+DmDS7Fl4OKQzp3oUI7b0J Eg== 
-Received: from hhmail05.hh.imgtec.org ([217.156.249.195])
-        by mx07-00376f01.pphosted.com with ESMTP id 382p9395yh-4
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT);
-        Fri, 23 Apr 2021 02:19:27 +0100
-Received: from adrianlarumbe-HP-Elite-7500-Series-MT.hh.imgtec.org
- (10.100.70.86) by HHMAIL05.hh.imgtec.org (10.100.10.120) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2176.2; Fri, 23 Apr 2021 02:19:25 +0100
-From:   Adrian Larumbe <adrian.martinezlarumbe@imgtec.com>
-To:     <vkoul@kernel.org>, <dmaengine@vger.kernel.org>
-CC:     <michal.simek@xilinx.com>, <linux-arm-kernel@lists.infradead.org>,
-        <adrian.martinezlarumbe@imgtec.com>
-Subject: [PATCH 3/4] dmaengine: xilinx_dma: Add CDMA SG transfer support
-Date:   Fri, 23 Apr 2021 02:19:12 +0100
-Message-ID: <20210423011913.13122-4-adrian.martinezlarumbe@imgtec.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20210423011913.13122-1-adrian.martinezlarumbe@imgtec.com>
+        id S230131AbhDWGea (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 23 Apr 2021 02:34:30 -0400
+Received: from www381.your-server.de ([78.46.137.84]:33706 "EHLO
+        www381.your-server.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229456AbhDWGea (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Fri, 23 Apr 2021 02:34:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=metafoo.de;
+         s=default2002; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:
+        MIME-Version:Date:Message-ID:From:References:Cc:To:Subject:Sender:Reply-To:
+        Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+        Resent-To:Resent-Cc:Resent-Message-ID;
+        bh=REwpFT4yEkvfF+vOdoBEKDL3h1PPEpQl2J0avEzhUv0=; b=etHwIJGgrEgmPAzTR6x+KneGer
+        Vn6O0E4vloq7H+tjr/070nl0x1VpNpVpFhgnW896AZy0V4vXt9+28pRAfGoJ4fe2sOFXZ7Pk78oOT
+        D6ptVI4iTxW+d92GrpeJ+rRT9azm5TXgHKYuEnXTqvRiGfdJxx0EFKBKjsXcq1/HiwtYBz9SRA5hJ
+        0VFfHblJsrUZMUWbCl4EbNntnjV/HrelV0RA0h6FfT+s8pzFInDKNdRLfDR7iAlsThnMEI7jHBVBF
+        ZOChXwXgH9n5W5A/NNb3upRUThHz8BxxlbAEm97eEWaivDzcUg6bB2hTSDW2QYeVVoZA4uy+G26+G
+        D/Pb9C/w==;
+Received: from sslproxy02.your-server.de ([78.47.166.47])
+        by www381.your-server.de with esmtpsa (TLSv1.3:TLS_AES_256_GCM_SHA384:256)
+        (Exim 4.92.3)
+        (envelope-from <lars@metafoo.de>)
+        id 1lZpNw-0009ky-46; Fri, 23 Apr 2021 08:33:52 +0200
+Received: from [2001:a61:2a42:9501:9e5c:8eff:fe01:8578]
+        by sslproxy02.your-server.de with esmtpsa (TLSv1.3:TLS_AES_256_GCM_SHA384:256)
+        (Exim 4.92)
+        (envelope-from <lars@metafoo.de>)
+        id 1lZpNv-000J5L-Vh; Fri, 23 Apr 2021 08:33:51 +0200
+Subject: Re: [PATCH 4/4] dmaengine: xilinx_dma: Add device synchronisation
+ callback
+To:     Adrian Larumbe <adrian.martinezlarumbe@imgtec.com>,
+        vkoul@kernel.org, dmaengine@vger.kernel.org
+Cc:     michal.simek@xilinx.com, linux-arm-kernel@lists.infradead.org
 References: <20210423011913.13122-1-adrian.martinezlarumbe@imgtec.com>
+ <20210423011913.13122-5-adrian.martinezlarumbe@imgtec.com>
+From:   Lars-Peter Clausen <lars@metafoo.de>
+Message-ID: <4f286de6-ab91-ffd1-1119-cd94e5805aa9@metafoo.de>
+Date:   Fri, 23 Apr 2021 08:33:51 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.9.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.100.70.86]
-X-ClientProxiedBy: HHMAIL05.hh.imgtec.org (10.100.10.120) To
- HHMAIL05.hh.imgtec.org (10.100.10.120)
-X-EXCLAIMER-MD-CONFIG: 15a78312-3e47-46eb-9010-2e54d84a9631
-X-Proofpoint-GUID: pKvPiUeNmStKTaGDpMW4RbWm-ygOPVd9
-X-Proofpoint-ORIG-GUID: pKvPiUeNmStKTaGDpMW4RbWm-ygOPVd9
+In-Reply-To: <20210423011913.13122-5-adrian.martinezlarumbe@imgtec.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
+X-Authenticated-Sender: lars@metafoo.de
+X-Virus-Scanned: Clear (ClamAV 0.102.4/26148/Thu Apr 22 13:06:46 2021)
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-CDMA devices have built-in SG capability, but it was not leveraged by the
-driver. It adds a new binding for CDMA's device_prep_slave_sg, which
-looks up the memory address supplied in a previous call to
-dmaengine_slave_config as the beginning of a contiguous chunk of memory,
-for either the source or destination of the transfer.
+On 4/23/21 3:19 AM, Adrian Larumbe wrote:
+> This was required as an answer to a very unusual race condition, whereby a
+> thread waiting on a completion signaled in a callback triggered by
+> dmaengine_desc_callback_invoke might immediately attempt to release the
+> DMA channel whilst the channel lock was still free. This would cause the
+> remaining descriptors to be deallocated, and xilinx_dma_chan_desc_cleanup
+> to perform an invalid memory access when attempting to traverse the rest
+> of the channel's done_list.
+>
+> Now, when releasing a DMA channel, it will wait until the tasklet has
+> finished.
+>
+> Signed-off-by: Adrian Larumbe <adrian.martinezlarumbe@imgtec.com>
 
-DMA_PRIVATE capability needs to be set for a CDMA channel too, or else
-the DMA Engine core will take a reference upon registration, and it
-won't be further available for callers of dma_request_chan.
+Hi,
 
-Signed-off-by: Adrian Larumbe <adrian.martinezlarumbe@imgtec.com>
----
- drivers/dma/xilinx/xilinx_dma.c | 131 +++++++++++++++++++++++++++++++-
- 1 file changed, 127 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/dma/xilinx/xilinx_dma.c b/drivers/dma/xilinx/xilinx_dma.c
-index 49c7093e2487..40c6cf8bf0e6 100644
---- a/drivers/dma/xilinx/xilinx_dma.c
-+++ b/drivers/dma/xilinx/xilinx_dma.c
-@@ -2433,6 +2433,130 @@ xilinx_mcdma_prep_slave_sg(struct dma_chan *dchan, struct scatterlist *sgl,
- 	return NULL;
- }
- 
-+/**
-+ * xilinx_cdma_prep_slave_sg - prepare descriptors for a DMA_SLAVE transaction
-+ * @dchan: DMA channel
-+ * @sgl: scatterlist to transfer to/from
-+ * @sg_len: number of entries in @scatterlist
-+ * @direction: DMA direction
-+ * @flags: transfer ack flags
-+ * @context: APP words of the descriptor
-+ *
-+ * Return: Async transaction descriptor on success and NULL on failure
-+ */
-+static struct dma_async_tx_descriptor
-+*xilinx_cdma_prep_slave_sg(struct dma_chan *dchan, struct scatterlist *sgl,
-+						   unsigned int sg_len,
-+						   enum dma_transfer_direction direction,
-+						   unsigned long flags, void *context)
-+{
-+	struct xilinx_dma_chan *chan = to_xilinx_chan(dchan);
-+	struct xilinx_cdma_tx_segment *segment, *prev = NULL;
-+	struct xilinx_dma_tx_descriptor *desc;
-+	struct xilinx_cdma_desc_hw *hw;
-+	dma_addr_t dma_dst, dma_src, dma_addr;
-+	size_t len, avail;
-+
-+	(void)flags;
-+	(void)context;
-+
-+	if (!is_slave_direction(direction)) {
-+		dev_err(chan->xdev->dev,
-+			"%s: bad direction?\n", __func__);
-+		return NULL;
-+	}
-+
-+	if (unlikely(sg_len == 0 || !sgl))
-+		return NULL;
-+
-+	dma_src = 0;
-+	dma_dst = 0;
-+
-+	if (direction == DMA_DEV_TO_MEM)
-+		dma_src = chan->cfg.src_addr;
-+	else
-+		dma_dst = chan->cfg.dst_addr;
-+
-+	desc = xilinx_dma_alloc_tx_descriptor(chan);
-+	if (!desc)
-+		return NULL;
-+
-+	dma_async_tx_descriptor_init(&desc->async_tx, &chan->common);
-+	desc->async_tx.tx_submit = xilinx_dma_tx_submit;
-+
-+	avail = sg_dma_len(sgl);
-+	/*
-+	 * Loop until there is either no more source or no more
-+	 * destination scatterlist entries
-+	 */
-+	while (true) {
-+		len = min_t(size_t, avail, chan->xdev->max_buffer_len);
-+		if (len == 0)
-+			goto fetch;
-+
-+		/* Allocate the link descriptor from DMA pool */
-+		segment = xilinx_cdma_alloc_tx_segment(chan);
-+		if (!segment)
-+			goto error;
-+
-+		dma_addr = sg_dma_address(sgl) + sg_dma_len(sgl) - avail;
-+
-+		if (direction == DMA_DEV_TO_MEM)
-+			dma_dst = dma_addr;
-+		else
-+			dma_src = dma_addr;
-+
-+		hw = &segment->hw;
-+		hw->control = len;
-+		hw->src_addr = dma_src;
-+		hw->dest_addr = dma_dst;
-+		if (chan->ext_addr) {
-+			hw->src_addr_msb = upper_32_bits(dma_src);
-+			hw->dest_addr_msb = upper_32_bits(dma_dst);
-+		}
-+
-+		if (prev) {
-+			prev->hw.next_desc = segment->phys;
-+			if (chan->ext_addr)
-+				prev->hw.next_desc_msb = upper_32_bits(segment->phys);
-+		}
-+
-+		prev = segment;
-+		avail -= len;
-+		list_add_tail(&segment->node, &desc->segments);
-+
-+		if (direction == DMA_DEV_TO_MEM)
-+			dma_src += len;
-+		else
-+			dma_dst += len;
-+fetch:
-+		/* Fetch the next scatterlist entry */
-+		if (avail == 0) {
-+			if (sg_len == 0)
-+				break;
-+			sgl = sg_next(sgl);
-+			if (!sgl)
-+				break;
-+			sg_len--;
-+			avail = sg_dma_len(sgl);
-+		}
-+	}
-+
-+	/* Link the last hardware descriptor with the first. */
-+	segment = list_first_entry(&desc->segments,
-+							   struct xilinx_cdma_tx_segment, node);
-+	desc->async_tx.phys = segment->phys;
-+	prev->hw.next_desc = segment->phys;
-+	if (chan->ext_addr)
-+		prev->hw.next_desc_msb = upper_32_bits(segment->phys);
-+
-+	return &desc->async_tx;
-+
-+error:
-+	xilinx_dma_free_tx_descriptor(chan, desc);
-+	return NULL;
-+}
-+
- /**
-  * xilinx_dma_terminate_all - Halt the channel and free descriptors
-  * @dchan: Driver specific DMA Channel pointer
-@@ -3100,10 +3224,8 @@ static int xilinx_dma_probe(struct platform_device *pdev)
- 	xdev->common.dev = &pdev->dev;
- 
- 	INIT_LIST_HEAD(&xdev->common.channels);
--	if (!(xdev->dma_config->dmatype == XDMA_TYPE_CDMA)) {
--		dma_cap_set(DMA_SLAVE, xdev->common.cap_mask);
--		dma_cap_set(DMA_PRIVATE, xdev->common.cap_mask);
--	}
-+	dma_cap_set(DMA_SLAVE, xdev->common.cap_mask);
-+	dma_cap_set(DMA_PRIVATE, xdev->common.cap_mask);
- 
- 	xdev->common.device_alloc_chan_resources =
- 				xilinx_dma_alloc_chan_resources;
-@@ -3124,6 +3246,7 @@ static int xilinx_dma_probe(struct platform_device *pdev)
- 	} else if (xdev->dma_config->dmatype == XDMA_TYPE_CDMA) {
- 		dma_cap_set(DMA_MEMCPY, xdev->common.cap_mask);
- 		xdev->common.device_prep_dma_memcpy = xilinx_cdma_prep_memcpy;
-+		xdev->common.device_prep_slave_sg = xilinx_cdma_prep_slave_sg;
- 		/* Residue calculation is supported by only AXI DMA and CDMA */
- 		xdev->common.residue_granularity =
- 					  DMA_RESIDUE_GRANULARITY_SEGMENT;
--- 
-2.17.1
+Patch looks good, but basically the same got already applied a few weeks 
+ago.
+
+See 
+https://git.kernel.org/pub/scm/linux/kernel/git/vkoul/dmaengine.git/commit/?h=next&id=50db2050faf854cbaf4b6557a7a8ca21bff302ae
+
+- Lars
+
+> ---
+>   drivers/dma/xilinx/xilinx_dma.c | 8 ++++++++
+>   1 file changed, 8 insertions(+)
+>
+> diff --git a/drivers/dma/xilinx/xilinx_dma.c b/drivers/dma/xilinx/xilinx_dma.c
+> index 40c6cf8bf0e6..d4bad999e7f9 100644
+> --- a/drivers/dma/xilinx/xilinx_dma.c
+> +++ b/drivers/dma/xilinx/xilinx_dma.c
+> @@ -942,6 +942,13 @@ static void xilinx_dma_free_chan_resources(struct dma_chan *dchan)
+>   
+>   }
+>   
+> +static void xilinx_dma_synchronize(struct dma_chan *dchan)
+> +{
+> +	struct xilinx_dma_chan *chan = to_xilinx_chan(dchan);
+> +
+> +	tasklet_kill(&chan->tasklet);
+> +}
+> +
+>   /**
+>    * xilinx_dma_get_residue - Compute residue for a given descriptor
+>    * @chan: Driver specific dma channel
+> @@ -3235,6 +3242,7 @@ static int xilinx_dma_probe(struct platform_device *pdev)
+>   	xdev->common.device_tx_status = xilinx_dma_tx_status;
+>   	xdev->common.device_issue_pending = xilinx_dma_issue_pending;
+>   	xdev->common.device_config = xilinx_dma_slave_config;
+> +	xdev->common.device_synchronize = xilinx_dma_synchronize;
+>   	if (xdev->dma_config->dmatype == XDMA_TYPE_AXIDMA) {
+>   		dma_cap_set(DMA_CYCLIC, xdev->common.cap_mask);
+>   		xdev->common.device_prep_slave_sg = xilinx_dma_prep_slave_sg;
+
 
