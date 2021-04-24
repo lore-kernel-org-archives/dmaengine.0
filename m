@@ -2,147 +2,120 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 369F6C433B4
-	for <dmaengine@archiver.kernel.org>; Sat, 24 Apr 2021 15:04:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0AA56C43462
+	for <dmaengine@archiver.kernel.org>; Sat, 24 Apr 2021 15:04:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 00D346146B
-	for <dmaengine@archiver.kernel.org>; Sat, 24 Apr 2021 15:04:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DCF496146B
+	for <dmaengine@archiver.kernel.org>; Sat, 24 Apr 2021 15:04:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232035AbhDXPE7 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Sat, 24 Apr 2021 11:04:59 -0400
-Received: from mail.kernel.org ([198.145.29.99]:55842 "EHLO mail.kernel.org"
+        id S234144AbhDXPFG (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Sat, 24 Apr 2021 11:05:06 -0400
+Received: from mail.kernel.org ([198.145.29.99]:55894 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231892AbhDXPE6 (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Sat, 24 Apr 2021 11:04:58 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 72D3261452;
-        Sat, 24 Apr 2021 15:04:19 +0000 (UTC)
+        id S233833AbhDXPFC (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Sat, 24 Apr 2021 11:05:02 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id D97136148E;
+        Sat, 24 Apr 2021 15:04:23 +0000 (UTC)
 From:   Tom Zanussi <tom.zanussi@linux.intel.com>
 To:     vkoul@kernel.org
 Cc:     peterz@infradead.org, acme@kernel.org, mingo@kernel.org,
         kan.liang@linux.intel.com, dave.jiang@intel.com,
         tony.luck@intel.com, dan.j.williams@intel.com,
         linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org
-Subject: [PATCH v4 0/2] dmaengine: idxd: IDXD pmu support
-Date:   Sat, 24 Apr 2021 10:04:14 -0500
-Message-Id: <cover.1619276133.git.zanussi@kernel.org>
+Subject: [PATCH v4 2/2] dmaengine: idxd: Enable IDXD performance monitor support
+Date:   Sat, 24 Apr 2021 10:04:16 -0500
+Message-Id: <a5564a5583911565d31c2af9234218c5166c4b2c.1619276133.git.zanussi@kernel.org>
 X-Mailer: git-send-email 2.17.1
+In-Reply-To: <cover.1619276133.git.zanussi@kernel.org>
+References: <cover.1619276133.git.zanussi@kernel.org>
+In-Reply-To: <cover.1619276133.git.zanussi@kernel.org>
+References: <cover.1619276133.git.zanussi@kernel.org>
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Hi,
+Add the code needed in the main IDXD driver to interface with the IDXD
+perfmon implementation.
 
-This is v4 of the IDXD pmu support patchset, which is the same as v3
-but rebased to the latest dmaengine/next, no other changes.
+[ Based on work originally by Jing Lin. ]
 
-Thanks,
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Reviewed-by: Kan Liang <kan.liang@linux.intel.com>
+Signed-off-by: Tom Zanussi <tom.zanussi@linux.intel.com>
+---
+ drivers/dma/idxd/init.c | 9 +++++++++
+ drivers/dma/idxd/irq.c  | 5 +----
+ 2 files changed, 10 insertions(+), 4 deletions(-)
 
-Tom
-
- -- original v3 text --
-
-Hi,
-
-This is v3 of the IDXD pmu support patch, which addresses the comments
-from Vinod:
-
- - Removed the default line for INTEL_IDXD_PERFMON making it default 'n'
-
- - Replaced #ifdef CONFIG_INTEL_IDXD_PERFMON with IS_ENABLED()
-
- - Split the patch into two separate patches, the perfmon
-   implementation and the code that uses it in the IDXD driver.
-
- - Added a new file,
-   Documentation/ABI/testing/sysfs-bus-event_source-devices-dsa that
-   documents the new format and cpumask attributes, and added better
-   comments for those in the code.
-
- - Changed 'dogrp' to 'do_group' in perfmon_collect_events()
-
- - Moved 'int idx' inside the loop in perfmon_validate_group() to the
-   top of function.
-
- - In perfmon_pmu_read_counter(), return ioread64() directly and get
-   rid of cntrdata.
-
-I also fixed some erroneous code in perfmon_counter_overflow() that
-because of my misreading of the spec caused unintended clearing of
-wrong bits.  According to the spec you need to write 1 rather than 0
-to an OVFSTATUS bit to clear it.
-
-Thanks,
-
-Tom
-
- -- original v2 text --
-
-Hi,
-
-This is v2 of the IDXD pmu support patch, which is the same as v1 but
-removes a few assigned-but-unused variables reported by kernel test
-robot <lkp@intel.com>.
-
- -- original v1 text --
-
-Hi,
-
-This patchset implements initial pmu support for the Intel DSA (Data
-Streaming Accelerator [1]), which I'm hoping can go into 5.13.
-
-I'm also hoping to supply a couple follow-on patches in the near
-future, but I'm not yet sure how much sense they make, so I thought
-I'd throw a couple ideas out there and maybe get some opinions before
-going forward with them:
-
-  - The perf userspace interface for this isn't exactly user-friedly,
-    in that you currently need to specify numeric values for field
-    values:
-
-     # perf stat -e dsa0/filter_wq=0x1,filter_tc=0x1,filter_sz=0x7,
-                    filter_eng=0x1,event=0x8,event_category=0x3/
-
-    It would be nicer to be able to specify those values symbolically
-    instead, and the way to do that seems to be via some JSON files in
-    perf userspace.
-
-  - Some of the DSA pmu support is patterned after existing uncore
-    code, and there seems to be at least some opportunity to
-    consolidate some of the things they both do into common code, such
-    as the cpumask device attributes and related cpu hotplug support.
-    At this point I'm not sure how much sense it makes to put any
-    effort into that, but would be willing to try if there would be
-    some interest in it, especially considering there will probably be
-    future pmu support added that could benefit from it.
-
-Thanks,
-
-Tom
-
-
-Tom Zanussi (2):
-  dmaengine: idxd: Add IDXD performance monitor support
-  dmaengine: idxd: Enable IDXD performance monitor support
-
- .../sysfs-bus-event_source-devices-dsa        |  30 +
- drivers/dma/Kconfig                           |  12 +
- drivers/dma/idxd/Makefile                     |   2 +
- drivers/dma/idxd/idxd.h                       |  45 ++
- drivers/dma/idxd/init.c                       |   9 +
- drivers/dma/idxd/irq.c                        |   5 +-
- drivers/dma/idxd/perfmon.c                    | 662 ++++++++++++++++++
- drivers/dma/idxd/perfmon.h                    | 119 ++++
- drivers/dma/idxd/registers.h                  | 108 +++
- include/linux/cpuhotplug.h                    |   1 +
- 10 files changed, 989 insertions(+), 4 deletions(-)
- create mode 100644 Documentation/ABI/testing/sysfs-bus-event_source-devices-dsa
- create mode 100644 drivers/dma/idxd/perfmon.c
- create mode 100644 drivers/dma/idxd/perfmon.h
-
+diff --git a/drivers/dma/idxd/init.c b/drivers/dma/idxd/init.c
+index 8003f8a25fff..2a926bef87f2 100644
+--- a/drivers/dma/idxd/init.c
++++ b/drivers/dma/idxd/init.c
+@@ -21,6 +21,7 @@
+ #include "../dmaengine.h"
+ #include "registers.h"
+ #include "idxd.h"
++#include "perfmon.h"
+ 
+ MODULE_VERSION(IDXD_DRIVER_VERSION);
+ MODULE_LICENSE("GPL v2");
+@@ -541,6 +542,10 @@ static int idxd_probe(struct idxd_device *idxd)
+ 
+ 	idxd->major = idxd_cdev_get_major(idxd);
+ 
++	rc = perfmon_pmu_init(idxd);
++	if (rc < 0)
++		dev_warn(dev, "Failed to initialize perfmon. No PMU support: %d\n", rc);
++
+ 	dev_dbg(dev, "IDXD device %d probed successfully\n", idxd->id);
+ 	return 0;
+ 
+@@ -720,6 +725,7 @@ static void idxd_remove(struct pci_dev *pdev)
+ 	if (device_pasid_enabled(idxd))
+ 		idxd_disable_system_pasid(idxd);
+ 	idxd_unregister_devices(idxd);
++	perfmon_pmu_remove(idxd);
+ 	iommu_dev_disable_feature(&pdev->dev, IOMMU_DEV_FEAT_SVA);
+ }
+ 
+@@ -749,6 +755,8 @@ static int __init idxd_init_module(void)
+ 	else
+ 		support_enqcmd = true;
+ 
++	perfmon_init();
++
+ 	err = idxd_register_bus_type();
+ 	if (err < 0)
+ 		return err;
+@@ -782,5 +790,6 @@ static void __exit idxd_exit_module(void)
+ 	pci_unregister_driver(&idxd_pci_driver);
+ 	idxd_cdev_remove();
+ 	idxd_unregister_bus_type();
++	perfmon_exit();
+ }
+ module_exit(idxd_exit_module);
+diff --git a/drivers/dma/idxd/irq.c b/drivers/dma/idxd/irq.c
+index afee571e0194..ae68e1e5487a 100644
+--- a/drivers/dma/idxd/irq.c
++++ b/drivers/dma/idxd/irq.c
+@@ -156,11 +156,8 @@ static int process_misc_interrupts(struct idxd_device *idxd, u32 cause)
+ 	}
+ 
+ 	if (cause & IDXD_INTC_PERFMON_OVFL) {
+-		/*
+-		 * Driver does not utilize perfmon counter overflow interrupt
+-		 * yet.
+-		 */
+ 		val |= IDXD_INTC_PERFMON_OVFL;
++		perfmon_counter_overflow(idxd);
+ 	}
+ 
+ 	val ^= cause;
 -- 
 2.17.1
 
