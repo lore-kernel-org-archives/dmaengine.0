@@ -2,92 +2,191 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,UNPARSEABLE_RELAY,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-16.7 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B5095C43461
-	for <dmaengine@archiver.kernel.org>; Mon,  3 May 2021 15:26:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 99BEBC433B4
+	for <dmaengine@archiver.kernel.org>; Mon,  3 May 2021 22:06:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 933A260C3E
-	for <dmaengine@archiver.kernel.org>; Mon,  3 May 2021 15:26:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7496A61244
+	for <dmaengine@archiver.kernel.org>; Mon,  3 May 2021 22:06:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230366AbhECP13 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 3 May 2021 11:27:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34184 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230423AbhECP10 (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Mon, 3 May 2021 11:27:26 -0400
-Received: from mail-ot1-x32b.google.com (mail-ot1-x32b.google.com [IPv6:2607:f8b0:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 86013C06138E
-        for <dmaengine@vger.kernel.org>; Mon,  3 May 2021 08:26:32 -0700 (PDT)
-Received: by mail-ot1-x32b.google.com with SMTP id 92-20020a9d02e50000b029028fcc3d2c9eso5437718otl.0
-        for <dmaengine@vger.kernel.org>; Mon, 03 May 2021 08:26:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baylibre-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:from:date:message-id:subject:cc;
-        bh=EI6bZyecXV+D4mAvyW1zNE2tx9yP9EY1VWyGEKOhGs4=;
-        b=qeuOlliDGX/UXrFBQRGA+wZpGmrZ3HwhDOaBcLLbNorJFBQ4hQ9Q/6PhUtBuNeS8Aj
-         au6pVFpGyoJApuOoR9hMvcsM3O/ekucc0pvsmba0X3h/ETYu8raP259toJ+B9EQmVv3U
-         noQ0uvWbA3AQWM/Qk9dBt9TfYB86MQgd8kz3agg/3D5fZKr6N1NOHdVpSHKhVHkpQlbO
-         GeOcTWWtTFUZMM+V3A3Em2sAhxFybQCvJI/ak4a4jeiX+fIB3AtFhVdTWrFtg63tw3xd
-         QOgP2+GbpbYXfLlNvbH5jOyPPPAz8hsNULBRqJWfisA+Pml5+1NmzEMm7R5HvdDBlBGU
-         Wc/Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:cc;
-        bh=EI6bZyecXV+D4mAvyW1zNE2tx9yP9EY1VWyGEKOhGs4=;
-        b=gbL73jATvqNXQhqiYwwkbE9cuiQsLKmhETIKT7Bwh3gAG/GRqIiD2mLZuG3EsEg7Oy
-         momWDWxX61CJkCCtjZUs+UMStiD+sDiJ69vHwYO9HCSLE4ZdVPEerX1hAUleaWOHN4MC
-         shlRzlFAiqQfTbC1IomAwU/Uz3gCPU9fzZpLOpT6jGDJN3xd8sOOyqsWxCKB6knB8Tj/
-         rgwinQ+Y+4NdEme6GTQ6MLc6umTZlO3j+1UFIo1JUrHNr7rsB2BBK+b63zewgWwR7h+D
-         c1N/uiTAI+tQC72ejGqJOnDBlbMOXkbERt1+jS8Zs5VGj0haM1CXZ7i7V7+s/iU11L6V
-         rcaA==
-X-Gm-Message-State: AOAM5323gt4ziwR+r4elkzPFeRY/3nqTsxW46iLKA/Bosgo+lWnd+WO7
-        aaRE7HGtUXRbJrAnETl7y97BjV8l3a8NaE31nB49Ww==
+        id S229499AbhECWHb (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 3 May 2021 18:07:31 -0400
+Received: from mail.kernel.org ([198.145.29.99]:39554 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229497AbhECWHa (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Mon, 3 May 2021 18:07:30 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 2A3B4610FC;
+        Mon,  3 May 2021 22:06:37 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1620079597;
+        bh=6b/U8Seq5uofAuhoy2eEbBzUlcdWBAkxOW6Z/HujxnU=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=J6/TxQDzklxOuba6XTDFeoj8ulloUfn4K1aTn3IW2+FLy/oPa58LESNqOH9oYxeX7
+         eFxIw8tkCMjAybbPPaDOKl0rIl7NqSkJggLUZ2NuWa0UsbjZ6AQobDlsOPYox8bcmH
+         jTMv0wr0lUAXSz0r1B63FiUp17r5t6/4yG5PQodYcPdBu14c2RcfeYbakoNEy/RbSr
+         sG8gLw7+E4R0bs1ko8PWhws8mTQJLjx7M4I7E8OYEeiWDUNRNt3Lnt/BeCFv2Egm2M
+         R+9QeZ+IxVeRNIU8ABxZDrQWurIYbIHFoGJQyDNxL4DrzHz34UEaFF/SlXb/i8ZXyc
+         kl+FVIjEuk8pw==
+Received: by mail-ed1-f43.google.com with SMTP id e7so8132636edu.10;
+        Mon, 03 May 2021 15:06:37 -0700 (PDT)
+X-Gm-Message-State: AOAM532cwYXuKpunaNfJIOoD8GiOZL7sUsiwk53LVHVCCMgOPgArAMNx
+        8opbbAweUzdwcGlFN9v2AEOcTTGs3rBMoSMWPg==
+X-Google-Smtp-Source: ABdhPJw+i4aK04IeE/ccNTgCMAXtyvNb57tOJTCXaITCldFzEumSKUvT2WxfUUabDek/J0g022bwANQtx03q0z4KFg0=
+X-Received: by 2002:a05:6402:84b:: with SMTP id b11mr22728486edz.289.1620079595815;
+ Mon, 03 May 2021 15:06:35 -0700 (PDT)
 MIME-Version: 1.0
-X-Received: by 2002:a9d:2f24:: with SMTP id h33mt13304199otb.128.1620055591994;
- Mon, 03 May 2021 08:26:31 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 3 May 2021 08:26:31 -0700
-From:   Guillaume Ranquet <granquet@baylibre.com>
-Date:   Mon, 3 May 2021 08:26:31 -0700
-Message-ID: <CABnWg9scYTkZ242STBop4yXNKsEzgd1gsGoZQzvrurL5nYhUQw@mail.gmail.com>
-Subject: [PATCH 3/4] dmaengine: mediatek: use GFP_NOWAIT instead of GFP_ATOMIC
- in prep_dma
-Cc:     Sean Wang <sean.wang@mediatek.com>, Vinod Koul <vkoul@kernel.org>,
-        Dan Williams <dan.j.williams@intel.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        dmaengine@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-mediatek@lists.infradead.org, linux-kernel@vger.kernel.org
+References: <YIq/qObuYw+8ikxg@orolia.com>
+In-Reply-To: <YIq/qObuYw+8ikxg@orolia.com>
+From:   Rob Herring <robh+dt@kernel.org>
+Date:   Mon, 3 May 2021 17:06:23 -0500
+X-Gmail-Original-Message-ID: <CAL_JsqJc=EDhXNcb4QZbmD1Ukh94hqLhk4YvN4SoCdt32TGMSg@mail.gmail.com>
+Message-ID: <CAL_JsqJc=EDhXNcb4QZbmD1Ukh94hqLhk4YvN4SoCdt32TGMSg@mail.gmail.com>
+Subject: Re: [PATCH v4 1/2] dt-bindings: dma: add schema for altr,msgdma
+To:     Olivier Dautricourt <olivier.dautricourt@orolia.com>
+Cc:     Vinod Koul <vkoul@kernel.org>, Stefan Roese <sr@denx.de>,
+        dmaengine@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-To:     unlisted-recipients:; (no To-header on input)
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-As recommended by the doc in:
-Documentation/drivers-api/dmaengine/provider.rst
+On Thu, Apr 29, 2021 at 9:16 AM Olivier Dautricourt
+<olivier.dautricourt@orolia.com> wrote:
+>
+> - add schema for Altera mSGDMA bindings in devicetree.
+> - add myself as 'Odd fixes' maintainer for this driver
 
-Use GFP_NOWAIT to not deplete the emergency pool.
+While I guess valid, the tools (b4) don't like the '/' in your
+message-id. Lore will escape it fine, but then you have to escape the
+url. Would be nice to avoid all that, but maybe this is Exchange's
+doing?
 
-Signed-off-by: Guillaume Ranquet <granquet@baylibre.com>
+> Signed-off-by: Olivier Dautricourt <olivier.dautricourt@orolia.com>
+> ---
+>
+> Notes:
+>     Changes in v2:
+>      - fix reg size in dt example
+>      - fix dt_binding check warning
+>      - add list in MAINTAINERS entry
+>
+>     Changes from v2 to v3:
+>      none
+>
+>     Changes from v3 to v4:
+>      none
+>
+>  .../devicetree/bindings/dma/altr,msgdma.yaml  | 62 +++++++++++++++++++
+>  MAINTAINERS                                   |  7 +++
+>  2 files changed, 69 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/dma/altr,msgdma.yaml
+>
+> diff --git a/Documentation/devicetree/bindings/dma/altr,msgdma.yaml b/Documentation/devicetree/bindings/dma/altr,msgdma.yaml
+> new file mode 100644
+> index 000000000000..295e46c84bf9
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/dma/altr,msgdma.yaml
+> @@ -0,0 +1,62 @@
+> +# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/dma/altr,msgdma.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Altera mSGDMA IP core
+> +
+> +maintainers:
+> +  - Olivier Dautricourt <olivier.dautricourt@orolia.com>
+> +
+> +description: |
+> +  Altera / Intel modular Scatter-Gather Direct Memory Access (mSGDMA)
+> +  intellectual property (IP)
+> +
+> +allOf:
+> +  - $ref: "dma-controller.yaml#"
+> +
+> +properties:
+> +  compatible:
+> +    const: altr,msgdma
 
-diff --git a/drivers/dma/mediatek/mtk-uart-apdma.c
-b/drivers/dma/mediatek/mtk-uart-apdma.c
-index 249cabddb7ee..4711bec04b98 100644
---- a/drivers/dma/mediatek/mtk-uart-apdma.c
-+++ b/drivers/dma/mediatek/mtk-uart-apdma.c
-@@ -349,7 +349,7 @@ static struct dma_async_tx_descriptor
-*mtk_uart_apdma_prep_slave_sg
- 		return NULL;
+Needs an SoC specific compatible.
 
- 	/* Now allocate and setup the descriptor */
--	d = kzalloc(sizeof(*d), GFP_ATOMIC);
-+	d = kzalloc(sizeof(*d), GFP_NOWAIT);
- 	if (!d)
- 		return NULL;
+> +
+> +  reg:
+> +    description:
+> +      csr, desc, resp resgisters
 
--- 
-2.26.3
+Expand what each region is:
+
+reg:
+  items:
+    - description: ...
+    - description: ...
+    - description: ...
+
+> +    maxItems: 3
+> +    minItems: 3
+
+And then drop this.
+
+> +
+> +  reg-names:
+> +    items:
+> +      - const: csr
+> +      - const: desc
+> +      - const: resp
+> +
+> +  interrupts:
+> +    maxItems: 1
+> +
+> +  "#dma-cells":
+> +    description: |
+> +      The dma controller discards the argument but one must be specified
+> +      to keep compatibility with dma-controller schema.
+> +    const: 1
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +  - reg-names
+> +  - interrupts
+> +
+> +unevaluatedProperties: false
+> +
+> +examples:
+> +  - |
+> +    #include <dt-bindings/interrupt-controller/irq.h>
+> +
+> +    msgdma_controller: dma-controller@ff200b00 {
+> +        compatible = "altr,msgdma";
+> +        reg = <0xff200b00 0x100>, <0xff200c00 0x100>, <0xff200d00 0x100>;
+> +        reg-names = "csr", "desc", "resp";
+> +        interrupts = <0 67 IRQ_TYPE_LEVEL_HIGH>;
+> +        #dma-cells = <1>;
+> +    };
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 5c90148f0369..359ab4877024 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -782,6 +782,13 @@ M: Ley Foon Tan <ley.foon.tan@intel.com>
+>  S:     Maintained
+>  F:     drivers/mailbox/mailbox-altera.c
+>
+> +ALTERA MSGDMA IP CORE DRIVER
+> +M:     Olivier Dautricourt <olivier.dautricourt@orolia.com>
+> +L:     dmaengine@vger.kernel.org
+> +S:     Odd Fixes
+> +F:     Documentation/devicetree/bindings/dma/altr,msgdma.yaml
+> +F:     drivers/dma/altera-msgdma.c
+> +
+>  ALTERA PIO DRIVER
+>  M:     Joyce Ooi <joyce.ooi@intel.com>
+>  L:     linux-gpio@vger.kernel.org
+> --
+> 2.31.0.rc2
+>
