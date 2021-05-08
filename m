@@ -2,158 +2,86 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.0 required=3.0 tests=BAYES_00,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E76F1C433B4
-	for <dmaengine@archiver.kernel.org>; Fri,  7 May 2021 21:14:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 822AAC433B4
+	for <dmaengine@archiver.kernel.org>; Sat,  8 May 2021 03:01:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BC8B661430
-	for <dmaengine@archiver.kernel.org>; Fri,  7 May 2021 21:14:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4EBD86145A
+	for <dmaengine@archiver.kernel.org>; Sat,  8 May 2021 03:01:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229542AbhEGVPj (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 7 May 2021 17:15:39 -0400
-Received: from mail-ot1-f50.google.com ([209.85.210.50]:41561 "EHLO
-        mail-ot1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229470AbhEGVPi (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Fri, 7 May 2021 17:15:38 -0400
-Received: by mail-ot1-f50.google.com with SMTP id 36-20020a9d0ba70000b02902e0a0a8fe36so2774485oth.8;
-        Fri, 07 May 2021 14:14:37 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=7veamalGpZ3JPYDEzgwvaohfG+qmQaU3ikes2gGH9cY=;
-        b=so6LJ1RBcGzpR+s3GBJ2bspHXUghZvAg8bmKPaIsOa7VtNbOzkDEcmO/jsRPzWHM7d
-         RXL4OfYKw7eEed+8cUyCxuXVGHgXHUgnyhXePc+MOyJSt83qZb/OxAZnXhWaDtwjDaf0
-         F1PEywpwxdDK0q1XZ1IA+VjzUtkI4cZbRygdEaU8ZqTgjFWkz77LumaLSa7rRawm5cmX
-         zDioXvOsesDO/U9jpUwGzU9I2oWKR/hFo33yKBR8WuirO4hWSFVzFB0OBz8IUWYImdJ/
-         iKMPjy3ytRqPCXq07ZG5fDU5HoqG+vcjFXwR8NfOrgZcsa+MyQi0mFzgfM05vWhKA2MY
-         PdxQ==
-X-Gm-Message-State: AOAM530VTkZ1a1F7jQGCLiz+ERkiHNEIXWA0ZLcPoww3f3+k6+1/UDaQ
-        0dnlmFOPpFji2yd976mieJJ73lBHEg==
-X-Google-Smtp-Source: ABdhPJws1frb5rRP1SOGObFpTLxgTjiWmAFCGMur/wBJeGgvCd26jhJ/gW4kSV1Zn+ctT9nDKHskEA==
-X-Received: by 2002:a9d:7593:: with SMTP id s19mr10190187otk.268.1620422076830;
-        Fri, 07 May 2021 14:14:36 -0700 (PDT)
-Received: from robh.at.kernel.org (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.gmail.com with ESMTPSA id c18sm128622otm.1.2021.05.07.14.14.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 07 May 2021 14:14:35 -0700 (PDT)
-Received: (nullmailer pid 2897610 invoked by uid 1000);
-        Fri, 07 May 2021 21:14:34 -0000
-Date:   Fri, 7 May 2021 16:14:34 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org,
-        Thara Gopinath <thara.gopinath@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Herbert Xu <herbert@gondor.apana.org.au>,
-        "David S . Miller" <davem@davemloft.net>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Vinod Koul <vkoul@kernel.org>, dmaengine@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-crypto@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        bhupesh.linux@gmail.com
-Subject: Re: [PATCH v2 00/17]  Enable Qualcomm Crypto Engine on sm8250
-Message-ID: <20210507211434.GA2879094@robh.at.kernel.org>
-References: <20210505213731.538612-1-bhupesh.sharma@linaro.org>
+        id S230267AbhEHDC3 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 7 May 2021 23:02:29 -0400
+Received: from szxga05-in.huawei.com ([45.249.212.191]:17479 "EHLO
+        szxga05-in.huawei.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229775AbhEHDC3 (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Fri, 7 May 2021 23:02:29 -0400
+Received: from DGGEMS401-HUB.china.huawei.com (unknown [172.30.72.58])
+        by szxga05-in.huawei.com (SkyGuard) with ESMTP id 4FcX884xLHzkX9N;
+        Sat,  8 May 2021 10:58:48 +0800 (CST)
+Received: from thunder-town.china.huawei.com (10.174.177.72) by
+ DGGEMS401-HUB.china.huawei.com (10.3.19.201) with Microsoft SMTP Server id
+ 14.3.498.0; Sat, 8 May 2021 11:01:16 +0800
+From:   Zhen Lei <thunder.leizhen@huawei.com>
+To:     Vinod Koul <vkoul@kernel.org>, Peng Ma <peng.ma@nxp.com>,
+        dmaengine <dmaengine@vger.kernel.org>,
+        linux-kernel <linux-kernel@vger.kernel.org>
+CC:     Zhen Lei <thunder.leizhen@huawei.com>
+Subject: [PATCH 1/1] dmaengine: fsl-dpaa2-qdma: Fix error return code in two functions
+Date:   Sat, 8 May 2021 11:00:56 +0800
+Message-ID: <20210508030056.2027-1-thunder.leizhen@huawei.com>
+X-Mailer: git-send-email 2.26.0.windows.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210505213731.538612-1-bhupesh.sharma@linaro.org>
+Content-Transfer-Encoding: 7BIT
+Content-Type:   text/plain; charset=US-ASCII
+X-Originating-IP: [10.174.177.72]
+X-CFilter-Loop: Reflected
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On Thu, May 06, 2021 at 03:07:14AM +0530, Bhupesh Sharma wrote:
-> Changes since v1:
-> =================
-> - v1 can be seen here: https://lore.kernel.org/linux-arm-msm/20210310052503.3618486-1-bhupesh.sharma@linaro.org/ 
-> - v1 did not work well as reported earlier by Dmitry, so v2 contains the following
->   changes/fixes:
->   ~ Enable the interconnect path b/w BAM DMA and main memory first
->     before trying to access the BAM DMA registers.
->   ~ Enable the interconnect path b/w qce crytpo and main memory first
->     before trying to access the qce crypto registers.
->   ~ Make sure to document the required and optional properties for both
->     BAM DMA and qce crypto drivers.
->   ~ Add a few debug related print messages in case the qce crypto driver
->     passes or fails to probe.
->   ~ Convert the qce crypto driver probe to a defered one in case the BAM DMA
->     or the interconnect driver(s) (needed on specific Qualcomm parts) are not
->     yet probed.
-> 
-> Qualcomm crypto engine is also available on sm8250 SoC.
-> It supports hardware accelerated algorithms for encryption
-> and authentication. It also provides support for aes, des, 3des
-> encryption algorithms and sha1, sha256, hmac(sha1), hmac(sha256)
-> authentication algorithms.
-> 
-> Tested the enabled crypto algorithms with cryptsetup test utilities
-> on sm8250-mtp and RB5 board (see [1]).
-> 
-> While at it, also make a minor fix in 'sdm845.dtsi', to make
-> sure it confirms with the other .dtsi files which expose
-> crypto nodes on qcom SoCs.
-> 
-> Cc: Thara Gopinath <thara.gopinath@linaro.org>
-> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Cc: Rob Herring <robh+dt@kernel.org>
-> Cc: Andy Gross <agross@kernel.org>
-> Cc: Herbert Xu <herbert@gondor.apana.org.au>
-> Cc: David S. Miller <davem@davemloft.net>
-> Cc: Stephen Boyd <sboyd@kernel.org>
-> Cc: Michael Turquette <mturquette@baylibre.com>
-> Cc: Vinod Koul <vkoul@kernel.org>
-> Cc: dmaengine@vger.kernel.org
-> Cc: linux-clk@vger.kernel.org
-> Cc: linux-crypto@vger.kernel.org
-> Cc: devicetree@vger.kernel.org
-> Cc: linux-kernel@vger.kernel.org
-> Cc: bhupesh.linux@gmail.com
->  
-> Bhupesh Sharma (14):
->   dt-bindings: qcom-bam: Add 'interconnects' & 'interconnect-names' to
->     optional properties
->   dt-bindings: qcom-bam: Add 'iommus' to required properties
->   dt-bindings: qcom-qce: Add 'iommus' to required properties
->   dt-bindings: qcom-qce: Add 'interconnects' and move 'clocks' to
->     optional properties
->   arm64/dts: qcom: sdm845: Use RPMH_CE_CLK macro directly
->   dt-bindings: crypto : Add new compatible strings for qcom-qce
+Fix to return a negative error code from the error handling case instead
+of 0, as done elsewhere in the function where it is.
 
-Please convert these bindings to schemas.
+Fixes: 7fdf9b05c73b ("dmaengine: fsl-dpaa2-qdma: Add NXP dpaa2 qDMA controller driver for Layerscape SoCs")
+Reported-by: Hulk Robot <hulkci@huawei.com>
+Signed-off-by: Zhen Lei <thunder.leizhen@huawei.com>
+---
+ drivers/dma/fsl-dpaa2-qdma/dpaa2-qdma.c | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/drivers/dma/fsl-dpaa2-qdma/dpaa2-qdma.c b/drivers/dma/fsl-dpaa2-qdma/dpaa2-qdma.c
+index 4ec909e0b810..4ae057922ef1 100644
+--- a/drivers/dma/fsl-dpaa2-qdma/dpaa2-qdma.c
++++ b/drivers/dma/fsl-dpaa2-qdma/dpaa2-qdma.c
+@@ -332,6 +332,7 @@ static int __cold dpaa2_qdma_setup(struct fsl_mc_device *ls_dev)
+ 	}
+ 
+ 	if (priv->dpdmai_attr.version.major > DPDMAI_VER_MAJOR) {
++		err = -EINVAL;
+ 		dev_err(dev, "DPDMAI major version mismatch\n"
+ 			     "Found %u.%u, supported version is %u.%u\n",
+ 				priv->dpdmai_attr.version.major,
+@@ -341,6 +342,7 @@ static int __cold dpaa2_qdma_setup(struct fsl_mc_device *ls_dev)
+ 	}
+ 
+ 	if (priv->dpdmai_attr.version.minor > DPDMAI_VER_MINOR) {
++		err = -EINVAL;
+ 		dev_err(dev, "DPDMAI minor version mismatch\n"
+ 			     "Found %u.%u, supported version is %u.%u\n",
+ 				priv->dpdmai_attr.version.major,
+@@ -475,6 +477,7 @@ static int __cold dpaa2_qdma_dpio_setup(struct dpaa2_qdma_priv *priv)
+ 		ppriv->store =
+ 			dpaa2_io_store_create(DPAA2_QDMA_STORE_SIZE, dev);
+ 		if (!ppriv->store) {
++			err = -ENOMEM;
+ 			dev_err(dev, "dpaa2_io_store_create() failed\n");
+ 			goto err_store;
+ 		}
+-- 
+2.25.1
 
 
->   arm64/dts: qcom: Use new compatibles for crypto nodes
->   crypto: qce: Add new compatibles for qce crypto driver
->   crypto: qce: Print a failure msg in case probe() fails
->   crypto: qce: Convert the device found dev_dbg() to dev_info()
->   dma: qcom: bam_dma: Create a new header file for BAM DMA driver
->   crypto: qce: Defer probing if BAM dma is not yet initialized
->   crypto: qce: Defer probe in case interconnect is not yet initialized
->   arm64/dts: qcom: sm8250: Add dt entries to support crypto engine.
-> 
-> Thara Gopinath (3):
->   dma: qcom: bam_dma: Add support to initialize interconnect path
->   crypto: qce: core: Add support to initialize interconnect path
->   crypto: qce: core: Make clocks optional
-> 
->  .../devicetree/bindings/crypto/qcom-qce.txt   |  22 +-
->  .../devicetree/bindings/dma/qcom_bam_dma.txt  |   5 +
->  arch/arm64/boot/dts/qcom/ipq6018.dtsi         |   2 +-
->  arch/arm64/boot/dts/qcom/sdm845.dtsi          |   6 +-
->  arch/arm64/boot/dts/qcom/sm8250.dtsi          |  28 ++
->  drivers/crypto/qce/core.c                     | 112 +++++--
->  drivers/crypto/qce/core.h                     |   3 +
->  drivers/dma/qcom/bam_dma.c                    | 306 ++----------------
->  include/soc/qcom/bam_dma.h                    | 290 +++++++++++++++++
->  9 files changed, 457 insertions(+), 317 deletions(-)
->  create mode 100644 include/soc/qcom/bam_dma.h
-> 
-> -- 
-> 2.30.2
-> 
