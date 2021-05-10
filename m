@@ -2,85 +2,61 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-16.7 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-6.7 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 707D9C433ED
-	for <dmaengine@archiver.kernel.org>; Mon, 10 May 2021 14:26:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B1570C433ED
+	for <dmaengine@archiver.kernel.org>; Mon, 10 May 2021 14:36:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 488B2611C2
-	for <dmaengine@archiver.kernel.org>; Mon, 10 May 2021 14:26:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8CC9760241
+	for <dmaengine@archiver.kernel.org>; Mon, 10 May 2021 14:36:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233199AbhEJO1c (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 10 May 2021 10:27:32 -0400
-Received: from mail.kernel.org ([198.145.29.99]:60292 "EHLO mail.kernel.org"
+        id S232303AbhEJOh4 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 10 May 2021 10:37:56 -0400
+Received: from mail.kernel.org ([198.145.29.99]:50764 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S237353AbhEJOYu (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Mon, 10 May 2021 10:24:50 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 6154C610F8;
-        Mon, 10 May 2021 14:23:44 +0000 (UTC)
+        id S233361AbhEJOfz (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Mon, 10 May 2021 10:35:55 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id CB8346145F;
+        Mon, 10 May 2021 14:34:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1620656625;
-        bh=kEP6aLlNuK4Dajr76Bpt6HISC9bo3qqNa90Xw9uHtoM=;
+        s=k20201202; t=1620657290;
+        bh=AsAyoVw3jfOoeNKWiGPEY4r1KTurdncvzIM0msm/r78=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=tUW+atv1hpr4r/pWfHHTxwrayD2unlBNNP8VlGbzhfqps3a/b5zLJvHpXi0Hkgrr3
-         /As3U1KQQ5zmMHKmiXDurRrT4LoRNbdh/8D3ADLuopFS1CBUoLKnLCI7qZmZkhmNPt
-         G6O4BDyduyWVl3RySPV3ijYCI0zEo2tQ3xKIHkCAPDW29wKTLQlM2R/2vZzvN39M+N
-         YJCywM1aFvzA8Ex1rvOWGOyUwo/A5Hf2jkCijWqCxskFK3Qr3QS77TRx2fut2WZQD4
-         0sTCbMhvU1haihnTIWhoGrLpRshsIeWEJIcMJAQiJp7hKsSzgT+x4ALY4c2oVNp1ki
-         D6QGSdap2araQ==
-Date:   Mon, 10 May 2021 19:53:41 +0530
+        b=qNZ8mxbAn5KZvmuJUJXVqrbMriD+D/2EW/lXPgFWQQ0oWhkw4NIW/1Kb7cMe/wxV/
+         wLqWLAgD48+3Pht/hFBH/3uDSNdTTRyxTwGu3NvL2MQmhL1cQQOllQHkhSnQbwAMjl
+         j0aIfRNXOfnBnzfkZ6YAuEEbLFqhRJQrv1PbMwMHA+5E7gOnaYuZvb4YaReJGaIcVI
+         5U7EF9NSzcydgcLMqDuSpLqj/HaG8LmzZSRbdyZBKUbdg930VBIG02IIrYwUfoKm0+
+         pdvKhoHZDyJ05j3u5vLIJGXYc37vUYS9rm/yyOOoHwK9YXEBfdBJ2aeAqBJzRPU5yO
+         UEEa48Vw1RQ+g==
+Date:   Mon, 10 May 2021 20:04:47 +0530
 From:   Vinod Koul <vkoul@kernel.org>
-To:     Robin Gong <yibin.gong@nxp.com>
-Cc:     dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3] dmaengine: fsl-qdma: check dma_set_mask return value
-Message-ID: <YJlB7XutrKJ0vq6n@vkoul-mobl.Dlink>
-References: <1619427549-20498-1-git-send-email-yibin.gong@nxp.com>
+To:     Jiapeng Chong <jiapeng.chong@linux.alibaba.com>
+Cc:     dave.jiang@intel.com, dmaengine@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] dmaengine: idxd: Remove redundant variable cdev_ctx
+Message-ID: <YJlEhyv0c17EEaz7@vkoul-mobl.Dlink>
+References: <1620298847-33127-1-git-send-email-jiapeng.chong@linux.alibaba.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1619427549-20498-1-git-send-email-yibin.gong@nxp.com>
+In-Reply-To: <1620298847-33127-1-git-send-email-jiapeng.chong@linux.alibaba.com>
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On 26-04-21, 16:59, Robin Gong wrote:
-> For fix below warning reported by static code analysis tool like Coverity
-> from Synopsys:
+On 06-05-21, 19:00, Jiapeng Chong wrote:
+> Variable cdev_ctx is set to '&ictx[wq->idxd->data->type]' but this
+> value is not used, hence it is a redundant assignment and can be
+> removed.
 > 
-> 'CID 12285639 (#1 of 2): Unchecked return value (CHECKED_RETURN)'
+> Clean up the following clang-analyzer warning:
+> 
+> drivers/dma/idxd/cdev.c:300:2: warning: Value stored to 'cdev_ctx' is
+> never read [clang-analyzer-deadcode.DeadStores].
 
-This should be:
-Addresses-Coverity-ID: 12285639 ("Unchecked return value")
-
-I have fixed that up and applied
-> 
-> Signed-off-by: Robin Gong <yibin.gong@nxp.com>
-> ---
->  drivers/dma/fsl-qdma.c | 6 +++++-
->  1 file changed, 5 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/dma/fsl-qdma.c b/drivers/dma/fsl-qdma.c
-> index ed2ab46..045ead4 100644
-> --- a/drivers/dma/fsl-qdma.c
-> +++ b/drivers/dma/fsl-qdma.c
-> @@ -1235,7 +1235,11 @@ static int fsl_qdma_probe(struct platform_device *pdev)
->  	fsl_qdma->dma_dev.device_synchronize = fsl_qdma_synchronize;
->  	fsl_qdma->dma_dev.device_terminate_all = fsl_qdma_terminate_all;
->  
-> -	dma_set_mask(&pdev->dev, DMA_BIT_MASK(40));
-> +	ret = dma_set_mask(&pdev->dev, DMA_BIT_MASK(40));
-> +	if (ret) {
-> +		dev_err(&pdev->dev, "dma_set_mask failure.\n");
-> +		return ret;
-> +	}
->  
->  	platform_set_drvdata(pdev, fsl_qdma);
->  
-> -- 
-> 2.7.4
+Applied, thanks
 
 -- 
 ~Vinod
