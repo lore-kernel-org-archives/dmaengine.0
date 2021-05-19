@@ -7,54 +7,54 @@ X-Spam-Status: No, score=-18.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
 	USER_AGENT_GIT autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E717AC433ED
-	for <dmaengine@archiver.kernel.org>; Wed, 19 May 2021 14:39:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2F4F1C43461
+	for <dmaengine@archiver.kernel.org>; Wed, 19 May 2021 14:39:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CC86E611C2
-	for <dmaengine@archiver.kernel.org>; Wed, 19 May 2021 14:39:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 09A5E61363
+	for <dmaengine@archiver.kernel.org>; Wed, 19 May 2021 14:39:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1354290AbhESOkk (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 19 May 2021 10:40:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43702 "EHLO
+        id S1354467AbhESOkr (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 19 May 2021 10:40:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43332 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1354421AbhESOk3 (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Wed, 19 May 2021 10:40:29 -0400
-Received: from mail-pf1-x42b.google.com (mail-pf1-x42b.google.com [IPv6:2607:f8b0:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 878A7C061358
-        for <dmaengine@vger.kernel.org>; Wed, 19 May 2021 07:38:39 -0700 (PDT)
-Received: by mail-pf1-x42b.google.com with SMTP id f22so1672155pfn.0
-        for <dmaengine@vger.kernel.org>; Wed, 19 May 2021 07:38:39 -0700 (PDT)
+        with ESMTP id S1354281AbhESOjL (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Wed, 19 May 2021 10:39:11 -0400
+Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AFDDFC06138B
+        for <dmaengine@vger.kernel.org>; Wed, 19 May 2021 07:37:51 -0700 (PDT)
+Received: by mail-pj1-x1030.google.com with SMTP id b15-20020a17090a550fb029015dad75163dso3544865pji.0
+        for <dmaengine@vger.kernel.org>; Wed, 19 May 2021 07:37:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=PDydCz783kyI7jNgitJR8zCb8Ar4M6klN2ivXhhgevM=;
-        b=xDVjMuiRG+d9R+s0Ow2ozpu7fxVX8osnVwDuOOGFE6+KOKHFHn80dJ9O3D/srtj9tt
-         Y/vxjISnx0tJWa46kTz2RgQbTunHkYtgCOiDdooJcqG/Q/c7g5gQqBiS6ceFRW+8o4rh
-         Mzw2j7C3UZe6KTz4lUHFZ0yAOVBJC8ZuQyZ2gHQSeA8LEF9yzG9j1HkAi0cXi107FefI
-         V9TXvX9DscVK1U5isYPGdkNacJdfNLP3xW3ASNpH//ZSsPaAgtolhsx7PMH/OhhRLaaE
-         +ZkkWCNz6A6syvJcrCVwXx1iOQuXSNiuue/fdXBKW6PfmFKMZmjmX7gR9VcTceeGNz/b
-         vqmw==
+        bh=ZOrjrBtPIyQIufzW+o4HH7ug0OM7ZtmcrQX7KbEW7to=;
+        b=M545Dwsqv22D3WQyGr7vMn1jPt0IkVoocNJtCm5AcFzfF3vxsG5NQvHUcVSEWo5mtM
+         rtY1srUqjp/4Snb5qn/0zVgceDUZcRJlM8caKj8cfd5vAsNdMAX2VEENGxo68qfvmVq5
+         CJou73dz7fd1tjvcRKUxHV7jdWDnDup0C+8E6T/6vIqibeoGA1xwopcHKMxKDACQYPvN
+         2fjl03bmmIg3GyfiYGlFCZs/x6v+ht/p7nvolKWB/GD0ldT3jhfWHMDqL1b+PT8UFViR
+         q5IbrCaQKKmCJ4doz7QJDtiKVmDUI+ZhX2B4MIBqOvqZd18C2yVlMcL32bkluJDFgdUO
+         P5kw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=PDydCz783kyI7jNgitJR8zCb8Ar4M6klN2ivXhhgevM=;
-        b=XGTSBgeIZWaOyYXylg2Ro0aocL637/JUwUTRgVHbAX9DvM9A1284mdZZNzgx3BF1Zn
-         4Yqv5bBC5S2TZ3/czddQ4q6gLQXXaaAmuASgMDlbfaeq9b0LVnbK+lZk0aVzX4zd9VYk
-         W6wS8DrYleUyYiCnsVoYvpFpu9FvWaOw9QuVNKwB5ZIoojz8K90wGepR1wnmj/6Ah65n
-         FLDIbu2Q8zwrG41ZoqD9YDZ4DMU0ZoZaHp//hPqRvscf3LlpEeiiAsapjumxUVcjDMB6
-         yTiC/Lc4LnNgmpuZmNOEFLguDY9mnRRS6u3yBHcEJPGT81VjIPr3tC/IhqjSxNZWr7A0
-         Hj4w==
-X-Gm-Message-State: AOAM5313jdlEkEdlcCXPQqST9xV4g14eKjnIFKaook3EcRyYRoujFYgn
-        9hd/RxAnzbgw1FpU8PkcD75ETQ==
-X-Google-Smtp-Source: ABdhPJzi8Amq8flun5ibZBTC1dsU+cOEzeRB7P2E+0T3I4Y6DU5ElvMH2rUatAGvb+DKw7pP2K0KKA==
-X-Received: by 2002:aa7:8809:0:b029:2de:3b94:487e with SMTP id c9-20020aa788090000b02902de3b94487emr9467646pfo.33.1621435119088;
-        Wed, 19 May 2021 07:38:39 -0700 (PDT)
+        bh=ZOrjrBtPIyQIufzW+o4HH7ug0OM7ZtmcrQX7KbEW7to=;
+        b=lbiOulFOtyp6BKXHC/gySik/P1amQkpN4cbE5OD8xrtwp/96jpvQM6ThFmEhlUNn5T
+         t5twYWP26P6wMv6bwY3O4RM4IUf3BErYpdiWYhwxaDNED8Lshp4UIyY8e7LDj0ejg85P
+         /JjJQEIFiwvAaiuR4eza+nhAC/1P2DM/Vc4PZYa0aDLiZkRgUkbnVWMBLBiVDrMUgckE
+         qi+X7PwbcHNbPFMX5JhMtWwgLGBlO7GNyqA/b48M2m1W4jGyd8PQOWTEnN/B72V2+lG3
+         8W39OVWxOPGI+06cwJq8SOzSN5VNom4w/5UPqmcVVv39euXe6A8delVRK8L11wq7/hon
+         Ft2A==
+X-Gm-Message-State: AOAM532vXXHI9TyQXD5d/KR7UzBgqNF1+m+4Qhs12g5aD0XNsZSRcIQf
+        kMcR7Nxk3qH8wcN2GCa065RYmA==
+X-Google-Smtp-Source: ABdhPJxmr+u2rkVp4m2hiqRLQaNgGpYGBaraMC0xioEZ1piRcVrBG+8u0r5P9Vx2Cl3l49L/iitVlQ==
+X-Received: by 2002:a17:90b:4812:: with SMTP id kn18mr11859732pjb.188.1621435071241;
+        Wed, 19 May 2021 07:37:51 -0700 (PDT)
 Received: from localhost.localdomain.name ([122.177.135.250])
-        by smtp.gmail.com with ESMTPSA id o24sm9239515pgl.55.2021.05.19.07.38.33
+        by smtp.gmail.com with ESMTPSA id o24sm9239515pgl.55.2021.05.19.07.37.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 19 May 2021 07:38:38 -0700 (PDT)
+        Wed, 19 May 2021 07:37:50 -0700 (PDT)
 From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
 To:     linux-arm-msm@vger.kernel.org
 Cc:     bhupesh.sharma@linaro.org,
@@ -70,9 +70,9 @@ Cc:     bhupesh.sharma@linaro.org,
         linux-clk@vger.kernel.org, linux-crypto@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
         bhupesh.linux@gmail.com
-Subject: [PATCH v3 11/17] crypto: qce: core: Add support to initialize interconnect path
-Date:   Wed, 19 May 2021 20:06:54 +0530
-Message-Id: <20210519143700.27392-12-bhupesh.sharma@linaro.org>
+Subject: [PATCH v3 04/17] dt-bindings: qcom-qce: Convert bindings to yaml
+Date:   Wed, 19 May 2021 20:06:47 +0530
+Message-Id: <20210519143700.27392-5-bhupesh.sharma@linaro.org>
 X-Mailer: git-send-email 2.31.1
 In-Reply-To: <20210519143700.27392-1-bhupesh.sharma@linaro.org>
 References: <20210519143700.27392-1-bhupesh.sharma@linaro.org>
@@ -82,13 +82,9 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-From: Thara Gopinath <thara.gopinath@linaro.org>
+Convert Qualcomm QCE crypto devicetree binding to YAML.
 
-Crypto engine on certain Snapdragon processors like sm8150, sm8250, sm8350
-etc. requires interconnect path between the engine and memory to be
-explicitly enabled and bandwidth set prior to any operations. Add support
-in the qce core to enable the interconnect path appropriately.
-
+Cc: Thara Gopinath <thara.gopinath@linaro.org>
 Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
 Cc: Rob Herring <robh+dt@kernel.org>
 Cc: Andy Gross <agross@kernel.org>
@@ -103,70 +99,120 @@ Cc: linux-crypto@vger.kernel.org
 Cc: devicetree@vger.kernel.org
 Cc: linux-kernel@vger.kernel.org
 Cc: bhupesh.linux@gmail.com
-Signed-off-by: Thara Gopinath <thara.gopinath@linaro.org>
-[ bhupesh.sharma@linaro.org: Make header file inclusion alphabetical and use devm_of_icc_get() ]
 Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
 ---
- drivers/crypto/qce/core.c | 12 ++++++++++++
- drivers/crypto/qce/core.h |  1 +
- 2 files changed, 13 insertions(+)
+ .../devicetree/bindings/crypto/qcom-qce.txt   | 25 -------
+ .../devicetree/bindings/crypto/qcom-qce.yaml  | 69 +++++++++++++++++++
+ 2 files changed, 69 insertions(+), 25 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/crypto/qcom-qce.txt
+ create mode 100644 Documentation/devicetree/bindings/crypto/qcom-qce.yaml
 
-diff --git a/drivers/crypto/qce/core.c b/drivers/crypto/qce/core.c
-index 80b75085c265..89a17b677607 100644
---- a/drivers/crypto/qce/core.c
-+++ b/drivers/crypto/qce/core.c
-@@ -5,6 +5,7 @@
- 
- #include <linux/clk.h>
- #include <linux/dma-mapping.h>
-+#include <linux/interconnect.h>
- #include <linux/interrupt.h>
- #include <linux/module.h>
- #include <linux/mod_devicetable.h>
-@@ -21,6 +22,8 @@
- #define QCE_MAJOR_VERSION5	0x05
- #define QCE_QUEUE_LENGTH	1
- 
-+#define QCE_DEFAULT_MEM_BANDWIDTH	393600
+diff --git a/Documentation/devicetree/bindings/crypto/qcom-qce.txt b/Documentation/devicetree/bindings/crypto/qcom-qce.txt
+deleted file mode 100644
+index fdd53b184ba8..000000000000
+--- a/Documentation/devicetree/bindings/crypto/qcom-qce.txt
++++ /dev/null
+@@ -1,25 +0,0 @@
+-Qualcomm crypto engine driver
+-
+-Required properties:
+-
+-- compatible  : should be "qcom,crypto-v5.1"
+-- reg         : specifies base physical address and size of the registers map
+-- clocks      : phandle to clock-controller plus clock-specifier pair
+-- clock-names : "iface" clocks register interface
+-                "bus" clocks data transfer interface
+-                "core" clocks rest of the crypto block
+-- dmas        : DMA specifiers for tx and rx dma channels. For more see
+-                Documentation/devicetree/bindings/dma/dma.txt
+-- dma-names   : DMA request names should be "rx" and "tx"
+-
+-Example:
+-	crypto@fd45a000 {
+-		compatible = "qcom,crypto-v5.1";
+-		reg = <0xfd45a000 0x6000>;
+-		clocks = <&gcc GCC_CE2_AHB_CLK>,
+-			 <&gcc GCC_CE2_AXI_CLK>,
+-			 <&gcc GCC_CE2_CLK>;
+-		clock-names = "iface", "bus", "core";
+-		dmas = <&cryptobam 2>, <&cryptobam 3>;
+-		dma-names = "rx", "tx";
+-	};
+diff --git a/Documentation/devicetree/bindings/crypto/qcom-qce.yaml b/Documentation/devicetree/bindings/crypto/qcom-qce.yaml
+new file mode 100644
+index 000000000000..a691cd08f372
+--- /dev/null
++++ b/Documentation/devicetree/bindings/crypto/qcom-qce.yaml
+@@ -0,0 +1,69 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/crypto/qcom-qce.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
 +
- static const struct qce_algo_ops *qce_ops[] = {
- #ifdef CONFIG_CRYPTO_DEV_QCE_SKCIPHER
- 	&skcipher_ops,
-@@ -202,6 +205,11 @@ static int qce_crypto_probe(struct platform_device *pdev)
- 	if (ret < 0)
- 		return ret;
- 
-+	qce->mem_path = devm_of_icc_get(qce->dev, "memory");
-+	if (IS_ERR(qce->mem_path))
-+		return dev_err_probe(dev, PTR_ERR(qce->mem_path),
-+				     "Failed to get mem path\n");
++title: Qualcomm crypto engine driver
 +
- 	qce->core = devm_clk_get(qce->dev, "core");
- 	if (IS_ERR(qce->core))
- 		return PTR_ERR(qce->core);
-@@ -214,6 +222,10 @@ static int qce_crypto_probe(struct platform_device *pdev)
- 	if (IS_ERR(qce->bus))
- 		return PTR_ERR(qce->bus);
- 
-+	ret = icc_set_bw(qce->mem_path, QCE_DEFAULT_MEM_BANDWIDTH, QCE_DEFAULT_MEM_BANDWIDTH);
-+	if (ret)
-+		return ret;
++maintainers:
++  - Bhupesh Sharma <bhupesh.sharma@linaro.org>
 +
- 	ret = clk_prepare_enable(qce->core);
- 	if (ret)
- 		return ret;
-diff --git a/drivers/crypto/qce/core.h b/drivers/crypto/qce/core.h
-index 085774cdf641..228fcd69ec51 100644
---- a/drivers/crypto/qce/core.h
-+++ b/drivers/crypto/qce/core.h
-@@ -35,6 +35,7 @@ struct qce_device {
- 	void __iomem *base;
- 	struct device *dev;
- 	struct clk *core, *iface, *bus;
-+	struct icc_path *mem_path;
- 	struct qce_dma_data dma;
- 	int burst_size;
- 	unsigned int pipe_pair_id;
++description: |
++  This document defines the binding for the QCE crypto
++  controller found on Qualcomm parts.
++
++properties:
++  compatible:
++    const: qcom,crypto-v5.1
++
++  reg:
++    maxItems: 1
++    description: |
++      Specifies base physical address and size of the registers map.
++
++  clocks:
++    items:
++      - description: iface clocks register interface.
++      - description: bus clocks data transfer interface.
++      - description: core clocks rest of the crypto block.
++
++  clock-names:
++    items:
++      - const: iface
++      - const: bus
++      - const: core
++
++  dmas:
++    items:
++      - description: DMA specifiers for tx dma channel.
++      - description: DMA specifiers for rx dma channel.
++
++  dma-names:
++    items:
++      - const: rx
++      - const: tx
++
++required:
++  - compatible
++  - reg
++  - clocks
++  - clock-names
++  - dmas
++  - dma-names
++
++additionalProperties: false
++
++examples:
++  - |
++    #include <dt-bindings/clock/qcom,gcc-apq8084.h>
++    crypto-engine@fd45a000 {
++        compatible = "qcom,crypto-v5.1";
++        reg = <0xfd45a000 0x6000>;
++        clocks = <&gcc GCC_CE2_AHB_CLK>,
++                 <&gcc GCC_CE2_AXI_CLK>,
++                 <&gcc GCC_CE2_CLK>;
++        clock-names = "iface", "bus", "core";
++        dmas = <&cryptobam 2>, <&cryptobam 3>;
++        dma-names = "rx", "tx";
++    };
 -- 
 2.31.1
 
