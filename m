@@ -7,37 +7,37 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AA9CEC433B4
-	for <dmaengine@archiver.kernel.org>; Thu, 20 May 2021 15:25:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B8006C433ED
+	for <dmaengine@archiver.kernel.org>; Thu, 20 May 2021 15:25:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 955826135A
-	for <dmaengine@archiver.kernel.org>; Thu, 20 May 2021 15:25:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9DF5D61355
+	for <dmaengine@archiver.kernel.org>; Thu, 20 May 2021 15:25:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231659AbhETP0a (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Thu, 20 May 2021 11:26:30 -0400
-Received: from perceval.ideasonboard.com ([213.167.242.64]:55444 "EHLO
+        id S238170AbhETP0b (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Thu, 20 May 2021 11:26:31 -0400
+Received: from perceval.ideasonboard.com ([213.167.242.64]:55452 "EHLO
         perceval.ideasonboard.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243602AbhETPZw (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Thu, 20 May 2021 11:25:52 -0400
+        with ESMTP id S232131AbhETPZx (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Thu, 20 May 2021 11:25:53 -0400
 Received: from pendragon.lan (62-78-145-57.bb.dnainternet.fi [62.78.145.57])
-        by perceval.ideasonboard.com (Postfix) with ESMTPSA id C4DB8DEE;
-        Thu, 20 May 2021 17:24:26 +0200 (CEST)
+        by perceval.ideasonboard.com (Postfix) with ESMTPSA id D8790E2B;
+        Thu, 20 May 2021 17:24:27 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
-        s=mail; t=1621524267;
-        bh=xYjj+txXnFrRcpyv9oqbDrdONQMheeJuEAqdZHA11eM=;
+        s=mail; t=1621524268;
+        bh=WJt9uLnd9ahdsuddT0v6yu32+aM2ZZNh5lobu5CEs8o=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=wE+w9qdhyizefZJyQ94OkRRfEjeYd2XlWxARXtpxutbyDk4FcVMZrINvtW91MQ6DU
-         iUJzGJYyhFhf19vXstGisvOaC3OrJ+5kmXilkIrFa3RsYL8UOzBGEv2qaGbBIsu3Tn
-         y9pn9m/WTf9UkFkwdjlCz+42HkzZC37pknIiWiI4=
+        b=NqpqAHl7iBqh9PT5igEKqx9bjuaHuLgu2pM5aEcGK8KqheE7VphQYVwgiKXwKnDa+
+         JRQn2wDZ9gkeyV+WH6Zriz+hCyFKdg72OoBfRfd64Mv0nnhjqOjTZ2in/LVXe7HtrX
+         l9EcYfsMDnYfXoZpY4TAZCpGWV5H5rDXmHjop1gE=
 From:   Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 To:     dmaengine@vger.kernel.org
 Cc:     Vinod Koul <vkoul@kernel.org>,
         Michal Simek <michal.simek@xilinx.com>,
         Jianqiang Chen <jianqian@xilinx.com>,
         linux-arm-kernel@lists.infradead.org
-Subject: [PATCH 2/4] dmaengine: xilinx: dpdma: Print channel number in kernel log messages
-Date:   Thu, 20 May 2021 18:24:18 +0300
-Message-Id: <20210520152420.23986-3-laurent.pinchart@ideasonboard.com>
+Subject: [PATCH 4/4] dmaengine: xilinx: dpdma: Limit descriptor IDs to 16 bits
+Date:   Thu, 20 May 2021 18:24:20 +0300
+Message-Id: <20210520152420.23986-5-laurent.pinchart@ideasonboard.com>
 X-Mailer: git-send-email 2.28.1
 In-Reply-To: <20210520152420.23986-1-laurent.pinchart@ideasonboard.com>
 References: <20210520152420.23986-1-laurent.pinchart@ideasonboard.com>
@@ -47,108 +47,49 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-To ease debugging, add the channel number to all kernel log messages
-related to a particular channel.
+While the descriptor ID is stored in a 32-bit field in the hardware
+descriptor, only 16 bits are used by the hardware and are reported
+through the XILINX_DPDMA_CH_DESC_ID register. Failure to handle the
+wrap-around results in a descriptor ID mismatch after 65536 frames. Fix
+it.
 
 Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 ---
- drivers/dma/xilinx/xilinx_dpdma.c | 32 +++++++++++++++++++------------
- 1 file changed, 20 insertions(+), 12 deletions(-)
+ drivers/dma/xilinx/xilinx_dpdma.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/dma/xilinx/xilinx_dpdma.c b/drivers/dma/xilinx/xilinx_dpdma.c
-index 70b29bd079c9..ea56c3b35782 100644
+index 5834f8614a58..6a8bb977fc7a 100644
 --- a/drivers/dma/xilinx/xilinx_dpdma.c
 +++ b/drivers/dma/xilinx/xilinx_dpdma.c
-@@ -702,8 +702,9 @@ xilinx_dpdma_chan_prep_interleaved_dma(struct xilinx_dpdma_chan *chan,
- 	size_t stride = hsize + xt->sgl[0].icg;
+@@ -113,6 +113,7 @@
+ #define XILINX_DPDMA_CH_VDO				0x020
+ #define XILINX_DPDMA_CH_PYLD_SZ				0x024
+ #define XILINX_DPDMA_CH_DESC_ID				0x028
++#define XILINX_DPDMA_CH_DESC_ID_MASK			GENMASK(15, 0)
  
- 	if (!IS_ALIGNED(xt->src_start, XILINX_DPDMA_ALIGN_BYTES)) {
--		dev_err(chan->xdev->dev, "buffer should be aligned at %d B\n",
--			XILINX_DPDMA_ALIGN_BYTES);
-+		dev_err(chan->xdev->dev,
-+			"chan%u: buffer should be aligned at %d B\n",
-+			chan->id, XILINX_DPDMA_ALIGN_BYTES);
- 		return NULL;
- 	}
+ /* DPDMA descriptor fields */
+ #define XILINX_DPDMA_DESC_CONTROL_PREEMBLE		0xa5
+@@ -867,7 +868,8 @@ static void xilinx_dpdma_chan_queue_transfer(struct xilinx_dpdma_chan *chan)
+ 	 * will be used, but it should be enough.
+ 	 */
+ 	list_for_each_entry(sw_desc, &desc->descriptors, node)
+-		sw_desc->hw.desc_id = desc->vdesc.tx.cookie;
++		sw_desc->hw.desc_id = desc->vdesc.tx.cookie
++				    & XILINX_DPDMA_CH_DESC_ID_MASK;
  
-@@ -934,7 +935,9 @@ static int xilinx_dpdma_chan_notify_no_ostand(struct xilinx_dpdma_chan *chan)
+ 	sw_desc = list_first_entry(&desc->descriptors,
+ 				   struct xilinx_dpdma_sw_desc, node);
+@@ -1090,7 +1092,8 @@ static void xilinx_dpdma_chan_vsync_irq(struct  xilinx_dpdma_chan *chan)
+ 	if (!chan->running || !pending)
+ 		goto out;
  
- 	cnt = xilinx_dpdma_chan_ostand(chan);
- 	if (cnt) {
--		dev_dbg(chan->xdev->dev, "%d outstanding transactions\n", cnt);
-+		dev_dbg(chan->xdev->dev,
-+			"chan%u: %d outstanding transactions\n",
-+			chan->id, cnt);
- 		return -EWOULDBLOCK;
- 	}
+-	desc_id = dpdma_read(chan->reg, XILINX_DPDMA_CH_DESC_ID);
++	desc_id = dpdma_read(chan->reg, XILINX_DPDMA_CH_DESC_ID)
++		& XILINX_DPDMA_CH_DESC_ID_MASK;
  
-@@ -970,8 +973,8 @@ static int xilinx_dpdma_chan_wait_no_ostand(struct xilinx_dpdma_chan *chan)
- 		return 0;
- 	}
- 
--	dev_err(chan->xdev->dev, "not ready to stop: %d trans\n",
--		xilinx_dpdma_chan_ostand(chan));
-+	dev_err(chan->xdev->dev, "chan%u: not ready to stop: %d trans\n",
-+		chan->id, xilinx_dpdma_chan_ostand(chan));
- 
- 	if (ret == 0)
- 		return -ETIMEDOUT;
-@@ -1005,8 +1008,8 @@ static int xilinx_dpdma_chan_poll_no_ostand(struct xilinx_dpdma_chan *chan)
- 		return 0;
- 	}
- 
--	dev_err(chan->xdev->dev, "not ready to stop: %d trans\n",
--		xilinx_dpdma_chan_ostand(chan));
-+	dev_err(chan->xdev->dev, "chan%u: not ready to stop: %d trans\n",
-+		chan->id, xilinx_dpdma_chan_ostand(chan));
- 
- 	return -ETIMEDOUT;
- }
-@@ -1060,7 +1063,8 @@ static void xilinx_dpdma_chan_done_irq(struct xilinx_dpdma_chan *chan)
- 		vchan_cyclic_callback(&active->vdesc);
- 	else
- 		dev_warn(chan->xdev->dev,
--			 "DONE IRQ with no active descriptor!\n");
-+			 "chan%u: DONE IRQ with no active descriptor!\n",
-+			 chan->id);
- 
- 	spin_unlock_irqrestore(&chan->lock, flags);
- }
-@@ -1148,10 +1152,12 @@ static void xilinx_dpdma_chan_handle_err(struct xilinx_dpdma_chan *chan)
- 
- 	spin_lock_irqsave(&chan->lock, flags);
- 
--	dev_dbg(xdev->dev, "cur desc addr = 0x%04x%08x\n",
-+	dev_dbg(xdev->dev, "chan%u: cur desc addr = 0x%04x%08x\n",
-+		chan->id,
- 		dpdma_read(chan->reg, XILINX_DPDMA_CH_DESC_START_ADDRE),
- 		dpdma_read(chan->reg, XILINX_DPDMA_CH_DESC_START_ADDR));
--	dev_dbg(xdev->dev, "cur payload addr = 0x%04x%08x\n",
-+	dev_dbg(xdev->dev, "chan%u: cur payload addr = 0x%04x%08x\n",
-+		chan->id,
- 		dpdma_read(chan->reg, XILINX_DPDMA_CH_PYLD_CUR_ADDRE),
- 		dpdma_read(chan->reg, XILINX_DPDMA_CH_PYLD_CUR_ADDR));
- 
-@@ -1167,7 +1173,8 @@ static void xilinx_dpdma_chan_handle_err(struct xilinx_dpdma_chan *chan)
- 	xilinx_dpdma_chan_dump_tx_desc(chan, active);
- 
- 	if (active->error)
--		dev_dbg(xdev->dev, "repeated error on desc\n");
-+		dev_dbg(xdev->dev, "chan%u: repeated error on desc\n",
-+			chan->id);
- 
- 	/* Reschedule if there's no new descriptor */
- 	if (!chan->desc.pending &&
-@@ -1232,7 +1239,8 @@ static int xilinx_dpdma_alloc_chan_resources(struct dma_chan *dchan)
- 					  align, 0);
- 	if (!chan->desc_pool) {
- 		dev_err(chan->xdev->dev,
--			"failed to allocate a descriptor pool\n");
-+			"chan%u: failed to allocate a descriptor pool\n",
-+			chan->id);
- 		return -ENOMEM;
- 	}
- 
+ 	/* If the retrigger raced with vsync, retry at the next frame. */
+ 	sw_desc = list_first_entry(&pending->descriptors,
 -- 
 Regards,
 
