@@ -7,40 +7,40 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 71C87C43460
-	for <dmaengine@archiver.kernel.org>; Thu, 20 May 2021 15:25:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 087ECC433ED
+	for <dmaengine@archiver.kernel.org>; Thu, 20 May 2021 15:25:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4A43961355
+	by mail.kernel.org (Postfix) with ESMTP id DC89C61355
 	for <dmaengine@archiver.kernel.org>; Thu, 20 May 2021 15:25:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232663AbhETP02 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Thu, 20 May 2021 11:26:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40134 "EHLO
+        id S233005AbhETP03 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Thu, 20 May 2021 11:26:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40144 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243516AbhETPZu (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Thu, 20 May 2021 11:25:50 -0400
+        with ESMTP id S232036AbhETPZw (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Thu, 20 May 2021 11:25:52 -0400
 Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [IPv6:2001:4b98:dc2:55:216:3eff:fef7:d647])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 49E08C06138E
-        for <dmaengine@vger.kernel.org>; Thu, 20 May 2021 08:24:28 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6007AC06138F
+        for <dmaengine@vger.kernel.org>; Thu, 20 May 2021 08:24:30 -0700 (PDT)
 Received: from pendragon.lan (62-78-145-57.bb.dnainternet.fi [62.78.145.57])
-        by perceval.ideasonboard.com (Postfix) with ESMTPSA id 3062AD84;
-        Thu, 20 May 2021 17:24:26 +0200 (CEST)
+        by perceval.ideasonboard.com (Postfix) with ESMTPSA id 553A2E0C;
+        Thu, 20 May 2021 17:24:27 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
-        s=mail; t=1621524266;
-        bh=8pcmUONH1aUUpwsB69i0J0FO1UXvfrIZMpswMRYOr58=;
+        s=mail; t=1621524267;
+        bh=MPyQ+vVZp1sQ3qtNieVc8s7/Xsyl8i4v0/UXQm+IvIA=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=kQAz7cwvEFxSZBKzN/kA/wsj+jekvXUoo4J0OOYr+2lxDuQffPcyZrib9AbpxYmok
-         FuyPOg6jq4Dl5L8W+ih/t+m/qOFRsyniOsp88UWPb2NEDvwsbcQcwXmkI/M07aIrlH
-         nsP1I5fZYHbgbQlTGk5xDjGOzXKN2IyiYSPlvuWI=
+        b=wGOUGGA21/1rv5wxW6yBhBppnaVa6KmxExVQ4kEV99ghDgvbyADmETmRitlEx+HQ6
+         A0+JyMEGGHC+qTaFXJn453jpeqAjHFhZGIfKg8c/prDEb6sJVqU4k5Jnvf2P0qCRpj
+         LMZ/XF2q8uNg+lUSrUPvsR04rFHpiud03+PdLrIw=
 From:   Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 To:     dmaengine@vger.kernel.org
 Cc:     Vinod Koul <vkoul@kernel.org>,
         Michal Simek <michal.simek@xilinx.com>,
         Jianqiang Chen <jianqian@xilinx.com>,
         linux-arm-kernel@lists.infradead.org
-Subject: [PATCH 1/4] dmaengine: xilinx: dpdma: Add missing dependencies to Kconfig
-Date:   Thu, 20 May 2021 18:24:17 +0300
-Message-Id: <20210520152420.23986-2-laurent.pinchart@ideasonboard.com>
+Subject: [PATCH 3/4] dmaengine: xilinx: dpdma: Print debug message when losing vsync race
+Date:   Thu, 20 May 2021 18:24:19 +0300
+Message-Id: <20210520152420.23986-4-laurent.pinchart@ideasonboard.com>
 X-Mailer: git-send-email 2.28.1
 In-Reply-To: <20210520152420.23986-1-laurent.pinchart@ideasonboard.com>
 References: <20210520152420.23986-1-laurent.pinchart@ideasonboard.com>
@@ -50,28 +50,34 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-The driver depends on both OF and IOMEM support, express those
-dependencies in Kconfig. This fixes a build failure on S390 reported by
-the 0day bot.
+The hardware retrigger is inherently racy with the vsync interrupt. This
+isn't an issue as the hardware provides a way to detect a race loss and
+handle it correctly. When debugging issues related to this, it's useful
+to get a notification of the race loss. Add a debug message to do so.
 
-Reported-by: kernel test robot <lkp@intel.com>
 Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 ---
- drivers/dma/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/dma/xilinx/xilinx_dpdma.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/dma/Kconfig b/drivers/dma/Kconfig
-index 6ab9d9a488a6..e47d4efbe7c5 100644
---- a/drivers/dma/Kconfig
-+++ b/drivers/dma/Kconfig
-@@ -701,6 +701,7 @@ config XILINX_ZYNQMP_DMA
+diff --git a/drivers/dma/xilinx/xilinx_dpdma.c b/drivers/dma/xilinx/xilinx_dpdma.c
+index ea56c3b35782..5834f8614a58 100644
+--- a/drivers/dma/xilinx/xilinx_dpdma.c
++++ b/drivers/dma/xilinx/xilinx_dpdma.c
+@@ -1095,8 +1095,12 @@ static void xilinx_dpdma_chan_vsync_irq(struct  xilinx_dpdma_chan *chan)
+ 	/* If the retrigger raced with vsync, retry at the next frame. */
+ 	sw_desc = list_first_entry(&pending->descriptors,
+ 				   struct xilinx_dpdma_sw_desc, node);
+-	if (sw_desc->hw.desc_id != desc_id)
++	if (sw_desc->hw.desc_id != desc_id) {
++		dev_dbg(chan->xdev->dev,
++			"chan%u: vsync race lost (%u != %u), retrying\n",
++			chan->id, sw_desc->hw.desc_id, desc_id);
+ 		goto out;
++	}
  
- config XILINX_ZYNQMP_DPDMA
- 	tristate "Xilinx DPDMA Engine"
-+	depends on HAS_IOMEM && OF
- 	select DMA_ENGINE
- 	select DMA_VIRTUAL_CHANNELS
- 	help
+ 	/*
+ 	 * Complete the active descriptor, if any, promote the pending
 -- 
 Regards,
 
