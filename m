@@ -2,38 +2,37 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-13.7 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E78DDC04FF3
-	for <dmaengine@archiver.kernel.org>; Sat, 22 May 2021 00:22:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 871C2C04FF3
+	for <dmaengine@archiver.kernel.org>; Sat, 22 May 2021 00:22:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BE5B1613D0
-	for <dmaengine@archiver.kernel.org>; Sat, 22 May 2021 00:22:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 61C3761152
+	for <dmaengine@archiver.kernel.org>; Sat, 22 May 2021 00:22:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231137AbhEVAXi (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 21 May 2021 20:23:38 -0400
-Received: from mga12.intel.com ([192.55.52.136]:24212 "EHLO mga12.intel.com"
+        id S230349AbhEVAX5 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 21 May 2021 20:23:57 -0400
+Received: from mga09.intel.com ([134.134.136.24]:27110 "EHLO mga09.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230429AbhEVAW5 (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Fri, 21 May 2021 20:22:57 -0400
-IronPort-SDR: 5FW0h8FVWdJ4bgabPRBKyeIbVEJK0GW27bLlcaHowfpgVXrE1eKQnXiVa6jZ1AwubBrRIOIjVV
- QxIx3PCgWj/A==
-X-IronPort-AV: E=McAfee;i="6200,9189,9991"; a="181210685"
+        id S230478AbhEVAXM (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Fri, 21 May 2021 20:23:12 -0400
+IronPort-SDR: 4lA4DYl3TTO9RPf0v5L5QiaWGOTxZBixkJKYwdJWrIm4osS0K8HpxPda6iBNKVjPWR0Yu+9H7h
+ Z4laU5ucfnlA==
+X-IronPort-AV: E=McAfee;i="6200,9189,9991"; a="201634425"
 X-IronPort-AV: E=Sophos;i="5.82,319,1613462400"; 
-   d="scan'208";a="181210685"
-Received: from orsmga002.jf.intel.com ([10.7.209.21])
-  by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 May 2021 17:20:51 -0700
-IronPort-SDR: MPcVlthEflmHx/IsUHghDBX+s9yREoSIh+uaaWREq5h4+vYWuwki8NFImjdQ6FQssNd/zhVHsJ
- KJR2qgwPq5vA==
+   d="scan'208";a="201634425"
+Received: from orsmga008.jf.intel.com ([10.7.209.65])
+  by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 May 2021 17:21:05 -0700
+IronPort-SDR: C9TyUlnAuHhIlKxxo2Tnq56G+67p2ETA+MiqYq+SL80Q7Eryb088zy2NlZJpimmgJ33hd5cwmU
+ U7cU4wJNypxg==
 X-IronPort-AV: E=Sophos;i="5.82,319,1613462400"; 
-   d="scan'208";a="412801885"
+   d="scan'208";a="441149772"
 Received: from djiang5-desk3.ch.intel.com ([143.182.136.137])
-  by orsmga002-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 May 2021 17:20:50 -0700
-Subject: [PATCH v6 17/20] vfio/mdev: idxd: add error notification from host
- driver to mediated device
+  by orsmga008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 May 2021 17:21:03 -0700
+Subject: [PATCH v6 19/20] vfio: mdev: Add device request interface
 From:   Dave Jiang <dave.jiang@intel.com>
 To:     alex.williamson@redhat.com, kwankhede@nvidia.com,
         tglx@linutronix.de, vkoul@kernel.org, jgg@mellanox.com
@@ -43,8 +42,8 @@ Cc:     megha.dey@intel.com, jacob.jun.pan@intel.com, ashok.raj@intel.com,
         dan.j.williams@intel.com, eric.auger@redhat.com,
         pbonzini@redhat.com, dmaengine@vger.kernel.org,
         linux-kernel@vger.kernel.org, kvm@vger.kernel.org
-Date:   Fri, 21 May 2021 17:20:49 -0700
-Message-ID: <162164284985.261970.10964903081717121200.stgit@djiang5-desk3.ch.intel.com>
+Date:   Fri, 21 May 2021 17:21:03 -0700
+Message-ID: <162164286322.261970.2647654897518928545.stgit@djiang5-desk3.ch.intel.com>
 In-Reply-To: <162164243591.261970.3439987543338120797.stgit@djiang5-desk3.ch.intel.com>
 References: <162164243591.261970.3439987543338120797.stgit@djiang5-desk3.ch.intel.com>
 User-Agent: StGit/0.23-29-ga622f1
@@ -55,153 +54,94 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-When a device error occurs, the mediated device need to be notified in
-order to notify the guest of device error. Add support to notify the
-specific mdev when an error is wq specific and broadcast errors to all mdev
-when it's a generic device error.
+Similar to commit 6140a8f56238 ("vfio-pci: Add device request interface").
+Add request interface for mdev to allow userspace to opt in to receive
+a device request notification, indicating that the device should be
+released.
 
 Signed-off-by: Dave Jiang <dave.jiang@intel.com>
 ---
- drivers/dma/idxd/idxd.h       |    7 +++++++
- drivers/dma/idxd/irq.c        |   21 +++++++++++++++++++--
- drivers/vfio/mdev/idxd/mdev.c |    5 +++++
- drivers/vfio/mdev/idxd/mdev.h |    1 +
- drivers/vfio/mdev/idxd/vdev.c |   23 +++++++++++++++++++++++
- 5 files changed, 55 insertions(+), 2 deletions(-)
+ drivers/vfio/mdev/mdev_irqs.c |   23 +++++++++++++++++++++++
+ include/linux/mdev.h          |   15 +++++++++++++++
+ 2 files changed, 38 insertions(+)
 
-diff --git a/drivers/dma/idxd/idxd.h b/drivers/dma/idxd/idxd.h
-index 5e8da9019c46..b1d94463fce5 100644
---- a/drivers/dma/idxd/idxd.h
-+++ b/drivers/dma/idxd/idxd.h
-@@ -50,10 +50,17 @@ enum idxd_type {
- #define IDXD_NAME_SIZE		128
- #define IDXD_PMU_EVENT_MAX	64
- 
-+struct idxd_wq;
-+
-+struct idxd_device_ops {
-+	void (*notify_error)(struct idxd_wq *wq);
-+};
-+
- struct idxd_device_driver {
- 	const char *name;
- 	int (*probe)(struct device *dev);
- 	void (*remove)(struct device *dev);
-+	struct idxd_device_ops *ops;
- 	struct device_driver drv;
- };
- 
-diff --git a/drivers/dma/idxd/irq.c b/drivers/dma/idxd/irq.c
-index d1a635ecc7f3..b8b6c93f4480 100644
---- a/drivers/dma/idxd/irq.c
-+++ b/drivers/dma/idxd/irq.c
-@@ -104,6 +104,7 @@ static int idxd_device_schedule_fault_process(struct idxd_device *idxd,
- 
- static int process_misc_interrupts(struct idxd_device *idxd, u32 cause)
- {
-+	struct idxd_device_driver *wq_drv;
- 	struct device *dev = &idxd->pdev->dev;
- 	union gensts_reg gensts;
- 	u32 val = 0;
-@@ -123,16 +124,32 @@ static int process_misc_interrupts(struct idxd_device *idxd, u32 cause)
- 			int id = idxd->sw_err.wq_idx;
- 			struct idxd_wq *wq = idxd->wqs[id];
- 
--			if (wq->type == IDXD_WQT_USER)
-+			if (is_idxd_wq_user(wq)) {
- 				wake_up_interruptible(&wq->err_queue);
-+			} else if (is_idxd_wq_mdev(wq)) {
-+				struct device *conf_dev = wq_confdev(wq);
-+				struct device_driver *drv = conf_dev->driver;
-+
-+				wq_drv = container_of(drv, struct idxd_device_driver, drv);
-+				if (wq_drv)
-+					wq_drv->ops->notify_error(wq);
-+			}
- 		} else {
- 			int i;
- 
- 			for (i = 0; i < idxd->max_wqs; i++) {
- 				struct idxd_wq *wq = idxd->wqs[i];
- 
--				if (wq->type == IDXD_WQT_USER)
-+				if (is_idxd_wq_user(wq)) {
- 					wake_up_interruptible(&wq->err_queue);
-+				} else if (is_idxd_wq_mdev(wq)) {
-+					struct device *conf_dev = wq_confdev(wq);
-+					struct device_driver *drv = conf_dev->driver;
-+
-+					wq_drv = container_of(drv, struct idxd_device_driver, drv);
-+					if (wq_drv)
-+						wq_drv->ops->notify_error(wq);
-+				}
- 			}
- 		}
- 
-diff --git a/drivers/vfio/mdev/idxd/mdev.c b/drivers/vfio/mdev/idxd/mdev.c
-index 3257505fb7c7..25d1ac67b0c9 100644
---- a/drivers/vfio/mdev/idxd/mdev.c
-+++ b/drivers/vfio/mdev/idxd/mdev.c
-@@ -904,10 +904,15 @@ static void idxd_mdev_drv_remove(struct device *dev)
- 	put_device(dev);
+diff --git a/drivers/vfio/mdev/mdev_irqs.c b/drivers/vfio/mdev/mdev_irqs.c
+index ed2d11a7c729..11b1f8df020c 100644
+--- a/drivers/vfio/mdev/mdev_irqs.c
++++ b/drivers/vfio/mdev/mdev_irqs.c
+@@ -316,3 +316,26 @@ void mdev_irqs_free(struct mdev_device *mdev)
+ 	memset(&mdev->mdev_irq, 0, sizeof(mdev->mdev_irq));
  }
- 
-+static struct idxd_device_ops mdev_wq_ops = {
-+	.notify_error = idxd_wq_vidxd_send_errors,
-+};
+ EXPORT_SYMBOL_GPL(mdev_irqs_free);
 +
- static struct idxd_device_driver idxd_mdev_driver = {
- 	.probe = idxd_mdev_drv_probe,
- 	.remove = idxd_mdev_drv_remove,
- 	.name = idxd_mdev_drv_name,
-+	.ops = &mdev_wq_ops,
- };
- 
- static int __init idxd_mdev_init(void)
-diff --git a/drivers/vfio/mdev/idxd/mdev.h b/drivers/vfio/mdev/idxd/mdev.h
-index dd4290bce772..10358831da6a 100644
---- a/drivers/vfio/mdev/idxd/mdev.h
-+++ b/drivers/vfio/mdev/idxd/mdev.h
-@@ -107,5 +107,6 @@ int vidxd_cfg_read(struct vdcm_idxd *vidxd, unsigned int pos, void *buf, unsigne
- int vidxd_cfg_write(struct vdcm_idxd *vidxd, unsigned int pos, void *buf, unsigned int size);
- int vidxd_mmio_write(struct vdcm_idxd *vidxd, u64 pos, void *buf, unsigned int size);
- int vidxd_mmio_read(struct vdcm_idxd *vidxd, u64 pos, void *buf, unsigned int size);
-+void idxd_wq_vidxd_send_errors(struct idxd_wq *wq);
- 
- #endif
-diff --git a/drivers/vfio/mdev/idxd/vdev.c b/drivers/vfio/mdev/idxd/vdev.c
-index a444a0af8b5f..2a066e483dd8 100644
---- a/drivers/vfio/mdev/idxd/vdev.c
-+++ b/drivers/vfio/mdev/idxd/vdev.c
-@@ -151,6 +151,29 @@ static void vidxd_report_swerror(struct vdcm_idxd *vidxd, unsigned int error)
- 	send_swerr_interrupt(vidxd);
- }
- 
-+void idxd_wq_vidxd_send_errors(struct idxd_wq *wq)
++void vfio_mdev_request(struct vfio_device *vdev, unsigned int count)
 +{
-+	struct vdcm_idxd *vidxd = wq->vidxd;
-+	struct idxd_device *idxd = vidxd->idxd;
-+	u8 *bar0 = vidxd->bar0;
-+	union sw_err_reg *swerr = (union sw_err_reg *)(bar0 + IDXD_SWERR_OFFSET);
-+	int i;
++	struct device *dev = vdev->dev;
++	struct mdev_device *mdev = to_mdev_device(dev);
 +
-+	if (swerr->valid) {
-+		if (!swerr->overflow) {
-+			swerr->overflow = 1;
-+			send_swerr_interrupt(vidxd);
-+		}
-+		return;
++	if (mdev->req_trigger) {
++		dev_dbg(dev, "Requesting device from user\n");
++		eventfd_signal(mdev->req_trigger, 1);
 +	}
-+
-+	lockdep_assert_held(&idxd->dev_lock);
-+	for (i = 0; i < 4; i++)
-+		swerr->bits[i] = idxd->sw_err.bits[i];
-+
-+	send_swerr_interrupt(vidxd);
 +}
++EXPORT_SYMBOL_GPL(vfio_mdev_request);
 +
- int vidxd_mmio_write(struct vdcm_idxd *vidxd, u64 pos, void *buf, unsigned int size)
- {
- 	u32 offset = pos & (vidxd->bar_size[0] - 1);
++int vfio_mdev_set_req_trigger(struct mdev_device *mdev, unsigned int index,
++			      unsigned int start, unsigned int count, u32 flags,
++			      void *data)
++{
++	if (index != VFIO_PCI_REQ_IRQ_INDEX || start != 0 || count != 1)
++		return -EINVAL;
++
++	return vfio_set_ctx_trigger_single(&mdev->req_trigger, count, flags, data);
++}
++EXPORT_SYMBOL_GPL(vfio_mdev_set_req_trigger);
+diff --git a/include/linux/mdev.h b/include/linux/mdev.h
+index 035c021e8068..db73d58f5e81 100644
+--- a/include/linux/mdev.h
++++ b/include/linux/mdev.h
+@@ -11,6 +11,8 @@
+ #define MDEV_H
+ 
+ #include <linux/irqbypass.h>
++#include <linux/eventfd.h>
++#include <linux/vfio.h>
+ 
+ struct mdev_type;
+ 
+@@ -38,6 +40,7 @@ struct mdev_device {
+ 	struct device *iommu_device;
+ 	struct mutex creation_lock;
+ 	struct mdev_irq mdev_irq;
++	struct eventfd_ctx *req_trigger;
+ };
+ 
+ static inline struct mdev_device *irq_to_mdev(struct mdev_irq *mdev_irq)
+@@ -131,6 +134,10 @@ void mdev_msix_send_signal(struct mdev_device *mdev, int vector);
+ int mdev_irqs_init(struct mdev_device *mdev, int num, bool *ims_map);
+ void mdev_irqs_free(struct mdev_device *mdev);
+ void mdev_irqs_set_pasid(struct mdev_device *mdev, u32 pasid);
++void vfio_mdev_request(struct vfio_device *vdev, unsigned int count);
++int vfio_mdev_set_req_trigger(struct mdev_device *mdev, unsigned int index,
++			      unsigned int start, unsigned int count, u32 flags,
++			      void *data);
+ #else
+ static inline int mdev_set_msix_trigger(struct mdev_device *mdev, unsigned int index,
+ 					unsigned int start, unsigned int count, u32 flags,
+@@ -148,6 +155,14 @@ static inline int mdev_irqs_init(struct mdev_device *mdev, int num, bool *ims_ma
+ 
+ void mdev_irqs_free(struct mdev_device *mdev) {}
+ void mdev_irqs_set_pasid(struct mdev_device *mdev, u32 pasid) {}
++void vfio_mdev_request(struct vfio_device *vdev, unsigned int count) {}
++
++int vfio_mdev_set_req_trigger(struct mdev_device *mdev, unsigned int index,
++			      unsigned int start, unsigned int count, u32 flags,
++			      void *data)
++{
++	return -EOPNOTSUPP;
++}
+ #endif /* CONFIG_VFIO_MDEV_IMS */
+ 
+ #endif /* MDEV_H */
 
 
