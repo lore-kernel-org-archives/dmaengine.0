@@ -2,297 +2,92 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.9 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,UNWANTED_LANGUAGE_BODY,
-	URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4EAFDC04FF3
-	for <dmaengine@archiver.kernel.org>; Sat, 22 May 2021 00:22:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 74EA3C04FF3
+	for <dmaengine@archiver.kernel.org>; Sat, 22 May 2021 02:13:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 34705613DB
-	for <dmaengine@archiver.kernel.org>; Sat, 22 May 2021 00:22:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 46C6861177
+	for <dmaengine@archiver.kernel.org>; Sat, 22 May 2021 02:13:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230375AbhEVAYO (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 21 May 2021 20:24:14 -0400
-Received: from mga14.intel.com ([192.55.52.115]:39679 "EHLO mga14.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230265AbhEVAXc (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Fri, 21 May 2021 20:23:32 -0400
-IronPort-SDR: /n64bcs1jHRBhQk2SS0Dd3/pBiXb5xSscxWGETK7t0llWqXWKRcNLisjQkL/bA3nUgcw6iaCJQ
- l8c9257w/KaA==
-X-IronPort-AV: E=McAfee;i="6200,9189,9991"; a="201312184"
-X-IronPort-AV: E=Sophos;i="5.82,319,1613462400"; 
-   d="scan'208";a="201312184"
-Received: from fmsmga001.fm.intel.com ([10.253.24.23])
-  by fmsmga103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 May 2021 17:20:33 -0700
-IronPort-SDR: oX7Y5oO9ui9QqSKITyIQ1u4G0dXw/VfdMfhzvqETytAUDwK0GUMxZ0aAgecUKAFlsyhKR2HHuc
- epTbZWM793Mg==
-X-IronPort-AV: E=Sophos;i="5.82,319,1613462400"; 
-   d="scan'208";a="544268896"
-Received: from djiang5-desk3.ch.intel.com ([143.182.136.137])
-  by fmsmga001-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 May 2021 17:20:32 -0700
-Subject: [PATCH v6 14/20] vfio/mdev: idxd: add 1dwq-v1 mdev type
-From:   Dave Jiang <dave.jiang@intel.com>
-To:     alex.williamson@redhat.com, kwankhede@nvidia.com,
-        tglx@linutronix.de, vkoul@kernel.org, jgg@mellanox.com
-Cc:     megha.dey@intel.com, jacob.jun.pan@intel.com, ashok.raj@intel.com,
-        yi.l.liu@intel.com, baolu.lu@intel.com, kevin.tian@intel.com,
-        sanjay.k.kumar@intel.com, tony.luck@intel.com,
-        dan.j.williams@intel.com, eric.auger@redhat.com,
-        pbonzini@redhat.com, dmaengine@vger.kernel.org,
-        linux-kernel@vger.kernel.org, kvm@vger.kernel.org
-Date:   Fri, 21 May 2021 17:20:31 -0700
-Message-ID: <162164283194.261970.12689960276759011457.stgit@djiang5-desk3.ch.intel.com>
-In-Reply-To: <162164243591.261970.3439987543338120797.stgit@djiang5-desk3.ch.intel.com>
-References: <162164243591.261970.3439987543338120797.stgit@djiang5-desk3.ch.intel.com>
-User-Agent: StGit/0.23-29-ga622f1
+        id S230474AbhEVCOo (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 21 May 2021 22:14:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58826 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230371AbhEVCOn (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Fri, 21 May 2021 22:14:43 -0400
+Received: from bombadil.infradead.org (bombadil.infradead.org [IPv6:2607:7c80:54:e::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 84A69C0613ED;
+        Fri, 21 May 2021 19:13:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=infradead.org; s=bombadil.20210309; h=Content-Transfer-Encoding:
+        MIME-Version:References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:Sender
+        :Reply-To:Content-Type:Content-ID:Content-Description;
+        bh=l7pAGv6nylMQQxZzZY1b/tuf+2vehC2Wuu34Kc+vOmA=; b=UA1pWQOTTMWToP+sPmYtSuMl7w
+        Xorugk/p4Ah8YsOaYhPSaDzXhYtKmuHq+JKigCnLkk3GDixP/FXoP3iuYbSpKcwZxngddrFTa6ytx
+        W/eQ1pvtFCR0hQ+juC2h5/6lzkwouQ6/nhzMExXebNSYd2AMXHo8JRjPNLpR1LGqvmY7vhtU0Prtl
+        h9d9bhk1k/9on7N28pYf+XNXu415TMs/3wInqfQnnjMqzhdZlRT41N0hGK4kifzUtHwcY4Y5/BSZn
+        +SguzLc+nx+bvK8wIPKle0eggzKvFU7BJVcoL6QfYWazD2s2m/n7n3N4mhKFoi50jhHCMGF2GBgSJ
+        hpYYnHLw==;
+Received: from [2601:1c0:6280:3f0::7376] (helo=bombadil.infradead.org)
+        by bombadil.infradead.org with esmtpsa (Exim 4.94 #2 (Red Hat Linux))
+        id 1lkH8e-00HX9I-Jh; Sat, 22 May 2021 02:13:16 +0000
+From:   Randy Dunlap <rdunlap@infradead.org>
+To:     linux-kernel@vger.kernel.org
+Cc:     Randy Dunlap <rdunlap@infradead.org>, Stefan Roese <sr@denx.de>,
+        Vinod Koul <vkoul@kernel.org>, dmaengine@vger.kernel.org,
+        Sinan Kaya <okaya@codeaurora.org>,
+        Green Wan <green.wan@sifive.com>,
+        Hyun Kwon <hyun.kwon@xilinx.com>,
+        Tejas Upadhyay <tejasu@xilinx.com>,
+        Michal Simek <michal.simek@xilinx.com>,
+        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+        kernel test robot <lkp@intel.com>
+Subject: [PATCH 2/4] DMA: QCOM_HIDMA_MGMT depends on HAS_IOMEM
+Date:   Fri, 21 May 2021 19:13:11 -0700
+Message-Id: <20210522021313.16405-3-rdunlap@infradead.org>
+X-Mailer: git-send-email 2.26.2
+In-Reply-To: <20210522021313.16405-1-rdunlap@infradead.org>
+References: <20210522021313.16405-1-rdunlap@infradead.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Add mdev device type "1dwq-v1" support code. 1dwq-v1 is defined as a
-single DSA gen1 dedicated WQ. This WQ cannot be shared between guests. The
-guest also cannot change any WQ configuration.
+When CONFIG_HAS_IOMEM is not set/enabled, certain iomap() family
+functions [including ioremap(), devm_ioremap(), etc.] are not
+available.
+Drivers that use these functions should depend on HAS_IOMEM so that
+they do not cause build errors.
 
-Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+Rectifies these build errors:
+s390-linux-ld: drivers/dma/qcom/hidma_mgmt.o: in function `hidma_mgmt_probe':
+hidma_mgmt.c:(.text+0x780): undefined reference to `devm_ioremap_resource'
+s390-linux-ld: drivers/dma/qcom/hidma_mgmt.o: in function `hidma_mgmt_init':
+hidma_mgmt.c:(.init.text+0x126): undefined reference to `of_address_to_resource'
+s390-linux-ld: hidma_mgmt.c:(.init.text+0x16e): undefined reference to `of_address_to_resource'
+
+Fixes: 67a2003e0607 ("dmaengine: add Qualcomm Technologies HIDMA channel driver")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Reported-by: kernel test robot <lkp@intel.com>
+Cc: Sinan Kaya <okaya@codeaurora.org>
+Cc: Vinod Koul <vkoul@kernel.org>
+Cc: dmaengine@vger.kernel.org
 ---
- drivers/vfio/mdev/idxd/mdev.c |  173 +++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 166 insertions(+), 7 deletions(-)
+ drivers/dma/qcom/Kconfig |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/vfio/mdev/idxd/mdev.c b/drivers/vfio/mdev/idxd/mdev.c
-index e484095baeea..9f6c4997ec24 100644
---- a/drivers/vfio/mdev/idxd/mdev.c
-+++ b/drivers/vfio/mdev/idxd/mdev.c
-@@ -22,6 +22,13 @@
- #include "idxd.h"
- #include "mdev.h"
+--- linux-next-20210521.orig/drivers/dma/qcom/Kconfig
++++ linux-next-20210521/drivers/dma/qcom/Kconfig
+@@ -33,6 +33,7 @@ config QCOM_GPI_DMA
  
-+static const char idxd_dsa_1dwq_name[] = "dsa-1dwq-v1";
-+static const char idxd_iax_1dwq_name[] = "iax-1dwq-v1";
-+
-+static int idxd_vdcm_set_irqs(struct vdcm_idxd *vidxd, uint32_t flags,
-+			      unsigned int index, unsigned int start,
-+			      unsigned int count, void *data);
-+
- int idxd_mdev_get_pasid(struct mdev_device *mdev, struct vfio_device *vdev, u32 *pasid)
- {
- 	struct vfio_group *vfio_group = vdev->group;
-@@ -41,10 +48,6 @@ int idxd_mdev_get_pasid(struct mdev_device *mdev, struct vfio_device *vdev, u32
- 	return 0;
- }
- 
--static int idxd_vdcm_set_irqs(struct vdcm_idxd *vidxd, uint32_t flags,
--			      unsigned int index, unsigned int start,
--			      unsigned int count, void *data);
--
- static int idxd_vdcm_get_irq_count(struct vfio_device *vdev, int type)
- {
- 	if (type == VFIO_PCI_MSIX_IRQ_INDEX)
-@@ -53,18 +56,73 @@ static int idxd_vdcm_get_irq_count(struct vfio_device *vdev, int type)
- 	return 0;
- }
- 
-+static struct idxd_wq *find_any_dwq(struct idxd_device *idxd, struct vdcm_idxd_type *type)
-+{
-+	int i;
-+	struct idxd_wq *wq;
-+	unsigned long flags;
-+
-+	switch (type->type) {
-+	case IDXD_MDEV_TYPE_DSA_1_DWQ:
-+		if (idxd->data->type != IDXD_TYPE_DSA)
-+			return NULL;
-+		break;
-+	case IDXD_MDEV_TYPE_IAX_1_DWQ:
-+		if (idxd->data->type != IDXD_TYPE_IAX)
-+			return NULL;
-+		break;
-+	default:
-+		return NULL;
-+	}
-+
-+	spin_lock_irqsave(&idxd->dev_lock, flags);
-+	for (i = 0; i < idxd->max_wqs; i++) {
-+		wq = idxd->wqs[i];
-+
-+		if (wq->state != IDXD_WQ_ENABLED)
-+			continue;
-+
-+		if (!wq_dedicated(wq))
-+			continue;
-+
-+		if (!is_idxd_wq_mdev(wq))
-+			continue;
-+
-+		if (idxd_wq_refcount(wq) != 0)
-+			continue;
-+
-+		spin_unlock_irqrestore(&idxd->dev_lock, flags);
-+		mutex_lock(&wq->wq_lock);
-+		if (idxd_wq_refcount(wq)) {
-+			spin_lock_irqsave(&idxd->dev_lock, flags);
-+			continue;
-+		}
-+
-+		idxd_wq_get(wq);
-+		mutex_unlock(&wq->wq_lock);
-+		return wq;
-+	}
-+
-+	spin_unlock_irqrestore(&idxd->dev_lock, flags);
-+	return NULL;
-+}
-+
- static struct vdcm_idxd *vdcm_vidxd_create(struct idxd_device *idxd, struct mdev_device *mdev,
- 					   struct vdcm_idxd_type *type)
- {
- 	struct vdcm_idxd *vidxd;
- 	struct idxd_wq *wq = NULL;
-+	int rc;
- 
-+	wq = find_any_dwq(idxd, type);
- 	if (!wq)
- 		return ERR_PTR(-ENODEV);
- 
- 	vidxd = kzalloc(sizeof(*vidxd), GFP_KERNEL);
--	if (!vidxd)
--		return ERR_PTR(-ENOMEM);
-+	if (!vidxd) {
-+		rc = -ENOMEM;
-+		goto err;
-+	}
- 
- 	mutex_init(&vidxd->dev_lock);
- 	vidxd->idxd = idxd;
-@@ -80,9 +138,24 @@ static struct vdcm_idxd *vdcm_vidxd_create(struct idxd_device *idxd, struct mdev
- 	vidxd_init(vidxd);
- 
- 	return vidxd;
-+
-+ err:
-+	mutex_lock(&wq->wq_lock);
-+	idxd_wq_put(wq);
-+	mutex_unlock(&wq->wq_lock);
-+	return ERR_PTR(rc);
- }
- 
--static struct vdcm_idxd_type idxd_mdev_types[IDXD_MDEV_TYPES];
-+static struct vdcm_idxd_type idxd_mdev_types[IDXD_MDEV_TYPES] = {
-+	{
-+		.name = idxd_dsa_1dwq_name,
-+		.type = IDXD_MDEV_TYPE_DSA_1_DWQ,
-+	},
-+	{
-+		.name = idxd_iax_1dwq_name,
-+		.type = IDXD_MDEV_TYPE_IAX_1_DWQ,
-+	},
-+};
- 
- static struct vdcm_idxd_type *idxd_vdcm_get_type(struct mdev_device *mdev)
- {
-@@ -677,6 +750,91 @@ static const struct vfio_device_ops idxd_mdev_ops = {
- 	.ioctl = idxd_vdcm_ioctl,
- };
- 
-+static ssize_t name_show(struct mdev_type *mtype, struct mdev_type_attribute *attr, char *buf)
-+{
-+	return sysfs_emit(buf, "%s\n", idxd_mdev_types[mtype_get_type_group_id(mtype)].name);
-+}
-+static MDEV_TYPE_ATTR_RO(name);
-+
-+static int find_available_mdev_instances(struct idxd_device *idxd, struct vdcm_idxd_type *type)
-+{
-+	int count = 0, i;
-+	unsigned long flags;
-+
-+	switch (type->type) {
-+	case IDXD_MDEV_TYPE_DSA_1_DWQ:
-+		if (idxd->data->type != IDXD_TYPE_DSA)
-+			return 0;
-+		break;
-+	case IDXD_MDEV_TYPE_IAX_1_DWQ:
-+		if (idxd->data->type != IDXD_TYPE_IAX)
-+			return 0;
-+		break;
-+	default:
-+		return 0;
-+	}
-+
-+	spin_lock_irqsave(&idxd->dev_lock, flags);
-+	for (i = 0; i < idxd->max_wqs; i++) {
-+		struct idxd_wq *wq;
-+
-+		wq = idxd->wqs[i];
-+		if (!is_idxd_wq_mdev(wq) || !wq_dedicated(wq) || idxd_wq_refcount(wq))
-+			continue;
-+
-+		count++;
-+	}
-+	spin_unlock_irqrestore(&idxd->dev_lock, flags);
-+
-+	return count;
-+}
-+
-+static ssize_t available_instances_show(struct mdev_type *mtype,
-+					struct mdev_type_attribute *attr,
-+					char *buf)
-+{
-+	struct device *dev = mtype_get_parent_dev(mtype);
-+	struct idxd_device *idxd = dev_get_drvdata(dev);
-+	int count;
-+	struct vdcm_idxd_type *type;
-+
-+	type = &idxd_mdev_types[mtype_get_type_group_id(mtype)];
-+	count = find_available_mdev_instances(idxd, type);
-+
-+	return sysfs_emit(buf, "%d\n", count);
-+}
-+static MDEV_TYPE_ATTR_RO(available_instances);
-+
-+static ssize_t device_api_show(struct mdev_type *mtype, struct mdev_type_attribute *attr,
-+			       char *buf)
-+{
-+	return sysfs_emit(buf, "%s\n", VFIO_DEVICE_API_PCI_STRING);
-+}
-+static MDEV_TYPE_ATTR_RO(device_api);
-+
-+static struct attribute *idxd_mdev_types_attrs[] = {
-+	&mdev_type_attr_name.attr,
-+	&mdev_type_attr_device_api.attr,
-+	&mdev_type_attr_available_instances.attr,
-+	NULL,
-+};
-+
-+static struct attribute_group idxd_mdev_type_dsa_group0 = {
-+	.name = idxd_dsa_1dwq_name,
-+	.attrs = idxd_mdev_types_attrs,
-+};
-+
-+static struct attribute_group idxd_mdev_type_iax_group0 = {
-+	.name = idxd_iax_1dwq_name,
-+	.attrs = idxd_mdev_types_attrs,
-+};
-+
-+static struct attribute_group *idxd_mdev_type_groups[] = {
-+	&idxd_mdev_type_dsa_group0,
-+	&idxd_mdev_type_iax_group0,
-+	NULL,
-+};
-+
- static struct mdev_driver idxd_vdcm_driver = {
- 	.driver = {
- 		.name = "idxd-mdev",
-@@ -685,6 +843,7 @@ static struct mdev_driver idxd_vdcm_driver = {
- 	},
- 	.probe = idxd_vdcm_probe,
- 	.remove = idxd_vdcm_remove,
-+	.supported_type_groups = idxd_mdev_type_groups,
- };
- 
- static int idxd_mdev_drv_probe(struct device *dev)
-
-
+ config QCOM_HIDMA_MGMT
+ 	tristate "Qualcomm Technologies HIDMA Management support"
++	depends on HAS_IOMEM
+ 	select DMA_ENGINE
+ 	help
+ 	  Enable support for the Qualcomm Technologies HIDMA Management.
