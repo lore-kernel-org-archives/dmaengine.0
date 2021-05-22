@@ -2,37 +2,37 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.7 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EBCB3C04FF3
-	for <dmaengine@archiver.kernel.org>; Sat, 22 May 2021 00:20:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B84A8C04FF3
+	for <dmaengine@archiver.kernel.org>; Sat, 22 May 2021 00:20:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CB296613F2
-	for <dmaengine@archiver.kernel.org>; Sat, 22 May 2021 00:20:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9E8E7613F2
+	for <dmaengine@archiver.kernel.org>; Sat, 22 May 2021 00:20:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230475AbhEVAVu (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 21 May 2021 20:21:50 -0400
-Received: from mga18.intel.com ([134.134.136.126]:45248 "EHLO mga18.intel.com"
+        id S230514AbhEVAWF (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 21 May 2021 20:22:05 -0400
+Received: from mga18.intel.com ([134.134.136.126]:45251 "EHLO mga18.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230478AbhEVAVe (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Fri, 21 May 2021 20:21:34 -0400
-IronPort-SDR: u9yCGp7K0GzHsDPNXF0DqAYkhZccbhmVSiE9Dx8NMSvcLNMOcG+38ntPjw8/cmMeBoD4VrHqXs
- bMW7TYxCfQHw==
-X-IronPort-AV: E=McAfee;i="6200,9189,9991"; a="188993218"
+        id S231127AbhEVAVl (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Fri, 21 May 2021 20:21:41 -0400
+IronPort-SDR: 88YNDiG8RHe89cArKMcHk0QwSUM03GFmGHvUcjMwvPWz+Ml/fwwv6EAQVUeMkKajKbdBkUH3lL
+ xnKrGc+Kiawg==
+X-IronPort-AV: E=McAfee;i="6200,9189,9991"; a="188993269"
 X-IronPort-AV: E=Sophos;i="5.82,319,1613462400"; 
-   d="scan'208";a="188993218"
+   d="scan'208";a="188993269"
 Received: from fmsmga005.fm.intel.com ([10.253.24.32])
-  by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 May 2021 17:19:43 -0700
-IronPort-SDR: Eb8/oGmG+cGzbFFUPLMwo9QQ3/Q57LR7j5KjEN5sYmxbVE4jhbN/OHWHLurAgK0xSig/VuNAGN
- 1rAhe+UzdWjQ==
+  by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 May 2021 17:20:14 -0700
+IronPort-SDR: to1My5qmEvSohnpclJdCrp3nNpyO6VwnPjebJPJ0HQALJmy5xS59L82d/RZr8QWrabQLKO1TUZ
+ zmChe4XT0+FA==
 X-IronPort-AV: E=Sophos;i="5.82,319,1613462400"; 
-   d="scan'208";a="631991805"
+   d="scan'208";a="631991888"
 Received: from djiang5-desk3.ch.intel.com ([143.182.136.137])
-  by fmsmga005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 May 2021 17:19:42 -0700
-Subject: [PATCH v6 06/20] vfio/mdev: idxd: add PCI config for read/write for
+  by fmsmga005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 May 2021 17:20:14 -0700
+Subject: [PATCH v6 11/20] vfio/mdev: idxd: Add basic driver setup for idxd
  mdev
 From:   Dave Jiang <dave.jiang@intel.com>
 To:     alex.williamson@redhat.com, kwankhede@nvidia.com,
@@ -43,8 +43,8 @@ Cc:     megha.dey@intel.com, jacob.jun.pan@intel.com, ashok.raj@intel.com,
         dan.j.williams@intel.com, eric.auger@redhat.com,
         pbonzini@redhat.com, dmaengine@vger.kernel.org,
         linux-kernel@vger.kernel.org, kvm@vger.kernel.org
-Date:   Fri, 21 May 2021 17:19:42 -0700
-Message-ID: <162164278223.261970.13253077604552916351.stgit@djiang5-desk3.ch.intel.com>
+Date:   Fri, 21 May 2021 17:20:13 -0700
+Message-ID: <162164281350.261970.10539208268885731071.stgit@djiang5-desk3.ch.intel.com>
 In-Reply-To: <162164243591.261970.3439987543338120797.stgit@djiang5-desk3.ch.intel.com>
 References: <162164243591.261970.3439987543338120797.stgit@djiang5-desk3.ch.intel.com>
 User-Agent: StGit/0.23-29-ga622f1
@@ -55,436 +55,283 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-The mediated device will emulate the PCI config access (read/write)
-from the guest. Add PCI config read/write functions to support
-the config read/write accesses from the guest.
+Add the basic registration and initialization for the mdev idxd driver.
+To register with the mdev framework, the driver must register the
+pci_dev. Add the registration as part of the idxd mdev driver probe.
+The host init is setup to be called on the first wq device probe. And
+when the last wq device releases the driver, the unregistration also
+happens.
 
 Signed-off-by: Dave Jiang <dave.jiang@intel.com>
 ---
- drivers/dma/idxd/registers.h    |    4 +
- drivers/vfio/mdev/Kconfig       |    9 +
- drivers/vfio/mdev/Makefile      |    1 
- drivers/vfio/mdev/idxd/Makefile |    4 +
- drivers/vfio/mdev/idxd/mdev.h   |   76 ++++++++++++
- drivers/vfio/mdev/idxd/vdev.c   |  255 +++++++++++++++++++++++++++++++++++++++
- include/uapi/linux/idxd.h       |    1 
- 7 files changed, 350 insertions(+)
- create mode 100644 drivers/vfio/mdev/idxd/Makefile
- create mode 100644 drivers/vfio/mdev/idxd/mdev.h
- create mode 100644 drivers/vfio/mdev/idxd/vdev.c
+ drivers/dma/Kconfig           |    1 
+ drivers/dma/idxd/device.c     |    2 +
+ drivers/dma/idxd/idxd.h       |   10 ++++
+ drivers/dma/idxd/init.c       |   39 +++++++++++++++++
+ drivers/vfio/mdev/idxd/mdev.c |   95 +++++++++++++++++++++++++++++++++++++++++
+ drivers/vfio/mdev/idxd/vdev.c |    3 -
+ 6 files changed, 147 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/dma/idxd/registers.h b/drivers/dma/idxd/registers.h
-index c970c3f025f0..c699c72bd8d2 100644
---- a/drivers/dma/idxd/registers.h
-+++ b/drivers/dma/idxd/registers.h
-@@ -155,6 +155,7 @@ enum idxd_device_reset_type {
- #define IDXD_INTC_CMD			0x02
- #define IDXD_INTC_OCCUPY			0x04
- #define IDXD_INTC_PERFMON_OVFL		0x08
-+#define IDXD_INTC_HALT			0x10
+diff --git a/drivers/dma/Kconfig b/drivers/dma/Kconfig
+index 84f996dd339d..390227027878 100644
+--- a/drivers/dma/Kconfig
++++ b/drivers/dma/Kconfig
+@@ -281,6 +281,7 @@ config INTEL_IDXD
+ 	depends on PCI && X86_64
+ 	depends on PCI_MSI
+ 	depends on SBITMAP
++	depends on IMS_MSI_ARRAY
+ 	select DMA_ENGINE
+ 	help
+ 	  Enable support for the Intel(R) data accelerators present
+diff --git a/drivers/dma/idxd/device.c b/drivers/dma/idxd/device.c
+index 2ea6015e0d53..cef41a273cc1 100644
+--- a/drivers/dma/idxd/device.c
++++ b/drivers/dma/idxd/device.c
+@@ -1257,6 +1257,7 @@ int drv_enable_wq(struct idxd_wq *wq)
+ 	mutex_unlock(&wq->wq_lock);
+ 	return rc;
+ }
++EXPORT_SYMBOL_GPL(drv_enable_wq);
  
- #define IDXD_CMD_OFFSET			0xa0
- union idxd_command_reg {
-@@ -279,6 +280,9 @@ union msix_perm {
- 	u32 bits;
- } __packed;
+ void __drv_disable_wq(struct idxd_wq *wq)
+ {
+@@ -1283,6 +1284,7 @@ void drv_disable_wq(struct idxd_wq *wq)
+ 	__drv_disable_wq(wq);
+ 	mutex_unlock(&wq->wq_lock);
+ }
++EXPORT_SYMBOL_GPL(drv_disable_wq);
  
-+#define MSIX_ENTRY_MASK_INT	0x1
-+#define MSIX_ENTRY_CTRL_BYTE	12
-+
- union group_flags {
- 	struct {
- 		u32 tc_a:3;
-diff --git a/drivers/vfio/mdev/Kconfig b/drivers/vfio/mdev/Kconfig
-index 82f79d99a7db..57f89457e9a7 100644
---- a/drivers/vfio/mdev/Kconfig
-+++ b/drivers/vfio/mdev/Kconfig
-@@ -21,3 +21,12 @@ config VFIO_MDEV_IRQS
- 	  devices.
- 
- 	  If you don't know what to do here, say N.
-+
-+config VFIO_MDEV_IDXD
-+	tristate "VFIO Mediated device driver for Intel IDXD"
-+	depends on VFIO && VFIO_MDEV && X86_64
-+	select VFIO_MDEV_IMS
-+	select IMS_MSI_ARRAY
-+	default n
-+	help
-+	  VFIO based mediated device driver for Intel Accelerator Devices driver.
-diff --git a/drivers/vfio/mdev/Makefile b/drivers/vfio/mdev/Makefile
-index c3f160cae192..7e3f5fae4bf1 100644
---- a/drivers/vfio/mdev/Makefile
-+++ b/drivers/vfio/mdev/Makefile
-@@ -6,3 +6,4 @@ mdev-$(CONFIG_VFIO_MDEV_IRQS) += mdev_irqs.o
- 
- obj-$(CONFIG_VFIO_MDEV) += mdev.o
- 
-+obj-$(CONFIG_VFIO_MDEV_IDXD) += idxd/
-diff --git a/drivers/vfio/mdev/idxd/Makefile b/drivers/vfio/mdev/idxd/Makefile
-new file mode 100644
-index 000000000000..ccd3bc1c7ab6
---- /dev/null
-+++ b/drivers/vfio/mdev/idxd/Makefile
-@@ -0,0 +1,4 @@
-+ccflags-y += -I$(srctree)/drivers/dma/idxd -DDEFAULT_SYMBOL_NAMESPACE=IDXD
-+
-+obj-$(CONFIG_VFIO_MDEV_IDXD) += idxd_mdev.o
-+idxd_mdev-y := vdev.o
-diff --git a/drivers/vfio/mdev/idxd/mdev.h b/drivers/vfio/mdev/idxd/mdev.h
-new file mode 100644
-index 000000000000..120c2dc29ba7
---- /dev/null
-+++ b/drivers/vfio/mdev/idxd/mdev.h
-@@ -0,0 +1,76 @@
-+/* SPDX-License-Identifier: GPL-2.0 */
-+/* Copyright(c) 2020 Intel Corporation. All rights rsvd. */
-+
-+#ifndef _IDXD_MDEV_H_
-+#define _IDXD_MDEV_H_
-+
-+/* two 64-bit BARs implemented */
-+#define VIDXD_MAX_BARS			2
-+#define VIDXD_MAX_CFG_SPACE_SZ		4096
-+#define VIDXD_MAX_MMIO_SPACE_SZ		8192
-+#define VIDXD_MSIX_TBL_SZ_OFFSET	0x42
-+#define VIDXD_CAP_CTRL_SZ		0x100
-+#define VIDXD_GRP_CTRL_SZ		0x100
-+#define VIDXD_WQ_CTRL_SZ		0x100
-+#define VIDXD_WQ_OCPY_INT_SZ		0x20
-+#define VIDXD_MSIX_TBL_SZ		0x90
-+#define VIDXD_MSIX_PERM_TBL_SZ		0x48
-+
-+#define VIDXD_MSIX_PERM_OFFSET		0x300
-+#define VIDXD_GRPCFG_OFFSET		0x400
-+#define VIDXD_WQCFG_OFFSET		0x500
-+#define VIDXD_MSIX_TABLE_OFFSET		0x600
-+#define VIDXD_MSIX_PBA_OFFSET		0x700
-+#define VIDXD_IMS_OFFSET		0x1000
-+
-+#define VIDXD_BAR0_SIZE			0x2000
-+#define VIDXD_BAR2_SIZE			0x2000
-+#define VIDXD_MAX_MSIX_VECS		2
-+#define VIDXD_MAX_MSIX_ENTRIES		VIDXD_MAX_MSIX_VECS
-+#define VIDXD_MAX_WQS			1
-+
-+struct vdcm_idxd {
-+	struct idxd_device *idxd;
-+	struct idxd_wq *wq;
-+	struct mdev_device *mdev;
-+	int num_wqs;
-+
-+	u64 bar_val[VIDXD_MAX_BARS];
-+	u64 bar_size[VIDXD_MAX_BARS];
-+	u8 cfg[VIDXD_MAX_CFG_SPACE_SZ];
-+	u8 bar0[VIDXD_MAX_MMIO_SPACE_SZ];
-+	struct mutex dev_lock; /* lock for vidxd resources */
-+};
-+
-+static inline u64 get_reg_val(void *buf, int size)
-+{
-+	u64 val = 0;
-+
-+	switch (size) {
-+	case 8:
-+		val = *(u64 *)buf;
-+		break;
-+	case 4:
-+		val = *(u32 *)buf;
-+		break;
-+	case 2:
-+		val = *(u16 *)buf;
-+		break;
-+	case 1:
-+		val = *(u8 *)buf;
-+		break;
-+	}
-+
-+	return val;
-+}
-+
-+static inline u8 vidxd_state(struct vdcm_idxd *vidxd)
-+{
-+	union gensts_reg *gensts = (union gensts_reg *)(vidxd->bar0 + IDXD_GENSTATS_OFFSET);
-+
-+	return gensts->state;
-+}
-+
-+int vidxd_cfg_read(struct vdcm_idxd *vidxd, unsigned int pos, void *buf, unsigned int count);
-+int vidxd_cfg_write(struct vdcm_idxd *vidxd, unsigned int pos, void *buf, unsigned int size);
-+#endif
-diff --git a/drivers/vfio/mdev/idxd/vdev.c b/drivers/vfio/mdev/idxd/vdev.c
-new file mode 100644
-index 000000000000..aca4a1228a97
---- /dev/null
-+++ b/drivers/vfio/mdev/idxd/vdev.c
-@@ -0,0 +1,255 @@
-+// SPDX-License-Identifier: GPL-2.0
-+/* Copyright(c) 2019,2020 Intel Corporation. All rights rsvd. */
-+#include <linux/init.h>
-+#include <linux/kernel.h>
-+#include <linux/module.h>
-+#include <linux/pci.h>
-+#include <linux/device.h>
-+#include <linux/sched/task.h>
-+#include <linux/io-64-nonatomic-lo-hi.h>
-+#include <linux/mm.h>
-+#include <linux/mmu_context.h>
-+#include <linux/vfio.h>
+ int idxd_device_drv_probe(struct device *dev)
+ {
+diff --git a/drivers/dma/idxd/idxd.h b/drivers/dma/idxd/idxd.h
+index cbb046c2921f..4d2532175705 100644
+--- a/drivers/dma/idxd/idxd.h
++++ b/drivers/dma/idxd/idxd.h
+@@ -11,6 +11,7 @@
+ #include <linux/idr.h>
+ #include <linux/pci.h>
+ #include <linux/perf_event.h>
 +#include <linux/mdev.h>
-+#include <linux/msi.h>
-+#include <linux/intel-iommu.h>
-+#include <linux/intel-svm.h>
-+#include <linux/kvm_host.h>
-+#include <linux/eventfd.h>
-+#include <uapi/linux/idxd.h>
-+#include "registers.h"
-+#include "idxd.h"
-+#include "mdev.h"
+ #include "registers.h"
+ 
+ #define IDXD_DRIVER_VERSION	"1.00"
+@@ -60,6 +61,7 @@ static const char idxd_dsa_drv_name[] = "dsa";
+ static const char idxd_dev_drv_name[] = "idxd";
+ static const char idxd_dmaengine_drv_name[] = "dmaengine";
+ static const char idxd_user_drv_name[] = "user";
++static const char idxd_mdev_drv_name[] = "mdev";
+ 
+ struct idxd_irq_entry {
+ 	struct idxd_device *idxd;
+@@ -297,6 +299,10 @@ struct idxd_device {
+ 	int *int_handles;
+ 
+ 	struct idxd_pmu *idxd_pmu;
 +
-+void vidxd_send_interrupt(struct vdcm_idxd *vidxd, int vector)
-+{
-+	struct mdev_device *mdev = vidxd->mdev;
-+	u8 *bar0 = vidxd->bar0;
-+	u8 *msix_entry = &bar0[VIDXD_MSIX_TABLE_OFFSET + vector * 0x10];
-+	u64 *pba = (u64 *)(bar0 + VIDXD_MSIX_PBA_OFFSET);
-+	u8 ctrl;
-+
-+	ctrl = msix_entry[MSIX_ENTRY_CTRL_BYTE];
-+	if (ctrl & MSIX_ENTRY_MASK_INT)
-+		set_bit(vector, (unsigned long *)pba);
-+	else
-+		mdev_msix_send_signal(mdev, vector);
-+}
-+
-+static void vidxd_set_swerr(struct vdcm_idxd *vidxd, unsigned int error)
-+{
-+	union sw_err_reg *swerr = (union sw_err_reg *)(vidxd->bar0 + IDXD_SWERR_OFFSET);
-+
-+	if (!swerr->valid) {
-+		memset(swerr, 0, sizeof(*swerr));
-+		swerr->valid = 1;
-+		swerr->error = error;
-+	} else if (!swerr->overflow) {
-+		swerr->overflow = 1;
-+	}
-+}
-+
-+static inline void send_swerr_interrupt(struct vdcm_idxd *vidxd)
-+{
-+	union genctrl_reg *genctrl = (union genctrl_reg *)(vidxd->bar0 + IDXD_GENCTRL_OFFSET);
-+	u32 *intcause = (u32 *)(vidxd->bar0 + IDXD_INTCAUSE_OFFSET);
-+
-+	if (!genctrl->softerr_int_en)
-+		return;
-+
-+	*intcause |= IDXD_INTC_ERR;
-+	vidxd_send_interrupt(vidxd, 0);
-+}
-+
-+static inline void send_halt_interrupt(struct vdcm_idxd *vidxd)
-+{
-+	union genctrl_reg *genctrl = (union genctrl_reg *)(vidxd->bar0 + IDXD_GENCTRL_OFFSET);
-+	u32 *intcause = (u32 *)(vidxd->bar0 + IDXD_INTCAUSE_OFFSET);
-+
-+	if (!genctrl->halt_int_en)
-+		return;
-+
-+	*intcause |= IDXD_INTC_HALT;
-+	vidxd_send_interrupt(vidxd, 0);
-+}
-+
-+static void vidxd_report_pci_error(struct vdcm_idxd *vidxd)
-+{
-+	union gensts_reg *gensts = (union gensts_reg *)(vidxd->bar0 + IDXD_GENSTATS_OFFSET);
-+
-+	vidxd_set_swerr(vidxd, DSA_ERR_PCI_CFG);
-+	/* set device to halt */
-+	gensts->reset_type = IDXD_DEVICE_RESET_FLR;
-+	gensts->state = IDXD_DEVICE_STATE_HALT;
-+
-+	send_halt_interrupt(vidxd);
-+}
-+
-+int vidxd_cfg_read(struct vdcm_idxd *vidxd, unsigned int pos, void *buf, unsigned int count)
-+{
-+	u32 offset = pos & 0xfff;
-+	struct device *dev = &vidxd->mdev->dev;
-+
-+	memcpy(buf, &vidxd->cfg[offset], count);
-+
-+	dev_dbg(dev, "vidxd pci R %d %x %x: %llx\n",
-+		vidxd->wq->id, count, offset, get_reg_val(buf, count));
-+
-+	return 0;
-+}
-+
-+/*
-+ * Much of the emulation code has been borrowed from Intel i915 cfg space
-+ * emulation code.
-+ * drivers/gpu/drm/i915/gvt/cfg_space.c:
-+ */
-+
-+/*
-+ * Bitmap for writable bits (RW or RW1C bits, but cannot co-exist in one
-+ * byte) byte by byte in standard pci configuration space. (not the full
-+ * 256 bytes.)
-+ */
-+static const u8 pci_cfg_space_rw_bmp[PCI_INTERRUPT_LINE + 4] = {
-+	[PCI_COMMAND]		= 0xff, 0x07,
-+	[PCI_STATUS]		= 0x00, 0xf9, /* the only one RW1C byte */
-+	[PCI_CACHE_LINE_SIZE]	= 0xff,
-+	[PCI_BASE_ADDRESS_0 ... PCI_CARDBUS_CIS - 1] = 0xff,
-+	[PCI_ROM_ADDRESS]	= 0x01, 0xf8, 0xff, 0xff,
-+	[PCI_INTERRUPT_LINE]	= 0xff,
-+};
-+
-+static void _pci_cfg_mem_write(struct vdcm_idxd *vidxd, unsigned int off, u8 *src,
-+			       unsigned int bytes)
-+{
-+	u8 *cfg_base = vidxd->cfg;
-+	u8 mask, new, old;
-+	int i = 0;
-+
-+	for (; i < bytes && (off + i < sizeof(pci_cfg_space_rw_bmp)); i++) {
-+		mask = pci_cfg_space_rw_bmp[off + i];
-+		old = cfg_base[off + i];
-+		new = src[i] & mask;
-+
-+		/**
-+		 * The PCI_STATUS high byte has RW1C bits, here
-+		 * emulates clear by writing 1 for these bits.
-+		 * Writing a 0b to RW1C bits has no effect.
-+		 */
-+		if (off + i == PCI_STATUS + 1)
-+			new = (~new & old) & mask;
-+
-+		cfg_base[off + i] = (old & ~mask) | new;
-+	}
-+
-+	/* For other configuration space directly copy as it is. */
-+	if (i < bytes)
-+		memcpy(cfg_base + off + i, src + i, bytes - i);
-+}
-+
-+static inline void _write_pci_bar(struct vdcm_idxd *vidxd, u32 offset, u32 val, bool low)
-+{
-+	u32 *pval;
-+
-+	/* BAR offset should be 32 bits algiend */
-+	offset = rounddown(offset, 4);
-+	pval = (u32 *)(vidxd->cfg + offset);
-+
-+	if (low) {
-+		/*
-+		 * only update bit 31 - bit 4,
-+		 * leave the bit 3 - bit 0 unchanged.
-+		 */
-+		*pval = (val & GENMASK(31, 4)) | (*pval & GENMASK(3, 0));
-+	} else {
-+		*pval = val;
-+	}
-+}
-+
-+static int _pci_cfg_bar_write(struct vdcm_idxd *vidxd, unsigned int offset, void *p_data,
-+			      unsigned int bytes)
-+{
-+	u32 new = *(u32 *)(p_data);
-+	bool lo = IS_ALIGNED(offset, 8);
-+	u64 size;
-+	unsigned int bar_id;
-+
-+	/*
-+	 * Power-up software can determine how much address
-+	 * space the device requires by writing a value of
-+	 * all 1's to the register and then reading the value
-+	 * back. The device will return 0's in all don't-care
-+	 * address bits.
-+	 */
-+	if (new == 0xffffffff) {
-+		switch (offset) {
-+		case PCI_BASE_ADDRESS_0:
-+		case PCI_BASE_ADDRESS_1:
-+		case PCI_BASE_ADDRESS_2:
-+		case PCI_BASE_ADDRESS_3:
-+			bar_id = (offset - PCI_BASE_ADDRESS_0) / 8;
-+			size = vidxd->bar_size[bar_id];
-+			_write_pci_bar(vidxd, offset, size >> (lo ? 0 : 32), lo);
-+			break;
-+		default:
-+			/* Unimplemented BARs */
-+			_write_pci_bar(vidxd, offset, 0x0, false);
-+		}
-+	} else {
-+		switch (offset) {
-+		case PCI_BASE_ADDRESS_0:
-+		case PCI_BASE_ADDRESS_1:
-+		case PCI_BASE_ADDRESS_2:
-+		case PCI_BASE_ADDRESS_3:
-+			_write_pci_bar(vidxd, offset, new, lo);
-+			break;
-+		default:
-+			break;
-+		}
-+	}
-+	return 0;
-+}
-+
-+int vidxd_cfg_write(struct vdcm_idxd *vidxd, unsigned int pos, void *buf, unsigned int size)
-+{
-+	struct device *dev = &vidxd->idxd->pdev->dev;
-+
-+	if (size > 4)
-+		return -EINVAL;
-+
-+	if (pos + size > VIDXD_MAX_CFG_SPACE_SZ)
-+		return -EINVAL;
-+
-+	dev_dbg(dev, "vidxd pci W %d %x %x: %llx\n", vidxd->wq->id, size, pos,
-+		get_reg_val(buf, size));
-+
-+	/* First check if it's PCI_COMMAND */
-+	if (IS_ALIGNED(pos, 2) && pos == PCI_COMMAND) {
-+		bool new_bme;
-+		bool bme;
-+
-+		if (size > 2)
-+			return -EINVAL;
-+
-+		new_bme = !!(get_reg_val(buf, 2) & PCI_COMMAND_MASTER);
-+		bme = !!(vidxd->cfg[pos] & PCI_COMMAND_MASTER);
-+		_pci_cfg_mem_write(vidxd, pos, buf, size);
-+
-+		/* Flag error if turning off BME while device is enabled */
-+		if ((bme && !new_bme) && vidxd_state(vidxd) == IDXD_DEVICE_STATE_ENABLED)
-+			vidxd_report_pci_error(vidxd);
-+		return 0;
-+	}
-+
-+	switch (pos) {
-+	case PCI_BASE_ADDRESS_0 ... PCI_BASE_ADDRESS_5:
-+		if (!IS_ALIGNED(pos, 4))
-+			return -EINVAL;
-+		return _pci_cfg_bar_write(vidxd, pos, buf, size);
-+
-+	default:
-+		_pci_cfg_mem_write(vidxd, pos, buf, size);
-+	}
-+	return 0;
-+}
-+
-+MODULE_LICENSE("GPL v2");
-diff --git a/include/uapi/linux/idxd.h b/include/uapi/linux/idxd.h
-index e33997b4d750..751f6107217c 100644
---- a/include/uapi/linux/idxd.h
-+++ b/include/uapi/linux/idxd.h
-@@ -89,6 +89,7 @@ enum dsa_completion_status {
- 	DSA_COMP_HW_ERR1,
- 	DSA_COMP_HW_ERR_DRB,
- 	DSA_COMP_TRANSLATION_FAIL,
-+	DSA_ERR_PCI_CFG = 0x51,
++	struct kref mdev_kref;
++	struct mutex kref_lock; /* lock for the mdev_kref */
++	bool mdev_host_init;
  };
  
- enum iax_completion_status {
+ /* IDXD software descriptor */
+@@ -587,6 +593,10 @@ int idxd_cdev_get_major(struct idxd_device *idxd);
+ int idxd_wq_add_cdev(struct idxd_wq *wq);
+ void idxd_wq_del_cdev(struct idxd_wq *wq);
+ 
++/* mdev host */
++int idxd_mdev_host_init(struct idxd_device *idxd, struct mdev_driver *drv);
++void idxd_mdev_host_release(struct kref *kref);
++
+ /* perfmon */
+ #if IS_ENABLED(CONFIG_INTEL_IDXD_PERFMON)
+ int perfmon_pmu_init(struct idxd_device *idxd);
+diff --git a/drivers/dma/idxd/init.c b/drivers/dma/idxd/init.c
+index 16ff37be2d26..809ca1827772 100644
+--- a/drivers/dma/idxd/init.c
++++ b/drivers/dma/idxd/init.c
+@@ -63,6 +63,41 @@ static struct pci_device_id idxd_pci_tbl[] = {
+ };
+ MODULE_DEVICE_TABLE(pci, idxd_pci_tbl);
+ 
++int idxd_mdev_host_init(struct idxd_device *idxd, struct mdev_driver *drv)
++{
++	struct device *dev = &idxd->pdev->dev;
++	int rc;
++
++	if (!idxd->ims_size)
++		return -EOPNOTSUPP;
++
++	rc = iommu_dev_enable_feature(dev, IOMMU_DEV_FEAT_AUX);
++	if (rc < 0) {
++		dev_warn(dev, "Failed to enable aux-domain: %d\n", rc);
++		return rc;
++	}
++
++	rc = mdev_register_device(dev, drv);
++	if (rc < 0) {
++		iommu_dev_disable_feature(dev, IOMMU_DEV_FEAT_AUX);
++		return rc;
++	}
++
++	idxd->mdev_host_init = true;
++	return 0;
++}
++EXPORT_SYMBOL_GPL(idxd_mdev_host_init);
++
++void idxd_mdev_host_release(struct kref *kref)
++{
++	struct idxd_device *idxd = container_of(kref, struct idxd_device, mdev_kref);
++	struct device *dev = &idxd->pdev->dev;
++
++	mdev_unregister_device(dev);
++	iommu_dev_disable_feature(dev, IOMMU_DEV_FEAT_AUX);
++}
++EXPORT_SYMBOL_GPL(idxd_mdev_host_release);
++
+ static int idxd_setup_interrupts(struct idxd_device *idxd)
+ {
+ 	struct pci_dev *pdev = idxd->pdev;
+@@ -352,6 +387,9 @@ static int idxd_setup_internals(struct idxd_device *idxd)
+ 		goto err_wkq_create;
+ 	}
+ 
++	kref_init(&idxd->mdev_kref);
++	mutex_init(&idxd->kref_lock);
++
+ 	return 0;
+ 
+  err_wkq_create:
+@@ -741,6 +779,7 @@ static void idxd_remove(struct pci_dev *pdev)
+ 
+ 	dev_dbg(&pdev->dev, "%s called\n", __func__);
+ 	idxd_shutdown(pdev);
++	kref_put_mutex(&idxd->mdev_kref, idxd_mdev_host_release, &idxd->kref_lock);
+ 	if (device_pasid_enabled(idxd))
+ 		idxd_disable_system_pasid(idxd);
+ 	idxd_unregister_devices(idxd);
+diff --git a/drivers/vfio/mdev/idxd/mdev.c b/drivers/vfio/mdev/idxd/mdev.c
+index 90ff7cedb8b4..25cd62b803f8 100644
+--- a/drivers/vfio/mdev/idxd/mdev.c
++++ b/drivers/vfio/mdev/idxd/mdev.c
+@@ -16,6 +16,7 @@
+ #include <linux/intel-svm.h>
+ #include <linux/kvm_host.h>
+ #include <linux/eventfd.h>
++#include <linux/irqchip/irq-ims-msi.h>
+ #include <uapi/linux/idxd.h>
+ #include "registers.h"
+ #include "idxd.h"
+@@ -40,5 +41,99 @@ int idxd_mdev_get_pasid(struct mdev_device *mdev, struct vfio_device *vdev, u32
+ 	return 0;
+ }
+ 
++static struct mdev_driver idxd_vdcm_driver = {
++	.driver = {
++		.name = "idxd-mdev",
++		.owner = THIS_MODULE,
++		.mod_name = KBUILD_MODNAME,
++	},
++};
++
++static int idxd_mdev_drv_probe(struct device *dev)
++{
++	struct idxd_wq *wq = confdev_to_wq(dev);
++	struct idxd_device *idxd = wq->idxd;
++	int rc;
++
++	if (!is_idxd_wq_mdev(wq))
++		return -ENODEV;
++
++	rc = drv_enable_wq(wq);
++	if (rc < 0)
++		return rc;
++
++	/*
++	 * The kref count starts at 1 on initialization. So the first device gets
++	 * probed, we want to setup the mdev and do the host initialization. The
++	 * follow on probes the driver want to just take a kref. On the remove side, once
++	 * the kref hits 0, the driver will do the host cleanup and unregister from the
++	 * mdev framework.
++	 */
++	mutex_lock(&idxd->kref_lock);
++	if (!idxd->mdev_host_init) {
++		rc = idxd_mdev_host_init(idxd, &idxd_vdcm_driver);
++		if (rc < 0) {
++			mutex_unlock(&idxd->kref_lock);
++			drv_disable_wq(wq);
++			dev_warn(dev, "mdev device init failed!\n");
++			return -ENXIO;
++		}
++		idxd->mdev_host_init = true;
++	} else {
++		kref_get(&idxd->mdev_kref);
++	}
++	mutex_unlock(&idxd->kref_lock);
++
++	get_device(dev);
++	dev_info(dev, "wq %s enabled\n", dev_name(dev));
++	return 0;
++}
++
++static void idxd_mdev_drv_remove(struct device *dev)
++{
++	struct idxd_wq *wq = confdev_to_wq(dev);
++	struct idxd_device *idxd = wq->idxd;
++
++	drv_disable_wq(wq);
++	dev_info(dev, "wq %s disabled\n", dev_name(dev));
++	kref_put_mutex(&idxd->mdev_kref, idxd_mdev_host_release, &idxd->kref_lock);
++	put_device(dev);
++}
++
++static struct idxd_device_driver idxd_mdev_driver = {
++	.probe = idxd_mdev_drv_probe,
++	.remove = idxd_mdev_drv_remove,
++	.name = idxd_mdev_drv_name,
++};
++
++static int __init idxd_mdev_init(void)
++{
++	int rc;
++
++	rc = idxd_driver_register(&idxd_mdev_driver);
++	if (rc < 0)
++		return rc;
++
++	rc = mdev_register_driver(&idxd_vdcm_driver);
++	if (rc < 0) {
++		idxd_driver_unregister(&idxd_mdev_driver);
++		return rc;
++	}
++
++	return 0;
++}
++
++static void __exit idxd_mdev_exit(void)
++{
++	mdev_unregister_driver(&idxd_vdcm_driver);
++	idxd_driver_unregister(&idxd_mdev_driver);
++}
++
++module_init(idxd_mdev_init);
++module_exit(idxd_mdev_exit);
++
+ MODULE_IMPORT_NS(IDXD);
++MODULE_SOFTDEP("pre: idxd");
+ MODULE_LICENSE("GPL v2");
++MODULE_AUTHOR("Intel Corporation");
++MODULE_ALIAS_IDXD_DEVICE(0);
+diff --git a/drivers/vfio/mdev/idxd/vdev.c b/drivers/vfio/mdev/idxd/vdev.c
+index d2416765ce7e..67da4c122a96 100644
+--- a/drivers/vfio/mdev/idxd/vdev.c
++++ b/drivers/vfio/mdev/idxd/vdev.c
+@@ -989,6 +989,3 @@ static void vidxd_do_command(struct vdcm_idxd *vidxd, u32 val)
+ 		break;
+ 	}
+ }
+-
+-MODULE_IMPORT_NS(IDXD);
+-MODULE_LICENSE("GPL v2");
 
 
