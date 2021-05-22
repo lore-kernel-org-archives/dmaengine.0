@@ -7,33 +7,32 @@ X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C7546C04FF3
-	for <dmaengine@archiver.kernel.org>; Sat, 22 May 2021 00:21:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3D631C04FF3
+	for <dmaengine@archiver.kernel.org>; Sat, 22 May 2021 00:21:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A02CE61002
-	for <dmaengine@archiver.kernel.org>; Sat, 22 May 2021 00:21:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 17E4761155
+	for <dmaengine@archiver.kernel.org>; Sat, 22 May 2021 00:21:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231197AbhEVAXD (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 21 May 2021 20:23:03 -0400
-Received: from mga04.intel.com ([192.55.52.120]:56072 "EHLO mga04.intel.com"
+        id S230447AbhEVAXU (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 21 May 2021 20:23:20 -0400
+Received: from mga07.intel.com ([134.134.136.100]:31480 "EHLO mga07.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231286AbhEVAWW (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Fri, 21 May 2021 20:22:22 -0400
-IronPort-SDR: 3fbRic06r2VCumwW6SahWbJyjULxrDNM5h2XQk4lNxOzH9Bm9jvM7G8m4VOqLAL8+VHFrvqcAS
- NWn0+MbSb+pQ==
-X-IronPort-AV: E=McAfee;i="6200,9189,9991"; a="199661288"
+        id S230334AbhEVAWd (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Fri, 21 May 2021 20:22:33 -0400
+IronPort-SDR: vVSjZ/+4IG0PjRoMpVORoaa6TqStWIZwOlEu2zK0d5mcl3GNvI0jTtA9XvQ/i5gzBYpt5EzpHJ
+ 1OIS6FX3mYQw==
+X-IronPort-AV: E=McAfee;i="6200,9189,9991"; a="265504426"
 X-IronPort-AV: E=Sophos;i="5.82,319,1613462400"; 
-   d="scan'208";a="199661288"
-Received: from orsmga001.jf.intel.com ([10.7.209.18])
-  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 May 2021 17:20:58 -0700
-IronPort-SDR: r66u16T10yzWEpgnFp0w9VS6i7FXAGZWvjKzU4FWhmUAM8XjWV9w3sHQKzn0pTZmCSLTCeP1RZ
- epSHqwRlOJGQ==
+   d="scan'208";a="265504426"
+Received: from fmsmga005.fm.intel.com ([10.253.24.32])
+  by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 May 2021 17:20:44 -0700
+IronPort-SDR: p9ylZudZE/ebgREN7McnQJns4oDNrFuq3y077r7ZMETpJ+o52SSvtCHzMlMyFN+uxVFhCFHsVP
+ n2NM2XTO+NHg==
 X-IronPort-AV: E=Sophos;i="5.82,319,1613462400"; 
-   d="scan'208";a="474753058"
+   d="scan'208";a="631991932"
 Received: from djiang5-desk3.ch.intel.com ([143.182.136.137])
-  by orsmga001-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 May 2021 17:20:57 -0700
-Subject: [PATCH v6 18/20] vfio: move vfio_pci_set_ctx_trigger_single to common
- code
+  by fmsmga005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 May 2021 17:20:44 -0700
+Subject: [PATCH v6 16/20] vfio/mdev: idxd: add new wq state for mdev
 From:   Dave Jiang <dave.jiang@intel.com>
 To:     alex.williamson@redhat.com, kwankhede@nvidia.com,
         tglx@linutronix.de, vkoul@kernel.org, jgg@mellanox.com
@@ -43,8 +42,8 @@ Cc:     megha.dey@intel.com, jacob.jun.pan@intel.com, ashok.raj@intel.com,
         dan.j.williams@intel.com, eric.auger@redhat.com,
         pbonzini@redhat.com, dmaengine@vger.kernel.org,
         linux-kernel@vger.kernel.org, kvm@vger.kernel.org
-Date:   Fri, 21 May 2021 17:20:56 -0700
-Message-ID: <162164285626.261970.18327549914978174180.stgit@djiang5-desk3.ch.intel.com>
+Date:   Fri, 21 May 2021 17:20:43 -0700
+Message-ID: <162164284391.261970.15032815614261092191.stgit@djiang5-desk3.ch.intel.com>
 In-Reply-To: <162164243591.261970.3439987543338120797.stgit@djiang5-desk3.ch.intel.com>
 References: <162164243591.261970.3439987543338120797.stgit@djiang5-desk3.ch.intel.com>
 User-Agent: StGit/0.23-29-ga622f1
@@ -55,211 +54,117 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-With mdev needing to also use the same function, move the function to a
-common place where vfio pci and mdev can both utilize.
+When a dedicated wq is enabled as mdev, we must disable the wq on the
+device in order to program the pasid to the wq. Introduce a wq state
+IDXD_WQ_LOCKED that is software state only in order to prevent the user
+from modifying the configuration while mdev wq is in this state. While
+in this state, the wq is not in DISABLED state and will prevent any
+modifications to the configuration. It is also not in the ENABLED state
+and therefore prevents any actions allowed in the ENABLED state.
+
+For mdev, the dwq is disabled and set to LOCKED state upon the mdev
+creation. When ->open() is called on the mdev and a pasid is programmed to
+the WQCFG, the dwq is enabled again and goes to the ENABLED state.
 
 Signed-off-by: Dave Jiang <dave.jiang@intel.com>
 ---
- drivers/vfio/Makefile             |    2 +
- drivers/vfio/pci/vfio_pci_intrs.c |   63 ++------------------------------
- drivers/vfio/vfio_common.c        |   74 +++++++++++++++++++++++++++++++++++++
- include/linux/vfio.h              |    4 ++
- 4 files changed, 83 insertions(+), 60 deletions(-)
- create mode 100644 drivers/vfio/vfio_common.c
+ drivers/dma/idxd/device.c     |   16 ++++++++++++++++
+ drivers/dma/idxd/idxd.h       |    1 +
+ drivers/dma/idxd/sysfs.c      |    2 ++
+ drivers/vfio/mdev/idxd/mdev.c |    5 +++++
+ drivers/vfio/mdev/idxd/vdev.c |    4 +++-
+ 5 files changed, 27 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/vfio/Makefile b/drivers/vfio/Makefile
-index fee73f3d9480..fc7fd2412dee 100644
---- a/drivers/vfio/Makefile
-+++ b/drivers/vfio/Makefile
-@@ -1,7 +1,7 @@
- # SPDX-License-Identifier: GPL-2.0
- vfio_virqfd-y := virqfd.o
+diff --git a/drivers/dma/idxd/device.c b/drivers/dma/idxd/device.c
+index cef41a273cc1..c46b6bc055bd 100644
+--- a/drivers/dma/idxd/device.c
++++ b/drivers/dma/idxd/device.c
+@@ -243,6 +243,14 @@ int idxd_wq_disable(struct idxd_wq *wq)
  
--obj-$(CONFIG_VFIO) += vfio.o
-+obj-$(CONFIG_VFIO) += vfio.o vfio_common.o
- obj-$(CONFIG_VFIO_VIRQFD) += vfio_virqfd.o
- obj-$(CONFIG_VFIO_IOMMU_TYPE1) += vfio_iommu_type1.o
- obj-$(CONFIG_VFIO_IOMMU_SPAPR_TCE) += vfio_iommu_spapr_tce.o
-diff --git a/drivers/vfio/pci/vfio_pci_intrs.c b/drivers/vfio/pci/vfio_pci_intrs.c
-index 9c8efad3a859..926cff00146c 100644
---- a/drivers/vfio/pci/vfio_pci_intrs.c
-+++ b/drivers/vfio/pci/vfio_pci_intrs.c
-@@ -561,61 +561,6 @@ static int vfio_pci_set_msi_trigger(struct vfio_pci_device *vdev,
- 	return 0;
- }
+ 	dev_dbg(dev, "Disabling WQ %d\n", wq->id);
  
--static int vfio_pci_set_ctx_trigger_single(struct eventfd_ctx **ctx,
--					   unsigned int count, uint32_t flags,
--					   void *data)
--{
--	/* DATA_NONE/DATA_BOOL enables loopback testing */
--	if (flags & VFIO_IRQ_SET_DATA_NONE) {
--		if (*ctx) {
--			if (count) {
--				eventfd_signal(*ctx, 1);
--			} else {
--				eventfd_ctx_put(*ctx);
--				*ctx = NULL;
--			}
--			return 0;
--		}
--	} else if (flags & VFIO_IRQ_SET_DATA_BOOL) {
--		uint8_t trigger;
--
--		if (!count)
--			return -EINVAL;
--
--		trigger = *(uint8_t *)data;
--		if (trigger && *ctx)
--			eventfd_signal(*ctx, 1);
--
--		return 0;
--	} else if (flags & VFIO_IRQ_SET_DATA_EVENTFD) {
--		int32_t fd;
--
--		if (!count)
--			return -EINVAL;
--
--		fd = *(int32_t *)data;
--		if (fd == -1) {
--			if (*ctx)
--				eventfd_ctx_put(*ctx);
--			*ctx = NULL;
--		} else if (fd >= 0) {
--			struct eventfd_ctx *efdctx;
--
--			efdctx = eventfd_ctx_fdget(fd);
--			if (IS_ERR(efdctx))
--				return PTR_ERR(efdctx);
--
--			if (*ctx)
--				eventfd_ctx_put(*ctx);
--
--			*ctx = efdctx;
--		}
--		return 0;
--	}
--
--	return -EINVAL;
--}
--
- static int vfio_pci_set_err_trigger(struct vfio_pci_device *vdev,
- 				    unsigned index, unsigned start,
- 				    unsigned count, uint32_t flags, void *data)
-@@ -623,8 +568,8 @@ static int vfio_pci_set_err_trigger(struct vfio_pci_device *vdev,
- 	if (index != VFIO_PCI_ERR_IRQ_INDEX || start != 0 || count > 1)
- 		return -EINVAL;
- 
--	return vfio_pci_set_ctx_trigger_single(&vdev->err_trigger,
--					       count, flags, data);
-+	return vfio_set_ctx_trigger_single(&vdev->err_trigger,
-+					   count, flags, data);
- }
- 
- static int vfio_pci_set_req_trigger(struct vfio_pci_device *vdev,
-@@ -634,8 +579,8 @@ static int vfio_pci_set_req_trigger(struct vfio_pci_device *vdev,
- 	if (index != VFIO_PCI_REQ_IRQ_INDEX || start != 0 || count > 1)
- 		return -EINVAL;
- 
--	return vfio_pci_set_ctx_trigger_single(&vdev->req_trigger,
--					       count, flags, data);
-+	return vfio_set_ctx_trigger_single(&vdev->req_trigger,
-+					   count, flags, data);
- }
- 
- int vfio_pci_set_irqs_ioctl(struct vfio_pci_device *vdev, uint32_t flags,
-diff --git a/drivers/vfio/vfio_common.c b/drivers/vfio/vfio_common.c
-new file mode 100644
-index 000000000000..b209d57c7312
---- /dev/null
-+++ b/drivers/vfio/vfio_common.c
-@@ -0,0 +1,74 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/*
-+ * Copyright (C) 2021 Intel, Corp. All rights reserved.
-+ * Copyright (C) 2012 Red Hat, Inc.  All rights reserved.
-+ *     Author: Alex Williamson <alex.williamson@redhat.com>
-+ * VFIO common helper functions
-+ */
-+
-+#include <linux/eventfd.h>
-+#include <linux/vfio.h>
-+
-+/*
-+ * Common helper to set single eventfd trigger
-+ *
-+ * @ctx [out]		: address of eventfd ctx to be written to
-+ * @count [in]		: number of vectors (should be 1)
-+ * @flags [in]		: VFIO IRQ flags
-+ * @data [in]		: data from ioctl
-+ */
-+int vfio_set_ctx_trigger_single(struct eventfd_ctx **ctx,
-+				unsigned int count, u32 flags,
-+				void *data)
-+{
-+	/* DATA_NONE/DATA_BOOL enables loopback testing */
-+	if (flags & VFIO_IRQ_SET_DATA_NONE) {
-+		if (*ctx) {
-+			if (count) {
-+				eventfd_signal(*ctx, 1);
-+			} else {
-+				eventfd_ctx_put(*ctx);
-+				*ctx = NULL;
-+			}
-+			return 0;
-+		}
-+	} else if (flags & VFIO_IRQ_SET_DATA_BOOL) {
-+		u8 trigger;
-+
-+		if (!count)
-+			return -EINVAL;
-+
-+		trigger = *(uint8_t *)data;
-+		if (trigger && *ctx)
-+			eventfd_signal(*ctx, 1);
-+
++	/*
++	 * When the wq is in LOCKED state, it means it is disabled but
++	 * also at the same time is "enabled" as far as the user is
++	 * concerned. So a call to disable the hardware can be skipped.
++	 */
++	if (wq->state == IDXD_WQ_LOCKED)
 +		return 0;
-+	} else if (flags & VFIO_IRQ_SET_DATA_EVENTFD) {
-+		s32 fd;
 +
-+		if (!count)
-+			return -EINVAL;
+ 	if (wq->state != IDXD_WQ_ENABLED) {
+ 		dev_dbg(dev, "WQ %d in wrong state: %d\n", wq->id, wq->state);
+ 		return 0;
+@@ -285,6 +293,14 @@ void idxd_wq_reset(struct idxd_wq *wq)
+ 	struct device *dev = &idxd->pdev->dev;
+ 	u32 operand;
+ 
++	/*
++	 * When the wq is in LOCKED state, it means it is disabled but
++	 * also at the same time is "enabled" as far as the user is
++	 * concerned. So a call to reset the hardware can be skipped.
++	 */
++	if (wq->state == IDXD_WQ_LOCKED)
++		return;
 +
-+		fd = *(s32 *)data;
-+		if (fd == -1) {
-+			if (*ctx)
-+				eventfd_ctx_put(*ctx);
-+			*ctx = NULL;
-+		} else if (fd >= 0) {
-+			struct eventfd_ctx *efdctx;
+ 	if (wq->state != IDXD_WQ_ENABLED) {
+ 		dev_dbg(dev, "WQ %d in wrong state: %d\n", wq->id, wq->state);
+ 		return;
+diff --git a/drivers/dma/idxd/idxd.h b/drivers/dma/idxd/idxd.h
+index 81c78add74dd..5e8da9019c46 100644
+--- a/drivers/dma/idxd/idxd.h
++++ b/drivers/dma/idxd/idxd.h
+@@ -120,6 +120,7 @@ struct idxd_pmu {
+ enum idxd_wq_state {
+ 	IDXD_WQ_DISABLED = 0,
+ 	IDXD_WQ_ENABLED,
++	IDXD_WQ_LOCKED,
+ };
+ 
+ enum idxd_wq_flag {
+diff --git a/drivers/dma/idxd/sysfs.c b/drivers/dma/idxd/sysfs.c
+index 3d3a84be2c9b..435ad3c62ad6 100644
+--- a/drivers/dma/idxd/sysfs.c
++++ b/drivers/dma/idxd/sysfs.c
+@@ -584,6 +584,8 @@ static ssize_t wq_state_show(struct device *dev,
+ 		return sysfs_emit(buf, "disabled\n");
+ 	case IDXD_WQ_ENABLED:
+ 		return sysfs_emit(buf, "enabled\n");
++	case IDXD_WQ_LOCKED:
++		return sysfs_emit(buf, "locked\n");
+ 	}
+ 
+ 	return sysfs_emit(buf, "unknown\n");
+diff --git a/drivers/vfio/mdev/idxd/mdev.c b/drivers/vfio/mdev/idxd/mdev.c
+index 7dac024e2852..3257505fb7c7 100644
+--- a/drivers/vfio/mdev/idxd/mdev.c
++++ b/drivers/vfio/mdev/idxd/mdev.c
+@@ -894,6 +894,11 @@ static void idxd_mdev_drv_remove(struct device *dev)
+ 	struct idxd_device *idxd = wq->idxd;
+ 
+ 	drv_disable_wq(wq);
++	mutex_lock(&wq->wq_lock);
++	if (wq->state == IDXD_WQ_LOCKED)
++		wq->state = IDXD_WQ_DISABLED;
++	mutex_unlock(&wq->wq_lock);
 +
-+			efdctx = eventfd_ctx_fdget(fd);
-+			if (IS_ERR(efdctx))
-+				return PTR_ERR(efdctx);
-+
-+			if (*ctx)
-+				eventfd_ctx_put(*ctx);
-+
-+			*ctx = efdctx;
-+		}
-+		return 0;
+ 	dev_info(dev, "wq %s disabled\n", dev_name(dev));
+ 	kref_put_mutex(&idxd->mdev_kref, idxd_mdev_host_release, &idxd->kref_lock);
+ 	put_device(dev);
+diff --git a/drivers/vfio/mdev/idxd/vdev.c b/drivers/vfio/mdev/idxd/vdev.c
+index 67da4c122a96..a444a0af8b5f 100644
+--- a/drivers/vfio/mdev/idxd/vdev.c
++++ b/drivers/vfio/mdev/idxd/vdev.c
+@@ -75,8 +75,10 @@ void vidxd_init(struct vdcm_idxd *vidxd)
+ 
+ 	vidxd_mmio_init(vidxd);
+ 
+-	if (wq_dedicated(wq) && wq->state == IDXD_WQ_ENABLED)
++	if (wq_dedicated(wq) && wq->state == IDXD_WQ_ENABLED) {
+ 		idxd_wq_disable(wq);
++		wq->state = IDXD_WQ_LOCKED;
 +	}
-+
-+	return -EINVAL;
-+}
-+EXPORT_SYMBOL(vfio_set_ctx_trigger_single);
-diff --git a/include/linux/vfio.h b/include/linux/vfio.h
-index ed5ca027eb49..aa7cb0e1b8b2 100644
---- a/include/linux/vfio.h
-+++ b/include/linux/vfio.h
-@@ -235,4 +235,8 @@ extern int vfio_virqfd_enable(void *opaque,
- 			      void *data, struct virqfd **pvirqfd, int fd);
- extern void vfio_virqfd_disable(struct virqfd **pvirqfd);
+ }
  
-+/* common lib functions */
-+extern int vfio_set_ctx_trigger_single(struct eventfd_ctx **ctx,
-+				       unsigned int count, u32 flags,
-+				       void *data);
- #endif /* VFIO_H */
+ void vidxd_send_interrupt(struct vdcm_idxd *vidxd, int vector)
 
 
