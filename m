@@ -7,45 +7,44 @@ X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A0CA7C04FF3
-	for <dmaengine@archiver.kernel.org>; Sat, 22 May 2021 00:19:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8FB9CC04FF3
+	for <dmaengine@archiver.kernel.org>; Sat, 22 May 2021 00:20:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 821C2613D6
-	for <dmaengine@archiver.kernel.org>; Sat, 22 May 2021 00:19:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 72EA8613EC
+	for <dmaengine@archiver.kernel.org>; Sat, 22 May 2021 00:20:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230426AbhEVAVO (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 21 May 2021 20:21:14 -0400
-Received: from mga02.intel.com ([134.134.136.20]:2497 "EHLO mga02.intel.com"
+        id S230300AbhEVAVc (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 21 May 2021 20:21:32 -0400
+Received: from mga04.intel.com ([192.55.52.120]:56018 "EHLO mga04.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230453AbhEVAVB (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Fri, 21 May 2021 20:21:01 -0400
-IronPort-SDR: ZST9NzzDWewFL+dJuRf36MAnlAW0nqIUSg7wQWLXbafANl37D84p4wTHAQs7Be9ALK4HnpPXek
- 7AY68KTau92g==
-X-IronPort-AV: E=McAfee;i="6200,9189,9991"; a="188728094"
+        id S230268AbhEVAVU (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Fri, 21 May 2021 20:21:20 -0400
+IronPort-SDR: hsUlE92OGPdPQQIThVjWgpIyzua3uImWSBxNB6DRwrxxndKFqTNImptFtWXS7ZURqYwUfSlTnc
+ ZVArNoZJ3ogg==
+X-IronPort-AV: E=McAfee;i="6200,9189,9991"; a="199661193"
 X-IronPort-AV: E=Sophos;i="5.82,319,1613462400"; 
-   d="scan'208";a="188728094"
-Received: from fmsmga006.fm.intel.com ([10.253.24.20])
-  by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 May 2021 17:19:37 -0700
-IronPort-SDR: cI0DdXQZFyMKhXSMOe9LhovWqziGOmqOHS/1A1y191XgQEJdy3YUJKlmyG/H5syc1GqUKAdHRr
- Ou2XKxGfL1Jg==
+   d="scan'208";a="199661193"
+Received: from orsmga008.jf.intel.com ([10.7.209.65])
+  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 May 2021 17:19:56 -0700
+IronPort-SDR: YkEtAZ80uK9zugMnOdyWsS4n8Nbrq7PRClYcodvuqx8oo6tcL9N6Azy5Gv+Rdi1/1KPKP80sfF
+ dW1zVEhNOcrg==
 X-IronPort-AV: E=Sophos;i="5.82,319,1613462400"; 
-   d="scan'208";a="628864430"
+   d="scan'208";a="441149316"
 Received: from djiang5-desk3.ch.intel.com ([143.182.136.137])
-  by fmsmga006-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 May 2021 17:19:36 -0700
-Subject: [PATCH v6 05/20] vfio: mdev: common lib code for setting up Interrupt
- Message Store
+  by orsmga008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 May 2021 17:19:55 -0700
+Subject: [PATCH v6 08/20] vfio/mdev: idxd: Add mdev device context
+ initialization
 From:   Dave Jiang <dave.jiang@intel.com>
 To:     alex.williamson@redhat.com, kwankhede@nvidia.com,
         tglx@linutronix.de, vkoul@kernel.org, jgg@mellanox.com
-Cc:     Jason Gunthorpe <jgg@nvidia.com>, megha.dey@intel.com,
-        jacob.jun.pan@intel.com, ashok.raj@intel.com, yi.l.liu@intel.com,
-        baolu.lu@intel.com, kevin.tian@intel.com, sanjay.k.kumar@intel.com,
-        tony.luck@intel.com, dan.j.williams@intel.com,
-        eric.auger@redhat.com, pbonzini@redhat.com,
-        dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
-        kvm@vger.kernel.org
-Date:   Fri, 21 May 2021 17:19:36 -0700
-Message-ID: <162164277624.261970.7989190254803052804.stgit@djiang5-desk3.ch.intel.com>
+Cc:     megha.dey@intel.com, jacob.jun.pan@intel.com, ashok.raj@intel.com,
+        yi.l.liu@intel.com, baolu.lu@intel.com, kevin.tian@intel.com,
+        sanjay.k.kumar@intel.com, tony.luck@intel.com,
+        dan.j.williams@intel.com, eric.auger@redhat.com,
+        pbonzini@redhat.com, dmaengine@vger.kernel.org,
+        linux-kernel@vger.kernel.org, kvm@vger.kernel.org
+Date:   Fri, 21 May 2021 17:19:54 -0700
+Message-ID: <162164279478.261970.8966553743790451233.stgit@djiang5-desk3.ch.intel.com>
 In-Reply-To: <162164243591.261970.3439987543338120797.stgit@djiang5-desk3.ch.intel.com>
 References: <162164243591.261970.3439987543338120797.stgit@djiang5-desk3.ch.intel.com>
 User-Agent: StGit/0.23-29-ga622f1
@@ -56,456 +55,293 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Add common helper code to setup IMS once the MSI domain has been
-setup by the device driver. The main helper function is
-mdev_ims_set_msix_trigger() that is called by the VFIO ioctl
-VFIO_DEVICE_SET_IRQS. The function deals with the setup and
-teardown of emulated and IMS backed eventfd that gets exported
-to the guest kernel via VFIO as MSIX vectors.
+Add support functions to initialize the vdcm context and the PCI
+config space region and the MMIO region. These regions are to
+support the emulation paths for the mdev.
 
-Suggested-by: Jason Gunthorpe <jgg@nvidia.com>
+
 Signed-off-by: Dave Jiang <dave.jiang@intel.com>
 ---
- drivers/vfio/mdev/Kconfig     |   12 ++
- drivers/vfio/mdev/Makefile    |    3 
- drivers/vfio/mdev/mdev_irqs.c |  318 +++++++++++++++++++++++++++++++++++++++++
- include/linux/mdev.h          |   51 +++++++
- 4 files changed, 384 insertions(+)
- create mode 100644 drivers/vfio/mdev/mdev_irqs.c
+ drivers/dma/idxd/registers.h  |    3 +
+ drivers/vfio/mdev/idxd/mdev.h |    4 +
+ drivers/vfio/mdev/idxd/vdev.c |  214 +++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 220 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/vfio/mdev/Kconfig b/drivers/vfio/mdev/Kconfig
-index 763c877a1318..82f79d99a7db 100644
---- a/drivers/vfio/mdev/Kconfig
-+++ b/drivers/vfio/mdev/Kconfig
-@@ -9,3 +9,15 @@ config VFIO_MDEV
- 	  See Documentation/driver-api/vfio-mediated-device.rst for more details.
- 
- 	  If you don't know what do here, say N.
-+
-+config VFIO_MDEV_IRQS
-+	bool "Mediated device driver common lib code for interrupts"
-+	depends on VFIO_MDEV
-+	select IMS_MSI_ARRAY
-+	select IRQ_BYPASS_MANAGER
-+	default n
-+	help
-+	  Provide common library code to deal with IMS interrupts for mediated
-+	  devices.
-+
-+	  If you don't know what to do here, say N.
-diff --git a/drivers/vfio/mdev/Makefile b/drivers/vfio/mdev/Makefile
-index 7c236ba1b90e..c3f160cae192 100644
---- a/drivers/vfio/mdev/Makefile
-+++ b/drivers/vfio/mdev/Makefile
-@@ -2,4 +2,7 @@
- 
- mdev-y := mdev_core.o mdev_sysfs.o mdev_driver.o
- 
-+mdev-$(CONFIG_VFIO_MDEV_IRQS) += mdev_irqs.o
-+
- obj-$(CONFIG_VFIO_MDEV) += mdev.o
-+
-diff --git a/drivers/vfio/mdev/mdev_irqs.c b/drivers/vfio/mdev/mdev_irqs.c
-new file mode 100644
-index 000000000000..ed2d11a7c729
---- /dev/null
-+++ b/drivers/vfio/mdev/mdev_irqs.c
-@@ -0,0 +1,318 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/*
-+ * Mediate device IMS library code
-+ *
-+ * Copyright (c) 2021 Intel Corp. All rights reserved.
-+ *
-+ */
-+
-+#include <linux/module.h>
-+#include <linux/slab.h>
-+#include <linux/device.h>
-+#include <linux/interrupt.h>
-+#include <linux/irqchip/irq-ims-msi.h>
-+#include <linux/eventfd.h>
-+#include <linux/irqreturn.h>
-+#include <linux/msi.h>
-+#include <linux/vfio.h>
-+#include <linux/irqbypass.h>
-+#include <linux/mdev.h>
-+
-+static irqreturn_t mdev_irq_handler(int irq, void *arg)
-+{
-+	struct eventfd_ctx *trigger = arg;
-+
-+	eventfd_signal(trigger, 1);
-+	return IRQ_HANDLED;
-+}
-+
-+/*
-+ * Common helper routine to send signal to the eventfd that has been setup.
-+ *
-+ * @mdev_irq [in]		: struct mdev_irq context
-+ * @vector [in]			: vector index for eventfd
-+ *
-+ * No return value.
-+ */
-+void mdev_msix_send_signal(struct mdev_device *mdev, int vector)
-+{
-+	struct mdev_irq *mdev_irq = &mdev->mdev_irq;
-+	struct eventfd_ctx *trigger = mdev_irq->irq_entries[vector].trigger;
-+
-+	if (!mdev_irq->irq_entries || !trigger) {
-+		dev_warn(&mdev->dev, "EventFD %d trigger not setup, can't send!\n", vector);
-+		return;
-+	}
-+	mdev_irq_handler(0, (void *)trigger);
-+}
-+EXPORT_SYMBOL_GPL(mdev_msix_send_signal);
-+
-+static int mdev_msix_set_vector_signal(struct mdev_irq *mdev_irq, int vector, int fd)
-+{
-+	int rc, irq;
-+	struct mdev_device *mdev = irq_to_mdev(mdev_irq);
-+	struct mdev_irq_entry *entry;
-+	struct device *dev = &mdev->dev;
-+	struct eventfd_ctx *trigger;
-+	char *name;
-+	bool pasid_en;
-+	u32 auxval;
-+
-+	if (vector < 0 || vector >= mdev_irq->num)
-+		return -EINVAL;
-+
-+	entry = &mdev_irq->irq_entries[vector];
-+
-+	if (entry->ims)
-+		irq = dev_msi_irq_vector(dev, entry->ims_id);
-+	else
-+		irq = 0;
-+
-+	pasid_en = mdev_irq->pasid != INVALID_IOASID ? true : false;
-+
-+	/* IMS and invalid pasid is not a valid configuration */
-+	if (entry->ims && !pasid_en)
-+		return -EINVAL;
-+
-+	if (entry->trigger) {
-+		if (irq) {
-+			irq_bypass_unregister_producer(&entry->producer);
-+			free_irq(irq, entry->trigger);
-+			if (pasid_en) {
-+				auxval = ims_ctrl_pasid_aux(0, false);
-+				irq_set_auxdata(irq, IMS_AUXDATA_CONTROL_WORD, auxval);
-+			}
-+		}
-+		kfree(entry->name);
-+		eventfd_ctx_put(entry->trigger);
-+		entry->trigger = NULL;
-+	}
-+
-+	if (fd < 0)
-+		return 0;
-+
-+	name = kasprintf(GFP_KERNEL, "vfio-mdev-irq[%d](%s)", vector, dev_name(dev));
-+	if (!name)
-+		return -ENOMEM;
-+
-+	trigger = eventfd_ctx_fdget(fd);
-+	if (IS_ERR(trigger)) {
-+		kfree(name);
-+		return PTR_ERR(trigger);
-+	}
-+
-+	entry->name = name;
-+	entry->trigger = trigger;
-+
-+	if (!irq)
-+		return 0;
-+
-+	if (pasid_en) {
-+		auxval = ims_ctrl_pasid_aux(mdev_irq->pasid, true);
-+		rc = irq_set_auxdata(irq, IMS_AUXDATA_CONTROL_WORD, auxval);
-+		if (rc < 0)
-+			goto err;
-+	}
-+
-+	rc = request_irq(irq, mdev_irq_handler, 0, name, trigger);
-+	if (rc < 0)
-+		goto irq_err;
-+
-+	entry->producer.token = trigger;
-+	entry->producer.irq = irq;
-+	rc = irq_bypass_register_producer(&entry->producer);
-+	if (unlikely(rc)) {
-+		dev_warn(dev, "irq bypass producer (token %p) registration fails: %d\n",
-+			 &entry->producer.token, rc);
-+		entry->producer.token = NULL;
-+	}
-+
-+	return 0;
-+
-+ irq_err:
-+	if (pasid_en) {
-+		auxval = ims_ctrl_pasid_aux(0, false);
-+		irq_set_auxdata(irq, IMS_AUXDATA_CONTROL_WORD, auxval);
-+	}
-+ err:
-+	kfree(name);
-+	eventfd_ctx_put(trigger);
-+	entry->trigger = NULL;
-+	return rc;
-+}
-+
-+static int mdev_msix_set_vector_signals(struct mdev_irq *mdev_irq, unsigned int start,
-+					unsigned int count, int *fds)
-+{
-+	int i, j, rc = 0;
-+
-+	if (start >= mdev_irq->num || start + count > mdev_irq->num)
-+		return -EINVAL;
-+
-+	for (i = 0, j = start; j < count && !rc; i++, j++) {
-+		int fd = fds ? fds[i] : -1;
-+
-+		rc = mdev_msix_set_vector_signal(mdev_irq, j, fd);
-+	}
-+
-+	if (rc) {
-+		for (--j; j >= (int)start; j--)
-+			mdev_msix_set_vector_signal(mdev_irq, j, -1);
-+	}
-+
-+	return rc;
-+}
-+
-+static int mdev_msix_enable(struct mdev_irq *mdev_irq, int nvec)
-+{
-+	struct mdev_device *mdev = irq_to_mdev(mdev_irq);
-+	struct device *dev;
-+	int rc;
-+
-+	if (nvec != mdev_irq->num)
-+		return -EINVAL;
-+
-+	if (mdev_irq->ims_num) {
-+		dev = &mdev->dev;
-+		rc = msi_domain_alloc_irqs(dev_get_msi_domain(dev), dev, mdev_irq->ims_num);
-+		if (rc < 0)
-+			return rc;
-+	}
-+
-+	mdev_irq->irq_type = VFIO_PCI_MSIX_IRQ_INDEX;
-+	return 0;
-+}
-+
-+static int mdev_msix_disable(struct mdev_irq *mdev_irq)
-+{
-+	struct mdev_device *mdev = irq_to_mdev(mdev_irq);
-+	struct device *dev = &mdev->dev;
-+	struct irq_domain *irq_domain;
-+
-+	mdev_msix_set_vector_signals(mdev_irq, 0, mdev_irq->num, NULL);
-+	irq_domain = dev_get_msi_domain(&mdev->dev);
-+	if (irq_domain)
-+		msi_domain_free_irqs(irq_domain, dev);
-+	mdev_irq->irq_type = VFIO_PCI_NUM_IRQS;
-+	return 0;
-+}
-+
-+/*
-+ * Common helper function that sets up the MSIX vectors for the mdev device that are
-+ * Interrupt Message Store (IMS) backed. Certain mdev devices can have the first
-+ * vector emulated rather than backed by IMS.
-+ *
-+ *  @mdev [in]		: mdev device
-+ *  @index [in]		: type of VFIO vectors to setup
-+ *  @start [in]		: start position of the vector index
-+ *  @count [in]		: number of vectors
-+ *  @flags [in]		: VFIO_IRQ action to be taken
-+ *  @data [in]		: data accompanied for the call
-+ *  Return error code on failure or 0 on success.
-+ */
-+
-+int mdev_set_msix_trigger(struct mdev_device *mdev, unsigned int index,
-+			  unsigned int start, unsigned int count, u32 flags,
-+			  void *data)
-+{
-+	struct mdev_irq *mdev_irq = &mdev->mdev_irq;
-+	int i, rc = 0;
-+
-+	if (count > mdev_irq->num)
-+		count = mdev_irq->num;
-+
-+	if (!count && (flags & VFIO_IRQ_SET_DATA_NONE)) {
-+		mdev_msix_disable(mdev_irq);
-+		return 0;
-+	}
-+
-+	if (flags & VFIO_IRQ_SET_DATA_EVENTFD) {
-+		int *fds = data;
-+
-+		if (mdev_irq->irq_type == index)
-+			return mdev_msix_set_vector_signals(mdev_irq, start, count, fds);
-+
-+		rc = mdev_msix_enable(mdev_irq, start + count);
-+		if (rc < 0)
-+			return rc;
-+
-+		rc = mdev_msix_set_vector_signals(mdev_irq, start, count, fds);
-+		if (rc < 0)
-+			mdev_msix_disable(mdev_irq);
-+
-+		return rc;
-+	}
-+
-+	if (start + count > mdev_irq->num)
-+		return -EINVAL;
-+
-+	for (i = start; i < start + count; i++) {
-+		if (!mdev_irq->irq_entries[i].trigger)
-+			continue;
-+		if (flags & VFIO_IRQ_SET_DATA_NONE) {
-+			eventfd_signal(mdev_irq->irq_entries[i].trigger, 1);
-+		} else if (flags & VFIO_IRQ_SET_DATA_BOOL) {
-+			u8 *bools = data;
-+
-+			if (bools[i - start])
-+				eventfd_signal(mdev_irq->irq_entries[i].trigger, 1);
-+		}
-+	}
-+	return 0;
-+}
-+EXPORT_SYMBOL_GPL(mdev_set_msix_trigger);
-+
-+void mdev_irqs_set_pasid(struct mdev_device *mdev, u32 pasid)
-+{
-+	mdev->mdev_irq.pasid = pasid;
-+}
-+EXPORT_SYMBOL_GPL(mdev_irqs_set_pasid);
-+
-+/*
-+ * Initialize and setup the mdev_irq context under mdev.
-+ *
-+ * @mdev [in]		: mdev device
-+ * @num [in]		: number of vectors
-+ * @ims_map [in]	: bool array that indicates whether a guest MSIX vector is
-+ *			  backed by an IMS vector or emulated
-+ * Return error code on failure or 0 on success.
-+ */
-+int mdev_irqs_init(struct mdev_device *mdev, int num, bool *ims_map)
-+{
-+	struct mdev_irq *mdev_irq = &mdev->mdev_irq;
-+	int i;
-+
-+	if (num < 1)
-+		return -EINVAL;
-+
-+	mdev_irq->irq_type = VFIO_PCI_NUM_IRQS;
-+	mdev_irq->num = num;
-+	mdev_irq->pasid = INVALID_IOASID;
-+
-+	mdev_irq->irq_entries = kcalloc(num, sizeof(*mdev_irq->irq_entries), GFP_KERNEL);
-+	if (!mdev_irq->irq_entries)
-+		return -ENOMEM;
-+
-+	for (i = 0; i < num; i++) {
-+		mdev_irq->irq_entries[i].ims = ims_map[i];
-+		if (ims_map[i]) {
-+			mdev_irq->irq_entries[i].ims_id = mdev_irq->ims_num;
-+			mdev_irq->ims_num++;
-+		}
-+	}
-+
-+	return 0;
-+}
-+EXPORT_SYMBOL_GPL(mdev_irqs_init);
-+
-+/*
-+ * Free allocated memory in mdev_irq
-+ *
-+ * @mdev [in]		: mdev device
-+ */
-+void mdev_irqs_free(struct mdev_device *mdev)
-+{
-+	kfree(mdev->mdev_irq.irq_entries);
-+	memset(&mdev->mdev_irq, 0, sizeof(mdev->mdev_irq));
-+}
-+EXPORT_SYMBOL_GPL(mdev_irqs_free);
-diff --git a/include/linux/mdev.h b/include/linux/mdev.h
-index 0cd8db2d3422..035c021e8068 100644
---- a/include/linux/mdev.h
-+++ b/include/linux/mdev.h
-@@ -10,8 +10,26 @@
- #ifndef MDEV_H
- #define MDEV_H
- 
-+#include <linux/irqbypass.h>
-+
- struct mdev_type;
- 
-+struct mdev_irq_entry {
-+	struct eventfd_ctx *trigger;
-+	struct irq_bypass_producer producer;
-+	char *name;
-+	bool ims;
-+	int ims_id;
-+};
-+
-+struct mdev_irq {
-+	struct mdev_irq_entry *irq_entries;
-+	int num;
-+	int ims_num;
-+	int irq_type;
-+	int pasid;
-+};
-+
- struct mdev_device {
- 	struct device dev;
- 	guid_t uuid;
-@@ -19,8 +37,14 @@ struct mdev_device {
- 	struct mdev_type *type;
- 	struct device *iommu_device;
- 	struct mutex creation_lock;
-+	struct mdev_irq mdev_irq;
+diff --git a/drivers/dma/idxd/registers.h b/drivers/dma/idxd/registers.h
+index c2d558e37baf..8ac2be4e174b 100644
+--- a/drivers/dma/idxd/registers.h
++++ b/drivers/dma/idxd/registers.h
+@@ -88,6 +88,9 @@ struct opcap {
+ 	u64 bits[4];
  };
  
-+static inline struct mdev_device *irq_to_mdev(struct mdev_irq *mdev_irq)
++#define OPCAP_OFS(op) (op - (0x40 * (op >> 6)))
++#define OPCAP_BIT(op) (BIT_ULL(OPCAP_OFS(op)))
++
+ #define IDXD_OPCAP_OFFSET		0x40
+ 
+ #define IDXD_TABLE_OFFSET		0x60
+diff --git a/drivers/vfio/mdev/idxd/mdev.h b/drivers/vfio/mdev/idxd/mdev.h
+index e52b50760ee7..91cb2662abd6 100644
+--- a/drivers/vfio/mdev/idxd/mdev.h
++++ b/drivers/vfio/mdev/idxd/mdev.h
+@@ -16,6 +16,7 @@
+ #define VIDXD_MSIX_TBL_SZ		0x90
+ #define VIDXD_MSIX_PERM_TBL_SZ		0x48
+ 
++#define VIDXD_VERSION_OFFSET		0
+ #define VIDXD_MSIX_PERM_OFFSET		0x300
+ #define VIDXD_GRPCFG_OFFSET		0x400
+ #define VIDXD_WQCFG_OFFSET		0x500
+@@ -74,8 +75,9 @@ static inline u8 vidxd_state(struct vdcm_idxd *vidxd)
+ 
+ int idxd_mdev_get_pasid(struct mdev_device *mdev, struct vfio_device *vdev, u32 *pasid);
+ 
++void vidxd_init(struct vdcm_idxd *vidxd);
+ void vidxd_reset(struct vdcm_idxd *vidxd);
+-
++void vidxd_mmio_init(struct vdcm_idxd *vidxd);
+ int vidxd_cfg_read(struct vdcm_idxd *vidxd, unsigned int pos, void *buf, unsigned int count);
+ int vidxd_cfg_write(struct vdcm_idxd *vidxd, unsigned int pos, void *buf, unsigned int size);
+ #endif
+diff --git a/drivers/vfio/mdev/idxd/vdev.c b/drivers/vfio/mdev/idxd/vdev.c
+index 4ead50947047..78cc2377e637 100644
+--- a/drivers/vfio/mdev/idxd/vdev.c
++++ b/drivers/vfio/mdev/idxd/vdev.c
+@@ -21,6 +21,62 @@
+ #include "idxd.h"
+ #include "mdev.h"
+ 
++static u64 idxd_pci_config[] = {
++	0x0010000000008086ULL,
++	0x0080000008800000ULL,
++	0x000000000000000cULL,
++	0x000000000000000cULL,
++	0x0000000000000000ULL,
++	0x2010808600000000ULL,
++	0x0000004000000000ULL,
++	0x000000ff00000000ULL,
++	0x0000060000015011ULL, /* MSI-X capability, hardcoded 2 entries, Encoded as N-1 */
++	0x0000070000000000ULL,
++	0x0000000000920010ULL, /* PCIe capability */
++	0x0000000000000000ULL,
++	0x0000000000000000ULL,
++	0x0000000000000000ULL,
++	0x0000000000000000ULL,
++	0x0000000000000000ULL,
++	0x0000000000000000ULL,
++	0x0000000000000000ULL,
++};
++
++static void vidxd_reset_config(struct vdcm_idxd *vidxd)
 +{
-+	return container_of(mdev_irq, struct mdev_device, mdev_irq);
++	u16 *devid = (u16 *)(vidxd->cfg + PCI_DEVICE_ID);
++	struct idxd_device *idxd = vidxd->idxd;
++
++	memset(vidxd->cfg, 0, VIDXD_MAX_CFG_SPACE_SZ);
++	memcpy(vidxd->cfg, idxd_pci_config, sizeof(idxd_pci_config));
++
++	if (idxd->data->type == IDXD_TYPE_DSA)
++		*devid = PCI_DEVICE_ID_INTEL_DSA_SPR0;
++	else if (idxd->data->type == IDXD_TYPE_IAX)
++		*devid = PCI_DEVICE_ID_INTEL_IAX_SPR0;
 +}
 +
- static inline struct mdev_device *to_mdev_device(struct device *dev)
++static inline void vidxd_reset_mmio(struct vdcm_idxd *vidxd)
++{
++	memset(&vidxd->bar0, 0, VIDXD_MAX_MMIO_SPACE_SZ);
++}
++
++void vidxd_init(struct vdcm_idxd *vidxd)
++{
++	struct idxd_wq *wq = vidxd->wq;
++
++	vidxd_reset_config(vidxd);
++	vidxd_reset_mmio(vidxd);
++
++	vidxd->bar_size[0] = VIDXD_BAR0_SIZE;
++	vidxd->bar_size[1] = VIDXD_BAR2_SIZE;
++
++	vidxd_mmio_init(vidxd);
++
++	if (wq_dedicated(wq) && wq->state == IDXD_WQ_ENABLED)
++		idxd_wq_disable(wq);
++}
++
+ void vidxd_send_interrupt(struct vdcm_idxd *vidxd, int vector)
  {
- 	return container_of(dev, struct mdev_device, dev);
-@@ -99,4 +123,31 @@ static inline struct mdev_device *mdev_from_dev(struct device *dev)
- 	return dev->bus == &mdev_bus_type ? to_mdev_device(dev) : NULL;
+ 	struct mdev_device *mdev = vidxd->mdev;
+@@ -252,6 +308,163 @@ int vidxd_cfg_write(struct vdcm_idxd *vidxd, unsigned int pos, void *buf, unsign
+ 	return 0;
  }
  
-+#if IS_ENABLED(CONFIG_VFIO_MDEV_IRQS)
-+int mdev_set_msix_trigger(struct mdev_device *mdev, unsigned int index,
-+			  unsigned int start, unsigned int count, u32 flags,
-+			  void *data);
-+void mdev_msix_send_signal(struct mdev_device *mdev, int vector);
-+int mdev_irqs_init(struct mdev_device *mdev, int num, bool *ims_map);
-+void mdev_irqs_free(struct mdev_device *mdev);
-+void mdev_irqs_set_pasid(struct mdev_device *mdev, u32 pasid);
-+#else
-+static inline int mdev_set_msix_trigger(struct mdev_device *mdev, unsigned int index,
-+					unsigned int start, unsigned int count, u32 flags,
-+					void *data)
++static void vidxd_mmio_init_grpcap(struct vdcm_idxd *vidxd)
 +{
-+	return -EOPNOTSUPP;
++	u8 *bar0 = vidxd->bar0;
++	union group_cap_reg *grp_cap = (union group_cap_reg *)(bar0 + IDXD_GRPCAP_OFFSET);
++
++	/* single group for current implementation */
++	grp_cap->num_groups = 1;
 +}
 +
-+void mdev_msix_send_signal(struct mdev_device *mdev, int vector) {}
-+
-+static inline int mdev_irqs_init(struct mdev_device *mdev, int num, bool *ims_map)
++static void vidxd_mmio_init_grpcfg(struct vdcm_idxd *vidxd)
 +{
-+	return -EOPNOTSUPP;
++	u8 *bar0 = vidxd->bar0;
++	struct grpcfg *grpcfg = (struct grpcfg *)(bar0 + VIDXD_GRPCFG_OFFSET);
++	struct idxd_wq *wq = vidxd->wq;
++	struct idxd_group *group = wq->group;
++	int i;
++
++	/*
++	 * At this point, we are only exporting a single workqueue for
++	 * each mdev.
++	 */
++	grpcfg->wqs[0] = BIT(0);
++	for (i = 0; i < group->num_engines; i++)
++		grpcfg->engines |= BIT(i);
++	grpcfg->flags.bits = group->grpcfg.flags.bits;
 +}
 +
-+void mdev_irqs_free(struct mdev_device *mdev) {}
-+void mdev_irqs_set_pasid(struct mdev_device *mdev, u32 pasid) {}
-+#endif /* CONFIG_VFIO_MDEV_IMS */
++static void vidxd_mmio_init_wqcap(struct vdcm_idxd *vidxd)
++{
++	u8 *bar0 = vidxd->bar0;
++	struct idxd_wq *wq = vidxd->wq;
++	union wq_cap_reg *wq_cap = (union wq_cap_reg *)(bar0 + IDXD_WQCAP_OFFSET);
 +
- #endif /* MDEV_H */
++	wq_cap->total_wq_size = wq->size;
++	wq_cap->num_wqs = 1;
++	wq_cap->dedicated_mode = 1;
++}
++
++static void vidxd_mmio_init_wqcfg(struct vdcm_idxd *vidxd)
++{
++	struct idxd_device *idxd = vidxd->idxd;
++	struct idxd_wq *wq = vidxd->wq;
++	u8 *bar0 = vidxd->bar0;
++	union wqcfg *wqcfg = (union wqcfg *)(bar0 + VIDXD_WQCFG_OFFSET);
++
++	wqcfg->wq_size = wq->size;
++	wqcfg->wq_thresh = wq->threshold;
++	wqcfg->mode = WQCFG_MODE_DEDICATED;
++	wqcfg->priority = wq->priority;
++	wqcfg->max_xfer_shift = idxd->hw.gen_cap.max_xfer_shift;
++	wqcfg->max_batch_shift = idxd->hw.gen_cap.max_batch_shift;
++}
++
++static void vidxd_mmio_init_engcap(struct vdcm_idxd *vidxd)
++{
++	u8 *bar0 = vidxd->bar0;
++	union engine_cap_reg *engcap = (union engine_cap_reg *)(bar0 + IDXD_ENGCAP_OFFSET);
++	struct idxd_wq *wq = vidxd->wq;
++	struct idxd_group *group = wq->group;
++
++	engcap->num_engines = group->num_engines;
++}
++
++static void vidxd_mmio_init_gencap(struct vdcm_idxd *vidxd)
++{
++	struct idxd_device *idxd = vidxd->idxd;
++	u8 *bar0 = vidxd->bar0;
++	union gen_cap_reg *gencap = (union gen_cap_reg *)(bar0 + IDXD_GENCAP_OFFSET);
++
++	gencap->overlap_copy = idxd->hw.gen_cap.overlap_copy;
++	gencap->cache_control_mem = idxd->hw.gen_cap.cache_control_mem;
++	gencap->cache_control_cache = idxd->hw.gen_cap.cache_control_cache;
++	gencap->cmd_cap = 1;
++	gencap->dest_readback = idxd->hw.gen_cap.dest_readback;
++	gencap->drain_readback = idxd->hw.gen_cap.drain_readback;
++	gencap->max_xfer_shift = idxd->hw.gen_cap.max_xfer_shift;
++	gencap->max_batch_shift = idxd->hw.gen_cap.max_batch_shift;
++	gencap->max_descs_per_engine = idxd->hw.gen_cap.max_descs_per_engine;
++}
++
++static void vidxd_mmio_init_cmdcap(struct vdcm_idxd *vidxd)
++{
++	u8 *bar0 = vidxd->bar0;
++	u32 *cmdcap = (u32 *)(bar0 + IDXD_CMDCAP_OFFSET);
++
++	*cmdcap |= BIT(IDXD_CMD_ENABLE_DEVICE) | BIT(IDXD_CMD_DISABLE_DEVICE) |
++		   BIT(IDXD_CMD_DRAIN_ALL) | BIT(IDXD_CMD_ABORT_ALL) |
++		   BIT(IDXD_CMD_RESET_DEVICE) | BIT(IDXD_CMD_ENABLE_WQ) |
++		   BIT(IDXD_CMD_DISABLE_WQ) | BIT(IDXD_CMD_DRAIN_WQ) |
++		   BIT(IDXD_CMD_ABORT_WQ) | BIT(IDXD_CMD_RESET_WQ) |
++		   BIT(IDXD_CMD_DRAIN_PASID) | BIT(IDXD_CMD_ABORT_PASID) |
++		   BIT(IDXD_CMD_REQUEST_INT_HANDLE) | BIT(IDXD_CMD_RELEASE_INT_HANDLE);
++}
++
++static void vidxd_mmio_init_opcap(struct vdcm_idxd *vidxd)
++{
++	struct idxd_device *idxd = vidxd->idxd;
++	u64 opcode;
++	u8 *bar0 = vidxd->bar0;
++	u64 *opcap = (u64 *)(bar0 + IDXD_OPCAP_OFFSET);
++
++	if (idxd->data->type == IDXD_TYPE_DSA) {
++		opcode = BIT_ULL(DSA_OPCODE_NOOP) | BIT_ULL(DSA_OPCODE_BATCH) |
++			 BIT_ULL(DSA_OPCODE_DRAIN) | BIT_ULL(DSA_OPCODE_MEMMOVE) |
++			 BIT_ULL(DSA_OPCODE_MEMFILL) | BIT_ULL(DSA_OPCODE_COMPARE) |
++			 BIT_ULL(DSA_OPCODE_COMPVAL) | BIT_ULL(DSA_OPCODE_CR_DELTA) |
++			 BIT_ULL(DSA_OPCODE_AP_DELTA) | BIT_ULL(DSA_OPCODE_DUALCAST) |
++			 BIT_ULL(DSA_OPCODE_CRCGEN) | BIT_ULL(DSA_OPCODE_COPY_CRC) |
++			 BIT_ULL(DSA_OPCODE_DIF_CHECK) | BIT_ULL(DSA_OPCODE_DIF_INS) |
++			 BIT_ULL(DSA_OPCODE_DIF_STRP) | BIT_ULL(DSA_OPCODE_DIF_UPDT) |
++			 BIT_ULL(DSA_OPCODE_CFLUSH);
++		*opcap = opcode;
++	} else if (idxd->data->type == IDXD_TYPE_IAX) {
++		opcode = BIT_ULL(IAX_OPCODE_NOOP) | BIT_ULL(IAX_OPCODE_DRAIN) |
++			 BIT_ULL(IAX_OPCODE_MEMMOVE);
++		*opcap = opcode;
++		opcap++;
++		opcode = OPCAP_BIT(IAX_OPCODE_DECOMPRESS) |
++			 OPCAP_BIT(IAX_OPCODE_COMPRESS);
++		*opcap = opcode;
++	}
++}
++
++static void vidxd_mmio_init_version(struct vdcm_idxd *vidxd)
++{
++	struct idxd_device *idxd = vidxd->idxd;
++	u32 *version;
++
++	version = (u32 *)(vidxd->bar0 + VIDXD_VERSION_OFFSET);
++	*version = idxd->hw.version;
++}
++
++void vidxd_mmio_init(struct vdcm_idxd *vidxd)
++{
++	u8 *bar0 = vidxd->bar0;
++	union offsets_reg *offsets;
++
++	memset(vidxd->bar0, 0, VIDXD_BAR0_SIZE);
++
++	vidxd_mmio_init_version(vidxd);
++	vidxd_mmio_init_gencap(vidxd);
++	vidxd_mmio_init_wqcap(vidxd);
++	vidxd_mmio_init_grpcap(vidxd);
++	vidxd_mmio_init_engcap(vidxd);
++	vidxd_mmio_init_opcap(vidxd);
++
++	offsets = (union offsets_reg *)(bar0 + IDXD_TABLE_OFFSET);
++	offsets->grpcfg = VIDXD_GRPCFG_OFFSET / 0x100;
++	offsets->wqcfg = VIDXD_WQCFG_OFFSET / 0x100;
++	offsets->msix_perm = VIDXD_MSIX_PERM_OFFSET / 0x100;
++
++	vidxd_mmio_init_cmdcap(vidxd);
++	memset(bar0 + VIDXD_MSIX_PERM_OFFSET, 0, VIDXD_MSIX_PERM_TBL_SZ);
++	vidxd_mmio_init_grpcfg(vidxd);
++	vidxd_mmio_init_wqcfg(vidxd);
++}
++
+ static void idxd_complete_command(struct vdcm_idxd *vidxd, enum idxd_cmdsts_err val)
+ {
+ 	u8 *bar0 = vidxd->bar0;
+@@ -396,6 +609,7 @@ void vidxd_reset(struct vdcm_idxd *vidxd)
+ 		}
+ 	}
+ 
++	vidxd_mmio_init(vidxd);
+ 	vwqcfg->wq_state = IDXD_WQ_DISABLED;
+ 	gensts->state = IDXD_DEVICE_STATE_DISABLED;
+ 	idxd_complete_command(vidxd, IDXD_CMDSTS_SUCCESS);
 
 
