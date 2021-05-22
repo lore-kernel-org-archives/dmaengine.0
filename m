@@ -7,32 +7,33 @@ X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 84AD7C04FF3
-	for <dmaengine@archiver.kernel.org>; Sat, 22 May 2021 00:21:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C7546C04FF3
+	for <dmaengine@archiver.kernel.org>; Sat, 22 May 2021 00:21:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 67694613D0
-	for <dmaengine@archiver.kernel.org>; Sat, 22 May 2021 00:21:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A02CE61002
+	for <dmaengine@archiver.kernel.org>; Sat, 22 May 2021 00:21:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231254AbhEVAWd (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 21 May 2021 20:22:33 -0400
-Received: from mga02.intel.com ([134.134.136.20]:2546 "EHLO mga02.intel.com"
+        id S231197AbhEVAXD (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 21 May 2021 20:23:03 -0400
+Received: from mga04.intel.com ([192.55.52.120]:56072 "EHLO mga04.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231255AbhEVAWD (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Fri, 21 May 2021 20:22:03 -0400
-IronPort-SDR: fi+7dYaKZ4qTU+zU6svarIEbKrVvALqgplV+G+x3nJiOpBONuBrkXpm0LuLN1HD6S7zqXHl60Y
- 75peFwzruLlA==
-X-IronPort-AV: E=McAfee;i="6200,9189,9991"; a="188728167"
+        id S231286AbhEVAWW (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Fri, 21 May 2021 20:22:22 -0400
+IronPort-SDR: 3fbRic06r2VCumwW6SahWbJyjULxrDNM5h2XQk4lNxOzH9Bm9jvM7G8m4VOqLAL8+VHFrvqcAS
+ NWn0+MbSb+pQ==
+X-IronPort-AV: E=McAfee;i="6200,9189,9991"; a="199661288"
 X-IronPort-AV: E=Sophos;i="5.82,319,1613462400"; 
-   d="scan'208";a="188728167"
-Received: from fmsmga006.fm.intel.com ([10.253.24.20])
-  by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 May 2021 17:20:39 -0700
-IronPort-SDR: R6Ld8Jeh1YpVrBnCKtCCt9ZDuxVeJi+rAaPlJpE++vFtUQSWxurWeNvBCu1bU2JZIEwuG6LBjf
- SME2dqgGOKIA==
+   d="scan'208";a="199661288"
+Received: from orsmga001.jf.intel.com ([10.7.209.18])
+  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 May 2021 17:20:58 -0700
+IronPort-SDR: r66u16T10yzWEpgnFp0w9VS6i7FXAGZWvjKzU4FWhmUAM8XjWV9w3sHQKzn0pTZmCSLTCeP1RZ
+ epSHqwRlOJGQ==
 X-IronPort-AV: E=Sophos;i="5.82,319,1613462400"; 
-   d="scan'208";a="628864663"
+   d="scan'208";a="474753058"
 Received: from djiang5-desk3.ch.intel.com ([143.182.136.137])
-  by fmsmga006-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 May 2021 17:20:38 -0700
-Subject: [PATCH v6 15/20] vfio/mdev: idxd: ims domain setup for the vdcm
+  by orsmga001-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 May 2021 17:20:57 -0700
+Subject: [PATCH v6 18/20] vfio: move vfio_pci_set_ctx_trigger_single to common
+ code
 From:   Dave Jiang <dave.jiang@intel.com>
 To:     alex.williamson@redhat.com, kwankhede@nvidia.com,
         tglx@linutronix.de, vkoul@kernel.org, jgg@mellanox.com
@@ -42,8 +43,8 @@ Cc:     megha.dey@intel.com, jacob.jun.pan@intel.com, ashok.raj@intel.com,
         dan.j.williams@intel.com, eric.auger@redhat.com,
         pbonzini@redhat.com, dmaengine@vger.kernel.org,
         linux-kernel@vger.kernel.org, kvm@vger.kernel.org
-Date:   Fri, 21 May 2021 17:20:37 -0700
-Message-ID: <162164283796.261970.11020270418798826121.stgit@djiang5-desk3.ch.intel.com>
+Date:   Fri, 21 May 2021 17:20:56 -0700
+Message-ID: <162164285626.261970.18327549914978174180.stgit@djiang5-desk3.ch.intel.com>
 In-Reply-To: <162164243591.261970.3439987543338120797.stgit@djiang5-desk3.ch.intel.com>
 References: <162164243591.261970.3439987543338120797.stgit@djiang5-desk3.ch.intel.com>
 User-Agent: StGit/0.23-29-ga622f1
@@ -54,97 +55,211 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Add setup code for the IMS domain. This feeds the MSI subsystem the
-relevant information for device IMS. The allocation of the IMS vectors are
-done in common VFIO code if the correct domain set for the
-mdev device.
+With mdev needing to also use the same function, move the function to a
+common place where vfio pci and mdev can both utilize.
 
 Signed-off-by: Dave Jiang <dave.jiang@intel.com>
 ---
- drivers/dma/idxd/idxd.h       |    1 +
- drivers/dma/idxd/init.c       |   14 ++++++++++++++
- drivers/vfio/mdev/idxd/mdev.c |    2 ++
- 3 files changed, 17 insertions(+)
+ drivers/vfio/Makefile             |    2 +
+ drivers/vfio/pci/vfio_pci_intrs.c |   63 ++------------------------------
+ drivers/vfio/vfio_common.c        |   74 +++++++++++++++++++++++++++++++++++++
+ include/linux/vfio.h              |    4 ++
+ 4 files changed, 83 insertions(+), 60 deletions(-)
+ create mode 100644 drivers/vfio/vfio_common.c
 
-diff --git a/drivers/dma/idxd/idxd.h b/drivers/dma/idxd/idxd.h
-index 0d9e2710fc76..81c78add74dd 100644
---- a/drivers/dma/idxd/idxd.h
-+++ b/drivers/dma/idxd/idxd.h
-@@ -297,6 +297,7 @@ struct idxd_device {
- 	struct workqueue_struct *wq;
- 	struct work_struct work;
+diff --git a/drivers/vfio/Makefile b/drivers/vfio/Makefile
+index fee73f3d9480..fc7fd2412dee 100644
+--- a/drivers/vfio/Makefile
++++ b/drivers/vfio/Makefile
+@@ -1,7 +1,7 @@
+ # SPDX-License-Identifier: GPL-2.0
+ vfio_virqfd-y := virqfd.o
  
-+	struct irq_domain *ims_domain;
- 	int *int_handles;
+-obj-$(CONFIG_VFIO) += vfio.o
++obj-$(CONFIG_VFIO) += vfio.o vfio_common.o
+ obj-$(CONFIG_VFIO_VIRQFD) += vfio_virqfd.o
+ obj-$(CONFIG_VFIO_IOMMU_TYPE1) += vfio_iommu_type1.o
+ obj-$(CONFIG_VFIO_IOMMU_SPAPR_TCE) += vfio_iommu_spapr_tce.o
+diff --git a/drivers/vfio/pci/vfio_pci_intrs.c b/drivers/vfio/pci/vfio_pci_intrs.c
+index 9c8efad3a859..926cff00146c 100644
+--- a/drivers/vfio/pci/vfio_pci_intrs.c
++++ b/drivers/vfio/pci/vfio_pci_intrs.c
+@@ -561,61 +561,6 @@ static int vfio_pci_set_msi_trigger(struct vfio_pci_device *vdev,
+ 	return 0;
+ }
  
- 	struct idxd_pmu *idxd_pmu;
-diff --git a/drivers/dma/idxd/init.c b/drivers/dma/idxd/init.c
-index 809ca1827772..ead46761b23e 100644
---- a/drivers/dma/idxd/init.c
-+++ b/drivers/dma/idxd/init.c
-@@ -16,6 +16,8 @@
- #include <linux/idr.h>
- #include <linux/intel-svm.h>
- #include <linux/iommu.h>
-+#include <linux/irqdomain.h>
-+#include <linux/irqchip/irq-ims-msi.h>
- #include <uapi/linux/idxd.h>
- #include <linux/dmaengine.h>
- #include "../dmaengine.h"
-@@ -66,6 +68,7 @@ MODULE_DEVICE_TABLE(pci, idxd_pci_tbl);
- int idxd_mdev_host_init(struct idxd_device *idxd, struct mdev_driver *drv)
- {
- 	struct device *dev = &idxd->pdev->dev;
-+	struct ims_array_info ims_info;
- 	int rc;
+-static int vfio_pci_set_ctx_trigger_single(struct eventfd_ctx **ctx,
+-					   unsigned int count, uint32_t flags,
+-					   void *data)
+-{
+-	/* DATA_NONE/DATA_BOOL enables loopback testing */
+-	if (flags & VFIO_IRQ_SET_DATA_NONE) {
+-		if (*ctx) {
+-			if (count) {
+-				eventfd_signal(*ctx, 1);
+-			} else {
+-				eventfd_ctx_put(*ctx);
+-				*ctx = NULL;
+-			}
+-			return 0;
+-		}
+-	} else if (flags & VFIO_IRQ_SET_DATA_BOOL) {
+-		uint8_t trigger;
+-
+-		if (!count)
+-			return -EINVAL;
+-
+-		trigger = *(uint8_t *)data;
+-		if (trigger && *ctx)
+-			eventfd_signal(*ctx, 1);
+-
+-		return 0;
+-	} else if (flags & VFIO_IRQ_SET_DATA_EVENTFD) {
+-		int32_t fd;
+-
+-		if (!count)
+-			return -EINVAL;
+-
+-		fd = *(int32_t *)data;
+-		if (fd == -1) {
+-			if (*ctx)
+-				eventfd_ctx_put(*ctx);
+-			*ctx = NULL;
+-		} else if (fd >= 0) {
+-			struct eventfd_ctx *efdctx;
+-
+-			efdctx = eventfd_ctx_fdget(fd);
+-			if (IS_ERR(efdctx))
+-				return PTR_ERR(efdctx);
+-
+-			if (*ctx)
+-				eventfd_ctx_put(*ctx);
+-
+-			*ctx = efdctx;
+-		}
+-		return 0;
+-	}
+-
+-	return -EINVAL;
+-}
+-
+ static int vfio_pci_set_err_trigger(struct vfio_pci_device *vdev,
+ 				    unsigned index, unsigned start,
+ 				    unsigned count, uint32_t flags, void *data)
+@@ -623,8 +568,8 @@ static int vfio_pci_set_err_trigger(struct vfio_pci_device *vdev,
+ 	if (index != VFIO_PCI_ERR_IRQ_INDEX || start != 0 || count > 1)
+ 		return -EINVAL;
  
- 	if (!idxd->ims_size)
-@@ -77,8 +80,18 @@ int idxd_mdev_host_init(struct idxd_device *idxd, struct mdev_driver *drv)
- 		return rc;
- 	}
+-	return vfio_pci_set_ctx_trigger_single(&vdev->err_trigger,
+-					       count, flags, data);
++	return vfio_set_ctx_trigger_single(&vdev->err_trigger,
++					   count, flags, data);
+ }
  
-+	ims_info.max_slots = idxd->ims_size;
-+	ims_info.slots = idxd->reg_base + idxd->ims_offset;
-+	idxd->ims_domain = pci_ims_array_create_msi_irq_domain(idxd->pdev, &ims_info);
-+	if (!idxd->ims_domain) {
-+		dev_warn(dev, "Fail to acquire IMS domain\n");
-+		iommu_dev_disable_feature(dev, IOMMU_DEV_FEAT_AUX);
-+		return -ENODEV;
+ static int vfio_pci_set_req_trigger(struct vfio_pci_device *vdev,
+@@ -634,8 +579,8 @@ static int vfio_pci_set_req_trigger(struct vfio_pci_device *vdev,
+ 	if (index != VFIO_PCI_REQ_IRQ_INDEX || start != 0 || count > 1)
+ 		return -EINVAL;
+ 
+-	return vfio_pci_set_ctx_trigger_single(&vdev->req_trigger,
+-					       count, flags, data);
++	return vfio_set_ctx_trigger_single(&vdev->req_trigger,
++					   count, flags, data);
+ }
+ 
+ int vfio_pci_set_irqs_ioctl(struct vfio_pci_device *vdev, uint32_t flags,
+diff --git a/drivers/vfio/vfio_common.c b/drivers/vfio/vfio_common.c
+new file mode 100644
+index 000000000000..b209d57c7312
+--- /dev/null
++++ b/drivers/vfio/vfio_common.c
+@@ -0,0 +1,74 @@
++// SPDX-License-Identifier: GPL-2.0-only
++/*
++ * Copyright (C) 2021 Intel, Corp. All rights reserved.
++ * Copyright (C) 2012 Red Hat, Inc.  All rights reserved.
++ *     Author: Alex Williamson <alex.williamson@redhat.com>
++ * VFIO common helper functions
++ */
++
++#include <linux/eventfd.h>
++#include <linux/vfio.h>
++
++/*
++ * Common helper to set single eventfd trigger
++ *
++ * @ctx [out]		: address of eventfd ctx to be written to
++ * @count [in]		: number of vectors (should be 1)
++ * @flags [in]		: VFIO IRQ flags
++ * @data [in]		: data from ioctl
++ */
++int vfio_set_ctx_trigger_single(struct eventfd_ctx **ctx,
++				unsigned int count, u32 flags,
++				void *data)
++{
++	/* DATA_NONE/DATA_BOOL enables loopback testing */
++	if (flags & VFIO_IRQ_SET_DATA_NONE) {
++		if (*ctx) {
++			if (count) {
++				eventfd_signal(*ctx, 1);
++			} else {
++				eventfd_ctx_put(*ctx);
++				*ctx = NULL;
++			}
++			return 0;
++		}
++	} else if (flags & VFIO_IRQ_SET_DATA_BOOL) {
++		u8 trigger;
++
++		if (!count)
++			return -EINVAL;
++
++		trigger = *(uint8_t *)data;
++		if (trigger && *ctx)
++			eventfd_signal(*ctx, 1);
++
++		return 0;
++	} else if (flags & VFIO_IRQ_SET_DATA_EVENTFD) {
++		s32 fd;
++
++		if (!count)
++			return -EINVAL;
++
++		fd = *(s32 *)data;
++		if (fd == -1) {
++			if (*ctx)
++				eventfd_ctx_put(*ctx);
++			*ctx = NULL;
++		} else if (fd >= 0) {
++			struct eventfd_ctx *efdctx;
++
++			efdctx = eventfd_ctx_fdget(fd);
++			if (IS_ERR(efdctx))
++				return PTR_ERR(efdctx);
++
++			if (*ctx)
++				eventfd_ctx_put(*ctx);
++
++			*ctx = efdctx;
++		}
++		return 0;
 +	}
 +
- 	rc = mdev_register_device(dev, drv);
- 	if (rc < 0) {
-+		irq_domain_remove(idxd->ims_domain);
- 		iommu_dev_disable_feature(dev, IOMMU_DEV_FEAT_AUX);
- 		return rc;
- 	}
-@@ -93,6 +106,7 @@ void idxd_mdev_host_release(struct kref *kref)
- 	struct idxd_device *idxd = container_of(kref, struct idxd_device, mdev_kref);
- 	struct device *dev = &idxd->pdev->dev;
++	return -EINVAL;
++}
++EXPORT_SYMBOL(vfio_set_ctx_trigger_single);
+diff --git a/include/linux/vfio.h b/include/linux/vfio.h
+index ed5ca027eb49..aa7cb0e1b8b2 100644
+--- a/include/linux/vfio.h
++++ b/include/linux/vfio.h
+@@ -235,4 +235,8 @@ extern int vfio_virqfd_enable(void *opaque,
+ 			      void *data, struct virqfd **pvirqfd, int fd);
+ extern void vfio_virqfd_disable(struct virqfd **pvirqfd);
  
-+	irq_domain_remove(idxd->ims_domain);
- 	mdev_unregister_device(dev);
- 	iommu_dev_disable_feature(dev, IOMMU_DEV_FEAT_AUX);
- }
-diff --git a/drivers/vfio/mdev/idxd/mdev.c b/drivers/vfio/mdev/idxd/mdev.c
-index 9f6c4997ec24..7dac024e2852 100644
---- a/drivers/vfio/mdev/idxd/mdev.c
-+++ b/drivers/vfio/mdev/idxd/mdev.c
-@@ -111,6 +111,7 @@ static struct vdcm_idxd *vdcm_vidxd_create(struct idxd_device *idxd, struct mdev
- 					   struct vdcm_idxd_type *type)
- {
- 	struct vdcm_idxd *vidxd;
-+	struct device *dev = &mdev->dev;
- 	struct idxd_wq *wq = NULL;
- 	int rc;
- 
-@@ -129,6 +130,7 @@ static struct vdcm_idxd *vdcm_vidxd_create(struct idxd_device *idxd, struct mdev
- 	vidxd->mdev = mdev;
- 	vidxd->type = type;
- 	vidxd->num_wqs = VIDXD_MAX_WQS;
-+	dev_set_msi_domain(dev, idxd->ims_domain);
- 
- 	mutex_lock(&wq->wq_lock);
- 	idxd_wq_get(wq);
++/* common lib functions */
++extern int vfio_set_ctx_trigger_single(struct eventfd_ctx **ctx,
++				       unsigned int count, u32 flags,
++				       void *data);
+ #endif /* VFIO_H */
 
 
