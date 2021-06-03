@@ -2,78 +2,74 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-16.4 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EB242C47082
-	for <dmaengine@archiver.kernel.org>; Thu,  3 Jun 2021 07:02:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7C72CC47096
+	for <dmaengine@archiver.kernel.org>; Thu,  3 Jun 2021 07:20:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C2D77613DC
-	for <dmaengine@archiver.kernel.org>; Thu,  3 Jun 2021 07:02:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 543FD61008
+	for <dmaengine@archiver.kernel.org>; Thu,  3 Jun 2021 07:20:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229667AbhFCHDq (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Thu, 3 Jun 2021 03:03:46 -0400
-Received: from mail.kernel.org ([198.145.29.99]:51542 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229635AbhFCHDq (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Thu, 3 Jun 2021 03:03:46 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 3945860E09;
-        Thu,  3 Jun 2021 07:02:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1622703722;
-        bh=k9/3kydmCD/YVqKYWG9ynJ32X/eSBMR1Sx8GD8erjTQ=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=N7+xsj/CtKHiwRCeE8Nts3det+GF1v+T+b9napCB8TheTV2oroNEhFpuECs8ZoXAN
-         2XItpaWpyu8LEAzolPthF1kF8OGbj+RTEd+FBcxnHLD48fEd7wBxoR/utP5Fg8Djj7
-         LYiQdamsZDSJRs79/zoteXRgV4Fa4T2b+IktGwKIOUYc2ERH2Y8TQdU98mzhiynvXr
-         G7Vv/r/eeuFacQQ3b0nchTcv5VPS5sYAIfH7uCH1h8APfmO1D7G/l819qvMQttmHoQ
-         boA0Igck7HmiCu2h/08xPVjXkazGyextREhVf+bDD/UXLl7hYW4aI6jbYrfoI7+1Wj
-         0+EB3ZakPYOYQ==
-Date:   Thu, 3 Jun 2021 12:31:58 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Yang Yingliang <yangyingliang@huawei.com>
-Cc:     linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org
-Subject: Re: [PATCH -next] dma: ipu: fix doc warning in ipu_irq.c
-Message-ID: <YLh+ZrjXhPN6kxdT@vkoul-mobl>
-References: <20210601115938.3193296-1-yangyingliang@huawei.com>
+        id S229723AbhFCHVv (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Thu, 3 Jun 2021 03:21:51 -0400
+Received: from szxga02-in.huawei.com ([45.249.212.188]:3522 "EHLO
+        szxga02-in.huawei.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229567AbhFCHVv (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Thu, 3 Jun 2021 03:21:51 -0400
+Received: from dggemv711-chm.china.huawei.com (unknown [172.30.72.57])
+        by szxga02-in.huawei.com (SkyGuard) with ESMTP id 4FwcfR4pbNzYnBL;
+        Thu,  3 Jun 2021 15:17:19 +0800 (CST)
+Received: from dggpeml500017.china.huawei.com (7.185.36.243) by
+ dggemv711-chm.china.huawei.com (10.1.198.66) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2176.2; Thu, 3 Jun 2021 15:20:04 +0800
+Received: from huawei.com (10.175.103.91) by dggpeml500017.china.huawei.com
+ (7.185.36.243) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2176.2; Thu, 3 Jun 2021
+ 15:20:03 +0800
+From:   Yang Yingliang <yangyingliang@huawei.com>
+To:     <linux-kernel@vger.kernel.org>, <dmaengine@vger.kernel.org>
+CC:     <vkoul@kernel.org>
+Subject: [PATCH -next v2] dma: ipu: fix doc warning in ipu_irq.c
+Date:   Thu, 3 Jun 2021 15:24:25 +0800
+Message-ID: <20210603072425.2973570-1-yangyingliang@huawei.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210601115938.3193296-1-yangyingliang@huawei.com>
+Content-Transfer-Encoding: 7BIT
+Content-Type:   text/plain; charset=US-ASCII
+X-Originating-IP: [10.175.103.91]
+X-ClientProxiedBy: dggems701-chm.china.huawei.com (10.3.19.178) To
+ dggpeml500017.china.huawei.com (7.185.36.243)
+X-CFilter-Loop: Reflected
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On 01-06-21, 19:59, Yang Yingliang wrote:
-> Fix the following make W=1 warning:
-> 
->   drivers/dma/ipu/ipu_irq.c:238: warning: expecting prototype for ipu_irq_map(). Prototype was for ipu_irq_unmap() instead
-> 
-> Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-> ---
->  drivers/dma/ipu/ipu_irq.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/drivers/dma/ipu/ipu_irq.c b/drivers/dma/ipu/ipu_irq.c
-> index 0d5c42f7bfa4..dc44294b79b5 100644
-> --- a/drivers/dma/ipu/ipu_irq.c
-> +++ b/drivers/dma/ipu/ipu_irq.c
-> @@ -230,7 +230,7 @@ int ipu_irq_map(unsigned int source)
->  }
->  
->  /**
-> - * ipu_irq_map() - map an IPU interrupt source to an IRQ number
-> + * ipu_irq_unmap() - map an IPU interrupt source to an IRQ number
+Fix the following make W=1 warning and correct description:
 
-the description does not match and should be fixed as well
+  drivers/dma/ipu/ipu_irq.c:238: warning: expecting prototype for ipu_irq_map(). Prototype was for ipu_irq_unmap() instead
 
->   * @source:	interrupt source bit position (see ipu_irq_map())
->   * @return:	0 or negative error code
->   */
-> -- 
-> 2.25.1
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+---
+ drivers/dma/ipu/ipu_irq.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
+diff --git a/drivers/dma/ipu/ipu_irq.c b/drivers/dma/ipu/ipu_irq.c
+index 0d5c42f7bfa4..97d9a6f04f2a 100644
+--- a/drivers/dma/ipu/ipu_irq.c
++++ b/drivers/dma/ipu/ipu_irq.c
+@@ -230,7 +230,7 @@ int ipu_irq_map(unsigned int source)
+ }
+ 
+ /**
+- * ipu_irq_map() - map an IPU interrupt source to an IRQ number
++ * ipu_irq_unmap() - unmap an IPU interrupt source
+  * @source:	interrupt source bit position (see ipu_irq_map())
+  * @return:	0 or negative error code
+  */
 -- 
-~Vinod
+2.25.1
+
