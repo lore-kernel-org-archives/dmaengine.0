@@ -2,126 +2,342 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
-	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B10EBC07E94
-	for <dmaengine@archiver.kernel.org>; Fri,  4 Jun 2021 08:04:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AE4BAC4743D
+	for <dmaengine@archiver.kernel.org>; Sat,  5 Jun 2021 00:06:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 96723601FE
-	for <dmaengine@archiver.kernel.org>; Fri,  4 Jun 2021 08:04:33 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7E7D661380
+	for <dmaengine@archiver.kernel.org>; Sat,  5 Jun 2021 00:06:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229934AbhFDIGS (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 4 Jun 2021 04:06:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48054 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229900AbhFDIGS (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Fri, 4 Jun 2021 04:06:18 -0400
-Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [IPv6:2001:4b98:dc2:55:216:3eff:fef7:d647])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C20FFC06174A;
-        Fri,  4 Jun 2021 01:04:32 -0700 (PDT)
-Received: from [192.168.1.111] (91-157-208-71.elisa-laajakaista.fi [91.157.208.71])
-        by perceval.ideasonboard.com (Postfix) with ESMTPSA id 20039A52;
-        Fri,  4 Jun 2021 10:04:30 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
-        s=mail; t=1622793871;
-        bh=j1SXMbUoe/8w0rZ6UdZfNhuo9qc6ocoxoJrTdQSBoU0=;
-        h=To:Cc:References:From:Subject:Date:In-Reply-To:From;
-        b=NNsF2Qc6TuwHZ1QwuxlAt3dWSJMADIbpLyeKjMAaTOQxq2XiyGUBVurqN218ePdZK
-         2YJwDUslifIOVMLazpGhUZn5VwmWXmkrVmS8vgqO88+NV3Y11jWrC+k1i37UV8oBif
-         2DlZlXlr9W6tCyT5C30McrP1EHCXS0awnpACQbEQ=
-To:     Pratyush Yadav <p.yadav@ti.com>
-Cc:     Maxime Ripard <mripard@kernel.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        Peter Ujfalusi <peter.ujfalusi@gmail.com>,
-        Steve Longerbeam <slongerbeam@gmail.com>,
-        Benoit Parrot <bparrot@ti.com>, linux-media@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-phy@lists.infradead.org, dmaengine@vger.kernel.org,
-        Vignesh Raghavendra <vigneshr@ti.com>,
-        Chunfeng Yun <chunfeng.yun@mediatek.com>,
-        Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-References: <20210526152308.16525-1-p.yadav@ti.com>
- <20210526152308.16525-14-p.yadav@ti.com>
- <5e00444a-683f-b4fa-9156-4450ca4edaf6@ideasonboard.com>
- <20210603124920.5o34klhlhjg5phlj@ti.com>
-From:   Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-Subject: Re: [PATCH v2 13/18] media: ti: Add CSI2RX support for J721E
-Message-ID: <b930c6e5-1210-5b13-2e29-25ffaa99519d@ideasonboard.com>
-Date:   Fri, 4 Jun 2021 11:04:29 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.8.1
+        id S229853AbhFEAIK (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 4 Jun 2021 20:08:10 -0400
+Received: from mga02.intel.com ([134.134.136.20]:6800 "EHLO mga02.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229847AbhFEAIK (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Fri, 4 Jun 2021 20:08:10 -0400
+IronPort-SDR: z43179csJ2hIsXzKabLSXn2L2I6UkrCEhEMV5UlWtOYf9KeMUF1u4JPbqEH9kcxHacclgS6yEC
+ fK9p1ja3UqRg==
+X-IronPort-AV: E=McAfee;i="6200,9189,10005"; a="191504476"
+X-IronPort-AV: E=Sophos;i="5.83,249,1616482800"; 
+   d="scan'208";a="191504476"
+Received: from orsmga003.jf.intel.com ([10.7.209.27])
+  by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Jun 2021 17:06:22 -0700
+IronPort-SDR: EvY2CmGcLA42WUjyEG7Txg6J6yZNYzI5M9ES5XVNEgy91E3CnGuzyXS09vCxYvq81ep9fpOXXr
+ Sd8cNdrsQOGg==
+X-IronPort-AV: E=Sophos;i="5.83,249,1616482800"; 
+   d="scan'208";a="401114553"
+Received: from djiang5-desk3.ch.intel.com ([143.182.136.137])
+  by orsmga003-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Jun 2021 17:06:21 -0700
+Subject: [PATCH v2] dmanegine: idxd: cleanup all device related bits after
+ disabling device
+From:   Dave Jiang <dave.jiang@intel.com>
+To:     vkoul@kernel.org
+Cc:     dmaengine@vger.kernel.org
+Date:   Fri, 04 Jun 2021 17:06:21 -0700
+Message-ID: <162285154108.2096632.5572805472362321307.stgit@djiang5-desk3.ch.intel.com>
+User-Agent: StGit/0.23-29-ga622f1
 MIME-Version: 1.0
-In-Reply-To: <20210603124920.5o34klhlhjg5phlj@ti.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On 03/06/2021 15:49, Pratyush Yadav wrote:
-> On 27/05/21 04:29PM, Tomi Valkeinen wrote:
->> Hi Pratyush,
->>
->> On 26/05/2021 18:23, Pratyush Yadav wrote:
->>> TI's J721E uses the Cadence CSI2RX and DPHY peripherals to facilitate
->>> capture over a CSI-2 bus.
->>>
->>> The Cadence CSI2RX IP acts as a bridge between the TI specific parts and
->>> the CSI-2 protocol parts. TI then has a wrapper on top of this bridge
->>> called the SHIM layer. It takes in data from stream 0, repacks it, and
->>> sends it to memory over PSI-L DMA.
->>>
->>> This driver acts as the "front end" to V4L2 client applications. It
->>> implements the required ioctls and buffer operations, passes the
->>> necessary calls on to the bridge, programs the SHIM layer, and performs
->>> DMA via the dmaengine API to finally return the data to a buffer
->>> supplied by the application.
->>>
->>> Signed-off-by: Pratyush Yadav <p.yadav@ti.com>
->>
->> I noticed that my test app didn't work at all with this, and I also wasn't
->> able to use v4l2-ctl to set the format.
-> 
-> I have not used v4l2-ctl, but I can see yavta works fine. What command
-> did you use for setting format via v4l2-ctl?
-> 
->>
->> At least for my test app the problem was that this driver doesn't initialize
->> the format at all. My app first calls VIDIOC_G_FMT with v4l2_format.type ==
->> V4L2_BUF_TYPE_VIDEO_CAPTURE, then after the call modifies the fields it
->> wants to change and calls VIDIOC_S_FMT. This failed, as G_FMT returned
->> uninitialized fmt, i.e. type was 0, which my app didn't set again.
->>
->> I believe the driver should have an initial format, something that it will
->> accept if an app calls G_FMT and then S_FMT.
-> 
-> Right. This is a bug. The question is what should the initial format be?
-> It is more or less arbitrary since there is no configuration made yet
-> and we don't know what the camera can or will send. So for example, what
-> if I use UYVY 640x480? The camera might not support it at all. Is it
-> still OK to have it as the default?
+The previous state cleanup patch only performed wq state cleanups. This
+does not go far enough as when device is disabled or reset, the state
+for groups and engines must also be cleaned up. Add additional state
+cleanup beyond wq cleanup. Tie those cleanups directly to device
+disable and reset, and wq disable and reset.
 
-I think it doesn't really matter what the initial format is, as long as 
-it's valid for the subdev itself. There are two separate things:
+Fixes: da32b28c95a7 ("dmaengine: idxd: cleanup workqueue config after disabling")
+Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+---
 
-1) Subdev config, where the subdev is considered independently from the 
-other subdevs. E.g. the formats in the input pads and output pads should 
-be valid, taking into account the capabilities of the subdev. The subdev 
-driver has to take care of these, i.e. if the user sets a format on a 
-pad, the driver must adjust the other pads (if needed) to keep the 
-subdev config valid.
+v2:
+- Fix 0-day report on unused var
+- Fix device reset so it only happens on configurable devices
 
-2) pipeline validation, where all the subdevs in the pipeline are looked 
-at and validated that the settings are compatible.
+ drivers/dma/idxd/device.c |   88 +++++++++++++++++++++++++++++++++------------
+ drivers/dma/idxd/idxd.h   |    6 +--
+ drivers/dma/idxd/irq.c    |    4 +-
+ drivers/dma/idxd/sysfs.c  |   22 +++--------
+ 4 files changed, 74 insertions(+), 46 deletions(-)
 
-We're talking about 1) here, and it doesn't matter if the camera 
-supports the csirx initial format or not.
+diff --git a/drivers/dma/idxd/device.c b/drivers/dma/idxd/device.c
+index 5357dfdd02bb..c8cf1de72176 100644
+--- a/drivers/dma/idxd/device.c
++++ b/drivers/dma/idxd/device.c
+@@ -15,6 +15,8 @@
+ 
+ static void idxd_cmd_exec(struct idxd_device *idxd, int cmd_code, u32 operand,
+ 			  u32 *status);
++static void idxd_device_wqs_clear_state(struct idxd_device *idxd);
++static void idxd_wq_disable_cleanup(struct idxd_wq *wq);
+ 
+ /* Interrupt control bits */
+ void idxd_mask_msix_vector(struct idxd_device *idxd, int vec_id)
+@@ -234,7 +236,7 @@ int idxd_wq_enable(struct idxd_wq *wq)
+ 	return 0;
+ }
+ 
+-int idxd_wq_disable(struct idxd_wq *wq)
++int idxd_wq_disable(struct idxd_wq *wq, bool reset_config)
+ {
+ 	struct idxd_device *idxd = wq->idxd;
+ 	struct device *dev = &idxd->pdev->dev;
+@@ -255,6 +257,8 @@ int idxd_wq_disable(struct idxd_wq *wq)
+ 		return -ENXIO;
+ 	}
+ 
++	if (reset_config)
++		idxd_wq_disable_cleanup(wq);
+ 	wq->state = IDXD_WQ_DISABLED;
+ 	dev_dbg(dev, "WQ %d disabled\n", wq->id);
+ 	return 0;
+@@ -289,6 +293,7 @@ void idxd_wq_reset(struct idxd_wq *wq)
+ 
+ 	operand = BIT(wq->id % 16) | ((wq->id / 16) << 16);
+ 	idxd_cmd_exec(idxd, IDXD_CMD_RESET_WQ, operand, NULL);
++	idxd_wq_disable_cleanup(wq);
+ 	wq->state = IDXD_WQ_DISABLED;
+ }
+ 
+@@ -337,7 +342,7 @@ int idxd_wq_set_pasid(struct idxd_wq *wq, int pasid)
+ 	unsigned int offset;
+ 	unsigned long flags;
+ 
+-	rc = idxd_wq_disable(wq);
++	rc = idxd_wq_disable(wq, false);
+ 	if (rc < 0)
+ 		return rc;
+ 
+@@ -364,7 +369,7 @@ int idxd_wq_disable_pasid(struct idxd_wq *wq)
+ 	unsigned int offset;
+ 	unsigned long flags;
+ 
+-	rc = idxd_wq_disable(wq);
++	rc = idxd_wq_disable(wq, false);
+ 	if (rc < 0)
+ 		return rc;
+ 
+@@ -383,11 +388,11 @@ int idxd_wq_disable_pasid(struct idxd_wq *wq)
+ 	return 0;
+ }
+ 
+-void idxd_wq_disable_cleanup(struct idxd_wq *wq)
++static void idxd_wq_disable_cleanup(struct idxd_wq *wq)
+ {
+ 	struct idxd_device *idxd = wq->idxd;
+ 
+-	lockdep_assert_held(&idxd->dev_lock);
++	lockdep_assert_held(&wq->wq_lock);
+ 	memset(wq->wqcfg, 0, idxd->wqcfg_size);
+ 	wq->type = IDXD_WQT_NONE;
+ 	wq->size = 0;
+@@ -549,22 +554,6 @@ int idxd_device_enable(struct idxd_device *idxd)
+ 	return 0;
+ }
+ 
+-void idxd_device_wqs_clear_state(struct idxd_device *idxd)
+-{
+-	int i;
+-
+-	lockdep_assert_held(&idxd->dev_lock);
+-
+-	for (i = 0; i < idxd->max_wqs; i++) {
+-		struct idxd_wq *wq = idxd->wqs[i];
+-
+-		if (wq->state == IDXD_WQ_ENABLED) {
+-			idxd_wq_disable_cleanup(wq);
+-			wq->state = IDXD_WQ_DISABLED;
+-		}
+-	}
+-}
+-
+ int idxd_device_disable(struct idxd_device *idxd)
+ {
+ 	struct device *dev = &idxd->pdev->dev;
+@@ -586,7 +575,7 @@ int idxd_device_disable(struct idxd_device *idxd)
+ 	}
+ 
+ 	spin_lock_irqsave(&idxd->dev_lock, flags);
+-	idxd_device_wqs_clear_state(idxd);
++	idxd_device_clear_state(idxd);
+ 	idxd->state = IDXD_DEV_CONF_READY;
+ 	spin_unlock_irqrestore(&idxd->dev_lock, flags);
+ 	return 0;
+@@ -598,7 +587,7 @@ void idxd_device_reset(struct idxd_device *idxd)
+ 
+ 	idxd_cmd_exec(idxd, IDXD_CMD_RESET_DEVICE, 0, NULL);
+ 	spin_lock_irqsave(&idxd->dev_lock, flags);
+-	idxd_device_wqs_clear_state(idxd);
++	idxd_device_clear_state(idxd);
+ 	idxd->state = IDXD_DEV_CONF_READY;
+ 	spin_unlock_irqrestore(&idxd->dev_lock, flags);
+ }
+@@ -686,6 +675,59 @@ int idxd_device_release_int_handle(struct idxd_device *idxd, int handle,
+ }
+ 
+ /* Device configuration bits */
++static void idxd_engines_clear_state(struct idxd_device *idxd)
++{
++	struct idxd_engine *engine;
++	int i;
++
++	lockdep_assert_held(&idxd->dev_lock);
++	for (i = 0; i < idxd->max_engines; i++) {
++		engine = idxd->engines[i];
++		engine->group = NULL;
++	}
++}
++
++static void idxd_groups_clear_state(struct idxd_device *idxd)
++{
++	struct idxd_group *group;
++	int i;
++
++	lockdep_assert_held(&idxd->dev_lock);
++	for (i = 0; i < idxd->max_groups; i++) {
++		group = idxd->groups[i];
++		memset(&group->grpcfg, 0, sizeof(group->grpcfg));
++		group->num_engines = 0;
++		group->num_wqs = 0;
++		group->use_token_limit = false;
++		group->tokens_allowed = 0;
++		group->tokens_reserved = 0;
++		group->tc_a = -1;
++		group->tc_b = -1;
++	}
++}
++
++static void idxd_device_wqs_clear_state(struct idxd_device *idxd)
++{
++	int i;
++
++	lockdep_assert_held(&idxd->dev_lock);
++	for (i = 0; i < idxd->max_wqs; i++) {
++		struct idxd_wq *wq = idxd->wqs[i];
++
++		if (wq->state == IDXD_WQ_ENABLED) {
++			idxd_wq_disable_cleanup(wq);
++			wq->state = IDXD_WQ_DISABLED;
++		}
++	}
++}
++
++void idxd_device_clear_state(struct idxd_device *idxd)
++{
++	idxd_groups_clear_state(idxd);
++	idxd_engines_clear_state(idxd);
++	idxd_device_wqs_clear_state(idxd);
++}
++
+ void idxd_msix_perm_setup(struct idxd_device *idxd)
+ {
+ 	union msix_perm mperm;
+diff --git a/drivers/dma/idxd/idxd.h b/drivers/dma/idxd/idxd.h
+index 26482c7d4c3a..1f0991dec679 100644
+--- a/drivers/dma/idxd/idxd.h
++++ b/drivers/dma/idxd/idxd.h
+@@ -420,9 +420,8 @@ int idxd_device_init_reset(struct idxd_device *idxd);
+ int idxd_device_enable(struct idxd_device *idxd);
+ int idxd_device_disable(struct idxd_device *idxd);
+ void idxd_device_reset(struct idxd_device *idxd);
+-void idxd_device_cleanup(struct idxd_device *idxd);
++void idxd_device_clear_state(struct idxd_device *idxd);
+ int idxd_device_config(struct idxd_device *idxd);
+-void idxd_device_wqs_clear_state(struct idxd_device *idxd);
+ void idxd_device_drain_pasid(struct idxd_device *idxd, int pasid);
+ int idxd_device_load_config(struct idxd_device *idxd);
+ int idxd_device_request_int_handle(struct idxd_device *idxd, int idx, int *handle,
+@@ -435,12 +434,11 @@ void idxd_wqs_unmap_portal(struct idxd_device *idxd);
+ int idxd_wq_alloc_resources(struct idxd_wq *wq);
+ void idxd_wq_free_resources(struct idxd_wq *wq);
+ int idxd_wq_enable(struct idxd_wq *wq);
+-int idxd_wq_disable(struct idxd_wq *wq);
++int idxd_wq_disable(struct idxd_wq *wq, bool reset_config);
+ void idxd_wq_drain(struct idxd_wq *wq);
+ void idxd_wq_reset(struct idxd_wq *wq);
+ int idxd_wq_map_portal(struct idxd_wq *wq);
+ void idxd_wq_unmap_portal(struct idxd_wq *wq);
+-void idxd_wq_disable_cleanup(struct idxd_wq *wq);
+ int idxd_wq_set_pasid(struct idxd_wq *wq, int pasid);
+ int idxd_wq_disable_pasid(struct idxd_wq *wq);
+ void idxd_wq_quiesce(struct idxd_wq *wq);
+diff --git a/drivers/dma/idxd/irq.c b/drivers/dma/idxd/irq.c
+index ae68e1e5487a..7a2cf0512501 100644
+--- a/drivers/dma/idxd/irq.c
++++ b/drivers/dma/idxd/irq.c
+@@ -59,7 +59,7 @@ static void idxd_device_reinit(struct work_struct *work)
+ 	return;
+ 
+  out:
+-	idxd_device_wqs_clear_state(idxd);
++	idxd_device_clear_state(idxd);
+ }
+ 
+ static void idxd_device_fault_work(struct work_struct *work)
+@@ -192,7 +192,7 @@ static int process_misc_interrupts(struct idxd_device *idxd, u32 cause)
+ 			spin_lock_bh(&idxd->dev_lock);
+ 			idxd_wqs_quiesce(idxd);
+ 			idxd_wqs_unmap_portal(idxd);
+-			idxd_device_wqs_clear_state(idxd);
++			idxd_device_clear_state(idxd);
+ 			dev_err(&idxd->pdev->dev,
+ 				"idxd halted, need %s.\n",
+ 				gensts.reset_type == IDXD_DEVICE_RESET_FLR ?
+diff --git a/drivers/dma/idxd/sysfs.c b/drivers/dma/idxd/sysfs.c
+index 0460d58e3941..71cd73fefec6 100644
+--- a/drivers/dma/idxd/sysfs.c
++++ b/drivers/dma/idxd/sysfs.c
+@@ -129,7 +129,7 @@ static int enable_wq(struct idxd_wq *wq)
+ 	rc = idxd_wq_map_portal(wq);
+ 	if (rc < 0) {
+ 		dev_warn(dev, "wq portal mapping failed: %d\n", rc);
+-		rc = idxd_wq_disable(wq);
++		rc = idxd_wq_disable(wq, false);
+ 		if (rc < 0)
+ 			dev_warn(dev, "IDXD wq disable failed\n");
+ 		mutex_unlock(&wq->wq_lock);
+@@ -262,8 +262,6 @@ static void disable_wq(struct idxd_wq *wq)
+ 
+ static int idxd_config_bus_remove(struct device *dev)
+ {
+-	int rc;
+-
+ 	dev_dbg(dev, "%s called for %s\n", __func__, dev_name(dev));
+ 
+ 	/* disable workqueue here */
+@@ -288,22 +286,12 @@ static int idxd_config_bus_remove(struct device *dev)
+ 		}
+ 
+ 		idxd_unregister_dma_device(idxd);
+-		rc = idxd_device_disable(idxd);
+-		if (test_bit(IDXD_FLAG_CONFIGURABLE, &idxd->flags)) {
+-			for (i = 0; i < idxd->max_wqs; i++) {
+-				struct idxd_wq *wq = idxd->wqs[i];
+-
+-				mutex_lock(&wq->wq_lock);
+-				idxd_wq_disable_cleanup(wq);
+-				mutex_unlock(&wq->wq_lock);
+-			}
+-		}
++		idxd_device_disable(idxd);
++		if (test_bit(IDXD_FLAG_CONFIGURABLE, &idxd->flags))
++			idxd_device_reset(idxd);
+ 		module_put(THIS_MODULE);
+-		if (rc < 0)
+-			dev_warn(dev, "Device disable failed\n");
+-		else
+-			dev_info(dev, "Device %s disabled\n", dev_name(dev));
+ 
++		dev_info(dev, "Device %s disabled\n", dev_name(dev));
+ 	}
+ 
+ 	return 0;
 
-  Tomi
+
