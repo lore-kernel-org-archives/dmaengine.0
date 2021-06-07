@@ -7,23 +7,23 @@ X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0E467C47082
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C3AEFC4743C
 	for <dmaengine@archiver.kernel.org>; Mon,  7 Jun 2021 06:32:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CAD836121D
-	for <dmaengine@archiver.kernel.org>; Mon,  7 Jun 2021 06:32:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A1EF5611CE
+	for <dmaengine@archiver.kernel.org>; Mon,  7 Jun 2021 06:32:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230175AbhFGGeg (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 7 Jun 2021 02:34:36 -0400
-Received: from szxga08-in.huawei.com ([45.249.212.255]:4332 "EHLO
-        szxga08-in.huawei.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229436AbhFGGef (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Mon, 7 Jun 2021 02:34:35 -0400
-Received: from dggemv711-chm.china.huawei.com (unknown [172.30.72.54])
-        by szxga08-in.huawei.com (SkyGuard) with ESMTP id 4Fz3MZ1zwdz1BJmb;
-        Mon,  7 Jun 2021 14:27:54 +0800 (CST)
+        id S229498AbhFGGeh (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 7 Jun 2021 02:34:37 -0400
+Received: from szxga03-in.huawei.com ([45.249.212.189]:4373 "EHLO
+        szxga03-in.huawei.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230128AbhFGGeh (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Mon, 7 Jun 2021 02:34:37 -0400
+Received: from dggemv703-chm.china.huawei.com (unknown [172.30.72.55])
+        by szxga03-in.huawei.com (SkyGuard) with ESMTP id 4Fz3Nl3KJbz69P9;
+        Mon,  7 Jun 2021 14:28:55 +0800 (CST)
 Received: from dggema755-chm.china.huawei.com (10.1.198.197) by
- dggemv711-chm.china.huawei.com (10.1.198.66) with Microsoft SMTP Server
+ dggemv703-chm.china.huawei.com (10.3.19.46) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256) id
  15.1.2176.2; Mon, 7 Jun 2021 14:32:43 +0800
 Received: from huawei.com (10.90.53.225) by dggema755-chm.china.huawei.com
@@ -36,9 +36,9 @@ To:     <vkoul@kernel.org>, <mcoquelin.stm32@gmail.com>,
 CC:     <amelie.delaunay@st.com>, <dmaengine@vger.kernel.org>,
         <linux-stm32@st-md-mailman.stormreply.com>,
         <linux-arm-kernel@lists.infradead.org>
-Subject: [PATCH -next 1/3] dmaengine: stm32-dma: Fix PM usage counter imbalance in stm32 dma ops
-Date:   Mon, 7 Jun 2021 14:46:38 +0800
-Message-ID: <20210607064640.121394-2-zhangqilong3@huawei.com>
+Subject: [PATCH -next 3/3] dmaengine: tegra210-adma: Using pm_runtime_resume_and_get to replace open coding
+Date:   Mon, 7 Jun 2021 14:46:40 +0800
+Message-ID: <20210607064640.121394-4-zhangqilong3@huawei.com>
 X-Mailer: git-send-email 2.26.0.106.g9fadedd
 In-Reply-To: <20210607064640.121394-1-zhangqilong3@huawei.com>
 References: <20210607064640.121394-1-zhangqilong3@huawei.com>
@@ -53,41 +53,42 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-pm_runtime_get_sync will increment pm usage counter
-even it failed. Forgetting to putting operation will
-result in reference leak here. We fix it by replacing
-it with pm_runtime_resume_and_get to keep usage counter
-balanced.
+use pm_runtime_resume_and_get() to replace pm_runtime_get_sync and
+pm_runtime_put_noidle. this change is just to simplify the code,
+there is no actual functional change.
 
-Fixes: 48bc73ba14bcd ("dmaengine: stm32-dma: Add PM Runtime support")
-Fixes: 05f8740a0e6fc ("dmaengine: stm32-dma: add suspend/resume power management support")
 Signed-off-by: Zhang Qilong <zhangqilong3@huawei.com>
 ---
- drivers/dma/stm32-dma.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/dma/tegra210-adma.c | 7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/dma/stm32-dma.c b/drivers/dma/stm32-dma.c
-index f54ecb123a52..7dd1d3d0bf06 100644
---- a/drivers/dma/stm32-dma.c
-+++ b/drivers/dma/stm32-dma.c
-@@ -1200,7 +1200,7 @@ static int stm32_dma_alloc_chan_resources(struct dma_chan *c)
- 
- 	chan->config_init = false;
- 
--	ret = pm_runtime_get_sync(dmadev->ddev.dev);
-+	ret = pm_runtime_resume_and_get(dmadev->ddev.dev);
- 	if (ret < 0)
+diff --git a/drivers/dma/tegra210-adma.c b/drivers/dma/tegra210-adma.c
+index 4735742e826d..b1115a6d1935 100644
+--- a/drivers/dma/tegra210-adma.c
++++ b/drivers/dma/tegra210-adma.c
+@@ -655,9 +655,8 @@ static int tegra_adma_alloc_chan_resources(struct dma_chan *dc)
  		return ret;
+ 	}
  
-@@ -1470,7 +1470,7 @@ static int stm32_dma_suspend(struct device *dev)
- 	struct stm32_dma_device *dmadev = dev_get_drvdata(dev);
- 	int id, ret, scr;
- 
--	ret = pm_runtime_get_sync(dev);
-+	ret = pm_runtime_resume_and_get(dev);
- 	if (ret < 0)
+-	ret = pm_runtime_get_sync(tdc2dev(tdc));
++	ret = pm_runtime_resume_and_get(tdc2dev(tdc));
+ 	if (ret < 0) {
+-		pm_runtime_put_noidle(tdc2dev(tdc));
+ 		free_irq(tdc->irq, tdc);
  		return ret;
+ 	}
+@@ -869,10 +868,8 @@ static int tegra_adma_probe(struct platform_device *pdev)
+ 	pm_runtime_enable(&pdev->dev);
  
+ 	ret = pm_runtime_get_sync(&pdev->dev);
+-	if (ret < 0) {
+-		pm_runtime_put_noidle(&pdev->dev);
++	if (ret < 0)
+ 		goto rpm_disable;
+-	}
+ 
+ 	ret = tegra_adma_init(tdma);
+ 	if (ret)
 -- 
 2.31.1
 
