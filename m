@@ -2,100 +2,58 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.2 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AF4C0C47082
-	for <dmaengine@archiver.kernel.org>; Mon,  7 Jun 2021 06:32:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3704BC47082
+	for <dmaengine@archiver.kernel.org>; Mon,  7 Jun 2021 06:54:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 915F16121D
-	for <dmaengine@archiver.kernel.org>; Mon,  7 Jun 2021 06:32:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 11D606121D
+	for <dmaengine@archiver.kernel.org>; Mon,  7 Jun 2021 06:54:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230128AbhFGGes (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 7 Jun 2021 02:34:48 -0400
-Received: from szxga08-in.huawei.com ([45.249.212.255]:4333 "EHLO
-        szxga08-in.huawei.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229545AbhFGGes (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Mon, 7 Jun 2021 02:34:48 -0400
-Received: from dggemv704-chm.china.huawei.com (unknown [172.30.72.53])
-        by szxga08-in.huawei.com (SkyGuard) with ESMTP id 4Fz3Mq244Hz1BJvn;
-        Mon,  7 Jun 2021 14:28:07 +0800 (CST)
-Received: from dggema755-chm.china.huawei.com (10.1.198.197) by
- dggemv704-chm.china.huawei.com (10.3.19.47) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256) id
- 15.1.2176.2; Mon, 7 Jun 2021 14:32:43 +0800
-Received: from huawei.com (10.90.53.225) by dggema755-chm.china.huawei.com
- (10.1.198.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.2176.2; Mon, 7 Jun
- 2021 14:32:43 +0800
-From:   Zhang Qilong <zhangqilong3@huawei.com>
-To:     <vkoul@kernel.org>, <mcoquelin.stm32@gmail.com>,
-        <alexandre.torgue@foss.st.com>, <pierre-yves.mordret@st.com>
-CC:     <amelie.delaunay@st.com>, <dmaengine@vger.kernel.org>,
-        <linux-stm32@st-md-mailman.stormreply.com>,
-        <linux-arm-kernel@lists.infradead.org>
-Subject: [PATCH -next 2/3] dmaengine: stm32-dmamux: Fix PM usage counter unbalance in stm32 dmamux ops
-Date:   Mon, 7 Jun 2021 14:46:39 +0800
-Message-ID: <20210607064640.121394-3-zhangqilong3@huawei.com>
-X-Mailer: git-send-email 2.26.0.106.g9fadedd
-In-Reply-To: <20210607064640.121394-1-zhangqilong3@huawei.com>
-References: <20210607064640.121394-1-zhangqilong3@huawei.com>
+        id S229470AbhFGGzw (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 7 Jun 2021 02:55:52 -0400
+Received: from mail.kernel.org ([198.145.29.99]:41536 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229436AbhFGGzv (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Mon, 7 Jun 2021 02:55:51 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 3C25060FF0;
+        Mon,  7 Jun 2021 06:53:59 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1623048841;
+        bh=3WOLgfAMR0w8GUbFt52lE2XL9Zd739S4s8Bkg9JcIKk=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=n6+6O9A/1C0/pvDUSV0h+nRgmgF3u5+tVSfum3G87Nc0YLLFyVSNE11VNYkCq2EvT
+         mjeH4ZWrt+XX90ZzTuRCVHkHr685vskt3e3c2A8CrewGwSVhEpbBqI/bXaeE9VXRUm
+         sGe2H4i1W1uj1ExYGnljmGwie40weJv8ifJu3Ghtf1/v/a4oMyGGzPfOfCVTy37Cng
+         r6GBcLiatke/HfikrNRpOV+EbOGrIgVyaRivS/YcApI7F0T3Jutk0WKwFoLRNsyua1
+         Pkan85xwt5ywPQ0wz6CpKpYo8HvftGd+EFpdk38Evv8+sXx0H+jC8W9zXg+EN4XNDO
+         fWKHCBZCIsi9g==
+Date:   Mon, 7 Jun 2021 12:23:57 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Guillaume Ranquet <granquet@baylibre.com>
+Cc:     Sean Wang <sean.wang@mediatek.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        dmaengine@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-mediatek@lists.infradead.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 0/3] fix mediatek UART APDMA desc logic
+Message-ID: <YL3ChZxIQwqZpCTF@vkoul-mobl>
+References: <20210513192642.29446-1-granquet@baylibre.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7BIT
-Content-Type:   text/plain; charset=US-ASCII
-X-Originating-IP: [10.90.53.225]
-X-ClientProxiedBy: dggems705-chm.china.huawei.com (10.3.19.182) To
- dggema755-chm.china.huawei.com (10.1.198.197)
-X-CFilter-Loop: Reflected
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210513192642.29446-1-granquet@baylibre.com>
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-pm_runtime_get_sync will increment pm usage counter
-even it failed. Forgetting to putting operation will
-result in reference leak here. We fix it by replacing
-it with pm_runtime_resume_and_get to keep usage counter
-balanced.
+On 13-05-21, 21:26, Guillaume Ranquet wrote:
+> The logic used in the apdma driver to handle the virt_dma_desc caused
+> panics and various memory corruption.
+> This is an attempt at sanitizing the logic a bit.
 
-Fixes: 4f3ceca254e0f ("dmaengine: stm32-dmamux: Add PM Runtime support")
-Signed-off-by: Zhang Qilong <zhangqilong3@huawei.com>
----
- drivers/dma/stm32-dmamux.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+Applied, thanks
 
-diff --git a/drivers/dma/stm32-dmamux.c b/drivers/dma/stm32-dmamux.c
-index ef0d0555103d..a42164389ebc 100644
---- a/drivers/dma/stm32-dmamux.c
-+++ b/drivers/dma/stm32-dmamux.c
-@@ -137,7 +137,7 @@ static void *stm32_dmamux_route_allocate(struct of_phandle_args *dma_spec,
- 
- 	/* Set dma request */
- 	spin_lock_irqsave(&dmamux->lock, flags);
--	ret = pm_runtime_get_sync(&pdev->dev);
-+	ret = pm_runtime_resume_and_get(&pdev->dev);
- 	if (ret < 0) {
- 		spin_unlock_irqrestore(&dmamux->lock, flags);
- 		goto error;
-@@ -336,7 +336,7 @@ static int stm32_dmamux_suspend(struct device *dev)
- 	struct stm32_dmamux_data *stm32_dmamux = platform_get_drvdata(pdev);
- 	int i, ret;
- 
--	ret = pm_runtime_get_sync(dev);
-+	ret = pm_runtime_resume_and_get(dev);
- 	if (ret < 0)
- 		return ret;
- 
-@@ -361,7 +361,7 @@ static int stm32_dmamux_resume(struct device *dev)
- 	if (ret < 0)
- 		return ret;
- 
--	ret = pm_runtime_get_sync(dev);
-+	ret = pm_runtime_resume_and_get(dev);
- 	if (ret < 0)
- 		return ret;
- 
 -- 
-2.31.1
-
+~Vinod
