@@ -2,94 +2,115 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F205EC48BCD
-	for <dmaengine@archiver.kernel.org>; Thu, 10 Jun 2021 01:38:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C0B07C48BDF
+	for <dmaengine@archiver.kernel.org>; Thu, 10 Jun 2021 05:22:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D051D61406
-	for <dmaengine@archiver.kernel.org>; Thu, 10 Jun 2021 01:38:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A7B63613D9
+	for <dmaengine@archiver.kernel.org>; Thu, 10 Jun 2021 05:22:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229634AbhFJBku (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 9 Jun 2021 21:40:50 -0400
-Received: from perceval.ideasonboard.com ([213.167.242.64]:33894 "EHLO
-        perceval.ideasonboard.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229507AbhFJBku (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Wed, 9 Jun 2021 21:40:50 -0400
-Received: from pendragon.ideasonboard.com (62-78-145-57.bb.dnainternet.fi [62.78.145.57])
-        by perceval.ideasonboard.com (Postfix) with ESMTPSA id 943DA8A2;
-        Thu, 10 Jun 2021 03:38:53 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
-        s=mail; t=1623289133;
-        bh=yqpHWZPanjkC+V9yvODkHojqHp3PntAQ434IwkjrduM=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=YZNBT8CDKmhWq5cKGb3SHMOG5gszAfxe0XtLk6Wo7lVNi70RuY9TvK2QpWtgZ1nRH
-         D6T9KUrJtNCgWdqCpoaVFXVsaCTZM+Zp1wVyZjlQH71nyGToUpOxi74t2yetS/p5Kc
-         DxCca1Z28Wn1wvjNYmofmVM0reUIVR9mfjTTkXYg=
-Date:   Thu, 10 Jun 2021 04:38:34 +0300
-From:   Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-To:     Yang Li <yang.lee@linux.alibaba.com>
-Cc:     hyun.kwon@xilinx.com, vkoul@kernel.org, michal.simek@xilinx.com,
-        nathan@kernel.org, ndesaulniers@google.com,
-        dmaengine@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        id S230029AbhFJFYq (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Thu, 10 Jun 2021 01:24:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37520 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229993AbhFJFYp (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Thu, 10 Jun 2021 01:24:45 -0400
+Received: from mout-u-107.mailbox.org (mout-u-107.mailbox.org [IPv6:2001:67c:2050:1::465:107])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A76FC061574;
+        Wed,  9 Jun 2021 22:22:49 -0700 (PDT)
+Received: from smtp2.mailbox.org (smtp2.mailbox.org [IPv6:2001:67c:2050:105:465:1:2:0])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-384) server-signature RSA-PSS (4096 bits) server-digest SHA256)
+        (No client certificate requested)
+        by mout-u-107.mailbox.org (Postfix) with ESMTPS id 4G0sn12lfgzQjZ5;
+        Thu, 10 Jun 2021 07:22:45 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at heinlein-support.de
+Received: from smtp2.mailbox.org ([80.241.60.241])
+        by spamfilter03.heinlein-hosting.de (spamfilter03.heinlein-hosting.de [80.241.56.117]) (amavisd-new, port 10030)
+        with ESMTP id 3etomxc0zP3G; Thu, 10 Jun 2021 07:22:42 +0200 (CEST)
+Subject: Re: [PATCH v6 2/3] MAINTAINERS: add entry for Altera mSGDMA
+To:     Olivier Dautricourt <olivier.dautricourt@orolia.com>,
+        Rob Herring <robh+dt@kernel.org>, Vinod Koul <vkoul@kernel.org>
+Cc:     dmaengine@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2] dmaengine: xilinx: dpdma: fix kernel-doc
-Message-ID: <YMFtGqicAMoZ0LOV@pendragon.ideasonboard.com>
-References: <1623222893-123227-1-git-send-email-yang.lee@linux.alibaba.com>
+References: <7487a25cdb240d1be4a8593aa602c3c73d8f5acb.1623251990.git.olivier.dautricourt@orolia.com>
+ <4258cb93e0f7ff57c4e116c3e8cd9a1a3159cec6.1623251990.git.olivier.dautricourt@orolia.com>
+From:   Stefan Roese <sr@denx.de>
+Message-ID: <31a0e56b-3cb7-122a-ec44-b504ea2c0960@denx.de>
+Date:   Thu, 10 Jun 2021 07:22:41 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <1623222893-123227-1-git-send-email-yang.lee@linux.alibaba.com>
+In-Reply-To: <4258cb93e0f7ff57c4e116c3e8cd9a1a3159cec6.1623251990.git.olivier.dautricourt@orolia.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: de-DE
+Content-Transfer-Encoding: 8bit
+X-MBO-SPAM-Probability: 
+X-Rspamd-Score: -7.14 / 15.00 / 15.00
+X-Rspamd-Queue-Id: 4CC0017FC
+X-Rspamd-UID: 930263
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Hi Yang Li,
-
-Thank you for the patch.
-
-On Wed, Jun 09, 2021 at 03:14:53PM +0800, Yang Li wrote:
-> Fix function name in xilinx/xilinx_dpdma.c comment to remove 
-> a warning found by kernel-doc.
+On 09.06.21 17:20, Olivier Dautricourt wrote:
+> This entry is for the standalone driver in drivers/dma/altera-msgdma.c
+> Add myself as 'Odd fixes' maintainer for this driver as i am currently
+> writing new code and have access to the hardware.
+> Add Stefan Roese as reviewer.
 > 
-> drivers/dma/xilinx/xilinx_dpdma.c:935: warning: expecting prototype for
-> xilinx_dpdma_chan_no_ostand(). Prototype was for
-> xilinx_dpdma_chan_notify_no_ostand() instead.
-> 
-> Reported-by: Abaci Robot <abaci@linux.alibaba.com>
-> Signed-off-by: Yang Li <yang.lee@linux.alibaba.com>
-> Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
-> Reviewed-by: Nathan Chancellor <nathan@kernel.org>
+> Signed-off-by: Olivier Dautricourt <olivier.dautricourt@orolia.com>
 
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Acked-by: Stefan Roese <sr@denx.de>
+
+Thanks,
+Stefan
 
 > ---
 > 
-> Change in v2:
-> --replaced s/clang(make W=1 LLVM=1)/kernel-doc/ in commit.
-> https://lore.kernel.org/patchwork/patch/1442639/
+> Notes:
+>      splitted commit, introduced in v5
 > 
->  drivers/dma/xilinx/xilinx_dpdma.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+>      v6:
+>        add Stefan Roese as Reviewer (after consulting him)
 > 
-> diff --git a/drivers/dma/xilinx/xilinx_dpdma.c b/drivers/dma/xilinx/xilinx_dpdma.c
-> index 70b29bd..0c8739a 100644
-> --- a/drivers/dma/xilinx/xilinx_dpdma.c
-> +++ b/drivers/dma/xilinx/xilinx_dpdma.c
-> @@ -915,7 +915,7 @@ static u32 xilinx_dpdma_chan_ostand(struct xilinx_dpdma_chan *chan)
->  }
->  
->  /**
-> - * xilinx_dpdma_chan_no_ostand - Notify no outstanding transaction event
-> + * xilinx_dpdma_chan_notify_no_ostand - Notify no outstanding transaction event
->   * @chan: DPDMA channel
->   *
->   * Notify waiters for no outstanding event, so waiters can stop the channel
+>   MAINTAINERS | 8 ++++++++
+>   1 file changed, 8 insertions(+)
+> 
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index b706dd20ff2b..3167d26f0718 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -783,6 +783,14 @@ M:	Ley Foon Tan <ley.foon.tan@intel.com>
+>   S:	Maintained
+>   F:	drivers/mailbox/mailbox-altera.c
+> 
+> +ALTERA MSGDMA IP CORE DRIVER
+> +M:	Olivier Dautricourt <olivier.dautricourt@orolia.com>
+> +R:	Stefan Roese <sr@denx.de>
+> +L:	dmaengine@vger.kernel.org
+> +S:	Odd Fixes
+> +F:	Documentation/devicetree/bindings/dma/altr,msgdma.yaml
+> +F:	drivers/dma/altera-msgdma.c
+> +
+>   ALTERA PIO DRIVER
+>   M:	Joyce Ooi <joyce.ooi@intel.com>
+>   L:	linux-gpio@vger.kernel.org
+> --
+> 2.31.0.rc2
+> 
+> 
+> --
+> Olivier Dautricourt
+> 
+
+
+Viele Grüße,
+Stefan
 
 -- 
-Regards,
-
-Laurent Pinchart
+DENX Software Engineering GmbH,      Managing Director: Wolfgang Denk
+HRB 165235 Munich, Office: Kirchenstr.5, D-82194 Groebenzell, Germany
+Phone: (+49)-8142-66989-51 Fax: (+49)-8142-66989-80 Email: sr@denx.de
