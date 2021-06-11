@@ -2,36 +2,37 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_GIT autolearn=unavailable autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
+	autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1B241C48BE6
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 35A3CC48BE5
 	for <dmaengine@archiver.kernel.org>; Fri, 11 Jun 2021 10:18:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 01384613F5
-	for <dmaengine@archiver.kernel.org>; Fri, 11 Jun 2021 10:18:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1CE02613E9
+	for <dmaengine@archiver.kernel.org>; Fri, 11 Jun 2021 10:18:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230382AbhFKKUr (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 11 Jun 2021 06:20:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55128 "EHLO
+        id S230392AbhFKKUs (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 11 Jun 2021 06:20:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55136 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230392AbhFKKUr (ORCPT
+        with ESMTP id S231252AbhFKKUr (ORCPT
         <rfc822;dmaengine@vger.kernel.org>); Fri, 11 Jun 2021 06:20:47 -0400
 Received: from baptiste.telenet-ops.be (baptiste.telenet-ops.be [IPv6:2a02:1800:120:4::f00:13])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 06E2EC0613A2
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2245AC061283
         for <dmaengine@vger.kernel.org>; Fri, 11 Jun 2021 03:18:48 -0700 (PDT)
 Received: from ramsan.of.borg ([IPv6:2a02:1810:ac12:ed20:2411:a261:8fe2:b47f])
         by baptiste.telenet-ops.be with bizsmtp
-        id FmJl2500K25eH3q01mJl6A; Fri, 11 Jun 2021 12:18:46 +0200
+        id FmJl2500o25eH3q01mJl6K; Fri, 11 Jun 2021 12:18:47 +0200
 Received: from rox.of.borg ([192.168.97.57])
         by ramsan.of.borg with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
         (Exim 4.93)
         (envelope-from <geert@linux-m68k.org>)
-        id 1lreFQ-00Fd29-VD; Fri, 11 Jun 2021 12:18:44 +0200
+        id 1lreFR-00Fd2B-Cm; Fri, 11 Jun 2021 12:18:45 +0200
 Received: from geert by rox.of.borg with local (Exim 4.93)
         (envelope-from <geert@linux-m68k.org>)
-        id 1lreFQ-00CaZT-H1; Fri, 11 Jun 2021 12:18:44 +0200
+        id 1lreFQ-00CaZf-Jy; Fri, 11 Jun 2021 12:18:44 +0200
 From:   Geert Uytterhoeven <geert+renesas@glider.be>
 To:     Rob Herring <robh+dt@kernel.org>, Vinod Koul <vkoul@kernel.org>,
         Magnus Damm <magnus.damm@gmail.com>
@@ -41,60 +42,126 @@ Cc:     Guennadi Liakhovetski <guennadi.liakhovetski@linux.intel.com>,
         linux-renesas-soc@vger.kernel.org, linux-sh@vger.kernel.org,
         linux-arm-kernel@lists.infradead.org,
         Geert Uytterhoeven <geert+renesas@glider.be>
-Subject: [PATCH 0/3] Remove shdma DT support
-Date:   Fri, 11 Jun 2021 12:18:38 +0200
-Message-Id: <cover.1623405675.git.geert+renesas@glider.be>
+Subject: [PATCH 2/3] dmaengine: sh: Remove unused shdma-of driver
+Date:   Fri, 11 Jun 2021 12:18:40 +0200
+Message-Id: <e9445a5f4ac15fc4d3b376b5e675e39f8c95b967.1623406640.git.geert+renesas@glider.be>
 X-Mailer: git-send-email 2.25.1
+In-Reply-To: <cover.1623406640.git.geert+renesas@glider.be>
+References: <cover.1623406640.git.geert+renesas@glider.be>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-	Hi all,
+Remove the DT-based Renesas SHDMA DMA multiplexer driver, as it is
+unused.  The DMA multiplexer node and one DMA controller instance were
+added to the R-Mobile APE6 .dtsi file, but DMA support was never fully
+enabled, cfr. commit a19788612f51b787 ("dmaengine: sh: Remove R-Mobile
+APE6 support").
 
-Documentation/devicetree/bindings/dma/renesas,shdma.txt is one of the
-few^W57% of the DT bindings that haven't been converted to json-schema
-yet.  These bindings were originally intended to cover all SH/R-Mobile
-SoCs, but the DMA multiplexer node and one DMA controller instance were
-only ever added to one .dtsi file, for R-Mobile APE6.  Still, DMA
-support for R-Mobile APE6 was never completed to the point that it would
-actually work, cfr. commit a19788612f51b787 ("dmaengine: sh: Remove
-R-Mobile APE6 support").  Later, the mux idea was dropped when
-implementing support for DMA on (very similar) R-Car Gen2, cfr.
-renesas,rcar-dmac.yaml.
-
-Hence this series removes the Renesas SHDMA Device Tree bindings, the
-SHDMA DMA multiplexer driver, and the corresponding description in the
-R-Mobile APE6 DTS.
-
-I plan to queue [PATCH 3/3] in renesas-devel for v5.15.
-
-Thanks for your comments!
-
-Geert Uytterhoeven (3):
-  dt-bindings: dmaengine: Remove SHDMA Device Tree bindings
-  dmaengine: sh: Remove unused shdma-of driver
-  ARM: dts: r8a73a4: Remove non-functional DMA support
-
- .../devicetree/bindings/dma/renesas,shdma.txt | 84 -------------------
- arch/arm/boot/dts/r8a73a4.dtsi                | 44 ----------
- drivers/dma/sh/Makefile                       |  2 +-
- drivers/dma/sh/shdma-of.c                     | 76 -----------------
- 4 files changed, 1 insertion(+), 205 deletions(-)
- delete mode 100644 Documentation/devicetree/bindings/dma/renesas,shdma.txt
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+---
+ drivers/dma/sh/Makefile   |  2 +-
+ drivers/dma/sh/shdma-of.c | 76 ---------------------------------------
+ 2 files changed, 1 insertion(+), 77 deletions(-)
  delete mode 100644 drivers/dma/sh/shdma-of.c
 
+diff --git a/drivers/dma/sh/Makefile b/drivers/dma/sh/Makefile
+index 112fbd22bb3fb984..abdf10341725c36b 100644
+--- a/drivers/dma/sh/Makefile
++++ b/drivers/dma/sh/Makefile
+@@ -3,7 +3,7 @@
+ # DMA Engine Helpers
+ #
+ 
+-obj-$(CONFIG_SH_DMAE_BASE) += shdma-base.o shdma-of.o
++obj-$(CONFIG_SH_DMAE_BASE) += shdma-base.o
+ 
+ #
+ # DMA Controllers
+diff --git a/drivers/dma/sh/shdma-of.c b/drivers/dma/sh/shdma-of.c
+deleted file mode 100644
+index be89dd894328f589..0000000000000000
+--- a/drivers/dma/sh/shdma-of.c
++++ /dev/null
+@@ -1,76 +0,0 @@
+-// SPDX-License-Identifier: GPL-2.0
+-/*
+- * SHDMA Device Tree glue
+- *
+- * Copyright (C) 2013 Renesas Electronics Inc.
+- * Author: Guennadi Liakhovetski <g.liakhovetski@gmx.de>
+- */
+-
+-#include <linux/dmaengine.h>
+-#include <linux/module.h>
+-#include <linux/of.h>
+-#include <linux/of_dma.h>
+-#include <linux/of_platform.h>
+-#include <linux/platform_device.h>
+-#include <linux/shdma-base.h>
+-
+-#define to_shdma_chan(c) container_of(c, struct shdma_chan, dma_chan)
+-
+-static struct dma_chan *shdma_of_xlate(struct of_phandle_args *dma_spec,
+-				       struct of_dma *ofdma)
+-{
+-	u32 id = dma_spec->args[0];
+-	dma_cap_mask_t mask;
+-	struct dma_chan *chan;
+-
+-	if (dma_spec->args_count != 1)
+-		return NULL;
+-
+-	dma_cap_zero(mask);
+-	/* Only slave DMA channels can be allocated via DT */
+-	dma_cap_set(DMA_SLAVE, mask);
+-
+-	chan = dma_request_channel(mask, shdma_chan_filter,
+-				   (void *)(uintptr_t)id);
+-	if (chan)
+-		to_shdma_chan(chan)->hw_req = id;
+-
+-	return chan;
+-}
+-
+-static int shdma_of_probe(struct platform_device *pdev)
+-{
+-	const struct of_dev_auxdata *lookup = dev_get_platdata(&pdev->dev);
+-	int ret;
+-
+-	ret = of_dma_controller_register(pdev->dev.of_node,
+-					 shdma_of_xlate, pdev);
+-	if (ret < 0)
+-		return ret;
+-
+-	ret = of_platform_populate(pdev->dev.of_node, NULL, lookup, &pdev->dev);
+-	if (ret < 0)
+-		of_dma_controller_free(pdev->dev.of_node);
+-
+-	return ret;
+-}
+-
+-static const struct of_device_id shdma_of_match[] = {
+-	{ .compatible = "renesas,shdma-mux", },
+-	{ }
+-};
+-MODULE_DEVICE_TABLE(of, sh_dmae_of_match);
+-
+-static struct platform_driver shdma_of = {
+-	.driver		= {
+-		.name	= "shdma-of",
+-		.of_match_table = shdma_of_match,
+-	},
+-	.probe		= shdma_of_probe,
+-};
+-
+-module_platform_driver(shdma_of);
+-
+-MODULE_LICENSE("GPL v2");
+-MODULE_DESCRIPTION("SH-DMA driver DT glue");
+-MODULE_AUTHOR("Guennadi Liakhovetski <g.liakhovetski@gmx.de>");
 -- 
 2.25.1
 
-Gr{oetje,eeting}s,
-
-						Geert
-
---
-Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
-
-In personal conversations with technical people, I call myself a hacker. But
-when I'm talking to journalists I just say "programmer" or something like that.
-							    -- Linus Torvalds
