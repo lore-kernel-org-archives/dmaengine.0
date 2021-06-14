@@ -5,26 +5,26 @@ X-Spam-Level:
 X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+	autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8F32DC48BE6
-	for <dmaengine@archiver.kernel.org>; Mon, 14 Jun 2021 23:56:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8E26CC49EA6
+	for <dmaengine@archiver.kernel.org>; Mon, 14 Jun 2021 23:56:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5F88F613DF
-	for <dmaengine@archiver.kernel.org>; Mon, 14 Jun 2021 23:56:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 72D9361029
+	for <dmaengine@archiver.kernel.org>; Mon, 14 Jun 2021 23:56:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231241AbhFNX6o (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 14 Jun 2021 19:58:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39704 "EHLO
+        id S231733AbhFNX6p (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 14 Jun 2021 19:58:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39712 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231735AbhFNX6n (ORCPT
+        with ESMTP id S231742AbhFNX6n (ORCPT
         <rfc822;dmaengine@vger.kernel.org>); Mon, 14 Jun 2021 19:58:43 -0400
-Received: from relay04.th.seeweb.it (relay04.th.seeweb.it [IPv6:2001:4b7a:2000:18::165])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8DAB5C061574
+Received: from m-r1.th.seeweb.it (m-r1.th.seeweb.it [IPv6:2001:4b7a:2000:18::170])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C7F33C0613A2
         for <dmaengine@vger.kernel.org>; Mon, 14 Jun 2021 16:56:39 -0700 (PDT)
 Received: from localhost.localdomain (83.6.168.161.neoplus.adsl.tpnet.pl [83.6.168.161])
-        by m-r1.th.seeweb.it (Postfix) with ESMTPA id 45AD01F955;
-        Tue, 15 Jun 2021 01:56:37 +0200 (CEST)
+        by m-r1.th.seeweb.it (Postfix) with ESMTPA id F1B191F91B;
+        Tue, 15 Jun 2021 01:56:35 +0200 (CEST)
 From:   Konrad Dybcio <konrad.dybcio@somainline.org>
 To:     ~postmarketos/upstreaming@lists.sr.ht
 Cc:     martin.botka@somainline.org,
@@ -37,9 +37,9 @@ Cc:     martin.botka@somainline.org,
         Rob Herring <robh+dt@kernel.org>,
         linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v2 3/3] arm64: dts: qcom: sm8250: Add GPI DMA nodes
-Date:   Tue, 15 Jun 2021 01:56:30 +0200
-Message-Id: <20210614235630.445501-3-konrad.dybcio@somainline.org>
+Subject: [PATCH v2 2/3] dmaengine: qcom: gpi: Add SM8250 compatible
+Date:   Tue, 15 Jun 2021 01:56:29 +0200
+Message-Id: <20210614235630.445501-2-konrad.dybcio@somainline.org>
 X-Mailer: git-send-email 2.32.0
 In-Reply-To: <20210614235630.445501-1-konrad.dybcio@somainline.org>
 References: <20210614235630.445501-1-konrad.dybcio@somainline.org>
@@ -49,113 +49,25 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Add and configure GPI DMA nodes to enable the way for peripherals to make
-DMA transfers.
+SM8250 seems to work just fine, so add a shiny new compatible for it.
 
 Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
 ---
-Changes since v1:
-- Use the right compatible :facepalm:
+ drivers/dma/qcom/gpi.c | 1 +
+ 1 file changed, 1 insertion(+)
 
- arch/arm64/boot/dts/qcom/sm8250.dtsi | 64 ++++++++++++++++++++++++++++
- 1 file changed, 64 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-index d45b6aa6fd05..806973d6ba55 100644
---- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-@@ -8,6 +8,7 @@
- #include <dt-bindings/clock/qcom,gcc-sm8250.h>
- #include <dt-bindings/clock/qcom,gpucc-sm8250.h>
- #include <dt-bindings/clock/qcom,rpmh.h>
-+#include <dt-bindings/dma/qcom-gpi.h>
- #include <dt-bindings/gpio/gpio.h>
- #include <dt-bindings/interconnect/qcom,osm-l3.h>
- #include <dt-bindings/interconnect/qcom,sm8250.h>
-@@ -520,6 +521,26 @@ opp-120000000 {
- 			};
- 		};
- 
-+		gpi_dma2: dma-controller@800000 {
-+			compatible = "qcom,sm8250-gpi-dma";
-+			reg = <0 0x00800000 0 0x70000>;
-+			interrupts = <GIC_SPI 588 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 589 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 590 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 591 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 592 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 593 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 594 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 595 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 596 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 597 IRQ_TYPE_LEVEL_HIGH>;
-+			dma-channels = <10>;
-+			dma-channel-mask = <0x3f>;
-+			iommus = <&apps_smmu 0x76 0x0>;
-+			#dma-cells = <3>;
-+			status = "disabled";
-+		};
-+
- 		qupv3_id_2: geniqup@8c0000 {
- 			compatible = "qcom,geni-se-qup";
- 			reg = <0x0 0x008c0000 0x0 0x6000>;
-@@ -715,6 +736,29 @@ spi19: spi@894000 {
- 			};
- 		};
- 
-+		gpi_dma0: dma-controller@900000 {
-+			compatible = "qcom,sm8250-gpi-dma";
-+			reg = <0 0x00900000 0 0x70000>;
-+			interrupts = <GIC_SPI 244 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 245 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 246 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 247 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 248 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 249 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 250 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 251 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 252 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 253 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 254 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 255 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 256 IRQ_TYPE_LEVEL_HIGH>;
-+			dma-channels = <15>;
-+			dma-channel-mask = <0x7ff>;
-+			iommus = <&apps_smmu 0x5b6 0x0>;
-+			#dma-cells = <3>;
-+			status = "disabled";
-+		};
-+
- 		qupv3_id_0: geniqup@9c0000 {
- 			compatible = "qcom,geni-se-qup";
- 			reg = <0x0 0x009c0000 0x0 0x6000>;
-@@ -962,6 +1006,26 @@ spi7: spi@99c000 {
- 			};
- 		};
- 
-+		gpi_dma1: dma-controller@a00000 {
-+			compatible = "qcom,sm8250-gpi-dma";
-+			reg = <0 0x00a00000 0 0x70000>;
-+			interrupts = <GIC_SPI 279 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 280 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 281 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 282 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 283 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 284 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 293 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 294 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 295 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 296 IRQ_TYPE_LEVEL_HIGH>;
-+			dma-channels = <10>;
-+			dma-channel-mask = <0x3f>;
-+			iommus = <&apps_smmu 0x56 0x0>;
-+			#dma-cells = <3>;
-+			status = "disabled";
-+		};
-+
- 		qupv3_id_1: geniqup@ac0000 {
- 			compatible = "qcom,geni-se-qup";
- 			reg = <0x0 0x00ac0000 0x0 0x6000>;
+diff --git a/drivers/dma/qcom/gpi.c b/drivers/dma/qcom/gpi.c
+index 43ac3ab23d4c..1a1b7d8458c9 100644
+--- a/drivers/dma/qcom/gpi.c
++++ b/drivers/dma/qcom/gpi.c
+@@ -2282,6 +2282,7 @@ static int gpi_probe(struct platform_device *pdev)
+ static const struct of_device_id gpi_of_match[] = {
+ 	{ .compatible = "qcom,sdm845-gpi-dma" },
+ 	{ .compatible = "qcom,sm8150-gpi-dma" },
++	{ .compatible = "qcom,sm8250-gpi-dma" },
+ 	{ },
+ };
+ MODULE_DEVICE_TABLE(of, gpi_of_match);
 -- 
 2.32.0
 
