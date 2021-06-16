@@ -2,193 +2,96 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DC08DC48BE8
-	for <dmaengine@archiver.kernel.org>; Wed, 16 Jun 2021 11:14:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4A3CCC49EA3
+	for <dmaengine@archiver.kernel.org>; Wed, 16 Jun 2021 11:18:32 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A0EF961075
-	for <dmaengine@archiver.kernel.org>; Wed, 16 Jun 2021 11:14:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3168061369
+	for <dmaengine@archiver.kernel.org>; Wed, 16 Jun 2021 11:18:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229943AbhFPLQj (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 16 Jun 2021 07:16:39 -0400
-Received: from relmlor1.renesas.com ([210.160.252.171]:36685 "EHLO
-        relmlie5.idc.renesas.com" rhost-flags-OK-OK-OK-FAIL)
-        by vger.kernel.org with ESMTP id S229546AbhFPLQj (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Wed, 16 Jun 2021 07:16:39 -0400
-X-IronPort-AV: E=Sophos;i="5.83,277,1616425200"; 
-   d="scan'208";a="84538440"
-Received: from unknown (HELO relmlir6.idc.renesas.com) ([10.200.68.152])
-  by relmlie5.idc.renesas.com with ESMTP; 16 Jun 2021 20:14:31 +0900
-Received: from localhost.localdomain (unknown [10.226.93.117])
-        by relmlir6.idc.renesas.com (Postfix) with ESMTP id 1356A421789D;
-        Wed, 16 Jun 2021 20:14:28 +0900 (JST)
-From:   Biju Das <biju.das.jz@bp.renesas.com>
-To:     Vinod Koul <vkoul@kernel.org>,
-        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-        Geert Uytterhoeven <geert+renesas@glider.be>,
-        Rob Herring <robh+dt@kernel.org>
-Cc:     Biju Das <biju.das.jz@bp.renesas.com>, dmaengine@vger.kernel.org,
-        devicetree@vger.kernel.org,
-        Chris Paterson <Chris.Paterson2@renesas.com>,
-        Biju Das <biju.das@bp.renesas.com>,
-        Prabhakar Mahadev Lad <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-        linux-renesas-soc@vger.kernel.org
-Subject: [PATCH v2] dt-bindings: dma: Document RZ/G2L bindings
-Date:   Wed, 16 Jun 2021 11:55:57 +0100
-Message-Id: <20210616105557.9321-1-biju.das.jz@bp.renesas.com>
-X-Mailer: git-send-email 2.17.1
+        id S231856AbhFPLUg (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 16 Jun 2021 07:20:36 -0400
+Received: from mail-ua1-f50.google.com ([209.85.222.50]:45728 "EHLO
+        mail-ua1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231741AbhFPLUg (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Wed, 16 Jun 2021 07:20:36 -0400
+Received: by mail-ua1-f50.google.com with SMTP id v17so627201uar.12;
+        Wed, 16 Jun 2021 04:18:28 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=KFppgdT7CLKOLDaLJGeivAUUwv8mpERUMDgjR5mFX2Q=;
+        b=BBeVsvoZ4AVSy+Y8yHwdEmm5VnqLTJRxB/oarkG9s8C2HRFpJvpV+Y7+gkXdhdzCYt
+         u4gaF3RUWOnSk7QWmQPj7ejeGSlZAeTfbC28/PXrdt8awQpGrlkRIoEhANUrvvRxSoyw
+         3eVOo93+6DEDuBDZ/KwPQHg++XM7nzuLRTtUggwGA+FqHWeU1femrCrTUarsi5PLXOf6
+         GcmwOWzKQsjK5jwTp2qkrJW7XbmWyRyHPOPTvkQ97OnIMc62PmAbzh7UsxsdoJ9f2ZEA
+         TZvaW2iEjYkB3/73sZqNGjJZQ6RjwwzWNqg+mp2U7n6mF48qBWrN2dxUZmKY34MKnAag
+         jY3Q==
+X-Gm-Message-State: AOAM530+WmRtpWEfnV0XLLJs/TZZdUYqwriS8gjlBz5xfdYJ1RlZxr6d
+        aDD8hRf3fwcCqIOFf6l9dyjmAdY/YbBvXisARXk=
+X-Google-Smtp-Source: ABdhPJy9W5ndu5bvPys51QNrj75YVXl0pvjisg4IJQA0U4LMfMINRJyD7Z5sYALWQifxuYErXQHn1iBe9VLGxsU9S+A=
+X-Received: by 2002:ab0:647:: with SMTP id f65mr3978118uaf.4.1623842308529;
+ Wed, 16 Jun 2021 04:18:28 -0700 (PDT)
+MIME-Version: 1.0
+References: <cover.1623405675.git.geert+renesas@glider.be> <0c6bdd6a-826c-6831-1477-3a1e782cced3@physik.fu-berlin.de>
+In-Reply-To: <0c6bdd6a-826c-6831-1477-3a1e782cced3@physik.fu-berlin.de>
+From:   Geert Uytterhoeven <geert@linux-m68k.org>
+Date:   Wed, 16 Jun 2021 13:18:17 +0200
+Message-ID: <CAMuHMdU_B4pRyaz4nhp3k0dtXy3A8tRYbdCpmYYaSpzeZCeWOw@mail.gmail.com>
+Subject: Re: [PATCH 0/3] Remove shdma DT support
+To:     John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+Cc:     Rob Herring <robh+dt@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+        Magnus Damm <magnus.damm@gmail.com>,
+        Guennadi Liakhovetski <guennadi.liakhovetski@linux.intel.com>,
+        Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        dmaengine <dmaengine@vger.kernel.org>,
+        Linux-Renesas <linux-renesas-soc@vger.kernel.org>,
+        Linux-sh list <linux-sh@vger.kernel.org>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        Chris Brandt <Chris.Brandt@renesas.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Document RZ/G2L DMAC bindings.
+Hi Adrian,
 
-Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
-Reviewed-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
----
-Note:-  This patch has dependency on #include <dt-bindings/clock/r9a07g044-cpg.h> file which will be in 
-next 5.14-rc1 release.
+On Wed, Jun 16, 2021 at 12:42 PM John Paul Adrian Glaubitz
+<glaubitz@physik.fu-berlin.de> wrote:
+> On 6/11/21 12:18 PM, Geert Uytterhoeven wrote:
+> > Hence this series removes the Renesas SHDMA Device Tree bindings, the
+> > SHDMA DMA multiplexer driver, and the corresponding description in the
+> > R-Mobile APE6 DTS.
+> Do these changes make life harder in case we want to convert SH to device
+> tree as already prepared by Yoshinori Sato? [1]
 
-v1->v2:
-  * Made interrupt names in defined order
-  * Removed src address and channel configuration from dma-cells.
-  * Changed the compatibele string to "renesas,r9a07g044-dmac".
-  * 
-v1:-
-  * https://patchwork.kernel.org/project/linux-renesas-soc/patch/20210611113642.18457-2-biju.das.jz@bp.renesas.com/
----
- .../bindings/dma/renesas,rz-dmac.yaml         | 118 ++++++++++++++++++
- 1 file changed, 118 insertions(+)
- create mode 100644 Documentation/devicetree/bindings/dma/renesas,rz-dmac.yaml
+Probably not. The only modern DT-aware DMAC drivers for Renesas
+hardware are drivers/dma/sh/{rcar,usb}-dmac.c.  Soon there will be
+drivers/dma/sh/rz-dmac.c, for RZ/G2L (and RZ/A1 and RZ/A2 later).
+Given the R-Car DMAC is very similar to the SH/R-Mobile DMAC, the
+latter may be made to work with rcar-dmac.c, if anyone is willing
+to spend cycles on that.  Likewise, the RZ/A DMAC probably has its
+roots in older SH SoCs, so that may be helpful for you, too.
 
-diff --git a/Documentation/devicetree/bindings/dma/renesas,rz-dmac.yaml b/Documentation/devicetree/bindings/dma/renesas,rz-dmac.yaml
-new file mode 100644
-index 000000000000..0389050aadf6
---- /dev/null
-+++ b/Documentation/devicetree/bindings/dma/renesas,rz-dmac.yaml
-@@ -0,0 +1,118 @@
-+# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/dma/renesas,rz-dmac.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Renesas RZ/G2L DMA Controller
-+
-+maintainers:
-+  - Biju Das <biju.das.jz@bp.renesas.com>
-+
-+allOf:
-+  - $ref: "dma-controller.yaml#"
-+
-+properties:
-+  compatible:
-+    items:
-+      - enum:
-+          - renesas,r9a07g044-dmac # RZ/G2{L,LC}
-+      - const: renesas,rz-dmac
-+
-+  reg:
-+    items:
-+      - description: Control and channel register block
-+      - description: DMA extended resource selector block
-+
-+  interrupts:
-+    maxItems: 17
-+
-+  interrupt-names:
-+    items:
-+      - const: ch0
-+      - const: ch1
-+      - const: ch2
-+      - const: ch3
-+      - const: ch4
-+      - const: ch5
-+      - const: ch6
-+      - const: ch7
-+      - const: ch8
-+      - const: ch9
-+      - const: ch10
-+      - const: ch11
-+      - const: ch12
-+      - const: ch13
-+      - const: ch14
-+      - const: ch15
-+      - const: error
-+
-+  clocks:
-+    maxItems: 1
-+
-+  '#dma-cells':
-+    const: 1
-+    description:
-+      The cell specifies the MID/RID of the DMAC port connected to
-+      the DMA client.
-+
-+  dma-channels:
-+    const: 16
-+
-+  power-domains:
-+    maxItems: 1
-+
-+  resets:
-+    maxItems: 1
-+
-+required:
-+  - compatible
-+  - reg
-+  - interrupts
-+  - interrupt-names
-+  - clocks
-+  - '#dma-cells'
-+  - dma-channels
-+  - power-domains
-+  - resets
-+
-+additionalProperties: false
-+
-+examples:
-+  - |
-+    #include <dt-bindings/interrupt-controller/arm-gic.h>
-+    #include <dt-bindings/clock/r9a07g044-cpg.h>
-+
-+    dmac: dma-controller@11820000 {
-+        compatible = "renesas,r9a07g044-dmac",
-+                     "renesas,rz-dmac";
-+        reg = <0x11820000 0x10000>,
-+              <0x11830000 0x10000>;
-+        interrupts = <GIC_SPI 125 IRQ_TYPE_EDGE_RISING>,
-+                     <GIC_SPI 126 IRQ_TYPE_EDGE_RISING>,
-+                     <GIC_SPI 127 IRQ_TYPE_EDGE_RISING>,
-+                     <GIC_SPI 128 IRQ_TYPE_EDGE_RISING>,
-+                     <GIC_SPI 129 IRQ_TYPE_EDGE_RISING>,
-+                     <GIC_SPI 130 IRQ_TYPE_EDGE_RISING>,
-+                     <GIC_SPI 131 IRQ_TYPE_EDGE_RISING>,
-+                     <GIC_SPI 132 IRQ_TYPE_EDGE_RISING>,
-+                     <GIC_SPI 133 IRQ_TYPE_EDGE_RISING>,
-+                     <GIC_SPI 134 IRQ_TYPE_EDGE_RISING>,
-+                     <GIC_SPI 135 IRQ_TYPE_EDGE_RISING>,
-+                     <GIC_SPI 136 IRQ_TYPE_EDGE_RISING>,
-+                     <GIC_SPI 137 IRQ_TYPE_EDGE_RISING>,
-+                     <GIC_SPI 138 IRQ_TYPE_EDGE_RISING>,
-+                     <GIC_SPI 139 IRQ_TYPE_EDGE_RISING>,
-+                     <GIC_SPI 140 IRQ_TYPE_EDGE_RISING>,
-+                     <GIC_SPI 141 IRQ_TYPE_EDGE_RISING>;
-+        interrupt-names = "ch0", "ch1", "ch2", "ch3",
-+                          "ch4", "ch5", "ch6", "ch7",
-+                          "ch8", "ch9", "ch10", "ch11",
-+                          "ch12", "ch13", "ch14", "ch15",
-+                          "error";
-+        clocks = <&cpg CPG_MOD R9A07G044_CLK_DMAC>;
-+        power-domains = <&cpg>;
-+        resets = <&cpg R9A07G044_CLK_DMAC>;
-+        #dma-cells = <1>;
-+        dma-channels = <16>;
-+    };
--- 
-2.17.1
+Chris (CCed) may know better...
 
+> > [1] https://lore.kernel.org/patchwork/cover/693910/
+
+None of these handle DMA?
+
+Gr{oetje,eeting}s,
+
+                        Geert
+
+--
+Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
+
+In personal conversations with technical people, I call myself a hacker. But
+when I'm talking to journalists I just say "programmer" or something like that.
+                                -- Linus Torvalds
