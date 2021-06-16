@@ -2,43 +2,45 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.0 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-6.2 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9FF87C48BE6
-	for <dmaengine@archiver.kernel.org>; Wed, 16 Jun 2021 07:17:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B6C86C48BE5
+	for <dmaengine@archiver.kernel.org>; Wed, 16 Jun 2021 07:52:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 801D5613B9
-	for <dmaengine@archiver.kernel.org>; Wed, 16 Jun 2021 07:17:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 80F0161369
+	for <dmaengine@archiver.kernel.org>; Wed, 16 Jun 2021 07:52:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231239AbhFPHTQ (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 16 Jun 2021 03:19:16 -0400
-Received: from mail.kernel.org ([198.145.29.99]:41118 "EHLO mail.kernel.org"
+        id S231309AbhFPHzE (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 16 Jun 2021 03:55:04 -0400
+Received: from mail.kernel.org ([198.145.29.99]:56104 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231536AbhFPHTP (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Wed, 16 Jun 2021 03:19:15 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 1783C60FEE;
-        Wed, 16 Jun 2021 07:17:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-        s=korg; t=1623827828;
-        bh=8Y2FE5YJ0Yc1yfyasf8FmPsfNNT+4GHONFUnjg85vQs=;
+        id S231290AbhFPHzD (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Wed, 16 Jun 2021 03:55:03 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 61F9C60FDB;
+        Wed, 16 Jun 2021 07:52:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1623829978;
+        bh=CwVhy/XtNtzhNeGQ44S4VfDUyl2kVZR4eIdRTYD1qsE=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=dY/pxMWkXLTWodK0D+9ngsmsCNkNzjb7LVXNgfZlc8ZMh55IES89NNd4iXptge/7Y
-         SQXqF8nUJBwRud+EKR0G5kj7OHZvA+nN1zifxuI+iRosJEG8qJCzVIeUA1ZX/x+BaT
-         7KxOMHacJSxrRQ0mc849RMeVL9kVu5dk2fdd5Y7Y=
-Date:   Wed, 16 Jun 2021 09:17:06 +0200
-From:   Greg KH <gregkh@linuxfoundation.org>
+        b=c0ZNKkTRz1bxdxBJABJqVaaig8Gnc8FVCedUxfBWT01gFpdiaPzH7YP1zN9v9jo4c
+         JnpndnOGvzpWqkyMrzfSvvo1oroCuWJ4rMpUeNYM/J2ZjFGylrLdUAzZIqff24lJ7f
+         YZ8ZggpFGZGBO1OcyPX99YZhmL+8OPCXDDZuz2RvRDEWtnagqxPBK8FH4lol5e+KfU
+         xJ1LI/005LzBeC7QYP+pRp2qsrWnyJPVkrd4g+QAHflPLy0PcgCAiafTUMixNou83E
+         SNl36kmWOBJk++cmOiD2RW7HPs3Jcuz+KDnWgFrNNsErnAklNIboIcAifTEMRDL9hO
+         caJO/JfgQdghQ==
+Date:   Wed, 16 Jun 2021 13:22:54 +0530
+From:   Vinod Koul <vkoul@kernel.org>
 To:     Sanjay R Mehta <sanmehta@amd.com>
-Cc:     Vinod Koul <vkoul@kernel.org>,
+Cc:     Greg KH <gregkh@linuxfoundation.org>,
         Sanjay R Mehta <Sanju.Mehta@amd.com>,
         dan.j.williams@intel.com, Thomas.Lendacky@amd.com,
         Shyam-sundar.S-k@amd.com, Nehal-bakulchandra.Shah@amd.com,
         robh@kernel.org, mchehab+samsung@kernel.org, davem@davemloft.net,
         linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org
 Subject: Re: [PATCH v9 1/3] dmaengine: ptdma: Initial driver for the AMD PTDMA
-Message-ID: <YMmlckWfppk+YffU@kroah.com>
+Message-ID: <YMmt1qhC1dIiYx7O@vkoul-mobl>
 References: <1622654551-9204-1-git-send-email-Sanju.Mehta@amd.com>
  <1622654551-9204-2-git-send-email-Sanju.Mehta@amd.com>
  <YL+rUBGUJoFLS902@vkoul-mobl>
@@ -55,7 +57,7 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On Wed, Jun 16, 2021 at 12:27:32PM +0530, Sanjay R Mehta wrote:
+On 16-06-21, 12:27, Sanjay R Mehta wrote:
 > 
 > 
 > On 6/16/2021 11:46 AM, Greg KH wrote:
@@ -104,11 +106,11 @@ On Wed, Jun 16, 2021 at 12:27:32PM +0530, Sanjay R Mehta wrote:
 > 	pt->ord = atomic_inc_return(&pt_ordinal);
 > 	snprintf(pt->name, MAX_PT_NAME_LEN, "pt-%u", pt->ord);
 
-Why not use an idr structure like this like all other drivers do?  That
-way when devices are removed the numbers are properly reused as well.
+Okay why not use device->name ?
 
-And why do you need to save the value?
+Trying to unroll further, who creates pt_device? who creates the dev
+object under this..?
 
-thanks,
-
-greg k-h
+Thanks
+-- 
+~Vinod
