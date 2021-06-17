@@ -4,92 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
-	autolearn=unavailable autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7DFFEC48BE5
-	for <dmaengine@archiver.kernel.org>; Wed, 16 Jun 2021 20:34:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5B348C2B9F4
+	for <dmaengine@archiver.kernel.org>; Thu, 17 Jun 2021 08:21:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4B9BE613BD
-	for <dmaengine@archiver.kernel.org>; Wed, 16 Jun 2021 20:34:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 38B9E613F4
+	for <dmaengine@archiver.kernel.org>; Thu, 17 Jun 2021 08:21:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233516AbhFPUgz (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 16 Jun 2021 16:36:55 -0400
-Received: from smtp11.smtpout.orange.fr ([80.12.242.133]:52184 "EHLO
-        smtp.smtpout.orange.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233512AbhFPUgz (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Wed, 16 Jun 2021 16:36:55 -0400
-Received: from localhost.localdomain ([86.243.172.93])
-        by mwinf5d21 with ME
-        id Hwag2500A21Fzsu03wag3C; Wed, 16 Jun 2021 22:34:42 +0200
-X-ME-Helo: localhost.localdomain
-X-ME-Auth: Y2hyaXN0b3BoZS5qYWlsbGV0QHdhbmFkb28uZnI=
-X-ME-Date: Wed, 16 Jun 2021 22:34:42 +0200
-X-ME-IP: 86.243.172.93
-From:   Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-To:     wangzhou1@hisilicon.com, vkoul@kernel.org
-Cc:     dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
-        kernel-janitors@vger.kernel.org,
-        Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Subject: [PATCH] dmaengine: hisi_dma: Remove some useless code
-Date:   Wed, 16 Jun 2021 22:34:38 +0200
-Message-Id: <4f8932e2d0d8d092bf60272511100030e013bc72.1623875508.git.christophe.jaillet@wanadoo.fr>
-X-Mailer: git-send-email 2.30.2
+        id S230039AbhFQIXb (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Thu, 17 Jun 2021 04:23:31 -0400
+Received: from szxga03-in.huawei.com ([45.249.212.189]:7347 "EHLO
+        szxga03-in.huawei.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229842AbhFQIXb (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Thu, 17 Jun 2021 04:23:31 -0400
+Received: from dggemv711-chm.china.huawei.com (unknown [172.30.72.53])
+        by szxga03-in.huawei.com (SkyGuard) with ESMTP id 4G5FKF2wzYz6vxm;
+        Thu, 17 Jun 2021 16:17:21 +0800 (CST)
+Received: from dggpemm500006.china.huawei.com (7.185.36.236) by
+ dggemv711-chm.china.huawei.com (10.1.198.66) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2176.2; Thu, 17 Jun 2021 16:21:21 +0800
+Received: from thunder-town.china.huawei.com (10.174.179.0) by
+ dggpemm500006.china.huawei.com (7.185.36.236) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2176.2; Thu, 17 Jun 2021 16:21:21 +0800
+From:   Zhen Lei <thunder.leizhen@huawei.com>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        dmaengine <dmaengine@vger.kernel.org>,
+        linux-kernel <linux-kernel@vger.kernel.org>
+CC:     Zhen Lei <thunder.leizhen@huawei.com>
+Subject: [PATCH 1/1] dmaengine: qcom: Fix possible memory leak
+Date:   Thu, 17 Jun 2021 16:20:58 +0800
+Message-ID: <20210617082058.955-1-thunder.leizhen@huawei.com>
+X-Mailer: git-send-email 2.26.0.windows.1
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7BIT
+Content-Type:   text/plain; charset=US-ASCII
+X-Originating-IP: [10.174.179.0]
+X-ClientProxiedBy: dggems706-chm.china.huawei.com (10.3.19.183) To
+ dggpemm500006.china.huawei.com (7.185.36.236)
+X-CFilter-Loop: Reflected
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-When using 'pcim_enable_device()', 'pci_alloc_irq_vectors()' is
-auto-magically a managed function.
+When krealloc() fails to expand the memory and returns NULL, the original
+memory is not released. In addition, subsequent memcpy() operation will
+overwrite the entire valid memory space, so using krealloc() to preserve
+the old content is not necessary.
 
-It is useless (but harmless) to record an action to explicitly call
-'pci_free_irq_vectors()'.
+Change to release the old memory and then apply for new memory.
 
-So keep things simple, comment why and how these resources are freed, axe
-some useless code and save some memory.
-
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Fixes: 5d0c3533a19f ("dmaengine: qcom: Add GPI dma driver")
+Signed-off-by: Zhen Lei <thunder.leizhen@huawei.com>
 ---
- drivers/dma/hisi_dma.c | 10 +---------
- 1 file changed, 1 insertion(+), 9 deletions(-)
+ drivers/dma/qcom/gpi.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/dma/hisi_dma.c b/drivers/dma/hisi_dma.c
-index a259ee010e9b..c855a0e4f9ff 100644
---- a/drivers/dma/hisi_dma.c
-+++ b/drivers/dma/hisi_dma.c
-@@ -133,11 +133,6 @@ static inline void hisi_dma_update_bit(void __iomem *addr, u32 pos, bool val)
- 	writel_relaxed(tmp, addr);
- }
+diff --git a/drivers/dma/qcom/gpi.c b/drivers/dma/qcom/gpi.c
+index 43ac3ab23d4c..e24fe64f3b63 100644
+--- a/drivers/dma/qcom/gpi.c
++++ b/drivers/dma/qcom/gpi.c
+@@ -1625,7 +1625,8 @@ gpi_peripheral_config(struct dma_chan *chan, struct dma_slave_config *config)
+ 	if (!config->peripheral_config)
+ 		return -EINVAL;
  
--static void hisi_dma_free_irq_vectors(void *data)
--{
--	pci_free_irq_vectors(data);
--}
--
- static void hisi_dma_pause_dma(struct hisi_dma_dev *hdma_dev, u32 index,
- 			       bool pause)
- {
-@@ -544,6 +539,7 @@ static int hisi_dma_probe(struct pci_dev *pdev, const struct pci_device_id *id)
- 	pci_set_drvdata(pdev, hdma_dev);
- 	pci_set_master(pdev);
+-	gchan->config = krealloc(gchan->config, config->peripheral_size, GFP_NOWAIT);
++	kfree(gchan->config);
++	gchan->config = kmalloc(config->peripheral_size, GFP_NOWAIT);
+ 	if (!gchan->config)
+ 		return -ENOMEM;
  
-+	/* This will be freed by 'pcim_release()'. See 'pcim_enable_device()' */
- 	ret = pci_alloc_irq_vectors(pdev, HISI_DMA_MSI_NUM, HISI_DMA_MSI_NUM,
- 				    PCI_IRQ_MSI);
- 	if (ret < 0) {
-@@ -551,10 +547,6 @@ static int hisi_dma_probe(struct pci_dev *pdev, const struct pci_device_id *id)
- 		return ret;
- 	}
- 
--	ret = devm_add_action_or_reset(dev, hisi_dma_free_irq_vectors, pdev);
--	if (ret)
--		return ret;
--
- 	dma_dev = &hdma_dev->dma_dev;
- 	dma_cap_set(DMA_MEMCPY, dma_dev->cap_mask);
- 	dma_dev->device_free_chan_resources = hisi_dma_free_chan_resources;
 -- 
-2.30.2
+2.25.1
+
 
