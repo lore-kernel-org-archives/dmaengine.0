@@ -7,43 +7,39 @@ X-Spam-Status: No, score=-19.4 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DE485C48BC2
-	for <dmaengine@archiver.kernel.org>; Mon, 21 Jun 2021 17:58:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6A55FC48BE5
+	for <dmaengine@archiver.kernel.org>; Mon, 21 Jun 2021 17:58:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CBB2F61289
-	for <dmaengine@archiver.kernel.org>; Mon, 21 Jun 2021 17:58:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 53DF56128E
+	for <dmaengine@archiver.kernel.org>; Mon, 21 Jun 2021 17:58:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233693AbhFUSAf (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 21 Jun 2021 14:00:35 -0400
-Received: from mail.kernel.org ([198.145.29.99]:39108 "EHLO mail.kernel.org"
+        id S231859AbhFUSAt (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 21 Jun 2021 14:00:49 -0400
+Received: from mail.kernel.org ([198.145.29.99]:39084 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S233371AbhFUR6e (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Mon, 21 Jun 2021 13:58:34 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id B31FE6128E;
-        Mon, 21 Jun 2021 17:54:08 +0000 (UTC)
+        id S233167AbhFUR6P (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Mon, 21 Jun 2021 13:58:15 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id B396E61289;
+        Mon, 21 Jun 2021 17:54:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1624298049;
-        bh=EnmzwoTGJS54IOhfktyp5oe1qbC3Ies/VbAzdAFFc0U=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=JUaNp5bEM1SzIcwYVjkcj73rxYn0HzWO+bnPgmeITlBjERckvdqSqXjf1PXKm7eVs
-         HRSRXWsBUHbvt4yC4Mcoh11b0X7PeFI4JHEo6D+aRdFFckerBI6QDZ/p9afvz8+7fi
-         OToUrhMviVKfqOExCqTLH3auBegfhVy1/J+/4orfoxhZPlxi826Y/iuT8qwqb+6yBa
-         YCZADoiPEsLtrPIWQcRboBKk27BTNeDdjxE2g4n7VYWWGStSrXDq3fo+uG2ZnEeU81
-         tYxTwEDg9/TSRx4Ct57rYTBqmOioNjhye7zJfofHYtRWYIkzrIJIppHU81xMZ/nGUr
-         Ibw1opDKGZHcw==
+        s=k20201202; t=1624298042;
+        bh=C3zD+YGqJM3yC94ihyfLYGL7l36I0vVTfiurb62Ssqg=;
+        h=From:To:Cc:Subject:Date:From;
+        b=CHLCiODYBeDHfwVzJl4b+yccK19tei2kxIpUSEZ8LxpoDQUgDeyqHqItvVhIe4gQp
+         7C0czEwWuT8ZD06WBl779r+raI4u7R7Px5bPwcx/dz6xNW82v6DghIoF82ii+EdpEC
+         FAqd92oLtL1Md4lwon8hjvv9dS2wlngDfh2TfZNoT8gobcq3RSKHs1rJc6li79OB0O
+         ERDKQmI3+Mcc9ye3Tu+1PbLAJ498fMFyEd4vFZtXlqBklAoHuponj4LWIT9UWovInn
+         c1H2tPl0I65CI6+l4rNuZgg+XTePnwCFfiOFHR2ocTCfrpnRrdOtl1mBJuwhPMLsXu
+         24m108hmBoSqQ==
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Zou Wei <zou_wei@huawei.com>, Hulk Robot <hulkci@huawei.com>,
-        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-        Geert Uytterhoeven <geert+renesas@glider.be>,
+Cc:     Yu Kuai <yukuai3@huawei.com>, Hulk Robot <hulkci@huawei.com>,
         Vinod Koul <vkoul@kernel.org>, Sasha Levin <sashal@kernel.org>,
-        dmaengine@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.4 05/26] dmaengine: rcar-dmac: Fix PM reference leak in rcar_dmac_probe()
-Date:   Mon, 21 Jun 2021 13:53:38 -0400
-Message-Id: <20210621175400.735800-5-sashal@kernel.org>
+        dmaengine@vger.kernel.org, linux-arm-kernel@lists.infradead.org
+Subject: [PATCH AUTOSEL 5.4 01/26] dmaengine: zynqmp_dma: Fix PM reference leak in zynqmp_dma_alloc_chan_resourc()
+Date:   Mon, 21 Jun 2021 13:53:34 -0400
+Message-Id: <20210621175400.735800-1-sashal@kernel.org>
 X-Mailer: git-send-email 2.30.2
-In-Reply-To: <20210621175400.735800-1-sashal@kernel.org>
-References: <20210621175400.735800-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
@@ -52,9 +48,9 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-From: Zou Wei <zou_wei@huawei.com>
+From: Yu Kuai <yukuai3@huawei.com>
 
-[ Upstream commit dea8464ddf553803382efb753b6727dbf3931d06 ]
+[ Upstream commit 8982d48af36d2562c0f904736b0fc80efc9f2532 ]
 
 pm_runtime_get_sync will increment pm usage counter even it failed.
 Forgetting to putting operation will result in reference leak here.
@@ -62,29 +58,27 @@ Fix it by replacing it with pm_runtime_resume_and_get to keep usage
 counter balanced.
 
 Reported-by: Hulk Robot <hulkci@huawei.com>
-Signed-off-by: Zou Wei <zou_wei@huawei.com>
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://lore.kernel.org/r/1622442963-54095-1-git-send-email-zou_wei@huawei.com
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Link: https://lore.kernel.org/r/20210517081826.1564698-4-yukuai3@huawei.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/sh/rcar-dmac.c | 2 +-
+ drivers/dma/xilinx/zynqmp_dma.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/dma/sh/rcar-dmac.c b/drivers/dma/sh/rcar-dmac.c
-index 3993ab65c62c..89eb9ea25814 100644
---- a/drivers/dma/sh/rcar-dmac.c
-+++ b/drivers/dma/sh/rcar-dmac.c
-@@ -1855,7 +1855,7 @@ static int rcar_dmac_probe(struct platform_device *pdev)
+diff --git a/drivers/dma/xilinx/zynqmp_dma.c b/drivers/dma/xilinx/zynqmp_dma.c
+index d47749a35863..84009c5e0f33 100644
+--- a/drivers/dma/xilinx/zynqmp_dma.c
++++ b/drivers/dma/xilinx/zynqmp_dma.c
+@@ -467,7 +467,7 @@ static int zynqmp_dma_alloc_chan_resources(struct dma_chan *dchan)
+ 	struct zynqmp_dma_desc_sw *desc;
+ 	int i, ret;
  
- 	/* Enable runtime PM and initialize the device. */
- 	pm_runtime_enable(&pdev->dev);
--	ret = pm_runtime_get_sync(&pdev->dev);
-+	ret = pm_runtime_resume_and_get(&pdev->dev);
- 	if (ret < 0) {
- 		dev_err(&pdev->dev, "runtime PM get sync failed (%d)\n", ret);
+-	ret = pm_runtime_get_sync(chan->dev);
++	ret = pm_runtime_resume_and_get(chan->dev);
+ 	if (ret < 0)
  		return ret;
+ 
 -- 
 2.30.2
 
