@@ -4,42 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-19.4 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
-	autolearn=unavailable autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AEC49C49EAB
-	for <dmaengine@archiver.kernel.org>; Mon, 21 Jun 2021 17:52:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B9907C4743C
+	for <dmaengine@archiver.kernel.org>; Mon, 21 Jun 2021 17:52:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9B8B561261
-	for <dmaengine@archiver.kernel.org>; Mon, 21 Jun 2021 17:52:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A6E2C61245
+	for <dmaengine@archiver.kernel.org>; Mon, 21 Jun 2021 17:52:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231743AbhFURyV (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 21 Jun 2021 13:54:21 -0400
-Received: from mail.kernel.org ([198.145.29.99]:38312 "EHLO mail.kernel.org"
+        id S231898AbhFURy3 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 21 Jun 2021 13:54:29 -0400
+Received: from mail.kernel.org ([198.145.29.99]:38536 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231706AbhFURyU (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Mon, 21 Jun 2021 13:54:20 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 6B054611CE;
-        Mon, 21 Jun 2021 17:52:04 +0000 (UTC)
+        id S231853AbhFURy1 (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Mon, 21 Jun 2021 13:54:27 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 81166611BD;
+        Mon, 21 Jun 2021 17:52:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1624297925;
-        bh=B7X9n0KxSfKATjIy3luIVXkiz2zILgPhXb7wwnPFLKM=;
+        s=k20201202; t=1624297933;
+        bh=ky/LzMqmuKZBKITCQNeQdJdeaFLX/RLjJ8oc2YMNYzU=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=oJ98WArBW+YWzHyOWzH7ttjd/FMMHqSkqzpIu30QgeM/3SOL6DUrd9rcTQ6D02hp5
-         hgRNzjbxD4IC2khNAkNf64AvJrGydkwpGX3wgC2et40UVSAr1sI13oAXdVvZBSE17M
-         pb3bFP5El6NLgmwpva0ff6RM+f59w8JymgkmKjgFsmbxWa9g3J5LkDN/GveR5fOeoy
-         iKc8jmfBd4OtY5OuqKVC4pdxMnbGNnvp39Q5xEHszCrprVMYbAtO+/W+SmvYC2/FI8
-         OKz2inHdg0xfb8wkOxgmIX3Wl055VKEadTnnCEogDvUKy8nBD4QFio8A1TscoWr2yV
-         HrA1eLFItANZA==
+        b=CfcvcKoq8HprcKbZR9iVJI2037itGbHPvALqqxkMkd5qhZf1s+H7wFs+maVcM05P3
+         mPRg3bKsGi/iZXALkDAYX6E9AAgmwc1bs4QElrVcM+FNyqDi1rRt08u+l2VESPlyP7
+         YnY6zxjDxtYgXjTKJWM3M6YMzzx/dfFx3VwjzejFB1Nk1L8/V1TAoCKVPAQyMGQkSf
+         YiXMmg0d7BWbIhMAazirPQu59AWTaXfDanHjj4kNQ7RWa00+OJeg11Xb3NKA67OYFM
+         cGLMqQM00P7ZPU0pxfx1fwoqamwICZmWyy6cJBfKGZ0z+hZaqulAw755bEA9I5xKpp
+         lUMgKMsywHuhg==
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-        Jianqiang Chen <jianqiang.chen@xilinx.com>,
+Cc:     Zou Wei <zou_wei@huawei.com>, Hulk Robot <hulkci@huawei.com>,
+        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+        Geert Uytterhoeven <geert+renesas@glider.be>,
         Vinod Koul <vkoul@kernel.org>, Sasha Levin <sashal@kernel.org>,
-        dmaengine@vger.kernel.org, linux-arm-kernel@lists.infradead.org
-Subject: [PATCH AUTOSEL 5.12 04/39] dmaengine: xilinx: dpdma: Limit descriptor IDs to 16 bits
-Date:   Mon, 21 Jun 2021 13:51:20 -0400
-Message-Id: <20210621175156.735062-4-sashal@kernel.org>
+        dmaengine@vger.kernel.org
+Subject: [PATCH AUTOSEL 5.12 09/39] dmaengine: rcar-dmac: Fix PM reference leak in rcar_dmac_probe()
+Date:   Mon, 21 Jun 2021 13:51:25 -0400
+Message-Id: <20210621175156.735062-9-sashal@kernel.org>
 X-Mailer: git-send-email 2.30.2
 In-Reply-To: <20210621175156.735062-1-sashal@kernel.org>
 References: <20210621175156.735062-1-sashal@kernel.org>
@@ -51,58 +52,39 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-From: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+From: Zou Wei <zou_wei@huawei.com>
 
-[ Upstream commit 9f007e7b6643799e2a6538a5fe04f51c371c6657 ]
+[ Upstream commit dea8464ddf553803382efb753b6727dbf3931d06 ]
 
-While the descriptor ID is stored in a 32-bit field in the hardware
-descriptor, only 16 bits are used by the hardware and are reported
-through the XILINX_DPDMA_CH_DESC_ID register. Failure to handle the
-wrap-around results in a descriptor ID mismatch after 65536 frames. Fix
-it.
+pm_runtime_get_sync will increment pm usage counter even it failed.
+Forgetting to putting operation will result in reference leak here.
+Fix it by replacing it with pm_runtime_resume_and_get to keep usage
+counter balanced.
 
-Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Tested-by: Jianqiang Chen <jianqiang.chen@xilinx.com>
-Reviewed-by: Jianqiang Chen <jianqiang.chen@xilinx.com>
-Link: https://lore.kernel.org/r/20210520152420.23986-5-laurent.pinchart@ideasonboard.com
+Reported-by: Hulk Robot <hulkci@huawei.com>
+Signed-off-by: Zou Wei <zou_wei@huawei.com>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://lore.kernel.org/r/1622442963-54095-1-git-send-email-zou_wei@huawei.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/xilinx/xilinx_dpdma.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/dma/sh/rcar-dmac.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/dma/xilinx/xilinx_dpdma.c b/drivers/dma/xilinx/xilinx_dpdma.c
-index 70b29bd079c9..249ce3988a59 100644
---- a/drivers/dma/xilinx/xilinx_dpdma.c
-+++ b/drivers/dma/xilinx/xilinx_dpdma.c
-@@ -113,6 +113,7 @@
- #define XILINX_DPDMA_CH_VDO				0x020
- #define XILINX_DPDMA_CH_PYLD_SZ				0x024
- #define XILINX_DPDMA_CH_DESC_ID				0x028
-+#define XILINX_DPDMA_CH_DESC_ID_MASK			GENMASK(15, 0)
+diff --git a/drivers/dma/sh/rcar-dmac.c b/drivers/dma/sh/rcar-dmac.c
+index d530c1bf11d9..6885b3dcd7a9 100644
+--- a/drivers/dma/sh/rcar-dmac.c
++++ b/drivers/dma/sh/rcar-dmac.c
+@@ -1913,7 +1913,7 @@ static int rcar_dmac_probe(struct platform_device *pdev)
  
- /* DPDMA descriptor fields */
- #define XILINX_DPDMA_DESC_CONTROL_PREEMBLE		0xa5
-@@ -866,7 +867,8 @@ static void xilinx_dpdma_chan_queue_transfer(struct xilinx_dpdma_chan *chan)
- 	 * will be used, but it should be enough.
- 	 */
- 	list_for_each_entry(sw_desc, &desc->descriptors, node)
--		sw_desc->hw.desc_id = desc->vdesc.tx.cookie;
-+		sw_desc->hw.desc_id = desc->vdesc.tx.cookie
-+				    & XILINX_DPDMA_CH_DESC_ID_MASK;
- 
- 	sw_desc = list_first_entry(&desc->descriptors,
- 				   struct xilinx_dpdma_sw_desc, node);
-@@ -1086,7 +1088,8 @@ static void xilinx_dpdma_chan_vsync_irq(struct  xilinx_dpdma_chan *chan)
- 	if (!chan->running || !pending)
- 		goto out;
- 
--	desc_id = dpdma_read(chan->reg, XILINX_DPDMA_CH_DESC_ID);
-+	desc_id = dpdma_read(chan->reg, XILINX_DPDMA_CH_DESC_ID)
-+		& XILINX_DPDMA_CH_DESC_ID_MASK;
- 
- 	/* If the retrigger raced with vsync, retry at the next frame. */
- 	sw_desc = list_first_entry(&pending->descriptors,
+ 	/* Enable runtime PM and initialize the device. */
+ 	pm_runtime_enable(&pdev->dev);
+-	ret = pm_runtime_get_sync(&pdev->dev);
++	ret = pm_runtime_resume_and_get(&pdev->dev);
+ 	if (ret < 0) {
+ 		dev_err(&pdev->dev, "runtime PM get sync failed (%d)\n", ret);
+ 		return ret;
 -- 
 2.30.2
 
