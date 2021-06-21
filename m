@@ -2,46 +2,45 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-19.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_GIT autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0DCCFC48BE5
-	for <dmaengine@archiver.kernel.org>; Mon, 21 Jun 2021 16:23:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0D43EC49EA2
+	for <dmaengine@archiver.kernel.org>; Mon, 21 Jun 2021 16:35:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E2966613F0
-	for <dmaengine@archiver.kernel.org>; Mon, 21 Jun 2021 16:23:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E9E796148E
+	for <dmaengine@archiver.kernel.org>; Mon, 21 Jun 2021 16:35:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232249AbhFUQ0B (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 21 Jun 2021 12:26:01 -0400
-Received: from mail.kernel.org ([198.145.29.99]:41712 "EHLO mail.kernel.org"
+        id S232526AbhFUQhr (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 21 Jun 2021 12:37:47 -0400
+Received: from mail.kernel.org ([198.145.29.99]:56052 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230232AbhFUQYX (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Mon, 21 Jun 2021 12:24:23 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 3DE4B61261;
-        Mon, 21 Jun 2021 16:21:14 +0000 (UTC)
+        id S231488AbhFUQfn (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Mon, 21 Jun 2021 12:35:43 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 60CD1613EB;
+        Mon, 21 Jun 2021 16:28:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-        s=korg; t=1624292474;
-        bh=EVp8eR+0gFf3zeSAS4slZqlAbcbPp7AwdLvUmfBdaSE=;
+        s=korg; t=1624292891;
+        bh=T635PmZqw00LVOjHU601srM16cHxEV08q50yxS3l3uQ=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=H9yb2jOJR3ZIJFGe/gF04nii4I+tXZ6vW0qb/zHv2cbsluimjL6i1DrUuz0tZGA7+
-         fMLuO2lUkdbkeEXqRtPsYWNAdGjM2qMqAIjdaxf6gBdnSAtnYMwEnZDfKM4cvifLyf
-         pQ0r8FR9js29vv1f4LQmPhmT4FFcM+lCEnNw3Acg=
+        b=yN42L+zKCeAqcUCWCFqc6z4w107mtOpbi8IzChU4yZD4B0FLuoH+0xq58WycAevzz
+         X68jziSJlOlUDOI8yd/8BtTmdwNjh0UG7+t9Q9e8mpuD0dFV03nxd2oleOBGX1sQDj
+         TRsP/t0JJoNY1XzRf2rC5gkzNERqjAF/Cz9F5rvo=
 From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To:     linux-kernel@vger.kernel.org
 Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
         stable@vger.kernel.org, Randy Dunlap <rdunlap@infradead.org>,
-        kernel test robot <lkp@intel.com>,
-        Green Wan <green.wan@sifive.com>,
+        kernel test robot <lkp@intel.com>, Stefan Roese <sr@denx.de>,
         Vinod Koul <vkoul@kernel.org>, dmaengine@vger.kernel.org,
         Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 006/146] dmaengine: SF_PDMA depends on HAS_IOMEM
-Date:   Mon, 21 Jun 2021 18:13:56 +0200
-Message-Id: <20210621154911.465543442@linuxfoundation.org>
+Subject: [PATCH 5.12 005/178] dmaengine: ALTERA_MSGDMA depends on HAS_IOMEM
+Date:   Mon, 21 Jun 2021 18:13:39 +0200
+Message-Id: <20210621154921.592179062@linuxfoundation.org>
 X-Mailer: git-send-email 2.32.0
-In-Reply-To: <20210621154911.244649123@linuxfoundation.org>
-References: <20210621154911.244649123@linuxfoundation.org>
+In-Reply-To: <20210621154921.212599475@linuxfoundation.org>
+References: <20210621154921.212599475@linuxfoundation.org>
 User-Agent: quilt/0.66
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -52,7 +51,7 @@ X-Mailing-List: dmaengine@vger.kernel.org
 
 From: Randy Dunlap <rdunlap@infradead.org>
 
-[ Upstream commit 8e2e4f3c58528c6040b5762b666734f8cceba568 ]
+[ Upstream commit 253697b93c2a1c237d34d3ae326e394aeb0ca7b3 ]
 
 When CONFIG_HAS_IOMEM is not set/enabled, certain iomap() family
 functions [including ioremap(), devm_ioremap(), etc.] are not
@@ -60,34 +59,37 @@ available.
 Drivers that use these functions should depend on HAS_IOMEM so that
 they do not cause build errors.
 
-Mends this build error:
-s390-linux-ld: drivers/dma/sf-pdma/sf-pdma.o: in function `sf_pdma_probe':
-sf-pdma.c:(.text+0x1668): undefined reference to `devm_ioremap_resource'
+Repairs this build error:
+s390-linux-ld: drivers/dma/altera-msgdma.o: in function `request_and_map':
+altera-msgdma.c:(.text+0x14b0): undefined reference to `devm_ioremap'
 
-Fixes: 6973886ad58e ("dmaengine: sf-pdma: add platform DMA support for HiFive Unleashed A00")
+Fixes: a85c6f1b2921 ("dmaengine: Add driver for Altera / Intel mSGDMA IP core")
 Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
 Reported-by: kernel test robot <lkp@intel.com>
-Cc: Green Wan <green.wan@sifive.com>
+Cc: Stefan Roese <sr@denx.de>
 Cc: Vinod Koul <vkoul@kernel.org>
 Cc: dmaengine@vger.kernel.org
-Link: https://lore.kernel.org/r/20210522021313.16405-4-rdunlap@infradead.org
+Reviewed-by: Stefan Roese <sr@denx.de>
+Phone: (+49)-8142-66989-51 Fax: (+49)-8142-66989-80 Email: sr@denx.de
+Link: https://lore.kernel.org/r/20210522021313.16405-2-rdunlap@infradead.org
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/sf-pdma/Kconfig | 1 +
+ drivers/dma/Kconfig | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/drivers/dma/sf-pdma/Kconfig b/drivers/dma/sf-pdma/Kconfig
-index f8ffa02e279f..ba46a0a15a93 100644
---- a/drivers/dma/sf-pdma/Kconfig
-+++ b/drivers/dma/sf-pdma/Kconfig
-@@ -1,5 +1,6 @@
- config SF_PDMA
- 	tristate "Sifive PDMA controller driver"
+diff --git a/drivers/dma/Kconfig b/drivers/dma/Kconfig
+index 0c2827fd8c19..03b1b0334947 100644
+--- a/drivers/dma/Kconfig
++++ b/drivers/dma/Kconfig
+@@ -59,6 +59,7 @@ config DMA_OF
+ #devices
+ config ALTERA_MSGDMA
+ 	tristate "Altera / Intel mSGDMA Engine"
 +	depends on HAS_IOMEM
  	select DMA_ENGINE
- 	select DMA_VIRTUAL_CHANNELS
  	help
+ 	  Enable support for Altera / Intel mSGDMA controller.
 -- 
 2.30.2
 
