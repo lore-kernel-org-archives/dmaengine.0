@@ -2,99 +2,87 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 68EABC48BE5
-	for <dmaengine@archiver.kernel.org>; Wed, 23 Jun 2021 11:08:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0B7A9C4743C
+	for <dmaengine@archiver.kernel.org>; Wed, 23 Jun 2021 12:58:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5922661185
-	for <dmaengine@archiver.kernel.org>; Wed, 23 Jun 2021 11:08:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E1FB260698
+	for <dmaengine@archiver.kernel.org>; Wed, 23 Jun 2021 12:58:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230450AbhFWLK0 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 23 Jun 2021 07:10:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41696 "EHLO
+        id S230251AbhFWNBP (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 23 Jun 2021 09:01:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38800 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230263AbhFWLKC (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Wed, 23 Jun 2021 07:10:02 -0400
-Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 944D0C061574
-        for <dmaengine@vger.kernel.org>; Wed, 23 Jun 2021 04:07:41 -0700 (PDT)
-Received: by mail-wm1-x329.google.com with SMTP id m41-20020a05600c3b29b02901dcd3733f24so3726326wms.1
-        for <dmaengine@vger.kernel.org>; Wed, 23 Jun 2021 04:07:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=monstr-eu.20150623.gappssmtp.com; s=20150623;
-        h=sender:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=Y3XSjAUgIycOsJaRGQxufljkRRuVDo+N2vgMRUqZcmE=;
-        b=Oo9my/B/3iFQsW7qS44zdQpsS7K4uAcB+Yv8Tf9MP+bVEF20P/gELD9ckgd/6BSva5
-         HBfOWZHPTQIRbAkryQy4dJ3wAfuj5XDTT/b5SugRd2866VuAz89AIkMhrh/4NUEnhiU1
-         Ng6Far7MXTa5RLmfIXk+MLDwHg8zRY/sGpOwq3sHep2ii8resl7nWMcf1fSXXrZfCiC1
-         8gI+aib24vowbmh3By/8RxfqhZ9AaTyffJYGdtgNkEG0hzT0T/QwZpj/ppSdGwAKtMUF
-         7ytJh2YLcSuIWr6oe3sPWWs/i2JgC+UKs5fLtiXc1961gsFt4B9PoLIIEBz0Pc7FutDQ
-         1F6w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
-         :mime-version:content-transfer-encoding;
-        bh=Y3XSjAUgIycOsJaRGQxufljkRRuVDo+N2vgMRUqZcmE=;
-        b=TrOViroRGztA3sMDE1/CiYvV+sIxPgM7aCPpChxO/jbG5tq2trGqccRQY0DECKFmfy
-         NPshWbbjidUC4BGdVCGq3KKnJ3Wjl81qH/axD/RupJzdoAkhBnfjejHXvRbfnkhvYrxp
-         qAtedvo9e+jizStVYOcdpJ0zn4fpRfJulSo0H6Q7JY2+pRCHZ2rfb7atrd41ulf3geCn
-         kvfD2lSar6v+UYXIAeEYTa8bCV+w1nEdCfyhh1ltdYs4UcWGaYUEv+HoF163fUbm+XHv
-         sgM0TGDpfW14sPYGizEW5LepEa4NA08A3MD6CIP+Od/yOL9dIxBFH2Tj8kIhYw8iPJ4y
-         lmKw==
-X-Gm-Message-State: AOAM532DHdy/VMFobZgPdlmWcWyL47DhGGNuA5Qifb4slexSMM97YADu
-        GHZmDYb6ajAdajiOBoxqQ+UiMQ==
-X-Google-Smtp-Source: ABdhPJwfHKLqQcbSufJeAPQZzKJKDt4BAEHiNDkqYgH8qODWgBBV2zqXwRUSgYbDVnObyxRuJm4yKg==
-X-Received: by 2002:a1c:f215:: with SMTP id s21mr10248788wmc.179.1624446460184;
-        Wed, 23 Jun 2021 04:07:40 -0700 (PDT)
-Received: from localhost ([2a02:768:2307:40d6::648])
-        by smtp.gmail.com with ESMTPSA id s5sm2701475wrn.38.2021.06.23.04.07.39
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 23 Jun 2021 04:07:39 -0700 (PDT)
-Sender: Michal Simek <monstr@monstr.eu>
-From:   Michal Simek <michal.simek@xilinx.com>
-To:     linux-kernel@vger.kernel.org, monstr@monstr.eu,
-        michal.simek@xilinx.com, git@xilinx.com
-Cc:     Hyun Kwon <hyun.kwon@xilinx.com>,
-        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+        with ESMTP id S230019AbhFWNBN (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Wed, 23 Jun 2021 09:01:13 -0400
+Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [IPv6:2001:4b98:dc2:55:216:3eff:fef7:d647])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F873C061574;
+        Wed, 23 Jun 2021 05:58:56 -0700 (PDT)
+Received: from pendragon.ideasonboard.com (62-78-145-57.bb.dnainternet.fi [62.78.145.57])
+        by perceval.ideasonboard.com (Postfix) with ESMTPSA id C60619AA;
+        Wed, 23 Jun 2021 14:58:54 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
+        s=mail; t=1624453135;
+        bh=lBmq8McJCYUITuRQECXx+V8MX4oixl0DGshKbgS0ijU=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=l0BdjNuAZpxxvpC2kZsH7qj8T5Tkud8HMBbBoFgNCukuC3lgirXZpDa8tk+g1TfK0
+         5Ef7hsc4u0NuKwGpZAs0m5HICC/8r/pwbkYuizCuZ3KGAI1kFVW48xCnM4EmcaSFyI
+         gEy1kamGV0f0T+XiwOpUtgmAZ25qxCdFJ8GyRMrE=
+Date:   Wed, 23 Jun 2021 15:58:25 +0300
+From:   Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+To:     Michal Simek <michal.simek@xilinx.com>
+Cc:     linux-kernel@vger.kernel.org, monstr@monstr.eu, git@xilinx.com,
+        Hyun Kwon <hyun.kwon@xilinx.com>,
         Vinod Koul <vkoul@kernel.org>, dmaengine@vger.kernel.org,
         linux-arm-kernel@lists.infradead.org
-Subject: [PATCH] dmaengine: xilinx: dpdma: Fix spacing around addr[i-1]
-Date:   Wed, 23 Jun 2021 13:07:38 +0200
-Message-Id: <ef7cde6f793bfa6f3dd0a8898bad13b6407479b0.1624446456.git.michal.simek@xilinx.com>
-X-Mailer: git-send-email 2.32.0
+Subject: Re: [PATCH] dmaengine: xilinx: dpdma: Use kernel type u32 over
+ uint32_t
+Message-ID: <YNMv8ZDahRnZD61w@pendragon.ideasonboard.com>
+References: <9569008794d519b487348bfeafbfd76c5da5755e.1624446336.git.michal.simek@xilinx.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <9569008794d519b487348bfeafbfd76c5da5755e.1624446336.git.michal.simek@xilinx.com>
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Use proper spacing for array calculation. Issue is reported by
-checkpatch.pl --strict.
+Hi Michal,
 
-Signed-off-by: Michal Simek <michal.simek@xilinx.com>
----
+Thank you for the patch.
 
- drivers/dma/xilinx/xilinx_dpdma.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+On Wed, Jun 23, 2021 at 01:05:39PM +0200, Michal Simek wrote:
+> Use u32 kernel type instead of uint32_t. Issue is reported by
+> checkpatch.pl --strict.
+> 
+> Signed-off-by: Michal Simek <michal.simek@xilinx.com>
 
-diff --git a/drivers/dma/xilinx/xilinx_dpdma.c b/drivers/dma/xilinx/xilinx_dpdma.c
-index 0b67083c95d0..b280a53e8570 100644
---- a/drivers/dma/xilinx/xilinx_dpdma.c
-+++ b/drivers/dma/xilinx/xilinx_dpdma.c
-@@ -531,7 +531,7 @@ static void xilinx_dpdma_sw_desc_set_dma_addrs(struct xilinx_dpdma_device *xdev,
- 	for (i = 1; i < num_src_addr; i++) {
- 		u32 *addr = &hw_desc->src_addr2;
- 
--		addr[i-1] = lower_32_bits(dma_addr[i]);
-+		addr[i - 1] = lower_32_bits(dma_addr[i]);
- 
- 		if (xdev->ext_addr) {
- 			u32 *addr_ext = &hw_desc->addr_ext_23;
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+
+> ---
+> 
+>  drivers/dma/xilinx/xilinx_dpdma.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/drivers/dma/xilinx/xilinx_dpdma.c b/drivers/dma/xilinx/xilinx_dpdma.c
+> index 539f1a42ca72..0b67083c95d0 100644
+> --- a/drivers/dma/xilinx/xilinx_dpdma.c
+> +++ b/drivers/dma/xilinx/xilinx_dpdma.c
+> @@ -1600,7 +1600,7 @@ static struct dma_chan *of_dma_xilinx_xlate(struct of_phandle_args *dma_spec,
+>  					    struct of_dma *ofdma)
+>  {
+>  	struct xilinx_dpdma_device *xdev = ofdma->of_dma_data;
+> -	uint32_t chan_id = dma_spec->args[0];
+> +	u32 chan_id = dma_spec->args[0];
+>  
+>  	if (chan_id >= ARRAY_SIZE(xdev->chan))
+>  		return NULL;
+
 -- 
-2.32.0
+Regards,
 
+Laurent Pinchart
