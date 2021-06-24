@@ -2,108 +2,57 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-18.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
-	USER_AGENT_GIT autolearn=unavailable autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.4 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A3788C49EAF
-	for <dmaengine@archiver.kernel.org>; Thu, 24 Jun 2021 09:40:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A997CC49EA7
+	for <dmaengine@archiver.kernel.org>; Thu, 24 Jun 2021 11:10:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8960B613F7
-	for <dmaengine@archiver.kernel.org>; Thu, 24 Jun 2021 09:40:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8DA0B613DA
+	for <dmaengine@archiver.kernel.org>; Thu, 24 Jun 2021 11:10:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232021AbhFXJml (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Thu, 24 Jun 2021 05:42:41 -0400
-Received: from mx07-00178001.pphosted.com ([185.132.182.106]:21674 "EHLO
-        mx07-00178001.pphosted.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S232005AbhFXJmk (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Thu, 24 Jun 2021 05:42:40 -0400
-Received: from pps.filterd (m0046668.ppops.net [127.0.0.1])
-        by mx07-00178001.pphosted.com (8.16.0.43/8.16.0.43) with SMTP id 15O9c8Vv004857;
-        Thu, 24 Jun 2021 11:40:04 +0200
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foss.st.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-transfer-encoding : content-type; s=selector1;
- bh=qEDhYt2leubu9mAEDVbUmPNoFRyqAPacUpoePznnKfA=;
- b=Nwm8bRawBzC/qpnqKlVQgFY7oKw+Tc9AdgynK8AFL9epY57FDo6yE4nLFSD+Ek9zzJF9
- gNEZYSKBvFSLJu3GBp5PojyzPHHqWcbCcAVv7dns7RRucwUCsGPKM8kfWoCO5ZhWAkg2
- Ro1AdyCWPIxXtBASmeXsHcOC3LewqZ4mkJYo8M5WhIz5kf6BMEYayyesSK2YpftAbHaM
- nijTAKl2n5IxeOf/T9MK9qAZOabJQFGFhNCq7NqsZq0+0HNj3z4BCLjyZ+ITgOA48SrM
- 1hk4qtiEqP2gKfv71NZmc+er+OMCZ5A9q+6DD5SNALirM0fJdn7MRnHr+M6Bw0SqgQXH 6w== 
-Received: from beta.dmz-eu.st.com (beta.dmz-eu.st.com [164.129.1.35])
-        by mx07-00178001.pphosted.com with ESMTP id 39chf6jsvb-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 24 Jun 2021 11:40:04 +0200
-Received: from euls16034.sgp.st.com (euls16034.sgp.st.com [10.75.44.20])
-        by beta.dmz-eu.st.com (STMicroelectronics) with ESMTP id 0A58810002A;
-        Thu, 24 Jun 2021 11:40:04 +0200 (CEST)
-Received: from Webmail-eu.st.com (sfhdag2node3.st.com [10.75.127.6])
-        by euls16034.sgp.st.com (STMicroelectronics) with ESMTP id E7F1D21B51B;
-        Thu, 24 Jun 2021 11:40:03 +0200 (CEST)
-Received: from localhost (10.75.127.47) by SFHDAG2NODE3.st.com (10.75.127.6)
- with Microsoft SMTP Server (TLS) id 15.0.1497.2; Thu, 24 Jun 2021 11:40:03
- +0200
-From:   Amelie Delaunay <amelie.delaunay@foss.st.com>
-To:     Vinod Koul <vkoul@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        Dan Williams <dan.j.williams@intel.com>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>
-CC:     <dmaengine@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-stm32@st-md-mailman.stormreply.com>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>,
-        Amelie Delaunay <amelie.delaunay@foss.st.com>,
-        Pierre-Yves Mordret <pierre-yves.mordret@foss.st.com>
-Subject: [PATCH 1/2] dt-bindings: dma: add alternative REQ/ACK protocol selection in stm32-dma
-Date:   Thu, 24 Jun 2021 11:39:58 +0200
-Message-ID: <20210624093959.142265-2-amelie.delaunay@foss.st.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20210624093959.142265-1-amelie.delaunay@foss.st.com>
-References: <20210624093959.142265-1-amelie.delaunay@foss.st.com>
+        id S232374AbhFXLMm (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Thu, 24 Jun 2021 07:12:42 -0400
+Received: from mail.kernel.org ([198.145.29.99]:56610 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S232331AbhFXLMl (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Thu, 24 Jun 2021 07:12:41 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 9D31F613C5;
+        Thu, 24 Jun 2021 11:10:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1624533022;
+        bh=3u57Aj47HiyOzb1Aq5HTw4fncIXifEL6yQ0gf3JMBB8=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=kF5f7z6Wp0JYYFhyGg5EbJzBR2TLXYTcfcygIipG30SqjUiyJ4JrRwJ1JlAdkALAW
+         gtlDqAOZrVpUiUoMW9F4SRXIjwE6NcER/tBVYcup4io/2ICMGXZFNgoF/5SMomF401
+         OxCY6wI4Y9vnN6d9i7lPzfd4Tlsv60LJiyZk1aFQ72B7ySP8XZm1YwcXj7DVlnSGRp
+         sQAVqMyQ5JXHgFODC6FJsHbuiwzp5jo9aVw9EHWn6mfaW8lTgfIYVyBrmV8TxjZVVu
+         F98sa8saC117uK6cvjZJ+gBfwv1dtYPmlX8/2zX+lrCGNbSf79GfSBZpqFx5f0YM07
+         6HMmoTdZW2Udg==
+Date:   Thu, 24 Jun 2021 16:40:18 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Michal Simek <michal.simek@xilinx.com>
+Cc:     linux-kernel@vger.kernel.org, monstr@monstr.eu, git@xilinx.com,
+        Hyun Kwon <hyun.kwon@xilinx.com>,
+        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+        dmaengine@vger.kernel.org, linux-arm-kernel@lists.infradead.org
+Subject: Re: [PATCH] dmaengine: xilinx: dpdma: Fix spacing around addr[i-1]
+Message-ID: <YNRoGkqDTbYyqQk/@matsya>
+References: <ef7cde6f793bfa6f3dd0a8898bad13b6407479b0.1624446456.git.michal.simek@xilinx.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.75.127.47]
-X-ClientProxiedBy: SFHDAG1NODE3.st.com (10.75.127.3) To SFHDAG2NODE3.st.com
- (10.75.127.6)
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.391,18.0.790
- definitions=2021-06-24_06:2021-06-24,2021-06-24 signatures=0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ef7cde6f793bfa6f3dd0a8898bad13b6407479b0.1624446456.git.michal.simek@xilinx.com>
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Default REQ/ACK protocol consists in maintaining ACK signal up to the
-removal of REQuest and the transfer completion.
-In case of alternative REQ/ACK protocol, ACK de-assertion does not wait the
-removal of the REQuest, but only the transfer completion.
-Due to a possible DMA stream lock when transferring data to/from STM32
-USART/UART, this new bindings allow to select this alternative protocol in
-device tree, especially for STM32 USART/UART nodes.
+On 23-06-21, 13:07, Michal Simek wrote:
+> Use proper spacing for array calculation. Issue is reported by
+> checkpatch.pl --strict.
 
-Signed-off-by: Amelie Delaunay <amelie.delaunay@foss.st.com>
----
- Documentation/devicetree/bindings/dma/st,stm32-dma.yaml | 7 +++++++
- 1 file changed, 7 insertions(+)
+Applied, thanks
 
-diff --git a/Documentation/devicetree/bindings/dma/st,stm32-dma.yaml b/Documentation/devicetree/bindings/dma/st,stm32-dma.yaml
-index 2a5325f480f6..4bf676fd25dc 100644
---- a/Documentation/devicetree/bindings/dma/st,stm32-dma.yaml
-+++ b/Documentation/devicetree/bindings/dma/st,stm32-dma.yaml
-@@ -40,6 +40,13 @@ description: |
-          0x0: FIFO mode with threshold selectable with bit 0-1
-          0x1: Direct mode: each DMA request immediately initiates a transfer
-               from/to the memory, FIFO is bypassed.
-+       -bit 4: alternative DMA request/acknowledge protocol
-+         0x0: Use standard DMA ACK management, where ACK signal is maintained
-+              up to the removal of request and transfer completion
-+         0x1: Use alternative DMA ACK management, where ACK de-assertion does
-+              not wait for the de-assertion of the REQuest, ACK is only managed
-+              by transfer completion. This must only be used on channels
-+              managing transfers for STM32 USART/UART.
- 
- 
- maintainers:
 -- 
-2.25.1
-
+~Vinod
