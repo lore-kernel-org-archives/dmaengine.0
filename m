@@ -2,157 +2,284 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 17719C11F66
-	for <dmaengine@archiver.kernel.org>; Tue, 29 Jun 2021 10:37:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DD54BC11F67
+	for <dmaengine@archiver.kernel.org>; Tue, 29 Jun 2021 16:11:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E544D61DC1
-	for <dmaengine@archiver.kernel.org>; Tue, 29 Jun 2021 10:37:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C0CB361DC8
+	for <dmaengine@archiver.kernel.org>; Tue, 29 Jun 2021 16:11:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233086AbhF2Kjq (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 29 Jun 2021 06:39:46 -0400
-Received: from mail-dm6nam11on2066.outbound.protection.outlook.com ([40.107.223.66]:55904
-        "EHLO NAM11-DM6-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S231956AbhF2Kjm (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Tue, 29 Jun 2021 06:39:42 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=XjkHHEEuaCsJn4r+MVdYURsTDULD/XsLOmxyZlkFyFTDE7VtTeJYJUiR+PtyfhyWBOTelComMEBPHmhVPJoInjlygfV2Cz3K7K1oEsPfERmR15rLM47DwEAopFUeNUBPy/2eH6Cw7AyW3S1vCkarBWar7UfDdzOzpHIu60WC8JIXq3pWGzUJ0Ya39inZsPGThYCychYz0Wr50Tvw3kQ5g7f/m4fHWqCECKIk6FOFKMFmmVa8DrtvAVhW08Yfg3Qb7OaZT2o7GBHw0svvoqbWfmG5wcTdc1irSI+0PRD3oUEOockwFfLOGa5Kwbjn2V5REDn6vXpjuasptt/AoSh/ZQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=oB77udtJWALg1OY2OYBI/3+cBhuCoJyxsmFFx4nA9GU=;
- b=VbtM27Xni+xFDzi5v05MLSNdCRh4jks7OyAPJUw0uvgLThu6+fwtKeF1F602l6Ehv7i+pmDpSE6WLc6UcIAk9v2e5oRIxnVUfo/zZalGCR55exLu541iZb7F09J/3ZLFbiKd6w0ei2iV8T0AGZ76Zfsnb3CDtIPXkiDryA6QNxuFpjfquZAHkxwRN9axFYg84n4CUkL9zKEmgOaohH8Ac5uCDLabjPd1QkApl2pzqniswg5jVTdGXJLn2eAmDm5kJY6UueKjv8aPwCc+SZsPeJW/8RFJxx+QsmmgyOWiy37QtumS/hujLpsBOfeVw7Z4nqNWgDNB1H5ZvCNoBCiXlw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 149.199.62.198) smtp.rcpttodomain=kernel.org smtp.mailfrom=xilinx.com;
- dmarc=pass (p=none sp=none pct=100) action=none header.from=xilinx.com;
- dkim=none (message not signed); arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=xilinx.onmicrosoft.com; s=selector2-xilinx-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=oB77udtJWALg1OY2OYBI/3+cBhuCoJyxsmFFx4nA9GU=;
- b=bhoUe3H3mxI4jN/Y51Vopt/6Gu20FgAEvrG5dlprYcHfrM5sIkX2KJapcrXFCJf3ZN1uppCk606vYReQSPA+rNhsVyE/6OzgCgitmMBE5KdEaZGAgvu6UdHIwWPvYZSF++hlPn94Ss0mFYQ58yNP8hQN/63/KtQcnWDktT/idI8=
-Received: from BN6PR22CA0070.namprd22.prod.outlook.com (2603:10b6:404:ca::32)
- by BY5PR02MB6535.namprd02.prod.outlook.com (2603:10b6:a03:1da::24) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4264.20; Tue, 29 Jun
- 2021 10:37:14 +0000
-Received: from BN1NAM02FT049.eop-nam02.prod.protection.outlook.com
- (2603:10b6:404:ca:cafe::61) by BN6PR22CA0070.outlook.office365.com
- (2603:10b6:404:ca::32) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4264.19 via Frontend
- Transport; Tue, 29 Jun 2021 10:37:13 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 149.199.62.198)
- smtp.mailfrom=xilinx.com; kernel.org; dkim=none (message not signed)
- header.d=none;kernel.org; dmarc=pass action=none header.from=xilinx.com;
-Received-SPF: Pass (protection.outlook.com: domain of xilinx.com designates
- 149.199.62.198 as permitted sender) receiver=protection.outlook.com;
- client-ip=149.199.62.198; helo=xsj-pvapexch01.xlnx.xilinx.com;
-Received: from xsj-pvapexch01.xlnx.xilinx.com (149.199.62.198) by
- BN1NAM02FT049.mail.protection.outlook.com (10.13.2.89) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.20.4264.18 via Frontend Transport; Tue, 29 Jun 2021 10:37:13 +0000
-Received: from xsj-pvapexch02.xlnx.xilinx.com (172.19.86.41) by
- xsj-pvapexch01.xlnx.xilinx.com (172.19.86.40) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2176.2; Tue, 29 Jun 2021 03:37:13 -0700
-Received: from smtp.xilinx.com (172.19.127.95) by
- xsj-pvapexch02.xlnx.xilinx.com (172.19.86.41) with Microsoft SMTP Server id
- 15.1.2176.2 via Frontend Transport; Tue, 29 Jun 2021 03:37:13 -0700
-Envelope-to: vkoul@kernel.org,
- dmaengine@vger.kernel.org,
- linux-kernel@vger.kernel.org,
- harinikatakamlinux@gmail.com
-Received: from [10.140.6.13] (port=43806 helo=xhdharinik40.xilinx.com)
-        by smtp.xilinx.com with esmtp (Exim 4.90)
-        (envelope-from <harini.katakam@xilinx.com>)
-        id 1lyB7A-0006BE-Oe; Tue, 29 Jun 2021 03:37:13 -0700
-From:   Harini Katakam <harini.katakam@xilinx.com>
-To:     <vkoul@kernel.org>
-CC:     <dmaengine@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <harinikatakamlinux@gmail.com>, <michal.simek@xilinx.com>,
-        <harini.katakam@xilinx.com>, <radhey.shyam.pandey@xilinx.com>,
-        <shravya.kumbham@xilinx.com>
-Subject: [PATCH] dmaengine: pl330: Typecast with enum to fix the coverity warning
-Date:   Tue, 29 Jun 2021 16:07:10 +0530
-Message-ID: <20210629103710.24828-1-harini.katakam@xilinx.com>
-X-Mailer: git-send-email 2.17.1
+        id S232238AbhF2QOH (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 29 Jun 2021 12:14:07 -0400
+Received: from mga18.intel.com ([134.134.136.126]:54805 "EHLO mga18.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S232178AbhF2QOG (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Tue, 29 Jun 2021 12:14:06 -0400
+X-IronPort-AV: E=McAfee;i="6200,9189,10030"; a="195470756"
+X-IronPort-AV: E=Sophos;i="5.83,309,1616482800"; 
+   d="scan'208";a="195470756"
+Received: from fmsmga007.fm.intel.com ([10.253.24.52])
+  by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Jun 2021 09:11:11 -0700
+X-IronPort-AV: E=Sophos;i="5.83,309,1616482800"; 
+   d="scan'208";a="419650028"
+Received: from djiang5-desk3.ch.intel.com ([143.182.136.137])
+  by fmsmga007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Jun 2021 09:11:10 -0700
+Subject: [PATCH v3] dmaengine: idxd: fix submission race window
+From:   Dave Jiang <dave.jiang@intel.com>
+To:     vkoul@kernel.org
+Cc:     Konstantin Ananyev <konstantin.ananyev@intel.com>,
+        dmaengine@vger.kernel.org
+Date:   Tue, 29 Jun 2021 09:11:09 -0700
+Message-ID: <162498301955.2302125.5031103655704428294.stgit@djiang5-desk3.ch.intel.com>
+User-Agent: StGit/0.23-29-ga622f1
 MIME-Version: 1.0
-Content-Type: text/plain
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: cff0cfb1-0a6f-424d-177a-08d93ae9dbc0
-X-MS-TrafficTypeDiagnostic: BY5PR02MB6535:
-X-Microsoft-Antispam-PRVS: <BY5PR02MB65355807893223F454F76D49C9029@BY5PR02MB6535.namprd02.prod.outlook.com>
-X-Auto-Response-Suppress: DR, RN, NRN, OOF, AutoReply
-X-MS-Oob-TLC-OOBClassifiers: OLM:4303;
-X-MS-Exchange-SenderADCheck: 1
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: yqyM6EQEXhjnlYNfkysfPB3ER5pKRQT8o9baHnAQvTR7h0J6VpcN4u+wZKb2cNzeAIJZPdJSVFUMtgsf465lftIiZ3pPPGzxv9EhCiMBOisEJDoepo5EZxggIVgxLVhIZbStr7o5792D2H8Ixu9eQn2WoVoMGZvNNT4EDwyXA+xGFKXe4S9esduaKv68MkwyEUGBlyki4jmA91gQrtEKR/6Vh3tKSgCfJemaKg0aWQv7XREJHBlUzABB0uKVz3DKdlfPmyNZKs7K7nceif0ihLpbKZlZZ7CbmeFdnmVgTR+6aDIFfkR6PGibrnM0hmXNSzplBuu63ltvfDkOxDO8WnDGpePEtIxpITnJxRXv49HWIEifY7VxVqT5ykAdAda7jvAroEtwrXB+eQ0aUNHqz7XJWxFm5BaqF2b+1Ho+3UEqY73nlCvz/oiEFPs3TLG1DFq/voj67GQhD8UqybM7QbY86wlSRIE93yNJVXu0sO2QEHzeQh+fTwntMyi4jVQ94Kqj1SXnreixcH5HMeg+Jy+gE1/Be6OLEczQZfZ4y31BjQumNtrNgRtSCFoJ2CpJw16NibglTwXjvTsYMGX+Kbh/FU5Jq0rxldaVZdYMt91sQCI+/KKzkVRM77MWnZeh6luCW5XtBfzA4KWc9fKYTLxm4ccwWXnX/1F7vC53xhHodD1jLpdun9Udr9kK5SNQQMyPS2tR0ULQpWozJFXMlmMhDcfgTnucf4+1rY/C+TU=
-X-Forefront-Antispam-Report: CIP:149.199.62.198;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:xsj-pvapexch01.xlnx.xilinx.com;PTR:unknown-62-198.xilinx.com;CAT:NONE;SFS:(4636009)(396003)(39860400002)(376002)(136003)(346002)(46966006)(36840700001)(7636003)(356005)(83380400001)(8936002)(36860700001)(36756003)(82310400003)(8676002)(82740400003)(70206006)(47076005)(186003)(70586007)(336012)(9786002)(2616005)(36906005)(316002)(54906003)(26005)(6916009)(426003)(44832011)(7696005)(4326008)(1076003)(5660300002)(478600001)(107886003)(2906002)(102446001);DIR:OUT;SFP:1101;
-X-OriginatorOrg: xilinx.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 Jun 2021 10:37:13.6746
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: cff0cfb1-0a6f-424d-177a-08d93ae9dbc0
-X-MS-Exchange-CrossTenant-Id: 657af505-d5df-48d0-8300-c31994686c5c
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=657af505-d5df-48d0-8300-c31994686c5c;Ip=[149.199.62.198];Helo=[xsj-pvapexch01.xlnx.xilinx.com]
-X-MS-Exchange-CrossTenant-AuthSource: BN1NAM02FT049.eop-nam02.prod.protection.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BY5PR02MB6535
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-From: Shravya Kumbham <shravya.kumbham@xilinx.com>
+Konstantin observed that when descriptors are submitted, the descriptor is
+added to the pending list after the submission. This creates a race window
+with the slight possibility that the descriptor can complete before it
+gets added to the pending list and this window would cause the completion
+handler to miss processing the descriptor.
 
-Typecast the flags and flg variables with (enum dma_ctrl_flags) in
-pl330_prep_dma_cyclic, pl330_prep_dma_memcpy and pl330_prep_slave_sg
-functions to fix the coverity warning.
+To address the issue, the addition of the descriptor to the pending list
+must be done before it gets submitted to the hardware. However, submitting
+to swq with ENQCMDS instruction can cause a failure with the condition of
+either wq is full or wq is not "active".
 
-Addresses-Coverity: Event mixed_enum_type.
-Signed-off-by: Shravya Kumbham <shravya.kumbham@xilinx.com>
-Signed-off-by: Harini Katakam <harini.katakam@xilinx.com>
-Reviewed-by: Radhey Shyam Pandey <radhey.shyam.pandey@xilinx.com>
+With the descriptor allocation being the gate to the wq capacity, it is not
+possible to hit a retry with ENQCMDS submission to the swq. The only
+possible failure can happen is when wq is no longer "active" due to hw
+error and therefore we are moving towards taking down the portal. Given
+this is a rare condition and there's no longer concern over I/O
+performance, the driver can walk the completion lists in order to retrieve
+and abort the descriptor.
+
+The error path will set the descriptor to aborted status. It will take the
+work list lock to prevent further processing of worklist. It will do a
+delete_all on the pending llist to retrieve all descriptors on the pending
+llist. The delete_all action does not require a lock. It will walk through
+the acquired llist to find the aborted descriptor while add all remaining
+descriptors to the work list since it holds the lock. If it does not find
+the aborted descriptor on the llist, it will walk through the work
+list. And if it still does not find the descriptor, then it means the
+interrupt handler has removed the desc from the llist but is pending on
+the work list lock and will process it once the error path releases the
+lock.
+
+Fixes: eb15e7154fbf ("dmaengine: idxd: add interrupt handle request and release support")
+Reported-by: Konstantin Ananyev <konstantin.ananyev@intel.com>
+Signed-off-by: Dave Jiang <dave.jiang@intel.com>
 ---
- drivers/dma/pl330.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/dma/pl330.c b/drivers/dma/pl330.c
-index 110de8a60058..35afbad2e1a7 100644
---- a/drivers/dma/pl330.c
-+++ b/drivers/dma/pl330.c
-@@ -2752,7 +2752,7 @@ static struct dma_async_tx_descriptor *pl330_prep_dma_cyclic(
- 		return NULL;
+v3:
+- add missing init for var (Konstantin)
+
+v2:
+- do abort callback outside of lock (Konstantin)
+- fix abort reason flag (Konstantin)
+- remove changes to spinlock
+
+ drivers/dma/idxd/idxd.h   |   14 ++++++++
+ drivers/dma/idxd/irq.c    |   27 +++++++++++-----
+ drivers/dma/idxd/submit.c |   75 ++++++++++++++++++++++++++++++++++++++++-----
+ 3 files changed, 99 insertions(+), 17 deletions(-)
+
+diff --git a/drivers/dma/idxd/idxd.h b/drivers/dma/idxd/idxd.h
+index 1f0991dec679..0f27374eae4b 100644
+--- a/drivers/dma/idxd/idxd.h
++++ b/drivers/dma/idxd/idxd.h
+@@ -294,6 +294,14 @@ struct idxd_desc {
+ 	struct idxd_wq *wq;
+ };
  
- 	pch->cyclic = true;
--	desc->txd.flags = flags;
-+	desc->txd.flags = (enum dma_ctrl_flags)flags;
++/*
++ * This is software defined error for the completion status. We overload the error code
++ * that will never appear in completion status and only SWERR register.
++ */
++enum idxd_completion_status {
++	IDXD_COMP_DESC_ABORT = 0xff,
++};
++
+ #define confdev_to_idxd(dev) container_of(dev, struct idxd_device, conf_dev)
+ #define confdev_to_wq(dev) container_of(dev, struct idxd_wq, conf_dev)
  
- 	return &desc->txd;
+@@ -480,4 +488,10 @@ static inline void perfmon_init(void) {}
+ static inline void perfmon_exit(void) {}
+ #endif
+ 
++static inline void complete_desc(struct idxd_desc *desc, enum idxd_complete_type reason)
++{
++	idxd_dma_complete_txd(desc, reason);
++	idxd_free_desc(desc->wq, desc);
++}
++
+ #endif
+diff --git a/drivers/dma/idxd/irq.c b/drivers/dma/idxd/irq.c
+index 7a2cf0512501..2924819ca8f3 100644
+--- a/drivers/dma/idxd/irq.c
++++ b/drivers/dma/idxd/irq.c
+@@ -245,12 +245,6 @@ static inline bool match_fault(struct idxd_desc *desc, u64 fault_addr)
+ 	return false;
  }
-@@ -2804,7 +2804,7 @@ pl330_prep_dma_memcpy(struct dma_chan *chan, dma_addr_t dst,
  
- 	desc->bytes_requested = len;
+-static inline void complete_desc(struct idxd_desc *desc, enum idxd_complete_type reason)
+-{
+-	idxd_dma_complete_txd(desc, reason);
+-	idxd_free_desc(desc->wq, desc);
+-}
+-
+ static int irq_process_pending_llist(struct idxd_irq_entry *irq_entry,
+ 				     enum irq_work_type wtype,
+ 				     int *processed, u64 data)
+@@ -272,8 +266,16 @@ static int irq_process_pending_llist(struct idxd_irq_entry *irq_entry,
+ 		reason = IDXD_COMPLETE_DEV_FAIL;
  
--	desc->txd.flags = flags;
-+	desc->txd.flags = (enum dma_ctrl_flags)flags;
+ 	llist_for_each_entry_safe(desc, t, head, llnode) {
+-		if (desc->completion->status) {
+-			if ((desc->completion->status & DSA_COMP_STATUS_MASK) != DSA_COMP_SUCCESS)
++		u8 status = desc->completion->status & DSA_COMP_STATUS_MASK;
++
++		if (status) {
++			if (unlikely(status == IDXD_COMP_DESC_ABORT)) {
++				complete_desc(desc, IDXD_COMPLETE_ABORT);
++				(*processed)++;
++				continue;
++			}
++
++			if (unlikely(status != DSA_COMP_SUCCESS))
+ 				match_fault(desc, data);
+ 			complete_desc(desc, reason);
+ 			(*processed)++;
+@@ -329,7 +331,14 @@ static int irq_process_work_list(struct idxd_irq_entry *irq_entry,
+ 	spin_unlock_irqrestore(&irq_entry->list_lock, flags);
  
- 	return &desc->txd;
+ 	list_for_each_entry(desc, &flist, list) {
+-		if ((desc->completion->status & DSA_COMP_STATUS_MASK) != DSA_COMP_SUCCESS)
++		u8 status = desc->completion->status & DSA_COMP_STATUS_MASK;
++
++		if (unlikely(status == IDXD_COMP_DESC_ABORT)) {
++			complete_desc(desc, IDXD_COMPLETE_ABORT);
++			continue;
++		}
++
++		if (unlikely(status != DSA_COMP_SUCCESS))
+ 			match_fault(desc, data);
+ 		complete_desc(desc, reason);
+ 	}
+diff --git a/drivers/dma/idxd/submit.c b/drivers/dma/idxd/submit.c
+index 736def129fa8..8204c7923f34 100644
+--- a/drivers/dma/idxd/submit.c
++++ b/drivers/dma/idxd/submit.c
+@@ -88,9 +88,64 @@ void idxd_free_desc(struct idxd_wq *wq, struct idxd_desc *desc)
+ 	sbitmap_queue_clear(&wq->sbq, desc->id, cpu);
  }
-@@ -2889,7 +2889,7 @@ pl330_prep_slave_sg(struct dma_chan *chan, struct scatterlist *sgl,
+ 
++static struct idxd_desc *list_abort_desc(struct idxd_wq *wq, struct idxd_irq_entry *ie,
++					 struct idxd_desc *desc)
++{
++	struct idxd_desc *d, *n;
++
++	lockdep_assert_held(&ie->list_lock);
++	list_for_each_entry_safe(d, n, &ie->work_list, list) {
++		if (d == desc) {
++			list_del(&d->list);
++			return d;
++		}
++	}
++
++	/*
++	 * At this point, the desc needs to be aborted is held by the completion
++	 * handler where it has taken it off the pending list but has not added to the
++	 * work list. It will be cleaned up by the interrupt handler when it sees the
++	 * IDXD_COMP_DESC_ABORT for completion status.
++	 */
++	return NULL;
++}
++
++static void llist_abort_desc(struct idxd_wq *wq, struct idxd_irq_entry *ie,
++			     struct idxd_desc *desc)
++{
++	struct idxd_desc *d, *t, *found = NULL;
++	struct llist_node *head;
++	unsigned long flags;
++
++	desc->completion->status = IDXD_COMP_DESC_ABORT;
++	/*
++	 * Grab the list lock so it will block the irq thread handler. This allows the
++	 * abort code to locate the descriptor need to be aborted.
++	 */
++	spin_lock_irqsave(&ie->list_lock, flags);
++	head = llist_del_all(&ie->pending_llist);
++	if (head) {
++		llist_for_each_entry_safe(d, t, head, llnode) {
++			if (d == desc) {
++				found = desc;
++				continue;
++			}
++			list_add_tail(&desc->list, &ie->work_list);
++		}
++	}
++
++	if (!found)
++		found = list_abort_desc(wq, ie, desc);
++	spin_unlock_irqrestore(&ie->list_lock, flags);
++
++	if (found)
++		complete_desc(found, IDXD_COMPLETE_ABORT);
++}
++
+ int idxd_submit_desc(struct idxd_wq *wq, struct idxd_desc *desc)
+ {
+ 	struct idxd_device *idxd = wq->idxd;
++	struct idxd_irq_entry *ie = NULL;
+ 	void __iomem *portal;
+ 	int rc;
+ 
+@@ -108,6 +163,16 @@ int idxd_submit_desc(struct idxd_wq *wq, struct idxd_desc *desc)
+ 	 * even on UP because the recipient is a device.
+ 	 */
+ 	wmb();
++
++	/*
++	 * Pending the descriptor to the lockless list for the irq_entry
++	 * that we designated the descriptor to.
++	 */
++	if (desc->hw->flags & IDXD_OP_FLAG_RCI) {
++		ie = &idxd->irq_entries[desc->vector];
++		llist_add(&desc->llnode, &ie->pending_llist);
++	}
++
+ 	if (wq_dedicated(wq)) {
+ 		iosubmit_cmds512(portal, desc->hw, 1);
+ 	} else {
+@@ -120,18 +185,12 @@ int idxd_submit_desc(struct idxd_wq *wq, struct idxd_desc *desc)
+ 		rc = enqcmds(portal, desc->hw);
+ 		if (rc < 0) {
+ 			percpu_ref_put(&wq->wq_active);
++			if (ie)
++				llist_abort_desc(wq, ie, desc);
+ 			return rc;
+ 		}
  	}
  
- 	/* Return the last desc in the chain */
--	desc->txd.flags = flg;
-+	desc->txd.flags = (enum dma_ctrl_flags)flg;
- 	return &desc->txd;
+ 	percpu_ref_put(&wq->wq_active);
+-
+-	/*
+-	 * Pending the descriptor to the lockless list for the irq_entry
+-	 * that we designated the descriptor to.
+-	 */
+-	if (desc->hw->flags & IDXD_OP_FLAG_RCI)
+-		llist_add(&desc->llnode, &idxd->irq_entries[desc->vector].pending_llist);
+-
+ 	return 0;
  }
- 
--- 
-2.17.1
+
 
