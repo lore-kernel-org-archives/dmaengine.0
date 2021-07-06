@@ -2,165 +2,131 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
+	USER_AGENT_GIT autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 03E7EC07E9B
-	for <dmaengine@archiver.kernel.org>; Tue,  6 Jul 2021 21:37:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 66388C07E96
+	for <dmaengine@archiver.kernel.org>; Tue,  6 Jul 2021 23:56:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E0D5261C3C
-	for <dmaengine@archiver.kernel.org>; Tue,  6 Jul 2021 21:37:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 45BF961C1E
+	for <dmaengine@archiver.kernel.org>; Tue,  6 Jul 2021 23:56:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230006AbhGFVkb (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 6 Jul 2021 17:40:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43092 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229894AbhGFVka (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Tue, 6 Jul 2021 17:40:30 -0400
-Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com [IPv6:2607:f8b0:4864:20::102a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4DE21C061574;
-        Tue,  6 Jul 2021 14:37:51 -0700 (PDT)
-Received: by mail-pj1-x102a.google.com with SMTP id h1-20020a17090a3d01b0290172d33bb8bcso2390238pjc.0;
-        Tue, 06 Jul 2021 14:37:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=Ocbz7plpl2GsaeWZtT2xSwu/ECmgcGgX+U0mFWoVx8o=;
-        b=fjV4+ka8h0vH05QQfb5mosysrP9nHimBGyZMIaa5AG6oYKlZIJ9fBu1u8zdUGxqK0V
-         Um+d4Woup62vh1nDeTEMfYQu/z07c7tU/WMAtzd8zyjZ+D++/9qAcGD3Qi5HWfAEidnP
-         LVIhoqq3BcdDCaWawKEqjjS8yu6I4JR+nAEzkK0jeMXN28vBiyhs3oL9vVM3I/zG4bRq
-         0ch+fVpWTwIZJdpOA5MGN4Hsas/DzY0s55S8/73rafQT0BQHzaPtbSSjdX9FgBPH3Kng
-         zdOUu0zymj0lCUC9mcaI5h90C5jAW9R9slEqBMssceloFyAtObCoJPafpr9GaUMLPWWg
-         1jSA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=Ocbz7plpl2GsaeWZtT2xSwu/ECmgcGgX+U0mFWoVx8o=;
-        b=WK3yTWnvM5htSk/VSimnCQqje/FGFNelVEcwioYL2R7o83YW8eHgkZ6evNB3mBqPc0
-         b3GB1gLkWojJs9XG4BTClxxWXSVq9Gv09epEhdKJWYrb06H3nFuUuHgoZMgPD+WJybRF
-         3gZPab5P9vzwNlIIVEEo5Jl90VKSVHHxvBhjU3Pay3BEhOy6ShtVlTPAKjzUw+5LPvM3
-         g6Hpy3G6QibGd3AnFNfSCRKBRvetF31DDjQDeo8pnbGgCNJEzMmdhIwT1ify8AXwqciQ
-         XYOzvzRvY9jKXvHDc86y1R7eC14/aeggf/uWlHU2/VXBeEU0HO0uKcxPPx3BI1CBvsUI
-         0OtQ==
-X-Gm-Message-State: AOAM531T2RTDL3ySJyrUH9BdixZdoksL8kUK7Ivl7hx7XCT9buaF/thj
-        cTEAlptetL3RDzHa5EJYnN0=
-X-Google-Smtp-Source: ABdhPJyn2Hi8kaCYu+WokB25snaMIG+9Q6KwjeQoMDQJIrAIZd3JeXm641055Ca25Y6q1bD80UK2hA==
-X-Received: by 2002:a17:90a:3009:: with SMTP id g9mr2332932pjb.82.1625607470831;
-        Tue, 06 Jul 2021 14:37:50 -0700 (PDT)
-Received: from shinobu ([156.146.35.76])
-        by smtp.gmail.com with ESMTPSA id h14sm14343197pgv.47.2021.07.06.14.37.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 06 Jul 2021 14:37:49 -0700 (PDT)
-Date:   Wed, 7 Jul 2021 06:37:39 +0900
-From:   William Breathitt Gray <vilhelm.gray@gmail.com>
-To:     Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
-Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        kernel@pengutronix.de, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-mips@vger.kernel.org,
-        linux-parisc@vger.kernel.org, linuxppc-dev@lists.ozlabs.org,
-        linux-acpi@vger.kernel.org, linux-wireless@vger.kernel.org,
-        linux-sunxi@lists.linux.dev, linux-cxl@vger.kernel.org,
-        nvdimm@lists.linux.dev, dmaengine@vger.kernel.org,
-        linux1394-devel@lists.sourceforge.net, linux-fpga@vger.kernel.org,
-        linux-input@vger.kernel.org, linux-hyperv@vger.kernel.org,
-        linux-i2c@vger.kernel.org, linux-i3c@lists.infradead.org,
-        industrypack-devel@lists.sourceforge.net,
-        linux-media@vger.kernel.org, linux-mmc@vger.kernel.org,
-        netdev@vger.kernel.org, linux-ntb@googlegroups.com,
-        linux-pci@vger.kernel.org, platform-driver-x86@vger.kernel.org,
-        linux-remoteproc@vger.kernel.org, linux-scsi@vger.kernel.org,
-        alsa-devel@alsa-project.org, linux-arm-msm@vger.kernel.org,
-        linux-spi@vger.kernel.org, linux-staging@lists.linux.dev,
-        greybus-dev@lists.linaro.org, target-devel@vger.kernel.org,
-        linux-usb@vger.kernel.org, linux-serial@vger.kernel.org,
-        virtualization@lists.linux-foundation.org, kvm@vger.kernel.org,
-        xen-devel@lists.xenproject.org
-Subject: Re: [PATCH v2 4/4] bus: Make remove callback return void
-Message-ID: <YOTMp88HfFiy6+RM@shinobu>
-References: <20210706154803.1631813-1-u.kleine-koenig@pengutronix.de>
- <20210706154803.1631813-5-u.kleine-koenig@pengutronix.de>
+        id S229953AbhGFX72 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 6 Jul 2021 19:59:28 -0400
+Received: from mx07-00376f01.pphosted.com ([185.132.180.163]:29154 "EHLO
+        mx07-00376f01.pphosted.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S229873AbhGFX72 (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Tue, 6 Jul 2021 19:59:28 -0400
+Received: from pps.filterd (m0168889.ppops.net [127.0.0.1])
+        by mx07-00376f01.pphosted.com (8.16.1.2/8.16.1.2) with SMTP id 166NVXxG032557;
+        Wed, 7 Jul 2021 00:43:50 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=imgtec.com; h=from : to : cc :
+ subject : date : message-id : in-reply-to : references : mime-version :
+ content-type; s=dk201812; bh=jEzXnVCx6Mdoe4csL3VU8+8+hZnGKEyYI8PFewbkI1M=;
+ b=LJcl5MDXcbngG6r8j9Wr5x8qNBMikbxILVFP6QM1c+UP9GOKJ4FxgcqNEVfxHnZpuP57
+ 25LM9Iw9k3Lezfr4IhDrtktweiDaesEa6YUViRGtzxI2q/Ziqv9RMDwhoq3nyL+8bLuP
+ bfyt0UG5NE73MGx9fQNmjb1g3MaMRFNDIiTt+jxPjhnsxOGOQNhh68szrvEAYH4tPtGU
+ sH41PuOYvXDW0zOgOturvvElO/80kgvAFrlhtr4rTESoBhIe+g6Nn4wX0uHqsyHY8TOW
+ GfKL+hk5DvrzoCYmRZ06FIeFv1H7QjW+tHcG2EGeuWoF35bmYpNJbCvmYE23DtDnGK3+ JQ== 
+Received: from hhmail05.hh.imgtec.org ([217.156.249.195])
+        by mx07-00376f01.pphosted.com with ESMTP id 39ms1j08cm-3
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT);
+        Wed, 07 Jul 2021 00:43:50 +0100
+Received: from adrianlarumbe-HP-Elite-7500-Series-MT.hh.imgtec.org
+ (10.100.70.86) by HHMAIL05.hh.imgtec.org (10.100.10.120) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2176.14; Wed, 7 Jul 2021 00:43:49 +0100
+From:   Adrian Larumbe <adrian.martinezlarumbe@imgtec.com>
+To:     <vkoul@kernel.org>, <dmaengine@vger.kernel.org>
+CC:     <michal.simek@xilinx.com>, <linux-arm-kernel@lists.infradead.org>,
+        <adrian.martinezlarumbe@imgtec.com>
+Subject: [PATCH 2/2] xilinx_dma: Fix read-after-free bug when terminating transfers
+Date:   Wed, 7 Jul 2021 00:43:38 +0100
+Message-ID: <20210706234338.7696-3-adrian.martinezlarumbe@imgtec.com>
+X-Mailer: git-send-email 2.17.1
+In-Reply-To: <20210706234338.7696-1-adrian.martinezlarumbe@imgtec.com>
+References: <20210706234338.7696-1-adrian.martinezlarumbe@imgtec.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="VOubNWsj2sFIOkFX"
-Content-Disposition: inline
-In-Reply-To: <20210706154803.1631813-5-u.kleine-koenig@pengutronix.de>
+Content-Type: text/plain
+X-Originating-IP: [10.100.70.86]
+X-ClientProxiedBy: HHMAIL05.hh.imgtec.org (10.100.10.120) To
+ HHMAIL05.hh.imgtec.org (10.100.10.120)
+X-EXCLAIMER-MD-CONFIG: 15a78312-3e47-46eb-9010-2e54d84a9631
+X-Proofpoint-ORIG-GUID: OF7SzEO7z0OEnT3wj26JgO7F4LdRNCJ4
+X-Proofpoint-GUID: OF7SzEO7z0OEnT3wj26JgO7F4LdRNCJ4
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
+When user calls dmaengine_terminate_sync, the driver will clean up any
+remaining descriptors for all the pending or active transfers that had
+previously been submitted. However, this might happen whilst the tasklet is
+invoking the DMA callback for the last finished transfer, so by the time it
+returns and takes over the channel's spinlock, the list of completed
+descriptors it was traversing is no longer valid. This leads to a
+read-after-free situation.
 
---VOubNWsj2sFIOkFX
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Fix it by signalling whether a user-triggered termination has happened by
+means of a boolean variable.
 
-On Tue, Jul 06, 2021 at 05:48:03PM +0200, Uwe Kleine-K=C3=B6nig wrote:
-> The driver core ignores the return value of this callback because there
-> is only little it can do when a device disappears.
->=20
-> This is the final bit of a long lasting cleanup quest where several
-> buses were converted to also return void from their remove callback.
-> Additionally some resource leaks were fixed that were caused by drivers
-> returning an error code in the expectation that the driver won't go
-> away.
->=20
-> With struct bus_type::remove returning void it's prevented that newly
-> implemented buses return an ignored error code and so don't anticipate
-> wrong expectations for driver authors.
->=20
-> Acked-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk> (For ARM, Am=
-ba and related parts)
-> Acked-by: Mark Brown <broonie@kernel.org>
-> Acked-by: Chen-Yu Tsai <wens@csie.org> (for drivers/bus/sunxi-rsb.c)
-> Acked-by: Pali Roh=C3=A1r <pali@kernel.org>
-> Acked-by: Mauro Carvalho Chehab <mchehab@kernel.org> (for drivers/media)
-> Acked-by: Hans de Goede <hdegoede@redhat.com> (For drivers/platform)
-> Acked-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
-> Acked-By: Vinod Koul <vkoul@kernel.org>
-> Acked-by: Juergen Gross <jgross@suse.com> (For Xen)
-> Acked-by: Lee Jones <lee.jones@linaro.org> (For drivers/mfd)
-> Acked-by: Johannes Thumshirn <jth@kernel.org> (For drivers/mcb)
-> Acked-by: Johan Hovold <johan@kernel.org>
-> Acked-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org> (For drive=
-rs/slimbus)
-> Acked-by: Kirti Wankhede <kwankhede@nvidia.com> (For drivers/vfio)
-> Acked-by: Maximilian Luz <luzmaximilian@gmail.com>
-> Acked-by: Heikki Krogerus <heikki.krogerus@linux.intel.com> (For ulpi and=
- typec)
-> Acked-by: Samuel Iglesias Gons=C3=A1lvez <siglesias@igalia.com> (For ipac=
-k)
-> Reviewed-by: Tom Rix <trix@redhat.com> (For fpga)
-> Acked-by: Geoff Levand <geoff@infradead.org> (For ps3)
-> Signed-off-by: Uwe Kleine-K=C3=B6nig <u.kleine-koenig@pengutronix.de>
-> ---
+Signed-off-by: Adrian Larumbe <adrian.martinezlarumbe@imgtec.com>
+---
+ drivers/dma/xilinx/xilinx_dma.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
->  drivers/base/isa.c                        | 4 +---
+diff --git a/drivers/dma/xilinx/xilinx_dma.c b/drivers/dma/xilinx/xilinx_dma.c
+index 0e2bf75d42d3..8258e9fcc179 100644
+--- a/drivers/dma/xilinx/xilinx_dma.c
++++ b/drivers/dma/xilinx/xilinx_dma.c
+@@ -394,6 +394,7 @@ struct xilinx_dma_tx_descriptor {
+  * @genlock: Support genlock mode
+  * @err: Channel has errors
+  * @idle: Check for channel idle
++ * @terminating: Check for channel being synchronized by user
+  * @tasklet: Cleanup work after irq
+  * @config: Device configuration info
+  * @flush_on_fsync: Flush on Frame sync
+@@ -431,6 +432,7 @@ struct xilinx_dma_chan {
+ 	bool genlock;
+ 	bool err;
+ 	bool idle;
++	bool terminating;
+ 	struct tasklet_struct tasklet;
+ 	struct xilinx_vdma_config config;
+ 	bool flush_on_fsync;
+@@ -1049,6 +1051,13 @@ static void xilinx_dma_chan_desc_cleanup(struct xilinx_dma_chan *chan)
+ 		/* Run any dependencies, then free the descriptor */
+ 		dma_run_dependencies(&desc->async_tx);
+ 		xilinx_dma_free_tx_descriptor(chan, desc);
++
++		/*
++		 * While we ran a callback the user called a terminate function,
++		 * which takes care of cleaning up any remaining descriptors
++		 */
++		if (chan->terminating)
++			break;
+ 	}
+ 
+ 	spin_unlock_irqrestore(&chan->lock, flags);
+@@ -1965,6 +1974,8 @@ static dma_cookie_t xilinx_dma_tx_submit(struct dma_async_tx_descriptor *tx)
+ 	if (desc->cyclic)
+ 		chan->cyclic = true;
+ 
++	chan->terminating = false;
++
+ 	spin_unlock_irqrestore(&chan->lock, flags);
+ 
+ 	return cookie;
+@@ -2556,6 +2567,7 @@ static int xilinx_dma_terminate_all(struct dma_chan *dchan)
+ 
+ 	xilinx_dma_chan_reset(chan);
+ 	/* Remove and free all of the descriptors in the lists */
++	chan->terminating = true;
+ 	xilinx_dma_free_descriptors(chan);
+ 	chan->idle = true;
+ 
+-- 
+2.17.1
 
-Acked-by: William Breathitt Gray <vilhelm.gray@gmail.com>
-
---VOubNWsj2sFIOkFX
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEk5I4PDJ2w1cDf/bghvpINdm7VJIFAmDkzSMACgkQhvpINdm7
-VJLVFhAAyxEk2xOSRC1xhJSnjLQvNeb+KeTAJr+uaSAwwExERXcbGlIryhqCZSij
-fZRzkvgPIscNAegWidvmuhZlhkFJPwvPArfhB/pFIDvQ1xX0kCPH3T51Lncu35Tf
-vgluc4JhAW9+1UzoKZsv8RK4uY2ETRMBBeYs7epjqK2RhCvzG8rDMD+Dy49nxrYX
-eNdmcR+7EcK8RjLmb/YEfNXxcXdDW0KlU5ATAh+PKuAPKbOKpoKfKuYsOYS7VrGJ
-MAk5lC5J/bqbBWM4eqm+g5NbskWMr1N5WC60R7K3isMCoaEpnKNhSD3kvYIFe2Tf
-mWyIE2c7D+UWhzbp+Kq4+DHzBN4ajLBy0oMd28HrGOQmD+/chjjc1zTOK9uNBvKz
-xBRbxQl7OrAnKhUqcrgVpVL30EvTNajZIOZdwtGXhQCWW+MX747JE+H291VLg3gz
-a0p6IJ8TS+gOgGGvmNjVg6yHYuKv6XDbDfI7tc0dRJUOoVqfbkIHSvAQQzn0LIFn
-k/Ln4D8LDFj8X3fHbfz200+nzo9gwA5ZXhWXzvTKXhSEyBoc3+i+Ihn3bgYf6rI8
-j8LozqWaWpNxaLMBrLuy06ldAuzhnQ7wPw1JuGXDAY1vdMYVVRp1XcbjBSqybXMA
-weoaxx4Lwh05XikzxZpXDQBx5N+5V3sYRuqGrYs7H1ZUm0rT0I0=
-=yTaM
------END PGP SIGNATURE-----
-
---VOubNWsj2sFIOkFX--
