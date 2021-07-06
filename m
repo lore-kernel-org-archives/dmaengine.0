@@ -2,143 +2,82 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-14.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
-	USER_AGENT_SANE_1 autolearn=unavailable autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
+	autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5387CC11F66
-	for <dmaengine@archiver.kernel.org>; Tue,  6 Jul 2021 12:31:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 04ABEC07E96
+	for <dmaengine@archiver.kernel.org>; Tue,  6 Jul 2021 12:41:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 34FEF619CD
-	for <dmaengine@archiver.kernel.org>; Tue,  6 Jul 2021 12:31:00 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DBEE161C7A
+	for <dmaengine@archiver.kernel.org>; Tue,  6 Jul 2021 12:41:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236451AbhGFMdg (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 6 Jul 2021 08:33:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52398 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243274AbhGFMDZ (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Tue, 6 Jul 2021 08:03:25 -0400
-Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 250ABC0613AC;
-        Tue,  6 Jul 2021 04:42:37 -0700 (PDT)
-Received: by mail-ed1-x52f.google.com with SMTP id j11so27557227edq.6;
-        Tue, 06 Jul 2021 04:42:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=CDGtQ2yb8IShQ7cIRYFiJmp1Uu5BANeA/6Jg/xILJy0=;
-        b=TwRJy6+J3urIn/EOHkX70XQHrPpIXFIOoiquz6eJSwyU/SQIQ4dADKORnRQAYcVLDd
-         bGmCH+O3vZ/zwAN03+xnrlCOWn/T/Pz6KfPYlHzOgGXWb72eEAEAjVLMxY3sV52LOQiu
-         4sMepvP8f2M/NuGTEEUpcS9djTSXyNUocbOOHuCxDZ/swc4Yj2krBjOK18+xBOWwYw7y
-         O/LcWjnu0kdZ4pmyv7jFfFo0qSdeTOdmtP2CciCXwcdnQ5FYkYueWY1vZLSQqxLbXVdx
-         xHWyXJmiVDLrlTvE9QGQSNArUJUGdY04ySHX3mfxNurDFI1sFLhNw1IKyh/ZzycJEC6f
-         piBA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=CDGtQ2yb8IShQ7cIRYFiJmp1Uu5BANeA/6Jg/xILJy0=;
-        b=cSIW3JOIioAioIfgYKQyQqSazD73CO2PhkvK0JpGSXcRxwlVCIhPlMy2RNwRC1MezP
-         BZ6h7/kkDgQ3vWimxPSP4mzUaGDt3EzWppD0JS17YAmF+WeMh8uX+T8RGBLrP1yn9PRd
-         7eiSxAMicNAC7ITetPISq3ES+JtI8d2MqrQXZ9OrUMbvPlFwZGfhN0arPSs6IUkqCOcX
-         7/5i+a2zAxbp3eKkAsq1+S0YeP3DdunBCJ7tBY5HrLzTvvsMNevnmiKoKYvViPuTMssR
-         3sCbpDUd/WDNCgYKdsmah+f8KbMhn4fyLfNLhWiuKnOWvf1HIIgc7XRx6t2Flm9df9IF
-         dO8A==
-X-Gm-Message-State: AOAM531si/HgMyvSBgLiARPQKINfzHpo1CAX05lwHmmBW914p2HvS2Mz
-        xYqcLlPqWc3xfYVAzVqH/8c=
-X-Google-Smtp-Source: ABdhPJwOR9RYbuFI1V8zYqZEcawlLdGKboqfR9DJ6TrIpurxtzPOHwaABH2lGpOOBvACTZh8ZOEU1A==
-X-Received: by 2002:a05:6402:1c06:: with SMTP id ck6mr22330893edb.287.1625571755735;
-        Tue, 06 Jul 2021 04:42:35 -0700 (PDT)
-Received: from [192.168.2.202] (pd9e5a48a.dip0.t-ipconnect.de. [217.229.164.138])
-        by smtp.gmail.com with ESMTPSA id eb9sm5646083ejc.32.2021.07.06.04.42.32
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 06 Jul 2021 04:42:35 -0700 (PDT)
-Subject: Re: [PATCH] bus: Make remove callback return void
-To:     =?UTF-8?Q?Uwe_Kleine-K=c3=b6nig?= <u.kleine-koenig@pengutronix.de>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc:     linux-kernel@vger.kernel.org,
-        "Rafael J. Wysocki" <rjw@rjwysocki.net>,
-        Len Brown <lenb@kernel.org>,
-        Maxime Ripard <mripard@kernel.org>,
-        Jiri Kosina <jikos@kernel.org>,
-        "K. Y. Srinivasan" <kys@microsoft.com>,
-        Haiyang Zhang <haiyangz@microsoft.com>,
-        Stephen Hemminger <sthemmin@microsoft.com>,
-        Wei Liu <wei.liu@kernel.org>, Dexuan Cui <decui@microsoft.com>,
-        Johannes Thumshirn <morbidrsa@gmail.com>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Jakub Kicinski <kuba@kernel.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        =?UTF-8?Q?Krzysztof_Wilczy=c5=84ski?= <kw@linux.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Hans de Goede <hdegoede@redhat.com>,
-        Mark Gross <mgross@linux.intel.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Mark Brown <broonie@kernel.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Johan Hovold <johan@kernel.org>, Alex Elder <elder@kernel.org>,
-        Mika Westerberg <mika.westerberg@linux.intel.com>,
-        Rob Herring <robh@kernel.org>,
-        Jiri Slaby <jirislaby@kernel.org>,
-        Stefano Stabellini <sstabellini@kernel.org>,
-        =?UTF-8?Q?Pali_Roh=c3=a1r?= <pali@kernel.org>,
-        Adrian Hunter <adrian.hunter@intel.com>,
-        linux-arm-kernel@lists.infradead.org, linux-mips@vger.kernel.org,
-        linux-parisc@vger.kernel.org, linuxppc-dev@lists.ozlabs.org,
-        linux-acpi@vger.kernel.org, linux-wireless@vger.kernel.org,
-        linux-sunxi@lists.linux.dev, linux-cxl@vger.kernel.org,
-        nvdimm@lists.linux.dev, dmaengine@vger.kernel.org,
-        linux1394-devel@lists.sourceforge.net, linux-fpga@vger.kernel.org,
-        linux-input@vger.kernel.org, linux-hyperv@vger.kernel.org,
-        linux-i2c@vger.kernel.org, linux-i3c@lists.infradead.org,
-        industrypack-devel@lists.sourceforge.net,
-        linux-media@vger.kernel.org, linux-mmc@vger.kernel.org,
-        netdev@vger.kernel.org, linux-ntb@googlegroups.com,
-        linux-pci@vger.kernel.org, platform-driver-x86@vger.kernel.org,
-        linux-remoteproc@vger.kernel.org, linux-scsi@vger.kernel.org,
-        alsa-devel@alsa-project.org, linux-arm-msm@vger.kernel.org,
-        linux-spi@vger.kernel.org, linux-staging@lists.linux.dev,
-        greybus-dev@lists.linaro.org, target-devel@vger.kernel.org,
-        linux-usb@vger.kernel.org, linux-serial@vger.kernel.org,
-        virtualization@lists.linux-foundation.org, kvm@vger.kernel.org,
-        xen-devel@lists.xenproject.org
-References: <20210706095037.1425211-1-u.kleine-koenig@pengutronix.de>
-From:   Maximilian Luz <luzmaximilian@gmail.com>
-Message-ID: <07c08230-6c71-2a73-c89f-05b9b5de78ab@gmail.com>
-Date:   Tue, 6 Jul 2021 13:42:31 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.11.0
+        id S231995AbhGFMob (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 6 Jul 2021 08:44:31 -0400
+Received: from szxga01-in.huawei.com ([45.249.212.187]:14020 "EHLO
+        szxga01-in.huawei.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S239099AbhGFMjp (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Tue, 6 Jul 2021 08:39:45 -0400
+Received: from dggemv703-chm.china.huawei.com (unknown [172.30.72.57])
+        by szxga01-in.huawei.com (SkyGuard) with ESMTP id 4GK26P659bzZnsQ;
+        Tue,  6 Jul 2021 20:33:49 +0800 (CST)
+Received: from dggema762-chm.china.huawei.com (10.1.198.204) by
+ dggemv703-chm.china.huawei.com (10.3.19.46) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256) id
+ 15.1.2176.2; Tue, 6 Jul 2021 20:37:00 +0800
+Received: from huawei.com (10.175.127.227) by dggema762-chm.china.huawei.com
+ (10.1.198.204) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.2176.2; Tue, 6 Jul
+ 2021 20:37:00 +0800
+From:   Yu Kuai <yukuai3@huawei.com>
+To:     <vkoul@kernel.org>, <yukuai3@huawei.com>
+CC:     <dmaengine@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <yi.zhang@huawei.com>
+Subject: [PATCH V2] dmaengine: usb-dmac: Fix PM reference leak in usb_dmac_probe()
+Date:   Tue, 6 Jul 2021 20:45:21 +0800
+Message-ID: <20210706124521.1371901-1-yukuai3@huawei.com>
+X-Mailer: git-send-email 2.31.1
 MIME-Version: 1.0
-In-Reply-To: <20210706095037.1425211-1-u.kleine-koenig@pengutronix.de>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7BIT
+Content-Type:   text/plain; charset=US-ASCII
+X-Originating-IP: [10.175.127.227]
+X-ClientProxiedBy: dggems703-chm.china.huawei.com (10.3.19.180) To
+ dggema762-chm.china.huawei.com (10.1.198.204)
+X-CFilter-Loop: Reflected
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On 7/6/21 11:50 AM, Uwe Kleine-König wrote:
-> The driver core ignores the return value of this callback because there
-> is only little it can do when a device disappears.
-> 
-> This is the final bit of a long lasting cleanup quest where several
-> buses were converted to also return void from their remove callback.
-> Additionally some resource leaks were fixed that were caused by drivers
-> returning an error code in the expectation that the driver won't go
-> away.
-> 
-> With struct bus_type::remove returning void it's prevented that newly
-> implemented buses return an ignored error code and so don't anticipate
-> wrong expectations for driver authors.
-> 
-> Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+pm_runtime_get_sync will increment pm usage counter even it failed.
+Forgetting to putting operation will result in reference leak here.
+Fix it by moving the error_pm label above the pm_runtime_put() in
+the error path.
 
->   drivers/platform/surface/aggregator/bus.c | 4 +---
+Reported-by: Hulk Robot <hulkci@huawei.com>
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+---
+changes in V2:
+ - As suggested by Johan, instead of using pm_runtime_resume_and_get,
+moving the 'error_pm' label above the pm_runtime_put() in the error path.
 
-Acked-by: Maximilian Luz <luzmaximilian@gmail.com>
+ drivers/dma/sh/usb-dmac.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/dma/sh/usb-dmac.c b/drivers/dma/sh/usb-dmac.c
+index 8f7ceb698226..1cc06900153e 100644
+--- a/drivers/dma/sh/usb-dmac.c
++++ b/drivers/dma/sh/usb-dmac.c
+@@ -855,8 +855,8 @@ static int usb_dmac_probe(struct platform_device *pdev)
+ 
+ error:
+ 	of_dma_controller_free(pdev->dev.of_node);
+-	pm_runtime_put(&pdev->dev);
+ error_pm:
++	pm_runtime_put(&pdev->dev);
+ 	pm_runtime_disable(&pdev->dev);
+ 	return ret;
+ }
+-- 
+2.31.1
+
