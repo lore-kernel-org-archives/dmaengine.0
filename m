@@ -5,42 +5,42 @@ X-Spam-Level:
 X-Spam-Status: No, score=-19.4 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=unavailable autolearn_force=no version=3.4.0
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 49653C07E9C
-	for <dmaengine@archiver.kernel.org>; Sat, 10 Jul 2021 02:22:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8A054C07E9C
+	for <dmaengine@archiver.kernel.org>; Sat, 10 Jul 2021 02:25:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 374AC613CC
-	for <dmaengine@archiver.kernel.org>; Sat, 10 Jul 2021 02:22:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 756B1613F4
+	for <dmaengine@archiver.kernel.org>; Sat, 10 Jul 2021 02:25:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231782AbhGJCYr (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 9 Jul 2021 22:24:47 -0400
-Received: from mail.kernel.org ([198.145.29.99]:41476 "EHLO mail.kernel.org"
+        id S234001AbhGJC2K (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 9 Jul 2021 22:28:10 -0400
+Received: from mail.kernel.org ([198.145.29.99]:43064 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231753AbhGJCYq (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Fri, 9 Jul 2021 22:24:46 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 8C3FD613D6;
-        Sat, 10 Jul 2021 02:22:01 +0000 (UTC)
+        id S233629AbhGJC1e (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Fri, 9 Jul 2021 22:27:34 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 6C373613F4;
+        Sat, 10 Jul 2021 02:24:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1625883722;
+        s=k20201202; t=1625883874;
         bh=79/HYkvwxCe55o5MFGHNpPyyxL7jdePrtaRs3K2/aC4=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=X4o/XOWxjXm6mCmFnVctC0lef5zpu+pFsNjvDsDNTq2nI4H+nz7z8g9T0SF/00N+z
-         j2agmBXckBYZyv6TQz1wZ+qLpHF8LkGxVsxXonjmm+IsraKtofEGA0XojNPMJfGAZb
-         9G6asp05iYKtLFRqYESqQRYGyVxagWM0HdysQ7mm2Fo3Af0KKqJmNoEJ1FpTIcA8u+
-         tT/CkCDVfGmrXcgKUQBViBO08t2VRdrMtCBx4PGPScU2RPrN3JsLckgeLzlTE3+TjI
-         hNERuryS6BwavD/n+TqmTP9aE6VhFiB3gn2YfRSKuDlVE1wirPieipNHEhfuEJKKa6
-         GFASg93sySeUw==
+        b=RU2cHB8wO6IszQHxJ+YyArNcprOx9v8ODwNvHZXZCHnRXD8T1zkd7f3JloxcNhCH9
+         aarB2te4/ycDLtuztXygPM24SbdDoo2afLtwY6JKODAPYdciA1OIHcCOb+bDvqLL13
+         EoovPWm2uWiC2mtPjhsfW6y8mi6hUZyvAjLo+XV9x5IsVrnR9lcU3JmXbMdJlA58Xu
+         q6DBdKfoKVolYpuM7f/1wSop4ryRqQUgCvHwHsGD5wxv5n7oz93/jyPOlxlyFoXWKe
+         kC1WgOUN5V7cRRiA+o+eHzm5LFxN+VRfr0cka5rG+DcXlc6eVRAVq2zgC4FGdN3FKd
+         St8KG4g/4n6eg==
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Cc:     Robin Gong <yibin.gong@nxp.com>, Vinod Koul <vkoul@kernel.org>,
         Sasha Levin <sashal@kernel.org>, dmaengine@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.12 004/104] dmaengine: fsl-qdma: check dma_set_mask return value
-Date:   Fri,  9 Jul 2021 22:20:16 -0400
-Message-Id: <20210710022156.3168825-4-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 5.10 04/93] dmaengine: fsl-qdma: check dma_set_mask return value
+Date:   Fri,  9 Jul 2021 22:22:58 -0400
+Message-Id: <20210710022428.3169839-4-sashal@kernel.org>
 X-Mailer: git-send-email 2.30.2
-In-Reply-To: <20210710022156.3168825-1-sashal@kernel.org>
-References: <20210710022156.3168825-1-sashal@kernel.org>
+In-Reply-To: <20210710022428.3169839-1-sashal@kernel.org>
+References: <20210710022428.3169839-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
