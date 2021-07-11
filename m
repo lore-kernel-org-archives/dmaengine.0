@@ -1,125 +1,75 @@
 Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-13.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Level: **
+X-Spam-Status: No, score=2.1 required=3.0 tests=ADVANCE_FEE_3_NEW,BAYES_50,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 96B0EC07E95
-	for <dmaengine@archiver.kernel.org>; Sat, 10 Jul 2021 16:54:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 91220C07E96
+	for <dmaengine@archiver.kernel.org>; Sun, 11 Jul 2021 19:46:33 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 82CCC611AD
-	for <dmaengine@archiver.kernel.org>; Sat, 10 Jul 2021 16:54:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6E528610A1
+	for <dmaengine@archiver.kernel.org>; Sun, 11 Jul 2021 19:46:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229783AbhGJQ5W (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Sat, 10 Jul 2021 12:57:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42942 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229704AbhGJQ5W (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Sat, 10 Jul 2021 12:57:22 -0400
-Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD0EEC0613DD;
-        Sat, 10 Jul 2021 09:54:35 -0700 (PDT)
-Received: by mail-ed1-x531.google.com with SMTP id ca14so2280868edb.2;
-        Sat, 10 Jul 2021 09:54:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:mime-version:content-disposition;
-        bh=qN42ft8TO2D20OJfcUBVmNsGjubNKzxaIpoGBDjnO30=;
-        b=KG0sSGBzPIyk5dn/9sNt5fk1YQ28ryo6J2vVotiVbPPWEYatde9dumrcWhqceKiI3f
-         IPDwqLnDEWzLXU4vPZg6+SegLfF3/3Fvf1Isv1yl3+vTyl+pgYUDMKM9493eZ7qT0H6o
-         5b0907j01AT7ZHVH4/ByLhKetsMah6WUxupKX5PMuvRFiBj1gQKNDlHIuU5sPKJDBnDt
-         YUqV5R/mnwb5U9eQgia3WxIs6JQDH1RYmi2/snrCPZ8H4rvyP/iulnc6+hBdBYWwzhp0
-         u1/Sgp9M50AGqYuBpdzY4FElsnwk0WjKDAZPGi/gKFo3pKmp5QH5WZPeBc6OWP7ERKdi
-         eviA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
-         :content-disposition;
-        bh=qN42ft8TO2D20OJfcUBVmNsGjubNKzxaIpoGBDjnO30=;
-        b=Met8Keoe20GeKKAbmMkhcE6xTxioMMieM6xU+jE5IEXSojveYpKmAuvoCqQfadHQOV
-         VanYY9hRyEB4IevKCjnRt1Lr3MVDPPc3Q5so7blJ4o+lDFSslE0XNYsUMhDOyj/0axT3
-         +p8lzCMm8LXStTzmmpR1r6N9fTRHXRIeCJyBB2+0T5J8h6NWO1QoQBZCbL+KGPjuID7R
-         f37+66cDl5NscrUbAGDPBytCRwhzIAHdafr/uKb4Hq7RWIC0KWelBq+O5Kj/edocqtXs
-         jPI5JaH8J5wkYF5jPywZK8VfpTio05KVvUILLuZQNjrRKqBHYcUYG2+6Kimtwj+N2L01
-         HCNg==
-X-Gm-Message-State: AOAM533caYDaWphKQPTZG+UxXxrzJ7GBtUjWBfIK6jd58nkrBi0pWkS6
-        N5xy21kh4SomMGbaeSNHPDYyxAt6Ovw=
-X-Google-Smtp-Source: ABdhPJyGZeQGHL0WIRf20gdnN8dNBz8RmT6sCRdzAsQgX3VQjmUP/4iWG4gOTCW+bCr/hOuxLfsJ5A==
-X-Received: by 2002:aa7:dc01:: with SMTP id b1mr54151950edu.239.1625936074121;
-        Sat, 10 Jul 2021 09:54:34 -0700 (PDT)
-Received: from pc ([196.235.212.194])
-        by smtp.gmail.com with ESMTPSA id e2sm4854801edy.12.2021.07.10.09.54.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 10 Jul 2021 09:54:33 -0700 (PDT)
-Date:   Sat, 10 Jul 2021 17:54:32 +0100
-From:   Salah Triki <salah.triki@gmail.com>
-To:     vkoul@kernel.org, krzk@kernel.org, allen.lkml@gmail.com,
-        romain.perier@gmail.com
-Cc:     dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [RESEND] ppc4xx: replace sscanf() by kstrtoul()
-Message-ID: <20210710165432.GA690401@pc>
+        id S229907AbhGKTtT convert rfc822-to-8bit (ORCPT
+        <rfc822;dmaengine@archiver.kernel.org>);
+        Sun, 11 Jul 2021 15:49:19 -0400
+Received: from ps11.myhostcenter.com ([64.6.248.4]:58088 "EHLO
+        ps11.myhostcenter.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229544AbhGKTtT (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Sun, 11 Jul 2021 15:49:19 -0400
+X-Greylist: delayed 2000 seconds by postgrey-1.27 at vger.kernel.org; Sun, 11 Jul 2021 15:49:18 EDT
+Received: (qmail 7698 invoked from network); 11 Jul 2021 15:05:52 -0400
+Received: from 66.42.97.134.vultr.com (HELO johnlewis.com) (66.42.97.134)
+  by s154.n248.n6.n64.static.myhostcenter.net with (DHE-RSA-AES256-SHA encrypted) SMTP; 11 Jul 2021 15:05:52 -0400
+Reply-To: robert_turner@johnlewis-trades.com,
+          pippawicks.sales@johnlewis-trades.com
+From:   John Lewis & Partners <robert.turner44@johnlewis.com>
+To:     dmaengine@vger.kernel.org
+Subject: (JL) Order Inquiry 7/12/21
+Date:   11 Jul 2021 19:06:02 +0000
+Message-ID: <20210711185804.7732F719D1496455@johnlewis.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Content-Type: text/plain;
+        charset="utf-8"
+Content-Transfer-Encoding: 8BIT
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Fix the checkpatch.pl warning: "Prefer kstrto<type> to single variable sscanf".
+Dear dmaengine
 
-Signed-off-by: Salah Triki <salah.triki@gmail.com>
----
- drivers/dma/ppc4xx/adma.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+The famous brand John Lewis Partnership, is UK's largest multi-
+channel retailer with over 126 shops and multiple expansion in 
+Africa furnished by European/Asian/American products. We are
+sourcing new products to attract new customers and also retain 
+our existing ones, create new partnerships with companies dealing 
+with different kinds of goods globally.
 
-diff --git a/drivers/dma/ppc4xx/adma.c b/drivers/dma/ppc4xx/adma.c
-index df7704053d91..e2b5129c5f84 100644
---- a/drivers/dma/ppc4xx/adma.c
-+++ b/drivers/dma/ppc4xx/adma.c
-@@ -4319,6 +4319,7 @@ static ssize_t enable_store(struct device_driver *dev, const char *buf,
- 			    size_t count)
- {
- 	unsigned long val;
-+	int err;
- 
- 	if (!count || count > 11)
- 		return -EINVAL;
-@@ -4327,7 +4328,10 @@ static ssize_t enable_store(struct device_driver *dev, const char *buf,
- 		return -EFAULT;
- 
- 	/* Write a key */
--	sscanf(buf, "%lx", &val);
-+	err = kstrtoul(buf, 16, &val);
-+	if (err)
-+		return err;
-+
- 	dcr_write(ppc440spe_mq_dcr_host, DCRN_MQ0_XORBA, val);
- 	isync();
- 
-@@ -4368,7 +4372,7 @@ static ssize_t poly_store(struct device_driver *dev, const char *buf,
- 			  size_t count)
- {
- 	unsigned long reg, val;
--
-+	int err;
- #ifdef CONFIG_440SP
- 	/* 440SP uses default 0x14D polynomial only */
- 	return -EINVAL;
-@@ -4378,7 +4382,9 @@ static ssize_t poly_store(struct device_driver *dev, const char *buf,
- 		return -EINVAL;
- 
- 	/* e.g., 0x14D or 0x11D */
--	sscanf(buf, "%lx", &val);
-+	err = kstrtoul(buf, 16, &val);
-+	if (err)
-+		return err;
- 
- 	if (val & ~0x1FF)
- 		return -EINVAL;
--- 
-2.25.1
+Your company's products are of interest to our market as we have 
+an amazing market for your products.
 
+Provide us your current catalog through email to review more. We 
+hope to be able to order with you and start a long-term friendly, 
+respectable and solid business partnership. Please we would
+appreciate it if you could send us your stock availability via 
+email if any.
+
+Our payment terms are 15 days net in Europe, 30 days Net in UK 
+and 30 days net in Asia/USA as we operate with over 5297 
+suppliers around the globe for the past 50 years now. For
+immediate response Send your reply to "robert_turner@johnlewis-
+trades.com" for us to be able to treat with care and urgency.
+
+
+Best Regards
+
+Rob Turner
+Head Of Procurement Operations
+John Lewis & Partners.
+robert_turner@johnlewis-trades.com
+Tel: +44-7451-274090
+WhatsApp: +447497483925
+www.johnlewis.com
+REGISTERED OFFICE: 171 VICTORIA STREET, LONDON SW1E 5NN 
