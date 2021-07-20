@@ -6,49 +6,49 @@ X-Spam-Status: No, score=-7.5 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D0330C07E9B
-	for <dmaengine@archiver.kernel.org>; Tue, 20 Jul 2021 13:53:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6C4EFC07E95
+	for <dmaengine@archiver.kernel.org>; Tue, 20 Jul 2021 14:02:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AEB1861186
-	for <dmaengine@archiver.kernel.org>; Tue, 20 Jul 2021 13:53:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 50A746113A
+	for <dmaengine@archiver.kernel.org>; Tue, 20 Jul 2021 14:02:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236191AbhGTNNA (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 20 Jul 2021 09:13:00 -0400
-Received: from mail.kernel.org ([198.145.29.99]:33922 "EHLO mail.kernel.org"
+        id S238492AbhGTNVx (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 20 Jul 2021 09:21:53 -0400
+Received: from mail.kernel.org ([198.145.29.99]:35952 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S239188AbhGTNI4 (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Tue, 20 Jul 2021 09:08:56 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 973BC6113A;
-        Tue, 20 Jul 2021 13:49:33 +0000 (UTC)
+        id S239095AbhGTNQl (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Tue, 20 Jul 2021 09:16:41 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 0C355610F7;
+        Tue, 20 Jul 2021 13:57:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1626788974;
-        bh=jT0TGDrbaqTjjYCZ0Nlu4Cvnm/2u0+UYmlAD8RzK66Y=;
+        s=k20201202; t=1626789424;
+        bh=dcWu8vEecywc3SMwjdvSYhZUrB5x7XGvTiGAUV+NKV8=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=KC+9tSwFJvjrmNAokkgJlPneHd+UKgwtZ3JRd3Mmkkd/5D3LGF42LSwT+3dG5scsl
-         KnAvnIUZQCIt/R8nEwryixQ1zQ0oBMJmzGG7Y3hX7JXYCG11jaF7NXI2XUlhWjCYXJ
-         hET0WUo1TuJmljGXAtmSsDjl1QPNydyL1B8+yaLj1X62OnKk2O0GTpUzvROv3TNKYz
-         oeweeh8o9IGbtMhJsgo722uIqGM023xDKtCLdn0fySYUqdaw+oE9h2Ys3z1LuQ5PMD
-         iN4x8PDbyyZadiJgZC/x4tF1XpCdhGzun2GLksK0lOFESdtolvvX9hU9LqlDuvh8Pe
-         a0Ph/kqHWRRIQ==
-Date:   Tue, 20 Jul 2021 19:19:30 +0530
+        b=bxEAJUuA/wSLXuCLncrDhIKkPkRz3Sq8kb+rT3W+KaQ5Vup8ndZHh7uLPQ5vjzgy5
+         yoetBnb52Q+yiCx7KtCWj0LjxFgC4Yo8yFAGxguKwNH2szRwIz8ZyWQofUxyxNuMNK
+         HIIx5lsq+mxRp5S5Yyat65ay5BPEbWJImc8l3W6gGnh+YfmErSMuGaJEoM3zdjF1qc
+         ucTjAgkBzfNf1dFQLik+ay9llYeThmqam/2lZjqha44+adgDS55GL6IbECifP8Xlpt
+         acScOGK/FegbOPPQm+PXq4iFNL9zlBEDa/AGsjVoOFS8Ha/Ln0MxzLLMqQZWB8eE5h
+         nT6F/szjurO5g==
+Date:   Tue, 20 Jul 2021 19:27:01 +0530
 From:   Vinod Koul <vkoul@kernel.org>
 To:     Dave Jiang <dave.jiang@intel.com>
-Cc:     Dan Willliams <dan.j.williams@intel.com>, dmaengine@vger.kernel.org
-Subject: Re: [PATCH v3 00/18] Fix idxd sub-drivers setup
-Message-ID: <YPbUaqiDe22Vwm+J@matsya>
-References: <162637445139.744545.6008938867943724701.stgit@djiang5-desk3.ch.intel.com>
+Cc:     dmaengine@vger.kernel.org
+Subject: Re: [PATCH] dmaengine: idxd: fix desc->vector that isn't being
+ updated
+Message-ID: <YPbWLb5sp0XVcxZv@matsya>
+References: <162628784374.353761.4736602409627820431.stgit@djiang5-desk3.ch.intel.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <162637445139.744545.6008938867943724701.stgit@djiang5-desk3.ch.intel.com>
+In-Reply-To: <162628784374.353761.4736602409627820431.stgit@djiang5-desk3.ch.intel.com>
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On 15-07-21, 11:43, Dave Jiang wrote:
-> Vinod,
-> The series did not encounter any issues pushed on top of the latest 'next'
-> branch.
+On 14-07-21, 11:38, Dave Jiang wrote:
+> Missing update for desc->vector when the wq vector gets updated. This
+> causes the desc->vector to always be at 0.
 
 Applied, thanks
 
