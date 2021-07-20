@@ -7,33 +7,33 @@ X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7FFD8C07E95
-	for <dmaengine@archiver.kernel.org>; Tue, 20 Jul 2021 20:52:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 114A9C07E9B
+	for <dmaengine@archiver.kernel.org>; Tue, 20 Jul 2021 20:53:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5DB8D6108B
-	for <dmaengine@archiver.kernel.org>; Tue, 20 Jul 2021 20:52:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F017E61019
+	for <dmaengine@archiver.kernel.org>; Tue, 20 Jul 2021 20:53:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229797AbhGTULv (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 20 Jul 2021 16:11:51 -0400
-Received: from mga11.intel.com ([192.55.52.93]:59798 "EHLO mga11.intel.com"
+        id S234708AbhGTUMB (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 20 Jul 2021 16:12:01 -0400
+Received: from mga12.intel.com ([192.55.52.136]:41173 "EHLO mga12.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S234651AbhGTUBi (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Tue, 20 Jul 2021 16:01:38 -0400
-X-IronPort-AV: E=McAfee;i="6200,9189,10051"; a="208207247"
+        id S234829AbhGTUBp (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Tue, 20 Jul 2021 16:01:45 -0400
+X-IronPort-AV: E=McAfee;i="6200,9189,10051"; a="190909286"
 X-IronPort-AV: E=Sophos;i="5.84,256,1620716400"; 
-   d="scan'208";a="208207247"
-Received: from fmsmga002.fm.intel.com ([10.253.24.26])
-  by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Jul 2021 13:42:05 -0700
+   d="scan'208";a="190909286"
+Received: from fmsmga008.fm.intel.com ([10.253.24.58])
+  by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Jul 2021 13:42:16 -0700
 X-IronPort-AV: E=Sophos;i="5.84,256,1620716400"; 
-   d="scan'208";a="510910103"
+   d="scan'208";a="469893107"
 Received: from djiang5-desk3.ch.intel.com ([143.182.136.137])
-  by fmsmga002-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Jul 2021 13:42:04 -0700
-Subject: [PATCH] dmaengine: idxd: rotate portal address for better performance
+  by fmsmga008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Jul 2021 13:42:16 -0700
+Subject: [PATCH] dmanegine: idxd: add software command status
 From:   Dave Jiang <dave.jiang@intel.com>
 To:     vkoul@kernel.org
-Cc:     dmaengine@vger.kernel.org
-Date:   Tue, 20 Jul 2021 13:42:04 -0700
-Message-ID: <162681372446.1968485.10634280461681015569.stgit@djiang5-desk3.ch.intel.com>
+Cc:     Ramesh Thomas <ramesh.thomas@intel.com>, dmaengine@vger.kernel.org
+Date:   Tue, 20 Jul 2021 13:42:15 -0700
+Message-ID: <162681373579.1968485.5891788397526827892.stgit@djiang5-desk3.ch.intel.com>
 User-Agent: StGit/0.23-29-ga622f1
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
@@ -42,87 +42,263 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-The device submission portal is on a 4k page and any of those 64bit aligned
-address on the page can be used for descriptor submission. By rotating the
-offset through the 4k range and prevent successive writes to the same MMIO
-address, performance improvement is observed through testing.
+Enabling device and wq returns standard errno and that does not provide
+enough details to indicate what exactly failed. The hardware command status
+is only 8bits. Expand the command status to 32bits and use the upper 16
+bits to define software errors to provide more details on the exact
+failure. Bit 31 will be used to indicate the error is software set as the
+driver is using some of the spec defined hardware error as well.
 
+Cc: Ramesh Thomas <ramesh.thomas@intel.com>
 Signed-off-by: Dave Jiang <dave.jiang@intel.com>
 ---
- drivers/dma/idxd/device.c |    1 +
- drivers/dma/idxd/idxd.h   |   20 ++++++++++++++++++++
- drivers/dma/idxd/submit.c |    2 +-
- 3 files changed, 22 insertions(+), 1 deletion(-)
+ Documentation/ABI/stable/sysfs-driver-dma-idxd |    2 ++
+ drivers/dma/idxd/cdev.c                        |    5 ++++-
+ drivers/dma/idxd/device.c                      |   22 +++++++++++++++++++---
+ drivers/dma/idxd/dma.c                         |    4 ++++
+ drivers/dma/idxd/idxd.h                        |    2 +-
+ drivers/dma/idxd/sysfs.c                       |   11 ++++++++++-
+ include/uapi/linux/idxd.h                      |   23 +++++++++++++++++++++++
+ 7 files changed, 63 insertions(+), 6 deletions(-)
 
+diff --git a/Documentation/ABI/stable/sysfs-driver-dma-idxd b/Documentation/ABI/stable/sysfs-driver-dma-idxd
+index adb0c93e8dfc..df4afbccf037 100644
+--- a/Documentation/ABI/stable/sysfs-driver-dma-idxd
++++ b/Documentation/ABI/stable/sysfs-driver-dma-idxd
+@@ -128,6 +128,8 @@ Date:		Aug 28, 2020
+ KernelVersion:	5.10.0
+ Contact:	dmaengine@vger.kernel.org
+ Description:	The last executed device administrative command's status/error.
++		Also last configuration error overloaded.
++		Writing to it will clear the status.
+ 
+ What:		/sys/bus/dsa/devices/wq<m>.<n>/block_on_fault
+ Date:		Oct 27, 2020
+diff --git a/drivers/dma/idxd/cdev.c b/drivers/dma/idxd/cdev.c
+index f6a4603517ba..4d2ecdb130e7 100644
+--- a/drivers/dma/idxd/cdev.c
++++ b/drivers/dma/idxd/cdev.c
+@@ -320,9 +320,12 @@ static int idxd_user_drv_probe(struct idxd_dev *idxd_dev)
+ 		goto err;
+ 
+ 	rc = idxd_wq_add_cdev(wq);
+-	if (rc < 0)
++	if (rc < 0) {
++		idxd->cmd_status = IDXD_SCMD_CDEV_ERR;
+ 		goto err_cdev;
++	}
+ 
++	idxd->cmd_status = 0;
+ 	mutex_unlock(&wq->wq_lock);
+ 	return 0;
+ 
 diff --git a/drivers/dma/idxd/device.c b/drivers/dma/idxd/device.c
-index 99350ac9a292..41f67a195eb6 100644
+index 41f67a195eb6..86fa4b4590f9 100644
 --- a/drivers/dma/idxd/device.c
 +++ b/drivers/dma/idxd/device.c
-@@ -320,6 +320,7 @@ void idxd_wq_unmap_portal(struct idxd_wq *wq)
+@@ -840,6 +840,7 @@ static int idxd_wq_config_write(struct idxd_wq *wq)
+ 	wq->wqcfg->wq_size = wq->size;
  
- 	devm_iounmap(dev, wq->portal);
- 	wq->portal = NULL;
-+	wq->portal_offset = 0;
+ 	if (wq->size == 0) {
++		idxd->cmd_status = IDXD_SCMD_WQ_NO_SIZE;
+ 		dev_warn(dev, "Incorrect work queue size: 0\n");
+ 		return -EINVAL;
+ 	}
+@@ -975,6 +976,7 @@ static int idxd_wqs_setup(struct idxd_device *idxd)
+ 			continue;
+ 
+ 		if (wq_shared(wq) && !device_swq_supported(idxd)) {
++			idxd->cmd_status = IDXD_SCMD_WQ_NO_SWQ_SUPPORT;
+ 			dev_warn(dev, "No shared wq support but configured.\n");
+ 			return -EINVAL;
+ 		}
+@@ -983,8 +985,10 @@ static int idxd_wqs_setup(struct idxd_device *idxd)
+ 		configured++;
+ 	}
+ 
+-	if (configured == 0)
++	if (configured == 0) {
++		idxd->cmd_status = IDXD_SCMD_WQ_NONE_CONFIGURED;
+ 		return -EINVAL;
++	}
+ 
+ 	return 0;
+ }
+@@ -1140,21 +1144,26 @@ int __drv_enable_wq(struct idxd_wq *wq)
+ 
+ 	lockdep_assert_held(&wq->wq_lock);
+ 
+-	if (idxd->state != IDXD_DEV_ENABLED)
++	if (idxd->state != IDXD_DEV_ENABLED) {
++		idxd->cmd_status = IDXD_SCMD_DEV_NOT_ENABLED;
+ 		goto err;
++	}
+ 
+ 	if (wq->state != IDXD_WQ_DISABLED) {
+ 		dev_dbg(dev, "wq %d already enabled.\n", wq->id);
++		idxd->cmd_status = IDXD_SCMD_WQ_ENABLED;
+ 		rc = -EBUSY;
+ 		goto err;
+ 	}
+ 
+ 	if (!wq->group) {
+ 		dev_dbg(dev, "wq %d not attached to group.\n", wq->id);
++		idxd->cmd_status = IDXD_SCMD_WQ_NO_GRP;
+ 		goto err;
+ 	}
+ 
+ 	if (strlen(wq->name) == 0) {
++		idxd->cmd_status = IDXD_SCMD_WQ_NO_NAME;
+ 		dev_dbg(dev, "wq %d name not set.\n", wq->id);
+ 		goto err;
+ 	}
+@@ -1162,6 +1171,7 @@ int __drv_enable_wq(struct idxd_wq *wq)
+ 	/* Shared WQ checks */
+ 	if (wq_shared(wq)) {
+ 		if (!device_swq_supported(idxd)) {
++			idxd->cmd_status = IDXD_SCMD_WQ_NO_SVM;
+ 			dev_dbg(dev, "PASID not enabled and shared wq.\n");
+ 			goto err;
+ 		}
+@@ -1174,6 +1184,7 @@ int __drv_enable_wq(struct idxd_wq *wq)
+ 		 * threshold via sysfs.
+ 		 */
+ 		if (wq->threshold == 0) {
++			idxd->cmd_status = IDXD_SCMD_WQ_NO_THRESH;
+ 			dev_dbg(dev, "Shared wq and threshold 0.\n");
+ 			goto err;
+ 		}
+@@ -1197,6 +1208,7 @@ int __drv_enable_wq(struct idxd_wq *wq)
+ 
+ 	rc = idxd_wq_map_portal(wq);
+ 	if (rc < 0) {
++		idxd->cmd_status = IDXD_SCMD_WQ_PORTAL_ERR;
+ 		dev_dbg(dev, "wq %d portal mapping failed: %d\n", wq->id, rc);
+ 		goto err_map_portal;
+ 	}
+@@ -1259,8 +1271,10 @@ int idxd_device_drv_probe(struct idxd_dev *idxd_dev)
+ 	 * enabled state, then the device was altered outside of driver's control.
+ 	 * If the state is in halted state, then we don't want to proceed.
+ 	 */
+-	if (idxd->state != IDXD_DEV_DISABLED)
++	if (idxd->state != IDXD_DEV_DISABLED) {
++		idxd->cmd_status = IDXD_SCMD_DEV_ENABLED;
+ 		return -ENXIO;
++	}
+ 
+ 	/* Device configuration */
+ 	spin_lock_irqsave(&idxd->dev_lock, flags);
+@@ -1279,9 +1293,11 @@ int idxd_device_drv_probe(struct idxd_dev *idxd_dev)
+ 	rc = idxd_register_dma_device(idxd);
+ 	if (rc < 0) {
+ 		idxd_device_disable(idxd);
++		idxd->cmd_status = IDXD_SCMD_DEV_DMA_ERR;
+ 		return rc;
+ 	}
+ 
++	idxd->cmd_status = 0;
+ 	return 0;
  }
  
- void idxd_wqs_unmap_portal(struct idxd_device *idxd)
+diff --git a/drivers/dma/idxd/dma.c b/drivers/dma/idxd/dma.c
+index 2fd7ec29a08f..a195225687bb 100644
+--- a/drivers/dma/idxd/dma.c
++++ b/drivers/dma/idxd/dma.c
+@@ -284,22 +284,26 @@ static int idxd_dmaengine_drv_probe(struct idxd_dev *idxd_dev)
+ 
+ 	rc = idxd_wq_alloc_resources(wq);
+ 	if (rc < 0) {
++		idxd->cmd_status = IDXD_SCMD_WQ_RES_ALLOC_ERR;
+ 		dev_dbg(dev, "WQ resource alloc failed\n");
+ 		goto err_res_alloc;
+ 	}
+ 
+ 	rc = idxd_wq_init_percpu_ref(wq);
+ 	if (rc < 0) {
++		idxd->cmd_status = IDXD_SCMD_PERCPU_ERR;
+ 		dev_dbg(dev, "percpu_ref setup failed\n");
+ 		goto err_ref;
+ 	}
+ 
+ 	rc = idxd_register_dma_channel(wq);
+ 	if (rc < 0) {
++		idxd->cmd_status = IDXD_SCMD_DMA_CHAN_ERR;
+ 		dev_dbg(dev, "Failed to register dma channel\n");
+ 		goto err_dma;
+ 	}
+ 
++	idxd->cmd_status = 0;
+ 	mutex_unlock(&wq->wq_lock);
+ 	return 0;
+ 
 diff --git a/drivers/dma/idxd/idxd.h b/drivers/dma/idxd/idxd.h
-index d0874d8877d9..34d4f43bfedc 100644
+index 94983bced189..bfcb03329f77 100644
 --- a/drivers/dma/idxd/idxd.h
 +++ b/drivers/dma/idxd/idxd.h
-@@ -11,6 +11,7 @@
- #include <linux/idr.h>
- #include <linux/pci.h>
- #include <linux/perf_event.h>
-+#include <uapi/linux/idxd.h>
- #include "registers.h"
+@@ -252,7 +252,7 @@ struct idxd_device {
+ 	unsigned long flags;
+ 	int id;
+ 	int major;
+-	u8 cmd_status;
++	u32 cmd_status;
  
- #define IDXD_DRIVER_VERSION	"1.00"
-@@ -161,6 +162,7 @@ struct idxd_dma_chan {
+ 	struct pci_dev *pdev;
+ 	void __iomem *reg_base;
+diff --git a/drivers/dma/idxd/sysfs.c b/drivers/dma/idxd/sysfs.c
+index 881a12596d4b..4c01587c9d4a 100644
+--- a/drivers/dma/idxd/sysfs.c
++++ b/drivers/dma/idxd/sysfs.c
+@@ -1217,7 +1217,16 @@ static ssize_t cmd_status_show(struct device *dev,
  
- struct idxd_wq {
- 	void __iomem *portal;
-+	u32 portal_offset;
- 	struct percpu_ref wq_active;
- 	struct completion wq_dead;
- 	struct idxd_dev idxd_dev;
-@@ -467,6 +469,24 @@ static inline int idxd_get_wq_portal_full_offset(int wq_id,
- 	return ((wq_id * 4) << PAGE_SHIFT) + idxd_get_wq_portal_offset(prot);
+ 	return sysfs_emit(buf, "%#x\n", idxd->cmd_status);
  }
- 
-+#define IDXD_PORTAL_MASK	(PAGE_SIZE - 1)
+-static DEVICE_ATTR_RO(cmd_status);
 +
-+/*
-+ * Even though this function can be accessed by multiple threads, it is safe to use.
-+ * At worst the address gets used more than once before it gets incremented. We don't
-+ * hit a threshold until iops becomes many million times a second. So the occasional
-+ * reuse of the same address is tolerable compare to using an atomic variable. This is
-+ * safe on a system that has atomic load/store for 32bit integers. Given that this is an
-+ * Intel iEP device, that should not be a problem.
-+ */
-+static inline void __iomem *idxd_wq_portal_addr(struct idxd_wq *wq)
++static ssize_t cmd_status_store(struct device *dev, struct device_attribute *attr,
++				const char *buf, size_t count)
 +{
-+	int ofs = wq->portal_offset;
++	struct idxd_device *idxd = confdev_to_idxd(dev);
 +
-+	wq->portal_offset = (ofs + sizeof(struct dsa_raw_desc)) & IDXD_PORTAL_MASK;
-+	return wq->portal + ofs;
++	idxd->cmd_status = 0;
++	return count;
 +}
++static DEVICE_ATTR_RW(cmd_status);
+ 
+ static struct attribute *idxd_device_attributes[] = {
+ 	&dev_attr_version.attr,
+diff --git a/include/uapi/linux/idxd.h b/include/uapi/linux/idxd.h
+index e33997b4d750..3f67255ae46f 100644
+--- a/include/uapi/linux/idxd.h
++++ b/include/uapi/linux/idxd.h
+@@ -9,6 +9,29 @@
+ #include <stdint.h>
+ #endif
+ 
++/* Driver command error status */
++enum idxd_scmd_stat {
++	IDXD_SCMD_DEV_ENABLED = 0x80000010,
++	IDXD_SCMD_DEV_NOT_ENABLED = 0x80000020,
++	IDXD_SCMD_WQ_ENABLED = 0x80000021,
++	IDXD_SCMD_DEV_DMA_ERR = 0x80020000,
++	IDXD_SCMD_WQ_NO_GRP = 0x80030000,
++	IDXD_SCMD_WQ_NO_NAME = 0x80040000,
++	IDXD_SCMD_WQ_NO_SVM = 0x80050000,
++	IDXD_SCMD_WQ_NO_THRESH = 0x80060000,
++	IDXD_SCMD_WQ_PORTAL_ERR = 0x80070000,
++	IDXD_SCMD_WQ_RES_ALLOC_ERR = 0x80080000,
++	IDXD_SCMD_PERCPU_ERR = 0x80090000,
++	IDXD_SCMD_DMA_CHAN_ERR= 0x800a0000,
++	IDXD_SCMD_CDEV_ERR = 0x800b0000,
++	IDXD_SCMD_WQ_NO_SWQ_SUPPORT = 0x800c0000,
++	IDXD_SCMD_WQ_NONE_CONFIGURED = 0x800d0000,
++	IDXD_SCMD_WQ_NO_SIZE = 0x800e0000,
++};
 +
- static inline void idxd_wq_get(struct idxd_wq *wq)
- {
- 	wq->client_count++;
-diff --git a/drivers/dma/idxd/submit.c b/drivers/dma/idxd/submit.c
-index 6ef704dd4d0b..43efbde696b5 100644
---- a/drivers/dma/idxd/submit.c
-+++ b/drivers/dma/idxd/submit.c
-@@ -146,7 +146,7 @@ int idxd_submit_desc(struct idxd_wq *wq, struct idxd_desc *desc)
- 	if (!percpu_ref_tryget_live(&wq->wq_active))
- 		return -ENXIO;
- 
--	portal = wq->portal;
-+	portal = idxd_wq_portal_addr(wq);
- 
- 	/*
- 	 * The wmb() flushes writes to coherent DMA data before
++#define IDXD_SCMD_SOFTERR_MASK	0x80000000
++#define IDXD_SCMD_SOFTERR_SHIFT	16
++
+ /* Descriptor flags */
+ #define IDXD_OP_FLAG_FENCE	0x0001
+ #define IDXD_OP_FLAG_BOF	0x0002
 
 
