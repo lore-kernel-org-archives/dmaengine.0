@@ -6,77 +6,49 @@ X-Spam-Status: No, score=-7.5 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8EC73C636C8
-	for <dmaengine@archiver.kernel.org>; Tue, 20 Jul 2021 14:02:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 200D6C636CE
+	for <dmaengine@archiver.kernel.org>; Tue, 20 Jul 2021 14:02:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 78FB46113C
-	for <dmaengine@archiver.kernel.org>; Tue, 20 Jul 2021 14:02:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0B1FD6113A
+	for <dmaengine@archiver.kernel.org>; Tue, 20 Jul 2021 14:02:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238596AbhGTNVy (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 20 Jul 2021 09:21:54 -0400
-Received: from mail.kernel.org ([198.145.29.99]:36162 "EHLO mail.kernel.org"
+        id S238960AbhGTNV4 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 20 Jul 2021 09:21:56 -0400
+Received: from mail.kernel.org ([198.145.29.99]:36314 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S239210AbhGTNRl (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Tue, 20 Jul 2021 09:17:41 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 41C3D6113A;
-        Tue, 20 Jul 2021 13:58:18 +0000 (UTC)
+        id S239447AbhGTNSv (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Tue, 20 Jul 2021 09:18:51 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 0AA6C6113B;
+        Tue, 20 Jul 2021 13:50:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1626789500;
-        bh=m4r6SGJy8VkYPoQh952xQ62vlJp1Exmn/BK57supkL0=;
+        s=k20201202; t=1626789005;
+        bh=UXL7Og6jkC/KEfhogXL0bEuB6NF9wI1aI+MlbEDUEjE=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=Hbd8s22omned4LdKTFXoh0EPXkZJ39QIVUAalKsR6jZMgxUc2wb1fOpvJiMCUORK7
-         QzsjgNsK/jYRk2BH5hMhkXPGQ/iXBJV/+9QNDKdjd936CLzRHyIfObVhE7HT+7MKj9
-         Far0DxGo+ozLnnMchFumgS9v55wSwRe91rUMgZKUqyQzeGL0450LOpYh1SNGOoVYi3
-         PU9HLVm7SNyhu5paS7I+orRr9P8X74geMx2LoDFpwsvvBaCAilYR5vLWwGcCQwuTrC
-         A1SPrn/xEiuI6s2ZfThHfMNEBIt9ekoFlZmDhiUNxC9VoJ/mA4zukT16MhIUUcXMnG
-         8qp3hber8IglQ==
-Date:   Tue, 20 Jul 2021 19:28:16 +0530
+        b=CSpCwS6wPQbpv1E4Gb2Z/8IsuHKW4g9WzFcgjTrMClC9RPz26hOZBkoTln06FdT70
+         5BPh303dUANM2uLs6B48zzKKWxaKBPHjC3dEawnpOo+uCuwzWJ5OGabnYNbwdJt/CQ
+         CBAsyF+enKDup0xnD8GM7zJFsAjFIOsXWcurGVQI+pABTNPmhjUP/AqCOrTTMlkAn8
+         fBCi/RUn+UJ/BelmuG7s8XhJeYRBKip/yTxvajeKW6Qwhpz/syBBCmSEqnLfFle1sJ
+         HhplCwj0cQHrqgTPbi102qpceRMr/HgpqX2J18tUuxn8JHpgunuVnv7RmyLVbdNntE
+         9LGP0WImdqz0w==
+Date:   Tue, 20 Jul 2021 19:20:02 +0530
 From:   Vinod Koul <vkoul@kernel.org>
 To:     Dave Jiang <dave.jiang@intel.com>
-Cc:     Konstantin Ananyev <konstantin.ananyev@intel.com>,
-        dmaengine@vger.kernel.org
-Subject: Re: [PATCH v4] dmaengine: idxd: fix submission race window
-Message-ID: <YPbWeAyZa/IsZyEG@matsya>
-References: <162628855747.360485.10101925573082466530.stgit@djiang5-desk3.ch.intel.com>
+Cc:     dmaengine@vger.kernel.org
+Subject: Re: [PATCH v2] dmaengine: idxd: remove fault processing code
+Message-ID: <YPbUij/jce+BJGxc@matsya>
+References: <162630502789.631986.10591230961790023856.stgit@djiang5-desk3.ch.intel.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <162628855747.360485.10101925573082466530.stgit@djiang5-desk3.ch.intel.com>
+In-Reply-To: <162630502789.631986.10591230961790023856.stgit@djiang5-desk3.ch.intel.com>
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On 14-07-21, 11:50, Dave Jiang wrote:
-> Konstantin observed that when descriptors are submitted, the descriptor is
-> added to the pending list after the submission. This creates a race window
-> with the slight possibility that the descriptor can complete before it
-> gets added to the pending list and this window would cause the completion
-> handler to miss processing the descriptor.
-> 
-> To address the issue, the addition of the descriptor to the pending list
-> must be done before it gets submitted to the hardware. However, submitting
-> to swq with ENQCMDS instruction can cause a failure with the condition of
-> either wq is full or wq is not "active".
-> 
-> With the descriptor allocation being the gate to the wq capacity, it is not
-> possible to hit a retry with ENQCMDS submission to the swq. The only
-> possible failure can happen is when wq is no longer "active" due to hw
-> error and therefore we are moving towards taking down the portal. Given
-> this is a rare condition and there's no longer concern over I/O
-> performance, the driver can walk the completion lists in order to retrieve
-> and abort the descriptor.
-> 
-> The error path will set the descriptor to aborted status. It will take the
-> work list lock to prevent further processing of worklist. It will do a
-> delete_all on the pending llist to retrieve all descriptors on the pending
-> llist. The delete_all action does not require a lock. It will walk through
-> the acquired llist to find the aborted descriptor while add all remaining
-> descriptors to the work list since it holds the lock. If it does not find
-> the aborted descriptor on the llist, it will walk through the work
-> list. And if it still does not find the descriptor, then it means the
-> interrupt handler has removed the desc from the llist but is pending on
-> the work list lock and will process it once the error path releases the
-> lock.
+On 14-07-21, 16:25, Dave Jiang wrote:
+> Kernel memory are pinned and will not cause faults. Since the driver
+> does not support interrupts for user descriptors, no fault errors are
+> expected to come through the misc interrupt. Remove dead code.
 
 Applied, thanks
 
