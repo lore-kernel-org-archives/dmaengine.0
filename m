@@ -2,47 +2,47 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
+X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
 	autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C60CAC636C9
-	for <dmaengine@archiver.kernel.org>; Wed, 21 Jul 2021 12:01:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 11703C6379D
+	for <dmaengine@archiver.kernel.org>; Wed, 21 Jul 2021 12:01:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 993AC6120A
-	for <dmaengine@archiver.kernel.org>; Wed, 21 Jul 2021 12:01:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F2C94611C1
+	for <dmaengine@archiver.kernel.org>; Wed, 21 Jul 2021 12:01:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235056AbhGULSY (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 21 Jul 2021 07:18:24 -0400
-Received: from mx08-00178001.pphosted.com ([91.207.212.93]:60994 "EHLO
-        mx07-00178001.pphosted.com" rhost-flags-OK-OK-OK-FAIL)
-        by vger.kernel.org with ESMTP id S238498AbhGUK7l (ORCPT
+        id S235826AbhGULU2 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 21 Jul 2021 07:20:28 -0400
+Received: from mx07-00178001.pphosted.com ([185.132.182.106]:34138 "EHLO
+        mx07-00178001.pphosted.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S238499AbhGUK7l (ORCPT
         <rfc822;dmaengine@vger.kernel.org>); Wed, 21 Jul 2021 06:59:41 -0400
-Received: from pps.filterd (m0046661.ppops.net [127.0.0.1])
-        by mx07-00178001.pphosted.com (8.16.0.43/8.16.0.43) with SMTP id 16LBbEAw030559;
+Received: from pps.filterd (m0241204.ppops.net [127.0.0.1])
+        by mx07-00178001.pphosted.com (8.16.0.43/8.16.0.43) with SMTP id 16LBdKru028532;
         Wed, 21 Jul 2021 13:40:00 +0200
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foss.st.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-transfer-encoding : content-type; s=selector1;
- bh=9K0el6v2S3oKMB5e1ZaxFrvwWS0dlKkQ3UZ872NGc4Y=;
- b=SE3RxeW+3onxzEVgY3qgSnz33Taq62il7B//FTbvpaLIP7ZxmghjVbz7eqbjhGDnKBhw
- tAEE4anqZ7I82aK/O1rhb+/OLVXKW99bJHqya6ZDuKzDoVGVfElqR4Re1hB22xtqnAIm
- PKxFv+mkoxEPqDYr5vStdQtDFUy//ZqloiW52huVFB0+xfNLrdhIfLds2xBJ/O0vFfz/
- 58opMxs4hM1LpKKhWp9fmAHZmqv1XqU6d+MEDct2Br4OPQ7eQweMj4pB68rFXxXQNt8k
- RWqZHUnwd8Fn5t+8XKzJzNNtDQvkR2nG1EbTZfclaTA8la+ON2/SB3VTj5MXeIM3HbXg zA== 
+ subject : date : message-id : mime-version : content-transfer-encoding :
+ content-type; s=selector1;
+ bh=WH9sfPG0sFNA7LnkNWxq7q/+Vqhs13duVaMd5M0INYY=;
+ b=mfjgMnmHu2oLf9JSYyCjk//ibLydGvJN0Ht8JXZXs7OTV/cGGZ3JTAERUwkBvjfPBOUc
+ 3xm1LLXcsGUghlim1TlvmWvaT9KXKfj8RZDOUsR6htHIVkWIa0D0d7Sq4GeuUvvu3cwl
+ 8mmsRa7sl1zaWJHZ98gIpmWh94Kp0Zle+Tk0QR0N2ThSzB8r9AB2WgmFmUr75ypNFD1R
+ prNGL6dqSKUaDxocFqT0d+kfh64oN7ur8LMWhU8bwa9EbM4rp/S2djSn+R5OQLVH2S9A
+ QQyfuWiaSSRd9EVd3H/IS057DNW/dondUrayo2BzYxRBytWRAXA2aMVGXi+cJL9ZNS8v 5A== 
 Received: from beta.dmz-eu.st.com (beta.dmz-eu.st.com [164.129.1.35])
-        by mx07-00178001.pphosted.com with ESMTP id 39xg2c11bc-1
+        by mx07-00178001.pphosted.com with ESMTP id 39wvs0pre5-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
         Wed, 21 Jul 2021 13:40:00 +0200
 Received: from euls16034.sgp.st.com (euls16034.sgp.st.com [10.75.44.20])
-        by beta.dmz-eu.st.com (STMicroelectronics) with ESMTP id C33DD100038;
-        Wed, 21 Jul 2021 13:39:59 +0200 (CEST)
+        by beta.dmz-eu.st.com (STMicroelectronics) with ESMTP id 2A09B10002A;
+        Wed, 21 Jul 2021 13:39:58 +0200 (CEST)
 Received: from Webmail-eu.st.com (sfhdag2node3.st.com [10.75.127.6])
-        by euls16034.sgp.st.com (STMicroelectronics) with ESMTP id B37052238C2;
-        Wed, 21 Jul 2021 13:39:59 +0200 (CEST)
-Received: from localhost (10.75.127.49) by SFHDAG2NODE3.st.com (10.75.127.6)
- with Microsoft SMTP Server (TLS) id 15.0.1497.2; Wed, 21 Jul 2021 13:39:59
+        by euls16034.sgp.st.com (STMicroelectronics) with ESMTP id 137852238C2;
+        Wed, 21 Jul 2021 13:39:58 +0200 (CEST)
+Received: from localhost (10.75.127.50) by SFHDAG2NODE3.st.com (10.75.127.6)
+ with Microsoft SMTP Server (TLS) id 15.0.1497.2; Wed, 21 Jul 2021 13:39:57
  +0200
 From:   Amelie Delaunay <amelie.delaunay@foss.st.com>
 To:     Vinod Koul <vkoul@kernel.org>, Rob Herring <robh+dt@kernel.org>,
@@ -55,17 +55,15 @@ CC:     <dmaengine@vger.kernel.org>, <devicetree@vger.kernel.org>,
         <linux-kernel@vger.kernel.org>,
         Amelie Delaunay <amelie.delaunay@foss.st.com>,
         Pierre-Yves Mordret <pierre-yves.mordret@foss.st.com>
-Subject: [RESEND PATCH 2/2] dmaengine: stm32-dma: add alternate REQ/ACK protocol management
-Date:   Wed, 21 Jul 2021 13:39:46 +0200
-Message-ID: <20210721113946.81001-3-amelie.delaunay@foss.st.com>
+Subject: [RESEND PATCH 0/2] STM32 DMA alternative REQ/ACK protocol support
+Date:   Wed, 21 Jul 2021 13:39:44 +0200
+Message-ID: <20210721113946.81001-1-amelie.delaunay@foss.st.com>
 X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20210721113946.81001-1-amelie.delaunay@foss.st.com>
-References: <20210721113946.81001-1-amelie.delaunay@foss.st.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-Originating-IP: [10.75.127.49]
-X-ClientProxiedBy: SFHDAG2NODE3.st.com (10.75.127.6) To SFHDAG2NODE3.st.com
+X-Originating-IP: [10.75.127.50]
+X-ClientProxiedBy: SFHDAG2NODE1.st.com (10.75.127.4) To SFHDAG2NODE3.st.com
  (10.75.127.6)
 X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.391,18.0.790
  definitions=2021-07-21_08:2021-07-21,2021-07-21 signatures=0
@@ -73,56 +71,22 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-STM32 USART/UART is not managing correctly the default DMA REQ/ACK protocol
-leading to possibly lock the DMA stream.
-Default protocol consists in maintaining ACK signal up to the removal of
-REQuest and the transfer completion.
+Default REQ/ACK protocol consists in maintaining ACK signal up to the
+removal of REQuest and the transfer completion.
 In case of alternative REQ/ACK protocol, ACK de-assertion does not wait the
 removal of the REQuest, but only the transfer completion.
+Due to a possible DMA stream lock when transferring data to/from STM32
+USART/UART, add support to select alternative REQ/ACK protocol.
 
-This patch retrieves the need of the alternative protocol through the
-device tree, and sets the protocol accordingly.
-It also unwrap STM32_DMA_DIRECT_MODE_GET macro definition for consistency
-with new STM32_DMA_ALT_ACK_MODE_GET macro definition.
+Amelie Delaunay (2):
+  dt-bindings: dma: add alternative REQ/ACK protocol selection in
+    stm32-dma
+  dmaengine: stm32-dma: add alternate REQ/ACK protocol management
 
-Signed-off-by: Amelie Delaunay <amelie.delaunay@foss.st.com>
----
- drivers/dma/stm32-dma.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ Documentation/devicetree/bindings/dma/st,stm32-dma.yaml | 7 +++++++
+ drivers/dma/stm32-dma.c                                 | 8 ++++++--
+ 2 files changed, 13 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/dma/stm32-dma.c b/drivers/dma/stm32-dma.c
-index f54ecb123a52..d3aa34b3d2f7 100644
---- a/drivers/dma/stm32-dma.c
-+++ b/drivers/dma/stm32-dma.c
-@@ -60,6 +60,7 @@
- #define STM32_DMA_SCR_PSIZE_GET(n)	((n & STM32_DMA_SCR_PSIZE_MASK) >> 11)
- #define STM32_DMA_SCR_DIR_MASK		GENMASK(7, 6)
- #define STM32_DMA_SCR_DIR(n)		((n & 0x3) << 6)
-+#define STM32_DMA_SCR_TRBUFF		BIT(20) /* Bufferable transfer for USART/UART */
- #define STM32_DMA_SCR_CT		BIT(19) /* Target in double buffer */
- #define STM32_DMA_SCR_DBM		BIT(18) /* Double Buffer Mode */
- #define STM32_DMA_SCR_PINCOS		BIT(15) /* Peripheral inc offset size */
-@@ -138,8 +139,9 @@
- #define STM32_DMA_THRESHOLD_FTR_MASK	GENMASK(1, 0)
- #define STM32_DMA_THRESHOLD_FTR_GET(n)	((n) & STM32_DMA_THRESHOLD_FTR_MASK)
- #define STM32_DMA_DIRECT_MODE_MASK	BIT(2)
--#define STM32_DMA_DIRECT_MODE_GET(n)	(((n) & STM32_DMA_DIRECT_MODE_MASK) \
--					 >> 2)
-+#define STM32_DMA_DIRECT_MODE_GET(n)	(((n) & STM32_DMA_DIRECT_MODE_MASK) >> 2)
-+#define STM32_DMA_ALT_ACK_MODE_MASK	BIT(4)
-+#define STM32_DMA_ALT_ACK_MODE_GET(n)	(((n) & STM32_DMA_ALT_ACK_MODE_MASK) >> 4)
- 
- enum stm32_dma_width {
- 	STM32_DMA_BYTE,
-@@ -1252,6 +1254,8 @@ static void stm32_dma_set_config(struct stm32_dma_chan *chan,
- 	chan->threshold = STM32_DMA_THRESHOLD_FTR_GET(cfg->features);
- 	if (STM32_DMA_DIRECT_MODE_GET(cfg->features))
- 		chan->threshold = STM32_DMA_FIFO_THRESHOLD_NONE;
-+	if (STM32_DMA_ALT_ACK_MODE_GET(cfg->features))
-+		chan->chan_reg.dma_scr |= STM32_DMA_SCR_TRBUFF;
- }
- 
- static struct dma_chan *stm32_dma_of_xlate(struct of_phandle_args *dma_spec,
 -- 
 2.25.1
 
