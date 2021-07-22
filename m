@@ -2,45 +2,42 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.5 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-12.2 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 50F03C63793
-	for <dmaengine@archiver.kernel.org>; Thu, 22 Jul 2021 14:10:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 49251C63798
+	for <dmaengine@archiver.kernel.org>; Thu, 22 Jul 2021 14:21:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 380F86100C
-	for <dmaengine@archiver.kernel.org>; Thu, 22 Jul 2021 14:10:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 282ED61353
+	for <dmaengine@archiver.kernel.org>; Thu, 22 Jul 2021 14:21:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232241AbhGVN3a (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Thu, 22 Jul 2021 09:29:30 -0400
-Received: from mail.kernel.org ([198.145.29.99]:40182 "EHLO mail.kernel.org"
+        id S232227AbhGVNku (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Thu, 22 Jul 2021 09:40:50 -0400
+Received: from mail.kernel.org ([198.145.29.99]:42884 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232105AbhGVN3a (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Thu, 22 Jul 2021 09:29:30 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 79B956100C;
-        Thu, 22 Jul 2021 14:10:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1626963005;
-        bh=Zng5weqblYORm27hewy/vtF2ESUwu4tN0uaPT0saZ9Y=;
+        id S232228AbhGVNjH (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Thu, 22 Jul 2021 09:39:07 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 2FC136100C;
+        Thu, 22 Jul 2021 14:19:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+        s=korg; t=1626963567;
+        bh=zJ3Zp5AAggyHtuPj8z/ta/IgeTLqyJcK5mtVEx526Q0=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=nEyoEueBim62N99t9Q6ZzZsWX0NuxoabhK09ERdSN44HbtRH7e0GHYn2+u31oS/ox
-         Ac3NLpSBOTzk2cNo0KgCiOUAIL3VZAyF+r2KOmfQGwNHbwM5NAFrwBluy2eTXDNggI
-         9ERNOBPO3vX7gbtQ77lNr+5lJbSU8JW4HLnTlBz6hErLRPVmqzpIJNS/X5w7fg/5/o
-         HVxh9PeB8gTIgkzdgcKwoGaZOcq8/wT9jmaqMt3seBAiCjetUaqBJ5liBDAivos+bU
-         0HmliRIHDIXkxT+2m3ktORso0PimaSlrX925vwNT2Ezpx9AQdukJ597mNYsQKbCVqf
-         stmr8JGOmituw==
-Date:   Thu, 22 Jul 2021 19:40:01 +0530
-From:   Vinod Koul <vkoul@kernel.org>
+        b=NH/3WHZejuDi6QFuAZ3CDOlsO7ym6vhQ+KGckYx4KyI3BhrWNob5JKnuegvMJZh2N
+         44o1DlRiPI6HOTtzTmZDh3pqMor0m7HnO8ANSB4ADU9ogIqLVWDc1R29WNle0SrmHL
+         mXI3X7zvU2FpPY9tmzocG2o/qpvMogauNNEKDKiU=
+Date:   Thu, 22 Jul 2021 16:19:25 +0200
+From:   Greg KH <gregkh@linuxfoundation.org>
 To:     Sanjay R Mehta <sanmehta@amd.com>
-Cc:     Sanjay R Mehta <Sanju.Mehta@amd.com>, gregkh@linuxfoundation.org,
+Cc:     Sanjay R Mehta <Sanju.Mehta@amd.com>, vkoul@kernel.org,
         dan.j.williams@intel.com, Thomas.Lendacky@amd.com,
         Shyam-sundar.S-k@amd.com, Nehal-bakulchandra.Shah@amd.com,
         robh@kernel.org, mchehab+samsung@kernel.org, davem@davemloft.net,
         linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org
 Subject: Re: [PATCH v10 0/3] Add support for AMD PTDMA controller driver
-Message-ID: <YPl8OZwMlKs7a+lK@matsya>
+Message-ID: <YPl+bY2z1BfkhQR9@kroah.com>
 References: <1624207298-115928-1-git-send-email-Sanju.Mehta@amd.com>
  <5dd9b34f-3e12-6ca1-1d4d-ddc3f82e341f@amd.com>
 MIME-Version: 1.0
@@ -51,7 +48,7 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On 22-07-21, 19:27, Sanjay R Mehta wrote:
+On Thu, Jul 22, 2021 at 07:27:51PM +0530, Sanjay R Mehta wrote:
 > 
 > 
 > On 6/20/2021 10:11 PM, Sanjay R Mehta wrote:
@@ -224,8 +221,8 @@ On 22-07-21, 19:27, Sanjay R Mehta wrote:
 > 
 > Need your guidance and feedback to get this code reviewed and up-streamed.
 
-This was sent during the merge window... and right now this is in my
-review queue and will be addressed shortly.
+That is up to the drivers/dma/ maintainer, which is Vinod, not me :)
 
--- 
-~Vinod
+thanks,
+
+greg k-h
