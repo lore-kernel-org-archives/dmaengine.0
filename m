@@ -2,129 +2,76 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-16.4 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B3C19C4320A
-	for <dmaengine@archiver.kernel.org>; Sat, 31 Jul 2021 22:05:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A0353C4338F
+	for <dmaengine@archiver.kernel.org>; Sun,  1 Aug 2021 06:27:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A218E60F92
-	for <dmaengine@archiver.kernel.org>; Sat, 31 Jul 2021 22:05:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7A5C961059
+	for <dmaengine@archiver.kernel.org>; Sun,  1 Aug 2021 06:27:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231407AbhGaWFT (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Sat, 31 Jul 2021 18:05:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35074 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229560AbhGaWFT (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Sat, 31 Jul 2021 18:05:19 -0400
-Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C10EC0613CF
-        for <dmaengine@vger.kernel.org>; Sat, 31 Jul 2021 15:05:12 -0700 (PDT)
-Received: by mail-lj1-x22e.google.com with SMTP id f12so18369894ljn.1
-        for <dmaengine@vger.kernel.org>; Sat, 31 Jul 2021 15:05:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=eavS7+nVlKa3pE/nMERuVdSNOcLN0CSyw0CYPXJs2RE=;
-        b=oxTawDKtE7gUMCEZTGVhmlVv2Y3WYDP+FS3lOaHPAgoD7WcgQjYd0RzzaaCmE3977P
-         y2AZlp+prHKgerutQ7jx1R/cVL6lbK+WzauqEJucT+Izj+ziz0I0tc0O+XwvtPwksIj1
-         ukvPhZPy1rocK17IvtjWMFHZ1JmoIIqK4FLNFIt716WQ3Pie0UvlUCbiTbUjKG2RTcHV
-         7aLptfufBWxUeUNmjY6/SgCFLiwOzAyRIGpCOm9JFIGiWEdzkbX1t7kvgcWoJlruvGQV
-         TNKC7K+DYoXaKkZDcceTWufkpcffdIMAe8eG+6751qHasEPk6w4m+/EI6Gd9NCUzZuvT
-         oxzQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=eavS7+nVlKa3pE/nMERuVdSNOcLN0CSyw0CYPXJs2RE=;
-        b=cqd4akHJyeT3pVvsKtNDaeL54tbOJQNED412KpLOx92RSr9rEx6pwGFBl2KkTIZXqs
-         5plr8rCFDUft+zHSESa6nwUDwP9Ud9BtItxJz1n0ke2+y+SzG6XUtJlAthOZ6jfbcHcB
-         NFVgdNQ80qubYFHzLAjwXkB+ZWZlyB7HQI0XreryNGXlk1gUoAdmKCJIk5d4gSOYgbOc
-         zP6TexhN71765YZ8UqzcI/n9edv8mGAGQRc/f9d/wa+edbnEEp3mHIDU7cr6nChrm2OT
-         ftirXz2NLjvL+p2Z8f0n8+mqCPkM3m8l3DkKKnmyOM5ARoNDjDQPJS/6CmyGAP7Fc+YJ
-         gliA==
-X-Gm-Message-State: AOAM530/Oc1Oo0Zrb5WAY1h7LZeOC2afuC93uAkcIJsgh3FKhC5FJysg
-        ZEF96WF8K0tHwt1SxEJwvITOGWsEwmvhnGR+H4HPQQ==
-X-Google-Smtp-Source: ABdhPJwTjpbUeZT+xrHLeSR/vD0UodSpw43lXDmx8pJiyALETra8HqJRQTMUGT7mTfcqIT7xDGsd2Eo06KRRqoQp1Bw=
-X-Received: by 2002:a2e:bc14:: with SMTP id b20mr6401323ljf.200.1627769110442;
- Sat, 31 Jul 2021 15:05:10 -0700 (PDT)
+        id S229521AbhHAG17 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Sun, 1 Aug 2021 02:27:59 -0400
+Received: from mail.kernel.org ([198.145.29.99]:46306 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229505AbhHAG16 (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Sun, 1 Aug 2021 02:27:58 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 4A70061057;
+        Sun,  1 Aug 2021 06:27:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+        s=korg; t=1627799270;
+        bh=2PHY9JhVD/YwlHDPKNMJfQk6cWOpOdiuFnlPIR1Cyco=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=AMQuE1xbZE1JJWZGWWPuMZ/Fex6D/H6joQKK92I03ggzjSYiFMjisUA7zElyV8ziB
+         /Sd5sVOJWdRrWhw639yl86nLzowtIQOYOQE+6TZn42QrN9j2JZg5UsgYsKFg/HXD2m
+         qv77iiTKxi+5rRW+KDRNDHbP31NthSL+kzW0w848=
+Date:   Sun, 1 Aug 2021 08:27:48 +0200
+From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To:     Jordy Zomer <jordy@pwning.systems>
+Cc:     dmaengine@vger.kernel.org, Vinod Koul <vkoul@kernel.org>,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] dmaengine: usb-dmac: make usb_dmac_get_current_residue
+ unsigned
+Message-ID: <YQY+5OaQKYeWQ+/n@kroah.com>
+References: <20210731091939.510816-1-jordy@pwning.systems>
 MIME-Version: 1.0
-References: <20210726115058.23729-1-nikita.shubin@maquefel.me>
-In-Reply-To: <20210726115058.23729-1-nikita.shubin@maquefel.me>
-From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Sun, 1 Aug 2021 00:04:59 +0200
-Message-ID: <CACRpkdYeqJFFwkc6pfSrz3-gaN_PjjV52jstqzR2sMa+bxbMuQ@mail.gmail.com>
-Subject: Re: [PATCH 0/8] arm: ep93xx: CCF conversion
-To:     Nikita Shubin <nikita.shubin@maquefel.me>
-Cc:     Alexander Sverdlin <alexander.sverdlin@gmail.com>,
-        Geert Uytterhoeven <geert@linux-m68k.org>,
-        "moderated list:SOUND - SOC LAYER / DYNAMIC AUDIO POWER MANAGEM..." 
-        <alsa-devel@alsa-project.org>,
-        Andrew Morton <akpm@linux-foundation.org>,
-        Andrzej Pietrasiewicz <andrzej.p@collabora.com>,
-        Anshuman Khandual <anshuman.khandual@arm.com>,
-        Ard Biesheuvel <ardb@kernel.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        "open list:DMA GENERIC OFFLOAD ENGINE SUBSYSTEM" 
-        <dmaengine@vger.kernel.org>,
-        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-        "open list:FRAMEBUFFER LAYER" <dri-devel@lists.freedesktop.org>,
-        Geert Uytterhoeven <geert+renesas@glider.be>,
-        Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
-        Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        "moderated list:ARM PORT" <linux-arm-kernel@lists.infradead.org>,
-        "open list:FRAMEBUFFER LAYER" <linux-fbdev@vger.kernel.org>,
-        "open list:IIO SUBSYSTEM AND DRIVERS" <linux-iio@vger.kernel.org>,
-        "open list:INPUT (KEYBOARD, MOUSE, JOYSTICK, TOUCHSCREEN)..." 
-        <linux-input@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        "open list:PWM SUBSYSTEM" <linux-pwm@vger.kernel.org>,
-        "open list:SPI SUBSYSTEM" <linux-spi@vger.kernel.org>,
-        Mark Brown <broonie@kernel.org>,
-        Mike Rapoport <rppt@kernel.org>,
-        Russell King <rmk+kernel@armlinux.org.uk>,
-        =?UTF-8?Q?Uwe_Kleine=2DK=C3=B6nig?= 
-        <u.kleine-koenig@pengutronix.de>, YiFei Zhu <yifeifz2@illinois.edu>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210731091939.510816-1-jordy@pwning.systems>
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On Mon, Jul 26, 2021 at 1:51 PM Nikita Shubin <nikita.shubin@maquefel.me> wrote:
+On Sat, Jul 31, 2021 at 11:19:38AM +0200, Jordy Zomer wrote:
+> The usb_dmac_get_current_residue function used to
+> take a signed integer as a pos parameter.
+> The only callers of this function passes an unsigned integer to it.
+> Therefore to make it obviously safe, let's just make this an unsgined
+> integer as this is used in pointer arithmetics.
+> 
+> Signed-off-by: Jordy Zomer <jordy@pwning.systems>
+> ---
+>  drivers/dma/sh/usb-dmac.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/drivers/dma/sh/usb-dmac.c b/drivers/dma/sh/usb-dmac.c
+> index 8f7ceb698226..a5e225c15730 100644
+> --- a/drivers/dma/sh/usb-dmac.c
+> +++ b/drivers/dma/sh/usb-dmac.c
+> @@ -466,7 +466,7 @@ static int usb_dmac_chan_terminate_all(struct dma_chan *chan)
+>  
+>  static unsigned int usb_dmac_get_current_residue(struct usb_dmac_chan *chan,
+>  						 struct usb_dmac_desc *desc,
+> -						 int sg_index)
+> +						 unsigned int sg_index)
+>  {
+>  	struct usb_dmac_sg *sg = desc->sg + sg_index;
+>  	u32 mem_addr = sg->mem_addr & 0xffffffff;
+> -- 
+> 2.27.0
+> 
 
-> This series series of patches converts ep93xx to Common Clock Framework.
->
-> It consists of preparation patches to use clk_prepare_enable where it is
-> needed, instead of clk_enable used in ep93xx drivers prior to CCF and
-> a patch converting mach-ep93xx/clock.c to CCF.
->
-> Link: https://lore.kernel.org/patchwork/cover/1445563/
-> Link: https://lore.kernel.org/patchwork/patch/1435884/
->
-> Alexander Sverdlin (7):
->   iio: ep93xx: Prepare clock before using it
->   spi: spi-ep93xx: Prepare clock before using it
->   Input: ep93xx_keypad: Prepare clock before using it
->   video: ep93xx: Prepare clock before using it
->   dmaengine: ep93xx: Prepare clock before using it
->   ASoC: cirrus: i2s: Prepare clock before using it
->   pwm: ep93xx: Prepare clock before using it
->
-> Nikita Shubin (1):
->   ep93xx: clock: convert in-place to COMMON_CLK
-
-This series is looking very good.
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-
-I suppose the per-subsystem patches can be picked up by
-each subsystem maintainer and then you can send the "big patch"
-to the SoC tree.
-
-Yours,
-Linus Walleij
+Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
