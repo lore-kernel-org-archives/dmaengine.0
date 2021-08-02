@@ -2,76 +2,90 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-16.4 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-11.7 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A0353C4338F
-	for <dmaengine@archiver.kernel.org>; Sun,  1 Aug 2021 06:27:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 91F89C4338F
+	for <dmaengine@archiver.kernel.org>; Mon,  2 Aug 2021 05:55:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7A5C961059
-	for <dmaengine@archiver.kernel.org>; Sun,  1 Aug 2021 06:27:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6234861029
+	for <dmaengine@archiver.kernel.org>; Mon,  2 Aug 2021 05:55:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229521AbhHAG17 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Sun, 1 Aug 2021 02:27:59 -0400
-Received: from mail.kernel.org ([198.145.29.99]:46306 "EHLO mail.kernel.org"
+        id S229734AbhHBFzJ (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 2 Aug 2021 01:55:09 -0400
+Received: from mga14.intel.com ([192.55.52.115]:41963 "EHLO mga14.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229505AbhHAG16 (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Sun, 1 Aug 2021 02:27:58 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 4A70061057;
-        Sun,  1 Aug 2021 06:27:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-        s=korg; t=1627799270;
-        bh=2PHY9JhVD/YwlHDPKNMJfQk6cWOpOdiuFnlPIR1Cyco=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=AMQuE1xbZE1JJWZGWWPuMZ/Fex6D/H6joQKK92I03ggzjSYiFMjisUA7zElyV8ziB
-         /Sd5sVOJWdRrWhw639yl86nLzowtIQOYOQE+6TZn42QrN9j2JZg5UsgYsKFg/HXD2m
-         qv77iiTKxi+5rRW+KDRNDHbP31NthSL+kzW0w848=
-Date:   Sun, 1 Aug 2021 08:27:48 +0200
-From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To:     Jordy Zomer <jordy@pwning.systems>
-Cc:     dmaengine@vger.kernel.org, Vinod Koul <vkoul@kernel.org>,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] dmaengine: usb-dmac: make usb_dmac_get_current_residue
- unsigned
-Message-ID: <YQY+5OaQKYeWQ+/n@kroah.com>
-References: <20210731091939.510816-1-jordy@pwning.systems>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210731091939.510816-1-jordy@pwning.systems>
+        id S229495AbhHBFzI (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Mon, 2 Aug 2021 01:55:08 -0400
+X-IronPort-AV: E=McAfee;i="6200,9189,10063"; a="213119910"
+X-IronPort-AV: E=Sophos;i="5.84,288,1620716400"; 
+   d="scan'208";a="213119910"
+Received: from fmsmga002.fm.intel.com ([10.253.24.26])
+  by fmsmga103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Aug 2021 22:54:59 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.84,288,1620716400"; 
+   d="scan'208";a="520283650"
+Received: from coresw01.iind.intel.com ([10.223.252.64])
+  by fmsmga002.fm.intel.com with ESMTP; 01 Aug 2021 22:54:55 -0700
+From:   pandith.n@intel.com
+To:     Eugeniy.Paltsev@synopsys.com, vkoul@kernel.org,
+        dmaengine@vger.kernel.org
+Cc:     lakshmi.bai.raja.subramanian@intel.com, kris.pan@intel.com,
+        mallikarjunappa.sangannavar@intel.com, Srikanth.Thokala@intel.com,
+        Pandith N <pandith.n@intel.com>
+Subject: [PATCH V5 0/3] dmaengine: dw-axi-dmac: support parallel memory <--> peripheral transfers
+Date:   Mon,  2 Aug 2021 11:24:51 +0530
+Message-Id: <20210802055454.15192-1-pandith.n@intel.com>
+X-Mailer: git-send-email 2.17.1
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On Sat, Jul 31, 2021 at 11:19:38AM +0200, Jordy Zomer wrote:
-> The usb_dmac_get_current_residue function used to
-> take a signed integer as a pos parameter.
-> The only callers of this function passes an unsigned integer to it.
-> Therefore to make it obviously safe, let's just make this an unsgined
-> integer as this is used in pointer arithmetics.
-> 
-> Signed-off-by: Jordy Zomer <jordy@pwning.systems>
-> ---
->  drivers/dma/sh/usb-dmac.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/drivers/dma/sh/usb-dmac.c b/drivers/dma/sh/usb-dmac.c
-> index 8f7ceb698226..a5e225c15730 100644
-> --- a/drivers/dma/sh/usb-dmac.c
-> +++ b/drivers/dma/sh/usb-dmac.c
-> @@ -466,7 +466,7 @@ static int usb_dmac_chan_terminate_all(struct dma_chan *chan)
->  
->  static unsigned int usb_dmac_get_current_residue(struct usb_dmac_chan *chan,
->  						 struct usb_dmac_desc *desc,
-> -						 int sg_index)
-> +						 unsigned int sg_index)
->  {
->  	struct usb_dmac_sg *sg = desc->sg + sg_index;
->  	u32 mem_addr = sg->mem_addr & 0xffffffff;
-> -- 
-> 2.27.0
-> 
+From: Pandith N <pandith.n@intel.com>
 
-Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Added support for multiple DMA_MEM_TO_DEV, DMA_DEV_TO_MEM transfers in
+parallel. Peripherals can use DMA for both transmit and receive
+operations in parallel.
+
+To setup DMA handshaking, the peripheral source number to be programmed
+in respective channel select slot of AXIDMA_CTRL_DMA_HS_SEL. No need to
+check for free slot in dw_axi_dma_set_hw_channel().
+
+The channel slot used in AXIDMA_CTRL_DMA_HS_SEL needs to be set in
+src_per/dst_per of CHx_CFG register
+
+Burst length, DMA HW capability set in dt-binding is now used in driver.
+
+Changes since v1:
+Added new macro, magic mask for HW handshake select.
+Typos in commit message are corrected
+
+Changes since v2:
+Split the patch as follows
+Patch 1: Remove free slot check algorithm in dw_axi_dma_set_hw_channel()
+Patch 2: The channel slot used needs to be set in CHx_CFG src/dst_per
+Patch 3: Usage of burst length HW capability
+
+Changes since v3:
+Patch 1: Added description for hardware handshake settings
+
+Changes since v4:
+Patch 1: Changed return type of dw_axi_dma_set_hw_channel().
+Log dev_err in case of APB registers not initialized.
+
+Pandith N (3):
+  dmaengine: dw-axi-dmac: Remove free slot check algorithm in
+    dw_axi_dma_set_hw_channel
+  dmaengine: dw-axi-dmac: support parallel memory <--> peripheral
+    transfers
+  dmaengine: dw-axi-dmac: Burst length settings
+
+ .../dma/dw-axi-dmac/dw-axi-dmac-platform.c    | 56 +++++++++----------
+ drivers/dma/dw-axi-dmac/dw-axi-dmac.h         |  4 ++
+ 2 files changed, 29 insertions(+), 31 deletions(-)
+
+-- 
+2.17.1
+
