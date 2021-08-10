@@ -7,41 +7,41 @@ X-Spam-Status: No, score=-19.7 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
 	autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5102EC432BE
-	for <dmaengine@archiver.kernel.org>; Tue, 10 Aug 2021 14:21:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 58D57C04FE3
+	for <dmaengine@archiver.kernel.org>; Tue, 10 Aug 2021 14:22:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3832A60EBB
-	for <dmaengine@archiver.kernel.org>; Tue, 10 Aug 2021 14:21:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3CF0F60F41
+	for <dmaengine@archiver.kernel.org>; Tue, 10 Aug 2021 14:22:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239443AbhHJOWU (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 10 Aug 2021 10:22:20 -0400
-Received: from mail.kernel.org ([198.145.29.99]:54694 "EHLO mail.kernel.org"
+        id S241539AbhHJOWg (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 10 Aug 2021 10:22:36 -0400
+Received: from mail.kernel.org ([198.145.29.99]:52806 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S241990AbhHJOTy (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Tue, 10 Aug 2021 10:19:54 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 8B24C60F41;
-        Tue, 10 Aug 2021 14:17:11 +0000 (UTC)
+        id S242717AbhHJOS2 (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Tue, 10 Aug 2021 10:18:28 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id DF9C561076;
+        Tue, 10 Aug 2021 14:16:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1628605032;
-        bh=xGSvjU0nc0iKr95fdCCVuHuhvuglMua4omPmd1c6baA=;
+        s=k20201202; t=1628605005;
+        bh=ePZz+sF9yOD/Cf5qf8TlpbkemcR8a+vrRB0qNX7C4KA=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=DVwAEPx4hkdSrFp4SiVazKlHWV+Gb0wbvoYLosG0okZqs9Zrx0CGHsIDX47UDGKKb
-         xNDAImsw3hx1OBfO7NbZLSdBPXFwZhfxsZlfVu9IamhHk0bKK7NEe4Bc6np7hE8wuc
-         vNk2ud5z+q0FAoNKyDi1gqE3iWJgDKaW55ZouSYQjcYfN53eRRaNPIayM8ffsVnua0
-         MocupieIQRjmC9DLHSt8Xy7gPwocrcvRQD0NwZKVgdUvpXDeXreKCutTWRULzKdYiO
-         lUVSHniNrMRWO8Q8yKZ3yFbXb/UYhAuSUFOxujsH1p0MLdG2Shn83uo05mjhzqix31
-         eSRl6dXPim+uQ==
+        b=K94jQAktXOMpkRZ6tXW2W6Jbcm4IxfcgDZuYJ4iDYkWqfuTShBmZzIUPLeAvQfdZ4
+         VcXHPelxs6rb2VUz/974Dks+L/WrNgFrQaGb9Nnz8Ok+aLljOLg3KimfK1qqoMvLq+
+         S7+yw6FpQlyErfsguq1jALsL3vUTGRAKh5X0KTU5Yh4AiicpuUspj3D0Lz7/PhEb3Q
+         BWeAT0QjDCgHRH414Gpfm8kgQG9hf+lny1JLba1WA7dWYNqxHY0YgnF992tucDW5hf
+         dHvRdk5nU9JXgGYlmnEieB9esOZp5ZQBN9KqhtoML2G0WgLzuJ90C12MouznvHMFYB
+         LEbdp7TN90L8Q==
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Cc:     Peter Ujfalusi <peter.ujfalusi@gmail.com>,
         Vinod Koul <vkoul@kernel.org>, Sasha Levin <sashal@kernel.org>,
         dmaengine@vger.kernel.org
-Subject: [PATCH AUTOSEL 4.4 3/6] dmaengine: of-dma: router_xlate to return -EPROBE_DEFER if controller is not yet available
-Date:   Tue, 10 Aug 2021 10:17:04 -0400
-Message-Id: <20210810141707.3118714-3-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 4.14 03/10] dmaengine: of-dma: router_xlate to return -EPROBE_DEFER if controller is not yet available
+Date:   Tue, 10 Aug 2021 10:16:34 -0400
+Message-Id: <20210810141641.3118360-3-sashal@kernel.org>
 X-Mailer: git-send-email 2.30.2
-In-Reply-To: <20210810141707.3118714-1-sashal@kernel.org>
-References: <20210810141707.3118714-1-sashal@kernel.org>
+In-Reply-To: <20210810141641.3118360-1-sashal@kernel.org>
+References: <20210810141641.3118360-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
@@ -78,7 +78,7 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 7 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/dma/of-dma.c b/drivers/dma/of-dma.c
-index 86c591481dfe..4a5dbf30605a 100644
+index 8344a60c2131..a9d3ab94749b 100644
 --- a/drivers/dma/of-dma.c
 +++ b/drivers/dma/of-dma.c
 @@ -68,8 +68,12 @@ static struct dma_chan *of_dma_router_xlate(struct of_phandle_args *dma_spec,
