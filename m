@@ -4,41 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-19.7 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
 	autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 95FDCC4320E
-	for <dmaengine@archiver.kernel.org>; Tue, 10 Aug 2021 14:21:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 138CDC43214
+	for <dmaengine@archiver.kernel.org>; Tue, 10 Aug 2021 14:21:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7B64360EBB
-	for <dmaengine@archiver.kernel.org>; Tue, 10 Aug 2021 14:21:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EEA0A60FDA
+	for <dmaengine@archiver.kernel.org>; Tue, 10 Aug 2021 14:21:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237490AbhHJOWR (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 10 Aug 2021 10:22:17 -0400
-Received: from mail.kernel.org ([198.145.29.99]:54070 "EHLO mail.kernel.org"
+        id S230331AbhHJOWS (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 10 Aug 2021 10:22:18 -0400
+Received: from mail.kernel.org ([198.145.29.99]:54576 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S243252AbhHJOSn (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Tue, 10 Aug 2021 10:18:43 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 52EB861102;
-        Tue, 10 Aug 2021 14:16:56 +0000 (UTC)
+        id S243484AbhHJOTx (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Tue, 10 Aug 2021 10:19:53 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id D34E861107;
+        Tue, 10 Aug 2021 14:17:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1628605017;
-        bh=GJQUHHC19H3AosXMyk0tjcmBoizngaJClrlOplJcQn4=;
+        s=k20201202; t=1628605029;
+        bh=bXXPPSl3UEzk1Aov3GYXRmLxrCKsx+1rwjgrEp9BZgc=;
         h=From:To:Cc:Subject:Date:From;
-        b=rkzVZuPSFcW4o96BWlebV+/OZssIwIMOj6Rm25LZv9HUDdVZr7eIRb7yYzZq8RgRR
-         1Ao8uFbZC1SyFFfUGw5JN7G/OnshkzOa+IpPAYAixWpPVO1HC2TpRlvLKb5GX7KbWe
-         EWKCN7SnWAFa9ENNaY/JpVzkgNtde6GdDG1WzOAvAixN/ENkpQkxs/YNf9E5Bma4Bk
-         1fhVBqT7PRvEINNc21i+UXtpUwhhGr3ajytYHiJ4LJ8414U5vkRzYqP5OflsqrUY+t
-         ggacAVGPegTF2PbCEHf0HVOVlAasmWb2xmKEyfkwHeM74+rZn03UvkdwurLRXy6otE
-         hzqATha/uuh5A==
+        b=BEoRu3TFkNb/uVtt6+M85DqcDYuDpTRZsdifLjTHZEa7ZPq7X7sWn1mONiEc3Cx2e
+         F88vtmnaX9JiAyIokTVOs/AFfDAgyFNem4kNNOkEf+z54LFt3sCaVCOrOX0BeJoJwb
+         jMJDgrIP0Qg9Vi/9oOaWrsOKZHIAYELRH5f1kbCzhj+oCm2g30y50lY/l2g3hUcCWX
+         WV07eMf6FNFQgtFTfHCx6qEIpPOsUqj45NJT+8h95uKbPz6mLM09r5aom+vKWbmdRH
+         xmg0VxxGYplMPCwnaT3gRPnrESoZo3VpzWSgpyBZMr1zu41rFtsL9eEj6fDrxJRmH0
+         3VWpwEIPEMIBw==
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Cc:     Yu Kuai <yukuai3@huawei.com>, Hulk Robot <hulkci@huawei.com>,
         Vinod Koul <vkoul@kernel.org>, Sasha Levin <sashal@kernel.org>,
         dmaengine@vger.kernel.org
-Subject: [PATCH AUTOSEL 4.9 1/8] dmaengine: usb-dmac: Fix PM reference leak in usb_dmac_probe()
-Date:   Tue, 10 Aug 2021 10:16:48 -0400
-Message-Id: <20210810141655.3118498-1-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 4.4 1/6] dmaengine: usb-dmac: Fix PM reference leak in usb_dmac_probe()
+Date:   Tue, 10 Aug 2021 10:17:02 -0400
+Message-Id: <20210810141707.3118714-1-sashal@kernel.org>
 X-Mailer: git-send-email 2.30.2
 MIME-Version: 1.0
 X-stable: review
@@ -67,10 +67,10 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/dma/sh/usb-dmac.c b/drivers/dma/sh/usb-dmac.c
-index 6682b3eec2b6..ec15ded640f6 100644
+index cc8fc601ed47..416057d9f0b6 100644
 --- a/drivers/dma/sh/usb-dmac.c
 +++ b/drivers/dma/sh/usb-dmac.c
-@@ -861,8 +861,8 @@ static int usb_dmac_probe(struct platform_device *pdev)
+@@ -863,8 +863,8 @@ static int usb_dmac_probe(struct platform_device *pdev)
  
  error:
  	of_dma_controller_free(pdev->dev.of_node);
