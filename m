@@ -2,85 +2,126 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-19.7 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EDD37C4338F
-	for <dmaengine@archiver.kernel.org>; Mon,  9 Aug 2021 17:27:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8B52AC4338F
+	for <dmaengine@archiver.kernel.org>; Tue, 10 Aug 2021 14:15:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D233F60EDF
-	for <dmaengine@archiver.kernel.org>; Mon,  9 Aug 2021 17:27:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6340A61008
+	for <dmaengine@archiver.kernel.org>; Tue, 10 Aug 2021 14:15:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234234AbhHIR1X (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 9 Aug 2021 13:27:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57938 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233919AbhHIR1X (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Mon, 9 Aug 2021 13:27:23 -0400
-Received: from sipsolutions.net (s3.sipsolutions.net [IPv6:2a01:4f8:191:4433::2])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F292DC0613D3
-        for <dmaengine@vger.kernel.org>; Mon,  9 Aug 2021 10:27:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=sipsolutions.net; s=mail; h=Content-Transfer-Encoding:MIME-Version:
-        Content-Type:References:In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Sender
-        :Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-To:
-        Resent-Cc:Resent-Message-ID; bh=4DDX4MJfPISPRbp4j7HoYkMuGx5m46aMi+yyP2A3MD8=;
-        t=1628530023; x=1629739623; b=Ttqadvrlg/m/w2GYC8Kj2smOghJXU+RierFtDXZUKvPU88J
-        gfSAgBak/HdBxDzQhOaZBX8eYs7tSpF+md8M1lRKuozZ+hGUVT0ZhNKvnT7gggNaVKy61rGj6g5k3
-        Sw2wnFH6CgbFnzlwu/XJSrdk8cq/CeDtf+7C1l3bJu8cwhYa3PzpidSt3yaatlHwM/CcCx4dwzaf3
-        bNsyWVCH2KzezLZLy10/EpOUOpjeFyRouXLbIg2BDFXib5wc87BPqThVBojQXJQ4gYqA0j+rOM35V
-        HfXOG3ROFdc4aJXV7EXq9yTnJcmsoHaeJwVbO9ivaT2UwITv0IsMOn8g5XDCmssA==;
-Received: by sipsolutions.net with esmtpsa (TLS1.3:ECDHE_SECP256R1__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
-        (Exim 4.94.2)
-        (envelope-from <johannes@sipsolutions.net>)
-        id 1mD90d-008D6r-UQ; Mon, 09 Aug 2021 19:26:58 +0200
-Message-ID: <0ef27e7c8df520ca48900140b3930af279cd2466.camel@sipsolutions.net>
-Subject: Re: [PATCH] dmaengine: ioat: depends on !UML
-From:   Johannes Berg <johannes@sipsolutions.net>
-To:     Dan Williams <dan.j.williams@intel.com>
-Cc:     Dave Jiang <dave.jiang@intel.com>, dmaengine@vger.kernel.org,
-        Geert Uytterhoeven <geert@linux-m68k.org>
-Date:   Mon, 09 Aug 2021 19:26:57 +0200
-In-Reply-To: <CAPcyv4i0p-DaPA7YTid4XsUJUpq+L-c1kDNArb=0XXnFkXz-iw@mail.gmail.com>
-References: <20210809112409.a3a0974874d2.I2ffe3d11ed37f735da2f39884a74c953b258b995@changeid>
-         <CAPcyv4i0p-DaPA7YTid4XsUJUpq+L-c1kDNArb=0XXnFkXz-iw@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.38.4 (3.38.4-1.fc33) 
+        id S240629AbhHJOPb (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 10 Aug 2021 10:15:31 -0400
+Received: from mail.kernel.org ([198.145.29.99]:50500 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S238749AbhHJOPa (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Tue, 10 Aug 2021 10:15:30 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 1EB0260F41;
+        Tue, 10 Aug 2021 14:15:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1628604907;
+        bh=tHeW17I9H24bnFkW/B5efT8oDfZabpe5hHSdODE6ycU=;
+        h=From:To:Cc:Subject:Date:From;
+        b=FR4An9RJa2A2iScm2xUI1Jg1JcdKP2oYDb8SlbEynQM8/ZYBjAdWcW7zQTbK3EluF
+         gyS6r3E9GKzFuHy6TtkMKFzBqy3HJhgTFvqb1NpDp/8FJaI/aEsKY/JWQDThU1JEp1
+         /KfA0WyDJkF6/6yKK+oc8dM8dvIm9UHXv1uYlcgOL/1x1gYrPb4wNytlbreHNOl6IZ
+         fs9EpWhUwRpUdfQe9h1/C6rMVLmluNubZRxRcoyJfsk4FNPzCpgIxNcWrQZXZTypG1
+         AyiqHgfQ4lcibwbPlGDPbFAcDIPdmEanZWQlz7YgxX0bgcmz2gJGUbDl7ChvoD4wJE
+         fggVVM8qi9ZOg==
+From:   Sasha Levin <sashal@kernel.org>
+To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
+Cc:     Adrian Larumbe <adrian.martinezlarumbe@imgtec.com>,
+        Vinod Koul <vkoul@kernel.org>, Sasha Levin <sashal@kernel.org>,
+        dmaengine@vger.kernel.org, linux-arm-kernel@lists.infradead.org
+Subject: [PATCH AUTOSEL 5.13 01/24] dmaengine: xilinx_dma: Fix read-after-free bug when terminating transfers
+Date:   Tue, 10 Aug 2021 10:14:42 -0400
+Message-Id: <20210810141505.3117318-1-sashal@kernel.org>
+X-Mailer: git-send-email 2.30.2
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-X-malware-bazaar: not-scanned
+X-stable: review
+X-Patchwork-Hint: Ignore
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On Mon, 2021-08-09 at 10:24 -0700, Dan Williams wrote:
-> On Mon, Aug 9, 2021 at 2:25 AM Johannes Berg <johannes@sipsolutions.net> wrote:
-> > 
-> > From: Johannes Berg <johannes.berg@intel.com>
-> > 
-> > Now that UML has PCI support, this driver must depend also on
-> > !UML since it pokes at X86_64 architecture internals that don't
-> > exist on ARCH=um.
-> > 
-> 
-> Do you really need to disable compilation of the whole driver just
-> because an arch level helper does not exist on UML builds? Isn't there
-> already a check for enqcmds on x86_64 to make sure the CPU is
-> sufficiently feature enabled?
+From: Adrian Larumbe <adrian.martinezlarumbe@imgtec.com>
 
-Hmm?
+[ Upstream commit 7dd2dd4ff9f3abda601f22b9d01441a0869d20d7 ]
 
-The problem here is that cpuid_eax() and cpuid_ebx() don't even exist on
-UML, and that's not really surprising - ARCH=um is after all compiled to
-run as a userspace process, not to run on bare metal. I guess
-technically we could provide (fake or even sort of real) implementations
-of these, but there's very little point?
+When user calls dmaengine_terminate_sync, the driver will clean up any
+remaining descriptors for all the pending or active transfers that had
+previously been submitted. However, this might happen whilst the tasklet is
+invoking the DMA callback for the last finished transfer, so by the time it
+returns and takes over the channel's spinlock, the list of completed
+descriptors it was traversing is no longer valid. This leads to a
+read-after-free situation.
 
-I don't see why you would ever possibly want to have this driver
-compiled on ARCH=um, even if it's compiled for x86-64 "subarch", since
-there will be no such device to run against?
+Fix it by signalling whether a user-triggered termination has happened by
+means of a boolean variable.
 
-johannes
+Signed-off-by: Adrian Larumbe <adrian.martinezlarumbe@imgtec.com>
+Link: https://lore.kernel.org/r/20210706234338.7696-3-adrian.martinezlarumbe@imgtec.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ drivers/dma/xilinx/xilinx_dma.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
+
+diff --git a/drivers/dma/xilinx/xilinx_dma.c b/drivers/dma/xilinx/xilinx_dma.c
+index 75c0b8e904e5..4b9530a7bf65 100644
+--- a/drivers/dma/xilinx/xilinx_dma.c
++++ b/drivers/dma/xilinx/xilinx_dma.c
+@@ -394,6 +394,7 @@ struct xilinx_dma_tx_descriptor {
+  * @genlock: Support genlock mode
+  * @err: Channel has errors
+  * @idle: Check for channel idle
++ * @terminating: Check for channel being synchronized by user
+  * @tasklet: Cleanup work after irq
+  * @config: Device configuration info
+  * @flush_on_fsync: Flush on Frame sync
+@@ -431,6 +432,7 @@ struct xilinx_dma_chan {
+ 	bool genlock;
+ 	bool err;
+ 	bool idle;
++	bool terminating;
+ 	struct tasklet_struct tasklet;
+ 	struct xilinx_vdma_config config;
+ 	bool flush_on_fsync;
+@@ -1049,6 +1051,13 @@ static void xilinx_dma_chan_desc_cleanup(struct xilinx_dma_chan *chan)
+ 		/* Run any dependencies, then free the descriptor */
+ 		dma_run_dependencies(&desc->async_tx);
+ 		xilinx_dma_free_tx_descriptor(chan, desc);
++
++		/*
++		 * While we ran a callback the user called a terminate function,
++		 * which takes care of cleaning up any remaining descriptors
++		 */
++		if (chan->terminating)
++			break;
+ 	}
+ 
+ 	spin_unlock_irqrestore(&chan->lock, flags);
+@@ -1965,6 +1974,8 @@ static dma_cookie_t xilinx_dma_tx_submit(struct dma_async_tx_descriptor *tx)
+ 	if (desc->cyclic)
+ 		chan->cyclic = true;
+ 
++	chan->terminating = false;
++
+ 	spin_unlock_irqrestore(&chan->lock, flags);
+ 
+ 	return cookie;
+@@ -2436,6 +2447,7 @@ static int xilinx_dma_terminate_all(struct dma_chan *dchan)
+ 
+ 	xilinx_dma_chan_reset(chan);
+ 	/* Remove and free all of the descriptors in the lists */
++	chan->terminating = true;
+ 	xilinx_dma_free_descriptors(chan);
+ 	chan->idle = true;
+ 
+-- 
+2.30.2
 
