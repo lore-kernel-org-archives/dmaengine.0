@@ -2,108 +2,162 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-19.7 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
-	autolearn=unavailable autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 58D57C04FE3
-	for <dmaengine@archiver.kernel.org>; Tue, 10 Aug 2021 14:22:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D8E10C4338F
+	for <dmaengine@archiver.kernel.org>; Wed, 11 Aug 2021 07:18:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3CF0F60F41
-	for <dmaengine@archiver.kernel.org>; Tue, 10 Aug 2021 14:22:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B4D0A604AC
+	for <dmaengine@archiver.kernel.org>; Wed, 11 Aug 2021 07:18:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241539AbhHJOWg (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 10 Aug 2021 10:22:36 -0400
-Received: from mail.kernel.org ([198.145.29.99]:52806 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S242717AbhHJOS2 (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Tue, 10 Aug 2021 10:18:28 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id DF9C561076;
-        Tue, 10 Aug 2021 14:16:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1628605005;
-        bh=ePZz+sF9yOD/Cf5qf8TlpbkemcR8a+vrRB0qNX7C4KA=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=K94jQAktXOMpkRZ6tXW2W6Jbcm4IxfcgDZuYJ4iDYkWqfuTShBmZzIUPLeAvQfdZ4
-         VcXHPelxs6rb2VUz/974Dks+L/WrNgFrQaGb9Nnz8Ok+aLljOLg3KimfK1qqoMvLq+
-         S7+yw6FpQlyErfsguq1jALsL3vUTGRAKh5X0KTU5Yh4AiicpuUspj3D0Lz7/PhEb3Q
-         BWeAT0QjDCgHRH414Gpfm8kgQG9hf+lny1JLba1WA7dWYNqxHY0YgnF992tucDW5hf
-         dHvRdk5nU9JXgGYlmnEieB9esOZp5ZQBN9KqhtoML2G0WgLzuJ90C12MouznvHMFYB
-         LEbdp7TN90L8Q==
-From:   Sasha Levin <sashal@kernel.org>
-To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Peter Ujfalusi <peter.ujfalusi@gmail.com>,
-        Vinod Koul <vkoul@kernel.org>, Sasha Levin <sashal@kernel.org>,
-        dmaengine@vger.kernel.org
-Subject: [PATCH AUTOSEL 4.14 03/10] dmaengine: of-dma: router_xlate to return -EPROBE_DEFER if controller is not yet available
-Date:   Tue, 10 Aug 2021 10:16:34 -0400
-Message-Id: <20210810141641.3118360-3-sashal@kernel.org>
-X-Mailer: git-send-email 2.30.2
-In-Reply-To: <20210810141641.3118360-1-sashal@kernel.org>
-References: <20210810141641.3118360-1-sashal@kernel.org>
+        id S235135AbhHKHSl (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 11 Aug 2021 03:18:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40092 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235109AbhHKHSk (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Wed, 11 Aug 2021 03:18:40 -0400
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 46BF6C061765;
+        Wed, 11 Aug 2021 00:18:17 -0700 (PDT)
+Received: by mail-lf1-x12c.google.com with SMTP id y34so3616572lfa.8;
+        Wed, 11 Aug 2021 00:18:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=dg6pLnPjVAtzxSVEs294XC4hAdURgggAJsxQwZ1ihAA=;
+        b=WiaozDn9hHTeG/WdotFQpHJfhhAXmNQ8JrHA7CTf/Op+uc/qOh9ShFDbEJmDkvdE5K
+         KYa5Hb3Rho98p4Wf+atu3+9Th152uhjVGdQBCGguHnX2pxGUhKRtO998MA8YIkndZed+
+         F756ljUgA+dncph+CbxShWCDcLgSs3VWziwSrOkQ+DOd5j66AoEHp2Wn6aKc7L3GLqgQ
+         r5frmMlbeA1xFJHuBES/6xSTJysq1ujdOGlHXAlcGeqyekjsW5IG3HM2IZ75j18H/Inl
+         MEBo4Y7UtIhfhCfaFDyXWCDBrOYIGm+qlV9B91pu1lzRTF1J6KV50z/6ZfFkKV6f6GLm
+         pqKg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=dg6pLnPjVAtzxSVEs294XC4hAdURgggAJsxQwZ1ihAA=;
+        b=DLX9M/8Fk3jUQt+MWcclWSIzOb6PoauvS7peBqeOW3zIH98DblS7VK4CQyYPhg2yTW
+         luPWzS4Zb/NLriUdKX06ToK3+nMRWbcP4p0KZPmIiv0ZwID3sfcg5xbFrEGOPzygZPxU
+         xGeY0airwARf52v68JP+w9UXEn+f6YD7lNkx12BwXHUlkIvT86VaNDUXiBN6rML1+8m2
+         KRaLvPwh3CUmkaSKt9tn4CyrLWjz1u4fIkqTFtnWbvT69u6ARKVr5VBE0uxJQw3oycvw
+         dEvk+DeaiefRIg4nkYYigerkByRphflY49xoN3X7asWqeGP07w4O2OjZVT7MKo8Dm2Wt
+         wmOA==
+X-Gm-Message-State: AOAM531g/pwR0bbOkmcOjGn+oX4ZXqH4dazH3y3+5vKfqBdjkaWK89TQ
+        bQL4a+SGMf0ch4NGjIt79VqOrl/kHzRWa4zpIFs=
+X-Google-Smtp-Source: ABdhPJwkDjxicadizT9KbFPV2Tun1I/JQcK9eslZZ4FSv1mNWUQ63syojkl0OMzQSqrPOjepv10eXc54ilfGxIr2ULw=
+X-Received: by 2002:a05:6512:3408:: with SMTP id i8mr1495706lfr.525.1628666295694;
+ Wed, 11 Aug 2021 00:18:15 -0700 (PDT)
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-Content-Transfer-Encoding: 8bit
+References: <20210704153314.6995-1-keguang.zhang@gmail.com>
+ <YO5yo8v/tRZLGEdo@matsya> <CAJhJPsUNCSK4VYv9Z4ZNDxC03F4CxQoAXCCf+TJmmbdUe4XNNA@mail.gmail.com>
+ <YPLrsXEmmHPtbZ+N@matsya> <YPMVyYoBojHYsMbJ@kroah.com> <YPa2+TsdL0PrR3hR@matsya>
+ <YPa4IAk3sh7bai15@kroah.com> <YPa/DsO1vWcXKJKd@matsya> <CAJhJPsV211=Y_wrXqaiWz7Tqhvbj-ETwSNWqLcbt8PHi8=JMLA@mail.gmail.com>
+In-Reply-To: <CAJhJPsV211=Y_wrXqaiWz7Tqhvbj-ETwSNWqLcbt8PHi8=JMLA@mail.gmail.com>
+From:   Kelvin Cheung <keguang.zhang@gmail.com>
+Date:   Wed, 11 Aug 2021 15:18:03 +0800
+Message-ID: <CAJhJPsXtm_i5OAtSxZn9mSumAp0X8r5EKJ3VLt1nmC-j-EuOyw@mail.gmail.com>
+Subject: Re: [PATCH V5] dmaengine: Loongson1: Add Loongson1 dmaengine driver
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     Greg KH <gregkh@linuxfoundation.org>, dmaengine@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-From: Peter Ujfalusi <peter.ujfalusi@gmail.com>
+Kelvin Cheung <keguang.zhang@gmail.com> =E4=BA=8E2021=E5=B9=B47=E6=9C=8821=
+=E6=97=A5=E5=91=A8=E4=B8=89 =E4=B8=8B=E5=8D=888:22=E5=86=99=E9=81=93=EF=BC=
+=9A
+>
+> Hi Vinod, Greg,
+>
+> Vinod Koul <vkoul@kernel.org> =E4=BA=8E2021=E5=B9=B47=E6=9C=8820=E6=97=A5=
+=E5=91=A8=E4=BA=8C =E4=B8=8B=E5=8D=888:18=E5=86=99=E9=81=93=EF=BC=9A
+> >
+> > On 20-07-21, 13:48, Greg KH wrote:
+> > > On Tue, Jul 20, 2021 at 05:13:53PM +0530, Vinod Koul wrote:
+> > > > On 17-07-21, 19:39, Greg KH wrote:
+> > > > > On Sat, Jul 17, 2021 at 08:09:45PM +0530, Vinod Koul wrote:
+> > > > > > On 17-07-21, 18:57, Kelvin Cheung wrote:
+> > > > > > > Vinod Koul <vkoul@kernel.org> =E4=BA=8E2021=E5=B9=B47=E6=9C=
+=8814=E6=97=A5=E5=91=A8=E4=B8=89 =E4=B8=8B=E5=8D=881:14=E5=86=99=E9=81=93=
+=EF=BC=9A
+> > > > > > > >
+> > > > > > > > On 04-07-21, 23:33, Keguang Zhang wrote:
+> > > > > > > >
+> > > > > > > > > +static struct platform_driver ls1x_dma_driver =3D {
+> > > > > > > > > +     .probe  =3D ls1x_dma_probe,
+> > > > > > > > > +     .remove =3D ls1x_dma_remove,
+> > > > > > > > > +     .driver =3D {
+> > > > > > > > > +             .name   =3D "ls1x-dma",
+> > > > > > > > > +     },
+> > > > > > > > > +};
+> > > > > > > > > +
+> > > > > > > > > +module_platform_driver(ls1x_dma_driver);
+> > > > > > > >
+> > > > > > > > so my comment was left unanswered, who creates this device!
+> > > > > > >
+> > > > > > > Sorry!
+> > > > > > > This patch will create the device: https://patchwork.kernel.o=
+rg/patch/12281691
+> > > > > >
+> > > > > > Greg, looks like the above patch creates platform devices in mi=
+ps, is
+> > > > > > that the right way..?
+> > > > >
+> > > > > I do not understand, what exactly is the question?
+> > > >
+> > > > So this patch was adding Loongson1 dmaengine driver which is a plat=
+form
+> > > > device. I asked about the platform device and was told that [1] cre=
+ates
+> > > > the platform device. I am not sure if that is the recommended way g=
+iven
+> > > > that you have been asking people to not use platform devices.
+> > >
+> > > Yes, but this link:
+> > >
+> > > > [1]: https://patchwork.kernel.org/patch/12281691
+> > >
+> > > Does look like a "real" platform device in that you have fixed resour=
+ces
+> > > for the device and no way to discover it on your own.
+> > >
+> > > But why are you not using DT for this?  That looks like the old platf=
+orm
+> > > data files.
+> >
+> > Apparently I was told that this platform does not use DT :( Looking at
+> > it it should.. Maybe Kelvin can explain why..
+>
+> Yes, the DT support of Loongson32 is still on the way.
+> Therefore, I have to use the old way to let the driver work.
+> I will update this driver once this platform supports DT.
+>
+Hi Vinod,
+Is there anything to be improved?
+Perhaps this patch is acceptable now?
 
-[ Upstream commit eda97cb095f2958bbad55684a6ca3e7d7af0176a ]
+Thanks!
+> >
+> > --
+> > ~Vinod
+>
+>
+>
+> --
+> Best regards,
+>
+> Kelvin Cheung
 
-If the router_xlate can not find the controller in the available DMA
-devices then it should return with -EPORBE_DEFER in a same way as the
-of_dma_request_slave_channel() does.
 
-The issue can be reproduced if the event router is registered before the
-DMA controller itself and a driver would request for a channel before the
-controller is registered.
-In of_dma_request_slave_channel():
-1. of_dma_find_controller() would find the dma_router
-2. ofdma->of_dma_xlate() would fail and returned NULL
-3. -ENODEV is returned as error code
 
-with this patch we would return in this case the correct -EPROBE_DEFER and
-the client can try to request the channel later.
+--=20
+Best regards,
 
-Signed-off-by: Peter Ujfalusi <peter.ujfalusi@gmail.com>
-Link: https://lore.kernel.org/r/20210717190021.21897-1-peter.ujfalusi@gmail.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- drivers/dma/of-dma.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
-
-diff --git a/drivers/dma/of-dma.c b/drivers/dma/of-dma.c
-index 8344a60c2131..a9d3ab94749b 100644
---- a/drivers/dma/of-dma.c
-+++ b/drivers/dma/of-dma.c
-@@ -68,8 +68,12 @@ static struct dma_chan *of_dma_router_xlate(struct of_phandle_args *dma_spec,
- 		return NULL;
- 
- 	ofdma_target = of_dma_find_controller(&dma_spec_target);
--	if (!ofdma_target)
--		return NULL;
-+	if (!ofdma_target) {
-+		ofdma->dma_router->route_free(ofdma->dma_router->dev,
-+					      route_data);
-+		chan = ERR_PTR(-EPROBE_DEFER);
-+		goto err;
-+	}
- 
- 	chan = ofdma_target->of_dma_xlate(&dma_spec_target, ofdma_target);
- 	if (IS_ERR_OR_NULL(chan)) {
-@@ -80,6 +84,7 @@ static struct dma_chan *of_dma_router_xlate(struct of_phandle_args *dma_spec,
- 		chan->route_data = route_data;
- 	}
- 
-+err:
- 	/*
- 	 * Need to put the node back since the ofdma->of_dma_route_allocate
- 	 * has taken it for generating the new, translated dma_spec
--- 
-2.30.2
-
+Kelvin Cheung
