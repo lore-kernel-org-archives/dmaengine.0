@@ -2,162 +2,203 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D8E10C4338F
-	for <dmaengine@archiver.kernel.org>; Wed, 11 Aug 2021 07:18:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 935A4C432BE
+	for <dmaengine@archiver.kernel.org>; Mon, 16 Aug 2021 07:52:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B4D0A604AC
-	for <dmaengine@archiver.kernel.org>; Wed, 11 Aug 2021 07:18:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7F69A61AFB
+	for <dmaengine@archiver.kernel.org>; Mon, 16 Aug 2021 07:52:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235135AbhHKHSl (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 11 Aug 2021 03:18:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40092 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235109AbhHKHSk (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Wed, 11 Aug 2021 03:18:40 -0400
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 46BF6C061765;
-        Wed, 11 Aug 2021 00:18:17 -0700 (PDT)
-Received: by mail-lf1-x12c.google.com with SMTP id y34so3616572lfa.8;
-        Wed, 11 Aug 2021 00:18:17 -0700 (PDT)
+        id S234168AbhHPHws (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 16 Aug 2021 03:52:48 -0400
+Received: from mail-eopbgr1400117.outbound.protection.outlook.com ([40.107.140.117]:60096
+        "EHLO JPN01-TY1-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S234043AbhHPHwr (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Mon, 16 Aug 2021 03:52:47 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=a1i67JucW6OngjiklvCiTRUGfvu3TsDRjuZfgux/H3Tgww23G/eJxfhzEf0Qred+Zh/qpdDUkNfH19dLRkc3r1qprLx0jQB+eLR5cxTpy0zbbjl3Q1xo2esODWrmfXNtJr8o0ScrFwAqfzrDGv3kkQzGxrYKFdKwWoPPQYDeBSv2uTTkDPBhig4I925qBJR6ykNqx2wZAIQpSpckOo5cOGijPckRcA92tJF702PG0YZYAInbqxkMnxOqmUEXMCgiL9HlyZE8yWQP4zam0POKriZ19C5ETads0jpGQfD33X5txgRj10uIVYw4UyBukcN34i4+nt4XkF1vaslzK8hFmQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=csW7mKpOGtAQV/iNWkEWkn8ZnEutslWnzl4iWMV9LZE=;
+ b=a8Yle690JGeid1alL+meeXqAfQPZyoWtERDgeYYAYBr8+TLFmi3+tTGHDMaOzY/0FbHn0Z5VUu4AIhum946J38i94S/BCQ+2Zfi18/X0sZrZVtBg4LjaAAXNQyMqlENfX8D3GnOtJoQpdwkskeoOscdlttfS3gAp+Jk9ZmswdbLZfUm+OYEYvQplmvEgYkwMT336UaRztlNz1wYUV0JHcuZCxOWRgw32VvC+txWFWHkQQUhUFPcQasUzcCe2somsdRO4sxRnOSQRJPfAJoQBOk4wZsYfZhuB9mGAj0+Yi1gMl39C52ITA1Qerp3qI7yJY89t4jI3HN6p9CjOGyuhrA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=bp.renesas.com; dmarc=pass action=none
+ header.from=bp.renesas.com; dkim=pass header.d=bp.renesas.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=dg6pLnPjVAtzxSVEs294XC4hAdURgggAJsxQwZ1ihAA=;
-        b=WiaozDn9hHTeG/WdotFQpHJfhhAXmNQ8JrHA7CTf/Op+uc/qOh9ShFDbEJmDkvdE5K
-         KYa5Hb3Rho98p4Wf+atu3+9Th152uhjVGdQBCGguHnX2pxGUhKRtO998MA8YIkndZed+
-         F756ljUgA+dncph+CbxShWCDcLgSs3VWziwSrOkQ+DOd5j66AoEHp2Wn6aKc7L3GLqgQ
-         r5frmMlbeA1xFJHuBES/6xSTJysq1ujdOGlHXAlcGeqyekjsW5IG3HM2IZ75j18H/Inl
-         MEBo4Y7UtIhfhCfaFDyXWCDBrOYIGm+qlV9B91pu1lzRTF1J6KV50z/6ZfFkKV6f6GLm
-         pqKg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=dg6pLnPjVAtzxSVEs294XC4hAdURgggAJsxQwZ1ihAA=;
-        b=DLX9M/8Fk3jUQt+MWcclWSIzOb6PoauvS7peBqeOW3zIH98DblS7VK4CQyYPhg2yTW
-         luPWzS4Zb/NLriUdKX06ToK3+nMRWbcP4p0KZPmIiv0ZwID3sfcg5xbFrEGOPzygZPxU
-         xGeY0airwARf52v68JP+w9UXEn+f6YD7lNkx12BwXHUlkIvT86VaNDUXiBN6rML1+8m2
-         KRaLvPwh3CUmkaSKt9tn4CyrLWjz1u4fIkqTFtnWbvT69u6ARKVr5VBE0uxJQw3oycvw
-         dEvk+DeaiefRIg4nkYYigerkByRphflY49xoN3X7asWqeGP07w4O2OjZVT7MKo8Dm2Wt
-         wmOA==
-X-Gm-Message-State: AOAM531g/pwR0bbOkmcOjGn+oX4ZXqH4dazH3y3+5vKfqBdjkaWK89TQ
-        bQL4a+SGMf0ch4NGjIt79VqOrl/kHzRWa4zpIFs=
-X-Google-Smtp-Source: ABdhPJwkDjxicadizT9KbFPV2Tun1I/JQcK9eslZZ4FSv1mNWUQ63syojkl0OMzQSqrPOjepv10eXc54ilfGxIr2ULw=
-X-Received: by 2002:a05:6512:3408:: with SMTP id i8mr1495706lfr.525.1628666295694;
- Wed, 11 Aug 2021 00:18:15 -0700 (PDT)
-MIME-Version: 1.0
-References: <20210704153314.6995-1-keguang.zhang@gmail.com>
- <YO5yo8v/tRZLGEdo@matsya> <CAJhJPsUNCSK4VYv9Z4ZNDxC03F4CxQoAXCCf+TJmmbdUe4XNNA@mail.gmail.com>
- <YPLrsXEmmHPtbZ+N@matsya> <YPMVyYoBojHYsMbJ@kroah.com> <YPa2+TsdL0PrR3hR@matsya>
- <YPa4IAk3sh7bai15@kroah.com> <YPa/DsO1vWcXKJKd@matsya> <CAJhJPsV211=Y_wrXqaiWz7Tqhvbj-ETwSNWqLcbt8PHi8=JMLA@mail.gmail.com>
-In-Reply-To: <CAJhJPsV211=Y_wrXqaiWz7Tqhvbj-ETwSNWqLcbt8PHi8=JMLA@mail.gmail.com>
-From:   Kelvin Cheung <keguang.zhang@gmail.com>
-Date:   Wed, 11 Aug 2021 15:18:03 +0800
-Message-ID: <CAJhJPsXtm_i5OAtSxZn9mSumAp0X8r5EKJ3VLt1nmC-j-EuOyw@mail.gmail.com>
-Subject: Re: [PATCH V5] dmaengine: Loongson1: Add Loongson1 dmaengine driver
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Greg KH <gregkh@linuxfoundation.org>, dmaengine@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+ d=renesasgroup.onmicrosoft.com; s=selector2-renesasgroup-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=csW7mKpOGtAQV/iNWkEWkn8ZnEutslWnzl4iWMV9LZE=;
+ b=aQuEi+3rRjHQLtlY/MV76FJ1hku6gaVLwj8voMdETz6f9QgDdCpW+z+opbh/JgUw3BwGwuRjq/clcjVjbxX8njLEr/gdj0X0Usv3hG8WQXc22UaEkp9dUjvCsCVNQOP1CdtWPd9KgKgd5p6UcXV+RjhvyDsJr2gVeJGHlpdQBwg=
+Received: from OS0PR01MB5922.jpnprd01.prod.outlook.com (2603:1096:604:bb::5)
+ by OS3PR01MB6628.jpnprd01.prod.outlook.com (2603:1096:604:10e::6) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4415.15; Mon, 16 Aug
+ 2021 07:52:13 +0000
+Received: from OS0PR01MB5922.jpnprd01.prod.outlook.com
+ ([fe80::c6f:e31f:eaa9:60fe]) by OS0PR01MB5922.jpnprd01.prod.outlook.com
+ ([fe80::c6f:e31f:eaa9:60fe%9]) with mapi id 15.20.4415.023; Mon, 16 Aug 2021
+ 07:52:12 +0000
+From:   Biju Das <biju.das.jz@bp.renesas.com>
+To:     Biju Das <biju.das.jz@bp.renesas.com>,
+        Vinod Koul <vkoul@kernel.org>, Rob Herring <robh+dt@kernel.org>
+CC:     Chris Brandt <Chris.Brandt@renesas.com>,
+        "dmaengine@vger.kernel.org" <dmaengine@vger.kernel.org>,
+        "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
+        Geert Uytterhoeven <geert+renesas@glider.be>,
+        Chris Paterson <Chris.Paterson2@renesas.com>,
+        Prabhakar Mahadev Lad <prabhakar.mahadev-lad.rj@bp.renesas.com>,
+        "linux-renesas-soc@vger.kernel.org" 
+        <linux-renesas-soc@vger.kernel.org>
+Subject: RE: [PATCH v7 0/3] Add RZ/G2L DMAC support
+Thread-Topic: [PATCH v7 0/3] Add RZ/G2L DMAC support
+Thread-Index: AQHXiqjo2NLXibA+ZEa2KdTQORKkVKt10bdg
+Date:   Mon, 16 Aug 2021 07:52:12 +0000
+Message-ID: <OS0PR01MB592295B2B25BF3CF56272A2B86FD9@OS0PR01MB5922.jpnprd01.prod.outlook.com>
+References: <20210806095322.2326-1-biju.das.jz@bp.renesas.com>
+In-Reply-To: <20210806095322.2326-1-biju.das.jz@bp.renesas.com>
+Accept-Language: en-GB, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: bp.renesas.com; dkim=none (message not signed)
+ header.d=none;bp.renesas.com; dmarc=none action=none
+ header.from=bp.renesas.com;
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 59d27517-9235-4a96-993c-08d9608ac1ea
+x-ms-traffictypediagnostic: OS3PR01MB6628:
+x-ms-exchange-transport-forked: True
+x-microsoft-antispam-prvs: <OS3PR01MB66281C0D391B5064BF8434D886FD9@OS3PR01MB6628.jpnprd01.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:8882;
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: 1tTOYCrJakYM+BMgf7ZjnQP3fWSjtQdNkQanK8hhxaArS+dyKaifI0I/Rq8+j6xYa4BOufR4kGZpeu/CFRQwgCRMyzHu+KkRkGqybOh7CBcUUV4ZPD5YM5G44MqjSMY1TcGdQUrFd4W80cboDP9dsEPHE9V07mEP9ctBVo9zWXhF8hAfkbSKpPQzRpvPCHwX+5GpEBdAVjpeFI+ekwWIFF92inj+BcFXEQRpLXkZfKtGL0s7TddM85xWu0kl6pdyLQi1AZ2c5zpuQQ+Gf5B81H18YrytkGpHt8a87dxBWNDb89UtoPxa7Xzno+hsnJKTNu1EShO+99Wxseu7ln+VpQDZiklhAFmEH9eZws3bxDLD6MaSwGALdx8boMnAgxYcOfbJmfUeYNT8uIZG36jgE3ehZ5eenuLGakUL1KDHLyGLZD5dH0K1lxJE4OLCmBnmyH4FfMAZhmW3tppANLjprxEVARR/3k3gjRQY4oDJZ/OLrImLQwuiDTb7S33No9vUTM3MH5onyir9SyZypdEnRNavXi4bvOX/q8piVA6mo6zI5AUW91fdC9fXpJkItkmPsClug5KJu7FyWnnYRVYp3hzPWVX1PfL/E0+5iBa9R7ZdJ0LfA46UkUp92p+a1N3+OSd4VttrtlyhCwJnzTYAxys5asA/q7Uh3rRpjuUR23V9cVQ50nAhQRdyXIUiDPJCl0/mUDd6piCqtX6EfGUYOg1Mw7tfNuIZYEQmAMLAUgfTa+qGIzwX3sbpVjP9bxmbLpFbdeCUKO7uKzpVfksSSb5CT7T4K9HCnzwFuPKOygU=
+x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:OS0PR01MB5922.jpnprd01.prod.outlook.com;PTR:;CAT:NONE;SFS:(4636009)(396003)(39850400004)(346002)(376002)(366004)(136003)(110136005)(9686003)(2906002)(54906003)(4326008)(76116006)(38070700005)(38100700002)(55016002)(5660300002)(52536014)(122000001)(66476007)(66946007)(66556008)(64756008)(66446008)(186003)(26005)(8936002)(6506007)(33656002)(45080400002)(83380400001)(316002)(86362001)(966005)(478600001)(7696005)(71200400001)(8676002);DIR:OUT;SFP:1102;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?eG/pV1RUgOJpowl1CsFOpetPx1GL0cbDvxEX6nYbadOzwKj/pDVb7wbT+H8b?=
+ =?us-ascii?Q?LLr9Jh2mOu9RSjOGmoiRwoPdyMHdHF7RPVHixwMe2B8rEfkODIRyrJuEXHAb?=
+ =?us-ascii?Q?Kclz6j4vUPHP8hFTJxhJ6rK6/SFdYR/nrtVgxwjBCQi2XO3cv7KAhly4YDH8?=
+ =?us-ascii?Q?PUGlTGI3G6keODL6Hvx34tErgU8377nEVCwI2aC4Lst7I+gRuNF1QceSHPbk?=
+ =?us-ascii?Q?hpzD1SxnLx4CuCVGFsekPzCZpvkKLnNoTDFoDpNiMMm6rSvnvhKk9RoRrECq?=
+ =?us-ascii?Q?gp6DdkUONQDcSXuYnJX06iV269YF+k+XmNqrCnN5t6OejFUdvUXO90RBsFD2?=
+ =?us-ascii?Q?OL/p6kMVhbSVEhQee6XqzZkQxyErGSGFN257YroupdtElSm3yHMn9KevqUoL?=
+ =?us-ascii?Q?L+YERU+0j1/CfDX3SGaPwCYS1ejKGGXfMaN7sbeNAT1l7pO6cyyM3QaJEqQ3?=
+ =?us-ascii?Q?/Zg4Q+PUA9TT3Oisi0+CcSj20TFnuqWAWC9Q6cbj/WePFVSU7mO7YSw1OW1m?=
+ =?us-ascii?Q?A3IV0BqOQbvNDmYU+OIwxhOfbrSjgrPzYYPb4P+Ejq34hyJM5Al0qgLAMPu+?=
+ =?us-ascii?Q?5HwXwNv0PEWDgNE6LmrgsNjKJkbXsuDfTEuhSC5gyjh4DyvPnHMLoUFFe6DT?=
+ =?us-ascii?Q?8F9VOp4w5HcG/1m4sXU18nUq4Nkf9Qrt+WbZmMLV8/A/mPqVxdCLZCVlEWXP?=
+ =?us-ascii?Q?FktqBcXzuffakq4YMx6V07v9fk63W3gJLG3ZMiN5gjzQAKiwed9C8/LAI7KN?=
+ =?us-ascii?Q?uk+863Hl/nsVcXTj1+W54EsyzK9C430U5mFSqQUoY/TQOmPxQJ6KNGA25hPG?=
+ =?us-ascii?Q?nbyOFiOJw+UvnGfroYeUHmtIh6oNTlOkNKdlJKmgaiXH+xjyh33w1lKIfFSh?=
+ =?us-ascii?Q?+GzwBJPNpqRc6wQEC8VgJePAqZjg10VT+E8IAya9O70sssnXVTZcoXXleVFZ?=
+ =?us-ascii?Q?abvN8a9Lyf67pGIdgwulgZ0quO+3w218nWqYk894m9hJs9F6b904SUv4Vqhz?=
+ =?us-ascii?Q?+XPjOd2CvdB1NrbQTnnBoTn3uJuAvHpbgxqz2T/7KN0Hp8XwO4hWZap/jKe1?=
+ =?us-ascii?Q?Iuk5bDojL7GYkNk5ISdW/yrwsNzUAvQmFNVtpfMW9WsGpGWrD2a6I9dGN2fW?=
+ =?us-ascii?Q?8pzbMTsHR6R7JILKhVEkc1xw2Vxb/49Tr1M/qI/eKAeV4Bbk1Pj+0BIqCNxu?=
+ =?us-ascii?Q?jVJXBQ0UCwR0lRaaTKd4KAvV9UfrYvqzIvgwxdjmXv4L8di7VtwT3c7G/5Sm?=
+ =?us-ascii?Q?Xpk79lhV4pxr2F+CTSELda9IR6yLxwQrpfjCpAT3hypKBdC93tBeD5rNMOE/?=
+ =?us-ascii?Q?39k=3D?=
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+X-OriginatorOrg: bp.renesas.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: OS0PR01MB5922.jpnprd01.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 59d27517-9235-4a96-993c-08d9608ac1ea
+X-MS-Exchange-CrossTenant-originalarrivaltime: 16 Aug 2021 07:52:12.2844
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 53d82571-da19-47e4-9cb4-625a166a4a2a
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: wWbMDi47+2RYrfs8u6GzWVrcl3BExg9nPxxhD+Zwm7uGhFrYKeVJDWA4SsDAvz+5YhX1NBDx7UE4u2tYzxg5kEqa7ZsQxUz79ojcdSosa+Y=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: OS3PR01MB6628
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Kelvin Cheung <keguang.zhang@gmail.com> =E4=BA=8E2021=E5=B9=B47=E6=9C=8821=
-=E6=97=A5=E5=91=A8=E4=B8=89 =E4=B8=8B=E5=8D=888:22=E5=86=99=E9=81=93=EF=BC=
-=9A
->
-> Hi Vinod, Greg,
->
-> Vinod Koul <vkoul@kernel.org> =E4=BA=8E2021=E5=B9=B47=E6=9C=8820=E6=97=A5=
-=E5=91=A8=E4=BA=8C =E4=B8=8B=E5=8D=888:18=E5=86=99=E9=81=93=EF=BC=9A
-> >
-> > On 20-07-21, 13:48, Greg KH wrote:
-> > > On Tue, Jul 20, 2021 at 05:13:53PM +0530, Vinod Koul wrote:
-> > > > On 17-07-21, 19:39, Greg KH wrote:
-> > > > > On Sat, Jul 17, 2021 at 08:09:45PM +0530, Vinod Koul wrote:
-> > > > > > On 17-07-21, 18:57, Kelvin Cheung wrote:
-> > > > > > > Vinod Koul <vkoul@kernel.org> =E4=BA=8E2021=E5=B9=B47=E6=9C=
-=8814=E6=97=A5=E5=91=A8=E4=B8=89 =E4=B8=8B=E5=8D=881:14=E5=86=99=E9=81=93=
-=EF=BC=9A
-> > > > > > > >
-> > > > > > > > On 04-07-21, 23:33, Keguang Zhang wrote:
-> > > > > > > >
-> > > > > > > > > +static struct platform_driver ls1x_dma_driver =3D {
-> > > > > > > > > +     .probe  =3D ls1x_dma_probe,
-> > > > > > > > > +     .remove =3D ls1x_dma_remove,
-> > > > > > > > > +     .driver =3D {
-> > > > > > > > > +             .name   =3D "ls1x-dma",
-> > > > > > > > > +     },
-> > > > > > > > > +};
-> > > > > > > > > +
-> > > > > > > > > +module_platform_driver(ls1x_dma_driver);
-> > > > > > > >
-> > > > > > > > so my comment was left unanswered, who creates this device!
-> > > > > > >
-> > > > > > > Sorry!
-> > > > > > > This patch will create the device: https://patchwork.kernel.o=
-rg/patch/12281691
-> > > > > >
-> > > > > > Greg, looks like the above patch creates platform devices in mi=
-ps, is
-> > > > > > that the right way..?
-> > > > >
-> > > > > I do not understand, what exactly is the question?
-> > > >
-> > > > So this patch was adding Loongson1 dmaengine driver which is a plat=
-form
-> > > > device. I asked about the platform device and was told that [1] cre=
-ates
-> > > > the platform device. I am not sure if that is the recommended way g=
-iven
-> > > > that you have been asking people to not use platform devices.
-> > >
-> > > Yes, but this link:
-> > >
-> > > > [1]: https://patchwork.kernel.org/patch/12281691
-> > >
-> > > Does look like a "real" platform device in that you have fixed resour=
-ces
-> > > for the device and no way to discover it on your own.
-> > >
-> > > But why are you not using DT for this?  That looks like the old platf=
-orm
-> > > data files.
-> >
-> > Apparently I was told that this platform does not use DT :( Looking at
-> > it it should.. Maybe Kelvin can explain why..
->
-> Yes, the DT support of Loongson32 is still on the way.
-> Therefore, I have to use the old way to let the driver work.
-> I will update this driver once this platform supports DT.
->
-Hi Vinod,
-Is there anything to be improved?
-Perhaps this patch is acceptable now?
+Hi All,
 
-Thanks!
-> >
-> > --
-> > ~Vinod
->
->
->
+Gentle ping. Are we happy with this patch series? Please let me know.
+
+Regards,
+Biju
+
+> Subject: [PATCH v7 0/3] Add RZ/G2L DMAC support
+>=20
+> This patch series aims to add DMAC support on RZ/G2L SoC's.
+>=20
+> It is based on the work done by Chris Brandt for RZ/A DMA driver.
+>=20
+> v6->v7:
+>  * As per the DMA documention vc.lock must be held by caller for
+>    vchan_cookie_complete. So added vc.lock for this function.
+>  * Added lock for the lists used in rz_dmac_terminate_all.
+>=20
+> v5->v6:
+>  * Added Rb tag from Rob for binding patch
+>  * Fixed dma_addr_t and size_t format specifier issue reported by
+>    kernel test robot
+>  * Started using ARRAY_SIZE macro instead of  magic number in
+>    rz_dmac_ds_to_val_mapping function.
+>=20
+> v4->v5:
+>  * Passing legacy slave channel configuration parameters using
+> dmaengine_slave_config is prohibited.
+>    So started passing this parameters in DT instead, by encoding MID/RID
+> values with channel parameters
+>    in the #dma-cells.
+>  * Removed Rb tag's of Geert and Rob since there is a modification in
+> binding patch
+>  * Added 128 byte slave bus width support
+>  * Removed SoC dtsi and Defconfig patch from this series. Will send as
+> separate patch.
+>=20
+> Ref:-
+>=20
+> https://jpn01.safelinks.protection.outlook.com/?url=3Dhttps%3A%2F%2Flore.=
+ker
+> nel.org%2Flinux-renesas-soc%2F20210719092535.4474-1-
+> biju.das.jz%40bp.renesas.com%2FT%2F%23ma0b261df6d4400882204aaaaa014ddb59c=
+4
+> 79db4&amp;data=3D04%7C01%7Cbiju.das.jz%40bp.renesas.com%7Cc9ed17350b19489=
+6fc
+> b308d958c00a1c%7C53d82571da1947e49cb4625a166a4a2a%7C0%7C0%7C6376384040934=
+3
+> 0389%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6=
+I
+> k1haWwiLCJXVCI6Mn0%3D%7C1000&amp;sdata=3Dy2phFowFQIsATfjN%2FagVsOsZU5fOVs=
+n8Z
+> maE3%2BvhUVo%3D&amp;reserved=3D0
+>=20
+> v3->v4:
+>  * Added Rob's Rb tag for binding patch.
+>  * Incorporated Vinod and Geert's review comments.
+> v2->v3:
+>   * Described clocks and resets in binding file as per Rob's feedback.
+>=20
+> v1->v2
+>  * Started using virtual DMAC
+>  * Added Geert's Rb tag for binding patch.
+>=20
+> Biju Das (3):
+>   dt-bindings: dma: Document RZ/G2L bindings
+>   dmaengine: Extend the dma_slave_width for 128 bytes
+>   drivers: dma: sh: Add DMAC driver for RZ/G2L SoC
+>=20
+>  .../bindings/dma/renesas,rz-dmac.yaml         | 130 +++
+>  drivers/dma/sh/Kconfig                        |   9 +
+>  drivers/dma/sh/Makefile                       |   1 +
+>  drivers/dma/sh/rz-dmac.c                      | 971 ++++++++++++++++++
+>  include/linux/dmaengine.h                     |   3 +-
+>  5 files changed, 1113 insertions(+), 1 deletion(-)  create mode 100644
+> Documentation/devicetree/bindings/dma/renesas,rz-dmac.yaml
+>  create mode 100644 drivers/dma/sh/rz-dmac.c
+>=20
 > --
-> Best regards,
->
-> Kelvin Cheung
+> 2.17.1
 
-
-
---=20
-Best regards,
-
-Kelvin Cheung
