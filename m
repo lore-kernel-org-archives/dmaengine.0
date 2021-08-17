@@ -2,203 +2,285 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 935A4C432BE
-	for <dmaengine@archiver.kernel.org>; Mon, 16 Aug 2021 07:52:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 87138C4338F
+	for <dmaengine@archiver.kernel.org>; Tue, 17 Aug 2021 13:56:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7F69A61AFB
-	for <dmaengine@archiver.kernel.org>; Mon, 16 Aug 2021 07:52:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6C3FE6024A
+	for <dmaengine@archiver.kernel.org>; Tue, 17 Aug 2021 13:56:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234168AbhHPHws (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 16 Aug 2021 03:52:48 -0400
-Received: from mail-eopbgr1400117.outbound.protection.outlook.com ([40.107.140.117]:60096
-        "EHLO JPN01-TY1-obe.outbound.protection.outlook.com"
+        id S236040AbhHQN5V (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 17 Aug 2021 09:57:21 -0400
+Received: from mail-bn8nam11on2074.outbound.protection.outlook.com ([40.107.236.74]:36961
+        "EHLO NAM11-BN8-obe.outbound.protection.outlook.com"
         rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S234043AbhHPHwr (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Mon, 16 Aug 2021 03:52:47 -0400
+        id S235588AbhHQN5U (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Tue, 17 Aug 2021 09:57:20 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=a1i67JucW6OngjiklvCiTRUGfvu3TsDRjuZfgux/H3Tgww23G/eJxfhzEf0Qred+Zh/qpdDUkNfH19dLRkc3r1qprLx0jQB+eLR5cxTpy0zbbjl3Q1xo2esODWrmfXNtJr8o0ScrFwAqfzrDGv3kkQzGxrYKFdKwWoPPQYDeBSv2uTTkDPBhig4I925qBJR6ykNqx2wZAIQpSpckOo5cOGijPckRcA92tJF702PG0YZYAInbqxkMnxOqmUEXMCgiL9HlyZE8yWQP4zam0POKriZ19C5ETads0jpGQfD33X5txgRj10uIVYw4UyBukcN34i4+nt4XkF1vaslzK8hFmQ==
+ b=LFWOwO30J56AsG5W0LaUWRfGF8uMDBUanXUdwYjZWkjt/jvAMqKkhvcqhe18yJlsYcFY1oM/RW+JjP0cZiyS7sxTnfLqXlKigWPmCcmE5OKqcsPBF738jy/3LfJ5DOKzOHc0p9LfN2gEJhTAfTkiPsmhJazq8gu/fP+7kORtY8ylOxsWHoLDmitm6ULNuWg80qQxaUN/DcDoZSCVev4iQOCmda7OGQ0vZwmoseQfACL+O2mWUBqAFdWX6emdzb3+qx0t7zIdaFzSSkkh8fAw9Yio8RlhNXmSMoG31VHH6Injhy/Nmh1qzxSwLo05b5Wj+lTIAp41H8sTA5ftemjMsw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=csW7mKpOGtAQV/iNWkEWkn8ZnEutslWnzl4iWMV9LZE=;
- b=a8Yle690JGeid1alL+meeXqAfQPZyoWtERDgeYYAYBr8+TLFmi3+tTGHDMaOzY/0FbHn0Z5VUu4AIhum946J38i94S/BCQ+2Zfi18/X0sZrZVtBg4LjaAAXNQyMqlENfX8D3GnOtJoQpdwkskeoOscdlttfS3gAp+Jk9ZmswdbLZfUm+OYEYvQplmvEgYkwMT336UaRztlNz1wYUV0JHcuZCxOWRgw32VvC+txWFWHkQQUhUFPcQasUzcCe2somsdRO4sxRnOSQRJPfAJoQBOk4wZsYfZhuB9mGAj0+Yi1gMl39C52ITA1Qerp3qI7yJY89t4jI3HN6p9CjOGyuhrA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=bp.renesas.com; dmarc=pass action=none
- header.from=bp.renesas.com; dkim=pass header.d=bp.renesas.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=renesasgroup.onmicrosoft.com; s=selector2-renesasgroup-onmicrosoft-com;
+ bh=NfQUXbWFXDqfoCbnzMaVzRRabY3oFMjTtW3DCJ5YBWc=;
+ b=NadjvfKpsO6Q8dOdayOLQB53MuP/jUGQgKlduMxL7MeMF+SK12ZoXRWopXwd+eogpE8teVBlFl6lBVbQhM913yhbacP4ICQPAYby54KCmJfPsnArPOa6A5ahbQNQfQdk28LqTRfIHGR65g9tOnRQ4vGP6kLp1lgMseCHDGZhV/xFlIr0wlEXFzm4xnCnRp/36Bohuj2TT+XPSQkOzlpUKapMMsgxHtbjbvXHtpQoYic76YwenpkQTabQlx1RJrLggFmuu30w8s5btpVOEHiWjQyAvgEN2iY4X45tQNghJhEPSdGxxxiHxC4wommlwMmF3z8U9tn1gQVUWhOIkzT5tA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=kernel.org smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=csW7mKpOGtAQV/iNWkEWkn8ZnEutslWnzl4iWMV9LZE=;
- b=aQuEi+3rRjHQLtlY/MV76FJ1hku6gaVLwj8voMdETz6f9QgDdCpW+z+opbh/JgUw3BwGwuRjq/clcjVjbxX8njLEr/gdj0X0Usv3hG8WQXc22UaEkp9dUjvCsCVNQOP1CdtWPd9KgKgd5p6UcXV+RjhvyDsJr2gVeJGHlpdQBwg=
-Received: from OS0PR01MB5922.jpnprd01.prod.outlook.com (2603:1096:604:bb::5)
- by OS3PR01MB6628.jpnprd01.prod.outlook.com (2603:1096:604:10e::6) with
+ bh=NfQUXbWFXDqfoCbnzMaVzRRabY3oFMjTtW3DCJ5YBWc=;
+ b=g8Z6TLE12hQscNNWvLpt6m5MGhBzx1DCGXG0XUVf6Ot08xLS59GUsOS//2T867CMmckc1hxiI4xlJ/5zLuRWVBfhCAIFRSHDRZQM5uwl3qPyiOfjbF3N9HW2YTz6Ak9/+5dRRk/HNX337fhI9IUMaYp9cEEoHfCjGUW1fjjzeMM=
+Received: from MWHPR21CA0062.namprd21.prod.outlook.com (2603:10b6:300:db::24)
+ by BYAPR12MB2790.namprd12.prod.outlook.com (2603:10b6:a03:69::28) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4415.15; Mon, 16 Aug
- 2021 07:52:13 +0000
-Received: from OS0PR01MB5922.jpnprd01.prod.outlook.com
- ([fe80::c6f:e31f:eaa9:60fe]) by OS0PR01MB5922.jpnprd01.prod.outlook.com
- ([fe80::c6f:e31f:eaa9:60fe%9]) with mapi id 15.20.4415.023; Mon, 16 Aug 2021
- 07:52:12 +0000
-From:   Biju Das <biju.das.jz@bp.renesas.com>
-To:     Biju Das <biju.das.jz@bp.renesas.com>,
-        Vinod Koul <vkoul@kernel.org>, Rob Herring <robh+dt@kernel.org>
-CC:     Chris Brandt <Chris.Brandt@renesas.com>,
-        "dmaengine@vger.kernel.org" <dmaengine@vger.kernel.org>,
-        "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
-        Geert Uytterhoeven <geert+renesas@glider.be>,
-        Chris Paterson <Chris.Paterson2@renesas.com>,
-        Prabhakar Mahadev Lad <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-        "linux-renesas-soc@vger.kernel.org" 
-        <linux-renesas-soc@vger.kernel.org>
-Subject: RE: [PATCH v7 0/3] Add RZ/G2L DMAC support
-Thread-Topic: [PATCH v7 0/3] Add RZ/G2L DMAC support
-Thread-Index: AQHXiqjo2NLXibA+ZEa2KdTQORKkVKt10bdg
-Date:   Mon, 16 Aug 2021 07:52:12 +0000
-Message-ID: <OS0PR01MB592295B2B25BF3CF56272A2B86FD9@OS0PR01MB5922.jpnprd01.prod.outlook.com>
-References: <20210806095322.2326-1-biju.das.jz@bp.renesas.com>
-In-Reply-To: <20210806095322.2326-1-biju.das.jz@bp.renesas.com>
-Accept-Language: en-GB, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: bp.renesas.com; dkim=none (message not signed)
- header.d=none;bp.renesas.com; dmarc=none action=none
- header.from=bp.renesas.com;
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 59d27517-9235-4a96-993c-08d9608ac1ea
-x-ms-traffictypediagnostic: OS3PR01MB6628:
-x-ms-exchange-transport-forked: True
-x-microsoft-antispam-prvs: <OS3PR01MB66281C0D391B5064BF8434D886FD9@OS3PR01MB6628.jpnprd01.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:8882;
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: 1tTOYCrJakYM+BMgf7ZjnQP3fWSjtQdNkQanK8hhxaArS+dyKaifI0I/Rq8+j6xYa4BOufR4kGZpeu/CFRQwgCRMyzHu+KkRkGqybOh7CBcUUV4ZPD5YM5G44MqjSMY1TcGdQUrFd4W80cboDP9dsEPHE9V07mEP9ctBVo9zWXhF8hAfkbSKpPQzRpvPCHwX+5GpEBdAVjpeFI+ekwWIFF92inj+BcFXEQRpLXkZfKtGL0s7TddM85xWu0kl6pdyLQi1AZ2c5zpuQQ+Gf5B81H18YrytkGpHt8a87dxBWNDb89UtoPxa7Xzno+hsnJKTNu1EShO+99Wxseu7ln+VpQDZiklhAFmEH9eZws3bxDLD6MaSwGALdx8boMnAgxYcOfbJmfUeYNT8uIZG36jgE3ehZ5eenuLGakUL1KDHLyGLZD5dH0K1lxJE4OLCmBnmyH4FfMAZhmW3tppANLjprxEVARR/3k3gjRQY4oDJZ/OLrImLQwuiDTb7S33No9vUTM3MH5onyir9SyZypdEnRNavXi4bvOX/q8piVA6mo6zI5AUW91fdC9fXpJkItkmPsClug5KJu7FyWnnYRVYp3hzPWVX1PfL/E0+5iBa9R7ZdJ0LfA46UkUp92p+a1N3+OSd4VttrtlyhCwJnzTYAxys5asA/q7Uh3rRpjuUR23V9cVQ50nAhQRdyXIUiDPJCl0/mUDd6piCqtX6EfGUYOg1Mw7tfNuIZYEQmAMLAUgfTa+qGIzwX3sbpVjP9bxmbLpFbdeCUKO7uKzpVfksSSb5CT7T4K9HCnzwFuPKOygU=
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:OS0PR01MB5922.jpnprd01.prod.outlook.com;PTR:;CAT:NONE;SFS:(4636009)(396003)(39850400004)(346002)(376002)(366004)(136003)(110136005)(9686003)(2906002)(54906003)(4326008)(76116006)(38070700005)(38100700002)(55016002)(5660300002)(52536014)(122000001)(66476007)(66946007)(66556008)(64756008)(66446008)(186003)(26005)(8936002)(6506007)(33656002)(45080400002)(83380400001)(316002)(86362001)(966005)(478600001)(7696005)(71200400001)(8676002);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?eG/pV1RUgOJpowl1CsFOpetPx1GL0cbDvxEX6nYbadOzwKj/pDVb7wbT+H8b?=
- =?us-ascii?Q?LLr9Jh2mOu9RSjOGmoiRwoPdyMHdHF7RPVHixwMe2B8rEfkODIRyrJuEXHAb?=
- =?us-ascii?Q?Kclz6j4vUPHP8hFTJxhJ6rK6/SFdYR/nrtVgxwjBCQi2XO3cv7KAhly4YDH8?=
- =?us-ascii?Q?PUGlTGI3G6keODL6Hvx34tErgU8377nEVCwI2aC4Lst7I+gRuNF1QceSHPbk?=
- =?us-ascii?Q?hpzD1SxnLx4CuCVGFsekPzCZpvkKLnNoTDFoDpNiMMm6rSvnvhKk9RoRrECq?=
- =?us-ascii?Q?gp6DdkUONQDcSXuYnJX06iV269YF+k+XmNqrCnN5t6OejFUdvUXO90RBsFD2?=
- =?us-ascii?Q?OL/p6kMVhbSVEhQee6XqzZkQxyErGSGFN257YroupdtElSm3yHMn9KevqUoL?=
- =?us-ascii?Q?L+YERU+0j1/CfDX3SGaPwCYS1ejKGGXfMaN7sbeNAT1l7pO6cyyM3QaJEqQ3?=
- =?us-ascii?Q?/Zg4Q+PUA9TT3Oisi0+CcSj20TFnuqWAWC9Q6cbj/WePFVSU7mO7YSw1OW1m?=
- =?us-ascii?Q?A3IV0BqOQbvNDmYU+OIwxhOfbrSjgrPzYYPb4P+Ejq34hyJM5Al0qgLAMPu+?=
- =?us-ascii?Q?5HwXwNv0PEWDgNE6LmrgsNjKJkbXsuDfTEuhSC5gyjh4DyvPnHMLoUFFe6DT?=
- =?us-ascii?Q?8F9VOp4w5HcG/1m4sXU18nUq4Nkf9Qrt+WbZmMLV8/A/mPqVxdCLZCVlEWXP?=
- =?us-ascii?Q?FktqBcXzuffakq4YMx6V07v9fk63W3gJLG3ZMiN5gjzQAKiwed9C8/LAI7KN?=
- =?us-ascii?Q?uk+863Hl/nsVcXTj1+W54EsyzK9C430U5mFSqQUoY/TQOmPxQJ6KNGA25hPG?=
- =?us-ascii?Q?nbyOFiOJw+UvnGfroYeUHmtIh6oNTlOkNKdlJKmgaiXH+xjyh33w1lKIfFSh?=
- =?us-ascii?Q?+GzwBJPNpqRc6wQEC8VgJePAqZjg10VT+E8IAya9O70sssnXVTZcoXXleVFZ?=
- =?us-ascii?Q?abvN8a9Lyf67pGIdgwulgZ0quO+3w218nWqYk894m9hJs9F6b904SUv4Vqhz?=
- =?us-ascii?Q?+XPjOd2CvdB1NrbQTnnBoTn3uJuAvHpbgxqz2T/7KN0Hp8XwO4hWZap/jKe1?=
- =?us-ascii?Q?Iuk5bDojL7GYkNk5ISdW/yrwsNzUAvQmFNVtpfMW9WsGpGWrD2a6I9dGN2fW?=
- =?us-ascii?Q?8pzbMTsHR6R7JILKhVEkc1xw2Vxb/49Tr1M/qI/eKAeV4Bbk1Pj+0BIqCNxu?=
- =?us-ascii?Q?jVJXBQ0UCwR0lRaaTKd4KAvV9UfrYvqzIvgwxdjmXv4L8di7VtwT3c7G/5Sm?=
- =?us-ascii?Q?Xpk79lhV4pxr2F+CTSELda9IR6yLxwQrpfjCpAT3hypKBdC93tBeD5rNMOE/?=
- =?us-ascii?Q?39k=3D?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4415.14; Tue, 17 Aug
+ 2021 13:56:45 +0000
+Received: from CO1NAM11FT052.eop-nam11.prod.protection.outlook.com
+ (2603:10b6:300:db:cafe::16) by MWHPR21CA0062.outlook.office365.com
+ (2603:10b6:300:db::24) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4457.1 via Frontend
+ Transport; Tue, 17 Aug 2021 13:56:45 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; kernel.org; dkim=none (message not signed)
+ header.d=none;kernel.org; dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=SATLEXMB04.amd.com;
+Received: from SATLEXMB04.amd.com (165.204.84.17) by
+ CO1NAM11FT052.mail.protection.outlook.com (10.13.174.225) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.20.4415.16 via Frontend Transport; Tue, 17 Aug 2021 13:56:44 +0000
+Received: from sanjuamdntb2.amd.com (10.180.168.240) by SATLEXMB04.amd.com
+ (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2242.12; Tue, 17 Aug
+ 2021 08:56:40 -0500
+From:   Sanjay R Mehta <Sanju.Mehta@amd.com>
+To:     <vkoul@kernel.org>
+CC:     <gregkh@linuxfoundation.org>, <dan.j.williams@intel.com>,
+        <Thomas.Lendacky@amd.com>, <robh@kernel.org>,
+        <mchehab+samsung@kernel.org>, <davem@davemloft.net>,
+        <linux-kernel@vger.kernel.org>, <dmaengine@vger.kernel.org>,
+        Sanjay R Mehta <sanju.mehta@amd.com>
+Subject: [PATCH v12 0/3] Add support for AMD PTDMA controller driver
+Date:   Tue, 17 Aug 2021 08:55:56 -0500
+Message-ID: <1629208559-51964-1-git-send-email-Sanju.Mehta@amd.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-X-OriginatorOrg: bp.renesas.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: OS0PR01MB5922.jpnprd01.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 59d27517-9235-4a96-993c-08d9608ac1ea
-X-MS-Exchange-CrossTenant-originalarrivaltime: 16 Aug 2021 07:52:12.2844
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.180.168.240]
+X-ClientProxiedBy: SATLEXMB03.amd.com (10.181.40.144) To SATLEXMB04.amd.com
+ (10.181.40.145)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-Office365-Filtering-Correlation-Id: ab30a4c6-82a2-41fb-a384-08d96186d95e
+X-MS-TrafficTypeDiagnostic: BYAPR12MB2790:
+X-Microsoft-Antispam-PRVS: <BYAPR12MB2790B4DAD9436B9D919662AEE5FE9@BYAPR12MB2790.namprd12.prod.outlook.com>
+X-MS-Oob-TLC-OOBClassifiers: OLM:7691;
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: +M0+decnuvupmVWZph/+5DRUl/ZsV2w5OSlvQAcn87nTetFNZgbX//FOwP8LaAlJnVGND/ldNnVdb5iHDBQcODmTrI58xUBfpxi9ZeQ9Yu16Xt1fDeor4Ed0RpAJ2UWiPiRdr5IOFlewSlRLd62+R7gGc/ViqRe2hNVme+IaE80/2je8Jp1BTFNtmYqYXMhLH0RM5benmgK5ZdABwb0LgEd7R+UMn1iIqVlRtU885vJTbFKa5RwdLEPPuYmGoM2hideXbpUY7MleQFssnBa9FBfdl8Hmt+BNl5zmYtnisS2O/rPKXr0+YTs7FphUrBcz7+eHpCUQ+5phD7ACQOet+Lc+YyJNHw80gnaugkxOPsgYp9lXhZNLNfEk/m8ziSD7iwvnAgICiccsEgoIiLQFsX/O9qcmusg+Rzf68xEjyHGqs8f5Mr2sdUEVsOjiPD94VUfkMSOnIpdtPfPFfreZ7mR6kv4i25uOr9ohirvAGtFvTesFNkJF8V8mFIoVWb/A9YvOy9dIs3tzOIgBNL0t5O4G8KrILk44wn718XkJ17DP0eHyAUtepH1YG41CNTzu8caz9MF+R3B+Xf2Eklz7OmVPy+1CSqC7SuHE5Xj2jzNxm1AuDCYu9PLK/HMU2dbXmyu0g/sG3X9eaYfe4RqwDL4Ty5XQjpntSnDyyJLQIQHmV9NFKCX+cbV4WOWeRs5Lsx36ZwKr+tYzhAC0LV1b9eo3eWOQP27YcUK9hHazEGo9cZnS77LU8hvbiJtulkv5/qVZ8RWmYGNMGVjmHMe/WS6/l3R3yKZtIXhmKVqj6GngdO07mielhzboj6LOjATlc/Tv7Hmz5QA32GsEoTZdJDktNXVJd/9kKZx2+w+3KoKkhx7wOJCOS/OwEcD2TD0o
+X-Forefront-Antispam-Report: CIP:165.204.84.17;CTRY:US;LANG:en;SCL:1;SRV:;IPV:CAL;SFV:NSPM;H:SATLEXMB04.amd.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(4636009)(36840700001)(46966006)(186003)(16526019)(2906002)(316002)(82310400003)(47076005)(26005)(5660300002)(83380400001)(6666004)(81166007)(34020700004)(8676002)(508600001)(36756003)(70206006)(336012)(6916009)(86362001)(426003)(966005)(2616005)(36860700001)(356005)(54906003)(4326008)(8936002)(7696005)(70586007)(36900700001);DIR:OUT;SFP:1101;
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Aug 2021 13:56:44.8476
  (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 53d82571-da19-47e4-9cb4-625a166a4a2a
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: wWbMDi47+2RYrfs8u6GzWVrcl3BExg9nPxxhD+Zwm7uGhFrYKeVJDWA4SsDAvz+5YhX1NBDx7UE4u2tYzxg5kEqa7ZsQxUz79ojcdSosa+Y=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: OS3PR01MB6628
+X-MS-Exchange-CrossTenant-Network-Message-Id: ab30a4c6-82a2-41fb-a384-08d96186d95e
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d;Ip=[165.204.84.17];Helo=[SATLEXMB04.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: CO1NAM11FT052.eop-nam11.prod.protection.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BYAPR12MB2790
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Hi All,
+From: Sanjay R Mehta <sanju.mehta@amd.com>
 
-Gentle ping. Are we happy with this patch series? Please let me know.
+This patch series add support for AMD PTDMA controller which
+performs high bandwidth memory-to-memory and IO copy operation,
+performs DMA transfer through queue based descriptor management.
 
-Regards,
-Biju
+AMD Processor has multiple ptdma device instances with each controller
+having single queue. The driver also adds support for for multiple PTDMA
+instances, each device will get an unique identifier and uniquely
+named resources.
 
-> Subject: [PATCH v7 0/3] Add RZ/G2L DMAC support
->=20
-> This patch series aims to add DMAC support on RZ/G2L SoC's.
->=20
-> It is based on the work done by Chris Brandt for RZ/A DMA driver.
->=20
-> v6->v7:
->  * As per the DMA documention vc.lock must be held by caller for
->    vchan_cookie_complete. So added vc.lock for this function.
->  * Added lock for the lists used in rz_dmac_terminate_all.
->=20
-> v5->v6:
->  * Added Rb tag from Rob for binding patch
->  * Fixed dma_addr_t and size_t format specifier issue reported by
->    kernel test robot
->  * Started using ARRAY_SIZE macro instead of  magic number in
->    rz_dmac_ds_to_val_mapping function.
->=20
-> v4->v5:
->  * Passing legacy slave channel configuration parameters using
-> dmaengine_slave_config is prohibited.
->    So started passing this parameters in DT instead, by encoding MID/RID
-> values with channel parameters
->    in the #dma-cells.
->  * Removed Rb tag's of Geert and Rob since there is a modification in
-> binding patch
->  * Added 128 byte slave bus width support
->  * Removed SoC dtsi and Defconfig patch from this series. Will send as
-> separate patch.
->=20
-> Ref:-
->=20
-> https://jpn01.safelinks.protection.outlook.com/?url=3Dhttps%3A%2F%2Flore.=
-ker
-> nel.org%2Flinux-renesas-soc%2F20210719092535.4474-1-
-> biju.das.jz%40bp.renesas.com%2FT%2F%23ma0b261df6d4400882204aaaaa014ddb59c=
-4
-> 79db4&amp;data=3D04%7C01%7Cbiju.das.jz%40bp.renesas.com%7Cc9ed17350b19489=
-6fc
-> b308d958c00a1c%7C53d82571da1947e49cb4625a166a4a2a%7C0%7C0%7C6376384040934=
-3
-> 0389%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6=
-I
-> k1haWwiLCJXVCI6Mn0%3D%7C1000&amp;sdata=3Dy2phFowFQIsATfjN%2FagVsOsZU5fOVs=
-n8Z
-> maE3%2BvhUVo%3D&amp;reserved=3D0
->=20
-> v3->v4:
->  * Added Rob's Rb tag for binding patch.
->  * Incorporated Vinod and Geert's review comments.
-> v2->v3:
->   * Described clocks and resets in binding file as per Rob's feedback.
->=20
-> v1->v2
->  * Started using virtual DMAC
->  * Added Geert's Rb tag for binding patch.
->=20
-> Biju Das (3):
->   dt-bindings: dma: Document RZ/G2L bindings
->   dmaengine: Extend the dma_slave_width for 128 bytes
->   drivers: dma: sh: Add DMAC driver for RZ/G2L SoC
->=20
->  .../bindings/dma/renesas,rz-dmac.yaml         | 130 +++
->  drivers/dma/sh/Kconfig                        |   9 +
->  drivers/dma/sh/Makefile                       |   1 +
->  drivers/dma/sh/rz-dmac.c                      | 971 ++++++++++++++++++
->  include/linux/dmaengine.h                     |   3 +-
->  5 files changed, 1113 insertions(+), 1 deletion(-)  create mode 100644
-> Documentation/devicetree/bindings/dma/renesas,rz-dmac.yaml
->  create mode 100644 drivers/dma/sh/rz-dmac.c
->=20
-> --
-> 2.17.1
+v12:
+	- fixed issue reported by kernel test robot
+	- removed use of name variable and use needed string directly
+	  as suggested by Greg KH.
+
+v11:
+	- removed IRQ_NONE from irq handler as suggested by Vinod.
+	- removed pt->name parameter and instead used "dev_name" in the
+	  code.
+	- used register offsets instead of having pointer for each
+	  registers as suggested by Vinod.
+	- removed few unused variables.
+
+v10:
+	- modified ISR to return IR_HANDLED only in non-error condition.
+	- removed unnecessary prints, variables and made some cosmetic changes.
+	- removed pt_ordinal atomic variable and instead using dev_name()
+	  for device name.
+	- removed the cmdlist dependency and instead using vc.desc_issued list.
+	- freeing the desc and list which was missing in the pt_terminate_all()
+	  funtion.
+	- Added comment for marking PTDMA as DMA_PRIVATE.
+	- removed unused pt_debugfs_lock from debufs code.
+	- keeping same file permision for all the debug directoris.
+
+v9:
+	- Modified the help message in Kconfig as per Randy's comment.
+	- reverted the split of code for "pt_handle_active_desc" as there
+	  was driver hang being observerd after few iterations.
+
+v8:
+	- splitted the code into different functions, one to find active desc 
+	  and second to	complete and invoke callback.
+	- used FIELD_PREP & FIELD_GET instead of union struct bitfields.
+	- modified all style fixes as per the comments.
+
+v7:
+	- Fixed module warnings reported ( by kernel test robot <lkp@intel.com> ).
+
+v6:
+	- Removed debug artifacts and made the suggested cosmetic changes.
+	- implemented and used to_pt_chan and to_pt_desc inline functions.
+	- Removed src and dst address check as framework does this.
+	- Removed devm_kcalloc() usage and used devm_kzalloc() api.
+	- Using framework debugfs directory to store dma info.
+
+v5:
+	- modified code to submit next tranction in ISR itself and removed the tasklet.
+	- implemented .device_synchronize API.
+	- converted debugfs code by using DEFINE_SHOW_ATTRIBUTE()
+	- using dbg_dev_root for debugfs root directory.
+	- removed dma_status from pt_dma_chan
+	- removed module parameter cmd_queue_lenght.
+	- removed global device list for multiple devics.
+	- removed code related to dynamic adding/deleting to device list
+	- removed pt_add_device and pt_del_device functions
+
+v4:
+	- modified DMA channel and descriptor management using virt-dma layer
+	  instead of list based management.
+	- return only status of the cookie from pt_tx_status
+	- copyright year changed from 2019 to 2020
+	- removed dummy code for suspend & resume
+	- used bitmask and genmask
+
+v3:
+        - Fixed the sparse warnings.
+
+v2:
+        - Added controller description in cover letter
+        - Removed "default m" from Kconfig
+        - Replaced low_address() and high_address() functions with kernel
+          API's lower_32_bits & upper_32_bits().
+        - Removed the BH handler function pt_core_irq_bh() and instead
+          handling transaction in irq handler itself.
+        - Moved presetting of command queue registers into new function
+          "init_cmdq_regs()"
+        - Removed the kernel thread dependency to submit transaction.
+        - Increased the hardware command queue size to 32 and adding it
+          as a module parameter.
+        - Removed backlog command queue handling mechanism.
+        - Removed software command queue handling and instead submitting
+          transaction command directly to
+          hardware command queue.
+        - Added tasklet structure variable in "struct pt_device".
+          This is used to invoke pt_do_cmd_complete() upon receiving interrupt
+          for command completion.
+        - pt_core_perform_passthru() function parameters are modified and it is
+          now used to submit command directly to hardware from dmaengine framew
+        - Removed below structures, enums, macros and functions, as these value
+          constants. Making command submission simple,
+           - Removed "union pt_function"  and several macros like PT_VERSION,
+             PT_BYTESWAP, PT_CMD_* etc..
+           - enum pt_passthru_bitwise, enum pt_passthru_byteswap, enum pt_memty
+             struct pt_dma_info, struct pt_data, struct pt_mem, struct pt_passt
+             struct pt_op,
+
+Links of the review comments for v11:
+1. https://lkml.org/lkml/2021/8/5/431
+2. https://lkml.org/lkml/2021/8/2/860
+
+Links of the review comments for v10:
+1. https://lkml.org/lkml/2021/6/8/976
+2. https://lkml.org/lkml/2021/6/16/7
+3. https://lkml.org/lkml/2021/6/16/65
+4. https://lkml.org/lkml/2021/6/16/192
+5. https://lkml.org/lkml/2021/6/16/273
+6. https://lkml.org/lkml/2021/6/8/1698
+7. https://lkml.org/lkml/2021/6/16/8
+8. https://lkml.org/lkml/2021/6/9/808
+
+Links of the review comments for v7:
+1. https://lkml.org/lkml/2020/11/18/351
+2. https://lkml.org/lkml/2020/11/18/384
+
+Links of the review comments for v5:
+1. https://lkml.org/lkml/2020/7/3/154
+2. https://lkml.org/lkml/2020/8/25/431
+3. https://lkml.org/lkml/2020/7/3/177
+4. https://lkml.org/lkml/2020/7/3/186
+
+Links of the review comments for v5:
+1. https://lkml.org/lkml/2020/5/4/42
+2. https://lkml.org/lkml/2020/5/4/45
+3. https://lkml.org/lkml/2020/5/4/38
+4. https://lkml.org/lkml/2020/5/26/70
+
+Links of the review comments for v4:
+1. https://lkml.org/lkml/2020/1/24/12
+2. https://lkml.org/lkml/2020/1/24/17
+
+Links of the review comments for v2:
+1https://lkml.org/lkml/2019/12/27/630
+2. https://lkml.org/lkml/2020/1/3/23
+3. https://lkml.org/lkml/2020/1/3/314
+4. https://lkml.org/lkml/2020/1/10/100
+
+Links of the review comments for v1:
+1. https://lkml.org/lkml/2019/9/24/490
+2. https://lkml.org/lkml/2019/9/24/399
+3. https://lkml.org/lkml/2019/9/24/862
+4. https://lkml.org/lkml/2019/9/24/122
+
+
+
+Sanjay R Mehta (3):
+  dmaengine: ptdma: Initial driver for the AMD PTDMA
+  dmaengine: ptdma: register PTDMA controller as a DMA resource
+  dmaengine: ptdma: Add debugfs entries for PTDMA
+
+ MAINTAINERS                         |   6 +
+ drivers/dma/Kconfig                 |   2 +
+ drivers/dma/Makefile                |   1 +
+ drivers/dma/ptdma/Kconfig           |  13 ++
+ drivers/dma/ptdma/Makefile          |  10 +
+ drivers/dma/ptdma/ptdma-debugfs.c   | 106 ++++++++++
+ drivers/dma/ptdma/ptdma-dev.c       | 305 ++++++++++++++++++++++++++++
+ drivers/dma/ptdma/ptdma-dmaengine.c | 389 ++++++++++++++++++++++++++++++++++++
+ drivers/dma/ptdma/ptdma-pci.c       | 243 ++++++++++++++++++++++
+ drivers/dma/ptdma/ptdma.h           | 325 ++++++++++++++++++++++++++++++
+ 10 files changed, 1400 insertions(+)
+ create mode 100644 drivers/dma/ptdma/Kconfig
+ create mode 100644 drivers/dma/ptdma/Makefile
+ create mode 100644 drivers/dma/ptdma/ptdma-debugfs.c
+ create mode 100644 drivers/dma/ptdma/ptdma-dev.c
+ create mode 100644 drivers/dma/ptdma/ptdma-dmaengine.c
+ create mode 100644 drivers/dma/ptdma/ptdma-pci.c
+ create mode 100644 drivers/dma/ptdma/ptdma.h
+
+-- 
+2.7.4
 
