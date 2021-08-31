@@ -2,76 +2,81 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-21.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 577D8C4320A
-	for <dmaengine@archiver.kernel.org>; Mon, 30 Aug 2021 09:49:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9C282C432BE
+	for <dmaengine@archiver.kernel.org>; Tue, 31 Aug 2021 12:42:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3AAE861076
-	for <dmaengine@archiver.kernel.org>; Mon, 30 Aug 2021 09:49:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 79B5E60240
+	for <dmaengine@archiver.kernel.org>; Tue, 31 Aug 2021 12:42:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236225AbhH3Jt6 convert rfc822-to-8bit (ORCPT
-        <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 30 Aug 2021 05:49:58 -0400
-Received: from aposti.net ([89.234.176.197]:42038 "EHLO aposti.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S235733AbhH3Jt6 (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Mon, 30 Aug 2021 05:49:58 -0400
-Date:   Mon, 30 Aug 2021 10:48:52 +0100
-From:   Paul Cercueil <paul@crapouillou.net>
-Subject: Re: [PATCH] dmaengine: jz4780: Set max number of SGs per burst
-To:     Artur Rojek <contact@artur-rojek.eu>
-Cc:     Vinod Koul <vkoul@kernel.org>, linux-mips@vger.kernel.org,
-        dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
-Message-Id: <GLCNYQ.LL8K0PVSTZ1W1@crapouillou.net>
-In-Reply-To: <20210829195805.148964-1-contact@artur-rojek.eu>
-References: <20210829195805.148964-1-contact@artur-rojek.eu>
+        id S232209AbhHaMnY (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 31 Aug 2021 08:43:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40306 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229625AbhHaMnW (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Tue, 31 Aug 2021 08:43:22 -0400
+Received: from andre.telenet-ops.be (andre.telenet-ops.be [IPv6:2a02:1800:120:4::f00:15])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 520ABC06175F
+        for <dmaengine@vger.kernel.org>; Tue, 31 Aug 2021 05:42:27 -0700 (PDT)
+Received: from ramsan.of.borg ([IPv6:2a02:1810:ac12:ed20:2193:279a:893d:20ae])
+        by andre.telenet-ops.be with bizsmtp
+        id oCiP2500V1ZidPp01CiP54; Tue, 31 Aug 2021 14:42:23 +0200
+Received: from rox.of.borg ([192.168.97.57])
+        by ramsan.of.borg with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+        (Exim 4.93)
+        (envelope-from <geert@linux-m68k.org>)
+        id 1mL35r-000rJA-82; Tue, 31 Aug 2021 14:42:23 +0200
+Received: from geert by rox.of.borg with local (Exim 4.93)
+        (envelope-from <geert@linux-m68k.org>)
+        id 1mL35q-00027I-KK; Tue, 31 Aug 2021 14:42:22 +0200
+From:   Geert Uytterhoeven <geert+renesas@glider.be>
+To:     Vinod Koul <vkoul@kernel.org>, Sanjay R Mehta <sanju.mehta@amd.com>
+Cc:     dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Geert Uytterhoeven <geert+renesas@glider.be>
+Subject: [PATCH] MAINTAINERS: Fix AMD PTDMA DRIVER entry
+Date:   Tue, 31 Aug 2021 14:42:21 +0200
+Message-Id: <28b7663ebcaf9363324a615129417b24625a7038.1630413650.git.geert+renesas@glider.be>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1; format=flowed
-Content-Transfer-Encoding: 8BIT
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Hi,
+Remove the bogus leading plus signs from the entry for the AMD PTDMA
+driver.
 
-Le dim., août 29 2021 at 21:58:05 +0200, Artur Rojek 
-<contact@artur-rojek.eu> a écrit :
-> Total amount of SG list entries executed in a single burst is limited 
-> by
-> the number of available DMA descriptors.
-> This information is useful for device drivers utilizing this DMA 
-> engine.
-> 
-> Signed-off-by: Artur Rojek <contact@artur-rojek.eu>
+Fixes: fa5d823b16a9442d ("dmaengine: ptdma: Initial driver for the AMD PTDMA")
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+---
+ MAINTAINERS | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-Acked-by: Paul Cercueil <paul@crapouillou.net>
-
-Cheers,
--Paul
-
-> ---
->  drivers/dma/dma-jz4780.c | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> diff --git a/drivers/dma/dma-jz4780.c b/drivers/dma/dma-jz4780.c
-> index ebee94dbd630..96701dedcac8 100644
-> --- a/drivers/dma/dma-jz4780.c
-> +++ b/drivers/dma/dma-jz4780.c
-> @@ -915,6 +915,7 @@ static int jz4780_dma_probe(struct 
-> platform_device *pdev)
->  	dd->dst_addr_widths = JZ_DMA_BUSWIDTHS;
->  	dd->directions = BIT(DMA_DEV_TO_MEM) | BIT(DMA_MEM_TO_DEV);
->  	dd->residue_granularity = DMA_RESIDUE_GRANULARITY_BURST;
-> +	dd->max_sg_burst = JZ_DMA_MAX_DESC;
-> 
->  	/*
->  	 * Enable DMA controller, mark all channels as not programmable.
-> --
-> 2.33.0
-> 
-
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 51827224c141eaa8..3b024911ce6e50fe 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -985,11 +985,11 @@ S:	Supported
+ T:	git https://gitlab.freedesktop.org/agd5f/linux.git
+ F:	drivers/gpu/drm/amd/pm/powerplay/
+ 
+-+AMD PTDMA DRIVER
+-+M:	Sanjay R Mehta <sanju.mehta@amd.com>
+-+L:	dmaengine@vger.kernel.org
+-+S:	Maintained
+-+F:	drivers/dma/ptdma/
++AMD PTDMA DRIVER
++M:	Sanjay R Mehta <sanju.mehta@amd.com>
++L:	dmaengine@vger.kernel.org
++S:	Maintained
++F:	drivers/dma/ptdma/
+ 
+ AMD SEATTLE DEVICE TREE SUPPORT
+ M:	Brijesh Singh <brijeshkumar.singh@amd.com>
+-- 
+2.25.1
 
