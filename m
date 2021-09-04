@@ -2,139 +2,104 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-19.9 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=unavailable
+X-Spam-Status: No, score=-13.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 16C8AC4320E
-	for <dmaengine@archiver.kernel.org>; Thu,  2 Sep 2021 11:35:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7C04FC433F5
+	for <dmaengine@archiver.kernel.org>; Sat,  4 Sep 2021 14:58:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id F174C600AA
-	for <dmaengine@archiver.kernel.org>; Thu,  2 Sep 2021 11:35:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5E33B61051
+	for <dmaengine@archiver.kernel.org>; Sat,  4 Sep 2021 14:58:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234035AbhIBLgc (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Thu, 2 Sep 2021 07:36:32 -0400
-Received: from mail-mw2nam12on2087.outbound.protection.outlook.com ([40.107.244.87]:15201
-        "EHLO NAM12-MW2-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S230256AbhIBLgb (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Thu, 2 Sep 2021 07:36:31 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=JlIhIWZzy58F2FvyvM6zLku0MYxKcgchiLApFJE2y/n/oPQZS+jSr6irETfXxvo7ZTyxJ+OPZvrQRL6n+QQb9XjhYia61ztVFo2ORrdTD0wwRdTHRU+py4iq7P0Nk7JIXcq6Gnpt1OEjHejBw3DlAOe2FTP0oIHFXj7VGQnW6Uk2l23GzMEfh0GMWtr5f9grAT9emBI1GugZfUfGAvhQsPvrMBNIwPEtu5o70BY0R/gcaqm/uUtMquDWcQbPQ3G982JQvQLSs1XsJUFoDSM3Ntj99LZDLAL7wOH2m1ajXH4M+6n+Epoc3JHt6yv4BBpwKx/pVOlUmm7/l0q+KtuD2g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901; h=From:Date:Subject:Message-ID:Content-Type:MIME-Version;
- bh=W0kLkBWH8Ye/Hr4b2fXAhlS4Ff1BEZsn9hFqlnGhplI=;
- b=Cn6RUgeU46V5tsZMTG06cOyZqkgFyABLKBKwxcd5qw7dDdarxErbgLMF/ibTQ0fvQ5csK2u0zNH+wSkWy/BWEzpjYZ9coUYOPjbHou5CScB8BE4Xnm6W9/dz87eFgI2JMZe0DG0OpWQijzwoVLi9CLXnRp88Zvq+zWPHH6BCPTi5NGdGLFqXdGKyDEyZ2MIGBtPlJxSpgRvV0YS1sc4gKAyizWOhK+u/lf/VGqwBqtYUoxYkQDaTMAmrtp+i0wbajkreb/+JMD36x0NyfC3OU6052qLCDQr95DtSPrpCzEEy5dpish3SUYP/sx6NRL0mvfPe8R54aAmV1TQmFcCmWA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.112.32) smtp.rcpttodomain=pengutronix.de smtp.mailfrom=nvidia.com;
- dmarc=pass (p=quarantine sp=none pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=W0kLkBWH8Ye/Hr4b2fXAhlS4Ff1BEZsn9hFqlnGhplI=;
- b=Ppuxyr0lekFYd0lnrily3yxX8enZRz1bLl754ua8DYq66O82u1zTyHuTsr87k+rfQNVzYtYBbmJOPqYvn91VQHRDjGCrAKyCG6ShOuvRpYEiH3Tq0E6/aEQucsRpIoHtDuPslEFShNZILGQe4Gq1c62soePMkRE+nyq7KE4GmV7/yk9RFOVyVlND9Yq4SxKFI5nwaL7ho2v8Yt9CNjmWGgbESnPqY06Y0QJrubxo0NEwaWZezg82gCv8tniPMUWy4suWWyh7NnlmctH71uaKlU8WlQYGjBC9NopltA/grK9oJmHcYEmNyk/CzCje26GmhHvSaIGkUEixL6dkWsdImQ==
-Received: from MWHPR20CA0005.namprd20.prod.outlook.com (2603:10b6:300:13d::15)
- by MN2PR12MB3183.namprd12.prod.outlook.com (2603:10b6:208:101::21) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4478.17; Thu, 2 Sep
- 2021 11:35:32 +0000
-Received: from CO1NAM11FT056.eop-nam11.prod.protection.outlook.com
- (2603:10b6:300:13d:cafe::c5) by MWHPR20CA0005.outlook.office365.com
- (2603:10b6:300:13d::15) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4478.17 via Frontend
- Transport; Thu, 2 Sep 2021 11:35:31 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.112.32)
- smtp.mailfrom=nvidia.com; pengutronix.de; dkim=none (message not signed)
- header.d=none;pengutronix.de; dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.112.32 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.112.32; helo=mail.nvidia.com;
-Received: from mail.nvidia.com (216.228.112.32) by
- CO1NAM11FT056.mail.protection.outlook.com (10.13.175.107) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id
- 15.20.4478.19 via Frontend Transport; Thu, 2 Sep 2021 11:35:31 +0000
-Received: from DRHQMAIL107.nvidia.com (10.27.9.16) by HQMAIL109.nvidia.com
- (172.20.187.15) with Microsoft SMTP Server (TLS) id 15.0.1497.2; Thu, 2 Sep
- 2021 04:35:30 -0700
-Received: from [10.26.49.12] (172.20.187.5) by DRHQMAIL107.nvidia.com
- (10.27.9.16) with Microsoft SMTP Server (TLS) id 15.0.1497.2; Thu, 2 Sep 2021
- 11:35:27 +0000
-Subject: Re: [PATCH v3 3/4] arm64: defconfig: tegra: Enable GPCDMA
-To:     Akhil R <akhilrajeev@nvidia.com>, <rgumasta@nvidia.com>
-CC:     <dan.j.williams@intel.com>, <dmaengine@vger.kernel.org>,
-        <kyarlagadda@nvidia.com>, <ldewangan@nvidia.com>,
-        <linux-kernel@vger.kernel.org>, <linux-tegra@vger.kernel.org>,
-        <p.zabel@pengutronix.de>, <thierry.reding@gmail.com>,
-        <vkoul@kernel.org>
-References: <MN2PR12MB41438B94148A6D522C056771A2A70@MN2PR12MB4143.namprd12.prod.outlook.com>
- <1630044294-21169-1-git-send-email-akhilrajeev@nvidia.com>
- <1630044294-21169-4-git-send-email-akhilrajeev@nvidia.com>
-From:   Jon Hunter <jonathanh@nvidia.com>
-Message-ID: <65f22625-89e4-771e-9292-5ac4d8a82266@nvidia.com>
-Date:   Thu, 2 Sep 2021 12:35:25 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.11.0
+        id S232532AbhIDO7r (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Sat, 4 Sep 2021 10:59:47 -0400
+Received: from mout.gmx.net ([212.227.15.18]:44473 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230514AbhIDO7q (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Sat, 4 Sep 2021 10:59:46 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1630767520;
+        bh=kHtuAbYiiBfGxvhY45tuo5q2d2Qu8ss/9ZK1wHJ1PWA=;
+        h=X-UI-Sender-Class:From:To:Cc:Subject:Date;
+        b=Wj532fDDWd7ji7XrN17RIRGtf/MgSvCBh+8fW7803p2BqmLxsR8MYSTobDjCbVd3U
+         wmaVGPvjLCN6kC20IJ/GbQgXzF4q4QZ7Q2GMGqj1y7Rmdj+bPFg2B5PPrZJTIP6Gl2
+         n9OPlXux4V2tKE2JNAP9TOpQI2PhM5KN+cBv/hZ0=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from localhost.localdomain ([79.150.72.99]) by mail.gmx.net
+ (mrgmx004 [212.227.17.184]) with ESMTPSA (Nemesis) id
+ 1MybKp-1nBtic3Mq5-00yzDG; Sat, 04 Sep 2021 16:58:39 +0200
+From:   Len Baker <len.baker@gmx.com>
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     Len Baker <len.baker@gmx.com>, Kees Cook <keescook@chromium.org>,
+        linux-hardening@vger.kernel.org, dmaengine@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH] dmaengine: milbeaut-hdmac: Prefer kcalloc over open coded arithmetic
+Date:   Sat,  4 Sep 2021 16:58:13 +0200
+Message-Id: <20210904145813.5161-1-len.baker@gmx.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-In-Reply-To: <1630044294-21169-4-git-send-email-akhilrajeev@nvidia.com>
-Content-Type: text/plain; charset="utf-8"; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [172.20.187.5]
-X-ClientProxiedBy: HQMAIL107.nvidia.com (172.20.187.13) To
- DRHQMAIL107.nvidia.com (10.27.9.16)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: 1b828578-7e9c-4d94-9269-08d96e05c57c
-X-MS-TrafficTypeDiagnostic: MN2PR12MB3183:
-X-Microsoft-Antispam-PRVS: <MN2PR12MB31839681895156AC032B6727D9CE9@MN2PR12MB3183.namprd12.prod.outlook.com>
-X-MS-Oob-TLC-OOBClassifiers: OLM:2958;
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: L2i9skP//CjqMB0enIh38GX6/Zh7Nu1k/66XB2r1sp4I2iyxSPOHzfJo4213Jejb7cChRVDH34vsIsN4SftOtckyMqYMUwbGT1sPCTK2iOmugV8HPp3L9/X+2B64bvrLldlHyXL4WWRRttVBTDdNWYkyAXF9TV8TZVO5sbiJkcVSe4IOsPT/PZUm4+Bfr1QFEaQBeOAJpXePtfr1HRGcBA7cNr66t5s3e8JNJ5ltNtT5zJX4B6h0/ekoVhC3GedH/3O+56JGAYuDk8y24+vbC2bbhSOY5Cnv8BN16crsAOysqhd0jmpGvn+K44U+CWSqOZQfpYyjDK62/KicdmhCy2QuxrOjNX1jJt2VDRDefa5pj1POgXf9fk5fLXYhljBiNKFT9BAlTzmAggNVl/6hs7SeRe5KO9S8uUjqiqFq54I29LvUbmPyTbe32EbSfMUFGjOmmKkl9TH5RokIClxJbQExVcrcijEp9jZeZkxkmt2THGxVczGO2pYRKuEgF6k+MP6u/K9A3z+OD0D45tAVK3JSgucdDiZrGbvelyhdiYeCScsoYr/uzjjn4lV7Zr6fVfnIO35tUxQNGI3T+iRHvMr137nVOa+uqE6EGNxIYfkUE4q/X3gKsBrx5g3zHwSrsnVq9cGkjhkXCFu0sm7ezeNLuC9c8/YKbmut8K9UXWGqGcm6PjLpsOZn7U+EFEGoDEd99tH20LZvWXNJhB79szKhC/MCuS5Xb0yrJNNREyE=
-X-Forefront-Antispam-Report: CIP:216.228.112.32;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:schybrid01.nvidia.com;CAT:NONE;SFS:(4636009)(376002)(39860400002)(396003)(346002)(136003)(36840700001)(46966006)(26005)(70206006)(2616005)(426003)(186003)(16526019)(2906002)(36756003)(70586007)(47076005)(36860700001)(53546011)(336012)(356005)(478600001)(86362001)(7636003)(4744005)(31696002)(8676002)(16576012)(316002)(31686004)(54906003)(6636002)(110136005)(82310400003)(4326008)(82740400003)(8936002)(5660300002)(43740500002);DIR:OUT;SFP:1101;
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Sep 2021 11:35:31.5813
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 1b828578-7e9c-4d94-9269-08d96e05c57c
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.112.32];Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource: CO1NAM11FT056.eop-nam11.prod.protection.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN2PR12MB3183
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:NSQFmTYhh/v2YneA2W5Ogc8MRxblor3ZiAgHPc+Z3Fg9SuI3aN8
+ /+x7hJn+9pOrlLQfyzRLGYbnCoaTk0GppfuHyJwHf8q4sbq1c5HITIzK7E9+NoRAl9izBhF
+ JMTQ830MDv6lRKX8j3lRT+heSk9Wdy+Vl8va/12qCess5IkxRQaQBZiqrsWE/pZNZ5oxTC/
+ sOe6BHT4QTXqbs47F1ruw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:qex0b/X3PnI=:hitT94Zrb/n84OxuD0tlVr
+ MxRw+2EmoU5WK0rtdpk+rJRlA+Tpk4h124IU4P9YBdaXi5Q/vNHG6ecGn3rNlFlDYqkZnsItD
+ FNwXE2IVeIRXtsOJ+Uhacr5NGv7MdK8HKQ2DmZ1w1s5oc9pB0Gv3QlGEevl+NEoycWh1eKcV1
+ dSBfLTRh3VTa7Lz0R5ozdVKCfFSnrMSXT4JyIfdquH/dCqEBhJXevDPT5E83VO9hQlVYQCpvD
+ A+p9qVKuIgWfFyqRQ0GcdoItFZXxciKPbMHEr5OsTgqbVvYHPUZ/Y9A0W6wpp0UHkChwmWgWV
+ o2Sw4u4jiovfqIDxe9OKOYSNbwAi4+yZyq4fRb2GUboJqjU1Z2lltIsPYljXzdERlfCEpfF2A
+ JS7c33WMd8/vmE23E2mySnJO9Yh214wVM20NU4bgGnvlGB1CKF2HeerdDDce92ATEN0oJHNZL
+ CeuO/3ziMBrmQ8l9+N94RAKDi4HQfOXjtaKHc6bPbevh18bEOegnd6HJ8jHdvhT255cwcq2kT
+ nEqhH8wlIj4CD/ucfc8QhGcp76yjwF4EMDwP5qfVbEII3f9stXeyWZaajPko/G/rTHNyGz/cE
+ fzrRFYWRE/V8avPkUb75hExN17ZSzOafax+Cy9dUtgUX+CiOJ7xS45MZR8BkBZxtZHLV8nvcf
+ Aw387J0v5PhTIjNgpMH6OuTKuGsxnl5F7NjhA3ekxbER6IQGQOfhrfu7zG0MCEOP2xmYu+3rp
+ UaHhGIoFCXl6Qhf+4j+bpua0PKIb7hS2wTcEFZd0O0I6902VPOHSk1ioB23vU0ueWDNrJf4Dt
+ 2VWWaq3574Jm1hpdBJ1YN9ager1hT2x05NlyWaUq6Z5+Eocn+/i+SlLwOn6isFS6rAj2wAo9G
+ Y4ygFOrA3sGzAtYX0Kirq3dXhe3hueTVjokP1BUeyy2u7UCtkKzVbnhpdNXlCgy1sP6Sj9ynI
+ qSPJ7COsJzyOKeD6dFyl7w+ebmwBnCbFbe96me1x3o4xZStvddcbXsob/AjP0lTBjPETUUjgE
+ h6wIbQ/9mRjTu0k/ccY9OwmkxUbX/P25hRmCuN2n4vN6oKG3jREztQPgDvlGdEjMXLyjRG62f
+ HUTtinN2SjgaL/EWm40Rhy6WVoKvEGq8xiMR3F4iGbVvoVD3PQ3qL1aXw==
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
+As noted in the "Deprecated Interfaces, Language Features, Attributes,
+and Conventions" documentation [1], size calculations (especially
+multiplication) should not be performed in memory allocator (or similar)
+function arguments due to the risk of them overflowing. This could lead
+to values wrapping around and a smaller allocation being made than the
+caller was expecting. Using those allocations could lead to linear
+overflows of heap memory and other misbehaviors.
 
-On 27/08/2021 07:04, Akhil R wrote:
-> Enable TEGRA_GPC_DMA in defconfig for Tegra186 and Tegra196 gpc
-> dma controller driver
-> 
-> Signed-off-by: Rajesh Gumasta <rgumasta@nvidia.com>
-> Signed-off-by: Akhil R <akhilrajeev@nvidia.com>
-> ---
->   arch/arm64/configs/defconfig | 1 +
->   1 file changed, 1 insertion(+)
-> 
-> diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-> index f423d08..d247a7e 100644
-> --- a/arch/arm64/configs/defconfig
-> +++ b/arch/arm64/configs/defconfig
-> @@ -930,6 +930,7 @@ CONFIG_OWL_DMA=y
->   CONFIG_PL330_DMA=y
->   CONFIG_TEGRA20_APB_DMA=y
->   CONFIG_TEGRA210_ADMA=m
-> +CONFIG_TEGRA_GPC_DMA=m
+So, use the purpose specific kcalloc() function instead of the argument
+size * count in the kzalloc() function.
 
-Again for consistency please name this CONFIG_TEGRA186_GPC_DMA.
+[1] https://www.kernel.org/doc/html/v5.14/process/deprecated.html#open-cod=
+ed-arithmetic-in-allocator-arguments
 
-Thanks!
-Jon
+Signed-off-by: Len Baker <len.baker@gmx.com>
+=2D--
+ drivers/dma/milbeaut-hdmac.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
--- 
-nvpublic
+diff --git a/drivers/dma/milbeaut-hdmac.c b/drivers/dma/milbeaut-hdmac.c
+index a8cfb59f6efe..1b0a95892627 100644
+=2D-- a/drivers/dma/milbeaut-hdmac.c
++++ b/drivers/dma/milbeaut-hdmac.c
+@@ -269,7 +269,7 @@ milbeaut_hdmac_prep_slave_sg(struct dma_chan *chan, st=
+ruct scatterlist *sgl,
+ 	if (!md)
+ 		return NULL;
+
+-	md->sgl =3D kzalloc(sizeof(*sgl) * sg_len, GFP_NOWAIT);
++	md->sgl =3D kcalloc(sg_len, sizeof(*sgl), GFP_NOWAIT);
+ 	if (!md->sgl) {
+ 		kfree(md);
+ 		return NULL;
+=2D-
+2.25.1
+
