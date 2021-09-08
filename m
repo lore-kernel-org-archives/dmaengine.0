@@ -2,151 +2,428 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,
-	UNWANTED_LANGUAGE_BODY,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-21.4 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,INCLUDES_PATCH,INCLUDES_PULL_REQUEST,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9162BC433F5
-	for <dmaengine@archiver.kernel.org>; Mon,  6 Sep 2021 15:31:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EBDB8C433F5
+	for <dmaengine@archiver.kernel.org>; Wed,  8 Sep 2021 04:39:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6ECFC6101C
-	for <dmaengine@archiver.kernel.org>; Mon,  6 Sep 2021 15:31:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C88A261152
+	for <dmaengine@archiver.kernel.org>; Wed,  8 Sep 2021 04:39:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239795AbhIFPc1 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 6 Sep 2021 11:32:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46740 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230505AbhIFPc0 (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Mon, 6 Sep 2021 11:32:26 -0400
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4447EC061575
-        for <dmaengine@vger.kernel.org>; Mon,  6 Sep 2021 08:31:21 -0700 (PDT)
-Received: by mail-wm1-x331.google.com with SMTP id g138so4871509wmg.4
-        for <dmaengine@vger.kernel.org>; Mon, 06 Sep 2021 08:31:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=PQ0Sz3nSdC4M1Li6PaTkmdjXBaQB3/I9C/9VyXKR078=;
-        b=UXRljDfh9pslkpfpiZW87xjIeGBWGwIaAMRlhWJCKG7426frC0Kf3IPd4Y1I1la0VX
-         yR+sttTvRZyIIqXtqEvMNgsD46eYnTi/cTMP9nhkOXv4qZJ2YwpO6rzL+Ad9sxuj2FUM
-         6W6/m+rhws4O7vtCY4Xiva5VZ95hBKwVmVRc5gCM+RrOnt67C1wg/drGrneMfWvU+jG5
-         l7O1qd0bsLRgpjxFf8Bd6t5jthk5fKIaMSBNPrDlWhhP0XLPqT4MFYj+oA0vYzozk3X2
-         bZpg5O3sTif4O/ZWaOrDw3jH9S/DBp5s9fEn++665aVy0K0x/CMSqlpEfnUx6laQG736
-         0S6w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=PQ0Sz3nSdC4M1Li6PaTkmdjXBaQB3/I9C/9VyXKR078=;
-        b=m7gNJESt/ZtlU9A7gwdyZ7Ws6QdzYCdknq8b4TmgoLgwi3eTV5xqAt9SmxqKI79Qa5
-         5SSwBRgGtgxQ8Xkyvwbr/LLw9DCckGrUAx+s6dgLTCmM0A0/n9xXKScPIkknCZAwck11
-         ht6g5o+WLlwL//z0Gmok3kV8N+lSi+sLqJ/5gVdL3XeBIdoUTrzd/cc1c38D/IQxsksj
-         oGCQ3bWBJfGhTvAs4O+y5DBDgNRi28girg3yzBiBB+b3mzuCWnGG/l4AI3tZC+PB+URP
-         aQEilK6NaE5UMPdYQZPVowGSvW9znfq5Szf5Mo0bbvFBXVJ6eCe6bFDPfzIFImmcQv3k
-         hMnQ==
-X-Gm-Message-State: AOAM532KNkCK8TfDdJtA3pPZMAqxUaOuOqmWPhedxiM8xlnFkw3S/ht+
-        t6Z7JSlWUosrPblRR8xhrr7x6Q==
-X-Google-Smtp-Source: ABdhPJw1GKspi6vCehDcEOXPQ+NCWmQvHbO1FyzGfSYpe1CVz0Iflaaie8Hoz/ZDPTqau9R2oirf6Q==
-X-Received: by 2002:a1c:1f49:: with SMTP id f70mr12167723wmf.13.1630942279756;
-        Mon, 06 Sep 2021 08:31:19 -0700 (PDT)
-Received: from [192.168.86.34] (cpc86377-aztw32-2-0-cust226.18-1.cable.virginm.net. [92.233.226.227])
-        by smtp.googlemail.com with ESMTPSA id f20sm7471638wmb.32.2021.09.06.08.31.18
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 06 Sep 2021 08:31:19 -0700 (PDT)
-Subject: Re: [PATCH] dt-bindings: Use 'enum' instead of 'oneOf' plus 'const'
- entries
-To:     Rob Herring <robh@kernel.org>, devicetree@vger.kernel.org
-Cc:     alsa-devel@alsa-project.org, Vignesh R <vigneshr@ti.com>,
-        linux-pci@vger.kernel.org, linux-i2c@vger.kernel.org,
-        linux-phy@lists.infradead.org, Lee Jones <lee.jones@linaro.org>,
-        Marc Zyngier <maz@kernel.org>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        linux-serial@vger.kernel.org, Jakub Kicinski <kuba@kernel.org>,
-        linux-media@vger.kernel.org, Maxime Ripard <mripard@kernel.org>,
-        Mark Brown <broonie@kernel.org>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        linux-kernel@vger.kernel.org, linux-spi@vger.kernel.org,
-        Vinod Koul <vkoul@kernel.org>,
-        Sakari Ailus <sakari.ailus@linux.intel.com>,
-        netdev@vger.kernel.org, dmaengine@vger.kernel.org,
-        "David S. Miller" <davem@davemloft.net>
-References: <20210824202014.978922-1-robh@kernel.org>
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Message-ID: <b2e70818-521d-eff8-d7d5-be5a8d95df19@linaro.org>
-Date:   Mon, 6 Sep 2021 16:31:17 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.11.0
+        id S231493AbhIHEk0 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 8 Sep 2021 00:40:26 -0400
+Received: from mail.kernel.org ([198.145.29.99]:33292 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229616AbhIHEk0 (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Wed, 8 Sep 2021 00:40:26 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id DAD12610FF;
+        Wed,  8 Sep 2021 04:39:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1631075958;
+        bh=UpZRQfX16jgEni17pcvYq88zgV8N8pBwwpB8Bbkle7c=;
+        h=Date:From:To:Cc:Subject:From;
+        b=c/hkvyBlsQh0BdQaBibFBbGVg7m4ETqO5AJqi+LdJsqMBOXRLzhevbfh0MhGRkDRD
+         Kz02HmjL3nm6yWU1CkOuLDAQWCNUmzt73+5n+Zfbfzr0Ch2L20n0Soio4BuedOXeRC
+         udE2myCEAVx/MtZbWDflK5mceTRapXa7/sI8SNqCkMpQWukmmUf6gX4QaYDr0AwDwC
+         p5MUubEg+6KX7V137Q6ooJunhvpDVA04A+YhfXs1SzaR2bqr514hvkoCeL1UY2FHks
+         TJ/Sn/jIWHSpUYhKUJNK5w86WssTZy2GQiEtmDrCmBP3QCKEwtQh9a+azCN6tEb3Co
+         hQtz37+tA6ZRA==
+Date:   Wed, 8 Sep 2021 10:09:14 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Linus Torvalds <torvalds@linux-foundation.org>
+Cc:     dma <dmaengine@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>
+Subject: [GIT PULL]: dmaengine updates for v5.15-rc1
+Message-ID: <YTg+csY9wy4mk035@matsya>
 MIME-Version: 1.0
-In-Reply-To: <20210824202014.978922-1-robh@kernel.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg=pgp-sha256;
+        protocol="application/pgp-signature"; boundary="KoQp2lLz9rVFR4nv"
+Content-Disposition: inline
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
 
+--KoQp2lLz9rVFR4nv
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-On 24/08/2021 21:20, Rob Herring wrote:
-> 'enum' is equivalent to 'oneOf' with a list of 'const' entries, but 'enum'
-> is more concise and yields better error messages.
-> 
-> Cc: Vinod Koul <vkoul@kernel.org>
-> Cc: Maxime Ripard <mripard@kernel.org>
-> Cc: Vignesh R <vigneshr@ti.com>
-> Cc: Marc Zyngier <maz@kernel.org>
-> Cc: Sakari Ailus <sakari.ailus@linux.intel.com>
-> Cc: Mauro Carvalho Chehab <mchehab@kernel.org>
-> Cc: Lee Jones <lee.jones@linaro.org>
-> Cc: "David S. Miller" <davem@davemloft.net>
-> Cc: Jakub Kicinski <kuba@kernel.org>
-> Cc: Bjorn Helgaas <bhelgaas@google.com>
-> Cc: Kishon Vijay Abraham I <kishon@ti.com>
-> Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-> Cc: Mark Brown <broonie@kernel.org>
-> Cc: Daniel Lezcano <daniel.lezcano@linaro.org>
-> Cc: dmaengine@vger.kernel.org
-> Cc: linux-i2c@vger.kernel.org
-> Cc: linux-media@vger.kernel.org
-> Cc: netdev@vger.kernel.org
-> Cc: linux-pci@vger.kernel.org
-> Cc: linux-phy@lists.infradead.org
-> Cc: linux-serial@vger.kernel.org
-> Cc: alsa-devel@alsa-project.org
-> Cc: linux-spi@vger.kernel.org
-> Signed-off-by: Rob Herring <robh@kernel.org>
-> ---
->   .../bindings/display/msm/dsi-phy-10nm.yaml           |  6 +++---
->   .../bindings/display/msm/dsi-phy-14nm.yaml           |  6 +++---
->   .../bindings/display/msm/dsi-phy-28nm.yaml           |  8 ++++----
->   .../bindings/dma/allwinner,sun6i-a31-dma.yaml        | 12 ++++++------
->   .../devicetree/bindings/firmware/arm,scpi.yaml       |  6 +++---
->   .../devicetree/bindings/i2c/ti,omap4-i2c.yaml        | 10 +++++-----
->   .../interrupt-controller/loongson,liointc.yaml       |  8 ++++----
->   .../devicetree/bindings/media/i2c/mipi-ccs.yaml      |  8 ++++----
->   .../devicetree/bindings/mfd/ti,lp87565-q1.yaml       |  6 +++---
->   .../devicetree/bindings/net/realtek-bluetooth.yaml   |  8 ++++----
->   .../bindings/net/ti,k3-am654-cpsw-nuss.yaml          |  8 ++++----
->   .../devicetree/bindings/net/ti,k3-am654-cpts.yaml    |  6 +++---
->   Documentation/devicetree/bindings/pci/loongson.yaml  |  8 ++++----
->   .../devicetree/bindings/phy/intel,lgm-emmc-phy.yaml  |  6 +++---
->   .../devicetree/bindings/serial/8250_omap.yaml        |  9 +++++----
+Hello Linus,
 
->   .../devicetree/bindings/sound/qcom,sm8250.yaml       |  6 +++---
+Please pull to receive dmaengine updates for v5.15-rc1. Please do note
+that this also contains bus_remove_return_void-5.15 tag from Greg to fix
+the dependencies for idxd driver.
 
-for sm8250 sound card,
+The following changes since commit 36a21d51725af2ce0700c6ebcb6b9594aac658a6:
 
-Acked-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+  Linux 5.14-rc5 (2021-08-08 13:49:31 -0700)
 
->   .../devicetree/bindings/sound/tlv320adcx140.yaml     |  8 ++++----
->   .../devicetree/bindings/spi/realtek,rtl-spi.yaml     | 12 ++++++------
->   .../devicetree/bindings/timer/arm,sp804.yaml         |  6 +++---
->   19 files changed, 74 insertions(+), 73 deletions(-)
-> 
+are available in the Git repository at:
+
+  git://git.kernel.org/pub/scm/linux/kernel/git/vkoul/dmaengine.git tags/dm=
+aengine-5.15-rc1
+
+for you to fetch changes up to 11a427be2c4749954e8b868ef5301dc65ca5a14b:
+
+  dmaengine: sh: fix some NULL dereferences (2021-08-31 21:50:23 +0530)
+
+----------------------------------------------------------------
+dmaengine updates for v5.15-rc1
+
+New drivers/devices
+ - Support for Renesas RZ/G2L dma controller
+ - New driver for AMD PTDMA controller
+
+Updates:
+ - Big pile of idxd updates
+ - Updates for Altera driver, stm32-dma, dw etc
+
+Also contains, bus_remove_return_void-5.15 to resolve dependencies
+
+----------------------------------------------------------------
+Alexander Sverdlin (1):
+      dmaengine: ep93xx: Prepare clock before using it
+
+Amelie Delaunay (2):
+      dt-bindings: dma: add alternative REQ/ACK protocol selection in stm32=
+-dma
+      dmaengine: stm32-dma: add alternate REQ/ACK protocol management
+
+Andy Shevchenko (6):
+      dmaengine: dw: Program xBAR hardware for Elkhart Lake
+      dmaengine: dw: Remove error message from DT parsing code
+      dmaengine: dw: Convert members to u32 in platform data
+      dmaengine: dw: Simplify DT property parser
+      dmaengine: acpi: Avoid comparison GSI with Linux vIRQ
+      dmaengine: acpi: Check for errors from acpi_register_gsi() separately
+
+Baokun Li (3):
+      dmaengine: xilinx_dma: Use list_move_tail instead of list_del/list_ad=
+d_tail
+      dmaengine: fsl-dpaa2-qdma: Use list_move_tail instead of list_del/lis=
+t_add_tail
+      dmaengine: zynqmp_dma: Use list_move_tail instead of list_del/list_ad=
+d_tail
+
+Biju Das (3):
+      dt-bindings: dma: Document RZ/G2L bindings
+      dmaengine: Extend the dma_slave_width for 128 bytes
+      dmaengine: sh: Add DMAC driver for RZ/G2L SoC
+
+Christophe JAILLET (3):
+      dmaengine: idxd: Simplify code and axe the use of a deprecated API
+      dmaengine: hisi_dma: Remove some useless code
+      dmaengine: idxd: Fix a possible NULL pointer dereference
+
+Cl=E9ment L=E9ger (1):
+      dmaengine: at_xdmac: use platform_driver_register
+
+Colin Ian King (2):
+      dmaengine: fsl-dpaa2-qdma: Fix spelling mistake "faile" -> "failed"
+      dmaengine: sh: Fix unused initialization of pointer lmdesc
+
+Dan Carpenter (1):
+      dmaengine: sh: fix some NULL dereferences
+
+Dave Jiang (40):
+      dmanegine: idxd: cleanup all device related bits after disabling devi=
+ce
+      dmaengine: idxd: Add wq occupancy information to sysfs attribute
+      dmaengine: idxd: have command status always set
+      dmaengine: idxd: add missing percpu ref put on failure
+      dmaengine: idxd: assign MSIX vectors to each WQ rather than roundrobin
+      dmaengine: idxd: fix sequence for pci driver remove() and shutdown()
+      dmaengine: idxd: add driver register helper
+      dmaengine: idxd: add driver name
+      dmaengine: idxd: add 'struct idxd_dev' as wrapper for conf_dev
+      dmaengine: idxd: remove IDXD_DEV_CONF_READY
+      dmaengine: idxd: move wq_enable() to device.c
+      dmaengine: idxd: move wq_disable() to device.c
+      dmaengine: idxd: remove bus shutdown
+      dmaengine: idxd: remove iax_bus_type prototype
+      dmaengine: idxd: fix bus_probe() and bus_remove() for dsa_bus
+      dmaengine: idxd: move probe() bits for idxd 'struct device' to device=
+=2Ec
+      dmaengine: idxd: idxd: move remove() bits for idxd 'struct device' to=
+ device.c
+      dmanegine: idxd: open code the dsa_drv registration
+      dmaengine: idxd: add type to driver in order to allow device matching
+      dmaengine: idxd: create idxd_device sub-driver
+      dmaengine: idxd: create dmaengine driver for wq 'device'
+      dmaengine: idxd: create user driver for wq 'device'
+      dmaengine: dsa: move dsa_bus_type out of idxd driver to standalone
+      dmaengine: idxd: move dsa_drv support to compatible mode
+      dmaengine: idxd: remove fault processing code
+      dmaengine: idxd: Set defaults for GRPCFG traffic class
+      dmaengine: idxd: fix uninit var for alt_drv
+      dmaengine: idxd: fix wq slot allocation index check
+      dmaengine: idxd: rotate portal address for better performance
+      dmanegine: idxd: add software command status
+      dmaengine: idxd: fix abort status check
+      dmaengine: idxd: add capability check for 'block on fault' attribute
+      dmaengine: idxd: clear block on fault flag when clear wq
+      dmaengine: idxd: make I/O interrupt handler one shot
+      dmaengine: idxd: remove interrupt flag for completion list spinlock
+      dmaengine: idxd: make submit failure path consistent on desc freeing
+      dmaengine: idxd: set descriptor allocation size to threshold for swq
+      dmaengine: idxd: fix setting up priv mode for dwq
+      dmaengine: idxd: remove interrupt disable for cmd_lock
+      dmaengine: idxd: remove interrupt disable for dev_lock
+
+Geert Uytterhoeven (1):
+      MAINTAINERS: Fix AMD PTDMA DRIVER entry
+
+Johannes Berg (2):
+      dmaengine: idxd: depends on !UML
+      dmaengine: ioat: depends on !UML
+
+Jordy Zomer (1):
+      dmaengine: usb-dmac: make usb_dmac_get_current_residue unsigned
+
+Juergen Borleis (1):
+      dma: imx-dma: configure the generic DMA type to make it work
+
+Marek Vasut (1):
+      dmaengine: xilinx: Add empty device_config function
+
+Nathan Chancellor (1):
+      dmaengine: idxd: Remove unused status variable in irq_process_work_li=
+st()
+
+Olivier Dautricourt (2):
+      dt-bindings: dma: altera-msgdma: make response port optional
+      dmaengine: altera-msgdma: make response port optional
+
+Pandith N (3):
+      dmaengine: dw-axi-dmac: Remove free slot check algorithm in dw_axi_dm=
+a_set_hw_channel
+      dmaengine: dw-axi-dmac: support parallel memory <--> peripheral trans=
+fers
+      dmaengine: dw-axi-dmac: Burst length settings
+
+Pratyush Yadav (1):
+      dmaengine: ti: k3-psil-j721e: Add entry for CSI2RX
+
+Radhey Shyam Pandey (1):
+      dmaengine: xilinx_dma: Set DMA mask for coherent APIs
+
+Salah Triki (1):
+      ppc4xx: replace sscanf() by kstrtoul()
+
+Sanjay R Mehta (4):
+      dmaengine: ptdma: Initial driver for the AMD PTDMA
+      dmaengine: ptdma: register PTDMA controller as a DMA resource
+      dmaengine: ptdma: Add debugfs entries for PTDMA
+      dmaengine: ptdma: remove PT_OFFSET to avoid redefnition
+
+Uwe Kleine-K=F6nig (5):
+      PCI: endpoint: Make struct pci_epf_driver::remove return void
+      s390/cio: Make struct css_driver::remove return void
+      s390/ccwgroup: Drop if with an always false condition
+      s390/scm: Make struct scm_driver::remove return void
+      bus: Make remove callback return void
+
+Vinod Koul (5):
+      Merge branch 'fixes' into next
+      Merge branch 'fixes' into next
+      Merge tag 'bus_remove_return_void-5.15' into next
+      Merge branch 'fixes' into next
+      Merge tag 'v5.14-rc5' into next
+
+Zhang Qilong (1):
+      dmaengine: tegra210-adma: Using pm_runtime_resume_and_get to replace =
+open coding
+
+Zou Wei (1):
+      dmaengine: sprd: Add missing MODULE_DEVICE_TABLE
+
+ Documentation/ABI/stable/sysfs-driver-dma-idxd     |   9 +
+ Documentation/admin-guide/kernel-parameters.txt    |   5 +
+ .../devicetree/bindings/dma/altr,msgdma.yaml       |   4 +-
+ .../devicetree/bindings/dma/renesas,rz-dmac.yaml   | 130 +++
+ .../devicetree/bindings/dma/st,stm32-dma.yaml      |   7 +
+ MAINTAINERS                                        |   6 +
+ arch/arm/common/locomo.c                           |   3 +-
+ arch/arm/common/sa1111.c                           |   4 +-
+ arch/arm/mach-rpc/ecard.c                          |   4 +-
+ arch/mips/sgi-ip22/ip22-gio.c                      |   3 +-
+ arch/parisc/kernel/drivers.c                       |   5 +-
+ arch/powerpc/platforms/ps3/system-bus.c            |   3 +-
+ arch/powerpc/platforms/pseries/ibmebus.c           |   3 +-
+ arch/powerpc/platforms/pseries/vio.c               |   3 +-
+ arch/s390/include/asm/eadm.h                       |   2 +-
+ arch/sparc/kernel/vio.c                            |   4 +-
+ drivers/acpi/bus.c                                 |   3 +-
+ drivers/amba/bus.c                                 |   4 +-
+ drivers/base/auxiliary.c                           |   4 +-
+ drivers/base/isa.c                                 |   4 +-
+ drivers/base/platform.c                            |   4 +-
+ drivers/bcma/main.c                                |   6 +-
+ drivers/bus/sunxi-rsb.c                            |   4 +-
+ drivers/cxl/core.c                                 |   3 +-
+ drivers/dax/bus.c                                  |   4 +-
+ drivers/dma/Kconfig                                |  28 +-
+ drivers/dma/Makefile                               |   3 +-
+ drivers/dma/acpi-dma.c                             |  18 +-
+ drivers/dma/altera-msgdma.c                        |  37 +-
+ drivers/dma/at_xdmac.c                             |   8 +-
+ drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c     |  56 +-
+ drivers/dma/dw-axi-dmac/dw-axi-dmac.h              |   4 +
+ drivers/dma/dw/idma32.c                            | 138 ++-
+ drivers/dma/dw/internal.h                          |  16 +
+ drivers/dma/dw/of.c                                |  49 +-
+ drivers/dma/dw/pci.c                               |   6 +-
+ drivers/dma/dw/platform.c                          |   6 +-
+ drivers/dma/ep93xx_dma.c                           |   6 +-
+ drivers/dma/fsl-dpaa2-qdma/dpaa2-qdma.c            |  10 +-
+ drivers/dma/hisi_dma.c                             |  10 +-
+ drivers/dma/idxd/Makefile                          |   8 +
+ drivers/dma/idxd/bus.c                             |  91 ++
+ drivers/dma/idxd/cdev.c                            |  73 +-
+ drivers/dma/idxd/compat.c                          | 107 +++
+ drivers/dma/idxd/device.c                          | 382 ++++++--
+ drivers/dma/idxd/dma.c                             |  96 +-
+ drivers/dma/idxd/idxd.h                            | 167 +++-
+ drivers/dma/idxd/init.c                            | 148 ++--
+ drivers/dma/idxd/irq.c                             | 190 +---
+ drivers/dma/idxd/registers.h                       |   6 +
+ drivers/dma/idxd/submit.c                          |  43 +-
+ drivers/dma/idxd/sysfs.c                           | 603 +++----------
+ drivers/dma/ppc4xx/adma.c                          |  12 +-
+ drivers/dma/ptdma/Kconfig                          |  13 +
+ drivers/dma/ptdma/Makefile                         |  10 +
+ drivers/dma/ptdma/ptdma-debugfs.c                  | 106 +++
+ drivers/dma/ptdma/ptdma-dev.c                      | 305 +++++++
+ drivers/dma/ptdma/ptdma-dmaengine.c                | 389 +++++++++
+ drivers/dma/ptdma/ptdma-pci.c                      | 243 ++++++
+ drivers/dma/ptdma/ptdma.h                          | 324 +++++++
+ drivers/dma/sh/Kconfig                             |   9 +
+ drivers/dma/sh/Makefile                            |   1 +
+ drivers/dma/sh/rz-dmac.c                           | 969 +++++++++++++++++=
+++++
+ drivers/dma/sh/usb-dmac.c                          |   2 +-
+ drivers/dma/sprd-dma.c                             |   1 +
+ drivers/dma/stm32-dma.c                            |   8 +-
+ drivers/dma/tegra210-adma.c                        |   7 +-
+ drivers/dma/ti/k3-psil-j721e.c                     |  73 ++
+ drivers/dma/xilinx/xilinx_dma.c                    |  17 +-
+ drivers/dma/xilinx/zynqmp_dma.c                    |   3 +-
+ drivers/firewire/core-device.c                     |   4 +-
+ drivers/firmware/arm_scmi/bus.c                    |   4 +-
+ drivers/firmware/google/coreboot_table.c           |   4 +-
+ drivers/fpga/dfl.c                                 |   4 +-
+ drivers/hid/hid-core.c                             |   4 +-
+ drivers/hid/intel-ish-hid/ishtp/bus.c              |   4 +-
+ drivers/hv/vmbus_drv.c                             |   5 +-
+ drivers/hwtracing/intel_th/core.c                  |   4 +-
+ drivers/i2c/i2c-core-base.c                        |   5 +-
+ drivers/i3c/master.c                               |   4 +-
+ drivers/input/gameport/gameport.c                  |   3 +-
+ drivers/input/serio/serio.c                        |   3 +-
+ drivers/ipack/ipack.c                              |   4 +-
+ drivers/macintosh/macio_asic.c                     |   4 +-
+ drivers/mcb/mcb-core.c                             |   4 +-
+ drivers/media/pci/bt8xx/bttv-gpio.c                |   3 +-
+ drivers/memstick/core/memstick.c                   |   3 +-
+ drivers/mfd/mcp-core.c                             |   3 +-
+ drivers/misc/mei/bus.c                             |   4 +-
+ drivers/misc/tifm_core.c                           |   3 +-
+ drivers/mmc/core/bus.c                             |   4 +-
+ drivers/mmc/core/sdio_bus.c                        |   4 +-
+ drivers/net/netdevsim/bus.c                        |   3 +-
+ drivers/ntb/core.c                                 |   4 +-
+ drivers/ntb/ntb_transport.c                        |   4 +-
+ drivers/nubus/bus.c                                |   6 +-
+ drivers/nvdimm/bus.c                               |   3 +-
+ drivers/pci/endpoint/pci-epf-core.c                |   7 +-
+ drivers/pci/pci-driver.c                           |   3 +-
+ drivers/pcmcia/ds.c                                |   4 +-
+ drivers/platform/surface/aggregator/bus.c          |   4 +-
+ drivers/platform/x86/wmi.c                         |   4 +-
+ drivers/pnp/driver.c                               |   3 +-
+ drivers/rapidio/rio-driver.c                       |   4 +-
+ drivers/rpmsg/rpmsg_core.c                         |   7 +-
+ drivers/s390/block/scm_drv.c                       |   4 +-
+ drivers/s390/cio/ccwgroup.c                        |   6 +-
+ drivers/s390/cio/chsc_sch.c                        |   3 +-
+ drivers/s390/cio/css.c                             |   7 +-
+ drivers/s390/cio/css.h                             |   2 +-
+ drivers/s390/cio/device.c                          |   9 +-
+ drivers/s390/cio/eadm_sch.c                        |   4 +-
+ drivers/s390/cio/scm.c                             |   5 +-
+ drivers/s390/cio/vfio_ccw_drv.c                    |   3 +-
+ drivers/s390/crypto/ap_bus.c                       |   4 +-
+ drivers/scsi/scsi_debug.c                          |   3 +-
+ drivers/sh/superhyway/superhyway.c                 |   8 +-
+ drivers/siox/siox-core.c                           |   4 +-
+ drivers/slimbus/core.c                             |   4 +-
+ drivers/soc/qcom/apr.c                             |   4 +-
+ drivers/spi/spi.c                                  |   4 +-
+ drivers/spmi/spmi.c                                |   3 +-
+ drivers/ssb/main.c                                 |   4 +-
+ drivers/staging/fieldbus/anybuss/host.c            |   4 +-
+ drivers/staging/greybus/gbphy.c                    |   4 +-
+ drivers/target/loopback/tcm_loop.c                 |   5 +-
+ drivers/thunderbolt/domain.c                       |   4 +-
+ drivers/tty/serdev/core.c                          |   4 +-
+ drivers/usb/common/ulpi.c                          |   4 +-
+ drivers/usb/serial/bus.c                           |   4 +-
+ drivers/usb/typec/bus.c                            |   4 +-
+ drivers/vdpa/vdpa.c                                |   4 +-
+ drivers/vfio/mdev/mdev_driver.c                    |   4 +-
+ drivers/virtio/virtio.c                            |   3 +-
+ drivers/vlynq/vlynq.c                              |   4 +-
+ drivers/vme/vme.c                                  |   4 +-
+ drivers/xen/xenbus/xenbus.h                        |   2 +-
+ drivers/xen/xenbus/xenbus_probe.c                  |   4 +-
+ drivers/zorro/zorro-driver.c                       |   3 +-
+ include/linux/device/bus.h                         |   2 +-
+ include/linux/dmaengine.h                          |   3 +-
+ include/linux/pci-epf.h                            |   2 +-
+ include/linux/platform_data/dma-dw.h               |  21 +-
+ include/uapi/linux/idxd.h                          |  24 +
+ sound/ac97/bus.c                                   |   6 +-
+ sound/aoa/soundbus/core.c                          |   4 +-
+ 146 files changed, 4186 insertions(+), 1190 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/dma/renesas,rz-dmac.y=
+aml
+ create mode 100644 drivers/dma/idxd/bus.c
+ create mode 100644 drivers/dma/idxd/compat.c
+ create mode 100644 drivers/dma/ptdma/Kconfig
+ create mode 100644 drivers/dma/ptdma/Makefile
+ create mode 100644 drivers/dma/ptdma/ptdma-debugfs.c
+ create mode 100644 drivers/dma/ptdma/ptdma-dev.c
+ create mode 100644 drivers/dma/ptdma/ptdma-dmaengine.c
+ create mode 100644 drivers/dma/ptdma/ptdma-pci.c
+ create mode 100644 drivers/dma/ptdma/ptdma.h
+ create mode 100644 drivers/dma/sh/rz-dmac.c
+
+Thanks
+--=20
+~Vinod
+
+--KoQp2lLz9rVFR4nv
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCAAdFiEE+vs47OPLdNbVcHzyfBQHDyUjg0cFAmE4PnIACgkQfBQHDyUj
+g0fn/xAAvyhFtlEVR2uIHkKAKCMnD4OvDmYnbJXAHp+WHfrC7Wt97LVqm2bEYCVi
+9aW/jSiZ6aWYIFNscmyhkuhsztkck7PzyIih7Cc+2ORkRh5DgOo3qYa+Vbnz2ZlQ
+O90A45xB5albkOGvErocH/QXOo1DYtOXLqE8PCbjl5d81zZTMACvbniHGBlD1Myg
+z0YbY3qHnshRr+9e/HboQ7BdXfcevqorCIbz9hKTYVJMRx0s7kIFHPO0w4Siss3y
+C4R3kgmCEIAR854JUjSIGqMjqTRe2X/NiSs1LZtx1tkPL149fCmzVcJebKsL1nJ5
+DLCd/QiWSV8xS1p35J6RQ8YMab7U60ieVC4UBP57mcty6eZ1brayX8tT+UC/tBkz
+h+JdxuEEt3CHPuOJ+1sx06tfErRxCLHjTxeaOQnjJnLXqe8fYD00w1TDAuTJPv4N
+h3fI8tZPrL9b3Rwv4Zd25EyAvgyw2NZ48rZOsGynEboFuXAvU3xIdFN0gzHVpWOj
+AgaPSkPfO1dFEqfn/ZYxUiuYgQWPF3nSzbMYc3cB9wGeS5poDFkraHhiUCkEhN7r
+P0oYhCl8Eeqx7jsnQRWotE0vzrhhWH808bMNvdfOHv/1MLuM/MavmkAZjc8UsuHj
+Vfud/Rap16YG6W4CeqMjMZrnaOIRGtqSRGRyF76iC+p6yu1VNUU=
+=5gK1
+-----END PGP SIGNATURE-----
+
+--KoQp2lLz9rVFR4nv--
