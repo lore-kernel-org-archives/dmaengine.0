@@ -7,41 +7,39 @@ X-Spam-Status: No, score=-19.4 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C1DFEC433EF
-	for <dmaengine@archiver.kernel.org>; Mon, 13 Sep 2021 22:36:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7735EC433FE
+	for <dmaengine@archiver.kernel.org>; Mon, 13 Sep 2021 22:37:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AAFF66137B
-	for <dmaengine@archiver.kernel.org>; Mon, 13 Sep 2021 22:36:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6357A6126A
+	for <dmaengine@archiver.kernel.org>; Mon, 13 Sep 2021 22:37:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245383AbhIMWhU (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 13 Sep 2021 18:37:20 -0400
-Received: from mail.kernel.org ([198.145.29.99]:51910 "EHLO mail.kernel.org"
+        id S1349234AbhIMWic (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 13 Sep 2021 18:38:32 -0400
+Received: from mail.kernel.org ([198.145.29.99]:51502 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1348676AbhIMWgK (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Mon, 13 Sep 2021 18:36:10 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 405956124D;
-        Mon, 13 Sep 2021 22:34:43 +0000 (UTC)
+        id S1348597AbhIMWgu (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Mon, 13 Sep 2021 18:36:50 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 6333B61163;
+        Mon, 13 Sep 2021 22:35:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1631572484;
-        bh=C2jMisGe6Hpa3CETJrk1NnMegofXErxuA/YmCw7WfKc=;
+        s=k20201202; t=1631572506;
+        bh=ChKO3yV2jWanbE7mp7KQIXdToMns1bq9wGPUwwiK6r8=;
         h=From:To:Cc:Subject:Date:From;
-        b=m0MoSTmz4gEUs+fwV/K7MO0PtrEKSYIGxF1QHamTJ03pIQZerlHdwj4yiViVAnq3v
-         lWzWI9KkCV/AgsQDD+oxiWMFof6aq7X5Hz9u2QNGrLZaqyFuDczex8rVLTxydzNv+D
-         tD8iMLsGCmvHpjpa7qwHSYx48u3Jbu5PWmFpbIcLNzxzQBqpRE8WS/wBeXDlEOYSiK
-         bh9rlcZ+D3hSsEQgo4fxvaNn3hKHZ/oNUFWNNbVJE/PMx33U5p3c06ouP2fNpTPa8U
-         OB0YwRrLI0Zmrw8E7+4HTglghGok0u3f+l5fJq5BohBilM343BQF9d5HCzFYspG45z
-         Lykr9mWBaImSQ==
+        b=sWfXMzFKaKoySjbgljtRXgKDt5PX8yFeEW4NXNyD861v8hzglF4sOmcbBlyF3Vlfa
+         UFNG06lsSPjWInBadAy/1+vi0S6q4T0rqULklJOzbgcckN+AYzoH6QUx/l1mRzABlm
+         F6vvmnXqAozVEBRFt3lnJW5xgaH5R/+H1xXQ+guS65e/nyactymTsPQNWZxq4qmtQW
+         j6z4xday5eMnYZcn8u9lvDIZcEc+PR9z265dQHpr4Gjd1GtBtVF9Ijmxu3ENl7NQqZ
+         cJvnI2cMP1OFrsr5Xp6Te3afg1gmOzG4fVxm8lgKtRqy58kr+ySK3xKgf2bvlvI8XP
+         tzvXyNPi3sGvA==
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Johannes Berg <johannes.berg@intel.com>,
-        kernel test robot <lkp@intel.com>,
-        Dave Jiang <dave.jiang@intel.com>,
-        Anton Ivanov <anton.ivanov@cambridgegreys.com>,
+Cc:     Zou Wei <zou_wei@huawei.com>, Hulk Robot <hulkci@huawei.com>,
+        Baolin Wang <baolin.wang7@gmail.com>,
         Vinod Koul <vkoul@kernel.org>, Sasha Levin <sashal@kernel.org>,
         dmaengine@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.10 01/16] dmaengine: idxd: depends on !UML
-Date:   Mon, 13 Sep 2021 18:34:27 -0400
-Message-Id: <20210913223442.435885-1-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 5.4 01/12] dmaengine: sprd: Add missing MODULE_DEVICE_TABLE
+Date:   Mon, 13 Sep 2021 18:34:53 -0400
+Message-Id: <20210913223504.436087-1-sashal@kernel.org>
 X-Mailer: git-send-email 2.30.2
 MIME-Version: 1.0
 X-stable: review
@@ -51,38 +49,36 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Zou Wei <zou_wei@huawei.com>
 
-[ Upstream commit b2296eeac91555bd13f774efa7ab7d4b12fb71ef ]
+[ Upstream commit 4faee8b65ec32346f8096e64c5fa1d5a73121742 ]
 
-Now that UML has PCI support, this driver must depend also on
-!UML since it pokes at X86_64 architecture internals that don't
-exist on ARCH=um.
+This patch adds missing MODULE_DEVICE_TABLE definition which generates
+correct modalias for automatic loading of this driver when it is built
+as an external module.
 
-Reported-by: kernel test robot <lkp@intel.com>
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Acked-by: Dave Jiang <dave.jiang@intel.com>
-Acked-By: Anton Ivanov <anton.ivanov@cambridgegreys.com>
-Link: https://lore.kernel.org/r/20210625103810.fe877ae0aef4.If240438e3f50ae226f3f755fc46ea498c6858393@changeid
+Reported-by: Hulk Robot <hulkci@huawei.com>
+Signed-off-by: Zou Wei <zou_wei@huawei.com>
+Reviewed-by: Baolin Wang <baolin.wang7@gmail.com>
+Link: https://lore.kernel.org/r/1620094977-70146-1-git-send-email-zou_wei@huawei.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/Kconfig | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/dma/sprd-dma.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/dma/Kconfig b/drivers/dma/Kconfig
-index f28bb2334e74..3a745e8a0f42 100644
---- a/drivers/dma/Kconfig
-+++ b/drivers/dma/Kconfig
-@@ -285,7 +285,7 @@ config INTEL_IDMA64
+diff --git a/drivers/dma/sprd-dma.c b/drivers/dma/sprd-dma.c
+index 8546ad034720..b966115bfad1 100644
+--- a/drivers/dma/sprd-dma.c
++++ b/drivers/dma/sprd-dma.c
+@@ -1230,6 +1230,7 @@ static const struct of_device_id sprd_dma_match[] = {
+ 	{ .compatible = "sprd,sc9860-dma", },
+ 	{},
+ };
++MODULE_DEVICE_TABLE(of, sprd_dma_match);
  
- config INTEL_IDXD
- 	tristate "Intel Data Accelerators support"
--	depends on PCI && X86_64
-+	depends on PCI && X86_64 && !UML
- 	depends on PCI_MSI
- 	depends on SBITMAP
- 	select DMA_ENGINE
+ static int __maybe_unused sprd_dma_runtime_suspend(struct device *dev)
+ {
 -- 
 2.30.2
 
