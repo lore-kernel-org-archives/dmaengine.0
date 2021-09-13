@@ -7,40 +7,42 @@ X-Spam-Status: No, score=-19.4 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7A8FFC4332F
-	for <dmaengine@archiver.kernel.org>; Mon, 13 Sep 2021 22:38:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CB32EC433F5
+	for <dmaengine@archiver.kernel.org>; Mon, 13 Sep 2021 22:38:33 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 65B5460EC0
-	for <dmaengine@archiver.kernel.org>; Mon, 13 Sep 2021 22:38:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B553E60E8B
+	for <dmaengine@archiver.kernel.org>; Mon, 13 Sep 2021 22:38:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1349416AbhIMWj3 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 13 Sep 2021 18:39:29 -0400
-Received: from mail.kernel.org ([198.145.29.99]:51224 "EHLO mail.kernel.org"
+        id S244357AbhIMWjs (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 13 Sep 2021 18:39:48 -0400
+Received: from mail.kernel.org ([198.145.29.99]:51304 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1349008AbhIMWh0 (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Mon, 13 Sep 2021 18:37:26 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id EB46161221;
-        Mon, 13 Sep 2021 22:35:22 +0000 (UTC)
+        id S244930AbhIMWhi (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Mon, 13 Sep 2021 18:37:38 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 6B1E461354;
+        Mon, 13 Sep 2021 22:35:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1631572523;
-        bh=5cCgx6kaz6HnDbPBulzbUIo35Q1e4DmFSGYnXaTROBo=;
-        h=From:To:Cc:Subject:Date:From;
-        b=o/69E4g9wJsCCu4EZEBjM2RzH9h0IirYd8jgbwbN11T1TgEWD34Yd6sqPBXZHrpI8
-         MZ9M24C6agfiZkuD5KRd79Qxw/XW9TCyq1exY3P0Qe6BjcJWVaH4YNTA5+aWvt+QJm
-         l+73I7KaYw180aPgPtzSa/j86+rCKp4BqzGrnuyHOEcNx4Hd+mg/fS32vLuWqVgDJg
-         9D4GHlRInWMpu+IFN7HeF73GFVjZNGV3fVI+PI/QQld78zoW/Tb/e7qqoxwM26rSzv
-         zRwLmJBpLp0WB/8NzZ8nQmR0scXyqf2FTVVX0r8N7g5kOEIYtdu7RZx0X0Pibhougp
-         y3DlsBoF66iYg==
+        s=k20201202; t=1631572526;
+        bh=nSJ9gpXuPaoi1bnAhq8W/J3axyHgdcIDw9hzK5lHd/Q=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=RuVBApAGoUZMO0MmBN+YNZRtl29TiXRL+pXqusGfwwYjDeyS/76boMCPpGtamHMAo
+         0ooHNcwuCAwsD/72om3njoVPPLxHsvDTf85pF33zx5/v+j/ZZDt6RShhk44dGB5FGz
+         LlKAtl8+06hrcDo640l/soGsGQ/VQJueQq7oARlxvLpJc4Rdn/QsHTjz37zlWNB7YD
+         IqgyjoqFP/vuNZJchNlPgp4rAizFjJA6yCkj4a7NQVuBKkouUSMIZ8aB68/iONLwbm
+         JWU02/7P8gh+7W6WYCWXgldL/ohre0uA47Yr7MIialyHusJxKjuxRxD5AyDGLjZ3rk
+         BKZuq2XkBm3Qg==
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Zou Wei <zou_wei@huawei.com>, Hulk Robot <hulkci@huawei.com>,
-        Baolin Wang <baolin.wang7@gmail.com>,
+Cc:     Radhey Shyam Pandey <radhey.shyam.pandey@xilinx.com>,
+        Harini Katakam <harini.katakam@xilinx.com>,
         Vinod Koul <vkoul@kernel.org>, Sasha Levin <sashal@kernel.org>,
-        dmaengine@vger.kernel.org
-Subject: [PATCH AUTOSEL 4.19 01/10] dmaengine: sprd: Add missing MODULE_DEVICE_TABLE
-Date:   Mon, 13 Sep 2021 18:35:12 -0400
-Message-Id: <20210913223521.436250-1-sashal@kernel.org>
+        dmaengine@vger.kernel.org, linux-arm-kernel@lists.infradead.org
+Subject: [PATCH AUTOSEL 4.19 03/10] dmaengine: xilinx_dma: Set DMA mask for coherent APIs
+Date:   Mon, 13 Sep 2021 18:35:14 -0400
+Message-Id: <20210913223521.436250-3-sashal@kernel.org>
 X-Mailer: git-send-email 2.30.2
+In-Reply-To: <20210913223521.436250-1-sashal@kernel.org>
+References: <20210913223521.436250-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
@@ -49,36 +51,48 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-From: Zou Wei <zou_wei@huawei.com>
+From: Radhey Shyam Pandey <radhey.shyam.pandey@xilinx.com>
 
-[ Upstream commit 4faee8b65ec32346f8096e64c5fa1d5a73121742 ]
+[ Upstream commit aac6c0f90799d66b8989be1e056408f33fd99fe6 ]
 
-This patch adds missing MODULE_DEVICE_TABLE definition which generates
-correct modalias for automatic loading of this driver when it is built
-as an external module.
+The xilinx dma driver uses the consistent allocations, so for correct
+operation also set the DMA mask for coherent APIs. It fixes the below
+kernel crash with dmatest client when DMA IP is configured with 64-bit
+address width and linux is booted from high (>4GB) memory.
 
-Reported-by: Hulk Robot <hulkci@huawei.com>
-Signed-off-by: Zou Wei <zou_wei@huawei.com>
-Reviewed-by: Baolin Wang <baolin.wang7@gmail.com>
-Link: https://lore.kernel.org/r/1620094977-70146-1-git-send-email-zou_wei@huawei.com
+Call trace:
+[  489.531257]  dma_alloc_from_pool+0x8c/0x1c0
+[  489.535431]  dma_direct_alloc+0x284/0x330
+[  489.539432]  dma_alloc_attrs+0x80/0xf0
+[  489.543174]  dma_pool_alloc+0x160/0x2c0
+[  489.547003]  xilinx_cdma_prep_memcpy+0xa4/0x180
+[  489.551524]  dmatest_func+0x3cc/0x114c
+[  489.555266]  kthread+0x124/0x130
+[  489.558486]  ret_from_fork+0x10/0x3c
+[  489.562051] ---[ end trace 248625b2d596a90a ]---
+
+Signed-off-by: Radhey Shyam Pandey <radhey.shyam.pandey@xilinx.com>
+Reviewed-by: Harini Katakam <harini.katakam@xilinx.com>
+Link: https://lore.kernel.org/r/1629363528-30347-1-git-send-email-radhey.shyam.pandey@xilinx.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/sprd-dma.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/dma/xilinx/xilinx_dma.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/dma/sprd-dma.c b/drivers/dma/sprd-dma.c
-index 9e8ce56a83d8..0fadf6a08494 100644
---- a/drivers/dma/sprd-dma.c
-+++ b/drivers/dma/sprd-dma.c
-@@ -1016,6 +1016,7 @@ static const struct of_device_id sprd_dma_match[] = {
- 	{ .compatible = "sprd,sc9860-dma", },
- 	{},
- };
-+MODULE_DEVICE_TABLE(of, sprd_dma_match);
+diff --git a/drivers/dma/xilinx/xilinx_dma.c b/drivers/dma/xilinx/xilinx_dma.c
+index d891ec05bc48..3f38df6b51f2 100644
+--- a/drivers/dma/xilinx/xilinx_dma.c
++++ b/drivers/dma/xilinx/xilinx_dma.c
+@@ -2674,7 +2674,7 @@ static int xilinx_dma_probe(struct platform_device *pdev)
+ 		xdev->ext_addr = false;
  
- static int __maybe_unused sprd_dma_runtime_suspend(struct device *dev)
- {
+ 	/* Set the dma mask bits */
+-	dma_set_mask(xdev->dev, DMA_BIT_MASK(addr_width));
++	dma_set_mask_and_coherent(xdev->dev, DMA_BIT_MASK(addr_width));
+ 
+ 	/* Initialize the DMA engine */
+ 	xdev->common.dev = &pdev->dev;
 -- 
 2.30.2
 
