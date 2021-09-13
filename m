@@ -7,42 +7,43 @@ X-Spam-Status: No, score=-19.4 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F24FFC43217
-	for <dmaengine@archiver.kernel.org>; Mon, 13 Sep 2021 22:35:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D5170C4332F
+	for <dmaengine@archiver.kernel.org>; Mon, 13 Sep 2021 22:35:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D807161108
-	for <dmaengine@archiver.kernel.org>; Mon, 13 Sep 2021 22:35:00 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BF4A761246
+	for <dmaengine@archiver.kernel.org>; Mon, 13 Sep 2021 22:35:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348698AbhIMWgN (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 13 Sep 2021 18:36:13 -0400
-Received: from mail.kernel.org ([198.145.29.99]:50818 "EHLO mail.kernel.org"
+        id S242928AbhIMWgM (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 13 Sep 2021 18:36:12 -0400
+Received: from mail.kernel.org ([198.145.29.99]:51068 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1348548AbhIMWfd (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Mon, 13 Sep 2021 18:35:33 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 7BE7A61154;
-        Mon, 13 Sep 2021 22:34:16 +0000 (UTC)
+        id S1348562AbhIMWfh (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Mon, 13 Sep 2021 18:35:37 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id ADB4F61209;
+        Mon, 13 Sep 2021 22:34:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1631572457;
-        bh=mZ6OLkFdQUsjQrobdyWliBhZeMi9SF3Lndi68Npfh18=;
-        h=From:To:Cc:Subject:Date:From;
-        b=IZp7339jH/tVwcr/C9AsHVdwv2lpWXkIfQDkrE7GeiK7SHsvYHQdWlBZ2Mntui1nG
-         apH92OYdtKjPN06uBV12Wgj6tMQWY5GfFKTNyp6VHPk5C0nF0sckai8FO5tJXIl8KV
-         CqSjHtSyhyIcfJk7o9khi8a6H0KGxovhIymedpfLkRpg2171YSF16uLI+LQjh3n/yT
-         c61f2UbrKdf1UYxgQ1y5mgRPQoebcwX7R0M/fngyuNVB7wvtGtlL+ey+ZLiVtOo0Pa
-         CYAl2HR4xvlGsmSpjeZVyUEvRhfFkE/9jVmI+PnsrQ3PVF5JWrRFk7eKORCdRnys/w
-         olALbenpV3i9g==
+        s=k20201202; t=1631572461;
+        bh=OPj6CZkkPdKRRabLQSvMYzV363OrmnTfbRaOzNENbDw=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=NUrGMrqZiP8VTU2H1ZwK3Q+lFll9Zqk3tTA+oXURKYQ+UzE7bGztQwNkBcnsH/ctE
+         W+sNtnDPEYSrzp/td/ff0GiOLygP5OhK+Exmmj65QEqa9asbXtA0fbYQBWozYgQTk0
+         Uo0lEaiV1DRGesKxM69pBVge5lBxt3zYvaG28TTM5whc8HICEUhlJuw2t+crecsqnV
+         VxRquk5pmvakEpngGICxGFz3WzgheIP3YvDI77BHH3HsgWlIYoaAA1BbiZRNcgOYpF
+         4saDaDYpGs/psz66Piq6o2xwcKMIUcvvPImjtaU/eRpcoS8S+EwOKqFY+CiTeeMHxS
+         Ce/IDVT5J1yiw==
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Cc:     Johannes Berg <johannes.berg@intel.com>,
-        kernel test robot <lkp@intel.com>,
+        Geert Uytterhoeven <geert@linux-m68k.org>,
         Dave Jiang <dave.jiang@intel.com>,
-        Anton Ivanov <anton.ivanov@cambridgegreys.com>,
         Vinod Koul <vkoul@kernel.org>, Sasha Levin <sashal@kernel.org>,
         dmaengine@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.13 01/19] dmaengine: idxd: depends on !UML
-Date:   Mon, 13 Sep 2021 18:33:57 -0400
-Message-Id: <20210913223415.435654-1-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 5.13 04/19] dmaengine: ioat: depends on !UML
+Date:   Mon, 13 Sep 2021 18:34:00 -0400
+Message-Id: <20210913223415.435654-4-sashal@kernel.org>
 X-Mailer: git-send-email 2.30.2
+In-Reply-To: <20210913223415.435654-1-sashal@kernel.org>
+References: <20210913223415.435654-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
@@ -53,17 +54,16 @@ X-Mailing-List: dmaengine@vger.kernel.org
 
 From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit b2296eeac91555bd13f774efa7ab7d4b12fb71ef ]
+[ Upstream commit bbac7a92a46f0876e588722ebe552ddfe6fd790f ]
 
 Now that UML has PCI support, this driver must depend also on
 !UML since it pokes at X86_64 architecture internals that don't
 exist on ARCH=um.
 
-Reported-by: kernel test robot <lkp@intel.com>
+Reported-by: Geert Uytterhoeven <geert@linux-m68k.org>
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Acked-by: Dave Jiang <dave.jiang@intel.com>
-Acked-By: Anton Ivanov <anton.ivanov@cambridgegreys.com>
-Link: https://lore.kernel.org/r/20210625103810.fe877ae0aef4.If240438e3f50ae226f3f755fc46ea498c6858393@changeid
+Link: https://lore.kernel.org/r/20210809112409.a3a0974874d2.I2ffe3d11ed37f735da2f39884a74c953b258b995@changeid
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
@@ -71,18 +71,18 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/dma/Kconfig b/drivers/dma/Kconfig
-index 39b5b46e880f..f450e4231db7 100644
+index f450e4231db7..4f70cf57471a 100644
 --- a/drivers/dma/Kconfig
 +++ b/drivers/dma/Kconfig
-@@ -279,7 +279,7 @@ config INTEL_IDMA64
+@@ -315,7 +315,7 @@ config INTEL_IDXD_PERFMON
  
- config INTEL_IDXD
- 	tristate "Intel Data Accelerators support"
+ config INTEL_IOATDMA
+ 	tristate "Intel I/OAT DMA support"
 -	depends on PCI && X86_64
 +	depends on PCI && X86_64 && !UML
- 	depends on PCI_MSI
- 	depends on SBITMAP
  	select DMA_ENGINE
+ 	select DMA_ENGINE_RAID
+ 	select DCA
 -- 
 2.30.2
 
