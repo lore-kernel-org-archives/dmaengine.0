@@ -5,44 +5,44 @@ X-Spam-Level:
 X-Spam-Status: No, score=-19.4 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=unavailable autolearn_force=no version=3.4.0
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 10AFFC433F5
-	for <dmaengine@archiver.kernel.org>; Mon, 13 Sep 2021 22:39:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B33ABC433F5
+	for <dmaengine@archiver.kernel.org>; Mon, 13 Sep 2021 22:40:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EA7E060EFF
-	for <dmaengine@archiver.kernel.org>; Mon, 13 Sep 2021 22:39:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9C9F3610F9
+	for <dmaengine@archiver.kernel.org>; Mon, 13 Sep 2021 22:40:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245168AbhIMWlB (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 13 Sep 2021 18:41:01 -0400
-Received: from mail.kernel.org ([198.145.29.99]:51032 "EHLO mail.kernel.org"
+        id S1348907AbhIMWmG (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 13 Sep 2021 18:42:06 -0400
+Received: from mail.kernel.org ([198.145.29.99]:51224 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1349307AbhIMWjF (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Mon, 13 Sep 2021 18:39:05 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 6887661288;
-        Mon, 13 Sep 2021 22:35:38 +0000 (UTC)
+        id S1349390AbhIMWj2 (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Mon, 13 Sep 2021 18:39:28 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 888296135E;
+        Mon, 13 Sep 2021 22:35:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1631572539;
-        bh=0imnu/QSbJlk6lBF4QOOnPSOOzd/NFLEAUPPiBEliOk=;
+        s=k20201202; t=1631572552;
+        bh=t5TSdv9gLqz7EsgvxnpanvAKcmoSvJ95WAo3sGh0GqM=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=LdJeo7tiRAQVoGiB6cbU17TeOFyAcF4xpI9mWJZ6wu3cvGxz1x2XmSzqGV/IF/uS5
-         P4EROL0brI+XWrDx3QEF3ozCx5NhU0mMp+XJFZKuHZIyH4Zxqd50oz7tPcwb2wwD9W
-         VsQikXeydBxuanY5lp2O879MWTbNWQ/ieyQVf3MI4HSE1zln/scKBkP650M4MAKDa7
-         nijqOB5o1oQLRSGn5rru3/MUrc6VGcWBNq9YkfRdsAo/YYDN2xCf5SD8jpbAivJ7fY
-         fff4Rp6ycsXSbbw3nOCnSPTCtqLF96joCx+qSjtF6iHN7Q7AZKCcSi+gkUs6JaMekS
-         4W/2cxSfTHcXQ==
+        b=hLFJwTaNwy3KYbAMD9DZiujpF6m7fYrY1ynOUFojd+qVP5AxXRtUYiDCYH5oT8CXP
+         O7rUUJTdKp0akes4QwSbrxnuKqXXqAivIdFEXBloufB37P3/N6l+inpqgue5b6HIIO
+         r2cnxl8UsSethd9kD5OsNrkm6ovzs/5mn2cu1Z9QC1g5qoTYHbpIVd3Svm++n7TFZn
+         HCDDTbV9+ZtnayYsNrBdnHy7ctKufFahnqlcUS9oy9bLrYo0AehYjJ2ZcTQy9TiJ+k
+         KMOx6QksOx8odtQN7hFD6EdseUTJZuvdIO11u/lxTAaa0SV2q+dPsQSGSAcZ+cE6EZ
+         XF9+vPk1MyVwA==
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Cc:     Radhey Shyam Pandey <radhey.shyam.pandey@xilinx.com>,
         Harini Katakam <harini.katakam@xilinx.com>,
         Vinod Koul <vkoul@kernel.org>, Sasha Levin <sashal@kernel.org>,
         dmaengine@vger.kernel.org, linux-arm-kernel@lists.infradead.org
-Subject: [PATCH AUTOSEL 4.14 2/9] dmaengine: xilinx_dma: Set DMA mask for coherent APIs
-Date:   Mon, 13 Sep 2021 18:35:28 -0400
-Message-Id: <20210913223535.436405-2-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 4.9 2/9] dmaengine: xilinx_dma: Set DMA mask for coherent APIs
+Date:   Mon, 13 Sep 2021 18:35:42 -0400
+Message-Id: <20210913223549.436541-2-sashal@kernel.org>
 X-Mailer: git-send-email 2.30.2
-In-Reply-To: <20210913223535.436405-1-sashal@kernel.org>
-References: <20210913223535.436405-1-sashal@kernel.org>
+In-Reply-To: <20210913223549.436541-1-sashal@kernel.org>
+References: <20210913223549.436541-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
@@ -81,10 +81,10 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/dma/xilinx/xilinx_dma.c b/drivers/dma/xilinx/xilinx_dma.c
-index 21203e3a54fd..3c2084766a31 100644
+index f00652585ee3..d88c53ff7bb6 100644
 --- a/drivers/dma/xilinx/xilinx_dma.c
 +++ b/drivers/dma/xilinx/xilinx_dma.c
-@@ -2585,7 +2585,7 @@ static int xilinx_dma_probe(struct platform_device *pdev)
+@@ -2578,7 +2578,7 @@ static int xilinx_dma_probe(struct platform_device *pdev)
  		xdev->ext_addr = false;
  
  	/* Set the dma mask bits */
