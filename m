@@ -7,30 +7,30 @@ X-Spam-Status: No, score=-19.4 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 62E7EC43217
-	for <dmaengine@archiver.kernel.org>; Mon, 13 Sep 2021 22:40:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0C45BC433EF
+	for <dmaengine@archiver.kernel.org>; Mon, 13 Sep 2021 22:41:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4DC4961108
-	for <dmaengine@archiver.kernel.org>; Mon, 13 Sep 2021 22:40:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EC5256113B
+	for <dmaengine@archiver.kernel.org>; Mon, 13 Sep 2021 22:41:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243563AbhIMWmH (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 13 Sep 2021 18:42:07 -0400
-Received: from mail.kernel.org ([198.145.29.99]:51156 "EHLO mail.kernel.org"
+        id S1349720AbhIMWme (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 13 Sep 2021 18:42:34 -0400
+Received: from mail.kernel.org ([198.145.29.99]:51502 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1349386AbhIMWj2 (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Mon, 13 Sep 2021 18:39:28 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 5454461247;
-        Mon, 13 Sep 2021 22:35:50 +0000 (UTC)
+        id S244688AbhIMWkb (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Mon, 13 Sep 2021 18:40:31 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id DDCBE61261;
+        Mon, 13 Sep 2021 22:36:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1631572551;
-        bh=skyWCzASgpYQ8ky8gcrb8BafQh7LHakiQs289AiZ3Rk=;
+        s=k20201202; t=1631572563;
+        bh=gP/FR+RTc1p6XswCaxsB4txWoB8XWZyhR7RIfruoL6E=;
         h=From:To:Cc:Subject:Date:From;
-        b=eN3QVIdyTnP18Uq1/jYwYgPLQNE36YU4T2J2t9UzRuRsAgeWQ/KfKEKzLShBd+LEk
-         65albUyCUJlBmMG1I/Vo0QeKw8c/xY6DLEVr6hVOuFNxTc8G6IK446AL2E1ZER22+p
-         Irj4s2ukQ64Uybokp9DHJ/5jB2BCxDcOXPkW/Y/X4Usa+JlE6XwqrhW3qOyECDTV3Q
-         8CMIx8lD3nJCl7w8nfQmcvLDgryFbQ3BneOYx6UrxF0XjQ/2Aetar9aAwyrOX5+kqR
-         eljRuEnSF1lT14rO5sML177+keVBgt512lRusFeZUgDCU6k97NRgxDrGE34rTurePO
-         lZ8OUTlu+dRgg==
+        b=BbnGFEkhklw/u/ewiCdsm3MaxbkIr5wTE9U36O1ggdaxfsnBhSG0xfkAN3o4/4UJH
+         xZ1rAWdnuzoYhV33kQteAARpwuyEYIk9G0uxlwh4Mq8JhFuLH6swKOaRKtN1xDmJuQ
+         MRWG/Y4Hx0FrNng9eyBW6HiY6wwjOvyeqVWZTeKZEFl6DjyPS+Rn4tNpkXNXhB/Sid
+         eoZcN9HiYhzv2ANUNxnGagc2d4IHcYyZeDjE+T20nu6EkeNH9Xkm4XVYUWip3FRpn+
+         FRc+7NSFApgaWZaJPWvNCkjO3TAEvCiCqFZ3D+RXq0exfPHL38AODK1yp8LOjgMdYG
+         60wQl4dJaZM6w==
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Cc:     Johannes Berg <johannes.berg@intel.com>,
@@ -38,9 +38,9 @@ Cc:     Johannes Berg <johannes.berg@intel.com>,
         Dave Jiang <dave.jiang@intel.com>,
         Vinod Koul <vkoul@kernel.org>, Sasha Levin <sashal@kernel.org>,
         dmaengine@vger.kernel.org
-Subject: [PATCH AUTOSEL 4.9 1/9] dmaengine: ioat: depends on !UML
-Date:   Mon, 13 Sep 2021 18:35:41 -0400
-Message-Id: <20210913223549.436541-1-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 4.4 1/8] dmaengine: ioat: depends on !UML
+Date:   Mon, 13 Sep 2021 18:35:54 -0400
+Message-Id: <20210913223601.436675-1-sashal@kernel.org>
 X-Mailer: git-send-email 2.30.2
 MIME-Version: 1.0
 X-stable: review
@@ -69,10 +69,10 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/dma/Kconfig b/drivers/dma/Kconfig
-index b0f798244a89..9a6da9b2dad3 100644
+index e6cd1a32025a..f450f3d8f63a 100644
 --- a/drivers/dma/Kconfig
 +++ b/drivers/dma/Kconfig
-@@ -238,7 +238,7 @@ config INTEL_IDMA64
+@@ -239,7 +239,7 @@ config INTEL_IDMA64
  
  config INTEL_IOATDMA
  	tristate "Intel I/OAT DMA support"
