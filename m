@@ -2,43 +2,43 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C10E5C433EF
-	for <dmaengine@archiver.kernel.org>; Tue, 28 Sep 2021 15:19:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CF93CC433FE
+	for <dmaengine@archiver.kernel.org>; Tue, 28 Sep 2021 15:19:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9EDDD6128C
-	for <dmaengine@archiver.kernel.org>; Tue, 28 Sep 2021 15:19:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B5DE06120D
+	for <dmaengine@archiver.kernel.org>; Tue, 28 Sep 2021 15:19:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241573AbhI1PVb (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        id S241605AbhI1PVb (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
         Tue, 28 Sep 2021 11:21:31 -0400
-Received: from mail-eopbgr30074.outbound.protection.outlook.com ([40.107.3.74]:11935
-        "EHLO EUR03-AM5-obe.outbound.protection.outlook.com"
+Received: from mail-eopbgr150078.outbound.protection.outlook.com ([40.107.15.78]:56462
+        "EHLO EUR01-DB5-obe.outbound.protection.outlook.com"
         rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S241566AbhI1PVa (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        id S241575AbhI1PVa (ORCPT <rfc822;dmaengine@vger.kernel.org>);
         Tue, 28 Sep 2021 11:21:30 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=YRqr5QevY1REm/zoddM+BbziZvDRL6Ja6B53OHaxqvxR3FCd6NaPAXZ+KnlprX7zeUa/aWhlDtXINk1IyyhvY6whcQk0YN0kzqD+xOfkrA7Q3ZQiAO+2/p8XdsJ8k5xXvuSlupYYDtXKn2YmdcBYnVuFJLalaDczLL2C9pSn3iITjgt4YVuXmAI0kgtAT2Azy+A5hA2AyuryXMalA9n4UvGx8iv8cBYKiB0LeF/xDPAbcb0PTfclKYvpqJe9z8zvRdQvqGuee1ZZdzy4BV3mASzXgG88moNey9PF+Q98YrqMzAxv1NicREXH4t2bnLoeqqFC+HbTuSC2t81jzeOQAA==
+ b=EZqS5f/24qBA9ddE8BQmcYrqacraYnZ6/7T2e+TARZkSpUMQxiGluj/rrbP3WcgLErlIeXz5uXn2Ucsa1Tb6RUgXZuydkHQrrlYe7HRaLj7SSvly7h5HLHdTWR5pZHVwXPe7NhdvyNDwR9sjA6nZ7d7VcllqZQakjop/8M0zDJmOqPsuyg5g6f9MHdZBGtZ5+5gUX3jnqhU1deRjjEFprt2OUhnUt/wRyNLpvoxBbyYGO7YK9T+90IGS96s9R+13KoXIn9Nv8LV3NvfqAT1S9SDkGxPM/t5oBwlz6G3PICVYqRekv77D7pHb1TpQ3KtaIfNHTrOTR8l6MoeJw6Abpg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901; h=From:Date:Subject:Message-ID:Content-Type:MIME-Version;
- bh=g4QWkTVS1FnXHgzMMRvfhNElA52or+CUNSVpMmYLj9w=;
- b=S6rbYymZpKqpWZISPq0Lx1Aw9chDt0y+pCafhvjr6rPVvUP6D5zMM+r4xw+79WcWcAyv6Q99Y3VFcxr3uyhYwTK1KQS4vMzqPNU2fvNjIyg8cUkcp5AW79cdjOx/Ur2nx1puymdPi7qWIR1xzeJoJULE8gvZn2ffUTYitzv7xBWRjrv8k0cXOKQvL6MFwA+NVFGDns0hkd6+dbHnpIPS7ZIieUgVBUClUqgf6P/DgECt26i3TGsEvNDJNw+h1CMukx3ubO9eSNnj9NpRC8OsETSxPX7IQ62DFWwGnJ1d+gxEiyKrrICRTzKXWcQ2oOhh0n/3gwwajY+5++tuGM7KBw==
+ bh=t4zUjXTn0plzCzI+5m20ObT412GiESbjjj+IPIieFWI=;
+ b=mYl3phyy+xeCwZRauXfw20aAlqg3eEqwcwKyKCrCByUUiNccxRDRGVF6tlLpbt7QoeIZBiR28/tL4ool2hXdatVKnEPWJtaCaP1Xdn12MCsepFOrZfR9xhFxdcDVob38NTLEirG2cQZeYk4yfjZNQKQxOsc5d/KpAcJGtGK+c4rhLYXTXV74V8mO0R0MnNGZIEGRMmh4Mp7A8C6IFeGn9oy47q6DLVyU7yS8LDQVrafgftBgQbo1XR2yLwZlXfdCamuqWZniRGjeG/Lw+p8drKZPIja6kLBBmOj5WpVzaictOibeYTlPUEzVK2rTxZWiiWLBlqXg/VvIcVAHIW/PGA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=permerror (sender ip
  is 151.1.184.193) smtp.rcpttodomain=vger.kernel.org smtp.mailfrom=asem.it;
  dmarc=fail (p=none sp=none pct=100) action=none header.from=asem.it;
  dkim=none (message not signed); arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=asem.it; s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=g4QWkTVS1FnXHgzMMRvfhNElA52or+CUNSVpMmYLj9w=;
- b=Lt7hmsbODhUIteRpbLfoGxIfxHg4OfH3zQ0XYKx/+888cPR54rXBU+RcooM4fHy6F3e7RsSgXDaIvW2M9TIswRlp/J0Q1JAzfIS6noAeHuNeVoTP/CcM/CvTMLcC2XL4Mz2QuhAqa4QKjonNKe5VWzkzKnEVEGJOzTt8VZBIiCM=
-Received: from DB9PR02CA0007.eurprd02.prod.outlook.com (2603:10a6:10:1d9::12)
- by VI1PR01MB6655.eurprd01.prod.exchangelabs.com (2603:10a6:800:184::8) with
+ bh=t4zUjXTn0plzCzI+5m20ObT412GiESbjjj+IPIieFWI=;
+ b=Bwl8M3wIUD8TcDMfk6ppfh3rBuAWlUbVjRrU6M3XKFCTFan61jG63s4B3RLtl3n8r4T44188ooJyrB9YVNUB5TDe9RmL8e3WNgR5T3mDs+auxmzcP2Oj3rtHckoW3rWOnslUTwKYm78yxd06iM4Hh8mNE50yZHNzpN37I2hzh7M=
+Received: from DB9PR02CA0019.eurprd02.prod.outlook.com (2603:10a6:10:1d9::24)
+ by AM0PR0102MB3444.eurprd01.prod.exchangelabs.com (2603:10a6:208:d::28) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4544.14; Tue, 28 Sep
- 2021 15:19:48 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4544.13; Tue, 28 Sep
+ 2021 15:19:45 +0000
 Received: from DB5EUR01FT060.eop-EUR01.prod.protection.outlook.com
- (2603:10a6:10:1d9:cafe::67) by DB9PR02CA0007.outlook.office365.com
- (2603:10a6:10:1d9::12) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4566.14 via Frontend
- Transport; Tue, 28 Sep 2021 15:19:47 +0000
+ (2603:10a6:10:1d9:cafe::ee) by DB9PR02CA0019.outlook.office365.com
+ (2603:10a6:10:1d9::24) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4544.18 via Frontend
+ Transport; Tue, 28 Sep 2021 15:19:45 +0000
 X-MS-Exchange-Authentication-Results: spf=permerror (sender IP is
  151.1.184.193) smtp.mailfrom=asem.it; vger.kernel.org; dkim=none (message not
  signed) header.d=none;vger.kernel.org; dmarc=fail action=none
@@ -48,9 +48,9 @@ Received-SPF: PermError (protection.outlook.com: domain of asem.it used an
 Received: from asas054.asem.intra (151.1.184.193) by
  DB5EUR01FT060.mail.protection.outlook.com (10.152.5.232) with Microsoft SMTP
  Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.4544.13 via Frontend Transport; Tue, 28 Sep 2021 15:19:47 +0000
+ 15.20.4544.13 via Frontend Transport; Tue, 28 Sep 2021 15:19:45 +0000
 Received: from flavio-x.asem.intra ([172.16.17.208]) by asas054.asem.intra with Microsoft SMTPSVC(10.0.14393.0);
-         Tue, 28 Sep 2021 17:18:51 +0200
+         Tue, 28 Sep 2021 17:18:50 +0200
 From:   Flavio Suligoi <f.suligoi@asem.it>
 To:     Vinod Koul <vkoul@kernel.org>, Shawn Guo <shawnguo@kernel.org>,
         Sascha Hauer <s.hauer@pengutronix.de>,
@@ -59,74 +59,64 @@ Cc:     Pengutronix Kernel Team <kernel@pengutronix.de>,
         NXP Linux Team <linux-imx@nxp.com>,
         dmaengine@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
         linux-kernel@vger.kernel.org, Flavio Suligoi <f.suligoi@asem.it>
-Subject: [PATCH 4/4] dmaengine: imx-sdma: remove space after sizeof
-Date:   Tue, 28 Sep 2021 17:18:33 +0200
-Message-Id: <20210928151833.589843-4-f.suligoi@asem.it>
+Subject: [PATCH 2/4] dmaengine: imx-sdma: add missed braces
+Date:   Tue, 28 Sep 2021 17:18:31 +0200
+Message-Id: <20210928151833.589843-2-f.suligoi@asem.it>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20210928151833.589843-1-f.suligoi@asem.it>
 References: <20210928151833.589843-1-f.suligoi@asem.it>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-OriginalArrivalTime: 28 Sep 2021 15:18:51.0142 (UTC) FILETIME=[2476AA60:01D7B47C]
+X-OriginalArrivalTime: 28 Sep 2021 15:18:50.0986 (UTC) FILETIME=[245EDCA0:01D7B47C]
 X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
 Content-Type: text/plain
-X-MS-Office365-Filtering-Correlation-Id: 32b9a15d-b68e-400b-2bff-08d982936880
-X-MS-TrafficTypeDiagnostic: VI1PR01MB6655:
-X-Microsoft-Antispam-PRVS: <VI1PR01MB66555E5FD9031DD809651A13F9A89@VI1PR01MB6655.eurprd01.prod.exchangelabs.com>
-X-MS-Oob-TLC-OOBClassifiers: OLM:1360;
+X-MS-Office365-Filtering-Correlation-Id: 5a17659c-9026-41c9-bdfd-08d982936751
+X-MS-TrafficTypeDiagnostic: AM0PR0102MB3444:
+X-Microsoft-Antispam-PRVS: <AM0PR0102MB3444E514CE8ACCCE5D6F39EEF9A89@AM0PR0102MB3444.eurprd01.prod.exchangelabs.com>
+X-MS-Oob-TLC-OOBClassifiers: OLM:3513;
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: ygPcL3FFnISekw23mNHYFtMbLNGtr5puwnnzvlujfrFjtBA6Db6QHuNSiC7UF9cRvxARv+fyRzASfKg4ZGgtut8jBdYe+XL/lTUJiO99K4ZUiUajGhRys4rl3WbsyCB5AUDSDW6wHsEOkRrrnIxTi+DQX/55y8mGhaLOTrqSCjDDFWqQx/5N6Q4BL1PQ3/Z8FIfzhVTJp9w45viPM4bnWHNlnRhzgj0jI8PHP6ns7POc7mAp/07X5OUGP+cGuf4k/KoFmnyihsEr1QmH9Et87rMS3bkhH/utbmX3T7ddj6BoC6fXpg71mhy4I1iCsOUQtk50je/b0VVBROdsA2rYEvjAVRBMa+kvVtVkDaMorKzdI6RtKoimQKHJFfBI8X1CpbAwbmPV+xnx9+ZX+KhofXA+BpQCnuzVaav/+EvncBBVmZvbYmBNzJE5OCr8fjGvEc6ddR1YZUnkTQC9njZs+tJWIiA7VCWjw51ZmL2NvRg/Kt0lOj8rymuyTEvkNDJpym9WstzmmgL3KW0rJFszdPTekpktZty75FaKnTyuh9lMDV3lcx3DviI3isSOFF6wpE1Nj/lBEtB7xWoj4AkKIYbDHBqJRkiOyTCSL5ou6+VtL48p/7wS4zMNXQgmgMKrX8v/8HAcm1mUHlxJsXB7dZQO+KI2Ijn7+B8yTKZqAao7CfAWvb4PI40yfYrdGasGbSv6O+ko+NXQHBfBYXcv3E2tQd8a1Kc7IipUoaeseAY=
-X-Forefront-Antispam-Report: CIP:151.1.184.193;CTRY:IT;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:asas054.asem.intra;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(36840700001)(46966006)(81166007)(54906003)(4326008)(356005)(336012)(36756003)(26005)(6666004)(186003)(82310400003)(83380400001)(2616005)(1076003)(110136005)(70586007)(36860700001)(5660300002)(47076005)(450100002)(8936002)(498600001)(2906002)(8676002)(107886003)(70206006)(86362001)(36900700001);DIR:OUT;SFP:1101;
+X-Microsoft-Antispam-Message-Info: 1iMxCNwx0OgSwyX/BsR2loipXZZiLs+tcXj8YDLvPqCkrVv2WsKe8dUs8hSl/g4vPHppEDBrbHMpVTCYvbLZ8vH6XunB74cr3a/UoGVHtc4PonWx9Ng6V58dxfXCJcIiqKnFbK+ja6bpdbdvWPWKZSFqCDsBo0BVABgXBI0bSHli/rqao6iUU4D8TQzUUYUTvX2hxorcdB8VmT6c1di29C9gQXS/WwtSwlfVpSWTwnxv5Jpi6t3evdvjacCSKf7YRHyrENWeATAwjyWLk1PMxcC45hxwBbSLvMIcpnFgKo3CYaA57gN7a6omCyPO7FzfA/8euVvoiRbeiltQMTmIRdB1WaWfAr2qu4RgigoVk1Lz6U7qhCAawoJ1L+cRenls1mmk8GfLbuzEidVK+luLMEIUuIGpcXEwm3fiqDS/713BK5zqIbhbw4i8Hi/wX79EqFieH0OjSyTCM1veCAzN9e2iaPuYuESnF7Zd0AxFzxFmfyHDuLizAWrUfvyWNxVZKmEqeGZZAJscVIg3iJe/Wgp/BSAfjP3qHh4X1l2Sd5Om5YHmTXycOQqt9vnrREDa8gCUwE8wl2intctgku5a5pfZlcY4hdPxgNhcJ2fC9LWZVPUq8mznBiuL3RchVwaTQSyCE2cV/i17OxiO5S+mcED/67b8TI8y7XxXhuTG6H7hW7nL1O/eI6kY4HNrXuV8dZ+po0YipprIOcoWXbCE9W/BBgJJn6p1ZbZPeZVPIRc=
+X-Forefront-Antispam-Report: CIP:151.1.184.193;CTRY:IT;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:asas054.asem.intra;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(46966006)(36840700001)(450100002)(86362001)(316002)(4326008)(2616005)(5660300002)(1076003)(83380400001)(54906003)(70206006)(8936002)(81166007)(70586007)(4744005)(336012)(110136005)(356005)(508600001)(82310400003)(107886003)(186003)(36860700001)(2906002)(8676002)(26005)(6666004)(47076005)(36756003)(36900700001);DIR:OUT;SFP:1101;
 X-OriginatorOrg: asem.it
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Sep 2021 15:19:47.3240
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Sep 2021 15:19:45.3500
  (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 32b9a15d-b68e-400b-2bff-08d982936880
+X-MS-Exchange-CrossTenant-Network-Message-Id: 5a17659c-9026-41c9-bdfd-08d982936751
 X-MS-Exchange-CrossTenant-Id: d0a766c6-7992-4344-a4a2-a467a7bb1ed2
 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=d0a766c6-7992-4344-a4a2-a467a7bb1ed2;Ip=[151.1.184.193];Helo=[asas054.asem.intra]
 X-MS-Exchange-CrossTenant-AuthSource: DB5EUR01FT060.eop-EUR01.prod.protection.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: VI1PR01MB6655
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM0PR0102MB3444
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Space prohibited between function name and
-open parenthesis '('
+The "if" conditional statement is not a single statement,
+so both branches require braces.
 
 Signed-off-by: Flavio Suligoi <f.suligoi@asem.it>
 ---
- drivers/dma/imx-sdma.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/dma/imx-sdma.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/dma/imx-sdma.c b/drivers/dma/imx-sdma.c
-index 7b3bd3608651..75ec0754d4ad 100644
+index a58798fc3ff8..726076683400 100644
 --- a/drivers/dma/imx-sdma.c
 +++ b/drivers/dma/imx-sdma.c
-@@ -1955,7 +1955,7 @@ static int sdma_init(struct sdma_engine *sdma)
- 	writel_relaxed(0, sdma->regs + SDMA_H_C0PTR);
+@@ -1226,8 +1226,9 @@ static int sdma_config_channel(struct dma_chan *chan)
+ 			if (sdmac->peripheral_type == IMX_DMATYPE_ASRC_SP ||
+ 			    sdmac->peripheral_type == IMX_DMATYPE_ASRC)
+ 				sdma_set_watermarklevel_for_p2p(sdmac);
+-		} else
++		} else {
+ 			__set_bit(sdmac->event_id0, sdmac->event_mask);
++		}
  
- 	sdma->channel_control = dma_alloc_coherent(sdma->dev,
--			MAX_DMA_CHANNELS * sizeof (struct sdma_channel_control) +
-+			MAX_DMA_CHANNELS * sizeof(struct sdma_channel_control) +
- 			sizeof(struct sdma_context_data),
- 			&ccb_phys, GFP_KERNEL);
- 
-@@ -1965,9 +1965,9 @@ static int sdma_init(struct sdma_engine *sdma)
- 	}
- 
- 	sdma->context = (void *)sdma->channel_control +
--		MAX_DMA_CHANNELS * sizeof (struct sdma_channel_control);
-+		MAX_DMA_CHANNELS * sizeof(struct sdma_channel_control);
- 	sdma->context_phys = ccb_phys +
--		MAX_DMA_CHANNELS * sizeof (struct sdma_channel_control);
-+		MAX_DMA_CHANNELS * sizeof(struct sdma_channel_control);
- 
- 	/* disable all channels */
- 	for (i = 0; i < sdma->drvdata->num_events; i++)
+ 		/* Address */
+ 		sdmac->shp_addr = sdmac->per_address;
 -- 
 2.25.1
 
