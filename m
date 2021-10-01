@@ -2,74 +2,77 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D5530C433EF
-	for <dmaengine@archiver.kernel.org>; Thu, 30 Sep 2021 18:00:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5DAF5C433F5
+	for <dmaengine@archiver.kernel.org>; Fri,  1 Oct 2021 07:15:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BF46E619F9
-	for <dmaengine@archiver.kernel.org>; Thu, 30 Sep 2021 18:00:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3B67A61A7B
+	for <dmaengine@archiver.kernel.org>; Fri,  1 Oct 2021 07:15:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1352961AbhI3SCf (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Thu, 30 Sep 2021 14:02:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57814 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1352908AbhI3SCe (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Thu, 30 Sep 2021 14:02:34 -0400
-Received: from mail-pl1-x634.google.com (mail-pl1-x634.google.com [IPv6:2607:f8b0:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E1452C06176C
-        for <dmaengine@vger.kernel.org>; Thu, 30 Sep 2021 11:00:51 -0700 (PDT)
-Received: by mail-pl1-x634.google.com with SMTP id w11so4582934plz.13
-        for <dmaengine@vger.kernel.org>; Thu, 30 Sep 2021 11:00:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=GvInsCJfgVIdu+bTl+EZcCSDBMnOYdIPFiEnPSEGWq8=;
-        b=C+AhbK8OmIghCqB38Es9+sqV5ZiplbGylDANFPGzeGsstzb+vKsJgLrMKcqsXrj+Ls
-         E51vKRIr5y+WbmZvxZVTas6LticTYRZPHvE3mTOcmA5do+nsSSV1iTn7ls4F2BlhqLym
-         CVjOo2cReN5XP3kuUARBo3Iiap96FHW4NnrJM=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=GvInsCJfgVIdu+bTl+EZcCSDBMnOYdIPFiEnPSEGWq8=;
-        b=zrEZ9Kkkg2QFCwq+R49YJ69e2cOh/4Goud4U0maKLZRJRwQx8mL5oinmU2ONs63jhL
-         FHx9X8XZdtqyperV1cVsshol1McfduT9zYDUvCDZTsryYIH96qjUXANFGPago443fv7S
-         HcKALQDAZieSCtmIGH25T6W0N2+/lKWyesl8KFwvZs7B4IdDQQx+OhospO+d5M24EpMi
-         sqkfdE2kBPPSiHNZHiX7d29M4EM9Bak3MpKlxyw13TdfKZ1J7Wy/1GQjbKBt6tS0R4j1
-         oPCZrWh+Xgln30y5m3vT82f3xMo3yScvnG+L0tPrcADiKkRSoCH8bYjq9yoKVx8U/5YV
-         q/fg==
-X-Gm-Message-State: AOAM532lXjKR2x1UYkLhKFEZ+zv73rzYSj1c5A97tSB3HOMDw6cv18h3
-        1h1UUcXwmmekjQ/cAEALt7cmVBgvGbvPUA==
-X-Google-Smtp-Source: ABdhPJw1x/cuO9mw2pkpxFtvuHlojDjhxrcg02FFcSXPI1A/yf4JspLL4WFzVx/lrn2zgGEudX2AQw==
-X-Received: by 2002:a17:902:6ac7:b0:13e:1fec:2bbc with SMTP id i7-20020a1709026ac700b0013e1fec2bbcmr5413917plt.82.1633024851430;
-        Thu, 30 Sep 2021 11:00:51 -0700 (PDT)
-Received: from www.outflux.net (smtp.outflux.net. [198.145.64.163])
-        by smtp.gmail.com with ESMTPSA id k9sm3628222pfi.86.2021.09.30.11.00.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 30 Sep 2021 11:00:50 -0700 (PDT)
-Date:   Thu, 30 Sep 2021 11:00:49 -0700
-From:   Kees Cook <keescook@chromium.org>
-To:     "Gustavo A. R. Silva" <gustavoars@kernel.org>
-Cc:     Vinod Koul <vkoul@kernel.org>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        dmaengine@vger.kernel.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-hardening@vger.kernel.org
+        id S1352057AbhJAHRD (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 1 Oct 2021 03:17:03 -0400
+Received: from mx07-00178001.pphosted.com ([185.132.182.106]:44126 "EHLO
+        mx07-00178001.pphosted.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S238668AbhJAHRC (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Fri, 1 Oct 2021 03:17:02 -0400
+Received: from pps.filterd (m0046668.ppops.net [127.0.0.1])
+        by mx07-00178001.pphosted.com (8.16.1.2/8.16.1.2) with SMTP id 19129KNc001404;
+        Fri, 1 Oct 2021 09:15:02 +0200
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foss.st.com; h=subject : to : cc :
+ references : from : message-id : date : mime-version : in-reply-to :
+ content-type : content-transfer-encoding; s=selector1;
+ bh=l2iRc9kE2dEezV+1JNj+2fgTrN2R77mcxJ4PyU00rHI=;
+ b=s3sfagtqbEzHHRR7KHJtK29t/qWlc7KaqSCMMZd6wXby6gYi6QoM/G9FSInnHCltCajY
+ aSgiufAe2PZYntmsee+ajhZSnC4b2+RowNEMUwXUakl3KB9vY0IiILKB5dGhbFEAWQOV
+ 0X8biN7PWN2Zz3ySA5+SSls98/9/oMGJqs+F/CkozqQL59p9QnFzzzKTWK8s3fktSOQM
+ C41qyf0Z41jx2x3leRdAK+wWZHeoD3/K9MrgHcwhVnftQaaS+9okQLqcMOlWoowJkZqF
+ 0ZY3yXDdJl7msgkcWptNrEKxYMn8VhiGxfh+oFRi/CQGoDA8wkWfie2dqShmq9anoy2q 5A== 
+Received: from beta.dmz-eu.st.com (beta.dmz-eu.st.com [164.129.1.35])
+        by mx07-00178001.pphosted.com with ESMTP id 3bds9nh9pe-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 01 Oct 2021 09:15:02 +0200
+Received: from euls16034.sgp.st.com (euls16034.sgp.st.com [10.75.44.20])
+        by beta.dmz-eu.st.com (STMicroelectronics) with ESMTP id B950A10002A;
+        Fri,  1 Oct 2021 09:14:59 +0200 (CEST)
+Received: from Webmail-eu.st.com (sfhdag2node2.st.com [10.75.127.5])
+        by euls16034.sgp.st.com (STMicroelectronics) with ESMTP id AE47A211F3F;
+        Fri,  1 Oct 2021 09:14:59 +0200 (CEST)
+Received: from lmecxl0995.lme.st.com (10.75.127.44) by SFHDAG2NODE2.st.com
+ (10.75.127.5) with Microsoft SMTP Server (TLS) id 15.0.1497.18; Fri, 1 Oct
+ 2021 09:14:59 +0200
 Subject: Re: [PATCH][next] dmaengine: stm32-mdma: Use struct_size() helper in
  devm_kzalloc()
-Message-ID: <202109301100.2BB00DE96A@keescook>
+To:     "Gustavo A. R. Silva" <gustavoars@kernel.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>
+CC:     <dmaengine@vger.kernel.org>,
+        <linux-stm32@st-md-mailman.stormreply.com>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>, <linux-hardening@vger.kernel.org>
 References: <20210929222922.GA357509@embeddedor>
+From:   Amelie DELAUNAY <amelie.delaunay@foss.st.com>
+Message-ID: <2e2fdc65-da02-90f3-e870-d63b43593c10@foss.st.com>
+Date:   Fri, 1 Oct 2021 09:14:58 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.13.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
 In-Reply-To: <20210929222922.GA357509@embeddedor>
+Content-Type: text/plain; charset="utf-8"; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.75.127.44]
+X-ClientProxiedBy: SFHDAG1NODE3.st.com (10.75.127.3) To SFHDAG2NODE2.st.com
+ (10.75.127.5)
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.182.1,Aquarius:18.0.790,Hydra:6.0.391,FMLib:17.0.607.475
+ definitions=2021-09-30_07,2021-09-30_01,2020-04-07_01
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On Wed, Sep 29, 2021 at 05:29:22PM -0500, Gustavo A. R. Silva wrote:
+
+
+On 9/30/21 12:29 AM, Gustavo A. R. Silva wrote:
 > Make use of the struct_size() helper instead of an open-coded version,
 > in order to avoid any potential type mistakes or integer overflows that,
 > in the worse scenario, could lead to heap overflows.
@@ -77,9 +80,24 @@ On Wed, Sep 29, 2021 at 05:29:22PM -0500, Gustavo A. R. Silva wrote:
 > Link: https://github.com/KSPP/linux/issues/160
 > Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
 
-Looks right to me.
+Reviewed-by: Amelie Delaunay <amelie.delaunay@foss.st.com>
 
-Reviewed-by: Kees Cook <keescook@chromium.org>
-
--- 
-Kees Cook
+> ---
+>   drivers/dma/stm32-mdma.c | 3 ++-
+>   1 file changed, 2 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/dma/stm32-mdma.c b/drivers/dma/stm32-mdma.c
+> index 18cbd1e43c2e..d30a4a28d3bf 100644
+> --- a/drivers/dma/stm32-mdma.c
+> +++ b/drivers/dma/stm32-mdma.c
+> @@ -1566,7 +1566,8 @@ static int stm32_mdma_probe(struct platform_device *pdev)
+>   	if (count < 0)
+>   		count = 0;
+>   
+> -	dmadev = devm_kzalloc(&pdev->dev, sizeof(*dmadev) + sizeof(u32) * count,
+> +	dmadev = devm_kzalloc(&pdev->dev,
+> +			      struct_size(dmadev, ahb_addr_masks, count),
+>   			      GFP_KERNEL);
+>   	if (!dmadev)
+>   		return -ENOMEM;
+> 
