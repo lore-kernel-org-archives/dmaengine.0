@@ -2,33 +2,34 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 417D2C433EF
-	for <dmaengine@archiver.kernel.org>; Tue, 12 Oct 2021 18:01:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6652EC433F5
+	for <dmaengine@archiver.kernel.org>; Tue, 12 Oct 2021 18:02:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1F9D360D07
-	for <dmaengine@archiver.kernel.org>; Tue, 12 Oct 2021 18:01:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4D802610C9
+	for <dmaengine@archiver.kernel.org>; Tue, 12 Oct 2021 18:02:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231739AbhJLSDX (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 12 Oct 2021 14:03:23 -0400
-Received: from mga06.intel.com ([134.134.136.31]:34185 "EHLO mga06.intel.com"
+        id S233541AbhJLSE2 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 12 Oct 2021 14:04:28 -0400
+Received: from mga11.intel.com ([192.55.52.93]:41540 "EHLO mga11.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231586AbhJLSDW (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Tue, 12 Oct 2021 14:03:22 -0400
-X-IronPort-AV: E=McAfee;i="6200,9189,10135"; a="288101479"
+        id S233376AbhJLSEU (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Tue, 12 Oct 2021 14:04:20 -0400
+X-IronPort-AV: E=McAfee;i="6200,9189,10135"; a="224657245"
 X-IronPort-AV: E=Sophos;i="5.85,368,1624345200"; 
-   d="scan'208";a="288101479"
+   d="scan'208";a="224657245"
 Received: from orsmga001.jf.intel.com ([10.7.209.18])
-  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Oct 2021 11:01:20 -0700
+  by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Oct 2021 11:01:59 -0700
 X-IronPort-AV: E=Sophos;i="5.85,368,1624345200"; 
-   d="scan'208";a="524323013"
+   d="scan'208";a="524323335"
 Received: from djiang5-desk3.ch.intel.com ([143.182.136.137])
-  by orsmga001-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Oct 2021 11:01:20 -0700
-Subject: [PATCH] dmaengine: idxd: remove gen cap field per spec 1.2 update
+  by orsmga001-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Oct 2021 11:01:59 -0700
+Subject: [PATCH] dmaengine: idxd: check GENCAP config support for gencfg
+ register
 From:   Dave Jiang <dave.jiang@intel.com>
 To:     vkoul@kernel.org
 Cc:     dmaengine@vger.kernel.org
-Date:   Tue, 12 Oct 2021 11:01:19 -0700
-Message-ID: <163406167978.1303649.1798682437841822837.stgit@djiang5-desk3.ch.intel.com>
+Date:   Tue, 12 Oct 2021 11:01:59 -0700
+Message-ID: <163406171896.1303830.11217958011385656998.stgit@djiang5-desk3.ch.intel.com>
 User-Agent: StGit/0.23-29-ga622f1
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
@@ -37,29 +38,27 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Remove max_descs_per_engine field. The recently released DSA spec 1.2 [1]
-has removed this field and made it reserved.
-
-[1]: https://software.intel.com/content/dam/develop/external/us/en/documents-tps/341204-intel-data-streaming-accelerator-spec.pdf
+DSA spec 1.2 has moved the GENCFG register under the GENCAP configuration
+support with respect to writability. Add check in driver before writing to
+GENCFG register.
 
 Signed-off-by: Dave Jiang <dave.jiang@intel.com>
 ---
- drivers/dma/idxd/registers.h |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/dma/idxd/device.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/dma/idxd/registers.h b/drivers/dma/idxd/registers.h
-index 97ffb06de9b0..262c8220adbd 100644
---- a/drivers/dma/idxd/registers.h
-+++ b/drivers/dma/idxd/registers.h
-@@ -36,8 +36,7 @@ union gen_cap_reg {
- 		u64 max_batch_shift:4;
- 		u64 max_ims_mult:6;
- 		u64 config_en:1;
--		u64 max_descs_per_engine:8;
--		u64 rsvd3:24;
-+		u64 rsvd3:32;
- 	};
- 	u64 bits;
- } __packed;
+diff --git a/drivers/dma/idxd/device.c b/drivers/dma/idxd/device.c
+index 419b206f8a42..1e153725432e 100644
+--- a/drivers/dma/idxd/device.c
++++ b/drivers/dma/idxd/device.c
+@@ -793,7 +793,7 @@ static int idxd_groups_config_write(struct idxd_device *idxd)
+ 	struct device *dev = &idxd->pdev->dev;
+ 
+ 	/* Setup bandwidth token limit */
+-	if (idxd->token_limit) {
++	if (idxd->hw.gen_cap.config_en && idxd->token_limit) {
+ 		reg.bits = ioread32(idxd->reg_base + IDXD_GENCFG_OFFSET);
+ 		reg.token_limit = idxd->token_limit;
+ 		iowrite32(reg.bits, idxd->reg_base + IDXD_GENCFG_OFFSET);
 
 
