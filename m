@@ -2,57 +2,96 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 57521C433F5
-	for <dmaengine@archiver.kernel.org>; Mon, 18 Oct 2021 06:46:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0D0C7C433FE
+	for <dmaengine@archiver.kernel.org>; Mon, 18 Oct 2021 10:26:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 35E2060F22
-	for <dmaengine@archiver.kernel.org>; Mon, 18 Oct 2021 06:46:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DF31760FF2
+	for <dmaengine@archiver.kernel.org>; Mon, 18 Oct 2021 10:26:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229533AbhJRGs3 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 18 Oct 2021 02:48:29 -0400
-Received: from mail.kernel.org ([198.145.29.99]:56346 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230006AbhJRGsZ (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Mon, 18 Oct 2021 02:48:25 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id BC31860F22;
-        Mon, 18 Oct 2021 06:46:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1634539574;
-        bh=OGxIj6fUXR57qZl93oH0SgIGgyRDGE4htr4GhpWrAQQ=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=g/BE4X6je8/B4L3JvcygUJPgPmJDNjmYXydHNIxPKPLqYDFuxsec23Q0a0ugcEzp6
-         ZOM1FGdXB4uZDRntMKVF7nFcnEoQYVkgmBO8VnKdxCU/z4Bv4e+Um2oP1sq7C6Eek3
-         ChrrgNvK/NlYgAYnWTFNWbvJtMccKuaaZTtiIW7Jwf/U9ECNV2CgjkjT6dX/eYrS+I
-         rM78dbCincuhi8EWy32kbQMMsw0lIGphLBgIKvPTTby7VWv+/BUCoy3pIGQdWh0Xbx
-         qqzyz4yZYFGxmaK7NB8Pp2gfG0RdkRVoDx6WHwuim+izsK5rtjQZy7pgoqqzjkWUFY
-         XOJNGhNLnS3JA==
-Date:   Mon, 18 Oct 2021 12:16:10 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Flavio Suligoi <f.suligoi@asem.it>
-Cc:     Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        dmaengine@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/4] dmaengine: imx-sdma: remove useless braces
-Message-ID: <YW0YMrHDuBVH37eN@matsya>
-References: <20210928151833.589843-1-f.suligoi@asem.it>
+        id S231590AbhJRK24 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 18 Oct 2021 06:28:56 -0400
+Received: from mo4-p01-ob.smtp.rzone.de ([85.215.255.54]:35071 "EHLO
+        mo4-p01-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231665AbhJRK2y (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Mon, 18 Oct 2021 06:28:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1634552791;
+    s=strato-dkim-0002; d=gerhold.net;
+    h=References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:Cc:Date:
+    From:Subject:Sender;
+    bh=GCXJJtuqsiwVcUKc+rGZzetE5ZrPt4qXdCp4FafrMb8=;
+    b=pjF1vO6iNrJsSrUOGwqEAoZs9cP++IZb9plaPgrP1wYFBPX3jzeSGevuzm93ieFrc4
+    oBVhbJTkdHynegfyxwbhID2LRYRZda4+639G2q5ojXYEmKRcRzOBjQx7DFVcynAJtLsV
+    fLkqCo5Xl7n/dPT7ZwLLQn96F5tgnt+1waynmIsw2qZzFSsBrA61//1NxcaT3C0Xa8KY
+    BwM375Ndtz5le/aufKMjiWIhSoXKsndxU8KG+vL854opR7J65MSzJLvenjNLQpkYUgEx
+    pVaM3MkDiam8zL1OfEZNppYKokXXlR8mon0NrPmpzm0Y1OOlaqKbScpsSti5fwe6bJYB
+    /Yrw==
+Authentication-Results: strato.com;
+    dkim=none
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVORvLd4SsytBXQ7UOGqRde+a0fiL1OfxR"
+X-RZG-CLASS-ID: mo00
+Received: from droid..
+    by smtp.strato.de (RZmta 47.33.8 AUTH)
+    with ESMTPSA id 301038x9IAQVVQ3
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+        (Client did not present a certificate);
+    Mon, 18 Oct 2021 12:26:31 +0200 (CEST)
+From:   Stephan Gerhold <stephan@gerhold.net>
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
+        devicetree@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+        Stephan Gerhold <stephan@gerhold.net>
+Subject: [PATCH v3 1/2] dt-bindings: dmaengine: bam_dma: Add "powered remotely" mode
+Date:   Mon, 18 Oct 2021 12:24:20 +0200
+Message-Id: <20211018102421.19848-2-stephan@gerhold.net>
+X-Mailer: git-send-email 2.33.0
+In-Reply-To: <20211018102421.19848-1-stephan@gerhold.net>
+References: <20211018102421.19848-1-stephan@gerhold.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210928151833.589843-1-f.suligoi@asem.it>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On 28-09-21, 17:18, Flavio Suligoi wrote:
-> Braces {} are not necessary for single statement blocks.
+In some configurations, the BAM DMA controller is set up by a remote
+processor and the local processor can simply start making use of it
+without setting up the BAM. This is already supported using the
+"qcom,controlled-remotely" property.
 
-Nice cleanup, well described and split patches!
+However, for some reason another possible configuration is that the
+remote processor is responsible for powering up the BAM, but we are
+still responsible for initializing it (e.g. resetting it etc). Add
+a "qcom,powered-remotely" property to describe that configuration.
 
-Applied all, thanks
+Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
+---
+Changes in v3: None, split from BAM-DMUX patch set
+Changes since RFC:
+  - Rename qcom,remote-power-collapse -> qcom,powered-remotely
+    for consistency with "qcom,controlled-remotely"
 
+Also note that there is an ongoing effort to convert these bindings
+to DT schema but sadly there were not any updates for a while. :/
+https://lore.kernel.org/linux-arm-msm/20210519143700.27392-2-bhupesh.sharma@linaro.org/
+---
+ Documentation/devicetree/bindings/dma/qcom_bam_dma.txt | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/Documentation/devicetree/bindings/dma/qcom_bam_dma.txt b/Documentation/devicetree/bindings/dma/qcom_bam_dma.txt
+index cf5b9e44432c..6e9a5497b3f2 100644
+--- a/Documentation/devicetree/bindings/dma/qcom_bam_dma.txt
++++ b/Documentation/devicetree/bindings/dma/qcom_bam_dma.txt
+@@ -15,6 +15,8 @@ Required properties:
+   the secure world.
+ - qcom,controlled-remotely : optional, indicates that the bam is controlled by
+   remote proccessor i.e. execution environment.
++- qcom,powered-remotely : optional, indicates that the bam is powered up by
++  a remote processor but must be initialized by the local processor.
+ - num-channels : optional, indicates supported number of DMA channels in a
+   remotely controlled bam.
+ - qcom,num-ees : optional, indicates supported number of Execution Environments
 -- 
-~Vinod
+2.33.0
+
