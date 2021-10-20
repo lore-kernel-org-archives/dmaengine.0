@@ -2,33 +2,36 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7D467C433F5
-	for <dmaengine@archiver.kernel.org>; Wed, 20 Oct 2021 16:54:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ADF42C433F5
+	for <dmaengine@archiver.kernel.org>; Wed, 20 Oct 2021 16:55:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6599960FE8
-	for <dmaengine@archiver.kernel.org>; Wed, 20 Oct 2021 16:54:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8F1626138B
+	for <dmaengine@archiver.kernel.org>; Wed, 20 Oct 2021 16:55:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230073AbhJTQ47 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 20 Oct 2021 12:56:59 -0400
-Received: from mga09.intel.com ([134.134.136.24]:40913 "EHLO mga09.intel.com"
+        id S230187AbhJTQ50 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 20 Oct 2021 12:57:26 -0400
+Received: from mga11.intel.com ([192.55.52.93]:48077 "EHLO mga11.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229771AbhJTQ47 (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Wed, 20 Oct 2021 12:56:59 -0400
-X-IronPort-AV: E=McAfee;i="6200,9189,10143"; a="228704029"
+        id S230264AbhJTQ5Z (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Wed, 20 Oct 2021 12:57:25 -0400
+X-IronPort-AV: E=McAfee;i="6200,9189,10143"; a="226292565"
 X-IronPort-AV: E=Sophos;i="5.87,167,1631602800"; 
-   d="scan'208";a="228704029"
-Received: from orsmga002.jf.intel.com ([10.7.209.21])
-  by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Oct 2021 09:53:36 -0700
+   d="scan'208";a="226292565"
+Received: from fmsmga008.fm.intel.com ([10.253.24.58])
+  by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Oct 2021 09:53:59 -0700
 X-IronPort-AV: E=Sophos;i="5.87,167,1631602800"; 
-   d="scan'208";a="463261205"
+   d="scan'208";a="532752534"
 Received: from djiang5-desk3.ch.intel.com ([143.182.136.137])
-  by orsmga002-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Oct 2021 09:53:35 -0700
-Subject: [PATCH 0/7] dmaengine: idxd: Add interrupt handle revoke support
+  by fmsmga008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Oct 2021 09:53:58 -0700
+Subject: [PATCH 4/7] dmaengine: idxd: add helper for per interrupt handle
+ drain
 From:   Dave Jiang <dave.jiang@intel.com>
 To:     vkoul@kernel.org
 Cc:     Kevin Tian <kevin.tian@intel.com>, dmaengine@vger.kernel.org
-Date:   Wed, 20 Oct 2021 09:53:35 -0700
-Message-ID: <163474864017.2608004.10983485368237365990.stgit@djiang5-desk3.ch.intel.com>
+Date:   Wed, 20 Oct 2021 09:53:58 -0700
+Message-ID: <163474883845.2608004.9330596081850512248.stgit@djiang5-desk3.ch.intel.com>
+In-Reply-To: <163474864017.2608004.10983485368237365990.stgit@djiang5-desk3.ch.intel.com>
+References: <163474864017.2608004.10983485368237365990.stgit@djiang5-desk3.ch.intel.com>
 User-Agent: StGit/0.23-29-ga622f1
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
@@ -37,40 +40,70 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Hi Vinod,
-I know this series came in late. If possible, can this be included for the 5.16
-merge window please? If not possible, totally understand. Thanks!
+The helper is called at the completion of the interrupt handle refresh
+event. It issues drain descriptors to each of the wq with associated
+interrupt handle. The drain descriptor will have interrupt request set but
+without completion record. This will ensure all descriptors with incorrect
+interrupt completion handle get drained and a completion interrupt is
+triggered for the guest driver to process them.
 
-The series adds support to refresh the interrupt handles when they become
-invalid. Typically this happens during a VM live migration where a VM moves
-from one machine to another. The driver will receive an interrupt to
-indicate that interrupt handles need to be changed. The driver blocks the
-current submissions and acquires new interrupt handles. All submissions
-will be held off until the handle is refreshed. Already submitted descriptor
-will error with status of "incorrect interrupt handle" and be resubmitted by the
-driver.
-
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+Signed-off-by: Dave Jiang <dave.jiang@intel.com>
 ---
+ drivers/dma/idxd/irq.c |   41 +++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 41 insertions(+)
 
-Dave Jiang (7):
-      dmaengine: idxd: rework descriptor free path on failure
-      dmaengine: idxd: int handle management refactoring
-      dmaengine: idxd: move interrupt handle assignment
-      dmaengine: idxd: add helper for per interrupt handle drain
-      dmaengine: idxd: create locked version of idxd_quiesce() call
-      dmaengine: idxd: handle invalid interrupt handle descriptors
-      dmaengine: idxd: handle interrupt handle revoked event
+diff --git a/drivers/dma/idxd/irq.c b/drivers/dma/idxd/irq.c
+index 573a2f6d0f7f..8bca0ed2d23c 100644
+--- a/drivers/dma/idxd/irq.c
++++ b/drivers/dma/idxd/irq.c
+@@ -55,6 +55,47 @@ static void idxd_device_reinit(struct work_struct *work)
+ 	idxd_device_clear_state(idxd);
+ }
+ 
++/*
++ * The function sends a drain descriptor for the interrupt handle. The drain ensures
++ * all descriptors with this interrupt handle is flushed and the interrupt
++ * will allow the cleanup of the outstanding descriptors.
++ */
++static void idxd_int_handle_revoke_drain(struct idxd_irq_entry *ie)
++{
++	struct idxd_wq *wq = ie->wq;
++	struct idxd_device *idxd = ie->idxd;
++	struct device *dev = &idxd->pdev->dev;
++	struct dsa_hw_desc desc;
++	void __iomem *portal;
++	int rc;
++
++	memset(&desc, 0, sizeof(desc));
++
++	/* Issue a simple drain operation with interrupt but no completion record */
++	desc.flags = IDXD_OP_FLAG_RCI;
++	desc.opcode = DSA_OPCODE_DRAIN;
++	desc.priv = 1;
++
++	if (ie->pasid != INVALID_IOASID)
++		desc.pasid = ie->pasid;
++	desc.int_handle = ie->int_handle;
++	portal = idxd_wq_portal_addr(wq);
++
++	/*
++	 * The wmb() makes sure that the descriptor is all there before we
++	 * issue.
++	 */
++	wmb();
++	if (wq_dedicated(wq)) {
++		iosubmit_cmds512(portal, &desc, 1);
++	} else {
++		rc = enqcmds(portal, &desc);
++		/* This should not fail unless hardware failed. */
++		if (rc < 0)
++			dev_warn(dev, "Failed to submit drain desc on wq %d\n", wq->id);
++	}
++}
++
+ static int process_misc_interrupts(struct idxd_device *idxd, u32 cause)
+ {
+ 	struct device *dev = &idxd->pdev->dev;
 
-
- drivers/dma/idxd/device.c    |  24 +++-
- drivers/dma/idxd/dma.c       |  18 ++-
- drivers/dma/idxd/idxd.h      |  13 +-
- drivers/dma/idxd/init.c      |  87 ++++++-------
- drivers/dma/idxd/irq.c       | 228 +++++++++++++++++++++++++++++++++++
- drivers/dma/idxd/registers.h |   1 +
- drivers/dma/idxd/submit.c    |  26 ++--
- drivers/dma/idxd/sysfs.c     |   1 -
- 8 files changed, 333 insertions(+), 65 deletions(-)
-
---
 
