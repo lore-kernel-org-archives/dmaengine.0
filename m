@@ -2,91 +2,239 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8E20AC433EF
-	for <dmaengine@archiver.kernel.org>; Thu, 21 Oct 2021 08:57:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A97E7C433EF
+	for <dmaengine@archiver.kernel.org>; Thu, 21 Oct 2021 12:51:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 74B0B610CF
-	for <dmaengine@archiver.kernel.org>; Thu, 21 Oct 2021 08:57:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7E6DC610C8
+	for <dmaengine@archiver.kernel.org>; Thu, 21 Oct 2021 12:51:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230385AbhJUI7i (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Thu, 21 Oct 2021 04:59:38 -0400
-Received: from mail-ua1-f53.google.com ([209.85.222.53]:44657 "EHLO
-        mail-ua1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230440AbhJUI7h (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Thu, 21 Oct 2021 04:59:37 -0400
-Received: by mail-ua1-f53.google.com with SMTP id r22so11716429uat.11;
-        Thu, 21 Oct 2021 01:57:22 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Pt56pOI2593Bz4YaZuLEHtZbkcFcr6OkdM6Oq/1gjxs=;
-        b=HK1t06sngZD3xVfws8Btkq1s3InncsLnQ6kVA3fToSuRxSG3PklL5iKkO4RweSkaZE
-         p2rTOx/3SpYh5pxxy7V16RYMnYtQSqcxm1d18g37TYw5KSn2zb1qOA04zb+CWGd/6ez+
-         kgWpaHf4QSrz0npj/On+mSSckeyfF4BJ5eicDNpnSPWjvhmZ0vg0IdIIaKyKOlLSY8HY
-         ZqbUFoNZm1VCMeHBWd0CtZ2anJ2m3Xx/HYwhzLLl3f0eNdhNnlbDeNupHdcp1SMsSRDR
-         yMJcU760kMYTP5h8Qe+HB1KbZbPFqyhY8WADbWshsMeb1xziKSSfBIx4onZ3879j1Cqn
-         qHeg==
-X-Gm-Message-State: AOAM531MRNZ97BXfm60idFwzPMrMDQZ8fRANSTntmSAZRQZPJXz0NDfA
-        aKgUUhfytnb59MiW6IVqrkIx9uJTo3kvtQ==
-X-Google-Smtp-Source: ABdhPJwbf0N7Q3ubDcS+tYcDopM0eZvLPqmjh/LrsUMs1rW/X9wjPRBRmC53YOEpBGpFvPn2j9gEgQ==
-X-Received: by 2002:a9f:29a5:: with SMTP id s34mr4628138uas.122.1634806641535;
-        Thu, 21 Oct 2021 01:57:21 -0700 (PDT)
-Received: from mail-ua1-f50.google.com (mail-ua1-f50.google.com. [209.85.222.50])
-        by smtp.gmail.com with ESMTPSA id d4sm2917220vkq.54.2021.10.21.01.57.20
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 21 Oct 2021 01:57:21 -0700 (PDT)
-Received: by mail-ua1-f50.google.com with SMTP id q13so11835045uaq.2;
-        Thu, 21 Oct 2021 01:57:20 -0700 (PDT)
-X-Received: by 2002:ab0:2bd2:: with SMTP id s18mr4562481uar.78.1634806640849;
- Thu, 21 Oct 2021 01:57:20 -0700 (PDT)
+        id S230484AbhJUMxh convert rfc822-to-8bit (ORCPT
+        <rfc822;dmaengine@archiver.kernel.org>);
+        Thu, 21 Oct 2021 08:53:37 -0400
+Received: from aposti.net ([89.234.176.197]:41610 "EHLO aposti.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230231AbhJUMxg (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Thu, 21 Oct 2021 08:53:36 -0400
+Date:   Thu, 21 Oct 2021 13:51:07 +0100
+From:   Paul Cercueil <paul@crapouillou.net>
+Subject: Re: [PATCH 5/5] dmaengine: jz4780: Support bidirectional I/O on one
+ channel
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     Rob Herring <robh+dt@kernel.org>, list@opendingux.net,
+        dmaengine@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-mips@vger.kernel.org
+Message-Id: <7PVB1R.D71JYJMQMRLC2@crapouillou.net>
+In-Reply-To: <YW0VRnFGcYFY0+XZ@matsya>
+References: <20211011143652.51976-1-paul@crapouillou.net>
+        <20211011143652.51976-6-paul@crapouillou.net> <YW0VRnFGcYFY0+XZ@matsya>
 MIME-Version: 1.0
-References: <20211020143546.3436205-1-mudongliangabcd@gmail.com>
-In-Reply-To: <20211020143546.3436205-1-mudongliangabcd@gmail.com>
-From:   Geert Uytterhoeven <geert@linux-m68k.org>
-Date:   Thu, 21 Oct 2021 10:57:09 +0200
-X-Gmail-Original-Message-ID: <CAMuHMdWs73KeXSrVBXS-8b0S6AXyOki+Fc_ST1SuWUQ6DD_3FA@mail.gmail.com>
-Message-ID: <CAMuHMdWs73KeXSrVBXS-8b0S6AXyOki+Fc_ST1SuWUQ6DD_3FA@mail.gmail.com>
-Subject: Re: [PATCH] dmaengine: rcar-dmac: refactor the error handling code of rcar_dmac_probe
-To:     Dongliang Mu <mudongliangabcd@gmail.com>
-Cc:     Vinod Koul <vkoul@kernel.org>,
-        Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-        Wolfram Sang <wsa+renesas@sang-engineering.com>,
-        Zou Wei <zou_wei@huawei.com>,
-        dmaengine <dmaengine@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=iso-8859-1; format=flowed
+Content-Transfer-Encoding: 8BIT
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Hi Dongliang,
+Hi Vinod,
 
-Thanks for your patch!
+Le lun., oct. 18 2021 at 12:03:42 +0530, Vinod Koul <vkoul@kernel.org> 
+a écrit :
+> On 11-10-21, 16:36, Paul Cercueil wrote:
+>>  For some devices with only half-duplex capabilities, it doesn't make
+>>  much sense to use one DMA channel per direction, as both channels 
+>> will
+>>  never be active at the same time.
+>> 
+>>  Add support for bidirectional I/O on DMA channels. The client 
+>> drivers
+>>  can then request a "tx-rx" DMA channel which will be used for both
+>>  directions.
+>> 
+>>  Signed-off-by: Paul Cercueil <paul@crapouillou.net>
+>>  ---
+>>   drivers/dma/dma-jz4780.c | 48 
+>> ++++++++++++++++++++++++++--------------
+>>   1 file changed, 32 insertions(+), 16 deletions(-)
+>> 
+>>  diff --git a/drivers/dma/dma-jz4780.c b/drivers/dma/dma-jz4780.c
+>>  index 4d62e24ebff9..ee1d50792c32 100644
+>>  --- a/drivers/dma/dma-jz4780.c
+>>  +++ b/drivers/dma/dma-jz4780.c
+>>  @@ -122,6 +122,7 @@ struct jz4780_dma_desc {
+>>   	dma_addr_t desc_phys;
+>>   	unsigned int count;
+>>   	enum dma_transaction_type type;
+>>  +	uint32_t transfer_type;
+> 
+> why not u32?
 
-On Wed, Oct 20, 2021 at 4:36 PM Dongliang Mu <mudongliangabcd@gmail.com> wrote:
-> In rcar_dmac_probe, if pm_runtime_resume_and_get fails, it forgets to
-> disable runtime PM. And of_dma_controller_free should only be invoked
-> after the success of of_dma_controller_register.
+It should be u32 yes. The driver uses uint32_t everywhere so I didn't 
+think about it.
 
-The second issue is actually harmless, as of_dma_controller_free()
-is a no-op if the DMA controller was never registered.
-Of course it doesn't hurt to improve symmetry.
+> 
+>>   	uint32_t status;
+>>   };
+>> 
+>>  @@ -130,7 +131,7 @@ struct jz4780_dma_chan {
+>>   	unsigned int id;
+>>   	struct dma_pool *desc_pool;
+>> 
+>>  -	uint32_t transfer_type;
+>>  +	uint32_t transfer_type_tx, transfer_type_rx;
+>>   	uint32_t transfer_shift;
+>>   	struct dma_slave_config	config;
+>> 
+>>  @@ -157,7 +158,7 @@ struct jz4780_dma_dev {
+>>   };
+>> 
+>>   struct jz4780_dma_filter_data {
+>>  -	uint32_t transfer_type;
+>>  +	uint32_t transfer_type_tx, transfer_type_rx;
+>>   	int channel;
+>>   };
+>> 
+>>  @@ -226,9 +227,10 @@ static inline void 
+>> jz4780_dma_chan_disable(struct jz4780_dma_dev *jzdma,
+>>   		jz4780_dma_ctrl_writel(jzdma, JZ_DMA_REG_DCKEC, BIT(chn));
+>>   }
+>> 
+>>  -static struct jz4780_dma_desc *jz4780_dma_desc_alloc(
+>>  -	struct jz4780_dma_chan *jzchan, unsigned int count,
+>>  -	enum dma_transaction_type type)
+>>  +static struct jz4780_dma_desc *
+>>  +jz4780_dma_desc_alloc(struct jz4780_dma_chan *jzchan, unsigned int 
+>> count,
+>>  +		      enum dma_transaction_type type,
+>>  +		      enum dma_transfer_direction direction)
+>>   {
+>>   	struct jz4780_dma_desc *desc;
+>> 
+>>  @@ -248,6 +250,12 @@ static struct jz4780_dma_desc 
+>> *jz4780_dma_desc_alloc(
+>> 
+>>   	desc->count = count;
+>>   	desc->type = type;
+>>  +
+>>  +	if (direction == DMA_DEV_TO_MEM)
+>>  +		desc->transfer_type = jzchan->transfer_type_rx;
+>>  +	else
+>>  +		desc->transfer_type = jzchan->transfer_type_tx;
+>>  +
+>>   	return desc;
+>>   }
+>> 
+>>  @@ -361,7 +369,7 @@ static struct dma_async_tx_descriptor 
+>> *jz4780_dma_prep_slave_sg(
+>>   	unsigned int i;
+>>   	int err;
+>> 
+>>  -	desc = jz4780_dma_desc_alloc(jzchan, sg_len, DMA_SLAVE);
+>>  +	desc = jz4780_dma_desc_alloc(jzchan, sg_len, DMA_SLAVE, 
+>> direction);
+>>   	if (!desc)
+>>   		return NULL;
+>> 
+>>  @@ -410,7 +418,7 @@ static struct dma_async_tx_descriptor 
+>> *jz4780_dma_prep_dma_cyclic(
+>> 
+>>   	periods = buf_len / period_len;
+>> 
+>>  -	desc = jz4780_dma_desc_alloc(jzchan, periods, DMA_CYCLIC);
+>>  +	desc = jz4780_dma_desc_alloc(jzchan, periods, DMA_CYCLIC, 
+>> direction);
+>>   	if (!desc)
+>>   		return NULL;
+>> 
+>>  @@ -455,14 +463,14 @@ static struct dma_async_tx_descriptor 
+>> *jz4780_dma_prep_dma_memcpy(
+>>   	struct jz4780_dma_desc *desc;
+>>   	uint32_t tsz;
+>> 
+>>  -	desc = jz4780_dma_desc_alloc(jzchan, 1, DMA_MEMCPY);
+>>  +	desc = jz4780_dma_desc_alloc(jzchan, 1, DMA_MEMCPY, 0);
+>>   	if (!desc)
+>>   		return NULL;
+>> 
+>>   	tsz = jz4780_dma_transfer_size(jzchan, dest | src | len,
+>>   				       &jzchan->transfer_shift);
+>> 
+>>  -	jzchan->transfer_type = JZ_DMA_DRT_AUTO;
+>>  +	desc->transfer_type = JZ_DMA_DRT_AUTO;
+>> 
+>>   	desc->desc[0].dsa = src;
+>>   	desc->desc[0].dta = dest;
+>>  @@ -528,7 +536,7 @@ static void jz4780_dma_begin(struct 
+>> jz4780_dma_chan *jzchan)
+>> 
+>>   	/* Set transfer type. */
+>>   	jz4780_dma_chn_writel(jzdma, jzchan->id, JZ_DMA_REG_DRT,
+>>  -			      jzchan->transfer_type);
+>>  +			      jzchan->desc->transfer_type);
+>> 
+>>   	/*
+>>   	 * Set the transfer count. This is redundant for a 
+>> descriptor-driven
+>>  @@ -788,7 +796,8 @@ static bool jz4780_dma_filter_fn(struct 
+>> dma_chan *chan, void *param)
+>>   		return false;
+>>   	}
+>> 
+>>  -	jzchan->transfer_type = data->transfer_type;
+>>  +	jzchan->transfer_type_tx = data->transfer_type_tx;
+>>  +	jzchan->transfer_type_rx = data->transfer_type_rx;
+>> 
+>>   	return true;
+>>   }
+>>  @@ -800,11 +809,17 @@ static struct dma_chan 
+>> *jz4780_of_dma_xlate(struct of_phandle_args *dma_spec,
+>>   	dma_cap_mask_t mask = jzdma->dma_device.cap_mask;
+>>   	struct jz4780_dma_filter_data data;
+>> 
+>>  -	if (dma_spec->args_count != 2)
+>>  +	if (dma_spec->args_count == 2) {
+>>  +		data.transfer_type_tx = dma_spec->args[0];
+>>  +		data.transfer_type_rx = dma_spec->args[0];
+>>  +		data.channel = dma_spec->args[1];
+>>  +	} else if (dma_spec->args_count == 3) {
+>>  +		data.transfer_type_tx = dma_spec->args[0];
+>>  +		data.transfer_type_rx = dma_spec->args[1];
+> 
+> aha so you have a different values for tx and rx, that seems okay. 
+> Maybe
+> word a better in binding and also add examples in binding for this
 
-> Fix this by refactoring the error handling code.
->
-> Signed-off-by: Dongliang Mu <mudongliangabcd@gmail.com>
+Alright.
 
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Cheers,
+-Paul
 
-Gr{oetje,eeting}s,
+> 
+>>  +		data.channel = dma_spec->args[2];
+>>  +	} else {
+>>   		return NULL;
+>>  -
+>>  -	data.transfer_type = dma_spec->args[0];
+>>  -	data.channel = dma_spec->args[1];
+>>  +	}
+>> 
+>>   	if (data.channel > -1) {
+>>   		if (data.channel >= jzdma->soc_data->nb_channels) {
+>>  @@ -822,7 +837,8 @@ static struct dma_chan 
+>> *jz4780_of_dma_xlate(struct of_phandle_args *dma_spec,
+>>   			return NULL;
+>>   		}
+>> 
+>>  -		jzdma->chan[data.channel].transfer_type = data.transfer_type;
+>>  +		jzdma->chan[data.channel].transfer_type_tx = 
+>> data.transfer_type_tx;
+>>  +		jzdma->chan[data.channel].transfer_type_rx = 
+>> data.transfer_type_rx;
+>> 
+>>   		return dma_get_slave_channel(
+>>   			&jzdma->chan[data.channel].vchan.chan);
+>>  --
+>>  2.33.0
+> 
+> --
+> ~Vinod
 
-                        Geert
 
---
-Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
-
-In personal conversations with technical people, I call myself a hacker. But
-when I'm talking to journalists I just say "programmer" or something like that.
-                                -- Linus Torvalds
