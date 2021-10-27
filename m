@@ -2,55 +2,53 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EAE64C433FE
-	for <dmaengine@archiver.kernel.org>; Wed, 27 Oct 2021 05:53:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7031CC433EF
+	for <dmaengine@archiver.kernel.org>; Wed, 27 Oct 2021 05:56:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D6EC4610A4
-	for <dmaengine@archiver.kernel.org>; Wed, 27 Oct 2021 05:53:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 508F1610A5
+	for <dmaengine@archiver.kernel.org>; Wed, 27 Oct 2021 05:56:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236625AbhJ0Fzh (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 27 Oct 2021 01:55:37 -0400
-Received: from fllv0015.ext.ti.com ([198.47.19.141]:45758 "EHLO
+        id S234464AbhJ0F7C (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 27 Oct 2021 01:59:02 -0400
+Received: from fllv0015.ext.ti.com ([198.47.19.141]:46446 "EHLO
         fllv0015.ext.ti.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239774AbhJ0Fzg (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Wed, 27 Oct 2021 01:55:36 -0400
-Received: from fllv0034.itg.ti.com ([10.64.40.246])
-        by fllv0015.ext.ti.com (8.15.2/8.15.2) with ESMTP id 19R5rAEU104879;
-        Wed, 27 Oct 2021 00:53:10 -0500
+        with ESMTP id S231297AbhJ0F7A (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Wed, 27 Oct 2021 01:59:00 -0400
+Received: from lelv0266.itg.ti.com ([10.180.67.225])
+        by fllv0015.ext.ti.com (8.15.2/8.15.2) with ESMTP id 19R5uYYG105836;
+        Wed, 27 Oct 2021 00:56:34 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
-        s=ti-com-17Q1; t=1635313990;
-        bh=G1G/nxbLKPZnpWOP2ZsyQlrDr5BUxyCaW1OxAXd1tp0=;
-        h=From:To:CC:Subject:Date:In-Reply-To:References;
-        b=yjGCEJZVPVOysgoVcy8aKuWnG6ccwFVHlP1vsgfW/y8wQUwN1YknuBQMAXVYaRu2O
-         cja2MhnLi7XemHWsGuxeIjEUmOWuWAXadLeChKI+Qof/wJN+ITX5FLQmBh2TNg35UD
-         LyFV4d65/A+7HFKMqOqioP0MSz5oqLAN+l9d3dn8=
-Received: from DLEE105.ent.ti.com (dlee105.ent.ti.com [157.170.170.35])
-        by fllv0034.itg.ti.com (8.15.2/8.15.2) with ESMTPS id 19R5rAXG126177
+        s=ti-com-17Q1; t=1635314194;
+        bh=g92cF+PG1Y8ft/dPCWjVaGnIySgCFpdj/dtBjMg5QSA=;
+        h=From:To:CC:Subject:Date;
+        b=Rpc+Aw+2iZ5dXMpDvawSE4h1+h5+1i+caYpA48iQo+UxoSE4Odnbf3V5D9VwD2JJc
+         8SKO4pwsfJeUcPi6PeULQAcYBbdSb1rL9OJ+ZG6dFBF3CJBQ3venDBLegUcHOFA4B8
+         A2zI9X844kFBzQDojQN/sjp/N9hKeBiqFgrzei0Y=
+Received: from DFLE113.ent.ti.com (dfle113.ent.ti.com [10.64.6.34])
+        by lelv0266.itg.ti.com (8.15.2/8.15.2) with ESMTPS id 19R5uY2C003978
         (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
-        Wed, 27 Oct 2021 00:53:10 -0500
-Received: from DLEE115.ent.ti.com (157.170.170.26) by DLEE105.ent.ti.com
- (157.170.170.35) with Microsoft SMTP Server (version=TLS1_2,
+        Wed, 27 Oct 2021 00:56:34 -0500
+Received: from DFLE106.ent.ti.com (10.64.6.27) by DFLE113.ent.ti.com
+ (10.64.6.34) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.2308.14; Wed, 27
- Oct 2021 00:53:10 -0500
-Received: from fllv0039.itg.ti.com (10.64.41.19) by DLEE115.ent.ti.com
- (157.170.170.26) with Microsoft SMTP Server (version=TLS1_2,
+ Oct 2021 00:56:34 -0500
+Received: from lelv0326.itg.ti.com (10.180.67.84) by DFLE106.ent.ti.com
+ (10.64.6.27) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.2308.14 via
- Frontend Transport; Wed, 27 Oct 2021 00:53:10 -0500
+ Frontend Transport; Wed, 27 Oct 2021 00:56:34 -0500
 Received: from a0393678-lt.ent.ti.com (ileax41-snat.itg.ti.com [10.172.224.153])
-        by fllv0039.itg.ti.com (8.15.2/8.15.2) with ESMTP id 19R5qvNQ100051;
-        Wed, 27 Oct 2021 00:53:08 -0500
+        by lelv0326.itg.ti.com (8.15.2/8.15.2) with ESMTP id 19R5uRPK126251;
+        Wed, 27 Oct 2021 00:56:31 -0500
 From:   Kishon Vijay Abraham I <kishon@ti.com>
 To:     Peter Ujfalusi <peter.ujfalusi@gmail.com>,
         Vinod Koul <vkoul@kernel.org>
 CC:     <dmaengine@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
         Vignesh Raghavendra <vigneshr@ti.com>,
         Kishon Vijay Abraham I <kishon@ti.com>
-Subject: [PATCH v2 1/2] dmaengine: ti: k3-udma: Fix NULL pointer dereference error for BCDMA
-Date:   Wed, 27 Oct 2021 11:22:53 +0530
-Message-ID: <20211027055254.10912-4-kishon@ti.com>
+Subject: [RESEND PATCH v2 0/2] dmaengine: ti: k3-udma: Fix NULL pointer dereference error
+Date:   Wed, 27 Oct 2021 11:26:23 +0530
+Message-ID: <20211027055625.11150-1-kishon@ti.com>
 X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20211027055254.10912-1-kishon@ti.com>
-References: <20211027055254.10912-1-kishon@ti.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-EXCLAIMER-MD-CONFIG: e1e8a2fd-e40a-4ac6-ac9b-f7e9cc9ee180
@@ -58,45 +56,26 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-bcdma_get_*() checks if bchan is already allocated by checking if it
-has a NON NULL value. For the error cases, bchan will have error value
-and bcdma_get_*() considers this as already allocated (PASS) since the
-error values are NON NULL. This results in NULL pointer dereference
-error while de-referencing bchan.
+NULL pointer de-reference error was observed when all the PCIe endpoint
+functions (22 function in J721E) request a DMA channel. The issue was
+specfically observed in BCDMA (Block copy DMA) but the issue is
+applicable in PKTDMA as well.
 
-Reset the value of bchan to NULL if the allocation actually fails.
+Changes from v1:
+1) Split the patch for BCDMA and PKTDMA separately
+2) Fixed the return value of udma_get_rflow() to 0.
+3) Removed the fixes tag as the patches does not directly apply to the
+commits.
 
-Signed-off-by: Kishon Vijay Abraham I <kishon@ti.com>
----
- drivers/dma/ti/k3-udma.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+v1 => https://lore.kernel.org/r/20210209090036.30832-1-kishon@ti.com
 
-diff --git a/drivers/dma/ti/k3-udma.c b/drivers/dma/ti/k3-udma.c
-index a35858610780..14ae28830871 100644
---- a/drivers/dma/ti/k3-udma.c
-+++ b/drivers/dma/ti/k3-udma.c
-@@ -1348,6 +1348,7 @@ static int bcdma_get_bchan(struct udma_chan *uc)
- {
- 	struct udma_dev *ud = uc->ud;
- 	enum udma_tp_level tpl;
-+	int ret;
- 
- 	if (uc->bchan) {
- 		dev_dbg(ud->dev, "chan%d: already have bchan%d allocated\n",
-@@ -1365,8 +1366,11 @@ static int bcdma_get_bchan(struct udma_chan *uc)
- 		tpl = ud->bchan_tpl.levels - 1;
- 
- 	uc->bchan = __udma_reserve_bchan(ud, tpl, -1);
--	if (IS_ERR(uc->bchan))
--		return PTR_ERR(uc->bchan);
-+	if (IS_ERR(uc->bchan)) {
-+		ret = PTR_ERR(uc->bchan);
-+		uc->bchan = NULL;
-+		return ret;
-+	}
- 
- 	uc->tchan = uc->bchan;
- 
+Kishon Vijay Abraham I (2):
+  dmaengine: ti: k3-udma: Fix NULL pointer dereference error for BCDMA
+  dmaengine: ti: k3-udma: Fix NULL pointer dereference error for PKTDMA
+
+ drivers/dma/ti/k3-udma.c | 32 ++++++++++++++++++++++++++------
+ 1 file changed, 26 insertions(+), 6 deletions(-)
+
 -- 
 2.17.1
 
