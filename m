@@ -2,51 +2,50 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 840A0C433EF
-	for <dmaengine@archiver.kernel.org>; Tue, 16 Nov 2021 11:21:53 +0000 (UTC)
-X-Greylist: delayed 61 seconds by postgrey-1.37 at mail.kernel.org; Tue, 16 Nov 2021 11:21:52 UTC
-DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org 45F3A619E8
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D063CC43219
+	for <dmaengine@archiver.kernel.org>; Tue, 16 Nov 2021 11:21:54 +0000 (UTC)
+Received: from vger.kernel.org (unknown [23.128.96.18])
+	by mail.kernel.org (Postfix) with ESMTP id 99C8F61055
+	for <dmaengine@archiver.kernel.org>; Tue, 16 Nov 2021 11:21:54 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org 99C8F61055
 Authentication-Results: mail.kernel.org; dmarc=fail (p=quarantine dis=none) header.from=microchip.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=vger.kernel.org
-Received: from vger.kernel.org (unknown [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 45F3A619E8
-	for <dmaengine@archiver.kernel.org>; Tue, 16 Nov 2021 11:21:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234964AbhKPLYa (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 16 Nov 2021 06:24:30 -0500
-Received: from esa.microchip.iphmx.com ([68.232.153.233]:3754 "EHLO
+        id S234914AbhKPLYc (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 16 Nov 2021 06:24:32 -0500
+Received: from esa.microchip.iphmx.com ([68.232.153.233]:3771 "EHLO
         esa.microchip.iphmx.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234899AbhKPLXx (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Tue, 16 Nov 2021 06:23:53 -0500
+        with ESMTP id S234908AbhKPLYB (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Tue, 16 Nov 2021 06:24:01 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
   d=microchip.com; i=@microchip.com; q=dns/txt; s=mchp;
-  t=1637061658; x=1668597658;
+  t=1637061665; x=1668597665;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=tVeVzCqLqbVxX1jH3+OLNjcxNS2IlcvbF+cf1Wql48c=;
-  b=pMfzOPxStm9c51za7QZA/+jDEkFlux8X1RoKfs1Zs/KqO4UiiRcIvtdR
-   scJPhzDL51RPVU4+fZVai1Rekzapj1WPt0QLW/dpy0FNgOK+kIuglVlWg
-   B305nIwx36w5BAIabCjDaVj8aLoXMctA/8tlKNarLlowLznzKuKeYTrmp
-   Ejc2DUThBOUbKkaTOQ3ntXOn6/5wezlXHq2MIIAoq29IV+QVDFLB8HcBt
-   qoNev23Sh/TfdJo7w/3Y1TfH4ToVseWPV73aYhSn+f3uYL8QvqV8nzt2i
-   PyOiqdYpSGbbBS75+y13e2e4NwpkzUVluQn33tJPM0LH6ZVVTNVjCjUwN
+  bh=5xHR1pSMET19iq1R2ORya7V1yqiD9c113vKBUFK5yTw=;
+  b=U1YFmQ5AnSAKEHVmssrZAqJiNwlV3zBa3wN9FQefYFVf0OAwQiU5y+dz
+   EYpuialrpWagzhRkibhmjSCNZ0pMTCJvBtNYX4BVrYV+jyFUzHY0lFc55
+   WEiEKxnrXpxtLk5FsjArHxKahDLgv1Ya2uXKaQSNvcz2rZVRFCCIMjbi9
+   nylsS7hzwGJw4zmjEssyWFC4fIrGvjZmI0qxUHZHYBtYlMqq2KcvqY5vx
+   wuIujdJFnKv6dEPMohdPGJe/vPWpKanW8iZM/S4lQI5Pna4DxWdbR7gmk
+   1n4hMy2KeQT/aWh6au/L2gS8r9gIjpWpS8fbOAaMy9ukZ39G44/xwq813
    g==;
-IronPort-SDR: ptQ4ClZml3U4feFRucCBtUBeG4D6cQHb8HHbkcrn1IlLTDN/KcK6pT4Wi3j3ot6dqWZWUjNrt4
- qFY95XrgSq5nnqwuT6spNUzvwjguNbOOb/zraNi0LwBvLcVt4yo7Rv9PFQKANzEz5sONIj8zm3
- OhhNEpxKhrmw52vf6U01ViQ0u4si2LQElCV8/Jw1dzq9ByOQDMxGWJ58THrP33RS62c3F0fVnl
- ghKwNfymUoCILV+YIj42S6r/tDEoWB0hl49eBleOaeykPks2DROZvkbkig2gBUwAk6kN8EDwNe
- UByUwo93SLhxbXE4qFDt/GFq
+IronPort-SDR: nEaswDJg6UvN1Ak1k5snxDBueJXCkjA/TZHVY+1/T2B1dAY07tQGG1LrfRuZa9m+38lrF9XE0P
+ lKna2Wl5adWWKHh/HCQ3jNYY7/wZmbI7calkFrXuiDctO/acd4xL3gHUMYLixQoumL3wgP3HRz
+ i8KsDoOBZB83LdFviPxl7FyfGzE8ZSUseaKNR/ws+hrHJ+qfTCCfDzF+9W19ycXtRH/yVsQfXh
+ mYe9HJf/p4+BhHSyqyAKvQY/Wd5pnsCAb1HE/Ua7Ir3jOAjSVIdpQugbcclg/axCOctF9ta0IR
+ 94LEaPFwvDU5xku5ARpCm85x
 X-IronPort-AV: E=Sophos;i="5.87,239,1631602800"; 
-   d="scan'208";a="143500766"
+   d="scan'208";a="143500780"
 Received: from smtpout.microchip.com (HELO email.microchip.com) ([198.175.253.82])
-  by esa5.microchip.iphmx.com with ESMTP/TLS/AES256-SHA256; 16 Nov 2021 04:20:57 -0700
+  by esa5.microchip.iphmx.com with ESMTP/TLS/AES256-SHA256; 16 Nov 2021 04:21:04 -0700
 Received: from chn-vm-ex04.mchp-main.com (10.10.85.152) by
  chn-vm-ex02.mchp-main.com (10.10.85.144) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2176.14; Tue, 16 Nov 2021 04:20:56 -0700
+ 15.1.2176.14; Tue, 16 Nov 2021 04:21:03 -0700
 Received: from ROB-ULT-M18064N.mchp-main.com (10.10.115.15) by
  chn-vm-ex04.mchp-main.com (10.10.85.152) with Microsoft SMTP Server id
- 15.1.2176.14 via Frontend Transport; Tue, 16 Nov 2021 04:20:53 -0700
+ 15.1.2176.14 via Frontend Transport; Tue, 16 Nov 2021 04:21:00 -0700
 From:   Tudor Ambarus <tudor.ambarus@microchip.com>
 To:     <ludovic.desroches@microchip.com>, <vkoul@kernel.org>,
         <richard.genoud@gmail.com>, <gregkh@linuxfoundation.org>,
@@ -56,9 +55,9 @@ CC:     <nicolas.ferre@microchip.com>, <alexandre.belloni@bootlin.com>,
         <dmaengine@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
         <linux-serial@vger.kernel.org>,
         Tudor Ambarus <tudor.ambarus@microchip.com>
-Subject: [PATCH 04/13] dmaengine: at_xdmac: Start transfer for cyclic channels in issue_pending
-Date:   Tue, 16 Nov 2021 13:20:27 +0200
-Message-ID: <20211116112036.96349-5-tudor.ambarus@microchip.com>
+Subject: [PATCH 06/13] dmaengine: at_xdmac: Fix concurrency over chan's completed_cookie
+Date:   Tue, 16 Nov 2021 13:20:29 +0200
+Message-ID: <20211116112036.96349-7-tudor.ambarus@microchip.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20211116112036.96349-1-tudor.ambarus@microchip.com>
 References: <20211116112036.96349-1-tudor.ambarus@microchip.com>
@@ -69,36 +68,32 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Cyclic channels must too call issue_pending in order to start a
-transfer. This wrongly worked before, because in the past the
-transfer was started at tx_submit level when only a desc in the
-transfer list.
+Caller of dma_cookie_complete is expected to hold a lock to prevent
+concurrency over the channel's completed cookie marker.
 
 Fixes: e1f7c9eee707 ("dmaengine: at_xdmac: creation of the atmel eXtended DMA Controller driver")
 Signed-off-by: Tudor Ambarus <tudor.ambarus@microchip.com>
 ---
- drivers/dma/at_xdmac.c | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ drivers/dma/at_xdmac.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
 diff --git a/drivers/dma/at_xdmac.c b/drivers/dma/at_xdmac.c
-index ccf796a3b9f3..9a5c68eda801 100644
+index b45ae4fee9db..4d8476845c20 100644
 --- a/drivers/dma/at_xdmac.c
 +++ b/drivers/dma/at_xdmac.c
-@@ -1778,11 +1778,9 @@ static void at_xdmac_issue_pending(struct dma_chan *chan)
+@@ -1703,11 +1703,10 @@ static void at_xdmac_tasklet(struct tasklet_struct *t)
+ 		}
  
- 	dev_dbg(chan2dev(&atchan->chan), "%s\n", __func__);
+ 		txd = &desc->tx_dma_desc;
+-
++		dma_cookie_complete(txd);
+ 		at_xdmac_remove_xfer(atchan, desc);
+ 		spin_unlock_irq(&atchan->lock);
  
--	if (!at_xdmac_chan_is_cyclic(atchan)) {
--		spin_lock_irqsave(&atchan->lock, flags);
--		at_xdmac_advance_work(atchan);
--		spin_unlock_irqrestore(&atchan->lock, flags);
--	}
-+	spin_lock_irqsave(&atchan->lock, flags);
-+	at_xdmac_advance_work(atchan);
-+	spin_unlock_irqrestore(&atchan->lock, flags);
+-		dma_cookie_complete(txd);
+ 		if (txd->flags & DMA_PREP_INTERRUPT)
+ 			dmaengine_desc_get_callback_invoke(txd, NULL);
  
- 	return;
- }
 -- 
 2.25.1
 
