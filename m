@@ -1,107 +1,102 @@
 Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 619E4C433EF
-	for <dmaengine@archiver.kernel.org>; Fri, 19 Nov 2021 19:59:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4DE5861B30
-	for <dmaengine@archiver.kernel.org>; Fri, 19 Nov 2021 19:59:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C0471C43217
+	for <dmaengine@archiver.kernel.org>; Sun, 21 Nov 2021 15:02:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234831AbhKSUCc (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 19 Nov 2021 15:02:32 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50236 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236169AbhKSUCU (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Fri, 19 Nov 2021 15:02:20 -0500
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF37CC061574;
-        Fri, 19 Nov 2021 11:59:17 -0800 (PST)
-Received: by mail-lf1-x135.google.com with SMTP id b40so48302714lfv.10;
-        Fri, 19 Nov 2021 11:59:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=j3zFh+wRLO9Q64j8kSaIpaKz65+6JS9leQyBRevKpgM=;
-        b=S1VEMn/+oR1ioE/QuqMGamM5lhp7U4tPMF4ud0qpRYZ9QyPlNV3Hp77L1Y0ngcTIA+
-         J0pBC0+LfufY30qvOQy2RgW0kiha3mQ+jTSTNWnYfyisEYYzgaVpwwBCEqVyePlAzLmD
-         p9W/vKxvjLuqlvJ2MwSU+lKX/sUZfI+9PA/+pxIoTeCEC0rz4o/hTb3vrf0ugJp6NnnW
-         1hB+FFk/KByeW+g6dtm8tGtvqDZuYWeCPFYOHM3LIkE9mUF19HyZDPFkl30Au2YB1KqD
-         cN0Iqr9HBGzmznmGX356YMykbnbzGnB3EwEB8ST5G0yqWPhEVwDdjyrgg6Lnr4IKkHyj
-         g96w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=j3zFh+wRLO9Q64j8kSaIpaKz65+6JS9leQyBRevKpgM=;
-        b=4y9OrPKLLAmW9zIiRFpe7BwFSG7zKcR5IAkh11VErap2dqVMDpkuv71rrzx2+Wt/y4
-         B4dX69I3VlI+962iy/r+uTqqxCKSsxG0HN76IWh7XFPvQp5DwvY2U2tWVByD0eacX15O
-         dAU9NFjnCnhybJohrQOkKKtLmUKgHK00MIysIPe3Op0JI/ibnK4/acUQ3merCgcq3lC1
-         LfqN1YtmuXcujwMM3WwlGEwWbQjr3zfA/OgjCKMxzuDg2gZYIBK9MK/4Snm0YdjQEqxy
-         ZuiXccouaLnQEYCE9MPOaFGdX6Mi9E2GN7uDjFZfZfkOfJ430cUzrQBW644jHv0q5LMP
-         XRpg==
-X-Gm-Message-State: AOAM530grQDPyQMibQMRgZCP8zQMaqYQFDTSfp9er6sH0/NsWl6g2MLU
-        TOWyS0ySIv7lg9zTcQVmy74=
-X-Google-Smtp-Source: ABdhPJwnUQFO4cSaradvKrTRPwnAK0i153LCDAJTFz53grS6CIS7KugtUTnb2dFfWGdEo7oDk51K8Q==
-X-Received: by 2002:a2e:aa14:: with SMTP id bf20mr28395243ljb.376.1637351955978;
-        Fri, 19 Nov 2021 11:59:15 -0800 (PST)
-Received: from [10.0.0.115] (91-153-170-164.elisa-laajakaista.fi. [91.153.170.164])
-        by smtp.gmail.com with ESMTPSA id l12sm77248lfk.212.2021.11.19.11.59.14
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 19 Nov 2021 11:59:15 -0800 (PST)
-Message-ID: <3dcce108-dcd0-59f9-33cc-061ec0f1bbfe@gmail.com>
-Date:   Fri, 19 Nov 2021 21:59:41 +0200
+        id S238347AbhKUPFl (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Sun, 21 Nov 2021 10:05:41 -0500
+Received: from mout.gmx.net ([212.227.17.22]:58551 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S238335AbhKUPFh (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Sun, 21 Nov 2021 10:05:37 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1637506951;
+        bh=E2btNeFRA3GGsbq5L/SotP+/jQ/dSxz3Noz23olq0u4=;
+        h=X-UI-Sender-Class:Date:To:From:Subject;
+        b=Hy3L4m48u/kwwQxjOcBs0cw2J+Bq80ux+SivO6CtqcTMeYG17uHe5aZPkcnTv8CUz
+         0ydLLdfUAl4GhrxGzpSr/YmANhontpCeMZPc/L/nEnDHAVDtprzLG9ly+8qjKp9RlL
+         /EEkXGRrRXlURZeNXKyaZSpEzD9HrdDDv1thegQ4=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.178.23] ([77.6.127.250]) by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MFbRm-1mrYzo3wlC-00H7OQ; Sun, 21
+ Nov 2021 16:02:31 +0100
+Message-ID: <747802b9-6c5d-cdb5-66e2-05b820f5213c@gmx.de>
+Date:   Sun, 21 Nov 2021 16:02:30 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.3.0
-Subject: Re: [PATCH] dmaengine: ti: edma: Use 'for_each_set_bit' when possible
+ Thunderbird/91.3.1
 Content-Language: en-US
-To:     Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-        vkoul@kernel.org
-Cc:     dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
-        kernel-janitors@vger.kernel.org
-References: <47a7415d3aff8dfb66780bd6f80b085db4503bf7.1637263609.git.christophe.jaillet@wanadoo.fr>
-From:   =?UTF-8?Q?P=c3=a9ter_Ujfalusi?= <peter.ujfalusi@gmail.com>
-In-Reply-To: <47a7415d3aff8dfb66780bd6f80b085db4503bf7.1637263609.git.christophe.jaillet@wanadoo.fr>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+To:     Linux Kernel <linux-kernel@vger.kernel.org>,
+        dmaengine@vger.kernel.org
+From:   =?UTF-8?Q?Toralf_F=c3=b6rster?= <toralf.foerster@gmx.de>
+Subject: compile error for 5.15.4
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:uNQHiFJp8tRsTyJkn/mjNH13VO4TkrchGNKyrrezdYlm9F2M4RG
+ 6ektVLEgFsUgV+pnsyP67aAGw+d8LMWnBexp1kMJtN6EbTei4uf9iOyc0p5po4iAbCkpZhx
+ k61Rvy76Hb+IUyy7gd6/MaxS7e0Ev0otg8rSmD3ta1UlNxios244QCU8oHiRFkJ8W7Sj2YK
+ iqz9Bsm9nN9LATWu45+Zw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:djnb1xtSlSA=:k337GDmwoR7b90Nw/0ByAl
+ psUi37nQauW0QSRXSBBiblM4m71d2XjRUFhiEXuC/8nd3QRhq9KOj1kboxIv+QwrO6+1VCtb1
+ TfGzqPCzD0umUVItVwgHsfJCikd42RXB52MraYcIKgK5lD73NIvcaH6wlHLQxiBZr5vZU8pOK
+ uMT1xt0Uh+kPdg+vDrozW8M+hhOzTWT3293UMQ9GNvbuW0Le/y/6mXBOgwfrg9MLmX40CT4bn
+ XSts3E4XFvMeejnZKcW5WtLrJbVKN/C/7AoyCAZ+d7auIlxBp2S7p9blZUste5mgmi3t6SZXb
+ LZ4AuU7pAzrCHkI4OpItVnSdxCbbNpoQljoKplVQHTdZIwuWGNRlGaTq1VGVCoALEmidwT+Fa
+ QWyJ8JYd7qDFKBKRQdSTxdJk3DkSHqx/pVzxWP1WNKwp3vCy+UcYbNNhqYwJr+HyVv0G2yrDQ
+ A5vuBoqvSyiHcFhV4EabTWaO91sA1NIeejfTytTfQopi3T9gY8WbdVc/BpOBHaCyFHD1Un8z4
+ /fVFa3Q9WKpKkSflQRUMcTGX2OfpO5rjpUnb6R6CNChNlcrW71DV+uuOXUl3o3yIPrmT8pq6E
+ ymfjOm8xx6TeYkcgMiqApFB2mCXTvNjq4kBeiDcr408ONI5V+de/w/nXhm35CPEcsHsTvdLS6
+ dLKivAF8KSczsgtVzcLdvnLL5yB5NuzlfR/Zh6RroHgvbakIYA+m2IHXq6BTqsW+JwuM4QN2B
+ Xo4AfOjJ6Zsq9smQLRJWxxTKIExvqfwpeTbcKJDM5Tn3K+LtrTk+jETrxm7XYDgQmoNyE3P3+
+ Gd57+5LprNKaBEWvhMVLfdYrzxdZ4fQ4gJiepkySOUvzs9qS0MYAFbaBFFMMzzkPHUjdfWw4E
+ /Q8MmuakeOP0ODbQlQfUKLdqeoV5ZPuesKvm11CCaf7TgXNffueSSNBwQxmubRQ2apb5fmRSn
+ iNrYq+8EkrAxFgTfeX+03pR/ulWXzalMQunGzV4x3Mlv3RdqZ75jjentP4Xue5YDNxYu6tPkv
+ cT5svJu7SMA0358/FBjvJqTDFSlTwRm4RP56Aqh2MkxlZ6h1ptZqzz7CYDkHsOttp+b7jKWM5
+ lc4aZoFqgET7xo=
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
+Hi,
+
+got this at a hardened stable Gentoo Server:
+
+# uname -a
+Linux mr-fox 5.14.17 #1 SMP Thu Nov 18 14:02:58 CET 2021 x86_64 AMD
+Ryzen 9 5950X 16-Core Processor AuthenticAMD GNU/Linux
 
 
-On 18/11/2021 21:28, Christophe JAILLET wrote:
-> Use 'for_each_set_bit()' instead of hand wrinting it. It is much less
-> version.
+   CC      net/ipv4/tcp_timer.o
+   CC      lib/raid6/sse1.o
+drivers/dma/ptdma/ptdma-debugfs.c: In function =E2=80=98ptdma_debugfs_setu=
+p=E2=80=99:
+drivers/dma/ptdma/ptdma-debugfs.c:93:54: error: =E2=80=98struct dma_device=
+=E2=80=99 has
+no member named =E2=80=98dbg_dev_root=E2=80=99
+    93 |         debugfs_create_file("info", 0400,
+pt->dma_dev.dbg_dev_root, pt,
+       |                                                      ^
+drivers/dma/ptdma/ptdma-debugfs.c:96:55: error: =E2=80=98struct dma_device=
+=E2=80=99 has
+no member named =E2=80=98dbg_dev_root=E2=80=99
+    96 |         debugfs_create_file("stats", 0400,
+pt->dma_dev.dbg_dev_root, pt,
+       |                                                       ^
+drivers/dma/ptdma/ptdma-debugfs.c:102:52: error: =E2=80=98struct dma_devic=
+e=E2=80=99 has
+no member named =E2=80=98dbg_dev_root=E2=80=99
+   102 |                 debugfs_create_dir("q", pt->dma_dev.dbg_dev_root)=
+;
+       |                                                    ^
+make[3]: *** [scripts/Makefile.build:277:
+drivers/dma/ptdma/ptdma-debugfs.o] Error 1
+make[2]: *** [scripts/Makefile.build:540: drivers/dma/ptdma] Error 2
+make[1]: *** [scripts/Makefile.build:540: drivers/dma] Error 2
+make[1]: *** Waiting for unfinished jobs....
+   CC      mm/usercopy.o
+   CC      lib/argv_split.o
 
-Thanks for the patch!
-
-Acked-by: Peter Ujfalusi <peter.ujfalusi@gmail.com>
-
-
-> Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-> ---
->  drivers/dma/ti/edma.c | 3 +--
->  1 file changed, 1 insertion(+), 2 deletions(-)
-> 
-> diff --git a/drivers/dma/ti/edma.c b/drivers/dma/ti/edma.c
-> index caa4050ecc02..08e47f44d325 100644
-> --- a/drivers/dma/ti/edma.c
-> +++ b/drivers/dma/ti/edma.c
-> @@ -1681,8 +1681,7 @@ static irqreturn_t dma_ccerr_handler(int irq, void *data)
->  
->  			dev_dbg(ecc->dev, "EMR%d 0x%08x\n", j, val);
->  			emr = val;
-> -			for (i = find_first_bit(&emr, 32); i < 32;
-> -			     i = find_next_bit(&emr, 32, i + 1)) {
-> +			for_each_set_bit(i, &emr, 32) {
->  				int k = (j << 5) + i;
->  
->  				/* Clear the corresponding EMR bits */
-> 
-
--- 
-Péter
+=2D-
+Toralf
