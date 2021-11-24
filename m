@@ -2,99 +2,176 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 13893C433F5
-	for <dmaengine@archiver.kernel.org>; Tue, 23 Nov 2021 23:01:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6D5E8C433EF
+	for <dmaengine@archiver.kernel.org>; Wed, 24 Nov 2021 16:32:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231860AbhKWXEM (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 23 Nov 2021 18:04:12 -0500
-Received: from mga01.intel.com ([192.55.52.88]:54470 "EHLO mga01.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231368AbhKWXEJ (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Tue, 23 Nov 2021 18:04:09 -0500
-X-IronPort-AV: E=McAfee;i="6200,9189,10177"; a="259032785"
-X-IronPort-AV: E=Sophos;i="5.87,258,1631602800"; 
-   d="scan'208";a="259032785"
-Received: from orsmga003.jf.intel.com ([10.7.209.27])
-  by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Nov 2021 15:01:00 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.87,258,1631602800"; 
-   d="scan'208";a="456854084"
-Received: from lkp-server02.sh.intel.com (HELO 9e1e9f9b3bcb) ([10.239.97.151])
-  by orsmga003.jf.intel.com with ESMTP; 23 Nov 2021 15:00:55 -0800
-Received: from kbuild by 9e1e9f9b3bcb with local (Exim 4.92)
-        (envelope-from <lkp@intel.com>)
-        id 1mpemU-0002PQ-Sw; Tue, 23 Nov 2021 23:00:54 +0000
-Date:   Wed, 24 Nov 2021 07:00:38 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Akhil R <akhilrajeev@nvidia.com>, dan.j.williams@intel.com,
-        devicetree@vger.kernel.org, dmaengine@vger.kernel.org,
-        jonathanh@nvidia.com, kyarlagadda@nvidia.com, ldewangan@nvidia.com,
-        linux-kernel@vger.kernel.org, linux-tegra@vger.kernel.org,
-        p.zabel@pengutronix.de, rgumasta@nvidia.com
-Cc:     llvm@lists.linux.dev, kbuild-all@lists.01.org
-Subject: Re: [PATCH v13 2/4] dmaengine: tegra: Add tegra gpcdma driver
-Message-ID: <202111240616.WWuSKq38-lkp@intel.com>
-References: <1637573292-13214-3-git-send-email-akhilrajeev@nvidia.com>
+        id S234405AbhKXQgD (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 24 Nov 2021 11:36:03 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49208 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233433AbhKXQgD (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Wed, 24 Nov 2021 11:36:03 -0500
+Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C6915C061574;
+        Wed, 24 Nov 2021 08:32:52 -0800 (PST)
+Received: by mail-lj1-x22d.google.com with SMTP id z8so6639219ljz.9;
+        Wed, 24 Nov 2021 08:32:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=hWdL3+sC7Y3WgMzxQgq49FXg8O3lrY2U4JGqRbZI6tg=;
+        b=gujWqpLYZ0ok4buE3cVMLWfC5uFpJyuXa42ARhUlnN4O23+qlO+EmYtRvyX/8c+8Cd
+         T5a1dyyYrYP3SiqkVxU+nFVwtXCc1qsYP3l3IZjhohQlobFIZT7KVzpd/uD0tmpe0CvO
+         aeCfiRXxliyhrHPinovV+UTXQVe/RaMFEMYjCu0hyn3k5BUgAGEZ29zDCOQVjlqJOFhL
+         TZBbWI9gTerbMrFWXfehbYHCPQb+K2zUVIW0lpbY8uZKY04odxTxEAVckbrorzsLNVGk
+         sCA4pYJSO2cZ60LDY064M6AwjoFewiMlf4tsmpailAug/kWALkfi3+l95LwEP1w10SMT
+         n/NQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=hWdL3+sC7Y3WgMzxQgq49FXg8O3lrY2U4JGqRbZI6tg=;
+        b=fipxd/uz398YZdkpw4O+SS+yHayRaMRrULaIWRHtxQwOSBRL1BF4m6a4Q8cbC9bYZ1
+         RFQrAJzAiZR5x9GifNrlQq0whLDtnKoIG6ztNFXp3IQNGR4pX1s9vb9PkZZo3PaiWYxu
+         rqD7d9IvgMWURXMEH81xcClIn04tbjpTMzLaqIKp0vP9W7gN6Y6yRQef9ropRTSW0YFP
+         1/8GtVs+BiaF6AJCrRzpVUq27gxv16Kadf9JJOeZCK5QMbvwUpJhR/8bIn8OF4q79X8/
+         luQbF7RBnZcKg9Za+cScUhLoqnD1HLzrZ8AZFJQO3WC6440t0QDWJvkm8c0vUWRkjAhl
+         G0Zg==
+X-Gm-Message-State: AOAM532bE9Gd3EdlbEqf+xZArj4r/9RRulwp1IgwY2x7pjOB3VObWBHb
+        uPW2/SnM2Ptz5q/RQBr09JGsKzRdEmU=
+X-Google-Smtp-Source: ABdhPJzQ2dc3wLXSWKQBFY+mHq5x3ddsPjsCSkkhRryLlNJ0eKxp2Ar8mZbKuizWCxiSq5j6WRb8tw==
+X-Received: by 2002:a2e:2a43:: with SMTP id q64mr17358890ljq.102.1637771570838;
+        Wed, 24 Nov 2021 08:32:50 -0800 (PST)
+Received: from [192.168.2.145] (94-29-48-99.dynamic.spd-mgts.ru. [94.29.48.99])
+        by smtp.googlemail.com with ESMTPSA id m14sm31645ljg.2.2021.11.24.08.32.49
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 24 Nov 2021 08:32:50 -0800 (PST)
+Subject: Re: [PATCH v2 01/11] ASoC: tegra20-spdif: stop setting slave_id
+To:     Arnd Bergmann <arnd@kernel.org>, Vinod Koul <vkoul@kernel.org>
+Cc:     Arnd Bergmann <arnd@arndb.de>, Andy Gross <agross@kernel.org>,
+        Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+        Baolin Wang <baolin.wang7@gmail.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Chunyan Zhang <zhang.lyra@gmail.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Hyun Kwon <hyun.kwon@xilinx.com>,
+        Jaroslav Kysela <perex@perex.cz>,
+        Jon Hunter <jonathanh@nvidia.com>,
+        Lars-Peter Clausen <lars@metafoo.de>,
+        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+        Laxman Dewangan <ldewangan@nvidia.com>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Mark Brown <broonie@kernel.org>,
+        Michal Simek <michal.simek@xilinx.com>,
+        Nicolas Saenz Julienne <nsaenz@kernel.org>,
+        Orson Zhai <orsonzhai@gmail.com>,
+        Robert Jarzmik <robert.jarzmik@free.fr>,
+        Scott Branden <sbranden@broadcom.com>,
+        Takashi Iwai <tiwai@suse.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        alsa-devel@alsa-project.org, bcm-kernel-feedback-list@broadcom.com,
+        dmaengine@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-mmc@vger.kernel.org, linux-mtd@lists.infradead.org,
+        linux-rpi-kernel@lists.infradead.org, linux-serial@vger.kernel.org,
+        linux-spi@vger.kernel.org, linux-staging@lists.linux.dev,
+        linux-tegra@vger.kernel.org
+References: <20211122222203.4103644-1-arnd@kernel.org>
+ <20211122222203.4103644-2-arnd@kernel.org>
+From:   Dmitry Osipenko <digetx@gmail.com>
+Message-ID: <1dbe0c9f-e209-49e1-f05c-765d9f9b91eb@gmail.com>
+Date:   Wed, 24 Nov 2021 19:32:48 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1637573292-13214-3-git-send-email-akhilrajeev@nvidia.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <20211122222203.4103644-2-arnd@kernel.org>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Hi Akhil,
+23.11.2021 01:21, Arnd Bergmann пишет:
+> From: Arnd Bergmann <arnd@arndb.de>
+> 
+> The DMA resource is never set up anywhere, and passing this as slave_id
+> has not been the proper procedure in a long time.
+> 
+> As a preparation for removing all slave_id references from the ALSA code,
+> remove this one.
+> 
+> According to Dmitry Osipenko, this driver has never been used and
+> the mechanism for configuring DMA would not work as it is implemented,
+> so this part will get rewritten when the driver gets put into use
+> again in the future.
+> 
+> Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+> ---
+>  sound/soc/tegra/tegra20_spdif.c | 1 -
+>  1 file changed, 1 deletion(-)
+> 
+> diff --git a/sound/soc/tegra/tegra20_spdif.c b/sound/soc/tegra/tegra20_spdif.c
+> index 9fdc82d58db3..1c3385da6f82 100644
+> --- a/sound/soc/tegra/tegra20_spdif.c
+> +++ b/sound/soc/tegra/tegra20_spdif.c
+> @@ -284,7 +284,6 @@ static int tegra20_spdif_platform_probe(struct platform_device *pdev)
+>  	spdif->playback_dma_data.addr = mem->start + TEGRA20_SPDIF_DATA_OUT;
+>  	spdif->playback_dma_data.addr_width = DMA_SLAVE_BUSWIDTH_4_BYTES;
+>  	spdif->playback_dma_data.maxburst = 4;
+> -	spdif->playback_dma_data.slave_id = dmareq->start;
+>  
+>  	pm_runtime_enable(&pdev->dev);
+>  
+> 
 
-Thank you for the patch! Perhaps something to improve:
+Thanks, Arnd!
 
-[auto build test WARNING on robh/for-next]
-[also build test WARNING on vkoul-dmaengine/next arm64/for-next/core v5.16-rc2 next-20211123]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch]
+The commit message is correct, however you could remove even more code
+here. But there is no need to make a v3 just because this patch because
+I already prepared patchset that revives this S/PDIF driver and enables
+HDMI audio on Tegra20. I'll take care of cleaning up the whole code of
+this driver.
 
-url:    https://github.com/0day-ci/linux/commits/Akhil-R/Add-NVIDIA-Tegra-GPC-DMA-driver/20211122-173019
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/robh/linux.git for-next
-config: riscv-randconfig-c006-20211123 (https://download.01.org/0day-ci/archive/20211124/202111240616.WWuSKq38-lkp@intel.com/config.gz)
-compiler: clang version 14.0.0 (https://github.com/llvm/llvm-project c133fb321f7ca6083ce15b6aa5bf89de6600e649)
-reproduce (this is a W=1 build):
-        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
-        chmod +x ~/bin/make.cross
-        # install riscv cross compiling tool for clang build
-        # apt-get install binutils-riscv64-linux-gnu
-        # https://github.com/0day-ci/linux/commit/7707da9f914433ccc5718dd3431153d3b5bf485d
-        git remote add linux-review https://github.com/0day-ci/linux
-        git fetch --no-tags linux-review Akhil-R/Add-NVIDIA-Tegra-GPC-DMA-driver/20211122-173019
-        git checkout 7707da9f914433ccc5718dd3431153d3b5bf485d
-        # save the config file to linux build tree
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=clang make.cross W=1 ARCH=riscv 
+diff --git a/sound/soc/tegra/tegra20_spdif.c
+b/sound/soc/tegra/tegra20_spdif.c
+index 7751575cd6d6..1c3385da6f82 100644
+--- a/sound/soc/tegra/tegra20_spdif.c
++++ b/sound/soc/tegra/tegra20_spdif.c
+@@ -251,7 +251,7 @@ static const struct regmap_config
+tegra20_spdif_regmap_config = {
+ static int tegra20_spdif_platform_probe(struct platform_device *pdev)
+ {
+ 	struct tegra20_spdif *spdif;
+-	struct resource *mem, *dmareq;
++	struct resource *mem;
+ 	void __iomem *regs;
+ 	int ret;
 
-If you fix the issue, kindly add following tag as appropriate
-Reported-by: kernel test robot <lkp@intel.com>
+@@ -273,12 +273,6 @@ static int tegra20_spdif_platform_probe(struct
+platform_device *pdev)
+ 	if (IS_ERR(regs))
+ 		return PTR_ERR(regs);
 
-All warnings (new ones prefixed by >>):
+-	dmareq = platform_get_resource(pdev, IORESOURCE_DMA, 0);
+-	if (!dmareq) {
+-		dev_err(&pdev->dev, "No DMA resource\n");
+-		return -ENODEV;
+-	}
+-
+ 	spdif->regmap = devm_regmap_init_mmio(&pdev->dev, regs,
+ 					    &tegra20_spdif_regmap_config);
+ 	if (IS_ERR(spdif->regmap)) {
+@@ -290,7 +284,6 @@ static int tegra20_spdif_platform_probe(struct
+platform_device *pdev)
+ 	spdif->playback_dma_data.addr = mem->start + TEGRA20_SPDIF_DATA_OUT;
+ 	spdif->playback_dma_data.addr_width = DMA_SLAVE_BUSWIDTH_4_BYTES;
+ 	spdif->playback_dma_data.maxburst = 4;
+-	spdif->playback_dma_data.slave_id = dmareq->start;
 
->> drivers/dma/tegra186-gpc-dma.c:1264:21: warning: attribute declaration must precede definition [-Wignored-attributes]
-   static const struct __maybe_unused dev_pm_ops tegra_dma_dev_pm_ops = {
-                       ^
-   include/linux/compiler_attributes.h:286:56: note: expanded from macro '__maybe_unused'
-   #define __maybe_unused                  __attribute__((__unused__))
-                                                          ^
-   include/linux/pm.h:277:8: note: previous definition is here
-   struct dev_pm_ops {
-          ^
-   1 warning generated.
+ 	pm_runtime_enable(&pdev->dev);
 
 
-vim +1264 drivers/dma/tegra186-gpc-dma.c
-
-  1263	
-> 1264	static const struct __maybe_unused dev_pm_ops tegra_dma_dev_pm_ops = {
-  1265		SET_LATE_SYSTEM_SLEEP_PM_OPS(tegra_dma_pm_suspend, tegra_dma_pm_resume)
-  1266	};
-  1267	
-
----
-0-DAY CI Kernel Test Service, Intel Corporation
-https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
