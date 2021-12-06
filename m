@@ -2,36 +2,36 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EB0E5C4321E
-	for <dmaengine@archiver.kernel.org>; Mon,  6 Dec 2021 22:41:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 33910C4332F
+	for <dmaengine@archiver.kernel.org>; Mon,  6 Dec 2021 22:41:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1376824AbhLFWog (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 6 Dec 2021 17:44:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51532 "EHLO
+        id S1358139AbhLFWoh (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 6 Dec 2021 17:44:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51266 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1359758AbhLFWnx (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Mon, 6 Dec 2021 17:43:53 -0500
+        with ESMTP id S1376264AbhLFWny (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Mon, 6 Dec 2021 17:43:54 -0500
 Received: from galois.linutronix.de (Galois.linutronix.de [IPv6:2a0a:51c0:0:12e:550::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 18553C0698D0;
-        Mon,  6 Dec 2021 14:39:43 -0800 (PST)
-Message-ID: <20211206210439.181331216@linutronix.de>
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 34D4BC0698D4;
+        Mon,  6 Dec 2021 14:39:46 -0800 (PST)
+Message-ID: <20211206210439.289194020@linutronix.de>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-        s=2020; t=1638830381;
+        s=2020; t=1638830384;
         h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
          to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         references:references; bh=VrULNCMH+O8xsmxJgHu1VunM7q/HyFmEpUljbWBlO+M=;
-        b=1WyUya3l8fZi6fy1zbrOKQrTo97M/mFRNLJk70qGOPb0JPRgzFKQUP3Ap98oq2yIU+W79y
-        WmvByYmwToUfcQdjSAd5N46svh0Lkih1RSbg6furNRI0+XUMr1pOBKIX+irSBkIRN609j/
-        jgDcnPD7jjQZ/ZAEDMijZa34I3oXKq99mGxdyY7uvZ2xHboD3lTKRVNV1ahRc0v6NJpUyd
-        2djS86MgaRG75KvoijVeoRbChYP6OBHa4h+jnI5iBX5I8xLG5cijyFLO/hLr8BePuB5G8D
-        EXG5Csvz4BostgHD1hbblseyHYWXy7KyZk0QJOjUNO2iPqUZZX60PIldxOiaQQ==
+         references:references; bh=jjYpKlfviGkOs8GJ86qqUCf8iCclgx/MvIgVwsbGrI8=;
+        b=CWfcJ/iBUYjrpon8kS2pojeizMcv7c60QxvaLAU5LI7KfIMvLSxmIM/m6bfUaFi/gGyxAb
+        PdqO0v+VPjjzILOgrIY49OVkafA0iReKzvL8PY9tzXeT2OhfpAJ4GW6YLu65K/Ld7nLIG0
+        dbzZwwZ742NgY9QLmrAZqlDg1SC6c+Vxj66hiQWNzv4d8TaTEE4oqgYxP5G8UX+MQMw73e
+        +b6nz9F4GAlHfDc5dR9qnGxMEdL//gXdSMYdGOcVIGZyzLatX6atJs5gbWAUqCzw+Ld7RN
+        hETb0rVdGgYiZNsPAYhQE+wSINXC0JxDMrNyubVTne/6jVvmGPHY/Mo/UsX8LQ==
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-        s=2020e; t=1638830381;
+        s=2020e; t=1638830384;
         h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
          to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         references:references; bh=VrULNCMH+O8xsmxJgHu1VunM7q/HyFmEpUljbWBlO+M=;
-        b=4SHbAktYMF4p3JfEkG2RuP8fQBgK7GPTe1sN6CDnwn2pN1kMTUy4TffqwybjaftPt18Fji
-        W4koD0rufC6aGiCQ==
+         references:references; bh=jjYpKlfviGkOs8GJ86qqUCf8iCclgx/MvIgVwsbGrI8=;
+        b=wbBVA5z+1RlpKAaa5w62yohCfb98XisYXj6A57jf4CV6E6TSRwWAqsQRcXyzzVkM5x3Dtz
+        DSeIPQrauDdTp2AA==
 From:   Thomas Gleixner <tglx@linutronix.de>
 To:     LKML <linux-kernel@vger.kernel.org>
 Cc:     Bjorn Helgaas <helgaas@kernel.org>, Marc Zygnier <maz@kernel.org>,
@@ -43,71 +43,90 @@ Cc:     Bjorn Helgaas <helgaas@kernel.org>, Marc Zygnier <maz@kernel.org>,
         Cedric Le Goater <clg@kaod.org>,
         xen-devel@lists.xenproject.org, Juergen Gross <jgross@suse.com>,
         Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        dmaengine@vger.kernel.org, Vinod Koul <vkoul@kernel.org>,
         Will Deacon <will@kernel.org>,
         Santosh Shilimkar <ssantosh@kernel.org>,
-        iommu@lists.linux-foundation.org, dmaengine@vger.kernel.org,
+        iommu@lists.linux-foundation.org,
         Stuart Yoder <stuyoder@gmail.com>,
         Laurentiu Tudor <laurentiu.tudor@nxp.com>,
         Nishanth Menon <nm@ti.com>, Tero Kristo <kristo@kernel.org>,
         linux-arm-kernel@lists.infradead.org,
-        Vinod Koul <vkoul@kernel.org>,
         Mark Rutland <mark.rutland@arm.com>,
         Robin Murphy <robin.murphy@arm.com>,
         Sinan Kaya <okaya@kernel.org>
-Subject: [patch V2 28/36] PCI/MSI: Use __msi_get_virq() in pci_get_vector()
+Subject: [patch V2 30/36] dmaengine: mv_xor_v2: Get rid of msi_desc abuse
 References: <20211206210307.625116253@linutronix.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Date:   Mon,  6 Dec 2021 23:39:41 +0100 (CET)
+Date:   Mon,  6 Dec 2021 23:39:44 +0100 (CET)
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Use msi_get_vector() and handle the return value to be compatible.
-
-No functional change intended.
+Storing a pointer to the MSI descriptor just to keep track of the Linux
+interrupt number is daft. Use msi_get_virq() instead.
 
 Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
+Cc: dmaengine@vger.kernel.org
+Cc: Vinod Koul <vkoul@kernel.org>
 ---
-V2: Handle the INTx case directly instead of trying to be overly smart - Marc
----
- drivers/pci/msi/msi.c |   25 +++++--------------------
- 1 file changed, 5 insertions(+), 20 deletions(-)
+ drivers/dma/mv_xor_v2.c |   16 +++++-----------
+ 1 file changed, 5 insertions(+), 11 deletions(-)
 
---- a/drivers/pci/msi/msi.c
-+++ b/drivers/pci/msi/msi.c
-@@ -1032,28 +1032,13 @@ EXPORT_SYMBOL(pci_free_irq_vectors);
+--- a/drivers/dma/mv_xor_v2.c
++++ b/drivers/dma/mv_xor_v2.c
+@@ -149,7 +149,7 @@ struct mv_xor_v2_descriptor {
+  * @desc_size: HW descriptor size
+  * @npendings: number of pending descriptors (for which tx_submit has
+  * @hw_queue_idx: HW queue index
+- * @msi_desc: local interrupt descriptor information
++ * @irq: The Linux interrupt number
+  * been called, but not yet issue_pending)
   */
- int pci_irq_vector(struct pci_dev *dev, unsigned int nr)
- {
--	if (dev->msix_enabled) {
--		struct msi_desc *entry;
+ struct mv_xor_v2_device {
+@@ -168,7 +168,7 @@ struct mv_xor_v2_device {
+ 	int desc_size;
+ 	unsigned int npendings;
+ 	unsigned int hw_queue_idx;
+-	struct msi_desc *msi_desc;
 +	unsigned int irq;
+ };
  
--		for_each_pci_msi_entry(entry, dev) {
--			if (entry->msi_index == nr)
--				return entry->irq;
--		}
--		WARN_ON_ONCE(1);
--		return -EINVAL;
--	}
-+	if (!dev->msi_enabled && !dev->msix_enabled)
-+		return !nr ? dev->irq : -EINVAL;
+ /**
+@@ -718,7 +718,6 @@ static int mv_xor_v2_probe(struct platfo
+ 	int i, ret = 0;
+ 	struct dma_device *dma_dev;
+ 	struct mv_xor_v2_sw_desc *sw_desc;
+-	struct msi_desc *msi_desc;
  
--	if (dev->msi_enabled) {
--		struct msi_desc *entry = first_pci_msi_entry(dev);
--
--		if (WARN_ON_ONCE(nr >= entry->nvec_used))
--			return -EINVAL;
--	} else {
--		if (WARN_ON_ONCE(nr > 0))
--			return -EINVAL;
+ 	BUILD_BUG_ON(sizeof(struct mv_xor_v2_descriptor) !=
+ 		     MV_XOR_V2_EXT_DESC_SIZE);
+@@ -770,14 +769,9 @@ static int mv_xor_v2_probe(struct platfo
+ 	if (ret)
+ 		goto disable_clk;
+ 
+-	msi_desc = first_msi_entry(&pdev->dev);
+-	if (!msi_desc) {
+-		ret = -ENODEV;
+-		goto free_msi_irqs;
 -	}
--
--	return dev->irq + nr;
-+	irq = msi_get_virq(&dev->dev, nr);
-+	return irq ? irq : -EINVAL;
- }
- EXPORT_SYMBOL(pci_irq_vector);
+-	xor_dev->msi_desc = msi_desc;
++	xor_dev->irq = msi_get_virq(&pdev->dev, 0);
+ 
+-	ret = devm_request_irq(&pdev->dev, msi_desc->irq,
++	ret = devm_request_irq(&pdev->dev, xor_dev->irq,
+ 			       mv_xor_v2_interrupt_handler, 0,
+ 			       dev_name(&pdev->dev), xor_dev);
+ 	if (ret)
+@@ -892,7 +886,7 @@ static int mv_xor_v2_remove(struct platf
+ 			  xor_dev->desc_size * MV_XOR_V2_DESC_NUM,
+ 			  xor_dev->hw_desq_virt, xor_dev->hw_desq);
+ 
+-	devm_free_irq(&pdev->dev, xor_dev->msi_desc->irq, xor_dev);
++	devm_free_irq(&pdev->dev, xor_dev->irq, xor_dev);
+ 
+ 	platform_msi_domain_free_irqs(&pdev->dev);
  
 
