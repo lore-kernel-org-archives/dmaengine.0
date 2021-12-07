@@ -2,178 +2,104 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BE483C433EF
-	for <dmaengine@archiver.kernel.org>; Mon,  6 Dec 2021 22:41:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4DCD7C433F5
+	for <dmaengine@archiver.kernel.org>; Tue,  7 Dec 2021 01:38:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1376439AbhLFWos (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 6 Dec 2021 17:44:48 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51554 "EHLO
+        id S232496AbhLGBmO (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 6 Dec 2021 20:42:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35510 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1376306AbhLFWnz (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Mon, 6 Dec 2021 17:43:55 -0500
-Received: from galois.linutronix.de (Galois.linutronix.de [IPv6:2a0a:51c0:0:12e:550::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 485DEC0698DD;
-        Mon,  6 Dec 2021 14:39:54 -0800 (PST)
-Message-ID: <20211206210439.563159167@linutronix.de>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-        s=2020; t=1638830393;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         references:references; bh=jHyezEoA6dhB4ZSrBoZ23WpPCkveZt9yuxL9BvGVX8Y=;
-        b=fSODZTv6AD7cSUnet1lA0cqP/4dL95Iu7D5l0WKszY8dggFQTtnEV3OUn3y9urhS5lmSRr
-        bFPJzjBz3KIY5JStVk2zLspbNKsiDElGLLBtmMeic1y43ALqfA26qf9j9voFO6UYMBcyGo
-        xANld6SPj5Tddo7FyTlAhz2h/RnlckwFpyglJv1Mm4P9x3xPdkLLUFYTmBGH0ndCDFXWmn
-        +HwZpvPjvn9qzUm1kTQMlIWr5a5R0DwCYqn4UG81FQqEXp0/qvhQ7ci1MdMRGaMY/JzthP
-        oh5Q61Ci98kFYJdOLoeMxVLrXNkS7mQiutBs2vw0mQuUoUWq2VaDx8FtqpYpNA==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-        s=2020e; t=1638830393;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         references:references; bh=jHyezEoA6dhB4ZSrBoZ23WpPCkveZt9yuxL9BvGVX8Y=;
-        b=ey27UtKMqiE+fXqJWfKK+X9EYyKnROGFcjxs9M1r6hk+PzmcSb+zFvcui9i4NN5/NwzEv9
-        ug0Fq3tF+65z+tBg==
-From:   Thomas Gleixner <tglx@linutronix.de>
-To:     LKML <linux-kernel@vger.kernel.org>
-Cc:     Bjorn Helgaas <helgaas@kernel.org>, Marc Zygnier <maz@kernel.org>,
-        Alex Williamson <alex.williamson@redhat.com>,
-        Kevin Tian <kevin.tian@intel.com>,
-        Jason Gunthorpe <jgg@nvidia.com>,
-        Megha Dey <megha.dey@intel.com>,
-        Ashok Raj <ashok.raj@intel.com>, linux-pci@vger.kernel.org,
-        Cedric Le Goater <clg@kaod.org>,
-        xen-devel@lists.xenproject.org, Juergen Gross <jgross@suse.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Will Deacon <will@kernel.org>,
-        Santosh Shilimkar <ssantosh@kernel.org>,
-        iommu@lists.linux-foundation.org, dmaengine@vger.kernel.org,
-        Stuart Yoder <stuyoder@gmail.com>,
-        Laurentiu Tudor <laurentiu.tudor@nxp.com>,
-        Nishanth Menon <nm@ti.com>, Tero Kristo <kristo@kernel.org>,
-        linux-arm-kernel@lists.infradead.org,
-        Vinod Koul <vkoul@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Sinan Kaya <okaya@kernel.org>
-Subject: [patch V2 35/36] soc: ti: ti_sci_inta_msi: Get rid of
- ti_sci_inta_msi_get_virq()
-References: <20211206210307.625116253@linutronix.de>
+        with ESMTP id S229734AbhLGBmO (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Mon, 6 Dec 2021 20:42:14 -0500
+Received: from mail-qv1-xf2b.google.com (mail-qv1-xf2b.google.com [IPv6:2607:f8b0:4864:20::f2b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D4287C061746;
+        Mon,  6 Dec 2021 17:38:44 -0800 (PST)
+Received: by mail-qv1-xf2b.google.com with SMTP id j9so11612799qvm.10;
+        Mon, 06 Dec 2021 17:38:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=TtX5Ua1bFK7U/ze5aptE0nmXvt0FV6UQIzQSovRpPk0=;
+        b=Fc0NJJWlIsvOOQPTjV7ybl0o/gG2buF2Ao4AFw3HZBtOUMHdx3N0b0GDbMrHdVHEGr
+         f2VU5s02Q5oCnpngXUvm1iyQuvbmGiGRQv6C0jmWei7y5mEJh5X0wNVhWSQ3qn0fNSiT
+         R6N4NdC32Glypm4dJBTgBddG4mlV6ACgPJlA/pFEY0If4iycaICREhU3ZY4Ib3uT+jW2
+         XhJmT8jPasUUVCewWaBBr6TzLP6R2ahvVKUgM1uDhNQeLsiKvC07MuKzhrVk5o0IYFj8
+         W4MTTTs7NJnFfd0oy97QJO+L+yjdmRyMsTrRxlYhjrCMCU2qVRs4UO1AWihwupydpPhJ
+         rwvg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=TtX5Ua1bFK7U/ze5aptE0nmXvt0FV6UQIzQSovRpPk0=;
+        b=M0swkeHtN/uaY4UJT/fVFLn4Ewl31x9Ra4NKNUI94NV1JmxAsv/2Okn2vZza2UAbF0
+         bhBXT3KJfx1I1hWpkEB6qNbMDtAWYJ4pv2bRdTWiM1pCWTtD6CexawhJaNZ9X5C9eTSi
+         zCmSjhndJsb5V2FB1I9oYXl+TSEPs6SgZnu70JdX3nIZy39yr8QwTYB+ybZ6sU2JAH1q
+         h20Ml8l9XNNiHU7kD6QeEou+bvQE6hb679jmW8oB/DU9oNmoAG+ligH2eBaeqAHvIws5
+         x0rgfGn/6xUXtuY+7rvr9/FEsjPV2/dRg9eO4vQwBWR+U5mpx6lMovU/XxF+F2jG0TBz
+         08Mg==
+X-Gm-Message-State: AOAM533dzkeohOcbU9hTmR26kZICmT1qX1EeZqbPvIhsmZzOi6FuFZ/p
+        0luMkVXgqgPQ6LX0qGg67iK0I5Dq3fMYGP/tRAg=
+X-Google-Smtp-Source: ABdhPJw9IBOmfDzr2lw9BdL22wzIVyQOHdH9Q/My/9L3cfmA6oJbyB4PFgg0Wceil0iKnLXIVfFpqkyL+Ebm2HeIx70=
+X-Received: by 2002:ad4:4027:: with SMTP id q7mr41260760qvp.117.1638841124062;
+ Mon, 06 Dec 2021 17:38:44 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Date:   Mon,  6 Dec 2021 23:39:52 +0100 (CET)
+References: <20211206113437.2820889-1-mudongliangabcd@gmail.com>
+In-Reply-To: <20211206113437.2820889-1-mudongliangabcd@gmail.com>
+From:   Baolin Wang <baolin.wang7@gmail.com>
+Date:   Tue, 7 Dec 2021 09:39:24 +0800
+Message-ID: <CADBw62pSJ=rHjwTocxeeuCgtadLKqz-U7gAQek5Eo_bBQSzBzQ@mail.gmail.com>
+Subject: Re: [PATCH] dmaengine: sprd: move pm_runtime_disable to err_rpm
+To:     Dongliang Mu <mudongliangabcd@gmail.com>
+Cc:     Vinod Koul <vkoul@kernel.org>, Orson Zhai <orsonzhai@gmail.com>,
+        Chunyan Zhang <zhang.lyra@gmail.com>,
+        Baolin Wang <baolin.wang@spreadtrum.com>,
+        dmaengine@vger.kernel.org, LKML <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Just use the core function msi_get_virq().
+Hi Dongliang,
 
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
----
- drivers/dma/ti/k3-udma-private.c       |    6 ++----
- drivers/dma/ti/k3-udma.c               |   10 ++++------
- drivers/soc/ti/k3-ringacc.c            |    2 +-
- drivers/soc/ti/ti_sci_inta_msi.c       |   12 ------------
- include/linux/soc/ti/ti_sci_inta_msi.h |    1 -
- 5 files changed, 7 insertions(+), 24 deletions(-)
+On Mon, Dec 6, 2021 at 7:34 PM Dongliang Mu <mudongliangabcd@gmail.com> wrote:
+>
+> When pm_runtime_get_sync fails, it forgets to invoke pm_runtime_disable
+> in the label err_rpm.
+>
+> Fix this by moving pm_runtime_disable to label err_rpm.
+>
+> Fixes: 9b3b8171f7f4 ("dmaengine: sprd: Add Spreadtrum DMA driver")
+> Signed-off-by: Dongliang Mu <mudongliangabcd@gmail.com>
+> ---
 
---- a/drivers/dma/ti/k3-udma-private.c
-+++ b/drivers/dma/ti/k3-udma-private.c
-@@ -168,8 +168,7 @@ int xudma_pktdma_tflow_get_irq(struct ud
- {
- 	const struct udma_oes_offsets *oes = &ud->soc_data->oes;
- 
--	return ti_sci_inta_msi_get_virq(ud->dev, udma_tflow_id +
--					oes->pktdma_tchan_flow);
-+	return msi_get_virq(ud->dev, udma_tflow_id + oes->pktdma_tchan_flow);
- }
- EXPORT_SYMBOL(xudma_pktdma_tflow_get_irq);
- 
-@@ -177,7 +176,6 @@ int xudma_pktdma_rflow_get_irq(struct ud
- {
- 	const struct udma_oes_offsets *oes = &ud->soc_data->oes;
- 
--	return ti_sci_inta_msi_get_virq(ud->dev, udma_rflow_id +
--					oes->pktdma_rchan_flow);
-+	return msi_get_virq(ud->dev, udma_rflow_id + oes->pktdma_rchan_flow);
- }
- EXPORT_SYMBOL(xudma_pktdma_rflow_get_irq);
---- a/drivers/dma/ti/k3-udma.c
-+++ b/drivers/dma/ti/k3-udma.c
-@@ -2313,8 +2313,7 @@ static int udma_alloc_chan_resources(str
- 
- 	/* Event from UDMA (TR events) only needed for slave TR mode channels */
- 	if (is_slave_direction(uc->config.dir) && !uc->config.pkt_mode) {
--		uc->irq_num_udma = ti_sci_inta_msi_get_virq(ud->dev,
--							    irq_udma_idx);
-+		uc->irq_num_udma = msi_get_virq(ud->dev, irq_udma_idx);
- 		if (uc->irq_num_udma <= 0) {
- 			dev_err(ud->dev, "Failed to get udma irq (index: %u)\n",
- 				irq_udma_idx);
-@@ -2486,7 +2485,7 @@ static int bcdma_alloc_chan_resources(st
- 		uc->psil_paired = true;
- 	}
- 
--	uc->irq_num_ring = ti_sci_inta_msi_get_virq(ud->dev, irq_ring_idx);
-+	uc->irq_num_ring = msi_get_virq(ud->dev, irq_ring_idx);
- 	if (uc->irq_num_ring <= 0) {
- 		dev_err(ud->dev, "Failed to get ring irq (index: %u)\n",
- 			irq_ring_idx);
-@@ -2503,8 +2502,7 @@ static int bcdma_alloc_chan_resources(st
- 
- 	/* Event from BCDMA (TR events) only needed for slave channels */
- 	if (is_slave_direction(uc->config.dir)) {
--		uc->irq_num_udma = ti_sci_inta_msi_get_virq(ud->dev,
--							    irq_udma_idx);
-+		uc->irq_num_udma = msi_get_virq(ud->dev, irq_udma_idx);
- 		if (uc->irq_num_udma <= 0) {
- 			dev_err(ud->dev, "Failed to get bcdma irq (index: %u)\n",
- 				irq_udma_idx);
-@@ -2672,7 +2670,7 @@ static int pktdma_alloc_chan_resources(s
- 
- 	uc->psil_paired = true;
- 
--	uc->irq_num_ring = ti_sci_inta_msi_get_virq(ud->dev, irq_ring_idx);
-+	uc->irq_num_ring = msi_get_virq(ud->dev, irq_ring_idx);
- 	if (uc->irq_num_ring <= 0) {
- 		dev_err(ud->dev, "Failed to get ring irq (index: %u)\n",
- 			irq_ring_idx);
---- a/drivers/soc/ti/k3-ringacc.c
-+++ b/drivers/soc/ti/k3-ringacc.c
-@@ -647,7 +647,7 @@ int k3_ringacc_get_ring_irq_num(struct k
- 	if (!ring)
- 		return -EINVAL;
- 
--	irq_num = ti_sci_inta_msi_get_virq(ring->parent->dev, ring->ring_id);
-+	irq_num = msi_get_virq(ring->parent->dev, ring->ring_id);
- 	if (irq_num <= 0)
- 		irq_num = -EINVAL;
- 	return irq_num;
---- a/drivers/soc/ti/ti_sci_inta_msi.c
-+++ b/drivers/soc/ti/ti_sci_inta_msi.c
-@@ -148,15 +148,3 @@ void ti_sci_inta_msi_domain_free_irqs(st
- 	ti_sci_inta_msi_free_descs(dev);
- }
- EXPORT_SYMBOL_GPL(ti_sci_inta_msi_domain_free_irqs);
--
--unsigned int ti_sci_inta_msi_get_virq(struct device *dev, u32 dev_index)
--{
--	struct msi_desc *desc;
--
--	for_each_msi_entry(desc, dev)
--		if (desc->msi_index == dev_index)
--			return desc->irq;
--
--	return -ENODEV;
--}
--EXPORT_SYMBOL_GPL(ti_sci_inta_msi_get_virq);
---- a/include/linux/soc/ti/ti_sci_inta_msi.h
-+++ b/include/linux/soc/ti/ti_sci_inta_msi.h
-@@ -18,6 +18,5 @@ struct irq_domain
- 				   struct irq_domain *parent);
- int ti_sci_inta_msi_domain_alloc_irqs(struct device *dev,
- 				      struct ti_sci_resource *res);
--unsigned int ti_sci_inta_msi_get_virq(struct device *dev, u32 index);
- void ti_sci_inta_msi_domain_free_irqs(struct device *dev);
- #endif /* __INCLUDE_LINUX_IRQCHIP_TI_SCI_INTA_H */
+Thanks for your patch, but looking at the code in detail, I think we
+also should decrease the rpm counter when failing to call the
+pm_runtime_get_sync().
 
+--- a/drivers/dma/sprd-dma.c
++++ b/drivers/dma/sprd-dma.c
+@@ -1210,7 +1210,7 @@ static int sprd_dma_probe(struct platform_device *pdev)
+        ret = dma_async_device_register(&sdev->dma_dev);
+        if (ret < 0) {
+                dev_err(&pdev->dev, "register dma device failed:%d\n", ret);
+-               goto err_register;
++               goto err_rpm;
+        }
+
+        sprd_dma_info.dma_cap = sdev->dma_dev.cap_mask;
+@@ -1224,10 +1224,9 @@ static int sprd_dma_probe(struct platform_device *pdev)
+
+ err_of_register:
+        dma_async_device_unregister(&sdev->dma_dev);
+-err_register:
++err_rpm:
+        pm_runtime_put_noidle(&pdev->dev);
+        pm_runtime_disable(&pdev->dev);
+-err_rpm:
+        sprd_dma_disable(sdev);
+        return ret;
+ }
+
+-- 
+Baolin Wang
