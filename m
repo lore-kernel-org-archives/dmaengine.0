@@ -2,87 +2,77 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 58513C433EF
-	for <dmaengine@archiver.kernel.org>; Wed,  8 Dec 2021 00:04:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7A32AC433EF
+	for <dmaengine@archiver.kernel.org>; Wed,  8 Dec 2021 04:55:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242703AbhLHAIS (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 7 Dec 2021 19:08:18 -0500
-Received: from sin.source.kernel.org ([145.40.73.55]:46270 "EHLO
-        sin.source.kernel.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242690AbhLHAIR (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Tue, 7 Dec 2021 19:08:17 -0500
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by sin.source.kernel.org (Postfix) with ESMTPS id 57E19CE1ECA;
-        Wed,  8 Dec 2021 00:04:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 029FDC341C5;
-        Wed,  8 Dec 2021 00:04:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1638921883;
-        bh=HVrBSNB36jTypNFFUkXDJkWXugeWW3Ecpo4AdjI1ygY=;
-        h=Date:From:To:Cc:Subject:From;
-        b=ZQQ6iAWGMymuF120zo9dKdNCNl6eiU0cit85AlJYyJtoyas5S2UxPHX3o0cwT+hbB
-         6yZQWUwsq76lATHtSVWBBzKLe5DlV3CIm0UHUJ2LgtEPbbWIxB4Hy3WLd4uxZP3G9n
-         J7oyyuFhuBhr/ng8e8+XaCRwGymOuT6GAg4NYmVEBmfTtuysf7jhzYEQVLoVovcocd
-         oRKJJesq8Jds5eAAeAdR+mwpQZN1YS+tDeLsogONg62v3noNXxvs/caRH2BHv6f2k1
-         7+T1bWmkbpJw/tnftpXDI2PiGYAYTHAbBoZd8NbUJGqi+8qTo7lvPEmX1CCg58kHgB
-         8BLzHqHVtZGeA==
-Date:   Tue, 7 Dec 2021 18:10:13 -0600
-From:   "Gustavo A. R. Silva" <gustavoars@kernel.org>
-To:     Ludovic Desroches <ludovic.desroches@microchip.com>,
+        id S239900AbhLHE6u (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 7 Dec 2021 23:58:50 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50894 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233743AbhLHE6t (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Tue, 7 Dec 2021 23:58:49 -0500
+Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 60CCDC061574
+        for <dmaengine@vger.kernel.org>; Tue,  7 Dec 2021 20:55:18 -0800 (PST)
+Received: by mail-pj1-x1030.google.com with SMTP id gt5so1100152pjb.1
+        for <dmaengine@vger.kernel.org>; Tue, 07 Dec 2021 20:55:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=cNfiJvO3fejBotE5iySezNhtEJJwER74TgDA97YhjHw=;
+        b=dFvbWj1YTb2rkTnoh4vumG6c98xkqmedsvStrzVGBcOXL5hS1P5l1JINBDvAe4CWYs
+         C56jIevPqd1PVb3iikh9OpUZjBNpFhNIf2ZOp6sBPFhhVkk/Y9HyfWCJKJ7Zxsg+jYgr
+         j26v5mM52Dd72VrH2kqFsdsH+aEdxKoaZ3JAo=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=cNfiJvO3fejBotE5iySezNhtEJJwER74TgDA97YhjHw=;
+        b=u8ERxtkxrWx/G4HBI5GB5TFFra6MVu0/4nS/DDxmRhRNdOkD2a51lhCJQ9dfhf2y2Y
+         UFuhTMvxIDI3XzkAHw0zxKJe9XFBjs4SXNz8g2Krr90LTWIIbZIfIrZ8GCv6Rgu7VBKs
+         9L3BKlsX0CB6LlE+cdllZedi0LkL/DLOysYMe/GWisUvIvAvk1bUDGL6hgakkJLGQ1QX
+         PjmZ68hthAaRf4CUYBusHSIMFnf0vDBjcNgROBZz4OwQOOeqY1tmmY5wuCLkR6yXkI92
+         c9+gCaElHSKV658M+MIRAJAgYYg4IAxt65fa6Zg82lNVCTFdXhwhf0z8GMPloOPW66Mk
+         TnDw==
+X-Gm-Message-State: AOAM532NV5HEIxI7vSahKSudcrlKOElG0u9oV8AWJbAqxAcfKcLlob4W
+        KAqZ1ENuDD/1tJnhIWSUlXRuzg==
+X-Google-Smtp-Source: ABdhPJzS2d4ffr4Pk1pU3l5zZk+LeQbBGpywoHPpAOS/5wf7KsRFrJSCYOl6vgYqGytySqvqn2Y0Gw==
+X-Received: by 2002:a17:902:860b:b0:143:87bf:648f with SMTP id f11-20020a170902860b00b0014387bf648fmr56650710plo.11.1638939317886;
+        Tue, 07 Dec 2021 20:55:17 -0800 (PST)
+Received: from www.outflux.net (smtp.outflux.net. [198.145.64.163])
+        by smtp.gmail.com with ESMTPSA id 16sm992605pgu.93.2021.12.07.20.55.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 07 Dec 2021 20:55:17 -0800 (PST)
+Date:   Tue, 7 Dec 2021 20:55:16 -0800
+From:   Kees Cook <keescook@chromium.org>
+To:     "Gustavo A. R. Silva" <gustavoars@kernel.org>
+Cc:     Ludovic Desroches <ludovic.desroches@microchip.com>,
         Tudor Ambarus <tudor.ambarus@microchip.com>,
-        Vinod Koul <vkoul@kernel.org>
-Cc:     linux-arm-kernel@lists.infradead.org, dmaengine@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        "Gustavo A. R. Silva" <gustavoars@kernel.org>,
-        linux-hardening@vger.kernel.org
-Subject: [PATCH][next] dmaengine: at_xdmac: Use struct_size() in
+        Vinod Koul <vkoul@kernel.org>,
+        linux-arm-kernel@lists.infradead.org, dmaengine@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-hardening@vger.kernel.org
+Subject: Re: [PATCH][next] dmaengine: at_xdmac: Use struct_size() in
  devm_kzalloc()
-Message-ID: <20211208001013.GA62330@embeddedor>
+Message-ID: <202112072055.3708E99@keescook>
+References: <20211208001013.GA62330@embeddedor>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
+In-Reply-To: <20211208001013.GA62330@embeddedor>
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Make use of the struct_size() helper instead of an open-coded version, in
-order to avoid any potential type mistakes or integer overflows that, in
-the worst scenario, could lead to heap overflows.
+On Tue, Dec 07, 2021 at 06:10:13PM -0600, Gustavo A. R. Silva wrote:
+> Make use of the struct_size() helper instead of an open-coded version, in
+> order to avoid any potential type mistakes or integer overflows that, in
+> the worst scenario, could lead to heap overflows.
+> 
+> Link: https://github.com/KSPP/linux/issues/160
+> Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
 
-Link: https://github.com/KSPP/linux/issues/160
-Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
----
- drivers/dma/at_xdmac.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+Reviewed-by: Kees Cook <keescook@chromium.org>
 
-diff --git a/drivers/dma/at_xdmac.c b/drivers/dma/at_xdmac.c
-index 275a76f188ae..e42dede5b243 100644
---- a/drivers/dma/at_xdmac.c
-+++ b/drivers/dma/at_xdmac.c
-@@ -2031,7 +2031,7 @@ static int __maybe_unused atmel_xdmac_resume(struct device *dev)
- static int at_xdmac_probe(struct platform_device *pdev)
- {
- 	struct at_xdmac	*atxdmac;
--	int		irq, size, nr_channels, i, ret;
-+	int		irq, nr_channels, i, ret;
- 	void __iomem	*base;
- 	u32		reg;
- 
-@@ -2056,9 +2056,9 @@ static int at_xdmac_probe(struct platform_device *pdev)
- 		return -EINVAL;
- 	}
- 
--	size = sizeof(*atxdmac);
--	size += nr_channels * sizeof(struct at_xdmac_chan);
--	atxdmac = devm_kzalloc(&pdev->dev, size, GFP_KERNEL);
-+	atxdmac = devm_kzalloc(&pdev->dev,
-+			       struct_size(atxdmac, chan, nr_channels),
-+			       GFP_KERNEL);
- 	if (!atxdmac) {
- 		dev_err(&pdev->dev, "can't allocate at_xdmac structure\n");
- 		return -ENOMEM;
 -- 
-2.27.0
-
+Kees Cook
