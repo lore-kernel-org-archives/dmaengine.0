@@ -2,33 +2,33 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D6D4DC433F5
-	for <dmaengine@archiver.kernel.org>; Fri, 10 Dec 2021 22:20:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 03D31C433FE
+	for <dmaengine@archiver.kernel.org>; Fri, 10 Dec 2021 22:20:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344808AbhLJWYH (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 10 Dec 2021 17:24:07 -0500
-Received: from Galois.linutronix.de ([193.142.43.55]:50738 "EHLO
+        id S1344798AbhLJWW4 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 10 Dec 2021 17:22:56 -0500
+Received: from Galois.linutronix.de ([193.142.43.55]:49782 "EHLO
         galois.linutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344684AbhLJWW5 (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Fri, 10 Dec 2021 17:22:57 -0500
-Message-ID: <20211210221814.662401116@linutronix.de>
+        with ESMTP id S1344701AbhLJWWh (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Fri, 10 Dec 2021 17:22:37 -0500
+Message-ID: <20211210221813.805529729@linutronix.de>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-        s=2020; t=1639174761;
+        s=2020; t=1639174739;
         h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
          to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         references:references; bh=B95vILF4f96+HtIHGYc7a4tJjZ074d989NcBwfF9o/k=;
-        b=fIOwaXb6T7YmYbzCNcuFWouRC2zGGXVRlsUgpqqFOIV0PyrJoOnT+aoyDMVKNK2A6krAZI
-        XSQeEqbaRaAtK4VvrlqFro0SB1vhErnfxWhzQgwr+qsDk36wQ+eFWHO7jp23E3M3puDi35
-        953o11ODU0TeOVEvTYbYoheZAqmksy26rdvmfI7PBx5P15pbca7UNafWBkDO+hECvHFdj9
-        Yev9a5GN8EarusWwFqVi4o0AwKm0r+2eGINSSeQt7Q5FKkUK03tvPM0NomazmAYBA/cAga
-        y3ObQUixyXi6+XAFUJSYrz1VSQAlbkSi94tipek580Cs/VN2H2S5HEWAnMSsvw==
+         references:references; bh=AIipdYHJdw47YEIR3ibDM4/EuKIZd0bBkHdL069vGOQ=;
+        b=j1D2L9Q78IUwnll6n5rxMGVu2mITgI1fie6htejXwkZkBu5vKvBCoSC0hybtM8CIndzeKy
+        8FxbvyCsSWDO1Je5QzsKaI/JE7U3VHAG33NrckGM8Jh90EVfjx9LVyCBsKiWw/5ODWbyNU
+        kojl0x/4/PVaVVmvviwmUOctKhNCi3chDZvokC+2bV6jT+/MGWHy2QTxSbgq5bJLTS0oc3
+        WunwiNoKKzPpL872PSd/7Fh8pFZgVkBASgKwd3jLaDi5pE0MyQTn5hNy8f1JZB6aEnheiK
+        IXKzSIcv8qTnf/i+HWAfLXKhChF87Qp+8borfTOdx+L3rIKkbAniU7i2NTkEuA==
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-        s=2020e; t=1639174761;
+        s=2020e; t=1639174739;
         h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
          to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         references:references; bh=B95vILF4f96+HtIHGYc7a4tJjZ074d989NcBwfF9o/k=;
-        b=Te6lNiwtavfKOApR2IhAxEwWLE9W8Bb3G/p8b6YTrFg+8nzwR06UFSXrmPjpS92tCkMg5/
-        Nkw6+1agFZw6IeBg==
+         references:references; bh=AIipdYHJdw47YEIR3ibDM4/EuKIZd0bBkHdL069vGOQ=;
+        b=iR9CZQZxt9DwiDQaI1OMnpL3qc51lhNFwI0XGQkIVGuIAxEp7I6QmDjeueiB5NSx48DEzo
+        NTxgjLao7vpldkAw==
 From:   Thomas Gleixner <tglx@linutronix.de>
 To:     LKML <linux-kernel@vger.kernel.org>
 Cc:     Bjorn Helgaas <helgaas@kernel.org>, Marc Zygnier <maz@kernel.org>,
@@ -39,12 +39,12 @@ Cc:     Bjorn Helgaas <helgaas@kernel.org>, Marc Zygnier <maz@kernel.org>,
         Ashok Raj <ashok.raj@intel.com>, linux-pci@vger.kernel.org,
         Cedric Le Goater <clg@kaod.org>,
         Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Bjorn Helgaas <bhelgaas@google.com>,
         Juergen Gross <jgross@suse.com>,
         xen-devel@lists.xenproject.org, Arnd Bergmann <arnd@arndb.de>,
         Michael Ellerman <mpe@ellerman.id.au>,
         Benjamin Herrenschmidt <benh@kernel.crashing.org>,
-        linuxppc-dev@lists.ozlabs.org, Stuart Yoder <stuyoder@gmail.com>,
+        linuxppc-dev@lists.ozlabs.org, Bjorn Helgaas <bhelgaas@google.com>,
+        Stuart Yoder <stuyoder@gmail.com>,
         Laurentiu Tudor <laurentiu.tudor@nxp.com>,
         Nishanth Menon <nm@ti.com>, Tero Kristo <kristo@kernel.org>,
         Santosh Shilimkar <ssantosh@kernel.org>,
@@ -58,66 +58,56 @@ Cc:     Bjorn Helgaas <helgaas@kernel.org>, Marc Zygnier <maz@kernel.org>,
         Jassi Brar <jassisinghbrar@gmail.com>,
         Peter Ujfalusi <peter.ujfalusi@gmail.com>,
         Sinan Kaya <okaya@kernel.org>
-Subject: [patch V3 24/35] PCI/MSI: Provide MSI_FLAG_MSIX_CONTIGUOUS
+Subject: [patch V3 10/35] platform-msi: Allocate MSI device data on first use
 References: <20211210221642.869015045@linutronix.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Date:   Fri, 10 Dec 2021 23:19:20 +0100 (CET)
+Date:   Fri, 10 Dec 2021 23:18:58 +0100 (CET)
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
 From: Thomas Gleixner <tglx@linutronix.de>
 
-Provide a domain info flag which makes the core code check for a contiguous
-MSI-X index on allocation. That's simpler than checking it at some other
-domain callback in architecture code.
+Allocate the MSI device data on first invocation of the allocation function
+for platform MSI private data.
 
 Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
 Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
-Acked-by: Bjorn Helgaas <bhelgaas@google.com>
-
 ---
- drivers/pci/msi/irqdomain.c |   16 ++++++++++++++--
- include/linux/msi.h         |    2 ++
- 2 files changed, 16 insertions(+), 2 deletions(-)
+ drivers/base/platform-msi.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/drivers/pci/msi/irqdomain.c
-+++ b/drivers/pci/msi/irqdomain.c
-@@ -89,9 +89,21 @@ static int pci_msi_domain_check_cap(stru
- 	if (pci_msi_desc_is_multi_msi(desc) &&
- 	    !(info->flags & MSI_FLAG_MULTI_PCI_MSI))
- 		return 1;
--	else if (desc->pci.msi_attrib.is_msix && !(info->flags & MSI_FLAG_PCI_MSIX))
--		return -ENOTSUPP;
- 
-+	if (desc->pci.msi_attrib.is_msix) {
-+		if (!(info->flags & MSI_FLAG_PCI_MSIX))
-+			return -ENOTSUPP;
+--- a/drivers/base/platform-msi.c
++++ b/drivers/base/platform-msi.c
+@@ -204,6 +204,8 @@ platform_msi_alloc_priv_data(struct devi
+ 			     irq_write_msi_msg_t write_msi_msg)
+ {
+ 	struct platform_msi_priv_data *datap;
++	int err;
 +
-+		if (info->flags & MSI_FLAG_MSIX_CONTIGUOUS) {
-+			unsigned int idx = 0;
+ 	/*
+ 	 * Limit the number of interrupts to 2048 per device. Should we
+ 	 * need to bump this up, DEV_ID_SHIFT should be adjusted
+@@ -218,6 +220,10 @@ platform_msi_alloc_priv_data(struct devi
+ 		return ERR_PTR(-EINVAL);
+ 	}
+ 
++	err = msi_setup_device_data(dev);
++	if (err)
++		return ERR_PTR(err);
 +
-+			/* Check for gaps in the entry indices */
-+			for_each_msi_entry(desc, dev) {
-+				if (desc->msi_index != idx++)
-+					return -ENOTSUPP;
-+			}
-+		}
-+	}
- 	return 0;
- }
- 
---- a/include/linux/msi.h
-+++ b/include/linux/msi.h
-@@ -361,6 +361,8 @@ enum {
- 	MSI_FLAG_LEVEL_CAPABLE		= (1 << 6),
- 	/* Populate sysfs on alloc() and destroy it on free() */
- 	MSI_FLAG_DEV_SYSFS		= (1 << 7),
-+	/* MSI-X entries must be contiguous */
-+	MSI_FLAG_MSIX_CONTIGUOUS	= (1 << 8),
- };
- 
- int msi_domain_set_affinity(struct irq_data *data, const struct cpumask *mask,
+ 	/* Already had a helping of MSI? Greed... */
+ 	if (!list_empty(dev_to_msi_list(dev)))
+ 		return ERR_PTR(-EBUSY);
+@@ -229,7 +235,7 @@ platform_msi_alloc_priv_data(struct devi
+ 	datap->devid = ida_simple_get(&platform_msi_devid_ida,
+ 				      0, 1 << DEV_ID_SHIFT, GFP_KERNEL);
+ 	if (datap->devid < 0) {
+-		int err = datap->devid;
++		err = datap->devid;
+ 		kfree(datap);
+ 		return ERR_PTR(err);
+ 	}
 
