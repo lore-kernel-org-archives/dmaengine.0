@@ -2,101 +2,97 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A4CD2C433F5
-	for <dmaengine@archiver.kernel.org>; Sat, 11 Dec 2021 16:22:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3A53DC433EF
+	for <dmaengine@archiver.kernel.org>; Mon, 13 Dec 2021 04:59:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231450AbhLKQWa (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Sat, 11 Dec 2021 11:22:30 -0500
-Received: from mout.kundenserver.de ([212.227.17.24]:49419 "EHLO
-        mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231444AbhLKQW3 (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Sat, 11 Dec 2021 11:22:29 -0500
-Received: from mail-wm1-f50.google.com ([209.85.128.50]) by
- mrelayeu.kundenserver.de (mreue109 [213.165.67.113]) with ESMTPSA (Nemesis)
- id 1N4R4i-1mUy7G0RlO-011T56; Sat, 11 Dec 2021 17:22:28 +0100
-Received: by mail-wm1-f50.google.com with SMTP id i8-20020a7bc948000000b0030db7b70b6bso11135796wml.1;
-        Sat, 11 Dec 2021 08:22:28 -0800 (PST)
-X-Gm-Message-State: AOAM532W7oAgpowdD+dMc62mggNuovwyl+A8DeVlRSDABx1a89vDZvNs
-        ti9uZexhIyfLisQ7xAmo6xCbCD6Z7nTlaR/og1A=
-X-Google-Smtp-Source: ABdhPJz9JqWJLeTUfS5IahRcetLl+JbMiIvXpgsv1eGAXoUb1XDPjjtJEfoNcEXB+cjjosPGuUvpUWQic5X/F+X6I8s=
-X-Received: by 2002:a1c:1c1:: with SMTP id 184mr24672882wmb.1.1639236184421;
- Sat, 11 Dec 2021 07:23:04 -0800 (PST)
-MIME-Version: 1.0
-References: <20211210221642.869015045@linutronix.de> <20211210221813.928842960@linutronix.de>
-In-Reply-To: <20211210221813.928842960@linutronix.de>
-From:   Arnd Bergmann <arnd@arndb.de>
-Date:   Sat, 11 Dec 2021 16:22:48 +0100
-X-Gmail-Original-Message-ID: <CAK8P3a00M1MGPEwMQpgGJ9-g9-P6e9wo8G1frfVMqJ4bRp1Okg@mail.gmail.com>
-Message-ID: <CAK8P3a00M1MGPEwMQpgGJ9-g9-P6e9wo8G1frfVMqJ4bRp1Okg@mail.gmail.com>
-Subject: Re: [patch V3 12/35] soc: ti: ti_sci_inta_msi: Allocate MSI device
- data on first use
-To:     Thomas Gleixner <tglx@linutronix.de>
-Cc:     LKML <linux-kernel@vger.kernel.org>,
-        Bjorn Helgaas <helgaas@kernel.org>,
-        Marc Zygnier <maz@kernel.org>,
-        Alex Williamson <alex.williamson@redhat.com>,
-        Kevin Tian <kevin.tian@intel.com>,
-        Jason Gunthorpe <jgg@nvidia.com>,
-        Megha Dey <megha.dey@intel.com>,
-        Ashok Raj <ashok.raj@intel.com>,
-        linux-pci <linux-pci@vger.kernel.org>,
-        Cedric Le Goater <clg@kaod.org>,
+        id S231771AbhLME7S (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Sun, 12 Dec 2021 23:59:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47958 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229990AbhLME7S (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Sun, 12 Dec 2021 23:59:18 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C2B5CC06173F;
+        Sun, 12 Dec 2021 20:59:17 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 15254B80D7C;
+        Mon, 13 Dec 2021 04:59:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7897CC00446;
+        Mon, 13 Dec 2021 04:59:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1639371554;
+        bh=uqDkjyi1DAG2WVFI7Iu0TC2w+GaDC3EmWkInyLpcGtE=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=mVDRCny15VHJlA+o7pFyvRO+fGTVY2J3x91BIqcOwy4cryBFjZQyaHtyPhgW6KO28
+         HCKopx8WXOVlRdPjhEOrjN2VBJ1zFB8NRnGb5EUdfofWdRrki7ZlorlrhKm0n81/la
+         3mN9IpyIgfzc1/r0ZuBokeJT/zwaGH17foE/YzWMrXovh2MCpsiNQwWNaKLY5YRyFy
+         blW8ncTTX15Q1zUIMmgSzOFg2mWmU6KWhkXrs65ZUlMvc/lyG3K8k5h5nInsBLDfjW
+         SlpMqgTcrrDN8iKQSo2q7ad2+NbXTwlELLLoqff2K0DHg43fpfYsWOz0ibzpD4QupX
+         V/h6/iJ4bdVAQ==
+Date:   Mon, 13 Dec 2021 10:29:10 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Arnd Bergmann <arnd@kernel.org>
+Cc:     Arnd Bergmann <arnd@arndb.de>, Andy Gross <agross@kernel.org>,
+        Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+        Baolin Wang <baolin.wang7@gmail.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Chunyan Zhang <zhang.lyra@gmail.com>,
         Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Nishanth Menon <nm@ti.com>, Tero Kristo <kristo@kernel.org>,
-        Santosh Shilimkar <ssantosh@kernel.org>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        Juergen Gross <jgross@suse.com>,
-        xen-devel <xen-devel@lists.xenproject.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Michael Ellerman <mpe@ellerman.id.au>,
-        Benjamin Herrenschmidt <benh@kernel.crashing.org>,
-        linuxppc-dev <linuxppc-dev@lists.ozlabs.org>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Stuart Yoder <stuyoder@gmail.com>,
-        Laurentiu Tudor <laurentiu.tudor@nxp.com>,
-        Vinod Koul <vkoul@kernel.org>, dmaengine@vger.kernel.org,
-        Mark Rutland <mark.rutland@arm.com>,
-        Will Deacon <will@kernel.org>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Joerg Roedel <joro@8bytes.org>,
-        "open list:IOMMU DRIVERS" <iommu@lists.linux-foundation.org>,
-        Jassi Brar <jassisinghbrar@gmail.com>,
-        Peter Ujfalusi <peter.ujfalusi@gmail.com>,
-        Sinan Kaya <okaya@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Provags-ID: V03:K1:zzex+FP14ARewDiSBOGij1VMXhVq96DuU1CzMgTGwsHN9tguKjv
- T7MhQQEpIb9mlE+Hw8eqwDgf1vd4u8YePTIvxEQX5OVI5adZGSNmrHbJoK2JK+1NQtoGZTl
- QyUd9dvE4rs8x/3Shw3qc59DsDdSSI/ChRQd+0xEKHIfS+YwkHDkly2EekQDojnI9ETTohI
- pCgGAKTQNqGceqpGf7hqQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:dTP/5A9xFns=:9gHfoklVBY9swp8nKHrR2k
- Z+64CGWF6HKTSdYOinoSUt8rP8R2xtGj1P+gqOkVTeagAhfjjglPkk7GdjtLsbyDuk501AZK6
- CdCjCIHV9WCgCMRva9OKxOFsfwHoMksZvq7pO6H3MC45/6VdO8SmsdpG56m+rf6TA3T4ZknaM
- 33XrJr/NvXJcnRIDEuRbisRR6RR/wOahZn4AL/WKdpT88PByqFbbHiCxQxoVAI3tXZzJFKNXV
- pst4bTJYRk5svv53gyKB6P/cWPW+hubQ2Tj0QjmrRN/1g1gN1nN2Q8lcgb5Aa69NEMNoZEwDd
- HlLrS1xheB4KKTGqb1W8eCCsmPAQg8SDwoNydwmxec5XyYAMxavty75m2ahjVIVRWfUbi0Wl1
- WGu9ATdfkLNituZoh/p8O4MfPQAUcDx49uLWkJt/66W4bKrmkZPUx6kMdQeh2bGQl7cD0FP4/
- xker3oU3n1IKa4Sc1U0M+C6kFxTJiTy4ifh7ssZbPBUsGNzh1mt8KgC3XjDy6E82gLoijY7Ni
- uRRGDf2rhGQTnLeheEHrBPNNAzuT5oB2OLIrdpu6PT13+YSk+ELybjbBc2ETBdrmx+u+Hqk0n
- iS6TUJmdHv997F5dOmMTa31pFGOvLJ0UW1n+nukRnNf15H+tWfQdWVUq3yS7tguaGnCTKlTkW
- vPCuWHlyJvTlawMsGw0QZqRmCPlxK2e5kRXL6E2Tt6O2UisP0V6h4zG+YwtTkGuvzfyIoo/rY
- 8QwEiUtpoN1LIJMly1ria01CnOHJBp2VJqXGHV9sopnlsL9Kslnr0gg9Gb7r/nB76oQnWuLkH
- s4rKN/A2ivtTgP89e+rqU59+oQdCSku1+esTQuPgTkbbeV+9yM=
+        Hyun Kwon <hyun.kwon@xilinx.com>,
+        Jaroslav Kysela <perex@perex.cz>,
+        Jon Hunter <jonathanh@nvidia.com>,
+        Lars-Peter Clausen <lars@metafoo.de>,
+        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+        Laxman Dewangan <ldewangan@nvidia.com>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Mark Brown <broonie@kernel.org>,
+        Michal Simek <michal.simek@xilinx.com>,
+        Nicolas Saenz Julienne <nsaenz@kernel.org>,
+        Orson Zhai <orsonzhai@gmail.com>,
+        Robert Jarzmik <robert.jarzmik@free.fr>,
+        Scott Branden <sbranden@broadcom.com>,
+        Takashi Iwai <tiwai@suse.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        alsa-devel@alsa-project.org, bcm-kernel-feedback-list@broadcom.com,
+        dmaengine@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-mmc@vger.kernel.org, linux-mtd@lists.infradead.org,
+        linux-rpi-kernel@lists.infradead.org, linux-serial@vger.kernel.org,
+        linux-spi@vger.kernel.org, linux-staging@lists.linux.dev,
+        linux-tegra@vger.kernel.org
+Subject: Re: [PATCH v2 00/11] dmaengine: kill off dma_slave_config->slave_id
+Message-ID: <YbbTHo+Wfpl30ZUH@matsya>
+References: <20211122222203.4103644-1-arnd@kernel.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20211122222203.4103644-1-arnd@kernel.org>
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On Fri, Dec 10, 2021 at 11:19 PM Thomas Gleixner <tglx@linutronix.de> wrote:
->
-> From: Thomas Gleixner <tglx@linutronix.de>
->
-> Allocate the MSI device data on first invocation of the allocation function.
->
-> Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-> Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-> Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
-> Cc: Nishanth Menon <nm@ti.com>
-> Cc: Tero Kristo <kristo@kernel.org>
-> Cc: Santosh Shilimkar <ssantosh@kernel.org>
-> Cc: linux-arm-kernel@lists.infradead.org
+On 22-11-21, 23:21, Arnd Bergmann wrote:
+> From: Arnd Bergmann <arnd@arndb.de>
+> 
+> I recently came across some new uses of the 'slave_id' field that
+> I had (almost) removed a few years ago. There are no legitimate
+> uses of this field in the kernel, only a few stale references and
+> two drivers that abuse the field as a side-channel between the
+> dmaengine driver and its client.
+> 
+> Let's change the xilinx and qualcomm drivers to use the documented
+> side-channel (peripheral_data) instead, and remove the remnants of
+> it to prevent new users from coming in.
+> 
+> I think I got all the necessary Acks on v1 already, so if there are
+> no further concerns, please merge this through the dmaengine tree
+> for v5.17, or pull from
 
-Acked-by: Arnd Bergmann <arnd@arndb.de>
+Arnd, Thanks for the cleanup. I have applied and folder the fix you sent
+in this
+
+-- 
+~Vinod
