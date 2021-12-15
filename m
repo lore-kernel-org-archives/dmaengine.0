@@ -2,53 +2,53 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0B68CC433F5
-	for <dmaengine@archiver.kernel.org>; Wed, 15 Dec 2021 11:01:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EC43FC4332F
+	for <dmaengine@archiver.kernel.org>; Wed, 15 Dec 2021 11:01:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241940AbhLOLBq (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 15 Dec 2021 06:01:46 -0500
-Received: from esa.microchip.iphmx.com ([68.232.153.233]:47834 "EHLO
+        id S241989AbhLOLB5 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 15 Dec 2021 06:01:57 -0500
+Received: from esa.microchip.iphmx.com ([68.232.154.123]:16401 "EHLO
         esa.microchip.iphmx.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241931AbhLOLBo (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Wed, 15 Dec 2021 06:01:44 -0500
+        with ESMTP id S241964AbhLOLBw (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Wed, 15 Dec 2021 06:01:52 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
   d=microchip.com; i=@microchip.com; q=dns/txt; s=mchp;
-  t=1639566104; x=1671102104;
+  t=1639566111; x=1671102111;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=wRIv3ubIX5xAKe7fyTIOsp2EcT/w6mzbj8LN+1DMbDQ=;
-  b=Qvn34RVzvRxx8dy7yeQzNaoT/29mLwfDfGzYtGz/5CgxZVAwaUV4txW7
-   orpS0HxDTnVqoczez3xDcmF3XuzN77gMxVJ0N2/J62hBxt74d7+PPwTbD
-   29fliBAcI2zotPPUVtNggF8PDnJwIyHQHCKdYmAkL5Y5FnkyY92VP7RP9
-   rnI/KCv7Q+LsXUok7c7mqK4MVqK1l8R2O3cwQ63x1cs9hP0rvErZKOZxo
-   MBZxBbkwWlGUq+caUK7e+WC6rgitZY5KS95lhbDOBN4qWwojxxLE5t1q1
-   bMu8vbrCAXF0yXKR6YFnErDAbGkb+C/UX1DOIVckJxV4VJ7G0I9PytBtk
-   Q==;
-IronPort-SDR: Fsz88XrgCtebLa3EfjLEQf4u+oi9crAkKTf3DVfGNDskAz0axCJ2nHMeZLPybHbqK2AfeUd2m0
- ac0NO21yMNuesZ4fQHC410CzbRr5PnAsA78colDNt3bKuntRpPj0cLmzt46xds/Hq/KCVSzmwA
- 9bx9PLxwqsSSUsxNADoJpLGv4LcWOfW5evAQGa0/nK1pl24KPgG5weDNoQXjae7YUYyTUmkZNi
- 19lWsopd1+rXYwe6E4FoJ/R7uHV+CUvxaTFXMEbOGA9JUl9mxD4InhogpfqzDclyrrnANQiK8I
- 2Lc7ni0R4+8mCSqwAGSU4ekf
+  bh=livyu8Olu9F9Ywh/gQcsyDAU8oKSPgD+q4+UxxEb734=;
+  b=SNJpg7CWyCFPdmXLKn4GSCD4x6TbtRPMeTvmBCojq5H+2uZlhN9065gK
+   KS/KvA7iVqiK9sgnwEN3YJfasRH2d1WlnjT9rSxXTWqCAT9rMeGDayLsY
+   NMdtynY6kTElOdMXbtCWZZK/wj3E3iaryQG9Uhm0ZHaiKdOlQ92fDXA+F
+   NePEhaygoJYqFaQaw9PMr1NzkxB8HxBZ40VLKsKkpn/c0ZZyEXFUtR+sp
+   DtuNPE/sGwguzFi6JHMBA3DLrkjSEcuxso9/XOA0XWBQqJKJaJ0jdIGlC
+   6/MH6R8dicggTr3IiNZksaH8ahCnYqD83N2x4AcmbVexX3ZkAfFzepBRJ
+   g==;
+IronPort-SDR: law3cO30f8LFLnfWd/Rjq4CEuz7T4Bx4DvtkSXmrdYQrIERp0Mxn4pOP7NmvXPxSkG3PqGKMiq
+ XjPu05B9Y6dwIRL+6vs5GiM0jZyVdbievZ/vQAB11aOR69853E5NknJVUqnBvLAcbBHCDE2VMz
+ uPYp7fUKVMzMhmnAr4LLCbtRNjib021fXDkN76B5tpwYIAwfbd6ks3Jf7uKPT4lOoHUxvxPl59
+ IUfBdty4gdUjhjdm6QnaVCKaEmK6j6B2zjF/xthNrkdTNwIOA6mID4d1lcqqgNk2Lg0kVaXFAR
+ qR6Wc3cOyh1rwSOPitr0sGuh
 X-IronPort-AV: E=Sophos;i="5.88,207,1635231600"; 
-   d="scan'208";a="155559242"
+   d="scan'208";a="139842746"
 Received: from smtpout.microchip.com (HELO email.microchip.com) ([198.175.253.82])
-  by esa1.microchip.iphmx.com with ESMTP/TLS/AES256-SHA256; 15 Dec 2021 04:01:43 -0700
+  by esa4.microchip.iphmx.com with ESMTP/TLS/AES256-SHA256; 15 Dec 2021 04:01:51 -0700
 Received: from chn-vm-ex03.mchp-main.com (10.10.85.151) by
- chn-vm-ex03.mchp-main.com (10.10.85.151) with Microsoft SMTP Server
+ chn-vm-ex04.mchp-main.com (10.10.85.152) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2375.17; Wed, 15 Dec 2021 04:01:43 -0700
+ 15.1.2375.17; Wed, 15 Dec 2021 04:01:51 -0700
 Received: from ROB-ULT-M18064N.mchp-main.com (10.10.115.15) by
  chn-vm-ex03.mchp-main.com (10.10.85.151) with Microsoft SMTP Server id
- 15.1.2375.17 via Frontend Transport; Wed, 15 Dec 2021 04:01:41 -0700
+ 15.1.2375.17 via Frontend Transport; Wed, 15 Dec 2021 04:01:48 -0700
 From:   Tudor Ambarus <tudor.ambarus@microchip.com>
 To:     <vkoul@kernel.org>
 CC:     <ludovic.desroches@microchip.com>, <nicolas.ferre@microchip.com>,
         <mripard@kernel.org>, <linux-arm-kernel@lists.infradead.org>,
         <dmaengine@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
         Tudor Ambarus <tudor.ambarus@microchip.com>
-Subject: [PATCH v3 09/12] dmaengine: at_xdmac: Fix lld view setting
-Date:   Wed, 15 Dec 2021 13:01:12 +0200
-Message-ID: <20211215110115.191749-10-tudor.ambarus@microchip.com>
+Subject: [PATCH v3 12/12] dmaengine: at_xdmac: Fix race over irq_status
+Date:   Wed, 15 Dec 2021 13:01:15 +0200
+Message-ID: <20211215110115.191749-13-tudor.ambarus@microchip.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20211215110115.191749-1-tudor.ambarus@microchip.com>
 References: <20211215110115.191749-1-tudor.ambarus@microchip.com>
@@ -59,37 +59,85 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-AT_XDMAC_CNDC_NDVIEW_NDV3 was set even for AT_XDMAC_MBR_UBC_NDV2,
-because of the wrong bit handling. Fix it.
+Tasklets run with interrupts enabled, so we need to protect
+atchan->irq_status with spin_lock_irq() otherwise the tasklet can be
+interrupted by the IRQ that modifies irq_status. Move the dev_dbg that
+prints the irq_status in at_xdmac_handle_cyclic() and lower in
+at_xdmac_tasklet() where the IRQ is disabled.
 
-Fixes: ee0fe35c8dcd ("dmaengine: xdmac: Handle descriptor's view 3 registers")
 Signed-off-by: Tudor Ambarus <tudor.ambarus@microchip.com>
 ---
- drivers/dma/at_xdmac.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/dma/at_xdmac.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
 diff --git a/drivers/dma/at_xdmac.c b/drivers/dma/at_xdmac.c
-index 0b09ec752db4..6e5bfc9b3825 100644
+index ba727751a9f6..a1da2b4b6d73 100644
 --- a/drivers/dma/at_xdmac.c
 +++ b/drivers/dma/at_xdmac.c
-@@ -99,6 +99,7 @@
- #define		AT_XDMAC_CNDC_NDE		(0x1 << 0)		/* Channel x Next Descriptor Enable */
- #define		AT_XDMAC_CNDC_NDSUP		(0x1 << 1)		/* Channel x Next Descriptor Source Update */
- #define		AT_XDMAC_CNDC_NDDUP		(0x1 << 2)		/* Channel x Next Descriptor Destination Update */
-+#define		AT_XDMAC_CNDC_NDVIEW_MASK	GENMASK(28, 27)
- #define		AT_XDMAC_CNDC_NDVIEW_NDV0	(0x0 << 3)		/* Channel x Next Descriptor View 0 */
- #define		AT_XDMAC_CNDC_NDVIEW_NDV1	(0x1 << 3)		/* Channel x Next Descriptor View 1 */
- #define		AT_XDMAC_CNDC_NDVIEW_NDV2	(0x2 << 3)		/* Channel x Next Descriptor View 2 */
-@@ -402,7 +403,8 @@ static void at_xdmac_start_xfer(struct at_xdmac_chan *atchan,
- 	 */
+@@ -1611,6 +1611,8 @@ static void at_xdmac_handle_cyclic(struct at_xdmac_chan *atchan)
+ 	struct dma_async_tx_descriptor	*txd;
+ 
+ 	spin_lock_irq(&atchan->lock);
++	dev_dbg(chan2dev(&atchan->chan), "%s: status=0x%08x\n",
++		__func__, atchan->irq_status);
+ 	if (list_empty(&atchan->xfers_list)) {
+ 		spin_unlock_irq(&atchan->lock);
+ 		return;
+@@ -1623,6 +1625,7 @@ static void at_xdmac_handle_cyclic(struct at_xdmac_chan *atchan)
+ 		dmaengine_desc_get_callback_invoke(txd, NULL);
+ }
+ 
++/* Called with atchan->lock held. */
+ static void at_xdmac_handle_error(struct at_xdmac_chan *atchan)
+ {
+ 	struct at_xdmac		*atxdmac = to_at_xdmac(atchan->chan.device);
+@@ -1641,8 +1644,6 @@ static void at_xdmac_handle_error(struct at_xdmac_chan *atchan)
+ 	if (atchan->irq_status & AT_XDMAC_CIS_ROIS)
+ 		dev_err(chan2dev(&atchan->chan), "request overflow error!!!");
+ 
+-	spin_lock_irq(&atchan->lock);
+-
+ 	/* Channel must be disabled first as it's not done automatically */
+ 	at_xdmac_write(atxdmac, AT_XDMAC_GD, atchan->mask);
+ 	while (at_xdmac_read(atxdmac, AT_XDMAC_GS) & atchan->mask)
+@@ -1652,8 +1653,6 @@ static void at_xdmac_handle_error(struct at_xdmac_chan *atchan)
+ 				    struct at_xdmac_desc,
+ 				    xfer_node);
+ 
+-	spin_unlock_irq(&atchan->lock);
+-
+ 	/* Print bad descriptor's details if needed */
+ 	dev_dbg(chan2dev(&atchan->chan),
+ 		"%s: lld: mbr_sa=%pad, mbr_da=%pad, mbr_ubc=0x%08x\n",
+@@ -1670,15 +1669,17 @@ static void at_xdmac_tasklet(struct tasklet_struct *t)
+ 	struct dma_async_tx_descriptor *txd;
+ 	u32			error_mask;
+ 
+-	dev_dbg(chan2dev(&atchan->chan), "%s: status=0x%08x\n",
+-		__func__, atchan->irq_status);
+-
  	if (at_xdmac_chan_is_cyclic(atchan))
- 		reg = AT_XDMAC_CNDC_NDVIEW_NDV1;
--	else if (first->lld.mbr_ubc & AT_XDMAC_MBR_UBC_NDV3)
-+	else if ((first->lld.mbr_ubc &
-+		  AT_XDMAC_CNDC_NDVIEW_MASK) == AT_XDMAC_MBR_UBC_NDV3)
- 		reg = AT_XDMAC_CNDC_NDVIEW_NDV3;
- 	else
- 		reg = AT_XDMAC_CNDC_NDVIEW_NDV2;
+ 		return at_xdmac_handle_cyclic(atchan);
+ 
+ 	error_mask = AT_XDMAC_CIS_RBEIS | AT_XDMAC_CIS_WBEIS |
+ 		AT_XDMAC_CIS_ROIS;
+ 
++	spin_lock_irq(&atchan->lock);
++
++	dev_dbg(chan2dev(&atchan->chan), "%s: status=0x%08x\n",
++		__func__, atchan->irq_status);
++
+ 	if (!(atchan->irq_status & AT_XDMAC_CIS_LIS) &&
+ 	    !(atchan->irq_status & error_mask))
+ 		return;
+@@ -1686,7 +1687,6 @@ static void at_xdmac_tasklet(struct tasklet_struct *t)
+ 	if (atchan->irq_status & error_mask)
+ 		at_xdmac_handle_error(atchan);
+ 
+-	spin_lock_irq(&atchan->lock);
+ 	desc = list_first_entry(&atchan->xfers_list, struct at_xdmac_desc,
+ 				xfer_node);
+ 	dev_vdbg(chan2dev(&atchan->chan), "%s: desc 0x%p\n", __func__, desc);
 -- 
 2.25.1
 
