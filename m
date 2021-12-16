@@ -2,187 +2,146 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 517BFC433EF
-	for <dmaengine@archiver.kernel.org>; Thu, 16 Dec 2021 06:14:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 27B29C433F5
+	for <dmaengine@archiver.kernel.org>; Thu, 16 Dec 2021 17:12:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233998AbhLPGOp (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Thu, 16 Dec 2021 01:14:45 -0500
-Received: from mail-eus2azlp17010007.outbound.protection.outlook.com ([40.93.12.7]:11087
-        "EHLO na01-obe.outbound.protection.outlook.com"
+        id S235904AbhLPRMK (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Thu, 16 Dec 2021 12:12:10 -0500
+Received: from mail-bn8nam12on2075.outbound.protection.outlook.com ([40.107.237.75]:28608
+        "EHLO NAM12-BN8-obe.outbound.protection.outlook.com"
         rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S233997AbhLPGOp (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Thu, 16 Dec 2021 01:14:45 -0500
+        id S235791AbhLPRMK (ORCPT <rfc822;dmaengine@vger.kernel.org>);
+        Thu, 16 Dec 2021 12:12:10 -0500
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=ImnwxWgJfJNOTow3iwSqSIHmRBr2j0oZerUh01KmbrfVRjfOCU1Ifxyk3ngB041EDVhed+FqHYQzKiyxj6y/Z/mii1LJK8D4FpyjDfLQSYAp4YzZRg5xK3MBjTU2F3PCK4Ib85pdGKWh2cKR8q2lhQCSEpmjp+kllK/wQy8O5lhrXhE5vbrXKx3tsU80jdDJIRhjPT5ulB7lCwps/mSKobxO7eAP3vb4XZTUO7mveLDbFMxIPe6ch2GOWCG+hKb5NSFvMb9MUA4X7Ok/iYl3BOxoEAjzOz+GWB7aQWuA3lTqWVo6BOFNzfsNRNu6hR/h4PApY9d9fEzoaTDeap5paA==
+ b=NydutdDru7aC8w2P2/TtFV8EDVjexVF+ccBkd4ewo+j2JIJQnfjZ2HhuZPfmIuuEblwlpFNLUMdG2GGPAp7RGKCHKymH5J7rT61EgeJ1l6z8msSdc9IfoiELA1A3xk8Fi0BmmXPBOxizDJrt6i38DJr6YvKMk2O90oa4ZbZFKKDfjslK9FqH/bwxM8xO3F729PwROImfZH5HPFvBrssiaHhvZ7Hpb84/w7wUSE6goQmyH6HvF/NIkW1sVKmZvb3cJ845AYqBs4KFKMtyVfHHve4EIR7iCZm3EK+vnON/6Fp30Y3IqtW+sO6BvpuYTEITQh1svLUdCGHOkLsl6ceTlg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Zj6f1cHHbnyHLhg4aA25mqY9UgdPFT817BJ+fttssdo=;
- b=FilI8fEv1FliLEwa0/pDU5wFg0ADI47DATLaijYE1KCLbAD2YR0b+V0WXkYAojlYJk8Qq0bk/lkgMdPTJX0jrQifP9dSwZDehRWhBNlEt9guHHxajoVUVuy60CEX9rfmB3tmPkr8TF6/QSBwzWqV43nMUGlnMoNEd9e9JwmQDmcWoeXInYj8RwFgcviHuLFMSRnmnnXh8vsVKIn+/JOZzoFBRGmxzkQmnfsDXf9oNRN3jM7lC2Q6D9ssuUOFEnzEdw1UVwpqfr4jViGAAIsU+iMf5/wUJz6DX8Km2/vUmz3d59YIT7FVZZwK0zKW8Xg9aC5C7q2UkoIsc2+7gwU2Iw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=microsoft.com; dmarc=pass action=none
- header.from=microsoft.com; dkim=pass header.d=microsoft.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ bh=KsZFi+p/kXxFzG00boegc4Wg46eq3NY0ldvychoVGpw=;
+ b=XFXq8C06edwUZdrZuOI0KzgkXOtPflp0P5GkMHA800z8ZlkY5IBCfXJ6STjb/WgcdvNfuWYnivp/th3xHUs9vpDMG/rZyO42ev/pgF6Kf6wEpYA60psPZ79Zvd6lKP425OnGkDnDpJNj29g1xuPhNYO/YY9IXBEQpICJ362el3Bk0+Bs+BKbjfh8A9rIp5n6HOar2dzmQ+LOGTrnNuYT6tVinfFqMqqZLSAcKaItjTXUcHwrxnnrO852F8onRHaQD0FyifmvXDZOrTv9sYS/OawKGoeQnjvwerYIuxQAk7dWUonl2WX8v1Q/nm8qJEdowHySSedhCWQ5GnmggI8Psg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 12.22.5.236) smtp.rcpttodomain=vger.kernel.org smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=quarantine sp=quarantine pct=100) action=none
+ header.from=nvidia.com; dkim=none (message not signed); arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Zj6f1cHHbnyHLhg4aA25mqY9UgdPFT817BJ+fttssdo=;
- b=Ycav6qsZKWLy+JhjK3iVGvddk44Zk+7uznPkQuMUf3Mz+5319ZF2hY+ae9QcoSCb0FI9WALjwRqJbgbTuYMbIm6vpr+ygF/TttTlBJxEv2AVFCiME8BbVTsOPYVgzNlhWtal0jWH24O3ZuwB0AXhBmLyqTU/dQBx/G+bsQuLotk=
-Received: from MWHPR21MB1593.namprd21.prod.outlook.com (2603:10b6:301:7c::11)
- by DM6PR21MB1273.namprd21.prod.outlook.com (2603:10b6:5:16c::27) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4823.8; Thu, 16 Dec
- 2021 06:14:38 +0000
-Received: from MWHPR21MB1593.namprd21.prod.outlook.com
- ([fe80::e9ea:fc3b:df77:af3e]) by MWHPR21MB1593.namprd21.prod.outlook.com
- ([fe80::e9ea:fc3b:df77:af3e%6]) with mapi id 15.20.4823.005; Thu, 16 Dec 2021
- 06:14:38 +0000
-From:   "Michael Kelley (LINUX)" <mikelley@microsoft.com>
-To:     Thomas Gleixner <tglx@linutronix.de>, Nishanth Menon <nm@ti.com>
-CC:     LKML <linux-kernel@vger.kernel.org>,
-        Bjorn Helgaas <helgaas@kernel.org>,
-        Marc Zygnier <maz@kernel.org>,
-        Alex Williamson <alex.williamson@redhat.com>,
-        Kevin Tian <kevin.tian@intel.com>,
-        Jason Gunthorpe <jgg@nvidia.com>,
-        Megha Dey <megha.dey@intel.com>,
-        Ashok Raj <ashok.raj@intel.com>,
-        "linux-pci@vger.kernel.org" <linux-pci@vger.kernel.org>,
-        Cedric Le Goater <clg@kaod.org>,
-        Juergen Gross <jgross@suse.com>,
-        "xen-devel@lists.xenproject.org" <xen-devel@lists.xenproject.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Michael Ellerman <mpe@ellerman.id.au>,
-        Benjamin Herrenschmidt <benh@kernel.crashing.org>,
-        "linuxppc-dev@lists.ozlabs.org" <linuxppc-dev@lists.ozlabs.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Stuart Yoder <stuyoder@gmail.com>,
-        Laurentiu Tudor <laurentiu.tudor@nxp.com>,
-        Tero Kristo <kristo@kernel.org>,
-        Santosh Shilimkar <ssantosh@kernel.org>,
-        "linux-arm-kernel@lists.infradead.org" 
-        <linux-arm-kernel@lists.infradead.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        "dmaengine@vger.kernel.org" <dmaengine@vger.kernel.org>,
-        Mark Rutland <Mark.Rutland@arm.com>,
-        Will Deacon <will@kernel.org>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Joerg Roedel <joro@8bytes.org>,
-        "iommu@lists.linux-foundation.org" <iommu@lists.linux-foundation.org>,
-        Jassi Brar <jassisinghbrar@gmail.com>,
-        Peter Ujfalusi <peter.ujfalusi@gmail.com>,
-        Sinan Kaya <okaya@kernel.org>,
-        "linux-wireless@vger.kernel.org" <linux-wireless@vger.kernel.org>,
-        Johannes Berg <johannes.berg@intel.com>
-Subject: RE: [patch V3 00/35] genirq/msi, PCI/MSI: Spring cleaning - Part 2
-Thread-Topic: [patch V3 00/35] genirq/msi, PCI/MSI: Spring cleaning - Part 2
-Thread-Index: AQHX7hP2OO+j8bTrKUC182AbgaxaDKwwwrUAgAD+lACAAHA4gIAAA7EAgAAHxwCAADWSAIAAC2sAgAAGkoCAAT4FgIAABOkAgADieNA=
-Date:   Thu, 16 Dec 2021 06:14:38 +0000
-Message-ID: <MWHPR21MB159301D63518283F813FC32ED7779@MWHPR21MB1593.namprd21.prod.outlook.com>
-References: <20211210221642.869015045@linutronix.de>
- <20211213182958.ytj4m6gsg35u77cv@detonator> <87fsqvttfv.ffs@tglx>
- <20211214162247.ocjm7ihg5oi7uiuv@slider> <87wnk7rvnz.ffs@tglx>
- <87tufbrudl.ffs@tglx> <87mtl3rli1.ffs@tglx>
- <20211214205626.lrnddha6bd6d6es5@possibly> <87h7basx36.ffs@tglx>
- <87zgp1rge4.ffs@tglx> <87wnk5rfkt.ffs@tglx>
-In-Reply-To: <87wnk5rfkt.ffs@tglx>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-msip_labels: MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_ActionId=7cb534aa-630b-47e6-8e34-abedba89cdec;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_ContentBits=0;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Enabled=true;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Method=Standard;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Name=Internal;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SetDate=2021-12-16T06:06:19Z;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SiteId=72f988bf-86f1-41af-91ab-2d7cd011db47;
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=microsoft.com;
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 65d6e4d5-65ed-4dc2-c83e-08d9c05b5726
-x-ms-traffictypediagnostic: DM6PR21MB1273:EE_
-x-ld-processed: 72f988bf-86f1-41af-91ab-2d7cd011db47,ExtAddr
-x-microsoft-antispam-prvs: <DM6PR21MB12735C192931744515825898D7779@DM6PR21MB1273.namprd21.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:3383;
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: vw+EVdznUWr5SaD5O6qTtFR5BytWYLHPOS18p7fOBcUblvxmnzsbXMDN+r0H4I7/46nVIt460P4ESXtZmrqIirY+pv20dQZe/jP2lcdX1WQkHnzzxqGGHG1f0vddrveujsNj5i0fbr9GxZM+9+wmX7m5ZdD3cRH8V4/7lpwgDT0pjedY6NjwndqvmD+lI+YiarRn/IS1hAKVBS3njOSmfLzq+ujEFxJFZ3ootq6dcEi7VPTYiXIhx8IRTDKtq2xJysCeZrGorCgU+xCuT2/Op9nqPfKC0R+ilDj80QuE1CD+zP56/bKu0zh74BH3+A6LHJuwlfGlxsGSkqurPU84MTJETlwOxxlbYVh8596NA0Xet/LlvkmpCSk9cmxxXT7Ga1xWvEqr3iz5+DWpa0K09EzhxwXFo2fx7OiP2HE0NcFEhUK2wtRCQ5LJk6WqOYQC2wUG+cz+Dl8tUhjBi99N/ixetupG713cV4Iau4QujA14IUs1buEcHZsaJcH2CSxmnyxETfgwbhybKz0+sjyRhNdCYC/oEDKETsIJhNT1WO9i9azpB9X6g3yhrZt739wxZFMDrozdmNz92+/n/d4Iv5ubwF0dKcakaaM50cLIR54MfBJoAS2Td+gOaGcp1JXLWIqZqdS4+yCWgw2gyjtBV9BuiWcpkU1ISWZV5CMyvW2hjbIrEXVyyvh3N/bTkSOqDAL0bWgWeJZnyPJ0fuadzapohKxLzx5O3aArglXLgnFvqEaEZhfreBMj7+RjvxCz
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MWHPR21MB1593.namprd21.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230001)(4636009)(366004)(8676002)(86362001)(71200400001)(8936002)(82960400001)(82950400001)(8990500004)(4326008)(66446008)(66556008)(64756008)(66476007)(7696005)(316002)(54906003)(6506007)(66946007)(76116006)(110136005)(10290500003)(55016003)(38100700002)(7406005)(508600001)(7416002)(26005)(2906002)(186003)(9686003)(52536014)(33656002)(38070700005)(83380400001)(122000001)(5660300002)(20210929001);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?BGfwAzFUCiYmI4pdlWbqMKpDx7KnUGggEv9dV+jkLJjVyikFT2zkhP1lCA4T?=
- =?us-ascii?Q?dxR0UOYjdUceWffccPhbHnififYqpK+FB/DeatLhAI1ZIadtjo/RFAk0+X9p?=
- =?us-ascii?Q?sE7nAfuNzGqlX0+HIyX0s3GLKNsVaCgMiIkGJ9rAkHxWe5WTAu2rzS4ouyz8?=
- =?us-ascii?Q?25qPl+kEmF2rkScYzZBJ6tbrAJFtg+aHqTNAIL+J1Y7Y5sSIqf2tzEPn9dYP?=
- =?us-ascii?Q?buZ/0Q/OSY+H92ImKO0jbP+0DL/SphmyW15qzquT7hRTC1KJaj2bNM3u3ZTF?=
- =?us-ascii?Q?s5q7dqubC9KTFLe4LI18oLM5TwRmkyl58znio8uOqffRZxxECB5YixedJ+NK?=
- =?us-ascii?Q?bQ5E9GLXe56e0p773dghG8lUN5iEyHJCeLf7HTFnxUMCDpMYBThmM/rid/9Z?=
- =?us-ascii?Q?TeZUV6K+ZtvtFJfQApeIPi/T6qe3rCj0EGjuoe82MAus32AJCmGSRxE7Nw3u?=
- =?us-ascii?Q?xWrVG9ye8C8EJdMS+pX+DJpynnHzEQELIMvCwZ2P04/fPVU0nCNGE8sblfPF?=
- =?us-ascii?Q?2Ltk+2hQFL9XBiS6tjj1202ADc57jfF7Son3HDOTvdcUphZVABeVtHMeqvEr?=
- =?us-ascii?Q?5iIY6UPhAqT266bPKkMMZ16xIuwn3HbR2AP5jwfnFOLe2Z0wfmV57hcKHyb9?=
- =?us-ascii?Q?3ihBuNkGIv88KqLAjPkVsF5krlcg+gtJKQYrlTtKEpsNSgiK6vbEg3FxPYB6?=
- =?us-ascii?Q?rXgnrdWZ0EBuuffi0To63vXVC8l4duhxnbLO59mMoMZ9Go0eKJ/IyQYV58aq?=
- =?us-ascii?Q?+wWeErwHSlTjA+Hjs2QdLFHK4rET4yHb2gWKitLcG1QyyUgn4nL3cgX4Ymio?=
- =?us-ascii?Q?WtfcM+rb/GhR/Fnp0ygaOAnHoESSHWOuezccSmpbnUfdAQoeKPhw66TPzsSh?=
- =?us-ascii?Q?N/o98VanUQNxhbnPi/fvfie8mUxc6JHHTrUeZEWBc6By5lDrVLpCICk4JH4G?=
- =?us-ascii?Q?sUdKA8oLToxQ+C2uaJ7JoAuwPiopTACT2GmyZm623obOHuma0PB/weQ9tPS1?=
- =?us-ascii?Q?IuBQ8E7hYlO/JeMpmXv8dPY7Iu5zLuhUgpYLwYdHTM9osnvVEmfkdxjNQYIu?=
- =?us-ascii?Q?DfxrWI2iF9rNBynZZt7qu+dZPTnF9z+O2RZPt6o1zpxZYDrq5MbDKqqzujIj?=
- =?us-ascii?Q?uaDqFMVWAYPVK8/VERQpE7RLbtbEQ6gis0P0+5b+hzsd+Jcy6FwnHc1Hrohz?=
- =?us-ascii?Q?0Dct2sE2xGwLTTh0dRxCVVMIU36S3L9L/ORD0NRoimAlmQM5DrJYlnxv4i9d?=
- =?us-ascii?Q?dRvg2ZR/nNZIrRnYEKOHM4qFhL3SBNSCQ710WizmN3UokN/pzVw79coDnBF4?=
- =?us-ascii?Q?P/ncARRTMjVGndaOgQFq5kFbNRhJaX6v5nMmI1GNKDo/7Cv03LB5Ut8Ay+cs?=
- =?us-ascii?Q?LXAoO4GOzxysV8JxtEajV8P0XY57juB4YJxgMGZCocop99tvRoaJG72CGRN9?=
- =?us-ascii?Q?cJJZXzHQlLKOfrtdy6i0V7W1sfKH6YPvMTeUQDOqK9W6WX0c3QT16xdG8Reo?=
- =?us-ascii?Q?fAneX49GPvY6gAsPdtVawydbwwX6Zkkqkx5WqfXHAnY5RhmKccsOkcihhVoT?=
- =?us-ascii?Q?8SmE/jZR9ZWotlCOWwQptC+37oLRwWNVefQdGqpywzleTRawgXfKqgDV3Lnb?=
- =?us-ascii?Q?Bjo3cKPj1m8gXGEBIiFylnRzOQdqsEB9wF1LTrdCYgttayieSbTCJxmIL66d?=
- =?us-ascii?Q?caZu2w=3D=3D?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+ bh=KsZFi+p/kXxFzG00boegc4Wg46eq3NY0ldvychoVGpw=;
+ b=RifDZnEhcFDjN/szSWtCGBejDivbbWx2nOkWg33r5jgSxrYUmyQCxbaNrNOWOPfxskLxkFF6bANifVpNaxo5WBkMxvzhSwgznLiafgHeqALoIJ+3A721Dd7Tvw0hg8dFXWCF0S1r5mjTOAPSnk3sJmhd/MaUDjsfZxf3LNa2jrGeKH3f1wLwXgblGfUmnhIvwjblVFRsz14hg9PIJr3SnS5pCOWNzBxRNtj1HNQdXnT09ocsu/6M/pJ7Sw/hOIV+Dy38P7huaKDll4a8YcQhtSEre+vY1nEExIB6Sb48unMuuUQKsVWrVB1G7xgf/dd+NxRhR4qqO3TKXB2U4JfFIQ==
+Received: from MWHPR2201CA0059.namprd22.prod.outlook.com
+ (2603:10b6:301:16::33) by DM6PR12MB4827.namprd12.prod.outlook.com
+ (2603:10b6:5:1d6::14) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4801.14; Thu, 16 Dec
+ 2021 17:12:06 +0000
+Received: from CO1NAM11FT026.eop-nam11.prod.protection.outlook.com
+ (2603:10b6:301:16:cafe::77) by MWHPR2201CA0059.outlook.office365.com
+ (2603:10b6:301:16::33) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4801.14 via Frontend
+ Transport; Thu, 16 Dec 2021 17:12:06 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 12.22.5.236)
+ smtp.mailfrom=nvidia.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 12.22.5.236 as permitted sender) receiver=protection.outlook.com;
+ client-ip=12.22.5.236; helo=mail.nvidia.com;
+Received: from mail.nvidia.com (12.22.5.236) by
+ CO1NAM11FT026.mail.protection.outlook.com (10.13.175.67) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id
+ 15.20.4801.14 via Frontend Transport; Thu, 16 Dec 2021 17:12:06 +0000
+Received: from HQMAIL101.nvidia.com (172.20.187.10) by DRHQMAIL109.nvidia.com
+ (10.27.9.19) with Microsoft SMTP Server (TLS) id 15.0.1497.18; Thu, 16 Dec
+ 2021 17:12:05 +0000
+Received: from HQMAIL101.nvidia.com (172.20.187.10) by HQMAIL101.nvidia.com
+ (172.20.187.10) with Microsoft SMTP Server (TLS) id 15.0.1497.18; Thu, 16 Dec
+ 2021 17:12:05 +0000
+Received: from kyarlagadda-linux.nvidia.com (172.20.187.6) by mail.nvidia.com
+ (172.20.187.10) with Microsoft SMTP Server id 15.0.1497.18 via Frontend
+ Transport; Thu, 16 Dec 2021 17:12:01 +0000
+From:   Akhil R <akhilrajeev@nvidia.com>
+To:     <dan.j.williams@intel.com>, <devicetree@vger.kernel.org>,
+        <dmaengine@vger.kernel.org>, <jonathanh@nvidia.com>,
+        <kyarlagadda@nvidia.com>, <ldewangan@nvidia.com>,
+        <linux-kernel@vger.kernel.org>, <linux-tegra@vger.kernel.org>,
+        <p.zabel@pengutronix.de>, <rgumasta@nvidia.com>,
+        <robh+dt@kernel.org>, <thierry.reding@gmail.com>,
+        <vkoul@kernel.org>
+CC:     <akhilrajeev@nvidia.com>
+Subject: [PATCH v15 0/4] Add NVIDIA Tegra GPC-DMA driver
+Date:   Thu, 16 Dec 2021 22:41:56 +0530
+Message-ID: <1639674720-18930-1-git-send-email-akhilrajeev@nvidia.com>
+X-Mailer: git-send-email 2.7.4
+X-NVConfidentiality: public
 MIME-Version: 1.0
-X-OriginatorOrg: microsoft.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: MWHPR21MB1593.namprd21.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 65d6e4d5-65ed-4dc2-c83e-08d9c05b5726
-X-MS-Exchange-CrossTenant-originalarrivaltime: 16 Dec 2021 06:14:38.4102
+Content-Type: text/plain
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-Office365-Filtering-Correlation-Id: ff2c07bc-7728-4999-57db-08d9c0b72ffd
+X-MS-TrafficTypeDiagnostic: DM6PR12MB4827:EE_
+X-Microsoft-Antispam-PRVS: <DM6PR12MB482786B4B596437E8117482FC0779@DM6PR12MB4827.namprd12.prod.outlook.com>
+X-MS-Oob-TLC-OOBClassifiers: OLM:3631;
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?cDSje8vHy94hm09tVcHlbcL2dubLI1ePtnpCU0ApjTGGybAEHPegs/n6IwIi?=
+ =?us-ascii?Q?T1r2TjFEew5WGiQh85lVCJYCfmT8eVjlFTiVInohWfDO1k4HHSMEabTCWVYf?=
+ =?us-ascii?Q?0q282Zh5jayX0S7N0QusL0TDKjgIHescHyiw0ckg74pGm4A4UUyfmTpVmAU9?=
+ =?us-ascii?Q?b0HNxunsx+huRhAhhrycV98PULxYNYI8scPOiHJvvnaXB++/Aik0spr1mdED?=
+ =?us-ascii?Q?ldnSCse04v3wWHMa7HvYMhddOA1ll/Ba5OqW4qMKdgZOMRA/W+DVhWVCZg5I?=
+ =?us-ascii?Q?AkWrtwqd75Pf4KC4Nl0YogZ4rH3OU3I1ugJ1LsFwJ1AM84QerqOyXCYB/f9R?=
+ =?us-ascii?Q?OiYjhAp/U10+rttOYVFnHKTekfmKdxFMUt39tRKZioQ9NXGyqATF+mQzVoz7?=
+ =?us-ascii?Q?SND16NGbZBhwM7AD14XLHjx69kSykSWpZ2cHNpxX5tYWHzXVlpc0dVBqfJOh?=
+ =?us-ascii?Q?+wdRei+Q5E/UKoMeE+NQuTj0Z/8zzgv8Me83IhngdZUUD10oI8k2+Gbc5XDZ?=
+ =?us-ascii?Q?VHVax07P93O7hhCQNMK3OmA1B+u1UqHNCvksHd15D6bLeacp3PleoecVlVDH?=
+ =?us-ascii?Q?QUrStuemciD0BfJs9LChVDTvBcbxq1hOHc8OFRhgZw/USEOOajPunDel2lUn?=
+ =?us-ascii?Q?9Sp1RtbcrxH+4+ZgMLo7Cmha90cMRWx+6AYtTGLgDA6kaPUL3zoeX73VGBRW?=
+ =?us-ascii?Q?0af7ATxWfTS7mLow9Y4l5JQyuYjIrA8qYAKCWkUn78MnPRrxwiM9fQsV+o+F?=
+ =?us-ascii?Q?cssPi+8SRy153Eq8wQfjv3+lJZYKLx5Oe2jyQtBxaIfRl8ydlBsdsRlR7IEW?=
+ =?us-ascii?Q?IkbbAXw79ToctAHRNAbS92iZk/3Ns/g6dRIugyQ8VmX+c5eXAhrxe1fINgqa?=
+ =?us-ascii?Q?9ETfE3L4WqLLeEDiB+0NvjQhyV1d7Kc+he0ksLevcJI4nBIpeZjF2eBSwNCk?=
+ =?us-ascii?Q?635z/EaX3lXahVFGUJOnR5fWHVEnVhK+xgXejZCEEHo=3D?=
+X-Forefront-Antispam-Report: CIP:12.22.5.236;CTRY:US;LANG:en;SCL:1;SRV:;IPV:CAL;SFV:NSPM;H:mail.nvidia.com;PTR:InfoNoRecords;CAT:NONE;SFS:(4636009)(36840700001)(46966006)(40470700001)(4326008)(356005)(36756003)(2906002)(110136005)(40460700001)(36860700001)(5660300002)(2616005)(86362001)(70206006)(7696005)(107886003)(4744005)(70586007)(316002)(966005)(82310400004)(34020700004)(81166007)(508600001)(426003)(26005)(8936002)(47076005)(921005)(186003)(8676002)(336012)(6666004)(83380400001)(2101003)(83996005)(36900700001);DIR:OUT;SFP:1101;
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Dec 2021 17:12:06.4910
  (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: eZ6pq4A7PkIMdqcGP/0mVivXlhB7Zm5ttEPN0eB5RBMFkYw7pr1902VJm30AU6kAFZ3r11LxYBi0TMYOCPy30l0AVasWxzJ11tgrlS3mR20=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR21MB1273
+X-MS-Exchange-CrossTenant-Network-Message-Id: ff2c07bc-7728-4999-57db-08d9c0b72ffd
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[12.22.5.236];Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource: CO1NAM11FT026.eop-nam11.prod.protection.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR12MB4827
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-From: Thomas Gleixner <tglx@linutronix.de> Sent: Wednesday, December 15, 20=
-21 8:36 AM
->=20
-> On Wed, Dec 15 2021 at 17:18, Thomas Gleixner wrote:
->=20
-> > On Tue, Dec 14 2021 at 22:19, Thomas Gleixner wrote:
-> >> On Tue, Dec 14 2021 at 14:56, Nishanth Menon wrote:
-> >>
-> >> thanks for trying. I'll have a look again with brain awake tomorrow
-> >> morning.
-> >
-> > Morning was busy with other things, but I found what my sleepy brain
-> > managed to do wrong yesterday evening.
-> >
-> > Let me reintegrate the pile and I'll send you an update.
->=20
->    git://git.kernel.org/pub/scm/linux/kernel/git/tglx/devel.git msi-v4.1-=
-part-2
->    git://git.kernel.org/pub/scm/linux/kernel/git/tglx/devel.git msi-v4.2-=
-part-3
->=20
-> That should cure the problem.
+Add support for NVIDIA Tegra general purpose DMA driver for
+Tegra186 and Tegra194 platform.
 
-Tested the msi-v4.2-part-3 tag in two different Azure/Hyper-V VMs.  One
-is a Generation 1 VM that has legacy PCI devices and one is a Generation 2
-VM with no legacy PCI devices.   Tested hot add and remove of Mellanox
-CX-3 and CX-4 SR-IOV NIC virtual functions that are directly mapped into th=
-e
-VM.  Also tested local NVMe devices directly mapped into one of the VMs.
+v14 -> v15:
+  * Removed late suspend.
+  * Removed unneeded prototype
+  * Updated kfree to free tdc->vc instead of tdc->dma_desc.
+  * Updated Kconfig to use ARCH_TEGRA instead of specific chips.
 
-No issues encountered.  So for Azure/Hyper-V specifically,
+v14 - https://lkml.org/lkml/2021/12/6/370
 
-Tested-by: Michael Kelley <mikelley@microsoft.com>
+Akhil R (4):
+  dt-bindings: dmaengine: Add doc for tegra gpcdma
+  dmaengine: tegra: Add tegra gpcdma driver
+  arm64: defconfig: tegra: Enable GPCDMA
+  arm64: tegra: Add GPCDMA node for tegra186 and tegra194
+
+ .../bindings/dma/nvidia,tegra186-gpc-dma.yaml      |  110 ++
+ arch/arm64/boot/dts/nvidia/tegra186.dtsi           |   42 +
+ arch/arm64/boot/dts/nvidia/tegra194.dtsi           |   43 +
+ arch/arm64/configs/defconfig                       |    1 +
+ drivers/dma/Kconfig                                |   11 +
+ drivers/dma/Makefile                               |    1 +
+ drivers/dma/tegra186-gpc-dma.c                     | 1281 ++++++++++++++++++++
+ 7 files changed, 1489 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/dma/nvidia,tegra186-gpc-dma.yaml
+ create mode 100644 drivers/dma/tegra186-gpc-dma.c
+
+-- 
+2.7.4
 
