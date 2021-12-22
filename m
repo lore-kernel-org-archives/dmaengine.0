@@ -2,76 +2,66 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8BF53C4167B
-	for <dmaengine@archiver.kernel.org>; Wed, 22 Dec 2021 11:45:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 34C12C433F5
+	for <dmaengine@archiver.kernel.org>; Wed, 22 Dec 2021 16:15:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232268AbhLVLp0 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 22 Dec 2021 06:45:26 -0500
-Received: from relmlor2.renesas.com ([210.160.252.172]:53136 "EHLO
-        relmlie6.idc.renesas.com" rhost-flags-OK-OK-OK-FAIL)
-        by vger.kernel.org with ESMTP id S233541AbhLVLpZ (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Wed, 22 Dec 2021 06:45:25 -0500
+        id S230463AbhLVQPp (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 22 Dec 2021 11:15:45 -0500
+Received: from relmlor1.renesas.com ([210.160.252.171]:29248 "EHLO
+        relmlie5.idc.renesas.com" rhost-flags-OK-OK-OK-FAIL)
+        by vger.kernel.org with ESMTP id S234060AbhLVQPo (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Wed, 22 Dec 2021 11:15:44 -0500
 X-IronPort-AV: E=Sophos;i="5.88,226,1635174000"; 
-   d="scan'208";a="104834400"
+   d="scan'208";a="104375071"
 Received: from unknown (HELO relmlir6.idc.renesas.com) ([10.200.68.152])
-  by relmlie6.idc.renesas.com with ESMTP; 22 Dec 2021 20:45:23 +0900
-Received: from localhost.localdomain (unknown [10.166.15.32])
-        by relmlir6.idc.renesas.com (Postfix) with ESMTP id 1C0B642E4FF5;
-        Wed, 22 Dec 2021 20:45:23 +0900 (JST)
-From:   Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
-To:     vkoul@kernel.org, robh+dt@kernel.org
-Cc:     dmaengine@vger.kernel.org, devicetree@vger.kernel.org,
+  by relmlie5.idc.renesas.com with ESMTP; 23 Dec 2021 01:15:42 +0900
+Received: from localhost.localdomain (unknown [10.226.36.204])
+        by relmlir6.idc.renesas.com (Postfix) with ESMTP id 41CE640A14AC;
+        Thu, 23 Dec 2021 01:15:40 +0900 (JST)
+From:   Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+To:     Sean Wang <sean.wang@mediatek.com>, Vinod Koul <vkoul@kernel.org>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        dmaengine@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-mediatek@lists.infradead.org
+Cc:     Rob Herring <robh+dt@kernel.org>, linux-kernel@vger.kernel.org,
         linux-renesas-soc@vger.kernel.org,
-        Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-        Geert Uytterhoeven <geert+renesas@glider.be>
-Subject: [PATCH v2 1/2] dt-bindings: renesas,rcar-dmac: Add r8a779f0 support
-Date:   Wed, 22 Dec 2021 20:45:06 +0900
-Message-Id: <20211222114507.1252947-2-yoshihiro.shimoda.uh@renesas.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20211222114507.1252947-1-yoshihiro.shimoda.uh@renesas.com>
-References: <20211222114507.1252947-1-yoshihiro.shimoda.uh@renesas.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        Prabhakar <prabhakar.csengg@gmail.com>,
+        Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+Subject: [PATCH 0/3] dmaengine: Use platform_get_irq*() variants to fetch IRQ's
+Date:   Wed, 22 Dec 2021 16:15:31 +0000
+Message-Id: <20211222161534.1263-1-prabhakar.mahadev-lad.rj@bp.renesas.com>
+X-Mailer: git-send-email 2.17.1
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Document the compatible value for the Direct Memory Access Controller
-blocks in the Renesas R-Car S4-8 (R8A779F0) SoC.
+Hi All,
 
-The most visible difference with DMAC blocks on other R-Car SoCs
-(except R8A779A0) is the move of the per-channel registers to
-a separate register block.
+This patch series aims to drop using platform_get_resource() for IRQ types
+in preparation for removal of static setup of IRQ resource from DT core
+code.
 
-Signed-off-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
----
- Documentation/devicetree/bindings/dma/renesas,rcar-dmac.yaml | 5 +++++
- 1 file changed, 5 insertions(+)
+Dropping usage of platform_get_resource() was agreed based on
+the discussion [0].
 
-diff --git a/Documentation/devicetree/bindings/dma/renesas,rcar-dmac.yaml b/Documentation/devicetree/bindings/dma/renesas,rcar-dmac.yaml
-index d8142cbd13d3..7c6badf39921 100644
---- a/Documentation/devicetree/bindings/dma/renesas,rcar-dmac.yaml
-+++ b/Documentation/devicetree/bindings/dma/renesas,rcar-dmac.yaml
-@@ -44,6 +44,10 @@ properties:
-       - items:
-           - const: renesas,dmac-r8a779a0 # R-Car V3U
- 
-+      - items:
-+          - const: renesas,dmac-r8a779f0 # R-Car S4-8
-+          - const: renesas,rcar-gen4-dmac
-+
-   reg: true
- 
-   interrupts:
-@@ -118,6 +122,7 @@ if:
-       contains:
-         enum:
-           - renesas,dmac-r8a779a0
-+          - renesas,rcar-gen4-dmac
- then:
-   properties:
-     reg:
+[0] https://patchwork.kernel.org/project/linux-renesas-soc/
+patch/20211209001056.29774-1-prabhakar.mahadev-lad.rj@bp.renesas.com/
+
+Cheers,
+Prabhakar
+
+Lad Prabhakar (3):
+  dmaengine: nbpfaxi: Use platform_get_irq_optional() to get the
+    interrupt
+  dmaengine: mediatek: mtk-hsdma: Use platform_get_irq() to get the
+    interrupt
+  dmaengine: mediatek-cqdma: Use platform_get_irq() to get the interrupt
+
+ drivers/dma/mediatek/mtk-cqdma.c | 12 ++++--------
+ drivers/dma/mediatek/mtk-hsdma.c | 11 ++++-------
+ drivers/dma/nbpfaxi.c            | 13 ++++++-------
+ 3 files changed, 14 insertions(+), 22 deletions(-)
+
 -- 
-2.25.1
+2.17.1
 
