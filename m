@@ -2,18 +2,18 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F40EAC35264
-	for <dmaengine@archiver.kernel.org>; Mon, 27 Dec 2021 12:06:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AE4C1C433EF
+	for <dmaengine@archiver.kernel.org>; Mon, 27 Dec 2021 12:07:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236582AbhL0MGf (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 27 Dec 2021 07:06:35 -0500
-Received: from mout.kundenserver.de ([212.227.126.187]:47399 "EHLO
+        id S236585AbhL0MHT (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 27 Dec 2021 07:07:19 -0500
+Received: from mout.kundenserver.de ([212.227.17.24]:46457 "EHLO
         mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236586AbhL0MGf (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Mon, 27 Dec 2021 07:06:35 -0500
+        with ESMTP id S236580AbhL0MHS (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Mon, 27 Dec 2021 07:07:18 -0500
 Received: from localhost.localdomain ([37.4.249.169]) by
- mrelayeu.kundenserver.de (mreue009 [212.227.15.167]) with ESMTPSA (Nemesis)
- id 1MryKr-1mgUEN17Ez-00nx3N; Mon, 27 Dec 2021 13:06:14 +0100
+ mrelayeu.kundenserver.de (mreue108 [212.227.15.183]) with ESMTPSA (Nemesis)
+ id 1Mirb8-1mXzoK2zJM-00erHu; Mon, 27 Dec 2021 13:07:04 +0100
 From:   Stefan Wahren <stefan.wahren@i2se.com>
 To:     Vinod Koul <vkoul@kernel.org>, Rob Herring <robh+dt@kernel.org>,
         Florian Fainelli <f.fainelli@gmail.com>,
@@ -25,72 +25,68 @@ Cc:     Ray Jui <rjui@broadcom.com>, Scott Branden <sbranden@broadcom.com>,
         Lukas Wunner <lukas@wunner.de>,
         linux-rpi-kernel@lists.infradead.org,
         Stefan Wahren <stefan.wahren@i2se.com>
-Subject: [PATCH RFC 03/11] dmaengine: bcm2835: Support common dma-channel-mask
-Date:   Mon, 27 Dec 2021 13:05:37 +0100
-Message-Id: <1640606743-10993-4-git-send-email-stefan.wahren@i2se.com>
+Subject: [PATCH RFC 11/11] ARM: dts: bcm2711: add bcm2711-dma node
+Date:   Mon, 27 Dec 2021 13:06:52 +0100
+Message-Id: <1640606812-11110-2-git-send-email-stefan.wahren@i2se.com>
 X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1640606743-10993-1-git-send-email-stefan.wahren@i2se.com>
-References: <1640606743-10993-1-git-send-email-stefan.wahren@i2se.com>
-X-Provags-ID: V03:K1:pLYG2yJd/86QSRmuXUNXZ0jIhtsFv1rfHEN2cSa9TfrRHXAWO4l
- aNYr2qJeom3SA27zUgKi6qnIgcL0rjTmq/0FDmy2SMlwHx+4AP4XCT2c+qwQexjMvOGKiS1
- JTOEQAVEPBUUr7BwZuH4qT2h5SQSpVcrYOJGgtzQeMj6za1WG8IyO+YLj0eiNSrC6IMJn1p
- /9/wtHXceaKFfdeRcVerA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:J6uy7lC+pS8=:/R/8iW/sI1gAwBu30ljRSk
- jXqZfVAjxRgtDwM6cRkToPx1ynXW1wFJyh2Q8H6djqi5HwsK6+pWX7jNZxor3t/2fo9MCuUfM
- rdZB1ykQt+N0FEXMK3mdHYizMURtO+BSmLYspKcZ0vIpcFhvBMHX0ycUL26VeA7jkPiJFncic
- f+Ka9dvWLA0mVfXzCj9EZrxMFs+n3yv0uignNRzEaCGdELeYtl/YCc+KvkVhFw+/XiRyoUyQj
- Cd2uCaEfJwk1wQ5ZL65s3VkfiaqRHeDrp4Jv1ofgP6IgQkTikTcvgBTZ2GXWjx5zyOz0Ole3y
- y8sfH/vTdHcI7K4VmibkdOoZF+N3wDb7Gbb4Z7sRvahfDEWLgNYIg4ptytQ3ETlm2HoDiZvEE
- VAJ/4KDo5CGzT4syfC+Dap4JifeJyisc2+jKh7nQr4xgXRH43v0F7lWEo5mF2NWWejLa1WzcD
- Iynxj2lVGYcgIHrXdabARmmex3qUKUO8lLMMw0onmbYnZ0rBWgkKudnKHU/TERUf0hfHypZdm
- ThOjjCfvl+FzUGDahA5QUjFNZsVKhwC8/XFMoJkqX1txAaifmUyhXIBM6EsDzlQT2TkF14DvY
- gPl6ZGy55KN1sqQRjrsFFFcTxmwG/RkYtZtEvOT1xejCmgIVYKTLeGXot58eR+8jcAhHfJT+m
- 0dEUMkp5yNzRpRCM7qpVRlb+RZ4gyovXbshezgG0SIQY4pJ/+pMTmN9hIy2J1kqsuQejM3JX8
- 5l6ykr9GibWR8/6H
+In-Reply-To: <1640606812-11110-1-git-send-email-stefan.wahren@i2se.com>
+References: <1640606812-11110-1-git-send-email-stefan.wahren@i2se.com>
+X-Provags-ID: V03:K1:U3nO36HzZGXq40n9R882naHiNjUl4oAFLiWYXZZHkaUh42dvvLS
+ burphzCrKM4DScfSiS/mZaIkh+uybGI1l2APtf1yp9EoWu0+1FY/9Ry/OPB2kmcRbGK4WEa
+ ndQURDst4PiujCCqJSeJGfu5+BNnHwBVdfuFSMIwLx/YjacYrvvpctnSy4Xpcma2qJ9qrAX
+ C6uiZeOtSxYEys3O9MIdA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:PcMir07Pc54=:bxIJKo2MiIwel1ZhW6jVx5
+ e8W38T1FRN+TR0DUfVTqJNCcq4sZ18dUnvBpn0tQz41g4qmNg52LH3/xa4JhgnlF582q6dbYw
+ KYX1R8UcQxW85FjugCnqn3AEX9uEk/QDGQx07FDg1UHXITPDlC6AYbVK96A2VNYCw1wqSRoqs
+ p3z+1pEi6fYIv0wGedFrsmQXCweu5BoiupAV0UTd3cnCt6yAfQCIGXvXq4SrTywFiosFVi4Hx
+ f0LWr2aA4dYS2VZ7xYgkRiZQDlDKQOKLzsS2J9cVWj6ba7rYwnxnsXkyfsz0t+e6AmdXTS96D
+ TZlesK47HWeSJ8EWounZTgHaYyd2U6dMWQz6S5kaPVtUTxFRE+6ObJuTLoQ7R+y2xuj+yBYNv
+ Ld9Wvo8xegHoa+ws12LL2lKucFn7f0QpQfzO7a+Alr10N/4yYcQtlAiVRk5Tz0CmEu71RMUfb
+ j6QQm+Yrtzy57pRI/RPdXb8bZhWuXk/ruZBuocVcnMj4n/hFTQAXXDfmPsBjV4/YgdCXuAHIP
+ jsJyXtm0xZHchTSUVxnDujGVRKwUwsCc74ptcEnw07ZRPRezn3vips9TtGupRnkXY4m0Oe3hV
+ ImhGcrhEScceH1pa0Q+2ANQ5I4ER+dIQ/SrX2a9SkdCj/aC+if6O5XUG77ClLZoRMvXNlduWi
+ WF48MEk8YTZZrqFO/iw3/899Es5JBVzNT340L0fkmr3t/BYAjE/muLJFXdkujchIFqDEpzdaz
+ Zlx4qJWgfcsUgkqE
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Nowadays there is a generic property for dma-channel-mask in the DMA
-controller binding. So prefer this one instead of the old vendor specific
-one. Print a warning in case the old one is used. Btw use the result of
-of_property_read_u32() as return code in error case.
+BCM2711 has 4 DMA channels with a 40-bit address range, allowing them
+to access the full 4GB of memory on a Pi 4. Not sure which adjustments to
+the parent node (scb) are required.
 
 Signed-off-by: Stefan Wahren <stefan.wahren@i2se.com>
 ---
- drivers/dma/bcm2835-dma.c | 19 +++++++++++++------
- 1 file changed, 13 insertions(+), 6 deletions(-)
+ arch/arm/boot/dts/bcm2711.dtsi | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-diff --git a/drivers/dma/bcm2835-dma.c b/drivers/dma/bcm2835-dma.c
-index 630dfbb..adfe6bc 100644
---- a/drivers/dma/bcm2835-dma.c
-+++ b/drivers/dma/bcm2835-dma.c
-@@ -943,12 +943,19 @@ static int bcm2835_dma_probe(struct platform_device *pdev)
- 	}
- 
- 	/* Request DMA channel mask from device tree */
--	if (of_property_read_u32(pdev->dev.of_node,
--			"brcm,dma-channel-mask",
--			&chans_available)) {
--		dev_err(&pdev->dev, "Failed to get channel mask\n");
--		rc = -EINVAL;
--		goto err_no_dma;
-+	rc = of_property_read_u32(pdev->dev.of_node, "dma-channel-mask",
-+				  &chans_available);
+diff --git a/arch/arm/boot/dts/bcm2711.dtsi b/arch/arm/boot/dts/bcm2711.dtsi
+index 590068b..12f373b 100644
+--- a/arch/arm/boot/dts/bcm2711.dtsi
++++ b/arch/arm/boot/dts/bcm2711.dtsi
+@@ -536,6 +536,22 @@
+ 				#size-cells = <0x1>;
+ 			};
+ 		};
 +
-+	if (rc) {
-+		/* Try deprecated property */
-+		if (of_property_read_u32(pdev->dev.of_node,
-+					 "brcm,dma-channel-mask",
-+					 &chans_available)) {
-+			dev_err(&pdev->dev, "Failed to get channel mask\n");
-+			goto err_no_dma;
-+		}
-+
-+		dev_warn(&pdev->dev, "Please update DT blob\n");
- 	}
++		dma40: dma-controller@7e007b00 {
++			compatible = "brcm,bcm2711-dma";
++			reg = <0x0 0x7e007b00 0x400>;
++			interrupts = <GIC_SPI 89 IRQ_TYPE_LEVEL_HIGH>, /* dma4 11 */
++				     <GIC_SPI 90 IRQ_TYPE_LEVEL_HIGH>, /* dma4 12 */
++				     <GIC_SPI 91 IRQ_TYPE_LEVEL_HIGH>, /* dma4 13 */
++				     <GIC_SPI 92 IRQ_TYPE_LEVEL_HIGH>; /* dma4 14 */
++			interrupt-names = "dma11",
++					  "dma12",
++					  "dma13",
++					  "dma14";
++			#dma-cells = <1>;
++			/* The VPU firmware uses DMA channel 11 for VCHIQ */
++			brcm,dma-channel-mask = <0x7000>;
++		};
+ 	};
+ };
  
- 	/* get irqs for each channel that we support */
 -- 
 2.7.4
 
