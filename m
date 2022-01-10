@@ -2,66 +2,78 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 17A9AC433F5
-	for <dmaengine@archiver.kernel.org>; Mon, 10 Jan 2022 10:16:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5CBB6C433EF
+	for <dmaengine@archiver.kernel.org>; Mon, 10 Jan 2022 13:47:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243739AbiAJKQ4 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 10 Jan 2022 05:16:56 -0500
-Received: from smtp23.cstnet.cn ([159.226.251.23]:39668 "EHLO cstnet.cn"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S243744AbiAJKQj (ORCPT <rfc822;dmaengine@vger.kernel.org>);
-        Mon, 10 Jan 2022 05:16:39 -0500
-Received: from localhost.localdomain (unknown [124.16.138.126])
-        by APP-03 (Coremail) with SMTP id rQCowABnbFhnB9xheltfBQ--.36673S2;
-        Mon, 10 Jan 2022 18:16:07 +0800 (CST)
-From:   Jiasheng Jiang <jiasheng@iscas.ac.cn>
-To:     geert@linux-m68k.org
-Cc:     vkoul@kernel.org, yoshihiro.shimoda.uh@renesas.com,
-        laurent.pinchart@ideasonboard.com,
-        wsa+renesas@sang-engineering.com, zou_wei@huawei.com,
-        dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Jiasheng Jiang <jiasheng@iscas.ac.cn>
-Subject: Re: Re: [PATCH] dmaengine: sh: rcar-dmac: Check for error num after setting mask
-Date:   Mon, 10 Jan 2022 18:16:06 +0800
-Message-Id: <20220110101606.429119-1-jiasheng@iscas.ac.cn>
-X-Mailer: git-send-email 2.25.1
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: rQCowABnbFhnB9xheltfBQ--.36673S2
-X-Coremail-Antispam: 1UD129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7v73
-        VFW2AGmfu7bjvjm3AaLaJ3UjIYCTnIWjp_UUUYY7AC8VAFwI0_Gr0_Xr1l1xkIjI8I6I8E
-        6xAIw20EY4v20xvaj40_Wr0E3s1l1IIY67AEw4v_Jr0_Jr4l8cAvFVAK0II2c7xJM28Cjx
-        kF64kEwVA0rcxSw2x7M28EF7xvwVC0I7IYx2IY67AKxVW5JVW7JwA2z4x0Y4vE2Ix0cI8I
-        cVCY1x0267AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIE14v26F4UJVW0owA2z4x0Y4vEx4A2js
-        IEc7CjxVAFwI0_GcCE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqx4xG64xvF2IEw4CE
-        5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE14v26r1j6r4UMcvjeV
-        CFs4IE7xkEbVWUJVW8JwACjcxG0xvY0x0EwIxGrwACjI8F5VA0II8E6IAqYI8I648v4I1l
-        c2xSY4AK67AK6r4DMxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I
-        0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWU
-        tVW8ZwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcV
-        CY1x0267AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_WFyUJVCq3wCI42IY6I8E87Iv
-        67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I0E14v26r4j6r4UJbIYCTnIWIevJa73UjIFyT
-        uYvjfUonmRUUUUU
-X-Originating-IP: [124.16.138.126]
-X-CM-SenderInfo: pmld2xxhqjqxpvfd2hldfou0/
+        id S234278AbiAJNru (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 10 Jan 2022 08:47:50 -0500
+Received: from relmlor2.renesas.com ([210.160.252.172]:17543 "EHLO
+        relmlie6.idc.renesas.com" rhost-flags-OK-OK-OK-FAIL)
+        by vger.kernel.org with ESMTP id S234254AbiAJNrc (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Mon, 10 Jan 2022 08:47:32 -0500
+X-IronPort-AV: E=Sophos;i="5.88,277,1635174000"; 
+   d="scan'208";a="106558145"
+Received: from unknown (HELO relmlir6.idc.renesas.com) ([10.200.68.152])
+  by relmlie6.idc.renesas.com with ESMTP; 10 Jan 2022 22:47:31 +0900
+Received: from localhost.localdomain (unknown [10.226.36.204])
+        by relmlir6.idc.renesas.com (Postfix) with ESMTP id 69EE642E354B;
+        Mon, 10 Jan 2022 22:47:29 +0900 (JST)
+From:   Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+To:     Geert Uytterhoeven <geert+renesas@glider.be>,
+        linux-renesas-soc@vger.kernel.org, Vinod Koul <vkoul@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Biju Das <biju.das.jz@bp.renesas.com>
+Cc:     Prabhakar <prabhakar.csengg@gmail.com>,
+        linux-kernel@vger.kernel.org,
+        Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
+        dmaengine@vger.kernel.org, devicetree@vger.kernel.org
+Subject: [PATCH v2 08/12] dt-bindings: dma: rz-dmac: Document RZ/V2L SoC
+Date:   Mon, 10 Jan 2022 13:46:55 +0000
+Message-Id: <20220110134659.30424-9-prabhakar.mahadev-lad.rj@bp.renesas.com>
+X-Mailer: git-send-email 2.17.1
+In-Reply-To: <20220110134659.30424-1-prabhakar.mahadev-lad.rj@bp.renesas.com>
+References: <20220110134659.30424-1-prabhakar.mahadev-lad.rj@bp.renesas.com>
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On Mon, Jan 10, 2022 at 05:37:34PM +0800, Geert Uytterhoeven wrote:
->> --- a/drivers/dma/sh/rcar-dmac.c
->> +++ b/drivers/dma/sh/rcar-dmac.c
->> @@ -1869,7 +1869,9 @@ static int rcar_dmac_probe(struct platform_device *pdev)
->>         dmac->dev = &pdev->dev;
->>         platform_set_drvdata(pdev, dmac);
->>         dma_set_max_seg_size(dmac->dev, RCAR_DMATCR_MASK);
->
-> dma_set_max_seg_size() can fail, too.
+From: Biju Das <biju.das.jz@bp.renesas.com>
 
-Thanks for your reminder.
-I will submit another patch to fix it and add
-"Reported-by: Geert Uytterhoeven <geert+renesas@glider.be>".
+Document RZ/V2L DMAC bindings. RZ/V2L DMAC is identical to one found on
+the RZ/G2L SoC. No driver changes are required as generic compatible
+string "renesas,rz-dmac" will be used as a fallback.
 
-Sincerely thanks,
-Jiang
+Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
+Signed-off-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+Acked-by: Rob Herring <robh@kernel.org>
+---
+v1->v2
+* Included ACK from ROB
+---
+ Documentation/devicetree/bindings/dma/renesas,rz-dmac.yaml | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/Documentation/devicetree/bindings/dma/renesas,rz-dmac.yaml b/Documentation/devicetree/bindings/dma/renesas,rz-dmac.yaml
+index 7a4f415d74dc..e353377084aa 100644
+--- a/Documentation/devicetree/bindings/dma/renesas,rz-dmac.yaml
++++ b/Documentation/devicetree/bindings/dma/renesas,rz-dmac.yaml
+@@ -4,7 +4,7 @@
+ $id: http://devicetree.org/schemas/dma/renesas,rz-dmac.yaml#
+ $schema: http://devicetree.org/meta-schemas/core.yaml#
+ 
+-title: Renesas RZ/G2L DMA Controller
++title: Renesas RZ/{G2L,V2L} DMA Controller
+ 
+ maintainers:
+   - Biju Das <biju.das.jz@bp.renesas.com>
+@@ -17,6 +17,7 @@ properties:
+     items:
+       - enum:
+           - renesas,r9a07g044-dmac # RZ/G2{L,LC}
++          - renesas,r9a07g054-dmac # RZ/V2L
+       - const: renesas,rz-dmac
+ 
+   reg:
+-- 
+2.17.1
 
