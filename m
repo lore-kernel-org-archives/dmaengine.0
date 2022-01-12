@@ -2,38 +2,38 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 36B38C433EF
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 66A45C4332F
 	for <dmaengine@archiver.kernel.org>; Wed, 12 Jan 2022 15:15:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1354488AbiALPP5 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 12 Jan 2022 10:15:57 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58208 "EHLO
+        id S1354489AbiALPP6 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 12 Jan 2022 10:15:58 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58218 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1354489AbiALPPt (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Wed, 12 Jan 2022 10:15:49 -0500
+        with ESMTP id S1354491AbiALPPu (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Wed, 12 Jan 2022 10:15:50 -0500
 Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6A8AEC06175C
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D842AC06175E
         for <dmaengine@vger.kernel.org>; Wed, 12 Jan 2022 07:15:47 -0800 (PST)
 Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
         by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
         (Exim 4.92)
         (envelope-from <mtr@pengutronix.de>)
-        id 1n7fLj-00031N-QU; Wed, 12 Jan 2022 16:15:43 +0100
+        id 1n7fLj-00031L-QU; Wed, 12 Jan 2022 16:15:44 +0100
 Received: from [2a0a:edc0:0:1101:1d::39] (helo=dude03.red.stw.pengutronix.de)
         by drehscheibe.grey.stw.pengutronix.de with esmtp (Exim 4.94.2)
         (envelope-from <mtr@pengutronix.de>)
-        id 1n7fLj-009ufV-KL; Wed, 12 Jan 2022 16:15:42 +0100
+        id 1n7fLj-009ufS-ES; Wed, 12 Jan 2022 16:15:42 +0100
 Received: from mtr by dude03.red.stw.pengutronix.de with local (Exim 4.94.2)
         (envelope-from <mtr@pengutronix.de>)
-        id 1n7fLh-005Zg3-Ib; Wed, 12 Jan 2022 16:15:41 +0100
+        id 1n7fLh-005Zfx-HO; Wed, 12 Jan 2022 16:15:41 +0100
 From:   Michael Tretter <m.tretter@pengutronix.de>
 To:     devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
         dmaengine@vger.kernel.org
 Cc:     robh+dt@kernel.org, michal.simek@xilinx.com,
         m.tretter@pengutronix.de, kernel@pengutronix.de
-Subject: [PATCH 3/3] arm64: zynqmp: Rename dma to dma-controller
-Date:   Wed, 12 Jan 2022 16:15:41 +0100
-Message-Id: <20220112151541.1328732-4-m.tretter@pengutronix.de>
+Subject: [PATCH 1/3] dt-bindings: dmaengine: zynqmp_dma: convert to yaml
+Date:   Wed, 12 Jan 2022 16:15:39 +0100
+Message-Id: <20220112151541.1328732-2-m.tretter@pengutronix.de>
 X-Mailer: git-send-email 2.30.2
 In-Reply-To: <20220112151541.1328732-1-m.tretter@pengutronix.de>
 References: <20220112151541.1328732-1-m.tretter@pengutronix.de>
@@ -47,162 +47,139 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-The ZynqMP dma engines are actually dma-controllers as specified by the
-device tree binding. Rename the device tree nodes accordingly.
+Convert the Xilinx ZynqMP DMA engine bindings to Yaml.
 
 Signed-off-by: Michael Tretter <m.tretter@pengutronix.de>
 ---
- arch/arm64/boot/dts/xilinx/zynqmp.dtsi | 32 +++++++++++++-------------
- 1 file changed, 16 insertions(+), 16 deletions(-)
+ .../dma/xilinx/xlnx,zynqmp-dma-1.0.yaml       | 85 +++++++++++++++++++
+ .../bindings/dma/xilinx/zynqmp_dma.txt        | 26 ------
+ 2 files changed, 85 insertions(+), 26 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/dma/xilinx/xlnx,zynqmp-dma-1.0.yaml
+ delete mode 100644 Documentation/devicetree/bindings/dma/xilinx/zynqmp_dma.txt
 
-diff --git a/arch/arm64/boot/dts/xilinx/zynqmp.dtsi b/arch/arm64/boot/dts/xilinx/zynqmp.dtsi
-index 6d96b6b99f84..3e15391e5b37 100644
---- a/arch/arm64/boot/dts/xilinx/zynqmp.dtsi
-+++ b/arch/arm64/boot/dts/xilinx/zynqmp.dtsi
-@@ -254,7 +254,7 @@ pmu@9000 {
- 		};
- 
- 		/* GDMA */
--		fpd_dma_chan1: dma@fd500000 {
-+		fpd_dma_chan1: dma-controller@fd500000 {
- 			status = "disabled";
- 			compatible = "xlnx,zynqmp-dma-1.0";
- 			reg = <0x0 0xfd500000 0x0 0x1000>;
-@@ -267,7 +267,7 @@ fpd_dma_chan1: dma@fd500000 {
- 			power-domains = <&zynqmp_firmware PD_GDMA>;
- 		};
- 
--		fpd_dma_chan2: dma@fd510000 {
-+		fpd_dma_chan2: dma-controller@fd510000 {
- 			status = "disabled";
- 			compatible = "xlnx,zynqmp-dma-1.0";
- 			reg = <0x0 0xfd510000 0x0 0x1000>;
-@@ -280,7 +280,7 @@ fpd_dma_chan2: dma@fd510000 {
- 			power-domains = <&zynqmp_firmware PD_GDMA>;
- 		};
- 
--		fpd_dma_chan3: dma@fd520000 {
-+		fpd_dma_chan3: dma-controller@fd520000 {
- 			status = "disabled";
- 			compatible = "xlnx,zynqmp-dma-1.0";
- 			reg = <0x0 0xfd520000 0x0 0x1000>;
-@@ -293,7 +293,7 @@ fpd_dma_chan3: dma@fd520000 {
- 			power-domains = <&zynqmp_firmware PD_GDMA>;
- 		};
- 
--		fpd_dma_chan4: dma@fd530000 {
-+		fpd_dma_chan4: dma-controller@fd530000 {
- 			status = "disabled";
- 			compatible = "xlnx,zynqmp-dma-1.0";
- 			reg = <0x0 0xfd530000 0x0 0x1000>;
-@@ -306,7 +306,7 @@ fpd_dma_chan4: dma@fd530000 {
- 			power-domains = <&zynqmp_firmware PD_GDMA>;
- 		};
- 
--		fpd_dma_chan5: dma@fd540000 {
-+		fpd_dma_chan5: dma-controller@fd540000 {
- 			status = "disabled";
- 			compatible = "xlnx,zynqmp-dma-1.0";
- 			reg = <0x0 0xfd540000 0x0 0x1000>;
-@@ -319,7 +319,7 @@ fpd_dma_chan5: dma@fd540000 {
- 			power-domains = <&zynqmp_firmware PD_GDMA>;
- 		};
- 
--		fpd_dma_chan6: dma@fd550000 {
-+		fpd_dma_chan6: dma-controller@fd550000 {
- 			status = "disabled";
- 			compatible = "xlnx,zynqmp-dma-1.0";
- 			reg = <0x0 0xfd550000 0x0 0x1000>;
-@@ -332,7 +332,7 @@ fpd_dma_chan6: dma@fd550000 {
- 			power-domains = <&zynqmp_firmware PD_GDMA>;
- 		};
- 
--		fpd_dma_chan7: dma@fd560000 {
-+		fpd_dma_chan7: dma-controller@fd560000 {
- 			status = "disabled";
- 			compatible = "xlnx,zynqmp-dma-1.0";
- 			reg = <0x0 0xfd560000 0x0 0x1000>;
-@@ -345,7 +345,7 @@ fpd_dma_chan7: dma@fd560000 {
- 			power-domains = <&zynqmp_firmware PD_GDMA>;
- 		};
- 
--		fpd_dma_chan8: dma@fd570000 {
-+		fpd_dma_chan8: dma-controller@fd570000 {
- 			status = "disabled";
- 			compatible = "xlnx,zynqmp-dma-1.0";
- 			reg = <0x0 0xfd570000 0x0 0x1000>;
-@@ -375,7 +375,7 @@ gic: interrupt-controller@f9010000 {
- 		 * These dma channels, Users should ensure that these dma
- 		 * Channels are allowed for non secure access.
- 		 */
--		lpd_dma_chan1: dma@ffa80000 {
-+		lpd_dma_chan1: dma-controller@ffa80000 {
- 			status = "disabled";
- 			compatible = "xlnx,zynqmp-dma-1.0";
- 			reg = <0x0 0xffa80000 0x0 0x1000>;
-@@ -388,7 +388,7 @@ lpd_dma_chan1: dma@ffa80000 {
- 			power-domains = <&zynqmp_firmware PD_ADMA>;
- 		};
- 
--		lpd_dma_chan2: dma@ffa90000 {
-+		lpd_dma_chan2: dma-controller@ffa90000 {
- 			status = "disabled";
- 			compatible = "xlnx,zynqmp-dma-1.0";
- 			reg = <0x0 0xffa90000 0x0 0x1000>;
-@@ -401,7 +401,7 @@ lpd_dma_chan2: dma@ffa90000 {
- 			power-domains = <&zynqmp_firmware PD_ADMA>;
- 		};
- 
--		lpd_dma_chan3: dma@ffaa0000 {
-+		lpd_dma_chan3: dma-controller@ffaa0000 {
- 			status = "disabled";
- 			compatible = "xlnx,zynqmp-dma-1.0";
- 			reg = <0x0 0xffaa0000 0x0 0x1000>;
-@@ -414,7 +414,7 @@ lpd_dma_chan3: dma@ffaa0000 {
- 			power-domains = <&zynqmp_firmware PD_ADMA>;
- 		};
- 
--		lpd_dma_chan4: dma@ffab0000 {
-+		lpd_dma_chan4: dma-controller@ffab0000 {
- 			status = "disabled";
- 			compatible = "xlnx,zynqmp-dma-1.0";
- 			reg = <0x0 0xffab0000 0x0 0x1000>;
-@@ -427,7 +427,7 @@ lpd_dma_chan4: dma@ffab0000 {
- 			power-domains = <&zynqmp_firmware PD_ADMA>;
- 		};
- 
--		lpd_dma_chan5: dma@ffac0000 {
-+		lpd_dma_chan5: dma-controller@ffac0000 {
- 			status = "disabled";
- 			compatible = "xlnx,zynqmp-dma-1.0";
- 			reg = <0x0 0xffac0000 0x0 0x1000>;
-@@ -440,7 +440,7 @@ lpd_dma_chan5: dma@ffac0000 {
- 			power-domains = <&zynqmp_firmware PD_ADMA>;
- 		};
- 
--		lpd_dma_chan6: dma@ffad0000 {
-+		lpd_dma_chan6: dma-controller@ffad0000 {
- 			status = "disabled";
- 			compatible = "xlnx,zynqmp-dma-1.0";
- 			reg = <0x0 0xffad0000 0x0 0x1000>;
-@@ -453,7 +453,7 @@ lpd_dma_chan6: dma@ffad0000 {
- 			power-domains = <&zynqmp_firmware PD_ADMA>;
- 		};
- 
--		lpd_dma_chan7: dma@ffae0000 {
-+		lpd_dma_chan7: dma-controller@ffae0000 {
- 			status = "disabled";
- 			compatible = "xlnx,zynqmp-dma-1.0";
- 			reg = <0x0 0xffae0000 0x0 0x1000>;
-@@ -466,7 +466,7 @@ lpd_dma_chan7: dma@ffae0000 {
- 			power-domains = <&zynqmp_firmware PD_ADMA>;
- 		};
- 
--		lpd_dma_chan8: dma@ffaf0000 {
-+		lpd_dma_chan8: dma-controller@ffaf0000 {
- 			status = "disabled";
- 			compatible = "xlnx,zynqmp-dma-1.0";
- 			reg = <0x0 0xffaf0000 0x0 0x1000>;
+diff --git a/Documentation/devicetree/bindings/dma/xilinx/xlnx,zynqmp-dma-1.0.yaml b/Documentation/devicetree/bindings/dma/xilinx/xlnx,zynqmp-dma-1.0.yaml
+new file mode 100644
+index 000000000000..c0a1408b12ec
+--- /dev/null
++++ b/Documentation/devicetree/bindings/dma/xilinx/xlnx,zynqmp-dma-1.0.yaml
+@@ -0,0 +1,85 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/dma/xilinx/xlnx,zynqmp-dma-1.0.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Xilinx ZynqMP DMA Engine
++
++description: |
++  The Xilinx ZynqMP DMA engine supports memory to memory transfers,
++  memory to device and device to memory transfers. It also has flow
++  control and rate control support for slave/peripheral dma access.
++
++maintainers:
++  - Michael Tretter <m.tretter@pengutronix.de>
++
++allOf:
++  - $ref: "../dma-controller.yaml#"
++
++properties:
++  "#dma-cells":
++    const: 1
++
++  compatible:
++    const: xlnx,zynqmp-dma-1.0
++
++  reg:
++    description: memory map for gdma/adma module access
++    maxItems: 1
++
++  interrupts:
++    description: DMA channel interrupt
++    maxItems: 1
++
++  clocks:
++    description: input clocks
++    minItems: 2
++    maxItems: 2
++
++  clock-names:
++    items:
++      - const: clk_main
++      - const: clk_apb
++
++  xlnx,bus-width:
++    $ref: /schemas/types.yaml#/definitions/uint32
++    enum:
++      - 64
++      - 128
++    description: AXI bus width in bits
++
++  iommus:
++    maxItems: 1
++
++  power-domains:
++    maxItems: 1
++
++  dma-coherent:
++    description: present if dma operations are coherent
++
++required:
++  - "#dma-cells"
++  - compatible
++  - reg
++  - interrupts
++  - clocks
++  - clock-names
++
++additionalProperties: false
++
++examples:
++  - |
++    #include <dt-bindings/clock/xlnx-zynqmp-clk.h>
++
++    fpd_dma_chan1: dma-controller@fd500000 {
++      compatible = "xlnx,zynqmp-dma-1.0";
++      reg = <0xfd500000 0x1000>;
++      interrupt-parent = <&gic>;
++      interrupts = <0 117 0x4>;
++      #dma-cells = <1>;
++      clock-names = "clk_main", "clk_apb";
++      clocks = <&zynqmp_clk GDMA_REF>, <&zynqmp_clk LPD_LSBUS>;
++      xlnx,bus-width = <128>;
++      dma-coherent;
++    };
+diff --git a/Documentation/devicetree/bindings/dma/xilinx/zynqmp_dma.txt b/Documentation/devicetree/bindings/dma/xilinx/zynqmp_dma.txt
+deleted file mode 100644
+index 07a5a7aa9ea0..000000000000
+--- a/Documentation/devicetree/bindings/dma/xilinx/zynqmp_dma.txt
++++ /dev/null
+@@ -1,26 +0,0 @@
+-Xilinx ZynqMP DMA engine, it does support memory to memory transfers,
+-memory to device and device to memory transfers. It also has flow
+-control and rate control support for slave/peripheral dma access.
+-
+-Required properties:
+-- compatible		: Should be "xlnx,zynqmp-dma-1.0"
+-- reg			: Memory map for gdma/adma module access.
+-- interrupts		: Should contain DMA channel interrupt.
+-- xlnx,bus-width	: Axi buswidth in bits. Should contain 128 or 64
+-- clock-names		: List of input clocks "clk_main", "clk_apb"
+-			  (see clock bindings for details)
+-
+-Optional properties:
+-- dma-coherent		: Present if dma operations are coherent.
+-
+-Example:
+-++++++++
+-fpd_dma_chan1: dma@fd500000 {
+-	compatible = "xlnx,zynqmp-dma-1.0";
+-	reg = <0x0 0xFD500000 0x1000>;
+-	interrupt-parent = <&gic>;
+-	interrupts = <0 117 4>;
+-	clock-names = "clk_main", "clk_apb";
+-	xlnx,bus-width = <128>;
+-	dma-coherent;
+-};
 -- 
 2.30.2
 
