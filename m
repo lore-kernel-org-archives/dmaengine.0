@@ -2,170 +2,191 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 96F32C433F5
-	for <dmaengine@archiver.kernel.org>; Wed, 12 Jan 2022 08:28:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 70C9DC433F5
+	for <dmaengine@archiver.kernel.org>; Wed, 12 Jan 2022 15:15:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1351591AbiALI2o (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 12 Jan 2022 03:28:44 -0500
-Received: from mail-ua1-f44.google.com ([209.85.222.44]:37413 "EHLO
-        mail-ua1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1351628AbiALI2l (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Wed, 12 Jan 2022 03:28:41 -0500
-Received: by mail-ua1-f44.google.com with SMTP id o1so3332800uap.4;
-        Wed, 12 Jan 2022 00:28:40 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=ICGbwIc6WQlKE/ioYvNigSD06lESIz/s7WepMycFiZo=;
-        b=YhEAl30wNcHFyH1+7O1DETP3Av7qbfD+WnsLM8hO1vitAW2g9n+InwUKJoXbWadKy0
-         9JATbFKZI5jE+JefVHSqi7bPqExvVVR8tX6/YEMAwFPW9iWWTit3w6zhyhS6dP+BLoie
-         pOZVF/ykuEDkkqDcfSHpElbXJ4VIhTfVwQoyTY8S+QZEou+iiffhLl0rgDoQLQiyJ1Oi
-         qXXwzIaRG6c+AmFe5OMGKKmeawQkzk19ueZWA+jrelIk5CQoEvRp8/JDAlfaQOPhQJ48
-         u/hpfFkg2p/f1zbouAzJuiVV4SPE69+HHfUU/rydOyqadR1qAyA1QIAbN0N/1kX0maYy
-         BHFQ==
-X-Gm-Message-State: AOAM531jneUJv9YWx2zzNzN+Tum6Ky6bdGM9fcIv4bl34Wvh7Sq9Tnum
-        CXSpQcFmqdX3UBsHPbySnR6oLMEhfeA1Fg==
-X-Google-Smtp-Source: ABdhPJwRWO0gQ7dsBbyZyegdRgDMCFwxwXtWiRODwE+JyRIBB9C7UKZYyalC1z28i9qPm8qgghuvfA==
-X-Received: by 2002:a67:b807:: with SMTP id i7mr3495512vsf.52.1641976120115;
-        Wed, 12 Jan 2022 00:28:40 -0800 (PST)
-Received: from mail-ua1-f51.google.com (mail-ua1-f51.google.com. [209.85.222.51])
-        by smtp.gmail.com with ESMTPSA id c25sm8147583vsk.32.2022.01.12.00.28.39
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 12 Jan 2022 00:28:39 -0800 (PST)
-Received: by mail-ua1-f51.google.com with SMTP id x33so3264101uad.12;
-        Wed, 12 Jan 2022 00:28:39 -0800 (PST)
-X-Received: by 2002:a05:6102:21dc:: with SMTP id r28mr3660457vsg.57.1641976118915;
- Wed, 12 Jan 2022 00:28:38 -0800 (PST)
+        id S1354501AbiALPP4 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 12 Jan 2022 10:15:56 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58206 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1354488AbiALPPt (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Wed, 12 Jan 2022 10:15:49 -0500
+Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 60680C06175B
+        for <dmaengine@vger.kernel.org>; Wed, 12 Jan 2022 07:15:47 -0800 (PST)
+Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
+        by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.92)
+        (envelope-from <mtr@pengutronix.de>)
+        id 1n7fLj-00031H-Qm; Wed, 12 Jan 2022 16:15:43 +0100
+Received: from [2a0a:edc0:0:1101:1d::39] (helo=dude03.red.stw.pengutronix.de)
+        by drehscheibe.grey.stw.pengutronix.de with esmtp (Exim 4.94.2)
+        (envelope-from <mtr@pengutronix.de>)
+        id 1n7fLi-009ufN-Vt; Wed, 12 Jan 2022 16:15:42 +0100
+Received: from mtr by dude03.red.stw.pengutronix.de with local (Exim 4.94.2)
+        (envelope-from <mtr@pengutronix.de>)
+        id 1n7fLh-005Zg0-Hy; Wed, 12 Jan 2022 16:15:41 +0100
+From:   Michael Tretter <m.tretter@pengutronix.de>
+To:     devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        dmaengine@vger.kernel.org
+Cc:     robh+dt@kernel.org, michal.simek@xilinx.com,
+        m.tretter@pengutronix.de, kernel@pengutronix.de
+Subject: [PATCH 2/3] arm64: zynqmp: Add missing #dma-cells property
+Date:   Wed, 12 Jan 2022 16:15:40 +0100
+Message-Id: <20220112151541.1328732-3-m.tretter@pengutronix.de>
+X-Mailer: git-send-email 2.30.2
+In-Reply-To: <20220112151541.1328732-1-m.tretter@pengutronix.de>
+References: <20220112151541.1328732-1-m.tretter@pengutronix.de>
 MIME-Version: 1.0
-References: <cover.1641890718.git.zong.li@sifive.com> <78cfa00a02cbd10202040058af22a73caa9c5ae8.1641890718.git.zong.li@sifive.com>
-In-Reply-To: <78cfa00a02cbd10202040058af22a73caa9c5ae8.1641890718.git.zong.li@sifive.com>
-From:   Geert Uytterhoeven <geert@linux-m68k.org>
-Date:   Wed, 12 Jan 2022 09:28:27 +0100
-X-Gmail-Original-Message-ID: <CAMuHMdUogbyjU=vBuvocxofGFCwzdQndk9OTnVdP+RNA8HEFZQ@mail.gmail.com>
-Message-ID: <CAMuHMdUogbyjU=vBuvocxofGFCwzdQndk9OTnVdP+RNA8HEFZQ@mail.gmail.com>
-Subject: Re: [PATCH v2 3/3] dmaengine: sf-pdma: Get number of channel by
- device tree
-To:     Zong Li <zong.li@sifive.com>
-Cc:     Rob Herring <robh+dt@kernel.org>,
-        Paul Walmsley <paul.walmsley@sifive.com>,
-        Palmer Dabbelt <palmer@dabbelt.com>,
-        Albert Ou <aou@eecs.berkeley.edu>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
-        Conor Dooley <conor.dooley@microchip.com>,
-        Bin Meng <bin.meng@windriver.com>, green.wan@sifive.com,
-        Vinod <vkoul@kernel.org>, dmaengine <dmaengine@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-riscv <linux-riscv@lists.infradead.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
+X-SA-Exim-Mail-From: mtr@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: dmaengine@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Hi Zong,
+Requesting the dma controllers fails if #dma-cells is not defined. Add
+the missing property.
 
-On Tue, Jan 11, 2022 at 9:51 AM Zong Li <zong.li@sifive.com> wrote:
-> It currently assumes that there are always four channels, it would
-> cause the error if there is actually less than four channels. Change
-> that by getting number of channel from device tree.
->
-> For backwards-compatible, it uses the default value (i.e. 4) when there
-> is no 'dma-channels' information in dts.
->
-> Signed-off-by: Zong Li <zong.li@sifive.com>
+Signed-off-by: Michael Tretter <m.tretter@pengutronix.de>
+---
+ arch/arm64/boot/dts/xilinx/zynqmp.dtsi | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-Thanks for your patch!
+diff --git a/arch/arm64/boot/dts/xilinx/zynqmp.dtsi b/arch/arm64/boot/dts/xilinx/zynqmp.dtsi
+index 493719f71fb5..6d96b6b99f84 100644
+--- a/arch/arm64/boot/dts/xilinx/zynqmp.dtsi
++++ b/arch/arm64/boot/dts/xilinx/zynqmp.dtsi
+@@ -261,6 +261,7 @@ fpd_dma_chan1: dma@fd500000 {
+ 			interrupt-parent = <&gic>;
+ 			interrupts = <0 124 4>;
+ 			clock-names = "clk_main", "clk_apb";
++			#dma-cells = <1>;
+ 			xlnx,bus-width = <128>;
+ 			iommus = <&smmu 0x14e8>;
+ 			power-domains = <&zynqmp_firmware PD_GDMA>;
+@@ -273,6 +274,7 @@ fpd_dma_chan2: dma@fd510000 {
+ 			interrupt-parent = <&gic>;
+ 			interrupts = <0 125 4>;
+ 			clock-names = "clk_main", "clk_apb";
++			#dma-cells = <1>;
+ 			xlnx,bus-width = <128>;
+ 			iommus = <&smmu 0x14e9>;
+ 			power-domains = <&zynqmp_firmware PD_GDMA>;
+@@ -285,6 +287,7 @@ fpd_dma_chan3: dma@fd520000 {
+ 			interrupt-parent = <&gic>;
+ 			interrupts = <0 126 4>;
+ 			clock-names = "clk_main", "clk_apb";
++			#dma-cells = <1>;
+ 			xlnx,bus-width = <128>;
+ 			iommus = <&smmu 0x14ea>;
+ 			power-domains = <&zynqmp_firmware PD_GDMA>;
+@@ -297,6 +300,7 @@ fpd_dma_chan4: dma@fd530000 {
+ 			interrupt-parent = <&gic>;
+ 			interrupts = <0 127 4>;
+ 			clock-names = "clk_main", "clk_apb";
++			#dma-cells = <1>;
+ 			xlnx,bus-width = <128>;
+ 			iommus = <&smmu 0x14eb>;
+ 			power-domains = <&zynqmp_firmware PD_GDMA>;
+@@ -309,6 +313,7 @@ fpd_dma_chan5: dma@fd540000 {
+ 			interrupt-parent = <&gic>;
+ 			interrupts = <0 128 4>;
+ 			clock-names = "clk_main", "clk_apb";
++			#dma-cells = <1>;
+ 			xlnx,bus-width = <128>;
+ 			iommus = <&smmu 0x14ec>;
+ 			power-domains = <&zynqmp_firmware PD_GDMA>;
+@@ -321,6 +326,7 @@ fpd_dma_chan6: dma@fd550000 {
+ 			interrupt-parent = <&gic>;
+ 			interrupts = <0 129 4>;
+ 			clock-names = "clk_main", "clk_apb";
++			#dma-cells = <1>;
+ 			xlnx,bus-width = <128>;
+ 			iommus = <&smmu 0x14ed>;
+ 			power-domains = <&zynqmp_firmware PD_GDMA>;
+@@ -333,6 +339,7 @@ fpd_dma_chan7: dma@fd560000 {
+ 			interrupt-parent = <&gic>;
+ 			interrupts = <0 130 4>;
+ 			clock-names = "clk_main", "clk_apb";
++			#dma-cells = <1>;
+ 			xlnx,bus-width = <128>;
+ 			iommus = <&smmu 0x14ee>;
+ 			power-domains = <&zynqmp_firmware PD_GDMA>;
+@@ -345,6 +352,7 @@ fpd_dma_chan8: dma@fd570000 {
+ 			interrupt-parent = <&gic>;
+ 			interrupts = <0 131 4>;
+ 			clock-names = "clk_main", "clk_apb";
++			#dma-cells = <1>;
+ 			xlnx,bus-width = <128>;
+ 			iommus = <&smmu 0x14ef>;
+ 			power-domains = <&zynqmp_firmware PD_GDMA>;
+@@ -374,6 +382,7 @@ lpd_dma_chan1: dma@ffa80000 {
+ 			interrupt-parent = <&gic>;
+ 			interrupts = <0 77 4>;
+ 			clock-names = "clk_main", "clk_apb";
++			#dma-cells = <1>;
+ 			xlnx,bus-width = <64>;
+ 			iommus = <&smmu 0x868>;
+ 			power-domains = <&zynqmp_firmware PD_ADMA>;
+@@ -386,6 +395,7 @@ lpd_dma_chan2: dma@ffa90000 {
+ 			interrupt-parent = <&gic>;
+ 			interrupts = <0 78 4>;
+ 			clock-names = "clk_main", "clk_apb";
++			#dma-cells = <1>;
+ 			xlnx,bus-width = <64>;
+ 			iommus = <&smmu 0x869>;
+ 			power-domains = <&zynqmp_firmware PD_ADMA>;
+@@ -398,6 +408,7 @@ lpd_dma_chan3: dma@ffaa0000 {
+ 			interrupt-parent = <&gic>;
+ 			interrupts = <0 79 4>;
+ 			clock-names = "clk_main", "clk_apb";
++			#dma-cells = <1>;
+ 			xlnx,bus-width = <64>;
+ 			iommus = <&smmu 0x86a>;
+ 			power-domains = <&zynqmp_firmware PD_ADMA>;
+@@ -410,6 +421,7 @@ lpd_dma_chan4: dma@ffab0000 {
+ 			interrupt-parent = <&gic>;
+ 			interrupts = <0 80 4>;
+ 			clock-names = "clk_main", "clk_apb";
++			#dma-cells = <1>;
+ 			xlnx,bus-width = <64>;
+ 			iommus = <&smmu 0x86b>;
+ 			power-domains = <&zynqmp_firmware PD_ADMA>;
+@@ -422,6 +434,7 @@ lpd_dma_chan5: dma@ffac0000 {
+ 			interrupt-parent = <&gic>;
+ 			interrupts = <0 81 4>;
+ 			clock-names = "clk_main", "clk_apb";
++			#dma-cells = <1>;
+ 			xlnx,bus-width = <64>;
+ 			iommus = <&smmu 0x86c>;
+ 			power-domains = <&zynqmp_firmware PD_ADMA>;
+@@ -434,6 +447,7 @@ lpd_dma_chan6: dma@ffad0000 {
+ 			interrupt-parent = <&gic>;
+ 			interrupts = <0 82 4>;
+ 			clock-names = "clk_main", "clk_apb";
++			#dma-cells = <1>;
+ 			xlnx,bus-width = <64>;
+ 			iommus = <&smmu 0x86d>;
+ 			power-domains = <&zynqmp_firmware PD_ADMA>;
+@@ -446,6 +460,7 @@ lpd_dma_chan7: dma@ffae0000 {
+ 			interrupt-parent = <&gic>;
+ 			interrupts = <0 83 4>;
+ 			clock-names = "clk_main", "clk_apb";
++			#dma-cells = <1>;
+ 			xlnx,bus-width = <64>;
+ 			iommus = <&smmu 0x86e>;
+ 			power-domains = <&zynqmp_firmware PD_ADMA>;
+@@ -458,6 +473,7 @@ lpd_dma_chan8: dma@ffaf0000 {
+ 			interrupt-parent = <&gic>;
+ 			interrupts = <0 84 4>;
+ 			clock-names = "clk_main", "clk_apb";
++			#dma-cells = <1>;
+ 			xlnx,bus-width = <64>;
+ 			iommus = <&smmu 0x86f>;
+ 			power-domains = <&zynqmp_firmware PD_ADMA>;
+-- 
+2.30.2
 
-> --- a/drivers/dma/sf-pdma/sf-pdma.c
-> +++ b/drivers/dma/sf-pdma/sf-pdma.c
-> @@ -484,21 +484,24 @@ static int sf_pdma_probe(struct platform_device *pdev)
->         struct sf_pdma *pdma;
->         struct sf_pdma_chan *chan;
->         struct resource *res;
-> -       int len, chans;
-> -       int ret;
-> +       int len, ret;
->         const enum dma_slave_buswidth widths =
->                 DMA_SLAVE_BUSWIDTH_1_BYTE | DMA_SLAVE_BUSWIDTH_2_BYTES |
->                 DMA_SLAVE_BUSWIDTH_4_BYTES | DMA_SLAVE_BUSWIDTH_8_BYTES |
->                 DMA_SLAVE_BUSWIDTH_16_BYTES | DMA_SLAVE_BUSWIDTH_32_BYTES |
->                 DMA_SLAVE_BUSWIDTH_64_BYTES;
->
-> -       chans = PDMA_NR_CH;
-> -       len = sizeof(*pdma) + sizeof(*chan) * chans;
-> +       len = sizeof(*pdma) + sizeof(*chan) * PDMA_MAX_NR_CH;
-
-Why is the last part added (yes, this is a pre-existing issue)?
-struct sf_pdma already contains space for chans[PDMA_MAX_NR_CH].
-Either drop the last part, or change sf_pdma.chans[] to a flexible
-array member.
-
-BTW, you can use the struct_size() or flex_array_size() helper
-to calculate len.
-
->         pdma = devm_kzalloc(&pdev->dev, len, GFP_KERNEL);
->         if (!pdma)
->                 return -ENOMEM;
->
-> -       pdma->n_chans = chans;
-> +       ret = of_property_read_u32(pdev->dev.of_node, "dma-channels",
-> +                                  &pdma->n_chans);
-> +       if (ret) {
-> +               dev_notice(&pdev->dev, "set number of channels to default value: 4\n");
-> +               pdma->n_chans = PDMA_MAX_NR_CH;
-> +       }
->
->         res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
->         pdma->membase = devm_ioremap_resource(&pdev->dev, res);
-> @@ -556,7 +559,7 @@ static int sf_pdma_remove(struct platform_device *pdev)
->         struct sf_pdma_chan *ch;
->         int i;
->
-> -       for (i = 0; i < PDMA_NR_CH; i++) {
-> +       for (i = 0; i < pdma->n_chans; i++) {
->                 ch = &pdma->chans[i];
-
-If dma-channels in DT > PDMA_NR_CH, this becomes an out-of-bound
-access.
-
->
->                 devm_free_irq(&pdev->dev, ch->txirq, ch);
-> diff --git a/drivers/dma/sf-pdma/sf-pdma.h b/drivers/dma/sf-pdma/sf-pdma.h
-> index 0c20167b097d..8127d792f639 100644
-> --- a/drivers/dma/sf-pdma/sf-pdma.h
-> +++ b/drivers/dma/sf-pdma/sf-pdma.h
-> @@ -22,11 +22,7 @@
->  #include "../dmaengine.h"
->  #include "../virt-dma.h"
->
-> -#define PDMA_NR_CH                                     4
-> -
-> -#if (PDMA_NR_CH != 4)
-> -#error "Please define PDMA_NR_CH to 4"
-> -#endif
-> +#define PDMA_MAX_NR_CH                                 4
->
->  #define PDMA_BASE_ADDR                                 0x3000000
->  #define PDMA_CHAN_OFFSET                               0x1000
-> @@ -118,7 +114,7 @@ struct sf_pdma {
->         void __iomem            *membase;
->         void __iomem            *mappedbase;
->         u32                     n_chans;
-> -       struct sf_pdma_chan     chans[PDMA_NR_CH];
-> +       struct sf_pdma_chan     chans[PDMA_MAX_NR_CH];
->  };
->
->  #endif /* _SF_PDMA_H */
--
-Gr{oetje,eeting}s,
-
-                        Geert
-
---
-Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
-
-In personal conversations with technical people, I call myself a hacker. But
-when I'm talking to journalists I just say "programmer" or something like that.
-                                -- Linus Torvalds
