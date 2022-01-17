@@ -2,80 +2,100 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 146AEC433F5
-	for <dmaengine@archiver.kernel.org>; Sun, 16 Jan 2022 11:32:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DFAF0C433F5
+	for <dmaengine@archiver.kernel.org>; Mon, 17 Jan 2022 01:35:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234853AbiAPLcv (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Sun, 16 Jan 2022 06:32:51 -0500
-Received: from zg8tmtyylji0my4xnjeumjiw.icoremail.net ([162.243.161.220]:60041
-        "HELO zg8tmtyylji0my4xnjeumjiw.icoremail.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with SMTP id S232797AbiAPLcv (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Sun, 16 Jan 2022 06:32:51 -0500
-X-Greylist: delayed 21321 seconds by postgrey-1.27 at vger.kernel.org; Sun, 16 Jan 2022 06:32:51 EST
+        id S232733AbiAQBfg (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Sun, 16 Jan 2022 20:35:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60962 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233906AbiAQBfe (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Sun, 16 Jan 2022 20:35:34 -0500
+Received: from mail-pg1-x532.google.com (mail-pg1-x532.google.com [IPv6:2607:f8b0:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B8B76C061574
+        for <dmaengine@vger.kernel.org>; Sun, 16 Jan 2022 17:35:34 -0800 (PST)
+Received: by mail-pg1-x532.google.com with SMTP id g2so9202823pgo.9
+        for <dmaengine@vger.kernel.org>; Sun, 16 Jan 2022 17:35:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=pku.edu.cn; s=dkim; h=Received:From:To:Cc:Subject:Date:
-        Message-Id; bh=4qtF5pTLgHrEtS/8byluABFgtK1z5IUdOHuMX+F5kgw=; b=A
-        gpwgqDGv4gr0ssKHhJ3wqZ4uhsqWVe5I44dY0ari+e0sXuhdyWaSb++2TTeYJ6G6
-        5cRYWBpqAI1fOtJEijJGxMqkvxYxeCX6uLi1ASgZy71xd1mSM6ebOadb+T9NPDcA
-        NVpS5c/R2d+GtKF6sbKa+555zST/3Y4GN1gTiJ7JZQ=
-Received: from localhost (unknown [10.129.21.144])
-        by front01 (Coremail) with SMTP id 5oFpogAXHTkgAuRh8vdaAA--.26418S2;
-        Sun, 16 Jan 2022 19:31:44 +0800 (CST)
-From:   Yongzhi Liu <lyz_cs@pku.edu.cn>
-To:     peter.ujfalusi@gmail.com, vkoul@kernel.org
-Cc:     dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Yongzhi Liu <lyz_cs@pku.edu.cn>
-Subject: [PATCH] dmaengine: ti: Fix runtime PM imbalance on error
-Date:   Sun, 16 Jan 2022 03:31:42 -0800
-Message-Id: <1642332702-126304-1-git-send-email-lyz_cs@pku.edu.cn>
-X-Mailer: git-send-email 2.7.4
-X-CM-TRANSID: 5oFpogAXHTkgAuRh8vdaAA--.26418S2
-X-Coremail-Antispam: 1UD129KBjvdXoWrKrW7ZFW7WF1rGrW8GF4rKrg_yoWfAFb_Cr
-        1rZrWxXrnxWF4Dtw17AwnxZFy0qF4UXr1DuF4Fv343trWjyrs8JrWYvFnYyws3X3yjyr1q
-        ya1v9F17CrWDWjkaLaAFLSUrUUUUUb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
-        9fnUUIcSsGvfJTRUUUb4xFc2x0x2IEx4CE42xK8VAvwI8IcIk0rVWrJVCq3wAFIxvE14AK
-        wVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK021l84ACjcxK6xIIjxv20x
-        vE14v26w1j6s0DM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26F4UJVW0owA2z4x0Y4vEx4A2
-        jsIE14v26rxl6s0DM28EF7xvwVC2z280aVCY1x0267AKxVW0oVCq3wAS0I0E0xvYzxvE52
-        x082IY62kv0487Mc02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUJVWU
-        GwAv7VC2z280aVAFwI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcxkI7VAKI4
-        8JM4x0x7Aq67IIx4CEVc8vx2IErcIFxwCY02Avz4vE-syl42xK82IYc2Ij64vIr41l42xK
-        82IY6x8ErcxFaVAv8VWkJr1UJwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E14
-        v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw1lIxkG
-        c2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAFwI
-        0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r4U
-        MIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIdaVFxhVjvjDU0xZFpf9x0JUdHUDUUU
-        UU=
-X-CM-SenderInfo: irzqijirqukmo6sn3hxhgxhubq/1tbiAwEEBlPy7t9+qgASsW
+        d=sifive.com; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=p5VfPZXhTB1Gitf1/abkH4dtjlhx6yCzyBbwzkYPtDE=;
+        b=nuEGBewfX2D4CBsw5hzzXDBRybGp50VAcaPLK0Bqr/3r2gDlgyUhoDa01Y75lMtU4R
+         ZsqZtEl/sbAcUqB9SJYhkfasbFUOOp6jKKaBBeKAEC4P1f6pataPMUxT76rMe6VnGxnE
+         bxWI36FkiT/2N2I4+m/qFkrI3+iiAaY0rSbiG6Jp9qMbzoNCVRxeVNeGzh1iZxFnnKLa
+         xXrj9gowNzNXtyIaGxcZlx0cz/zZM0r/4g5P1T8FcZDwusYWq3P64BtvYD7EvrOg7PEy
+         1lMmj1YjI+E9v4/poeZIQqxDWdeoV0xpkV4rAZTGGF7PQ3wAFQkz0l4UDRJWSuMzrkb+
+         hXUQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=p5VfPZXhTB1Gitf1/abkH4dtjlhx6yCzyBbwzkYPtDE=;
+        b=yv4FGurMb9mQyq8+4l8C/go5gBVfkv8AlWN/8FqDBVBucT83N11jYSwVr7MlxlLx6r
+         yY5y6yXOEMNQk6kRg/BYo06O595stOS4cirmqAAsfeTCip9e3JjTcm55zp8XHHKBXbFj
+         r8EgmAYQEIjhY2aUEFoySsBH1s92ugAFhETexa7u2xZjycCsOfnKYJCLi0zSz03sSPOm
+         npbdPKGeSKMpyyUvCLNYqM+GxwuQE8a0FkaU0/oEZEDG0DApVsxpisNOd/gPnEY3cXmm
+         oAUE+Z1WxCbV8r+ZmLPJ2kkMTcrlpUdfH2wbOBxfHWHG654bqOw7sw7mYuiEOyHLZzSt
+         agQw==
+X-Gm-Message-State: AOAM530va+WemJ76SwPuEXiAJIRIOBXIBYSpoSOpURq/1WzzVjJw4zf1
+        o3AXplQcuDsMzrNg7Q8KFCcu1Q==
+X-Google-Smtp-Source: ABdhPJxLIYeShTzCQNAuiqhv+woORrPiGiFg3PY5eGHPTWu8DqZgmWT1wWUIlKvDczvdCAZbTZ+aQg==
+X-Received: by 2002:a63:83c8:: with SMTP id h191mr9624306pge.499.1642383334271;
+        Sun, 16 Jan 2022 17:35:34 -0800 (PST)
+Received: from hsinchu16.internal.sifive.com (59-124-168-89.hinet-ip.hinet.net. [59.124.168.89])
+        by smtp.gmail.com with ESMTPSA id l1sm10008335pgn.35.2022.01.16.17.35.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 16 Jan 2022 17:35:33 -0800 (PST)
+From:   Zong Li <zong.li@sifive.com>
+To:     robh+dt@kernel.org, paul.walmsley@sifive.com, palmer@dabbelt.com,
+        aou@eecs.berkeley.edu, krzysztof.kozlowski@canonical.com,
+        conor.dooley@microchip.com, geert@linux-m68k.org,
+        bin.meng@windriver.com, green.wan@sifive.com, vkoul@kernel.org,
+        dmaengine@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org
+Cc:     Zong Li <zong.li@sifive.com>
+Subject: [PATCH v4 0/3] Determine the number of DMA channels by 'dma-channels' property
+Date:   Mon, 17 Jan 2022 09:35:25 +0800
+Message-Id: <cover.1642383007.git.zong.li@sifive.com>
+X-Mailer: git-send-email 2.31.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-pm_runtime_get_sync() increments the runtime PM usage counter even
-when it returns an error code, thus a matching decrement is needed on
-the error handling path to keep the counter balanced.
+The PDMA driver currently assumes there are four channels by default, it
+might cause the error if there is actually less than four channels.
+Change that by getting number of channel dynamically from device tree.
+For backwards-compatible, it uses the default value (i.e. 4) when there
+is no 'dma-channels' information in dts.
 
-Signed-off-by: Yongzhi Liu <lyz_cs@pku.edu.cn>
----
- drivers/dma/ti/edma.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+This patch set contains the dts and dt-bindings change.
 
-diff --git a/drivers/dma/ti/edma.c b/drivers/dma/ti/edma.c
-index 08e47f4..a73f779 100644
---- a/drivers/dma/ti/edma.c
-+++ b/drivers/dma/ti/edma.c
-@@ -2398,9 +2398,9 @@ static int edma_probe(struct platform_device *pdev)
- 	platform_set_drvdata(pdev, ecc);
- 
- 	pm_runtime_enable(dev);
--	ret = pm_runtime_get_sync(dev);
-+	ret = pm_runtime_resume_and_get(dev);
- 	if (ret < 0) {
--		dev_err(dev, "pm_runtime_get_sync() failed\n");
-+		dev_err(dev, "pm_runtime_resume_and_get() failed\n");
- 		pm_runtime_disable(dev);
- 		return ret;
- 	}
+Changed in v4:
+ - Remove cflags of debug use reported-by: kernel test robot <lkp@intel.com>
+
+Changed in v3:
+ - Fix allocating wrong size
+ - Return error if 'dma-channels' is larger than maximum
+
+Changed in v2:
+ - Rebase on tag v5.16
+ - Use 4 as default value of dma-channels
+
+Zong Li (3):
+  riscv: dts: Add dma-channels property in dma node
+  dt-bindings: Add dma-channels for pdma device node
+  dmaengine: sf-pdma: Get number of channel by device tree
+
+ .../bindings/dma/sifive,fu540-c000-pdma.yaml  |  7 +++++++
+ .../boot/dts/microchip/microchip-mpfs.dtsi    |  1 +
+ arch/riscv/boot/dts/sifive/fu540-c000.dtsi    |  1 +
+ drivers/dma/sf-pdma/sf-pdma.c                 | 20 ++++++++++++-------
+ drivers/dma/sf-pdma/sf-pdma.h                 |  8 ++------
+ 5 files changed, 24 insertions(+), 13 deletions(-)
+
 -- 
-2.7.4
+2.31.1
 
