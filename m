@@ -2,88 +2,97 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CF61BC433FE
-	for <dmaengine@archiver.kernel.org>; Fri, 18 Feb 2022 18:12:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 11E36C433EF
+	for <dmaengine@archiver.kernel.org>; Fri, 18 Feb 2022 20:56:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239026AbiBRSNI (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 18 Feb 2022 13:13:08 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:36306 "EHLO
+        id S239553AbiBRU4U (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 18 Feb 2022 15:56:20 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:36996 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238795AbiBRSNH (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Fri, 18 Feb 2022 13:13:07 -0500
-Received: from relay7-d.mail.gandi.net (relay7-d.mail.gandi.net [IPv6:2001:4b98:dc4:8::227])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2237A36302;
-        Fri, 18 Feb 2022 10:12:49 -0800 (PST)
-Received: (Authenticated sender: miquel.raynal@bootlin.com)
-        by mail.gandi.net (Postfix) with ESMTPSA id D5B1A20007;
-        Fri, 18 Feb 2022 18:12:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
-        t=1645207966;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=9DmvAJFX2U0qo86wiZbyP/58xIuEhZNsNjvYfvIL0Zw=;
-        b=fXTIrpfk6ihAVCE7KFWybnOdSS6ItYmEU4QaNAGseyxApwFoy8+DrLW9qdXRGw/k+TtjVt
-        MksSK4fQBIN34+DDaGatzQYxrlLS0tKUz0kzapVuiJFXr3H9bUYyb5DAkkkGCYSnkFzuOe
-        LFf8eg3izI9lZl5/qEr9co0SYeYvTrzlijfAzvFf/DS1x5Ac49ppRcqB14n6QjmV+/280z
-        gFtA3QOFomHR25ZozcbI7ozE6G6qgvQU15/EYbKEe1qP5LSfbnc19ZzThSw7dc2IjkmjaR
-        WM93nCzFISLNB+MZAfHmkHeCdNJOTWLYBg2IOeHNp2har63SOYFprYtTVMVkvg==
-From:   Miquel Raynal <miquel.raynal@bootlin.com>
-To:     Viresh Kumar <vireshk@kernel.org>,
-        Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        Geert Uytterhoeven <geert+renesas@glider.be>,
-        Magnus Damm <magnus.damm@gmail.com>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>
-Cc:     Rob Herring <robh+dt@kernel.org>, <devicetree@vger.kernel.org>,
-        dmaengine@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
-        linux-clk@vger.kernel.org,
-        Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
-        Milan Stevanovic <milan.stevanovic@se.com>,
-        Jimmy Lalande <jimmy.lalande@se.com>,
-        Laetitia MARIOTTINI <laetitia.mariottini@se.com>,
-        Miquel Raynal <miquel.raynal@bootlin.com>
-Subject: [PATCH 8/8] ARM: dts: r9a06g032: Describe the DMA router
-Date:   Fri, 18 Feb 2022 19:12:26 +0100
-Message-Id: <20220218181226.431098-9-miquel.raynal@bootlin.com>
-X-Mailer: git-send-email 2.27.0
-In-Reply-To: <20220218181226.431098-1-miquel.raynal@bootlin.com>
-References: <20220218181226.431098-1-miquel.raynal@bootlin.com>
+        with ESMTP id S231269AbiBRU4U (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Fri, 18 Feb 2022 15:56:20 -0500
+Received: from mga17.intel.com (mga17.intel.com [192.55.52.151])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D4CE184631
+        for <dmaengine@vger.kernel.org>; Fri, 18 Feb 2022 12:56:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1645217763; x=1676753763;
+  h=from:to:cc:subject:date:message-id:in-reply-to:
+   references:mime-version:content-transfer-encoding;
+  bh=unKxfshh86dInrkw1kXhK8vdm0pS1G/6t7SAOu77Low=;
+  b=nb4zpCHEDTICgJ9oq9MYhz+eewxzNAOQeUbh7B4a1jB6zwx1ykLbgsp9
+   sNbN87ngsHMbrqpJQs4xFJe/VZkQXn3gjOgaarGRTUKOrX+rX6X4JciVr
+   CfsXacBx+FsumYH+6060vSUuGfABnb097xb3BFTQ+JuUI3mzAeEKWCKGg
+   AP7xQhMg0L/wCi7YveFVYnWV0kB++j9ws3U1QBxDzI9M0qEU8IWUxm9ep
+   kzVke+ypcRj0lVtHm8xFDzglncsjix7TJPXs3yR4NZR9BGMPcaAuF9upI
+   bRLXYfD7Z88oIHzcyI8+vtFqKRQ70oxq2AzU+kd3sziwdCUPeBHl0P1Q3
+   w==;
+X-IronPort-AV: E=McAfee;i="6200,9189,10262"; a="231840023"
+X-IronPort-AV: E=Sophos;i="5.88,379,1635231600"; 
+   d="scan'208";a="231840023"
+Received: from fmsmga003.fm.intel.com ([10.253.24.29])
+  by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Feb 2022 12:56:03 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.88,379,1635231600"; 
+   d="scan'208";a="626735630"
+Received: from bwalker-desk.ch.intel.com ([143.182.137.126])
+  by FMSMGA003.fm.intel.com with ESMTP; 18 Feb 2022 12:56:02 -0800
+From:   Ben Walker <benjamin.walker@intel.com>
+To:     vkoul@kernel.org
+Cc:     dmaengine@vger.kernel.org, ludovic.desroches@microchip.com,
+        okaya@kernel.org, dave.jiang@intel.com,
+        Ben Walker <benjamin.walker@intel.com>,
+        Tudor Ambarus <tudor.ambarus@microchip.com>
+Subject: [PATCH v2 2/4] dmaengine: at_hdmac: In atc_prep_dma_memset, treat value as a single byte
+Date:   Fri, 18 Feb 2022 13:55:55 -0700
+Message-Id: <20220218205557.486208-3-benjamin.walker@intel.com>
+X-Mailer: git-send-email 2.35.1
+In-Reply-To: <20220218205557.486208-1-benjamin.walker@intel.com>
+References: <20220218205557.486208-1-benjamin.walker@intel.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-There is a dmamux on this SoC which allows picking two different sources
-for a single DMA request.
+The value passed in to .prep_dma_memset is to be treated as a single
+byte repeating pattern.
 
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Signed-off-by: Ben Walker <benjamin.walker@intel.com>
+Cc: Ludovic Desroches <ludovic.desroches@microchip.com>
+Cc: Tudor Ambarus <tudor.ambarus@microchip.com>
 ---
- arch/arm/boot/dts/r9a06g032.dtsi | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/dma/at_hdmac.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm/boot/dts/r9a06g032.dtsi b/arch/arm/boot/dts/r9a06g032.dtsi
-index 640c3eb4bbcd..0eb12c3d9cfd 100644
---- a/arch/arm/boot/dts/r9a06g032.dtsi
-+++ b/arch/arm/boot/dts/r9a06g032.dtsi
-@@ -59,6 +59,13 @@ ext_rtc_clk: extrtcclk {
- 		clock-frequency = <0>;
- 	};
+diff --git a/drivers/dma/at_hdmac.c b/drivers/dma/at_hdmac.c
+index 30ae36124b1db..bb84693f82e8d 100644
+--- a/drivers/dma/at_hdmac.c
++++ b/drivers/dma/at_hdmac.c
+@@ -942,6 +942,7 @@ atc_prep_dma_memset(struct dma_chan *chan, dma_addr_t dest, int value,
+ 	struct at_desc		*desc;
+ 	void __iomem		*vaddr;
+ 	dma_addr_t		paddr;
++	unsigned char		fill_pattern;
  
-+	dmamux: dma-router {
-+		compatible = "renesas,rzn1-dmamux";
-+		#dma-cells = <6>;
-+		dma-requests = <32>;
-+		dma-masters = <&dma0 &dma1>;
-+	};
+ 	dev_vdbg(chan2dev(chan), "%s: d%pad v0x%x l0x%zx f0x%lx\n", __func__,
+ 		&dest, value, len, flags);
+@@ -963,7 +964,14 @@ atc_prep_dma_memset(struct dma_chan *chan, dma_addr_t dest, int value,
+ 			__func__);
+ 		return NULL;
+ 	}
+-	*(u32*)vaddr = value;
 +
- 	soc {
- 		compatible = "simple-bus";
- 		#address-cells = <1>;
++	/* Only the first byte of value is to be used according to dmaengine */
++	fill_pattern = (char)value;
++
++	*(u32*)vaddr = (fill_pattern << 24) |
++		       (fill_pattern << 16) |
++		       (fill_pattern << 8) |
++		       fill_pattern;
+ 
+ 	desc = atc_create_memset_desc(chan, paddr, dest, len);
+ 	if (!desc) {
 -- 
-2.27.0
+2.35.1
 
