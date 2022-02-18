@@ -2,82 +2,99 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D3EB8C433FE
-	for <dmaengine@archiver.kernel.org>; Fri, 18 Feb 2022 20:56:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2A935C43217
+	for <dmaengine@archiver.kernel.org>; Fri, 18 Feb 2022 20:56:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236268AbiBRU4V (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 18 Feb 2022 15:56:21 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:37016 "EHLO
+        id S231269AbiBRU4W (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 18 Feb 2022 15:56:22 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:37024 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231269AbiBRU4V (ORCPT
+        with ESMTP id S239576AbiBRU4V (ORCPT
         <rfc822;dmaengine@vger.kernel.org>); Fri, 18 Feb 2022 15:56:21 -0500
 Received: from mga17.intel.com (mga17.intel.com [192.55.52.151])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F034184631
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7DE37189AB8
         for <dmaengine@vger.kernel.org>; Fri, 18 Feb 2022 12:56:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
   t=1645217764; x=1676753764;
-  h=from:to:cc:subject:date:message-id:mime-version:
-   content-transfer-encoding;
-  bh=5bjH1aWRwrymwCWKXuUVCPVt2wqY0xgSDk+uCtLfNK0=;
-  b=ll0NyATA7mdxspkQSu02/sU/wOUMUTWdcGkiuiwodi2JyEXXFt45E2lY
-   IgXXY35XFJot+GN9+dbdDTyBKw5LKgY/3XZPf8OgWQiVh2LEkwZOmnfnl
-   DBOuPVKIPxsJtGR2xouM/oyN4MxuC97IBZWazy+Mq+HlZ7mvf+FxwQXgs
-   w23T/F+B1FbQomLF1gtBI5fVqHyPSW+e1BAMjOzHNkTEnra1Chqvtl4hn
-   06tIiMP/Y7sMkt9t+MDeOnUTmTM8a2eNC95O9+45u92TCE87azecHCdsX
-   72B93rstOvFk2zsIuFTzO4HDtu6GLFdlMZtcmguYXcHT8hzf7ht0u43Mt
-   g==;
-X-IronPort-AV: E=McAfee;i="6200,9189,10262"; a="231840021"
+  h=from:to:cc:subject:date:message-id:in-reply-to:
+   references:mime-version:content-transfer-encoding;
+  bh=tFz5exw/Q8BYBVPJtqsAJmTppihvI1zL1DDjfonh8LQ=;
+  b=YIbzpzdAcK6CYLCcqmr/zgvhWYxg9T4G541SLmzABCJrmJ0waFPCrpUB
+   wsa8o1qxdgvbMOsZcCABaIRUN2dOPTo2/44ZsUqDVTX69LB6uTvb6VQMr
+   2jzdiSxqT59dcU0ssRKq0P1ALfRvm6Joi4iLrpzSOQPXtP1qLyqbdA3wv
+   tbB/A5PRZqQqZ57g0MpE72Kx9G8Kn+Hiz7UPFDgzi9vdPP1+6+IRqwroe
+   jtlcS1VikQ58nGPI4ACBdm0eecFXs3d7LnT1LnklnLhAy39d+Jv9yZN1k
+   MEPg8NiOu5glxCiUzOwo2ZHft5pSPfs5cedtuzfchFPpqgoYlkI0NlUb7
+   w==;
+X-IronPort-AV: E=McAfee;i="6200,9189,10262"; a="231840024"
 X-IronPort-AV: E=Sophos;i="5.88,379,1635231600"; 
-   d="scan'208";a="231840021"
+   d="scan'208";a="231840024"
 Received: from fmsmga003.fm.intel.com ([10.253.24.29])
   by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Feb 2022 12:56:03 -0800
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="5.88,379,1635231600"; 
-   d="scan'208";a="626735615"
+   d="scan'208";a="626735637"
 Received: from bwalker-desk.ch.intel.com ([143.182.137.126])
-  by FMSMGA003.fm.intel.com with ESMTP; 18 Feb 2022 12:56:01 -0800
+  by FMSMGA003.fm.intel.com with ESMTP; 18 Feb 2022 12:56:02 -0800
 From:   Ben Walker <benjamin.walker@intel.com>
 To:     vkoul@kernel.org
 Cc:     dmaengine@vger.kernel.org, ludovic.desroches@microchip.com,
         okaya@kernel.org, dave.jiang@intel.com,
-        Ben Walker <benjamin.walker@intel.com>
-Subject: [PATCH v2 0/4] dmaengine: memset clarifications and fixes
-Date:   Fri, 18 Feb 2022 13:55:53 -0700
-Message-Id: <20220218205557.486208-1-benjamin.walker@intel.com>
+        Ben Walker <benjamin.walker@intel.com>,
+        Tudor Ambarus <tudor.ambarus@microchip.com>
+Subject: [PATCH v2 3/4] dmaengine: at_xdmac: In at_xdmac_prep_dma_memset, treat value as a single byte
+Date:   Fri, 18 Feb 2022 13:55:56 -0700
+Message-Id: <20220218205557.486208-4-benjamin.walker@intel.com>
 X-Mailer: git-send-email 2.35.1
+In-Reply-To: <20220218205557.486208-1-benjamin.walker@intel.com>
+References: <20220218205557.486208-1-benjamin.walker@intel.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-The following contains a clarification for the behavior of the 'value'
-parameter in the memset operation. It is intended to be a single byte
-pattern as laid out here:
+The value passed in to .prep_dma_memset is to be treated as a single
+byte repeating pattern.
 
-https://lore.kernel.org/dmaengine/YejrA5ZWZ3lTRO%2F1@matsya/
+Signed-off-by: Ben Walker <benjamin.walker@intel.com>
+Cc: Ludovic Desroches <ludovic.desroches@microchip.com>
+Cc: Tudor Ambarus <tudor.ambarus@microchip.com>
+---
+ drivers/dma/at_xdmac.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-Then I'm attempting to fix all places it is currently used. But note
-that I do not have access to this hardware and cannot test it. We'll
-really need a maintainer to take a look at each of these to verify that
-the changes are correct.
-
-Ben Walker (4):
-  dmaengine: Document dmaengine_prep_dma_memset
-  dmaengine: at_hdmac: In atc_prep_dma_memset, treat value as a single
-    byte
-  dmaengine: at_xdmac: In at_xdmac_prep_dma_memset, treat value as a
-    single byte
-  dmaengine: hidma: In hidma_prep_dma_memset treat value as a single
-    byte
-
- drivers/dma/at_hdmac.c    | 10 +++++++++-
- drivers/dma/at_xdmac.c    |  9 ++++++++-
- drivers/dma/qcom/hidma.c  | 13 ++++++++++++-
- include/linux/dmaengine.h |  8 ++++++++
- 4 files changed, 37 insertions(+), 3 deletions(-)
-
+diff --git a/drivers/dma/at_xdmac.c b/drivers/dma/at_xdmac.c
+index a1da2b4b6d732..547778fc6445b 100644
+--- a/drivers/dma/at_xdmac.c
++++ b/drivers/dma/at_xdmac.c
+@@ -1202,6 +1202,7 @@ static struct at_xdmac_desc *at_xdmac_memset_create_desc(struct dma_chan *chan,
+ 	unsigned long		flags;
+ 	size_t			ublen;
+ 	u32			dwidth;
++	unsigned char		pattern;
+ 	/*
+ 	 * WARNING: The channel configuration is set here since there is no
+ 	 * dmaengine_slave_config call in this case. Moreover we don't know the
+@@ -1244,10 +1245,16 @@ static struct at_xdmac_desc *at_xdmac_memset_create_desc(struct dma_chan *chan,
+ 
+ 	chan_cc |= AT_XDMAC_CC_DWIDTH(dwidth);
+ 
++	/* Only the first byte of value is to be used according to dmaengine */
++	pattern = (unsigned char)value;
++
+ 	ublen = len >> dwidth;
+ 
+ 	desc->lld.mbr_da = dst_addr;
+-	desc->lld.mbr_ds = value;
++	desc->lld.mbr_ds = (pattern << 24) |
++			   (pattern << 16) |
++			   (pattern << 8) |
++			   pattern;
+ 	desc->lld.mbr_ubc = AT_XDMAC_MBR_UBC_NDV3
+ 		| AT_XDMAC_MBR_UBC_NDEN
+ 		| AT_XDMAC_MBR_UBC_NSEN
 -- 
 2.33.1
 
