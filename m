@@ -2,155 +2,130 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AAAA2C433EF
-	for <dmaengine@archiver.kernel.org>; Sun, 20 Feb 2022 10:57:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2216EC433EF
+	for <dmaengine@archiver.kernel.org>; Sun, 20 Feb 2022 14:10:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231860AbiBTK5W (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Sun, 20 Feb 2022 05:57:22 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:38874 "EHLO
+        id S231806AbiBTOKt (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Sun, 20 Feb 2022 09:10:49 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:58608 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229480AbiBTK5V (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Sun, 20 Feb 2022 05:57:21 -0500
-Received: from mga01.intel.com (mga01.intel.com [192.55.52.88])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 39065340C2;
-        Sun, 20 Feb 2022 02:57:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1645354620; x=1676890620;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=yPqPywbDC7Awr4bHvSEXFevB7s9D3RWFfXlO+8m6W44=;
-  b=grmpciZvqwbTEiQGP9hdwHFo0pb8S43722IJNdUUlq3fSPWP8My02gxc
-   7iizn46btKlUrVSwuKG2Llu0Dy3e6xfBMKhKsYukOe3Y26vRO09mKERDY
-   dQoMSsvmQIHidDUAMXH9qdtZInh/Wk9y8/nVzfnjIQgW2Cx86vyJzDOt5
-   GmQJlQ2Rgr8dt6/0fFC3kvbOchDY4Qc35wpMok+TQP2+apJAylFzX8Xjr
-   jWfARkYVaIONnZWDy84mzpNzYW/W6o6mWhvsE2zmWtUj3PP78WFzEY/wt
-   HsjnMWA2GgRKjgJu8is8RwWejhEvuVkVA9XNnJmTn/VPYm++Uvl3b1hh3
-   g==;
-X-IronPort-AV: E=McAfee;i="6200,9189,10263"; a="275951791"
-X-IronPort-AV: E=Sophos;i="5.88,383,1635231600"; 
-   d="scan'208";a="275951791"
-Received: from orsmga007.jf.intel.com ([10.7.209.58])
-  by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Feb 2022 02:56:59 -0800
-X-IronPort-AV: E=Sophos;i="5.88,383,1635231600"; 
-   d="scan'208";a="531490390"
-Received: from smile.fi.intel.com ([10.237.72.59])
-  by orsmga007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Feb 2022 02:56:55 -0800
-Received: from andy by smile.fi.intel.com with local (Exim 4.95)
-        (envelope-from <andriy.shevchenko@linux.intel.com>)
-        id 1nLjsp-006UYn-51;
-        Sun, 20 Feb 2022 12:56:03 +0200
-Date:   Sun, 20 Feb 2022 12:56:02 +0200
-From:   Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-To:     Miquel Raynal <miquel.raynal@bootlin.com>
-Cc:     Viresh Kumar <vireshk@kernel.org>, Vinod Koul <vkoul@kernel.org>,
-        Geert Uytterhoeven <geert+renesas@glider.be>,
-        Magnus Damm <magnus.damm@gmail.com>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        dmaengine@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
-        linux-clk@vger.kernel.org,
-        Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
-        Milan Stevanovic <milan.stevanovic@se.com>,
-        Jimmy Lalande <jimmy.lalande@se.com>,
-        Laetitia MARIOTTINI <laetitia.mariottini@se.com>
-Subject: Re: [PATCH 4/8] dma: dmamux: Introduce RZN1 DMA router support
-Message-ID: <YhIeQlwmt/yCc8Uu@smile.fi.intel.com>
-References: <20220218181226.431098-1-miquel.raynal@bootlin.com>
- <20220218181226.431098-5-miquel.raynal@bootlin.com>
+        with ESMTP id S243167AbiBTOKo (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Sun, 20 Feb 2022 09:10:44 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A7F84B40F;
+        Sun, 20 Feb 2022 06:10:23 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 1EE6E61183;
+        Sun, 20 Feb 2022 14:10:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C805C340F1;
+        Sun, 20 Feb 2022 14:10:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1645366222;
+        bh=x1e9WpSJg6pvlqSnU+CmONdE9nG45brjpDmAsA5OPIs=;
+        h=Date:From:To:Cc:Subject:From;
+        b=HSzc5C+f500FabQaLUIL9WfnxM/e0LIj8Xqt62uA8JPFLQJMO6550p9Qe8OZ0MawZ
+         bolGQTUNDSRhahq+7/rM6ZW59EZ0j7eBK5SABWUOfNoIM2+aNes+IDCg6QmvAtiPJ8
+         c4VFSrYTPZryXv9RfNsYMSb3d6WgohmspCG+W0O35+VKrTQUH68JOo7sqO/MLYNEsl
+         D8LG4oVc3G8B/Gwr6M3xJc4tQfhxgprQokGXIHwBbrq4g0mI2h9UTZ2iX2xHTuLAiw
+         EQXJsWeopiiku4YWGMeuVJCg9M5wikxBzNBYf21eflQn7MO3KzmvBmbsNvB+KYydbD
+         Q/ERIyK5QYMqw==
+Date:   Sun, 20 Feb 2022 19:40:17 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Linus Torvalds <torvalds@linux-foundation.org>
+Cc:     dma <dmaengine@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>
+Subject: [GIT PULL]: dmaengine fixes for v5.17
+Message-ID: <YhJLyWF5PZvc242o@matsya>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha256;
+        protocol="application/pgp-signature"; boundary="z++uS9hCUogcDo3u"
 Content-Disposition: inline
-In-Reply-To: <20220218181226.431098-5-miquel.raynal@bootlin.com>
-Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On Fri, Feb 18, 2022 at 07:12:22PM +0100, Miquel Raynal wrote:
-> The Renesas RZN1 DMA IP is a based on a DW core, with eg. an additional
-> dmamux register located in the system control area which can take up to
-> 32 requests (16 per DMA controller). Each DMA channel can be wired to
-> two different peripherals.
-> 
-> We need two additional information from the 'dmas' property: the channel
-> (bit in the dmamux register) that must be accessed and the value of the
-> mux for this channel.
 
-...
+--z++uS9hCUogcDo3u
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> +dw_dmac-y			:= platform.o dmamux.o
+Hello Linus,
 
-We do not need this on other platforms, please make sure we have no dangling
-code on, e.g., x86.
+Please pull to receive updates for v5.17.
 
-...
+The following changes since commit e783362eb54cd99b2cac8b3a9aeac942e6f6ac07:
 
-> +	/* The of_node_put() will be done in the core for the node */
-> +	master = map->req_idx < dmamux->dmac_requests ? 0 : 1;
+  Linux 5.17-rc1 (2022-01-23 10:12:53 +0200)
 
-The opposite conditional will be better, no?`
+are available in the Git repository at:
 
-...
+  git://git.kernel.org/pub/scm/linux/kernel/git/vkoul/dmaengine.git tags/dm=
+aengine-fix-5.17
 
-> +	dmamux->used_chans |= BIT(map->req_idx);
-> +	ret = r9a06g032_syscon_set_dmamux(BIT(map->req_idx),
-> +					  val ? BIT(map->req_idx) : 0);
+for you to fetch changes up to 455896c53d5b803733ddd84e1bf8a430644439b6:
 
+  dmaengine: shdma: Fix runtime PM imbalance on error (2022-02-15 11:04:16 =
++0530)
 
-Cleaner to do
+----------------------------------------------------------------
+dmaengine fixes for v5.17
 
-	u32 mask = BIT(...);
-	...
+Bunch of driver fixes for:
+ - ptdma error handling in init
+ - lock fix in at_hdmac
+ - error path and error num fix for sh dma
+ - pm balance fix for stm32
 
-	dmamux->used_chans |= mask;
-	ret = r9a06g032_syscon_set_dmamux(mask, val ? mask : 0);
+----------------------------------------------------------------
+Christophe JAILLET (1):
+      dmaengine: ptdma: Fix the error handling path in pt_core_init()
 
-...
+Jiasheng Jiang (2):
+      dmaengine: sh: rcar-dmac: Check for error num after setting mask
+      dmaengine: sh: rcar-dmac: Check for error num after dma_set_max_seg_s=
+ize
 
-> +static const struct of_device_id rzn1_dmac_match[] __maybe_unused = {
-> +	{ .compatible = "renesas,rzn1-dma", },
-> +	{},
+Miaoqian Lin (1):
+      dmaengine: stm32-dmamux: Fix PM disable depth imbalance in stm32_dmam=
+ux_probe
 
-No comma for terminator entry.
+Yang Yingliang (1):
+      dmaengine: at_xdmac: Fix missing unlock in at_xdmac_tasklet()
 
-> +};
+Yongzhi Liu (1):
+      dmaengine: shdma: Fix runtime PM imbalance on error
 
-...
+ drivers/dma/at_xdmac.c        |  4 +++-
+ drivers/dma/ptdma/ptdma-dev.c | 17 +++++++++--------
+ drivers/dma/sh/rcar-dmac.c    |  9 +++++++--
+ drivers/dma/sh/shdma-base.c   |  4 +++-
+ drivers/dma/stm32-dmamux.c    |  4 +++-
+ 5 files changed, 25 insertions(+), 13 deletions(-)
 
-> +	if (!node)
-> +		return -ENODEV;
+--=20
+~Vinod
 
-Dup check, why not to simply try for phandle first?
+--z++uS9hCUogcDo3u
+Content-Type: application/pgp-signature; name="signature.asc"
 
-...
+-----BEGIN PGP SIGNATURE-----
 
-> +	if (of_property_read_u32(dmac_node, "dma-requests",
-> +				 &dmamux->dmac_requests)) {
+iQIzBAEBCAAdFiEE+vs47OPLdNbVcHzyfBQHDyUjg0cFAmISS8kACgkQfBQHDyUj
+g0fp3A/+PT/usHZaJ0/tT9uL4PpZnX75tDF6P/XlaGPpfN1L/EIqfQQI8+tYGHLf
+BtTsoXW1Bm1GfzMrsf4GLD+K/qk/KOsaF9qOobys0bLy6uJNnBgPSNBQDwkLgsQY
+82GO5z1rm1SQD+vHkPFStAQDIryUMFzgXcUQ3PjUnzpIk6zfvH82arReuGaSx18x
+RB87ZdeFzjv7V8QFQ7qxNRdJXbQ2oLB7skY78jvfPrBVA8w7JcRTu/eLu7UeUh7q
+THrdCYV/+a4gfYnWmW96H4j08sTgtnWiInPWWxnhAcg/2jDmgW7G9pcRXG1+gr4T
+9FYwf3BVxU9QzGBH6jr+LpVUXI2bqmQOBG589gGmMreM0i1lMNyFJ0wQCYrGwlB+
+F+t050oXaI/S+NkdVlxF+o4TeoLk6Q8e+3rSqzdfw/iUKwHtnytiN/+9Z5YvfMKL
+5nCFOYcT1qFAohJh1TLCCJpY0LTxfsUwD/6goQ9AZ9LHYW93EITKBM9emmhOkABN
+Ojb4VvY1ya+E3nae6Crhm33IrN2HidVTiuBSU29koj3s30cEyEEcNOyyaObPsAue
+gsope9rpmB4JJXALwmWddpNCWCLwRKGM9TW8+YMGNVcvpwNh4HeAZXUyBTtdDjpl
+jVNR5SDQU1MkRDjV46uGip6ZIbe/UbzkfssOi/dajhpn/hdA8JY=
+=WeYy
+-----END PGP SIGNATURE-----
 
-One line?
-
-> +		dev_err(&pdev->dev, "Missing DMAC requests information\n");
-> +		of_node_put(dmac_node);
-> +		return -EINVAL;
-
-First put node, then simply use dev_err_probe().
-
-> +	}
-
-...
-
-> +static const struct of_device_id rzn1_dmamux_match[] = {
-> +	{ .compatible = "renesas,rzn1-dmamux", },
-> +	{},
-
-No comma.
-
-> +};
-
--- 
-With Best Regards,
-Andy Shevchenko
-
-
+--z++uS9hCUogcDo3u--
