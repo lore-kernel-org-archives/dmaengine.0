@@ -2,94 +2,114 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 69C4DC433EF
-	for <dmaengine@archiver.kernel.org>; Sat,  5 Mar 2022 09:31:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0A59BC433EF
+	for <dmaengine@archiver.kernel.org>; Mon,  7 Mar 2022 05:44:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230226AbiCEJcd (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Sat, 5 Mar 2022 04:32:33 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59118 "EHLO
+        id S235369AbiCGFp1 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 7 Mar 2022 00:45:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50966 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229590AbiCEJcc (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Sat, 5 Mar 2022 04:32:32 -0500
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A289C21D087;
-        Sat,  5 Mar 2022 01:31:42 -0800 (PST)
-Received: by mail-wr1-x434.google.com with SMTP id b5so15997232wrr.2;
-        Sat, 05 Mar 2022 01:31:42 -0800 (PST)
+        with ESMTP id S235364AbiCGFp0 (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Mon, 7 Mar 2022 00:45:26 -0500
+Received: from mail-pf1-x434.google.com (mail-pf1-x434.google.com [IPv6:2607:f8b0:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9597D4A930
+        for <dmaengine@vger.kernel.org>; Sun,  6 Mar 2022 21:44:32 -0800 (PST)
+Received: by mail-pf1-x434.google.com with SMTP id p8so12792368pfh.8
+        for <dmaengine@vger.kernel.org>; Sun, 06 Mar 2022 21:44:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id;
-        bh=vaa9FvdTpNZqd2d6Oc0OE/r/3v+vyBiqAeaP9xPqhtk=;
-        b=PLt55TC8ooVxjZu9AvFK2v1j+G96W0UgGdDzbdJRgr574mn+3ocI/XWPIag0brCkqh
-         qPKm0QIt2TIZqgFcKeMnuhntUPRKpS5dZXt2P/ybJzgaFM3WFhMOBNSm1H1Oi0b9XJDF
-         f8+5CFiiULzuSpnjgXgR5NP5Xi9GxHuvqjaZBjCP7tBAedD4HS4DYlLNWtyLtQ6Z04L7
-         ELg6kfnDOF1ZBI8P3DS0pfJ7j34kYRtCyP/ydIQ4gXJMWl1O5IW7xlnX4Uao70I7k6BF
-         aCfjLCg7QrTHDTup7nIziH6xieH+cwjwAfGe/iBwusKIArVJJrWFOBrK4np5aAIIHyrM
-         0lCw==
+        d=sifive.com; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=YWajgjcCCrnsZSF3IfZMfbxzzFZcQpbBns1alayx99E=;
+        b=cGSKTJZ3Kh0Ek+WCmI4HffDYMUe79KY/em0iV2NUNCazJjGDuknQdSzpMZoSaLZmTW
+         MWFW28V2UbmFQKm/k3VUesxpUIBWzAjLzi2WcDEab8uTZuIAd1MQjyvECjNRKr9+ruFH
+         FNTKNGnEfcD1KYvDQ9idr3ukmIYhMRFgqGmexUFgyYHjJYbadhBDKkIE0L7DsSnD3Zjv
+         HykdLhbEQaupRwNLgPP4ZSdjV/Qo0IALd4wiaDRaNm9bd7ahZWuGrIGpL+yhLbnJXgSS
+         x0PUdKL3Kbe0fk3XC/83eJgP6jMQ0WpG489XH/88h9sIiLD0iO4AXz0cNoq3fnbBgbeT
+         s7qA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=vaa9FvdTpNZqd2d6Oc0OE/r/3v+vyBiqAeaP9xPqhtk=;
-        b=WkXkWhTt5RKn4JFbcUPeo/VIJI7uFv83P2iY3nDm0J5F4cUeTSDX9ZmtfvV/0qlb0T
-         TVqVrD9eHRkuzImCcce3F/can+3y/urSsl8C4WJZOEtObV0wstN+ktN9T+44s3BrAU/6
-         5NxKWGmD7VZlMLZlTkhQ4OZhcSrMMLjY4AEeS53foQpxJMpu+PpPPrWb4/hrH3TwaZso
-         o+gWloh969i0WYEOYlr5YVJ+RMMJTHffGm3ZcvcRXSrrn+tQDsZR9Ey9AAUWe4SxLYl9
-         PsCExQ/PuaB054BHTWWV6JPgpNKAYhL1CSy15hRIxJK9GiByqJGU5+sHKnumeIdeMLSH
-         YXgA==
-X-Gm-Message-State: AOAM533Y0iZpdSdZHHewlXbHTPa/HoWcya9CIdCdeFCrWxwtV7bYP4a4
-        mEd2n9twEK7kcuuhUuVH81aqdVfR1yNluQ==
-X-Google-Smtp-Source: ABdhPJy/tC4m3vdDhR0KEM6zPir0uboL2kBiAzK6ABjxHV5vi4YaMGIV0n45OnWHEnCDxV2XvT9hEQ==
-X-Received: by 2002:a05:6000:137a:b0:1f1:d6ec:7b69 with SMTP id q26-20020a056000137a00b001f1d6ec7b69mr1837889wrz.78.1646472701182;
-        Sat, 05 Mar 2022 01:31:41 -0800 (PST)
-Received: from localhost.localdomain ([64.64.123.48])
-        by smtp.gmail.com with ESMTPSA id r15-20020a05600c35cf00b003808165fbc2sm7909863wmq.25.2022.03.05.01.31.37
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=YWajgjcCCrnsZSF3IfZMfbxzzFZcQpbBns1alayx99E=;
+        b=lJrEiZW3vtsA52jzvEEY1Z6++7hD1aDU8mc1jcKIKN5mKJHIsoaC5fhFiFt0c90ydm
+         noI2MssNY7x3vaX+5KJTtKfxcA1mW9l8CVI5zyrkRED/es3TQvhrZeIkzuH2eHhhLegb
+         3FmxSKOTRsMFJj/I+CwiqD8pyxBZLQ3kQld9b9cbec7zhh8A5NuTUR7o2/YP5mTQjJ+C
+         CZleOeHpePaWUIlPceqbtJExiH9e28mman02JV9BctlFrRjA5Bd7JUuuL6vMc4iC/MnU
+         qbHkPv2nSAUTla3Qkou4UplY2Yayla6xa5CdcK84XPYVZbyHxfdBiODtCyi1lrjWOp8O
+         Xlxw==
+X-Gm-Message-State: AOAM533+zFkFUFPy/s0xVRJZAQemNS2hKpKuCFFN6MhwzgJ+AQ+HE0VV
+        UiZXTW9zAiP5PzYWRnLuAI02wQ==
+X-Google-Smtp-Source: ABdhPJwnA3KEBp7KJP4Dkadosl1pu/fl5hoM+iRWl2JxYsBzf8nK0VH8nGH8sx7PD9Mes5im6f4iZg==
+X-Received: by 2002:a05:6a00:1a09:b0:4e1:67a7:2c87 with SMTP id g9-20020a056a001a0900b004e167a72c87mr11135766pfv.37.1646631872090;
+        Sun, 06 Mar 2022 21:44:32 -0800 (PST)
+Received: from hsinchu16.internal.sifive.com (59-124-168-89.hinet-ip.hinet.net. [59.124.168.89])
+        by smtp.gmail.com with ESMTPSA id k1-20020a056a00168100b004e0e45a39c6sm14447385pfc.181.2022.03.06.21.44.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 05 Mar 2022 01:31:40 -0800 (PST)
-From:   Jia-Ju Bai <baijiaju1990@gmail.com>
-To:     vkoul@kernel.org, michal.simek@xilinx.com,
-        m.tretter@pengutronix.de, lars@metafoo.de, libaokun1@huawei.com,
-        yukuai3@huawei.com
-Cc:     dmaengine@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-kernel@vger.kernel.org, Jia-Ju Bai <baijiaju1990@gmail.com>
-Subject: [PATCH v2] dma: xilinx: check the return value of dma_set_mask() in zynqmp_dma_probe()
-Date:   Sat,  5 Mar 2022 01:31:20 -0800
-Message-Id: <20220305093120.28999-1-baijiaju1990@gmail.com>
-X-Mailer: git-send-email 2.17.1
+        Sun, 06 Mar 2022 21:44:31 -0800 (PST)
+From:   Zong Li <zong.li@sifive.com>
+To:     robh+dt@kernel.org, paul.walmsley@sifive.com, palmer@dabbelt.com,
+        aou@eecs.berkeley.edu, krzysztof.kozlowski@canonical.com,
+        conor.dooley@microchip.com, geert@linux-m68k.org,
+        bin.meng@windriver.com, green.wan@sifive.com, vkoul@kernel.org,
+        dmaengine@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org
+Cc:     Zong Li <zong.li@sifive.com>
+Subject: [PATCH v7 0/3] Determine the number of DMA channels by 'dma-channels' property
+Date:   Mon,  7 Mar 2022 13:44:23 +0800
+Message-Id: <cover.1646631717.git.zong.li@sifive.com>
+X-Mailer: git-send-email 2.31.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-The function dma_set_mask() in zynqmp_dma_probe() can fail, so its
-return value should be checked.
+The PDMA driver currently assumes there are four channels by default, it
+might cause the error if there is actually less than four channels.
+Change that by getting number of channel dynamically from device tree.
+For backwards-compatible, it uses the default value (i.e. 4) when there
+is no 'dma-channels' information in dts.
 
-Fixes: b0cc417c1637 ("dmaengine: Add Xilinx zynqmp dma engine driver support")
-Reported-by: TOTE Robot <oslab@tsinghua.edu.cn>
-Signed-off-by: Jia-Ju Bai <baijiaju1990@gmail.com>
----
-v2:
-* Print an error message and forward the return value of dma_set_mask().
-  Thank Michael for good advice.
+This patch set contains the dts and dt-bindings change.
 
----
- drivers/dma/xilinx/zynqmp_dma.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+Changed in v7:
+ - Rebase on tag v5.17-rc7
+ - Modify the subject of patch
 
-diff --git a/drivers/dma/xilinx/zynqmp_dma.c b/drivers/dma/xilinx/zynqmp_dma.c
-index 7aa63b652027..2791e9c6a4ea 100644
---- a/drivers/dma/xilinx/zynqmp_dma.c
-+++ b/drivers/dma/xilinx/zynqmp_dma.c
-@@ -1050,7 +1050,10 @@ static int zynqmp_dma_probe(struct platform_device *pdev)
- 	zdev->dev = &pdev->dev;
- 	INIT_LIST_HEAD(&zdev->common.channels);
- 
--	dma_set_mask(&pdev->dev, DMA_BIT_MASK(44));
-+	ret = dma_set_mask(&pdev->dev, DMA_BIT_MASK(44));
-+	if (ret)
-+		return dev_err_probe(&pdev->dev, ret, "No usable DMA available\n");
-+
- 	dma_cap_set(DMA_MEMCPY, zdev->common.cap_mask);
- 
- 	p = &zdev->common;
+Changed in v6:
+ - Rebase on tag v5.17-rc6
+ - Change sf_pdma.chans[] to a flexible array member.
+
+Changed in v5:
+ - Rebase on tag v5.17-rc3
+ - Fix typo in dt-bindings and commit message
+ - Add PDMA versioning scheme for compatible
+
+Changed in v4:
+ - Remove cflags of debug use reported-by: kernel test robot <lkp@intel.com>
+
+Changed in v3:
+ - Fix allocating wrong size
+ - Return error if 'dma-channels' is larger than maximum
+
+Changed in v2:
+ - Rebase on tag v5.16
+ - Use 4 as default value of dma-channels
+
+Zong Li (3):
+  dt-bindings: dma-engine: sifive,fu540: Add dma-channels property and
+    modify compatible
+  riscv: dts: Add dma-channels property and modify compatible
+  dmaengine: sf-pdma: Get number of channel by device tree
+
+ .../bindings/dma/sifive,fu540-c000-pdma.yaml  | 19 +++++++++++++--
+ .../boot/dts/microchip/microchip-mpfs.dtsi    |  3 ++-
+ arch/riscv/boot/dts/sifive/fu540-c000.dtsi    |  3 ++-
+ drivers/dma/sf-pdma/sf-pdma.c                 | 24 ++++++++++++-------
+ drivers/dma/sf-pdma/sf-pdma.h                 |  8 ++-----
+ 5 files changed, 39 insertions(+), 18 deletions(-)
+
 -- 
-2.17.1
+2.31.1
 
