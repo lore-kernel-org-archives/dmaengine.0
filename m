@@ -2,155 +2,108 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5C38CC433EF
-	for <dmaengine@archiver.kernel.org>; Mon, 14 Mar 2022 08:33:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3155CC433F5
+	for <dmaengine@archiver.kernel.org>; Mon, 14 Mar 2022 14:17:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233763AbiCNIez (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 14 Mar 2022 04:34:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42462 "EHLO
+        id S242236AbiCNOS2 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 14 Mar 2022 10:18:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54358 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229772AbiCNIey (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Mon, 14 Mar 2022 04:34:54 -0400
-Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E2F165C8;
-        Mon, 14 Mar 2022 01:33:44 -0700 (PDT)
-Received: by mail-lj1-x232.google.com with SMTP id 25so20692123ljv.10;
-        Mon, 14 Mar 2022 01:33:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=/lxC0RZgyTNm5IJy+tApWTULFN2ZbIloTBHcLX3Txa4=;
-        b=RK1LKmtrCEPcKEW6DR+Kh77VUky4SPt3P8QAMyVY/JtAio5EA/nG/jmmqBTTKvhp+e
-         VdcVLcD7wlOJBVF6I04e2Zp6nfUMy37StwrwoOijqhqJ596yykKCRG+uSgXkGihbs3qS
-         tyKic8dMUEIaxjRwF5djptDQQljsTgw2qV2wp6eZLt8N6FgUxZVknBlJrJrUOvU/P/Tk
-         823A2HgaGgTJsEkWbVLeqZn8OAfH++SZC9sfSO878Rj/YT4PYAaafT9hZRTypt8p7yFX
-         skSdhXFgfTzmTUXuIsGwKgcJ2C/CN5ADv8AzDOwQ68wIhN74oYw2w7nkwQZ/Qq4JV1bO
-         J+Hg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=/lxC0RZgyTNm5IJy+tApWTULFN2ZbIloTBHcLX3Txa4=;
-        b=PuLzBu/mn7ATOnxHltgnp9QXnEGJ4RSQjprjQzuekME5gBKxwHsgXJ/tkpuxd6FwSt
-         T0t8qinlbkOQ/5XWw5nttTl1+vAgUrQlA8PAqQVHM4u0yxC9PpGagwELQcvk28KlhHay
-         8Obhr+Wuj8YxhUkcN705g+r5I3yQ2HRZXYmqcie4VTyoCFs01lrDksrRtHuoLpWHppMV
-         WVp6L/WiL9Vd/TJVDwTzAlfZUiTq7q2IcyXUgmtko+EJCmNSr2vyJ+Qoa1rO3PCRAh1D
-         ORfD3oNQWT/UP1w/pf9+aLPhHKKqBD4ci8mr4anHeia7xJoXdiB+W0e1zZJ82aV/D07U
-         59iw==
-X-Gm-Message-State: AOAM533sA1uNlXwuM7OMM2ywoP25kfy8+lODMb2al6rvkN6muVBnR883
-        OMbjc7Wh1fUWSYXM2Nbtu2A=
-X-Google-Smtp-Source: ABdhPJzRKpeLltrQrE8DFtgLrrgPbOU9E2Y8LQXYmZRIlYR70Grus7D6/LJRPq+BfmZP88rPYoCTeQ==
-X-Received: by 2002:a05:651c:12c7:b0:23e:b8f9:15b2 with SMTP id 7-20020a05651c12c700b0023eb8f915b2mr13323382lje.382.1647246822824;
-        Mon, 14 Mar 2022 01:33:42 -0700 (PDT)
-Received: from mobilestation ([95.79.188.22])
-        by smtp.gmail.com with ESMTPSA id n13-20020a056512388d00b00443d9064160sm3127921lft.125.2022.03.14.01.33.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 14 Mar 2022 01:33:42 -0700 (PDT)
-Date:   Mon, 14 Mar 2022 11:33:40 +0300
-From:   Serge Semin <fancer.lancer@gmail.com>
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     Serge Semin <Sergey.Semin@baikalelectronics.ru>,
-        Frank Li <Frank.Li@nxp.com>, gustavo.pimentel@synopsys.com,
-        hongxing.zhu@nxp.com, l.stach@pengutronix.de, linux-imx@nxp.com,
-        linux-pci@vger.kernel.org, dmaengine@vger.kernel.org,
-        lznuaa@gmail.com, vkoul@kernel.org, lorenzo.pieralisi@arm.com,
-        robh@kernel.org, kw@linux.com, bhelgaas@google.com,
-        shawnguo@kernel.org
-Subject: Re: [PATCH v4 5/8] dmaengine: dw-edma: Fix programming the source &
- dest addresses for ep
-Message-ID: <20220314083340.244dfwo4v3uuhkkm@mobilestation>
-References: <20220309211204.26050-1-Frank.Li@nxp.com>
- <20220309211204.26050-6-Frank.Li@nxp.com>
- <20220310163123.h2zqdx5tkn2czmbm@mobilestation>
- <20220311174134.GA3966@thinkpad>
- <20220311190147.pvjp6v7whjgyeuey@mobilestation>
- <20220312053720.GA4356@thinkpad>
+        with ESMTP id S233040AbiCNOS2 (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Mon, 14 Mar 2022 10:18:28 -0400
+Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F92819C2B
+        for <dmaengine@vger.kernel.org>; Mon, 14 Mar 2022 07:17:17 -0700 (PDT)
+Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
+        by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.92)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1nTlVO-00055P-FO; Mon, 14 Mar 2022 15:17:02 +0100
+Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
+        by drehscheibe.grey.stw.pengutronix.de with esmtp (Exim 4.94.2)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1nTlVO-000f3e-HW; Mon, 14 Mar 2022 15:17:01 +0100
+Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.94.2)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1nTlVM-0097bV-AF; Mon, 14 Mar 2022 15:17:00 +0100
+From:   =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= 
+        <u.kleine-koenig@pengutronix.de>
+To:     Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Russell King <linux@armlinux.org.uk>,
+        Vinod Koul <vkoul@kernel.org>
+Cc:     linux-clk@vger.kernel.org, kernel@pengutronix.de,
+        Amireddy Mallikarjuna reddy 
+        <mallikarjunax.reddy@linux.intel.com>, dmaengine@vger.kernel.org
+Subject: [PATCH v8 16/16] dmaengine: lgm: Fix error handling
+Date:   Mon, 14 Mar 2022 15:16:43 +0100
+Message-Id: <20220314141643.22184-17-u.kleine-koenig@pengutronix.de>
+X-Mailer: git-send-email 2.35.1
+In-Reply-To: <20220314141643.22184-1-u.kleine-koenig@pengutronix.de>
+References: <20220314141643.22184-1-u.kleine-koenig@pengutronix.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220312053720.GA4356@thinkpad>
+Content-Type: text/plain; charset=UTF-8
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1796; i=uwe@kleine-koenig.org; h=from:subject; bh=lnYF+Rp4uQSBPl21vZvNytughSjblSgWjFEEAFtBkUU=; b=owEBbQGS/pANAwAKAcH8FHityuwJAcsmYgBiL04fQXumhMT235kSD6N70fAzqtECjOg0TFKxJsoj LkvENvWJATMEAAEKAB0WIQR+cioWkBis/z50pAvB/BR4rcrsCQUCYi9OHwAKCRDB/BR4rcrsCeMmB/ 9HLw37+Kw66dEv/fLAWEF9hJfFla6RSk571W/CW/fBH6caBGsM/akyUEWmm+1k6bU4+AljtgP87dD9 vhUL+UdNu56APpY2WXPuYSIS9W4HdfeHrNTMw8wlUvQ4IPqG7J/VUhVvpCJxefSU0fgaxJVkspifIs xG1T/h/g+08/wWJa36SfN5N3ndYN/xA8SnQUjU0rdNb1Cl1RqKSOjybjChvn3Fq39zHBUGoFIp+TFN FAF4JZUVdUs0xUxJ3NZxX4x73cxLBF1Kq9UxmFa0rN9RL+8U3WT7/ifDelFhEqH4O7OhzcC1BL9iQ2 tkyVEG73MiyEsKxMLULhLkPMwNHQCH
+X-Developer-Key: i=uwe@kleine-koenig.org; a=openpgp; fpr=0D2511F322BFAB1C1580266BE2DCDD9132669BD6
+Content-Transfer-Encoding: 8bit
+X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
+X-SA-Exim-Mail-From: ukl@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: dmaengine@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On Sat, Mar 12, 2022 at 11:07:20AM +0530, Manivannan Sadhasivam wrote:
-> On Fri, Mar 11, 2022 at 10:01:47PM +0300, Serge Semin wrote:
-> > On Fri, Mar 11, 2022 at 11:11:34PM +0530, Manivannan Sadhasivam wrote:
+It's an invalid approach to use only a single devm cleanup handler for
+two resources (without further error handling at least). In this case the
+core clk isn't disabled if getting the reset control fails.
 
-[nip]
+This also fixes the problem that the return value of clk_prepare_enable()
+wasn't checked before.
 
-> > 
-> > > As per my understanding, the eDMA is solely used in the PCIe endpoint. And the
-> > > access to it happens over PCIe bus or by the local CPU.
-> > 
-> > Not fully correct. Root Ports can also have eDMA embedded. In that
-> > case the eDMA can be only accessible from the local CPU. At the same
-> > time the DW PCIe End-point case is the IP-core synthesize parameters
-> > specific. It's always possible to access the eDMA CSRs from local
-> > CPU, but a particular End-point BAR can be pre-synthesize to map
-> > either Port Logic, or eDMA or iATU CSRs. Thus a PCIe root port can
-> > perform a full End-point configuration. Anyway the case if the eDMA
-> > functionality being accessible over the PCIe wire doesn't really make
-> > much sense with no info regarding the application logic hidden behind
-> > the PCIe End-point interface since SAR/DAR LLP is supposed to be
-> > initialized with an address from the local (application) memory space.
-> > 
-> 
-> Thanks for the explanation, it clarifies my doubt. I got misleaded by the
-> earlier commits...
-> 
-> > So AFAICS the main usecase of the controller is 1) - when eDMA is a
-> > part of the Root Port/End-point and only local CPU is supposed to have
-> > it accessed and configured.
-> > 
-> > I can resend this patch with my fix to the problem. What do you think?
-> > 
-> 
+Fixes: 32d31c79a1a4 ("dmaengine: Add Intel LGM SoC DMA support.")
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+---
+ drivers/dma/lgm/lgm-dma.c | 8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
-> Yes, please do.
+diff --git a/drivers/dma/lgm/lgm-dma.c b/drivers/dma/lgm/lgm-dma.c
+index efe8bd3a0e2a..f8904cf2d832 100644
+--- a/drivers/dma/lgm/lgm-dma.c
++++ b/drivers/dma/lgm/lgm-dma.c
+@@ -1463,11 +1463,10 @@ static int ldma_init_v22(struct ldma_dev *d, struct platform_device *pdev)
+ 	return 0;
+ }
+ 
+-static void ldma_clk_disable(void *data)
++static void ldma_reset(void *data)
+ {
+ 	struct ldma_dev *d = data;
+ 
+-	clk_disable_unprepare(d->core_clk);
+ 	reset_control_assert(d->rst);
+ }
+ 
+@@ -1590,17 +1589,16 @@ static int intel_ldma_probe(struct platform_device *pdev)
+ 		return PTR_ERR(d->base);
+ 
+ 	/* Power up and reset the dma engine, some DMAs always on?? */
+-	d->core_clk = devm_clk_get_optional(dev, NULL);
++	d->core_clk = devm_clk_get_optional_enabled(dev, NULL);
+ 	if (IS_ERR(d->core_clk))
+ 		return PTR_ERR(d->core_clk);
+-	clk_prepare_enable(d->core_clk);
+ 
+ 	d->rst = devm_reset_control_get_optional(dev, NULL);
+ 	if (IS_ERR(d->rst))
+ 		return PTR_ERR(d->rst);
+ 	reset_control_deassert(d->rst);
+ 
+-	ret = devm_add_action_or_reset(dev, ldma_clk_disable, d);
++	ret = devm_add_action_or_reset(dev, ldma_reset, d);
+ 	if (ret) {
+ 		dev_err(dev, "Failed to devm_add_action_or_reset, %d\n", ret);
+ 		return ret;
+-- 
+2.35.1
 
-Ok. I'll be AFK today, but will send my patches tomorrow.  @Frank,
-Could you please hold on with respinning the series for a few days?
-I'll send out some of my patches then with a note which one of them
-could be picked up by you and merged into this series.
-
--Sergey
-
-> 
-> Thanks,
-> Mani
-> 
-> > -Sergey
-> > 
-> > > 
-> > > The commit from Alan Mikhak is what I took as a reference since the patch was
-> > > already merged:
-> > > https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/drivers/dma/dw-edma?id=bd96f1b2f43a39310cc576bb4faf2ea24317a4c9
-> > > 
-> > > Thanks,
-> > > Mani
-> > > 
-> > > > -Sergey
-> > > > 
-> > > > > +		 *
-> > > > > +		 ****************************************************************/
-> > > > > +
-> > > > 
-> > > > > +		if ((dir == DMA_DEV_TO_MEM && chan->dir == EDMA_DIR_READ) ||
-> > > > > +		    (dir == DMA_DEV_TO_MEM && chan->dir == EDMA_DIR_WRITE))
-> > > > > +			read = true;
-> > > > 
-> > > > Seeing the driver support only two directions DMA_DEV_TO_MEM/DMA_DEV_TO_MEM
-> > > > and EDMA_DIR_READ/EDMA_DIR_WRITE, this conditional statement seems
-> > > > redundant.
-> > > > 
-> > > > > +
-> > > > > +		/* Program the source and destination addresses for DMA read/write */
-> > > > > +		if (read) {
-> > > > >  			burst->sar = src_addr;
-> > > > >  			if (xfer->type == EDMA_XFER_CYCLIC) {
-> > > > >  				burst->dar = xfer->xfer.cyclic.paddr;
-> > > > > -- 
-> > > > > 2.24.0.rc1
-> > > > > 
