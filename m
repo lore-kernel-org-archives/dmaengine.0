@@ -2,26 +2,26 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8A793C43217
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F305FC433FE
 	for <dmaengine@archiver.kernel.org>; Thu, 17 Mar 2022 08:28:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229776AbiCQIaD (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        id S231160AbiCQIaD (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
         Thu, 17 Mar 2022 04:30:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55646 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55816 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231160AbiCQIaA (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Thu, 17 Mar 2022 04:30:00 -0400
+        with ESMTP id S231172AbiCQIaD (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Thu, 17 Mar 2022 04:30:03 -0400
 Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 778B8DA6F4
-        for <dmaengine@vger.kernel.org>; Thu, 17 Mar 2022 01:28:43 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EDA73CC507
+        for <dmaengine@vger.kernel.org>; Thu, 17 Mar 2022 01:28:46 -0700 (PDT)
 Received: from dude02.hi.pengutronix.de ([2001:67c:670:100:1d::28])
         by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
         (Exim 4.92)
         (envelope-from <sha@pengutronix.de>)
-        id 1nUlUt-000693-4g; Thu, 17 Mar 2022 09:28:39 +0100
+        id 1nUlUo-000691-7g; Thu, 17 Mar 2022 09:28:34 +0100
 Received: from sha by dude02.hi.pengutronix.de with local (Exim 4.94.2)
         (envelope-from <sha@pengutronix.de>)
-        id 1nUlUm-0027UC-Vw; Thu, 17 Mar 2022 09:28:32 +0100
+        id 1nUlUm-0027U6-Uy; Thu, 17 Mar 2022 09:28:32 +0100
 From:   Sascha Hauer <s.hauer@pengutronix.de>
 To:     alsa-devel@alsa-project.org
 Cc:     Xiubo Li <Xiubo.Lee@gmail.com>, Fabio Estevam <festevam@gmail.com>,
@@ -29,9 +29,9 @@ Cc:     Xiubo Li <Xiubo.Lee@gmail.com>, Fabio Estevam <festevam@gmail.com>,
         Vinod Koul <vkoul@kernel.org>,
         NXP Linux Team <linux-imx@nxp.com>,
         dmaengine@vger.kernel.org, Sascha Hauer <s.hauer@pengutronix.de>
-Subject: [PATCH 13/19] ASoC: fsl_micfil: Drop get_pdm_clk()
-Date:   Thu, 17 Mar 2022 09:28:12 +0100
-Message-Id: <20220317082818.503143-14-s.hauer@pengutronix.de>
+Subject: [PATCH 11/19] ASoC: fsl_micfil: add multi fifo support
+Date:   Thu, 17 Mar 2022 09:28:10 +0100
+Message-Id: <20220317082818.503143-12-s.hauer@pengutronix.de>
 X-Mailer: git-send-email 2.30.2
 In-Reply-To: <20220317082818.503143-1-s.hauer@pengutronix.de>
 References: <20220317082818.503143-1-s.hauer@pengutronix.de>
@@ -45,72 +45,42 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-get_pdm_clk() calculates the PDM clock based on the quality setting,
-but really the PDM clock is independent of the quality, it's always
-rate * 4 * micfil->osr. Just drop the function and do the calculation
-in the caller.
-
 Signed-off-by: Sascha Hauer <s.hauer@pengutronix.de>
 ---
- sound/soc/fsl/fsl_micfil.c | 38 +-------------------------------------
- 1 file changed, 1 insertion(+), 37 deletions(-)
+ sound/soc/fsl/fsl_micfil.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
 diff --git a/sound/soc/fsl/fsl_micfil.c b/sound/soc/fsl/fsl_micfil.c
-index 48054b9bd4bb2..8dadb824a94ff 100644
+index 82b8fc83fd361..7795fc59d7d1a 100644
 --- a/sound/soc/fsl/fsl_micfil.c
 +++ b/sound/soc/fsl/fsl_micfil.c
-@@ -110,42 +110,6 @@ static const struct snd_kcontrol_new fsl_micfil_snd_controls[] = {
- 		     snd_soc_get_enum_double, snd_soc_put_enum_double),
- };
+@@ -15,6 +15,7 @@
+ #include <linux/regmap.h>
+ #include <linux/sysfs.h>
+ #include <linux/types.h>
++#include <linux/platform_data/dma-imx.h>
+ #include <sound/dmaengine_pcm.h>
+ #include <sound/pcm.h>
+ #include <sound/soc.h>
+@@ -34,6 +35,7 @@ struct fsl_micfil {
+ 	struct clk *busclk;
+ 	struct clk *mclk;
+ 	struct snd_dmaengine_dai_dma_data dma_params_rx;
++	struct sdma_peripheral_config sdmacfg;
+ 	unsigned int dataline;
+ 	char name[32];
+ 	int irq[MICFIL_IRQ_LINES];
+@@ -323,6 +325,10 @@ static int fsl_micfil_hw_params(struct snd_pcm_substream *substream,
+ 		return ret;
+ 	}
  
--static inline int get_pdm_clk(struct fsl_micfil *micfil,
--			      unsigned int rate)
--{
--	u32 ctrl2_reg;
--	int qsel;
--	int bclk;
--	int osr = MICFIL_OSR_DEFAULT;
--
--	regmap_read(micfil->regmap, REG_MICFIL_CTRL2, &ctrl2_reg);
--	qsel = FIELD_GET(MICFIL_CTRL2_QSEL, ctrl2_reg);
--
--	switch (qsel) {
--	case MICFIL_QSEL_HIGH_QUALITY:
--		bclk = rate * 8 * osr / 2; /* kfactor = 0.5 */
--		break;
--	case MICFIL_QSEL_MEDIUM_QUALITY:
--	case MICFIL_QSEL_VLOW0_QUALITY:
--		bclk = rate * 4 * osr * 1; /* kfactor = 1 */
--		break;
--	case MICFIL_QSEL_LOW_QUALITY:
--	case MICFIL_QSEL_VLOW1_QUALITY:
--		bclk = rate * 2 * osr * 2; /* kfactor = 2 */
--		break;
--	case MICFIL_QSEL_VLOW2_QUALITY:
--		bclk = rate * osr * 4; /* kfactor = 4 */
--		break;
--	default:
--		dev_err(&micfil->pdev->dev,
--			"Please make sure you select a valid quality.\n");
--		bclk = -1;
--		break;
--	}
--
--	return bclk;
--}
--
- static inline int get_clk_div(struct fsl_micfil *micfil,
- 			      unsigned int rate)
- {
-@@ -154,7 +118,7 @@ static inline int get_clk_div(struct fsl_micfil *micfil,
++	micfil->dma_params_rx.peripheral_config = &micfil->sdmacfg;
++	micfil->dma_params_rx.peripheral_size = sizeof(micfil->sdmacfg);
++	micfil->sdmacfg.n_fifos_src = channels;
++	micfil->sdmacfg.sw_done = true;
+ 	micfil->dma_params_rx.maxburst = channels * MICFIL_DMA_MAXBURST_RX;
  
- 	mclk_rate = clk_get_rate(micfil->mclk);
- 
--	clk_div = mclk_rate / (get_pdm_clk(micfil, rate) * 2);
-+	clk_div = mclk_rate / (rate * micfil->osr * 8);
- 
- 	return clk_div;
- }
+ 	return 0;
 -- 
 2.30.2
 
