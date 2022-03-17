@@ -2,26 +2,26 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 55AE2C433F5
-	for <dmaengine@archiver.kernel.org>; Thu, 17 Mar 2022 08:28:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 25D74C433F5
+	for <dmaengine@archiver.kernel.org>; Thu, 17 Mar 2022 08:28:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231179AbiCQIaI (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Thu, 17 Mar 2022 04:30:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56112 "EHLO
+        id S231196AbiCQIaL (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Thu, 17 Mar 2022 04:30:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56288 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230260AbiCQIaH (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Thu, 17 Mar 2022 04:30:07 -0400
+        with ESMTP id S230215AbiCQIaK (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Thu, 17 Mar 2022 04:30:10 -0400
 Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6E411E019
-        for <dmaengine@vger.kernel.org>; Thu, 17 Mar 2022 01:28:51 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6CBB3B91A3
+        for <dmaengine@vger.kernel.org>; Thu, 17 Mar 2022 01:28:54 -0700 (PDT)
 Received: from dude02.hi.pengutronix.de ([2001:67c:670:100:1d::28])
         by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
         (Exim 4.92)
         (envelope-from <sha@pengutronix.de>)
-        id 1nUlUt-000695-4b; Thu, 17 Mar 2022 09:28:39 +0100
+        id 1nUlUo-000699-7y; Thu, 17 Mar 2022 09:28:34 +0100
 Received: from sha by dude02.hi.pengutronix.de with local (Exim 4.94.2)
         (envelope-from <sha@pengutronix.de>)
-        id 1nUlUn-0027UJ-0z; Thu, 17 Mar 2022 09:28:33 +0100
+        id 1nUlUn-0027UV-3O; Thu, 17 Mar 2022 09:28:33 +0100
 From:   Sascha Hauer <s.hauer@pengutronix.de>
 To:     alsa-devel@alsa-project.org
 Cc:     Xiubo Li <Xiubo.Lee@gmail.com>, Fabio Estevam <festevam@gmail.com>,
@@ -29,9 +29,9 @@ Cc:     Xiubo Li <Xiubo.Lee@gmail.com>, Fabio Estevam <festevam@gmail.com>,
         Vinod Koul <vkoul@kernel.org>,
         NXP Linux Team <linux-imx@nxp.com>,
         dmaengine@vger.kernel.org, Sascha Hauer <s.hauer@pengutronix.de>
-Subject: [PATCH 15/19] ASoC: fsl_micfil: rework quality setting
-Date:   Thu, 17 Mar 2022 09:28:14 +0100
-Message-Id: <20220317082818.503143-16-s.hauer@pengutronix.de>
+Subject: [PATCH 19/19] ASoC: fsl_micfil: fold fsl_set_clock_params() into its only user
+Date:   Thu, 17 Mar 2022 09:28:18 +0100
+Message-Id: <20220317082818.503143-20-s.hauer@pengutronix.de>
 X-Mailer: git-send-email 2.30.2
 In-Reply-To: <20220317082818.503143-1-s.hauer@pengutronix.de>
 References: <20220317082818.503143-1-s.hauer@pengutronix.de>
@@ -45,191 +45,81 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-For the quality setting the quality setting register values are directly
-exposed to the kcontrol and thus to userspace. This is unfortunate
-because the register settings contains invalid bit combinations marked
-as "N/A". For userspace it doesn't make much sense to be able to set
-these just to see that the driver responds with "Please make sure you
-select a valid quality." in the kernel log.
-
-Work around this by adding get/set functions for the quality setting.
+fsl_set_clock_params() is used only once and easily be folded into its
+caller, do so.
 
 Signed-off-by: Sascha Hauer <s.hauer@pengutronix.de>
 ---
- sound/soc/fsl/fsl_micfil.c | 109 ++++++++++++++++++++++++++-----------
- 1 file changed, 77 insertions(+), 32 deletions(-)
+ sound/soc/fsl/fsl_micfil.c | 41 ++++++++++++--------------------------
+ 1 file changed, 13 insertions(+), 28 deletions(-)
 
 diff --git a/sound/soc/fsl/fsl_micfil.c b/sound/soc/fsl/fsl_micfil.c
-index 7975ae6f3fb4f..3c0a0ccd0e5fe 100644
+index 99e25761008b1..79f6deb2ba821 100644
 --- a/sound/soc/fsl/fsl_micfil.c
 +++ b/sound/soc/fsl/fsl_micfil.c
-@@ -30,6 +30,15 @@
+@@ -252,29 +252,6 @@ static int fsl_micfil_trigger(struct snd_pcm_substream *substream, int cmd,
+ 	return 0;
+ }
  
- #define MICFIL_OSR_DEFAULT	16
- 
-+enum quality {
-+	QUALITY_HIGH,
-+	QUALITY_MEDIUM,
-+	QUALITY_LOW,
-+	QUALITY_VLOW0,
-+	QUALITY_VLOW1,
-+	QUALITY_VLOW2,
-+};
-+
- struct fsl_micfil {
- 	struct platform_device *pdev;
- 	struct regmap *regmap;
-@@ -41,7 +50,7 @@ struct fsl_micfil {
- 	unsigned int dataline;
- 	char name[32];
- 	int irq[MICFIL_IRQ_LINES];
--	int quality;	/*QUALITY 2-0 bits */
-+	enum quality quality;
- 	unsigned int osr;
- };
- 
-@@ -65,29 +74,73 @@ static const struct of_device_id fsl_micfil_dt_ids[] = {
- };
- MODULE_DEVICE_TABLE(of, fsl_micfil_dt_ids);
- 
--/* Table 5. Quality Modes
-- * Medium	0 0 0
-- * High		0 0 1
-- * Very Low 2	1 0 0
-- * Very Low 1	1 0 1
-- * Very Low 0	1 1 0
-- * Low		1 1 1
-- */
- static const char * const micfil_quality_select_texts[] = {
--	"Medium", "High",
--	"N/A", "N/A",
--	"VLow2", "VLow1",
--	"VLow0", "Low",
-+	[QUALITY_HIGH] = "High",
-+	[QUALITY_MEDIUM] = "Medium",
-+	[QUALITY_LOW] = "Low",
-+	[QUALITY_VLOW0] = "VLow0",
-+	[QUALITY_VLOW1] = "Vlow1",
-+	[QUALITY_VLOW2] = "Vlow2",
- };
- 
- static const struct soc_enum fsl_micfil_quality_enum =
--	SOC_ENUM_SINGLE(REG_MICFIL_CTRL2,
--			MICFIL_CTRL2_QSEL_SHIFT,
--			ARRAY_SIZE(micfil_quality_select_texts),
--			micfil_quality_select_texts);
-+	SOC_ENUM_SINGLE_EXT(ARRAY_SIZE(micfil_quality_select_texts),
-+			    micfil_quality_select_texts);
- 
- static DECLARE_TLV_DB_SCALE(gain_tlv, 0, 100, 0);
- 
-+static int micfil_set_quality(struct fsl_micfil *micfil)
-+{
-+	u32 qsel;
-+
-+	switch (micfil->quality) {
-+	case QUALITY_HIGH:
-+		qsel = MICFIL_QSEL_HIGH_QUALITY;
-+		break;
-+	case QUALITY_MEDIUM:
-+		qsel = MICFIL_QSEL_MEDIUM_QUALITY;
-+		break;
-+	case QUALITY_LOW:
-+		qsel = MICFIL_QSEL_LOW_QUALITY;
-+		break;
-+	case QUALITY_VLOW0:
-+		qsel = MICFIL_QSEL_VLOW0_QUALITY;
-+		break;
-+	case QUALITY_VLOW1:
-+		qsel = MICFIL_QSEL_VLOW1_QUALITY;
-+		break;
-+	case QUALITY_VLOW2:
-+		qsel = MICFIL_QSEL_VLOW2_QUALITY;
-+		break;
-+	}
-+
-+	return regmap_update_bits(micfil->regmap, REG_MICFIL_CTRL2,
-+				 MICFIL_CTRL2_QSEL,
-+				 FIELD_PREP(MICFIL_CTRL2_QSEL, qsel));
-+}
-+
-+static int micfil_quality_get(struct snd_kcontrol *kcontrol,
-+			     struct snd_ctl_elem_value *ucontrol)
-+{
-+	struct snd_soc_component *cmpnt = snd_soc_kcontrol_component(kcontrol);
-+	struct fsl_micfil *micfil = snd_soc_component_get_drvdata(cmpnt);
-+
-+	ucontrol->value.integer.value[0] = micfil->quality;
-+
-+	return 0;
-+}
-+
-+static int micfil_quality_set(struct snd_kcontrol *kcontrol,
-+			      struct snd_ctl_elem_value *ucontrol)
-+{
-+	struct snd_soc_component *cmpnt = snd_soc_kcontrol_component(kcontrol);
-+	struct fsl_micfil *micfil = snd_soc_component_get_drvdata(cmpnt);
-+
-+	micfil->quality = ucontrol->value.integer.value[0];
-+
-+	return micfil_set_quality(micfil);
-+}
-+
- static const struct snd_kcontrol_new fsl_micfil_snd_controls[] = {
- 	SOC_SINGLE_SX_TLV("CH0 Volume", REG_MICFIL_OUT_CTRL,
- 			  MICFIL_OUTGAIN_CHX_SHIFT(0), 0xF, 0x7, gain_tlv),
-@@ -107,7 +160,7 @@ static const struct snd_kcontrol_new fsl_micfil_snd_controls[] = {
- 			  MICFIL_OUTGAIN_CHX_SHIFT(7), 0xF, 0x7, gain_tlv),
- 	SOC_ENUM_EXT("MICFIL Quality Select",
- 		     fsl_micfil_quality_enum,
--		     snd_soc_get_enum_double, snd_soc_put_enum_double),
-+		     micfil_quality_get, micfil_quality_set),
- };
- 
- /* The SRES is a self-negated bit which provides the CPU with the
-@@ -207,22 +260,21 @@ static int fsl_set_clock_params(struct device *dev, unsigned int rate)
- {
- 	struct fsl_micfil *micfil = dev_get_drvdata(dev);
- 	int clk_div = 8;
+-static int fsl_set_clock_params(struct device *dev, unsigned int rate)
+-{
+-	struct fsl_micfil *micfil = dev_get_drvdata(dev);
+-	int clk_div = 8;
+-	int osr = MICFIL_OSR_DEFAULT;
+-	int ret;
+-
+-	ret = clk_set_rate(micfil->mclk, rate * clk_div * osr * 8);
+-	if (ret)
+-		return ret;
+-
+-	ret = micfil_set_quality(micfil);
+-	if (ret)
+-		return ret;
+-
+-	ret = regmap_update_bits(micfil->regmap, REG_MICFIL_CTRL2,
+-				 MICFIL_CTRL2_CLKDIV | MICFIL_CTRL2_CICOSR,
+-				 FIELD_PREP(MICFIL_CTRL2_CLKDIV, clk_div) |
+-				 FIELD_PREP(MICFIL_CTRL2_CICOSR, 16 - osr));
+-
+-	return ret;
+-}
+-
+ static int fsl_micfil_hw_params(struct snd_pcm_substream *substream,
+ 				struct snd_pcm_hw_params *params,
+ 				struct snd_soc_dai *dai)
+@@ -282,7 +259,8 @@ static int fsl_micfil_hw_params(struct snd_pcm_substream *substream,
+ 	struct fsl_micfil *micfil = snd_soc_dai_get_drvdata(dai);
+ 	unsigned int channels = params_channels(params);
+ 	unsigned int rate = params_rate(params);
+-	struct device *dev = &micfil->pdev->dev;
++	int clk_div = 8;
 +	int osr = MICFIL_OSR_DEFAULT;
  	int ret;
  
--	ret = clk_set_rate(micfil->mclk, rate * clk_div * micfil->osr * 8);
+ 	/* 1. Disable the module */
+@@ -297,11 +275,18 @@ static int fsl_micfil_hw_params(struct snd_pcm_substream *substream,
+ 	if (ret)
+ 		return ret;
+ 
+-	ret = fsl_set_clock_params(dev, rate);
+-	if (ret < 0) {
+-		dev_err(dev, "Failed to set clock parameters [%d]\n", ret);
 +	ret = clk_set_rate(micfil->mclk, rate * clk_div * osr * 8);
- 	if (ret)
++	if (ret)
  		return ret;
- 
--	/* set CICOSR */
--	ret = regmap_update_bits(micfil->regmap, REG_MICFIL_CTRL2,
--				 MICFIL_CTRL2_CICOSR,
--				 FIELD_PREP(MICFIL_CTRL2_CICOSR, 16 - MICFIL_OSR_DEFAULT));
+-	}
++
 +	ret = micfil_set_quality(micfil);
- 	if (ret)
- 		return ret;
- 
- 	ret = regmap_update_bits(micfil->regmap, REG_MICFIL_CTRL2,
--				 MICFIL_CTRL2_CLKDIV,
--				 FIELD_PREP(MICFIL_CTRL2_CLKDIV, clk_div));
++	if (ret)
++		return ret;
++
++	ret = regmap_update_bits(micfil->regmap, REG_MICFIL_CTRL2,
 +				 MICFIL_CTRL2_CLKDIV | MICFIL_CTRL2_CICOSR,
 +				 FIELD_PREP(MICFIL_CTRL2_CLKDIV, clk_div) |
 +				 FIELD_PREP(MICFIL_CTRL2_CICOSR, 16 - osr));
  
- 	return ret;
- }
-@@ -275,13 +327,6 @@ static int fsl_micfil_dai_probe(struct snd_soc_dai *cpu_dai)
- 	struct fsl_micfil *micfil = dev_get_drvdata(cpu_dai->dev);
- 	int ret;
- 
--	/* set qsel to medium */
--	ret = regmap_update_bits(micfil->regmap, REG_MICFIL_CTRL2,
--			MICFIL_CTRL2_QSEL,
--			FIELD_PREP(MICFIL_CTRL2_QSEL, MICFIL_QSEL_MEDIUM_QUALITY));
--	if (ret)
--		return ret;
--
- 	/* set default gain to max_gain */
- 	regmap_write(micfil->regmap, REG_MICFIL_OUT_CTRL, 0x77777777);
- 
+ 	micfil->dma_params_rx.peripheral_config = &micfil->sdmacfg;
+ 	micfil->dma_params_rx.peripheral_size = sizeof(micfil->sdmacfg);
 -- 
 2.30.2
 
