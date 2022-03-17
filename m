@@ -2,26 +2,26 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 04D04C433EF
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AE55BC433FE
 	for <dmaengine@archiver.kernel.org>; Thu, 17 Mar 2022 08:28:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230447AbiCQIaA (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        id S230472AbiCQIaA (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
         Thu, 17 Mar 2022 04:30:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55426 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55526 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230472AbiCQI35 (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Thu, 17 Mar 2022 04:29:57 -0400
+        with ESMTP id S229481AbiCQI36 (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Thu, 17 Mar 2022 04:29:58 -0400
 Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6DAB5E019
-        for <dmaengine@vger.kernel.org>; Thu, 17 Mar 2022 01:28:41 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 639DED3734
+        for <dmaengine@vger.kernel.org>; Thu, 17 Mar 2022 01:28:42 -0700 (PDT)
 Received: from dude02.hi.pengutronix.de ([2001:67c:670:100:1d::28])
         by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
         (Exim 4.92)
         (envelope-from <sha@pengutronix.de>)
-        id 1nUlUo-00068w-7r; Thu, 17 Mar 2022 09:28:34 +0100
+        id 1nUlUo-00068r-7p; Thu, 17 Mar 2022 09:28:34 +0100
 Received: from sha by dude02.hi.pengutronix.de with local (Exim 4.94.2)
         (envelope-from <sha@pengutronix.de>)
-        id 1nUlUm-0027Tr-Rr; Thu, 17 Mar 2022 09:28:32 +0100
+        id 1nUlUm-0027Tc-OB; Thu, 17 Mar 2022 09:28:32 +0100
 From:   Sascha Hauer <s.hauer@pengutronix.de>
 To:     alsa-devel@alsa-project.org
 Cc:     Xiubo Li <Xiubo.Lee@gmail.com>, Fabio Estevam <festevam@gmail.com>,
@@ -29,9 +29,9 @@ Cc:     Xiubo Li <Xiubo.Lee@gmail.com>, Fabio Estevam <festevam@gmail.com>,
         Vinod Koul <vkoul@kernel.org>,
         NXP Linux Team <linux-imx@nxp.com>,
         dmaengine@vger.kernel.org, Sascha Hauer <s.hauer@pengutronix.de>
-Subject: [PATCH 06/19] ASoC: fsl_micfil: use clear/set bits
-Date:   Thu, 17 Mar 2022 09:28:05 +0100
-Message-Id: <20220317082818.503143-7-s.hauer@pengutronix.de>
+Subject: [PATCH 01/19] ASoC: fsl_micfil: Drop unnecessary register read
+Date:   Thu, 17 Mar 2022 09:28:00 +0100
+Message-Id: <20220317082818.503143-2-s.hauer@pengutronix.de>
 X-Mailer: git-send-email 2.30.2
 In-Reply-To: <20220317082818.503143-1-s.hauer@pengutronix.de>
 References: <20220317082818.503143-1-s.hauer@pengutronix.de>
@@ -45,77 +45,26 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Instead regmap_update_bits() use the simpler variants
-regmap_[set|clear]_bits() where appropriate.
+in get_pdm_clk() REG_MICFIL_CTRL2 is read twice. Drop second read.
 
 Signed-off-by: Sascha Hauer <s.hauer@pengutronix.de>
 ---
- sound/soc/fsl/fsl_micfil.c | 26 ++++++++++----------------
- 1 file changed, 10 insertions(+), 16 deletions(-)
+ sound/soc/fsl/fsl_micfil.c | 2 --
+ 1 file changed, 2 deletions(-)
 
 diff --git a/sound/soc/fsl/fsl_micfil.c b/sound/soc/fsl/fsl_micfil.c
-index 4a537cf17bad8..9314f31f950c6 100644
+index 9f90989ac59a6..64019d003784b 100644
 --- a/sound/soc/fsl/fsl_micfil.c
 +++ b/sound/soc/fsl/fsl_micfil.c
-@@ -167,19 +167,15 @@ static int fsl_micfil_reset(struct device *dev)
- 	struct fsl_micfil *micfil = dev_get_drvdata(dev);
- 	int ret;
+@@ -118,8 +118,6 @@ static inline int get_pdm_clk(struct fsl_micfil *micfil,
+ 	regmap_read(micfil->regmap, REG_MICFIL_CTRL2, &ctrl2_reg);
+ 	osr = 16 - ((ctrl2_reg & MICFIL_CTRL2_CICOSR_MASK)
+ 		    >> MICFIL_CTRL2_CICOSR_SHIFT);
+-
+-	regmap_read(micfil->regmap, REG_MICFIL_CTRL2, &ctrl2_reg);
+ 	qsel = ctrl2_reg & MICFIL_CTRL2_QSEL_MASK;
  
--	ret = regmap_update_bits(micfil->regmap,
--				 REG_MICFIL_CTRL1,
--				 MICFIL_CTRL1_MDIS,
--				 0);
-+	ret = regmap_clear_bits(micfil->regmap, REG_MICFIL_CTRL1,
-+				MICFIL_CTRL1_MDIS);
- 	if (ret) {
- 		dev_err(dev, "failed to clear MDIS bit %d\n", ret);
- 		return ret;
- 	}
- 
--	ret = regmap_update_bits(micfil->regmap,
--				 REG_MICFIL_CTRL1,
--				 MICFIL_CTRL1_SRES,
--				 MICFIL_CTRL1_SRES);
-+	ret = regmap_set_bits(micfil->regmap, REG_MICFIL_CTRL1,
-+			      MICFIL_CTRL1_SRES);
- 	if (ret) {
- 		dev_err(dev, "failed to reset MICFIL: %d\n", ret);
- 		return ret;
-@@ -251,9 +247,8 @@ static int fsl_micfil_trigger(struct snd_pcm_substream *substream, int cmd,
- 		}
- 
- 		/* Enable the module */
--		ret = regmap_update_bits(micfil->regmap, REG_MICFIL_CTRL1,
--					 MICFIL_CTRL1_PDMIEN,
--					 MICFIL_CTRL1_PDMIEN);
-+		ret = regmap_set_bits(micfil->regmap, REG_MICFIL_CTRL1,
-+				      MICFIL_CTRL1_PDMIEN);
- 		if (ret) {
- 			dev_err(dev, "failed to enable the module\n");
- 			return ret;
-@@ -264,9 +259,8 @@ static int fsl_micfil_trigger(struct snd_pcm_substream *substream, int cmd,
- 	case SNDRV_PCM_TRIGGER_SUSPEND:
- 	case SNDRV_PCM_TRIGGER_PAUSE_PUSH:
- 		/* Disable the module */
--		ret = regmap_update_bits(micfil->regmap, REG_MICFIL_CTRL1,
--					 MICFIL_CTRL1_PDMIEN,
--					 0);
-+		ret = regmap_clear_bits(micfil->regmap, REG_MICFIL_CTRL1,
-+					MICFIL_CTRL1_PDMIEN);
- 		if (ret) {
- 			dev_err(dev, "failed to enable the module\n");
- 			return ret;
-@@ -331,8 +325,8 @@ static int fsl_micfil_hw_params(struct snd_pcm_substream *substream,
- 	int ret;
- 
- 	/* 1. Disable the module */
--	ret = regmap_update_bits(micfil->regmap, REG_MICFIL_CTRL1,
--				 MICFIL_CTRL1_PDMIEN, 0);
-+	ret = regmap_clear_bits(micfil->regmap, REG_MICFIL_CTRL1,
-+				 MICFIL_CTRL1_PDMIEN);
- 	if (ret) {
- 		dev_err(dev, "failed to disable the module\n");
- 		return ret;
+ 	switch (qsel) {
 -- 
 2.30.2
 
