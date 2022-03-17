@@ -2,26 +2,26 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9BE1EC433EF
-	for <dmaengine@archiver.kernel.org>; Thu, 17 Mar 2022 08:29:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AA9A8C433F5
+	for <dmaengine@archiver.kernel.org>; Thu, 17 Mar 2022 08:29:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230271AbiCQIa3 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Thu, 17 Mar 2022 04:30:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57476 "EHLO
+        id S231276AbiCQIao (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Thu, 17 Mar 2022 04:30:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57946 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229854AbiCQIa0 (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Thu, 17 Mar 2022 04:30:26 -0400
+        with ESMTP id S231245AbiCQIag (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Thu, 17 Mar 2022 04:30:36 -0400
 Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2B5E5E019
-        for <dmaengine@vger.kernel.org>; Thu, 17 Mar 2022 01:29:11 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F348E019
+        for <dmaengine@vger.kernel.org>; Thu, 17 Mar 2022 01:29:20 -0700 (PDT)
 Received: from dude02.hi.pengutronix.de ([2001:67c:670:100:1d::28])
         by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
         (Exim 4.92)
         (envelope-from <sha@pengutronix.de>)
-        id 1nUlUo-00068s-7n; Thu, 17 Mar 2022 09:28:34 +0100
+        id 1nUlUo-000694-7r; Thu, 17 Mar 2022 09:28:34 +0100
 Received: from sha by dude02.hi.pengutronix.de with local (Exim 4.94.2)
         (envelope-from <sha@pengutronix.de>)
-        id 1nUlUm-0027Tf-Op; Thu, 17 Mar 2022 09:28:32 +0100
+        id 1nUlUn-0027UG-0J; Thu, 17 Mar 2022 09:28:33 +0100
 From:   Sascha Hauer <s.hauer@pengutronix.de>
 To:     alsa-devel@alsa-project.org
 Cc:     Xiubo Li <Xiubo.Lee@gmail.com>, Fabio Estevam <festevam@gmail.com>,
@@ -29,9 +29,9 @@ Cc:     Xiubo Li <Xiubo.Lee@gmail.com>, Fabio Estevam <festevam@gmail.com>,
         Vinod Koul <vkoul@kernel.org>,
         NXP Linux Team <linux-imx@nxp.com>,
         dmaengine@vger.kernel.org, Sascha Hauer <s.hauer@pengutronix.de>
-Subject: [PATCH 02/19] ASoC: fsl_micfil: Drop unused register read
-Date:   Thu, 17 Mar 2022 09:28:01 +0100
-Message-Id: <20220317082818.503143-3-s.hauer@pengutronix.de>
+Subject: [PATCH 14/19] ASoC: fsl_micfil: simplify clock setting
+Date:   Thu, 17 Mar 2022 09:28:13 +0100
+Message-Id: <20220317082818.503143-15-s.hauer@pengutronix.de>
 X-Mailer: git-send-email 2.30.2
 In-Reply-To: <20220317082818.503143-1-s.hauer@pengutronix.de>
 References: <20220317082818.503143-1-s.hauer@pengutronix.de>
@@ -45,31 +45,110 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-In get_pdm_clk() REG_MICFIL_CTRL2 is read, but the result is never used.
-Drop the unused code.
+The reference manual has this for calculating the micfil internal clock
+divider:
+
+         MICFIL Clock rate
+clkdiv = -----------------
+         8 * OSR * outrate
+
+(with OSR == Oversampling Rate, outrate == output sample rate)
+
+The driver first sets the MICFIL Clock rate to (outrate * 1024) and then
+calculates back the clkdiv value from the above calculation.
+
+Simplify this by using a fixed clkdiv value of 8 and set the MICFIL
+Clock rate to (outrate * clkdiv * OSR * 8).
+
+While at it drop disabling the clock before setting its rate. The MICFIL
+module is disabled when the rate is changed and it is also resetted
+before it is started again, so I doubt it's necessary to disable the
+clock.
 
 Signed-off-by: Sascha Hauer <s.hauer@pengutronix.de>
 ---
- sound/soc/fsl/fsl_micfil.c | 3 ---
- 1 file changed, 3 deletions(-)
+ sound/soc/fsl/fsl_micfil.c | 45 ++++----------------------------------
+ 1 file changed, 4 insertions(+), 41 deletions(-)
 
 diff --git a/sound/soc/fsl/fsl_micfil.c b/sound/soc/fsl/fsl_micfil.c
-index 64019d003784b..cf10c212d770d 100644
+index 8dadb824a94ff..7975ae6f3fb4f 100644
 --- a/sound/soc/fsl/fsl_micfil.c
 +++ b/sound/soc/fsl/fsl_micfil.c
-@@ -148,12 +148,9 @@ static inline int get_pdm_clk(struct fsl_micfil *micfil,
- static inline int get_clk_div(struct fsl_micfil *micfil,
- 			      unsigned int rate)
- {
--	u32 ctrl2_reg;
- 	long mclk_rate;
- 	int clk_div;
+@@ -110,19 +110,6 @@ static const struct snd_kcontrol_new fsl_micfil_snd_controls[] = {
+ 		     snd_soc_get_enum_double, snd_soc_put_enum_double),
+ };
  
--	regmap_read(micfil->regmap, REG_MICFIL_CTRL2, &ctrl2_reg);
+-static inline int get_clk_div(struct fsl_micfil *micfil,
+-			      unsigned int rate)
+-{
+-	long mclk_rate;
+-	int clk_div;
 -
- 	mclk_rate = clk_get_rate(micfil->mclk);
+-	mclk_rate = clk_get_rate(micfil->mclk);
+-
+-	clk_div = mclk_rate / (rate * micfil->osr * 8);
+-
+-	return clk_div;
+-}
+-
+ /* The SRES is a self-negated bit which provides the CPU with the
+  * capability to initialize the PDM Interface module through the
+  * slave-bus interface. This bit always reads as zero, and this
+@@ -146,24 +133,6 @@ static int fsl_micfil_reset(struct device *dev)
+ 	return 0;
+ }
  
- 	clk_div = mclk_rate / (get_pdm_clk(micfil, rate) * 2);
+-static int fsl_micfil_set_mclk_rate(struct fsl_micfil *micfil,
+-				    unsigned int freq)
+-{
+-	struct device *dev = &micfil->pdev->dev;
+-	int ret;
+-
+-	clk_disable_unprepare(micfil->mclk);
+-
+-	ret = clk_set_rate(micfil->mclk, freq * 1024);
+-	if (ret)
+-		dev_warn(dev, "failed to set rate (%u): %d\n",
+-			 freq * 1024, ret);
+-
+-	clk_prepare_enable(micfil->mclk);
+-
+-	return ret;
+-}
+-
+ static int fsl_micfil_startup(struct snd_pcm_substream *substream,
+ 			      struct snd_soc_dai *dai)
+ {
+@@ -237,13 +206,12 @@ static int fsl_micfil_trigger(struct snd_pcm_substream *substream, int cmd,
+ static int fsl_set_clock_params(struct device *dev, unsigned int rate)
+ {
+ 	struct fsl_micfil *micfil = dev_get_drvdata(dev);
+-	int clk_div;
++	int clk_div = 8;
+ 	int ret;
+ 
+-	ret = fsl_micfil_set_mclk_rate(micfil, rate);
+-	if (ret < 0)
+-		dev_err(dev, "failed to set mclk[%lu] to rate %u\n",
+-			clk_get_rate(micfil->mclk), rate);
++	ret = clk_set_rate(micfil->mclk, rate * clk_div * micfil->osr * 8);
++	if (ret)
++		return ret;
+ 
+ 	/* set CICOSR */
+ 	ret = regmap_update_bits(micfil->regmap, REG_MICFIL_CTRL2,
+@@ -252,11 +220,6 @@ static int fsl_set_clock_params(struct device *dev, unsigned int rate)
+ 	if (ret)
+ 		return ret;
+ 
+-	/* set CLK_DIV */
+-	clk_div = get_clk_div(micfil, rate);
+-	if (clk_div < 0)
+-		ret = -EINVAL;
+-
+ 	ret = regmap_update_bits(micfil->regmap, REG_MICFIL_CTRL2,
+ 				 MICFIL_CTRL2_CLKDIV,
+ 				 FIELD_PREP(MICFIL_CTRL2_CLKDIV, clk_div));
 -- 
 2.30.2
 
