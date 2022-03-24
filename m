@@ -2,38 +2,42 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 79E1DC4332F
-	for <dmaengine@archiver.kernel.org>; Mon, 28 Mar 2022 16:44:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6F986C43219
+	for <dmaengine@archiver.kernel.org>; Mon, 28 Mar 2022 16:46:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239197AbiC1QqY (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 28 Mar 2022 12:46:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45184 "EHLO
+        id S243367AbiC1QqR (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 28 Mar 2022 12:46:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45146 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242764AbiC1QqC (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Mon, 28 Mar 2022 12:46:02 -0400
+        with ESMTP id S242935AbiC1QqE (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Mon, 28 Mar 2022 12:46:04 -0400
 Received: from mail.baikalelectronics.ru (mail.baikalelectronics.com [87.245.175.226])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id A524E21E06;
-        Mon, 28 Mar 2022 09:44:15 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 76B17222A1;
+        Mon, 28 Mar 2022 09:44:17 -0700 (PDT)
 Received: from mail.baikalelectronics.ru (unknown [192.168.51.25])
-        by mail.baikalelectronics.ru (Postfix) with ESMTP id 0D8591E4957;
-        Thu, 24 Mar 2022 04:48:52 +0300 (MSK)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mail.baikalelectronics.ru 0D8591E4957
+        by mail.baikalelectronics.ru (Postfix) with ESMTP id 8C8691E493D;
+        Thu, 24 Mar 2022 04:48:40 +0300 (MSK)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mail.baikalelectronics.ru 8C8691E493D
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baikalelectronics.ru; s=mail; t=1648086532;
-        bh=6r8gaQsOYq/p4RX7+mLlgeUaSGu+wrHHd6FACxtxVx4=;
+        d=baikalelectronics.ru; s=mail; t=1648086520;
+        bh=AYgCGlj6XCp3KD2/KUlHJg+55HiFo50ys5cdSY8nwOc=;
         h=From:To:CC:Subject:Date:In-Reply-To:References:From;
-        b=baS8gS76iAlILpvT5olXT8ykmqBOamm4ZjLq1TSMgcAqYxgSX82luvDPyZ91MN7gn
-         uqX+PS84so5Bk7Ix79JAMIwOVB7WkXtXVkM/phh5vjHmxrSk0ejqs4c0pFruT8xLQb
-         tki+Xst7GsH9ZR8DlwZTMX4m8oOsQKAXHTE11UU8=
+        b=Gdpk4DVTE1MY+dgZ0kGVMp67RyX8d1SyCg2QO2NJHj25IYEGxOxb8VC4cSyQcFRx4
+         sxb20q0ugu4aEjTmpg69ImHd3ruWyaaxda/H8iMTCWfSg/qZlBV6hI7F5qPAIl5pvM
+         TH40nEUw788A0bI+6t728iRMW+6lqKWGI7yOKtds=
 Received: from localhost (192.168.168.10) by mail (192.168.51.25) with
- Microsoft SMTP Server (TLS) id 15.0.1395.4; Thu, 24 Mar 2022 04:48:51 +0300
+ Microsoft SMTP Server (TLS) id 15.0.1395.4; Thu, 24 Mar 2022 04:48:40 +0300
 From:   Serge Semin <Sergey.Semin@baikalelectronics.ru>
 To:     Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
         Vinod Koul <vkoul@kernel.org>,
         Jingoo Han <jingoohan1@gmail.com>,
         Bjorn Helgaas <bhelgaas@google.com>,
         Frank Li <Frank.Li@nxp.com>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Christoph Hellwig <hch@lst.de>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Vladimir Murzin <vladimir.murzin@arm.com>
 CC:     Serge Semin <Sergey.Semin@baikalelectronics.ru>,
         Serge Semin <fancer.lancer@gmail.com>,
         Alexey Malahov <Alexey.Malahov@baikalelectronics.ru>,
@@ -42,10 +46,10 @@ CC:     Serge Semin <Sergey.Semin@baikalelectronics.ru>,
         Rob Herring <robh@kernel.org>,
         =?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>,
         <linux-pci@vger.kernel.org>, <dmaengine@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-Subject: [PATCH 19/25] dmaengine: dw-edma: Use DMA-engine device DebugFS subdirectory
-Date:   Thu, 24 Mar 2022 04:48:30 +0300
-Message-ID: <20220324014836.19149-20-Sergey.Semin@baikalelectronics.ru>
+        <linux-kernel@vger.kernel.org>, <iommu@lists.linux-foundation.org>
+Subject: [PATCH 03/25] dma-direct: take dma-ranges/offsets into account in resource mapping
+Date:   Thu, 24 Mar 2022 04:48:14 +0300
+Message-ID: <20220324014836.19149-4-Sergey.Semin@baikalelectronics.ru>
 In-Reply-To: <20220324014836.19149-1-Sergey.Semin@baikalelectronics.ru>
 References: <20220324014836.19149-1-Sergey.Semin@baikalelectronics.ru>
 MIME-Version: 1.0
@@ -56,130 +60,40 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Since all DW eDMA read and write channels are now installed in a framework
-of a single DMA-engine device, we can freely move all the DW eDMA-specific
-DebugFS nodes into a ready-to-use DMA-engine DebugFS subdirectory. It's
-created during the DMA-device registration and can be found in the
-dma_device.dbg_dev_root field.
+A basic device-specific linear memory mapping was introduced back in
+commit ("dma: Take into account dma_pfn_offset") as a single-valued offset
+preserved in the device.dma_pfn_offset field, which was initialized for
+instance by means of the "dma-ranges" DT property. Afterwards the
+functionality was extended to support more than one device-specific region
+defined in the device.dma_range_map list of maps. But all of these
+improvements concerned a single pointer, page or sg DMA-mapping methods,
+while the system resource mapping function turned to miss the
+corresponding modification. Thus the dma_direct_map_resource() method now
+just casts the CPU physical address to the device DMA address with no
+dma-ranges-based mapping taking into account, which is obviously wrong.
+Let's fix it by using the phys_to_dma_direct() method to get the
+device-specific bus address from the passed memory resource for the case
+of the directly mapped DMA.
 
+Fixes: 25f1e1887088 ("dma: Take into account dma_pfn_offset")
 Signed-off-by: Serge Semin <Sergey.Semin@baikalelectronics.ru>
 ---
- drivers/dma/dw-edma/dw-edma-core.c       |  3 ---
- drivers/dma/dw-edma/dw-edma-core.h       |  3 ---
- drivers/dma/dw-edma/dw-edma-v0-core.c    |  5 -----
- drivers/dma/dw-edma/dw-edma-v0-core.h    |  1 -
- drivers/dma/dw-edma/dw-edma-v0-debugfs.c | 18 ++++--------------
- drivers/dma/dw-edma/dw-edma-v0-debugfs.h |  5 -----
- 6 files changed, 4 insertions(+), 31 deletions(-)
+ kernel/dma/direct.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/dma/dw-edma/dw-edma-core.c b/drivers/dma/dw-edma/dw-edma-core.c
-index a391e44da039..bc530f0a2468 100644
---- a/drivers/dma/dw-edma/dw-edma-core.c
-+++ b/drivers/dma/dw-edma/dw-edma-core.c
-@@ -1045,9 +1045,6 @@ int dw_edma_remove(struct dw_edma_chip *chip)
- 		list_del(&chan->vc.chan.device_node);
- 	}
- 
--	/* Turn debugfs off */
--	dw_edma_v0_core_debugfs_off(chip);
--
- 	return 0;
- }
- EXPORT_SYMBOL_GPL(dw_edma_remove);
-diff --git a/drivers/dma/dw-edma/dw-edma-core.h b/drivers/dma/dw-edma/dw-edma-core.h
-index ec9f84a857d1..980adb079182 100644
---- a/drivers/dma/dw-edma/dw-edma-core.h
-+++ b/drivers/dma/dw-edma/dw-edma-core.h
-@@ -110,9 +110,6 @@ struct dw_edma {
- 	raw_spinlock_t			lock;		/* Only for legacy */
- 
- 	struct dw_edma_chip             *chip;
--#ifdef CONFIG_DEBUG_FS
--	struct dentry			*debugfs;
--#endif /* CONFIG_DEBUG_FS */
- };
- 
- struct dw_edma_sg {
-diff --git a/drivers/dma/dw-edma/dw-edma-v0-core.c b/drivers/dma/dw-edma/dw-edma-v0-core.c
-index 013d9a9cb991..6b303d5a6b2a 100644
---- a/drivers/dma/dw-edma/dw-edma-v0-core.c
-+++ b/drivers/dma/dw-edma/dw-edma-v0-core.c
-@@ -511,8 +511,3 @@ void dw_edma_v0_core_debugfs_on(struct dw_edma_chip *chip)
+diff --git a/kernel/dma/direct.c b/kernel/dma/direct.c
+index 50f48e9e4598..9ce8192b29ab 100644
+--- a/kernel/dma/direct.c
++++ b/kernel/dma/direct.c
+@@ -497,7 +497,7 @@ int dma_direct_map_sg(struct device *dev, struct scatterlist *sgl, int nents,
+ dma_addr_t dma_direct_map_resource(struct device *dev, phys_addr_t paddr,
+ 		size_t size, enum dma_data_direction dir, unsigned long attrs)
  {
- 	dw_edma_v0_debugfs_on(chip);
- }
--
--void dw_edma_v0_core_debugfs_off(struct dw_edma_chip *chip)
--{
--	dw_edma_v0_debugfs_off(chip);
--}
-diff --git a/drivers/dma/dw-edma/dw-edma-v0-core.h b/drivers/dma/dw-edma/dw-edma-v0-core.h
-index 2afa626b8300..43e01844375a 100644
---- a/drivers/dma/dw-edma/dw-edma-v0-core.h
-+++ b/drivers/dma/dw-edma/dw-edma-v0-core.h
-@@ -23,6 +23,5 @@ void dw_edma_v0_core_start(struct dw_edma_chunk *chunk, bool first);
- int dw_edma_v0_core_device_config(struct dw_edma_chan *chan);
- /* eDMA debug fs callbacks */
- void dw_edma_v0_core_debugfs_on(struct dw_edma_chip *chip);
--void dw_edma_v0_core_debugfs_off(struct dw_edma_chip *chip);
+-	dma_addr_t dma_addr = paddr;
++	dma_addr_t dma_addr = phys_to_dma_direct(dev, paddr);
  
- #endif /* _DW_EDMA_V0_CORE_H */
-diff --git a/drivers/dma/dw-edma/dw-edma-v0-debugfs.c b/drivers/dma/dw-edma/dw-edma-v0-debugfs.c
-index 353269a3680b..319a3c790dc4 100644
---- a/drivers/dma/dw-edma/dw-edma-v0-debugfs.c
-+++ b/drivers/dma/dw-edma/dw-edma-v0-debugfs.c
-@@ -268,7 +268,7 @@ static void dw_edma_debugfs_regs(struct dw_edma *dw)
- 	struct dentry *regs_dir;
- 	int nr_entries;
- 
--	regs_dir = debugfs_create_dir(REGISTERS_STR, dw->debugfs);
-+	regs_dir = debugfs_create_dir(REGISTERS_STR, dw->dma.dbg_dev_root);
- 
- 	nr_entries = ARRAY_SIZE(debugfs_regs);
- 	dw_edma_debugfs_create_x32(dw, debugfs_regs, nr_entries, regs_dir);
-@@ -284,19 +284,9 @@ void dw_edma_v0_debugfs_on(struct dw_edma_chip *chip)
- 	if (!debugfs_initialized())
- 		return;
- 
--	dw->debugfs = debugfs_create_dir(dw->name, NULL);
--
--	debugfs_create_u32("mf", 0444, dw->debugfs, &dw->chip->mf);
--	debugfs_create_u16("wr_ch_cnt", 0444, dw->debugfs, &dw->wr_ch_cnt);
--	debugfs_create_u16("rd_ch_cnt", 0444, dw->debugfs, &dw->rd_ch_cnt);
-+	debugfs_create_u32("mf", 0444, dw->dma.dbg_dev_root, &dw->chip->mf);
-+	debugfs_create_u16("wr_ch_cnt", 0444, dw->dma.dbg_dev_root, &dw->wr_ch_cnt);
-+	debugfs_create_u16("rd_ch_cnt", 0444, dw->dma.dbg_dev_root, &dw->rd_ch_cnt);
- 
- 	dw_edma_debugfs_regs(dw);
- }
--
--void dw_edma_v0_debugfs_off(struct dw_edma_chip *chip)
--{
--	struct dw_edma *dw = chip->dw;
--
--	debugfs_remove_recursive(dw->debugfs);
--	dw->debugfs = NULL;
--}
-diff --git a/drivers/dma/dw-edma/dw-edma-v0-debugfs.h b/drivers/dma/dw-edma/dw-edma-v0-debugfs.h
-index d0ff25a9ea5c..eb11802c2b76 100644
---- a/drivers/dma/dw-edma/dw-edma-v0-debugfs.h
-+++ b/drivers/dma/dw-edma/dw-edma-v0-debugfs.h
-@@ -13,15 +13,10 @@
- 
- #ifdef CONFIG_DEBUG_FS
- void dw_edma_v0_debugfs_on(struct dw_edma_chip *chip);
--void dw_edma_v0_debugfs_off(struct dw_edma_chip *chip);
- #else
- static inline void dw_edma_v0_debugfs_on(struct dw_edma_chip *chip)
- {
- }
--
--static inline void dw_edma_v0_debugfs_off(struct dw_edma_chip *chip)
--{
--}
- #endif /* CONFIG_DEBUG_FS */
- 
- #endif /* _DW_EDMA_V0_DEBUG_FS_H */
+ 	if (unlikely(!dma_capable(dev, dma_addr, size, false))) {
+ 		dev_err_once(dev,
 -- 
 2.35.1
 
