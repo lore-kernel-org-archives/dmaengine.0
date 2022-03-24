@@ -2,31 +2,31 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 60227C433FE
-	for <dmaengine@archiver.kernel.org>; Mon, 28 Mar 2022 16:46:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0C25EC433EF
+	for <dmaengine@archiver.kernel.org>; Mon, 28 Mar 2022 16:46:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243410AbiC1QqS (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 28 Mar 2022 12:46:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45174 "EHLO
+        id S236217AbiC1Qs3 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 28 Mar 2022 12:48:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45108 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242943AbiC1QqE (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Mon, 28 Mar 2022 12:46:04 -0400
+        with ESMTP id S242739AbiC1QqC (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Mon, 28 Mar 2022 12:46:02 -0400
 Received: from mail.baikalelectronics.ru (mail.baikalelectronics.com [87.245.175.226])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 7AF962251A;
-        Mon, 28 Mar 2022 09:44:17 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 2D0FA2183C;
+        Mon, 28 Mar 2022 09:44:15 -0700 (PDT)
 Received: from mail.baikalelectronics.ru (unknown [192.168.51.25])
-        by mail.baikalelectronics.ru (Postfix) with ESMTP id 15FF11E493B;
-        Thu, 24 Mar 2022 04:48:39 +0300 (MSK)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mail.baikalelectronics.ru 15FF11E493B
+        by mail.baikalelectronics.ru (Postfix) with ESMTP id 07B241E4944;
+        Thu, 24 Mar 2022 04:48:44 +0300 (MSK)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mail.baikalelectronics.ru 07B241E4944
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baikalelectronics.ru; s=mail; t=1648086519;
-        bh=qeD0LQB5yz0tEnI7peM/retOGT3xKLiWnq9l84RaXtg=;
+        d=baikalelectronics.ru; s=mail; t=1648086524;
+        bh=JyBVrXBeB4f1gDpmLax7fWQaZrqiLN49r1NgvwAubBU=;
         h=From:To:CC:Subject:Date:In-Reply-To:References:From;
-        b=pxMDwJ2d7YWS6glR8disDs7jCpmDaCgVA+5xJkDkOkmGxoz2qgRmveWL/Gu+8h+DS
-         PVLhOsTKdCB/8/sfAGRbN9vLfWr0naiLFzI3GpZSKHllo1KcseFSI0z5btzIEztT5D
-         3qHlEjo6fE/SDvrCCK2B9sNCaHfz1Y1UkXRXDum8=
+        b=kyG7eraqfK1fuxEzPFGi0KMFTNvcrl6nD7HSPzPZZeXTx0TcXysUjWdOp7qdN0q/I
+         gKBlLRKebqXEuRscVUA47Qd3iP+ZwWaDwnU/Qjb/6Esdw1DUyl3Ud+hBCEHvTrUVtF
+         heOyfkX0HsbgubbYqYrjzRmh++doZIJnG7qgaUWE=
 Received: from localhost (192.168.168.10) by mail (192.168.51.25) with
- Microsoft SMTP Server (TLS) id 15.0.1395.4; Thu, 24 Mar 2022 04:48:38 +0300
+ Microsoft SMTP Server (TLS) id 15.0.1395.4; Thu, 24 Mar 2022 04:48:43 +0300
 From:   Serge Semin <Sergey.Semin@baikalelectronics.ru>
 To:     Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
         Vinod Koul <vkoul@kernel.org>,
@@ -42,10 +42,11 @@ CC:     Serge Semin <Sergey.Semin@baikalelectronics.ru>,
         Rob Herring <robh@kernel.org>,
         =?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>,
         <linux-pci@vger.kernel.org>, <dmaengine@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-Subject: [PATCH 01/25] dmaengine: dw-edma: Drop dma_slave_config.direction field usage
-Date:   Thu, 24 Mar 2022 04:48:12 +0300
-Message-ID: <20220324014836.19149-2-Sergey.Semin@baikalelectronics.ru>
+        <linux-kernel@vger.kernel.org>,
+        Gustavo Pimentel <Gustavo.Pimentel@synopsys.com>
+Subject: [PATCH 08/25] dmaengine: dw-edma: Fix invalid interleaved xfers semantics
+Date:   Thu, 24 Mar 2022 04:48:19 +0300
+Message-ID: <20220324014836.19149-9-Sergey.Semin@baikalelectronics.ru>
 In-Reply-To: <20220324014836.19149-1-Sergey.Semin@baikalelectronics.ru>
 References: <20220324014836.19149-1-Sergey.Semin@baikalelectronics.ru>
 MIME-Version: 1.0
@@ -56,109 +57,105 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-The dma_slave_config.direction field usage in the DW eDMA driver has been
-introduced in the commit bd96f1b2f43a ("dmaengine: dw-edma: support local
-dma device transfer semantics"). Mainly the change introduced there was
-correct (indeed DEV_TO_MEM means using RD-channel and MEM_TO_DEV -
-WR-channel for the case of having eDMA accessed locally from
-CPU/Application side), but providing an additional
-MEM_TO_MEM/DEV_TO_DEV-based semantics was quite redundant if not to say
-potentially harmful (when it comes to removing the denoted field). First
-of all since the dma_slave_config.direction field has been marked as
-obsolete (see [1] and the structure dc [2]) and will be discarded in
-future, using it especially in a non-standard way is discouraged. Secondly
-in accordance with the commit denoted above the default
-dw_edma_device_transfer() semantics has been changed despite what it's
-message said. So claiming that the method was left backward compatible was
-wrong.
+The interleaved DMA transfer support added in commit 85e7518f42c8
+("dmaengine: dw-edma: Add device_prep_interleave_dma() support") seems
+contradicting to what the DMA-engine defines. The next conditional
+statements:
+	if (!xfer->xfer.il->numf)
+		return NULL;
+	if (xfer->xfer.il->numf > 0 && xfer->xfer.il->frame_size > 0)
+		return NULL;
+basically mean that numf can't be zero and frame_size must always be zero,
+otherwise the transfer won't be executed. But further the transfer
+execution method takes the frames size from the
+dma_interleaved_template.sgl[] array for each frame. That array in
+accordance with [1] is supposed to be of
+dma_interleaved_template.frame_size size, which as we discovered before
+the code expects to be zero. So judging by the dw_edma_device_transfer()
+implementation the method implies the dma_interleaved_template.sgl[] array
+being of dma_interleaved_template.numf size, which is wrong. Since the
+dw_edma_device_transfer() method doesn't permit
+dma_interleaved_template.frame_size being non-zero then actual multi-chunk
+interleaved transfer turns to be unsupported even though the code implies
+having it supported.
 
-Anyway let's fix the problems denoted above and simplify the
-dw_edma_device_transfer() method by dropping the parsing of the
-DMA-channel direction field. Instead of having that implicit
-dma_slave_config.direction field semantic we can use the recently added
-DW_EDMA_CHIP_LOCAL flag to distinguish between the local and remote DW
-eDMA setups thus preserving both cases support. In addition to that an
-ASCII-figure has been added to clarify the complication out.
+Let's fix that by adding a fully functioning support of the interleaved
+DMA transfers. First of all dma_interleaved_template.frame_size is
+supposed to be greater or equal to one thus having at least simple linear
+chunked frames. Secondly we can create a walk-through all over the chunks
+and frames just by initializing the number of the eDMA burst transactios
+as a multiple of dma_interleaved_template.numf and
+dma_interleaved_template.frame_size and getting the frame_size-modulo of
+the iteration step as an index of the dma_interleaved_template.sgl[]
+array. The rest of the dw_edma_device_transfer() method code can be left
+unchanged.
 
-[1] Documentation/driver-api/dmaengine/provider.rst
-[2] include/linux/dmaengine.h: dma_slave_config.direction
+[1] include/linux/dmaengine.h: doc struct dma_interleaved_template
 
-Co-developed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Fixes: 85e7518f42c8 ("dmaengine: dw-edma: Add device_prep_interleave_dma() support")
 Signed-off-by: Serge Semin <Sergey.Semin@baikalelectronics.ru>
-
 ---
-
-In accordance with agreement with Frank and Manivannan this patch is
-supposed to be moved to the series:
-Link: https://lore.kernel.org/dmaengine/20220310192457.3090-1-Frank.Li@nxp.com/
-in place of the patch:
-[PATCH v5 6/9] dmaengine: dw-edma: Don't rely on the deprecated "direction" member
-Link: https://lore.kernel.org/dmaengine/20220310192457.3090-7-Frank.Li@nxp.com/
----
- drivers/dma/dw-edma/dw-edma-core.c | 49 +++++++++++++++++++++---------
- 1 file changed, 34 insertions(+), 15 deletions(-)
+ drivers/dma/dw-edma/dw-edma-core.c | 18 +++++++-----------
+ 1 file changed, 7 insertions(+), 11 deletions(-)
 
 diff --git a/drivers/dma/dw-edma/dw-edma-core.c b/drivers/dma/dw-edma/dw-edma-core.c
-index 5be8a5944714..e9e32ed74aa9 100644
+index f41bde27795c..97743fe44ebf 100644
 --- a/drivers/dma/dw-edma/dw-edma-core.c
 +++ b/drivers/dma/dw-edma/dw-edma-core.c
-@@ -339,21 +339,40 @@ dw_edma_device_transfer(struct dw_edma_transfer *xfer)
- 	if (!chan->configured)
- 		return NULL;
+@@ -333,6 +333,7 @@ dw_edma_device_transfer(struct dw_edma_transfer *xfer)
+ 	struct dw_edma_chunk *chunk;
+ 	struct dw_edma_burst *burst;
+ 	struct dw_edma_desc *desc;
++	size_t fsz = 0;
+ 	u32 cnt = 0;
+ 	int i;
  
--	switch (chan->config.direction) {
--	case DMA_DEV_TO_MEM: /* local DMA */
--		if (dir == DMA_DEV_TO_MEM && chan->dir == EDMA_DIR_READ)
--			break;
--		return NULL;
--	case DMA_MEM_TO_DEV: /* local DMA */
--		if (dir == DMA_MEM_TO_DEV && chan->dir == EDMA_DIR_WRITE)
--			break;
--		return NULL;
--	default: /* remote DMA */
--		if (dir == DMA_MEM_TO_DEV && chan->dir == EDMA_DIR_READ)
--			break;
--		if (dir == DMA_DEV_TO_MEM && chan->dir == EDMA_DIR_WRITE)
--			break;
--		return NULL;
-+	/*
-+	 * Local Root Port/End-point              Remote End-point
-+	 * +-----------------------+ PCIe bus +----------------------+
-+	 * |                       |    +-+   |                      |
-+	 * |    DEV_TO_MEM   Rx Ch <----+ +---+ Tx Ch  DEV_TO_MEM    |
-+	 * |                       |    | |   |                      |
-+	 * |    MEM_TO_DEV   Tx Ch +----+ +---> Rx Ch  MEM_TO_DEV    |
-+	 * |                       |    +-+   |                      |
-+	 * +-----------------------+          +----------------------+
-+	 *
-+	 * 1. Normal logic:
-+	 * If eDMA is embedded into the DW PCIe RP/EP and controlled from the
-+	 * CPU/Application side, the Rx channel (EDMA_DIR_READ) will be used
-+	 * for the device read operations (DEV_TO_MEM) and the Tx channel
-+	 * (EDMA_DIR_WRITE) - for the write operations (MEM_TO_DEV).
-+	 *
-+	 * 2. Inverted logic:
-+	 * If eDMA is embedded into a Remote PCIe EP and is controlled by the
-+	 * MWr/MRd TLPs sent from the CPU's PCIe host controller, the Tx
-+	 * channel (EDMA_DIR_WRITE) will be used for the device read operations
-+	 * (DEV_TO_MEM) and the Rx channel (EDMA_DIR_READ) - for the write
-+	 * operations (MEM_TO_DEV).
-+	 *
-+	 * It is the client driver responsibility to choose a proper channel
-+	 * for the DMA transfers.
-+	 */
-+	if (chan->dw->chip->flags & DW_EDMA_CHIP_LOCAL) {
-+		if ((chan->dir == EDMA_DIR_READ && dir != DMA_DEV_TO_MEM) ||
-+		    (chan->dir == EDMA_DIR_WRITE && dir != DMA_MEM_TO_DEV))
-+			return NULL;
-+	} else {
-+		if ((chan->dir == EDMA_DIR_WRITE && dir != DMA_DEV_TO_MEM) ||
-+		    (chan->dir == EDMA_DIR_READ && dir != DMA_MEM_TO_DEV))
-+			return NULL;
+@@ -382,9 +383,7 @@ dw_edma_device_transfer(struct dw_edma_transfer *xfer)
+ 		if (xfer->xfer.sg.len < 1)
+ 			return NULL;
+ 	} else if (xfer->type == EDMA_XFER_INTERLEAVED) {
+-		if (!xfer->xfer.il->numf)
+-			return NULL;
+-		if (xfer->xfer.il->numf > 0 && xfer->xfer.il->frame_size > 0)
++		if (!xfer->xfer.il->numf || xfer->xfer.il->frame_size < 1)
+ 			return NULL;
+ 		if (!xfer->xfer.il->src_inc || !xfer->xfer.il->dst_inc)
+ 			return NULL;
+@@ -414,10 +413,8 @@ dw_edma_device_transfer(struct dw_edma_transfer *xfer)
+ 		cnt = xfer->xfer.sg.len;
+ 		sg = xfer->xfer.sg.sgl;
+ 	} else if (xfer->type == EDMA_XFER_INTERLEAVED) {
+-		if (xfer->xfer.il->numf > 0)
+-			cnt = xfer->xfer.il->numf;
+-		else
+-			cnt = xfer->xfer.il->frame_size;
++		cnt = xfer->xfer.il->numf * xfer->xfer.il->frame_size;
++		fsz = xfer->xfer.il->frame_size;
  	}
  
- 	if (xfer->type == EDMA_XFER_CYCLIC) {
+ 	for (i = 0; i < cnt; i++) {
+@@ -439,7 +436,7 @@ dw_edma_device_transfer(struct dw_edma_transfer *xfer)
+ 		else if (xfer->type == EDMA_XFER_SCATTER_GATHER)
+ 			burst->sz = sg_dma_len(sg);
+ 		else if (xfer->type == EDMA_XFER_INTERLEAVED)
+-			burst->sz = xfer->xfer.il->sgl[i].size;
++			burst->sz = xfer->xfer.il->sgl[i % fsz].size;
+ 
+ 		chunk->ll_region.sz += burst->sz;
+ 		desc->alloc_sz += burst->sz;
+@@ -482,10 +479,9 @@ dw_edma_device_transfer(struct dw_edma_transfer *xfer)
+ 
+ 		if (xfer->type == EDMA_XFER_SCATTER_GATHER) {
+ 			sg = sg_next(sg);
+-		} else if (xfer->type == EDMA_XFER_INTERLEAVED &&
+-			   xfer->xfer.il->frame_size > 0) {
++		} else if (xfer->type == EDMA_XFER_INTERLEAVED) {
+ 			struct dma_interleaved_template *il = xfer->xfer.il;
+-			struct data_chunk *dc = &il->sgl[i];
++			struct data_chunk *dc = &il->sgl[i % fsz];
+ 
+ 			src_addr += burst->sz;
+ 			if (il->src_sgl)
 -- 
 2.35.1
 
