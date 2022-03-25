@@ -2,136 +2,67 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ABE72C43217
-	for <dmaengine@archiver.kernel.org>; Fri, 25 Mar 2022 19:39:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2D179C433F5
+	for <dmaengine@archiver.kernel.org>; Fri, 25 Mar 2022 21:11:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230447AbiCYTka (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 25 Mar 2022 15:40:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48066 "EHLO
+        id S233259AbiCYVMj (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 25 Mar 2022 17:12:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59282 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233329AbiCYTjv (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Fri, 25 Mar 2022 15:39:51 -0400
-Received: from mail-pf1-x429.google.com (mail-pf1-x429.google.com [IPv6:2607:f8b0:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 11E6E1AD3B3
-        for <dmaengine@vger.kernel.org>; Fri, 25 Mar 2022 12:12:18 -0700 (PDT)
-Received: by mail-pf1-x429.google.com with SMTP id p8so7178191pfh.8
-        for <dmaengine@vger.kernel.org>; Fri, 25 Mar 2022 12:12:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=kZES9xIl6k9PvYS5MDCMcxY5BJubJIUmZOtDfDfAejs=;
-        b=G+VoHJsNN0ri/JzciH09IIMeE8UG5JI8cQ0Bi+n1qzT1U7e2FvdiZW70FLIX5LIbWI
-         svKvAmULBod057SqPwM+zCt9dYAp0E7Nh0JdjhTVG9zloKwBg15BPF4N174Yjl2eHqiU
-         Eja1GhgO6IYA3dYuZDm+hULboBb7ImzDwWP6ibLR81BotK0HFhHcQr7eqjGNAn/6QD8N
-         cf3yzF+3aj0A8W19SK7cffVZxlCEmuIOwoRdtYQx1DJA7VekL91I6RjMb0Ay0tlkCc4q
-         TOsdigNz7PpG5hQeE8+H3j5DcskDvPL6O6GKWgx8Ks4UFW60VUyt5A1nr+QDjQ5DAiRd
-         1Ocg==
+        with ESMTP id S231745AbiCYVMi (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Fri, 25 Mar 2022 17:12:38 -0400
+Received: from mail-oi1-f174.google.com (mail-oi1-f174.google.com [209.85.167.174])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8AD731FF412;
+        Fri, 25 Mar 2022 14:11:03 -0700 (PDT)
+Received: by mail-oi1-f174.google.com with SMTP id w127so9487607oig.10;
+        Fri, 25 Mar 2022 14:11:03 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=kZES9xIl6k9PvYS5MDCMcxY5BJubJIUmZOtDfDfAejs=;
-        b=ygFG2cxDxH8C8udVTUP/XDeBJbRdJVFMEqGoJU395x7C1JBbwqq0KbhtLg2Y7alLWw
-         r1qFXTu2WYrEdyxBQK11wbnOPOvhezRWXyO/ltg9yyTzSeeA1PKhChTZEsp1dUMDdH6L
-         RI1VTwFXznewxF/oy651TiSPT4yHa7d0mD9dAVO2crBHXB+Dy16o55S/df722NdHitNj
-         vhpwV5x51lluEaYyaOQ3gya8yRj2KL42Glio0iq/OCtPsTPcdrSYAOEWUSBqRqfvQy69
-         GkLmUZOyHlnuOv7X+qlaWI7BHmkF0iQbK8jnZncN9czxHcBldZWpS9NBqkLZAhjf7koG
-         GRMw==
-X-Gm-Message-State: AOAM532OMbKjQ5J/Tez3AdHJqK35P1IZepWz3G/QgeR1Ts7qbW97XPmG
-        pDEDlFkZpR+AzOJbHknQwp7lRglx5BMI
-X-Google-Smtp-Source: ABdhPJxHEq9AiqyZOMWbqRFWmAZeorLFYNmf9U/rZ0ZkWmXSwUxDnbhzMAiXTxAo6JhPvOvZ4DYL7w==
-X-Received: by 2002:a63:77ca:0:b0:386:25a5:5ed with SMTP id s193-20020a6377ca000000b0038625a505edmr649866pgc.30.1648231848826;
-        Fri, 25 Mar 2022 11:10:48 -0700 (PDT)
-Received: from thinkpad ([117.193.209.11])
-        by smtp.gmail.com with ESMTPSA id b16-20020a056a000cd000b004fadb6f0290sm7420435pfv.11.2022.03.25.11.10.44
+        bh=wXvBLN2YPI/f+mwgNpVUSPw3vc7vaslW8j6BkDAkPkw=;
+        b=5yVFPYFVS/tIzDi0a9ZxGo5qJfpMOsEpodTqe7HVQb77GpyQCti0jT0NIGDNA6LoHQ
+         dFxli7rK6VXnwjqNRNpg3zv9vACIdfHArhvWNPVqzkmTwQ73au+ylEfD8om8qsbnHK1e
+         cWYXuMzNMn9dIy2kceK1oEKCUrfI3ms9KfHkkERZa/1/jit65VYQxOI6mIgukZYxg4A4
+         m+DFGPEvPpSPDjCf0jwoMdd8ytTrbQ3a2IPgOsifuv+pDSx92qPLZtwlaGVb/v+2gpCm
+         mD/PFOkeUvHKJS5AcwgyA7JL0M92TfScdHrbqUUnkQcBUgjXAsOpot69l1dg80bpHyq9
+         815g==
+X-Gm-Message-State: AOAM533lqbX31IXv5s0k3N2/ktd4BN8dUKh90tQhnh3SkBsWq4XoBLf3
+        u6nz2qIeuer8z7SChl1oow==
+X-Google-Smtp-Source: ABdhPJz/WMdnAOINviqJND5zDMeL1o27zVTXARwz/Cw5GDE6nIi94HXm4B8MMoxqz03bNIsAqu/rNQ==
+X-Received: by 2002:a05:6808:9b9:b0:2ef:7562:1586 with SMTP id e25-20020a05680809b900b002ef75621586mr6372651oig.261.1648242662763;
+        Fri, 25 Mar 2022 14:11:02 -0700 (PDT)
+Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id c26-20020a4ae25a000000b0031c268c5436sm3028104oot.16.2022.03.25.14.11.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 25 Mar 2022 11:10:48 -0700 (PDT)
-Date:   Fri, 25 Mar 2022 23:40:42 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Serge Semin <Sergey.Semin@baikalelectronics.ru>
-Cc:     Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Frank Li <Frank.Li@nxp.com>,
-        Serge Semin <fancer.lancer@gmail.com>,
-        Alexey Malahov <Alexey.Malahov@baikalelectronics.ru>,
-        Pavel Parkhomenko <Pavel.Parkhomenko@baikalelectronics.ru>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-        linux-pci@vger.kernel.org, dmaengine@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 23/25] dmaengine: dw-edma: Bypass dma-ranges mapping for
- the local setup
-Message-ID: <20220325181042.GA12218@thinkpad>
-References: <20220324014836.19149-1-Sergey.Semin@baikalelectronics.ru>
- <20220324014836.19149-24-Sergey.Semin@baikalelectronics.ru>
+        Fri, 25 Mar 2022 14:11:01 -0700 (PDT)
+Received: (nullmailer pid 460214 invoked by uid 1000);
+        Fri, 25 Mar 2022 21:11:01 -0000
+Date:   Fri, 25 Mar 2022 16:11:01 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Olivier Dautricourt <olivier.dautricourt@orolia.com>
+Cc:     Vinod Koul <vkoul@kernel.org>, devicetree@vger.kernel.org,
+        Rob Herring <robh+dt@kernel.org>, dmaengine@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Stefan Roese <sr@denx.de>
+Subject: Re: [PATCH 2/2] dt-bindings: altr,msgdma: update my email address
+Message-ID: <Yj4v5c3nTdOhgyU7@robh.at.kernel.org>
+References: <85c4174fa162bd946ccf3e08dcfc9b83cfe69b5c.1647539776.git.olivier.dautricourt@orolia.com>
+ <dc3decf1dae172c688017bd3ada2ad2b7d060c1e.1647539776.git.olivier.dautricourt@orolia.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220324014836.19149-24-Sergey.Semin@baikalelectronics.ru>
+In-Reply-To: <dc3decf1dae172c688017bd3ada2ad2b7d060c1e.1647539776.git.olivier.dautricourt@orolia.com>
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On Thu, Mar 24, 2022 at 04:48:34AM +0300, Serge Semin wrote:
-> DW eDMA doesn't perform any translation of the traffic generated on the
-> CPU/Application side. It just generates read/write AXI-bus requests with
-> the specified addresses. But in case if the dma-ranges DT-property is
-> specified for a platform device node, Linux will use it to map the CPU
-> memory regions into the DMAable bus ranges. This isn't what we want for
-> the eDMA embedded into the locally accessed DW PCIe Root Port and
-> End-point. In order to work that around let's set the chan_dma_dev flag
-> for each DW eDMA channel thus forcing the client drivers to getting a
-> custom dma-ranges-less parental device for the mappings.
+On Thu, 17 Mar 2022 18:56:56 +0100, Olivier Dautricourt wrote:
+> This email should now be used to contact me.
 > 
-> Note it will only work for the client drivers using the
-> dmaengine_get_dma_device() method to get the parental DMA device.
-> 
-> Signed-off-by: Serge Semin <Sergey.Semin@baikalelectronics.ru>
+> Signed-off-by: Olivier Dautricourt <olivier.dautricourt@orolia.com>
 > ---
->  drivers/dma/dw-edma/dw-edma-core.c | 15 +++++++++++++++
->  1 file changed, 15 insertions(+)
+>  Documentation/devicetree/bindings/dma/altr,msgdma.yaml | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> diff --git a/drivers/dma/dw-edma/dw-edma-core.c b/drivers/dma/dw-edma/dw-edma-core.c
-> index 72a51970bfba..ca5cd7c99571 100644
-> --- a/drivers/dma/dw-edma/dw-edma-core.c
-> +++ b/drivers/dma/dw-edma/dw-edma-core.c
-> @@ -716,6 +716,21 @@ static int dw_edma_alloc_chan_resources(struct dma_chan *dchan)
->  	if (chan->status != EDMA_ST_IDLE)
->  		return -EBUSY;
->  
-> +	/* Bypass the dma-ranges based memory regions mapping since the
-> +	 * inbound iATU only affects the traffic incoming from the
-> +	 * PCIe bus.
-> +	 */
 
-Bypass the dma-ranges based memory regions mapping since eDMA doesn't do any
-address translation for the CPU address?
-
-Other than this,
-
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-
-Thanks,
-Mani
-
-> +	if (chan->dw->chip->flags & DW_EDMA_CHIP_LOCAL) {
-> +		dchan->dev->chan_dma_dev = true;
-> +
-> +		dchan->dev->device.dma_coherent = chan->dw->chip->dev->dma_coherent;
-> +		dma_coerce_mask_and_coherent(&dchan->dev->device,
-> +					     dma_get_mask(chan->dw->chip->dev));
-> +		dchan->dev->device.dma_parms = chan->dw->chip->dev->dma_parms;
-> +	} else {
-> +		dchan->dev->chan_dma_dev = false;
-> +	}
-> +
->  	pm_runtime_get(chan->dw->chip->dev);
->  
->  	return 0;
-> -- 
-> 2.35.1
-> 
+Acked-by: Rob Herring <robh@kernel.org>
