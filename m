@@ -2,30 +2,30 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D6067C433EF
-	for <dmaengine@archiver.kernel.org>; Mon, 28 Mar 2022 11:40:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3AD4FC433F5
+	for <dmaengine@archiver.kernel.org>; Mon, 28 Mar 2022 11:40:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241748AbiC1Lll (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        id S241129AbiC1Lll (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
         Mon, 28 Mar 2022 07:41:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55496 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56206 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243517AbiC1Lgg (ORCPT
+        with ESMTP id S243514AbiC1Lgg (ORCPT
         <rfc822;dmaengine@vger.kernel.org>); Mon, 28 Mar 2022 07:36:36 -0400
 Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C6F3B60E3
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB3355FFC
         for <dmaengine@vger.kernel.org>; Mon, 28 Mar 2022 04:28:21 -0700 (PDT)
 Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
         by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
         (Exim 4.92)
         (envelope-from <sha@pengutronix.de>)
-        id 1nYnXj-0003Ta-6O; Mon, 28 Mar 2022 13:28:15 +0200
+        id 1nYnXi-0003SS-Go; Mon, 28 Mar 2022 13:28:14 +0200
 Received: from [2a0a:edc0:0:1101:1d::28] (helo=dude02.red.stw.pengutronix.de)
         by drehscheibe.grey.stw.pengutronix.de with esmtp (Exim 4.94.2)
         (envelope-from <sha@pengutronix.de>)
-        id 1nYnXf-003Zlu-Bo; Mon, 28 Mar 2022 13:28:14 +0200
+        id 1nYnXe-003Zla-M2; Mon, 28 Mar 2022 13:28:13 +0200
 Received: from sha by dude02.red.stw.pengutronix.de with local (Exim 4.94.2)
         (envelope-from <sha@pengutronix.de>)
-        id 1nYnXd-006bz3-N0; Mon, 28 Mar 2022 13:28:09 +0200
+        id 1nYnXd-006byl-JO; Mon, 28 Mar 2022 13:28:09 +0200
 From:   Sascha Hauer <s.hauer@pengutronix.de>
 To:     alsa-devel@alsa-project.org
 Cc:     Xiubo Li <Xiubo.Lee@gmail.com>, Fabio Estevam <festevam@gmail.com>,
@@ -33,9 +33,9 @@ Cc:     Xiubo Li <Xiubo.Lee@gmail.com>, Fabio Estevam <festevam@gmail.com>,
         Vinod Koul <vkoul@kernel.org>,
         NXP Linux Team <linux-imx@nxp.com>,
         dmaengine@vger.kernel.org, Sascha Hauer <s.hauer@pengutronix.de>
-Subject: [PATCH v2 17/19] ASoC: fsl_micfil: drop only once used defines
-Date:   Mon, 28 Mar 2022 13:27:42 +0200
-Message-Id: <20220328112744.1575631-18-s.hauer@pengutronix.de>
+Subject: [PATCH v2 11/19] ASoC: fsl_micfil: add multi fifo support
+Date:   Mon, 28 Mar 2022 13:27:36 +0200
+Message-Id: <20220328112744.1575631-12-s.hauer@pengutronix.de>
 X-Mailer: git-send-email 2.30.2
 In-Reply-To: <20220328112744.1575631-1-s.hauer@pengutronix.de>
 References: <20220328112744.1575631-1-s.hauer@pengutronix.de>
@@ -49,40 +49,42 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-FSL_MICFIL_RATES and FSL_MICFIL_FORMATS is only used once. Drop
-the unnecesary indirection and use SNDRV_PCM_RATE_8000_48000 and
-SNDRV_PCM_FMTBIT_S16_LE directly.
-
 Signed-off-by: Sascha Hauer <s.hauer@pengutronix.de>
 ---
- sound/soc/fsl/fsl_micfil.c | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+ sound/soc/fsl/fsl_micfil.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
 diff --git a/sound/soc/fsl/fsl_micfil.c b/sound/soc/fsl/fsl_micfil.c
-index f7742a6e6c204..f536ea2db89db 100644
+index ffca56d72562d..fe3e1319b35fd 100644
 --- a/sound/soc/fsl/fsl_micfil.c
 +++ b/sound/soc/fsl/fsl_micfil.c
-@@ -25,9 +25,6 @@
+@@ -16,6 +16,7 @@
+ #include <linux/regmap.h>
+ #include <linux/sysfs.h>
+ #include <linux/types.h>
++#include <linux/platform_data/dma-imx.h>
+ #include <sound/dmaengine_pcm.h>
+ #include <sound/pcm.h>
+ #include <sound/soc.h>
+@@ -35,6 +36,7 @@ struct fsl_micfil {
+ 	struct clk *busclk;
+ 	struct clk *mclk;
+ 	struct snd_dmaengine_dai_dma_data dma_params_rx;
++	struct sdma_peripheral_config sdmacfg;
+ 	unsigned int dataline;
+ 	char name[32];
+ 	int irq[MICFIL_IRQ_LINES];
+@@ -324,6 +326,10 @@ static int fsl_micfil_hw_params(struct snd_pcm_substream *substream,
+ 		return ret;
+ 	}
  
- #include "fsl_micfil.h"
++	micfil->dma_params_rx.peripheral_config = &micfil->sdmacfg;
++	micfil->dma_params_rx.peripheral_size = sizeof(micfil->sdmacfg);
++	micfil->sdmacfg.n_fifos_src = channels;
++	micfil->sdmacfg.sw_done = true;
+ 	micfil->dma_params_rx.maxburst = channels * MICFIL_DMA_MAXBURST_RX;
  
--#define FSL_MICFIL_RATES		SNDRV_PCM_RATE_8000_48000
--#define FSL_MICFIL_FORMATS		(SNDRV_PCM_FMTBIT_S16_LE)
--
- #define MICFIL_OSR_DEFAULT	16
- 
- enum quality {
-@@ -349,8 +346,8 @@ static struct snd_soc_dai_driver fsl_micfil_dai = {
- 		.stream_name = "CPU-Capture",
- 		.channels_min = 1,
- 		.channels_max = 8,
--		.rates = FSL_MICFIL_RATES,
--		.formats = FSL_MICFIL_FORMATS,
-+		.rates = SNDRV_PCM_RATE_8000_48000,
-+		.formats = SNDRV_PCM_FMTBIT_S16_LE,
- 	},
- 	.ops = &fsl_micfil_dai_ops,
- };
+ 	return 0;
 -- 
 2.30.2
 
