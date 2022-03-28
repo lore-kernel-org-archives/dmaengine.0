@@ -2,30 +2,30 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DCF74C433FE
-	for <dmaengine@archiver.kernel.org>; Mon, 28 Mar 2022 11:39:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 896E5C43217
+	for <dmaengine@archiver.kernel.org>; Mon, 28 Mar 2022 11:39:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241914AbiC1Llb (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 28 Mar 2022 07:41:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55978 "EHLO
+        id S229878AbiC1Llf (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 28 Mar 2022 07:41:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56126 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243481AbiC1Lge (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Mon, 28 Mar 2022 07:36:34 -0400
+        with ESMTP id S243497AbiC1Lgf (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Mon, 28 Mar 2022 07:36:35 -0400
 Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DBEC9DB0
-        for <dmaengine@vger.kernel.org>; Mon, 28 Mar 2022 04:28:18 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8ADF7F15
+        for <dmaengine@vger.kernel.org>; Mon, 28 Mar 2022 04:28:19 -0700 (PDT)
 Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
         by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
         (Exim 4.92)
         (envelope-from <sha@pengutronix.de>)
-        id 1nYnXg-0003PZ-7D; Mon, 28 Mar 2022 13:28:12 +0200
+        id 1nYnXh-0003Pz-J5; Mon, 28 Mar 2022 13:28:13 +0200
 Received: from [2a0a:edc0:0:1101:1d::28] (helo=dude02.red.stw.pengutronix.de)
         by drehscheibe.grey.stw.pengutronix.de with esmtp (Exim 4.94.2)
         (envelope-from <sha@pengutronix.de>)
-        id 1nYnXb-003Zl5-Uh; Mon, 28 Mar 2022 13:28:10 +0200
+        id 1nYnXd-003ZlO-Ux; Mon, 28 Mar 2022 13:28:12 +0200
 Received: from sha by dude02.red.stw.pengutronix.de with local (Exim 4.94.2)
         (envelope-from <sha@pengutronix.de>)
-        id 1nYnXd-006byN-DT; Mon, 28 Mar 2022 13:28:09 +0200
+        id 1nYnXd-006bz6-NT; Mon, 28 Mar 2022 13:28:09 +0200
 From:   Sascha Hauer <s.hauer@pengutronix.de>
 To:     alsa-devel@alsa-project.org
 Cc:     Xiubo Li <Xiubo.Lee@gmail.com>, Fabio Estevam <festevam@gmail.com>,
@@ -33,9 +33,9 @@ Cc:     Xiubo Li <Xiubo.Lee@gmail.com>, Fabio Estevam <festevam@gmail.com>,
         Vinod Koul <vkoul@kernel.org>,
         NXP Linux Team <linux-imx@nxp.com>,
         dmaengine@vger.kernel.org, Sascha Hauer <s.hauer@pengutronix.de>
-Subject: [PATCH v2 03/19] ASoC: fsl_micfil: drop fsl_micfil_set_mclk_rate()
-Date:   Mon, 28 Mar 2022 13:27:28 +0200
-Message-Id: <20220328112744.1575631-4-s.hauer@pengutronix.de>
+Subject: [PATCH v2 18/19] ASoC: fsl_micfil: drop support for undocumented property
+Date:   Mon, 28 Mar 2022 13:27:43 +0200
+Message-Id: <20220328112744.1575631-19-s.hauer@pengutronix.de>
 X-Mailer: git-send-email 2.30.2
 In-Reply-To: <20220328112744.1575631-1-s.hauer@pengutronix.de>
 References: <20220328112744.1575631-1-s.hauer@pengutronix.de>
@@ -49,52 +49,49 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-All that the .set_sysclk hook in the micfil driver does is to pass
-the sysclk frequency to fsl_micfil_set_mclk_rate(). This function
-expects the sample rate as argument though, not any kind of sysclk
-frequency. The resulting rate setting of the clock is overwritten
-in hw_params anyway, so drop this altogether.
+The "fsl,shared-interrupt" property is undocumented and unnecessary.
+Just pass IRQF_SHARED unconditionally.
 
 Signed-off-by: Sascha Hauer <s.hauer@pengutronix.de>
 ---
- sound/soc/fsl/fsl_micfil.c | 20 --------------------
- 1 file changed, 20 deletions(-)
+ sound/soc/fsl/fsl_micfil.c | 8 ++------
+ 1 file changed, 2 insertions(+), 6 deletions(-)
 
 diff --git a/sound/soc/fsl/fsl_micfil.c b/sound/soc/fsl/fsl_micfil.c
-index cf10c212d770d..5353474d0ff2b 100644
+index f536ea2db89db..99c256f46f38e 100644
 --- a/sound/soc/fsl/fsl_micfil.c
 +++ b/sound/soc/fsl/fsl_micfil.c
-@@ -358,30 +358,10 @@ static int fsl_micfil_hw_params(struct snd_pcm_substream *substream,
- 	return 0;
- }
+@@ -553,7 +553,6 @@ static int fsl_micfil_probe(struct platform_device *pdev)
+ 	struct resource *res;
+ 	void __iomem *regs;
+ 	int ret, i;
+-	unsigned long irqflag = 0;
  
--static int fsl_micfil_set_dai_sysclk(struct snd_soc_dai *dai, int clk_id,
--				     unsigned int freq, int dir)
--{
--	struct fsl_micfil *micfil = snd_soc_dai_get_drvdata(dai);
--	struct device *dev = &micfil->pdev->dev;
--
--	int ret;
--
--	if (!freq)
--		return 0;
--
--	ret = fsl_micfil_set_mclk_rate(micfil, freq);
--	if (ret < 0)
--		dev_err(dev, "failed to set mclk[%lu] to rate %u\n",
--			clk_get_rate(micfil->mclk), freq);
--
--	return ret;
--}
--
- static const struct snd_soc_dai_ops fsl_micfil_dai_ops = {
- 	.startup = fsl_micfil_startup,
- 	.trigger = fsl_micfil_trigger,
- 	.hw_params = fsl_micfil_hw_params,
--	.set_sysclk = fsl_micfil_set_dai_sysclk,
- };
+ 	micfil = devm_kzalloc(&pdev->dev, sizeof(*micfil), GFP_KERNEL);
+ 	if (!micfil)
+@@ -617,12 +616,9 @@ static int fsl_micfil_probe(struct platform_device *pdev)
+ 			return micfil->irq[i];
+ 	}
  
- static int fsl_micfil_dai_probe(struct snd_soc_dai *cpu_dai)
+-	if (of_property_read_bool(np, "fsl,shared-interrupt"))
+-		irqflag = IRQF_SHARED;
+-
+ 	/* Digital Microphone interface interrupt */
+ 	ret = devm_request_irq(&pdev->dev, micfil->irq[0],
+-			       micfil_isr, irqflag,
++			       micfil_isr, IRQF_SHARED,
+ 			       micfil->name, micfil);
+ 	if (ret) {
+ 		dev_err(&pdev->dev, "failed to claim mic interface irq %u\n",
+@@ -632,7 +628,7 @@ static int fsl_micfil_probe(struct platform_device *pdev)
+ 
+ 	/* Digital Microphone interface error interrupt */
+ 	ret = devm_request_irq(&pdev->dev, micfil->irq[1],
+-			       micfil_err_isr, irqflag,
++			       micfil_err_isr, IRQF_SHARED,
+ 			       micfil->name, micfil);
+ 	if (ret) {
+ 		dev_err(&pdev->dev, "failed to claim mic interface error irq %u\n",
 -- 
 2.30.2
 
