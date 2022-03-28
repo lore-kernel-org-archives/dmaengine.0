@@ -2,30 +2,30 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2D575C433EF
-	for <dmaengine@archiver.kernel.org>; Mon, 28 Mar 2022 11:39:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DCF74C433FE
+	for <dmaengine@archiver.kernel.org>; Mon, 28 Mar 2022 11:39:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241912AbiC1Lla (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 28 Mar 2022 07:41:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56122 "EHLO
+        id S241914AbiC1Llb (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 28 Mar 2022 07:41:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55978 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243469AbiC1Lgd (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Mon, 28 Mar 2022 07:36:33 -0400
+        with ESMTP id S243481AbiC1Lge (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Mon, 28 Mar 2022 07:36:34 -0400
 Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F58DBA1
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DBEC9DB0
         for <dmaengine@vger.kernel.org>; Mon, 28 Mar 2022 04:28:18 -0700 (PDT)
 Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
         by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
         (Exim 4.92)
         (envelope-from <sha@pengutronix.de>)
-        id 1nYnXh-0003Pw-8c; Mon, 28 Mar 2022 13:28:13 +0200
+        id 1nYnXg-0003PZ-7D; Mon, 28 Mar 2022 13:28:12 +0200
 Received: from [2a0a:edc0:0:1101:1d::28] (helo=dude02.red.stw.pengutronix.de)
         by drehscheibe.grey.stw.pengutronix.de with esmtp (Exim 4.94.2)
         (envelope-from <sha@pengutronix.de>)
-        id 1nYnXd-003ZlF-KQ; Mon, 28 Mar 2022 13:28:12 +0200
+        id 1nYnXb-003Zl5-Uh; Mon, 28 Mar 2022 13:28:10 +0200
 Received: from sha by dude02.red.stw.pengutronix.de with local (Exim 4.94.2)
         (envelope-from <sha@pengutronix.de>)
-        id 1nYnXd-006byf-Hs; Mon, 28 Mar 2022 13:28:09 +0200
+        id 1nYnXd-006byN-DT; Mon, 28 Mar 2022 13:28:09 +0200
 From:   Sascha Hauer <s.hauer@pengutronix.de>
 To:     alsa-devel@alsa-project.org
 Cc:     Xiubo Li <Xiubo.Lee@gmail.com>, Fabio Estevam <festevam@gmail.com>,
@@ -33,9 +33,9 @@ Cc:     Xiubo Li <Xiubo.Lee@gmail.com>, Fabio Estevam <festevam@gmail.com>,
         Vinod Koul <vkoul@kernel.org>,
         NXP Linux Team <linux-imx@nxp.com>,
         dmaengine@vger.kernel.org, Sascha Hauer <s.hauer@pengutronix.de>
-Subject: [PATCH v2 09/19] dma: imx-sdma: error out on unsupported transfer types
-Date:   Mon, 28 Mar 2022 13:27:34 +0200
-Message-Id: <20220328112744.1575631-10-s.hauer@pengutronix.de>
+Subject: [PATCH v2 03/19] ASoC: fsl_micfil: drop fsl_micfil_set_mclk_rate()
+Date:   Mon, 28 Mar 2022 13:27:28 +0200
+Message-Id: <20220328112744.1575631-4-s.hauer@pengutronix.de>
 X-Mailer: git-send-email 2.30.2
 In-Reply-To: <20220328112744.1575631-1-s.hauer@pengutronix.de>
 References: <20220328112744.1575631-1-s.hauer@pengutronix.de>
@@ -49,78 +49,52 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-The i.MX SDMA driver currently silently ignores unsupported transfer
-types. These transfer types are specified in the dma channel description
-in the device tree, so they should really be checked.
-Issue a message and error out when we hit unsupported transfer types.
+All that the .set_sysclk hook in the micfil driver does is to pass
+the sysclk frequency to fsl_micfil_set_mclk_rate(). This function
+expects the sample rate as argument though, not any kind of sysclk
+frequency. The resulting rate setting of the clock is overwritten
+in hw_params anyway, so drop this altogether.
 
 Signed-off-by: Sascha Hauer <s.hauer@pengutronix.de>
 ---
- drivers/dma/imx-sdma.c | 17 +++++++++++++----
- 1 file changed, 13 insertions(+), 4 deletions(-)
+ sound/soc/fsl/fsl_micfil.c | 20 --------------------
+ 1 file changed, 20 deletions(-)
 
-diff --git a/drivers/dma/imx-sdma.c b/drivers/dma/imx-sdma.c
-index 75ec0754d4ad4..1038f6bc7f846 100644
---- a/drivers/dma/imx-sdma.c
-+++ b/drivers/dma/imx-sdma.c
-@@ -924,7 +924,7 @@ static irqreturn_t sdma_int_handler(int irq, void *dev_id)
- /*
-  * sets the pc of SDMA script according to the peripheral type
-  */
--static void sdma_get_pc(struct sdma_channel *sdmac,
-+static int sdma_get_pc(struct sdma_channel *sdmac,
- 		enum sdma_peripheral_type peripheral_type)
- {
- 	struct sdma_engine *sdma = sdmac->sdma;
-@@ -1023,13 +1023,17 @@ static void sdma_get_pc(struct sdma_channel *sdmac,
- 		emi_2_per = sdma->script_addrs->ext_mem_2_ipu_addr;
- 		break;
- 	default:
--		break;
-+		dev_err(sdma->dev, "Unsupported transfer type %d\n",
-+			peripheral_type);
-+		return -EINVAL;
- 	}
- 
- 	sdmac->pc_from_device = per_2_emi;
- 	sdmac->pc_to_device = emi_2_per;
- 	sdmac->device_to_device = per_2_per;
- 	sdmac->pc_to_pc = emi_2_emi;
-+
-+	return 0;
+diff --git a/sound/soc/fsl/fsl_micfil.c b/sound/soc/fsl/fsl_micfil.c
+index cf10c212d770d..5353474d0ff2b 100644
+--- a/sound/soc/fsl/fsl_micfil.c
++++ b/sound/soc/fsl/fsl_micfil.c
+@@ -358,30 +358,10 @@ static int fsl_micfil_hw_params(struct snd_pcm_substream *substream,
+ 	return 0;
  }
  
- static int sdma_load_context(struct sdma_channel *sdmac)
-@@ -1197,6 +1201,7 @@ static void sdma_set_watermarklevel_for_p2p(struct sdma_channel *sdmac)
- static int sdma_config_channel(struct dma_chan *chan)
- {
- 	struct sdma_channel *sdmac = to_sdma_chan(chan);
-+	int ret;
+-static int fsl_micfil_set_dai_sysclk(struct snd_soc_dai *dai, int clk_id,
+-				     unsigned int freq, int dir)
+-{
+-	struct fsl_micfil *micfil = snd_soc_dai_get_drvdata(dai);
+-	struct device *dev = &micfil->pdev->dev;
+-
+-	int ret;
+-
+-	if (!freq)
+-		return 0;
+-
+-	ret = fsl_micfil_set_mclk_rate(micfil, freq);
+-	if (ret < 0)
+-		dev_err(dev, "failed to set mclk[%lu] to rate %u\n",
+-			clk_get_rate(micfil->mclk), freq);
+-
+-	return ret;
+-}
+-
+ static const struct snd_soc_dai_ops fsl_micfil_dai_ops = {
+ 	.startup = fsl_micfil_startup,
+ 	.trigger = fsl_micfil_trigger,
+ 	.hw_params = fsl_micfil_hw_params,
+-	.set_sysclk = fsl_micfil_set_dai_sysclk,
+ };
  
- 	sdma_disable_channel(chan);
- 
-@@ -1217,7 +1222,9 @@ static int sdma_config_channel(struct dma_chan *chan)
- 		break;
- 	}
- 
--	sdma_get_pc(sdmac, sdmac->peripheral_type);
-+	ret = sdma_get_pc(sdmac, sdmac->peripheral_type);
-+	if (ret)
-+		return ret;
- 
- 	if ((sdmac->peripheral_type != IMX_DMATYPE_MEMORY) &&
- 			(sdmac->peripheral_type != IMX_DMATYPE_DSP)) {
-@@ -1333,7 +1340,9 @@ static int sdma_alloc_chan_resources(struct dma_chan *chan)
- 		mem_data.dma_request2 = 0;
- 		data = &mem_data;
- 
--		sdma_get_pc(sdmac, IMX_DMATYPE_MEMORY);
-+		ret = sdma_get_pc(sdmac, IMX_DMATYPE_MEMORY);
-+		if (ret)
-+			return ret;
- 	}
- 
- 	switch (data->priority) {
+ static int fsl_micfil_dai_probe(struct snd_soc_dai *cpu_dai)
 -- 
 2.30.2
 
