@@ -2,134 +2,91 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A8AB5C433FE
-	for <dmaengine@archiver.kernel.org>; Mon, 28 Mar 2022 16:46:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1673CC433F5
+	for <dmaengine@archiver.kernel.org>; Tue, 29 Mar 2022 01:35:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240853AbiC1Qsb (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 28 Mar 2022 12:48:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45088 "EHLO
+        id S229507AbiC2Bhe (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 28 Mar 2022 21:37:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46644 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242731AbiC1QqC (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Mon, 28 Mar 2022 12:46:02 -0400
-Received: from mail.baikalelectronics.ru (mail.baikalelectronics.com [87.245.175.226])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 28FD12182E;
-        Mon, 28 Mar 2022 09:44:15 -0700 (PDT)
-Received: from mail.baikalelectronics.ru (unknown [192.168.51.25])
-        by mail.baikalelectronics.ru (Postfix) with ESMTP id 6CFA51E495B;
-        Thu, 24 Mar 2022 04:48:54 +0300 (MSK)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mail.baikalelectronics.ru 6CFA51E495B
+        with ESMTP id S229441AbiC2Bhd (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Mon, 28 Mar 2022 21:37:33 -0400
+Received: from mail-yb1-xb2e.google.com (mail-yb1-xb2e.google.com [IPv6:2607:f8b0:4864:20::b2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7252F1AA4B0;
+        Mon, 28 Mar 2022 18:35:52 -0700 (PDT)
+Received: by mail-yb1-xb2e.google.com with SMTP id o5so29137869ybe.2;
+        Mon, 28 Mar 2022 18:35:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baikalelectronics.ru; s=mail; t=1648086534;
-        bh=6NSTRCoVzt81JyA6QUO5cIP2eDNgzFkfTxM4XjlryDw=;
-        h=From:To:CC:Subject:Date:In-Reply-To:References:From;
-        b=NvFah7HZvSrT0KQVpWhAoFO1ZvuZwLY+HDDwBvpE2d9oaQwJoczT9p6xitDMIv0/Z
-         KkA27dWuRMtEZwU8tpLrkuTUE+/YQghjb/wtoTAIwY6IkKNaGWs+XUi8EnQA9wJ8on
-         IaKhwxNMBQR676ALcQ/zh0dZbvOZWiabqQHUkBV4=
-Received: from localhost (192.168.168.10) by mail (192.168.51.25) with
- Microsoft SMTP Server (TLS) id 15.0.1395.4; Thu, 24 Mar 2022 04:48:54 +0300
-From:   Serge Semin <Sergey.Semin@baikalelectronics.ru>
-To:     Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Frank Li <Frank.Li@nxp.com>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-CC:     Serge Semin <Sergey.Semin@baikalelectronics.ru>,
-        Serge Semin <fancer.lancer@gmail.com>,
-        Alexey Malahov <Alexey.Malahov@baikalelectronics.ru>,
-        Pavel Parkhomenko <Pavel.Parkhomenko@baikalelectronics.ru>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Rob Herring <robh@kernel.org>,
-        =?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>,
-        <linux-pci@vger.kernel.org>, <dmaengine@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-Subject: [PATCH 22/25] dmaengine: dw-edma: Replace chip ID number with device name
-Date:   Thu, 24 Mar 2022 04:48:33 +0300
-Message-ID: <20220324014836.19149-23-Sergey.Semin@baikalelectronics.ru>
-In-Reply-To: <20220324014836.19149-1-Sergey.Semin@baikalelectronics.ru>
-References: <20220324014836.19149-1-Sergey.Semin@baikalelectronics.ru>
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=UUMDHkRP/8Kobp4SqOhIfI5YC+CFPdiLYdQuQeo5ONc=;
+        b=ds3x1f5M4qmFLSp9i1Lf8czpJ2ro20lGW+k29/7Je9+ABb8oScKI06t0yhPbG8Kq0S
+         bZ2C20GpcKLmlxeZ77SBo3m/MqXCjWS7JFdxV0Wci2OhW3/6zO7CJ+nvVx2R0k+tT3st
+         0gtMwhXqWxJ3ULbDnuVyJjUJZl8hAKfQ4+TfMHPKff0ehsR8kziHfIJm/2vtl1SZxwEg
+         bujOSANdLiz2pTHsXsWc/czK4ZHFCme4KtKuacXoO9ckL4brvR6p/6b56dTgWNuFYjhU
+         ZcRJ3hqaw9b0IGS7tva0ZoQP8G+S7OTVCeTDp9BeBleuaSEu6XCKu+puegfofCW2t5r2
+         ZSDA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=UUMDHkRP/8Kobp4SqOhIfI5YC+CFPdiLYdQuQeo5ONc=;
+        b=DQXdOFQjNmO09ai6abbqCNe+rSdeC+3chUWp5h6G2a7WSrJbivrhc6TnluqhvyhUN9
+         YG4K3Gw+QhXJif4HGzZVYXQOUVe+d7vXol+1jjdwNKL/4m1ajCrOxdw5mPFGceHLKnk9
+         sRtxySAHcfCnaPIG+8UsbuJAsM7OO4tQB0jl4/4mKHFR0bJYllGgdN1gKpAcbN0Z+lPd
+         1y5iRYTdV6F7PwI5Og+vOHWGHSzVhcLncQrKLSLlv+LNoLr7D85iZDe+jCPUxaLbH/fb
+         jJnyxisoqRcyWw+LyvOiK0EB8GEn8Y7WDV229kqopuNRPfl2ce2+sLvefn8XVMvYGyFQ
+         iXJg==
+X-Gm-Message-State: AOAM532TfdnVMctriHoSs7FtUspqoWM9p45CXipSjlxig2ZrZalbuDAd
+        ghrJ8cmEHdmYca03i2cdSWBATFgDUMG7Ni3ohww=
+X-Google-Smtp-Source: ABdhPJwMicyHr4xbXXojEjRJ03bg1BdpiBkV88I0GL3Zt5Cq/INEqoCBMdWWNfR7Tvl3MMcPhTbTsWgRwj+E1Je693A=
+X-Received: by 2002:a25:d456:0:b0:633:6b35:bcf5 with SMTP id
+ m83-20020a25d456000000b006336b35bcf5mr25408116ybf.239.1648517751767; Mon, 28
+ Mar 2022 18:35:51 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: MAIL.baikal.int (192.168.51.25) To mail (192.168.51.25)
+References: <cover.1648461096.git.zong.li@sifive.com> <7cc9a7b5f7e6c28fc9eb172c441b5aed2159b8a0.1648461096.git.zong.li@sifive.com>
+In-Reply-To: <7cc9a7b5f7e6c28fc9eb172c441b5aed2159b8a0.1648461096.git.zong.li@sifive.com>
+From:   Bin Meng <bmeng.cn@gmail.com>
+Date:   Tue, 29 Mar 2022 09:35:40 +0800
+Message-ID: <CAEUhbmUYZ=htiQUwiLZuBufj7=p6ATR752N+qUn-=Gy7Uz04Uw@mail.gmail.com>
+Subject: Re: [PATCH v8 1/4] dt-bindings: dma-engine: sifive,fu540: Add
+ dma-channels property and modify compatible
+To:     Zong Li <zong.li@sifive.com>
+Cc:     Rob Herring <robh+dt@kernel.org>,
+        Paul Walmsley <paul.walmsley@sifive.com>,
+        Palmer Dabbelt <palmer@dabbelt.com>,
+        Albert Ou <aou@eecs.berkeley.edu>,
+        krzysztof.kozlowski@canonical.com,
+        Conor Dooley <conor.dooley@microchip.com>,
+        Geert Uytterhoeven <geert@linux-m68k.org>,
+        Bin Meng <bin.meng@windriver.com>,
+        Green Wan <green.wan@sifive.com>, vkoul@kernel.org,
+        dmaengine@vger.kernel.org, devicetree <devicetree@vger.kernel.org>,
+        linux-kernel <linux-kernel@vger.kernel.org>,
+        linux-riscv <linux-riscv@lists.infradead.org>,
+        Rob Herring <robh@kernel.org>,
+        Palmer Dabbelt <palmer@rivosinc.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Using some abstract number as the DW eDMA chip identifier isn't really
-practical. First of all there can be more than one DW eDMA controller on
-the platform some of them can be detected as the PCIe end-points, some of
-them can be embedded into the DW PCIe Root Port/End-point controllers.
-Seeing some abstract number in for instance IRQ handlers list doesn't give
-a notion regarding their reference to the particular DMA controller.
-Secondly current DW eDMA chip id implementation doesn't provide the
-multi-eDMA platforms support for same reason of possibly having eDMA
-detected on different system buses. At the same time re-implementing
-something ida-based won't give much benefits especially seeing the DW eDMA
-chip ID is only used in the IRQ request procedure. So to speak in order to
-preserve the code simplicity and get to have the multi-eDMA platforms
-support let's just use the parental device name to create the DW eDMA
-controller name.
+On Mon, Mar 28, 2022 at 7:56 PM Zong Li <zong.li@sifive.com> wrote:
+>
+> Add dma-channels property, then we can determine how many channels there
+> by device tree, rather than statically defining it in PDMA driver.
+> In addition, we also modify the compatible for PDMA versioning scheme.
+>
+> Signed-off-by: Zong Li <zong.li@sifive.com>
+> Reviewed-by: Rob Herring <robh@kernel.org>
+> Suggested-by: Palmer Dabbelt <palmer@rivosinc.com>
+> Reviewed-by: Palmer Dabbelt <palmer@rivosinc.com>
+> Acked-by: Palmer Dabbelt <palmer@rivosinc.com>
+> Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+> ---
+>  .../bindings/dma/sifive,fu540-c000-pdma.yaml  | 19 +++++++++++++++++--
+>  1 file changed, 17 insertions(+), 2 deletions(-)
+>
 
-Signed-off-by: Serge Semin <Sergey.Semin@baikalelectronics.ru>
----
- drivers/dma/dw-edma/dw-edma-core.c | 3 ++-
- drivers/dma/dw-edma/dw-edma-core.h | 2 +-
- drivers/dma/dw-edma/dw-edma-pcie.c | 1 -
- include/linux/dma/edma.h           | 1 -
- 4 files changed, 3 insertions(+), 4 deletions(-)
-
-diff --git a/drivers/dma/dw-edma/dw-edma-core.c b/drivers/dma/dw-edma/dw-edma-core.c
-index dbe1119fd1d2..72a51970bfba 100644
---- a/drivers/dma/dw-edma/dw-edma-core.c
-+++ b/drivers/dma/dw-edma/dw-edma-core.c
-@@ -970,7 +970,8 @@ int dw_edma_probe(struct dw_edma_chip *chip)
- 	if (!dw->chan)
- 		return -ENOMEM;
- 
--	snprintf(dw->name, sizeof(dw->name), "dw-edma-core:%d", chip->id);
-+	snprintf(dw->name, sizeof(dw->name), "dw-edma-core:%s",
-+		 dev_name(chip->dev));
- 
- 	/* Disable eDMA, only to establish the ideal initial conditions */
- 	dw_edma_v0_core_off(dw);
-diff --git a/drivers/dma/dw-edma/dw-edma-core.h b/drivers/dma/dw-edma/dw-edma-core.h
-index 980adb079182..dc25798d4ba9 100644
---- a/drivers/dma/dw-edma/dw-edma-core.h
-+++ b/drivers/dma/dw-edma/dw-edma-core.h
-@@ -96,7 +96,7 @@ struct dw_edma_irq {
- };
- 
- struct dw_edma {
--	char				name[20];
-+	char				name[30];
- 
- 	struct dma_device		dma;
- 
-diff --git a/drivers/dma/dw-edma/dw-edma-pcie.c b/drivers/dma/dw-edma/dw-edma-pcie.c
-index f530bacfd716..3f9dadc73854 100644
---- a/drivers/dma/dw-edma/dw-edma-pcie.c
-+++ b/drivers/dma/dw-edma/dw-edma-pcie.c
-@@ -222,7 +222,6 @@ static int dw_edma_pcie_probe(struct pci_dev *pdev,
- 
- 	/* Data structure initialization */
- 	chip->dev = dev;
--	chip->id = pdev->devfn;
- 
- 	chip->mf = vsec_data.mf;
- 	chip->nr_irqs = nr_irqs;
-diff --git a/include/linux/dma/edma.h b/include/linux/dma/edma.h
-index 5cc87cfdd685..241c5a97ddf4 100644
---- a/include/linux/dma/edma.h
-+++ b/include/linux/dma/edma.h
-@@ -73,7 +73,6 @@ enum dw_edma_map_format {
-  */
- struct dw_edma_chip {
- 	struct device		*dev;
--	int			id;
- 	int			nr_irqs;
- 	const struct dw_edma_core_ops   *ops;
- 	u32			flags;
--- 
-2.35.1
-
+Reviewed-by: Bin Meng <bmeng.cn@gmail.com>
