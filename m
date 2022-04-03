@@ -2,87 +2,65 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C6302C433F5
-	for <dmaengine@archiver.kernel.org>; Sat,  2 Apr 2022 09:54:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B1598C433EF
+	for <dmaengine@archiver.kernel.org>; Sun,  3 Apr 2022 12:35:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239990AbiDBJ4a (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Sat, 2 Apr 2022 05:56:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51122 "EHLO
+        id S237664AbiDCMhD (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Sun, 3 Apr 2022 08:37:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53280 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234011AbiDBJ43 (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Sat, 2 Apr 2022 05:56:29 -0400
-Received: from pegase2.c-s.fr (pegase2.c-s.fr [93.17.235.10])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E7E340A07;
-        Sat,  2 Apr 2022 02:54:37 -0700 (PDT)
-Received: from localhost (mailhub3.si.c-s.fr [172.26.127.67])
-        by localhost (Postfix) with ESMTP id 4KVsp42Bfwz9sSQ;
-        Sat,  2 Apr 2022 11:54:36 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at c-s.fr
-Received: from pegase2.c-s.fr ([172.26.127.65])
-        by localhost (pegase2.c-s.fr [127.0.0.1]) (amavisd-new, port 10024)
-        with ESMTP id J1kWWnxAR9xr; Sat,  2 Apr 2022 11:54:36 +0200 (CEST)
-Received: from messagerie.si.c-s.fr (messagerie.si.c-s.fr [192.168.25.192])
-        by pegase2.c-s.fr (Postfix) with ESMTP id 4KVsp41JX8z9sSK;
-        Sat,  2 Apr 2022 11:54:36 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-        by messagerie.si.c-s.fr (Postfix) with ESMTP id 124A58B76D;
-        Sat,  2 Apr 2022 11:54:36 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at c-s.fr
-Received: from messagerie.si.c-s.fr ([127.0.0.1])
-        by localhost (messagerie.si.c-s.fr [127.0.0.1]) (amavisd-new, port 10023)
-        with ESMTP id NMfIRjo3li5L; Sat,  2 Apr 2022 11:54:36 +0200 (CEST)
-Received: from PO20335.IDSI0.si.c-s.fr (unknown [192.168.202.136])
-        by messagerie.si.c-s.fr (Postfix) with ESMTP id D11938B768;
-        Sat,  2 Apr 2022 11:54:35 +0200 (CEST)
-Received: from PO20335.IDSI0.si.c-s.fr (localhost [127.0.0.1])
-        by PO20335.IDSI0.si.c-s.fr (8.17.1/8.16.1) with ESMTPS id 2329sPms683831
-        (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
-        Sat, 2 Apr 2022 11:54:25 +0200
-Received: (from chleroy@localhost)
-        by PO20335.IDSI0.si.c-s.fr (8.17.1/8.17.1/Submit) id 2329sPsu683830;
-        Sat, 2 Apr 2022 11:54:25 +0200
-X-Authentication-Warning: PO20335.IDSI0.si.c-s.fr: chleroy set sender to christophe.leroy@csgroup.eu using -f
-From:   Christophe Leroy <christophe.leroy@csgroup.eu>
-To:     Vinod Koul <vkoul@kernel.org>, dmaengine@vger.kernel.org
-Cc:     Christophe Leroy <christophe.leroy@csgroup.eu>,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH] dmaengine: bestcomm: Prepare cleanup of powerpc's asm/prom.h
-Date:   Sat,  2 Apr 2022 11:54:25 +0200
-Message-Id: <f98acba303489bdf003e7256460696225b00702e.1648833428.git.christophe.leroy@csgroup.eu>
-X-Mailer: git-send-email 2.35.1
-MIME-Version: 1.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1648893263; l=775; s=20211009; h=from:subject:message-id; bh=EHC7XtdpuXzk9fw6SFZ1JBqiHftTjbWPW7+mZd21a2Y=; b=m9bCiPyxk4aVv8FPemO7/1yq520mjKfA8Xfnt7B5v6Cx5YfJSchYSQ7/EkaNIxP1iE1PocKgfrXd iiH3a1IZBFUtv8+Ec6vZxEQ7rbLl8/SdbMHEf+c7VBTXvAse0Gto
-X-Developer-Key: i=christophe.leroy@csgroup.eu; a=ed25519; pk=HIzTzUj91asvincQGOFx6+ZF5AoUuP9GdOtQChs7Mm0=
-Content-Transfer-Encoding: 8bit
+        with ESMTP id S236325AbiDCMhC (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Sun, 3 Apr 2022 08:37:02 -0400
+X-Greylist: delayed 182 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Sun, 03 Apr 2022 05:35:02 PDT
+Received: from cmccmta3.chinamobile.com (cmccmta3.chinamobile.com [221.176.66.81])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id C5A1D12ACC
+        for <dmaengine@vger.kernel.org>; Sun,  3 Apr 2022 05:35:02 -0700 (PDT)
+X-RM-TagInfo: emlType=0                                       
+X-RM-SPAM-FLAG: 00000000
+Received: from spf.mail.chinamobile.com (unknown[172.16.121.3])
+        by rmmx-syy-dmz-app11-12011 (RichMail) with SMTP id 2eeb624993bcb75-fb97d;
+        Sun, 03 Apr 2022 20:31:58 +0800 (CST)
+X-RM-TRANSID: 2eeb624993bcb75-fb97d
+X-RM-TagInfo: emlType=0                                       
+X-RM-SPAM-FLAG: 00000000
+Received: from 192.168.125.128 (unknown[112.22.3.63])
+        by rmsmtp-syy-appsvr02-12002 (RichMail) with SMTP id 2ee2624993b80a5-f0d37;
+        Sun, 03 Apr 2022 20:31:57 +0800 (CST)
+X-RM-TRANSID: 2ee2624993b80a5-f0d37
+From:   jianchunfu <jianchunfu@cmss.chinamobile.com>
+To:     vkoul@kernel.org
+Cc:     dmaengine@vger.kernel.org,
+        jianchunfu <jianchunfu@cmss.chinamobile.com>
+Subject: [PATCH] dmaengine: ep93xx: Remove redundant word in comment
+Date:   Sun,  3 Apr 2022 20:31:20 +0800
+Message-Id: <20220403123120.7794-1-jianchunfu@cmss.chinamobile.com>
+X-Mailer: git-send-email 2.18.4
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-powerpc's asm/prom.h brings some headers that it doesn't
-need itself.
+Remove the second 'to' which is repeated.
 
-In order to clean it up, first add missing headers in
-users of asm/prom.h
-
-Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Signed-off-by: jianchunfu <jianchunfu@cmss.chinamobile.com>
 ---
- drivers/dma/bestcomm/bestcomm.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/dma/ep93xx_dma.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/dma/bestcomm/bestcomm.c b/drivers/dma/bestcomm/bestcomm.c
-index 8c42e5ca00a9..1822a7034630 100644
---- a/drivers/dma/bestcomm/bestcomm.c
-+++ b/drivers/dma/bestcomm/bestcomm.c
-@@ -17,7 +17,9 @@
- #include <linux/kernel.h>
- #include <linux/slab.h>
- #include <linux/of.h>
-+#include <linux/of_address.h>
- #include <linux/of_device.h>
-+#include <linux/of_irq.h>
- #include <linux/of_platform.h>
- #include <asm/io.h>
- #include <asm/irq.h>
+diff --git a/drivers/dma/ep93xx_dma.c b/drivers/dma/ep93xx_dma.c
+index 98f9ee703..971ff5f9a 100644
+--- a/drivers/dma/ep93xx_dma.c
++++ b/drivers/dma/ep93xx_dma.c
+@@ -132,7 +132,7 @@ struct ep93xx_dma_desc {
+ /**
+  * struct ep93xx_dma_chan - an EP93xx DMA M2P/M2M channel
+  * @chan: dmaengine API channel
+- * @edma: pointer to to the engine device
++ * @edma: pointer to the engine device
+  * @regs: memory mapped registers
+  * @irq: interrupt number of the channel
+  * @clk: clock used by this channel
 -- 
-2.35.1
+2.18.4
+
+
 
