@@ -2,30 +2,30 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DE412C4332F
-	for <dmaengine@archiver.kernel.org>; Tue,  5 Apr 2022 08:03:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 00563C433EF
+	for <dmaengine@archiver.kernel.org>; Tue,  5 Apr 2022 08:03:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233283AbiDEIFo (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 5 Apr 2022 04:05:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54382 "EHLO
+        id S233127AbiDEIFp (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 5 Apr 2022 04:05:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54036 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236420AbiDEICN (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Tue, 5 Apr 2022 04:02:13 -0400
+        with ESMTP id S236369AbiDEICI (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Tue, 5 Apr 2022 04:02:08 -0400
 Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 677744B84A
-        for <dmaengine@vger.kernel.org>; Tue,  5 Apr 2022 01:00:14 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 988304B434
+        for <dmaengine@vger.kernel.org>; Tue,  5 Apr 2022 01:00:09 -0700 (PDT)
 Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
         by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
         (Exim 4.92)
         (envelope-from <sha@pengutronix.de>)
-        id 1nbe6e-0003aE-EF; Tue, 05 Apr 2022 10:00:04 +0200
+        id 1nbe6e-0003a7-5P; Tue, 05 Apr 2022 10:00:04 +0200
 Received: from [2a0a:edc0:0:1101:1d::28] (helo=dude02.red.stw.pengutronix.de)
         by drehscheibe.grey.stw.pengutronix.de with esmtp (Exim 4.94.2)
         (envelope-from <sha@pengutronix.de>)
-        id 1nbe6e-001BGk-T3; Tue, 05 Apr 2022 10:00:03 +0200
+        id 1nbe6e-001BGf-Ks; Tue, 05 Apr 2022 10:00:03 +0200
 Received: from sha by dude02.red.stw.pengutronix.de with local (Exim 4.94.2)
         (envelope-from <sha@pengutronix.de>)
-        id 1nbe6a-00BXZk-SQ; Tue, 05 Apr 2022 10:00:00 +0200
+        id 1nbe6b-00BXaN-6a; Tue, 05 Apr 2022 10:00:01 +0200
 From:   Sascha Hauer <s.hauer@pengutronix.de>
 To:     alsa-devel@alsa-project.org
 Cc:     Xiubo Li <Xiubo.Lee@gmail.com>, Fabio Estevam <festevam@gmail.com>,
@@ -33,9 +33,9 @@ Cc:     Xiubo Li <Xiubo.Lee@gmail.com>, Fabio Estevam <festevam@gmail.com>,
         Vinod Koul <vkoul@kernel.org>,
         NXP Linux Team <linux-imx@nxp.com>,
         dmaengine@vger.kernel.org, Sascha Hauer <s.hauer@pengutronix.de>
-Subject: [PATCH v3 03/20] ASoC: fsl_micfil: drop fsl_micfil_set_mclk_rate()
-Date:   Tue,  5 Apr 2022 09:59:42 +0200
-Message-Id: <20220405075959.2744803-4-s.hauer@pengutronix.de>
+Subject: [PATCH v3 16/20] ASoC: fsl_micfil: rework quality setting
+Date:   Tue,  5 Apr 2022 09:59:55 +0200
+Message-Id: <20220405075959.2744803-17-s.hauer@pengutronix.de>
 X-Mailer: git-send-email 2.30.2
 In-Reply-To: <20220405075959.2744803-1-s.hauer@pengutronix.de>
 References: <20220405075959.2744803-1-s.hauer@pengutronix.de>
@@ -49,52 +49,191 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-All that the .set_sysclk hook in the micfil driver does is to pass
-the sysclk frequency to fsl_micfil_set_mclk_rate(). This function
-expects the sample rate as argument though, not any kind of sysclk
-frequency. The resulting rate setting of the clock is overwritten
-in hw_params anyway, so drop this altogether.
+For the quality setting the quality setting register values are directly
+exposed to the kcontrol and thus to userspace. This is unfortunate
+because the register settings contains invalid bit combinations marked
+as "N/A". For userspace it doesn't make much sense to be able to set
+these just to see that the driver responds with "Please make sure you
+select a valid quality." in the kernel log.
+
+Work around this by adding get/set functions for the quality setting.
 
 Signed-off-by: Sascha Hauer <s.hauer@pengutronix.de>
 ---
- sound/soc/fsl/fsl_micfil.c | 20 --------------------
- 1 file changed, 20 deletions(-)
+ sound/soc/fsl/fsl_micfil.c | 109 ++++++++++++++++++++++++++-----------
+ 1 file changed, 77 insertions(+), 32 deletions(-)
 
 diff --git a/sound/soc/fsl/fsl_micfil.c b/sound/soc/fsl/fsl_micfil.c
-index cf10c212d770d..5353474d0ff2b 100644
+index fd3b168a38661..e28a2e2ba5c97 100644
 --- a/sound/soc/fsl/fsl_micfil.c
 +++ b/sound/soc/fsl/fsl_micfil.c
-@@ -358,30 +358,10 @@ static int fsl_micfil_hw_params(struct snd_pcm_substream *substream,
- 	return 0;
- }
+@@ -31,6 +31,15 @@
  
--static int fsl_micfil_set_dai_sysclk(struct snd_soc_dai *dai, int clk_id,
--				     unsigned int freq, int dir)
--{
--	struct fsl_micfil *micfil = snd_soc_dai_get_drvdata(dai);
--	struct device *dev = &micfil->pdev->dev;
--
--	int ret;
--
--	if (!freq)
--		return 0;
--
--	ret = fsl_micfil_set_mclk_rate(micfil, freq);
--	if (ret < 0)
--		dev_err(dev, "failed to set mclk[%lu] to rate %u\n",
--			clk_get_rate(micfil->mclk), freq);
--
--	return ret;
--}
--
- static const struct snd_soc_dai_ops fsl_micfil_dai_ops = {
- 	.startup = fsl_micfil_startup,
- 	.trigger = fsl_micfil_trigger,
- 	.hw_params = fsl_micfil_hw_params,
--	.set_sysclk = fsl_micfil_set_dai_sysclk,
+ #define MICFIL_OSR_DEFAULT	16
+ 
++enum quality {
++	QUALITY_HIGH,
++	QUALITY_MEDIUM,
++	QUALITY_LOW,
++	QUALITY_VLOW0,
++	QUALITY_VLOW1,
++	QUALITY_VLOW2,
++};
++
+ struct fsl_micfil {
+ 	struct platform_device *pdev;
+ 	struct regmap *regmap;
+@@ -42,7 +51,7 @@ struct fsl_micfil {
+ 	unsigned int dataline;
+ 	char name[32];
+ 	int irq[MICFIL_IRQ_LINES];
+-	int quality;	/*QUALITY 2-0 bits */
++	enum quality quality;
+ 	unsigned int osr;
  };
  
- static int fsl_micfil_dai_probe(struct snd_soc_dai *cpu_dai)
+@@ -66,29 +75,73 @@ static const struct of_device_id fsl_micfil_dt_ids[] = {
+ };
+ MODULE_DEVICE_TABLE(of, fsl_micfil_dt_ids);
+ 
+-/* Table 5. Quality Modes
+- * Medium	0 0 0
+- * High		0 0 1
+- * Very Low 2	1 0 0
+- * Very Low 1	1 0 1
+- * Very Low 0	1 1 0
+- * Low		1 1 1
+- */
+ static const char * const micfil_quality_select_texts[] = {
+-	"Medium", "High",
+-	"N/A", "N/A",
+-	"VLow2", "VLow1",
+-	"VLow0", "Low",
++	[QUALITY_HIGH] = "High",
++	[QUALITY_MEDIUM] = "Medium",
++	[QUALITY_LOW] = "Low",
++	[QUALITY_VLOW0] = "VLow0",
++	[QUALITY_VLOW1] = "Vlow1",
++	[QUALITY_VLOW2] = "Vlow2",
+ };
+ 
+ static const struct soc_enum fsl_micfil_quality_enum =
+-	SOC_ENUM_SINGLE(REG_MICFIL_CTRL2,
+-			MICFIL_CTRL2_QSEL_SHIFT,
+-			ARRAY_SIZE(micfil_quality_select_texts),
+-			micfil_quality_select_texts);
++	SOC_ENUM_SINGLE_EXT(ARRAY_SIZE(micfil_quality_select_texts),
++			    micfil_quality_select_texts);
+ 
+ static DECLARE_TLV_DB_SCALE(gain_tlv, 0, 100, 0);
+ 
++static int micfil_set_quality(struct fsl_micfil *micfil)
++{
++	u32 qsel;
++
++	switch (micfil->quality) {
++	case QUALITY_HIGH:
++		qsel = MICFIL_QSEL_HIGH_QUALITY;
++		break;
++	case QUALITY_MEDIUM:
++		qsel = MICFIL_QSEL_MEDIUM_QUALITY;
++		break;
++	case QUALITY_LOW:
++		qsel = MICFIL_QSEL_LOW_QUALITY;
++		break;
++	case QUALITY_VLOW0:
++		qsel = MICFIL_QSEL_VLOW0_QUALITY;
++		break;
++	case QUALITY_VLOW1:
++		qsel = MICFIL_QSEL_VLOW1_QUALITY;
++		break;
++	case QUALITY_VLOW2:
++		qsel = MICFIL_QSEL_VLOW2_QUALITY;
++		break;
++	}
++
++	return regmap_update_bits(micfil->regmap, REG_MICFIL_CTRL2,
++				 MICFIL_CTRL2_QSEL,
++				 FIELD_PREP(MICFIL_CTRL2_QSEL, qsel));
++}
++
++static int micfil_quality_get(struct snd_kcontrol *kcontrol,
++			     struct snd_ctl_elem_value *ucontrol)
++{
++	struct snd_soc_component *cmpnt = snd_soc_kcontrol_component(kcontrol);
++	struct fsl_micfil *micfil = snd_soc_component_get_drvdata(cmpnt);
++
++	ucontrol->value.integer.value[0] = micfil->quality;
++
++	return 0;
++}
++
++static int micfil_quality_set(struct snd_kcontrol *kcontrol,
++			      struct snd_ctl_elem_value *ucontrol)
++{
++	struct snd_soc_component *cmpnt = snd_soc_kcontrol_component(kcontrol);
++	struct fsl_micfil *micfil = snd_soc_component_get_drvdata(cmpnt);
++
++	micfil->quality = ucontrol->value.integer.value[0];
++
++	return micfil_set_quality(micfil);
++}
++
+ static const struct snd_kcontrol_new fsl_micfil_snd_controls[] = {
+ 	SOC_SINGLE_SX_TLV("CH0 Volume", REG_MICFIL_OUT_CTRL,
+ 			  MICFIL_OUTGAIN_CHX_SHIFT(0), 0xF, 0x7, gain_tlv),
+@@ -108,7 +161,7 @@ static const struct snd_kcontrol_new fsl_micfil_snd_controls[] = {
+ 			  MICFIL_OUTGAIN_CHX_SHIFT(7), 0xF, 0x7, gain_tlv),
+ 	SOC_ENUM_EXT("MICFIL Quality Select",
+ 		     fsl_micfil_quality_enum,
+-		     snd_soc_get_enum_double, snd_soc_put_enum_double),
++		     micfil_quality_get, micfil_quality_set),
+ };
+ 
+ /* The SRES is a self-negated bit which provides the CPU with the
+@@ -208,22 +261,21 @@ static int fsl_set_clock_params(struct device *dev, unsigned int rate)
+ {
+ 	struct fsl_micfil *micfil = dev_get_drvdata(dev);
+ 	int clk_div = 8;
++	int osr = MICFIL_OSR_DEFAULT;
+ 	int ret;
+ 
+-	ret = clk_set_rate(micfil->mclk, rate * clk_div * micfil->osr * 8);
++	ret = clk_set_rate(micfil->mclk, rate * clk_div * osr * 8);
+ 	if (ret)
+ 		return ret;
+ 
+-	/* set CICOSR */
+-	ret = regmap_update_bits(micfil->regmap, REG_MICFIL_CTRL2,
+-				 MICFIL_CTRL2_CICOSR,
+-				 FIELD_PREP(MICFIL_CTRL2_CICOSR, 16 - MICFIL_OSR_DEFAULT));
++	ret = micfil_set_quality(micfil);
+ 	if (ret)
+ 		return ret;
+ 
+ 	ret = regmap_update_bits(micfil->regmap, REG_MICFIL_CTRL2,
+-				 MICFIL_CTRL2_CLKDIV,
+-				 FIELD_PREP(MICFIL_CTRL2_CLKDIV, clk_div));
++				 MICFIL_CTRL2_CLKDIV | MICFIL_CTRL2_CICOSR,
++				 FIELD_PREP(MICFIL_CTRL2_CLKDIV, clk_div) |
++				 FIELD_PREP(MICFIL_CTRL2_CICOSR, 16 - osr));
+ 
+ 	return ret;
+ }
+@@ -276,13 +328,6 @@ static int fsl_micfil_dai_probe(struct snd_soc_dai *cpu_dai)
+ 	struct fsl_micfil *micfil = dev_get_drvdata(cpu_dai->dev);
+ 	int ret;
+ 
+-	/* set qsel to medium */
+-	ret = regmap_update_bits(micfil->regmap, REG_MICFIL_CTRL2,
+-			MICFIL_CTRL2_QSEL,
+-			FIELD_PREP(MICFIL_CTRL2_QSEL, MICFIL_QSEL_MEDIUM_QUALITY));
+-	if (ret)
+-		return ret;
+-
+ 	/* set default gain to max_gain */
+ 	regmap_write(micfil->regmap, REG_MICFIL_OUT_CTRL, 0x77777777);
+ 
 -- 
 2.30.2
 
