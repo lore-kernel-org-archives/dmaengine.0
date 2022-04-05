@@ -2,128 +2,98 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7B70EC433FE
-	for <dmaengine@archiver.kernel.org>; Wed,  6 Apr 2022 00:51:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3E68DC433FE
+	for <dmaengine@archiver.kernel.org>; Wed,  6 Apr 2022 00:51:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238369AbiDFAwX (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 5 Apr 2022 20:52:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35866 "EHLO
+        id S242799AbiDFAw0 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 5 Apr 2022 20:52:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53218 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1444576AbiDEPlo (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Tue, 5 Apr 2022 11:41:44 -0400
-Received: from mga14.intel.com (mga14.intel.com [192.55.52.115])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 29BA4AD126
-        for <dmaengine@vger.kernel.org>; Tue,  5 Apr 2022 07:06:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1649167570; x=1680703570;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=N0NFTkpFQl/qecbw6wmL6YP13wN2X3pakdXix1QzrOI=;
-  b=k9H6/UiukQOEhOW/W3nwZQzkgUnm/5Q+XfOvFrsSkwul3o2QDzqXgyYy
-   6DLJTCrZKOffSDWndNOzhfa2mdw8AP4+1xdwGJDdN+BVoKWkt9IcPx3/r
-   l3GV6sArwZrnanh6jQ8HeT2GvHb76sZ2PqSJv9snABPg3u8liQ38xECzg
-   laK1pC2dQUE2UxpiA4iHq/tkNH2f7vgjlh/psgwnU03Cw4WzT9dvcaHfF
-   RGCwJ+MMPEQ5GrV7HjchQfcdcOejkyxpLcPZEboHDXf0gtFL3UVPQWJ4W
-   T4/zbhIQtMErWsqAjgouCUkLrGoBpwS/Nt4aVV8HY8uzc6AzON106+j/E
-   g==;
-X-IronPort-AV: E=McAfee;i="6200,9189,10307"; a="260932517"
-X-IronPort-AV: E=Sophos;i="5.90,236,1643702400"; 
-   d="scan'208";a="260932517"
-Received: from orsmga007.jf.intel.com ([10.7.209.58])
-  by fmsmga103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Apr 2022 07:06:09 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.90,236,1643702400"; 
-   d="scan'208";a="549067236"
-Received: from lkp-server02.sh.intel.com (HELO a44fdfb70b94) ([10.239.97.151])
-  by orsmga007.jf.intel.com with ESMTP; 05 Apr 2022 07:06:06 -0700
-Received: from kbuild by a44fdfb70b94 with local (Exim 4.95)
-        (envelope-from <lkp@intel.com>)
-        id 1nbjos-0003Mh-45;
-        Tue, 05 Apr 2022 14:06:06 +0000
-Date:   Tue, 5 Apr 2022 22:05:38 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Sascha Hauer <s.hauer@pengutronix.de>, alsa-devel@alsa-project.org
-Cc:     kbuild-all@lists.01.org, Xiubo Li <Xiubo.Lee@gmail.com>,
-        Fabio Estevam <festevam@gmail.com>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Vinod Koul <vkoul@kernel.org>,
-        NXP Linux Team <linux-imx@nxp.com>, kernel@pengutronix.de,
-        dmaengine@vger.kernel.org, Shengjiu Wang <shengjiu.wang@gmail.com>
-Subject: Re: [PATCH v3 12/20] ASoC: fsl_micfil: add multi fifo support
-Message-ID: <202204052143.2nZlY7hL-lkp@intel.com>
-References: <20220405075959.2744803-13-s.hauer@pengutronix.de>
+        with ESMTP id S1573189AbiDESOb (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Tue, 5 Apr 2022 14:14:31 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C759386E3A;
+        Tue,  5 Apr 2022 11:12:32 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 6208A618D5;
+        Tue,  5 Apr 2022 18:12:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD4B6C385A8;
+        Tue,  5 Apr 2022 18:12:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1649182351;
+        bh=RtSQnyTH2bGhJA1/9COYZ3axzbF+DTRbMhYJaQmigK4=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=bJXWYYG/tvvtzQ7mynkQmNmp4oWLRn5127jXucil0ZLUP2QwdSLkBd5VLlbiifoVL
+         MgsLY/BryAsTAHBk3L3Sqwke8Hs7z/Svxr1W1nPprI2+t4529BS7r4CQ986LY8AC/d
+         VpHb41kMYECay1Rhodz0/QvluhQC2I2d67+dYNNz5M3Bw5D7vYXNb7J74ah5beA2Qd
+         HJxJL8u8zj7a/ifUwE8hM3YLLOZdrQVuBi35vMjU9a+8qFX/bOR5RGWKdXyo0mvx5v
+         L9StbjsctvN910jBX2Ls6y7Yk7VsE7ZW9DZcknWApQcyYPsTfQV5pkAHKkvVzTRnc+
+         19d6NNVu+8Sjg==
+Received: by mail-il1-f180.google.com with SMTP id x9so170651ilc.3;
+        Tue, 05 Apr 2022 11:12:31 -0700 (PDT)
+X-Gm-Message-State: AOAM531rrObIDBJhGG5oxmBRGK90USUAfsY5v8di4WSmnM0rjVVxPVuG
+        GVqLF4VLPTT89asBePniNrzoC9YV6JQ9uCG42w==
+X-Google-Smtp-Source: ABdhPJxl778BPyM18iwKU9BBEuG8FWmDp6WxR6Z3mTcc8vTqYUBuaCKKMi20g9YQGtWiXGmB8EkjpVPbfq9ItDZJ7Uc=
+X-Received: by 2002:a05:6e02:2183:b0:2c7:fe42:7b07 with SMTP id
+ j3-20020a056e02218300b002c7fe427b07mr2249890ila.302.1649182350732; Tue, 05
+ Apr 2022 11:12:30 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220405075959.2744803-13-s.hauer@pengutronix.de>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+References: <20220405081911.1349563-1-miquel.raynal@bootlin.com> <20220405081911.1349563-2-miquel.raynal@bootlin.com>
+In-Reply-To: <20220405081911.1349563-2-miquel.raynal@bootlin.com>
+From:   Rob Herring <robh@kernel.org>
+Date:   Tue, 5 Apr 2022 13:12:19 -0500
+X-Gmail-Original-Message-ID: <CAL_JsqK3VJ=5VxF5DgZh58zkmWkaAHu9TL9dYOAeTw5nry1Xrg@mail.gmail.com>
+Message-ID: <CAL_JsqK3VJ=5VxF5DgZh58zkmWkaAHu9TL9dYOAeTw5nry1Xrg@mail.gmail.com>
+Subject: Re: [PATCH v7 1/9] dt-bindings: dmaengine: Introduce RZN1 dmamux bindings
+To:     Miquel Raynal <miquel.raynal@bootlin.com>
+Cc:     Magnus Damm <magnus.damm@gmail.com>,
+        Gareth Williams <gareth.williams.jx@renesas.com>,
+        Phil Edworthy <phil.edworthy@renesas.com>,
+        Geert Uytterhoeven <geert@linux-m68k.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        "open list:MEDIA DRIVERS FOR RENESAS - FCP" 
+        <linux-renesas-soc@vger.kernel.org>,
+        "open list:DMA GENERIC OFFLOAD ENGINE SUBSYSTEM" 
+        <dmaengine@vger.kernel.org>,
+        Milan Stevanovic <milan.stevanovic@se.com>,
+        Jimmy Lalande <jimmy.lalande@se.com>,
+        Pascal Eberhard <pascal.eberhard@se.com>,
+        Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
+        Herve Codina <herve.codina@bootlin.com>,
+        Clement Leger <clement.leger@bootlin.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        linux-clk <linux-clk@vger.kernel.org>,
+        Viresh Kumar <vireshk@kernel.org>,
+        Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+        Ilpo Jarvinen <ilpo.jarvinen@linux.intel.com>,
+        Geert Uytterhoeven <geert+renesas@glider.be>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Hi Sascha,
+On Tue, Apr 5, 2022 at 3:19 AM Miquel Raynal <miquel.raynal@bootlin.com> wrote:
+>
+> The Renesas RZN1 DMA IP is based on a DW core, with eg. an additional
+> dmamux register located in the system control area which can take up to
+> 32 requests (16 per DMA controller). Each DMA channel can be wired to
+> two different peripherals.
+>
+> Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+> Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+> Reviewed-by: Rob Herring <robh@kernel.org>
+> ---
+>  .../bindings/dma/renesas,rzn1-dmamux.yaml     | 51 +++++++++++++++++++
+>  MAINTAINERS                                   |  1 +
+>  2 files changed, 52 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/dma/renesas,rzn1-dmamux.yaml
 
-I love your patch! Yet something to improve:
+Please send to the DT list so checks run. I've already reviewed this,
+but what passes does change over time. Such as RiscV cpuidle patches
+that were picked up after 2 months on Thurs and sent to Linus on
+Fri... :(
 
-[auto build test ERROR on broonie-sound/for-next]
-[also build test ERROR on shawnguo/for-next vkoul-dmaengine/next linus/master v5.18-rc1 next-20220405]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch]
-
-url:    https://github.com/intel-lab-lkp/linux/commits/Sascha-Hauer/ASoC-fsl_micfil-Driver-updates/20220405-161030
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next
-config: alpha-randconfig-r023-20220405 (https://download.01.org/0day-ci/archive/20220405/202204052143.2nZlY7hL-lkp@intel.com/config)
-compiler: alpha-linux-gcc (GCC) 11.2.0
-reproduce (this is a W=1 build):
-        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
-        chmod +x ~/bin/make.cross
-        # https://github.com/intel-lab-lkp/linux/commit/05755df1cf507c46e44c4742bed6090e546b2905
-        git remote add linux-review https://github.com/intel-lab-lkp/linux
-        git fetch --no-tags linux-review Sascha-Hauer/ASoC-fsl_micfil-Driver-updates/20220405-161030
-        git checkout 05755df1cf507c46e44c4742bed6090e546b2905
-        # save the config file to linux build tree
-        mkdir build_dir
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-11.2.0 make.cross O=build_dir ARCH=alpha SHELL=/bin/bash sound/soc/fsl/
-
-If you fix the issue, kindly add following tag as appropriate
-Reported-by: kernel test robot <lkp@intel.com>
-
-All errors (new ones prefixed by >>):
-
->> sound/soc/fsl/fsl_micfil.c:19:10: fatal error: linux/platform_data/dma-imx.h: No such file or directory
-      19 | #include <linux/platform_data/dma-imx.h>
-         |          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   compilation terminated.
-
-
-vim +19 sound/soc/fsl/fsl_micfil.c
-
-     3	
-     4	#include <linux/bitfield.h>
-     5	#include <linux/clk.h>
-     6	#include <linux/device.h>
-     7	#include <linux/interrupt.h>
-     8	#include <linux/kobject.h>
-     9	#include <linux/kernel.h>
-    10	#include <linux/module.h>
-    11	#include <linux/of.h>
-    12	#include <linux/of_address.h>
-    13	#include <linux/of_irq.h>
-    14	#include <linux/of_platform.h>
-    15	#include <linux/pm_runtime.h>
-    16	#include <linux/regmap.h>
-    17	#include <linux/sysfs.h>
-    18	#include <linux/types.h>
-  > 19	#include <linux/platform_data/dma-imx.h>
-    20	#include <sound/dmaengine_pcm.h>
-    21	#include <sound/pcm.h>
-    22	#include <sound/soc.h>
-    23	#include <sound/tlv.h>
-    24	#include <sound/core.h>
-    25	
-
--- 
-0-DAY CI Kernel Test Service
-https://01.org/lkp
+Rob
