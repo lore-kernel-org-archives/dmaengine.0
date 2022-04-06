@@ -2,114 +2,96 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D66DFC433F5
-	for <dmaengine@archiver.kernel.org>; Wed,  6 Apr 2022 15:28:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0145AC433F5
+	for <dmaengine@archiver.kernel.org>; Wed,  6 Apr 2022 15:56:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236120AbiDFPao (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 6 Apr 2022 11:30:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50862 "EHLO
+        id S236495AbiDFP6a (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 6 Apr 2022 11:58:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58230 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236086AbiDFPa0 (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Wed, 6 Apr 2022 11:30:26 -0400
-Received: from mga05.intel.com (mga05.intel.com [192.55.52.43])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A802F6CCD14;
-        Wed,  6 Apr 2022 05:49:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1649249380; x=1680785380;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=IYoVpyb3l2wM7Z7eVoU8dR1W5tEkmTa6mGYnlgO8Gh4=;
-  b=DHR/thF4iFN+EWlQ1KW+wQZO7eNGtUpMEzZ46RqmLo51/B9+i1MnCPKx
-   k0+3pH78xlBz3e6IgpzVMF8nqyfKjF3Z9DRw06PHAWZUtqkg65PdQThXF
-   6b6A1SPSFA1XJZieaqeUKe+koX4tyxC5ilUUprHNuLvDq4VT/O8U4xxNH
-   f2xQgtuKFtA6unaPJycIbEMC3NorvPNBxdvsAg0Zy+H89oqWC/PiXRc0Z
-   ClIlNwnv4sPshR6LxIe3LorlFKK14E6Arkr1Hra/j6gPd3xnSPYmHhP53
-   KGfpfWjsYviIa/94sTeowPrMyW39tv96sQZDUUcv2tDStvgy3go+sMEYy
-   Q==;
-X-IronPort-AV: E=McAfee;i="6200,9189,10308"; a="347478440"
-X-IronPort-AV: E=Sophos;i="5.90,239,1643702400"; 
-   d="scan'208";a="347478440"
-Received: from orsmga001.jf.intel.com ([10.7.209.18])
-  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Apr 2022 05:48:49 -0700
-X-IronPort-AV: E=Sophos;i="5.90,239,1643702400"; 
-   d="scan'208";a="588356315"
-Received: from smile.fi.intel.com ([10.237.72.54])
-  by orsmga001-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Apr 2022 05:48:44 -0700
-Received: from andy by smile.fi.intel.com with local (Exim 4.95)
-        (envelope-from <andriy.shevchenko@linux.intel.com>)
-        id 1nc544-000Dyb-V4;
-        Wed, 06 Apr 2022 15:47:12 +0300
-Date:   Wed, 6 Apr 2022 15:47:12 +0300
-From:   Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-To:     Miquel Raynal <miquel.raynal@bootlin.com>
-Cc:     Magnus Damm <magnus.damm@gmail.com>,
-        Gareth Williams <gareth.williams.jx@renesas.com>,
-        Phil Edworthy <phil.edworthy@renesas.com>,
-        Geert Uytterhoeven <geert@linux-m68k.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        linux-renesas-soc@vger.kernel.org, dmaengine@vger.kernel.org,
-        Milan Stevanovic <milan.stevanovic@se.com>,
-        Jimmy Lalande <jimmy.lalande@se.com>,
-        Pascal Eberhard <pascal.eberhard@se.com>,
-        Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
-        Herve Codina <herve.codina@bootlin.com>,
-        Clement Leger <clement.leger@bootlin.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        linux-clk@vger.kernel.org, Viresh Kumar <vireshk@kernel.org>,
-        Ilpo Jarvinen <ilpo.jarvinen@linux.intel.com>
-Subject: Re: [PATCH v7 5/9] dmaengine: dw: dmamux: Introduce RZN1 DMA router
- support
-Message-ID: <Yk2L0MAMjMnWB2sU@smile.fi.intel.com>
-References: <20220405081911.1349563-1-miquel.raynal@bootlin.com>
- <20220405081911.1349563-6-miquel.raynal@bootlin.com>
- <YkxXUdMA75b8keSd@smile.fi.intel.com>
- <20220406094908.48ecc4bb@xps13>
- <Yk1WWaJ9IJsU5HXV@smile.fi.intel.com>
- <20220406141346.5caf746c@xps13>
+        with ESMTP id S237539AbiDFP6O (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Wed, 6 Apr 2022 11:58:14 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12D7613DFF;
+        Wed,  6 Apr 2022 06:25:30 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id C87F96152F;
+        Wed,  6 Apr 2022 13:25:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78B4DC385AA;
+        Wed,  6 Apr 2022 13:25:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1649251529;
+        bh=NZuFXM3zqS91214yNiugl+PV0SUW+INnvg+0l8KGQ2g=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=i7hIVXjO8JIfjb8oqfshU57Clp3/ThSRPXcXZ21/OMEq7lCJxrkgyrQmgut1J8DC9
+         9R637NI/wj8sryhCNbyrpqEtW4zHrrJ0tMI4/m2T1sGqMvEXKXc962WIVLINpF77D5
+         oSOL52BCtccx0EgXpgTlKI9Z92ZiDlIPSgYroaHHruZw2L+McYa1p3B3+mhXPtpnk8
+         O0Js3em3qzq6LxsmzX+wFbWG/XRY9v/WMV/m0mcAoTVRgI2wZNZ99rEsVFSkqou1Xe
+         FQbhSnNXiphRwzEygoHIfX6eCBD3SHOL/sJCQnkC7sYVJf5syNNKOyJqbK1tV3c8Gz
+         h2u2/JR1SQezA==
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH 3/3] dmaengine: qcom: gpi: Add support for ee_offset
+Date:   Wed,  6 Apr 2022 18:55:08 +0530
+Message-Id: <20220406132508.1029348-3-vkoul@kernel.org>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20220406132508.1029348-1-vkoul@kernel.org>
+References: <20220406132508.1029348-1-vkoul@kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220406141346.5caf746c@xps13>
-Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On Wed, Apr 06, 2022 at 02:13:46PM +0200, Miquel Raynal wrote:
-> andriy.shevchenko@linux.intel.com wrote on Wed, 6 Apr 2022 11:59:05
-> +0300:
-> > On Wed, Apr 06, 2022 at 09:49:08AM +0200, Miquel Raynal wrote:
-> > > andriy.shevchenko@linux.intel.com wrote on Tue, 5 Apr 2022 17:50:57
-> > > +0300:  
-> > > > On Tue, Apr 05, 2022 at 10:19:07AM +0200, Miquel Raynal wrote:  
+Controller on newer SoCs like SM8450 have registers at at offset. Add
+ee_offset to driver_data and add this compatible for the driver.
 
-...
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+---
+ drivers/dma/qcom/gpi.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
-> > > > > +#define RZN1_DMAMUX_SPLIT 16  
-> > > >
-> > > > I would name it more explicitly:
-> > > > 
-> > > > #define RZN1_DMAMUX_SPLIT_1_0	 16  
-> > > 
-> > > I am sorry but I don't understand this suffix, which probably means
-> > > that it is not as clear as we wish. Do you mind if I stick to
-> > > RZN1_DMAMUX_SPLIT?  
-> > 
-> > The suffix to show that this is the value between part 0 (indexed by 0) and
-> > part 1 (indexed by 1) as far as I can see they are different by size. Since
-> > they are not equal, the original name without suffix is confusing (I would
-> > expect indexing up to 4 in such case).
-> 
-> They are equivalent in size (0-15/16-31), or aren't we talking about the
-> same thing?
-
-Hmm... I have misread something then. To clarify that the portions are equal
-perhaps we can name it MAX_LINES or so instead of SPLIT?
-
+diff --git a/drivers/dma/qcom/gpi.c b/drivers/dma/qcom/gpi.c
+index 3429ceccd13b..0b402d923eae 100644
+--- a/drivers/dma/qcom/gpi.c
++++ b/drivers/dma/qcom/gpi.c
+@@ -2152,6 +2152,7 @@ static int gpi_probe(struct platform_device *pdev)
+ {
+ 	struct gpi_dev *gpi_dev;
+ 	unsigned int i;
++	u32 ee_offset;
+ 	int ret;
+ 
+ 	gpi_dev = devm_kzalloc(&pdev->dev, sizeof(*gpi_dev), GFP_KERNEL);
+@@ -2179,6 +2180,9 @@ static int gpi_probe(struct platform_device *pdev)
+ 		return ret;
+ 	}
+ 
++	ee_offset = (uintptr_t)device_get_match_data(gpi_dev->dev);
++	gpi_dev->ee_base = gpi_dev->ee_base - ee_offset;
++
+ 	gpi_dev->ev_factor = EV_FACTOR;
+ 
+ 	ret = dma_set_mask(gpi_dev->dev, DMA_BIT_MASK(64));
+@@ -2282,9 +2286,10 @@ static int gpi_probe(struct platform_device *pdev)
+ }
+ 
+ static const struct of_device_id gpi_of_match[] = {
+-	{ .compatible = "qcom,sdm845-gpi-dma" },
+-	{ .compatible = "qcom,sm8150-gpi-dma" },
+-	{ .compatible = "qcom,sm8250-gpi-dma" },
++	{ .compatible = "qcom,sdm845-gpi-dma", .data = (void *)0x0 },
++	{ .compatible = "qcom,sm8150-gpi-dma", .data = (void *)0x0 },
++	{ .compatible = "qcom,sm8250-gpi-dma", .data = (void *)0x0 },
++	{ .compatible = "qcom,sm8450-gpi-dma", .data = (void *)0x10000 },
+ 	{ },
+ };
+ MODULE_DEVICE_TABLE(of, gpi_of_match);
 -- 
-With Best Regards,
-Andy Shevchenko
-
+2.34.1
 
