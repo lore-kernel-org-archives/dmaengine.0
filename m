@@ -2,102 +2,64 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3F389C433FE
-	for <dmaengine@archiver.kernel.org>; Wed,  6 Apr 2022 11:04:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4739DC433EF
+	for <dmaengine@archiver.kernel.org>; Wed,  6 Apr 2022 12:02:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347325AbiDFLGb (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 6 Apr 2022 07:06:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35302 "EHLO
+        id S229939AbiDFMEC (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 6 Apr 2022 08:04:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56122 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1355260AbiDFLFX (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Wed, 6 Apr 2022 07:05:23 -0400
-Received: from relay11.mail.gandi.net (relay11.mail.gandi.net [IPv6:2001:4b98:dc4:8::231])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 66B9952D903;
-        Wed,  6 Apr 2022 00:31:26 -0700 (PDT)
-Received: (Authenticated sender: miquel.raynal@bootlin.com)
-        by mail.gandi.net (Postfix) with ESMTPSA id A818910000A;
-        Wed,  6 Apr 2022 07:31:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
-        t=1649230282;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=nHj5k5RzXeFddFrVB4M3iAfHYNCiMLQrlVcvkv7tNwY=;
-        b=QQ5TYeKl8nxr5lg5xsdiD7SuJg8yDXW1F3juR7fPgJYpvK08QuPE7EUW/W6PxBk35X/bkI
-        2U0fwd4SCh3wyKlp8+o3l5XiTMtU8kAtBrzRE13elbV53+4g2CzJA+kLcO9KSBQzgVqlN2
-        HKHJTi/YZPm66mEm/kY9Jz3HDTsV30BMXAa8RNcJNQVKdxgeP6v0mXxGNz7Dv16PI2PLcH
-        AGrY5R6n9401GPAOrJfN2ejcm4gL7AjqusI3PJVB7yLWrBYxCtA9pCgZcirL1dxBfN22nH
-        Ft8GXJLBCXyz8aKnfaojBfueyrreClpIfWdVsFYBTWE3eFgPq96WB/NRIFHVAg==
-Date:   Wed, 6 Apr 2022 09:31:17 +0200
-From:   Miquel Raynal <miquel.raynal@bootlin.com>
-To:     Rob Herring <robh@kernel.org>
-Cc:     Magnus Damm <magnus.damm@gmail.com>,
-        Gareth Williams <gareth.williams.jx@renesas.com>,
-        Phil Edworthy <phil.edworthy@renesas.com>,
-        Geert Uytterhoeven <geert@linux-m68k.org>,
+        with ESMTP id S232501AbiDFMCm (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Wed, 6 Apr 2022 08:02:42 -0400
+Received: from relmlie5.idc.renesas.com (relmlor1.renesas.com [210.160.252.171])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 3836A3024C6;
+        Wed,  6 Apr 2022 01:04:25 -0700 (PDT)
+X-IronPort-AV: E=Sophos;i="5.90,239,1643641200"; 
+   d="scan'208";a="115882199"
+Received: from unknown (HELO relmlir6.idc.renesas.com) ([10.200.68.152])
+  by relmlie5.idc.renesas.com with ESMTP; 06 Apr 2022 17:04:24 +0900
+Received: from localhost.localdomain (unknown [10.226.36.204])
+        by relmlir6.idc.renesas.com (Postfix) with ESMTP id D90C941E7F1A;
+        Wed,  6 Apr 2022 17:04:22 +0900 (JST)
+From:   Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+To:     Geert Uytterhoeven <geert+renesas@glider.be>,
         Vinod Koul <vkoul@kernel.org>,
-        "open list:MEDIA DRIVERS FOR RENESAS - FCP" 
-        <linux-renesas-soc@vger.kernel.org>,
-        "open list:DMA GENERIC OFFLOAD ENGINE SUBSYSTEM" 
-        <dmaengine@vger.kernel.org>,
-        Milan Stevanovic <milan.stevanovic@se.com>,
-        Jimmy Lalande <jimmy.lalande@se.com>,
-        Pascal Eberhard <pascal.eberhard@se.com>,
-        Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
-        Herve Codina <herve.codina@bootlin.com>,
-        Clement Leger <clement.leger@bootlin.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        linux-clk <linux-clk@vger.kernel.org>,
-        Viresh Kumar <vireshk@kernel.org>,
-        Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-        Ilpo Jarvinen <ilpo.jarvinen@linux.intel.com>,
-        Geert Uytterhoeven <geert+renesas@glider.be>
-Subject: Re: [PATCH v7 1/9] dt-bindings: dmaengine: Introduce RZN1 dmamux
- bindings
-Message-ID: <20220406093117.128bc7f1@xps13>
-In-Reply-To: <CAL_JsqK3VJ=5VxF5DgZh58zkmWkaAHu9TL9dYOAeTw5nry1Xrg@mail.gmail.com>
-References: <20220405081911.1349563-1-miquel.raynal@bootlin.com>
-        <20220405081911.1349563-2-miquel.raynal@bootlin.com>
-        <CAL_JsqK3VJ=5VxF5DgZh58zkmWkaAHu9TL9dYOAeTw5nry1Xrg@mail.gmail.com>
-Organization: Bootlin
-X-Mailer: Claws Mail 3.17.7 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+        linux-renesas-soc@vger.kernel.org, dmaengine@vger.kernel.org
+Cc:     linux-kernel@vger.kernel.org,
+        Prabhakar <prabhakar.csengg@gmail.com>,
+        Biju Das <biju.das.jz@bp.renesas.com>,
+        Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+Subject: [PATCH] dmaengine: sh: Kconfig: Make RZ_DMAC depend on ARCH_RZG2L
+Date:   Wed,  6 Apr 2022 09:04:17 +0100
+Message-Id: <20220406080417.14593-1-prabhakar.mahadev-lad.rj@bp.renesas.com>
+X-Mailer: git-send-email 2.17.1
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Hi Rob,
+The DMAC block is identical on Renesas RZ/G2L, RZ/G2UL and RZ/V2L SoC's, so
+instead of adding dependency for each SoC's add dependency on ARCH_RZG2L.
+The ARCH_RZG2L config option is already selected by ARCH_R9A07G043,
+ARCH_R9A07G044 and ARCH_R9A07G054.
 
-robh@kernel.org wrote on Tue, 5 Apr 2022 13:12:19 -0500:
+Signed-off-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+---
+ drivers/dma/sh/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-> On Tue, Apr 5, 2022 at 3:19 AM Miquel Raynal <miquel.raynal@bootlin.com> =
-wrote:
-> >
-> > The Renesas RZN1 DMA IP is based on a DW core, with eg. an additional
-> > dmamux register located in the system control area which can take up to
-> > 32 requests (16 per DMA controller). Each DMA channel can be wired to
-> > two different peripherals.
-> >
-> > Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-> > Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-> > Reviewed-by: Rob Herring <robh@kernel.org>
-> > ---
-> >  .../bindings/dma/renesas,rzn1-dmamux.yaml     | 51 +++++++++++++++++++
-> >  MAINTAINERS                                   |  1 +
-> >  2 files changed, 52 insertions(+)
-> >  create mode 100644 Documentation/devicetree/bindings/dma/renesas,rzn1-=
-dmamux.yaml =20
->=20
-> Please send to the DT list so checks run. I've already reviewed this,
-> but what passes does change over time. Such as RiscV cpuidle patches
-> that were picked up after 2 months on Thurs and sent to Linus on
-> Fri... :(
+diff --git a/drivers/dma/sh/Kconfig b/drivers/dma/sh/Kconfig
+index b35d705f79e7..c0b2997ab7fd 100644
+--- a/drivers/dma/sh/Kconfig
++++ b/drivers/dma/sh/Kconfig
+@@ -50,7 +50,7 @@ config RENESAS_USB_DMAC
+ 
+ config RZ_DMAC
+ 	tristate "Renesas RZ/{G2L,V2L} DMA Controller"
+-	depends on ARCH_R9A07G044 || ARCH_R9A07G054 || COMPILE_TEST
++	depends on ARCH_RZG2L || COMPILE_TEST
+ 	select RENESAS_DMA
+ 	select DMA_VIRTUAL_CHANNELS
+ 	help
+-- 
+2.17.1
 
-Oh, ok, no problem.
-
-Thanks,
-Miqu=C3=A8l
