@@ -2,65 +2,97 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6A335C433EF
-	for <dmaengine@archiver.kernel.org>; Thu,  7 Apr 2022 08:31:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C7ADAC433F5
+	for <dmaengine@archiver.kernel.org>; Thu,  7 Apr 2022 08:49:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243087AbiDGIdy (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Thu, 7 Apr 2022 04:33:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39286 "EHLO
+        id S239687AbiDGIvu (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Thu, 7 Apr 2022 04:51:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35998 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243138AbiDGIdw (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Thu, 7 Apr 2022 04:33:52 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3362B22031C
-        for <dmaengine@vger.kernel.org>; Thu,  7 Apr 2022 01:31:49 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id B2F55618FE
-        for <dmaengine@vger.kernel.org>; Thu,  7 Apr 2022 08:31:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A202C385A0;
-        Thu,  7 Apr 2022 08:31:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1649320308;
-        bh=3XImbs9tYxaOBQMtogypa7KJuCYfykCfRlkZqbJCaJA=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=SEVdm7I3h4PQUGOwBmgWIUlzdS5ov5DTIERt225MvujqOny0VHzL+Yb5zsscHbH1z
-         SBpGzSks+E8vLVhVXPHbT7ajI7L379w4p4f7ONZVHbiHFzUOhXnb2MLOBOuem+4000
-         Y6oy2hYjnqftMl+EYRRTMXKCD1VGITplB2Y+b/DXTVJKtikb2e4eQXKve+S0rXTzN2
-         DuS8JJKn0aVeP4e7NmzLAsBA+ui6tIcnbdWcORbLFuF1geLDMSoE0SEBkkeJneGkzw
-         2x4Ttz0FtPjP+idJtz/IcWpT5l8PAK6MzK/SXgSsxt2WamHGaf7O34s0euanib5Ov0
-         D+wAl1ihqscRw==
-Date:   Thu, 7 Apr 2022 14:01:43 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Sascha Hauer <s.hauer@pengutronix.de>
-Cc:     alsa-devel@alsa-project.org, Xiubo Li <Xiubo.Lee@gmail.com>,
-        Fabio Estevam <festevam@gmail.com>,
+        with ESMTP id S229748AbiDGIvu (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Thu, 7 Apr 2022 04:51:50 -0400
+Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2045E62A3A
+        for <dmaengine@vger.kernel.org>; Thu,  7 Apr 2022 01:49:51 -0700 (PDT)
+Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
+        by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.92)
+        (envelope-from <sha@pengutronix.de>)
+        id 1ncNpq-0003d7-A3; Thu, 07 Apr 2022 10:49:46 +0200
+Received: from [2a0a:edc0:0:1101:1d::28] (helo=dude02.red.stw.pengutronix.de)
+        by drehscheibe.grey.stw.pengutronix.de with esmtp (Exim 4.94.2)
+        (envelope-from <sha@pengutronix.de>)
+        id 1ncNpq-001Zqz-Oa; Thu, 07 Apr 2022 10:49:45 +0200
+Received: from sha by dude02.red.stw.pengutronix.de with local (Exim 4.94.2)
+        (envelope-from <sha@pengutronix.de>)
+        id 1ncNpm-000w4L-N7; Thu, 07 Apr 2022 10:49:42 +0200
+From:   Sascha Hauer <s.hauer@pengutronix.de>
+To:     alsa-devel@alsa-project.org
+Cc:     Xiubo Li <Xiubo.Lee@gmail.com>, Fabio Estevam <festevam@gmail.com>,
         Shengjiu Wang <shengjiu.wang@gmail.com>, kernel@pengutronix.de,
-        NXP Linux Team <linux-imx@nxp.com>, dmaengine@vger.kernel.org
-Subject: Re: [PATCH v3 11/20] dmaengine: imx-sdma: Add multi fifo support
-Message-ID: <Yk6hb+vcI95eCshj@matsya>
-References: <20220405075959.2744803-1-s.hauer@pengutronix.de>
- <20220405075959.2744803-12-s.hauer@pengutronix.de>
+        Vinod Koul <vkoul@kernel.org>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        dmaengine@vger.kernel.org, Sascha Hauer <s.hauer@pengutronix.de>
+Subject: [PATCH v4 08/21] ASoC: fsl_micfil: drop unused variables
+Date:   Thu,  7 Apr 2022 10:49:23 +0200
+Message-Id: <20220407084936.223075-9-s.hauer@pengutronix.de>
+X-Mailer: git-send-email 2.30.2
+In-Reply-To: <20220407084936.223075-1-s.hauer@pengutronix.de>
+References: <20220407084936.223075-1-s.hauer@pengutronix.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220405075959.2744803-12-s.hauer@pengutronix.de>
+Content-Transfer-Encoding: 8bit
+X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
+X-SA-Exim-Mail-From: sha@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: dmaengine@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On 05-04-22, 09:59, Sascha Hauer wrote:
-> The i.MX SDMA engine can read from / write to multiple successive
-> hardware FIFO registers, referred to as "Multi FIFO support". This is
-> needed for the micfil driver and certain configurations of the SAI
-> driver. This patch adds support for this feature.
-> 
-> The number of FIFOs to read from / write to must be communicated from
-> the client driver to the SDMA engine. For this the struct
-> dma_slave_config::peripheral_config field is used.
+struct fsl_micfil has unused fields, remove them.
 
-Acked-By: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Sascha Hauer <s.hauer@pengutronix.de>
+---
 
+Notes:
+    Changes since v3:
+    - Add commit log
+
+ sound/soc/fsl/fsl_micfil.c | 6 ------
+ 1 file changed, 6 deletions(-)
+
+diff --git a/sound/soc/fsl/fsl_micfil.c b/sound/soc/fsl/fsl_micfil.c
+index 619e013cf272d..4656a18a03e45 100644
+--- a/sound/soc/fsl/fsl_micfil.c
++++ b/sound/soc/fsl/fsl_micfil.c
+@@ -38,10 +38,7 @@ struct fsl_micfil {
+ 	unsigned int dataline;
+ 	char name[32];
+ 	int irq[MICFIL_IRQ_LINES];
+-	unsigned int mclk_streams;
+ 	int quality;	/*QUALITY 2-0 bits */
+-	bool slave_mode;
+-	int channel_gain[8];
+ };
+ 
+ struct fsl_micfil_soc_data {
+@@ -342,7 +339,6 @@ static int fsl_micfil_dai_probe(struct snd_soc_dai *cpu_dai)
+ {
+ 	struct fsl_micfil *micfil = dev_get_drvdata(cpu_dai->dev);
+ 	int ret;
+-	int i;
+ 
+ 	/* set qsel to medium */
+ 	ret = regmap_update_bits(micfil->regmap, REG_MICFIL_CTRL2,
+@@ -353,8 +349,6 @@ static int fsl_micfil_dai_probe(struct snd_soc_dai *cpu_dai)
+ 
+ 	/* set default gain to max_gain */
+ 	regmap_write(micfil->regmap, REG_MICFIL_OUT_CTRL, 0x77777777);
+-	for (i = 0; i < 8; i++)
+-		micfil->channel_gain[i] = 0xF;
+ 
+ 	snd_soc_dai_init_dma_data(cpu_dai, NULL,
+ 				  &micfil->dma_params_rx);
 -- 
-~Vinod
+2.30.2
+
