@@ -2,30 +2,30 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 26A28C4332F
-	for <dmaengine@archiver.kernel.org>; Thu,  7 Apr 2022 08:50:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 14F15C433F5
+	for <dmaengine@archiver.kernel.org>; Thu,  7 Apr 2022 08:50:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243408AbiDGIv7 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        id S243426AbiDGIv7 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
         Thu, 7 Apr 2022 04:51:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36300 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36370 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243426AbiDGIvw (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Thu, 7 Apr 2022 04:51:52 -0400
+        with ESMTP id S243429AbiDGIvx (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Thu, 7 Apr 2022 04:51:53 -0400
 Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA3FB107080
-        for <dmaengine@vger.kernel.org>; Thu,  7 Apr 2022 01:49:52 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E4BD1F378F
+        for <dmaengine@vger.kernel.org>; Thu,  7 Apr 2022 01:49:53 -0700 (PDT)
 Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
         by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
         (Exim 4.92)
         (envelope-from <sha@pengutronix.de>)
-        id 1ncNpr-0003gU-T9; Thu, 07 Apr 2022 10:49:47 +0200
+        id 1ncNps-0003hS-7Q; Thu, 07 Apr 2022 10:49:48 +0200
 Received: from [2a0a:edc0:0:1101:1d::28] (helo=dude02.red.stw.pengutronix.de)
         by drehscheibe.grey.stw.pengutronix.de with esmtp (Exim 4.94.2)
         (envelope-from <sha@pengutronix.de>)
-        id 1ncNps-001Zri-6Q; Thu, 07 Apr 2022 10:49:46 +0200
+        id 1ncNps-001Zrr-H6; Thu, 07 Apr 2022 10:49:47 +0200
 Received: from sha by dude02.red.stw.pengutronix.de with local (Exim 4.94.2)
         (envelope-from <sha@pengutronix.de>)
-        id 1ncNpm-000w4y-Vf; Thu, 07 Apr 2022 10:49:42 +0200
+        id 1ncNpm-000w40-HN; Thu, 07 Apr 2022 10:49:42 +0200
 From:   Sascha Hauer <s.hauer@pengutronix.de>
 To:     alsa-devel@alsa-project.org
 Cc:     Xiubo Li <Xiubo.Lee@gmail.com>, Fabio Estevam <festevam@gmail.com>,
@@ -33,9 +33,9 @@ Cc:     Xiubo Li <Xiubo.Lee@gmail.com>, Fabio Estevam <festevam@gmail.com>,
         Vinod Koul <vkoul@kernel.org>,
         NXP Linux Team <linux-imx@nxp.com>,
         dmaengine@vger.kernel.org, Sascha Hauer <s.hauer@pengutronix.de>
-Subject: [PATCH v4 21/21] ASoC: fsl_micfil: Remove debug message
-Date:   Thu,  7 Apr 2022 10:49:36 +0200
-Message-Id: <20220407084936.223075-22-s.hauer@pengutronix.de>
+Subject: [PATCH v4 01/21] ASoC: fsl_micfil: Drop unnecessary register read
+Date:   Thu,  7 Apr 2022 10:49:16 +0200
+Message-Id: <20220407084936.223075-2-s.hauer@pengutronix.de>
 X-Mailer: git-send-email 2.30.2
 In-Reply-To: <20220407084936.223075-1-s.hauer@pengutronix.de>
 References: <20220407084936.223075-1-s.hauer@pengutronix.de>
@@ -49,31 +49,27 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-The micfil driver prints out the IRQ numbers for each interrupt at error
-level. This information is useful for debugging at best, remove it.
+in get_pdm_clk() REG_MICFIL_CTRL2 is read twice. Drop second read.
 
 Signed-off-by: Sascha Hauer <s.hauer@pengutronix.de>
+Acked-by: Shengjiu Wang <shengjiu.wang@gmail.com>
 ---
-
-Notes:
-    Changes since v3:
-    - new patch
-
- sound/soc/fsl/fsl_micfil.c | 1 -
- 1 file changed, 1 deletion(-)
+ sound/soc/fsl/fsl_micfil.c | 2 --
+ 1 file changed, 2 deletions(-)
 
 diff --git a/sound/soc/fsl/fsl_micfil.c b/sound/soc/fsl/fsl_micfil.c
-index 8f0ab61fd1b07..be669523a4bf7 100644
+index 9f90989ac59a6..64019d003784b 100644
 --- a/sound/soc/fsl/fsl_micfil.c
 +++ b/sound/soc/fsl/fsl_micfil.c
-@@ -597,7 +597,6 @@ static int fsl_micfil_probe(struct platform_device *pdev)
- 	/* get IRQs */
- 	for (i = 0; i < MICFIL_IRQ_LINES; i++) {
- 		micfil->irq[i] = platform_get_irq(pdev, i);
--		dev_err(&pdev->dev, "GET IRQ: %d\n", micfil->irq[i]);
- 		if (micfil->irq[i] < 0)
- 			return micfil->irq[i];
- 	}
+@@ -118,8 +118,6 @@ static inline int get_pdm_clk(struct fsl_micfil *micfil,
+ 	regmap_read(micfil->regmap, REG_MICFIL_CTRL2, &ctrl2_reg);
+ 	osr = 16 - ((ctrl2_reg & MICFIL_CTRL2_CICOSR_MASK)
+ 		    >> MICFIL_CTRL2_CICOSR_SHIFT);
+-
+-	regmap_read(micfil->regmap, REG_MICFIL_CTRL2, &ctrl2_reg);
+ 	qsel = ctrl2_reg & MICFIL_CTRL2_QSEL_MASK;
+ 
+ 	switch (qsel) {
 -- 
 2.30.2
 
