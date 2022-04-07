@@ -2,30 +2,30 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 09D60C433F5
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4EDF4C4332F
 	for <dmaengine@archiver.kernel.org>; Thu,  7 Apr 2022 08:49:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229748AbiDGIvy (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        id S242536AbiDGIvy (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
         Thu, 7 Apr 2022 04:51:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36194 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36250 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242536AbiDGIvv (ORCPT
+        with ESMTP id S243302AbiDGIvv (ORCPT
         <rfc822;dmaengine@vger.kernel.org>); Thu, 7 Apr 2022 04:51:51 -0400
 Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 88EEBD64E5
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B70A4F44F
         for <dmaengine@vger.kernel.org>; Thu,  7 Apr 2022 01:49:52 -0700 (PDT)
 Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
         by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
         (Exim 4.92)
         (envelope-from <sha@pengutronix.de>)
-        id 1ncNpq-0003d6-Aq; Thu, 07 Apr 2022 10:49:46 +0200
+        id 1ncNpr-0003f9-EI; Thu, 07 Apr 2022 10:49:47 +0200
 Received: from [2a0a:edc0:0:1101:1d::28] (helo=dude02.red.stw.pengutronix.de)
         by drehscheibe.grey.stw.pengutronix.de with esmtp (Exim 4.94.2)
         (envelope-from <sha@pengutronix.de>)
-        id 1ncNpq-001Zqy-OU; Thu, 07 Apr 2022 10:49:45 +0200
+        id 1ncNpr-001ZrR-JK; Thu, 07 Apr 2022 10:49:46 +0200
 Received: from sha by dude02.red.stw.pengutronix.de with local (Exim 4.94.2)
         (envelope-from <sha@pengutronix.de>)
-        id 1ncNpm-000w4G-Lc; Thu, 07 Apr 2022 10:49:42 +0200
+        id 1ncNpm-000w4R-Od; Thu, 07 Apr 2022 10:49:42 +0200
 From:   Sascha Hauer <s.hauer@pengutronix.de>
 To:     alsa-devel@alsa-project.org
 Cc:     Xiubo Li <Xiubo.Lee@gmail.com>, Fabio Estevam <festevam@gmail.com>,
@@ -33,9 +33,9 @@ Cc:     Xiubo Li <Xiubo.Lee@gmail.com>, Fabio Estevam <festevam@gmail.com>,
         Vinod Koul <vkoul@kernel.org>,
         NXP Linux Team <linux-imx@nxp.com>,
         dmaengine@vger.kernel.org, Sascha Hauer <s.hauer@pengutronix.de>
-Subject: [PATCH v4 06/21] ASoC: fsl_micfil: use clear/set bits
-Date:   Thu,  7 Apr 2022 10:49:21 +0200
-Message-Id: <20220407084936.223075-7-s.hauer@pengutronix.de>
+Subject: [PATCH v4 10/21] dmaengine: imx-sdma: error out on unsupported transfer types
+Date:   Thu,  7 Apr 2022 10:49:25 +0200
+Message-Id: <20220407084936.223075-11-s.hauer@pengutronix.de>
 X-Mailer: git-send-email 2.30.2
 In-Reply-To: <20220407084936.223075-1-s.hauer@pengutronix.de>
 References: <20220407084936.223075-1-s.hauer@pengutronix.de>
@@ -49,77 +49,84 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Instead regmap_update_bits() use the simpler variants
-regmap_[set|clear]_bits() where appropriate.
+The i.MX SDMA driver currently silently ignores unsupported transfer
+types. These transfer types are specified in the dma channel description
+in the device tree, so they should really be checked.
+Issue a message and error out when we hit unsupported transfer types.
 
 Signed-off-by: Sascha Hauer <s.hauer@pengutronix.de>
+Acked-By: Vinod Koul <vkoul@kernel.org>
 ---
- sound/soc/fsl/fsl_micfil.c | 26 ++++++++++----------------
- 1 file changed, 10 insertions(+), 16 deletions(-)
 
-diff --git a/sound/soc/fsl/fsl_micfil.c b/sound/soc/fsl/fsl_micfil.c
-index cfa8af668d921..da4c245c35e62 100644
---- a/sound/soc/fsl/fsl_micfil.c
-+++ b/sound/soc/fsl/fsl_micfil.c
-@@ -168,19 +168,15 @@ static int fsl_micfil_reset(struct device *dev)
- 	struct fsl_micfil *micfil = dev_get_drvdata(dev);
- 	int ret;
- 
--	ret = regmap_update_bits(micfil->regmap,
--				 REG_MICFIL_CTRL1,
--				 MICFIL_CTRL1_MDIS,
--				 0);
-+	ret = regmap_clear_bits(micfil->regmap, REG_MICFIL_CTRL1,
-+				MICFIL_CTRL1_MDIS);
- 	if (ret) {
- 		dev_err(dev, "failed to clear MDIS bit %d\n", ret);
- 		return ret;
+Notes:
+    Changes since v2:
+    - Use prefix dmaengine:
+
+ drivers/dma/imx-sdma.c | 17 +++++++++++++----
+ 1 file changed, 13 insertions(+), 4 deletions(-)
+
+diff --git a/drivers/dma/imx-sdma.c b/drivers/dma/imx-sdma.c
+index 80261a905eb5b..0e70843567cef 100644
+--- a/drivers/dma/imx-sdma.c
++++ b/drivers/dma/imx-sdma.c
+@@ -940,7 +940,7 @@ static irqreturn_t sdma_int_handler(int irq, void *dev_id)
+ /*
+  * sets the pc of SDMA script according to the peripheral type
+  */
+-static void sdma_get_pc(struct sdma_channel *sdmac,
++static int sdma_get_pc(struct sdma_channel *sdmac,
+ 		enum sdma_peripheral_type peripheral_type)
+ {
+ 	struct sdma_engine *sdma = sdmac->sdma;
+@@ -1039,13 +1039,17 @@ static void sdma_get_pc(struct sdma_channel *sdmac,
+ 		emi_2_per = sdma->script_addrs->ext_mem_2_ipu_addr;
+ 		break;
+ 	default:
+-		break;
++		dev_err(sdma->dev, "Unsupported transfer type %d\n",
++			peripheral_type);
++		return -EINVAL;
  	}
  
--	ret = regmap_update_bits(micfil->regmap,
--				 REG_MICFIL_CTRL1,
--				 MICFIL_CTRL1_SRES,
--				 MICFIL_CTRL1_SRES);
-+	ret = regmap_set_bits(micfil->regmap, REG_MICFIL_CTRL1,
-+			      MICFIL_CTRL1_SRES);
- 	if (ret) {
- 		dev_err(dev, "failed to reset MICFIL: %d\n", ret);
- 		return ret;
-@@ -252,9 +248,8 @@ static int fsl_micfil_trigger(struct snd_pcm_substream *substream, int cmd,
- 		}
+ 	sdmac->pc_from_device = per_2_emi;
+ 	sdmac->pc_to_device = emi_2_per;
+ 	sdmac->device_to_device = per_2_per;
+ 	sdmac->pc_to_pc = emi_2_emi;
++
++	return 0;
+ }
  
- 		/* Enable the module */
--		ret = regmap_update_bits(micfil->regmap, REG_MICFIL_CTRL1,
--					 MICFIL_CTRL1_PDMIEN,
--					 MICFIL_CTRL1_PDMIEN);
-+		ret = regmap_set_bits(micfil->regmap, REG_MICFIL_CTRL1,
-+				      MICFIL_CTRL1_PDMIEN);
- 		if (ret) {
- 			dev_err(dev, "failed to enable the module\n");
- 			return ret;
-@@ -265,9 +260,8 @@ static int fsl_micfil_trigger(struct snd_pcm_substream *substream, int cmd,
- 	case SNDRV_PCM_TRIGGER_SUSPEND:
- 	case SNDRV_PCM_TRIGGER_PAUSE_PUSH:
- 		/* Disable the module */
--		ret = regmap_update_bits(micfil->regmap, REG_MICFIL_CTRL1,
--					 MICFIL_CTRL1_PDMIEN,
--					 0);
-+		ret = regmap_clear_bits(micfil->regmap, REG_MICFIL_CTRL1,
-+					MICFIL_CTRL1_PDMIEN);
- 		if (ret) {
- 			dev_err(dev, "failed to enable the module\n");
- 			return ret;
-@@ -332,8 +326,8 @@ static int fsl_micfil_hw_params(struct snd_pcm_substream *substream,
- 	int ret;
+ static int sdma_load_context(struct sdma_channel *sdmac)
+@@ -1213,6 +1217,7 @@ static void sdma_set_watermarklevel_for_p2p(struct sdma_channel *sdmac)
+ static int sdma_config_channel(struct dma_chan *chan)
+ {
+ 	struct sdma_channel *sdmac = to_sdma_chan(chan);
++	int ret;
  
- 	/* 1. Disable the module */
--	ret = regmap_update_bits(micfil->regmap, REG_MICFIL_CTRL1,
--				 MICFIL_CTRL1_PDMIEN, 0);
-+	ret = regmap_clear_bits(micfil->regmap, REG_MICFIL_CTRL1,
-+				MICFIL_CTRL1_PDMIEN);
- 	if (ret) {
- 		dev_err(dev, "failed to disable the module\n");
- 		return ret;
+ 	sdma_disable_channel(chan);
+ 
+@@ -1233,7 +1238,9 @@ static int sdma_config_channel(struct dma_chan *chan)
+ 		break;
+ 	}
+ 
+-	sdma_get_pc(sdmac, sdmac->peripheral_type);
++	ret = sdma_get_pc(sdmac, sdmac->peripheral_type);
++	if (ret)
++		return ret;
+ 
+ 	if ((sdmac->peripheral_type != IMX_DMATYPE_MEMORY) &&
+ 			(sdmac->peripheral_type != IMX_DMATYPE_DSP)) {
+@@ -1349,7 +1356,9 @@ static int sdma_alloc_chan_resources(struct dma_chan *chan)
+ 		mem_data.dma_request2 = 0;
+ 		data = &mem_data;
+ 
+-		sdma_get_pc(sdmac, IMX_DMATYPE_MEMORY);
++		ret = sdma_get_pc(sdmac, IMX_DMATYPE_MEMORY);
++		if (ret)
++			return ret;
+ 	}
+ 
+ 	switch (data->priority) {
 -- 
 2.30.2
 
