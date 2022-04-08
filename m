@@ -2,30 +2,30 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D0984C43217
-	for <dmaengine@archiver.kernel.org>; Fri,  8 Apr 2022 11:29:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 607BDC4332F
+	for <dmaengine@archiver.kernel.org>; Fri,  8 Apr 2022 11:29:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234155AbiDHLbu (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        id S233639AbiDHLbu (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
         Fri, 8 Apr 2022 07:31:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48130 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48134 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234460AbiDHLbr (ORCPT
+        with ESMTP id S234155AbiDHLbr (ORCPT
         <rfc822;dmaengine@vger.kernel.org>); Fri, 8 Apr 2022 07:31:47 -0400
 Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 117E816E7C6
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 93DF1170D85
         for <dmaengine@vger.kernel.org>; Fri,  8 Apr 2022 04:29:44 -0700 (PDT)
 Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
         by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
         (Exim 4.92)
         (envelope-from <sha@pengutronix.de>)
-        id 1ncmo7-0004ux-EE; Fri, 08 Apr 2022 13:29:39 +0200
+        id 1ncmo7-0004uE-8u; Fri, 08 Apr 2022 13:29:39 +0200
 Received: from [2a0a:edc0:0:1101:1d::28] (helo=dude02.red.stw.pengutronix.de)
         by drehscheibe.grey.stw.pengutronix.de with esmtp (Exim 4.94.2)
         (envelope-from <sha@pengutronix.de>)
-        id 1ncmo7-001n6X-Pt; Fri, 08 Apr 2022 13:29:38 +0200
+        id 1ncmo7-001n6V-K9; Fri, 08 Apr 2022 13:29:38 +0200
 Received: from sha by dude02.red.stw.pengutronix.de with local (Exim 4.94.2)
         (envelope-from <sha@pengutronix.de>)
-        id 1ncmo3-005ZBX-4o; Fri, 08 Apr 2022 13:29:35 +0200
+        id 1ncmo3-005ZBd-5u; Fri, 08 Apr 2022 13:29:35 +0200
 From:   Sascha Hauer <s.hauer@pengutronix.de>
 To:     alsa-devel@alsa-project.org
 Cc:     Xiubo Li <Xiubo.Lee@gmail.com>, Fabio Estevam <festevam@gmail.com>,
@@ -33,9 +33,9 @@ Cc:     Xiubo Li <Xiubo.Lee@gmail.com>, Fabio Estevam <festevam@gmail.com>,
         Vinod Koul <vkoul@kernel.org>,
         NXP Linux Team <linux-imx@nxp.com>,
         dmaengine@vger.kernel.org, Sascha Hauer <s.hauer@pengutronix.de>
-Subject: [PATCH v5 18/21] ASoC: fsl_micfil: drop only once used defines
-Date:   Fri,  8 Apr 2022 13:29:25 +0200
-Message-Id: <20220408112928.1326755-19-s.hauer@pengutronix.de>
+Subject: [PATCH v5 20/21] ASoC: fsl_micfil: fold fsl_set_clock_params() into its only user
+Date:   Fri,  8 Apr 2022 13:29:27 +0200
+Message-Id: <20220408112928.1326755-21-s.hauer@pengutronix.de>
 X-Mailer: git-send-email 2.30.2
 In-Reply-To: <20220408112928.1326755-1-s.hauer@pengutronix.de>
 References: <20220408112928.1326755-1-s.hauer@pengutronix.de>
@@ -49,41 +49,82 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-FSL_MICFIL_RATES and FSL_MICFIL_FORMATS is only used once. Drop
-the unnecesary indirection and use SNDRV_PCM_RATE_8000_48000 and
-SNDRV_PCM_FMTBIT_S16_LE directly.
+fsl_set_clock_params() is used only once and easily be folded into its
+caller, do so.
 
 Signed-off-by: Sascha Hauer <s.hauer@pengutronix.de>
 Acked-by: Shengjiu Wang <shengjiu.wang@gmail.com>
 ---
- sound/soc/fsl/fsl_micfil.c | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+ sound/soc/fsl/fsl_micfil.c | 41 ++++++++++++--------------------------
+ 1 file changed, 13 insertions(+), 28 deletions(-)
 
 diff --git a/sound/soc/fsl/fsl_micfil.c b/sound/soc/fsl/fsl_micfil.c
-index 821beca9b4bf1..89af6cfe24e69 100644
+index a603033daed69..8c7b15dbd1d45 100644
 --- a/sound/soc/fsl/fsl_micfil.c
 +++ b/sound/soc/fsl/fsl_micfil.c
-@@ -25,9 +25,6 @@
+@@ -252,29 +252,6 @@ static int fsl_micfil_trigger(struct snd_pcm_substream *substream, int cmd,
+ 	return 0;
+ }
  
- #include "fsl_micfil.h"
- 
--#define FSL_MICFIL_RATES		SNDRV_PCM_RATE_8000_48000
--#define FSL_MICFIL_FORMATS		(SNDRV_PCM_FMTBIT_S16_LE)
+-static int fsl_set_clock_params(struct device *dev, unsigned int rate)
+-{
+-	struct fsl_micfil *micfil = dev_get_drvdata(dev);
+-	int clk_div = 8;
+-	int osr = MICFIL_OSR_DEFAULT;
+-	int ret;
 -
- #define MICFIL_OSR_DEFAULT	16
+-	ret = clk_set_rate(micfil->mclk, rate * clk_div * osr * 8);
+-	if (ret)
+-		return ret;
+-
+-	ret = micfil_set_quality(micfil);
+-	if (ret)
+-		return ret;
+-
+-	ret = regmap_update_bits(micfil->regmap, REG_MICFIL_CTRL2,
+-				 MICFIL_CTRL2_CLKDIV | MICFIL_CTRL2_CICOSR,
+-				 FIELD_PREP(MICFIL_CTRL2_CLKDIV, clk_div) |
+-				 FIELD_PREP(MICFIL_CTRL2_CICOSR, 16 - osr));
+-
+-	return ret;
+-}
+-
+ static int fsl_micfil_hw_params(struct snd_pcm_substream *substream,
+ 				struct snd_pcm_hw_params *params,
+ 				struct snd_soc_dai *dai)
+@@ -282,7 +259,8 @@ static int fsl_micfil_hw_params(struct snd_pcm_substream *substream,
+ 	struct fsl_micfil *micfil = snd_soc_dai_get_drvdata(dai);
+ 	unsigned int channels = params_channels(params);
+ 	unsigned int rate = params_rate(params);
+-	struct device *dev = &micfil->pdev->dev;
++	int clk_div = 8;
++	int osr = MICFIL_OSR_DEFAULT;
+ 	int ret;
  
- enum quality {
-@@ -350,8 +347,8 @@ static struct snd_soc_dai_driver fsl_micfil_dai = {
- 		.stream_name = "CPU-Capture",
- 		.channels_min = 1,
- 		.channels_max = 8,
--		.rates = FSL_MICFIL_RATES,
--		.formats = FSL_MICFIL_FORMATS,
-+		.rates = SNDRV_PCM_RATE_8000_48000,
-+		.formats = SNDRV_PCM_FMTBIT_S16_LE,
- 	},
- 	.ops = &fsl_micfil_dai_ops,
- };
+ 	/* 1. Disable the module */
+@@ -297,11 +275,18 @@ static int fsl_micfil_hw_params(struct snd_pcm_substream *substream,
+ 	if (ret)
+ 		return ret;
+ 
+-	ret = fsl_set_clock_params(dev, rate);
+-	if (ret < 0) {
+-		dev_err(dev, "Failed to set clock parameters [%d]\n", ret);
++	ret = clk_set_rate(micfil->mclk, rate * clk_div * osr * 8);
++	if (ret)
+ 		return ret;
+-	}
++
++	ret = micfil_set_quality(micfil);
++	if (ret)
++		return ret;
++
++	ret = regmap_update_bits(micfil->regmap, REG_MICFIL_CTRL2,
++				 MICFIL_CTRL2_CLKDIV | MICFIL_CTRL2_CICOSR,
++				 FIELD_PREP(MICFIL_CTRL2_CLKDIV, clk_div) |
++				 FIELD_PREP(MICFIL_CTRL2_CICOSR, 16 - osr));
+ 
+ 	micfil->dma_params_rx.peripheral_config = &micfil->sdmacfg;
+ 	micfil->dma_params_rx.peripheral_size = sizeof(micfil->sdmacfg);
 -- 
 2.30.2
 
