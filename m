@@ -2,30 +2,30 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 90ACFC433F5
-	for <dmaengine@archiver.kernel.org>; Fri,  8 Apr 2022 11:29:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0E623C4332F
+	for <dmaengine@archiver.kernel.org>; Fri,  8 Apr 2022 11:29:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234810AbiDHLby (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        id S234460AbiDHLby (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
         Fri, 8 Apr 2022 07:31:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48188 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48194 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234460AbiDHLbu (ORCPT
+        with ESMTP id S234812AbiDHLbu (ORCPT
         <rfc822;dmaengine@vger.kernel.org>); Fri, 8 Apr 2022 07:31:50 -0400
 Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 230B6176679
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 23D0A1777D3
         for <dmaengine@vger.kernel.org>; Fri,  8 Apr 2022 04:29:46 -0700 (PDT)
 Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
         by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
         (Exim 4.92)
         (envelope-from <sha@pengutronix.de>)
-        id 1ncmo8-0004wS-4F; Fri, 08 Apr 2022 13:29:40 +0200
+        id 1ncmo8-0004wV-9Q; Fri, 08 Apr 2022 13:29:40 +0200
 Received: from [2a0a:edc0:0:1101:1d::28] (helo=dude02.red.stw.pengutronix.de)
         by drehscheibe.grey.stw.pengutronix.de with esmtp (Exim 4.94.2)
         (envelope-from <sha@pengutronix.de>)
-        id 1ncmo8-001n6o-Fy; Fri, 08 Apr 2022 13:29:39 +0200
+        id 1ncmo8-001n6p-HT; Fri, 08 Apr 2022 13:29:39 +0200
 Received: from sha by dude02.red.stw.pengutronix.de with local (Exim 4.94.2)
         (envelope-from <sha@pengutronix.de>)
-        id 1ncmo3-005ZBL-1m; Fri, 08 Apr 2022 13:29:35 +0200
+        id 1ncmo2-005ZAg-Mz; Fri, 08 Apr 2022 13:29:34 +0200
 From:   Sascha Hauer <s.hauer@pengutronix.de>
 To:     alsa-devel@alsa-project.org
 Cc:     Xiubo Li <Xiubo.Lee@gmail.com>, Fabio Estevam <festevam@gmail.com>,
@@ -33,12 +33,10 @@ Cc:     Xiubo Li <Xiubo.Lee@gmail.com>, Fabio Estevam <festevam@gmail.com>,
         Vinod Koul <vkoul@kernel.org>,
         NXP Linux Team <linux-imx@nxp.com>,
         dmaengine@vger.kernel.org, Sascha Hauer <s.hauer@pengutronix.de>
-Subject: [PATCH v5 14/21] ASoC: fsl_micfil: Drop get_pdm_clk()
-Date:   Fri,  8 Apr 2022 13:29:21 +0200
-Message-Id: <20220408112928.1326755-15-s.hauer@pengutronix.de>
+Subject: [PATCH v5 00/21] ASoC: fsl_micfil: Driver updates
+Date:   Fri,  8 Apr 2022 13:29:07 +0200
+Message-Id: <20220408112928.1326755-1-s.hauer@pengutronix.de>
 X-Mailer: git-send-email 2.30.2
-In-Reply-To: <20220408112928.1326755-1-s.hauer@pengutronix.de>
-References: <20220408112928.1326755-1-s.hauer@pengutronix.de>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
@@ -49,78 +47,83 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-get_pdm_clk() calculates the PDM clock based on the quality setting,
-but really the PDM clock is independent of the quality, it's always
-rate * 4 * micfil->osr. Just drop the function and do the calculation
-in the caller.
+This series has a bunch of cleanups for the FSL MICFIL driver. There is
+not much chance for regressions in this series as the driver currently
+can't work at all. The MICFIL needs multififo support in the i.MX SDMA
+engine which is added with this series, see 11/20.
 
-Signed-off-by: Sascha Hauer <s.hauer@pengutronix.de>
-Acked-by: Shengjiu Wang <shengjiu.wang@gmail.com>
----
+The multififo support is selected in the dma phandle arguments in the
+device tree, the transfer type must be '25' aka IMX_DMATYPE_MULTI_SAI.
+This is set already to 25 in the upstream i.MX8M[NM] dtsi files, but the
+SDMA driver silently ignores unsupported values instead of throwing an
+error. This is fixed in this series and multififo support is added.
 
-Notes:
-    Changes since v3:
-    - Don't use uninitialized and no longer present struct fsl_micfil::osr
+The dmaengine patches have acks from Vinod, so the series is free to
+go through the ASoC tree.
 
- sound/soc/fsl/fsl_micfil.c | 38 +-------------------------------------
- 1 file changed, 1 insertion(+), 37 deletions(-)
+Changes since v4:
+- collect more acks
+- whitespace cleanup in 16/21
 
-diff --git a/sound/soc/fsl/fsl_micfil.c b/sound/soc/fsl/fsl_micfil.c
-index a35c1c580dbc1..3ddc988b4fe65 100644
---- a/sound/soc/fsl/fsl_micfil.c
-+++ b/sound/soc/fsl/fsl_micfil.c
-@@ -110,42 +110,6 @@ static const struct snd_kcontrol_new fsl_micfil_snd_controls[] = {
- 		     snd_soc_get_enum_double, snd_soc_put_enum_double),
- };
- 
--static inline int get_pdm_clk(struct fsl_micfil *micfil,
--			      unsigned int rate)
--{
--	u32 ctrl2_reg;
--	int qsel;
--	int bclk;
--	int osr = MICFIL_OSR_DEFAULT;
--
--	regmap_read(micfil->regmap, REG_MICFIL_CTRL2, &ctrl2_reg);
--	qsel = FIELD_GET(MICFIL_CTRL2_QSEL, ctrl2_reg);
--
--	switch (qsel) {
--	case MICFIL_QSEL_HIGH_QUALITY:
--		bclk = rate * 8 * osr / 2; /* kfactor = 0.5 */
--		break;
--	case MICFIL_QSEL_MEDIUM_QUALITY:
--	case MICFIL_QSEL_VLOW0_QUALITY:
--		bclk = rate * 4 * osr * 1; /* kfactor = 1 */
--		break;
--	case MICFIL_QSEL_LOW_QUALITY:
--	case MICFIL_QSEL_VLOW1_QUALITY:
--		bclk = rate * 2 * osr * 2; /* kfactor = 2 */
--		break;
--	case MICFIL_QSEL_VLOW2_QUALITY:
--		bclk = rate * osr * 4; /* kfactor = 4 */
--		break;
--	default:
--		dev_err(&micfil->pdev->dev,
--			"Please make sure you select a valid quality.\n");
--		bclk = -1;
--		break;
--	}
--
--	return bclk;
--}
--
- static inline int get_clk_div(struct fsl_micfil *micfil,
- 			      unsigned int rate)
- {
-@@ -154,7 +118,7 @@ static inline int get_clk_div(struct fsl_micfil *micfil,
- 
- 	mclk_rate = clk_get_rate(micfil->mclk);
- 
--	clk_div = mclk_rate / (get_pdm_clk(micfil, rate) * 2);
-+	clk_div = mclk_rate / (rate * MICFIL_OSR_DEFAULT * 8);
- 
- 	return clk_div;
- }
+Changes since v3:
+- Add commit log to "ASoC: fsl_micfil: drop unused variables"
+- Fix include name in "ASoC: fsl_micfil: add multi fifo support"
+- Drop unnecessary temporary adding of struct fsl_micfil::osr
+- Leave default quality setting at 'medium'
+- Drop debugging message printed at error level
+- collect acks from Shengjiu Wang and Vinod Koul
+
+Changes since v2:
+- Add forgotten commit log to dmaengine patches
+- Add patch to move include/linux/platform_data/dma-imx.h to include/linux/dma/imx-dma.h
+- Use prefix dmaengine: for dma patches
+
+Changes since v1:
+- Drop unused variable sw_done_sel
+- Evaluate sdmac->direction directly instead of storing value in n_fifos
+- add missing include linux/bitfield.h
+
+Sascha Hauer (21):
+  ASoC: fsl_micfil: Drop unnecessary register read
+  ASoC: fsl_micfil: Drop unused register read
+  ASoC: fsl_micfil: drop fsl_micfil_set_mclk_rate()
+  ASoC: fsl_micfil: do not define SHIFT/MASK for single bits
+  ASoC: fsl_micfil: use GENMASK to define register bit fields
+  ASoC: fsl_micfil: use clear/set bits
+  ASoC: fsl_micfil: drop error messages from failed register accesses
+  ASoC: fsl_micfil: drop unused variables
+  dmaengine: imx: Move header to include/dma/
+  dmaengine: imx-sdma: error out on unsupported transfer types
+  dmaengine: imx-sdma: Add multi fifo support
+  ASoC: fsl_micfil: add multi fifo support
+  ASoC: fsl_micfil: use define for OSR default value
+  ASoC: fsl_micfil: Drop get_pdm_clk()
+  ASoC: fsl_micfil: simplify clock setting
+  ASoC: fsl_micfil: rework quality setting
+  ASoC: fsl_micfil: drop unused include
+  ASoC: fsl_micfil: drop only once used defines
+  ASoC: fsl_micfil: drop support for undocumented property
+  ASoC: fsl_micfil: fold fsl_set_clock_params() into its only user
+  ASoC: fsl_micfil: Remove debug message
+
+ drivers/dma/imx-dma.c                         |   2 +-
+ drivers/dma/imx-sdma.c                        |  76 +++-
+ drivers/mmc/host/mxcmmc.c                     |   2 +-
+ drivers/spi/spi-fsl-lpspi.c                   |   2 +-
+ drivers/spi/spi-imx.c                         |   2 +-
+ drivers/tty/serial/imx.c                      |   2 +-
+ drivers/video/fbdev/mx3fb.c                   |   2 +-
+ .../dma-imx.h => dma/imx-dma.h}               |  26 +-
+ sound/soc/fsl/fsl_asrc.c                      |   2 +-
+ sound/soc/fsl/fsl_asrc_dma.c                  |   2 +-
+ sound/soc/fsl/fsl_easrc.h                     |   2 +-
+ sound/soc/fsl/fsl_micfil.c                    | 369 +++++++-----------
+ sound/soc/fsl/fsl_micfil.h                    | 269 +++----------
+ sound/soc/fsl/imx-pcm.h                       |   2 +-
+ sound/soc/fsl/imx-ssi.h                       |   2 +-
+ 15 files changed, 297 insertions(+), 465 deletions(-)
+ rename include/linux/{platform_data/dma-imx.h => dma/imx-dma.h} (67%)
+
 -- 
 2.30.2
 
