@@ -2,162 +2,125 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EC705C433FE
-	for <dmaengine@archiver.kernel.org>; Fri,  8 Apr 2022 09:56:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E02DEC433EF
+	for <dmaengine@archiver.kernel.org>; Fri,  8 Apr 2022 11:29:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233858AbiDHJ6I (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 8 Apr 2022 05:58:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59852 "EHLO
+        id S234811AbiDHLbs (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 8 Apr 2022 07:31:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48132 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233841AbiDHJ6H (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Fri, 8 Apr 2022 05:58:07 -0400
-Received: from mga04.intel.com (mga04.intel.com [192.55.52.120])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 54A581D59CA;
-        Fri,  8 Apr 2022 02:56:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1649411760; x=1680947760;
-  h=date:from:to:cc:subject:in-reply-to:message-id:
-   references:mime-version;
-  bh=VFW5ooso+q6hlaQnz7e4gtHdL3Ba8aSrKhhWGKZ5rUQ=;
-  b=k4cEr2LOiHEG/NGGiHN9gS31kq/aD/edsFdayOMNLL82J421wDnfAD9I
-   92YNF+DNUgTYmzwKPpxI5vmmoOiniCuYAoOyqhrWdtoSefklJWtkdLAxY
-   Dh6hfbm3PAhqH9WLOok+fWLtpU+91MwV2qlL4Pz0TgFNCfx2xakR/To/F
-   QJfCYxx6EoLVdLT2GD5tWDD/HVgQYMDfjURPN4BeA10SxG9c+Ep9cb8fF
-   wAPCjGzs7/9z/q4/VMY38DWcYqer4f5J13gewnJyiz30ObJSXEfjXfH5c
-   EP3GIZKnmrZFQVNiEKxMXKciEp1YImKeaVyttpXfxuzbTmzS6z3lnQnnt
-   g==;
-X-IronPort-AV: E=McAfee;i="6400,9594,10310"; a="260391197"
-X-IronPort-AV: E=Sophos;i="5.90,244,1643702400"; 
-   d="scan'208";a="260391197"
-Received: from orsmga008.jf.intel.com ([10.7.209.65])
-  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Apr 2022 02:56:00 -0700
-X-IronPort-AV: E=Sophos;i="5.90,244,1643702400"; 
-   d="scan'208";a="571433908"
-Received: from aecajiao-mobl.amr.corp.intel.com ([10.252.48.54])
-  by orsmga008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Apr 2022 02:55:54 -0700
-Date:   Fri, 8 Apr 2022 12:55:47 +0300 (EEST)
-From:   =?ISO-8859-15?Q?Ilpo_J=E4rvinen?= <ilpo.jarvinen@linux.intel.com>
-To:     Miquel Raynal <miquel.raynal@bootlin.com>
-cc:     Magnus Damm <magnus.damm@gmail.com>,
-        Gareth Williams <gareth.williams.jx@renesas.com>,
-        Phil Edworthy <phil.edworthy@renesas.com>,
-        Geert Uytterhoeven <geert@linux-m68k.org>,
+        with ESMTP id S229509AbiDHLbr (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Fri, 8 Apr 2022 07:31:47 -0400
+Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12E6316F042
+        for <dmaengine@vger.kernel.org>; Fri,  8 Apr 2022 04:29:44 -0700 (PDT)
+Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
+        by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.92)
+        (envelope-from <sha@pengutronix.de>)
+        id 1ncmo6-0004ts-Vb; Fri, 08 Apr 2022 13:29:39 +0200
+Received: from [2a0a:edc0:0:1101:1d::28] (helo=dude02.red.stw.pengutronix.de)
+        by drehscheibe.grey.stw.pengutronix.de with esmtp (Exim 4.94.2)
+        (envelope-from <sha@pengutronix.de>)
+        id 1ncmo7-001n6S-DL; Fri, 08 Apr 2022 13:29:37 +0200
+Received: from sha by dude02.red.stw.pengutronix.de with local (Exim 4.94.2)
+        (envelope-from <sha@pengutronix.de>)
+        id 1ncmo2-005ZAx-Rs; Fri, 08 Apr 2022 13:29:34 +0200
+From:   Sascha Hauer <s.hauer@pengutronix.de>
+To:     alsa-devel@alsa-project.org
+Cc:     Xiubo Li <Xiubo.Lee@gmail.com>, Fabio Estevam <festevam@gmail.com>,
+        Shengjiu Wang <shengjiu.wang@gmail.com>, kernel@pengutronix.de,
         Vinod Koul <vkoul@kernel.org>,
-        linux-renesas-soc@vger.kernel.org, dmaengine@vger.kernel.org,
-        Milan Stevanovic <milan.stevanovic@se.com>,
-        Jimmy Lalande <jimmy.lalande@se.com>,
-        Pascal Eberhard <pascal.eberhard@se.com>,
-        Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
-        Herve Codina <herve.codina@bootlin.com>,
-        Clement Leger <clement.leger@bootlin.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        linux-clk@vger.kernel.org, Viresh Kumar <vireshk@kernel.org>,
-        Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-        Rob Herring <robh@kernel.org>, devicetree@vger.kernel.org
-Subject: Re: [PATCH v8 5/9] dmaengine: dw: dmamux: Introduce RZN1 DMA router
- support
-In-Reply-To: <20220406161856.1669069-6-miquel.raynal@bootlin.com>
-Message-ID: <6fbeebe2-9693-f91-78bd-451480f7a6dd@linux.intel.com>
-References: <20220406161856.1669069-1-miquel.raynal@bootlin.com> <20220406161856.1669069-6-miquel.raynal@bootlin.com>
+        NXP Linux Team <linux-imx@nxp.com>,
+        dmaengine@vger.kernel.org, Sascha Hauer <s.hauer@pengutronix.de>
+Subject: [PATCH v5 06/21] ASoC: fsl_micfil: use clear/set bits
+Date:   Fri,  8 Apr 2022 13:29:13 +0200
+Message-Id: <20220408112928.1326755-7-s.hauer@pengutronix.de>
+X-Mailer: git-send-email 2.30.2
+In-Reply-To: <20220408112928.1326755-1-s.hauer@pengutronix.de>
+References: <20220408112928.1326755-1-s.hauer@pengutronix.de>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323329-1766008063-1649411759=:1643"
+Content-Transfer-Encoding: 8bit
+X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
+X-SA-Exim-Mail-From: sha@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: dmaengine@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Instead regmap_update_bits() use the simpler variants
+regmap_[set|clear]_bits() where appropriate.
 
---8323329-1766008063-1649411759=:1643
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8BIT
+Signed-off-by: Sascha Hauer <s.hauer@pengutronix.de>
+Acked-by: Shengjiu Wang <shengjiu.wang@gmail.com>
+---
+ sound/soc/fsl/fsl_micfil.c | 26 ++++++++++----------------
+ 1 file changed, 10 insertions(+), 16 deletions(-)
 
-On Wed, 6 Apr 2022, Miquel Raynal wrote:
-
-> The Renesas RZN1 DMA IP is based on a DW core, with eg. an additional
-> dmamux register located in the system control area which can take up to
-> 32 requests (16 per DMA controller). Each DMA channel can be wired to
-> two different peripherals.
-> 
-> We need two additional information from the 'dmas' property: the channel
-> (bit in the dmamux register) that must be accessed and the value of the
-> mux for this channel.
-> 
-> Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-> Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-> ---
-
-> +static void *rzn1_dmamux_route_allocate(struct of_phandle_args *dma_spec,
-> +					struct of_dma *ofdma)
-> +{
-> +	struct platform_device *pdev = of_find_device_by_node(ofdma->of_node);
-> +	struct rzn1_dmamux_data *dmamux = platform_get_drvdata(pdev);
-> +	struct rzn1_dmamux_map *map;
-> +	unsigned int dmac_idx, chan, val;
-> +	u32 mask;
-> +	int ret;
-> +
-> +	if (dma_spec->args_count != 6)
-> +		return ERR_PTR(-EINVAL);
-> +
-> +	map = kzalloc(sizeof(*map), GFP_KERNEL);
-> +	if (!map)
-> +		return ERR_PTR(-ENOMEM);
-> +
-> +	chan = dma_spec->args[0];
-> +	map->req_idx = dma_spec->args[4];
-> +	val = dma_spec->args[5];
-> +	dma_spec->args_count -= 2;
-> +
-> +	if (chan >= RZN1_DMAMUX_MAX_LINES) {
-> +		dev_err(&pdev->dev, "Invalid DMA request line: %u\n", chan);
-> +		ret = -EINVAL;
-> +		goto free_map;
-> +	}
-> +
-> +	if (map->req_idx >= RZN1_DMAMUX_LINES ||
-> +	    (map->req_idx % RZN1_DMAMUX_MAX_LINES) != chan) {
-> +		dev_err(&pdev->dev, "Invalid MUX request line: %u\n", map->req_idx);
-> +		ret = -EINVAL;
-> +		goto free_map;
-> +	}
-> +
-> +	dmac_idx = map->req_idx >= RZN1_DMAMUX_MAX_LINES ? 1 : 0;
-> +	dma_spec->np = of_parse_phandle(ofdma->of_node, "dma-masters", dmac_idx);
-> +	if (!dma_spec->np) {
-> +		dev_err(&pdev->dev, "Can't get DMA master\n");
-> +		ret = -EINVAL;
-> +		goto free_map;
-> +	}
-> +
-> +	dev_dbg(&pdev->dev, "Mapping DMAMUX request %u to DMAC%u request %u\n",
-> +		map->req_idx, dmac_idx, chan);
-> +
-> +	mask = BIT(map->req_idx);
-> +	mutex_lock(&dmamux->lock);
-> +	dmamux->used_chans |= mask;
-> +	ret = r9a06g032_sysctrl_set_dmamux(mask, val ? mask : 0);
-> +	if (ret)
-> +		goto release_chan_and_unlock;
-> +
-> +	mutex_unlock(&dmamux->lock);
-> +
-> +	return map;
-> +
-> +release_chan_and_unlock:
-> +	dmamux->used_chans &= ~mask;
-
-Now that I check this again, I'm not sure why dmamux->used_chans |= mask; 
-couldn't be done after r9a06g032_sysctrl_set_dmamux() call so this 
-rollback of it wouldn't be necessary.
-
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-
-
-
+diff --git a/sound/soc/fsl/fsl_micfil.c b/sound/soc/fsl/fsl_micfil.c
+index cfa8af668d921..da4c245c35e62 100644
+--- a/sound/soc/fsl/fsl_micfil.c
++++ b/sound/soc/fsl/fsl_micfil.c
+@@ -168,19 +168,15 @@ static int fsl_micfil_reset(struct device *dev)
+ 	struct fsl_micfil *micfil = dev_get_drvdata(dev);
+ 	int ret;
+ 
+-	ret = regmap_update_bits(micfil->regmap,
+-				 REG_MICFIL_CTRL1,
+-				 MICFIL_CTRL1_MDIS,
+-				 0);
++	ret = regmap_clear_bits(micfil->regmap, REG_MICFIL_CTRL1,
++				MICFIL_CTRL1_MDIS);
+ 	if (ret) {
+ 		dev_err(dev, "failed to clear MDIS bit %d\n", ret);
+ 		return ret;
+ 	}
+ 
+-	ret = regmap_update_bits(micfil->regmap,
+-				 REG_MICFIL_CTRL1,
+-				 MICFIL_CTRL1_SRES,
+-				 MICFIL_CTRL1_SRES);
++	ret = regmap_set_bits(micfil->regmap, REG_MICFIL_CTRL1,
++			      MICFIL_CTRL1_SRES);
+ 	if (ret) {
+ 		dev_err(dev, "failed to reset MICFIL: %d\n", ret);
+ 		return ret;
+@@ -252,9 +248,8 @@ static int fsl_micfil_trigger(struct snd_pcm_substream *substream, int cmd,
+ 		}
+ 
+ 		/* Enable the module */
+-		ret = regmap_update_bits(micfil->regmap, REG_MICFIL_CTRL1,
+-					 MICFIL_CTRL1_PDMIEN,
+-					 MICFIL_CTRL1_PDMIEN);
++		ret = regmap_set_bits(micfil->regmap, REG_MICFIL_CTRL1,
++				      MICFIL_CTRL1_PDMIEN);
+ 		if (ret) {
+ 			dev_err(dev, "failed to enable the module\n");
+ 			return ret;
+@@ -265,9 +260,8 @@ static int fsl_micfil_trigger(struct snd_pcm_substream *substream, int cmd,
+ 	case SNDRV_PCM_TRIGGER_SUSPEND:
+ 	case SNDRV_PCM_TRIGGER_PAUSE_PUSH:
+ 		/* Disable the module */
+-		ret = regmap_update_bits(micfil->regmap, REG_MICFIL_CTRL1,
+-					 MICFIL_CTRL1_PDMIEN,
+-					 0);
++		ret = regmap_clear_bits(micfil->regmap, REG_MICFIL_CTRL1,
++					MICFIL_CTRL1_PDMIEN);
+ 		if (ret) {
+ 			dev_err(dev, "failed to enable the module\n");
+ 			return ret;
+@@ -332,8 +326,8 @@ static int fsl_micfil_hw_params(struct snd_pcm_substream *substream,
+ 	int ret;
+ 
+ 	/* 1. Disable the module */
+-	ret = regmap_update_bits(micfil->regmap, REG_MICFIL_CTRL1,
+-				 MICFIL_CTRL1_PDMIEN, 0);
++	ret = regmap_clear_bits(micfil->regmap, REG_MICFIL_CTRL1,
++				MICFIL_CTRL1_PDMIEN);
+ 	if (ret) {
+ 		dev_err(dev, "failed to disable the module\n");
+ 		return ret;
 -- 
- i.
+2.30.2
 
---8323329-1766008063-1649411759=:1643--
