@@ -2,160 +2,171 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D5EEEC433FE
-	for <dmaengine@archiver.kernel.org>; Tue, 12 Apr 2022 06:54:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1AA6EC433FE
+	for <dmaengine@archiver.kernel.org>; Tue, 12 Apr 2022 10:01:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1351024AbiDLG5F (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 12 Apr 2022 02:57:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48862 "EHLO
+        id S240742AbiDLKCZ (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 12 Apr 2022 06:02:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46768 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1351776AbiDLGyX (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Tue, 12 Apr 2022 02:54:23 -0400
-Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 48E4BC27
-        for <dmaengine@vger.kernel.org>; Mon, 11 Apr 2022 23:44:02 -0700 (PDT)
-Received: by mail-ej1-x636.google.com with SMTP id bg10so35325686ejb.4
-        for <dmaengine@vger.kernel.org>; Mon, 11 Apr 2022 23:44:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=gdMXT9TzsyH4/nxmkBNQPgpVjR8VBr666pmrMpmTXZI=;
-        b=Sf9531F6U+Pwb0a1JtSz+UJf/7y7GtDmQlZZhYfSi+mfIvdBuA4l0w7/WatdjA9Ad6
-         TvV1/c+RE7sUGKS1/vUuU2MhBpzDMSR5e27v5CWt4Y1uEERO4rzy1WFE7UFOUTkys8y4
-         CrAZELDcitDaBEG070MG6AnwITJStO2p0wpebyOBC/F8c4E4tcDxGW0/DG5QxVW1sIpV
-         8p0pgBHVk3S74bwGfrfbc9v6owVXngqPs+TyhlqZ2FJ8kqVHCNvX0K4QrJKpDWlQQ4ZP
-         fgucKqXTCFSYrEFgMqiDfOIFe4mCpdCXVpFSuD1BRgEDhCuvS5dXmNhhvfMGmg+v/lcO
-         ESgg==
+        with ESMTP id S1380843AbiDLIWn (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Tue, 12 Apr 2022 04:22:43 -0400
+Received: from mail-qv1-f49.google.com (mail-qv1-f49.google.com [209.85.219.49])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A05884F9CF;
+        Tue, 12 Apr 2022 00:52:39 -0700 (PDT)
+Received: by mail-qv1-f49.google.com with SMTP id n11so4721963qvl.0;
+        Tue, 12 Apr 2022 00:52:39 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=gdMXT9TzsyH4/nxmkBNQPgpVjR8VBr666pmrMpmTXZI=;
-        b=bEln92jKD+8pbRykwnE+SwRqDCiINejVHpGJsasuS+qq0GPFgmS6TPuys4lq1xuxMX
-         5xWJZN9WmHc+H+lRBo/se6lFa6mps4gcRAk5iIS7jaMXDul5+0NLubLl7Nl591F2gsnI
-         Nt68BPWK+7DRcEXLLascddJHjE0EbXVje1yLcOzMhQmV3SKG/WJzy1wzR3Ew8QoBZanG
-         PHoMHS12O7Ya8CI/BRIN4VjXjhw0Y8STa9wuCEuYg/BXTAB2+dSN4d6VUgEQAhWGlvlw
-         NcP8ub4PeIHUkB13gbxxdSqYPbgOfmMblm7VRjleJn+79q1Auf9RIvbG+Ybt879u+/6v
-         0rlQ==
-X-Gm-Message-State: AOAM533ubl7b2MPDe95TrWw8DaaC59UJYMq1+JZyhimmksdWeuDfjoAT
-        PukINff1P4i07twMOWZseT+3XA==
-X-Google-Smtp-Source: ABdhPJzlMIXt07hedFNdXekcNnAvfM3k0nzYSnt57hMcEFauFmO4UC80WvnBdB/kePIRmAW6KtUX+g==
-X-Received: by 2002:a17:907:1b06:b0:6e7:f58a:9b91 with SMTP id mp6-20020a1709071b0600b006e7f58a9b91mr34377224ejc.291.1649745840798;
-        Mon, 11 Apr 2022 23:44:00 -0700 (PDT)
-Received: from [192.168.0.193] (xdsl-188-155-201-27.adslplus.ch. [188.155.201.27])
-        by smtp.gmail.com with ESMTPSA id c1-20020a50cf01000000b0041cb7e02a5csm14566517edk.87.2022.04.11.23.43.59
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=3EWUkumYa767x1xmZsomqu/jb1QeueIdmUOwM+PNwgA=;
+        b=IYv/jDoGqZk7JQt+6B7Mb3wUEjLP/BoxWvxam4fe+YlUpfCc9PoU9b4HQMTRa4tnY6
+         MKBARZvcV+lMqklkfiRhU3/8V7VLXJfq/1Ows/APowEk17W1qvNdu3c2+Z46W0W3Wf4m
+         D92wgntjdLj3QhDyBd528oQjHWex7b/T4CPiJOlYsNE+hXFlFMZ6JHZi2be4gH/dBAFg
+         m3wEts89vg2RZTt9rc4pdG5ON6jbsvXZ6Sj4CUjXyLLf9VCPmfaInF5C97q64VpibdHJ
+         IhByvhbqD4ut5yS5/F2/VJ3ahTUbPuOJC4Dee12qlQcfHeAWIV8lm5T4tQVvdFyzfXRF
+         9Pgg==
+X-Gm-Message-State: AOAM530I6EPlChBwcbtuFn4oYnCPgveEpmdRVVNsE6Ozbym0BG1eRICQ
+        knaCI1BrkoTZM+XpZDEdWoAqrKZfbGe5jRGs
+X-Google-Smtp-Source: ABdhPJy/ENtEDzuTB185TBUyi9LMz8oqVDPQUGwLpqzCEAkQv6tLw7ll3Tny8urvFYdMukaTgJxF+Q==
+X-Received: by 2002:a05:6214:daa:b0:441:7161:de4b with SMTP id h10-20020a0562140daa00b004417161de4bmr30072940qvh.48.1649749958645;
+        Tue, 12 Apr 2022 00:52:38 -0700 (PDT)
+Received: from mail-yb1-f169.google.com (mail-yb1-f169.google.com. [209.85.219.169])
+        by smtp.gmail.com with ESMTPSA id j19-20020a05622a039300b002ecc2ebfd87sm10050735qtx.32.2022.04.12.00.52.37
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 11 Apr 2022 23:44:00 -0700 (PDT)
-Message-ID: <8ff07720-3c52-99e6-8046-501f4ae28518@linaro.org>
-Date:   Tue, 12 Apr 2022 08:43:59 +0200
+        Tue, 12 Apr 2022 00:52:38 -0700 (PDT)
+Received: by mail-yb1-f169.google.com with SMTP id i20so10531607ybj.7;
+        Tue, 12 Apr 2022 00:52:37 -0700 (PDT)
+X-Received: by 2002:a25:c049:0:b0:634:6751:e8d2 with SMTP id
+ c70-20020a25c049000000b006346751e8d2mr26038321ybf.6.1649749956492; Tue, 12
+ Apr 2022 00:52:36 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.7.0
-Subject: Re: [PATCH v2 6/6] dt-bindings: dma: Convert Qualcomm BAM DMA binding
- to json format
-Content-Language: en-US
-To:     Kuldeep Singh <singh.kuldeep87k@gmail.com>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Cc:     Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        dmaengine@vger.kernel.org
-References: <20220410175056.79330-1-singh.kuldeep87k@gmail.com>
- <20220410175056.79330-7-singh.kuldeep87k@gmail.com>
- <14ecb746-56f0-2d3b-2f93-1af9407de4b7@linaro.org>
- <20220411105810.GB33220@9a2d8922b8f1>
- <50defa36-3d91-80ea-e303-abaade1c1f7e@linaro.org>
- <20220412061953.GA95928@9a2d8922b8f1>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220412061953.GA95928@9a2d8922b8f1>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <20220406161856.1669069-1-miquel.raynal@bootlin.com>
+ <20220407004511.3A6D1C385A3@smtp.kernel.org> <20220407101605.7d2a17cc@xps13>
+ <CAMuHMdUZFTm+0NFLUFoXT7ujtxDot_Y+gya9ETK1FOai2MXfvA@mail.gmail.com>
+ <20220412093155.090de9d6@xps13> <CAMuHMdVpfHuJi1+bm2jvsz8ZpMn8u=5bNYqHBRv7DYykyrC-XQ@mail.gmail.com>
+ <20220412094338.382e8754@xps13>
+In-Reply-To: <20220412094338.382e8754@xps13>
+From:   Geert Uytterhoeven <geert@linux-m68k.org>
+Date:   Tue, 12 Apr 2022 09:52:25 +0200
+X-Gmail-Original-Message-ID: <CAMuHMdVaWskmiqUEyGyz7HKUjgzFhx+5hAJxd5od7Hp4hFD1KA@mail.gmail.com>
+Message-ID: <CAMuHMdVaWskmiqUEyGyz7HKUjgzFhx+5hAJxd5od7Hp4hFD1KA@mail.gmail.com>
+Subject: Re: [PATCH v8 0/9] RZN1 DMA support
+To:     Miquel Raynal <miquel.raynal@bootlin.com>
+Cc:     Stephen Boyd <sboyd@kernel.org>,
+        Gareth Williams <gareth.williams.jx@renesas.com>,
+        Magnus Damm <magnus.damm@gmail.com>,
+        Phil Edworthy <phil.edworthy@renesas.com>,
+        Vinod Koul <vkoul@kernel.org>,
+        Linux-Renesas <linux-renesas-soc@vger.kernel.org>,
+        dmaengine <dmaengine@vger.kernel.org>,
+        Milan Stevanovic <milan.stevanovic@se.com>,
+        Jimmy Lalande <jimmy.lalande@se.com>,
+        Pascal Eberhard <pascal.eberhard@se.com>,
+        Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
+        Herve Codina <herve.codina@bootlin.com>,
+        Clement Leger <clement.leger@bootlin.com>,
+        Michael Turquette <mturquette@baylibre.com>,
+        linux-clk <linux-clk@vger.kernel.org>,
+        Viresh Kumar <vireshk@kernel.org>,
+        Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+        Ilpo Jarvinen <ilpo.jarvinen@linux.intel.com>,
+        Rob Herring <robh@kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On 12/04/2022 08:19, Kuldeep Singh wrote:
-> On Mon, Apr 11, 2022 at 01:38:41PM +0200, Krzysztof Kozlowski wrote:
->> On 11/04/2022 12:58, Kuldeep Singh wrote:
->>>> This is something new and it seems only one SoC defines it (not even one
->>>> BAM version). I wonder whether this is actually correct or this
->>>> particular version of BAM is slightly different. Maybe someone could
->>>> clarify it, but if no - looks ok.
->>>
->>> Yes, sdm845.dtsi uses 4 entries and rest 1.
->>
->> Yes, I know. This does not solve my wonder.
->>
->>>
->>>>
->>>>> +
->>>>> +  num-channels:
->>>>> +    $ref: /schemas/types.yaml#/definitions/uint32
->>>>> +    description:
->>>>> +      Indicates supported number of DMA channels in a remotely controlled bam.
->>>>> +
->>>>> +  qcom,controlled-remotely:
->>>>> +    $ref: /schemas/types.yaml#/definitions/flag
->>>>
->>>> type: boolean
->>>
->>> Boolean comes under flag in types.yaml
->>>
->>> definitions:
->>>   flag:
->>>     oneOf:
->>>       - type: boolean
->>>         const: true
->>>       - type: 'null'
->>>
->>> I have seen other boolean properties(spi-cpol, spi-cpha and bunch of
->>> others) using type flag. I think we should keep flag here.
->>
->> type:boolean is just shorter and example-schema recommends it. If you
->> want to base on something (as a template, pattern) then the
->> example-schema is the source, the preferred one.
-> 
-> I had seen other spec using flag and that's why kept same here.
+Hi Miquel,
 
-I understand, you mentioned it before. However other spec is not the
-example-schema...
+On Tue, Apr 12, 2022 at 9:43 AM Miquel Raynal <miquel.raynal@bootlin.com> wrote:
+> geert@linux-m68k.org wrote on Tue, 12 Apr 2022 09:37:22 +0200:
+> > On Tue, Apr 12, 2022 at 9:32 AM Miquel Raynal <miquel.raynal@bootlin.com> wrote:
+> > > geert@linux-m68k.org wrote on Mon, 11 Apr 2022 17:09:50 +0200:
+> > > > On Thu, Apr 7, 2022 at 10:16 AM Miquel Raynal <miquel.raynal@bootlin.com> wrote:
+> > > > > sboyd@kernel.org wrote on Wed, 06 Apr 2022 17:45:09 -0700:
+> > > > > > Quoting Miquel Raynal (2022-04-06 09:18:47)
+> > > > > > > Here is a first series bringing DMA support to RZN1 platforms. Soon a
+> > > > > > > second series will come with changes made to the UART controller
+> > > > > > > driver, in order to interact with the RZN1 DMA controller.
+> > > > > > >
+> > > > > > > Stephen acked the sysctrl patch (in the clk driver) but somehow I feel
+> > > > > > > like it would be good to have this patch applied on both sides
+> > > > > > > (dmaengine and clk) because more changes will depend on the addition of
+> > > > > > > this helper, that are not related to DMA at all. I'll let you folks
+> > > > > > > figure out what is best.
+> > > > > >
+> > > > > > Are you sending more patches in the next 7 weeks or so that will touch
+> > > > > > the same area? If so, then it sounds like I'll need to take the clk
+> > > > > > patch through clk tree. I don't know what is best because I don't have
+> > > > > > the information about what everyone plans to do in that file.
+> > > > >
+> > > > > This series brings DMA support and needs to access the dmamux registers
+> > > > > that are in the sysctrl area.
+> > > > >
+> > > > > I've sent an RTC series which needs to access this area as well, but
+> > > > > it is not fully ready yet as it was advised to go for a reset
+> > > > > controller in this case. The reset controller would be registered by
+> > > > > the clock driver, so yes it would touch the same file.
+> > > > >
+> > > > > Finally, there is an USB series that is coming soon, I don't know if
+> > > > > it will be ready for merge for 5.19, but it needs to access a specific
+> > > > > register in this area as well (h2mode).
+> > > > >
+> > > > > So provided that we are able to contribute this reset driver quickly
+> > > > > enough, I would argue that it is safer to merge the clk changes in the
+> > > > > clk tree.
+> > > >
+> > > > The clk tree or the renesas-clk tree? ;-)
+> > >
+> > > Actually I forgot about this tree, would you mind to merge *all* the
+> > > patches that depend on the sysctrl changes in the renesas/renesas-clk
+> > > tree? This also stands for the UART and RTC for instance. Otherwise
+> > > you'll need to set up immutable branches and share them with the
+> > > dmaengine, serial and rtc trees. I'm fine either way, it's just much
+> > > less work in the first situation IMHO.
+> >
+> > Sure, I can do that, given acks from the DMA, UART, and RTC
+> > maintainers.
+>
+> Ok, I'll say so in the cover letter of the v9.
+>
+> > So far I've been rather terse in giving feedback on these series,
+> > as I'm in wait-and-see mode w.r.t. what else you've planned for the
+> > sysctrl DT node[1] and clock/sys controller code...
+> >
+> > [1] Did I say I'm not that fond of child nodes? But for the dmamux,
+> >     it looks like a good solution to handle this.
+>
+> O:-)
+>
+> I plan in the coming days to write a proper reset controller driver
+> that will be queried by the rtc driver (as proposed by Alexandre).
 
-> Which example schema are you talking about?
+OK.
 
-There is only one example-schema.
-$ find ./linux -name 'example-schema*'
+> Which means I'll have to declare this reset controller as a child of
+> the systrl node. If you disagree with it, you may jump-in, see this
+> thread :
+>
+>         Subject: Re: [PATCH 2/7] soc: renesas: rzn1-sysc: Export a
+>                  function to  enable/disable the RTC
+>         Date: Wed, 6 Apr 2022 10:32:31 +0200
 
->>>> clocks, clock-names, qcom-ee - these are required according to old bindings.
->>>
->>> I missed qcom,ee. Will add in v3.
->>>
->>> For clocks and clock-names , there are two platforms(msm8996.dtsi,
->>> sdm845.dtsi) where these properties are missing. And I don't want to add
->>> some random values. Shall I skip them here? and let board owners add
->>> them later.
->>
->> These are required, so the SoC DTSI should be fixed. Not with random
->> clocks but something proper. :)
-> 
-> Yes absolutely :-)
-> I have kept Srinivas in copy, who sent initial support for both the
-> dtsi. Probably he can confirm provided his email doesn't bounce.
-> 
-> Anyway Krzysztof, can you confirm the same as you have been actively
-> contributing to Qcom peripherals. I will add credit in follow-up
-> submission.
+But do you need a child node for that? All(most all) other Renesas
+clock drivers provide reset functionality, and none of them use a
+child node for that.
 
-Honestly not now, because I don't have access to related datasheets (I
-am working on this). You can though try to look at original (vendor)
-sources:
-https://git.codelinaro.org/clo/la/kernel/msm-4.19 (sdm845)
-https://git.codelinaro.org/clo/la/kernel/msm-3.18 (msm8996)
+Gr{oetje,eeting}s,
 
+                        Geert
 
-Best regards,
-Krzysztof
+--
+Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
+
+In personal conversations with technical people, I call myself a hacker. But
+when I'm talking to journalists I just say "programmer" or something like that.
+                                -- Linus Torvalds
