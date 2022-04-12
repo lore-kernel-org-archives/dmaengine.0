@@ -2,32 +2,32 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 93919C433EF
-	for <dmaengine@archiver.kernel.org>; Tue, 12 Apr 2022 01:17:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 71317C433FE
+	for <dmaengine@archiver.kernel.org>; Tue, 12 Apr 2022 01:17:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231676AbiDLBTb (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        id S235391AbiDLBTb (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
         Mon, 11 Apr 2022 21:19:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57620 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35204 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1348746AbiDLBSS (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Mon, 11 Apr 2022 21:18:18 -0400
-Received: from mail.meizu.com (edge05.meizu.com [157.122.146.251])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 11ABBBE1E;
-        Mon, 11 Apr 2022 18:14:49 -0700 (PDT)
-Received: from IT-EXMB-1-125.meizu.com (172.16.1.125) by mz-mail12.meizu.com
- (172.16.1.108) with Microsoft SMTP Server (TLS) id 14.3.487.0; Tue, 12 Apr
- 2022 09:14:49 +0800
+        with ESMTP id S1349081AbiDLBSk (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Mon, 11 Apr 2022 21:18:40 -0400
+Received: from mail.meizu.com (unknown [14.29.68.187])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1870D10C0;
+        Mon, 11 Apr 2022 18:16:24 -0700 (PDT)
+Received: from IT-EXMB-1-125.meizu.com (172.16.1.125) by mz-mail04.meizu.com
+ (172.16.1.16) with Microsoft SMTP Server (TLS) id 14.3.487.0; Tue, 12 Apr
+ 2022 09:16:22 +0800
 Received: from meizu.meizu.com (172.16.137.70) by IT-EXMB-1-125.meizu.com
  (172.16.1.125) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2308.14; Tue, 12 Apr
- 2022 09:14:47 +0800
+ 2022 09:16:22 +0800
 From:   Haowen Bai <baihaowen@meizu.com>
 To:     Vinod Koul <vkoul@kernel.org>
 CC:     Haowen Bai <baihaowen@meizu.com>, <dmaengine@vger.kernel.org>,
         <linux-kernel@vger.kernel.org>
-Subject: [PATCH V2] dmaengine: pl08x: drop the useless function "NULL"
-Date:   Tue, 12 Apr 2022 09:14:45 +0800
-Message-ID: <1649726086-12889-1-git-send-email-baihaowen@meizu.com>
+Subject: [PATCH V3] dmaengine: pl08x: drop the useless function
+Date:   Tue, 12 Apr 2022 09:16:20 +0800
+Message-ID: <1649726180-13133-1-git-send-email-baihaowen@meizu.com>
 X-Mailer: git-send-email 2.7.4
 In-Reply-To: <YlQ1i3DFqoFFFszO@matsya>
 References: <YlQ1i3DFqoFFFszO@matsya>
@@ -46,6 +46,7 @@ better way, drop the function.
 Signed-off-by: Haowen Bai <baihaowen@meizu.com>
 ---
 V1->V2: drop the useless function.
+V2->V3: change title
 
  drivers/dma/amba-pl08x.c | 11 -----------
  1 file changed, 11 deletions(-)
