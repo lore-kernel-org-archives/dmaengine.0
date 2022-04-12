@@ -2,33 +2,33 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D2B8CC433FE
-	for <dmaengine@archiver.kernel.org>; Tue, 12 Apr 2022 11:41:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E57A7C43219
+	for <dmaengine@archiver.kernel.org>; Tue, 12 Apr 2022 11:41:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229890AbiDLLoD (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 12 Apr 2022 07:44:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58178 "EHLO
+        id S234717AbiDLLoG (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 12 Apr 2022 07:44:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55240 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1347304AbiDLLlX (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Tue, 12 Apr 2022 07:41:23 -0400
+        with ESMTP id S234303AbiDLLlc (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Tue, 12 Apr 2022 07:41:32 -0400
 Received: from relay9-d.mail.gandi.net (relay9-d.mail.gandi.net [IPv6:2001:4b98:dc4:8::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C21CF7A9AD;
-        Tue, 12 Apr 2022 03:21:55 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B8848506CD;
+        Tue, 12 Apr 2022 03:22:09 -0700 (PDT)
 Received: (Authenticated sender: miquel.raynal@bootlin.com)
-        by mail.gandi.net (Postfix) with ESMTPSA id 54015FF80B;
-        Tue, 12 Apr 2022 10:21:50 +0000 (UTC)
+        by mail.gandi.net (Postfix) with ESMTPSA id E2967FF80D;
+        Tue, 12 Apr 2022 10:22:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
-        t=1649758914;
+        t=1649758928;
         h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
          to:to:cc:cc:mime-version:mime-version:content-type:content-type:
          content-transfer-encoding:content-transfer-encoding:
          in-reply-to:in-reply-to:references:references;
-        bh=psSRZJhAOXsPUtZ0dZbzo0PztnR1Q8vauZShn+Y/BqQ=;
-        b=pWUSysFPjH1EHeeEbcjujZta2mzlYSPEzxiP0pQLc4kcqEtxIr/MgP3xtVMhl8WSbVsGZq
-        Gb9OKkWQUGVNxcGafmJBvBHL80dzDpCqaUjU6TZwyoHgjeUpnjHnUo//YmBQB+iad9E6eB
-        gB3xf0QMuFmufZ+V+y+ZWvvPeWLHf/7lHUvnGGefO7F5ZD3rnVXW3qX7fLblU0q094LjpU
-        HHDz8LlltmY35xtZGeT2sSo4Pzg8eXGVAMEi/kpxerg5xMPC+tp5bcVC1aGERsPUW6ioYQ
-        ZwcJFlV227AGgT1a/pwcSNP08EDTfvD0gj6g3xEAdm4h8yVHdfU80THIDOy8lg==
+        bh=zIaJzlhcitEDdJTHuh7eIv4TamuZ7pCdIgFe1rezCFs=;
+        b=lmo588VWu8kuCbUAmbiayiMKdhqKMww2OqHar2dH2cpL7dSNICHQ7XK2G9y0pwcgc1w9LU
+        yho8kwhpxqNMnhzUI8m27ZAnUI0VKXTvWf+3k2Qd0HNXFnJxKmmLNsopa7EOzHaa9ngID2
+        Od92pD2cFj+5Zgrld5nvVVd5M9eBEE1NDLbQg3akeECyaWh9t3nR2Da0TEMOqRtUcf//X2
+        VmuAIpxyh+ouxTmTo/PlGgdNk49M62UUVNJLnQdlXrerUuL0L8FCRUFJxq2aSDevQnpKwD
+        yfZ9ZHwJwc6o1tF/rpeYH0Wr+qNO4nzgH1WdAST47LftKNzwTWEBsNeTdkpa3w==
 From:   Miquel Raynal <miquel.raynal@bootlin.com>
 To:     Magnus Damm <magnus.damm@gmail.com>,
         Gareth Williams <gareth.williams.jx@renesas.com>,
@@ -50,9 +50,9 @@ Cc:     Miquel Raynal <miquel.raynal@bootlin.com>,
         Ilpo Jarvinen <ilpo.jarvinen@linux.intel.com>,
         Rob Herring <robh@kernel.org>, devicetree@vger.kernel.org,
         Geert Uytterhoeven <geert+renesas@glider.be>
-Subject: [PATCH v9 3/9] dt-bindings: dmaengine: Introduce RZN1 DMA compatible
-Date:   Tue, 12 Apr 2022 12:21:32 +0200
-Message-Id: <20220412102138.45975-4-miquel.raynal@bootlin.com>
+Subject: [PATCH v9 7/9] dmaengine: dw: Add RZN1 compatible
+Date:   Tue, 12 Apr 2022 12:21:36 +0200
+Message-Id: <20220412102138.45975-8-miquel.raynal@bootlin.com>
 X-Mailer: git-send-email 2.27.0
 In-Reply-To: <20220412102138.45975-1-miquel.raynal@bootlin.com>
 References: <20220412102138.45975-1-miquel.raynal@bootlin.com>
@@ -63,36 +63,29 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Just like for the NAND controller that is also on this SoC, let's
-provide a SoC generic and a more specific couple of compatibles for the
-DMA controller.
+The Renesas RZN1 DMA IP is very close to the original DW DMA IP, a DMA
+router has been introduced to handle the wiring options that have been
+added.
 
 Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Acked-by: Rob Herring <robh@kernel.org>
+Acked-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 ---
- .../devicetree/bindings/dma/snps,dma-spear1340.yaml       | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/dma/dw/platform.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/Documentation/devicetree/bindings/dma/snps,dma-spear1340.yaml b/Documentation/devicetree/bindings/dma/snps,dma-spear1340.yaml
-index 6b35089ac017..c13649bf7f19 100644
---- a/Documentation/devicetree/bindings/dma/snps,dma-spear1340.yaml
-+++ b/Documentation/devicetree/bindings/dma/snps,dma-spear1340.yaml
-@@ -15,7 +15,13 @@ allOf:
- 
- properties:
-   compatible:
--    const: snps,dma-spear1340
-+    oneOf:
-+      - const: snps,dma-spear1340
-+      - items:
-+          - enum:
-+              - renesas,r9a06g032-dma
-+          - const: renesas,rzn1-dma
-+
- 
-   "#dma-cells":
-     minimum: 3
+diff --git a/drivers/dma/dw/platform.c b/drivers/dma/dw/platform.c
+index 246118955877..47f2292dba98 100644
+--- a/drivers/dma/dw/platform.c
++++ b/drivers/dma/dw/platform.c
+@@ -137,6 +137,7 @@ static void dw_shutdown(struct platform_device *pdev)
+ #ifdef CONFIG_OF
+ static const struct of_device_id dw_dma_of_id_table[] = {
+ 	{ .compatible = "snps,dma-spear1340", .data = &dw_dma_chip_pdata },
++	{ .compatible = "renesas,rzn1-dma", .data = &dw_dma_chip_pdata },
+ 	{}
+ };
+ MODULE_DEVICE_TABLE(of, dw_dma_of_id_table);
 -- 
 2.27.0
 
