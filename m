@@ -2,42 +2,41 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CFC8FC4321E
-	for <dmaengine@archiver.kernel.org>; Tue, 12 Apr 2022 12:48:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3B8BBC433F5
+	for <dmaengine@archiver.kernel.org>; Tue, 12 Apr 2022 15:17:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1351574AbiDLMue (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 12 Apr 2022 08:50:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57438 "EHLO
+        id S241570AbiDLPTd (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 12 Apr 2022 11:19:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39276 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1354991AbiDLMr6 (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Tue, 12 Apr 2022 08:47:58 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D6E256565;
-        Tue, 12 Apr 2022 05:14:12 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 7DED16169F;
-        Tue, 12 Apr 2022 12:14:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BB61C385A6;
-        Tue, 12 Apr 2022 12:14:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1649765651;
-        bh=Nz2SivOgqlG94fI51wSS3/fqaxpQqqMbgq6mFjBnfhc=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=Qrh9ykgZpyWAFIO88oxLto2fn19HoGfiBaiZ4cOtod3cwS0HeWyAuYPltV2ykS/qv
-         YWPIHwjlXZLQDQHc2bClxbX1qByGJL4QIdqwDIrxpuhepmaXv4N451rs6QxjrQ8VfS
-         /ehFtlVC+zvJyMU/knr9RD/App7sp5y9yx8n+BXP/p5QPoelTg+seujwvJU6D0la5k
-         Lhqe9FQOnIfXc7CLV4bDuhytXb99MQxH9A9HCozngcRPkq0lRUHYRtkzp12Xcam00w
-         +0F4bqyigCrV0YQV2YriTIgLQcw8N3lMKZ4mpTTm8huKnea4Zc09jq1Ce+8dg7q6UK
-         EaT3vUvBgXznw==
-Date:   Tue, 12 Apr 2022 17:44:07 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Miquel Raynal <miquel.raynal@bootlin.com>
+        with ESMTP id S230387AbiDLPTc (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Tue, 12 Apr 2022 11:19:32 -0400
+Received: from relay1-d.mail.gandi.net (relay1-d.mail.gandi.net [217.70.183.193])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B8C55E74D;
+        Tue, 12 Apr 2022 08:17:13 -0700 (PDT)
+Received: (Authenticated sender: miquel.raynal@bootlin.com)
+        by mail.gandi.net (Postfix) with ESMTPSA id 37A3024000E;
+        Tue, 12 Apr 2022 15:17:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
+        t=1649776632;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=fRPbzKghNrLcWzL0upbuuhSfisRbrbkUbmUfYgSIypo=;
+        b=i/yWvK0e0N+bBW0QN02/AQQB/xfMLKHE8CbISse+qvoLnonxgWT0JMrzN3O4GI3VJ6mLIq
+        FA+Pcn5MwzHCreLJfhZbqixMBB9+TgyyRchO2565KfIqFQVOqwVCQMRsrzamqbupZrK3N4
+        pmJvepfXODmaQFRhd1t5vj9u6SRUNa6eq+mvv77sBH4tJSHWoIy/YMhs0w8F+3Fie36RRx
+        wfH6qX/1D9DlgevB7iNRkM5TPZ+1E9bdyxSL0Wv1plLMZ/e01nwF1uX5oG2zrUdpAaefHn
+        RJrMcO8VvuxGQHdQm7zwTXS6HB8w0jkaROpdjJa/lR4I4dOYmNayPokSYfeMxg==
+Date:   Tue, 12 Apr 2022 17:17:05 +0200
+From:   Miquel Raynal <miquel.raynal@bootlin.com>
+To:     Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 Cc:     Magnus Damm <magnus.damm@gmail.com>,
         Gareth Williams <gareth.williams.jx@renesas.com>,
         Phil Edworthy <phil.edworthy@renesas.com>,
         Geert Uytterhoeven <geert@linux-m68k.org>,
+        Vinod Koul <vkoul@kernel.org>,
         linux-renesas-soc@vger.kernel.org, dmaengine@vger.kernel.org,
         Milan Stevanovic <milan.stevanovic@se.com>,
         Jimmy Lalande <jimmy.lalande@se.com>,
@@ -48,29 +47,41 @@ Cc:     Magnus Damm <magnus.damm@gmail.com>,
         Stephen Boyd <sboyd@kernel.org>,
         Michael Turquette <mturquette@baylibre.com>,
         linux-clk@vger.kernel.org, Viresh Kumar <vireshk@kernel.org>,
-        Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
         Ilpo Jarvinen <ilpo.jarvinen@linux.intel.com>,
-        Rob Herring <robh@kernel.org>, devicetree@vger.kernel.org,
-        Geert Uytterhoeven <geert+renesas@glider.be>
-Subject: Re: [PATCH v9 3/9] dt-bindings: dmaengine: Introduce RZN1 DMA
- compatible
-Message-ID: <YlVtD8hHMrG60bU8@matsya>
+        Rob Herring <robh@kernel.org>, devicetree@vger.kernel.org
+Subject: Re: [PATCH v9 5/9] dmaengine: dw: dmamux: Introduce RZN1 DMA router
+ support
+Message-ID: <20220412171705.0dd51846@xps13>
+In-Reply-To: <YlVdsTVpWrx+XaUH@smile.fi.intel.com>
 References: <20220412102138.45975-1-miquel.raynal@bootlin.com>
- <20220412102138.45975-4-miquel.raynal@bootlin.com>
+        <20220412102138.45975-6-miquel.raynal@bootlin.com>
+        <YlVdNpuYdgzo7Vgi@smile.fi.intel.com>
+        <YlVdsTVpWrx+XaUH@smile.fi.intel.com>
+Organization: Bootlin
+X-Mailer: Claws Mail 3.17.7 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220412102138.45975-4-miquel.raynal@bootlin.com>
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On 12-04-22, 12:21, Miquel Raynal wrote:
-> Just like for the NAND controller that is also on this SoC, let's
-> provide a SoC generic and a more specific couple of compatibles for the
-> DMA controller.
+Hi Andy,
 
-Acked-By: Vinod Koul <vkoul@kernel.org>
+andriy.shevchenko@linux.intel.com wrote on Tue, 12 Apr 2022 14:08:33
++0300:
 
--- 
-~Vinod
+> On Tue, Apr 12, 2022 at 02:06:31PM +0300, Andy Shevchenko wrote:
+> > On Tue, Apr 12, 2022 at 12:21:34PM +0200, Miquel Raynal wrote:  
+> 
+> ...
+> 
+> > > +	clear_bit(BIT(map->req_idx), dmamux->used_chans);  
+> 
+> On top of the previously asked, are you sure the use of BIT() is correct here?
+
+Looks like I have been tricked by the doc...
+
+	* DOC: bitmap bitops
+	*  set_bit(bit, addr)                  *addr |= bit
+	*  clear_bit(bit, addr)                *addr &= ~bit
