@@ -2,30 +2,30 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2DFF1C433F5
-	for <dmaengine@archiver.kernel.org>; Thu, 14 Apr 2022 16:51:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F3235C433EF
+	for <dmaengine@archiver.kernel.org>; Thu, 14 Apr 2022 16:51:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243392AbiDNQyO (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Thu, 14 Apr 2022 12:54:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42018 "EHLO
+        id S242633AbiDNQyP (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Thu, 14 Apr 2022 12:54:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41010 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237719AbiDNQyG (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Thu, 14 Apr 2022 12:54:06 -0400
+        with ESMTP id S242032AbiDNQyD (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Thu, 14 Apr 2022 12:54:03 -0400
 Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9CD0913CCEE
-        for <dmaengine@vger.kernel.org>; Thu, 14 Apr 2022 09:22:59 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F76713CCE3
+        for <dmaengine@vger.kernel.org>; Thu, 14 Apr 2022 09:22:58 -0700 (PDT)
 Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
         by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
         (Exim 4.92)
         (envelope-from <sha@pengutronix.de>)
-        id 1nf2FC-0007PT-Na; Thu, 14 Apr 2022 18:22:54 +0200
+        id 1nf2FC-0007Ox-2I; Thu, 14 Apr 2022 18:22:54 +0200
 Received: from [2a0a:edc0:0:1101:1d::28] (helo=dude02.red.stw.pengutronix.de)
         by drehscheibe.grey.stw.pengutronix.de with esmtp (Exim 4.94.2)
         (envelope-from <sha@pengutronix.de>)
-        id 1nf2FD-00312h-6p; Thu, 14 Apr 2022 18:22:53 +0200
+        id 1nf2FC-00312S-HA; Thu, 14 Apr 2022 18:22:53 +0200
 Received: from sha by dude02.red.stw.pengutronix.de with local (Exim 4.94.2)
         (envelope-from <sha@pengutronix.de>)
-        id 1nf2F9-00GuEK-Qs; Thu, 14 Apr 2022 18:22:51 +0200
+        id 1nf2F9-00Gu8P-8q; Thu, 14 Apr 2022 18:22:51 +0200
 From:   Sascha Hauer <s.hauer@pengutronix.de>
 To:     alsa-devel@alsa-project.org
 Cc:     Xiubo Li <Xiubo.Lee@gmail.com>, Fabio Estevam <festevam@gmail.com>,
@@ -34,9 +34,9 @@ Cc:     Xiubo Li <Xiubo.Lee@gmail.com>, Fabio Estevam <festevam@gmail.com>,
         NXP Linux Team <linux-imx@nxp.com>,
         dmaengine@vger.kernel.org, Mark Brown <broonie@kernel.org>,
         Sascha Hauer <s.hauer@pengutronix.de>
-Subject: [PATCH v6 19/21] ASoC: fsl_micfil: drop support for undocumented property
-Date:   Thu, 14 Apr 2022 18:22:47 +0200
-Message-Id: <20220414162249.3934543-20-s.hauer@pengutronix.de>
+Subject: [PATCH v6 06/21] ASoC: fsl_micfil: use clear/set bits
+Date:   Thu, 14 Apr 2022 18:22:34 +0200
+Message-Id: <20220414162249.3934543-7-s.hauer@pengutronix.de>
 X-Mailer: git-send-email 2.30.2
 In-Reply-To: <20220414162249.3934543-1-s.hauer@pengutronix.de>
 References: <20220414162249.3934543-1-s.hauer@pengutronix.de>
@@ -50,50 +50,78 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-The "fsl,shared-interrupt" property is undocumented and unnecessary.
-Just pass IRQF_SHARED unconditionally.
+Instead regmap_update_bits() use the simpler variants
+regmap_[set|clear]_bits() where appropriate.
 
 Signed-off-by: Sascha Hauer <s.hauer@pengutronix.de>
 Acked-by: Shengjiu Wang <shengjiu.wang@gmail.com>
 ---
- sound/soc/fsl/fsl_micfil.c | 8 ++------
- 1 file changed, 2 insertions(+), 6 deletions(-)
+ sound/soc/fsl/fsl_micfil.c | 26 ++++++++++----------------
+ 1 file changed, 10 insertions(+), 16 deletions(-)
 
 diff --git a/sound/soc/fsl/fsl_micfil.c b/sound/soc/fsl/fsl_micfil.c
-index 89af6cfe24e69..a603033daed69 100644
+index cfa8af668d921..da4c245c35e62 100644
 --- a/sound/soc/fsl/fsl_micfil.c
 +++ b/sound/soc/fsl/fsl_micfil.c
-@@ -554,7 +554,6 @@ static int fsl_micfil_probe(struct platform_device *pdev)
- 	struct resource *res;
- 	void __iomem *regs;
- 	int ret, i;
--	unsigned long irqflag = 0;
+@@ -168,19 +168,15 @@ static int fsl_micfil_reset(struct device *dev)
+ 	struct fsl_micfil *micfil = dev_get_drvdata(dev);
+ 	int ret;
  
- 	micfil = devm_kzalloc(&pdev->dev, sizeof(*micfil), GFP_KERNEL);
- 	if (!micfil)
-@@ -618,12 +617,9 @@ static int fsl_micfil_probe(struct platform_device *pdev)
- 			return micfil->irq[i];
+-	ret = regmap_update_bits(micfil->regmap,
+-				 REG_MICFIL_CTRL1,
+-				 MICFIL_CTRL1_MDIS,
+-				 0);
++	ret = regmap_clear_bits(micfil->regmap, REG_MICFIL_CTRL1,
++				MICFIL_CTRL1_MDIS);
+ 	if (ret) {
+ 		dev_err(dev, "failed to clear MDIS bit %d\n", ret);
+ 		return ret;
  	}
  
--	if (of_property_read_bool(np, "fsl,shared-interrupt"))
--		irqflag = IRQF_SHARED;
--
- 	/* Digital Microphone interface interrupt */
- 	ret = devm_request_irq(&pdev->dev, micfil->irq[0],
--			       micfil_isr, irqflag,
-+			       micfil_isr, IRQF_SHARED,
- 			       micfil->name, micfil);
+-	ret = regmap_update_bits(micfil->regmap,
+-				 REG_MICFIL_CTRL1,
+-				 MICFIL_CTRL1_SRES,
+-				 MICFIL_CTRL1_SRES);
++	ret = regmap_set_bits(micfil->regmap, REG_MICFIL_CTRL1,
++			      MICFIL_CTRL1_SRES);
  	if (ret) {
- 		dev_err(&pdev->dev, "failed to claim mic interface irq %u\n",
-@@ -633,7 +629,7 @@ static int fsl_micfil_probe(struct platform_device *pdev)
+ 		dev_err(dev, "failed to reset MICFIL: %d\n", ret);
+ 		return ret;
+@@ -252,9 +248,8 @@ static int fsl_micfil_trigger(struct snd_pcm_substream *substream, int cmd,
+ 		}
  
- 	/* Digital Microphone interface error interrupt */
- 	ret = devm_request_irq(&pdev->dev, micfil->irq[1],
--			       micfil_err_isr, irqflag,
-+			       micfil_err_isr, IRQF_SHARED,
- 			       micfil->name, micfil);
+ 		/* Enable the module */
+-		ret = regmap_update_bits(micfil->regmap, REG_MICFIL_CTRL1,
+-					 MICFIL_CTRL1_PDMIEN,
+-					 MICFIL_CTRL1_PDMIEN);
++		ret = regmap_set_bits(micfil->regmap, REG_MICFIL_CTRL1,
++				      MICFIL_CTRL1_PDMIEN);
+ 		if (ret) {
+ 			dev_err(dev, "failed to enable the module\n");
+ 			return ret;
+@@ -265,9 +260,8 @@ static int fsl_micfil_trigger(struct snd_pcm_substream *substream, int cmd,
+ 	case SNDRV_PCM_TRIGGER_SUSPEND:
+ 	case SNDRV_PCM_TRIGGER_PAUSE_PUSH:
+ 		/* Disable the module */
+-		ret = regmap_update_bits(micfil->regmap, REG_MICFIL_CTRL1,
+-					 MICFIL_CTRL1_PDMIEN,
+-					 0);
++		ret = regmap_clear_bits(micfil->regmap, REG_MICFIL_CTRL1,
++					MICFIL_CTRL1_PDMIEN);
+ 		if (ret) {
+ 			dev_err(dev, "failed to enable the module\n");
+ 			return ret;
+@@ -332,8 +326,8 @@ static int fsl_micfil_hw_params(struct snd_pcm_substream *substream,
+ 	int ret;
+ 
+ 	/* 1. Disable the module */
+-	ret = regmap_update_bits(micfil->regmap, REG_MICFIL_CTRL1,
+-				 MICFIL_CTRL1_PDMIEN, 0);
++	ret = regmap_clear_bits(micfil->regmap, REG_MICFIL_CTRL1,
++				MICFIL_CTRL1_PDMIEN);
  	if (ret) {
- 		dev_err(&pdev->dev, "failed to claim mic interface error irq %u\n",
+ 		dev_err(dev, "failed to disable the module\n");
+ 		return ret;
 -- 
 2.30.2
 
