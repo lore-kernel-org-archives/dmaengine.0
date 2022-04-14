@@ -2,30 +2,30 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 35982C433FE
-	for <dmaengine@archiver.kernel.org>; Thu, 14 Apr 2022 16:51:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BEB9DC433EF
+	for <dmaengine@archiver.kernel.org>; Thu, 14 Apr 2022 16:52:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238708AbiDNQyV (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Thu, 14 Apr 2022 12:54:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44538 "EHLO
+        id S239182AbiDNQyW (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Thu, 14 Apr 2022 12:54:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42962 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241775AbiDNQyH (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Thu, 14 Apr 2022 12:54:07 -0400
+        with ESMTP id S242437AbiDNQyI (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Thu, 14 Apr 2022 12:54:08 -0400
 Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2875C13CEC3
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1849813CEC1
         for <dmaengine@vger.kernel.org>; Thu, 14 Apr 2022 09:23:00 -0700 (PDT)
 Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
         by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
         (Exim 4.92)
         (envelope-from <sha@pengutronix.de>)
-        id 1nf2FE-0007Qd-1P; Thu, 14 Apr 2022 18:22:56 +0200
+        id 1nf2FD-0007Qu-VE; Thu, 14 Apr 2022 18:22:56 +0200
 Received: from [2a0a:edc0:0:1101:1d::28] (helo=dude02.red.stw.pengutronix.de)
         by drehscheibe.grey.stw.pengutronix.de with esmtp (Exim 4.94.2)
         (envelope-from <sha@pengutronix.de>)
-        id 1nf2FD-00312t-Lp; Thu, 14 Apr 2022 18:22:54 +0200
+        id 1nf2FD-003131-QX; Thu, 14 Apr 2022 18:22:54 +0200
 Received: from sha by dude02.red.stw.pengutronix.de with local (Exim 4.94.2)
         (envelope-from <sha@pengutronix.de>)
-        id 1nf2F9-00GuD8-Ne; Thu, 14 Apr 2022 18:22:51 +0200
+        id 1nf2F8-00Gu5I-W3; Thu, 14 Apr 2022 18:22:50 +0200
 From:   Sascha Hauer <s.hauer@pengutronix.de>
 To:     alsa-devel@alsa-project.org
 Cc:     Xiubo Li <Xiubo.Lee@gmail.com>, Fabio Estevam <festevam@gmail.com>,
@@ -34,9 +34,9 @@ Cc:     Xiubo Li <Xiubo.Lee@gmail.com>, Fabio Estevam <festevam@gmail.com>,
         NXP Linux Team <linux-imx@nxp.com>,
         dmaengine@vger.kernel.org, Mark Brown <broonie@kernel.org>,
         Sascha Hauer <s.hauer@pengutronix.de>
-Subject: [PATCH v6 17/21] ASoC: fsl_micfil: drop unused include
-Date:   Thu, 14 Apr 2022 18:22:45 +0200
-Message-Id: <20220414162249.3934543-18-s.hauer@pengutronix.de>
+Subject: [PATCH v6 01/21] ASoC: fsl_micfil: Drop unnecessary register read
+Date:   Thu, 14 Apr 2022 18:22:29 +0200
+Message-Id: <20220414162249.3934543-2-s.hauer@pengutronix.de>
 X-Mailer: git-send-email 2.30.2
 In-Reply-To: <20220414162249.3934543-1-s.hauer@pengutronix.de>
 References: <20220414162249.3934543-1-s.hauer@pengutronix.de>
@@ -50,27 +50,27 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-The micfil driver doesn't use anything from imx-pcm.h. Drop its
-inclusion.
+in get_pdm_clk() REG_MICFIL_CTRL2 is read twice. Drop second read.
 
 Signed-off-by: Sascha Hauer <s.hauer@pengutronix.de>
 Acked-by: Shengjiu Wang <shengjiu.wang@gmail.com>
 ---
- sound/soc/fsl/fsl_micfil.c | 1 -
- 1 file changed, 1 deletion(-)
+ sound/soc/fsl/fsl_micfil.c | 2 --
+ 1 file changed, 2 deletions(-)
 
 diff --git a/sound/soc/fsl/fsl_micfil.c b/sound/soc/fsl/fsl_micfil.c
-index aecc8a1bcfcd8..821beca9b4bf1 100644
+index 9f90989ac59a6..64019d003784b 100644
 --- a/sound/soc/fsl/fsl_micfil.c
 +++ b/sound/soc/fsl/fsl_micfil.c
-@@ -24,7 +24,6 @@
- #include <sound/core.h>
+@@ -118,8 +118,6 @@ static inline int get_pdm_clk(struct fsl_micfil *micfil,
+ 	regmap_read(micfil->regmap, REG_MICFIL_CTRL2, &ctrl2_reg);
+ 	osr = 16 - ((ctrl2_reg & MICFIL_CTRL2_CICOSR_MASK)
+ 		    >> MICFIL_CTRL2_CICOSR_SHIFT);
+-
+-	regmap_read(micfil->regmap, REG_MICFIL_CTRL2, &ctrl2_reg);
+ 	qsel = ctrl2_reg & MICFIL_CTRL2_QSEL_MASK;
  
- #include "fsl_micfil.h"
--#include "imx-pcm.h"
- 
- #define FSL_MICFIL_RATES		SNDRV_PCM_RATE_8000_48000
- #define FSL_MICFIL_FORMATS		(SNDRV_PCM_FMTBIT_S16_LE)
+ 	switch (qsel) {
 -- 
 2.30.2
 
