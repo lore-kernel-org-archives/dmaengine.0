@@ -2,30 +2,30 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3FEBDC433FE
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9EE26C433EF
 	for <dmaengine@archiver.kernel.org>; Thu, 14 Apr 2022 16:51:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242063AbiDNQyS (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Thu, 14 Apr 2022 12:54:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41324 "EHLO
+        id S242760AbiDNQyT (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Thu, 14 Apr 2022 12:54:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40954 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241674AbiDNQyH (ORCPT
+        with ESMTP id S241655AbiDNQyH (ORCPT
         <rfc822;dmaengine@vger.kernel.org>); Thu, 14 Apr 2022 12:54:07 -0400
 Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3A1A13CCFD
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5814E13CCF6
         for <dmaengine@vger.kernel.org>; Thu, 14 Apr 2022 09:23:00 -0700 (PDT)
 Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
         by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
         (Exim 4.92)
         (envelope-from <sha@pengutronix.de>)
-        id 1nf2FE-0007Qs-2U; Thu, 14 Apr 2022 18:22:56 +0200
+        id 1nf2FD-0007Qr-VJ; Thu, 14 Apr 2022 18:22:56 +0200
 Received: from [2a0a:edc0:0:1101:1d::28] (helo=dude02.red.stw.pengutronix.de)
         by drehscheibe.grey.stw.pengutronix.de with esmtp (Exim 4.94.2)
         (envelope-from <sha@pengutronix.de>)
-        id 1nf2FD-00312z-PX; Thu, 14 Apr 2022 18:22:54 +0200
+        id 1nf2FD-00312w-O3; Thu, 14 Apr 2022 18:22:54 +0200
 Received: from sha by dude02.red.stw.pengutronix.de with local (Exim 4.94.2)
         (envelope-from <sha@pengutronix.de>)
-        id 1nf2F9-00GuBa-I4; Thu, 14 Apr 2022 18:22:51 +0200
+        id 1nf2F9-00GuDa-PI; Thu, 14 Apr 2022 18:22:51 +0200
 From:   Sascha Hauer <s.hauer@pengutronix.de>
 To:     alsa-devel@alsa-project.org
 Cc:     Xiubo Li <Xiubo.Lee@gmail.com>, Fabio Estevam <festevam@gmail.com>,
@@ -34,9 +34,9 @@ Cc:     Xiubo Li <Xiubo.Lee@gmail.com>, Fabio Estevam <festevam@gmail.com>,
         NXP Linux Team <linux-imx@nxp.com>,
         dmaengine@vger.kernel.org, Mark Brown <broonie@kernel.org>,
         Sascha Hauer <s.hauer@pengutronix.de>
-Subject: [PATCH v6 13/21] ASoC: fsl_micfil: use define for OSR default value
-Date:   Thu, 14 Apr 2022 18:22:41 +0200
-Message-Id: <20220414162249.3934543-14-s.hauer@pengutronix.de>
+Subject: [PATCH v6 18/21] ASoC: fsl_micfil: drop only once used defines
+Date:   Thu, 14 Apr 2022 18:22:46 +0200
+Message-Id: <20220414162249.3934543-19-s.hauer@pengutronix.de>
 X-Mailer: git-send-email 2.30.2
 In-Reply-To: <20220414162249.3934543-1-s.hauer@pengutronix.de>
 References: <20220414162249.3934543-1-s.hauer@pengutronix.de>
@@ -50,79 +50,41 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-The OSR (OverSampling Rate) setting is set once to the default value
-and never changed throughout the driver. Nevertheless the value is
-read back from the register for further calculations. Just use the
-default value because we know what we have written.
+FSL_MICFIL_RATES and FSL_MICFIL_FORMATS is only used once. Drop
+the unnecesary indirection and use SNDRV_PCM_RATE_8000_48000 and
+SNDRV_PCM_FMTBIT_S16_LE directly.
 
 Signed-off-by: Sascha Hauer <s.hauer@pengutronix.de>
 Acked-by: Shengjiu Wang <shengjiu.wang@gmail.com>
 ---
-
-Notes:
-    Changes since v3:
-    - Drop adding unused 'osr' to struct fsl_micfil
-
- sound/soc/fsl/fsl_micfil.c | 9 +++++----
- sound/soc/fsl/fsl_micfil.h | 1 -
- 2 files changed, 5 insertions(+), 5 deletions(-)
+ sound/soc/fsl/fsl_micfil.c | 7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
 diff --git a/sound/soc/fsl/fsl_micfil.c b/sound/soc/fsl/fsl_micfil.c
-index 56df916ad55f2..a35c1c580dbc1 100644
+index 821beca9b4bf1..89af6cfe24e69 100644
 --- a/sound/soc/fsl/fsl_micfil.c
 +++ b/sound/soc/fsl/fsl_micfil.c
-@@ -29,6 +29,8 @@
- #define FSL_MICFIL_RATES		SNDRV_PCM_RATE_8000_48000
- #define FSL_MICFIL_FORMATS		(SNDRV_PCM_FMTBIT_S16_LE)
+@@ -25,9 +25,6 @@
  
-+#define MICFIL_OSR_DEFAULT	16
-+
- struct fsl_micfil {
- 	struct platform_device *pdev;
- 	struct regmap *regmap;
-@@ -112,11 +114,11 @@ static inline int get_pdm_clk(struct fsl_micfil *micfil,
- 			      unsigned int rate)
- {
- 	u32 ctrl2_reg;
--	int qsel, osr;
-+	int qsel;
- 	int bclk;
-+	int osr = MICFIL_OSR_DEFAULT;
+ #include "fsl_micfil.h"
  
- 	regmap_read(micfil->regmap, REG_MICFIL_CTRL2, &ctrl2_reg);
--	osr = 16 - FIELD_GET(MICFIL_CTRL2_CICOSR, ctrl2_reg);
- 	qsel = FIELD_GET(MICFIL_CTRL2_QSEL, ctrl2_reg);
- 
- 	switch (qsel) {
-@@ -282,7 +284,7 @@ static int fsl_set_clock_params(struct device *dev, unsigned int rate)
- 	/* set CICOSR */
- 	ret = regmap_update_bits(micfil->regmap, REG_MICFIL_CTRL2,
- 				 MICFIL_CTRL2_CICOSR,
--				 FIELD_PREP(MICFIL_CTRL2_CICOSR, MICFIL_CTRL2_CICOSR_DEFAULT));
-+				 FIELD_PREP(MICFIL_CTRL2_CICOSR, 16 - MICFIL_OSR_DEFAULT));
- 	if (ret)
- 		return ret;
- 
-@@ -673,7 +675,6 @@ static int fsl_micfil_probe(struct platform_device *pdev)
- 	micfil->dma_params_rx.addr = res->start + REG_MICFIL_DATACH0;
- 	micfil->dma_params_rx.maxburst = MICFIL_DMA_MAXBURST_RX;
- 
+-#define FSL_MICFIL_RATES		SNDRV_PCM_RATE_8000_48000
+-#define FSL_MICFIL_FORMATS		(SNDRV_PCM_FMTBIT_S16_LE)
 -
- 	platform_set_drvdata(pdev, micfil);
+ #define MICFIL_OSR_DEFAULT	16
  
- 	pm_runtime_enable(&pdev->dev);
-diff --git a/sound/soc/fsl/fsl_micfil.h b/sound/soc/fsl/fsl_micfil.h
-index 5cecae2519795..08901827047db 100644
---- a/sound/soc/fsl/fsl_micfil.h
-+++ b/sound/soc/fsl/fsl_micfil.h
-@@ -58,7 +58,6 @@
- #define MICFIL_QSEL_VLOW2_QUALITY	4
- 
- #define MICFIL_CTRL2_CICOSR		GENMASK(19, 16)
--#define MICFIL_CTRL2_CICOSR_DEFAULT	0
- #define MICFIL_CTRL2_CLKDIV		GENMASK(7, 0)
- 
- /* MICFIL Status Register -- REG_MICFIL_STAT 0x08 */
+ enum quality {
+@@ -350,8 +347,8 @@ static struct snd_soc_dai_driver fsl_micfil_dai = {
+ 		.stream_name = "CPU-Capture",
+ 		.channels_min = 1,
+ 		.channels_max = 8,
+-		.rates = FSL_MICFIL_RATES,
+-		.formats = FSL_MICFIL_FORMATS,
++		.rates = SNDRV_PCM_RATE_8000_48000,
++		.formats = SNDRV_PCM_FMTBIT_S16_LE,
+ 	},
+ 	.ops = &fsl_micfil_dai_ops,
+ };
 -- 
 2.30.2
 
