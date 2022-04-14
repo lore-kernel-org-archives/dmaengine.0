@@ -2,30 +2,30 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BC4EEC433EF
-	for <dmaengine@archiver.kernel.org>; Thu, 14 Apr 2022 16:51:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BB0B9C433FE
+	for <dmaengine@archiver.kernel.org>; Thu, 14 Apr 2022 16:51:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238221AbiDNQyM (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        id S241594AbiDNQyM (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
         Thu, 14 Apr 2022 12:54:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44534 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40970 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239716AbiDNQyD (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Thu, 14 Apr 2022 12:54:03 -0400
+        with ESMTP id S232666AbiDNQyC (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Thu, 14 Apr 2022 12:54:02 -0400
 Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F6F213CCE2
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5DC8113CCE4
         for <dmaengine@vger.kernel.org>; Thu, 14 Apr 2022 09:22:58 -0700 (PDT)
 Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
         by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
         (Exim 4.92)
         (envelope-from <sha@pengutronix.de>)
-        id 1nf2FC-0007P6-C9; Thu, 14 Apr 2022 18:22:54 +0200
+        id 1nf2FC-0007Ou-2J; Thu, 14 Apr 2022 18:22:54 +0200
 Received: from [2a0a:edc0:0:1101:1d::28] (helo=dude02.red.stw.pengutronix.de)
         by drehscheibe.grey.stw.pengutronix.de with esmtp (Exim 4.94.2)
         (envelope-from <sha@pengutronix.de>)
-        id 1nf2FC-00312c-UX; Thu, 14 Apr 2022 18:22:53 +0200
+        id 1nf2FC-00312R-HR; Thu, 14 Apr 2022 18:22:53 +0200
 Received: from sha by dude02.red.stw.pengutronix.de with local (Exim 4.94.2)
         (envelope-from <sha@pengutronix.de>)
-        id 1nf2F9-00GuAJ-E8; Thu, 14 Apr 2022 18:22:51 +0200
+        id 1nf2F9-00GuBM-GY; Thu, 14 Apr 2022 18:22:51 +0200
 From:   Sascha Hauer <s.hauer@pengutronix.de>
 To:     alsa-devel@alsa-project.org
 Cc:     Xiubo Li <Xiubo.Lee@gmail.com>, Fabio Estevam <festevam@gmail.com>,
@@ -34,9 +34,9 @@ Cc:     Xiubo Li <Xiubo.Lee@gmail.com>, Fabio Estevam <festevam@gmail.com>,
         NXP Linux Team <linux-imx@nxp.com>,
         dmaengine@vger.kernel.org, Mark Brown <broonie@kernel.org>,
         Sascha Hauer <s.hauer@pengutronix.de>
-Subject: [PATCH v6 10/21] dmaengine: imx-sdma: error out on unsupported transfer types
-Date:   Thu, 14 Apr 2022 18:22:38 +0200
-Message-Id: <20220414162249.3934543-11-s.hauer@pengutronix.de>
+Subject: [PATCH v6 12/21] ASoC: fsl_micfil: add multi fifo support
+Date:   Thu, 14 Apr 2022 18:22:40 +0200
+Message-Id: <20220414162249.3934543-13-s.hauer@pengutronix.de>
 X-Mailer: git-send-email 2.30.2
 In-Reply-To: <20220414162249.3934543-1-s.hauer@pengutronix.de>
 References: <20220414162249.3934543-1-s.hauer@pengutronix.de>
@@ -50,84 +50,57 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-The i.MX SDMA driver currently silently ignores unsupported transfer
-types. These transfer types are specified in the dma channel description
-in the device tree, so they should really be checked.
-Issue a message and error out when we hit unsupported transfer types.
+The micfil hardware provides the microphone data on multiple successive
+FIFO registers, one register per stereo pair. Also to work properly the
+SDMA_DONE0_CONFIG_DONE_SEL bit in the SDMA engines SDMA_DONE0_CONFIG
+register must be set. This patch provides the necessary information to
+the SDMA engine driver.
 
 Signed-off-by: Sascha Hauer <s.hauer@pengutronix.de>
-Acked-By: Vinod Koul <vkoul@kernel.org>
+Acked-by: Shengjiu Wang <shengjiu.wang@gmail.com>
 ---
 
 Notes:
+    Changes since v3:
+    - Fix include name
+    
     Changes since v2:
-    - Use prefix dmaengine:
+    - Add forgotten commit message
 
- drivers/dma/imx-sdma.c | 17 +++++++++++++----
- 1 file changed, 13 insertions(+), 4 deletions(-)
+ sound/soc/fsl/fsl_micfil.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/dma/imx-sdma.c b/drivers/dma/imx-sdma.c
-index 80261a905eb5b..0e70843567cef 100644
---- a/drivers/dma/imx-sdma.c
-+++ b/drivers/dma/imx-sdma.c
-@@ -940,7 +940,7 @@ static irqreturn_t sdma_int_handler(int irq, void *dev_id)
- /*
-  * sets the pc of SDMA script according to the peripheral type
-  */
--static void sdma_get_pc(struct sdma_channel *sdmac,
-+static int sdma_get_pc(struct sdma_channel *sdmac,
- 		enum sdma_peripheral_type peripheral_type)
- {
- 	struct sdma_engine *sdma = sdmac->sdma;
-@@ -1039,13 +1039,17 @@ static void sdma_get_pc(struct sdma_channel *sdmac,
- 		emi_2_per = sdma->script_addrs->ext_mem_2_ipu_addr;
- 		break;
- 	default:
--		break;
-+		dev_err(sdma->dev, "Unsupported transfer type %d\n",
-+			peripheral_type);
-+		return -EINVAL;
+diff --git a/sound/soc/fsl/fsl_micfil.c b/sound/soc/fsl/fsl_micfil.c
+index 4656a18a03e45..56df916ad55f2 100644
+--- a/sound/soc/fsl/fsl_micfil.c
++++ b/sound/soc/fsl/fsl_micfil.c
+@@ -16,6 +16,7 @@
+ #include <linux/regmap.h>
+ #include <linux/sysfs.h>
+ #include <linux/types.h>
++#include <linux/dma/imx-dma.h>
+ #include <sound/dmaengine_pcm.h>
+ #include <sound/pcm.h>
+ #include <sound/soc.h>
+@@ -35,6 +36,7 @@ struct fsl_micfil {
+ 	struct clk *busclk;
+ 	struct clk *mclk;
+ 	struct snd_dmaengine_dai_dma_data dma_params_rx;
++	struct sdma_peripheral_config sdmacfg;
+ 	unsigned int dataline;
+ 	char name[32];
+ 	int irq[MICFIL_IRQ_LINES];
+@@ -324,6 +326,10 @@ static int fsl_micfil_hw_params(struct snd_pcm_substream *substream,
+ 		return ret;
  	}
  
- 	sdmac->pc_from_device = per_2_emi;
- 	sdmac->pc_to_device = emi_2_per;
- 	sdmac->device_to_device = per_2_per;
- 	sdmac->pc_to_pc = emi_2_emi;
-+
-+	return 0;
- }
++	micfil->dma_params_rx.peripheral_config = &micfil->sdmacfg;
++	micfil->dma_params_rx.peripheral_size = sizeof(micfil->sdmacfg);
++	micfil->sdmacfg.n_fifos_src = channels;
++	micfil->sdmacfg.sw_done = true;
+ 	micfil->dma_params_rx.maxburst = channels * MICFIL_DMA_MAXBURST_RX;
  
- static int sdma_load_context(struct sdma_channel *sdmac)
-@@ -1213,6 +1217,7 @@ static void sdma_set_watermarklevel_for_p2p(struct sdma_channel *sdmac)
- static int sdma_config_channel(struct dma_chan *chan)
- {
- 	struct sdma_channel *sdmac = to_sdma_chan(chan);
-+	int ret;
- 
- 	sdma_disable_channel(chan);
- 
-@@ -1233,7 +1238,9 @@ static int sdma_config_channel(struct dma_chan *chan)
- 		break;
- 	}
- 
--	sdma_get_pc(sdmac, sdmac->peripheral_type);
-+	ret = sdma_get_pc(sdmac, sdmac->peripheral_type);
-+	if (ret)
-+		return ret;
- 
- 	if ((sdmac->peripheral_type != IMX_DMATYPE_MEMORY) &&
- 			(sdmac->peripheral_type != IMX_DMATYPE_DSP)) {
-@@ -1349,7 +1356,9 @@ static int sdma_alloc_chan_resources(struct dma_chan *chan)
- 		mem_data.dma_request2 = 0;
- 		data = &mem_data;
- 
--		sdma_get_pc(sdmac, IMX_DMATYPE_MEMORY);
-+		ret = sdma_get_pc(sdmac, IMX_DMATYPE_MEMORY);
-+		if (ret)
-+			return ret;
- 	}
- 
- 	switch (data->priority) {
+ 	return 0;
 -- 
 2.30.2
 
