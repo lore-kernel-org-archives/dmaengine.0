@@ -2,35 +2,35 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7DD26C4167E
-	for <dmaengine@archiver.kernel.org>; Tue, 19 Apr 2022 13:41:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B3596C4332F
+	for <dmaengine@archiver.kernel.org>; Tue, 19 Apr 2022 13:41:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1352549AbiDSNnW (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 19 Apr 2022 09:43:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36120 "EHLO
+        id S1352503AbiDSNnU (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 19 Apr 2022 09:43:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36996 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1352830AbiDSNm7 (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Tue, 19 Apr 2022 09:42:59 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C4C1BCF;
-        Tue, 19 Apr 2022 06:40:16 -0700 (PDT)
+        with ESMTP id S1352737AbiDSNml (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Tue, 19 Apr 2022 09:42:41 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B96543914F;
+        Tue, 19 Apr 2022 06:39:45 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id CCE5A616B4;
-        Tue, 19 Apr 2022 13:40:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CC1DC385A7;
-        Tue, 19 Apr 2022 13:40:08 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 437EB616A3;
+        Tue, 19 Apr 2022 13:39:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11D9CC385A7;
+        Tue, 19 Apr 2022 13:39:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1650375615;
-        bh=1fFZ/OaS6ZClv/BpTxI65DDId5sPYXRbQkpa111wNoQ=;
+        s=k20201202; t=1650375584;
+        bh=x1mvWl2U7fZILb5TbyNkFpMm6/MypG7RO5sXAsxLvRg=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=SBrvXLW2zVcL4oM2JTZy14QIztOs2NeSPSDRvDSB3PuiYhuyfupqTrAe+sUpRjYJq
-         C/GKYP7Rr9OBPx8TOivj54uZ/4cXN37y81WRHLpyqeduJN/AM1rmWK3+dm/5sDrwI9
-         e3AxiT/oXlEkctIWbmZCggqIVuL8YwyCPnAoJx7rwxuppFXSO2ULPPBCiTLjkiOoCg
-         S/UwEjtXMKx8ZQN9AOp41OaXzVVEqbYRCJZmKXTbrmszKg/NpZ+SET8KE+jVSLFVb+
-         DFVTEAALkLMldn2MDi+hmjX7hK5Y3kLvxKHS8N/zSEh0KKiqkmrzORHtQInIHNThua
-         RAvesC2+gnbAA==
+        b=PZTxNL5DSXCYDgJG8/+vLbglm3Bhpk5h/Ugh3KUJ531orszQSnNDG73cQlb4bZj0Z
+         HBwfwm3Fn7Q0EsAJCI4GK9LiCXzD1yNHN8VW/FO14KinCNU1FkRN0TGkYURwKC6MQ+
+         DTiCUh0nUOK7+AnvZnl6/cpsoi3FJisdZmBonypOAIOjqDOfu07w90A2ngtcRTl0k/
+         tn3+f7kw7MCBRbxGjZrMN+Jpn0HXe4XH2X02BuHpYN9z5uaKHSEmxpZnVQHVMccNtZ
+         ujjtywF56S80y2RETVswGMcLzlBjDwf5rDrx3BJsgCkT53Z2c14D77ga1UB6uWLFWf
+         6ZqDHxa1AcOJg==
 From:   Arnd Bergmann <arnd@kernel.org>
 To:     linux-omap@vger.kernel.org, tony@atomide.com, aaro.koskinen@iki.fi,
         jmkrzyszt@gmail.com
@@ -57,9 +57,9 @@ Cc:     Arnd Bergmann <arnd@arndb.de>,
         linux-input@vger.kernel.org, linux-mmc@vger.kernel.org,
         linux-serial@vger.kernel.org, dri-devel@lists.freedesktop.org,
         linux-fbdev@vger.kernel.org, alsa-devel@alsa-project.org
-Subject: [PATCH 21/41] ARM: omap1: dma: remove omap2 specific bits
-Date:   Tue, 19 Apr 2022 15:37:03 +0200
-Message-Id: <20220419133723.1394715-22-arnd@kernel.org>
+Subject: [PATCH 17/41] ARM: omap1: move 32k counter from plat-omap to mach-omap1
+Date:   Tue, 19 Apr 2022 15:36:59 +0200
+Message-Id: <20220419133723.1394715-18-arnd@kernel.org>
 X-Mailer: git-send-email 2.29.2
 In-Reply-To: <20220419133723.1394715-1-arnd@kernel.org>
 References: <20220419133723.1394715-1-arnd@kernel.org>
@@ -71,416 +71,337 @@ X-Mailing-List: dmaengine@vger.kernel.org
 
 From: Arnd Bergmann <arnd@arndb.de>
 
-No part of plat-omap/dma.c is called on omap2 any more, so
-anything omap2 specific in here can simply be removed.
+omap2 stopped using this code with commit 8d39ff3d1696 ("ARM: OMAP2+:
+Remove unused legacy code for timer"), so just move it to mach-omap1 now,
+along with the other half of that driver.
 
 Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 ---
- arch/arm/plat-omap/dma.c | 217 ++++++++++-----------------------------
- 1 file changed, 55 insertions(+), 162 deletions(-)
+ arch/arm/mach-omap1/Kconfig                   |  16 +++
+ arch/arm/mach-omap1/timer32k.c                |  96 ++++++++++++++-
+ arch/arm/plat-omap/Kconfig                    |  17 ---
+ arch/arm/plat-omap/Makefile                   |   2 +-
+ arch/arm/plat-omap/counter_32k.c              | 114 ------------------
+ arch/arm/plat-omap/include/plat/counter-32k.h |   1 -
+ 6 files changed, 110 insertions(+), 136 deletions(-)
+ delete mode 100644 arch/arm/plat-omap/counter_32k.c
+ delete mode 100644 arch/arm/plat-omap/include/plat/counter-32k.h
 
-diff --git a/arch/arm/plat-omap/dma.c b/arch/arm/plat-omap/dma.c
-index b7757864d0aa..eb14528f133c 100644
---- a/arch/arm/plat-omap/dma.c
-+++ b/arch/arm/plat-omap/dma.c
-@@ -34,11 +34,9 @@
+diff --git a/arch/arm/mach-omap1/Kconfig b/arch/arm/mach-omap1/Kconfig
+index 208c700c2455..04155b5ce978 100644
+--- a/arch/arm/mach-omap1/Kconfig
++++ b/arch/arm/mach-omap1/Kconfig
+@@ -53,6 +53,22 @@ config OMAP_MUX_WARNINGS
+ 	  to change the pin multiplexing setup.	 When there are no warnings
+ 	  printed, it's safe to deselect OMAP_MUX for your product.
  
- #include <linux/omap-dma.h>
++config OMAP_32K_TIMER
++	bool "Use 32KHz timer"
++	depends on ARCH_OMAP16XX
++	default ARCH_OMAP16XX
++	help
++	  Select this option if you want to enable the OMAP 32KHz timer.
++	  This timer saves power compared to the OMAP_MPU_TIMER, and has
++	  support for no tick during idle. The 32KHz timer provides less
++	  intra-tick resolution than OMAP_MPU_TIMER. The 32KHz timer is
++	  currently only available for OMAP16XX, 24XX, 34XX, OMAP4/5 and DRA7XX.
++
++	  On OMAP2PLUS this value is only used for CONFIG_HZ and
++	  CLOCK_TICK_RATE compile time calculation.
++	  The actual timer selection is done in the board file
++	  through the (DT_)MACHINE_START structure.
++
+ comment "OMAP Board Type"
  
--#ifdef CONFIG_ARCH_OMAP1
+ config MACH_OMAP_INNOVATOR
+diff --git a/arch/arm/mach-omap1/timer32k.c b/arch/arm/mach-omap1/timer32k.c
+index 780fdf03c3ce..11958ccd894d 100644
+--- a/arch/arm/mach-omap1/timer32k.c
++++ b/arch/arm/mach-omap1/timer32k.c
+@@ -45,15 +45,13 @@
+ #include <linux/clocksource.h>
+ #include <linux/clockchips.h>
+ #include <linux/io.h>
++#include <linux/sched_clock.h>
+ 
+ #include <asm/irq.h>
+ #include <asm/mach/irq.h>
+ #include <asm/mach/time.h>
+ 
+-#include <plat/counter-32k.h>
+-
  #include <mach/hardware.h>
- #include <linux/soc/ti/omap1-io.h>
- #include <linux/soc/ti/omap1-soc.h>
--#endif
+-
+ #include "common.h"
  
  /*
-  * MAX_LOGICAL_DMA_CH_COUNT: the maximum number of logical DMA
-@@ -51,16 +49,7 @@
+@@ -159,6 +157,98 @@ static __init void omap_init_32k_timer(void)
+ 					OMAP_32K_TICKS_PER_SEC, 1, 0xfffffffe);
+ }
  
- #undef DEBUG
++/* OMAP2_32KSYNCNT_CR_OFF: offset of 32ksync counter register */
++#define OMAP2_32KSYNCNT_REV_OFF		0x0
++#define OMAP2_32KSYNCNT_REV_SCHEME	(0x3 << 30)
++#define OMAP2_32KSYNCNT_CR_OFF_LOW	0x10
++#define OMAP2_32KSYNCNT_CR_OFF_HIGH	0x30
++
++/*
++ * 32KHz clocksource ... always available, on pretty most chips except
++ * OMAP 730 and 1510.  Other timers could be used as clocksources, with
++ * higher resolution in free-running counter modes (e.g. 12 MHz xtal),
++ * but systems won't necessarily want to spend resources that way.
++ */
++static void __iomem *sync32k_cnt_reg;
++
++static u64 notrace omap_32k_read_sched_clock(void)
++{
++	return sync32k_cnt_reg ? readl_relaxed(sync32k_cnt_reg) : 0;
++}
++
++/**
++ * omap_read_persistent_clock64 -  Return time from a persistent clock.
++ *
++ * Reads the time from a source which isn't disabled during PM, the
++ * 32k sync timer.  Convert the cycles elapsed since last read into
++ * nsecs and adds to a monotonically increasing timespec64.
++ */
++static struct timespec64 persistent_ts;
++static cycles_t cycles;
++static unsigned int persistent_mult, persistent_shift;
++
++static void omap_read_persistent_clock64(struct timespec64 *ts)
++{
++	unsigned long long nsecs;
++	cycles_t last_cycles;
++
++	last_cycles = cycles;
++	cycles = sync32k_cnt_reg ? readl_relaxed(sync32k_cnt_reg) : 0;
++
++	nsecs = clocksource_cyc2ns(cycles - last_cycles,
++					persistent_mult, persistent_shift);
++
++	timespec64_add_ns(&persistent_ts, nsecs);
++
++	*ts = persistent_ts;
++}
++
++/**
++ * omap_init_clocksource_32k - setup and register counter 32k as a
++ * kernel clocksource
++ * @pbase: base addr of counter_32k module
++ * @size: size of counter_32k to map
++ *
++ * Returns 0 upon success or negative error code upon failure.
++ *
++ */
++int __init omap_init_clocksource_32k(void __iomem *vbase)
++{
++	int ret;
++
++	/*
++	 * 32k sync Counter IP register offsets vary between the
++	 * highlander version and the legacy ones.
++	 * The 'SCHEME' bits(30-31) of the revision register is used
++	 * to identify the version.
++	 */
++	if (readl_relaxed(vbase + OMAP2_32KSYNCNT_REV_OFF) &
++						OMAP2_32KSYNCNT_REV_SCHEME)
++		sync32k_cnt_reg = vbase + OMAP2_32KSYNCNT_CR_OFF_HIGH;
++	else
++		sync32k_cnt_reg = vbase + OMAP2_32KSYNCNT_CR_OFF_LOW;
++
++	/*
++	 * 120000 rough estimate from the calculations in
++	 * __clocksource_update_freq_scale.
++	 */
++	clocks_calc_mult_shift(&persistent_mult, &persistent_shift,
++			32768, NSEC_PER_SEC, 120000);
++
++	ret = clocksource_mmio_init(sync32k_cnt_reg, "32k_counter", 32768,
++				250, 32, clocksource_mmio_readl_up);
++	if (ret) {
++		pr_err("32k_counter: can't register clocksource\n");
++		return ret;
++	}
++
++	sched_clock_register(omap_32k_read_sched_clock, 32, 32768);
++	register_persistent_clock(omap_read_persistent_clock64);
++	pr_info("OMAP clocksource: 32k_counter at 32768 Hz\n");
++
++	return 0;
++}
++
+ /*
+  * ---------------------------------------------------------------------------
+  * Timer initialization
+diff --git a/arch/arm/plat-omap/Kconfig b/arch/arm/plat-omap/Kconfig
+index 272670ef1e92..dfa19d5030e3 100644
+--- a/arch/arm/plat-omap/Kconfig
++++ b/arch/arm/plat-omap/Kconfig
+@@ -72,23 +72,6 @@ config OMAP_MPU_TIMER
+ 	  timer provides more intra-tick resolution than the 32KHz timer,
+ 	  but consumes more power.
  
--#ifndef CONFIG_ARCH_OMAP1
--enum { DMA_CH_ALLOC_DONE, DMA_CH_PARAMS_SET_DONE, DMA_CH_STARTED,
--	DMA_CH_QUEUED, DMA_CH_NOTSTARTED, DMA_CH_PAUSED, DMA_CH_LINK_ENABLED
--};
+-config OMAP_32K_TIMER
+-	bool "Use 32KHz timer"
+-	depends on ARCH_OMAP16XX || ARCH_OMAP2PLUS
+-	default y if (ARCH_OMAP16XX || ARCH_OMAP2PLUS)
+-	help
+-	  Select this option if you want to enable the OMAP 32KHz timer.
+-	  This timer saves power compared to the OMAP_MPU_TIMER, and has
+-	  support for no tick during idle. The 32KHz timer provides less
+-	  intra-tick resolution than OMAP_MPU_TIMER. The 32KHz timer is
+-	  currently only available for OMAP16XX, 24XX, 34XX, OMAP4/5 and DRA7XX.
 -
--enum { DMA_CHAIN_STARTED, DMA_CHAIN_NOTSTARTED };
--#endif
+-	  On OMAP2PLUS this value is only used for CONFIG_HZ and
+-	  CLOCK_TICK_RATE compile time calculation.
+-	  The actual timer selection is done in the board file
+-	  through the (DT_)MACHINE_START structure.
 -
- #define OMAP_DMA_ACTIVE			0x01
--#define OMAP2_DMA_CSR_CLEAR_MASK	0xffffffff
+-
+ config OMAP3_L2_AUX_SECURE_SAVE_RESTORE
+ 	bool "OMAP3 HS/EMU save and restore for L2 AUX control register"
+ 	depends on ARCH_OMAP3 && PM
+diff --git a/arch/arm/plat-omap/Makefile b/arch/arm/plat-omap/Makefile
+index 371f2ed00eda..98a7b607873a 100644
+--- a/arch/arm/plat-omap/Makefile
++++ b/arch/arm/plat-omap/Makefile
+@@ -6,7 +6,7 @@
+ ccflags-$(CONFIG_ARCH_MULTIPLATFORM) := -I$(srctree)/arch/arm/plat-omap/include
  
- #define OMAP_FUNC_MUX_ARM_BASE		(0xfffe1000 + 0xec)
+ # Common support
+-obj-y := sram.o dma.o counter_32k.o
++obj-y := sram.o dma.o
  
-@@ -94,13 +83,9 @@ static inline void omap_disable_channel_irq(int lch)
- 	/* disable channel interrupts */
- 	p->dma_write(0, CICR, lch);
- 	/* Clear CSR */
--	if (dma_omap1())
--		p->dma_read(CSR, lch);
+ # omap_device support (OMAP2+ only at the moment)
+ 
+diff --git a/arch/arm/plat-omap/counter_32k.c b/arch/arm/plat-omap/counter_32k.c
+deleted file mode 100644
+index 7a729ade2105..000000000000
+--- a/arch/arm/plat-omap/counter_32k.c
++++ /dev/null
+@@ -1,114 +0,0 @@
+-// SPDX-License-Identifier: GPL-2.0-only
+-/*
+- * OMAP 32ksynctimer/counter_32k-related code
+- *
+- * Copyright (C) 2009 Texas Instruments
+- * Copyright (C) 2010 Nokia Corporation
+- * Tony Lindgren <tony@atomide.com>
+- * Added OMAP4 support - Santosh Shilimkar <santosh.shilimkar@ti.com>
+- *
+- * NOTE: This timer is not the same timer as the old OMAP1 MPU timer.
+- */
+-#include <linux/kernel.h>
+-#include <linux/init.h>
+-#include <linux/clk.h>
+-#include <linux/err.h>
+-#include <linux/io.h>
+-#include <linux/clocksource.h>
+-#include <linux/sched_clock.h>
+-
+-#include <asm/mach/time.h>
+-
+-#include <plat/counter-32k.h>
+-
+-/* OMAP2_32KSYNCNT_CR_OFF: offset of 32ksync counter register */
+-#define OMAP2_32KSYNCNT_REV_OFF		0x0
+-#define OMAP2_32KSYNCNT_REV_SCHEME	(0x3 << 30)
+-#define OMAP2_32KSYNCNT_CR_OFF_LOW	0x10
+-#define OMAP2_32KSYNCNT_CR_OFF_HIGH	0x30
+-
+-/*
+- * 32KHz clocksource ... always available, on pretty most chips except
+- * OMAP 730 and 1510.  Other timers could be used as clocksources, with
+- * higher resolution in free-running counter modes (e.g. 12 MHz xtal),
+- * but systems won't necessarily want to spend resources that way.
+- */
+-static void __iomem *sync32k_cnt_reg;
+-
+-static u64 notrace omap_32k_read_sched_clock(void)
+-{
+-	return sync32k_cnt_reg ? readl_relaxed(sync32k_cnt_reg) : 0;
+-}
+-
+-/**
+- * omap_read_persistent_clock64 -  Return time from a persistent clock.
+- *
+- * Reads the time from a source which isn't disabled during PM, the
+- * 32k sync timer.  Convert the cycles elapsed since last read into
+- * nsecs and adds to a monotonically increasing timespec64.
+- */
+-static struct timespec64 persistent_ts;
+-static cycles_t cycles;
+-static unsigned int persistent_mult, persistent_shift;
+-
+-static void omap_read_persistent_clock64(struct timespec64 *ts)
+-{
+-	unsigned long long nsecs;
+-	cycles_t last_cycles;
+-
+-	last_cycles = cycles;
+-	cycles = sync32k_cnt_reg ? readl_relaxed(sync32k_cnt_reg) : 0;
+-
+-	nsecs = clocksource_cyc2ns(cycles - last_cycles,
+-					persistent_mult, persistent_shift);
+-
+-	timespec64_add_ns(&persistent_ts, nsecs);
+-
+-	*ts = persistent_ts;
+-}
+-
+-/**
+- * omap_init_clocksource_32k - setup and register counter 32k as a
+- * kernel clocksource
+- * @pbase: base addr of counter_32k module
+- * @size: size of counter_32k to map
+- *
+- * Returns 0 upon success or negative error code upon failure.
+- *
+- */
+-int __init omap_init_clocksource_32k(void __iomem *vbase)
+-{
+-	int ret;
+-
+-	/*
+-	 * 32k sync Counter IP register offsets vary between the
+-	 * highlander version and the legacy ones.
+-	 * The 'SCHEME' bits(30-31) of the revision register is used
+-	 * to identify the version.
+-	 */
+-	if (readl_relaxed(vbase + OMAP2_32KSYNCNT_REV_OFF) &
+-						OMAP2_32KSYNCNT_REV_SCHEME)
+-		sync32k_cnt_reg = vbase + OMAP2_32KSYNCNT_CR_OFF_HIGH;
 -	else
--		p->dma_write(OMAP2_DMA_CSR_CLEAR_MASK, CSR, lch);
-+	p->dma_read(CSR, lch);
- }
- 
--#ifdef CONFIG_ARCH_OMAP1
- static inline void set_gdma_dev(int req, int dev)
- {
- 	u32 reg = OMAP_FUNC_MUX_ARM_BASE + ((req - 1) / 5) * 4;
-@@ -112,11 +97,6 @@ static inline void set_gdma_dev(int req, int dev)
- 	l |= (dev - 1) << shift;
- 	omap_writel(l, reg);
- }
--#else
--#define set_gdma_dev(req, dev)	do {} while (0)
--#define omap_readl(reg)		0
--#define omap_writel(val, reg)	do {} while (0)
--#endif
- 
- #ifdef CONFIG_ARCH_OMAP1
- void omap_set_dma_priority(int lch, int dst_port, int priority)
-@@ -181,59 +161,24 @@ void omap_set_dma_transfer_params(int lch, int data_type, int elem_count,
- 				  int dma_trigger, int src_or_dst_synch)
- {
- 	u32 l;
-+	u16 ccr;
- 
- 	l = p->dma_read(CSDP, lch);
- 	l &= ~0x03;
- 	l |= data_type;
- 	p->dma_write(l, CSDP, lch);
- 
--	if (dma_omap1()) {
--		u16 ccr;
+-		sync32k_cnt_reg = vbase + OMAP2_32KSYNCNT_CR_OFF_LOW;
 -
--		ccr = p->dma_read(CCR, lch);
--		ccr &= ~(1 << 5);
--		if (sync_mode == OMAP_DMA_SYNC_FRAME)
--			ccr |= 1 << 5;
--		p->dma_write(ccr, CCR, lch);
+-	/*
+-	 * 120000 rough estimate from the calculations in
+-	 * __clocksource_update_freq_scale.
+-	 */
+-	clocks_calc_mult_shift(&persistent_mult, &persistent_shift,
+-			32768, NSEC_PER_SEC, 120000);
 -
--		ccr = p->dma_read(CCR2, lch);
--		ccr &= ~(1 << 2);
--		if (sync_mode == OMAP_DMA_SYNC_BLOCK)
--			ccr |= 1 << 2;
--		p->dma_write(ccr, CCR2, lch);
+-	ret = clocksource_mmio_init(sync32k_cnt_reg, "32k_counter", 32768,
+-				250, 32, clocksource_mmio_readl_up);
+-	if (ret) {
+-		pr_err("32k_counter: can't register clocksource\n");
+-		return ret;
 -	}
 -
--	if (dma_omap2plus() && dma_trigger) {
--		u32 val;
+-	sched_clock_register(omap_32k_read_sched_clock, 32, 32768);
+-	register_persistent_clock(omap_read_persistent_clock64);
+-	pr_info("OMAP clocksource: 32k_counter at 32768 Hz\n");
 -
--		val = p->dma_read(CCR, lch);
--
--		/* DMA_SYNCHRO_CONTROL_UPPER depends on the channel number */
--		val &= ~((1 << 23) | (3 << 19) | 0x1f);
--		val |= (dma_trigger & ~0x1f) << 14;
--		val |= dma_trigger & 0x1f;
--
--		if (sync_mode & OMAP_DMA_SYNC_FRAME)
--			val |= 1 << 5;
--		else
--			val &= ~(1 << 5);
--
--		if (sync_mode & OMAP_DMA_SYNC_BLOCK)
--			val |= 1 << 18;
--		else
--			val &= ~(1 << 18);
--
--		if (src_or_dst_synch == OMAP_DMA_DST_SYNC_PREFETCH) {
--			val &= ~(1 << 24);	/* dest synch */
--			val |= (1 << 23);	/* Prefetch */
--		} else if (src_or_dst_synch) {
--			val |= 1 << 24;		/* source synch */
--		} else {
--			val &= ~(1 << 24);	/* dest synch */
--		}
--		p->dma_write(val, CCR, lch);
--	}
-+	ccr = p->dma_read(CCR, lch);
-+	ccr &= ~(1 << 5);
-+	if (sync_mode == OMAP_DMA_SYNC_FRAME)
-+		ccr |= 1 << 5;
-+	p->dma_write(ccr, CCR, lch);
- 
-+	ccr = p->dma_read(CCR2, lch);
-+	ccr &= ~(1 << 2);
-+	if (sync_mode == OMAP_DMA_SYNC_BLOCK)
-+		ccr |= 1 << 2;
-+	p->dma_write(ccr, CCR2, lch);
- 	p->dma_write(elem_count, CEN, lch);
- 	p->dma_write(frame_count, CFN, lch);
- }
-@@ -241,7 +186,7 @@ EXPORT_SYMBOL(omap_set_dma_transfer_params);
- 
- void omap_set_dma_channel_mode(int lch, enum omap_dma_channel_mode mode)
- {
--	if (dma_omap1() && !dma_omap15xx()) {
-+	if (!dma_omap15xx()) {
- 		u32 l;
- 
- 		l = p->dma_read(LCH_CTRL, lch);
-@@ -258,15 +203,12 @@ void omap_set_dma_src_params(int lch, int src_port, int src_amode,
- 			     int src_ei, int src_fi)
- {
- 	u32 l;
-+	u16 w;
- 
--	if (dma_omap1()) {
--		u16 w;
--
--		w = p->dma_read(CSDP, lch);
--		w &= ~(0x1f << 2);
--		w |= src_port << 2;
--		p->dma_write(w, CSDP, lch);
--	}
-+	w = p->dma_read(CSDP, lch);
-+	w &= ~(0x1f << 2);
-+	w |= src_port << 2;
-+	p->dma_write(w, CSDP, lch);
- 
- 	l = p->dma_read(CCR, lch);
- 	l &= ~(0x03 << 12);
-@@ -304,26 +246,15 @@ void omap_set_dma_src_burst_mode(int lch, enum omap_dma_burst_mode burst_mode)
- 	case OMAP_DMA_DATA_BURST_DIS:
- 		break;
- 	case OMAP_DMA_DATA_BURST_4:
--		if (dma_omap2plus())
--			burst = 0x1;
--		else
--			burst = 0x2;
-+		burst = 0x2;
- 		break;
- 	case OMAP_DMA_DATA_BURST_8:
--		if (dma_omap2plus()) {
--			burst = 0x2;
--			break;
--		}
- 		/*
- 		 * not supported by current hardware on OMAP1
- 		 * w |= (0x03 << 7);
- 		 */
- 		fallthrough;
- 	case OMAP_DMA_DATA_BURST_16:
--		if (dma_omap2plus()) {
--			burst = 0x3;
--			break;
--		}
- 		/* OMAP1 don't support burst 16 */
- 		fallthrough;
- 	default:
-@@ -342,12 +273,10 @@ void omap_set_dma_dest_params(int lch, int dest_port, int dest_amode,
- {
- 	u32 l;
- 
--	if (dma_omap1()) {
--		l = p->dma_read(CSDP, lch);
--		l &= ~(0x1f << 9);
--		l |= dest_port << 9;
--		p->dma_write(l, CSDP, lch);
--	}
-+	l = p->dma_read(CSDP, lch);
-+	l &= ~(0x1f << 9);
-+	l |= dest_port << 9;
-+	p->dma_write(l, CSDP, lch);
- 
- 	l = p->dma_read(CCR, lch);
- 	l &= ~(0x03 << 14);
-@@ -385,22 +314,12 @@ void omap_set_dma_dest_burst_mode(int lch, enum omap_dma_burst_mode burst_mode)
- 	case OMAP_DMA_DATA_BURST_DIS:
- 		break;
- 	case OMAP_DMA_DATA_BURST_4:
--		if (dma_omap2plus())
--			burst = 0x1;
--		else
--			burst = 0x2;
-+		burst = 0x2;
- 		break;
- 	case OMAP_DMA_DATA_BURST_8:
--		if (dma_omap2plus())
--			burst = 0x2;
--		else
--			burst = 0x3;
-+		burst = 0x3;
- 		break;
- 	case OMAP_DMA_DATA_BURST_16:
--		if (dma_omap2plus()) {
--			burst = 0x3;
--			break;
--		}
- 		/* OMAP1 don't support burst 16 */
- 		fallthrough;
- 	default:
-@@ -416,10 +335,7 @@ EXPORT_SYMBOL(omap_set_dma_dest_burst_mode);
- static inline void omap_enable_channel_irq(int lch)
- {
- 	/* Clear CSR */
--	if (dma_omap1())
--		p->dma_read(CSR, lch);
--	else
--		p->dma_write(OMAP2_DMA_CSR_CLEAR_MASK, CSR, lch);
-+	p->dma_read(CSR, lch);
- 
- 	/* Enable some nice interrupts. */
- 	p->dma_write(dma_chan[lch].enabled_irqs, CICR, lch);
-@@ -437,8 +353,7 @@ static inline void enable_lnk(int lch)
- 
- 	l = p->dma_read(CLNK_CTRL, lch);
- 
--	if (dma_omap1())
--		l &= ~(1 << 14);
-+	l &= ~(1 << 14);
- 
- 	/* Set the ENABLE_LNK bits */
- 	if (dma_chan[lch].next_lch != -1)
-@@ -456,15 +371,8 @@ static inline void disable_lnk(int lch)
- 	/* Disable interrupts */
- 	omap_disable_channel_irq(lch);
- 
--	if (dma_omap1()) {
--		/* Set the STOP_LNK bit */
--		l |= 1 << 14;
--	}
--
--	if (dma_omap2plus()) {
--		/* Clear the ENABLE_LNK bit */
--		l &= ~(1 << 15);
--	}
-+	/* Set the STOP_LNK bit */
-+	l |= 1 << 14;
- 
- 	p->dma_write(l, CLNK_CTRL, lch);
- 	dma_chan[lch].flags &= ~OMAP_DMA_ACTIVE;
-@@ -508,8 +416,7 @@ int omap_request_dma(int dev_id, const char *dev_name,
- 
- 	chan->enabled_irqs = OMAP_DMA_DROP_IRQ | OMAP_DMA_BLOCK_IRQ;
- 
--	if (dma_omap1())
--		chan->enabled_irqs |= OMAP1_DMA_TOUT_IRQ;
-+	chan->enabled_irqs |= OMAP1_DMA_TOUT_IRQ;
- 
- 	if (dma_omap16xx()) {
- 		/* If the sync device is set, configure it dynamically. */
-@@ -522,7 +429,7 @@ int omap_request_dma(int dev_id, const char *dev_name,
- 		 * id.
- 		 */
- 		p->dma_write(dev_id | (1 << 10), CCR, free_ch);
--	} else if (dma_omap1()) {
-+	} else {
- 		p->dma_write(dev_id, CCR, free_ch);
- 	}
- 
-@@ -739,8 +646,7 @@ dma_addr_t omap_get_dma_src_pos(int lch)
- 			offset = p->dma_read(CSSA, lch);
- 	}
- 
--	if (dma_omap1())
--		offset |= (p->dma_read(CSSA, lch) & 0xFFFF0000);
-+	offset |= (p->dma_read(CSSA, lch) & 0xFFFF0000);
- 
- 	return offset;
- }
-@@ -778,8 +684,7 @@ dma_addr_t omap_get_dma_dst_pos(int lch)
- 			offset = p->dma_read(CDSA, lch);
- 	}
- 
--	if (dma_omap1())
--		offset |= (p->dma_read(CDSA, lch) & 0xFFFF0000);
-+	offset |= (p->dma_read(CDSA, lch) & 0xFFFF0000);
- 
- 	return offset;
- }
-@@ -796,9 +701,8 @@ int omap_dma_running(void)
- {
- 	int lch;
- 
--	if (dma_omap1())
--		if (omap_lcd_dma_running())
--			return 1;
-+	if (omap_lcd_dma_running())
-+		return 1;
- 
- 	for (lch = 0; lch < dma_chan_count; lch++)
- 		if (p->dma_read(CCR, lch) & OMAP_DMA_CCR_EN)
-@@ -809,8 +713,6 @@ int omap_dma_running(void)
- 
- /*----------------------------------------------------------------------------*/
- 
--#ifdef CONFIG_ARCH_OMAP1
--
- static int omap1_dma_handle_ch(int ch)
- {
- 	u32 csr;
-@@ -863,10 +765,6 @@ static irqreturn_t omap1_dma_irq_handler(int irq, void *dev_id)
- 	return handled ? IRQ_HANDLED : IRQ_NONE;
- }
- 
--#else
--#define omap1_dma_irq_handler	NULL
--#endif
--
- struct omap_system_dma_plat_info *omap_get_plat_info(void)
- {
- 	return p;
-@@ -912,29 +810,27 @@ static int omap_system_dma_probe(struct platform_device *pdev)
- 		if (ch >= 6 && enable_1510_mode)
- 			continue;
- 
--		if (dma_omap1()) {
--			/*
--			 * request_irq() doesn't like dev_id (ie. ch) being
--			 * zero, so we have to kludge around this.
--			 */
--			sprintf(&irq_name[0], "%d", ch);
--			dma_irq = platform_get_irq_byname(pdev, irq_name);
--
--			if (dma_irq < 0) {
--				ret = dma_irq;
--				goto exit_dma_irq_fail;
--			}
--
--			/* INT_DMA_LCD is handled in lcd_dma.c */
--			if (dma_irq == INT_DMA_LCD)
--				continue;
--
--			ret = request_irq(dma_irq,
--					omap1_dma_irq_handler, 0, "DMA",
--					(void *) (ch + 1));
--			if (ret != 0)
--				goto exit_dma_irq_fail;
-+		/*
-+		 * request_irq() doesn't like dev_id (ie. ch) being
-+		 * zero, so we have to kludge around this.
-+		 */
-+		sprintf(&irq_name[0], "%d", ch);
-+		dma_irq = platform_get_irq_byname(pdev, irq_name);
-+
-+		if (dma_irq < 0) {
-+			ret = dma_irq;
-+			goto exit_dma_irq_fail;
- 		}
-+
-+		/* INT_DMA_LCD is handled in lcd_dma.c */
-+		if (dma_irq == INT_DMA_LCD)
-+			continue;
-+
-+		ret = request_irq(dma_irq,
-+				omap1_dma_irq_handler, 0, "DMA",
-+				(void *) (ch + 1));
-+		if (ret != 0)
-+			goto exit_dma_irq_fail;
- 	}
- 
- 	/* reserve dma channels 0 and 1 in high security devices on 34xx */
-@@ -954,9 +850,6 @@ static int omap_system_dma_remove(struct platform_device *pdev)
- {
- 	int dma_irq, irq_rel = 0;
- 
--	if (dma_omap2plus())
--		return 0;
--
- 	for ( ; irq_rel < dma_chan_count; irq_rel++) {
- 		dma_irq = platform_get_irq(pdev, irq_rel);
- 		free_irq(dma_irq, (void *)(irq_rel + 1));
+-	return 0;
+-}
+diff --git a/arch/arm/plat-omap/include/plat/counter-32k.h b/arch/arm/plat-omap/include/plat/counter-32k.h
+deleted file mode 100644
+index da000d482ff2..000000000000
+--- a/arch/arm/plat-omap/include/plat/counter-32k.h
++++ /dev/null
+@@ -1 +0,0 @@
+-int omap_init_clocksource_32k(void __iomem *vbase);
 -- 
 2.29.2
 
