@@ -2,35 +2,35 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 95171C4332F
-	for <dmaengine@archiver.kernel.org>; Tue, 19 Apr 2022 13:44:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3F5A5C433F5
+	for <dmaengine@archiver.kernel.org>; Tue, 19 Apr 2022 13:45:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242585AbiDSNqo (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 19 Apr 2022 09:46:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41292 "EHLO
+        id S232898AbiDSNsP (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 19 Apr 2022 09:48:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43164 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243252AbiDSNpW (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Tue, 19 Apr 2022 09:45:22 -0400
+        with ESMTP id S1353004AbiDSNru (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Tue, 19 Apr 2022 09:47:50 -0400
 Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D4E1938DA8;
-        Tue, 19 Apr 2022 06:41:34 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 31BD239839;
+        Tue, 19 Apr 2022 06:42:06 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 57A0AB81987;
-        Tue, 19 Apr 2022 13:41:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BB39C385A8;
-        Tue, 19 Apr 2022 13:41:24 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 88111B81986;
+        Tue, 19 Apr 2022 13:42:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D256C385A5;
+        Tue, 19 Apr 2022 13:41:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1650375692;
-        bh=tnWw7oBH8X/XBSc06dB4T/Xrxth9FWCIgmXAbL0gUiI=;
+        s=k20201202; t=1650375722;
+        bh=b8M7Htp8PC1M3UqN4COpkh3W696Svq9K1vaNWm/6ehg=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=l353b3xn7RP12XuOF9Cs9zO9tge/orX72WpKCH58E7muL7FyXckbWebpZVTgREpYO
-         94nj83AEJ8G4ma3/hGOjwiDA7u44mm32sOWTOmedTY1j9E754Khi/eBhNw7sZcR/fP
-         sEELa4g6tqqCHlME51Brhwnr6YLWLyI8Af7wRGM8o8xD8amnnB09engI4zVkiclXXu
-         mCNS0Sb+wp3+DZySStUMonTFolm2Ob9v/CLQNN4JWPX7Aweoh7N2XbyQM1ddcyBgBz
-         1g2qalhGNLlbW40TdlyWoLmDXnGz4w+LLuOQpSk9G4QwyJjZxE6HKbSgWD1lwNbvb3
-         UwCXSJ2vUo86g==
+        b=WO+hx1jvcO8sNvVYXwtk9yzViyIi/AeD0vyEdyCzAJ0epFG3OGq2Fn7Q2EGQVFZtL
+         lxuUOfpn5uHFQi9GsZUgd6pDtHMGP4raATiMUNW5ZDgt1Mx2Nw3Wma2I/LO2HpIx7E
+         xUcwEuvzj7umr7FkY4CRlMIXjMQvfrB/eUY+gzYzcxeP8V0TSSePzn/s5Bzv+cR+NL
+         E7plBnP5gpO17xOQMhGm9BvxgJ5ifb3qFbpNxGlNnaeWblY970wnie8dXu9AYsKFAH
+         ZR4rCJZff8i/YehkU19EDTDNz/bmaatCQOWZ7ZUnBrKD8BeNNfnxpY761tWUDxDIY6
+         FSC+791LABy0A==
 From:   Arnd Bergmann <arnd@kernel.org>
 To:     linux-omap@vger.kernel.org, tony@atomide.com, aaro.koskinen@iki.fi,
         jmkrzyszt@gmail.com
@@ -57,9 +57,9 @@ Cc:     Arnd Bergmann <arnd@arndb.de>,
         linux-input@vger.kernel.org, linux-mmc@vger.kernel.org,
         linux-serial@vger.kernel.org, dri-devel@lists.freedesktop.org,
         linux-fbdev@vger.kernel.org, alsa-devel@alsa-project.org
-Subject: [PATCH 31/41] ARM: OMAP1: clock: Fix early UART rate issues
-Date:   Tue, 19 Apr 2022 15:37:13 +0200
-Message-Id: <20220419133723.1394715-32-arnd@kernel.org>
+Subject: [PATCH 35/41] usb: host: ohci-omap: Make it CCF clk API compatible
+Date:   Tue, 19 Apr 2022 15:37:17 +0200
+Message-Id: <20220419133723.1394715-36-arnd@kernel.org>
 X-Mailer: git-send-email 2.29.2
 In-Reply-To: <20220419133723.1394715-1-arnd@kernel.org>
 References: <20220419133723.1394715-1-arnd@kernel.org>
@@ -71,50 +71,78 @@ X-Mailing-List: dmaengine@vger.kernel.org
 
 From: Janusz Krzysztofik <jmkrzyszt@gmail.com>
 
-Commit ef772f2ee31e ("ARM: OMAP: Fix CONFIG_DEBUG_LL") was supposed to fix
-low level debugging, most possibly by early enabling UART clocks.  The fix
-actually introduced early reset of most bits of MOD_CONF_CTRL_0 register,
-with the exception of UART1 and UART2 clock related bits which were set
-high.  However, UART1 clock bit can play different roles on different
-OMAP1 variants.  On OMAP1610 it enables the clock as intended, but on
-OMAP1510 it switches the clock rate from 12 to 48 MHz.  Even worth, for
-UART2 the bit changes its clock rate also on OMAP1610.  As a result, UART
-rates set by a bootloader can be unintentionally changed early on kernel
-boot and low level debugging broken, not fixed.  Besides, reset of all
-other bits was not justified.
+The driver, OMAP1 specific, now omits clk_prepare/unprepare() steps, not
+supported by OMAP1 custom implementation of clock API.  However, non-CCF
+stubs of those functions exist for use on such platforms until converted
+to CCF.
 
-Don't touch register bits not related to UART clocks.  Also, don't touch
-the bit of UART2 clock.  Make sure UART1 and UART3 are enabled early on
-relevant OMAP1610 machine types while preserving bootloader UART clock
-rates on others.
+Update the driver to be compatible with CCF implementation of clock API.
 
 Signed-off-by: Janusz Krzysztofik <jmkrzyszt@gmail.com>
+Acked-by: Alan Stern <stern@rowland.harvard.edu>
 Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 ---
- arch/arm/mach-omap1/clock_data.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/usb/host/ohci-omap.c | 18 ++++++++++++++++--
+ 1 file changed, 16 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm/mach-omap1/clock_data.c b/arch/arm/mach-omap1/clock_data.c
-index 36f04da4b939..57d3752babf8 100644
---- a/arch/arm/mach-omap1/clock_data.c
-+++ b/arch/arm/mach-omap1/clock_data.c
-@@ -766,11 +766,11 @@ int __init omap1_clk_init(void)
- 	u32 reg;
+diff --git a/drivers/usb/host/ohci-omap.c b/drivers/usb/host/ohci-omap.c
+index 069791d25abb..f5bc9c8bdc9a 100644
+--- a/drivers/usb/host/ohci-omap.c
++++ b/drivers/usb/host/ohci-omap.c
+@@ -259,6 +259,10 @@ static int ohci_hcd_omap_probe(struct platform_device *pdev)
+ 		goto err_put_hcd;
+ 	}
  
- #ifdef CONFIG_DEBUG_LL
--	/*
--	 * Resets some clocks that may be left on from bootloader,
--	 * but leaves serial clocks on.
--	 */
--	omap_writel(0x3 << 29, MOD_CONF_CTRL_0);
-+	/* Make sure UART clocks are enabled early */
-+	if (cpu_is_omap16xx())
-+		omap_writel(omap_readl(MOD_CONF_CTRL_0) |
-+			    CONF_MOD_UART1_CLK_MODE_R |
-+			    CONF_MOD_UART3_CLK_MODE_R, MOD_CONF_CTRL_0);
- #endif
++	retval = clk_prepare(priv->usb_host_ck);
++	if (retval)
++		goto err_put_host_ck;
++
+ 	if (!cpu_is_omap15xx())
+ 		priv->usb_dc_ck = clk_get(&pdev->dev, "usb_dc_ck");
+ 	else
+@@ -266,13 +270,17 @@ static int ohci_hcd_omap_probe(struct platform_device *pdev)
  
- 	/* USB_REQ_EN will be disabled later if necessary (usb_dc_ck) */
+ 	if (IS_ERR(priv->usb_dc_ck)) {
+ 		retval = PTR_ERR(priv->usb_dc_ck);
+-		goto err_put_host_ck;
++		goto err_unprepare_host_ck;
+ 	}
+ 
++	retval = clk_prepare(priv->usb_dc_ck);
++	if (retval)
++		goto err_put_dc_ck;
++
+ 	if (!request_mem_region(hcd->rsrc_start, hcd->rsrc_len, hcd_name)) {
+ 		dev_dbg(&pdev->dev, "request_mem_region failed\n");
+ 		retval = -EBUSY;
+-		goto err_put_dc_ck;
++		goto err_unprepare_dc_ck;
+ 	}
+ 
+ 	hcd->regs = ioremap(hcd->rsrc_start, hcd->rsrc_len);
+@@ -297,8 +305,12 @@ static int ohci_hcd_omap_probe(struct platform_device *pdev)
+ 	iounmap(hcd->regs);
+ err2:
+ 	release_mem_region(hcd->rsrc_start, hcd->rsrc_len);
++err_unprepare_dc_ck:
++	clk_unprepare(priv->usb_dc_ck);
+ err_put_dc_ck:
+ 	clk_put(priv->usb_dc_ck);
++err_unprepare_host_ck:
++	clk_unprepare(priv->usb_host_ck);
+ err_put_host_ck:
+ 	clk_put(priv->usb_host_ck);
+ err_put_hcd:
+@@ -333,7 +345,9 @@ static int ohci_hcd_omap_remove(struct platform_device *pdev)
+ 	}
+ 	iounmap(hcd->regs);
+ 	release_mem_region(hcd->rsrc_start, hcd->rsrc_len);
++	clk_unprepare(priv->usb_dc_ck);
+ 	clk_put(priv->usb_dc_ck);
++	clk_unprepare(priv->usb_host_ck);
+ 	clk_put(priv->usb_host_ck);
+ 	usb_put_hcd(hcd);
+ 	return 0;
 -- 
 2.29.2
 
