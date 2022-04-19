@@ -2,35 +2,35 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9DA0FC433EF
-	for <dmaengine@archiver.kernel.org>; Tue, 19 Apr 2022 13:41:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4B5F1C433FE
+	for <dmaengine@archiver.kernel.org>; Tue, 19 Apr 2022 13:41:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1352558AbiDSNnX (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 19 Apr 2022 09:43:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39934 "EHLO
+        id S238615AbiDSNoc (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 19 Apr 2022 09:44:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36996 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234762AbiDSNnI (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Tue, 19 Apr 2022 09:43:08 -0400
+        with ESMTP id S1352642AbiDSNmf (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Tue, 19 Apr 2022 09:42:35 -0400
 Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C35AE182;
-        Tue, 19 Apr 2022 06:40:25 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2698A3818F;
+        Tue, 19 Apr 2022 06:39:26 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 7A754B81983;
-        Tue, 19 Apr 2022 13:40:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B32FFC385A5;
-        Tue, 19 Apr 2022 13:40:15 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id BD100B81980;
+        Tue, 19 Apr 2022 13:39:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB547C385A5;
+        Tue, 19 Apr 2022 13:39:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1650375623;
-        bh=R5zRvKa0SoyT3N6cs+9ATf3vspiQLolbMLlEiLA/7fA=;
+        s=k20201202; t=1650375563;
+        bh=e/6LwBQRyYsqoQ1/3hfke8Tr/1qpFFXXNWHXWvPRr1U=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=h4qvsRlCqc1+D/Un3T++kg9XOlylFj9tu57mNt8nm00hUNQ6OKBJwfaNIy8CUc5b/
-         qlJ5Qll9E9CFFYZxtIhDJzmK+qDlqq4+ArAd2BBXudLqHYrCpKgbUoCnwsfLaR2pgk
-         Q7EkW4bPFi3bk0l1eRnod+7F8TcxdVYbp1x3X1kd6GHmuGnsuLz3ITS24UVsnNzXdg
-         x/K6BdB+SIi+C9NttQpeR53oMsrljIEQWrLP8CdiwfvAVwJt/CIv2ZT1IB0hwp9ZMU
-         YhjJTR86Ah4hamcr5wDfPSVrUyclrlzsHDyDQ4lgL5SrWli+rzKao8UrzltowcxyNH
-         vWiGzLOvfg/Eg==
+        b=iV3cqgxsdj2upxQIoK91L/txRXqfjq76PvDRmkXJrWp/FZGP3UwajNZc3LzYUXwep
+         Wpjx5B2mgf8pPs8V3T9NF38UepMlWko7fW3ElDUkn1L39NbypTyjb4e3cTF2YtXtQM
+         rZZBrb0moVxeTXaoNCmPZjxeZFc2BxdRbHQTb85h/EtHpKNmkXtvFfU3G1YcCDbWMG
+         CVWPbZyeLymL8KTq6UQjFFxy8H40arcYLX9BtcjX8Nx5GCgnb/7f2+XzLLpVS0D1gI
+         fGuz9dkWZKrYHjDKwJ8ucl3hOEywWE023+f3G2C7nEhMm4yp70/BMqYBIQ5am0gbGx
+         IBMrD0Q8dumig==
 From:   Arnd Bergmann <arnd@kernel.org>
 To:     linux-omap@vger.kernel.org, tony@atomide.com, aaro.koskinen@iki.fi,
         jmkrzyszt@gmail.com
@@ -57,9 +57,9 @@ Cc:     Arnd Bergmann <arnd@arndb.de>,
         linux-input@vger.kernel.org, linux-mmc@vger.kernel.org,
         linux-serial@vger.kernel.org, dri-devel@lists.freedesktop.org,
         linux-fbdev@vger.kernel.org, alsa-devel@alsa-project.org
-Subject: [PATCH 22/41] ARM: omap1: move plat/dma.c to mach/omap-dma.c
-Date:   Tue, 19 Apr 2022 15:37:04 +0200
-Message-Id: <20220419133723.1394715-23-arnd@kernel.org>
+Subject: [PATCH 14/41] serial: 8250/omap1: include linux/soc/ti/omap1-soc.h
+Date:   Tue, 19 Apr 2022 15:36:56 +0200
+Message-Id: <20220419133723.1394715-15-arnd@kernel.org>
 X-Mailer: git-send-email 2.29.2
 In-Reply-To: <20220419133723.1394715-1-arnd@kernel.org>
 References: <20220419133723.1394715-1-arnd@kernel.org>
@@ -71,48 +71,27 @@ X-Mailing-List: dmaengine@vger.kernel.org
 
 From: Arnd Bergmann <arnd@arndb.de>
 
-Most of the interface functions in plat/dma.c are only used from the
-USB driver, which is practically OMAP1 specific, except for compile
-testing.
-
-The omap_get_plat_info(), omap_request_dma() and omap_free_dma()
-functions are never called on omap2 because of runtime checks.
+As a preparation for cleaning up the omap1 headers, start
+including linux/soc/ti/omap1-soc.h directly so we can
+keep calling cpu_is_omap1510().
 
 Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 ---
- arch/arm/mach-omap1/Makefile                        | 2 +-
- arch/arm/{plat-omap/dma.c => mach-omap1/omap-dma.c} | 0
- arch/arm/plat-omap/Makefile                         | 2 +-
- 3 files changed, 2 insertions(+), 2 deletions(-)
- rename arch/arm/{plat-omap/dma.c => mach-omap1/omap-dma.c} (100%)
+ drivers/tty/serial/8250/8250.h | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm/mach-omap1/Makefile b/arch/arm/mach-omap1/Makefile
-index 450bbf552b57..0615cb0ba580 100644
---- a/arch/arm/mach-omap1/Makefile
-+++ b/arch/arm/mach-omap1/Makefile
-@@ -5,7 +5,7 @@
+diff --git a/drivers/tty/serial/8250/8250.h b/drivers/tty/serial/8250/8250.h
+index db784ace25d8..a8830e15a22c 100644
+--- a/drivers/tty/serial/8250/8250.h
++++ b/drivers/tty/serial/8250/8250.h
+@@ -259,6 +259,7 @@ static inline int fintek_8250_probe(struct uart_8250_port *uart) { return 0; }
+ #endif
  
- # Common support
- obj-y := io.o id.o sram-init.o sram.o time.o irq.o mux.o flash.o \
--	 serial.o devices.o dma.o fb.o
-+	 serial.o devices.o dma.o omap-dma.o fb.o
- obj-y += clock.o clock_data.o opp_data.o reset.o pm_bus.o timer.o
- 
- ifneq ($(CONFIG_SND_SOC_OMAP_MCBSP),)
-diff --git a/arch/arm/plat-omap/dma.c b/arch/arm/mach-omap1/omap-dma.c
-similarity index 100%
-rename from arch/arm/plat-omap/dma.c
-rename to arch/arm/mach-omap1/omap-dma.c
-diff --git a/arch/arm/plat-omap/Makefile b/arch/arm/plat-omap/Makefile
-index 68ccec9de106..5d55295a14ee 100644
---- a/arch/arm/plat-omap/Makefile
-+++ b/arch/arm/plat-omap/Makefile
-@@ -6,4 +6,4 @@
- ccflags-$(CONFIG_ARCH_MULTIPLATFORM) := -I$(srctree)/arch/arm/plat-omap/include
- 
- # Common support
--obj-y := sram.o dma.o
-+obj-y := sram.o
+ #ifdef CONFIG_ARCH_OMAP1
++#include <linux/soc/ti/omap1-soc.h>
+ static inline int is_omap1_8250(struct uart_8250_port *pt)
+ {
+ 	int res;
 -- 
 2.29.2
 
