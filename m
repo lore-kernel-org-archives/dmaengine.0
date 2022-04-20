@@ -2,121 +2,88 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 707CFC433F5
-	for <dmaengine@archiver.kernel.org>; Wed, 20 Apr 2022 10:27:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 17D2EC433EF
+	for <dmaengine@archiver.kernel.org>; Wed, 20 Apr 2022 10:30:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237495AbiDTKac (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 20 Apr 2022 06:30:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58742 "EHLO
+        id S1349339AbiDTKc7 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 20 Apr 2022 06:32:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60198 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1343847AbiDTKaa (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Wed, 20 Apr 2022 06:30:30 -0400
-Received: from mail-m17635.qiye.163.com (mail-m17635.qiye.163.com [59.111.176.35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 208443D1EF;
-        Wed, 20 Apr 2022 03:27:44 -0700 (PDT)
-Received: from localhost.localdomain (unknown [58.22.7.114])
-        by mail-m17635.qiye.163.com (Hmail) with ESMTPA id D78494005C0;
-        Wed, 20 Apr 2022 18:27:41 +0800 (CST)
-From:   Sugar Zhang <sugar.zhang@rock-chips.com>
-To:     vkoul@kernel.org
-Cc:     Sugar Zhang <sugar.zhang@rock-chips.com>,
-        Huibin Hong <huibin.hong@rock-chips.com>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        Russell King <rmk+kernel@arm.linux.org.uk>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v2] dmaengine: pl330: Fix unbalanced runtime PM
-Date:   Wed, 20 Apr 2022 18:27:36 +0800
-Message-Id: <1650450456-34351-1-git-send-email-sugar.zhang@rock-chips.com>
-X-Mailer: git-send-email 2.7.4
-X-HM-Spam-Status: e1kfGhgUHx5ZQUtXWQgPGg8OCBgUHx5ZQUlOS1dZCBgUCR5ZQVlLVUtZV1
-        kWDxoPAgseWUFZKDYvK1lXWShZQUlKS0tKN1dZLVlBSVdZDwkaFQgSH1lBWUJDTB1WGU4aT0JPSk
-        lMSB9MVRMBExYaEhckFA4PWVdZFhoPEhUdFFlBWU9LSFVKSktITUpVS1kG
-X-HM-Sender-Digest: e1kMHhlZQR0aFwgeV1kSHx4VD1lBWUc6Mzo6HQw5KD01PilNClYtHxUK
-        LjxPFEtVSlVKTU5LT05LT01JSExPVTMWGhIXVQgOHBoJVQETGhUcOwkUGBBWGBMSCwhVGBQWRVlX
-        WRILWUFZTkNVSUlVTFVKSk9ZV1kIAVlBSEJLQzcG
-X-HM-Tid: 0a8046837595d991kuwsd78494005c0
+        with ESMTP id S238282AbiDTKc6 (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Wed, 20 Apr 2022 06:32:58 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0FA5C3F885;
+        Wed, 20 Apr 2022 03:30:12 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id B8F86B81E8D;
+        Wed, 20 Apr 2022 10:30:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE298C385A0;
+        Wed, 20 Apr 2022 10:30:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1650450609;
+        bh=kEDDxF17hrgH58OVXjuIFepbkYbLgvtx7CEHRjDCwCY=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=NuN7WrdOgPrnpmS28LNzTXFdP0/6JFpbRoUr8/TS88N1o8Cdkyx4z17A2P6Y6NyAN
+         5mZ6/kGu36j0rAd+C7uf3DXMWLq6LYjta+6Mz8wX7AhgC+8qwq/yOgI36IFJdvOxGK
+         fgiox1MxAGqv2hcK4BuHaeXsS05hug5qZJm/sCD+ZQr2B/4vyDQRTgDEw89ckih+sX
+         asjureABj9XGif273HwHcxBenmh2LvafbGcBD6yf2Gf5gBmbSE1Ttb5b7UmC2996YX
+         aIXXfFeH4Bi6M9/3FIUVsPQb7OUe2glfii1bl/dbBfg7X1YkdyCt/aI0O+J6OpFGON
+         ksxKZ1CFX4e9g==
+Date:   Wed, 20 Apr 2022 16:00:04 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Yunbo Yu <yuyunbo519@gmail.com>
+Cc:     logang@deltatee.com, dmaengine@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] dmaengine: plx_dma: Move spin_lock_bh() to spin_lock()
+Message-ID: <Yl/grDCcX0/SRusw@matsya>
+References: <20220418142021.1241558-1-yuyunbo519@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220418142021.1241558-1-yuyunbo519@gmail.com>
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-This driver use runtime PM autosuspend mechanism to manager clk.
+On 18-04-22, 22:20, Yunbo Yu wrote:
+> It is unnecessary to call spin_lock_bh() for you are already in a tasklet.
 
-  pm_runtime_use_autosuspend(&adev->dev);
-  pm_runtime_set_autosuspend_delay(&adev->dev, PL330_AUTOSUSPEND_DELAY);
+call spin_lock_bh() if you are already in a ..
 
-So, after ref count reached to zero, it will enter suspend
-after the delay time elapsed.
 
-The unbalanced PM:
+With that fixed, applied. Thanks
+> 
+> Signed-off-by: Yunbo Yu <yuyunbo519@gmail.com>
+> ---
+>  drivers/dma/plx_dma.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/dma/plx_dma.c b/drivers/dma/plx_dma.c
+> index 1ffcb5ca9788..12725fa1655f 100644
+> --- a/drivers/dma/plx_dma.c
+> +++ b/drivers/dma/plx_dma.c
+> @@ -137,7 +137,7 @@ static void plx_dma_process_desc(struct plx_dma_dev *plxdev)
+>  	struct plx_dma_desc *desc;
+>  	u32 flags;
+>  
+> -	spin_lock_bh(&plxdev->ring_lock);
+> +	spin_lock(&plxdev->ring_lock);
+>  
+>  	while (plxdev->tail != plxdev->head) {
+>  		desc = plx_dma_get_desc(plxdev, plxdev->tail);
+> @@ -165,7 +165,7 @@ static void plx_dma_process_desc(struct plx_dma_dev *plxdev)
+>  		plxdev->tail++;
+>  	}
+>  
+> -	spin_unlock_bh(&plxdev->ring_lock);
+> +	spin_unlock(&plxdev->ring_lock);
+>  }
+>  
+>  static void plx_dma_abort_desc(struct plx_dma_dev *plxdev)
+> -- 
+> 2.25.1
 
-* May cause dmac the next start failed.
-* May cause dmac read unexpected state.
-* May cause dmac stall if power down happen at the middle of the transfer.
-  e.g. may lose ack from AXI bus and stall.
-
-Considering the following situation:
-
-      DMA TERMINATE               TASKLET ROUTINE
-            |                            |
-            |                       issue_pending
-            |                            |
-            |                     pch->active = true
-            |                       pm_runtime_get
-  pm_runtime_put(if active)              |
-    pch->active = false                  |
-            |                      work_list empty
-            |                            |
-            |                     pm_runtime_put(unconditional)
-            |                            |
-
-At this point, it's unbalanced(1 get / 2 put).
-
-After this patch:
-
-      DMA TERMINATE               TASKLET ROUTINE
-            |                            |
-            |                       issue_pending
-            |                            |
-            |                     pch->active = true
-            |                       pm_runtime_get
-  pm_runtime_put(if active)              |
-    pch->active = false                  |
-            |                      work_list empty
-            |                            |
-            |                   pm_runtime_put(if active)
-            |                            |
-
-Now, it's balanced(1 get / 1 put).
-
-Fixes: 5c9e6c2b2ba3 ("dmaengine: pl330: Fix runtime PM support for terminated transfers")
-Fixes: ae43b3289186 ("ARM: 8202/1: dmaengine: pl330: Add runtime Power Management support v12")
-
-Signed-off-by: Huibin Hong <huibin.hong@rock-chips.com>
-Signed-off-by: Sugar Zhang <sugar.zhang@rock-chips.com>
-
----
-
-Changes in v2:
-- fixup commit message per Vinod suggestion.
-
- drivers/dma/pl330.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/drivers/dma/pl330.c b/drivers/dma/pl330.c
-index 858400e..ccd430e 100644
---- a/drivers/dma/pl330.c
-+++ b/drivers/dma/pl330.c
-@@ -2084,7 +2084,7 @@ static void pl330_tasklet(struct tasklet_struct *t)
- 		spin_lock(&pch->thread->dmac->lock);
- 		_stop(pch->thread);
- 		spin_unlock(&pch->thread->dmac->lock);
--		power_down = true;
-+		power_down = pch->active;
- 		pch->active = false;
- 	} else {
- 		/* Make sure the PL330 Channel thread is active */
 -- 
-2.7.4
-
+~Vinod
