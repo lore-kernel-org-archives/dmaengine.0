@@ -2,59 +2,62 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 52F0DC433EF
-	for <dmaengine@archiver.kernel.org>; Fri, 22 Apr 2022 05:59:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 97426C433F5
+	for <dmaengine@archiver.kernel.org>; Fri, 22 Apr 2022 06:00:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232861AbiDVGCW (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 22 Apr 2022 02:02:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42436 "EHLO
+        id S232951AbiDVGDP (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 22 Apr 2022 02:03:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42792 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232912AbiDVGCW (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Fri, 22 Apr 2022 02:02:22 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD8C24F9EC
-        for <dmaengine@vger.kernel.org>; Thu, 21 Apr 2022 22:59:30 -0700 (PDT)
+        with ESMTP id S233129AbiDVGDN (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Fri, 22 Apr 2022 02:03:13 -0400
+Received: from sin.source.kernel.org (sin.source.kernel.org [145.40.73.55])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 99AEC4F9E6;
+        Thu, 21 Apr 2022 23:00:19 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 4A15A61DD2
-        for <dmaengine@vger.kernel.org>; Fri, 22 Apr 2022 05:59:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33E98C385A4;
-        Fri, 22 Apr 2022 05:59:28 +0000 (UTC)
+        by sin.source.kernel.org (Postfix) with ESMTPS id ADB47CE2734;
+        Fri, 22 Apr 2022 06:00:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4547BC385A9;
+        Fri, 22 Apr 2022 06:00:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1650607169;
-        bh=C2Hj2+Z1XjiShfrUX+VbMjRZuQBKVyhIUwgYnzfGfNA=;
+        s=k20201202; t=1650607215;
+        bh=np9k1HF17G/foQYsLsraNIRu3iRUQ1M7X1InLfXJuQk=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=rKjcCOrbONBv9TnlvU4w0I6cqS77dO62wNez67WID+JamTtlKqihHXn3iEgDwwSZH
-         PpuxrSir+6dGtBdg6eCx9e0cVA7EpuuT16AwyDFLNsuRrG6wWLFtBfUG1MAiAvzZ66
-         dehFpWm0XTVHIEvu0bptLMl1vDjmQLTB/RfQc1Olj51F5t2pKbIHYUjhxZv51yWDll
-         0ikkp7o6PxiXM7nZIb+DlCXC9WyofLrgCHiCJQMK3dMWWHq4Q4bHKuf8nWH3q67InB
-         9KeKyJD2lupEOqOcRferqH0HcNl83dWjVWHt1BHVlPAkQCzk/63l40F7U16WuO47bL
-         vPgYxMK9l7uBA==
-Date:   Fri, 22 Apr 2022 11:29:25 +0530
+        b=PkR4he/6UBUNRftk8d8Y87Wt3vDwtiOj7zEDz7HWFoOW8uBFx9llbDR5pg30bUVBu
+         S1gJ1GbZyGzH0PG20DDLem56Geq0S2/LxxHL0WcHCH937FXgN+a7GL+U30V+tFCMTQ
+         PcKR7A1FhbhbnmjtxPhFLDAqP9uRqqYoG2OdyIH18qBa8nKK//ZHRbDcJrnn5U8v44
+         ndM5gtQ1GoeC87V0FmiEMPJoNbPUeSuOWDxlEtDN/AoHUNJLrjEgnw/0/SA+6hqdCc
+         HeU1Vr2L0F1TY2MDkTMxo2WXcNUcv7HivQ+i03wGZdafqgL/XK5BDMKzzXhOrfWY+o
+         ZidfbTW6EupQw==
+Date:   Fri, 22 Apr 2022 11:30:11 +0530
 From:   Vinod Koul <vkoul@kernel.org>
-To:     dmaengine@vger.kernel.org, Sanjay R Mehta <sanju.mehta@amd.com>
-Cc:     Ilya Novikov <i.m.novikov@yadro.com>,
+To:     i.m.novikov@yadro.com
+Cc:     sanju.mehta@amd.com, dmaengine@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux@yadro.com,
         kernel test robot <lkp@intel.com>
-Subject: Re: [PATCH] dmaengine: ptdma: statify pt_tx_status
-Message-ID: <YmJEPaA0R+9gTgfW@matsya>
-References: <20220421052407.745637-1-vkoul@kernel.org>
+Subject: Re: [PATCH] dmaengine: PTDMA: statify pt_tx_status
+Message-ID: <YmJEa8YH4vI1G38s@matsya>
+References: <20220421092143.18281-1-i.m.novikov@yadro.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220421052407.745637-1-vkoul@kernel.org>
+In-Reply-To: <20220421092143.18281-1-i.m.novikov@yadro.com>
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On 21-04-22, 10:54, Vinod Koul wrote:
+On 21-04-22, 12:21, i.m.novikov@yadro.com wrote:
+> From: Ilya Novikov <i.m.novikov@yadro.com>
+> 
 > LKP bot reports a new warning:
 > Warning:
-> drivers/dma/ptdma/ptdma-dmaengine.c:262:1: warning: no previous prototype for 'pt_tx_status' [-Wmissing-prototypes]
-> 
-> pt_tx_status() should be static, so declare as such.
+> drivers/dma/ptdma/ptdma-dmaengine.c:262:1: warning: no previous
+> prototype for 'pt_tx_status' [-Wmissing-prototypes]
 
-Applied, thanks
+I have applied 20220421052407.745637-1-vkoul@kernel.org which was sent
+before this
 
 -- 
 ~Vinod
