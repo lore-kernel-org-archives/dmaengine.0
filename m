@@ -2,214 +2,127 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 29D94C433EF
-	for <dmaengine@archiver.kernel.org>; Sat, 23 Apr 2022 21:48:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 079F8C433F5
+	for <dmaengine@archiver.kernel.org>; Sun, 24 Apr 2022 17:28:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235940AbiDWVvB (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Sat, 23 Apr 2022 17:51:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42382 "EHLO
+        id S236142AbiDXRbG (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Sun, 24 Apr 2022 13:31:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33098 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231400AbiDWVvB (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Sat, 23 Apr 2022 17:51:01 -0400
-Received: from mail-pl1-x636.google.com (mail-pl1-x636.google.com [IPv6:2607:f8b0:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5177F49CB2;
-        Sat, 23 Apr 2022 14:48:03 -0700 (PDT)
-Received: by mail-pl1-x636.google.com with SMTP id d15so4171268plh.2;
-        Sat, 23 Apr 2022 14:48:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=K4NfFwngIGFN34es3zHoUzHbcKpJBQTkkPjZbDshugo=;
-        b=OlfmOL4nL28ljfEtqqNToCj5Qx4pbIor+ftAFwvDzzR4eygBhiamdl53NWx393n6IW
-         V9O5hsB6XMIQBXkjBLRURzDkKhXXRHyEuA0k0BMxqSBxuh+k2SZncWho3X7LQdqS/s2w
-         gPGNbSdnSMi0W2SwQsR0TEcYgdrd1gVh/SLjCIrVnT9nbtT8+W1C7UkjiQaFyZZp1ccz
-         JWTkZDEfy27W4Cozh27c5iOC5Hoxhyl+LJG/d2ThMRgPWSYf24/JeoJYA0Pbl1zBImbj
-         pQJFVCrK7qW5O39SlO38vBE6m2fwGQwaXnTECNbT39FCDuu2R5Zi/B8Zmu1UeBmEjkdJ
-         /QfQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=K4NfFwngIGFN34es3zHoUzHbcKpJBQTkkPjZbDshugo=;
-        b=t6EucL65+wdKS8COLIqqyF6EdHtVrrQZccM/LakfsIRZXg//b/bup7zGM5Y75XwR3Q
-         wwCfoo6bp6+7DW0zKxwGaETB+BBg09Y9ee+cOVz6zO7HceRpupVpQhYe2z4C1N0uTm6p
-         Tnlpa6dePqLPQpEM7XO+H4j0/L1HrtCOd2gUOIZiIUxEfVMHbJHB2awruz21SOH/TrSi
-         5De9wNd3j8YoZhnmszuerSni+pzfNC5prjHEwflFakEO1BxFM3l8cOVH9XLR2cB/mliT
-         Hz74W26xV2LxjIeHggD64+ZSeGOFFJ454cQjM5AoM8GBjOyJ//nV2x8QJWnEsuw7OiUp
-         crXQ==
-X-Gm-Message-State: AOAM5330OKEo/QutsjwsvRng4//snq6wk8clNV9uB3thgGq4U6fNZe4P
-        f3HUCRsQQqhuPh2lqH01Pk8V2ADeCc7sryF5EqJJibQjGkLu38f6
-X-Google-Smtp-Source: ABdhPJyTyUvU2jsaC1ExZ35msqlQfYImbcQfls3Z9c3VxpKTWwWr74xmMnsove/jZcJDUJYwdRVCRmxjAMX0coVDQnA=
-X-Received: by 2002:a17:902:e881:b0:159:828:b6dd with SMTP id
- w1-20020a170902e88100b001590828b6ddmr11260002plg.127.1650750482655; Sat, 23
- Apr 2022 14:48:02 -0700 (PDT)
+        with ESMTP id S229914AbiDXRbF (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Sun, 24 Apr 2022 13:31:05 -0400
+Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com [66.111.4.26])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0819A14AAEB;
+        Sun, 24 Apr 2022 10:28:04 -0700 (PDT)
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
+        by mailout.nyi.internal (Postfix) with ESMTP id 66C2F5C017D;
+        Sun, 24 Apr 2022 13:28:03 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute2.internal (MEProxy); Sun, 24 Apr 2022 13:28:03 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sholland.org; h=
+        cc:cc:content-transfer-encoding:date:date:from:from:in-reply-to
+        :in-reply-to:message-id:mime-version:references:reply-to:sender
+        :subject:subject:to:to; s=fm2; t=1650821283; x=1650907683; bh=gL
+        LJXvPow1EyaPPDjH9fdOoNOR+1/wWYRGyiSoUxs+o=; b=FBiV7wxx+kBiVJhw2U
+        0nRo8+CDjUOHCyi5GqiRsWvwOig/uYHw1SlQBbZX/iXWCKJKPI2yRxePjoRjiFb8
+        AuCykvcWThzH0gCEts2FzQj7rR9JFMmqSj7T/GEL2GVelwztcc/+q5Z1xCWVGLNo
+        e0idrdtcZi11zWn++NIGIPPijXKKJDX55pcux2oLXK511IhlipsnDJjn8DZSqQLh
+        mYdF8Y2ldSE6LYE1fnS2+XbUztwulNXvbH5mgMhuG6LfFoWcK/VuFbaCojfK8meD
+        ckIFqiP9vntIpKcVvpoy6Ko+uKloWFyuJIVH9VXOskhi7pNvz+De+4fpdVmUHdw5
+        6kYw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:cc:content-transfer-encoding:date:date
+        :from:from:in-reply-to:in-reply-to:message-id:mime-version
+        :references:reply-to:sender:subject:subject:to:to:x-me-proxy
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+        1650821283; x=1650907683; bh=gLLJXvPow1EyaPPDjH9fdOoNOR+1/wWYRGy
+        iSoUxs+o=; b=pOuiUpJw2LCW2hxJZeEPCCiZskRIeJvHr8tHUqpFVMCXzoOPk+p
+        qd7VA6xlZHvsI5ubofpt4YX/5MerC/hMV7J0tsw6Hf8UHHB+qd1hu1q4gqp6nUxv
+        E9nQpN3nWntW9rsysxl5ale3AoBGmh7TZjLoixtubltRZ5C4KLK0ltOZQJFWmCFw
+        BulYuOLhE5kuV8POEG9/obxDFHW1mYA66KsWOyTbEyeRLlMoHL53rH4Hu1Aiilib
+        eeu1Kh6W/c8f4WHX5EiV9wyNg1DSEt+0tfsErjWqHEnVpXsb2H1ZlpB9dykPAKdJ
+        BEGFDzX/vpptylkiq/i0za2IfYJsrUnGcgg==
+X-ME-Sender: <xms:oohlYjm0MocGpVmkbYd06wxk9qVdm0thxZqjQ1tLJGxIzmkboUXbKQ>
+    <xme:oohlYm0OBPlyamLWlxVS7OBqCPbl5YwDhARC5SsFZQpV8CIBPM0u5z72KtxxJ1vdf
+    xk1UZutf8K3KolOIA>
+X-ME-Received: <xmr:oohlYppqjHWut4gijbd6LZk6c1VfhC0dlv7pgE9r2Iu_MyNd15qH6-lQ471-nXUVvZwwSG46LrUtw9dSwmUUcJV9STBYcH78PMN7zFe8uq-zVYW-Uv0ZbpbcRCzLsb27ctFQXg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvfedrtdelgdduudegucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhephffvvefufffkofgjfhgggfestdekredtredttdenucfhrhhomhepufgrmhhu
+    vghlucfjohhllhgrnhguuceoshgrmhhuvghlsehshhholhhlrghnugdrohhrgheqnecugg
+    ftrfgrthhtvghrnhepudekteeuudehtdelteevgfduvddvjefhfedulefgudevgeeghefg
+    udefiedtveetnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrh
+    homhepshgrmhhuvghlsehshhholhhlrghnugdrohhrgh
+X-ME-Proxy: <xmx:oohlYrkra0vBcOMaF4YDhnCoRkwCN-Dts-qaba8rtMNBUCr0cfmjog>
+    <xmx:oohlYh2YuV533KevEednzvOOw-tZLuiB8gJ3tSBQPxC7mQzsjqxbfg>
+    <xmx:oohlYqtuUvXZu5gTcMTDYnaYHoSa7oS4kNHWBn62Uyl4I0AKVgwuDg>
+    <xmx:o4hlYvORsR1KXIgaT6IrxpfoUyVu4TDVq96ajbhreip-j1JH0op_Dw>
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
+ 24 Apr 2022 13:28:02 -0400 (EDT)
+From:   Samuel Holland <samuel@sholland.org>
+To:     Vinod Koul <vkoul@kernel.org>, dmaengine@vger.kernel.org
+Cc:     Samuel Holland <samuel@sholland.org>, Chen-Yu Tsai <wens@csie.org>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Maxime Ripard <mripard@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-sunxi@lists.linux.dev, Rob Herring <robh@kernel.org>,
+        Maxime Ripard <maxime@cerno.tech>
+Subject: [PATCH v3 1/4] dt-bindings: dma: sun50i-a64: Add compatible for D1
+Date:   Sun, 24 Apr 2022 12:27:55 -0500
+Message-Id: <20220424172759.33383-2-samuel@sholland.org>
+X-Mailer: git-send-email 2.35.1
+In-Reply-To: <20220424172759.33383-1-samuel@sholland.org>
+References: <20220424172759.33383-1-samuel@sholland.org>
 MIME-Version: 1.0
-References: <20220422143643.727871-1-Frank.Li@nxp.com> <20220422143643.727871-5-Frank.Li@nxp.com>
- <20220423121218.GG374560@thinkpad>
-In-Reply-To: <20220423121218.GG374560@thinkpad>
-From:   Zhi Li <lznuaa@gmail.com>
-Date:   Sat, 23 Apr 2022 16:47:51 -0500
-Message-ID: <CAHrpEqTxc71wKMHQCcAd=jFPOONbrD1S1RNOr78kiu3Vr25a7w@mail.gmail.com>
-Subject: Re: [PATCH v9 4/9] dmaengine: dw-edma: Rename wr(rd)_ch_cnt to
- ll_wr(rd)_cnt in struct dw_edma_chip
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     Frank Li <Frank.Li@nxp.com>,
-        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-        hongxing.zhu@nxp.com, Lucas Stach <l.stach@pengutronix.de>,
-        dl-linux-imx <linux-imx@nxp.com>, linux-pci@vger.kernel.org,
-        dmaengine@vger.kernel.org, Serge Semin <fancer.lancer@gmail.com>,
-        Bjorn Helgaas <helgaas@kernel.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Rob Herring <robh@kernel.org>,
-        =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Serge Semin <Sergey.Semin@baikalelectronics.ru>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On Sat, Apr 23, 2022 at 7:12 AM Manivannan Sadhasivam
-<manivannan.sadhasivam@linaro.org> wrote:
->
-> On Fri, Apr 22, 2022 at 09:36:38AM -0500, Frank Li wrote:
-> > There are same name wr(rd)_ch_cnt in struct dw_edma. EDMA driver get
-> > write(read) channel number from register, then save these into dw_edma.
-> > Old wr(rd)_ch_cnt in dw_edma_chip actuall means how many link list memory
-> > are available in ll_region_wr(rd)[EDMA_MAX_WR_CH]. So rename it to
-> > ll_wr(rd)_cnt to indicate actual usage.
-> >
-> > Signed-off-by: Frank Li <Frank.Li@nxp.com>
->
-> One minor comment below,
->
-> Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
->
-> > Reviewed-by: Serge Semin <fancer.lancer@gmail.com>
-> > ---
-> > Change from v6 to v9
-> >  - none
-> > Change from v5 to v6
-> >  - s/rename/Rename/ at subject
-> > new patch at v4
-> >
-> >  drivers/dma/dw-edma/dw-edma-core.c |  4 ++--
-> >  drivers/dma/dw-edma/dw-edma-pcie.c | 12 ++++++------
-> >  include/linux/dma/edma.h           |  8 ++++----
-> >  3 files changed, 12 insertions(+), 12 deletions(-)
-> >
-> > diff --git a/drivers/dma/dw-edma/dw-edma-core.c b/drivers/dma/dw-edma/dw-edma-core.c
-> > index 435e4f2ab6575..1a0a98f6c5515 100644
-> > --- a/drivers/dma/dw-edma/dw-edma-core.c
-> > +++ b/drivers/dma/dw-edma/dw-edma-core.c
-> > @@ -919,11 +919,11 @@ int dw_edma_probe(struct dw_edma_chip *chip)
-> >
-> >       raw_spin_lock_init(&dw->lock);
-> >
-> > -     dw->wr_ch_cnt = min_t(u16, chip->wr_ch_cnt,
-> > +     dw->wr_ch_cnt = min_t(u16, chip->ll_wr_cnt,
-> >                             dw_edma_v0_core_ch_count(dw, EDMA_DIR_WRITE));
-> >       dw->wr_ch_cnt = min_t(u16, dw->wr_ch_cnt, EDMA_MAX_WR_CH);
-> >
-> > -     dw->rd_ch_cnt = min_t(u16, chip->rd_ch_cnt,
-> > +     dw->rd_ch_cnt = min_t(u16, chip->ll_rd_cnt,
-> >                             dw_edma_v0_core_ch_count(dw, EDMA_DIR_READ));
-> >       dw->rd_ch_cnt = min_t(u16, dw->rd_ch_cnt, EDMA_MAX_RD_CH);
-> >
-> > diff --git a/drivers/dma/dw-edma/dw-edma-pcie.c b/drivers/dma/dw-edma/dw-edma-pcie.c
-> > index ae42bad24dd5a..7732537f96086 100644
-> > --- a/drivers/dma/dw-edma/dw-edma-pcie.c
-> > +++ b/drivers/dma/dw-edma/dw-edma-pcie.c
-> > @@ -230,14 +230,14 @@ static int dw_edma_pcie_probe(struct pci_dev *pdev,
-> >       chip->nr_irqs = nr_irqs;
-> >       chip->ops = &dw_edma_pcie_core_ops;
-> >
-> > -     chip->wr_ch_cnt = vsec_data.wr_ch_cnt;
-> > -     chip->rd_ch_cnt = vsec_data.rd_ch_cnt;
-> > +     chip->ll_wr_cnt = vsec_data.wr_ch_cnt;
-> > +     chip->ll_rd_cnt = vsec_data.rd_ch_cnt;
-> >
-> >       chip->reg_base = pcim_iomap_table(pdev)[vsec_data.rg.bar];
-> >       if (!chip->reg_base)
-> >               return -ENOMEM;
-> >
-> > -     for (i = 0; i < chip->wr_ch_cnt; i++) {
-> > +     for (i = 0; i < chip->ll_wr_cnt; i++) {
-> >               struct dw_edma_region *ll_region = &chip->ll_region_wr[i];
-> >               struct dw_edma_region *dt_region = &chip->dt_region_wr[i];
-> >               struct dw_edma_block *ll_block = &vsec_data.ll_wr[i];
-> > @@ -262,7 +262,7 @@ static int dw_edma_pcie_probe(struct pci_dev *pdev,
-> >               dt_region->sz = dt_block->sz;
-> >       }
-> >
-> > -     for (i = 0; i < chip->rd_ch_cnt; i++) {
-> > +     for (i = 0; i < chip->ll_rd_cnt; i++) {
-> >               struct dw_edma_region *ll_region = &chip->ll_region_rd[i];
-> >               struct dw_edma_region *dt_region = &chip->dt_region_rd[i];
-> >               struct dw_edma_block *ll_block = &vsec_data.ll_rd[i];
-> > @@ -302,7 +302,7 @@ static int dw_edma_pcie_probe(struct pci_dev *pdev,
-> >               chip->reg_base);
-> >
-> >
-> > -     for (i = 0; i < chip->wr_ch_cnt; i++) {
-> > +     for (i = 0; i < chip->ll_wr_cnt; i++) {
-> >               pci_dbg(pdev, "L. List:\tWRITE CH%.2u, BAR=%u, off=0x%.8lx, sz=0x%zx bytes, addr(v=%p, p=%pa)\n",
-> >                       i, vsec_data.ll_wr[i].bar,
-> >                       vsec_data.ll_wr[i].off, chip->ll_region_wr[i].sz,
-> > @@ -314,7 +314,7 @@ static int dw_edma_pcie_probe(struct pci_dev *pdev,
-> >                       chip->dt_region_wr[i].vaddr, &chip->dt_region_wr[i].paddr);
-> >       }
-> >
-> > -     for (i = 0; i < chip->rd_ch_cnt; i++) {
-> > +     for (i = 0; i < chip->ll_rd_cnt; i++) {
-> >               pci_dbg(pdev, "L. List:\tREAD CH%.2u, BAR=%u, off=0x%.8lx, sz=0x%zx bytes, addr(v=%p, p=%pa)\n",
-> >                       i, vsec_data.ll_rd[i].bar,
-> >                       vsec_data.ll_rd[i].off, chip->ll_region_rd[i].sz,
-> > diff --git a/include/linux/dma/edma.h b/include/linux/dma/edma.h
-> > index e9ce652b88233..c2039246fc08c 100644
-> > --- a/include/linux/dma/edma.h
-> > +++ b/include/linux/dma/edma.h
-> > @@ -40,8 +40,8 @@ enum dw_edma_map_format {
-> >   * @nr_irqs:          total dma irq number
-> >   * @ops                       DMA channel to IRQ number mapping
-> >   * @reg_base          DMA register base address
-> > - * @wr_ch_cnt                 DMA write channel number
-> > - * @rd_ch_cnt                 DMA read channel number
-> > + * @ll_wr_cnt                 DMA write link list number
-> > + * @ll_rd_cnt                 DMA read link list number
->
-> DMA linked list write/read memory regions?
+D1 has a DMA controller similar to the one in other Allwinner SoCs.
+Add its compatible, and include it in the list of variants with a
+separate MBUS clock gate.
 
-ll_wr_cnt is the counter of the DMA listed list.
+Acked-by: Rob Herring <robh@kernel.org>
+Acked-by: Maxime Ripard <maxime@cerno.tech>
+Signed-off-by: Samuel Holland <samuel@sholland.org>
+---
 
-Do you means
+(no changes since v1)
 
-@ll_region_wr        DMA linked list write memory regions
+ .../bindings/dma/allwinner,sun50i-a64-dma.yaml           | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-best regards
-Frank Li
+diff --git a/Documentation/devicetree/bindings/dma/allwinner,sun50i-a64-dma.yaml b/Documentation/devicetree/bindings/dma/allwinner,sun50i-a64-dma.yaml
+index b6e1ebfaf366..ff0a5c58d78c 100644
+--- a/Documentation/devicetree/bindings/dma/allwinner,sun50i-a64-dma.yaml
++++ b/Documentation/devicetree/bindings/dma/allwinner,sun50i-a64-dma.yaml
+@@ -20,9 +20,11 @@ properties:
+ 
+   compatible:
+     oneOf:
+-      - const: allwinner,sun50i-a64-dma
+-      - const: allwinner,sun50i-a100-dma
+-      - const: allwinner,sun50i-h6-dma
++      - enum:
++          - allwinner,sun20i-d1-dma
++          - allwinner,sun50i-a64-dma
++          - allwinner,sun50i-a100-dma
++          - allwinner,sun50i-h6-dma
+       - items:
+           - const: allwinner,sun8i-r40-dma
+           - const: allwinner,sun50i-a64-dma
+@@ -58,6 +60,7 @@ if:
+   properties:
+     compatible:
+       enum:
++        - allwinner,sun20i-d1-dma
+         - allwinner,sun50i-a100-dma
+         - allwinner,sun50i-h6-dma
+ 
+-- 
+2.35.1
 
-
->
-> Thanks,
-> Mani
->
-> >   * @rg_region                 DMA register region
-> >   * @ll_region_wr      DMA descriptor link list memory for write channel
-> >   * @ll_region_rd      DMA descriptor link list memory for read channel
-> > @@ -56,8 +56,8 @@ struct dw_edma_chip {
-> >
-> >       void __iomem            *reg_base;
-> >
-> > -     u16                     wr_ch_cnt;
-> > -     u16                     rd_ch_cnt;
-> > +     u16                     ll_wr_cnt;
-> > +     u16                     ll_rd_cnt;
-> >       /* link list address */
-> >       struct dw_edma_region   ll_region_wr[EDMA_MAX_WR_CH];
-> >       struct dw_edma_region   ll_region_rd[EDMA_MAX_RD_CH];
-> > --
-> > 2.35.1
-> >
