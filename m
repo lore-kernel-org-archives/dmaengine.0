@@ -2,115 +2,105 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C758CC433EF
-	for <dmaengine@archiver.kernel.org>; Tue, 26 Apr 2022 10:33:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0E601C433EF
+	for <dmaengine@archiver.kernel.org>; Tue, 26 Apr 2022 22:32:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1349146AbiDZKg5 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 26 Apr 2022 06:36:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57618 "EHLO
+        id S243349AbiDZWfR (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 26 Apr 2022 18:35:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48228 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1349235AbiDZKgo (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Tue, 26 Apr 2022 06:36:44 -0400
-Received: from NAM04-MW2-obe.outbound.protection.outlook.com (mail-mw2nam08on2070.outbound.protection.outlook.com [40.107.101.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 693C2558C;
-        Tue, 26 Apr 2022 03:19:25 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=GQ7Hkq4Sv7KBgCOeZ6cle1LKFHjFn8hxktxtW/0yS4aLCusJUQIcdSsN+bTwM9t+Xqi+BjDYtvMYMxVceHgOFzcLxtGHTqHUlTFVlcEDDdkwUJ0Yajfoeo/q1mIlRL48dT5ow+RwRXZNr0boAt1DzbmrbeNz8FTq6kOee7iIa4UDl56zpslXxe2opV4/qL6N+HhPpPauhy2uSYSYIoM98n6mUWFCGz3PNAziG9y6+QKR2hCDdPRFJSPqTaBG8PiA54oWEtahZibjT9GdDooJdajWjBmNCEKeQm2MZSlRfbddZBgZudcqOAPjJMjq+TeXSdUNxdhMgDMl6crJuZTaSg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Bwp8I/ZEuoKKK9dF7ApLwGY7kYSXyoqUCM2ainJqSMI=;
- b=BQdkYsbGpdJ9sI+/j3enUeNSj6dvYoKw29arZvdliWxEuXcO0OFVRUHQZm53nYS62DYh+1vvC/wd6BKrZt0wIAu2e8NEgs1SQFBO/yTGVmTmX4R1kEw45hACMLk88Wr4i0t5iuMsb4mvppuWofCC8oE3xPvCN9/p0U0Rk4hY6Pau1DPsD+86K8wwA0t764u2DvVgjhu+sWyRSZvn/WS2cqZb13OH86kyu5nMX7LZcC5vCWOUwCAO3b+PP1Dp3KfKRHh5ejTsyhBU5vkGRjPaqAwHCRYx1ETa1vLiNAbltX27ZTx91pOILgLpYrkTHEXm+kbDuWTNftG0OQKWoHYSeA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 12.22.5.238) smtp.rcpttodomain=gmail.com smtp.mailfrom=nvidia.com; dmarc=pass
- (p=reject sp=reject pct=100) action=none header.from=nvidia.com; dkim=none
- (message not signed); arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Bwp8I/ZEuoKKK9dF7ApLwGY7kYSXyoqUCM2ainJqSMI=;
- b=D3xDKZGp+4nmMAtnggEbNUidqT2Bk3Xiqx1oSSncsjlVAg4F7svUgWqRc8csnw+TAelyX4U7tLMdciTRCLvlfnehlL8AyHb+7P6VJ+tLp4E3IjAT75Kbp1HQILOqiCvn/fbKNDFqhre1XUngRbAchY5WE0QPCjlZ1EQ9Exy1/fh3wZNlysVTPfGDEp1+uqW44glk3eo0vbBs8rkKKJ9az9p1MutTwNl6QXi4mlFR8yHCFFi+rckTXwoRuteJcSShG+2a4ViTT1aIFYGb9B51QxmQhVV6qW5kAevHsQobGdoEr0Uoy1eTEE3IaQCdiGeONQN2HehVOfPvxEPZBhl8HA==
-Received: from BN0PR07CA0017.namprd07.prod.outlook.com (2603:10b6:408:141::31)
- by MWHPR12MB1920.namprd12.prod.outlook.com (2603:10b6:300:10e::20) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5186.18; Tue, 26 Apr
- 2022 10:19:24 +0000
-Received: from BN8NAM11FT012.eop-nam11.prod.protection.outlook.com
- (2603:10b6:408:141:cafe::97) by BN0PR07CA0017.outlook.office365.com
- (2603:10b6:408:141::31) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5186.13 via Frontend
- Transport; Tue, 26 Apr 2022 10:19:23 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 12.22.5.238)
- smtp.mailfrom=nvidia.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 12.22.5.238 as permitted sender) receiver=protection.outlook.com;
- client-ip=12.22.5.238; helo=mail.nvidia.com;
-Received: from mail.nvidia.com (12.22.5.238) by
- BN8NAM11FT012.mail.protection.outlook.com (10.13.177.55) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id
- 15.20.5164.19 via Frontend Transport; Tue, 26 Apr 2022 10:19:23 +0000
-Received: from rnnvmail201.nvidia.com (10.129.68.8) by DRHQMAIL105.nvidia.com
- (10.27.9.14) with Microsoft SMTP Server (TLS) id 15.0.1497.32; Tue, 26 Apr
- 2022 10:19:22 +0000
-Received: from rnnvmail203.nvidia.com (10.129.68.9) by rnnvmail201.nvidia.com
- (10.129.68.8) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Tue, 26 Apr
- 2022 03:19:22 -0700
-Received: from BUILDSERVER-IO-L4T.nvidia.com (10.127.8.14) by mail.nvidia.com
- (10.129.68.9) with Microsoft SMTP Server id 15.2.986.22 via Frontend
- Transport; Tue, 26 Apr 2022 03:19:18 -0700
-From:   Akhil R <akhilrajeev@nvidia.com>
-To:     <devicetree@vger.kernel.org>, <dmaengine@vger.kernel.org>,
-        <jonathanh@nvidia.com>, <kyarlagadda@nvidia.com>,
-        <ldewangan@nvidia.com>, <linux-kernel@vger.kernel.org>,
-        <linux-tegra@vger.kernel.org>, <p.zabel@pengutronix.de>,
-        <rgumasta@nvidia.com>, <robh+dt@kernel.org>,
-        <thierry.reding@gmail.com>, <nathan@kernel.org>,
-        <vkoul@kernel.org>, <dan.carpenter@oracle.com>
-CC:     <akhilrajeev@nvidia.com>
-Subject: [PATCH v2 0/2] Fix uninitialized variable usage in Tegra GPCDMA
-Date:   Tue, 26 Apr 2022 15:49:11 +0530
-Message-ID: <20220426101913.43335-1-akhilrajeev@nvidia.com>
-X-Mailer: git-send-email 2.17.1
+        with ESMTP id S241713AbiDZWfQ (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Tue, 26 Apr 2022 18:35:16 -0400
+Received: from mga09.intel.com (mga09.intel.com [134.134.136.24])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF8F4C90C9
+        for <dmaengine@vger.kernel.org>; Tue, 26 Apr 2022 15:32:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1651012327; x=1682548327;
+  h=subject:from:to:cc:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=tpq+lf25/cwsIy1SnI7DQgYxijoOTCa0+vgPBpfQO88=;
+  b=GZMM0D7Q18gkfZtCcQqnikPSf4MZDTTfP6l8L/8k7w85wCjaGGsUpDsV
+   1m3Eq8pTdQwHJrxzb+99O8JLCXDzdDTOLzets/ADS4uKM/VHZqVW+BKhT
+   3b/gl9eKWdEaf0jVSmfH8fnJ6SgMbcS+/7yxC334nOTqo/gZpY0437+jf
+   3Qbn9rKyxOx3NaYejt67qb3W+qZJsyexjh2olanhk3xkACRaC72p3wsW6
+   Vo+Z/54yWhy1O+JneF9E0kcCEg/F9OCRRSEmaeSMs0eTXZir9BKtm2xf2
+   SPBX969MUgi/LJqhjJ4nPUza3NVKaOlU/s81czUjlXXe607Y3eFF/+rKT
+   A==;
+X-IronPort-AV: E=McAfee;i="6400,9594,10329"; a="265264644"
+X-IronPort-AV: E=Sophos;i="5.90,292,1643702400"; 
+   d="scan'208";a="265264644"
+Received: from orsmga004.jf.intel.com ([10.7.209.38])
+  by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Apr 2022 15:32:07 -0700
+X-IronPort-AV: E=Sophos;i="5.90,292,1643702400"; 
+   d="scan'208";a="679318450"
+Received: from djiang5-desk3.ch.intel.com ([143.182.136.137])
+  by orsmga004-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Apr 2022 15:32:06 -0700
+Subject: [PATCH] dmaengine: idxd: add missing callback function to support
+ DMA_INTERRUPT
+From:   Dave Jiang <dave.jiang@intel.com>
+To:     vkoul@kernel.org
+Cc:     dmaengine@vger.kernel.org
+Date:   Tue, 26 Apr 2022 15:32:06 -0700
+Message-ID: <165101232637.3951447.15765792791591763119.stgit@djiang5-desk3.ch.intel.com>
+User-Agent: StGit/1.1
 MIME-Version: 1.0
-Content-Type: text/plain
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: bd212114-0703-4376-b37e-08da276e3c54
-X-MS-TrafficTypeDiagnostic: MWHPR12MB1920:EE_
-X-Microsoft-Antispam-PRVS: <MWHPR12MB1920F4163738329ABEFF0712C0FB9@MWHPR12MB1920.namprd12.prod.outlook.com>
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: PhGThzj/OMgRFMipXGll6sZRhpXRypfRT7dfS9m/9JMXd/Jc+ZwFctNyOCx2OQPrJjyLR6eocEf/gAZU3Q1XTcGNA0s9bsVTTvD+TTw9K5WfPQXmI70q2dKTsisy/U7PtTv7Wh2s2nHRjQMN0ltclINpFZyTYQxpPEnomD5Y+Udy0GMhidc+cu+nShFp6wFVpH9wzGsuMao020n5xDGHQtMt3NXK8CeIB5U2bPXkvS5PWYTGb4Y+llBdtlyrC2642eoNV6gmzInbrFUr1KKT3UWr1jKquZkat5qkZgIxE/GRIGjszx/CixzE+E7+uaqXbncptf6i3gDkLH2V6KcJhyNiOOFY94lnfkleesTX7/MkyBmniIdca7akGnmdneUtZiPEv759IBXAKiGjEdfcMh5GrKb4r7RlGnp/f2vSIMh2nUdPvTPmD4VHjF+js7TihuSm1KBGw3jY6WfJNugdtZ2aIGVMXGS1DyE2NZFxcjJ7FkicO0qwROfxSNWX9flT5KyRcZJ0IKpd3HhtcusIbW8QYhtZPo7EaU8jLnywejKYG85/nOac12a6CkzgU0SHWJLH3PESHY2fZeqaCatb4715sVPsoUYJn1pr7iM9EFfuBx3N9ZFFUb9gjGYtjVnc4Sa9884DNP74dUktuTHx1kfhRKuA/VJwKhj+oyUbetXxCCFyQxzhR5eQlLnZIuWttnxCE0hEpyJgcH/Pdif9/VqY9+VH7rnsMBptrH910EdpVeU3V67pz/iKPOpuuJ+DmZoYgP8b7gMmiHTJiJZKyg==
-X-Forefront-Antispam-Report: CIP:12.22.5.238;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:InfoNoRecords;CAT:NONE;SFS:(13230001)(4636009)(36840700001)(40470700004)(46966006)(82310400005)(70206006)(70586007)(8676002)(186003)(4326008)(336012)(426003)(5660300002)(36756003)(6666004)(26005)(7696005)(316002)(47076005)(86362001)(921005)(81166007)(356005)(2616005)(1076003)(110136005)(107886003)(7416002)(2906002)(83380400001)(36860700001)(40460700003)(4744005)(8936002)(508600001)(36900700001)(2101003)(83996005);DIR:OUT;SFP:1101;
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 26 Apr 2022 10:19:23.6697
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: bd212114-0703-4376-b37e-08da276e3c54
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[12.22.5.238];Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource: BN8NAM11FT012.eop-nam11.prod.protection.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MWHPR12MB1920
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Initialize uninitialized variable and remove unused switch case
-in tegra186-gpcdma driver.
+When setting DMA_INTERRUPT capability, a callback function
+dma->device_prep_dma_interrupt() is needed to support this capability.
+Without setting the callback, dma_async_device_register() will fail dma
+capability check.
 
-v1->v2: Split the patches to separate 'fixes'.
+Fixes: 4e5a4eb20393 ("dmaengine: idxd: set DMA_INTERRUPT cap bit")
+Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+---
+ drivers/dma/idxd/dma.c |   22 ++++++++++++++++++++++
+ 1 file changed, 22 insertions(+)
 
-Akhil R (2):
-  dmaengine: tegra: Fix uninitialized variable usage
-  dmaengine: tegra: Remove unused switch case
+diff --git a/drivers/dma/idxd/dma.c b/drivers/dma/idxd/dma.c
+index 950f06c8aad5..d66cef5a918e 100644
+--- a/drivers/dma/idxd/dma.c
++++ b/drivers/dma/idxd/dma.c
+@@ -87,6 +87,27 @@ static inline void idxd_prep_desc_common(struct idxd_wq *wq,
+ 	hw->completion_addr = compl;
+ }
+ 
++static struct dma_async_tx_descriptor *
++idxd_dma_prep_interrupt(struct dma_chan *c, unsigned long flags)
++{
++	struct idxd_wq *wq = to_idxd_wq(c);
++	u32 desc_flags;
++	struct idxd_desc *desc;
++
++	if (wq->state != IDXD_WQ_ENABLED)
++		return NULL;
++
++	op_flag_setup(flags, &desc_flags);
++	desc = idxd_alloc_desc(wq, IDXD_OP_BLOCK);
++	if (IS_ERR(desc))
++		return NULL;
++
++	idxd_prep_desc_common(wq, desc->hw, DSA_OPCODE_NOOP,
++			      0, 0, 0, desc->compl_dma, desc_flags);
++	desc->txd.flags = flags;
++	return &desc->txd;
++}
++
+ static struct dma_async_tx_descriptor *
+ idxd_dma_submit_memcpy(struct dma_chan *c, dma_addr_t dma_dest,
+ 		       dma_addr_t dma_src, size_t len, unsigned long flags)
+@@ -198,6 +219,7 @@ int idxd_register_dma_device(struct idxd_device *idxd)
+ 	dma_cap_set(DMA_COMPLETION_NO_ORDER, dma->cap_mask);
+ 	dma->device_release = idxd_dma_release;
+ 
++	dma->device_prep_dma_interrupt = idxd_dma_prep_interrupt;
+ 	if (idxd->hw.opcap.bits[0] & IDXD_OPCAP_MEMMOVE) {
+ 		dma_cap_set(DMA_MEMCPY, dma->cap_mask);
+ 		dma->device_prep_dma_memcpy = idxd_dma_submit_memcpy;
 
- drivers/dma/tegra186-gpc-dma.c | 12 ++++--------
- 1 file changed, 4 insertions(+), 8 deletions(-)
-
--- 
-2.17.1
 
