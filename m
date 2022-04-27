@@ -2,44 +2,62 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7D5FBC433F5
-	for <dmaengine@archiver.kernel.org>; Wed, 27 Apr 2022 10:59:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1E8B6C433EF
+	for <dmaengine@archiver.kernel.org>; Wed, 27 Apr 2022 11:01:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231736AbiD0LCw (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 27 Apr 2022 07:02:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39188 "EHLO
+        id S232072AbiD0LDt (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 27 Apr 2022 07:03:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43712 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231844AbiD0LCj (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Wed, 27 Apr 2022 07:02:39 -0400
-Received: from mslow1.mail.gandi.net (mslow1.mail.gandi.net [217.70.178.240])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 97ED63F1E3A;
-        Wed, 27 Apr 2022 03:41:09 -0700 (PDT)
-Received: from relay12.mail.gandi.net (unknown [217.70.178.232])
-        by mslow1.mail.gandi.net (Postfix) with ESMTP id 27A69CC462;
-        Wed, 27 Apr 2022 09:57:52 +0000 (UTC)
-Received: (Authenticated sender: miquel.raynal@bootlin.com)
-        by mail.gandi.net (Postfix) with ESMTPSA id 02EDB200012;
-        Wed, 27 Apr 2022 09:57:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
-        t=1651053431;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=Wvra6RNRuCu2P8jLSDcUUkmJcWIau45cFl07/k1NsZM=;
-        b=X+YkpuI+mjKJDFukyw5iXjHr6x806XvTaDO2Vz0//c3tDV8zkCn1PS14GIHbc5xT+K5bEr
-        Y6ZQLQsoZNqkcP7SxflW0sE3p3KYPDtsVDWB8rqQSOb+J2a6Fa3lUUGdGPzIYYV3dhQlfb
-        IpZ/jtPHrlMbylmz2mRQyEv4n29Q6wWGiIaQn5NVNYOGJGKPJWFnQlZxDtgnzbIXIqExQc
-        nFI6g6Y4ZV1NGPQQWGywppCed+ZdJh58wjuyVfgHkAQLI9GwdI/MGIoPqQXLYsJFrBSMCJ
-        z4UFRmlEsVg+YLlGJdOTCeYrxHFzig+GZemywSXwRAD3xCDi7V3zpQKoEMCHAw==
-From:   Miquel Raynal <miquel.raynal@bootlin.com>
-To:     Magnus Damm <magnus.damm@gmail.com>,
+        with ESMTP id S231922AbiD0LDT (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Wed, 27 Apr 2022 07:03:19 -0400
+Received: from mail-qt1-f180.google.com (mail-qt1-f180.google.com [209.85.160.180])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E04C3E010C;
+        Wed, 27 Apr 2022 03:52:53 -0700 (PDT)
+Received: by mail-qt1-f180.google.com with SMTP id ay11so821583qtb.4;
+        Wed, 27 Apr 2022 03:52:53 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=EeLCBbdeC0qD/hBxXlqSXJDGwgSvd3X/uaXmAMqW6zk=;
+        b=t0KBTaCSCYha6Hax/gXynQzxub2+ZyzD/X16Jdu0645zIjcUrtWOQMebkAZOdncBU5
+         tQddXF0hLgTugkA+efgPqJozDNIhQsy5yXynj5tT0cItwxdRuH2PyTiuW6VOwYvCGdb0
+         syhQ5RGaDwlsZ3goZSdVfIwbYuf7kysytl0ZYnqWku/QMukig1BeV4hJhCrb7jKkL1tY
+         JRcbMdeD/tFtK7qT7gWJHwbVhkORHBDdZdhAQwrZg7p6nTxsrmwU5zMvwtrVepQX9AEe
+         sx8FROJPF782NEXJ9DqmX76sjstdvka9HqpZkqxx5l88L01eAfY8lyTlOylm+jMDWUbU
+         /LEQ==
+X-Gm-Message-State: AOAM5324AbiKlLHkFdwYMHUfPAwkb3fjlvewjZSuPViwZzjBPqw7HbKe
+        eOBllBlFwI/t0rv8rW5oSLM0U0YSBpqGaw==
+X-Google-Smtp-Source: ABdhPJzGxz8Io1ttjjHGXiVhAChNio+RmmRO1avG8nIsh3BztxQiSgLBgz6CscLT9CLL3DXUDJOVhg==
+X-Received: by 2002:a05:620a:270d:b0:69f:26e4:15f6 with SMTP id b13-20020a05620a270d00b0069f26e415f6mr12974171qkp.362.1651052196478;
+        Wed, 27 Apr 2022 02:36:36 -0700 (PDT)
+Received: from mail-yb1-f178.google.com (mail-yb1-f178.google.com. [209.85.219.178])
+        by smtp.gmail.com with ESMTPSA id s18-20020a05622a1a9200b002f36470c4f1sm6197201qtc.56.2022.04.27.02.36.35
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 27 Apr 2022 02:36:35 -0700 (PDT)
+Received: by mail-yb1-f178.google.com with SMTP id w17so2275068ybh.9;
+        Wed, 27 Apr 2022 02:36:35 -0700 (PDT)
+X-Received: by 2002:a25:d393:0:b0:648:4871:3b91 with SMTP id
+ e141-20020a25d393000000b0064848713b91mr16014133ybf.506.1651052195208; Wed, 27
+ Apr 2022 02:36:35 -0700 (PDT)
+MIME-Version: 1.0
+References: <20220421085112.78858-1-miquel.raynal@bootlin.com>
+ <20220421085112.78858-9-miquel.raynal@bootlin.com> <CAMuHMdXkrdjETcgN9yruL_J_mL3q7OEMj2DbY36ppwg1eDU5SA@mail.gmail.com>
+ <20220427111449.338d9579@xps13>
+In-Reply-To: <20220427111449.338d9579@xps13>
+From:   Geert Uytterhoeven <geert@linux-m68k.org>
+Date:   Wed, 27 Apr 2022 11:36:23 +0200
+X-Gmail-Original-Message-ID: <CAMuHMdUdJtwOkYT86H5TneMmrVRDrsRqhhaxMp3ruyEkiG+XqA@mail.gmail.com>
+Message-ID: <CAMuHMdUdJtwOkYT86H5TneMmrVRDrsRqhhaxMp3ruyEkiG+XqA@mail.gmail.com>
+Subject: Re: [PATCH v11 8/9] ARM: dts: r9a06g032: Add the two DMA nodes
+To:     Miquel Raynal <miquel.raynal@bootlin.com>
+Cc:     Magnus Damm <magnus.damm@gmail.com>,
         Gareth Williams <gareth.williams.jx@renesas.com>,
         Phil Edworthy <phil.edworthy@renesas.com>,
-        Geert Uytterhoeven <geert@linux-m68k.org>,
-        Vinod Koul <vkoul@kernel.org>
-Cc:     Miquel Raynal <miquel.raynal@bootlin.com>,
-        linux-renesas-soc@vger.kernel.org, dmaengine@vger.kernel.org,
+        Vinod Koul <vkoul@kernel.org>,
+        Linux-Renesas <linux-renesas-soc@vger.kernel.org>,
+        dmaengine <dmaengine@vger.kernel.org>,
         Milan Stevanovic <milan.stevanovic@se.com>,
         Jimmy Lalande <jimmy.lalande@se.com>,
         Pascal Eberhard <pascal.eberhard@se.com>,
@@ -48,48 +66,88 @@ Cc:     Miquel Raynal <miquel.raynal@bootlin.com>,
         Clement Leger <clement.leger@bootlin.com>,
         Stephen Boyd <sboyd@kernel.org>,
         Michael Turquette <mturquette@baylibre.com>,
-        linux-clk@vger.kernel.org, Viresh Kumar <vireshk@kernel.org>,
+        linux-clk <linux-clk@vger.kernel.org>,
+        Viresh Kumar <vireshk@kernel.org>,
         Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
         Ilpo Jarvinen <ilpo.jarvinen@linux.intel.com>,
-        Rob Herring <robh@kernel.org>, devicetree@vger.kernel.org,
+        Rob Herring <robh@kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
         Geert Uytterhoeven <geert+renesas@glider.be>
-Subject: [PATCH v12 7/9] dmaengine: dw: Add RZN1 compatible
-Date:   Wed, 27 Apr 2022 11:56:51 +0200
-Message-Id: <20220427095653.91804-8-miquel.raynal@bootlin.com>
-X-Mailer: git-send-email 2.27.0
-In-Reply-To: <20220427095653.91804-1-miquel.raynal@bootlin.com>
-References: <20220427095653.91804-1-miquel.raynal@bootlin.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-The Renesas RZN1 DMA IP is very close to the original DW DMA IP, a DMA
-router has been introduced to handle the wiring options that have been
-added.
+Hi Miquel,
 
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Acked-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Acked-By: Vinod Koul <vkoul@kernel.org>
----
- drivers/dma/dw/platform.c | 1 +
- 1 file changed, 1 insertion(+)
+On Wed, Apr 27, 2022 at 11:14 AM Miquel Raynal
+<miquel.raynal@bootlin.com> wrote:
+> geert@linux-m68k.org wrote on Mon, 25 Apr 2022 18:29:58 +0200:
+> > On Thu, Apr 21, 2022 at 10:51 AM Miquel Raynal
+> > <miquel.raynal@bootlin.com> wrote:
+> > > Describe the two DMA controllers available on this SoC.
+> > >
+> > > Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+> > > Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+> >
+> > Still, a few comments below, valid for both instances...
+> >
+> > > --- a/arch/arm/boot/dts/r9a06g032.dtsi
+> > > +++ b/arch/arm/boot/dts/r9a06g032.dtsi
+> > > @@ -200,6 +200,36 @@ nand_controller: nand-controller@40102000 {
+> > >                         status = "disabled";
+> > >                 };
+> > >
+> > > +               dma0: dma-controller@40104000 {
+> > > +                       compatible = "renesas,r9a06g032-dma", "renesas,rzn1-dma";
+> > > +                       reg = <0x40104000 0x1000>;
+> > > +                       interrupts = <GIC_SPI 56 IRQ_TYPE_LEVEL_HIGH>;
+> > > +                       clock-names = "hclk";
+> > > +                       clocks = <&sysctrl R9A06G032_HCLK_DMA0>;
+> > > +                       dma-channels = <8>;
+> > > +                       dma-requests = <16>;
+> > > +                       dma-masters = <1>;
+> > > +                       #dma-cells = <3>;
+> > > +                       block_size = <0xfff>;
+> > > +                       data_width = <3>;
+> >
+> > This property is deprecated, in favor of "dma-width".
+>
+> Indeed,
+>         data_width = <3>;
+> is deprecated.
+>
+> However, dma-width does not seem to be described anywhere. Do you mean:
+>         data-width = <8>;
+> instead?
 
-diff --git a/drivers/dma/dw/platform.c b/drivers/dma/dw/platform.c
-index 246118955877..47f2292dba98 100644
---- a/drivers/dma/dw/platform.c
-+++ b/drivers/dma/dw/platform.c
-@@ -137,6 +137,7 @@ static void dw_shutdown(struct platform_device *pdev)
- #ifdef CONFIG_OF
- static const struct of_device_id dw_dma_of_id_table[] = {
- 	{ .compatible = "snps,dma-spear1340", .data = &dw_dma_chip_pdata },
-+	{ .compatible = "renesas,rzn1-dma", .data = &dw_dma_chip_pdata },
- 	{}
- };
- MODULE_DEVICE_TABLE(of, dw_dma_of_id_table);
--- 
-2.27.0
+Oops, I did mean "data-width".
 
+> > > +                       status = "disabled";
+> >
+> > Why not keep it enabled?
+>
+> I'm used to always disable all the nodes from the SoC descriptions,
+> but it's true that for a DMA controller it might make sense to keep
+> it enabled.
+>
+> Would dropping the status property be enough or do you prefer a proper
+>         status = "okay";
+> instead?
+
+Please just drop the status property, like is done in other Renesas .dtsi
+files.
+
+Thanks!
+
+Gr{oetje,eeting}s,
+
+                        Geert
+
+--
+Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
+
+In personal conversations with technical people, I call myself a hacker. But
+when I'm talking to journalists I just say "programmer" or something like that.
+                                -- Linus Torvalds
