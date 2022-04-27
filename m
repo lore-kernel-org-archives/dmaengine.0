@@ -2,42 +2,44 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0EE14C43217
-	for <dmaengine@archiver.kernel.org>; Wed, 27 Apr 2022 09:03:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 88E28C4332F
+	for <dmaengine@archiver.kernel.org>; Wed, 27 Apr 2022 10:34:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230176AbiD0JGJ (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 27 Apr 2022 05:06:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46166 "EHLO
+        id S229548AbiD0Khw (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 27 Apr 2022 06:37:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57230 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232416AbiD0JGG (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Wed, 27 Apr 2022 05:06:06 -0400
-Received: from relay12.mail.gandi.net (relay12.mail.gandi.net [IPv6:2001:4b98:dc4:8::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D35AD1D70DA;
-        Wed, 27 Apr 2022 02:02:44 -0700 (PDT)
+        with ESMTP id S229441AbiD0Khv (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Wed, 27 Apr 2022 06:37:51 -0400
+Received: from mslow1.mail.gandi.net (mslow1.mail.gandi.net [IPv6:2001:4b98:dc4:8::240])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E11BC438EE0;
+        Wed, 27 Apr 2022 03:16:06 -0700 (PDT)
+Received: from relay12.mail.gandi.net (unknown [IPv6:2001:4b98:dc4:8::232])
+        by mslow1.mail.gandi.net (Postfix) with ESMTP id 5C7B3CC51C;
+        Wed, 27 Apr 2022 09:57:57 +0000 (UTC)
 Received: (Authenticated sender: miquel.raynal@bootlin.com)
-        by mail.gandi.net (Postfix) with ESMTPSA id 7D56D200003;
-        Wed, 27 Apr 2022 09:02:30 +0000 (UTC)
+        by mail.gandi.net (Postfix) with ESMTPSA id 13C56200019;
+        Wed, 27 Apr 2022 09:57:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
-        t=1651050154;
+        t=1651053437;
         h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
          to:to:cc:cc:mime-version:mime-version:content-type:content-type:
          content-transfer-encoding:content-transfer-encoding:
          in-reply-to:in-reply-to:references:references;
-        bh=/+rW5mXOv5sbGat0TDX1wCwn8FAk7uPLtDbpW3WtQ0M=;
-        b=OExvz/fso96rIW52h/+SICEP1ySdo298YEFNftVJH2dwKMIBVt8zG5jFi1yEIUaDWm4HjM
-        97CjSPmMfdXB0Yw2uMVoshEQK0a0shs+vsjEEnUjHPFNW0/EQdjyGOlDTbIqO9wlfcmCjo
-        wqB+2GUfdVhe+copVOqNZg01oV56BIaOWcdUXjmCMMPQIxMTDVkRxgF7a1Qo4Vcx3XpnEB
-        MX7FptvGuTxGYKUYpHB+WGUBcv2kYz5rWMZdmIdzq7lGGclVJ5b5PG/mYu6oHuUYfuOvVt
-        ovyuSTisZL8Wdkpn2ZXhzOtv/ktDmUL5tmMWJAl+OcCZ96CZYJT+iiRteKmYOQ==
-Date:   Wed, 27 Apr 2022 11:02:29 +0200
+        bh=UxzMEOqhe0N5yp6GmaQi9cglbTWdIMVSkvcspvfYAsA=;
+        b=WtY8Rp/wzqRTZj3Sfbvox6ilJE6pxreJnw4mczmp6V6fZzYr+mZifk+JPUSh4WW+bkGIvx
+        yxeSLhqTZu1k7+Ab52/DGhPZ+EclGHG5pZvOhiuMeo6zFy59ducknxROc/PB5vdzlAApKR
+        uH6RUAYTaZBgy91RDHgGmYM5X/xYSftk9LT0e8HNDG7iQpYyO5mXYSJCUAMFea4S5KUj69
+        C7iHIKlbt5xZOWaoFr9wM8yxAGr6auzqOqlTJBT0vVvRahuaBulRsl30KgXhtGky0LZcuE
+        EO5Pwm/5JDl7A20zghrZPymdSjNuh7UKtQcMR6EwGZXOUXI4YRtGrgJN+AH81A==
 From:   Miquel Raynal <miquel.raynal@bootlin.com>
-To:     Geert Uytterhoeven <geert@linux-m68k.org>
-Cc:     Magnus Damm <magnus.damm@gmail.com>,
+To:     Magnus Damm <magnus.damm@gmail.com>,
         Gareth Williams <gareth.williams.jx@renesas.com>,
         Phil Edworthy <phil.edworthy@renesas.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        Linux-Renesas <linux-renesas-soc@vger.kernel.org>,
-        dmaengine <dmaengine@vger.kernel.org>,
+        Geert Uytterhoeven <geert@linux-m68k.org>,
+        Vinod Koul <vkoul@kernel.org>
+Cc:     Miquel Raynal <miquel.raynal@bootlin.com>,
+        linux-renesas-soc@vger.kernel.org, dmaengine@vger.kernel.org,
         Milan Stevanovic <milan.stevanovic@se.com>,
         Jimmy Lalande <jimmy.lalande@se.com>,
         Pascal Eberhard <pascal.eberhard@se.com>,
@@ -46,73 +48,54 @@ Cc:     Magnus Damm <magnus.damm@gmail.com>,
         Clement Leger <clement.leger@bootlin.com>,
         Stephen Boyd <sboyd@kernel.org>,
         Michael Turquette <mturquette@baylibre.com>,
-        linux-clk <linux-clk@vger.kernel.org>,
-        Viresh Kumar <vireshk@kernel.org>,
+        linux-clk@vger.kernel.org, Viresh Kumar <vireshk@kernel.org>,
         Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
         Ilpo Jarvinen <ilpo.jarvinen@linux.intel.com>,
-        Rob Herring <robh@kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>
-Subject: Re: [PATCH v11 6/9] clk: renesas: r9a06g032: Probe possible
- children
-Message-ID: <20220427110229.25825aaa@xps13>
-In-Reply-To: <CAMuHMdWaViDYRnwdpD+m73ZisDSMKESfcGbanf6qXR1M2167EQ@mail.gmail.com>
-References: <20220421085112.78858-1-miquel.raynal@bootlin.com>
-        <20220421085112.78858-7-miquel.raynal@bootlin.com>
-        <CAMuHMdWaViDYRnwdpD+m73ZisDSMKESfcGbanf6qXR1M2167EQ@mail.gmail.com>
-Organization: Bootlin
-X-Mailer: Claws Mail 3.17.7 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
+        Rob Herring <robh@kernel.org>, devicetree@vger.kernel.org,
+        Geert Uytterhoeven <geert+renesas@glider.be>
+Subject: [PATCH v12 9/9] ARM: dts: r9a06g032: Describe the DMA router
+Date:   Wed, 27 Apr 2022 11:56:53 +0200
+Message-Id: <20220427095653.91804-10-miquel.raynal@bootlin.com>
+X-Mailer: git-send-email 2.27.0
+In-Reply-To: <20220427095653.91804-1-miquel.raynal@bootlin.com>
+References: <20220427095653.91804-1-miquel.raynal@bootlin.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Hi Geert,
+There is a dmamux on this SoC which allows picking two different sources
+for a single DMA request.
 
-geert@linux-m68k.org wrote on Mon, 25 Apr 2022 18:18:28 +0200:
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+---
+ arch/arm/boot/dts/r9a06g032.dtsi | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-> Hi Miquel,
->=20
-> On Thu, Apr 21, 2022 at 10:51 AM Miquel Raynal
-> <miquel.raynal@bootlin.com> wrote:
-> > The clock controller device on r9a06g032 takes all the memory range that
-> > is described as being a system controller. This range contains many
-> > different (unrelated?) registers besides the ones belonging to the clock
-> > controller, that can necessitate to be accessed from other peripherals.
-> >
-> > For instance, the dmamux registers are there. The dmamux "device" will
-> > be described as a child node of the clock/system controller node, which
-> > means we need the top device driver (the clock controller driver in this
-> > case) to populate its children manually.
-> >
-> > Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-> > Acked-by: Stephen Boyd <sboyd@kernel.org> =20
->=20
-> Thanks for your patch!
->=20
-> > --- a/drivers/clk/renesas/r9a06g032-clocks.c
-> > +++ b/drivers/clk/renesas/r9a06g032-clocks.c
-> > @@ -996,7 +997,7 @@ static int __init r9a06g032_clocks_probe(struct pla=
-tform_device *pdev)
-> >
-> >         sysctrl_priv =3D clocks;
-> >
-> > -       return 0;
-> > +       return of_platform_populate(np, NULL, NULL, dev); =20
->=20
-> This is a bit dangerous: in the (very unlikely) case that
-> of_platform_populate() fails, the clock driver will fail to probe,
-> and all managed cleanup will be done (not everything will be cleant
-> up, though), while sysctrl_priv will still point to the now-freed
-> r9a06g032_priv structure.
->=20
-> So I think you just want to ignore the failure from
-> of_platform_populate(), and return zero anyway.
+diff --git a/arch/arm/boot/dts/r9a06g032.dtsi b/arch/arm/boot/dts/r9a06g032.dtsi
+index 1e90bfc76417..37c2eb7bbb7f 100644
+--- a/arch/arm/boot/dts/r9a06g032.dtsi
++++ b/arch/arm/boot/dts/r9a06g032.dtsi
+@@ -91,6 +91,16 @@ sysctrl: system-controller@4000c000 {
+ 			clocks = <&ext_mclk>, <&ext_rtc_clk>,
+ 					<&ext_jtag_clk>, <&ext_rgmii_ref>;
+ 			clock-names = "mclk", "rtc", "jtag", "rgmii_ref_ext";
++			#address-cells = <1>;
++			#size-cells = <1>;
++
++			dmamux: dma-router@a0 {
++				compatible = "renesas,rzn1-dmamux";
++				reg = <0xa0 4>;
++				#dma-cells = <6>;
++				dma-requests = <32>;
++				dma-masters = <&dma0 &dma1>;
++			};
+ 		};
+ 
+ 		uart0: serial@40060000 {
+-- 
+2.27.0
 
-That is a very good point. I've changed the logic to just print an
-error message and return 0 anyway.
-
-Thanks,
-Miqu=C3=A8l
