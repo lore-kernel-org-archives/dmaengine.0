@@ -2,299 +2,209 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CA270C43217
-	for <dmaengine@archiver.kernel.org>; Wed, 27 Apr 2022 10:56:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 71615C4332F
+	for <dmaengine@archiver.kernel.org>; Wed, 27 Apr 2022 10:56:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231447AbiD0K70 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 27 Apr 2022 06:59:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33212 "EHLO
+        id S231310AbiD0K7o (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 27 Apr 2022 06:59:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34072 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231309AbiD0K64 (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Wed, 27 Apr 2022 06:58:56 -0400
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 979AA3C5985;
-        Wed, 27 Apr 2022 03:35:58 -0700 (PDT)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id C05C61474;
-        Wed, 27 Apr 2022 02:30:54 -0700 (PDT)
-Received: from lpieralisi (unknown [10.57.11.108])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 09EDD3F5A1;
-        Wed, 27 Apr 2022 02:30:51 -0700 (PDT)
-Date:   Wed, 27 Apr 2022 10:30:46 +0100
-From:   Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
-To:     Frank Li <Frank.Li@nxp.com>
-Cc:     gustavo.pimentel@synopsys.com, hongxing.zhu@nxp.com,
-        l.stach@pengutronix.de, linux-imx@nxp.com,
-        linux-pci@vger.kernel.org, dmaengine@vger.kernel.org,
-        fancer.lancer@gmail.com, lznuaa@gmail.com, helgaas@kernel.org,
-        vkoul@kernel.org, robh@kernel.org, kw@linux.com,
-        bhelgaas@google.com, manivannan.sadhasivam@linaro.org,
-        Sergey.Semin@baikalelectronics.ru
-Subject: Re: [PATCH v9 9/9] PCI: endpoint: Add embedded DMA controller test
-Message-ID: <YmkNRnkKo/UQT5uX@lpieralisi>
-References: <20220422143643.727871-1-Frank.Li@nxp.com>
- <20220422143643.727871-10-Frank.Li@nxp.com>
+        with ESMTP id S231799AbiD0K7R (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Wed, 27 Apr 2022 06:59:17 -0400
+Received: from mslow1.mail.gandi.net (mslow1.mail.gandi.net [217.70.178.240])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 668984ACCAE;
+        Wed, 27 Apr 2022 03:36:44 -0700 (PDT)
+Received: from relay12.mail.gandi.net (unknown [IPv6:2001:4b98:dc4:8::232])
+        by mslow1.mail.gandi.net (Postfix) with ESMTP id 9DF55CC404;
+        Wed, 27 Apr 2022 09:57:36 +0000 (UTC)
+Received: (Authenticated sender: miquel.raynal@bootlin.com)
+        by mail.gandi.net (Postfix) with ESMTPSA id EC196200002;
+        Wed, 27 Apr 2022 09:56:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
+        t=1651053416;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding;
+        bh=GvFtSNte1I4kDe3e5lqmt1eZYrESNZeDVtGdKabkQjU=;
+        b=g1XAwn+7yxPipLlHf5wNhZf3nr0jJxn/piXTPbFTdFoyx6syqG4ki5JF0GSHQvtRHnyJjq
+        gdNZFEQyV/UIvVUHREgUSaVmEs3ToWo0GUAEWwqNpr3AbJ5fMa89rSHSRf35WNaY9awhnO
+        YBb2lZbhYBCBaTy40ZIjMFHD80aEwCO2SL7HBcbuYLdYkzl/w6rO+71I2Ofz6FJt3dA9xW
+        Jz1qHvYBvnyvj0y9F/Kei/Cme3zBxvCWCcqCoXPIs1qsfcpYQyqPS2WRqQlWZPQ2ywzrAY
+        IFpHd23JJ1ZdgaxLoeNIMsKfXn96QVu86vaXx5BcFSBFMkzfk4Z70SiHVEzaaw==
+From:   Miquel Raynal <miquel.raynal@bootlin.com>
+To:     Magnus Damm <magnus.damm@gmail.com>,
+        Gareth Williams <gareth.williams.jx@renesas.com>,
+        Phil Edworthy <phil.edworthy@renesas.com>,
+        Geert Uytterhoeven <geert@linux-m68k.org>,
+        Vinod Koul <vkoul@kernel.org>
+Cc:     Miquel Raynal <miquel.raynal@bootlin.com>,
+        linux-renesas-soc@vger.kernel.org, dmaengine@vger.kernel.org,
+        Milan Stevanovic <milan.stevanovic@se.com>,
+        Jimmy Lalande <jimmy.lalande@se.com>,
+        Pascal Eberhard <pascal.eberhard@se.com>,
+        Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
+        Herve Codina <herve.codina@bootlin.com>,
+        Clement Leger <clement.leger@bootlin.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        linux-clk@vger.kernel.org, Viresh Kumar <vireshk@kernel.org>,
+        Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+        Ilpo Jarvinen <ilpo.jarvinen@linux.intel.com>,
+        Rob Herring <robh@kernel.org>, devicetree@vger.kernel.org
+Subject: [PATCH v12 0/9] RZN1 DMA support
+Date:   Wed, 27 Apr 2022 11:56:44 +0200
+Message-Id: <20220427095653.91804-1-miquel.raynal@bootlin.com>
+X-Mailer: git-send-email 2.27.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220422143643.727871-10-Frank.Li@nxp.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On Fri, Apr 22, 2022 at 09:36:43AM -0500, Frank Li wrote:
-> Designware provided eDMA support in controller. This enabled use
-> this eDMA controller to transfer data.
-> 
-> The whole flow align with standard DMA usage module
-> 
-> 1. Using dma_request_channel() and filter function to find correct
-> RX and TX Channel.
-> 2. dmaengine_slave_config() config remote side physcial address.
-> 3. using dmaengine_prep_slave_single() create transfer descriptor
-> 4. tx_submit();
-> 5. dma_async_issue_pending();
-> 
-> Tested at i.MX8DXL platform.
-> 
-> root@imx8qmmek:~# /usr/bin/pcitest -d -w
-> WRITE ( 102400 bytes):          OKAY
-> root@imx8qmmek:~# /usr/bin/pcitest -d -r
-> READ ( 102400 bytes):           OKAY
-> 
-> WRITE => Size: 102400 bytes DMA: YES  Time: 0.000180145 seconds Rate: 555108 KB/s
-> READ => Size: 102400 bytes  DMA: YES  Time: 0.000194397 seconds Rate: 514411 KB/s
-> 
-> READ => Size: 102400 bytes  DMA: NO   Time: 0.013532597 seconds Rate: 7389 KB/s
-> WRITE => Size: 102400 bytes DMA: NO   Time: 0.000857090 seconds Rate: 116673 KB/s
-> 
+Hello,
 
-You should rewrite this commit log.
+This is the series bringing DMA support to RZN1 platforms.
+The UART changes regarding DMA support has been merged into tty-next
+already.
 
-1) this is not Designware specific
-2) On what platforms you tested is information for a cover letter but
-   not very useful for a commit log
-3) The commit log describes why you need the patch and what the patch
-   does.
-   It can be a one liner: "Enable DMA controller tests for endpoints with
-   DMA capabilities". Or something along those lines.
+There is no other conflicting dependency with the other series, so these
+patches (all but DTS) can go though the dmaengine tree I believe.
 
-Lorenzo
+Cheers,
+Miquèl
 
-> Signed-off-by: Frank Li <Frank.Li@nxp.com>
-> ---
-> Change from v6 to v9:
->  - none
-> Change from v5 to v6:
->  - change subject
-> Change from v4 to v5:
->  - none
-> Change from v3 to v4:
->  - reverse Xmas tree order
->  - local -> dma_local
->  - change error message
->  - IS_ERR -> IS_ERR_OR_NULL
->  - check return value of dmaengine_slave_config()
-> Change from v1 to v2:
->  - none
-> 
->  drivers/pci/endpoint/functions/pci-epf-test.c | 108 ++++++++++++++++--
->  1 file changed, 98 insertions(+), 10 deletions(-)
-> 
-> diff --git a/drivers/pci/endpoint/functions/pci-epf-test.c b/drivers/pci/endpoint/functions/pci-epf-test.c
-> index 90d84d3bc868f..f26afd02f3a86 100644
-> --- a/drivers/pci/endpoint/functions/pci-epf-test.c
-> +++ b/drivers/pci/endpoint/functions/pci-epf-test.c
-> @@ -52,9 +52,11 @@ struct pci_epf_test {
->  	enum pci_barno		test_reg_bar;
->  	size_t			msix_table_offset;
->  	struct delayed_work	cmd_handler;
-> -	struct dma_chan		*dma_chan;
-> +	struct dma_chan		*dma_chan_tx;
-> +	struct dma_chan		*dma_chan_rx;
->  	struct completion	transfer_complete;
->  	bool			dma_supported;
-> +	bool			dma_private;
->  	const struct pci_epc_features *epc_features;
->  };
->  
-> @@ -105,12 +107,15 @@ static void pci_epf_test_dma_callback(void *param)
->   */
->  static int pci_epf_test_data_transfer(struct pci_epf_test *epf_test,
->  				      dma_addr_t dma_dst, dma_addr_t dma_src,
-> -				      size_t len)
-> +				      size_t len, dma_addr_t dma_remote,
-> +				      enum dma_transfer_direction dir)
->  {
-> +	struct dma_chan *chan = (dir == DMA_DEV_TO_MEM) ? epf_test->dma_chan_tx : epf_test->dma_chan_rx;
-> +	dma_addr_t dma_local = (dir == DMA_MEM_TO_DEV) ? dma_src : dma_dst;
->  	enum dma_ctrl_flags flags = DMA_CTRL_ACK | DMA_PREP_INTERRUPT;
-> -	struct dma_chan *chan = epf_test->dma_chan;
->  	struct pci_epf *epf = epf_test->epf;
->  	struct dma_async_tx_descriptor *tx;
-> +	struct dma_slave_config sconf = {};
->  	struct device *dev = &epf->dev;
->  	dma_cookie_t cookie;
->  	int ret;
-> @@ -120,7 +125,22 @@ static int pci_epf_test_data_transfer(struct pci_epf_test *epf_test,
->  		return -EINVAL;
->  	}
->  
-> -	tx = dmaengine_prep_dma_memcpy(chan, dma_dst, dma_src, len, flags);
-> +	if (epf_test->dma_private) {
-> +		sconf.direction = dir;
-> +		if (dir == DMA_MEM_TO_DEV)
-> +			sconf.dst_addr = dma_remote;
-> +		else
-> +			sconf.src_addr = dma_remote;
-> +
-> +		if (dmaengine_slave_config(chan, &sconf)) {
-> +			dev_err(dev, "DMA slave config fail\n");
-> +			return -EIO;
-> +		}
-> +		tx = dmaengine_prep_slave_single(chan, dma_local, len, dir, flags);
-> +	} else {
-> +		tx = dmaengine_prep_dma_memcpy(chan, dma_dst, dma_src, len, flags);
-> +	}
-> +
->  	if (!tx) {
->  		dev_err(dev, "Failed to prepare DMA memcpy\n");
->  		return -EIO;
-> @@ -148,6 +168,23 @@ static int pci_epf_test_data_transfer(struct pci_epf_test *epf_test,
->  	return 0;
->  }
->  
-> +struct epf_dma_filter {
-> +	struct device *dev;
-> +	u32 dma_mask;
-> +};
-> +
-> +static bool epf_dma_filter_fn(struct dma_chan *chan, void *node)
-> +{
-> +	struct epf_dma_filter *filter = node;
-> +	struct dma_slave_caps caps;
-> +
-> +	memset(&caps, 0, sizeof(caps));
-> +	dma_get_slave_caps(chan, &caps);
-> +
-> +	return chan->device->dev == filter->dev
-> +		&& (filter->dma_mask & caps.directions);
-> +}
-> +
->  /**
->   * pci_epf_test_init_dma_chan() - Function to initialize EPF test DMA channel
->   * @epf_test: the EPF test device that performs data transfer operation
-> @@ -158,10 +195,44 @@ static int pci_epf_test_init_dma_chan(struct pci_epf_test *epf_test)
->  {
->  	struct pci_epf *epf = epf_test->epf;
->  	struct device *dev = &epf->dev;
-> +	struct epf_dma_filter filter;
->  	struct dma_chan *dma_chan;
->  	dma_cap_mask_t mask;
->  	int ret;
->  
-> +	filter.dev = epf->epc->dev.parent;
-> +	filter.dma_mask = BIT(DMA_DEV_TO_MEM);
-> +
-> +	dma_cap_zero(mask);
-> +	dma_cap_set(DMA_SLAVE, mask);
-> +	dma_chan = dma_request_channel(mask, epf_dma_filter_fn, &filter);
-> +	if (IS_ERR_OR_NULL(dma_chan)) {
-> +		dev_info(dev, "Failed to get private DMA channel. Falling back to generic one\n");
-> +		goto fail_back_tx;
-> +	}
-> +
-> +	epf_test->dma_chan_rx = dma_chan;
-> +
-> +	filter.dma_mask = BIT(DMA_MEM_TO_DEV);
-> +	dma_chan = dma_request_channel(mask, epf_dma_filter_fn, &filter);
-> +
-> +	if (IS_ERR(dma_chan)) {
-> +		dev_info(dev, "Failed to get private DMA channel. Falling back to generic one\n");
-> +		goto fail_back_rx;
-> +	}
-> +
-> +	epf_test->dma_chan_tx = dma_chan;
-> +	epf_test->dma_private = true;
-> +
-> +	init_completion(&epf_test->transfer_complete);
-> +
-> +	return 0;
-> +
-> +fail_back_rx:
-> +	dma_release_channel(epf_test->dma_chan_rx);
-> +	epf_test->dma_chan_tx = NULL;
-> +
-> +fail_back_tx:
->  	dma_cap_zero(mask);
->  	dma_cap_set(DMA_MEMCPY, mask);
->  
-> @@ -174,7 +245,7 @@ static int pci_epf_test_init_dma_chan(struct pci_epf_test *epf_test)
->  	}
->  	init_completion(&epf_test->transfer_complete);
->  
-> -	epf_test->dma_chan = dma_chan;
-> +	epf_test->dma_chan_tx = epf_test->dma_chan_rx = dma_chan;
->  
->  	return 0;
->  }
-> @@ -190,8 +261,17 @@ static void pci_epf_test_clean_dma_chan(struct pci_epf_test *epf_test)
->  	if (!epf_test->dma_supported)
->  		return;
->  
-> -	dma_release_channel(epf_test->dma_chan);
-> -	epf_test->dma_chan = NULL;
-> +	dma_release_channel(epf_test->dma_chan_tx);
-> +	if (epf_test->dma_chan_tx == epf_test->dma_chan_rx) {
-> +		epf_test->dma_chan_tx = NULL;
-> +		epf_test->dma_chan_rx = NULL;
-> +		return;
-> +	}
-> +
-> +	dma_release_channel(epf_test->dma_chan_rx);
-> +	epf_test->dma_chan_rx = NULL;
-> +
-> +	return;
->  }
->  
->  static void pci_epf_test_print_rate(const char *ops, u64 size,
-> @@ -280,8 +360,14 @@ static int pci_epf_test_copy(struct pci_epf_test *epf_test)
->  			goto err_map_addr;
->  		}
->  
-> +		if (epf_test->dma_private) {
-> +			dev_err(dev, "Cannot transfer data using DMA\n");
-> +			ret = -EINVAL;
-> +			goto err_map_addr;
-> +		}
-> +
->  		ret = pci_epf_test_data_transfer(epf_test, dst_phys_addr,
-> -						 src_phys_addr, reg->size);
-> +						 src_phys_addr, reg->size, 0, DMA_MEM_TO_MEM);
->  		if (ret)
->  			dev_err(dev, "Data transfer failed\n");
->  	} else {
-> @@ -363,7 +449,8 @@ static int pci_epf_test_read(struct pci_epf_test *epf_test)
->  
->  		ktime_get_ts64(&start);
->  		ret = pci_epf_test_data_transfer(epf_test, dst_phys_addr,
-> -						 phys_addr, reg->size);
-> +						 phys_addr, reg->size,
-> +						 reg->src_addr, DMA_DEV_TO_MEM);
->  		if (ret)
->  			dev_err(dev, "Data transfer failed\n");
->  		ktime_get_ts64(&end);
-> @@ -453,8 +540,9 @@ static int pci_epf_test_write(struct pci_epf_test *epf_test)
->  		}
->  
->  		ktime_get_ts64(&start);
-> +
->  		ret = pci_epf_test_data_transfer(epf_test, phys_addr,
-> -						 src_phys_addr, reg->size);
-> +						 src_phys_addr, reg->size, reg->dst_addr, DMA_MEM_TO_DEV);
->  		if (ret)
->  			dev_err(dev, "Data transfer failed\n");
->  		ktime_get_ts64(&end);
-> -- 
-> 2.35.1
-> 
+Changes in v12:
+* Collected more tags.
+* Updated the prefix of the patch introducing the dmamux helper.
+* Avoid failing to probe the clock driver entirely when a clock subnode
+  fails to probe. Just print an error message on purpose and mention it
+  int the commit log.
+* Enabled the DMA nodes by default in the DTSI.
+* Used the data-width property instead of the deprecated data_width.
+
+Changes in v11:
+* Renamed two defines.
+* Changed the way the bitmap is declared.
+* Updated the cover letter: this series can now go in through the
+  dmaengine tree.
+
+Changes in v10:
+* Collected more tags.
+* Dropped the mutex from the dmamux driver.
+* Added missing includes in the dmamux driver.
+* Replaced set_bit() by test_and_set_bit() in order to check if the chan
+  is already used or not in the dmamux driver.
+* Corrected the misuse of the set_bit() macro in the dmamux driver.
+
+Changes in v9:
+* Collected more tags.
+* Changed a u32 into a regular bitmap and used the bitmap API.
+* Reordered two function calls to save one extra line.
+* Added a define to avoid a magic value.
+
+Changes in v8:
+* Collected more tags.
+* Moved the Makefile line adding the dmamux driver to the bottom of the
+  file.
+* Reversed the logic in a ternary operation as suggested by Andy.
+* Changed a bit the naming of a #define as suggested by Andy.
+
+Changes in v7:
+* This time, really added Stephen's Acks (sorry for the error).
+* Moved an error check to get rid of one mutex_unlock/lock call as
+  suggested by Ilpo.
+* Split the patch adding the dmamux driver as advised by Vinod. One
+  patch introduces the dmamux driver, the other populates the children
+  of the system controller. As the original patch got acked by Stephen
+  Boyd, I moved his tag to the patch touching the clock controller only.
+
+Changes in v6:
+* Added Stephen's acks.
+* Fixed an extra newline added in the middle of nowhere.
+* Rebased on top of v5.18-rc1.
+
+Changes in v5:
+* Used gotos in rzn1_dmamux_route_allocate().
+* Changed the prefix to "dmaengine:".
+* Dropped the partial transfers fix.
+* Added Rob's acks.
+
+Changes in v4:
+* Freed "map" in the error path of the dmamux driver.
+* Improved a bit the style as requested by Prabhakar.
+* Dropped a __maybe_unused.
+* Reorder the includes.
+* Added a dependency on ARCH_RZN1.
+* Added Rob's Ack.
+* Added a reg property to the dmamux binding file.
+* Referenced the dmamux binding from the system controller file.
+* Called of_platform_populate from the end of the system controller
+  (clock) driver probe in order to probe the dmamux if it was
+  populated.
+* Added DMA properties to all the relevant UARTs.
+
+Changes in v3:
+* Added Reviewed-by tags.
+* Exported the set_dmamux* symbol properly.
+* Dropped a useless check in the probe and moved the sysctrl_priv
+  assignation to the end of the probe.
+* Renamed the dmamux driver
+* Added a couple of missing MODULE_ macros in the dmamux driver.
+* Decided to use a regular platform init call instead of the
+  arch_initcall() initially proposed.
+* s/%d/%u/ in printk's when appropriate.
+* Used a hardcoded value instead of dmamux->dmac_requests when
+  appropriate.
+* Changed the variable name "master" to "dmac_idx" to be more
+  descriptive.
+* Dropped most of the of_* calls in favor of #define's.
+* Fixed a typo.
+* Exported two symbols from 8250_dma.c.
+
+Changes in v2:
+* Clarified that the 'fix' regarding non aligned reads would only apply
+  to the DEV_TO_MEM case.
+* Fix the DMA controller compatible string (copy-paste error).
+* s/syscon/sysctrl/ as advised by Geert.
+* Disabled irqs when taking the spinlock from the clocks driver.
+* Moved the DMAMUX offset inside the driver.
+* Removed extra commas.
+* Improved the style as suggested by Andy.
+* Removed a dupplicated check against the device node presence.
+* Reduced the number of lines of code by using dev_err_probe().
+* Created a Kconfig symbol for DMAMUX to fix the two robot reports
+  received and be sure there was no useless overhead with other
+  platforms.
+* Exported the serial8250_{tx,rx}_dma() symbols.
+
+Miquel Raynal (9):
+  dt-bindings: dmaengine: Introduce RZN1 dmamux bindings
+  dt-bindings: clock: r9a06g032-sysctrl: Reference the DMAMUX subnode
+  dt-bindings: dmaengine: Introduce RZN1 DMA compatible
+  clk: renesas: r9a06g032: Export function to set dmamux
+  dmaengine: dw: dmamux: Introduce RZN1 DMA router support
+  clk: renesas: r9a06g032: Probe possible children
+  dmaengine: dw: Add RZN1 compatible
+  ARM: dts: r9a06g032: Add the two DMA nodes
+  ARM: dts: r9a06g032: Describe the DMA router
+
+ .../clock/renesas,r9a06g032-sysctrl.yaml      |  11 ++
+ .../bindings/dma/renesas,rzn1-dmamux.yaml     |  51 ++++++
+ .../bindings/dma/snps,dma-spear1340.yaml      |   8 +-
+ MAINTAINERS                                   |   1 +
+ arch/arm/boot/dts/r9a06g032.dtsi              |  38 +++++
+ drivers/clk/renesas/r9a06g032-clocks.c        |  40 ++++-
+ drivers/dma/dw/Kconfig                        |   9 +
+ drivers/dma/dw/Makefile                       |   2 +
+ drivers/dma/dw/platform.c                     |   1 +
+ drivers/dma/dw/rzn1-dmamux.c                  | 155 ++++++++++++++++++
+ include/linux/soc/renesas/r9a06g032-sysctrl.h |  11 ++
+ 11 files changed, 325 insertions(+), 2 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/dma/renesas,rzn1-dmamux.yaml
+ create mode 100644 drivers/dma/dw/rzn1-dmamux.c
+ create mode 100644 include/linux/soc/renesas/r9a06g032-sysctrl.h
+
+-- 
+2.27.0
+
