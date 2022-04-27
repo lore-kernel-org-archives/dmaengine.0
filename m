@@ -2,102 +2,107 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 42FDAC433EF
-	for <dmaengine@archiver.kernel.org>; Wed, 27 Apr 2022 16:17:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CB5F7C43219
+	for <dmaengine@archiver.kernel.org>; Wed, 27 Apr 2022 16:17:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242642AbiD0QU2 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 27 Apr 2022 12:20:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43572 "EHLO
+        id S242666AbiD0QUa (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 27 Apr 2022 12:20:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58490 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242501AbiD0QSr (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Wed, 27 Apr 2022 12:18:47 -0400
-Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A960D83B03
-        for <dmaengine@vger.kernel.org>; Wed, 27 Apr 2022 09:14:39 -0700 (PDT)
-Received: by mail-ed1-x531.google.com with SMTP id k27so2528710edk.4
-        for <dmaengine@vger.kernel.org>; Wed, 27 Apr 2022 09:14:39 -0700 (PDT)
+        with ESMTP id S243133AbiD0QTJ (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Wed, 27 Apr 2022 12:19:09 -0400
+Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2525B203F75
+        for <dmaengine@vger.kernel.org>; Wed, 27 Apr 2022 09:15:21 -0700 (PDT)
+Received: by mail-ed1-x52e.google.com with SMTP id k27so2530800edk.4
+        for <dmaengine@vger.kernel.org>; Wed, 27 Apr 2022 09:15:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=8alvGyBBDkI+jnFt5S8vbtqPulfD6lL++1vfGqh/pyA=;
-        b=SIDxM8u7nMxxqj5wsbYizeXXTLXYGtlGEjLw60UnJal85YRIm1PE8fq5Q1knv0G6qs
-         SrpXniDJb13xtNYcGUPaKI9VJ74Wy5r8G/pDTSOFcIn1bwLwoEbNBOPAZdZsbqHNgF4M
-         KgLxWj+n8YD/9yowwKM/gG86oyZJY8f+CIwhA4HnmM5ioUX1JOUBnq7fuF+NeHHFAI9W
-         ll14I3oAfA9dECJ80yh8YgkSrMKzxarCR532JluTUDD0HNTkblVoSq3qwMzYinrqd3TJ
-         ej6xJ9wBAJ8oXB/otALdykILgxfdE8rM6cO9pcrny4QDv8yRwvq7go0ydvyML04+CfRs
-         F4uQ==
+        bh=31n4NKx1muSic9R+KSUXp8YhkBAU/fz0QvMncbQEELc=;
+        b=XgQiz/DMtYoEuMdjsE5RPTiK8uFm9NKru9Ft5z31xwpOehzewXxVtyrDiqdO/DSduZ
+         MhN6G0qCcNlQMRG/ym+te/voyNUBHC5fyMIgNxhwnRJYoMQB4TIshrl7IMjIfAEyLaiH
+         w3PbGQlf/Zwb9CcJ8zhiQtf9/TlJ7tawPpx/34AtNuZTe9DOaS7p+17ysDNTMdHKWnK6
+         R0fl2lTkBlILADHx+IJOaqq0MsbXQb+PHBXR0eSNs0NUiifAacUi+QqP6EWJ76vXT3Al
+         3BJlbFz19P+xLgneNgOW3oVmglAXptQNVqKNZu100r0K64jeiobaEYfaHL9471K2t5Hx
+         bJAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=8alvGyBBDkI+jnFt5S8vbtqPulfD6lL++1vfGqh/pyA=;
-        b=HbdZO6qVRMuzFe5435RnSPyl/htsw8QqelF906mP9t3psiTgkmbTuDMefsiuGqf+lQ
-         EYDJs49t7Y7nZsHM9vzYwgbnhlL9SLKfUKNe2fyU7DM98WLzA3yFWKT7fVaMHnb1FNOs
-         FOG/Mir1r+Ag5DIF0PqrNTLnpSz5x8xB77vEe+LLTvMLpcGFW06s5aVb3RT/48hniR+d
-         vqbsJMpSHffTM/Ox095/YuR8+EuImDMaxkPmvtytFlpWnAA/6t6xz+3s2wBO9CYOope3
-         /r+/x8ZldY2zR81Z3zCOMwEqj2cjSUay6ZVuMySXS6hWdyTsovoT8wmE+aWf4IBIIuHt
-         W5Ow==
-X-Gm-Message-State: AOAM532IkCOtcZMLcXm70xRJVVhWjdJiukGsePNE5LK3kR2R8ltQY8xv
-        bmGPRl28OdgV4zoXqKlZgfHgtg==
-X-Google-Smtp-Source: ABdhPJz6HWk5sB9nwfwdf1kQDcgkA+wqGy0z6ftS09yTJNkx6ybSS1PM3iIUUoGohfHi4XmFs5lz8A==
-X-Received: by 2002:a05:6402:1bce:b0:425:bfaf:f20c with SMTP id ch14-20020a0564021bce00b00425bfaff20cmr29534634edb.359.1651076070280;
-        Wed, 27 Apr 2022 09:14:30 -0700 (PDT)
+        bh=31n4NKx1muSic9R+KSUXp8YhkBAU/fz0QvMncbQEELc=;
+        b=a1u5g4aqL6UeGIpOA4va072G/VtVLYVbLidyUEoR3ayCz+K+Lgmm9iSX+OSenGXDMC
+         ujGVEyZ2Ug0IQJ3qsuPrKID/kClRicTpVSp0eprzEty5utbqQOqaLsLUqPnfmwD8hgKt
+         UwBXXCzzyigiZ37ZvPAl8uL1uSVZUEnrajDalAVIe4pRI/2kJI7FJv8kKhM6OzE+JXKj
+         wT0pCA0MikBl4lZe3A+SsG3vdZmNuTcqYoFOTLrjxx7dd2RRL+TaOMjf8F34QRQY8ZES
+         T6I0HoXkSFcBg3kb3jFGRN4bU/5JZh+qPx3mEv1omny2T+WBLxiBXw4E62bZY/HyXEnI
+         F9jg==
+X-Gm-Message-State: AOAM530aAu4TVImuWj70hbcMqBRLL2kVj/8jWlncgWl2T/Dez/tw7o9I
+        JLrhSX0BS72Kfyzaxa3f1BdWIg==
+X-Google-Smtp-Source: ABdhPJwHfDDPN11PYsb9j7rKqQqQGw0/VEFXbbHLx6w0PzuY3ZIqjllPexQhruoKLhJahwnycQh0kA==
+X-Received: by 2002:a05:6402:11c9:b0:425:ef56:a1dd with SMTP id j9-20020a05640211c900b00425ef56a1ddmr15339331edw.143.1651076107787;
+        Wed, 27 Apr 2022 09:15:07 -0700 (PDT)
 Received: from localhost.localdomain (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
-        by smtp.gmail.com with ESMTPSA id b17-20020aa7dc11000000b00412ae7fda95sm8583383edu.44.2022.04.27.09.14.29
+        by smtp.gmail.com with ESMTPSA id r19-20020a17090638d300b006d6e4fc047bsm7095015ejd.11.2022.04.27.09.15.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 27 Apr 2022 09:14:29 -0700 (PDT)
+        Wed, 27 Apr 2022 09:15:07 -0700 (PDT)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 To:     Vinod Koul <vkoul@kernel.org>, Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Orson Zhai <orsonzhai@gmail.com>,
-        Baolin Wang <baolin.wang7@gmail.com>,
-        Chunyan Zhang <zhang.lyra@gmail.com>,
+        Lubomir Rintel <lkundrak@v3.sk>,
+        Daniel Mack <daniel@zonque.org>,
+        Haojian Zhuang <haojian.zhuang@gmail.com>,
+        Robert Jarzmik <robert.jarzmik@free.fr>,
         dmaengine@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org
 Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 3/3] arm64: dts: sprd: use new 'dma-channels' property
-Date:   Wed, 27 Apr 2022 18:14:23 +0200
-Message-Id: <20220427161423.647534-4-krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 2/4] dmaengine: pxa: deprecate '#dma-channels' and '#dma-requests'
+Date:   Wed, 27 Apr 2022 18:14:57 +0200
+Message-Id: <20220427161459.647676-3-krzysztof.kozlowski@linaro.org>
 X-Mailer: git-send-email 2.32.0
-In-Reply-To: <20220427161423.647534-1-krzysztof.kozlowski@linaro.org>
-References: <20220427161423.647534-1-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220427161459.647676-1-krzysztof.kozlowski@linaro.org>
+References: <20220427161459.647676-1-krzysztof.kozlowski@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-The '#dma-channels' property was deprecated in favor of one defined by
-generic dma-common DT bindings.
+The generic properties, used in most of the drivers and defined in
+generic dma-common DT bindings, are 'dma-channels' and 'dma-requests'.
+Switch to new properties while keeping backward compatibility.
 
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 ---
- arch/arm64/boot/dts/sprd/whale2.dtsi | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/dma/pxa_dma.c | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/sprd/whale2.dtsi b/arch/arm64/boot/dts/sprd/whale2.dtsi
-index 79b9591c37aa..945f0e02d364 100644
---- a/arch/arm64/boot/dts/sprd/whale2.dtsi
-+++ b/arch/arm64/boot/dts/sprd/whale2.dtsi
-@@ -126,7 +126,7 @@ ap_dma: dma-controller@20100000 {
- 				reg = <0 0x20100000 0 0x4000>;
- 				interrupts = <GIC_SPI 42 IRQ_TYPE_LEVEL_HIGH>;
- 				#dma-cells = <1>;
--				#dma-channels = <32>;
-+				dma-channels = <32>;
- 				clock-names = "enable";
- 				clocks = <&apahb_gate CLK_DMA_EB>;
- 			};
-@@ -272,7 +272,7 @@ agcp_dma: dma-controller@41580000 {
- 				compatible = "sprd,sc9860-dma";
- 				reg = <0 0x41580000 0 0x4000>;
- 				#dma-cells = <1>;
--				#dma-channels = <32>;
-+				dma-channels = <32>;
- 				clock-names = "enable", "ashb_eb";
- 				clocks = <&agcp_gate CLK_AGCP_DMAAP_EB>,
- 				       <&agcp_gate CLK_AGCP_AP_ASHB_EB>;
+diff --git a/drivers/dma/pxa_dma.c b/drivers/dma/pxa_dma.c
+index 6078cc81892e..e7034f6f3994 100644
+--- a/drivers/dma/pxa_dma.c
++++ b/drivers/dma/pxa_dma.c
+@@ -1365,10 +1365,17 @@ static int pxad_probe(struct platform_device *op)
+ 
+ 	of_id = of_match_device(pxad_dt_ids, &op->dev);
+ 	if (of_id) {
+-		of_property_read_u32(op->dev.of_node, "#dma-channels",
+-				     &dma_channels);
+-		ret = of_property_read_u32(op->dev.of_node, "#dma-requests",
++		/* Parse new and deprecated dma-channels properties */
++		if (of_property_read_u32(op->dev.of_node, "dma-channels",
++					 &dma_channels))
++			of_property_read_u32(op->dev.of_node, "#dma-channels",
++					     &dma_channels);
++		/* Parse new and deprecated dma-requests properties */
++		ret = of_property_read_u32(op->dev.of_node, "dma-requests",
+ 					   &nb_requestors);
++		if (ret)
++			ret = of_property_read_u32(op->dev.of_node, "#dma-requests",
++						   &nb_requestors);
+ 		if (ret) {
+ 			dev_warn(pdev->slave.dev,
+ 				 "#dma-requests set to default 32 as missing in OF: %d",
 -- 
 2.32.0
 
