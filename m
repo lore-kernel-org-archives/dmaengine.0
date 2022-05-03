@@ -2,31 +2,31 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B1906C433EF
-	for <dmaengine@archiver.kernel.org>; Tue,  3 May 2022 23:01:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 45678C433F5
+	for <dmaengine@archiver.kernel.org>; Tue,  3 May 2022 23:01:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243923AbiECXFD (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 3 May 2022 19:05:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51574 "EHLO
+        id S243955AbiECXFE (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 3 May 2022 19:05:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51474 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244128AbiECXEL (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Tue, 3 May 2022 19:04:11 -0400
+        with ESMTP id S244041AbiECXEJ (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Tue, 3 May 2022 19:04:09 -0400
 Received: from mail.baikalelectronics.ru (mail.baikalelectronics.com [87.245.175.226])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id C1C78AE59
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id C17BD764A
         for <dmaengine@vger.kernel.org>; Tue,  3 May 2022 16:00:32 -0700 (PDT)
 Received: from mail.baikalelectronics.ru (unknown [192.168.51.25])
-        by mail.baikalelectronics.ru (Postfix) with ESMTP id 8BCC716DE;
-        Wed,  4 May 2022 01:51:54 +0300 (MSK)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mail.baikalelectronics.ru 8BCC716DE
+        by mail.baikalelectronics.ru (Postfix) with ESMTP id CC1C9C0D;
+        Wed,  4 May 2022 01:52:12 +0300 (MSK)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mail.baikalelectronics.ru CC1C9C0D
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baikalelectronics.ru; s=mail; t=1651618314;
-        bh=Mrs4arcuSUIBflxwE77VbGUc7c+dlUS54mMf+wSDYxo=;
+        d=baikalelectronics.ru; s=mail; t=1651618332;
+        bh=Rn3qRaOQPZj8s+wlKxCUQb+RVz0erO/Tc5KHt3cNz0s=;
         h=From:To:CC:Subject:Date:In-Reply-To:References:From;
-        b=kGa6RwrIObhyVS2dr3IDa9UFFzhrNulvYcM9pImUvV9EnWX1FiTh6z+42Bnetm4re
-         WPkJRmf4tDKAr/FkYukhxpcGL4HiHeXHnKvHChYMohsRoLdpX6Lf9ruAKbf1D0Ihca
-         BK2vKifpbCh7+W/rq7MrqnlB4LiiRuW9ZtSqZxKk=
+        b=WkD51AEWXM8aWlFZsICk+Db4KR/+PC0GVeXEKfBlHgrB56tRHomlcZh4tdXXzeXob
+         LG1wbzcQI/fMFvgOZQ8pUfZtQgipH5mlhqL/Qx9iE+dlbnH74Ek2U+dwMCmN4oFYq+
+         ppkXndKNe4V4EIZmSTIQ877X63mmPs2YRd3Fti9I=
 Received: from localhost (192.168.53.207) by mail (192.168.51.25) with
- Microsoft SMTP Server (TLS) id 15.0.1395.4; Wed, 4 May 2022 01:51:20 +0300
+ Microsoft SMTP Server (TLS) id 15.0.1395.4; Wed, 4 May 2022 01:51:38 +0300
 From:   Serge Semin <Sergey.Semin@baikalelectronics.ru>
 To:     Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
         Vinod Koul <vkoul@kernel.org>,
@@ -34,18 +34,18 @@ To:     Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
         Bjorn Helgaas <bhelgaas@google.com>,
         Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
         Frank Li <Frank.Li@nxp.com>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Rob Herring <robh@kernel.org>,
+        =?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>
 CC:     Serge Semin <Sergey.Semin@baikalelectronics.ru>,
         Serge Semin <fancer.lancer@gmail.com>,
         Alexey Malahov <Alexey.Malahov@baikalelectronics.ru>,
         Pavel Parkhomenko <Pavel.Parkhomenko@baikalelectronics.ru>,
-        Rob Herring <robh@kernel.org>,
-        =?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>,
         <linux-pci@vger.kernel.org>, <dmaengine@vger.kernel.org>,
         <linux-kernel@vger.kernel.org>
-Subject: [PATCH v2 08/26] dmaengine: dw-edma: Add CPU to PCIe bus address translation
-Date:   Wed, 4 May 2022 01:50:46 +0300
-Message-ID: <20220503225104.12108-9-Sergey.Semin@baikalelectronics.ru>
+Subject: [PATCH v2 25/26] PCI: dwc: Add generic iATU/eDMA CSRs space detection method
+Date:   Wed, 4 May 2022 01:51:03 +0300
+Message-ID: <20220503225104.12108-26-Sergey.Semin@baikalelectronics.ru>
 In-Reply-To: <20220503225104.12108-1-Sergey.Semin@baikalelectronics.ru>
 References: <20220503225104.12108-1-Sergey.Semin@baikalelectronics.ru>
 MIME-Version: 1.0
@@ -56,116 +56,198 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Starting from commit 9575632052ba ("dmaengine: make slave address
-physical") the source and destination addresses of the DMA-slave device
-have been converted to being defined in CPU address space. It's DMA-device
-driver responsibility to properly convert them to the reachable DMA bus
-spaces. In case of the DW eDMA device, the source or destination
-peripheral (slave) devices reside PCIe bus space. Thus we need to perform
-the PCIe Host/EP windows-based (i.e. ranges DT-property) addresses
-translation otherwise the eDMA transactions won't work as expected (or can
-be even harmful) in case if the CPU and PCIe address spaces don't match.
+The iATU and eDMA are accessible over the same AXI/DBI interface and have
+the same access mode (viewport-based or unrolled). Due to that it will be
+more suitable to perform the iATU and eDMA CSRs space detection in the
+same coherent function. Since the iATU CSRs space and access mode
+detection procedure is already available in the driver let's move it into
+the dedicated method. The eDMA CSRs space detection will be added there in
+the next commit. This change is a preparation before adding the eDMA
+support to the DW PCIe controller driver.
 
-Note 1. Even though the DMA interleaved template has both source and
-destination addresses declared of dma_addr_t type only CPU memory range is
-supposed to be mapped in a way so to be seen by the DMA device since it's
-a subject of the DMA getting towards the system side. The device part must
-not be mapped since slave device resides in the PCIe bus space, which
-isn't affected by IOMMUs or iATU translations. DW PCIe eDMA generates
-corresponding MWr/MRd TLPs on its own.
-
-Note 2. This functionality is mainly required for the remote eDMA setup
-since the CPU address must be manually translated into the PCIe bus space
-before being written to LLI.{SAR,DAR}. If eDMA is embedded into the
-locally accessible DW PCIe RP/EP software-based translation isn't required
-since it will be done by hardware by means of the Outbound iATU as long as
-the DMA_BYPASS flag is cleared. If the later flag is set or there is no
-Outbound iATU entry found to which the SAR or DAR falls in (for Read and
-Write channel respectfully), there won't be any translation performed but
-DMA will proceed with the corresponding source/destination address as is.
+Note the new dw_pcie_map_detect() method fails if the iATU MMIO region
+IO-remapping fails. It should have been done in the first place since the
+failed remapping of the detected reg-space is certainly the erroneous
+situation.
 
 Signed-off-by: Serge Semin <Sergey.Semin@baikalelectronics.ru>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
----
- drivers/dma/dw-edma/dw-edma-core.c | 18 +++++++++++++++++-
- include/linux/dma/edma.h           | 15 +++++++++++++++
- 2 files changed, 32 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/dma/dw-edma/dw-edma-core.c b/drivers/dma/dw-edma/dw-edma-core.c
-index ef49deb5a7f3..be466b781376 100644
---- a/drivers/dma/dw-edma/dw-edma-core.c
-+++ b/drivers/dma/dw-edma/dw-edma-core.c
-@@ -40,6 +40,17 @@ struct dw_edma_desc *vd2dw_edma_desc(struct virt_dma_desc *vd)
- 	return container_of(vd, struct dw_edma_desc, vd);
+---
+
+Changelog v2:
+- This is a new patch added in v2. (@Manivannan)
+---
+ .../pci/controller/dwc/pcie-designware-ep.c   |  4 +
+ .../pci/controller/dwc/pcie-designware-host.c |  4 +
+ drivers/pci/controller/dwc/pcie-designware.c  | 76 +++++++++----------
+ drivers/pci/controller/dwc/pcie-designware.h  |  3 +-
+ 4 files changed, 48 insertions(+), 39 deletions(-)
+
+diff --git a/drivers/pci/controller/dwc/pcie-designware-ep.c b/drivers/pci/controller/dwc/pcie-designware-ep.c
+index 9b0540cfa9e8..6cfcfa34e587 100644
+--- a/drivers/pci/controller/dwc/pcie-designware-ep.c
++++ b/drivers/pci/controller/dwc/pcie-designware-ep.c
+@@ -717,6 +717,10 @@ int dw_pcie_ep_init(struct dw_pcie_ep *ep)
+ 
+ 	dw_pcie_version_detect(pci);
+ 
++	ret = dw_pcie_map_detect(pci);
++	if (ret)
++		return ret;
++
+ 	dw_pcie_iatu_detect(pci);
+ 
+ 	ep->ib_window_map = devm_kcalloc(dev,
+diff --git a/drivers/pci/controller/dwc/pcie-designware-host.c b/drivers/pci/controller/dwc/pcie-designware-host.c
+index 9cb406f5c185..3cd5b096a427 100644
+--- a/drivers/pci/controller/dwc/pcie-designware-host.c
++++ b/drivers/pci/controller/dwc/pcie-designware-host.c
+@@ -409,6 +409,10 @@ int dw_pcie_host_init(struct pcie_port *pp)
+ 
+ 	dw_pcie_version_detect(pci);
+ 
++	ret = dw_pcie_map_detect(pci);
++	if (ret)
++		goto err_free_msi;
++
+ 	dw_pcie_iatu_detect(pci);
+ 
+ 	ret = dw_pcie_setup_rc(pp);
+diff --git a/drivers/pci/controller/dwc/pcie-designware.c b/drivers/pci/controller/dwc/pcie-designware.c
+index 33718ed6c511..68bd3fc66fd7 100644
+--- a/drivers/pci/controller/dwc/pcie-designware.c
++++ b/drivers/pci/controller/dwc/pcie-designware.c
+@@ -213,7 +213,7 @@ static inline void __iomem *dw_pcie_select_atu(struct dw_pcie *pci, u32 dir,
+ {
+ 	void __iomem *base = pci->atu_base;
+ 
+-	if (pci->iatu_unroll_enabled)
++	if (pci->iatu_dma_unrolled)
+ 		base += PCIE_ATU_UNROLL_BASE(dir, index);
+ 	else
+ 		dw_pcie_writel_dbi(pci, PCIE_ATU_VIEWPORT, dir | index);
+@@ -579,24 +579,56 @@ static void dw_pcie_link_set_max_speed(struct dw_pcie *pci, u32 link_gen)
+ 
  }
  
-+static inline
-+u64 dw_edma_get_pci_address(struct dw_edma_chan *chan, phys_addr_t cpu_addr)
-+{
-+	struct dw_edma_chip *chip = chan->dw->chip;
-+
-+	if (chip->ops->pci_address)
-+		return chip->ops->pci_address(chip->dev, cpu_addr);
-+
-+	return cpu_addr;
-+}
-+
- static struct dw_edma_burst *dw_edma_alloc_burst(struct dw_edma_chunk *chunk)
+-static bool dw_pcie_iatu_unroll_enabled(struct dw_pcie *pci)
++int dw_pcie_map_detect(struct dw_pcie *pci)
  {
- 	struct dw_edma_burst *burst;
-@@ -328,11 +339,11 @@ dw_edma_device_transfer(struct dw_edma_transfer *xfer)
- {
- 	struct dw_edma_chan *chan = dchan2dw_edma_chan(xfer->dchan);
- 	enum dma_transfer_direction dir = xfer->direction;
--	phys_addr_t src_addr, dst_addr;
- 	struct scatterlist *sg = NULL;
- 	struct dw_edma_chunk *chunk;
- 	struct dw_edma_burst *burst;
- 	struct dw_edma_desc *desc;
-+	u64 src_addr, dst_addr;
- 	size_t fsz = 0;
- 	u32 cnt = 0;
- 	int i;
-@@ -407,6 +418,11 @@ dw_edma_device_transfer(struct dw_edma_transfer *xfer)
- 		dst_addr = chan->config.dst_addr;
- 	}
++	struct platform_device *pdev = to_platform_device(pci->dev);
++	struct resource *res;
+ 	u32 val;
  
-+	if (dir == DMA_DEV_TO_MEM)
-+		src_addr = dw_edma_get_pci_address(chan, (phys_addr_t)src_addr);
+ 	val = dw_pcie_readl_dbi(pci, PCIE_ATU_VIEWPORT);
+ 	if (val == 0xffffffff)
+-		return true;
++		pci->iatu_dma_unrolled = true;
 +	else
-+		dst_addr = dw_edma_get_pci_address(chan, (phys_addr_t)dst_addr);
++		pci->iatu_dma_unrolled = false;
 +
- 	if (xfer->type == EDMA_XFER_CYCLIC) {
- 		cnt = xfer->xfer.cyclic.cnt;
- 	} else if (xfer->type == EDMA_XFER_SCATTER_GATHER) {
-diff --git a/include/linux/dma/edma.h b/include/linux/dma/edma.h
-index 5ec7cf2f14fc..391db06b74b7 100644
---- a/include/linux/dma/edma.h
-+++ b/include/linux/dma/edma.h
-@@ -23,8 +23,23 @@ struct dw_edma_region {
- 	size_t		sz;
++	if (!pci->iatu_dma_unrolled) {
++		pci->atu_base = pci->dbi_base + PCIE_ATU_VIEWPORT_BASE;
++		pci->atu_size = PCIE_ATU_VIEWPORT_SIZE;
++
++		dev_info(pci->dev, "iATU/DMA unroll: disabled\n");
++
++		return 0;
++	}
+ 
+-	return false;
++	if (!pci->atu_base) {
++		res = platform_get_resource_byname(pdev, IORESOURCE_MEM, "atu");
++		if (res) {
++			pci->atu_base = devm_ioremap_resource(pci->dev, res);
++			if (IS_ERR(pci->atu_base))
++				return PTR_ERR(pci->atu_base);
++
++			pci->atu_size = resource_size(res);
++		} else {
++			pci->atu_base = pci->dbi_base + DEFAULT_DBI_ATU_OFFSET;
++		}
++	}
++
++	/* Pick a minimal default, enough for 8 in and 8 out windows */
++	if (!pci->atu_size)
++		pci->atu_size = SZ_4K;
++
++	dev_info(pci->dev, "iATU/DMA unroll: enabled\n");
++
++	return 0;
+ }
+ 
+-static void dw_pcie_iatu_detect_regions(struct dw_pcie *pci)
++void dw_pcie_iatu_detect(struct dw_pcie *pci)
+ {
+ 	int max_region, ob, ib;
+ 	u32 val, min, dir;
+ 	u64 max;
+ 
+-	if (pci->iatu_unroll_enabled) {
++	if (pci->iatu_dma_unrolled) {
+ 		max_region = min((int)pci->atu_size / 512, 256);
+ 	} else {
+ 		dw_pcie_writel_dbi(pci, PCIE_ATU_VIEWPORT, 0xFF);
+@@ -640,38 +672,6 @@ static void dw_pcie_iatu_detect_regions(struct dw_pcie *pci)
+ 	pci->num_ib_windows = ib;
+ 	pci->region_align = 1 << fls(min);
+ 	pci->region_limit = (max << 32) | (SZ_4G - 1);
+-}
+-
+-void dw_pcie_iatu_detect(struct dw_pcie *pci)
+-{
+-	struct device *dev = pci->dev;
+-	struct platform_device *pdev = to_platform_device(dev);
+-
+-	pci->iatu_unroll_enabled = dw_pcie_iatu_unroll_enabled(pci);
+-	if (pci->iatu_unroll_enabled) {
+-		if (!pci->atu_base) {
+-			struct resource *res =
+-				platform_get_resource_byname(pdev, IORESOURCE_MEM, "atu");
+-			if (res) {
+-				pci->atu_size = resource_size(res);
+-				pci->atu_base = devm_ioremap_resource(dev, res);
+-			}
+-			if (!pci->atu_base || IS_ERR(pci->atu_base))
+-				pci->atu_base = pci->dbi_base + DEFAULT_DBI_ATU_OFFSET;
+-		}
+-
+-		if (!pci->atu_size)
+-			/* Pick a minimal default, enough for 8 in and 8 out windows */
+-			pci->atu_size = SZ_4K;
+-	} else {
+-		pci->atu_base = pci->dbi_base + PCIE_ATU_VIEWPORT_BASE;
+-		pci->atu_size = PCIE_ATU_VIEWPORT_SIZE;
+-	}
+-
+-	dw_pcie_iatu_detect_regions(pci);
+-
+-	dev_info(pci->dev, "iATU unroll: %s\n", pci->iatu_unroll_enabled ?
+-		"enabled" : "disabled");
+ 
+ 	dev_info(pci->dev, "iATU regions: %u ob, %u ib, align %uK, limit %lluG\n",
+ 		 pci->num_ob_windows, pci->num_ib_windows,
+diff --git a/drivers/pci/controller/dwc/pcie-designware.h b/drivers/pci/controller/dwc/pcie-designware.h
+index 765d99d5bfaa..e10647b96c68 100644
+--- a/drivers/pci/controller/dwc/pcie-designware.h
++++ b/drivers/pci/controller/dwc/pcie-designware.h
+@@ -310,7 +310,7 @@ struct dw_pcie {
+ 	int			num_lanes;
+ 	int			link_gen;
+ 	u8			n_fts[2];
+-	bool			iatu_unroll_enabled: 1;
++	bool			iatu_dma_unrolled: 1;
+ 	bool			io_cfg_atu_shared: 1;
  };
  
-+/**
-+ * struct dw_edma_core_ops - platform-specific eDMA methods
-+ * @irq_vector:		Get IRQ number of the passed eDMA channel. Note the
-+ *                      method accepts the channel id in the end-to-end
-+ *                      numbering with the eDMA write channels being placed
-+ *                      first in the row.
-+ * @pci_address:	Get PCIe bus address corresponding to the passed CPU
-+ *			address. Note there is no need in specifying this
-+ *			function if the address translation is performed by
-+ *			the DW PCIe RP/EP controller with the DW eDMA device in
-+ *			subject and DMA_BYPASS isn't set for all the outbound
-+ *			iATU windows. That will be done by the controller
-+ *			automatically.
-+ */
- struct dw_edma_core_ops {
- 	int (*irq_vector)(struct device *dev, unsigned int nr);
-+	u64 (*pci_address)(struct device *dev, phys_addr_t cpu_addr);
- };
+@@ -343,6 +343,7 @@ int dw_pcie_prog_ep_inbound_atu(struct dw_pcie *pci, u8 func_no, int index,
+ 				int type, u64 cpu_addr, u8 bar);
+ void dw_pcie_disable_atu(struct dw_pcie *pci, u32 dir, int index);
+ void dw_pcie_setup(struct dw_pcie *pci);
++int dw_pcie_map_detect(struct dw_pcie *pci);
+ void dw_pcie_iatu_detect(struct dw_pcie *pci);
  
- enum dw_edma_map_format {
+ static inline void dw_pcie_writel_dbi(struct dw_pcie *pci, u32 reg, u32 val)
 -- 
 2.35.1
 
