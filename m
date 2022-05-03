@@ -2,31 +2,31 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6894BC433FE
-	for <dmaengine@archiver.kernel.org>; Tue,  3 May 2022 23:01:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B6D49C433EF
+	for <dmaengine@archiver.kernel.org>; Tue,  3 May 2022 23:01:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237685AbiECXEz (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 3 May 2022 19:04:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51152 "EHLO
+        id S238031AbiECXE4 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 3 May 2022 19:04:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51150 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243940AbiECXEH (ORCPT
+        with ESMTP id S243930AbiECXEH (ORCPT
         <rfc822;dmaengine@vger.kernel.org>); Tue, 3 May 2022 19:04:07 -0400
 Received: from mail.baikalelectronics.ru (mail.baikalelectronics.com [87.245.175.226])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id B16B0659E
-        for <dmaengine@vger.kernel.org>; Tue,  3 May 2022 16:00:31 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id C393D6412
+        for <dmaengine@vger.kernel.org>; Tue,  3 May 2022 16:00:30 -0700 (PDT)
 Received: from mail.baikalelectronics.ru (unknown [192.168.51.25])
-        by mail.baikalelectronics.ru (Postfix) with ESMTP id 5C76C16D1;
-        Wed,  4 May 2022 01:51:47 +0300 (MSK)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mail.baikalelectronics.ru 5C76C16D1
+        by mail.baikalelectronics.ru (Postfix) with ESMTP id 69E2B16D8;
+        Wed,  4 May 2022 01:51:50 +0300 (MSK)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mail.baikalelectronics.ru 69E2B16D8
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baikalelectronics.ru; s=mail; t=1651618307;
-        bh=mO431tI1SNQWLBayZin6EOk4nSImyeG4ZAo0sqrxslA=;
+        d=baikalelectronics.ru; s=mail; t=1651618310;
+        bh=6ylghrvgUT4d9UhZC8/foUYLQFbArdgaj4rvOFIS31A=;
         h=From:To:CC:Subject:Date:In-Reply-To:References:From;
-        b=KJQDLWp4uw+MV/pE08eMUEm3STzjE1jPymvmHWLFZHnRcsKxDCAKVrShxLpr4XSHX
-         ByCbxSCfuRqxhXFeBVmDbPqZWTzvaJKYw9h0jnjtQ0WUpebjgd8vLnR+6beBC2OeoR
-         rv0hbs7+TbZ3nV0C9iCK5bRkYiXBTgpWm5mNODJk=
+        b=kmPcvNEZt2a7CFF0fRZmZGBUfM4L2p3Xp99VPb1+1S+I2lS0LFcBVs/HNESgng0b1
+         crV2XjmqegSxhd4yCTbuki/Vj7S9V4VhyAN6cS/U6pXo32+zm3BvXaE1pw3aJrCSy9
+         +psNKUwCTJih3mdIz2jxToY9//ts+LoelS9Bs0mI=
 Received: from localhost (192.168.53.207) by mail (192.168.51.25) with
- Microsoft SMTP Server (TLS) id 15.0.1395.4; Wed, 4 May 2022 01:51:13 +0300
+ Microsoft SMTP Server (TLS) id 15.0.1395.4; Wed, 4 May 2022 01:51:16 +0300
 From:   Serge Semin <Sergey.Semin@baikalelectronics.ru>
 To:     Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
         Vinod Koul <vkoul@kernel.org>,
@@ -34,11 +34,7 @@ To:     Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
         Bjorn Helgaas <bhelgaas@google.com>,
         Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
         Frank Li <Frank.Li@nxp.com>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Christoph Hellwig <hch@lst.de>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Vladimir Murzin <vladimir.murzin@arm.com>
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 CC:     Serge Semin <Sergey.Semin@baikalelectronics.ru>,
         Serge Semin <fancer.lancer@gmail.com>,
         Alexey Malahov <Alexey.Malahov@baikalelectronics.ru>,
@@ -46,10 +42,11 @@ CC:     Serge Semin <Sergey.Semin@baikalelectronics.ru>,
         Rob Herring <robh@kernel.org>,
         =?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>,
         <linux-pci@vger.kernel.org>, <dmaengine@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <iommu@lists.linux-foundation.org>
-Subject: [PATCH v2 01/26] dma-direct: take dma-ranges/offsets into account in resource mapping
-Date:   Wed, 4 May 2022 01:50:39 +0300
-Message-ID: <20220503225104.12108-2-Sergey.Semin@baikalelectronics.ru>
+        <linux-kernel@vger.kernel.org>,
+        Gustavo Pimentel <Gustavo.Pimentel@synopsys.com>
+Subject: [PATCH v2 04/26] dmaengine: dw-edma: Convert ll/dt phys-address to PCIe bus/DMA address
+Date:   Wed, 4 May 2022 01:50:42 +0300
+Message-ID: <20220503225104.12108-5-Sergey.Semin@baikalelectronics.ru>
 In-Reply-To: <20220503225104.12108-1-Sergey.Semin@baikalelectronics.ru>
 References: <20220503225104.12108-1-Sergey.Semin@baikalelectronics.ru>
 MIME-Version: 1.0
@@ -60,40 +57,100 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-A basic device-specific linear memory mapping was introduced back in
-commit ("dma: Take into account dma_pfn_offset") as a single-valued offset
-preserved in the device.dma_pfn_offset field, which was initialized for
-instance by means of the "dma-ranges" DT property. Afterwards the
-functionality was extended to support more than one device-specific region
-defined in the device.dma_range_map list of maps. But all of these
-improvements concerned a single pointer, page or sg DMA-mapping methods,
-while the system resource mapping function turned to miss the
-corresponding modification. Thus the dma_direct_map_resource() method now
-just casts the CPU physical address to the device DMA address with no
-dma-ranges-based mapping taking into account, which is obviously wrong.
-Let's fix it by using the phys_to_dma_direct() method to get the
-device-specific bus address from the passed memory resource for the case
-of the directly mapped DMA.
+In accordance with the dw_edma_region.paddr field semantics it is supposed
+to be initialized with a memory base address visible by the DW eDMA
+controller. If the DMA engine is embedded into the DW PCIe Host/EP
+controller, then the address should belong to the Local CPU/Application
+memory. If eDMA is remotely accessible across the PCIe bus via the PCIe
+memory IOs, then the address needs to be a part of the PCIe bus memory
+space. The later case hasn't been well covered in the corresponding
+glue-driver. Since in general the PCIe memory space doesn't have to match
+the CPU memory space and the pci_dev.resource[] arrays contain the
+resources defined in the CPU memory space, a proper conversion needs to be
+performed, otherwise either the driver won't properly work or much worse
+the memory corruption will happen. The conversion can be done by means of
+the pci_bus_address() method. Let's use it to retrieve the LL, DT and CSRs
+PCIe memory ranges.
 
-Fixes: 25f1e1887088 ("dma: Take into account dma_pfn_offset")
+Note in addition to that we need to extend the dw_edma_region.paddr field
+size. The field normally contains a memory range base address to be set in
+the DW eDMA Linked-List pointer register or as a base address of the
+Linked-List data buffer. In accordance with [1] the LL range is supposed
+to be created in the Local CPU/Application memory, but depending on the DW
+eDMA utilization the memory can be created as a part of the PCIe bus
+address space (as in the case of the DW PCIe EP prototype kit). Thus in
+the former case the dw_edma_region.paddr field should have the dma_addr_t
+type, while in the later one - pci_bus_addr_t. Seeing the corresponding
+CSRs are always 64-bits wide let's convert the dw_edma_region.paddr field
+type to be u64 and let the client code logic to make sure it has a valid
+address visible by the DW eDMA controller. For instance the DW eDMA PCIe
+glue-driver initializes the field with the addresses from the PCIe bus
+memory space.
+
+[1] DesignWare Cores PCI Express Controller Databook - DWC PCIe Root Port,
+    v.5.40a, March 2019, p.1103
+
+Fixes: 41aaff2a2ac0 ("dmaengine: Add Synopsys eDMA IP PCIe glue-logic")
 Signed-off-by: Serge Semin <Sergey.Semin@baikalelectronics.ru>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 ---
- kernel/dma/direct.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/dma/dw-edma/dw-edma-pcie.c | 8 ++++----
+ include/linux/dma/edma.h           | 2 +-
+ 2 files changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/kernel/dma/direct.c b/kernel/dma/direct.c
-index 9743c6ccce1a..bc06db74dfdb 100644
---- a/kernel/dma/direct.c
-+++ b/kernel/dma/direct.c
-@@ -497,7 +497,7 @@ int dma_direct_map_sg(struct device *dev, struct scatterlist *sgl, int nents,
- dma_addr_t dma_direct_map_resource(struct device *dev, phys_addr_t paddr,
- 		size_t size, enum dma_data_direction dir, unsigned long attrs)
- {
--	dma_addr_t dma_addr = paddr;
-+	dma_addr_t dma_addr = phys_to_dma_direct(dev, paddr);
+diff --git a/drivers/dma/dw-edma/dw-edma-pcie.c b/drivers/dma/dw-edma/dw-edma-pcie.c
+index d6b5e2463884..04c95cba1244 100644
+--- a/drivers/dma/dw-edma/dw-edma-pcie.c
++++ b/drivers/dma/dw-edma/dw-edma-pcie.c
+@@ -231,7 +231,7 @@ static int dw_edma_pcie_probe(struct pci_dev *pdev,
+ 			return -ENOMEM;
  
- 	if (unlikely(!dma_capable(dev, dma_addr, size, false))) {
- 		dev_err_once(dev,
+ 		ll_region->vaddr += ll_block->off;
+-		ll_region->paddr = pdev->resource[ll_block->bar].start;
++		ll_region->paddr = pci_bus_address(pdev, ll_block->bar);
+ 		ll_region->paddr += ll_block->off;
+ 		ll_region->sz = ll_block->sz;
+ 
+@@ -240,7 +240,7 @@ static int dw_edma_pcie_probe(struct pci_dev *pdev,
+ 			return -ENOMEM;
+ 
+ 		dt_region->vaddr += dt_block->off;
+-		dt_region->paddr = pdev->resource[dt_block->bar].start;
++		dt_region->paddr = pci_bus_address(pdev, dt_block->bar);
+ 		dt_region->paddr += dt_block->off;
+ 		dt_region->sz = dt_block->sz;
+ 	}
+@@ -256,7 +256,7 @@ static int dw_edma_pcie_probe(struct pci_dev *pdev,
+ 			return -ENOMEM;
+ 
+ 		ll_region->vaddr += ll_block->off;
+-		ll_region->paddr = pdev->resource[ll_block->bar].start;
++		ll_region->paddr = pci_bus_address(pdev, ll_block->bar);
+ 		ll_region->paddr += ll_block->off;
+ 		ll_region->sz = ll_block->sz;
+ 
+@@ -265,7 +265,7 @@ static int dw_edma_pcie_probe(struct pci_dev *pdev,
+ 			return -ENOMEM;
+ 
+ 		dt_region->vaddr += dt_block->off;
+-		dt_region->paddr = pdev->resource[dt_block->bar].start;
++		dt_region->paddr = pci_bus_address(pdev, dt_block->bar);
+ 		dt_region->paddr += dt_block->off;
+ 		dt_region->sz = dt_block->sz;
+ 	}
+diff --git a/include/linux/dma/edma.h b/include/linux/dma/edma.h
+index 8b134896c9ed..5ec7cf2f14fc 100644
+--- a/include/linux/dma/edma.h
++++ b/include/linux/dma/edma.h
+@@ -18,7 +18,7 @@
+ struct dw_edma;
+ 
+ struct dw_edma_region {
+-	phys_addr_t	paddr;
++	u64		paddr;
+ 	void __iomem	*vaddr;
+ 	size_t		sz;
+ };
 -- 
 2.35.1
 
