@@ -2,51 +2,51 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0E204C433EF
-	for <dmaengine@archiver.kernel.org>; Tue,  3 May 2022 06:54:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 52845C433FE
+	for <dmaengine@archiver.kernel.org>; Tue,  3 May 2022 06:55:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231560AbiECG6V (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 3 May 2022 02:58:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46648 "EHLO
+        id S231147AbiECG6a (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 3 May 2022 02:58:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47140 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231452AbiECG6L (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Tue, 3 May 2022 02:58:11 -0400
-Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 73956222A9
-        for <dmaengine@vger.kernel.org>; Mon,  2 May 2022 23:54:14 -0700 (PDT)
-Received: by mail-ej1-x636.google.com with SMTP id g6so31699500ejw.1
-        for <dmaengine@vger.kernel.org>; Mon, 02 May 2022 23:54:14 -0700 (PDT)
+        with ESMTP id S231475AbiECG6M (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Tue, 3 May 2022 02:58:12 -0400
+Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A2BD18E2E
+        for <dmaengine@vger.kernel.org>; Mon,  2 May 2022 23:54:16 -0700 (PDT)
+Received: by mail-ed1-x536.google.com with SMTP id z99so18827048ede.5
+        for <dmaengine@vger.kernel.org>; Mon, 02 May 2022 23:54:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=31n4NKx1muSic9R+KSUXp8YhkBAU/fz0QvMncbQEELc=;
-        b=Z5OIn2rGyBFk1Z0vLmDQ388oecgW+5bheVurOGOOLeKLfpQMU/B0yOM6ZWJfiGK7qd
-         0DCYzPrCJ+5W/frYoExpIvaiU9h9meCDGS50IlADuFtCVv9NLSC6cvj+StOhCh7IUWQm
-         Cc1pVuYmnVfxpeZfxEr5j8x40k+ZfNzbNNYCXEH+hfUxcBLspZUCLK0tKCKhLrhCfkno
-         9BlR3PiImyJK2Hf7rdvOQgpGV1//1g5z3g6VBjh9KoXN1ONPAZ8h0ad0La1e/hErSKl9
-         RPe7P6RiKVoL8IOaXnMdaAr4s+fii8ZiRjaQTygT59ozkDNR678+FD3WKbx8VKk864NX
-         pzmw==
+        bh=0Om7E3tZCgwxeaQekqleJAaOkpjdc9uO+KkphkJXZIw=;
+        b=A5vc+vTpsI6Dz+CvfDMeY1y0K9VrnUu4BmfVN+yowooh0lh7bhFU36TXpJpn8s0khO
+         /1u4E6S4WRv5qnTOf0jYVIczlKGwzwuCym9vysqhYZC5c+MIM1XKTmvwJvBOJdIoYtn4
+         W2NcUjn6L4SDNhLl5mL75j3wYzZgzOD4xg3Ia8nKZfyehozs4ylZM4VoBtJhyQG5FLB3
+         o8rA3+UzsrKxUtBL6qF/nYXmIku+g6RoRv4TcWl2WUTgXM0AKXpvCoZxcTbXaoaARisa
+         SMVC7s3EgM9x6k0cpFNrVhp/I33PsdX+wQS9Bc/ktaxfavt0YRprTAJR11ro3I5p0J0U
+         f2JA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=31n4NKx1muSic9R+KSUXp8YhkBAU/fz0QvMncbQEELc=;
-        b=ePaubD4CK3U2kk3mfv0E0our8ne4EhuuMTep7jbNzRLL1zReCyhy/WQPg0SZGtFGi+
-         BNVVMBeLWcc8p4fD5cYhr4Z4ehzRuOeYkMlBGNBcWxN6efyuSg3lQZE1GERYziT2NEdu
-         TfnUSOH7jbCO/3ISHsmexWjfoAbva2Y+3R7gmkcXzzRDRtPg8MYtsQ6RB2wNuZgGI36T
-         tO8CRBcSw6xG3Ye9tghxxDnn1B4ta1F3M6mlgIJ3gWC+YEo/LyjjX3/1crOAvx5RNJSd
-         JefTFugBqqAhrlwTudVVzDiHCltmSpiDd/5uomFd0xxIVfXedoPuVz3w6HGVGP5ELSOU
-         PJOw==
-X-Gm-Message-State: AOAM530V7QYykeFaQAjbr1gMZB58LXv8qh1kwIfVeNjqIIkwrVrM6AX8
-        HSuQL9BjwrPPBJCZl5jc9VcbdQ==
-X-Google-Smtp-Source: ABdhPJzDXkyPokM0IM43pGWhXvxnvp8eZB1vqKbFxpPmZDLh9aEzEuzQI4DcfJhCWvBSd40FFqZaHg==
-X-Received: by 2002:a17:907:6e02:b0:6f3:d185:5d25 with SMTP id sd2-20020a1709076e0200b006f3d1855d25mr14343646ejc.14.1651560853020;
-        Mon, 02 May 2022 23:54:13 -0700 (PDT)
+        bh=0Om7E3tZCgwxeaQekqleJAaOkpjdc9uO+KkphkJXZIw=;
+        b=5QwE0CF7hNwrBCX8VucltMI3NxtuJtIxQ/EEkkg0beLGep5nrK+zLJGRDoGBpIXMaU
+         cg09msSbC9hogHTegjX8yzwkRtYsG/z1eiY+b26VRS+FkBffKrlE0Ed+6vtPQrNLTDZ6
+         CA2vh9Dz4JSegiR1WIafp+Pf/o+6pgWRw8uvmXAP011jHHFhblYdBpQzM+0zHyglHYFk
+         RuPT9qNdc+nekEVmFBZIra+MkwcT2ahvk66A0eJlU9ghMjHvxSDgqon3sLfVjK2SGsnI
+         LCtygSwJHgUchgZBnWz7VNesrPXMHuFLb9QYexoX3Unphyb8/Uarb4li2621T/Tq1Qej
+         SFsw==
+X-Gm-Message-State: AOAM532HxzSJbz/LnHxXAfFWqhDQlt1YxGy0t+FCg6UgcEr5Y8lfHB1L
+        +DlINr2JKu7AOAM+1/tVmUJ7xg==
+X-Google-Smtp-Source: ABdhPJy/soHkx3KrZDjY+Xw2pSTuOspk0j5nJMh8MXun24XmQC02uczGjygli3btUhMvuX7AmFGX1A==
+X-Received: by 2002:a50:954b:0:b0:41a:c9cb:8778 with SMTP id v11-20020a50954b000000b0041ac9cb8778mr16638414eda.165.1651560855140;
+        Mon, 02 May 2022 23:54:15 -0700 (PDT)
 Received: from localhost.localdomain (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
-        by smtp.gmail.com with ESMTPSA id l23-20020aa7c3d7000000b0042617ba6396sm7565326edr.32.2022.05.02.23.54.12
+        by smtp.gmail.com with ESMTPSA id l23-20020aa7c3d7000000b0042617ba6396sm7565326edr.32.2022.05.02.23.54.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 May 2022 23:54:12 -0700 (PDT)
+        Mon, 02 May 2022 23:54:14 -0700 (PDT)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 To:     Vinod Koul <vkoul@kernel.org>, Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
@@ -57,9 +57,9 @@ To:     Vinod Koul <vkoul@kernel.org>, Rob Herring <robh+dt@kernel.org>,
         dmaengine@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org
 Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH v2 2/4] dmaengine: pxa: deprecate '#dma-channels' and '#dma-requests'
-Date:   Tue,  3 May 2022 08:54:05 +0200
-Message-Id: <20220503065407.52188-3-krzysztof.kozlowski@linaro.org>
+Subject: [PATCH v2 4/4] ARM: dts: pxa: use new 'dma-channels/requests' properties
+Date:   Tue,  3 May 2022 08:54:07 +0200
+Message-Id: <20220503065407.52188-5-krzysztof.kozlowski@linaro.org>
 X-Mailer: git-send-email 2.32.0
 In-Reply-To: <20220503065407.52188-1-krzysztof.kozlowski@linaro.org>
 References: <20220503065407.52188-1-krzysztof.kozlowski@linaro.org>
@@ -69,40 +69,86 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-The generic properties, used in most of the drivers and defined in
-generic dma-common DT bindings, are 'dma-channels' and 'dma-requests'.
-Switch to new properties while keeping backward compatibility.
+The '#dma-channels' and '#dma-requests' properties were deprecated in
+favor of these defined by generic dma-common DT bindings.  Add new
+properties while keeping old ones for backwards compatibility.
 
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 ---
- drivers/dma/pxa_dma.c | 13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ arch/arm/boot/dts/mmp2.dtsi   | 2 ++
+ arch/arm/boot/dts/pxa25x.dtsi | 5 ++++-
+ arch/arm/boot/dts/pxa27x.dtsi | 5 ++++-
+ arch/arm/boot/dts/pxa3xx.dtsi | 5 ++++-
+ 4 files changed, 14 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/dma/pxa_dma.c b/drivers/dma/pxa_dma.c
-index 6078cc81892e..e7034f6f3994 100644
---- a/drivers/dma/pxa_dma.c
-+++ b/drivers/dma/pxa_dma.c
-@@ -1365,10 +1365,17 @@ static int pxad_probe(struct platform_device *op)
+diff --git a/arch/arm/boot/dts/mmp2.dtsi b/arch/arm/boot/dts/mmp2.dtsi
+index 46984d4c5224..987d792f67ea 100644
+--- a/arch/arm/boot/dts/mmp2.dtsi
++++ b/arch/arm/boot/dts/mmp2.dtsi
+@@ -275,7 +275,9 @@ dma-controller@d4000000 {
+ 				compatible = "marvell,pdma-1.0";
+ 				reg = <0xd4000000 0x10000>;
+ 				interrupts = <48>;
++				/* For backwards compatibility: */
+ 				#dma-channels = <16>;
++				dma-channels = <16>;
+ 				status = "disabled";
+ 			};
  
- 	of_id = of_match_device(pxad_dt_ids, &op->dev);
- 	if (of_id) {
--		of_property_read_u32(op->dev.of_node, "#dma-channels",
--				     &dma_channels);
--		ret = of_property_read_u32(op->dev.of_node, "#dma-requests",
-+		/* Parse new and deprecated dma-channels properties */
-+		if (of_property_read_u32(op->dev.of_node, "dma-channels",
-+					 &dma_channels))
-+			of_property_read_u32(op->dev.of_node, "#dma-channels",
-+					     &dma_channels);
-+		/* Parse new and deprecated dma-requests properties */
-+		ret = of_property_read_u32(op->dev.of_node, "dma-requests",
- 					   &nb_requestors);
-+		if (ret)
-+			ret = of_property_read_u32(op->dev.of_node, "#dma-requests",
-+						   &nb_requestors);
- 		if (ret) {
- 			dev_warn(pdev->slave.dev,
- 				 "#dma-requests set to default 32 as missing in OF: %d",
+diff --git a/arch/arm/boot/dts/pxa25x.dtsi b/arch/arm/boot/dts/pxa25x.dtsi
+index a248bf038033..5f8300e356ad 100644
+--- a/arch/arm/boot/dts/pxa25x.dtsi
++++ b/arch/arm/boot/dts/pxa25x.dtsi
+@@ -38,9 +38,12 @@ pdma: dma-controller@40000000 {
+ 			compatible = "marvell,pdma-1.0";
+ 			reg = <0x40000000 0x10000>;
+ 			interrupts = <25>;
+-			#dma-channels = <16>;
+ 			#dma-cells = <2>;
++			/* For backwards compatibility: */
++			#dma-channels = <16>;
++			dma-channels = <16>;
+ 			#dma-requests = <40>;
++			dma-requests = <40>;
+ 			status = "okay";
+ 		};
+ 
+diff --git a/arch/arm/boot/dts/pxa27x.dtsi b/arch/arm/boot/dts/pxa27x.dtsi
+index ccbecad9c5c7..a2cbfb3be609 100644
+--- a/arch/arm/boot/dts/pxa27x.dtsi
++++ b/arch/arm/boot/dts/pxa27x.dtsi
+@@ -12,9 +12,12 @@ pdma: dma-controller@40000000 {
+ 			compatible = "marvell,pdma-1.0";
+ 			reg = <0x40000000 0x10000>;
+ 			interrupts = <25>;
+-			#dma-channels = <32>;
+ 			#dma-cells = <2>;
++			/* For backwards compatibility: */
++			#dma-channels = <32>;
++			dma-channels = <32>;
+ 			#dma-requests = <75>;
++			dma-requests = <75>;
+ 			status = "okay";
+ 		};
+ 
+diff --git a/arch/arm/boot/dts/pxa3xx.dtsi b/arch/arm/boot/dts/pxa3xx.dtsi
+index d19674812cd2..f9c216f91865 100644
+--- a/arch/arm/boot/dts/pxa3xx.dtsi
++++ b/arch/arm/boot/dts/pxa3xx.dtsi
+@@ -122,9 +122,12 @@ pdma: dma-controller@40000000 {
+ 			compatible = "marvell,pdma-1.0";
+ 			reg = <0x40000000 0x10000>;
+ 			interrupts = <25>;
+-			#dma-channels = <32>;
+ 			#dma-cells = <2>;
++			/* For backwards compatibility: */
++			#dma-channels = <32>;
++			dma-channels = <32>;
+ 			#dma-requests = <100>;
++			dma-requests = <100>;
+ 			status = "okay";
+ 		};
+ 
 -- 
 2.32.0
 
