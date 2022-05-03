@@ -2,31 +2,31 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D26B3C4332F
-	for <dmaengine@archiver.kernel.org>; Tue,  3 May 2022 23:01:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2F46BC43219
+	for <dmaengine@archiver.kernel.org>; Tue,  3 May 2022 23:01:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239078AbiECXEv (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 3 May 2022 19:04:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50768 "EHLO
+        id S243920AbiECXEy (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 3 May 2022 19:04:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51572 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242196AbiECXEC (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Tue, 3 May 2022 19:04:02 -0400
+        with ESMTP id S244100AbiECXEK (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Tue, 3 May 2022 19:04:10 -0400
 Received: from mail.baikalelectronics.ru (mail.baikalelectronics.com [87.245.175.226])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 73F706417
-        for <dmaengine@vger.kernel.org>; Tue,  3 May 2022 16:00:25 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id C19757669
+        for <dmaengine@vger.kernel.org>; Tue,  3 May 2022 16:00:32 -0700 (PDT)
 Received: from mail.baikalelectronics.ru (unknown [192.168.51.25])
-        by mail.baikalelectronics.ru (Postfix) with ESMTP id 607ED16D6;
-        Wed,  4 May 2022 01:51:48 +0300 (MSK)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mail.baikalelectronics.ru 607ED16D6
+        by mail.baikalelectronics.ru (Postfix) with ESMTP id 82B3EC0B;
+        Wed,  4 May 2022 01:52:10 +0300 (MSK)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mail.baikalelectronics.ru 82B3EC0B
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baikalelectronics.ru; s=mail; t=1651618308;
-        bh=45B91bTRPDAiVVFXTWFyOKTO4rQMMJ7SJOEIZd4mBWc=;
+        d=baikalelectronics.ru; s=mail; t=1651618330;
+        bh=0ptXtCK1i99miO8i1gK/SouMlHAeFCgwJ3UskvlQy9g=;
         h=From:To:CC:Subject:Date:In-Reply-To:References:From;
-        b=hW6NN3XmaclC1NQBB5+yrm7tUDzI+V27l6nwbpKGVaAhzL9Gmm384L5/JhYDCO0IA
-         HI54mSmbK44lqKbjFhJk6VOhdNGe2g75bXIxogQvHQtBrXwc6tU2ZMiQ4GpY/C85VW
-         E2Si5ykW3/FLLJ2dUVG/3tu8Ivx0RQDhArbjjAMk=
+        b=CoeT8kfhyMTbwdz1k1coKdWNM57Ubaw6x99Qw2O4k+BkOIfGqD1RLvo2B1l5MunRY
+         Jx3d4X+oFVc/fb2PGWf7sVo0rerAdIUD6tDHN4nG0UXAqVzay9ntFOoErj1kB+7m5I
+         cDuDf28hgxRL+5FZ9laqMBC7a6Hwtn2xRKpKZcdE=
 Received: from localhost (192.168.53.207) by mail (192.168.51.25) with
- Microsoft SMTP Server (TLS) id 15.0.1395.4; Wed, 4 May 2022 01:51:14 +0300
+ Microsoft SMTP Server (TLS) id 15.0.1395.4; Wed, 4 May 2022 01:51:36 +0300
 From:   Serge Semin <Sergey.Semin@baikalelectronics.ru>
 To:     Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
         Vinod Koul <vkoul@kernel.org>,
@@ -43,9 +43,9 @@ CC:     Serge Semin <Sergey.Semin@baikalelectronics.ru>,
         =?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>,
         <linux-pci@vger.kernel.org>, <dmaengine@vger.kernel.org>,
         <linux-kernel@vger.kernel.org>
-Subject: [PATCH v2 02/26] dmaengine: Fix dma_slave_config.dst_addr description
-Date:   Wed, 4 May 2022 01:50:40 +0300
-Message-ID: <20220503225104.12108-3-Sergey.Semin@baikalelectronics.ru>
+Subject: [PATCH v2 23/26] dmaengine: dw-edma: Bypass dma-ranges mapping for the local setup
+Date:   Wed, 4 May 2022 01:51:01 +0300
+Message-ID: <20220503225104.12108-24-Sergey.Semin@baikalelectronics.ru>
 In-Reply-To: <20220503225104.12108-1-Sergey.Semin@baikalelectronics.ru>
 References: <20220503225104.12108-1-Sergey.Semin@baikalelectronics.ru>
 MIME-Version: 1.0
@@ -56,31 +56,56 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Most likely due to a copy-paste mistake the dst_addr member of the
-dma_slave_config structure has been marked as ignored if the !source!
-address belong to the memory. That is relevant to the src_addr field of
-the structure while the dst_addr field as containing a destination device
-address is supposed to be ignored if the destination is the CPU memory.
-Let's fix the field description accordingly.
+DW eDMA doesn't perform any translation of the traffic generated on the
+CPU/Application side. It just generates read/write AXI-bus requests with
+the specified addresses. But in case if the dma-ranges DT-property is
+specified for a platform device node, Linux will use it to map the CPU
+memory regions into the DMAable bus ranges. This isn't what we want for
+the eDMA embedded into the locally accessed DW PCIe Root Port and
+End-point. In order to work that around let's set the chan_dma_dev flag
+for each DW eDMA channel thus forcing the client drivers to getting a
+custom dma-ranges-less parental device for the mappings.
+
+Note it will only work for the client drivers using the
+dmaengine_get_dma_device() method to get the parental DMA device.
 
 Signed-off-by: Serge Semin <Sergey.Semin@baikalelectronics.ru>
----
- include/linux/dmaengine.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-diff --git a/include/linux/dmaengine.h b/include/linux/dmaengine.h
-index 842d4f7ca752..f204ea16ac1c 100644
---- a/include/linux/dmaengine.h
-+++ b/include/linux/dmaengine.h
-@@ -395,7 +395,7 @@ enum dma_slave_buswidth {
-  * should be read (RX), if the source is memory this argument is
-  * ignored.
-  * @dst_addr: this is the physical address where DMA slave data
-- * should be written (TX), if the source is memory this argument
-+ * should be written (TX), if the destination is memory this argument
-  * is ignored.
-  * @src_addr_width: this is the width in bytes of the source (RX)
-  * register where DMA data shall be read. If the source
+---
+
+Changelog v2:
+- Fix the comment a bit to being clearer. (@Manivannan)
+---
+ drivers/dma/dw-edma/dw-edma-core.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
+
+diff --git a/drivers/dma/dw-edma/dw-edma-core.c b/drivers/dma/dw-edma/dw-edma-core.c
+index 6a8282eaebaf..908607785401 100644
+--- a/drivers/dma/dw-edma/dw-edma-core.c
++++ b/drivers/dma/dw-edma/dw-edma-core.c
+@@ -716,6 +716,21 @@ static int dw_edma_alloc_chan_resources(struct dma_chan *dchan)
+ 	if (chan->status != EDMA_ST_IDLE)
+ 		return -EBUSY;
+ 
++	/* Bypass the dma-ranges based memory regions mapping for the eDMA
++	 * controlled from the CPU/Application side since in that case
++	 * the local memory address is left untranslated.
++	 */
++	if (chan->dw->chip->flags & DW_EDMA_CHIP_LOCAL) {
++		dchan->dev->chan_dma_dev = true;
++
++		dchan->dev->device.dma_coherent = chan->dw->chip->dev->dma_coherent;
++		dma_coerce_mask_and_coherent(&dchan->dev->device,
++					     dma_get_mask(chan->dw->chip->dev));
++		dchan->dev->device.dma_parms = chan->dw->chip->dev->dma_parms;
++	} else {
++		dchan->dev->chan_dma_dev = false;
++	}
++
+ 	pm_runtime_get(chan->dw->chip->dev);
+ 
+ 	return 0;
 -- 
 2.35.1
 
