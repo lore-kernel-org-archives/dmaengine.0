@@ -2,31 +2,31 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B6D49C433EF
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F3D04C433F5
 	for <dmaengine@archiver.kernel.org>; Tue,  3 May 2022 23:01:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238031AbiECXE4 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 3 May 2022 19:04:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51150 "EHLO
+        id S238621AbiECXE6 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 3 May 2022 19:04:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51646 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243930AbiECXEH (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Tue, 3 May 2022 19:04:07 -0400
+        with ESMTP id S244186AbiECXEL (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Tue, 3 May 2022 19:04:11 -0400
 Received: from mail.baikalelectronics.ru (mail.baikalelectronics.com [87.245.175.226])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id C393D6412
-        for <dmaengine@vger.kernel.org>; Tue,  3 May 2022 16:00:30 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 8CA4113D09
+        for <dmaengine@vger.kernel.org>; Tue,  3 May 2022 16:00:37 -0700 (PDT)
 Received: from mail.baikalelectronics.ru (unknown [192.168.51.25])
-        by mail.baikalelectronics.ru (Postfix) with ESMTP id 69E2B16D8;
-        Wed,  4 May 2022 01:51:50 +0300 (MSK)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mail.baikalelectronics.ru 69E2B16D8
+        by mail.baikalelectronics.ru (Postfix) with ESMTP id A00FEC04;
+        Wed,  4 May 2022 01:52:02 +0300 (MSK)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mail.baikalelectronics.ru A00FEC04
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baikalelectronics.ru; s=mail; t=1651618310;
-        bh=6ylghrvgUT4d9UhZC8/foUYLQFbArdgaj4rvOFIS31A=;
+        d=baikalelectronics.ru; s=mail; t=1651618322;
+        bh=3NGnV4L3yKRDq8qTZRBdv9UvE+k6BF7hNy1V0ERo/1M=;
         h=From:To:CC:Subject:Date:In-Reply-To:References:From;
-        b=kmPcvNEZt2a7CFF0fRZmZGBUfM4L2p3Xp99VPb1+1S+I2lS0LFcBVs/HNESgng0b1
-         crV2XjmqegSxhd4yCTbuki/Vj7S9V4VhyAN6cS/U6pXo32+zm3BvXaE1pw3aJrCSy9
-         +psNKUwCTJih3mdIz2jxToY9//ts+LoelS9Bs0mI=
+        b=iaSxaLncR2RpDxfKCoCI5GYgeyYV2dppRHjwrbV4/XIP5jRfVSzAQofBN/8IxwozF
+         3uxakFetZx0y36/aGR1btXwcR2YZME9cEX31NrtM1z8qANb2TAZVNEIZhtiSGh4AMP
+         BriLbcddP86zZDhys0ECaaj87omCLQzygIVD5HQA=
 Received: from localhost (192.168.53.207) by mail (192.168.51.25) with
- Microsoft SMTP Server (TLS) id 15.0.1395.4; Wed, 4 May 2022 01:51:16 +0300
+ Microsoft SMTP Server (TLS) id 15.0.1395.4; Wed, 4 May 2022 01:51:28 +0300
 From:   Serge Semin <Sergey.Semin@baikalelectronics.ru>
 To:     Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
         Vinod Koul <vkoul@kernel.org>,
@@ -42,11 +42,10 @@ CC:     Serge Semin <Sergey.Semin@baikalelectronics.ru>,
         Rob Herring <robh@kernel.org>,
         =?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>,
         <linux-pci@vger.kernel.org>, <dmaengine@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>,
-        Gustavo Pimentel <Gustavo.Pimentel@synopsys.com>
-Subject: [PATCH v2 04/26] dmaengine: dw-edma: Convert ll/dt phys-address to PCIe bus/DMA address
-Date:   Wed, 4 May 2022 01:50:42 +0300
-Message-ID: <20220503225104.12108-5-Sergey.Semin@baikalelectronics.ru>
+        <linux-kernel@vger.kernel.org>
+Subject: [PATCH v2 16/26] dmaengine: dw-edma: Simplify the DebugFS context CSRs init procedure
+Date:   Wed, 4 May 2022 01:50:54 +0300
+Message-ID: <20220503225104.12108-17-Sergey.Semin@baikalelectronics.ru>
 In-Reply-To: <20220503225104.12108-1-Sergey.Semin@baikalelectronics.ru>
 References: <20220503225104.12108-1-Sergey.Semin@baikalelectronics.ru>
 MIME-Version: 1.0
@@ -57,100 +56,184 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-In accordance with the dw_edma_region.paddr field semantics it is supposed
-to be initialized with a memory base address visible by the DW eDMA
-controller. If the DMA engine is embedded into the DW PCIe Host/EP
-controller, then the address should belong to the Local CPU/Application
-memory. If eDMA is remotely accessible across the PCIe bus via the PCIe
-memory IOs, then the address needs to be a part of the PCIe bus memory
-space. The later case hasn't been well covered in the corresponding
-glue-driver. Since in general the PCIe memory space doesn't have to match
-the CPU memory space and the pci_dev.resource[] arrays contain the
-resources defined in the CPU memory space, a proper conversion needs to be
-performed, otherwise either the driver won't properly work or much worse
-the memory corruption will happen. The conversion can be done by means of
-the pci_bus_address() method. Let's use it to retrieve the LL, DT and CSRs
-PCIe memory ranges.
+DW eDMA v4.70a and older have the read and write channels context CSRs
+indirectly accessible. It means the CSRs like Channel Control, Xfer size,
+SAR, DAR and LLP address are accessed over at a fixed MMIO address, but
+their reference to the corresponding channel is determined by the Viewport
+CSR. In order to have a coherent access to these registers the CSR IOs are
+supposed to be protected with a spin-lock. DW eDMA v4.80a and newer
+normally have unrolled Read/Write channel context registers. That is all
+CSRs denoted before are directly mapped in the controller MMIO space.
 
-Note in addition to that we need to extend the dw_edma_region.paddr field
-size. The field normally contains a memory range base address to be set in
-the DW eDMA Linked-List pointer register or as a base address of the
-Linked-List data buffer. In accordance with [1] the LL range is supposed
-to be created in the Local CPU/Application memory, but depending on the DW
-eDMA utilization the memory can be created as a part of the PCIe bus
-address space (as in the case of the DW PCIe EP prototype kit). Thus in
-the former case the dw_edma_region.paddr field should have the dma_addr_t
-type, while in the later one - pci_bus_addr_t. Seeing the corresponding
-CSRs are always 64-bits wide let's convert the dw_edma_region.paddr field
-type to be u64 and let the client code logic to make sure it has a valid
-address visible by the DW eDMA controller. For instance the DW eDMA PCIe
-glue-driver initializes the field with the addresses from the PCIe bus
-memory space.
+Since both normal and viewport-based registers are exposed via the DebugFS
+nodes, the original code author decided to implement an algorithm based on
+the unrolled CSRs mapping with the viewport addresses recalculation if
+it's required. The problem is that such implementation turned to be first
+unscalable (supports a platform with only single eDMA available since a
+base address statically preserved) and second needlessly overcomplicated
+(it loops over all Rd/Wr context addresses and re-calculates the viewport
+base address on each DebugFS node access). The algorithm can be greatly
+simplified just by adding the channel ID and it's direction fields in the
+eDMA DebugFS node descriptor. These new parameters can be used to find a
+CSR offset within the corresponding channel registers space. The DW eDMA
+DebugFS node getter afterwards will also use them in order to activate the
+respective context CSRs viewport before reading data from the specified
+register. In case of the unrolled version of the CSRs mapping there won't
+be any spin-lock taken/released, no viewport activation as before this
+modification.
 
-[1] DesignWare Cores PCI Express Controller Databook - DWC PCIe Root Port,
-    v.5.40a, March 2019, p.1103
+Note this modification fixes the REGISTER() macros using an externally
+defined local variable. The same problem with the rest of the macro will
+be fixed in the next commit.
 
-Fixes: 41aaff2a2ac0 ("dmaengine: Add Synopsys eDMA IP PCIe glue-logic")
 Signed-off-by: Serge Semin <Sergey.Semin@baikalelectronics.ru>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 ---
- drivers/dma/dw-edma/dw-edma-pcie.c | 8 ++++----
- include/linux/dma/edma.h           | 2 +-
- 2 files changed, 5 insertions(+), 5 deletions(-)
+ drivers/dma/dw-edma/dw-edma-v0-debugfs.c | 84 +++++++++++-------------
+ 1 file changed, 38 insertions(+), 46 deletions(-)
 
-diff --git a/drivers/dma/dw-edma/dw-edma-pcie.c b/drivers/dma/dw-edma/dw-edma-pcie.c
-index d6b5e2463884..04c95cba1244 100644
---- a/drivers/dma/dw-edma/dw-edma-pcie.c
-+++ b/drivers/dma/dw-edma/dw-edma-pcie.c
-@@ -231,7 +231,7 @@ static int dw_edma_pcie_probe(struct pci_dev *pdev,
- 			return -ENOMEM;
+diff --git a/drivers/dma/dw-edma/dw-edma-v0-debugfs.c b/drivers/dma/dw-edma/dw-edma-v0-debugfs.c
+index 7bb3363b40e4..1596eedf35c5 100644
+--- a/drivers/dma/dw-edma/dw-edma-v0-debugfs.c
++++ b/drivers/dma/dw-edma/dw-edma-v0-debugfs.c
+@@ -15,9 +15,27 @@
  
- 		ll_region->vaddr += ll_block->off;
--		ll_region->paddr = pdev->resource[ll_block->bar].start;
-+		ll_region->paddr = pci_bus_address(pdev, ll_block->bar);
- 		ll_region->paddr += ll_block->off;
- 		ll_region->sz = ll_block->sz;
+ #define REGS_ADDR(name) \
+ 	((void __iomem *)&regs->name)
++
++#define REGS_CH_ADDR(name, _dir, _ch)						\
++	({									\
++		struct dw_edma_v0_ch_regs __iomem *__ch_regs;			\
++										\
++		if ((dw)->chip->mf == EDMA_MF_EDMA_LEGACY)			\
++			__ch_regs = &regs->type.legacy.ch;			\
++		else if (_dir == EDMA_DIR_READ)					\
++			__ch_regs = &regs->type.unroll.ch[_ch].rd;		\
++		else								\
++			__ch_regs = &regs->type.unroll.ch[_ch].wr;		\
++										\
++		(void __iomem *)&__ch_regs->name;				\
++	})
++
+ #define REGISTER(name) \
+ 	{ #name, REGS_ADDR(name) }
  
-@@ -240,7 +240,7 @@ static int dw_edma_pcie_probe(struct pci_dev *pdev,
- 			return -ENOMEM;
++#define CTX_REGISTER(name, dir, ch) \
++	{ #name, REGS_CH_ADDR(name, dir, ch), dir, ch }
++
+ #define WR_REGISTER(name) \
+ 	{ #name, REGS_ADDR(wr_##name) }
+ #define RD_REGISTER(name) \
+@@ -41,14 +59,11 @@
+ static struct dw_edma				*dw;
+ static struct dw_edma_v0_regs			__iomem *regs;
  
- 		dt_region->vaddr += dt_block->off;
--		dt_region->paddr = pdev->resource[dt_block->bar].start;
-+		dt_region->paddr = pci_bus_address(pdev, dt_block->bar);
- 		dt_region->paddr += dt_block->off;
- 		dt_region->sz = dt_block->sz;
- 	}
-@@ -256,7 +256,7 @@ static int dw_edma_pcie_probe(struct pci_dev *pdev,
- 			return -ENOMEM;
- 
- 		ll_region->vaddr += ll_block->off;
--		ll_region->paddr = pdev->resource[ll_block->bar].start;
-+		ll_region->paddr = pci_bus_address(pdev, ll_block->bar);
- 		ll_region->paddr += ll_block->off;
- 		ll_region->sz = ll_block->sz;
- 
-@@ -265,7 +265,7 @@ static int dw_edma_pcie_probe(struct pci_dev *pdev,
- 			return -ENOMEM;
- 
- 		dt_region->vaddr += dt_block->off;
--		dt_region->paddr = pdev->resource[dt_block->bar].start;
-+		dt_region->paddr = pci_bus_address(pdev, dt_block->bar);
- 		dt_region->paddr += dt_block->off;
- 		dt_region->sz = dt_block->sz;
- 	}
-diff --git a/include/linux/dma/edma.h b/include/linux/dma/edma.h
-index 8b134896c9ed..5ec7cf2f14fc 100644
---- a/include/linux/dma/edma.h
-+++ b/include/linux/dma/edma.h
-@@ -18,7 +18,7 @@
- struct dw_edma;
- 
- struct dw_edma_region {
--	phys_addr_t	paddr;
-+	u64		paddr;
- 	void __iomem	*vaddr;
- 	size_t		sz;
+-static struct {
+-	void					__iomem *start;
+-	void					__iomem *end;
+-} lim[2][EDMA_V0_MAX_NR_CH];
+-
+ struct dw_edma_debugfs_entry {
+ 	const char				*name;
+ 	void __iomem				*reg;
++	enum dw_edma_dir			dir;
++	u16					ch;
  };
+ 
+ static int dw_edma_debugfs_u32_get(void *data, u64 *val)
+@@ -58,33 +73,16 @@ static int dw_edma_debugfs_u32_get(void *data, u64 *val)
+ 
+ 	if (dw->chip->mf == EDMA_MF_EDMA_LEGACY &&
+ 	    reg >= (void __iomem *)&regs->type.legacy.ch) {
+-		void __iomem *ptr = &regs->type.legacy.ch;
+-		u32 viewport_sel = 0;
+ 		unsigned long flags;
+-		u16 ch;
+-
+-		for (ch = 0; ch < dw->wr_ch_cnt; ch++)
+-			if (lim[0][ch].start >= reg && reg < lim[0][ch].end) {
+-				ptr += (reg - lim[0][ch].start);
+-				goto legacy_sel_wr;
+-			}
+-
+-		for (ch = 0; ch < dw->rd_ch_cnt; ch++)
+-			if (lim[1][ch].start >= reg && reg < lim[1][ch].end) {
+-				ptr += (reg - lim[1][ch].start);
+-				goto legacy_sel_rd;
+-			}
+-
+-		return 0;
+-legacy_sel_rd:
+-		viewport_sel = BIT(31);
+-legacy_sel_wr:
+-		viewport_sel |= FIELD_PREP(EDMA_V0_VIEWPORT_MASK, ch);
++		u32 viewport_sel;
++
++		viewport_sel = entry->dir == EDMA_DIR_READ ? BIT(31) : 0;
++		viewport_sel |= FIELD_PREP(EDMA_V0_VIEWPORT_MASK, entry->ch);
+ 
+ 		raw_spin_lock_irqsave(&dw->lock, flags);
+ 
+ 		writel(viewport_sel, &regs->type.legacy.viewport_sel);
+-		*val = readl(ptr);
++		*val = readl(reg);
+ 
+ 		raw_spin_unlock_irqrestore(&dw->lock, flags);
+ 	} else {
+@@ -114,19 +112,19 @@ static void dw_edma_debugfs_create_x32(const struct dw_edma_debugfs_entry ini[],
+ 	}
+ }
+ 
+-static void dw_edma_debugfs_regs_ch(struct dw_edma_v0_ch_regs __iomem *regs,
++static void dw_edma_debugfs_regs_ch(enum dw_edma_dir dir, u16 ch,
+ 				    struct dentry *dent)
+ {
+-	const struct dw_edma_debugfs_entry debugfs_regs[] = {
+-		REGISTER(ch_control1),
+-		REGISTER(ch_control2),
+-		REGISTER(transfer_size),
+-		REGISTER(sar.lsb),
+-		REGISTER(sar.msb),
+-		REGISTER(dar.lsb),
+-		REGISTER(dar.msb),
+-		REGISTER(llp.lsb),
+-		REGISTER(llp.msb),
++	struct dw_edma_debugfs_entry debugfs_regs[] = {
++		CTX_REGISTER(ch_control1, dir, ch),
++		CTX_REGISTER(ch_control2, dir, ch),
++		CTX_REGISTER(transfer_size, dir, ch),
++		CTX_REGISTER(sar.lsb, dir, ch),
++		CTX_REGISTER(sar.msb, dir, ch),
++		CTX_REGISTER(dar.lsb, dir, ch),
++		CTX_REGISTER(dar.msb, dir, ch),
++		CTX_REGISTER(llp.lsb, dir, ch),
++		CTX_REGISTER(llp.msb, dir, ch),
+ 	};
+ 	int nr_entries;
+ 
+@@ -191,10 +189,7 @@ static void dw_edma_debugfs_regs_wr(struct dentry *dent)
+ 
+ 		ch_dent = debugfs_create_dir(name, regs_dent);
+ 
+-		dw_edma_debugfs_regs_ch(&regs->type.unroll.ch[i].wr, ch_dent);
+-
+-		lim[0][i].start = &regs->type.unroll.ch[i].wr;
+-		lim[0][i].end = &regs->type.unroll.ch[i].padding_1[0];
++		dw_edma_debugfs_regs_ch(EDMA_DIR_WRITE, i, ch_dent);
+ 	}
+ }
+ 
+@@ -256,10 +251,7 @@ static void dw_edma_debugfs_regs_rd(struct dentry *dent)
+ 
+ 		ch_dent = debugfs_create_dir(name, regs_dent);
+ 
+-		dw_edma_debugfs_regs_ch(&regs->type.unroll.ch[i].rd, ch_dent);
+-
+-		lim[1][i].start = &regs->type.unroll.ch[i].rd;
+-		lim[1][i].end = &regs->type.unroll.ch[i].padding_2[0];
++		dw_edma_debugfs_regs_ch(EDMA_DIR_READ, i, ch_dent);
+ 	}
+ }
+ 
 -- 
 2.35.1
 
