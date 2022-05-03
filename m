@@ -2,50 +2,50 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BDE81C4332F
-	for <dmaengine@archiver.kernel.org>; Tue,  3 May 2022 20:08:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3A6ECC433FE
+	for <dmaengine@archiver.kernel.org>; Tue,  3 May 2022 20:09:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242196AbiECUM2 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 3 May 2022 16:12:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46836 "EHLO
+        id S240795AbiECUMa (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 3 May 2022 16:12:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45818 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242261AbiECUMV (ORCPT
+        with ESMTP id S242253AbiECUMV (ORCPT
         <rfc822;dmaengine@vger.kernel.org>); Tue, 3 May 2022 16:12:21 -0400
 Received: from mga17.intel.com (mga17.intel.com [192.55.52.151])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F5CA40A3B
-        for <dmaengine@vger.kernel.org>; Tue,  3 May 2022 13:08:36 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D9AD40938
+        for <dmaengine@vger.kernel.org>; Tue,  3 May 2022 13:08:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1651608516; x=1683144516;
+  t=1651608508; x=1683144508;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=5vPGZF8ptP0uLGzMxnYOhisEDIAqIkno9kzecpnsDuc=;
-  b=XR0jnmmjYs5yyAZ/Z2S+8mQX7Nf5j4n4EA6ylYdzZDy7XY4CDebQe3nt
-   cfJezALwOFsS5gIBt37nIdeYG0DTv5r38C4p9igHuyv8TVoWROtWfn0Fm
-   1uPQGyTlxEtwiIKZaXYu/pjvK9VV4P+UE3szUtuuHSTVgyp8LqtPJMs9Y
-   S3cp6AhNCQ83RdQiXF47AS0KJC7ZwvZKveRhDy4/BvORFLdYykdGe0lyh
-   Ks8DVTsVf1KKMOX7WULdd+3kRrZx62fhYBNnlI4IqioStAx4+RYl2jLXD
-   kCWAhIESWdY8sgyUPIdxZ4t9UujhWovG67794ajYU0M59rdIbBYukXj3Q
+  bh=AbCtiizXn7mtWsj4iItd1wCayDjqPN6a2w8lSyAntQQ=;
+  b=UEZhKjTc+cHeiXLbqLJuDjglv+SxAzMQOaIw7mIQedVc2MGLPjE+nI13
+   WQEOQcP4QLQI9+1K7THMM9LZX6vq9uIx5C766+wy27uMCNl+HIqy7ckb4
+   /joWbXzLBEKAJmLxgIAqpNtLmmRD4rhm8isZD+Fmu9KQ+6yDrv4UfTq95
+   1YY8Syg/xTkPCxr2GkxDbEoP2bHT1Xf32kmGPtU0GL3SQgmBp7tBQzXUM
+   jtcFIC17ORcvuUC4YvmZUGDqECQzfWiyVaBZcBPTtaqQhaNgt7ziKMSvO
+   8vDINbVMKQMX++NdDM5q1iI9h9GrklGAh4MsZKclcJivplUeEPTDJklq2
    A==;
-X-IronPort-AV: E=McAfee;i="6400,9594,10336"; a="248118276"
+X-IronPort-AV: E=McAfee;i="6400,9594,10336"; a="248118258"
 X-IronPort-AV: E=Sophos;i="5.91,196,1647327600"; 
-   d="scan'208";a="248118276"
+   d="scan'208";a="248118258"
 Received: from orsmga003.jf.intel.com ([10.7.209.27])
-  by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 May 2022 13:08:36 -0700
+  by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 May 2022 13:08:28 -0700
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="5.91,196,1647327600"; 
-   d="scan'208";a="516705412"
+   d="scan'208";a="516705376"
 Received: from bwalker-desk.ch.intel.com ([143.182.136.162])
-  by orsmga003.jf.intel.com with ESMTP; 03 May 2022 13:08:35 -0700
+  by orsmga003.jf.intel.com with ESMTP; 03 May 2022 13:08:27 -0700
 From:   Ben Walker <benjamin.walker@intel.com>
 To:     vkoul@kernel.org
 Cc:     dmaengine@vger.kernel.org, herbert@gondor.apana.org.au,
         davem@davemloft.net, mchehab@kernel.org,
         mporter@kernel.crashing.org, alex.bou9@gmail.com,
         Ben Walker <benjamin.walker@intel.com>
-Subject: [PATCH v2 14/15] dmaengine: idxd: Support device_tx_status
-Date:   Tue,  3 May 2022 13:07:27 -0700
-Message-Id: <20220503200728.2321188-15-benjamin.walker@intel.com>
+Subject: [PATCH v2 12/15] dmaengine: Add provider documentation on cookie assignment
+Date:   Tue,  3 May 2022 13:07:25 -0700
+Message-Id: <20220503200728.2321188-13-benjamin.walker@intel.com>
 X-Mailer: git-send-email 2.35.1
 In-Reply-To: <20220503200728.2321188-1-benjamin.walker@intel.com>
 References: <20220503200728.2321188-1-benjamin.walker@intel.com>
@@ -55,156 +55,83 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-This can now be supported even for devices that complete operations out
-of order. Add support for directly polling transactions.
+Clarify the rules on assigning cookies to DMA transactions.
 
 Signed-off-by: Ben Walker <benjamin.walker@intel.com>
 ---
- drivers/dma/idxd/device.c |  1 +
- drivers/dma/idxd/dma.c    | 85 ++++++++++++++++++++++++++++++++++++++-
- drivers/dma/idxd/idxd.h   |  1 +
- 3 files changed, 85 insertions(+), 2 deletions(-)
+ .../driver-api/dmaengine/provider.rst         | 45 +++++++++++++++----
+ 1 file changed, 37 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/dma/idxd/device.c b/drivers/dma/idxd/device.c
-index f98dd443a4edb..48424693c7a49 100644
---- a/drivers/dma/idxd/device.c
-+++ b/drivers/dma/idxd/device.c
-@@ -148,6 +148,7 @@ int idxd_wq_alloc_resources(struct idxd_wq *wq)
- 			desc->iax_completion = &wq->iax_compls[i];
- 		desc->compl_dma = wq->compls_addr + idxd->data->compl_size * i;
- 		desc->id = i;
-+		desc->gen = 1;
- 		desc->wq = wq;
- 		desc->cpu = -1;
- 	}
-diff --git a/drivers/dma/idxd/dma.c b/drivers/dma/idxd/dma.c
-index ccd4a67bdb4ba..7bb9ecad43ec5 100644
---- a/drivers/dma/idxd/dma.c
-+++ b/drivers/dma/idxd/dma.c
-@@ -12,6 +12,23 @@
- #include "registers.h"
- #include "idxd.h"
+diff --git a/Documentation/driver-api/dmaengine/provider.rst b/Documentation/driver-api/dmaengine/provider.rst
+index e9e9de18d6b02..7c8ace703c96f 100644
+--- a/Documentation/driver-api/dmaengine/provider.rst
++++ b/Documentation/driver-api/dmaengine/provider.rst
+@@ -421,7 +421,9 @@ supported.
  
-+
-+#define DMA_COOKIE_BITS (sizeof(dma_cookie_t) * 8)
-+/*
-+ * The descriptor id takes the lower 16 bits of the cookie.
-+ */
-+#define DESC_ID_BITS 16
-+#define DESC_ID_MASK ((1 << DESC_ID_BITS) - 1)
-+/*
-+ * The 'generation' is in the upper half of the cookie. But dma_cookie_t
-+ * is signed, so we leave the upper-most bit for the sign. Further, we
-+ * need to flag whether a cookie corresponds to an operation that is
-+ * being completed via interrupt to avoid polling it, which takes
-+ * the second most upper bit. So we subtract two bits from the upper half.
-+ */
-+#define DESC_GEN_MAX ((1 << (DMA_COOKIE_BITS - DESC_ID_BITS - 2)) - 1)
-+#define DESC_INTERRUPT_FLAG (1 << (DMA_COOKIE_BITS - 2))
-+
- static inline struct idxd_wq *to_idxd_wq(struct dma_chan *c)
- {
- 	struct idxd_dma_chan *idxd_chan;
-@@ -151,13 +168,67 @@ static void idxd_dma_free_chan_resources(struct dma_chan *chan)
- 		idxd_wq_refcount(wq));
- }
+     - tx_submit: A pointer to a function you have to implement,
+       that is supposed to push the current transaction descriptor to a
+-      pending queue, waiting for issue_pending to be called.
++      pending queue, waiting for issue_pending to be called. Each
++      descriptor is given a cookie to identify it. See the section
++      "Cookie Management" below.
  
-+
- static enum dma_status idxd_dma_tx_status(struct dma_chan *dma_chan,
- 					  dma_cookie_t cookie,
- 					  struct dma_tx_state *txstate)
- {
--	return DMA_OUT_OF_ORDER;
-+	u8 status;
-+	struct idxd_wq *wq;
-+	struct idxd_desc *desc;
-+	u32 idx;
-+
-+	memset(txstate, 0, sizeof(*txstate));
-+
-+	if (dma_submit_error(cookie))
-+		return DMA_ERROR;
-+
-+	wq = to_idxd_wq(dma_chan);
-+
-+	idx = cookie & DESC_ID_MASK;
-+	if (idx >= wq->num_descs)
-+		return DMA_ERROR;
-+
-+	desc = wq->descs[idx];
-+
-+	if (desc->txd.cookie != cookie) {
-+		/*
-+		 * The user asked about an old transaction
-+		 */
-+		return DMA_COMPLETE;
-+	}
-+
-+	/*
-+	 * For descriptors completed via interrupt, we can't go
-+	 * look at the completion status directly because it races
-+	 * with the IRQ handler recyling the descriptor. However,
-+	 * since in this case we can rely on the interrupt handler
-+	 * to invalidate the cookie when the command completes we
-+	 * know that if we get here, the command is still in
-+	 * progress.
-+	 */
-+	if ((cookie & DESC_INTERRUPT_FLAG) != 0)
-+		return DMA_IN_PROGRESS;
-+
-+	status = desc->completion->status & DSA_COMP_STATUS_MASK;
-+
-+	if (status) {
-+		/*
-+		 * Check against the original status as ABORT is software defined
-+		 * and 0xff, which DSA_COMP_STATUS_MASK can mask out.
-+		 */
-+		if (unlikely(desc->completion->status == IDXD_COMP_DESC_ABORT))
-+			idxd_dma_complete_txd(desc, IDXD_COMPLETE_ABORT, true);
-+		else
-+			idxd_dma_complete_txd(desc, IDXD_COMPLETE_NORMAL, true);
-+
-+		return DMA_COMPLETE;
-+	}
-+
-+	return DMA_IN_PROGRESS;
- }
+   - In this structure the function pointer callback_result can be
+     initialized in order for the submitter to be notified that a
+@@ -526,6 +528,40 @@ supported.
  
-+
- /*
-  * issue_pending() does not need to do anything since tx_submit() does the job
-  * already.
-@@ -174,7 +245,17 @@ static dma_cookie_t idxd_dma_tx_submit(struct dma_async_tx_descriptor *tx)
- 	int rc;
- 	struct idxd_desc *desc = container_of(tx, struct idxd_desc, txd);
+   - May sleep.
  
--	cookie = dma_cookie_assign(tx);
-+	cookie = (desc->gen << DESC_ID_BITS) | (desc->id & DESC_ID_MASK);
++Cookie Management
++------------------
 +
-+	if ((desc->hw->flags & IDXD_OP_FLAG_RCI) != 0)
-+		cookie |= DESC_INTERRUPT_FLAG;
++When a transaction is queued for submission via tx_submit(), the provider
++must assign that transaction a cookie (dma_cookie_t) to uniquely identify it.
++The provider is allowed to perform this assignment however it wants, but for
++convenience the following utility functions are available to create
++monotonically increasing cookies
 +
-+	if (desc->gen == DESC_GEN_MAX)
-+		desc->gen = 1;
-+	else
-+		desc->gen++;
++  .. code-block:: c
 +
-+	tx->cookie = cookie;
++    void dma_cookie_init(struct dma_chan *chan);
++
++  Called once at channel creation
++
++  .. code-block:: c
++
++    dma_cookie_t dma_cookie_assign(struct dma_async_tx_descriptor *tx);
++
++  Assign a cookie to the given descriptor
++
++  .. code-block:: c
++
++    void dma_cookie_complete(struct dma_async_tx_descriptor *tx);
++
++  Mark the descriptor as complete and invalidate the cookie
++
++  .. code-block:: c
++
++    enum dma_status dma_cookie_status(struct dma_chan *chan,
++      dma_cookie_t cookie, struct dma_tx_state *state);
++
++  Report the status of the cookie and filling in state, if not NULL.
++
  
- 	rc = idxd_submit_desc(wq, desc);
- 	if (rc < 0) {
-diff --git a/drivers/dma/idxd/idxd.h b/drivers/dma/idxd/idxd.h
-index 40835160ef883..d06ddfddd8612 100644
---- a/drivers/dma/idxd/idxd.h
-+++ b/drivers/dma/idxd/idxd.h
-@@ -329,6 +329,7 @@ struct idxd_desc {
- 	struct llist_node llnode;
- 	struct list_head list;
- 	u16 id;
-+	u16 gen;
- 	int cpu;
- 	struct idxd_wq *wq;
- };
+ Misc notes
+ ==========
+@@ -541,13 +577,6 @@ where to put them)
+ - Makes sure that dependent operations are run before marking it
+   as complete.
+ 
+-dma_cookie_t
+-
+-- it's a DMA transaction ID.
+-
+-- The value can be chosen by the provider, or use the helper APIs
+-  such as dma_cookie_assign() and dma_cookie_complete().
+-
+ DMA_CTRL_ACK
+ 
+ - If clear, the descriptor cannot be reused by provider until the
 -- 
 2.35.1
 
