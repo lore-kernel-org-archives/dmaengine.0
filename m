@@ -2,31 +2,31 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 777F3C43217
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E03D2C4321E
 	for <dmaengine@archiver.kernel.org>; Tue,  3 May 2022 23:01:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230337AbiECXE7 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        id S242196AbiECXE7 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
         Tue, 3 May 2022 19:04:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51640 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51648 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244200AbiECXEL (ORCPT
+        with ESMTP id S244134AbiECXEL (ORCPT
         <rfc822;dmaengine@vger.kernel.org>); Tue, 3 May 2022 19:04:11 -0400
 Received: from mail.baikalelectronics.ru (mail.baikalelectronics.com [87.245.175.226])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 8FBC913D24
-        for <dmaengine@vger.kernel.org>; Tue,  3 May 2022 16:00:37 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id CC469E0B3
+        for <dmaengine@vger.kernel.org>; Tue,  3 May 2022 16:00:35 -0700 (PDT)
 Received: from mail.baikalelectronics.ru (unknown [192.168.51.25])
-        by mail.baikalelectronics.ru (Postfix) with ESMTP id AE98DC00;
-        Wed,  4 May 2022 01:51:58 +0300 (MSK)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mail.baikalelectronics.ru AE98DC00
+        by mail.baikalelectronics.ru (Postfix) with ESMTP id 7F439C0C;
+        Wed,  4 May 2022 01:52:11 +0300 (MSK)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mail.baikalelectronics.ru 7F439C0C
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baikalelectronics.ru; s=mail; t=1651618318;
-        bh=v2tYJrYiAEbZtvDvSvss7D+P15mGrAxcXJq7ntJIjc0=;
+        d=baikalelectronics.ru; s=mail; t=1651618331;
+        bh=y5IO3jDpjKtpa6V0+SnC4iOUIBpWgU86hTUe3uaN7w8=;
         h=From:To:CC:Subject:Date:In-Reply-To:References:From;
-        b=XFuY/ynA9ih96fFpK11sgyGOo+RKyt9pNkmPM3HBy6Kq5DXTbVZbgpuZku2fF3+wE
-         sTC+pxrWJmKNxM8EOnI6hgvZz29SIUjwvBmkMR1Dk7pAtybPzHkqgfwm727utTPNdV
-         bPnHY/x7XZwRTAeP197JMMtQK7IWmvrybzO8HtAA=
+        b=Z/dV+e/1p5YNY1xa5ja/5kgC3lDjAH0IcdtoAJMAmE7+3THAJJzPth7BpGfhD+rbL
+         8pUnoDguP2Wh7IRziAsnxAuhI2tfVmIDjGezirsik9Da0yvpix6pj6ZZPzRGPuWnrc
+         NcmcP9iO0VUzjO5/zyPVRdYjdzvMKsYSPxoP/vYc=
 Received: from localhost (192.168.53.207) by mail (192.168.51.25) with
- Microsoft SMTP Server (TLS) id 15.0.1395.4; Wed, 4 May 2022 01:51:24 +0300
+ Microsoft SMTP Server (TLS) id 15.0.1395.4; Wed, 4 May 2022 01:51:37 +0300
 From:   Serge Semin <Sergey.Semin@baikalelectronics.ru>
 To:     Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
         Vinod Koul <vkoul@kernel.org>,
@@ -43,9 +43,9 @@ CC:     Serge Semin <Sergey.Semin@baikalelectronics.ru>,
         =?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>,
         <linux-pci@vger.kernel.org>, <dmaengine@vger.kernel.org>,
         <linux-kernel@vger.kernel.org>
-Subject: [PATCH v2 12/26] dmaengine: dw-edma: Stop checking debugfs_create_*() return value
-Date:   Wed, 4 May 2022 01:50:50 +0300
-Message-ID: <20220503225104.12108-13-Sergey.Semin@baikalelectronics.ru>
+Subject: [PATCH v2 24/26] dmaengine: dw-edma: Skip cleanup procedure if no private data found
+Date:   Wed, 4 May 2022 01:51:02 +0300
+Message-ID: <20220503225104.12108-25-Sergey.Semin@baikalelectronics.ru>
 In-Reply-To: <20220503225104.12108-1-Sergey.Semin@baikalelectronics.ru>
 References: <20220503225104.12108-1-Sergey.Semin@baikalelectronics.ru>
 MIME-Version: 1.0
@@ -56,105 +56,32 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-First of all they never return NULL. So checking their return value for
-being not NULL just pointless. Secondly the DebugFS subsystem is designed
-in a way to be used as simple as possible. So if one of the
-debugfs_create_*() method in a hierarchy fails, the following methods will
-just silently return the passed erroneous parental dentry. Finally the
-code is supposed to be working no matter whether anything DebugFS-related
-fails. So in order to make code simpler and DebugFS-independent let's drop
-the debugfs_create_*() methods return value checking in the same way as
-the most of the kernel drivers do.
-
-Note in order to preserve some memory space we suggest to skip the DebugFS
-nodes initialization if the file system in unavailable.
+DW eDMA driver private data is preserved in the passed DW eDMA chip info
+structure. If either probe procedure failed or for some reason the passed
+info object doesn't have private data pointer initialized we need to halt
+the DMA device cleanup procedure in order to prevent possible system
+crashes.
 
 Signed-off-by: Serge Semin <Sergey.Semin@baikalelectronics.ru>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 ---
- drivers/dma/dw-edma/dw-edma-v0-debugfs.c | 20 +++++---------------
- 1 file changed, 5 insertions(+), 15 deletions(-)
+ drivers/dma/dw-edma/dw-edma-core.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/dma/dw-edma/dw-edma-v0-debugfs.c b/drivers/dma/dw-edma/dw-edma-v0-debugfs.c
-index 8e61810dea4b..6e7f3ef60ca7 100644
---- a/drivers/dma/dw-edma/dw-edma-v0-debugfs.c
-+++ b/drivers/dma/dw-edma/dw-edma-v0-debugfs.c
-@@ -100,9 +100,8 @@ static void dw_edma_debugfs_create_x32(const struct debugfs_entries entries[],
+diff --git a/drivers/dma/dw-edma/dw-edma-core.c b/drivers/dma/dw-edma/dw-edma-core.c
+index 908607785401..561686b51915 100644
+--- a/drivers/dma/dw-edma/dw-edma-core.c
++++ b/drivers/dma/dw-edma/dw-edma-core.c
+@@ -1035,6 +1035,10 @@ int dw_edma_remove(struct dw_edma_chip *chip)
+ 	struct dw_edma *dw = chip->dw;
  	int i;
  
- 	for (i = 0; i < nr_entries; i++) {
--		if (!debugfs_create_file_unsafe(entries[i].name, 0444, dir,
--						entries[i].reg,	&fops_x32))
--			break;
-+		debugfs_create_file_unsafe(entries[i].name, 0444, dir,
-+					   entries[i].reg, &fops_x32);
- 	}
- }
- 
-@@ -168,8 +167,6 @@ static void dw_edma_debugfs_regs_wr(struct dentry *dir)
- 	char name[16];
- 
- 	regs_dir = debugfs_create_dir(WRITE_STR, dir);
--	if (!regs_dir)
--		return;
- 
- 	nr_entries = ARRAY_SIZE(debugfs_regs);
- 	dw_edma_debugfs_create_x32(debugfs_regs, nr_entries, regs_dir);
-@@ -184,8 +181,6 @@ static void dw_edma_debugfs_regs_wr(struct dentry *dir)
- 		snprintf(name, sizeof(name), "%s:%d", CHANNEL_STR, i);
- 
- 		ch_dir = debugfs_create_dir(name, regs_dir);
--		if (!ch_dir)
--			return;
- 
- 		dw_edma_debugfs_regs_ch(&regs->type.unroll.ch[i].wr, ch_dir);
- 
-@@ -237,8 +232,6 @@ static void dw_edma_debugfs_regs_rd(struct dentry *dir)
- 	char name[16];
- 
- 	regs_dir = debugfs_create_dir(READ_STR, dir);
--	if (!regs_dir)
--		return;
- 
- 	nr_entries = ARRAY_SIZE(debugfs_regs);
- 	dw_edma_debugfs_create_x32(debugfs_regs, nr_entries, regs_dir);
-@@ -253,8 +246,6 @@ static void dw_edma_debugfs_regs_rd(struct dentry *dir)
- 		snprintf(name, sizeof(name), "%s:%d", CHANNEL_STR, i);
- 
- 		ch_dir = debugfs_create_dir(name, regs_dir);
--		if (!ch_dir)
--			return;
- 
- 		dw_edma_debugfs_regs_ch(&regs->type.unroll.ch[i].rd, ch_dir);
- 
-@@ -273,8 +264,6 @@ static void dw_edma_debugfs_regs(void)
- 	int nr_entries;
- 
- 	regs_dir = debugfs_create_dir(REGISTERS_STR, dw->debugfs);
--	if (!regs_dir)
--		return;
- 
- 	nr_entries = ARRAY_SIZE(debugfs_regs);
- 	dw_edma_debugfs_create_x32(debugfs_regs, nr_entries, regs_dir);
-@@ -285,6 +274,9 @@ static void dw_edma_debugfs_regs(void)
- 
- void dw_edma_v0_debugfs_on(struct dw_edma *_dw)
- {
-+	if (!debugfs_initialized())
-+		return;
++	/* Skip removal if no private data found */
++	if (!dw)
++		return -ENODEV;
 +
- 	dw = _dw;
- 	if (!dw)
- 		return;
-@@ -294,8 +286,6 @@ void dw_edma_v0_debugfs_on(struct dw_edma *_dw)
- 		return;
+ 	/* Disable eDMA */
+ 	dw_edma_v0_core_off(dw);
  
- 	dw->debugfs = debugfs_create_dir(dw->name, NULL);
--	if (!dw->debugfs)
--		return;
- 
- 	debugfs_create_u32("mf", 0444, dw->debugfs, &dw->chip->mf);
- 	debugfs_create_u16("wr_ch_cnt", 0444, dw->debugfs, &dw->wr_ch_cnt);
 -- 
 2.35.1
 
