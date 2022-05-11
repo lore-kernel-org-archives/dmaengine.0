@@ -2,282 +2,293 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 64CDEC433EF
-	for <dmaengine@archiver.kernel.org>; Wed, 11 May 2022 00:40:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 52E76C433F5
+	for <dmaengine@archiver.kernel.org>; Wed, 11 May 2022 09:28:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237707AbiEKAkB (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 10 May 2022 20:40:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33214 "EHLO
+        id S229634AbiEKJ2f (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 11 May 2022 05:28:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55816 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239799AbiEKAkB (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Tue, 10 May 2022 20:40:01 -0400
-Received: from mga18.intel.com (mga18.intel.com [134.134.136.126])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E75113325D;
-        Tue, 10 May 2022 17:40:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1652229600; x=1683765600;
-  h=date:from:to:cc:subject:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=DE2oBIK7BGDbN+fpmpl0HxZv5AkQDJetPoSGfAJhg4s=;
-  b=mmOOCFd16u1UwD+YTZi4sQ18PaOVkrxNGA0OvnMBZ8yB012IT7kq7PW+
-   eCEFl/yQPueOowiWLtHocl2TrxoBcEvxawanRhSNWr2jrKjAfv+kwnoZq
-   eZhQKXQhyzah+Zh0V2Tn4vtcl7auywCw0sWsLZqYeA7Fh9YBLT2U1hMwM
-   aWikW2X9xCu2m0c8XJ+FrA/vVWwh2jsS623o5WWxVjhArwGg3IG7o7WUD
-   U/q1JiSwD1mLjHfy2jlWwUZnPYAnPHITMEDjcfVB3JDJC0mgsODAx7RXb
-   fc0SvEQOXEiaCEhjRWrmiqi20NpuRcL9FJNIRafzpFcAgKFOq8AbkmA5B
-   Q==;
-X-IronPort-AV: E=McAfee;i="6400,9594,10343"; a="251590959"
-X-IronPort-AV: E=Sophos;i="5.91,215,1647327600"; 
-   d="scan'208";a="251590959"
-Received: from orsmga006.jf.intel.com ([10.7.209.51])
-  by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 May 2022 17:39:59 -0700
-X-IronPort-AV: E=Sophos;i="5.91,215,1647327600"; 
-   d="scan'208";a="542056357"
-Received: from jacob-builder.jf.intel.com (HELO jacob-builder) ([10.7.198.157])
-  by orsmga006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 May 2022 17:39:59 -0700
-Date:   Tue, 10 May 2022 17:43:45 -0700
-From:   Jacob Pan <jacob.jun.pan@linux.intel.com>
-To:     Jason Gunthorpe <jgg@nvidia.com>
-Cc:     iommu@lists.linux-foundation.org,
-        LKML <linux-kernel@vger.kernel.org>, dmaengine@vger.kernel.org,
-        Joerg Roedel <joro@8bytes.org>,
-        David Woodhouse <dwmw2@infradead.org>,
-        Jean-Philippe Brucker <jean-philippe@linaro.com>,
-        Lu Baolu <baolu.lu@linux.intel.com>, vkoul@kernel.org,
-        robin.murphy@arm.com, will@kernel.org, Yi Liu <yi.l.liu@intel.com>,
-        Dave Jiang <dave.jiang@intel.com>,
-        "Tian, Kevin" <kevin.tian@intel.com>,
-        Raj Ashok <ashok.raj@intel.com>,
-        Eric Auger <eric.auger@redhat.com>,
-        jacob.jun.pan@linux.intel.com
-Subject: Re: [PATCH v3 2/4] iommu: Add PASID support for DMA mapping API
- users
-Message-ID: <20220510174345.27fdaeb8@jacob-builder>
-In-Reply-To: <20220510232804.GQ49344@nvidia.com>
-References: <20220510210704.3539577-1-jacob.jun.pan@linux.intel.com>
-        <20220510210704.3539577-3-jacob.jun.pan@linux.intel.com>
-        <20220510232804.GQ49344@nvidia.com>
-Organization: OTC
-X-Mailer: Claws Mail 3.17.5 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
+        with ESMTP id S233378AbiEKJ2e (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Wed, 11 May 2022 05:28:34 -0400
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 4F4F41053C3;
+        Wed, 11 May 2022 02:28:26 -0700 (PDT)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 2B3EB143D;
+        Wed, 11 May 2022 02:28:26 -0700 (PDT)
+Received: from lpieralisi (unknown [10.57.1.148])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id AE5FC3F73D;
+        Wed, 11 May 2022 02:28:23 -0700 (PDT)
+Date:   Wed, 11 May 2022 10:28:20 +0100
+From:   Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
+To:     Frank Li <Frank.Li@nxp.com>
+Cc:     gustavo.pimentel@synopsys.com, hongxing.zhu@nxp.com,
+        l.stach@pengutronix.de, linux-imx@nxp.com,
+        linux-pci@vger.kernel.org, dmaengine@vger.kernel.org,
+        fancer.lancer@gmail.com, lznuaa@gmail.com, helgaas@kernel.org,
+        vkoul@kernel.org, robh@kernel.org, kw@linux.com,
+        bhelgaas@google.com, manivannan.sadhasivam@linaro.org,
+        Sergey.Semin@baikalelectronics.ru, kishon@ti.com
+Subject: Re: [PATCH v10 9/9] PCI: endpoint: Enable DMA controller tests for
+ endpoints with DMA capabilities
+Message-ID: <YnuBtEhttgxBrZD4@lpieralisi>
+References: <20220503005801.1714345-1-Frank.Li@nxp.com>
+ <20220503005801.1714345-10-Frank.Li@nxp.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220503005801.1714345-10-Frank.Li@nxp.com>
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Hi Jason,
+[+Kishon]
 
-On Tue, 10 May 2022 20:28:04 -0300, Jason Gunthorpe <jgg@nvidia.com> wrote:
+On Mon, May 02, 2022 at 07:58:01PM -0500, Frank Li wrote:
+> Some Endpoints controllers have DMA capabilities.  This DMA controller has
+> more efficiency then a general external DMA controller.  And this DMA
+> controller can bypass outbound memory address translation unit.
 
-> On Tue, May 10, 2022 at 02:07:02PM -0700, Jacob Pan wrote:
-> > DMA mapping API is the de facto standard for in-kernel DMA. It operates
-> > on a per device/RID basis which is not PASID-aware.
-> > 
-> > Some modern devices such as Intel Data Streaming Accelerator, PASID is
-> > required for certain work submissions. To allow such devices use DMA
-> > mapping API, we need the following functionalities:
-> > 1. Provide device a way to retrieve a PASID for work submission within
-> > the kernel
-> > 2. Enable the kernel PASID on the IOMMU for the device
-> > 3. Attach the kernel PASID to the device's default DMA domain, let it
-> > be IOVA or physical address in case of pass-through.
-> > 
-> > This patch introduces a driver facing API that enables DMA API
-> > PASID usage. Once enabled, device drivers can continue to use DMA APIs
-> > as is. There is no difference in dma_handle between without PASID and
-> > with PASID.
-> > 
-> > Signed-off-by: Jacob Pan <jacob.jun.pan@linux.intel.com>
-> >  drivers/iommu/dma-iommu.c | 107 ++++++++++++++++++++++++++++++++++++++
-> >  include/linux/dma-iommu.h |   3 ++
-> >  include/linux/iommu.h     |   2 +
-> >  3 files changed, 112 insertions(+)
-> > 
-> > diff --git a/drivers/iommu/dma-iommu.c b/drivers/iommu/dma-iommu.c
-> > index 1ca85d37eeab..5984f3129fa2 100644
-> > +++ b/drivers/iommu/dma-iommu.c
-> > @@ -34,6 +34,8 @@ struct iommu_dma_msi_page {
-> >  	phys_addr_t		phys;
-> >  };
-> >  
-> > +static DECLARE_IOASID_SET(iommu_dma_pasid);
-> > +
-> >  enum iommu_dma_cookie_type {
-> >  	IOMMU_DMA_IOVA_COOKIE,
-> >  	IOMMU_DMA_MSI_COOKIE,
-> > @@ -370,6 +372,111 @@ void iommu_put_dma_cookie(struct iommu_domain
-> > *domain) domain->iova_cookie = NULL;
-> >  }
-> >  
-> > +/**
-> > + * iommu_attach_dma_pasid --Attach a PASID for in-kernel DMA. Use the
-> > device's
-> > + * DMA domain.
-> > + * @dev: Device to be enabled
-> > + * @pasid: The returned kernel PASID to be used for DMA
-> > + *
-> > + * DMA request with PASID will be mapped the same way as the legacy
-> > DMA.
-> > + * If the device is in pass-through, PASID will also pass-through. If
-> > the
-> > + * device is in IOVA, the PASID will point to the same IOVA page table.
-> > + *
-> > + * @return err code or 0 on success
-> > + */
-> > +int iommu_attach_dma_pasid(struct device *dev, ioasid_t *pasid)
-> > +{
-> > +	struct iommu_domain *dom;
-> > +	ioasid_t id, max;
-> > +	int ret = 0;
-> > +
-> > +	dom = iommu_get_domain_for_dev(dev);
-> > +	if (!dom || !dom->ops || !dom->ops->attach_dev_pasid)
-> > +		return -ENODEV;
-> > +
-> > +	/* Only support domain types that DMA API can be used */
-> > +	if (dom->type == IOMMU_DOMAIN_UNMANAGED ||
-> > +	    dom->type == IOMMU_DOMAIN_BLOCKED) {
-> > +		dev_warn(dev, "Invalid domain type %d", dom->type);  
-> 
-> This should be a WARN_ON
-> 
-will do, thanks
+I am sorry to be pedantic but which DMA controller ?
 
-> > +		return -EPERM;
-> > +	}
-> > +
-> > +	id = dom->pasid;
-> > +	if (!id) {
-> > +		/*
-> > +		 * First device to use PASID in its DMA domain,
-> > allocate
-> > +		 * a single PASID per DMA domain is all we need, it is
-> > also
-> > +		 * good for performance when it comes down to IOTLB
-> > flush.
-> > +		 */
-> > +		max = 1U << dev->iommu->pasid_bits;
-> > +		if (!max)
-> > +			return -EINVAL;
-> > +
-> > +		id = ioasid_alloc(&iommu_dma_pasid, 1, max, dev);
-> > +		if (id == INVALID_IOASID)
-> > +			return -ENOMEM;
-> > +
-> > +		dom->pasid = id;
-> > +		atomic_set(&dom->pasid_users, 1);  
-> 
-> All of this needs proper locking.
-> 
-good catch, will add a mutex for domain updates, detach as well.
+Do you mean "DMA controllers embedded in Endpoint controllers" ?
 
-> > +	}
-> > +
-> > +	ret = dom->ops->attach_dev_pasid(dom, dev, id);
-> > +	if (!ret) {
-> > +		*pasid = id;
-> > +		atomic_inc(&dom->pasid_users);
-> > +		return 0;
-> > +	}
-> > +
-> > +	if (atomic_dec_and_test(&dom->pasid_users)) {
-> > +		ioasid_free(id);
-> > +		dom->pasid = 0;
-> > +	}
-> > +
-> > +	return ret;
-> > +}
-> > +EXPORT_SYMBOL(iommu_attach_dma_pasid);
-> > +
-> > +/**
-> > + * iommu_detach_dma_pasid --Disable in-kernel DMA request with PASID
-> > + * @dev:	Device's PASID DMA to be disabled
-> > + *
-> > + * It is the device driver's responsibility to ensure no more incoming
-> > DMA
-> > + * requests with the kernel PASID before calling this function. IOMMU
-> > driver
-> > + * ensures PASID cache, IOTLBs related to the kernel PASID are cleared
-> > and
-> > + * drained.
-> > + *
-> > + */
-> > +void iommu_detach_dma_pasid(struct device *dev)
-> > +{
-> > +	struct iommu_domain *dom;
-> > +	ioasid_t pasid;
-> > +
-> > +	dom = iommu_get_domain_for_dev(dev);
-> > +	if (!dom || !dom->ops || !dom->ops->detach_dev_pasid) {
-> > +		dev_warn(dev, "No ops for detaching PASID %u", pasid);
-> > +		return;
-> > +	}
-> > +	/* Only support DMA API managed domain type */
-> > +	if (dom->type == IOMMU_DOMAIN_UNMANAGED ||
-> > +	    dom->type == IOMMU_DOMAIN_BLOCKED) {
-> > +		dev_err(dev, "Invalid domain type %d to detach DMA
-> > PASID %u\n",
-> > +			 dom->type, pasid);
-> > +		return;
-> > +	}
-> > +	pasid = dom->pasid;
-> > +	if (!pasid) {
-> > +		dev_err(dev, "No DMA PASID attached\n");
-> > +		return;
-> > +	}  
-> 
-> All WARN_ON's too
-> 
-will do.
+This is a bit vague and overall you are patching pci-epf-test.c,
+that's the change that has to be explained.
 
-> > +	dom->ops->detach_dev_pasid(dom, dev, pasid);
-> > +	if (atomic_dec_and_test(&dom->pasid_users)) {
-> > +		ioasid_free(pasid);
-> > +		dom->pasid = 0;
-> > +	}
-> > +}
-> > +EXPORT_SYMBOL(iommu_detach_dma_pasid);
-> > +
-> >  /**
-> >   * iommu_dma_get_resv_regions - Reserved region driver helper
-> >   * @dev: Device from iommu_get_resv_regions()
-> > diff --git a/include/linux/dma-iommu.h b/include/linux/dma-iommu.h
-> > index 24607dc3c2ac..538650b9cb75 100644
-> > +++ b/include/linux/dma-iommu.h
-> > @@ -18,6 +18,9 @@ int iommu_get_dma_cookie(struct iommu_domain *domain);
-> >  int iommu_get_msi_cookie(struct iommu_domain *domain, dma_addr_t base);
-> >  void iommu_put_dma_cookie(struct iommu_domain *domain);
-> >  
-> > +int iommu_attach_dma_pasid(struct device *dev, ioasid_t *pasid);
-> > +void iommu_detach_dma_pasid(struct device *dev);
-> > +
-> >  /* Setup call for arch DMA mapping code */
-> >  void iommu_setup_dma_ops(struct device *dev, u64 dma_base, u64
-> > dma_limit); int iommu_dma_init_fq(struct iommu_domain *domain);
-> > diff --git a/include/linux/iommu.h b/include/linux/iommu.h
-> > index 1164524814cb..281a87fdce77 100644
-> > +++ b/include/linux/iommu.h
-> > @@ -105,6 +105,8 @@ struct iommu_domain {
-> >  	enum iommu_page_response_code (*iopf_handler)(struct
-> > iommu_fault *fault, void *data);
-> >  	void *fault_data;
-> > +	ioasid_t pasid;		/* Used for DMA requests with
-> > PASID */
-> > +	atomic_t pasid_users;  
-> 
-> These are poorly named, this is really the DMA API global PASID and
-> shouldn't be used for other things.
-> 
-I was hoping it can be generic since sva_cookie also has a pasid field but
-it looks like sva uses mm->pasid now.
+If Kishon can have a look that would be greatly appreciated too.
 
-Shall we call it dma_api_pasid, dma_pasid, or something else?
-
-> Jason
-
+When we agree on a proper commit log I can ACK the patch, the whole
+series can then go via the DMA engine tree.
 
 Thanks,
+Lorenzo
 
-Jacob
+> 
+> The whole flow use standard DMA usage module
+> 
+>  1. Using dma_request_channel() and filter function to find correct
+>     RX and TX Channel. if not exist,  fallback to try allocate
+>     general DMA controller channel.
+>  2. dmaengine_slave_config() config remote side physcial address.
+>  3. using dmaengine_prep_slave_single() create transfer descriptor.
+>  4. tx_submit();
+>  5. dma_async_issue_pending();
+> 
+> Signed-off-by: Frank Li <Frank.Li@nxp.com>
+> Acked-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> ---
+> Change from v9 to v10:
+>  - rewrite commit message
+> Change from v4 to v9:
+>  - none
+> Change from v3 to v4:
+>  - reverse Xmas tree order
+>  - local -> dma_local
+>  - change error message
+>  - IS_ERR -> IS_ERR_OR_NULL
+>  - check return value of dmaengine_slave_config()
+> Change from v1 to v2:
+>  - none
+> 
+>  drivers/pci/endpoint/functions/pci-epf-test.c | 108 ++++++++++++++++--
+>  1 file changed, 98 insertions(+), 10 deletions(-)
+> 
+> diff --git a/drivers/pci/endpoint/functions/pci-epf-test.c b/drivers/pci/endpoint/functions/pci-epf-test.c
+> index 90d84d3bc868f..f26afd02f3a86 100644
+> --- a/drivers/pci/endpoint/functions/pci-epf-test.c
+> +++ b/drivers/pci/endpoint/functions/pci-epf-test.c
+> @@ -52,9 +52,11 @@ struct pci_epf_test {
+>  	enum pci_barno		test_reg_bar;
+>  	size_t			msix_table_offset;
+>  	struct delayed_work	cmd_handler;
+> -	struct dma_chan		*dma_chan;
+> +	struct dma_chan		*dma_chan_tx;
+> +	struct dma_chan		*dma_chan_rx;
+>  	struct completion	transfer_complete;
+>  	bool			dma_supported;
+> +	bool			dma_private;
+>  	const struct pci_epc_features *epc_features;
+>  };
+>  
+> @@ -105,12 +107,15 @@ static void pci_epf_test_dma_callback(void *param)
+>   */
+>  static int pci_epf_test_data_transfer(struct pci_epf_test *epf_test,
+>  				      dma_addr_t dma_dst, dma_addr_t dma_src,
+> -				      size_t len)
+> +				      size_t len, dma_addr_t dma_remote,
+> +				      enum dma_transfer_direction dir)
+>  {
+> +	struct dma_chan *chan = (dir == DMA_DEV_TO_MEM) ? epf_test->dma_chan_tx : epf_test->dma_chan_rx;
+> +	dma_addr_t dma_local = (dir == DMA_MEM_TO_DEV) ? dma_src : dma_dst;
+>  	enum dma_ctrl_flags flags = DMA_CTRL_ACK | DMA_PREP_INTERRUPT;
+> -	struct dma_chan *chan = epf_test->dma_chan;
+>  	struct pci_epf *epf = epf_test->epf;
+>  	struct dma_async_tx_descriptor *tx;
+> +	struct dma_slave_config sconf = {};
+>  	struct device *dev = &epf->dev;
+>  	dma_cookie_t cookie;
+>  	int ret;
+> @@ -120,7 +125,22 @@ static int pci_epf_test_data_transfer(struct pci_epf_test *epf_test,
+>  		return -EINVAL;
+>  	}
+>  
+> -	tx = dmaengine_prep_dma_memcpy(chan, dma_dst, dma_src, len, flags);
+> +	if (epf_test->dma_private) {
+> +		sconf.direction = dir;
+> +		if (dir == DMA_MEM_TO_DEV)
+> +			sconf.dst_addr = dma_remote;
+> +		else
+> +			sconf.src_addr = dma_remote;
+> +
+> +		if (dmaengine_slave_config(chan, &sconf)) {
+> +			dev_err(dev, "DMA slave config fail\n");
+> +			return -EIO;
+> +		}
+> +		tx = dmaengine_prep_slave_single(chan, dma_local, len, dir, flags);
+> +	} else {
+> +		tx = dmaengine_prep_dma_memcpy(chan, dma_dst, dma_src, len, flags);
+> +	}
+> +
+>  	if (!tx) {
+>  		dev_err(dev, "Failed to prepare DMA memcpy\n");
+>  		return -EIO;
+> @@ -148,6 +168,23 @@ static int pci_epf_test_data_transfer(struct pci_epf_test *epf_test,
+>  	return 0;
+>  }
+>  
+> +struct epf_dma_filter {
+> +	struct device *dev;
+> +	u32 dma_mask;
+> +};
+> +
+> +static bool epf_dma_filter_fn(struct dma_chan *chan, void *node)
+> +{
+> +	struct epf_dma_filter *filter = node;
+> +	struct dma_slave_caps caps;
+> +
+> +	memset(&caps, 0, sizeof(caps));
+> +	dma_get_slave_caps(chan, &caps);
+> +
+> +	return chan->device->dev == filter->dev
+> +		&& (filter->dma_mask & caps.directions);
+> +}
+> +
+>  /**
+>   * pci_epf_test_init_dma_chan() - Function to initialize EPF test DMA channel
+>   * @epf_test: the EPF test device that performs data transfer operation
+> @@ -158,10 +195,44 @@ static int pci_epf_test_init_dma_chan(struct pci_epf_test *epf_test)
+>  {
+>  	struct pci_epf *epf = epf_test->epf;
+>  	struct device *dev = &epf->dev;
+> +	struct epf_dma_filter filter;
+>  	struct dma_chan *dma_chan;
+>  	dma_cap_mask_t mask;
+>  	int ret;
+>  
+> +	filter.dev = epf->epc->dev.parent;
+> +	filter.dma_mask = BIT(DMA_DEV_TO_MEM);
+> +
+> +	dma_cap_zero(mask);
+> +	dma_cap_set(DMA_SLAVE, mask);
+> +	dma_chan = dma_request_channel(mask, epf_dma_filter_fn, &filter);
+> +	if (IS_ERR_OR_NULL(dma_chan)) {
+> +		dev_info(dev, "Failed to get private DMA channel. Falling back to generic one\n");
+> +		goto fail_back_tx;
+> +	}
+> +
+> +	epf_test->dma_chan_rx = dma_chan;
+> +
+> +	filter.dma_mask = BIT(DMA_MEM_TO_DEV);
+> +	dma_chan = dma_request_channel(mask, epf_dma_filter_fn, &filter);
+> +
+> +	if (IS_ERR(dma_chan)) {
+> +		dev_info(dev, "Failed to get private DMA channel. Falling back to generic one\n");
+> +		goto fail_back_rx;
+> +	}
+> +
+> +	epf_test->dma_chan_tx = dma_chan;
+> +	epf_test->dma_private = true;
+> +
+> +	init_completion(&epf_test->transfer_complete);
+> +
+> +	return 0;
+> +
+> +fail_back_rx:
+> +	dma_release_channel(epf_test->dma_chan_rx);
+> +	epf_test->dma_chan_tx = NULL;
+> +
+> +fail_back_tx:
+>  	dma_cap_zero(mask);
+>  	dma_cap_set(DMA_MEMCPY, mask);
+>  
+> @@ -174,7 +245,7 @@ static int pci_epf_test_init_dma_chan(struct pci_epf_test *epf_test)
+>  	}
+>  	init_completion(&epf_test->transfer_complete);
+>  
+> -	epf_test->dma_chan = dma_chan;
+> +	epf_test->dma_chan_tx = epf_test->dma_chan_rx = dma_chan;
+>  
+>  	return 0;
+>  }
+> @@ -190,8 +261,17 @@ static void pci_epf_test_clean_dma_chan(struct pci_epf_test *epf_test)
+>  	if (!epf_test->dma_supported)
+>  		return;
+>  
+> -	dma_release_channel(epf_test->dma_chan);
+> -	epf_test->dma_chan = NULL;
+> +	dma_release_channel(epf_test->dma_chan_tx);
+> +	if (epf_test->dma_chan_tx == epf_test->dma_chan_rx) {
+> +		epf_test->dma_chan_tx = NULL;
+> +		epf_test->dma_chan_rx = NULL;
+> +		return;
+> +	}
+> +
+> +	dma_release_channel(epf_test->dma_chan_rx);
+> +	epf_test->dma_chan_rx = NULL;
+> +
+> +	return;
+>  }
+>  
+>  static void pci_epf_test_print_rate(const char *ops, u64 size,
+> @@ -280,8 +360,14 @@ static int pci_epf_test_copy(struct pci_epf_test *epf_test)
+>  			goto err_map_addr;
+>  		}
+>  
+> +		if (epf_test->dma_private) {
+> +			dev_err(dev, "Cannot transfer data using DMA\n");
+> +			ret = -EINVAL;
+> +			goto err_map_addr;
+> +		}
+> +
+>  		ret = pci_epf_test_data_transfer(epf_test, dst_phys_addr,
+> -						 src_phys_addr, reg->size);
+> +						 src_phys_addr, reg->size, 0, DMA_MEM_TO_MEM);
+>  		if (ret)
+>  			dev_err(dev, "Data transfer failed\n");
+>  	} else {
+> @@ -363,7 +449,8 @@ static int pci_epf_test_read(struct pci_epf_test *epf_test)
+>  
+>  		ktime_get_ts64(&start);
+>  		ret = pci_epf_test_data_transfer(epf_test, dst_phys_addr,
+> -						 phys_addr, reg->size);
+> +						 phys_addr, reg->size,
+> +						 reg->src_addr, DMA_DEV_TO_MEM);
+>  		if (ret)
+>  			dev_err(dev, "Data transfer failed\n");
+>  		ktime_get_ts64(&end);
+> @@ -453,8 +540,9 @@ static int pci_epf_test_write(struct pci_epf_test *epf_test)
+>  		}
+>  
+>  		ktime_get_ts64(&start);
+> +
+>  		ret = pci_epf_test_data_transfer(epf_test, phys_addr,
+> -						 src_phys_addr, reg->size);
+> +						 src_phys_addr, reg->size, reg->dst_addr, DMA_MEM_TO_DEV);
+>  		if (ret)
+>  			dev_err(dev, "Data transfer failed\n");
+>  		ktime_get_ts64(&end);
+> -- 
+> 2.35.1
+> 
