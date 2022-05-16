@@ -2,57 +2,54 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 576F5C433EF
-	for <dmaengine@archiver.kernel.org>; Mon, 16 May 2022 12:50:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 57A62C433EF
+	for <dmaengine@archiver.kernel.org>; Mon, 16 May 2022 12:50:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243470AbiEPMua (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 16 May 2022 08:50:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32998 "EHLO
+        id S243082AbiEPMuq (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 16 May 2022 08:50:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33128 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243465AbiEPMuP (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Mon, 16 May 2022 08:50:15 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9DDAE3A5C1
-        for <dmaengine@vger.kernel.org>; Mon, 16 May 2022 05:49:47 -0700 (PDT)
+        with ESMTP id S243572AbiEPMuh (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Mon, 16 May 2022 08:50:37 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8EEAB39B95
+        for <dmaengine@vger.kernel.org>; Mon, 16 May 2022 05:50:15 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id E0AC6B811D3
-        for <dmaengine@vger.kernel.org>; Mon, 16 May 2022 12:49:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16E32C385AA;
-        Mon, 16 May 2022 12:49:43 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 1AEDFB811CE
+        for <dmaengine@vger.kernel.org>; Mon, 16 May 2022 12:50:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53748C385B8;
+        Mon, 16 May 2022 12:50:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1652705384;
-        bh=wWN57vaEEDPEKmafR6DzGIK1CI+rcXGyfhfnJkcJYw4=;
+        s=k20201202; t=1652705412;
+        bh=WQP4oumO35xVjS7uk8XLqF3ehCAmsCxDXFYKc7Plni0=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=DvOyBR8zV0UUYzrSoM1lMiXpKx1KuLw+UpMCHaSuTjpT10FFyrrt3SrVa/6mAYjjR
-         4OQzSfoVyNv5XHvGfkQROxF9tpdII6+P6cTGn55lMVNX3u5WAkcIBvl/sOvXgPNkfV
-         fDy1JQyscrk1a+zRb5WOoOrsGF9P/vHNlv15g5jwGvjvwde8WgjHtXnKOp6lOLXMlN
-         b/HNk+LDqvBW6o3ehgUtS6+9eTkxvfrt7FP0DdvtLgFWB9olfbL+AMqpEaaqfd7dxw
-         3ILeNyFyaOPSg4CNxgZ60ID4gV2Qc06H58L5IBXTu+0oSd/N99tOIx3YuCw4TlBlME
-         g4wKhSq9QW/yw==
-Date:   Mon, 16 May 2022 18:19:40 +0530
+        b=OFUiSdJF+1+smm9SnNo+/tBP0EHVAE2Wpvb7SlzYC3vnBR+CKd1WfHWsMTJyjA+uq
+         TS1mSPHEJ3ptoA/oY+aiIT8DM9uhUvbwBs1/pajmTW0TSNYV57nuIYaR2stRHrK3uJ
+         BClC7lQkj1afKwHIQlkrsMkZ7hczHFX6kqGl4CuYMdZlmKdgHnYuC/m0mLfIgL3HZ0
+         vig5FobK3iLTS55g99gsAyvAlSaLIoUuq+H8UJNeBJQ18BvGNZ0P1FconxLPpQJIAB
+         RyRwM1iQWKmO9U2e3hcWoWB1MtbveA46txgIGkV4iVXfAb+Y7xZToJ3xxaHHhhjZTt
+         xzmkC99BUJNWQ==
+Date:   Mon, 16 May 2022 18:20:09 +0530
 From:   Vinod Koul <vkoul@kernel.org>
 To:     Dave Jiang <dave.jiang@intel.com>
-Cc:     Jacob Pan <jacob.jun.pan@intel.com>, dmaengine@vger.kernel.org
-Subject: Re: [PATCH] dmaengine: idxd: fix lockdep warning on device driver
- removal
-Message-ID: <YoJIZB5H4RjTZR0b@matsya>
-References: <165231364426.986304.9294302800482492780.stgit@djiang5-desk3.ch.intel.com>
+Cc:     dmaengine@vger.kernel.org
+Subject: Re: [PATCH] dmaengine: idxd: free irq before wq type is reset
+Message-ID: <YoJIgZPxZdvj3YJs@matsya>
+References: <165231367316.986407.11001767338124941736.stgit@djiang5-desk3.ch.intel.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <165231364426.986304.9294302800482492780.stgit@djiang5-desk3.ch.intel.com>
+In-Reply-To: <165231367316.986407.11001767338124941736.stgit@djiang5-desk3.ch.intel.com>
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On 11-05-22, 17:00, Dave Jiang wrote:
-> Jacob reported that with lockdep debug turned on, idxd_device_driver
-> removal causes kernel splat from lock assert warning for
-> idxd_device_wqs_clear_state(). Make sure
-> idxd_device_wqs_clear_state() holds the wq lock for each wq when
-> cleaning the wq state. Move the call outside of the device spinlock.
+On 11-05-22, 17:01, Dave Jiang wrote:
+> Call idxd_wq_free_irq() in the drv_disable_wq() function before
+> idxd_wq_reset() is called. Otherwise the wq type is reset and the irq does
+> not get freed.
 
 Applied, thanks
 
