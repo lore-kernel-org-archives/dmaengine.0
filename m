@@ -2,218 +2,133 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D49FEC43217
-	for <dmaengine@archiver.kernel.org>; Wed, 18 May 2022 18:17:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 19163C433F5
+	for <dmaengine@archiver.kernel.org>; Wed, 18 May 2022 18:40:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241356AbiERSRl (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 18 May 2022 14:17:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50460 "EHLO
+        id S234057AbiERSj7 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 18 May 2022 14:39:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32866 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241346AbiERSRj (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Wed, 18 May 2022 14:17:39 -0400
-Received: from mga04.intel.com (mga04.intel.com [192.55.52.120])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3AE2617EC3F;
-        Wed, 18 May 2022 11:17:38 -0700 (PDT)
+        with ESMTP id S241280AbiERSj6 (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Wed, 18 May 2022 14:39:58 -0400
+Received: from mga11.intel.com (mga11.intel.com [192.55.52.93])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 15B641DB588;
+        Wed, 18 May 2022 11:39:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1652897858; x=1684433858;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
+  t=1652899197; x=1684435197;
+  h=date:from:to:cc:subject:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=4E0rUsQ0j9aptl5lb7L0UIOwroU6cL8nhCs1ddmoug0=;
-  b=cj1lzljHpeP7O11FRCsm+hYZIR0uYDFByzUT34/fqqlFCwClbyS3oPlU
-   pGCnO7OiDI5TDswH76Y+mHQg4x9iBO+qjLxjrAVMMw3Suk07n8mG5EYMK
-   pF87d4J0KDIbTv62Pl2rqEShLc+rR9pyDXIkt+GyCSfk9Jn9R0hUOaQY3
-   cOXkE5WMhLaVXn47tzjhhS3gfy+PNz/PHHC0GA3OerqDJwd2ymv4/vg9h
-   3zBPXLxyDhiGdb/8Bk0agtECZnBg5BcUh5ITKW44bjOK1yyQsyArrdkrt
-   aMRqNWgt9MqDTixvtk9bKjW3UUSIsFlKu1NViE6Rh3S45ONkxA+iuJQAt
-   A==;
-X-IronPort-AV: E=McAfee;i="6400,9594,10351"; a="270648740"
+  bh=M/oKhYTcnY4myTpFoegzGHopmAVVEEzgyLwyapl7tQQ=;
+  b=gjifRWwVI7atM6NqpjKQjmIIKSpRRAvJjla4cCLFkc5/c5LeqQwiOPmq
+   KraYXLAeeWMDecMyFyPbwEQmu6QVzhfBD4Hd4SB08h24jDQYLaRJLuxx7
+   pjF7eRU/yHmf59EaRXYMnU/rPUSBRa4MX9HccnwP6e0fyZfpvttn1MxNX
+   wsT4o+PKpfOs/kDGJwK7KvG9kE3pe3tj9IL21ilIWyXUDj82f3hAkVyOv
+   FoLIc49hjSoHw+0zgbbwnHXDI2/dseCwKpZMheoqbvy+0sSrLVbq4Q7Jd
+   aoB2iW2VBrHyQVI1D40EAELe/wapHYj7LJYfbfUmg35oiJeXyUNI+eKym
+   Q==;
+X-IronPort-AV: E=McAfee;i="6400,9594,10351"; a="269425271"
 X-IronPort-AV: E=Sophos;i="5.91,235,1647327600"; 
-   d="scan'208";a="270648740"
-Received: from fmsmga004.fm.intel.com ([10.253.24.48])
-  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 May 2022 11:17:33 -0700
-X-ExtLoop1: 1
+   d="scan'208";a="269425271"
+Received: from orsmga007.jf.intel.com ([10.7.209.58])
+  by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 May 2022 11:38:14 -0700
 X-IronPort-AV: E=Sophos;i="5.91,235,1647327600"; 
-   d="scan'208";a="639405497"
-Received: from otc-wp-03.jf.intel.com (HELO jacob-builder.jf.intel.com) ([10.54.39.79])
-  by fmsmga004.fm.intel.com with ESMTP; 18 May 2022 11:17:32 -0700
+   d="scan'208";a="569686074"
+Received: from jacob-builder.jf.intel.com (HELO jacob-builder) ([10.7.198.157])
+  by orsmga007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 May 2022 11:38:14 -0700
+Date:   Wed, 18 May 2022 11:42:04 -0700
 From:   Jacob Pan <jacob.jun.pan@linux.intel.com>
-To:     iommu@lists.linux-foundation.org,
+To:     Jason Gunthorpe <jgg@nvidia.com>
+Cc:     iommu@lists.linux-foundation.org,
         LKML <linux-kernel@vger.kernel.org>, dmaengine@vger.kernel.org,
         Joerg Roedel <joro@8bytes.org>,
         David Woodhouse <dwmw2@infradead.org>,
         Jean-Philippe Brucker <jean-philippe@linaro.com>,
-        "Lu Baolu" <baolu.lu@linux.intel.com>,
-        Jason Gunthorpe <jgg@nvidia.com>,
-        "Christoph Hellwig" <hch@infradead.org>, vkoul@kernel.org,
-        robin.murphy@arm.com, will@kernel.org
-Cc:     Yi Liu <yi.l.liu@intel.com>, Dave Jiang <dave.jiang@intel.com>,
+        Lu Baolu <baolu.lu@linux.intel.com>, vkoul@kernel.org,
+        robin.murphy@arm.com, will@kernel.org, Yi Liu <yi.l.liu@intel.com>,
+        Dave Jiang <dave.jiang@intel.com>,
         "Tian, Kevin" <kevin.tian@intel.com>,
         Raj Ashok <ashok.raj@intel.com>,
         Eric Auger <eric.auger@redhat.com>,
-        Jacob Pan <jacob.jun.pan@linux.intel.com>
-Subject: [PATCH v4 3/6] iommu/vt-d: Implement domain ops for attach_dev_pasid
-Date:   Wed, 18 May 2022 11:21:17 -0700
-Message-Id: <20220518182120.1136715-4-jacob.jun.pan@linux.intel.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20220518182120.1136715-1-jacob.jun.pan@linux.intel.com>
-References: <20220518182120.1136715-1-jacob.jun.pan@linux.intel.com>
+        jacob.jun.pan@linux.intel.com
+Subject: Re: [PATCH v3 1/4] iommu/vt-d: Implement domain ops for
+ attach_dev_pasid
+Message-ID: <20220518114204.4d251b41@jacob-builder>
+In-Reply-To: <20220511182908.GK49344@nvidia.com>
+References: <20220510210704.3539577-1-jacob.jun.pan@linux.intel.com>
+        <20220510210704.3539577-2-jacob.jun.pan@linux.intel.com>
+        <20220510232121.GP49344@nvidia.com>
+        <20220510172309.3c4e7512@jacob-builder>
+        <20220511115427.GU49344@nvidia.com>
+        <20220511082958.79d5d8ee@jacob-builder>
+        <20220511161237.GB49344@nvidia.com>
+        <20220511100216.7615e288@jacob-builder>
+        <20220511170025.GF49344@nvidia.com>
+        <20220511102521.6b7c578c@jacob-builder>
+        <20220511182908.GK49344@nvidia.com>
+Organization: OTC
+X-Mailer: Claws Mail 3.17.5 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On VT-d platforms with scalable mode enabled, devices issue DMA requests
-with PASID need to attach PASIDs to given IOMMU domains. The attach
-operation involves the following:
-- Programming the PASID into the device's PASID table
-- Tracking device domain and the PASID relationship
-- Managing IOTLB and device TLB invalidations
+Hi Jason,
 
-This patch add attach_dev_pasid functions to the default domain ops which
-is used by DMA and identity domain types. It could be extended to support
-other domain types whenever necessary.
+On Wed, 11 May 2022 15:29:08 -0300, Jason Gunthorpe <jgg@nvidia.com> wrote:
 
-Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
-Signed-off-by: Jacob Pan <jacob.jun.pan@linux.intel.com>
----
- drivers/iommu/intel/iommu.c | 72 +++++++++++++++++++++++++++++++++++--
- 1 file changed, 70 insertions(+), 2 deletions(-)
+> On Wed, May 11, 2022 at 10:25:21AM -0700, Jacob Pan wrote:
+> > Hi Jason,
+> > 
+> > On Wed, 11 May 2022 14:00:25 -0300, Jason Gunthorpe <jgg@nvidia.com>
+> > wrote: 
+> > > On Wed, May 11, 2022 at 10:02:16AM -0700, Jacob Pan wrote:  
+> > > > > > If not global, perhaps we could have a list of pasids (e.g.
+> > > > > > xarray) attached to the device_domain_info. The TLB flush logic
+> > > > > > would just go through the list w/o caring what the PASIDs are
+> > > > > > for. Does it make sense to you?      
+> > > > > 
+> > > > > Sort of, but we shouldn't duplicate xarrays - the group already
+> > > > > has this xarray - need to find some way to allow access to it
+> > > > > from the driver.
+> > > > >     
+> > > > I am not following,  here are the PASIDs for devTLB flush which is
+> > > > per device. Why group?    
+> > > 
+> > > Because group is where the core code stores it.  
+> > I see, with singleton group. I guess I can let dma-iommu code call
+> > 
+> > iommu_attach_dma_pasid {
+> > 	iommu_attach_device_pasid();
+> > Then the PASID will be stored in the group xa.  
+> 
+> Yes, again, the dma-iommu should not be any different from the normal
+> unmanaged path. At this point there is no longer any difference, we
+> should not invent new ones.
+> 
+> > The flush code can retrieve PASIDs from device_domain_info.device ->
+> > group -> pasid_array.  Thanks for pointing it out, I missed the new
+> > pasid_array.  
+> 
+> Yes.. It seems inefficient to iterate over that xarray multiple times
+> on the flush hot path, but maybe there is little choice. Try to use
+> use the xas iterators under the xa_lock spinlock..
+> 
+xas_for_each takes a max range, here we don't really have one. So I posted
+v4 w/o using the xas advanced API. Please let me know if you have
+suggestions.
+xa_for_each takes RCU read lock, it should be fast for tlb flush, right? The
+worst case maybe over flush when we have stale data but should be very rare.
 
-diff --git a/drivers/iommu/intel/iommu.c b/drivers/iommu/intel/iommu.c
-index 1c2c92b657c7..75615c105fdf 100644
---- a/drivers/iommu/intel/iommu.c
-+++ b/drivers/iommu/intel/iommu.c
-@@ -1556,12 +1556,18 @@ static void __iommu_flush_dev_iotlb(struct device_domain_info *info,
- 				    u64 addr, unsigned int mask)
- {
- 	u16 sid, qdep;
-+	ioasid_t pasid;
- 
- 	if (!info || !info->ats_enabled)
- 		return;
- 
- 	sid = info->bus << 8 | info->devfn;
- 	qdep = info->ats_qdep;
-+	pasid = iommu_get_pasid_from_domain(info->dev, &info->domain->domain);
-+	if (pasid != INVALID_IOASID) {
-+		qi_flush_dev_iotlb_pasid(info->iommu, sid, info->pfsid,
-+					 pasid, qdep, addr, mask);
-+	}
- 	qi_flush_dev_iotlb(info->iommu, sid, info->pfsid,
- 			   qdep, addr, mask);
- }
-@@ -1591,6 +1597,7 @@ static void iommu_flush_iotlb_psi(struct intel_iommu *iommu,
- 	unsigned int mask = ilog2(aligned_pages);
- 	uint64_t addr = (uint64_t)pfn << VTD_PAGE_SHIFT;
- 	u16 did = domain->iommu_did[iommu->seq_id];
-+	struct iommu_domain *iommu_domain = &domain->domain;
- 
- 	BUG_ON(pages == 0);
- 
-@@ -1599,6 +1606,9 @@ static void iommu_flush_iotlb_psi(struct intel_iommu *iommu,
- 
- 	if (domain_use_first_level(domain)) {
- 		qi_flush_piotlb(iommu, did, PASID_RID2PASID, addr, pages, ih);
-+		/* flush additional kernel DMA PASIDs attached */
-+		if (iommu_domain->dma_pasid)
-+			qi_flush_piotlb(iommu, did, iommu_domain->dma_pasid, addr, pages, ih);
- 	} else {
- 		unsigned long bitmask = aligned_pages - 1;
- 
-@@ -4255,6 +4265,7 @@ static void __dmar_remove_one_dev_info(struct device_domain_info *info)
- 	struct dmar_domain *domain;
- 	struct intel_iommu *iommu;
- 	unsigned long flags;
-+	ioasid_t pasid;
- 
- 	assert_spin_locked(&device_domain_lock);
- 
-@@ -4265,10 +4276,15 @@ static void __dmar_remove_one_dev_info(struct device_domain_info *info)
- 	domain = info->domain;
- 
- 	if (info->dev && !dev_is_real_dma_subdevice(info->dev)) {
--		if (dev_is_pci(info->dev) && sm_supported(iommu))
-+		if (dev_is_pci(info->dev) && sm_supported(iommu)) {
- 			intel_pasid_tear_down_entry(iommu, info->dev,
- 					PASID_RID2PASID, false);
--
-+			pasid = iommu_get_pasid_from_domain(info->dev,
-+							    &info->domain->domain);
-+			if (pasid != INVALID_IOASID)
-+				intel_pasid_tear_down_entry(iommu, info->dev,
-+							    pasid, false);
-+		}
- 		iommu_disable_dev_iotlb(info);
- 		domain_context_clear(info);
- 		intel_pasid_free_table(info->dev);
-@@ -4904,6 +4920,56 @@ static void intel_iommu_iotlb_sync_map(struct iommu_domain *domain,
- 	}
- }
- 
-+static int intel_iommu_attach_dev_pasid(struct iommu_domain *domain,
-+					struct device *dev,
-+					ioasid_t pasid)
-+{
-+	struct device_domain_info *info = dev_iommu_priv_get(dev);
-+	struct dmar_domain *dmar_domain = to_dmar_domain(domain);
-+	struct intel_iommu *iommu = info->iommu;
-+	unsigned long flags;
-+	int ret = 0;
-+
-+	if (!sm_supported(iommu) || !info)
-+		return -ENODEV;
-+
-+	if (WARN_ON(pasid == PASID_RID2PASID))
-+		return -EINVAL;
-+
-+	spin_lock_irqsave(&device_domain_lock, flags);
-+	spin_lock(&iommu->lock);
-+	if (hw_pass_through && domain_type_is_si(dmar_domain))
-+		ret = intel_pasid_setup_pass_through(iommu, dmar_domain,
-+						     dev, pasid);
-+	else if (domain_use_first_level(dmar_domain))
-+		ret = domain_setup_first_level(iommu, dmar_domain,
-+					       dev, pasid);
-+	else
-+		ret = intel_pasid_setup_second_level(iommu, dmar_domain,
-+						     dev, pasid);
-+
-+	spin_unlock(&iommu->lock);
-+	spin_unlock_irqrestore(&device_domain_lock, flags);
-+
-+	return ret;
-+}
-+
-+static void intel_iommu_detach_dev_pasid(struct iommu_domain *domain,
-+					struct device *dev,
-+					ioasid_t pasid)
-+{
-+	struct device_domain_info *info = dev_iommu_priv_get(dev);
-+	struct intel_iommu *iommu = info->iommu;
-+	unsigned long flags;
-+
-+	if (pasid != iommu_get_pasid_from_domain(info->dev, &info->domain->domain))
-+		return;
-+
-+	spin_lock_irqsave(&iommu->lock, flags);
-+	intel_pasid_tear_down_entry(iommu, dev, pasid, false);
-+	spin_unlock_irqrestore(&iommu->lock, flags);
-+}
-+
- const struct iommu_ops intel_iommu_ops = {
- 	.capable		= intel_iommu_capable,
- 	.domain_alloc		= intel_iommu_domain_alloc,
-@@ -4932,6 +4998,8 @@ const struct iommu_ops intel_iommu_ops = {
- 		.iova_to_phys		= intel_iommu_iova_to_phys,
- 		.free			= intel_iommu_domain_free,
- 		.enforce_cache_coherency = intel_iommu_enforce_cache_coherency,
-+		.attach_dev_pasid	= intel_iommu_attach_dev_pasid,
-+		.detach_dev_pasid	= intel_iommu_detach_dev_pasid,
- 	}
- };
- 
--- 
-2.25.1
+> The challenge will be accessing the group xa in the first place, but
+> maybe the core code can gain a function call to return a pointer to
+> that XA or something..
+> 
+I added a helper function to find the matching DMA API PASID in v4.
 
+
+Thanks,
+
+Jacob
