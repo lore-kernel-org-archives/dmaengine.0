@@ -2,41 +2,43 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4B59BC433F5
-	for <dmaengine@archiver.kernel.org>; Sat, 21 May 2022 11:13:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DF37CC433EF
+	for <dmaengine@archiver.kernel.org>; Sat, 21 May 2022 11:13:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1354949AbiEULM7 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Sat, 21 May 2022 07:12:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48542 "EHLO
+        id S1354956AbiEULNR (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Sat, 21 May 2022 07:13:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47808 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1354858AbiEULMp (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Sat, 21 May 2022 07:12:45 -0400
+        with ESMTP id S1354719AbiEULMj (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Sat, 21 May 2022 07:12:39 -0400
 Received: from mail3-relais-sop.national.inria.fr (mail3-relais-sop.national.inria.fr [192.134.164.104])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 35C252B18B;
-        Sat, 21 May 2022 04:12:17 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71A273054B;
+        Sat, 21 May 2022 04:12:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
   d=inria.fr; s=dc;
   h=from:to:cc:subject:date:message-id:mime-version:
    content-transfer-encoding;
-  bh=FijcdnWeNJHGkmGIXKvwmM4MTGHZdgWDIgV1eJ838sw=;
-  b=HLWioN3D7KOIrKtH4lHd6OUnJLBBrp1vadDwRoGPWJKu9oUED85+q9kV
-   tqgb0tuy46WU1Sr+AjRpPA4ZHAv1GnsdabNFfHAmxScFuF7d7ngXm8nuE
-   A5k29y821XahNM3iJceVcTKt47A6DFvA5OAsqNYVgW2kN0ThF/5AnojrD
-   8=;
+  bh=xWadsLJC4l7Q7/MBaFIQaJdl6vNOYxEGLL1gzjFKb6E=;
+  b=rbkfxHx2gIoHDam6N2zZnDd0wX+1jXkG/Bqc20W3hORHj5mHYIaDec/c
+   r0xPPcBClinK+FeWx0846x21DbClqoPHCvng9V5W5maX/WcDSsCjDqhm3
+   xRi5l3QqKk/+MuRbUhz+w897k7hRjga0X0eAKYtt4pIcIHU/lA37apNrq
+   4=;
 Authentication-Results: mail3-relais-sop.national.inria.fr; dkim=none (message not signed) header.i=none; spf=SoftFail smtp.mailfrom=Julia.Lawall@inria.fr; dmarc=fail (p=none dis=none) d=inria.fr
 X-IronPort-AV: E=Sophos;i="5.91,242,1647298800"; 
-   d="scan'208";a="14727966"
+   d="scan'208";a="14727943"
 Received: from i80.paris.inria.fr (HELO i80.paris.inria.fr.) ([128.93.90.48])
-  by mail3-relais-sop.national.inria.fr with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 May 2022 13:12:03 +0200
+  by mail3-relais-sop.national.inria.fr with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 May 2022 13:12:00 +0200
 From:   Julia Lawall <Julia.Lawall@inria.fr>
-To:     Sean Wang <sean.wang@mediatek.com>
-Cc:     kernel-janitors@vger.kernel.org, Vinod Koul <vkoul@kernel.org>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        dmaengine@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-mediatek@lists.infradead.org, linux-kernel@vger.kernel.org
-Subject: [PATCH] dmaengine: mediatek-cqdma: fix typo in comment
-Date:   Sat, 21 May 2022 13:11:11 +0200
-Message-Id: <20220521111145.81697-61-Julia.Lawall@inria.fr>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     kernel-janitors@vger.kernel.org,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Vinod Koul <vkoul@kernel.org>,
+        linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, dmaengine@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH] dmaengine: s3c24xx: fix typo in comment
+Date:   Sat, 21 May 2022 13:10:56 +0200
+Message-Id: <20220521111145.81697-46-Julia.Lawall@inria.fr>
 X-Mailer: git-send-email 2.20.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -50,20 +52,20 @@ Detected with the help of Coccinelle.
 Signed-off-by: Julia Lawall <Julia.Lawall@inria.fr>
 
 ---
- drivers/dma/mediatek/mtk-cqdma.c |    2 +-
+ drivers/dma/s3c24xx-dma.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/dma/mediatek/mtk-cqdma.c b/drivers/dma/mediatek/mtk-cqdma.c
-index f8847c48ba03..9ae92b8940ef 100644
---- a/drivers/dma/mediatek/mtk-cqdma.c
-+++ b/drivers/dma/mediatek/mtk-cqdma.c
-@@ -373,7 +373,7 @@ static void mtk_cqdma_tasklet_cb(struct tasklet_struct *t)
- 
- 		/*
- 		 * free child CVD after completion.
--		 * the parent CVD would be freeed with desc_free by user.
-+		 * the parent CVD would be freed with desc_free by user.
- 		 */
- 		if (cvd->parent != cvd)
- 			kfree(cvd);
+diff --git a/drivers/dma/s3c24xx-dma.c b/drivers/dma/s3c24xx-dma.c
+index 8e14c72d03f0..f6ed7e889781 100644
+--- a/drivers/dma/s3c24xx-dma.c
++++ b/drivers/dma/s3c24xx-dma.c
+@@ -202,7 +202,7 @@ struct s3c24xx_dma_phy {
+  * struct s3c24xx_dma_chan - this structure wraps a DMA ENGINE channel
+  * @id: the id of the channel
+  * @name: name of the channel
+- * @vc: wrappped virtual channel
++ * @vc: wrapped virtual channel
+  * @phy: the physical channel utilized by this channel, if there is one
+  * @runtime_addr: address for RX/TX according to the runtime config
+  * @at: active transaction on this channel
 
