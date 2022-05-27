@@ -2,172 +2,386 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 94E43C4332F
-	for <dmaengine@archiver.kernel.org>; Fri, 27 May 2022 10:59:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2443DC433F5
+	for <dmaengine@archiver.kernel.org>; Fri, 27 May 2022 21:57:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350717AbiE0K7g (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 27 May 2022 06:59:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57984 "EHLO
+        id S233037AbiE0V5P (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 27 May 2022 17:57:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42016 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1350414AbiE0K7g (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Fri, 27 May 2022 06:59:36 -0400
-Received: from mout.kundenserver.de (mout.kundenserver.de [217.72.192.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94ADB12E30F;
-        Fri, 27 May 2022 03:59:34 -0700 (PDT)
-Received: from mail-yb1-f170.google.com ([209.85.219.170]) by
- mrelayeu.kundenserver.de (mreue108 [213.165.67.113]) with ESMTPSA (Nemesis)
- id 1MxDck-1nagUG2Bui-00xdsr; Fri, 27 May 2022 12:59:32 +0200
-Received: by mail-yb1-f170.google.com with SMTP id h75so1298847ybg.4;
-        Fri, 27 May 2022 03:59:32 -0700 (PDT)
-X-Gm-Message-State: AOAM530ThosBoAXjZMTkPJhZKMvYR+9cTw+Q2VrK51YA9X7ew3QblMrP
-        79m/8lRD2Rhu1ujASVk3pKJFm9mDDp/A0cOTRTI=
-X-Google-Smtp-Source: ABdhPJwJBQNIblI88S+eAxO/GdYbGBjYaYEn0zqYz6L8E/RzXhSPm0XJBTs9A9G4lFnnXcIXbRsjgtR+GiFws1I2RgI=
-X-Received: by 2002:a25:31c2:0:b0:641:660f:230f with SMTP id
- x185-20020a2531c2000000b00641660f230fmr39185871ybx.472.1653649171073; Fri, 27
- May 2022 03:59:31 -0700 (PDT)
+        with ESMTP id S229558AbiE0V5O (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Fri, 27 May 2022 17:57:14 -0400
+Received: from mail-lj1-x241.google.com (mail-lj1-x241.google.com [IPv6:2a00:1450:4864:20::241])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1800863393
+        for <dmaengine@vger.kernel.org>; Fri, 27 May 2022 14:57:13 -0700 (PDT)
+Received: by mail-lj1-x241.google.com with SMTP id a23so6223529ljd.9
+        for <dmaengine@vger.kernel.org>; Fri, 27 May 2022 14:57:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=TTkFFJWiGQsszaptj0zwEzjUmbbtBVgiZScQuKDSU+A=;
+        b=JTu9/4vP8K290bnailpAakp45NIhtHVTymPXI203da08EDsUGlB77lT2Zwn7CmHK1b
+         K3Jk78sReFb0N6ZsnbOL0Nnq7DpAX71BvCErtguWVRI5WwZxjrhYimnyly/+ptl9CNVX
+         CPWSVSL9f5yGiP6VWxTNnM5Y1X2qIx1KKQJYONzoe52U9Q9EM3L473nQ2qn/tHdtdycJ
+         9K6lcq5YrgVmNxymqVeWlEV+3huSATwj56QKrbzshpn9pUKRpPudltE4VmFz7QyRPZfK
+         cv2adr4sMdZUQS2HPbpLz9ozT2A+mofbcwYwdUalYpN6DnrKann5dnh+HiOGRmhNvYuU
+         jpfQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=TTkFFJWiGQsszaptj0zwEzjUmbbtBVgiZScQuKDSU+A=;
+        b=mrzjHmpL1A6e6corC+grMSwvIeYcfnOkDu5WfBUeEFSEDBAiCk5YuswmuECfolDmsX
+         N9Jsha2DI22OwYXLJsIFKEBaSGdaJSjTAzc4n8qyESUXwbF+wOPU5xquRsurrP/XvEen
+         DeWeZ+HRzvkZY40EsBZlju/tIWJ5BkO2P1LAbgxM7gHYMGHUmcywFVkjjQdpvnncxWGu
+         UU7TOVrJX1yYzbqklu2XhKdfiRyzgLkyANO3pDQ8W48sTvN7uvixG0Q4n108lm20se3w
+         oXctgdz7o/zp/+wlJ1Kf+DYeGHyxYjiA9AHxMVsrliJ5YvtU5ApiMHqXV+7036Ng7Mh8
+         v5nA==
+X-Gm-Message-State: AOAM533NDaTgwyO0CAjmooR6PBc7BEFcx+Vvk55x+uS7YufZVYzJPdGp
+        oXJT/Z3uniDSqXO5mC53XCvsvQ==
+X-Google-Smtp-Source: ABdhPJxmyUBtcpLNRPm9IGYlwLl/0kWqngy9V3wAdhmQcZ6lsarjSkFMP724DvtIRIk8ulm08GbuWQ==
+X-Received: by 2002:a2e:9d96:0:b0:253:e0cf:4be4 with SMTP id c22-20020a2e9d96000000b00253e0cf4be4mr21417642ljj.185.1653688631269;
+        Fri, 27 May 2022 14:57:11 -0700 (PDT)
+Received: from localhost.localdomain (c-fdcc225c.014-348-6c756e10.bbcust.telenor.se. [92.34.204.253])
+        by smtp.gmail.com with ESMTPSA id 29-20020a2e145d000000b0024f555d863csm1218100lju.135.2022.05.27.14.57.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 27 May 2022 14:57:10 -0700 (PDT)
+From:   Linus Walleij <linus.walleij@linaro.org>
+To:     Vinod Koul <vkoul@kernel.org>, dmaengine@vger.kernel.org
+Cc:     Linus Walleij <linus.walleij@linaro.org>,
+        Lee Jones <lee.jones@linaro.org>, devicetree@vger.kernel.org
+Subject: [PATCH] dt-bindings: dma: Rewrite ST-Ericsson DMA40 to YAML
+Date:   Fri, 27 May 2022 23:55:08 +0200
+Message-Id: <20220527215508.622374-1-linus.walleij@linaro.org>
+X-Mailer: git-send-email 2.35.3
 MIME-Version: 1.0
-References: <20220419211658.11403-1-apais@linux.microsoft.com>
- <20220419211658.11403-2-apais@linux.microsoft.com> <CACRpkdZ2DFZRPHS1x0=M3_8zYvU-jpCG5Tm3863dXv51EhY+BA@mail.gmail.com>
- <CAK8P3a0j_rziihsgHnG5bHMxmPbOkAhT6_+CCE4iFZy7HzQrLw@mail.gmail.com> <YpCGePbo9B/Z7slV@matsya>
-In-Reply-To: <YpCGePbo9B/Z7slV@matsya>
-From:   Arnd Bergmann <arnd@arndb.de>
-Date:   Fri, 27 May 2022 12:59:14 +0200
-X-Gmail-Original-Message-ID: <CAK8P3a2wD7=hgvqyS14X5p-eP+7Ajk4dFJOXgbOo8Z0r5UNYmg@mail.gmail.com>
-Message-ID: <CAK8P3a2wD7=hgvqyS14X5p-eP+7Ajk4dFJOXgbOo8Z0r5UNYmg@mail.gmail.com>
-Subject: Re: [RFC 1/1] drivers/dma/*: replace tasklets with workqueue
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Arnd Bergmann <arnd@arndb.de>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Allen Pais <apais@linux.microsoft.com>,
-        Vincent Guittot <vincent.guittot@linaro.org>,
-        olivier.dautricourt@orolia.com, Stefan Roese <sr@denx.de>,
-        Kees Cook <keescook@chromium.org>,
-        linux-hardening@vger.kernel.org,
-        Ludovic Desroches <ludovic.desroches@microchip.com>,
-        Tudor Ambarus <tudor.ambarus@microchip.com>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Ray Jui <rjui@broadcom.com>,
-        Scott Branden <sbranden@broadcom.com>,
-        bcm-kernel-feedback-list <bcm-kernel-feedback-list@broadcom.com>,
-        Nicolas Saenz Julienne <nsaenz@kernel.org>,
-        Paul Cercueil <paul@crapouillou.net>,
-        Eugeniy.Paltsev@synopsys.com,
-        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-        Viresh Kumar <vireshk@kernel.org>,
-        Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-        Leo Li <leoyang.li@nxp.com>, zw@zh-kernel.org,
-        Zhou Wang <wangzhou1@hisilicon.com>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Sean Wang <sean.wang@mediatek.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        =?UTF-8?Q?Andreas_F=C3=A4rber?= <afaerber@suse.de>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Logan Gunthorpe <logang@deltatee.com>,
-        Sanjay R Mehta <sanju.mehta@amd.com>,
-        Daniel Mack <daniel@zonque.org>,
-        Haojian Zhuang <haojian.zhuang@gmail.com>,
-        Robert Jarzmik <robert.jarzmik@free.fr>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        green.wan@sifive.com, Orson Zhai <orsonzhai@gmail.com>,
-        Baolin Wang <baolin.wang7@gmail.com>,
-        Lyra Zhang <zhang.lyra@gmail.com>,
-        Patrice CHOTARD <patrice.chotard@foss.st.com>,
-        Chen-Yu Tsai <wens@csie.org>,
-        =?UTF-8?Q?Jernej_=C5=A0krabec?= <jernej.skrabec@gmail.com>,
-        Samuel Holland <samuel@sholland.org>,
-        dmaengine@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Provags-ID: V03:K1:IrdVXaCr/iQtw8Mck98AsO+WGMa/ZodKqN96B4Fe1uabK65AnL7
- qYJYWPEtVpl71RH8M1VJTEepWOeuHOdLQTEccRWOScPR0b/K6grHXTstGWc0MJdhPmm5/iD
- RLmb2aBLaf6qFyAt/sFBLJUDTI0X7Ax3fY8B7emLb+jIZatyVJIDkSK9bLQeP+aTME7fVix
- 8Q/2xDAhL8s26m5R1nxJQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:vfPV2nj/JfM=:fUkfskn5IOihfv8fgcki9k
- SOkN6pDqUGp5rpc6YmE1oMxJgrXlQB9h6YumlrlW2EF5PCcNkxPICw+FF1q58cURiaPdB+gko
- XBtzda1lOqZ5bgo5IwI7/0iCsDtsoWaoGDtiFsJGq3Kisyc12QzOwfLZhfpHkVebAGkO4iXzy
- mFWJ6VW7gaVK8AoDkpd+nf0dwM8t3N8qW2qriHxZI2qNkC5zyXQtN9nNRIrz6FcWxcB9r/8F9
- JKv5Kz3JkP/ly+nYznDw6RubyVfa7NRIYqVG/uZbvinKyLkSpq6gXJv5O0yc5oxrqWhmlvwGf
- dGhoTKaztcDUuvJH+141XAdZAJXYFdhp+TDmn+KzDwbpNRaF0hFmtbT8VRcYOEP1LbulIw4nW
- yOSBXLjj5dVAWuUqX3WfX7DUZvpK4pESfNTRkyKVLkGTiDnDX0zpkATX9x/shAOYDJ5Z6kIFp
- 2kmuOR7yr3Zp+sGb0JK+lqmHkJ4rqOySQ7zOBsQz8tTo6Gjj1F2LA+4mz+YUTPP0MaKbGN84x
- 0sbqszOiJqN8bj0ybzud225hlABU+aKnR6tuSYNoRt2YtaBe6aPou8rcA2dHcU/N/m7xnzGra
- VvlZqbXNGY4zKm6UtVprVGmnZFQCti/0EBbqxulQhzeHrZahDUqjnzHam2ZkO2pNUJvR0r3RX
- 2yhd4hVQCgg2Hhdjzr0oHUQONwqdGifWTZuDvtjt6ZoaQdnxT6QgBOJLR7nbaZZnIbuLhGSGr
- 4f8s+hd3ZhlZSkhJzHbbySABs5775zvSHG2oXA==
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On Fri, May 27, 2022 at 10:06 AM Vinod Koul <vkoul@kernel.org> wrote:
-> On 25-05-22, 13:03, Arnd Bergmann wrote:
-> > What might work better in the case of the dmaengine API would
-> > be an approach like:
-> >
-> > 1. add helper functions to call the callback functions from a
-> >     tasklet locally defined in drivers/dma/dmaengine.c to allow
-> >     deferring it from hardirq context
-> >
-> > 2. Change all  tasklets that are not part of the callback
-> >     mechanism to work queue functions, I only see
-> >     xilinx_dpdma_chan_err_task in the patch, but there
-> >     may be more
-> >
-> > 3. change all drivers to move their custom tasklets back into
-> >     hardirq context and instead call the new helper for deferring
-> >     the callback.
-> >
-> > 4. Extend the dmaengine callback API to let slave drivers
-> >     pick hardirq, tasklet or task context for the callback.
-> >     task context can mean either a workqueue, or a threaded
-> >     IRQ here, with the default remaining the tasklet version.
->
-> That does sound a good idea, but I dont know who will use the workqueue
-> or a threaded context here, it might be that most would default to
-> hardirq or tasklet context for obvious reasons...
+This rewrites the ST-Ericsson DMA40 bindings in YAML.
 
-If the idea is to remove tasklets from the kernel for good, then the
-choice is only between workqueue and hardirq at this point. The
-workqueue version is the one that would make sense for any driver
-that just defers execution from the callback down into task context.
-If that gets called in task context already, the driver can be simpler.
+Cc: Lee Jones <lee.jones@linaro.org>
+Cc: devicetree@vger.kernel.org
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+---
+ .../devicetree/bindings/dma/ste-dma40.txt     | 138 ---------------
+ .../bindings/dma/stericsson,dma40.yaml        | 159 ++++++++++++++++++
+ 2 files changed, 159 insertions(+), 138 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/dma/ste-dma40.txt
+ create mode 100644 Documentation/devicetree/bindings/dma/stericsson,dma40.yaml
 
-I took a brief look at the roughly 150 slave drivers, and it does
-seem like very few of them actually want task context:
+diff --git a/Documentation/devicetree/bindings/dma/ste-dma40.txt b/Documentation/devicetree/bindings/dma/ste-dma40.txt
+deleted file mode 100644
+index 99ab5c4d331e..000000000000
+--- a/Documentation/devicetree/bindings/dma/ste-dma40.txt
++++ /dev/null
+@@ -1,138 +0,0 @@
+-* DMA40 DMA Controller
+-
+-Required properties:
+-- compatible: "stericsson,dma40"
+-- reg: Address range of the DMAC registers
+-- reg-names: Names of the above areas to use during resource look-up
+-- interrupt: Should contain the DMAC interrupt number
+-- #dma-cells: must be <3>
+-- memcpy-channels: Channels to be used for memcpy
+-
+-Optional properties:
+-- dma-channels: Number of channels supported by hardware - if not present
+-		the driver will attempt to obtain the information from H/W
+-- disabled-channels: Channels which can not be used
+-
+-Example:
+-
+-	dma: dma-controller@801c0000 {
+-		compatible = "stericsson,db8500-dma40", "stericsson,dma40";
+-		reg = <0x801C0000 0x1000  0x40010000 0x800>;
+-		reg-names = "base", "lcpa";
+-		interrupt-parent = <&intc>;
+-		interrupts = <0 25 0x4>;
+-
+-		#dma-cells = <2>;
+-		memcpy-channels  = <56 57 58 59 60>;
+-		disabled-channels  = <12>;
+-		dma-channels = <8>;
+-	};
+-
+-Clients
+-Required properties:
+-- dmas: Comma separated list of dma channel requests
+-- dma-names: Names of the aforementioned requested channels
+-
+-Each dmas request consists of 4 cells:
+-  1. A phandle pointing to the DMA controller
+-  2. Device signal number, the signal line for single and burst requests
+-     connected from the device to the DMA40 engine
+-  3. The DMA request line number (only when 'use fixed channel' is set)
+-  4. A 32bit mask specifying; mode, direction and endianness
+-     [NB: This list will grow]
+-        0x00000001: Mode:
+-                Logical channel when unset
+-                Physical channel when set
+-        0x00000002: Direction:
+-                Memory to Device when unset
+-                Device to Memory when set
+-        0x00000004: Endianness:
+-                Little endian when unset
+-                Big endian when set
+-        0x00000008: Use fixed channel:
+-                Use automatic channel selection when unset
+-                Use DMA request line number when set
+-        0x00000010: Set channel as high priority:
+-                Normal priority when unset
+-                High priority when set
+-
+-Existing signal numbers for the DB8500 ASIC. Unless specified, the signals are
+-bidirectional, i.e. the same for RX and TX operations:
+-
+-0:  SPI controller 0
+-1:  SD/MMC controller 0 (unused)
+-2:  SD/MMC controller 1 (unused)
+-3:  SD/MMC controller 2 (unused)
+-4:  I2C port 1
+-5:  I2C port 3
+-6:  I2C port 2
+-7:  I2C port 4
+-8:  Synchronous Serial Port SSP0
+-9:  Synchronous Serial Port SSP1
+-10: Multi-Channel Display Engine MCDE RX
+-11: UART port 2
+-12: UART port 1
+-13: UART port 0
+-14: Multirate Serial Port MSP2
+-15: I2C port 0
+-16: USB OTG in/out endpoints 7 & 15
+-17: USB OTG in/out endpoints 6 & 14
+-18: USB OTG in/out endpoints 5 & 13
+-19: USB OTG in/out endpoints 4 & 12
+-20: SLIMbus or HSI channel 0
+-21: SLIMbus or HSI channel 1
+-22: SLIMbus or HSI channel 2
+-23: SLIMbus or HSI channel 3
+-24: Multimedia DSP SXA0
+-25: Multimedia DSP SXA1
+-26: Multimedia DSP SXA2
+-27: Multimedia DSP SXA3
+-28: SD/MM controller 2
+-29: SD/MM controller 0
+-30: MSP port 1 on DB8500 v1, MSP port 3 on DB8500 v2
+-31: MSP port 0 or SLIMbus channel 0
+-32: SD/MM controller 1
+-33: SPI controller 2
+-34: i2c3 RX2 TX2
+-35: SPI controller 1
+-36: USB OTG in/out endpoints 3 & 11
+-37: USB OTG in/out endpoints 2 & 10
+-38: USB OTG in/out endpoints 1 & 9
+-39: USB OTG in/out endpoints 8
+-40: SPI controller 3
+-41: SD/MM controller 3
+-42: SD/MM controller 4
+-43: SD/MM controller 5
+-44: Multimedia DSP SXA4
+-45: Multimedia DSP SXA5
+-46: SLIMbus channel 8 or Multimedia DSP SXA6
+-47: SLIMbus channel 9 or Multimedia DSP SXA7
+-48: Crypto Accelerator 1
+-49: Crypto Accelerator 1 TX or Hash Accelerator 1 TX
+-50: Hash Accelerator 1 TX
+-51: memcpy TX (to be used by the DMA driver for memcpy operations)
+-52: SLIMbus or HSI channel 4
+-53: SLIMbus or HSI channel 5
+-54: SLIMbus or HSI channel 6
+-55: SLIMbus or HSI channel 7
+-56: memcpy (to be used by the DMA driver for memcpy operations)
+-57: memcpy (to be used by the DMA driver for memcpy operations)
+-58: memcpy (to be used by the DMA driver for memcpy operations)
+-59: memcpy (to be used by the DMA driver for memcpy operations)
+-60: memcpy (to be used by the DMA driver for memcpy operations)
+-61: Crypto Accelerator 0
+-62: Crypto Accelerator 0 TX or Hash Accelerator 0 TX
+-63: Hash Accelerator 0 TX
+-
+-Example:
+-
+-	uart@80120000 {
+-		compatible = "arm,pl011", "arm,primecell";
+-		reg = <0x80120000 0x1000>;
+-		interrupts = <0 11 0x4>;
+-
+-		dmas = <&dma 13 0 0x2>, /* Logical - DevToMem */
+-		       <&dma 13 0 0x0>; /* Logical - MemToDev */
+-		dma-names = "rx", "rx";
+-
+-	};
+diff --git a/Documentation/devicetree/bindings/dma/stericsson,dma40.yaml b/Documentation/devicetree/bindings/dma/stericsson,dma40.yaml
+new file mode 100644
+index 000000000000..8bddfb3b6fa0
+--- /dev/null
++++ b/Documentation/devicetree/bindings/dma/stericsson,dma40.yaml
+@@ -0,0 +1,159 @@
++# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/dma/stericsson,dma40.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: ST-Ericsson DMA40 DMA Engine
++
++maintainers:
++  - Linus Walleij <linus.walleij@linaro.org>
++
++allOf:
++  - $ref: "dma-controller.yaml#"
++
++properties:
++  "#dma-cells":
++    const: 3
++    description: |
++      The first cell is the unique device channel number as indicated by this
++      table for DB8500 which is the only ASIC known to use DMA40:
++
++      0:  SPI controller 0
++      1:  SD/MMC controller 0 (unused)
++      2:  SD/MMC controller 1 (unused)
++      3:  SD/MMC controller 2 (unused)
++      4:  I2C port 1
++      5:  I2C port 3
++      6:  I2C port 2
++      7:  I2C port 4
++      8:  Synchronous Serial Port SSP0
++      9:  Synchronous Serial Port SSP1
++      10: Multi-Channel Display Engine MCDE RX
++      11: UART port 2
++      12: UART port 1
++      13: UART port 0
++      14: Multirate Serial Port MSP2
++      15: I2C port 0
++      16: USB OTG in/out endpoints 7 & 15
++      17: USB OTG in/out endpoints 6 & 14
++      18: USB OTG in/out endpoints 5 & 13
++      19: USB OTG in/out endpoints 4 & 12
++      20: SLIMbus or HSI channel 0
++      21: SLIMbus or HSI channel 1
++      22: SLIMbus or HSI channel 2
++      23: SLIMbus or HSI channel 3
++      24: Multimedia DSP SXA0
++      25: Multimedia DSP SXA1
++      26: Multimedia DSP SXA2
++      27: Multimedia DSP SXA3
++      28: SD/MMC controller 2
++      29: SD/MMC controller 0
++      30: MSP port 1 on DB8500 v1, MSP port 3 on DB8500 v2
++      31: MSP port 0 or SLIMbus channel 0
++      32: SD/MMC controller 1
++      33: SPI controller 2
++      34: i2c3 RX2 TX2
++      35: SPI controller 1
++      36: USB OTG in/out endpoints 3 & 11
++      37: USB OTG in/out endpoints 2 & 10
++      38: USB OTG in/out endpoints 1 & 9
++      39: USB OTG in/out endpoints 8
++      40: SPI controller 3
++      41: SD/MMC controller 3
++      42: SD/MMC controller 4
++      43: SD/MMC controller 5
++      44: Multimedia DSP SXA4
++      45: Multimedia DSP SXA5
++      46: SLIMbus channel 8 or Multimedia DSP SXA6
++      47: SLIMbus channel 9 or Multimedia DSP SXA7
++      48: Crypto Accelerator 1
++      49: Crypto Accelerator 1 TX or Hash Accelerator 1 TX
++      50: Hash Accelerator 1 TX
++      51: memcpy TX (to be used by the DMA driver for memcpy operations)
++      52: SLIMbus or HSI channel 4
++      53: SLIMbus or HSI channel 5
++      54: SLIMbus or HSI channel 6
++      55: SLIMbus or HSI channel 7
++      56: memcpy (to be used by the DMA driver for memcpy operations)
++      57: memcpy (to be used by the DMA driver for memcpy operations)
++      58: memcpy (to be used by the DMA driver for memcpy operations)
++      59: memcpy (to be used by the DMA driver for memcpy operations)
++      60: memcpy (to be used by the DMA driver for memcpy operations)
++      61: Crypto Accelerator 0
++      62: Crypto Accelerator 0 TX or Hash Accelerator 0 TX
++      63: Hash Accelerator 0 TX
++
++      The second cell is the DMA request line number. This is only used when
++      a fixed channel is allocated, and indicated by setting bit 3 in the
++      flags field (see below).
++
++      The third cell is a 32bit flags bitfield with the following possible
++      bits set:
++      0x00000001 (bit 0) - mode:
++        Logical channel when unset
++        Physical channel when set
++      0x00000002 (bit 1) - direction:
++        Memory to Device when unset
++        Device to Memory when set
++      0x00000004 (bit 2) - endianness:
++        Little endian when unset
++        Big endian when set
++      0x00000008 (bit 3) - use fixed channel:
++        Use automatic channel selection when unset
++        Use DMA request line number when set
++      0x00000010 (bit 4) - set channel as high priority:
++        Normal priority when unset
++        High priority when set
++
++  compatible:
++    items:
++      - const: stericsson,db8500-dma40
++      - const: stericsson,dma40
++
++  reg:
++    items:
++      - description: DMA40 memory base
++      - description: LCPA memory base
++
++  reg-names:
++    items:
++      - const: base
++      - const: lcpa
++
++  interrupts:
++    maxItems: 1
++
++  clocks:
++    maxItems: 1
++
++  memcpy-channels:
++    $ref: /schemas/types.yaml#/definitions/uint32-array
++    description: Array of u32 elements indicating which channels on the DMA
++      engine are elegible for memcpy transfers
++
++required:
++  - "#dma-cells"
++  - compatible
++  - reg
++  - interrupts
++  - clocks
++  - memcpy-channels
++
++additionalProperties: false
++
++examples:
++  - |
++    #include <dt-bindings/interrupt-controller/irq.h>
++    #include <dt-bindings/interrupt-controller/arm-gic.h>
++    #include <dt-bindings/mfd/dbx500-prcmu.h>
++    dma-controller@801C0000 {
++      compatible = "stericsson,db8500-dma40", "stericsson,dma40";
++      reg = <0x801C0000 0x1000>, <0x40010000 0x800>;
++      reg-names = "base", "lcpa";
++      interrupts = <GIC_SPI 25 IRQ_TYPE_LEVEL_HIGH>;
++      #dma-cells = <3>;
++      memcpy-channels = <56 57 58 59 60>;
++      clocks = <&prcmu_clk PRCMU_DMACLK>;
++    };
++...
+-- 
+2.35.3
 
-* Over Half the drivers just do a complete(), which could
-  probably be pulled into the dmaengine layer and done from
-  hardirq, avoiding the callback entirely
-
-* A lot of the remaining drivers have interrupts disabled for
-  the entire callback, which means they might as well use
-  hardirqs, regardless of what they want
-
-* drivers/crypto/* and drivers/mmc/* tend to call another tasklet
-  to do the real work.
-
-* drivers/ata/sata_dwc_460ex.c and drivers/ntb/ntb_transport.c
-   probably want task context
-
-* Some drivers like sound/soc/sh/siu_pcm.c start a new DMA
-  from the callback. Is that allowed from hardirq?
-
-If we do the first three steps above, and then add a 'struct
-completion' pointer to dma_async_tx_descriptor as an alternative
-to the callback, that would already reduce the number of drivers
-that end up in a tasklet significantly and should be completely
-safe.
-
-Unfortunately we can't just move the rest into hardirq
-context because that breaks anything using spin_lock_bh
-to protect against concurrent execution of the tasklet.
-
-A possible alternative might be to then replace the global
-dmaengine tasklet with a custom softirq. Obviously those
-are not so hot either,  but dmaengine could be considered
-special enough to fit in the same category as net_rx/tx
-and block with their global softirqs.
-
-       Arnd
