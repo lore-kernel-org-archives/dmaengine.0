@@ -2,126 +2,94 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D8A65C433F5
-	for <dmaengine@archiver.kernel.org>; Wed,  1 Jun 2022 09:36:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C8A0DC433EF
+	for <dmaengine@archiver.kernel.org>; Wed,  1 Jun 2022 09:38:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346532AbiFAJgt (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 1 Jun 2022 05:36:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52128 "EHLO
+        id S229688AbiFAJiB (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 1 Jun 2022 05:38:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55434 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1351236AbiFAJgj (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Wed, 1 Jun 2022 05:36:39 -0400
-Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6A84A9E9E1
-        for <dmaengine@vger.kernel.org>; Wed,  1 Jun 2022 02:36:35 -0700 (PDT)
-Received: by mail-ej1-x62c.google.com with SMTP id m20so2495893ejj.10
-        for <dmaengine@vger.kernel.org>; Wed, 01 Jun 2022 02:36:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=SXy2jxkQQlSv6Zx0OkI1k2j7NF0aEo6KqD+T9sPY7WM=;
-        b=OdjBPtg23WUxhKUm9hU2NUXHqwMlxMRYyzulQr63FTEhuJ5jj1zz5lOlc37ZWJDHx1
-         yBhSh0WzM7/4DEHCvoa6AK6vkRMAI1J0tLHVOSHX/9b1IGLPHsOtweDVsk/MZajf+cXT
-         8Et9FDg8ZIst859pqWHpcvZmU9M3p5yefD+06N0IwXhF9bXrgnSdfuFiyHhHPzdrsz8/
-         Meq3v3nRKuI+9gdizaNXVVyWj5YJorA5MYEZQNkWpT10S6gKi7Dy4KckdtGAIdDn+Ix6
-         iJA5aaf1/tkVvNhO5A06NtSALO1K/Qgd9Anjuo4M2n15L5wGPW2I1dqtQglKf4EcZ5fR
-         X0mw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=SXy2jxkQQlSv6Zx0OkI1k2j7NF0aEo6KqD+T9sPY7WM=;
-        b=BsmpANQdDkKL+r3q+HxH8iwEnHhcvOr6H/M8ccrxcJoUQ0QYH81i9468x3xUT8K75j
-         PAVqkPQ43791yqZC/YnA2rCq7ZlQlgpVwD3o6Ux+TwzboyyB0S2WdRNRuB2wdz2tZB13
-         VX0ymcL8H749+TL2VSjRPDmN7J/MJ5rlxl4C5dK1DjlE1Sga3SoLVhas4MXG0Q5IiAE6
-         Y1+ncFOTN3xZGlZe6TEx0zejLd5z4W2uZS3nWuoBFsbxB9tdsPliSpUmIh6WTXnxks+g
-         Nz4EYbAQc6lpFsX+Ayn0RoqWapnLVVRfo0rDydwvb2EzUlWVFGF5E5W6EduRgF1Pzh4f
-         KiJQ==
-X-Gm-Message-State: AOAM533ctr4w1LYYEYjsUN3390o1aYuW4nd6TNf5/QGk9OhLF768s0bY
-        JkQwtzRvUoZTM+VFNCjRLkm0zQ==
-X-Google-Smtp-Source: ABdhPJwjWC7FIS5LNCO1EphF1UnMztgGaShcktFcPPwtjGiwFhZCxmDcyHE8hBBzwAedsIdemtVCQw==
-X-Received: by 2002:a17:907:8688:b0:707:926e:ea44 with SMTP id qa8-20020a170907868800b00707926eea44mr1377732ejc.547.1654076193885;
-        Wed, 01 Jun 2022 02:36:33 -0700 (PDT)
-Received: from [192.168.0.179] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
-        by smtp.gmail.com with ESMTPSA id w12-20020a1709064a0c00b007066283fdfesm474720eju.111.2022.06.01.02.36.32
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 01 Jun 2022 02:36:33 -0700 (PDT)
-Message-ID: <8f695677-a45c-7117-6659-c2778cbc221a@linaro.org>
-Date:   Wed, 1 Jun 2022 11:36:31 +0200
+        with ESMTP id S1349866AbiFAJhc (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Wed, 1 Jun 2022 05:37:32 -0400
+Received: from mga05.intel.com (mga05.intel.com [192.55.52.43])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 72EA213DDD;
+        Wed,  1 Jun 2022 02:37:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1654076251; x=1685612251;
+  h=message-id:date:mime-version:cc:subject:to:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=D7NtTD/QI9HCTZzgqGKCgSrSSUq0k5fYUd5oM5bo5JY=;
+  b=G3zvwCRiDRNivkdtM/m01wXHda3/2bap0PGQPIgurgD/m0orMk3wn3ON
+   msppomuEDWSL5T4jTotk2g9U3A7GLZF6GvkqxcgbvbF49b7+nY3iz7HWn
+   NMEQnKmQz2L95oA9UhcIJb2mEp+6K+9L/2DSd9lL9U2/0H5VjRGs4NMLq
+   A90q0phGiZHaViF11kN1Zsu9DJAGfrhu1jTBRfp/wm0EQLBckTHK14bSH
+   jwAb55wxaoAuLzeAx5KMs7nZmpQ/ArJJZCX92mThpegtX1kUS8HaIYMZs
+   IundusFBY9A/Fy86SXHOaJg0DFOtMv7Y3EMX7x3DwiNrm6EZuHTrIRznZ
+   A==;
+X-IronPort-AV: E=McAfee;i="6400,9594,10364"; a="361904366"
+X-IronPort-AV: E=Sophos;i="5.91,266,1647327600"; 
+   d="scan'208";a="361904366"
+Received: from orsmga004.jf.intel.com ([10.7.209.38])
+  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Jun 2022 02:37:31 -0700
+X-IronPort-AV: E=Sophos;i="5.91,266,1647327600"; 
+   d="scan'208";a="706981292"
+Received: from hej1-mobl.ccr.corp.intel.com (HELO [10.255.28.123]) ([10.255.28.123])
+  by orsmga004-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Jun 2022 02:37:27 -0700
+Message-ID: <868984fa-c8bc-635c-1788-99bc8e6fd587@linux.intel.com>
+Date:   Wed, 1 Jun 2022 17:37:25 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.9.1
-Subject: Re: [PATCH 04/17] dt-bindings: arm: mediatek: Add binding for
- mt8365-evk board
+Cc:     baolu.lu@linux.intel.com, Jason Gunthorpe <jgg@nvidia.com>,
+        "iommu@lists.linux-foundation.org" <iommu@lists.linux-foundation.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        "dmaengine@vger.kernel.org" <dmaengine@vger.kernel.org>,
+        Joerg Roedel <joro@8bytes.org>,
+        David Woodhouse <dwmw2@infradead.org>,
+        Jean-Philippe Brucker <jean-philippe@linaro.com>,
+        Christoph Hellwig <hch@infradead.org>,
+        "vkoul@kernel.org" <vkoul@kernel.org>,
+        "robin.murphy@arm.com" <robin.murphy@arm.com>,
+        "will@kernel.org" <will@kernel.org>,
+        "Liu, Yi L" <yi.l.liu@intel.com>,
+        "Jiang, Dave" <dave.jiang@intel.com>,
+        "Raj, Ashok" <ashok.raj@intel.com>,
+        Eric Auger <eric.auger@redhat.com>
+Subject: Re: [PATCH v4 1/6] iommu: Add a per domain PASID for DMA API
 Content-Language: en-US
-To:     Fabien Parent <fparent@baylibre.com>, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, vkoul@kernel.org,
-        qii.wang@mediatek.com, matthias.bgg@gmail.com, jic23@kernel.org,
-        chaotian.jing@mediatek.com, ulf.hansson@linaro.org,
-        srinivas.kandagatla@linaro.org, chunfeng.yun@mediatek.com,
-        broonie@kernel.org, wim@linux-watchdog.org, linux@roeck-us.net,
-        Sean Wang <sean.wang@mediatek.com>
-Cc:     devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        dmaengine@vger.kernel.org, linux-i2c@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-mediatek@lists.infradead.org, linux-iio@vger.kernel.org,
-        linux-mmc@vger.kernel.org, linux-phy@lists.infradead.org,
-        linux-serial@vger.kernel.org, linux-spi@vger.kernel.org,
-        linux-usb@vger.kernel.org, linux-watchdog@vger.kernel.org
-References: <20220531135026.238475-1-fparent@baylibre.com>
- <20220531135026.238475-5-fparent@baylibre.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220531135026.238475-5-fparent@baylibre.com>
-Content-Type: text/plain; charset=UTF-8
+To:     "Tian, Kevin" <kevin.tian@intel.com>,
+        Jacob Pan <jacob.jun.pan@linux.intel.com>
+References: <20220518182120.1136715-1-jacob.jun.pan@linux.intel.com>
+ <20220518182120.1136715-2-jacob.jun.pan@linux.intel.com>
+ <20220524135034.GU1343366@nvidia.com> <20220524081727.19c2dd6d@jacob-builder>
+ <20220530122247.GY1343366@nvidia.com>
+ <BN9PR11MB52768105FC4FB959298F8A188CDC9@BN9PR11MB5276.namprd11.prod.outlook.com>
+ <628aa885-dd12-8bcd-bfc6-446345bf69ed@linux.intel.com>
+ <20220531102955.6618b540@jacob-builder>
+ <BN9PR11MB5276A2B5E849C2153939934C8CDF9@BN9PR11MB5276.namprd11.prod.outlook.com>
+From:   Baolu Lu <baolu.lu@linux.intel.com>
+In-Reply-To: <BN9PR11MB5276A2B5E849C2153939934C8CDF9@BN9PR11MB5276.namprd11.prod.outlook.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On 31/05/2022 15:50, Fabien Parent wrote:
-> Add binding documentation for the MT8365-EVK board. The MT8365 EVK board
-> has the following IOs:
-> * DPI <-> HDMI bridge and HDMI connector.
-> * 2 audio jack
-> * 1 USB Type-A Host port
-> * 2 UART to USB port
-> * 1 battery connector
-> * 1 eMMC
-> * 1 SD card
-> * 2 camera connectors
-> * 1 M.2 slot for connectivity
-> * 1 DSI connector + touchscreen connector
-> * RPI compatible header
-> * 1 Ethernet port
-> 
-> Signed-off-by: Fabien Parent <fparent@baylibre.com>
-> ---
->  Documentation/devicetree/bindings/arm/mediatek.yaml | 4 ++++
->  1 file changed, 4 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/arm/mediatek.yaml b/Documentation/devicetree/bindings/arm/mediatek.yaml
-> index 4a2bd9759c47..a4b1288fa837 100644
-> --- a/Documentation/devicetree/bindings/arm/mediatek.yaml
-> +++ b/Documentation/devicetree/bindings/arm/mediatek.yaml
-> @@ -216,6 +216,10 @@ properties:
->            - enum:
->                - mediatek,mt8516-pumpkin
->            - const: mediatek,mt8516
+On 2022/6/1 09:43, Tian, Kevin wrote:
+>> From: Jacob Pan<jacob.jun.pan@linux.intel.com>
+>> Sent: Wednesday, June 1, 2022 1:30 AM
+>>>> In both cases the pasid is stored in the attach data instead of the
+>>>> domain.
+>>>>
+>> So during IOTLB flush for the domain, do we loop through the attach data?
+> Yes and it's required.
 
-Blank line here
+What does the attach data mean here? Do you mean group->pasid_array?
 
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-
-> +      - items:
-> +          - enum:
-> +              - mediatek,mt8365-evk
-> +          - const: mediatek,mt8365
->  
->  additionalProperties: true
->  
-
+Why not tracking the {device, pasid} info in the iommu driver when
+setting domain to {device, pasid}? We have tracked device in a list when
+setting a domain to device.
 
 Best regards,
-Krzysztof
+baolu
