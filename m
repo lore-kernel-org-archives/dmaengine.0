@@ -2,86 +2,59 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 358B2C433EF
-	for <dmaengine@archiver.kernel.org>; Fri, 10 Jun 2022 11:47:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E3A83C433EF
+	for <dmaengine@archiver.kernel.org>; Fri, 10 Jun 2022 12:19:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240200AbiFJLrJ (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 10 Jun 2022 07:47:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35860 "EHLO
+        id S235619AbiFJMTo (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 10 Jun 2022 08:19:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40186 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233309AbiFJLrJ (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Fri, 10 Jun 2022 07:47:09 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 271AA7938A
-        for <dmaengine@vger.kernel.org>; Fri, 10 Jun 2022 04:47:08 -0700 (PDT)
+        with ESMTP id S239840AbiFJMTn (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Fri, 10 Jun 2022 08:19:43 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 642EB2CFE8B
+        for <dmaengine@vger.kernel.org>; Fri, 10 Jun 2022 05:19:42 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id DC225B83438
-        for <dmaengine@vger.kernel.org>; Fri, 10 Jun 2022 11:47:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99B7AC34114;
-        Fri, 10 Jun 2022 11:47:04 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id D6BCE621A3
+        for <dmaengine@vger.kernel.org>; Fri, 10 Jun 2022 12:19:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0DEDC3411E;
+        Fri, 10 Jun 2022 12:19:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1654861625;
-        bh=8ZvD41YHm/Gb/yGz96jS9pDl8fWKTfvHLvvqvsmVUSk=;
+        s=k20201202; t=1654863581;
+        bh=YYkRqp8ldunjkkKi6ZDvraJv++/2kyZaowvrlGqRPDA=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=FinvaabFVUvtNXoM77c2jIgQuelHrYgfQ5v2w+36zB/x2Zwsc6k47/IYAVeilYorh
-         AUBLWigFD/weRlRTKGEnmQF8yKmnYaHj7sosHMNsQhaGPOAdT3XWk2XbzaDk3erDLx
-         oJS+TPT/I2q30dGvzZXhU7ed5iBOhZG/xT+IFvTjp4jiJOkbxYhzD1wcgd/KpzSBGZ
-         KaH0JJWkjKetZAa6W3xS1OcsfKrv9PMa0GoTvOkBwK3hVZXBKER7JM4TWtMVK2pcPw
-         r5JGn8po+34XTqKGeIx2wG1cJmRxNmixgUQJHrNZKvpFsz4kL1lY+yWjht0K7Qz3zB
-         sAwKnIx6Ex6dg==
-Date:   Fri, 10 Jun 2022 17:17:01 +0530
+        b=ohkw+XyeaaWP67wBzp561Bjv7RWGXSScVLMbd8MyjRmZrl6vbj0gBmW6rcqeNTYmG
+         mfMu18/+ssn035SAPrEssHWJiU/C6flHdSaV6YXzLz35eajw44/YUoZQDEVDylFs/H
+         58uLqKVFatCxYwgOH3CWSJ1PlMj4+TDedbJ7lnigi/EWHv5gwC2qjJlpm3w4wKDaA7
+         npYh0vYUAMiCLFm7GUtg+aBd+KQQ9mcgeNn6MB3ihV1LUFZDz1Rm4Y/4GgNAfENgr/
+         MDdwUwaJvf0vxBRIpBawC9t0MIWSPaTKfXYNCt21mWGLWkbFnmF2ZmOxSjKmNkgLK9
+         ozUq3MaJEqsVQ==
+Date:   Fri, 10 Jun 2022 17:49:36 +0530
 From:   Vinod Koul <vkoul@kernel.org>
-To:     dmaengine@vger.kernel.org,
-        Martin =?utf-8?Q?Povi=C5=A1er?= <povik+lin@cutebit.org>
-Cc:     Stephen Rothwell <sfr@canb.auug.org.au>
-Subject: Re: [PATCH] dmaengine: apple-admac: Fix print format
-Message-ID: <YqMvNdmolngiUNmm@matsya>
-References: <20220610043117.39337-1-vkoul@kernel.org>
+To:     Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Cc:     Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+        Herve Codina <herve.codina@bootlin.com>,
+        dmaengine@vger.kernel.org
+Subject: Re: [PATCH] dmaengine: dw-edma: remove a macro conditional with
+ similar branches
+Message-ID: <YqM22A+pzVOZxzn2@matsya>
+References: <20220610100700.2295522-1-vladimir.zapolskiy@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220610043117.39337-1-vkoul@kernel.org>
+In-Reply-To: <20220610100700.2295522-1-vladimir.zapolskiy@linaro.org>
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On 10-06-22, 10:01, Vinod Koul wrote:
-> We get a warning (treated as error now)
-> drivers/dma/apple-admac.c: In function 'admac_cyclic_write_one_desc':
-> drivers/dma/apple-admac.c:209:26: error: format '%x' expects argument of type 'unsigned int', but argument 7 has type 'long unsigned int' [-Werror=format=]
->   209 |         dev_dbg(ad->dev, "ch%d descriptor: addr=0x%pad len=0x%zx flags=0x%x\n",
-> 
-> Use %lx for priniting the flag
+On 10-06-22, 13:07, Vladimir Zapolskiy wrote:
+> After adding commit 8fc5133d6d4d ("dmaengine: dw-edma: Fix unaligned
+> 64bit access") two branches under macro conditional become identical,
+> thus the code can be simplified without any functional change.
 
-I have picked this one
-> 
-> Fixes: b127315d9a78 ("dmaengine: apple-admac: Add Apple ADMAC driver")
-> Reported-by: Stephen Rothwell <sfr@canb.auug.org.au>
-
-added bot as report too
-
-> Signed-off-by: Vinod Koul <vkoul@kernel.org>
-> ---
->  drivers/dma/apple-admac.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/drivers/dma/apple-admac.c b/drivers/dma/apple-admac.c
-> index 2425069c186d..c502f8c3aca7 100644
-> --- a/drivers/dma/apple-admac.c
-> +++ b/drivers/dma/apple-admac.c
-> @@ -206,7 +206,7 @@ static void admac_cyclic_write_one_desc(struct admac_data *ad, int channo,
->  	/* If happens means we have buggy code */
->  	WARN_ON_ONCE(addr + tx->period_len > tx->buf_end);
->  
-> -	dev_dbg(ad->dev, "ch%d descriptor: addr=0x%pad len=0x%zx flags=0x%x\n",
-> +	dev_dbg(ad->dev, "ch%d descriptor: addr=0x%pad len=0x%zx flags=0x%lx\n",
->  		channo, &addr, tx->period_len, FLAG_DESC_NOTIFY);
->  
->  	writel_relaxed(addr,             ad->base + REG_DESC_WRITE(channo));
-> -- 
-> 2.34.3
+Applied, thanks
 
 -- 
 ~Vinod
