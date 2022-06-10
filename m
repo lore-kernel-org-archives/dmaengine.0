@@ -2,173 +2,198 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 529B2C433EF
-	for <dmaengine@archiver.kernel.org>; Fri, 10 Jun 2022 04:43:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F37A1C433EF
+	for <dmaengine@archiver.kernel.org>; Fri, 10 Jun 2022 08:14:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234358AbiFJEm7 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 10 Jun 2022 00:42:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40794 "EHLO
+        id S1343996AbiFJIOx (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 10 Jun 2022 04:14:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48924 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232425AbiFJEm6 (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Fri, 10 Jun 2022 00:42:58 -0400
-Received: from inva020.nxp.com (inva020.nxp.com [92.121.34.13])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C2021D01CA;
-        Thu,  9 Jun 2022 21:42:57 -0700 (PDT)
-Received: from inva020.nxp.com (localhost [127.0.0.1])
-        by inva020.eu-rdc02.nxp.com (Postfix) with ESMTP id E4C551A0A73;
-        Fri, 10 Jun 2022 06:42:55 +0200 (CEST)
-Received: from aprdc01srsp001v.ap-rdc01.nxp.com (aprdc01srsp001v.ap-rdc01.nxp.com [165.114.16.16])
-        by inva020.eu-rdc02.nxp.com (Postfix) with ESMTP id 613ED1A0A6F;
-        Fri, 10 Jun 2022 06:42:55 +0200 (CEST)
-Received: from localhost.localdomain (shlinux2.ap.freescale.net [10.192.224.44])
-        by aprdc01srsp001v.ap-rdc01.nxp.com (Postfix) with ESMTP id ADC901802201;
-        Fri, 10 Jun 2022 12:42:53 +0800 (+08)
-From:   Shengjiu Wang <shengjiu.wang@nxp.com>
-To:     vkoul@kernel.org, shawnguo@kernel.org, s.hauer@pengutronix.de,
-        kernel@pengutronix.de, festevam@gmail.com, shengjiu.wang@gmail.com,
-        joy.zou@nxp.com, linux-imx@nxp.com, dmaengine@vger.kernel.org
-Cc:     linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v2] dmaengine: imx-sdma: Add FIFO stride support for multi FIFO script
-Date:   Fri, 10 Jun 2022 12:29:16 +0800
-Message-Id: <1654835356-6825-1-git-send-email-shengjiu.wang@nxp.com>
-X-Mailer: git-send-email 2.7.4
-X-Virus-Scanned: ClamAV using ClamSMTP
+        with ESMTP id S1346746AbiFJIOv (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Fri, 10 Jun 2022 04:14:51 -0400
+X-Greylist: delayed 393 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Fri, 10 Jun 2022 01:14:49 PDT
+Received: from mail.baikalelectronics.com (mail.baikalelectronics.com [87.245.175.230])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id C10D3A5AAA;
+        Fri, 10 Jun 2022 01:14:49 -0700 (PDT)
+Received: from mail (mail.baikal.int [192.168.51.25])
+        by mail.baikalelectronics.com (Postfix) with ESMTP id 9473516A0;
+        Fri, 10 Jun 2022 11:08:57 +0300 (MSK)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mail.baikalelectronics.com 9473516A0
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=baikalelectronics.ru; s=mail; t=1654848540;
+        bh=P0epdiQ2UfkKeER5KtOFqFsZ8/0xaqJ7ab4vUUQPTCw=;
+        h=From:To:CC:Subject:Date:From;
+        b=FES/RpZBcFEtKNYzfj2ZM1TKH3v4j1D1srCu1QFX0yo+vxrndl74dC/lOEO0AROoD
+         E9WiAns/InODAMwuQ3yGDm0SYSUjNGDlAku4e4gJHtto+ZKLwtUZuRhTH6qiwi2G8o
+         Wx1WzoKWULlo6KhIEebDed0WI8cU+7OfayCvYSmE=
+Received: from localhost (192.168.53.207) by mail (192.168.51.25) with
+ Microsoft SMTP Server (TLS) id 15.0.1395.4; Fri, 10 Jun 2022 11:08:05 +0300
+From:   Serge Semin <Sergey.Semin@baikalelectronics.ru>
+To:     Christoph Hellwig <hch@lst.de>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Vladimir Murzin <vladimir.murzin@arm.com>
+CC:     Serge Semin <Sergey.Semin@baikalelectronics.ru>,
+        Serge Semin <fancer.lancer@gmail.com>,
+        Alexey Malahov <Alexey.Malahov@baikalelectronics.ru>,
+        Pavel Parkhomenko <Pavel.Parkhomenko@baikalelectronics.ru>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Andrew Lunn <andrew@lunn.ch>,
+        Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
+        Gregory Clement <gregory.clement@bootlin.com>,
+        <linux-arm-kernel@lists.infradead.org>,
+        Srujana Challa <schalla@marvell.com>,
+        Arnaud Ebalard <arno@natisbad.org>,
+        Boris Brezillon <bbrezillon@kernel.org>,
+        <linux-crypto@vger.kernel.org>, Vinod Koul <vkoul@kernel.org>,
+        <dmaengine@vger.kernel.org>, Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Li Yang <leoyang.li@nxp.com>,
+        Geert Uytterhoeven <geert+renesas@glider.be>,
+        Magnus Damm <magnus.damm@gmail.com>,
+        <linux-renesas-soc@vger.kernel.org>,
+        Alex Deucher <alexander.deucher@amd.com>,
+        =?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+        "Pan, Xinhui" <Xinhui.Pan@amd.com>,
+        David Airlie <airlied@linux.ie>,
+        Gerd Hoffmann <kraxel@redhat.com>,
+        Tomasz Figa <tfiga@chromium.org>,
+        Oded Gabbay <ogabbay@kernel.org>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>,
+        Sunil Goutham <sgoutham@marvell.com>,
+        Linu Cherian <lcherian@marvell.com>,
+        Geetha sowjanya <gakula@marvell.com>,
+        Jon Mason <jdmason@kudzu.us>,
+        Dave Jiang <dave.jiang@intel.com>, <ntb@lists.linux.dev>,
+        <iommu@lists.linux-foundation.org>, <linux-kernel@vger.kernel.org>
+Subject: [PATCH] dma-direct: take dma-ranges/offsets into account in resource mapping
+Date:   Fri, 10 Jun 2022 11:08:02 +0300
+Message-ID: <20220610080802.11147-1-Sergey.Semin@baikalelectronics.ru>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: MAIL.baikal.int (192.168.51.25) To mail (192.168.51.25)
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-The peripheral may have several FIFOs, but some case just select
-some FIFOs from them for data transfer, which means FIFO0 and FIFO2
-may be selected. So add FIFO address stride support, 0 means all FIFOs
-are continuous, 1 means 1 word stride between FIFOs. All stride between
-FIFOs should be same.
+A basic device-specific linear memory mapping was introduced back in
+commit ("dma: Take into account dma_pfn_offset") as a single-valued offset
+preserved in the device.dma_pfn_offset field, which was initialized for
+instance by means of the "dma-ranges" DT property. Afterwards the
+functionality was extended to support more than one device-specific region
+defined in the device.dma_range_map list of maps. But all of these
+improvements concerned a single pointer, page or sg DMA-mapping methods,
+while the system resource mapping function turned to miss the
+corresponding modification. Thus the dma_direct_map_resource() method now
+just casts the CPU physical address to the device DMA address with no
+dma-ranges-based mapping taking into account, which is obviously wrong.
+Let's fix it by using the phys_to_dma_direct() method to get the
+device-specific bus address from the passed memory resource for the case
+of the directly mapped DMA.
 
-Another option words_per_fifo means how many audio channel data copied
-to one FIFO one time, 1 means one channel per FIFO, 2 means 2 channels
-per FIFO.
+Fixes: 25f1e1887088 ("dma: Take into account dma_pfn_offset")
+Signed-off-by: Serge Semin <Sergey.Semin@baikalelectronics.ru>
 
-If 'n_fifos_src =  4' and 'words_per_fifo = 2', it means the first two
-words(channels) fetch from FIFO0 and then jump to FIFO1 for next two words,
-and so on after the last FIFO3 fetched, roll back to FIFO0.
-
-Signed-off-by: Joy Zou <joy.zou@nxp.com>
-Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
 ---
-changes in v2
-- change offset to stride for naming and description
-- fix description for words_per_fifo
-- update subsystem tag to be dmaengine
 
+After a long discussion with Christoph and Robin regarding this patch
+here:
+https://lore.kernel.org/lkml/20220324014836.19149-4-Sergey.Semin@baikalelectronics.ru
+and here
+https://lore.kernel.org/linux-pci/20220503225104.12108-2-Sergey.Semin@baikalelectronics.ru/
+It was decided to consult with wider maintainers audience whether it's ok
+to accept the change as is or a more sophisticated solution needs to be
+found for the non-linear direct MMIO mapping.
 
- drivers/dma/imx-sdma.c      | 26 ++++++++++++++++++++++++--
- include/linux/dma/imx-dma.h | 13 +++++++++++++
- 2 files changed, 37 insertions(+), 2 deletions(-)
+Cc: Christoph Hellwig <hch@lst.de>
+Cc: Robin Murphy <robin.murphy@arm.com>
+Cc: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-diff --git a/drivers/dma/imx-sdma.c b/drivers/dma/imx-sdma.c
-index 39d70ef1caf0..d3c478131824 100644
---- a/drivers/dma/imx-sdma.c
-+++ b/drivers/dma/imx-sdma.c
-@@ -183,6 +183,8 @@
- 				 BIT(DMA_DEV_TO_DEV))
- 
- #define SDMA_WATERMARK_LEVEL_N_FIFOS	GENMASK(15, 12)
-+#define SDMA_WATERMARK_LEVEL_OFF_FIFOS  GENMASK(19, 16)
-+#define SDMA_WATERMARK_LEVEL_WORDS_PER_FIFO   GENMASK(31, 28)
- #define SDMA_WATERMARK_LEVEL_SW_DONE	BIT(23)
- 
- #define SDMA_DONE0_CONFIG_DONE_SEL	BIT(7)
-@@ -429,6 +431,9 @@ struct sdma_desc {
-  * @n_fifos_src:	number of source device fifos
-  * @n_fifos_dst:	number of destination device fifos
-  * @sw_done:		software done flag
-+ * @stride_fifos_src:	stride for source device FIFOs
-+ * @stride_fifos_dst:	stride for destination device FIFOs
-+ * @words_per_fifo:	copy number of words one time for one FIFO
-  */
- struct sdma_channel {
- 	struct virt_dma_chan		vc;
-@@ -456,6 +461,9 @@ struct sdma_channel {
- 	bool				is_ram_script;
- 	unsigned int			n_fifos_src;
- 	unsigned int			n_fifos_dst;
-+	unsigned int			stride_fifos_src;
-+	unsigned int			stride_fifos_dst;
-+	unsigned int			words_per_fifo;
- 	bool				sw_done;
- };
- 
-@@ -1245,17 +1253,28 @@ static void sdma_set_watermarklevel_for_p2p(struct sdma_channel *sdmac)
- static void sdma_set_watermarklevel_for_sais(struct sdma_channel *sdmac)
+file: arch/arm/mach-orion5x/board-dt.c
+Cc: Andrew Lunn <andrew@lunn.ch>
+Cc: Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>
+Cc: Gregory Clement <gregory.clement@bootlin.com>
+Cc: linux-arm-kernel@lists.infradead.org
+
+file: drivers/crypto/marvell/cesa/cesa.c
+Cc: Srujana Challa <schalla@marvell.com>
+Cc: Arnaud Ebalard <arno@natisbad.org>
+Cc: Boris Brezillon <bbrezillon@kernel.org>
+Cc: linux-crypto@vger.kernel.org
+
+file: drivers/dma/{fsl-edma-common.c,pl330.c,sh/rcar-dmac.c}
+Cc: Vinod Koul <vkoul@kernel.org>
+Cc: dmaengine@vger.kernel.org
+
+file: arch/arm/boot/dts/{vfxxx.dtsi,ls1021a.dtsi,imx7ulp.dtsi,fsl-ls1043a.dtsi}
+Cc: Shawn Guo <shawnguo@kernel.org>
+Cc: Sascha Hauer <s.hauer@pengutronix.de>
+Cc: Li Yang <leoyang.li@nxp.com>
+Cc: linux-arm-kernel@lists.infradead.org
+
+file: arch/arm/boot/dts/r8a77*.dtsi, arch/arm64/boot/dts/renesas/r8a77*.dtsi
+Cc: Geert Uytterhoeven <geert+renesas@glider.be>
+Cc: Magnus Damm <magnus.damm@gmail.com>
+Cc: linux-renesas-soc@vger.kernel.org
+
+file: drivers/gpu/drm/amd/amdgpu/amdgpu_vram_mgr.c
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Cc: "Christian König" <christian.koenig@amd.com>
+Cc: "Pan, Xinhui" <Xinhui.Pan@amd.com>
+
+file: drivers/gpu/drm/virtio/virtgpu_vram.c
+Cc: David Airlie <airlied@linux.ie>
+Cc: Gerd Hoffmann <kraxel@redhat.com>
+
+file: drivers/media/common/videobuf2/videobuf2-dma-contig.c
+Cc: Tomasz Figa <tfiga@chromium.org>
+Cc: Marek Szyprowski <m.szyprowski@samsung.com>
+
+file: drivers/misc/habanalabs/common/memory.c
+Cc: Oded Gabbay <ogabbay@kernel.org>
+Cc: Arnd Bergmann <arnd@arndb.de>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+
+file: drivers/mtd/nand/raw/qcom_nandc.c
+Cc: Manivannan Sadhasivam <mani@kernel.org>
+
+file: arch/arm64/boot/dts/qcom/{ipq8074.dtsi,ipq6018.dtsi,qcom-sdx55.dtsi,qcom-ipq4019.dtsi,qcom-ipq8064.dtsi}
+Cc: Andy Gross <agross@kernel.org>
+Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org
+
+file: drivers/net/ethernet/marvell/octeontx2/af/rvu.c
+Cc: Sunil Goutham <sgoutham@marvell.com>
+Cc: Linu Cherian <lcherian@marvell.com>
+Cc: Geetha sowjanya <gakula@marvell.com>
+
+file: drivers/ntb/ntb_transport.c
+Cc: Jon Mason <jdmason@kudzu.us>
+Cc: Dave Jiang <dave.jiang@intel.com>
+Cc: ntb@lists.linux.dev
+---
+ kernel/dma/direct.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/kernel/dma/direct.c b/kernel/dma/direct.c
+index 9743c6ccce1a..bc06db74dfdb 100644
+--- a/kernel/dma/direct.c
++++ b/kernel/dma/direct.c
+@@ -497,7 +497,7 @@ int dma_direct_map_sg(struct device *dev, struct scatterlist *sgl, int nents,
+ dma_addr_t dma_direct_map_resource(struct device *dev, phys_addr_t paddr,
+ 		size_t size, enum dma_data_direction dir, unsigned long attrs)
  {
- 	unsigned int n_fifos;
-+	unsigned int stride_fifos;
-+	unsigned int words_per_fifo;
+-	dma_addr_t dma_addr = paddr;
++	dma_addr_t dma_addr = phys_to_dma_direct(dev, paddr);
  
- 	if (sdmac->sw_done)
- 		sdmac->watermark_level |= SDMA_WATERMARK_LEVEL_SW_DONE;
- 
--	if (sdmac->direction == DMA_DEV_TO_MEM)
-+	if (sdmac->direction == DMA_DEV_TO_MEM) {
- 		n_fifos = sdmac->n_fifos_src;
--	else
-+		stride_fifos = sdmac->stride_fifos_src;
-+	} else {
- 		n_fifos = sdmac->n_fifos_dst;
-+		stride_fifos = sdmac->stride_fifos_dst;
-+	}
-+
-+	words_per_fifo = sdmac->words_per_fifo;
- 
- 	sdmac->watermark_level |=
- 			FIELD_PREP(SDMA_WATERMARK_LEVEL_N_FIFOS, n_fifos);
-+	sdmac->watermark_level |=
-+			FIELD_PREP(SDMA_WATERMARK_LEVEL_OFF_FIFOS, stride_fifos);
-+	sdmac->watermark_level |=
-+			FIELD_PREP(SDMA_WATERMARK_LEVEL_WORDS_PER_FIFO, (words_per_fifo - 1));
- }
- 
- static int sdma_config_channel(struct dma_chan *chan)
-@@ -1769,6 +1788,9 @@ static int sdma_config(struct dma_chan *chan,
- 		}
- 		sdmac->n_fifos_src = sdmacfg->n_fifos_src;
- 		sdmac->n_fifos_dst = sdmacfg->n_fifos_dst;
-+		sdmac->stride_fifos_src = sdmacfg->stride_fifos_src;
-+		sdmac->stride_fifos_dst = sdmacfg->stride_fifos_dst;
-+		sdmac->words_per_fifo = sdmacfg->words_per_fifo;
- 		sdmac->sw_done = sdmacfg->sw_done;
- 	}
- 
-diff --git a/include/linux/dma/imx-dma.h b/include/linux/dma/imx-dma.h
-index 8887762360d4..f487a4fa103a 100644
---- a/include/linux/dma/imx-dma.h
-+++ b/include/linux/dma/imx-dma.h
-@@ -70,6 +70,16 @@ static inline int imx_dma_is_general_purpose(struct dma_chan *chan)
-  * struct sdma_peripheral_config - SDMA config for audio
-  * @n_fifos_src: Number of FIFOs for recording
-  * @n_fifos_dst: Number of FIFOs for playback
-+ * @stride_fifos_src: FIFO address stride for recording, 0 means all FIFOs are
-+ *                    continuous, 1 means 1 word stride between FIFOs. All stride
-+ *                    between FIFOs should be same.
-+ * @stride_fifos_dst: FIFO address stride for playback
-+ * @words_per_fifo: numbers of words per FIFO fetch/fill, 1 means
-+ *                  one channel per FIFO, 2 means 2 channels per FIFO..
-+ *                  If 'n_fifos_src =  4' and 'words_per_fifo = 2', it
-+ *                  means the first two words(channels) fetch from FIFO0
-+ *                  and then jump to FIFO1 for next two words, and so on
-+ *                  after the last FIFO3 fetched, roll back to FIFO0.
-  * @sw_done: Use software done. Needed for PDM (micfil)
-  *
-  * Some i.MX Audio devices (SAI, micfil) have multiple successive FIFO
-@@ -82,6 +92,9 @@ static inline int imx_dma_is_general_purpose(struct dma_chan *chan)
- struct sdma_peripheral_config {
- 	int n_fifos_src;
- 	int n_fifos_dst;
-+	int stride_fifos_src;
-+	int stride_fifos_dst;
-+	int words_per_fifo;
- 	bool sw_done;
- };
- 
+ 	if (unlikely(!dma_capable(dev, dma_addr, size, false))) {
+ 		dev_err_once(dev,
 -- 
-2.17.1
+2.35.1
 
