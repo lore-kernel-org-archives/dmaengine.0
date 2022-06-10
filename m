@@ -2,198 +2,85 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F37A1C433EF
-	for <dmaengine@archiver.kernel.org>; Fri, 10 Jun 2022 08:14:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 96674CCA47F
+	for <dmaengine@archiver.kernel.org>; Fri, 10 Jun 2022 09:16:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343996AbiFJIOx (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 10 Jun 2022 04:14:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48924 "EHLO
+        id S1348706AbiFJJQP (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 10 Jun 2022 05:16:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47450 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1346746AbiFJIOv (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Fri, 10 Jun 2022 04:14:51 -0400
-X-Greylist: delayed 393 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Fri, 10 Jun 2022 01:14:49 PDT
+        with ESMTP id S1347543AbiFJJPM (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Fri, 10 Jun 2022 05:15:12 -0400
 Received: from mail.baikalelectronics.com (mail.baikalelectronics.com [87.245.175.230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id C10D3A5AAA;
-        Fri, 10 Jun 2022 01:14:49 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 014C71D1053;
+        Fri, 10 Jun 2022 02:15:09 -0700 (PDT)
 Received: from mail (mail.baikal.int [192.168.51.25])
-        by mail.baikalelectronics.com (Postfix) with ESMTP id 9473516A0;
-        Fri, 10 Jun 2022 11:08:57 +0300 (MSK)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mail.baikalelectronics.com 9473516A0
+        by mail.baikalelectronics.com (Postfix) with ESMTP id D110216A1;
+        Fri, 10 Jun 2022 12:15:57 +0300 (MSK)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mail.baikalelectronics.com D110216A1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baikalelectronics.ru; s=mail; t=1654848540;
-        bh=P0epdiQ2UfkKeER5KtOFqFsZ8/0xaqJ7ab4vUUQPTCw=;
-        h=From:To:CC:Subject:Date:From;
-        b=FES/RpZBcFEtKNYzfj2ZM1TKH3v4j1D1srCu1QFX0yo+vxrndl74dC/lOEO0AROoD
-         E9WiAns/InODAMwuQ3yGDm0SYSUjNGDlAku4e4gJHtto+ZKLwtUZuRhTH6qiwi2G8o
-         Wx1WzoKWULlo6KhIEebDed0WI8cU+7OfayCvYSmE=
+        d=baikalelectronics.ru; s=mail; t=1654852557;
+        bh=jdEFSqG6aoMObiat/d/ABAKCDMCthhWtDmNFbKuYowg=;
+        h=From:To:CC:Subject:Date:In-Reply-To:References:From;
+        b=rRp2f39IYk8oOdmgz1RAwZSwXfv3tiPMsJu76QmFEZmRo0pj22DjTKrwr6X/1AMy4
+         YGiXkch8AOw3UiInOtNjavBfOMmwZROfoddkl/Jxw2PeKIX5gqKyasX7CP00evoNwE
+         mrEiiOOI19BBQwMEhzuubQBKUCgRLaJA27ynJL0E=
 Received: from localhost (192.168.53.207) by mail (192.168.51.25) with
- Microsoft SMTP Server (TLS) id 15.0.1395.4; Fri, 10 Jun 2022 11:08:05 +0300
+ Microsoft SMTP Server (TLS) id 15.0.1395.4; Fri, 10 Jun 2022 12:15:05 +0300
 From:   Serge Semin <Sergey.Semin@baikalelectronics.ru>
-To:     Christoph Hellwig <hch@lst.de>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Vladimir Murzin <vladimir.murzin@arm.com>
+To:     Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+        Vinod Koul <vkoul@kernel.org>, Rob Herring <robh@kernel.org>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Jingoo Han <jingoohan1@gmail.com>, Frank Li <Frank.Li@nxp.com>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 CC:     Serge Semin <Sergey.Semin@baikalelectronics.ru>,
         Serge Semin <fancer.lancer@gmail.com>,
         Alexey Malahov <Alexey.Malahov@baikalelectronics.ru>,
         Pavel Parkhomenko <Pavel.Parkhomenko@baikalelectronics.ru>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Andrew Lunn <andrew@lunn.ch>,
-        Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
-        Gregory Clement <gregory.clement@bootlin.com>,
-        <linux-arm-kernel@lists.infradead.org>,
-        Srujana Challa <schalla@marvell.com>,
-        Arnaud Ebalard <arno@natisbad.org>,
-        Boris Brezillon <bbrezillon@kernel.org>,
-        <linux-crypto@vger.kernel.org>, Vinod Koul <vkoul@kernel.org>,
-        <dmaengine@vger.kernel.org>, Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Li Yang <leoyang.li@nxp.com>,
-        Geert Uytterhoeven <geert+renesas@glider.be>,
-        Magnus Damm <magnus.damm@gmail.com>,
-        <linux-renesas-soc@vger.kernel.org>,
-        Alex Deucher <alexander.deucher@amd.com>,
-        =?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-        "Pan, Xinhui" <Xinhui.Pan@amd.com>,
-        David Airlie <airlied@linux.ie>,
-        Gerd Hoffmann <kraxel@redhat.com>,
-        Tomasz Figa <tfiga@chromium.org>,
-        Oded Gabbay <ogabbay@kernel.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>,
-        Sunil Goutham <sgoutham@marvell.com>,
-        Linu Cherian <lcherian@marvell.com>,
-        Geetha sowjanya <gakula@marvell.com>,
-        Jon Mason <jdmason@kudzu.us>,
-        Dave Jiang <dave.jiang@intel.com>, <ntb@lists.linux.dev>,
-        <iommu@lists.linux-foundation.org>, <linux-kernel@vger.kernel.org>
-Subject: [PATCH] dma-direct: take dma-ranges/offsets into account in resource mapping
-Date:   Fri, 10 Jun 2022 11:08:02 +0300
-Message-ID: <20220610080802.11147-1-Sergey.Semin@baikalelectronics.ru>
+        =?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>,
+        <linux-pci@vger.kernel.org>, <dmaengine@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+Subject: [PATCH v3 01/24] dmaengine: Fix dma_slave_config.dst_addr description
+Date:   Fri, 10 Jun 2022 12:14:36 +0300
+Message-ID: <20220610091459.17612-2-Sergey.Semin@baikalelectronics.ru>
+In-Reply-To: <20220610091459.17612-1-Sergey.Semin@baikalelectronics.ru>
+References: <20220610091459.17612-1-Sergey.Semin@baikalelectronics.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 X-ClientProxiedBy: MAIL.baikal.int (192.168.51.25) To mail (192.168.51.25)
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-A basic device-specific linear memory mapping was introduced back in
-commit ("dma: Take into account dma_pfn_offset") as a single-valued offset
-preserved in the device.dma_pfn_offset field, which was initialized for
-instance by means of the "dma-ranges" DT property. Afterwards the
-functionality was extended to support more than one device-specific region
-defined in the device.dma_range_map list of maps. But all of these
-improvements concerned a single pointer, page or sg DMA-mapping methods,
-while the system resource mapping function turned to miss the
-corresponding modification. Thus the dma_direct_map_resource() method now
-just casts the CPU physical address to the device DMA address with no
-dma-ranges-based mapping taking into account, which is obviously wrong.
-Let's fix it by using the phys_to_dma_direct() method to get the
-device-specific bus address from the passed memory resource for the case
-of the directly mapped DMA.
+Most likely due to a copy-paste mistake the dst_addr member of the
+dma_slave_config structure has been marked as ignored if the !source!
+address belong to the memory. That is relevant to the src_addr field of
+the structure while the dst_addr field as containing a destination device
+address is supposed to be ignored if the destination is the CPU memory.
+Let's fix the field description accordingly.
 
-Fixes: 25f1e1887088 ("dma: Take into account dma_pfn_offset")
 Signed-off-by: Serge Semin <Sergey.Semin@baikalelectronics.ru>
-
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Tested-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 ---
-
-After a long discussion with Christoph and Robin regarding this patch
-here:
-https://lore.kernel.org/lkml/20220324014836.19149-4-Sergey.Semin@baikalelectronics.ru
-and here
-https://lore.kernel.org/linux-pci/20220503225104.12108-2-Sergey.Semin@baikalelectronics.ru/
-It was decided to consult with wider maintainers audience whether it's ok
-to accept the change as is or a more sophisticated solution needs to be
-found for the non-linear direct MMIO mapping.
-
-Cc: Christoph Hellwig <hch@lst.de>
-Cc: Robin Murphy <robin.murphy@arm.com>
-Cc: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-
-file: arch/arm/mach-orion5x/board-dt.c
-Cc: Andrew Lunn <andrew@lunn.ch>
-Cc: Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>
-Cc: Gregory Clement <gregory.clement@bootlin.com>
-Cc: linux-arm-kernel@lists.infradead.org
-
-file: drivers/crypto/marvell/cesa/cesa.c
-Cc: Srujana Challa <schalla@marvell.com>
-Cc: Arnaud Ebalard <arno@natisbad.org>
-Cc: Boris Brezillon <bbrezillon@kernel.org>
-Cc: linux-crypto@vger.kernel.org
-
-file: drivers/dma/{fsl-edma-common.c,pl330.c,sh/rcar-dmac.c}
-Cc: Vinod Koul <vkoul@kernel.org>
-Cc: dmaengine@vger.kernel.org
-
-file: arch/arm/boot/dts/{vfxxx.dtsi,ls1021a.dtsi,imx7ulp.dtsi,fsl-ls1043a.dtsi}
-Cc: Shawn Guo <shawnguo@kernel.org>
-Cc: Sascha Hauer <s.hauer@pengutronix.de>
-Cc: Li Yang <leoyang.li@nxp.com>
-Cc: linux-arm-kernel@lists.infradead.org
-
-file: arch/arm/boot/dts/r8a77*.dtsi, arch/arm64/boot/dts/renesas/r8a77*.dtsi
-Cc: Geert Uytterhoeven <geert+renesas@glider.be>
-Cc: Magnus Damm <magnus.damm@gmail.com>
-Cc: linux-renesas-soc@vger.kernel.org
-
-file: drivers/gpu/drm/amd/amdgpu/amdgpu_vram_mgr.c
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Cc: "Christian König" <christian.koenig@amd.com>
-Cc: "Pan, Xinhui" <Xinhui.Pan@amd.com>
-
-file: drivers/gpu/drm/virtio/virtgpu_vram.c
-Cc: David Airlie <airlied@linux.ie>
-Cc: Gerd Hoffmann <kraxel@redhat.com>
-
-file: drivers/media/common/videobuf2/videobuf2-dma-contig.c
-Cc: Tomasz Figa <tfiga@chromium.org>
-Cc: Marek Szyprowski <m.szyprowski@samsung.com>
-
-file: drivers/misc/habanalabs/common/memory.c
-Cc: Oded Gabbay <ogabbay@kernel.org>
-Cc: Arnd Bergmann <arnd@arndb.de>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-
-file: drivers/mtd/nand/raw/qcom_nandc.c
-Cc: Manivannan Sadhasivam <mani@kernel.org>
-
-file: arch/arm64/boot/dts/qcom/{ipq8074.dtsi,ipq6018.dtsi,qcom-sdx55.dtsi,qcom-ipq4019.dtsi,qcom-ipq8064.dtsi}
-Cc: Andy Gross <agross@kernel.org>
-Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org
-
-file: drivers/net/ethernet/marvell/octeontx2/af/rvu.c
-Cc: Sunil Goutham <sgoutham@marvell.com>
-Cc: Linu Cherian <lcherian@marvell.com>
-Cc: Geetha sowjanya <gakula@marvell.com>
-
-file: drivers/ntb/ntb_transport.c
-Cc: Jon Mason <jdmason@kudzu.us>
-Cc: Dave Jiang <dave.jiang@intel.com>
-Cc: ntb@lists.linux.dev
----
- kernel/dma/direct.c | 2 +-
+ include/linux/dmaengine.h | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/dma/direct.c b/kernel/dma/direct.c
-index 9743c6ccce1a..bc06db74dfdb 100644
---- a/kernel/dma/direct.c
-+++ b/kernel/dma/direct.c
-@@ -497,7 +497,7 @@ int dma_direct_map_sg(struct device *dev, struct scatterlist *sgl, int nents,
- dma_addr_t dma_direct_map_resource(struct device *dev, phys_addr_t paddr,
- 		size_t size, enum dma_data_direction dir, unsigned long attrs)
- {
--	dma_addr_t dma_addr = paddr;
-+	dma_addr_t dma_addr = phys_to_dma_direct(dev, paddr);
- 
- 	if (unlikely(!dma_capable(dev, dma_addr, size, false))) {
- 		dev_err_once(dev,
+diff --git a/include/linux/dmaengine.h b/include/linux/dmaengine.h
+index 842d4f7ca752..f204ea16ac1c 100644
+--- a/include/linux/dmaengine.h
++++ b/include/linux/dmaengine.h
+@@ -395,7 +395,7 @@ enum dma_slave_buswidth {
+  * should be read (RX), if the source is memory this argument is
+  * ignored.
+  * @dst_addr: this is the physical address where DMA slave data
+- * should be written (TX), if the source is memory this argument
++ * should be written (TX), if the destination is memory this argument
+  * is ignored.
+  * @src_addr_width: this is the width in bytes of the source (RX)
+  * register where DMA data shall be read. If the source
 -- 
 2.35.1
 
