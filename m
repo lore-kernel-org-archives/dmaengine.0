@@ -2,31 +2,31 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9ED99C43334
-	for <dmaengine@archiver.kernel.org>; Fri, 10 Jun 2022 09:16:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BD717CCA47F
+	for <dmaengine@archiver.kernel.org>; Fri, 10 Jun 2022 09:16:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347667AbiFJJQy (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 10 Jun 2022 05:16:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43596 "EHLO
+        id S1348646AbiFJJQ4 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 10 Jun 2022 05:16:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39092 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1343678AbiFJJQM (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Fri, 10 Jun 2022 05:16:12 -0400
+        with ESMTP id S245749AbiFJJQL (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Fri, 10 Jun 2022 05:16:11 -0400
 Received: from mail.baikalelectronics.com (mail.baikalelectronics.com [87.245.175.230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 6B6C1250244;
-        Fri, 10 Jun 2022 02:15:30 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 49B1B24E1D3;
+        Fri, 10 Jun 2022 02:15:27 -0700 (PDT)
 Received: from mail (mail.baikal.int [192.168.51.25])
-        by mail.baikalelectronics.com (Postfix) with ESMTP id 48BF816B0;
-        Fri, 10 Jun 2022 12:16:10 +0300 (MSK)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mail.baikalelectronics.com 48BF816B0
+        by mail.baikalelectronics.com (Postfix) with ESMTP id 896A816A5;
+        Fri, 10 Jun 2022 12:16:08 +0300 (MSK)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mail.baikalelectronics.com 896A816A5
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baikalelectronics.ru; s=mail; t=1654852570;
-        bh=t8xC/g0AeI6QYGkjn4ZUR5rnwRyuianyz03xk/t0oIA=;
+        d=baikalelectronics.ru; s=mail; t=1654852568;
+        bh=NYE8xeQysTFjp1PwhK7jrAdKvWEj9BL72RL9oig5VFI=;
         h=From:To:CC:Subject:Date:In-Reply-To:References:From;
-        b=XXzrWDZBDPQCFr0bHhPTLiCwr7cApYfR+GEVa1PsF/CfAMDqeLNEHZxbVuOubZCua
-         GzSBVY2ZlunLpKXwVgngxtP4C7WvsVBQE87ux6u/ggnuReajTLQLpJ+pRKNtuKQq9C
-         bSjqJ0dgLT8EOnrwEkRvCj3XfI3Xs42cUbSOGFWU=
+        b=JFfgUU+ZSx35n4sQKgwaDUxs3otTillrGw9LvCHdfyExK6kxngv/6+1VwKep0WdZY
+         oapDg9g2xiy2utspKYorXSnX4xAueTpmup0aUAvABuytln0UU+IryjVd//QZUemB+M
+         F7SqUfkevBR2b38CitXpcB6t5/OXyw8CnrWdk09k=
 Received: from localhost (192.168.53.207) by mail (192.168.51.25) with
- Microsoft SMTP Server (TLS) id 15.0.1395.4; Fri, 10 Jun 2022 12:15:17 +0300
+ Microsoft SMTP Server (TLS) id 15.0.1395.4; Fri, 10 Jun 2022 12:15:16 +0300
 From:   Serge Semin <Sergey.Semin@baikalelectronics.ru>
 To:     Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
         Vinod Koul <vkoul@kernel.org>, Rob Herring <robh@kernel.org>,
@@ -41,9 +41,9 @@ CC:     Serge Semin <Sergey.Semin@baikalelectronics.ru>,
         =?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>,
         <linux-pci@vger.kernel.org>, <dmaengine@vger.kernel.org>,
         <linux-kernel@vger.kernel.org>
-Subject: [PATCH v3 19/24] dmaengine: dw-edma: Use non-atomic io-64 methods
-Date:   Fri, 10 Jun 2022 12:14:54 +0300
-Message-ID: <20220610091459.17612-20-Sergey.Semin@baikalelectronics.ru>
+Subject: [PATCH v3 17/24] dmaengine: dw-edma: Join Write/Read channels into a single device
+Date:   Fri, 10 Jun 2022 12:14:52 +0300
+Message-ID: <20220610091459.17612-18-Sergey.Semin@baikalelectronics.ru>
 In-Reply-To: <20220610091459.17612-1-Sergey.Semin@baikalelectronics.ru>
 References: <20220610091459.17612-1-Sergey.Semin@baikalelectronics.ru>
 MIME-Version: 1.0
@@ -54,191 +54,262 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Instead of splitting the 64-bits IOs up into two 32-bits ones it's
-possible to use an available set of the non-atomic readq/writeq methods
-implemented exactly for such cases. They are defined in the dedicated
-header files io-64-nonatomic-lo-hi.h/io-64-nonatomic-hi-lo.h. So in case
-if the 64-bits readq/writeq methods are unavailable on some platforms at
-consideration, the corresponding drivers can have any of these headers
-included and stop locally re-implementing the 64-bits IO accessors taking
-into account the non-atomic nature of the included methods. Let's do that
-in the DW eDMA driver too. Note by doing so we can discard the
-CONFIG_64BIT config ifdefs from the code. Also note that if a platform
-doesn't support 64-bit DBI IOs then the corresponding accessors will just
-directly call the lo_hi_readq()/lo_hi_writeq() methods.
+Indeed there is no point in such split up because due to multiple reasons.
+First of all eDMA read and write channels belong to one physical
+controller. Splitting them up illogical. Secondly the channels
+differentiating can be done by means of the filtering and the
+dma_get_slave_caps() method. Finally having these channels handled
+separately not only needlessly complicates the code, but also causes the
+DebugFS error printed to console:
+
+>> Debugfs: Directory '1f052000.pcie' with parent 'dmaengine' already present!
+
+So to speak let's join the read/write channels into a single DMA device.
+The client drivers will be able to choose the channel with required
+capability by getting the DMA slave direction setting. It's default value
+is overridden by the dw_edma_device_caps() callback in accordance with the
+channel nature.
 
 Signed-off-by: Serge Semin <Sergey.Semin@baikalelectronics.ru>
 Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 Tested-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 ---
- drivers/dma/dw-edma/dw-edma-v0-core.c | 71 +++++++++------------------
- 1 file changed, 24 insertions(+), 47 deletions(-)
+ drivers/dma/dw-edma/dw-edma-core.c | 116 +++++++++++++++--------------
+ drivers/dma/dw-edma/dw-edma-core.h |   5 +-
+ 2 files changed, 61 insertions(+), 60 deletions(-)
 
-diff --git a/drivers/dma/dw-edma/dw-edma-v0-core.c b/drivers/dma/dw-edma/dw-edma-v0-core.c
-index e6d611176891..4348d2323125 100644
---- a/drivers/dma/dw-edma/dw-edma-v0-core.c
-+++ b/drivers/dma/dw-edma/dw-edma-v0-core.c
-@@ -8,6 +8,8 @@
+diff --git a/drivers/dma/dw-edma/dw-edma-core.c b/drivers/dma/dw-edma/dw-edma-core.c
+index e9cb3056b6b7..f5124e7b50cf 100644
+--- a/drivers/dma/dw-edma/dw-edma-core.c
++++ b/drivers/dma/dw-edma/dw-edma-core.c
+@@ -209,6 +209,24 @@ static void dw_edma_start_transfer(struct dw_edma_chan *chan)
+ 	desc->chunks_alloc--;
+ }
  
- #include <linux/bitfield.h>
- 
-+#include <linux/io-64-nonatomic-lo-hi.h>
++static void dw_edma_device_caps(struct dma_chan *dchan,
++				struct dma_slave_caps *caps)
++{
++	struct dw_edma_chan *chan = dchan2dw_edma_chan(dchan);
 +
- #include "dw-edma-core.h"
- #include "dw-edma-v0-core.h"
- #include "dw-edma-v0-regs.h"
-@@ -53,8 +55,6 @@ static inline struct dw_edma_v0_regs __iomem *__dw_regs(struct dw_edma *dw)
- 		SET_32(dw, rd_##name, value);		\
- 	} while (0)
- 
--#ifdef CONFIG_64BIT
--
- #define SET_64(dw, name, value)				\
- 	writeq(value, &(__dw_regs(dw)->name))
- 
-@@ -80,8 +80,6 @@ static inline struct dw_edma_v0_regs __iomem *__dw_regs(struct dw_edma *dw)
- 		SET_64(dw, rd_##name, value);		\
- 	} while (0)
- 
--#endif /* CONFIG_64BIT */
--
- #define SET_COMPAT(dw, name, value)			\
- 	writel(value, &(__dw_regs(dw)->type.unroll.name))
- 
-@@ -164,14 +162,13 @@ static inline u32 readl_ch(struct dw_edma *dw, enum dw_edma_dir dir, u16 ch,
- #define SET_LL_32(ll, value) \
- 	writel(value, ll)
- 
--#ifdef CONFIG_64BIT
--
- static inline void writeq_ch(struct dw_edma *dw, enum dw_edma_dir dir, u16 ch,
- 			     u64 value, void __iomem *addr)
- {
-+	unsigned long flags;
-+
- 	if (dw->chip->mf == EDMA_MF_EDMA_LEGACY) {
- 		u32 viewport_sel;
--		unsigned long flags;
- 
- 		raw_spin_lock_irqsave(&dw->lock, flags);
- 
-@@ -181,22 +178,25 @@ static inline void writeq_ch(struct dw_edma *dw, enum dw_edma_dir dir, u16 ch,
- 
- 		writel(viewport_sel,
- 		       &(__dw_regs(dw)->type.legacy.viewport_sel));
++	if (chan->dw->chip->flags & DW_EDMA_CHIP_LOCAL) {
++		if (chan->dir == EDMA_DIR_READ)
++			caps->directions = BIT(DMA_DEV_TO_MEM);
++		else
++			caps->directions = BIT(DMA_MEM_TO_DEV);
++	} else {
++		if (chan->dir == EDMA_DIR_WRITE)
++			caps->directions = BIT(DMA_DEV_TO_MEM);
++		else
++			caps->directions = BIT(DMA_MEM_TO_DEV);
 +	}
++}
 +
-+	if (dw->chip->flags & DW_EDMA_CHIP_32BIT_DBI)
-+		lo_hi_writeq(value, addr);
-+	else
- 		writeq(value, addr);
- 
-+	if (dw->chip->mf == EDMA_MF_EDMA_LEGACY)
- 		raw_spin_unlock_irqrestore(&dw->lock, flags);
--	} else {
--		writeq(value, addr);
--	}
- }
- 
- static inline u64 readq_ch(struct dw_edma *dw, enum dw_edma_dir dir, u16 ch,
- 			   const void __iomem *addr)
+ static int dw_edma_device_config(struct dma_chan *dchan,
+ 				 struct dma_slave_config *config)
  {
--	u32 value;
-+	unsigned long flags;
-+	u64 value;
- 
- 	if (dw->chip->mf == EDMA_MF_EDMA_LEGACY) {
- 		u32 viewport_sel;
--		unsigned long flags;
- 
- 		raw_spin_lock_irqsave(&dw->lock, flags);
- 
-@@ -206,12 +206,15 @@ static inline u64 readq_ch(struct dw_edma *dw, enum dw_edma_dir dir, u16 ch,
- 
- 		writel(viewport_sel,
- 		       &(__dw_regs(dw)->type.legacy.viewport_sel));
-+	}
-+
-+	if (dw->chip->flags & DW_EDMA_CHIP_32BIT_DBI)
-+		value = lo_hi_readq(addr);
-+	else
- 		value = readq(addr);
- 
-+	if (dw->chip->mf == EDMA_MF_EDMA_LEGACY)
- 		raw_spin_unlock_irqrestore(&dw->lock, flags);
--	} else {
--		value = readq(addr);
--	}
- 
- 	return value;
+@@ -723,8 +741,7 @@ static void dw_edma_free_chan_resources(struct dma_chan *dchan)
+ 	pm_runtime_put(chan->dw->chip->dev);
  }
-@@ -225,8 +228,6 @@ static inline u64 readq_ch(struct dw_edma *dw, enum dw_edma_dir dir, u16 ch,
- #define SET_LL_64(ll, value) \
- 	writeq(value, ll)
  
--#endif /* CONFIG_64BIT */
+-static int dw_edma_channel_setup(struct dw_edma *dw, bool write,
+-				 u32 wr_alloc, u32 rd_alloc)
++static int dw_edma_channel_setup(struct dw_edma *dw, u32 wr_alloc, u32 rd_alloc)
+ {
+ 	struct dw_edma_chip *chip = dw->chip;
+ 	struct dw_edma_region *dt_region;
+@@ -732,27 +749,15 @@ static int dw_edma_channel_setup(struct dw_edma *dw, bool write,
+ 	struct dw_edma_chan *chan;
+ 	struct dw_edma_irq *irq;
+ 	struct dma_device *dma;
+-	u32 alloc, off_alloc;
+-	u32 i, j, cnt;
+-	int err = 0;
++	u32 i, ch_cnt;
+ 	u32 pos;
+ 
+-	if (write) {
+-		i = 0;
+-		cnt = dw->wr_ch_cnt;
+-		dma = &dw->wr_edma;
+-		alloc = wr_alloc;
+-		off_alloc = 0;
+-	} else {
+-		i = dw->wr_ch_cnt;
+-		cnt = dw->rd_ch_cnt;
+-		dma = &dw->rd_edma;
+-		alloc = rd_alloc;
+-		off_alloc = wr_alloc;
+-	}
++	ch_cnt = dw->wr_ch_cnt + dw->rd_ch_cnt;
++	dma = &dw->dma;
+ 
+ 	INIT_LIST_HEAD(&dma->channels);
+-	for (j = 0; (alloc || dw->nr_irqs == 1) && j < cnt; j++, i++) {
++
++	for (i = 0; i < ch_cnt; i++) {
+ 		chan = &dw->chan[i];
+ 
+ 		dt_region = devm_kzalloc(dev, sizeof(*dt_region), GFP_KERNEL);
+@@ -762,52 +767,62 @@ static int dw_edma_channel_setup(struct dw_edma *dw, bool write,
+ 		chan->vc.chan.private = dt_region;
+ 
+ 		chan->dw = dw;
+-		chan->id = j;
+-		chan->dir = write ? EDMA_DIR_WRITE : EDMA_DIR_READ;
++
++		if (i < dw->wr_ch_cnt) {
++			chan->id = i;
++			chan->dir = EDMA_DIR_WRITE;
++		} else {
++			chan->id = i - dw->wr_ch_cnt;
++			chan->dir = EDMA_DIR_READ;
++		}
++
+ 		chan->configured = false;
+ 		chan->request = EDMA_REQ_NONE;
+ 		chan->status = EDMA_ST_IDLE;
+ 
+-		if (write)
+-			chan->ll_max = (chip->ll_region_wr[j].sz / EDMA_LL_SZ);
++		if (chan->dir == EDMA_DIR_WRITE)
++			chan->ll_max = (chip->ll_region_wr[chan->id].sz / EDMA_LL_SZ);
+ 		else
+-			chan->ll_max = (chip->ll_region_rd[j].sz / EDMA_LL_SZ);
++			chan->ll_max = (chip->ll_region_rd[chan->id].sz / EDMA_LL_SZ);
+ 		chan->ll_max -= 1;
+ 
+ 		dev_vdbg(dev, "L. List:\tChannel %s[%u] max_cnt=%u\n",
+-			 write ? "write" : "read", j, chan->ll_max);
++			 chan->dir == EDMA_DIR_WRITE ? "write" : "read",
++			 chan->id, chan->ll_max);
+ 
+ 		if (dw->nr_irqs == 1)
+ 			pos = 0;
++		else if (chan->dir == EDMA_DIR_WRITE)
++			pos = chan->id % wr_alloc;
+ 		else
+-			pos = off_alloc + (j % alloc);
++			pos = wr_alloc + chan->id % rd_alloc;
+ 
+ 		irq = &dw->irq[pos];
+ 
+-		if (write)
+-			irq->wr_mask |= BIT(j);
++		if (chan->dir == EDMA_DIR_WRITE)
++			irq->wr_mask |= BIT(chan->id);
+ 		else
+-			irq->rd_mask |= BIT(j);
++			irq->rd_mask |= BIT(chan->id);
+ 
+ 		irq->dw = dw;
+ 		memcpy(&chan->msi, &irq->msi, sizeof(chan->msi));
+ 
+ 		dev_vdbg(dev, "MSI:\t\tChannel %s[%u] addr=0x%.8x%.8x, data=0x%.8x\n",
+-			 write ? "write" : "read", j,
++			 chan->dir == EDMA_DIR_WRITE  ? "write" : "read", chan->id,
+ 			 chan->msi.address_hi, chan->msi.address_lo,
+ 			 chan->msi.data);
+ 
+ 		chan->vc.desc_free = vchan_free_desc;
+ 		vchan_init(&chan->vc, dma);
+ 
+-		if (write) {
+-			dt_region->paddr = chip->dt_region_wr[j].paddr;
+-			dt_region->vaddr = chip->dt_region_wr[j].vaddr;
+-			dt_region->sz = chip->dt_region_wr[j].sz;
++		if (chan->dir == EDMA_DIR_WRITE) {
++			dt_region->paddr = chip->dt_region_wr[chan->id].paddr;
++			dt_region->vaddr = chip->dt_region_wr[chan->id].vaddr;
++			dt_region->sz = chip->dt_region_wr[chan->id].sz;
+ 		} else {
+-			dt_region->paddr = chip->dt_region_rd[j].paddr;
+-			dt_region->vaddr = chip->dt_region_rd[j].vaddr;
+-			dt_region->sz = chip->dt_region_rd[j].sz;
++			dt_region->paddr = chip->dt_region_rd[chan->id].paddr;
++			dt_region->vaddr = chip->dt_region_rd[chan->id].vaddr;
++			dt_region->sz = chip->dt_region_rd[chan->id].sz;
+ 		}
+ 
+ 		dw_edma_v0_core_device_config(chan);
+@@ -819,7 +834,7 @@ static int dw_edma_channel_setup(struct dw_edma *dw, bool write,
+ 	dma_cap_set(DMA_CYCLIC, dma->cap_mask);
+ 	dma_cap_set(DMA_PRIVATE, dma->cap_mask);
+ 	dma_cap_set(DMA_INTERLEAVE, dma->cap_mask);
+-	dma->directions = BIT(write ? DMA_DEV_TO_MEM : DMA_MEM_TO_DEV);
++	dma->directions = BIT(DMA_DEV_TO_MEM) | BIT(DMA_MEM_TO_DEV);
+ 	dma->src_addr_widths = BIT(DMA_SLAVE_BUSWIDTH_4_BYTES);
+ 	dma->dst_addr_widths = BIT(DMA_SLAVE_BUSWIDTH_4_BYTES);
+ 	dma->residue_granularity = DMA_RESIDUE_GRANULARITY_DESCRIPTOR;
+@@ -828,6 +843,7 @@ static int dw_edma_channel_setup(struct dw_edma *dw, bool write,
+ 	dma->dev = chip->dev;
+ 	dma->device_alloc_chan_resources = dw_edma_alloc_chan_resources;
+ 	dma->device_free_chan_resources = dw_edma_free_chan_resources;
++	dma->device_caps = dw_edma_device_caps;
+ 	dma->device_config = dw_edma_device_config;
+ 	dma->device_pause = dw_edma_device_pause;
+ 	dma->device_resume = dw_edma_device_resume;
+@@ -841,9 +857,7 @@ static int dw_edma_channel_setup(struct dw_edma *dw, bool write,
+ 	dma_set_max_seg_size(dma->dev, U32_MAX);
+ 
+ 	/* Register DMA device */
+-	err = dma_async_device_register(dma);
 -
- /* eDMA management callbacks */
- void dw_edma_v0_core_off(struct dw_edma *dw)
- {
-@@ -325,19 +326,10 @@ static void dw_edma_v0_core_write_chunk(struct dw_edma_chunk *chunk)
- 		/* Transfer size */
- 		SET_LL_32(&lli[i].transfer_size, child->sz);
- 		/* SAR */
--		#ifdef CONFIG_64BIT
--			SET_LL_64(&lli[i].sar.reg, child->sar);
--		#else /* CONFIG_64BIT */
--			SET_LL_32(&lli[i].sar.lsb, lower_32_bits(child->sar));
--			SET_LL_32(&lli[i].sar.msb, upper_32_bits(child->sar));
--		#endif /* CONFIG_64BIT */
-+		SET_LL_64(&lli[i].sar.reg, child->sar);
- 		/* DAR */
--		#ifdef CONFIG_64BIT
--			SET_LL_64(&lli[i].dar.reg, child->dar);
--		#else /* CONFIG_64BIT */
--			SET_LL_32(&lli[i].dar.lsb, lower_32_bits(child->dar));
--			SET_LL_32(&lli[i].dar.msb, upper_32_bits(child->dar));
--		#endif /* CONFIG_64BIT */
-+		SET_LL_64(&lli[i].dar.reg, child->dar);
-+
- 		i++;
- 	}
- 
-@@ -349,12 +341,7 @@ static void dw_edma_v0_core_write_chunk(struct dw_edma_chunk *chunk)
- 	/* Channel control */
- 	SET_LL_32(&llp->control, control);
- 	/* Linked list */
--	#ifdef CONFIG_64BIT
--		SET_LL_64(&llp->llp.reg, chunk->ll_region.paddr);
--	#else /* CONFIG_64BIT */
--		SET_LL_32(&llp->llp.lsb, lower_32_bits(chunk->ll_region.paddr));
--		SET_LL_32(&llp->llp.msb, upper_32_bits(chunk->ll_region.paddr));
--	#endif /* CONFIG_64BIT */
-+	SET_LL_64(&llp->llp.reg, chunk->ll_region.paddr);
+-	return err;
++	return dma_async_device_register(dma);
  }
  
- void dw_edma_v0_core_start(struct dw_edma_chunk *chunk, bool first)
-@@ -417,18 +404,8 @@ void dw_edma_v0_core_start(struct dw_edma_chunk *chunk, bool first)
- 		SET_CH_32(dw, chan->dir, chan->id, ch_control1,
- 			  (DW_EDMA_V0_CCS | DW_EDMA_V0_LLE));
- 		/* Linked list */
--		if ((chan->dw->chip->flags & DW_EDMA_CHIP_32BIT_DBI) ||
--		    !IS_ENABLED(CONFIG_64BIT)) {
--			SET_CH_32(dw, chan->dir, chan->id, llp.lsb,
--				  lower_32_bits(chunk->ll_region.paddr));
--			SET_CH_32(dw, chan->dir, chan->id, llp.msb,
--				  upper_32_bits(chunk->ll_region.paddr));
--		} else {
--		#ifdef CONFIG_64BIT
--			SET_CH_64(dw, chan->dir, chan->id, llp.reg,
--				  chunk->ll_region.paddr);
--		#endif
--		}
-+		SET_CH_64(dw, chan->dir, chan->id, llp.reg,
-+			  chunk->ll_region.paddr);
- 	}
- 	/* Doorbell */
- 	SET_RW_32(dw, chan->dir, doorbell,
+ static inline void dw_edma_dec_irq_alloc(int *nr_irqs, u32 *alloc, u16 cnt)
+@@ -988,13 +1002,8 @@ int dw_edma_probe(struct dw_edma_chip *chip)
+ 	if (err)
+ 		return err;
+ 
+-	/* Setup write channels */
+-	err = dw_edma_channel_setup(dw, true, wr_alloc, rd_alloc);
+-	if (err)
+-		goto err_irq_free;
+-
+-	/* Setup read channels */
+-	err = dw_edma_channel_setup(dw, false, wr_alloc, rd_alloc);
++	/* Setup write/read channels */
++	err = dw_edma_channel_setup(dw, wr_alloc, rd_alloc);
+ 	if (err)
+ 		goto err_irq_free;
+ 
+@@ -1034,15 +1043,8 @@ int dw_edma_remove(struct dw_edma_chip *chip)
+ 	pm_runtime_disable(dev);
+ 
+ 	/* Deregister eDMA device */
+-	dma_async_device_unregister(&dw->wr_edma);
+-	list_for_each_entry_safe(chan, _chan, &dw->wr_edma.channels,
+-				 vc.chan.device_node) {
+-		tasklet_kill(&chan->vc.task);
+-		list_del(&chan->vc.chan.device_node);
+-	}
+-
+-	dma_async_device_unregister(&dw->rd_edma);
+-	list_for_each_entry_safe(chan, _chan, &dw->rd_edma.channels,
++	dma_async_device_unregister(&dw->dma);
++	list_for_each_entry_safe(chan, _chan, &dw->dma.channels,
+ 				 vc.chan.device_node) {
+ 		tasklet_kill(&chan->vc.task);
+ 		list_del(&chan->vc.chan.device_node);
+diff --git a/drivers/dma/dw-edma/dw-edma-core.h b/drivers/dma/dw-edma/dw-edma-core.h
+index 85df2d511907..b576a8fff45a 100644
+--- a/drivers/dma/dw-edma/dw-edma-core.h
++++ b/drivers/dma/dw-edma/dw-edma-core.h
+@@ -98,10 +98,9 @@ struct dw_edma_irq {
+ struct dw_edma {
+ 	char				name[20];
+ 
+-	struct dma_device		wr_edma;
+-	u16				wr_ch_cnt;
++	struct dma_device		dma;
+ 
+-	struct dma_device		rd_edma;
++	u16				wr_ch_cnt;
+ 	u16				rd_ch_cnt;
+ 
+ 	struct dw_edma_irq		*irq;
 -- 
 2.35.1
 
