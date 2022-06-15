@@ -2,100 +2,113 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 02537C43334
-	for <dmaengine@archiver.kernel.org>; Wed, 15 Jun 2022 23:41:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5C04DCCA47E
+	for <dmaengine@archiver.kernel.org>; Wed, 15 Jun 2022 23:54:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241580AbiFOXl5 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 15 Jun 2022 19:41:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54714 "EHLO
+        id S1349472AbiFOXyH (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 15 Jun 2022 19:54:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34272 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230172AbiFOXl4 (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Wed, 15 Jun 2022 19:41:56 -0400
-Received: from mga17.intel.com (mga17.intel.com [192.55.52.151])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E2EE3632E
-        for <dmaengine@vger.kernel.org>; Wed, 15 Jun 2022 16:41:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1655336515; x=1686872515;
-  h=from:to:cc:subject:date:message-id:mime-version:
-   content-transfer-encoding;
-  bh=W4Jvv8jec5QfeykLHRTOnuYoNQ1wOjtYIHEIkIB1tYc=;
-  b=Xqv5CP5YU7quM3ekLQ+6Y7Yk3SdZGKpk4yBg4Qiw45X4s4hXiFPJzJK7
-   +E7nUsua9C3rCrTDSmJ5YPoR58JjyjbXYbqSUTDyjxZJ19w12naS9h3qu
-   zJlZVO5Qqwgriq+NJTT9hj0WYPs2XDBIQHjT5l07ITisGF2OXogSKpaox
-   aCt1GieH50jEVSK5NAQ6sfYl6aXSh3aqAdx0UEv8KrNLFyUQQCjnuXDbE
-   ABVCtaqqxk/tk/ks+UbL/xaU9CgXiMz4DVk8SQV1RuRQvrKAKhm0tLdGR
-   574gvQKTrrlGX7Rgpe4KRXhHPW7dRz/lLVUMeiPRknO8/EBNKzYdyWXsh
-   A==;
-X-IronPort-AV: E=McAfee;i="6400,9594,10379"; a="259588492"
-X-IronPort-AV: E=Sophos;i="5.91,302,1647327600"; 
-   d="scan'208";a="259588492"
-Received: from fmsmga005.fm.intel.com ([10.253.24.32])
-  by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Jun 2022 16:41:55 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.91,302,1647327600"; 
-   d="scan'208";a="911912263"
-Received: from fyu1.sc.intel.com ([172.25.103.126])
-  by fmsmga005.fm.intel.com with ESMTP; 15 Jun 2022 16:41:55 -0700
-From:   Fenghua Yu <fenghua.yu@intel.com>
-To:     "Vinod Koul" <vkoul@kernel.org>
-Cc:     "Dave Jiang" <dave.jiang@intel.com>, dmaengine@vger.kernel.org,
-        Tony Zhu <tony.zhu@intel.com>
-Subject: [PATCH v2] dmaengine: idxd: force wq context cleanup on device disable path
-Date:   Wed, 15 Jun 2022 16:42:19 -0700
-Message-Id: <20220615234219.178186-1-fenghua.yu@intel.com>
-X-Mailer: git-send-email 2.32.0
+        with ESMTP id S1348951AbiFOXyG (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Wed, 15 Jun 2022 19:54:06 -0400
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 36CF13DDE1;
+        Wed, 15 Jun 2022 16:54:05 -0700 (PDT)
+Received: by mail-wr1-x42f.google.com with SMTP id s1so17283474wra.9;
+        Wed, 15 Jun 2022 16:54:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:subject:date:message-id:in-reply-to:references:mime-version
+         :content-transfer-encoding;
+        bh=IMHxQtKFSGIpi4Dt5QYvqjxFJ6KAEK/ElIU+ikKEqhE=;
+        b=L5nBjPJp8jqFfZbco081UO/HoB5IGYIHUvQAwTP6PKLl5vmXE95g9QuVSyuzDK5pxM
+         dkJv+PtS2lN2fsn8PrRmUWnnj9uB96Pb+oII2EE88skQvY2zTA4DRp1U6S/pkfEUqz+b
+         3YcXZ/91Q81pw1xunyLFid+dlYNW240z3EevxA742sejKy9XflO80V6iGVfc6arOhM1P
+         al6aWL7W6/XgL/NnhSw4bUND8UubdJsy0bfitbKwuXFQay66RAZ7dfMShi0elJA5+oDI
+         iMx6/qGc2gisUKc8cPMjPtD0Mae52ZCvNvG1rZJwj6etQau3e4gKCnbU2FDWUvNEg4EL
+         zwYA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=IMHxQtKFSGIpi4Dt5QYvqjxFJ6KAEK/ElIU+ikKEqhE=;
+        b=lJVQdQjfbko4IIIR51nQBG396Q0wOhqBkLmbm5VT/5/5bu5bIDuCez69p3BQpK+Djw
+         74nMdmtWJn1tltiA7JFQzvUTkHvlJw9LjauNUYBDDGJtxT8bTqePpVpjyKhzKlXDKWcZ
+         hG0NPsjTzBePc2XYgt/e5qwizGaP6z4gdMCFHLG6J+v+bA+EN5tipnT8u/F57Eogdw97
+         aKrp/A0enBnaUip+1aAptXcH8SgROhYFZfHLVR6dpisqLk+CZNwwoxqjTw/OeCyAWy9h
+         LTEzyyCZm/rBbNl6Rqn9omh3Ac9PcU147c5KN+eEVUdNuqnLaMl14oNS/Iev7rumZVca
+         6EHQ==
+X-Gm-Message-State: AJIora86mLUzney/evOFRkqLo5sm9RgvBmMuZnLNNzf/tfAZ8jT6vEBL
+        C085oc72c5rq5tQlOw5mbUs=
+X-Google-Smtp-Source: AGRyM1u+muYBxk6COENUiNTsry2J4I3tggp+r+ALtyQl220gcSGcga8Z9a71T7GCGQMPWBCC9Hy9gg==
+X-Received: by 2002:adf:ed92:0:b0:217:2e17:9219 with SMTP id c18-20020adfed92000000b002172e179219mr1960086wro.195.1655337243508;
+        Wed, 15 Jun 2022 16:54:03 -0700 (PDT)
+Received: from localhost.localdomain (93-42-70-190.ip85.fastwebnet.it. [93.42.70.190])
+        by smtp.googlemail.com with ESMTPSA id x1-20020adff0c1000000b002103cfd2fbasm268116wro.65.2022.06.15.16.54.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 15 Jun 2022 16:54:03 -0700 (PDT)
+From:   Christian Marangi <ansuelsmth@gmail.com>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Christian Marangi <ansuelsmth@gmail.com>,
+        linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH v2 2/2] dt-bindings: dma: add additional pbus reset to qcom,adm
+Date:   Thu, 16 Jun 2022 01:54:04 +0200
+Message-Id: <20220615235404.3457-2-ansuelsmth@gmail.com>
+X-Mailer: git-send-email 2.36.1
+In-Reply-To: <20220615235404.3457-1-ansuelsmth@gmail.com>
+References: <20220615235404.3457-1-ansuelsmth@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-From: Dave Jiang <dave.jiang@intel.com>
+qcom,adm require an additional reset for the pbus line. Add this missing
+reset to match the current implementation on ipq806x.dtsi.
 
-Testing shown that when a wq mode is setup to be dedicated and then torn
-down and reconfigured to shared, the wq configured end up being dedicated
-anyays. The root cause is when idxd_device_wqs_clear_state() gets called
-during idxd_driver removal, idxd_wq_disable_cleanup() does not get called
-vs when the wq driver is removed first. The check of wq state being
-"enabled" causes the cleanup to be bypassed. However, idxd_driver->remove()
-releases all wq drivers. So the wqs goes to "disabled" state and will never
-be "enabled". By that point, the driver has no idea if the wq was
-previously configured or clean. So force call idxd_wq_disable_cleanup() on
-all wqs always to make sure everything gets cleaned up.
-
-Reported-by: Tony Zhu <tony.zhu@intel.com>
-Tested-by: Tony Zhu <tony.zhu@intel.com>
-Fixes: 0dcfe41e9a4c ("dmanegine: idxd: cleanup all device related bits after disabling device")
-Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
 ---
-Change Log:
-v2:
-- Re-based to 5.19-rc2 so that it can be applied cleanly. No functionality
-  change.
+ Documentation/devicetree/bindings/dma/qcom,adm.yaml | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-v1:
-https://patchwork.kernel.org/project/linux-dmaengine/patch/165090959239.1376825.18183942742142655091.stgit@djiang5-desk3.ch.intel.com/
-
- drivers/dma/idxd/device.c | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
-
-diff --git a/drivers/dma/idxd/device.c b/drivers/dma/idxd/device.c
-index ff0ea60051f0..5a8cc52c1abf 100644
---- a/drivers/dma/idxd/device.c
-+++ b/drivers/dma/idxd/device.c
-@@ -716,10 +716,7 @@ static void idxd_device_wqs_clear_state(struct idxd_device *idxd)
- 		struct idxd_wq *wq = idxd->wqs[i];
+diff --git a/Documentation/devicetree/bindings/dma/qcom,adm.yaml b/Documentation/devicetree/bindings/dma/qcom,adm.yaml
+index 6c08245bf5d5..6a9d7bc74aff 100644
+--- a/Documentation/devicetree/bindings/dma/qcom,adm.yaml
++++ b/Documentation/devicetree/bindings/dma/qcom,adm.yaml
+@@ -40,6 +40,7 @@ properties:
+   resets:
+     items:
+       - description: phandle to the clk reset
++      - description: phandle to the pbus reset
+       - description: phandle to the c0 reset
+       - description: phandle to the c1 reset
+       - description: phandle to the c2 reset
+@@ -47,6 +48,7 @@ properties:
+   reset-names:
+     items:
+       - const: clk
++      - const: pbus
+       - const: c0
+       - const: c1
+       - const: c2
+@@ -86,10 +88,11 @@ examples:
+         clock-names = "core", "iface";
  
- 		mutex_lock(&wq->wq_lock);
--		if (wq->state == IDXD_WQ_ENABLED) {
--			idxd_wq_disable_cleanup(wq);
--			wq->state = IDXD_WQ_DISABLED;
--		}
-+		idxd_wq_disable_cleanup(wq);
- 		idxd_wq_device_reset_cleanup(wq);
- 		mutex_unlock(&wq->wq_lock);
- 	}
+         resets = <&gcc ADM0_RESET>,
++                  <&gcc ADM0_PBUS_RESET>,
+                   <&gcc ADM0_C0_RESET>,
+                   <&gcc ADM0_C1_RESET>,
+                   <&gcc ADM0_C2_RESET>;
+-        reset-names = "clk", "c0", "c1", "c2";
++        reset-names = "clk", "pbus", "c0", "c1", "c2";
+         qcom,ee = <0>;
+     };
+ 
 -- 
-2.32.0
+2.36.1
 
