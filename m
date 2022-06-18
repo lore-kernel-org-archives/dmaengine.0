@@ -2,51 +2,51 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 63356C433EF
-	for <dmaengine@archiver.kernel.org>; Sat, 18 Jun 2022 12:32:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0F458C43334
+	for <dmaengine@archiver.kernel.org>; Sat, 18 Jun 2022 12:32:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235604AbiFRMcb (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Sat, 18 Jun 2022 08:32:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53250 "EHLO
+        id S234871AbiFRMch (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Sat, 18 Jun 2022 08:32:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52638 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235047AbiFRMcZ (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Sat, 18 Jun 2022 08:32:25 -0400
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B16351E3FF
-        for <dmaengine@vger.kernel.org>; Sat, 18 Jun 2022 05:32:18 -0700 (PDT)
-Received: by mail-wm1-x32e.google.com with SMTP id i17-20020a7bc951000000b0039c4760ec3fso5312063wml.0
-        for <dmaengine@vger.kernel.org>; Sat, 18 Jun 2022 05:32:18 -0700 (PDT)
+        with ESMTP id S235024AbiFRMcW (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Sat, 18 Jun 2022 08:32:22 -0400
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2BAF21DA60
+        for <dmaengine@vger.kernel.org>; Sat, 18 Jun 2022 05:32:12 -0700 (PDT)
+Received: by mail-wr1-x429.google.com with SMTP id c21so8820614wrb.1
+        for <dmaengine@vger.kernel.org>; Sat, 18 Jun 2022 05:32:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=conchuod.ie; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=hRUbJk2nRy4s5CIJwi9VsR0jeyH/n7EOc4sICxWxXyQ=;
-        b=bhD31hG1IqRZiTVI7PGE75Ozpn0ZL75oApBble/77rs/x6j7Yj0P44fPfNnU7vhVUY
-         nCjZMXxWsTk0A61dgIyHtvcMlkUKqozbRvB64rHl/1QTd2jL/SWVTA2Y2ndXS0ZqhK4S
-         r9aFcMkRXpG9sUoBVLmgJheYo4olnTUwQPZVfeHRImZxUkokJecGSOgHC/rYW/i1Ng8a
-         J62jSu9bj5d3BTplW1G7IvlHfdW0zGfdAEhQ8IJXKKHoaeeUEsv3cwY2C56pbw+EFDRT
-         Px2zfYaeM76WmKCsR+FKXUs2W3XDiaxFj/ATwEYBX9PdDmUTbV3rwLoFdXHfn/aL4RDD
-         bpaQ==
+        bh=qmSWtWUd+mMy8ZYoZTgQjYDztLIGNDdvta+tk149+dY=;
+        b=dM4LDKg5XtY0Inv2LgZSsQ50IPuzGfCzEsvHlFQ/2NLIm/6++fbLLGSB9koJgwMTjp
+         07IF9XMy4P4HaeMA1yfSnaPY3CYXQ+u0Kv6ZrDa4GjATk93Wx2p5DeaQw29BenmArCiz
+         I6simFjZ6ZTWhMpFS4z5vR9LZUvOOE+DqLAunuoSePBDY5dNABj/iCXgooJ7JUM1Gx2w
+         oJTVRWFtg+XkkdFP3+9IwXZt69jucggKlNwGuChB7WxmXKdl5k9lj8f8ITLIpfckoFQS
+         YaBPUVjvUVp7mpO9D9wZzFoEi6tceysbIOAoKo4R7lpk7QqiW4+Bkh5CqE2X/nDML5P4
+         Wj6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=hRUbJk2nRy4s5CIJwi9VsR0jeyH/n7EOc4sICxWxXyQ=;
-        b=vkWXHeyZCNg89aEeYNKMPxULLvq+LqT0vIiL61wnBld2NFDbaPDVeq6rQpREHIk6HF
-         KGPgreOcADUxVLEX6zYGhihfP/Wdz8XjrMlCZfB9bRHEMp7dJwYIwTXwLhoE5E+WK5nc
-         0pPJv7IHcqBJet5C6tdgJ7XadpAs+Xl0betFf0eD940QKg8OZpADLnPJQ6eZC5cN2rIF
-         VI/amkRYMNjz4i5+IFLfKwbGJHqnYAJY20PsF/LzsMAyWYcNZbTFlkEYaL8UCYjEPY+G
-         etthhda+7gbHG5rBEzGWn+3nDDnxANc6as+fumyXvwIb39UC2GQOHOkGvU3njpOp1jnZ
-         pFsw==
-X-Gm-Message-State: AJIora+2Pu8kdcClhZMuCnnxYY2D6yATszapitwavfjHCZfcPeSVP0D1
-        dAehbp3ahF5n235XBlUF42ukSw==
-X-Google-Smtp-Source: AGRyM1vrfCLD3Ztbth3Hr/dYyMBMcGJMbeidx+6HhuS1VFlnoKH5xZoqGBvj1wkYgukALt4oQZ1Dvg==
-X-Received: by 2002:a05:600c:3ba8:b0:39c:5bba:5406 with SMTP id n40-20020a05600c3ba800b0039c5bba5406mr15029119wms.120.1655555537181;
-        Sat, 18 Jun 2022 05:32:17 -0700 (PDT)
+        bh=qmSWtWUd+mMy8ZYoZTgQjYDztLIGNDdvta+tk149+dY=;
+        b=nQGNx6xusmIC6sbQfR5tJQDNozgFybJCv9ONZnpLnMzE12O6yD+qrF/KwmB5zPBdB7
+         ytaB6em8i9soKtuxxMcqThbC2H5AnrCCdAuzAbRsgqUoytfCXxj+NQ+aCMZ+ZZ+QnKLh
+         ZbSRbFerSXT1hpopcwl2GXggy+WVyj4Bb97piw0YHDmhuQSi/K4xLq6c+w/3dM6h/KFA
+         oPcTKpoh4CZb9GapN2UcRI3fGyrQCSU1wVLzfPizOn8SHDyPnlWQqCn9xcazQzorttsy
+         Tv8hqh5fc3R7uW1SBvp700bvSqT75HqJ/fkDGvVgenG3WYZDW/g9lSNCa7VippMx/Sgg
+         kl/A==
+X-Gm-Message-State: AJIora+Nkf9E0zrfLxdqNQrQgx3MBt6qZf+zZbgZ4TpovO+CVql1FF3t
+        MW1R24ZNhzmw0PtZEXjIYzDDAw==
+X-Google-Smtp-Source: AGRyM1sfPQ5XTH8REWSlcNVbh+KVLu6pjXz8b6gchhSbSGxDuCamFh0CMH0mba5q/rzWCUN22eIJUA==
+X-Received: by 2002:a05:6000:1b03:b0:210:3372:2bd9 with SMTP id f3-20020a0560001b0300b0021033722bd9mr14215037wrz.704.1655555531747;
+        Sat, 18 Jun 2022 05:32:11 -0700 (PDT)
 Received: from henark71.. ([51.37.234.167])
-        by smtp.gmail.com with ESMTPSA id az10-20020adfe18a000000b00210396b2eaesm9292305wrb.45.2022.06.18.05.32.15
+        by smtp.gmail.com with ESMTPSA id az10-20020adfe18a000000b00210396b2eaesm9292305wrb.45.2022.06.18.05.32.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 18 Jun 2022 05:32:16 -0700 (PDT)
+        Sat, 18 Jun 2022 05:32:11 -0700 (PDT)
 From:   Conor Dooley <mail@conchuod.ie>
 To:     David Airlie <airlied@linux.ie>, Daniel Vetter <daniel@ffwll.ch>,
         Rob Herring <robh+dt@kernel.org>,
@@ -76,9 +76,9 @@ Cc:     Thomas Gleixner <tglx@linutronix.de>,
         linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org,
         alsa-devel@alsa-project.org, linux-spi@vger.kernel.org,
         linux-riscv@lists.infradead.org
-Subject: [PATCH 10/14] riscv: dts: canaan: fix mmc node names
-Date:   Sat, 18 Jun 2022 13:30:32 +0100
-Message-Id: <20220618123035.563070-11-mail@conchuod.ie>
+Subject: [PATCH 07/14] riscv: dts: canaan: fix the k210's memory node
+Date:   Sat, 18 Jun 2022 13:30:29 +0100
+Message-Id: <20220618123035.563070-8-mail@conchuod.ie>
 X-Mailer: git-send-email 2.36.1
 In-Reply-To: <20220618123035.563070-1-mail@conchuod.ie>
 References: <20220618123035.563070-1-mail@conchuod.ie>
@@ -90,83 +90,36 @@ X-Mailing-List: dmaengine@vger.kernel.org
 
 From: Conor Dooley <conor.dooley@microchip.com>
 
-The newly-converted-to-dt-schema binding expects the mmc node name to be
-'^mmc(@.*)?$' so align the devicetree with the schema.
+The k210 memory node has a compatible string that does not match with
+any driver or dt-binding & has several non standard properties.
+Replace the reg names with a comment and delete the rest.
 
 Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
 ---
- arch/riscv/boot/dts/canaan/canaan_kd233.dts     | 2 +-
- arch/riscv/boot/dts/canaan/sipeed_maix_bit.dts  | 2 +-
- arch/riscv/boot/dts/canaan/sipeed_maix_dock.dts | 2 +-
- arch/riscv/boot/dts/canaan/sipeed_maix_go.dts   | 2 +-
- arch/riscv/boot/dts/canaan/sipeed_maixduino.dts | 2 +-
- 5 files changed, 5 insertions(+), 5 deletions(-)
+---
+ arch/riscv/boot/dts/canaan/k210.dtsi | 6 ------
+ 1 file changed, 6 deletions(-)
 
-diff --git a/arch/riscv/boot/dts/canaan/canaan_kd233.dts b/arch/riscv/boot/dts/canaan/canaan_kd233.dts
-index 039b92abf046..40992d495aa8 100644
---- a/arch/riscv/boot/dts/canaan/canaan_kd233.dts
-+++ b/arch/riscv/boot/dts/canaan/canaan_kd233.dts
-@@ -142,7 +142,7 @@ &spi1 {
- 	cs-gpios = <&gpio0 16 GPIO_ACTIVE_LOW>;
- 	status = "okay";
+diff --git a/arch/riscv/boot/dts/canaan/k210.dtsi b/arch/riscv/boot/dts/canaan/k210.dtsi
+index 44d338514761..287ea6eebe47 100644
+--- a/arch/riscv/boot/dts/canaan/k210.dtsi
++++ b/arch/riscv/boot/dts/canaan/k210.dtsi
+@@ -69,15 +69,9 @@ cpu1_intc: interrupt-controller {
  
--	slot@0 {
-+	mmc@0 {
- 		compatible = "mmc-spi-slot";
- 		reg = <0>;
- 		voltage-ranges = <3300 3300>;
-diff --git a/arch/riscv/boot/dts/canaan/sipeed_maix_bit.dts b/arch/riscv/boot/dts/canaan/sipeed_maix_bit.dts
-index b9e30df127fe..5e809d0e11fb 100644
---- a/arch/riscv/boot/dts/canaan/sipeed_maix_bit.dts
-+++ b/arch/riscv/boot/dts/canaan/sipeed_maix_bit.dts
-@@ -189,7 +189,7 @@ &spi1 {
- 	cs-gpios = <&gpio0 13 GPIO_ACTIVE_LOW>;
- 	status = "okay";
+ 	sram: memory@80000000 {
+ 		device_type = "memory";
+-		compatible = "canaan,k210-sram";
+ 		reg = <0x80000000 0x400000>,
+ 		      <0x80400000 0x200000>,
+ 		      <0x80600000 0x200000>;
+-		reg-names = "sram0", "sram1", "aisram";
+-		clocks = <&sysclk K210_CLK_SRAM0>,
+-			 <&sysclk K210_CLK_SRAM1>,
+-			 <&sysclk K210_CLK_AI>;
+-		clock-names = "sram0", "sram1", "aisram";
+ 	};
  
--	slot@0 {
-+	mmc@0 {
- 		compatible = "mmc-spi-slot";
- 		reg = <0>;
- 		voltage-ranges = <3300 3300>;
-diff --git a/arch/riscv/boot/dts/canaan/sipeed_maix_dock.dts b/arch/riscv/boot/dts/canaan/sipeed_maix_dock.dts
-index 8d23401b0bbb..4be5ffac6b4a 100644
---- a/arch/riscv/boot/dts/canaan/sipeed_maix_dock.dts
-+++ b/arch/riscv/boot/dts/canaan/sipeed_maix_dock.dts
-@@ -191,7 +191,7 @@ &spi1 {
- 	cs-gpios = <&gpio0 13 GPIO_ACTIVE_LOW>;
- 	status = "okay";
- 
--	slot@0 {
-+	mmc@0 {
- 		compatible = "mmc-spi-slot";
- 		reg = <0>;
- 		voltage-ranges = <3300 3300>;
-diff --git a/arch/riscv/boot/dts/canaan/sipeed_maix_go.dts b/arch/riscv/boot/dts/canaan/sipeed_maix_go.dts
-index 24fd83b43d9d..5c63f79b18ec 100644
---- a/arch/riscv/boot/dts/canaan/sipeed_maix_go.dts
-+++ b/arch/riscv/boot/dts/canaan/sipeed_maix_go.dts
-@@ -199,7 +199,7 @@ &spi1 {
- 	cs-gpios = <&gpio0 13 GPIO_ACTIVE_LOW>;
- 	status = "okay";
- 
--	slot@0 {
-+	mmc@0 {
- 		compatible = "mmc-spi-slot";
- 		reg = <0>;
- 		voltage-ranges = <3300 3300>;
-diff --git a/arch/riscv/boot/dts/canaan/sipeed_maixduino.dts b/arch/riscv/boot/dts/canaan/sipeed_maixduino.dts
-index 25341f38292a..59f7eaf74655 100644
---- a/arch/riscv/boot/dts/canaan/sipeed_maixduino.dts
-+++ b/arch/riscv/boot/dts/canaan/sipeed_maixduino.dts
-@@ -164,7 +164,7 @@ &spi1 {
- 	cs-gpios = <&gpio1_0 2 GPIO_ACTIVE_LOW>;
- 	status = "okay";
- 
--	slot@0 {
-+	mmc@0 {
- 		compatible = "mmc-spi-slot";
- 		reg = <0>;
- 		voltage-ranges = <3300 3300>;
+ 	clocks {
 -- 
 2.36.1
 
