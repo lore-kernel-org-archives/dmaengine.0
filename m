@@ -2,47 +2,47 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E875ACCA47E
-	for <dmaengine@archiver.kernel.org>; Wed, 22 Jun 2022 19:39:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C4ABDC43334
+	for <dmaengine@archiver.kernel.org>; Wed, 22 Jun 2022 20:05:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1359490AbiFVTjG (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 22 Jun 2022 15:39:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47898 "EHLO
+        id S234514AbiFVUFR (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 22 Jun 2022 16:05:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47914 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1359854AbiFVTih (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Wed, 22 Jun 2022 15:38:37 -0400
+        with ESMTP id S1359595AbiFVTif (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Wed, 22 Jun 2022 15:38:35 -0400
 Received: from mga01.intel.com (mga01.intel.com [192.55.52.88])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4CD4517E0E;
-        Wed, 22 Jun 2022 12:38:34 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E1F4C3FD88;
+        Wed, 22 Jun 2022 12:38:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1655926714; x=1687462714;
+  t=1655926709; x=1687462709;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=b2jYdUokYSrhLLJ65hnYCKypoanrr8xEmX1WraLh+kI=;
-  b=XhWTImSyKzEAZGaufTfISFbQHCzPjilYzwtGxHs900QtUjUVMODUUHeG
-   1PUiqDCtUIy24S4z57oVkFEIoqrRRLKUjmXaEAGgf4m7X92VRLvGXXfAF
-   Tztqkdd4usw9EBtqTULzA9SECMux5CzDoKZYQFkkr3rXNDm2ra1cLcGOb
-   vTBG5/gqpeXV9iVzobqAPjeS2bNIwBFI9+frz/YH/l3fuNzcxEHvQ+68U
-   zhB8+xDXVFuMcgSEELWEEb8wmCJtItXCiazFU//eLywKbHUCS9xTM/+kp
-   jQPtG8nbIkUZ7EFt7HOcJnyyyfp9wlznBm1+qdh+LPYVXmZHG4gw5ZBef
-   g==;
-X-IronPort-AV: E=McAfee;i="6400,9594,10386"; a="305983112"
+  bh=IWEAw0BMzgbgDY1rwfN7uYNpUJiLcW/iUQ1Hnk7la2k=;
+  b=HrQ7LWP/OX/1yIB0icKU98J+jztuKO32SLlqIngKMr91OnyuIO7brStr
+   t5PEvUBBXm4cAnRT5EbTCGimXrZ4IvlWreOZsGQ22ml5x3cqkeMCEPUj0
+   //9Y2YrkJh3jZX1ip6R2dktVpdnry5E14SD2xosws+KGSclPBlBkWcoFD
+   pMT/i6qx7zGuUpkR16FMVB1SkVkHj8lpEuINKJf+XOYnymn+OuAT8LY4q
+   nVReOEMpckzfsdSHdMEzYTzGlu9MVkHEDU4d7Wwnu+0HbaXp+R4oNgzYk
+   gPhh+qQM+OMEqvH97LYLQQ40waaDsETrgJItgaolxuVAwiBT6tD4Fy92W
+   A==;
+X-IronPort-AV: E=McAfee;i="6400,9594,10386"; a="305983101"
 X-IronPort-AV: E=Sophos;i="5.92,212,1650956400"; 
-   d="scan'208";a="305983112"
+   d="scan'208";a="305983101"
 Received: from orsmga004.jf.intel.com ([10.7.209.38])
-  by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Jun 2022 12:38:33 -0700
+  by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Jun 2022 12:38:29 -0700
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="5.92,212,1650956400"; 
-   d="scan'208";a="715542104"
+   d="scan'208";a="715542100"
 Received: from bwalker-desk.ch.intel.com ([143.182.136.162])
-  by orsmga004.jf.intel.com with ESMTP; 22 Jun 2022 12:38:33 -0700
+  by orsmga004.jf.intel.com with ESMTP; 22 Jun 2022 12:38:29 -0700
 From:   Ben Walker <benjamin.walker@intel.com>
 To:     vkoul@kernel.org
 Cc:     dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v4 13/15] dmaengine: idxd: idxd_desc.id is now a u16
-Date:   Wed, 22 Jun 2022 12:37:51 -0700
-Message-Id: <20220622193753.3044206-14-benjamin.walker@intel.com>
+Subject: [PATCH v4 09/15] dmaengine: Remove last, used from dma_tx_state
+Date:   Wed, 22 Jun 2022 12:37:47 -0700
+Message-Id: <20220622193753.3044206-10-benjamin.walker@intel.com>
 X-Mailer: git-send-email 2.35.1
 In-Reply-To: <20220622193753.3044206-1-benjamin.walker@intel.com>
 References: <20220503200728.2321188-1-benjamin.walker@intel.com>
@@ -53,26 +53,56 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-This is going to be packed into the cookie. It does not need to be
-negative or larger than u16.
+Nothing uses these and they don't convey usable information.
 
 Signed-off-by: Ben Walker <benjamin.walker@intel.com>
 ---
- drivers/dma/idxd/idxd.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/dma/dmaengine.h   | 4 ----
+ include/linux/dmaengine.h | 4 ----
+ 2 files changed, 8 deletions(-)
 
-diff --git a/drivers/dma/idxd/idxd.h b/drivers/dma/idxd/idxd.h
-index fed0dfc1eaa83..bd93ada32c89d 100644
---- a/drivers/dma/idxd/idxd.h
-+++ b/drivers/dma/idxd/idxd.h
-@@ -325,7 +325,7 @@ struct idxd_desc {
- 	struct dma_async_tx_descriptor txd;
- 	struct llist_node llnode;
- 	struct list_head list;
--	int id;
-+	u16 id;
- 	int cpu;
- 	struct idxd_wq *wq;
+diff --git a/drivers/dma/dmaengine.h b/drivers/dma/dmaengine.h
+index e72876a512a39..08c7bd7cfc229 100644
+--- a/drivers/dma/dmaengine.h
++++ b/drivers/dma/dmaengine.h
+@@ -74,8 +74,6 @@ static inline enum dma_status dma_cookie_status(struct dma_chan *chan,
+ 	complete = chan->completed_cookie;
+ 	barrier();
+ 	if (state) {
+-		state->last = complete;
+-		state->used = used;
+ 		state->residue = 0;
+ 		state->in_flight_bytes = 0;
+ 	}
+@@ -96,8 +94,6 @@ static inline void dma_set_tx_state(struct dma_tx_state *st,
+ 	if (!st)
+ 		return;
+ 
+-	st->last = last;
+-	st->used = used;
+ 	st->residue = residue;
+ }
+ 
+diff --git a/include/linux/dmaengine.h b/include/linux/dmaengine.h
+index c34f21d19c423..e3e5311b6bb64 100644
+--- a/include/linux/dmaengine.h
++++ b/include/linux/dmaengine.h
+@@ -716,16 +716,12 @@ static inline struct dma_async_tx_descriptor *txd_next(struct dma_async_tx_descr
+ /**
+  * struct dma_tx_state - filled in to report the status of
+  * a transfer.
+- * @last: last completed DMA cookie
+- * @used: last issued DMA cookie (i.e. the one in progress)
+  * @residue: the remaining number of bytes left to transmit
+  *	on the selected transfer for states DMA_IN_PROGRESS and
+  *	DMA_PAUSED if this is implemented in the driver, else 0
+  * @in_flight_bytes: amount of data in bytes cached by the DMA.
+  */
+ struct dma_tx_state {
+-	dma_cookie_t last;
+-	dma_cookie_t used;
+ 	u32 residue;
+ 	u32 in_flight_bytes;
  };
 -- 
 2.35.1
