@@ -2,51 +2,51 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CE5A8C43334
-	for <dmaengine@archiver.kernel.org>; Mon, 27 Jun 2022 19:41:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3F816CCA482
+	for <dmaengine@archiver.kernel.org>; Mon, 27 Jun 2022 19:41:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240483AbiF0Tl1 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 27 Jun 2022 15:41:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54464 "EHLO
+        id S240454AbiF0Tl3 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 27 Jun 2022 15:41:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54474 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240450AbiF0TlW (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Mon, 27 Jun 2022 15:41:22 -0400
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F826175A3
-        for <dmaengine@vger.kernel.org>; Mon, 27 Jun 2022 12:41:20 -0700 (PDT)
-Received: by mail-wm1-x32e.google.com with SMTP id bi22-20020a05600c3d9600b003a04de22ab6so1339219wmb.1
-        for <dmaengine@vger.kernel.org>; Mon, 27 Jun 2022 12:41:20 -0700 (PDT)
+        with ESMTP id S240447AbiF0TlY (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Mon, 27 Jun 2022 15:41:24 -0400
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C1C461704F
+        for <dmaengine@vger.kernel.org>; Mon, 27 Jun 2022 12:41:23 -0700 (PDT)
+Received: by mail-wr1-x42d.google.com with SMTP id b26so2095946wrc.2
+        for <dmaengine@vger.kernel.org>; Mon, 27 Jun 2022 12:41:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=conchuod.ie; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=wA+ekkpjde0Zx9cXanks0YsUmdtDvWig/ia7r5xRwsg=;
-        b=QizeLMoa4P+K5NRfW783uv00QZQ9FUl1yrJSFvTDQ91NxzrJIEoQC1vyn7V6UN1aBI
-         KC47cW6AyaaQsZOVeSRRRcDH6KVsIokTGyvzOhvNcwVXXmO9A5cBaI7DAxVPi39AhkBc
-         suh5GymLQ6pb0Omy1yzYvTL9j0If9mnJhIDj0ku/aQjAl5BJ1s4s5lX4boSmhT/3axFd
-         9BaZlYgOo9FI3fxMT4EBBRC7Mae04h+WHW7wbDtw8HercIYexvTAN752j8mUDTucVOX3
-         dyTU0rPZKbAWUOVQJDUXIMdakema1v4gXRBDbYJnKue0E1FRC9jfhN3HZzfcP4SKHOku
-         6lwg==
+        bh=rPDKSpav5hSShjOawRd8sA//kdWQiIl6x3DL8tBafaU=;
+        b=C1x747pHFCl5BIqO2tKVzQODSEqSKX0M+cQ0VD6TIiatD4/0B898wZwGc+vBUmCQ0Z
+         ADkKctZpaFeqts/DgO6pXu3oW1ot2vW9NotfT4U4Xa+zwfZDDxaHFDiYVvm2R9CNqtBj
+         E06Rcknh3CHYad9cflRuFOXZX1vmY5B3c3ybS+4vwbu/3Wp9I852RvQRqqNz4cuKOOgI
+         n6ASQz3H09UYndOSN0Sl15ncyePaPZCwy8CrQeWv2hWUXslPkctHVLpfaWL3RtoOlIom
+         6s/OUA/vQFDetPTA2Tu0u58R+o5XSwX+2TI4F7Y5afZgDMoZsAgvkVAFJy3S7tg8MlqF
+         4qZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=wA+ekkpjde0Zx9cXanks0YsUmdtDvWig/ia7r5xRwsg=;
-        b=0PWlZfuEiXJ6pq0PCCPcUWSCmhLG63iMhqfqMKcH0CK1TQvKNf+hcH+uMAo83DM8BD
-         ybS/6cqejvLPUeb0gJGoZaNbXAhZStX5MsP6jqLNTutk6FqbStmc0xU863hDDRFP7mwm
-         2TeqhRXcL/8x51ZJkxuhuuBFVpUekWNNFEn6laaGcTOGxat43y/C+AxjX6/LY7nKeuvS
-         /OhI8pvb6jalY432xAZNmhK50DGJBeTNh0tx/IQuXCf3tj5wOrOTK7RZxcmrYw1zjVUe
-         wDWo/lyQ/3e8QUcV6bpaKTW/LpGxVUB0HsfVsXZV2bnzmn5dlbuaFYcfl6+x3RNkijj6
-         PPNA==
-X-Gm-Message-State: AJIora+Q9RJGO/lzRu5Z45SgsU8RryJnFr1oyGgGR4zHo0EWDJ373A8S
-        +Y0wiS5OzDQiEBkV/OvX0XxCVg==
-X-Google-Smtp-Source: AGRyM1sGEP9IS4aUetkgrW5cPwURwUYGFTM9jMyAFxw9F86IEWrWl9NXn+BD46xMXN0gtp4uxfYclw==
-X-Received: by 2002:a05:600c:4e04:b0:39c:66bc:46d2 with SMTP id b4-20020a05600c4e0400b0039c66bc46d2mr22594341wmq.71.1656358878796;
-        Mon, 27 Jun 2022 12:41:18 -0700 (PDT)
+        bh=rPDKSpav5hSShjOawRd8sA//kdWQiIl6x3DL8tBafaU=;
+        b=2ixwPXAlWeTIjpxmUJrD1PDjLKS+sEhEOzpa7nhazrtVh055zEUbMxRKUJUIBwFv4b
+         ZkjaFiO73gTLhUW+DdU23g/UNzU5NfOjGA+PYiCRf8+ZC8zPpNblxyAH4dBfVvnaG6Jm
+         c8HlYv1ASqQHQ7yHTRJE8jaM/Af5dTpiAXKwDtWR8K05zNv6/6xV1GMJmaALKMebAhob
+         ut9Lu74DZlqmqW8FGp91zpinDd6MQlpoj5PPbzO8BPcR3kO5tB3u0K1H+WuhB8xrNCFY
+         k3X7vbPkcyLCtfGD+HMBmjyYQ5I16FJ771SJVMQzQFYeqtwZ9MdfC8T8UJdfRp9F3mUr
+         5FTw==
+X-Gm-Message-State: AJIora/s1zyYCmhfV1BEkr0g+a8iMRbKusngbFZqCjuDplayFVuYTYuX
+        vN9PYASsWNXnz0du+9jbRXX/Jw==
+X-Google-Smtp-Source: AGRyM1tVL2lpq2bKGJHZFM8okKWTC0C0B/ryfKeZtLnMa7gdCDbQ3Nw3Z3guL69dxyfpeL6LZkAb/A==
+X-Received: by 2002:a5d:4592:0:b0:21b:8e50:7fb9 with SMTP id p18-20020a5d4592000000b0021b8e507fb9mr13593921wrq.428.1656358882170;
+        Mon, 27 Jun 2022 12:41:22 -0700 (PDT)
 Received: from henark71.. ([51.37.234.167])
-        by smtp.gmail.com with ESMTPSA id e9-20020a5d4e89000000b0021a3a87fda9sm11428047wru.47.2022.06.27.12.41.17
+        by smtp.gmail.com with ESMTPSA id e9-20020a5d4e89000000b0021a3a87fda9sm11428047wru.47.2022.06.27.12.41.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 Jun 2022 12:41:18 -0700 (PDT)
+        Mon, 27 Jun 2022 12:41:21 -0700 (PDT)
 From:   Conor Dooley <mail@conchuod.ie>
 To:     David Airlie <airlied@linux.ie>, Daniel Vetter <daniel@ffwll.ch>,
         Rob Herring <robh+dt@kernel.org>,
@@ -76,9 +76,9 @@ Cc:     Thomas Gleixner <tglx@linutronix.de>,
         linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org,
         alsa-devel@alsa-project.org, linux-spi@vger.kernel.org,
         linux-riscv@lists.infradead.org
-Subject: [PATCH v2 02/16] dt-bindings: display: panel: allow ilitek,ili9341 in isolation
-Date:   Mon, 27 Jun 2022 20:39:50 +0100
-Message-Id: <20220627194003.2395484-3-mail@conchuod.ie>
+Subject: [PATCH v2 04/16] spi: dt-bindings: dw-apb-ssi: update spi-{r,t}x-bus-width
+Date:   Mon, 27 Jun 2022 20:39:52 +0100
+Message-Id: <20220627194003.2395484-5-mail@conchuod.ie>
 X-Mailer: git-send-email 2.36.1
 In-Reply-To: <20220627194003.2395484-1-mail@conchuod.ie>
 References: <20220627194003.2395484-1-mail@conchuod.ie>
@@ -90,45 +90,43 @@ X-Mailing-List: dmaengine@vger.kernel.org
 
 From: Conor Dooley <conor.dooley@microchip.com>
 
-The dt-binding for the ilitek,ili9341 does not allow it to be used as a
-compatible in isolation. This generates a warning for the Canaan kd233
-devicetree:
-arch/riscv/boot/dts/canaan/canaan_kd233.dtb: panel@0: compatible:0: 'ilitek,ili9341' is not one of ['st,sf-tc240t-9370-t']
-        From schema: Documentation/devicetree/bindings/display/panel/ilitek,ili9341.yaml
-arch/riscv/boot/dts/canaan/canaan_kd233.dtb: panel@0: compatible: ['ilitek,ili9341'] is too short
-        From schema: Documentation/devicetree/bindings/display/panel/ilitek,ili9341.yaml
-Allow ilitek,ili9341 to be selected in isolation.
+Most users of dw-apb-ssi use spi-{r,t}x-bus-width of 1, however the
+Canaan k210 is wired up for a width of 4.
+Quoting Serge:
+The modern DW APB SSI controllers of v.4.* and newer also support the
+enhanced SPI Modes too (Dual, Quad and Octal). Since the IP-core
+version is auto-detected at run-time there is no way to create a
+DT-schema correctly constraining the Rx/Tx SPI bus widths.
+/endquote
 
+As such, drop the restriction on only supporting a bus width of 1.
+
+Link: https://lore.kernel.org/all/20220620205654.g7fyipwytbww5757@mobilestation/
 Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
 ---
- .../bindings/display/panel/ilitek,ili9341.yaml     | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+Serge, I dropped your R-b when I swapped to the default
+property since it changed the enum.
+---
+ Documentation/devicetree/bindings/spi/snps,dw-apb-ssi.yaml | 6 ------
+ 1 file changed, 6 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/display/panel/ilitek,ili9341.yaml b/Documentation/devicetree/bindings/display/panel/ilitek,ili9341.yaml
-index 94ca92878434..c402bedaa37a 100644
---- a/Documentation/devicetree/bindings/display/panel/ilitek,ili9341.yaml
-+++ b/Documentation/devicetree/bindings/display/panel/ilitek,ili9341.yaml
-@@ -19,12 +19,14 @@ allOf:
+diff --git a/Documentation/devicetree/bindings/spi/snps,dw-apb-ssi.yaml b/Documentation/devicetree/bindings/spi/snps,dw-apb-ssi.yaml
+index e25d44c218f2..0a43d6e0ef91 100644
+--- a/Documentation/devicetree/bindings/spi/snps,dw-apb-ssi.yaml
++++ b/Documentation/devicetree/bindings/spi/snps,dw-apb-ssi.yaml
+@@ -143,12 +143,6 @@ patternProperties:
+         minimum: 0
+         maximum: 3
  
- properties:
-   compatible:
--    items:
--      - enum:
--          # ili9341 240*320 Color on stm32f429-disco board
--          - st,sf-tc240t-9370-t
--          - adafruit,yx240qv29
--      - const: ilitek,ili9341
-+    oneOf:
-+      - items:
-+          - const: ilitek,ili9341
-+      - items:
-+          - enum:
-+              - st,sf-tc240t-9370-t
-+              - adafruit,yx240qv29
-+          - const: ilitek,ili9341
+-      spi-rx-bus-width:
+-        const: 1
+-
+-      spi-tx-bus-width:
+-        const: 1
+-
+ unevaluatedProperties: false
  
-   reg: true
- 
+ required:
 -- 
 2.36.1
 
