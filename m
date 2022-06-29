@@ -2,106 +2,95 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B4898C433EF
-	for <dmaengine@archiver.kernel.org>; Wed, 29 Jun 2022 03:58:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 40E41C433EF
+	for <dmaengine@archiver.kernel.org>; Wed, 29 Jun 2022 09:30:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230514AbiF2D6e (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 28 Jun 2022 23:58:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48092 "EHLO
+        id S232869AbiF2Jaa (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 29 Jun 2022 05:30:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42860 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230526AbiF2D62 (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Tue, 28 Jun 2022 23:58:28 -0400
-Received: from szxga02-in.huawei.com (szxga02-in.huawei.com [45.249.212.188])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EF2021FCF1;
-        Tue, 28 Jun 2022 20:58:25 -0700 (PDT)
-Received: from dggemv711-chm.china.huawei.com (unknown [172.30.72.54])
-        by szxga02-in.huawei.com (SkyGuard) with ESMTP id 4LXnhK01RbzkWdG;
-        Wed, 29 Jun 2022 11:56:33 +0800 (CST)
-Received: from kwepemm600007.china.huawei.com (7.193.23.208) by
- dggemv711-chm.china.huawei.com (10.1.198.66) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2375.24; Wed, 29 Jun 2022 11:58:20 +0800
-Received: from localhost.localdomain (10.69.192.56) by
- kwepemm600007.china.huawei.com (7.193.23.208) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2375.24; Wed, 29 Jun 2022 11:58:20 +0800
-From:   Jie Hai <haijie1@huawei.com>
-To:     <vkoul@kernel.org>, <wangzhou1@hisilicon.com>
-CC:     <dmaengine@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-Subject: [PATCH v2 1/7] dmaengine: hisilicon: Disable channels when unregister hisi_dma
-Date:   Wed, 29 Jun 2022 11:55:43 +0800
-Message-ID: <20220629035549.44181-2-haijie1@huawei.com>
-X-Mailer: git-send-email 2.33.0
-In-Reply-To: <20220629035549.44181-1-haijie1@huawei.com>
-References: <20220625074422.3479591-1-haijie1@huawei.com>
- <20220629035549.44181-1-haijie1@huawei.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7BIT
-Content-Type:   text/plain; charset=US-ASCII
-X-Originating-IP: [10.69.192.56]
-X-ClientProxiedBy: dggems705-chm.china.huawei.com (10.3.19.182) To
- kwepemm600007.china.huawei.com (7.193.23.208)
-X-CFilter-Loop: Reflected
+        with ESMTP id S232883AbiF2JaT (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Wed, 29 Jun 2022 05:30:19 -0400
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 606133A187;
+        Wed, 29 Jun 2022 02:30:16 -0700 (PDT)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 678C91477;
+        Wed, 29 Jun 2022 02:30:16 -0700 (PDT)
+Received: from usa.arm.com (unknown [10.162.16.71])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPA id 7E4C23F792;
+        Wed, 29 Jun 2022 02:30:14 -0700 (PDT)
+From:   Vivek Gautam <vivek.gautam@arm.com>
+To:     dmaengine@vger.kernel.org, vkoul@kernel.org
+Cc:     linux-kernel@vger.kernel.org, robin.murphy@arm.com,
+        Vivek Gautam <vivek.gautam@arm.com>
+Subject: [PATCH] dmaengine: pl330: Set DMA_INTERRUPT capability and add related callback
+Date:   Wed, 29 Jun 2022 15:00:03 +0530
+Message-Id: <20220629093003.19440-1-vivek.gautam@arm.com>
+X-Mailer: git-send-email 2.17.1
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-When hisi_dma is unloaded or unbinded, all of channels should be
-disabled. This patch disables DMA channels when driver is unloaded
-or unbinded.
+With the verification for DMA_INTERRUPT capability added to the dmatest
+module, the dmatest fails to start for various channels of pl330 dma
+controller. So, set the DMA_INTERRUPT capability and add the required
+callback method to set the transaction descriptor flags.
 
-Fixes: e9f08b65250d ("dmaengine: hisilicon: Add Kunpeng DMA engine support")
-Signed-off-by: Jie Hai <haijie1@huawei.com>
+Signed-off-by: Vivek Gautam <vivek.gautam@arm.com>
 ---
- drivers/dma/hisi_dma.c | 14 +++++++++-----
- 1 file changed, 9 insertions(+), 5 deletions(-)
+ drivers/dma/pl330.c | 24 ++++++++++++++++++++
+ 1 file changed, 24 insertions(+)
 
-diff --git a/drivers/dma/hisi_dma.c b/drivers/dma/hisi_dma.c
-index 43817ced3a3e..98bc488893cc 100644
---- a/drivers/dma/hisi_dma.c
-+++ b/drivers/dma/hisi_dma.c
-@@ -180,7 +180,8 @@ static void hisi_dma_reset_qp_point(struct hisi_dma_dev *hdma_dev, u32 index)
- 	hisi_dma_chan_write(hdma_dev->base, HISI_DMA_CQ_HEAD_PTR, index, 0);
+diff --git a/drivers/dma/pl330.c b/drivers/dma/pl330.c
+index 858400e42ec0..b80e48f0970b 100644
+--- a/drivers/dma/pl330.c
++++ b/drivers/dma/pl330.c
+@@ -2757,6 +2757,28 @@ static struct dma_async_tx_descriptor *pl330_prep_dma_cyclic(
+ 	return &desc->txd;
  }
  
--static void hisi_dma_reset_hw_chan(struct hisi_dma_chan *chan)
-+static void hisi_dma_reset_or_disable_hw_chan(struct hisi_dma_chan *chan,
-+					      bool disable)
- {
- 	struct hisi_dma_dev *hdma_dev = chan->hdma_dev;
- 	u32 index = chan->qp_num, tmp;
-@@ -201,8 +202,11 @@ static void hisi_dma_reset_hw_chan(struct hisi_dma_chan *chan)
- 	hisi_dma_do_reset(hdma_dev, index);
- 	hisi_dma_reset_qp_point(hdma_dev, index);
- 	hisi_dma_pause_dma(hdma_dev, index, false);
--	hisi_dma_enable_dma(hdma_dev, index, true);
--	hisi_dma_unmask_irq(hdma_dev, index);
++static struct dma_async_tx_descriptor *
++pl330_dma_prep_interrupt(struct dma_chan *chan, unsigned long flags)
++{
++	struct dma_pl330_chan *pch = to_pchan(chan);
++	struct dma_pl330_desc *desc;
 +
-+	if (!disable) {
-+		hisi_dma_enable_dma(hdma_dev, index, true);
-+		hisi_dma_unmask_irq(hdma_dev, index);
++	if (unlikely(!pch))
++		return NULL;
++
++	desc = pl330_get_desc(pch);
++	if (!desc) {
++		dev_err(pch->dmac->ddma.dev, "%s:%d Unable to fetch desc\n",
++			__func__, __LINE__);
++		return NULL;
 +	}
++
++	/* Set the flags that are passed downstream */
++	desc->txd.flags = flags;
++
++	return &desc->txd;
++}
++
+ static struct dma_async_tx_descriptor *
+ pl330_prep_dma_memcpy(struct dma_chan *chan, dma_addr_t dst,
+ 		dma_addr_t src, size_t len, unsigned long flags)
+@@ -3111,6 +3133,7 @@ pl330_probe(struct amba_device *adev, const struct amba_id *id)
+ 	}
  
- 	ret = readl_relaxed_poll_timeout(hdma_dev->base +
- 		HISI_DMA_Q_FSM_STS + index * HISI_DMA_OFFSET, tmp,
-@@ -218,7 +222,7 @@ static void hisi_dma_free_chan_resources(struct dma_chan *c)
- 	struct hisi_dma_chan *chan = to_hisi_dma_chan(c);
- 	struct hisi_dma_dev *hdma_dev = chan->hdma_dev;
- 
--	hisi_dma_reset_hw_chan(chan);
-+	hisi_dma_reset_or_disable_hw_chan(chan, false);
- 	vchan_free_chan_resources(&chan->vc);
- 
- 	memset(chan->sq, 0, sizeof(struct hisi_dma_sqe) * hdma_dev->chan_depth);
-@@ -394,7 +398,7 @@ static void hisi_dma_enable_qp(struct hisi_dma_dev *hdma_dev, u32 qp_index)
- 
- static void hisi_dma_disable_qp(struct hisi_dma_dev *hdma_dev, u32 qp_index)
- {
--	hisi_dma_reset_hw_chan(&hdma_dev->chan[qp_index]);
-+	hisi_dma_reset_or_disable_hw_chan(&hdma_dev->chan[qp_index], true);
- }
- 
- static void hisi_dma_enable_qps(struct hisi_dma_dev *hdma_dev)
+ 	dma_cap_set(DMA_MEMCPY, pd->cap_mask);
++	dma_cap_set(DMA_INTERRUPT, pd->cap_mask);
+ 	if (pcfg->num_peri) {
+ 		dma_cap_set(DMA_SLAVE, pd->cap_mask);
+ 		dma_cap_set(DMA_CYCLIC, pd->cap_mask);
+@@ -3121,6 +3144,7 @@ pl330_probe(struct amba_device *adev, const struct amba_id *id)
+ 	pd->device_free_chan_resources = pl330_free_chan_resources;
+ 	pd->device_prep_dma_memcpy = pl330_prep_dma_memcpy;
+ 	pd->device_prep_dma_cyclic = pl330_prep_dma_cyclic;
++	pd->device_prep_dma_interrupt = pl330_dma_prep_interrupt;
+ 	pd->device_tx_status = pl330_tx_status;
+ 	pd->device_prep_slave_sg = pl330_prep_slave_sg;
+ 	pd->device_config = pl330_config;
 -- 
-2.33.0
+2.17.1
 
