@@ -2,51 +2,51 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 870ACC433EF
-	for <dmaengine@archiver.kernel.org>; Wed, 29 Jun 2022 18:44:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6B950CCA485
+	for <dmaengine@archiver.kernel.org>; Wed, 29 Jun 2022 18:44:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231334AbiF2Sow (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 29 Jun 2022 14:44:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55940 "EHLO
+        id S231396AbiF2Soz (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 29 Jun 2022 14:44:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56034 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231127AbiF2Sor (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Wed, 29 Jun 2022 14:44:47 -0400
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 54E2427FF0
-        for <dmaengine@vger.kernel.org>; Wed, 29 Jun 2022 11:44:44 -0700 (PDT)
-Received: by mail-wr1-x430.google.com with SMTP id i25so18272801wrc.13
-        for <dmaengine@vger.kernel.org>; Wed, 29 Jun 2022 11:44:44 -0700 (PDT)
+        with ESMTP id S231261AbiF2Sov (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Wed, 29 Jun 2022 14:44:51 -0400
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F0D6275FF
+        for <dmaengine@vger.kernel.org>; Wed, 29 Jun 2022 11:44:50 -0700 (PDT)
+Received: by mail-wr1-x431.google.com with SMTP id o4so19850425wrh.3
+        for <dmaengine@vger.kernel.org>; Wed, 29 Jun 2022 11:44:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=conchuod.ie; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=lSAtLBVYvrx4+26h7+GvQLFIbOLj8yUyLWcfE4t8YDc=;
-        b=Gg05/t+/FXPkRenwx1qHvhlOMODtFpKL/no0hINP8JMW14scbGTJqbUefdhtwratgU
-         grEGM8eU4lWFIiPESGiueYpts7cjDlJRLBIzM5ZsXVuH9FzkMr9tHsBgVVqjWBN1GlvK
-         8Q8loTffgUn8dEzgkBiOh2xMyV0VFHVAZAtsSavWDwGncJhky3H7ImOtJQlzgOOWAqUY
-         iJQrWXeLhD8IqbgRQGGdxV35uefbG0o1zSbrLcVIYjgZlRqMq28pTN5szQsAw/tFRiJo
-         YAy9bH1NwbpaHtrgHoUWaU2YAC7ZpC+O10b5BEj7lUVsyLa3x39mZw6dh7g0gC0fT41X
-         T7gQ==
+        bh=Juzz+Ngk10Ta05//fxfH00O+jv/gMrP+Bqb9Q3jKosQ=;
+        b=ZA8y7P8hKKrPtisjdtqQq+qA1CID6TRmuw8f26eSBGt1WTJeML7gtXTyV7fNJDHMK3
+         uuo7s6uFAg+bbTdr6RVne+0z6egOsvto5QiZ6mK0zZwxu/+Wi7VHR3Sih2KhTPitJxxv
+         lTfuAXeyZvMxoG6sYUHkPFi0QiV+MOFey0wVpULURsN00zFfHAxuzQa2wJRk2MJYufak
+         ZBER6WKxnutHozCshebTmqJ5yG6ZaDruFHXsj5/te+pMua81k77zKXbcbZvi+jh9fqcm
+         2tlxPmKfOjotnkDLVyD5TXiHh4tRn3SOWxgppXhFA3DURAdXDHGX1ICJCnx8LDK9p3Ha
+         1wZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=lSAtLBVYvrx4+26h7+GvQLFIbOLj8yUyLWcfE4t8YDc=;
-        b=p6BmxESCa4K4f61y43peygMizphmJNhImXYxOyqwxWK6UmspboAmepjAxmFFfTieV0
-         Xk9yWYXegSx70r+K7TFgtVg90A27gTXlwpJF8S0JFKKe8giuy085U4J1YQXpOL3a1oy8
-         xQEcwCTsidUDJxpPGUG802PT9eCL97/Zx/Oz+sw9+4inlx0FKKh/XyBt0PlFS4Eka0/6
-         3z3JNL8ruxzKQ38skHFmuTz5tGh8fuE5X1DPKNmp5TAjLqmtF34IUH5Vtd6/9DMoEWdy
-         bR8xaiOla/DdW9UwVegTafIQzUQmjjKkeMDpJM3jlJijXld9oLOe8qTkDlUdD+5XGnP6
-         LAiQ==
-X-Gm-Message-State: AJIora8b8kw/fHgr4wxIWOSXa8w0GkglnsFC/dfbXRYgnmFEjm43vbuf
-        2Zstihcb6scup9sGRDauY4bw7Q==
-X-Google-Smtp-Source: AGRyM1sKo8OaJK8TbEgNGzQ3er/g31kuw/qeXLGUV3MKWqoytAx3LrG09RNZ7rN7G4m3of4rSEmYUA==
-X-Received: by 2002:a5d:4e47:0:b0:21a:39fd:5bb5 with SMTP id r7-20020a5d4e47000000b0021a39fd5bb5mr4583796wrt.712.1656528282726;
-        Wed, 29 Jun 2022 11:44:42 -0700 (PDT)
+        bh=Juzz+Ngk10Ta05//fxfH00O+jv/gMrP+Bqb9Q3jKosQ=;
+        b=v3TUYij/jg0cssvuFNz9uNMZJfmOYu2NpX03O22PsGBmt8+denyUIJdRY+BH4zOWzW
+         ISYlgjDeTGqP/Iwsfx4Gt1NoS86oR3+Jzi9VWBK7GyQ2A41sFjR1QPqODx8Spx6gquMe
+         HxJhds4UfOBhutNz+V5GE9zo/HEkzSGGu0o6in/q93QfyMhGn/yAKRoxUmUvuInlZuCi
+         4WkJcucdmDnlepA8+F5TFc7Xc1VoBQL7GVcV9XnTe2TgZV1dNthz2YTQcRaP41/yESs6
+         7AP979h+eicMjSLUyLr0nqWRYcjn+AHpgQ44FBksBff4muYdsFmLVQHtdf4nHcSi/wq8
+         9GcQ==
+X-Gm-Message-State: AJIora9iMxXn39oUc762kTbSJgtnWtnIfcrPdWFxV+1PzvccYC9vAb9h
+        d+hrh/P2UeLC10PWzQYWffM+rA==
+X-Google-Smtp-Source: AGRyM1s0I5FJ4BJCXP+3NEy7+7xMkTJben+77vrmXua6sh2SuaEOzmm9e8Tj0lFsY/ZmuWdd66mstA==
+X-Received: by 2002:a5d:6d45:0:b0:21a:2f43:cb76 with SMTP id k5-20020a5d6d45000000b0021a2f43cb76mr4604259wri.254.1656528289159;
+        Wed, 29 Jun 2022 11:44:49 -0700 (PDT)
 Received: from henark71.. ([51.37.234.167])
-        by smtp.gmail.com with ESMTPSA id u23-20020a7bcb17000000b0039aef592ca0sm3834371wmj.35.2022.06.29.11.44.41
+        by smtp.gmail.com with ESMTPSA id u23-20020a7bcb17000000b0039aef592ca0sm3834371wmj.35.2022.06.29.11.44.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 29 Jun 2022 11:44:42 -0700 (PDT)
+        Wed, 29 Jun 2022 11:44:48 -0700 (PDT)
 From:   Conor Dooley <mail@conchuod.ie>
 To:     David Airlie <airlied@linux.ie>, Daniel Vetter <daniel@ffwll.ch>,
         Rob Herring <robh+dt@kernel.org>,
@@ -75,9 +75,9 @@ Cc:     Thomas Gleixner <tglx@linutronix.de>,
         linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org,
         alsa-devel@alsa-project.org, linux-spi@vger.kernel.org,
         linux-riscv@lists.infradead.org
-Subject: [PATCH v3 04/15] spi: dt-bindings: dw-apb-ssi: update spi-{r,t}x-bus-width
-Date:   Wed, 29 Jun 2022 19:43:33 +0100
-Message-Id: <20220629184343.3438856-5-mail@conchuod.ie>
+Subject: [PATCH v3 08/15] riscv: dts: canaan: fix the k210's timer nodes
+Date:   Wed, 29 Jun 2022 19:43:37 +0100
+Message-Id: <20220629184343.3438856-9-mail@conchuod.ie>
 X-Mailer: git-send-email 2.36.1
 In-Reply-To: <20220629184343.3438856-1-mail@conchuod.ie>
 References: <20220629184343.3438856-1-mail@conchuod.ie>
@@ -89,40 +89,91 @@ X-Mailing-List: dmaengine@vger.kernel.org
 
 From: Conor Dooley <conor.dooley@microchip.com>
 
-Most users of dw-apb-ssi use spi-{r,t}x-bus-width of 1, however the
-Canaan k210 is wired up for a width of 4.
-Quoting Serge:
-The modern DW APB SSI controllers of v.4.* and newer also support the
-enhanced SPI Modes too (Dual, Quad and Octal). Since the IP-core
-version is auto-detected at run-time there is no way to create a
-DT-schema correctly constraining the Rx/Tx SPI bus widths.
-/endquote
+The timers on the k210 have non standard interrupt configurations,
+which leads to dtbs_check warnings:
 
-As such, drop the restriction on only supporting a bus width of 1.
+k210_generic.dtb: timer@502d0000: interrupts: [[14], [15]] is too long
+From schema: Documentation/devicetree/bindings/timer/snps,dw-apb-timer.yaml
 
-Link: https://lore.kernel.org/all/20220620205654.g7fyipwytbww5757@mobilestation/
+Split the timer nodes in two, so that the second timer in the IP block
+can actually be accessed & in the process solve the dtbs_check warning.
+
 Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
 ---
- Documentation/devicetree/bindings/spi/snps,dw-apb-ssi.yaml | 6 ------
- 1 file changed, 6 deletions(-)
+ arch/riscv/boot/dts/canaan/k210.dtsi | 46 +++++++++++++++++++++++-----
+ 1 file changed, 38 insertions(+), 8 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/spi/snps,dw-apb-ssi.yaml b/Documentation/devicetree/bindings/spi/snps,dw-apb-ssi.yaml
-index e25d44c218f2..0a43d6e0ef91 100644
---- a/Documentation/devicetree/bindings/spi/snps,dw-apb-ssi.yaml
-+++ b/Documentation/devicetree/bindings/spi/snps,dw-apb-ssi.yaml
-@@ -143,12 +143,6 @@ patternProperties:
-         minimum: 0
-         maximum: 3
+diff --git a/arch/riscv/boot/dts/canaan/k210.dtsi b/arch/riscv/boot/dts/canaan/k210.dtsi
+index cd4eae82d8b2..72f70128d751 100644
+--- a/arch/riscv/boot/dts/canaan/k210.dtsi
++++ b/arch/riscv/boot/dts/canaan/k210.dtsi
+@@ -319,28 +319,58 @@ fpioa: pinmux@502b0000 {
  
--      spi-rx-bus-width:
--        const: 1
--
--      spi-tx-bus-width:
--        const: 1
--
- unevaluatedProperties: false
+ 			timer0: timer@502d0000 {
+ 				compatible = "snps,dw-apb-timer";
+-				reg = <0x502D0000 0x100>;
+-				interrupts = <14>, <15>;
++				reg = <0x502D0000 0x14>;
++				interrupts = <14>;
+ 				clocks = <&sysclk K210_CLK_TIMER0>,
+ 					 <&sysclk K210_CLK_APB0>;
+ 				clock-names = "timer", "pclk";
+ 				resets = <&sysrst K210_RST_TIMER0>;
+ 			};
  
- required:
+-			timer1: timer@502e0000 {
++			timer1: timer@502d0014 {
+ 				compatible = "snps,dw-apb-timer";
+-				reg = <0x502E0000 0x100>;
+-				interrupts = <16>, <17>;
++				reg = <0x502D0014 0x14>;
++				interrupts = <15>;
++				clocks = <&sysclk K210_CLK_TIMER0>,
++					 <&sysclk K210_CLK_APB0>;
++				clock-names = "timer", "pclk";
++				resets = <&sysrst K210_RST_TIMER0>;
++			};
++
++			timer2: timer@502e0000 {
++				compatible = "snps,dw-apb-timer";
++				reg = <0x502E0000 0x14>;
++				interrupts = <16>;
+ 				clocks = <&sysclk K210_CLK_TIMER1>,
+ 					 <&sysclk K210_CLK_APB0>;
+ 				clock-names = "timer", "pclk";
+ 				resets = <&sysrst K210_RST_TIMER1>;
+ 			};
+ 
+-			timer2: timer@502f0000 {
++			timer3: timer@502e0014 {
++				compatible = "snps,dw-apb-timer";
++				reg = <0x502E0014 0x114>;
++				interrupts = <17>;
++				clocks = <&sysclk K210_CLK_TIMER1>,
++					 <&sysclk K210_CLK_APB0>;
++				clock-names = "timer", "pclk";
++				resets = <&sysrst K210_RST_TIMER1>;
++			};
++
++			timer4: timer@502f0000 {
++				compatible = "snps,dw-apb-timer";
++				reg = <0x502F0000 0x14>;
++				interrupts = <18>;
++				clocks = <&sysclk K210_CLK_TIMER2>,
++					 <&sysclk K210_CLK_APB0>;
++				clock-names = "timer", "pclk";
++				resets = <&sysrst K210_RST_TIMER2>;
++			};
++
++			timer5: timer@502f0014 {
+ 				compatible = "snps,dw-apb-timer";
+-				reg = <0x502F0000 0x100>;
+-				interrupts = <18>, <19>;
++				reg = <0x502F0014 0x14>;
++				interrupts = <19>;
+ 				clocks = <&sysclk K210_CLK_TIMER2>,
+ 					 <&sysclk K210_CLK_APB0>;
+ 				clock-names = "timer", "pclk";
 -- 
 2.36.1
 
