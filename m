@@ -2,114 +2,101 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ACE91C43334
-	for <dmaengine@archiver.kernel.org>; Mon, 11 Jul 2022 05:50:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0D771C433EF
+	for <dmaengine@archiver.kernel.org>; Mon, 11 Jul 2022 08:47:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229490AbiGKFu3 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 11 Jul 2022 01:50:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41964 "EHLO
+        id S229844AbiGKIrs (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 11 Jul 2022 04:47:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57282 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229469AbiGKFu2 (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Mon, 11 Jul 2022 01:50:28 -0400
-Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E50A615A16
-        for <dmaengine@vger.kernel.org>; Sun, 10 Jul 2022 22:50:26 -0700 (PDT)
-Received: by mail-lj1-x235.google.com with SMTP id 19so4969836ljz.4
-        for <dmaengine@vger.kernel.org>; Sun, 10 Jul 2022 22:50:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=igel-co-jp.20210112.gappssmtp.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=gZzDKZH4l/zsGGLg21sfARYm6tZRtnVyVNYZn/4KXR4=;
-        b=1hDk7+kuuy4xkNR/AJ47KK9L6gFkbe+P4ejAU8gm3Zqu2dw7Xt1E50de++3YyKQehQ
-         mK2w4ujcycEdkMNnAjZmDO3qJI5Bs2kS0oDp9uiKLmyzFkBJTLW6BXBQyNWzvbbcF7Se
-         9yvfErNl5BX3yceFj+nZELYw7Frs6tfAl+aU5CI8Cnk49TMLs7ozDJc/atmlHiATwY8p
-         OIElJMElMCMItvrdPWO8N2vKI0yasyjqRy9LliXGUTKNdzoGKCavwA8hhi2G0nqEKv0N
-         yEW2vxtGbJEXL/4KjInVv0A5qm1IgxQPdyMvbFWTEAMyNW7EBJXMrlpxCS8lmZOR6U3/
-         mr/Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=gZzDKZH4l/zsGGLg21sfARYm6tZRtnVyVNYZn/4KXR4=;
-        b=kJ6ecIZ7xX3OtwOdhsqzawFypXlMDuMBAxBWojniP0gQHbkclgAlFTD2So6ZmN3oqp
-         yWl53zEcWYJV5mJIe8+q2hHkRJI9rh1SkMxvdiXr3tWZGzayd3MB8qa+w+h5HFGNRaOZ
-         FVB3QkGg/a8MPte+hi5ZonrnErg0MASDM+G3FaaaSk5r1wfKrIo/UlZjSHQTU/kWP8mg
-         KdIhn9JdoNPnTAxY6ZdlXKDG9MCy3QaUtj2yu71qCMtc2lOME9hak+KVnJfE2qFpl/4A
-         XOh08SdVEsrgnPlakP3veWOU13uxappT/ijclRNXUdS6LjFuvY/WpT+EuVl2/R4qLXCZ
-         Ah5g==
-X-Gm-Message-State: AJIora/RXAiCGC7vNBeaLNvQPHTfHNwoMFn5vLz9ivhbX0AMWr8zRxU6
-        MX4aF7LrYy0USEjD/UT8hnDA8QkNUkIQ72+q3+2v8PzpteE=
-X-Google-Smtp-Source: AGRyM1ujJTpRlpUQbWJjcXD2sNPu0r92UkySH6kWufJZIc0hIlEnQAxHUS5q1rkeIrLqyrpDmVo7cvubpJ/rts8z07U=
-X-Received: by 2002:a2e:6a0e:0:b0:25d:6930:d00f with SMTP id
- f14-20020a2e6a0e000000b0025d6930d00fmr2785666ljc.134.1657518625320; Sun, 10
- Jul 2022 22:50:25 -0700 (PDT)
+        with ESMTP id S229814AbiGKIrs (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Mon, 11 Jul 2022 04:47:48 -0400
+Received: from mx07-00178001.pphosted.com (mx07-00178001.pphosted.com [185.132.182.106])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0057E230;
+        Mon, 11 Jul 2022 01:47:46 -0700 (PDT)
+Received: from pps.filterd (m0288072.ppops.net [127.0.0.1])
+        by mx07-00178001.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 26B4e7l4012250;
+        Mon, 11 Jul 2022 10:47:22 +0200
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foss.st.com; h=from : to : cc :
+ subject : date : message-id : in-reply-to : references : mime-version :
+ content-transfer-encoding : content-type; s=selector1;
+ bh=RdEwrkIquuRU3qsHgDtPW7Zm8iWX7XLfjhLyYDrAEXE=;
+ b=x/xn1JVlETC3L0JRo+zQ2UFjJqGUCyy0Qk954BmCHiA0NAXMjQUv0CVRW7Iw8qkAXccP
+ oK6iv0rWHUrQvxc8Pg0mxTXFynf9bar4m3UtracbdcrVmBy+oz8tbr0rlhFG+qA49IuE
+ GGF5A8l8lbq0REQk/2vwirAD6eYlmwSaafiQBeNuzwlFNL24ngrkPRZ6LaOteD7EfDzg
+ X1TZiDirq6mufrY4V6GE193gL+u3UVvqcjsgt8W1CbqK7QS6QMvjelptcsoLcLsxCHkk
+ G++YI08zqXg5nT6o7cT74VVhpjoEjnUFb1djDg2Bmb1Tc8SutfR4tA09TAXbQo+QEWci XA== 
+Received: from beta.dmz-eu.st.com (beta.dmz-eu.st.com [164.129.1.35])
+        by mx07-00178001.pphosted.com (PPS) with ESMTPS id 3h6y3mt4rb-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 11 Jul 2022 10:47:22 +0200
+Received: from euls16034.sgp.st.com (euls16034.sgp.st.com [10.75.44.20])
+        by beta.dmz-eu.st.com (STMicroelectronics) with ESMTP id B9469100038;
+        Mon, 11 Jul 2022 10:47:21 +0200 (CEST)
+Received: from Webmail-eu.st.com (shfdag1node2.st.com [10.75.129.70])
+        by euls16034.sgp.st.com (STMicroelectronics) with ESMTP id 5EA8B215142;
+        Mon, 11 Jul 2022 10:47:21 +0200 (CEST)
+Received: from localhost (10.75.127.51) by SHFDAG1NODE2.st.com (10.75.129.70)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256) id 15.1.2308.20; Mon, 11 Jul
+ 2022 10:47:21 +0200
+From:   Amelie Delaunay <amelie.delaunay@foss.st.com>
+To:     Jonathan Corbet <corbet@lwn.net>, Vinod Koul <vkoul@kernel.org>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>
+CC:     <linux-doc@vger.kernel.org>, <dmaengine@vger.kernel.org>,
+        <linux-stm32@st-md-mailman.stormreply.com>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>, Marek Vasut <marex@denx.de>,
+        Amelie Delaunay <amelie.delaunay@foss.st.com>
+Subject: [PATCH 2/4] dmaengine: stm32-dmamux: set dmamux channel id in dma features bitfield
+Date:   Mon, 11 Jul 2022 10:47:01 +0200
+Message-ID: <20220711084703.268481-3-amelie.delaunay@foss.st.com>
+X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20220711084703.268481-1-amelie.delaunay@foss.st.com>
+References: <20220711084703.268481-1-amelie.delaunay@foss.st.com>
 MIME-Version: 1.0
-References: <YsftwaVowtU9/pgn@kili>
-In-Reply-To: <YsftwaVowtU9/pgn@kili>
-From:   Shunsuke Mie <mie@igel.co.jp>
-Date:   Mon, 11 Jul 2022 14:50:14 +0900
-Message-ID: <CANXvt5rK98-cEMgpzopY9POOK8a5=VDib8uKPLgJakOG=hRfwQ@mail.gmail.com>
-Subject: Re: [PATCH] PCI: endpoint: IS_ERR() vs NULL bug in pci_epf_test_init_dma_chan()
-To:     Dan Carpenter <dan.carpenter@oracle.com>
-Cc:     Kishon Vijay Abraham I <kishon@ti.com>,
-        Frank Li <Frank.Li@nxp.com>, dmaengine@vger.kernel.org,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Hou Zhiqiang <Zhiqiang.Hou@nxp.com>,
-        Li Chen <lchen@ambarella.com>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        linux-pci@vger.kernel.org, kernel-janitors@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.75.127.51]
+X-ClientProxiedBy: SFHDAG2NODE3.st.com (10.75.127.6) To SHFDAG1NODE2.st.com
+ (10.75.129.70)
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.883,Hydra:6.0.517,FMLib:17.11.122.1
+ definitions=2022-07-11_14,2022-07-08_01,2022-06-22_01
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-This patch changes for a tx dma channel. There is a similar problem for a
- rx one too. The code doesn't cause an error, but it is likely better to
-change to just NULL checking.
+STM32 DMAMUX is used with STM32 DMA1 and DMA2:
+- DMAMUX channels 0 to 7 are connected to DMA1 channels 0 to 7
+- DMAMUX channels 8 to 15 are connected to DMA2 channels 0 to 7
 
-2022=E5=B9=B47=E6=9C=888=E6=97=A5(=E9=87=91) 17:41 Dan Carpenter <dan.carpe=
-nter@oracle.com>:
+STM32 MDMA can be triggered by DMA1 and DMA2 channels transfer complete,
+and the "request line number" is the DMAMUX channel id (e.g. DMA2 channel 0
+triggers MDMA with request line 8).
 
->
-> The dma_request_channel() function doesn't return error pointers, it
-> returns NULL.
->
-> Fixes: fff86dfbbf82 ("PCI: endpoint: Enable DMA tests for endpoints with =
-DMA capabilities")
-> Signed-off-by: Dan Carpenter <dan.carpenter@oracle.com>
-> ---
-> It's surprising and unfortunate that dma_request_channel() returns NULL
-> while dma_request_chan_by_mask() returns error pointers.  These days
-> static checkers will catch this so it's not as bad as it could be but
-> still not ideal.
->
->  drivers/pci/endpoint/functions/pci-epf-test.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/drivers/pci/endpoint/functions/pci-epf-test.c b/drivers/pci/=
-endpoint/functions/pci-epf-test.c
-> index 34aac220dd4c..eed6638ab71d 100644
-> --- a/drivers/pci/endpoint/functions/pci-epf-test.c
-> +++ b/drivers/pci/endpoint/functions/pci-epf-test.c
-> @@ -221,7 +221,7 @@ static int pci_epf_test_init_dma_chan(struct pci_epf_=
-test *epf_test)
->         filter.dma_mask =3D BIT(DMA_MEM_TO_DEV);
->         dma_chan =3D dma_request_channel(mask, epf_dma_filter_fn, &filter=
-);
->
-> -       if (IS_ERR(dma_chan)) {
-> +       if (!dma_chan) {
->                 dev_info(dev, "Failed to get private DMA tx channel. Fall=
-ing back to generic one\n");
->                 goto fail_back_rx;
->         }
-> --
-> 2.35.1
->
+To well configure MDMA, set DMAMUX channel id in DMA features bitfield,
+so that DMA can update struct dma_slave_config peripheral_config properly.
 
-Thanks,
-Shunsuke.
+Signed-off-by: Amelie Delaunay <amelie.delaunay@foss.st.com>
+---
+ drivers/dma/stm32-dmamux.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/dma/stm32-dmamux.c b/drivers/dma/stm32-dmamux.c
+index eee0c5aa5fb5..b431f9da9206 100644
+--- a/drivers/dma/stm32-dmamux.c
++++ b/drivers/dma/stm32-dmamux.c
+@@ -147,7 +147,7 @@ static void *stm32_dmamux_route_allocate(struct of_phandle_args *dma_spec,
+ 	mux->request = dma_spec->args[0];
+ 
+ 	/*  craft DMA spec */
+-	dma_spec->args[3] = dma_spec->args[2];
++	dma_spec->args[3] = dma_spec->args[2] | mux->chan_id << 16;
+ 	dma_spec->args[2] = dma_spec->args[1];
+ 	dma_spec->args[1] = 0;
+ 	dma_spec->args[0] = mux->chan_id - min;
+-- 
+2.25.1
+
