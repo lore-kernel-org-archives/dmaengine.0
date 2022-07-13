@@ -2,524 +2,156 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 041DECCA489
-	for <dmaengine@archiver.kernel.org>; Wed, 13 Jul 2022 14:22:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CCD64C43334
+	for <dmaengine@archiver.kernel.org>; Wed, 13 Jul 2022 15:21:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235360AbiGMOWW (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 13 Jul 2022 10:22:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55076 "EHLO
+        id S236893AbiGMPVx (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 13 Jul 2022 11:21:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56918 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235637AbiGMOWU (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Wed, 13 Jul 2022 10:22:20 -0400
-Received: from mx07-00178001.pphosted.com (mx08-00178001.pphosted.com [91.207.212.93])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A811532EDF;
-        Wed, 13 Jul 2022 07:22:17 -0700 (PDT)
-Received: from pps.filterd (m0046661.ppops.net [127.0.0.1])
-        by mx07-00178001.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 26DAO3cZ003160;
-        Wed, 13 Jul 2022 16:21:59 +0200
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foss.st.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-transfer-encoding : content-type; s=selector1;
- bh=7H7xANk7GrD+3i08MsffXmfpiF29YbYdx57mtUoXFxc=;
- b=t79myy2fUN4TAZRNP+RMNLqMm8T8WNeJcQqq/o6M4HTkkMqHwF5/7SJ0rb0sm4mxsu5a
- yjdU43TtIqwliOBoKuNxTWFAajik5tf8Wo0LKAaI6CKv7A3PG8hPpIFF6pNGLOxj8cz5
- 4Hd087RgTtkQU4AkGDrS/M/yXpB4axj5a3HSeOzBBHfzAykr8ZrXJSp6Vq32dcYlMZO+
- xuh9TGWrXLQ2+1RaeURIwGOdc0vAeNsykfcpBi/55PpEens88FbMqrDJtPPEJvwV2kVu
- hFhsC5Y99/9TqcEIoMqeRdTc0glBdAcFXg0TU5C+r5nXFUjG28efmvTf3tp2JgHzkkqh yA== 
-Received: from beta.dmz-eu.st.com (beta.dmz-eu.st.com [164.129.1.35])
-        by mx07-00178001.pphosted.com (PPS) with ESMTPS id 3h9173tmmg-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 13 Jul 2022 16:21:59 +0200
-Received: from euls16034.sgp.st.com (euls16034.sgp.st.com [10.75.44.20])
-        by beta.dmz-eu.st.com (STMicroelectronics) with ESMTP id C6830100034;
-        Wed, 13 Jul 2022 16:21:58 +0200 (CEST)
-Received: from Webmail-eu.st.com (shfdag1node2.st.com [10.75.129.70])
-        by euls16034.sgp.st.com (STMicroelectronics) with ESMTP id C1BE1226FC7;
-        Wed, 13 Jul 2022 16:21:58 +0200 (CEST)
-Received: from localhost (10.75.127.45) by SHFDAG1NODE2.st.com (10.75.129.70)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256) id 15.1.2308.20; Wed, 13 Jul
- 2022 16:21:55 +0200
-From:   Amelie Delaunay <amelie.delaunay@foss.st.com>
-To:     Jonathan Corbet <corbet@lwn.net>, Vinod Koul <vkoul@kernel.org>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>
-CC:     <linux-doc@vger.kernel.org>, <dmaengine@vger.kernel.org>,
-        <linux-stm32@st-md-mailman.stormreply.com>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>, Marek Vasut <marex@denx.de>,
-        Amelie Delaunay <amelie.delaunay@foss.st.com>
-Subject: [PATCH v2 1/4] docs: arm: stm32: introduce STM32 DMA-MDMA chaining feature
-Date:   Wed, 13 Jul 2022 16:21:45 +0200
-Message-ID: <20220713142148.239253-2-amelie.delaunay@foss.st.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20220713142148.239253-1-amelie.delaunay@foss.st.com>
-References: <20220713142148.239253-1-amelie.delaunay@foss.st.com>
+        with ESMTP id S229887AbiGMPVq (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Wed, 13 Jul 2022 11:21:46 -0400
+Received: from NAM02-SN1-obe.outbound.protection.outlook.com (mail-sn1anam02on2086.outbound.protection.outlook.com [40.107.96.86])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4292945F43;
+        Wed, 13 Jul 2022 08:21:45 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=HNdUu0JckvvGul+nhPosKouFVqsdeH8xkPFsqq0veqSDmU4QyrKRwE/jJmeXS0h9/sN8ssyQ2olVm3fKD5NRFyxEHJC6DSfxb6EwMv090TL8YUtqI4PK+28vYGfVaIzTDQzriBjQUhUau8jMO2QJrgZqG0d/DnAM8x6R5ejUlBdkXQhiNxsr6JX7tY5s8Ggkv2JbzFdV6j/40ZSYwh2LfkhzcJ47C/wqO5pLO+PxP8lgXOQ7HrfT38PRpLEbrqwYoQXpkHY7rMtx93sTc6EtW7z+6YBMr1pMOhxnDUxyNAt9GLmbOqE+OWUg6dlKWK8ZVb5LrdjiRgr1WxsnAV8kSw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=1UKKmZYlrtQiHfNrWV5hnmkYbe2hwcY6ber8EvDtFP4=;
+ b=cAdTCS/7veAXjSgGwZjz3ShQxMfYPM+q0CVwnQhZbOFvehpUVA9Dp9O/4rUIfQ4z9glFuSLvezpsww0m3Gy3wLekHx2xn0AlA2MSLi06u0flH+3hKaCKasibpHeofF938uVUH2UJlSVDHWbOO0qSnjcRTvgCLavpulPP6TXV7mXsL9GuIkKviCHH0tRmL2PSqc2Uj2i76BUCy/YkS2wZxVuep1TMl2CM+0xhHhPOzQUr4elHocfyx4uNjgWGsbpSywo36JvXiOxANa8bw0RpQL9UXzCWS3kdu7EAQPxbxXXHbRuYnTwzrFrku+InE/xdQARf2OY9Zu6yJqqwhK8esQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=1UKKmZYlrtQiHfNrWV5hnmkYbe2hwcY6ber8EvDtFP4=;
+ b=nUemiwkvH/OeBJViax5sCiKA0UIYSVFxnYvqtfvWIyxfRKJBrRwkq90UCPGGXoX6MS7gCY3RVkCdpV0vd9XwIEZmIDJg+GyRyMA3+5yig4K+EFRzXVo5vL+lBmWHnzmuIWxK9IDXnh/WNwMrHC41GOl6K5Kh7aWDxzP+Y7jb7f8KT4Qao6o6oML+Y+vQdCcz+lp1vUHBMzC76UGC6zo8O1r2TWMXZ+O9ISUtfTqh1ShnstOW/Evi7YSJLe5cMq/aJ1GzMDq6I7U8jo49IykQxeiYRd76GPNscBxxQUgdV0HpR0G+fugEAwUG2OJ2ay9xYN9N8lRJ/4GBFoGP339Gig==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from CO6PR12MB5444.namprd12.prod.outlook.com (2603:10b6:5:35e::8) by
+ DM6PR12MB4314.namprd12.prod.outlook.com (2603:10b6:5:211::22) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.5417.21; Wed, 13 Jul 2022 15:21:43 +0000
+Received: from CO6PR12MB5444.namprd12.prod.outlook.com
+ ([fe80::b148:f3bb:5247:a55d]) by CO6PR12MB5444.namprd12.prod.outlook.com
+ ([fe80::b148:f3bb:5247:a55d%2]) with mapi id 15.20.5417.026; Wed, 13 Jul 2022
+ 15:21:43 +0000
+Message-ID: <6bc92c59-dfa1-aef7-f41b-befab216f87d@nvidia.com>
+Date:   Wed, 13 Jul 2022 16:21:36 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.1
+Subject: Re: [PATCH v3 1/3] dt-bindings: dmaengine: Add compatible for
+ Tegra234
+Content-Language: en-US
+To:     Akhil R <akhilrajeev@nvidia.com>, dmaengine@vger.kernel.org,
+        ldewangan@nvidia.com, linux-kernel@vger.kernel.org,
+        linux-tegra@vger.kernel.org, p.zabel@pengutronix.de,
+        thierry.reding@gmail.com, vkoul@kernel.org, robh+dt@kernel.org,
+        devicetree@vger.kernel.org
+References: <20220711154536.41736-1-akhilrajeev@nvidia.com>
+ <20220711154536.41736-2-akhilrajeev@nvidia.com>
+From:   Jon Hunter <jonathanh@nvidia.com>
+In-Reply-To: <20220711154536.41736-2-akhilrajeev@nvidia.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: LO2P123CA0016.GBRP123.PROD.OUTLOOK.COM
+ (2603:10a6:600:a6::28) To CO6PR12MB5444.namprd12.prod.outlook.com
+ (2603:10b6:5:35e::8)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.75.127.45]
-X-ClientProxiedBy: SFHDAG2NODE3.st.com (10.75.127.6) To SHFDAG1NODE2.st.com
- (10.75.129.70)
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.883,Hydra:6.0.517,FMLib:17.11.122.1
- definitions=2022-07-13_03,2022-07-13_03,2022-06-22_01
+X-MS-PublicTrafficType: Email
+X-MS-Office365-Filtering-Correlation-Id: 4c20a643-aa13-4a7b-7a50-08da64e3647a
+X-MS-TrafficTypeDiagnostic: DM6PR12MB4314:EE_
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: j2v1ZZ2aqoVYy4pKLNTNdlOecrSG+B8Zl8f/Kv3GEn1f5E8nq9R1i8ryg2Y+1WMkfZYK1qzt7VFrMMT+HW2jQBsN7ZdKOGleOrh4ClqIMGGU94i7Gx4xlqoZRmfajT/Gks+Eq2Mkys7DJtCmF81VApqjUnjSgbADVLnv7klKOxWav36L7xfxHKG/K6x7uEhHEpmMy5+Rw2dOTlJi+QMj1qCEPQB95n3fQI9ImJ0riTF7WXVHtaon2HI0yvbhEPMrmwW9/20ZJWMfpcv2SakY/1mt/a1TdS80Bq0w9RdnF2drEvxkA1sJXd9yk2Ufh3LpjFNEI+oQNUmSk7BUTx+JWzQlQGnS40uMWbktZiTGAwgssIOvRM56ik+suLW7KTTXw2cHJpp+5sKdMEgCsTS/8Cj40A/bCknmk+AzQ60a0h7iFeupVOHZMEv7I/r5cLfXo6qOh1qUvI97xDSWtPkzV1pgnzkTUwR3g+wOP2fw6ZFQKtRkwlmONklmHynvnTvhSetZAmkbNdoBPkea7wXi7Ri5ypdbXSlokZuSEgMYgwgjUcr+gTz+ec1gBN6gQHfGgfpYL/qqiyt2XN7e6joVUjbMUcmj09lQsSdpPaPdlMfKgmjnJa1H3Xi7Rs5sYvV9S0JO6I/ZkPBfkqWYx1diSZzwHCDuvplB/BrT0Af5+UF8TzcZHIwUMAd9VHXNnlB9TaQMUKcbarnXmRaRRmCrof7AnkFp9KoLblhVksMDP8PfIJ4DJwIzAS0bR6+K/nGGvnwcYbFiVEBZlvV2Txh3L0KADy0X6brJXVc8H5lyPU6b5kDt8L01l/7AVCwRKbkvMCkwfi2DF6YXtGLPF+dL8u92bqxXlij0Rj6B/OPBV5XAb9GwBwHyagvPLysqlFj2
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CO6PR12MB5444.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230016)(4636009)(136003)(346002)(366004)(376002)(39860400002)(396003)(6506007)(6666004)(8936002)(53546011)(26005)(2906002)(31696002)(86362001)(6486002)(6512007)(41300700001)(316002)(478600001)(2616005)(4744005)(55236004)(66946007)(31686004)(38100700002)(186003)(66476007)(36756003)(66556008)(8676002)(5660300002)(921005)(45980500001)(43740500002);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?YjdudWU1d1UrZGg0VHBsMHU1STRIWndsZXpnMGpxZGhmOEhaSlpKSmxEWjk1?=
+ =?utf-8?B?SHpIaU5McXJuM0ZhU2ZkbG54OGtvWFlCM3N2K0R6K29DTkVUWU16VWlmRnJN?=
+ =?utf-8?B?Yno0TE1nemZaVCtSWXFldlBsSEdWak1NcWtaKzNqWXJnL2UxbHF4K2hqWWp3?=
+ =?utf-8?B?NXJFSGhEZXlZM2VNMGZhU1BKZ0Z3d214UzJPVWFPODQ1UVI2UytoTkkxd080?=
+ =?utf-8?B?ZzJYc0swaEZHKy8wVjRuQUMxclRtWWpSS0lBMi9NREkySU5CQjBqQWpEbzN3?=
+ =?utf-8?B?QXZnYkZzSkRCU3VDbVh5WVNTTmpPRitYdVYzN2J6dUx6bTlDQWVVekYyMWxa?=
+ =?utf-8?B?aHpBMFJqTVlxU0t1elU0VmY0d2hGZy9CMS9UcnlyUytQc2RhOFV5REZ6VENq?=
+ =?utf-8?B?R1RuNEZnQmxNVHl3eUtvRWZtQkpjYVJ0MWhDNVVhK0hrb0t5aG4zTUZtUmM5?=
+ =?utf-8?B?aWVPRmdObXFWUzlYaFN3MSt5NzdQT05pemZBVTB4cG13MWoreE9zSUQ3TnJ2?=
+ =?utf-8?B?RjZrdEZ5VHptOXVPcGtjSHJCR1VsOVJYbVE1aWI1UnNaMm03TER6bEo4ZldL?=
+ =?utf-8?B?QkRUN2ZHV3lqMldWeXZ5SEhCUHUxYmc2SFVuL0JJcHN5bG5UN0JCNDcyTzdE?=
+ =?utf-8?B?YktuK1VyL0h0WmxzeHpPNzM1dFdTa1dlbzVlZS84NGNlSXBqUUVXZEZOdFpN?=
+ =?utf-8?B?MGlIZHhEZEJiUWpYRXo5VlFnZGZLZGJaL2g1Y243Ujk5UDVtNE5yU2hab2hZ?=
+ =?utf-8?B?QnNCMHh2bHRyU0pQOTFCZ3dwRzBYZ1VGL0tPaTk3SG9pOUJTRDFBNFFxazQ5?=
+ =?utf-8?B?bGFsNHhqNGk1OVp0cDVwU3A3UzFYMEtDd3VDQWhpMWprZDFBSHZnbHJLVTdX?=
+ =?utf-8?B?bjh4SUEyVmxSQXk4bC9pZ01IMDFJVWlHM3V4cEtjK2JZYVMwTEk2c2t2bE9h?=
+ =?utf-8?B?T2ZIcWMwakE3dkpPdWZuc0ZXYlpISXRVdUxwQTk3OU8rK0pkV0hYQm5MRlZH?=
+ =?utf-8?B?M3IyaysyWEJZSkxDSW4wb1BySkRLWS9CZ3EvQm44VGcvRlZEOThDMi9md1pZ?=
+ =?utf-8?B?Y1A0ajFydGUrNEdmdzBSL2hhVVBTckRDa3E5b2JwRCsvdXBJSUxLU0xQcklw?=
+ =?utf-8?B?ZVdLMS8vMDRSN2lsTnZ5TjVUZlhXZHFHTFhndVlHV0VoaXh4ZENPQ0JFeVU3?=
+ =?utf-8?B?Ym5ia29QVUV5aDBDOXBvT0EweHdJTzJBZzI5THJNT1Z2MzVHK0Fic0E5cVBv?=
+ =?utf-8?B?Yi84bGtSd2h2dXpJNEJvSlRnNTY4Z25HWEhaQ1RJbWJoMEN2cDhjOFYyTTBs?=
+ =?utf-8?B?MkpFMHQ5S3hmL3dKVXZ6bzJqK2tvbS95b3FpenJYTHFvTERNU1MrMis4b1g2?=
+ =?utf-8?B?SGJFUkpTVlFLY1VEcHZ4eDFmcm83ZHQwWmp2UXJFbzF4eDVZL2hZKytBMnc2?=
+ =?utf-8?B?SmpvbkVJNEtaZENudFhlekdYbmk0eTYvVmc4VkNZK3BMVDQ3Q0kwU0hPdVky?=
+ =?utf-8?B?TzZjME82dlNDelpWaFhxb0hjRkF3NkNaRTFPc2FRVUtTdGplUjZyME9tNEUx?=
+ =?utf-8?B?dUltL0tSRmEwTjJ3TWlDbTcyOGR3MlRIb0ZzSG9YT28vMHBrVlVFV3R2eXZp?=
+ =?utf-8?B?bHp6WHRzZkdiOVU2QnRQdzF6RExvbjlWWlJ1N2NiVFZOREhNbWxaK25SNHpH?=
+ =?utf-8?B?cFFrektwcm96Ky8raXdWYXJDaDlVcGlUNXZ0TE9aUkZoUnllUHRyUXpMRGw4?=
+ =?utf-8?B?VEE1QU1LU0U2TDZtN2NsUmpmd1dVcjA1Q25XVTF2YS9idDdCdGpwbkRRbklu?=
+ =?utf-8?B?cnR3aFNyYmVvcnM3Tnd1cUZCT0Q1RGxnVmlIK1h1VDVnNU5hNVZuWVQwbkdn?=
+ =?utf-8?B?UlA1dVVqNTAzMVpCMEFwNTB0bUFqL0Q0dFlQNHMyYkQwektNYkpjVmJoWVZV?=
+ =?utf-8?B?QWFtcU5iZU1BQVp2Ujk4ZklYT0dKb3UyVHRIYUliQ1VlMTMzbzBKM3pGOG9V?=
+ =?utf-8?B?VGRPN3Q1ZlJIM21ZZnNsdkFEQUQvZUh0WGZtbXhaVFlXd3FZaFdyWW9RNWNB?=
+ =?utf-8?B?ZFBoN3JvNHFwODBDSjMyR25Nck45Vys4aUNTemZQQmJrYkcxLzUrcU9ta3pR?=
+ =?utf-8?B?TEFoS2RZOEZqcUUybUJqZkR6WW1Yc0NMZ1Z2dWtkQXNHOVBlajlXZkhjQmRI?=
+ =?utf-8?B?Y3c9PQ==?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 4c20a643-aa13-4a7b-7a50-08da64e3647a
+X-MS-Exchange-CrossTenant-AuthSource: CO6PR12MB5444.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Jul 2022 15:21:43.5088
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: qcqr407V1zRiZ0XGgL7l1cX4aN8Cr/1luGGkc7oBwjIIqyvPmfkxERUNYRu5dTXyXpzZbc8fAD64Rfle5ejaYA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR12MB4314
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-STM32 DMA-MDMA chaining feature is available on STM32 SoCs which embed
-STM32 DMAMUX, DMA and MDMA controllers. It is the case on STM32MP1 SoCs but
-also on STM32H7 SoCs. But focus is on STM32MP1 SoCs, using DDR.
-This documentation aims to explain how to use STM32 DMA-MDMA chaining
-feature in drivers of STM32 peripheral having request lines on STM32 DMA.
 
-Signed-off-by: Amelie Delaunay <amelie.delaunay@foss.st.com>
----
-Changes in v2:
-- wrap to 80-column limit
-- add an entry in index.rst
-- use simple table instead of csv-table
----
- Documentation/arm/index.rst                   |   1 +
- .../arm/stm32/stm32-dma-mdma-chaining.rst     | 415 ++++++++++++++++++
- 2 files changed, 416 insertions(+)
- create mode 100644 Documentation/arm/stm32/stm32-dma-mdma-chaining.rst
+On 11/07/2022 16:45, Akhil R wrote:
+> Document the compatible string used by GPCDMA controller for Tegra234.
+> 
+> Signed-off-by: Akhil R <akhilrajeev@nvidia.com>
+> ---
+>   .../devicetree/bindings/dma/nvidia,tegra186-gpc-dma.yaml      | 4 ++++
+>   1 file changed, 4 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/dma/nvidia,tegra186-gpc-dma.yaml b/Documentation/devicetree/bindings/dma/nvidia,tegra186-gpc-dma.yaml
+> index 9dd1476d1849..399edcd5cecf 100644
+> --- a/Documentation/devicetree/bindings/dma/nvidia,tegra186-gpc-dma.yaml
+> +++ b/Documentation/devicetree/bindings/dma/nvidia,tegra186-gpc-dma.yaml
+> @@ -26,6 +26,10 @@ properties:
+>             - const: nvidia,tegra194-gpcdma
+>             - const: nvidia,tegra186-gpcdma
+>   
+> +      - items:
+> +          - const: nvidia,tegra234-gpcdma
+> +          - const: nvidia,tegra186-gpcdma
+> +
+>     "#dma-cells":
+>       const: 1
+>   
 
-diff --git a/Documentation/arm/index.rst b/Documentation/arm/index.rst
-index 2bda5461a80b..83bd01d55345 100644
---- a/Documentation/arm/index.rst
-+++ b/Documentation/arm/index.rst
-@@ -57,6 +57,7 @@ SoC-specific documents
-    stm32/stm32f429-overview
-    stm32/stm32mp13-overview
-    stm32/stm32mp157-overview
-+   stm32/stm32-dma-mdma-chaining
- 
-    sunxi
- 
-diff --git a/Documentation/arm/stm32/stm32-dma-mdma-chaining.rst b/Documentation/arm/stm32/stm32-dma-mdma-chaining.rst
-new file mode 100644
-index 000000000000..2945e0e33104
---- /dev/null
-+++ b/Documentation/arm/stm32/stm32-dma-mdma-chaining.rst
-@@ -0,0 +1,415 @@
-+.. SPDX-License-Identifier: GPL-2.0
-+
-+=======================
-+STM32 DMA-MDMA chaining
-+=======================
-+
-+
-+Introduction
-+------------
-+
-+  This document describes the STM32 DMA-MDMA chaining feature. But before going
-+  further, let's introduce the peripherals involved.
-+
-+  To offload data transfers from the CPU, STM32 microprocessors (MPUs) embed
-+  direct memory access controllers (DMA).
-+
-+  STM32MP1 SoCs embed both STM32 DMA and STM32 MDMA controllers. STM32 DMA
-+  request routing capabilities are enhanced by a DMA request multiplexer
-+  (STM32 DMAMUX).
-+
-+  **STM32 DMAMUX**
-+
-+  STM32 DMAMUX routes any DMA request from a given peripheral to any STM32 DMA
-+  controller (STM32MP1 counts two STM32 DMA controllers) channels.
-+
-+  **STM32 DMA**
-+
-+  STM32 DMA is mainly used to implement central data buffer storage (usually in
-+  the system SRAM) for different peripheral. It can access external RAMs but
-+  without the ability to generate convenient burst transfer ensuring the best
-+  load of the AXI.
-+
-+  **STM32 MDMA**
-+
-+  STM32 MDMA (Master DMA) is mainly used to manage direct data transfers between
-+  RAM data buffers without CPU intervention. It can also be used in a
-+  hierarchical structure that uses STM32 DMA as first level data buffer
-+  interfaces for AHB peripherals, while the STM32 MDMA acts as a second level
-+  DMA with better performance. As a AXI/AHB master, STM32 MDMA can take control
-+  of the AXI/AHB bus.
-+
-+
-+Principles
-+----------
-+
-+  STM32 DMA-MDMA chaining feature relies on the strengths of STM32 DMA and
-+  STM32 MDMA controllers.
-+
-+  STM32 DMA has a circular Double Buffer Mode (DBM). At each end of transaction
-+  (when DMA data counter - DMA_SxNDTR - reaches 0), the memory pointers
-+  (configured with DMA_SxSM0AR and DMA_SxM1AR) are swapped and the DMA data
-+  counter is automatically reloaded. This allows the SW or the STM32 MDMA to
-+  process one memory area while the second memory area is being filled/used by
-+  the STM32 DMA transfer.
-+
-+  With STM32 MDMA linked-list mode, a single request initiates the data array
-+  (collection of nodes) to be transferred until the linked-list pointer for the
-+  channel is null. The channel transfer complete of the last node is the end of
-+  transfer, unless first and last nodes are linked to each other, in such a
-+  case, the linked-list loops on to create a circular MDMA transfer.
-+
-+  STM32 MDMA has direct connections with STM32 DMA. This enables autonomous
-+  communication and synchronization between peripherals, thus saving CPU
-+  resources and bus congestion. Transfer Complete signal of STM32 DMA channel
-+  can triggers STM32 MDMA transfer. STM32 MDMA can clear the request generated
-+  by the STM32 DMA by writing to its Interrupt Clear register (whose address is
-+  stored in MDMA_CxMAR, and bit mask in MDMA_CxMDR).
-+
-+  .. table:: STM32 MDMA interconnect table with STM32 DMA
-+
-+    +--------------+----------------+-----------+------------+
-+    | STM32 DMAMUX | STM32 DMA      | STM32 DMA | STM32 MDMA |
-+    | channels     | channels       | Transfer  | request    |
-+    |              |                | complete  |            |
-+    |              |                | signal    |            |
-+    +==============+================+===========+============+
-+    | Channel *0*  | DMA1 channel 0 | dma1_tcf0 | *0x00*     |
-+    +--------------+----------------+-----------+------------+
-+    | Channel *1*  | DMA1 channel 1 | dma1_tcf1 | *0x01*     |
-+    +--------------+----------------+-----------+------------+
-+    | Channel *2*  | DMA1 channel 2 | dma1_tcf2 | *0x02*     |
-+    +--------------+----------------+-----------+------------+
-+    | Channel *3*  | DMA1 channel 3 | dma1_tcf3 | *0x03*     |
-+    +--------------+----------------+-----------+------------+
-+    | Channel *4*  | DMA1 channel 4 | dma1_tcf4 | *0x04*     |
-+    +--------------+----------------+-----------+------------+
-+    | Channel *5*  | DMA1 channel 5 | dma1_tcf5 | *0x05*     |
-+    +--------------+----------------+-----------+------------+
-+    | Channel *6*  | DMA1 channel 6 | dma1_tcf6 | *0x06*     |
-+    +--------------+----------------+-----------+------------+
-+    | Channel *7*  | DMA1 channel 7 | dma1_tcf7 | *0x07*     |
-+    +--------------+----------------+-----------+------------+
-+    | Channel *8*  | DMA2 channel 0 | dma2_tcf0 | *0x08*     |
-+    +--------------+----------------+-----------+------------+
-+    | Channel *9*  | DMA2 channel 1 | dma2_tcf1 | *0x09*     |
-+    +--------------+----------------+-----------+------------+
-+    | Channel *10* | DMA2 channel 2 | dma2_tcf2 | *0x0A*     |
-+    +--------------+----------------+-----------+------------+
-+    | Channel *11* | DMA2 channel 3 | dma2_tcf3 | *0x0B*     |
-+    +--------------+----------------+-----------+------------+
-+    | Channel *12* | DMA2 channel 4 | dma2_tcf4 | *0x0C*     |
-+    +--------------+----------------+-----------+------------+
-+    | Channel *13* | DMA2 channel 5 | dma2_tcf5 | *0x0D*     |
-+    +--------------+----------------+-----------+------------+
-+    | Channel *14* | DMA2 channel 6 | dma2_tcf6 | *0x0E*     |
-+    +--------------+----------------+-----------+------------+
-+    | Channel *15* | DMA2 channel 7 | dma2_tcf7 | *0x0F*     |
-+    +--------------+----------------+-----------+------------+
-+
-+  STM32 DMA-MDMA chaining feature then uses a SRAM buffer. STM32MP1 SoCs embed
-+  three fast access static internal RAMs of various size, used for data storage.
-+  Due to STM32 DMA legacy (within microcontrollers), STM32 DMA performances are
-+  bad with DDR, while they are optimal with SRAM. Hence the SRAM buffer used
-+  between STM32 DMA and STM32 MDMA. This buffer is split in two equal periods
-+  and STM32 DMA uses one period while STM32 MDMA uses the other period
-+  simultaneously.
-+  ::
-+
-+                    dma[1:2]-tcf[0:7]
-+                   .----------------.
-+     ____________ '    _________     V____________
-+    | STM32 DMA  |    /  __|>_  \    | STM32 MDMA |
-+    |------------|   |  /     \  |   |------------|
-+    | DMA_SxM0AR |<=>| | SRAM  | |<=>| []-[]...[] |
-+    | DMA_SxM1AR |   |  \_____/  |   |            |
-+    |____________|    \___<|____/    |____________|
-+
-+  STM32 DMA-MDMA chaining uses (struct dma_slave_config).peripheral_config to
-+  exchange the parameters needed to configure MDMA. These parameters are
-+  gathered into a u32 array with three values:
-+
-+  * the STM32 MDMA request (which is actually the DMAMUX channel ID),
-+  * the address of the STM32 DMA register to clear the Transfer Complete
-+    interrupt flag,
-+  * the mask of the Transfer Complete interrupt flag of the STM32 DMA channel.
-+
-+Device Tree updates for STM32 DMA-MDMA chaining support
-+-------------------------------------------------------
-+
-+  **1. Allocate a SRAM buffer**
-+
-+    SRAM device tree node is defined in SoC device tree. You can refer to it in
-+    your board device tree to define your SRAM pool.
-+    ::
-+
-+          &sram {
-+                  my_foo_device_dma_pool: dma-sram@0 {
-+                          reg = <0x0 0x1000>;
-+                  };
-+          };
-+
-+    Be careful of the start index, in case there are other SRAM consumers.
-+    Define your pool size strategically: to optimise chaining, the idea is that
-+    STM32 DMA and STM32 MDMA can work simultaneously, on each buffer of the
-+    SRAM.
-+    If the SRAM period is greater than the expected DMA transfer, then STM32 DMA
-+    and STM32 MDMA will work sequentially instead of simultaneously. It is not a
-+    functional issue but it is not optimal.
-+
-+    Don't forget to refer to your SRAM pool in your device node. You need to
-+    define a new property.
-+    ::
-+
-+          &my_foo_device {
-+                  ...
-+                  my_dma_pool = &my_foo_device_dma_pool;
-+          };
-+
-+    Then get this SRAM pool in your foo driver and allocate your SRAM buffer.
-+
-+  **2. Allocate a STM32 DMA channel and a STM32 MDMA channel**
-+
-+    You need to define an extra channel in your device tree node, in addition to
-+    the one you should already have for "classic" DMA operation.
-+
-+    This new channel must be taken from STM32 MDMA channels, so, the phandle of
-+    the DMA controller to use is the MDMA controller's one.
-+    ::
-+
-+          &my_foo_device {
-+                  [...]
-+                  my_dma_pool = &my_foo_device_dma_pool;
-+                  dmas = <&dmamux1 ...>,                // STM32 DMA channel
-+                         <&mdma1 0 0x3 0x1200000a 0 0>; // + STM32 MDMA channel
-+          };
-+
-+    Concerning STM32 MDMA bindings:
-+
-+    1. The request line number : whatever the value here, it will be overwritten
-+    by MDMA driver with the STM32 DMAMUX channel ID passed through
-+    (struct dma_slave_config).peripheral_config
-+
-+    2. The priority level : choose Very High (0x3) so that your channel will
-+    take priority other the other during request arbitration
-+
-+    3. A 32bit mask specifying the DMA channel configuration : source and
-+    destination address increment, block transfer with 128 bytes per single
-+    transfer
-+
-+    4. The 32bit value specifying the register to be used to acknowledge the
-+    request: it will be overwritten by MDMA driver, with the DMA channel
-+    interrupt flag clear register address passed through
-+    (struct dma_slave_config).peripheral_config
-+
-+    5. The 32bit mask specifying the value to be written to acknowledge the
-+    request: it will be overwritten by MDMA driver, with the DMA channel
-+    Transfer Complete flag passed through
-+    (struct dma_slave_config).peripheral_config
-+
-+Driver updates for STM32 DMA-MDMA chaining support in foo driver
-+----------------------------------------------------------------
-+
-+  **0. (optional) Refactor the original sg_table if dmaengine_prep_slave_sg()**
-+
-+    In case of dmaengine_prep_slave_sg(), the original sg_table can't be used as
-+    is. Two new sg_tables must be created from the original one. One for
-+    STM32 DMA transfer (where memory address targets now the SRAM buffer instead
-+    of DDR buffer) and one for STM32 MDMA transfer (where memory address targets
-+    the DDR buffer).
-+
-+    The new sg_list items must fit SRAM period length. Here is an example for
-+    DMA_DEV_TO_MEM:
-+    ::
-+
-+      /*
-+        * Assuming sgl and nents, respectively the initial scatterlist and its
-+        * length.
-+        * Assuming sram_dma_buf and sram_period, respectively the memory
-+        * allocated from the pool for DMA usage, and the length of the period,
-+        * which is half of the sram_buf size.
-+        */
-+      struct sg_table new_dma_sgt, new_mdma_sgt;
-+      struct scatterlist *s, *_sgl;
-+      dma_addr_t ddr_dma_buf;
-+      u32 new_nents = 0, len;
-+      int i;
-+
-+      /* Count the number of entries needed */
-+      for_each_sg(sgl, s, nents, i)
-+              if (sg_dma_len(s) > sram_period)
-+                      new_nents += DIV_ROUND_UP(sg_dma_len(s), sram_period);
-+              else
-+                      new_nents++;
-+
-+      /* Create sg table for STM32 DMA channel */
-+      ret = sg_alloc_table(&new_dma_sgt, new_nents, GFP_ATOMIC);
-+      if (ret)
-+              dev_err(dev, "DMA sg table alloc failed\n");
-+
-+      for_each_sg(new_dma_sgt.sgl, s, new_dma_sgt.nents, i) {
-+              _sgl = sgl;
-+              sg_dma_len(s) = min(sg_dma_len(_sgl), sram_period);
-+              /* Targets the beginning = first half of the sram_buf */
-+              s->dma_address = sram_buf;
-+              /*
-+                * Targets the second half of the sram_buf
-+                * for odd indexes of the item of the sg_list
-+                */
-+              if (i & 1)
-+                      s->dma_address += sram_period;
-+      }
-+
-+      /* Create sg table for STM32 MDMA channel */
-+      ret = sg_alloc_table(&new_mdma_sgt, new_nents, GFP_ATOMIC);
-+      if (ret)
-+              dev_err(dev, "MDMA sg_table alloc failed\n");
-+
-+      _sgl = sgl;
-+      len = sg_dma_len(sgl);
-+      ddr_dma_buf = sg_dma_address(sgl);
-+      for_each_sg(mdma_sgt.sgl, s, mdma_sgt.nents, i) {
-+              size_t bytes = min_t(size_t, len, sram_period);
-+
-+              sg_dma_len(s) = bytes;
-+              sg_dma_address(s) = ddr_dma_buf;
-+              len -= bytes;
-+
-+              if (!len && sg_next(_sgl)) {
-+                      _sgl = sg_next(_sgl);
-+                      len = sg_dma_len(_sgl);
-+                      ddr_dma_buf = sg_dma_address(_sgl);
-+              } else {
-+                      ddr_dma_buf += bytes;
-+              }
-+      }
-+
-+    Don't forget to release these new sg_tables after getting the descriptors
-+    with dmaengine_prep_slave_sg().
-+
-+  **1. Set controller specific parameters**
-+
-+    First, use dmaengine_slave_config() with a struct dma_slave_config to
-+    configure STM32 DMA channel. You just have to take care of DMA addresses,
-+    the memory address (depending on the transfer direction) must point on your
-+    SRAM buffer, and set (struct dma_slave_config).peripheral_size != 0.
-+
-+    STM32 DMA driver will check (struct dma_slave_config).peripheral_size to
-+    determine if chaining is being used or not. If it is used, then STM32 DMA
-+    driver fills (struct dma_slave_config).peripheral_config with an array of
-+    three u32 : the first one containing STM32 DMAMUX channel ID, the second one
-+    the channel interrupt flag clear register address, and the third one the
-+    channel Transfer Complete flag mask.
-+
-+    Then, use dmaengine_slave_config with another struct dma_slave_config to
-+    configure STM32 MDMA channel. Take care of DMA addresses, the device address
-+    (depending on the transfer direction) must point on your SRAM buffer, and
-+    the memory address must point to the buffer originally used for "classic"
-+    DMA operation. Use the previous (struct dma_slave_config).peripheral_size
-+    and .peripheral_config that have been updated by STM32 DMA driver, to set
-+    (struct dma_slave_config).peripheral_size and .peripheral_config of the
-+    struct dma_slave_config to configure STM32 MDMA channel.
-+    ::
-+
-+      struct dma_slave_config dma_conf;
-+      struct dma_slave_config mdma_conf;
-+
-+      memset(&dma_conf, 0, sizeof(dma_conf));
-+      [...]
-+      config.direction = DMA_DEV_TO_MEM;
-+      config.dst_addr = sram_dma_buf;        // SRAM buffer
-+      config.peripheral_size = 1;            // peripheral_size != 0 => chaining
-+
-+      dmaengine_slave_config(dma_chan, &dma_config);
-+
-+      memset(&mdma_conf, 0, sizeof(mdma_conf));
-+      config.direction = DMA_DEV_TO_MEM;
-+      mdma_conf.src_addr = sram_dma_buf;     // SRAM buffer
-+      mdma_conf.dst_addr = rx_dma_buf;       // original memory buffer
-+      mdma_conf.peripheral_size = dma_conf.peripheral_size;       // <- dma_conf
-+      mdma_conf.peripheral_config = dma_config.peripheral_config; // <- dma_conf
-+
-+      dmaengine_slave_config(mdma_chan, &mdma_conf);
-+
-+  **2. Get a descriptor for STM32 DMA channel transaction**
-+
-+    In the same way you get your descriptor for your "classic" DMA operation,
-+    you just have to replace the original sg_list (in case of
-+    dmaengine_prep_slave_sg()) with the new sg_list using SRAM buffer, or to
-+    replace the original buffer address, length and period (in case of
-+    dmaengine_prep_dma_cyclic()) with the new SRAM buffer.
-+
-+  **3. Get a descriptor for STM32 MDMA channel transaction**
-+
-+    If you previously get descriptor (for STM32 DMA) with
-+
-+    * dmaengine_prep_slave_sg(), then use dmaengine_prep_slave_sg() for
-+      STM32 MDMA;
-+    * dmaengine_prep_dma_cyclic(), then use dmaengine_prep_dma_cyclic() for
-+      STM32 MDMA.
-+
-+    Use the new sg_list using SRAM buffer (in case of dmaengine_prep_slave_sg())
-+    or, depending on the transfer direction, either the original DDR buffer (in
-+    case of DMA_DEV_TO_MEM) or the SRAM buffer (in case of DMA_MEM_TO_DEV), the
-+    source address being previously set with dmaengine_slave_config().
-+
-+  **4. Submit both transactions**
-+
-+    Before submitting your transactions, you may need to define on which
-+    descriptor you want a callback to be called at the end of the transfer
-+    (dmaengine_prep_slave_sg()) or the period (dmaengine_prep_dma_cyclic()).
-+    Depending on the direction, set the callback on the descriptor that finishes
-+    the overal transfer:
-+
-+    * DMA_DEV_TO_MEM: set the callback on the "MDMA" descriptor
-+    * DMA_MEM_TO_DEV: set the callback on the "DMA" descriptor
-+
-+    Then, submit the descriptors whatever the order, with dmaengine_tx_submit().
-+
-+  **5. Issue pending requests (and wait for callback notification)**
-+
-+  As STM32 MDMA channel transfer is triggered by STM32 DMA, you must issue
-+  STM32 MDMA channel before STM32 DMA channel.
-+
-+  If any, your callback will be called to warn you about the end of the overal
-+  transfer or the period completion.
-+
-+  Don't forget to terminate both channels. STM32 DMA channel is configured in
-+  cyclic Double-Buffer mode so it won't be disabled by HW, you need to terminate
-+  it. STM32 MDMA channel will be stopped by HW in case of sg transfer, but not
-+  in case of cyclic transfer. You can terminate it whatever the kind of transfer.
-+
-+  **STM32 DMA-MDMA chaining DMA_MEM_TO_DEV special case**
-+
-+  STM32 DMA-MDMA chaining in DMA_MEM_TO_DEV is a special case. Indeed, the
-+  STM32 MDMA feeds the SRAM buffer with the DDR data, and the STM32 DMA reads
-+  data from SRAM buffer. So some data (the first period) have to be copied in
-+  SRAM buffer when the STM32 DMA starts to read.
-+
-+  A trick could be pausing the STM32 DMA channel (that will raise a Transfer
-+  Complete signal, triggering the STM32 MDMA channel), but the first data read
-+  by the STM32 DMA could be "wrong". The proper way is to prepare the first SRAM
-+  period with dmaengine_prep_dma_memcpy(). Then this first period should be
-+  "removed" from the sg or the cyclic transfer.
-+
-+  Due to this complexity, rather use the STM32 DMA-MDMA chaining for
-+  DMA_DEV_TO_MEM and keep the "classic" DMA usage for DMA_MEM_TO_DEV, unless
-+  you're not afraid.
-+
-+Resources
-+---------
-+
-+  Application note, datasheet and reference manual are available on ST website
-+  (STM32MP1_).
-+
-+  Dedicated focus on three application notes (AN5224_, AN4031_ & AN5001_)
-+  dealing with STM32 DMAMUX, STM32 DMA and STM32 MDMA.
-+
-+.. _STM32MP1: https://www.st.com/en/microcontrollers-microprocessors/stm32mp1-series.html
-+.. _AN5224: https://www.st.com/resource/en/application_note/an5224-stm32-dmamux-the-dma-request-router-stmicroelectronics.pdf
-+.. _AN4031: https://www.st.com/resource/en/application_note/dm00046011-using-the-stm32f2-stm32f4-and-stm32f7-series-dma-controller-stmicroelectronics.pdf
-+.. _AN5001: https://www.st.com/resource/en/application_note/an5001-stm32cube-expansion-package-for-stm32h7-series-mdma-stmicroelectronics.pdf
-+
-+:Authors:
-+
-+- Amelie Delaunay <amelie.delaunay@foss.st.com>
-\ No newline at end of file
+
+Reviewed-by: Jon Hunter <jonathanh@nvidia.com>
+
+Cheers
+Jon
+
 -- 
-2.25.1
-
+nvpublic
