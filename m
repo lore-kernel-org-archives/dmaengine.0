@@ -2,168 +2,103 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B024AC43334
-	for <dmaengine@archiver.kernel.org>; Wed, 13 Jul 2022 08:56:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C63A0C433EF
+	for <dmaengine@archiver.kernel.org>; Wed, 13 Jul 2022 14:22:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234489AbiGMI4D (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 13 Jul 2022 04:56:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36816 "EHLO
+        id S229497AbiGMOWT (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 13 Jul 2022 10:22:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55056 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235127AbiGMI4B (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Wed, 13 Jul 2022 04:56:01 -0400
-Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7AF75A58D1
-        for <dmaengine@vger.kernel.org>; Wed, 13 Jul 2022 01:56:00 -0700 (PDT)
-Received: from ptx.hi.pengutronix.de ([2001:67c:670:100:1d::c0])
-        by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.92)
-        (envelope-from <mfe@pengutronix.de>)
-        id 1oBY9z-0006jp-Mi; Wed, 13 Jul 2022 10:55:55 +0200
-Received: from mfe by ptx.hi.pengutronix.de with local (Exim 4.92)
-        (envelope-from <mfe@pengutronix.de>)
-        id 1oBY9x-0006Bp-PA; Wed, 13 Jul 2022 10:55:53 +0200
-Date:   Wed, 13 Jul 2022 10:55:53 +0200
-From:   Marco Felsch <m.felsch@pengutronix.de>
-To:     Dario Binacchi <dario.binacchi@amarulasolutions.com>
-Cc:     linux-kernel@vger.kernel.org,
-        Michael Trimarchi <michael@amarulasolutions.com>,
-        linux-amarula@amarulasolutions.com,
-        Sascha Hauer <s.hauer@pengutronix.de>, stable@vger.kernel.org,
-        Vinod Koul <vkoul@kernel.org>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        dmaengine@vger.kernel.org, Shawn Guo <shawnguo@kernel.org>,
-        Fabio Estevam <festevam@gmail.com>,
-        linux-arm-kernel@lists.infradead.org
-Subject: Re: [PATCH v5 1/2] dmaengine: mxs: use platform_driver_register
-Message-ID: <20220713085553.yunfuvh6a4gn2phj@pengutronix.de>
-References: <20220712160909.2054141-1-dario.binacchi@amarulasolutions.com>
- <20220713084036.ipcd6bhcdb574w7h@pengutronix.de>
- <CABGWkvpJ5Hc8pQ-Rzu8z6Y_Cfa2pEC0C2ABT_FGp6r9Vyz-Gmw@mail.gmail.com>
+        with ESMTP id S230440AbiGMOWS (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Wed, 13 Jul 2022 10:22:18 -0400
+Received: from mx07-00178001.pphosted.com (mx07-00178001.pphosted.com [185.132.182.106])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C74F232EC9;
+        Wed, 13 Jul 2022 07:22:15 -0700 (PDT)
+Received: from pps.filterd (m0288072.ppops.net [127.0.0.1])
+        by mx07-00178001.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 26DAo2xC027405;
+        Wed, 13 Jul 2022 16:21:58 +0200
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foss.st.com; h=from : to : cc :
+ subject : date : message-id : in-reply-to : references : mime-version :
+ content-transfer-encoding : content-type; s=selector1;
+ bh=fyyQJuRm529q54ZzHitzFOjpOk9IVG1ad4Uu2OC7hq0=;
+ b=68yKYK4wfTt3+A2MhPwOlcsYqnjQaiKkDWw1nCPfxL0sqj/O+i9200KmslXnfz0qRbcG
+ KBeyAAy6gIrSX5A4PfeP2Z9gFqjhvEA34Onn9CHPhzhmVj8tybSZ89NrNWwBDoiQCF8v
+ winQImR7+R3h70G7ouQBDUbjeq0QnnkynsaYE4wnqhkvTwlqmX5n9nfJ0pIRnKJOVvuD
+ sZ/+vTfMBoJEp3/c3Ue48SmY0M/po9T9Jcgw50JbpO1G5oT2tnz1WxfSE+JKpNyfbFAa
+ JeC4i1czLZt9z7DBFV3kTDKmpNKY8fa0yQQ5EKFLjJRnrOuwEpiufZ1WIQC7js3dSGYJ 2A== 
+Received: from beta.dmz-eu.st.com (beta.dmz-eu.st.com [164.129.1.35])
+        by mx07-00178001.pphosted.com (PPS) with ESMTPS id 3h93cwj2h3-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 13 Jul 2022 16:21:58 +0200
+Received: from euls16034.sgp.st.com (euls16034.sgp.st.com [10.75.44.20])
+        by beta.dmz-eu.st.com (STMicroelectronics) with ESMTP id 5AB8A10002A;
+        Wed, 13 Jul 2022 16:21:58 +0200 (CEST)
+Received: from Webmail-eu.st.com (shfdag1node2.st.com [10.75.129.70])
+        by euls16034.sgp.st.com (STMicroelectronics) with ESMTP id 5564A226FC7;
+        Wed, 13 Jul 2022 16:21:58 +0200 (CEST)
+Received: from localhost (10.75.127.47) by SHFDAG1NODE2.st.com (10.75.129.70)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256) id 15.1.2308.20; Wed, 13 Jul
+ 2022 16:21:57 +0200
+From:   Amelie Delaunay <amelie.delaunay@foss.st.com>
+To:     Jonathan Corbet <corbet@lwn.net>, Vinod Koul <vkoul@kernel.org>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>
+CC:     <linux-doc@vger.kernel.org>, <dmaengine@vger.kernel.org>,
+        <linux-stm32@st-md-mailman.stormreply.com>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>, Marek Vasut <marex@denx.de>,
+        Amelie Delaunay <amelie.delaunay@foss.st.com>
+Subject: [PATCH v2 2/4] dmaengine: stm32-dmamux: set dmamux channel id in dma features bitfield
+Date:   Wed, 13 Jul 2022 16:21:46 +0200
+Message-ID: <20220713142148.239253-3-amelie.delaunay@foss.st.com>
+X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20220713142148.239253-1-amelie.delaunay@foss.st.com>
+References: <20220713142148.239253-1-amelie.delaunay@foss.st.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CABGWkvpJ5Hc8pQ-Rzu8z6Y_Cfa2pEC0C2ABT_FGp6r9Vyz-Gmw@mail.gmail.com>
-User-Agent: NeoMutt/20180716
-X-SA-Exim-Connect-IP: 2001:67c:670:100:1d::c0
-X-SA-Exim-Mail-From: mfe@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: dmaengine@vger.kernel.org
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.75.127.47]
+X-ClientProxiedBy: SFHDAG2NODE3.st.com (10.75.127.6) To SHFDAG1NODE2.st.com
+ (10.75.129.70)
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.883,Hydra:6.0.517,FMLib:17.11.122.1
+ definitions=2022-07-13_03,2022-07-13_03,2022-06-22_01
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On 22-07-13, Dario Binacchi wrote:
-> Hi Marco,
-> 
-> On Wed, Jul 13, 2022 at 10:40 AM Marco Felsch <m.felsch@pengutronix.de> wrote:
-> >
-> > Hi Dario,
-> >
-> > On 22-07-12, Dario Binacchi wrote:
-> > > Driver registration fails on SOC imx8mn as its supplier, the clock
-> > > control module, is probed later than subsys initcall level. This driver
-> > > uses platform_driver_probe which is not compatible with deferred probing
-> > > and won't be probed again later if probe function fails due to clock not
-> > > being available at that time.
-> > >
-> > > This patch replaces the use of platform_driver_probe with
-> > > platform_driver_register which will allow probing the driver later again
-> > > when the clock control module will be available.
-> > >
-> > > Fixes: a580b8c5429a ("dmaengine: mxs-dma: add dma support for i.MX23/28")
-> > > Co-developed-by: Michael Trimarchi <michael@amarulasolutions.com>
-> > > Signed-off-by: Michael Trimarchi <michael@amarulasolutions.com>
-> > > Signed-off-by: Dario Binacchi <dario.binacchi@amarulasolutions.com>
-> > > Cc: stable@vger.kernel.org
-> > >
-> > > ---
-> > >
-> > > Changes in v5:
-> > > - Update the commit message.
-> > > - Create a new patch to remove the warning generated by this patch.
-> >
-> > Please squash this new patch into this patch since you introduce the
-> > warning with this patch.
-> 
-> In version 4 I had only one patch, but Vinod told me to separate the
-> patches like
-> this. I also think like you, but I did what Vinod asked me to do.
-> So, can you agree and actually tell me what to do?
+STM32 DMAMUX is used with STM32 DMA1 and DMA2:
+- DMAMUX channels 0 to 7 are connected to DMA1 channels 0 to 7
+- DMAMUX channels 8 to 15 are connected to DMA2 channels 0 to 7
 
-Sorry, I didn't wanted to step in here just saw the patch and it is a
-bit strange to fix something by a 2nd patch we introduce by the 1st
-patch within the same series. This also increase the probability that
-the 2nd patch isn't ported to stable. Anyway, if Vinod is fine with this
-as maintainer than it is fine.
+STM32 MDMA can be triggered by DMA1 and DMA2 channels transfer complete,
+and the "request line number" is the DMAMUX channel id (e.g. DMA2 channel 0
+triggers MDMA with request line 8).
 
-Regards,
-  Marco
+To well configure MDMA, set DMAMUX channel id in DMA features bitfield,
+so that DMA can update struct dma_slave_config peripheral_config properly.
 
-> Thanks and regards,
-> Dario
-> 
-> >
-> > Regards,
-> >   Marco
-> >
-> > > Changes in v4:
-> > > - Restore __init in front of mxs_dma_probe() definition.
-> > > - Rename the mxs_dma_driver variable to mxs_dma_driver_probe.
-> > > - Update the commit message.
-> > > - Use builtin_platform_driver() instead of module_platform_driver().
-> > >
-> > > Changes in v3:
-> > > - Restore __init in front of mxs_dma_init() definition.
-> > >
-> > > Changes in v2:
-> > > - Add the tag "Cc: stable@vger.kernel.org" in the sign-off area.
-> > >
-> > >  drivers/dma/mxs-dma.c | 8 ++------
-> > >  1 file changed, 2 insertions(+), 6 deletions(-)
-> > >
-> > > diff --git a/drivers/dma/mxs-dma.c b/drivers/dma/mxs-dma.c
-> > > index 994fc4d2aca4..18f8154b859b 100644
-> > > --- a/drivers/dma/mxs-dma.c
-> > > +++ b/drivers/dma/mxs-dma.c
-> > > @@ -839,10 +839,6 @@ static struct platform_driver mxs_dma_driver = {
-> > >               .name   = "mxs-dma",
-> > >               .of_match_table = mxs_dma_dt_ids,
-> > >       },
-> > > +     .probe = mxs_dma_probe,
-> > >  };
-> > > -
-> > > -static int __init mxs_dma_module_init(void)
-> > > -{
-> > > -     return platform_driver_probe(&mxs_dma_driver, mxs_dma_probe);
-> > > -}
-> > > -subsys_initcall(mxs_dma_module_init);
-> > > +builtin_platform_driver(mxs_dma_driver);
-> > > --
-> > > 2.32.0
-> > >
-> > >
-> > >
-> 
-> 
-> 
-> -- 
-> 
-> Dario Binacchi
-> 
-> Embedded Linux Developer
-> 
-> dario.binacchi@amarulasolutions.com
-> 
-> __________________________________
-> 
-> 
-> Amarula Solutions SRL
-> 
-> Via Le Canevare 30, 31100 Treviso, Veneto, IT
-> 
-> T. +39 042 243 5310
-> info@amarulasolutions.com
-> 
-> www.amarulasolutions.com
-> 
+Signed-off-by: Amelie Delaunay <amelie.delaunay@foss.st.com>
+---
+No changes in v2.
+---
+ drivers/dma/stm32-dmamux.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/dma/stm32-dmamux.c b/drivers/dma/stm32-dmamux.c
+index eee0c5aa5fb5..b431f9da9206 100644
+--- a/drivers/dma/stm32-dmamux.c
++++ b/drivers/dma/stm32-dmamux.c
+@@ -147,7 +147,7 @@ static void *stm32_dmamux_route_allocate(struct of_phandle_args *dma_spec,
+ 	mux->request = dma_spec->args[0];
+ 
+ 	/*  craft DMA spec */
+-	dma_spec->args[3] = dma_spec->args[2];
++	dma_spec->args[3] = dma_spec->args[2] | mux->chan_id << 16;
+ 	dma_spec->args[2] = dma_spec->args[1];
+ 	dma_spec->args[1] = 0;
+ 	dma_spec->args[0] = mux->chan_id - min;
+-- 
+2.25.1
+
