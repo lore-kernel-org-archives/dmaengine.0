@@ -2,114 +2,90 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 65D1BCCA479
-	for <dmaengine@archiver.kernel.org>; Mon, 18 Jul 2022 15:56:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1CC53C433EF
+	for <dmaengine@archiver.kernel.org>; Mon, 18 Jul 2022 19:16:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235201AbiGRP4v (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 18 Jul 2022 11:56:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36260 "EHLO
+        id S233699AbiGRTQb (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 18 Jul 2022 15:16:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38144 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235076AbiGRP4u (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Mon, 18 Jul 2022 11:56:50 -0400
-X-Greylist: delayed 2640 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Mon, 18 Jul 2022 08:56:48 PDT
-Received: from imap4.hz.codethink.co.uk (imap4.hz.codethink.co.uk [188.40.203.114])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E70CA2A41F;
-        Mon, 18 Jul 2022 08:56:48 -0700 (PDT)
-Received: from [167.98.27.226] (helo=[10.35.4.171])
-        by imap4.hz.codethink.co.uk with esmtpsa  (Exim 4.94.2 #2 (Debian))
-        id 1oDSQ9-002C9w-8q; Mon, 18 Jul 2022 16:12:29 +0100
-Message-ID: <7c68e645-efd7-c48c-77aa-9aa607c77033@codethink.co.uk>
-Date:   Mon, 18 Jul 2022 16:12:28 +0100
+        with ESMTP id S231199AbiGRTQb (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Mon, 18 Jul 2022 15:16:31 -0400
+Received: from mail-il1-f169.google.com (mail-il1-f169.google.com [209.85.166.169])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C98792ED5D;
+        Mon, 18 Jul 2022 12:16:29 -0700 (PDT)
+Received: by mail-il1-f169.google.com with SMTP id r4so2362765ilb.10;
+        Mon, 18 Jul 2022 12:16:29 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=8RF8yPg0V6Ei1ECcsENYa6ZgHRNw38bA40D3WRP4FyM=;
+        b=HtIUSlWeR67/+pac3QdOLs/nTkmfUEP3IOQGcSHNfw8CupHXTLHuMaPwMBcdCxOIt/
+         BhPgPwaC3u9lnnCi11gSBCzJVQj7yN5XOZDSekAdTLbbEv/wKCz3v5EekWn271vmFyX2
+         K+qsBpI1Al0EsGIxmNpu7joFOZ8hJIlSU/BUQitlZLuUXbWltgssjgOqed91QRTdfCUY
+         tUdMsIR6yWfknVDQpvBpE2IK1S8pitqKZjpX1KdEwTZlOGDCGnVcJ3xWlN3BpHPAM6ht
+         S8W+IvKX9hX33KOTj/EpK+Tnbli8NvbRr707kY6xmnEibAZQovY+PhBgf/cYJQD981hb
+         8u/Q==
+X-Gm-Message-State: AJIora/7P6kX1T4V4WCDr8g5mO2a4sCQ2f8w3oaC5Impc/Mx1DsqNDwQ
+        Lx3lJ/oTAvf3+xm+3dANP2dUqYEfZQ==
+X-Google-Smtp-Source: AGRyM1skZXRGXATxAj9yKT/sA/YyYFM/FtsMqbrtgIQYQ35QL7+WaUwDmKepF9LYedHCorY7wdg3Cg==
+X-Received: by 2002:a05:6e02:188c:b0:2dc:a00:3222 with SMTP id o12-20020a056e02188c00b002dc0a003222mr13783935ilu.43.1658171789064;
+        Mon, 18 Jul 2022 12:16:29 -0700 (PDT)
+Received: from robh.at.kernel.org ([64.188.179.248])
+        by smtp.gmail.com with ESMTPSA id w64-20020a025d43000000b0033ef9dc43d4sm5785863jaa.159.2022.07.18.12.16.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 18 Jul 2022 12:16:28 -0700 (PDT)
+Received: (nullmailer pid 3377517 invoked by uid 1000);
+        Mon, 18 Jul 2022 19:16:27 -0000
+Date:   Mon, 18 Jul 2022 13:16:27 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Akhil R <akhilrajeev@nvidia.com>
+Cc:     dmaengine@vger.kernel.org, jonathanh@nvidia.com,
+        ldewangan@nvidia.com, linux-kernel@vger.kernel.org,
+        linux-tegra@vger.kernel.org, p.zabel@pengutronix.de,
+        thierry.reding@gmail.com, vkoul@kernel.org,
+        devicetree@vger.kernel.org
+Subject: Re: [PATCH v3 1/3] dt-bindings: dmaengine: Add compatible for
+ Tegra234
+Message-ID: <20220718191627.GA3375779-robh@kernel.org>
+References: <20220711154536.41736-1-akhilrajeev@nvidia.com>
+ <20220711154536.41736-2-akhilrajeev@nvidia.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.10.0
-Subject: Re: [PATCH v5 03/13] dt-bindings: dma: dw-axi-dmac: extend the number
- of interrupts
-Content-Language: en-GB
-To:     Conor Dooley <mail@conchuod.ie>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Sam Ravnborg <sam@ravnborg.org>,
-        Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        Serge Semin <fancer.lancer@gmail.com>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Palmer Dabbelt <palmer@dabbelt.com>,
-        Palmer Dabbelt <palmer@rivosinc.com>
-Cc:     Paul Walmsley <paul.walmsley@sifive.com>,
-        Albert Ou <aou@eecs.berkeley.edu>,
-        Conor Dooley <conor.dooley@microchip.com>,
-        Masahiro Yamada <masahiroy@kernel.org>,
-        Damien Le Moal <damien.lemoal@opensource.wdc.com>,
-        Geert Uytterhoeven <geert@linux-m68k.org>,
-        Niklas Cassel <niklas.cassel@wdc.com>,
-        Dillon Min <dillon.minfei@gmail.com>,
-        dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org,
-        linux-riscv@lists.infradead.org, Rob Herring <robh@kernel.org>
-References: <20220705215213.1802496-1-mail@conchuod.ie>
- <20220705215213.1802496-4-mail@conchuod.ie>
-From:   Ben Dooks <ben.dooks@codethink.co.uk>
-Organization: Codethink Limited.
-In-Reply-To: <20220705215213.1802496-4-mail@conchuod.ie>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220711154536.41736-2-akhilrajeev@nvidia.com>
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On 05/07/2022 22:52, Conor Dooley wrote:
-> From: Conor Dooley <conor.dooley@microchip.com>
+On Mon, Jul 11, 2022 at 09:15:34PM +0530, Akhil R wrote:
+> Document the compatible string used by GPCDMA controller for Tegra234.
 > 
-> The Canaan k210 apparently has a Sysnopsys Designware AXI DMA
-> controller, but according to the documentation & devicetree it has 6
-> interrupts rather than the standard one. Support the 6 interrupt
-> configuration by unconditionally extending the binding to a maximum of
-> 8 per-channel interrupts thereby matching the number of possible
-> channels.
-
-I think you can still configure it to produce a single interrupt
-even if there are per-channel interrupts available. This is from
-my reading of the driver a little while ago so may not be totally
-correct now.
-
-Having per-channel irqs might be useful in the future, but as above
-I think it'll require the driver to be updated to do it (and possibly
-some sort of detection)
-
-
-> Link: https://canaan-creative.com/wp-content/uploads/2020/03/kendryte_standalone_programming_guide_20190311144158_en.pdf #Page 51
-> Reviewed-by: Serge Semin <fancer.lancer@gmail.com>
-> Reviewed-by: Rob Herring <robh@kernel.org>
-> Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
+> Signed-off-by: Akhil R <akhilrajeev@nvidia.com>
 > ---
->   .../devicetree/bindings/dma/snps,dw-axi-dmac.yaml          | 7 ++++++-
->   1 file changed, 6 insertions(+), 1 deletion(-)
+>  .../devicetree/bindings/dma/nvidia,tegra186-gpc-dma.yaml      | 4 ++++
+>  1 file changed, 4 insertions(+)
 > 
-> diff --git a/Documentation/devicetree/bindings/dma/snps,dw-axi-dmac.yaml b/Documentation/devicetree/bindings/dma/snps,dw-axi-dmac.yaml
-> index 4324a94b26b2..67aa7bb6d36a 100644
-> --- a/Documentation/devicetree/bindings/dma/snps,dw-axi-dmac.yaml
-> +++ b/Documentation/devicetree/bindings/dma/snps,dw-axi-dmac.yaml
-> @@ -34,7 +34,12 @@ properties:
->         - const: axidma_apb_regs
->   
->     interrupts:
-> -    maxItems: 1
-> +    description:
-> +      If the IP-core synthesis parameter DMAX_INTR_IO_TYPE is set to 1, this
-> +      will be per-channel interrupts. Otherwise, this is a single combined IRQ
-> +      for all channels.
-> +    minItems: 1
-> +    maxItems: 8
->   
->     clocks:
->       items:
+> diff --git a/Documentation/devicetree/bindings/dma/nvidia,tegra186-gpc-dma.yaml b/Documentation/devicetree/bindings/dma/nvidia,tegra186-gpc-dma.yaml
+> index 9dd1476d1849..399edcd5cecf 100644
+> --- a/Documentation/devicetree/bindings/dma/nvidia,tegra186-gpc-dma.yaml
+> +++ b/Documentation/devicetree/bindings/dma/nvidia,tegra186-gpc-dma.yaml
+> @@ -26,6 +26,10 @@ properties:
+>            - const: nvidia,tegra194-gpcdma
+>            - const: nvidia,tegra186-gpcdma
+>  
+> +      - items:
+> +          - const: nvidia,tegra234-gpcdma
 
+This can be added to the above entry changing it from a const to enum.
 
--- 
-Ben Dooks				http://www.codethink.co.uk/
-Senior Engineer				Codethink - Providing Genius
-
-https://www.codethink.co.uk/privacy.html
+> +          - const: nvidia,tegra186-gpcdma
+> +
+>    "#dma-cells":
+>      const: 1
+>  
+> -- 
+> 2.17.1
+> 
+> 
