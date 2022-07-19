@@ -2,44 +2,44 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 10DADC433EF
-	for <dmaengine@archiver.kernel.org>; Tue, 19 Jul 2022 15:31:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6B1B7CCA486
+	for <dmaengine@archiver.kernel.org>; Tue, 19 Jul 2022 15:31:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236227AbiGSPbv (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 19 Jul 2022 11:31:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34756 "EHLO
+        id S237364AbiGSPby (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 19 Jul 2022 11:31:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34772 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237369AbiGSPbp (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Tue, 19 Jul 2022 11:31:45 -0400
+        with ESMTP id S237757AbiGSPbq (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Tue, 19 Jul 2022 11:31:46 -0400
 Received: from mx07-00178001.pphosted.com (mx08-00178001.pphosted.com [91.207.212.93])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F390C5887C;
-        Tue, 19 Jul 2022 08:31:44 -0700 (PDT)
-Received: from pps.filterd (m0046661.ppops.net [127.0.0.1])
-        by mx07-00178001.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 26JD8AR7030475;
-        Tue, 19 Jul 2022 17:31:26 +0200
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 722CC59242;
+        Tue, 19 Jul 2022 08:31:45 -0700 (PDT)
+Received: from pps.filterd (m0046660.ppops.net [127.0.0.1])
+        by mx07-00178001.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 26JFNHNr002662;
+        Tue, 19 Jul 2022 17:31:29 +0200
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foss.st.com; h=from : to : cc :
- subject : date : message-id : mime-version : content-transfer-encoding :
- content-type; s=selector1;
- bh=1ralePF7NZgiuaaEZtba9R7/B4WF8Zv4f9q+QOtg1so=;
- b=ovGLk68qwlCYzXBtDnHzdBiVd7/Agced4hab8SCCtj6Q2qS3vg2skCuapG+9vWhaXcw+
- wCgLgNAQsqMJJN1uOuiwF1smm59WOeRSbI1wl3um/QUEFSeAhzqVGzK0YWdmUOyNTFkc
- Ka1PUJqGEGmsPXn1YLUPCvbXAOuRe30vXl2PlYrQpjdbA7jyGjQ6VOEVACI8Tf0OSOUV
- +pkTQS1qpenJFg9/Y0gcFAG1oGgXhB5eibtNEoOqepyu596lqTqk2y1VuSwep3lNpPFh
- rkcPqeJ0p4lzAL+L99UKTSKLdxBTGTphF4TMnVyTzU1MCcwktEjMkJAubfAhvUryWb8A xQ== 
+ subject : date : message-id : in-reply-to : references : mime-version :
+ content-transfer-encoding : content-type; s=selector1;
+ bh=OHdFWQNeifopdWbgdjW6jtZOq7tqozD7bw8FPdNUfnU=;
+ b=JXo3L6+3lzGmJcau+v2xJiof+JzGt9nRHjRr9JN5xg3Lh0yA1bxKSaJfqfutBi0q97X2
+ y/Qu8yaEsSVMUqi8FOzl0Wdc6m0rWKWkn9U/vx9a/gDJEuD07x1t0B3ZMCmu2KXnmL1c
+ Q+JelY+LtIw2cuOLdV13QvnWZSFjYDs/nW9bQIQosGkqLvouZZx0vfDbkOswwUMM3VrY
+ 52jSTlhe8PDQchNtbb7B4XpOJm/QBlA6b0ukBUL5IdMxCePntQvsKCCUa26XHlzOxGB/
+ G5d7rp9WWqV0ovX3gIQjbrv/7E+WquSdffkLh7URNbpLQqMjWZvYSEJiPEH2TVMJsqPo Qg== 
 Received: from beta.dmz-eu.st.com (beta.dmz-eu.st.com [164.129.1.35])
-        by mx07-00178001.pphosted.com (PPS) with ESMTPS id 3hdrwwjf19-1
+        by mx07-00178001.pphosted.com (PPS) with ESMTPS id 3hbnkg8p25-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 19 Jul 2022 17:31:26 +0200
+        Tue, 19 Jul 2022 17:31:29 +0200
 Received: from euls16034.sgp.st.com (euls16034.sgp.st.com [10.75.44.20])
-        by beta.dmz-eu.st.com (STMicroelectronics) with ESMTP id CFD6A10002A;
-        Tue, 19 Jul 2022 17:31:25 +0200 (CEST)
+        by beta.dmz-eu.st.com (STMicroelectronics) with ESMTP id 10AE810002A;
+        Tue, 19 Jul 2022 17:31:29 +0200 (CEST)
 Received: from Webmail-eu.st.com (shfdag1node2.st.com [10.75.129.70])
-        by euls16034.sgp.st.com (STMicroelectronics) with ESMTP id CAE7B22AFE6;
-        Tue, 19 Jul 2022 17:31:25 +0200 (CEST)
-Received: from localhost (10.75.127.44) by SHFDAG1NODE2.st.com (10.75.129.70)
+        by euls16034.sgp.st.com (STMicroelectronics) with ESMTP id 0C80222AFE6;
+        Tue, 19 Jul 2022 17:31:29 +0200 (CEST)
+Received: from localhost (10.75.127.45) by SHFDAG1NODE2.st.com (10.75.129.70)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256) id 15.1.2308.20; Tue, 19 Jul
- 2022 17:31:24 +0200
+ 2022 17:31:28 +0200
 From:   Amelie Delaunay <amelie.delaunay@foss.st.com>
 To:     Jonathan Corbet <corbet@lwn.net>, Vinod Koul <vkoul@kernel.org>,
         Maxime Coquelin <mcoquelin.stm32@gmail.com>,
@@ -49,14 +49,16 @@ CC:     <linux-doc@vger.kernel.org>, <dmaengine@vger.kernel.org>,
         <linux-arm-kernel@lists.infradead.org>,
         <linux-kernel@vger.kernel.org>, Marek Vasut <marex@denx.de>,
         Amelie Delaunay <amelie.delaunay@foss.st.com>
-Subject: [PATCH v3 0/6] STM32 DMA-MDMA chaining feature
-Date:   Tue, 19 Jul 2022 17:31:16 +0200
-Message-ID: <20220719153122.620730-1-amelie.delaunay@foss.st.com>
+Subject: [PATCH v3 4/6] dmaengine: stm32-dmamux: set dmamux channel id in dma features bitfield
+Date:   Tue, 19 Jul 2022 17:31:20 +0200
+Message-ID: <20220719153122.620730-5-amelie.delaunay@foss.st.com>
 X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20220719153122.620730-1-amelie.delaunay@foss.st.com>
+References: <20220719153122.620730-1-amelie.delaunay@foss.st.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-Originating-IP: [10.75.127.44]
+X-Originating-IP: [10.75.127.45]
 X-ClientProxiedBy: SFHDAG2NODE3.st.com (10.75.127.6) To SHFDAG1NODE2.st.com
  (10.75.129.70)
 X-Proofpoint-Virus-Version: vendor=baseguard
@@ -66,54 +68,39 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-This patchset (re)introduces STM32 DMA-MDMA chaining feature.
+STM32 DMAMUX is used with STM32 DMA1 and DMA2:
+- DMAMUX channels 0 to 7 are connected to DMA1 channels 0 to 7
+- DMAMUX channels 8 to 15 are connected to DMA2 channels 0 to 7
 
-As the DMA is not able to generate convenient burst transfer on the DDR,
-it penalises the AXI bus when accessing the DDR. While it accesses
-optimally the SRAM. The DMA-MDMA chaining then consists in having an SRAM
-buffer between DMA and MDMA, so the DMA deals with peripheral and SRAM,
-and the MDMA with SRAM and DDR.
+STM32 MDMA can be triggered by DMA1 and DMA2 channels transfer complete,
+and the "request line number" is the DMAMUX channel id (e.g. DMA2 channel 0
+triggers MDMA with request line 8).
 
-The feature relies on the fact that DMA channel Transfer Complete signal
-can trigger a MDMA channel transfer and MDMA can clear the DMA request by
-writing to DMA Interrupt Clear register.
+To well configure MDMA, set DMAMUX channel id in DMA features bitfield,
+so that DMA can update struct dma_slave_config peripheral_config properly.
 
-A deeper introduction can be found in patch 1.
+Signed-off-by: Amelie Delaunay <amelie.delaunay@foss.st.com>
+---
+No changes in v3.
 
-Previous implementation [1] has been dropped as nacked.
-Unlike this previous implementation (where all the stuff was embedded in
-stm32-dma driver), the user (in peripheral drivers using dma) has now to
-configure the MDMA channel.
+No changes in v2.
+---
+ drivers/dma/stm32-dmamux.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-[1] https://lore.kernel.org/lkml/1538139715-24406-1-git-send-email-pierre-yves.mordret@st.com/
-
-Changes in v3:
-- introduce two prior patches to help readibility
-- fix stm32-dma struct stm32_dma_mdma_config documentation
-
-Changes in v2:
-- wrap to 80-column limit for documentation
-- add an entry for this documentation in index.rst
-- use simple table instead of csv-table in documentation
-
-
-Amelie Delaunay (6):
-  dmaengine: stm32-dma: introduce 3 helpers to address channel flags
-  dmaengine: stm32-dma: use bitfield helpers
-  docs: arm: stm32: introduce STM32 DMA-MDMA chaining feature
-  dmaengine: stm32-dmamux: set dmamux channel id in dma features
-    bitfield
-  dmaengine: stm32-dma: add support to trigger STM32 MDMA
-  dmaengine: stm32-mdma: add support to be triggered by STM32 DMA
-
- Documentation/arm/index.rst                   |   1 +
- .../arm/stm32/stm32-dma-mdma-chaining.rst     | 415 ++++++++++++++++++
- drivers/dma/stm32-dma.c                       | 136 +++---
- drivers/dma/stm32-dmamux.c                    |   2 +-
- drivers/dma/stm32-mdma.c                      |  70 ++-
- 5 files changed, 569 insertions(+), 55 deletions(-)
- create mode 100644 Documentation/arm/stm32/stm32-dma-mdma-chaining.rst
-
+diff --git a/drivers/dma/stm32-dmamux.c b/drivers/dma/stm32-dmamux.c
+index eee0c5aa5fb5..b431f9da9206 100644
+--- a/drivers/dma/stm32-dmamux.c
++++ b/drivers/dma/stm32-dmamux.c
+@@ -147,7 +147,7 @@ static void *stm32_dmamux_route_allocate(struct of_phandle_args *dma_spec,
+ 	mux->request = dma_spec->args[0];
+ 
+ 	/*  craft DMA spec */
+-	dma_spec->args[3] = dma_spec->args[2];
++	dma_spec->args[3] = dma_spec->args[2] | mux->chan_id << 16;
+ 	dma_spec->args[2] = dma_spec->args[1];
+ 	dma_spec->args[1] = 0;
+ 	dma_spec->args[0] = mux->chan_id - min;
 -- 
 2.25.1
 
