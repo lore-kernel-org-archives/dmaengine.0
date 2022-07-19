@@ -2,25 +2,25 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 52B26C43334
-	for <dmaengine@archiver.kernel.org>; Tue, 19 Jul 2022 14:48:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 733FCC433EF
+	for <dmaengine@archiver.kernel.org>; Tue, 19 Jul 2022 14:49:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235756AbiGSOsP (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 19 Jul 2022 10:48:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46020 "EHLO
+        id S238182AbiGSOt3 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 19 Jul 2022 10:49:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47104 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232969AbiGSOsP (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Tue, 19 Jul 2022 10:48:15 -0400
-Received: from relmlie6.idc.renesas.com (relmlor2.renesas.com [210.160.252.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id BAE3D25CC;
-        Tue, 19 Jul 2022 07:48:12 -0700 (PDT)
+        with ESMTP id S239357AbiGSOtO (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Tue, 19 Jul 2022 10:49:14 -0400
+Received: from relmlie5.idc.renesas.com (relmlor1.renesas.com [210.160.252.171])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 2BDBEEAC;
+        Tue, 19 Jul 2022 07:49:13 -0700 (PDT)
 X-IronPort-AV: E=Sophos;i="5.92,284,1650898800"; 
-   d="scan'208";a="128389004"
-Received: from unknown (HELO relmlir6.idc.renesas.com) ([10.200.68.152])
-  by relmlie6.idc.renesas.com with ESMTP; 19 Jul 2022 23:48:12 +0900
+   d="scan'208";a="126656671"
+Received: from unknown (HELO relmlir5.idc.renesas.com) ([10.200.68.151])
+  by relmlie5.idc.renesas.com with ESMTP; 19 Jul 2022 23:49:12 +0900
 Received: from localhost.localdomain (unknown [10.226.92.160])
-        by relmlir6.idc.renesas.com (Postfix) with ESMTP id 523AD4055DB2;
-        Tue, 19 Jul 2022 23:48:07 +0900 (JST)
+        by relmlir5.idc.renesas.com (Postfix) with ESMTP id 1198A400C4DD;
+        Tue, 19 Jul 2022 23:49:08 +0900 (JST)
 From:   Biju Das <biju.das.jz@bp.renesas.com>
 To:     Vinod Koul <vkoul@kernel.org>
 Cc:     Biju Das <biju.das.jz@bp.renesas.com>,
@@ -34,8 +34,8 @@ Cc:     Biju Das <biju.das.jz@bp.renesas.com>,
         Prabhakar Mahadev Lad <prabhakar.mahadev-lad.rj@bp.renesas.com>,
         linux-renesas-soc@vger.kernel.org
 Subject: [PATCH 1/2] dmaengine: sh: rz-dmac: Add device_synchronize callback
-Date:   Tue, 19 Jul 2022 15:48:04 +0100
-Message-Id: <20220719144805.382458-1-biju.das.jz@bp.renesas.com>
+Date:   Tue, 19 Jul 2022 15:49:05 +0100
+Message-Id: <20220719144906.382548-1-biju.das.jz@bp.renesas.com>
 X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
