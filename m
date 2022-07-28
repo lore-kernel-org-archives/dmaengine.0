@@ -2,156 +2,85 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 49CBFC04A68
-	for <dmaengine@archiver.kernel.org>; Thu, 28 Jul 2022 14:17:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C9D25C3F6B0
+	for <dmaengine@archiver.kernel.org>; Thu, 28 Jul 2022 14:36:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231297AbiG1OR4 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Thu, 28 Jul 2022 10:17:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47194 "EHLO
+        id S230479AbiG1OgD (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Thu, 28 Jul 2022 10:36:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37452 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229484AbiG1ORz (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Thu, 28 Jul 2022 10:17:55 -0400
-Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E448751A07;
-        Thu, 28 Jul 2022 07:17:53 -0700 (PDT)
-Received: by mail-lj1-x236.google.com with SMTP id s14so2123538ljh.0;
-        Thu, 28 Jul 2022 07:17:53 -0700 (PDT)
+        with ESMTP id S232634AbiG1OfM (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Thu, 28 Jul 2022 10:35:12 -0400
+Received: from mail.baikalelectronics.com (unknown [87.245.175.230])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 82C822F39A
+        for <dmaengine@vger.kernel.org>; Thu, 28 Jul 2022 07:34:30 -0700 (PDT)
+Received: from mail (mail.baikal.int [192.168.51.25])
+        by mail.baikalelectronics.com (Postfix) with ESMTP id 15FE75BC5;
+        Thu, 28 Jul 2022 17:31:18 +0300 (MSK)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mail.baikalelectronics.com 15FE75BC5
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=XrrrW4++UP8Z1/g4RPl+VWHxRE3xR4vShEJqGT7s7ks=;
-        b=jFPW+/cAzl1wgsBZ+OnwY61OHhJWd86DKN+6Hj9sDgImdFglHPnhs8rGRYKMopLwh2
-         PP5m5jW/eyQ0JXNxDROJXZx7bseJaqd3LlrUXK4kJGpdqZO/fkoyYSnMl50GLitzHHGj
-         B5v7Xxvi1oliv6t4WEAeXjfTuyl05VDDBsH5rzIZV5N8JREMhgAoPL2tqoz77xNc9eZK
-         KDTP7GmuURxC+8nJEnbcPpAAoCqTq8Czcy2280q3ecj0jpzMX4hKqTLvMYsUYM1ucobf
-         gt/wk0eEjIAMz0bve1vIIpIeDVso6bhJrYeJjdPWqIfYk7IidBlwbKS/9x7P9DJsh6KY
-         FHAw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=XrrrW4++UP8Z1/g4RPl+VWHxRE3xR4vShEJqGT7s7ks=;
-        b=eNiuYQEzBLeZDhspLo3ADltqQ/bC1kWVfar/xHdUL31MGh6ZS9hkLhkUYfR0vFswNc
-         /dMayzSxkERYZ4j/IOyqy7bdnH4HJh/H1xE9vhAUFnF5b5u4kZtWptfFaYQketRJFRuk
-         NJNlZZ+lm2JiSKRUmFvp2MfoDe0+yGSgbvrkj2y0iqT5H9HSYOHuhI+GZ0T9WVd4G8zT
-         eZMIH4A31hwiFink4DBzGf4jR+5T9+scCBkSZywcwEd1Vy7xypdxFqmoWaeP8Uh7IaQ/
-         T6P6yBnbtImPs1Rno4aIc3HuH1hLMzqzAhWkQRjYdkxvw57jT/Tmu/7OPuCEbYVSRNyy
-         ERvA==
-X-Gm-Message-State: AJIora+3HyBfh6BYw4RU7jy1bY/19GVSqWAoQjy5PCoBBOyqTZfTrNsV
-        GbLxlxai85NKaIQZyYWKB9c=
-X-Google-Smtp-Source: AGRyM1vmDbf/D2wQN66Ua5khxvctUPoy/TITsmzPW0Qi+P0RywPFWU/UBLOkF7DR/IYtB5I2dT/ZbQ==
-X-Received: by 2002:a2e:6a18:0:b0:25e:2f3f:ba71 with SMTP id f24-20020a2e6a18000000b0025e2f3fba71mr786247ljc.352.1659017871652;
-        Thu, 28 Jul 2022 07:17:51 -0700 (PDT)
-Received: from mobilestation ([95.79.140.178])
-        by smtp.gmail.com with ESMTPSA id e14-20020a2e500e000000b0025df04af0f0sm168583ljb.51.2022.07.28.07.17.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 28 Jul 2022 07:17:51 -0700 (PDT)
-Date:   Thu, 28 Jul 2022 17:17:48 +0300
-From:   Serge Semin <fancer.lancer@gmail.com>
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Serge Semin <Sergey.Semin@baikalelectronics.ru>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-        Rob Herring <robh@kernel.org>,
+        d=baikalelectronics.ru; s=mail; t=1659018678;
+        bh=97a9U8E5vZvQUfsqwWz6wdvVx63TZNSKII0ja/EivXE=;
+        h=From:To:CC:Subject:Date:In-Reply-To:References:From;
+        b=F5ztyMM59ocesilbGc+gSFwjViWGfAwRegr2YdMyydUVF51NJsf08i6tOXY3pwmkx
+         uvnQoxurt3v2l3v2DVDjX16or8qg4c/6b7J1v64YhDczMudqcpvYst/oGIZ7L4Ra6T
+         TcStu34VSiFSF9eb/+a4WEgFQozt+lIvh1/OCdhw=
+Received: from localhost (192.168.53.207) by mail (192.168.51.25) with
+ Microsoft SMTP Server (TLS) id 15.0.1395.4; Thu, 28 Jul 2022 17:28:53 +0300
+From:   Serge Semin <Sergey.Semin@baikalelectronics.ru>
+To:     Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+        Vinod Koul <vkoul@kernel.org>, Rob Herring <robh@kernel.org>,
         Bjorn Helgaas <bhelgaas@google.com>,
         Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
         Jingoo Han <jingoohan1@gmail.com>, Frank Li <Frank.Li@nxp.com>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+CC:     Serge Semin <Sergey.Semin@baikalelectronics.ru>,
+        Serge Semin <fancer.lancer@gmail.com>,
         Alexey Malahov <Alexey.Malahov@baikalelectronics.ru>,
         Pavel Parkhomenko <Pavel.Parkhomenko@baikalelectronics.ru>,
-        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-        linux-pci@vger.kernel.org, dmaengine@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 00/24] dmaengine: dw-edma: Add RP/EP local DMA
- controllers support
-Message-ID: <20220728141748.karft7dflr5e3vlp@mobilestation>
-References: <20220610091459.17612-1-Sergey.Semin@baikalelectronics.ru>
- <YtlDivjaXfSEK1Xg@matsya>
- <20220728113359.hs54apv22bo5bnyr@mobilestation>
- <YuKFnjrxnyNa+98X@matsya>
+        =?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>,
+        <linux-pci@vger.kernel.org>, <dmaengine@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>,
+        Gustavo Pimentel <Gustavo.Pimentel@synopsys.com>
+Subject: [PATCH v4 09/24] dmaengine: dw-edma: Drop chancnt initialization
+Date:   Thu, 28 Jul 2022 17:28:26 +0300
+Message-ID: <20220728142841.12305-10-Sergey.Semin@baikalelectronics.ru>
+In-Reply-To: <20220728142841.12305-1-Sergey.Semin@baikalelectronics.ru>
+References: <20220728142841.12305-1-Sergey.Semin@baikalelectronics.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <YuKFnjrxnyNa+98X@matsya>
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: MAIL.baikal.int (192.168.51.25) To mail (192.168.51.25)
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On Thu, Jul 28, 2022 at 06:18:30PM +0530, Vinod Koul wrote:
-> On 28-07-22, 14:33, Serge Semin wrote:
-> > On Thu, Jul 21, 2022 at 05:46:10PM +0530, Vinod Koul wrote:
-> > > On 10-06-22, 12:14, Serge Semin wrote:
-> > > > This is a final patchset in the series created in the framework of
-> > > > my Baikal-T1 PCIe/eDMA-related work:
-> > > > 
-> > > > [1: In-progress v4] PCI: dwc: Various fixes and cleanups
-> > > > Link: https://lore.kernel.org/linux-pci/20220610082535.12802-1-Sergey.Semin@baikalelectronics.ru/
-> > > > [2: In-progress v3] PCI: dwc: Add hw version and dma-ranges support
-> > > > Link: https://lore.kernel.org/linux-pci/20220610084444.14549-1-Sergey.Semin@baikalelectronics.ru/
-> > > > [3: In-progress v3] PCI: dwc: Add generic resources and Baikal-T1 support
-> > > > Link: https://lore.kernel.org/linux-pci/20220610085706.15741-1-Sergey.Semin@baikalelectronics.ru/
-> > > > [4: In-progress v3] dmaengine: dw-edma: Add RP/EP local DMA support
-> > > > Link: ---you are looking at it---
-> > > > 
-> > > > Note it is very recommended to merge the patchsets in the same order as
-> > > > they are listed in the set above in order to have them applied smoothly.
-> > > > Nothing prevents them from being reviewed synchronously though.
-> > > > 
-> > > > Please note originally this series was self content, but due to Frank
-> > > > being a bit faster in his work submission I had to rebase my patchset onto
-> > > > his one. So now this patchset turns to be dependent on the Frank' work:
-> > > > 
-> > > > Link: https://lore.kernel.org/linux-pci/20220524152159.2370739-1-Frank.Li@nxp.com/
-> > > > 
-> > > > So please merge Frank' series first before applying this one.
-> > > > 
-> > > > Here is a short summary regarding this patchset. The series starts with
-> > > > fixes patches. We discovered that the dw-edma-pcie.c driver incorrectly
-> > > > initializes the LL/DT base addresses for the platforms with not matching
-> > > > CPU and PCIe memory spaces. It is fixed by using the pci_bus_address()
-> > > > method to get a correct base address. After that you can find a series of
-> > > > the interleaved xfers fixes. It turned out the interleaved transfers
-> > > > implementation didn't work quite correctly from the very beginning for
-> > > > instance missing src/dst addresses initialization, etc. In the framework
-> > > > of the next two patches we suggest to add a new platform-specific
-> > > > callback - pci_address() and use it to convert the CPU address to the PCIe
-> > > > space address. It is at least required for the DW eDMA remote End-point
-> > > > setup on the platforms with not-matching CPU/PCIe address spaces. In case
-> > > > of the DW eDMA local RP/EP setup the conversion will be done automatically
-> > > > by the outbound iATU (if no DMA-bypass flag is specified for the
-> > > > corresponding iATU window). Then we introduce a set of the patches to make
-> > > > the DebugFS part of the code supporting the multi-eDMA controllers
-> > > > platforms. It starts with several cleanup patches and is closed joining
-> > > > the Read/Write channels into a single DMA-device as they originally should
-> > > > have been. After that you can find the patches with adding the non-atomic
-> > > > io-64 methods usage, dropping DT-region descriptors allocation, replacing
-> > > > chip IDs with the device name. In addition to that in order to have the
-> > > > eDMA embedded into the DW PCIe RP/EP supported we need to bypass the
-> > > > dma-ranges-based memory ranges mapping since in case of the root port DT
-> > > > node it's applicable for the peripheral PCIe devices only. Finally at the
-> > > > series closure we introduce a generic DW eDMA controller support being
-> > > > available in the DW PCIe Root Port/Endpoint driver.
-> > > 
-> > 
-> > > Acked-By: Vinod Koul <vkoul@kernel.org>
-> > 
-> > Thanks, Vinod! The series will be merged in after the patchset
-> > [PATCH vX 00/17] PCI: dwc: Add generic resources and Baikal-T1 support
-> > Link: https://lore.kernel.org/linux-pci/20220610085706.15741-1-Sergey.Semin@baikalelectronics.ru/
-> > is done with Rob' review (I failed to reach him with a few issues
-> > lately). I'll add your ab-tag to this one on the next patchset re-spin
-> > (rebase will be likely needed).
-> 
+DMA device drivers aren't supposed to initialize the dma_device.chancnt
+field. It will be done by the DMA-engine core in accordance with number of
+added virtual DMA-channels. Pre-initializing it with some value causes
+having a wrong number of channels printed in the device summary.
 
-> You can cc Krzysztof (cced him0, maybe he can help with review of DT
-> parts
+Fixes: e63d79d1ffcd ("dmaengine: Add Synopsys eDMA IP core driver")
+Signed-off-by: Serge Semin <Sergey.Semin@baikalelectronics.ru>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Tested-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Acked-By: Vinod Koul <vkoul@kernel.org>
+---
+ drivers/dma/dw-edma/dw-edma-core.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-Thanks for the suggestion. I'll Cc him in the next series re-spin.
+diff --git a/drivers/dma/dw-edma/dw-edma-core.c b/drivers/dma/dw-edma/dw-edma-core.c
+index be466b781376..e9cb3056b6b7 100644
+--- a/drivers/dma/dw-edma/dw-edma-core.c
++++ b/drivers/dma/dw-edma/dw-edma-core.c
+@@ -823,7 +823,6 @@ static int dw_edma_channel_setup(struct dw_edma *dw, bool write,
+ 	dma->src_addr_widths = BIT(DMA_SLAVE_BUSWIDTH_4_BYTES);
+ 	dma->dst_addr_widths = BIT(DMA_SLAVE_BUSWIDTH_4_BYTES);
+ 	dma->residue_granularity = DMA_RESIDUE_GRANULARITY_DESCRIPTOR;
+-	dma->chancnt = cnt;
+ 
+ 	/* Set DMA channel callbacks */
+ 	dma->dev = chip->dev;
+-- 
+2.35.1
 
--Sergey
-
-> 
-> thanks
-> -- 
-> ~Vinod
