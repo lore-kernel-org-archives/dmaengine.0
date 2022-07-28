@@ -2,31 +2,31 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4533EC25B0E
-	for <dmaengine@archiver.kernel.org>; Thu, 28 Jul 2022 14:36:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 97A39C19F2D
+	for <dmaengine@archiver.kernel.org>; Thu, 28 Jul 2022 14:36:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229628AbiG1OgV (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Thu, 28 Jul 2022 10:36:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38088 "EHLO
+        id S232879AbiG1OgW (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Thu, 28 Jul 2022 10:36:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38080 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232733AbiG1OfN (ORCPT
+        with ESMTP id S232677AbiG1OfN (ORCPT
         <rfc822;dmaengine@vger.kernel.org>); Thu, 28 Jul 2022 10:35:13 -0400
 Received: from mail.baikalelectronics.com (unknown [87.245.175.230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id D24163DF27
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id D265141D03
         for <dmaengine@vger.kernel.org>; Thu, 28 Jul 2022 07:34:33 -0700 (PDT)
 Received: from mail (mail.baikal.int [192.168.51.25])
-        by mail.baikalelectronics.com (Postfix) with ESMTP id 256DA5BE2;
-        Thu, 28 Jul 2022 17:31:24 +0300 (MSK)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mail.baikalelectronics.com 256DA5BE2
+        by mail.baikalelectronics.com (Postfix) with ESMTP id B3C2F16D7;
+        Thu, 28 Jul 2022 17:31:09 +0300 (MSK)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mail.baikalelectronics.com B3C2F16D7
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baikalelectronics.ru; s=mail; t=1659018684;
-        bh=Gkk7/wuRGiJqLIFB/dQGceCCDwcGwRLJqDMhy3IdGqc=;
+        d=baikalelectronics.ru; s=mail; t=1659018669;
+        bh=bA4WQAY8CizPkO+9IE2AjYNnbT8/R2l+P47T/SmQGRk=;
         h=From:To:CC:Subject:Date:In-Reply-To:References:From;
-        b=FyC1n1Wxg117B/kXAjN4nf8XgCdoJ+SfhkhZEf9edCE4PdDDvkvmZ+Z0TtJVChin/
-         DLuoSZo819n0xNtZIfglmIYQPBFXBOyhj+6evnChnpPEVNnaMuUWdQ4vfZq6kyqWZb
-         fOGlkIuvw+lITVXj93BkTPRVOxkt9cUfyYn51V6E=
+        b=FgO9ubxj/6bE6eSTuM+UaAneOB0ZrZl8UztyxMneRe46VWM2lF1DhyfjqbwuTtc9+
+         G2pOQAvLQ9y+CnnaSpf5cwMGc/EgiBvu41wgcjZDVWKmAmYQSBtY/00fBLd8hak1r4
+         DoR0VhryNyDoRLrz4hVcEpXmHdbbTSgSnIa6+FPE=
 Received: from localhost (192.168.53.207) by mail (192.168.51.25) with
- Microsoft SMTP Server (TLS) id 15.0.1395.4; Thu, 28 Jul 2022 17:28:59 +0300
+ Microsoft SMTP Server (TLS) id 15.0.1395.4; Thu, 28 Jul 2022 17:28:44 +0300
 From:   Serge Semin <Sergey.Semin@baikalelectronics.ru>
 To:     Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
         Vinod Koul <vkoul@kernel.org>, Rob Herring <robh@kernel.org>,
@@ -41,9 +41,9 @@ CC:     Serge Semin <Sergey.Semin@baikalelectronics.ru>,
         =?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>,
         <linux-pci@vger.kernel.org>, <dmaengine@vger.kernel.org>,
         <linux-kernel@vger.kernel.org>
-Subject: [PATCH v4 15/24] dmaengine: dw-edma: Simplify the DebugFS context CSRs init procedure
-Date:   Thu, 28 Jul 2022 17:28:32 +0300
-Message-ID: <20220728142841.12305-16-Sergey.Semin@baikalelectronics.ru>
+Subject: [PATCH v4 01/24] dmaengine: Fix dma_slave_config.dst_addr description
+Date:   Thu, 28 Jul 2022 17:28:18 +0300
+Message-ID: <20220728142841.12305-2-Sergey.Semin@baikalelectronics.ru>
 In-Reply-To: <20220728142841.12305-1-Sergey.Semin@baikalelectronics.ru>
 References: <20220728142841.12305-1-Sergey.Semin@baikalelectronics.ru>
 MIME-Version: 1.0
@@ -54,187 +54,34 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-DW eDMA v4.70a and older have the read and write channels context CSRs
-indirectly accessible. It means the CSRs like Channel Control, Xfer size,
-SAR, DAR and LLP address are accessed over at a fixed MMIO address, but
-their reference to the corresponding channel is determined by the Viewport
-CSR. In order to have a coherent access to these registers the CSR IOs are
-supposed to be protected with a spin-lock. DW eDMA v4.80a and newer
-normally have unrolled Read/Write channel context registers. That is all
-CSRs denoted before are directly mapped in the controller MMIO space.
-
-Since both normal and viewport-based registers are exposed via the DebugFS
-nodes, the original code author decided to implement an algorithm based on
-the unrolled CSRs mapping with the viewport addresses recalculation if
-it's required. The problem is that such implementation turned to be first
-unscalable (supports a platform with only single eDMA available since a
-base address statically preserved) and second needlessly overcomplicated
-(it loops over all Rd/Wr context addresses and re-calculates the viewport
-base address on each DebugFS node access). The algorithm can be greatly
-simplified just by adding the channel ID and it's direction fields in the
-eDMA DebugFS node descriptor. These new parameters can be used to find a
-CSR offset within the corresponding channel registers space. The DW eDMA
-DebugFS node getter afterwards will also use them in order to activate the
-respective context CSRs viewport before reading data from the specified
-register. In case of the unrolled version of the CSRs mapping there won't
-be any spin-lock taken/released, no viewport activation as before this
-modification.
-
-Note this modification fixes the REGISTER() macros using an externally
-defined local variable. The same problem with the rest of the macro will
-be fixed in the next commit.
+Most likely due to a copy-paste mistake the dst_addr member of the
+dma_slave_config structure has been marked as ignored if the !source!
+address belong to the memory. That is relevant to the src_addr field of
+the structure while the dst_addr field as containing a destination device
+address is supposed to be ignored if the destination is the CPU memory.
+Let's fix the field description accordingly.
 
 Signed-off-by: Serge Semin <Sergey.Semin@baikalelectronics.ru>
 Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 Tested-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 Acked-By: Vinod Koul <vkoul@kernel.org>
 ---
- drivers/dma/dw-edma/dw-edma-v0-debugfs.c | 84 +++++++++++-------------
- 1 file changed, 38 insertions(+), 46 deletions(-)
+ include/linux/dmaengine.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/dma/dw-edma/dw-edma-v0-debugfs.c b/drivers/dma/dw-edma/dw-edma-v0-debugfs.c
-index 7bb3363b40e4..1596eedf35c5 100644
---- a/drivers/dma/dw-edma/dw-edma-v0-debugfs.c
-+++ b/drivers/dma/dw-edma/dw-edma-v0-debugfs.c
-@@ -15,9 +15,27 @@
- 
- #define REGS_ADDR(name) \
- 	((void __iomem *)&regs->name)
-+
-+#define REGS_CH_ADDR(name, _dir, _ch)						\
-+	({									\
-+		struct dw_edma_v0_ch_regs __iomem *__ch_regs;			\
-+										\
-+		if ((dw)->chip->mf == EDMA_MF_EDMA_LEGACY)			\
-+			__ch_regs = &regs->type.legacy.ch;			\
-+		else if (_dir == EDMA_DIR_READ)					\
-+			__ch_regs = &regs->type.unroll.ch[_ch].rd;		\
-+		else								\
-+			__ch_regs = &regs->type.unroll.ch[_ch].wr;		\
-+										\
-+		(void __iomem *)&__ch_regs->name;				\
-+	})
-+
- #define REGISTER(name) \
- 	{ #name, REGS_ADDR(name) }
- 
-+#define CTX_REGISTER(name, dir, ch) \
-+	{ #name, REGS_CH_ADDR(name, dir, ch), dir, ch }
-+
- #define WR_REGISTER(name) \
- 	{ #name, REGS_ADDR(wr_##name) }
- #define RD_REGISTER(name) \
-@@ -41,14 +59,11 @@
- static struct dw_edma				*dw;
- static struct dw_edma_v0_regs			__iomem *regs;
- 
--static struct {
--	void					__iomem *start;
--	void					__iomem *end;
--} lim[2][EDMA_V0_MAX_NR_CH];
--
- struct dw_edma_debugfs_entry {
- 	const char				*name;
- 	void __iomem				*reg;
-+	enum dw_edma_dir			dir;
-+	u16					ch;
- };
- 
- static int dw_edma_debugfs_u32_get(void *data, u64 *val)
-@@ -58,33 +73,16 @@ static int dw_edma_debugfs_u32_get(void *data, u64 *val)
- 
- 	if (dw->chip->mf == EDMA_MF_EDMA_LEGACY &&
- 	    reg >= (void __iomem *)&regs->type.legacy.ch) {
--		void __iomem *ptr = &regs->type.legacy.ch;
--		u32 viewport_sel = 0;
- 		unsigned long flags;
--		u16 ch;
--
--		for (ch = 0; ch < dw->wr_ch_cnt; ch++)
--			if (lim[0][ch].start >= reg && reg < lim[0][ch].end) {
--				ptr += (reg - lim[0][ch].start);
--				goto legacy_sel_wr;
--			}
--
--		for (ch = 0; ch < dw->rd_ch_cnt; ch++)
--			if (lim[1][ch].start >= reg && reg < lim[1][ch].end) {
--				ptr += (reg - lim[1][ch].start);
--				goto legacy_sel_rd;
--			}
--
--		return 0;
--legacy_sel_rd:
--		viewport_sel = BIT(31);
--legacy_sel_wr:
--		viewport_sel |= FIELD_PREP(EDMA_V0_VIEWPORT_MASK, ch);
-+		u32 viewport_sel;
-+
-+		viewport_sel = entry->dir == EDMA_DIR_READ ? BIT(31) : 0;
-+		viewport_sel |= FIELD_PREP(EDMA_V0_VIEWPORT_MASK, entry->ch);
- 
- 		raw_spin_lock_irqsave(&dw->lock, flags);
- 
- 		writel(viewport_sel, &regs->type.legacy.viewport_sel);
--		*val = readl(ptr);
-+		*val = readl(reg);
- 
- 		raw_spin_unlock_irqrestore(&dw->lock, flags);
- 	} else {
-@@ -114,19 +112,19 @@ static void dw_edma_debugfs_create_x32(const struct dw_edma_debugfs_entry ini[],
- 	}
- }
- 
--static void dw_edma_debugfs_regs_ch(struct dw_edma_v0_ch_regs __iomem *regs,
-+static void dw_edma_debugfs_regs_ch(enum dw_edma_dir dir, u16 ch,
- 				    struct dentry *dent)
- {
--	const struct dw_edma_debugfs_entry debugfs_regs[] = {
--		REGISTER(ch_control1),
--		REGISTER(ch_control2),
--		REGISTER(transfer_size),
--		REGISTER(sar.lsb),
--		REGISTER(sar.msb),
--		REGISTER(dar.lsb),
--		REGISTER(dar.msb),
--		REGISTER(llp.lsb),
--		REGISTER(llp.msb),
-+	struct dw_edma_debugfs_entry debugfs_regs[] = {
-+		CTX_REGISTER(ch_control1, dir, ch),
-+		CTX_REGISTER(ch_control2, dir, ch),
-+		CTX_REGISTER(transfer_size, dir, ch),
-+		CTX_REGISTER(sar.lsb, dir, ch),
-+		CTX_REGISTER(sar.msb, dir, ch),
-+		CTX_REGISTER(dar.lsb, dir, ch),
-+		CTX_REGISTER(dar.msb, dir, ch),
-+		CTX_REGISTER(llp.lsb, dir, ch),
-+		CTX_REGISTER(llp.msb, dir, ch),
- 	};
- 	int nr_entries;
- 
-@@ -191,10 +189,7 @@ static void dw_edma_debugfs_regs_wr(struct dentry *dent)
- 
- 		ch_dent = debugfs_create_dir(name, regs_dent);
- 
--		dw_edma_debugfs_regs_ch(&regs->type.unroll.ch[i].wr, ch_dent);
--
--		lim[0][i].start = &regs->type.unroll.ch[i].wr;
--		lim[0][i].end = &regs->type.unroll.ch[i].padding_1[0];
-+		dw_edma_debugfs_regs_ch(EDMA_DIR_WRITE, i, ch_dent);
- 	}
- }
- 
-@@ -256,10 +251,7 @@ static void dw_edma_debugfs_regs_rd(struct dentry *dent)
- 
- 		ch_dent = debugfs_create_dir(name, regs_dent);
- 
--		dw_edma_debugfs_regs_ch(&regs->type.unroll.ch[i].rd, ch_dent);
--
--		lim[1][i].start = &regs->type.unroll.ch[i].rd;
--		lim[1][i].end = &regs->type.unroll.ch[i].padding_2[0];
-+		dw_edma_debugfs_regs_ch(EDMA_DIR_READ, i, ch_dent);
- 	}
- }
- 
+diff --git a/include/linux/dmaengine.h b/include/linux/dmaengine.h
+index b46b88e6aa0d..afa12e7beed3 100644
+--- a/include/linux/dmaengine.h
++++ b/include/linux/dmaengine.h
+@@ -395,7 +395,7 @@ enum dma_slave_buswidth {
+  * should be read (RX), if the source is memory this argument is
+  * ignored.
+  * @dst_addr: this is the physical address where DMA slave data
+- * should be written (TX), if the source is memory this argument
++ * should be written (TX), if the destination is memory this argument
+  * is ignored.
+  * @src_addr_width: this is the width in bytes of the source (RX)
+  * register where DMA data shall be read. If the source
 -- 
 2.35.1
 
