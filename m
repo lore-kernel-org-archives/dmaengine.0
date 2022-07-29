@@ -2,35 +2,35 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 29DA5C19F2C
-	for <dmaengine@archiver.kernel.org>; Fri, 29 Jul 2022 10:45:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 81E3DC25B0E
+	for <dmaengine@archiver.kernel.org>; Fri, 29 Jul 2022 10:45:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235712AbiG2Ko6 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 29 Jul 2022 06:44:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39652 "EHLO
+        id S235818AbiG2KpA (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 29 Jul 2022 06:45:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39670 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233101AbiG2Ko5 (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Fri, 29 Jul 2022 06:44:57 -0400
+        with ESMTP id S235742AbiG2Ko7 (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Fri, 29 Jul 2022 06:44:59 -0400
 Received: from madras.collabora.co.uk (madras.collabora.co.uk [46.235.227.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3A40E8321F;
-        Fri, 29 Jul 2022 03:44:54 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1171083211;
+        Fri, 29 Jul 2022 03:44:58 -0700 (PDT)
 Received: from IcarusMOD.eternityproject.eu (2-237-20-237.ip236.fastwebnet.it [2.237.20.237])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
         (No client certificate requested)
         (Authenticated sender: kholk11)
-        by madras.collabora.co.uk (Postfix) with ESMTPSA id EF54D6601B55;
-        Fri, 29 Jul 2022 11:44:51 +0100 (BST)
+        by madras.collabora.co.uk (Postfix) with ESMTPSA id B1F976601B67;
+        Fri, 29 Jul 2022 11:44:55 +0100 (BST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-        s=mail; t=1659091493;
-        bh=g+LcCft8DaAa9BeWpNJbD1ov3XINszU+afPtdnzNVwE=;
+        s=mail; t=1659091496;
+        bh=yVmhhT/qx+tW3CwtsNMyM1l565LqcHdXD5WPr7UhHvw=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=UuLkRXbNOEtS+yPogV3R63b1wH6QZVeIf9Fz44BXMMQUk4ChORyyAYVBXhFTrYT+y
-         /x+lY/0lg6luBq6l9rj+BTLNh+X+p7gYS5ehcMwCUaFYK/WE1fGmzBLn8CUTOp1lmM
-         TFCGRVp0IQRJAWpveTh/qg4Spg93s5H5tkqdLcSRrAwAq87JAcrK6uq4xn+c5Tx8Rl
-         ypwKYULbYpFL2Ue+JN9c9bTOxZ0cslT0JndPC0NSeqMfT0HtIt+s9FaVnr75zwbYJs
-         pazkRs4/gFK1wjoQ63V3NFI60nOMUPJ3CQirf8qRRBHEpsA/lycnbyK8PDrhH9ak5j
-         Z4uSN0yqnlPDg==
+        b=IAY6rFWWe4TWdsu6dYjxm9mvBCzXlLn949L17cmUizMmPbLMDKq7fOdlugwx2wB/y
+         FNWW4BNaZ1TsF32t3jztQX0+00XsR/OIJidBhdy4UCfnesSEcAmEjzWKerWBpvXZBX
+         EfeRj9TNfW4pmDeBZ1MIv//2YQqu/dvlz1kcwg8qUy6aNbxpnvj0W1bJPOiAdCK8jT
+         KBRqaEd3MjStG4xu5EPf252jg6ChlHcdcr3E7vL9Y0ZgfV5TtPWpOmkvnwopFULyGr
+         dXdRWC1aWRQp+8zEvYnsHvHqdGkferWs4G6EzI8dWc74eRnWmSN8W0VgjW9x7ClXmG
+         4ztQmf85X8law==
 From:   AngeloGioacchino Del Regno 
         <angelogioacchino.delregno@collabora.com>
 To:     robh+dt@kernel.org
@@ -46,9 +46,9 @@ Cc:     krzysztof.kozlowski+dt@linaro.org, vkoul@kernel.org,
         linux-arm-kernel@lists.infradead.org,
         linux-mediatek@lists.infradead.org, phone-devel@vger.kernel.org,
         ~postmarketos/upstreaming@lists.sr.ht
-Subject: [PATCH 1/8] dt-bindings: dma: mediatek,uart-dma: Add binding for MT6795 SoC
-Date:   Fri, 29 Jul 2022 12:44:33 +0200
-Message-Id: <20220729104441.39177-2-angelogioacchino.delregno@collabora.com>
+Subject: [PATCH 4/8] arm64: dts: mediatek: mt6795: Replace UART dummy clocks with pericfg
+Date:   Fri, 29 Jul 2022 12:44:36 +0200
+Message-Id: <20220729104441.39177-5-angelogioacchino.delregno@collabora.com>
 X-Mailer: git-send-email 2.35.1
 In-Reply-To: <20220729104441.39177-1-angelogioacchino.delregno@collabora.com>
 References: <20220729104441.39177-1-angelogioacchino.delregno@collabora.com>
@@ -58,26 +58,60 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Add mediatek,mt6795-uart-dma to the compatibles list to support
-the MT6795 Helio X10 SoC's UART APDMA.
+The UART nodes had a dummy clock for early bringup, as it is
+expected that these are left on by the bootloader: now that
+the pericfg clock controller is supported, we can replace
+them with the real clocks.
 
 Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 ---
- Documentation/devicetree/bindings/dma/mediatek,uart-dma.yaml | 1 +
- 1 file changed, 1 insertion(+)
+ arch/arm64/boot/dts/mediatek/mt6795.dtsi | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/dma/mediatek,uart-dma.yaml b/Documentation/devicetree/bindings/dma/mediatek,uart-dma.yaml
-index 19ea8dcbcbce..9ab4d81ead35 100644
---- a/Documentation/devicetree/bindings/dma/mediatek,uart-dma.yaml
-+++ b/Documentation/devicetree/bindings/dma/mediatek,uart-dma.yaml
-@@ -22,6 +22,7 @@ properties:
-       - items:
-           - enum:
-               - mediatek,mt2712-uart-dma
-+              - mediatek,mt6795-uart-dma
-               - mediatek,mt8365-uart-dma
-               - mediatek,mt8516-uart-dma
-           - const: mediatek,mt6577-uart-dma
+diff --git a/arch/arm64/boot/dts/mediatek/mt6795.dtsi b/arch/arm64/boot/dts/mediatek/mt6795.dtsi
+index 9166d481a366..559fec1ee123 100644
+--- a/arch/arm64/boot/dts/mediatek/mt6795.dtsi
++++ b/arch/arm64/boot/dts/mediatek/mt6795.dtsi
+@@ -312,7 +312,8 @@ uart0: serial@11002000 {
+ 				     "mediatek,mt6577-uart";
+ 			reg = <0 0x11002000 0 0x400>;
+ 			interrupts = <GIC_SPI 91 IRQ_TYPE_LEVEL_LOW>;
+-			clocks = <&clk26m>;
++			clocks = <&pericfg CLK_PERI_UART0_SEL>, <&pericfg CLK_PERI_UART0>;
++			clock-names = "baud", "bus";
+ 			status = "disabled";
+ 		};
+ 
+@@ -321,7 +322,8 @@ uart1: serial@11003000 {
+ 				     "mediatek,mt6577-uart";
+ 			reg = <0 0x11003000 0 0x400>;
+ 			interrupts = <GIC_SPI 92 IRQ_TYPE_LEVEL_LOW>;
+-			clocks = <&clk26m>;
++			clocks = <&pericfg CLK_PERI_UART1_SEL>, <&pericfg CLK_PERI_UART1>;
++			clock-names = "baud", "bus";
+ 			status = "disabled";
+ 		};
+ 
+@@ -330,7 +332,8 @@ uart2: serial@11004000 {
+ 				     "mediatek,mt6577-uart";
+ 			reg = <0 0x11004000 0 0x400>;
+ 			interrupts = <GIC_SPI 93 IRQ_TYPE_LEVEL_LOW>;
+-			clocks = <&clk26m>;
++			clocks = <&pericfg CLK_PERI_UART2_SEL>, <&pericfg CLK_PERI_UART2>;
++			clock-names = "baud", "bus";
+ 			status = "disabled";
+ 		};
+ 
+@@ -339,7 +342,8 @@ uart3: serial@11005000 {
+ 				     "mediatek,mt6577-uart";
+ 			reg = <0 0x11005000 0 0x400>;
+ 			interrupts = <GIC_SPI 94 IRQ_TYPE_LEVEL_LOW>;
+-			clocks = <&clk26m>;
++			clocks = <&pericfg CLK_PERI_UART3_SEL>, <&pericfg CLK_PERI_UART3>;
++			clock-names = "baud", "bus";
+ 			status = "disabled";
+ 		};
+ 	};
 -- 
 2.35.1
 
