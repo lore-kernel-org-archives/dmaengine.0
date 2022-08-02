@@ -2,39 +2,40 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BB8D7C19F2C
-	for <dmaengine@archiver.kernel.org>; Tue,  2 Aug 2022 10:15:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A3BABC00140
+	for <dmaengine@archiver.kernel.org>; Tue,  2 Aug 2022 10:15:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236562AbiHBKPd (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 2 Aug 2022 06:15:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56550 "EHLO
+        id S236574AbiHBKPg (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 2 Aug 2022 06:15:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56676 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233412AbiHBKPb (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Tue, 2 Aug 2022 06:15:31 -0400
+        with ESMTP id S236566AbiHBKPe (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Tue, 2 Aug 2022 06:15:34 -0400
 Received: from szxga02-in.huawei.com (szxga02-in.huawei.com [45.249.212.188])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BACDC1D310;
-        Tue,  2 Aug 2022 03:15:29 -0700 (PDT)
-Received: from dggemv711-chm.china.huawei.com (unknown [172.30.72.57])
-        by szxga02-in.huawei.com (SkyGuard) with ESMTP id 4LxrQj5Z28zlVql;
-        Tue,  2 Aug 2022 18:12:45 +0800 (CST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD42D2181A;
+        Tue,  2 Aug 2022 03:15:32 -0700 (PDT)
+Received: from dggemv704-chm.china.huawei.com (unknown [172.30.72.53])
+        by szxga02-in.huawei.com (SkyGuard) with ESMTP id 4LxrQn460FzlVmg;
+        Tue,  2 Aug 2022 18:12:49 +0800 (CST)
 Received: from kwepemm600007.china.huawei.com (7.193.23.208) by
- dggemv711-chm.china.huawei.com (10.1.198.66) with Microsoft SMTP Server
+ dggemv704-chm.china.huawei.com (10.3.19.47) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2375.24; Tue, 2 Aug 2022 18:15:27 +0800
+ 15.1.2375.24; Tue, 2 Aug 2022 18:15:28 +0800
 Received: from localhost.localdomain (10.69.192.56) by
  kwepemm600007.china.huawei.com (7.193.23.208) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2375.24; Tue, 2 Aug 2022 18:15:26 +0800
+ 15.1.2375.24; Tue, 2 Aug 2022 18:15:27 +0800
 From:   Jie Hai <haijie1@huawei.com>
 To:     <vkoul@kernel.org>, <wangzhou1@hisilicon.com>
 CC:     <haijie1@huawei.com>, <liudongdong3@huawei.com>,
         <dmaengine@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-Subject: [PATCH v4 0/7] dmaengine: hisilicon: Add support for hisi dma driver
-Date:   Tue, 2 Aug 2022 18:12:19 +0800
-Message-ID: <20220802101226.9005-1-haijie1@huawei.com>
+Subject: [PATCH v4 3/7] dmaengine: hisilicon: Add multi-thread support for a DMA channel
+Date:   Tue, 2 Aug 2022 18:12:22 +0800
+Message-ID: <20220802101226.9005-4-haijie1@huawei.com>
 X-Mailer: git-send-email 2.33.0
-In-Reply-To: <20220625074422.3479591-1-haijie1@huawei.com>
+In-Reply-To: <20220802101226.9005-1-haijie1@huawei.com>
 References: <20220625074422.3479591-1-haijie1@huawei.com>
+ <20220802101226.9005-1-haijie1@huawei.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 7BIT
 Content-Type:   text/plain; charset=US-ASCII
@@ -46,49 +47,93 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-The HiSilicon IP08 and HiSilicon IP09 are DMA iEPs, they share the
-same pci device id but different pci revision and register layouts.
+When we get a DMA channel and try to use it in multiple threads it
+will cause oops and hanging the system.
 
-The original version supports HiSilicon IP08 but not HiSilicon IP09.
-This series support DMA driver for HIP08 and HIP09:
-1. Fix bugs for HIP08 DMA driver
-	- Disable hardware channels when driver detached
-	- Update cq_head whenever accessed it
-	- Support multi-thread for one DMA channel
-2. Use macros instead of magic number
-3. Add support for HIP09 DMA driver
-4. Add debugfs for HIP08 and HIP09 DMA driver
-5. Add myself as maintainer of hisi_dma.c
+% echo 100 > /sys/module/dmatest/parameters/threads_per_chan
+% echo 100 > /sys/module/dmatest/parameters/iterations
+% echo 1 > /sys/module/dmatest/parameters/run
+[383493.327077] Unable to handle kernel paging request at virtual
+		address dead000000000108
+[383493.335103] Mem abort info:
+[383493.335103]   ESR = 0x96000044
+[383493.335105]   EC = 0x25: DABT (current EL), IL = 32 bits
+[383493.335107]   SET = 0, FnV = 0
+[383493.335108]   EA = 0, S1PTW = 0
+[383493.335109]   FSC = 0x04: level 0 translation fault
+[383493.335110] Data abort info:
+[383493.335111]   ISV = 0, ISS = 0x00000044
+[383493.364739]   CM = 0, WnR = 1
+[383493.367793] [dead000000000108] address between user and kernel
+		address ranges
+[383493.375021] Internal error: Oops: 96000044 [#1] PREEMPT SMP
+[383493.437574] CPU: 63 PID: 27895 Comm: dma0chan0-copy2 Kdump:
+		loaded Tainted: GO 5.17.0-rc4+ #2
+[383493.457851] pstate: 204000c9 (nzCv daIF +PAN -UAO -TCO -DIT
+		-SSBS BTYPE=--)
+[383493.465331] pc : vchan_tx_submit+0x64/0xa0
+[383493.469957] lr : vchan_tx_submit+0x34/0xa0
 
-Changes since version 3:
- - remove reduldant braces
- - add "Acked-by: Zhou Wang <wangzhou1@hisilicon.com>" in commit log
+This occurs because the transmission timed out, and that's due
+to data race. Each thread rewrite channels's descriptor as soon as
+device_issue_pending is called. It leads to the situation that
+the driver thinks that it uses the right descriptor in interrupt
+handler while channels's descriptor has been changed by other
+thread. The descriptor which in fact reported interrupt will not
+be handled any more, as well as its tx->callback.
+That's why timeout reports.
 
-Changes since version 2:
- - fix unnecessary line breaks
- - fix register bit with BIT/GENMASK and adjust hisi_dma_update_bit to it
- - remove "Reported-by" in commit message
- - use dmaengine root instead of hisi_dma root
- - ignore errors for creating debugfs
+With current fixes channels' descriptor changes it's value only
+when it has been used. A new descriptor is acquired from
+vc->desc_issued queue that is already filled with descriptors
+that are ready to be sent. Threads have no direct access to DMA
+channel descriptor. In case of channel's descriptor is busy, try
+to submit to HW again when a descriptor is completed. In this case,
+vc->desc_issued may be empty when hisi_dma_start_transfer is called,
+so delete error reporting on this. Now it is just possible to queue
+a descriptor for further processing.
 
-Changes since version 1:
- - remove error changes casuse compile failure
- - remove reduldant "*" in comment
- - remove debugfs-hisi-dma doc and path in MAINTAINERS
+Fixes: e9f08b65250d ("dmaengine: hisilicon: Add Kunpeng DMA engine support")
+Signed-off-by: Jie Hai <haijie1@huawei.com>
+Acked-by: Zhou Wang <wangzhou1@hisilicon.com>
+---
+ drivers/dma/hisi_dma.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-Jie Hai (7):
-  dmaengine: hisilicon: Disable channels when unregister hisi_dma
-  dmaengine: hisilicon: Fix CQ head update
-  dmaengine: hisilicon: Add multi-thread support for a DMA channel
-  dmaengine: hisilicon: Use macros instead of magic number
-  dmaengine: hisilicon: Adapt DMA driver to HiSilicon IP09
-  dmaengine: hisilicon: Dump regs to debugfs
-  MAINTAINERS: Add myself as maintainer for hisi_dma
-
- MAINTAINERS            |   1 +
- drivers/dma/hisi_dma.c | 650 +++++++++++++++++++++++++++++++++++------
- 2 files changed, 555 insertions(+), 96 deletions(-)
-
+diff --git a/drivers/dma/hisi_dma.c b/drivers/dma/hisi_dma.c
+index 837f7e4adfa6..0233b42143c7 100644
+--- a/drivers/dma/hisi_dma.c
++++ b/drivers/dma/hisi_dma.c
+@@ -271,7 +271,6 @@ static void hisi_dma_start_transfer(struct hisi_dma_chan *chan)
+ 
+ 	vd = vchan_next_desc(&chan->vc);
+ 	if (!vd) {
+-		dev_err(&hdma_dev->pdev->dev, "no issued task!\n");
+ 		chan->desc = NULL;
+ 		return;
+ 	}
+@@ -303,7 +302,7 @@ static void hisi_dma_issue_pending(struct dma_chan *c)
+ 
+ 	spin_lock_irqsave(&chan->vc.lock, flags);
+ 
+-	if (vchan_issue_pending(&chan->vc))
++	if (vchan_issue_pending(&chan->vc) && !chan->desc)
+ 		hisi_dma_start_transfer(chan);
+ 
+ 	spin_unlock_irqrestore(&chan->vc.lock, flags);
+@@ -441,11 +440,10 @@ static irqreturn_t hisi_dma_irq(int irq, void *data)
+ 				    chan->qp_num, chan->cq_head);
+ 		if (FIELD_GET(STATUS_MASK, cqe->w0) == STATUS_SUCC) {
+ 			vchan_cookie_complete(&desc->vd);
++			hisi_dma_start_transfer(chan);
+ 		} else {
+ 			dev_err(&hdma_dev->pdev->dev, "task error!\n");
+ 		}
+-
+-		chan->desc = NULL;
+ 	}
+ 
+ 	spin_unlock(&chan->vc.lock);
 -- 
 2.33.0
 
