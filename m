@@ -2,51 +2,47 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9D09FC25B0F
-	for <dmaengine@archiver.kernel.org>; Sun, 14 Aug 2022 15:39:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5F7A2C25B0F
+	for <dmaengine@archiver.kernel.org>; Sun, 14 Aug 2022 15:45:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241115AbiHNPj0 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Sun, 14 Aug 2022 11:39:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53588 "EHLO
+        id S241440AbiHNPpW (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Sun, 14 Aug 2022 11:45:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39524 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240745AbiHNPh3 (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Sun, 14 Aug 2022 11:37:29 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C57420F4D;
-        Sun, 14 Aug 2022 08:32:25 -0700 (PDT)
+        with ESMTP id S241078AbiHNPoc (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Sun, 14 Aug 2022 11:44:32 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 635E1240B6;
+        Sun, 14 Aug 2022 08:34:02 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id A83D8B80B4D;
-        Sun, 14 Aug 2022 15:32:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76DB3C43141;
-        Sun, 14 Aug 2022 15:32:21 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 739A260CF5;
+        Sun, 14 Aug 2022 15:34:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E859C433D6;
+        Sun, 14 Aug 2022 15:34:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1660491142;
-        bh=3Ju9VbGV6I1/r0QTNy2axkLR0oPolV6Y+H6HWcrkt4E=;
+        s=k20201202; t=1660491240;
+        bh=L2kbwHsu7mISqjTwShhCSkl2t+nfdjFXCjhkhiPZprA=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=sF5GBF00uzwQUEZmevW1jwuhFc5ooOVFuoJY/9CrFYQWmW0VJ3U0ZRi5+fTwZ6pXb
-         SlkJnGcMQ7yC6tkPLUmtcFAJSXT6nkPQYuOoj78q1Rgyb4RvBvt4/sdJB5yFODxiI7
-         csB9PJ1MVwvRlZQ9GiYh31sVszWlVreJVYlZoBdcvMPtaDeTsMG+u2JSODkAam7O9e
-         S5zbYtYJTVBfHEkI2uBV+35qUAneHMzUR2ZhzbEv2RiwKDxICwFdY9JvDciIaVbgiS
-         yM+alo9kYtyb++u6acjRUMKvncJBmQCcSLMWPiZEQ3Nv1ppV5qEZ3zmuM4pHGUo0JV
-         I6QULbeThgdeQ==
+        b=D9lEuKYCbf+of5vMT+ZuxpGmGLGep4k9W1QobEV2fNRiPQD2FiYumxbAQTeMJhTZS
+         k8LsLifcErNDIojWY91rEU9wjmajgHCHRe27GRqUXOpJcHSzX2hxJBm85qi12RXAm6
+         0Hob1VZkqPqZMgS9fCTNINJ90ZYEVcViNTuRosz4BqPZ48caU5f6UnF+CcpgHYkuup
+         KCMEmkddqOyOyf424cQ3xX/NlKbH7G1JUmoSLQO5XF1hNUwx1pB/zhZkWRZvVEh2mV
+         htc2E16zspnjGOSEFygobeyfJqV1dBPFYTcJGCJfMlI09gWPpH8glJ9bseRT/+b3gl
+         5w6rL8H0ARwew==
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= 
-        <u.kleine-koenig@pengutronix.de>,
-        Baolin Wang <baolin.wang7@gmail.com>,
-        Vinod Koul <vkoul@kernel.org>, Sasha Levin <sashal@kernel.org>,
-        orsonzhai@gmail.com, zhang.lyra@gmail.com,
+Cc:     Ben Dooks <ben.dooks@sifive.com>, Vinod Koul <vkoul@kernel.org>,
+        Sasha Levin <sashal@kernel.org>, Eugeniy.Paltsev@synopsys.com,
         dmaengine@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.18 45/56] dmaengine: sprd: Cleanup in .remove() after pm_runtime_get_sync() failed
-Date:   Sun, 14 Aug 2022 11:30:15 -0400
-Message-Id: <20220814153026.2377377-45-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 5.15 33/46] dmaengine: dw-axi-dmac: ignore interrupt if no descriptor
+Date:   Sun, 14 Aug 2022 11:32:34 -0400
+Message-Id: <20220814153247.2378312-33-sashal@kernel.org>
 X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220814153026.2377377-1-sashal@kernel.org>
-References: <20220814153026.2377377-1-sashal@kernel.org>
+In-Reply-To: <20220814153247.2378312-1-sashal@kernel.org>
+References: <20220814153247.2378312-1-sashal@kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
@@ -54,45 +50,46 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+From: Ben Dooks <ben.dooks@sifive.com>
 
-[ Upstream commit 1e42f82cbec7b2cc4873751e7791e6611901c5fc ]
+[ Upstream commit 820f5ce999d2f99961e88c16d65cd26764df0590 ]
 
-It's not allowed to quit remove early without cleaning up completely.
-Otherwise this results in resource leaks that probably yield graver
-problems later. Here for example some tasklets might survive the lifetime
-of the sprd-dma device and access sdev which is freed after .remove()
-returns.
+If the channel has no descriptor and the interrupt is raised then the
+kernel will OOPS. Check the result of vchan_next_desc() in the handler
+axi_chan_block_xfer_complete() to avoid the error happening.
 
-As none of the device freeing requires an active device, just ignore the
-return value of pm_runtime_get_sync().
-
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Reviewed-by: Baolin Wang <baolin.wang7@gmail.com>
-Link: https://lore.kernel.org/r/20220721204054.323602-1-u.kleine-koenig@pengutronix.de
+Signed-off-by: Ben Dooks <ben.dooks@sifive.com>
+Link: https://lore.kernel.org/r/20220708170153.269991-4-ben.dooks@sifive.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/sprd-dma.c | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/dma/sprd-dma.c b/drivers/dma/sprd-dma.c
-index 7f158ef5672d..e5c8b274c76a 100644
---- a/drivers/dma/sprd-dma.c
-+++ b/drivers/dma/sprd-dma.c
-@@ -1233,11 +1233,8 @@ static int sprd_dma_remove(struct platform_device *pdev)
- {
- 	struct sprd_dma_dev *sdev = platform_get_drvdata(pdev);
- 	struct sprd_dma_chn *c, *cn;
--	int ret;
+diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
+index 8f765e2d7c72..48de8d2b32f2 100644
+--- a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
++++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
+@@ -1016,6 +1016,11 @@ static void axi_chan_block_xfer_complete(struct axi_dma_chan *chan)
  
--	ret = pm_runtime_get_sync(&pdev->dev);
--	if (ret < 0)
--		return ret;
-+	pm_runtime_get_sync(&pdev->dev);
+ 	/* The completed descriptor currently is in the head of vc list */
+ 	vd = vchan_next_desc(&chan->vc);
++	if (!vd) {
++		dev_err(chan2dev(chan), "BUG: %s, IRQ with no descriptors\n",
++			axi_chan_name(chan));
++		goto out;
++	}
  
- 	/* explicitly free the irq */
- 	if (sdev->irq > 0)
+ 	if (chan->cyclic) {
+ 		desc = vd_to_axi_desc(vd);
+@@ -1045,6 +1050,7 @@ static void axi_chan_block_xfer_complete(struct axi_dma_chan *chan)
+ 		axi_chan_start_first_queued(chan);
+ 	}
+ 
++out:
+ 	spin_unlock_irqrestore(&chan->vc.lock, flags);
+ }
+ 
 -- 
 2.35.1
 
