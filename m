@@ -2,109 +2,101 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 82FA0C32762
-	for <dmaengine@archiver.kernel.org>; Mon, 15 Aug 2022 10:13:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 102A7C28B2C
+	for <dmaengine@archiver.kernel.org>; Mon, 15 Aug 2022 18:52:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242535AbiHOKNZ (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 15 Aug 2022 06:13:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60530 "EHLO
+        id S241753AbiHOSwF (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 15 Aug 2022 14:52:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33148 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242424AbiHOKMs (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Mon, 15 Aug 2022 06:12:48 -0400
-Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7AF57165A4;
-        Mon, 15 Aug 2022 03:12:47 -0700 (PDT)
-Received: by mail-lj1-x22c.google.com with SMTP id u6so7172290ljk.8;
-        Mon, 15 Aug 2022 03:12:47 -0700 (PDT)
+        with ESMTP id S244407AbiHOSvG (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Mon, 15 Aug 2022 14:51:06 -0400
+Received: from mail-ot1-x331.google.com (mail-ot1-x331.google.com [IPv6:2607:f8b0:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D6893204C
+        for <dmaengine@vger.kernel.org>; Mon, 15 Aug 2022 11:29:04 -0700 (PDT)
+Received: by mail-ot1-x331.google.com with SMTP id h9-20020a9d5549000000b0063727299bb4so5977921oti.9
+        for <dmaengine@vger.kernel.org>; Mon, 15 Aug 2022 11:29:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc;
-        bh=M6PIQlUx6Zdh6S9AJkWXOp4FOoOhzviQOAnjrgwO1aU=;
-        b=WHGZmAbVH/Rt3jRuhcbO3MFReqRlbxNEcw89HPrkihvsw/6AUsLBLpMuuStY2tYoX3
-         oSh5kwhi5Fyl8nm1nALfAIHq9Rd8FatG6DzFHJdsChe0LKyNSdl31DTqcIZKyh05TbLT
-         rOSdSfpb0UFzHzUdQS9Sef9729xmTekAkHhZFthukrCEiDrPZ3dyX6lP7NL33uWLQBMo
-         Ss6+1e+s0/kihYNcMQmeixIz4k/RNE649wo/OiAvfJgoVzmZEdodbwGGwJnaVcXoylUF
-         r+l/8C1DxdD2bACELb7jCojdgZ3iixLENaffCZsrmRk4Ax7AOzDqanM9aHHnzmj0Y8J/
-         BDKw==
+        d=linaro.org; s=google;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc;
+        bh=+2lJJE7hfrkayt0qzi/fmG2izz2GLSD8nOH7tC1AeLo=;
+        b=Lc4mNTi56/32O+lgEowursl3S1QdLAWj1FpOC5XA+F8Rx3hlrgkYOxG1d54XP1PQRd
+         mRXvLbXoAcxba3284ULxJIFBNCvTT393HISNfqbcZuOLFtg+LqNpWh6FTFFT1Kn55/rk
+         zAZXdzx4ceCx8rckPOQCS1eQ62LLF9XQdJtL4mfhlygbh3m8UIe1cBmEMwyCyVggoqQ5
+         0AQrM/A7lyijOyzdtN6eZC5x/J5rIMS+uFtUFMAl/SWgdp5wlh8OC3/0n6nNp5sceRpk
+         UgecbFyp9AiB0Vs0GSuanHfZWxpaVLDqfOE02iJGWyO2aUyx6mnP3+zKwWw4DwnIGAqg
+         KVsg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc;
-        bh=M6PIQlUx6Zdh6S9AJkWXOp4FOoOhzviQOAnjrgwO1aU=;
-        b=J32QinGMOv0XJxV0x4R4y6n6IU/ZuzGvtDrID4OyFRkPM8zDt+g0z3UHKh012B6PPZ
-         WDi3ewJRjULAg9i+YkaglZiNAdeilR39R9BoRD+p2dw8wTjRFgZcrqlIAQoRzricu5OK
-         cUM7v5eh979p5SuKre6oj6MlOquzGkXI5/J35lSUimp2uthzD6agbA2vmGNTHCTKCVc7
-         7iLL9ZzRuSlcMFom+i+cB1afb2paUpm3CgkBHO3ok7PD+hXOOuYGcEHeR/0fuU2yJSrA
-         wgX39KdWjpqQWrjPV3Hbsbr6UT1aTrFeAlrwxVy3HvQk6pOuuOMxDpT/gCoG9oSJBzXR
-         r05A==
-X-Gm-Message-State: ACgBeo0P4JDrkOMAinBAB7p9dJX2JETX2jFm9Ak6Ak2jJ/qtBXoxcqDs
-        +7RD+wiG0SdUtaDaBDcrFzl7i7DNgCM=
-X-Google-Smtp-Source: AA6agR6ue/K7NDIBySkoofjS+cIh1O8Y2SxFzadrHzRFoVcUPw4z2N/CPH6O60kVQGA+Ty7tgtHhRw==
-X-Received: by 2002:a2e:8885:0:b0:25e:bf9b:2de2 with SMTP id k5-20020a2e8885000000b0025ebf9b2de2mr5014503lji.367.1660558367059;
-        Mon, 15 Aug 2022 03:12:47 -0700 (PDT)
-Received: from localhost.localdomain (admv234.neoplus.adsl.tpnet.pl. [79.185.51.234])
-        by smtp.gmail.com with ESMTPSA id 18-20020ac25f52000000b0048b1ba4d2a4sm1047264lfz.265.2022.08.15.03.12.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 15 Aug 2022 03:12:46 -0700 (PDT)
-From:   Adam Skladowski <a39.skl@gmail.com>
-Cc:     phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
-        Adam Skladowski <a39.skl@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Will Deacon <will@kernel.org>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Joerg Roedel <joro@8bytes.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Viresh Kumar <viresh.kumar@linaro.org>,
-        Sai Prakash Ranjan <quic_saipraka@quicinc.com>,
-        Loic Poulain <loic.poulain@linaro.org>,
-        Emma Anholt <emma@anholt.net>,
-        Rob Clark <robdclark@chromium.org>,
-        Bhupesh Sharma <bhupesh.sharma@linaro.org>,
-        linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
-        linux-mmc@vger.kernel.org, linux-pm@vger.kernel.org,
-        Adam Skladowski <a_skl39@protonmail.com>
-Subject: [PATCH 6/7] iommu/arm-smmu-qcom: Add SM6115 support
-Date:   Mon, 15 Aug 2022 12:09:44 +0200
-Message-Id: <20220815100952.23795-7-a39.skl@gmail.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20220815100952.23795-1-a39.skl@gmail.com>
-References: <20220815100952.23795-1-a39.skl@gmail.com>
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc;
+        bh=+2lJJE7hfrkayt0qzi/fmG2izz2GLSD8nOH7tC1AeLo=;
+        b=X8sruozXGSkDxocJ0t3wfTZU6aFzkYInzuuyg5OF3OOQ3fy4lQOS1b2hpPfz+6MHX+
+         ewTwNULTKMVQjIF9yN3udPbd4EiLxr94gWM0j9MYCZhPhxs9bLJ/9AxWv+9g8OAnPuSH
+         hI6/7cM0WyV6InG79TKP7pjBSMy6KT9lWhSRHLnErb4BcNioggmcIrDnRSFE4CKGVixq
+         SQkWXEi25zIAo9v5cmibpSCGqnZqkVQuecXowte81IDMQulB+QC3W9i2u5wOSbr/7TnK
+         WqU9+eqp/QrQ19c6y3VKYTWSaqcpYCpEZjBqRJAmjk2y1WBskq1fV/iNTugOUJ6Cbg5U
+         +qrg==
+X-Gm-Message-State: ACgBeo3UIVpl7zmQFay4a3Az9n8LLLPKz9pmDpKWJpyRqVPiGEk4mFki
+        p85q1xuaZn1Xvq8FGtloPd+GFHT7Voobhw3YhEA5dw==
+X-Google-Smtp-Source: AA6agR76AJA44USeULweUjdFYUfN/+GbzCosXIK/UxZ4AEkVDK/VEN27cHeW+w+gAM3CyEeE2422VPU3VsRAqluGTjk=
+X-Received: by 2002:a9d:490:0:b0:636:825e:3b6 with SMTP id 16-20020a9d0490000000b00636825e03b6mr6661546otm.91.1660588143705;
+ Mon, 15 Aug 2022 11:29:03 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-To:     unlisted-recipients:; (no To-header on input)
+References: <20220729104441.39177-1-angelogioacchino.delregno@collabora.com> <20220729104441.39177-3-angelogioacchino.delregno@collabora.com>
+In-Reply-To: <20220729104441.39177-3-angelogioacchino.delregno@collabora.com>
+From:   Ulf Hansson <ulf.hansson@linaro.org>
+Date:   Mon, 15 Aug 2022 20:28:07 +0200
+Message-ID: <CAPDyKFqqb=FC85PAMPtrfp=vn5HWB2tXqUCY4Yjd_twxL8sY=w@mail.gmail.com>
+Subject: Re: [PATCH 2/8] dt-bindings: mmc: Add compatible for MT6795 Helio X10 SoC
+To:     AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>
+Cc:     robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        vkoul@kernel.org, chaotian.jing@mediatek.com,
+        matthias.bgg@gmail.com, hsinyi@chromium.org,
+        nfraprado@collabora.com, allen-kh.cheng@mediatek.com,
+        fparent@baylibre.com, sam.shih@mediatek.com,
+        sean.wang@mediatek.com, long.cheng@mediatek.com,
+        wenbin.mei@mediatek.com, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org,
+        linux-mmc@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-mediatek@lists.infradead.org, phone-devel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Add the Qualcomm SM6115 platform to the list of compatible,
-this target uses MMU500 for both APSS and GPU.
+On Fri, 29 Jul 2022 at 12:44, AngeloGioacchino Del Regno
+<angelogioacchino.delregno@collabora.com> wrote:
+>
+> Add a compatible string for the MT6795 SoC's mtk-sd mmc controllers.
+>
+> Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 
-Signed-off-by: Adam Skladowski <a39.skl@gmail.com>
----
- drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 1 +
- 1 file changed, 1 insertion(+)
+Applied for next, thanks!
 
-diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-index b2708de25ea3..526fec79b4fe 100644
---- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-+++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-@@ -432,6 +432,7 @@ static const struct of_device_id __maybe_unused qcom_smmu_impl_of_match[] = {
- 	{ .compatible = "qcom,sc8280xp-smmu-500" },
- 	{ .compatible = "qcom,sdm630-smmu-v2" },
- 	{ .compatible = "qcom,sdm845-smmu-500" },
-+	{ .compatible = "qcom,sm6115-smmu-500" },
- 	{ .compatible = "qcom,sm6125-smmu-500" },
- 	{ .compatible = "qcom,sm6350-smmu-500" },
- 	{ .compatible = "qcom,sm6375-smmu-500" },
--- 
-2.25.1
+Kind regards
+Uffe
 
+
+> ---
+>  Documentation/devicetree/bindings/mmc/mtk-sd.yaml | 1 +
+>  1 file changed, 1 insertion(+)
+>
+> diff --git a/Documentation/devicetree/bindings/mmc/mtk-sd.yaml b/Documentation/devicetree/bindings/mmc/mtk-sd.yaml
+> index be366cefffc2..e1ceefe0ae48 100644
+> --- a/Documentation/devicetree/bindings/mmc/mtk-sd.yaml
+> +++ b/Documentation/devicetree/bindings/mmc/mtk-sd.yaml
+> @@ -20,6 +20,7 @@ properties:
+>            - mediatek,mt2701-mmc
+>            - mediatek,mt2712-mmc
+>            - mediatek,mt6779-mmc
+> +          - mediatek,mt6795-mmc
+>            - mediatek,mt7620-mmc
+>            - mediatek,mt7622-mmc
+>            - mediatek,mt8135-mmc
+> --
+> 2.35.1
+>
