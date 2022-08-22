@@ -2,103 +2,161 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 072CEC32772
-	for <dmaengine@archiver.kernel.org>; Mon, 22 Aug 2022 09:17:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1B8DAC28D13
+	for <dmaengine@archiver.kernel.org>; Mon, 22 Aug 2022 11:49:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232808AbiHVJRZ (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 22 Aug 2022 05:17:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59540 "EHLO
+        id S234877AbiHVLtK (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 22 Aug 2022 07:49:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49468 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234595AbiHVJPx (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Mon, 22 Aug 2022 05:15:53 -0400
-Received: from fllv0016.ext.ti.com (fllv0016.ext.ti.com [198.47.19.142])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C60252A40A;
-        Mon, 22 Aug 2022 02:15:40 -0700 (PDT)
-Received: from fllv0034.itg.ti.com ([10.64.40.246])
-        by fllv0016.ext.ti.com (8.15.2/8.15.2) with ESMTP id 27M9FZbu019388;
-        Mon, 22 Aug 2022 04:15:35 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
-        s=ti-com-17Q1; t=1661159735;
-        bh=CCFuC6F3PDmk2qInbJWBLRf6Yk6t6h+PLhjhJhuGEiU=;
-        h=From:To:CC:Subject:Date:In-Reply-To:References;
-        b=wVHPOOoOSXMNWegBZxJgN9tTlzrUxjqKFEC2pfWyu1jkiRQVmWYH48cilDIOW81A4
-         GXbLcOKJryRxCgnVAVsaVziLaLnwBdnwv+Q76xPG0blv49+9fwhorbI1fneWITb5uh
-         VN91c/YXBIolZRYwsNATRwAawDB84QRYNLmzhpmM=
-Received: from DLEE115.ent.ti.com (dlee115.ent.ti.com [157.170.170.26])
-        by fllv0034.itg.ti.com (8.15.2/8.15.2) with ESMTPS id 27M9FYu9111259
-        (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
-        Mon, 22 Aug 2022 04:15:35 -0500
-Received: from DLEE100.ent.ti.com (157.170.170.30) by DLEE115.ent.ti.com
- (157.170.170.26) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.2507.6; Mon, 22
- Aug 2022 04:15:34 -0500
-Received: from lelv0327.itg.ti.com (10.180.67.183) by DLEE100.ent.ti.com
- (157.170.170.30) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.2507.6 via
- Frontend Transport; Mon, 22 Aug 2022 04:15:34 -0500
-Received: from localhost (ileax41-snat.itg.ti.com [10.172.224.153])
-        by lelv0327.itg.ti.com (8.15.2/8.15.2) with ESMTP id 27M9FXYS037071;
-        Mon, 22 Aug 2022 04:15:34 -0500
-From:   Vaishnav Achath <vaishnav.a@ti.com>
-To:     <peter.ujfalusi@gmail.com>, <vkoul@kernel.org>,
-        <broonie@kernel.org>, <dmaengine@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-spi@vger.kernel.org>
-CC:     <vigneshr@ti.com>, <kishon@ti.com>, <vaishnav.a@ti.com>
-Subject: [PATCH 1/2] dmaengine: ti: k3-udma: Respond TX done if DMA_PREP_INTERRUPT is not requested
-Date:   Mon, 22 Aug 2022 14:45:30 +0530
-Message-ID: <20220822091531.27827-2-vaishnav.a@ti.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20220822091531.27827-1-vaishnav.a@ti.com>
-References: <20220822091531.27827-1-vaishnav.a@ti.com>
+        with ESMTP id S234833AbiHVLst (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Mon, 22 Aug 2022 07:48:49 -0400
+Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07630140A5
+        for <dmaengine@vger.kernel.org>; Mon, 22 Aug 2022 04:48:29 -0700 (PDT)
+Received: by mail-lj1-x22b.google.com with SMTP id x10so10335205ljq.4
+        for <dmaengine@vger.kernel.org>; Mon, 22 Aug 2022 04:48:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc;
+        bh=JvWkrZCHWaZg0B4fxrggJpcKlzsXeXTjMFTXm2G7Ln0=;
+        b=ntDl1WxU9/IUGVBIzGbRcPLYqrhAQsz+Epif8d5cKLduGObeiWeA+h2oQrWj4VfwJY
+         3us3dedr0/iRRja4d/vUR9gyixjlX1+X4SY4lGD+9XJVyYj13nJnyiRIaRQ7O4tr/kKz
+         yVwDWJQ59ycGmvBy501WrN4nlF0J8cNfqJW4pkP4jSiHUfd/NQx61qUkncqhc1Zd9XS2
+         6XexzVqLwQZ6WKD2g/2YnZ2kC28NrSkKDev5OkONAM5CRDnSAODI1zTzKxS/XGp7EiGG
+         6x7c1Gh1p+bf6fEeksc92jtUlNdaagTzBLFPYGJrwU3U2MqG6L8NzqLbNKvAdaf2aUHF
+         ErQA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc;
+        bh=JvWkrZCHWaZg0B4fxrggJpcKlzsXeXTjMFTXm2G7Ln0=;
+        b=WBU7/EXoJHUPx4Ycy4I8h+2LjfitxcMfpF5U415k4KVH92eIujYGvJdja9yVHlii37
+         axVF4faJB+y+jB25GneToasQQ4PxdL3BAGMDijfcMdG+PLfuYn/VXl9l53kLNanuynM2
+         Dvk7Elqp9V66CB5m9NBZo/vl4PXgdMsg1w9OJqc6KPXxuYH3sgqQpn6G8PGKk7UqSI9a
+         3Jt/qJ07aftnEjoaHCXhOapx/Q4TOOIBjM24U0arebxkoFNxQccNvdXrXBBHtGZtOIMZ
+         SSCLL70PiM4bchu6oTCth2SVKcrUyDN+XLK3AEF2lElEQfW+45uSECAKCATf405fQbky
+         u9kQ==
+X-Gm-Message-State: ACgBeo1XepljrxxOalOtseekQvgVIcmHKEfdDd545Mm2aWolBeFqlDqH
+        TI1r7V8B25rqKgqDthvzqX+00i9BuCYp1g==
+X-Google-Smtp-Source: AA6agR4fIfbHU9sQN9gJYIMhUAZyI5YxjG0VfzrmyjddRUTPs/HW/kNhis6A88PpJ6e6VUtpkSe7+A==
+X-Received: by 2002:a2e:952:0:b0:261:d128:142b with SMTP id 79-20020a2e0952000000b00261d128142bmr803620ljj.50.1661168907193;
+        Mon, 22 Aug 2022 04:48:27 -0700 (PDT)
+Received: from localhost.localdomain ([188.244.36.106])
+        by smtp.googlemail.com with ESMTPSA id u34-20020a05651c142200b00261b32f1548sm1744559lje.100.2022.08.22.04.48.26
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 22 Aug 2022 04:48:26 -0700 (PDT)
+From:   Alexander Fomichev <fomichev.ru@gmail.com>
+To:     dmaengine@vger.kernel.org
+Cc:     linux@yadro.com, Vinod Koul <vkoul@kernel.org>,
+        Alexander Fomichev <a.fomichev@yadro.com>
+Subject: [PATCH] dmatest: add CPU binding parameter
+Date:   Mon, 22 Aug 2022 14:48:04 +0300
+Message-Id: <20220822114804.95751-1-fomichev.ru@gmail.com>
+X-Mailer: git-send-email 2.37.1
 MIME-Version: 1.0
-Content-Type: text/plain
-X-EXCLAIMER-MD-CONFIG: e1e8a2fd-e40a-4ac6-ac9b-f7e9cc9ee180
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-When the DMA consumer driver does not expect the callback for TX done,
-There is no need to perform the channel RT byte counter calculations 
-and estimate the completion but return complete on first attempt itself.
-This assumes that the consumer who did not request DMA_PREP_INTERRUPT 
-has its own mechanism for understanding TX completion, example: MCSPI
-EOW interrupt can be used as TX completion signal for a SPI transaction.
+From: Alexander Fomichev <a.fomichev@yadro.com>
 
-Signed-off-by: Vaishnav Achath <vaishnav.a@ti.com>
+Introduce "on_cpu" module parameter for dmatest.
+By default, its value is -1 which means no binding implies.
+Positive values or zero cause the next "channel" assignment(s) to bind
+channel's thread to certain CPU. Thus, it is possible to bind different
+DMA channels' threads to different CPUs.
+
+This is useful for the cases when cold cache (because of task migrating
+between CPUs) significantly impacts DMA Engine performance. Such
+situation was analyzed in [1].
+
+[1] Scheduler: DMA Engine regression because of sched/fair changes
+https://lore.kernel.org/all/20220128165058.zxyrnd7nzr4hlks2@yadro.com/
+
+Signed-off-by: Alexander Fomichev <a.fomichev@yadro.com>
 ---
- drivers/dma/ti/k3-udma.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/dma/dmatest.c | 23 +++++++++++++++++++++--
+ 1 file changed, 21 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/dma/ti/k3-udma.c b/drivers/dma/ti/k3-udma.c
-index 39b330ada200..03d579068453 100644
---- a/drivers/dma/ti/k3-udma.c
-+++ b/drivers/dma/ti/k3-udma.c
-@@ -263,6 +263,7 @@ struct udma_chan_config {
- 	enum udma_tp_level channel_tpl; /* Channel Throughput Level */
+diff --git a/drivers/dma/dmatest.c b/drivers/dma/dmatest.c
+index f696246f57fd..c91cbc9e5d1a 100644
+--- a/drivers/dma/dmatest.c
++++ b/drivers/dma/dmatest.c
+@@ -89,6 +89,10 @@ static bool polled;
+ module_param(polled, bool, S_IRUGO | S_IWUSR);
+ MODULE_PARM_DESC(polled, "Use polling for completion instead of interrupts");
  
- 	u32 tr_trigger_type;
-+	unsigned long tx_flags;
- 
- 	/* PKDMA mapped channel */
- 	int mapped_channel_id;
-@@ -1057,7 +1058,7 @@ static bool udma_is_desc_really_done(struct udma_chan *uc, struct udma_desc *d)
- 
- 	/* Only TX towards PDMA is affected */
- 	if (uc->config.ep_type == PSIL_EP_NATIVE ||
--	    uc->config.dir != DMA_MEM_TO_DEV)
-+	    uc->config.dir != DMA_MEM_TO_DEV || !(uc->config.tx_flags & DMA_PREP_INTERRUPT))
- 		return true;
- 
- 	peer_bcnt = udma_tchanrt_read(uc, UDMA_CHAN_RT_PEER_BCNT_REG);
-@@ -3418,6 +3419,8 @@ udma_prep_slave_sg(struct dma_chan *chan, struct scatterlist *sgl,
- 	if (!burst)
- 		burst = 1;
- 
-+	uc->config.tx_flags = tx_flags;
++static int on_cpu = -1;
++module_param(on_cpu, int, 0644);
++MODULE_PARM_DESC(on_cpu, "Bind CPU to run threads on (default: auto scheduled (-1))");
 +
- 	if (uc->config.pkt_mode)
- 		d = udma_prep_slave_sg_pkt(uc, sgl, sglen, dir, tx_flags,
- 					   context);
+ /**
+  * struct dmatest_params - test parameters.
+  * @buf_size:		size of the memcpy test buffer
+@@ -237,6 +241,7 @@ struct dmatest_thread {
+ struct dmatest_chan {
+ 	struct list_head	node;
+ 	struct dma_chan		*chan;
++	int					cpu;
+ 	struct list_head	threads;
+ };
+ 
+@@ -602,6 +607,7 @@ static int dmatest_func(void *data)
+ 	ret = -ENOMEM;
+ 
+ 	smp_rmb();
++
+ 	thread->pending = false;
+ 	info = thread->info;
+ 	params = &info->params;
+@@ -1010,6 +1016,7 @@ static int dmatest_add_channel(struct dmatest_info *info,
+ 	struct dmatest_chan	*dtc;
+ 	struct dma_device	*dma_dev = chan->device;
+ 	unsigned int		thread_count = 0;
++	char	cpu_str[20];
+ 	int cnt;
+ 
+ 	dtc = kmalloc(sizeof(struct dmatest_chan), GFP_KERNEL);
+@@ -1018,6 +1025,13 @@ static int dmatest_add_channel(struct dmatest_info *info,
+ 		return -ENOMEM;
+ 	}
+ 
++	memset(cpu_str, 0, sizeof(cpu_str));
++	if (on_cpu >= nr_cpu_ids || on_cpu < -1)
++		on_cpu = -1;
++	dtc->cpu = on_cpu;
++	if (dtc->cpu != -1)
++		snprintf(cpu_str, sizeof(cpu_str) - 1, " on CPU #%d", dtc->cpu);
++
+ 	dtc->chan = chan;
+ 	INIT_LIST_HEAD(&dtc->threads);
+ 
+@@ -1050,8 +1064,8 @@ static int dmatest_add_channel(struct dmatest_info *info,
+ 		thread_count += cnt > 0 ? cnt : 0;
+ 	}
+ 
+-	pr_info("Added %u threads using %s\n",
+-		thread_count, dma_chan_name(chan));
++	pr_info("Added %u threads using %s%s\n",
++		thread_count, dma_chan_name(chan), cpu_str);
+ 
+ 	list_add_tail(&dtc->node, &info->channels);
+ 	info->nr_channels++;
+@@ -1125,6 +1139,11 @@ static void run_pending_tests(struct dmatest_info *info)
+ 
+ 		thread_count = 0;
+ 		list_for_each_entry(thread, &dtc->threads, node) {
++			if (dtc->cpu != -1) {
++				if (!thread->pending)
++					continue;
++				kthread_bind(thread->task, dtc->cpu);
++			}
+ 			wake_up_process(thread->task);
+ 			thread_count++;
+ 		}
 -- 
-2.17.1
+2.37.1
 
