@@ -2,31 +2,31 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4027AC32792
-	for <dmaengine@archiver.kernel.org>; Mon, 22 Aug 2022 18:54:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A1B70C32772
+	for <dmaengine@archiver.kernel.org>; Mon, 22 Aug 2022 18:54:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237978AbiHVSyz (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 22 Aug 2022 14:54:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37952 "EHLO
+        id S237674AbiHVSyx (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 22 Aug 2022 14:54:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37910 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237799AbiHVSyT (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Mon, 22 Aug 2022 14:54:19 -0400
+        with ESMTP id S237696AbiHVSyR (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Mon, 22 Aug 2022 14:54:17 -0400
 Received: from mail.baikalelectronics.com (mail.baikalelectronics.com [87.245.175.230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 46A0EB7D;
-        Mon, 22 Aug 2022 11:53:57 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id A60173DF32;
+        Mon, 22 Aug 2022 11:53:52 -0700 (PDT)
 Received: from mail (mail.baikal.int [192.168.51.25])
-        by mail.baikalelectronics.com (Postfix) with ESMTP id 1924CDA4;
-        Mon, 22 Aug 2022 21:57:08 +0300 (MSK)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mail.baikalelectronics.com 1924CDA4
+        by mail.baikalelectronics.com (Postfix) with ESMTP id F408CDA6;
+        Mon, 22 Aug 2022 21:57:03 +0300 (MSK)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mail.baikalelectronics.com F408CDA6
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baikalelectronics.ru; s=mail; t=1661194628;
-        bh=97a9U8E5vZvQUfsqwWz6wdvVx63TZNSKII0ja/EivXE=;
+        d=baikalelectronics.ru; s=mail; t=1661194624;
+        bh=vwfya36YubZ2bYzJNs2OOzl4KTHtrqBAGr7OFYCUolk=;
         h=From:To:CC:Subject:Date:In-Reply-To:References:From;
-        b=D4cw8tbaUxNXpB8h9AI+Zq9eW31vxqy3ow7qgNrENRxcUlEd/LGJrKC6Rk+0e+3Hv
-         xTb2SsmVt3leXHKxWevQdxEzzqP2o3l08fxcaK3ZY2bOZ7G8VJMrMKx1UYzUPSb11G
-         yZbGUow0rliH1o9pQNqaDprFGPNQI+TZzKAubxCE=
+        b=FdnuerjpysxXthGrwvxCRCo25SLj2MS2EXuEXSP7PnExg+5ZL7A6iGAYnll77a/Rr
+         mQUYQxzOpljHQXvTK0GdjHeaXBAfNp6m19pHqhUpineyjp5yrNvFgHM4N8BoDrkAkw
+         AhFpLIAiJeIH+/EVT72XFNYgSnXRXnXOpXn9GIV4=
 Received: from localhost (192.168.168.10) by mail (192.168.51.25) with
- Microsoft SMTP Server (TLS) id 15.0.1395.4; Mon, 22 Aug 2022 21:53:53 +0300
+ Microsoft SMTP Server (TLS) id 15.0.1395.4; Mon, 22 Aug 2022 21:53:49 +0300
 From:   Serge Semin <Sergey.Semin@baikalelectronics.ru>
 To:     Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
         Vinod Koul <vkoul@kernel.org>, Rob Herring <robh@kernel.org>,
@@ -42,9 +42,9 @@ CC:     Serge Semin <Sergey.Semin@baikalelectronics.ru>,
         <linux-pci@vger.kernel.org>, <dmaengine@vger.kernel.org>,
         <linux-kernel@vger.kernel.org>,
         Gustavo Pimentel <Gustavo.Pimentel@synopsys.com>
-Subject: [PATCH RESEND v5 09/24] dmaengine: dw-edma: Drop chancnt initialization
-Date:   Mon, 22 Aug 2022 21:53:17 +0300
-Message-ID: <20220822185332.26149-10-Sergey.Semin@baikalelectronics.ru>
+Subject: [PATCH RESEND v5 04/24] dmaengine: dw-edma: Fix missing src/dst address of the interleaved xfers
+Date:   Mon, 22 Aug 2022 21:53:12 +0300
+Message-ID: <20220822185332.26149-5-Sergey.Semin@baikalelectronics.ru>
 In-Reply-To: <20220822185332.26149-1-Sergey.Semin@baikalelectronics.ru>
 References: <20220822185332.26149-1-Sergey.Semin@baikalelectronics.ru>
 MIME-Version: 1.0
@@ -55,32 +55,48 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-DMA device drivers aren't supposed to initialize the dma_device.chancnt
-field. It will be done by the DMA-engine core in accordance with number of
-added virtual DMA-channels. Pre-initializing it with some value causes
-having a wrong number of channels printed in the device summary.
+The interleaved DMA transfers support was added in the commit 85e7518f42c8
+("dmaengine: dw-edma: Add device_prep_interleave_dma() support"). It
+seems like the support was broken from the very beginning. Depending on
+the selected channel either source or destination address are left
+uninitialized which was obviously wrong. I don't really know how come the
+original modification was working for the commit author. Anyway let's fix
+it by initializing the destination address of the eDMA burst descriptors
+for the DEV_TO_MEM interleaved operations and by initializing the source
+address of the eDMA burst descriptors for the MEM_TO_DEV interleaved
+operations.
 
-Fixes: e63d79d1ffcd ("dmaengine: Add Synopsys eDMA IP core driver")
+Fixes: 85e7518f42c8 ("dmaengine: dw-edma: Add device_prep_interleave_dma() support")
 Signed-off-by: Serge Semin <Sergey.Semin@baikalelectronics.ru>
 Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 Tested-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 Acked-By: Vinod Koul <vkoul@kernel.org>
 ---
- drivers/dma/dw-edma/dw-edma-core.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/dma/dw-edma/dw-edma-core.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
 diff --git a/drivers/dma/dw-edma/dw-edma-core.c b/drivers/dma/dw-edma/dw-edma-core.c
-index be466b781376..e9cb3056b6b7 100644
+index 04efcb16d13d..f0ef87d75ea9 100644
 --- a/drivers/dma/dw-edma/dw-edma-core.c
 +++ b/drivers/dma/dw-edma/dw-edma-core.c
-@@ -823,7 +823,6 @@ static int dw_edma_channel_setup(struct dw_edma *dw, bool write,
- 	dma->src_addr_widths = BIT(DMA_SLAVE_BUSWIDTH_4_BYTES);
- 	dma->dst_addr_widths = BIT(DMA_SLAVE_BUSWIDTH_4_BYTES);
- 	dma->residue_granularity = DMA_RESIDUE_GRANULARITY_DESCRIPTOR;
--	dma->chancnt = cnt;
+@@ -456,6 +456,8 @@ dw_edma_device_transfer(struct dw_edma_transfer *xfer)
+ 				 * and destination addresses are increased
+ 				 * by the same portion (data length)
+ 				 */
++			} else if (xfer->type == EDMA_XFER_INTERLEAVED) {
++				burst->dar = dst_addr;
+ 			}
+ 		} else {
+ 			burst->dar = dst_addr;
+@@ -471,6 +473,8 @@ dw_edma_device_transfer(struct dw_edma_transfer *xfer)
+ 				 * and destination addresses are increased
+ 				 * by the same portion (data length)
+ 				 */
++			}  else if (xfer->type == EDMA_XFER_INTERLEAVED) {
++				burst->sar = src_addr;
+ 			}
+ 		}
  
- 	/* Set DMA channel callbacks */
- 	dma->dev = chip->dev;
 -- 
 2.35.1
 
