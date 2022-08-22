@@ -2,412 +2,327 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C4C70C32774
-	for <dmaengine@archiver.kernel.org>; Mon, 22 Aug 2022 02:17:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C0FCCC32789
+	for <dmaengine@archiver.kernel.org>; Mon, 22 Aug 2022 09:16:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232467AbiHVCRB (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Sun, 21 Aug 2022 22:17:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52736 "EHLO
+        id S233610AbiHVJQ4 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 22 Aug 2022 05:16:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59132 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232470AbiHVCQn (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Sun, 21 Aug 2022 22:16:43 -0400
-Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com [IPv6:2607:f8b0:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2AA6C22BE5;
-        Sun, 21 Aug 2022 19:16:35 -0700 (PDT)
-Received: by mail-pl1-x62e.google.com with SMTP id c2so8679027plo.3;
-        Sun, 21 Aug 2022 19:16:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc;
-        bh=xB76u9yqtIZ+mSa30ADibl4N4bymJ9Dh7UlLFPT7o98=;
-        b=HRSBxEVCt3rvrI/7lmMMzAo0rRbfGOgqEC67o825HvHiARvDrjB8+tDVoRpWMePXYp
-         9oQI+id67tHzlJ/A1v+NZiooV2Ufdbed57m4RPzeWT4HTWQ3q2I+/Pe+oeuuLSkGr3sH
-         OFGxMUhrOnPgyl+8PJjFb2VlRGBH65CMs+CTIcK33IedsTj91WJy8qIYPkCyA3YhPpbN
-         xDCCgOZKQ5Y1aN3JjfMjYvKZvr6vDO7+ZcRdt9uyjXkR87MKlV9+WnblT5SVy92eqfSx
-         w3yN/jWsdSyvHft8Zf3G5N2NxPQml5tWr62cry/lKZIDETPbgI06U3OybrR+Eaet25zB
-         MNXw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc;
-        bh=xB76u9yqtIZ+mSa30ADibl4N4bymJ9Dh7UlLFPT7o98=;
-        b=8HTec5PKe3qNIodA8+yUymOr1kqtqer4mcRv6RSpygHXfAWmuHpvMJzKtn4TcI1uwg
-         zlfaCE/GOg1M3Tff9mf1JFEI8o1qpxFJ84zY8twMkOnTEWR16ZDC3FSowSSBCs8NXmA+
-         Pa9D6z/iMCZUpG4ryP4xajmsjBysnj9bzzq7aaGGgJl5+pkdxy6dJtWmyxkTOR8an//T
-         1yZU0tmzbJyZMpJO4g2mtlcUfaABTeq+n26BJSIbUwwdj0lyaonOGPnlURM+vxOl6CHO
-         nj1blI06Un713sWZAof80W7zmttoEUs4z/+8kXWD3oriB7GnKdH1rGSO8PxxJD1NAhw/
-         24Lg==
-X-Gm-Message-State: ACgBeo1cK40iG/0rQfPTbxfNf6jDO9GVXQ3jxODlOOt+RNbGdX4D3zM4
-        ldaUrG0OFGwuCIV9bT3fJg==
-X-Google-Smtp-Source: AA6agR522vRbRjKGj/9trWnx6g9g6lhC9pFTs134FCjBnfDght6iTV00F7UnaCUQri0jee4v1rjxPQ==
-X-Received: by 2002:a17:90b:33ce:b0:1fb:1aec:ffac with SMTP id lk14-20020a17090b33ce00b001fb1aecffacmr5850314pjb.137.1661134594615;
-        Sun, 21 Aug 2022 19:16:34 -0700 (PDT)
-Received: from piliu.users.ipa.redhat.com ([209.132.188.80])
-        by smtp.gmail.com with ESMTPSA id k3-20020aa79723000000b005321340753fsm7312139pfg.103.2022.08.21.19.16.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 21 Aug 2022 19:16:34 -0700 (PDT)
-From:   Pingfan Liu <kernelfans@gmail.com>
-To:     linux-arm-kernel@lists.infradead.org, dmaengine@vger.kernel.org,
-        linux-fpga@vger.kernel.org, intel-gfx@lists.freedesktop.org,
-        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        linuxppc-dev@lists.ozlabs.org, linux-kernel@vger.kernel.org
-Cc:     Pingfan Liu <kernelfans@gmail.com>,
-        Russell King <linux@armlinux.org.uk>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Fenghua Yu <fenghua.yu@intel.com>,
-        Dave Jiang <dave.jiang@intel.com>,
-        Vinod Koul <vkoul@kernel.org>, Wu Hao <hao.wu@intel.com>,
-        Tom Rix <trix@redhat.com>, Moritz Fischer <mdf@kernel.org>,
-        Xu Yilun <yilun.xu@intel.com>,
-        Jani Nikula <jani.nikula@linux.intel.com>,
-        Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
-        Rodrigo Vivi <rodrigo.vivi@intel.com>,
-        Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>, Will Deacon <will@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Frank Li <Frank.li@nxp.com>,
-        Shaokun Zhang <zhangshaokun@hisilicon.com>,
-        Qi Liu <liuqi115@huawei.com>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Khuong Dinh <khuong@os.amperecomputing.com>,
-        Li Yang <leoyang.li@nxp.com>, Yury Norov <yury.norov@gmail.com>
-Subject: [RFC 08/10] cpuhp: Replace cpumask_any_but(cpu_online_mask, cpu)
-Date:   Mon, 22 Aug 2022 10:15:18 +0800
-Message-Id: <20220822021520.6996-9-kernelfans@gmail.com>
-X-Mailer: git-send-email 2.31.1
-In-Reply-To: <20220822021520.6996-1-kernelfans@gmail.com>
-References: <20220822021520.6996-1-kernelfans@gmail.com>
+        with ESMTP id S234599AbiHVJPy (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Mon, 22 Aug 2022 05:15:54 -0400
+Received: from lelv0142.ext.ti.com (lelv0142.ext.ti.com [198.47.23.249])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 209E1286F2;
+        Mon, 22 Aug 2022 02:15:41 -0700 (PDT)
+Received: from fllv0034.itg.ti.com ([10.64.40.246])
+        by lelv0142.ext.ti.com (8.15.2/8.15.2) with ESMTP id 27M9FaUN121375;
+        Mon, 22 Aug 2022 04:15:36 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
+        s=ti-com-17Q1; t=1661159736;
+        bh=4RWmn9Vu1OlHjUmqPhU6tSBzfYbt3rOJpZXMAAaiX+w=;
+        h=From:To:CC:Subject:Date:In-Reply-To:References;
+        b=NuVwIMSvZ6ZH0I95bUagB4dlPI77RKUHqPAqFr+E4PmjsS+sk3/0VQZdVKU6Sj+iS
+         Qtb5tQbeJySFzu507Im1iLoq97l4H4YP2xetHw8xfgwsRgur2HSOH71UO73gCwqfG2
+         izvGG9Vfg0ToVeaD+FLaR6QR/fVzv0vSbqcZW/zI=
+Received: from DFLE112.ent.ti.com (dfle112.ent.ti.com [10.64.6.33])
+        by fllv0034.itg.ti.com (8.15.2/8.15.2) with ESMTPS id 27M9Fa8q111278
+        (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
+        Mon, 22 Aug 2022 04:15:36 -0500
+Received: from DFLE107.ent.ti.com (10.64.6.28) by DFLE112.ent.ti.com
+ (10.64.6.33) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.2507.6; Mon, 22
+ Aug 2022 04:15:36 -0500
+Received: from fllv0039.itg.ti.com (10.64.41.19) by DFLE107.ent.ti.com
+ (10.64.6.28) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.2507.6 via
+ Frontend Transport; Mon, 22 Aug 2022 04:15:36 -0500
+Received: from localhost (ileax41-snat.itg.ti.com [10.172.224.153])
+        by fllv0039.itg.ti.com (8.15.2/8.15.2) with ESMTP id 27M9FZuh069753;
+        Mon, 22 Aug 2022 04:15:36 -0500
+From:   Vaishnav Achath <vaishnav.a@ti.com>
+To:     <peter.ujfalusi@gmail.com>, <vkoul@kernel.org>,
+        <broonie@kernel.org>, <dmaengine@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-spi@vger.kernel.org>
+CC:     <vigneshr@ti.com>, <kishon@ti.com>, <vaishnav.a@ti.com>
+Subject: [PATCH 2/2] spi: spi-omap2-mcspi: Use EOW interrupt for completion when DMA enabled
+Date:   Mon, 22 Aug 2022 14:45:31 +0530
+Message-ID: <20220822091531.27827-3-vaishnav.a@ti.com>
+X-Mailer: git-send-email 2.17.1
+In-Reply-To: <20220822091531.27827-1-vaishnav.a@ti.com>
+References: <20220822091531.27827-1-vaishnav.a@ti.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-EXCLAIMER-MD-CONFIG: e1e8a2fd-e40a-4ac6-ac9b-f7e9cc9ee180
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-In a kexec quick reboot path, the dying cpus are still on
-cpu_online_mask. During the teardown of cpu, a subsystem needs to
-migrate its broker to a real online cpu.
+In MCSPI controller EOW interrupt is triggered when the channel has
+transmitted the set number of bytes in MCSPI_XFERLEVEL[31-16] WCNT,
+this can be used to signal the completion of a TX/RX when the internal
+FIFO is enabled, when DMA is enabled the internal FIFO is always enabled.
+Waiting for the DMA completion adds unpredictable delays due to the
+non-realtime completion calculation mechanism in k3-udma driver.
 
-This patch replaces cpumask_any_but(cpu_online_mask, cpu) in a teardown
-procedure with cpumask_not_dying_but(cpu_online_mask, cpu).
+This commit removes the dma_tx_completion and dma_rx_completion and
+relies on the MCSPI controller EOW interrupt to signal transaction
+completion.This fixes the real-time performance issues in master and
+slave mode when DMA was enabled which resulted from the DMA completion
+calculation delays.
 
-Signed-off-by: Pingfan Liu <kernelfans@gmail.com>
-Cc: Russell King <linux@armlinux.org.uk>
-Cc: Shawn Guo <shawnguo@kernel.org>
-Cc: Sascha Hauer <s.hauer@pengutronix.de>
-Cc: Pengutronix Kernel Team <kernel@pengutronix.de>
-Cc: Fabio Estevam <festevam@gmail.com>
-Cc: NXP Linux Team <linux-imx@nxp.com>
-Cc: Fenghua Yu <fenghua.yu@intel.com>
-Cc: Dave Jiang <dave.jiang@intel.com>
-Cc: Vinod Koul <vkoul@kernel.org>
-Cc: Wu Hao <hao.wu@intel.com>
-Cc: Tom Rix <trix@redhat.com>
-Cc: Moritz Fischer <mdf@kernel.org>
-Cc: Xu Yilun <yilun.xu@intel.com>
-Cc: Jani Nikula <jani.nikula@linux.intel.com>
-Cc: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
-Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Cc: Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>
-Cc: David Airlie <airlied@linux.ie>
-Cc: Daniel Vetter <daniel@ffwll.ch>
-Cc: Will Deacon <will@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Frank Li <Frank.li@nxp.com>
-Cc: Shaokun Zhang <zhangshaokun@hisilicon.com>
-Cc: Qi Liu <liuqi115@huawei.com>
-Cc: Andy Gross <agross@kernel.org>
-Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc: Konrad Dybcio <konrad.dybcio@somainline.org>
-Cc: Khuong Dinh <khuong@os.amperecomputing.com>
-Cc: Li Yang <leoyang.li@nxp.com>
-Cc: Yury Norov <yury.norov@gmail.com>
-To: linux-arm-kernel@lists.infradead.org
-To: dmaengine@vger.kernel.org
-To: linux-fpga@vger.kernel.org
-To: intel-gfx@lists.freedesktop.org
-To: dri-devel@lists.freedesktop.org
-To: linux-arm-msm@vger.kernel.org
-To: linuxppc-dev@lists.ozlabs.org
-To: linux-kernel@vger.kernel.org
+Since the MCSPI driver now uses internal mechanism to identify a transfer
+completion we disable the TX and RX DMA completion callback and remove
+DMA_PREP_INTERRUPT.
+
+Signed-off-by: Vaishnav Achath <vaishnav.a@ti.com>
 ---
- arch/arm/mach-imx/mmdc.c                 | 2 +-
- arch/arm/mm/cache-l2x0-pmu.c             | 2 +-
- drivers/dma/idxd/perfmon.c               | 2 +-
- drivers/fpga/dfl-fme-perf.c              | 2 +-
- drivers/gpu/drm/i915/i915_pmu.c          | 2 +-
- drivers/perf/arm-cci.c                   | 2 +-
- drivers/perf/arm-ccn.c                   | 2 +-
- drivers/perf/arm-cmn.c                   | 4 ++--
- drivers/perf/arm_dmc620_pmu.c            | 2 +-
- drivers/perf/arm_dsu_pmu.c               | 2 +-
- drivers/perf/arm_smmuv3_pmu.c            | 2 +-
- drivers/perf/fsl_imx8_ddr_perf.c         | 2 +-
- drivers/perf/hisilicon/hisi_uncore_pmu.c | 2 +-
- drivers/perf/marvell_cn10k_tad_pmu.c     | 2 +-
- drivers/perf/qcom_l2_pmu.c               | 2 +-
- drivers/perf/qcom_l3_pmu.c               | 2 +-
- drivers/perf/xgene_pmu.c                 | 2 +-
- drivers/soc/fsl/qbman/bman_portal.c      | 2 +-
- drivers/soc/fsl/qbman/qman_portal.c      | 2 +-
- 19 files changed, 20 insertions(+), 20 deletions(-)
+ drivers/spi/spi-omap2-mcspi.c | 141 +++++++++-------------------------
+ 1 file changed, 36 insertions(+), 105 deletions(-)
 
-diff --git a/arch/arm/mach-imx/mmdc.c b/arch/arm/mach-imx/mmdc.c
-index af12668d0bf5..a109a7ea8613 100644
---- a/arch/arm/mach-imx/mmdc.c
-+++ b/arch/arm/mach-imx/mmdc.c
-@@ -220,7 +220,7 @@ static int mmdc_pmu_offline_cpu(unsigned int cpu, struct hlist_node *node)
- 	if (!cpumask_test_and_clear_cpu(cpu, &pmu_mmdc->cpu))
- 		return 0;
+diff --git a/drivers/spi/spi-omap2-mcspi.c b/drivers/spi/spi-omap2-mcspi.c
+index c48d02bb7013..8680465533e0 100644
+--- a/drivers/spi/spi-omap2-mcspi.c
++++ b/drivers/spi/spi-omap2-mcspi.c
+@@ -91,10 +91,6 @@
+ struct omap2_mcspi_dma {
+ 	struct dma_chan *dma_tx;
+ 	struct dma_chan *dma_rx;
+-
+-	struct completion dma_tx_completion;
+-	struct completion dma_rx_completion;
+-
+ 	char dma_rx_ch_name[14];
+ 	char dma_tx_ch_name[14];
+ };
+@@ -116,7 +112,7 @@ struct omap2_mcspi_regs {
+ };
  
--	target = cpumask_any_but(cpu_online_mask, cpu);
-+	target = cpumask_not_dying_but(cpu_online_mask, cpu);
- 	if (target >= nr_cpu_ids)
- 		return 0;
- 
-diff --git a/arch/arm/mm/cache-l2x0-pmu.c b/arch/arm/mm/cache-l2x0-pmu.c
-index 993fefdc167a..1b0037ef7fa5 100644
---- a/arch/arm/mm/cache-l2x0-pmu.c
-+++ b/arch/arm/mm/cache-l2x0-pmu.c
-@@ -428,7 +428,7 @@ static int l2x0_pmu_offline_cpu(unsigned int cpu)
- 	if (!cpumask_test_and_clear_cpu(cpu, &pmu_cpu))
- 		return 0;
- 
--	target = cpumask_any_but(cpu_online_mask, cpu);
-+	target = cpumask_not_dying_but(cpu_online_mask, cpu);
- 	if (target >= nr_cpu_ids)
- 		return 0;
- 
-diff --git a/drivers/dma/idxd/perfmon.c b/drivers/dma/idxd/perfmon.c
-index d73004f47cf4..f3f1ccb55f73 100644
---- a/drivers/dma/idxd/perfmon.c
-+++ b/drivers/dma/idxd/perfmon.c
-@@ -528,7 +528,7 @@ static int perf_event_cpu_offline(unsigned int cpu, struct hlist_node *node)
- 	if (!cpumask_test_and_clear_cpu(cpu, &perfmon_dsa_cpu_mask))
- 		return 0;
- 
--	target = cpumask_any_but(cpu_online_mask, cpu);
-+	target = cpumask_not_dying_but(cpu_online_mask, cpu);
- 
- 	/* migrate events if there is a valid target */
- 	if (target < nr_cpu_ids)
-diff --git a/drivers/fpga/dfl-fme-perf.c b/drivers/fpga/dfl-fme-perf.c
-index 587c82be12f7..57804f28357e 100644
---- a/drivers/fpga/dfl-fme-perf.c
-+++ b/drivers/fpga/dfl-fme-perf.c
-@@ -948,7 +948,7 @@ static int fme_perf_offline_cpu(unsigned int cpu, struct hlist_node *node)
- 	if (cpu != priv->cpu)
- 		return 0;
- 
--	target = cpumask_any_but(cpu_online_mask, cpu);
-+	target = cpumask_not_dying_but(cpu_online_mask, cpu);
- 	if (target >= nr_cpu_ids)
- 		return 0;
- 
-diff --git a/drivers/gpu/drm/i915/i915_pmu.c b/drivers/gpu/drm/i915/i915_pmu.c
-index 958b37123bf1..f866f9223492 100644
---- a/drivers/gpu/drm/i915/i915_pmu.c
-+++ b/drivers/gpu/drm/i915/i915_pmu.c
-@@ -1068,7 +1068,7 @@ static int i915_pmu_cpu_offline(unsigned int cpu, struct hlist_node *node)
- 		return 0;
- 
- 	if (cpumask_test_and_clear_cpu(cpu, &i915_pmu_cpumask)) {
--		target = cpumask_any_but(topology_sibling_cpumask(cpu), cpu);
-+		target = cpumask_not_dying_but(topology_sibling_cpumask(cpu), cpu);
- 
- 		/* Migrate events if there is a valid target */
- 		if (target < nr_cpu_ids) {
-diff --git a/drivers/perf/arm-cci.c b/drivers/perf/arm-cci.c
-index 03b1309875ae..481da937fb9d 100644
---- a/drivers/perf/arm-cci.c
-+++ b/drivers/perf/arm-cci.c
-@@ -1447,7 +1447,7 @@ static int cci_pmu_offline_cpu(unsigned int cpu)
- 	if (!g_cci_pmu || cpu != g_cci_pmu->cpu)
- 		return 0;
- 
--	target = cpumask_any_but(cpu_online_mask, cpu);
-+	target = cpumask_not_dying_but(cpu_online_mask, cpu);
- 	if (target >= nr_cpu_ids)
- 		return 0;
- 
-diff --git a/drivers/perf/arm-ccn.c b/drivers/perf/arm-ccn.c
-index 728d13d8e98a..573d6906ec9b 100644
---- a/drivers/perf/arm-ccn.c
-+++ b/drivers/perf/arm-ccn.c
-@@ -1205,7 +1205,7 @@ static int arm_ccn_pmu_offline_cpu(unsigned int cpu, struct hlist_node *node)
- 
- 	if (cpu != dt->cpu)
- 		return 0;
--	target = cpumask_any_but(cpu_online_mask, cpu);
-+	target = cpumask_not_dying_but(cpu_online_mask, cpu);
- 	if (target >= nr_cpu_ids)
- 		return 0;
- 	perf_pmu_migrate_context(&dt->pmu, cpu, target);
-diff --git a/drivers/perf/arm-cmn.c b/drivers/perf/arm-cmn.c
-index 80d8309652a4..1847182a1ed3 100644
---- a/drivers/perf/arm-cmn.c
-+++ b/drivers/perf/arm-cmn.c
-@@ -1787,9 +1787,9 @@ static int arm_cmn_pmu_offline_cpu(unsigned int cpu, struct hlist_node *cpuhp_no
- 	node = dev_to_node(cmn->dev);
- 	if (cpumask_and(&mask, cpumask_of_node(node), cpu_online_mask) &&
- 	    cpumask_andnot(&mask, &mask, cpumask_of(cpu)))
--		target = cpumask_any(&mask);
-+		target = cpumask_not_dying_but(&mask, cpu);
- 	else
--		target = cpumask_any_but(cpu_online_mask, cpu);
-+		target = cpumask_not_dying_but(cpu_online_mask, cpu);
- 	if (target < nr_cpu_ids)
- 		arm_cmn_migrate(cmn, target);
- 	return 0;
-diff --git a/drivers/perf/arm_dmc620_pmu.c b/drivers/perf/arm_dmc620_pmu.c
-index 280a6ae3e27c..3a0a2bb92e12 100644
---- a/drivers/perf/arm_dmc620_pmu.c
-+++ b/drivers/perf/arm_dmc620_pmu.c
-@@ -611,7 +611,7 @@ static int dmc620_pmu_cpu_teardown(unsigned int cpu,
- 	if (cpu != irq->cpu)
- 		return 0;
- 
--	target = cpumask_any_but(cpu_online_mask, cpu);
-+	target = cpumask_not_dying_but(cpu_online_mask, cpu);
- 	if (target >= nr_cpu_ids)
- 		return 0;
- 
-diff --git a/drivers/perf/arm_dsu_pmu.c b/drivers/perf/arm_dsu_pmu.c
-index aa9f4393ff0c..e19ce0406b02 100644
---- a/drivers/perf/arm_dsu_pmu.c
-+++ b/drivers/perf/arm_dsu_pmu.c
-@@ -236,7 +236,7 @@ static int dsu_pmu_get_online_cpu_any_but(struct dsu_pmu *dsu_pmu, int cpu)
- 
- 	cpumask_and(&online_supported,
- 			 &dsu_pmu->associated_cpus, cpu_online_mask);
--	return cpumask_any_but(&online_supported, cpu);
-+	return cpumask_not_dying_but(&online_supported, cpu);
- }
- 
- static inline bool dsu_pmu_counter_valid(struct dsu_pmu *dsu_pmu, u32 idx)
-diff --git a/drivers/perf/arm_smmuv3_pmu.c b/drivers/perf/arm_smmuv3_pmu.c
-index 00d4c45a8017..827315d31056 100644
---- a/drivers/perf/arm_smmuv3_pmu.c
-+++ b/drivers/perf/arm_smmuv3_pmu.c
-@@ -640,7 +640,7 @@ static int smmu_pmu_offline_cpu(unsigned int cpu, struct hlist_node *node)
- 	if (cpu != smmu_pmu->on_cpu)
- 		return 0;
- 
--	target = cpumask_any_but(cpu_online_mask, cpu);
-+	target = cpumask_not_dying_but(cpu_online_mask, cpu);
- 	if (target >= nr_cpu_ids)
- 		return 0;
- 
-diff --git a/drivers/perf/fsl_imx8_ddr_perf.c b/drivers/perf/fsl_imx8_ddr_perf.c
-index 8e058e08fe81..4e0276fc1548 100644
---- a/drivers/perf/fsl_imx8_ddr_perf.c
-+++ b/drivers/perf/fsl_imx8_ddr_perf.c
-@@ -664,7 +664,7 @@ static int ddr_perf_offline_cpu(unsigned int cpu, struct hlist_node *node)
- 	if (cpu != pmu->cpu)
- 		return 0;
- 
--	target = cpumask_any_but(cpu_online_mask, cpu);
-+	target = cpumask_not_dying_but(cpu_online_mask, cpu);
- 	if (target >= nr_cpu_ids)
- 		return 0;
- 
-diff --git a/drivers/perf/hisilicon/hisi_uncore_pmu.c b/drivers/perf/hisilicon/hisi_uncore_pmu.c
-index fbc8a93d5eac..8c39da8f4b3c 100644
---- a/drivers/perf/hisilicon/hisi_uncore_pmu.c
-+++ b/drivers/perf/hisilicon/hisi_uncore_pmu.c
-@@ -518,7 +518,7 @@ int hisi_uncore_pmu_offline_cpu(unsigned int cpu, struct hlist_node *node)
- 	/* Choose a new CPU to migrate ownership of the PMU to */
- 	cpumask_and(&pmu_online_cpus, &hisi_pmu->associated_cpus,
- 		    cpu_online_mask);
--	target = cpumask_any_but(&pmu_online_cpus, cpu);
-+	target = cpumask_not_dying_but(&pmu_online_cpus, cpu);
- 	if (target >= nr_cpu_ids)
- 		return 0;
- 
-diff --git a/drivers/perf/marvell_cn10k_tad_pmu.c b/drivers/perf/marvell_cn10k_tad_pmu.c
-index 69c3050a4348..268e3288893d 100644
---- a/drivers/perf/marvell_cn10k_tad_pmu.c
-+++ b/drivers/perf/marvell_cn10k_tad_pmu.c
-@@ -387,7 +387,7 @@ static int tad_pmu_offline_cpu(unsigned int cpu, struct hlist_node *node)
- 	if (cpu != pmu->cpu)
- 		return 0;
- 
--	target = cpumask_any_but(cpu_online_mask, cpu);
-+	target = cpumask_not_dying_but(cpu_online_mask, cpu);
- 	if (target >= nr_cpu_ids)
- 		return 0;
- 
-diff --git a/drivers/perf/qcom_l2_pmu.c b/drivers/perf/qcom_l2_pmu.c
-index 30234c261b05..8823d0bb6476 100644
---- a/drivers/perf/qcom_l2_pmu.c
-+++ b/drivers/perf/qcom_l2_pmu.c
-@@ -822,7 +822,7 @@ static int l2cache_pmu_offline_cpu(unsigned int cpu, struct hlist_node *node)
- 	/* Any other CPU for this cluster which is still online */
- 	cpumask_and(&cluster_online_cpus, &cluster->cluster_cpus,
- 		    cpu_online_mask);
--	target = cpumask_any_but(&cluster_online_cpus, cpu);
-+	target = cpumask_not_dying_but(&cluster_online_cpus, cpu);
- 	if (target >= nr_cpu_ids) {
- 		disable_irq(cluster->irq);
- 		return 0;
-diff --git a/drivers/perf/qcom_l3_pmu.c b/drivers/perf/qcom_l3_pmu.c
-index 1ff2ff6582bf..ba26b2fa0736 100644
---- a/drivers/perf/qcom_l3_pmu.c
-+++ b/drivers/perf/qcom_l3_pmu.c
-@@ -718,7 +718,7 @@ static int qcom_l3_cache_pmu_offline_cpu(unsigned int cpu, struct hlist_node *no
- 
- 	if (!cpumask_test_and_clear_cpu(cpu, &l3pmu->cpumask))
- 		return 0;
--	target = cpumask_any_but(cpu_online_mask, cpu);
-+	target = cpumask_not_dying_but(cpu_online_mask, cpu);
- 	if (target >= nr_cpu_ids)
- 		return 0;
- 	perf_pmu_migrate_context(&l3pmu->pmu, cpu, target);
-diff --git a/drivers/perf/xgene_pmu.c b/drivers/perf/xgene_pmu.c
-index 0c32dffc7ede..069eb0a0d3ba 100644
---- a/drivers/perf/xgene_pmu.c
-+++ b/drivers/perf/xgene_pmu.c
-@@ -1804,7 +1804,7 @@ static int xgene_pmu_offline_cpu(unsigned int cpu, struct hlist_node *node)
- 
- 	if (!cpumask_test_and_clear_cpu(cpu, &xgene_pmu->cpu))
- 		return 0;
--	target = cpumask_any_but(cpu_online_mask, cpu);
-+	target = cpumask_not_dying_but(cpu_online_mask, cpu);
- 	if (target >= nr_cpu_ids)
- 		return 0;
- 
-diff --git a/drivers/soc/fsl/qbman/bman_portal.c b/drivers/soc/fsl/qbman/bman_portal.c
-index 4d7b9caee1c4..8ebcf87e7d06 100644
---- a/drivers/soc/fsl/qbman/bman_portal.c
-+++ b/drivers/soc/fsl/qbman/bman_portal.c
-@@ -67,7 +67,7 @@ static int bman_offline_cpu(unsigned int cpu)
- 		return 0;
- 
- 	/* use any other online CPU */
--	cpu = cpumask_any_but(cpu_online_mask, cpu);
-+	cpu = cpumask_not_dying_but(cpu_online_mask, cpu);
- 	irq_set_affinity(pcfg->irq, cpumask_of(cpu));
+ struct omap2_mcspi {
+-	struct completion	txdone;
++	struct completion	txrxdone;
+ 	struct spi_master	*master;
+ 	/* Virtual base address of the controller */
+ 	void __iomem		*base;
+@@ -375,30 +371,6 @@ static int mcspi_wait_for_completion(struct  omap2_mcspi *mcspi,
  	return 0;
  }
-diff --git a/drivers/soc/fsl/qbman/qman_portal.c b/drivers/soc/fsl/qbman/qman_portal.c
-index e23b60618c1a..3807a8285ced 100644
---- a/drivers/soc/fsl/qbman/qman_portal.c
-+++ b/drivers/soc/fsl/qbman/qman_portal.c
-@@ -148,7 +148,7 @@ static int qman_offline_cpu(unsigned int cpu)
- 		pcfg = qman_get_qm_portal_config(p);
- 		if (pcfg) {
- 			/* select any other online CPU */
--			cpu = cpumask_any_but(cpu_online_mask, cpu);
-+			cpu = cpumask_not_dying_but(cpu_online_mask, cpu);
- 			irq_set_affinity(pcfg->irq, cpumask_of(cpu));
- 			qman_portal_update_sdest(pcfg, cpu);
+ 
+-static void omap2_mcspi_rx_callback(void *data)
+-{
+-	struct spi_device *spi = data;
+-	struct omap2_mcspi *mcspi = spi_master_get_devdata(spi->master);
+-	struct omap2_mcspi_dma *mcspi_dma = &mcspi->dma_channels[spi->chip_select];
+-
+-	/* We must disable the DMA RX request */
+-	omap2_mcspi_set_dma_req(spi, 1, 0);
+-
+-	complete(&mcspi_dma->dma_rx_completion);
+-}
+-
+-static void omap2_mcspi_tx_callback(void *data)
+-{
+-	struct spi_device *spi = data;
+-	struct omap2_mcspi *mcspi = spi_master_get_devdata(spi->master);
+-	struct omap2_mcspi_dma *mcspi_dma = &mcspi->dma_channels[spi->chip_select];
+-
+-	/* We must disable the DMA TX request */
+-	omap2_mcspi_set_dma_req(spi, 0, 0);
+-
+-	complete(&mcspi_dma->dma_tx_completion);
+-}
+-
+ static void omap2_mcspi_tx_dma(struct spi_device *spi,
+ 				struct spi_transfer *xfer,
+ 				struct dma_slave_config cfg)
+@@ -413,12 +385,9 @@ static void omap2_mcspi_tx_dma(struct spi_device *spi,
+ 	dmaengine_slave_config(mcspi_dma->dma_tx, &cfg);
+ 
+ 	tx = dmaengine_prep_slave_sg(mcspi_dma->dma_tx, xfer->tx_sg.sgl,
+-				     xfer->tx_sg.nents,
+-				     DMA_MEM_TO_DEV,
+-				     DMA_PREP_INTERRUPT | DMA_CTRL_ACK);
++					xfer->tx_sg.nents, DMA_MEM_TO_DEV, DMA_CTRL_ACK);
++
+ 	if (tx) {
+-		tx->callback = omap2_mcspi_tx_callback;
+-		tx->callback_param = spi;
+ 		dmaengine_submit(tx);
+ 	} else {
+ 		/* FIXME: fall back to PIO? */
+@@ -500,11 +469,9 @@ omap2_mcspi_rx_dma(struct spi_device *spi, struct spi_transfer *xfer,
+ 	}
+ 
+ 	tx = dmaengine_prep_slave_sg(mcspi_dma->dma_rx, sg_out[0],
+-				     out_mapped_nents[0], DMA_DEV_TO_MEM,
+-				     DMA_PREP_INTERRUPT | DMA_CTRL_ACK);
++				     out_mapped_nents[0], DMA_DEV_TO_MEM, DMA_CTRL_ACK);
++
+ 	if (tx) {
+-		tx->callback = omap2_mcspi_rx_callback;
+-		tx->callback_param = spi;
+ 		dmaengine_submit(tx);
+ 	} else {
+ 		/* FIXME: fall back to PIO? */
+@@ -513,10 +480,10 @@ omap2_mcspi_rx_dma(struct spi_device *spi, struct spi_transfer *xfer,
+ 	dma_async_issue_pending(mcspi_dma->dma_rx);
+ 	omap2_mcspi_set_dma_req(spi, 1, 1);
+ 
+-	ret = mcspi_wait_for_completion(mcspi, &mcspi_dma->dma_rx_completion);
++	ret = mcspi_wait_for_completion(mcspi, &mcspi->txrxdone);
++	omap2_mcspi_set_dma_req(spi, 1, 0);
+ 	if (ret || mcspi->slave_aborted) {
+ 		dmaengine_terminate_sync(mcspi_dma->dma_rx);
+-		omap2_mcspi_set_dma_req(spi, 1, 0);
+ 		return 0;
+ 	}
+ 
+@@ -587,8 +554,8 @@ omap2_mcspi_txrx_dma(struct spi_device *spi, struct spi_transfer *xfer)
+ 	enum dma_slave_buswidth width;
+ 	unsigned es;
+ 	void __iomem		*chstat_reg;
+-	void __iomem            *irqstat_reg;
+ 	int			wait_res;
++	int ret;
+ 
+ 	mcspi = spi_master_get_devdata(spi->master);
+ 	mcspi_dma = &mcspi->dma_channels[spi->chip_select];
+@@ -618,68 +585,36 @@ omap2_mcspi_txrx_dma(struct spi_device *spi, struct spi_transfer *xfer)
+ 	tx = xfer->tx_buf;
+ 
+ 	mcspi->slave_aborted = false;
+-	reinit_completion(&mcspi_dma->dma_tx_completion);
+-	reinit_completion(&mcspi_dma->dma_rx_completion);
+-	reinit_completion(&mcspi->txdone);
+-	if (tx) {
+-		/* Enable EOW IRQ to know end of tx in slave mode */
+-		if (spi_controller_is_slave(spi->master))
+-			mcspi_write_reg(spi->master,
+-					OMAP2_MCSPI_IRQENABLE,
+-					OMAP2_MCSPI_IRQSTATUS_EOW);
++	reinit_completion(&mcspi->txrxdone);
++	mcspi_write_reg(spi->master, OMAP2_MCSPI_IRQENABLE,	OMAP2_MCSPI_IRQSTATUS_EOW);
++	if (tx)
+ 		omap2_mcspi_tx_dma(spi, xfer, cfg);
+-	}
+ 
+-	if (rx != NULL)
++	if (rx)
+ 		count = omap2_mcspi_rx_dma(spi, xfer, cfg, es);
+ 
+-	if (tx != NULL) {
+-		int ret;
+-
+-		ret = mcspi_wait_for_completion(mcspi, &mcspi_dma->dma_tx_completion);
+-		if (ret || mcspi->slave_aborted) {
+-			dmaengine_terminate_sync(mcspi_dma->dma_tx);
+-			omap2_mcspi_set_dma_req(spi, 0, 0);
+-			return 0;
+-		}
+-
+-		if (spi_controller_is_slave(mcspi->master)) {
+-			ret = mcspi_wait_for_completion(mcspi, &mcspi->txdone);
+-			if (ret || mcspi->slave_aborted)
+-				return 0;
+-		}
++	ret = mcspi_wait_for_completion(mcspi, &mcspi->txrxdone);
++	omap2_mcspi_set_dma_req(spi, 0, 0);
++	if (ret || mcspi->slave_aborted)
++		return 0;
+ 
++	/* for TX_ONLY mode, be sure all words have shifted out */
++	if (tx && !rx) {
++		chstat_reg = cs->base + OMAP2_MCSPI_CHSTAT0;
+ 		if (mcspi->fifo_depth > 0) {
+-			irqstat_reg = mcspi->base + OMAP2_MCSPI_IRQSTATUS;
+-
+-			if (mcspi_wait_for_reg_bit(irqstat_reg,
+-						OMAP2_MCSPI_IRQSTATUS_EOW) < 0)
+-				dev_err(&spi->dev, "EOW timed out\n");
+-
+-			mcspi_write_reg(mcspi->master, OMAP2_MCSPI_IRQSTATUS,
+-					OMAP2_MCSPI_IRQSTATUS_EOW);
+-		}
+-
+-		/* for TX_ONLY mode, be sure all words have shifted out */
+-		if (rx == NULL) {
+-			chstat_reg = cs->base + OMAP2_MCSPI_CHSTAT0;
+-			if (mcspi->fifo_depth > 0) {
+-				wait_res = mcspi_wait_for_reg_bit(chstat_reg,
+-						OMAP2_MCSPI_CHSTAT_TXFFE);
+-				if (wait_res < 0)
+-					dev_err(&spi->dev, "TXFFE timed out\n");
+-			} else {
+-				wait_res = mcspi_wait_for_reg_bit(chstat_reg,
+-						OMAP2_MCSPI_CHSTAT_TXS);
+-				if (wait_res < 0)
+-					dev_err(&spi->dev, "TXS timed out\n");
+-			}
+-			if (wait_res >= 0 &&
+-				(mcspi_wait_for_reg_bit(chstat_reg,
+-					OMAP2_MCSPI_CHSTAT_EOT) < 0))
+-				dev_err(&spi->dev, "EOT timed out\n");
++			wait_res = mcspi_wait_for_reg_bit(chstat_reg, OMAP2_MCSPI_CHSTAT_TXFFE);
++			if (wait_res < 0)
++				dev_err(&spi->dev, "TXFFE timed out\n");
++		} else {
++			wait_res = mcspi_wait_for_reg_bit(chstat_reg, OMAP2_MCSPI_CHSTAT_TXS);
++			if (wait_res < 0)
++				dev_err(&spi->dev, "TXS timed out\n");
  		}
++		if (wait_res >= 0 && (mcspi_wait_for_reg_bit(chstat_reg,
++							     OMAP2_MCSPI_CHSTAT_EOT) < 0))
++			dev_err(&spi->dev, "EOT timed out\n");
+ 	}
++
+ 	return count;
+ }
+ 
+@@ -1010,9 +945,6 @@ static int omap2_mcspi_request_dma(struct omap2_mcspi *mcspi,
+ 		mcspi_dma->dma_rx = NULL;
+ 	}
+ 
+-	init_completion(&mcspi_dma->dma_rx_completion);
+-	init_completion(&mcspi_dma->dma_tx_completion);
+-
+ no_dma:
+ 	return ret;
+ }
+@@ -1102,8 +1034,10 @@ static irqreturn_t omap2_mcspi_irq_handler(int irq, void *data)
+ 
+ 	/* Disable IRQ and wakeup slave xfer task */
+ 	mcspi_write_reg(mcspi->master, OMAP2_MCSPI_IRQENABLE, 0);
+-	if (irqstat & OMAP2_MCSPI_IRQSTATUS_EOW)
+-		complete(&mcspi->txdone);
++	if (irqstat & OMAP2_MCSPI_IRQSTATUS_EOW) {
++		complete_all(&mcspi->txrxdone);
++		mcspi_write_reg(mcspi->master, OMAP2_MCSPI_IRQSTATUS, OMAP2_MCSPI_IRQSTATUS_EOW);
++	}
+ 
+ 	return IRQ_HANDLED;
+ }
+@@ -1111,12 +1045,9 @@ static irqreturn_t omap2_mcspi_irq_handler(int irq, void *data)
+ static int omap2_mcspi_slave_abort(struct spi_master *master)
+ {
+ 	struct omap2_mcspi *mcspi = spi_master_get_devdata(master);
+-	struct omap2_mcspi_dma *mcspi_dma = mcspi->dma_channels;
+ 
+ 	mcspi->slave_aborted = true;
+-	complete(&mcspi_dma->dma_rx_completion);
+-	complete(&mcspi_dma->dma_tx_completion);
+-	complete(&mcspi->txdone);
++	complete_all(&mcspi->txrxdone);
+ 
+ 	return 0;
+ }
+@@ -1516,7 +1447,7 @@ static int omap2_mcspi_probe(struct platform_device *pdev)
+ 		dev_err(&pdev->dev, "no irq resource found\n");
+ 		goto free_master;
+ 	}
+-	init_completion(&mcspi->txdone);
++	init_completion(&mcspi->txrxdone);
+ 	status = devm_request_irq(&pdev->dev, status,
+ 				  omap2_mcspi_irq_handler, 0, pdev->name,
+ 				  mcspi);
 -- 
-2.31.1
+2.17.1
 
