@@ -2,95 +2,101 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 678D6ECAAD5
-	for <dmaengine@archiver.kernel.org>; Mon, 29 Aug 2022 15:18:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E15EEC0502C
+	for <dmaengine@archiver.kernel.org>; Mon, 29 Aug 2022 15:47:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229698AbiH2PR6 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 29 Aug 2022 11:17:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40386 "EHLO
+        id S229890AbiH2PrW (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 29 Aug 2022 11:47:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48568 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229972AbiH2PRz (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Mon, 29 Aug 2022 11:17:55 -0400
-Received: from mail-pg1-x52d.google.com (mail-pg1-x52d.google.com [IPv6:2607:f8b0:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9403E83051;
-        Mon, 29 Aug 2022 08:17:53 -0700 (PDT)
-Received: by mail-pg1-x52d.google.com with SMTP id q9so7976661pgq.6;
-        Mon, 29 Aug 2022 08:17:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:date:subject:cc:to:from:from:to:cc;
-        bh=4S4aGCSHz4Vj3kjY4xlroZ+QjJu7qG4QBgfFBofR0ts=;
-        b=JoRczjGA3zzSk5TZIELeyYloCSmHhwFfAPIygEhaYOnBbROWLsCRTyFxEBbfaziVMa
-         0Y4Y77U1wlXpIqHC9RL7lAXt5yNFBy1u+xcfKXurOLsyB8hAPGVbDw9/MCPK1yv+CZpk
-         zAX4l+VB/ptzOHy3x//ZOp6tUrLXoqoPPqvqhxzTZkMPtfDkewsceDNjCgfhZ3wMDBQA
-         2GQ+P7gFs5aazOhz2M1gejXib7f4lGXcTD66ze38i/hWSJhbdUbB10yLUORXooAKSx5U
-         KgL9XspHkYdC1PQ97Skmjcbe29NQ1f9pwvZzRUVT0HPKbILNVNGUQwE3nlK6M6Ie14rg
-         zrGQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc;
-        bh=4S4aGCSHz4Vj3kjY4xlroZ+QjJu7qG4QBgfFBofR0ts=;
-        b=K60KZqgwINqJhvHjIMSR9HGAeomY+UHXdQl9fEahOZqtUtmhZEMuOHnuLp0TiWMiYp
-         abFPVqG9MRsIsl63o0ghBlnu0XNTjLGGuZwFNCsYkbm9TQUsHSUPcoPlHyaWy1i2YDjh
-         QOF/Ln+5aOAN2IqnqzqJWBB6jyXgZrk7vSSC0kYL60UsAe7m9QgpBLtssqHJUsikLB87
-         SrG5nX3mbl3rG9PTn7g1sS5P48BKzlbpVG0gR/EXus4Z9Ir/dDycirWLW5WS1SAzb1zL
-         jTuzdhxhlzahyHwi/GCNF3nROr1ksto/4dc/SaflgiemysVqjWceCehxawEtRS7gENFC
-         ErDA==
-X-Gm-Message-State: ACgBeo0CHOFdhFXuHVvIvIShZ/ZGl0PwxKe2yKFDYO67tlXoQVRcBSg/
-        o4N6QqtzhJSP0OuwoP5wlcQ=
-X-Google-Smtp-Source: AA6agR5vifeItEAfN0UZDd0WAe9m4uHYdSPgZeCJrcltqBgUdjQC7kVm47B8ZrzYzmR1KtI2xKehZg==
-X-Received: by 2002:a63:d84f:0:b0:428:ee87:3769 with SMTP id k15-20020a63d84f000000b00428ee873769mr14551052pgj.212.1661786272995;
-        Mon, 29 Aug 2022 08:17:52 -0700 (PDT)
-Received: from localhost.localdomain ([182.160.5.243])
-        by smtp.gmail.com with ESMTPSA id cp10-20020a170902e78a00b001750361f42dsm611279plb.125.2022.08.29.08.17.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 29 Aug 2022 08:17:52 -0700 (PDT)
-From:   Tuo Cao <91tuocao@gmail.com>
-To:     agross@kernel.org, bjorn.andersson@linaro.org,
-        konrad.dybcio@somainline.org, vkoul@kernel.org
-Cc:     linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
-        linux-kernel@vger.kernel.org, 91tuocao@gmail.com
-Subject: [RESEND] dmaengine: qcom: gpi: move read_lock_bh to read_lock in tasklet
-Date:   Mon, 29 Aug 2022 23:16:59 +0800
-Message-Id: <20220829151659.6071-1-91tuocao@gmail.com>
-X-Mailer: git-send-email 2.17.1
+        with ESMTP id S229631AbiH2PrV (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Mon, 29 Aug 2022 11:47:21 -0400
+Received: from mx07-00178001.pphosted.com (mx08-00178001.pphosted.com [91.207.212.93])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 17C4188DE6;
+        Mon, 29 Aug 2022 08:47:19 -0700 (PDT)
+Received: from pps.filterd (m0046661.ppops.net [127.0.0.1])
+        by mx07-00178001.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 27TCsCdh017555;
+        Mon, 29 Aug 2022 17:47:01 +0200
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foss.st.com; h=from : to : cc :
+ subject : date : message-id : in-reply-to : references : mime-version :
+ content-transfer-encoding : content-type; s=selector1;
+ bh=RdEwrkIquuRU3qsHgDtPW7Zm8iWX7XLfjhLyYDrAEXE=;
+ b=h/tRsjnSsDIgUejgmJSGoRvD3HBvz04p/OPEXxj/qpTHh6Ip576fJFSMiShQLY9t0Hwq
+ DwIxw5P5wXW9NjgLkPqNYfcPQR6quGFVUPtugYpfFOC5wTwC6KvHaL7KdxbcULWIav/z
+ kf/kGyaKEAteH4PSRbBiXBWwUVzitOmJofFkF7nbCBym1zCMqrOWSpTRYf5G89cx0gab
+ Zdj84FRdlyl865+4YBMGEedS182x0KNlezWbDu61af8zlNRVcMkzcuCYhx2SZF/nUS2w
+ 5rCXyk4Mf7mc7BXYpeo2DZ5S6p6S+QI8hoWn9VNuuYJYvY31meEwNzZeo+s5QLr/P6zF Nw== 
+Received: from beta.dmz-eu.st.com (beta.dmz-eu.st.com [164.129.1.35])
+        by mx07-00178001.pphosted.com (PPS) with ESMTPS id 3j7a5htmxd-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 29 Aug 2022 17:47:01 +0200
+Received: from euls16034.sgp.st.com (euls16034.sgp.st.com [10.75.44.20])
+        by beta.dmz-eu.st.com (STMicroelectronics) with ESMTP id 5C231100040;
+        Mon, 29 Aug 2022 17:47:00 +0200 (CEST)
+Received: from Webmail-eu.st.com (shfdag1node2.st.com [10.75.129.70])
+        by euls16034.sgp.st.com (STMicroelectronics) with ESMTP id 57E4A236927;
+        Mon, 29 Aug 2022 17:47:00 +0200 (CEST)
+Received: from localhost (10.75.127.44) by SHFDAG1NODE2.st.com (10.75.129.70)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256) id 15.1.2375.7; Mon, 29 Aug
+ 2022 17:46:59 +0200
+From:   Amelie Delaunay <amelie.delaunay@foss.st.com>
+To:     Jonathan Corbet <corbet@lwn.net>, Vinod Koul <vkoul@kernel.org>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>
+CC:     <linux-doc@vger.kernel.org>, <dmaengine@vger.kernel.org>,
+        <linux-stm32@st-md-mailman.stormreply.com>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>, Marek Vasut <marex@denx.de>,
+        Amelie Delaunay <amelie.delaunay@foss.st.com>
+Subject: [RESEND PATCH v3 4/6] dmaengine: stm32-dmamux: set dmamux channel id in dma features bitfield
+Date:   Mon, 29 Aug 2022 17:46:44 +0200
+Message-ID: <20220829154646.29867-5-amelie.delaunay@foss.st.com>
+X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20220829154646.29867-1-amelie.delaunay@foss.st.com>
+References: <20220829154646.29867-1-amelie.delaunay@foss.st.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.75.127.44]
+X-ClientProxiedBy: SFHDAG2NODE3.st.com (10.75.127.6) To SHFDAG1NODE2.st.com
+ (10.75.129.70)
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.517,FMLib:17.11.122.1
+ definitions=2022-08-29_07,2022-08-25_01,2022-06-22_01
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-It has already disabled softirq in a tasklet,so it is unnecessary to
-call read_lock_bh in a tasklet.
+STM32 DMAMUX is used with STM32 DMA1 and DMA2:
+- DMAMUX channels 0 to 7 are connected to DMA1 channels 0 to 7
+- DMAMUX channels 8 to 15 are connected to DMA2 channels 0 to 7
 
-Signed-off-by: Tuo Cao <91tuocao@gmail.com>
+STM32 MDMA can be triggered by DMA1 and DMA2 channels transfer complete,
+and the "request line number" is the DMAMUX channel id (e.g. DMA2 channel 0
+triggers MDMA with request line 8).
+
+To well configure MDMA, set DMAMUX channel id in DMA features bitfield,
+so that DMA can update struct dma_slave_config peripheral_config properly.
+
+Signed-off-by: Amelie Delaunay <amelie.delaunay@foss.st.com>
 ---
- drivers/dma/qcom/gpi.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/dma/stm32-dmamux.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/dma/qcom/gpi.c b/drivers/dma/qcom/gpi.c
-index 8f0c9c4e2efd..236005f7dd30 100644
---- a/drivers/dma/qcom/gpi.c
-+++ b/drivers/dma/qcom/gpi.c
-@@ -1150,9 +1150,9 @@ static void gpi_ev_tasklet(unsigned long data)
- {
- 	struct gpii *gpii = (struct gpii *)data;
+diff --git a/drivers/dma/stm32-dmamux.c b/drivers/dma/stm32-dmamux.c
+index eee0c5aa5fb5..b431f9da9206 100644
+--- a/drivers/dma/stm32-dmamux.c
++++ b/drivers/dma/stm32-dmamux.c
+@@ -147,7 +147,7 @@ static void *stm32_dmamux_route_allocate(struct of_phandle_args *dma_spec,
+ 	mux->request = dma_spec->args[0];
  
--	read_lock_bh(&gpii->pm_lock);
-+	read_lock(&gpii->pm_lock);
- 	if (!REG_ACCESS_VALID(gpii->pm_state)) {
--		read_unlock_bh(&gpii->pm_lock);
-+		read_unlock(&gpii->pm_lock);
- 		dev_err(gpii->gpi_dev->dev, "not processing any events, pm_state:%s\n",
- 			TO_GPI_PM_STR(gpii->pm_state));
- 		return;
-@@ -1163,7 +1163,7 @@ static void gpi_ev_tasklet(unsigned long data)
- 
- 	/* enable IEOB, switching back to interrupts */
- 	gpi_config_interrupts(gpii, MASK_IEOB_SETTINGS, 1);
--	read_unlock_bh(&gpii->pm_lock);
-+	read_unlock(&gpii->pm_lock);
- }
- 
- /* marks all pending events for the channel as stale */
+ 	/*  craft DMA spec */
+-	dma_spec->args[3] = dma_spec->args[2];
++	dma_spec->args[3] = dma_spec->args[2] | mux->chan_id << 16;
+ 	dma_spec->args[2] = dma_spec->args[1];
+ 	dma_spec->args[1] = 0;
+ 	dma_spec->args[0] = mux->chan_id - min;
 -- 
-2.17.1
+2.25.1
 
