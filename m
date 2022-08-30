@@ -2,112 +2,97 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BD9C8C0502F
-	for <dmaengine@archiver.kernel.org>; Tue, 30 Aug 2022 06:25:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CEF70ECAAA1
+	for <dmaengine@archiver.kernel.org>; Tue, 30 Aug 2022 07:45:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229808AbiH3GZm (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 30 Aug 2022 02:25:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55890 "EHLO
+        id S231233AbiH3HpZ (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 30 Aug 2022 03:45:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41740 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229940AbiH3GZe (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Tue, 30 Aug 2022 02:25:34 -0400
+        with ESMTP id S231197AbiH3HpT (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Tue, 30 Aug 2022 03:45:19 -0400
 Received: from szxga01-in.huawei.com (szxga01-in.huawei.com [45.249.212.187])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA49C53012;
-        Mon, 29 Aug 2022 23:25:32 -0700 (PDT)
-Received: from dggemv703-chm.china.huawei.com (unknown [172.30.72.57])
-        by szxga01-in.huawei.com (SkyGuard) with ESMTP id 4MGy0m5g42znTr4;
-        Tue, 30 Aug 2022 14:23:04 +0800 (CST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7452C15A2D;
+        Tue, 30 Aug 2022 00:45:18 -0700 (PDT)
+Received: from dggemv704-chm.china.huawei.com (unknown [172.30.72.57])
+        by szxga01-in.huawei.com (SkyGuard) with ESMTP id 4MGzmp43d9znTt0;
+        Tue, 30 Aug 2022 15:42:50 +0800 (CST)
 Received: from kwepemm600007.china.huawei.com (7.193.23.208) by
- dggemv703-chm.china.huawei.com (10.3.19.46) with Microsoft SMTP Server
+ dggemv704-chm.china.huawei.com (10.3.19.47) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2375.24; Tue, 30 Aug 2022 14:25:30 +0800
-Received: from localhost.localdomain (10.69.192.56) by
+ 15.1.2375.24; Tue, 30 Aug 2022 15:45:15 +0800
+Received: from [10.67.102.167] (10.67.102.167) by
  kwepemm600007.china.huawei.com (7.193.23.208) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2375.24; Tue, 30 Aug 2022 14:25:29 +0800
+ 15.1.2375.24; Tue, 30 Aug 2022 15:45:15 +0800
+Message-ID: <bf8ccd6f-b58d-8296-9e33-e7c32243922f@huawei.com>
+Date:   Tue, 30 Aug 2022 15:45:14 +0800
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.1
+Subject: Re: [RESENT PATCH v5 0/7] dmaengine: hisilicon: Add support for hisi
+ dma driver
 From:   Jie Hai <haijie1@huawei.com>
 To:     <vkoul@kernel.org>, <wangzhou1@hisilicon.com>
 CC:     <dmaengine@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-Subject: [RESEND PATCH v5 4/7] dmaengine: hisilicon: Use macros instead of magic number
-Date:   Tue, 30 Aug 2022 14:22:48 +0800
-Message-ID: <20220830062251.52993-5-haijie1@huawei.com>
-X-Mailer: git-send-email 2.33.0
-In-Reply-To: <20220830062251.52993-1-haijie1@huawei.com>
-References: <20220830062251.52993-1-haijie1@huawei.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7BIT
-Content-Type:   text/plain; charset=US-ASCII
-X-Originating-IP: [10.69.192.56]
-X-ClientProxiedBy: dggems702-chm.china.huawei.com (10.3.19.179) To
+References: <20220830060555.50781-1-haijie1@huawei.com>
+In-Reply-To: <20220830060555.50781-1-haijie1@huawei.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.67.102.167]
+X-ClientProxiedBy: dggems703-chm.china.huawei.com (10.3.19.180) To
  kwepemm600007.china.huawei.com (7.193.23.208)
 X-CFilter-Loop: Reflected
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-readl_relaxed_poll_timeout() uses magic numbers 10 and 1000, which
-indicate maximum time to sleep between reads in us and timeout in us,
-respectively.
-
-Use macros HISI_DMA_POLL_Q_STS_DELAY_US and
-HISI_DMA_POLL_Q_STS_TIME_OUT_US instead of these two numbers.
-
-Signed-off-by: Jie Hai <haijie1@huawei.com>
-Acked-by: Zhou Wang <wangzhou1@hisilicon.com>
----
- drivers/dma/hisi_dma.c | 19 +++++++++++++------
- 1 file changed, 13 insertions(+), 6 deletions(-)
-
-diff --git a/drivers/dma/hisi_dma.c b/drivers/dma/hisi_dma.c
-index 0233b42143c7..5d62fe62ba00 100644
---- a/drivers/dma/hisi_dma.c
-+++ b/drivers/dma/hisi_dma.c
-@@ -36,6 +36,9 @@
- 
- #define PCI_BAR_2			2
- 
-+#define HISI_DMA_POLL_Q_STS_DELAY_US	10
-+#define HISI_DMA_POLL_Q_STS_TIME_OUT_US	1000
-+
- enum hisi_dma_mode {
- 	EP = 0,
- 	RC,
-@@ -185,15 +188,19 @@ static void hisi_dma_reset_or_disable_hw_chan(struct hisi_dma_chan *chan,
- {
- 	struct hisi_dma_dev *hdma_dev = chan->hdma_dev;
- 	u32 index = chan->qp_num, tmp;
-+	void __iomem *addr;
- 	int ret;
- 
- 	hisi_dma_pause_dma(hdma_dev, index, true);
- 	hisi_dma_enable_dma(hdma_dev, index, false);
- 	hisi_dma_mask_irq(hdma_dev, index);
- 
--	ret = readl_relaxed_poll_timeout(hdma_dev->base +
--		HISI_DMA_Q_FSM_STS + index * HISI_DMA_OFFSET, tmp,
--		FIELD_GET(HISI_DMA_FSM_STS_MASK, tmp) != RUN, 10, 1000);
-+	addr = hdma_dev->base +
-+	       HISI_DMA_Q_FSM_STS + index * HISI_DMA_OFFSET;
-+
-+	ret = readl_relaxed_poll_timeout(addr, tmp,
-+		FIELD_GET(HISI_DMA_FSM_STS_MASK, tmp) != RUN,
-+		HISI_DMA_POLL_Q_STS_DELAY_US, HISI_DMA_POLL_Q_STS_TIME_OUT_US);
- 	if (ret) {
- 		dev_err(&hdma_dev->pdev->dev, "disable channel timeout!\n");
- 		WARN_ON(1);
-@@ -208,9 +215,9 @@ static void hisi_dma_reset_or_disable_hw_chan(struct hisi_dma_chan *chan,
- 		hisi_dma_unmask_irq(hdma_dev, index);
- 	}
- 
--	ret = readl_relaxed_poll_timeout(hdma_dev->base +
--		HISI_DMA_Q_FSM_STS + index * HISI_DMA_OFFSET, tmp,
--		FIELD_GET(HISI_DMA_FSM_STS_MASK, tmp) == IDLE, 10, 1000);
-+	ret = readl_relaxed_poll_timeout(addr, tmp,
-+		FIELD_GET(HISI_DMA_FSM_STS_MASK, tmp) == IDLE,
-+		HISI_DMA_POLL_Q_STS_DELAY_US, HISI_DMA_POLL_Q_STS_TIME_OUT_US);
- 	if (ret) {
- 		dev_err(&hdma_dev->pdev->dev, "reset channel timeout!\n");
- 		WARN_ON(1);
--- 
-2.33.0
-
+On 2022/8/30 14:05, Jie Hai wrote:
+Sorry for incorrect titles with "RESENT", please drop this patch set and 
+follow the latest.
+> The HiSilicon IP08 and HiSilicon IP09 are DMA iEPs, they share the
+> same pci device id but different pci revision and register layouts.
+> 
+> The original version supports HiSilicon IP08 but not HiSilicon IP09.
+> This series support DMA driver for HIP08 and HIP09:
+> 1. Fix bugs for HIP08 DMA driver
+> 	- Disable hardware channels when driver detached
+> 	- Update cq_head whenever accessed it
+> 	- Support multi-thread for one DMA channel
+> 2. Use macros instead of magic number
+> 3. Add support for HIP09 DMA driver
+> 4. Add debugfs for HIP08 and HIP09 DMA driver
+> 5. Add myself as maintainer of hisi_dma.c
+> 
+> Changes since version 4:
+>   - Fix hdma_dev->base to hdma_dev->queue_base in hisi_dma_reset_or_disable_hw_chan
+> 
+> Changes since version 3:
+>   - remove reduldant braces
+>   - add "Acked-by: Zhou Wang <wangzhou1@hisilicon.com>" in commit log
+> 
+> Changes since version 2:
+>   - fix unnecessary line breaks
+>   - fix register bit with BIT/GENMASK and adjust hisi_dma_update_bit to it
+>   - remove "Reported-by" in commit message
+>   - use dmaengine root instead of hisi_dma root
+>   - ignore errors for creating debugfs
+> 
+> Changes since version 1:
+>   - remove error changes casuse compile failure
+>   - remove reduldant "*" in comment
+>   - remove debugfs-hisi-dma doc and path in MAINTAINERS
+> 
+> Jie Hai (7):
+>    dmaengine: hisilicon: Disable channels when unregister hisi_dma
+>    dmaengine: hisilicon: Fix CQ head update
+>    dmaengine: hisilicon: Add multi-thread support for a DMA channel
+>    dmaengine: hisilicon: Use macros instead of magic number
+>    dmaengine: hisilicon: Adapt DMA driver to HiSilicon IP09
+>    dmaengine: hisilicon: Dump regs to debugfs
+>    MAINTAINERS: Add myself as maintainer for hisi_dma
+> 
+>   MAINTAINERS            |   1 +
+>   drivers/dma/hisi_dma.c | 650 +++++++++++++++++++++++++++++++++++------
+>   2 files changed, 555 insertions(+), 96 deletions(-)
+> 
