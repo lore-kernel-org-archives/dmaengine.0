@@ -2,148 +2,432 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3C839C54EE9
-	for <dmaengine@archiver.kernel.org>; Tue,  6 Sep 2022 09:49:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A0CB4ECAAD5
+	for <dmaengine@archiver.kernel.org>; Tue,  6 Sep 2022 10:56:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239126AbiIFJtC (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 6 Sep 2022 05:49:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40286 "EHLO
+        id S233634AbiIFK4I (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 6 Sep 2022 06:56:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58572 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239286AbiIFJsf (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Tue, 6 Sep 2022 05:48:35 -0400
-Received: from EUR03-DBA-obe.outbound.protection.outlook.com (mail-dbaeur03on2059.outbound.protection.outlook.com [40.107.104.59])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ECF8A77578;
-        Tue,  6 Sep 2022 02:48:34 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=QCdDvR8eor0EImvEEh+j7XuilDkipBiqHuQUZ+KTENDeiW0eW+G31AANGfHrqp1PvZ9A8h5nmQMc3DPc7LfmgiPqma8ilPPfiiP+F7jzqZibgqQffZfdAsVUkJ5TRceuSfA8rvfUrL8B9elMOZbNaI9FvdJUBZKanNQWKGipMqc2S2iYhhBXp6AX0DnhKYEy4vky/tVnTtAMue+rb94SANuTERQ4+fw1NrDUtdjN3o9ISrtJ1sVVA5I3gACNwNXUBdjflh7zQUmgvql99WPh092ui0Zs6PEFOCwoirppQ4Kqs+qnyrBSIZgv2XnMnR9qiDHzPfkjmFzF+vNzLPiIIA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=r0FmPn9bKy+WC5vi1B5s348FJ6sWh/6fPot6HI30w/c=;
- b=RFwF5NqkoBlcgKKzwDjGWNtoYV/YMVVMV5htUwBAy4yHBwqc7f5CKRpFmshjC+gLYRskHsKuJTbBbeek9ZGP/Nj2sym3I8TLzmlzJaq548kvslmKEG9ie8Fwfd0sZeUx1iG+mq2Cf/bU/hpiifJcl9pBlmszRYNfu4HhXd9EV5fxWwkr40Moj3FC459sB2Nzqe3wi2CnBcP/OOcE7oYswd0S/UX60U02Sx9WVaeW05MSFM5/5tFF7GjuRQZUBMaf98+NDFMeyNea4VGTkRjqBEdpxTVpV8LHCOCz6dGhq3DCqZ31x+cz/tCTFHpzaDZiTsrVr1pYrA6MKy/GHrP/Hg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
- header.d=nxp.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=r0FmPn9bKy+WC5vi1B5s348FJ6sWh/6fPot6HI30w/c=;
- b=LtHEbcSYx1k0VnFfK6FqB+JmGem568wNUEbF0sWF31HH+/zmesVC+EQ3OUF2EO/B/VPGuJGW3weHhy/4PICZ3qc02ucCBFb6XRdx6RtqFAahhf7BV5xRSF+cOT8s3E7M58LjGbW5ay6/pGRSrcRHGPjOvGeK6oKPxewhG52dF8E=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nxp.com;
-Received: from AM6PR04MB5925.eurprd04.prod.outlook.com (2603:10a6:20b:ab::19)
- by PR3PR04MB7305.eurprd04.prod.outlook.com (2603:10a6:102:83::12) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5612.12; Tue, 6 Sep
- 2022 09:48:32 +0000
-Received: from AM6PR04MB5925.eurprd04.prod.outlook.com
- ([fe80::704a:fa82:a28e:d198]) by AM6PR04MB5925.eurprd04.prod.outlook.com
- ([fe80::704a:fa82:a28e:d198%6]) with mapi id 15.20.5588.017; Tue, 6 Sep 2022
- 09:48:32 +0000
-From:   Joy Zou <joy.zou@nxp.com>
-To:     vkoul@kernel.org, robh+dt@kernel.org,
+        with ESMTP id S239839AbiIFKzq (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Tue, 6 Sep 2022 06:55:46 -0400
+Received: from mx1.tq-group.com (mx1.tq-group.com [93.104.207.81])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2894C31EE4;
+        Tue,  6 Sep 2022 03:55:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=tq-group.com; i=@tq-group.com; q=dns/txt; s=key1;
+  t=1662461718; x=1693997718;
+  h=from:to:cc:subject:date:message-id:in-reply-to:
+   references:mime-version:content-transfer-encoding;
+  bh=O4jAcprb4ri56XwdsGMJfbSSgoRuiMSLAeqNznvvMxM=;
+  b=bO06tk8L77nHOkSiF7+KzOzJYRWBo8trjn3Zqvkaa06o5fJRyo07KMtF
+   zRjpAvjKMQh1zj3viPZKj9Rykdb/bTRlNx9b77aLxzUXgUKhKkmdryyXS
+   42dVb1oultmR9HMvlsqcDgW+BMkys0S+/6sY7fV9IecrHQc5bkENvnWsP
+   InU+ggAj8T65r/HFCkArSvbGvMzR+zXH/NcSQikGbbpXAQmv19LElA+Yq
+   ffZe1qC5JowwoytmZQeQw9Krr3E5f6VkxZFMol163AVjV0pKWGrFrzU7f
+   cj8up8g7kjRWVlMdSPx0Q+wVP5BxevLc4dYin2sh3lACqT3ly9YCRTdSJ
+   A==;
+X-IronPort-AV: E=Sophos;i="5.93,294,1654552800"; 
+   d="scan'208";a="26013587"
+X-URL-LookUp-ScanningError: 1
+Received: from unknown (HELO tq-pgp-pr1.tq-net.de) ([192.168.6.15])
+  by mx1-pgp.tq-group.com with ESMTP; 06 Sep 2022 12:55:15 +0200
+Received: from mx1.tq-group.com ([192.168.6.7])
+  by tq-pgp-pr1.tq-net.de (PGP Universal service);
+  Tue, 06 Sep 2022 12:55:15 +0200
+X-PGP-Universal: processed;
+        by tq-pgp-pr1.tq-net.de on Tue, 06 Sep 2022 12:55:15 +0200
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=tq-group.com; i=@tq-group.com; q=dns/txt; s=key1;
+  t=1662461715; x=1693997715;
+  h=from:to:cc:subject:date:message-id:in-reply-to:
+   references:mime-version:content-transfer-encoding;
+  bh=O4jAcprb4ri56XwdsGMJfbSSgoRuiMSLAeqNznvvMxM=;
+  b=qfw+9Yyx3BbLGP8RJrySNN4zJ6J0XGTzSJU6SCSLlkiO0ASqash1r7CQ
+   hwiQ6FE0FOp9ak3T5smSN0lT3xozFkHmtnAjM1cRMI0N/uP+V0xJ//m3X
+   +aXZ5PB99sW6VrWkbUM5bzAt159rTpFp669twCKmbMAvScUaiohcwSDuK
+   LMVVQhrD5wqnTBX3GIpiFU5Q8fDVrI6lnHTnyLfGoeuBJvOlLJ4ng5VKn
+   dMIh+FMZ0/Nxk4+isest9+Yk5LI0dG/NPBf7SjchpbtbZ+jufG4k1A+QT
+   zYCsv6H8FaOdY/6lAgayIjDM2qDkd8gKSLkbLktUxiTP3XOYVJLDzn9NI
+   w==;
+X-IronPort-AV: E=Sophos;i="5.93,294,1654552800"; 
+   d="scan'208";a="26013586"
+X-URL-LookUp-ScanningError: 1
+Received: from vtuxmail01.tq-net.de ([10.115.0.20])
+  by mx1.tq-group.com with ESMTP; 06 Sep 2022 12:55:15 +0200
+Received: from steina-w.localnet (unknown [10.123.49.11])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
+        (No client certificate requested)
+        by vtuxmail01.tq-net.de (Postfix) with ESMTPSA id 0F693280056;
+        Tue,  6 Sep 2022 12:55:15 +0200 (CEST)
+From:   Alexander Stein <alexander.stein@ew.tq-group.com>
+To:     Joy Zou <joy.zou@nxp.com>
+Cc:     vkoul@kernel.org, robh+dt@kernel.org,
         krzysztof.kozlowski+dt@linaro.org, shawnguo@kernel.org,
-        s.hauer@pengutronix.de, kernel@pengutronix.de, festevam@gmail.com
-Cc:     shengjiu.wang@nxp.com, martink@posteo.de, dev@lynxeye.de,
-        alexander.stein@ew.tq-group.com, peng.fan@nxp.com, david@ixit.cz,
-        aford173@gmail.com, hongxing.zhu@nxp.com, linux-imx@nxp.com,
-        dmaengine@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v6 4/4] arm64: dts: imx8mq: update sdma node name format
-Date:   Tue,  6 Sep 2022 17:42:56 +0800
-Message-Id: <20220906094256.3787384-5-joy.zou@nxp.com>
-X-Mailer: git-send-email 2.37.1
-In-Reply-To: <20220906094256.3787384-1-joy.zou@nxp.com>
-References: <20220906094256.3787384-1-joy.zou@nxp.com>
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: SG2PR03CA0128.apcprd03.prod.outlook.com
- (2603:1096:4:91::32) To AM6PR04MB5925.eurprd04.prod.outlook.com
- (2603:10a6:20b:ab::19)
+        s.hauer@pengutronix.de, kernel@pengutronix.de, festevam@gmail.com,
+        shengjiu.wang@nxp.com, martink@posteo.de, dev@lynxeye.de,
+        peng.fan@nxp.com, david@ixit.cz, aford173@gmail.com,
+        hongxing.zhu@nxp.com, linux-imx@nxp.com, dmaengine@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v6 1/4] dt-bindings: fsl-imx-sdma: Convert imx sdma to DT schema
+Date:   Tue, 06 Sep 2022 12:55:12 +0200
+Message-ID: <4743969.GXAFRqVoOG@steina-w>
+Organization: TQ-Systems GmbH
+In-Reply-To: <20220906094256.3787384-2-joy.zou@nxp.com>
+References: <20220906094256.3787384-1-joy.zou@nxp.com> <20220906094256.3787384-2-joy.zou@nxp.com>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: 25fc980b-07c1-44c4-665d-08da8fecf593
-X-MS-TrafficTypeDiagnostic: PR3PR04MB7305:EE_
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: /I/L2Bz+Sume6KRFMJhW6xdzgqvompCgjdESf9/kacrmxIoWOoMwOzKgCm4do0ChYzEbUAtR3KTDr5pFVABldsFGvzaOql1hIdRW7NS6cq4gLeyv8PvHdNgTSAPbMVSuvePQkR1JwhLWkyHbP764bQ+bErydAfl9OCvWczeKoSy4J5ureVgxyAdNa8oNdKQXLvIadH0ZyDI8AO1tNRSucqTNcCLCdYmTrVIfXl9ftx7iDSHD6SlHAsbEfU1CaAjqtkEc/EAS12SczApdbWBQD80SnBwMIq6wmHAcmg/thV0qiesv9QtCeAn89lN9PzOgg1w9VHFwsVhQ7xvYYtxBeLsAv5ld59aMnGwoOEIZ2CrrVMm00sTPCbhOzhk7RUzu5kMo/FeXMlCg4RGwKePrD1mHLI6Gu8fo2UcixGhw6aEEilf6yeUeQIbKTP7S9nPaaoOtQ2bFGQ1636azIi8kUWQbvkviAl/W5sKtw7DTyX4JVne6sDOEg9qJcqgLoT24Wv4vYtutWys/IPnQkSQe+SlA6s2efR3y5Y/BQESYxbjduK0mDHWfQARdOD1MifHAyspxCf4I7fnSP7PpEhxcfo/DbCHSS8B4WAmBa0fVg2J0GCfewnHDYhFJ96MTH9UeHW4EThe54tedWPTFj0sAQTQb1/7tL5Q5tCVLFwEwrWQXNphOfJgWYedYKB0SxFztcSTSWXVoxoeOVsUZrLfV8cdE3Y9rkajWydk5uyum7cL3lyFn80/4lCACs9f55wyZF1wtohUKAG+/6NBrqXJw2KlCo3cfcbm7yxdJNirUjzo=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:AM6PR04MB5925.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230016)(4636009)(366004)(39860400002)(376002)(136003)(346002)(396003)(7416002)(8936002)(5660300002)(44832011)(15650500001)(2906002)(83380400001)(38350700002)(66476007)(36756003)(8676002)(38100700002)(66946007)(4326008)(66556008)(316002)(6666004)(86362001)(2616005)(6506007)(26005)(1076003)(186003)(41300700001)(6486002)(52116002)(478600001)(6512007)(32563001);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?BNmrjsCiZBxTYu45O0Q4pA2MAxSv56ZwyeoVUQVQS3xZKn0D4rwZp9P5EzRj?=
- =?us-ascii?Q?hp0FpjgLDreVbXS7bIe7VvWq14BtviKRa12I6bDa9uhUq99P6MnQSFWd3Rs6?=
- =?us-ascii?Q?o1H74H2cD9zF501uQl1T3DHKQoBdCvUuk3k/q1ks17I0N6b3tKqxJrz836y6?=
- =?us-ascii?Q?lpPEjcZKFdURjELTJdnZDEXnA/Ro0+NVP9do03QSAUjP2mgwTY2VCE8rhUei?=
- =?us-ascii?Q?NKNIJj7F2mZlnnU4EWCyjyUVJNuVEzM3i1emNXJv/xdjRSo3tdZS6Jh/zfNg?=
- =?us-ascii?Q?lcnnimhV/lvcKZQU5z9qruxNk1RuaPlBPL/VhAQWYYolTeUgktEFSxA41dsG?=
- =?us-ascii?Q?hsdnEMaxV45hEHir8qhSfhAf8tCA8UbqvOQF50mm0iFn6Hf+Lwe4Dx0RWMEb?=
- =?us-ascii?Q?b/yJ2heUWO5DRVgsxRBUuL0XA+hH7DKv5C9zt+N6mRgl5siBB/lKNUQs9vGG?=
- =?us-ascii?Q?UYiqcBmw7J2Z0VXs/eioVl953yvezf1NVlSgPjR/s4WIpMa4HyifqXFnxIMH?=
- =?us-ascii?Q?KMAiPmcDPAIszggWGwpZX4AfilmxTORkbsh5zNkMrhV3Cn7mtCHQX0q6DkxW?=
- =?us-ascii?Q?VE51aBH+CnsnfR5Ba9pPR5GmfUSSXvij1DIG/FsabK8lhlVovapkVeNt2/4J?=
- =?us-ascii?Q?krRAnyVLqZPotmsc1g1XLlYdTtSno09zCRFYZPd2a1Bn9KQtuvWAaSTNvUMD?=
- =?us-ascii?Q?RgQjKNj1d4h7aPtmIACV7wCR0zwNkzkilp5tSSYy1uZN0Mtdt20eKtXPnABl?=
- =?us-ascii?Q?+/AMygnZvfPH4er7jimh0A6DWiRogtcbty4zC0UKoO8JM8TkoaG9m+wjJtYx?=
- =?us-ascii?Q?xHJ05ZrBOKND7KRQ0A0QG2TXq9ltRRNt3vcYAQL1EB/CTyi9PphNWHtGffAx?=
- =?us-ascii?Q?P7dbkY0+gKUzHhVmzzjzRhB3jEmWW2dveeWuSHXjeEgsQpTI/w0g7cxN31Dd?=
- =?us-ascii?Q?VZLS9gzuo4wN2hWvQPL6nugObt8Ly+WthMhLCDmpmyN7zHuFy9V4xcueLiTr?=
- =?us-ascii?Q?yeKnC1c5z002lCjoB8VQZAxFu2eqLXKzZFHkeEetsBaij3xMzQxX3KUyahM6?=
- =?us-ascii?Q?hdjEYmdeQ31mFeD+mHFsGTENHjwunkSqq77xXCUukPxzBbn3/JFisyasjqX7?=
- =?us-ascii?Q?hGD45Qk9ocd9QbdYBzgyOXKiVXOF9Tv3OdSgqd6veETZlIAOBNX2N6A7Q080?=
- =?us-ascii?Q?YkOYuCEk9EnQRlvMWUaNvHbuQhpmAROdytgVSKiEndG2ZKzl48UPdiqsMHxT?=
- =?us-ascii?Q?u5uUnjxs21ZRDxf0mWhjlsWfegl5A2q1wE5twDJ5+yHOQEPkw5e9bTlA3MIb?=
- =?us-ascii?Q?u1avX4Xdl1XnwyjyrmzYpAZWA6QDqsDWEj35Cn8dQy4AogwKw/Nr+zjqN6P9?=
- =?us-ascii?Q?7hWwncejYyDyKHCPAUz54jCLtYj5bXPNK16otT0eUGee5eIfJ0zljE6OJeqE?=
- =?us-ascii?Q?T3e+3m6Xx87xvKUTZY50EWMy6cmsAYjalsUck2tckNu/6aFvLxRAXqaPa1Yj?=
- =?us-ascii?Q?QkRrwU4hu16a5GVolQHtRYq+O4546uvbDoN4/BkBfkhIcIPhAs/OT2hQUNPd?=
- =?us-ascii?Q?Fppsf/0ACsV332BvFYYzzvOrBh1oele4EXcx2umn?=
-X-OriginatorOrg: nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 25fc980b-07c1-44c4-665d-08da8fecf593
-X-MS-Exchange-CrossTenant-AuthSource: AM6PR04MB5925.eurprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Sep 2022 09:48:32.6946
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: LFWyilPi9CJfdMZASUmh2zT5Okl+281GQdFzH8tjWAFzRO/Ouogq2iB839hK5vAk
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PR3PR04MB7305
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="us-ascii"
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Node names should be generic, so change the sdma node name format 'sdma'
-into 'dma-controller'.
+Hi,
 
-Signed-off-by: Joy Zou <joy.zou@nxp.com>
----
-Changes in v5:
-modify the commit message.
----
- arch/arm64/boot/dts/freescale/imx8mq.dtsi | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+thanks for the YAML conversion patch.
 
-diff --git a/arch/arm64/boot/dts/freescale/imx8mq.dtsi b/arch/arm64/boot/dts/freescale/imx8mq.dtsi
-index e9f0cdd10ab6..19eaa523564d 100644
---- a/arch/arm64/boot/dts/freescale/imx8mq.dtsi
-+++ b/arch/arm64/boot/dts/freescale/imx8mq.dtsi
-@@ -534,7 +534,7 @@ wdog3: watchdog@302a0000 {
- 				status = "disabled";
- 			};
- 
--			sdma2: sdma@302c0000 {
-+			sdma2: dma-controller@302c0000 {
- 				compatible = "fsl,imx8mq-sdma","fsl,imx7d-sdma";
- 				reg = <0x302c0000 0x10000>;
- 				interrupts = <GIC_SPI 103 IRQ_TYPE_LEVEL_HIGH>;
-@@ -1302,7 +1302,7 @@ qspi0: spi@30bb0000 {
- 				status = "disabled";
- 			};
- 
--			sdma1: sdma@30bd0000 {
-+			sdma1: dma-controller@30bd0000 {
- 				compatible = "fsl,imx8mq-sdma","fsl,imx7d-sdma";
- 				reg = <0x30bd0000 0x10000>;
- 				interrupts = <GIC_SPI 2 IRQ_TYPE_LEVEL_HIGH>;
--- 
-2.37.1
+Am Dienstag, 6. September 2022, 11:42:53 CEST schrieb Joy Zou:
+> Convert the i.MX SDMA binding to DT schema format using json-schema.
+> 
+> The compatibles fsl,imx31-to1-sdma, fsl,imx31-to2-sdma, fsl,imx35-to1-sdma
+> and fsl,imx35-to2-sdma are not used. So need to delete it. The compatibles
+> fsl,imx50-sdma, fsl,imx6sll-sdma and fsl,imx6sl-sdma are added. The
+> original binding don't list all compatible used.
+> 
+> In addition, add new peripheral types HDMI Audio.
+> 
+> Signed-off-by: Joy Zou <joy.zou@nxp.com>
+> ---
+> Changes in v6:
+> delete tag Acked-by from commit message.
+> 
+> Changes in v5:
+> modify the commit message fromat.
+> add additionalProperties, because delete the quotes in patch v4.
+> delete unevaluatedProperties due to similar to additionalProperties.
+> modification fsl,sdma-event-remap items and description.
+> 
+> Changes in v4:
+> modify the commit message.
+> delete the quotes in patch.
+> modify the compatible in patch.
+> delete maxitems and add items for clock-names property.
+> add iram property.
+> 
+> Changes in v3:
+> modify the commit message.
+> modify the filename.
+> modify the maintainer.
+> delete the unnecessary comment.
+> modify the compatible and run dt_binding_check and dtbs_check.
+> add clocks and clock-names property.
+> delete the reg description and add maxItems.
+> delete the interrupts description and add maxItems.
+> add ref for gpr property.
+> modify the fsl,sdma-event-remap ref type and add items.
+> delete consumer example.
+> 
+> Changes in v2:
+> convert imx sdma bindings to DT schema.
+> ---
+>  .../devicetree/bindings/dma/fsl,imx-sdma.yaml | 147 ++++++++++++++++++
+>  .../devicetree/bindings/dma/fsl-imx-sdma.txt  | 118 --------------
+>  2 files changed, 147 insertions(+), 118 deletions(-)
+>  create mode 100644 Documentation/devicetree/bindings/dma/fsl,imx-sdma.yaml
+>  delete mode 100644 Documentation/devicetree/bindings/dma/fsl-imx-sdma.txt
+> 
+> diff --git a/Documentation/devicetree/bindings/dma/fsl,imx-sdma.yaml
+> b/Documentation/devicetree/bindings/dma/fsl,imx-sdma.yaml new file mode
+> 100644
+> index 000000000000..3da65d3ea4af
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/dma/fsl,imx-sdma.yaml
+> @@ -0,0 +1,147 @@
+> +# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/dma/fsl,imx-sdma.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Freescale Smart Direct Memory Access (SDMA) Controller for i.MX
+> +
+> +maintainers:
+> +  - Joy Zou <joy.zou@nxp.com>
+> +
+> +properties:
+
+Is it sensible to add something like this?
+
+  $nodename:
+    pattern: "^dma-controller(@.*)?$"
+
+You are changing the node names in patch 3 anyway.
+
+Best regards,
+Alexander
+
+> +  compatible:
+> +    oneOf:
+> +      - items:
+> +          - enum:
+> +              - fsl,imx50-sdma
+> +              - fsl,imx51-sdma
+> +              - fsl,imx53-sdma
+> +              - fsl,imx6q-sdma
+> +              - fsl,imx7d-sdma
+> +          - const: fsl,imx35-sdma
+> +      - items:
+> +          - enum:
+> +              - fsl,imx6sx-sdma
+> +              - fsl,imx6sl-sdma
+> +          - const: fsl,imx6q-sdma
+> +      - items:
+> +          - const: fsl,imx6ul-sdma
+> +          - const: fsl,imx6q-sdma
+> +          - const: fsl,imx35-sdma
+> +      - items:
+> +          - const: fsl,imx6sll-sdma
+> +          - const: fsl,imx6ul-sdma
+> +      - items:
+> +          - const: fsl,imx8mq-sdma
+> +          - const: fsl,imx7d-sdma
+> +      - items:
+> +          - enum:
+> +              - fsl,imx8mp-sdma
+> +              - fsl,imx8mn-sdma
+> +              - fsl,imx8mm-sdma
+> +          - const: fsl,imx8mq-sdma
+> +      - items:
+> +          - enum:
+> +              - fsl,imx25-sdma
+> +              - fsl,imx31-sdma
+> +              - fsl,imx35-sdma
+> +  reg:
+> +    maxItems: 1
+> +
+> +  interrupts:
+> +    maxItems: 1
+> +
+> +  fsl,sdma-ram-script-name:
+> +    $ref: /schemas/types.yaml#/definitions/string
+> +    description: Should contain the full path of SDMA RAM scripts firmware.
+> +
+> +  "#dma-cells":
+> +    const: 3
+> +    description: |
+> +      The first cell: request/event ID
+> +
+> +      The second cell: peripheral types ID
+> +        enum:
+> +          - MCU domain SSI: 0
+> +          - Shared SSI: 1
+> +          - MMC: 2
+> +          - SDHC: 3
+> +          - MCU domain UART: 4
+> +          - Shared UART: 5
+> +          - FIRI: 6
+> +          - MCU domain CSPI: 7
+> +          - Shared CSPI: 8
+> +          - SIM: 9
+> +          - ATA: 10
+> +          - CCM: 11
+> +          - External peripheral: 12
+> +          - Memory Stick Host Controller: 13
+> +          - Shared Memory Stick Host Controller: 14
+> +          - DSP: 15
+> +          - Memory: 16
+> +          - FIFO type Memory: 17
+> +          - SPDIF: 18
+> +          - IPU Memory: 19
+> +          - ASRC: 20
+> +          - ESAI: 21
+> +          - SSI Dual FIFO: 22
+> +              description: needs firmware more than ver 2
+> +          - Shared ASRC: 23
+> +          - SAI: 24
+> +          - HDMI Audio: 25
+> +
+> +       The third cell: transfer priority ID
+> +         enum:
+> +           - High: 0
+> +           - Medium: 1
+> +           - Low: 2
+> +
+> +  gpr:
+> +    $ref: /schemas/types.yaml#/definitions/phandle
+> +    description: The phandle to the General Purpose Register (GPR) node
+> +
+> +  fsl,sdma-event-remap:
+> +    $ref: /schemas/types.yaml#/definitions/uint32-matrix
+> +    maxItems: 2
+> +    items:
+> +      items:
+> +        - description: GPR register offset
+> +        - description: GPR register shift
+> +        - description: GPR register value
+> +    description: |
+> +      Register bits of sdma event remap, the format is <reg shift val>.
+> +      The order is <RX>, <TX>.
+> +
+> +  clocks:
+> +    maxItems: 2
+> +
+> +  clock-names:
+> +    items:
+> +      - const: ipg
+> +      - const: ahb
+> +
+> +  iram:
+> +    $ref: /schemas/types.yaml#/definitions/phandle
+> +    description: The phandle to the On-chip RAM (OCRAM) node.
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +  - interrupts
+> +  - fsl,sdma-ram-script-name
+> +  - "#dma-cells"
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +    sdma: dma-controller@83fb0000 {
+> +      compatible = "fsl,imx51-sdma", "fsl,imx35-sdma";
+> +      reg = <0x83fb0000 0x4000>;
+> +      interrupts = <6>;
+> +      #dma-cells = <3>;
+> +      fsl,sdma-ram-script-name = "sdma-imx51.bin";
+> +    };
+> +
+> +...
+> diff --git a/Documentation/devicetree/bindings/dma/fsl-imx-sdma.txt
+> b/Documentation/devicetree/bindings/dma/fsl-imx-sdma.txt deleted file mode
+> 100644
+> index 12c316ff4834..000000000000
+> --- a/Documentation/devicetree/bindings/dma/fsl-imx-sdma.txt
+> +++ /dev/null
+> @@ -1,118 +0,0 @@
+> -* Freescale Smart Direct Memory Access (SDMA) Controller for i.MX
+> -
+> -Required properties:
+> -- compatible : Should be one of
+> -      "fsl,imx25-sdma"
+> -      "fsl,imx31-sdma", "fsl,imx31-to1-sdma", "fsl,imx31-to2-sdma"
+> -      "fsl,imx35-sdma", "fsl,imx35-to1-sdma", "fsl,imx35-to2-sdma"
+> -      "fsl,imx51-sdma"
+> -      "fsl,imx53-sdma"
+> -      "fsl,imx6q-sdma"
+> -      "fsl,imx7d-sdma"
+> -      "fsl,imx6ul-sdma"
+> -      "fsl,imx8mq-sdma"
+> -      "fsl,imx8mm-sdma"
+> -      "fsl,imx8mn-sdma"
+> -      "fsl,imx8mp-sdma"
+> -  The -to variants should be preferred since they allow to determine the
+> -  correct ROM script addresses needed for the driver to work without
+> additional -  firmware.
+> -- reg : Should contain SDMA registers location and length
+> -- interrupts : Should contain SDMA interrupt
+> -- #dma-cells : Must be <3>.
+> -  The first cell specifies the DMA request/event ID.  See details below
+> -  about the second and third cell.
+> -- fsl,sdma-ram-script-name : Should contain the full path of SDMA RAM
+> -  scripts firmware
+> -
+> -The second cell of dma phandle specifies the peripheral type of DMA
+> transfer. -The full ID of peripheral types can be found below.
+> -
+> -	ID	transfer type
+> -	---------------------
+> -	0	MCU domain SSI
+> -	1	Shared SSI
+> -	2	MMC
+> -	3	SDHC
+> -	4	MCU domain UART
+> -	5	Shared UART
+> -	6	FIRI
+> -	7	MCU domain CSPI
+> -	8	Shared CSPI
+> -	9	SIM
+> -	10	ATA
+> -	11	CCM
+> -	12	External peripheral
+> -	13	Memory Stick Host Controller
+> -	14	Shared Memory Stick Host Controller
+> -	15	DSP
+> -	16	Memory
+> -	17	FIFO type Memory
+> -	18	SPDIF
+> -	19	IPU Memory
+> -	20	ASRC
+> -	21	ESAI
+> -	22	SSI Dual FIFO	(needs firmware ver >= 2)
+> -	23	Shared ASRC
+> -	24	SAI
+> -
+> -The third cell specifies the transfer priority as below.
+> -
+> -	ID	transfer priority
+> -	-------------------------
+> -	0	High
+> -	1	Medium
+> -	2	Low
+> -
+> -Optional properties:
+> -
+> -- gpr : The phandle to the General Purpose Register (GPR) node.
+> -- fsl,sdma-event-remap : Register bits of sdma event remap, the format is
+> -  <reg shift val>.
+> -    reg is the GPR register offset.
+> -    shift is the bit position inside the GPR register.
+> -    val is the value of the bit (0 or 1).
+> -
+> -Examples:
+> -
+> -sdma@83fb0000 {
+> -	compatible = "fsl,imx51-sdma", "fsl,imx35-sdma";
+> -	reg = <0x83fb0000 0x4000>;
+> -	interrupts = <6>;
+> -	#dma-cells = <3>;
+> -	fsl,sdma-ram-script-name = "sdma-imx51.bin";
+> -};
+> -
+> -DMA clients connected to the i.MX SDMA controller must use the format
+> -described in the dma.txt file.
+> -
+> -Examples:
+> -
+> -ssi2: ssi@70014000 {
+> -	compatible = "fsl,imx51-ssi", "fsl,imx21-ssi";
+> -	reg = <0x70014000 0x4000>;
+> -	interrupts = <30>;
+> -	clocks = <&clks 49>;
+> -	dmas = <&sdma 24 1 0>,
+> -	       <&sdma 25 1 0>;
+> -	dma-names = "rx", "tx";
+> -	fsl,fifo-depth = <15>;
+> -};
+> -
+> -Using the fsl,sdma-event-remap property:
+> -
+> -If we want to use SDMA on the SAI1 port on a MX6SX:
+> -
+> -&sdma {
+> -	gpr = <&gpr>;
+> -	/* SDMA events remap for SAI1_RX and SAI1_TX */
+> -	fsl,sdma-event-remap = <0 15 1>, <0 16 1>;
+> -};
+> -
+> -The fsl,sdma-event-remap property in this case has two values:
+> -- <0 15 1> means that the offset is 0, so GPR0 is the register of the
+> -SDMA remap. Bit 15 of GPR0 selects between UART4_RX and SAI1_RX.
+> -Setting bit 15 to 1 selects SAI1_RX.
+> -- <0 16 1> means that the offset is 0, so GPR0 is the register of the
+> -SDMA remap. Bit 16 of GPR0 selects between UART4_TX and SAI1_TX.
+> -Setting bit 16 to 1 selects SAI1_TX.
+
+
+
 
