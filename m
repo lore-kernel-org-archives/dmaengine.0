@@ -2,45 +2,44 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C7B60ECAAD8
-	for <dmaengine@archiver.kernel.org>; Tue, 13 Sep 2022 17:15:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 858A7C54EE9
+	for <dmaengine@archiver.kernel.org>; Tue, 13 Sep 2022 17:42:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232715AbiIMRPd (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 13 Sep 2022 13:15:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54982 "EHLO
+        id S232949AbiIMRm3 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 13 Sep 2022 13:42:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35570 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232474AbiIMROl (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Tue, 13 Sep 2022 13:14:41 -0400
+        with ESMTP id S233362AbiIMRmA (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Tue, 13 Sep 2022 13:42:00 -0400
 Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63E2E183AD
-        for <dmaengine@vger.kernel.org>; Tue, 13 Sep 2022 09:03:18 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B85D725EB0
+        for <dmaengine@vger.kernel.org>; Tue, 13 Sep 2022 09:35:26 -0700 (PDT)
 Received: from ptx.hi.pengutronix.de ([2001:67c:670:100:1d::c0])
         by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
         (Exim 4.92)
         (envelope-from <sha@pengutronix.de>)
-        id 1oY7e1-0005K2-JO; Tue, 13 Sep 2022 17:16:13 +0200
+        id 1oY8sR-0000Ue-O1; Tue, 13 Sep 2022 18:35:11 +0200
 Received: from sha by ptx.hi.pengutronix.de with local (Exim 4.92)
         (envelope-from <sha@pengutronix.de>)
-        id 1oY7e1-0001yU-1A; Tue, 13 Sep 2022 17:16:13 +0200
-Date:   Tue, 13 Sep 2022 17:16:12 +0200
+        id 1oY8sQ-0005qY-Nl; Tue, 13 Sep 2022 18:35:10 +0200
+Date:   Tue, 13 Sep 2022 18:35:10 +0200
 From:   Sascha Hauer <s.hauer@pengutronix.de>
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Dario Binacchi <dario.binacchi@amarulasolutions.com>,
-        linux-kernel@vger.kernel.org, linux-amarula@amarulasolutions.com,
+To:     Dario Binacchi <dario.binacchi@amarulasolutions.com>
+Cc:     linux-kernel@vger.kernel.org, linux-amarula@amarulasolutions.com,
         Michael Trimarchi <michael@amarulasolutions.com>,
         stable@vger.kernel.org, Fabio Estevam <festevam@gmail.com>,
         NXP Linux Team <linux-imx@nxp.com>,
         Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Shawn Guo <shawnguo@kernel.org>, dmaengine@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org
-Subject: Re: [PATCH v3] dmaengine: mxs: fix driver registering
-Message-ID: <20220913151612.GI12909@pengutronix.de>
-References: <20220614101751.3636028-1-dario.binacchi@amarulasolutions.com>
- <Yqs3E0ipEpsCT2T2@matsya>
+        Shawn Guo <shawnguo@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+        dmaengine@vger.kernel.org, linux-arm-kernel@lists.infradead.org
+Subject: Re: [RESEND PATCH v5 1/2] dmaengine: mxs: use
+ platform_driver_register
+Message-ID: <20220913163510.GR6477@pengutronix.de>
+References: <20220904141020.2947725-1-dario.binacchi@amarulasolutions.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <Yqs3E0ipEpsCT2T2@matsya>
+In-Reply-To: <20220904141020.2947725-1-dario.binacchi@amarulasolutions.com>
 X-Sent-From: Pengutronix Hildesheim
 X-URL:  http://www.pengutronix.de/
 X-Accept-Language: de,en
@@ -54,87 +53,78 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Hi Vinod,
+Hi Dario,
 
-On Thu, Jun 16, 2022 at 06:58:43AM -0700, Vinod Koul wrote:
-> On 14-06-22, 12:17, Dario Binacchi wrote:
-> > Driver registration fails on SOC imx8mn as its supplier, the clock
-> > control module, is not ready. Since platform_driver_probe(), as
-> > reported by its description, is incompatible with deferred probing,
-> > we have to use platform_driver_register().
-> > 
-> > Fixes: a580b8c5429a ("dmaengine: mxs-dma: add dma support for i.MX23/28")
-> > Co-developed-by: Michael Trimarchi <michael@amarulasolutions.com>
-> > Signed-off-by: Michael Trimarchi <michael@amarulasolutions.com>
-> > Signed-off-by: Dario Binacchi <dario.binacchi@amarulasolutions.com>
-> > Cc: stable@vger.kernel.org
-> > 
-> > ---
-> > 
-> > Changes in v3:
-> > - Restore __init in front of mxs_dma_init() definition.
-> > 
-> > Changes in v2:
-> > - Add the tag "Cc: stable@vger.kernel.org" in the sign-off area.
-> > 
-> >  drivers/dma/mxs-dma.c | 9 +++------
-> >  1 file changed, 3 insertions(+), 6 deletions(-)
-> > 
-> > diff --git a/drivers/dma/mxs-dma.c b/drivers/dma/mxs-dma.c
-> > index 994fc4d2aca4..6e90540fedc4 100644
-> > --- a/drivers/dma/mxs-dma.c
-> > +++ b/drivers/dma/mxs-dma.c
-> > @@ -741,7 +741,7 @@ static struct dma_chan *mxs_dma_xlate(struct of_phandle_args *dma_spec,
-> >  				     ofdma->of_node);
-> >  }
-> >  
-> > -static int __init mxs_dma_probe(struct platform_device *pdev)
-> > +static int mxs_dma_probe(struct platform_device *pdev)
+On Sun, Sep 04, 2022 at 04:10:19PM +0200, Dario Binacchi wrote:
+> Driver registration fails on SOC imx8mn as its supplier, the clock
+> control module, is probed later than subsys initcall level. This driver
+> uses platform_driver_probe which is not compatible with deferred probing
+> and won't be probed again later if probe function fails due to clock not
+> being available at that time.
 > 
-> why drop __init here, if there is a reason for that please split this
-> change and document such reason...
+> This patch replaces the use of platform_driver_probe with
+> platform_driver_register which will allow probing the driver later again
+> when the clock control module will be available.
+> 
+> Fixes: a580b8c5429a ("dmaengine: mxs-dma: add dma support for i.MX23/28")
+> Co-developed-by: Michael Trimarchi <michael@amarulasolutions.com>
+> Signed-off-by: Michael Trimarchi <michael@amarulasolutions.com>
+> Signed-off-by: Dario Binacchi <dario.binacchi@amarulasolutions.com>
+> Cc: stable@vger.kernel.org
 
-The reason for dropping __init comes with this patch. With
-platform_driver_probe() the probe function is called only once, during
-init time. The problem with platform_driver_probe() is that the probe
-function will never be called again when it initially returns
--EPROBE_DEFER. That's a problem for Dario: The clock is not yet
-available, the driver defers probe and will never be probed again
-when the clock is finally available.
+How I see it v3 of this patch is perfectly fine and should be taken
+instead of this one. I just commented that to v3.
 
-With platform_driver_register() to which this patch switches to the
-probe function can be called at any time, thus __init has to be removed.
+Not sure if Vinod would take v3, or if you should resend v3 as v6
+instead. If you do, you can add my Acked-by.
 
-For what it's worth:
-
-Acked-by: Sascha Hauer <s.hauer@pengutronix.de>
-
-for this patch.
+Vinod, please let us know what you prefer.
 
 Sascha
 
 > 
-> >  {
-> >  	struct device_node *np = pdev->dev.of_node;
-> >  	const struct mxs_dma_type *dma_type;
-> > @@ -839,10 +839,7 @@ static struct platform_driver mxs_dma_driver = {
-> >  		.name	= "mxs-dma",
-> >  		.of_match_table = mxs_dma_dt_ids,
-> >  	},
-> > +	.probe = mxs_dma_probe,
-> >  };
-> >  
-> > -static int __init mxs_dma_module_init(void)
-> > -{
-> > -	return platform_driver_probe(&mxs_dma_driver, mxs_dma_probe);
-> > -}
-> > -subsys_initcall(mxs_dma_module_init);
-> > +module_platform_driver(mxs_dma_driver);
-> > -- 
-> > 2.32.0
+> ---
 > 
+> Changes in v5:
+> - Update the commit message.
+> - Add the patch "dmaengine: mxs: fix section mismatch" to remove the
+>   warning raised by this patch.
+> 
+> Changes in v4:
+> - Restore __init in front of mxs_dma_probe() definition.
+> - Rename the mxs_dma_driver variable to mxs_dma_driver_probe.
+> - Update the commit message.
+> - Use builtin_platform_driver() instead of module_platform_driver().
+> 
+> Changes in v3:
+> - Restore __init in front of mxs_dma_init() definition.
+> 
+> Changes in v2:
+> - Add the tag "Cc: stable@vger.kernel.org" in the sign-off area.
+> 
+>  drivers/dma/mxs-dma.c | 8 ++------
+>  1 file changed, 2 insertions(+), 6 deletions(-)
+> 
+> diff --git a/drivers/dma/mxs-dma.c b/drivers/dma/mxs-dma.c
+> index 994fc4d2aca4..18f8154b859b 100644
+> --- a/drivers/dma/mxs-dma.c
+> +++ b/drivers/dma/mxs-dma.c
+> @@ -839,10 +839,6 @@ static struct platform_driver mxs_dma_driver = {
+>  		.name	= "mxs-dma",
+>  		.of_match_table = mxs_dma_dt_ids,
+>  	},
+> +	.probe = mxs_dma_probe,
+>  };
+> -
+> -static int __init mxs_dma_module_init(void)
+> -{
+> -	return platform_driver_probe(&mxs_dma_driver, mxs_dma_probe);
+> -}
+> -subsys_initcall(mxs_dma_module_init);
+> +builtin_platform_driver(mxs_dma_driver);
 > -- 
-> ~Vinod
+> 2.32.0
+> 
 > 
 
 -- 
