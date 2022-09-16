@@ -2,104 +2,79 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2441BC6FA8B
-	for <dmaengine@archiver.kernel.org>; Fri, 16 Sep 2022 12:21:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D403BECAAD8
+	for <dmaengine@archiver.kernel.org>; Fri, 16 Sep 2022 14:26:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231452AbiIPMVL (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 16 Sep 2022 08:21:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53218 "EHLO
+        id S231482AbiIPO0O (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 16 Sep 2022 10:26:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47898 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231405AbiIPMVK (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Fri, 16 Sep 2022 08:21:10 -0400
-Received: from new2-smtp.messagingengine.com (new2-smtp.messagingengine.com [66.111.4.224])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 10EA4B089B;
-        Fri, 16 Sep 2022 05:21:08 -0700 (PDT)
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-        by mailnew.nyi.internal (Postfix) with ESMTP id BB2CD58012F;
-        Fri, 16 Sep 2022 08:21:07 -0400 (EDT)
-Received: from imap51 ([10.202.2.101])
-  by compute3.internal (MEProxy); Fri, 16 Sep 2022 08:21:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arndb.de; h=cc
-        :cc:content-type:date:date:from:from:in-reply-to:in-reply-to
-        :message-id:mime-version:references:reply-to:sender:subject
-        :subject:to:to; s=fm1; t=1663330867; x=1663334467; bh=Z7y3PzeVTJ
-        ZOhaYvhx0ZFCEnasatKo4vgoHWfeSmhxQ=; b=Gq8WZZlQodvsYxPY6MapHpPKVD
-        WixsmUh93mSDnGjEeqZNS6a+mC8md5H+Z2yUlNlZDSA3nhKTselB1GAL8PagRPU3
-        VdSkXW2+h3dby4y6mJjODA73NCB9awfEWMhN/OqE6b7Iv/0DMoudyDrhyvfaDfln
-        LO8DPv58XlpwPywhQDFNYV2yFRWC+YmPxuL7ch33r9ic/H7klkRrmQT+dwBgN1y+
-        MC4wzhDLHeRHH1hUdwAMEWuWfe0o67WqmxOS6PTuBLS04PtO8PxmwXAzQdnpN1lJ
-        5HG1TkAy8eYZW/7Uso5wsl+qfoF2q85ttDhk1FUUO+MaaVbsaCcVxZrfkp8w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:cc:content-type:date:date:feedback-id
-        :feedback-id:from:from:in-reply-to:in-reply-to:message-id
-        :mime-version:references:reply-to:sender:subject:subject:to:to
-        :x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-        fm2; t=1663330867; x=1663334467; bh=Z7y3PzeVTJZOhaYvhx0ZFCEnasat
-        Ko4vgoHWfeSmhxQ=; b=lix2UlhL3PIDge88fd8+Q0t/5j1Tvph0H4DMfuTRD7VZ
-        tlsXBw8ch5khFuPrelEYTbECLJfkrdMorUkllfA0oqwYg6vf0Sw47h87ULYa7M/y
-        bvHEJxWJa/tdqvBYiKt4vANh7EvbAxuuqrVFQQZWqZBiqiyYboTr2RF8D8AZ183J
-        R5oSJiTwC27QSNsf3Tl9t50ueuwRsfka5bms/Mr/mzLls0qznCZzRwX/dJqiQACA
-        KWbsl7tr0LwKid9EXBW8YMVeNhc/7v344SCIpZ/ORn2Wx1VgFmk+Mmai69WzDNDn
-        3hV7wjyXbAOCxVg4Px+EzhmI+o0Zydsfc+XKaP94bg==
-X-ME-Sender: <xms:M2okY7l4nigX1Ty5BPO1Yqq0q400eCI_sSKJWtsw5Bew28jsocDpkQ>
-    <xme:M2okY-24cax230p6tAW7f5QzUmGY40xrIAkuq4QCHFu63LKrBJQ_PBZsrSFc8lQXH
-    FB_r3yFPU10jXkww4U>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvfedrfedvtddgheefucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepofgfggfkjghffffhvfevufgtsehttdertderredtnecuhfhrohhmpedftehr
-    nhguuceuvghrghhmrghnnhdfuceorghrnhgusegrrhhnuggsrdguvgeqnecuggftrfgrth
-    htvghrnhepffehueegteeihfegtefhjefgtdeugfegjeelheejueethfefgeeghfektdek
-    teffnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheprg
-    hrnhgusegrrhhnuggsrdguvg
-X-ME-Proxy: <xmx:M2okYxoDbZC8hcX01i1MotbXSEMKAyGXBTcZmaR1j4qerwNNN8sQ9Q>
-    <xmx:M2okYzkaDxwXx-HWJ-9VNsAwJF0aGuOJeHyMmNj0j4JzlZNADj0S9g>
-    <xmx:M2okY50kzVpNn2UGApa23w0vIAp03plbfw0OM5H6wvXibRx8Pnvsdg>
-    <xmx:M2okY2lYH0pzOhHFJ3Laoh4-iBQKR7iMO7f-vrZ6RBMHaxk9jPB_rw>
-Feedback-ID: i56a14606:Fastmail
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
-        id 500BEB60086; Fri, 16 Sep 2022 08:21:07 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.7.0-alpha0-935-ge4ccd4c47b-fm-20220914.001-ge4ccd4c4
-Mime-Version: 1.0
-Message-Id: <17ee7d23-27d3-4d29-aec3-a61f7d0d3526@www.fastmail.com>
-In-Reply-To: <20220915204844.3838-1-ansuelsmth@gmail.com>
-References: <20220915204844.3838-1-ansuelsmth@gmail.com>
-Date:   Fri, 16 Sep 2022 14:20:47 +0200
-From:   "Arnd Bergmann" <arnd@arndb.de>
-To:     "Christian Marangi" <ansuelsmth@gmail.com>,
-        "Andy Gross" <agross@kernel.org>,
-        "Bjorn Andersson" <andersson@kernel.org>,
-        "Konrad Dybcio" <konrad.dybcio@somainline.org>,
-        "Vinod Koul" <vkoul@kernel.org>, "Mark Brown" <broonie@kernel.org>,
-        linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     stable@vger.kernel.org
-Subject: Re: [PATCH] dmaengine: qcom-adm: fix wrong sizeof config in slave_config
-Content-Type: text/plain
+        with ESMTP id S231749AbiIPOZy (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Fri, 16 Sep 2022 10:25:54 -0400
+Received: from soltyk.jannau.net (soltyk.jannau.net [144.76.91.90])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9747CA50FA;
+        Fri, 16 Sep 2022 07:25:53 -0700 (PDT)
+Received: from robin.home.jannau.net (unknown [91.200.110.112])
+        by soltyk.jannau.net (Postfix) with ESMTPSA id DC99726F079;
+        Fri, 16 Sep 2022 16:25:51 +0200 (CEST)
+From:   Janne Grunau <j@jannau.net>
+To:     asahi@lists.linux.dev
+Cc:     Mark Kettenis <kettenis@openbsd.org>,
+        =?UTF-8?q?Martin=20Povi=C5=A1er?= <povik+lin@cutebit.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Alyssa Rosenzweig <alyssa@rosenzweig.io>,
+        Hector Martin <marcan@marcan.st>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Sven Peter <sven@svenpeter.dev>, Vinod Koul <vkoul@kernel.org>,
+        devicetree@vger.kernel.org, dmaengine@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
+Subject: [PATCH v1 01/10] dt-bindings: dma: apple,admac: Add iommus and power-domains properties
+Date:   Fri, 16 Sep 2022 16:25:41 +0200
+Message-Id: <20220916142550.269905-2-j@jannau.net>
+X-Mailer: git-send-email 2.35.1
+In-Reply-To: <20220916142550.269905-1-j@jannau.net>
+References: <20220916142550.269905-1-j@jannau.net>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On Thu, Sep 15, 2022, at 10:48 PM, Christian Marangi wrote:
-> Fix broken slave_config function that uncorrectly compare the
-> peripheral_size with the size of the config pointer instead of the size
-> of the config struct. This cause the crci value to be ignored and cause
-> a kernel panic on any slave that use adm driver.
->
-> To fix this, compare to the size of the struct and NOT the size of the
-> pointer.
->
-> Fixes: 03de6b273805 ("dmaengine: qcom-adm: stop abusing slave_id config")
-> Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
-> Cc: stable@vger.kernel.org # v5.17+
+Apple's ADMAC is on all supported Apple silicon SoCs behind an IOMMU
+and has its own power-domain.
 
-Thanks for the fix,
+Signed-off-by: Janne Grunau <j@jannau.net>
+Acked-by: Martin Povišer <povik+lin@cutebit.org>
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-Reviewed-by: Arnd Bergmann <arnd@arndb.de>
+---
 
-I guess this worked on 64-bit by accident, since both the pointer
-and the struct are 8 bytes, but it was clearly wrong and broke
-32-bit.
+Changes in v1:
+ - added Martin's and Krzysztof's ack
 
-     Arnd
+ Documentation/devicetree/bindings/dma/apple,admac.yaml | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+diff --git a/Documentation/devicetree/bindings/dma/apple,admac.yaml b/Documentation/devicetree/bindings/dma/apple,admac.yaml
+index bdc8c129c4f5..3b1e667f7ea0 100644
+--- a/Documentation/devicetree/bindings/dma/apple,admac.yaml
++++ b/Documentation/devicetree/bindings/dma/apple,admac.yaml
+@@ -49,6 +49,13 @@ properties:
+       in an interrupts-extended list the disconnected positions will contain
+       an empty phandle reference <0>.
+ 
++  iommus:
++    minItems: 1
++    maxItems: 2
++
++  power-domains:
++    maxItems: 1
++
+ required:
+   - compatible
+   - reg
+-- 
+2.35.1
+
