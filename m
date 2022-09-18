@@ -2,83 +2,126 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5C9C2C32771
-	for <dmaengine@archiver.kernel.org>; Sun, 18 Sep 2022 08:49:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C51FBC32771
+	for <dmaengine@archiver.kernel.org>; Sun, 18 Sep 2022 09:59:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229615AbiIRItX (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Sun, 18 Sep 2022 04:49:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47234 "EHLO
+        id S229708AbiIRJ7o (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Sun, 18 Sep 2022 05:59:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37162 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229557AbiIRItW (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Sun, 18 Sep 2022 04:49:22 -0400
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A79F248D9
-        for <dmaengine@vger.kernel.org>; Sun, 18 Sep 2022 01:49:20 -0700 (PDT)
-Received: by mail-lf1-x12f.google.com with SMTP id a3so30168927lfk.9
-        for <dmaengine@vger.kernel.org>; Sun, 18 Sep 2022 01:49:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date;
-        bh=ZwZOJe+FeJxtg/aH4rA88K+jC4BSJwI/ocMiCdlkcF4=;
-        b=kUjG8tiF4DOfsJ0yJkFeQNvYX8SQhVCHXi4eNw8XMHJSr47dTMRvT7KeIZmgNvmntK
-         pNROOHFTGL0H9Lt6Hu0c3rpka9USx5IarPwMf99T6QAGBePksYVpfBpHlU1/UOHkCT/Q
-         Yyb3MyZftJrrGNF854cy0oPR5vLLcRffyRxOL0vMn1OM1idEo2mgu07pd3LgNwzUS+wf
-         QA+UKOG2kEiBSrmmew8A5IgQ9WtMWAerjIuQ5kkfuBjzSD6eKLwq4zYJn1goQq792F7P
-         CnFZun00GqK8tw8HtZEnQMoL+X/W+dP4T+z5nrBDwLDfZnTp7m455wgC/tKB4+AEIWs6
-         f5pA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date;
-        bh=ZwZOJe+FeJxtg/aH4rA88K+jC4BSJwI/ocMiCdlkcF4=;
-        b=m0/Nb8kRo6U4oa+3EyOIjIutoCdh1K6p6TwKEA5u2fgTvC9tVamrL8z6E0MHeNQE+/
-         TmF1MGJLctrASa3o3Hmv8ouwr/y1WIjtDlk+N3pHAAg/P2nZGSeZtHRBKF+Aq55Y8gDM
-         pf3T0ucMedHbAtxG/17zbgirciK7V4tkIDK3Bct73aMw46GpQ4UcZA45gnWTOZKPkOrb
-         isSdthtlgY0YGYADA85H+EepjU+2tbLA91CjmzSM4VnFjVTILlxrWt+iYDEDpeogiDfk
-         PvJcf7JPnqzerkX8kPaQDxjB5XOnqF0qlbqUNsGCkzj0Hx/PV5xu9YZCN/xrMvBosB3h
-         gj1Q==
-X-Gm-Message-State: ACrzQf018y28fYeo5/se60vHCo+CfyIQzdKGd+aJIMBdT/3Nq/h5/S+i
-        +QJlB2EFgiZNrEsY9vl3zcruyA==
-X-Google-Smtp-Source: AMsMyM4yl2AEVfWW9ArVGX0h5XMxSuG5pI1ClU8XUcTQBDMci5kCqO/xui6FIfPjoE7bJwhMzj8jxA==
-X-Received: by 2002:a05:6512:3b85:b0:499:183:d5f1 with SMTP id g5-20020a0565123b8500b004990183d5f1mr3962466lfv.659.1663490958946;
-        Sun, 18 Sep 2022 01:49:18 -0700 (PDT)
-Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id o27-20020ac25e3b000000b00494935ddb88sm4570516lfg.240.2022.09.18.01.49.18
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 18 Sep 2022 01:49:18 -0700 (PDT)
-Message-ID: <d7507d61-9d16-c2d3-2066-5e2f9afd6eb9@linaro.org>
-Date:   Sun, 18 Sep 2022 09:49:12 +0100
+        with ESMTP id S230208AbiIRJ7X (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Sun, 18 Sep 2022 05:59:23 -0400
+Received: from hutie.ust.cz (hutie.ust.cz [185.8.165.127])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 19229F4F;
+        Sun, 18 Sep 2022 02:59:19 -0700 (PDT)
+From:   =?UTF-8?q?Martin=20Povi=C5=A1er?= <povik+lin@cutebit.org>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cutebit.org; s=mail;
+        t=1663495158; bh=LrJPTCNgJnKyYQZq+jzf17tmj1SfmkEssly/2yyWLXI=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References;
+        b=VQt1bFhxVZIgI0lk3VKPibjdw92XIuzyJf5Jh1JYuWIUcFaOQY88E6ksD5tsdb/L2
+         BmCIssV4FXl+DOq6rKXgZOoPSLQlYA7go+QjyqoDyACc6+9/ya1FQ5kc07+kKd88fW
+         EcJCpUC3bu8jkmmPw005ZxDPT0SckNd2qaABSlHc=
+To:     Hector Martin <marcan@marcan.st>, Sven Peter <sven@svenpeter.dev>,
+        Vinod Koul <vkoul@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>
+Cc:     Alyssa Rosenzweig <alyssa@rosenzweig.io>, asahi@lists.linux.dev,
+        dmaengine@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        =?UTF-8?q?Martin=20Povi=C5=A1er?= <povik+lin@cutebit.org>
+Subject: [PATCH 4/4] dmaengine: apple-admac: Trigger shared reset
+Date:   Sun, 18 Sep 2022 11:58:45 +0200
+Message-Id: <20220918095845.68860-5-povik+lin@cutebit.org>
+In-Reply-To: <20220918095845.68860-1-povik+lin@cutebit.org>
+References: <20220918095845.68860-1-povik+lin@cutebit.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.13.0
-Subject: Re: [PATCH] dt-bindings: dma: Make minor fixes to qcom,bam-dma
- binding doc
-Content-Language: en-US
-To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>,
-        devicetree@vger.kernel.org
-Cc:     linux-arm-msm@vger.kernel.org, bhupesh.linux@gmail.com,
-        linux-kernel@vger.kernel.org, vkoul@kernel.org, agross@kernel.org,
-        dmaengine@vger.kernel.org, konrad.dybcio@somainline.org,
-        robh+dt@kernel.org, andersson@kernel.org
-References: <20220918081119.295364-1-bhupesh.sharma@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220918081119.295364-1-bhupesh.sharma@linaro.org>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On 18/09/2022 09:11, Bhupesh Sharma wrote:
-> As a user recently noted, the qcom,bam-dma binding document
-> describes the BAM DMA node incorrectly. 
+If a reset domain is attached to the device, obtain a shared reference
+to it and trigger it. Typically on a chip the ADMAC controller will
+share a reset domain with the MCA peripheral.
 
-It's a bit confusing - what is exactly incorrectly described by binding?
-You did not make any changes to the binding itself...
+Signed-off-by: Martin Povišer <povik+lin@cutebit.org>
+---
+ drivers/dma/apple-admac.c | 22 +++++++++++++++++++---
+ 1 file changed, 19 insertions(+), 3 deletions(-)
 
+diff --git a/drivers/dma/apple-admac.c b/drivers/dma/apple-admac.c
+index 7d1b76678032..317ca76ccafd 100644
+--- a/drivers/dma/apple-admac.c
++++ b/drivers/dma/apple-admac.c
+@@ -12,8 +12,9 @@
+ #include <linux/module.h>
+ #include <linux/of_device.h>
+ #include <linux/of_dma.h>
+-#include <linux/interrupt.h>
++#include <linux/reset.h>
+ #include <linux/spinlock.h>
++#include <linux/interrupt.h>
+ 
+ #include "dmaengine.h"
+ 
+@@ -95,6 +96,7 @@ struct admac_data {
+ 	struct dma_device dma;
+ 	struct device *dev;
+ 	__iomem void *base;
++	struct reset_control *rstc;
+ 
+ 	int irq;
+ 	int irq_index;
+@@ -732,6 +734,10 @@ static int admac_probe(struct platform_device *pdev)
+ 		return dev_err_probe(&pdev->dev, PTR_ERR(ad->base),
+ 				     "unable to obtain MMIO resource\n");
+ 
++	ad->rstc = devm_reset_control_get_optional_shared(&pdev->dev, NULL);
++	if (IS_ERR(ad->rstc))
++		return PTR_ERR(ad->rstc);
++
+ 	dma = &ad->dma;
+ 
+ 	dma_cap_set(DMA_PRIVATE, dma->cap_mask);
+@@ -770,10 +776,17 @@ static int admac_probe(struct platform_device *pdev)
+ 		tasklet_setup(&adchan->tasklet, admac_chan_tasklet);
+ 	}
+ 
+-	err = request_irq(irq, admac_interrupt, 0, dev_name(&pdev->dev), ad);
++	err = reset_control_reset(ad->rstc);
+ 	if (err)
+ 		return dev_err_probe(&pdev->dev, err,
+-				     "unable to register interrupt\n");
++				     "unable to trigger reset\n");
++
++	err = request_irq(irq, admac_interrupt, 0, dev_name(&pdev->dev), ad);
++	if (err) {
++		dev_err_probe(&pdev->dev, err,
++				"unable to register interrupt\n");
++		goto free_reset;
++	}
+ 
+ 	err = dma_async_device_register(&ad->dma);
+ 	if (err) {
+@@ -792,6 +805,8 @@ static int admac_probe(struct platform_device *pdev)
+ 
+ free_irq:
+ 	free_irq(ad->irq, ad);
++free_reset:
++	reset_control_rearm(ad->rstc);
+ 	return err;
+ }
+ 
+@@ -802,6 +817,7 @@ static int admac_remove(struct platform_device *pdev)
+ 	of_dma_controller_free(pdev->dev.of_node);
+ 	dma_async_device_unregister(&ad->dma);
+ 	free_irq(ad->irq, ad);
++	reset_control_rearm(ad->rstc);
+ 
+ 	return 0;
+ }
+-- 
+2.33.0
 
-Best regards,
-Krzysztof
