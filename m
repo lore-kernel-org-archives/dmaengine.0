@@ -2,25 +2,25 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E46CEC32771
-	for <dmaengine@archiver.kernel.org>; Sun, 18 Sep 2022 09:59:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D0FFCC32771
+	for <dmaengine@archiver.kernel.org>; Sun, 18 Sep 2022 09:59:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229642AbiIRJ7s (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Sun, 18 Sep 2022 05:59:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37164 "EHLO
+        id S229877AbiIRJ7v (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Sun, 18 Sep 2022 05:59:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37158 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230211AbiIRJ7X (ORCPT
+        with ESMTP id S230210AbiIRJ7X (ORCPT
         <rfc822;dmaengine@vger.kernel.org>); Sun, 18 Sep 2022 05:59:23 -0400
-Received: from hutie.ust.cz (hutie.ust.cz [185.8.165.127])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 193EFFFD;
+Received: from hutie.ust.cz (unknown [IPv6:2a03:3b40:fe:f0::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 11303E08;
         Sun, 18 Sep 2022 02:59:19 -0700 (PDT)
 From:   =?UTF-8?q?Martin=20Povi=C5=A1er?= <povik+lin@cutebit.org>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cutebit.org; s=mail;
-        t=1663495157; bh=gaKj0Ci5FD63deotj130sKbZ5bE1yUtuVtF+Ah5tT40=;
+        t=1663495156; bh=ksK/iiTdEFt0yUmhNmHJ0UbHdl5qCLakkzptRrVKPZA=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References;
-        b=IDTxXvLfZNDc4JOl0JP8m6l4wQRFooeggzLjK21+aezGO81b0Fdv+LjxPvbhUncL3
-         DpJuT/7miSTKMNJvw4594YyjbRWpDVGJLW8BeZq0JP2VTtbGz7BWOaIW4f4HpFpTs8
-         l28P27O2tz/HQNoFKme3dvax7zeTQWWDkxIpvNm8=
+        b=DwqofZlil1USt0Vhrq8Q81lX+Uo757ecItAyK9vr9wszT/JkD3IbAxV06te8Ngf/l
+         /z8I7qpYhAjyC5J4cF8nE7PK8agNYmuOtSmPvvB/5/TyFrKQAd1AJem7gX1fU3FLTq
+         CvpaQIjiJ4W0IY/pd1preR319acBgM2ntP5OXNsY=
 To:     Hector Martin <marcan@marcan.st>, Sven Peter <sven@svenpeter.dev>,
         Vinod Koul <vkoul@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
@@ -30,9 +30,9 @@ Cc:     Alyssa Rosenzweig <alyssa@rosenzweig.io>, asahi@lists.linux.dev,
         dmaengine@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org,
         =?UTF-8?q?Martin=20Povi=C5=A1er?= <povik+lin@cutebit.org>
-Subject: [PATCH 3/4] dmaengine: apple-admac: Do not use devres for IRQs
-Date:   Sun, 18 Sep 2022 11:58:44 +0200
-Message-Id: <20220918095845.68860-4-povik+lin@cutebit.org>
+Subject: [PATCH 1/4] dt-bindings: dma: apple,admac: Add reset
+Date:   Sun, 18 Sep 2022 11:58:42 +0200
+Message-Id: <20220918095845.68860-2-povik+lin@cutebit.org>
 In-Reply-To: <20220918095845.68860-1-povik+lin@cutebit.org>
 References: <20220918095845.68860-1-povik+lin@cutebit.org>
 MIME-Version: 1.0
@@ -42,82 +42,28 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-This is in advance of adding support for triggering the reset signal to
-the peripheral, since registering the IRQ handler will have to be
-sequenced with it.
+On the SoCs there is usually a shared audio reset line, so add
+a property for that.
 
 Signed-off-by: Martin Povišer <povik+lin@cutebit.org>
 ---
- drivers/dma/apple-admac.c | 27 ++++++++++++++++++---------
- 1 file changed, 18 insertions(+), 9 deletions(-)
+ Documentation/devicetree/bindings/dma/apple,admac.yaml | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/dma/apple-admac.c b/drivers/dma/apple-admac.c
-index d1f74a3aa999..7d1b76678032 100644
---- a/drivers/dma/apple-admac.c
-+++ b/drivers/dma/apple-admac.c
-@@ -96,6 +96,7 @@ struct admac_data {
- 	struct device *dev;
- 	__iomem void *base;
+diff --git a/Documentation/devicetree/bindings/dma/apple,admac.yaml b/Documentation/devicetree/bindings/dma/apple,admac.yaml
+index 3b1e667f7ea0..97282469e4af 100644
+--- a/Documentation/devicetree/bindings/dma/apple,admac.yaml
++++ b/Documentation/devicetree/bindings/dma/apple,admac.yaml
+@@ -56,6 +56,9 @@ properties:
+   power-domains:
+     maxItems: 1
  
-+	int irq;
- 	int irq_index;
- 	int nchannels;
- 	struct admac_chan channels[];
-@@ -724,12 +725,7 @@ static int admac_probe(struct platform_device *pdev)
- 
- 	if (irq < 0)
- 		return dev_err_probe(&pdev->dev, irq, "no usable interrupt\n");
--
--	err = devm_request_irq(&pdev->dev, irq, admac_interrupt,
--			       0, dev_name(&pdev->dev), ad);
--	if (err)
--		return dev_err_probe(&pdev->dev, err,
--				     "unable to register interrupt\n");
-+	ad->irq = irq;
- 
- 	ad->base = devm_platform_ioremap_resource(pdev, 0);
- 	if (IS_ERR(ad->base))
-@@ -774,17 +770,29 @@ static int admac_probe(struct platform_device *pdev)
- 		tasklet_setup(&adchan->tasklet, admac_chan_tasklet);
- 	}
- 
--	err = dma_async_device_register(&ad->dma);
-+	err = request_irq(irq, admac_interrupt, 0, dev_name(&pdev->dev), ad);
- 	if (err)
--		return dev_err_probe(&pdev->dev, err, "failed to register DMA device\n");
-+		return dev_err_probe(&pdev->dev, err,
-+				     "unable to register interrupt\n");
++  resets:
++    maxItems: 1
 +
-+	err = dma_async_device_register(&ad->dma);
-+	if (err) {
-+		dev_err_probe(&pdev->dev, err, "failed to register DMA device\n");
-+		goto free_irq;
-+	}
- 
- 	err = of_dma_controller_register(pdev->dev.of_node, admac_dma_of_xlate, ad);
- 	if (err) {
- 		dma_async_device_unregister(&ad->dma);
--		return dev_err_probe(&pdev->dev, err, "failed to register with OF\n");
-+		dev_err_probe(&pdev->dev, err, "failed to register with OF\n");
-+		goto free_irq;
- 	}
- 
- 	return 0;
-+
-+free_irq:
-+	free_irq(ad->irq, ad);
-+	return err;
- }
- 
- static int admac_remove(struct platform_device *pdev)
-@@ -793,6 +801,7 @@ static int admac_remove(struct platform_device *pdev)
- 
- 	of_dma_controller_free(pdev->dev.of_node);
- 	dma_async_device_unregister(&ad->dma);
-+	free_irq(ad->irq, ad);
- 
- 	return 0;
- }
+ required:
+   - compatible
+   - reg
 -- 
 2.33.0
 
