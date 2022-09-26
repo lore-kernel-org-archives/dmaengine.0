@@ -2,126 +2,101 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 92E98C32771
-	for <dmaengine@archiver.kernel.org>; Mon, 26 Sep 2022 12:59:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 92996C6FA86
+	for <dmaengine@archiver.kernel.org>; Mon, 26 Sep 2022 15:22:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235254AbiIZM7F (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 26 Sep 2022 08:59:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35326 "EHLO
+        id S236448AbiIZPWN (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 26 Sep 2022 11:22:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56198 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235250AbiIZM6p (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Mon, 26 Sep 2022 08:58:45 -0400
-Received: from mail-pf1-x436.google.com (mail-pf1-x436.google.com [IPv6:2607:f8b0:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 25E196CF60
-        for <dmaengine@vger.kernel.org>; Mon, 26 Sep 2022 04:32:16 -0700 (PDT)
-Received: by mail-pf1-x436.google.com with SMTP id d82so6365764pfd.10
-        for <dmaengine@vger.kernel.org>; Mon, 26 Sep 2022 04:32:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date;
-        bh=JYDoWINnTnWSLstS0U4CDHaR+NWzszIow/uHYNqrLqs=;
-        b=g8lNQl16VInhr8fQ1rv/n0nIZV//JkcF0keGq+gempO8uCVYTU+H63nmK7nU2hMpLe
-         Njj07s3zeBlBr9UexgLer+HpLpvJaqQbyQQ0eF53+TYDbRmpJY5e7NU1vvn2iGQMLsym
-         SSMHR03IeaQnlN88FvM6YVl9uXdvs60c6ZFzaYqWpI8cr2YdUNi3lD/Cvex2tuHMmkiO
-         9HT3fHoGkirhHn2fIHZbC7dHRabAMNZq5N36tDboZzbGj2j7LByFRuI1ePq+53bTM+6b
-         FqOUhWcKzXIktRRsimpfBGLrWmfh/BSsgnG5989KrDLosVrijb0yVGgjaAQd67+cCwmq
-         S21A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date;
-        bh=JYDoWINnTnWSLstS0U4CDHaR+NWzszIow/uHYNqrLqs=;
-        b=xgZUTUqirAKT5qQiaTGvQkFoyyE7Oyo7CM86Pv2pYZGtruwNbnVvdBHhXNBIZz3iF0
-         tuln2UFG6/3qZ6I6QQt810cLAT31kUorwMMTtxSuEhkmnihAGXPDRUrJywYhQvaUTfpy
-         7n5fspwkrVVyFKzZeUxVRqdIWFD65wCLCcukkrz5xq9YskMZGhDZWvfV4bhVDG0tX6Ca
-         REy9cIZHlDTwEV8epbsxFYdmY6CVTvIkLB58QWWbMRIbg/dwa5DyZVjHYnX9+EiQZemg
-         RZ3rmT3Sve0F7n+5anOd+HtMrHGPFPjP5BHvtihYiTlaUJMjwCk3Q952gH/eOnG/9Lb8
-         K2og==
-X-Gm-Message-State: ACrzQf1nE6dh453rQdnXTrZEiAe+vaEVMKqsLoD7RJr6dA2mEatrb3jy
-        BK2nlCqulO8efejsD2mbwUv+u428ITf3bA==
-X-Google-Smtp-Source: AMsMyM74+1NNHJgu7WyQesL5hoEKzfq6L9qRrAIaL/fTtmfCUGntVGvjnG3d33XG33OgJMgTUCkgjA==
-X-Received: by 2002:a17:903:44e:b0:178:8492:d0ff with SMTP id iw14-20020a170903044e00b001788492d0ffmr21768016plb.146.1664191340419;
-        Mon, 26 Sep 2022 04:22:20 -0700 (PDT)
-Received: from localhost.localdomain ([2401:4900:1c5e:95f8:d0c3:cac:4cc3:5957])
-        by smtp.gmail.com with ESMTPSA id mm10-20020a17090b358a00b002005f5ab6a8sm6277418pjb.29.2022.09.26.04.22.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 26 Sep 2022 04:22:19 -0700 (PDT)
-From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
-To:     devicetree@vger.kernel.org
-Cc:     linux-arm-msm@vger.kernel.org, bhupesh.sharma@linaro.org,
-        bhupesh.linux@gmail.com, linux-kernel@vger.kernel.org,
-        vkoul@kernel.org, agross@kernel.org, dmaengine@vger.kernel.org,
-        krzysztof.kozlowski@linaro.org, andersson@kernel.org,
-        konrad.dybcio@somainline.org, robh+dt@kernel.org
-Subject: [PATCH v2] dt-bindings: dma: Make minor fixes to qcom,bam-dma binding doc
-Date:   Mon, 26 Sep 2022 16:52:00 +0530
-Message-Id: <20220926112200.1948080-1-bhupesh.sharma@linaro.org>
-X-Mailer: git-send-email 2.37.1
+        with ESMTP id S236294AbiIZPVD (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Mon, 26 Sep 2022 11:21:03 -0400
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 744E45D12C;
+        Mon, 26 Sep 2022 07:08:09 -0700 (PDT)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id CB1BE1042;
+        Mon, 26 Sep 2022 07:08:15 -0700 (PDT)
+Received: from [10.57.65.170] (unknown [10.57.65.170])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id B5E4B3F73B;
+        Mon, 26 Sep 2022 07:08:06 -0700 (PDT)
+Message-ID: <5569ad73-9699-e326-c1fb-e0753bbdde78@arm.com>
+Date:   Mon, 26 Sep 2022 15:08:01 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (Windows NT 10.0; rv:102.0) Gecko/20100101
+ Thunderbird/102.3.0
+Subject: Re: [PATCH RESEND v5 22/24] dmaengine: dw-edma: Bypass dma-ranges
+ mapping for the local setup
+Content-Language: en-GB
+To:     Serge Semin <fancer.lancer@gmail.com>
+Cc:     Serge Semin <Sergey.Semin@baikalelectronics.ru>,
+        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+        Vinod Koul <vkoul@kernel.org>, Rob Herring <robh@kernel.org>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Jingoo Han <jingoohan1@gmail.com>, Frank Li <Frank.Li@nxp.com>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Alexey Malahov <Alexey.Malahov@baikalelectronics.ru>,
+        Pavel Parkhomenko <Pavel.Parkhomenko@baikalelectronics.ru>,
+        =?UTF-8?Q?Krzysztof_Wilczy=c5=84ski?= <kw@linux.com>,
+        linux-pci@vger.kernel.org, dmaengine@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        "iommu@lists.linux.dev" <iommu@lists.linux.dev>
+References: <20220822185332.26149-1-Sergey.Semin@baikalelectronics.ru>
+ <20220822185332.26149-23-Sergey.Semin@baikalelectronics.ru>
+ <7a035b29-fca6-2650-c3c1-eedb3904c32d@arm.com>
+ <20220912012426.xcg4tu6wzogbirp6@mobilestation>
+From:   Robin Murphy <robin.murphy@arm.com>
+In-Reply-To: <20220912012426.xcg4tu6wzogbirp6@mobilestation>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-As a user recently noted, the qcom,bam-dma binding document
-describes the msm8974 BAM DMA node in the 'example section'
-incorrectly. Fix the same by making it consistent with the node
-present inside 'qcom-msm8974' dts file, namely the 'reg' and
-'interrupt' values which are incorrect in the 'example section'.
+On 2022-09-12 02:24, Serge Semin wrote:
+> On Wed, Aug 31, 2022 at 10:17:30AM +0100, Robin Murphy wrote:
+>> On 2022-08-22 19:53, Serge Semin wrote:
+>>> DW eDMA doesn't perform any translation of the traffic generated on the
+>>> CPU/Application side. It just generates read/write AXI-bus requests with
+>>> the specified addresses. But in case if the dma-ranges DT-property is
+>>> specified for a platform device node, Linux will use it to map the CPU
+>>> memory regions into the DMAable bus ranges. This isn't what we want for
+>>> the eDMA embedded into the locally accessed DW PCIe Root Port and
+>>> End-point. In order to work that around let's set the chan_dma_dev flag
+>>> for each DW eDMA channel thus forcing the client drivers to getting a
+>>> custom dma-ranges-less parental device for the mappings.
+>>>
+>>> Note it will only work for the client drivers using the
+>>> dmaengine_get_dma_device() method to get the parental DMA device.
+>>
+> 
+>> No, this is nonsense. If the DMA engine is on the host side of the bridge
+>> then it should not have anything to do with the PCI device at all, it should
+>> be associated with the platform device,
+> 
+> Well. The DMA-engine is embedded into the PCIe Root Port bus, is associated
+> with the platform device it's embedded to, and it doesn't have
+> anything to do with any particular PCI device.
+> 
+>> and thus any range mapping on the bridge itself would be irrelevant anyway.
+> 
+> Really? I find it otherwise. Please see the way the "dma-ranges"
+> property is parsed and works during the device-specific memory ranges
+> mapping when it's applicable for the PCIe Root Ports.
 
-While at it also make two additioanal minor cleanups:
- - mention Bjorn's new email ID in the document, and
- - add SDM845 in the comment line for the SoCs on which
-   qcom,bam-v1.7.0 version is supported.
+Sigh, that's a bug. Now I see where the confusion is coming from.
 
-Fixes: 4f46cc1b88b3 ("dt-bindings: dma: Convert Qualcomm BAM DMA binding to json format")
-Cc: konrad.dybcio@somainline.org
-Cc: robh+dt@kernel.org
-Cc: andersson@kernel.org
-Cc: krzysztof.kozlowski@linaro.org
-Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
----
-- v1 can be seen here: https://lore.kernel.org/all/20220918081119.295364-1-bhupesh.sharma@linaro.org/
-- Fixed Krzysztof's comments on v1 regarding describing the problem more
-  clearly in the commit log.
+Annoyingly it's basically the exact thing I called out in 951d48855d86 
+when making dma-ranges work for non-OF PCI devices in the first place, 
+but apparently neither I nor anyone else thought of this particular edge 
+case at the time. Sorry about that. I'll have a look at how best to fix it.
 
- Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+Everything else still stands, though. If you can't use the original 
+platform device for DMA API calls, at least configure the child device 
+properly by calling of_dma_configure() with the parent's DT node in the 
+expected manner (and manually remove its dma_range_map if you need an 
+immediate workaround).
 
-diff --git a/Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml b/Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml
-index 9bf3a1b164f1..003098caf709 100644
---- a/Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml
-+++ b/Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml
-@@ -8,7 +8,7 @@ title: Qualcomm Technologies Inc BAM DMA controller
- 
- maintainers:
-   - Andy Gross <agross@kernel.org>
--  - Bjorn Andersson <bjorn.andersson@linaro.org>
-+  - Bjorn Andersson <andersson@kernel.org>
- 
- allOf:
-   - $ref: "dma-controller.yaml#"
-@@ -20,7 +20,7 @@ properties:
-       - qcom,bam-v1.3.0
-         # MSM8974, APQ8074 and APQ8084
-       - qcom,bam-v1.4.0
--        # MSM8916
-+        # MSM8916 and SDM845
-       - qcom,bam-v1.7.0
- 
-   clocks:
-@@ -90,8 +90,8 @@ examples:
- 
-     dma-controller@f9944000 {
-         compatible = "qcom,bam-v1.4.0";
--        reg = <0xf9944000 0x15000>;
--        interrupts = <GIC_SPI 94 IRQ_TYPE_LEVEL_HIGH>;
-+        reg = <0xf9944000 0x19000>;
-+        interrupts = <GIC_SPI 239 IRQ_TYPE_LEVEL_HIGH>;
-         clocks = <&gcc GCC_BLSP2_AHB_CLK>;
-         clock-names = "bam_clk";
-         #dma-cells = <1>;
--- 
-2.37.1
-
+Thanks,
+Robin.
