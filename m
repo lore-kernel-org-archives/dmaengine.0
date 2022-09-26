@@ -2,102 +2,93 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4A0D7C6FA82
-	for <dmaengine@archiver.kernel.org>; Mon, 26 Sep 2022 08:49:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E1ACEC07E9D
+	for <dmaengine@archiver.kernel.org>; Mon, 26 Sep 2022 12:56:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234582AbiIZItH (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 26 Sep 2022 04:49:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60968 "EHLO
+        id S234719AbiIZM4H (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 26 Sep 2022 08:56:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35176 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234620AbiIZIsn (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Mon, 26 Sep 2022 04:48:43 -0400
-Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 80E3B3C171
-        for <dmaengine@vger.kernel.org>; Mon, 26 Sep 2022 01:48:41 -0700 (PDT)
-Received: by mail-lj1-x22e.google.com with SMTP id j24so6618152lja.4
-        for <dmaengine@vger.kernel.org>; Mon, 26 Sep 2022 01:48:41 -0700 (PDT)
+        with ESMTP id S234948AbiIZMzh (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Mon, 26 Sep 2022 08:55:37 -0400
+Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C870A474F4
+        for <dmaengine@vger.kernel.org>; Mon, 26 Sep 2022 04:29:55 -0700 (PDT)
+Received: by mail-lj1-x235.google.com with SMTP id x29so7096148ljq.2
+        for <dmaengine@vger.kernel.org>; Mon, 26 Sep 2022 04:29:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date;
-        bh=dyoN5NkBMjN5fTrHiRf8M9wo3Eh26rWGMliaShD1tmk=;
-        b=BD+lLtFdD0rf5g+823kwux0X8eeYS3fu/0vbz9T/6UhpzaHbVqcuWAAeGRcWPCFAky
-         iT0j8JWeWZABFtsd3vpFyzHCA+XDmAsL0HkwzzxNof2S7+lkwqrfEFfuWePomLnPcksc
-         5eZVDgOnAl9qKB5/0A0bbJoBVFd6VUoipR7VCPjsrKFKzv9DxqyEbzcTw3PNjpjEFwHP
-         XPJg0kg/7sIjPkUvzpzXVvdOhcf+D4yXlVl+olUtZE03G1qFEMYpny7w979Mr/oXBawP
-         iP3MNLidJccY1p9435TeCXnR0Ggnfr+kicDYq3AjtOoXVkyPWoRl4RM5NxNe5LABysCj
-         G2gQ==
+        bh=ApSuVze+jAnc2QxIUhDygKbIUFSeGH2UJjjkmYd3zSI=;
+        b=dWMpG+eJFevYe1DDKjWzVmAZLfPpdsvzDQGoYHi2f4gX8eNpN0VgZI9l3PxzitBVch
+         XQecnvgXLotQYjztAeqom51a1FkC+rLhyYdEy+jB0FB20ny4Pjhjg1qJQZDcsdWqC6b8
+         hXALY7EfGGjPV9TSuSYK6ohTC1LxTT8Epa1AUqnIzqIFFY4+wyIqu2zrCPG9rDyNhYJc
+         jlU7B/AwTFwTj958YxkPr+4RDb2T4ZxMvksz24+UEajn+rSxJS1A6MJr8PE0Fxtwjsms
+         T91UZj+H4mos60Kpqp+wZMPyBiMz+I9U4Fs18TVeN/bu/nn4S5RruyLtbSkSAZIEEfjb
+         6Wpg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date;
-        bh=dyoN5NkBMjN5fTrHiRf8M9wo3Eh26rWGMliaShD1tmk=;
-        b=et/5EmA02TAiR4rrSHGJyWKGut2u8KmWjucSguS9ngLEFutp43be8TqmWzRhmL36vp
-         JI2oVqTk/HC1IAEIn7A/fgakoK6wg8uO95ufISlIrDIHIINqMNpGXzdOutQiLpL5HLda
-         YG7Q8uFhGiK4HGdRpKQoVz2lHP4C0kfwxy49If0f7GTt6z27+1B6R3BKE9mN/NcaSudL
-         vMS5tz8920520kHcNt1Xb6ewwplPq4p8dgShOYnsbz3xq5hznP1C7JIRaEVbuisVAO9f
-         2Xyv678eJilHaB251QxGj1/NdbgWjf7cbE85KNTvGqM87dQ1EeIaEKYkzWoUjhyGQIAI
-         w4ZA==
-X-Gm-Message-State: ACrzQf3q2TGgsESVohi/WdsKzl027fRrMQb5fEcT6JA1nXmtBtFiFpIh
-        IZ+fZek+iNFMdX7HkKwfbpFuXQ==
-X-Google-Smtp-Source: AMsMyM4ml1rrIAAdDcF7x3+nZ6DRH+//vOF2T83Xh1IrnMXz3AhCGH85sn5jz2z/b+RKjUe9Gnigbw==
-X-Received: by 2002:a2e:90d0:0:b0:26a:cd11:cb0e with SMTP id o16-20020a2e90d0000000b0026acd11cb0emr7103228ljg.444.1664182119550;
-        Mon, 26 Sep 2022 01:48:39 -0700 (PDT)
+        bh=ApSuVze+jAnc2QxIUhDygKbIUFSeGH2UJjjkmYd3zSI=;
+        b=BsHDv3fLKOlCzmjkh3bg98m+XC/GzNlGonh6eUpk60g1S1xF5L7UnsZnf7RjCenSDb
+         YJCNzO+1JncOejOh4ejNHdGAhgPAJ9b8FANJTpZsbdEuaWsMGDX53fllPtoD48Gzl/L3
+         PdWrdcc2aYVhb4IgSXT5YDDx5L8vPF7Jwh1oOGsKcBEgSULl2k2w0k2BqND3hRJp1u7T
+         yuy3+VWSw0xIXE4Ab/V6VUqy6ariyZt7q3reqMkk4BAo8dYMtVCVGMxJcGbEtRnd61Ke
+         r/IMTDZzIUe2xoJWmrkQ8pcIwx/d2ixSG95wTmLIjY+wXArzrNFeiudkXmy8VwpLXZKE
+         6gbw==
+X-Gm-Message-State: ACrzQf2FDHXUBTEDY2XQBOK+oCEcQooCHND/+RxWJChgI5KyenWgOLrz
+        hV+aUQ5yUb+5zfc2YFAjJ1e2Mg==
+X-Google-Smtp-Source: AMsMyM6FDEihqoEtiiXC2bhgnGHeDNsinnMNdg1jBBIlpO6Vz26TgaV3keOLrvWNax1QEke/zOd+mA==
+X-Received: by 2002:a2e:8496:0:b0:26b:f230:a55d with SMTP id b22-20020a2e8496000000b0026bf230a55dmr7118641ljh.466.1664191699956;
+        Mon, 26 Sep 2022 04:28:19 -0700 (PDT)
 Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id b24-20020ac24118000000b00497a879e552sm2449550lfi.291.2022.09.26.01.48.38
+        by smtp.gmail.com with ESMTPSA id z17-20020a2e4c11000000b0026c2fec2f8esm2337806lja.84.2022.09.26.04.28.18
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 26 Sep 2022 01:48:39 -0700 (PDT)
-Message-ID: <1841f368-e9db-1662-e950-c162a6b17f75@linaro.org>
-Date:   Mon, 26 Sep 2022 10:48:37 +0200
+        Mon, 26 Sep 2022 04:28:19 -0700 (PDT)
+Message-ID: <b20a9c47-d10f-c71b-2491-8b5f322bc346@linaro.org>
+Date:   Mon, 26 Sep 2022 13:28:18 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.3.0
-Subject: Re: [PATCH] dt-bindings: dma: Make minor fixes to qcom,bam-dma
+Subject: Re: [PATCH v2] dt-bindings: dma: Make minor fixes to qcom,bam-dma
  binding doc
 Content-Language: en-US
 To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>,
         devicetree@vger.kernel.org
 Cc:     linux-arm-msm@vger.kernel.org, bhupesh.linux@gmail.com,
         linux-kernel@vger.kernel.org, vkoul@kernel.org, agross@kernel.org,
-        dmaengine@vger.kernel.org, konrad.dybcio@somainline.org,
-        robh+dt@kernel.org, andersson@kernel.org
-References: <20220918081119.295364-1-bhupesh.sharma@linaro.org>
- <d7507d61-9d16-c2d3-2066-5e2f9afd6eb9@linaro.org>
- <d3205b59-6b6e-2983-9e2a-39354cd1803e@linaro.org>
+        dmaengine@vger.kernel.org, andersson@kernel.org,
+        konrad.dybcio@somainline.org, robh+dt@kernel.org
+References: <20220926112200.1948080-1-bhupesh.sharma@linaro.org>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <d3205b59-6b6e-2983-9e2a-39354cd1803e@linaro.org>
+In-Reply-To: <20220926112200.1948080-1-bhupesh.sharma@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On 25/09/2022 21:55, Bhupesh Sharma wrote:
+On 26/09/2022 13:22, Bhupesh Sharma wrote:
+> As a user recently noted, the qcom,bam-dma binding document
+> describes the msm8974 BAM DMA node in the 'example section'
+> incorrectly. Fix the same by making it consistent with the node
+> present inside 'qcom-msm8974' dts file, namely the 'reg' and
+> 'interrupt' values which are incorrect in the 'example section'.
 > 
-> On 9/18/22 2:19 PM, Krzysztof Kozlowski wrote:
->> On 18/09/2022 09:11, Bhupesh Sharma wrote:
->>> As a user recently noted, the qcom,bam-dma binding document
->>> describes the BAM DMA node incorrectly.
->>
->> It's a bit confusing - what is exactly incorrectly described by binding?
->> You did not make any changes to the binding itself...
+> While at it also make two additioanal minor cleanups:
+>  - mention Bjorn's new email ID in the document, and
+>  - add SDM845 in the comment line for the SoCs on which
+>    qcom,bam-v1.7.0 version is supported.
 > 
-> Sorry for the late reply. Your comment just skipped through my mail 
-> filters :(
-> 
-> I understand your point. I should have made the commit message more 
-> descriptive (infact now I look at it, I see some key words are actually 
-> missing from the commit message).
-> 
-> The commit message should infact read as:
-> 
-> "As a user recently noted, the qcom,bam-dma binding document
-> describes the BAM DMA node *in the example section* incorrectly. Fix the 
+> Fixes: 4f46cc1b88b3 ("dt-bindings: dma: Convert Qualcomm BAM DMA binding to json format")
 
-OK, now it makes sense :)
+I don't think examples are worth backporting. Other than that:
 
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Best regards,
 Krzysztof
