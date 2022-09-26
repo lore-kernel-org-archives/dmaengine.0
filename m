@@ -2,98 +2,92 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B5D2EC6FA82
-	for <dmaengine@archiver.kernel.org>; Mon, 26 Sep 2022 18:08:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A3957C07E9D
+	for <dmaengine@archiver.kernel.org>; Mon, 26 Sep 2022 18:22:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231447AbiIZSIm (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 26 Sep 2022 14:08:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35676 "EHLO
+        id S231145AbiIZSWd (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 26 Sep 2022 14:22:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34680 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231343AbiIZSIF (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Mon, 26 Sep 2022 14:08:05 -0400
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 65DCC286F2;
-        Mon, 26 Sep 2022 10:53:30 -0700 (PDT)
-Received: by mail-lf1-x12f.google.com with SMTP id j16so12110996lfg.1;
-        Mon, 26 Sep 2022 10:53:30 -0700 (PDT)
+        with ESMTP id S229980AbiIZSWR (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Mon, 26 Sep 2022 14:22:17 -0400
+Received: from mail-pf1-x430.google.com (mail-pf1-x430.google.com [IPv6:2607:f8b0:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D7D75142C
+        for <dmaengine@vger.kernel.org>; Mon, 26 Sep 2022 11:18:52 -0700 (PDT)
+Received: by mail-pf1-x430.google.com with SMTP id l65so7501424pfl.8
+        for <dmaengine@vger.kernel.org>; Mon, 26 Sep 2022 11:18:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date;
-        bh=rx6S5GyWtbkwCUObHi8ZQPV3HDLXobFD9FeixNTjARs=;
-        b=RP7MljUqd6fIy+V/RnOUO3fvJqC/3zA3HusG/tXyxZrcOkyHiD29FwhIf+sj/ACjqj
-         m+gZrYUtY94qH+qtWZCwxfloVWFS4Pm6NewC2VvM9HjW3+DSAt53PRzJXh7+M37fsM54
-         BJ+kDjLpBLUtt0Xk4byXuP3hFAg2G48PYFGlPOrWfO/tibkGldSghS/cDn8/3D/lj0sR
-         mASdUerplEAgtbur6Ki6WkrQp87tWp+2K9k0v2HXd7iSXQnu0JHg4xK335h8Oo4Zho2I
-         QgHqAFWh55DxI8GpmG6D0ETpzt7F1p5J2bN98yEOf0gw/pX9UMirzIJ4WLysIv8yPV6h
-         zlpg==
+        d=baylibre-com.20210112.gappssmtp.com; s=20210112;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date;
+        bh=/0Wgb/pUWIq+NWeSNBH6i++oWwTqz1d9Kg9pALwjvjA=;
+        b=OAbnJpnmU6XFNt5nES+EJFQyCvS7N43F1TH8Qvar/5VyAvdmf04DqJIB+zQlY/21Fo
+         KevaxR1gGYYO1iMedhUOPk6f4fg1m93ghagAUs06mw/zHuzurupi7t21VCRdiV8CW5bd
+         xPdL9ubtYkZSyTQrRPXPJ11aj2Wb/IYTA/AmLxTalsQlXxUYKFCqvrGNDIJWFrQpL50m
+         /mj3thiS3dYLLd2s/Wa/3QPVv4QHWMrEuvmV2vW4pLQvVBTZvFHMRZmrHU6xpPDntZqo
+         fnzHYGEr6VxiwHkg+cXT3hAp4a1o3uiIPGNdBn91PmQXB5U81wCzSzuGjnX8yhOxKnXy
+         f0dA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date;
-        bh=rx6S5GyWtbkwCUObHi8ZQPV3HDLXobFD9FeixNTjARs=;
-        b=Z5Vbbnk4kPQVc//dAkJIvH54q/rIJ5TC9wZrQkYxrN3hhSSV6l/1ZWZ2WbBz7AKb/X
-         M5r63e1OYWyuimPIy80Nhnb0hMNr8OTSyXP39wZkibIvka4FP7c8wRgDLKmwEHBIaTm6
-         UQfQ2qrFW7WdEKWD0oE5WxuuRlkVQqUbV7A7IAYQC3E4bOPTDTXQVi0qAOX/dRclVqbN
-         K7D+0LTUBE+lELMQDN+Xa6JTpAq7B64Iw/URLbAKeqnJlWYxSyaFtJVPV/fD/MlrMiLm
-         i1qPhJU6XNhHS2UK3bZjtiMzsl834Aiw10UUFHAjfxFIj3DFL/sc+W0vMvwUL3Hbg5y3
-         xOCA==
-X-Gm-Message-State: ACrzQf3imfU0+jht6Af2qVx7AEwYtOz4Ke8FlmPEs9lqruvH+dIbj9Am
-        NG8QyP3NOTTiFO3ycXl8pmUafpiXy7+HsQ==
-X-Google-Smtp-Source: AMsMyM5VUVQj2tG4gnCtQ4VVMjtILE21s2WA3/NIKBjH/aY4X02nRiyExJvXYCeaATSfZVMDufke/w==
-X-Received: by 2002:a05:6512:b86:b0:498:fe61:d2a8 with SMTP id b6-20020a0565120b8600b00498fe61d2a8mr9580909lfv.437.1664214808794;
-        Mon, 26 Sep 2022 10:53:28 -0700 (PDT)
-Received: from [10.0.0.42] (91-159-150-230.elisa-laajakaista.fi. [91.159.150.230])
-        by smtp.gmail.com with ESMTPSA id 8-20020a2e0508000000b00268cfcf841asm2437609ljf.56.2022.09.26.10.53.28
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 26 Sep 2022 10:53:28 -0700 (PDT)
-Message-ID: <d5acf81b-cdeb-2686-927b-4cae4b32cea9@gmail.com>
-Date:   Mon, 26 Sep 2022 21:02:18 +0300
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date;
+        bh=/0Wgb/pUWIq+NWeSNBH6i++oWwTqz1d9Kg9pALwjvjA=;
+        b=pcqHXJYJwUAp+cMzPPWJFT+pwPTgLnodG20VC8/NAJ4lOPw4Dsp+8se3Dv8X2ZXedn
+         72Kwj/oWUu5b86J/S+7QIAd6iApqh8iuN5EskiTQ/vadft9m7tc24CKwNEeQjuq9wDnW
+         qG6naeoetysMncwZQxSkzFb5w8vSmWR7VTt33kIsVWFngautVCQE66URicemi3L3bfld
+         2v3H/RQXQ+6Ve3mCKSCAiiEF/HIqDIBD0Jmtupx5Q3rzqBEGW6KZErRA/KWvtu8d+s3R
+         abcSXj3H86+8YOXsYRpMhc3QpyuW5z6PPxK3fL1eiuOxzQAwad8W8psvQD1iHx8u1uc+
+         hcCw==
+X-Gm-Message-State: ACrzQf325hZL09Kh3uZQO0QrRRQq+6TnmtDA++orocZ5bAJQs1SzdtZr
+        oBNlCwQaJs8WVYmUc3WjpFw9OA==
+X-Google-Smtp-Source: AMsMyM7ITbNUZuCGG4FQ4Hb14MHVV8qELDpnSpkbJKtx6Z/tP/VCS6/W2sMfgf6huxANh254I8Kr1Q==
+X-Received: by 2002:aa7:9af5:0:b0:54e:5455:2b8c with SMTP id y21-20020aa79af5000000b0054e54552b8cmr25379183pfp.63.1664216332104;
+        Mon, 26 Sep 2022 11:18:52 -0700 (PDT)
+Received: from localhost ([76.146.1.42])
+        by smtp.gmail.com with ESMTPSA id z16-20020aa79e50000000b00537d7cc774bsm12510356pfq.139.2022.09.26.11.18.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 26 Sep 2022 11:18:51 -0700 (PDT)
+From:   Kevin Hilman <khilman@baylibre.com>
+To:     Peter Ujfalusi <peter.ujfalusi@gmail.com>,
+        dmaengine@vger.kernel.org
+Cc:     linux-omap@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        Nicolas Frayer <nfrayer@baylibre.com>
+Subject: [PATCH 1/3] of/irq: export of_msi_get_domain
+Date:   Mon, 26 Sep 2022 11:18:46 -0700
+Message-Id: <20220926181848.2917639-2-khilman@baylibre.com>
+X-Mailer: git-send-email 2.34.0
+In-Reply-To: <20220926181848.2917639-1-khilman@baylibre.com>
+References: <20220926181848.2917639-1-khilman@baylibre.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.3.0
-Subject: Re: [PATCH] Documentation: devicetree: dma: update the comments
-Content-Language: en-US
-To:     Deming Wang <wangdeming@inspur.com>, vkoul@kernel.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org
-Cc:     dmaengine@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20220920020721.2190-1-wangdeming@inspur.com>
-From:   =?UTF-8?Q?P=c3=a9ter_Ujfalusi?= <peter.ujfalusi@gmail.com>
-In-Reply-To: <20220920020721.2190-1-wangdeming@inspur.com>
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
+Export of_mis_get_domain to enable it for users from outside.
 
+Signed-off-by: Matthias Brugger <mbrugger@suse.com>
+Acked-by: Rob Herring <robh@kernel.org>
+Signed-off-by: Peter Ujfalusi <peter.ujfalusi@ti.com>
+Link: https://lore.kernel.org/r/20200122104723.16955-1-peter.ujfalusi@ti.com
+Signed-off-by: Kevin Hilman <khilman@baylibre.com>
+---
+ drivers/of/irq.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-On 9/20/22 05:07, Deming Wang wrote:
-> remove the double word to.
-
-Acked-by: Peter Ujfalusi <peter.ujfalusi@gmail.com>
-
-> Signed-off-by: Deming Wang <wangdeming@inspur.com>
-> ---
->  Documentation/devicetree/bindings/dma/ti-dma-crossbar.txt | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/Documentation/devicetree/bindings/dma/ti-dma-crossbar.txt b/Documentation/devicetree/bindings/dma/ti-dma-crossbar.txt
-> index b849a1ed389d..47e477cce6d2 100644
-> --- a/Documentation/devicetree/bindings/dma/ti-dma-crossbar.txt
-> +++ b/Documentation/devicetree/bindings/dma/ti-dma-crossbar.txt
-> @@ -4,7 +4,7 @@ Required properties:
->  - compatible:	"ti,dra7-dma-crossbar" for DRA7xx DMA crossbar
->  		"ti,am335x-edma-crossbar" for AM335x and AM437x
->  - reg:		Memory map for accessing module
-> -- #dma-cells:	Should be set to to match with the DMA controller's dma-cells
-> +- #dma-cells:	Should be set to match with the DMA controller's dma-cells
->  		for ti,dra7-dma-crossbar and <3> for ti,am335x-edma-crossbar.
->  - dma-requests:	Number of DMA requests the crossbar can receive
->  - dma-masters:	phandle pointing to the DMA controller
-
+diff --git a/drivers/of/irq.c b/drivers/of/irq.c
+index d22f605fa7ee..c9308baa32c5 100644
+--- a/drivers/of/irq.c
++++ b/drivers/of/irq.c
+@@ -727,6 +727,7 @@ struct irq_domain *of_msi_get_domain(struct device *dev,
+ 
+ 	return NULL;
+ }
++EXPORT_SYMBOL_GPL(of_msi_get_domain);
+ 
+ /**
+  * of_msi_configure - Set the msi_domain field of a device
 -- 
-Péter
+2.34.0
+
