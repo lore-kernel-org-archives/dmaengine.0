@@ -2,157 +2,103 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B21BDC07E9D
-	for <dmaengine@archiver.kernel.org>; Tue, 27 Sep 2022 17:19:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 31B4BC07E9D
+	for <dmaengine@archiver.kernel.org>; Tue, 27 Sep 2022 17:21:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230256AbiI0RTC (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 27 Sep 2022 13:19:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36972 "EHLO
+        id S231956AbiI0RVh (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 27 Sep 2022 13:21:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45172 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230165AbiI0RTC (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Tue, 27 Sep 2022 13:19:02 -0400
-Received: from NAM11-CO1-obe.outbound.protection.outlook.com (mail-co1nam11on2089.outbound.protection.outlook.com [40.107.220.89])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4AB551D138F;
-        Tue, 27 Sep 2022 10:19:00 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=U1DDS1qTyp+Ts/YP5BwXMffdjRGbpLQNkVilH+xyTOp+DV+RSwkdeP1FqLUuJzQ1CY/V39WCZR3rUkuM/qUDLXXYPnGWoGkiiAtXPSXieM3y2qFHzFolqp1d/ZWyRfPkyQZIyJ3UPvLXWi7cGqfLyUcfPisrwqzeIT4fqwXZ2yOBA+K6hx7SVLPG0HL9wRMTvnyYF6Q2BqbToKZFsQixgirxZtuqm7xEl3qUaivcNdTAdD/IxzKCzBI4GzOWXofzBZLD925ks9lNNDzX+PudVcmqhDrzYMUkoCEEwn4A0ZZKpJ9fL6l99ZjQH5PNO+njbowUeiv4Rge0Q2nsPrLH1g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=spHejvDSPcDrFsODqYU4Uzgcd+H45C69VfAMv2I9nRk=;
- b=AC0vyJ+qdPHpP2gLsQ9d6Rb3jMFVkIoV1RpyLGl373dGkH3CEFwatohQC4qyvuKkYdFu3ZnUlYAoeN18Hy24KoU6wdJp0fw56jgu0XyYVruW0kznAqkInWAk1FC+n6r2UaaE37dHS7rX+JGe9NIxPSns18Rk4S2aLWoWoLRLpFTspb0l74xqJyri4QeBF9hKuU60XT18CzYX7FD8hsJi7ETz8r+65X/m1ZvftPC2OJjfqAepvOv56mdJIFEIugZ4edwtUJxF1qb0Ge5yqdwifGDunw+xbEiiuMWxDxiHRjD7NnublIPslKnLamI4RPcXFizVTjUKvpi9wCQA8LGQ/A==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=gpxsee.org smtp.mailfrom=amd.com; dmarc=pass
- (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
- dkim=none (message not signed); arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=spHejvDSPcDrFsODqYU4Uzgcd+H45C69VfAMv2I9nRk=;
- b=erHJh/5LDACMYxnV+FNzSIfhhgDzB5COuBH8dPnQnB3UFt+WyhzuHx5SGNwK/dQlp/RpE6/ezo4flZVXmFemATwLhBOWOzkQQvOzvchU+sf7f76GAKf/vI4jaeAstZQlNfirehYlWYTZq3TRm1NNK6f7NQypWjJuxQjCXgRmky8=
-Received: from MW4PR04CA0353.namprd04.prod.outlook.com (2603:10b6:303:8a::28)
- by SN7PR12MB6692.namprd12.prod.outlook.com (2603:10b6:806:270::19) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5654.26; Tue, 27 Sep
- 2022 17:18:58 +0000
-Received: from CO1NAM11FT081.eop-nam11.prod.protection.outlook.com
- (2603:10b6:303:8a:cafe::bc) by MW4PR04CA0353.outlook.office365.com
- (2603:10b6:303:8a::28) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5676.15 via Frontend
- Transport; Tue, 27 Sep 2022 17:18:57 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
-Received: from SATLEXMB04.amd.com (165.204.84.17) by
- CO1NAM11FT081.mail.protection.outlook.com (10.13.174.80) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.20.5654.14 via Frontend Transport; Tue, 27 Sep 2022 17:18:56 +0000
-Received: from SATLEXMB06.amd.com (10.181.40.147) by SATLEXMB04.amd.com
- (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2375.28; Tue, 27 Sep
- 2022 12:18:56 -0500
-Received: from SATLEXMB04.amd.com (10.181.40.145) by SATLEXMB06.amd.com
- (10.181.40.147) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2375.28; Tue, 27 Sep
- 2022 12:18:55 -0500
-Received: from [172.19.74.144] (10.180.168.240) by SATLEXMB04.amd.com
- (10.181.40.145) with Microsoft SMTP Server id 15.1.2375.28 via Frontend
- Transport; Tue, 27 Sep 2022 12:18:55 -0500
-Message-ID: <5f77987e-49bc-e035-19e0-52c25f4adc7e@amd.com>
-Date:   Tue, 27 Sep 2022 10:18:54 -0700
+        with ESMTP id S230118AbiI0RVg (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Tue, 27 Sep 2022 13:21:36 -0400
+Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6AF0FEF0BD;
+        Tue, 27 Sep 2022 10:21:35 -0700 (PDT)
+Received: by mail-lj1-x22f.google.com with SMTP id b6so11657793ljr.10;
+        Tue, 27 Sep 2022 10:21:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date;
+        bh=Y1H5sQw1pB57hlTStlx7yu2qnClPknyxb90LREDOfJM=;
+        b=UVWz/KfeGp0cOYxIOpGvpl6qI1R8pPOVRUwVvgjN1yqWCeHoN7ejEhBI92+5CUOkc5
+         IP1g4satFGhiRRznF9pB1colfYEbGJJI8IkOzNYf5iGplVIaiE9QG8DRgNUW3fUY2J6E
+         uUlxvxVinfrFkfSv3Wo2loA1OUiT1srMby0etFxIBxYwZhSVgOh4HZ9pZ542D3AANHMP
+         /S3FEUD0or50fF9rnH9phXgHsUVA+i9v9yJrBgzgDmmXYXF8wDnFnS6zm9votKF+XrtY
+         IZZ92Cl/lfQ+KI3svh0YpO64wMeZAmIa9HQkIXHhqlyeXpdl2L+/3oW8VEZrB8az4IOT
+         V2DQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=Y1H5sQw1pB57hlTStlx7yu2qnClPknyxb90LREDOfJM=;
+        b=aBkOCYeJLUlnGDKyDhM4IZMh2S3i+GBMObPBCdcYoZ4YGmE9b9mmwTyndzLzqAsbfX
+         q0t1158D1rSgvzfS0BO80SCHU2uWmFz8blC/3ByyR3sanPViHW/i3VDIr36mvAv6E1of
+         fjSFIhClfhyZnjjDmAtEb7brk14DckTVKkTecpfcT7w1J0IWF22LBWUySNgJ+jN3E+U4
+         e3D9LOjEYXjnS24RCtHjZjwGZ769glLv19MvdfJ128VCtaT5Svj4bqwMBelRTBhnZcKK
+         1FYJmeWDz/RDqVu4a+gJp2ZAieX6f1ewcBElv1QoZJ+xmaWsZqhXJaSvKYm48IohWuds
+         m5JQ==
+X-Gm-Message-State: ACrzQf1ojgJ6cuBsZ4r94nfph4UEy6bIfkuJKgSVxLXYVQFyhRC4xNng
+        +j6NLhlxBMHQjHwb4uBeFoc9px1Z30tdfg==
+X-Google-Smtp-Source: AMsMyM5EMDAfdCgT3bXJLqU/0O3iq+aMoyCBq5ABOgKS4zM9naWYwBFBa0rAVvkmDXt6tv1hY7sPLg==
+X-Received: by 2002:a2e:a547:0:b0:26c:6b98:6b2e with SMTP id e7-20020a2ea547000000b0026c6b986b2emr9672366ljn.90.1664299293781;
+        Tue, 27 Sep 2022 10:21:33 -0700 (PDT)
+Received: from [10.0.0.127] (91-159-150-230.elisa-laajakaista.fi. [91.159.150.230])
+        by smtp.gmail.com with ESMTPSA id v8-20020a2ea608000000b002618e5c2664sm209507ljp.103.2022.09.27.10.21.33
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 27 Sep 2022 10:21:33 -0700 (PDT)
+Message-ID: <541337f7-1c0d-3ea4-d959-cd5aed83e615@gmail.com>
+Date:   Tue, 27 Sep 2022 20:21:53 +0300
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: [PATCH V4 XDMA 2/2] dmaengine: xilinx: xdma: Add user logic
- interrupt support
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.3.0
+Subject: Re: [PATCH 0/3] dma/ti: enable udma and psil to be built as modules
 Content-Language: en-US
-To:     =?UTF-8?Q?Martin_T=c5=afma?= <tumic@gpxsee.org>,
-        <vkoul@kernel.org>, <dmaengine@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <trix@redhat.com>
-CC:     <max.zhen@amd.com>, <sonal.santan@amd.com>, <larry.liu@amd.com>,
-        <brian.xu@amd.com>
-References: <1663871905-60498-1-git-send-email-lizhi.hou@amd.com>
- <1663871905-60498-3-git-send-email-lizhi.hou@amd.com>
- <a2b5c35d-ced2-ff83-c550-4bbf29973b80@gpxsee.org>
- <64388266-1707-ee20-c3ab-edb67ada68dc@amd.com>
- <c0430eb7-d607-acfd-201a-db56db982309@gpxsee.org>
-From:   Lizhi Hou <lizhi.hou@amd.com>
-In-Reply-To: <c0430eb7-d607-acfd-201a-db56db982309@gpxsee.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+To:     Kevin Hilman <khilman@baylibre.com>, dmaengine@vger.kernel.org
+Cc:     linux-omap@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        Nicolas Frayer <nfrayer@baylibre.com>
+References: <20220926181848.2917639-1-khilman@baylibre.com>
+ <cf3194ec-0952-fa7a-cc05-6a60e7e66cf0@gmail.com>
+ <7h7d1pg7c4.fsf@baylibre.com>
+From:   =?UTF-8?Q?P=c3=a9ter_Ujfalusi?= <peter.ujfalusi@gmail.com>
+In-Reply-To: <7h7d1pg7c4.fsf@baylibre.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CO1NAM11FT081:EE_|SN7PR12MB6692:EE_
-X-MS-Office365-Filtering-Correlation-Id: 0d0a9180-cad9-4413-b1ba-08daa0ac5c6a
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: ZVnGIhznrSF1MwFFYtMU7YvopMgzxY4a8zaGa8QSYvjelhLHtQbgNQqK6Hu1TRyYIz5+4SxzicuL2PSdfvLdHFRjfUSeLM0OKlB9EtjrnVAHeuLDCjq3rpsMVWuah7+P4JBfrXeAM1UMfo781d6neFRwj3x5cSd2Pg4kY/dXoZMezEeZ7r5ieRfYTOFbRRo4O+lCp6Bgki7rvEg+tn7doM9C+MAG/ai1f/9OMKgL0IuqxR98m1EMPREj/pJs4CNP/q89grM9Qy5YZYGJ8okcM7ePV+SRjLXcus4rssHWUc7ADtP8z07vUm3z/p1gyuH6A7LFaHKG0tU7k2B7d0WnSaYfCGOAuwfn5OLxQdACpFH4jM4RlGdtil8iUjG8ea8S1morW6+8a4MNS6VOm7qqU0NgQL0h1vqc4skcnBKbMIBEbM6An/XNSDmBchq3U2G9PAUcgPQicU6Kwy63cY0Q5CsQCVLhNuB3A8ke0/ZtlqtPFzo0/G83qlqd4b35LPDrBJddFyXMNwoq/lOJS97Cf/0BRaMlhza+QobhIyvAe0ncqdgVqSsPZIEpd6lyNqbRyO21d0tR6dsUDBl5EZzqvzNwZV/pPsxv8yOuYGgfsPpfonFhVGgpnprBtzcH61Xh/8kTKNCEx4XmaZDXPC1ddgrKCPPzxY2mFm6W9GR+TGk+NrkVOoEA4Ojemy92TqrEBMfEbvUobKLASE6NY1ICRKYCCB4t5pbtphHb9cf+BscXGrUtUvtVrKLH1neHGJgKlQSJb4YhiBjPmZPLfhmObBNKsK31Dl1As9ic/7/xSpfGTQ8djcQZ68gqB6UxYuZxlYKtfGgrunpMtso2TteMyg==
-X-Forefront-Antispam-Report: CIP:165.204.84.17;CTRY:US;LANG:en;SCL:1;SRV:;IPV:CAL;SFV:NSPM;H:SATLEXMB04.amd.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230022)(4636009)(39860400002)(376002)(136003)(396003)(346002)(451199015)(40470700004)(46966006)(36840700001)(2906002)(36860700001)(82740400003)(426003)(70206006)(8936002)(70586007)(83380400001)(16576012)(41300700001)(82310400005)(478600001)(5660300002)(26005)(36756003)(44832011)(40480700001)(186003)(356005)(336012)(110136005)(66574015)(54906003)(31686004)(86362001)(2616005)(81166007)(53546011)(8676002)(4326008)(316002)(40460700003)(31696002)(47076005)(43740500002)(36900700001);DIR:OUT;SFP:1101;
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Sep 2022 17:18:56.9161
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 0d0a9180-cad9-4413-b1ba-08daa0ac5c6a
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d;Ip=[165.204.84.17];Helo=[SATLEXMB04.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: CO1NAM11FT081.eop-nam11.prod.protection.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN7PR12MB6692
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
 
-On 9/27/22 09:46, Martin Tůma wrote:
-> On 27. 09. 22 18:28, Lizhi Hou wrote:
->
->> Okay, I got the point. How about changing request/remove APIs to 
->> enable/disable APIs as below
->>
->>       xdma_enable_user_irq(struct platform_device *pdev, u32 
->> user_irq_index, u32 *irq)
->>
->>              user_irq_index: user logic interrupt wire index. (XDMA 
->> driver determines how system IRQs are mapped to DMA channels and user 
->> logic wires)
->>
->>              irq: IRQ number returned for registering interrupt 
->> handler (request_irq()) or passing to existing platform driver.
->>
->>      xdma_disable_user_irq(struct platform_device *pdev, u32 
->> user_irq_index)
->>
->> Does this make sense to you?
->>
->
-> I think even the "irq" parameter in the enable function is surplus as 
-> the parent driver (the driver of the actual PCIe card) knows* what PCI 
-> irq he has to allocate without XDMA providing the number.
->
-> xdma_enable_user_irq(struct platform_device *pdev, u32 user_irq_index);
-> xdma_disable_user_irq(struct platform_device *pdev, u32 user_irq_index);
->
-> should be all that is needed.
->
-> M.
->
-> * something like:
-> pci_irq_vector((pdev), PCI_BAR_ID) + NUM_C2H_CHANNELS + NUM_H2C_CHANNELS
-> can be used from the PCIe driver
 
-How does parent driver know the first few vectors will be assigned to 
-DMA channel?  Parent diver should not assume the first 
-(NUM_C2H_CHANNELS+NUM_H2C_CHANNELS) are for DMA channel.
+On 27/09/2022 00:21, Kevin Hilman wrote:
+> Hi Péter,
+> 
+> Péter Ujfalusi <peter.ujfalusi@gmail.com> writes:
+> 
+>> On 9/26/22 21:18, Kevin Hilman wrote:
+>>> Enable the UDMA driver & glue and PSIL maps to be built & loaded as modules.
+>>>
+>>> The defauilt Kconfig settings are not changed, so default upstream is
+>>> still to be built in.  This series just enables the option to build as
+>>> modules.
+>>
+>> I can finally drop the half backed stuff I roll on top of -next ;)
+>>
+>> Do you plan to convert the ringacc also? It is straight forward, like:
+>> https://github.com/omap-audio/linux-audio/commit/01f9290c1c61e8bbc0fbdd877382672883ba7e73
+> 
+> Yes, my colleague Nicolas (cc'd) was planning ringacc shortly, but we
+> didn't realize you had already don it.  Your version looks fine to me.
+> Any reason not to submit yours?
 
-Parent driver passes the system IRQ range  to XDMA driver, and only XDMA 
-driver knows what IRQs are used by DMA channel and what IRQs are mapped 
-to user logic wires. I would keep the "u32 *irq" argument.
+It can only be sent after the UDMA is able to be built as a module.
+When I did the module support there were also a tisci dependency which 
+for some reason took too long for me to be able to send these.
 
+I can send my version later if it is OK, but if Nicolas have a better 
+take on it, I don't mind.
 
-Thanks,
-
-Lizhi
-
+-- 
+Péter
