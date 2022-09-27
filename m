@@ -2,153 +2,192 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2C3F0C6FA86
-	for <dmaengine@archiver.kernel.org>; Tue, 27 Sep 2022 06:53:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B88EEC6FA92
+	for <dmaengine@archiver.kernel.org>; Tue, 27 Sep 2022 10:48:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230017AbiI0GxO (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 27 Sep 2022 02:53:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38644 "EHLO
+        id S230088AbiI0Kss (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 27 Sep 2022 06:48:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57748 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229459AbiI0GxN (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Tue, 27 Sep 2022 02:53:13 -0400
-Received: from JPN01-TYC-obe.outbound.protection.outlook.com (mail-tycjpn01on2125.outbound.protection.outlook.com [40.107.114.125])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7FD8E9A6B5;
-        Mon, 26 Sep 2022 23:53:11 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=M2GQ8oWDbq2T1S9WveQ/tZKaI1Lu1HlJrv5WB3S4D3+k0sWzdi03GTSuiPxkuZtxS/O8sMAdBcbOJneWbrMy8pOT9Bb6HOlITMsNN5uZwrAS7nR5Ic0gl9vtcPVYo6r7gSd3y73THkZIYNdPXtno5n1sENDVfc9+ew+Mo53PClk3Z0xI6QQ0wJ5SX+4pj1gQzdpjHnHE8pnt0It3pvk1vs7hvAYFWev7YGBQMghpeZDE6ac4iy21Nx83XcsqS9y8KCfdLFbk0tmBqVv0rNkVtxG8ptuoGxl4YTANGunWFppXmu/zMbXtqlI4ixL9FwIkbyCLRNOho7Ssk9npse7RyQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=jk0W7fXndk++tQoWH0PUWX5epPh/EoV5iC/SLJxVY04=;
- b=MvdB4liDyCtWGpuJ9IGCsqtpAtzg5CX3Db4muzrfrJJU26LpzmnqtJQCPRLgHFjPINTHwNUE0FzmJEnkWPGpI6+eHJ8u6ptwipJrbfeRZxuhgrZLEYbEgx3TnSGdRuEH1ShPmZTP22fGiQ+ln9z2kjClHQxijIsnjqd18pV2qgfqNa4KDQbQ5KOeZFTR262Mlpwq67aoibX7gWsYSAs2k2V+8igltPQwMpZkt1VLFvvg2Egc2uMPZUJEWfzZdtqCxg/x3EqmCYjAE20ZuiZjLm0uVMmSfpDHfN/74TwsaDb6/wMYdaVO2qn5S6bGrQGIXG9tqHknG7pK5CJcr8KRVQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=renesas.com; dmarc=pass action=none header.from=renesas.com;
- dkim=pass header.d=renesas.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=renesas.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=jk0W7fXndk++tQoWH0PUWX5epPh/EoV5iC/SLJxVY04=;
- b=amaB63PgyahFeJAyTEvYb5i7UisM2t9VFWygKb0kPynRx8Gi0HYLI6b6Lo/967t2se6eVC3TWGIjwXmJV867On3HnFg6VMeqojewUbtVma0dn8kinzg3l8C8ojqiXT2kAkiWQIyiwvEDs5OCHEaAvS9L3k5IKyIH+uFIXWeWAXY=
-Received: from TYBPR01MB5341.jpnprd01.prod.outlook.com
- (2603:1096:404:8028::13) by TYVPR01MB10652.jpnprd01.prod.outlook.com
- (2603:1096:400:299::13) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5654.26; Tue, 27 Sep
- 2022 06:53:09 +0000
-Received: from TYBPR01MB5341.jpnprd01.prod.outlook.com
- ([fe80::2991:1e2d:e62c:37d0]) by TYBPR01MB5341.jpnprd01.prod.outlook.com
- ([fe80::2991:1e2d:e62c:37d0%3]) with mapi id 15.20.5654.026; Tue, 27 Sep 2022
- 06:53:09 +0000
-From:   Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
-To:     Geert Uytterhoeven <geert+renesas@glider.be>,
-        Vinod Koul <vkoul@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-CC:     "dmaengine@vger.kernel.org" <dmaengine@vger.kernel.org>,
-        "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
-        "linux-renesas-soc@vger.kernel.org" 
-        <linux-renesas-soc@vger.kernel.org>
-Subject: RE: [PATCH] dt-bindings: renesas,rcar-dmac: Add r8a779g0 support
-Thread-Topic: [PATCH] dt-bindings: renesas,rcar-dmac: Add r8a779g0 support
-Thread-Index: AQHY0bkn/fJ3iqk2YEe+j/nPlR5OlK3y1+MA
-Date:   Tue, 27 Sep 2022 06:53:09 +0000
-Message-ID: <TYBPR01MB5341D19A7EB469F297905173D8559@TYBPR01MB5341.jpnprd01.prod.outlook.com>
-References: <0a4d40092a51345003742725aea512a815d27e89.1664204526.git.geert+renesas@glider.be>
-In-Reply-To: <0a4d40092a51345003742725aea512a815d27e89.1664204526.git.geert+renesas@glider.be>
-Accept-Language: ja-JP, en-US
-Content-Language: ja-JP
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=renesas.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: TYBPR01MB5341:EE_|TYVPR01MB10652:EE_
-x-ms-office365-filtering-correlation-id: d33ef6b9-903a-47bc-37ea-08daa054f050
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: 64Ri03A3w/CmQu/H+xZXRfTzAideZoOcojBpFKWkQ+NmKSmiEqsFNHswef4NXqhvMOV188o7ommDHpSF9gcKVKDWY8eCj8KaIUC5jOnpx1Olz2l+khVIVwnnxEUooK0AWsRV1DE0QPowfpwwY+BWp+nlHpP1eVZ2TpvGqxLpdr1dFVqhUiK4An3hDNxAzybwlEL8sqoW/RPmPcrlsmDz0p2g4+zLW0TEh7fvU5SfW7jFPinSgXwTgTxOmg2aDzX3A9huExWchANNAQMtOcQZ3FWeRMqnpRjg7f/vR+Itab5FI8ABzWkBDpRkd7blITgJCo4rUhBAHW3nRwdzHvZ8rq++JihZHZlMZdO8WUaOGhTn4Iye+5h0CzeXWyvrJPRF4Mr6bU/H1gHYDL0SYtYGXz+DHCsaICxQ3nMl0YBTxgAstSFw+L4ldIX4mXSfBYdeEoYIstTsxj/2DVcJm1iQbQNPqMsy9uilajnDWZEeCM4AYriqktV9wFbqR7t0UeY+XqxxNld9hIs1bQkD4o7QD/Lk1DaBtpn7ZtdpVap1LCnerRJE8LKtLM/idiAGs/52o0tA2NVUUcUJBpOLoBVzVXNi8UqtaNWBtRCHh3dxmJ6HmTS6lnqosbEO+vGTfi1jpUSSXv4+PhEfNs6ektRgZuJcfahj0PV+7h1mBgt+9Myp7kfQHRtxft1m8Y4R0ik/i5Ntg8SruUaYF8m8YfEKDURjCPPvjVCxtkbn+/ld6D5uj98SJU7kmBapej6B2sueJG01bSmwE1mVLbC1rVNlIg==
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:TYBPR01MB5341.jpnprd01.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230022)(4636009)(366004)(376002)(396003)(136003)(39860400002)(346002)(451199015)(41300700001)(66446008)(66556008)(64756008)(9686003)(66946007)(4326008)(38070700005)(76116006)(66476007)(186003)(2906002)(86362001)(5660300002)(33656002)(4744005)(8936002)(52536014)(8676002)(478600001)(71200400001)(55016003)(83380400001)(7696005)(316002)(38100700002)(6506007)(54906003)(122000001)(110136005);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?49lpNCZbNit79IGvy1isXpjncYzqP6lKP8DJm/mQfG2W9dqymhhoZgHEoVgI?=
- =?us-ascii?Q?g+tcLLWPeqfqIJBxWCtWamFD7ZkZ789+FqWPI5wthgKeYvkVC9SwcSCsFx08?=
- =?us-ascii?Q?1Db+1slGawNrLPz/jvVegM46mDCNXU8d+T54aOO+mpeK1SFffXD3rXGr6tlq?=
- =?us-ascii?Q?+sQcmihKs5/mF5CirblpkioflOdxrGdVHoETE9FMmAmDqX7NngNNJszgTpNi?=
- =?us-ascii?Q?Hwl4BSrTl+tp0k9fKPgGTXVWgxviYS2AFnIL/3GXzawQIGE1BzG6guLlYhXS?=
- =?us-ascii?Q?ZkYaEfdYmTtaYO6kb2a4qAtr85gq5LE1La6TqthM2WTh4ienhcCXxFFtxWb+?=
- =?us-ascii?Q?EbzRWi44KovwlDv+xTY6QidIokjS0vdT2eZ7Sf+mBP5QDE5tvFpkHVBFdWxG?=
- =?us-ascii?Q?un4wxy7lLK4I9cxR1QpaYSsamWOSjvy9YRYhKXK+iRmpCuyKsbaoQSwJe8FT?=
- =?us-ascii?Q?KE/1rxz4oEowMGjR3IQMLaFB4wqkUL/iqV1gY1YJAuyjXEBiYB/d5E5x4udK?=
- =?us-ascii?Q?W2ZThiJcS8IBF+OuxwoaJMya24wLphv7QKADgkdv1nYBD1Wo0IBiHPiwb242?=
- =?us-ascii?Q?p3IsIl3AhQ5Q0pKADbFWqdordcNa5bVe/Di4TCeVZVoBJMnji4ZtbJ9eCPGi?=
- =?us-ascii?Q?bOUkFvQc7C/W8MYvBU5AElDFDD/k5UXSHwqAHmjKSZ5rwYMrlWc5OE21b9Ov?=
- =?us-ascii?Q?BrrzkCcIGjJaDd3AIYhlI2/gNg0gkWYzFvLlI90OvRtiNoDEsH2JkvTOGGpo?=
- =?us-ascii?Q?n1rF7mIJsqixi+k/XlG9pT40OdGjLongPuliWdcSHttW51mFCyDIJhhfzgud?=
- =?us-ascii?Q?dOWjB2qHiZYBE0RstCN4Gnw05bBPqKd9boseIFhh3fPqsi0sexaEGBLow4Dr?=
- =?us-ascii?Q?73a6WKTfSWzIDmLcudiYYFh9QYz4/Ftwv9Vu2mgmahF5851G4tqtHU3b8Gx9?=
- =?us-ascii?Q?Qhlq6Fs3FX81jgy1x+pW666WZybNpsfQbD01koGuy8tWeTduYdMsyqaTHY/C?=
- =?us-ascii?Q?XD468j7lBsObG/jhal5MBhmnd6IKm2mo9z60BBcrC7q+MEXk0XmX++U/2nm/?=
- =?us-ascii?Q?15Pnz1emN7gxLgnGL6yOowBDp/dkNG2Wp1t1aWWAdwFZ7VoWCPbD0AJoEirY?=
- =?us-ascii?Q?Zik32CPRUGZVK4nRqundZAYLF+0wpkJSoezFzv3avJb865H7nVhmVB1ISIPZ?=
- =?us-ascii?Q?/4PMHMMMYrjv9Hp1w6gm6CAsyDBeOLj3ebhLoU0SWoP+1olXw4oYgCqGAEgR?=
- =?us-ascii?Q?3MgMKla/kaiF9R3rtS+4DFgPEe04d0pX7NzPeEpNGsIuHAOLv19NhfdttM3b?=
- =?us-ascii?Q?9qVkVcMrgCk0KlY/mqIf6J5RNnc5KiiO2UZCZ5iHrScyDE7i/dLEgj7lHuEG?=
- =?us-ascii?Q?q5bp1hqDfIdtQyZSEjzijL+GlqjnDLTZK5LyB0k3vyGJW/C6VEvi94H/vXMQ?=
- =?us-ascii?Q?IU0ipCjO3RB7Hvxs9fLvCv6FyOz5tyPKHzptDB32gg51UFAYruaRVj7XDqbZ?=
- =?us-ascii?Q?RVslYQnDSzlOvjyKAa9c95GvRGKm1qcORs22b+ms8joDv8uHHlb5tP/hVFMn?=
- =?us-ascii?Q?xfrybA908Tzp+Z4TSinlDUdr/x/KSkd65lnQFAH7yqvypNvWebhxaQN0D08r?=
- =?us-ascii?Q?htDb3W0n1Dw8QrfRtgQwny3VG7mdhdIM8i4W3ktCj4h06XUbIGB6rprsaz8k?=
- =?us-ascii?Q?+kFABQ=3D=3D?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+        with ESMTP id S229942AbiI0Ksh (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Tue, 27 Sep 2022 06:48:37 -0400
+Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D761A1023B8;
+        Tue, 27 Sep 2022 03:48:35 -0700 (PDT)
+Received: by mail-lj1-x235.google.com with SMTP id l12so10428988ljg.9;
+        Tue, 27 Sep 2022 03:48:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date;
+        bh=tD6fFmYeJzTuuK2jdpy00amrlyqkgZ5Un8L3kfeEcF8=;
+        b=QJ5JaSFgxh4n89b6RIh5iJvHUsstk9b2AEeT63AnQ3oBbP61Caap6pEYPWyLOJbIrj
+         7tMenbSWo4DlDZwNgaeExjDzlCfFC6j/u4HncM7VvZPIQ1wVudYJ4wjxDy+1UAoPRHS+
+         RurA8rqqxXTI05eq7Rigpfzd9qee+fM7RTibyDO8kvxvhui2bAT5hrJ4r0OKmj83TOG+
+         GJ3rJtXI3chTUgaFAu7+HuvE21zr1dDR0+kp00ity0rx7AC+PdYa8tY+DEyxDdXqXwsV
+         6bO6ZhFCsaWb/YSunJ0JTKkHRF+bAFva+d6KSfcFFykbl/ZK/ZWV/UFRhcmQwoIk0VXb
+         62Pw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date;
+        bh=tD6fFmYeJzTuuK2jdpy00amrlyqkgZ5Un8L3kfeEcF8=;
+        b=LL2tmjkKHtzF6UIPlFp73AScIAGXeirBtOOF+BAgyEizKtwgFOLig2aaU+rcAPJHCl
+         ZBE+4QS5ZVbOt8cg+Vn6tWze0zwK32NH2Mje8IfcGWw/vvLuBeVs6bkiZiKx6NynLkd5
+         tu/YvKEliokLk7CZE/xOLBAZU7/wl2qjvIOJn7x3agaBC7oWw50xVx+5EfeHorrKUhpp
+         fl6mTePeDhQ9dQEYXnFFK904FXLI390sW8MuiNUOv+nhORSUOI/x386qiphim3mFBuUx
+         dtSbMpMHz0N2PaoLmjpWKlSaa9gH0TU4vGhwu0z5Itc/Q+uakab5QR7oEb8/UtFnteNk
+         +BAQ==
+X-Gm-Message-State: ACrzQf29a62Z7/v8hHJI/A3ZaaSDScWUo8jkFGImdwPUWqIWimUCn3Zg
+        Sgp4sFTu7KDGEYSBvyAhMrU=
+X-Google-Smtp-Source: AMsMyM52lU3IpY51FkG3e8rm+8k9oJZqPUCZ6uvKv8ZTNPIHL7Y4SAbYANUYG8R7y/okhsrSXUXuUA==
+X-Received: by 2002:a2e:9650:0:b0:26b:ef42:7168 with SMTP id z16-20020a2e9650000000b0026bef427168mr8903544ljh.346.1664275713981;
+        Tue, 27 Sep 2022 03:48:33 -0700 (PDT)
+Received: from mobilestation ([95.79.140.178])
+        by smtp.gmail.com with ESMTPSA id o6-20020a05651238a600b004a100c21eaesm128071lft.97.2022.09.27.03.48.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 27 Sep 2022 03:48:33 -0700 (PDT)
+Date:   Tue, 27 Sep 2022 13:48:31 +0300
+From:   Serge Semin <fancer.lancer@gmail.com>
+To:     Robin Murphy <robin.murphy@arm.com>
+Cc:     Serge Semin <Sergey.Semin@baikalelectronics.ru>,
+        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+        Vinod Koul <vkoul@kernel.org>, Rob Herring <robh@kernel.org>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Jingoo Han <jingoohan1@gmail.com>, Frank Li <Frank.Li@nxp.com>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Alexey Malahov <Alexey.Malahov@baikalelectronics.ru>,
+        Pavel Parkhomenko <Pavel.Parkhomenko@baikalelectronics.ru>,
+        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+        linux-pci@vger.kernel.org, dmaengine@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        "iommu@lists.linux.dev" <iommu@lists.linux.dev>
+Subject: Re: [PATCH RESEND v5 22/24] dmaengine: dw-edma: Bypass dma-ranges
+ mapping for the local setup
+Message-ID: <20220927104831.bovlzl74osb4t5d3@mobilestation>
+References: <20220822185332.26149-1-Sergey.Semin@baikalelectronics.ru>
+ <20220822185332.26149-23-Sergey.Semin@baikalelectronics.ru>
+ <7a035b29-fca6-2650-c3c1-eedb3904c32d@arm.com>
+ <20220912012426.xcg4tu6wzogbirp6@mobilestation>
+ <5569ad73-9699-e326-c1fb-e0753bbdde78@arm.com>
 MIME-Version: 1.0
-X-OriginatorOrg: renesas.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: TYBPR01MB5341.jpnprd01.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: d33ef6b9-903a-47bc-37ea-08daa054f050
-X-MS-Exchange-CrossTenant-originalarrivaltime: 27 Sep 2022 06:53:09.5520
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 53d82571-da19-47e4-9cb4-625a166a4a2a
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: Dhm/c/E/KJFOTol95oWHcUS/7bB1C9xkcLz4qAJ3TRg2BHmw5ttlvLfWACgKB9S5G2pVUGNpjKpgn86e5sxS1HBFUVoeMYbrWjSXFPJUo1WqpaNme3jVETiVHwAyn5Bd
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYVPR01MB10652
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <5569ad73-9699-e326-c1fb-e0753bbdde78@arm.com>
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Hi Geert-san,
+On Mon, Sep 26, 2022 at 03:08:01PM +0100, Robin Murphy wrote:
+> On 2022-09-12 02:24, Serge Semin wrote:
+> > On Wed, Aug 31, 2022 at 10:17:30AM +0100, Robin Murphy wrote:
+> > > On 2022-08-22 19:53, Serge Semin wrote:
+> > > > DW eDMA doesn't perform any translation of the traffic generated on the
+> > > > CPU/Application side. It just generates read/write AXI-bus requests with
+> > > > the specified addresses. But in case if the dma-ranges DT-property is
+> > > > specified for a platform device node, Linux will use it to map the CPU
+> > > > memory regions into the DMAable bus ranges. This isn't what we want for
+> > > > the eDMA embedded into the locally accessed DW PCIe Root Port and
+> > > > End-point. In order to work that around let's set the chan_dma_dev flag
+> > > > for each DW eDMA channel thus forcing the client drivers to getting a
+> > > > custom dma-ranges-less parental device for the mappings.
+> > > > 
+> > > > Note it will only work for the client drivers using the
+> > > > dmaengine_get_dma_device() method to get the parental DMA device.
+> > > 
+> > 
+> > > No, this is nonsense. If the DMA engine is on the host side of the bridge
+> > > then it should not have anything to do with the PCI device at all, it should
+> > > be associated with the platform device,
+> > 
+> > Well. The DMA-engine is embedded into the PCIe Root Port bus, is associated
+> > with the platform device it's embedded to, and it doesn't have
+> > anything to do with any particular PCI device.
+> > 
+> > > and thus any range mapping on the bridge itself would be irrelevant anyway.
+> > 
+> > Really? I find it otherwise. Please see the way the "dma-ranges"
+> > property is parsed and works during the device-specific memory ranges
+> > mapping when it's applicable for the PCIe Root Ports.
+> 
 
-> From: Geert Uytterhoeven, Sent: Tuesday, September 27, 2022 12:03 AM
->=20
-> Document support for the Direct Memory Access Controllers (DMAC) in the
-> Renesas R-Car V4H (R8A779G0) SoC.
->=20
-> Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+> Sigh, that's a bug. Now I see where the confusion is coming from.
 
-Thank you for the patch!
+Finally we are on the same page.) I didn't thought it was a bug
+though. Some details of the problem I described in another thread
+earlier today:
+Link: https://lore.kernel.org/linux-pci/20220926205333.qlhb5ojmx4sktzt5@mobilestation/
+(See my note regarding the "dma-ranges" usage, which I accidentally
+addressed to William instead of you.)
 
-Reviewed-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
+> 
+> Annoyingly it's basically the exact thing I called out in 951d48855d86 when
+> making dma-ranges work for non-OF PCI devices in the first place, but
+> apparently neither I nor anyone else thought of this particular edge case at
+> the time. Sorry about that. I'll have a look at how best to fix it.
 
-Best regards,
-Yoshihiro Shimoda
+You are right. The PCI-specific dma-ranges semantic hasn't been well
+thought through in the first place. The child devices should have had
+a dedicated method to set their own way of the memory ranges mapping.
 
-> ---
->  Documentation/devicetree/bindings/dma/renesas,rcar-dmac.yaml | 1 +
->  1 file changed, 1 insertion(+)
->=20
-> diff --git a/Documentation/devicetree/bindings/dma/renesas,rcar-dmac.yaml
-> b/Documentation/devicetree/bindings/dma/renesas,rcar-dmac.yaml
-> index 7202cd68e7597dc2..89b591a05bce5fe5 100644
-> --- a/Documentation/devicetree/bindings/dma/renesas,rcar-dmac.yaml
-> +++ b/Documentation/devicetree/bindings/dma/renesas,rcar-dmac.yaml
-> @@ -45,6 +45,7 @@ properties:
->            - enum:
->                - renesas,dmac-r8a779a0     # R-Car V3U
->                - renesas,dmac-r8a779f0     # R-Car S4-8
-> +              - renesas,dmac-r8a779g0     # R-Car V4H
->            - const: renesas,rcar-gen4-dmac # R-Car Gen4
->=20
->    reg: true
-> --
-> 2.25.1
+Just a thought. As a possible solution for the dma-ranges property
+being dedicated for the child devices we could introduce a new "space
+code" of the dma-ranges property with a flag which would indicate the
+actual bridge/host-controller memory range. If the dma-ranges property
+doesn't have an entry with such code the mapping could be considered
+as direct (in accordance with the parental dma-ranges properties).
+IOMMU-part is applicable for all PCIe-related hierarchy - bridge itself
+and peripheral devices.
 
+> 
+> Everything else still stands, though. If you can't use the original platform
+> device for DMA API calls, at least configure the child device properly by
+> calling of_dma_configure() with the parent's DT node in the expected manner
+> (and manually remove its dma_range_map if you need an immediate workaround).
+
+Do you mean something like this?
+
+< 	struct dma_chan *dchan = ...;
+< 	struct dw_edma_chan *chan = ...;
+< 	struct device *parent = chan->dw->chip->dev;
+<
+< 	if (dev_of_node(parent)) {
+< 		struct device_node *node = dev_of_node(parent);
+< 
+< 		ret = of_dma_configure(&chan->dev->device, node, true);
+< 	} else if (has_acpi_companion(parent)) {
+< 		struct acpi_device *adev = to_acpi_device_node(parent->fwnode);
+<
+< 		ret = acpi_dma_configure(&chan->dev->device, acpi_get_dma_attr(adev));
+< 	} else {
+<		ret = -EINVAL;
+<	}
+<
+< 	if (ret)
+< 		return ret;
+<
+<	/* Drop the detected dma-ranges mapping since it isn't applicable for
+< 	 * the PCIe RP/EP bridge itself but to the peripheral devices only.
+<	 */
+<	dchan->dev->device.dma_range_map = NULL;
+< 	dchan->dev->chan_dma_dev = true;
+< 
+< 	return 0;
+
+What about the DMA-mask? Will it be ok if I copy it from the parental device?
+Like this:
+
+<	dma_coerce_mask_and_coherent(&dchan->dev->device, dma_get_mask(parent));
+
+Judging by the of_dma_configure_id() method implementation the mask
+upper bound is calculated based on the dma-ranges entries. Since the
+DT-property isn't applicable for the PCIe host platform device itself
+then it' upper bound most like will be invalid for the bridge too.
+
+Regards,
+-Sergey
+
+> 
+> Thanks,
+> Robin.
