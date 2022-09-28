@@ -2,81 +2,170 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 87AFAC54EE9
-	for <dmaengine@archiver.kernel.org>; Wed, 28 Sep 2022 15:49:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8BB5EC32771
+	for <dmaengine@archiver.kernel.org>; Wed, 28 Sep 2022 15:52:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233997AbiI1PtK (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 28 Sep 2022 11:49:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55766 "EHLO
+        id S233194AbiI1PwB (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 28 Sep 2022 11:52:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39386 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234016AbiI1PtH (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Wed, 28 Sep 2022 11:49:07 -0400
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3FE04DC110
-        for <dmaengine@vger.kernel.org>; Wed, 28 Sep 2022 08:49:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1664380145;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:
-         content-transfer-encoding:content-transfer-encoding;
-        bh=/fkn9zPBJpOFQKeaHKQiXdHNWX6qJBIhEOAaIwagtrc=;
-        b=GrsoWNNG6NqcDvKJ1NfJ+u7g6B3oKn9ed/3cP56JOa2wkB5mkbprVNg1ZmJk/RNbVp/EJv
-        aCWQxkHNwndeGpU6c9XQOhMes+TpkxapCTGAuxSXow8rA8p9GfZAwYnh2mMMdqej5BOwwg
-        Sge9gl6QAxi5HO+m0PnMF2L8Y9cioxg=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- us-mta-664-j9V9FJRcO3qocio5BNqKyg-1; Wed, 28 Sep 2022 11:48:59 -0400
-X-MC-Unique: j9V9FJRcO3qocio5BNqKyg-1
-Received: from smtp.corp.redhat.com (int-mx10.intmail.prod.int.rdu2.redhat.com [10.11.54.10])
-        (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 9B064800B30;
-        Wed, 28 Sep 2022 15:48:58 +0000 (UTC)
-Received: from cantor.redhat.com (unknown [10.2.17.155])
-        by smtp.corp.redhat.com (Postfix) with ESMTP id 03B50492B04;
-        Wed, 28 Sep 2022 15:48:57 +0000 (UTC)
-From:   Jerry Snitselaar <jsnitsel@redhat.com>
-To:     linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org
-Cc:     Fenghua Yu <fenghua.yu@intel.com>,
-        Dave Jiang <dave.jiang@intel.com>,
-        Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH v2 0/2] dmaengine: idxd: Fix up re-enabling device workqueues
-Date:   Wed, 28 Sep 2022 08:48:54 -0700
-Message-Id: <20220928154856.623545-1-jsnitsel@redhat.com>
+        with ESMTP id S229486AbiI1PwA (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Wed, 28 Sep 2022 11:52:00 -0400
+Received: from mga09.intel.com (mga09.intel.com [134.134.136.24])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C8928305A;
+        Wed, 28 Sep 2022 08:51:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1664380319; x=1695916319;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=2NxRgRts5NH10GH5zaZNAr4ml97NqLJQPJNK5aYWjbI=;
+  b=RuyIzQ1KoW/wEKXVlgZ2E08ByCf0F1chE6kCzOb4sUDOZtzBYK706F4x
+   9Y3V3ZZEZnOG1A+GbXxxbydh3/ArPAUOvtYEALbXyYxGqXG7sqhgM7j/E
+   vl7mCrbOzAS9+nMhofESKFkA0O1ReV/LJTTHDndbTuIL1sqE8kkwP9DFP
+   CLLReWC8alZfO5DOepRjLaCkbrhiPjzR2BHWApDyENBI7u3kdEoGXKarg
+   e9PEgW+bLh0/mvvBD4fDKW7jbV3+HFO5NuElTTY2mE8msrgtmb8EqZ42U
+   WCRoyJ7AYspYxkAj+1ucG5cq7tkJXqJQgpShCW8Vc/mlFQ5BZRn7++JFt
+   A==;
+X-IronPort-AV: E=McAfee;i="6500,9779,10484"; a="302549268"
+X-IronPort-AV: E=Sophos;i="5.93,352,1654585200"; 
+   d="scan'208";a="302549268"
+Received: from orsmga004.jf.intel.com ([10.7.209.38])
+  by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Sep 2022 08:51:58 -0700
+X-IronPort-AV: E=McAfee;i="6500,9779,10484"; a="747477181"
+X-IronPort-AV: E=Sophos;i="5.93,352,1654585200"; 
+   d="scan'208";a="747477181"
+Received: from djiang5-mobl2.amr.corp.intel.com (HELO [10.212.108.153]) ([10.212.108.153])
+  by orsmga004-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Sep 2022 08:51:57 -0700
+Message-ID: <e72f8966-de53-6288-517f-dd2a205a761c@intel.com>
+Date:   Wed, 28 Sep 2022 08:51:56 -0700
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.1 on 10.11.54.10
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Firefox/102.0 Thunderbird/102.3.0
+Subject: Re: [PATCH v2 2/2] dmaengine: idxd: track enabled workqueues in
+ bitmap
+Content-Language: en-US
+To:     Jerry Snitselaar <jsnitsel@redhat.com>,
+        linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org
+Cc:     Fenghua Yu <fenghua.yu@intel.com>, Vinod Koul <vkoul@kernel.org>
+References: <20220928154856.623545-1-jsnitsel@redhat.com>
+ <20220928154856.623545-3-jsnitsel@redhat.com>
+From:   Dave Jiang <dave.jiang@intel.com>
+In-Reply-To: <20220928154856.623545-3-jsnitsel@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Currently if a software reset is attempted on an idxd device
-the workqueues will not be re-enabled, because it will see
-incorrectly see that wq->state is already set to IDXD_WQ_ENABLED.
-So set the workqueue state to disabled in idxd_wq_disable_cleanup(),
-and use a bitmap to track which workqueues have been enabled so they
-can be re-enabled during device re-initialization.
 
-Changes from v1 to v2:
-- Clear bit in case where idxd_wq_enable() fails during re-init.
-
-
-Cc: Fenghua Yu <fenghua.yu@intel.com>
-Cc: Dave Jiang <dave.jiang@intel.com>
-Cc: Vinod Koul <vkoul@kernel.org>
-
-Jerry Snitselaar (2):
-  dmaengine: idxd: Set wq state to disabled in idxd_wq_disable_cleanup()
-  dmaengine: idxd: track enabled workqueues in bitmap
-
- drivers/dma/idxd/device.c | 4 +++-
- drivers/dma/idxd/idxd.h   | 2 ++
- drivers/dma/idxd/init.c   | 6 ++++++
- drivers/dma/idxd/irq.c    | 5 +++--
- drivers/dma/idxd/sysfs.c  | 1 +
- 5 files changed, 15 insertions(+), 3 deletions(-)
-
--- 
-2.37.2
-
+On 9/28/2022 8:48 AM, Jerry Snitselaar wrote:
+> Now that idxd_wq_disable_cleanup() sets the workqueue state to
+> IDXD_WQ_DISABLED, use a bitmap to track which workqueues have been
+> enabled. This will then be used to determine which workqueues
+> should be re-enabled when attempting a software reset to recover
+> from a device halt state.
+>
+> Cc: Fenghua Yu <fenghua.yu@intel.com>
+> Cc: Dave Jiang <dave.jiang@intel.com>
+> Cc: Vinod Koul <vkoul@kernel.org>
+> Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+> ---
+> v2: Clear bit in case where idxd_wq_enable fails during re-init
+>
+>   drivers/dma/idxd/device.c | 2 ++
+>   drivers/dma/idxd/idxd.h   | 2 ++
+>   drivers/dma/idxd/init.c   | 6 ++++++
+>   drivers/dma/idxd/irq.c    | 5 +++--
+>   drivers/dma/idxd/sysfs.c  | 1 +
+>   5 files changed, 14 insertions(+), 2 deletions(-)
+>
+> diff --git a/drivers/dma/idxd/device.c b/drivers/dma/idxd/device.c
+> index 31911e255ac1..f0c7d6d348e3 100644
+> --- a/drivers/dma/idxd/device.c
+> +++ b/drivers/dma/idxd/device.c
+> @@ -196,6 +196,7 @@ int idxd_wq_enable(struct idxd_wq *wq)
+>   	}
+>   
+>   	wq->state = IDXD_WQ_ENABLED;
+> +	set_bit(wq->id, idxd->wq_enable_map);
+>   	dev_dbg(dev, "WQ %d enabled\n", wq->id);
+>   	return 0;
+>   }
+> @@ -223,6 +224,7 @@ int idxd_wq_disable(struct idxd_wq *wq, bool reset_config)
+>   
+>   	if (reset_config)
+>   		idxd_wq_disable_cleanup(wq);
+> +	clear_bit(wq->id, idxd->wq_enable_map);
+>   	wq->state = IDXD_WQ_DISABLED;
+>   	dev_dbg(dev, "WQ %d disabled\n", wq->id);
+>   	return 0;
+> diff --git a/drivers/dma/idxd/idxd.h b/drivers/dma/idxd/idxd.h
+> index fed0dfc1eaa8..f527a7f88b92 100644
+> --- a/drivers/dma/idxd/idxd.h
+> +++ b/drivers/dma/idxd/idxd.h
+> @@ -11,6 +11,7 @@
+>   #include <linux/idr.h>
+>   #include <linux/pci.h>
+>   #include <linux/ioasid.h>
+> +#include <linux/bitmap.h>
+>   #include <linux/perf_event.h>
+>   #include <uapi/linux/idxd.h>
+>   #include "registers.h"
+> @@ -299,6 +300,7 @@ struct idxd_device {
+>   	int rdbuf_limit;
+>   	int nr_rdbufs;		/* non-reserved read buffers */
+>   	unsigned int wqcfg_size;
+> +	unsigned long *wq_enable_map;
+>   
+>   	union sw_err_reg sw_err;
+>   	wait_queue_head_t cmd_waitq;
+> diff --git a/drivers/dma/idxd/init.c b/drivers/dma/idxd/init.c
+> index aa3478257ddb..7e27e69ff741 100644
+> --- a/drivers/dma/idxd/init.c
+> +++ b/drivers/dma/idxd/init.c
+> @@ -151,6 +151,12 @@ static int idxd_setup_wqs(struct idxd_device *idxd)
+>   	if (!idxd->wqs)
+>   		return -ENOMEM;
+>   
+> +	idxd->wq_enable_map = bitmap_zalloc_node(idxd->max_wqs, GFP_KERNEL, dev_to_node(dev));
+> +	if (!idxd->wq_enable_map) {
+> +		kfree(idxd->wqs);
+> +		return -ENOMEM;
+> +	}
+> +
+>   	for (i = 0; i < idxd->max_wqs; i++) {
+>   		wq = kzalloc_node(sizeof(*wq), GFP_KERNEL, dev_to_node(dev));
+>   		if (!wq) {
+> diff --git a/drivers/dma/idxd/irq.c b/drivers/dma/idxd/irq.c
+> index 743ead5ebc57..3fcfbb7bf6e3 100644
+> --- a/drivers/dma/idxd/irq.c
+> +++ b/drivers/dma/idxd/irq.c
+> @@ -49,11 +49,12 @@ static void idxd_device_reinit(struct work_struct *work)
+>   		goto out;
+>   
+>   	for (i = 0; i < idxd->max_wqs; i++) {
+> -		struct idxd_wq *wq = idxd->wqs[i];
+> +		if (test_bit(i, idxd->wq_enable_map)) {
+> +			struct idxd_wq *wq = idxd->wqs[i];
+>   
+> -		if (wq->state == IDXD_WQ_ENABLED) {
+>   			rc = idxd_wq_enable(wq);
+>   			if (rc < 0) {
+> +				clear_bit(i, idxd->wq_enable_map);
+>   				dev_warn(dev, "Unable to re-enable wq %s\n",
+>   					 dev_name(wq_confdev(wq)));
+>   			}
+> diff --git a/drivers/dma/idxd/sysfs.c b/drivers/dma/idxd/sysfs.c
+> index 3f262a57441b..3325b16ed959 100644
+> --- a/drivers/dma/idxd/sysfs.c
+> +++ b/drivers/dma/idxd/sysfs.c
+> @@ -1405,6 +1405,7 @@ static void idxd_conf_device_release(struct device *dev)
+>   	struct idxd_device *idxd = confdev_to_idxd(dev);
+>   
+>   	kfree(idxd->groups);
+> +	bitmap_free(idxd->wq_enable_map);
+>   	kfree(idxd->wqs);
+>   	kfree(idxd->engines);
+>   	ida_free(&idxd_ida, idxd->id);
