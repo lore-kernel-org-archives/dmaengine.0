@@ -2,80 +2,82 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8A90EC433FE
-	for <dmaengine@archiver.kernel.org>; Sat,  1 Oct 2022 01:32:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E9430C4332F
+	for <dmaengine@archiver.kernel.org>; Sat,  1 Oct 2022 03:08:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231795AbiJABb6 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 30 Sep 2022 21:31:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38368 "EHLO
+        id S232812AbiJADIs (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 30 Sep 2022 23:08:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45212 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231298AbiJABb5 (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Fri, 30 Sep 2022 21:31:57 -0400
-Received: from mga12.intel.com (mga12.intel.com [192.55.52.136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F15E1176F3
-        for <dmaengine@vger.kernel.org>; Fri, 30 Sep 2022 18:31:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1664587911; x=1696123911;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=NUBmqwofEQhIsYj9X7axkscXZT6vudLnJZ0kcsjiL+g=;
-  b=dtcB9vzasOunrs1VB3/O1m1LuW3CSOdaXugXSfXgcHb0MMcP7q4Pcg4J
-   kAoe3nvCcoqbF5NNnIcFiwq77GsZ+lKFJ2xcv5T31E8Lgu6abFKBE60Mv
-   WYR1CiUOlghYF8dPW5NGWU9OGbZnL/1aUKbPQrmCbaJe/IebOizSU+/XK
-   TsF3TVoZuz5WStXODAqqy0hymF62C9Hk7RFInMN3+ROyt6L/mLuPK6ykf
-   ElgWH1ebRU9JnWFw+zmZtxZlezJQgpV1iNAzQrA+UVU0H3z1iHU+hKhgV
-   W6Su4ryxpaWzVIgkj07bzZ2xALplmcG1F/NEJJ5WYG5/0uIyF03gbeFYJ
-   g==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10486"; a="282036705"
-X-IronPort-AV: E=Sophos;i="5.93,359,1654585200"; 
-   d="scan'208";a="282036705"
-Received: from orsmga005.jf.intel.com ([10.7.209.41])
-  by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Sep 2022 18:31:50 -0700
-X-IronPort-AV: E=McAfee;i="6500,9779,10486"; a="798151986"
-X-IronPort-AV: E=Sophos;i="5.93,359,1654585200"; 
-   d="scan'208";a="798151986"
-Received: from xshen14-mobl.ccr.corp.intel.com (HELO [10.254.214.38]) ([10.254.214.38])
-  by orsmga005-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Sep 2022 18:31:47 -0700
-Message-ID: <5a8b2a3d-2870-2cfb-03bd-a8a3f0eb19db@intel.com>
-Date:   Sat, 1 Oct 2022 09:31:44 +0800
+        with ESMTP id S232573AbiJADH1 (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Fri, 30 Sep 2022 23:07:27 -0400
+Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 115A7CA281;
+        Fri, 30 Sep 2022 20:06:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1664593601; x=1696129601;
+  h=from:to:cc:subject:date:message-id:in-reply-to:
+   references:mime-version:content-transfer-encoding;
+  bh=MjC1xNzKenBHU8kT4k360DnZXsHo+Jy276zH+wgLXt4=;
+  b=WfW68bTouPb9+WZhrdKV/YvRkvdlcuKmwhvVGQQaJVvQQ4hKQaNAjAoW
+   A1hbpHQiep5yvIpW0aUW1zhgCCO6jAnuJxc3hIDdzBcuolpgkFBzj1TPX
+   AGrAuG96N2psOWwgAVG8srWFZ7zyParE6MjEieWgQvFj/lQfu4ucEsSnM
+   8=;
+Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 30 Sep 2022 20:06:40 -0700
+X-QCInternal: smtphost
+Received: from nasanex01b.na.qualcomm.com ([10.46.141.250])
+  by ironmsg-SD-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Sep 2022 20:06:40 -0700
+Received: from hu-molvera-sd.qualcomm.com (10.80.80.8) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.29; Fri, 30 Sep 2022 20:06:40 -0700
+From:   Melody Olvera <quic_molvera@quicinc.com>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <dmaengine@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        Melody Olvera <quic_molvera@quicinc.com>
+Subject: [PATCH 1/2] dt-bindings: dmaengine: qcom: gpi: Add compatible for QDU1000 and QRU1000
+Date:   Fri, 30 Sep 2022 20:06:26 -0700
+Message-ID: <20221001030627.29147-2-quic_molvera@quicinc.com>
+X-Mailer: git-send-email 2.37.3
+In-Reply-To: <20221001030627.29147-1-quic_molvera@quicinc.com>
+References: <20221001030627.29147-1-quic_molvera@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Firefox/91.0 Thunderbird/91.13.1
-Subject: Re: [PATCH 0/2] dmaengine: idxd: Fix max batch size issues for Intel
- IAA
-Content-Language: en-US
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     "Yu, Fenghua" <fenghua.yu@intel.com>,
-        "Jiang, Dave" <dave.jiang@intel.com>,
-        "dmaengine@vger.kernel.org" <dmaengine@vger.kernel.org>,
-        "Thomas, Ramesh" <ramesh.thomas@intel.com>,
-        "Luck, Tony" <tony.luck@intel.com>,
-        "Zhu, Tony" <tony.zhu@intel.com>,
-        "Jia, Pei P" <pei.p.jia@intel.com>,
-        Xiaochen Shen <xiaochen.shen@intel.com>
-References: <20220808031922.29751-1-xiaochen.shen@intel.com>
- <IA1PR11MB6097EC13718EEEED2A15A0F09B499@IA1PR11MB6097.namprd11.prod.outlook.com>
- <YzXL/HkYS2Q8QEbK@matsya> <c898dd4c-1f1d-789e-e485-afd33c6dce87@intel.com>
- <YzcW27iY+fcDCxtw@matsya>
-From:   Xiaochen Shen <xiaochen.shen@intel.com>
-In-Reply-To: <YzcW27iY+fcDCxtw@matsya>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Hi Vinod,
+Add compatible documentation for Qualcomm QDU1000 and QRU1000 SoCs.
 
-On 10/1/2022 0:18, Vinod Koul wrote:
-> yes pls rebase on -next branch, thanks
+Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
+---
+ Documentation/devicetree/bindings/dma/qcom,gpi.yaml | 2 ++
+ 1 file changed, 2 insertions(+)
 
-Please find v2 patchset which is rebased on -next branch:
-https://lore.kernel.org/all/20220930201528.18621-1-xiaochen.shen@intel.com/
+diff --git a/Documentation/devicetree/bindings/dma/qcom,gpi.yaml b/Documentation/devicetree/bindings/dma/qcom,gpi.yaml
+index 7d2fc4eb5530..e37cee079c78 100644
+--- a/Documentation/devicetree/bindings/dma/qcom,gpi.yaml
++++ b/Documentation/devicetree/bindings/dma/qcom,gpi.yaml
+@@ -25,6 +25,8 @@ properties:
+       - qcom,sm8250-gpi-dma
+       - qcom,sm8350-gpi-dma
+       - qcom,sm8450-gpi-dma
++      - qcom,qdu1000-gpi-dma
++      - qcom,qru1000-gpi-dma
+ 
+   reg:
+     maxItems: 1
+-- 
+2.37.3
 
-Thank you very much!
-
-
-Best regards,
-Xiaochen
