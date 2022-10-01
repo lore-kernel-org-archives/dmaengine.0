@@ -2,51 +2,52 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 219D9C43217
-	for <dmaengine@archiver.kernel.org>; Sat,  1 Oct 2022 21:19:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A5655C4332F
+	for <dmaengine@archiver.kernel.org>; Sat,  1 Oct 2022 21:19:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229524AbiJAVTo (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Sat, 1 Oct 2022 17:19:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44564 "EHLO
+        id S229592AbiJAVTq (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Sat, 1 Oct 2022 17:19:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44764 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229503AbiJAVTm (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Sat, 1 Oct 2022 17:19:42 -0400
-Received: from mail-il1-x12e.google.com (mail-il1-x12e.google.com [IPv6:2607:f8b0:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 81B27DC2;
-        Sat,  1 Oct 2022 14:19:39 -0700 (PDT)
-Received: by mail-il1-x12e.google.com with SMTP id u10so1929161ilm.5;
-        Sat, 01 Oct 2022 14:19:39 -0700 (PDT)
+        with ESMTP id S229503AbiJAVTp (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Sat, 1 Oct 2022 17:19:45 -0400
+Received: from mail-io1-xd2a.google.com (mail-io1-xd2a.google.com [IPv6:2607:f8b0:4864:20::d2a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E3D5659D;
+        Sat,  1 Oct 2022 14:19:43 -0700 (PDT)
+Received: by mail-io1-xd2a.google.com with SMTP id p202so5733493iod.6;
+        Sat, 01 Oct 2022 14:19:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date;
-        bh=om1GcEIyYHdAjslVkRCVb4S8CzbSl6NxZMlPM84vTm8=;
-        b=bK86Rk7aVgCQcYOvQMtNkwPKHvIi41WtY77mAg58oFNUqYxKlPdwGTUh0ZsC1ZC4vu
-         7W2zKwWdvD6Cc6cA6vF42+eh2bekkQMRQmQBO4FzqQc2YD3RXFX9cVWRkDwH5Jz5YkTy
-         t2NZne2HsE/BH5lpNA1mzY7ia87zeobBiYHxxoH2ERO3VzlEB5i4pWLmVSX4lrV08dq0
-         HoscbtmSnZIXQuDKWeTa3rkbU6SV02TFioG/HsNoM461xYhfC5lELsemUDU8kkNBDmCb
-         Rw1ZeEGUm/LDqO/c0jW5wwe71ZN/rjVXOz8AGjYysbCbKXOIP2ncSODqztTxPpR2KoNJ
-         rukw==
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date;
+        bh=W45UiD2TumgDHADA0Bi3A73GMwe5dfWiZOQNYdF92SY=;
+        b=mqi5UeL4NN8J4sXjI7AOWnU8jZonIf3ImSkDEUYdxacv6jOvgBvpL61SMb3DzW9Zv4
+         /kP+EJ0NN+T/pb8o3J4K3vr/UGq7jk/ZeJd6ln6HPHWWsO6tHTj/zbMzzOoEZRwariOj
+         wrKUASiOnVkpHr0NpsCb4kIUl/RYHnh6IHtI8h9WOejN8/8tWoJwXP8o1ZjSkY8RP3Ai
+         Td3xjKnP6332WQtLiSgAbKpiEbGvbep4Quo0Az81NdSep2wblFWIVJs6mAN/GjGdBQKP
+         j9CluzHXzr+OHQFOQLcwPvckklnDdE36yXMxMKTH4QSAuPnooGW913FwUI+tImEYFUDZ
+         86Ng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date;
-        bh=om1GcEIyYHdAjslVkRCVb4S8CzbSl6NxZMlPM84vTm8=;
-        b=btQjRu9MomcskF3GUeA6ElylLFhrciiLOyn8AC+yUOmqkfMBtcK+NqhAGo71oWCJiO
-         5xJq3qfZmJTmlCGvUizNXGDFkh9JSPnTqT6YQHmHt5KMbSICvxqapxYyOkhK7W7dcKPn
-         DcKrXGsgMg5X7nuASTFCuFJRjLFw7/wWNC7LYjQVbMa/eeQe1G5rUoDN1ytiEyMjgNW7
-         iDdfbhKY6+ARpvvJ9K+M1i2Ye29jkUTOksf0d9r9aWjXPg+sP1ccGudLMYXxtx+VFhur
-         A5Jja6lZyd8opJwzW5qISXW89O9AuYHiqrj489mMJSY3hGnjd31gjjH1l/yE6mX0+RlY
-         2FnA==
-X-Gm-Message-State: ACrzQf1cQzbZNF8bojHn6rtg/VTXdWjQC7j9/qvVGSiyQBtsgkWGlMon
-        8JIOQeVQgKd7n4jSV7GY0ZoVs+1m4fYXKQ==
-X-Google-Smtp-Source: AMsMyM6IeKGMHMGmUd2Kd4xjtP1x2jBqtf47dUBO2QwBC1VBxUNFKSjmik2Je2qwwnixCHASaWRimw==
-X-Received: by 2002:a92:6811:0:b0:2f8:f381:1bd5 with SMTP id d17-20020a926811000000b002f8f3811bd5mr7050192ilc.145.1664659178350;
-        Sat, 01 Oct 2022 14:19:38 -0700 (PDT)
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date;
+        bh=W45UiD2TumgDHADA0Bi3A73GMwe5dfWiZOQNYdF92SY=;
+        b=N8ia9Qgdq2FOGPES4qMPLnilzMYd3FOxpV8cqLmW0uhPKApaH9hWwN3PHzAY9PwD1O
+         ErwRGhXuRoLgYX8l98yFJB5XlukFw+GOw2O34TJ/SaF1ds9RneTYYQgQDGxO4ZiEr/Lm
+         RI80PHw5o3Ki/HE5ohD4r/pb9SyGi4Ju8A4mKE/NeNyr8DFLaHI/byzgvZnzxDK/3NXu
+         RTKbc9coMxrYxePMdBCRRPL43/+Ra7aaPDACGTR4WiX6x+ap+J3PsvkaV2n1dMEs6K9m
+         CzvJ/0lS7gwruc+3uT2rl611TLV/ytydaVsiPHhbJQLIkEktvcDmVeY1BoTjkLV9xXTw
+         VVZg==
+X-Gm-Message-State: ACrzQf3ynVskEKBDbmxLa69dT/p5BBFBx62DghFFYbbinEPNiccNI3z+
+        NBBKWWjBEiYq15zzOGhjmN5aHeORlKcQEA==
+X-Google-Smtp-Source: AMsMyM4fSyY4UVQKxgr1kycGYFuo068e1zqkSkumS1yVZPshVg2VHVa7zARlNRkmFq1IL82O4p636Q==
+X-Received: by 2002:a6b:cd86:0:b0:6a8:4861:fc2e with SMTP id d128-20020a6bcd86000000b006a84861fc2emr1902728iog.38.1664659182495;
+        Sat, 01 Oct 2022 14:19:42 -0700 (PDT)
 Received: from localhost ([2607:fea8:a2e2:2d00::1eda])
-        by smtp.gmail.com with UTF8SMTPSA id c19-20020a023f53000000b0035a274c8030sm2448962jaf.44.2022.10.01.14.19.36
+        by smtp.gmail.com with UTF8SMTPSA id x6-20020a026f06000000b00352a7f96772sm2356074jab.38.2022.10.01.14.19.41
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 01 Oct 2022 14:19:37 -0700 (PDT)
+        Sat, 01 Oct 2022 14:19:41 -0700 (PDT)
 From:   Richard Acayan <mailingradian@gmail.com>
 To:     linux-arm-msm@vger.kernel.org
 Cc:     Andy Gross <agross@kernel.org>,
@@ -57,43 +58,39 @@ Cc:     Andy Gross <agross@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         dmaengine@vger.kernel.org, devicetree@vger.kernel.org,
         Richard Acayan <mailingradian@gmail.com>
-Subject: [PATCH v4 0/4] SDM670 GPI DMA support
-Date:   Sat,  1 Oct 2022 17:19:30 -0400
-Message-Id: <20221001211934.62511-1-mailingradian@gmail.com>
+Subject: [PATCH v4 2/4] dt-bindings: dma: qcom: gpi: add compatible for sdm670
+Date:   Sat,  1 Oct 2022 17:19:32 -0400
+Message-Id: <20221001211934.62511-3-mailingradian@gmail.com>
 X-Mailer: git-send-email 2.37.3
+In-Reply-To: <20221001211934.62511-1-mailingradian@gmail.com>
+References: <20221001211934.62511-1-mailingradian@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Changes since v3:
- - keep other compatible strings in driver and add comment
- - accumulate review tags
+The Snapdragon 670 uses GPI DMA for its GENI interface. Add a compatible
+string for it in the documentation.
 
-Changes since v2:
- - change fallback to sdm845 compat string (and keep compat string in
-   driver)
- - fallback now only affects two SoCs + SDM670
+Signed-off-by: Richard Acayan <mailingradian@gmail.com>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+---
+ Documentation/devicetree/bindings/dma/qcom,gpi.yaml | 1 +
+ 1 file changed, 1 insertion(+)
 
-Changes since v1:
- - add fallback compatible
-
-This patch series adds the compatible string for GPI DMA, needed for the
-GENI interface, on Snapdragon 670.
-
-Richard Acayan (4):
-  dt-bindings: dma: qcom: gpi: add fallback compatible
-  dt-bindings: dma: qcom: gpi: add compatible for sdm670
-  arm64: dts: qcom: add gpi-dma fallback compatible
-  dmaengine: qcom: deprecate redundant of_device_id entries
-
- .../devicetree/bindings/dma/qcom,gpi.yaml     | 22 ++++++++++++-------
- arch/arm64/boot/dts/qcom/sm8150.dtsi          |  6 ++---
- arch/arm64/boot/dts/qcom/sm8250.dtsi          |  6 ++---
- drivers/dma/qcom/gpi.c                        |  4 ++++
- 4 files changed, 24 insertions(+), 14 deletions(-)
-
+diff --git a/Documentation/devicetree/bindings/dma/qcom,gpi.yaml b/Documentation/devicetree/bindings/dma/qcom,gpi.yaml
+index 081b8a2d393d..750b40c32213 100644
+--- a/Documentation/devicetree/bindings/dma/qcom,gpi.yaml
++++ b/Documentation/devicetree/bindings/dma/qcom,gpi.yaml
+@@ -28,6 +28,7 @@ properties:
+ 
+       - items:
+           - enum:
++              - qcom,sdm670-gpi-dma
+               - qcom,sm8150-gpi-dma
+               - qcom,sm8250-gpi-dma
+           - const: qcom,sdm845-gpi-dma
 -- 
 2.37.3
 
