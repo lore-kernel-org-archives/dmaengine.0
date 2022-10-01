@@ -2,82 +2,117 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 66906C433FE
-	for <dmaengine@archiver.kernel.org>; Sat,  1 Oct 2022 20:19:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D100DC433FE
+	for <dmaengine@archiver.kernel.org>; Sat,  1 Oct 2022 21:19:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229558AbiJAUTH (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Sat, 1 Oct 2022 16:19:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45918 "EHLO
+        id S229548AbiJAVTn (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Sat, 1 Oct 2022 17:19:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44566 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229550AbiJAUTF (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Sat, 1 Oct 2022 16:19:05 -0400
-X-Greylist: delayed 315 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Sat, 01 Oct 2022 13:19:04 PDT
-Received: from relay03.th.seeweb.it (relay03.th.seeweb.it [IPv6:2001:4b7a:2000:18::164])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6BE483687F
-        for <dmaengine@vger.kernel.org>; Sat,  1 Oct 2022 13:19:04 -0700 (PDT)
-Received: from [192.168.1.101] (95.49.31.201.neoplus.adsl.tpnet.pl [95.49.31.201])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id D7B1F202E6;
-        Sat,  1 Oct 2022 22:13:46 +0200 (CEST)
-Message-ID: <40db9312-6450-8b45-1501-ceb2f3869270@somainline.org>
-Date:   Sat, 1 Oct 2022 22:13:46 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.3.0
-Subject: Re: [PATCH 2/3] drivers: dma: gpi: Add SM6125 compatible
-Content-Language: en-US
-To:     Martin Botka <martin.botka@somainline.org>, martin.botka1@gmail.com
-Cc:     ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Jami Kettunen <jamipkettunen@somainline.org>,
-        Paul Bouchara <paul.bouchara@somainline.org>,
-        Andy Gross <agross@kernel.org>,
+        with ESMTP id S229524AbiJAVTm (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Sat, 1 Oct 2022 17:19:42 -0400
+Received: from mail-io1-xd35.google.com (mail-io1-xd35.google.com [IPv6:2607:f8b0:4864:20::d35])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 340E42BC1;
+        Sat,  1 Oct 2022 14:19:41 -0700 (PDT)
+Received: by mail-io1-xd35.google.com with SMTP id l127so3236745iof.12;
+        Sat, 01 Oct 2022 14:19:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date;
+        bh=IhR4jS5mTKqz4s743v2gTnl33ynzzzLSD1UxLXxB31Q=;
+        b=GVfTBp1WvMFPhDUQGNZ8fnj0xKNKzm99WezeKAC0YvLWmIyk+yVXz4WBtEPcoYFyG0
+         GL9DdKiMBEJnC5h03qv5TpfEi7DQFf5KEv96nMScmaIXCKe7lkvf/24JtjKpVEYNjm89
+         XfOpKTp9SQkh9eNKNoccv1GmmHtrYlcnrbMX0s+0B0CgNB1iNvvVvkBsBRCw9rxXubjp
+         TK3VccIjbS/tkRhdItjhXrRSpvD8iBIt+tgZD1qexK5V9SLu9TcbpGNPU2urgiVKFg2C
+         kINmgJu+Guzo9Im3mYLyRbakAMZ4BDZfpG2fmD73S5Cu9hs+DpCanTvuGSzCXVNL9kqL
+         WESA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date;
+        bh=IhR4jS5mTKqz4s743v2gTnl33ynzzzLSD1UxLXxB31Q=;
+        b=yJVPa72F5FyLIomF6vQCJhSCPMP3cqKxKR5NFgaSk3prn0sCOM8Gtgp6DSPn1yeNZZ
+         D7GC0fcD7k5PIwyNPsFRcmezxssJB0IKi16jbZFHYr8UQlBAmKoaPpZ8q+u5I8C+Y5IP
+         +dBL8KQIvbglU04Rz+FCT0SBsI45dCFP5uZn+9ulpgoIyz+sBzZmKsUuP27x29wflSju
+         MQNn6FWRa2VN3oCZEEjycDaIKIlRqcXL/y1lCHvndlTcyU6rPy1OIP7z5Izln+zP2UnS
+         /TXWq/DLQ97dLuuN7bLon42KYpZoVbomJlowbEx856oDH/jGDLD0eXs5hve5t8Vc3Bvw
+         oHAw==
+X-Gm-Message-State: ACrzQf2GiDCktn+BI1NLOsd4vck/BOD0ewNhFHAADCf8DMym6TBNOKMk
+        2FZOx3XMJyoiMsJ9YzX/cy6D0iUe8l8DVQ==
+X-Google-Smtp-Source: AMsMyM5c0ZceTmIceQmKCmHevF5/W1F/ZoIuoScWE8IalNjG8pAEWwsqGwqqNThFY3/t8V+JZmQrbw==
+X-Received: by 2002:a05:6638:2725:b0:362:1b0f:ce9b with SMTP id m37-20020a056638272500b003621b0fce9bmr1121907jav.250.1664659180430;
+        Sat, 01 Oct 2022 14:19:40 -0700 (PDT)
+Received: from localhost ([2607:fea8:a2e2:2d00::1eda])
+        by smtp.gmail.com with UTF8SMTPSA id x7-20020a056638010700b0035a995a34d6sm2432272jao.60.2022.10.01.14.19.39
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 01 Oct 2022 14:19:39 -0700 (PDT)
+From:   Richard Acayan <mailingradian@gmail.com>
+To:     linux-arm-msm@vger.kernel.org
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
         Vinod Koul <vkoul@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20221001185526.494095-1-martin.botka@somainline.org>
- <20221001185526.494095-2-martin.botka@somainline.org>
-From:   Konrad Dybcio <konrad.dybcio@somainline.org>
-In-Reply-To: <20221001185526.494095-2-martin.botka@somainline.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+        dmaengine@vger.kernel.org, devicetree@vger.kernel.org,
+        Richard Acayan <mailingradian@gmail.com>
+Subject: [PATCH v4 1/4] dt-bindings: dma: qcom: gpi: add fallback compatible
+Date:   Sat,  1 Oct 2022 17:19:31 -0400
+Message-Id: <20221001211934.62511-2-mailingradian@gmail.com>
+X-Mailer: git-send-email 2.37.3
+In-Reply-To: <20221001211934.62511-1-mailingradian@gmail.com>
+References: <20221001211934.62511-1-mailingradian@gmail.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
+The drivers are transitioning from matching against lists of specific
+compatible strings to matching against smaller lists of more generic
+compatible strings. Use the SDM845 compatible string as a fallback in
+the schema to support this change.
 
+Signed-off-by: Richard Acayan <mailingradian@gmail.com>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+---
+ .../devicetree/bindings/dma/qcom,gpi.yaml     | 21 ++++++++++++-------
+ 1 file changed, 13 insertions(+), 8 deletions(-)
 
-On 1.10.2022 20:55, Martin Botka wrote:
-> This commit adds compatible for SM6125
-> SoC.
-> 
-> Signed-off-by: Martin Botka <martin.botka@somainline.org>
-> ---
-It's been decided to not add any more compatibles without a need.
-Please follow what has been done here:
+diff --git a/Documentation/devicetree/bindings/dma/qcom,gpi.yaml b/Documentation/devicetree/bindings/dma/qcom,gpi.yaml
+index eabf8a76d3a0..081b8a2d393d 100644
+--- a/Documentation/devicetree/bindings/dma/qcom,gpi.yaml
++++ b/Documentation/devicetree/bindings/dma/qcom,gpi.yaml
+@@ -18,14 +18,19 @@ allOf:
+ 
+ properties:
+   compatible:
+-    enum:
+-      - qcom,sc7280-gpi-dma
+-      - qcom,sdm845-gpi-dma
+-      - qcom,sm6350-gpi-dma
+-      - qcom,sm8150-gpi-dma
+-      - qcom,sm8250-gpi-dma
+-      - qcom,sm8350-gpi-dma
+-      - qcom,sm8450-gpi-dma
++    oneOf:
++      - enum:
++          - qcom,sc7280-gpi-dma
++          - qcom,sdm845-gpi-dma
++          - qcom,sm6350-gpi-dma
++          - qcom,sm8350-gpi-dma
++          - qcom,sm8450-gpi-dma
++
++      - items:
++          - enum:
++              - qcom,sm8150-gpi-dma
++              - qcom,sm8250-gpi-dma
++          - const: qcom,sdm845-gpi-dma
+ 
+   reg:
+     maxItems: 1
+-- 
+2.37.3
 
-https://lore.kernel.org/all/YzVL9ngfwqfwhF8Q@matsya/t/
-
-Konrad
->  drivers/dma/qcom/gpi.c | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> diff --git a/drivers/dma/qcom/gpi.c b/drivers/dma/qcom/gpi.c
-> index 8f0c9c4e2efd..0c42b40a7586 100644
-> --- a/drivers/dma/qcom/gpi.c
-> +++ b/drivers/dma/qcom/gpi.c
-> @@ -2288,6 +2288,7 @@ static int gpi_probe(struct platform_device *pdev)
->  static const struct of_device_id gpi_of_match[] = {
->  	{ .compatible = "qcom,sc7280-gpi-dma", .data = (void *)0x10000 },
->  	{ .compatible = "qcom,sdm845-gpi-dma", .data = (void *)0x0 },
-> +	{ .compatible = "qcom,sm6125-gpi-dma", .data = (void *)0x0 },
->  	{ .compatible = "qcom,sm8150-gpi-dma", .data = (void *)0x0 },
->  	{ .compatible = "qcom,sm8250-gpi-dma", .data = (void *)0x0 },
->  	{ .compatible = "qcom,sm8350-gpi-dma", .data = (void *)0x10000 },
