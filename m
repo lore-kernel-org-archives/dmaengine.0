@@ -2,49 +2,49 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C159DC4332F
-	for <dmaengine@archiver.kernel.org>; Sun,  2 Oct 2022 23:04:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F356CC433FE
+	for <dmaengine@archiver.kernel.org>; Sun,  2 Oct 2022 23:04:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229572AbiJBXEH (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Sun, 2 Oct 2022 19:04:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35364 "EHLO
+        id S230451AbiJBXEZ (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Sun, 2 Oct 2022 19:04:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34696 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230494AbiJBXD1 (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Sun, 2 Oct 2022 19:03:27 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0FF533ED4D;
-        Sun,  2 Oct 2022 15:59:31 -0700 (PDT)
+        with ESMTP id S231285AbiJBXD7 (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Sun, 2 Oct 2022 19:03:59 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D7D041D661;
+        Sun,  2 Oct 2022 15:59:56 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 3394860F2E;
-        Sun,  2 Oct 2022 22:53:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7494DC433D7;
-        Sun,  2 Oct 2022 22:53:09 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 7E097B80D6C;
+        Sun,  2 Oct 2022 22:52:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1009BC433B5;
+        Sun,  2 Oct 2022 22:52:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1664751190;
-        bh=fSVz+OkgMcoaGQ/swcxjK7pSryFkqY9VNBJa73jPodY=;
+        s=k20201202; t=1664751162;
+        bh=C51fN9Flo2zCAj2jCaWdZGHnkUxwUijWwOrzoNiedtg=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=DM/706INZ0H830xZnhJtftA6WfCw4Vd7ZGZZfON7IxyzoLbo4n5zFDmyR3KszMVjy
-         iyQu4yzNY/CkA/ok7BspxwJ1/VyAgBhm0Z6K7i/PRjD8oNseQQDkJs3sCidkxjw14e
-         6tFSHsznEdAT/MHNQbWywfAMZ6PJff5TqqhOJjgLjLlsRPkZLfAfxintcqp3fdNCiL
-         yfmE8EHH0q8PL45v0u7UjcGOXoArz7/oTxW/s/Snt2SfTyXyXK0uzKMZpda5s4AWzz
-         1mk6g7+QZMT1wi1PjKqpWMekoKRgbnsf7aRobznpDh5EAtYW161LFDZVFpdtDTP333
-         31iIUzi+GW5+A==
+        b=A63Y0rH9q1ie0C5lhOZHucn8YnsVeCYshEI3KuCz3MoMmBGT7XhJXKqP3eI4HNdzO
+         tqaWvLgcY+ftlWl58vIFVAJXts772tEEMGazYu1dF6JbG+sgb2DsDLsl0dvl7EjGFu
+         a6Rj9ynuUtIlhG93LbYDKRbBJnwkSOAnzzGv0l+6VMOpOoXDGWE4M42BPMdOq8iVcS
+         t3tKN/Lkfp1u3yArGvsr4cN5vlGfgHprqdnNSSxZnkgC5bbM+lqCmhZG4WFqHb9U/o
+         rC9Uy+B3v6B8v1GPsPznRHajZwekrBvfMmKuuXaQxWKPBTRcjsy0P9n8EsivX6m93t
+         bOwPmj5zb2pvg==
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Cc:     Swati Agarwal <swati.agarwal@xilinx.com>,
-        Radhey Shyam Pandey <radhey.shyam.pandey@xilinx.com>,
         Vinod Koul <vkoul@kernel.org>, Sasha Levin <sashal@kernel.org>,
-        michal.simek@xilinx.com, lars@metafoo.de,
-        shravya.kumbham@xilinx.com, adrianml@alumnos.upm.es,
-        dmaengine@vger.kernel.org, linux-arm-kernel@lists.infradead.org
-Subject: [PATCH AUTOSEL 4.19 3/8] dmaengine: xilinx_dma: Report error in case of dma_set_mask_and_coherent API failure
-Date:   Sun,  2 Oct 2022 18:52:55 -0400
-Message-Id: <20221002225300.239982-3-sashal@kernel.org>
+        michal.simek@xilinx.com, radhey.shyam.pandey@xilinx.com,
+        lars@metafoo.de, adrianml@alumnos.upm.es,
+        shravya.kumbham@xilinx.com, dmaengine@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org
+Subject: [PATCH AUTOSEL 5.4 2/9] dmaengine: xilinx_dma: cleanup for fetching xlnx,num-fstores property
+Date:   Sun,  2 Oct 2022 18:52:29 -0400
+Message-Id: <20221002225236.239675-2-sashal@kernel.org>
 X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20221002225300.239982-1-sashal@kernel.org>
-References: <20221002225300.239982-1-sashal@kernel.org>
+In-Reply-To: <20221002225236.239675-1-sashal@kernel.org>
+References: <20221002225236.239675-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
@@ -55,42 +55,31 @@ X-Mailing-List: dmaengine@vger.kernel.org
 
 From: Swati Agarwal <swati.agarwal@xilinx.com>
 
-[ Upstream commit 8f2b6bc79c32f0fa60df000ae387a790ec80eae9 ]
+[ Upstream commit 462bce790e6a7e68620a4ce260cc38f7ed0255d5 ]
 
-The driver does not handle the failure case while calling
-dma_set_mask_and_coherent API.
-
-In case of failure, capture the return value of API and then report an
-error.
-
-Addresses-coverity: Unchecked return value (CHECKED_RETURN)
+Free the allocated resources for missing xlnx,num-fstores property.
 
 Signed-off-by: Swati Agarwal <swati.agarwal@xilinx.com>
-Reviewed-by: Radhey Shyam Pandey <radhey.shyam.pandey@xilinx.com>
-Link: https://lore.kernel.org/r/20220817061125.4720-4-swati.agarwal@xilinx.com
+Link: https://lore.kernel.org/r/20220817061125.4720-3-swati.agarwal@xilinx.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/xilinx/xilinx_dma.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/dma/xilinx/xilinx_dma.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/dma/xilinx/xilinx_dma.c b/drivers/dma/xilinx/xilinx_dma.c
-index f72803587b8f..0ba70be4ea85 100644
+index 7729b8d22553..792776c86ee8 100644
 --- a/drivers/dma/xilinx/xilinx_dma.c
 +++ b/drivers/dma/xilinx/xilinx_dma.c
-@@ -2674,7 +2674,11 @@ static int xilinx_dma_probe(struct platform_device *pdev)
- 		xdev->ext_addr = false;
+@@ -2683,7 +2683,7 @@ static int xilinx_dma_probe(struct platform_device *pdev)
+ 		if (err < 0) {
+ 			dev_err(xdev->dev,
+ 				"missing xlnx,num-fstores property\n");
+-			return err;
++			goto disable_clks;
+ 		}
  
- 	/* Set the dma mask bits */
--	dma_set_mask_and_coherent(xdev->dev, DMA_BIT_MASK(addr_width));
-+	err = dma_set_mask_and_coherent(xdev->dev, DMA_BIT_MASK(addr_width));
-+	if (err < 0) {
-+		dev_err(xdev->dev, "DMA mask error %d\n", err);
-+		goto disable_clks;
-+	}
- 
- 	/* Initialize the DMA engine */
- 	xdev->common.dev = &pdev->dev;
+ 		err = of_property_read_u32(node, "xlnx,flush-fsync",
 -- 
 2.35.1
 
