@@ -2,49 +2,49 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BC529C433F5
-	for <dmaengine@archiver.kernel.org>; Sun,  2 Oct 2022 22:50:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D80DFC433FE
+	for <dmaengine@archiver.kernel.org>; Sun,  2 Oct 2022 22:54:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230055AbiJBWuv (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Sun, 2 Oct 2022 18:50:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56602 "EHLO
+        id S230288AbiJBWyF (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Sun, 2 Oct 2022 18:54:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55024 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230022AbiJBWuW (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Sun, 2 Oct 2022 18:50:22 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1DE2911474;
-        Sun,  2 Oct 2022 15:49:53 -0700 (PDT)
+        with ESMTP id S230093AbiJBWxU (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Sun, 2 Oct 2022 18:53:20 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F64111803;
+        Sun,  2 Oct 2022 15:51:12 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 80B47B80DA0;
-        Sun,  2 Oct 2022 22:49:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3253AC4314C;
-        Sun,  2 Oct 2022 22:49:45 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id B99A8B80D9A;
+        Sun,  2 Oct 2022 22:51:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28969C433C1;
+        Sun,  2 Oct 2022 22:51:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1664750986;
-        bh=2eEzG9gMoeCDqrQE6PVnB7Na/A3URZNcMUiHeCsODx0=;
+        s=k20201202; t=1664751069;
+        bh=YQdDdJ2wBIObSkIQqBsYU0YvqiqEvaVtU7QUzxUfiEM=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=uuKsNBf3s+7QewDOYu5Y2Aie7rtp5Nhhm2U8Jzg2BuqQ+AmcD6N60qZ1KyVjqn24H
-         CZXnuNeRPtSZwVbJgilMP0MFLYjQ+L1wXrBbTWnzsKsFxB3YH0qY8t3t0ZM9vt3cpV
-         MLaznyvfZUUj7E7B/yaY3duql1npihMuNxr4HftyD3nCkm05wozxBpZTeDXlHFhS/M
-         WKrMdy7MZ4hhuvxorDGzjKJLKTDlG5NFkSSO3Gha6/mPlKwjuCWMN/REXDFHEuwtfM
-         znqNRlK6i/zos+le+yXYLhiTbjaN0q+kWyKXsRaCI5aQCnsV3mvXPWEmm7u5Cf2PU9
-         RI2tmO5JtNCHA==
+        b=r0LIaY9+rWFr90MgGw42jHLE2/tnrkDtnnzoE/iLF6lBpX/D9utW3OF/aYJvtCAJL
+         qe4UrdykE2fzFOvxd9wRxmUpdBmBxDr2ssyID9CXtvhVMxaV8cjGSiAEk5RNaQwnfC
+         Nh3Ks+VhnWPqDdc8VVTWRJlVKXl3O2EOedOyI79ah1QyELE9chxPMWwItwQiCGcoU0
+         ZkpCeJwbY4SkZA/aFOlyJ58EuYyg+ideb9t3zJKr9+x4B0WhqtO2d64J7u2uIh9dQY
+         +mocowjABk/tc5TsawISzdgbTdMIE0S/7CSgzr0k8RVXsW2McPioBg+XSKBYl3+V25
+         qOjw3gPLjtlQg==
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Cc:     Swati Agarwal <swati.agarwal@xilinx.com>,
-        Radhey Shyam Pandey <radhey.shyam.pandey@xilinx.com>,
         Vinod Koul <vkoul@kernel.org>, Sasha Levin <sashal@kernel.org>,
-        michal.simek@xilinx.com, lars@metafoo.de,
-        shravya.kumbham@xilinx.com, adrianml@alumnos.upm.es,
-        dmaengine@vger.kernel.org, linux-arm-kernel@lists.infradead.org
-Subject: [PATCH AUTOSEL 5.19 08/29] dmaengine: xilinx_dma: Report error in case of dma_set_mask_and_coherent API failure
-Date:   Sun,  2 Oct 2022 18:49:01 -0400
-Message-Id: <20221002224922.238837-8-sashal@kernel.org>
+        michal.simek@xilinx.com, radhey.shyam.pandey@xilinx.com,
+        lars@metafoo.de, adrianml@alumnos.upm.es,
+        shravya.kumbham@xilinx.com, dmaengine@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org
+Subject: [PATCH AUTOSEL 5.15 05/20] dmaengine: xilinx_dma: Fix devm_platform_ioremap_resource error handling
+Date:   Sun,  2 Oct 2022 18:50:44 -0400
+Message-Id: <20221002225100.239217-5-sashal@kernel.org>
 X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20221002224922.238837-1-sashal@kernel.org>
-References: <20221002224922.238837-1-sashal@kernel.org>
+In-Reply-To: <20221002225100.239217-1-sashal@kernel.org>
+References: <20221002225100.239217-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
@@ -55,42 +55,62 @@ X-Mailing-List: dmaengine@vger.kernel.org
 
 From: Swati Agarwal <swati.agarwal@xilinx.com>
 
-[ Upstream commit 8f2b6bc79c32f0fa60df000ae387a790ec80eae9 ]
+[ Upstream commit 91df7751eb890e970afc08f50b8f0fa5ea39e03d ]
 
-The driver does not handle the failure case while calling
-dma_set_mask_and_coherent API.
-
-In case of failure, capture the return value of API and then report an
-error.
-
-Addresses-coverity: Unchecked return value (CHECKED_RETURN)
+Add missing cleanup in devm_platform_ioremap_resource().
+When probe fails remove dma channel resources and disable clocks in
+accordance with the order of resources allocated .
 
 Signed-off-by: Swati Agarwal <swati.agarwal@xilinx.com>
-Reviewed-by: Radhey Shyam Pandey <radhey.shyam.pandey@xilinx.com>
-Link: https://lore.kernel.org/r/20220817061125.4720-4-swati.agarwal@xilinx.com
+Link: https://lore.kernel.org/r/20220817061125.4720-2-swati.agarwal@xilinx.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/xilinx/xilinx_dma.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/dma/xilinx/xilinx_dma.c | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
 diff --git a/drivers/dma/xilinx/xilinx_dma.c b/drivers/dma/xilinx/xilinx_dma.c
-index f63ec9d862ff..7ce8bb160a59 100644
+index a4450bc95466..d3556b00a672 100644
 --- a/drivers/dma/xilinx/xilinx_dma.c
 +++ b/drivers/dma/xilinx/xilinx_dma.c
-@@ -3211,7 +3211,11 @@ static int xilinx_dma_probe(struct platform_device *pdev)
- 		xdev->ext_addr = false;
+@@ -3037,9 +3037,10 @@ static int xilinx_dma_probe(struct platform_device *pdev)
  
- 	/* Set the dma mask bits */
--	dma_set_mask_and_coherent(xdev->dev, DMA_BIT_MASK(addr_width));
-+	err = dma_set_mask_and_coherent(xdev->dev, DMA_BIT_MASK(addr_width));
-+	if (err < 0) {
-+		dev_err(xdev->dev, "DMA mask error %d\n", err);
+ 	/* Request and map I/O memory */
+ 	xdev->regs = devm_platform_ioremap_resource(pdev, 0);
+-	if (IS_ERR(xdev->regs))
+-		return PTR_ERR(xdev->regs);
+-
++	if (IS_ERR(xdev->regs)) {
++		err = PTR_ERR(xdev->regs);
 +		goto disable_clks;
 +	}
+ 	/* Retrieve the DMA engine properties from the device tree */
+ 	xdev->max_buffer_len = GENMASK(XILINX_DMA_MAX_TRANS_LEN_MAX - 1, 0);
+ 	xdev->s2mm_chan_id = xdev->dma_config->max_channels / 2;
+@@ -3134,7 +3135,7 @@ static int xilinx_dma_probe(struct platform_device *pdev)
+ 	for_each_child_of_node(node, child) {
+ 		err = xilinx_dma_child_probe(xdev, child);
+ 		if (err < 0)
+-			goto disable_clks;
++			goto error;
+ 	}
  
- 	/* Initialize the DMA engine */
- 	xdev->common.dev = &pdev->dev;
+ 	if (xdev->dma_config->dmatype == XDMA_TYPE_VDMA) {
+@@ -3169,12 +3170,12 @@ static int xilinx_dma_probe(struct platform_device *pdev)
+ 
+ 	return 0;
+ 
+-disable_clks:
+-	xdma_disable_allclks(xdev);
+ error:
+ 	for (i = 0; i < xdev->dma_config->max_channels; i++)
+ 		if (xdev->chan[i])
+ 			xilinx_dma_chan_remove(xdev->chan[i]);
++disable_clks:
++	xdma_disable_allclks(xdev);
+ 
+ 	return err;
+ }
 -- 
 2.35.1
 
