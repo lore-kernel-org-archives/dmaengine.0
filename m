@@ -2,35 +2,35 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7B5BEC433F5
-	for <dmaengine@archiver.kernel.org>; Sun,  2 Oct 2022 23:04:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 08152C4332F
+	for <dmaengine@archiver.kernel.org>; Sun,  2 Oct 2022 23:05:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230447AbiJBXE5 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Sun, 2 Oct 2022 19:04:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34652 "EHLO
+        id S231139AbiJBXFH (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Sun, 2 Oct 2022 19:05:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39280 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230457AbiJBXEZ (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Sun, 2 Oct 2022 19:04:25 -0400
+        with ESMTP id S229628AbiJBXEh (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Sun, 2 Oct 2022 19:04:37 -0400
 Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CCC853ECEB;
-        Sun,  2 Oct 2022 16:00:11 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 972E8248CC;
+        Sun,  2 Oct 2022 16:00:06 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id A7422B80DCE;
-        Sun,  2 Oct 2022 22:53:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FE95C43140;
-        Sun,  2 Oct 2022 22:53:11 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 907A8B80DA9;
+        Sun,  2 Oct 2022 22:52:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 253A3C433B5;
+        Sun,  2 Oct 2022 22:52:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1664751192;
-        bh=baATQorB7E7tji15g54jQol3I3flzO4pwiVl9pgM6Bk=;
+        s=k20201202; t=1664751167;
+        bh=snTKj5uUCniAAmOx2ttL6/s1ceXhHSHr5CwfTfYUtug=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=C+MkRQhjlHRZ4h0tddutXAyrheSCu1R8NPZmVVJSJUJ16JnSZRXYS/P6mTuSII7yV
-         lT8fBdUdb5CuKVb0b58imV2WLZECrxJX5G8meubfABRucCtA7M3HzNFY9w5jgkfm+S
-         3xI0KOy5tpFE0cIauZZgj2r7gtFqce1yJju6mDn0WqfjiVdbyqnRr9fEK9t5bDIqRi
-         GJh4rRhmhM1f8UTCdJh1yBO/uOH0k20ZONg0vaG+TxmCXvVLN14tvr6H+4lllaXE+t
-         /O4ZrUgEDzysJXW1smCTYAZPRAgNWqV3KNVz/WZvrbfOnKFHQcaKdsk2v/Khap//0Z
-         v6gmtlIpyPqEA==
+        b=DT1RRyaFMq/ybDkigF3Z4t/Jm0UnY1MlDnJD9uoFJCRfRxdCUcQjnPxT2x44z2j9A
+         ajxwZt0rwM+TfgVo9hxkIa0+hzJLl8C1olEfuvqj9RdYdQByW1w0mzzRIdJnfaryLC
+         BIH7i7y7yYfgkcRAh3sn+VZ5wLU2vnDZeJGE0NYlY6Z8bKqsPoip3623B2YpUVNG4N
+         jI/IgdT7Rx4Jtgjdlse+hJORkAF8TuXls6wi7upBZey/qZqfsxUuWa2CvVRQNjMPU6
+         TUVfm8J20UKYVdcfRfx9wgO0adH+I8JZGqDJHKu4KEGlRIyWsmoKcThvDFtiWscP+g
+         Soi+Glr+c3hfg==
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Cc:     Sergei Antonov <saproj@gmail.com>, Arnd Bergmann <arnd@arndb.de>,
@@ -38,12 +38,12 @@ Cc:     Sergei Antonov <saproj@gmail.com>, Arnd Bergmann <arnd@arndb.de>,
         Sasha Levin <sashal@kernel.org>, vkoul@kernel.org,
         robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
         dmaengine@vger.kernel.org, devicetree@vger.kernel.org
-Subject: [PATCH AUTOSEL 4.19 4/8] ARM: dts: fix Moxa SDIO 'compatible', remove 'sdhci' misnomer
-Date:   Sun,  2 Oct 2022 18:52:56 -0400
-Message-Id: <20221002225300.239982-4-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 5.4 4/9] ARM: dts: fix Moxa SDIO 'compatible', remove 'sdhci' misnomer
+Date:   Sun,  2 Oct 2022 18:52:31 -0400
+Message-Id: <20221002225236.239675-4-sashal@kernel.org>
 X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20221002225300.239982-1-sashal@kernel.org>
-References: <20221002225300.239982-1-sashal@kernel.org>
+In-Reply-To: <20221002225236.239675-1-sashal@kernel.org>
+References: <20221002225236.239675-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
@@ -94,10 +94,10 @@ index 8a9f3559335b..7e14e26676ec 100644
  		interrupts = <5 0>;
  		clocks = <&clk_apb>;
 diff --git a/arch/arm/boot/dts/moxart-uc7112lx.dts b/arch/arm/boot/dts/moxart-uc7112lx.dts
-index 4a962a26482d..59d8775a3a93 100644
+index eb5291b0ee3a..e07b807b4cec 100644
 --- a/arch/arm/boot/dts/moxart-uc7112lx.dts
 +++ b/arch/arm/boot/dts/moxart-uc7112lx.dts
-@@ -80,7 +80,7 @@ &clk_pll {
+@@ -79,7 +79,7 @@ &clk_pll {
  	clocks = <&ref12>;
  };
  
@@ -107,7 +107,7 @@ index 4a962a26482d..59d8775a3a93 100644
  };
  
 diff --git a/arch/arm/boot/dts/moxart.dtsi b/arch/arm/boot/dts/moxart.dtsi
-index da7b3237bfe9..804a2bc6ec82 100644
+index f5f070a87482..764832ddfa78 100644
 --- a/arch/arm/boot/dts/moxart.dtsi
 +++ b/arch/arm/boot/dts/moxart.dtsi
 @@ -93,8 +93,8 @@ watchdog: watchdog@98500000 {
