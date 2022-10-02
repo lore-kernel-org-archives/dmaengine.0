@@ -2,49 +2,47 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5EAF3C433FE
-	for <dmaengine@archiver.kernel.org>; Sun,  2 Oct 2022 23:06:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D6D45C43217
+	for <dmaengine@archiver.kernel.org>; Sun,  2 Oct 2022 23:06:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229735AbiJBXGr (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Sun, 2 Oct 2022 19:06:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35782 "EHLO
+        id S229788AbiJBXGt (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Sun, 2 Oct 2022 19:06:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52572 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231147AbiJBXGO (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Sun, 2 Oct 2022 19:06:14 -0400
+        with ESMTP id S230494AbiJBXGb (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Sun, 2 Oct 2022 19:06:31 -0400
 Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4273647B98;
-        Sun,  2 Oct 2022 16:01:38 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD83112755;
+        Sun,  2 Oct 2022 16:01:54 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 6B49AB80DA2;
-        Sun,  2 Oct 2022 22:53:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 146F6C43140;
-        Sun,  2 Oct 2022 22:53:05 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id DB0C2B80DD8;
+        Sun,  2 Oct 2022 22:53:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AB50C433D6;
+        Sun,  2 Oct 2022 22:53:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1664751187;
-        bh=u5TzAJ+V988KQo6k184h+K2UMiphbxZiON4R8VGPRfA=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=hhgOawzIs6P6zktwdqsOZlQdpKkOKkctdMguPXo4Wc3zsS2j6Oc4IkVO7xnztnJS2
-         NPo4fcjvdpPX1Wt0/Fa8zEpXIyc5j6TLcrz18MLiGQh4dvbDqFG64F89NWUjDnH6wz
-         93xDVIIcAy+Rzrm2zSRyrXELoW36/o4ItpULOXhQVPiPFOAkT0kIo/vaGK7NKYd8sD
-         GbCayTXqiZlUIPXH5MqO9Up1N+Ta01KZEVejnJ16oBDx+wUS+qC6tN49BMJmy/JmZv
-         TOrxv6JVlpNIA/oJ/CoVB7QAVKLLEN0bOM0Ti7n3ll26bTRirxKM/n0pY1hbv3Wd/J
-         hE/HrG0rgHBuQ==
+        s=k20201202; t=1664751206;
+        bh=JMY2yHIJQoF20ytPxniJHlxxD17968IV8wAg1htep04=;
+        h=From:To:Cc:Subject:Date:From;
+        b=EoHnISVlomnkC1QjeI96DW2l20KGSCsnZ2jvQR7mnmVdM3pECVlR8ym0PRZsgXh+f
+         CHF+ZNY/K+4GRxAwxJfeKBRfKbMPtsmtl817flMZNWuN53jPJfc6eokokgs3Xq/xbU
+         apRG11EVpkQQqJOz5F62GPmuF2IuIPGKTKrpbYght+874IiktaDlMekYzSNFSKyJwL
+         tMpWd8LViuWQ6ko0j6QTCdvIyPKMP0giSQLFzQRxpwuaopfpeksw0tejokODKJpAUY
+         M8bnphcGpqkRCvh4hjVEpjfN0KlxcgPOsvthTTO5QyTBz6MOuSfoH597wwcdwBs7OA
+         j5Btkb+rYI1ow==
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Cc:     Swati Agarwal <swati.agarwal@xilinx.com>,
         Vinod Koul <vkoul@kernel.org>, Sasha Levin <sashal@kernel.org>,
         michal.simek@xilinx.com, radhey.shyam.pandey@xilinx.com,
-        lars@metafoo.de, adrianml@alumnos.upm.es,
-        shravya.kumbham@xilinx.com, dmaengine@vger.kernel.org,
+        lars@metafoo.de, shravya.kumbham@xilinx.com,
+        adrianml@alumnos.upm.es, dmaengine@vger.kernel.org,
         linux-arm-kernel@lists.infradead.org
-Subject: [PATCH AUTOSEL 4.19 2/8] dmaengine: xilinx_dma: cleanup for fetching xlnx,num-fstores property
-Date:   Sun,  2 Oct 2022 18:52:54 -0400
-Message-Id: <20221002225300.239982-2-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 4.14 1/6] dmaengine: xilinx_dma: cleanup for fetching xlnx,num-fstores property
+Date:   Sun,  2 Oct 2022 18:53:16 -0400
+Message-Id: <20221002225323.240142-1-sashal@kernel.org>
 X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20221002225300.239982-1-sashal@kernel.org>
-References: <20221002225300.239982-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
@@ -68,10 +66,10 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/dma/xilinx/xilinx_dma.c b/drivers/dma/xilinx/xilinx_dma.c
-index 3f38df6b51f2..f72803587b8f 100644
+index 3c2084766a31..9319349e69d2 100644
 --- a/drivers/dma/xilinx/xilinx_dma.c
 +++ b/drivers/dma/xilinx/xilinx_dma.c
-@@ -2654,7 +2654,7 @@ static int xilinx_dma_probe(struct platform_device *pdev)
+@@ -2565,7 +2565,7 @@ static int xilinx_dma_probe(struct platform_device *pdev)
  		if (err < 0) {
  			dev_err(xdev->dev,
  				"missing xlnx,num-fstores property\n");
