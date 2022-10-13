@@ -2,47 +2,47 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B29A5C4321E
-	for <dmaengine@archiver.kernel.org>; Thu, 13 Oct 2022 00:25:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D7147C43217
+	for <dmaengine@archiver.kernel.org>; Thu, 13 Oct 2022 00:35:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230512AbiJMAZE (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 12 Oct 2022 20:25:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56090 "EHLO
+        id S231526AbiJMAfo (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 12 Oct 2022 20:35:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47178 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229941AbiJMAYW (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Wed, 12 Oct 2022 20:24:22 -0400
+        with ESMTP id S231814AbiJMAcX (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Wed, 12 Oct 2022 20:32:23 -0400
 Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A63B4A285F;
-        Wed, 12 Oct 2022 17:23:53 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2F5E6DFC2E;
+        Wed, 12 Oct 2022 17:28:27 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 3296C616F8;
-        Thu, 13 Oct 2022 00:23:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD1CFC4347C;
-        Thu, 13 Oct 2022 00:23:49 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id A21FD61684;
+        Thu, 13 Oct 2022 00:19:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4658BC43141;
+        Thu, 13 Oct 2022 00:19:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1665620630;
-        bh=opJ560Mld8QhWmSSOPieqs+ADj6zk6rs1gncd2h+GPY=;
+        s=k20201202; t=1665620349;
+        bh=M+GQYKj7W9Q9eqQVTrqZvdk+oerpuJZZbVXvQ6MtdVg=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=V+x1/iPkVPE/7Svhfsvm32DXbL7yhmzPUNqO3i5jlAyD0fV6qEwZlrFn2LVomMRFu
-         i/khNVTqE4OvjJbjXI39w+Ax8V50ssVkjoxPDijB4TNw5fqb6RvKSo36imrb+eBqJ5
-         ECSvn7zXyp7ZzP4UQVrg9zg+0y74MuLMSKybu7zYmngpjazplCsNEHphGWHa8RX4+d
-         NAkqQGBjeJTjIwgGPXmrSBcl19PwQY/lCS4hRDhbS5rVI1bR/yBYSFVjQu3FuS8QZx
-         5+biXl+xjrp/+A/YHdA8OXY5YGzgqkQfnhpnZuhQ2er9YG2xjBgCycrwYx439hWF5r
-         1ckE226raTHLA==
+        b=gXavkX+/E2EzW+eDHKKTjHwsut1yem5A291CG/eg4jcGrglQlmnDwuy8dlxnTt6xi
+         hZrSj+tTxUo1GW9nmmPsmRgWloMrPaVsnPiNH/mgdcpwXPE0cr6Q8mZe4RdZKbh4og
+         HkSmTEJP+PRSvh09hPaD4+1JAy0LioUZAuKlZzcHOoMyUL+0qkMZXUDkZ/IfoS0aHT
+         /NL3AqX8YjEVQebI3SjtccLitxSkrLJlqqfECDMVO2fB7+lAQqLY2I1DRkvcsJz6hu
+         qjbokTS4rW54ruUGRM+dLI7AZOjv5cbt7kc9q7wUzdxIt80umUkJxQkEFu+caakRz/
+         Xjzj+IQdgHgCA==
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Cc:     Vaishnav Achath <vaishnav.a@ti.com>,
         Peter Ujfalusi <peter.ujfalusi@gmail.com>,
         Vinod Koul <vkoul@kernel.org>, Sasha Levin <sashal@kernel.org>,
         dmaengine@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.10 06/33] dmaengine: ti: k3-udma: Reset UDMA_CHAN_RT byte counters to prevent overflow
-Date:   Wed, 12 Oct 2022 20:23:05 -0400
-Message-Id: <20221013002334.1894749-6-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 5.19 10/63] dmaengine: ti: k3-udma: Reset UDMA_CHAN_RT byte counters to prevent overflow
+Date:   Wed, 12 Oct 2022 20:17:44 -0400
+Message-Id: <20221013001842.1893243-10-sashal@kernel.org>
 X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20221013002334.1894749-1-sashal@kernel.org>
-References: <20221013002334.1894749-1-sashal@kernel.org>
+In-Reply-To: <20221013001842.1893243-1-sashal@kernel.org>
+References: <20221013001842.1893243-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
@@ -80,10 +80,10 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 17 insertions(+), 8 deletions(-)
 
 diff --git a/drivers/dma/ti/k3-udma.c b/drivers/dma/ti/k3-udma.c
-index d3902784cae2..eacc4377e4a0 100644
+index 2f0d2c68c93c..fcfcde947b30 100644
 --- a/drivers/dma/ti/k3-udma.c
 +++ b/drivers/dma/ti/k3-udma.c
-@@ -235,8 +235,6 @@ struct udma_chan {
+@@ -300,8 +300,6 @@ struct udma_chan {
  
  	struct udma_tx_drain tx_drain;
  
@@ -92,7 +92,7 @@ index d3902784cae2..eacc4377e4a0 100644
  	/* Channel configuration parameters */
  	struct udma_chan_config config;
  
-@@ -656,6 +654,20 @@ static void udma_reset_rings(struct udma_chan *uc)
+@@ -757,6 +755,20 @@ static void udma_reset_rings(struct udma_chan *uc)
  	}
  }
  
@@ -113,7 +113,7 @@ index d3902784cae2..eacc4377e4a0 100644
  static void udma_reset_counters(struct udma_chan *uc)
  {
  	u32 val;
-@@ -687,8 +699,6 @@ static void udma_reset_counters(struct udma_chan *uc)
+@@ -790,8 +802,6 @@ static void udma_reset_counters(struct udma_chan *uc)
  		val = udma_rchanrt_read(uc, UDMA_CHAN_RT_PEER_BCNT_REG);
  		udma_rchanrt_write(uc, UDMA_CHAN_RT_PEER_BCNT_REG, val);
  	}
@@ -122,7 +122,7 @@ index d3902784cae2..eacc4377e4a0 100644
  }
  
  static int udma_reset_chan(struct udma_chan *uc, bool hard)
-@@ -1006,7 +1016,7 @@ static void udma_check_tx_completion(struct work_struct *work)
+@@ -1115,7 +1125,7 @@ static void udma_check_tx_completion(struct work_struct *work)
  		if (uc->desc) {
  			struct udma_desc *d = uc->desc;
  
@@ -131,7 +131,7 @@ index d3902784cae2..eacc4377e4a0 100644
  			udma_start(uc);
  			vchan_cookie_complete(&d->vd);
  			break;
-@@ -1060,7 +1070,7 @@ static irqreturn_t udma_ring_irq_handler(int irq, void *data)
+@@ -1168,7 +1178,7 @@ static irqreturn_t udma_ring_irq_handler(int irq, void *data)
  				vchan_cyclic_callback(&d->vd);
  			} else {
  				if (udma_is_desc_really_done(uc, d)) {
@@ -140,7 +140,7 @@ index d3902784cae2..eacc4377e4a0 100644
  					udma_start(uc);
  					vchan_cookie_complete(&d->vd);
  				} else {
-@@ -1097,7 +1107,7 @@ static irqreturn_t udma_udma_irq_handler(int irq, void *data)
+@@ -1204,7 +1214,7 @@ static irqreturn_t udma_udma_irq_handler(int irq, void *data)
  			vchan_cyclic_callback(&d->vd);
  		} else {
  			/* TODO: figure out the real amount of data */
@@ -149,7 +149,7 @@ index d3902784cae2..eacc4377e4a0 100644
  			udma_start(uc);
  			vchan_cookie_complete(&d->vd);
  		}
-@@ -2741,7 +2751,6 @@ static enum dma_status udma_tx_status(struct dma_chan *chan,
+@@ -3809,7 +3819,6 @@ static enum dma_status udma_tx_status(struct dma_chan *chan,
  			bcnt = udma_tchanrt_read(uc, UDMA_CHAN_RT_BCNT_REG);
  		}
  
