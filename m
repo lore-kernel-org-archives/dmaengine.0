@@ -2,147 +2,147 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B82D1C4332F
-	for <dmaengine@archiver.kernel.org>; Thu, 13 Oct 2022 00:40:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BE400C433FE
+	for <dmaengine@archiver.kernel.org>; Thu, 13 Oct 2022 01:43:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230091AbiJMAkI (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 12 Oct 2022 20:40:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43728 "EHLO
+        id S229586AbiJMBnX convert rfc822-to-8bit (ORCPT
+        <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 12 Oct 2022 21:43:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52382 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231403AbiJMAhe (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Wed, 12 Oct 2022 20:37:34 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 61B91139E75;
-        Wed, 12 Oct 2022 17:31:53 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 949E3B81CCB;
-        Thu, 13 Oct 2022 00:18:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55F71C433C1;
-        Thu, 13 Oct 2022 00:18:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1665620303;
-        bh=UcMC/ohTlfSufjYNgla/y8KiliyHVdq5JfegDQggsIE=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=VcELeYaaGXogzZg8x+/K6GJ71tQOP+GqDw04Fyh+xwHaOW9sGbdfj49LPIbGu5cOn
-         cmJkeJKx9miBIcVqgFc+YGZ4/OMI+z8sM+nc1GYtQbo+58IUZbM6Yq37l2CdiTf8qj
-         7ygRyWxxgQ0vjd0RIszCGDZOSf8VYX/vT9UY12lsJ4923lG8BUNr0MF1p8pfJLyt6p
-         +RAfeG3gQrUqwC+uEv3pdWlKP2ITGGnSjydv6+KvtYnnx+2jDV2G5faUlZoBYU53rz
-         Wkh7AMxJlNH4cn5+tBXQEPGuyMc6f1eo9TNR4c22HKSQEZqI9rvUSGEKFWSmusH92M
-         dRARX5VfWCKjw==
-From:   Sasha Levin <sashal@kernel.org>
-To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Serge Semin <fancer.lancer@gmail.com>,
-        Frank Li <Frank.Li@nxp.com>, Vinod Koul <vkoul@kernel.org>,
-        Sasha Levin <sashal@kernel.org>, gustavo.pimentel@synopsys.com,
-        dmaengine@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.0 63/67] dmaengine: dw-edma: Remove runtime PM support
-Date:   Wed, 12 Oct 2022 20:15:44 -0400
-Message-Id: <20221013001554.1892206-63-sashal@kernel.org>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20221013001554.1892206-1-sashal@kernel.org>
-References: <20221013001554.1892206-1-sashal@kernel.org>
+        with ESMTP id S229459AbiJMBnV (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Wed, 12 Oct 2022 21:43:21 -0400
+Received: from relay.hostedemail.com (smtprelay0011.hostedemail.com [216.40.44.11])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7678936DEB;
+        Wed, 12 Oct 2022 18:43:19 -0700 (PDT)
+Received: from omf20.hostedemail.com (a10.router.float.18 [10.200.18.1])
+        by unirelay02.hostedemail.com (Postfix) with ESMTP id 640C9120237;
+        Thu, 13 Oct 2022 01:37:28 +0000 (UTC)
+Received: from [HIDDEN] (Authenticated sender: joe@perches.com) by omf20.hostedemail.com (Postfix) with ESMTPA id 56EDD20026;
+        Thu, 13 Oct 2022 01:37:01 +0000 (UTC)
+Message-ID: <3f527ec95a12135eb40f5f2d156a2954feb7fbfe.camel@perches.com>
+Subject: Re: [PATCH v1 3/5] treewide: use get_random_u32() when possible
+From:   Joe Perches <joe@perches.com>
+To:     David Laight <David.Laight@ACULAB.COM>,
+        "Jason A. Donenfeld" <Jason@zx2c4.com>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
+Cc:     "linux-fbdev@vger.kernel.org" <linux-fbdev@vger.kernel.org>,
+        "linux-doc@vger.kernel.org" <linux-doc@vger.kernel.org>,
+        "linux-wireless@vger.kernel.org" <linux-wireless@vger.kernel.org>,
+        "dri-devel@lists.freedesktop.org" <dri-devel@lists.freedesktop.org>,
+        "linux-mm@kvack.org" <linux-mm@kvack.org>,
+        "linux-sctp@vger.kernel.org" <linux-sctp@vger.kernel.org>,
+        "target-devel@vger.kernel.org" <target-devel@vger.kernel.org>,
+        "linux-mtd@lists.infradead.org" <linux-mtd@lists.infradead.org>,
+        "linux-stm32@st-md-mailman.stormreply.com" 
+        <linux-stm32@st-md-mailman.stormreply.com>,
+        "drbd-dev@lists.linbit.com" <drbd-dev@lists.linbit.com>,
+        "dev@openvswitch.org" <dev@openvswitch.org>,
+        "rds-devel@oss.oracle.com" <rds-devel@oss.oracle.com>,
+        "linux-scsi@vger.kernel.org" <linux-scsi@vger.kernel.org>,
+        "dccp@vger.kernel.org" <dccp@vger.kernel.org>,
+        "linux-rdma@vger.kernel.org" <linux-rdma@vger.kernel.org>,
+        "kasan-dev@googlegroups.com" <kasan-dev@googlegroups.com>,
+        "lvs-devel@vger.kernel.org" <lvs-devel@vger.kernel.org>,
+        "SHA-cyfmac-dev-list@infineon.com" <SHA-cyfmac-dev-list@infineon.com>,
+        "coreteam@netfilter.org" <coreteam@netfilter.org>,
+        "tipc-discussion@lists.sourceforge.net" 
+        <tipc-discussion@lists.sourceforge.net>,
+        "linux-ext4@vger.kernel.org" <linux-ext4@vger.kernel.org>,
+        "linux-media@vger.kernel.org" <linux-media@vger.kernel.org>,
+        "linux-actions@lists.infradead.org" 
+        <linux-actions@lists.infradead.org>,
+        "linux-nfs@vger.kernel.org" <linux-nfs@vger.kernel.org>,
+        "linux-block@vger.kernel.org" <linux-block@vger.kernel.org>,
+        "dmaengine@vger.kernel.org" <dmaengine@vger.kernel.org>,
+        "linux-nvme@lists.infradead.org" <linux-nvme@lists.infradead.org>,
+        "linux-hams@vger.kernel.org" <linux-hams@vger.kernel.org>,
+        "ceph-devel@vger.kernel.org" <ceph-devel@vger.kernel.org>,
+        "linux-arm-kernel@lists.infradead.org" 
+        <linux-arm-kernel@lists.infradead.org>,
+        "cake@lists.bufferbloat.net" <cake@lists.bufferbloat.net>,
+        "brcm80211-dev-list.pdl@broadcom.com" 
+        <brcm80211-dev-list.pdl@broadcom.com>,
+        "linux-raid@vger.kernel.org" <linux-raid@vger.kernel.org>,
+        "netdev@vger.kernel.org" <netdev@vger.kernel.org>,
+        "linux-usb@vger.kernel.org" <linux-usb@vger.kernel.org>,
+        "linux-mmc@vger.kernel.org" <linux-mmc@vger.kernel.org>,
+        "linux-f2fs-devel@lists.sourceforge.net" 
+        <linux-f2fs-devel@lists.sourceforge.net>,
+        "linux-xfs@vger.kernel.org" <linux-xfs@vger.kernel.org>,
+        "netfilter-devel@vger.kernel.org" <netfilter-devel@vger.kernel.org>,
+        "linux-crypto@vger.kernel.org" <linux-crypto@vger.kernel.org>,
+        "linux-fsdevel@vger.kernel.org" <linux-fsdevel@vger.kernel.org>,
+        "linuxppc-dev@lists.ozlabs.org" <linuxppc-dev@lists.ozlabs.org>
+Date:   Wed, 12 Oct 2022 18:37:11 -0700
+In-Reply-To: <d45bd258e033453b85a137112e7694e1@AcuMS.aculab.com>
+References: <20221005214844.2699-1-Jason@zx2c4.com>
+         <20221005214844.2699-4-Jason@zx2c4.com>
+         <f8ad3ba44d28dec1a5f7626b82c5e9c2aeefa729.camel@perches.com>
+         <d45bd258e033453b85a137112e7694e1@AcuMS.aculab.com>
+Content-Type: text/plain; charset="ISO-8859-1"
+Content-Transfer-Encoding: 8BIT
+User-Agent: Evolution 3.44.4 (3.44.4-2.fc36) 
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-Content-Transfer-Encoding: 8bit
+X-Stat-Signature: jmxt1u5agdpi9w76hr4tp6uotie3p373
+X-Rspamd-Server: rspamout03
+X-Rspamd-Queue-Id: 56EDD20026
+X-Session-Marker: 6A6F6540706572636865732E636F6D
+X-Session-ID: U2FsdGVkX18KEIRmyyr9pSEavQqF5X0dTzAEITyiJq4=
+X-HE-Tag: 1665625021-540494
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+On Wed, 2022-10-12 at 21:29 +0000, David Laight wrote:
+> From: Joe Perches
+> > Sent: 12 October 2022 20:17
+> > 
+> > On Wed, 2022-10-05 at 23:48 +0200, Jason A. Donenfeld wrote:
+> > > The prandom_u32() function has been a deprecated inline wrapper around
+> > > get_random_u32() for several releases now, and compiles down to the
+> > > exact same code. Replace the deprecated wrapper with a direct call to
+> > > the real function.
+> > []
+> > > diff --git a/drivers/infiniband/hw/cxgb4/cm.c b/drivers/infiniband/hw/cxgb4/cm.c
+> > []
+> > > @@ -734,7 +734,7 @@ static int send_connect(struct c4iw_ep *ep)
+> > >  				   &ep->com.remote_addr;
+> > >  	int ret;
+> > >  	enum chip_type adapter_type = ep->com.dev->rdev.lldi.adapter_type;
+> > > -	u32 isn = (prandom_u32() & ~7UL) - 1;
+> > > +	u32 isn = (get_random_u32() & ~7UL) - 1;
+> > 
+> > trivia:
+> > 
+> > There are somewhat odd size mismatches here.
+> > 
+> > I had to think a tiny bit if random() returned a value from 0 to 7
+> > and was promoted to a 64 bit value then truncated to 32 bit.
+> > 
+> > Perhaps these would be clearer as ~7U and not ~7UL
+> 
+> That makes no difference - the compiler will generate the same code.
 
-[ Upstream commit a0188eb6e71c93ab7dd9bfa4305fac43c70db309 ]
+True, more or less.  It's more a question for the reader.
 
-Currently, the dw-edma driver enables the runtime_pm for parent device
-(chip->dev) and increments/decrements the refcount during alloc/free
-chan resources callbacks.
+> The real question is WTF is the code doing?
 
-This leads to a problem when the eDMA driver has been probed, but the
-channels were not used. This scenario can happen when the DW PCIe driver
-probes eDMA driver successfully, but the PCI EPF driver decides not to
-use eDMA channels and use iATU instead for PCI transfers.
+True.
 
-In this case, the underlying device would be runtime suspended due to
-pm_runtime_enable() in dw_edma_probe() and the PCI EPF driver would have
-no knowledge of it.
+> The '& ~7u' clears the bottom 3 bits.
+> The '- 1' then sets the bottom 3 bits and decrements the
+> (random) high bits.
 
-Ideally, the eDMA driver should not be the one doing the runtime PM of
-the parent device. The responsibility should instead belong to the client
-drivers like PCI EPF.
+Right.
 
-So let's remove the runtime PM support from eDMA driver.
+> So is the same as get_random_u32() | 7.
 
-Cc: Serge Semin <fancer.lancer@gmail.com>
-Cc: Frank Li <Frank.Li@nxp.com>
-Reviewed-by: Serge Semin <fancer.lancer@gmail.com>
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Link: https://lore.kernel.org/r/20220910054700.12205-1-manivannan.sadhasivam@linaro.org
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- drivers/dma/dw-edma/dw-edma-core.c | 12 ------------
- 1 file changed, 12 deletions(-)
+True, it's effectively the same as the upper 29 bits are random
+anyway and the bottom 3 bits are always set.
 
-diff --git a/drivers/dma/dw-edma/dw-edma-core.c b/drivers/dma/dw-edma/dw-edma-core.c
-index 07f756479663..c54b24ff5206 100644
---- a/drivers/dma/dw-edma/dw-edma-core.c
-+++ b/drivers/dma/dw-edma/dw-edma-core.c
-@@ -9,7 +9,6 @@
- #include <linux/module.h>
- #include <linux/device.h>
- #include <linux/kernel.h>
--#include <linux/pm_runtime.h>
- #include <linux/dmaengine.h>
- #include <linux/err.h>
- #include <linux/interrupt.h>
-@@ -682,15 +681,12 @@ static int dw_edma_alloc_chan_resources(struct dma_chan *dchan)
- 	if (chan->status != EDMA_ST_IDLE)
- 		return -EBUSY;
- 
--	pm_runtime_get(chan->dw->chip->dev);
--
- 	return 0;
- }
- 
- static void dw_edma_free_chan_resources(struct dma_chan *dchan)
- {
- 	unsigned long timeout = jiffies + msecs_to_jiffies(5000);
--	struct dw_edma_chan *chan = dchan2dw_edma_chan(dchan);
- 	int ret;
- 
- 	while (time_before(jiffies, timeout)) {
-@@ -703,8 +699,6 @@ static void dw_edma_free_chan_resources(struct dma_chan *dchan)
- 
- 		cpu_relax();
- 	}
--
--	pm_runtime_put(chan->dw->chip->dev);
- }
- 
- static int dw_edma_channel_setup(struct dw_edma *dw, bool write,
-@@ -977,9 +971,6 @@ int dw_edma_probe(struct dw_edma_chip *chip)
- 	if (err)
- 		goto err_irq_free;
- 
--	/* Power management */
--	pm_runtime_enable(dev);
--
- 	/* Turn debugfs on */
- 	dw_edma_v0_core_debugfs_on(dw);
- 
-@@ -1009,9 +1000,6 @@ int dw_edma_remove(struct dw_edma_chip *chip)
- 	for (i = (dw->nr_irqs - 1); i >= 0; i--)
- 		free_irq(chip->ops->irq_vector(dev, i), &dw->irq[i]);
- 
--	/* Power management */
--	pm_runtime_disable(dev);
--
- 	/* Deregister eDMA device */
- 	dma_async_device_unregister(&dw->wr_edma);
- 	list_for_each_entry_safe(chan, _chan, &dw->wr_edma.channels,
--- 
-2.35.1
+> But I bet the coder had something else in mind.
 
+Likely.
+
+And it was also likely copy/pasted a few times.
