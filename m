@@ -2,117 +2,122 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 61603C4332F
-	for <dmaengine@archiver.kernel.org>; Mon, 17 Oct 2022 21:23:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4ED57C4332F
+	for <dmaengine@archiver.kernel.org>; Mon, 17 Oct 2022 21:44:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230167AbiJQVXe (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 17 Oct 2022 17:23:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52056 "EHLO
+        id S230014AbiJQVoe (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 17 Oct 2022 17:44:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37254 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230342AbiJQVXc (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Mon, 17 Oct 2022 17:23:32 -0400
-Received: from mail-io1-xd35.google.com (mail-io1-xd35.google.com [IPv6:2607:f8b0:4864:20::d35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D398A7B78A;
-        Mon, 17 Oct 2022 14:23:26 -0700 (PDT)
-Received: by mail-io1-xd35.google.com with SMTP id i65so10262774ioa.0;
-        Mon, 17 Oct 2022 14:23:26 -0700 (PDT)
+        with ESMTP id S229900AbiJQVo3 (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Mon, 17 Oct 2022 17:44:29 -0400
+Received: from mail-qt1-x829.google.com (mail-qt1-x829.google.com [IPv6:2607:f8b0:4864:20::829])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 549407E818
+        for <dmaengine@vger.kernel.org>; Mon, 17 Oct 2022 14:35:35 -0700 (PDT)
+Received: by mail-qt1-x829.google.com with SMTP id f22so8610468qto.3
+        for <dmaengine@vger.kernel.org>; Mon, 17 Oct 2022 14:35:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=XYQG9L0WOG7E+TXZGOh2Lmubn0+AsR6A7Ea6syLqUyQ=;
-        b=DDlea4psan6fGakfEvw2MIaDr32zNEN1/S7GTqmmx5IJ88UF1kXdO0ErhCoCmhohb8
-         /Nf95Dm3Qg6qP0LzP9Dlr9M0eEH9SJtjHFUUgD7JuOz9gOkMXnFSfT2rt59RBap+fuBM
-         SPuwfeDTOD1Cg2JiuxxHgl8e/spOD1wCYCY0vlC1NS1glv/SIc9QA4LccI1nUQKAiajd
-         guZae4U7oc5BlDNALXgIw9mM5Qt8tUoXGRmb58g39geLK8kmEEncxoXUyT0keXZS8fYj
-         589jiJ1IdyptqXBsS1KXe3KSMQJySJjTvdPCelNIcvi5YmC+HDcGeF0kHhnbPbSD4Jqn
-         7XoA==
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=0raal7iq6Rw5yYtJhzJZvkw7Ubhx9PBhmhXAO/yGMLs=;
+        b=Y8x38UQyElcPUdDlJf0O/38+LAhYLZtYlg91n51OW/GnLbq5EdKq0riLhU6mQ9ioQt
+         XGmdks4ay8MB91XHUu1vY56t/VzUl9434k4cKSK+i8TfRZujZcMRu+Fvow3KvtjxoDZt
+         Ay9B7ddpIwW3aqmlHk2dDwrFC+/2RT2jbF9WS0bVvS1e0JSDsTnSvfmQ8MM7CXmCs9aV
+         +LjBo/SF/yFiNYGJtSs6HTdOs/P9QxvbHsimvwAAHROPjwtbbdwF+SnQRWQm3LbCA+qf
+         gAUcvgyzcO3sWOgLp9f8V384xR1t2H3fotSFdzdK3x6v5ijs78KDN7OeU+nsAfKCcXJF
+         zBgw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=XYQG9L0WOG7E+TXZGOh2Lmubn0+AsR6A7Ea6syLqUyQ=;
-        b=g3tknXjBlI3Vn1MrcxrY01pkwv82FWb9gfX6NVcC8s2gWUQByB47kgxdZFMK/IRvGF
-         08KhQ/opJNorzj4f37HFTNJ+ZF5bJ8raROdUmau0TWkw8XJz+jTucvOtWtXCH+XpGcyv
-         gXILephCUT3xKeKQn1tbu06aHWdRJsvLvj6vAIKcJgeMaxDunNB5lOexDfxibw3LsOKH
-         CaK6Iw6Rio1l8omX4yImwf57btfWYLKScglPszj4XlNjm/AHnW9LRHOisz92kRkMhRnA
-         Ai1Vd51lFZ7DuOU69nrGcWIyQe3MZuEXvpb3x++WjRWlMX6Ns7AcDzdazyNEMZHidXlQ
-         PiSw==
-X-Gm-Message-State: ACrzQf3InO9Mf2IOF6Tb9lXg9ZhDhJ2rpup+DtV2zAhoA/PAkO+qPGDl
-        jx+FFhYXrI0jMu1QpzopMkI=
-X-Google-Smtp-Source: AMsMyM7r9cJXj6CSb2SdazjR8bFX3mMN7uTdF0rMCmxCh+sRQmvRjB67Z7AnPymhZsVGubQX0y6xdA==
-X-Received: by 2002:a05:6638:3e06:b0:363:fd8c:7d3c with SMTP id co6-20020a0566383e0600b00363fd8c7d3cmr6659333jab.266.1666041805466;
-        Mon, 17 Oct 2022 14:23:25 -0700 (PDT)
-Received: from localhost ([2607:fea8:a2e2:2d00::4a89])
-        by smtp.gmail.com with UTF8SMTPSA id g191-20020a025bc8000000b0035672327fe5sm338763jab.149.2022.10.17.14.23.23
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=0raal7iq6Rw5yYtJhzJZvkw7Ubhx9PBhmhXAO/yGMLs=;
+        b=Q0ehZZgVuqF3Yx7olAoV307RMiFEqB/Up3DpDuJbdmNg8/M2twYhQ2rR63XLFEhI1a
+         jPV0Crdk0qi5v4QJYgXfw12pplEPXfRn82/0irS3Wcq7APUw01zoQD22zZhi9gKTs1Ov
+         gnr2Tf3KoGg5Ghmhj4ar0k2ouRbsVPQ3rG2dx8qFtSOXuXDHAtNGx+il3LhN6XY99WmR
+         Vikl26hO2RVLjWgqOvjIQ6HlNry4zFqYZybr6T4RjbmsRf4htkLgHGnr2Ed6xdkmWqcZ
+         987z3Y3d3f9ZJ25UGs40T/oJ3djoxLL1TUlyUVOI4ML0lBpLByDt+3pOGJKqFnM/nr1i
+         cK6Q==
+X-Gm-Message-State: ACrzQf1K2ZX8i9NSJHaQGrGRr+ZmCJrY645KPxCf95nqIuTsO/jPen7s
+        S9C8Z5y2seRukWCIZPjYAfmfDA==
+X-Google-Smtp-Source: AMsMyM5RPb6orLQyrTY7kb9P4RQASphIak5SXT0QThIvCdyMRlDV1xll88MIJqG7h8ToksOsgpTJIw==
+X-Received: by 2002:ac8:7f84:0:b0:39c:c69f:68d9 with SMTP id z4-20020ac87f84000000b0039cc69f68d9mr10480408qtj.254.1666042534447;
+        Mon, 17 Oct 2022 14:35:34 -0700 (PDT)
+Received: from [192.168.10.124] (pool-72-83-177-149.washdc.east.verizon.net. [72.83.177.149])
+        by smtp.gmail.com with ESMTPSA id p6-20020a05620a132600b006ee7923c187sm692413qkj.42.2022.10.17.14.35.33
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 17 Oct 2022 14:23:24 -0700 (PDT)
-From:   Richard Acayan <mailingradian@gmail.com>
-To:     Andy Gross <agross@kernel.org>,
+        Mon, 17 Oct 2022 14:35:33 -0700 (PDT)
+Message-ID: <8bf0046c-51a9-8244-e355-78dd2725944b@linaro.org>
+Date:   Mon, 17 Oct 2022 17:35:32 -0400
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.3.2
+Subject: Re: [PATCH 1/5] dt-bindings: dma: qcom: gpi: use sm6350 fallback
+Content-Language: en-US
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Vinod Koul <vkoul@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     Richard Acayan <mailingradian@gmail.com>,
-        Melody Olvera <quic_molvera@quicinc.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: Re: [PATCH 2/5] dmaengine: qcom: gpi: document preferred SM6350 binding
-Date:   Mon, 17 Oct 2022 17:23:20 -0400
-Message-Id: <20221017212320.4960-1-mailingradian@gmail.com>
-X-Mailer: git-send-email 2.38.0
-In-Reply-To: <20221015140447.55221-3-krzysztof.kozlowski@linaro.org>
-References: <20221015140447.55221-1-krzysztof.kozlowski@linaro.org> <20221015140447.55221-3-krzysztof.kozlowski@linaro.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Richard Acayan <mailingradian@gmail.com>,
+        Melody Olvera <quic_molvera@quicinc.com>
+References: <20221015140447.55221-1-krzysztof.kozlowski@linaro.org>
+ <20221015140447.55221-2-krzysztof.kozlowski@linaro.org>
+ <Y00wWnkcLKaticjl@matsya>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <Y00wWnkcLKaticjl@matsya>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-> Devices with ee offset of 0x10000 should rather bind with SM6350
-> compatible, so the list will not unnecessarily grow for compatible
-> devices.
+On 17/10/2022 06:37, Vinod Koul wrote:
+> On 15-10-22, 10:04, Krzysztof Kozlowski wrote:
+>> Several devices like SM6350, SM8150 and SC7280 are actually compatible,
+>> so use one compatible fallback for all of them.
+>>
+>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>> ---
+>>  Documentation/devicetree/bindings/dma/qcom,gpi.yaml | 10 ++++++----
+>>  1 file changed, 6 insertions(+), 4 deletions(-)
+>>
+>> diff --git a/Documentation/devicetree/bindings/dma/qcom,gpi.yaml b/Documentation/devicetree/bindings/dma/qcom,gpi.yaml
+>> index 750b40c32213..0c2894498845 100644
+>> --- a/Documentation/devicetree/bindings/dma/qcom,gpi.yaml
+>> +++ b/Documentation/devicetree/bindings/dma/qcom,gpi.yaml
+>> @@ -20,12 +20,14 @@ properties:
+>>    compatible:
+>>      oneOf:
+>>        - enum:
+>> -          - qcom,sc7280-gpi-dma
+>>            - qcom,sdm845-gpi-dma
+>>            - qcom,sm6350-gpi-dma
+>> -          - qcom,sm8350-gpi-dma
+>> -          - qcom,sm8450-gpi-dma
+>> -
+>> +      - items:
+>> +          - enum:
+>> +              - qcom,sc7280-gpi-dma
+>> +              - qcom,sm8350-gpi-dma
+>> +              - qcom,sm8450-gpi-dma
+>> +          - const: qcom,sm6350-gpi-dma
 > 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> ---
->  drivers/dma/qcom/gpi.c | 7 ++++---
->  1 file changed, 4 insertions(+), 3 deletions(-)
-> 
-> diff --git a/drivers/dma/qcom/gpi.c b/drivers/dma/qcom/gpi.c
-> index f8e19e6e6117..061add832295 100644
-> --- a/drivers/dma/qcom/gpi.c
-> +++ b/drivers/dma/qcom/gpi.c
-> @@ -2286,13 +2286,14 @@ static int gpi_probe(struct platform_device *pdev)
->  }
->  
->  static const struct of_device_id gpi_of_match[] = {
-> -	{ .compatible = "qcom,sc7280-gpi-dma", .data = (void *)0x10000 },
->  	{ .compatible = "qcom,sdm845-gpi-dma", .data = (void *)0x0 },
->  	{ .compatible = "qcom,sm6350-gpi-dma", .data = (void *)0x10000 },
->  	/*
-> -	 * Deprecated, devices with ee_offset = 0 should use sdm845-gpi-dma as
-> -	 * fallback and not need their own entries here.
+> I think it makes sense but can we document this in binding as well that
+> why people should use these two compatibles. I am fine with this being
+> comments here..
 
-This comment is from the dependency series [1]. Why would we need to add it just
-to remove it here? I was not notified that the dependency was applied anywhere
-(except as a base for other series) so it's not set in stone. Let's just drop
-the original patch that this comment originates from to prevent needlessly
-adding and removing the same lines at once.
+It is kind of implied (and maybe obvious) from the bindings - a list of
+two items, one enum and one fallback compatible.
 
-[1] https://lore.kernel.org/linux-arm-msm/20221007213640.85469-4-mailingradian@gmail.com/
+We usually do not document such patterns in the bindings with comments
+for that reason. If you insist, I can add it.
 
-> +	 * Do not grow the list for compatible devices. Instead use
-> +	 * qcom,sdm845-gpi-dma (for ee_offset = 0x0) or qcom,sm6350-gpi-dma
-> +	 * (for ee_offset = 0x10000).
->  	 */
-> +	{ .compatible = "qcom,sc7280-gpi-dma", .data = (void *)0x10000 },
->  	{ .compatible = "qcom,sm8150-gpi-dma", .data = (void *)0x0 },
->  	{ .compatible = "qcom,sm8250-gpi-dma", .data = (void *)0x0 },
->  	{ .compatible = "qcom,sm8350-gpi-dma", .data = (void *)0x10000 },
-> -- 
-> 2.34.1
-> 
+Best regards,
+Krzysztof
+
