@@ -2,61 +2,55 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 01AC5C4332F
-	for <dmaengine@archiver.kernel.org>; Wed, 19 Oct 2022 13:36:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D348EC433FE
+	for <dmaengine@archiver.kernel.org>; Wed, 19 Oct 2022 13:41:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229592AbiJSNgl (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 19 Oct 2022 09:36:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60714 "EHLO
+        id S232845AbiJSNl0 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 19 Oct 2022 09:41:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58302 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230010AbiJSNgG (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Wed, 19 Oct 2022 09:36:06 -0400
-Received: from hutie.ust.cz (hutie.ust.cz [185.8.165.127])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E708D11E47E;
-        Wed, 19 Oct 2022 06:24:53 -0700 (PDT)
-From:   =?UTF-8?q?Martin=20Povi=C5=A1er?= <povik+lin@cutebit.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cutebit.org; s=mail;
-        t=1666185808; bh=00XpFFUQMJvRxGis99g6ozE8OJO2nXC2MC4LveWM/4k=;
-        h=From:To:Cc:Subject:Date;
-        b=qgn+em+fUXd9c0OqunKrr0HB3TkgnoqpJfVxHZFO6AbzjzhRilDuwHSOmsTGrMKB8
-         ogODkpAq9wKcMnmPLRGOEqhmsf4aQVj72qARmqJ25hsLxLDdBgJ2QpQ8x36gbgRa1c
-         x1beH56jVvPOmCxtHvIwJh9YqCbaXOSc7c4TIHis=
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     =?UTF-8?q?Martin=20Povi=C5=A1er?= <povik+lin@cutebit.org>,
-        asahi@lists.linux.dev, dmaengine@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH v2 1/2] dmaengine: apple-admac: Fix grabbing of channels in of_xlate
-Date:   Wed, 19 Oct 2022 15:23:23 +0200
-Message-Id: <20221019132324.8585-1-povik+lin@cutebit.org>
+        with ESMTP id S232303AbiJSNlE (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Wed, 19 Oct 2022 09:41:04 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E0CF51AF29;
+        Wed, 19 Oct 2022 06:28:32 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 1BF63B822EB;
+        Wed, 19 Oct 2022 13:27:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E65AC433D6;
+        Wed, 19 Oct 2022 13:27:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1666186030;
+        bh=bPyf7qhG0vZuSB+2GkOelpmW5vyhp9yjwvOWEO+3gvY=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=SH255SVdAXWhTmndoa93qxEnoDkV3H/+E6n76U9kVyJ8/Z8zwgTHD0DfayDmM3rc1
+         CA8THtInMWALw0vYCmN6/qG2zDSZeNdCLwp3rmC7B16od3vTq3JAXYyYXr4bR/xZOE
+         ZoN4V2tLd88DIqapNCSxX86TzsLW/3jb8IvDMj6IBoMwZveCMnWE+LnXQz0mh7ApkT
+         9RodCnfQcB8GSqYnrtSQlqmnc+zZScI4VudlF2+4c2H5NzA2T8NRVzTcE+vcR0U5Pn
+         keVzEW1SOqoLrWQ2cbATPZDDxh36/hYCBzCzx7R5KCk/i4QRgRHF9610m32nsvJf8J
+         y3oJQpQpfG3Qw==
+Date:   Wed, 19 Oct 2022 18:57:06 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Colin Ian King <colin.i.king@gmail.com>
+Cc:     Dave Jiang <dave.jiang@intel.com>, dmaengine@vger.kernel.org,
+        kernel-janitors@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] dmaengine: ioat: Fix spelling mistake "idel" -> "idle"
+Message-ID: <Y0/7KhJMl9eBQw99@matsya>
+References: <20221004160913.154739-1-colin.i.king@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20221004160913.154739-1-colin.i.king@gmail.com>
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-The of_xlate callback is supposed to return the channel after already
-having 'grabbed' it for private use, so fill that in.
+On 04-10-22, 17:09, Colin Ian King wrote:
+> There is a spelling mistake in the module description. Fix it.
 
-Fixes: b127315d9a78 ("dmaengine: apple-admac: Add Apple ADMAC driver")
-Signed-off-by: Martin Povišer <povik+lin@cutebit.org>
----
- drivers/dma/apple-admac.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Applied, thanks
 
-diff --git a/drivers/dma/apple-admac.c b/drivers/dma/apple-admac.c
-index 317ca76ccafd..a2cc520225d3 100644
---- a/drivers/dma/apple-admac.c
-+++ b/drivers/dma/apple-admac.c
-@@ -493,7 +493,7 @@ static struct dma_chan *admac_dma_of_xlate(struct of_phandle_args *dma_spec,
- 		return NULL;
- 	}
- 
--	return &ad->channels[index].chan;
-+	return dma_get_slave_channel(&ad->channels[index].chan);
- }
- 
- static int admac_drain_reports(struct admac_data *ad, int channo)
 -- 
-2.33.0
-
+~Vinod
