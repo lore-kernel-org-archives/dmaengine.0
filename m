@@ -2,95 +2,98 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DACDEC4321E
-	for <dmaengine@archiver.kernel.org>; Wed, 19 Oct 2022 06:40:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7E8F5C4332F
+	for <dmaengine@archiver.kernel.org>; Wed, 19 Oct 2022 09:15:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230099AbiJSGka (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 19 Oct 2022 02:40:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50380 "EHLO
+        id S232946AbiJSJP4 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 19 Oct 2022 05:15:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36666 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230101AbiJSGkL (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Wed, 19 Oct 2022 02:40:11 -0400
-Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 614F814D25;
-        Tue, 18 Oct 2022 23:39:45 -0700 (PDT)
-Received: by mail-ej1-x635.google.com with SMTP id a26so37243231ejc.4;
-        Tue, 18 Oct 2022 23:39:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=CzZ/0kJ25IZFQ+fXOgV6ivprSS9GGp5SkUxE38Mr8iA=;
-        b=m/L/QUe9BT9Bx6rjulcvTeel7RT82sBotg2IWuC8/omI0b/k3xnEGLTvkR6M5ZN8vv
-         M0MzO83iNJuzy7YulBWxv7FuZge7RhJdg8/0yiWsa7iZAlN/qkDoEOC8RZhnEmWZvjHt
-         dT17Vq0L4v8IWbIr9bjmOv+sFuzqa8ZIRJZMFNPLLI8tSQ822vKQVZtYW86DUlW2tI4B
-         uBJ1Hi0bIMuVwuCIqAHvhKjVAbH9vXY1JNctAvUXLqqnH3HhhXd8fGHNfvQS+hHk4PEY
-         pyZzH2BGfrEU4c84BgnyFq12VJ8lMOvq6n2GFnOux5CT/E7LLblDG5m+4dLiiy4BR/fp
-         WQXg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=CzZ/0kJ25IZFQ+fXOgV6ivprSS9GGp5SkUxE38Mr8iA=;
-        b=6WHMCvJBxUx757+JinFllA7vgybfA1cfv5mFA59kb1VH/Ox67ANd95V/eAObv+k4Jp
-         HDgwJi6ka1TYWoULU8kXa8rziq90cL8xt+U2Q4nTrWJYy2vr9QpsTtyZYQj+OVSETBlw
-         AFMSdU5TrzCMw8mSVxFlvcafDYms0TqUihdGekrNd+Ft0pqtXtqvE8RlbiIRpO/FEXGu
-         xbDgNKuHved4jFOhqsIr9sFRzwgG9gCQQ9UOUfJkQPHEvhodc9xiFcGS1ClXzY+5wPAA
-         fRgMJnP1WRuJwF3wj4hty+V9qsVea+ioAooGYZdyJg499EMgcwlBuskXOXjEopGHu5lz
-         G9ig==
-X-Gm-Message-State: ACrzQf3EqpnQqX5m+ObCO5pP1LyZlPkmRXIvtGrNX7cEGypHZMh1mmWy
-        Uf0O2dbwAnOcnAALsiqIYMpJgWSCkTt+uQ==
-X-Google-Smtp-Source: AMsMyM4ngi5sZCNuH4gIjBYEUamjjffCUGLF7/XehIS4LgCEkXFfNeEJ2PvjMxVWoGs3h65Pyx/PnQ==
-X-Received: by 2002:a17:907:d04:b0:76e:e208:27ba with SMTP id gn4-20020a1709070d0400b0076ee20827bamr5632131ejc.652.1666161583511;
-        Tue, 18 Oct 2022 23:39:43 -0700 (PDT)
-Received: from hp-power-15.localdomain (mm-39-4-212-37.vitebsk.dynamic.pppoe.byfly.by. [37.212.4.39])
-        by smtp.gmail.com with ESMTPSA id fy19-20020a170906b7d300b00781dbdb292asm8467168ejb.155.2022.10.18.23.39.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 18 Oct 2022 23:39:43 -0700 (PDT)
-From:   Siarhei Volkau <lis8215@gmail.com>
-Cc:     Siarhei Volkau <lis8215@gmail.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Paul Cercueil <paul@crapouillou.net>,
-        dmaengine@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-mips@vger.kernel.org
-Subject: [PATCH v4 1/2] dt-bindings: ingenic: Add support for the JZ4755 dmaengine
-Date:   Wed, 19 Oct 2022 09:39:33 +0300
-Message-Id: <20221019063934.3278444-2-lis8215@gmail.com>
-X-Mailer: git-send-email 2.36.1
-In-Reply-To: <20221019063934.3278444-1-lis8215@gmail.com>
-References: <20221019063934.3278444-1-lis8215@gmail.com>
+        with ESMTP id S233221AbiJSJOO (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Wed, 19 Oct 2022 05:14:14 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E7FD5DFC9;
+        Wed, 19 Oct 2022 02:04:29 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 0A0F46181D;
+        Wed, 19 Oct 2022 09:00:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F2C6C433D6;
+        Wed, 19 Oct 2022 09:00:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+        s=korg; t=1666170048;
+        bh=k9UmSSd24VoHD4EdvwgqSONVwGFzHEbaHDORRiPVUfQ=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=uwIKVdGuzLQwhxO9hQgPH/9lrl8YqE0aJ+NE0Pfcckc3qOgT0aTTiiw3VsTX9/dzp
+         BDnLnraPQRqNTc79C7c11VNR/oZeLznitDUxD22PrbH/j+h2lIlE1OIGpipu3ff5EG
+         MOezB958iyT8c2Q1/dAM7n3fcjEGwlycjQX9moko=
+From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To:     linux-kernel@vger.kernel.org
+Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        stable@vger.kernel.org, Fenghua Yu <fenghua.yu@intel.com>,
+        Dave Jiang <dave.jiang@intel.com>,
+        Vinod Koul <vkoul@kernel.org>, dmaengine@vger.kernel.org,
+        Jerry Snitselaar <jsnitsel@redhat.com>,
+        Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.0 507/862] dmaengine: idxd: avoid deadlock in process_misc_interrupts()
+Date:   Wed, 19 Oct 2022 10:29:54 +0200
+Message-Id: <20221019083312.384744713@linuxfoundation.org>
+X-Mailer: git-send-email 2.38.0
+In-Reply-To: <20221019083249.951566199@linuxfoundation.org>
+References: <20221019083249.951566199@linuxfoundation.org>
+User-Agent: quilt/0.67
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-To:     unlisted-recipients:; (no To-header on input)
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Update documentation prior to adding driver changes.
+From: Jerry Snitselaar <jsnitsel@redhat.com>
 
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Siarhei Volkau <lis8215@gmail.com>
+[ Upstream commit 407171717a4f4d2d80825584643374a2dfdb0540 ]
+
+idxd_device_clear_state() now grabs the idxd->dev_lock
+itself, so don't grab the lock prior to calling it.
+
+This was seen in testing after dmar fault occurred on system,
+resulting in lockup stack traces.
+
+Cc: Fenghua Yu <fenghua.yu@intel.com>
+Cc: Dave Jiang <dave.jiang@intel.com>
+Cc: Vinod Koul <vkoul@kernel.org>
+Cc: dmaengine@vger.kernel.org
+Fixes: cf4ac3fef338 ("dmaengine: idxd: fix lockdep warning on device driver removal")
+Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Link: https://lore.kernel.org/r/20220823163709.2102468-1-jsnitsel@redhat.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/devicetree/bindings/dma/ingenic,dma.yaml | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/dma/idxd/irq.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/dma/ingenic,dma.yaml b/Documentation/devicetree/bindings/dma/ingenic,dma.yaml
-index 3b0b3b919..e42b8ce94 100644
---- a/Documentation/devicetree/bindings/dma/ingenic,dma.yaml
-+++ b/Documentation/devicetree/bindings/dma/ingenic,dma.yaml
-@@ -18,6 +18,7 @@ properties:
-       - enum:
-           - ingenic,jz4740-dma
-           - ingenic,jz4725b-dma
-+          - ingenic,jz4755-dma
-           - ingenic,jz4760-dma
-           - ingenic,jz4760-bdma
-           - ingenic,jz4760-mdma
+diff --git a/drivers/dma/idxd/irq.c b/drivers/dma/idxd/irq.c
+index 743ead5ebc57..5b9921475be6 100644
+--- a/drivers/dma/idxd/irq.c
++++ b/drivers/dma/idxd/irq.c
+@@ -324,13 +324,11 @@ static int process_misc_interrupts(struct idxd_device *idxd, u32 cause)
+ 			idxd->state = IDXD_DEV_HALTED;
+ 			idxd_wqs_quiesce(idxd);
+ 			idxd_wqs_unmap_portal(idxd);
+-			spin_lock(&idxd->dev_lock);
+ 			idxd_device_clear_state(idxd);
+ 			dev_err(&idxd->pdev->dev,
+ 				"idxd halted, need %s.\n",
+ 				gensts.reset_type == IDXD_DEVICE_RESET_FLR ?
+ 				"FLR" : "system reset");
+-			spin_unlock(&idxd->dev_lock);
+ 			return -ENXIO;
+ 		}
+ 	}
 -- 
-2.36.1
+2.35.1
+
+
 
