@@ -2,42 +2,42 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0021DC04A95
-	for <dmaengine@archiver.kernel.org>; Tue, 25 Oct 2022 09:07:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A38BCFA373E
+	for <dmaengine@archiver.kernel.org>; Tue, 25 Oct 2022 09:08:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232257AbiJYJHo (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 25 Oct 2022 05:07:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57370 "EHLO
+        id S231947AbiJYJIL (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 25 Oct 2022 05:08:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57240 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231782AbiJYJGc (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Tue, 25 Oct 2022 05:06:32 -0400
+        with ESMTP id S230134AbiJYJHI (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Tue, 25 Oct 2022 05:07:08 -0400
 Received: from esa.microchip.iphmx.com (esa.microchip.iphmx.com [68.232.153.233])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8440749B6D;
-        Tue, 25 Oct 2022 02:04:27 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DF527B1B90;
+        Tue, 25 Oct 2022 02:04:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=microchip.com; i=@microchip.com; q=dns/txt; s=mchp;
-  t=1666688667; x=1698224667;
+  t=1666688670; x=1698224670;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=P2dHIbWPEA/klMV1uzBkl6AouHK73ZLrDvDFdf+YQBU=;
-  b=ToVXI9LyVSlHlm7NQVc/f6WWMWmbPLIJ7gQcRhGCVY3R5FYy3c3RX4He
-   ZtDcbDrJKUPJD3IWASSzkLWMrgArUY6FeVelZYxHfQwowwa6n+gtGZSu4
-   iH7XAVAU6j+82byf1FFuDV2SBGRi+PAIEi3NpCE+3Hpjf38c0Lftto177
-   IIEHnHZULjBS/UHX8K2pEJ5G6+gYyFuL+7a3M+GWPOT8XWrmK17Og+R1b
-   veOlHcu9KF13a5KD0JyKYmwHhSbkVYk5ZYn/c2CpGhrXV6IedYU1UTJw5
-   ZvbKWjoDYWM+PF8jJSlS7a3v/Gqv5NJ+fpmzxWvkggW02kXWvS/rGf/pr
-   Q==;
+  bh=Nmkk4t5hZNIkDnSjkdy3tZsVaVAlGxAMmBXKHXLVS4U=;
+  b=canLLWyEACaiB48FdCK4fAOPyswysjsV43meY18B47UpjYVU+itwkRd8
+   Hzmhry7JKE5l8U49GTghe0mW0oS9mCxt40kttD9tB1cM3mlII3WFMnFP9
+   K7L7ZAnHCXfifFxe/60Gp6lkOmdv65o1lr01vR868upXtXDlblhulnh22
+   coICVJ5+1wxVHug5koJJg0lCUufUPiuxE71ET9P9HCJoqnoxocoOivHGR
+   4ysb1Ys56yShWmCMAJYEeaYn2hbdhryY3vN8YcMurMqxJztKDBIcQPgvB
+   O+bjMIcWew2dcRT2ua+FXyc/aGqD8Y4hLRYN9axrBlUka/kA9uekbfx/l
+   w==;
 X-IronPort-AV: E=Sophos;i="5.95,211,1661842800"; 
-   d="scan'208";a="196910199"
+   d="scan'208";a="186273160"
 Received: from unknown (HELO email.microchip.com) ([170.129.1.10])
-  by esa1.microchip.iphmx.com with ESMTP/TLS/AES256-SHA256; 25 Oct 2022 02:04:23 -0700
+  by esa3.microchip.iphmx.com with ESMTP/TLS/AES256-SHA256; 25 Oct 2022 02:04:29 -0700
 Received: from chn-vm-ex03.mchp-main.com (10.10.85.151) by
  chn-vm-ex01.mchp-main.com (10.10.85.143) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.12; Tue, 25 Oct 2022 02:04:23 -0700
+ 15.1.2507.12; Tue, 25 Oct 2022 02:04:29 -0700
 Received: from ROB-ULT-M18064N.mchp-main.com (10.10.115.15) by
  chn-vm-ex03.mchp-main.com (10.10.85.151) with Microsoft SMTP Server id
- 15.1.2507.12 via Frontend Transport; Tue, 25 Oct 2022 02:04:21 -0700
+ 15.1.2507.12 via Frontend Transport; Tue, 25 Oct 2022 02:04:26 -0700
 From:   Tudor Ambarus <tudor.ambarus@microchip.com>
 To:     <vkoul@kernel.org>, <peda@axentia.se>, <du@axentia.se>
 CC:     <maciej.sosnowski@intel.com>, <nicolas.ferre@microchip.com>,
@@ -45,9 +45,9 @@ CC:     <maciej.sosnowski@intel.com>, <nicolas.ferre@microchip.com>,
         <linux-kernel@vger.kernel.org>, <dmaengine@vger.kernel.org>,
         <linux-arm-kernel@lists.infradead.org>,
         "Tudor Ambarus" <tudor.ambarus@microchip.com>
-Subject: [PATCH v2 24/32] dmaengine: at_hdmac: Use devm_clk_get()
-Date:   Tue, 25 Oct 2022 12:02:58 +0300
-Message-ID: <20221025090306.297886-25-tudor.ambarus@microchip.com>
+Subject: [PATCH v2 26/32] dmaengine: at_hdmac: Set include entries in alphabetic order
+Date:   Tue, 25 Oct 2022 12:03:00 +0300
+Message-ID: <20221025090306.297886-27-tudor.ambarus@microchip.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20221025090306.297886-1-tudor.ambarus@microchip.com>
 References: <20221025090306.297886-1-tudor.ambarus@microchip.com>
@@ -58,51 +58,40 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Clocks that are get with this method will be automatically put on driver
-detach. Use devm_clk_get() and simplify the error handling.
+It's a good practice to set the include entries in alphabetic order. It
+helps humans to read the code easier. Alphabetic order should also prove
+that each header is self-contained, i.e. can be included without
+prerequisites.
 
 Signed-off-by: Tudor Ambarus <tudor.ambarus@microchip.com>
 ---
- drivers/dma/at_hdmac.c | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+ drivers/dma/at_hdmac.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/dma/at_hdmac.c b/drivers/dma/at_hdmac.c
-index 10c250618a33..444aa7d75ff5 100644
+index 4e3c519e6079..a3fa8bffdb74 100644
 --- a/drivers/dma/at_hdmac.c
 +++ b/drivers/dma/at_hdmac.c
-@@ -1803,13 +1803,13 @@ static int __init at_dma_probe(struct platform_device *pdev)
- 	atdma->dma_common.cap_mask = plat_dat->cap_mask;
- 	atdma->all_chan_mask = (1 << plat_dat->nr_channels) - 1;
+@@ -12,16 +12,16 @@
+ #include <dt-bindings/dma/at91.h>
+ #include <linux/clk.h>
+ #include <linux/dmaengine.h>
+-#include <linux/dma-mapping.h>
+ #include <linux/dmapool.h>
++#include <linux/dma-mapping.h>
+ #include <linux/interrupt.h>
+ #include <linux/module.h>
+-#include <linux/platform_device.h>
+-#include <linux/slab.h>
+ #include <linux/of.h>
+ #include <linux/overflow.h>
+ #include <linux/of_device.h>
+ #include <linux/of_dma.h>
++#include <linux/platform_device.h>
++#include <linux/slab.h>
  
--	atdma->clk = clk_get(&pdev->dev, "dma_clk");
-+	atdma->clk = devm_clk_get(&pdev->dev, "dma_clk");
- 	if (IS_ERR(atdma->clk))
- 		return PTR_ERR(atdma->clk);
- 
- 	err = clk_prepare_enable(atdma->clk);
- 	if (err)
--		goto err_clk_prepare;
-+		return err;
- 
- 	/* force dma off, just in case */
- 	at_dma_off(atdma);
-@@ -1942,8 +1942,6 @@ static int __init at_dma_probe(struct platform_device *pdev)
- 	free_irq(platform_get_irq(pdev, 0), atdma);
- err_irq:
- 	clk_disable_unprepare(atdma->clk);
--err_clk_prepare:
--	clk_put(atdma->clk);
- 	return err;
- }
- 
-@@ -1973,7 +1971,6 @@ static int at_dma_remove(struct platform_device *pdev)
- 	}
- 
- 	clk_disable_unprepare(atdma->clk);
--	clk_put(atdma->clk);
- 
- 	return 0;
- }
+ #include "at_hdmac_regs.h"
+ #include "dmaengine.h"
 -- 
 2.25.1
 
