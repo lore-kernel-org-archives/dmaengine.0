@@ -2,42 +2,42 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D4A72C38A2D
-	for <dmaengine@archiver.kernel.org>; Tue, 25 Oct 2022 09:05:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A9647C04A95
+	for <dmaengine@archiver.kernel.org>; Tue, 25 Oct 2022 09:05:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232257AbiJYJFI (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 25 Oct 2022 05:05:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57754 "EHLO
+        id S231807AbiJYJFp (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 25 Oct 2022 05:05:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57510 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231958AbiJYJEN (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Tue, 25 Oct 2022 05:04:13 -0400
-Received: from esa.microchip.iphmx.com (esa.microchip.iphmx.com [68.232.154.123])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B1C97160204;
-        Tue, 25 Oct 2022 02:03:45 -0700 (PDT)
+        with ESMTP id S232060AbiJYJEk (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Tue, 25 Oct 2022 05:04:40 -0400
+Received: from esa.microchip.iphmx.com (esa.microchip.iphmx.com [68.232.153.233])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B430D15995B;
+        Tue, 25 Oct 2022 02:03:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=microchip.com; i=@microchip.com; q=dns/txt; s=mchp;
-  t=1666688625; x=1698224625;
+  t=1666688632; x=1698224632;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=otOwHLgHLrSuHRXKEz7Xh2PEvd8g6jBAJ0XHPtc1d2I=;
-  b=JuWLG/UDp3c2aRHeKbfKiloaVmTvQTrJPHjsETP+RwPRPSZ3X9bG1UCz
-   PSI1IlnepsXg7z0uOtFXWWkB7hX3nBOlr4Dl9PcCyOjBsYPRrfCKAAVDU
-   hA1zN9GAdJsOqSjTE8N5i/vL5eNN3orzBbbYVL6Tmhx0a7IUUxzUq3BaM
-   FZ5Vhhvhz6lENjNQrL9rKPgCYWEHhMZ/LjauKmQJLL/u9VwsWP34qo8TZ
-   Yw2o6+pWvbaM/VGL65JOcjFOwJ7hoe+ppq13Dt/BtPbp6hDk/fuamKf19
-   EPSMasV6s/rh2+toBPF/X+poqT7RP4QqIjEE/Qw+Y8BOhzfX8lMVZMIm6
-   A==;
+  bh=mc6SsypKCjut3u6a+plDwQ+qo2GsXn3Mr3PKcaDZdms=;
+  b=UU/lz70iJJqf0AAEAVhLlTmhkWHJkl9laixddfbnR26rIc+Rz9GMr7YG
+   jJByLatq1O6h6UmjnsCkN7N+0JXhIw1rDtITbDqakPL5dsgCUYOVsUjI0
+   krTn9oWuEvm5mC8lY1r/vPiFSoQZwmwSu/JFmNz8kpz9rg4Anpn9ttzIN
+   JszfVX5DJ2uyepzwbuczkAj5d0gbqEAINIqrCYNyRc2qqaqi7olHXZ2/V
+   htbOPBzjgCqvgVCrTqQ+27sohMJSzXNr3omRnrasllMOgu4XmIj+n465P
+   gPOo/kB5Xq+EiqWaE1sO/vNRJDUICPiRTJY0jmlB18E95nUMmuZfTHDB7
+   w==;
 X-IronPort-AV: E=Sophos;i="5.95,211,1661842800"; 
-   d="scan'208";a="180386392"
+   d="scan'208";a="196910056"
 Received: from unknown (HELO email.microchip.com) ([170.129.1.10])
-  by esa4.microchip.iphmx.com with ESMTP/TLS/AES256-SHA256; 25 Oct 2022 02:03:40 -0700
+  by esa1.microchip.iphmx.com with ESMTP/TLS/AES256-SHA256; 25 Oct 2022 02:03:51 -0700
 Received: from chn-vm-ex03.mchp-main.com (10.10.85.151) by
- chn-vm-ex01.mchp-main.com (10.10.85.143) with Microsoft SMTP Server
+ chn-vm-ex03.mchp-main.com (10.10.85.151) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.12; Tue, 25 Oct 2022 02:03:39 -0700
+ 15.1.2507.12; Tue, 25 Oct 2022 02:03:52 -0700
 Received: from ROB-ULT-M18064N.mchp-main.com (10.10.115.15) by
  chn-vm-ex03.mchp-main.com (10.10.85.151) with Microsoft SMTP Server id
- 15.1.2507.12 via Frontend Transport; Tue, 25 Oct 2022 02:03:37 -0700
+ 15.1.2507.12 via Frontend Transport; Tue, 25 Oct 2022 02:03:49 -0700
 From:   Tudor Ambarus <tudor.ambarus@microchip.com>
 To:     <vkoul@kernel.org>, <peda@axentia.se>, <du@axentia.se>
 CC:     <maciej.sosnowski@intel.com>, <nicolas.ferre@microchip.com>,
@@ -46,9 +46,9 @@ CC:     <maciej.sosnowski@intel.com>, <nicolas.ferre@microchip.com>,
         <linux-arm-kernel@lists.infradead.org>,
         "Tudor Ambarus" <tudor.ambarus@microchip.com>,
         <stable@vger.kernel.org>
-Subject: [PATCH v2 09/32] dmaengine: at_hdmac: Free the memset buf without holding the chan lock
-Date:   Tue, 25 Oct 2022 12:02:43 +0300
-Message-ID: <20221025090306.297886-10-tudor.ambarus@microchip.com>
+Subject: [PATCH v2 13/32] dmaengine: at_hdmac: Don't allow CPU to reorder channel enable
+Date:   Tue, 25 Oct 2022 12:02:47 +0300
+Message-ID: <20221025090306.297886-14-tudor.ambarus@microchip.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20221025090306.297886-1-tudor.ambarus@microchip.com>
 References: <20221025090306.297886-1-tudor.ambarus@microchip.com>
@@ -59,49 +59,34 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-There's no need to hold the channel lock when freeing the memset buf, as
-the operation has already completed. Free the memset buf without holding
-the channel lock.
+at_hdmac uses __raw_writel for register writes. In the absence of a
+barrier, the CPU may reorder the register operations.
+Introduce a write memory barrier so that the CPU does not reorder the
+channel enable, thus the start of the transfer, without making sure that
+all the pre-required register fields are already written.
 
-Fixes: 4d112426c344 ("dmaengine: hdmac: Add memset capabilities")
+Fixes: dc78baa2b90b ("dmaengine: at_hdmac: new driver for the Atmel AHB DMA Controller")
+Reported-by: Peter Rosin <peda@axentia.se>
 Signed-off-by: Tudor Ambarus <tudor.ambarus@microchip.com>
 Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/lkml/13c6c9a2-6db5-c3bf-349b-4c127ad3496a@axentia.se/
 ---
- drivers/dma/at_hdmac.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ drivers/dma/at_hdmac.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
 diff --git a/drivers/dma/at_hdmac.c b/drivers/dma/at_hdmac.c
-index 2012ecc57826..0fb44f622d35 100644
+index 80eeb4fb88ef..968a5aba47cd 100644
 --- a/drivers/dma/at_hdmac.c
 +++ b/drivers/dma/at_hdmac.c
-@@ -462,13 +462,6 @@ atc_chain_complete(struct at_dma_chan *atchan, struct at_desc *desc)
- 	if (!atc_chan_is_cyclic(atchan))
- 		dma_cookie_complete(txd);
+@@ -256,6 +256,8 @@ static void atc_dostart(struct at_dma_chan *atchan, struct at_desc *first)
+ 		       ATC_SPIP_BOUNDARY(first->boundary));
+ 	channel_writel(atchan, DPIP, ATC_DPIP_HOLE(first->dst_hole) |
+ 		       ATC_DPIP_BOUNDARY(first->boundary));
++	/* Don't allow CPU to reorder channel enable. */
++	wmb();
+ 	dma_writel(atdma, CHER, atchan->mask);
  
--	/* If the transfer was a memset, free our temporary buffer */
--	if (desc->memset_buffer) {
--		dma_pool_free(atdma->memset_pool, desc->memset_vaddr,
--			      desc->memset_paddr);
--		desc->memset_buffer = false;
--	}
--
- 	/* Remove transfer node from the active list. */
- 	list_del_init(&desc->desc_node);
- 	spin_unlock_irqrestore(&atchan->lock, flags);
-@@ -487,6 +480,13 @@ atc_chain_complete(struct at_dma_chan *atchan, struct at_desc *desc)
- 	/* add myself to free_list */
- 	list_add(&desc->desc_node, &atchan->free_list);
- 	spin_unlock_irqrestore(&atchan->lock, flags);
-+
-+	/* If the transfer was a memset, free our temporary buffer */
-+	if (desc->memset_buffer) {
-+		dma_pool_free(atdma->memset_pool, desc->memset_vaddr,
-+			      desc->memset_paddr);
-+		desc->memset_buffer = false;
-+	}
- }
- 
- /**
+ 	vdbg_dump_regs(atchan);
 -- 
 2.25.1
 
