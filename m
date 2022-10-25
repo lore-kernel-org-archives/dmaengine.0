@@ -2,42 +2,42 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A9647C04A95
-	for <dmaengine@archiver.kernel.org>; Tue, 25 Oct 2022 09:05:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 960B0FA3740
+	for <dmaengine@archiver.kernel.org>; Tue, 25 Oct 2022 09:05:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231807AbiJYJFp (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 25 Oct 2022 05:05:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57510 "EHLO
+        id S231947AbiJYJFq (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 25 Oct 2022 05:05:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57526 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232060AbiJYJEk (ORCPT
+        with ESMTP id S232075AbiJYJEk (ORCPT
         <rfc822;dmaengine@vger.kernel.org>); Tue, 25 Oct 2022 05:04:40 -0400
 Received: from esa.microchip.iphmx.com (esa.microchip.iphmx.com [68.232.153.233])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B430D15995B;
-        Tue, 25 Oct 2022 02:03:52 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2570715A332;
+        Tue, 25 Oct 2022 02:03:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=microchip.com; i=@microchip.com; q=dns/txt; s=mchp;
-  t=1666688632; x=1698224632;
+  t=1666688634; x=1698224634;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=mc6SsypKCjut3u6a+plDwQ+qo2GsXn3Mr3PKcaDZdms=;
-  b=UU/lz70iJJqf0AAEAVhLlTmhkWHJkl9laixddfbnR26rIc+Rz9GMr7YG
-   jJByLatq1O6h6UmjnsCkN7N+0JXhIw1rDtITbDqakPL5dsgCUYOVsUjI0
-   krTn9oWuEvm5mC8lY1r/vPiFSoQZwmwSu/JFmNz8kpz9rg4Anpn9ttzIN
-   JszfVX5DJ2uyepzwbuczkAj5d0gbqEAINIqrCYNyRc2qqaqi7olHXZ2/V
-   htbOPBzjgCqvgVCrTqQ+27sohMJSzXNr3omRnrasllMOgu4XmIj+n465P
-   gPOo/kB5Xq+EiqWaE1sO/vNRJDUICPiRTJY0jmlB18E95nUMmuZfTHDB7
-   w==;
+  bh=Mnc0LDzNnye3Pe9OLiPnC3vdVr+IETqhaLn7lpRl7MU=;
+  b=yojwudRVf5y1cvzj4uL7u2B/8KBkjF1Gvy9M1atkwL13GMvPnZpwXshD
+   iJPzkdJiK7JfL2Wo4hDZRR9RWsbCi9rUt5ZGhuPv2g5uFVgVI4SAVXM7Y
+   C9Ay1RocpXAnXywfP2I7V/3Epr7OHEn8C5kkeJKjjH9lqhYfJ9ALRZOEu
+   kU51R4ZqvmaP3sommycf8GWNRIcR1ZAtsQHPAK+dcFcnYaMR/MaaSxH2k
+   fko1KmM1bmJzP1pdTUmXdN9/HX9ZUt7eGcXLvYaK0qIlx9sQhr+a1d35F
+   Z1MCJ9Q42pY3mj3Otrx68Z4orqIbHKP/9IVDa0d3Xc7bQwS7N461znuwj
+   g==;
 X-IronPort-AV: E=Sophos;i="5.95,211,1661842800"; 
-   d="scan'208";a="196910056"
+   d="scan'208";a="196910067"
 Received: from unknown (HELO email.microchip.com) ([170.129.1.10])
-  by esa1.microchip.iphmx.com with ESMTP/TLS/AES256-SHA256; 25 Oct 2022 02:03:51 -0700
+  by esa1.microchip.iphmx.com with ESMTP/TLS/AES256-SHA256; 25 Oct 2022 02:03:54 -0700
 Received: from chn-vm-ex03.mchp-main.com (10.10.85.151) by
- chn-vm-ex03.mchp-main.com (10.10.85.151) with Microsoft SMTP Server
+ chn-vm-ex01.mchp-main.com (10.10.85.143) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.12; Tue, 25 Oct 2022 02:03:52 -0700
+ 15.1.2507.12; Tue, 25 Oct 2022 02:03:45 -0700
 Received: from ROB-ULT-M18064N.mchp-main.com (10.10.115.15) by
  chn-vm-ex03.mchp-main.com (10.10.85.151) with Microsoft SMTP Server id
- 15.1.2507.12 via Frontend Transport; Tue, 25 Oct 2022 02:03:49 -0700
+ 15.1.2507.12 via Frontend Transport; Tue, 25 Oct 2022 02:03:43 -0700
 From:   Tudor Ambarus <tudor.ambarus@microchip.com>
 To:     <vkoul@kernel.org>, <peda@axentia.se>, <du@axentia.se>
 CC:     <maciej.sosnowski@intel.com>, <nicolas.ferre@microchip.com>,
@@ -46,9 +46,9 @@ CC:     <maciej.sosnowski@intel.com>, <nicolas.ferre@microchip.com>,
         <linux-arm-kernel@lists.infradead.org>,
         "Tudor Ambarus" <tudor.ambarus@microchip.com>,
         <stable@vger.kernel.org>
-Subject: [PATCH v2 13/32] dmaengine: at_hdmac: Don't allow CPU to reorder channel enable
-Date:   Tue, 25 Oct 2022 12:02:47 +0300
-Message-ID: <20221025090306.297886-14-tudor.ambarus@microchip.com>
+Subject: [PATCH v2 11/32] dmaengine: at_hdmac: Fix descriptor handling when issuing it to hardware
+Date:   Tue, 25 Oct 2022 12:02:45 +0300
+Message-ID: <20221025090306.297886-12-tudor.ambarus@microchip.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20221025090306.297886-1-tudor.ambarus@microchip.com>
 References: <20221025090306.297886-1-tudor.ambarus@microchip.com>
@@ -59,11 +59,9 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-at_hdmac uses __raw_writel for register writes. In the absence of a
-barrier, the CPU may reorder the register operations.
-Introduce a write memory barrier so that the CPU does not reorder the
-channel enable, thus the start of the transfer, without making sure that
-all the pre-required register fields are already written.
+As it was before, the descriptor was issued to the hardware without adding
+it to the active (issued) list. This could result in a completion of other
+descriptor, or/and in the descriptor never being completed.
 
 Fixes: dc78baa2b90b ("dmaengine: at_hdmac: new driver for the Atmel AHB DMA Controller")
 Reported-by: Peter Rosin <peda@axentia.se>
@@ -71,22 +69,49 @@ Signed-off-by: Tudor Ambarus <tudor.ambarus@microchip.com>
 Cc: stable@vger.kernel.org
 Link: https://lore.kernel.org/lkml/13c6c9a2-6db5-c3bf-349b-4c127ad3496a@axentia.se/
 ---
- drivers/dma/at_hdmac.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/dma/at_hdmac.c | 15 +++++++++++----
+ 1 file changed, 11 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/dma/at_hdmac.c b/drivers/dma/at_hdmac.c
-index 80eeb4fb88ef..968a5aba47cd 100644
+index b53a9fc15dd9..9e5a30396c1c 100644
 --- a/drivers/dma/at_hdmac.c
 +++ b/drivers/dma/at_hdmac.c
-@@ -256,6 +256,8 @@ static void atc_dostart(struct at_dma_chan *atchan, struct at_desc *first)
- 		       ATC_SPIP_BOUNDARY(first->boundary));
- 	channel_writel(atchan, DPIP, ATC_DPIP_HOLE(first->dst_hole) |
- 		       ATC_DPIP_BOUNDARY(first->boundary));
-+	/* Don't allow CPU to reorder channel enable. */
-+	wmb();
- 	dma_writel(atdma, CHER, atchan->mask);
+@@ -510,8 +510,11 @@ static void atc_advance_work(struct at_dma_chan *atchan)
  
- 	vdbg_dump_regs(atchan);
+ 	/* advance work */
+ 	spin_lock_irqsave(&atchan->lock, flags);
+-	if (!list_empty(&atchan->active_list))
+-		atc_dostart(atchan, atc_first_active(atchan));
++	if (!list_empty(&atchan->active_list)) {
++		desc = atc_first_queued(atchan);
++		list_move_tail(&desc->desc_node, &atchan->active_list);
++		atc_dostart(atchan, desc);
++	}
+ 	spin_unlock_irqrestore(&atchan->lock, flags);
+ }
+ 
+@@ -523,6 +526,7 @@ static void atc_advance_work(struct at_dma_chan *atchan)
+ static void atc_handle_error(struct at_dma_chan *atchan)
+ {
+ 	struct at_desc *bad_desc;
++	struct at_desc *desc;
+ 	struct at_desc *child;
+ 	unsigned long flags;
+ 
+@@ -540,8 +544,11 @@ static void atc_handle_error(struct at_dma_chan *atchan)
+ 	list_splice_init(&atchan->queue, atchan->active_list.prev);
+ 
+ 	/* Try to restart the controller */
+-	if (!list_empty(&atchan->active_list))
+-		atc_dostart(atchan, atc_first_active(atchan));
++	if (!list_empty(&atchan->active_list)) {
++		desc = atc_first_queued(atchan);
++		list_move_tail(&desc->desc_node, &atchan->active_list);
++		atc_dostart(atchan, desc);
++	}
+ 
+ 	/*
+ 	 * KERN_CRITICAL may seem harsh, but since this only happens
 -- 
 2.25.1
 
