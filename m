@@ -2,53 +2,56 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AE19AFA373F
-	for <dmaengine@archiver.kernel.org>; Tue, 25 Oct 2022 09:03:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 191ADC38A2D
+	for <dmaengine@archiver.kernel.org>; Tue, 25 Oct 2022 09:03:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230517AbiJYJDW (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 25 Oct 2022 05:03:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56306 "EHLO
+        id S229937AbiJYJDX (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 25 Oct 2022 05:03:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56314 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231847AbiJYJDU (ORCPT
+        with ESMTP id S231855AbiJYJDU (ORCPT
         <rfc822;dmaengine@vger.kernel.org>); Tue, 25 Oct 2022 05:03:20 -0400
 Received: from esa.microchip.iphmx.com (esa.microchip.iphmx.com [68.232.154.123])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D9FA5158D41;
-        Tue, 25 Oct 2022 02:03:18 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B1458158D70;
+        Tue, 25 Oct 2022 02:03:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=microchip.com; i=@microchip.com; q=dns/txt; s=mchp;
-  t=1666688598; x=1698224598;
-  h=from:to:cc:subject:date:message-id:mime-version:
-   content-transfer-encoding;
-  bh=wcNkbfUgqXT7nAfmkdFbESesrvdKH9TGwWLIWOtxlR0=;
-  b=ONh1T9tA75KwZBtSgIq3xUguW5QkJaXdInAkheFyii7uf/mHENhD+O8H
-   Pl36jvw5gCM1p5NBCl9mFoIzv6GK0qzHJnCQKHAUTFKK3IB1539BgMw0K
-   bQbMdnaz3Lin+x1I4RvbpJ9cuacmrlrg/FeuS/VJuV67xgnoJv8KjxQCv
-   bVeQWCb6wNgpv/SN/oME3STeq3d3qRF6M08V/xXrpi6pTxlH5OJQFVFUv
-   ZOnyGbvIYy04Y1ksfrD/vI4AnkB5+xiGZg4BUwJ6cKf/EwKgTQ8bMMsjn
-   +gwtXU9NLULbg/nK6y8hCxhjyecWf+A4f8tQZ+uFObxPzTsNXYsXQVHjX
-   w==;
+  t=1666688599; x=1698224599;
+  h=from:to:cc:subject:date:message-id:in-reply-to:
+   references:mime-version:content-transfer-encoding;
+  bh=KFP4YnfbuYYuZey4wLzIf7XSaPSpfjyDFE50YuFJ0J4=;
+  b=oV5Awk0ZuoRV/nJdmHsGOEDL2O8RhBh9o+7nbxO94uIlpWvGsbS/1rZP
+   zFAk8SLq2rE7Qq/X6j1Uaj3NVpgq5QWXLklgPaTGvVN57BTcpFIpezRGJ
+   axcEo5klNKY1IZHxxBXi5H0xim7cAfY6g/KvMcVsNMQuJeAHWdbhbMxrA
+   x6mH2XbtWTbqDDmtncMUxDnxQMaUDgY3ztfX+YUGgXdDJKd4bYRYk793r
+   HS+c84zqyLIyIxrhuKhM7JHODIrjV/35MbXG2IO0lbt3u/dx4k5YMpmE3
+   8jE7GRkX2/y8Su3icFXCKvdkisAhS17h1la9JL5cceFpeqovBKvPMmKrc
+   Q==;
 X-IronPort-AV: E=Sophos;i="5.95,211,1661842800"; 
-   d="scan'208";a="183777233"
+   d="scan'208";a="183777244"
 Received: from unknown (HELO email.microchip.com) ([170.129.1.10])
-  by esa2.microchip.iphmx.com with ESMTP/TLS/AES256-SHA256; 25 Oct 2022 02:03:17 -0700
+  by esa2.microchip.iphmx.com with ESMTP/TLS/AES256-SHA256; 25 Oct 2022 02:03:18 -0700
 Received: from chn-vm-ex03.mchp-main.com (10.10.85.151) by
  chn-vm-ex04.mchp-main.com (10.10.85.152) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.12; Tue, 25 Oct 2022 02:03:12 -0700
+ 15.1.2507.12; Tue, 25 Oct 2022 02:03:18 -0700
 Received: from ROB-ULT-M18064N.mchp-main.com (10.10.115.15) by
  chn-vm-ex03.mchp-main.com (10.10.85.151) with Microsoft SMTP Server id
- 15.1.2507.12 via Frontend Transport; Tue, 25 Oct 2022 02:03:10 -0700
+ 15.1.2507.12 via Frontend Transport; Tue, 25 Oct 2022 02:03:15 -0700
 From:   Tudor Ambarus <tudor.ambarus@microchip.com>
 To:     <vkoul@kernel.org>, <peda@axentia.se>, <du@axentia.se>
 CC:     <maciej.sosnowski@intel.com>, <nicolas.ferre@microchip.com>,
         <mripard@kernel.org>, <torfl6749@gmail.com>,
         <linux-kernel@vger.kernel.org>, <dmaengine@vger.kernel.org>,
         <linux-arm-kernel@lists.infradead.org>,
-        "Tudor Ambarus" <tudor.ambarus@microchip.com>
-Subject: [PATCH v2 00/32] dmaengine: at_hdmac: Fix concurrency bugs and then convert to virt-dma
-Date:   Tue, 25 Oct 2022 12:02:34 +0300
-Message-ID: <20221025090306.297886-1-tudor.ambarus@microchip.com>
+        "Tudor Ambarus" <tudor.ambarus@microchip.com>,
+        <stable@vger.kernel.org>
+Subject: [PATCH v2 02/32] dmaengine: at_hdmac: Don't start transactions at tx_submit level
+Date:   Tue, 25 Oct 2022 12:02:36 +0300
+Message-ID: <20221025090306.297886-3-tudor.ambarus@microchip.com>
 X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20221025090306.297886-1-tudor.ambarus@microchip.com>
+References: <20221025090306.297886-1-tudor.ambarus@microchip.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
@@ -56,88 +59,53 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-v2:
-- reorder patches so that fixes come first -> easier to backport to
-stable kernels.
-- drop the devm_request_irq() patch as we had to disable the irq anyway
-in remove() in order to avoid spurios IRQs. Using devm variant brings no
-palpable benefit.
-- reword pm_ptr commit message
+tx_submit is supposed to push the current transaction descriptor to a
+pending queue, waiting for issue_pending() to be called. issue_pending()
+must start the transfer, not tx_submit(), thus remove atc_dostart() from
+atc_tx_submit(). Clients of at_xdmac that assume that tx_submit() starts
+the transfer must be updated and call dma_async_issue_pending() if they
+miss to call it.
+The vdbg print was moved to after the lock is released. It is desirable to
+do the prints without the lock held if possible, and because the if
+statement disappears there's no reason why to do the print while holding
+the lock.
 
+Fixes: dc78baa2b90b ("dmaengine: at_hdmac: new driver for the Atmel AHB DMA Controller")
+Reported-by: Peter Rosin <peda@axentia.se>
+Signed-off-by: Tudor Ambarus <tudor.ambarus@microchip.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/lkml/13c6c9a2-6db5-c3bf-349b-4c127ad3496a@axentia.se/
+---
+ drivers/dma/at_hdmac.c | 14 +++-----------
+ 1 file changed, 3 insertions(+), 11 deletions(-)
 
-at_hdmac driver had poor list handling and concurrency bugs.
-We experienced calling of the completion call twice for the
-same descriptor. Peter Rosin encountered the same while
-reporting a different bug:
-https://lore.kernel.org/lkml/13c6c9a2-6db5-c3bf-349b-4c127ad3496a@axentia.se/
-
-Two sets of tests were performed:
-1/ tested just the fixes, to make sure everything is fine and the
-concurrency bugs are squashed even without the conversion to virt-dma.
-All went fine.
-2/ tested the entire series including the conversion the virt-dma
-All went fine.
-
-I tested NAND (prep_dma_memcpy), MMC (prep_dma_slave_sg),
-usart (cyclic mode), dmatest (memcpy, memset).
-With the conversion to virt-dma I replaced the election of a new transfer
-in the tasklet with the election of the new transfer in the interrupt
-handler. We should have a shorter idle window as we remove the scheduling
-latency of the tasklet. Using mtd_speedtest showed similar performances
-when using NAND with DMA. That could be because of using a low timming
-mode on NAND.
-
-
-Tudor Ambarus (32):
-  dmaengine: at_hdmac: Fix at_lli struct definition
-  dmaengine: at_hdmac: Don't start transactions at tx_submit level
-  dmaengine: at_hdmac: Start transfer for cyclic channels in
-    issue_pending
-  dmaengine: at_hdmac: Fix premature completion of desc in issue_pending
-  dmaengine: at_hdmac: Do not call the complete callback on
-    device_terminate_all
-  dmaengine: at_hdmac: Protect atchan->status with the channel lock
-  dmaengine: at_hdmac: Fix concurrency problems by removing
-    atc_complete_all()
-  dmaengine: at_hdmac: Fix concurrency over descriptor
-  dmaengine: at_hdmac: Free the memset buf without holding the chan lock
-  dmaengine: at_hdmac: Fix concurrency over the active list
-  dmaengine: at_hdmac: Fix descriptor handling when issuing it to
-    hardware
-  dmaengine: at_hdmac: Fix completion of unissued descriptor in case of
-    errors
-  dmaengine: at_hdmac: Don't allow CPU to reorder channel enable
-  dmaengine: at_hdmac: Fix impossible condition
-  dmaengine: at_hdmac: Check return code of dma_async_device_register
-  dmaengine: at_hdmac: Do not print messages on console while holding
-    the lock
-  dmaengine: at_hdmac: Return dma_cookie_status()'s ret code when
-    txstate is NULL
-  dmaengine: at_hdmac: Remove superfluous cast
-  dmaengine: at_hdmac: Pass residue by address to avoid unnecessary
-    implicit casts
-  dmaengine: at_hdmac: s/atc_get_bytes_left/atc_get_residue
-  dmaengine: at_hdmac: Introduce atc_get_llis_residue()
-  dmaengine: at_hdmac: Use devm_kzalloc() and struct_size()
-  dmaengine: at_hdmac: Use devm_platform_ioremap_resource
-  dmaengine: at_hdmac: Use devm_clk_get()
-  dmaengine: at_hdmac: Use pm_ptr()
-  dmaengine: at_hdmac: Set include entries in alphabetic order
-  dmaengine: at_hdmac: Keep register definitions and structures private
-    to at_hdmac.c
-  dmaengine: at_hdmac: Use bitfield access macros
-  dmaengine: at_hdmac: Rename "dma_common" to "dma_device"
-  dmaengine: at_hdmac: Rename "chan_common" to "dma_chan"
-  dmaengine: at_hdmac: Remove unused member of at_dma_chan
-  dmaengine: at_hdmac: Convert driver to use virt-dma
-
- MAINTAINERS                 |    1 -
- drivers/dma/Kconfig         |    1 +
- drivers/dma/at_hdmac.c      | 1899 ++++++++++++++++++-----------------
- drivers/dma/at_hdmac_regs.h |  478 ---------
- 4 files changed, 990 insertions(+), 1389 deletions(-)
- delete mode 100644 drivers/dma/at_hdmac_regs.h
-
+diff --git a/drivers/dma/at_hdmac.c b/drivers/dma/at_hdmac.c
+index 5a50423b7378..3f71f4d2f467 100644
+--- a/drivers/dma/at_hdmac.c
++++ b/drivers/dma/at_hdmac.c
+@@ -691,19 +691,11 @@ static dma_cookie_t atc_tx_submit(struct dma_async_tx_descriptor *tx)
+ 	spin_lock_irqsave(&atchan->lock, flags);
+ 	cookie = dma_cookie_assign(tx);
+ 
+-	if (list_empty(&atchan->active_list)) {
+-		dev_vdbg(chan2dev(tx->chan), "tx_submit: started %u\n",
+-				desc->txd.cookie);
+-		atc_dostart(atchan, desc);
+-		list_add_tail(&desc->desc_node, &atchan->active_list);
+-	} else {
+-		dev_vdbg(chan2dev(tx->chan), "tx_submit: queued %u\n",
+-				desc->txd.cookie);
+-		list_add_tail(&desc->desc_node, &atchan->queue);
+-	}
+-
++	list_add_tail(&desc->desc_node, &atchan->queue);
+ 	spin_unlock_irqrestore(&atchan->lock, flags);
+ 
++	dev_vdbg(chan2dev(tx->chan), "tx_submit: queued %u\n",
++		 desc->txd.cookie);
+ 	return cookie;
+ }
+ 
 -- 
 2.25.1
 
