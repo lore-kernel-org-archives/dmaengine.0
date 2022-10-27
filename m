@@ -2,62 +2,64 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 31CCAC38A2D
-	for <dmaengine@archiver.kernel.org>; Thu, 27 Oct 2022 05:14:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A61E3C67871
+	for <dmaengine@archiver.kernel.org>; Thu, 27 Oct 2022 05:15:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233725AbiJ0FOx (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Thu, 27 Oct 2022 01:14:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36558 "EHLO
+        id S234437AbiJ0FPS (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Thu, 27 Oct 2022 01:15:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38484 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234305AbiJ0FOr (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Thu, 27 Oct 2022 01:14:47 -0400
-Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com [IPv6:2607:f8b0:4864:20::1031])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D23C41CB0D;
-        Wed, 26 Oct 2022 22:14:43 -0700 (PDT)
-Received: by mail-pj1-x1031.google.com with SMTP id u8-20020a17090a5e4800b002106dcdd4a0so5195986pji.1;
-        Wed, 26 Oct 2022 22:14:43 -0700 (PDT)
+        with ESMTP id S234369AbiJ0FPD (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Thu, 27 Oct 2022 01:15:03 -0400
+Received: from mail-pf1-x431.google.com (mail-pf1-x431.google.com [IPv6:2607:f8b0:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 13AE574CCC;
+        Wed, 26 Oct 2022 22:15:01 -0700 (PDT)
+Received: by mail-pf1-x431.google.com with SMTP id b29so390705pfp.13;
+        Wed, 26 Oct 2022 22:15:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=2oMfxaXF7nRI4BLfRkUmZFlJUfBUODNFJS3becz/GPQ=;
-        b=ZON6/JpoeO41g78FtnY6wu8/97zwQU3H41Ex8/Sk28ZEFSj0drFqzMy2meOlmlAW0c
-         v6J496KoWJwEN6WYDR11wotmU6hAeTKOwwmhiOZRmi2lCEDMK9sz4O61D25ZrCraFCos
-         cFPKTfs7tZUXqiJ9pJ4ddU4odhH921pkTe6TkbKjUCh8xQJpw2KQmSCaRXphz/bW04o/
-         m1+/AbfSUPHxfYGLpgFbwUzrdZKrF8ygsbj1u2111qx7yyDjOFbm1Khf9/F1E41K8pZO
-         uyxqVgD+1UGNwQfnMnDkIv4ysc4pkvqeyMIzGDXCkbvqmbF8wnwFuIPeksIG2/3nJtiu
-         eRHg==
+        bh=mOGRH9NXdrfqgbNenNuBmO6i+ru+iWERjL2qQ8bxKOc=;
+        b=GGl2VErwxlzjseiEoId4PZOsXmsgVi2Udhz+DvniQ41BY8OPcCl1DVdKnUs8R7cY71
+         sS4is/og8XoTndtqK9zcSUX8Ek/9GYYe163+5S6qZUAhGz7hDIA73bhnXCTusQ6tppnQ
+         Cw15UZ2XJaiqZlWNlfl56JtY8QJ8523iRbkBii3Qnhagc1nTeUWNdlz0HkgJAKcanEvW
+         2fSNowmzImpuC1sa0tih6zRYsZlmGo+iCy1wDmyf9LMXKi9qucQYjiV0oguqFuwJRZL1
+         fRt1QEh2+W8uhteWX4b6LBfgKyIgKVi1kmvKxuDQMthf72CFVPtEG+WV7Mh4fn8vbIbv
+         xLIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=2oMfxaXF7nRI4BLfRkUmZFlJUfBUODNFJS3becz/GPQ=;
-        b=TSrKn7RvkO6A6TLBNTGlies9E1fFk59jpVo668tuK+UK3gzIQPbuUUt/RKvN2LVW+K
-         JJzHL0APbuEx05kHaiXVen4V1q5xjoIkkQVDd2TIFGVhKDSp0x8X3owKObeE/S9IS6/S
-         Aw+hNj//K+YXUDnEo67qmvBG8cI84HQctyR26SysFcpzvEAwZ0Vfyu1ILbx+G+PeAQgg
-         F79nYnRzn/30eWieHgL1MAq4Lu1K98w/57S79mRmL41Yi6cqbXIGInhWbXGycsBsjQfG
-         mljVcoLSva4zWG0zyosw7dguIo9hUKGJN0iLtm7iIih13CqD9SZvYH1N7DhFe2UN0Bwx
-         Smag==
-X-Gm-Message-State: ACrzQf27C95fbyqxJXXHMQ2l47tVjIppKq7kec4wRhAlfH3gZeiMomFd
-        g+Zhh+Ns5l9WogE3d7ffRIo=
-X-Google-Smtp-Source: AMsMyM6LdVb3pwNKgm9TQaOrdm/oRLxBIWu8X88HIbZcvT49c3mpI/PeeYndAhpIxWAAZWIHmvczVA==
-X-Received: by 2002:a17:902:d4c4:b0:186:a951:b8f9 with SMTP id o4-20020a170902d4c400b00186a951b8f9mr19152254plg.130.1666847683310;
-        Wed, 26 Oct 2022 22:14:43 -0700 (PDT)
+        bh=mOGRH9NXdrfqgbNenNuBmO6i+ru+iWERjL2qQ8bxKOc=;
+        b=C4+Dp2A/stO9NN6kq1qjqGMnicgufOAkUAnE3X2y21tNisgoBaU+HFyTuaCv5+Lj30
+         aWtTi8RliSPEad4xF9a+4N00LPfdBrZsiX3Lw0jIrVUfZl6ETgzxGOTkHyicYrf6nusu
+         bAawtwYnF+KnUrPsDHDkdLrgCmMfz1YJZU5S6ekhgMiq78xEhIHQsNuA7kWQc2EY9rkD
+         VnHHoivQ1ATCj9ZuAowNyKS2W23+u1C73+UxRwS0nojJcK3lkzOpOYESZKYvh5rj60HO
+         OVODnawV1atoMUhqXyNlLPKvzMISEiKgO+oTEU5xbmDfS+MYuJ3u5aSvQ8A/YVeL8ZrN
+         /fIA==
+X-Gm-Message-State: ACrzQf1SNRk8H9j6vES13EauemiiN9dQ52o46euEcb8etozxlFrLtssd
+        IAhCmq57UYwICeYuGvyBtEiZLf4sd+rH7w==
+X-Google-Smtp-Source: AMsMyM7kLAPyboZ1bo3FBbafLPqEEmUiEqpipe4WaWFsn+1q7Q+Y6J3nXYCe8ac9I5OcmiDy5RLvaw==
+X-Received: by 2002:a17:902:900a:b0:178:77c7:aa28 with SMTP id a10-20020a170902900a00b0017877c7aa28mr46692384plp.3.1666847690404;
+        Wed, 26 Oct 2022 22:14:50 -0700 (PDT)
 Received: from skynet-linux.local ([2406:7400:61:dcaa:bb0:9908:b137:b0b4])
-        by smtp.googlemail.com with ESMTPSA id s8-20020a170902ea0800b001869ba04c83sm216713plg.245.2022.10.26.22.14.40
+        by smtp.googlemail.com with ESMTPSA id s8-20020a170902ea0800b001869ba04c83sm216713plg.245.2022.10.26.22.14.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 26 Oct 2022 22:14:42 -0700 (PDT)
+        Wed, 26 Oct 2022 22:14:49 -0700 (PDT)
 From:   Sireesh Kodali <sireeshkodali1@gmail.com>
 To:     vkoul@kernel.org, linux-kernel@vger.kernel.org,
         linux-doc@vger.kernel.org, linux-arm-msm@vger.kernel.org
 Cc:     dmaengine@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
         Sireesh Kodali <sireeshkodali1@gmail.com>,
-        Jonathan Corbet <corbet@lwn.net>
-Subject: [PATCH v2 1/3] doc: dmaengine: client-api: Add immediate commands in the DMA client API
-Date:   Thu, 27 Oct 2022 10:44:27 +0530
-Message-Id: <20221027051429.46593-2-sireeshkodali1@gmail.com>
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>
+Subject: [PATCH v2 3/3] dmaengine: bam_dma: Add support for immediate commands
+Date:   Thu, 27 Oct 2022 10:44:29 +0530
+Message-Id: <20221027051429.46593-4-sireeshkodali1@gmail.com>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221027051429.46593-1-sireeshkodali1@gmail.com>
 References: <20221027051429.46593-1-sireeshkodali1@gmail.com>
@@ -67,35 +69,37 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Immediate commands are used by the IPA driver to send commands to the
-microcontroller over BAM. These are different from PREP_CMD.
+Immediate commands are handled similar to regular commands that are sent
+over BAM, only a different flag needs to be set. The immediate command
+support is needed to implement support for IPA v2.x, which rely on BAM
+immediate commands to send commands to the IPA microcontroller.
 
 Signed-off-by: Sireesh Kodali <sireeshkodali1@gmail.com>
 ---
- Documentation/driver-api/dmaengine/provider.rst | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/dma/qcom/bam_dma.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/Documentation/driver-api/dmaengine/provider.rst b/Documentation/driver-api/dmaengine/provider.rst
-index ceac2a300e32..5afe21191299 100644
---- a/Documentation/driver-api/dmaengine/provider.rst
-+++ b/Documentation/driver-api/dmaengine/provider.rst
-@@ -590,6 +590,16 @@ DMA_CTRL_REUSE
-     writes for which the descriptor should be in different format from
-     normal data descriptors.
+diff --git a/drivers/dma/qcom/bam_dma.c b/drivers/dma/qcom/bam_dma.c
+index 2ff787df513e..3135a3e4a167 100644
+--- a/drivers/dma/qcom/bam_dma.c
++++ b/drivers/dma/qcom/bam_dma.c
+@@ -58,6 +58,7 @@ struct bam_desc_hw {
+ #define DESC_FLAG_EOB BIT(13)
+ #define DESC_FLAG_NWD BIT(12)
+ #define DESC_FLAG_CMD BIT(11)
++#define DESC_FLAG_IMM BIT(8)
  
-+- DMA_PREP_IMM_CMD
-+
-+  - If set, the client driver tells DMA controller that passed data in DMA
-+    API is immediate command data.
-+
-+  - Interpretation of command data is DMA controller specific. It can be
-+    used for issuing immediate commands to other peripherals/register
-+    reads/register writes for which the descriptor should be in a
-+    different format from normal data descriptors.
-+
- - DMA_PREP_REPEAT
+ struct bam_async_desc {
+ 	struct virt_dma_desc vd;
+@@ -693,6 +694,8 @@ static struct dma_async_tx_descriptor *bam_prep_slave_sg(struct dma_chan *chan,
+ 		do {
+ 			if (flags & DMA_PREP_CMD)
+ 				desc->flags |= cpu_to_le16(DESC_FLAG_CMD);
++			else if (flags & DMA_PREP_IMM_CMD)
++				desc->flags |= cpu_to_le16(DESC_FLAG_IMM);
  
-   - If set, the transfer will be automatically repeated when it ends until a
+ 			desc->addr = cpu_to_le32(sg_dma_address(sg) +
+ 						 curr_offset);
 -- 
 2.38.1
 
