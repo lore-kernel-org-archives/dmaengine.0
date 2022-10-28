@@ -2,163 +2,184 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7A0D7ECAAA1
-	for <dmaengine@archiver.kernel.org>; Fri, 28 Oct 2022 13:00:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 15B6AC38A02
+	for <dmaengine@archiver.kernel.org>; Fri, 28 Oct 2022 16:31:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230004AbiJ1NAx (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 28 Oct 2022 09:00:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44762 "EHLO
+        id S230293AbiJ1QbY (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 28 Oct 2022 12:31:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33018 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230161AbiJ1NAv (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Fri, 28 Oct 2022 09:00:51 -0400
-Received: from esa.microchip.iphmx.com (esa.microchip.iphmx.com [68.232.153.233])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A2580844E9;
-        Fri, 28 Oct 2022 06:00:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=microchip.com; i=@microchip.com; q=dns/txt; s=mchp;
-  t=1666962042; x=1698498042;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=Q6RUi+rLXaM5pWbUnyblE7p8zaqln2TeO5NDpPS1p94=;
-  b=NpL6XXAtoXUOu6wI79bvhO0P5cGpVxC3FdiOjkluuxAegbIXdwLi0eCH
-   G4KOHcRpjIwoWJMx8o/bYhypm7kKG9OpVS3FJ+Wh3x7WSgeth6fQSey1H
-   5M9ggbUI9ORichbDDcLfOqAdfeENqtMSoHb8HmatEqUocr//Ae4I+S4XD
-   ZdjaHIG99HakKXNVBfo3yGOTJb9fnE1FewNsBTMAHMMeBjb4+Avpf0ehu
-   GXDjLeKTkD5VPl1Kq5jHHHy6podjusqh+gz/CAmo1qE5e+zMSYloip6Dn
-   pTLgpkhMKhTd5mxxsoU6tL33xftfWMs6BLrED7A2JGHZlg//CJpOda+J6
-   g==;
-X-IronPort-AV: E=Sophos;i="5.95,221,1661842800"; 
-   d="scan'208";a="186776959"
-Received: from unknown (HELO email.microchip.com) ([170.129.1.10])
-  by esa3.microchip.iphmx.com with ESMTP/TLS/AES256-SHA256; 28 Oct 2022 06:00:42 -0700
-Received: from chn-vm-ex03.mchp-main.com (10.10.85.151) by
- chn-vm-ex02.mchp-main.com (10.10.85.144) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.12; Fri, 28 Oct 2022 06:00:42 -0700
-Received: from [10.159.245.112] (10.10.115.15) by chn-vm-ex03.mchp-main.com
- (10.10.85.151) with Microsoft SMTP Server id 15.1.2507.12 via Frontend
- Transport; Fri, 28 Oct 2022 06:00:40 -0700
-Message-ID: <4fc31b0c-3295-2272-52c8-548634c3a6dc@microchip.com>
-Date:   Fri, 28 Oct 2022 15:00:38 +0200
+        with ESMTP id S229968AbiJ1QbX (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Fri, 28 Oct 2022 12:31:23 -0400
+Received: from lelv0143.ext.ti.com (lelv0143.ext.ti.com [198.47.23.248])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F195C1C73D1;
+        Fri, 28 Oct 2022 09:31:21 -0700 (PDT)
+Received: from lelv0266.itg.ti.com ([10.180.67.225])
+        by lelv0143.ext.ti.com (8.15.2/8.15.2) with ESMTP id 29SGVIRV009012;
+        Fri, 28 Oct 2022 11:31:18 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
+        s=ti-com-17Q1; t=1666974678;
+        bh=7aMKQAHE01RLpeN36QolcinSJvyqvU8P9/9KHcHaxbs=;
+        h=From:To:CC:Subject:Date;
+        b=EOsGul9P/eZJIOHjJjAv0rKGBcr80fUv/Fc9NVqzFDyTY0JKXcSke94pGV8ls1b2t
+         QFi9jIRMQg7aKSdSblnpWGEWOoIbMYiaYik/WCQbobXPI5lG3sgUFJIxkZwYySv9Ki
+         4jXIAC1Dbifa9K5gl9QXS6jowX3SRac6ZiSspx9A=
+Received: from DLEE102.ent.ti.com (dlee102.ent.ti.com [157.170.170.32])
+        by lelv0266.itg.ti.com (8.15.2/8.15.2) with ESMTPS id 29SGVIjX130499
+        (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
+        Fri, 28 Oct 2022 11:31:18 -0500
+Received: from DLEE107.ent.ti.com (157.170.170.37) by DLEE102.ent.ti.com
+ (157.170.170.32) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.2507.6; Fri, 28
+ Oct 2022 11:31:18 -0500
+Received: from lelv0326.itg.ti.com (10.180.67.84) by DLEE107.ent.ti.com
+ (157.170.170.37) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.2507.6 via
+ Frontend Transport; Fri, 28 Oct 2022 11:31:18 -0500
+Received: from jti.ent.ti.com (ileaxei01-snat.itg.ti.com [10.180.69.5])
+        by lelv0326.itg.ti.com (8.15.2/8.15.2) with ESMTP id 29SGVBYf003448;
+        Fri, 28 Oct 2022 11:31:13 -0500
+From:   Georgi Vlaev <g-vlaev@ti.com>
+To:     Peter Ujfalusi <peter.ujfalusi@gmail.com>,
+        Vinod Koul <vkoul@kernel.org>
+CC:     Nishanth Menon <nm@ti.com>, <dmaengine@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, Georgi Vlaev <g-vlaev@ti.com>,
+        Vignesh Raghavendra <vigneshr@ti.com>
+Subject: [PATCH] dmaengine: k3-udma: Add system suspend/resume support
+Date:   Fri, 28 Oct 2022 19:30:50 +0300
+Message-ID: <20221028163050.248074-1-g-vlaev@ti.com>
+X-Mailer: git-send-email 2.30.2
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.2.2
-Subject: Re: [PATCH v2 00/32] dmaengine: at_hdmac: Fix concurrency bugs and
- then convert to virt-dma
-Content-Language: en-US
-To:     Tudor Ambarus <tudor.ambarus@microchip.com>, <vkoul@kernel.org>,
-        <peda@axentia.se>, <du@axentia.se>
-CC:     <maciej.sosnowski@intel.com>, <mripard@kernel.org>,
-        <torfl6749@gmail.com>, <linux-kernel@vger.kernel.org>,
-        <dmaengine@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>
-References: <20221025090306.297886-1-tudor.ambarus@microchip.com>
-From:   Nicolas Ferre <nicolas.ferre@microchip.com>
-Organization: microchip
-In-Reply-To: <20221025090306.297886-1-tudor.ambarus@microchip.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-EXCLAIMER-MD-CONFIG: e1e8a2fd-e40a-4ac6-ac9b-f7e9cc9ee180
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On 25/10/2022 at 11:02, Tudor Ambarus wrote:
-> v2:
-> - reorder patches so that fixes come first -> easier to backport to
-> stable kernels.
-> - drop the devm_request_irq() patch as we had to disable the irq anyway
-> in remove() in order to avoid spurios IRQs. Using devm variant brings no
-> palpable benefit.
-> - reword pm_ptr commit message
-> 
-> 
-> at_hdmac driver had poor list handling and concurrency bugs.
-> We experienced calling of the completion call twice for the
-> same descriptor. Peter Rosin encountered the same while
-> reporting a different bug:
-> https://lore.kernel.org/lkml/13c6c9a2-6db5-c3bf-349b-4c127ad3496a@axentia.se/
-> 
-> Two sets of tests were performed:
-> 1/ tested just the fixes, to make sure everything is fine and the
-> concurrency bugs are squashed even without the conversion to virt-dma.
-> All went fine.
-> 2/ tested the entire series including the conversion the virt-dma
-> All went fine.
-> 
-> I tested NAND (prep_dma_memcpy), MMC (prep_dma_slave_sg),
-> usart (cyclic mode), dmatest (memcpy, memset).
+From: Vignesh Raghavendra <vigneshr@ti.com>
 
-All these tests are reassuring.
+The K3 platforms configure the DMA resources with the
+help of the TI's System Firmware's Device Manager(DM)
+over TISCI. The group of DMA related Resource Manager[1]
+TISCI messages includes: INTA, RINGACC, UDMAP, and PSI-L.
+This configuration however, does not persist in the DM
+after leaving from Suspend-to-RAM state. We have to restore
+the DMA channel configuration over TISCI for all configured
+channels when entering suspend.
 
-The important piece to preserve is the computation of the residue as it 
-went with lots of experiments in both silicon and simulation with the IP 
-designer. The errors were very difficult to reproduce.
-As this part seems well understood and maintained it its good 
-conditions, I can give my Ack to the series.
-So, for the whole series, after a quick-but-not-too-quick review:
-Acked-by: Nicolas Ferre <nicolas.ferre@microchip.com>
+The TISCI resource management calls for each DMA type (UDMA,
+PKTDMA, BCDMA) happen in device_free_chan_resources() and
+device_alloc_chan_resources(). In pm_suspend() we store
+the current udma_chan_config for channels that still have
+attached clients and call device_free_chan_resources().
+In pm_resume() restore the udma_channel_config from backup
+and call device_alloc_chan_resources() for those channels.
+Drivers like CPSW can do their own DMA resource management,
+so use the late system suspend/resume hooks.
 
-Thanks for this effort Tudor. Best regards,
-   Nicolas
+[1] https://software-dl.ti.com/tisci/esd/latest/2_tisci_msgs/index.html#resource-management-rm
 
-> With the conversion to virt-dma I replaced the election of a new transfer
-> in the tasklet with the election of the new transfer in the interrupt
-> handler. We should have a shorter idle window as we remove the scheduling
-> latency of the tasklet. Using mtd_speedtest showed similar performances
-> when using NAND with DMA. That could be because of using a low timming
-> mode on NAND.
-> 
-> 
-> Tudor Ambarus (32):
->    dmaengine: at_hdmac: Fix at_lli struct definition
->    dmaengine: at_hdmac: Don't start transactions at tx_submit level
->    dmaengine: at_hdmac: Start transfer for cyclic channels in
->      issue_pending
->    dmaengine: at_hdmac: Fix premature completion of desc in issue_pending
->    dmaengine: at_hdmac: Do not call the complete callback on
->      device_terminate_all
->    dmaengine: at_hdmac: Protect atchan->status with the channel lock
->    dmaengine: at_hdmac: Fix concurrency problems by removing
->      atc_complete_all()
->    dmaengine: at_hdmac: Fix concurrency over descriptor
->    dmaengine: at_hdmac: Free the memset buf without holding the chan lock
->    dmaengine: at_hdmac: Fix concurrency over the active list
->    dmaengine: at_hdmac: Fix descriptor handling when issuing it to
->      hardware
->    dmaengine: at_hdmac: Fix completion of unissued descriptor in case of
->      errors
->    dmaengine: at_hdmac: Don't allow CPU to reorder channel enable
->    dmaengine: at_hdmac: Fix impossible condition
->    dmaengine: at_hdmac: Check return code of dma_async_device_register
->    dmaengine: at_hdmac: Do not print messages on console while holding
->      the lock
->    dmaengine: at_hdmac: Return dma_cookie_status()'s ret code when
->      txstate is NULL
->    dmaengine: at_hdmac: Remove superfluous cast
->    dmaengine: at_hdmac: Pass residue by address to avoid unnecessary
->      implicit casts
->    dmaengine: at_hdmac: s/atc_get_bytes_left/atc_get_residue
->    dmaengine: at_hdmac: Introduce atc_get_llis_residue()
->    dmaengine: at_hdmac: Use devm_kzalloc() and struct_size()
->    dmaengine: at_hdmac: Use devm_platform_ioremap_resource
->    dmaengine: at_hdmac: Use devm_clk_get()
->    dmaengine: at_hdmac: Use pm_ptr()
->    dmaengine: at_hdmac: Set include entries in alphabetic order
->    dmaengine: at_hdmac: Keep register definitions and structures private
->      to at_hdmac.c
->    dmaengine: at_hdmac: Use bitfield access macros
->    dmaengine: at_hdmac: Rename "dma_common" to "dma_device"
->    dmaengine: at_hdmac: Rename "chan_common" to "dma_chan"
->    dmaengine: at_hdmac: Remove unused member of at_dma_chan
->    dmaengine: at_hdmac: Convert driver to use virt-dma
-> 
->   MAINTAINERS                 |    1 -
->   drivers/dma/Kconfig         |    1 +
->   drivers/dma/at_hdmac.c      | 1899 ++++++++++++++++++-----------------
->   drivers/dma/at_hdmac_regs.h |  478 ---------
->   4 files changed, 990 insertions(+), 1389 deletions(-)
->   delete mode 100644 drivers/dma/at_hdmac_regs.h
-> 
+Signed-off-by: Vignesh Raghavendra <vigneshr@ti.com>
+[g-vlaev@ti.com: Add patch description and config backup]
+[g-vlaev@ti.com: Supend only channels with clients]
+Signed-off-by: Georgi Vlaev <g-vlaev@ti.com>
+---
+ drivers/dma/ti/k3-udma.c | 55 ++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 55 insertions(+)
 
+diff --git a/drivers/dma/ti/k3-udma.c b/drivers/dma/ti/k3-udma.c
+index ce8b80bb34d7..efcc1c5ddb2d 100644
+--- a/drivers/dma/ti/k3-udma.c
++++ b/drivers/dma/ti/k3-udma.c
+@@ -194,6 +194,7 @@ struct udma_dev {
+ 	int rchan_cnt;
+ 	int rflow_cnt;
+ 	int tflow_cnt;
++	int ch_count;
+ 	unsigned long *bchan_map;
+ 	unsigned long *tchan_map;
+ 	unsigned long *rchan_map;
+@@ -304,6 +305,8 @@ struct udma_chan {
+ 
+ 	/* Channel configuration parameters */
+ 	struct udma_chan_config config;
++	/* Channel configuration parameters (backup) */
++	struct udma_chan_config backup_config;
+ 
+ 	/* dmapool for packet mode descriptors */
+ 	bool use_dma_pool;
+@@ -4999,6 +5002,7 @@ static int setup_resources(struct udma_dev *ud)
+ 	if (!ch_count)
+ 		return -ENODEV;
+ 
++	ud->ch_count = ch_count;
+ 	ud->channels = devm_kcalloc(dev, ch_count, sizeof(*ud->channels),
+ 				    GFP_KERNEL);
+ 	if (!ud->channels)
+@@ -5491,11 +5495,62 @@ static int udma_probe(struct platform_device *pdev)
+ 	return ret;
+ }
+ 
++static int udma_pm_suspend(struct device *dev)
++{
++	struct udma_dev *ud = dev_get_drvdata(dev);
++	struct dma_chan *chan;
++	int i;
++
++	for (i = 0; i < ud->ch_count; i++) {
++		chan = &ud->channels[i].vc.chan;
++		if (chan->client_count) {
++			/* backup the channel configuration */
++			memcpy(&ud->channels[i].backup_config,
++			       &ud->channels[i].config,
++			       sizeof(struct udma_chan_config));
++			dev_dbg(dev, "Suspending channel %s\n",
++				dma_chan_name(chan));
++			ud->ddev.device_free_chan_resources(chan);
++		}
++	}
++
++	return 0;
++}
++
++static int udma_pm_resume(struct device *dev)
++{
++	struct udma_dev *ud = dev_get_drvdata(dev);
++	struct dma_chan *chan;
++	int ret, i;
++
++	for (i = 0; i < ud->ch_count; i++) {
++		chan = &ud->channels[i].vc.chan;
++		if (chan->client_count) {
++			/* restore the channel configuration */
++			memcpy(&ud->channels[i].config,
++			       &ud->channels[i].backup_config,
++			       sizeof(struct udma_chan_config));
++			dev_dbg(dev, "Resuming channel %s\n",
++				dma_chan_name(chan));
++			ret = ud->ddev.device_alloc_chan_resources(chan);
++			if (ret)
++				return ret;
++		}
++	}
++
++	return 0;
++}
++
++static const struct dev_pm_ops udma_pm_ops = {
++	SET_LATE_SYSTEM_SLEEP_PM_OPS(udma_pm_suspend, udma_pm_resume)
++};
++
+ static struct platform_driver udma_driver = {
+ 	.driver = {
+ 		.name	= "ti-udma",
+ 		.of_match_table = udma_of_match,
+ 		.suppress_bind_attrs = true,
++		.pm = &udma_pm_ops,
+ 	},
+ 	.probe		= udma_probe,
+ };
 -- 
-Nicolas Ferre
+2.30.2
 
