@@ -2,117 +2,116 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 94A22ECAAA1
-	for <dmaengine@archiver.kernel.org>; Fri, 28 Oct 2022 17:51:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8E6CEECAAA1
+	for <dmaengine@archiver.kernel.org>; Fri, 28 Oct 2022 20:48:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229773AbiJ1Rv2 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 28 Oct 2022 13:51:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39850 "EHLO
+        id S229678AbiJ1UsT (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 28 Oct 2022 16:48:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47628 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229515AbiJ1RvZ (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Fri, 28 Oct 2022 13:51:25 -0400
-X-Greylist: delayed 19194 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Fri, 28 Oct 2022 10:51:24 PDT
-Received: from 20.mo581.mail-out.ovh.net (20.mo581.mail-out.ovh.net [46.105.49.208])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2326BCA8BF
-        for <dmaengine@vger.kernel.org>; Fri, 28 Oct 2022 10:51:23 -0700 (PDT)
-Received: from player792.ha.ovh.net (unknown [10.108.16.164])
-        by mo581.mail-out.ovh.net (Postfix) with ESMTP id 2DF2B25FF6
-        for <dmaengine@vger.kernel.org>; Fri, 28 Oct 2022 11:54:03 +0000 (UTC)
-Received: from sk2.org (82-65-25-201.subs.proxad.net [82.65.25.201])
-        (Authenticated sender: steve@sk2.org)
-        by player792.ha.ovh.net (Postfix) with ESMTPSA id AFB223030BAFD;
-        Fri, 28 Oct 2022 11:53:58 +0000 (UTC)
-Authentication-Results: garm.ovh; auth=pass (GARM-109S00381dfec32-158c-4e50-a43f-6652ca230d89,
-                    064883BA926DE173662F194B93470FD4AA5384D5) smtp.auth=steve@sk2.org
-X-OVh-ClientIp: 82.65.25.201
-From:   Stephen Kitt <steve@sk2.org>
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Geert Uytterhoeven <geert+renesas@glider.be>,
-        linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org,
-        Stephen Kitt <steve@sk2.org>
-Subject: [PATCH] dmaengine: sh: Remove unused shdma-arm.h
-Date:   Fri, 28 Oct 2022 13:53:36 +0200
-Message-Id: <20221028115336.1052782-1-steve@sk2.org>
-X-Mailer: git-send-email 2.31.1
+        with ESMTP id S229501AbiJ1UsS (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Fri, 28 Oct 2022 16:48:18 -0400
+Received: from mga18.intel.com (mga18.intel.com [134.134.136.126])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 915B523AB5E;
+        Fri, 28 Oct 2022 13:48:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1666990097; x=1698526097;
+  h=from:to:cc:subject:date:message-id:in-reply-to:
+   references:mime-version:content-transfer-encoding;
+  bh=0VvBMb8HOrsGjv14X6zMqZCqDSjuN88qxERiFzhxSKo=;
+  b=N7B7aJFcAPyL7TuG6cv/ofCD3UwOe5mSEx7x+Pexk6DiNhSkwHMHkBg7
+   IS9hzjZY9AUtoXTxN80ScLQsh+EpoDbTF8B7vP+hLKIzu2GPSYdeYtEql
+   GXRC9WS4hljrg5n7ei0CZYA5ktZLjB49bbSsmGBFTL8X8AZZac/aqt+q/
+   Vwz4tVSfnDQ6wBWzWLT9lfMxFiIxQ6IO1/Qp92VN400tIV8TXM1cwsQgS
+   yi1KugWU/+/qlLGxM7ZCPgA6SUiqo/o/RPdyljY2E8ayrQVMUguTkGtZF
+   b86OFJTiEOILr1g0BkCRuJxuSFbtRGCe0KAT4u05Oor+m8sP2vb9Vqlg0
+   A==;
+X-IronPort-AV: E=McAfee;i="6500,9779,10514"; a="291885085"
+X-IronPort-AV: E=Sophos;i="5.95,222,1661842800"; 
+   d="scan'208";a="291885085"
+Received: from fmsmga005.fm.intel.com ([10.253.24.32])
+  by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Oct 2022 13:48:17 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6500,9779,10514"; a="962159787"
+X-IronPort-AV: E=Sophos;i="5.95,222,1661842800"; 
+   d="scan'208";a="962159787"
+Received: from bwalker-desk.ch.intel.com ([143.182.136.162])
+  by fmsmga005.fm.intel.com with ESMTP; 28 Oct 2022 13:48:16 -0700
+From:   Ben Walker <benjamin.walker@intel.com>
+To:     vkoul@kernel.org
+Cc:     dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH v6 0/7] dmaengine: Support polling for out of order completions
+Date:   Fri, 28 Oct 2022 13:48:05 -0700
+Message-Id: <20221028204812.1772736-1-benjamin.walker@intel.com>
+X-Mailer: git-send-email 2.37.3
+In-Reply-To: <20220829203537.30676-1-benjamin.walker@intel.com>
+References: <20220829203537.30676-1-benjamin.walker@intel.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Ovh-Tracer-Id: 14040816263407896198
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedvgedrtdeigdeggecutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfqggfjpdevjffgvefmvefgnecuuegrihhlohhuthemucehtddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefhvfevufffkffoggfgsedtkeertdertddtnecuhfhrohhmpefuthgvphhhvghnucfmihhtthcuoehsthgvvhgvsehskhdvrdhorhhgqeenucggtffrrghtthgvrhhnpeelgeetueejffejfeejvefhtddufeejgfetleegtddukeelieelvddvteduveejtdenucfkphepuddvjedrtddrtddruddpkedvrdeihedrvdehrddvtddunecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehinhgvthepuddvjedrtddrtddruddpmhgrihhlfhhrohhmpeeoshhtvghvvgesshhkvddrohhrgheqpdhnsggprhgtphhtthhopedupdhrtghpthhtohepughmrggvnhhgihhnvgesvhhgvghrrdhkvghrnhgvlhdrohhrghdpoffvtefjohhsthepmhhoheekuddpmhhouggvpehsmhhtphhouhht
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-shdma-arm.h was introduced with commit 1e69653d40f1 ("DMA: shdma: add
-r8a73a4 DMAC data to the device ID table"), and its sole user was
-removed with commit a19788612f51 ("dmaengine: sh: Remove R-Mobile APE6
-support"). The latter mentions r8a73a4.dtsi but shdma support was
-removed from that with commit cfda82037780 ("ARM: dts: r8a73a4: Remove
-non-functional DMA support"), so it seems this is safe to remove.
+This series adds support for polling async transactions for completion
+even if interrupts are disabled and transactions can complete out of
+order.
 
-Signed-off-by: Stephen Kitt <steve@sk2.org>
----
- drivers/dma/sh/shdma-arm.h | 48 --------------------------------------
- 1 file changed, 48 deletions(-)
- delete mode 100644 drivers/dma/sh/shdma-arm.h
+Prior to this series, dma_cookie_t was a monotonically increasing integer and
+cookies could be compared to one another to determine if earlier operations had
+completed (up until the cookie wraps around, then it would break). Now, cookies
+are treated as opaque handles. The series also does some API clean up and
+documents how dma_cookie_t should behave.
 
-diff --git a/drivers/dma/sh/shdma-arm.h b/drivers/dma/sh/shdma-arm.h
-deleted file mode 100644
-index 7459f9a13b5b..000000000000
---- a/drivers/dma/sh/shdma-arm.h
-+++ /dev/null
-@@ -1,48 +0,0 @@
--/* SPDX-License-Identifier: GPL-2.0 */
--/*
-- * Renesas SuperH DMA Engine support
-- *
-- * Copyright (C) 2013 Renesas Electronics, Inc.
-- */
--
--#ifndef SHDMA_ARM_H
--#define SHDMA_ARM_H
--
--#include "shdma.h"
--
--/* Transmit sizes and respective CHCR register values */
--enum {
--	XMIT_SZ_8BIT		= 0,
--	XMIT_SZ_16BIT		= 1,
--	XMIT_SZ_32BIT		= 2,
--	XMIT_SZ_64BIT		= 7,
--	XMIT_SZ_128BIT		= 3,
--	XMIT_SZ_256BIT		= 4,
--	XMIT_SZ_512BIT		= 5,
--};
--
--/* log2(size / 8) - used to calculate number of transfers */
--#define SH_DMAE_TS_SHIFT {		\
--	[XMIT_SZ_8BIT]		= 0,	\
--	[XMIT_SZ_16BIT]		= 1,	\
--	[XMIT_SZ_32BIT]		= 2,	\
--	[XMIT_SZ_64BIT]		= 3,	\
--	[XMIT_SZ_128BIT]	= 4,	\
--	[XMIT_SZ_256BIT]	= 5,	\
--	[XMIT_SZ_512BIT]	= 6,	\
--}
--
--#define TS_LOW_BIT	0x3 /* --xx */
--#define TS_HI_BIT	0xc /* xx-- */
--
--#define TS_LOW_SHIFT	(3)
--#define TS_HI_SHIFT	(20 - 2)	/* 2 bits for shifted low TS */
--
--#define TS_INDEX2VAL(i) \
--	((((i) & TS_LOW_BIT) << TS_LOW_SHIFT) |\
--	 (((i) & TS_HI_BIT)  << TS_HI_SHIFT))
--
--#define CHCR_TX(xmit_sz) (DM_FIX | SM_INC | RS_ERS | TS_INDEX2VAL((xmit_sz)))
--#define CHCR_RX(xmit_sz) (DM_INC | SM_FIX | RS_ERS | TS_INDEX2VAL((xmit_sz)))
--
--#endif
+This closes out by adding support for .device_tx_status() to the idxd
+driver and then reverting the DMA_OUT_OF_ORDER patch that previously
+allowed idxd to opt-out of support for polling, which I think is a nice
+overall simplification to the dmaengine API.
 
-base-commit: 23758867219c8d84c8363316e6dd2f9fd7ae3049
+Changes since version 5:
+ - Rebased to 6.1
+ - Renamed dmaengine_async_is_tx_complete to dmaengine_is_tx_complete
+ - Fixed stray blank line above idxd_dma_tx_status
+ - Added Reviewed-by from Dave Jiang
+
+Changes since version 4:
+ - Rebased
+ - Removed updates to the various drivers that call dma_async_is_tx_complete.
+   These clean ups will be spun off into a separate patch series since they need
+   acks from other maintainers.
+
+Changes since version 3:
+ - Fixed Message-Id in emails. Sorry they were all stripped! Won't
+   happen again.
+
+Changes since version 2:
+ - None. Rebased as requested without conflict.
+
+Changes since version 1:
+ - Broke up the change to remove dma_async_is_tx_complete into a single
+   patch for each driver
+ - Renamed dma_async_is_tx_complete to dmaengine_async_is_tx_complete.
+
+Ben Walker (7):
+  dmaengine: Remove dma_async_is_complete from client API
+  dmaengine: Move dma_set_tx_state to the provider API header
+  dmaengine: Add dmaengine_async_is_tx_complete
+  dmaengine: Add provider documentation on cookie assignment
+  dmaengine: idxd: idxd_desc.id is now a u16
+  dmaengine: idxd: Support device_tx_status
+  dmaengine: Revert "cookie bypass for out of order completion"
+
+ Documentation/driver-api/dmaengine/client.rst | 24 ++----
+ .../driver-api/dmaengine/provider.rst         | 64 ++++++++------
+ drivers/dma/dmaengine.c                       |  2 +-
+ drivers/dma/dmaengine.h                       | 21 ++++-
+ drivers/dma/dmatest.c                         | 14 +--
+ drivers/dma/idxd/device.c                     |  1 +
+ drivers/dma/idxd/dma.c                        | 86 ++++++++++++++++++-
+ drivers/dma/idxd/idxd.h                       |  3 +-
+ include/linux/dmaengine.h                     | 43 +++-------
+ 9 files changed, 164 insertions(+), 94 deletions(-)
+
 -- 
-2.31.1
+2.37.1
 
