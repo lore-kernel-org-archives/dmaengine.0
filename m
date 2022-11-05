@@ -2,82 +2,204 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C0661C4332F
-	for <dmaengine@archiver.kernel.org>; Sat,  5 Nov 2022 09:30:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B367DC4332F
+	for <dmaengine@archiver.kernel.org>; Sat,  5 Nov 2022 18:48:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229501AbiKEJan (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Sat, 5 Nov 2022 05:30:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55826 "EHLO
+        id S229718AbiKESs7 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Sat, 5 Nov 2022 14:48:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51660 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229469AbiKEJam (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Sat, 5 Nov 2022 05:30:42 -0400
-Received: from szxga03-in.huawei.com (szxga03-in.huawei.com [45.249.212.189])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB264240BB
-        for <dmaengine@vger.kernel.org>; Sat,  5 Nov 2022 02:30:37 -0700 (PDT)
-Received: from dggpemm500023.china.huawei.com (unknown [172.30.72.53])
-        by szxga03-in.huawei.com (SkyGuard) with ESMTP id 4N4Bwq0zsrzJnQP;
-        Sat,  5 Nov 2022 17:27:39 +0800 (CST)
-Received: from dggpemm500007.china.huawei.com (7.185.36.183) by
- dggpemm500023.china.huawei.com (7.185.36.83) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2375.31; Sat, 5 Nov 2022 17:30:36 +0800
-Received: from huawei.com (10.175.103.91) by dggpemm500007.china.huawei.com
- (7.185.36.183) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2375.31; Sat, 5 Nov
- 2022 17:30:35 +0800
-From:   Yang Yingliang <yangyingliang@huawei.com>
-To:     <dmaengine@vger.kernel.org>
-CC:     <vkoul@kernel.org>, <dave.jiang@intel.com>, <jsnitsel@redhat.com>,
-        <yangyingliang@huawei.com>
-Subject: [PATCH v2] dmaengine: fix possible memory leak in while registering device channel
-Date:   Sat, 5 Nov 2022 17:29:23 +0800
-Message-ID: <20221105092923.2844847-1-yangyingliang@huawei.com>
-X-Mailer: git-send-email 2.25.1
+        with ESMTP id S229453AbiKESs6 (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Sat, 5 Nov 2022 14:48:58 -0400
+Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E7117178B1;
+        Sat,  5 Nov 2022 11:48:55 -0700 (PDT)
+Received: by mail-lj1-x22f.google.com with SMTP id u11so10708145ljk.6;
+        Sat, 05 Nov 2022 11:48:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:in-reply-to:subject:from:content-language
+         :references:cc:to:user-agent:mime-version:date:message-id:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=7G5Dcl8evUDZTsQ00NdOfIxS0ycTvIlgB4Poi2VDHt8=;
+        b=n/NTVDKfQtfuVcMNy/aD9dp1pcIDCYNdAVvxsR6n8PoR8mcP71nZOkMy2hRwwjps8m
+         aTmi2IYleMKJh8BIEY/n0U8GasHdKlO5NgBJKecc02eDqApFgjKy2ZvZyheZoWvX3M2O
+         r7/eGPduOazcRrU7RFpt636k+FpEmHKn7AE7Tj2SSEoceMzn+DxlP9U6+qAgCyzH6kJi
+         ofWrS2kSZ7Ko7P3Gp7C428tce9LonkwyTkKpap6JwFP8jZkKFX91EwIamQblmoIR8GGn
+         QDFBGVpAH91w9R4lceTOQWJEEbSSlpZGHweM31LRyixRgF1I9oYAlHHcjMULk14fdLSz
+         FA0g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:subject:from:content-language
+         :references:cc:to:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=7G5Dcl8evUDZTsQ00NdOfIxS0ycTvIlgB4Poi2VDHt8=;
+        b=w0ZfNJQVBJu+qugmNIKfe5jcXri+B6owqLbwLBAg1d5DqGvtWK0PnRkNHON+IhoQFI
+         N8X+3GKAdWPEW2//Jg3B1mqaIwhwq1OlseeGYLUozfCi3JKjhhm+XbNXw3rehaHiItk1
+         n+HClj+Kloq0NI6f4XXarqlxkVfdkl3y5wab8z2gqa2Fhz8Se1v7ujE9NMxHUwfjfiZb
+         JJ2rJRX6xNX5zTqMzStw5nyfX/8uweQmxaqfJX8Rep0V5s0f6ck0Q475tCg0bNB3E+X8
+         uyJQiF0io4Q/5ZrQ0AsupjD/C2Ldz8+N7aIJaObcwHW+7Jij9HIXEJGcLcD/Vb8jrVJW
+         rrog==
+X-Gm-Message-State: ACrzQf0umKA27SxG0ybzc+qUBYOjngVutu/ZFyQkxOAUmkqP+L7sTyim
+        dTzmHi88K/cfEqgqPL01kmk=
+X-Google-Smtp-Source: AMsMyM7U4xI7nFSwWyhVQFBs4IPdbBRMBZQwwkF+QB6fMptlJkCi0GAvaZpZEMXL4Z/dYb59cnNbvA==
+X-Received: by 2002:a2e:9591:0:b0:277:99b:3826 with SMTP id w17-20020a2e9591000000b00277099b3826mr3335872ljh.412.1667674134079;
+        Sat, 05 Nov 2022 11:48:54 -0700 (PDT)
+Received: from [10.0.0.100] (host-185-69-38-8.kaisa-laajakaista.fi. [185.69.38.8])
+        by smtp.gmail.com with ESMTPSA id f4-20020a056512228400b00498f570aef2sm378864lfu.209.2022.11.05.11.48.52
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 05 Nov 2022 11:48:53 -0700 (PDT)
+Message-ID: <be967357-6ecb-5ecf-c860-5265e1527b2a@gmail.com>
+Date:   Sat, 5 Nov 2022 20:49:49 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7BIT
-Content-Type:   text/plain; charset=US-ASCII
-X-Originating-IP: [10.175.103.91]
-X-ClientProxiedBy: dggems705-chm.china.huawei.com (10.3.19.182) To
- dggpemm500007.china.huawei.com (7.185.36.183)
-X-CFilter-Loop: Reflected
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.1
+To:     Georgi Vlaev <g-vlaev@ti.com>, Vinod Koul <vkoul@kernel.org>
+Cc:     Nishanth Menon <nm@ti.com>, dmaengine@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Vignesh Raghavendra <vigneshr@ti.com>
+References: <20221103203021.83929-1-g-vlaev@ti.com>
+Content-Language: en-US
+From:   =?UTF-8?Q?P=c3=a9ter_Ujfalusi?= <peter.ujfalusi@gmail.com>
+Subject: Re: [PATCH v2] dmaengine: k3-udma: Add system suspend/resume support
+In-Reply-To: <20221103203021.83929-1-g-vlaev@ti.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-If device_register() returns error, the name allocated by
-dev_set_name() need be freed. As comment of device_register()
-says, it should use put_device() to give up the reference in
-the error path. So fix this by calling put_device(), then the
-name can be freed in kobject_cleanup(), the dma_chan_dev will
-be freed in chan_dev_release(), set 'chan->dev' to null in the
-error path to avoid it be freed again by kfree().
 
-Fixes: d2fb0a043838 ("dmaengine: break out channel registration")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
----
-v1 -> v2:
-  Add fix tag and update commit message.
----
- drivers/dma/dmaengine.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/dma/dmaengine.c b/drivers/dma/dmaengine.c
-index c741b6431958..46adfec04f0c 100644
---- a/drivers/dma/dmaengine.c
-+++ b/drivers/dma/dmaengine.c
-@@ -1068,8 +1068,11 @@ static int __dma_async_device_channel_register(struct dma_device *device,
- 	dev_set_name(&chan->dev->device, "dma%dchan%d",
- 		     device->dev_id, chan->chan_id);
- 	rc = device_register(&chan->dev->device);
--	if (rc)
-+	if (rc) {
-+		put_device(&chan->dev->device);
-+		chan->dev = NULL;
- 		goto err_out_ida;
-+	}
- 	chan->client_count = 0;
- 	device->chancnt++;
- 
+On 03/11/2022 22:30, Georgi Vlaev wrote:
+> From: Vignesh Raghavendra <vigneshr@ti.com>
+> 
+> The K3 platforms configure the DMA resources with the
+> help of the TI's System Firmware's Device Manager(DM)
+> over TISCI. The group of DMA related Resource Manager[1]
+> TISCI messages includes: INTA, RINGACC, UDMAP, and PSI-L.
+> This configuration however, does not persist in the DM
+> after leaving from Suspend-to-RAM state. We have to restore
+> the DMA channel configuration over TISCI for all configured
+> channels when returning from suspend.
+> 
+> The TISCI resource management calls for each DMA type (UDMA,
+> PKTDMA, BCDMA) happen in device_free_chan_resources() and
+> device_alloc_chan_resources(). In pm_suspend() we store
+> the current udma_chan_config for channels that still have
+> attached clients and call device_free_chan_resources().
+> In pm_resume() restore the udma_channel_config from backup
+> and call device_alloc_chan_resources() for those channels.
+> Drivers like CPSW can do their own DMA resource management,
+> so use the late system suspend/resume hooks.
+
+It is wrong to push the DMA context store/restore task to a client 
+driver (cpsw or icss), it has to be done by the glue layer.
+
+With this patch the DMAengine side of the UDMA/BCDMA/PKTDMA will support 
+suspend/resume while the networking will remain broken, right?
+
+I can not test this atm since my setup relies solely on NFS rootfs via 
+cpsw, I might be able to check with a USB-ethernet dongle..
+
+Please do a followup for the glue layer support.
+
+Acked-by: Peter Ujfalusi <peter.ujfalusi@gmail.com>
+
+> [1] https://software-dl.ti.com/tisci/esd/latest/2_tisci_msgs/index.html#resource-management-rm
+> 
+> Signed-off-by: Vignesh Raghavendra <vigneshr@ti.com>
+> [g-vlaev@ti.com: Add patch description and config backup]
+> [g-vlaev@ti.com: Supend only channels with clients]
+> Signed-off-by: Georgi Vlaev <g-vlaev@ti.com>
+> ---
+> Changes:
+> 
+> v2:
+> * Update the commit message
+> * Use list_for_each_entry() to iterate over the channel list.
+> 
+>   drivers/dma/ti/k3-udma.c | 54 ++++++++++++++++++++++++++++++++++++++++
+>   1 file changed, 54 insertions(+)
+> 
+> diff --git a/drivers/dma/ti/k3-udma.c b/drivers/dma/ti/k3-udma.c
+> index ce8b80bb34d7..29844044132c 100644
+> --- a/drivers/dma/ti/k3-udma.c
+> +++ b/drivers/dma/ti/k3-udma.c
+> @@ -304,6 +304,8 @@ struct udma_chan {
+>   
+>   	/* Channel configuration parameters */
+>   	struct udma_chan_config config;
+> +	/* Channel configuration parameters (backup) */
+> +	struct udma_chan_config backup_config;
+>   
+>   	/* dmapool for packet mode descriptors */
+>   	bool use_dma_pool;
+> @@ -5491,11 +5493,63 @@ static int udma_probe(struct platform_device *pdev)
+>   	return ret;
+>   }
+>   
+> +static int udma_pm_suspend(struct device *dev)
+> +{
+> +	struct udma_dev *ud = dev_get_drvdata(dev);
+> +	struct dma_device *dma_dev = &ud->ddev;
+> +	struct dma_chan *chan;
+> +	struct udma_chan *uc;
+> +
+> +	list_for_each_entry(chan, &dma_dev->channels, device_node) {
+> +		if (chan->client_count) {
+> +			uc = to_udma_chan(chan);
+> +			/* backup the channel configuration */
+> +			memcpy(&uc->backup_config, &uc->config,
+> +			       sizeof(struct udma_chan_config));
+> +			dev_dbg(dev, "Suspending channel %s\n",
+> +				dma_chan_name(chan));
+> +			ud->ddev.device_free_chan_resources(chan);
+> +		}
+> +	}
+> +
+> +	return 0;
+> +}
+> +
+> +static int udma_pm_resume(struct device *dev)
+> +{
+> +	struct udma_dev *ud = dev_get_drvdata(dev);
+> +	struct dma_device *dma_dev = &ud->ddev;
+> +	struct dma_chan *chan;
+> +	struct udma_chan *uc;
+> +	int ret;
+> +
+> +	list_for_each_entry(chan, &dma_dev->channels, device_node) {
+> +		if (chan->client_count) {
+> +			uc = to_udma_chan(chan);
+> +			/* restore the channel configuration */
+> +			memcpy(&uc->config, &uc->backup_config,
+> +			       sizeof(struct udma_chan_config));
+> +			dev_dbg(dev, "Resuming channel %s\n",
+> +				dma_chan_name(chan));
+> +			ret = ud->ddev.device_alloc_chan_resources(chan);
+> +			if (ret)
+> +				return ret;
+> +		}
+> +	}
+> +
+> +	return 0;
+> +}
+> +
+> +static const struct dev_pm_ops udma_pm_ops = {
+> +	SET_LATE_SYSTEM_SLEEP_PM_OPS(udma_pm_suspend, udma_pm_resume)
+> +};
+> +
+>   static struct platform_driver udma_driver = {
+>   	.driver = {
+>   		.name	= "ti-udma",
+>   		.of_match_table = udma_of_match,
+>   		.suppress_bind_attrs = true,
+> +		.pm = &udma_pm_ops,
+>   	},
+>   	.probe		= udma_probe,
+>   };
+> 
+> base-commit: 81214a573d19ae2fa5b528286ba23cd1cb17feec
+
 -- 
-2.25.1
-
+Péter
