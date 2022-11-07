@@ -2,180 +2,215 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E07FAC4332F
-	for <dmaengine@archiver.kernel.org>; Mon,  7 Nov 2022 09:00:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2B4DBC433FE
+	for <dmaengine@archiver.kernel.org>; Mon,  7 Nov 2022 13:23:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230428AbiKGJAO (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 7 Nov 2022 04:00:14 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59830 "EHLO
+        id S231618AbiKGNXW (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 7 Nov 2022 08:23:22 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57012 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229586AbiKGJAN (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Mon, 7 Nov 2022 04:00:13 -0500
-Received: from esa.microchip.iphmx.com (esa.microchip.iphmx.com [68.232.153.233])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 85FBC12AFA;
-        Mon,  7 Nov 2022 01:00:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=microchip.com; i=@microchip.com; q=dns/txt; s=mchp;
-  t=1667811612; x=1699347612;
-  h=from:to:cc:subject:date:message-id:references:
-   in-reply-to:content-id:content-transfer-encoding:
-   mime-version;
-  bh=eJRJg4dr6L1XMewhqOoQg2VFwfTUhQIjjDurN4sIL9Q=;
-  b=KvCsANrYHi1qRWps0HUhXL8sYJdphZ26A8G/FEaaLL68MMMCpT2fHaV7
-   lL6ggW+U2Axk9qmtrBc8pr5C5M8n1o/SokR7UzWoshzln8LwUL3DIToxz
-   4iDVNAeqKiS4wDHf6h2n0svCAP/sSBFHIszoarHwKpXkCI+pMOg3t5dsu
-   Td/OyMfeLFjK5AAyf5HSHOeK2P94FZ1U/zd1eeRLLhRnAy6L282pE+ix2
-   lQCY0N1r6rq0+dlvMXyz2DILkmsC8zrQXhvZkTPi4pgwuF9idX+OwyHEe
-   bODXHZbR8iNwARA2ux2mkLB4SCGKHSAASnI2FD3lzzKsXPkenuit7QoHz
-   A==;
-X-IronPort-AV: E=Sophos;i="5.96,143,1665471600"; 
-   d="scan'208";a="198685223"
-Received: from unknown (HELO email.microchip.com) ([170.129.1.10])
-  by esa1.microchip.iphmx.com with ESMTP/TLS/AES256-SHA256; 07 Nov 2022 02:00:12 -0700
-Received: from chn-vm-ex03.mchp-main.com (10.10.85.151) by
- chn-vm-ex01.mchp-main.com (10.10.85.143) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.12; Mon, 7 Nov 2022 02:00:10 -0700
-Received: from NAM12-DM6-obe.outbound.protection.outlook.com (10.10.215.89) by
- email.microchip.com (10.10.87.152) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.12 via Frontend Transport; Mon, 7 Nov 2022 02:00:10 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=LFJEOZofiJcwSwwHr8P2Q3Ivvqjsa1Sf3r0X72vYrZJkhPZaYjS7pGRP6F7ltl1148pJ7cyZfCNm715SeJZR8piNxcsQHDnuwDlnDm/aLbemX5Aa3u26x4qHI0gxRMfJwz5+aXEJeBd3Gs7th8bAC3W+9s7yTDG0Bp9YlSt6kYA4IpZ7w4jbiOA5eC519ooMYQ7PONO6Xqf8aPF3bIQk70frh7CmsQdOGm8qGdl0j1momNxcaK2QN3J99aqAmJMldGcKdjl78PZLOMEi3jirk1f/W4ffZdQ+Zs6oJIKcFzXqKpI5G+duFc79iHwWSYZX7eneR4KcQq5QenE5+HfUlQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=eJRJg4dr6L1XMewhqOoQg2VFwfTUhQIjjDurN4sIL9Q=;
- b=ZRQoTnFMbIYfZPuJw9wo97RVf3PAVOWaGYPC+jQldIB39IKzEGL/UaDvwPIYM7xQsyarK9sa3UV5Xr0TZVVB53VofeJI4sbq/8TLaeAy7/iRPqBImLyo8BC6Cm06Foc0jM8QZVMWrlZkuGASHslblXQSkxVKArNaZXtd8cAfs7RfYB0R72bZOKJZ0ctPoarwwIDiNINo2LyupkbtUdxvjL3FgVD2HK8ZyYaB+ctme5Gxhdn2OO/fHafXdqYFFf7tVXtRCUlIHBw+gVljtpYNC6qi4N0Xc/Az06DFvkd9MbTqgiqzWab8RoLDvP1QZKsOem2tmM6B2YxNxQ5RVcUp0A==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=microchip.com; dmarc=pass action=none
- header.from=microchip.com; dkim=pass header.d=microchip.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=microchiptechnology.onmicrosoft.com;
- s=selector2-microchiptechnology-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=eJRJg4dr6L1XMewhqOoQg2VFwfTUhQIjjDurN4sIL9Q=;
- b=k/hE+F9Kjprz8AI6Nz2162xEH20teS7mQMCtT0J2yUYY0W7qqs5UZEF03VahInK4z7T2qYFwVCvvOKngFfVeQ6KeJPqxVqM7UzeEbShGAL91VnUm+fejlR2tCJVcobO74dMYWcsBebeik+LEIddLE5oWr21uVllbj05+zBt4OEA=
-Received: from DM4PR11MB6479.namprd11.prod.outlook.com (2603:10b6:8:8c::19) by
- MN0PR11MB5962.namprd11.prod.outlook.com (2603:10b6:208:371::18) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5791.26; Mon, 7 Nov
- 2022 09:00:06 +0000
-Received: from DM4PR11MB6479.namprd11.prod.outlook.com
- ([fe80::626d:ef37:c13f:1c4b]) by DM4PR11MB6479.namprd11.prod.outlook.com
- ([fe80::626d:ef37:c13f:1c4b%4]) with mapi id 15.20.5791.026; Mon, 7 Nov 2022
- 09:00:06 +0000
-From:   <Tudor.Ambarus@microchip.com>
-To:     <vkoul@kernel.org>
-CC:     <peda@axentia.se>, <du@axentia.se>, <maciej.sosnowski@intel.com>,
-        <Nicolas.Ferre@microchip.com>, <mripard@kernel.org>,
-        <torfl6749@gmail.com>, <linux-kernel@vger.kernel.org>,
-        <dmaengine@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>
-Subject: Re: [PATCH v2 00/32] dmaengine: at_hdmac: Fix concurrency bugs and
- then convert to virt-dma
-Thread-Topic: [PATCH v2 00/32] dmaengine: at_hdmac: Fix concurrency bugs and
- then convert to virt-dma
-Thread-Index: AQHY8GAxL57d78lf2Ea0R6kPIjrAlw==
-Date:   Mon, 7 Nov 2022 09:00:06 +0000
-Message-ID: <da042959-9c87-94cc-990c-27f7d9b8ab29@microchip.com>
-References: <20221025090306.297886-1-tudor.ambarus@microchip.com>
- <Y2USF24O90/dLKz7@matsya>
- <d1035d5f-02f8-a98f-fbfe-bccbdfd3920b@microchip.com>
- <93048355-18a0-df4e-54ad-9c5955933109@microchip.com>
- <Y2VS6xPnTXNvNtf8@matsya> <Y2iKn5CH7IYUxwy8@matsya>
-In-Reply-To: <Y2iKn5CH7IYUxwy8@matsya>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-user-agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.2.2
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=microchip.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: DM4PR11MB6479:EE_|MN0PR11MB5962:EE_
-x-ms-office365-filtering-correlation-id: 00831814-ecd9-4d1c-0f2a-08dac09e7717
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: 8+hn6xURH7oMQxllYK/fcgRbCCKNh1mMKNfuWk9HhhLUCifHhPsD/5nUMioVv0TNadpSphu9teZTH67aGkF9vKndBYRwkTw/x+A9SA8xXzL1HC5O6fIHMXh/etjtsbvRvxdkqHQCcflsfa2fIhN0nEv72FHA49CmUjtM5OoQ2KHV6iDKbCKa2I45FuEHr3PkvGzgINFBQWYPOV+PLnHkkFbwTC/gN5x+lXEV9k/Tlbtk9Xk8OV6vqaaanwYCHDnNxoAtvmYAmTn4l/TO4b0JCGkIsAW+1JrX2Gy7UQCNfne15uWsX4tVIA7uVkDF1cPJpPaXC1N7lAo1exxxb15ut9VO6CaifTmRqFMZ+duGU7j7PitpTb+R52V6kHaIXrF6WA5r7t7tG2gfrbGnAbwiIRmWUhHU59EfST8mJwWjToLjCVciec47usWsR2sTOecIKb30dHG73jUM8nj8wO8LBvOAczw7bmc4BNNG1TgYl4JsCmNIRaFlx6CN300qtiB6EOdqbSdbnAa6Zk1MgrVSS9H3Ale15wCvIJ7PgkBLacNzktWWbZ2K5ZMy7sGN1qifgfV70HVbIMkgJkZDIJ2eHvNkFbX1B4anmMKkXfAvnUdnymdMH3MgtK3uXfZQtQqzXKCNRfovMxBwesVuDfH910HYkapmJ5Rc6C1NLlR93qAwCCa8dv5fjFJ63/qHgRHsrcKqxmyuiKjOMZBFmbGND0QkpcYkjbkabYs9HalA0mkQ2O22Ag0Qxs/MMXS5YJORNynl0eb98M4eZz3P0B872kZ0RpR5oLurxmKE38u1qY9EJzcvrwFeapQPHdo9pWUKdnFyEsSwYgAbp/W0OJ7FU3HYddgnxzg5g1b8LCrJOkubdU+xznxuV5pqRyPjsyoZ8n0RP+yKWjabfahcjPHLow==
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM4PR11MB6479.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230022)(376002)(39860400002)(366004)(396003)(136003)(346002)(451199015)(84970400001)(186003)(66946007)(76116006)(66446008)(64756008)(8676002)(66556008)(316002)(66476007)(6916009)(91956017)(4326008)(54906003)(31686004)(478600001)(2906002)(966005)(6486002)(71200400001)(38100700002)(5660300002)(36756003)(8936002)(41300700001)(26005)(53546011)(86362001)(31696002)(6512007)(2616005)(6506007)(38070700005)(83380400001)(122000001)(45980500001)(43740500002);DIR:OUT;SFP:1101;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?R0lPdDd0WTN3akJ5aWsyeGZqY3R4Qzhld09xZHFjeUtpMFdVRlM2cDVkRkR0?=
- =?utf-8?B?Z0R6b0VQSUhpNHNZWUpXdkwyN3JtUlUzb05uTXk3cUJzRUJsakU2cEM2bHds?=
- =?utf-8?B?K2dPMWdtTFFGVTFwWTAvUjdiNStLQk50VnF0OGs5RGdXS1NLWGlKdkZWZ1NX?=
- =?utf-8?B?dEZGbERFQnY2RUI0Yi9RNHUxZ3c0WVdoMVgwTmx2RjVXL3hlSUV6bTl1bGRG?=
- =?utf-8?B?WHhleVk1ZzdwWUNMa0EydFZXbUYvNTlXUVpSZlovdmxDQXRCK1pISEJDRHN5?=
- =?utf-8?B?RERTMDBPaG1XSjF1Q2xCbVdVUHA5dEthK1FNVFBTY3RDRENRMnJmcngzc2Jo?=
- =?utf-8?B?TzFoUFpLaTh5T3lja2paWUlVdmdMTTh5SXFLeVpiUXNPRkVFYXdzWnltY09s?=
- =?utf-8?B?dUE2bW1hUkc5WTFzMDNKTmFKT0VyRzNERFEwUklKdlk2Q0FSMy9Wdi9URjAv?=
- =?utf-8?B?MkUzYnRwZW9QOXRiUk1ya2NVVzhMQnM3aWkxZmx6TmFUeDhGcjlmdE5TRFpa?=
- =?utf-8?B?Smo1M0pKMWtHeGdxVXFiZTRMWnZSUG1jcmhra0kwcCtwNGpNQnEzUzJUSnFY?=
- =?utf-8?B?SHR5aVUyb05YTzlCd0VQRHJmN0IyaDRacHhiZlBlbWJ2dW9JRVV5MGF5dzBl?=
- =?utf-8?B?eStrbksxZ1dDbnM1Rjk1NHAxM2g1TWpQd0ZpNWtMNmlRaWVCQ0RDTzdRZ0Ja?=
- =?utf-8?B?OTF3eGFIcnBhMEFPSU5Rby83OG8vWERxZTRWUzJTNU5iTGtQOWNqMm1FMy80?=
- =?utf-8?B?ZTdJWFNlb0lOdTJRL0UzM0dBbEYwaUgrU001QjNyS1RpNG5ndWlmb0k0V1dI?=
- =?utf-8?B?ZDVubkV6UU15Wlh2QXZsd0pMRlp3ZTVoUE12UXQ5b3NBVnFOWUxyU2xBemdC?=
- =?utf-8?B?M0lYOHlzaDJ0dXVBR1JxSWRNVkpiMUg4MFkycnJtN1hBV0JLMXpuNlp3K2hS?=
- =?utf-8?B?OUJHMjdKM2xuWUZmSFo4V3dzbjFReDJKUExhUnVXL2FXdWtLMm5DSkJtOHhQ?=
- =?utf-8?B?MzV0K1dGY3NsMXp5bUFaUWpRUkZVSytldWxnUGszWEpPMVROQ0JNamk2YzBi?=
- =?utf-8?B?YWlZUHN2NGJLVytENEZYZlcrbkMzS2VjOVd6ZUtkVjNoQ29lVXpvUGhqSVBZ?=
- =?utf-8?B?SXhEdk15dmtnOGZrcUpRbHZDbVZWZGR5RTBSYW5kdTZFbUloaWNQQ2V5cDlO?=
- =?utf-8?B?T3RmL3kveDlocTlKUWRvejhCbkk0YjVvMUN3K01IV01XNUZGWENycWs5UWVC?=
- =?utf-8?B?N2ZObGVWQkxjZGhhdEhoZFlmTmN3WkhuZ1ZhYThHbU1SNWJQenNzdVdwWnF6?=
- =?utf-8?B?Ynk1S09kY0pMbUdZVFhhTm00eVBFK0Qxam1yVVF1NzhJbkNTQ3VxMzNjeEVR?=
- =?utf-8?B?OUlYQUd4STlWdURWVzZsaVY2MW53Zy9Nblp4VnJwcTRmVERyZjdodmpSOEhO?=
- =?utf-8?B?NWZlZWI1K3h6dGVCTXBGZ3lKcmdSQ21EOUhOSmh5NDdVendzVmhzNnlYOElU?=
- =?utf-8?B?T2JmeWxIbkRnNGNNOHZ0NVRwdHBaMGg0YVR5TUFXMGhXSkFoVjQ1U3NvRDRr?=
- =?utf-8?B?SEJHM1FoOW9xcVpYa29WcWEwbExxbnE3L3BSUFFiaE5vU2FjMUt5Z1E4QUtY?=
- =?utf-8?B?cUJ2c3ZSa25RWG5hS3BXT1Z4a04wQXlIOW1jYVZ2Y2VUSTNjVnFOWVNrR3Ro?=
- =?utf-8?B?Z1dXb1VpWWxTQldoaDdFSm9yMHlFVktBZDliaFdva2EvWHVFYmQ3NVdKd2VS?=
- =?utf-8?B?ZWRIUG1GdlNDRWIxSFdsR1Zxai92WFROUEs3d1g5aDFRam4xWW5nTGNMam55?=
- =?utf-8?B?RWFzMWprd2pzNVIyVVd6aEZqYmYzRUh3R2VsWDdNQ0dCV2JQYkR5VnFaam1F?=
- =?utf-8?B?WlB1RXVaSnQ5bFlaTVJINEdJUUlldE1qRUpqN0tyTEc1TFlXZTRic1VlUyt6?=
- =?utf-8?B?TU4zZG9URHpIbnViUG1JU2IwK3F1YVQrbEwyd1N4Zld2MEJYTVROYlpIZUVo?=
- =?utf-8?B?cThLU05PSHRSaGsvU1M3Rkx1cm0va2tDRjVBbnhmMFNnRjZuTnQvdUdaNUpk?=
- =?utf-8?B?NTF1cUtUZjdoQzRjdDNxNXoxb1E3TFFsNVRHWjZYVExCWjNERHB6YXZKd2VW?=
- =?utf-8?Q?kzzF1X+5Af/zWPK9voej7NX4f?=
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <BD6ECF53837FBA4F9FA1FFB9AAAFB380@namprd11.prod.outlook.com>
-Content-Transfer-Encoding: base64
+        with ESMTP id S231433AbiKGNXV (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Mon, 7 Nov 2022 08:23:21 -0500
+Received: from lelv0142.ext.ti.com (lelv0142.ext.ti.com [198.47.23.249])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 74CA31C41E;
+        Mon,  7 Nov 2022 05:23:20 -0800 (PST)
+Received: from lelv0266.itg.ti.com ([10.180.67.225])
+        by lelv0142.ext.ti.com (8.15.2/8.15.2) with ESMTP id 2A7DNFYi102192;
+        Mon, 7 Nov 2022 07:23:15 -0600
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
+        s=ti-com-17Q1; t=1667827395;
+        bh=jzboITK7Wb0XVXubjpJtUn2rXNJZJ9vNCV/qB95ry50=;
+        h=Date:Subject:To:CC:References:From:In-Reply-To;
+        b=GWEtIyZd8pK1XKxkXTBHOMWPHXNrufmgiwEbt2fsIZWuEnfOuQ5QvLuJmdgsZ1Cd1
+         4+O92B6lWK0Q8j20DsIpMCT7QOcqha9wTX/oyV42hZFFHruzyF8KbsLfoWkMNughPf
+         bMHAvVP+YBiPjvbEGdqyL3kiHbYifjDowknDAVAs=
+Received: from DLEE115.ent.ti.com (dlee115.ent.ti.com [157.170.170.26])
+        by lelv0266.itg.ti.com (8.15.2/8.15.2) with ESMTPS id 2A7DNFm7063269
+        (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
+        Mon, 7 Nov 2022 07:23:15 -0600
+Received: from DLEE112.ent.ti.com (157.170.170.23) by DLEE115.ent.ti.com
+ (157.170.170.26) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.2507.6; Mon, 7 Nov
+ 2022 07:23:15 -0600
+Received: from fllv0040.itg.ti.com (10.64.41.20) by DLEE112.ent.ti.com
+ (157.170.170.23) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.2507.6 via
+ Frontend Transport; Mon, 7 Nov 2022 07:23:15 -0600
+Received: from [10.250.135.52] (ileaxei01-snat.itg.ti.com [10.180.69.5])
+        by fllv0040.itg.ti.com (8.15.2/8.15.2) with ESMTP id 2A7DN9Sr059466;
+        Mon, 7 Nov 2022 07:23:10 -0600
+Message-ID: <4d82c447-f957-5595-e5d2-f8a0dd629921@ti.com>
+Date:   Mon, 7 Nov 2022 15:23:08 +0200
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: DM4PR11MB6479.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 00831814-ecd9-4d1c-0f2a-08dac09e7717
-X-MS-Exchange-CrossTenant-originalarrivaltime: 07 Nov 2022 09:00:06.1243
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 3f4057f3-b418-4d4e-ba84-d55b4e897d88
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: kPEUApOQaAS8TOPb6mwBtZMVgVcsnfZ4SfHnQeIuzqg2d6FAWU371RwqksGsnbNAfyyfrFWv2vKJ9hhfCpCG7Jluv72ib+jUo6/yw6xLDsU=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN0PR11MB5962
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.0
+Subject: Re: [PATCH v2] dmaengine: k3-udma: Add system suspend/resume support
+To:     =?UTF-8?Q?P=c3=a9ter_Ujfalusi?= <peter.ujfalusi@gmail.com>,
+        Vinod Koul <vkoul@kernel.org>
+CC:     Nishanth Menon <nm@ti.com>, <dmaengine@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>,
+        Vignesh Raghavendra <vigneshr@ti.com>,
+        Roger Quadros <rogerq@kernel.org>
+References: <20221103203021.83929-1-g-vlaev@ti.com>
+ <be967357-6ecb-5ecf-c860-5265e1527b2a@gmail.com>
+Content-Language: en-US
+From:   Georgi Vlaev <g-vlaev@ti.com>
+In-Reply-To: <be967357-6ecb-5ecf-c860-5265e1527b2a@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-EXCLAIMER-MD-CONFIG: e1e8a2fd-e40a-4ac6-ac9b-f7e9cc9ee180
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-T24gMTEvNy8yMiAwNjozMywgVmlub2QgS291bCB3cm90ZToNCj4gRVhURVJOQUwgRU1BSUw6IERv
-IG5vdCBjbGljayBsaW5rcyBvciBvcGVuIGF0dGFjaG1lbnRzIHVubGVzcyB5b3Uga25vdyB0aGUg
-Y29udGVudCBpcyBzYWZlDQo+IA0KPiBPbiAwNC0xMS0yMiwgMjM6MjksIFZpbm9kIEtvdWwgd3Jv
-dGU6DQo+PiBPbiAwNC0xMS0yMiwgMTU6MjEsIFR1ZG9yLkFtYmFydXNAbWljcm9jaGlwLmNvbSB3
-cm90ZToNCj4+Pg0KPj4+Pj4NCj4+Pj4+IFRoaXMgZG9lcyBub3QgYXBwbHkgb24gZG1hZW5naW5l
-LWZpeGVzLCBjYW4geW91IHBsZWFzZSByZWJhc2UgYW5kIHJlc2VuZA0KPj4+Pj4NCj4+Pj4NCj4+
-Pj4gU3VyZSwgSSBjYW4sIGJ1dCBvbiBteSBzaWRlIGl0IGFwcGxpZXMganVzdCBmaW5lLCBib3Ro
-IG9uIHRoZSBmaXhlcyBhbmQgbmV4dA0KPj4+PiBicmFuY2hlcy4gSSB1c2VkIGdpdDovL2dpdC5r
-ZXJuZWwub3JnL3B1Yi9zY20vbGludXgva2VybmVsL2dpdC92a291bC9kbWFlbmdpbmUuZ2l0DQo+
-Pj4+IFNoYWxsIEkgdXNlIG90aGVyIHRyZWU/DQo+Pg0KPj4gdGhpcyBpcyByaWdodCB0cmVlLCBJ
-IHdhcyBvbiBmaXhlcyBicmFuY2ggKGZvciBpbml0aWFsIGZpeGVzKSBhbmQgaQ0KPj4gdGhpbmsg
-N3RoIG9yIDh0aCBvbmUgZmFpbGVkIHRvIGFwcGx5IGZvciBtZS4uLg0KPj4NCj4+Pg0KPj4+ICQg
-Z2l0IGxvZyAtLW9uZWxpbmUNCj4+PiA3OTAyOWRjMzQxYzcgKEhFQUQsIHZrb3VsLWRtYS9maXhl
-cykgZG1hZW5naW5lOiBzdG0zMi1kbWE6IGZpeCBwb3RlbnRpYWwgcmFjZSBiZXR3ZWVuIHBhdXNl
-IGFuZCByZXN1bWUNCj4+Pg0KPj4+IFtjdXRdDQo+Pj4NCj4+PiAkIGI0IGFtIDIwMjIxMDI1MDkw
-MzA2LjI5Nzg4Ni0xLXR1ZG9yLmFtYmFydXNAbWljcm9jaGlwLmNvbQ0KPj4+IExvb2tpbmcgdXAg
-aHR0cHM6Ly9sb3JlLmtlcm5lbC5vcmcvci8yMDIyMTAyNTA5MDMwNi4yOTc4ODYtMS10dWRvci5h
-bWJhcnVzJTQwbWljcm9jaGlwLmNvbQ0KPj4+IEdyYWJiaW5nIHRocmVhZCBmcm9tIGxvcmUua2Vy
-bmVsLm9yZy9hbGwvMjAyMjEwMjUwOTAzMDYuMjk3ODg2LTEtdHVkb3IuYW1iYXJ1cyU0MG1pY3Jv
-Y2hpcC5jb20vdC5tYm94Lmd6DQo+Pj4gQW5hbHl6aW5nIDM3IG1lc3NhZ2VzIGluIHRoZSB0aHJl
-YWQNCj4+PiBDaGVja2luZyBhdHRlc3RhdGlvbiBvbiBhbGwgbWVzc2FnZXMsIG1heSB0YWtlIGEg
-bW9tZW50Li4uDQo+IA0KPiBPa2F5IGdyYWJiaW5nIHRoZSBiNCB2ZXJzaW9uIGRpZCB0aGUgdHJp
-Y2ssIG5vIHN1cmUgd2h5IG15IGxvY2FsIG9uZQ0KPiBmYWlsZWQuIEkgaGF2ZSBhcHBsaWVkIHRo
-ZXNlIG5vdy4gVGhhbmtzDQoNCkNvb2wsIHRoYW5rIHlvdSENCg0K
+Hi Peter,
+
+On 11/5/22 20:49, Péter Ujfalusi wrote:
+> 
+> 
+> On 03/11/2022 22:30, Georgi Vlaev wrote:
+>> From: Vignesh Raghavendra <vigneshr@ti.com>
+>>
+>> The K3 platforms configure the DMA resources with the
+>> help of the TI's System Firmware's Device Manager(DM)
+>> over TISCI. The group of DMA related Resource Manager[1]
+>> TISCI messages includes: INTA, RINGACC, UDMAP, and PSI-L.
+>> This configuration however, does not persist in the DM
+>> after leaving from Suspend-to-RAM state. We have to restore
+>> the DMA channel configuration over TISCI for all configured
+>> channels when returning from suspend.
+>>
+>> The TISCI resource management calls for each DMA type (UDMA,
+>> PKTDMA, BCDMA) happen in device_free_chan_resources() and
+>> device_alloc_chan_resources(). In pm_suspend() we store
+>> the current udma_chan_config for channels that still have
+>> attached clients and call device_free_chan_resources().
+>> In pm_resume() restore the udma_channel_config from backup
+>> and call device_alloc_chan_resources() for those channels.
+>> Drivers like CPSW can do their own DMA resource management,
+>> so use the late system suspend/resume hooks.
+> 
+> It is wrong to push the DMA context store/restore task to a client driver (cpsw or icss), it has to be done by the glue layer.
+> 
+> With this patch the DMAengine side of the UDMA/BCDMA/PKTDMA will support suspend/resume while the networking will remain broken, right?
+
+The CPSW suspend/resume patch [0] releases the DMA resources in
+suspend() and this one follows up in suspend_late() to deal with
+what's left. The order is reversed when we resume back from suspend. 
+
+> 
+> I can not test this atm since my setup relies solely on NFS rootfs via cpsw, I might be able to check with a USB-ethernet dongle..
+> 
+
+In this case you'll probably need CPSW suspend/resume patches [0]
+and apply this one on top of that sequence.
+
+> Please do a followup for the glue layer support.
+> 
+
+Okay, will do. This may have some effect on the cpsw sequence though.
+
+> Acked-by: Peter Ujfalusi <peter.ujfalusi@gmail.com>
+> 
+
+Thanks.
+
+[0] https://lore.kernel.org/netdev/20221104132310.31577-1-rogerq@kernel.org/
+
+>> [1] https://software-dl.ti.com/tisci/esd/latest/2_tisci_msgs/index.html#resource-management-rm
+>>
+>> Signed-off-by: Vignesh Raghavendra <vigneshr@ti.com>
+>> [g-vlaev@ti.com: Add patch description and config backup]
+>> [g-vlaev@ti.com: Supend only channels with clients]
+>> Signed-off-by: Georgi Vlaev <g-vlaev@ti.com>
+>> ---
+>> Changes:
+>>
+>> v2:
+>> * Update the commit message
+>> * Use list_for_each_entry() to iterate over the channel list.
+>>
+>>   drivers/dma/ti/k3-udma.c | 54 ++++++++++++++++++++++++++++++++++++++++
+>>   1 file changed, 54 insertions(+)
+>>
+>> diff --git a/drivers/dma/ti/k3-udma.c b/drivers/dma/ti/k3-udma.c
+>> index ce8b80bb34d7..29844044132c 100644
+>> --- a/drivers/dma/ti/k3-udma.c
+>> +++ b/drivers/dma/ti/k3-udma.c
+>> @@ -304,6 +304,8 @@ struct udma_chan {
+>>         /* Channel configuration parameters */
+>>       struct udma_chan_config config;
+>> +    /* Channel configuration parameters (backup) */
+>> +    struct udma_chan_config backup_config;
+>>         /* dmapool for packet mode descriptors */
+>>       bool use_dma_pool;
+>> @@ -5491,11 +5493,63 @@ static int udma_probe(struct platform_device *pdev)
+>>       return ret;
+>>   }
+>>   +static int udma_pm_suspend(struct device *dev)
+>> +{
+>> +    struct udma_dev *ud = dev_get_drvdata(dev);
+>> +    struct dma_device *dma_dev = &ud->ddev;
+>> +    struct dma_chan *chan;
+>> +    struct udma_chan *uc;
+>> +
+>> +    list_for_each_entry(chan, &dma_dev->channels, device_node) {
+>> +        if (chan->client_count) {
+>> +            uc = to_udma_chan(chan);
+>> +            /* backup the channel configuration */
+>> +            memcpy(&uc->backup_config, &uc->config,
+>> +                   sizeof(struct udma_chan_config));
+>> +            dev_dbg(dev, "Suspending channel %s\n",
+>> +                dma_chan_name(chan));
+>> +            ud->ddev.device_free_chan_resources(chan);
+>> +        }
+>> +    }
+>> +
+>> +    return 0;
+>> +}
+>> +
+>> +static int udma_pm_resume(struct device *dev)
+>> +{
+>> +    struct udma_dev *ud = dev_get_drvdata(dev);
+>> +    struct dma_device *dma_dev = &ud->ddev;
+>> +    struct dma_chan *chan;
+>> +    struct udma_chan *uc;
+>> +    int ret;
+>> +
+>> +    list_for_each_entry(chan, &dma_dev->channels, device_node) {
+>> +        if (chan->client_count) {
+>> +            uc = to_udma_chan(chan);
+>> +            /* restore the channel configuration */
+>> +            memcpy(&uc->config, &uc->backup_config,
+>> +                   sizeof(struct udma_chan_config));
+>> +            dev_dbg(dev, "Resuming channel %s\n",
+>> +                dma_chan_name(chan));
+>> +            ret = ud->ddev.device_alloc_chan_resources(chan);
+>> +            if (ret)
+>> +                return ret;
+>> +        }
+>> +    }
+>> +
+>> +    return 0;
+>> +}
+>> +
+>> +static const struct dev_pm_ops udma_pm_ops = {
+>> +    SET_LATE_SYSTEM_SLEEP_PM_OPS(udma_pm_suspend, udma_pm_resume)
+>> +};
+>> +
+>>   static struct platform_driver udma_driver = {
+>>       .driver = {
+>>           .name    = "ti-udma",
+>>           .of_match_table = udma_of_match,
+>>           .suppress_bind_attrs = true,
+>> +        .pm = &udma_pm_ops,
+>>       },
+>>       .probe        = udma_probe,
+>>   };
+>>
+>> base-commit: 81214a573d19ae2fa5b528286ba23cd1cb17feec
+> 
+
+-- 
+Regards,
+Georgi
