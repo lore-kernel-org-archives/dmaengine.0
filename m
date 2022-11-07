@@ -2,215 +2,179 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2B4DBC433FE
-	for <dmaengine@archiver.kernel.org>; Mon,  7 Nov 2022 13:23:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F1BBEC4332F
+	for <dmaengine@archiver.kernel.org>; Mon,  7 Nov 2022 21:14:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231618AbiKGNXW (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 7 Nov 2022 08:23:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57012 "EHLO
+        id S233167AbiKGVOR (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 7 Nov 2022 16:14:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60700 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231433AbiKGNXV (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Mon, 7 Nov 2022 08:23:21 -0500
-Received: from lelv0142.ext.ti.com (lelv0142.ext.ti.com [198.47.23.249])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 74CA31C41E;
-        Mon,  7 Nov 2022 05:23:20 -0800 (PST)
-Received: from lelv0266.itg.ti.com ([10.180.67.225])
-        by lelv0142.ext.ti.com (8.15.2/8.15.2) with ESMTP id 2A7DNFYi102192;
-        Mon, 7 Nov 2022 07:23:15 -0600
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
-        s=ti-com-17Q1; t=1667827395;
-        bh=jzboITK7Wb0XVXubjpJtUn2rXNJZJ9vNCV/qB95ry50=;
-        h=Date:Subject:To:CC:References:From:In-Reply-To;
-        b=GWEtIyZd8pK1XKxkXTBHOMWPHXNrufmgiwEbt2fsIZWuEnfOuQ5QvLuJmdgsZ1Cd1
-         4+O92B6lWK0Q8j20DsIpMCT7QOcqha9wTX/oyV42hZFFHruzyF8KbsLfoWkMNughPf
-         bMHAvVP+YBiPjvbEGdqyL3kiHbYifjDowknDAVAs=
-Received: from DLEE115.ent.ti.com (dlee115.ent.ti.com [157.170.170.26])
-        by lelv0266.itg.ti.com (8.15.2/8.15.2) with ESMTPS id 2A7DNFm7063269
-        (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
-        Mon, 7 Nov 2022 07:23:15 -0600
-Received: from DLEE112.ent.ti.com (157.170.170.23) by DLEE115.ent.ti.com
- (157.170.170.26) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.2507.6; Mon, 7 Nov
- 2022 07:23:15 -0600
-Received: from fllv0040.itg.ti.com (10.64.41.20) by DLEE112.ent.ti.com
- (157.170.170.23) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.2507.6 via
- Frontend Transport; Mon, 7 Nov 2022 07:23:15 -0600
-Received: from [10.250.135.52] (ileaxei01-snat.itg.ti.com [10.180.69.5])
-        by fllv0040.itg.ti.com (8.15.2/8.15.2) with ESMTP id 2A7DN9Sr059466;
-        Mon, 7 Nov 2022 07:23:10 -0600
-Message-ID: <4d82c447-f957-5595-e5d2-f8a0dd629921@ti.com>
-Date:   Mon, 7 Nov 2022 15:23:08 +0200
+        with ESMTP id S233186AbiKGVOB (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Mon, 7 Nov 2022 16:14:01 -0500
+X-Greylist: delayed 376 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Mon, 07 Nov 2022 13:11:01 PST
+Received: from post.baikalelectronics.com (post.baikalelectronics.com [213.79.110.86])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 912022ED5B
+        for <dmaengine@vger.kernel.org>; Mon,  7 Nov 2022 13:11:01 -0800 (PST)
+Received: from post.baikalelectronics.com (localhost.localdomain [127.0.0.1])
+        by post.baikalelectronics.com (Proxmox) with ESMTP id D5841E0ED0;
+        Tue,  8 Nov 2022 00:04:49 +0300 (MSK)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        baikalelectronics.ru; h=cc:cc:content-transfer-encoding
+        :content-type:content-type:date:from:from:in-reply-to:message-id
+        :mime-version:references:reply-to:subject:subject:to:to; s=post;
+         bh=VDdVy2i0fRAVmnG7tPyGdAnlLqhc4ZGtsLgZRXBWdSk=; b=HMc+wlo1n4CA
+        CefDee0dOW95PzSJTp3SRgInGeGbDPEHbaY3nreyGj4uqO8syRZ72wQwFniUN+1U
+        jljggm9DH0ajIbWqCvk9saGcc6iT7Dmb1OA5S4YxACCECnEQguXyEo52rEB3eFDZ
+        SnI+CRV8HuNtvwY0ogoXnBvEu4PkCs8=
+Received: from mail.baikal.int (mail.baikal.int [192.168.51.25])
+        by post.baikalelectronics.com (Proxmox) with ESMTP id C0E22E0E6A;
+        Tue,  8 Nov 2022 00:04:49 +0300 (MSK)
+Received: from localhost (192.168.168.10) by mail (192.168.51.25) with
+ Microsoft SMTP Server (TLS) id 15.0.1395.4; Tue, 8 Nov 2022 00:04:49 +0300
+From:   Serge Semin <Sergey.Semin@baikalelectronics.ru>
+To:     Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+        Vinod Koul <vkoul@kernel.org>, Rob Herring <robh@kernel.org>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Cai Huoqing <cai.huoqing@linux.dev>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Jingoo Han <jingoohan1@gmail.com>, Frank Li <Frank.Li@nxp.com>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+CC:     Serge Semin <Sergey.Semin@baikalelectronics.ru>,
+        Serge Semin <fancer.lancer@gmail.com>,
+        Alexey Malahov <Alexey.Malahov@baikalelectronics.ru>,
+        Pavel Parkhomenko <Pavel.Parkhomenko@baikalelectronics.ru>,
+        =?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>,
+        caihuoqing <caihuoqing@baidu.com>, <linux-pci@vger.kernel.org>,
+        <dmaengine@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+Subject: [PATCH v6 07/24] dmaengine: dw-edma: Add CPU to PCIe bus address translation
+Date:   Tue, 8 Nov 2022 00:04:21 +0300
+Message-ID: <20221107210438.1515-8-Sergey.Semin@baikalelectronics.ru>
+X-Mailer: git-send-email 2.38.0
+In-Reply-To: <20221107210438.1515-1-Sergey.Semin@baikalelectronics.ru>
+References: <20221107210438.1515-1-Sergey.Semin@baikalelectronics.ru>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.0
-Subject: Re: [PATCH v2] dmaengine: k3-udma: Add system suspend/resume support
-To:     =?UTF-8?Q?P=c3=a9ter_Ujfalusi?= <peter.ujfalusi@gmail.com>,
-        Vinod Koul <vkoul@kernel.org>
-CC:     Nishanth Menon <nm@ti.com>, <dmaengine@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>,
-        Vignesh Raghavendra <vigneshr@ti.com>,
-        Roger Quadros <rogerq@kernel.org>
-References: <20221103203021.83929-1-g-vlaev@ti.com>
- <be967357-6ecb-5ecf-c860-5265e1527b2a@gmail.com>
-Content-Language: en-US
-From:   Georgi Vlaev <g-vlaev@ti.com>
-In-Reply-To: <be967357-6ecb-5ecf-c860-5265e1527b2a@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
-X-EXCLAIMER-MD-CONFIG: e1e8a2fd-e40a-4ac6-ac9b-f7e9cc9ee180
+Content-Type: text/plain
+X-Originating-IP: [192.168.168.10]
+X-ClientProxiedBy: MAIL.baikal.int (192.168.51.25) To mail (192.168.51.25)
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Hi Peter,
+Starting from commit 9575632052ba ("dmaengine: make slave address
+physical") the source and destination addresses of the DMA-slave device
+have been converted to being defined in CPU address space. It's DMA-device
+driver responsibility to properly convert them to the reachable DMA bus
+spaces. In case of the DW eDMA device, the source or destination
+peripheral (slave) devices reside PCIe bus space. Thus we need to perform
+the PCIe Host/EP windows-based (i.e. ranges DT-property) addresses
+translation otherwise the eDMA transactions won't work as expected (or can
+be even harmful) in case if the CPU and PCIe address spaces don't match.
 
-On 11/5/22 20:49, Péter Ujfalusi wrote:
-> 
-> 
-> On 03/11/2022 22:30, Georgi Vlaev wrote:
->> From: Vignesh Raghavendra <vigneshr@ti.com>
->>
->> The K3 platforms configure the DMA resources with the
->> help of the TI's System Firmware's Device Manager(DM)
->> over TISCI. The group of DMA related Resource Manager[1]
->> TISCI messages includes: INTA, RINGACC, UDMAP, and PSI-L.
->> This configuration however, does not persist in the DM
->> after leaving from Suspend-to-RAM state. We have to restore
->> the DMA channel configuration over TISCI for all configured
->> channels when returning from suspend.
->>
->> The TISCI resource management calls for each DMA type (UDMA,
->> PKTDMA, BCDMA) happen in device_free_chan_resources() and
->> device_alloc_chan_resources(). In pm_suspend() we store
->> the current udma_chan_config for channels that still have
->> attached clients and call device_free_chan_resources().
->> In pm_resume() restore the udma_channel_config from backup
->> and call device_alloc_chan_resources() for those channels.
->> Drivers like CPSW can do their own DMA resource management,
->> so use the late system suspend/resume hooks.
-> 
-> It is wrong to push the DMA context store/restore task to a client driver (cpsw or icss), it has to be done by the glue layer.
-> 
-> With this patch the DMAengine side of the UDMA/BCDMA/PKTDMA will support suspend/resume while the networking will remain broken, right?
+Note 1. Even though the DMA interleaved template has both source and
+destination addresses declared of dma_addr_t type only CPU memory range is
+supposed to be mapped in a way so to be seen by the DMA device since it's
+a subject of the DMA getting towards the system side. The device part must
+not be mapped since slave device resides in the PCIe bus space, which
+isn't affected by IOMMUs or iATU translations. DW PCIe eDMA generates
+corresponding MWr/MRd TLPs on its own.
 
-The CPSW suspend/resume patch [0] releases the DMA resources in
-suspend() and this one follows up in suspend_late() to deal with
-what's left. The order is reversed when we resume back from suspend. 
+Note 2. This functionality is mainly required for the remote eDMA setup
+since the CPU address must be manually translated into the PCIe bus space
+before being written to LLI.{SAR,DAR}. If eDMA is embedded into the
+locally accessible DW PCIe RP/EP software-based translation isn't required
+since it will be done by hardware by means of the Outbound iATU as long as
+the DMA_BYPASS flag is cleared. If the later flag is set or there is no
+Outbound iATU entry found to which the SAR or DAR falls in (for Read and
+Write channel respectfully), there won't be any translation performed but
+DMA will proceed with the corresponding source/destination address as is.
 
-> 
-> I can not test this atm since my setup relies solely on NFS rootfs via cpsw, I might be able to check with a USB-ethernet dongle..
-> 
+Signed-off-by: Serge Semin <Sergey.Semin@baikalelectronics.ru>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Tested-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Acked-by: Vinod Koul <vkoul@kernel.org>
+---
+ drivers/dma/dw-edma/dw-edma-core.c | 18 +++++++++++++++++-
+ include/linux/dma/edma.h           | 15 +++++++++++++++
+ 2 files changed, 32 insertions(+), 1 deletion(-)
 
-In this case you'll probably need CPSW suspend/resume patches [0]
-and apply this one on top of that sequence.
-
-> Please do a followup for the glue layer support.
-> 
-
-Okay, will do. This may have some effect on the cpsw sequence though.
-
-> Acked-by: Peter Ujfalusi <peter.ujfalusi@gmail.com>
-> 
-
-Thanks.
-
-[0] https://lore.kernel.org/netdev/20221104132310.31577-1-rogerq@kernel.org/
-
->> [1] https://software-dl.ti.com/tisci/esd/latest/2_tisci_msgs/index.html#resource-management-rm
->>
->> Signed-off-by: Vignesh Raghavendra <vigneshr@ti.com>
->> [g-vlaev@ti.com: Add patch description and config backup]
->> [g-vlaev@ti.com: Supend only channels with clients]
->> Signed-off-by: Georgi Vlaev <g-vlaev@ti.com>
->> ---
->> Changes:
->>
->> v2:
->> * Update the commit message
->> * Use list_for_each_entry() to iterate over the channel list.
->>
->>   drivers/dma/ti/k3-udma.c | 54 ++++++++++++++++++++++++++++++++++++++++
->>   1 file changed, 54 insertions(+)
->>
->> diff --git a/drivers/dma/ti/k3-udma.c b/drivers/dma/ti/k3-udma.c
->> index ce8b80bb34d7..29844044132c 100644
->> --- a/drivers/dma/ti/k3-udma.c
->> +++ b/drivers/dma/ti/k3-udma.c
->> @@ -304,6 +304,8 @@ struct udma_chan {
->>         /* Channel configuration parameters */
->>       struct udma_chan_config config;
->> +    /* Channel configuration parameters (backup) */
->> +    struct udma_chan_config backup_config;
->>         /* dmapool for packet mode descriptors */
->>       bool use_dma_pool;
->> @@ -5491,11 +5493,63 @@ static int udma_probe(struct platform_device *pdev)
->>       return ret;
->>   }
->>   +static int udma_pm_suspend(struct device *dev)
->> +{
->> +    struct udma_dev *ud = dev_get_drvdata(dev);
->> +    struct dma_device *dma_dev = &ud->ddev;
->> +    struct dma_chan *chan;
->> +    struct udma_chan *uc;
->> +
->> +    list_for_each_entry(chan, &dma_dev->channels, device_node) {
->> +        if (chan->client_count) {
->> +            uc = to_udma_chan(chan);
->> +            /* backup the channel configuration */
->> +            memcpy(&uc->backup_config, &uc->config,
->> +                   sizeof(struct udma_chan_config));
->> +            dev_dbg(dev, "Suspending channel %s\n",
->> +                dma_chan_name(chan));
->> +            ud->ddev.device_free_chan_resources(chan);
->> +        }
->> +    }
->> +
->> +    return 0;
->> +}
->> +
->> +static int udma_pm_resume(struct device *dev)
->> +{
->> +    struct udma_dev *ud = dev_get_drvdata(dev);
->> +    struct dma_device *dma_dev = &ud->ddev;
->> +    struct dma_chan *chan;
->> +    struct udma_chan *uc;
->> +    int ret;
->> +
->> +    list_for_each_entry(chan, &dma_dev->channels, device_node) {
->> +        if (chan->client_count) {
->> +            uc = to_udma_chan(chan);
->> +            /* restore the channel configuration */
->> +            memcpy(&uc->config, &uc->backup_config,
->> +                   sizeof(struct udma_chan_config));
->> +            dev_dbg(dev, "Resuming channel %s\n",
->> +                dma_chan_name(chan));
->> +            ret = ud->ddev.device_alloc_chan_resources(chan);
->> +            if (ret)
->> +                return ret;
->> +        }
->> +    }
->> +
->> +    return 0;
->> +}
->> +
->> +static const struct dev_pm_ops udma_pm_ops = {
->> +    SET_LATE_SYSTEM_SLEEP_PM_OPS(udma_pm_suspend, udma_pm_resume)
->> +};
->> +
->>   static struct platform_driver udma_driver = {
->>       .driver = {
->>           .name    = "ti-udma",
->>           .of_match_table = udma_of_match,
->>           .suppress_bind_attrs = true,
->> +        .pm = &udma_pm_ops,
->>       },
->>       .probe        = udma_probe,
->>   };
->>
->> base-commit: 81214a573d19ae2fa5b528286ba23cd1cb17feec
-> 
-
+diff --git a/drivers/dma/dw-edma/dw-edma-core.c b/drivers/dma/dw-edma/dw-edma-core.c
+index d5c4192141ef..6c9f95a8e397 100644
+--- a/drivers/dma/dw-edma/dw-edma-core.c
++++ b/drivers/dma/dw-edma/dw-edma-core.c
+@@ -39,6 +39,17 @@ struct dw_edma_desc *vd2dw_edma_desc(struct virt_dma_desc *vd)
+ 	return container_of(vd, struct dw_edma_desc, vd);
+ }
+ 
++static inline
++u64 dw_edma_get_pci_address(struct dw_edma_chan *chan, phys_addr_t cpu_addr)
++{
++	struct dw_edma_chip *chip = chan->dw->chip;
++
++	if (chip->ops->pci_address)
++		return chip->ops->pci_address(chip->dev, cpu_addr);
++
++	return cpu_addr;
++}
++
+ static struct dw_edma_burst *dw_edma_alloc_burst(struct dw_edma_chunk *chunk)
+ {
+ 	struct dw_edma_burst *burst;
+@@ -327,11 +338,11 @@ dw_edma_device_transfer(struct dw_edma_transfer *xfer)
+ {
+ 	struct dw_edma_chan *chan = dchan2dw_edma_chan(xfer->dchan);
+ 	enum dma_transfer_direction dir = xfer->direction;
+-	phys_addr_t src_addr, dst_addr;
+ 	struct scatterlist *sg = NULL;
+ 	struct dw_edma_chunk *chunk;
+ 	struct dw_edma_burst *burst;
+ 	struct dw_edma_desc *desc;
++	u64 src_addr, dst_addr;
+ 	size_t fsz = 0;
+ 	u32 cnt = 0;
+ 	int i;
+@@ -406,6 +417,11 @@ dw_edma_device_transfer(struct dw_edma_transfer *xfer)
+ 		dst_addr = chan->config.dst_addr;
+ 	}
+ 
++	if (dir == DMA_DEV_TO_MEM)
++		src_addr = dw_edma_get_pci_address(chan, (phys_addr_t)src_addr);
++	else
++		dst_addr = dw_edma_get_pci_address(chan, (phys_addr_t)dst_addr);
++
+ 	if (xfer->type == EDMA_XFER_CYCLIC) {
+ 		cnt = xfer->xfer.cyclic.cnt;
+ 	} else if (xfer->type == EDMA_XFER_SCATTER_GATHER) {
+diff --git a/include/linux/dma/edma.h b/include/linux/dma/edma.h
+index a864978ddd27..380a0a3e251f 100644
+--- a/include/linux/dma/edma.h
++++ b/include/linux/dma/edma.h
+@@ -23,8 +23,23 @@ struct dw_edma_region {
+ 	size_t		sz;
+ };
+ 
++/**
++ * struct dw_edma_core_ops - platform-specific eDMA methods
++ * @irq_vector:		Get IRQ number of the passed eDMA channel. Note the
++ *                      method accepts the channel id in the end-to-end
++ *                      numbering with the eDMA write channels being placed
++ *                      first in the row.
++ * @pci_address:	Get PCIe bus address corresponding to the passed CPU
++ *			address. Note there is no need in specifying this
++ *			function if the address translation is performed by
++ *			the DW PCIe RP/EP controller with the DW eDMA device in
++ *			subject and DMA_BYPASS isn't set for all the outbound
++ *			iATU windows. That will be done by the controller
++ *			automatically.
++ */
+ struct dw_edma_core_ops {
+ 	int (*irq_vector)(struct device *dev, unsigned int nr);
++	u64 (*pci_address)(struct device *dev, phys_addr_t cpu_addr);
+ };
+ 
+ enum dw_edma_map_format {
 -- 
-Regards,
-Georgi
+2.38.0
+
+
