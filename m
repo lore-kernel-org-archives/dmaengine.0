@@ -2,34 +2,34 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 87768C43217
-	for <dmaengine@archiver.kernel.org>; Mon,  7 Nov 2022 21:14:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 72BEFC4167B
+	for <dmaengine@archiver.kernel.org>; Mon,  7 Nov 2022 21:14:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233337AbiKGVOX (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 7 Nov 2022 16:14:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34270 "EHLO
+        id S233341AbiKGVO3 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 7 Nov 2022 16:14:29 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60758 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233477AbiKGVOF (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Mon, 7 Nov 2022 16:14:05 -0500
+        with ESMTP id S233349AbiKGVOH (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Mon, 7 Nov 2022 16:14:07 -0500
 Received: from post.baikalelectronics.com (post.baikalelectronics.com [213.79.110.86])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 5564F31FBF
-        for <dmaengine@vger.kernel.org>; Mon,  7 Nov 2022 13:11:01 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id C5E542CDE9
+        for <dmaengine@vger.kernel.org>; Mon,  7 Nov 2022 13:11:05 -0800 (PST)
 Received: from post.baikalelectronics.com (localhost.localdomain [127.0.0.1])
-        by post.baikalelectronics.com (Proxmox) with ESMTP id B4D60E0ECA;
-        Tue,  8 Nov 2022 00:04:44 +0300 (MSK)
+        by post.baikalelectronics.com (Proxmox) with ESMTP id AAB9BE0ED7;
+        Tue,  8 Nov 2022 00:04:53 +0300 (MSK)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
         baikalelectronics.ru; h=cc:cc:content-transfer-encoding
         :content-type:content-type:date:from:from:in-reply-to:message-id
         :mime-version:references:reply-to:subject:subject:to:to; s=post;
-         bh=+RQYTNSVFqSXSnfofJxrlYw10sh63Bj5j4KYzlzhFvA=; b=QrprN2SkX9cW
-        m97ytnW5MucEot9EtQSWr4ijX/hmzs1RPBiKex+0DnpvE6FUz9cpTKvpuNw1mS7y
-        1bUvWu9LJwwDLerAcUeFw+S+jyl7KpsutIQ9Zx1ofq7XDliSvGQ1ellLGMcPxY+b
-        XZNui4udY3Upk9sPDafy0Z3HhuaikPU=
+         bh=SEc0/TJGdJztP7HNTfy6MRhUGeFPU8iiNcFtwZFyML0=; b=eoWuYx0v9XC8
+        rNfCB1OWDHbEC3AUveng/769lUCJjArCjbzNTsXP65b6UoUSTp4jVEBCFFt5JIHr
+        lnxnFb98LM+RfoT4bLso85bQvkViA5cblE01NMNwe9b65hhJ5ULS+o/QXxpfDzTO
+        QCy0/zn6U46Vx9kL7LSEzhqElNkdmAw=
 Received: from mail.baikal.int (mail.baikal.int [192.168.51.25])
-        by post.baikalelectronics.com (Proxmox) with ESMTP id A5027E0E6A;
-        Tue,  8 Nov 2022 00:04:44 +0300 (MSK)
+        by post.baikalelectronics.com (Proxmox) with ESMTP id 9C353E0ED5;
+        Tue,  8 Nov 2022 00:04:53 +0300 (MSK)
 Received: from localhost (192.168.168.10) by mail (192.168.51.25) with
- Microsoft SMTP Server (TLS) id 15.0.1395.4; Tue, 8 Nov 2022 00:04:44 +0300
+ Microsoft SMTP Server (TLS) id 15.0.1395.4; Tue, 8 Nov 2022 00:04:53 +0300
 From:   Serge Semin <Sergey.Semin@baikalelectronics.ru>
 To:     Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
         Vinod Koul <vkoul@kernel.org>, Rob Herring <robh@kernel.org>,
@@ -46,9 +46,9 @@ CC:     Serge Semin <Sergey.Semin@baikalelectronics.ru>,
         =?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>,
         caihuoqing <caihuoqing@baidu.com>, <linux-pci@vger.kernel.org>,
         <dmaengine@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-Subject: [PATCH v6 01/24] dmaengine: Fix dma_slave_config.dst_addr description
-Date:   Tue, 8 Nov 2022 00:04:15 +0300
-Message-ID: <20221107210438.1515-2-Sergey.Semin@baikalelectronics.ru>
+Subject: [PATCH v6 12/24] dmaengine: dw-edma: Add dw_edma prefix to the DebugFS nodes descriptor
+Date:   Tue, 8 Nov 2022 00:04:26 +0300
+Message-ID: <20221107210438.1515-13-Sergey.Semin@baikalelectronics.ru>
 X-Mailer: git-send-email 2.38.0
 In-Reply-To: <20221107210438.1515-1-Sergey.Semin@baikalelectronics.ru>
 References: <20221107210438.1515-1-Sergey.Semin@baikalelectronics.ru>
@@ -61,34 +61,105 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Most likely due to a copy-paste mistake the dst_addr member of the
-dma_slave_config structure has been marked as ignored if the !source!
-address belong to the memory. That is relevant to the src_addr field of
-the structure while the dst_addr field as containing a destination device
-address is supposed to be ignored if the destination is the CPU memory.
-Let's fix the field description accordingly.
+The rest of the locally defined and used methods and structures have
+dw_edma prefix in their names. It's right in accordance with the kernel
+coding style to follow the locally defined rule of naming. Let's add that
+prefix to the debugfs_entries structure too especially seeing it's name
+may be confusing as if that structure belongs to the global DebugFS space.
 
 Signed-off-by: Serge Semin <Sergey.Semin@baikalelectronics.ru>
 Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 Tested-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 Acked-by: Vinod Koul <vkoul@kernel.org>
 ---
- include/linux/dmaengine.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/dma/dw-edma/dw-edma-v0-debugfs.c | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/include/linux/dmaengine.h b/include/linux/dmaengine.h
-index c923f4e60f24..0c020682d894 100644
---- a/include/linux/dmaengine.h
-+++ b/include/linux/dmaengine.h
-@@ -394,7 +394,7 @@ enum dma_slave_buswidth {
-  * should be read (RX), if the source is memory this argument is
-  * ignored.
-  * @dst_addr: this is the physical address where DMA slave data
-- * should be written (TX), if the source is memory this argument
-+ * should be written (TX), if the destination is memory this argument
-  * is ignored.
-  * @src_addr_width: this is the width in bytes of the source (RX)
-  * register where DMA data shall be read. If the source
+diff --git a/drivers/dma/dw-edma/dw-edma-v0-debugfs.c b/drivers/dma/dw-edma/dw-edma-v0-debugfs.c
+index 6e7f3ef60ca7..2121ffc33cf3 100644
+--- a/drivers/dma/dw-edma/dw-edma-v0-debugfs.c
++++ b/drivers/dma/dw-edma/dw-edma-v0-debugfs.c
+@@ -46,7 +46,7 @@ static struct {
+ 	void					__iomem *end;
+ } lim[2][EDMA_V0_MAX_NR_CH];
+ 
+-struct debugfs_entries {
++struct dw_edma_debugfs_entry {
+ 	const char				*name;
+ 	void __iomem				*reg;
+ };
+@@ -94,7 +94,7 @@ static int dw_edma_debugfs_u32_get(void *data, u64 *val)
+ }
+ DEFINE_DEBUGFS_ATTRIBUTE(fops_x32, dw_edma_debugfs_u32_get, NULL, "0x%08llx\n");
+ 
+-static void dw_edma_debugfs_create_x32(const struct debugfs_entries entries[],
++static void dw_edma_debugfs_create_x32(const struct dw_edma_debugfs_entry entries[],
+ 				       int nr_entries, struct dentry *dir)
+ {
+ 	int i;
+@@ -108,8 +108,7 @@ static void dw_edma_debugfs_create_x32(const struct debugfs_entries entries[],
+ static void dw_edma_debugfs_regs_ch(struct dw_edma_v0_ch_regs __iomem *regs,
+ 				    struct dentry *dir)
+ {
+-	int nr_entries;
+-	const struct debugfs_entries debugfs_regs[] = {
++	const struct dw_edma_debugfs_entry debugfs_regs[] = {
+ 		REGISTER(ch_control1),
+ 		REGISTER(ch_control2),
+ 		REGISTER(transfer_size),
+@@ -120,6 +119,7 @@ static void dw_edma_debugfs_regs_ch(struct dw_edma_v0_ch_regs __iomem *regs,
+ 		REGISTER(llp.lsb),
+ 		REGISTER(llp.msb),
+ 	};
++	int nr_entries;
+ 
+ 	nr_entries = ARRAY_SIZE(debugfs_regs);
+ 	dw_edma_debugfs_create_x32(debugfs_regs, nr_entries, dir);
+@@ -127,7 +127,7 @@ static void dw_edma_debugfs_regs_ch(struct dw_edma_v0_ch_regs __iomem *regs,
+ 
+ static void dw_edma_debugfs_regs_wr(struct dentry *dir)
+ {
+-	const struct debugfs_entries debugfs_regs[] = {
++	const struct dw_edma_debugfs_entry debugfs_regs[] = {
+ 		/* eDMA global registers */
+ 		WR_REGISTER(engine_en),
+ 		WR_REGISTER(doorbell),
+@@ -148,7 +148,7 @@ static void dw_edma_debugfs_regs_wr(struct dentry *dir)
+ 		WR_REGISTER(ch67_imwr_data),
+ 		WR_REGISTER(linked_list_err_en),
+ 	};
+-	const struct debugfs_entries debugfs_unroll_regs[] = {
++	const struct dw_edma_debugfs_entry debugfs_unroll_regs[] = {
+ 		/* eDMA channel context grouping */
+ 		WR_REGISTER_UNROLL(engine_chgroup),
+ 		WR_REGISTER_UNROLL(engine_hshake_cnt.lsb),
+@@ -191,7 +191,7 @@ static void dw_edma_debugfs_regs_wr(struct dentry *dir)
+ 
+ static void dw_edma_debugfs_regs_rd(struct dentry *dir)
+ {
+-	const struct debugfs_entries debugfs_regs[] = {
++	const struct dw_edma_debugfs_entry debugfs_regs[] = {
+ 		/* eDMA global registers */
+ 		RD_REGISTER(engine_en),
+ 		RD_REGISTER(doorbell),
+@@ -213,7 +213,7 @@ static void dw_edma_debugfs_regs_rd(struct dentry *dir)
+ 		RD_REGISTER(ch45_imwr_data),
+ 		RD_REGISTER(ch67_imwr_data),
+ 	};
+-	const struct debugfs_entries debugfs_unroll_regs[] = {
++	const struct dw_edma_debugfs_entry debugfs_unroll_regs[] = {
+ 		/* eDMA channel context grouping */
+ 		RD_REGISTER_UNROLL(engine_chgroup),
+ 		RD_REGISTER_UNROLL(engine_hshake_cnt.lsb),
+@@ -256,7 +256,7 @@ static void dw_edma_debugfs_regs_rd(struct dentry *dir)
+ 
+ static void dw_edma_debugfs_regs(void)
+ {
+-	const struct debugfs_entries debugfs_regs[] = {
++	const struct dw_edma_debugfs_entry debugfs_regs[] = {
+ 		REGISTER(ctrl_data_arb_prior),
+ 		REGISTER(ctrl),
+ 	};
 -- 
 2.38.0
 
