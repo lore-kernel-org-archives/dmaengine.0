@@ -2,110 +2,114 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6914CC07E9D
-	for <dmaengine@archiver.kernel.org>; Wed, 16 Nov 2022 10:14:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9483EC43219
+	for <dmaengine@archiver.kernel.org>; Wed, 16 Nov 2022 10:26:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233265AbiKPKOT (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 16 Nov 2022 05:14:19 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48760 "EHLO
+        id S238729AbiKPK0O (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 16 Nov 2022 05:26:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33700 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230340AbiKPKOG (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Wed, 16 Nov 2022 05:14:06 -0500
+        with ESMTP id S233416AbiKPKZp (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Wed, 16 Nov 2022 05:25:45 -0500
 Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 24016B4A1
-        for <dmaengine@vger.kernel.org>; Wed, 16 Nov 2022 02:13:34 -0800 (PST)
-Received: by mail-wr1-x42a.google.com with SMTP id l14so29094755wrw.2
-        for <dmaengine@vger.kernel.org>; Wed, 16 Nov 2022 02:13:34 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 09EC7F28
+        for <dmaengine@vger.kernel.org>; Wed, 16 Nov 2022 02:23:29 -0800 (PST)
+Received: by mail-wr1-x42a.google.com with SMTP id d9so24413753wrm.13
+        for <dmaengine@vger.kernel.org>; Wed, 16 Nov 2022 02:23:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=9rkHRZPLMXnDDtmeNeo0KQmmMvPEMQ/+5F/WBXa1gt4=;
-        b=DotRMWs4p7FKev5sCkvulGty+CU8qE0gMqnQFUyW7bTTfZShyzTeOQcAdOBBV6YMTg
-         JpFVW0PM5Xw38HwWBzIwzbxxWstEgPzE3S66P/6zgfb71eEsmZIyv1WxuE1nMLXaLgyn
-         usWIqu3Hoy5n67Cl5Pel/XhYTv2wy8gqyn9Ud+HL3nEWs+WgARkvrBV4EXsg0sAMXD/T
-         fn64J5GRv9wcGtDqPbick6g0DtwV3c7XvNwNqR7hda6EjgXZmsNJxZZS+92J93RKpxqB
-         zfan15Q4WrSQCc4E/cbM/0S7VfOdM3C0eneZ2K6sx7/UU97Ns8n95c8etwWer0my3/Gw
-         i6Lg==
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=cvE5SovEDJCGF/rawmWEv+LBNoAcghIphpP6V/P6V0A=;
+        b=fltpn0kAZk73fsa6sh+pSvQk1/yfT+g4cRlZgJncX7GlU7W1j178/oQzUHZjST8sC2
+         YC3Bya1IBgqvQ7frC5sYX3gKFxyb291EssE6REMN9KGKaHsM0+rp8V1m3ndZS0+UVZ8a
+         LJ5aDTtuBLJt8SNDCCbiNgpgAzP08yWrUL3Qtm7ecFyi/IP9cE+Ap2cnsEW/jL0eU0fw
+         aZJhbZk2Fry6VpXaWCge6fS6J9TAGUR5mSbiGBcHiq8HPda76b/RRztBctyA/wFiTKWp
+         NyQ7RxX9RiHMj6hDa8werbvZxNDBzZNKgnjUhfSSk7wF3bqbFCh2oKJ3AWMe/858m42b
+         bYXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=9rkHRZPLMXnDDtmeNeo0KQmmMvPEMQ/+5F/WBXa1gt4=;
-        b=GL+zjR/Tj0OXcRTLJIhuegkOFErCOoY3tGzZHRstByST0K5viIH1nLdwa6g08ybEi7
-         sumxrZPZrlbSsj/I/Up1YiT3QU9mw5fq+A60zkPydonXybBxFtwXnKjS6cHC8dI2OA8U
-         W+pdvxNuG7AkpIlJ+BqdGxr9nBXiw17Dn/Ui+ueHnwMAa592vTavn3JUSQcGSs8Jw5RJ
-         DBLy8GxZkCSjP+HcRT2/6uQgxU3g1SCjMnnnuXjTZnhT8XsaAFzEjeJebHRd8cj+Ujg+
-         MgcjkspOB6aHJ58CfQBXOPo36hGiQxTgQ15pN3DVYw+o3yMJThcQaN8nm7FMQ1pt4ROM
-         7UbA==
-X-Gm-Message-State: ANoB5pnzEaYyffanb6CRzOwtnKsFk8N1rpK3s6oircce7qT1xTmAOb5n
-        wXzo8HtVrXQrGcd7VW8o45f6dg==
-X-Google-Smtp-Source: AA0mqf47YRdnCOsxriuyFnTZ6lAYXb8/75HOCB7obr/rNmN3FZmVvDr3XDA4hoh92Dt086MhlRjvHQ==
-X-Received: by 2002:a5d:484f:0:b0:236:e629:adab with SMTP id n15-20020a5d484f000000b00236e629adabmr13896879wrs.621.1668593612727;
-        Wed, 16 Nov 2022 02:13:32 -0800 (PST)
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=cvE5SovEDJCGF/rawmWEv+LBNoAcghIphpP6V/P6V0A=;
+        b=V+0ZcLwMzAjMF3yq/puaaNH0rKrVdTfmXL3PxJU++Iiwgh2+WqFRlggpLZ91q9lWYf
+         //OKmMTLDHQpCgnMLE145rK1mKP4qgi3CLqXB1Ab9f8DrZFNL/mqvW8ZPWm+8UBUfoBm
+         5BUfDV21Khw8ghOKzXvlZvy4H48xszftbeVhwxhRgomnDwIN75HX52AlnbhovmHbRIxe
+         0WWe3DbLAblzy3G6j52Mgj/POvE41trUATTA3FONR/OSEGbWjULRw9N6FvN9r9jsNUqU
+         McSzx1vBPyjBHMbW9okYLVJ7C0QH73uO1NZwWOQV09ppj6yp3dDZNdnxeezbukZrZIKS
+         1IQw==
+X-Gm-Message-State: ANoB5pl4E0DtUltMEW3j3kS+GiuXY5j5OJzWD7ydxDwcFb6LB3YHoI/c
+        g0rymAFTn9lk03TofjK//txmuA==
+X-Google-Smtp-Source: AA0mqf5v4bQjBjkLpiFWrtD7U4f1kmffpiBLeWwKJC8c5qO7nx54jMdrGd+eCWZfA45L4eymlZiL0A==
+X-Received: by 2002:a5d:514b:0:b0:236:7921:e10e with SMTP id u11-20020a5d514b000000b002367921e10emr13159994wrt.61.1668594190881;
+        Wed, 16 Nov 2022 02:23:10 -0800 (PST)
 Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:8261:5fff:fe11:bdda])
-        by smtp.gmail.com with ESMTPSA id h16-20020a05600c315000b003cff309807esm1426309wmo.23.2022.11.16.02.13.31
+        by smtp.gmail.com with ESMTPSA id i9-20020adfefc9000000b00228dbf15072sm14927047wrp.62.2022.11.16.02.23.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Nov 2022 02:13:32 -0800 (PST)
+        Wed, 16 Nov 2022 02:23:10 -0800 (PST)
 From:   Neil Armstrong <neil.armstrong@linaro.org>
-Date:   Wed, 16 Nov 2022 11:13:27 +0100
-Subject: [PATCH] dt-bindings: dma: qcom: gpi: add compatible for sm8550
+Date:   Wed, 16 Nov 2022 11:23:08 +0100
+Subject: [PATCH 1/4] dt-bindings: dma: qcom,bam-dma: Add 'interconnects' and
+ 'interconnect-names'
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20221114-narmstrong-sm8550-upstream-gpi-v1-0-33b28a227c5d@linaro.org>
-To:     Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Andy Gross <agross@kernel.org>,
+Message-Id: <20221114-narmstrong-sm8550-upstream-qce-v1-1-31b489d5690a@linaro.org>
+References: <20221114-narmstrong-sm8550-upstream-qce-v1-0-31b489d5690a@linaro.org>
+In-Reply-To: <20221114-narmstrong-sm8550-upstream-qce-v1-0-31b489d5690a@linaro.org>
+To:     Vinod Koul <vkoul@kernel.org>, Andy Gross <agross@kernel.org>,
+        "David S. Miller" <davem@davemloft.net>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Thara Gopinath <thara.gopinath@gmail.com>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>
-Cc:     linux-kernel@vger.kernel.org,
-        Neil Armstrong <neil.armstrong@linaro.org>,
+        Herbert Xu <herbert@gondor.apana.org.au>,
+        Bhupesh Sharma <bhupesh.sharma@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>
+Cc:     linux-crypto@vger.kernel.org, linux-kernel@vger.kernel.org,
         devicetree@vger.kernel.org, dmaengine@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Abel Vesa <abel.vesa@linaro.org>, linux-arm-msm@vger.kernel.org
 X-Mailer: b4 0.10.1
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-The Qualcomm SM8550 uses GPI DMA for its GENI interface. Add a compatible
-string for it in the documentation by using the SM6350 as fallback.
+From: Abel Vesa <abel.vesa@linaro.org>
 
+Add 'interconnects' and 'interconnect-names' as optional properties
+to the device-tree binding documentation for BAM DMA IP.
+
+These properties describe the interconnect path between BAM and main
+memory and the interconnect type respectively.
+
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 ---
-To: Andy Gross <agross@kernel.org>
-To: Bjorn Andersson <andersson@kernel.org>
-To: Konrad Dybcio <konrad.dybcio@somainline.org>
-To: Vinod Koul <vkoul@kernel.org>
-To: Rob Herring <robh+dt@kernel.org>
-To: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org
-Cc: dmaengine@vger.kernel.org
-Cc: devicetree@vger.kernel.org
-Cc: linux-kernel@vger.kernel.org
----
- Documentation/devicetree/bindings/dma/qcom,gpi.yaml | 1 +
- 1 file changed, 1 insertion(+)
+ Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/dma/qcom,gpi.yaml b/Documentation/devicetree/bindings/dma/qcom,gpi.yaml
-index e7ba1c47a88e..99c224836bfd 100644
---- a/Documentation/devicetree/bindings/dma/qcom,gpi.yaml
-+++ b/Documentation/devicetree/bindings/dma/qcom,gpi.yaml
-@@ -29,6 +29,7 @@ properties:
-               - qcom,sm6375-gpi-dma
-               - qcom,sm8350-gpi-dma
-               - qcom,sm8450-gpi-dma
-+              - qcom,sm8550-gpi-dma
-           - const: qcom,sm6350-gpi-dma
-       - items:
-           - enum:
+diff --git a/Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml b/Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml
+index 003098caf709..ce8bbb2de4c5 100644
+--- a/Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml
++++ b/Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml
+@@ -36,6 +36,14 @@ properties:
+   interrupts:
+     maxItems: 1
+ 
++  interconnects:
++    maxItems: 1
++    description:
++      Interconnect path between bam and main memory.
++
++  interconnect-names:
++    const: memory
++
+   iommus:
+     minItems: 1
+     maxItems: 4
 
----
-base-commit: 3c1f24109dfc4fb1a3730ed237e50183c6bb26b3
-change-id: 20221114-narmstrong-sm8550-upstream-gpi-59edc9c3bbef
-
-Best regards,
 -- 
-Neil Armstrong <neil.armstrong@linaro.org>
+b4 0.10.1
