@@ -2,67 +2,75 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 92AFDC4332F
-	for <dmaengine@archiver.kernel.org>; Mon, 21 Nov 2022 15:24:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0243EC4332F
+	for <dmaengine@archiver.kernel.org>; Tue, 22 Nov 2022 01:29:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232327AbiKUPYd (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 21 Nov 2022 10:24:33 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52930 "EHLO
+        id S232158AbiKVB3B (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 21 Nov 2022 20:29:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35808 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232256AbiKUPX7 (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Mon, 21 Nov 2022 10:23:59 -0500
-Received: from laurent.telenet-ops.be (laurent.telenet-ops.be [IPv6:2a02:1800:110:4::f00:19])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 33A45F587
-        for <dmaengine@vger.kernel.org>; Mon, 21 Nov 2022 07:23:56 -0800 (PST)
-Received: from ramsan.of.borg ([IPv6:2a02:1810:ac12:ed10:4821:1ba5:2638:5c3a])
-        by laurent.telenet-ops.be with bizsmtp
-        id n3Pv280025WXlCv013Pvs5; Mon, 21 Nov 2022 16:23:55 +0100
-Received: from rox.of.borg ([192.168.97.57])
-        by ramsan.of.borg with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-        (Exim 4.93)
-        (envelope-from <geert@linux-m68k.org>)
-        id 1ox8eI-0019Ch-LD; Mon, 21 Nov 2022 16:23:54 +0100
-Received: from geert by rox.of.borg with local (Exim 4.93)
-        (envelope-from <geert@linux-m68k.org>)
-        id 1ox8eI-00BQ2H-5w; Mon, 21 Nov 2022 16:23:54 +0100
-From:   Geert Uytterhoeven <geert+renesas@glider.be>
-To:     Vinod Koul <vkoul@kernel.org>, Zhou Wang <wangzhou1@hisilicon.com>,
-        Zhenfa Qiu <qiuzhenfa@hisilicon.com>
-Cc:     dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Geert Uytterhoeven <geert+renesas@glider.be>
-Subject: [PATCH] dmaengine: HISI_DMA should depend on ARCH_HISI
-Date:   Mon, 21 Nov 2022 16:23:53 +0100
-Message-Id: <363a1816d36cd3cf604d88ec90f97c75f604de64.1669044190.git.geert+renesas@glider.be>
+        with ESMTP id S231771AbiKVB3A (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Mon, 21 Nov 2022 20:29:00 -0500
+Received: from szxga03-in.huawei.com (szxga03-in.huawei.com [45.249.212.189])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 42D7897A82;
+        Mon, 21 Nov 2022 17:28:59 -0800 (PST)
+Received: from dggpemm500023.china.huawei.com (unknown [172.30.72.57])
+        by szxga03-in.huawei.com (SkyGuard) with ESMTP id 4NGRQv08jHzFqVB;
+        Tue, 22 Nov 2022 09:25:43 +0800 (CST)
+Received: from dggpemm100009.china.huawei.com (7.185.36.113) by
+ dggpemm500023.china.huawei.com (7.185.36.83) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2375.31; Tue, 22 Nov 2022 09:28:57 +0800
+Received: from huawei.com (10.175.113.32) by dggpemm100009.china.huawei.com
+ (7.185.36.113) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2375.31; Tue, 22 Nov
+ 2022 09:28:57 +0800
+From:   Liu Shixin <liushixin2@huawei.com>
+To:     Vinod Koul <vkoul@kernel.org>,
+        Michal Simek <michal.simek@xilinx.com>
+CC:     <dmaengine@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>, Liu Shixin <liushixin2@huawei.com>
+Subject: [PATCH] dmaengine: xilinx_dma: call of_node_put() when breaking out of for_each_child_of_node()
+Date:   Tue, 22 Nov 2022 10:16:12 +0800
+Message-ID: <20221122021612.1908866-1-liushixin2@huawei.com>
 X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7BIT
+Content-Type:   text/plain; charset=US-ASCII
+X-Originating-IP: [10.175.113.32]
+X-ClientProxiedBy: dggems701-chm.china.huawei.com (10.3.19.178) To
+ dggpemm100009.china.huawei.com (7.185.36.113)
+X-CFilter-Loop: Reflected
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-The HiSilicon DMA Engine is only present on HiSilicon SoCs.  Hence add a
-dependency on ARCH_HISI, to prevent asking the user about this driver
-when configuring a kernel without HiSilicon SoC support.
+Since for_each_child_of_node() will increase the refcount of node, we need
+to call of_node_put() manually when breaking out of the iteration.
 
-Fixes: e9f08b65250d73ab ("dmaengine: hisilicon: Add Kunpeng DMA engine support")
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Fixes: 9cd4360de609 ("dma: Add Xilinx AXI Video Direct Memory Access Engine driver support")
+Signed-off-by: Liu Shixin <liushixin2@huawei.com>
 ---
- drivers/dma/Kconfig | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/dma/xilinx/xilinx_dma.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/dma/Kconfig b/drivers/dma/Kconfig
-index b9d54f20812f794b..67323afe9fcad137 100644
---- a/drivers/dma/Kconfig
-+++ b/drivers/dma/Kconfig
-@@ -245,7 +245,7 @@ config FSL_RAID
+diff --git a/drivers/dma/xilinx/xilinx_dma.c b/drivers/dma/xilinx/xilinx_dma.c
+index 8cd4e69dc7b4..766017570488 100644
+--- a/drivers/dma/xilinx/xilinx_dma.c
++++ b/drivers/dma/xilinx/xilinx_dma.c
+@@ -3141,8 +3141,10 @@ static int xilinx_dma_probe(struct platform_device *pdev)
+ 	/* Initialize the channels */
+ 	for_each_child_of_node(node, child) {
+ 		err = xilinx_dma_child_probe(xdev, child);
+-		if (err < 0)
++		if (err < 0) {
++			of_node_put(child);
+ 			goto error;
++		}
+ 	}
  
- config HISI_DMA
- 	tristate "HiSilicon DMA Engine support"
--	depends on ARM64 || COMPILE_TEST
-+	depends on ARCH_HISI || COMPILE_TEST
- 	depends on PCI_MSI
- 	select DMA_ENGINE
- 	select DMA_VIRTUAL_CHANNELS
+ 	if (xdev->dma_config->dmatype == XDMA_TYPE_VDMA) {
 -- 
 2.25.1
 
