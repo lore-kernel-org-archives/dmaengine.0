@@ -2,91 +2,107 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7421CC4332F
-	for <dmaengine@archiver.kernel.org>; Mon,  5 Dec 2022 15:31:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 75CA6C4332F
+	for <dmaengine@archiver.kernel.org>; Mon,  5 Dec 2022 16:37:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232800AbiLEPbs (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 5 Dec 2022 10:31:48 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35498 "EHLO
+        id S232463AbiLEQhK (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 5 Dec 2022 11:37:10 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56950 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232845AbiLEPbI (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Mon, 5 Dec 2022 10:31:08 -0500
-Received: from mga02.intel.com (mga02.intel.com [134.134.136.20])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B16BAD2DB
-        for <dmaengine@vger.kernel.org>; Mon,  5 Dec 2022 07:30:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1670254212; x=1701790212;
-  h=message-id:date:mime-version:subject:to:references:from:
-   in-reply-to:content-transfer-encoding;
-  bh=jwLmWVYbMtyjUXCZFpgHlU+HWlwcK3pUZKMg4wzTDig=;
-  b=W/KVzIisSN6iNFoQapqqr4jD3E/P+uC2jNHFuJLEP2M7kibkjj7FvTqW
-   +Tkis8azgAwfFfnpsbaLMLkghdaPJseWOpYarQG9pXw4vGcGUmv4n202R
-   rHaGqWEC0LXCSZjL+eJ7aeWgvJr/k9IxgfQWtErQ8kPYoL0JwV5JSWL0s
-   nU/EbcR/7JJmsnC7DX0hvgzmrWw6/WMsIl90oD+rp/YRXJaucBAux1LY5
-   Bt2iO3NgfThBkKexHALBR2QNPVRnwN1tPo2zrc09bLzLlcXbxjA/Rr/81
-   98pMVfqDWWH91M3ctDD5s5feTr4cdLorckFk993aKQzFmnpoegpFYG6Ef
-   Q==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10552"; a="303995004"
-X-IronPort-AV: E=Sophos;i="5.96,219,1665471600"; 
-   d="scan'208";a="303995004"
-Received: from fmsmga001.fm.intel.com ([10.253.24.23])
-  by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Dec 2022 07:30:12 -0800
-X-IronPort-AV: E=McAfee;i="6500,9779,10552"; a="788111355"
-X-IronPort-AV: E=Sophos;i="5.96,219,1665471600"; 
-   d="scan'208";a="788111355"
-Received: from djiang5-mobl2.amr.corp.intel.com (HELO [10.212.26.166]) ([10.212.26.166])
-  by fmsmga001-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Dec 2022 07:30:11 -0800
-Message-ID: <90f0244b-adb4-bc5e-792d-2ead9fe463d6@intel.com>
-Date:   Mon, 5 Dec 2022 08:29:51 -0700
+        with ESMTP id S232904AbiLEQgq (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Mon, 5 Dec 2022 11:36:46 -0500
+Received: from mail-oi1-f170.google.com (mail-oi1-f170.google.com [209.85.167.170])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 19BC12126F;
+        Mon,  5 Dec 2022 08:35:00 -0800 (PST)
+Received: by mail-oi1-f170.google.com with SMTP id t62so13628046oib.12;
+        Mon, 05 Dec 2022 08:35:00 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=3LmueXUXyGNVa79/vNF3eg0gla6XRQeVcGtQ/SX2HD4=;
+        b=ck82cPaf9J+Khv3IcJpj7vnCJTA1CdFnMQrGyaSxCGp1D9a5SKJQ+9qXnETjfmPbDS
+         fYBsnL1xQ3QTa9JMvwLhvQ55MR1hwuwEZsPia2trROTqypBh6dS2pBbMFFnawbyaD0he
+         2v/Tq50sq6vE0cMtgf26lbnu8ABgmZ8X1/wEryrJ38U87cQzCoEWtNSoluG9mo9jwdgB
+         F7BBoUxwcGVlp26Q53s1ISiF6w9ogJx2DE8Y8XZWeE5Ola2Sk7NzWpi1NyWtYSiWwTH7
+         qAzLBlFoTiqjAELH7Mo3tlrNPr6gxqbhxOWxuI8hCmuIVCicfg5rtUZSIScNNXn+dNiF
+         Ustg==
+X-Gm-Message-State: ANoB5pk8cqsH+mEn4XYhyelBml7wqISGtlj4KqE22wX/n22gHmv8t2KX
+        RjrWGJNE7fWsWwpwKxAXMw==
+X-Google-Smtp-Source: AA0mqf6CoNtePO5bj+mi2MYlTeJfbtyVVhhECDsbwer0VjrJUMrf9hVTNLDwy5cYNa3POnSH40rVuA==
+X-Received: by 2002:a54:4407:0:b0:34f:9f93:1f17 with SMTP id k7-20020a544407000000b0034f9f931f17mr38439368oiw.203.1670258094210;
+        Mon, 05 Dec 2022 08:34:54 -0800 (PST)
+Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id 18-20020aca1112000000b00354d9b9f6b4sm4152761oir.27.2022.12.05.08.34.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 05 Dec 2022 08:34:53 -0800 (PST)
+Received: (nullmailer pid 2036863 invoked by uid 1000);
+        Mon, 05 Dec 2022 16:34:53 -0000
+Date:   Mon, 5 Dec 2022 10:34:53 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>,
+        Vinod Koul <vkoul@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>,
+        Alexandre Belloni <alexandre.belloni@bootlin.com>,
+        Daniele Alessandrelli <daniele.alessandrelli@intel.com>,
+        "Paul J. Murphy" <paul.j.murphy@intel.com>,
+        dmaengine@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, alsa-devel@alsa-project.org
+Subject: Re: [PATCH 1/2] dt-bindings: Drop Jee Heng Sia
+Message-ID: <20221205163453.GA2034441-robh@kernel.org>
+References: <20221203162144.99225-1-krzysztof.kozlowski@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Firefox/102.0 Thunderbird/102.5.1
-Subject: Re: poor ptdma performance
-Content-Language: en-US
-To:     Eric Pilmore <epilmore@gigaio.com>, dmaengine@vger.kernel.org
-References: <CAOQPn8tHAx1zsgUO7UAuKf1DJYt+fdT6OPAHoxO+HgEPvT5SPg@mail.gmail.com>
- <CAOQPn8v=PWvRWntknEK9pYu3jLgDePWfsjVByYSjUe_tYCpdPA@mail.gmail.com>
-From:   Dave Jiang <dave.jiang@intel.com>
-In-Reply-To: <CAOQPn8v=PWvRWntknEK9pYu3jLgDePWfsjVByYSjUe_tYCpdPA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20221203162144.99225-1-krzysztof.kozlowski@linaro.org>
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
+On Sat, Dec 03, 2022 at 05:21:43PM +0100, Krzysztof Kozlowski wrote:
+> Emails to Jee Heng Sia bounce ("550 #5.1.0 Address rejected.").  Add
+> Keembay platform maintainers as Keembay I2S maintainers.
+> 
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> ---
+>  Documentation/devicetree/bindings/dma/snps,dw-axi-dmac.yaml    | 1 -
+>  Documentation/devicetree/bindings/sound/intel,keembay-i2s.yaml | 3 ++-
+>  2 files changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/dma/snps,dw-axi-dmac.yaml b/Documentation/devicetree/bindings/dma/snps,dw-axi-dmac.yaml
+> index 67aa7bb6d36a..ad107a4d3b33 100644
+> --- a/Documentation/devicetree/bindings/dma/snps,dw-axi-dmac.yaml
+> +++ b/Documentation/devicetree/bindings/dma/snps,dw-axi-dmac.yaml
+> @@ -8,7 +8,6 @@ title: Synopsys DesignWare AXI DMA Controller
+>  
+>  maintainers:
+>    - Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>
+> -  - Jee Heng Sia <jee.heng.sia@intel.com>
+>  
+>  description:
+>    Synopsys DesignWare AXI DMA Controller DT Binding
+> diff --git a/Documentation/devicetree/bindings/sound/intel,keembay-i2s.yaml b/Documentation/devicetree/bindings/sound/intel,keembay-i2s.yaml
+> index 2ac0a4b3cd18..33ab0be036a1 100644
+> --- a/Documentation/devicetree/bindings/sound/intel,keembay-i2s.yaml
+> +++ b/Documentation/devicetree/bindings/sound/intel,keembay-i2s.yaml
+> @@ -8,7 +8,8 @@ $schema: http://devicetree.org/meta-schemas/core.yaml#
+>  title: Intel KeemBay I2S
+>  
+>  maintainers:
+> -  - Sia, Jee Heng <jee.heng.sia@intel.com>
+> +  - Daniele Alessandrelli <daniele.alessandrelli@intel.com>
+> +  - Paul J. Murphy <paul.j.murphy@intel.com
 
+Missing '>'
 
-On 12/3/2022 1:51 AM, Eric Pilmore wrote:
-> On Fri, Dec 2, 2022 at 1:57 PM Eric Pilmore <epilmore@gigaio.com> wrote:
->>
->> Was curious if anybody has any expected performance numbers for the
->> AMD DMA engine "ptdma"?
->>
->> I'm doing some testing utilizing the "ntb_netdev" module for TCP/IP
->> communication between servers via NTB (Non-Transparent Bridge) using
->> "iperf". I find that on Intel based boxes, utilizing IOAT DMA, I can
->> get approximately 19-20 Gb/s for a simple untuned single iperf
->> instance. However, when running on AMD based boxes (Milan CPUs), and
->> running the latest ptdma driver from the Linux tree, I can only
->> achieve about 2-3 Gb/s. I'm thinking there must be some driver knob
->> that I need to tweek or something.
->>
->> Any help is greatly appreciated.
->>
->> Thanks,
->> Eric
+>  
+>  description: |
+>   Intel KeemBay I2S
+> -- 
+> 2.34.1
 > 
 > 
-> You can disregard this question. The issue turned out to be a bug in
-> the ntb_netdev module. The module was calling dev_kfree_skb() in an
-> inappropriate place (interrupt context). Once that was fixed (changed
-> to dev_kfree_skb_irq()), some assert WARNINGS (that I had previously
-> missed) went away and the performance is as expected.
-> 
-
-Curious why this bug only effected the AMD DMA driver.... It should've 
-impacted all DMA drivers through NTB right? Did it make any difference 
-with the ioatdma after the change?
-
-> Eric
