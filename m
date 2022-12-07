@@ -2,110 +2,89 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A54FCC6370C
-	for <dmaengine@archiver.kernel.org>; Wed,  7 Dec 2022 22:52:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F2485C6370A
+	for <dmaengine@archiver.kernel.org>; Wed,  7 Dec 2022 22:52:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229745AbiLGWwa (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        id S229835AbiLGWwa (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
         Wed, 7 Dec 2022 17:52:30 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45000 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44998 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229470AbiLGWw3 (ORCPT
+        with ESMTP id S229646AbiLGWw3 (ORCPT
         <rfc822;dmaengine@vger.kernel.org>); Wed, 7 Dec 2022 17:52:29 -0500
 Received: from mga18.intel.com (mga18.intel.com [134.134.136.126])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F012685662;
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE79D66C93;
         Wed,  7 Dec 2022 14:52:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1670453549; x=1701989549;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=EHXrUzFqhtjrtp+2R9Fafu9ntu7u1UaPLUSfczdzlWE=;
-  b=DClaJA0v7HFjSN6HKpvW/VK4O6LjOB9I+4aLVx/TRXAiBPaoANbEFI0C
-   VCbQ2DhNeEMXvSfpsAZgk9DhN+qXRKsD8O+h5mihcjgQfBullDQkNr1II
-   qQuy0+WSu5ulYiqTzaFxYG3a1jX8amIcOnLyIM1mRZs1MjiSpQ/xE3HdA
-   3UMcksGv5ECPBJsMpXi0OHjNvQmdQE1Stssgg4n7YNL62UXE1C5x/2cdb
-   FqoiS7/36yPQzwKkt/7M1EGd7ReDXZyQbHrRktmgikYmTuWUWJhJOvWdB
-   7MTTndxNIB7Trt8I72fCoOiGLiC2NF0MXpNJ+hihzRTanQHbiJxTig7df
-   Q==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10554"; a="300439516"
+  t=1670453548; x=1701989548;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=TiQw9gnA/BtPLA6qK2uRjsuNq7tuXuBWsu83s/9U4YQ=;
+  b=iEKwkOWLkCmYz/dzwlu07ZWaKeU/3VioiNQMrDZx3TJTazRB2pl5Enp8
+   vARBLDef3QUN02HWJovE09pvs/92+Sfz8OQJb5nVfD66BUoJTGo1+reOv
+   SuHv11YUhxHehPv+qPpGoyMkAyyRm7S+OwVZjj+qLwFIqqWEFj3RwNXyV
+   7mJ2+Aq6OtcG5aGMU27xX2WVAMj9/unADIXIwx6Q3gteZJLSYlMTrFScb
+   NStjp7gADeCQzPc8Ubi01entjwoC3RzUESSNY3+rOimd/fDDEtzHqMmOx
+   rVUWZw7f0W0bF2QYRLD38hKH1LeBjdgw7MLDoQdnbqJ2Xs5QGHfUWy1wu
+   A==;
+X-IronPort-AV: E=McAfee;i="6500,9779,10554"; a="300439511"
 X-IronPort-AV: E=Sophos;i="5.96,225,1665471600"; 
-   d="scan'208";a="300439516"
+   d="scan'208";a="300439511"
 Received: from orsmga002.jf.intel.com ([10.7.209.21])
   by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Dec 2022 14:52:27 -0800
-X-IronPort-AV: E=McAfee;i="6500,9779,10554"; a="646781161"
+X-IronPort-AV: E=McAfee;i="6500,9779,10554"; a="646781154"
 X-IronPort-AV: E=Sophos;i="5.96,225,1665471600"; 
-   d="scan'208";a="646781161"
+   d="scan'208";a="646781154"
 Received: from rchatre-ws.ostc.intel.com ([10.54.69.144])
   by orsmga002-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Dec 2022 14:52:27 -0800
 From:   Reinette Chatre <reinette.chatre@intel.com>
 To:     fenghua.yu@intel.com, dave.jiang@intel.com, vkoul@kernel.org,
         dmaengine@vger.kernel.org
 Cc:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Subject: [PATCH V2 2/3] dmaengine: idxd: Prevent use after free on completion memory
-Date:   Wed,  7 Dec 2022 14:52:21 -0800
-Message-Id: <6c4657d9cff0a0a00501a7b928297ac966e9ec9d.1670452419.git.reinette.chatre@intel.com>
+Subject: [PATCH V2 0/3] dmaengine: idxd: Error path fixes
+Date:   Wed,  7 Dec 2022 14:52:19 -0800
+Message-Id: <cover.1670452419.git.reinette.chatre@intel.com>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <cover.1670452419.git.reinette.chatre@intel.com>
-References: <cover.1670452419.git.reinette.chatre@intel.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On driver unload any pending descriptors are flushed at the
-time the interrupt is freed:
-idxd_dmaengine_drv_remove() ->
-	drv_disable_wq() ->
-		idxd_wq_free_irq() ->
-			idxd_flush_pending_descs().
+Changes since v1:
+- V1: https://lore.kernel.org/lkml/cover.1670005163.git.reinette.chatre@intel.com/
+- Cover trimmed after obtaining needed information.
+- Added Reviewed-by tags.
+- cc stable team.
+- Please see individual patches for patch specific changes.
 
-If there are any descriptors present that need to be flushed this
-flow triggers a "not present" page fault as below:
+Dear Maintainers,
 
- BUG: unable to handle page fault for address: ff391c97c70c9040
- #PF: supervisor read access in kernel mode
- #PF: error_code(0x0000) - not-present page
+I have been using the IDXD driver to experiment with the upcoming core
+changes in support of IMS ([1], [2], [3]). As part of this work I
+happened to exercise the error paths within IDXD and encountered
+a few issues that are addressed in this series. These changes are
+independent from IMS and just aims to make the IDXD driver more
+robust against errors.
 
-The address that triggers the fault is the address of the
-descriptor that was freed moments earlier via:
-drv_disable_wq()->idxd_wq_free_resources()
+Your feedback is greatly appreciated.
 
-Fix the use after free by freeing the descriptors after any possible
-usage. This is done after idxd_wq_reset() to ensure that the memory
-remains accessible during possible completion writes by the device.
+Reinette
 
-Fixes: 63c14ae6c161 ("dmaengine: idxd: refactor wq driver enable/disable operations")
-Suggested-by: Dave Jiang <dave.jiang@intel.com>
-Signed-off-by: Reinette Chatre <reinette.chatre@intel.com>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Reviewed-by: Fenghua Yu <fenghua.yu@intel.com>
-Cc: stable@vger.kernel.org
----
-Changes since V1:
-- Add Dave and Fenghua's Reviewed-by tags.
-- cc stable team (Fenghua).
+[1] https://lore.kernel.org/lkml/20221111132706.104870257@linutronix.de
+[2] https://lore.kernel.org/lkml/20221111131813.914374272@linutronix.dexo
+[3] https://lore.kernel.org/lkml/20221111133158.196269823@linutronix.de
 
- drivers/dma/idxd/device.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Reinette Chatre (3):
+  dmaengine: idxd: Let probe fail when workqueue cannot be enabled
+  dmaengine: idxd: Prevent use after free on completion memory
+  dmaengine: idxd: Do not call DMX TX callbacks during workqueue disable
 
-diff --git a/drivers/dma/idxd/device.c b/drivers/dma/idxd/device.c
-index fcd03d29a941..b4d7bb923a40 100644
---- a/drivers/dma/idxd/device.c
-+++ b/drivers/dma/idxd/device.c
-@@ -1408,11 +1408,11 @@ void drv_disable_wq(struct idxd_wq *wq)
- 		dev_warn(dev, "Clients has claim on wq %d: %d\n",
- 			 wq->id, idxd_wq_refcount(wq));
- 
--	idxd_wq_free_resources(wq);
- 	idxd_wq_unmap_portal(wq);
- 	idxd_wq_drain(wq);
- 	idxd_wq_free_irq(wq);
- 	idxd_wq_reset(wq);
-+	idxd_wq_free_resources(wq);
- 	percpu_ref_exit(&wq->wq_active);
- 	wq->type = IDXD_WQT_NONE;
- 	wq->client_count = 0;
+ drivers/dma/idxd/device.c | 16 +++++++++++++---
+ 1 file changed, 13 insertions(+), 3 deletions(-)
+
+
+base-commit: 76dcd734eca23168cb008912c0f69ff408905235
 -- 
 2.34.1
 
