@@ -2,43 +2,43 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6421DC4332F
-	for <dmaengine@archiver.kernel.org>; Mon, 12 Dec 2022 11:07:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A2543C4332F
+	for <dmaengine@archiver.kernel.org>; Mon, 12 Dec 2022 11:07:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231916AbiLLLHt (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 12 Dec 2022 06:07:49 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52606 "EHLO
+        id S232116AbiLLLHy (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 12 Dec 2022 06:07:54 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52604 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232117AbiLLLHG (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Mon, 12 Dec 2022 06:07:06 -0500
+        with ESMTP id S232125AbiLLLHH (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Mon, 12 Dec 2022 06:07:07 -0500
 Received: from lelv0143.ext.ti.com (lelv0143.ext.ti.com [198.47.23.248])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 66D8A11A10;
-        Mon, 12 Dec 2022 02:54:35 -0800 (PST)
-Received: from lelv0266.itg.ti.com ([10.180.67.225])
-        by lelv0143.ext.ti.com (8.15.2/8.15.2) with ESMTP id 2BCAsSrg019167;
-        Mon, 12 Dec 2022 04:54:28 -0600
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0477511A13;
+        Mon, 12 Dec 2022 02:54:38 -0800 (PST)
+Received: from fllv0035.itg.ti.com ([10.64.41.0])
+        by lelv0143.ext.ti.com (8.15.2/8.15.2) with ESMTP id 2BCAsXdv019175;
+        Mon, 12 Dec 2022 04:54:33 -0600
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
-        s=ti-com-17Q1; t=1670842468;
-        bh=5eBEqont1Hh66nEc8s7Ovin4BNz2G7HwxSF5/nTvwu8=;
+        s=ti-com-17Q1; t=1670842473;
+        bh=w2Ue5WDDYL9x4Hgu6bdWROqq/0qU9t4BO6DzYi2Kw+M=;
         h=From:To:CC:Subject:Date:In-Reply-To:References;
-        b=wwPlpXeP2kjAUlQZV7TSNXRiWQio9Xoq74GN0AKspkCWwBjfgnuSeU4Rh0TWF0qmk
-         xmRqyd6VJf+zM9hPQ6ggrn1/tqEW3MJLIbsi5YFZAZEcNo5+J7UeYrSBHqiIZYiF2L
-         9LbRP1iOpPg6X1hyZ5u8QT/06nIGyIv5pFkMdxQo=
+        b=F0GvFmQVnjEj7ZWLTiacNHBo25YSFbnUh5cP9YgfwsG8X227jiOafcZ0khSs7swVO
+         UkL99binAoPsosKeP0ddpahSW13mc0SaHcZ7jXKFWMzkyZcZVZcJUNelKT/izAsVWY
+         JVVemYm2g0tVamTEoyKpJc5kZLVdDaoYE19k0bFU=
 Received: from DFLE112.ent.ti.com (dfle112.ent.ti.com [10.64.6.33])
-        by lelv0266.itg.ti.com (8.15.2/8.15.2) with ESMTPS id 2BCAsSR5026436
+        by fllv0035.itg.ti.com (8.15.2/8.15.2) with ESMTPS id 2BCAsXoV099829
         (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
-        Mon, 12 Dec 2022 04:54:28 -0600
-Received: from DFLE109.ent.ti.com (10.64.6.30) by DFLE112.ent.ti.com
+        Mon, 12 Dec 2022 04:54:33 -0600
+Received: from DFLE113.ent.ti.com (10.64.6.34) by DFLE112.ent.ti.com
  (10.64.6.33) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.2507.16; Mon, 12
- Dec 2022 04:54:27 -0600
-Received: from lelv0327.itg.ti.com (10.180.67.183) by DFLE109.ent.ti.com
- (10.64.6.30) with Microsoft SMTP Server (version=TLS1_2,
+ Dec 2022 04:54:33 -0600
+Received: from lelv0327.itg.ti.com (10.180.67.183) by DFLE113.ent.ti.com
+ (10.64.6.34) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.2507.16 via
- Frontend Transport; Mon, 12 Dec 2022 04:54:27 -0600
+ Frontend Transport; Mon, 12 Dec 2022 04:54:33 -0600
 Received: from uda0132425.dhcp.ti.com (ileaxei01-snat2.itg.ti.com [10.180.69.6])
-        by lelv0327.itg.ti.com (8.15.2/8.15.2) with ESMTP id 2BCAsJVI035634;
-        Mon, 12 Dec 2022 04:54:25 -0600
+        by lelv0327.itg.ti.com (8.15.2/8.15.2) with ESMTP id 2BCAsJVK035634;
+        Mon, 12 Dec 2022 04:54:31 -0600
 From:   Vignesh Raghavendra <vigneshr@ti.com>
 To:     Peter Ujfalusi <peter.ujfalusi@gmail.com>,
         Vinod Koul <vkoul@kernel.org>,
@@ -48,9 +48,9 @@ CC:     <dmaengine@vger.kernel.org>, <devicetree@vger.kernel.org>,
         <linux-kernel@vger.kernel.org>,
         Vignesh Raghavendra <vigneshr@ti.com>,
         <linux-arm-kernel@lists.infradead.org>
-Subject: [PATCH v2 2/5] dmaengine: ti: k3-udma: Fix BCDMA for case w/o BCHAN
-Date:   Mon, 12 Dec 2022 16:24:13 +0530
-Message-ID: <20221212105416.3628442-3-vigneshr@ti.com>
+Subject: [PATCH v2 4/5] dmaengine: ti: k3-udma: Add support for DMAs on AM62A SoC
+Date:   Mon, 12 Dec 2022 16:24:15 +0530
+Message-ID: <20221212105416.3628442-5-vigneshr@ti.com>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221212105416.3628442-1-vigneshr@ti.com>
 References: <20221212105416.3628442-1-vigneshr@ti.com>
@@ -62,29 +62,26 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Reusing loop iterator fails if BCHAN is not present as iterator is
-uninitialized
+AM62A SoC has a BCDMA and PKTDMA as systems DMAs for service various
+peripherals similar to AM64 SoC. Add support for the same.
 
 Signed-off-by: Vignesh Raghavendra <vigneshr@ti.com>
 ---
- drivers/dma/ti/k3-udma.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/dma/ti/k3-udma.c | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/drivers/dma/ti/k3-udma.c b/drivers/dma/ti/k3-udma.c
-index ce8b80bb34d7..aa50d46fa856 100644
+index aa50d46fa856..c1005d17b42e 100644
 --- a/drivers/dma/ti/k3-udma.c
 +++ b/drivers/dma/ti/k3-udma.c
-@@ -4774,7 +4774,10 @@ static int bcdma_setup_resources(struct udma_dev *ud)
- 				irq_res.desc[i].num = rm_res->desc[i].num;
- 			}
- 		}
-+	} else {
-+		i = 0;
- 	}
-+
- 	if (ud->tchan_cnt) {
- 		rm_res = tisci_rm->rm_ranges[RM_RANGE_TCHAN];
- 		if (IS_ERR(rm_res)) {
+@@ -4386,6 +4386,7 @@ static const struct soc_device_attribute k3_soc_devices[] = {
+ 	{ .family = "AM64X", .data = &am64_soc_data },
+ 	{ .family = "J721S2", .data = &j721e_soc_data},
+ 	{ .family = "AM62X", .data = &am64_soc_data },
++	{ .family = "AM62AX", .data = &am64_soc_data },
+ 	{ /* sentinel */ }
+ };
+ 
 -- 
 2.38.1
 
