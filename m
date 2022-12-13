@@ -2,43 +2,43 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1E4C0C10F1B
-	for <dmaengine@archiver.kernel.org>; Tue, 13 Dec 2022 16:43:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 045D6C10F1D
+	for <dmaengine@archiver.kernel.org>; Tue, 13 Dec 2022 16:43:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236196AbiLMQng (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 13 Dec 2022 11:43:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46740 "EHLO
+        id S234798AbiLMQnh (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 13 Dec 2022 11:43:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46752 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236199AbiLMQnc (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Tue, 13 Dec 2022 11:43:32 -0500
+        with ESMTP id S236204AbiLMQnd (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Tue, 13 Dec 2022 11:43:33 -0500
 Received: from fllv0016.ext.ti.com (fllv0016.ext.ti.com [198.47.19.142])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F5615FFC;
-        Tue, 13 Dec 2022 08:43:27 -0800 (PST)
-Received: from fllv0034.itg.ti.com ([10.64.40.246])
-        by fllv0016.ext.ti.com (8.15.2/8.15.2) with ESMTP id 2BDGhCAL042949;
-        Tue, 13 Dec 2022 10:43:12 -0600
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AC23D2AC1;
+        Tue, 13 Dec 2022 08:43:31 -0800 (PST)
+Received: from fllv0035.itg.ti.com ([10.64.41.0])
+        by fllv0016.ext.ti.com (8.15.2/8.15.2) with ESMTP id 2BDGhOrT043041;
+        Tue, 13 Dec 2022 10:43:24 -0600
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
-        s=ti-com-17Q1; t=1670949792;
-        bh=1sdVIeBxoZTAw0wZ5K5+Bhj/ogaEqZRyuZbryv9UwlI=;
+        s=ti-com-17Q1; t=1670949804;
+        bh=lSeG+4HQ3gyOii17ukc7PlcSnkdUoIsNZqiqck3q650=;
         h=From:To:CC:Subject:Date:In-Reply-To:References;
-        b=hEW/fUPwFxgKXn7fr86wLCXDNZ70m/iqH5o4ynC2TPpH/lq/7oF6gY5/BZIr8Z5Xd
-         LmwV5M4c/EMrIEeguZVb+MOXvKgQ8JGkFZEFe1dPcYkFsVEqfDe3qt0ySzrnQb/Lv9
-         BzN72XT5J4uN6OgJzDSmco12s8r0gvj7CedKJQAw=
+        b=O/goOkBVWekE6VNa2kdMtSSwaEGAq7DG+i/uLi+0ubskeE27wMbAJNtCF0+tr4YY7
+         T0l5cWiURgzytV6Jq0JOXhlQpggdJCzqZv0rrlFPLOELuWaGVUKJU+auvQyV9VwrVl
+         D0Da9MSKanKnD1DXXvbfe462H9ECjZacKKfwHed8=
 Received: from DLEE112.ent.ti.com (dlee112.ent.ti.com [157.170.170.23])
-        by fllv0034.itg.ti.com (8.15.2/8.15.2) with ESMTPS id 2BDGhCoP112121
+        by fllv0035.itg.ti.com (8.15.2/8.15.2) with ESMTPS id 2BDGhOWq073274
         (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
-        Tue, 13 Dec 2022 10:43:12 -0600
-Received: from DLEE104.ent.ti.com (157.170.170.34) by DLEE112.ent.ti.com
+        Tue, 13 Dec 2022 10:43:24 -0600
+Received: from DLEE109.ent.ti.com (157.170.170.41) by DLEE112.ent.ti.com
  (157.170.170.23) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.2507.16; Tue, 13
- Dec 2022 10:43:12 -0600
-Received: from fllv0040.itg.ti.com (10.64.41.20) by DLEE104.ent.ti.com
- (157.170.170.34) with Microsoft SMTP Server (version=TLS1_2,
+ Dec 2022 10:43:23 -0600
+Received: from fllv0040.itg.ti.com (10.64.41.20) by DLEE109.ent.ti.com
+ (157.170.170.41) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.2507.16 via
- Frontend Transport; Tue, 13 Dec 2022 10:43:12 -0600
+ Frontend Transport; Tue, 13 Dec 2022 10:43:23 -0600
 Received: from uda0132425.dhcp.ti.com (ileaxei01-snat.itg.ti.com [10.180.69.5])
-        by fllv0040.itg.ti.com (8.15.2/8.15.2) with ESMTP id 2BDGh6gJ034997;
-        Tue, 13 Dec 2022 10:43:09 -0600
+        by fllv0040.itg.ti.com (8.15.2/8.15.2) with ESMTP id 2BDGh6gN034997;
+        Tue, 13 Dec 2022 10:43:21 -0600
 From:   Vignesh Raghavendra <vigneshr@ti.com>
 To:     Peter Ujfalusi <peter.ujfalusi@gmail.com>,
         Vinod Koul <vkoul@kernel.org>,
@@ -48,9 +48,9 @@ CC:     <dmaengine@vger.kernel.org>, <devicetree@vger.kernel.org>,
         <linux-kernel@vger.kernel.org>,
         Vignesh Raghavendra <vigneshr@ti.com>,
         <linux-arm-kernel@lists.infradead.org>
-Subject: [PATCH v3 1/5] dt-bindings: dma: ti: k3-bcdma: Add bindings for BCDMA CSI RX
-Date:   Tue, 13 Dec 2022 22:13:00 +0530
-Message-ID: <20221213164304.1126945-2-vigneshr@ti.com>
+Subject: [PATCH v3 5/5] dmaengine: ti: k3-udma: Add support for BCDMA CSI RX
+Date:   Tue, 13 Dec 2022 22:13:04 +0530
+Message-ID: <20221213164304.1126945-6-vigneshr@ti.com>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221213164304.1126945-1-vigneshr@ti.com>
 References: <20221213164304.1126945-1-vigneshr@ti.com>
@@ -62,134 +62,84 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-AM62A SoC has a dedicated BCDMA that serves Camera Serial Interface
-(CSI) IP. Add new compatible for the same. Unlike system
-BCDMA, this instance only has RX DMA channels and lack TX or block copy
-channel. Thus make those properties optional. Additionally CSI RX has
-independent power domain, add the binding for the same.
+BCDMA CSI RX present on AM62Ax SoC is a dedicated DMA for servicing
+Camera Serial Interface (CSI) IP. Add support for the same.
 
 Signed-off-by: Vignesh Raghavendra <vigneshr@ti.com>
 ---
-v3:
-Add min/max constraints for reg-names and reg on per compatible basis
+ drivers/dma/ti/k3-udma.c | 37 ++++++++++++++++++++++++++++++++-----
+ 1 file changed, 32 insertions(+), 5 deletions(-)
 
-v2:
-reorder compatibles alphabetically
-Fix reg defintion to min 3 and max 5
-Keep top level constraints as is  and further restrict
-variants within "if-else" blocks
-
- .../devicetree/bindings/dma/ti/k3-bcdma.yaml  | 77 ++++++++++++++-----
- 1 file changed, 59 insertions(+), 18 deletions(-)
-
-diff --git a/Documentation/devicetree/bindings/dma/ti/k3-bcdma.yaml b/Documentation/devicetree/bindings/dma/ti/k3-bcdma.yaml
-index 08627d91e607..2bc48dfd3396 100644
---- a/Documentation/devicetree/bindings/dma/ti/k3-bcdma.yaml
-+++ b/Documentation/devicetree/bindings/dma/ti/k3-bcdma.yaml
-@@ -28,13 +28,19 @@ description: |
-   PDMAs can be configured via BCDMA split channel's peer registers to match with
-   the configuration of the legacy peripheral.
+diff --git a/drivers/dma/ti/k3-udma.c b/drivers/dma/ti/k3-udma.c
+index c1005d17b42e..1d3d1b387b96 100644
+--- a/drivers/dma/ti/k3-udma.c
++++ b/drivers/dma/ti/k3-udma.c
+@@ -135,6 +135,7 @@ struct udma_match_data {
+ 	u32 flags;
+ 	u32 statictr_z_mask;
+ 	u8 burst_size[3];
++	struct udma_soc_data *soc_data;
+ };
  
--allOf:
--  - $ref: /schemas/dma/dma-controller.yaml#
--  - $ref: /schemas/arm/keystone/ti,k3-sci-common.yaml#
--
- properties:
-   compatible:
--    const: ti,am64-dmss-bcdma
-+    enum:
-+      - ti,am62a-dmss-bcdma-csirx
-+      - ti,am64-dmss-bcdma
-+
-+  reg:
-+    minItems: 3
-+    maxItems: 5
-+
-+  reg-names:
-+    minItems: 3
-+    maxItems: 5
+ struct udma_soc_data {
+@@ -4295,6 +4296,25 @@ static struct udma_match_data j721e_mcu_data = {
+ 	},
+ };
  
-   "#dma-cells":
-     const: 3
-@@ -65,19 +71,13 @@ properties:
++static struct udma_soc_data am62a_dmss_csi_soc_data = {
++	.oes = {
++		.bcdma_rchan_data = 0xe00,
++		.bcdma_rchan_ring = 0x1000,
++	},
++};
++
++static struct udma_match_data am62a_bcdma_csirx_data = {
++	.type = DMA_TYPE_BCDMA,
++	.psil_base = 0x3100,
++	.enable_memcpy_support = false,
++	.burst_size = {
++		TI_SCI_RM_UDMAP_CHAN_BURST_SIZE_64_BYTES, /* Normal Channels */
++		0, /* No H Channels */
++		0, /* No UH Channels */
++	},
++	.soc_data = &am62a_dmss_csi_soc_data,
++};
++
+ static struct udma_match_data am64_bcdma_data = {
+ 	.type = DMA_TYPE_BCDMA,
+ 	.psil_base = 0x2000, /* for tchan and rchan, not applicable to bchan */
+@@ -4344,6 +4364,10 @@ static const struct of_device_id udma_of_match[] = {
+ 		.compatible = "ti,am64-dmss-pktdma",
+ 		.data = &am64_pktdma_data,
+ 	},
++	{
++		.compatible = "ti,am62a-dmss-bcdma-csirx",
++		.data = &am62a_bcdma_csirx_data,
++	},
+ 	{ /* Sentinel */ },
+ };
  
-       cell 3: ASEL value for the channel
+@@ -5274,12 +5298,15 @@ static int udma_probe(struct platform_device *pdev)
+ 	}
+ 	ud->match_data = match->data;
  
--  reg:
--    maxItems: 5
--
--  reg-names:
--    items:
--      - const: gcfg
--      - const: bchanrt
--      - const: rchanrt
--      - const: tchanrt
--      - const: ringrt
--
-   msi-parent: true
+-	soc = soc_device_match(k3_soc_devices);
+-	if (!soc) {
+-		dev_err(dev, "No compatible SoC found\n");
+-		return -ENODEV;
++	ud->soc_data = ud->match_data->soc_data;
++	if (!ud->soc_data) {
++		soc = soc_device_match(k3_soc_devices);
++		if (!soc) {
++			dev_err(dev, "No compatible SoC found\n");
++			return -ENODEV;
++		}
++		ud->soc_data = soc->data;
+ 	}
+-	ud->soc_data = soc->data;
  
-+  power-domains:
-+    description:
-+      Power domain if available
-+    maxItems: 1
-+
-   ti,asel:
-     $ref: /schemas/types.yaml#/definitions/uint32
-     description: ASEL value for non slave channels
-@@ -123,10 +123,51 @@ required:
-   - msi-parent
-   - ti,sci
-   - ti,sci-dev-id
--  - ti,sci-rm-range-bchan
--  - ti,sci-rm-range-tchan
-   - ti,sci-rm-range-rchan
- 
-+allOf:
-+  - $ref: /schemas/dma/dma-controller.yaml#
-+  - $ref: /schemas/arm/keystone/ti,k3-sci-common.yaml#
-+
-+  - if:
-+      properties:
-+        compatible:
-+          contains:
-+            const: ti,am62a-dmss-bcdma-csirx
-+    then:
-+      properties:
-+        ti,sci-rm-range-bchan: false
-+        ti,sci-rm-range-tchan: false
-+
-+        reg:
-+          maxItems: 3
-+
-+        reg-names:
-+          items:
-+            - const: gcfg
-+            - const: rchanrt
-+            - const: ringrt
-+
-+      required:
-+        - power-domains
-+
-+    else:
-+      properties:
-+        reg:
-+          minItems: 5
-+
-+        reg-names:
-+          items:
-+            - const: gcfg
-+            - const: bchanrt
-+            - const: rchanrt
-+            - const: tchanrt
-+            - const: ringrt
-+
-+      required:
-+        - ti,sci-rm-range-bchan
-+        - ti,sci-rm-range-tchan
-+
- unevaluatedProperties: false
- 
- examples:
+ 	ret = udma_get_mmrs(pdev, ud);
+ 	if (ret)
 -- 
 2.38.1
 
