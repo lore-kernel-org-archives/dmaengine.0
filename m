@@ -2,34 +2,34 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1CACEC3DA6D
-	for <dmaengine@archiver.kernel.org>; Wed, 14 Dec 2022 23:53:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6060DC10F31
+	for <dmaengine@archiver.kernel.org>; Wed, 14 Dec 2022 23:53:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229923AbiLNXxg (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        id S229909AbiLNXxg (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
         Wed, 14 Dec 2022 18:53:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44120 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44110 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229784AbiLNXxP (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Wed, 14 Dec 2022 18:53:15 -0500
+        with ESMTP id S229610AbiLNXxO (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Wed, 14 Dec 2022 18:53:14 -0500
 Received: from post.baikalelectronics.com (post.baikalelectronics.com [213.79.110.86])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id AA77C4733F;
-        Wed, 14 Dec 2022 15:53:14 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id CF22B2AE07;
+        Wed, 14 Dec 2022 15:53:12 -0800 (PST)
 Received: from post.baikalelectronics.com (localhost.localdomain [127.0.0.1])
-        by post.baikalelectronics.com (Proxmox) with ESMTP id 4B274E0ECE;
-        Thu, 15 Dec 2022 02:53:14 +0300 (MSK)
+        by post.baikalelectronics.com (Proxmox) with ESMTP id 13ECAE0EDA;
+        Thu, 15 Dec 2022 02:53:12 +0300 (MSK)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
         baikalelectronics.ru; h=cc:cc:content-transfer-encoding
         :content-type:content-type:date:from:from:in-reply-to:message-id
         :mime-version:references:reply-to:subject:subject:to:to; s=post;
-         bh=YvCsAOGVqiLyJuUIO/SM0nIA0o8rGVJQNGewjqJLv28=; b=hhm5bGlEPjKn
-        TbL62p7t18fwUW2a8xo94kwdnxakx9vwq1ReqZLP/GAGGGeOtlHbST79Yn1oxXwd
-        Ofx6Z859Fcql/7xcJVi5w0PwF8tr4G8jgH4iQcUSXx1Uoc8UkVd3Jg0gdc6FLkb9
-        yEHB0ru4vj2f05zs3BgQAF8WYLQQo3Y=
+         bh=PSWqL5Qc3wOjDaLrQ6Pchk7PUiIPV0NolS6Mp2DoyUA=; b=KYB1IaWQMPVn
+        1ormAZGpSIbgcZQAzR+0v5wnWa/LW3xTYzagRPyFzj6GbOipjqN9tNwSCMzht5Ve
+        zRQbtosPyb4arXjYfzTb9rkVsbxYK/PuedCKBYvEy7P5yoEzbzCszOZkWjNkGhzf
+        NxUljFMZXEZzvhKq3ojy6J9RAu8PJTA=
 Received: from mail.baikal.int (mail.baikal.int [192.168.51.25])
-        by post.baikalelectronics.com (Proxmox) with ESMTP id 34AABE0E6B;
-        Thu, 15 Dec 2022 02:53:14 +0300 (MSK)
+        by post.baikalelectronics.com (Proxmox) with ESMTP id EE327E0E6B;
+        Thu, 15 Dec 2022 02:53:11 +0300 (MSK)
 Received: from localhost (10.8.30.6) by mail (192.168.51.25) with Microsoft
- SMTP Server (TLS) id 15.0.1395.4; Thu, 15 Dec 2022 02:53:14 +0300
+ SMTP Server (TLS) id 15.0.1395.4; Thu, 15 Dec 2022 02:53:11 +0300
 From:   Serge Semin <Sergey.Semin@baikalelectronics.ru>
 To:     Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
         Vinod Koul <vkoul@kernel.org>, Rob Herring <robh@kernel.org>,
@@ -49,9 +49,9 @@ CC:     Serge Semin <Sergey.Semin@baikalelectronics.ru>,
         <linux-pci@vger.kernel.org>, <dmaengine@vger.kernel.org>,
         <linux-kernel@vger.kernel.org>,
         Gustavo Pimentel <Gustavo.Pimentel@synopsys.com>
-Subject: [PATCH v7 09/25] dmaengine: dw-edma: Drop chancnt initialization
-Date:   Thu, 15 Dec 2022 02:52:49 +0300
-Message-ID: <20221214235305.31744-10-Sergey.Semin@baikalelectronics.ru>
+Subject: [PATCH v7 06/25] dmaengine: dw-edma: Fix invalid interleaved xfers semantics
+Date:   Thu, 15 Dec 2022 02:52:46 +0300
+Message-ID: <20221214235305.31744-7-Sergey.Semin@baikalelectronics.ru>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221214235305.31744-1-Sergey.Semin@baikalelectronics.ru>
 References: <20221214235305.31744-1-Sergey.Semin@baikalelectronics.ru>
@@ -64,32 +64,108 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-DMA device drivers aren't supposed to initialize the dma_device.chancnt
-field. It will be done by the DMA-engine core in accordance with number of
-added virtual DMA-channels. Pre-initializing it with some value causes
-having a wrong number of channels printed in the device summary.
+The interleaved DMA transfer support added in commit 85e7518f42c8
+("dmaengine: dw-edma: Add device_prep_interleave_dma() support") seems
+contradicting to what the DMA-engine defines. The next conditional
+statements:
+	if (!xfer->xfer.il->numf)
+		return NULL;
+	if (xfer->xfer.il->numf > 0 && xfer->xfer.il->frame_size > 0)
+		return NULL;
+basically mean that numf can't be zero and frame_size must always be zero,
+otherwise the transfer won't be executed. But further the transfer
+execution method takes the frames size from the
+dma_interleaved_template.sgl[] array for each frame. That array in
+accordance with [1] is supposed to be of
+dma_interleaved_template.frame_size size, which as we discovered before
+the code expects to be zero. So judging by the dw_edma_device_transfer()
+implementation the method implies the dma_interleaved_template.sgl[] array
+being of dma_interleaved_template.numf size, which is wrong. Since the
+dw_edma_device_transfer() method doesn't permit
+dma_interleaved_template.frame_size being non-zero then actual multi-chunk
+interleaved transfer turns to be unsupported even though the code implies
+having it supported.
 
-Fixes: e63d79d1ffcd ("dmaengine: Add Synopsys eDMA IP core driver")
+Let's fix that by adding a fully functioning support of the interleaved
+DMA transfers. First of all dma_interleaved_template.frame_size is
+supposed to be greater or equal to one thus having at least simple linear
+chunked frames. Secondly we can create a walk-through all over the chunks
+and frames just by initializing the number of the eDMA burst transactios
+as a multiple of dma_interleaved_template.numf and
+dma_interleaved_template.frame_size and getting the frame_size-modulo of
+the iteration step as an index of the dma_interleaved_template.sgl[]
+array. The rest of the dw_edma_device_transfer() method code can be left
+unchanged.
+
+[1] include/linux/dmaengine.h: doc struct dma_interleaved_template
+
+Fixes: 85e7518f42c8 ("dmaengine: dw-edma: Add device_prep_interleave_dma() support")
 Signed-off-by: Serge Semin <Sergey.Semin@baikalelectronics.ru>
 Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 Tested-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 Acked-by: Vinod Koul <vkoul@kernel.org>
 ---
- drivers/dma/dw-edma/dw-edma-core.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/dma/dw-edma/dw-edma-core.c | 18 +++++++-----------
+ 1 file changed, 7 insertions(+), 11 deletions(-)
 
 diff --git a/drivers/dma/dw-edma/dw-edma-core.c b/drivers/dma/dw-edma/dw-edma-core.c
-index 6c9f95a8e397..ecd3e8f7ac5d 100644
+index 35588e14f79a..d5c4192141ef 100644
 --- a/drivers/dma/dw-edma/dw-edma-core.c
 +++ b/drivers/dma/dw-edma/dw-edma-core.c
-@@ -817,7 +817,6 @@ static int dw_edma_channel_setup(struct dw_edma *dw, bool write,
- 	dma->src_addr_widths = BIT(DMA_SLAVE_BUSWIDTH_4_BYTES);
- 	dma->dst_addr_widths = BIT(DMA_SLAVE_BUSWIDTH_4_BYTES);
- 	dma->residue_granularity = DMA_RESIDUE_GRANULARITY_DESCRIPTOR;
--	dma->chancnt = cnt;
+@@ -332,6 +332,7 @@ dw_edma_device_transfer(struct dw_edma_transfer *xfer)
+ 	struct dw_edma_chunk *chunk;
+ 	struct dw_edma_burst *burst;
+ 	struct dw_edma_desc *desc;
++	size_t fsz = 0;
+ 	u32 cnt = 0;
+ 	int i;
  
- 	/* Set DMA channel callbacks */
- 	dma->dev = chip->dev;
+@@ -381,9 +382,7 @@ dw_edma_device_transfer(struct dw_edma_transfer *xfer)
+ 		if (xfer->xfer.sg.len < 1)
+ 			return NULL;
+ 	} else if (xfer->type == EDMA_XFER_INTERLEAVED) {
+-		if (!xfer->xfer.il->numf)
+-			return NULL;
+-		if (xfer->xfer.il->numf > 0 && xfer->xfer.il->frame_size > 0)
++		if (!xfer->xfer.il->numf || xfer->xfer.il->frame_size < 1)
+ 			return NULL;
+ 		if (!xfer->xfer.il->src_inc || !xfer->xfer.il->dst_inc)
+ 			return NULL;
+@@ -413,10 +412,8 @@ dw_edma_device_transfer(struct dw_edma_transfer *xfer)
+ 		cnt = xfer->xfer.sg.len;
+ 		sg = xfer->xfer.sg.sgl;
+ 	} else if (xfer->type == EDMA_XFER_INTERLEAVED) {
+-		if (xfer->xfer.il->numf > 0)
+-			cnt = xfer->xfer.il->numf;
+-		else
+-			cnt = xfer->xfer.il->frame_size;
++		cnt = xfer->xfer.il->numf * xfer->xfer.il->frame_size;
++		fsz = xfer->xfer.il->frame_size;
+ 	}
+ 
+ 	for (i = 0; i < cnt; i++) {
+@@ -438,7 +435,7 @@ dw_edma_device_transfer(struct dw_edma_transfer *xfer)
+ 		else if (xfer->type == EDMA_XFER_SCATTER_GATHER)
+ 			burst->sz = sg_dma_len(sg);
+ 		else if (xfer->type == EDMA_XFER_INTERLEAVED)
+-			burst->sz = xfer->xfer.il->sgl[i].size;
++			burst->sz = xfer->xfer.il->sgl[i % fsz].size;
+ 
+ 		chunk->ll_region.sz += burst->sz;
+ 		desc->alloc_sz += burst->sz;
+@@ -481,10 +478,9 @@ dw_edma_device_transfer(struct dw_edma_transfer *xfer)
+ 
+ 		if (xfer->type == EDMA_XFER_SCATTER_GATHER) {
+ 			sg = sg_next(sg);
+-		} else if (xfer->type == EDMA_XFER_INTERLEAVED &&
+-			   xfer->xfer.il->frame_size > 0) {
++		} else if (xfer->type == EDMA_XFER_INTERLEAVED) {
+ 			struct dma_interleaved_template *il = xfer->xfer.il;
+-			struct data_chunk *dc = &il->sgl[i];
++			struct data_chunk *dc = &il->sgl[i % fsz];
+ 
+ 			src_addr += burst->sz;
+ 			if (il->src_sgl)
 -- 
 2.38.1
 
