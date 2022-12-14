@@ -2,94 +2,96 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CEB49C4167B
-	for <dmaengine@archiver.kernel.org>; Wed, 14 Dec 2022 12:00:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EF9D6C4332F
+	for <dmaengine@archiver.kernel.org>; Wed, 14 Dec 2022 23:53:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238353AbiLNMA0 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 14 Dec 2022 07:00:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34442 "EHLO
+        id S229821AbiLNXx0 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 14 Dec 2022 18:53:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44078 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238355AbiLNMAD (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Wed, 14 Dec 2022 07:00:03 -0500
-Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9CCCD264BF
-        for <dmaengine@vger.kernel.org>; Wed, 14 Dec 2022 03:59:24 -0800 (PST)
-Received: by mail-lf1-x129.google.com with SMTP id y25so10010570lfa.9
-        for <dmaengine@vger.kernel.org>; Wed, 14 Dec 2022 03:59:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=8O/vW9WSKsHkZK0ykTgQ1QEzHkmmFKIznSejf9tyvWs=;
-        b=WJ8TKFAXZjvQw0UVY1xJ8cGh6fO3cBzDk8hy3FACDWH04zCHHMzn4imY/AnpciSiWt
-         YBdlAqlr7yzRn0C9S0tpg9u075BMHSABwXf0B6KEF8h4RbZ77TicHC0Ak/J6lIF+hQ0K
-         n93fA+cnwkxClUVcvIH9sqlRbm4pn90M4mEiPFw2O4/0PLf2htIQony04cPkxoPeMPvj
-         7yZUYROnbsYVBEC/Yjti1oYuRxyyBZyp2ynjUpbYiv5Q7muKDRQc/BANqWe4+tQzRN7E
-         jLYrUdT9AXfqxgl6jL/mzwT8yNDGdxAurlWX7MakFjXuVoOl/RIGhKOUJ+OlHn/Wc6zi
-         KVgw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=8O/vW9WSKsHkZK0ykTgQ1QEzHkmmFKIznSejf9tyvWs=;
-        b=OoT7lzwh/M5NDtfYnhO9KQYRz9/wbQhJ/MNqzd78sYf/SfrlMjloe+3Kgk96LYLOUi
-         dfR0Jr/7DcxJO6GqNIsmGqPHnQnRjRt8PvFKwYLLqaqiDg2VssUkliG858e1CJgiGkrR
-         9tWIpRYezJWYLK4E6X3zKg/gJ4Iz4ZbcsSDXMX7ATlnx5QrKbXpZ8sJ9JfAGKoMLruKW
-         TBKCHuEGYe4uc9x8yQALPS+yxNIvPH+tV7mvWknO3RMDPcPevcM3hzyCAhQAOUvTUSzH
-         rM0bnsm/KZEfkKm2NhzzV8BEvIWX571+Fx4DePPv4erSkcy6OH5AtPfD4am5k77fGjqv
-         cDYw==
-X-Gm-Message-State: ANoB5plXFWifXfvLZixSQOYfUWrhPFSpiPPwMK4+w+eOAoPF214utlMM
-        c7jg+QgFvmDA9VYkcPhuAeIF14wZxKRfdfc7
-X-Google-Smtp-Source: AA0mqf7jxVEC3HyZvvPv5fwRRGcINPJQYYlkNqgDNylF7UF7gthNhPIWCijByNhe55lN9vx/Xw9RNg==
-X-Received: by 2002:a05:6512:308a:b0:4b6:f51e:b8b6 with SMTP id z10-20020a056512308a00b004b6f51eb8b6mr2332142lfd.56.1671019163235;
-        Wed, 14 Dec 2022 03:59:23 -0800 (PST)
-Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id x2-20020a056512078200b004b577fdce62sm777188lfr.158.2022.12.14.03.59.22
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 14 Dec 2022 03:59:22 -0800 (PST)
-Message-ID: <9e602e50-143e-b50d-047e-c5ff05363929@linaro.org>
-Date:   Wed, 14 Dec 2022 12:59:21 +0100
+        with ESMTP id S229696AbiLNXxN (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Wed, 14 Dec 2022 18:53:13 -0500
+Received: from post.baikalelectronics.com (post.baikalelectronics.com [213.79.110.86])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 4101048754;
+        Wed, 14 Dec 2022 15:53:09 -0800 (PST)
+Received: from post.baikalelectronics.com (localhost.localdomain [127.0.0.1])
+        by post.baikalelectronics.com (Proxmox) with ESMTP id 623E3E0ED5;
+        Thu, 15 Dec 2022 02:53:08 +0300 (MSK)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        baikalelectronics.ru; h=cc:cc:content-transfer-encoding
+        :content-type:content-type:date:from:from:in-reply-to:message-id
+        :mime-version:references:reply-to:subject:subject:to:to; s=post;
+         bh=h43jggFkHbpSKEdtfUv/QU5I7Y2qMI4tAlStsWepeHc=; b=Hak2QjM5p12G
+        bQRIn79KDGfOTZbcMa1FPqsPEn7r9/r7G0j6SziqGyTOxgtApx236cfhWb6E1DcC
+        YEXcW1Q6G0FAFcWJ76sS6JPVANYOfRRbqMDn8Sz1kVkMH2u7vKPdWGhD1kiIddSc
+        gsQqHYdYPGboN4EYPvH/Yh7hbYt3YeQ=
+Received: from mail.baikal.int (mail.baikal.int [192.168.51.25])
+        by post.baikalelectronics.com (Proxmox) with ESMTP id 519F3E0E6B;
+        Thu, 15 Dec 2022 02:53:08 +0300 (MSK)
+Received: from localhost (10.8.30.6) by mail (192.168.51.25) with Microsoft
+ SMTP Server (TLS) id 15.0.1395.4; Thu, 15 Dec 2022 02:53:08 +0300
+From:   Serge Semin <Sergey.Semin@baikalelectronics.ru>
+To:     Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+        Vinod Koul <vkoul@kernel.org>, Rob Herring <robh@kernel.org>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Cai Huoqing <cai.huoqing@linux.dev>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Jingoo Han <jingoohan1@gmail.com>, Frank Li <Frank.Li@nxp.com>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+CC:     Serge Semin <Sergey.Semin@baikalelectronics.ru>,
+        Serge Semin <fancer.lancer@gmail.com>,
+        Alexey Malahov <Alexey.Malahov@baikalelectronics.ru>,
+        Pavel Parkhomenko <Pavel.Parkhomenko@baikalelectronics.ru>,
+        =?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>,
+        caihuoqing <caihuoqing@baidu.com>,
+        Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+        <linux-pci@vger.kernel.org>, <dmaengine@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+Subject: [PATCH v7 01/25] dmaengine: Fix dma_slave_config.dst_addr description
+Date:   Thu, 15 Dec 2022 02:52:41 +0300
+Message-ID: <20221214235305.31744-2-Sergey.Semin@baikalelectronics.ru>
+X-Mailer: git-send-email 2.38.1
+In-Reply-To: <20221214235305.31744-1-Sergey.Semin@baikalelectronics.ru>
+References: <20221214235305.31744-1-Sergey.Semin@baikalelectronics.ru>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.5.1
-Subject: Re: [PATCH v3 1/5] dt-bindings: dma: ti: k3-bcdma: Add bindings for
- BCDMA CSI RX
-Content-Language: en-US
-To:     Vignesh Raghavendra <vigneshr@ti.com>,
-        Peter Ujfalusi <peter.ujfalusi@gmail.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     dmaengine@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org
-References: <20221213164304.1126945-1-vigneshr@ti.com>
- <20221213164304.1126945-2-vigneshr@ti.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20221213164304.1126945-2-vigneshr@ti.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.8.30.6]
+X-ClientProxiedBy: MAIL.baikal.int (192.168.51.25) To mail (192.168.51.25)
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On 13/12/2022 17:43, Vignesh Raghavendra wrote:
-> AM62A SoC has a dedicated BCDMA that serves Camera Serial Interface
-> (CSI) IP. Add new compatible for the same. Unlike system
-> BCDMA, this instance only has RX DMA channels and lack TX or block copy
-> channel. Thus make those properties optional. Additionally CSI RX has
-> independent power domain, add the binding for the same.
-> 
-> Signed-off-by: Vignesh Raghavendra <vigneshr@ti.com>
-> ---
-> v3:
-> Add min/max constraints for reg-names and reg on per compatible basis
-> 
+Most likely due to a copy-paste mistake the dst_addr member of the
+dma_slave_config structure has been marked as ignored if the !source!
+address belong to the memory. That is relevant to the src_addr field of
+the structure while the dst_addr field as containing a destination device
+address is supposed to be ignored if the destination is the CPU memory.
+Let's fix the field description accordingly.
 
+Signed-off-by: Serge Semin <Sergey.Semin@baikalelectronics.ru>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Tested-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Acked-by: Vinod Koul <vkoul@kernel.org>
+---
+ include/linux/dmaengine.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+diff --git a/include/linux/dmaengine.h b/include/linux/dmaengine.h
+index c923f4e60f24..0c020682d894 100644
+--- a/include/linux/dmaengine.h
++++ b/include/linux/dmaengine.h
+@@ -394,7 +394,7 @@ enum dma_slave_buswidth {
+  * should be read (RX), if the source is memory this argument is
+  * ignored.
+  * @dst_addr: this is the physical address where DMA slave data
+- * should be written (TX), if the source is memory this argument
++ * should be written (TX), if the destination is memory this argument
+  * is ignored.
+  * @src_addr_width: this is the width in bytes of the source (RX)
+  * register where DMA data shall be read. If the source
+-- 
+2.38.1
 
-Best regards,
-Krzysztof
 
