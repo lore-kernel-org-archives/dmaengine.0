@@ -2,109 +2,122 @@ Return-Path: <dmaengine-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 38ED7C3DA6E
-	for <dmaengine@archiver.kernel.org>; Fri, 16 Dec 2022 23:16:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CA987C4332F
+	for <dmaengine@archiver.kernel.org>; Fri, 16 Dec 2022 23:22:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230166AbiLPXQC (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 16 Dec 2022 18:16:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45358 "EHLO
+        id S229471AbiLPXWW (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 16 Dec 2022 18:22:22 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49348 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230014AbiLPXP4 (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Fri, 16 Dec 2022 18:15:56 -0500
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DF734C77F;
-        Fri, 16 Dec 2022 15:15:44 -0800 (PST)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2BGLS3lC020106;
-        Fri, 16 Dec 2022 23:15:42 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : mime-version : content-transfer-encoding :
- content-type; s=qcppdkim1;
- bh=eOEnyLa8Idu6Kcj9YUhdXWt7BBG5vo88pgKbA8YFfaU=;
- b=ehbbbkWdnvMvtdb48kexpihbSQuznd89Cx4cfTPXOfk+vO0bho0umbPpMUwNg7cL1Sqx
- Mhf/4TGerYTo7ZifV3yq5alux4qknyI8TaVb6VyCNlO3rNKQepN8pKT0lYMWfd1HQCcH
- bjykTgGCctbjm52lJ/qx8PKRLxo7s9SSaY2DczT48NgMY+Icy1F9j1jZSfcUcLQlPXXC
- s2O4doDlbZ12YsgqbCRHZazV6yidzYPGlW7jaH2vKB6SNzdiD/c3TXrhYoZyeUL5Tkhd
- BCmwilpf5o+2gaxWzpPPWS5wq+/VPN+5fWuXIx6M8j4Im0XebZh5216qBhKkUQZc4KeP bg== 
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3mgmv12b9j-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 16 Dec 2022 23:15:41 +0000
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-        by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2BGNFfYm031168
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 16 Dec 2022 23:15:41 GMT
-Received: from hu-molvera-sd.qualcomm.com (10.80.80.8) by
- nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.36; Fri, 16 Dec 2022 15:15:40 -0800
-From:   Melody Olvera <quic_molvera@quicinc.com>
-To:     Andy Gross <agross@kernel.org>,
+        with ESMTP id S229957AbiLPXWV (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Fri, 16 Dec 2022 18:22:21 -0500
+X-Greylist: delayed 389 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Fri, 16 Dec 2022 15:22:20 PST
+Received: from m-r2.th.seeweb.it (m-r2.th.seeweb.it [IPv6:2001:4b7a:2000:18::171])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 964311ADAB
+        for <dmaengine@vger.kernel.org>; Fri, 16 Dec 2022 15:22:20 -0800 (PST)
+Received: from localhost.localdomain (94-209-172-39.cable.dynamic.v4.ziggo.nl [94.209.172.39])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 5FD0A3EEFB;
+        Sat, 17 Dec 2022 00:15:42 +0100 (CET)
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     phone-devel@vger.kernel.org, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
         Vinod Koul <vkoul@kernel.org>,
-        "Rob Herring" <robh+dt@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-CC:     Melody Olvera <quic_molvera@quicinc.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>,
-        "open list:DMA GENERIC OFFLOAD ENGINE SUBSYSTEM" 
-        <dmaengine@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>
-Subject: [RESEND PATCH] dt-bindings: dmaengine: qcom: gpi: Add QDU1000/QRU1000 gpi device
-Date:   Fri, 16 Dec 2022 15:15:12 -0800
-Message-ID: <20221216231513.25085-1-quic_molvera@quicinc.com>
-X-Mailer: git-send-email 2.38.1
+Cc:     ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Lux Aliaga <they@mint.lgbt>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Richard Acayan <mailingradian@gmail.com>,
+        linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH v2 2/2] arm64: dts: qcom: sm6125: Add GPI DMA nodes
+Date:   Sat, 17 Dec 2022 00:15:28 +0100
+Message-Id: <20221216231528.1268447-3-marijn.suijten@somainline.org>
+X-Mailer: git-send-email 2.39.0
+In-Reply-To: <20221216231528.1268447-1-marijn.suijten@somainline.org>
+References: <20221216231528.1268447-1-marijn.suijten@somainline.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: Tazv2PHrUD3lC_UAabN0Rdg1fDuaTT4L
-X-Proofpoint-ORIG-GUID: Tazv2PHrUD3lC_UAabN0Rdg1fDuaTT4L
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.923,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2022-12-16_14,2022-12-15_02,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 mlxscore=0
- mlxlogscore=915 adultscore=0 phishscore=0 impostorscore=0 malwarescore=0
- suspectscore=0 spamscore=0 bulkscore=0 lowpriorityscore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2212160205
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Add compatible for gpi on QDU1000 and QRU1000 SoCs.
+From: Martin Botka <martin.botka@somainline.org>
 
-Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Add nodes for GPI DMA hosts on SM6125.
+
+Signed-off-by: Martin Botka <martin.botka@somainline.org>
+[Marijn: reorder properties, use sdm845 fallback compatible, disable by
+ default, use 3 instead of 5 dma cells]
+Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
 ---
-This patch comes from discussion on
-https://lore.kernel.org/all/ae4b2333-d243-17ee-1ebd-6b1c89eef9f3@linaro.org/
+ arch/arm64/boot/dts/qcom/sm6125.dtsi | 37 ++++++++++++++++++++++++++++
+ 1 file changed, 37 insertions(+)
 
----
- Documentation/devicetree/bindings/dma/qcom,gpi.yaml | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/Documentation/devicetree/bindings/dma/qcom,gpi.yaml b/Documentation/devicetree/bindings/dma/qcom,gpi.yaml
-index e7ba1c47a88e..851a11714ce4 100644
---- a/Documentation/devicetree/bindings/dma/qcom,gpi.yaml
-+++ b/Documentation/devicetree/bindings/dma/qcom,gpi.yaml
-@@ -24,6 +24,7 @@ properties:
-           - qcom,sm6350-gpi-dma
-       - items:
-           - enum:
-+              - qcom,qdu1000-gpi-dma
-               - qcom,sc7280-gpi-dma
-               - qcom,sm6115-gpi-dma
-               - qcom,sm6375-gpi-dma
-
-base-commit: ca39c4daa6f7f770b1329ffb46f1e4a6bcc3f291
+diff --git a/arch/arm64/boot/dts/qcom/sm6125.dtsi b/arch/arm64/boot/dts/qcom/sm6125.dtsi
+index a205121ab4a7..abcd634c4f6d 100644
+--- a/arch/arm64/boot/dts/qcom/sm6125.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm6125.dtsi
+@@ -5,6 +5,7 @@
+ 
+ #include <dt-bindings/clock/qcom,gcc-sm6125.h>
+ #include <dt-bindings/clock/qcom,rpmcc.h>
++#include <dt-bindings/dma/qcom-gpi.h>
+ #include <dt-bindings/gpio/gpio.h>
+ #include <dt-bindings/interrupt-controller/arm-gic.h>
+ #include <dt-bindings/power/qcom-rpmpd.h>
+@@ -510,6 +511,42 @@ sdhc_2: mmc@4784000 {
+ 			status = "disabled";
+ 		};
+ 
++		gpi_dma0: dma-controller@4a00000 {
++			compatible = "qcom,sm6125-gpi-dma", "qcom,sdm845-gpi-dma";
++			reg = <0x04a00000 0x60000>;
++			interrupts = <GIC_SPI 335 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 336 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 337 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 338 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 339 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 340 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 341 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 342 IRQ_TYPE_LEVEL_HIGH>;
++			dma-channels = <8>;
++			dma-channel-mask = <0x1f>;
++			iommus = <&apps_smmu 0x0136 0x0>;
++			#dma-cells = <3>;
++			status = "disabled";
++		};
++
++		gpi_dma1: dma-controller@4c00000 {
++			compatible = "qcom,sm6125-gpi-dma", "qcom,sdm845-gpi-dma";
++			reg = <0x04c00000 0x60000>;
++			interrupts = <GIC_SPI 314 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 315 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 316 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 317 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 318 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 319 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 320 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 321 IRQ_TYPE_LEVEL_HIGH>;
++			dma-channels = <8>;
++			dma-channel-mask = <0x0f>;
++			iommus = <&apps_smmu 0x0156 0x0>;
++			#dma-cells = <3>;
++			status = "disabled";
++		};
++
+ 		usb3: usb@4ef8800 {
+ 			compatible = "qcom,sm6125-dwc3", "qcom,dwc3";
+ 			reg = <0x04ef8800 0x400>;
 -- 
-2.38.1
+2.39.0
 
