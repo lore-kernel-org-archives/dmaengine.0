@@ -2,50 +2,50 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 215CEC3DA7D
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C9792C53210
 	for <dmaengine@archiver.kernel.org>; Tue,  3 Jan 2023 16:35:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238131AbjACQfV (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 3 Jan 2023 11:35:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55616 "EHLO
+        id S237830AbjACQfW (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 3 Jan 2023 11:35:22 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55628 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237830AbjACQfR (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Tue, 3 Jan 2023 11:35:17 -0500
+        with ESMTP id S237968AbjACQfS (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Tue, 3 Jan 2023 11:35:18 -0500
 Received: from mga17.intel.com (mga17.intel.com [192.55.52.151])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A849F117D
-        for <dmaengine@vger.kernel.org>; Tue,  3 Jan 2023 08:35:16 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E2EF2C9
+        for <dmaengine@vger.kernel.org>; Tue,  3 Jan 2023 08:35:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1672763716; x=1704299716;
+  t=1672763717; x=1704299717;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=nu8TEDSnT8dGxQ+h9irNqBjORhczGl74ch1l5/VNNw4=;
-  b=eyQax2kAZJ7tXfmjWu1x4eDUCRmMaxVOSz2W3Zd5xqKNZz0Lh5gplyei
-   i6vPyl30fhqWbxyRVQM4z0bSyKeMpFCdam8OpAjPwUFjRuISYbpjDKWy7
-   oTfnNMIZ1DwTdZU6cD6St1ez8t2J33O92DfebBtnPjmML83XYIc1l1ulF
-   qPkOjOs6f9fVPjC2yP4ePChDQXOp52mPZ/1e94NYf5fZIwzA5OvSjIpbs
-   VLQU8jxzTppQ4WG+m1jfLtHraffXFBffY7mkDgCCpyh3Q0PTTWbgiL8UV
-   Alm5QvYhfl38GjNXk7cIbeOgLbq8hYFIqX9r15Qa6yiHF6h6d0bMY4Lyq
+  bh=Z6EV4TeeF1TjimYFbh6vearqKIPBg/1Qfiztrk6EhOc=;
+  b=bNCWuj2xknBrzq0duX5JFHTFLFvJfir708sZ42h5AIfhU20YpWC6/9Nt
+   XIu8pC6KSbO11DU7euf/1G5eJ4/IrE3DSzporvdU56aCVq6Bmn+Q52oDY
+   aa/w8oZ2EHAYXqCd5IRn+ptTvsZHnRLc5CaUbB+iFxhyWJaaMkT2Hmcu2
+   Ox6mP7Uj2oT0xdwpuET+pAnp44WFUqlsxppUwk3cYpmFX1ALXF67frbv6
+   AR+oURIKFmMRfuu4Swv7muJGkWUdYQtT0bO1p8RL9XUyYkRJHowHSLkJD
+   R+CYQmemTEapo4fVHPloBH+C/6eYmJlOAark9eDNvqufmu749wSkzFoq5
    Q==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10579"; a="302072293"
+X-IronPort-AV: E=McAfee;i="6500,9779,10579"; a="302072304"
 X-IronPort-AV: E=Sophos;i="5.96,297,1665471600"; 
-   d="scan'208";a="302072293"
+   d="scan'208";a="302072304"
 Received: from orsmga003.jf.intel.com ([10.7.209.27])
-  by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Jan 2023 08:35:11 -0800
+  by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Jan 2023 08:35:13 -0800
 X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6500,9779,10579"; a="604858460"
+X-IronPort-AV: E=McAfee;i="6500,9779,10579"; a="604858481"
 X-IronPort-AV: E=Sophos;i="5.96,297,1665471600"; 
-   d="scan'208";a="604858460"
+   d="scan'208";a="604858481"
 Received: from fyu1.sc.intel.com ([172.25.103.126])
-  by orsmga003.jf.intel.com with ESMTP; 03 Jan 2023 08:35:10 -0800
+  by orsmga003.jf.intel.com with ESMTP; 03 Jan 2023 08:35:11 -0800
 From:   Fenghua Yu <fenghua.yu@intel.com>
 To:     "Vinod Koul" <vkoul@kernel.org>,
         "Dave Jiang" <dave.jiang@intel.com>
 Cc:     "Fenghua Yu" <fenghua.yu@intel.com>, dmaengine@vger.kernel.org,
         Tony Zhu <tony.zhu@intel.com>
-Subject: [PATCH 02/17] dmaengine: idxd: add event log size sysfs attribute
-Date:   Tue,  3 Jan 2023 08:34:50 -0800
-Message-Id: <20230103163505.1569356-3-fenghua.yu@intel.com>
+Subject: [PATCH 04/17] dmaengine: idxd: add interrupt handling for event log
+Date:   Tue,  3 Jan 2023 08:34:52 -0800
+Message-Id: <20230103163505.1569356-5-fenghua.yu@intel.com>
 X-Mailer: git-send-email 2.32.0
 In-Reply-To: <20230103163505.1569356-1-fenghua.yu@intel.com>
 References: <20230103163505.1569356-1-fenghua.yu@intel.com>
@@ -57,227 +57,141 @@ X-Mailing-List: dmaengine@vger.kernel.org
 
 From: Dave Jiang <dave.jiang@intel.com>
 
-Add support for changing of the event log size. Event log is a
-feature added to DSA 2.0 hardware to improve error reporting.
-It supersedes the SWERROR register on DSA 1.0 hardware and hope
-to prevent loss of reported errors.
-
-The error log size determines how many error entries supported for
-the device. It can be configured by the user via sysfs attribute.
+An event log interrupt is raised in the misc interrupt INTCAUSE register
+when an event is written by the hardware. Add basic event log processing
+support to the interrupt handler. The event log is a ring where the
+hardware owns the tail and the software owns the head. The hardware will
+advance the tail index when an additional event has been pushed to memory.
+The software will process the log entry and then advances the head. The
+log is full when (tail + 1) % log_size = head. The hardware will stop
+writing when the log is full. The user is expected to create a log size
+large enough to handle all the expected events.
 
 Tested-by: Tony Zhu <tony.zhu@intel.com>
 Signed-off-by: Dave Jiang <dave.jiang@intel.com>
 Co-developed-by: Fenghua Yu <fenghua.yu@intel.com>
 Signed-off-by: Fenghua Yu <fenghua.yu@intel.com>
 ---
- .../ABI/stable/sysfs-driver-dma-idxd          |  8 +++
- drivers/dma/idxd/idxd.h                       |  5 ++
- drivers/dma/idxd/init.c                       | 23 ++++++++
- drivers/dma/idxd/registers.h                  |  7 ++-
- drivers/dma/idxd/sysfs.c                      | 52 +++++++++++++++++++
- 5 files changed, 94 insertions(+), 1 deletion(-)
+ drivers/dma/idxd/irq.c       | 48 ++++++++++++++++++++++++++++++++++++
+ drivers/dma/idxd/registers.h | 19 ++++++++++++++
+ include/uapi/linux/idxd.h    |  1 +
+ 3 files changed, 68 insertions(+)
 
-diff --git a/Documentation/ABI/stable/sysfs-driver-dma-idxd b/Documentation/ABI/stable/sysfs-driver-dma-idxd
-index 3becc9a82bdf..f7acb14bf255 100644
---- a/Documentation/ABI/stable/sysfs-driver-dma-idxd
-+++ b/Documentation/ABI/stable/sysfs-driver-dma-idxd
-@@ -136,6 +136,14 @@ Description:	The last executed device administrative command's status/error.
- 		Also last configuration error overloaded.
- 		Writing to it will clear the status.
- 
-+What:		/sys/bus/dsa/devices/dsa<m>/event_log_size
-+Date:		Sept 14, 2022
-+KernelVersion: 6.2.0
-+Contact:	dmaengine@vger.kernel.org
-+Description:	The event log size to be configured. Default is 64 entries and
-+		occupies 4k size if the evl entry is 64 bytes. It's visible
-+		only on platforms that support the capability.
-+
- What:		/sys/bus/dsa/devices/wq<m>.<n>/block_on_fault
- Date:		Oct 27, 2020
- KernelVersion:	5.11.0
-diff --git a/drivers/dma/idxd/idxd.h b/drivers/dma/idxd/idxd.h
-index 7ced8d283d98..f42f87c490b4 100644
---- a/drivers/dma/idxd/idxd.h
-+++ b/drivers/dma/idxd/idxd.h
-@@ -260,6 +260,10 @@ struct idxd_driver_data {
- 	int align;
- };
- 
-+struct idxd_evl {
-+	u16 size;
-+};
-+
- struct idxd_device {
- 	struct idxd_dev idxd_dev;
- 	struct idxd_driver_data *data;
-@@ -316,6 +320,7 @@ struct idxd_device {
- 	struct idxd_pmu *idxd_pmu;
- 
- 	unsigned long *opcap_bmap;
-+	struct idxd_evl *evl;
- };
- 
- /* IDXD software descriptor */
-diff --git a/drivers/dma/idxd/init.c b/drivers/dma/idxd/init.c
-index 529ea09c9094..3f4540741d11 100644
---- a/drivers/dma/idxd/init.c
-+++ b/drivers/dma/idxd/init.c
-@@ -327,6 +327,23 @@ static void idxd_cleanup_internals(struct idxd_device *idxd)
- 	destroy_workqueue(idxd->wq);
+diff --git a/drivers/dma/idxd/irq.c b/drivers/dma/idxd/irq.c
+index 0d639303b515..52b8b7d9db22 100644
+--- a/drivers/dma/idxd/irq.c
++++ b/drivers/dma/idxd/irq.c
+@@ -217,6 +217,49 @@ static void idxd_int_handle_revoke(struct work_struct *work)
+ 	kfree(revoke);
  }
  
-+static int idxd_init_evl(struct idxd_device *idxd)
++static void process_evl_entry(struct idxd_device *idxd, struct __evl_entry *entry_head)
 +{
 +	struct device *dev = &idxd->pdev->dev;
-+	struct idxd_evl *evl;
++	u8 status;
 +
-+	if (idxd->hw.gen_cap.evl_support == 0)
-+		return 0;
-+
-+	evl = kzalloc_node(sizeof(*evl), GFP_KERNEL, dev_to_node(dev));
-+	if (!evl)
-+		return -ENOMEM;
-+
-+	evl->size = IDXD_EVL_SIZE_MIN;
-+	idxd->evl = evl;
-+	return 0;
++	status = DSA_COMP_STATUS(entry_head->error);
++	dev_warn_ratelimited(dev, "Device error %#x operation: %#x fault addr: %#llx\n",
++			     status, entry_head->operation, entry_head->fault_addr);
 +}
 +
- static int idxd_setup_internals(struct idxd_device *idxd)
++static void process_evl_entries(struct idxd_device *idxd)
++{
++	union evl_status_reg evl_status;
++	unsigned int h, t;
++	struct idxd_evl *evl = idxd->evl;
++	struct __evl_entry *entry_head;
++	unsigned int ent_size = evl_ent_size(idxd);
++	u32 size;
++
++	evl_status.bits = 0;
++	evl_status.int_pending = 1;
++
++	spin_lock(&evl->lock);
++	/* Clear interrupt pending bit */
++	iowrite32(evl_status.bits_upper32,
++		  idxd->reg_base + IDXD_EVLSTATUS_OFFSET + sizeof(u32));
++	h = evl->head;
++	evl_status.bits = ioread64(idxd->reg_base + IDXD_EVLSTATUS_OFFSET);
++	t = evl_status.tail;
++	size = idxd->evl->size;
++
++	while (h != t) {
++		entry_head = (struct __evl_entry *)(evl->log + (h * ent_size));
++		process_evl_entry(idxd, entry_head);
++		h = (h + 1) % size;
++	}
++
++	evl->head = h;
++	evl_status.head = h;
++	iowrite32(evl_status.bits_lower32, idxd->reg_base + IDXD_EVLSTATUS_OFFSET);
++	spin_unlock(&evl->lock);
++}
++
+ irqreturn_t idxd_misc_thread(int vec, void *data)
  {
- 	struct device *dev = &idxd->pdev->dev;
-@@ -352,8 +369,14 @@ static int idxd_setup_internals(struct idxd_device *idxd)
- 		goto err_wkq_create;
+ 	struct idxd_irq_entry *irq_entry = data;
+@@ -304,6 +347,11 @@ irqreturn_t idxd_misc_thread(int vec, void *data)
+ 		perfmon_counter_overflow(idxd);
  	}
  
-+	rc = idxd_init_evl(idxd);
-+	if (rc < 0)
-+		goto err_evl;
++	if (cause & IDXD_INTC_EVL) {
++		val |= IDXD_INTC_EVL;
++		process_evl_entries(idxd);
++	}
 +
- 	return 0;
- 
-+ err_evl:
-+	destroy_workqueue(idxd->wq);
-  err_wkq_create:
- 	for (i = 0; i < idxd->max_groups; i++)
- 		put_device(group_confdev(idxd->groups[i]));
+ 	val ^= cause;
+ 	if (val)
+ 		dev_warn_once(dev, "Unexpected interrupt cause bits set: %#x\n",
 diff --git a/drivers/dma/idxd/registers.h b/drivers/dma/idxd/registers.h
-index fe3b8d04f9db..b36a743a94a4 100644
+index 8ea0c45cbe2c..a3c56847b38a 100644
 --- a/drivers/dma/idxd/registers.h
 +++ b/drivers/dma/idxd/registers.h
-@@ -31,7 +31,9 @@ union gen_cap_reg {
- 		u64 rsvd:3;
- 		u64 dest_readback:1;
- 		u64 drain_readback:1;
--		u64 rsvd2:6;
-+		u64 rsvd2:3;
-+		u64 evl_support:2;
-+		u64 rsvd4:1;
- 		u64 max_xfer_shift:5;
- 		u64 max_batch_shift:4;
- 		u64 max_ims_mult:6;
-@@ -276,6 +278,9 @@ union sw_err_reg {
- 	u64 bits[4];
+@@ -168,6 +168,7 @@ enum idxd_device_reset_type {
+ #define IDXD_INTC_OCCUPY			0x04
+ #define IDXD_INTC_PERFMON_OVFL		0x08
+ #define IDXD_INTC_HALT_STATE		0x10
++#define IDXD_INTC_EVL			0x20
+ #define IDXD_INTC_INT_HANDLE_REVOKED	0x80000000
+ 
+ #define IDXD_CMD_OFFSET			0xa0
+@@ -537,6 +538,24 @@ union filter_cfg {
+ 	u64 val;
  } __packed;
  
-+#define IDXD_EVL_SIZE_MIN	0x0040
-+#define IDXD_EVL_SIZE_MAX	0xffff
++#define IDXD_EVLSTATUS_OFFSET		0xf0
 +
- union msix_perm {
- 	struct {
- 		u32 rsvd:2;
-diff --git a/drivers/dma/idxd/sysfs.c b/drivers/dma/idxd/sysfs.c
-index 3229dfc78650..3e27cd4d189f 100644
---- a/drivers/dma/idxd/sysfs.c
-+++ b/drivers/dma/idxd/sysfs.c
-@@ -1563,6 +1563,46 @@ static ssize_t cmd_status_store(struct device *dev, struct device_attribute *att
- }
- static DEVICE_ATTR_RW(cmd_status);
++union evl_status_reg {
++	struct {
++		u32 head:16;
++		u32 rsvd:16;
++		u32 tail:16;
++		u32 rsvd2:14;
++		u32 int_pending:1;
++		u32 rsvd3:1;
++	};
++	struct {
++		u32 bits_lower32;
++		u32 bits_upper32;
++	};
++	u64 bits;
++} __packed;
++
+ struct __evl_entry {
+ 	u64 rsvd:2;
+ 	u64 desc_valid:1;
+diff --git a/include/uapi/linux/idxd.h b/include/uapi/linux/idxd.h
+index 96b552614ee7..1b33834336ab 100644
+--- a/include/uapi/linux/idxd.h
++++ b/include/uapi/linux/idxd.h
+@@ -168,6 +168,7 @@ enum iax_completion_status {
  
-+static ssize_t event_log_size_show(struct device *dev,
-+				   struct device_attribute *attr, char *buf)
-+{
-+	struct idxd_device *idxd = confdev_to_idxd(dev);
-+
-+	if (!idxd->evl)
-+		return -EOPNOTSUPP;
-+
-+	return sysfs_emit(buf, "%u\n", idxd->evl->size);
-+}
-+
-+static ssize_t event_log_size_store(struct device *dev,
-+				    struct device_attribute *attr,
-+				    const char *buf, size_t count)
-+{
-+	struct idxd_device *idxd = confdev_to_idxd(dev);
-+	unsigned long val;
-+	int rc;
-+
-+	if (!idxd->evl)
-+		return -EOPNOTSUPP;
-+
-+	rc = kstrtoul(buf, 10, &val);
-+	if (rc < 0)
-+		return -EINVAL;
-+
-+	if (idxd->state == IDXD_DEV_ENABLED)
-+		return -EPERM;
-+
-+	if (!test_bit(IDXD_FLAG_CONFIGURABLE, &idxd->flags))
-+		return -EPERM;
-+
-+	if (val < IDXD_EVL_SIZE_MIN || val > IDXD_EVL_SIZE_MAX)
-+		return -EINVAL;
-+
-+	idxd->evl->size = val;
-+	return count;
-+}
-+static DEVICE_ATTR_RW(event_log_size);
-+
- static bool idxd_device_attr_max_batch_size_invisible(struct attribute *attr,
- 						      struct idxd_device *idxd)
- {
-@@ -1585,6 +1625,13 @@ static bool idxd_device_attr_read_buffers_invisible(struct attribute *attr,
- 		idxd->data->type == IDXD_TYPE_IAX;
- }
+ #define DSA_COMP_STATUS_MASK		0x7f
+ #define DSA_COMP_STATUS_WRITE		0x80
++#define DSA_COMP_STATUS(status)		((status) & DSA_COMP_STATUS_MASK)
  
-+static bool idxd_device_attr_event_log_size_invisible(struct attribute *attr,
-+						      struct idxd_device *idxd)
-+{
-+	return (attr == &dev_attr_event_log_size.attr &&
-+		!idxd->hw.gen_cap.evl_support);
-+}
-+
- static umode_t idxd_device_attr_visible(struct kobject *kobj,
- 					struct attribute *attr, int n)
- {
-@@ -1597,6 +1644,9 @@ static umode_t idxd_device_attr_visible(struct kobject *kobj,
- 	if (idxd_device_attr_read_buffers_invisible(attr, idxd))
- 		return 0;
- 
-+	if (idxd_device_attr_event_log_size_invisible(attr, idxd))
-+		return 0;
-+
- 	return attr->mode;
- }
- 
-@@ -1622,6 +1672,7 @@ static struct attribute *idxd_device_attributes[] = {
- 	&dev_attr_read_buffer_limit.attr,
- 	&dev_attr_cdev_major.attr,
- 	&dev_attr_cmd_status.attr,
-+	&dev_attr_event_log_size.attr,
- 	NULL,
- };
- 
-@@ -1643,6 +1694,7 @@ static void idxd_conf_device_release(struct device *dev)
- 	bitmap_free(idxd->wq_enable_map);
- 	kfree(idxd->wqs);
- 	kfree(idxd->engines);
-+	kfree(idxd->evl);
- 	ida_free(&idxd_ida, idxd->id);
- 	bitmap_free(idxd->opcap_bmap);
- 	kfree(idxd);
+ struct dsa_hw_desc {
+ 	uint32_t	pasid:20;
 -- 
 2.32.0
 
