@@ -2,209 +2,268 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D18D4C4332F
-	for <dmaengine@archiver.kernel.org>; Wed,  4 Jan 2023 07:02:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 49F84C4332F
+	for <dmaengine@archiver.kernel.org>; Wed,  4 Jan 2023 16:42:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229469AbjADHCR (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 4 Jan 2023 02:02:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33486 "EHLO
+        id S235044AbjADQmT (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 4 Jan 2023 11:42:19 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34518 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233763AbjADHCP (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Wed, 4 Jan 2023 02:02:15 -0500
-Received: from NAM12-DM6-obe.outbound.protection.outlook.com (mail-dm6nam12on2070.outbound.protection.outlook.com [40.107.243.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 20B1311A15
-        for <dmaengine@vger.kernel.org>; Tue,  3 Jan 2023 23:02:14 -0800 (PST)
+        with ESMTP id S239545AbjADQlx (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Wed, 4 Jan 2023 11:41:53 -0500
+Received: from NAM10-MW2-obe.outbound.protection.outlook.com (mail-mw2nam10on2044.outbound.protection.outlook.com [40.107.94.44])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 294561DF0A;
+        Wed,  4 Jan 2023 08:41:52 -0800 (PST)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=ieUBqG/VgZLyTYyYG6087SeGOC8peWuAqWdgft1RfAMYQ0iFxW1+iUlVmQlFPKmFI3yjjonpsa2/biuU/cZsbRWFiJp45KWuTXrxJp8ML9uObiMikCI8knCKtL+UdIqESS4Pj9Muhb/scRZWSuZh/Ovq98EZGlpGGvbUQEAI4+qtyvaNXgwnrrJbMARwKqR3MbBVSMPB8Mx4wB2Mh9PAhg9Nz224LkQlV36uiKlCJylm20gvFe5ASnpwTomI9MCStkrCWaKHGMH2za5BcK87bSCDFbXvbRE+rNPk/GvPdctaSN3Cb4MdIZBT1I9PVFa038I4ZLaTSBousjoq795r1w==
+ b=muxosYOQpyO51kzx6v1BXEPLfylsiXqefWUF/kZSeaxFXG+0pl9UJrFG8AqKm4OcqfaitJKyELDpDrKaVfq5xqoNlRe5kKbizG48e75e4/N1pOtiCLIQOwsZqhwv2Du1UU1enpve4jS0u3ZQyc0OQAsP0N5b5ZmmLuumxPTWoTZIGWpuPwzl3BXSOn9dn3MrgC4ePXyHyyUxPiHkkzmItfkZanwwsEN59FSkdYUGkXTGjUhnXLtSnhUoJeNTVAgEC25RQsOXI0Ssi6v3piJsGkGavaAuViezjl7rE+WS6RTp8TdPinCi2B86oZ5MpOHvDx1mxHj5etNcstScsEwR/Q==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=a4+N0kCaE/s9h/kloeFKGUeaM0Pfj9dWk6GeeyzqhJs=;
- b=VEYLoBSMnkCI+FUdga1eZ+YC18vWTsPhic4tcCf4px/HIfGJrH0aWo5QIGxEltWGnH0Nqc7PV15k+xyW2youHwf8GRd04V1eLvW7fOwonrg/n+QenIUH3XiYu0euEEb5CLOBgK0QUOPpOjHLwOJ7MW1XizLsf2QV3ukXS+l7amYoWK5dFMWBj9HYZx4tFifgEJ/IX1+tK1u0BidJQixXtIOKhFsniIRMLUQnvgey3velEoqBHeD4Ntr3IHWhWMfLBoDIIck2cjMEo+5iHeCQPTQJAT3gI5tQBBPQPDI6jKbn8U61Ttz1IetvofTuDvlsZKPYu7V2t6+qOHcyEwlVeg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
+ bh=qAzsiTpdL0SBjzJLE5CDWwht36IIvxDx+Yrel2ix04A=;
+ b=MpgFniHSpHlQSytaxy4VodjNqtgYE6s/NngephVQ3JkAEpKyK1Rdw7KA6dsynKWFKU6DclPow2Q6sOHbbw9XJEBACUZXuoHfkCLtqw9MrO6y3udUDBcnJYpCpnFobGV0PzuNNSndikgr3azU4hhMIua9+B4lU9HZptYeoVmJYyhsDhRo9E05PrrDBIXdEq8DCv5PNKqFpH29fuy66VL+j5sbis0DVRY1rTj/7BDD3KXPNJ/ZsutB95eqeNgkFyyEfrxjeSa/ke2kuTNTEF0b2I3+sC5CY00ZkBZj9A14wxH2qjcygqzevBBjYcqSVZyQmwq10vSoP+G8CnKGlAKcIw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=kernel.org smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=a4+N0kCaE/s9h/kloeFKGUeaM0Pfj9dWk6GeeyzqhJs=;
- b=Ph2AZ146TYmBGNAvSMVpeg1BIlp8lfh02nuaSHxG3fblNhjwdHKq1rXloeHhvC5SHq95eBiVcRwTLX4Wr88dv980jeqqhwoxd8xXPXULwgYEpwozE+mG9RNRq2my+XPglpY5CjMZo7JPlQC3efGuvgLx5KI46oUSGZ7YRRvWjScPYbu/p2po8aZ0GNAimNIfe+JsOO3Sz7PN0XJOUlgHRFL3WnTXbbjj4iDP4rglimqlW1fH02wdhPIok7Oxgz0so6dOiUd+chQl9kZdjQ7Fi99TqLMSYJ5g/L5C3/hCy4tI//99/KIhc5hKHXt8Za8nbTUGJcEbz8EVA+dpXXFbEw==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from BYAPR12MB3176.namprd12.prod.outlook.com (2603:10b6:a03:134::26)
- by PH7PR12MB5973.namprd12.prod.outlook.com (2603:10b6:510:1d8::12) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5944.19; Wed, 4 Jan
- 2023 07:02:12 +0000
-Received: from BYAPR12MB3176.namprd12.prod.outlook.com
- ([fe80::ecfb:a3ad:3efa:9df8]) by BYAPR12MB3176.namprd12.prod.outlook.com
- ([fe80::ecfb:a3ad:3efa:9df8%3]) with mapi id 15.20.5944.019; Wed, 4 Jan 2023
- 07:02:12 +0000
-References: <20230103163505.1569356-1-fenghua.yu@intel.com>
- <20230103163505.1569356-10-fenghua.yu@intel.com>
- <Y7RpuqbTAM11wVQG@lucifer> <Y7Rq0WRc4p3lCkjk@lucifer>
- <IA1PR11MB609703A614F64CD34FA8F02D9BF49@IA1PR11MB6097.namprd11.prod.outlook.com>
- <Y7SMYF8MlzeqDgp+@lucifer>
- <IA1PR11MB609745A8BE83313FAB0236C29BF59@IA1PR11MB6097.namprd11.prod.outlook.com>
-User-agent: mu4e 1.8.10; emacs 28.2
-From:   Alistair Popple <apopple@nvidia.com>
-To:     "Yu, Fenghua" <fenghua.yu@intel.com>
-Cc:     Lorenzo Stoakes <lstoakes@gmail.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        "Jiang, Dave" <dave.jiang@intel.com>,
-        "dmaengine@vger.kernel.org" <dmaengine@vger.kernel.org>,
-        "Zhu, Tony" <tony.zhu@intel.com>,
-        Andrew Morton <akpm@linux-foundation.org>,
-        "linux-mm@kvack.org" <linux-mm@kvack.org>,
-        Christoph Hellwig <hch@infradead.org>,
-        "Shankar, Ravi V" <ravi.v.shankar@intel.com>
-Subject: Re: [PATCH 09/17] mm: export access_remote_vm() symbol
-Date:   Wed, 04 Jan 2023 17:12:31 +1100
-In-reply-to: <IA1PR11MB609745A8BE83313FAB0236C29BF59@IA1PR11MB6097.namprd11.prod.outlook.com>
-Message-ID: <87tu16rdea.fsf@nvidia.com>
-Content-Type: text/plain
-X-ClientProxiedBy: SYBPR01CA0077.ausprd01.prod.outlook.com
- (2603:10c6:10:3::17) To BYAPR12MB3176.namprd12.prod.outlook.com
- (2603:10b6:a03:134::26)
+ bh=qAzsiTpdL0SBjzJLE5CDWwht36IIvxDx+Yrel2ix04A=;
+ b=n6ZVRy6CncUx0TyH/GbFT/YJ0k8O1KTXDMQaItCP+C3mT9GNJvw2OR9r2opI67HUZmqJgysqjH7okGQ8EZBAoIamdVitl6X/R5lDM3xBCwY0Wtoajow1rC7XyDIpY91WnS85cB6KwOf5AbKwb1bGPQ4xkAQeE4UPByASSGYtHdQ=
+Received: from DS7PR03CA0312.namprd03.prod.outlook.com (2603:10b6:8:2b::21) by
+ DS0PR12MB7680.namprd12.prod.outlook.com (2603:10b6:8:136::5) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.5944.19; Wed, 4 Jan 2023 16:41:50 +0000
+Received: from DS1PEPF0000E644.namprd02.prod.outlook.com
+ (2603:10b6:8:2b:cafe::dd) by DS7PR03CA0312.outlook.office365.com
+ (2603:10b6:8:2b::21) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5986.14 via Frontend
+ Transport; Wed, 4 Jan 2023 16:41:50 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
+Received: from SATLEXMB04.amd.com (165.204.84.17) by
+ DS1PEPF0000E644.mail.protection.outlook.com (10.167.17.200) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.20.5944.8 via Frontend Transport; Wed, 4 Jan 2023 16:41:50 +0000
+Received: from SATLEXMB06.amd.com (10.181.40.147) by SATLEXMB04.amd.com
+ (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2375.34; Wed, 4 Jan
+ 2023 10:41:46 -0600
+Received: from SATLEXMB03.amd.com (10.181.40.144) by SATLEXMB06.amd.com
+ (10.181.40.147) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2375.34; Wed, 4 Jan
+ 2023 10:41:45 -0600
+Received: from xsjlizhih40.xilinx.com (10.180.168.240) by SATLEXMB03.amd.com
+ (10.181.40.144) with Microsoft SMTP Server id 15.1.2375.34 via Frontend
+ Transport; Wed, 4 Jan 2023 10:41:45 -0600
+From:   Lizhi Hou <lizhi.hou@amd.com>
+To:     <vkoul@kernel.org>, <dmaengine@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+CC:     Lizhi Hou <lizhi.hou@amd.com>, <max.zhen@amd.com>,
+        <sonal.santan@amd.com>, <larry.liu@amd.com>, <brian.xu@amd.com>,
+        <tumic@gpxsee.org>
+Subject: [RESEND PATCH V11 XDMA 2/2] dmaengine: xilinx: xdma: Add user logic interrupt support
+Date:   Wed, 4 Jan 2023 08:40:41 -0800
+Message-ID: <1672850441-51944-3-git-send-email-lizhi.hou@amd.com>
+X-Mailer: git-send-email 1.8.3.1
+In-Reply-To: <1672850441-51944-1-git-send-email-lizhi.hou@amd.com>
+References: <1672850441-51944-1-git-send-email-lizhi.hou@amd.com>
 MIME-Version: 1.0
+Content-Type: text/plain
+X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BYAPR12MB3176:EE_|PH7PR12MB5973:EE_
-X-MS-Office365-Filtering-Correlation-Id: 07e2b142-9abb-470a-cebf-08daee219a73
+X-MS-TrafficTypeDiagnostic: DS1PEPF0000E644:EE_|DS0PR12MB7680:EE_
+X-MS-Office365-Filtering-Correlation-Id: 9331bac8-dfff-4b70-bcbe-08daee7293f5
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: 9sqVcLScDR7EEHRx49yJL8h1XboVt+704Xv+Jv6tp0JcAGmt6F8ttia34F6rwCaVNE6IfBxuZKDUm2nzfxnsq4xXR6MntQmXyVekKixN/j8ylayAhD9NQIV1lrHzrQtzEOIRNLFD5XwVbITL0fIBAEemkSbIBhL3PWApYstaWA+hteMp5RNXflS6njCJn1k3co42c1HBKnWAcAMIEo0e5h6U1914dZphQssftTF77uLfR+dkJohezMKZ1rcV42+M/Cu3A9iAEBT6A7Ew1vNvOizxqkomI6dN0tPknqxzYbKc6+WQNfnzz/1OvC/67QxuDKHqyFZEDqcMAS7/Ubv6HYz+/SQpo3aiwniRCGhqcdraQaTR/MZ1s7MiKr3ryzXTXgbs28UlZhzgSKjnke6kKIQmazE0/GKFBckrY5VUhcg0JT7mHpF/BWlbRearQQy1s5kMr6Vxp0kWlEShGqzuE/gBXKKe/CL+JTyGmQlnZ3uhQnQldI4EM3y2HWksbXeRicYAUOVhuwakhI2dV0DKo7ZkNwY7QN5xTmTxE/+5E80Z/BgqEcIIWM2wvw+o5gOR1Zf5ylp7JMu6yc+EDCnHl5dqUj0LRBshkOvSE9PytfMTH/WJH/MPLYopKK4vRQKIivBUje6m831CQ1bNLq2Hnw==
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BYAPR12MB3176.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230022)(4636009)(366004)(136003)(39860400002)(396003)(376002)(346002)(451199015)(26005)(6486002)(6506007)(478600001)(186003)(6512007)(86362001)(6666004)(6916009)(54906003)(4326008)(8676002)(66946007)(316002)(66476007)(2616005)(66556008)(38100700002)(41300700001)(36756003)(83380400001)(5660300002)(8936002)(7416002)(2906002);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?CeFfz/Pmc7AIxK9Qix6grLzwNTX5AvAJOQsrdrwLw9ycnFyTd9kavMi2XGoE?=
- =?us-ascii?Q?Wc655rSw6ohWMocxb8W79Yk7dtbHgfA6CzCLanoag4RKSYYqgcXaPRi2Oo8C?=
- =?us-ascii?Q?/JdAiBNsndzLiSu+R0Kgg4KmowralEC+zWIMs4mgLoIv7XkwXQQUMLy+MwRp?=
- =?us-ascii?Q?I2blwmDlP28GyhkibFUppB67KGtSLgDphfmBssQACTrUK7Xlo5rQJxJWAWtt?=
- =?us-ascii?Q?y0mqeDIfozWATQaXqMT+rRT/xE5SJJIdvkJyj0W+V3mT5uO09VLhmvoVtxhy?=
- =?us-ascii?Q?bdwEb30IP098WjUAZyceugtzb8RNdTNglVvr7lF1RZDsnkC67KiT3i03gURQ?=
- =?us-ascii?Q?oX7ruGQfBtpJw7w4nGpbEKyWqZyx/D3t2THyUw6e4s91Yf18FBnTH2FugUbF?=
- =?us-ascii?Q?Uh11koG1cxLil9JwW3t2sViLYSVh72EVNb2oklsWOrNkwtE/HEb5udHFKukm?=
- =?us-ascii?Q?pp/AZvpelGeV4oBKYfsqH1n3LZ5PCJbQqMM6Sf/FDaabV8O3qM9M/2smbTpb?=
- =?us-ascii?Q?Hhf6VTqycZZFVoYuCzgCqFkcVTikkVzoBnz5VHyVHRYx8pX6zxUYmIdGgJF/?=
- =?us-ascii?Q?v+jFdeszmGy+8mWG0fnS65uPqbYcbUfFP+qx1T+WQ59RtjFzVvQbIPiFNw0X?=
- =?us-ascii?Q?JktK8arNljExX/xcUuj+kbU3E518OYFuOJSR3LEBGkCuxccb9tRL9MULx588?=
- =?us-ascii?Q?F/iQuP9oxTTL0KyXevwunVw1AzKjUmOa5RrEdIR/T7qwR9hW+TvWiR2bkDmX?=
- =?us-ascii?Q?VJTlYExNlSrAO0tRWHyQm0PEpBvGrLFZxt8nHLUuhaDWy1Ka/hEcZmdSM1+J?=
- =?us-ascii?Q?vvBbOLqOoe+MrTetMoFSntOATdNl+KP6pjUZ7v8x1Q634t419vetgOxMI8i1?=
- =?us-ascii?Q?FlQ1EaBtXky8K6latofeixjTBUyDw4cRoE0cfyDIDJXAYyEFkZFrpuTGC5lp?=
- =?us-ascii?Q?D3YXUr8kFYx0VqxtJSIMx/KZNM6w0DegSlAh8urch2gZEuMDdiuDgOUQchwU?=
- =?us-ascii?Q?LELqNWftBF0IQ5j9CO/ooALUoPFcdnU38d2RsjhDhmWpGRkn1dmb3kmcznPq?=
- =?us-ascii?Q?JlwbUbGG0WVwcn8UHKiHSI+S4kcUk6HXcT0n3p2Ms0j6BWnbs1JuyM2A0w1B?=
- =?us-ascii?Q?nppuQRppBFQFDYU2z56QJYEgvz53BFRuen0bfeO1wyMi0enC6BEGGJU8knfJ?=
- =?us-ascii?Q?MYimzOFfSbcetBILRmmpDg/GSlYP1CCTqzte//2WV3/RC7bFu1xAMtwymJ5/?=
- =?us-ascii?Q?tsyX8YOk79JYD9JQ5irOzj3pNUECiO+2MRtDoQiKtcTzRNNEl1Sfx0tNGg0V?=
- =?us-ascii?Q?OQ/JjR9adFSm1WuwMcXzTNyKY+AIiT+zoca/Y3JBVecjrELDp3GmifyLGDfQ?=
- =?us-ascii?Q?oP3IBuOb/D+N7ifGimLOiAlhNVz0OXTvLK33C5iYm4dAVv/sutJa1Lln6qna?=
- =?us-ascii?Q?rVVB2vvQFD7Q282F2Vefrdu7VtlsiZOdrLNNrK82ERlu9Meku/aaWFxOqCBT?=
- =?us-ascii?Q?JXWLJ8u1n8pUWd1CfQ42azyK/7YGRa2owjSIzVfcZWUOoJtf7DeSFa8Qc7gh?=
- =?us-ascii?Q?f6y8yV2hc4vZS3j++cGDtAKm4yL9TUnfO0DBbLK7?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 07e2b142-9abb-470a-cebf-08daee219a73
-X-MS-Exchange-CrossTenant-AuthSource: BYAPR12MB3176.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Jan 2023 07:02:12.0208
+X-Microsoft-Antispam-Message-Info: KfCIjP0ICbhor57Vr0ZnEiLvXqHN2CDsmo3XDHzx/T5SNeHupl5sbQMn/NX3HVBCpgIScefKqY/JqyenEgm9A044+OegXh1teJ0+llg0iwh06SS/+fDBgBZsY7BiYW/qq95QkE9mZDX2roZXoaaqdUSilbFwLz8jzpplw5r/y1iA/BpzXQ6pX/pmPdvAfklrzlCW0zVfZaZeNZyk1999tF+c/uZViN3j8sSXLF/9FTH/nlZ/EIWXkb811jMNE7hWs1ByNOGRBNA8JG4pWhAXaQPT8ovPNW9GmUcfYYckbkkHK/9lqcOP9h1IM2hvDJXLSreRcd7/6Pndz1IrY33FqaqywK8jGqlIfVmgHAZcscdgP6FxNP+lTtBsxwGDos3uA7h6dArOuuEyyhtjPmBEFvJIIvBnAPKHM8LewNcl50eeDvsebMJdJmpbUwpu31vBbAIBqHUg6GxUMi5cZ0fWIjUX+FSMvUxCDhzMWYTQ+hcz6zfB8fBZmENr/HP7AGSv0UjZ4JmOrCZzNpUC4yVrnZESZI55TnoX95xffeXvVYSsjmbko2reo7LlxJtX1bdQz14C9nswa8BJz9cqVxqN4AJiuIdWs7emAZEl61pMfG3Ezljoi5GD+v2+4NcJGJB6kaXE7Irp1fKma2giHLu/2DH5u/Rp56PkLcmBMGtcUFCwEglJ9sZ2QOeVgcJeOeFFU/hhUmIvibT1SJlOmp8labEEIH4S/I3R+eT+F3gkTpQ=
+X-Forefront-Antispam-Report: CIP:165.204.84.17;CTRY:US;LANG:en;SCL:1;SRV:;IPV:CAL;SFV:NSPM;H:SATLEXMB04.amd.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230022)(4636009)(376002)(39860400002)(396003)(346002)(136003)(451199015)(40470700004)(46966006)(36840700001)(82310400005)(82740400003)(8676002)(41300700001)(36860700001)(8936002)(4326008)(70206006)(70586007)(5660300002)(86362001)(81166007)(356005)(2616005)(44832011)(316002)(83380400001)(2906002)(110136005)(54906003)(336012)(40480700001)(40460700003)(26005)(36756003)(186003)(47076005)(6666004)(478600001)(426003)(36900700001);DIR:OUT;SFP:1101;
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Jan 2023 16:41:50.1603
  (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: AKkE/v8L6pmi2wnLSSxdsTCuL2bOldXIVEceJVhXGbv4d/c6Y9NmR/gXUM60A1hwfktRBVAv6yWb1p0wftQgbw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR12MB5973
+X-MS-Exchange-CrossTenant-Network-Message-Id: 9331bac8-dfff-4b70-bcbe-08daee7293f5
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d;Ip=[165.204.84.17];Helo=[SATLEXMB04.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: DS1PEPF0000E644.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR12MB7680
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
+The Xilinx DMA/Bridge Subsystem for PCIe (XDMA) provides up to 16 user
+interrupt wires to user logic that generate interrupts to the host.
+This patch adds APIs to enable/disable user logic interrupt for a given
+interrupt wire index.
 
-"Yu, Fenghua" <fenghua.yu@intel.com> writes:
+Signed-off-by: Lizhi Hou <lizhi.hou@amd.com>
+Signed-off-by: Sonal Santan <sonal.santan@amd.com>
+Signed-off-by: Max Zhen <max.zhen@amd.com>
+Signed-off-by: Brian Xu <brian.xu@amd.com>
+Tested-by: Martin Tuma <tumic@gpxsee.org>
+---
+ MAINTAINERS                  |  1 +
+ drivers/dma/xilinx/xdma.c    | 85 ++++++++++++++++++++++++++++++++++++
+ include/linux/dma/amd_xdma.h | 16 +++++++
+ 3 files changed, 102 insertions(+)
+ create mode 100644 include/linux/dma/amd_xdma.h
 
-> Hi, Lorenzo,
->
->> Hey Fenghua :)
->> 
->> > access_remote_vm(mm) directly call __access_remote_vm(mm).
->> > access_process_vm(tsk) calls mm=get_task_mm() then
->> __access_remote_vm(mm).
->> >
->> > So instead of access_remote_vm(mm), it's access_process_vm(tsk) that
->> > holds a reference count on the mm, right?
->> 
->> Indeed!
->> 
->> >
->> > > >
->> > > > Is there a reason you can't use access_process_vm() which is
->> > > > exported and additionally handles the refrencing?
->> >
->> > IDXD interrupt handler starts a work which needs to access remote vm.
->> > The remote mm is found by PASID which is saved in device event log.
->> >
->> > In the work, it's hard to get the remote mm from a task because
->> > mm->owner could be NULL but the mm is still existing.
->> 
->> That makes sense, however I do feel nervous about exporting something that
->> that relies on this reference.
->> 
->> The issue is ensuring that the mm can't be taken from underneath you, the only
->> user of access_remote_vm(), procfs, does a careful dance using get_task_mm()
->> and
->> mm_access() to ensure this can't happen, if _sometimes_ the remote mm might
->> have an owner and _sometimes_ not it feels like any exported function needs to
->> be equally careful?
-
-I think the point is the remote mm should be valid as long as the PASID
-is valid because it doesn't make sense to have a PASID without
-associated memory map. iommu_sva_find() does mmget_not_zero() to ensure
-that.
-
-Obviously something must still be holding a mmgrab() though. That should
-happen as part of the PASID allocation done by iommu_sva_bind_device().
+diff --git a/MAINTAINERS b/MAINTAINERS
+index d598c4e23901..eaf6590dda19 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -22583,6 +22583,7 @@ L:	dmaengine@vger.kernel.org
+ S:	Supported
+ F:	drivers/dma/xilinx/xdma-regs.h
+ F:	drivers/dma/xilinx/xdma.c
++F:	include/linux/dma/amd_xdma.h
+ F:	include/linux/platform_data/amd_xdma.h
  
->> I definitely don't feel as if simply exporting this is a safe option, and you would in
->> that case need a new function that handles different scenarios of mm
->> ownership/not.
-
-Note this isn't that different from get_user_pages_remote().
+ XILINX ZYNQMP DPDMA DRIVER
+diff --git a/drivers/dma/xilinx/xdma.c b/drivers/dma/xilinx/xdma.c
+index 118528295fb7..846f10317bba 100644
+--- a/drivers/dma/xilinx/xdma.c
++++ b/drivers/dma/xilinx/xdma.c
+@@ -25,6 +25,7 @@
+ #include <linux/dmapool.h>
+ #include <linux/regmap.h>
+ #include <linux/dmaengine.h>
++#include <linux/dma/amd_xdma.h>
+ #include <linux/platform_device.h>
+ #include <linux/platform_data/amd_xdma.h>
+ #include <linux/dma-mapping.h>
+@@ -713,6 +714,7 @@ static int xdma_set_vector_reg(struct xdma_device *xdev, u32 vec_tbl_start,
+ static int xdma_irq_init(struct xdma_device *xdev)
+ {
+ 	u32 irq = xdev->irq_start;
++	u32 user_irq_start;
+ 	int i, j, ret;
  
->> I may be missing something here and I will wait for others to chime in but I think
->> we would definitely need something more than simply exporting this.
->
-> I may define and export a new wrapper access_remote_vm_ref() which will hold
-> mm's reference count before accessing it:
-> int access_remote_vm_ref(mm)
-> {
->    int ret;
->
->    if (mm == &init_mm)
->         return 0;
->
->    mmget(mm);
->    ret = access_remote_vm(mm);
->    mmput(mm);
->
->    return ret;
-> }
-> EXPORT_SYMBOL_GPL(access_remote_vm_ref);
->
-> IDXD or any driver calls this and holds mm reference count while accesses the mm.
-> This is useful for caller to directly access mm even if mm's owner could be NULL.
-
-I'm not sure that helps much. A driver would still need to hold a
-mm_count to ensure the struct_mm itself can't go away anyway so it may
-as well do the mmget() IMHO (although it really should be
-mmget_not_zero()).
-
-In any case though iommu_sva_find() already takes care of doing
-mmget_not_zero(). I wonder if it makes more sense to define a wrapper
-(eg. iommu_access_pasid) that takes a PASID and does the mm
-lookup/access_vm/mmput?
-
-> Do you think this is sufficient to take care of the mm reference and is a good way to go?
->
-> Thanks.
->
-> -Fenghua
+ 	/* return failure if there are not enough IRQs */
+@@ -755,6 +757,18 @@ static int xdma_irq_init(struct xdma_device *xdev)
+ 		goto failed_init_c2h;
+ 	}
+ 
++	/* config user IRQ registers if needed */
++	user_irq_start = XDMA_CHAN_NUM(xdev);
++	if (xdev->irq_num > user_irq_start) {
++		ret = xdma_set_vector_reg(xdev, XDMA_IRQ_USER_VEC_NUM,
++					  user_irq_start,
++					  xdev->irq_num - user_irq_start);
++		if (ret) {
++			xdma_err(xdev, "failed to set user vectors: %d", ret);
++			goto failed_init_c2h;
++		}
++	}
++
+ 	/* enable interrupt */
+ 	ret = xdma_write_reg(xdev, XDMA_IRQ_BASE, XDMA_IRQ_CHAN_INT_EN_W1S, ~0);
+ 	if (ret)
+@@ -780,6 +794,77 @@ static bool xdma_filter_fn(struct dma_chan *chan, void *param)
+ 	return chan_info->dir == xdma_chan->dir;
+ }
+ 
++/**
++ * xdma_disable_user_irq - Disable user interrupt
++ * @pdev: Pointer to the platform_device structure
++ * @irq_num: System IRQ number
++ */
++void xdma_disable_user_irq(struct platform_device *pdev, u32 irq_num)
++{
++	struct xdma_device *xdev = platform_get_drvdata(pdev);
++	u32 user_irq_index;
++
++	user_irq_index = irq_num - xdev->irq_start;
++	if (user_irq_index < XDMA_CHAN_NUM(xdev) ||
++	    user_irq_index >= xdev->irq_num) {
++		xdma_err(xdev, "invalid user irq number");
++		return;
++	}
++	user_irq_index -= XDMA_CHAN_NUM(xdev);
++
++	xdma_write_reg(xdev, XDMA_IRQ_BASE, XDMA_IRQ_USER_INT_EN_W1C,
++		       (1 << user_irq_index));
++}
++EXPORT_SYMBOL(xdma_disable_user_irq);
++
++/**
++ * xdma_enable_user_irq - Enable user logic interrupt
++ * @pdev: Pointer to the platform_device structure
++ * @irq_num: System IRQ number
++ */
++int xdma_enable_user_irq(struct platform_device *pdev, u32 irq_num)
++{
++	struct xdma_device *xdev = platform_get_drvdata(pdev);
++	u32 user_irq_index;
++	int ret;
++
++	user_irq_index = irq_num - xdev->irq_start;
++	if (user_irq_index < XDMA_CHAN_NUM(xdev) ||
++	    user_irq_index >= xdev->irq_num) {
++		xdma_err(xdev, "invalid user irq number");
++		return -EINVAL;
++	}
++	user_irq_index -= XDMA_CHAN_NUM(xdev);
++
++	ret = xdma_write_reg(xdev, XDMA_IRQ_BASE, XDMA_IRQ_USER_INT_EN_W1S,
++			     (1 << user_irq_index));
++	if (ret)
++		return ret;
++
++	return 0;
++}
++EXPORT_SYMBOL(xdma_enable_user_irq);
++
++/**
++ * xdma_get_user_irq - Get system IRQ number
++ * @pdev: Pointer to the platform_device structure
++ * @user_irq_index: User logic IRQ wire index
++ *
++ * Return: The system IRQ number allocated for the given wire index.
++ */
++int xdma_get_user_irq(struct platform_device *pdev, u32 user_irq_index)
++{
++	struct xdma_device *xdev = platform_get_drvdata(pdev);
++
++	if (XDMA_CHAN_NUM(xdev) + user_irq_index >= xdev->irq_num) {
++		xdma_err(xdev, "invalid user irq index");
++		return -EINVAL;
++	}
++
++	return xdev->irq_start + XDMA_CHAN_NUM(xdev) + user_irq_index;
++}
++EXPORT_SYMBOL(xdma_get_user_irq);
++
+ /**
+  * xdma_remove - Driver remove function
+  * @pdev: Pointer to the platform_device structure
+diff --git a/include/linux/dma/amd_xdma.h b/include/linux/dma/amd_xdma.h
+new file mode 100644
+index 000000000000..ceba69ed7cb4
+--- /dev/null
++++ b/include/linux/dma/amd_xdma.h
+@@ -0,0 +1,16 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++/*
++ * Copyright (C) 2022, Advanced Micro Devices, Inc.
++ */
++
++#ifndef _DMAENGINE_AMD_XDMA_H
++#define _DMAENGINE_AMD_XDMA_H
++
++#include <linux/interrupt.h>
++#include <linux/platform_device.h>
++
++int xdma_enable_user_irq(struct platform_device *pdev, u32 irq_num);
++void xdma_disable_user_irq(struct platform_device *pdev, u32 irq_num);
++int xdma_get_user_irq(struct platform_device *pdev, u32 user_irq_index);
++
++#endif /* _DMAENGINE_AMD_XDMA_H */
+-- 
+2.27.0
 
