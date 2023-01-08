@@ -2,89 +2,55 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6D9DCC4708E
-	for <dmaengine@archiver.kernel.org>; Thu,  5 Jan 2023 21:05:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C0E3CC54EBE
+	for <dmaengine@archiver.kernel.org>; Sun,  8 Jan 2023 17:36:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235068AbjAEVFE (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Thu, 5 Jan 2023 16:05:04 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40072 "EHLO
+        id S231134AbjAHRgO (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Sun, 8 Jan 2023 12:36:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58974 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233371AbjAEVFD (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Thu, 5 Jan 2023 16:05:03 -0500
-Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94FC66338A
-        for <dmaengine@vger.kernel.org>; Thu,  5 Jan 2023 13:05:02 -0800 (PST)
-Received: by mail-wm1-x332.google.com with SMTP id g25-20020a7bc4d9000000b003d97c8d4941so2266097wmk.4
-        for <dmaengine@vger.kernel.org>; Thu, 05 Jan 2023 13:05:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=HoWJgXt75B2FaD5T8CG8P5HWgc9d5ls9y8uuDb2TdCk=;
-        b=Cvvxp/eZbhwKnViR7moem4VFGoYLw1ZPpnfYtO+GTLH0Cp1P5dpDAG6yMxQ7XAK4rP
-         l0fmAwxjlWee1lz1fV/WXAjYRG6zKRpGHYflZZdVRKe/KxsE14ehtX/LcHl6LQjn+9pV
-         OxMTdclWovGYNSTyHuMLjBDGJMH/r494voTBcRH2ERxKF9m2/zNZqzw3mT0PnwDyuld6
-         KurK+82Xo/rw3fGpBzW+yKIdetfOYItwCAs63ZC3lDJRWPyF61HX5W6N67/8qzQXQ01Y
-         V6vFee4KD/6Fd0vK4oyBTnoFBcIz6+8WsqZ4yesAqdGyRaSti0f1xEoB2Z0/T+7wo+7w
-         RAdg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=HoWJgXt75B2FaD5T8CG8P5HWgc9d5ls9y8uuDb2TdCk=;
-        b=Njp4g9cO0FMVIzxg0E3DxxrjgRqLQDtPyqDPNyyEPLUclQ2K8R+8QWN1caM+5obZVI
-         fM+p2Kb9W3aEE9+cMiLGb5+llzbJZ8A9/3V/1SECGs8fxNppHuN5wjFkECKJAvNd/JYJ
-         d5U5Afv4bWBf9dZ1KSBJUKPyf+MXBdwYM0hHqMdfGhlHHV3irhvOkIgT2sIo9JKLe2iE
-         2J9e2qqEDgGxT0qZmTW9r9ob3ly3t2Qh5n5pUjw4ZfIHr65n6Lki+h4vw91pGnLbYvWM
-         PFFXBs+P0o6p8pRfQ2aR4CnSr2BTW1UINJLZa0kARPDlIN3oua7xecf6VU05mGgUzzrD
-         KCsg==
-X-Gm-Message-State: AFqh2kpBpQnl/OYXpc+N4yPrS9YN3XCeK6FCqxacua01fV1b+u0En/v7
-        eDQIQ8mZ78JATnLnuy+aL78=
-X-Google-Smtp-Source: AMrXdXv2shvhv/8hSUoaMitujEMFKLRB8CO1/qW92HGxAtrkhB8CmUefelbTOZw24lw/jenTP34FHA==
-X-Received: by 2002:a05:600c:214a:b0:3cf:6910:51d4 with SMTP id v10-20020a05600c214a00b003cf691051d4mr36994060wml.29.1672952701014;
-        Thu, 05 Jan 2023 13:05:01 -0800 (PST)
-Received: from localhost (host81-157-153-247.range81-157.btcentralplus.com. [81.157.153.247])
-        by smtp.gmail.com with ESMTPSA id h10-20020a05600c2caa00b003cfd58409desm3721982wmc.13.2023.01.05.13.04.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 05 Jan 2023 13:05:00 -0800 (PST)
-Date:   Thu, 5 Jan 2023 21:04:59 +0000
-From:   Lorenzo Stoakes <lstoakes@gmail.com>
-To:     "Yu, Fenghua" <fenghua.yu@intel.com>
-Cc:     Alistair Popple <apopple@nvidia.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        "Jiang, Dave" <dave.jiang@intel.com>,
-        "dmaengine@vger.kernel.org" <dmaengine@vger.kernel.org>,
-        "Zhu, Tony" <tony.zhu@intel.com>,
-        Andrew Morton <akpm@linux-foundation.org>,
-        "linux-mm@kvack.org" <linux-mm@kvack.org>,
-        Christoph Hellwig <hch@infradead.org>,
-        "Shankar, Ravi V" <ravi.v.shankar@intel.com>
+        with ESMTP id S230396AbjAHRgK (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Sun, 8 Jan 2023 12:36:10 -0500
+Received: from bombadil.infradead.org (bombadil.infradead.org [IPv6:2607:7c80:54:3::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E77463BC
+        for <dmaengine@vger.kernel.org>; Sun,  8 Jan 2023 09:36:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=infradead.org; s=bombadil.20210309; h=In-Reply-To:Content-Type:MIME-Version
+        :References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
+        Content-Transfer-Encoding:Content-ID:Content-Description;
+        bh=uKx/6wNbKp0TIcFEhLz5OI0WO0orOz47Y6mrSwwiEyQ=; b=FUO2WOCC5NyD8C6UPyz9qvRX1H
+        XgVBb53AjH0CEyKrTTMcnLzi38cTJH25rYeBhkaRv2X0t2bkfq1cLJiNTm5NIEpNb4My3CdXIZGv1
+        OGxzNG3KLF9iMEZAW2GcerJXSXUqa5U19oiiwK+/yJ5wIHPO8Hl4MI/zdGSc/JjzFJTcm6EieDF5+
+        5eoTHY7aeOwzuf+771xCGw1DhHwPW63o6qjj1HCr2kvrWisXHVfJ7Vo2AA4fkEeIa9zCMhrJ6B6I0
+        c56rMi3b892tWAPwwYwzQH3zdI4CtZ9r8MBsdUzFirEA9wE9WK97PA3+d982oH5cdSQXUnrc4ZYuG
+        exQE58Fg==;
+Received: from hch by bombadil.infradead.org with local (Exim 4.94.2 #2 (Red Hat Linux))
+        id 1pEZaY-00EepB-Bo; Sun, 08 Jan 2023 17:36:06 +0000
+Date:   Sun, 8 Jan 2023 09:36:06 -0800
+From:   Christoph Hellwig <hch@infradead.org>
+To:     Lorenzo Stoakes <lstoakes@gmail.com>
+Cc:     Fenghua Yu <fenghua.yu@intel.com>, Vinod Koul <vkoul@kernel.org>,
+        Dave Jiang <dave.jiang@intel.com>, dmaengine@vger.kernel.org,
+        Tony Zhu <tony.zhu@intel.com>,
+        Andrew Morton <akpm@linux-foundation.org>, linux-mm@kvack.org,
+        Christoph Hellwig <hch@infradead.org>
 Subject: Re: [PATCH 09/17] mm: export access_remote_vm() symbol
-Message-ID: <Y7c7e8vEY0CPfkbx@lucifer>
-References: <Y7Rq0WRc4p3lCkjk@lucifer>
- <IA1PR11MB609703A614F64CD34FA8F02D9BF49@IA1PR11MB6097.namprd11.prod.outlook.com>
- <Y7SMYF8MlzeqDgp+@lucifer>
- <IA1PR11MB609745A8BE83313FAB0236C29BF59@IA1PR11MB6097.namprd11.prod.outlook.com>
- <87tu16rdea.fsf@nvidia.com>
- <Y7XZ8zY3KIRDlu/f@lucifer>
- <87k021vnmw.fsf@nvidia.com>
- <IA1PR11MB6097336ED90E27E78E069E299BFA9@IA1PR11MB6097.namprd11.prod.outlook.com>
- <87tu15u061.fsf@nvidia.com>
- <IA1PR11MB6097D5C6C3182A3C782E99D89BFA9@IA1PR11MB6097.namprd11.prod.outlook.com>
+Message-ID: <Y7r/BjWEP2q64TGy@infradead.org>
+References: <20230103163505.1569356-1-fenghua.yu@intel.com>
+ <20230103163505.1569356-10-fenghua.yu@intel.com>
+ <Y7RpuqbTAM11wVQG@lucifer>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <IA1PR11MB6097D5C6C3182A3C782E99D89BFA9@IA1PR11MB6097.namprd11.prod.outlook.com>
+In-Reply-To: <Y7RpuqbTAM11wVQG@lucifer>
+X-SRS-Rewrite: SMTP reverse-path rewritten from <hch@infradead.org> by bombadil.infradead.org. See http://www.infradead.org/rpr.html
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On Thu, Jan 05, 2023 at 08:58:08PM +0000, Yu, Fenghua wrote:
-> This looks better than exporting access_remote_vm(). I will remove this patch
-> and write the IOMMU wrapper to call access_remote_vm() in v2.
+Exporting access_remote_vm just seems like a horrible idea.
 
-Thank you both for a very constructive conversation! I definitely think this is
-the right way to go.
-
-All the best, Lorenzo
+If a driver needs to access a different VM from a completion path
+in some thread or workqueue (which I assume this does, if not please
+explain the use case), it should use kthread_use_mm to associate the
+mm struct and then just use all the normal uaccess helpers.
