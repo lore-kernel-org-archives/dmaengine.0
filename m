@@ -2,34 +2,34 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BDF27C678D4
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1E3F4C678DC
 	for <dmaengine@archiver.kernel.org>; Fri, 13 Jan 2023 17:24:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230339AbjAMRYW (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 13 Jan 2023 12:24:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33626 "EHLO
+        id S229580AbjAMRYV (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 13 Jan 2023 12:24:21 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34380 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230356AbjAMRW7 (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Fri, 13 Jan 2023 12:22:59 -0500
+        with ESMTP id S230351AbjAMRXY (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Fri, 13 Jan 2023 12:23:24 -0500
 Received: from post.baikalelectronics.com (post.baikalelectronics.com [213.79.110.86])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 5A518A1835;
-        Fri, 13 Jan 2023 09:14:26 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 36896A41CD;
+        Fri, 13 Jan 2023 09:14:30 -0800 (PST)
 Received: from post.baikalelectronics.com (localhost.localdomain [127.0.0.1])
-        by post.baikalelectronics.com (Proxmox) with ESMTP id 7ECA5E0F20;
-        Fri, 13 Jan 2023 20:14:22 +0300 (MSK)
+        by post.baikalelectronics.com (Proxmox) with ESMTP id 930F8E0F26;
+        Fri, 13 Jan 2023 20:14:29 +0300 (MSK)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
         baikalelectronics.ru; h=cc:cc:content-transfer-encoding
         :content-type:content-type:date:from:from:in-reply-to:message-id
         :mime-version:references:reply-to:subject:subject:to:to; s=post;
-         bh=9IAs5jR80/jb1e5odF+JbFjtXhnvVuaONmeUDKQO+u4=; b=Vt6oH94CQ9RA
-        ZUWJhYGr6vpZT+7T5IpilMqvZY4ym6BMut7QXb1x84/Lq5IeT6VNXWUcsoUjCX0+
-        pT8MLzqGF8ULiGPLCu87diJifZVx/2YML6LGamC62yh9f3MyJn1qeAa0uGO1BffO
-        f0BCmKWLRLojrJuXpsaP9AKAEAfp8V0=
+         bh=XjWUWZx9hiGdoeCnBBKAqxVKEx/2Rz53JAW+aYIz+oI=; b=cb3gQq5FQLGO
+        GCY7YzNMPIMLUx0jys55l0mJFms7jef3uweWPkyT3BDc8tgMF0HPqplbA2JrxYH2
+        N5d5Tifah7+FEPPlK4NGSyJZLqcFfVGVA41SzR8pnoPQqvEfIctNPDTlpAq3hxD+
+        lolVnUhL2BYteDzDoACo3aASeCurXTk=
 Received: from mail.baikal.int (mail.baikal.int [192.168.51.25])
-        by post.baikalelectronics.com (Proxmox) with ESMTP id 655C1E0F13;
-        Fri, 13 Jan 2023 20:14:22 +0300 (MSK)
+        by post.baikalelectronics.com (Proxmox) with ESMTP id 624B0E0F13;
+        Fri, 13 Jan 2023 20:14:29 +0300 (MSK)
 Received: from localhost (10.8.30.26) by mail (192.168.51.25) with Microsoft
- SMTP Server (TLS) id 15.0.1395.4; Fri, 13 Jan 2023 20:14:22 +0300
+ SMTP Server (TLS) id 15.0.1395.4; Fri, 13 Jan 2023 20:14:29 +0300
 From:   Serge Semin <Sergey.Semin@baikalelectronics.ru>
 To:     Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
         Vinod Koul <vkoul@kernel.org>, Rob Herring <robh@kernel.org>,
@@ -47,11 +47,10 @@ CC:     Serge Semin <Sergey.Semin@baikalelectronics.ru>,
         caihuoqing <caihuoqing@baidu.com>,
         Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
         <linux-pci@vger.kernel.org>, <dmaengine@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>,
-        Gustavo Pimentel <Gustavo.Pimentel@synopsys.com>
-Subject: [PATCH v9 05/27] dmaengine: dw-edma: Don't permit non-inc interleaved xfers
-Date:   Fri, 13 Jan 2023 20:13:47 +0300
-Message-ID: <20230113171409.30470-6-Sergey.Semin@baikalelectronics.ru>
+        <linux-kernel@vger.kernel.org>
+Subject: [PATCH v9 14/27] dmaengine: dw-edma: Rename DebugFS dentry variables to 'dent'
+Date:   Fri, 13 Jan 2023 20:13:56 +0300
+Message-ID: <20230113171409.30470-15-Sergey.Semin@baikalelectronics.ru>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230113171409.30470-1-Sergey.Semin@baikalelectronics.ru>
 References: <20230113171409.30470-1-Sergey.Semin@baikalelectronics.ru>
@@ -64,56 +63,166 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-DW eDMA controller always increments both source and destination
-addresses. Permitting DMA interleaved transfers with no src_inc/dst_inc
-flags set may lead to unexpected behaviour for the device users. Let's fix
-that by terminating the interleaved transfers if at least one of the
-dma_interleaved_template.{src_inc,dst_inc} flag is initialized with false
-value. Note in addition to that we need to increase the source and
-destination addresses accordingly after each iteration.
+Since we are about to add the eDMA channels direction support to the
+debugfs module it will be confusing to have both the DebugFS directory and
+the channels direction short names used in the same code. As a preparation
+patch let's convert the DebugFS dentry 'dir' variables to having the
+'dent' name so to prevent the confusion.
 
-Fixes: 85e7518f42c8 ("dmaengine: dw-edma: Add device_prep_interleave_dma() support")
+Suggested-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 Signed-off-by: Serge Semin <Sergey.Semin@baikalelectronics.ru>
 Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 Tested-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 Acked-by: Vinod Koul <vkoul@kernel.org>
----
- drivers/dma/dw-edma/dw-edma-core.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/dma/dw-edma/dw-edma-core.c b/drivers/dma/dw-edma/dw-edma-core.c
-index 778d91d9fc1b..35588e14f79a 100644
---- a/drivers/dma/dw-edma/dw-edma-core.c
-+++ b/drivers/dma/dw-edma/dw-edma-core.c
-@@ -385,6 +385,8 @@ dw_edma_device_transfer(struct dw_edma_transfer *xfer)
- 			return NULL;
- 		if (xfer->xfer.il->numf > 0 && xfer->xfer.il->frame_size > 0)
- 			return NULL;
-+		if (!xfer->xfer.il->src_inc || !xfer->xfer.il->dst_inc)
-+			return NULL;
- 	} else {
- 		return NULL;
+---
+
+Changelog v2:
+- This is a new patch added in v2. (@Manivannan)
+---
+ drivers/dma/dw-edma/dw-edma-v0-debugfs.c | 46 ++++++++++++------------
+ 1 file changed, 23 insertions(+), 23 deletions(-)
+
+diff --git a/drivers/dma/dw-edma/dw-edma-v0-debugfs.c b/drivers/dma/dw-edma/dw-edma-v0-debugfs.c
+index 78f15e4b07ac..7bb3363b40e4 100644
+--- a/drivers/dma/dw-edma/dw-edma-v0-debugfs.c
++++ b/drivers/dma/dw-edma/dw-edma-v0-debugfs.c
+@@ -96,7 +96,7 @@ static int dw_edma_debugfs_u32_get(void *data, u64 *val)
+ DEFINE_DEBUGFS_ATTRIBUTE(fops_x32, dw_edma_debugfs_u32_get, NULL, "0x%08llx\n");
+ 
+ static void dw_edma_debugfs_create_x32(const struct dw_edma_debugfs_entry ini[],
+-				       int nr_entries, struct dentry *dir)
++				       int nr_entries, struct dentry *dent)
+ {
+ 	struct dw_edma_debugfs_entry *entries;
+ 	int i;
+@@ -109,13 +109,13 @@ static void dw_edma_debugfs_create_x32(const struct dw_edma_debugfs_entry ini[],
+ 	for (i = 0; i < nr_entries; i++) {
+ 		entries[i] = ini[i];
+ 
+-		debugfs_create_file_unsafe(entries[i].name, 0444, dir,
++		debugfs_create_file_unsafe(entries[i].name, 0444, dent,
+ 					   &entries[i], &fops_x32);
  	}
-@@ -484,15 +486,13 @@ dw_edma_device_transfer(struct dw_edma_transfer *xfer)
- 			struct dma_interleaved_template *il = xfer->xfer.il;
- 			struct data_chunk *dc = &il->sgl[i];
+ }
  
--			if (il->src_sgl) {
--				src_addr += burst->sz;
-+			src_addr += burst->sz;
-+			if (il->src_sgl)
- 				src_addr += dmaengine_get_src_icg(il, dc);
--			}
+ static void dw_edma_debugfs_regs_ch(struct dw_edma_v0_ch_regs __iomem *regs,
+-				    struct dentry *dir)
++				    struct dentry *dent)
+ {
+ 	const struct dw_edma_debugfs_entry debugfs_regs[] = {
+ 		REGISTER(ch_control1),
+@@ -131,10 +131,10 @@ static void dw_edma_debugfs_regs_ch(struct dw_edma_v0_ch_regs __iomem *regs,
+ 	int nr_entries;
  
--			if (il->dst_sgl) {
--				dst_addr += burst->sz;
-+			dst_addr += burst->sz;
-+			if (il->dst_sgl)
- 				dst_addr += dmaengine_get_dst_icg(il, dc);
--			}
- 		}
+ 	nr_entries = ARRAY_SIZE(debugfs_regs);
+-	dw_edma_debugfs_create_x32(debugfs_regs, nr_entries, dir);
++	dw_edma_debugfs_create_x32(debugfs_regs, nr_entries, dent);
+ }
+ 
+-static void dw_edma_debugfs_regs_wr(struct dentry *dir)
++static void dw_edma_debugfs_regs_wr(struct dentry *dent)
+ {
+ 	const struct dw_edma_debugfs_entry debugfs_regs[] = {
+ 		/* eDMA global registers */
+@@ -171,34 +171,34 @@ static void dw_edma_debugfs_regs_wr(struct dentry *dir)
+ 		WR_REGISTER_UNROLL(ch6_pwr_en),
+ 		WR_REGISTER_UNROLL(ch7_pwr_en),
+ 	};
+-	struct dentry *regs_dir, *ch_dir;
++	struct dentry *regs_dent, *ch_dent;
+ 	int nr_entries, i;
+ 	char name[16];
+ 
+-	regs_dir = debugfs_create_dir(WRITE_STR, dir);
++	regs_dent = debugfs_create_dir(WRITE_STR, dent);
+ 
+ 	nr_entries = ARRAY_SIZE(debugfs_regs);
+-	dw_edma_debugfs_create_x32(debugfs_regs, nr_entries, regs_dir);
++	dw_edma_debugfs_create_x32(debugfs_regs, nr_entries, regs_dent);
+ 
+ 	if (dw->chip->mf == EDMA_MF_HDMA_COMPAT) {
+ 		nr_entries = ARRAY_SIZE(debugfs_unroll_regs);
+ 		dw_edma_debugfs_create_x32(debugfs_unroll_regs, nr_entries,
+-					   regs_dir);
++					   regs_dent);
  	}
  
+ 	for (i = 0; i < dw->wr_ch_cnt; i++) {
+ 		snprintf(name, sizeof(name), "%s:%d", CHANNEL_STR, i);
+ 
+-		ch_dir = debugfs_create_dir(name, regs_dir);
++		ch_dent = debugfs_create_dir(name, regs_dent);
+ 
+-		dw_edma_debugfs_regs_ch(&regs->type.unroll.ch[i].wr, ch_dir);
++		dw_edma_debugfs_regs_ch(&regs->type.unroll.ch[i].wr, ch_dent);
+ 
+ 		lim[0][i].start = &regs->type.unroll.ch[i].wr;
+ 		lim[0][i].end = &regs->type.unroll.ch[i].padding_1[0];
+ 	}
+ }
+ 
+-static void dw_edma_debugfs_regs_rd(struct dentry *dir)
++static void dw_edma_debugfs_regs_rd(struct dentry *dent)
+ {
+ 	const struct dw_edma_debugfs_entry debugfs_regs[] = {
+ 		/* eDMA global registers */
+@@ -236,27 +236,27 @@ static void dw_edma_debugfs_regs_rd(struct dentry *dir)
+ 		RD_REGISTER_UNROLL(ch6_pwr_en),
+ 		RD_REGISTER_UNROLL(ch7_pwr_en),
+ 	};
+-	struct dentry *regs_dir, *ch_dir;
++	struct dentry *regs_dent, *ch_dent;
+ 	int nr_entries, i;
+ 	char name[16];
+ 
+-	regs_dir = debugfs_create_dir(READ_STR, dir);
++	regs_dent = debugfs_create_dir(READ_STR, dent);
+ 
+ 	nr_entries = ARRAY_SIZE(debugfs_regs);
+-	dw_edma_debugfs_create_x32(debugfs_regs, nr_entries, regs_dir);
++	dw_edma_debugfs_create_x32(debugfs_regs, nr_entries, regs_dent);
+ 
+ 	if (dw->chip->mf == EDMA_MF_HDMA_COMPAT) {
+ 		nr_entries = ARRAY_SIZE(debugfs_unroll_regs);
+ 		dw_edma_debugfs_create_x32(debugfs_unroll_regs, nr_entries,
+-					   regs_dir);
++					   regs_dent);
+ 	}
+ 
+ 	for (i = 0; i < dw->rd_ch_cnt; i++) {
+ 		snprintf(name, sizeof(name), "%s:%d", CHANNEL_STR, i);
+ 
+-		ch_dir = debugfs_create_dir(name, regs_dir);
++		ch_dent = debugfs_create_dir(name, regs_dent);
+ 
+-		dw_edma_debugfs_regs_ch(&regs->type.unroll.ch[i].rd, ch_dir);
++		dw_edma_debugfs_regs_ch(&regs->type.unroll.ch[i].rd, ch_dent);
+ 
+ 		lim[1][i].start = &regs->type.unroll.ch[i].rd;
+ 		lim[1][i].end = &regs->type.unroll.ch[i].padding_2[0];
+@@ -269,16 +269,16 @@ static void dw_edma_debugfs_regs(void)
+ 		REGISTER(ctrl_data_arb_prior),
+ 		REGISTER(ctrl),
+ 	};
+-	struct dentry *regs_dir;
++	struct dentry *regs_dent;
+ 	int nr_entries;
+ 
+-	regs_dir = debugfs_create_dir(REGISTERS_STR, dw->debugfs);
++	regs_dent = debugfs_create_dir(REGISTERS_STR, dw->debugfs);
+ 
+ 	nr_entries = ARRAY_SIZE(debugfs_regs);
+-	dw_edma_debugfs_create_x32(debugfs_regs, nr_entries, regs_dir);
++	dw_edma_debugfs_create_x32(debugfs_regs, nr_entries, regs_dent);
+ 
+-	dw_edma_debugfs_regs_wr(regs_dir);
+-	dw_edma_debugfs_regs_rd(regs_dir);
++	dw_edma_debugfs_regs_wr(regs_dent);
++	dw_edma_debugfs_regs_rd(regs_dent);
+ }
+ 
+ void dw_edma_v0_debugfs_on(struct dw_edma *_dw)
 -- 
 2.39.0
 
