@@ -2,34 +2,34 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1E3F4C678DC
-	for <dmaengine@archiver.kernel.org>; Fri, 13 Jan 2023 17:24:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E9C3BC3DA78
+	for <dmaengine@archiver.kernel.org>; Fri, 13 Jan 2023 17:24:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229580AbjAMRYV (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 13 Jan 2023 12:24:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34380 "EHLO
+        id S230361AbjAMRYX (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 13 Jan 2023 12:24:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33822 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230351AbjAMRXY (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Fri, 13 Jan 2023 12:23:24 -0500
+        with ESMTP id S231208AbjAMRXu (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Fri, 13 Jan 2023 12:23:50 -0500
 Received: from post.baikalelectronics.com (post.baikalelectronics.com [213.79.110.86])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 36896A41CD;
-        Fri, 13 Jan 2023 09:14:30 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 09E71A4C6B;
+        Fri, 13 Jan 2023 09:14:41 -0800 (PST)
 Received: from post.baikalelectronics.com (localhost.localdomain [127.0.0.1])
-        by post.baikalelectronics.com (Proxmox) with ESMTP id 930F8E0F26;
-        Fri, 13 Jan 2023 20:14:29 +0300 (MSK)
+        by post.baikalelectronics.com (Proxmox) with ESMTP id 6D88AE0F2C;
+        Fri, 13 Jan 2023 20:14:35 +0300 (MSK)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
         baikalelectronics.ru; h=cc:cc:content-transfer-encoding
         :content-type:content-type:date:from:from:in-reply-to:message-id
         :mime-version:references:reply-to:subject:subject:to:to; s=post;
-         bh=XjWUWZx9hiGdoeCnBBKAqxVKEx/2Rz53JAW+aYIz+oI=; b=cb3gQq5FQLGO
-        GCY7YzNMPIMLUx0jys55l0mJFms7jef3uweWPkyT3BDc8tgMF0HPqplbA2JrxYH2
-        N5d5Tifah7+FEPPlK4NGSyJZLqcFfVGVA41SzR8pnoPQqvEfIctNPDTlpAq3hxD+
-        lolVnUhL2BYteDzDoACo3aASeCurXTk=
+         bh=rm52EHXk9zhos3pIhkdkgojTWB1rvHu/gaPCXIP5N28=; b=IPfoHI89mz3y
+        /MFaBu/EMBq/52KRvwChKUlr0gcaenuxYT53xM/CDHTFLrROZ9dhW4Kq4VAqXd5J
+        zpYSShfcafeTNelt7DOSuXpmhxFuDrT41bX+5g/M5XQLpsoqfl+C0dCnxvMFL9md
+        i0Johe6qodxuQ0eYCiAbusdNFMJpX5k=
 Received: from mail.baikal.int (mail.baikal.int [192.168.51.25])
-        by post.baikalelectronics.com (Proxmox) with ESMTP id 624B0E0F13;
-        Fri, 13 Jan 2023 20:14:29 +0300 (MSK)
+        by post.baikalelectronics.com (Proxmox) with ESMTP id 56807E0F13;
+        Fri, 13 Jan 2023 20:14:35 +0300 (MSK)
 Received: from localhost (10.8.30.26) by mail (192.168.51.25) with Microsoft
- SMTP Server (TLS) id 15.0.1395.4; Fri, 13 Jan 2023 20:14:29 +0300
+ SMTP Server (TLS) id 15.0.1395.4; Fri, 13 Jan 2023 20:14:34 +0300
 From:   Serge Semin <Sergey.Semin@baikalelectronics.ru>
 To:     Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
         Vinod Koul <vkoul@kernel.org>, Rob Herring <robh@kernel.org>,
@@ -48,9 +48,9 @@ CC:     Serge Semin <Sergey.Semin@baikalelectronics.ru>,
         Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
         <linux-pci@vger.kernel.org>, <dmaengine@vger.kernel.org>,
         <linux-kernel@vger.kernel.org>
-Subject: [PATCH v9 14/27] dmaengine: dw-edma: Rename DebugFS dentry variables to 'dent'
-Date:   Fri, 13 Jan 2023 20:13:56 +0300
-Message-ID: <20230113171409.30470-15-Sergey.Semin@baikalelectronics.ru>
+Subject: [PATCH v9 21/27] dmaengine: dw-edma: Replace chip ID number with device name
+Date:   Fri, 13 Jan 2023 20:14:03 +0300
+Message-ID: <20230113171409.30470-22-Sergey.Semin@baikalelectronics.ru>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230113171409.30470-1-Sergey.Semin@baikalelectronics.ru>
 References: <20230113171409.30470-1-Sergey.Semin@baikalelectronics.ru>
@@ -63,13 +63,21 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Since we are about to add the eDMA channels direction support to the
-debugfs module it will be confusing to have both the DebugFS directory and
-the channels direction short names used in the same code. As a preparation
-patch let's convert the DebugFS dentry 'dir' variables to having the
-'dent' name so to prevent the confusion.
+Using some abstract number as the DW eDMA chip identifier isn't really
+practical. First of all there can be more than one DW eDMA controller on
+the platform some of them can be detected as the PCIe end-points, some of
+them can be embedded into the DW PCIe Root Port/End-point controllers.
+Seeing some abstract number in for instance IRQ handlers list doesn't give
+a notion regarding their reference to the particular DMA controller.
+Secondly current DW eDMA chip id implementation doesn't provide the
+multi-eDMA platforms support for same reason of possibly having eDMA
+detected on different system buses. At the same time re-implementing
+something ida-based won't give much benefits especially seeing the DW eDMA
+chip ID is only used in the IRQ request procedure. So to speak in order to
+preserve the code simplicity and get to have the multi-eDMA platforms
+support let's just use the parental device name to create the DW eDMA
+controller name.
 
-Suggested-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 Signed-off-by: Serge Semin <Sergey.Semin@baikalelectronics.ru>
 Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 Tested-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
@@ -78,151 +86,65 @@ Acked-by: Vinod Koul <vkoul@kernel.org>
 ---
 
 Changelog v2:
-- This is a new patch added in v2. (@Manivannan)
+- Slightly extend the eDMA name array. (@Manivannan)
 ---
- drivers/dma/dw-edma/dw-edma-v0-debugfs.c | 46 ++++++++++++------------
- 1 file changed, 23 insertions(+), 23 deletions(-)
+ drivers/dma/dw-edma/dw-edma-core.c | 3 ++-
+ drivers/dma/dw-edma/dw-edma-core.h | 2 +-
+ drivers/dma/dw-edma/dw-edma-pcie.c | 1 -
+ include/linux/dma/edma.h           | 1 -
+ 4 files changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/dma/dw-edma/dw-edma-v0-debugfs.c b/drivers/dma/dw-edma/dw-edma-v0-debugfs.c
-index 78f15e4b07ac..7bb3363b40e4 100644
---- a/drivers/dma/dw-edma/dw-edma-v0-debugfs.c
-+++ b/drivers/dma/dw-edma/dw-edma-v0-debugfs.c
-@@ -96,7 +96,7 @@ static int dw_edma_debugfs_u32_get(void *data, u64 *val)
- DEFINE_DEBUGFS_ATTRIBUTE(fops_x32, dw_edma_debugfs_u32_get, NULL, "0x%08llx\n");
+diff --git a/drivers/dma/dw-edma/dw-edma-core.c b/drivers/dma/dw-edma/dw-edma-core.c
+index 040a88cfe070..e3671bfbe186 100644
+--- a/drivers/dma/dw-edma/dw-edma-core.c
++++ b/drivers/dma/dw-edma/dw-edma-core.c
+@@ -973,7 +973,8 @@ int dw_edma_probe(struct dw_edma_chip *chip)
+ 	if (!dw->chan)
+ 		return -ENOMEM;
  
- static void dw_edma_debugfs_create_x32(const struct dw_edma_debugfs_entry ini[],
--				       int nr_entries, struct dentry *dir)
-+				       int nr_entries, struct dentry *dent)
- {
- 	struct dw_edma_debugfs_entry *entries;
- 	int i;
-@@ -109,13 +109,13 @@ static void dw_edma_debugfs_create_x32(const struct dw_edma_debugfs_entry ini[],
- 	for (i = 0; i < nr_entries; i++) {
- 		entries[i] = ini[i];
+-	snprintf(dw->name, sizeof(dw->name), "dw-edma-core:%d", chip->id);
++	snprintf(dw->name, sizeof(dw->name), "dw-edma-core:%s",
++		 dev_name(chip->dev));
  
--		debugfs_create_file_unsafe(entries[i].name, 0444, dir,
-+		debugfs_create_file_unsafe(entries[i].name, 0444, dent,
- 					   &entries[i], &fops_x32);
- 	}
- }
+ 	/* Disable eDMA, only to establish the ideal initial conditions */
+ 	dw_edma_v0_core_off(dw);
+diff --git a/drivers/dma/dw-edma/dw-edma-core.h b/drivers/dma/dw-edma/dw-edma-core.h
+index e3ad3e372b55..0ab2b6dba880 100644
+--- a/drivers/dma/dw-edma/dw-edma-core.h
++++ b/drivers/dma/dw-edma/dw-edma-core.h
+@@ -96,7 +96,7 @@ struct dw_edma_irq {
+ };
  
- static void dw_edma_debugfs_regs_ch(struct dw_edma_v0_ch_regs __iomem *regs,
--				    struct dentry *dir)
-+				    struct dentry *dent)
- {
- 	const struct dw_edma_debugfs_entry debugfs_regs[] = {
- 		REGISTER(ch_control1),
-@@ -131,10 +131,10 @@ static void dw_edma_debugfs_regs_ch(struct dw_edma_v0_ch_regs __iomem *regs,
- 	int nr_entries;
+ struct dw_edma {
+-	char				name[20];
++	char				name[32];
  
- 	nr_entries = ARRAY_SIZE(debugfs_regs);
--	dw_edma_debugfs_create_x32(debugfs_regs, nr_entries, dir);
-+	dw_edma_debugfs_create_x32(debugfs_regs, nr_entries, dent);
- }
+ 	struct dma_device		dma;
  
--static void dw_edma_debugfs_regs_wr(struct dentry *dir)
-+static void dw_edma_debugfs_regs_wr(struct dentry *dent)
- {
- 	const struct dw_edma_debugfs_entry debugfs_regs[] = {
- 		/* eDMA global registers */
-@@ -171,34 +171,34 @@ static void dw_edma_debugfs_regs_wr(struct dentry *dir)
- 		WR_REGISTER_UNROLL(ch6_pwr_en),
- 		WR_REGISTER_UNROLL(ch7_pwr_en),
- 	};
--	struct dentry *regs_dir, *ch_dir;
-+	struct dentry *regs_dent, *ch_dent;
- 	int nr_entries, i;
- 	char name[16];
+diff --git a/drivers/dma/dw-edma/dw-edma-pcie.c b/drivers/dma/dw-edma/dw-edma-pcie.c
+index f530bacfd716..3f9dadc73854 100644
+--- a/drivers/dma/dw-edma/dw-edma-pcie.c
++++ b/drivers/dma/dw-edma/dw-edma-pcie.c
+@@ -222,7 +222,6 @@ static int dw_edma_pcie_probe(struct pci_dev *pdev,
  
--	regs_dir = debugfs_create_dir(WRITE_STR, dir);
-+	regs_dent = debugfs_create_dir(WRITE_STR, dent);
+ 	/* Data structure initialization */
+ 	chip->dev = dev;
+-	chip->id = pdev->devfn;
  
- 	nr_entries = ARRAY_SIZE(debugfs_regs);
--	dw_edma_debugfs_create_x32(debugfs_regs, nr_entries, regs_dir);
-+	dw_edma_debugfs_create_x32(debugfs_regs, nr_entries, regs_dent);
- 
- 	if (dw->chip->mf == EDMA_MF_HDMA_COMPAT) {
- 		nr_entries = ARRAY_SIZE(debugfs_unroll_regs);
- 		dw_edma_debugfs_create_x32(debugfs_unroll_regs, nr_entries,
--					   regs_dir);
-+					   regs_dent);
- 	}
- 
- 	for (i = 0; i < dw->wr_ch_cnt; i++) {
- 		snprintf(name, sizeof(name), "%s:%d", CHANNEL_STR, i);
- 
--		ch_dir = debugfs_create_dir(name, regs_dir);
-+		ch_dent = debugfs_create_dir(name, regs_dent);
- 
--		dw_edma_debugfs_regs_ch(&regs->type.unroll.ch[i].wr, ch_dir);
-+		dw_edma_debugfs_regs_ch(&regs->type.unroll.ch[i].wr, ch_dent);
- 
- 		lim[0][i].start = &regs->type.unroll.ch[i].wr;
- 		lim[0][i].end = &regs->type.unroll.ch[i].padding_1[0];
- 	}
- }
- 
--static void dw_edma_debugfs_regs_rd(struct dentry *dir)
-+static void dw_edma_debugfs_regs_rd(struct dentry *dent)
- {
- 	const struct dw_edma_debugfs_entry debugfs_regs[] = {
- 		/* eDMA global registers */
-@@ -236,27 +236,27 @@ static void dw_edma_debugfs_regs_rd(struct dentry *dir)
- 		RD_REGISTER_UNROLL(ch6_pwr_en),
- 		RD_REGISTER_UNROLL(ch7_pwr_en),
- 	};
--	struct dentry *regs_dir, *ch_dir;
-+	struct dentry *regs_dent, *ch_dent;
- 	int nr_entries, i;
- 	char name[16];
- 
--	regs_dir = debugfs_create_dir(READ_STR, dir);
-+	regs_dent = debugfs_create_dir(READ_STR, dent);
- 
- 	nr_entries = ARRAY_SIZE(debugfs_regs);
--	dw_edma_debugfs_create_x32(debugfs_regs, nr_entries, regs_dir);
-+	dw_edma_debugfs_create_x32(debugfs_regs, nr_entries, regs_dent);
- 
- 	if (dw->chip->mf == EDMA_MF_HDMA_COMPAT) {
- 		nr_entries = ARRAY_SIZE(debugfs_unroll_regs);
- 		dw_edma_debugfs_create_x32(debugfs_unroll_regs, nr_entries,
--					   regs_dir);
-+					   regs_dent);
- 	}
- 
- 	for (i = 0; i < dw->rd_ch_cnt; i++) {
- 		snprintf(name, sizeof(name), "%s:%d", CHANNEL_STR, i);
- 
--		ch_dir = debugfs_create_dir(name, regs_dir);
-+		ch_dent = debugfs_create_dir(name, regs_dent);
- 
--		dw_edma_debugfs_regs_ch(&regs->type.unroll.ch[i].rd, ch_dir);
-+		dw_edma_debugfs_regs_ch(&regs->type.unroll.ch[i].rd, ch_dent);
- 
- 		lim[1][i].start = &regs->type.unroll.ch[i].rd;
- 		lim[1][i].end = &regs->type.unroll.ch[i].padding_2[0];
-@@ -269,16 +269,16 @@ static void dw_edma_debugfs_regs(void)
- 		REGISTER(ctrl_data_arb_prior),
- 		REGISTER(ctrl),
- 	};
--	struct dentry *regs_dir;
-+	struct dentry *regs_dent;
- 	int nr_entries;
- 
--	regs_dir = debugfs_create_dir(REGISTERS_STR, dw->debugfs);
-+	regs_dent = debugfs_create_dir(REGISTERS_STR, dw->debugfs);
- 
- 	nr_entries = ARRAY_SIZE(debugfs_regs);
--	dw_edma_debugfs_create_x32(debugfs_regs, nr_entries, regs_dir);
-+	dw_edma_debugfs_create_x32(debugfs_regs, nr_entries, regs_dent);
- 
--	dw_edma_debugfs_regs_wr(regs_dir);
--	dw_edma_debugfs_regs_rd(regs_dir);
-+	dw_edma_debugfs_regs_wr(regs_dent);
-+	dw_edma_debugfs_regs_rd(regs_dent);
- }
- 
- void dw_edma_v0_debugfs_on(struct dw_edma *_dw)
+ 	chip->mf = vsec_data.mf;
+ 	chip->nr_irqs = nr_irqs;
+diff --git a/include/linux/dma/edma.h b/include/linux/dma/edma.h
+index 380a0a3e251f..9d44da4aa59d 100644
+--- a/include/linux/dma/edma.h
++++ b/include/linux/dma/edma.h
+@@ -76,7 +76,6 @@ enum dw_edma_chip_flags {
+  */
+ struct dw_edma_chip {
+ 	struct device		*dev;
+-	int			id;
+ 	int			nr_irqs;
+ 	const struct dw_edma_core_ops   *ops;
+ 	u32			flags;
 -- 
 2.39.0
 
