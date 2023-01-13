@@ -2,34 +2,34 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C431AC67871
-	for <dmaengine@archiver.kernel.org>; Fri, 13 Jan 2023 17:24:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 58087C54EBD
+	for <dmaengine@archiver.kernel.org>; Fri, 13 Jan 2023 17:24:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229656AbjAMRY2 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 13 Jan 2023 12:24:28 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34906 "EHLO
+        id S230397AbjAMRY3 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 13 Jan 2023 12:24:29 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37922 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231231AbjAMRXy (ORCPT
+        with ESMTP id S231233AbjAMRXy (ORCPT
         <rfc822;dmaengine@vger.kernel.org>); Fri, 13 Jan 2023 12:23:54 -0500
 Received: from post.baikalelectronics.com (post.baikalelectronics.com [213.79.110.86])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id A66F689BC0;
-        Fri, 13 Jan 2023 09:14:42 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id C34F9A4C73;
+        Fri, 13 Jan 2023 09:14:43 -0800 (PST)
 Received: from post.baikalelectronics.com (localhost.localdomain [127.0.0.1])
-        by post.baikalelectronics.com (Proxmox) with ESMTP id 51629E0F1F;
-        Fri, 13 Jan 2023 20:14:30 +0300 (MSK)
+        by post.baikalelectronics.com (Proxmox) with ESMTP id 9A41AE0F30;
+        Fri, 13 Jan 2023 20:14:38 +0300 (MSK)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
         baikalelectronics.ru; h=cc:cc:content-transfer-encoding
         :content-type:content-type:date:from:from:in-reply-to:message-id
         :mime-version:references:reply-to:subject:subject:to:to; s=post;
-         bh=oSIVXEGJjsNxKt5s5mEIrCjk16X7D/OpaOXlgm+H4qU=; b=qq9rFd1GbJAq
-        EerA4exryrzhrW1F1EUzSL1ozej3MvMFwjY69A7lfJstfBNQxVd05OCMokKkJWSS
-        hQfjK3gDI1pX0hGsnKJry3HPiyAhzMvHM4D/MNphtmKJFKsan8PTRUcGrT6jezGw
-        ne17bcidQbot6dbAn6o/REL1wi4mhDg=
+         bh=d7bJelLGSWZmM7IXBZfGb6iRBR8TCuRpsPrdqslUK5E=; b=v1Y4Zv1XgLQQ
+        wxMzn5D0uXPjyNwJkp/fbevesPq7ksq6PhryOdRwg2DxVfs5h4yZftrKAw5eO1UD
+        yWdWY4pahoZ1ThcOJQHMwhxAvJ9QSqi/gkky9BxnCPtrqp1dEegq+RDO3qIpi7lm
+        3r3iHcqg08tEgzvxyCuvgOCBvi/ImnE=
 Received: from mail.baikal.int (mail.baikal.int [192.168.51.25])
-        by post.baikalelectronics.com (Proxmox) with ESMTP id 1BB80E0F13;
-        Fri, 13 Jan 2023 20:14:30 +0300 (MSK)
+        by post.baikalelectronics.com (Proxmox) with ESMTP id 71B8CE0F13;
+        Fri, 13 Jan 2023 20:14:38 +0300 (MSK)
 Received: from localhost (10.8.30.26) by mail (192.168.51.25) with Microsoft
- SMTP Server (TLS) id 15.0.1395.4; Fri, 13 Jan 2023 20:14:29 +0300
+ SMTP Server (TLS) id 15.0.1395.4; Fri, 13 Jan 2023 20:14:38 +0300
 From:   Serge Semin <Sergey.Semin@baikalelectronics.ru>
 To:     Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
         Vinod Koul <vkoul@kernel.org>, Rob Herring <robh@kernel.org>,
@@ -38,19 +38,20 @@ To:     Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
         Cai Huoqing <cai.huoqing@linux.dev>,
         Robin Murphy <robin.murphy@arm.com>,
         Jingoo Han <jingoohan1@gmail.com>, Frank Li <Frank.Li@nxp.com>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        =?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>
 CC:     Serge Semin <Sergey.Semin@baikalelectronics.ru>,
         Serge Semin <fancer.lancer@gmail.com>,
         Alexey Malahov <Alexey.Malahov@baikalelectronics.ru>,
         Pavel Parkhomenko <Pavel.Parkhomenko@baikalelectronics.ru>,
-        =?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>,
         caihuoqing <caihuoqing@baidu.com>,
         Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
         <linux-pci@vger.kernel.org>, <dmaengine@vger.kernel.org>,
         <linux-kernel@vger.kernel.org>
-Subject: [PATCH v9 15/27] dmaengine: dw-edma: Simplify the DebugFS context CSRs init procedure
-Date:   Fri, 13 Jan 2023 20:13:57 +0300
-Message-ID: <20230113171409.30470-16-Sergey.Semin@baikalelectronics.ru>
+Subject: [PATCH v9 25/27] PCI: dwc: Set coherent DMA-mask on MSI-address allocation
+Date:   Fri, 13 Jan 2023 20:14:07 +0300
+Message-ID: <20230113171409.30470-26-Sergey.Semin@baikalelectronics.ru>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230113171409.30470-1-Sergey.Semin@baikalelectronics.ru>
 References: <20230113171409.30470-1-Sergey.Semin@baikalelectronics.ru>
@@ -63,186 +64,53 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-DW eDMA v4.70a and older have the read and write channels context CSRs
-indirectly accessible. It means the CSRs like Channel Control, Xfer size,
-SAR, DAR and LLP address are accessed over at a fixed MMIO address, but
-their reference to the corresponding channel is determined by the Viewport
-CSR. In order to have a coherent access to these registers the CSR IOs are
-supposed to be protected with a spin-lock. DW eDMA v4.80a and newer
-normally have unrolled Read/Write channel context registers. That is all
-CSRs denoted before are directly mapped in the controller MMIO space.
+The MSI target address requires to be reserved within the lowest 4GB
+memory in order to support the PCIe peripherals with no 64-bit MSI TLPs
+support. Since the allocation is done from the DMA-coherent memory let's
+modify the allocation procedure to setting the coherent DMA-mask only and
+avoiding the streaming DMA-mask modification. Thus at least the streaming
+DMA operations would work with no artificial limitations. It will be
+specifically useful for the eDMA-capable controllers so the corresponding
+DMA-engine clients would map the DMA buffers with no need in the SWIOTLB
+intervention for the buffers allocated above the 4GB memory region.
 
-Since both normal and viewport-based registers are exposed via the DebugFS
-nodes, the original code author decided to implement an algorithm based on
-the unrolled CSRs mapping with the viewport addresses recalculation if
-it's required. The problem is that such implementation turned to be first
-unscalable (supports a platform with only single eDMA available since a
-base address statically preserved) and second needlessly overcomplicated
-(it loops over all Rd/Wr context addresses and re-calculates the viewport
-base address on each DebugFS node access). The algorithm can be greatly
-simplified just by adding the channel ID and it's direction fields in the
-eDMA DebugFS node descriptor. These new parameters can be used to find a
-CSR offset within the corresponding channel registers space. The DW eDMA
-DebugFS node getter afterwards will also use them in order to activate the
-respective context CSRs viewport before reading data from the specified
-register. In case of the unrolled version of the CSRs mapping there won't
-be any spin-lock taken/released, no viewport activation as before this
-modification.
-
-Note this modification fixes the REGISTER() macros using an externally
-defined local variable. The same problem with the rest of the macro will
-be fixed in the next commit.
+While at it let's add a brief comment about the reason of having the MSI
+target address allocated from the DMA-coherent memory limited with the 4GB
+upper bound.
 
 Signed-off-by: Serge Semin <Sergey.Semin@baikalelectronics.ru>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Tested-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Acked-by: Vinod Koul <vkoul@kernel.org>
----
- drivers/dma/dw-edma/dw-edma-v0-debugfs.c | 84 +++++++++++-------------
- 1 file changed, 38 insertions(+), 46 deletions(-)
+Reviewed-by: Robin Murphy <robin.murphy@arm.com>
 
-diff --git a/drivers/dma/dw-edma/dw-edma-v0-debugfs.c b/drivers/dma/dw-edma/dw-edma-v0-debugfs.c
-index 7bb3363b40e4..1596eedf35c5 100644
---- a/drivers/dma/dw-edma/dw-edma-v0-debugfs.c
-+++ b/drivers/dma/dw-edma/dw-edma-v0-debugfs.c
-@@ -15,9 +15,27 @@
- 
- #define REGS_ADDR(name) \
- 	((void __iomem *)&regs->name)
-+
-+#define REGS_CH_ADDR(name, _dir, _ch)						\
-+	({									\
-+		struct dw_edma_v0_ch_regs __iomem *__ch_regs;			\
-+										\
-+		if ((dw)->chip->mf == EDMA_MF_EDMA_LEGACY)			\
-+			__ch_regs = &regs->type.legacy.ch;			\
-+		else if (_dir == EDMA_DIR_READ)					\
-+			__ch_regs = &regs->type.unroll.ch[_ch].rd;		\
-+		else								\
-+			__ch_regs = &regs->type.unroll.ch[_ch].wr;		\
-+										\
-+		(void __iomem *)&__ch_regs->name;				\
-+	})
-+
- #define REGISTER(name) \
- 	{ #name, REGS_ADDR(name) }
- 
-+#define CTX_REGISTER(name, dir, ch) \
-+	{ #name, REGS_CH_ADDR(name, dir, ch), dir, ch }
-+
- #define WR_REGISTER(name) \
- 	{ #name, REGS_ADDR(wr_##name) }
- #define RD_REGISTER(name) \
-@@ -41,14 +59,11 @@
- static struct dw_edma				*dw;
- static struct dw_edma_v0_regs			__iomem *regs;
- 
--static struct {
--	void					__iomem *start;
--	void					__iomem *end;
--} lim[2][EDMA_V0_MAX_NR_CH];
--
- struct dw_edma_debugfs_entry {
- 	const char				*name;
- 	void __iomem				*reg;
-+	enum dw_edma_dir			dir;
-+	u16					ch;
- };
- 
- static int dw_edma_debugfs_u32_get(void *data, u64 *val)
-@@ -58,33 +73,16 @@ static int dw_edma_debugfs_u32_get(void *data, u64 *val)
- 
- 	if (dw->chip->mf == EDMA_MF_EDMA_LEGACY &&
- 	    reg >= (void __iomem *)&regs->type.legacy.ch) {
--		void __iomem *ptr = &regs->type.legacy.ch;
--		u32 viewport_sel = 0;
- 		unsigned long flags;
--		u16 ch;
--
--		for (ch = 0; ch < dw->wr_ch_cnt; ch++)
--			if (lim[0][ch].start >= reg && reg < lim[0][ch].end) {
--				ptr += (reg - lim[0][ch].start);
--				goto legacy_sel_wr;
--			}
--
--		for (ch = 0; ch < dw->rd_ch_cnt; ch++)
--			if (lim[1][ch].start >= reg && reg < lim[1][ch].end) {
--				ptr += (reg - lim[1][ch].start);
--				goto legacy_sel_rd;
--			}
--
--		return 0;
--legacy_sel_rd:
--		viewport_sel = BIT(31);
--legacy_sel_wr:
--		viewport_sel |= FIELD_PREP(EDMA_V0_VIEWPORT_MASK, ch);
-+		u32 viewport_sel;
-+
-+		viewport_sel = entry->dir == EDMA_DIR_READ ? BIT(31) : 0;
-+		viewport_sel |= FIELD_PREP(EDMA_V0_VIEWPORT_MASK, entry->ch);
- 
- 		raw_spin_lock_irqsave(&dw->lock, flags);
- 
- 		writel(viewport_sel, &regs->type.legacy.viewport_sel);
--		*val = readl(ptr);
-+		*val = readl(reg);
- 
- 		raw_spin_unlock_irqrestore(&dw->lock, flags);
- 	} else {
-@@ -114,19 +112,19 @@ static void dw_edma_debugfs_create_x32(const struct dw_edma_debugfs_entry ini[],
+---
+
+Changelog v8:
+- This is a new patch added on v8 stage of the series.
+  (@Robin, @Christoph)
+---
+ drivers/pci/controller/dwc/pcie-designware-host.c | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/pci/controller/dwc/pcie-designware-host.c b/drivers/pci/controller/dwc/pcie-designware-host.c
+index 3ab6ae3712c4..e10608af39b4 100644
+--- a/drivers/pci/controller/dwc/pcie-designware-host.c
++++ b/drivers/pci/controller/dwc/pcie-designware-host.c
+@@ -366,7 +366,16 @@ static int dw_pcie_msi_host_init(struct dw_pcie_rp *pp)
+ 						    dw_chained_msi_isr, pp);
  	}
- }
  
--static void dw_edma_debugfs_regs_ch(struct dw_edma_v0_ch_regs __iomem *regs,
-+static void dw_edma_debugfs_regs_ch(enum dw_edma_dir dir, u16 ch,
- 				    struct dentry *dent)
- {
--	const struct dw_edma_debugfs_entry debugfs_regs[] = {
--		REGISTER(ch_control1),
--		REGISTER(ch_control2),
--		REGISTER(transfer_size),
--		REGISTER(sar.lsb),
--		REGISTER(sar.msb),
--		REGISTER(dar.lsb),
--		REGISTER(dar.msb),
--		REGISTER(llp.lsb),
--		REGISTER(llp.msb),
-+	struct dw_edma_debugfs_entry debugfs_regs[] = {
-+		CTX_REGISTER(ch_control1, dir, ch),
-+		CTX_REGISTER(ch_control2, dir, ch),
-+		CTX_REGISTER(transfer_size, dir, ch),
-+		CTX_REGISTER(sar.lsb, dir, ch),
-+		CTX_REGISTER(sar.msb, dir, ch),
-+		CTX_REGISTER(dar.lsb, dir, ch),
-+		CTX_REGISTER(dar.msb, dir, ch),
-+		CTX_REGISTER(llp.lsb, dir, ch),
-+		CTX_REGISTER(llp.msb, dir, ch),
- 	};
- 	int nr_entries;
- 
-@@ -191,10 +189,7 @@ static void dw_edma_debugfs_regs_wr(struct dentry *dent)
- 
- 		ch_dent = debugfs_create_dir(name, regs_dent);
- 
--		dw_edma_debugfs_regs_ch(&regs->type.unroll.ch[i].wr, ch_dent);
--
--		lim[0][i].start = &regs->type.unroll.ch[i].wr;
--		lim[0][i].end = &regs->type.unroll.ch[i].padding_1[0];
-+		dw_edma_debugfs_regs_ch(EDMA_DIR_WRITE, i, ch_dent);
- 	}
- }
- 
-@@ -256,10 +251,7 @@ static void dw_edma_debugfs_regs_rd(struct dentry *dent)
- 
- 		ch_dent = debugfs_create_dir(name, regs_dent);
- 
--		dw_edma_debugfs_regs_ch(&regs->type.unroll.ch[i].rd, ch_dent);
--
--		lim[1][i].start = &regs->type.unroll.ch[i].rd;
--		lim[1][i].end = &regs->type.unroll.ch[i].padding_2[0];
-+		dw_edma_debugfs_regs_ch(EDMA_DIR_READ, i, ch_dent);
- 	}
- }
+-	ret = dma_set_mask_and_coherent(dev, DMA_BIT_MASK(32));
++	/*
++	 * Even though the iMSI-RX Module supports 64-bit addresses some
++	 * peripheral PCIe devices may lack the 64-bit messages support. In
++	 * order not to miss MSI TLPs from those devices the MSI target address
++	 * has to be reserved within the lowest 4GB.
++	 * Note until there is a better alternative found the reservation is
++	 * done by allocating from the artificially limited DMA-coherent
++	 * memory.
++	 */
++	ret = dma_set_coherent_mask(dev, DMA_BIT_MASK(32));
+ 	if (ret)
+ 		dev_warn(dev, "Failed to set DMA mask to 32-bit. Devices with only 32-bit MSI support may not work properly\n");
  
 -- 
 2.39.0
