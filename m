@@ -2,42 +2,43 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 94D99C38147
-	for <dmaengine@archiver.kernel.org>; Tue, 17 Jan 2023 23:11:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BF417C00A5A
+	for <dmaengine@archiver.kernel.org>; Tue, 17 Jan 2023 23:32:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229873AbjAQXLV (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 17 Jan 2023 18:11:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58740 "EHLO
+        id S229999AbjAQXcH (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 17 Jan 2023 18:32:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55204 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229484AbjAQXK7 (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Tue, 17 Jan 2023 18:10:59 -0500
-Received: from NAM11-CO1-obe.outbound.protection.outlook.com (mail-co1nam11on2081.outbound.protection.outlook.com [40.107.220.81])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E4D7E683EE;
-        Tue, 17 Jan 2023 12:54:20 -0800 (PST)
+        with ESMTP id S229930AbjAQXba (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Tue, 17 Jan 2023 18:31:30 -0500
+Received: from NAM11-DM6-obe.outbound.protection.outlook.com (mail-dm6nam11on2051.outbound.protection.outlook.com [40.107.223.51])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6BE8D68418;
+        Tue, 17 Jan 2023 12:54:22 -0800 (PST)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=BOTtZrd2IeIs3RCz86xXXSXPtT66uIk+i2rsyJ5PufHgOrIRjV05E6Ogulz6An3tfheEoYjbqTqxodWT5SIlq8dp/T62iK7nEhaiyo9sv2N6HBZP7Fvg+w2MLnkyqdDTdvm4jDRjqqvU7uNE+5wct/ASMniByW/tyemTpMiGIik83cCTPJq8SouJlqKZHY1UzvNhO2fKEQMDJCkbcrtjpvpmvlcPv0/YRBeM/mV6heJXvojATYb+7z2s5JJPCTscYaJhmCxMsayuicJhjRyP5Ik/l0YL8WOYwJwTKCoJQpAy0Qc+UwhU1dnyzABRR0Bb9ygVabDFTZ02hTa2YJA8Wg==
+ b=kgazXv7xNzgss8qoflF2r5TN4dM1FW86TAPGSp2dLbYZLS6ScShdbFhFQY2uH/UiRJ4mAUAteuY47nIAl/H68jE+DEhcu/p20ogWnAJ+KSvHEC89TEMdMueHBY5eomSeKfKnhXwepGpxp1DHbuJSj0WFMDdpRAur49p+9+kgCdClivPnh93hI0ERSWP1peP6UloBzaJOS8D6oMrsG0dj7kLP+zT8zqTaZCAKnkcH1z6iABG4v/x4VCJ46Gh+WfCdr3UZ09Yv9uxnYJe50XmiXSlfpG1iY6EcxwbYXaCxCHkq3yZ9Lg/Zr704yuvG1Ha1SJveRP8XuDXjzD2Au/JpyA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=1jvyGBuH2fvAOiqFAE6dALUqHxvX0lHh0TXJhDzIQkY=;
- b=oC9x4DAKFUDQNAcKlnecl1xQrZLbopOr0D9oes0MpbefezEJI2eeRF+qUieIE7tyT7gkk4Fi5dSftuF/6LhtpOmizUKJz0PryJt4CEVumtA6mV5g37yrKDFUC9CskGLSD6761obFutwVmz25wxMMCtdmqftfoHcsz7PEqqTz41NTGQKojmlM3f9W/43P190B0299lEidAXGx5Ypv5DdX2aSRm6deY5yJDTV0REqNaKUq7lz47tghrfiUpYqItfrXFE7ZfK3SZJ4jwV+RLUN5ebwMPCQDR/NUB8tA32frQYRd1I1JP7HGVWwGJIGXe36THf+aQMatv4E/a/CAEQBTxg==
+ bh=qAzsiTpdL0SBjzJLE5CDWwht36IIvxDx+Yrel2ix04A=;
+ b=SnCyZZfoda51lUXzrTpKfB+zCOR4v3cs1OLvhEuTSMSPlWlbMfPYZiGm2WztIqNwKZQHev59ZLwwoQUpUQKb63LV4b9t8gxTVWQepEd5xsUJO6kquD4H+mz/UVLoz5z3vP8PMZyQGQAMK9Nu1wbnNIGAqwyNtuCBv1yysVC4GDmB2vnrlLboKue4zpvX2gc/9E1AvTYaVA9pFNm9WMYJPp3CXlgr/x6l5hLEdm+ANWQr8IFlcLjzylq3f55H02a4+SWksL5Mykl3Kh1MXOIRsePGjwmpQhH3JGiREmR0W+1RSfca1Ppjaz5ywY6BVl8sVxKQwWZYgsDnehp3hPFkcw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
  165.204.84.17) smtp.rcpttodomain=kernel.org smtp.mailfrom=amd.com; dmarc=pass
  (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
  dkim=none (message not signed); arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=1jvyGBuH2fvAOiqFAE6dALUqHxvX0lHh0TXJhDzIQkY=;
- b=W+CJwLCWJ4YMLhX0dxe1EjVGfI0UUCYC3ymp45bgXUAvzlQPZ4Z+0ZSBNKDVgscjcAKGbAgP4Y45yUjgioQyOa+FTAPkhkLPb9Z5T8eArC5MH6BmlY3PBU6rcAfeXetPO78Tu9NdL+tEriCCIk70dfFupz/2JdOXBjOg4AAAc3M=
-Received: from DM5PR07CA0060.namprd07.prod.outlook.com (2603:10b6:4:ad::25) by
- CH2PR12MB4875.namprd12.prod.outlook.com (2603:10b6:610:35::24) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.5986.23; Tue, 17 Jan 2023 20:54:18 +0000
-Received: from DM6NAM11FT103.eop-nam11.prod.protection.outlook.com
- (2603:10b6:4:ad:cafe::64) by DM5PR07CA0060.outlook.office365.com
- (2603:10b6:4:ad::25) with Microsoft SMTP Server (version=TLS1_2,
+ bh=qAzsiTpdL0SBjzJLE5CDWwht36IIvxDx+Yrel2ix04A=;
+ b=upCXqMSYIUr9gFsZqqMBEGeyy/n9aR6jP3oCyNuA/OvM4JABTcVLeQvX5T8p57kqIeQ7Kr/hZLfRByqk3Sq0u+NlFzgHgBWtUubq5HTBjZbvt3Y0k+ffY9kMgTXwd7smnKerBLKGcP/D6eUb0z80YNyvzEnzzZXel3H+fAq/owk=
+Received: from DM6PR07CA0117.namprd07.prod.outlook.com (2603:10b6:5:330::32)
+ by MN6PR12MB8565.namprd12.prod.outlook.com (2603:10b6:208:47d::22) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5986.23; Tue, 17 Jan
+ 2023 20:54:19 +0000
+Received: from DM6NAM11FT057.eop-nam11.prod.protection.outlook.com
+ (2603:10b6:5:330:cafe::14) by DM6PR07CA0117.outlook.office365.com
+ (2603:10b6:5:330::32) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6002.19 via Frontend
- Transport; Tue, 17 Jan 2023 20:54:18 +0000
+ Transport; Tue, 17 Jan 2023 20:54:19 +0000
 X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
  smtp.mailfrom=amd.com; dkim=none (message not signed)
  header.d=none;dmarc=pass action=none header.from=amd.com;
@@ -45,132 +46,225 @@ Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
  165.204.84.17 as permitted sender) receiver=protection.outlook.com;
  client-ip=165.204.84.17; helo=SATLEXMB03.amd.com; pr=C
 Received: from SATLEXMB03.amd.com (165.204.84.17) by
- DM6NAM11FT103.mail.protection.outlook.com (10.13.172.75) with Microsoft SMTP
+ DM6NAM11FT057.mail.protection.outlook.com (10.13.172.252) with Microsoft SMTP
  Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.20.6002.13 via Frontend Transport; Tue, 17 Jan 2023 20:54:17 +0000
-Received: from SATLEXMB07.amd.com (10.181.41.45) by SATLEXMB03.amd.com
+ 15.20.6002.13 via Frontend Transport; Tue, 17 Jan 2023 20:54:19 +0000
+Received: from SATLEXMB06.amd.com (10.181.40.147) by SATLEXMB03.amd.com
  (10.181.40.144) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2375.34; Tue, 17 Jan
- 2023 14:54:17 -0600
-Received: from SATLEXMB04.amd.com (10.181.40.145) by SATLEXMB07.amd.com
- (10.181.41.45) with Microsoft SMTP Server (version=TLS1_2,
+ 2023 14:54:19 -0600
+Received: from SATLEXMB04.amd.com (10.181.40.145) by SATLEXMB06.amd.com
+ (10.181.40.147) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2375.34; Tue, 17 Jan
- 2023 12:54:16 -0800
+ 2023 14:54:18 -0600
 Received: from xsjlizhih40.xilinx.com (10.180.168.240) by SATLEXMB04.amd.com
  (10.181.40.145) with Microsoft SMTP Server id 15.1.2375.34 via Frontend
- Transport; Tue, 17 Jan 2023 14:54:16 -0600
+ Transport; Tue, 17 Jan 2023 14:54:18 -0600
 From:   Lizhi Hou <lizhi.hou@amd.com>
 To:     <vkoul@kernel.org>, <dmaengine@vger.kernel.org>,
         <linux-kernel@vger.kernel.org>
 CC:     Lizhi Hou <lizhi.hou@amd.com>, <max.zhen@amd.com>,
         <sonal.santan@amd.com>, <larry.liu@amd.com>, <brian.xu@amd.com>,
         <tumic@gpxsee.org>
-Subject: [RESEND PATCH V11 XDMA 0/2] xilinx XDMA driver
-Date:   Tue, 17 Jan 2023 12:54:00 -0800
-Message-ID: <1673988842-43631-1-git-send-email-lizhi.hou@amd.com>
+Subject: [RESEND PATCH V11 XDMA 2/2] dmaengine: xilinx: xdma: Add user logic interrupt support
+Date:   Tue, 17 Jan 2023 12:54:02 -0800
+Message-ID: <1673988842-43631-3-git-send-email-lizhi.hou@amd.com>
 X-Mailer: git-send-email 1.8.3.1
+In-Reply-To: <1673988842-43631-1-git-send-email-lizhi.hou@amd.com>
+References: <1673988842-43631-1-git-send-email-lizhi.hou@amd.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DM6NAM11FT103:EE_|CH2PR12MB4875:EE_
-X-MS-Office365-Filtering-Correlation-Id: 0b271c94-966a-4031-a601-08daf8ccfffc
+X-MS-TrafficTypeDiagnostic: DM6NAM11FT057:EE_|MN6PR12MB8565:EE_
+X-MS-Office365-Filtering-Correlation-Id: 4160f7cd-c2fd-4459-3e0a-08daf8cd011d
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: ygafrXQjZHmnkh1t+a+y8rAnW3ThI213OPSyx0CsKVPNQ3m304G56pqzpaja1X129+ASzshlLdT0y3PziJdvtWPN5surV46xRuKyrwVy/Qj6m588H3l44NFWfdBUAtVMV+9YXuiiU1Pp0lYizo4ebSE03RxcABTxhW+qFDYTtWXmxf5qBBi9aBYbuO2FDLeGnARzygcc/QKZW18MoXpTvRNA69yA0tpoExTksaSUsSy35p3okWJC0pqp0EyKXLDKNkFFVktBsRuc5ekmkiHQXIkdaw48QPaT3tzENj4HXnsUmeREY8kZg28axV/6soTDHcqpDgoIGhAygxiGaqGZLzsV5WoKXsJRppaOjedq22sInePtEP2NLfkPF/wtPKzJM5/hrSGRmMnDs30HN/G5HvVHEeB3YlHV2bwhPwa9Ycw7Hm78OA9BpabWzuW1Bdg9w42qNlPFRBv8ROlGbndoU5fO76jFF42JNmylas2JisWEr8/zope1kiK/2yz/76e+YiGygdac9do3XoTBJCqceD35RQKXsosnLRDCktiqgM2x31s9MoTLdiQiWXZbQ1iAc5hyYoQanx58Jhih3r3XN4RxGN9b2H1FYmoWBxRsrOibxf9I2GJPflAJGqq/05+E31uxQoMr0HhzTyDWCtIyz5zGYkHqE/alLE3uOloyz2VNEPlfmsT0hrFiC/GSJaFpC1r+Rg/3sgsBS75EBeBzpeYpDH2bPWTlik08ssLI2o4Ffxoh9mOjTiaBZYjRxgYMI60PQ5a5dVkF0jRVq4ekWcO7JtZiDOAvK12a1vnOmUbhIPmYQuQgwPXddu2ItL8b
-X-Forefront-Antispam-Report: CIP:165.204.84.17;CTRY:US;LANG:en;SCL:1;SRV:;IPV:CAL;SFV:NSPM;H:SATLEXMB03.amd.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230022)(4636009)(346002)(136003)(396003)(376002)(39860400002)(451199015)(46966006)(40470700004)(36840700001)(81166007)(82740400003)(36860700001)(83380400001)(356005)(86362001)(2906002)(5660300002)(44832011)(8676002)(8936002)(70206006)(70586007)(4326008)(41300700001)(2616005)(40480700001)(82310400005)(186003)(26005)(47076005)(336012)(110136005)(40460700003)(426003)(966005)(316002)(6666004)(478600001)(54906003)(36756003)(36900700001);DIR:OUT;SFP:1101;
+X-Microsoft-Antispam-Message-Info: MwV/h4m0R+laqyiFxabreAOD098B3LgHWGUYpync0ceYTFF5xxg9YRqRzcAfYSbutGHEckrfqV8QGBZ0wW0OUZbifTpuPzK/5BoupKfN6QnDoAAQ71rBoSoyC9Qk51NvH4hy2WBM5V9/mPNf0lG5yzbIxevUroLbraS9wcpNes5zkXAkSF7s6VdOl6ahB1kIJrcZyFDTil69jlyyx6tqXwFIGqlW3Tv+GwVyAmmyLVh8qYK5HAuTJ+BwcMUqICfiTC1DCELcX8aO8KSCjcgsCLZ6r9TCVlL/gcjNFol7PcbBztdkaqrLhmK6WOI6mhNArV9G2s7CuBxiGEEoHYIhh7fJrrP8+L3apDkZKdxUJWPvMOZtqggHMlixhk2DT119XUQTaafYlnGmIv9WSLrNGfffyKMdv+446btrPNA//JhdCfl4GJEUOs2fBG9FTvl6Y3aOi1I4Ea78qu88B51KqKTcWI4wmZ0tMqWQq3UDfwwH9VoFMxt7U/uZlac9C+6mqQy4x2y4bZMl5rxPY6Kmh9nMCPeqY4Zo4jrNNRSkgjalGtIt0vJnGlTpiuC14cZ6x9Dv5Lheci/7vTfYaOxD3KnExrNACXTGbhVVT4u0d4M4OCviwHbk2j1hNYvkJIEvG/VSRKKEUXlj4X+cUb5t8xvNXXvqPLg2l5Pn5LDFHqGj/cQUFJdjF2CvwIWoxx2Z/yExMpf4HHc8fvaTH+IwnrzTgm3OadPoqSlgf8qxOYw=
+X-Forefront-Antispam-Report: CIP:165.204.84.17;CTRY:US;LANG:en;SCL:1;SRV:;IPV:CAL;SFV:NSPM;H:SATLEXMB03.amd.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230022)(4636009)(396003)(136003)(346002)(376002)(39860400002)(451199015)(40470700004)(36840700001)(46966006)(86362001)(36756003)(82310400005)(8676002)(186003)(2616005)(4326008)(70586007)(426003)(47076005)(70206006)(41300700001)(26005)(40480700001)(83380400001)(316002)(54906003)(110136005)(478600001)(6666004)(40460700003)(44832011)(356005)(2906002)(81166007)(8936002)(36860700001)(336012)(5660300002)(82740400003)(36900700001);DIR:OUT;SFP:1101;
 X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Jan 2023 20:54:17.7329
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Jan 2023 20:54:19.6243
  (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 0b271c94-966a-4031-a601-08daf8ccfffc
+X-MS-Exchange-CrossTenant-Network-Message-Id: 4160f7cd-c2fd-4459-3e0a-08daf8cd011d
 X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d;Ip=[165.204.84.17];Helo=[SATLEXMB03.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: DM6NAM11FT103.eop-nam11.prod.protection.outlook.com
+X-MS-Exchange-CrossTenant-AuthSource: DM6NAM11FT057.eop-nam11.prod.protection.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH2PR12MB4875
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN6PR12MB8565
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Hello,
-
-This V11 of patch series is to provide the platform driver to support the
-Xilinx XDMA subsystem. The XDMA subsystem is used in conjunction with the
-PCI Express IP block to provide high performance data transfer between host
-memory and the card's DMA subsystem. It also provides up to 16 user
+The Xilinx DMA/Bridge Subsystem for PCIe (XDMA) provides up to 16 user
 interrupt wires to user logic that generate interrupts to the host.
+This patch adds APIs to enable/disable user logic interrupt for a given
+interrupt wire index.
 
-            +-------+       +-------+       +-----------+
-   PCIe     |       |       |       |       |           |
-   Tx/Rx    |       |       |       |  AXI  |           |
- <=======>  | PCIE  | <===> | XDMA  | <====>| User Logic|
-            |       |       |       |       |           |
-            +-------+       +-------+       +-----------+
-
-The XDMA has been used for Xilinx Alveo PCIe devices.
-And it is also integrated into Versal ACAP DMA and Bridge Subsystem.
-    https://www.xilinx.com/products/boards-and-kits/alveo.html
-    https://docs.xilinx.com/r/en-US/pg344-pcie-dma-versal/Introduction-to-the-DMA-and-Bridge-Subsystems
-
-The device driver for any FPGA based PCIe device which leverages XDMA can
-call the standard dmaengine APIs to discover and use the XDMA subsystem
-without duplicating the XDMA driver code in its own driver.
-
-Changes since v10:
-- Added Tested-by Martin Tuma tumic@gpxsee.org
-
-Changes since v9:
-- Cleanup code based on review comments.
-
-Changes since v8:
-- Fixed test robot failure on s390.
-
-Changes since v7:
-- Used pci device pointer for dma_pool_create().
-
-Changes since v6:
-- Fixed descriptor filling bug.
-
-Changes since v5:
-- Modified user logic interrupt APIs to handle user logic IP which does not
-  have its own register to enable/disable interrupt.
-- Clean up code based on review comments.
-
-Changes since v4:
-- Modified user logic interrupt APIs.
-
-Changes since v3:
-- Added one patch to support user logic interrupt.
-
-Changes since v2:
-- Removed tasklet.
-- Fixed regression bug introduced to V2.
-- Test Robot warning.
-
-Changes since v1:
-- Moved filling hardware descriptor to xdma_prep_device_sg().
-- Changed hardware descriptor enum to "struct xdma_hw_desc".
-- Minor changes from code review comments.
-
-Lizhi Hou (2):
-  dmaengine: xilinx: xdma: Add xilinx xdma driver
-  dmaengine: xilinx: xdma: Add user logic interrupt support
-
- MAINTAINERS                            |   11 +
- drivers/dma/Kconfig                    |   14 +
- drivers/dma/xilinx/Makefile            |    1 +
- drivers/dma/xilinx/xdma-regs.h         |  173 ++++
- drivers/dma/xilinx/xdma.c              | 1004 ++++++++++++++++++++++++
- include/linux/dma/amd_xdma.h           |   16 +
- include/linux/platform_data/amd_xdma.h |   34 +
- 7 files changed, 1253 insertions(+)
- create mode 100644 drivers/dma/xilinx/xdma-regs.h
- create mode 100644 drivers/dma/xilinx/xdma.c
+Signed-off-by: Lizhi Hou <lizhi.hou@amd.com>
+Signed-off-by: Sonal Santan <sonal.santan@amd.com>
+Signed-off-by: Max Zhen <max.zhen@amd.com>
+Signed-off-by: Brian Xu <brian.xu@amd.com>
+Tested-by: Martin Tuma <tumic@gpxsee.org>
+---
+ MAINTAINERS                  |  1 +
+ drivers/dma/xilinx/xdma.c    | 85 ++++++++++++++++++++++++++++++++++++
+ include/linux/dma/amd_xdma.h | 16 +++++++
+ 3 files changed, 102 insertions(+)
  create mode 100644 include/linux/dma/amd_xdma.h
- create mode 100644 include/linux/platform_data/amd_xdma.h
 
+diff --git a/MAINTAINERS b/MAINTAINERS
+index d598c4e23901..eaf6590dda19 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -22583,6 +22583,7 @@ L:	dmaengine@vger.kernel.org
+ S:	Supported
+ F:	drivers/dma/xilinx/xdma-regs.h
+ F:	drivers/dma/xilinx/xdma.c
++F:	include/linux/dma/amd_xdma.h
+ F:	include/linux/platform_data/amd_xdma.h
+ 
+ XILINX ZYNQMP DPDMA DRIVER
+diff --git a/drivers/dma/xilinx/xdma.c b/drivers/dma/xilinx/xdma.c
+index 118528295fb7..846f10317bba 100644
+--- a/drivers/dma/xilinx/xdma.c
++++ b/drivers/dma/xilinx/xdma.c
+@@ -25,6 +25,7 @@
+ #include <linux/dmapool.h>
+ #include <linux/regmap.h>
+ #include <linux/dmaengine.h>
++#include <linux/dma/amd_xdma.h>
+ #include <linux/platform_device.h>
+ #include <linux/platform_data/amd_xdma.h>
+ #include <linux/dma-mapping.h>
+@@ -713,6 +714,7 @@ static int xdma_set_vector_reg(struct xdma_device *xdev, u32 vec_tbl_start,
+ static int xdma_irq_init(struct xdma_device *xdev)
+ {
+ 	u32 irq = xdev->irq_start;
++	u32 user_irq_start;
+ 	int i, j, ret;
+ 
+ 	/* return failure if there are not enough IRQs */
+@@ -755,6 +757,18 @@ static int xdma_irq_init(struct xdma_device *xdev)
+ 		goto failed_init_c2h;
+ 	}
+ 
++	/* config user IRQ registers if needed */
++	user_irq_start = XDMA_CHAN_NUM(xdev);
++	if (xdev->irq_num > user_irq_start) {
++		ret = xdma_set_vector_reg(xdev, XDMA_IRQ_USER_VEC_NUM,
++					  user_irq_start,
++					  xdev->irq_num - user_irq_start);
++		if (ret) {
++			xdma_err(xdev, "failed to set user vectors: %d", ret);
++			goto failed_init_c2h;
++		}
++	}
++
+ 	/* enable interrupt */
+ 	ret = xdma_write_reg(xdev, XDMA_IRQ_BASE, XDMA_IRQ_CHAN_INT_EN_W1S, ~0);
+ 	if (ret)
+@@ -780,6 +794,77 @@ static bool xdma_filter_fn(struct dma_chan *chan, void *param)
+ 	return chan_info->dir == xdma_chan->dir;
+ }
+ 
++/**
++ * xdma_disable_user_irq - Disable user interrupt
++ * @pdev: Pointer to the platform_device structure
++ * @irq_num: System IRQ number
++ */
++void xdma_disable_user_irq(struct platform_device *pdev, u32 irq_num)
++{
++	struct xdma_device *xdev = platform_get_drvdata(pdev);
++	u32 user_irq_index;
++
++	user_irq_index = irq_num - xdev->irq_start;
++	if (user_irq_index < XDMA_CHAN_NUM(xdev) ||
++	    user_irq_index >= xdev->irq_num) {
++		xdma_err(xdev, "invalid user irq number");
++		return;
++	}
++	user_irq_index -= XDMA_CHAN_NUM(xdev);
++
++	xdma_write_reg(xdev, XDMA_IRQ_BASE, XDMA_IRQ_USER_INT_EN_W1C,
++		       (1 << user_irq_index));
++}
++EXPORT_SYMBOL(xdma_disable_user_irq);
++
++/**
++ * xdma_enable_user_irq - Enable user logic interrupt
++ * @pdev: Pointer to the platform_device structure
++ * @irq_num: System IRQ number
++ */
++int xdma_enable_user_irq(struct platform_device *pdev, u32 irq_num)
++{
++	struct xdma_device *xdev = platform_get_drvdata(pdev);
++	u32 user_irq_index;
++	int ret;
++
++	user_irq_index = irq_num - xdev->irq_start;
++	if (user_irq_index < XDMA_CHAN_NUM(xdev) ||
++	    user_irq_index >= xdev->irq_num) {
++		xdma_err(xdev, "invalid user irq number");
++		return -EINVAL;
++	}
++	user_irq_index -= XDMA_CHAN_NUM(xdev);
++
++	ret = xdma_write_reg(xdev, XDMA_IRQ_BASE, XDMA_IRQ_USER_INT_EN_W1S,
++			     (1 << user_irq_index));
++	if (ret)
++		return ret;
++
++	return 0;
++}
++EXPORT_SYMBOL(xdma_enable_user_irq);
++
++/**
++ * xdma_get_user_irq - Get system IRQ number
++ * @pdev: Pointer to the platform_device structure
++ * @user_irq_index: User logic IRQ wire index
++ *
++ * Return: The system IRQ number allocated for the given wire index.
++ */
++int xdma_get_user_irq(struct platform_device *pdev, u32 user_irq_index)
++{
++	struct xdma_device *xdev = platform_get_drvdata(pdev);
++
++	if (XDMA_CHAN_NUM(xdev) + user_irq_index >= xdev->irq_num) {
++		xdma_err(xdev, "invalid user irq index");
++		return -EINVAL;
++	}
++
++	return xdev->irq_start + XDMA_CHAN_NUM(xdev) + user_irq_index;
++}
++EXPORT_SYMBOL(xdma_get_user_irq);
++
+ /**
+  * xdma_remove - Driver remove function
+  * @pdev: Pointer to the platform_device structure
+diff --git a/include/linux/dma/amd_xdma.h b/include/linux/dma/amd_xdma.h
+new file mode 100644
+index 000000000000..ceba69ed7cb4
+--- /dev/null
++++ b/include/linux/dma/amd_xdma.h
+@@ -0,0 +1,16 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++/*
++ * Copyright (C) 2022, Advanced Micro Devices, Inc.
++ */
++
++#ifndef _DMAENGINE_AMD_XDMA_H
++#define _DMAENGINE_AMD_XDMA_H
++
++#include <linux/interrupt.h>
++#include <linux/platform_device.h>
++
++int xdma_enable_user_irq(struct platform_device *pdev, u32 irq_num);
++void xdma_disable_user_irq(struct platform_device *pdev, u32 irq_num);
++int xdma_get_user_irq(struct platform_device *pdev, u32 user_irq_index);
++
++#endif /* _DMAENGINE_AMD_XDMA_H */
 -- 
 2.27.0
 
