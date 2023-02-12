@@ -2,87 +2,74 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 24B24C636CC
-	for <dmaengine@archiver.kernel.org>; Sat, 11 Feb 2023 14:30:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C61A5C05027
+	for <dmaengine@archiver.kernel.org>; Sun, 12 Feb 2023 15:41:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229461AbjBKOap (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Sat, 11 Feb 2023 09:30:45 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39270 "EHLO
+        id S229798AbjBLPlu (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Sun, 12 Feb 2023 10:41:50 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39878 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229447AbjBKOao (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Sat, 11 Feb 2023 09:30:44 -0500
-Received: from wp530.webpack.hosteurope.de (wp530.webpack.hosteurope.de [80.237.130.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69B8F27D55;
-        Sat, 11 Feb 2023 06:30:43 -0800 (PST)
-Received: from [2a02:8108:8980:2478:8cde:aa2c:f324:937e]; authenticated
-        by wp530.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
-        id 1pQqtl-0004G1-U5; Sat, 11 Feb 2023 15:30:41 +0100
-Message-ID: <cd61b6d1-52e3-11a9-714e-324b51425cec@leemhuis.info>
-Date:   Sat, 11 Feb 2023 15:30:41 +0100
+        with ESMTP id S229789AbjBLPln (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Sun, 12 Feb 2023 10:41:43 -0500
+Received: from soltyk.jannau.net (soltyk.jannau.net [144.76.91.90])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E83F712F09;
+        Sun, 12 Feb 2023 07:41:37 -0800 (PST)
+Received: from robin.home.jannau.net (p579ad32f.dip0.t-ipconnect.de [87.154.211.47])
+        by soltyk.jannau.net (Postfix) with ESMTPSA id 85BE926F790;
+        Sun, 12 Feb 2023 16:41:36 +0100 (CET)
+From:   Janne Grunau <j@jannau.net>
+To:     Hector Martin <marcan@marcan.st>, Sven Peter <sven@svenpeter.dev>,
+        Alyssa Rosenzweig <alyssa@rosenzweig.io>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Mark Kettenis <kettenis@openbsd.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        =?UTF-8?q?=A1er?= <povik+lin@cutebit.org>
+Cc:     asahi@lists.linux.dev, linux-arm-kernel@lists.infradead.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        dmaengine@vger.kernel.org
+Subject: [PATCH 15/17] dt-bindings: dma: apple,admac: Add t8112-admac compatible
+Date:   Sun, 12 Feb 2023 16:41:25 +0100
+Message-Id: <20230202-asahi-t8112-dt-v1-15-cb5442d1c229@jannau.net>
+X-Mailer: git-send-email 2.39.1
+In-Reply-To: <20230202-asahi-t8112-dt-v1-0-cb5442d1c229@jannau.net>
+References: <20230202-asahi-t8112-dt-v1-0-cb5442d1c229@jannau.net>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.1
-Subject: =?UTF-8?Q?Re=3a_=5bregression=5d_Bug=c2=a0216856_-_=5bptdma=5d_NULL?=
- =?UTF-8?Q?_pointer_dereference_in_pt=5fcmd=5fcallback_during_server_shutdow?=
- =?UTF-8?Q?n?=
-Content-Language: en-US, de-DE
-From:   "Linux regression tracking #update (Thorsten Leemhuis)" 
-        <regressions@leemhuis.info>
-To:     Sanjay R Mehta <sanju.mehta@amd.com>, Vinod Koul <vkoul@kernel.org>
-Cc:     Eric Pilmore <epilmore@gigaio.com>, dmaengine@vger.kernel.org,
-        LKML <linux-kernel@vger.kernel.org>,
-        "regressions@lists.linux.dev" <regressions@lists.linux.dev>
-References: <0e77436c-9f0a-15b6-697a-7b879e4abc4a@leemhuis.info>
-Reply-To: Linux regressions mailing list <regressions@lists.linux.dev>
-In-Reply-To: <0e77436c-9f0a-15b6-697a-7b879e4abc4a@leemhuis.info>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-bounce-key: webpack.hosteurope.de;regressions@leemhuis.info;1676125843;d111d630;
-X-HE-SMSGID: 1pQqtl-0004G1-U5
+Content-Type: text/plain; charset="utf-8"
+X-Mailer: b4 0.12.1
+X-Developer-Signature: v=1; a=openpgp-sha256; l=904; i=j@jannau.net; h=from:subject:message-id; bh=S0Iix+sqEiNt1+LztfuVpGzFysCtRTtL+8qXnHKS/io=; b=owGbwMvMwCG2UNrmdq9+ahrjabUkhuSX7Cctj8mFrO69buzrXLdi+51fD+8LhFq82vFXk/ls/ PQL8ilnOkpZGMQ4GGTFFFmStF92MKyuUYypfRAGM4eVCWQIAxenAExkjyPDP5ujN1JdMjc/XLE8 a+u13JyrecEeyw91tESm/Km5Pve3gh8jw4apSS2mV070POnZbih/9ZqwVb/OqtSSz+WtGktKn++ L5gcA
+X-Developer-Key: i=j@jannau.net; a=openpgp; fpr=8B336A6BE4E5695E89B8532B81E806F586338419
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-[TLDR: This mail in primarily relevant for Linux regression tracking. A
-change or fix related to the regression discussed in this thread was
-posted or applied, but it did not use a Link: tag to point to the
-report, as Linus and the documentation call for. Things happen, no
-worries -- but now the regression tracking bot needs to be told manually
-about the fix. See link in footer if these mails annoy you.]
+The block found on Apple's M2 SoC is compatible with the existing driver
+so add its per-SoC compatible.
 
-On 30.12.22 09:27, Thorsten Leemhuis wrote:
+Signed-off-by: Janne Grunau <j@jannau.net>
 
-> I noticed a bug report in bugzilla.kernel.org that looks a lot like a
-> regression to my untrained eyes (it's not entirely clear). As many
-> (most?) kernel developer don't keep an eye on it, I decided to forward
-> it by mail. Quoting from
-> https://bugzilla.kernel.org/show_bug.cgi?id=216856 :
-> 
->>  Eric Pilmore 2022-12-27 22:23:50 UTC
->>
->> Observed kernel panic during host shutdown on a AMD (Milan CPU) based
->> server. The issue ended up being a NULL pointer dereference in
->> pt_cmd_callback() when
->> called from pt_issue_pending(). If you follow the flow in
->> pt_issue_pending() you will note that if pt_next_dma_desc() returns
->> NULL, then engine_is_idle will remain as TRUE, including if
->> pt_next_dma_desc() is still returning NULL in the 2nd call just prior to
->> doing the call to pt_cmd_callback().
-> [...]
-> #regzbot introduced: v6.1..v6.2-rc1
-> https://bugzilla.kernel.org/show_bug.cgi?id=216856
-> #regzbot title: ptdma: kernel panic during host shutdown
-> #regzbot ignore-activity
+---
+This trivial dt-bindings update should be merged through the asahi-soc
+tree to ensure validation of the Apple M2 (t8112) devicetrees in this
+series.
+---
+ Documentation/devicetree/bindings/dma/apple,admac.yaml | 1 +
+ 1 file changed, 1 insertion(+)
 
-#regzbot introduced: 6fa7e0e836e2
-#regzbot monitor:
-https://lore.kernel.org/all/20230210075142.58253-1-epilmore@gigaio.com/
-#regzbot fix: dmaengine: ptdma: check for null desc before calling
-pt_cmd_callback
-#regzbot ignore-activity
+diff --git a/Documentation/devicetree/bindings/dma/apple,admac.yaml b/Documentation/devicetree/bindings/dma/apple,admac.yaml
+index 97282469e4af..beb09f115f40 100644
+--- a/Documentation/devicetree/bindings/dma/apple,admac.yaml
++++ b/Documentation/devicetree/bindings/dma/apple,admac.yaml
+@@ -26,6 +26,7 @@ properties:
+       - enum:
+           - apple,t6000-admac
+           - apple,t8103-admac
++          - apple,t8112-admac
+       - const: apple,admac
+ 
+   reg:
 
-Ciao, Thorsten (wearing his 'the Linux kernel's regression tracker' hat)
---
-Everything you wanna know about Linux kernel regression tracking:
-https://linux-regtracking.leemhuis.info/about/#tldr
-That page also explains what to do if mails like this annoy you.
+-- 
+2.39.1
+
