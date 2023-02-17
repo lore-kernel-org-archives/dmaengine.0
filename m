@@ -2,34 +2,34 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 98F3AC636D4
-	for <dmaengine@archiver.kernel.org>; Fri, 17 Feb 2023 09:40:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 60109C6FD18
+	for <dmaengine@archiver.kernel.org>; Fri, 17 Feb 2023 09:40:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230120AbjBQJkQ (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 17 Feb 2023 04:40:16 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34508 "EHLO
+        id S230146AbjBQJkS (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 17 Feb 2023 04:40:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34498 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230104AbjBQJkM (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Fri, 17 Feb 2023 04:40:12 -0500
+        with ESMTP id S229882AbjBQJkN (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Fri, 17 Feb 2023 04:40:13 -0500
 Received: from post.baikalelectronics.com (post.baikalelectronics.com [213.79.110.86])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 8FA0E62FD5;
-        Fri, 17 Feb 2023 01:40:10 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 35FED61878;
+        Fri, 17 Feb 2023 01:40:12 -0800 (PST)
 Received: from post.baikalelectronics.com (localhost.localdomain [127.0.0.1])
-        by post.baikalelectronics.com (Proxmox) with ESMTP id A6F25E0EB3;
-        Fri, 17 Feb 2023 12:40:08 +0300 (MSK)
+        by post.baikalelectronics.com (Proxmox) with ESMTP id 68B71E0EAC;
+        Fri, 17 Feb 2023 12:40:11 +0300 (MSK)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
         baikalelectronics.ru; h=cc:cc:content-transfer-encoding
         :content-type:content-type:date:from:from:in-reply-to:message-id
         :mime-version:references:reply-to:subject:subject:to:to; s=post;
-         bh=rQD6exJUBz0l/57+p9e85qnkaWE60dL9QxOOTe78vck=; b=Yzm/6AtuFB23
-        +230iduh9h4t6T9gyUwVUbvVI8UGGT064KjGeNoFyC9p2c+kkBiR5QKjwoOOwiMB
-        PUZTfSkyo1fRFk9N9IDomReGndL0BowOZRG7dTPW0eoL3w43rfMPyqrs/UxF5KCF
-        pFBWOAxjDNuZqb0HmwZO4IgzhXRiyb4=
+         bh=kbTXPo50FUtkj9Sp0fDTmB5AKDdjxAfnnrnFc1erRjs=; b=I0dMBTcZfciW
+        f9d2Hb/5T1JFjnlgu/0G31DtrOAnbicaA5S30pQ3He44krJi+sFhF2vW9YfPtVAU
+        JMR7J6Rx2hKXwtYgAkABNAGCap7F9NsP5JtbFWNaq2LWpgmFYqjItUNOfntGgCux
+        FVm6r/M8Y3xWzGcdEofKf4zWvbAdGZ0=
 Received: from mail.baikal.int (mail.baikal.int [192.168.51.25])
-        by post.baikalelectronics.com (Proxmox) with ESMTP id 8D1ADE0E6A;
-        Fri, 17 Feb 2023 12:40:08 +0300 (MSK)
+        by post.baikalelectronics.com (Proxmox) with ESMTP id 50777E0E6A;
+        Fri, 17 Feb 2023 12:40:11 +0300 (MSK)
 Received: from localhost (10.8.30.14) by mail (192.168.51.25) with Microsoft
- SMTP Server (TLS) id 15.0.1395.4; Fri, 17 Feb 2023 12:40:08 +0300
+ SMTP Server (TLS) id 15.0.1395.4; Fri, 17 Feb 2023 12:40:10 +0300
 From:   Serge Semin <Sergey.Semin@baikalelectronics.ru>
 To:     Bjorn Helgaas <bhelgaas@google.com>,
         Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
@@ -39,18 +39,16 @@ To:     Bjorn Helgaas <bhelgaas@google.com>,
         Vinod Koul <vkoul@kernel.org>,
         Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
         Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-        Rob Herring <robh@kernel.org>,
-        Serge Semin <fancer.lancer@gmail.com>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        =?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>
+        Rob Herring <robh@kernel.org>
 CC:     Serge Semin <Sergey.Semin@baikalelectronics.ru>,
+        Serge Semin <fancer.lancer@gmail.com>,
         Alexey Malahov <Alexey.Malahov@baikalelectronics.ru>,
         Pavel Parkhomenko <Pavel.Parkhomenko@baikalelectronics.ru>,
         <linux-pci@vger.kernel.org>, <dmaengine@vger.kernel.org>,
         <linux-kernel@vger.kernel.org>
-Subject: [PATCH 07/11] PCI: dwc: Drop empty line from dw_pcie_link_set_max_speed()
-Date:   Fri, 17 Feb 2023 12:39:52 +0300
-Message-ID: <20230217093956.27126-8-Sergey.Semin@baikalelectronics.ru>
+Subject: [PATCH 09/11] MAINTAINERS: Add all generic DW PCIe RP/EP DT-schemas
+Date:   Fri, 17 Feb 2023 12:39:54 +0300
+Message-ID: <20230217093956.27126-10-Sergey.Semin@baikalelectronics.ru>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230217093956.27126-1-Sergey.Semin@baikalelectronics.ru>
 References: <20230217093956.27126-1-Sergey.Semin@baikalelectronics.ru>
@@ -63,27 +61,33 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Well, just drop a redundant empty line from the tail of the denoted
-function which by mistake was added in commit 39bc5006501c ("PCI: dwc:
-Centralize link gen setting").
+Recently the DT-schema of the DW PCIe Root Port and End-point controllers
+has been refactored by detaching the common bindings into a separate
+schema. The provided modification must be reflected in the MAINTAINERS
+list so the patch submitters would be aware of the new files maintainers.
+Let's do that by adding the maintained files wildcard pattern like
+snps,dw-pcie*.yaml, which is applicable for all the old DW PCIe DT-schema
+files and the new one.
 
 Signed-off-by: Serge Semin <Sergey.Semin@baikalelectronics.ru>
 ---
- drivers/pci/controller/dwc/pcie-designware.c | 1 -
- 1 file changed, 1 deletion(-)
+ MAINTAINERS | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/pci/controller/dwc/pcie-designware.c b/drivers/pci/controller/dwc/pcie-designware.c
-index ab774665ed87..c09b339891e2 100644
---- a/drivers/pci/controller/dwc/pcie-designware.c
-+++ b/drivers/pci/controller/dwc/pcie-designware.c
-@@ -716,7 +716,6 @@ static void dw_pcie_link_set_max_speed(struct dw_pcie *pci, u32 link_gen)
+diff --git a/MAINTAINERS b/MAINTAINERS
+index a36df9ed283d..8a9dd6af2b45 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -16085,8 +16085,7 @@ M:	Jingoo Han <jingoohan1@gmail.com>
+ M:	Gustavo Pimentel <gustavo.pimentel@synopsys.com>
+ L:	linux-pci@vger.kernel.org
+ S:	Maintained
+-F:	Documentation/devicetree/bindings/pci/snps,dw-pcie.yaml
+-F:	Documentation/devicetree/bindings/pci/snps,dw-pcie-ep.yaml
++F:	Documentation/devicetree/bindings/pci/snps,dw-pcie*.yaml
+ F:	drivers/pci/controller/dwc/*designware*
  
- 	cap &= ~((u32)PCI_EXP_LNKCAP_SLS);
- 	dw_pcie_writel_dbi(pci, offset + PCI_EXP_LNKCAP, cap | link_speed);
--
- }
- 
- void dw_pcie_iatu_detect(struct dw_pcie *pci)
+ PCI DRIVER FOR TI DRA7XX/J721E
 -- 
 2.39.0
 
