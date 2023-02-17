@@ -2,34 +2,34 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0A048C64ED8
-	for <dmaengine@archiver.kernel.org>; Fri, 17 Feb 2023 09:40:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2ED49C64ED9
+	for <dmaengine@archiver.kernel.org>; Fri, 17 Feb 2023 09:40:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230126AbjBQJkP (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 17 Feb 2023 04:40:15 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34498 "EHLO
+        id S230116AbjBQJkO (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 17 Feb 2023 04:40:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34496 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230103AbjBQJkM (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Fri, 17 Feb 2023 04:40:12 -0500
+        with ESMTP id S229868AbjBQJkK (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Fri, 17 Feb 2023 04:40:10 -0500
 Received: from post.baikalelectronics.com (post.baikalelectronics.com [213.79.110.86])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 4E51162FC8;
-        Fri, 17 Feb 2023 01:40:10 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 16AAC62FD0;
+        Fri, 17 Feb 2023 01:40:04 -0800 (PST)
 Received: from post.baikalelectronics.com (localhost.localdomain [127.0.0.1])
-        by post.baikalelectronics.com (Proxmox) with ESMTP id 75730E0EB2;
-        Fri, 17 Feb 2023 12:40:07 +0300 (MSK)
+        by post.baikalelectronics.com (Proxmox) with ESMTP id 45F58E0EAF;
+        Fri, 17 Feb 2023 12:40:03 +0300 (MSK)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
         baikalelectronics.ru; h=cc:cc:content-transfer-encoding
         :content-type:content-type:date:from:from:in-reply-to:message-id
         :mime-version:references:reply-to:subject:subject:to:to; s=post;
-         bh=90XSpVALKMiW/nq26mbKADCqnLXe+Q5eidyES0CfvMs=; b=kjyxqyeagoKV
-        CHUAK6HekMyQHVrkMZpNHsULfoXzAeZLGQk2DYzuri4akEMgSrfeJ7SkJ9+5Dm3R
-        f+o378vpgFxyfcT9VT/XS04fUxoAIZWPZ1c3Xja7dqq8e3bn5ShUIyzGmqzCaRAl
-        vKaFpfOTNyXyStV/I8f3A4nZQACEAmM=
+         bh=w2jlGrFc3qlyTKTPE83c3X1APnnB2VRFPyB7c0ZQ+FI=; b=RRzqS2/0K8Ge
+        mdhKGX9+WFP+VcEHZTdSVmo9qiAxVL/OTSjwF1oUc5pXuOoA3mY13hi0rUCO1tBF
+        fW+CAKx3EArhpVOxXQNW/VdU8JCrFfmTTaLktqKzyPIeErNfRPy48qIx+2+B6aLV
+        wz148Vu8/he1OvYYHoDk+er4oyH9tsI=
 Received: from mail.baikal.int (mail.baikal.int [192.168.51.25])
-        by post.baikalelectronics.com (Proxmox) with ESMTP id 590EAE0E6A;
-        Fri, 17 Feb 2023 12:40:07 +0300 (MSK)
+        by post.baikalelectronics.com (Proxmox) with ESMTP id 307D5E0E6A;
+        Fri, 17 Feb 2023 12:40:03 +0300 (MSK)
 Received: from localhost (10.8.30.14) by mail (192.168.51.25) with Microsoft
- SMTP Server (TLS) id 15.0.1395.4; Fri, 17 Feb 2023 12:40:06 +0300
+ SMTP Server (TLS) id 15.0.1395.4; Fri, 17 Feb 2023 12:40:02 +0300
 From:   Serge Semin <Sergey.Semin@baikalelectronics.ru>
 To:     Bjorn Helgaas <bhelgaas@google.com>,
         Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
@@ -48,9 +48,9 @@ CC:     Serge Semin <Sergey.Semin@baikalelectronics.ru>,
         Pavel Parkhomenko <Pavel.Parkhomenko@baikalelectronics.ru>,
         <linux-pci@vger.kernel.org>, <dmaengine@vger.kernel.org>,
         <linux-kernel@vger.kernel.org>
-Subject: [PATCH 06/11] PCI: dwc: Drop duplicated fast-link-mode flag unsetting
-Date:   Fri, 17 Feb 2023 12:39:51 +0300
-Message-ID: <20230217093956.27126-7-Sergey.Semin@baikalelectronics.ru>
+Subject: [PATCH 03/11] PCI: dwc: Fix inbound iATU entries out-of-bounds warning message
+Date:   Fri, 17 Feb 2023 12:39:48 +0300
+Message-ID: <20230217093956.27126-4-Sergey.Semin@baikalelectronics.ru>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230217093956.27126-1-Sergey.Semin@baikalelectronics.ru>
 References: <20230217093956.27126-1-Sergey.Semin@baikalelectronics.ru>
@@ -63,30 +63,31 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Most likely by mistake the PORT_LINK_FAST_LINK_MODE flag unsetting was
-added twice in the commit cff9244432e8 ("PCI: dwc: Ensure FAST_LINK_MODE
-is cleared"): first it is cleared right after the content of the
-PCIE_PORT_LINK_CONTROL register is read, second it's cleared in the
-framework of the link-mode initialization procedure. The later action is
-redundant. Let's drop it.
+The message is printed if the number of requested inbound iATU windows
+exceed the device capability. In that case the message should either refer
+to the "dma-ranges" DT property or to the DMA-ranges mapping. We suggest
+to use the later version as a counterpart to the just CPU-ranges mapping.
+In any case the current "Dma-ranges" phrase seems incorrect.
 
+Suggested-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 Signed-off-by: Serge Semin <Sergey.Semin@baikalelectronics.ru>
 ---
- drivers/pci/controller/dwc/pcie-designware.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/pci/controller/dwc/pcie-designware-host.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pci/controller/dwc/pcie-designware.c b/drivers/pci/controller/dwc/pcie-designware.c
-index 3bb9ca14fb9c..ab774665ed87 100644
---- a/drivers/pci/controller/dwc/pcie-designware.c
-+++ b/drivers/pci/controller/dwc/pcie-designware.c
-@@ -825,7 +825,6 @@ void dw_pcie_setup(struct dw_pcie *pci)
+diff --git a/drivers/pci/controller/dwc/pcie-designware-host.c b/drivers/pci/controller/dwc/pcie-designware-host.c
+index 3ab6ae3712c4..5762bd306261 100644
+--- a/drivers/pci/controller/dwc/pcie-designware-host.c
++++ b/drivers/pci/controller/dwc/pcie-designware-host.c
+@@ -704,7 +704,7 @@ static int dw_pcie_iatu_setup(struct dw_pcie_rp *pp)
+ 	}
  
- 	/* Set the number of lanes */
- 	val = dw_pcie_readl_dbi(pci, PCIE_PORT_LINK_CONTROL);
--	val &= ~PORT_LINK_FAST_LINK_MODE;
- 	val &= ~PORT_LINK_MODE_MASK;
- 	switch (pci->num_lanes) {
- 	case 1:
+ 	if (pci->num_ib_windows <= i)
+-		dev_warn(pci->dev, "Dma-ranges exceed inbound iATU size (%u)\n",
++		dev_warn(pci->dev, "DMA-ranges exceed inbound iATU size (%u)\n",
+ 			 pci->num_ib_windows);
+ 
+ 	return 0;
 -- 
 2.39.0
 
