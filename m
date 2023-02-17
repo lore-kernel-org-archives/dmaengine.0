@@ -2,61 +2,99 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 60713C05027
-	for <dmaengine@archiver.kernel.org>; Fri, 17 Feb 2023 08:54:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D234BC05027
+	for <dmaengine@archiver.kernel.org>; Fri, 17 Feb 2023 09:40:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229628AbjBQIyO (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 17 Feb 2023 03:54:14 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57664 "EHLO
+        id S230090AbjBQJkK (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 17 Feb 2023 04:40:10 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34480 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229583AbjBQIyO (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Fri, 17 Feb 2023 03:54:14 -0500
-X-Greylist: delayed 487 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Fri, 17 Feb 2023 00:54:13 PST
-Received: from mail.paretdee.com (mail.paretdee.com [141.95.17.174])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0FAAE4233
-        for <dmaengine@vger.kernel.org>; Fri, 17 Feb 2023 00:54:12 -0800 (PST)
-Received: by mail.paretdee.com (Postfix, from userid 1002)
-        id B871EA25BF; Fri, 17 Feb 2023 08:46:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=paretdee.com; s=mail;
-        t=1676623563; bh=81y7GKW1qfpmZraEf77YtkUdBRVrEXx1Dfams4657E8=;
-        h=Date:From:To:Subject:From;
-        b=ZkNio5ZBxMek2CQ6fVDB4n/z9ECkNFLaFlvGpt07MbLnN9QbXqw/fB7hiBUy+V99b
-         /PwQbLfxbEZhDYWDoUlf4mzdepQwhVEq1DlptJ2Tv+0ZQqGS8WDHdOqRQqPBbKKrAo
-         VCFGVcMb0ACU12rnnF8OeGoxLQGEgeolkDojdC9YhfzyRB0T/BTnBb4uSeaIrLHoje
-         DLPSrxCYu+/xUe025/3Uv2vC13/jrmcSpNcwqI3yR9f/W1j2HYEsXYCrT+DtuEgA7C
-         ushMIL2Q4TPCHBTcql5pMQIyIUNQhf5zFxpQw+orFT7OIvV4XVdqANReu9sp646qvx
-         FeziuLOF2AUKQ==
-Received: by mail.paretdee.com for <dmaengine@vger.kernel.org>; Fri, 17 Feb 2023 08:46:01 GMT
-Message-ID: <20230217074500-0.1.4x.aeqb.0.1bz6dd1rlu@paretdee.com>
-Date:   Fri, 17 Feb 2023 08:46:01 GMT
-From:   "Zbynek Spacek" <zbynek.spacek@paretdee.com>
-To:     <dmaengine@vger.kernel.org>
-Subject: Silicone rubber - vulcanization
-X-Mailer: mail.paretdee.com
+        with ESMTP id S229605AbjBQJkK (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Fri, 17 Feb 2023 04:40:10 -0500
+Received: from post.baikalelectronics.com (post.baikalelectronics.com [213.79.110.86])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 5F7F562FDD;
+        Fri, 17 Feb 2023 01:40:01 -0800 (PST)
+Received: from post.baikalelectronics.com (localhost.localdomain [127.0.0.1])
+        by post.baikalelectronics.com (Proxmox) with ESMTP id 80D55E0EAC;
+        Fri, 17 Feb 2023 12:40:00 +0300 (MSK)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        baikalelectronics.ru; h=cc:cc:content-transfer-encoding
+        :content-type:content-type:date:from:from:in-reply-to:message-id
+        :mime-version:references:reply-to:subject:subject:to:to; s=post;
+         bh=Tv9FLsHiNOnxzHzQ4+Y5Gt8oNFskGfjGVuw49JYQI/M=; b=ry3EXBiKkYUA
+        prt2XdNsZHFU/Tp461Whj35weJ3xp7uHhPpFj6uiaMMLWOBaejPJf3TFUBw/jyxF
+        vB4M0OaLkpvFcZcULMd/waJ6x4fM8s0HRVAtaM8e2Ip6LniY/QIuZiagrWX7SAZM
+        VnOz/4/F/qgIxrPtZNxfmOx5ztHqTbI=
+Received: from mail.baikal.int (mail.baikal.int [192.168.51.25])
+        by post.baikalelectronics.com (Proxmox) with ESMTP id 69CAEE0E6A;
+        Fri, 17 Feb 2023 12:40:00 +0300 (MSK)
+Received: from localhost (10.8.30.14) by mail (192.168.51.25) with Microsoft
+ SMTP Server (TLS) id 15.0.1395.4; Fri, 17 Feb 2023 12:40:00 +0300
+From:   Serge Semin <Sergey.Semin@baikalelectronics.ru>
+To:     Bjorn Helgaas <bhelgaas@google.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Cai Huoqing <cai.huoqing@linux.dev>,
+        Jingoo Han <jingoohan1@gmail.com>,
+        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+        Vinod Koul <vkoul@kernel.org>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+        Rob Herring <robh@kernel.org>,
+        Serge Semin <fancer.lancer@gmail.com>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        =?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>,
+        Vidya Sagar <vidyas@nvidia.com>,
+        Manivannan Sadhasivam <mani@kernel.org>
+CC:     Serge Semin <Sergey.Semin@baikalelectronics.ru>,
+        Alexey Malahov <Alexey.Malahov@baikalelectronics.ru>,
+        Pavel Parkhomenko <Pavel.Parkhomenko@baikalelectronics.ru>,
+        <linux-pci@vger.kernel.org>, <dmaengine@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+Subject: [PATCH 01/11] PCI: dwc: Fix port link CSR improper init if CDM check enabled
+Date:   Fri, 17 Feb 2023 12:39:46 +0300
+Message-ID: <20230217093956.27126-2-Sergey.Semin@baikalelectronics.ru>
+X-Mailer: git-send-email 2.39.0
+In-Reply-To: <20230217093956.27126-1-Sergey.Semin@baikalelectronics.ru>
+References: <20230217093956.27126-1-Sergey.Semin@baikalelectronics.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.8.30.14]
+X-ClientProxiedBy: MAIL.baikal.int (192.168.51.25) To mail (192.168.51.25)
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Good morning,
+If CDM_CHECK capability is set then the local variable 'val' will be
+overwritten in the dw_pcie_setup() method in the PL_CHK register
+initialization procedure. Thus further variable usage in the framework of
+the PCIE_PORT_LINK_CONTROL register initialization must imply the variable
+re-initialization. Alas it hasn't been taken into account in the
+commit ec7b952f453c ("PCI: dwc: Always enable CDM check if
+"snps,enable-cdm-check" exists"). Due to that the PCIE_PORT_LINK_CONTROL
+register will be written with improper value in case if the CDM-check is
+enabled. Let's fix this by re-initializing the 'val' variable with the
+PCIE_PORT_LINK_CONTROL CSR content before link-mode initialization.
 
-a few months ago, we were contacted by a company from your industry, wher=
-e too high costs were generated by the purchase of silicone rubbers and s=
-ilicone mixtures with specific properties.
+Fixes: ec7b952f453c ("PCI: dwc: Always enable CDM check if "snps,enable-cdm-check" exists")
+Signed-off-by: Serge Semin <Sergey.Semin@baikalelectronics.ru>
+---
+ drivers/pci/controller/dwc/pcie-designware.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-We offered them a wide range of HTV silicone rubbers with technical prope=
-rties and liquid silicone rubber (LSR), as well as dyes and stabilizers. =
-Competitive conditions made it possible to flexibly adjust to their needs=
- and type of production.
+diff --git a/drivers/pci/controller/dwc/pcie-designware.c b/drivers/pci/controller/dwc/pcie-designware.c
+index 6d5d619ab2e9..3bb9ca14fb9c 100644
+--- a/drivers/pci/controller/dwc/pcie-designware.c
++++ b/drivers/pci/controller/dwc/pcie-designware.c
+@@ -824,6 +824,7 @@ void dw_pcie_setup(struct dw_pcie *pci)
+ 	}
+ 
+ 	/* Set the number of lanes */
++	val = dw_pcie_readl_dbi(pci, PCIE_PORT_LINK_CONTROL);
+ 	val &= ~PORT_LINK_FAST_LINK_MODE;
+ 	val &= ~PORT_LINK_MODE_MASK;
+ 	switch (pci->num_lanes) {
+-- 
+2.39.0
 
-Now the purchase and delivery of rubber runs smoothly, the client has gai=
-ned a significant increase in savings in relation to the planned budget a=
-t the level of several percent per year.
 
-Would you like to check what solutions we can provide you?
-
-
-Best regards
-Zbynek Spacek
