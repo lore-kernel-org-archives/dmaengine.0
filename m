@@ -2,36 +2,34 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 86C60C61DA3
-	for <dmaengine@archiver.kernel.org>; Fri, 24 Feb 2023 15:22:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8BFFEC61DA3
+	for <dmaengine@archiver.kernel.org>; Fri, 24 Feb 2023 15:22:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229685AbjBXPWf (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 24 Feb 2023 10:22:35 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46424 "EHLO
+        id S230296AbjBXPWi (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 24 Feb 2023 10:22:38 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46756 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229748AbjBXPWe (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Fri, 24 Feb 2023 10:22:34 -0500
+        with ESMTP id S229748AbjBXPWh (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Fri, 24 Feb 2023 10:22:37 -0500
 Received: from hutie.ust.cz (unknown [IPv6:2a03:3b40:fe:f0::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 42F876A9CD;
-        Fri, 24 Feb 2023 07:22:28 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ACEF66A9E6;
+        Fri, 24 Feb 2023 07:22:30 -0800 (PST)
 From:   =?UTF-8?q?Martin=20Povi=C5=A1er?= <povik+lin@cutebit.org>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cutebit.org; s=mail;
-        t=1677252146; bh=qcgclGCFYD+77b0HLKFa7/pKBARXaiNkZFUlsvgiV7U=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References;
-        b=rPQdylosAxrYCCO5c8/2Rz1rgF2eMzEo2nN+XzDHHHY4+Y/P8SWrZZ3ZkW96z5Hcb
-         7hYQRfRVs/LzFiwrE5hV2PlmdcgVImUYYTcN6kqBi+W5L2KFPLvVQuwqPe1AOsk3bW
-         qLWLeQ+rLGrT5pbA3RNrIgOsxOwUY1GatwjsNLj8=
+        t=1677252145; bh=8I53wAm0Lhx1Y1CRpTsp/SrqowkIL26beK+I0BreeKg=;
+        h=From:To:Cc:Subject:Date;
+        b=KzjvnnBtPMLzkpne5ixV1R5vuvAuRq/riSQMn9JedY18pihL2mEdyY4AVhiv2dpX4
+         2jOIvqTVWjw8jMAAe4igDy0ErG5dXi8IdYScZWKLs1WURJu6IVVQGM4gAmerF6KtlL
+         uzDbQyJTxoBgbh/cekLbEdEGeCEnorFmhJLgHseg=
 To:     Hector Martin <marcan@marcan.st>, Sven Peter <sven@svenpeter.dev>,
         Vinod Koul <vkoul@kernel.org>
 Cc:     Alyssa Rosenzweig <alyssa@rosenzweig.io>,
         =?UTF-8?q?Martin=20Povi=C5=A1er?= <povik+lin@cutebit.org>,
         asahi@lists.linux.dev, linux-arm-kernel@lists.infradead.org,
         dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH 3/3] dmaengine: apple-admac: Set src_addr_widths capability
-Date:   Fri, 24 Feb 2023 16:22:22 +0100
-Message-Id: <20230224152222.26732-3-povik+lin@cutebit.org>
-In-Reply-To: <20230224152222.26732-1-povik+lin@cutebit.org>
-References: <20230224152222.26732-1-povik+lin@cutebit.org>
+Subject: [PATCH 1/3] dmaengine: apple-admac: Handle 'global' interrupt flags
+Date:   Fri, 24 Feb 2023 16:22:20 +0100
+Message-Id: <20230224152222.26732-1-povik+lin@cutebit.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -39,29 +37,60 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Add missing setting of 'src_addr_widths', which is the same as for the
-other direction.
+In addition to TX channel and RX channel interrupt flags there's
+another class of 'global' interrupt flags with unknown semantics. Those
+weren't being handled up to now, and they are the suspected cause of
+stuck IRQ states that have been sporadically occurring. Check the global
+flags and clear them if raised.
 
 Fixes: b127315d9a78 ("dmaengine: apple-admac: Add Apple ADMAC driver")
 Signed-off-by: Martin Povišer <povik+lin@cutebit.org>
 ---
- drivers/dma/apple-admac.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/dma/apple-admac.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/dma/apple-admac.c b/drivers/dma/apple-admac.c
-index 497bb65b7d6d..4cf8da77bdd9 100644
+index 90f28bda29c8..00cbfafe0ed9 100644
 --- a/drivers/dma/apple-admac.c
 +++ b/drivers/dma/apple-admac.c
-@@ -861,6 +861,9 @@ static int admac_probe(struct platform_device *pdev)
+@@ -75,6 +75,7 @@
  
- 	dma->directions = BIT(DMA_MEM_TO_DEV) | BIT(DMA_DEV_TO_MEM);
- 	dma->residue_granularity = DMA_RESIDUE_GRANULARITY_BURST;
-+	dma->src_addr_widths = BIT(DMA_SLAVE_BUSWIDTH_1_BYTE) |
-+			BIT(DMA_SLAVE_BUSWIDTH_2_BYTES) |
-+			BIT(DMA_SLAVE_BUSWIDTH_4_BYTES);
- 	dma->dst_addr_widths = BIT(DMA_SLAVE_BUSWIDTH_1_BYTE) |
- 			BIT(DMA_SLAVE_BUSWIDTH_2_BYTES) |
- 			BIT(DMA_SLAVE_BUSWIDTH_4_BYTES);
+ #define REG_TX_INTSTATE(idx)		(0x0030 + (idx) * 4)
+ #define REG_RX_INTSTATE(idx)		(0x0040 + (idx) * 4)
++#define REG_GLOBAL_INTSTATE(idx)	(0x0050 + (idx) * 4)
+ #define REG_CHAN_INTSTATUS(ch, idx)	(0x8010 + (ch) * 0x200 + (idx) * 4)
+ #define REG_CHAN_INTMASK(ch, idx)	(0x8020 + (ch) * 0x200 + (idx) * 4)
+ 
+@@ -672,13 +673,14 @@ static void admac_handle_chan_int(struct admac_data *ad, int no)
+ static irqreturn_t admac_interrupt(int irq, void *devid)
+ {
+ 	struct admac_data *ad = devid;
+-	u32 rx_intstate, tx_intstate;
++	u32 rx_intstate, tx_intstate, global_intstate;
+ 	int i;
+ 
+ 	rx_intstate = readl_relaxed(ad->base + REG_RX_INTSTATE(ad->irq_index));
+ 	tx_intstate = readl_relaxed(ad->base + REG_TX_INTSTATE(ad->irq_index));
++	global_intstate = readl_relaxed(ad->base + REG_GLOBAL_INTSTATE(ad->irq_index));
+ 
+-	if (!tx_intstate && !rx_intstate)
++	if (!tx_intstate && !rx_intstate && !global_intstate)
+ 		return IRQ_NONE;
+ 
+ 	for (i = 0; i < ad->nchannels; i += 2) {
+@@ -693,6 +695,12 @@ static irqreturn_t admac_interrupt(int irq, void *devid)
+ 		rx_intstate >>= 1;
+ 	}
+ 
++	if (global_intstate) {
++		dev_warn(ad->dev, "clearing unknown global interrupt flag: %x\n",
++			 global_intstate);
++		writel_relaxed(~(u32) 0, ad->base + REG_GLOBAL_INTSTATE(ad->irq_index));
++	}
++
+ 	return IRQ_HANDLED;
+ }
+ 
 -- 
 2.33.0
 
