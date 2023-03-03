@@ -2,68 +2,65 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 15C94C64EC4
-	for <dmaengine@archiver.kernel.org>; Fri,  3 Mar 2023 21:52:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9A069C61DA4
+	for <dmaengine@archiver.kernel.org>; Fri,  3 Mar 2023 22:03:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232894AbjCCVwb (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 3 Mar 2023 16:52:31 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38048 "EHLO
+        id S233559AbjCCWDw (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 3 Mar 2023 17:03:52 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43020 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232889AbjCCVvn (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Fri, 3 Mar 2023 16:51:43 -0500
-Received: from mga03.intel.com (mga03.intel.com [134.134.136.65])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5FFC165449;
-        Fri,  3 Mar 2023 13:47:28 -0800 (PST)
+        with ESMTP id S233568AbjCCWDY (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Fri, 3 Mar 2023 17:03:24 -0500
+Received: from mga18.intel.com (mga18.intel.com [134.134.136.126])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 51AAC664F3;
+        Fri,  3 Mar 2023 13:53:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1677880048; x=1709416048;
+  t=1677880423; x=1709416423;
   h=date:from:to:cc:subject:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=kj65eZ6x1XaMxzFMjvimVXP1TU9dIZpyh6Wk8sLAlnk=;
-  b=n/2TUIYNbv0IsFT7hK71sydMcakD4tcjml8BTP1xeveswn48Jv09HE6f
-   5k+GGKV7RG22OZK/JY1ozTsW3gxpXRAddxlJNxgheoGgOKlb7Smtw+Z0E
-   FUXfLbiG6/wVt7hpvOmR8lWVG43FqwSkx0AZ71bR0kZB8dwvvwyNORlOB
-   e9aDdwjgCXYzYxn9lwezxtpGdXHkQ+eq1tPo9zuJOgNe9plwlcAZJffwH
-   9cJPGDW2K6pYJCUQZj5bSILw8KJP8OZqx4ygb9oRFYWRQxoAT3SaE5vVZ
-   McRc6axBh9XCjdE4kE/dkFwwrQ8Es1Ga3Hz4AU2n7a0VvPAvCWHX53RYH
+  bh=qxJfn1HMo5o/TEK84TFNUVCEuwu46pEXGqZ2QTppX2c=;
+  b=gNIpRPK8y43yn/q7QNe7cjMBmXt7QFF5J021G4hevFWd3xR6RM97PhiQ
+   UpCm2qAjw1DM4d1BwA94AR38ZRX450hYZ5qqnLhUHzGPj+TpaIA44f1pZ
+   0psJROt+JHrgDMXMZPXSJULeZUp49J51gDoI1Y85jSUKudSkAz9TJSxOr
+   x59LN129nnw7U2cJ8+ztjvCrm8c+IGiyquMsuBetnQstQyWFqW2SUKBFh
+   FI9pGorJpFw7Su1N+Y5wYtQQWhtKrppJKWHp4Ocmsp2dSROxgKR/mi9Ow
+   vYEeq92ndSqlqWrULlvY8G/AYTsJsTp5Ky6kKrYR4aGVO0PEZzLBPWZ/B
    g==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10638"; a="337481927"
+X-IronPort-AV: E=McAfee;i="6500,9779,10638"; a="318989793"
 X-IronPort-AV: E=Sophos;i="5.98,231,1673942400"; 
-   d="scan'208";a="337481927"
-Received: from orsmga007.jf.intel.com ([10.7.209.58])
-  by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Mar 2023 13:44:03 -0800
+   d="scan'208";a="318989793"
+Received: from fmsmga006.fm.intel.com ([10.253.24.20])
+  by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Mar 2023 13:48:20 -0800
 X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6500,9779,10638"; a="668795971"
+X-IronPort-AV: E=McAfee;i="6500,9779,10638"; a="921252005"
 X-IronPort-AV: E=Sophos;i="5.98,231,1673942400"; 
-   d="scan'208";a="668795971"
+   d="scan'208";a="921252005"
 Received: from jacob-builder.jf.intel.com (HELO jacob-builder) ([10.24.100.114])
-  by orsmga007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Mar 2023 13:44:03 -0800
-Date:   Fri, 3 Mar 2023 13:47:53 -0800
+  by fmsmga006-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Mar 2023 13:48:20 -0800
+Date:   Fri, 3 Mar 2023 13:52:09 -0800
 From:   Jacob Pan <jacob.jun.pan@linux.intel.com>
-To:     "Tian, Kevin" <kevin.tian@intel.com>
-Cc:     LKML <linux-kernel@vger.kernel.org>,
-        "iommu@lists.linux.dev" <iommu@lists.linux.dev>,
+To:     Baolu Lu <baolu.lu@linux.intel.com>
+Cc:     LKML <linux-kernel@vger.kernel.org>, iommu@lists.linux.dev,
         Jason Gunthorpe <jgg@nvidia.com>,
-        Lu Baolu <baolu.lu@linux.intel.com>,
-        Joerg Roedel <joro@8bytes.org>,
-        "dmaengine@vger.kernel.org" <dmaengine@vger.kernel.org>,
-        "vkoul@kernel.org" <vkoul@kernel.org>,
-        Robin Murphy <robin.murphy@arm.com>,
+        Joerg Roedel <joro@8bytes.org>, dmaengine@vger.kernel.org,
+        vkoul@kernel.org, Robin Murphy <robin.murphy@arm.com>,
         Will Deacon <will@kernel.org>,
-        "David Woodhouse" <dwmw2@infradead.org>,
-        "Raj, Ashok" <ashok.raj@intel.com>,
-        "Liu, Yi L" <yi.l.liu@intel.com>,
+        David Woodhouse <dwmw2@infradead.org>,
+        Raj Ashok <ashok.raj@intel.com>,
+        "Tian, Kevin" <kevin.tian@intel.com>, Yi Liu <yi.l.liu@intel.com>,
         "Yu, Fenghua" <fenghua.yu@intel.com>,
-        "Jiang, Dave" <dave.jiang@intel.com>,
-        "Luck, Tony" <tony.luck@intel.com>,
+        Dave Jiang <dave.jiang@intel.com>,
+        Tony Luck <tony.luck@intel.com>,
         "Zanussi, Tom" <tom.zanussi@intel.com>,
         jacob.jun.pan@linux.intel.com
-Subject: Re: [PATCH 3/4] iommu/sva: Support reservation of global PASIDs
-Message-ID: <20230303134753.660d0755@jacob-builder>
-In-Reply-To: <BN9PR11MB52765C5E0DC0759880C08E258CB29@BN9PR11MB5276.namprd11.prod.outlook.com>
+Subject: Re: [PATCH 4/4] dmaengine/idxd: Re-enable kernel workqueue under
+ DMA API
+Message-ID: <20230303135209.16caf5ad@jacob-builder>
+In-Reply-To: <063ed735-b8d1-1b44-67d7-78c3adb34074@linux.intel.com>
 References: <20230302005959.2695267-1-jacob.jun.pan@linux.intel.com>
-        <20230302005959.2695267-4-jacob.jun.pan@linux.intel.com>
-        <BN9PR11MB52765C5E0DC0759880C08E258CB29@BN9PR11MB5276.namprd11.prod.outlook.com>
+        <20230302005959.2695267-5-jacob.jun.pan@linux.intel.com>
+        <063ed735-b8d1-1b44-67d7-78c3adb34074@linux.intel.com>
 Organization: OTC
 X-Mailer: Claws Mail 3.17.5 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
@@ -73,75 +70,48 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Hi Kevin,
+Hi Baolu,
 
-On Thu, 2 Mar 2023 09:43:03 +0000, "Tian, Kevin" <kevin.tian@intel.com>
+On Fri, 3 Mar 2023 09:19:48 +0800, Baolu Lu <baolu.lu@linux.intel.com>
 wrote:
 
-> > From: Jacob Pan <jacob.jun.pan@linux.intel.com>
-> > Sent: Thursday, March 2, 2023 9:00 AM
-> > 
-> > Global PASID allocation is under IOMMU SVA code since it is the primary
-> > use case.  However, some architecture such as VT-d, global PASIDs are
-> > necessary for its internal use of DMA API with PASID.  
-> 
-> No, global PASID is not a VT-d restriction. It's from ENQCMD/S hence a
-> device requirement.
-I meant VT-d based platforms, it is kind of intertwined in that ENQCMDS
-does not restrict RIDPASID!=DMA PASID, vt-d does. Without this
-restriction, there wouldn't be a need for this patch. Let me reword.
-> > 
-> > This patch introduces SVA APIs to reserve and release global PASIDs.
-> > 
-> > Link: https://lore.kernel.org/all/20230301235646.2692846-4-
-> > jacob.jun.pan@linux.intel.com/
-> > Signed-off-by: Jacob Pan <jacob.jun.pan@linux.intel.com>
-> > ---
-> >  drivers/iommu/iommu-sva.c | 25 +++++++++++++++++++++++++
-> >  include/linux/iommu.h     | 14 ++++++++++++++
-> >  2 files changed, 39 insertions(+)
-> > 
-> > diff --git a/drivers/iommu/iommu-sva.c b/drivers/iommu/iommu-sva.c
-> > index 8c92a145e15d..cfdeafde88a9 100644
-> > --- a/drivers/iommu/iommu-sva.c
-> > +++ b/drivers/iommu/iommu-sva.c
-> > @@ -149,6 +149,31 @@ u32 iommu_sva_get_pasid(struct iommu_sva
-> > *handle)
-> >  }
-> >  EXPORT_SYMBOL_GPL(iommu_sva_get_pasid);
-> > 
-> > +ioasid_t iommu_sva_reserve_pasid(ioasid_t min, ioasid_t max)
-> > +{
+> On 3/2/23 8:59 AM, Jacob Pan wrote:
+> > diff --git a/drivers/dma/idxd/init.c b/drivers/dma/idxd/init.c
+> > index f30eef701970..dadc908318aa 100644
+> > --- a/drivers/dma/idxd/init.c
+> > +++ b/drivers/dma/idxd/init.c
+> > @@ -501,14 +501,52 @@ static struct idxd_device *idxd_alloc(struct
+> > pci_dev *pdev, struct idxd_driver_d 
+> >   static int idxd_enable_system_pasid(struct idxd_device *idxd)
+> >   {
+> > -	return -EOPNOTSUPP;
+> > +	struct pci_dev *pdev = idxd->pdev;
+> > +	struct device *dev = &pdev->dev;
+> > +	struct iommu_domain *domain;
+> > +	union gencfg_reg gencfg;
+> > +	ioasid_t pasid;
 > > +	int ret;
 > > +
-> > +	if (min == IOMMU_PASID_INVALID || max ==
-> > IOMMU_PASID_INVALID ||
-> > +	    min == 0 || max < min)
-> > +		return IOMMU_PASID_INVALID;
-> > +
-> > +	ret = ida_alloc_range(&iommu_global_pasid_ida, min, max,
-> > GFP_KERNEL);
-> > +	if (ret < 0)
-> > +		return IOMMU_PASID_INVALID;
-> > +
-> > +	return ret;
-> > +}
-> > +EXPORT_SYMBOL_GPL(iommu_sva_reserve_pasid);
-> > +  
+> > +	domain = iommu_get_domain_for_dev(dev);
+> > +	if (!domain || domain->type == IOMMU_DOMAIN_BLOCKED)
+> > +		return -EPERM;  
 > 
-> I'm not sure it's the right way. It's not related to SVA.
+> The idxd driver has claimed the DMA ownership of this device. Unless the
+> idxd driver itself attached another domain, iommu_get_domain_for_dev()
+> should never return a blocking domain.
 > 
-> We should move iommu_global_pasid_ida to iomm.c and then have
-> another interface for allocation.
+> "domain == NULL" happens when CONFIG_IOMMU_API is not set.
 > 
-> Above is pretty generic so probably a general one like:
+> Furthermore, iommu_get_domain_for_dev() doesn't hold any refcount from
+> the domain, so in theory it's not safe here because it possibly causes
+> use-after-release case.
 > 
-> 	ioasid_t iommu_allocate_global_pasid(struct device *dev)
+> I would say iommu_get_dma_domain() or something similar is more suitable
+> for use here. It directly returns the device's default domain and the
+> iommu core guarantees that default domain will always valid during the
+> life cycle of any device driver.
 > 
-> internally it can use [1, dev->iommu->max_pasids] as min/max instead
-> of passed in from the caller.
-sounds good to me, will do.
-
+will do, same as Jason's comments.
 
 Thanks,
 
