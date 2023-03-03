@@ -2,114 +2,102 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D9DBFC7EE30
-	for <dmaengine@archiver.kernel.org>; Fri,  3 Mar 2023 21:34:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B0967C7EE30
+	for <dmaengine@archiver.kernel.org>; Fri,  3 Mar 2023 21:36:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231824AbjCCVe0 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 3 Mar 2023 16:34:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44704 "EHLO
+        id S231615AbjCCVgX (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 3 Mar 2023 16:36:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47366 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231808AbjCCVeY (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Fri, 3 Mar 2023 16:34:24 -0500
-Received: from mga07.intel.com (mga07.intel.com [134.134.136.100])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0FD8C1A485;
-        Fri,  3 Mar 2023 13:34:23 -0800 (PST)
+        with ESMTP id S231292AbjCCVgW (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Fri, 3 Mar 2023 16:36:22 -0500
+Received: from mga09.intel.com (mga09.intel.com [134.134.136.24])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4979B6233F;
+        Fri,  3 Mar 2023 13:36:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1677879263; x=1709415263;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
+  t=1677879381; x=1709415381;
+  h=date:from:to:cc:subject:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=yD3JIRnWO3O5QD2FW9PbHdj50CTjoVy/ibSII+27rM0=;
-  b=AU/FbYYhH2mrcPY6INgLkUyDiKAMhClRfiuthwSH6LCU45Ll07NLm/fQ
-   26uY+UX+nHP6OnZtPH2PlaZYpMuEaO3KX80rgH0QYRQ1KNSkYn51dUwN2
-   hsi4xDPhaQpLiuY3ybqjx03v8l7VFPJGXg6FsM336cZXlSR4m5aImdr+s
-   GsB8dROS7URRvGoWN2hKIqPtNJvxHx8Z9nFSULTmakaWd6AEoWgjOrTN7
-   IYzCszvfv3Ol6gJ74kxmf2LB59QDECnL0Mxv1evHCLfx8u7Ma8WKPo+Vl
-   eaWBFzXFR5xMRD5pbvyXyRucwxkiMXA2DH0CH+gPBJUzfNO8ktDyi7CTJ
-   w==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10638"; a="399976472"
+  bh=1OKCAy9ob19J/BmWrfVVQDL23h90LsZl9wS/K15VWWs=;
+  b=beAtohhfu4nJ8VwtTFDin/0hCpBYw2R7dWQQjcoO+gFw/wKtyMUPw9sO
+   lCM5oupURpGBe909BkNMyhRZUK13GTK24ffRgUjS0/INu1So9JBfRexDo
+   v9oLOqhOWE6a6D/o5+WqDeKksGtF31Bfo8UqjTXf1+D+CdKjfwaUhvtW4
+   YjipPrTNA3G2wnPBgDNmvjSiJ2NxKZnUqL7U09T3IOtReO4L7rREUssj4
+   hXJSM26tCDTCEMexb9nsUbFBagNqMCW/QC41yvuLXaGgSVDhANkGPhriE
+   nMccaaydzruFsxrPXg2aAFJdRorhZY/putnIadwj7x59hJkKIxprLFWEB
+   Q==;
+X-IronPort-AV: E=McAfee;i="6500,9779,10638"; a="336682317"
 X-IronPort-AV: E=Sophos;i="5.98,231,1673942400"; 
-   d="scan'208";a="399976472"
-Received: from orsmga002.jf.intel.com ([10.7.209.21])
-  by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Mar 2023 13:34:21 -0800
+   d="scan'208";a="336682317"
+Received: from fmsmga008.fm.intel.com ([10.253.24.58])
+  by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Mar 2023 13:36:20 -0800
 X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6500,9779,10638"; a="675508706"
+X-IronPort-AV: E=McAfee;i="6500,9779,10638"; a="739651237"
 X-IronPort-AV: E=Sophos;i="5.98,231,1673942400"; 
-   d="scan'208";a="675508706"
-Received: from fyu1.sc.intel.com ([172.25.103.126])
-  by orsmga002.jf.intel.com with ESMTP; 03 Mar 2023 13:34:20 -0800
-From:   Fenghua Yu <fenghua.yu@intel.com>
-To:     "Vinod Koul" <vkoul@kernel.org>,
-        "Dave Jiang" <dave.jiang@intel.com>
-Cc:     dmaengine@vger.kernel.org,
-        "linux-kernel" <linux-kernel@vger.kernel.org>,
-        Fenghua Yu <fenghua.yu@intel.com>
-Subject: [PATCH v2 3/3] dmaengine: idxd: Add descriptor definitions for translation fetch operation
-Date:   Fri,  3 Mar 2023 13:34:13 -0800
-Message-Id: <20230303213413.3357431-4-fenghua.yu@intel.com>
-X-Mailer: git-send-email 2.37.1
-In-Reply-To: <20230303213413.3357431-1-fenghua.yu@intel.com>
-References: <20230303213413.3357431-1-fenghua.yu@intel.com>
+   d="scan'208";a="739651237"
+Received: from jacob-builder.jf.intel.com (HELO jacob-builder) ([10.24.100.114])
+  by fmsmga008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Mar 2023 13:36:20 -0800
+Date:   Fri, 3 Mar 2023 13:40:09 -0800
+From:   Jacob Pan <jacob.jun.pan@linux.intel.com>
+To:     Baolu Lu <baolu.lu@linux.intel.com>
+Cc:     LKML <linux-kernel@vger.kernel.org>, iommu@lists.linux.dev,
+        Jason Gunthorpe <jgg@nvidia.com>,
+        Joerg Roedel <joro@8bytes.org>, dmaengine@vger.kernel.org,
+        vkoul@kernel.org, Robin Murphy <robin.murphy@arm.com>,
+        Will Deacon <will@kernel.org>,
+        David Woodhouse <dwmw2@infradead.org>,
+        Raj Ashok <ashok.raj@intel.com>,
+        "Tian, Kevin" <kevin.tian@intel.com>, Yi Liu <yi.l.liu@intel.com>,
+        "Yu, Fenghua" <fenghua.yu@intel.com>,
+        Dave Jiang <dave.jiang@intel.com>,
+        Tony Luck <tony.luck@intel.com>,
+        "Zanussi, Tom" <tom.zanussi@intel.com>,
+        jacob.jun.pan@linux.intel.com
+Subject: Re: [PATCH 2/4] iommu/vt-d: Use non-privileged mode for all PASIDs
+Message-ID: <20230303134009.189d792f@jacob-builder>
+In-Reply-To: <0afa8e6e-1676-d6a5-d679-173351fe439c@linux.intel.com>
+References: <20230302005959.2695267-1-jacob.jun.pan@linux.intel.com>
+        <20230302005959.2695267-3-jacob.jun.pan@linux.intel.com>
+        <0afa8e6e-1676-d6a5-d679-173351fe439c@linux.intel.com>
+Organization: OTC
+X-Mailer: Claws Mail 3.17.5 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-The translation fetch operation (0x0A) fetches address translations for the
-address range specified in the descriptor by issuing address translation
-(ATS) requests to the IOMMU.
+Hi Baolu,
 
-Add descriptor definitions for the operation so that user can use DSA
-to accelerate translation fetch.
+On Thu, 2 Mar 2023 22:11:36 +0800, Baolu Lu <baolu.lu@linux.intel.com>
+wrote:
 
-Signed-off-by: Fenghua Yu <fenghua.yu@intel.com>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
----
- include/uapi/linux/idxd.h | 9 +++++++++
- 1 file changed, 9 insertions(+)
+> On 2023/3/2 8:59, Jacob Pan wrote:
+> > For in-kernel DMA, use non-privileged access for all PASIDs to be
+> > consistent with RID_PASID.
+> > There's no need to differentiate user and kernel for in-kernel DMA. >
+> > Signed-off-by: Jacob Pan <jacob.jun.pan@linux.intel.com>
+> > ---
+> >   drivers/iommu/intel/iommu.c | 2 --
+> >   1 file changed, 2 deletions(-)
+> > 
+> > diff --git a/drivers/iommu/intel/iommu.c b/drivers/iommu/intel/iommu.c
+> > index a0cb3bc851ac..9e3c056e392d 100644
+> > --- a/drivers/iommu/intel/iommu.c
+> > +++ b/drivers/iommu/intel/iommu.c
+> > @@ -2334,8 +2334,6 @@ static int domain_setup_first_level(struct
+> > intel_iommu *iommu, if (level != 4 && level != 5)
+> >   		return -EINVAL;
+> >   
+> > -	if (pasid != PASID_RID2PASID)
+> > -		flags |= PASID_FLAG_SUPERVISOR_MODE;  
+> 
+> With above removed, PASID_FLAG_SUPERVISOR_MODE is not used anywhere?
+> Perhaps you can cleanup it to avoid dead code?
+good point, we could remove pasid_set_sre() related code for FL,SL, and PT.
 
-diff --git a/include/uapi/linux/idxd.h b/include/uapi/linux/idxd.h
-index 4c12e93a6aa6..fc47635b57dc 100644
---- a/include/uapi/linux/idxd.h
-+++ b/include/uapi/linux/idxd.h
-@@ -72,6 +72,7 @@ enum dsa_opcode {
- 	DSA_OPCODE_CR_DELTA,
- 	DSA_OPCODE_AP_DELTA,
- 	DSA_OPCODE_DUALCAST,
-+	DSA_OPCODE_TRANSL_FETCH,
- 	DSA_OPCODE_CRCGEN = 0x10,
- 	DSA_OPCODE_COPY_CRC,
- 	DSA_OPCODE_DIF_CHECK,
-@@ -182,6 +183,7 @@ struct dsa_hw_desc {
- 		uint64_t	pattern;
- 		uint64_t	desc_list_addr;
- 		uint64_t	pattern_lower;
-+		uint64_t	transl_fetch_addr;
- 	};
- 	union {
- 		uint64_t	dst_addr;
-@@ -192,6 +194,7 @@ struct dsa_hw_desc {
- 	union {
- 		uint32_t	xfer_size;
- 		uint32_t	desc_count;
-+		uint32_t	region_size;
- 	};
- 	uint16_t	int_handle;
- 	uint16_t	rsvd1;
-@@ -249,6 +252,12 @@ struct dsa_hw_desc {
- 		/* Fill */
- 		uint64_t	pattern_upper;
- 
-+		/* Translation fetch */
-+		struct {
-+			uint64_t	transl_fetch_res;
-+			uint32_t	region_stride;
-+		};
-+
- 		/* DIX generate */
- 		struct {
- 			uint8_t		dix_gen_res;
--- 
-2.37.1
+Thanks,
 
+Jacob
