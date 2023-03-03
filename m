@@ -2,211 +2,111 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A2176C7EE43
-	for <dmaengine@archiver.kernel.org>; Fri,  3 Mar 2023 21:37:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 07539C7EE43
+	for <dmaengine@archiver.kernel.org>; Fri,  3 Mar 2023 21:51:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231908AbjCCVhs (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 3 Mar 2023 16:37:48 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48708 "EHLO
+        id S232833AbjCCVve (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 3 Mar 2023 16:51:34 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37868 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231895AbjCCVhr (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Fri, 3 Mar 2023 16:37:47 -0500
-Received: from mga11.intel.com (mga11.intel.com [192.55.52.93])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD9B662D8C;
-        Fri,  3 Mar 2023 13:37:46 -0800 (PST)
+        with ESMTP id S233106AbjCCVue (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Fri, 3 Mar 2023 16:50:34 -0500
+Received: from mga06.intel.com (mga06b.intel.com [134.134.136.31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 452CB1FF0;
+        Fri,  3 Mar 2023 13:46:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1677879466; x=1709415466;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
+  t=1677879994; x=1709415994;
+  h=date:from:to:cc:subject:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=e3uMSc7vnp0UG11z9FHv+RYvjjoY2I0CYOVB3hSp2Oo=;
-  b=EsqhW2kvNUcA8f0D3uN1tuSLUfA4/RLCLOftrCHzbD5Spxq8lH08gXv2
-   v/MlpP5SqPcEyVWnhsmOlQyMO4FH/U3Bq4NagVLzLg7rrNVQvPwH8Rf0H
-   zGR+ohy2N4Vag/sLmdGrJNHKqwU9/+Z0zBKvjSMPkgrNJr38p6/q3txqg
-   5bzh4YDigZUO5cqpn4lPJADwKaXstnvWNr5tm4xETg4/bPjfgG+4cjI1L
-   PkXrxCWJpHx2ML5IOzCcWsh55PM2aOdl8Dijokxy3bu0Tu706KsSi9lfa
-   Sszr+mRaggBdlyqpaeank2wjUNLkecFecKCU6CR86InHLfa97HSGuELEo
-   Q==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10638"; a="332643553"
+  bh=qGV5bJjDHw2ZzOUEb+Ljo+MxhpwEmK8AGP04i4kgrdk=;
+  b=QK3H3na/NMHjUAUvhEOBkeGE5IozNLzwZc9q2GYxY7v8HARORkjrfYXi
+   IgZ3co8XHw4p7L8PnRt427pGtBbWevjOkMwh7cwS77NThFqQjJHEgDvQX
+   63xZGN0m4BcWuduzi5bXTXd0y4W+188NLI/s6udOO2y9PynALsqI7EOvJ
+   A6sAA6/9Lhrr/PFvPqHsbcex8OVCfTJjuIPVGBRQOL9L5oOdBSuDRMVka
+   KjanuMvFwdlu37obH/IqXrPMvijYrRgO8R0npA/kfHgdsXsOwKFD+GznE
+   /KY5OQNfQICARXhoftLL4r8t9AbBNx2+A2gLP357cRPeOd2hFEGP6vYW1
+   g==;
+X-IronPort-AV: E=McAfee;i="6500,9779,10638"; a="397753654"
 X-IronPort-AV: E=Sophos;i="5.98,231,1673942400"; 
-   d="scan'208";a="332643553"
-Received: from fmsmga001.fm.intel.com ([10.253.24.23])
-  by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Mar 2023 13:37:45 -0800
+   d="scan'208";a="397753654"
+Received: from orsmga001.jf.intel.com ([10.7.209.18])
+  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Mar 2023 13:45:33 -0800
 X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6500,9779,10638"; a="818650495"
+X-IronPort-AV: E=McAfee;i="6500,9779,10638"; a="707993274"
 X-IronPort-AV: E=Sophos;i="5.98,231,1673942400"; 
-   d="scan'208";a="818650495"
-Received: from fyu1.sc.intel.com ([172.25.103.126])
-  by fmsmga001.fm.intel.com with ESMTP; 03 Mar 2023 13:37:45 -0800
-From:   Fenghua Yu <fenghua.yu@intel.com>
-To:     "Vinod Koul" <vkoul@kernel.org>,
-        "Dave Jiang" <dave.jiang@intel.com>
-Cc:     dmaengine@vger.kernel.org,
-        "linux-kernel" <linux-kernel@vger.kernel.org>,
-        Fenghua Yu <fenghua.yu@intel.com>
-Subject: [PATCH v2 2/2] dmaengine: idxd: expose IAA CAP register via sysfs knob
-Date:   Fri,  3 Mar 2023 13:37:32 -0800
-Message-Id: <20230303213732.3357494-3-fenghua.yu@intel.com>
-X-Mailer: git-send-email 2.37.1
-In-Reply-To: <20230303213732.3357494-1-fenghua.yu@intel.com>
-References: <20230303213732.3357494-1-fenghua.yu@intel.com>
+   d="scan'208";a="707993274"
+Received: from jacob-builder.jf.intel.com (HELO jacob-builder) ([10.24.100.114])
+  by orsmga001-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Mar 2023 13:45:33 -0800
+Date:   Fri, 3 Mar 2023 13:49:23 -0800
+From:   Jacob Pan <jacob.jun.pan@linux.intel.com>
+To:     Jason Gunthorpe <jgg@nvidia.com>
+Cc:     "Tian, Kevin" <kevin.tian@intel.com>,
+        LKML <linux-kernel@vger.kernel.org>,
+        "iommu@lists.linux.dev" <iommu@lists.linux.dev>,
+        Lu Baolu <baolu.lu@linux.intel.com>,
+        Joerg Roedel <joro@8bytes.org>,
+        "dmaengine@vger.kernel.org" <dmaengine@vger.kernel.org>,
+        "vkoul@kernel.org" <vkoul@kernel.org>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Will Deacon <will@kernel.org>,
+        David Woodhouse <dwmw2@infradead.org>,
+        "Raj, Ashok" <ashok.raj@intel.com>,
+        "Liu, Yi L" <yi.l.liu@intel.com>,
+        "Yu, Fenghua" <fenghua.yu@intel.com>,
+        "Jiang, Dave" <dave.jiang@intel.com>,
+        "Luck, Tony" <tony.luck@intel.com>,
+        "Zanussi, Tom" <tom.zanussi@intel.com>,
+        jacob.jun.pan@linux.intel.com
+Subject: Re: [PATCH 4/4] dmaengine/idxd: Re-enable kernel workqueue under
+ DMA API
+Message-ID: <20230303134923.22b7686f@jacob-builder>
+In-Reply-To: <ZACdTG4QZSHF2QRj@nvidia.com>
+References: <20230302005959.2695267-1-jacob.jun.pan@linux.intel.com>
+        <20230302005959.2695267-5-jacob.jun.pan@linux.intel.com>
+        <BN9PR11MB527624EDB9FCD26751C73B128CB29@BN9PR11MB5276.namprd11.prod.outlook.com>
+        <ZACdTG4QZSHF2QRj@nvidia.com>
+Organization: OTC
+X-Mailer: Claws Mail 3.17.5 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-From: Dave Jiang <dave.jiang@intel.com>
+Hi Jason,
 
-Add IAA (IAX) capability mask sysfs attribute to expose to applications.
-The mask provides application knowledge of what capabilities this IAA
-device supports. This mask is available for IAA 2.0 device or later.
+On Thu, 2 Mar 2023 08:57:48 -0400, Jason Gunthorpe <jgg@nvidia.com> wrote:
 
-Signed-off-by: Dave Jiang <dave.jiang@intel.com>
-Co-developed-by: Fenghua Yu <fenghua.yu@intel.com>
-Signed-off-by: Fenghua Yu <fenghua.yu@intel.com>
----
- .../ABI/stable/sysfs-driver-dma-idxd          |  8 +++++++
- drivers/dma/idxd/idxd.h                       |  1 +
- drivers/dma/idxd/init.c                       |  4 ++++
- drivers/dma/idxd/registers.h                  | 21 ++++++++++++++++
- drivers/dma/idxd/sysfs.c                      | 24 +++++++++++++++++++
- 5 files changed, 58 insertions(+)
+> On Thu, Mar 02, 2023 at 09:47:00AM +0000, Tian, Kevin wrote:
+> > > From: Jacob Pan <jacob.jun.pan@linux.intel.com>
+> > > Sent: Thursday, March 2, 2023 9:00 AM
+> > > 
+> > >  static int idxd_enable_system_pasid(struct idxd_device *idxd)
+> > >  {
+> > > -	return -EOPNOTSUPP;
+> > > +	struct pci_dev *pdev = idxd->pdev;
+> > > +	struct device *dev = &pdev->dev;
+> > > +	struct iommu_domain *domain;
+> > > +	union gencfg_reg gencfg;
+> > > +	ioasid_t pasid;
+> > > +	int ret;
+> > > +
+> > > +	domain = iommu_get_domain_for_dev(dev);
+> > > +	if (!domain || domain->type == IOMMU_DOMAIN_BLOCKED)
+> > > +		return -EPERM;  
+> > 
+> > what about UNMANAGED?  
+> 
+> Why are we checking this anyhow?
+> 
+> Get the domain the DMA API is using and feed it to
+> iommu_attach_device_pasid(). If the driver can't mirror the DMA API's
+> domain onto the PASID then it will just fail the attach. A domain
+> cannot even be NULL on x86.
+makes sense,
 
-diff --git a/Documentation/ABI/stable/sysfs-driver-dma-idxd b/Documentation/ABI/stable/sysfs-driver-dma-idxd
-index 3becc9a82bdf..d5e3dd3d8434 100644
---- a/Documentation/ABI/stable/sysfs-driver-dma-idxd
-+++ b/Documentation/ABI/stable/sysfs-driver-dma-idxd
-@@ -136,6 +136,14 @@ Description:	The last executed device administrative command's status/error.
- 		Also last configuration error overloaded.
- 		Writing to it will clear the status.
- 
-+What:		/sys/bus/dsa/devices/dsa<m>/iaa_cap
-+Date:		Sept 14, 2022
-+KernelVersion: 6.0.0
-+Contact:	dmaengine@vger.kernel.org
-+Description:	IAA (IAX) capability mask. Exported to user space for application
-+		consumption. This attribute should only be visible on IAA devices
-+		that are version 2 or later.
-+
- What:		/sys/bus/dsa/devices/wq<m>.<n>/block_on_fault
- Date:		Oct 27, 2020
- KernelVersion:	5.11.0
-diff --git a/drivers/dma/idxd/idxd.h b/drivers/dma/idxd/idxd.h
-index ad7a1e8a0e1c..eca2c9d76db6 100644
---- a/drivers/dma/idxd/idxd.h
-+++ b/drivers/dma/idxd/idxd.h
-@@ -232,6 +232,7 @@ struct idxd_hw {
- 	union engine_cap_reg engine_cap;
- 	struct opcap opcap;
- 	u32 cmd_cap;
-+	union iaa_cap_reg iaa_cap;
- };
- 
- enum idxd_device_state {
-diff --git a/drivers/dma/idxd/init.c b/drivers/dma/idxd/init.c
-index 68d1c7fc9112..a408fc91144d 100644
---- a/drivers/dma/idxd/init.c
-+++ b/drivers/dma/idxd/init.c
-@@ -461,6 +461,10 @@ static void idxd_read_caps(struct idxd_device *idxd)
- 		dev_dbg(dev, "opcap[%d]: %#llx\n", i, idxd->hw.opcap.bits[i]);
- 	}
- 	multi_u64_to_bmap(idxd->opcap_bmap, &idxd->hw.opcap.bits[0], 4);
-+
-+	/* read iaa cap */
-+	if (idxd->data->type == IDXD_TYPE_IAX && idxd->hw.version >= DEVICE_VERSION_2)
-+		idxd->hw.iaa_cap.bits = ioread64(idxd->reg_base + IDXD_IAACAP_OFFSET);
- }
- 
- static struct idxd_device *idxd_alloc(struct pci_dev *pdev, struct idxd_driver_data *data)
-diff --git a/drivers/dma/idxd/registers.h b/drivers/dma/idxd/registers.h
-index fe3b8d04f9db..338289a66f00 100644
---- a/drivers/dma/idxd/registers.h
-+++ b/drivers/dma/idxd/registers.h
-@@ -276,6 +276,27 @@ union sw_err_reg {
- 	u64 bits[4];
- } __packed;
- 
-+union iaa_cap_reg {
-+	struct {
-+		u64 dec_aecs_format_ver:1;
-+		u64 drop_init_bits:1;
-+		u64 chaining:1;
-+		u64 force_array_output_mod:1;
-+		u64 load_part_aecs:1;
-+		u64 comp_early_abort:1;
-+		u64 nested_comp:1;
-+		u64 diction_comp:1;
-+		u64 header_gen:1;
-+		u64 crypto_gcm:1;
-+		u64 crypto_cfb:1;
-+		u64 crypto_xts:1;
-+		u64 rsvd:52;
-+	};
-+	u64 bits;
-+} __packed;
-+
-+#define IDXD_IAACAP_OFFSET	0x180
-+
- union msix_perm {
- 	struct {
- 		u32 rsvd:2;
-diff --git a/drivers/dma/idxd/sysfs.c b/drivers/dma/idxd/sysfs.c
-index 927c9d645121..2eba8cab25a1 100644
---- a/drivers/dma/idxd/sysfs.c
-+++ b/drivers/dma/idxd/sysfs.c
-@@ -1561,6 +1561,18 @@ static ssize_t cmd_status_store(struct device *dev, struct device_attribute *att
- }
- static DEVICE_ATTR_RW(cmd_status);
- 
-+static ssize_t iaa_cap_show(struct device *dev,
-+			    struct device_attribute *attr, char *buf)
-+{
-+	struct idxd_device *idxd = confdev_to_idxd(dev);
-+
-+	if (idxd->hw.version < DEVICE_VERSION_2)
-+		return -EOPNOTSUPP;
-+
-+	return sysfs_emit(buf, "%#llx\n", idxd->hw.iaa_cap.bits);
-+}
-+static DEVICE_ATTR_RO(iaa_cap);
-+
- static bool idxd_device_attr_max_batch_size_invisible(struct attribute *attr,
- 						      struct idxd_device *idxd)
- {
-@@ -1583,6 +1595,14 @@ static bool idxd_device_attr_read_buffers_invisible(struct attribute *attr,
- 		idxd->data->type == IDXD_TYPE_IAX;
- }
- 
-+static bool idxd_device_attr_iaa_cap_invisible(struct attribute *attr,
-+					       struct idxd_device *idxd)
-+{
-+	return attr == &dev_attr_iaa_cap.attr &&
-+	       (idxd->data->type != IDXD_TYPE_IAX ||
-+	       idxd->hw.version < DEVICE_VERSION_2);
-+}
-+
- static umode_t idxd_device_attr_visible(struct kobject *kobj,
- 					struct attribute *attr, int n)
- {
-@@ -1595,6 +1615,9 @@ static umode_t idxd_device_attr_visible(struct kobject *kobj,
- 	if (idxd_device_attr_read_buffers_invisible(attr, idxd))
- 		return 0;
- 
-+	if (idxd_device_attr_iaa_cap_invisible(attr, idxd))
-+		return 0;
-+
- 	return attr->mode;
- }
- 
-@@ -1620,6 +1643,7 @@ static struct attribute *idxd_device_attributes[] = {
- 	&dev_attr_read_buffer_limit.attr,
- 	&dev_attr_cdev_major.attr,
- 	&dev_attr_cmd_status.attr,
-+	&dev_attr_iaa_cap.attr,
- 	NULL,
- };
- 
--- 
-2.37.1
+Thanks,
 
+Jacob
