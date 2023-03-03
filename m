@@ -2,102 +2,88 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B0967C7EE30
-	for <dmaengine@archiver.kernel.org>; Fri,  3 Mar 2023 21:36:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 84DFEC7EE33
+	for <dmaengine@archiver.kernel.org>; Fri,  3 Mar 2023 21:37:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231615AbjCCVgX (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 3 Mar 2023 16:36:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47366 "EHLO
+        id S231858AbjCCVhr (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 3 Mar 2023 16:37:47 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48690 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231292AbjCCVgW (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Fri, 3 Mar 2023 16:36:22 -0500
-Received: from mga09.intel.com (mga09.intel.com [134.134.136.24])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4979B6233F;
-        Fri,  3 Mar 2023 13:36:21 -0800 (PST)
+        with ESMTP id S231889AbjCCVhq (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Fri, 3 Mar 2023 16:37:46 -0500
+Received: from mga11.intel.com (mga11.intel.com [192.55.52.93])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BBAB162D9E;
+        Fri,  3 Mar 2023 13:37:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1677879381; x=1709415381;
-  h=date:from:to:cc:subject:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=1OKCAy9ob19J/BmWrfVVQDL23h90LsZl9wS/K15VWWs=;
-  b=beAtohhfu4nJ8VwtTFDin/0hCpBYw2R7dWQQjcoO+gFw/wKtyMUPw9sO
-   lCM5oupURpGBe909BkNMyhRZUK13GTK24ffRgUjS0/INu1So9JBfRexDo
-   v9oLOqhOWE6a6D/o5+WqDeKksGtF31Bfo8UqjTXf1+D+CdKjfwaUhvtW4
-   YjipPrTNA3G2wnPBgDNmvjSiJ2NxKZnUqL7U09T3IOtReO4L7rREUssj4
-   hXJSM26tCDTCEMexb9nsUbFBagNqMCW/QC41yvuLXaGgSVDhANkGPhriE
-   nMccaaydzruFsxrPXg2aAFJdRorhZY/putnIadwj7x59hJkKIxprLFWEB
-   Q==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10638"; a="336682317"
+  t=1677879465; x=1709415465;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=VwG7ZZohEf0svVvNC9st5b7NqZLiJfhjCrP/gsGWpPY=;
+  b=UO1g1Ngz9o6KNKvxfgIUC+52zvWDxiLm424KvHXFHKsGW7iO3hj8nUvo
+   NeYx8e690bss9ObeaQiF2bbdHVuU8N4Ksm6EHzmLd9ey+16UloTjzEYX3
+   vAJJbs13VX6lUPCrDXA2ZaXknfxEWClkG7c9M3bdA2pA7k/nESXwfNomG
+   ssxlqDVNvewxIH8BdFZlIge4GxfVt8BW2hzB4xIDm1v0MYQw59HxSApU5
+   1Wlj4SdxcwmOSV4jfSdktXQ6Cy6HWDOk7KbU9ZxXx3xnTuwmovWL+V3lB
+   U8cT+FR0hLhHfCr2KhAMnE+7G+d74pVvR1p7TKXOztlA9pJfsg15Gvnrg
+   A==;
+X-IronPort-AV: E=McAfee;i="6500,9779,10638"; a="332643548"
 X-IronPort-AV: E=Sophos;i="5.98,231,1673942400"; 
-   d="scan'208";a="336682317"
-Received: from fmsmga008.fm.intel.com ([10.253.24.58])
-  by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Mar 2023 13:36:20 -0800
+   d="scan'208";a="332643548"
+Received: from fmsmga001.fm.intel.com ([10.253.24.23])
+  by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Mar 2023 13:37:45 -0800
 X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6500,9779,10638"; a="739651237"
+X-IronPort-AV: E=McAfee;i="6500,9779,10638"; a="818650489"
 X-IronPort-AV: E=Sophos;i="5.98,231,1673942400"; 
-   d="scan'208";a="739651237"
-Received: from jacob-builder.jf.intel.com (HELO jacob-builder) ([10.24.100.114])
-  by fmsmga008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Mar 2023 13:36:20 -0800
-Date:   Fri, 3 Mar 2023 13:40:09 -0800
-From:   Jacob Pan <jacob.jun.pan@linux.intel.com>
-To:     Baolu Lu <baolu.lu@linux.intel.com>
-Cc:     LKML <linux-kernel@vger.kernel.org>, iommu@lists.linux.dev,
-        Jason Gunthorpe <jgg@nvidia.com>,
-        Joerg Roedel <joro@8bytes.org>, dmaengine@vger.kernel.org,
-        vkoul@kernel.org, Robin Murphy <robin.murphy@arm.com>,
-        Will Deacon <will@kernel.org>,
-        David Woodhouse <dwmw2@infradead.org>,
-        Raj Ashok <ashok.raj@intel.com>,
-        "Tian, Kevin" <kevin.tian@intel.com>, Yi Liu <yi.l.liu@intel.com>,
-        "Yu, Fenghua" <fenghua.yu@intel.com>,
-        Dave Jiang <dave.jiang@intel.com>,
-        Tony Luck <tony.luck@intel.com>,
-        "Zanussi, Tom" <tom.zanussi@intel.com>,
-        jacob.jun.pan@linux.intel.com
-Subject: Re: [PATCH 2/4] iommu/vt-d: Use non-privileged mode for all PASIDs
-Message-ID: <20230303134009.189d792f@jacob-builder>
-In-Reply-To: <0afa8e6e-1676-d6a5-d679-173351fe439c@linux.intel.com>
-References: <20230302005959.2695267-1-jacob.jun.pan@linux.intel.com>
-        <20230302005959.2695267-3-jacob.jun.pan@linux.intel.com>
-        <0afa8e6e-1676-d6a5-d679-173351fe439c@linux.intel.com>
-Organization: OTC
-X-Mailer: Claws Mail 3.17.5 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
+   d="scan'208";a="818650489"
+Received: from fyu1.sc.intel.com ([172.25.103.126])
+  by fmsmga001.fm.intel.com with ESMTP; 03 Mar 2023 13:37:45 -0800
+From:   Fenghua Yu <fenghua.yu@intel.com>
+To:     "Vinod Koul" <vkoul@kernel.org>,
+        "Dave Jiang" <dave.jiang@intel.com>
+Cc:     dmaengine@vger.kernel.org,
+        "linux-kernel" <linux-kernel@vger.kernel.org>,
+        Fenghua Yu <fenghua.yu@intel.com>
+Subject: [PATCH v2 0/2] Expose IAA 2.0 device capabilities
+Date:   Fri,  3 Mar 2023 13:37:30 -0800
+Message-Id: <20230303213732.3357494-1-fenghua.yu@intel.com>
+X-Mailer: git-send-email 2.37.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Hi Baolu,
+In-memory Analytics Accelerator (IAA) 2.0 [1] introduces General
+Capabilities Register (GENCAP). Add a sysfs attribute to expose the
+register to applications.
 
-On Thu, 2 Mar 2023 22:11:36 +0800, Baolu Lu <baolu.lu@linux.intel.com>
-wrote:
+This series is applied cleanly on top of DSA 2.0 Event Log and Completion
+Record Faulting series: 
+https://lore.kernel.org/dmaengine/20230103163505.1569356-1-fenghua.yu@intel.com/T/#m13ba6167994f3add6446d2d7e242ecb637c54426
 
-> On 2023/3/2 8:59, Jacob Pan wrote:
-> > For in-kernel DMA, use non-privileged access for all PASIDs to be
-> > consistent with RID_PASID.
-> > There's no need to differentiate user and kernel for in-kernel DMA. >
-> > Signed-off-by: Jacob Pan <jacob.jun.pan@linux.intel.com>
-> > ---
-> >   drivers/iommu/intel/iommu.c | 2 --
-> >   1 file changed, 2 deletions(-)
-> > 
-> > diff --git a/drivers/iommu/intel/iommu.c b/drivers/iommu/intel/iommu.c
-> > index a0cb3bc851ac..9e3c056e392d 100644
-> > --- a/drivers/iommu/intel/iommu.c
-> > +++ b/drivers/iommu/intel/iommu.c
-> > @@ -2334,8 +2334,6 @@ static int domain_setup_first_level(struct
-> > intel_iommu *iommu, if (level != 4 && level != 5)
-> >   		return -EINVAL;
-> >   
-> > -	if (pasid != PASID_RID2PASID)
-> > -		flags |= PASID_FLAG_SUPERVISOR_MODE;  
-> 
-> With above removed, PASID_FLAG_SUPERVISOR_MODE is not used anywhere?
-> Perhaps you can cleanup it to avoid dead code?
-good point, we could remove pasid_set_sre() related code for FL,SL, and PT.
+Change log:
+v2:
+- Fix a typo in commit message of patch 1 (Vinod)
+- Rebased to 6.2. No functionality change.
 
-Thanks,
+v1:
+https://lore.kernel.org/dmaengine/20230103165337.1570238-1-fenghua.yu@intel.com/
 
-Jacob
+[1] IAA 2.0 spec: https://cdrdv2-public.intel.com/721858/350295-iaa-specification.pdf
+
+Dave Jiang (2):
+  dmaengine: idxd: reformat swerror output to standard Linux bitmap
+    output
+  dmaengine: idxd: expose IAA CAP register via sysfs knob
+
+ .../ABI/stable/sysfs-driver-dma-idxd          |  8 +++++
+ drivers/dma/idxd/idxd.h                       |  2 ++
+ drivers/dma/idxd/init.c                       |  6 +++-
+ drivers/dma/idxd/registers.h                  | 21 ++++++++++++
+ drivers/dma/idxd/sysfs.c                      | 34 +++++++++++++++----
+ 5 files changed, 64 insertions(+), 7 deletions(-)
+
+-- 
+2.37.1
+
