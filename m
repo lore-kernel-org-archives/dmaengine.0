@@ -2,176 +2,392 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 202DEC61DA4
-	for <dmaengine@archiver.kernel.org>; Mon,  6 Mar 2023 16:44:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 139E7C6FA99
+	for <dmaengine@archiver.kernel.org>; Mon,  6 Mar 2023 16:44:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230329AbjCFQoV (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 6 Mar 2023 11:44:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34468 "EHLO
+        id S230348AbjCFQoX (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 6 Mar 2023 11:44:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34478 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230242AbjCFQoH (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Mon, 6 Mar 2023 11:44:07 -0500
+        with ESMTP id S230244AbjCFQoI (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Mon, 6 Mar 2023 11:44:08 -0500
 Received: from mga06.intel.com (mga06b.intel.com [134.134.136.31])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 927679EDB;
-        Mon,  6 Mar 2023 08:43:43 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF6EC41B44;
+        Mon,  6 Mar 2023 08:43:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1678121023; x=1709657023;
-  h=from:to:cc:subject:date:message-id:mime-version:
-   content-transfer-encoding;
-  bh=kJZUZf+J47j7PPpaqeXXB3/Hvai5TS6lAosU6kfHu3s=;
-  b=AevzY5s437XuVBMrk5YtNu7pe//oHK3ltCtLvbMOSAjXPlJsRPVMXAPS
-   yZKSK2bxUuiAnRWz3N0Tc79LfpaffwDolYuu9gxA6+9fREVJPvUC4gUvG
-   bE+YV36YJBvGVBwL1fqIuuBZV41uPnhNwk4VyKtoc701kMicIMn7KJulM
-   fgbjA48wGchokMTorjyGaaMlc0qvryRnnYnzaKJKA5Ns7dZfYlwDa2wUS
-   xsvHTF7TfvBNfF5ZkKT5GF7vawH/fkisKxiNI5gt3ZuuixsKWW/wMJqtD
-   +TIpNyqGdsn7ENVwrCklAeLMCZ9JHm/4bqK1RlK2j1/MXgCOfn2NbhK2R
-   w==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10641"; a="398181125"
+  t=1678121022; x=1709657022;
+  h=from:to:cc:subject:date:message-id:in-reply-to:
+   references:mime-version:content-transfer-encoding;
+  bh=vyRGDapMyyLqsA7crlN6WhQHps1C7Gco3rKRxAu1AFQ=;
+  b=d1MoPEBzEdYXj7Fgi8BzyioDY7oIZgJC8BlT5JQxIN/qgDnUqGJ6B29j
+   xAsBWMJIYQ5VT2d7PjbvWrSdteujhO/ykSFaOfya0Emr7SjM6h48M8xcG
+   085iftFz7zcESiMY6A656BNMPLrkOQ8QkzEahD2fleizDtmwZly0rnce4
+   19+kvABkYeXwjfAt7RoI1/903gHSFTU22JqKc2oYuuXpG6rnBZ2dt+QSx
+   y1Iv253PJnsjyib50rXRtliXAOzhakwGj4tqrFHZLB3cTI9dRBiaC0j2E
+   NlBq5Sdy1cR4/9v8j9701ihIgF94NnPs5+hrkFlkQ317JB1UY/Y+5kZNC
+   A==;
+X-IronPort-AV: E=McAfee;i="6500,9779,10641"; a="398181146"
 X-IronPort-AV: E=Sophos;i="5.98,238,1673942400"; 
-   d="scan'208";a="398181125"
+   d="scan'208";a="398181146"
 Received: from orsmga007.jf.intel.com ([10.7.209.58])
-  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Mar 2023 08:31:54 -0800
+  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Mar 2023 08:31:56 -0800
 X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6500,9779,10641"; a="669504454"
+X-IronPort-AV: E=McAfee;i="6500,9779,10641"; a="669504501"
 X-IronPort-AV: E=Sophos;i="5.98,238,1673942400"; 
-   d="scan'208";a="669504454"
+   d="scan'208";a="669504501"
 Received: from fyu1.sc.intel.com ([172.25.103.126])
-  by orsmga007.jf.intel.com with ESMTP; 06 Mar 2023 08:31:54 -0800
+  by orsmga007.jf.intel.com with ESMTP; 06 Mar 2023 08:31:55 -0800
 From:   Fenghua Yu <fenghua.yu@intel.com>
 To:     "Vinod Koul" <vkoul@kernel.org>,
         "Dave Jiang" <dave.jiang@intel.com>
 Cc:     dmaengine@vger.kernel.org,
         "linux-kernel" <linux-kernel@vger.kernel.org>,
+        Tony Zhu <tony.zhu@intel.com>,
         Fenghua Yu <fenghua.yu@intel.com>
-Subject: [PATCH v2 00/16] Enable DSA 2.0 Event Log and completion record faulting features
-Date:   Mon,  6 Mar 2023 08:31:22 -0800
-Message-Id: <20230306163138.587484-1-fenghua.yu@intel.com>
+Subject: [PATCH v2 03/16] dmaengine: idxd: setup event log configuration
+Date:   Mon,  6 Mar 2023 08:31:25 -0800
+Message-Id: <20230306163138.587484-4-fenghua.yu@intel.com>
 X-Mailer: git-send-email 2.37.1
+In-Reply-To: <20230306163138.587484-1-fenghua.yu@intel.com>
+References: <20230306163138.587484-1-fenghua.yu@intel.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Applications can send 64B descriptors to the DSA device via CPU
-instructions MOVDIR64B or ENQCMD. The application can choose to have
-the device write back a completion record (CR) in system memory to
-indicate the status of the descriptor submitted on completion.
+From: Dave Jiang <dave.jiang@intel.com>
 
-With the DSA hardware, the device is able to do on demand paging through
-the hardware by faulting in the user pages that do not have physical memory
-page backing with assistance from IOMMU. In the spec this was designated as
-the block on fault feature. While this hardware feature made operation
-simpler, it also stalls the device engines while the memory pages are being
-faulted in through Page Request Service (PRS). For applications sharing the
-same workqueue (wq) or wqs in the same group, operations are stalled if
-there are no free engines. To avoid slowing the performance of all other
-running applications sharing the same device engine(s), PRS can to be
-disabled and software can deal with partial completion.
+Add setup of event log feature for supported device. Event log addresses
+error reporting that was lacking in gen 1 DSA devices where a second error
+event does not get reported when a first event is pending software
+handling. The event log allows a circular buffer that the device can push
+error events to. It is up to the user to create a large enough event log
+ring in order to capture the expected events. The evl size can be set in
+the device sysfs attribute. By default 64 entries are supported as minimal
+when event log is enabled.
 
-The block on fault feature on DSA 1.0 can be disabled for the wq. However,
-PRS is not completely disabled for the whole path. It is not disabled for
-CRs or batch list for a batch operation.
+Tested-by: Tony Zhu <tony.zhu@intel.com>
+Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+Co-developed-by: Fenghua Yu <fenghua.yu@intel.com>
+Signed-off-by: Fenghua Yu <fenghua.yu@intel.com>
+---
+ drivers/dma/idxd/device.c    | 89 +++++++++++++++++++++++++++++++++++-
+ drivers/dma/idxd/idxd.h      | 19 ++++++++
+ drivers/dma/idxd/init.c      |  1 +
+ drivers/dma/idxd/registers.h | 72 ++++++++++++++++++++++++++++-
+ drivers/dma/idxd/sysfs.c     |  3 +-
+ include/uapi/linux/idxd.h    |  1 +
+ 6 files changed, 181 insertions(+), 4 deletions(-)
 
-The other issue is the DSA 1.0 error reporting mechanism, SWERROR register.
-The SWERROR register can only report a single error at a time until the
-driver reads and acknowledges the error. The follow on errors cannot be
-reported until the current error is "cleared" by the software by writing
-a bit to the SWERR register. If a large number of faults arrive and the
-software cannot clear them fast enough, overflowed errors will be dropped
-by the device.
-
-A CR is the optional 32 bytes (DSA) or 64 bytes (IAA) status that is
-written back for a submitted descriptor. If the address for the CR faults,
-the error is reported to the SWERROR register instead.
-
-With DSA 2.0 hardware [1], the event log feature is added. All errors are
-reported as an entry in a circular buffer reside in the system memory.
-The system admin is responsible to configure the size of the circular
-buffer large enough per device to handle the potential errors that may be
-reported. If the buffer is full and another error needs to be reported,
-the device engine will block until there's a free slot in the buffer.
-An event log entry for a faulted CR will contain the error information,
-the CR address that faulted, and the expected CR content the device had
-originally intended to write.
-
-DSA 2.0 also introduces per wq PRS disable knob. This will disable all PRS
-operations for the specific wq. The device will still have Address
-Translation Service (ATS) on. When ATS fails on a memory address for a CR,
-an eventlog entry will be written by the hardware into the event log
-ring buffer. The driver software is expected to parse the event log entry,
-fault in the address of the CR, and the write the content of the CR to
-the memory address.
-
-This patch series will implement the DSA 2 event log support. The support
-for the handling of the faulted user CR is added. The driver is also
-adding the same support for batch operation descriptors. With a batch
-operation the handling of the event log entry is a bit more complex.
-The faulting CR could be for the batch descriptor or any of the operation
-descriptors within the batch. The hardware generates a batch identifier
-that is used by the driver software to correlate the event log entries for
-the relevant descriptors of that batch.
-
-The faulting of source and destination addresses for the operation is not
-handled by the driver. That is left to be handled by the user application
-by faulting in the memory and re-submit the remaining operation.
-
-This series consists of three parts:
-1. Patch 1: Make misc interrupt one shot. Event Log interrupt depends on
-   this patch. This patch was released before but is not in upstream yet:
-   https://lore.kernel.org/dmaengine/165125374675.311834.10460196228320964350.stgit@djiang5-desk3.ch.intel.com/
-2. Patches 2-15: Enable Event Log and Completion Record faulting.
-3. Patch 16: Configure PRS disable per WQ.
-
-This series is applied cleanly on top of "Expose IAA 2.0 device
-capabilities" series:
-https://lore.kernel.org/lkml/20230303213732.3357494-1-fenghua.yu@intel.com/
-
-Change log:
-v2:
-- Define and export iommu_access_remote_vm() for IDXD driver to write
-  completion record to user address space. This change removes
-  patch 8 and 9 in v1 (Alistair Popple)
-
-Dave Jiang (15):
-  dmaengine: idxd: make misc interrupt one shot
-  dmaengine: idxd: add event log size sysfs attribute
-  dmaengine: idxd: setup event log configuration
-  dmaengine: idxd: add interrupt handling for event log
-  dmanegine: idxd: add debugfs for event log dump
-  dmaengine: idxd: add per DSA wq workqueue for processing cr faults
-  dmaengine: idxd: create kmem cache for event log fault items
-  dmaengine: idxd: process user page faults for completion record
-  dmaengine: idxd: add descs_completed field for completion record
-  dmaengine: idxd: process batch descriptor completion record faults
-  dmaengine: idxd: add per file user counters for completion record
-    faults
-  dmaengine: idxd: add a device to represent the file opened
-  dmaengine: idxd: expose fault counters to sysfs
-  dmaengine: idxd: add pid to exported sysfs attribute for opened file
-  dmaengine: idxd: add per wq PRS disable
-
-Fenghua Yu (1):
-  iommu: define and export iommu_access_remote_vm()
-
- .../ABI/stable/sysfs-driver-dma-idxd          |  43 +++
- drivers/dma/Kconfig                           |   1 +
- drivers/dma/idxd/Makefile                     |   2 +-
- drivers/dma/idxd/cdev.c                       | 264 ++++++++++++++++--
- drivers/dma/idxd/debugfs.c                    | 138 +++++++++
- drivers/dma/idxd/device.c                     | 113 +++++++-
- drivers/dma/idxd/idxd.h                       |  63 +++++
- drivers/dma/idxd/init.c                       |  53 ++++
- drivers/dma/idxd/irq.c                        | 203 ++++++++++++--
- drivers/dma/idxd/registers.h                  | 105 ++++++-
- drivers/dma/idxd/sysfs.c                      | 112 +++++++-
- drivers/iommu/iommu-sva.c                     |  35 +++
- include/linux/iommu.h                         |   9 +
- include/uapi/linux/idxd.h                     |  15 +-
- 14 files changed, 1091 insertions(+), 65 deletions(-)
- create mode 100644 drivers/dma/idxd/debugfs.c
-
+diff --git a/drivers/dma/idxd/device.c b/drivers/dma/idxd/device.c
+index 5f321f3b4242..230fe9bb56ae 100644
+--- a/drivers/dma/idxd/device.c
++++ b/drivers/dma/idxd/device.c
+@@ -752,6 +752,83 @@ void idxd_device_clear_state(struct idxd_device *idxd)
+ 	spin_unlock(&idxd->dev_lock);
+ }
+ 
++static int idxd_device_evl_setup(struct idxd_device *idxd)
++{
++	union gencfg_reg gencfg;
++	union evlcfg_reg evlcfg;
++	union genctrl_reg genctrl;
++	struct device *dev = &idxd->pdev->dev;
++	void *addr;
++	dma_addr_t dma_addr;
++	int size;
++	struct idxd_evl *evl = idxd->evl;
++
++	if (!evl)
++		return 0;
++
++	size = evl_size(idxd);
++	/*
++	 * Address needs to be page aligned. However, dma_alloc_coherent() provides
++	 * at minimal page size aligned address. No manual alignment required.
++	 */
++	addr = dma_alloc_coherent(dev, size, &dma_addr, GFP_KERNEL);
++	if (!addr)
++		return -ENOMEM;
++
++	memset(addr, 0, size);
++
++	spin_lock(&evl->lock);
++	evl->log = addr;
++	evl->dma = dma_addr;
++	evl->log_size = size;
++
++	memset(&evlcfg, 0, sizeof(evlcfg));
++	evlcfg.bits[0] = dma_addr & GENMASK(63, 12);
++	evlcfg.size = evl->size;
++
++	iowrite64(evlcfg.bits[0], idxd->reg_base + IDXD_EVLCFG_OFFSET);
++	iowrite64(evlcfg.bits[1], idxd->reg_base + IDXD_EVLCFG_OFFSET + 8);
++
++	genctrl.bits = ioread32(idxd->reg_base + IDXD_GENCTRL_OFFSET);
++	genctrl.evl_int_en = 1;
++	iowrite32(genctrl.bits, idxd->reg_base + IDXD_GENCTRL_OFFSET);
++
++	gencfg.bits = ioread32(idxd->reg_base + IDXD_GENCFG_OFFSET);
++	gencfg.evl_en = 1;
++	iowrite32(gencfg.bits, idxd->reg_base + IDXD_GENCFG_OFFSET);
++
++	spin_unlock(&evl->lock);
++	return 0;
++}
++
++static void idxd_device_evl_free(struct idxd_device *idxd)
++{
++	union gencfg_reg gencfg;
++	union genctrl_reg genctrl;
++	struct device *dev = &idxd->pdev->dev;
++	struct idxd_evl *evl = idxd->evl;
++
++	gencfg.bits = ioread32(idxd->reg_base + IDXD_GENCFG_OFFSET);
++	if (!gencfg.evl_en)
++		return;
++
++	spin_lock(&evl->lock);
++	gencfg.evl_en = 0;
++	iowrite32(gencfg.bits, idxd->reg_base + IDXD_GENCFG_OFFSET);
++
++	genctrl.bits = ioread32(idxd->reg_base + IDXD_GENCTRL_OFFSET);
++	genctrl.evl_int_en = 0;
++	iowrite32(genctrl.bits, idxd->reg_base + IDXD_GENCTRL_OFFSET);
++
++	iowrite64(0, idxd->reg_base + IDXD_EVLCFG_OFFSET);
++	iowrite64(0, idxd->reg_base + IDXD_EVLCFG_OFFSET + 8);
++
++	dma_free_coherent(dev, evl->log_size, evl->log, evl->dma);
++	evl->log = NULL;
++	evl->size = IDXD_EVL_SIZE_MIN;
++	spin_unlock(&evl->lock);
++}
++
+ static void idxd_group_config_write(struct idxd_group *group)
+ {
+ 	struct idxd_device *idxd = group->idxd;
+@@ -1451,15 +1528,24 @@ int idxd_device_drv_probe(struct idxd_dev *idxd_dev)
+ 	if (rc < 0)
+ 		return -ENXIO;
+ 
++	rc = idxd_device_evl_setup(idxd);
++	if (rc < 0) {
++		idxd->cmd_status = IDXD_SCMD_DEV_EVL_ERR;
++		return rc;
++	}
++
+ 	/* Start device */
+ 	rc = idxd_device_enable(idxd);
+-	if (rc < 0)
++	if (rc < 0) {
++		idxd_device_evl_free(idxd);
+ 		return rc;
++	}
+ 
+ 	/* Setup DMA device without channels */
+ 	rc = idxd_register_dma_device(idxd);
+ 	if (rc < 0) {
+ 		idxd_device_disable(idxd);
++		idxd_device_evl_free(idxd);
+ 		idxd->cmd_status = IDXD_SCMD_DEV_DMA_ERR;
+ 		return rc;
+ 	}
+@@ -1488,6 +1574,7 @@ void idxd_device_drv_remove(struct idxd_dev *idxd_dev)
+ 	idxd_device_disable(idxd);
+ 	if (test_bit(IDXD_FLAG_CONFIGURABLE, &idxd->flags))
+ 		idxd_device_reset(idxd);
++	idxd_device_evl_free(idxd);
+ }
+ 
+ static enum idxd_dev_type dev_types[] = {
+diff --git a/drivers/dma/idxd/idxd.h b/drivers/dma/idxd/idxd.h
+index 2a71273f1822..c74681f02b18 100644
+--- a/drivers/dma/idxd/idxd.h
++++ b/drivers/dma/idxd/idxd.h
+@@ -262,7 +262,15 @@ struct idxd_driver_data {
+ };
+ 
+ struct idxd_evl {
++	/* Lock to protect event log access. */
++	spinlock_t lock;
++	void *log;
++	dma_addr_t dma;
++	/* Total size of event log = number of entries * entry size. */
++	unsigned int log_size;
++	/* The number of entries in the event log. */
+ 	u16 size;
++	u16 head;
+ };
+ 
+ struct idxd_device {
+@@ -324,6 +332,17 @@ struct idxd_device {
+ 	struct idxd_evl *evl;
+ };
+ 
++static inline unsigned int evl_ent_size(struct idxd_device *idxd)
++{
++	return idxd->hw.gen_cap.evl_support ?
++	       (32 * (1 << idxd->hw.gen_cap.evl_support)) : 0;
++}
++
++static inline unsigned int evl_size(struct idxd_device *idxd)
++{
++	return idxd->evl->size * evl_ent_size(idxd);
++}
++
+ /* IDXD software descriptor */
+ struct idxd_desc {
+ 	union {
+diff --git a/drivers/dma/idxd/init.c b/drivers/dma/idxd/init.c
+index d1fb01c115d8..2ffeb2f3a2c8 100644
+--- a/drivers/dma/idxd/init.c
++++ b/drivers/dma/idxd/init.c
+@@ -344,6 +344,7 @@ static int idxd_init_evl(struct idxd_device *idxd)
+ 	if (!evl)
+ 		return -ENOMEM;
+ 
++	spin_lock_init(&evl->lock);
+ 	evl->size = IDXD_EVL_SIZE_MIN;
+ 	idxd->evl = evl;
+ 	return 0;
+diff --git a/drivers/dma/idxd/registers.h b/drivers/dma/idxd/registers.h
+index ea3a499a3c3c..11bb97cf7481 100644
+--- a/drivers/dma/idxd/registers.h
++++ b/drivers/dma/idxd/registers.h
+@@ -3,6 +3,8 @@
+ #ifndef _IDXD_REGISTERS_H_
+ #define _IDXD_REGISTERS_H_
+ 
++#include <uapi/linux/idxd.h>
++
+ /* PCI Config */
+ #define PCI_DEVICE_ID_INTEL_DSA_SPR0	0x0b25
+ #define PCI_DEVICE_ID_INTEL_IAX_SPR0	0x0cfe
+@@ -119,7 +121,8 @@ union gencfg_reg {
+ 		u32 rdbuf_limit:8;
+ 		u32 rsvd:4;
+ 		u32 user_int_en:1;
+-		u32 rsvd2:19;
++		u32 evl_en:1;
++		u32 rsvd2:18;
+ 	};
+ 	u32 bits;
+ } __packed;
+@@ -129,7 +132,8 @@ union genctrl_reg {
+ 	struct {
+ 		u32 softerr_int_en:1;
+ 		u32 halt_int_en:1;
+-		u32 rsvd:30;
++		u32 evl_int_en:1;
++		u32 rsvd:29;
+ 	};
+ 	u32 bits;
+ } __packed;
+@@ -299,6 +303,21 @@ union iaa_cap_reg {
+ 
+ #define IDXD_IAACAP_OFFSET	0x180
+ 
++#define IDXD_EVLCFG_OFFSET	0xe0
++union evlcfg_reg {
++	struct {
++		u64 pasid_en:1;
++		u64 priv:1;
++		u64 rsvd:10;
++		u64 base_addr:52;
++
++		u64 size:16;
++		u64 pasid:20;
++		u64 rsvd2:28;
++	};
++	u64 bits[2];
++} __packed;
++
+ #define IDXD_EVL_SIZE_MIN	0x0040
+ #define IDXD_EVL_SIZE_MAX	0xffff
+ 
+@@ -539,4 +558,53 @@ union filter_cfg {
+ 	u64 val;
+ } __packed;
+ 
++struct __evl_entry {
++	u64 rsvd:2;
++	u64 desc_valid:1;
++	u64 wq_idx_valid:1;
++	u64 batch:1;
++	u64 fault_rw:1;
++	u64 priv:1;
++	u64 err_info_valid:1;
++	u64 error:8;
++	u64 wq_idx:8;
++	u64 batch_id:8;
++	u64 operation:8;
++	u64 pasid:20;
++	u64 rsvd2:4;
++
++	u16 batch_idx;
++	u16 rsvd3;
++	union {
++		/* Invalid Flags 0x11 */
++		u32 invalid_flags;
++		/* Invalid Int Handle 0x19 */
++		/* Page fault 0x1a */
++		/* Page fault 0x06, 0x1f, only operand_id */
++		/* Page fault before drain or in batch, 0x26, 0x27 */
++		struct {
++			u16 int_handle;
++			u16 rci:1;
++			u16 ims:1;
++			u16 rcr:1;
++			u16 first_err_in_batch:1;
++			u16 rsvd4_2:9;
++			u16 operand_id:3;
++		};
++	};
++	u64 fault_addr;
++	u64 rsvd5;
++} __packed;
++
++struct dsa_evl_entry {
++	struct __evl_entry e;
++	struct dsa_completion_record cr;
++} __packed;
++
++struct iax_evl_entry {
++	struct __evl_entry e;
++	u64 rsvd[4];
++	struct iax_completion_record cr;
++} __packed;
++
+ #endif
+diff --git a/drivers/dma/idxd/sysfs.c b/drivers/dma/idxd/sysfs.c
+index 85644e5bde83..163fdfaa5022 100644
+--- a/drivers/dma/idxd/sysfs.c
++++ b/drivers/dma/idxd/sysfs.c
+@@ -1605,7 +1605,8 @@ static ssize_t event_log_size_store(struct device *dev,
+ 	if (!test_bit(IDXD_FLAG_CONFIGURABLE, &idxd->flags))
+ 		return -EPERM;
+ 
+-	if (val < IDXD_EVL_SIZE_MIN || val > IDXD_EVL_SIZE_MAX)
++	if (val < IDXD_EVL_SIZE_MIN || val > IDXD_EVL_SIZE_MAX ||
++	    (val * evl_ent_size(idxd) > ULONG_MAX - idxd->evl->dma))
+ 		return -EINVAL;
+ 
+ 	idxd->evl->size = val;
+diff --git a/include/uapi/linux/idxd.h b/include/uapi/linux/idxd.h
+index fc47635b57dc..5d05bf12f2bd 100644
+--- a/include/uapi/linux/idxd.h
++++ b/include/uapi/linux/idxd.h
+@@ -30,6 +30,7 @@ enum idxd_scmd_stat {
+ 	IDXD_SCMD_WQ_NO_PRIV = 0x800f0000,
+ 	IDXD_SCMD_WQ_IRQ_ERR = 0x80100000,
+ 	IDXD_SCMD_WQ_USER_NO_IOMMU = 0x80110000,
++	IDXD_SCMD_DEV_EVL_ERR = 0x80120000,
+ };
+ 
+ #define IDXD_SCMD_SOFTERR_MASK	0x80000000
 -- 
 2.37.1
 
