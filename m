@@ -2,133 +2,115 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 70660C64EC4
-	for <dmaengine@archiver.kernel.org>; Mon,  6 Mar 2023 17:35:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8F50EC61DA4
+	for <dmaengine@archiver.kernel.org>; Mon,  6 Mar 2023 17:42:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229542AbjCFRfL (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 6 Mar 2023 12:35:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43030 "EHLO
+        id S230199AbjCFRmB (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 6 Mar 2023 12:42:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53976 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229568AbjCFRfK (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Mon, 6 Mar 2023 12:35:10 -0500
+        with ESMTP id S230246AbjCFRl5 (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Mon, 6 Mar 2023 12:41:57 -0500
 Received: from mga01.intel.com (mga01.intel.com [192.55.52.88])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E4B167020;
-        Mon,  6 Mar 2023 09:34:38 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 223A94741C;
+        Mon,  6 Mar 2023 09:41:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1678124078; x=1709660078;
+  t=1678124490; x=1709660490;
   h=date:from:to:cc:subject:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=DUxKUZFXlH9ieOprWzSIsATKqQ+Kr3d5N+BZv+HPjN8=;
-  b=ZqrftcwLR2/7ATmkjnbaGMN59LPlwGoRli0v+/esKl79PSjxrbBO/qx9
-   JMPi5NUx7h10bGnaRBZ5PF7n/ONWFE7a50ItEB/N/9MROtKLsgkJRPGqa
-   ZwvZ9ylx/NxZxufPQpVxgUyFdQDrkFj2n1CpMhyf84DDlpBTaoUZnBbpw
-   oYQ7t44ISEXUEjS0jvq40Q/Wboq3xHkjxvUVzgm0n/i8ilmrQDqsd0x6J
-   C4Cn1eUKB8bBKCT3OmnFi4yQLXwr4CrhMzzlWysI+6ZsA3kAWLLU2rJPy
-   vwr+NrTLpVdOVZm65LXKfFftxaVIDC01EgdXN8w8NJTdDHf5xAIJJphk1
+  bh=jYQf0+QQ92IJa7rmg3xs0GynrfCE+yIEFalz9+F5Bow=;
+  b=ONk4LW0Wy6ZzIgng6KRJCOe8xvw87Q4XkdId1hjJFPxIs36Dqc6giZJb
+   KmM2PBvE1VD3gDVbG4MKOjKkrv4sPI2Lh+HdxZIN2x8JOTC2vW5RS/cVr
+   Seoy4axexPSfKhJK0wYWXJ/NazP2La1dXl9hBeRLJqqKKSfylgkYH+UB+
+   N/0qfiAqPsxRkIOpVOCUqjjN3o0zgKCIs9l3Ad4F+tRpBcHptgt+9uB/R
+   fGf5ll+GGYKcDsofJtaJ9b8wFD41c9uukhkWJARRqrlZWc+p/0qyizbgw
+   5/wjRvbxH0auB+vXBEZChTpXaXlAqk4Cz0uba1VnOzL1gmNIzfWbgv2K3
    A==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10641"; a="363240590"
+X-IronPort-AV: E=McAfee;i="6500,9779,10641"; a="363242787"
 X-IronPort-AV: E=Sophos;i="5.98,238,1673942400"; 
-   d="scan'208";a="363240590"
+   d="scan'208";a="363242787"
 Received: from fmsmga004.fm.intel.com ([10.253.24.48])
-  by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Mar 2023 09:32:36 -0800
+  by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Mar 2023 09:40:17 -0800
 X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6500,9779,10641"; a="745155575"
+X-IronPort-AV: E=McAfee;i="6500,9779,10641"; a="745156852"
 X-IronPort-AV: E=Sophos;i="5.98,238,1673942400"; 
-   d="scan'208";a="745155575"
+   d="scan'208";a="745156852"
 Received: from jacob-builder.jf.intel.com (HELO jacob-builder) ([10.24.100.114])
-  by fmsmga004-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Mar 2023 09:32:36 -0800
-Date:   Mon, 6 Mar 2023 09:36:26 -0800
+  by fmsmga004-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Mar 2023 09:40:17 -0800
+Date:   Mon, 6 Mar 2023 09:44:08 -0800
 From:   Jacob Pan <jacob.jun.pan@linux.intel.com>
 To:     Jason Gunthorpe <jgg@nvidia.com>
-Cc:     LKML <linux-kernel@vger.kernel.org>, iommu@lists.linux.dev,
+Cc:     "Tian, Kevin" <kevin.tian@intel.com>,
+        LKML <linux-kernel@vger.kernel.org>,
+        "iommu@lists.linux.dev" <iommu@lists.linux.dev>,
         Lu Baolu <baolu.lu@linux.intel.com>,
-        Joerg Roedel <joro@8bytes.org>, dmaengine@vger.kernel.org,
-        vkoul@kernel.org, Robin Murphy <robin.murphy@arm.com>,
+        Joerg Roedel <joro@8bytes.org>,
+        "dmaengine@vger.kernel.org" <dmaengine@vger.kernel.org>,
+        "vkoul@kernel.org" <vkoul@kernel.org>,
+        Robin Murphy <robin.murphy@arm.com>,
         Will Deacon <will@kernel.org>,
         David Woodhouse <dwmw2@infradead.org>,
-        Raj Ashok <ashok.raj@intel.com>,
-        "Tian, Kevin" <kevin.tian@intel.com>, Yi Liu <yi.l.liu@intel.com>,
+        "Raj, Ashok" <ashok.raj@intel.com>,
+        "Liu, Yi L" <yi.l.liu@intel.com>,
         "Yu, Fenghua" <fenghua.yu@intel.com>,
-        Dave Jiang <dave.jiang@intel.com>,
-        Tony Luck <tony.luck@intel.com>,
+        "Jiang, Dave" <dave.jiang@intel.com>,
+        "Luck, Tony" <tony.luck@intel.com>,
         "Zanussi, Tom" <tom.zanussi@intel.com>,
         jacob.jun.pan@linux.intel.com
-Subject: Re: [PATCH 1/4] iommu/vt-d: Implement set device pasid op for
- default domain
-Message-ID: <20230306093626.31c1573e@jacob-builder>
-In-Reply-To: <ZAXjVaucrkEvrfsw@nvidia.com>
+Subject: Re: [PATCH 3/4] iommu/sva: Support reservation of global PASIDs
+Message-ID: <20230306094408.2d675d5b@jacob-builder>
+In-Reply-To: <ZAXkLN39VUSl+t65@nvidia.com>
 References: <20230302005959.2695267-1-jacob.jun.pan@linux.intel.com>
-        <20230302005959.2695267-2-jacob.jun.pan@linux.intel.com>
-        <ZAXjVaucrkEvrfsw@nvidia.com>
+        <20230302005959.2695267-4-jacob.jun.pan@linux.intel.com>
+        <BN9PR11MB52765C5E0DC0759880C08E258CB29@BN9PR11MB5276.namprd11.prod.outlook.com>
+        <20230303134753.660d0755@jacob-builder>
+        <ZAXkLN39VUSl+t65@nvidia.com>
 Organization: OTC
 X-Mailer: Claws Mail 3.17.5 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
 Hi Jason,
 
-On Mon, 6 Mar 2023 08:57:57 -0400, Jason Gunthorpe <jgg@nvidia.com> wrote:
+On Mon, 6 Mar 2023 09:01:32 -0400, Jason Gunthorpe <jgg@nvidia.com> wrote:
 
-> On Wed, Mar 01, 2023 at 04:59:56PM -0800, Jacob Pan wrote:
-> > On VT-d platforms, legacy DMA requests without PASID use device=E2=80=
-=99s
-> > default domain, where RID_PASID is always attached. Device drivers
-> > can then use the DMA API for all in-kernel DMA on the RID.
-> >=20
-> > Ideally, devices capable of using ENQCMDS can also transparently use the
-> > default domain, consequently DMA API. However, VT-d architecture
-> > dictates that the PASID used by ENQCMDS must be different from the
-> > RID_PASID value.
-> >=20
-> > To provide support for transparent use of DMA API with non-RID_PASID
-> > value, this patch implements the set_dev_pasid() function for the
-> > default domain. The idea is that device drivers wishing to use ENQCMDS
-> > to submit work on buffers mapped by DMA API will call
-> > iommu_attach_device_pasid() beforehand.
-> >=20
-> > Signed-off-by: Jacob Pan <jacob.jun.pan@linux.intel.com>
-> > ---
-> >  drivers/iommu/intel/iommu.c | 32 ++++++++++++++++++++++++++++++++
-> >  1 file changed, 32 insertions(+)
-> >=20
-> > diff --git a/drivers/iommu/intel/iommu.c b/drivers/iommu/intel/iommu.c
-> > index 10f657828d3a..a0cb3bc851ac 100644
-> > --- a/drivers/iommu/intel/iommu.c
-> > +++ b/drivers/iommu/intel/iommu.c
-> > @@ -4665,6 +4665,10 @@ static void intel_iommu_remove_dev_pasid(struct
-> > device *dev, ioasid_t pasid) case IOMMU_DOMAIN_SVA:
-> >  			intel_svm_remove_dev_pasid(dev, pasid);
-> >  			break;
-> > +		case IOMMU_DOMAIN_DMA:
-> > +		case IOMMU_DOMAIN_DMA_FQ:
-> > +		case IOMMU_DOMAIN_IDENTITY: =20
->=20
-> Why do we need this switch statement anyhow?
-For DMA API pasid, there is nothing special just let it fall through and
-call=20
-	intel_pasid_tear_down_entry(iommu, dev, pasid, false);
-
-> Something seems to have
-> gone wrong here.. SVM shouldn't be special,=20
-I think all the trouble is caused by  the asymmetrical setup of
-iommu_op.remove_dev_pasid() and iommu_domain_ops.set_dev_pasid()
-Perhaps, we should "demote" remove_dev_pasid to iommu_domain_ops then we
-don't have to check SVA specific things.
-
-> and why does this call intel_pasid_tear_down_entry() twice on the SVA
-> path?
-Good catch, that seems to be unnecessary.
-
-> It seems like all this is doing is flushing the PRI queue.
-> A domain should have a dedicated flag unrelated to the type if it is
-> using PRI and all PRI using domains should have the PRI queue flushed
-> here, using the same code as flushing the PRI for a RID attachment.
-Yes, or if the teardown op is domain-specific, then it works too?
+> On Fri, Mar 03, 2023 at 01:47:53PM -0800, Jacob Pan wrote:
+> > Hi Kevin,
+> > 
+> > On Thu, 2 Mar 2023 09:43:03 +0000, "Tian, Kevin" <kevin.tian@intel.com>
+> > wrote:
+> >   
+> > > > From: Jacob Pan <jacob.jun.pan@linux.intel.com>
+> > > > Sent: Thursday, March 2, 2023 9:00 AM
+> > > > 
+> > > > Global PASID allocation is under IOMMU SVA code since it is the
+> > > > primary use case.  However, some architecture such as VT-d, global
+> > > > PASIDs are necessary for its internal use of DMA API with PASID.    
+> > > 
+> > > No, global PASID is not a VT-d restriction. It's from ENQCMD/S hence a
+> > > device requirement.  
+> > I meant VT-d based platforms, it is kind of intertwined in that ENQCMDS
+> > does not restrict RIDPASID!=DMA PASID, vt-d does. Without this
+> > restriction, there wouldn't be a need for this patch. Let me reword.  
+> 
+> No, Kevin is right, there is nothing about VT-d that needs global
+> PASID values.
+> 
+> The driver should be managing RID2PASID itself to avoid conflicting
+> with any in-use PASID, either by changing RID2PASID on demand or by
+> setting it to a value that is not part of the PASID number space, eg
+> we can make 0 entirely invalid, or the driver can reduce max_pasid of
+> the devices it controls and use PASID_MAX.
+> 
+I see, thank you both. how about
+"This patch provide an API for device drivers to request global PASIDs as
+needed. The device drivers will then gain the flexibility of choosing
+PASIDs not conflicting with anyone in-use."
 
 
 Thanks,
