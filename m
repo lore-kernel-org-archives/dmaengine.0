@@ -2,42 +2,42 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C5041C64EC4
-	for <dmaengine@archiver.kernel.org>; Mon,  6 Mar 2023 16:45:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BEF24C61DA4
+	for <dmaengine@archiver.kernel.org>; Mon,  6 Mar 2023 16:45:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229572AbjCFQpy (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 6 Mar 2023 11:45:54 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35036 "EHLO
+        id S229971AbjCFQpz (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 6 Mar 2023 11:45:55 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36608 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230113AbjCFQoR (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Mon, 6 Mar 2023 11:44:17 -0500
+        with ESMTP id S230352AbjCFQoX (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Mon, 6 Mar 2023 11:44:23 -0500
 Received: from mga06.intel.com (mga06b.intel.com [134.134.136.31])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D4F3D298FF;
-        Mon,  6 Mar 2023 08:43:54 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A72C046A3;
+        Mon,  6 Mar 2023 08:44:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1678121034; x=1709657034;
+  t=1678121041; x=1709657041;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=mn1nFVof/uaU7GNK/6NGBnoeC6aCmePHCwCCzsaRLNQ=;
-  b=k8k7g/oXbjX47R3xtZRhZFbTg9xKD2PY9eHihoDLD9ZVStyGnljG6qF0
-   53y+LdnhKEmHNtcQ6edSP90IenXfMgKkJxVp65iNrMhiYm2CX+W0pd3/3
-   xZTqnGcdD6NS7JPy5lCbIydBJnjW6t5711SWVQeMPlQZV3rNs7kId2eJb
-   HPX1PWuA0aKg4ggSsZUAXzqt67BHE0GBFUyQznbD7t8rMC7tmW/TcWuOq
-   ddFv0WX0XAEEm3A7rU69Sc4nl6mAi+ci+RiFN1VCtOYmNziA0k88fSo4e
-   IZFjPHcDXHIhDufIXpakYHK2jN4RJEeJ/geE0WJ1q4DQv/Szv85V8YwVd
-   A==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10641"; a="398181160"
+  bh=g/s7XMoaD0305pZc+v+dkPi6sAXzjOyWDTcLsZDgBP0=;
+  b=XR3eX01GpdKJKbRdFmwg/64mBPA9PGUdu573tkfhqJUKqCGoRGaWzTPI
+   kwP7bKQwRL8VDL8A39XlfbTMe+BHmjKtoY5PpVgrLrNiPHKxjkKOC0bem
+   eOV/Joj0K5wDL2LJzCweHY1AaKKt2zgvGPWbuOLjiUDsKrkYFch4jqZCn
+   wFjmwIsVr8MIhJTdN/alQ/RmtDXEVzMWBq6WjO/CzylUjPVkEUNTFPW7M
+   ShkYvmFb+Npi8ryPyB6aNRRVE1usLi8AcjHPwi73w3lwTawrqaQafI6i9
+   Fosus+p3yz59H6829ATbfTTdHF2O9jBYMXVY+fvscwM/SBJEIAtCSQJIV
+   Q==;
+X-IronPort-AV: E=McAfee;i="6500,9779,10641"; a="398181175"
 X-IronPort-AV: E=Sophos;i="5.98,238,1673942400"; 
-   d="scan'208";a="398181160"
+   d="scan'208";a="398181175"
 Received: from orsmga007.jf.intel.com ([10.7.209.58])
-  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Mar 2023 08:31:57 -0800
+  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Mar 2023 08:31:58 -0800
 X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6500,9779,10641"; a="669504517"
+X-IronPort-AV: E=McAfee;i="6500,9779,10641"; a="669504538"
 X-IronPort-AV: E=Sophos;i="5.98,238,1673942400"; 
-   d="scan'208";a="669504517"
+   d="scan'208";a="669504538"
 Received: from fyu1.sc.intel.com ([172.25.103.126])
-  by orsmga007.jf.intel.com with ESMTP; 06 Mar 2023 08:31:57 -0800
+  by orsmga007.jf.intel.com with ESMTP; 06 Mar 2023 08:31:58 -0800
 From:   Fenghua Yu <fenghua.yu@intel.com>
 To:     "Vinod Koul" <vkoul@kernel.org>,
         "Dave Jiang" <dave.jiang@intel.com>
@@ -45,9 +45,9 @@ Cc:     dmaengine@vger.kernel.org,
         "linux-kernel" <linux-kernel@vger.kernel.org>,
         Tony Zhu <tony.zhu@intel.com>,
         Fenghua Yu <fenghua.yu@intel.com>
-Subject: [PATCH v2 07/16] dmaengine: idxd: create kmem cache for event log fault items
-Date:   Mon,  6 Mar 2023 08:31:29 -0800
-Message-Id: <20230306163138.587484-8-fenghua.yu@intel.com>
+Subject: [PATCH v2 10/16] dmaengine: idxd: add descs_completed field for completion record
+Date:   Mon,  6 Mar 2023 08:31:32 -0800
+Message-Id: <20230306163138.587484-11-fenghua.yu@intel.com>
 X-Mailer: git-send-email 2.37.1
 In-Reply-To: <20230306163138.587484-1-fenghua.yu@intel.com>
 References: <20230306163138.587484-1-fenghua.yu@intel.com>
@@ -59,82 +59,34 @@ X-Mailing-List: dmaengine@vger.kernel.org
 
 From: Dave Jiang <dave.jiang@intel.com>
 
-Add a kmem cache per device for allocating event log fault context. The
-context allows an event log entry to be copied and passed to a software
-workqueue to be processed. Due to each device can have different sized
-event log entry depending on device type, it's not possible to have a
-global kmem cache.
+The descs_completed field for a completion record is part of a batch
+descriptor completion record. It takes the same location as bytes_completed
+in a normal descriptor field. Add to expose to user.
 
 Tested-by: Tony Zhu <tony.zhu@intel.com>
 Signed-off-by: Dave Jiang <dave.jiang@intel.com>
 Co-developed-by: Fenghua Yu <fenghua.yu@intel.com>
 Signed-off-by: Fenghua Yu <fenghua.yu@intel.com>
 ---
- drivers/dma/idxd/idxd.h  | 10 ++++++++++
- drivers/dma/idxd/init.c  |  9 +++++++++
- drivers/dma/idxd/sysfs.c |  1 +
- 3 files changed, 20 insertions(+)
+ include/uapi/linux/idxd.h | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/dma/idxd/idxd.h b/drivers/dma/idxd/idxd.h
-index 6e56361ae658..c5d99c179902 100644
---- a/drivers/dma/idxd/idxd.h
-+++ b/drivers/dma/idxd/idxd.h
-@@ -274,6 +274,15 @@ struct idxd_evl {
- 	u16 head;
- };
- 
-+struct idxd_evl_fault {
-+	struct work_struct work;
-+	struct idxd_wq *wq;
-+	u8 status;
-+
-+	/* make this last member always */
-+	struct __evl_entry entry[];
-+};
-+
- struct idxd_device {
- 	struct idxd_dev idxd_dev;
- 	struct idxd_driver_data *data;
-@@ -331,6 +340,7 @@ struct idxd_device {
- 
- 	unsigned long *opcap_bmap;
- 	struct idxd_evl *evl;
-+	struct kmem_cache *evl_cache;
- 
- 	struct dentry *dbgfs_dir;
- 	struct dentry *dbgfs_evl_file;
-diff --git a/drivers/dma/idxd/init.c b/drivers/dma/idxd/init.c
-index d19bc6389221..a7c98fac7a85 100644
---- a/drivers/dma/idxd/init.c
-+++ b/drivers/dma/idxd/init.c
-@@ -346,6 +346,15 @@ static int idxd_init_evl(struct idxd_device *idxd)
- 
- 	spin_lock_init(&evl->lock);
- 	evl->size = IDXD_EVL_SIZE_MIN;
-+
-+	idxd->evl_cache = kmem_cache_create(dev_name(idxd_confdev(idxd)),
-+					    sizeof(struct idxd_evl_fault) + evl_ent_size(idxd),
-+					    0, 0, NULL);
-+	if (!idxd->evl_cache) {
-+		kfree(evl);
-+		return -ENOMEM;
-+	}
-+
- 	idxd->evl = evl;
- 	return 0;
- }
-diff --git a/drivers/dma/idxd/sysfs.c b/drivers/dma/idxd/sysfs.c
-index 163fdfaa5022..8b9dfa0d2b99 100644
---- a/drivers/dma/idxd/sysfs.c
-+++ b/drivers/dma/idxd/sysfs.c
-@@ -1718,6 +1718,7 @@ static void idxd_conf_device_release(struct device *dev)
- 	kfree(idxd->wqs);
- 	kfree(idxd->engines);
- 	kfree(idxd->evl);
-+	kmem_cache_destroy(idxd->evl_cache);
- 	ida_free(&idxd_ida, idxd->id);
- 	bitmap_free(idxd->opcap_bmap);
- 	kfree(idxd);
+diff --git a/include/uapi/linux/idxd.h b/include/uapi/linux/idxd.h
+index 4b584d5afd87..76ad71bf751e 100644
+--- a/include/uapi/linux/idxd.h
++++ b/include/uapi/linux/idxd.h
+@@ -314,7 +314,10 @@ struct dsa_completion_record {
+ 	};
+ 	uint8_t			fault_info;
+ 	uint8_t			rsvd;
+-	uint32_t		bytes_completed;
++	union {
++		uint32_t		bytes_completed;
++		uint32_t		descs_completed;
++	};
+ 	uint64_t		fault_addr;
+ 	union {
+ 		/* common record */
 -- 
 2.37.1
 
