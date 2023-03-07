@@ -2,32 +2,32 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 79F8BC678D4
-	for <dmaengine@archiver.kernel.org>; Tue,  7 Mar 2023 18:30:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 84574C678D5
+	for <dmaengine@archiver.kernel.org>; Tue,  7 Mar 2023 19:17:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230189AbjCGSaB (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 7 Mar 2023 13:30:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57248 "EHLO
+        id S233932AbjCGTRm (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 7 Mar 2023 14:17:42 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44788 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232983AbjCGS30 (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Tue, 7 Mar 2023 13:29:26 -0500
+        with ESMTP id S229690AbjCGTRP (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Tue, 7 Mar 2023 14:17:15 -0500
 Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C0C6AA241;
-        Tue,  7 Mar 2023 10:22:46 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C0663C4884;
+        Tue,  7 Mar 2023 11:01:08 -0800 (PST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id EB4C261501;
-        Tue,  7 Mar 2023 18:22:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06EC4C4339B;
-        Tue,  7 Mar 2023 18:22:44 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 5BA5F61522;
+        Tue,  7 Mar 2023 19:01:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 548E3C433EF;
+        Tue,  7 Mar 2023 19:01:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-        s=korg; t=1678213365;
-        bh=X5Kev56y7YGnAKASzygP7QcKaEky7kIxHJKVW2nbC40=;
+        s=korg; t=1678215667;
+        bh=reVceQw8Vjx9DCDFgIspNsUMefaa5uHVjxDU6awyz2E=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=oBlDCavI3A6VAhvkheEQNTHbMHasZKouo4AlPxEfW849NFFIK2PCpZZDzqwrEC06p
-         4r8JYy2Ys5bYx95BzYAJdiMum5GJtrifPDDqkZaLoSPJ0GtE+cGDWh8aqF+mBywH+a
-         8mIRRrNU0ztuoqqE/XcLWJ/xOPSffgmpXmf+WldE=
+        b=JGmT13anfTY8J7ztslV1AcWL3hN6Dn2LRdQ0oUdpWld1ylpkZv5kOoFHU39A5kVxI
+         CltbV57/aaGCBF3iC4KtMAf2NOBC63IhCAxtvPi/+S5K2uYkP+Z2zbQ2WgMBNLIU3h
+         XqZnSMLxUBE2VwpNGp/kx1+hlSQBPdMwAnMimeo4=
 From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To:     stable@vger.kernel.org
 Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -37,12 +37,12 @@ Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
         Kees Cook <keescook@chromium.org>,
         Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
         Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 485/885] dmaengine: dw-axi-dmac: Do not dereference NULL structure
-Date:   Tue,  7 Mar 2023 17:56:59 +0100
-Message-Id: <20230307170023.538433020@linuxfoundation.org>
+Subject: [PATCH 5.15 336/567] dmaengine: dw-axi-dmac: Do not dereference NULL structure
+Date:   Tue,  7 Mar 2023 18:01:12 +0100
+Message-Id: <20230307165920.444892107@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
-References: <20230307170001.594919529@linuxfoundation.org>
+In-Reply-To: <20230307165905.838066027@linuxfoundation.org>
+References: <20230307165905.838066027@linuxfoundation.org>
 User-Agent: quilt/0.67
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -78,10 +78,10 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 2 deletions(-)
 
 diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-index bf85aa0979ecb..152c5d98524d7 100644
+index 41654b2f6c600..cfc47efcb5d93 100644
 --- a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
 +++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-@@ -325,8 +325,6 @@ dma_chan_tx_status(struct dma_chan *dchan, dma_cookie_t cookie,
+@@ -288,8 +288,6 @@ dma_chan_tx_status(struct dma_chan *dchan, dma_cookie_t cookie,
  		len = vd_to_axi_desc(vdesc)->hw_desc[0].len;
  		completed_length = completed_blocks * len;
  		bytes = length - completed_length;
