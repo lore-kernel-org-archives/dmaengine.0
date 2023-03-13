@@ -2,88 +2,131 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 068D8C61DA4
-	for <dmaengine@archiver.kernel.org>; Mon, 13 Mar 2023 20:09:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E222EC74A4B
+	for <dmaengine@archiver.kernel.org>; Mon, 13 Mar 2023 20:38:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230146AbjCMUJl (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 13 Mar 2023 16:09:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40318 "EHLO
+        id S230156AbjCMUiJ (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 13 Mar 2023 16:38:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34814 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229787AbjCMUJe (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Mon, 13 Mar 2023 16:09:34 -0400
-Received: from post.baikalelectronics.com (post.baikalelectronics.com [213.79.110.86])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 3964487A2D;
-        Mon, 13 Mar 2023 13:09:05 -0700 (PDT)
-Received: from post.baikalelectronics.com (localhost.localdomain [127.0.0.1])
-        by post.baikalelectronics.com (Proxmox) with ESMTP id B50B8E0EB2;
-        Mon, 13 Mar 2023 23:09:04 +0300 (MSK)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        baikalelectronics.ru; h=cc:cc:content-transfer-encoding
-        :content-type:content-type:date:from:from:in-reply-to:message-id
-        :mime-version:references:reply-to:subject:subject:to:to; s=post;
-         bh=I88fhOV2wC+VAaHhdfMemGW3M/5XG81EN6ibSQeYAlY=; b=jx5DHsv3Lkdc
-        7HgeAPlkPUaISK2uiZVwnuMBqhmlIbtr6/yGZJhJgBFRE0umj9woxewf+19D10PD
-        0wjKrIlmSsxuyaIrnAxm02bpdr3giHKfW4YHO1U2oJ6y+pTi6xZmEch+A3tREtIa
-        NdmPUiDtwwylsvfufV76iCiLKIoTAqM=
-Received: from mail.baikal.int (mail.baikal.int [192.168.51.25])
-        by post.baikalelectronics.com (Proxmox) with ESMTP id A05C5E0E1C;
-        Mon, 13 Mar 2023 23:09:04 +0300 (MSK)
-Received: from localhost (10.8.30.10) by mail (192.168.51.25) with Microsoft
- SMTP Server (TLS) id 15.0.1395.4; Mon, 13 Mar 2023 23:09:04 +0300
-From:   Serge Semin <Sergey.Semin@baikalelectronics.ru>
-To:     Bjorn Helgaas <bhelgaas@google.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Cai Huoqing <cai.huoqing@linux.dev>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-        Rob Herring <robh@kernel.org>
-CC:     Serge Semin <Sergey.Semin@baikalelectronics.ru>,
-        Serge Semin <fancer.lancer@gmail.com>,
-        Alexey Malahov <Alexey.Malahov@baikalelectronics.ru>,
-        Pavel Parkhomenko <Pavel.Parkhomenko@baikalelectronics.ru>,
-        <linux-pci@vger.kernel.org>, <dmaengine@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-Subject: [PATCH RESEND v2 11/11] MAINTAINERS: Add myself as the DW eDMA driver reviewer
-Date:   Mon, 13 Mar 2023 23:08:15 +0300
-Message-ID: <20230313200816.30105-12-Sergey.Semin@baikalelectronics.ru>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230313200816.30105-1-Sergey.Semin@baikalelectronics.ru>
-References: <20230313200816.30105-1-Sergey.Semin@baikalelectronics.ru>
+        with ESMTP id S230053AbjCMUiI (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Mon, 13 Mar 2023 16:38:08 -0400
+Received: from mga11.intel.com (mga11.intel.com [192.55.52.93])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC954CDCA;
+        Mon, 13 Mar 2023 13:38:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1678739886; x=1710275886;
+  h=from:to:cc:subject:date:message-id:in-reply-to:
+   references:mime-version:content-transfer-encoding;
+  bh=kuBMCkUjwmOHyTPzkVALxDPf/dAuO+xl8IQ19U3bZXw=;
+  b=jtcH2QzlriyFF6vsrov17Xt3xSBbpzFtIDocDkxxmmDkpycdP6r//Ef5
+   rATF9yaATVFKZ3yXVLTHOFkgUBMESvG1zh61+Zlbni68vb1ViqpEl4TEg
+   8IVxXUf7ciQG9go0RJSbq29BsL3YHtKcJGRFc92X/HUPq+jBRpQ5iOP9I
+   vny7Ip+dY1wHVmoTywIelFBAfsLo6Yn2bjqZZHhXQfz/CdxH0rexpMHIt
+   eXIWHXyctGclvfmMmxr9owymLBceYb38HGC5KUZdQzS3tO59hNUoAG2i2
+   5C4rxOQ6aCkNXCg68LGs0PP+73ulIvQOwnk+yPBdWi0GFiCsARnqHcMu1
+   Q==;
+X-IronPort-AV: E=McAfee;i="6500,9779,10648"; a="334732058"
+X-IronPort-AV: E=Sophos;i="5.98,257,1673942400"; 
+   d="scan'208";a="334732058"
+Received: from orsmga004.jf.intel.com ([10.7.209.38])
+  by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Mar 2023 13:38:05 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6500,9779,10648"; a="802584778"
+X-IronPort-AV: E=Sophos;i="5.98,257,1673942400"; 
+   d="scan'208";a="802584778"
+Received: from srinivas-otcpl-7600.jf.intel.com (HELO jacob-builder.jf.intel.com) ([10.54.39.106])
+  by orsmga004.jf.intel.com with ESMTP; 13 Mar 2023 13:38:05 -0700
+From:   Jacob Pan <jacob.jun.pan@linux.intel.com>
+To:     LKML <linux-kernel@vger.kernel.org>, iommu@lists.linux.dev,
+        Jason Gunthorpe <jgg@nvidia.com>,
+        "Lu Baolu" <baolu.lu@linux.intel.com>,
+        Joerg Roedel <joro@8bytes.org>,
+        Jean-Philippe Brucker <jean-philippe@linaro.com>,
+        "Robin Murphy" <robin.murphy@arm.com>,
+        Dave Hansen <dave.hansen@intel.com>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        X86 Kernel <x86@kernel.org>, bp@alien8.de,
+        "H. Peter Anvin" <hpa@zytor.com>,
+        Peter Zijlstra <peterz@infradead.org>, corbet@lwn.net,
+        vkoul@kernel.org, dmaengine@vger.kernel.org,
+        linux-doc@vger.kernel.org
+Cc:     "Will Deacon" <will@kernel.org>,
+        David Woodhouse <dwmw2@infradead.org>,
+        Raj Ashok <ashok.raj@intel.com>,
+        "Tian, Kevin" <kevin.tian@intel.com>, Yi Liu <yi.l.liu@intel.com>,
+        "Yu, Fenghua" <fenghua.yu@intel.com>,
+        Dave Jiang <dave.jiang@intel.com>,
+        Kirill Shutemov <kirill.shutemov@linux.intel.com>,
+        Tony Luck <tony.luck@intel.com>,
+        Jacob Pan <jacob.jun.pan@linux.intel.com>
+Subject: [PATCH v6 3/7] iommu/sva: Remove PASID to mm lookup function
+Date:   Mon, 13 Mar 2023 13:41:54 -0700
+Message-Id: <20230313204158.1495067-4-jacob.jun.pan@linux.intel.com>
+X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20230313204158.1495067-1-jacob.jun.pan@linux.intel.com>
+References: <20230313204158.1495067-1-jacob.jun.pan@linux.intel.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.8.30.10]
-X-ClientProxiedBy: MAIL.baikal.int (192.168.51.25) To mail (192.168.51.25)
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-The driver maintainer has been inactive for almost two years now. It
-doesn't positively affect the new patches tests and reviews process. Since
-the DW eDMA engine has been embedded into the PCIe controllers in several
-our SoCs we will be interested in helping with the updates review.
+There is no user of iommu_sva_find() function, remove it so that PASID
+allocator can be a simple IDA. Device drivers are expected to store
+and keep track of their own PASID metadata.
 
-Signed-off-by: Serge Semin <Sergey.Semin@baikalelectronics.ru>
+Signed-off-by: Jason Gunthorpe<jgg@nvidia.com>
+Signed-off-by: Jacob Pan <jacob.jun.pan@linux.intel.com>
 ---
- MAINTAINERS | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/iommu/iommu-sva.c | 20 --------------------
+ drivers/iommu/iommu-sva.h |  1 -
+ 2 files changed, 21 deletions(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 51adcafa0f0c..fb7bada6cdd0 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -5862,6 +5862,7 @@ F:	drivers/mtd/nand/raw/denali*
+diff --git a/drivers/iommu/iommu-sva.c b/drivers/iommu/iommu-sva.c
+index fcfdc80a3939..4f357ef14f04 100644
+--- a/drivers/iommu/iommu-sva.c
++++ b/drivers/iommu/iommu-sva.c
+@@ -51,26 +51,6 @@ int iommu_sva_alloc_pasid(struct mm_struct *mm, ioasid_t min, ioasid_t max)
+ }
+ EXPORT_SYMBOL_GPL(iommu_sva_alloc_pasid);
  
- DESIGNWARE EDMA CORE IP DRIVER
- M:	Gustavo Pimentel <gustavo.pimentel@synopsys.com>
-+R:	Serge Semin <fancer.lancer@gmail.com>
- L:	dmaengine@vger.kernel.org
- S:	Maintained
- F:	drivers/dma/dw-edma/
+-/* ioasid_find getter() requires a void * argument */
+-static bool __mmget_not_zero(void *mm)
+-{
+-	return mmget_not_zero(mm);
+-}
+-
+-/**
+- * iommu_sva_find() - Find mm associated to the given PASID
+- * @pasid: Process Address Space ID assigned to the mm
+- *
+- * On success a reference to the mm is taken, and must be released with mmput().
+- *
+- * Returns the mm corresponding to this PASID, or an error if not found.
+- */
+-struct mm_struct *iommu_sva_find(ioasid_t pasid)
+-{
+-	return ioasid_find(&iommu_sva_pasid, pasid, __mmget_not_zero);
+-}
+-EXPORT_SYMBOL_GPL(iommu_sva_find);
+-
+ /**
+  * iommu_sva_bind_device() - Bind a process address space to a device
+  * @dev: the device
+diff --git a/drivers/iommu/iommu-sva.h b/drivers/iommu/iommu-sva.h
+index 7215a761b962..102eae1817a2 100644
+--- a/drivers/iommu/iommu-sva.h
++++ b/drivers/iommu/iommu-sva.h
+@@ -9,7 +9,6 @@
+ #include <linux/mm_types.h>
+ 
+ int iommu_sva_alloc_pasid(struct mm_struct *mm, ioasid_t min, ioasid_t max);
+-struct mm_struct *iommu_sva_find(ioasid_t pasid);
+ 
+ /* I/O Page fault */
+ struct device;
 -- 
-2.39.2
-
+2.25.1
 
