@@ -2,35 +2,35 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9FDCAC7618E
-	for <dmaengine@archiver.kernel.org>; Mon, 13 Mar 2023 17:15:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BDE49C76196
+	for <dmaengine@archiver.kernel.org>; Mon, 13 Mar 2023 17:15:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231405AbjCMRPY (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 13 Mar 2023 13:15:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36272 "EHLO
+        id S230097AbjCMRP0 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 13 Mar 2023 13:15:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36640 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231657AbjCMRPL (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Mon, 13 Mar 2023 13:15:11 -0400
+        with ESMTP id S230200AbjCMRPX (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Mon, 13 Mar 2023 13:15:23 -0400
 Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB918D536;
-        Mon, 13 Mar 2023 10:14:47 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C865977E1F;
+        Mon, 13 Mar 2023 10:14:56 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 6807BB811A9;
-        Mon, 13 Mar 2023 17:13:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01845C433A4;
-        Mon, 13 Mar 2023 17:13:42 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id B0D0FB810D8;
+        Mon, 13 Mar 2023 17:13:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F7D2C433A4;
+        Mon, 13 Mar 2023 17:13:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1678727626;
-        bh=MmQlG4bKX5zRhls8Ppg0KYbzYJ0yCTbRflxLRO/KTAQ=;
+        s=k20201202; t=1678727633;
+        bh=waygJoMsmEuzShbrfLKTmYsjXJJABs/ZjxmcAXxJrFo=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=MaxyiQm3zr++CxlIZQvcW00rgAI+9VUp45EuH39mSHwSJYNEN3erATeQQBmRAbDu4
-         cVAF7BjY731YkBIC0veCIoGxOy9TjxXtXygU7Dtk1Npl5Ayu4xhUdiBEKdLfSqk3+2
-         /E6GI7kiVSyhBBujStix0sb6kdj4ecpiaU0exXy4zUVucXDiEkeLdWhTIrM2khMzH8
-         tBP5VPdrF1QADqGTs7xKRL+lHSi3t0mdSNDibe6Uhs1lXcCeFYczD95hqoZExkOYNQ
-         r/Tp1Ch88FT7gUE24U8Ajn7vz22H4nQj2DP1/9hZHty6kAixtFz8/BcoGKZ85yRAdW
-         oKxHJ7Gc7jy2Q==
+        b=MzHKXiczApY5CW+k510wfPoijOe94MAfIi9QUFi6zkEn4hI/btbZ9sLGreVlnKLeR
+         bcpn7r6Kbv1A15fq6RMXqCj57/YTzz1VxBTzjijTyos35t5U4w2C3Hfe0CKPZxB5K4
+         IdRpfyr0xXHVSbQpqvMCLcMtQ8NFC/FLXCNK0PJkqeyybsMU7nOa0ibkMtJMOrLILJ
+         4rd+3N8Y2i196SbGbk/+aXTt003pva4/qKcLDo9FKe1GGvV48IS8yz23oY/JZLcDu2
+         A5NglNk2j5ouel+0hhQBzTq3AdpdF14O09x0v72BqY2pNuTklScLo/DhHHemSSAr15
+         kaAULm8lzRayQ==
 From:   Jisheng Zhang <jszhang@kernel.org>
 To:     Lars-Peter Clausen <lars@metafoo.de>,
         Vinod Koul <vkoul@kernel.org>,
@@ -44,9 +44,9 @@ To:     Lars-Peter Clausen <lars@metafoo.de>,
         Chunyan Zhang <zhang.lyra@gmail.com>
 Cc:     dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
         linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org
-Subject: [PATCH 3/5] dmaengine: plx_dma: Don't set chancnt
-Date:   Tue, 14 Mar 2023 01:02:48 +0800
-Message-Id: <20230313170250.815-4-jszhang@kernel.org>
+Subject: [PATCH 5/5] dmaengine: sprd: Don't set chancnt
+Date:   Tue, 14 Mar 2023 01:02:50 +0800
+Message-Id: <20230313170250.815-6-jszhang@kernel.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230313170250.815-1-jszhang@kernel.org>
 References: <20230313170250.815-1-jszhang@kernel.org>
@@ -61,21 +61,21 @@ outself is wrong.
 
 Signed-off-by: Jisheng Zhang <jszhang@kernel.org>
 ---
- drivers/dma/plx_dma.c | 1 -
+ drivers/dma/sprd-dma.c | 1 -
  1 file changed, 1 deletion(-)
 
-diff --git a/drivers/dma/plx_dma.c b/drivers/dma/plx_dma.c
-index 12725fa1655f..34b6416c3287 100644
---- a/drivers/dma/plx_dma.c
-+++ b/drivers/dma/plx_dma.c
-@@ -517,7 +517,6 @@ static int plx_dma_create(struct pci_dev *pdev)
- 	plxdev->bar = pcim_iomap_table(pdev)[0];
+diff --git a/drivers/dma/sprd-dma.c b/drivers/dma/sprd-dma.c
+index 474d3ba8ec9f..2b639adb48ba 100644
+--- a/drivers/dma/sprd-dma.c
++++ b/drivers/dma/sprd-dma.c
+@@ -1169,7 +1169,6 @@ static int sprd_dma_probe(struct platform_device *pdev)
  
- 	dma = &plxdev->dma_dev;
--	dma->chancnt = 1;
- 	INIT_LIST_HEAD(&dma->channels);
- 	dma_cap_set(DMA_MEMCPY, dma->cap_mask);
- 	dma->copy_align = DMAENGINE_ALIGN_1_BYTE;
+ 	dma_cap_set(DMA_MEMCPY, sdev->dma_dev.cap_mask);
+ 	sdev->total_chns = chn_count;
+-	sdev->dma_dev.chancnt = chn_count;
+ 	INIT_LIST_HEAD(&sdev->dma_dev.channels);
+ 	INIT_LIST_HEAD(&sdev->dma_dev.global_node);
+ 	sdev->dma_dev.dev = &pdev->dev;
 -- 
 2.39.2
 
