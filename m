@@ -2,42 +2,42 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9C438C74A4B
-	for <dmaengine@archiver.kernel.org>; Mon, 13 Mar 2023 17:17:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B5134C61DA4
+	for <dmaengine@archiver.kernel.org>; Mon, 13 Mar 2023 17:17:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230410AbjCMRRD (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 13 Mar 2023 13:17:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39114 "EHLO
+        id S229845AbjCMRRF (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 13 Mar 2023 13:17:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39208 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231499AbjCMRQz (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Mon, 13 Mar 2023 13:16:55 -0400
+        with ESMTP id S229988AbjCMRQ6 (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Mon, 13 Mar 2023 13:16:58 -0400
 Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B9F977E15;
-        Mon, 13 Mar 2023 10:16:27 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 56BB57E8B1;
+        Mon, 13 Mar 2023 10:16:30 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id D8DC66141D;
-        Mon, 13 Mar 2023 17:15:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43AFBC4339B;
-        Mon, 13 Mar 2023 17:15:33 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id D7B0061368;
+        Mon, 13 Mar 2023 17:15:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39DAFC4339B;
+        Mon, 13 Mar 2023 17:15:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1678727734;
-        bh=IhJqKy/lFwInJmGYo3Tizjdc1Cg9RTkiCKAvvE/5axU=;
+        s=k20201202; t=1678727737;
+        bh=/WoZ1V3BfTduJ79xfQ4OOwggeNMcUtHeDcPNMKwKbuk=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=Ma+bhWtuu+yLhewspm0qg1DsqcCvLp67qc/WgVu6MYKqlr5ZC3LT492zAnTEtkEn0
-         1WHAR73D78JEQpigWF2DcPdyFYeU9DOh+MmKqedagiobLZm8Yeykq+KDx26uALyxrQ
-         6r3AEht3hmXZ7qfyZZGfVsSCbsfLdjp6hPu1ZAUJ0AzEwLGpKrWzh2+yT679FkhQh3
-         BUxLuREbHdp3oJ7+gTbyhdqg0NW3Nq7DRxCvtkehJdgoxSmIYNqKbFhL/MmTxNcu3W
-         H3xMcSHTS/hdZsrkKKNpPQLpx7TiNLManem5jNf7jWX8gJfCAp/TOJGVa6Gx5QkOH9
-         +xHR5vlK/viNQ==
+        b=HuigqclHWxET0fEcgScekjHYmY/mpWPHwMXaJnJSXjXoWJM6vd5pe7bgmphI0o9u0
+         N+h97Hl/alXMJFQT5hiB+G3tjP7YVBWDykPS1ePqv+4xo+vv2RLkKgSXOWHImKAAiB
+         YwFdoa+dFIAfQcjN1f2vnmKc0KRgR+rj0/Y53qQyISCaTMtjwgZHwnJ1Rp4nbr1PMD
+         mRC52Kii48yk/cwCoFol3CcpFjguwOTbm+9AfJrmbz50Pe7g9Qm4+upUvoNex9T53Z
+         WOKdUgXQ9fMWgAWBFwu3wf97yOBZ+oJ8CvwUOAnLeuIycpRca83q660pvtZkNV4IEY
+         WDbOxI91eCgUA==
 From:   Jisheng Zhang <jszhang@kernel.org>
 To:     Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>,
         Vinod Koul <vkoul@kernel.org>
 Cc:     dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH 01/11] dmaengine: dw-axi-dmac: fix reading register hen runtime suspended
-Date:   Tue, 14 Mar 2023 01:04:40 +0800
-Message-Id: <20230313170450.897-2-jszhang@kernel.org>
+Subject: [PATCH 03/11] dmaengine: dw-axi-dmac: remove unnecessary axi_dma_enable() calling
+Date:   Tue, 14 Mar 2023 01:04:42 +0800
+Message-Id: <20230313170450.897-4-jszhang@kernel.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230313170450.897-1-jszhang@kernel.org>
 References: <20230313170450.897-1-jszhang@kernel.org>
@@ -47,57 +47,28 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-We should runtime resume the device before calling
-axi_chan_is_hw_enable().
+The dma is enabled, I.E runtime resumed during chan allocation, and
+is disable, I.E runtime suspended during chan free. So when starting
+xfer, we are sure the dma is enabled.
 
 Signed-off-by: Jisheng Zhang <jszhang@kernel.org>
 ---
- drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c | 15 +++++++++++----
- 1 file changed, 11 insertions(+), 4 deletions(-)
+ drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c | 2 --
+ 1 file changed, 2 deletions(-)
 
 diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-index 7f3a60e28e38..23a10dbdecb7 100644
+index 56f12dfa410d..891776528619 100644
 --- a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
 +++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-@@ -462,13 +462,17 @@ static void dw_axi_dma_synchronize(struct dma_chan *dchan)
- 
- static int dma_chan_alloc_chan_resources(struct dma_chan *dchan)
- {
-+	int ret;
- 	struct axi_dma_chan *chan = dchan_to_axi_dma_chan(dchan);
- 
-+	pm_runtime_get(chan->chip->dev);
-+
- 	/* ASSERT: channel is idle */
- 	if (axi_chan_is_hw_enable(chan)) {
- 		dev_err(chan2dev(chan), "%s is non-idle!\n",
- 			axi_chan_name(chan));
--		return -EBUSY;
-+		ret = -EBUSY;
-+		goto err_busy;
+@@ -382,8 +382,6 @@ static void axi_chan_block_xfer_start(struct axi_dma_chan *chan,
+ 		return;
  	}
  
- 	/* LLI address must be aligned to a 64-byte boundary */
-@@ -478,13 +482,16 @@ static int dma_chan_alloc_chan_resources(struct dma_chan *dchan)
- 					  64, 0);
- 	if (!chan->desc_pool) {
- 		dev_err(chan2dev(chan), "No memory for descriptors\n");
--		return -ENOMEM;
-+		ret = -ENOMEM;
-+		goto err_busy;
- 	}
- 	dev_vdbg(dchan2dev(dchan), "%s: allocating\n", axi_chan_name(chan));
- 
--	pm_runtime_get(chan->chip->dev);
+-	axi_dma_enable(chan->chip);
 -
- 	return 0;
-+
-+err_busy:
-+	pm_runtime_put(chan->chip->dev);
-+	return ret;
- }
- 
- static void dma_chan_free_chan_resources(struct dma_chan *dchan)
+ 	config.dst_multblk_type = DWAXIDMAC_MBLK_TYPE_LL;
+ 	config.src_multblk_type = DWAXIDMAC_MBLK_TYPE_LL;
+ 	config.tt_fc = DWAXIDMAC_TT_FC_MEM_TO_MEM_DMAC;
 -- 
 2.39.2
 
