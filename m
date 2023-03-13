@@ -2,108 +2,152 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A2B24C6FD1D
-	for <dmaengine@archiver.kernel.org>; Fri, 17 Mar 2023 11:34:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EDEFDC6FD1C
+	for <dmaengine@archiver.kernel.org>; Mon, 13 Mar 2023 20:38:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230123AbjCQLeT (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 17 Mar 2023 07:34:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50874 "EHLO
+        id S229608AbjCMUiH (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 13 Mar 2023 16:38:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34762 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230131AbjCQLeL (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Fri, 17 Mar 2023 07:34:11 -0400
-Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C50CDA8E94
-        for <dmaengine@vger.kernel.org>; Fri, 17 Mar 2023 04:33:34 -0700 (PDT)
-Received: by mail-pj1-x102b.google.com with SMTP id qe8-20020a17090b4f8800b0023f07253a2cso4871851pjb.3
-        for <dmaengine@vger.kernel.org>; Fri, 17 Mar 2023 04:33:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=igel-co-jp.20210112.gappssmtp.com; s=20210112; t=1679052805;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=UBJ3jXvxXCld7rCbYIUA76P7q/tR6ahC8o8afEyFSeg=;
-        b=SSqnByrqrr+3VcUDTYBw+VNwigK0LKtbr3MEmUWTApLPk2vh3j2tzaOsn1hq0KcVR6
-         6aivcKsqqMiMH9mvfQuEqYm0O3UlMzJZljBHtbwxrnu6mnC1tGsnMLZbXPpgxD9p+Ffp
-         nYOXAWx+D3hwVjMftozRbucnIv5txD2FWVxIdqrst32Fi0o9zO5GKthRuetbfB/fVbgo
-         WBNH7cRghUYZPLtkP27Cl7zlIJ9zANuuY6QLfMq/5gAdWra9LpfVDIrVEMATdFii7LhJ
-         U4BrqaJR9u41RGSTvx7+bF/VSMvwLLvXVgrLa2caxXfPMckKLRNMsZmAoOWbBPH8pAeW
-         mvtg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679052805;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=UBJ3jXvxXCld7rCbYIUA76P7q/tR6ahC8o8afEyFSeg=;
-        b=EynsE5p8D0PeANdHIT5mJ3rgZLGt0gBSLsZiMcdMMfNn6Xlor236I6RGsf1bDqjS+g
-         8Q9yC8yo9KykwbWXGkV+Kaa5Hy2eg+7B9qS4qTB/MFFTpYWiTHtT7ERZ4sC0Te86bw+H
-         WQHnZDa1OpvRmQHKUmOORY5SzVjY2eiE+R7bskONhxFGTs3rtaxt26uWF6rh+RNedp5K
-         nApjCkhhILOxa45YkpTzqKoqf9ISVzQfHBwgnTx0kfEHqrxSGrrQZ9h7A8N6Dm0eXzyY
-         O2dh4owDxKIahPLyRgXWUwzNVNj5Fvibh+L7z799AFHwUIYusMkO8FGrfwTW+LvKshRc
-         cYrg==
-X-Gm-Message-State: AO0yUKXo6yaZe4JUkq0JBAAm9Zf0/eqNgPGsAPS7amXW6Fwgwx/7hLWd
-        noC5SO99iWxwDsUhX91C+jSpuA==
-X-Google-Smtp-Source: AK7set8mw4eu8SWp80RS17+P5NFx2EppFu4x7YobwRde2GI2yhM4sarU4Jk2ey0NmwtFezyvF659YQ==
-X-Received: by 2002:a17:90b:1b07:b0:23f:5247:3334 with SMTP id nu7-20020a17090b1b0700b0023f52473334mr3353989pjb.19.1679052804978;
-        Fri, 17 Mar 2023 04:33:24 -0700 (PDT)
-Received: from tyrell.hq.igel.co.jp (napt.igel.co.jp. [219.106.231.132])
-        by smtp.gmail.com with ESMTPSA id e3-20020a17090a818300b00233aacab89esm1182904pjn.48.2023.03.17.04.33.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 17 Mar 2023 04:33:24 -0700 (PDT)
-From:   Shunsuke Mie <mie@igel.co.jp>
-To:     Gustavo Pimentel <gustavo.pimentel@synopsys.com>
-Cc:     Vinod Koul <vkoul@kernel.org>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        =?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Shunsuke Mie <mie@igel.co.jp>,
-        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-        Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-        Frank Li <Frank.Li@nxp.com>, linux-kernel@vger.kernel.org,
-        dmaengine@vger.kernel.org, linux-pci@vger.kernel.org
-Subject: [RFC PATCH 11/11] dmaengine: dw-edma: Fix to enable to issue dma request on DMA processing
-Date:   Fri, 17 Mar 2023 20:32:38 +0900
-Message-Id: <20230317113238.142970-12-mie@igel.co.jp>
+        with ESMTP id S229536AbjCMUiG (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Mon, 13 Mar 2023 16:38:06 -0400
+Received: from mga11.intel.com (mga11.intel.com [192.55.52.93])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47D9D55BE;
+        Mon, 13 Mar 2023 13:38:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1678739885; x=1710275885;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=xhLemzapIYtjwt7W6UjVVSZx3bQKLmhz6UvBBX3dL3c=;
+  b=NYyfInkMm8rKQCdXPwFYho32BAhtDX4FwScEizr+Y9ocRy6vBohl5zi6
+   OkTigMJD3sZafm4Y1d6TTFkhXyJF+N6Qf3y4uj3CbY6yUz3Y4t4kB9Qo5
+   V2cOKEsPyPoUPg75hNwHNkMzUExVfVUhD4Ko2iSL3llQ3lcyEQe/qWAa1
+   zOIr3pVq9PKCDl1fi0EhKm4pyNG5+F2DagZMkGyrkdXhXRAkZNTiB/Db1
+   00ER/pDRL3fPrggUFKm09gw+CHdjzZxHqjxIHoZNfKWYVym+aezwcG+xZ
+   8kMoLgJhNUWPfhrp+FTIU/oZCSo7xAw9GVuSHnt/HcmJt524ihj7rxuWg
+   g==;
+X-IronPort-AV: E=McAfee;i="6500,9779,10648"; a="334732019"
+X-IronPort-AV: E=Sophos;i="5.98,257,1673942400"; 
+   d="scan'208";a="334732019"
+Received: from orsmga004.jf.intel.com ([10.7.209.38])
+  by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Mar 2023 13:38:04 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6500,9779,10648"; a="802584766"
+X-IronPort-AV: E=Sophos;i="5.98,257,1673942400"; 
+   d="scan'208";a="802584766"
+Received: from srinivas-otcpl-7600.jf.intel.com (HELO jacob-builder.jf.intel.com) ([10.54.39.106])
+  by orsmga004.jf.intel.com with ESMTP; 13 Mar 2023 13:38:03 -0700
+From:   Jacob Pan <jacob.jun.pan@linux.intel.com>
+To:     LKML <linux-kernel@vger.kernel.org>, iommu@lists.linux.dev,
+        Jason Gunthorpe <jgg@nvidia.com>,
+        "Lu Baolu" <baolu.lu@linux.intel.com>,
+        Joerg Roedel <joro@8bytes.org>,
+        Jean-Philippe Brucker <jean-philippe@linaro.com>,
+        "Robin Murphy" <robin.murphy@arm.com>,
+        Dave Hansen <dave.hansen@intel.com>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        X86 Kernel <x86@kernel.org>, bp@alien8.de,
+        "H. Peter Anvin" <hpa@zytor.com>,
+        Peter Zijlstra <peterz@infradead.org>, corbet@lwn.net,
+        vkoul@kernel.org, dmaengine@vger.kernel.org,
+        linux-doc@vger.kernel.org
+Cc:     "Will Deacon" <will@kernel.org>,
+        David Woodhouse <dwmw2@infradead.org>,
+        Raj Ashok <ashok.raj@intel.com>,
+        "Tian, Kevin" <kevin.tian@intel.com>, Yi Liu <yi.l.liu@intel.com>,
+        "Yu, Fenghua" <fenghua.yu@intel.com>,
+        Dave Jiang <dave.jiang@intel.com>,
+        Kirill Shutemov <kirill.shutemov@linux.intel.com>,
+        Tony Luck <tony.luck@intel.com>,
+        Jacob Pan <jacob.jun.pan@linux.intel.com>
+Subject: 
+Date:   Mon, 13 Mar 2023 13:41:51 -0700
+Message-Id: <20230313204158.1495067-1-jacob.jun.pan@linux.intel.com>
 X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20230317113238.142970-1-mie@igel.co.jp>
-References: <20230317113238.142970-1-mie@igel.co.jp>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-The issue_pending request is ignored while driver is processing a DMA
-request. Fix to issue the pending requests on any dma channel status.
+Subject: [PATCH v6 0/7] Remove VT-d virtual command interface and IOASID
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Fixes: e63d79d1ffcd ("dmaengine: Add Synopsys eDMA IP core driver")
-Signed-off-by: Shunsuke Mie <mie@igel.co.jp>
----
- drivers/dma/dw-edma/dw-edma-core.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+Hi all,
 
-diff --git a/drivers/dma/dw-edma/dw-edma-core.c b/drivers/dma/dw-edma/dw-edma-core.c
-index c527af00ff4e..430f9ee0d9e8 100644
---- a/drivers/dma/dw-edma/dw-edma-core.c
-+++ b/drivers/dma/dw-edma/dw-edma-core.c
-@@ -308,9 +308,12 @@ static void dw_edma_device_issue_pending(struct dma_chan *dchan)
- 	struct dw_edma_chan *chan = dchan2dw_edma_chan(dchan);
- 	unsigned long flags;
- 
-+	if (!chan->configured)
-+		return;
-+
- 	spin_lock_irqsave(&chan->vc.lock, flags);
--	if (chan->configured && chan->request == EDMA_REQ_NONE &&
--	    chan->status == EDMA_ST_IDLE && vchan_issue_pending(&chan->vc)) {
-+	if (vchan_issue_pending(&chan->vc) && chan->request == EDMA_REQ_NONE &&
-+	    chan->status == EDMA_ST_IDLE) {
- 		chan->status = EDMA_ST_BUSY;
- 		dw_edma_start_transfer(chan);
- 	}
+This patch set removes unused VT-d virtual command interface followed by
+removal of the IOASID infrastructure.
+
+This has only been tested on x86 platforms, need help with testing on ARM
+SMMU and other architectures.
+
+
+Thanks,
+
+Jacob
+
+ChangeLog:
+v6:
+ - put pasid helpers under iommu.h instead of iommu-helper.h
+ - add comments for pasid allocation function to clarify inclusive range
+
+v5:
+ - rebased on v6.3-rc1
+ - put removing iommu_sva_find() in a separate patch (Kevin)
+ - move definition of helpers to iommu code to be consistent with
+   declarations. (Kevin)
+ - misc fixes
+
+v4:
+ - keep mm_pasid helpers inline as much as we can for fork performance
+ - separate GFP_ATOMIC to GFP_KERNEL change for bisectability
+
+v3:
+ - moved helper functions for PASID under SVA code, avoided circular inclusion
+   between mm.h and iommu.h
+ - deleted makefiles
+ - put rename under a different patch
+
+
+Jacob Pan (5):
+  iommu/vt-d: Remove virtual command interface
+  iommu/sva: Move PASID helpers to sva code
+  iommu/sva: Remove PASID to mm lookup function
+  iommu/sva: Use GFP_KERNEL for pasid allocation
+  iommu/ioasid: Rename INVALID_IOASID
+
+Jason Gunthorpe (2):
+  iommu/sva: Stop using ioasid_set for SVA
+  iommu: Remove ioasid infrastructure
+
+ Documentation/x86/sva.rst       |   2 +-
+ arch/x86/kernel/traps.c         |   5 +-
+ drivers/dma/idxd/device.c       |   8 +-
+ drivers/dma/idxd/idxd.h         |   2 +-
+ drivers/dma/idxd/init.c         |   2 +-
+ drivers/dma/idxd/irq.c          |   2 +-
+ drivers/iommu/Kconfig           |   5 -
+ drivers/iommu/Makefile          |   1 -
+ drivers/iommu/intel/cap_audit.c |   2 -
+ drivers/iommu/intel/dmar.c      |   6 +-
+ drivers/iommu/intel/iommu.c     |  87 +------
+ drivers/iommu/intel/iommu.h     |   3 -
+ drivers/iommu/intel/svm.c       |   3 +-
+ drivers/iommu/ioasid.c          | 422 --------------------------------
+ drivers/iommu/iommu-sva.c       |  63 ++---
+ drivers/iommu/iommu-sva.h       |   4 -
+ include/linux/ioasid.h          |  83 -------
+ include/linux/iommu.h           |  14 +-
+ include/linux/sched/mm.h        |  26 --
+ kernel/fork.c                   |   3 +
+ mm/init-mm.c                    |   4 +-
+ 21 files changed, 53 insertions(+), 694 deletions(-)
+ delete mode 100644 drivers/iommu/ioasid.c
+ delete mode 100644 include/linux/ioasid.h
+
 -- 
 2.25.1
 
