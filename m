@@ -2,80 +2,70 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2606DC6FD19
-	for <dmaengine@archiver.kernel.org>; Mon, 13 Mar 2023 17:15:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D8544C61DA4
+	for <dmaengine@archiver.kernel.org>; Mon, 13 Mar 2023 17:17:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231286AbjCMRP4 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 13 Mar 2023 13:15:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37356 "EHLO
+        id S231244AbjCMRRC (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 13 Mar 2023 13:17:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39028 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231311AbjCMRPl (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Mon, 13 Mar 2023 13:15:41 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 84B091B2DB;
-        Mon, 13 Mar 2023 10:15:11 -0700 (PDT)
+        with ESMTP id S231451AbjCMRQx (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Mon, 13 Mar 2023 13:16:53 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F3E277C8E;
+        Mon, 13 Mar 2023 10:16:26 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 1BFD961381;
-        Mon, 13 Mar 2023 17:13:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D613C433A1;
-        Mon, 13 Mar 2023 17:13:39 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 12BDCB810D8;
+        Mon, 13 Mar 2023 17:15:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE31DC433EF;
+        Mon, 13 Mar 2023 17:15:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1678727622;
-        bh=+THSfPIwklUUC80eud55EQMNToM9c5KqOlS32WoC2XM=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=qTOal6KEg0SZVhRbX2h2CEBDzRGBr32VzO+RBaVn1hEGQzAM4zdovWfmhZyejwSHN
-         AJ+VvrD7VN5fr/rrtHU1E+KDt8Jcow0fge06jycv1hJTscQcJyr7INs2UmOBhdmwTb
-         414DupFCmMvpm3lAhGnbmEqM2W/bL1MQnqHt1J8mRjpBije3IMDBN0OZOmBr19iTg/
-         HnkT9mnarEL3YWzew22rp48cAsdYlGSzuUxZnf5Xd67fL5bBrbMfgWmsFIeEt8GGXe
-         kuhVYiFRaUf4Ir8CB8H1S+SDGvR+kZbVcQNjlmJ9VJLoYp+dt/TxLpe120yB39YdPx
-         WJBIaHv3hxzzg==
+        s=k20201202; t=1678727732;
+        bh=AgxnGnjCcuCLrvUebJaSyNbX/LjrIkQcC+AUGh//ULo=;
+        h=From:To:Cc:Subject:Date:From;
+        b=Rc1X74Z0PSz0l+9fCLydu9UqhFcIazbnDk4YVJ2BFsmNxkIqMEaKNBtigo95WLuW0
+         qrLi7CACAwXSyrit0YQ7TefcadFTdBu1hQKaRkYkFHBV9brsOyDn4/7cp20Mk1LY33
+         hE+yZNL0cKfzlBDVfPBLuXzga2mg8QGbb6q2VtBNwG/Z1XPfVLMS73mqn0sH42L/qL
+         e4/oBDdQNahOyL1d1IrfAoylwTrPm9bq2EWTUeHty0iml60OKDA+R072Z1WP21M0ZT
+         sdKsj023JvtU4mlSb8voF+iRpl3Xqowkr5J9E3RCB3uWcmx1OSGpif6TVZHvwq8hlP
+         +GB35luE+SsKA==
 From:   Jisheng Zhang <jszhang@kernel.org>
-To:     Lars-Peter Clausen <lars@metafoo.de>,
-        Vinod Koul <vkoul@kernel.org>,
-        Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>,
-        Logan Gunthorpe <logang@deltatee.com>,
-        Sinan Kaya <okaya@kernel.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Orson Zhai <orsonzhai@gmail.com>,
-        Baolin Wang <baolin.wang@linux.alibaba.com>,
-        Chunyan Zhang <zhang.lyra@gmail.com>
-Cc:     dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org
-Subject: [PATCH 2/5] dmaengine: axi-dmac: Don't set chancnt
-Date:   Tue, 14 Mar 2023 01:02:47 +0800
-Message-Id: <20230313170250.815-3-jszhang@kernel.org>
+To:     Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>,
+        Vinod Koul <vkoul@kernel.org>
+Cc:     dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH 00/11] dmaengine: dw-axi_dmac: bug fix clean up and more features
+Date:   Tue, 14 Mar 2023 01:04:39 +0800
+Message-Id: <20230313170450.897-1-jszhang@kernel.org>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230313170250.815-1-jszhang@kernel.org>
-References: <20230313170250.815-1-jszhang@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-The dma framework will calculate the dma channels chancnt, setting it
-outself is wrong.
+This series first fix a bug related with runtime pm. Then do three clean
+up. After that, we add three new features: per channel irq support,
+dma-channel-mask support and polled mode support.
 
-Signed-off-by: Jisheng Zhang <jszhang@kernel.org>
----
- drivers/dma/dma-axi-dmac.c | 1 -
- 1 file changed, 1 deletion(-)
+Jisheng Zhang (11):
+  dmaengine: dw-axi-dmac: fix reading register hen runtime suspended
+  dmaengine: dw-axi-dmac: remove unnecessary devm_free_irq() calling
+  dmaengine: dw-axi-dmac: remove unnecessary axi_dma_enable() calling
+  dmaengine: dw-axi-dmac: remove redudant axi_dma_disable() calling
+  dmaengine: dw-axi-dmac: delay irq getting until request_irq
+  dmaengine: dw-axi-dmac: move ch irq handling into common routine
+  dmaengine: dw-axi-dmac: support per channel irq
+  dmaengine: dw-axi-dmac: support dma-channel-mask
+  dmaengine: dw-axi-dmac: try best to get residue when tx is running
+  dmaengine: dw-axi-dmac: move dma_chan_tx_status()
+  dmaengine: dw-axi-dmac: support polled mode
 
-diff --git a/drivers/dma/dma-axi-dmac.c b/drivers/dma/dma-axi-dmac.c
-index a812b9b00e6b..fc7cdad37161 100644
---- a/drivers/dma/dma-axi-dmac.c
-+++ b/drivers/dma/dma-axi-dmac.c
-@@ -963,7 +963,6 @@ static int axi_dmac_probe(struct platform_device *pdev)
- 	dma_dev->device_terminate_all = axi_dmac_terminate_all;
- 	dma_dev->device_synchronize = axi_dmac_synchronize;
- 	dma_dev->dev = &pdev->dev;
--	dma_dev->chancnt = 1;
- 	dma_dev->src_addr_widths = BIT(dmac->chan.src_width);
- 	dma_dev->dst_addr_widths = BIT(dmac->chan.dest_width);
- 	dma_dev->directions = BIT(dmac->chan.direction);
+ .../dma/dw-axi-dmac/dw-axi-dmac-platform.c    | 207 ++++++++++++------
+ drivers/dma/dw-axi-dmac/dw-axi-dmac.h         |   4 +
+ 2 files changed, 147 insertions(+), 64 deletions(-)
+
 -- 
 2.39.2
 
