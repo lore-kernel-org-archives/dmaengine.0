@@ -2,38 +2,48 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 987FFC74A4B
-	for <dmaengine@archiver.kernel.org>; Mon, 13 Mar 2023 17:24:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1CAD3C61DA4
+	for <dmaengine@archiver.kernel.org>; Mon, 13 Mar 2023 17:59:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230231AbjCMRYK (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 13 Mar 2023 13:24:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53472 "EHLO
+        id S229543AbjCMR7Q (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 13 Mar 2023 13:59:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32776 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230263AbjCMRXw (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Mon, 13 Mar 2023 13:23:52 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C3ED63ABE;
-        Mon, 13 Mar 2023 10:22:57 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 6E53261414;
-        Mon, 13 Mar 2023 17:13:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5BCCC4339B;
-        Mon, 13 Mar 2023 17:13:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1678727629;
-        bh=sheGLWSRVeZHY8o45gICU781ZznV4t/ae6HtpWxBx6U=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=qf/UOe9YjBj6REsfrKde/wD39EkAWcypvQ3WAqT+0+FFqQ6Ffgx0TPeqPLDgy5NLe
-         Vd0wn75BEOm3xW7xNHHJPZ/ZWX89ofjbTLlxFia0uvDGFDhl6DBdazT4iTCrwxJomQ
-         Wew47qEoGgxKmOtPj4JGSHmIjz6GAMU5PG+E6LV4BqbZwCw2iR4Z0jtVL2XRCoVx37
-         je9F07HOoMrM8tI9Zvkc4sQOluGXL6M7MFWWb2JrMDbNxPEY8CmKwP0LbRv2JI8SGb
-         jnN7zAE6TN0h1scWNriCZuy7jEz8ZB8ei+E4uDzu3K3gWhBE5NQ/Ra89Eg/gnpBjZn
-         T1JWesBbzPsEQ==
-From:   Jisheng Zhang <jszhang@kernel.org>
-To:     Lars-Peter Clausen <lars@metafoo.de>,
-        Vinod Koul <vkoul@kernel.org>,
+        with ESMTP id S229516AbjCMR7Q (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Mon, 13 Mar 2023 13:59:16 -0400
+X-Greylist: delayed 1365 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Mon, 13 Mar 2023 10:59:14 PDT
+Received: from www381.your-server.de (www381.your-server.de [78.46.137.84])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 746A84FF27;
+        Mon, 13 Mar 2023 10:59:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=metafoo.de;
+        s=default2002; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
+        References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:
+        Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+        Resent-To:Resent-Cc:Resent-Message-ID;
+        bh=Lt4mtIjD4YyqKIuyjla1T3Ra1U7Xq48NvAy7VCekmRA=; b=g0r/lWXHFdizF5Hl/TIfhR8fWF
+        NMwSnoXGienHTsvDiDVVuUhUdbZageGCHqFcSPB62BhE+aE1EvX/pM6fSD7mVorRljtom07PFW9uf
+        4wsKDq0kUP1aIx7PLLAaovyhBZunUsJwoiOUWB4q93uZkwxhXPK/P26a8hR9PZl3O5cRboFtObBOB
+        sHwG5eWy6VGSqHyoYAebRR3131LkIKuj9dXMEuat/buc2XmCp40Kn/rxfaysd6SB9FG5EqD856mJe
+        X1/FF8EULD1S8990dV0hl5uqGdSkv5f7+U7fEaD0Dp1RgXIoB6xsxBpkIuN9iDtDCfFzhl9ck9ebN
+        4QxuIUAw==;
+Received: from sslproxy01.your-server.de ([78.46.139.224])
+        by www381.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
+        (Exim 4.94.2)
+        (envelope-from <lars@metafoo.de>)
+        id 1pbm5w-000O5g-P4; Mon, 13 Mar 2023 18:36:24 +0100
+Received: from [2604:5500:c0e5:eb00:da5e:d3ff:feff:933b]
+        by sslproxy01.your-server.de with esmtpsa (TLSv1.3:TLS_AES_256_GCM_SHA384:256)
+        (Exim 4.92)
+        (envelope-from <lars@metafoo.de>)
+        id 1pbm5w-000XJa-7C; Mon, 13 Mar 2023 18:36:24 +0100
+Message-ID: <5513e68a-22b8-2c91-5342-b1796741610d@metafoo.de>
+Date:   Mon, 13 Mar 2023 10:36:20 -0700
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH 2/5] dmaengine: axi-dmac: Don't set chancnt
+Content-Language: en-US
+To:     Jisheng Zhang <jszhang@kernel.org>, Vinod Koul <vkoul@kernel.org>,
         Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>,
         Logan Gunthorpe <logang@deltatee.com>,
         Sinan Kaya <okaya@kernel.org>, Andy Gross <agross@kernel.org>,
@@ -44,38 +54,45 @@ To:     Lars-Peter Clausen <lars@metafoo.de>,
         Chunyan Zhang <zhang.lyra@gmail.com>
 Cc:     dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
         linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org
-Subject: [PATCH 4/5] dmaengine: hidma: Don't set chancnt
-Date:   Tue, 14 Mar 2023 01:02:49 +0800
-Message-Id: <20230313170250.815-5-jszhang@kernel.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230313170250.815-1-jszhang@kernel.org>
 References: <20230313170250.815-1-jszhang@kernel.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+ <20230313170250.815-3-jszhang@kernel.org>
+From:   Lars-Peter Clausen <lars@metafoo.de>
+In-Reply-To: <20230313170250.815-3-jszhang@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Authenticated-Sender: lars@metafoo.de
+X-Virus-Scanned: Clear (ClamAV 0.103.8/26840/Mon Mar 13 08:22:58 2023)
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-The dma framework will calculate the dma channels chancnt, setting it
-outself is wrong.
+On 3/13/23 10:02, Jisheng Zhang wrote:
+> The dma framework will calculate the dma channels chancnt, setting it
+> outself is wrong.
 
-Signed-off-by: Jisheng Zhang <jszhang@kernel.org>
----
- drivers/dma/qcom/hidma.c | 1 -
- 1 file changed, 1 deletion(-)
+s/outself/ourself/
 
-diff --git a/drivers/dma/qcom/hidma.c b/drivers/dma/qcom/hidma.c
-index 04d1c33afc12..344525c3a32f 100644
---- a/drivers/dma/qcom/hidma.c
-+++ b/drivers/dma/qcom/hidma.c
-@@ -214,7 +214,6 @@ static int hidma_chan_init(struct hidma_dev *dmadev, u32 dma_sig)
- 
- 	spin_lock_init(&mchan->lock);
- 	list_add_tail(&mchan->chan.device_node, &ddev->channels);
--	dmadev->ddev.chancnt++;
- 	return 0;
- }
- 
--- 
-2.39.2
+Looks good otherwise, thanks.
+
+Acked-by: Lars-Peter Clausen <lars@metafoo.de>
+
+>
+> Signed-off-by: Jisheng Zhang <jszhang@kernel.org>
+> ---
+>   drivers/dma/dma-axi-dmac.c | 1 -
+>   1 file changed, 1 deletion(-)
+>
+> diff --git a/drivers/dma/dma-axi-dmac.c b/drivers/dma/dma-axi-dmac.c
+> index a812b9b00e6b..fc7cdad37161 100644
+> --- a/drivers/dma/dma-axi-dmac.c
+> +++ b/drivers/dma/dma-axi-dmac.c
+> @@ -963,7 +963,6 @@ static int axi_dmac_probe(struct platform_device *pdev)
+>   	dma_dev->device_terminate_all = axi_dmac_terminate_all;
+>   	dma_dev->device_synchronize = axi_dmac_synchronize;
+>   	dma_dev->dev = &pdev->dev;
+> -	dma_dev->chancnt = 1;
+>   	dma_dev->src_addr_widths = BIT(dmac->chan.src_width);
+>   	dma_dev->dst_addr_widths = BIT(dmac->chan.dest_width);
+>   	dma_dev->directions = BIT(dmac->chan.direction);
+
 
