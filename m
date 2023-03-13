@@ -2,42 +2,42 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B08E4C74A4B
-	for <dmaengine@archiver.kernel.org>; Mon, 13 Mar 2023 17:17:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 882B5C6FD19
+	for <dmaengine@archiver.kernel.org>; Mon, 13 Mar 2023 17:18:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230265AbjCMRRi (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 13 Mar 2023 13:17:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40080 "EHLO
+        id S229670AbjCMRSL (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 13 Mar 2023 13:18:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40382 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231239AbjCMRR3 (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Mon, 13 Mar 2023 13:17:29 -0400
+        with ESMTP id S230426AbjCMRSA (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Mon, 13 Mar 2023 13:18:00 -0400
 Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3544377CBA;
-        Mon, 13 Mar 2023 10:16:58 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B14FC81CE4;
+        Mon, 13 Mar 2023 10:17:32 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id A21BB6144A;
-        Mon, 13 Mar 2023 17:15:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CF0DC4339C;
-        Mon, 13 Mar 2023 17:15:44 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 319AE6142F;
+        Mon, 13 Mar 2023 17:15:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91440C433EF;
+        Mon, 13 Mar 2023 17:15:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1678727746;
-        bh=eA2ZxLGWNR6IdxbFmS127kxHvHFaTkPGETvRqPfSGHI=;
+        s=k20201202; t=1678727744;
+        bh=LTJK1Q5mjYuDFo6XOCu0Yts3P4bL4yj+TgvZBGYtFVU=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=Rz+HewYQDWhKf2yVjWlD3Ax9+Bei/7TPg13o2xwZJMK5x/cP9LYG78LNGMJ0j8/Od
-         kKprT9xj8VyFk0GbUfCKCeXjqQnkpBzsAVxHRea9/0NxyNiez5/4/VWE0VYmijkZf+
-         Rs2jKa7+8pzb3SEeKfl4lzZ0lwJfab0c5PDZE8ZEvLAVn5D17sZm+z0D3s70ggk9BJ
-         yUvMLmRQ1DmmAqJxmtDMjRKeJCjICW8tGdLwOChm+OsExmxIDJnRArIDxbHQF4D0E8
-         +uPUVPcchyBMj06+r2ukJZLkK7l5fFEGcapnljsHzX9WVOciblQefC38gn/zeNtUgC
-         MGPe94fPoWuXg==
+        b=juz5mfjIHepuK/C9slExugzY1AT/hTly2K0djTFKQtMPZLNdsnTYzJnhImV3McZFf
+         gP7768wE2sjelp9jgF6+BqLpQNziHenoA8Dqz++Bm+kYY8mlQFwJ1XwFgo706aqARH
+         gJFidpFNx2JfKW2xGQN3mMdTAVlesx4ziduuwSKQYkFCXSOzyb2FVwtWxz6HIuHWRy
+         XtqtVvZp+46HjJkDoHwwFlckYrF6ozr1KNRcSR1fkFMpK2UHnbsLinHqPnadrBuw7T
+         IqYcX1S35y1wm/hwPjtcFt3/cBzq/DN6P3EufNXDfo5fs6APztcnbczjE5JzhP3y3R
+         +JCWfbkyOWZEA==
 From:   Jisheng Zhang <jszhang@kernel.org>
 To:     Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>,
         Vinod Koul <vkoul@kernel.org>
 Cc:     dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH 09/11] dmaengine: dw-axi-dmac: try best to get residue when tx is running
-Date:   Tue, 14 Mar 2023 01:04:48 +0800
-Message-Id: <20230313170450.897-10-jszhang@kernel.org>
+Subject: [PATCH 08/11] dmaengine: dw-axi-dmac: support dma-channel-mask
+Date:   Tue, 14 Mar 2023 01:04:47 +0800
+Message-Id: <20230313170450.897-9-jszhang@kernel.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230313170450.897-1-jszhang@kernel.org>
 References: <20230313170450.897-1-jszhang@kernel.org>
@@ -47,61 +47,86 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-When tx is running, vchan_find_desc() will return NULL, try our best
-to get the residue in this case.
+Some dma channels may not be available, so we need to tell the driver
+the available dma channels, use the general dt binding
+"dma-channel-mask" for this purpose.
 
 Signed-off-by: Jisheng Zhang <jszhang@kernel.org>
 ---
- drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c | 15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+ .../dma/dw-axi-dmac/dw-axi-dmac-platform.c    | 19 +++++++++++++++++++
+ drivers/dma/dw-axi-dmac/dw-axi-dmac.h         |  1 +
+ 2 files changed, 20 insertions(+)
 
 diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-index a6e46cb66000..1c1b9574985a 100644
+index edb1c089a8eb..a6e46cb66000 100644
 --- a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
 +++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-@@ -305,6 +305,7 @@ dma_chan_tx_status(struct dma_chan *dchan, dma_cookie_t cookie,
- 		  struct dma_tx_state *txstate)
- {
- 	struct axi_dma_chan *chan = dchan_to_axi_dma_chan(dchan);
-+	struct axi_dma_desc *desc = NULL;
- 	struct virt_dma_desc *vdesc;
- 	enum dma_status status;
- 	u32 completed_length;
-@@ -322,9 +323,15 @@ dma_chan_tx_status(struct dma_chan *dchan, dma_cookie_t cookie,
+@@ -216,6 +216,8 @@ static void axi_dma_hw_init(struct axi_dma_chip *chip)
+ 	u32 i;
  
- 	vdesc = vchan_find_desc(&chan->vc, cookie);
- 	if (vdesc) {
--		length = vd_to_axi_desc(vdesc)->length;
--		completed_blocks = vd_to_axi_desc(vdesc)->completed_blocks;
--		len = vd_to_axi_desc(vdesc)->hw_desc[0].len;
-+		desc = vd_to_axi_desc(vdesc);
-+	} else if (chan->desc && chan->desc->vd.tx.cookie == cookie) {
-+		desc = chan->desc;
-+	}
-+
-+	if (desc) {
-+		length = desc->length;
-+		completed_blocks = desc->completed_blocks;
-+		len = desc->hw_desc[0].len;
- 		completed_length = completed_blocks * len;
- 		bytes = length - completed_length;
+ 	for (i = 0; i < chip->dw->hdata->nr_channels; i++) {
++		if (!(chip->dw->hdata->channels_mask & (1 << i)))
++			continue;
+ 		axi_chan_irq_disable(&chip->dw->chan[i], DWAXIDMAC_IRQ_ALL);
+ 		axi_chan_disable(&chip->dw->chan[i]);
  	}
-@@ -425,6 +432,7 @@ static void axi_chan_block_xfer_start(struct axi_dma_chan *chan,
- 	axi_chan_irq_set(chan, irq_mask);
+@@ -1390,6 +1392,14 @@ static int parse_device_properties(struct axi_dma_chip *chip)
+ 		chip->dw->hdata->axi_rw_burst_len = tmp;
+ 	}
  
- 	axi_chan_enable(chan);
-+	chan->desc = first;
- }
++	/*
++	 * Use all channels if there's no dma-channel-mask property
++	 */
++	ret = device_property_read_u32(dev, "dma-channel-mask", &tmp);
++	if (ret)
++		tmp = GENMASK(chip->dw->hdata->nr_channels - 1, 0);
++	chip->dw->hdata->channels_mask = tmp;
++
+ 	chip->dw->hdata->perch_irq = device_property_read_bool(dev, "snps,perch_irq");
  
- static void axi_chan_start_first_queued(struct axi_dma_chan *chan)
-@@ -1188,6 +1196,7 @@ static int dma_chan_terminate_all(struct dma_chan *dchan)
- 	spin_unlock_irqrestore(&chan->vc.lock, flags);
+ 	return 0;
+@@ -1450,6 +1460,10 @@ static int dw_probe(struct platform_device *pdev)
+ 	if (hdata->perch_irq) {
+ 		char irqname[8];
+ 		for (i = 0; i < hdata->nr_channels; i++) {
++			if (!(hdata->channels_mask & (1 << i))) {
++				dw->chan[i].irq = -1;
++				continue;
++			}
+ 			snprintf(irqname, sizeof(irqname), "ch%u", i);
+ 			dw->chan[i].irq = platform_get_irq_byname(pdev, irqname);
+ 			if (dw->chan[i].irq < 0)
+@@ -1475,6 +1489,9 @@ static int dw_probe(struct platform_device *pdev)
+ 	for (i = 0; i < hdata->nr_channels; i++) {
+ 		struct axi_dma_chan *chan = &dw->chan[i];
  
- 	vchan_dma_desc_free_list(&chan->vc, &head);
-+	chan->desc = NULL;
- 
- 	dev_vdbg(dchan2dev(dchan), "terminated: %s\n", axi_chan_name(chan));
- 
++		if (!(hdata->channels_mask & (1 << i)))
++			continue;
++
+ 		chan->chip = chip;
+ 		chan->id = i;
+ 		chan->chan_regs = chip->regs + COMMON_REG_LEN + i * CHAN_REG_LEN;
+@@ -1572,6 +1589,8 @@ static int dw_remove(struct platform_device *pdev)
+ 	clk_prepare_enable(chip->core_clk);
+ 	axi_dma_irq_disable(chip);
+ 	for (i = 0; i < dw->hdata->nr_channels; i++) {
++		if (!(dw->hdata->channels_mask & (1 << i)))
++			continue;
+ 		axi_chan_disable(&chip->dw->chan[i]);
+ 		axi_chan_irq_disable(&chip->dw->chan[i], DWAXIDMAC_IRQ_ALL);
+ 	}
+diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac.h b/drivers/dma/dw-axi-dmac/dw-axi-dmac.h
+index 83ac839b4394..f57961620d2d 100644
+--- a/drivers/dma/dw-axi-dmac/dw-axi-dmac.h
++++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac.h
+@@ -30,6 +30,7 @@ struct dw_axi_dma_hcfg {
+ 	u32	priority[DMAC_MAX_CHANNELS];
+ 	/* maximum supported axi burst length */
+ 	u32	axi_rw_burst_len;
++	u32	channels_mask;
+ 	/* Register map for DMAX_NUM_CHANNELS <= 8 */
+ 	bool	reg_map_8_channels;
+ 	bool	restrict_axi_burst_len;
 -- 
 2.39.2
 
