@@ -2,62 +2,62 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BCAB3C6FD1C
-	for <dmaengine@archiver.kernel.org>; Tue, 14 Mar 2023 13:06:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7990BC7618B
+	for <dmaengine@archiver.kernel.org>; Tue, 14 Mar 2023 13:08:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229904AbjCNNG5 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 14 Mar 2023 09:06:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58280 "EHLO
+        id S232060AbjCNNIV (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 14 Mar 2023 09:08:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55918 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230098AbjCNNGj (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Tue, 14 Mar 2023 09:06:39 -0400
-Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 164BC9CFD4
-        for <dmaengine@vger.kernel.org>; Tue, 14 Mar 2023 06:03:16 -0700 (PDT)
-Received: by mail-lf1-x133.google.com with SMTP id f18so19942025lfa.3
-        for <dmaengine@vger.kernel.org>; Tue, 14 Mar 2023 06:03:16 -0700 (PDT)
+        with ESMTP id S232146AbjCNNH6 (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Tue, 14 Mar 2023 09:07:58 -0400
+Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C3C3A189D
+        for <dmaengine@vger.kernel.org>; Tue, 14 Mar 2023 06:04:40 -0700 (PDT)
+Received: by mail-ed1-x52a.google.com with SMTP id x3so61674512edb.10
+        for <dmaengine@vger.kernel.org>; Tue, 14 Mar 2023 06:04:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678798988;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=MqZsJOX1El+luUmSocWq2Ruds493hltfIeGTUI/M7s0=;
-        b=VuZ5Xxjfxv3Yjrx0ZeWrpu4WOxYX5s6NX5okzeTfhBe5yziMRpHZc2mAc9gmGoR3xI
-         5CJwwbhjUh74nX1QnyiImpoFisueYEqRsZQ2ZARtcH/jIdIVo7uZMf3IXx1yJ1sfgyF0
-         MtWHTscGBIbsHGeON6Q/DpZ4IJCVkMssT67PFx9e3+LcfBDffiNaK0RxCHHsbWZwRk9i
-         K1vxTpPRMTO7ykKnQJOlcGzFGQadzKM8M8kbnSKSkRJca1OerxbFbMb5KKVoKT0rUlO2
-         cll+EtnuJ9PRTwGFgOXBQI78Izt5Q0ngLmF87PqRotmfkSAZJe8YbyGsJO6IQ8OYR7p9
-         OPOA==
+        d=linaro.org; s=google; t=1678799073;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=8MiNq49jj5N76vOjmnLvIQjHj4KSRTiJUui/5+4fP1s=;
+        b=A0vgjGlTZVjYgBTq6D3yIZ6ULn6v37r3+IWmoRO0k4XaArVbHoRHR2nCGHJvjhkpKc
+         XM5KcRb/9JlM3CaH80n/A39bNNWNEtyO3p4Vsxri2tti2tO0ifwjB2WCdUA+y7+EjFyI
+         9q8wHoNEFCKtBnifwvFH6zrwCpDzeXUQg6WtP2esf0i2sgvPNHv88oP5P1i1fGMKjCgv
+         upeMxGda3hsm1cIBspRS3GaJ6Rk/u8aLBrbH+m6ddBoX5CmN3x+MB/D/Mgv/MijVVV46
+         Z3KhlvxmhShU93W/E2ESy/F0Mv/uwvoL+3N+aAChdc6IdI8WjGUaL3sXOxb5OugJV7t8
+         zUCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678798988;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=MqZsJOX1El+luUmSocWq2Ruds493hltfIeGTUI/M7s0=;
-        b=YZIAE/fn/pTVM2XCNmPGkK7GhE5CBiFnvDc+rAQ3xk0Gk5h8T4TwByoGshfOlBAfzs
-         mESyojY+34TxHjrsvfwu0JtJm0bFWPUniuNv1n/GePGY3g7zJEgpxdWm8V9+tgbxGQ8u
-         RNcEOwoT4RK4Lv3TxH6DIClP3KulmC05BLAD2JwRvgnMxUnfMJumDHnhwbxFKTnmA+YB
-         3vYYuY4OnzJlmEUJ+QBAsPKEvuD0NDCn630FPwVJsj0nYq9WouD2yimPRF6p6Mqh5Fjt
-         f2TseW3HjtLMOY92v2ozAcNwrIt40ZAlPTjpLg1kGdiCStILQsRItJYsXdG4dT6XQmrR
-         s1Vg==
-X-Gm-Message-State: AO0yUKWEikF9b25q18B68lJw22mtCTQVAYTkJoQo10UwUkhQ/M0rVqu7
-        wJZ8dI7w5fvUNVzd8LkHF1YVu7G/G5zDAPw5164=
-X-Google-Smtp-Source: AK7set9qOvhwQgOeP4U1McR7yj1LUoKO8eAR6fKuhFRTzvH3/lO2wA88LCnFpHmHEttF3cZT0GEPtg==
-X-Received: by 2002:ac2:5a11:0:b0:4dd:afb4:26b3 with SMTP id q17-20020ac25a11000000b004ddafb426b3mr768141lfn.16.1678798391245;
-        Tue, 14 Mar 2023 05:53:11 -0700 (PDT)
+        d=1e100.net; s=20210112; t=1678799073;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=8MiNq49jj5N76vOjmnLvIQjHj4KSRTiJUui/5+4fP1s=;
+        b=PXTPRkikcGfxQwErfkdrCtqqETjGEOgXTHa+AuJ7pBk/M4F6rAbJGL3TbFrHhcVcOg
+         xC04Gz8isuQ+lFSnlRUXushrnXLXJ/d8KKEkH57vh9+g6ChFEC2oUcrcp1F+xWnXZL14
+         WtNvvPDa8dyv0WWsgwx93RtjogyIcIcyJoMfSWjAvxTR7ugEld54pg2g3xiT+AbtXPBW
+         U8/OYaCA4wyQzAAVfqUcDp20IeKWgH+uTL2vWdGDjeeEzTDH9O9sEB+6b6I3fd/pWoCE
+         gXyLNjcUIBy5COIRCc9zcQQwBfLn5Q7gTHi5r2T7+kHNd56HQYVDRpl7nr/5uPvzrMHE
+         cZJA==
+X-Gm-Message-State: AO0yUKXbALbZd3ByvhZXidq5z97x3BeUjhU/lMo+h/2wR7oZNYta77Uo
+        f18/mjAU1YWLCE7wP9nhyyS30LLT1pcoOEfm9Hw=
+X-Google-Smtp-Source: AK7set8VKJrgRZQmRB5O8ZRHtIgj6S97HoqVRdvQ+bdeVt0+Ot8plS+62FwVZz74fIgpHE6Yl4Y7XA==
+X-Received: by 2002:ac2:4354:0:b0:4cc:73ff:579a with SMTP id o20-20020ac24354000000b004cc73ff579amr609441lfl.38.1678798386805;
+        Tue, 14 Mar 2023 05:53:06 -0700 (PDT)
 Received: from [192.168.1.101] (abyj16.neoplus.adsl.tpnet.pl. [83.9.29.16])
-        by smtp.gmail.com with ESMTPSA id s9-20020a19ad49000000b004dda74eccafsm395374lfd.68.2023.03.14.05.53.09
+        by smtp.gmail.com with ESMTPSA id s9-20020a19ad49000000b004dda74eccafsm395374lfd.68.2023.03.14.05.53.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Mar 2023 05:53:10 -0700 (PDT)
+        Tue, 14 Mar 2023 05:53:06 -0700 (PDT)
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Tue, 14 Mar 2023 13:52:57 +0100
-Subject: [PATCH 2/6] dt-bindings: dmaengine: qcom: gpi: Add QCM2290 GPI DMA
+Subject: [PATCH 0/6] QCM2290 compatibles
+Date:   Tue, 14 Mar 2023 13:52:55 +0100
+Message-Id: <20230314-topic-2290_compats-v1-0-47e26c3c0365@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230314-topic-2290_compats-v1-2-47e26c3c0365@linaro.org>
-References: <20230314-topic-2290_compats-v1-0-47e26c3c0365@linaro.org>
-In-Reply-To: <20230314-topic-2290_compats-v1-0-47e26c3c0365@linaro.org>
+X-B4-Tracking: v=1; b=H4sIACduEGQC/x2N0QrCMAwAf2Xk2UDXqTB/RUTSmLnAbEszRRj7d
+ 4OPd3DcBiZNxeDSbdDko6YlO/SHDnim/BTUhzPEEIcw9EdcS1XGGMdw5/KqtBqekvB4pkkkBfA
+ wkQmmRplnT/N7WVzWJpN+/6frbd9/94JWunkAAAA=
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Wim Van Sebroeck <wim@linux-watchdog.org>,
@@ -82,38 +82,42 @@ Cc:     linux-arm-msm@vger.kernel.org, linux-watchdog@vger.kernel.org,
         linux-usb@vger.kernel.org, linux-pm@vger.kernel.org,
         Konrad Dybcio <konrad.dybcio@linaro.org>
 X-Mailer: b4 0.12.1
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1678798384; l=817;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1678798384; l=1135;
  i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=9mAqu5IGrrdUOaP0PlfWAkH94BH0kiBbnQ1iZWRCDUM=;
- b=Sh44OBUk8yAs+WqMAoK2kFFPM3jib6rHQJUJlUycILo2oU82/iPMiKJDnydXvXJL+YhzIpMEFN+N
- sGnknaghBoSI8VGUuzX1St9M1lXVjwwnkKWcthQp66XIHR9eCzzo
+ bh=IVVr6i/KawvLqgguv8RbQtO5KAqHsyGmBYNRJ1zL87s=;
+ b=W0b4hLXBOA8niOLA8fKdilzR5RN4jcIicLpxxMuwCxGKwdtorkzQeCG0KRkBUbfGtPhGN+20WiF1
+ 9tOrl1oNDvSI33bPrrkLp5i9LoYhpz7RyDAT9iAeJDJncuAa08eM
 X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
  pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Add a compatible for the single GPI DMA controller on QCM2290. It uses
-the same 0x10000 offset as SM6350.
+Document a couple of compatibles for IPs found on the QCM2290 that don't
+require any specific driver changes
 
 Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 ---
- Documentation/devicetree/bindings/dma/qcom,gpi.yaml | 1 +
- 1 file changed, 1 insertion(+)
+Konrad Dybcio (6):
+      dt-bindings: watchdog: qcom-wdt: add QCM2290
+      dt-bindings: dmaengine: qcom: gpi: Add QCM2290 GPI DMA
+      dt-bindings: nvmem: Add compatible for QCM2290
+      dt-bindings: mmc: sdhci-msm: Document QCM2290 SDHCI
+      dt-bindings: usb: dwc3: Add QCM2290 compatible
+      dt-bindings: thermal: tsens: Add QCM2290
 
-diff --git a/Documentation/devicetree/bindings/dma/qcom,gpi.yaml b/Documentation/devicetree/bindings/dma/qcom,gpi.yaml
-index fc5de7b6f19e..f61145c91b6d 100644
---- a/Documentation/devicetree/bindings/dma/qcom,gpi.yaml
-+++ b/Documentation/devicetree/bindings/dma/qcom,gpi.yaml
-@@ -24,6 +24,7 @@ properties:
-           - qcom,sm6350-gpi-dma
-       - items:
-           - enum:
-+              - qcom,qcm2290-gpi-dma
-               - qcom,qdu1000-gpi-dma
-               - qcom,sc7280-gpi-dma
-               - qcom,sm6115-gpi-dma
+ Documentation/devicetree/bindings/dma/qcom,gpi.yaml       | 1 +
+ Documentation/devicetree/bindings/mmc/sdhci-msm.yaml      | 1 +
+ Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml  | 1 +
+ Documentation/devicetree/bindings/thermal/qcom-tsens.yaml | 1 +
+ Documentation/devicetree/bindings/usb/qcom,dwc3.yaml      | 2 ++
+ Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml  | 1 +
+ 6 files changed, 7 insertions(+)
+---
+base-commit: ec0fa9a0a6fac454745c930bdb8619d0a354bac9
+change-id: 20230314-topic-2290_compats-5bec96afeeb0
 
+Best regards,
 -- 
-2.39.2
+Konrad Dybcio <konrad.dybcio@linaro.org>
 
