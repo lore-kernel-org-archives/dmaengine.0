@@ -2,73 +2,113 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8409CC6FD1F
-	for <dmaengine@archiver.kernel.org>; Tue, 14 Mar 2023 03:51:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C9A6EC6FD1C
+	for <dmaengine@archiver.kernel.org>; Tue, 14 Mar 2023 08:35:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229548AbjCNDva (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 13 Mar 2023 23:51:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52440 "EHLO
+        id S229911AbjCNIfy (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 14 Mar 2023 04:35:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38426 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229473AbjCNDv3 (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Mon, 13 Mar 2023 23:51:29 -0400
-Received: from out30-101.freemail.mail.aliyun.com (out30-101.freemail.mail.aliyun.com [115.124.30.101])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 08C52738AF;
-        Mon, 13 Mar 2023 20:51:27 -0700 (PDT)
-Received: from 30.221.133.100(mailfrom:baolin.wang@linux.alibaba.com fp:SMTPD_---0VdqWb7B_1678765884)
-          by smtp.aliyun-inc.com;
-          Tue, 14 Mar 2023 11:51:25 +0800
-Message-ID: <04cc510b-6d66-99b5-4fe8-f51729299574@linux.alibaba.com>
-Date:   Tue, 14 Mar 2023 11:51:25 +0800
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH 5/5] dmaengine: sprd: Don't set chancnt
-To:     Jisheng Zhang <jszhang@kernel.org>,
-        Lars-Peter Clausen <lars@metafoo.de>,
+        with ESMTP id S229565AbjCNIfy (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Tue, 14 Mar 2023 04:35:54 -0400
+Received: from ex01.ufhost.com (ex01.ufhost.com [61.152.239.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C13346773F;
+        Tue, 14 Mar 2023 01:35:52 -0700 (PDT)
+Received: from EXMBX166.cuchost.com (unknown [175.102.18.54])
+        (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+        (Client CN "EXMBX166", Issuer "EXMBX166" (not verified))
+        by ex01.ufhost.com (Postfix) with ESMTP id 2AC9324E1FF;
+        Tue, 14 Mar 2023 16:35:50 +0800 (CST)
+Received: from EXMBX168.cuchost.com (172.16.6.78) by EXMBX166.cuchost.com
+ (172.16.6.76) with Microsoft SMTP Server (TLS) id 15.0.1497.42; Tue, 14 Mar
+ 2023 16:35:50 +0800
+Received: from localhost.localdomain (113.72.145.194) by EXMBX168.cuchost.com
+ (172.16.6.78) with Microsoft SMTP Server (TLS) id 15.0.1497.42; Tue, 14 Mar
+ 2023 16:35:49 +0800
+From:   Walker Chen <walker.chen@starfivetech.com>
+To:     Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>,
         Vinod Koul <vkoul@kernel.org>,
-        Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>,
-        Logan Gunthorpe <logang@deltatee.com>,
-        Sinan Kaya <okaya@kernel.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Orson Zhai <orsonzhai@gmail.com>,
-        Chunyan Zhang <zhang.lyra@gmail.com>
-Cc:     dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org
-References: <20230313170250.815-1-jszhang@kernel.org>
- <20230313170250.815-6-jszhang@kernel.org>
-From:   Baolin Wang <baolin.wang@linux.alibaba.com>
-In-Reply-To: <20230313170250.815-6-jszhang@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor.dooley@microchip.com>,
+        Palmer Dabbelt <palmer@dabbelt.com>,
+        "Emil Renner Berthing" <emil.renner.berthing@canonical.com>,
+        Walker Chen <walker.chen@starfivetech.com>
+CC:     <dmaengine@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-riscv@lists.infradead.org>
+Subject: [PATCH v5 1/3] dt-bindings: dma: snps,dw-axi-dmac: constrain the items of resets for JH7110 dma
+Date:   Tue, 14 Mar 2023 16:35:35 +0800
+Message-ID: <20230314083537.22571-2-walker.chen@starfivetech.com>
+X-Mailer: git-send-email 2.17.1
+In-Reply-To: <20230314083537.22571-1-walker.chen@starfivetech.com>
+References: <20230314083537.22571-1-walker.chen@starfivetech.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Originating-IP: [113.72.145.194]
+X-ClientProxiedBy: EXCAS064.cuchost.com (172.16.6.24) To EXMBX168.cuchost.com
+ (172.16.6.78)
+X-YovoleRuleAgent: yovoleflag
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
+The DMA controller needs two reset items to work properly on JH7110 SoC,
+so there is need to constrain the items' value to 2, other platforms
+have 1 reset item at most.
 
+Signed-off-by: Walker Chen <walker.chen@starfivetech.com>
+---
+ .../bindings/dma/snps,dw-axi-dmac.yaml        | 23 ++++++++++++++++++-
+ 1 file changed, 22 insertions(+), 1 deletion(-)
 
-On 3/14/2023 1:02 AM, Jisheng Zhang wrote:
-> The dma framework will calculate the dma channels chancnt, setting it
-> outself is wrong.
-> 
-> Signed-off-by: Jisheng Zhang <jszhang@kernel.org>
+diff --git a/Documentation/devicetree/bindings/dma/snps,dw-axi-dmac.yaml b/Documentation/devicetree/bindings/dma/snps,dw-axi-dmac.yaml
+index 5c81194e2300..363cf8bd150d 100644
+--- a/Documentation/devicetree/bindings/dma/snps,dw-axi-dmac.yaml
++++ b/Documentation/devicetree/bindings/dma/snps,dw-axi-dmac.yaml
+@@ -20,6 +20,7 @@ properties:
+     enum:
+       - snps,axi-dma-1.01a
+       - intel,kmb-axi-dma
++      - starfive,jh7110-axi-dma
+ 
+   reg:
+     minItems: 1
+@@ -58,7 +59,8 @@ properties:
+     maximum: 8
+ 
+   resets:
+-    maxItems: 1
++    minItems: 1
++    maxItems: 2
+ 
+   snps,dma-masters:
+     description: |
+@@ -109,6 +111,25 @@ required:
+   - snps,priority
+   - snps,block-size
+ 
++if:
++  properties:
++    compatible:
++      contains:
++        enum:
++          - starfive,jh7110-axi-dma
++then:
++  properties:
++    resets:
++      minItems: 2
++      items:
++        - description: AXI reset line
++        - description: AHB reset line
++        - description: module reset
++else:
++  properties:
++    resets:
++      maxItems: 1
++
+ additionalProperties: false
+ 
+ examples:
+-- 
+2.17.1
 
-LGTM. Thanks.
-Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
-
-> ---
->   drivers/dma/sprd-dma.c | 1 -
->   1 file changed, 1 deletion(-)
-> 
-> diff --git a/drivers/dma/sprd-dma.c b/drivers/dma/sprd-dma.c
-> index 474d3ba8ec9f..2b639adb48ba 100644
-> --- a/drivers/dma/sprd-dma.c
-> +++ b/drivers/dma/sprd-dma.c
-> @@ -1169,7 +1169,6 @@ static int sprd_dma_probe(struct platform_device *pdev)
->   
->   	dma_cap_set(DMA_MEMCPY, sdev->dma_dev.cap_mask);
->   	sdev->total_chns = chn_count;
-> -	sdev->dma_dev.chancnt = chn_count;
->   	INIT_LIST_HEAD(&sdev->dma_dev.channels);
->   	INIT_LIST_HEAD(&sdev->dma_dev.global_node);
->   	sdev->dma_dev.dev = &pdev->dev;
