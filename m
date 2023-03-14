@@ -2,29 +2,29 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C9A6EC6FD1C
-	for <dmaengine@archiver.kernel.org>; Tue, 14 Mar 2023 08:35:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CED96C7618A
+	for <dmaengine@archiver.kernel.org>; Tue, 14 Mar 2023 08:35:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229911AbjCNIfy (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 14 Mar 2023 04:35:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38426 "EHLO
+        id S229992AbjCNIfz (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 14 Mar 2023 04:35:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38438 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229565AbjCNIfy (ORCPT
+        with ESMTP id S229690AbjCNIfy (ORCPT
         <rfc822;dmaengine@vger.kernel.org>); Tue, 14 Mar 2023 04:35:54 -0400
 Received: from ex01.ufhost.com (ex01.ufhost.com [61.152.239.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C13346773F;
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D689269072;
         Tue, 14 Mar 2023 01:35:52 -0700 (PDT)
 Received: from EXMBX166.cuchost.com (unknown [175.102.18.54])
         (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
         (Client CN "EXMBX166", Issuer "EXMBX166" (not verified))
-        by ex01.ufhost.com (Postfix) with ESMTP id 2AC9324E1FF;
-        Tue, 14 Mar 2023 16:35:50 +0800 (CST)
+        by ex01.ufhost.com (Postfix) with ESMTP id 7DB1F24E203;
+        Tue, 14 Mar 2023 16:35:51 +0800 (CST)
 Received: from EXMBX168.cuchost.com (172.16.6.78) by EXMBX166.cuchost.com
  (172.16.6.76) with Microsoft SMTP Server (TLS) id 15.0.1497.42; Tue, 14 Mar
- 2023 16:35:50 +0800
+ 2023 16:35:51 +0800
 Received: from localhost.localdomain (113.72.145.194) by EXMBX168.cuchost.com
  (172.16.6.78) with Microsoft SMTP Server (TLS) id 15.0.1497.42; Tue, 14 Mar
- 2023 16:35:49 +0800
+ 2023 16:35:50 +0800
 From:   Walker Chen <walker.chen@starfivetech.com>
 To:     Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>,
         Vinod Koul <vkoul@kernel.org>,
@@ -36,9 +36,9 @@ To:     Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>,
         Walker Chen <walker.chen@starfivetech.com>
 CC:     <dmaengine@vger.kernel.org>, <devicetree@vger.kernel.org>,
         <linux-kernel@vger.kernel.org>, <linux-riscv@lists.infradead.org>
-Subject: [PATCH v5 1/3] dt-bindings: dma: snps,dw-axi-dmac: constrain the items of resets for JH7110 dma
-Date:   Tue, 14 Mar 2023 16:35:35 +0800
-Message-ID: <20230314083537.22571-2-walker.chen@starfivetech.com>
+Subject: [PATCH v5 3/3] riscv: dts: starfive: add dma controller node
+Date:   Tue, 14 Mar 2023 16:35:37 +0800
+Message-ID: <20230314083537.22571-4-walker.chen@starfivetech.com>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20230314083537.22571-1-walker.chen@starfivetech.com>
 References: <20230314083537.22571-1-walker.chen@starfivetech.com>
@@ -52,63 +52,43 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-The DMA controller needs two reset items to work properly on JH7110 SoC,
-so there is need to constrain the items' value to 2, other platforms
-have 1 reset item at most.
+Add the dma controller node for the Starfive JH7110 SoC.
 
+Reviewed-by: Emil Renner Berthing <emil.renner.berthing@canonical.com>
 Signed-off-by: Walker Chen <walker.chen@starfivetech.com>
 ---
- .../bindings/dma/snps,dw-axi-dmac.yaml        | 23 ++++++++++++++++++-
- 1 file changed, 22 insertions(+), 1 deletion(-)
+ arch/riscv/boot/dts/starfive/jh7110.dtsi | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/dma/snps,dw-axi-dmac.yaml b/Documentation/devicetree/bindings/dma/snps,dw-axi-dmac.yaml
-index 5c81194e2300..363cf8bd150d 100644
---- a/Documentation/devicetree/bindings/dma/snps,dw-axi-dmac.yaml
-+++ b/Documentation/devicetree/bindings/dma/snps,dw-axi-dmac.yaml
-@@ -20,6 +20,7 @@ properties:
-     enum:
-       - snps,axi-dma-1.01a
-       - intel,kmb-axi-dma
-+      - starfive,jh7110-axi-dma
+diff --git a/arch/riscv/boot/dts/starfive/jh7110.dtsi b/arch/riscv/boot/dts/starfive/jh7110.dtsi
+index 17220576b21c..b503b6137743 100644
+--- a/arch/riscv/boot/dts/starfive/jh7110.dtsi
++++ b/arch/riscv/boot/dts/starfive/jh7110.dtsi
+@@ -510,6 +510,24 @@
+ 			#gpio-cells = <2>;
+ 		};
  
-   reg:
-     minItems: 1
-@@ -58,7 +59,8 @@ properties:
-     maximum: 8
- 
-   resets:
--    maxItems: 1
-+    minItems: 1
-+    maxItems: 2
- 
-   snps,dma-masters:
-     description: |
-@@ -109,6 +111,25 @@ required:
-   - snps,priority
-   - snps,block-size
- 
-+if:
-+  properties:
-+    compatible:
-+      contains:
-+        enum:
-+          - starfive,jh7110-axi-dma
-+then:
-+  properties:
-+    resets:
-+      minItems: 2
-+      items:
-+        - description: AXI reset line
-+        - description: AHB reset line
-+        - description: module reset
-+else:
-+  properties:
-+    resets:
-+      maxItems: 1
++		dma: dma-controller@16050000 {
++			compatible = "starfive,jh7110-axi-dma";
++			reg = <0x0 0x16050000 0x0 0x10000>;
++			clocks = <&stgcrg JH7110_STGCLK_DMA1P_AXI>,
++				 <&stgcrg JH7110_STGCLK_DMA1P_AHB>;
++			clock-names = "core-clk", "cfgr-clk";
++			resets = <&stgcrg JH7110_STGRST_DMA1P_AXI>,
++				 <&stgcrg JH7110_STGRST_DMA1P_AHB>;
++			interrupts = <73>;
++			#dma-cells = <1>;
++			dma-channels = <4>;
++			snps,dma-masters = <1>;
++			snps,data-width = <3>;
++			snps,block-size = <65536 65536 65536 65536>;
++			snps,priority = <0 1 2 3>;
++			snps,axi-max-burst-len = <16>;
++		};
 +
- additionalProperties: false
- 
- examples:
+ 		aoncrg: clock-controller@17000000 {
+ 			compatible = "starfive,jh7110-aoncrg";
+ 			reg = <0x0 0x17000000 0x0 0x10000>;
 -- 
 2.17.1
 
