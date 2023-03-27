@@ -2,42 +2,42 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 49BD7C77B61
-	for <dmaengine@archiver.kernel.org>; Mon, 27 Mar 2023 23:17:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BEF5AC761A6
+	for <dmaengine@archiver.kernel.org>; Mon, 27 Mar 2023 23:17:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230412AbjC0XRl (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 27 Mar 2023 19:17:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55134 "EHLO
+        id S231432AbjC0XRn (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 27 Mar 2023 19:17:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55192 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230328AbjC0XRk (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Mon, 27 Mar 2023 19:17:40 -0400
+        with ESMTP id S230432AbjC0XRm (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Mon, 27 Mar 2023 19:17:42 -0400
 Received: from mga17.intel.com (mga17.intel.com [192.55.52.151])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4DF612129;
-        Mon, 27 Mar 2023 16:17:39 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 626EE2129;
+        Mon, 27 Mar 2023 16:17:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1679959059; x=1711495059;
+  t=1679959061; x=1711495061;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=SxhHJiwAc4IjPHQUnpcm01kWFsDqXPFpSF6ZqTd6+oU=;
-  b=SwP8JvaBNBPO/0h0e2LiJMzhLEl+jqNfYWE0jldM/dNAdVIRzJYrdrr6
-   T2tLSfuSr5K3ivqoRck1j3BXDSEx6XjOxPjz85sKg1Fh6XYCb+mGlazon
-   nuObqbxMsw9sive3atzHf6uQwG6fZUfBp4i7dTDJOMnzav49R9u8yXpTm
-   eCbQoVNpqwBSuV2UThW7xju+lVEQ9YOxcNPjdkR4MOrnTkin+4fS+cfgH
-   g4lQvoU70Tru1lMX4EvG/gpdu5VpucPk7/OeaC3YRM+HuBdj9r6BZXo29
-   OYn4OqADzu8glks/hnuuQLS5sKpKSs+7CTR3UtYlvrOGNcN0jKni4J68N
-   A==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10662"; a="320817309"
+  bh=+aKPPSGltRYTSFQIA0jmfTMfQ61VKUSyWFf8UtKgL5A=;
+  b=XDG8Cw4fUCXXT2VuszsRTfpLFHOC9sz641brUwMaLfFbZlipgM9rEYgs
+   YukmFKA5nWtJH5VxLzr8P5xWwwvJrkm9OuuasTi7U3Nwt4d/3xl3jQM+Q
+   qExifXybV6rql5iFVxUhcHAzP79jPTrqo7HiarIwpW5ehn9pdeABI6QFP
+   Xt4VOtGoQOgI+sonb4Z8taF6psNGuweJ+u+fsBcmRd9L53Pzy9RCR70Ih
+   wSkQsVh+z2b85qLacuPKA1TN2g2JL4sPebUvuzMXWPIRJeE8Cs2O9Zjb5
+   8dEk3YpmovInVcBaKj8Hf6CpLXb175aMpMGTGr67bZ4GPGwyiA5g2e7Xt
+   g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10662"; a="320817335"
 X-IronPort-AV: E=Sophos;i="5.98,295,1673942400"; 
-   d="scan'208";a="320817309"
+   d="scan'208";a="320817335"
 Received: from fmsmga007.fm.intel.com ([10.253.24.52])
-  by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Mar 2023 16:17:38 -0700
+  by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Mar 2023 16:17:41 -0700
 X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10662"; a="686144724"
+X-IronPort-AV: E=McAfee;i="6600,9927,10662"; a="686144737"
 X-IronPort-AV: E=Sophos;i="5.98,295,1673942400"; 
-   d="scan'208";a="686144724"
+   d="scan'208";a="686144737"
 Received: from srinivas-otcpl-7600.jf.intel.com (HELO jacob-builder.jf.intel.com) ([10.54.39.106])
-  by fmsmga007.fm.intel.com with ESMTP; 27 Mar 2023 16:17:38 -0700
+  by fmsmga007.fm.intel.com with ESMTP; 27 Mar 2023 16:17:40 -0700
 From:   Jacob Pan <jacob.jun.pan@linux.intel.com>
 To:     LKML <linux-kernel@vger.kernel.org>, iommu@lists.linux.dev,
         Jason Gunthorpe <jgg@nvidia.com>,
@@ -54,9 +54,9 @@ Cc:     "Robin Murphy" <robin.murphy@arm.com>,
         Tony Luck <tony.luck@intel.com>,
         "Zanussi, Tom" <tom.zanussi@intel.com>,
         Jacob Pan <jacob.jun.pan@linux.intel.com>
-Subject: [PATCH v2 3/8] iommu/sva: Support reservation of global SVA PASIDs
-Date:   Mon, 27 Mar 2023 16:21:33 -0700
-Message-Id: <20230327232138.1490712-4-jacob.jun.pan@linux.intel.com>
+Subject: [PATCH v2 6/8] iommu/vt-d: Implement set_dev_pasid domain op
+Date:   Mon, 27 Mar 2023 16:21:36 -0700
+Message-Id: <20230327232138.1490712-7-jacob.jun.pan@linux.intel.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20230327232138.1490712-1-jacob.jun.pan@linux.intel.com>
 References: <20230327232138.1490712-1-jacob.jun.pan@linux.intel.com>
@@ -66,97 +66,57 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Devices that use Intel ENQCMD to submit work must use global PASIDs in
-that the PASID are stored in a per CPU MSR. When such device need to
-submit work for in-kernel DMA with PASID, it must allocate PASIDs from
-the same global number space to avoid conflict.
-
-This patch introduces IOMMU SVA APIs to reserve and release global PASIDs.
-It is expected that device drivers will use the allocated PASIDs to attach
-to appropriate IOMMU domains for use.
+Devices that use ENQCMDS to submit work on buffers mapped by DMA API
+must attach a PASID to the default domain of the device. In preparation
+for this use case, this patch implements set_dev_pasid() for the
+default_domain_ops. Besides PASID attachment, device will also be
+attached to the domain as the result of this call if the device has not
+been attached before.
 
 Signed-off-by: Jacob Pan <jacob.jun.pan@linux.intel.com>
 ---
- drivers/iommu/iommu-sva.c | 33 +++++++++++++++++++++++++++++++++
- include/linux/iommu.h     | 14 ++++++++++++++
- 2 files changed, 47 insertions(+)
+ drivers/iommu/intel/iommu.c | 21 +++++++++++++++++++++
+ 1 file changed, 21 insertions(+)
 
-diff --git a/drivers/iommu/iommu-sva.c b/drivers/iommu/iommu-sva.c
-index c434b95dc8eb..84b9de84b3e0 100644
---- a/drivers/iommu/iommu-sva.c
-+++ b/drivers/iommu/iommu-sva.c
-@@ -148,6 +148,39 @@ u32 iommu_sva_get_pasid(struct iommu_sva *handle)
+diff --git a/drivers/iommu/intel/iommu.c b/drivers/iommu/intel/iommu.c
+index 0a195136bac7..652ee0ca72da 100644
+--- a/drivers/iommu/intel/iommu.c
++++ b/drivers/iommu/intel/iommu.c
+@@ -4782,6 +4782,26 @@ static void intel_iommu_remove_dev_pasid(struct device *dev, ioasid_t pasid)
+ 	intel_iommu_detach_device_pasid(domain, dev, pasid);
  }
- EXPORT_SYMBOL_GPL(iommu_sva_get_pasid);
  
-+/**
-+ * @brief
-+ *	Reserve a PASID from the SVA global number space.
-+ *
-+ * @param min starting range, inclusive
-+ * @param max ending range, inclusive
-+ * @return The reserved PASID on success or IOMMU_PASID_INVALID on failure.
-+ */
-+ioasid_t iommu_sva_reserve_pasid(ioasid_t min, ioasid_t max)
++static int intel_iommu_attach_device_pasid(struct iommu_domain *domain,
++					   struct device *dev, ioasid_t pasid)
 +{
++	struct device_domain_info *info = dev_iommu_priv_get(dev);
++	struct dmar_domain *dmar_domain = to_dmar_domain(domain);
++	struct intel_iommu *iommu = info->iommu;
 +	int ret;
 +
-+	if (!pasid_valid(min) || !pasid_valid(max) ||
-+	    min == 0 || max < min)
-+		return IOMMU_PASID_INVALID;
++	if (!pasid_supported(iommu))
++		return -ENODEV;
 +
-+	ret = ida_alloc_range(&iommu_global_pasid_ida, min, max, GFP_KERNEL);
-+	if (ret < 0)
-+		return IOMMU_PASID_INVALID;
++	ret = prepare_domain_attach_device(domain, dev);
++	if (ret)
++		return ret;
 +
-+	return ret;
-+}
-+EXPORT_SYMBOL_GPL(iommu_sva_reserve_pasid);
-+
-+void iommu_sva_release_pasid(ioasid_t pasid)
-+{
-+	if (!pasid_valid(pasid))
-+		return;
-+
-+	ida_free(&iommu_global_pasid_ida, pasid);
-+}
-+EXPORT_SYMBOL_GPL(iommu_sva_release_pasid);
-+
- /*
-  * I/O page fault handler for SVA
-  */
-diff --git a/include/linux/iommu.h b/include/linux/iommu.h
-index 54f535ff9868..0471089dc1d0 100644
---- a/include/linux/iommu.h
-+++ b/include/linux/iommu.h
-@@ -1187,6 +1187,9 @@ struct iommu_sva *iommu_sva_bind_device(struct device *dev,
- 					struct mm_struct *mm);
- void iommu_sva_unbind_device(struct iommu_sva *handle);
- u32 iommu_sva_get_pasid(struct iommu_sva *handle);
-+ioasid_t iommu_sva_reserve_pasid(ioasid_t min, ioasid_t max);
-+void iommu_sva_release_pasid(ioasid_t pasid);
-+
- #else
- static inline struct iommu_sva *
- iommu_sva_bind_device(struct device *dev, struct mm_struct *mm)
-@@ -1202,6 +1205,17 @@ static inline u32 iommu_sva_get_pasid(struct iommu_sva *handle)
- {
- 	return IOMMU_PASID_INVALID;
- }
-+
-+static inline ioasid_t iommu_sva_reserve_pasid(ioasid_t min, ioasid_t max)
-+{
-+	return IOMMU_PASID_INVALID;
++	return dmar_domain_attach_device_pasid(dmar_domain, dev, pasid);
 +}
 +
-+static inline void iommu_sva_release_pasid(ioasid_t pasid)
-+{
 +
-+}
 +
- static inline void mm_pasid_init(struct mm_struct *mm) {}
- static inline void mm_pasid_drop(struct mm_struct *mm) {}
- #endif /* CONFIG_IOMMU_SVA */
+ const struct iommu_ops intel_iommu_ops = {
+ 	.capable		= intel_iommu_capable,
+ 	.domain_alloc		= intel_iommu_domain_alloc,
+@@ -4801,6 +4821,7 @@ const struct iommu_ops intel_iommu_ops = {
+ #endif
+ 	.default_domain_ops = &(const struct iommu_domain_ops) {
+ 		.attach_dev		= intel_iommu_attach_device,
++		.set_dev_pasid          = intel_iommu_attach_device_pasid,
+ 		.map_pages		= intel_iommu_map_pages,
+ 		.unmap_pages		= intel_iommu_unmap_pages,
+ 		.iotlb_sync_map		= intel_iommu_iotlb_sync_map,
 -- 
 2.25.1
 
