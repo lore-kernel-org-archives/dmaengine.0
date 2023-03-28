@@ -2,49 +2,49 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 08E22C6FD1D
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E70ADC77B60
 	for <dmaengine@archiver.kernel.org>; Tue, 28 Mar 2023 02:24:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229608AbjC1CYd (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        id S232590AbjC1CYd (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
         Mon, 27 Mar 2023 22:24:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52380 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52446 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232545AbjC1CYa (ORCPT
+        with ESMTP id S232477AbjC1CYa (ORCPT
         <rfc822;dmaengine@vger.kernel.org>); Mon, 27 Mar 2023 22:24:30 -0400
-Received: from esa.microchip.iphmx.com (esa.microchip.iphmx.com [68.232.153.233])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 712B11A8;
-        Mon, 27 Mar 2023 19:24:24 -0700 (PDT)
+Received: from esa.microchip.iphmx.com (esa.microchip.iphmx.com [68.232.154.123])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 517DA171F;
+        Mon, 27 Mar 2023 19:24:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=microchip.com; i=@microchip.com; q=dns/txt; s=mchp;
-  t=1679970264; x=1711506264;
+  t=1679970265; x=1711506265;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
   bh=CII71HybAPki0z6I1zOiqw4hxU5/+3FIJwO2yQbs/dk=;
-  b=vLfZMKjt9CGqE/TCfqMPx7jk67KxL26rJuThjp0eSJ65ocC8Dpyr8jY6
-   M1kkXTbaUzm9naROpn7zyVlrwmZt/s5oY6mlmmoQOWR0+80CMYrRyJ6s+
-   9x85YldT2RoB5a60BqrHZbw9F64juy1moyxzButZpL9potRwJzOit7xF4
-   vq+/NuT8Ss4pHRiLoRP/z90tRPQxgC96Dzu56Fdr77/uhBrQxsQFXcWSm
-   yAJObbyA5DDH/5wyoxankRIAj8lvZwCwLEpScS3eK9hff1FTtAQkxpbhn
-   4yBt48y+wP9K+8XdX4Nt2DeaozzJXGq8em9YKllofRl4xBfRnt2fnNYsW
+  b=xoTFJDsk5Gp5gUYmp/3gKuYBBsq0TKXnsQXKPY8XuVoQAWKkIVcm0fOX
+   nq3C/kqgsQ6M78Jr06OuW//KIZQ3iHHmZ3nDmZdo1tQzk1u2tdxi5tmhB
+   TTNCU7D7XSrSgcuIi6lgrJIFKwsRJmTTKE/tzOnLPa5865wfY9B8Dl6Ly
+   uuWFQJHEsliPEC0cuSaRbn5DshijiH45jdKcUOkjSPcGdKpE9MapjXrUb
+   4pSeMJVcmiYn7QWZO1q14PQkEzdt4sNteH/RAQTYH5bZKq4RmSsGD+wq5
+   NJ7Y53kvFMXb7dWNqTaAP18saSjZCAY5B70s6xKlPenLPwi9/b6BI2Kue
    g==;
 X-IronPort-AV: E=Sophos;i="5.98,295,1673938800"; 
-   d="scan'208";a="206992176"
+   d="scan'208";a="144189558"
 Received: from unknown (HELO email.microchip.com) ([170.129.1.10])
-  by esa5.microchip.iphmx.com with ESMTP/TLS/AES256-SHA256; 27 Mar 2023 19:24:24 -0700
-Received: from chn-vm-ex01.mchp-main.com (10.10.85.143) by
- chn-vm-ex04.mchp-main.com (10.10.85.152) with Microsoft SMTP Server
+  by esa6.microchip.iphmx.com with ESMTP/TLS/AES256-SHA256; 27 Mar 2023 19:24:24 -0700
+Received: from chn-vm-ex04.mchp-main.com (10.10.85.152) by
+ chn-vm-ex03.mchp-main.com (10.10.85.151) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.21; Mon, 27 Mar 2023 19:24:23 -0700
-Received: from localhost (10.10.115.15) by chn-vm-ex01.mchp-main.com
- (10.10.85.143) with Microsoft SMTP Server id 15.1.2507.21 via Frontend
- Transport; Mon, 27 Mar 2023 19:24:23 -0700
+ 15.1.2507.21; Mon, 27 Mar 2023 19:24:24 -0700
+Received: from localhost (10.10.115.15) by chn-vm-ex04.mchp-main.com
+ (10.10.85.152) with Microsoft SMTP Server id 15.1.2507.21 via Frontend
+ Transport; Mon, 27 Mar 2023 19:24:24 -0700
 From:   Kelvin Cao <kelvin.cao@microchip.com>
 To:     <vkoul@kernel.org>, <dmaengine@vger.kernel.org>,
         <linux-kernel@vger.kernel.org>
 CC:     <kelvin.cao@microchip.com>, <logang@deltatee.com>
 Subject: [PATCH 1/1] dmaengine: switchtec-dma: Introduce Switchtec DMA engine PCI driver
-Date:   Mon, 27 Mar 2023 18:11:40 -0700
-Message-ID: <20230328011142.2107129-2-kelvin.cao@microchip.com>
+Date:   Mon, 27 Mar 2023 18:11:42 -0700
+Message-ID: <20230328011142.2107129-4-kelvin.cao@microchip.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20230328011142.2107129-1-kelvin.cao@microchip.com>
 References: <20230328011142.2107129-1-kelvin.cao@microchip.com>
