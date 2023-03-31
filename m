@@ -2,40 +2,40 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4FF60C76196
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 79F6DC77B61
 	for <dmaengine@archiver.kernel.org>; Fri, 31 Mar 2023 23:07:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233134AbjCaXHi (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        id S233118AbjCaXHi (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
         Fri, 31 Mar 2023 19:07:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36060 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36038 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233099AbjCaXHg (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Fri, 31 Mar 2023 19:07:36 -0400
+        with ESMTP id S233074AbjCaXHf (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Fri, 31 Mar 2023 19:07:35 -0400
 Received: from mga09.intel.com (mga09.intel.com [134.134.136.24])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B54411A948;
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D4141A471;
         Fri, 31 Mar 2023 16:07:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
   t=1680304055; x=1711840055;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=uSXXj/CzihsdqWSIfoULHyCBzlYtwHCX/EZVzgaBP38=;
-  b=A8SohF5c3mkz7tyC+dl7HZ28bZjPtx1Eq6coP8QXChqS98BohuSvgHjT
-   rBI4OEjKEATuyUb74K6Mc2rv4qcuemDTS3RJsl4erES3Ai/ZI1m0MQRaX
-   5rdcm40gmKsZp/ytqwPmnQlaqCwc44mcrmmyrUIdSLw18mgFbkGHD3VEC
-   AkQH/Yltmu0cfzWdqUSzsMYW44AKbu8BubRKbcShWjIhFYdE3wOvqxWBe
-   6MMm3CmzhQkHRidjxgpXxFIFSyAxYD//fhQvYeK78iLqYFoYdU+6G4IbZ
-   RRO2Yvbeqz8MKXbkm3lKffumtaykN0dNIQqVnkfM6A41br/iuKFTgS0Tb
-   g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10666"; a="343245159"
+  bh=86aFWjB5alp/mq4OwyCmhytbhDjYJbntMbdQCEJ84y8=;
+  b=Hxo3EqCT7RP1rZ2SwG3xYkQdHofdjPOppHwQ2ROm1kxiXphMb+Zj1Jwg
+   u7LJJ22bpMi65Sj8QJjoRRaLTG6QGwgyAtHsJ4lD5p00vOIkFkr2fs0lo
+   iMQCAzRaDncd3QZoEhfskW8CCZLRwI3gnJVec0xT3wvdNay6NE+rWkSyc
+   5+SNT1ZDyl+62OIuK24urGsECgJfG3SD+z08rvOI/bGraBoFzDoP7J8Bt
+   DhGyty3DPF1/QfBnphV5s8XxpfXtmqdRhGqucp1M48UuW7LKWvclrQu63
+   5y/ZIjNtScTNWF80VCchtw8m6oVcpvT6J0cipYWJ2SSDeIFXnMrEGB2Kh
+   w==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10666"; a="343245149"
 X-IronPort-AV: E=Sophos;i="5.98,307,1673942400"; 
-   d="scan'208";a="343245159"
+   d="scan'208";a="343245149"
 Received: from orsmga001.jf.intel.com ([10.7.209.18])
   by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 31 Mar 2023 16:07:33 -0700
 X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10666"; a="717888352"
+X-IronPort-AV: E=McAfee;i="6600,9927,10666"; a="717888346"
 X-IronPort-AV: E=Sophos;i="5.98,307,1673942400"; 
-   d="scan'208";a="717888352"
+   d="scan'208";a="717888346"
 Received: from srinivas-otcpl-7600.jf.intel.com (HELO jacob-builder.jf.intel.com) ([10.54.39.106])
   by orsmga001.jf.intel.com with ESMTP; 31 Mar 2023 16:07:33 -0700
 From:   Jacob Pan <jacob.jun.pan@linux.intel.com>
@@ -54,9 +54,9 @@ Cc:     "Will Deacon" <will@kernel.org>,
         Tony Luck <tony.luck@intel.com>,
         "Zanussi, Tom" <tom.zanussi@intel.com>,
         Jacob Pan <jacob.jun.pan@linux.intel.com>
-Subject: [PATCH v3 6/7] iommu/vt-d: Implement set_dev_pasid domain op
-Date:   Fri, 31 Mar 2023 16:11:36 -0700
-Message-Id: <20230331231137.1947675-7-jacob.jun.pan@linux.intel.com>
+Subject: [PATCH v3 4/7] iommu/vt-d: Reserve RID_PASID from global PASID space
+Date:   Fri, 31 Mar 2023 16:11:34 -0700
+Message-Id: <20230331231137.1947675-5-jacob.jun.pan@linux.intel.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20230331231137.1947675-1-jacob.jun.pan@linux.intel.com>
 References: <20230331231137.1947675-1-jacob.jun.pan@linux.intel.com>
@@ -66,58 +66,37 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Devices that use ENQCMDS to submit work on buffers mapped by DMA API
-must attach a PASID to the default domain of the device. In preparation
-for this use case, this patch implements set_dev_pasid() for the
-default_domain_ops.
+On VT-d platforms, RID_PASID is used for DMA request without PASID. We
+should not treat RID_PASID special instead let it be allocated from the
+global PASID number space. Non-zero value can be used in RID_PASID on
+Intel VT-d.
 
-If the device context has not been set up prior to this call, this will
-set up the device context in addition to PASID attachment.
+For ARM, AMD and others that _always_ use 0 as RID_PASID, there is no
+impact in that SVA PASID allocation base is 1.
+
+With this change, devices do both DMA with PASID and SVA will not worry
+about conflicts when it comes to allocating PASIDs for in-kernel DMA.
 
 Signed-off-by: Jacob Pan <jacob.jun.pan@linux.intel.com>
 ---
- drivers/iommu/intel/iommu.c | 21 +++++++++++++++++++++
- 1 file changed, 21 insertions(+)
+ drivers/iommu/intel/iommu.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
 diff --git a/drivers/iommu/intel/iommu.c b/drivers/iommu/intel/iommu.c
-index 52b9d0d3a02c..1ad9c5a4bd8f 100644
+index 9f737ef55463..cbb2670f88ca 100644
 --- a/drivers/iommu/intel/iommu.c
 +++ b/drivers/iommu/intel/iommu.c
-@@ -4784,6 +4784,26 @@ static void intel_iommu_remove_dev_pasid(struct device *dev, ioasid_t pasid)
- 	domain_detach_iommu(dmar_domain, info->iommu);
- }
+@@ -3956,6 +3956,10 @@ int __init intel_iommu_init(void)
  
-+static int intel_iommu_attach_device_pasid(struct iommu_domain *domain,
-+					   struct device *dev, ioasid_t pasid)
-+{
-+	struct device_domain_info *info = dev_iommu_priv_get(dev);
-+	struct dmar_domain *dmar_domain = to_dmar_domain(domain);
-+	struct intel_iommu *iommu = info->iommu;
-+	int ret;
+ 	intel_iommu_enabled = 1;
+ 
++	/* Reserved RID_PASID from the global namespace for legacy DMA */
++	WARN_ON(iommu_alloc_global_pasid(PASID_RID2PASID, PASID_RID2PASID) !=
++		PASID_RID2PASID);
 +
-+	if (!pasid_supported(iommu))
-+		return -ENODEV;
-+
-+	ret = prepare_domain_attach_device(domain, dev);
-+	if (ret)
-+		return ret;
-+
-+	return dmar_domain_attach_device_pasid(dmar_domain, dev, pasid);
-+}
-+
-+
-+
- const struct iommu_ops intel_iommu_ops = {
- 	.capable		= intel_iommu_capable,
- 	.domain_alloc		= intel_iommu_domain_alloc,
-@@ -4803,6 +4823,7 @@ const struct iommu_ops intel_iommu_ops = {
- #endif
- 	.default_domain_ops = &(const struct iommu_domain_ops) {
- 		.attach_dev		= intel_iommu_attach_device,
-+		.set_dev_pasid          = intel_iommu_attach_device_pasid,
- 		.map_pages		= intel_iommu_map_pages,
- 		.unmap_pages		= intel_iommu_unmap_pages,
- 		.iotlb_sync_map		= intel_iommu_iotlb_sync_map,
+ 	return 0;
+ 
+ out_free_dmar:
 -- 
 2.25.1
 
