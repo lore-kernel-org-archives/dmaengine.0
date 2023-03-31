@@ -2,40 +2,40 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 621E7C761A6
-	for <dmaengine@archiver.kernel.org>; Fri, 31 Mar 2023 23:07:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BD114C761AF
+	for <dmaengine@archiver.kernel.org>; Fri, 31 Mar 2023 23:07:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230332AbjCaXHj (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 31 Mar 2023 19:07:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36074 "EHLO
+        id S233151AbjCaXHk (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 31 Mar 2023 19:07:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36080 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233100AbjCaXHh (ORCPT
+        with ESMTP id S233104AbjCaXHh (ORCPT
         <rfc822;dmaengine@vger.kernel.org>); Fri, 31 Mar 2023 19:07:37 -0400
 Received: from mga09.intel.com (mga09.intel.com [134.134.136.24])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9EB3F1A947;
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E679E1A959;
         Fri, 31 Mar 2023 16:07:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
   t=1680304055; x=1711840055;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=XIu8pG3dfBoG5twXS+C7UZckidk9Mw8wBu2etiAguq8=;
-  b=Udy9zsNeDaMZlPX2A11UgnJ0ic8SKaXNqhAp2vqYhpqvLIZjr/UF0LLS
-   VHrJw3dGpNigWetp0xJ5O0dtapGJM6CMtrkogT8iJKu3djCM2annvh2VP
-   u2AkEFhpLCftDg2LJeNxPLt5NNliXJhtna0bTBcpXEbSwFFCc2BLxD2b3
-   9gavG8S6UEgo+Qc0yQ1mt77jFu5D75jng0CxcuRmLt3wUl417aGfRE1BP
-   kXBaXl0CoLSazMheMMyx/XgkNKRl3i+6CdcdQzNUna/REkwRbodYLiYDX
-   w0l9uHSZsLv37DTs1fM7+7JGSbZ38ES5QsE1k7QNHG8fIKqhAJml1oaHW
+  bh=jxr3v2l61hZEreTEFWYJm0GwUqpLGEMRB3P581VOVLk=;
+  b=Zulfu2H4JDocbgX/MYqi82Qd9e83ASoHz8ZjGj/pDgbDj2QXSUSlLEYD
+   /aZPvL9LKiOzdvzfXrr3XREszAbF9vhQ39NXg6ZeYS09lEShy3XysIiRu
+   KCMfpDdQKvdMGsiIXZjQZP3YYV7pWnR5K7EGtbzGMKgj8+FHmqkl4J4JO
+   By9CwwBSI4QXtS3Si3HPMP/+SOKNX7cgZhNwe7DwErlbs2e6HAETEVCbx
+   ql2ysJXpXMBCCZFBmo9xipP6j6hGOUMS0ngFBDzPoIf+2evOuaMKSe33V
+   lK8Ojt7yqkZxKF29YkJ87g5b7VFYdfoaG8Ie4JWh+U6jkJ6PrWUCRQ/zz
    Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10666"; a="343245156"
+X-IronPort-AV: E=McAfee;i="6600,9927,10666"; a="343245167"
 X-IronPort-AV: E=Sophos;i="5.98,307,1673942400"; 
-   d="scan'208";a="343245156"
+   d="scan'208";a="343245167"
 Received: from orsmga001.jf.intel.com ([10.7.209.18])
-  by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 31 Mar 2023 16:07:33 -0700
+  by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 31 Mar 2023 16:07:34 -0700
 X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10666"; a="717888349"
+X-IronPort-AV: E=McAfee;i="6600,9927,10666"; a="717888355"
 X-IronPort-AV: E=Sophos;i="5.98,307,1673942400"; 
-   d="scan'208";a="717888349"
+   d="scan'208";a="717888355"
 Received: from srinivas-otcpl-7600.jf.intel.com (HELO jacob-builder.jf.intel.com) ([10.54.39.106])
   by orsmga001.jf.intel.com with ESMTP; 31 Mar 2023 16:07:33 -0700
 From:   Jacob Pan <jacob.jun.pan@linux.intel.com>
@@ -54,9 +54,9 @@ Cc:     "Will Deacon" <will@kernel.org>,
         Tony Luck <tony.luck@intel.com>,
         "Zanussi, Tom" <tom.zanussi@intel.com>,
         Jacob Pan <jacob.jun.pan@linux.intel.com>
-Subject: [PATCH v3 5/7] iommu/vt-d: Make device pasid attachment explicit
-Date:   Fri, 31 Mar 2023 16:11:35 -0700
-Message-Id: <20230331231137.1947675-6-jacob.jun.pan@linux.intel.com>
+Subject: [PATCH v3 7/7] dmaengine/idxd: Re-enable kernel workqueue under DMA API
+Date:   Fri, 31 Mar 2023 16:11:37 -0700
+Message-Id: <20230331231137.1947675-8-jacob.jun.pan@linux.intel.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20230331231137.1947675-1-jacob.jun.pan@linux.intel.com>
 References: <20230331231137.1947675-1-jacob.jun.pan@linux.intel.com>
@@ -66,346 +66,180 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Currently, when a device is attached to its DMA domain, RID_PASID is
-implicitly attached if VT-d is in scalable mode. To prepare for generic
-PASID-device domain attachment, this patch parameterizes PASID such that
-all PASIDs are attached explicitly.
+Kernel workqueues were disabled due to flawed use of kernel VA and SVA
+API. Now That we have the support for attaching PASID to the device's
+default domain and the ability to reserve global PASIDs from SVA APIs,
+we can re-enable the kernel work queues and use them under DMA API.
 
-It will allow code reuse for DMA API with PASID usage and makes no
-assumptions of the ordering in which PASIDs and device are attached.
-The same change applies to IOTLB invalidation and removing PASIDs.
+We also use non-privileged access for in-kernel DMA to be consistent
+with the IOMMU settings. Consequently, interrupt for user privilege is
+enabled for work completion IRQs.
 
-Extracted common code based on Baolu's patch:
-
-Link:https://lore.kernel.org/linux-iommu/20220614034411.1634238-1-baolu.lu@linux.intel.com/
-Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
+Link:https://lore.kernel.org/linux-iommu/20210511194726.GP1002214@nvidia.com/
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
 Signed-off-by: Jacob Pan <jacob.jun.pan@linux.intel.com>
 ---
- drivers/iommu/intel/iommu.c | 153 ++++++++++++++++++++++++++++--------
- drivers/iommu/intel/iommu.h |   8 ++
- 2 files changed, 128 insertions(+), 33 deletions(-)
+ drivers/dma/idxd/device.c | 30 ++++-----------------
+ drivers/dma/idxd/init.c   | 56 ++++++++++++++++++++++++++++++++++++---
+ drivers/dma/idxd/sysfs.c  |  7 -----
+ 3 files changed, 57 insertions(+), 36 deletions(-)
 
-diff --git a/drivers/iommu/intel/iommu.c b/drivers/iommu/intel/iommu.c
-index cbb2670f88ca..52b9d0d3a02c 100644
---- a/drivers/iommu/intel/iommu.c
-+++ b/drivers/iommu/intel/iommu.c
-@@ -278,6 +278,8 @@ static LIST_HEAD(dmar_satc_units);
- 	list_for_each_entry(rmrr, &dmar_rmrr_units, list)
- 
- static void device_block_translation(struct device *dev);
-+static void intel_iommu_detach_device_pasid(struct iommu_domain *domain,
-+					    struct device *dev, ioasid_t pasid);
- static void intel_iommu_domain_free(struct iommu_domain *domain);
- 
- int dmar_disabled = !IS_ENABLED(CONFIG_INTEL_IOMMU_DEFAULT_ON);
-@@ -1365,6 +1367,7 @@ domain_lookup_dev_info(struct dmar_domain *domain,
- 
- static void domain_update_iotlb(struct dmar_domain *domain)
- {
-+	struct device_pasid_info *dev_pasid;
- 	struct device_domain_info *info;
- 	bool has_iotlb_device = false;
- 	unsigned long flags;
-@@ -1376,6 +1379,14 @@ static void domain_update_iotlb(struct dmar_domain *domain)
- 			break;
- 		}
+diff --git a/drivers/dma/idxd/device.c b/drivers/dma/idxd/device.c
+index 6fca8fa8d3a8..f6b133d61a04 100644
+--- a/drivers/dma/idxd/device.c
++++ b/drivers/dma/idxd/device.c
+@@ -299,21 +299,6 @@ void idxd_wqs_unmap_portal(struct idxd_device *idxd)
  	}
-+
-+	list_for_each_entry(dev_pasid, &domain->dev_pasids, link_domain) {
-+		info = dev_iommu_priv_get(dev_pasid->dev);
-+		if (info->ats_enabled) {
-+			has_iotlb_device = true;
-+			break;
-+		}
-+	}
- 	domain->has_iotlb_device = has_iotlb_device;
- 	spin_unlock_irqrestore(&domain->lock, flags);
- }
-@@ -1486,6 +1497,7 @@ static void __iommu_flush_dev_iotlb(struct device_domain_info *info,
- static void iommu_flush_dev_iotlb(struct dmar_domain *domain,
- 				  u64 addr, unsigned mask)
- {
-+	struct device_pasid_info *dev_pasid;
- 	struct device_domain_info *info;
- 	unsigned long flags;
- 
-@@ -1495,6 +1507,39 @@ static void iommu_flush_dev_iotlb(struct dmar_domain *domain,
- 	spin_lock_irqsave(&domain->lock, flags);
- 	list_for_each_entry(info, &domain->devices, link)
- 		__iommu_flush_dev_iotlb(info, addr, mask);
-+
-+	list_for_each_entry(dev_pasid, &domain->dev_pasids, link_domain) {
-+		/* device TLB is not aware of the use of RID PASID is for DMA w/o PASID */
-+		if (dev_pasid->pasid == PASID_RID2PASID)
-+			continue;
-+
-+		info = dev_iommu_priv_get(dev_pasid->dev);
-+		qi_flush_dev_iotlb_pasid(info->iommu,
-+					 PCI_DEVID(info->bus, info->devfn),
-+					 info->pfsid, dev_pasid->pasid,
-+					 info->ats_qdep, addr,
-+					 mask);
-+	}
-+	spin_unlock_irqrestore(&domain->lock, flags);
-+}
-+
-+/*
-+ * The VT-d spec requires to use PASID-based-IOTLB Invalidation to
-+ * invalidate IOTLB and the paging-structure-caches for a first-stage
-+ * page table.
-+ */
-+static void domain_flush_pasid_iotlb(struct intel_iommu *iommu,
-+				     struct dmar_domain *domain, u64 addr,
-+				     unsigned long npages, bool ih)
-+{
-+	u16 did = domain_id_iommu(domain, iommu);
-+	struct device_pasid_info *dev_pasid;
-+	unsigned long flags;
-+
-+	spin_lock_irqsave(&domain->lock, flags);
-+	list_for_each_entry(dev_pasid, &domain->dev_pasids, link_domain)
-+		qi_flush_piotlb(iommu, did, dev_pasid->pasid, addr, npages, ih);
-+
- 	spin_unlock_irqrestore(&domain->lock, flags);
  }
  
-@@ -1514,7 +1559,7 @@ static void iommu_flush_iotlb_psi(struct intel_iommu *iommu,
- 		ih = 1 << 6;
- 
- 	if (domain->use_first_level) {
--		qi_flush_piotlb(iommu, did, PASID_RID2PASID, addr, pages, ih);
-+		domain_flush_pasid_iotlb(iommu, domain, addr, pages, ih);
- 	} else {
- 		unsigned long bitmask = aligned_pages - 1;
- 
-@@ -1584,7 +1629,7 @@ static void intel_flush_iotlb_all(struct iommu_domain *domain)
- 		u16 did = domain_id_iommu(dmar_domain, iommu);
- 
- 		if (dmar_domain->use_first_level)
--			qi_flush_piotlb(iommu, did, PASID_RID2PASID, 0, -1, 0);
-+			domain_flush_pasid_iotlb(iommu, dmar_domain, 0, -1, 0);
- 		else
- 			iommu->flush.flush_iotlb(iommu, did, 0, 0,
- 						 DMA_TLB_DSI_FLUSH);
-@@ -1756,6 +1801,7 @@ static struct dmar_domain *alloc_domain(unsigned int type)
- 		domain->use_first_level = true;
- 	domain->has_iotlb_device = false;
- 	INIT_LIST_HEAD(&domain->devices);
-+	INIT_LIST_HEAD(&domain->dev_pasids);
- 	spin_lock_init(&domain->lock);
- 	xa_init(&domain->iommu_array);
- 
-@@ -2429,10 +2475,11 @@ static int __init si_domain_init(int hw)
- 	return 0;
- }
- 
--static int dmar_domain_attach_device(struct dmar_domain *domain,
--				     struct device *dev)
-+static int dmar_domain_attach_device_pasid(struct dmar_domain *domain,
-+				     struct device *dev, ioasid_t pasid)
- {
- 	struct device_domain_info *info = dev_iommu_priv_get(dev);
-+	struct device_pasid_info *dev_pasid;
- 	struct intel_iommu *iommu;
- 	unsigned long flags;
- 	u8 bus, devfn;
-@@ -2442,43 +2489,57 @@ static int dmar_domain_attach_device(struct dmar_domain *domain,
- 	if (!iommu)
- 		return -ENODEV;
- 
-+	dev_pasid = kzalloc(sizeof(*dev_pasid), GFP_KERNEL);
-+	if (!dev_pasid)
-+		return -ENOMEM;
-+
- 	ret = domain_attach_iommu(domain, iommu);
- 	if (ret)
--		return ret;
-+		goto exit_free;
-+
- 	info->domain = domain;
-+	dev_pasid->pasid = pasid;
-+	dev_pasid->dev = dev;
- 	spin_lock_irqsave(&domain->lock, flags);
--	list_add(&info->link, &domain->devices);
-+	if (!info->dev_attached)
-+		list_add(&info->link, &domain->devices);
-+
-+	list_add(&dev_pasid->link_domain, &domain->dev_pasids);
- 	spin_unlock_irqrestore(&domain->lock, flags);
- 
- 	/* PASID table is mandatory for a PCI device in scalable mode. */
- 	if (sm_supported(iommu) && !dev_is_real_dma_subdevice(dev)) {
- 		/* Setup the PASID entry for requests without PASID: */
- 		if (hw_pass_through && domain_type_is_si(domain))
--			ret = intel_pasid_setup_pass_through(iommu, domain,
--					dev, PASID_RID2PASID);
-+			ret = intel_pasid_setup_pass_through(iommu, domain, dev, pasid);
- 		else if (domain->use_first_level)
--			ret = domain_setup_first_level(iommu, domain, dev,
--					PASID_RID2PASID);
-+			ret = domain_setup_first_level(iommu, domain, dev, pasid);
- 		else
--			ret = intel_pasid_setup_second_level(iommu, domain,
--					dev, PASID_RID2PASID);
-+			ret = intel_pasid_setup_second_level(iommu, domain, dev, pasid);
- 		if (ret) {
--			dev_err(dev, "Setup RID2PASID failed\n");
-+			dev_err(dev, "Setup PASID %d failed\n", pasid);
- 			device_block_translation(dev);
--			return ret;
-+			goto exit_free;
- 		}
- 	}
-+	/* device context already activated,  we are done */
-+	if (info->dev_attached)
-+		goto exit;
- 
- 	ret = domain_context_mapping(domain, dev);
- 	if (ret) {
- 		dev_err(dev, "Domain context map failed\n");
- 		device_block_translation(dev);
--		return ret;
-+		goto exit_free;
- 	}
- 
- 	iommu_enable_pci_caps(info);
+-static void __idxd_wq_set_priv_locked(struct idxd_wq *wq, int priv)
+-{
+-	struct idxd_device *idxd = wq->idxd;
+-	union wqcfg wqcfg;
+-	unsigned int offset;
 -
-+	info->dev_attached = 1;
-+exit:
- 	return 0;
-+exit_free:
-+	kfree(dev_pasid);
+-	offset = WQCFG_OFFSET(idxd, wq->id, WQCFG_PRIVL_IDX);
+-	spin_lock(&idxd->dev_lock);
+-	wqcfg.bits[WQCFG_PRIVL_IDX] = ioread32(idxd->reg_base + offset);
+-	wqcfg.priv = priv;
+-	wq->wqcfg->bits[WQCFG_PRIVL_IDX] = wqcfg.bits[WQCFG_PRIVL_IDX];
+-	iowrite32(wqcfg.bits[WQCFG_PRIVL_IDX], idxd->reg_base + offset);
+-	spin_unlock(&idxd->dev_lock);
+-}
+-
+ static void __idxd_wq_set_pasid_locked(struct idxd_wq *wq, int pasid)
+ {
+ 	struct idxd_device *idxd = wq->idxd;
+@@ -1324,15 +1309,14 @@ int drv_enable_wq(struct idxd_wq *wq)
+ 	}
+ 
+ 	/*
+-	 * In the event that the WQ is configurable for pasid and priv bits.
+-	 * For kernel wq, the driver should setup the pasid, pasid_en, and priv bit.
+-	 * However, for non-kernel wq, the driver should only set the pasid_en bit for
+-	 * shared wq. A dedicated wq that is not 'kernel' type will configure pasid and
++	 * In the event that the WQ is configurable for pasid, the driver
++	 * should setup the pasid, pasid_en bit. This is true for both kernel
++	 * and user shared workqueues. There is no need to setup priv bit in
++	 * that in-kernel DMA will also do user privileged requests.
++	 * A dedicated wq that is not 'kernel' type will configure pasid and
+ 	 * pasid_en later on so there is no need to setup.
+ 	 */
+ 	if (test_bit(IDXD_FLAG_CONFIGURABLE, &idxd->flags)) {
+-		int priv = 0;
+-
+ 		if (wq_pasid_enabled(wq)) {
+ 			if (is_idxd_wq_kernel(wq) || wq_shared(wq)) {
+ 				u32 pasid = wq_dedicated(wq) ? idxd->pasid : 0;
+@@ -1340,10 +1324,6 @@ int drv_enable_wq(struct idxd_wq *wq)
+ 				__idxd_wq_set_pasid_locked(wq, pasid);
+ 			}
+ 		}
+-
+-		if (is_idxd_wq_kernel(wq))
+-			priv = 1;
+-		__idxd_wq_set_priv_locked(wq, priv);
+ 	}
+ 
+ 	rc = 0;
+diff --git a/drivers/dma/idxd/init.c b/drivers/dma/idxd/init.c
+index e6ee267da0ff..6f7778e1e936 100644
+--- a/drivers/dma/idxd/init.c
++++ b/drivers/dma/idxd/init.c
+@@ -506,14 +506,61 @@ static struct idxd_device *idxd_alloc(struct pci_dev *pdev, struct idxd_driver_d
+ 
+ static int idxd_enable_system_pasid(struct idxd_device *idxd)
+ {
+-	return -EOPNOTSUPP;
++	struct pci_dev *pdev = idxd->pdev;
++	struct device *dev = &pdev->dev;
++	struct iommu_domain *domain;
++	union gencfg_reg gencfg;
++	ioasid_t pasid;
++	int ret;
++
++	/*
++	 * Attach a global PASID to the DMA domain so that we can use ENQCMDS
++	 * to submit work on buffers mapped by DMA API.
++	 */
++	domain = iommu_get_domain_for_dev(dev);
++	if (!domain)
++		return -EPERM;
++
++	pasid = iommu_alloc_global_pasid(0, dev->iommu->max_pasids);
++	if (!pasid_valid(pasid))
++		return -ENOSPC;
++
++	ret = iommu_attach_device_pasid(domain, dev, pasid);
++	if (ret) {
++		dev_err(dev, "failed to attach device pasid %d, domain type %d",
++			pasid, domain->type);
++		iommu_free_global_pasid(pasid);
++		return ret;
++	}
++
++	/* Since we set user privilege for kernel DMA, enable completion IRQ */
++	gencfg.bits = ioread32(idxd->reg_base + IDXD_GENCFG_OFFSET);
++	gencfg.user_int_en = 1;
++	iowrite32(gencfg.bits, idxd->reg_base + IDXD_GENCFG_OFFSET);
++	idxd->pasid = pasid;
++
 +	return ret;
  }
  
- static bool device_has_rmrr(struct device *dev)
-@@ -4029,8 +4090,7 @@ static void device_block_translation(struct device *dev)
- 	iommu_disable_pci_caps(info);
- 	if (!dev_is_real_dma_subdevice(dev)) {
- 		if (sm_supported(iommu))
--			intel_pasid_tear_down_entry(iommu, dev,
--						    PASID_RID2PASID, false);
-+			intel_iommu_detach_device_pasid(&info->domain->domain, dev, PASID_RID2PASID);
- 		else
- 			domain_context_clear(info);
- 	}
-@@ -4040,6 +4100,7 @@ static void device_block_translation(struct device *dev)
- 
- 	spin_lock_irqsave(&info->domain->lock, flags);
- 	list_del(&info->link);
-+	info->dev_attached = 0;
- 	spin_unlock_irqrestore(&info->domain->lock, flags);
- 
- 	domain_detach_iommu(info->domain, iommu);
-@@ -4186,7 +4247,7 @@ static int intel_iommu_attach_device(struct iommu_domain *domain,
- 	if (ret)
- 		return ret;
- 
--	return dmar_domain_attach_device(to_dmar_domain(domain), dev);
-+	return dmar_domain_attach_device_pasid(to_dmar_domain(domain), dev, PASID_RID2PASID);
- }
- 
- static int intel_iommu_map(struct iommu_domain *domain,
-@@ -4675,26 +4736,52 @@ static void intel_iommu_iotlb_sync_map(struct iommu_domain *domain,
- 		__mapping_notify_one(info->iommu, dmar_domain, pfn, pages);
- }
- 
--static void intel_iommu_remove_dev_pasid(struct device *dev, ioasid_t pasid)
-+static void intel_iommu_detach_device_pasid(struct iommu_domain *domain,
-+					    struct device *dev, ioasid_t pasid)
+ static void idxd_disable_system_pasid(struct idxd_device *idxd)
  {
--	struct intel_iommu *iommu = device_to_iommu(dev, NULL, NULL);
--	struct iommu_domain *domain;
-+	struct device_domain_info *info = dev_iommu_priv_get(dev);
-+	struct dmar_domain *dmar_domain = to_dmar_domain(domain);
-+	struct device_pasid_info *i, *dev_pasid = NULL;
-+	struct intel_iommu *iommu = info->iommu;
-+	unsigned long flags;
- 
--	/* Domain type specific cleanup: */
--	domain = iommu_get_domain_for_dev_pasid(dev, pasid, 0);
--	if (domain) {
--		switch (domain->type) {
--		case IOMMU_DOMAIN_SVA:
--			intel_svm_remove_dev_pasid(dev, pasid);
--			break;
--		default:
--			/* should never reach here */
--			WARN_ON(1);
-+	spin_lock_irqsave(&dmar_domain->lock, flags);
-+	list_for_each_entry(i, &dmar_domain->dev_pasids, link_domain) {
-+		if (i->dev == dev && i->pasid == pasid) {
-+			list_del(&i->link_domain);
-+			dev_pasid = i;
- 			break;
- 		}
- 	}
-+	spin_unlock_irqrestore(&dmar_domain->lock, flags);
-+	if (WARN_ON(!dev_pasid))
++	struct pci_dev *pdev = idxd->pdev;
++	struct device *dev = &pdev->dev;
++	struct iommu_domain *domain;
++	union gencfg_reg gencfg;
++
++	domain = iommu_get_domain_for_dev(dev);
++	if (!domain || domain->type == IOMMU_DOMAIN_BLOCKED)
 +		return;
 +
-+	/* PASID entry already cleared during SVA unbind */
-+	if (domain->type != IOMMU_DOMAIN_SVA)
-+		intel_pasid_tear_down_entry(iommu, dev, pasid, false);
-+
-+	kfree(dev_pasid);
-+}
-+
-+static void intel_iommu_remove_dev_pasid(struct device *dev, ioasid_t pasid)
-+{
-+	struct device_domain_info *info = dev_iommu_priv_get(dev);
-+	struct dmar_domain *dmar_domain;
-+	struct iommu_domain *domain;
-+
-+	domain = iommu_get_domain_for_dev_pasid(dev, pasid, 0);
-+	dmar_domain = to_dmar_domain(domain);
-+
-+	/*
-+	 * SVA Domain type specific cleanup: Not ideal but not until we have
-+	 * IOPF capable domain specific ops, we need this special case.
-+	 */
-+	if (domain->type == IOMMU_DOMAIN_SVA)
-+		return intel_svm_remove_dev_pasid(dev, pasid);
++	iommu_detach_device_pasid(domain, dev, idxd->pasid);
++	iommu_free_global_pasid(idxd->pasid);
  
--	intel_pasid_tear_down_entry(iommu, dev, pasid, false);
-+	intel_iommu_detach_device_pasid(domain, dev, pasid);
-+	domain_detach_iommu(dmar_domain, info->iommu);
+-	iommu_sva_unbind_device(idxd->sva);
++	gencfg.bits = ioread32(idxd->reg_base + IDXD_GENCFG_OFFSET);
++	gencfg.user_int_en = 0;
++	iowrite32(gencfg.bits, idxd->reg_base + IDXD_GENCFG_OFFSET);
+ 	idxd->sva = NULL;
++	idxd->pasid = IOMMU_PASID_INVALID;
  }
  
- const struct iommu_ops intel_iommu_ops = {
-diff --git a/drivers/iommu/intel/iommu.h b/drivers/iommu/intel/iommu.h
-index 65b15be72878..b6c26f25d1ba 100644
---- a/drivers/iommu/intel/iommu.h
-+++ b/drivers/iommu/intel/iommu.h
-@@ -595,6 +595,7 @@ struct dmar_domain {
+ static int idxd_probe(struct idxd_device *idxd)
+@@ -535,8 +582,9 @@ static int idxd_probe(struct idxd_device *idxd)
+ 		} else {
+ 			set_bit(IDXD_FLAG_USER_PASID_ENABLED, &idxd->flags);
  
- 	spinlock_t lock;		/* Protect device tracking lists */
- 	struct list_head devices;	/* all devices' list */
-+	struct list_head dev_pasids;	/* all attached pasids */
+-			if (idxd_enable_system_pasid(idxd))
+-				dev_warn(dev, "No in-kernel DMA with PASID.\n");
++			rc = idxd_enable_system_pasid(idxd);
++			if (rc)
++				dev_warn(dev, "No in-kernel DMA with PASID. %d\n", rc);
+ 			else
+ 				set_bit(IDXD_FLAG_PASID_ENABLED, &idxd->flags);
+ 		}
+diff --git a/drivers/dma/idxd/sysfs.c b/drivers/dma/idxd/sysfs.c
+index 18cd8151dee0..c5561c00a503 100644
+--- a/drivers/dma/idxd/sysfs.c
++++ b/drivers/dma/idxd/sysfs.c
+@@ -944,13 +944,6 @@ static ssize_t wq_name_store(struct device *dev,
+ 	if (strlen(buf) > WQ_NAME_SIZE || strlen(buf) == 0)
+ 		return -EINVAL;
  
- 	struct dma_pte	*pgd;		/* virtual address */
- 	int		gaw;		/* max guest address width */
-@@ -708,6 +709,7 @@ struct device_domain_info {
- 	u8 ats_supported:1;
- 	u8 ats_enabled:1;
- 	u8 dtlb_extra_inval:1;	/* Quirk for devices need extra flush */
-+	u8 dev_attached:1;	/* Device context activated */
- 	u8 ats_qdep;
- 	struct device *dev; /* it's NULL for PCIe-to-PCI bridge */
- 	struct intel_iommu *iommu; /* IOMMU used by this device */
-@@ -715,6 +717,12 @@ struct device_domain_info {
- 	struct pasid_table *pasid_table; /* pasid table */
- };
- 
-+struct device_pasid_info {
-+	struct list_head link_domain;	/* link to domain siblings */
-+	struct device *dev;		/* physical device derived from */
-+	ioasid_t pasid;			/* PASID on physical device */
-+};
-+
- static inline void __iommu_flush_cache(
- 	struct intel_iommu *iommu, void *addr, int size)
- {
+-	/*
+-	 * This is temporarily placed here until we have SVM support for
+-	 * dmaengine.
+-	 */
+-	if (wq->type == IDXD_WQT_KERNEL && device_pasid_enabled(wq->idxd))
+-		return -EOPNOTSUPP;
+-
+ 	input = kstrndup(buf, count, GFP_KERNEL);
+ 	if (!input)
+ 		return -ENOMEM;
 -- 
 2.25.1
 
