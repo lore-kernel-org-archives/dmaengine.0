@@ -2,168 +2,83 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7517DC76188
-	for <dmaengine@archiver.kernel.org>; Mon,  3 Apr 2023 18:37:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 19D70C76196
+	for <dmaengine@archiver.kernel.org>; Mon,  3 Apr 2023 19:19:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231655AbjDCShc (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 3 Apr 2023 14:37:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42654 "EHLO
+        id S232607AbjDCTTv (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 3 Apr 2023 15:19:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40638 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232354AbjDCShc (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Mon, 3 Apr 2023 14:37:32 -0400
-Received: from aposti.net (aposti.net [89.234.176.197])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9308899;
-        Mon,  3 Apr 2023 11:37:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=crapouillou.net;
-        s=mail; t=1680547048;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=bnQrvEz/F0HtMo61MRMevGwpunBFI0o/+wdfXFhszQw=;
-        b=wmGIpaAeX3wlUIVZdWVbWY5RMVdmTF8B40N5sXTdehP85NEPptugaqHw+XJX2cPDclj4WM
-        atYeygViHa62jb9sd3JFz3XJkkiptTMr2M6qClT8yr7YS7UCHzJiq2HgKhRuPR2z7rVKai
-        SbXDqG7PskUUFgyASdtczeEkdEVJmqg=
-Message-ID: <6a75a551b3ef3fc7cf9281db0b69167a570130c2.camel@crapouillou.net>
-Subject: Re: [PATCH v3 11/11] Documentation: iio: Document high-speed DMABUF
- based API
-From:   Paul Cercueil <paul@crapouillou.net>
-To:     Jonathan Corbet <corbet@lwn.net>,
-        Jonathan Cameron <jic23@kernel.org>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        Vinod Koul <vkoul@kernel.org>,
-        Michael Hennerich <Michael.Hennerich@analog.com>,
-        Nuno =?ISO-8859-1?Q?S=E1?= <noname.nuno@gmail.com>,
-        Sumit Semwal <sumit.semwal@linaro.org>,
-        Christian =?ISO-8859-1?Q?K=F6nig?= <christian.koenig@amd.com>
-Cc:     linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org,
-        linux-iio@vger.kernel.org, linux-media@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, linaro-mm-sig@lists.linaro.org,
-        linux-doc@vger.kernel.org
-Date:   Mon, 03 Apr 2023 20:37:26 +0200
-In-Reply-To: <87zg7p7xz4.fsf@meer.lwn.net>
-References: <20230403154800.215924-1-paul@crapouillou.net>
-         <20230403154955.216148-1-paul@crapouillou.net>
-         <20230403154955.216148-2-paul@crapouillou.net>
-         <87zg7p7xz4.fsf@meer.lwn.net>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+        with ESMTP id S232221AbjDCTTu (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Mon, 3 Apr 2023 15:19:50 -0400
+Received: from esa.microchip.iphmx.com (esa.microchip.iphmx.com [68.232.153.233])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E751A3C05;
+        Mon,  3 Apr 2023 12:19:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=microchip.com; i=@microchip.com; q=dns/txt; s=mchp;
+  t=1680549570; x=1712085570;
+  h=from:to:cc:subject:date:message-id:in-reply-to:
+   references:mime-version:content-transfer-encoding;
+  bh=ePxHK6Wg0z1QpCTAloo+BxX7YWBgmbRVAuDqJf/Q7Mc=;
+  b=Qr65gGq91nSc1Cvq250MQxf/EdM7qS/rj5xeWmtcRlNUXjzTcJ8130NZ
+   l0UMg4KoJyBBhlFgqtAca+Z0qcoUvhdV20z6w0lljKECX+0hVuVhZXAWT
+   HPNOAkVj5sivIySgiK8SbfuuwT6oEEivpa3PYSFDJVkP+CYQUfywUABDN
+   bJ1evxVIemnySWpF2QLyubF7Hx29pN+MZnpANy8LjUsb+hcrVM3Nf5vWP
+   sFpQ2je0050zV6JbYSX3zAyyfGdIctm+G4ucKpPdXuY/wocEg70Ddp6rv
+   6+MP4o7uRH2q2yHPpqoEbdmU0jaBcAYhzRK3wBmLRKVU8zl7s2NeKndmn
+   Q==;
+X-IronPort-AV: E=Sophos;i="5.98,315,1673938800"; 
+   d="scan'208";a="207550039"
+Received: from unknown (HELO email.microchip.com) ([170.129.1.10])
+  by esa3.microchip.iphmx.com with ESMTP/TLS/AES256-SHA256; 03 Apr 2023 12:19:18 -0700
+Received: from chn-vm-ex01.mchp-main.com (10.10.85.143) by
+ chn-vm-ex01.mchp-main.com (10.10.85.143) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.21; Mon, 3 Apr 2023 12:19:18 -0700
+Received: from localhost (10.10.115.15) by chn-vm-ex01.mchp-main.com
+ (10.10.85.143) with Microsoft SMTP Server id 15.1.2507.21 via Frontend
+ Transport; Mon, 3 Apr 2023 12:19:18 -0700
+From:   Kelvin Cao <kelvin.cao@microchip.com>
+To:     <vkoul@kernel.org>, <dmaengine@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+CC:     <logang@deltatee.com>, <george.ge@microchip.com>
+Subject: [PATCH v2 0/1] Switchtec Switch DMA Engine Driver
+Date:   Mon, 3 Apr 2023 11:06:29 -0700
+Message-ID: <20230403180630.4186061-3-kelvin.cao@microchip.com>
+X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20230403180630.4186061-1-kelvin.cao@microchip.com>
+References: <20230403180630.4186061-1-kelvin.cao@microchip.com>
 MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Hi Jonathan,
+Hi,
 
-Le lundi 03 avril 2023 =C3=A0 10:05 -0600, Jonathan Corbet a =C3=A9crit=C2=
-=A0:
-> Paul Cercueil <paul@crapouillou.net> writes:
->=20
-> One nit:
->=20
-> > Document the new DMABUF based API.
-> >=20
-> > Signed-off-by: Paul Cercueil <paul@crapouillou.net>
-> > Cc: Jonathan Corbet <corbet@lwn.net>
-> > Cc: linux-doc@vger.kernel.org
-> >=20
-> > ---
-> > v2: - Explicitly state that the new interface is optional and is
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 not implemented by all drivers.
-> > =C2=A0=C2=A0=C2=A0 - The IOCTLs can now only be called on the buffer FD=
- returned
-> > by
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 IIO_BUFFER_GET_FD_IOCTL.
-> > =C2=A0=C2=A0=C2=A0 - Move the page up a bit in the index since it is co=
-re stuff
-> > and not
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 driver-specific.
-> > v3: Update the documentation to reflect the new API.
-> > ---
-> > =C2=A0Documentation/iio/dmabuf_api.rst | 59
-> > ++++++++++++++++++++++++++++++++
-> > =C2=A0Documentation/iio/index.rst=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0=
- 2 ++
-> > =C2=A02 files changed, 61 insertions(+)
-> > =C2=A0create mode 100644 Documentation/iio/dmabuf_api.rst
-> >=20
-> > diff --git a/Documentation/iio/dmabuf_api.rst
-> > b/Documentation/iio/dmabuf_api.rst
-> > new file mode 100644
-> > index 000000000000..4d70372c7ebd
-> > --- /dev/null
-> > +++ b/Documentation/iio/dmabuf_api.rst
-> > @@ -0,0 +1,59 @@
-> > +.. SPDX-License-Identifier: GPL-2.0
-> > +
-> > +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> > +High-speed DMABUF interface for IIO
-> > +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> > +
-> > +1. Overview
-> > +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> > +
-> > +The Industrial I/O subsystem supports access to buffers through a
-> > +file-based interface, with read() and write() access calls through
-> > the
-> > +IIO device's dev node.
-> > +
-> > +It additionally supports a DMABUF based interface, where the
-> > userspace
-> > +can attach DMABUF objects (externally created) to a IIO buffer,
-> > and
-> > +subsequently use them for data transfers.
-> > +
-> > +A userspace application can then use this interface to share
-> > DMABUF
-> > +objects between several interfaces, allowing it to transfer data
-> > in a
-> > +zero-copy fashion, for instance between IIO and the USB stack.
-> > +
-> > +The userspace application can also memory-map the DMABUF objects,
-> > and
-> > +access the sample data directly. The advantage of doing this vs.
-> > the
-> > +read() interface is that it avoids an extra copy of the data
-> > between the
-> > +kernel and userspace. This is particularly useful for high-speed
-> > devices
-> > +which produce several megabytes or even gigabytes of data per
-> > second.
-> > +It does however increase the userspace-kernelspace synchronization
-> > +overhead, as the DMA_BUF_SYNC_START and DMA_BUF_SYNC_END IOCTLs
-> > have to
-> > +be used for data integrity.
-> > +
-> > +2. User API
-> > +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> > +
-> > +As part of this interface, three new IOCTLs have been added. These
-> > three
-> > +IOCTLs have to be performed on the IIO buffer's file descriptor,
-> > +obtained using the IIO_BUFFER_GET_FD_IOCTL() ioctl.
-> > +
-> > +``IIO_BUFFER_DMABUF_ATTACH_IOCTL(int)``
-> > +----------------------------------------------------------------
-> > +
-> > +Attach the DMABUF object, identified by its file descriptor, to
-> > the IIO
-> > +buffer. Returns zero on success, and a negative errno value on
-> > error.
->=20
-> Rather than abusing subsections, this would be better done as a
-> description list:
->=20
-> =C2=A0 IIO_BUFFER_DMABUF_ATTACH_IOCTL(int)
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 Attach the DMABUF object, identified by it=
-s file descriptor, to
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 the IIO buffer. Returns zero on success, a=
-nd a negative errno
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 value on error.
+This is v2 of the Switchtec Switch DMA Engine Driver, incorporating
+changes for the review comments of the initial post.
 
-Noted, thanks.
+Changes in v2:
+  - Move put_device(dma_dev->dev) before kfree(swdma_dev) as dma_dev is
+    part of swdma_dev.
+  - Convert dev_ print calls to pci_ print calls to make the use of
+    print functions consistent within switchtec_dma_create().
+  - Remove some dev_ print calls, which use device pointer as handles,
+    to ensure there's no reference issue when the device is unbound.
+  - Remove unused .driver_data from pci_device_id structure.
 
-Cheers,
--Paul
+Kelvin Cao (1):
+  dmaengine: switchtec-dma: Introduce Switchtec DMA engine PCI driver
+
+ MAINTAINERS                 |    5 +
+ drivers/dma/Kconfig         |    9 +
+ drivers/dma/Makefile        |    1 +
+ drivers/dma/switchtec_dma.c | 1734 +++++++++++++++++++++++++++++++++++
+ 4 files changed, 1749 insertions(+)
+ create mode 100644 drivers/dma/switchtec_dma.c
+
+-- 
+2.25.1
+
