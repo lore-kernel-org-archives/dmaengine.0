@@ -2,49 +2,49 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6C2FAC761AF
-	for <dmaengine@archiver.kernel.org>; Mon,  3 Apr 2023 19:19:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BA8CAC76196
+	for <dmaengine@archiver.kernel.org>; Mon,  3 Apr 2023 19:20:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233159AbjDCTTz (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 3 Apr 2023 15:19:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40740 "EHLO
+        id S231497AbjDCTUQ (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 3 Apr 2023 15:20:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41486 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232415AbjDCTTx (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Mon, 3 Apr 2023 15:19:53 -0400
+        with ESMTP id S231894AbjDCTUK (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Mon, 3 Apr 2023 15:20:10 -0400
 Received: from esa.microchip.iphmx.com (esa.microchip.iphmx.com [68.232.153.233])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E67603A87;
-        Mon,  3 Apr 2023 12:19:30 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 745BD3C05;
+        Mon,  3 Apr 2023 12:19:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=microchip.com; i=@microchip.com; q=dns/txt; s=mchp;
-  t=1680549571; x=1712085571;
+  t=1680549593; x=1712085593;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
   bh=k6PZTg+i3v3TXXdd2nHLflVOk0XstNG6NJiqYNt4vFA=;
-  b=0b0SrLyDgHJiM1QDwcHmpsFU9gM6Mp9onwp2VDom9YQC0HZGM5Rwv29F
-   EUrEIN0RWf/qja8AR3NJeio+yextyyLRmA5ogxP46amR5JfVDiGC/CiBr
-   WYZRE6P6yf349RMWe9blD405ha7rCup3SirTvR+6Lb8qu0UhbOOBczihe
-   ThyZ+zyVGSiEmOkLTnR3NQMwxzDtrCHpdUe2JtS4TfQ/kk/YangyIXHec
-   mBL9GN7XR3xDFuGliNMBJ0X6Xj6gE2A2hGODzSi8pUdvdfDHx7lpogVdL
-   KRbL94uP5+LHwxH58ZDzOb3FJoDaWsSWzvoNwVUSNZ2v69QkMQmtVrkvn
-   Q==;
+  b=zkZl1OmXOj0jgf0jfNTXB/hVZjmwW1rWCdu2xyGKgxe4pg75Ck/MUJk5
+   cguWW3braY5wwTWqMpgEigPVkAMEEY89dhQ98XpAR1DUqmsv+oB4pvKdR
+   QSDW8VkGqcT/Juyuux2O4Z1VnBWOvmzAYRLPHcZgNnplQyB23ffQA8Q7j
+   uAzEMA4Xnqy1zS388E7waHtDZvqW2CwLzDfE5CR3Ucr3tlFh4aLbrIXtl
+   9BGt4usSvKVEm3Svd4C8KKeMV4luHe+FJHbqio4QKxGxCO0+UYP8luRbE
+   k43Cp6Xq3FsZSiQY/Nof8m+NxYlddGNpW37VE8KXjRx7gaLzP0vxrOIZb
+   A==;
 X-IronPort-AV: E=Sophos;i="5.98,315,1673938800"; 
-   d="scan'208";a="207961939"
+   d="scan'208";a="207961941"
 Received: from unknown (HELO email.microchip.com) ([170.129.1.10])
-  by esa5.microchip.iphmx.com with ESMTP/TLS/AES256-SHA256; 03 Apr 2023 12:19:18 -0700
-Received: from chn-vm-ex03.mchp-main.com (10.10.85.151) by
- chn-vm-ex04.mchp-main.com (10.10.85.152) with Microsoft SMTP Server
+  by esa5.microchip.iphmx.com with ESMTP/TLS/AES256-SHA256; 03 Apr 2023 12:19:19 -0700
+Received: from chn-vm-ex02.mchp-main.com (10.10.87.72) by
+ chn-vm-ex02.mchp-main.com (10.10.87.72) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.21; Mon, 3 Apr 2023 12:19:17 -0700
-Received: from localhost (10.10.115.15) by chn-vm-ex03.mchp-main.com
- (10.10.85.151) with Microsoft SMTP Server id 15.1.2507.21 via Frontend
- Transport; Mon, 3 Apr 2023 12:19:17 -0700
+ 15.1.2507.21; Mon, 3 Apr 2023 12:19:18 -0700
+Received: from localhost (10.10.115.15) by chn-vm-ex02.mchp-main.com
+ (10.10.85.144) with Microsoft SMTP Server id 15.1.2507.21 via Frontend
+ Transport; Mon, 3 Apr 2023 12:19:18 -0700
 From:   Kelvin Cao <kelvin.cao@microchip.com>
 To:     <vkoul@kernel.org>, <dmaengine@vger.kernel.org>,
         <linux-kernel@vger.kernel.org>
 CC:     <logang@deltatee.com>, <george.ge@microchip.com>
 Subject: [PATCH v2 1/1] dmaengine: switchtec-dma: Introduce Switchtec DMA engine PCI driver
-Date:   Mon, 3 Apr 2023 11:06:28 -0700
-Message-ID: <20230403180630.4186061-2-kelvin.cao@microchip.com>
+Date:   Mon, 3 Apr 2023 11:06:30 -0700
+Message-ID: <20230403180630.4186061-4-kelvin.cao@microchip.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20230403180630.4186061-1-kelvin.cao@microchip.com>
 References: <20230403180630.4186061-1-kelvin.cao@microchip.com>
