@@ -2,40 +2,40 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0608AC77B71
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 180BCC77B74
 	for <dmaengine@archiver.kernel.org>; Fri,  7 Apr 2023 20:32:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231129AbjDGUcL (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 7 Apr 2023 16:32:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54998 "EHLO
+        id S230413AbjDGUcK (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 7 Apr 2023 16:32:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54964 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231398AbjDGUbl (ORCPT
+        with ESMTP id S230194AbjDGUbl (ORCPT
         <rfc822;dmaengine@vger.kernel.org>); Fri, 7 Apr 2023 16:31:41 -0400
 Received: from mga07.intel.com (mga07.intel.com [134.134.136.100])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94EAFC159;
-        Fri,  7 Apr 2023 13:31:34 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D4543CA1C;
+        Fri,  7 Apr 2023 13:31:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1680899494; x=1712435494;
+  t=1680899493; x=1712435493;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=hPT8u68bZ2bhw3ksoI+ABo14zNuLKH375W6tuyoGx1s=;
-  b=oCXOrYjUfhQQjOjC7ty2qS4yzDbkE6kraBw3Oq57LBx6xqzWdZSbyuJ+
-   gE9lSaM8gKAXRqvwOq33Ahcb1T4sCF6hCkvOvwelP2M1oAQQ4ZakK6ZHi
-   9cBf99iiDybjnWgdc9N8vGmdIOM7GT87yG72/goxV/Se7faqPUT8XfpcW
-   BoBV/C9MiPsf/fL0Vm5oJVkn+LMk0OUYMZReh/3BfpgYBR9MvSCRAqzOB
-   YVLjFV7sOylRexyI2mXxKLczmsDpiFUwb/S3KeQkr3pEp5vd0Pz3FDuc7
-   y9r9dJ1l4OQsxZQk0onxxN9G8hDvMMns7gDwHJ6eJV1yPZwoTV8mjNh44
-   g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10673"; a="408196885"
+  bh=+iqZKLVe13EZnrppVcirChYzm/SHpJjyJP0Q/X+NHWw=;
+  b=IYvY1FdcVldW65is41Ex1kamAWr9JppHMMGzaJypCG01Quo34pfvGtFV
+   hNJCKO1bXmLOaoOWT/0YzDjy07irNqZXQ1BQo45NJkoQDW4UNPSDeLlNl
+   XlkhUOgWfLTdNiVCY9BhozIOcoUCMu4sGrWBKeFEh/xhAAASwNH2On8ip
+   CyNqcAbrSOqPSGb6DNifdaqEFy2x4pGHkVk8GNHfVBjDtbAHigH3fRy7X
+   rNm28rz8aev/XvPYc6LKIJrg13SIptkYWxNecLTL3Tw9odkJgTg3Q5tXJ
+   nOctgVFhGsRaNtY19DvnULnLH2hr9jm6UGdJp76kzLDjDlpwSBAgtnd3w
+   A==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10673"; a="408196880"
 X-IronPort-AV: E=Sophos;i="5.98,327,1673942400"; 
-   d="scan'208";a="408196885"
+   d="scan'208";a="408196880"
 Received: from orsmga007.jf.intel.com ([10.7.209.58])
-  by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Apr 2023 13:31:29 -0700
+  by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Apr 2023 13:31:28 -0700
 X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10673"; a="681125909"
+X-IronPort-AV: E=McAfee;i="6600,9927,10673"; a="681125903"
 X-IronPort-AV: E=Sophos;i="5.98,327,1673942400"; 
-   d="scan'208";a="681125909"
+   d="scan'208";a="681125903"
 Received: from fyu1.sc.intel.com ([172.25.103.126])
   by orsmga007.jf.intel.com with ESMTP; 07 Apr 2023 13:31:28 -0700
 From:   Fenghua Yu <fenghua.yu@intel.com>
@@ -45,9 +45,9 @@ Cc:     dmaengine@vger.kernel.org,
         "linux-kernel" <linux-kernel@vger.kernel.org>,
         Tony Zhu <tony.zhu@intel.com>,
         Fenghua Yu <fenghua.yu@intel.com>
-Subject: [PATCH v4 16/16] dmaengine: idxd: add per wq PRS disable
-Date:   Fri,  7 Apr 2023 13:31:43 -0700
-Message-Id: <20230407203143.2189681-17-fenghua.yu@intel.com>
+Subject: [PATCH v4 14/16] dmaengine: idxd: expose fault counters to sysfs
+Date:   Fri,  7 Apr 2023 13:31:41 -0700
+Message-Id: <20230407203143.2189681-15-fenghua.yu@intel.com>
 X-Mailer: git-send-email 2.37.1
 In-Reply-To: <20230407203143.2189681-1-fenghua.yu@intel.com>
 References: <20230407203143.2189681-1-fenghua.yu@intel.com>
@@ -59,198 +59,112 @@ X-Mailing-List: dmaengine@vger.kernel.org
 
 From: Dave Jiang <dave.jiang@intel.com>
 
-Add sysfs knob for per wq Page Request Service disable. This knob
-disables PRS support for the specific wq. When this bit is set,
-it also overrides the wq's block on fault enabling.
+Expose cr_faults and cr_fault_failures counters to the user space. This
+allows a user app to keep track of how many fault the application is
+causing with the completion record (CR) and also the number of failures
+of the CR writeback. Having a high number of cr_fault_failures is bad as
+the app is submitting descriptors with the CR addresses that are bad. User
+monitoring daemon may want to consider killing the application as it may be
+malicious and attempting to flood the device event log.
 
 Tested-by: Tony Zhu <tony.zhu@intel.com>
 Signed-off-by: Dave Jiang <dave.jiang@intel.com>
 Co-developed-by: Fenghua Yu <fenghua.yu@intel.com>
 Signed-off-by: Fenghua Yu <fenghua.yu@intel.com>
 ---
- .../ABI/stable/sysfs-driver-dma-idxd          | 10 ++++
- drivers/dma/idxd/device.c                     |  6 +-
- drivers/dma/idxd/idxd.h                       |  1 +
- drivers/dma/idxd/registers.h                  |  5 +-
- drivers/dma/idxd/sysfs.c                      | 57 ++++++++++++++++++-
- 5 files changed, 74 insertions(+), 5 deletions(-)
+ .../ABI/stable/sysfs-driver-dma-idxd          | 17 +++++++
+ drivers/dma/idxd/cdev.c                       | 46 +++++++++++++++++++
+ 2 files changed, 63 insertions(+)
 
 diff --git a/Documentation/ABI/stable/sysfs-driver-dma-idxd b/Documentation/ABI/stable/sysfs-driver-dma-idxd
-index 5d0df57f5298..534b7a3d59fc 100644
+index e01916611452..73ab86196a41 100644
 --- a/Documentation/ABI/stable/sysfs-driver-dma-idxd
 +++ b/Documentation/ABI/stable/sysfs-driver-dma-idxd
-@@ -235,6 +235,16 @@ Contact:	dmaengine@vger.kernel.org
- Description:	Indicate whether ATS disable is turned on for the workqueue.
- 		0 indicates ATS is on, and 1 indicates ATS is off for the workqueue.
- 
-+What:		/sys/bus/dsa/devices/wq<m>.<n>/prs_disable
+@@ -318,3 +318,20 @@ Description:	Allows control of the number of batch descriptors that can be
+ 		1 (1/2 of max value), 2 (1/4 of the max value), and 3 (1/8 of
+ 		the max value). It's visible only on platforms that support
+ 		the capability.
++
++What:		/sys/bus/dsa/devices/wq<m>.<n>/dsa<x>\!wq<m>.<n>/file<y>/cr_faults
 +Date:		Sept 14, 2022
-+KernelVersion: 6.4.0
++KernelVersion:	6.4.0
 +Contact:	dmaengine@vger.kernel.org
-+Description:	Controls whether PRS disable is turned on for the workqueue.
-+		0 indicates PRS is on, and 1 indicates PRS is off for the
-+		workqueue. This option overrides block_on_fault attribute
-+		if set. It's visible only on platforms that support the
-+		capability.
++Description:	Show the number of Completion Record (CR) faults this application
++		has caused.
 +
- What:		/sys/bus/dsa/devices/wq<m>.<n>/occupancy
- Date		May 25, 2021
- KernelVersion:	5.14.0
-diff --git a/drivers/dma/idxd/device.c b/drivers/dma/idxd/device.c
-index fd97b2b58734..3c80b9681c72 100644
---- a/drivers/dma/idxd/device.c
-+++ b/drivers/dma/idxd/device.c
-@@ -967,12 +967,16 @@ static int idxd_wq_config_write(struct idxd_wq *wq)
- 	wq->wqcfg->priority = wq->priority;
- 
- 	if (idxd->hw.gen_cap.block_on_fault &&
--	    test_bit(WQ_FLAG_BLOCK_ON_FAULT, &wq->flags))
-+	    test_bit(WQ_FLAG_BLOCK_ON_FAULT, &wq->flags) &&
-+	    !test_bit(WQ_FLAG_PRS_DISABLE, &wq->flags))
- 		wq->wqcfg->bof = 1;
- 
- 	if (idxd->hw.wq_cap.wq_ats_support)
- 		wq->wqcfg->wq_ats_disable = test_bit(WQ_FLAG_ATS_DISABLE, &wq->flags);
- 
-+	if (idxd->hw.wq_cap.wq_prs_support)
-+		wq->wqcfg->wq_prs_disable = test_bit(WQ_FLAG_PRS_DISABLE, &wq->flags);
-+
- 	/* bytes 12-15 */
- 	wq->wqcfg->max_xfer_shift = ilog2(wq->max_xfer_bytes);
- 	idxd_wqcfg_set_max_batch_shift(idxd->data->type, wq->wqcfg, ilog2(wq->max_batch_size));
-diff --git a/drivers/dma/idxd/idxd.h b/drivers/dma/idxd/idxd.h
-index bd544eb2ddcb..e44b1d45ccd5 100644
---- a/drivers/dma/idxd/idxd.h
-+++ b/drivers/dma/idxd/idxd.h
-@@ -143,6 +143,7 @@ enum idxd_wq_flag {
- 	WQ_FLAG_DEDICATED = 0,
- 	WQ_FLAG_BLOCK_ON_FAULT,
- 	WQ_FLAG_ATS_DISABLE,
-+	WQ_FLAG_PRS_DISABLE,
- };
- 
- enum idxd_wq_type {
-diff --git a/drivers/dma/idxd/registers.h b/drivers/dma/idxd/registers.h
-index 9f3959d001b6..7b54a3939ea1 100644
---- a/drivers/dma/idxd/registers.h
-+++ b/drivers/dma/idxd/registers.h
-@@ -59,7 +59,8 @@ union wq_cap_reg {
- 		u64 occupancy:1;
- 		u64 occupancy_int:1;
- 		u64 op_config:1;
--		u64 rsvd3:9;
-+		u64 wq_prs_support:1;
-+		u64 rsvd4:8;
- 	};
- 	u64 bits;
- } __packed;
-@@ -371,7 +372,7 @@ union wqcfg {
- 		u32 mode:1;	/* shared or dedicated */
- 		u32 bof:1;	/* block on fault */
- 		u32 wq_ats_disable:1;
--		u32 rsvd2:1;
-+		u32 wq_prs_disable:1;
- 		u32 priority:4;
- 		u32 pasid:20;
- 		u32 pasid_en:1;
-diff --git a/drivers/dma/idxd/sysfs.c b/drivers/dma/idxd/sysfs.c
-index 465d2e7627e4..293739ac5596 100644
---- a/drivers/dma/idxd/sysfs.c
-+++ b/drivers/dma/idxd/sysfs.c
-@@ -822,10 +822,14 @@ static ssize_t wq_block_on_fault_store(struct device *dev,
- 	if (rc < 0)
- 		return rc;
- 
--	if (bof)
-+	if (bof) {
-+		if (test_bit(WQ_FLAG_PRS_DISABLE, &wq->flags))
-+			return -EOPNOTSUPP;
-+
- 		set_bit(WQ_FLAG_BLOCK_ON_FAULT, &wq->flags);
--	else
-+	} else {
- 		clear_bit(WQ_FLAG_BLOCK_ON_FAULT, &wq->flags);
-+	}
- 
- 	return count;
- }
-@@ -1109,6 +1113,44 @@ static ssize_t wq_ats_disable_store(struct device *dev, struct device_attribute
- static struct device_attribute dev_attr_wq_ats_disable =
- 		__ATTR(ats_disable, 0644, wq_ats_disable_show, wq_ats_disable_store);
- 
-+static ssize_t wq_prs_disable_show(struct device *dev, struct device_attribute *attr, char *buf)
-+{
-+	struct idxd_wq *wq = confdev_to_wq(dev);
-+
-+	return sysfs_emit(buf, "%u\n", test_bit(WQ_FLAG_PRS_DISABLE, &wq->flags));
-+}
-+
-+static ssize_t wq_prs_disable_store(struct device *dev, struct device_attribute *attr,
-+				    const char *buf, size_t count)
-+{
-+	struct idxd_wq *wq = confdev_to_wq(dev);
-+	struct idxd_device *idxd = wq->idxd;
-+	bool prs_dis;
-+	int rc;
-+
-+	if (wq->state != IDXD_WQ_DISABLED)
-+		return -EPERM;
-+
-+	if (!idxd->hw.wq_cap.wq_prs_support)
-+		return -EOPNOTSUPP;
-+
-+	rc = kstrtobool(buf, &prs_dis);
-+	if (rc < 0)
-+		return rc;
-+
-+	if (prs_dis) {
-+		set_bit(WQ_FLAG_PRS_DISABLE, &wq->flags);
-+		/* when PRS is disabled, BOF needs to be off as well */
-+		clear_bit(WQ_FLAG_BLOCK_ON_FAULT, &wq->flags);
-+	} else {
-+		clear_bit(WQ_FLAG_PRS_DISABLE, &wq->flags);
-+	}
-+	return count;
-+}
-+
-+static struct device_attribute dev_attr_wq_prs_disable =
-+		__ATTR(prs_disable, 0644, wq_prs_disable_show, wq_prs_disable_store);
-+
- static ssize_t wq_occupancy_show(struct device *dev, struct device_attribute *attr, char *buf)
- {
- 	struct idxd_wq *wq = confdev_to_wq(dev);
-@@ -1239,6 +1281,7 @@ static struct attribute *idxd_wq_attributes[] = {
- 	&dev_attr_wq_max_transfer_size.attr,
- 	&dev_attr_wq_max_batch_size.attr,
- 	&dev_attr_wq_ats_disable.attr,
-+	&dev_attr_wq_prs_disable.attr,
- 	&dev_attr_wq_occupancy.attr,
- 	&dev_attr_wq_enqcmds_retries.attr,
- 	&dev_attr_wq_op_config.attr,
-@@ -1260,6 +1303,13 @@ static bool idxd_wq_attr_max_batch_size_invisible(struct attribute *attr,
- 	       idxd->data->type == IDXD_TYPE_IAX;
++What:		/sys/bus/dsa/devices/wq<m>.<n>/dsa<x>\!wq<m>.<n>/file<y>/cr_fault_failures
++Date:		Sept 14, 2022
++KernelVersion:	6.4.0
++Contact:	dmaengine@vger.kernel.org
++Description:	Show the number of Completion Record (CR) faults failures that this
++		application has caused. The failure counter is incremented when the
++		driver cannot fault in the address for the CR. Typically this is caused
++		by a bad address programmed in the submitted descriptor or a malicious
++		submitter is using bad CR address on purpose.
+diff --git a/drivers/dma/idxd/cdev.c b/drivers/dma/idxd/cdev.c
+index e07411053e21..2fb905f2545b 100644
+--- a/drivers/dma/idxd/cdev.c
++++ b/drivers/dma/idxd/cdev.c
+@@ -61,6 +61,51 @@ static inline struct idxd_user_context *dev_to_uctx(struct device *dev)
+ 	return container_of(idxd_dev, struct idxd_user_context, idxd_dev);
  }
  
-+static bool idxd_wq_attr_wq_prs_disable_invisible(struct attribute *attr,
-+						  struct idxd_device *idxd)
++static ssize_t cr_faults_show(struct device *dev, struct device_attribute *attr, char *buf)
 +{
-+	return attr == &dev_attr_wq_prs_disable.attr &&
-+	       !idxd->hw.wq_cap.wq_prs_support;
-+}
++	struct idxd_user_context *ctx = dev_to_uctx(dev);
 +
- static umode_t idxd_wq_attr_visible(struct kobject *kobj,
- 				    struct attribute *attr, int n)
- {
-@@ -1273,6 +1323,9 @@ static umode_t idxd_wq_attr_visible(struct kobject *kobj,
- 	if (idxd_wq_attr_max_batch_size_invisible(attr, idxd))
- 		return 0;
- 
-+	if (idxd_wq_attr_wq_prs_disable_invisible(attr, idxd))
++	return sysfs_emit(buf, "%llu\n", ctx->counters[COUNTER_FAULTS]);
++}
++static DEVICE_ATTR_RO(cr_faults);
++
++static ssize_t cr_fault_failures_show(struct device *dev,
++				      struct device_attribute *attr, char *buf)
++{
++	struct idxd_user_context *ctx = dev_to_uctx(dev);
++
++	return sysfs_emit(buf, "%llu\n", ctx->counters[COUNTER_FAULT_FAILS]);
++}
++static DEVICE_ATTR_RO(cr_fault_failures);
++
++static struct attribute *cdev_file_attributes[] = {
++	&dev_attr_cr_faults.attr,
++	&dev_attr_cr_fault_failures.attr,
++	NULL
++};
++
++static umode_t cdev_file_attr_visible(struct kobject *kobj, struct attribute *a, int n)
++{
++	struct device *dev = container_of(kobj, typeof(*dev), kobj);
++	struct idxd_user_context *ctx = dev_to_uctx(dev);
++	struct idxd_wq *wq = ctx->wq;
++
++	if (!wq_pasid_enabled(wq))
 +		return 0;
 +
- 	return attr->mode;
- }
++	return a->mode;
++}
++
++static const struct attribute_group cdev_file_attribute_group = {
++	.attrs = cdev_file_attributes,
++	.is_visible = cdev_file_attr_visible,
++};
++
++static const struct attribute_group *cdev_file_attribute_groups[] = {
++	&cdev_file_attribute_group,
++	NULL
++};
++
+ static void idxd_file_dev_release(struct device *dev)
+ {
+ 	struct idxd_user_context *ctx = dev_to_uctx(dev);
+@@ -100,6 +145,7 @@ static void idxd_file_dev_release(struct device *dev)
+ static struct device_type idxd_cdev_file_type = {
+ 	.name = "idxd_file",
+ 	.release = idxd_file_dev_release,
++	.groups = cdev_file_attribute_groups,
+ };
  
+ static void idxd_cdev_dev_release(struct device *dev)
 -- 
 2.37.1
 
