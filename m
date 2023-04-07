@@ -2,42 +2,42 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BF714C77B70
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9E80CC76196
 	for <dmaengine@archiver.kernel.org>; Fri,  7 Apr 2023 20:32:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230234AbjDGUcJ (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 7 Apr 2023 16:32:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55282 "EHLO
+        id S229887AbjDGUcI (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 7 Apr 2023 16:32:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55002 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231352AbjDGUbl (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Fri, 7 Apr 2023 16:31:41 -0400
+        with ESMTP id S231266AbjDGUbf (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Fri, 7 Apr 2023 16:31:35 -0400
 Received: from mga07.intel.com (mga07.intel.com [134.134.136.100])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4246FCA2B;
-        Fri,  7 Apr 2023 13:31:34 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BFF51C140;
+        Fri,  7 Apr 2023 13:31:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1680899494; x=1712435494;
+  t=1680899492; x=1712435492;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=g5ilb4+0dWGScQreqTS5r5+hbNiJgbK8srbCtL8vqqw=;
-  b=J25Uyzze8RcFgkB5OzXDLdNztfKIRIVMOgle01HIlERaJLrWooJXR2xU
-   EtC7Q0NHFfCFGnt6MV+/E2k4cnsDi21xC/m1lMUmYiNGiFdudrBnUOcOz
-   q894LQY95Hh98XkNuEAg+n4BaSznedfqHyahELKUOXVspfhBvU1S4cFGo
-   bQug5LzAiEVlbR+LxNcxMzDvDRbKBi1/dRK2cLwjlpIEAUoDSEGR1pwu6
-   MOic4M7+28v9wVlmbnoX/GIeSsk38nG9cFVYTsV0LppdkQVmzGh26rNKG
-   LZ1DgtD69kKP7rOo1vSwWOH6H/H3yC+LfcO7U6gMq4qwAdWGwoqAHpRQK
-   A==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10673"; a="408196882"
+  bh=weIoFwPmDBgK/Kz633bx40JkpnSzh85lXO3LAWwlT/Q=;
+  b=RhJQ2kaeAQbHp9z7ANhRbQ+NbpQBlszMpRi3S40q7VE+I4wr00lz5yTm
+   h+PBh8iMOS5gGFVoZPhy8kpnryhILV/WL3f9kG/ggrzLqSHdclkTQjltf
+   mAAkzpX/usw0M0IHJz4HJ4nPd0g0F1VL8F6kAUVkq2MWgTympOUJMY4CS
+   hMPfx1UbW+c3jQsN8EjHiEgv/yA1ft2EMoQ5aouOhMiLmU/v/aiJsyBH6
+   U78CC9zYCpkj7YwIw4yULnGbO17yp1FC83FhC7SmFsVQzs/j1DVAXVdpD
+   TT//LhSNh60OdIfjyaX/dH3TfL4Q0otPk1lHRSmz1dpkz4ynBNzYF7ify
+   w==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10673"; a="408196876"
 X-IronPort-AV: E=Sophos;i="5.98,327,1673942400"; 
-   d="scan'208";a="408196882"
+   d="scan'208";a="408196876"
 Received: from orsmga007.jf.intel.com ([10.7.209.58])
   by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Apr 2023 13:31:28 -0700
 X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10673"; a="681125906"
+X-IronPort-AV: E=McAfee;i="6600,9927,10673"; a="681125897"
 X-IronPort-AV: E=Sophos;i="5.98,327,1673942400"; 
-   d="scan'208";a="681125906"
+   d="scan'208";a="681125897"
 Received: from fyu1.sc.intel.com ([172.25.103.126])
-  by orsmga007.jf.intel.com with ESMTP; 07 Apr 2023 13:31:28 -0700
+  by orsmga007.jf.intel.com with ESMTP; 07 Apr 2023 13:31:27 -0700
 From:   Fenghua Yu <fenghua.yu@intel.com>
 To:     "Vinod Koul" <vkoul@kernel.org>,
         "Dave Jiang" <dave.jiang@intel.com>
@@ -45,9 +45,9 @@ Cc:     dmaengine@vger.kernel.org,
         "linux-kernel" <linux-kernel@vger.kernel.org>,
         Tony Zhu <tony.zhu@intel.com>,
         Fenghua Yu <fenghua.yu@intel.com>
-Subject: [PATCH v4 15/16] dmaengine: idxd: add pid to exported sysfs attribute for opened file
-Date:   Fri,  7 Apr 2023 13:31:42 -0700
-Message-Id: <20230407203143.2189681-16-fenghua.yu@intel.com>
+Subject: [PATCH v4 12/16] dmaengine: idxd: add per file user counters for completion record faults
+Date:   Fri,  7 Apr 2023 13:31:39 -0700
+Message-Id: <20230407203143.2189681-13-fenghua.yu@intel.com>
 X-Mailer: git-send-email 2.37.1
 In-Reply-To: <20230407203143.2189681-1-fenghua.yu@intel.com>
 References: <20230407203143.2189681-1-fenghua.yu@intel.com>
@@ -59,74 +59,123 @@ X-Mailing-List: dmaengine@vger.kernel.org
 
 From: Dave Jiang <dave.jiang@intel.com>
 
-Provide the pid of the application for the opened file. This allows the
-monitor daemon to easily correlate which app opened the file and easily
-kill the app by pid if that is desired action.
+Add counters per opened file for the char device in order to keep track how
+many completion record faults occurred and how many of those faults failed
+the writeback by the driver after attempt to fault in the page. The
+counters are managed by xarray that associates the PASID with
+struct idxd_user_context.
 
 Tested-by: Tony Zhu <tony.zhu@intel.com>
 Signed-off-by: Dave Jiang <dave.jiang@intel.com>
 Co-developed-by: Fenghua Yu <fenghua.yu@intel.com>
 Signed-off-by: Fenghua Yu <fenghua.yu@intel.com>
 ---
- Documentation/ABI/stable/sysfs-driver-dma-idxd |  8 ++++++++
- drivers/dma/idxd/cdev.c                        | 11 +++++++++++
- 2 files changed, 19 insertions(+)
+v3:
+- Move majority of the xarry code to patch 8 which implements new function
+  idxd_copy_cr() since the function needs the xarry to maintain and find
+  mm by wq and PASID. Only keep the user counters related xarry code here.
+ drivers/dma/idxd/cdev.c | 18 ++++++++++++++++++
+ drivers/dma/idxd/idxd.h |  7 +++++++
+ drivers/dma/idxd/irq.c  |  4 ++++
+ 3 files changed, 29 insertions(+)
 
-diff --git a/Documentation/ABI/stable/sysfs-driver-dma-idxd b/Documentation/ABI/stable/sysfs-driver-dma-idxd
-index 73ab86196a41..5d0df57f5298 100644
---- a/Documentation/ABI/stable/sysfs-driver-dma-idxd
-+++ b/Documentation/ABI/stable/sysfs-driver-dma-idxd
-@@ -335,3 +335,11 @@ Description:	Show the number of Completion Record (CR) faults failures that this
- 		driver cannot fault in the address for the CR. Typically this is caused
- 		by a bad address programmed in the submitted descriptor or a malicious
- 		submitter is using bad CR address on purpose.
-+
-+What:		/sys/bus/dsa/devices/wq<m>.<n>/dsa<x>\!wq<m>.<n>/file<y>/pid
-+Date:		Sept 14, 2022
-+KernelVersion:	6.4.0
-+Contact:	dmaengine@vger.kernel.org
-+Description:	Show the process id of the application that opened the file. This is
-+		helpful information for a monitor daemon that wants to kill the
-+		application that opened the file.
 diff --git a/drivers/dma/idxd/cdev.c b/drivers/dma/idxd/cdev.c
-index 2fb905f2545b..ecbf67c2ad2b 100644
+index 0a51c33198f6..5c8e964e671b 100644
 --- a/drivers/dma/idxd/cdev.c
 +++ b/drivers/dma/idxd/cdev.c
-@@ -49,6 +49,7 @@ struct idxd_user_context {
- 	struct idxd_dev idxd_dev;
- 	u64 counters[COUNTER_MAX];
- 	int id;
-+	pid_t pid;
+@@ -39,6 +39,7 @@ struct idxd_user_context {
+ 	struct mm_struct *mm;
+ 	unsigned int flags;
+ 	struct iommu_sva *sva;
++	u64 counters[COUNTER_MAX];
  };
  
- static void idxd_cdev_evl_drain_pasid(struct idxd_wq *wq, u32 pasid);
-@@ -78,9 +79,18 @@ static ssize_t cr_fault_failures_show(struct device *dev,
+ static void idxd_cdev_dev_release(struct device *dev)
+@@ -84,6 +85,23 @@ static void idxd_xa_pasid_remove(struct idxd_user_context *ctx)
+ 	mutex_unlock(&wq->uc_lock);
  }
- static DEVICE_ATTR_RO(cr_fault_failures);
  
-+static ssize_t pid_show(struct device *dev, struct device_attribute *attr, char *buf)
++void idxd_user_counter_increment(struct idxd_wq *wq, u32 pasid, int index)
 +{
-+	struct idxd_user_context *ctx = dev_to_uctx(dev);
++	struct idxd_user_context *ctx;
 +
-+	return sysfs_emit(buf, "%u\n", ctx->pid);
++	if (index >= COUNTER_MAX)
++		return;
++
++	mutex_lock(&wq->uc_lock);
++	ctx = xa_load(&wq->upasid_xa, pasid);
++	if (!ctx) {
++		mutex_unlock(&wq->uc_lock);
++		return;
++	}
++	ctx->counters[index]++;
++	mutex_unlock(&wq->uc_lock);
 +}
-+static DEVICE_ATTR_RO(pid);
 +
- static struct attribute *cdev_file_attributes[] = {
- 	&dev_attr_cr_faults.attr,
- 	&dev_attr_cr_fault_failures.attr,
-+	&dev_attr_pid.attr,
- 	NULL
- };
+ static int idxd_cdev_open(struct inode *inode, struct file *filp)
+ {
+ 	struct idxd_user_context *ctx;
+diff --git a/drivers/dma/idxd/idxd.h b/drivers/dma/idxd/idxd.h
+index 4c4baa80c731..9fb26d017285 100644
+--- a/drivers/dma/idxd/idxd.h
++++ b/drivers/dma/idxd/idxd.h
+@@ -127,6 +127,12 @@ struct idxd_pmu {
  
-@@ -238,6 +248,7 @@ static int idxd_cdev_open(struct inode *inode, struct file *filp)
+ #define IDXD_MAX_PRIORITY	0xf
  
- 	ctx->wq = wq;
- 	filp->private_data = ctx;
-+	ctx->pid = current->pid;
++enum {
++	COUNTER_FAULTS = 0,
++	COUNTER_FAULT_FAILS,
++	COUNTER_MAX
++};
++
+ enum idxd_wq_state {
+ 	IDXD_WQ_DISABLED = 0,
+ 	IDXD_WQ_ENABLED,
+@@ -713,6 +719,7 @@ int idxd_wq_add_cdev(struct idxd_wq *wq);
+ void idxd_wq_del_cdev(struct idxd_wq *wq);
+ int idxd_copy_cr(struct idxd_wq *wq, ioasid_t pasid, unsigned long addr,
+ 		 void *buf, int len);
++void idxd_user_counter_increment(struct idxd_wq *wq, u32 pasid, int index);
  
- 	if (device_user_pasid_enabled(idxd)) {
- 		sva = iommu_sva_bind_device(dev, current->mm);
+ /* perfmon */
+ #if IS_ENABLED(CONFIG_INTEL_IDXD_PERFMON)
+diff --git a/drivers/dma/idxd/irq.c b/drivers/dma/idxd/irq.c
+index c660d63a3eb8..f4b0f59c95ba 100644
+--- a/drivers/dma/idxd/irq.c
++++ b/drivers/dma/idxd/irq.c
+@@ -240,6 +240,7 @@ static void idxd_evl_fault_work(struct work_struct *work)
+ 			evl->batch_fail[entry_head->batch_id] = false;
+ 
+ 		copy_size = cr_size;
++		idxd_user_counter_increment(wq, entry_head->pasid, COUNTER_FAULTS);
+ 		break;
+ 	case DSA_COMP_BATCH_EVL_ERR:
+ 		bf = &evl->batch_fail[entry_head->batch_id];
+@@ -251,6 +252,7 @@ static void idxd_evl_fault_work(struct work_struct *work)
+ 			*result = 1;
+ 			*bf = false;
+ 		}
++		idxd_user_counter_increment(wq, entry_head->pasid, COUNTER_FAULTS);
+ 		break;
+ 	case DSA_COMP_DRAIN_EVL:
+ 		copy_size = cr_size;
+@@ -282,6 +284,7 @@ static void idxd_evl_fault_work(struct work_struct *work)
+ 	switch (fault->status) {
+ 	case DSA_COMP_CRA_XLAT:
+ 		if (copied != copy_size) {
++			idxd_user_counter_increment(wq, entry_head->pasid, COUNTER_FAULT_FAILS);
+ 			dev_dbg_ratelimited(dev, "Failed to write to completion record: (%d:%d)\n",
+ 					    copy_size, copied);
+ 			if (entry_head->batch)
+@@ -290,6 +293,7 @@ static void idxd_evl_fault_work(struct work_struct *work)
+ 		break;
+ 	case DSA_COMP_BATCH_EVL_ERR:
+ 		if (copied != copy_size) {
++			idxd_user_counter_increment(wq, entry_head->pasid, COUNTER_FAULT_FAILS);
+ 			dev_dbg_ratelimited(dev, "Failed to write to batch completion record: (%d:%d)\n",
+ 					    copy_size, copied);
+ 		}
 -- 
 2.37.1
 
