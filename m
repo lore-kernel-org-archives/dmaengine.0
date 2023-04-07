@@ -2,40 +2,40 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 98F42C6FD1D
-	for <dmaengine@archiver.kernel.org>; Fri,  7 Apr 2023 20:32:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8E8BDC77B6C
+	for <dmaengine@archiver.kernel.org>; Fri,  7 Apr 2023 20:32:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232025AbjDGUcG (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 7 Apr 2023 16:32:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54998 "EHLO
+        id S229677AbjDGUcH (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 7 Apr 2023 16:32:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55004 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230413AbjDGUbf (ORCPT
+        with ESMTP id S231315AbjDGUbf (ORCPT
         <rfc822;dmaengine@vger.kernel.org>); Fri, 7 Apr 2023 16:31:35 -0400
 Received: from mga07.intel.com (mga07.intel.com [134.134.136.100])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B07FCA08;
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1D110CA0C;
         Fri,  7 Apr 2023 13:31:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1680899492; x=1712435492;
+  t=1680899493; x=1712435493;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=zvk7qPdJBJHv289Zox3rK/VgyUPjEJdEY7p1CNsp8J0=;
-  b=GlpgDJe8b8Qzd7FUre8WuD0PrvAeox/Xjd2bHLJf6pqafb1J1WHjrwIO
-   Q/XOkGmrYAPvHVA0KQP2VQP+HJ5K9CW64LTESImqzJlXbj4DRP2aV1FJb
-   KmhW/FeswvqCSxz4k7E6JtPF5J7sD9xpQ/TQNTEFquKJiAWCuqb5w17GD
-   F1MMob7+hXDOfdGRzw2tuL+J2C5UiN8qVZP6LKdXy4T54hoDeQsKB0eTl
-   MKDTHfC5l0yYms0PS0GOgk/01E+AobgyE6iy1ePqrODnsZrNAoE1r3Fdu
-   bgSRNYYl0QyBay9B7LH17MBzTfIAGNN55WHGnl9D4+amYwJmMPv0WnGnP
-   Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10673"; a="408196873"
+  bh=WerQDtmuf8yZcX7AnDOXhwPDaGTSDW/AqrkuB0lbMbA=;
+  b=Gg0oiEUh057AWSYz1wx4WodP6mnbCKLU88+M0aMzTigdq+/TmMytxZrk
+   MXX9uWt1OkAooDttDUMC8+mnZQQNyE85m2WrMWKJY445GrqiRP9Wmqk2Z
+   lazyUPCSS0+WJeNW7O1OUanT5s917pEKLzm8X/ZjOv3ltsINmDOinWfLS
+   Lv/ncpVNvjpuruBTksQvAxy7aH/QYlz0Gcaownvr1E1L6pPlkbsnMsJ/H
+   1rX6H14FWPat1wMh8gxZ1Rx21TrykMMQv2I1BJpTouZGY3yncTCfL9o1k
+   olPvKqLaMQc35eGIsli/0Y3xYcJw8NK1Xe4pUbthRcrLmr79d6twENNtM
+   w==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10673"; a="408196878"
 X-IronPort-AV: E=Sophos;i="5.98,327,1673942400"; 
-   d="scan'208";a="408196873"
+   d="scan'208";a="408196878"
 Received: from orsmga007.jf.intel.com ([10.7.209.58])
-  by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Apr 2023 13:31:27 -0700
+  by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Apr 2023 13:31:28 -0700
 X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10673"; a="681125894"
+X-IronPort-AV: E=McAfee;i="6600,9927,10673"; a="681125900"
 X-IronPort-AV: E=Sophos;i="5.98,327,1673942400"; 
-   d="scan'208";a="681125894"
+   d="scan'208";a="681125900"
 Received: from fyu1.sc.intel.com ([172.25.103.126])
   by orsmga007.jf.intel.com with ESMTP; 07 Apr 2023 13:31:27 -0700
 From:   Fenghua Yu <fenghua.yu@intel.com>
@@ -45,9 +45,9 @@ Cc:     dmaengine@vger.kernel.org,
         "linux-kernel" <linux-kernel@vger.kernel.org>,
         Tony Zhu <tony.zhu@intel.com>,
         Fenghua Yu <fenghua.yu@intel.com>
-Subject: [PATCH v4 11/16] dmaengine: idxd: process batch descriptor completion record faults
-Date:   Fri,  7 Apr 2023 13:31:38 -0700
-Message-Id: <20230407203143.2189681-12-fenghua.yu@intel.com>
+Subject: [PATCH v4 13/16] dmaengine: idxd: add a device to represent the file opened
+Date:   Fri,  7 Apr 2023 13:31:40 -0700
+Message-Id: <20230407203143.2189681-14-fenghua.yu@intel.com>
 X-Mailer: git-send-email 2.37.1
 In-Reply-To: <20230407203143.2189681-1-fenghua.yu@intel.com>
 References: <20230407203143.2189681-1-fenghua.yu@intel.com>
@@ -59,255 +59,217 @@ X-Mailing-List: dmaengine@vger.kernel.org
 
 From: Dave Jiang <dave.jiang@intel.com>
 
-Add event log processing for faulting of user batch descriptor completion
-record.
-
-When encountering an event log entry for a page fault on a completion
-record, the driver is expected to do the following:
-1. If the "first error in batch" bit in event log entry error info is
-set, discard any previously recorded errors associated with the
-"batch identifier".
-2. Fix the page fault according to the fault address in the event log. If
-successful, write the completion record to the fault address in user space.
-3. If an error is encountered while writing the completion record and it is
-associated to a descriptor in the batch, the driver associates the error
-with the batch identifier of the event log entry and tracks it until the
-event log entry for the corresponding batch desc is encountered.
-
-While processing an event log entry for a batch descriptor with error
-indicating that one or more descs in the batch had event log entries,
-the driver will do the following before writing the batch completion
-record:
-1. If the status field of the completion record is 0x1, the driver will
-change it to error code 0x5 (one or more operations in batch completed
-with status not successful) and changes the result field to 1.
-2. If the status is error code 0x6 (page fault on batch descriptor list
-address), change the result field to 1.
-3. If status is any other value, the completion record is not changed.
-4. Clear the recorded error in preparation for next batch with same batch
-identifier.
-
-The result field is for user software to determine whether to set the
-"Batch Error" flag bit in the descriptor for continuation of partial
-batch descriptor completion. See DSA spec 2.0 for additional information.
-
-If no error has been recorded for the batch, the batch completion record is
-written to user space as is.
+Embed a struct device for the user file context in order to export sysfs
+attributes related with the opened file. Tie the lifetime of the file
+context to the device. The sysfs entry will be added under the char device.
 
 Tested-by: Tony Zhu <tony.zhu@intel.com>
 Signed-off-by: Dave Jiang <dave.jiang@intel.com>
 Co-developed-by: Fenghua Yu <fenghua.yu@intel.com>
 Signed-off-by: Fenghua Yu <fenghua.yu@intel.com>
 ---
-v4:
-- Change dev_err() to dev_dbg_ratelimited() (Tony Luck).
+ drivers/dma/idxd/cdev.c | 119 ++++++++++++++++++++++++++++++++--------
+ drivers/dma/idxd/idxd.h |   2 +
+ 2 files changed, 97 insertions(+), 24 deletions(-)
 
-v3:
-- Call new function idxd_copy_cr().
-
-v2:
-- Call iommu_access_remote_vm() to copy completion record to user.
- drivers/dma/idxd/idxd.h      |  3 ++
- drivers/dma/idxd/init.c      |  4 ++
- drivers/dma/idxd/irq.c       | 91 ++++++++++++++++++++++++++----------
- drivers/dma/idxd/registers.h |  4 +-
- include/uapi/linux/idxd.h    |  1 +
- 5 files changed, 78 insertions(+), 25 deletions(-)
-
-diff --git a/drivers/dma/idxd/idxd.h b/drivers/dma/idxd/idxd.h
-index 3963c83165a6..4c4baa80c731 100644
---- a/drivers/dma/idxd/idxd.h
-+++ b/drivers/dma/idxd/idxd.h
-@@ -265,6 +265,8 @@ struct idxd_driver_data {
- 	int compl_size;
- 	int align;
- 	int evl_cr_off;
-+	int cr_status_off;
-+	int cr_result_off;
+diff --git a/drivers/dma/idxd/cdev.c b/drivers/dma/idxd/cdev.c
+index 5c8e964e671b..e07411053e21 100644
+--- a/drivers/dma/idxd/cdev.c
++++ b/drivers/dma/idxd/cdev.c
+@@ -23,6 +23,13 @@ struct idxd_cdev_context {
+ 	struct ida minor_ida;
  };
  
- struct idxd_evl {
-@@ -278,6 +280,7 @@ struct idxd_evl {
- 	u16 size;
- 	u16 head;
- 	unsigned long *bmap;
-+	bool batch_fail[IDXD_MAX_BATCH_IDENT];
- };
- 
- struct idxd_evl_fault {
-diff --git a/drivers/dma/idxd/init.c b/drivers/dma/idxd/init.c
-index be4f3676e1a6..9b3e7f0770d1 100644
---- a/drivers/dma/idxd/init.c
-+++ b/drivers/dma/idxd/init.c
-@@ -48,6 +48,8 @@ static struct idxd_driver_data idxd_driver_data[] = {
- 		.align = 32,
- 		.dev_type = &dsa_device_type,
- 		.evl_cr_off = offsetof(struct dsa_evl_entry, cr),
-+		.cr_status_off = offsetof(struct dsa_completion_record, status),
-+		.cr_result_off = offsetof(struct dsa_completion_record, result),
- 	},
- 	[IDXD_TYPE_IAX] = {
- 		.name_prefix = "iax",
-@@ -56,6 +58,8 @@ static struct idxd_driver_data idxd_driver_data[] = {
- 		.align = 64,
- 		.dev_type = &iax_device_type,
- 		.evl_cr_off = offsetof(struct iax_evl_entry, cr),
-+		.cr_status_off = offsetof(struct iax_completion_record, status),
-+		.cr_result_off = offsetof(struct iax_completion_record, error_code),
- 	},
- };
- 
-diff --git a/drivers/dma/idxd/irq.c b/drivers/dma/idxd/irq.c
-index 96983975f974..c660d63a3eb8 100644
---- a/drivers/dma/idxd/irq.c
-+++ b/drivers/dma/idxd/irq.c
-@@ -225,37 +225,79 @@ static void idxd_evl_fault_work(struct work_struct *work)
- 	struct idxd_wq *wq = fault->wq;
- 	struct idxd_device *idxd = wq->idxd;
- 	struct device *dev = &idxd->pdev->dev;
-+	struct idxd_evl *evl = idxd->evl;
- 	struct __evl_entry *entry_head = fault->entry;
- 	void *cr = (void *)entry_head + idxd->data->evl_cr_off;
--	int cr_size = idxd->data->compl_size, copied;
-+	int cr_size = idxd->data->compl_size;
-+	u8 *status = (u8 *)cr + idxd->data->cr_status_off;
-+	u8 *result = (u8 *)cr + idxd->data->cr_result_off;
-+	int copied, copy_size;
-+	bool *bf;
- 
- 	switch (fault->status) {
- 	case DSA_COMP_CRA_XLAT:
--	case DSA_COMP_DRAIN_EVL:
--		/*
--		 * Copy completion record to fault_addr in user address space
--		 * that is found by wq and PASID.
--		 */
--		copied = idxd_copy_cr(wq, entry_head->pasid,
--				      entry_head->fault_addr,
--				      cr, cr_size);
--		/*
--		 * The task that triggered the page fault is unknown currently
--		 * because multiple threads may share the user address
--		 * space or the task exits already before this fault.
--		 * So if the copy fails, SIGSEGV can not be sent to the task.
--		 * Just print an error for the failure. The user application
--		 * waiting for the completion record will time out on this
--		 * failure.
--		 */
--		if (copied != cr_size) {
--			dev_dbg_ratelimited(dev, "Failed to write to completion record. (%d:%d)\n",
--					    cr_size, copied);
-+		if (entry_head->batch && entry_head->first_err_in_batch)
-+			evl->batch_fail[entry_head->batch_id] = false;
++/*
++ * Since user file names are global in DSA devices, define their ida's as
++ * global to avoid conflict file names.
++ */
++static DEFINE_IDA(file_ida);
++static DEFINE_MUTEX(ida_lock);
 +
-+		copy_size = cr_size;
-+		break;
-+	case DSA_COMP_BATCH_EVL_ERR:
-+		bf = &evl->batch_fail[entry_head->batch_id];
+ /*
+  * ictx is an array based off of accelerator types. enum idxd_type
+  * is used as index
+@@ -39,7 +46,60 @@ struct idxd_user_context {
+ 	struct mm_struct *mm;
+ 	unsigned int flags;
+ 	struct iommu_sva *sva;
++	struct idxd_dev idxd_dev;
+ 	u64 counters[COUNTER_MAX];
++	int id;
++};
 +
-+		copy_size = entry_head->rcr || *bf ? cr_size : 0;
-+		if (*bf) {
-+			if (*status == DSA_COMP_SUCCESS)
-+				*status = DSA_COMP_BATCH_FAIL;
-+			*result = 1;
-+			*bf = false;
- 		}
- 		break;
-+	case DSA_COMP_DRAIN_EVL:
-+		copy_size = cr_size;
-+		break;
- 	default:
--		dev_dbg_ratelimited(dev, "Unrecognized error code: %#x\n",
--				    DSA_COMP_STATUS(entry_head->error));
-+		copy_size = 0;
-+		dev_dbg_ratelimited(dev, "Unrecognized error code: %#x\n", fault->status);
-+		break;
++static void idxd_cdev_evl_drain_pasid(struct idxd_wq *wq, u32 pasid);
++static void idxd_xa_pasid_remove(struct idxd_user_context *ctx);
++
++static inline struct idxd_user_context *dev_to_uctx(struct device *dev)
++{
++	struct idxd_dev *idxd_dev = confdev_to_idxd_dev(dev);
++
++	return container_of(idxd_dev, struct idxd_user_context, idxd_dev);
++}
++
++static void idxd_file_dev_release(struct device *dev)
++{
++	struct idxd_user_context *ctx = dev_to_uctx(dev);
++	struct idxd_wq *wq = ctx->wq;
++	struct idxd_device *idxd = wq->idxd;
++	int rc;
++
++	mutex_lock(&ida_lock);
++	ida_free(&file_ida, ctx->id);
++	mutex_unlock(&ida_lock);
++
++	/* Wait for in-flight operations to complete. */
++	if (wq_shared(wq)) {
++		idxd_device_drain_pasid(idxd, ctx->pasid);
++	} else {
++		if (device_user_pasid_enabled(idxd)) {
++			/* The wq disable in the disable pasid function will drain the wq */
++			rc = idxd_wq_disable_pasid(wq);
++			if (rc < 0)
++				dev_err(dev, "wq disable pasid failed.\n");
++		} else {
++			idxd_wq_drain(wq);
++		}
 +	}
 +
-+	if (copy_size == 0)
-+		return;
++	if (ctx->sva) {
++		idxd_cdev_evl_drain_pasid(wq, ctx->pasid);
++		iommu_sva_unbind_device(ctx->sva);
++		idxd_xa_pasid_remove(ctx);
++	}
++	kfree(ctx);
++	mutex_lock(&wq->wq_lock);
++	idxd_wq_put(wq);
++	mutex_unlock(&wq->wq_lock);
++}
 +
-+	/*
-+	 * Copy completion record to fault_addr in user address space
-+	 * that is found by wq and PASID.
-+	 */
-+	copied = idxd_copy_cr(wq, entry_head->pasid, entry_head->fault_addr,
-+			      cr, copy_size);
-+	/*
-+	 * The task that triggered the page fault is unknown currently
-+	 * because multiple threads may share the user address
-+	 * space or the task exits already before this fault.
-+	 * So if the copy fails, SIGSEGV can not be sent to the task.
-+	 * Just print an error for the failure. The user application
-+	 * waiting for the completion record will time out on this
-+	 * failure.
-+	 */
-+	switch (fault->status) {
-+	case DSA_COMP_CRA_XLAT:
-+		if (copied != copy_size) {
-+			dev_dbg_ratelimited(dev, "Failed to write to completion record: (%d:%d)\n",
-+					    copy_size, copied);
-+			if (entry_head->batch)
-+				evl->batch_fail[entry_head->batch_id] = true;
-+		}
-+		break;
-+	case DSA_COMP_BATCH_EVL_ERR:
-+		if (copied != copy_size) {
-+			dev_dbg_ratelimited(dev, "Failed to write to batch completion record: (%d:%d)\n",
-+					    copy_size, copied);
-+		}
-+		break;
-+	case DSA_COMP_DRAIN_EVL:
-+		if (copied != copy_size)
-+			dev_dbg_ratelimited(dev, "Failed to write to drain completion record: (%d:%d)\n",
-+					    copy_size, copied);
- 		break;
- 	}
- 
-@@ -274,7 +316,8 @@ static void process_evl_entry(struct idxd_device *idxd,
- 	} else {
- 		status = DSA_COMP_STATUS(entry_head->error);
- 
--		if (status == DSA_COMP_CRA_XLAT || status == DSA_COMP_DRAIN_EVL) {
-+		if (status == DSA_COMP_CRA_XLAT || status == DSA_COMP_DRAIN_EVL ||
-+		    status == DSA_COMP_BATCH_EVL_ERR) {
- 			struct idxd_evl_fault *fault;
- 			int ent_size = evl_ent_size(idxd);
- 
-diff --git a/drivers/dma/idxd/registers.h b/drivers/dma/idxd/registers.h
-index 148db94f9373..9f3959d001b6 100644
---- a/drivers/dma/idxd/registers.h
-+++ b/drivers/dma/idxd/registers.h
-@@ -35,7 +35,7 @@ union gen_cap_reg {
- 		u64 drain_readback:1;
- 		u64 rsvd2:3;
- 		u64 evl_support:2;
--		u64 rsvd4:1;
-+		u64 batch_continuation:1;
- 		u64 max_xfer_shift:5;
- 		u64 max_batch_shift:4;
- 		u64 max_ims_mult:6;
-@@ -577,6 +577,8 @@ union evl_status_reg {
- 	u64 bits;
- } __packed;
- 
-+#define IDXD_MAX_BATCH_IDENT	256
-+
- struct __evl_entry {
- 	u64 rsvd:2;
- 	u64 desc_valid:1;
-diff --git a/include/uapi/linux/idxd.h b/include/uapi/linux/idxd.h
-index 37732016f3b0..2645fa8662cc 100644
---- a/include/uapi/linux/idxd.h
-+++ b/include/uapi/linux/idxd.h
-@@ -134,6 +134,7 @@ enum dsa_completion_status {
- 	DSA_COMP_HW_ERR_DRB,
- 	DSA_COMP_TRANSLATION_FAIL,
- 	DSA_COMP_DRAIN_EVL = 0x26,
-+	DSA_COMP_BATCH_EVL_ERR,
++static struct device_type idxd_cdev_file_type = {
++	.name = "idxd_file",
++	.release = idxd_file_dev_release,
  };
  
- enum iax_completion_status {
+ static void idxd_cdev_dev_release(struct device *dev)
+@@ -107,10 +167,11 @@ static int idxd_cdev_open(struct inode *inode, struct file *filp)
+ 	struct idxd_user_context *ctx;
+ 	struct idxd_device *idxd;
+ 	struct idxd_wq *wq;
+-	struct device *dev;
++	struct device *dev, *fdev;
+ 	int rc = 0;
+ 	struct iommu_sva *sva;
+ 	unsigned int pasid;
++	struct idxd_cdev *idxd_cdev;
+ 
+ 	wq = inode_wq(inode);
+ 	idxd = wq->idxd;
+@@ -166,10 +227,41 @@ static int idxd_cdev_open(struct inode *inode, struct file *filp)
+ 		}
+ 	}
+ 
++	idxd_cdev = wq->idxd_cdev;
++	mutex_lock(&ida_lock);
++	ctx->id = ida_alloc(&file_ida, GFP_KERNEL);
++	mutex_unlock(&ida_lock);
++	if (ctx->id < 0) {
++		dev_warn(dev, "ida alloc failure\n");
++		goto failed_ida;
++	}
++	ctx->idxd_dev.type  = IDXD_DEV_CDEV_FILE;
++	fdev = user_ctx_dev(ctx);
++	device_initialize(fdev);
++	fdev->parent = cdev_dev(idxd_cdev);
++	fdev->bus = &dsa_bus_type;
++	fdev->type = &idxd_cdev_file_type;
++
++	rc = dev_set_name(fdev, "file%d", ctx->id);
++	if (rc < 0) {
++		dev_warn(dev, "set name failure\n");
++		goto failed_dev_name;
++	}
++
++	rc = device_add(fdev);
++	if (rc < 0) {
++		dev_warn(dev, "file device add failure\n");
++		goto failed_dev_add;
++	}
++
+ 	idxd_wq_get(wq);
+ 	mutex_unlock(&wq->wq_lock);
+ 	return 0;
+ 
++failed_dev_add:
++failed_dev_name:
++	put_device(fdev);
++failed_ida:
+ failed_set_pasid:
+ 	if (device_user_pasid_enabled(idxd))
+ 		idxd_xa_pasid_remove(ctx);
+@@ -217,34 +309,12 @@ static int idxd_cdev_release(struct inode *node, struct file *filep)
+ 	struct idxd_wq *wq = ctx->wq;
+ 	struct idxd_device *idxd = wq->idxd;
+ 	struct device *dev = &idxd->pdev->dev;
+-	int rc;
+ 
+ 	dev_dbg(dev, "%s called\n", __func__);
+ 	filep->private_data = NULL;
+ 
+-	/* Wait for in-flight operations to complete. */
+-	if (wq_shared(wq)) {
+-		idxd_device_drain_pasid(idxd, ctx->pasid);
+-	} else {
+-		if (device_user_pasid_enabled(idxd)) {
+-			/* The wq disable in the disable pasid function will drain the wq */
+-			rc = idxd_wq_disable_pasid(wq);
+-			if (rc < 0)
+-				dev_err(dev, "wq disable pasid failed.\n");
+-		} else {
+-			idxd_wq_drain(wq);
+-		}
+-	}
++	device_unregister(user_ctx_dev(ctx));
+ 
+-	if (ctx->sva) {
+-		idxd_cdev_evl_drain_pasid(wq, ctx->pasid);
+-		iommu_sva_unbind_device(ctx->sva);
+-		idxd_xa_pasid_remove(ctx);
+-	}
+-	kfree(ctx);
+-	mutex_lock(&wq->wq_lock);
+-	idxd_wq_put(wq);
+-	mutex_unlock(&wq->wq_lock);
+ 	return 0;
+ }
+ 
+@@ -375,6 +445,7 @@ void idxd_wq_del_cdev(struct idxd_wq *wq)
+ 	struct idxd_cdev *idxd_cdev;
+ 
+ 	idxd_cdev = wq->idxd_cdev;
++	ida_destroy(&file_ida);
+ 	wq->idxd_cdev = NULL;
+ 	cdev_device_del(&idxd_cdev->cdev, cdev_dev(idxd_cdev));
+ 	put_device(cdev_dev(idxd_cdev));
+diff --git a/drivers/dma/idxd/idxd.h b/drivers/dma/idxd/idxd.h
+index 9fb26d017285..bd544eb2ddcb 100644
+--- a/drivers/dma/idxd/idxd.h
++++ b/drivers/dma/idxd/idxd.h
+@@ -32,6 +32,7 @@ enum idxd_dev_type {
+ 	IDXD_DEV_GROUP,
+ 	IDXD_DEV_ENGINE,
+ 	IDXD_DEV_CDEV,
++	IDXD_DEV_CDEV_FILE,
+ 	IDXD_DEV_MAX_TYPE,
+ };
+ 
+@@ -405,6 +406,7 @@ enum idxd_completion_status {
+ #define engine_confdev(engine) &engine->idxd_dev.conf_dev
+ #define group_confdev(group) &group->idxd_dev.conf_dev
+ #define cdev_dev(cdev) &cdev->idxd_dev.conf_dev
++#define user_ctx_dev(ctx) (&(ctx)->idxd_dev.conf_dev)
+ 
+ #define confdev_to_idxd_dev(dev) container_of(dev, struct idxd_dev, conf_dev)
+ #define idxd_dev_to_idxd(idxd_dev) container_of(idxd_dev, struct idxd_device, idxd_dev)
 -- 
 2.37.1
 
