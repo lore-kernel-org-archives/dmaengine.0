@@ -2,42 +2,42 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 95C24C77B71
-	for <dmaengine@archiver.kernel.org>; Sat, 15 Apr 2023 10:49:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 99A6FC77B76
+	for <dmaengine@archiver.kernel.org>; Sat, 15 Apr 2023 10:50:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230342AbjDOKto (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Sat, 15 Apr 2023 06:49:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49260 "EHLO
+        id S229936AbjDOKuG (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Sat, 15 Apr 2023 06:50:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49344 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230400AbjDOKtY (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Sat, 15 Apr 2023 06:49:24 -0400
+        with ESMTP id S231133AbjDOKtw (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Sat, 15 Apr 2023 06:49:52 -0400
 Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E74F2B45A;
-        Sat, 15 Apr 2023 03:49:02 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F3894EF4;
+        Sat, 15 Apr 2023 03:49:21 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id DD95B617CB;
-        Sat, 15 Apr 2023 10:47:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59C93C4339E;
-        Sat, 15 Apr 2023 10:47:05 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id ABDE5617E4;
+        Sat, 15 Apr 2023 10:47:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FA17C433D2;
+        Sat, 15 Apr 2023 10:47:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1681555626;
-        bh=BENT+Gyh2C5823xlOfoa81398QX+6CAqsChvkHIBGOc=;
+        s=k20201202; t=1681555629;
+        bh=eA2ZxLGWNR6IdxbFmS127kxHvHFaTkPGETvRqPfSGHI=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=G9Z09GtImEFma9YsVLp8pqsVAXgSSZeb7PK9XDKvDsX/8TNFRMF64iQ7FuSF7C4B/
-         /EVWJi9OkaXJ+s2avyrsGmbV1c1jHD48WR4+HdyXnCwlhdbun3IVXtUT1FpF8/u6Qu
-         8RMPfSEk7vWmejNwXe2i0+oowX5qAxIHllQ7TI9/Ejd1DlMqTRSaskehElLrlW8htx
-         teYYhZ0HjNcuadIzAuackkhVZYhgYlmF/vsdrAejSlZQUesc0E1vqQ+M+XQXMX7Hf8
-         oIqQdxNB4c9PnvF3Ur182weJ+zJg5TyriBlMIrVEL3on5rYytMqJDppcntFO2E94iu
-         B0H/mCqV1IC+g==
+        b=oZm1bHl7XW9SxEIIxUAftIHPOTtnfokBHFkTXliyMMm0VDJq0rS4/lb9Rsl65rgQv
+         w/kF0nIlnI2ayXKT6YTcwti6KXBoP6YpssS7xQXh4K4ezaQ9FWfRbeFqVRSVGFm1c2
+         i7PCsG4PiOii528r5pJfKaPemJRou+sHlcWhstzi8FEcBJbpjflb5NHBEYTTSMKgTp
+         fUqsA82F/Q1KGdXYQstbf0DUXyim6zw8KbETAK8p5QAl5WmqWFpB1NbjyWJ9w/oOHL
+         IXCBMOzDrTx/XypzjjKxQ/2Uyb5tEZdow9cTx8cYeFA0kiX0CgCP8Z92G5ezcjC/LF
+         RV8LGYwuN8n8Q==
 From:   Jisheng Zhang <jszhang@kernel.org>
 To:     Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>,
         Vinod Koul <vkoul@kernel.org>
 Cc:     dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v2 07/11] dmaengine: dw-axi-dmac: support per channel irq
-Date:   Sat, 15 Apr 2023 18:35:57 +0800
-Message-Id: <20230415103601.2979-8-jszhang@kernel.org>
+Subject: [PATCH v2 09/11] dmaengine: dw-axi-dmac: try best to get residue when tx is running
+Date:   Sat, 15 Apr 2023 18:35:59 +0800
+Message-Id: <20230415103601.2979-10-jszhang@kernel.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230415103601.2979-1-jszhang@kernel.org>
 References: <20230415103601.2979-1-jszhang@kernel.org>
@@ -47,107 +47,61 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Each channel can have its own irq, support this case.
+When tx is running, vchan_find_desc() will return NULL, try our best
+to get the residue in this case.
 
 Signed-off-by: Jisheng Zhang <jszhang@kernel.org>
 ---
- .../dma/dw-axi-dmac/dw-axi-dmac-platform.c    | 48 +++++++++++++++----
- drivers/dma/dw-axi-dmac/dw-axi-dmac.h         |  2 +
- 2 files changed, 42 insertions(+), 8 deletions(-)
+ drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c | 15 ++++++++++++---
+ 1 file changed, 12 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-index 796fd0136781..edb1c089a8eb 100644
+index a6e46cb66000..1c1b9574985a 100644
 --- a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
 +++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-@@ -1141,6 +1141,21 @@ static irqreturn_t dw_axi_dma_interrupt(int irq, void *dev_id)
- 	return IRQ_HANDLED;
- }
- 
-+static irqreturn_t dw_axi_dma_ch_interrupt(int irq, void *dev_id)
-+{
-+	struct axi_dma_chan *chan = dev_id;
-+
-+	/* Disable DMAC interrupts. We'll enable them after processing channels */
-+	axi_chan_irq_sig_set(chan, DWAXIDMAC_IRQ_NONE);
-+
-+	dw_axi_dma_handle_ch(chan);
-+
-+	/* Re-enable interrupts */
-+	axi_chan_irq_sig_set(chan, DWAXIDMAC_IRQ_DMA_TRF | DWAXIDMAC_IRQ_ALL_ERR);
-+
-+	return IRQ_HANDLED;
-+}
-+
- static int dma_chan_terminate_all(struct dma_chan *dchan)
+@@ -305,6 +305,7 @@ dma_chan_tx_status(struct dma_chan *dchan, dma_cookie_t cookie,
+ 		  struct dma_tx_state *txstate)
  {
  	struct axi_dma_chan *chan = dchan_to_axi_dma_chan(dchan);
-@@ -1375,6 +1390,8 @@ static int parse_device_properties(struct axi_dma_chip *chip)
- 		chip->dw->hdata->axi_rw_burst_len = tmp;
- 	}
++	struct axi_dma_desc *desc = NULL;
+ 	struct virt_dma_desc *vdesc;
+ 	enum dma_status status;
+ 	u32 completed_length;
+@@ -322,9 +323,15 @@ dma_chan_tx_status(struct dma_chan *dchan, dma_cookie_t cookie,
  
-+	chip->dw->hdata->perch_irq = device_property_read_bool(dev, "snps,perch_irq");
+ 	vdesc = vchan_find_desc(&chan->vc, cookie);
+ 	if (vdesc) {
+-		length = vd_to_axi_desc(vdesc)->length;
+-		completed_blocks = vd_to_axi_desc(vdesc)->completed_blocks;
+-		len = vd_to_axi_desc(vdesc)->hw_desc[0].len;
++		desc = vd_to_axi_desc(vdesc);
++	} else if (chan->desc && chan->desc->vd.tx.cookie == cookie) {
++		desc = chan->desc;
++	}
 +
- 	return 0;
++	if (desc) {
++		length = desc->length;
++		completed_blocks = desc->completed_blocks;
++		len = desc->hw_desc[0].len;
+ 		completed_length = completed_blocks * len;
+ 		bytes = length - completed_length;
+ 	}
+@@ -425,6 +432,7 @@ static void axi_chan_block_xfer_start(struct axi_dma_chan *chan,
+ 	axi_chan_irq_set(chan, irq_mask);
+ 
+ 	axi_chan_enable(chan);
++	chan->desc = first;
  }
  
-@@ -1430,14 +1447,29 @@ static int dw_probe(struct platform_device *pdev)
- 	if (!dw->chan)
- 		return -ENOMEM;
+ static void axi_chan_start_first_queued(struct axi_dma_chan *chan)
+@@ -1188,6 +1196,7 @@ static int dma_chan_terminate_all(struct dma_chan *dchan)
+ 	spin_unlock_irqrestore(&chan->vc.lock, flags);
  
--	chip->irq = platform_get_irq(pdev, 0);
--	if (chip->irq < 0)
--		return chip->irq;
--
--	ret = devm_request_irq(chip->dev, chip->irq, dw_axi_dma_interrupt,
--			       IRQF_SHARED, KBUILD_MODNAME, chip);
--	if (ret)
--		return ret;
-+	if (hdata->perch_irq) {
-+		char irqname[8];
-+		for (i = 0; i < hdata->nr_channels; i++) {
-+			snprintf(irqname, sizeof(irqname), "ch%u", i);
-+			dw->chan[i].irq = platform_get_irq_byname(pdev, irqname);
-+			if (dw->chan[i].irq < 0)
-+				return dw->chan[i].irq;
-+			ret = devm_request_irq(chip->dev, dw->chan[i].irq,
-+					       dw_axi_dma_ch_interrupt,
-+					       0, KBUILD_MODNAME, &dw->chan[i]);
-+			if (ret)
-+				return ret;
-+		}
-+	} else {
-+		chip->irq = platform_get_irq(pdev, 0);
-+		if (chip->irq < 0)
-+			return chip->irq;
-+
-+		ret = devm_request_irq(chip->dev, chip->irq, dw_axi_dma_interrupt,
-+				       IRQF_SHARED, KBUILD_MODNAME, chip);
-+		if (ret)
-+			return ret;
-+	}
+ 	vchan_dma_desc_free_list(&chan->vc, &head);
++	chan->desc = NULL;
  
- 	INIT_LIST_HEAD(&dw->dma.channels);
- 	for (i = 0; i < hdata->nr_channels; i++) {
-diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac.h b/drivers/dma/dw-axi-dmac/dw-axi-dmac.h
-index e9d5eb0fd594..83ac839b4394 100644
---- a/drivers/dma/dw-axi-dmac/dw-axi-dmac.h
-+++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac.h
-@@ -33,6 +33,7 @@ struct dw_axi_dma_hcfg {
- 	/* Register map for DMAX_NUM_CHANNELS <= 8 */
- 	bool	reg_map_8_channels;
- 	bool	restrict_axi_burst_len;
-+	bool	perch_irq;
- };
+ 	dev_vdbg(dchan2dev(dchan), "terminated: %s\n", axi_chan_name(chan));
  
- struct axi_dma_chan {
-@@ -48,6 +49,7 @@ struct axi_dma_chan {
- 	struct axi_dma_desc		*desc;
- 	struct dma_slave_config		config;
- 	enum dma_transfer_direction	direction;
-+	int				irq;
- 	bool				cyclic;
- 	/* these other elements are all protected by vc.lock */
- 	bool				is_paused;
 -- 
 2.39.2
 
