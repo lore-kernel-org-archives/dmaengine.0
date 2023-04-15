@@ -2,87 +2,103 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 63F95C7619A
-	for <dmaengine@archiver.kernel.org>; Sat, 15 Apr 2023 10:14:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 667D9C77B76
+	for <dmaengine@archiver.kernel.org>; Sat, 15 Apr 2023 10:48:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229790AbjDOKOY (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Sat, 15 Apr 2023 06:14:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33114 "EHLO
+        id S230103AbjDOKsD (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Sat, 15 Apr 2023 06:48:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48430 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229717AbjDOKOY (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Sat, 15 Apr 2023 06:14:24 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 72A1455B9;
-        Sat, 15 Apr 2023 03:14:23 -0700 (PDT)
+        with ESMTP id S230091AbjDOKsD (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Sat, 15 Apr 2023 06:48:03 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B3148AF14;
+        Sat, 15 Apr 2023 03:47:33 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 0290160A06;
-        Sat, 15 Apr 2023 10:14:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E7B8C433EF;
-        Sat, 15 Apr 2023 10:14:21 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 97FC061376;
+        Sat, 15 Apr 2023 10:46:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14E07C433D2;
+        Sat, 15 Apr 2023 10:46:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1681553662;
-        bh=0oNOegTSY6ZATo0hB6OS4cyxUB5rZP4EyyM7funkiGM=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=nBhRWISsdh9uRVMsMedPH5tWOzkj8K8cvaj0F69slnttlblPZFN5twenJ4u9qeL8n
-         Fz7n/OadfpLBN7WrkNtuXAoFQ3ZXQmY6D1/kGmVONbeQg6UIgMbNlm8T5kpQzbruRe
-         nf/b87MJKkB17FSTlXU1TS+IgtNLX2RJS4id3ZmRM1zhRqQWErQP5Ko5Mhh7Ex0tEg
-         hCHhX8wnIqGTA9RDaRE7ZVEn6495a8iUafCtCrTJPTi9AnwYPA++r22llfMV7Ta7Ci
-         X75BIVt4mrzU9AuGbqclap/Q63TgTAO5CT6EdHehQFKTROqNwGLEQ4no4DNkg4a6QO
-         55H4jYkHKZWUA==
-Date:   Sat, 15 Apr 2023 18:03:27 +0800
+        s=k20201202; t=1681555618;
+        bh=R7SwTXxq4n6vsL5nvON8lNyUl7g6u9nqIP9ZCvDXMeQ=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=Vm4+HXJ58/UX9/57jm4JxlWyQwuSKMa6I9jcjkcvoJQ9StIJw1dF21zYloiplq+Gb
+         q+b9IDyjPBO8JigcByB7O8kLMQK9LUs9nOKtRi8yWpgiz9wJpsFpGUNhVKmtzkIEyi
+         40KVCO+BcwfgBT2fRRppdMIWLkBn6g2daqrvf/KGFTD3GSEclUhn4yUlMgcu4XWHdW
+         M0mgpiM9IE9ILsV3oFylUOIR047zMb0a/jPCnd1WVeMe+GiO0Ty138VsE9p9hfgE7K
+         h76r1vc8OjMGa6ExoOuoa/h6Yn61PETb0hlCYynTOUOyHjD1Jj0nOAA/IGxtVg9ThM
+         3kul41SlS7/sQ==
 From:   Jisheng Zhang <jszhang@kernel.org>
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>,
-        dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 02/11] dmaengine: dw-axi-dmac: remove unnecessary
- devm_free_irq() calling
-Message-ID: <ZDp2b4M4z0/1a153@xhacker>
-References: <20230313170450.897-1-jszhang@kernel.org>
- <20230313170450.897-3-jszhang@kernel.org>
- <ZDbsiKV2nOUhrRiU@matsya>
+To:     Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>,
+        Vinod Koul <vkoul@kernel.org>
+Cc:     dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH v2 01/11] dmaengine: dw-axi-dmac: fix reading register when runtime suspended
+Date:   Sat, 15 Apr 2023 18:35:51 +0800
+Message-Id: <20230415103601.2979-2-jszhang@kernel.org>
+X-Mailer: git-send-email 2.40.0
+In-Reply-To: <20230415103601.2979-1-jszhang@kernel.org>
+References: <20230415103601.2979-1-jszhang@kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <ZDbsiKV2nOUhrRiU@matsya>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On Wed, Apr 12, 2023 at 11:08:16PM +0530, Vinod Koul wrote:
-> On 14-03-23, 01:04, Jisheng Zhang wrote:
-> > In dw_remove(), We have disabled the irq from the dw-axi-dma side, so
-> > we are safe against the case "The irq is still ON when devices remove
-> > is executed and irq should be quiesced before remove is completed."
-> 
-> what about the interrupts which might fire spuriously after this? I
+We should runtime resume the device before calling
+axi_chan_is_hw_enable(), otherwise we may see cpu aborts when
+accessing registers in axi_chan_is_hw_enable().
 
-This is impossible becuase the irq has been disabled from the dw-axi-dma
-side.
+Signed-off-by: Jisheng Zhang <jszhang@kernel.org>
+---
+ drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c | 15 +++++++++++----
+ 1 file changed, 11 insertions(+), 4 deletions(-)
 
-> prefer to keep this explicitly here
-> > 
-> > Signed-off-by: Jisheng Zhang <jszhang@kernel.org>
-> > ---
-> >  drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c | 2 --
-> >  1 file changed, 2 deletions(-)
-> > 
-> > diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-> > index 23a10dbdecb7..56f12dfa410d 100644
-> > --- a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-> > +++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-> > @@ -1542,8 +1542,6 @@ static int dw_remove(struct platform_device *pdev)
-> >  	pm_runtime_disable(chip->dev);
-> >  	axi_dma_suspend(chip);
-> >  
-> > -	devm_free_irq(chip->dev, chip->irq, chip);
-> > -
-> >  	of_dma_controller_free(chip->dev->of_node);
-> >  
-> >  	list_for_each_entry_safe(chan, _chan, &dw->dma.channels,
-> > -- 
-> > 2.39.2
-> 
-> -- 
-> ~Vinod
+diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
+index 7f3a60e28e38..23a10dbdecb7 100644
+--- a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
++++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
+@@ -462,13 +462,17 @@ static void dw_axi_dma_synchronize(struct dma_chan *dchan)
+ 
+ static int dma_chan_alloc_chan_resources(struct dma_chan *dchan)
+ {
++	int ret;
+ 	struct axi_dma_chan *chan = dchan_to_axi_dma_chan(dchan);
+ 
++	pm_runtime_get(chan->chip->dev);
++
+ 	/* ASSERT: channel is idle */
+ 	if (axi_chan_is_hw_enable(chan)) {
+ 		dev_err(chan2dev(chan), "%s is non-idle!\n",
+ 			axi_chan_name(chan));
+-		return -EBUSY;
++		ret = -EBUSY;
++		goto err_busy;
+ 	}
+ 
+ 	/* LLI address must be aligned to a 64-byte boundary */
+@@ -478,13 +482,16 @@ static int dma_chan_alloc_chan_resources(struct dma_chan *dchan)
+ 					  64, 0);
+ 	if (!chan->desc_pool) {
+ 		dev_err(chan2dev(chan), "No memory for descriptors\n");
+-		return -ENOMEM;
++		ret = -ENOMEM;
++		goto err_busy;
+ 	}
+ 	dev_vdbg(dchan2dev(dchan), "%s: allocating\n", axi_chan_name(chan));
+ 
+-	pm_runtime_get(chan->chip->dev);
+-
+ 	return 0;
++
++err_busy:
++	pm_runtime_put(chan->chip->dev);
++	return ret;
+ }
+ 
+ static void dma_chan_free_chan_resources(struct dma_chan *dchan)
+-- 
+2.39.2
+
