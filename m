@@ -2,222 +2,243 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E69A9C77B60
-	for <dmaengine@archiver.kernel.org>; Mon, 24 Apr 2023 01:36:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1D7B6C77B61
+	for <dmaengine@archiver.kernel.org>; Mon, 24 Apr 2023 09:42:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229458AbjDXBgp (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Sun, 23 Apr 2023 21:36:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35744 "EHLO
+        id S230504AbjDXJmQ (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 24 Apr 2023 05:42:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38820 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230349AbjDXBgo (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Sun, 23 Apr 2023 21:36:44 -0400
-Received: from mga05.intel.com (mga05.intel.com [192.55.52.43])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E7101997;
-        Sun, 23 Apr 2023 18:36:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1682300201; x=1713836201;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=G22SleDyELmqv+4z24qsjjgOeXAlE59i3fa4mNcnIW8=;
-  b=XUXVHW9JKgJY4wMvo1F1sjPAIgqOKAt+iXF7r9sSm6Yja981Qq4HI/rq
-   njUO2EBJPPwVwwyw41RqaWpWWRdBWXyoOvkULU3r50NTDIfui3gSAKhLA
-   c6K1y3ioFshumrh9K+MKssnGBKH7nC2hAMBw6iQlHaT4Grg7UOvqJ1Vrv
-   xrqqf0XmFdj5QGJj7raFdeByEQj/WxQj6lolb9Hic17Np1iC1p+PBAlkC
-   CDhdE9gAkE8kEw65EUZmgQWQ7OtYkeEVzQv1s5PVsZAuAAi7uFNVTMoZl
-   lAlZFhQuIArawZxB5HW/uhaLmVfpUtzsOZR8PtnbuObuaJCbpa0cWkMyu
-   A==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10689"; a="432607648"
-X-IronPort-AV: E=Sophos;i="5.99,221,1677571200"; 
-   d="scan'208";a="432607648"
-Received: from orsmga006.jf.intel.com ([10.7.209.51])
-  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Apr 2023 18:36:40 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10689"; a="670334040"
-X-IronPort-AV: E=Sophos;i="5.99,221,1677571200"; 
-   d="scan'208";a="670334040"
-Received: from lkp-server01.sh.intel.com (HELO b613635ddfff) ([10.239.97.150])
-  by orsmga006.jf.intel.com with ESMTP; 23 Apr 2023 18:36:38 -0700
-Received: from kbuild by b613635ddfff with local (Exim 4.96)
-        (envelope-from <lkp@intel.com>)
-        id 1pql89-000iCl-0n;
-        Mon, 24 Apr 2023 01:36:37 +0000
-Date:   Mon, 24 Apr 2023 09:36:13 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Kelvin Cao <kelvin.cao@microchip.com>, vkoul@kernel.org,
-        dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     oe-kbuild-all@lists.linux.dev, logang@deltatee.com,
-        george.ge@microchip.com, christophe.jaillet@wanadoo.fr,
-        hch@infradead.org
-Subject: Re: [PATCH v4 1/1] dmaengine: switchtec-dma: Introduce Switchtec DMA
- engine PCI driver
-Message-ID: <202304240915.MYWRJpvn-lkp@intel.com>
-References: <20230423213717.318655-2-kelvin.cao@microchip.com>
+        with ESMTP id S230235AbjDXJmP (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Mon, 24 Apr 2023 05:42:15 -0400
+X-Greylist: delayed 394 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Mon, 24 Apr 2023 02:42:13 PDT
+Received: from forward500c.mail.yandex.net (forward500c.mail.yandex.net [178.154.239.208])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B0FA8132;
+        Mon, 24 Apr 2023 02:42:12 -0700 (PDT)
+Received: from mail-nwsmtp-smtp-production-main-39.myt.yp-c.yandex.net (mail-nwsmtp-smtp-production-main-39.myt.yp-c.yandex.net [IPv6:2a02:6b8:c12:261e:0:640:2e3d:0])
+        by forward500c.mail.yandex.net (Yandex) with ESMTP id E3AC95EDB6;
+        Mon, 24 Apr 2023 12:35:52 +0300 (MSK)
+Received: by mail-nwsmtp-smtp-production-main-39.myt.yp-c.yandex.net (smtp/Yandex) with ESMTPSA id JZBb1pbWwKo0-BwYy9Cx4;
+        Mon, 24 Apr 2023 12:35:52 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=maquefel.me; s=mail; t=1682328952;
+        bh=Rjcz5dgGLteFjKtx+6Kc5AGWRQU0XvJKClPFRS4r3RE=;
+        h=Message-Id:Date:In-Reply-To:Cc:Subject:References:To:From;
+        b=UcrFabIZjE56akCZK7xPv3UCVVdigntUsjwDCrlxeJDwAo2ISruAb92Pt6BVPyES+
+         itFRIlRzk6jAl/dlNuQlSv1FL8AILySvHhxenp/gvBgNdkacYxSQ2DyjrU3tYEYoxm
+         Bqu2tFThRSEYzMjb9ny3p9yukrQdF0abomF/q6kQ=
+Authentication-Results: mail-nwsmtp-smtp-production-main-39.myt.yp-c.yandex.net; dkim=pass header.i=@maquefel.me
+From:   Nikita Shubin <nikita.shubin@maquefel.me>
+Cc:     Arnd Bergmann <arnd@kernel.org>, Linus Walleij <linusw@kernel.org>,
+        Alexander Sverdlin <alexander.sverdlin@gmail.com>,
+        Vinod Koul <vkoul@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        dmaengine@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH 20/43] dt-bindings: dma: Add DT bindings ep93xx dma
+Date:   Mon, 24 Apr 2023 15:34:36 +0300
+Message-Id: <20230424123522.18302-21-nikita.shubin@maquefel.me>
+X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20230424123522.18302-1-nikita.shubin@maquefel.me>
+References: <20230424123522.18302-1-nikita.shubin@maquefel.me>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230423213717.318655-2-kelvin.cao@microchip.com>
+Content-Transfer-Encoding: 8bit
+To:     unlisted-recipients:; (no To-header on input)
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Hi Kelvin,
+Add YAML bindings for ep93xx SoC.
 
-kernel test robot noticed the following build warnings:
+Signed-off-by: Nikita Shubin <nikita.shubin@maquefel.me>
+---
+ .../bindings/dma/cirrus,ep93xx-dma-m2m.yaml   |  66 ++++++++++++
+ .../bindings/dma/cirrus,ep93xx-dma-m2p.yaml   | 102 ++++++++++++++++++
+ 2 files changed, 168 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/dma/cirrus,ep93xx-dma-m2m.yaml
+ create mode 100644 Documentation/devicetree/bindings/dma/cirrus,ep93xx-dma-m2p.yaml
 
-[auto build test WARNING on vkoul-dmaengine/next]
-[also build test WARNING on linus/master v6.3 next-20230421]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
-
-url:    https://github.com/intel-lab-lkp/linux/commits/Kelvin-Cao/dmaengine-switchtec-dma-Introduce-Switchtec-DMA-engine-PCI-driver/20230424-065123
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/vkoul/dmaengine.git next
-patch link:    https://lore.kernel.org/r/20230423213717.318655-2-kelvin.cao%40microchip.com
-patch subject: [PATCH v4 1/1] dmaengine: switchtec-dma: Introduce Switchtec DMA engine PCI driver
-config: arm64-allyesconfig (https://download.01.org/0day-ci/archive/20230424/202304240915.MYWRJpvn-lkp@intel.com/config)
-compiler: aarch64-linux-gcc (GCC) 12.1.0
-reproduce (this is a W=1 build):
-        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
-        chmod +x ~/bin/make.cross
-        # https://github.com/intel-lab-lkp/linux/commit/bd3b335b60238af4f01bd6c28a96873988330557
-        git remote add linux-review https://github.com/intel-lab-lkp/linux
-        git fetch --no-tags linux-review Kelvin-Cao/dmaengine-switchtec-dma-Introduce-Switchtec-DMA-engine-PCI-driver/20230424-065123
-        git checkout bd3b335b60238af4f01bd6c28a96873988330557
-        # save the config file
-        mkdir build_dir && cp config build_dir/.config
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-12.1.0 make.cross W=1 O=build_dir ARCH=arm64 olddefconfig
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-12.1.0 make.cross W=1 O=build_dir ARCH=arm64 SHELL=/bin/bash drivers/dma/
-
-If you fix the issue, kindly add following tag where applicable
-| Reported-by: kernel test robot <lkp@intel.com>
-| Link: https://lore.kernel.org/oe-kbuild-all/202304240915.MYWRJpvn-lkp@intel.com/
-
-All warnings (new ones prefixed by >>):
-
-   drivers/dma/switchtec_dma.c: In function 'switchtec_dma_create':
->> drivers/dma/switchtec_dma.c:1410:13: warning: variable 'i' set but not used [-Wunused-but-set-variable]
-    1410 |         int i;
-         |             ^
-
-
-vim +/i +1410 drivers/dma/switchtec_dma.c
-
-  1400	
-  1401	static int switchtec_dma_create(struct pci_dev *pdev)
-  1402	{
-  1403		struct switchtec_dma_dev *swdma_dev;
-  1404		struct dma_device *dma;
-  1405		struct dma_chan *chan;
-  1406		int chan_cnt;
-  1407		int nr_vecs;
-  1408		int irq;
-  1409		int rc;
-> 1410		int i;
-  1411	
-  1412		/*
-  1413		 * Create the switchtec dma device
-  1414		 */
-  1415		swdma_dev = kzalloc(sizeof(*swdma_dev), GFP_KERNEL);
-  1416		if (!swdma_dev)
-  1417			return -ENOMEM;
-  1418	
-  1419		swdma_dev->bar = ioremap(pci_resource_start(pdev, 0),
-  1420					 pci_resource_len(pdev, 0));
-  1421	
-  1422		pci_info(pdev, "Switchtec PSX/PFX DMA EP\n");
-  1423	
-  1424		RCU_INIT_POINTER(swdma_dev->pdev, pdev);
-  1425	
-  1426		nr_vecs = pci_msix_vec_count(pdev);
-  1427		rc = pci_alloc_irq_vectors(pdev, nr_vecs, nr_vecs, PCI_IRQ_MSIX);
-  1428		if (rc < 0)
-  1429			goto err_exit;
-  1430	
-  1431		tasklet_init(&swdma_dev->chan_status_task,
-  1432			     switchtec_dma_chan_status_task,
-  1433			     (unsigned long)swdma_dev);
-  1434	
-  1435		irq = readw(swdma_dev->bar + SWITCHTEC_REG_CHAN_STS_VEC);
-  1436		pci_dbg(pdev, "Channel pause irq vector %d\n", irq);
-  1437	
-  1438		irq = pci_irq_vector(pdev, irq);
-  1439		if (irq < 0) {
-  1440			rc = irq;
-  1441			goto err_exit;
-  1442		}
-  1443	
-  1444		rc = request_irq(irq, switchtec_dma_chan_status_isr, 0,
-  1445				 KBUILD_MODNAME, swdma_dev);
-  1446		if (rc)
-  1447			goto err_exit;
-  1448	
-  1449		swdma_dev->chan_status_irq = irq;
-  1450	
-  1451		chan_cnt = readl(swdma_dev->bar + SWITCHTEC_REG_CHAN_CNT);
-  1452		if (!chan_cnt) {
-  1453			pci_err(pdev, "No channel configured.\n");
-  1454			rc = -ENXIO;
-  1455			goto err_exit;
-  1456		}
-  1457	
-  1458		chan_cnt = switchtec_dma_chans_enumerate(swdma_dev, chan_cnt);
-  1459		if (chan_cnt < 0) {
-  1460			pci_err(pdev, "Failed to enumerate dma channels: %d\n",
-  1461				chan_cnt);
-  1462			rc = -ENXIO;
-  1463			goto err_exit;
-  1464		}
-  1465	
-  1466		swdma_dev->chan_cnt = chan_cnt;
-  1467	
-  1468		dma = &swdma_dev->dma_dev;
-  1469		dma->copy_align = DMAENGINE_ALIGN_1_BYTE;
-  1470		dma_cap_set(DMA_MEMCPY, dma->cap_mask);
-  1471		dma_cap_set(DMA_PRIVATE, dma->cap_mask);
-  1472		dma->dev = get_device(&pdev->dev);
-  1473	
-  1474		dma->device_alloc_chan_resources = switchtec_dma_alloc_chan_resources;
-  1475		dma->device_free_chan_resources = switchtec_dma_free_chan_resources;
-  1476		dma->device_prep_dma_memcpy = switchtec_dma_prep_memcpy;
-  1477		dma->device_prep_dma_imm_data = switchtec_dma_prep_wimm_data;
-  1478		dma->device_issue_pending = switchtec_dma_issue_pending;
-  1479		dma->device_tx_status = switchtec_dma_tx_status;
-  1480		dma->device_pause = switchtec_dma_pause;
-  1481		dma->device_resume = switchtec_dma_resume;
-  1482		dma->device_terminate_all = switchtec_dma_terminate_all;
-  1483		dma->device_synchronize = switchtec_dma_synchronize;
-  1484		dma->device_release = switchtec_dma_release;
-  1485	
-  1486		rc = dma_async_device_register(dma);
-  1487		if (rc) {
-  1488			pci_err(pdev, "Failed to register dma device: %d\n", rc);
-  1489			goto err_chans_release_exit;
-  1490		}
-  1491	
-  1492		pci_info(pdev, "Channel count: %d\n", chan_cnt);
-  1493	
-  1494		i = 0;
-  1495		list_for_each_entry(chan, &dma->channels, device_node)
-  1496			pci_info(pdev, "%s\n", dma_chan_name(chan));
-  1497	
-  1498		pci_set_drvdata(pdev, swdma_dev);
-  1499	
-  1500		return 0;
-  1501	
-  1502	err_chans_release_exit:
-  1503		switchtec_dma_chans_release(swdma_dev);
-  1504	
-  1505	err_exit:
-  1506		if (swdma_dev->chan_status_irq)
-  1507			free_irq(swdma_dev->chan_status_irq, swdma_dev);
-  1508	
-  1509		iounmap(swdma_dev->bar);
-  1510		kfree(swdma_dev);
-  1511		return rc;
-  1512	}
-  1513	
-
+diff --git a/Documentation/devicetree/bindings/dma/cirrus,ep93xx-dma-m2m.yaml b/Documentation/devicetree/bindings/dma/cirrus,ep93xx-dma-m2m.yaml
+new file mode 100644
+index 000000000000..9a53ee9052a0
+--- /dev/null
++++ b/Documentation/devicetree/bindings/dma/cirrus,ep93xx-dma-m2m.yaml
+@@ -0,0 +1,66 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/dma/cirrus,ep93xx-dma-m2m.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Cirrus Logick ep93xx SoC DMA controller Device Tree Bindings
++
++maintainers:
++  - Vinod Koul <vkoul@kernel.org>
++
++properties:
++  compatible:
++    items:
++      - const: cirrus,ep9301-dma-m2m
++
++  reg:
++    minItems: 2
++    maxItems: 2
++
++  clocks:
++    items:
++      - description: m2m0 channel gate clock
++      - description: m2m1 channel gate clock
++
++  clock-names:
++    items:
++      - const: m2m0
++      - const: m2m1
++
++  interrupts:
++    minItems: 2
++    maxItems: 2
++
++  dma-channels:
++    minimum: 2
++    maximum: 2
++
++  '#dma-cells': false
++
++required:
++  - compatible
++  - reg
++  - clocks
++  - clock-names
++  - interrupts
++
++additionalProperties: false
++
++examples:
++  - |
++    #include <dt-bindings/clock/cirrus,ep93xx-clock.h>
++    dma1: dma-controller@80000100 {
++        compatible = "cirrus,ep9301-dma-m2m";
++        reg = <0x80000100 0x0040>,
++                <0x80000140 0x0040>;
++        clocks = <&syscon EP93XX_CLK_M2M0>,
++                <&syscon EP93XX_CLK_M2M1>;
++        clock-names = "m2m0", "m2m1";
++        dma-channels = <2>;
++        interrupt-parent = <&vic0>;
++        interrupts = <17>, <18>;
++    };
++
++...
++
+diff --git a/Documentation/devicetree/bindings/dma/cirrus,ep93xx-dma-m2p.yaml b/Documentation/devicetree/bindings/dma/cirrus,ep93xx-dma-m2p.yaml
+new file mode 100644
+index 000000000000..51fd72b4e843
+--- /dev/null
++++ b/Documentation/devicetree/bindings/dma/cirrus,ep93xx-dma-m2p.yaml
+@@ -0,0 +1,102 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/dma/cirrus,ep93xx-dma-m2p.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Cirrus Logick ep93xx SoC M2P DMA controller Device Tree Bindings
++
++maintainers:
++  - Vinod Koul <vkoul@kernel.org>
++
++properties:
++  compatible:
++    items:
++      - const: cirrus,ep9301-dma-m2p
++
++  reg:
++    minItems: 10
++    maxItems: 10
++
++  clocks:
++    items:
++      - description: m2p0 channel gate clock
++      - description: m2p1 channel gate clock
++      - description: m2p2 channel gate clock
++      - description: m2p3 channel gate clock
++      - description: m2p4 channel gate clock
++      - description: m2p5 channel gate clock
++      - description: m2p6 channel gate clock
++      - description: m2p7 channel gate clock
++      - description: m2p8 channel gate clock
++      - description: m2p9 channel gate clock
++
++  clock-names:
++    items:
++      - const: m2p0
++      - const: m2p1
++      - const: m2p2
++      - const: m2p3
++      - const: m2p4
++      - const: m2p5
++      - const: m2p6
++      - const: m2p7
++      - const: m2p8
++      - const: m2p9
++
++  interrupts:
++    minItems: 10
++    maxItems: 10
++
++  dma-channels:
++    minimum: 10
++    maximum: 10
++
++  '#dma-cells': false
++
++required:
++  - compatible
++  - reg
++  - clocks
++  - clock-names
++  - interrupts
++
++additionalProperties: false
++
++examples:
++  - |
++    #include <dt-bindings/clock/cirrus,ep93xx-clock.h>
++    dma0: dma-controller@80000000 {
++        compatible = "cirrus,ep9301-dma-m2p";
++        reg =   <0x80000000 0x0040>,
++                <0x80000040 0x0040>,
++                <0x80000080 0x0040>,
++                <0x800000c0 0x0040>,
++                <0x80000240 0x0040>,
++                <0x80000200 0x0040>,
++                <0x800002c0 0x0040>,
++                <0x80000280 0x0040>,
++                <0x80000340 0x0040>,
++                <0x80000300 0x0040>;
++        clocks = <&syscon EP93XX_CLK_M2P0>,
++                <&syscon EP93XX_CLK_M2P1>,
++                <&syscon EP93XX_CLK_M2P2>,
++                <&syscon EP93XX_CLK_M2P3>,
++                <&syscon EP93XX_CLK_M2P4>,
++                <&syscon EP93XX_CLK_M2P5>,
++                <&syscon EP93XX_CLK_M2P6>,
++                <&syscon EP93XX_CLK_M2P7>,
++                <&syscon EP93XX_CLK_M2P8>,
++                <&syscon EP93XX_CLK_M2P9>;
++        clock-names = "m2p0", "m2p1",
++                "m2p2", "m2p3",
++                "m2p4", "m2p5",
++                "m2p6", "m2p7",
++                "m2p8", "m2p9";
++        dma-channels = <10>;
++        interrupt-parent = <&vic0>;
++        interrupts = <7>, <8>, <9>, <10>, <11>, <12>, <13>, <14>, <15>, <16>;
++    };
++
++...
++
 -- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests
+2.39.2
+
