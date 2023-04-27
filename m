@@ -2,151 +2,108 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 50564C7EE23
-	for <dmaengine@archiver.kernel.org>; Wed, 26 Apr 2023 21:06:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 54544C77B73
+	for <dmaengine@archiver.kernel.org>; Thu, 27 Apr 2023 12:10:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239992AbjDZVGv (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 26 Apr 2023 17:06:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41444 "EHLO
+        id S243530AbjD0MKD (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Thu, 27 Apr 2023 08:10:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54736 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239449AbjDZVGu (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Wed, 26 Apr 2023 17:06:50 -0400
-Received: from mail-yw1-x1132.google.com (mail-yw1-x1132.google.com [IPv6:2607:f8b0:4864:20::1132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC887273D
-        for <dmaengine@vger.kernel.org>; Wed, 26 Apr 2023 14:06:47 -0700 (PDT)
-Received: by mail-yw1-x1132.google.com with SMTP id 00721157ae682-54fc1824f0bso87609287b3.0
-        for <dmaengine@vger.kernel.org>; Wed, 26 Apr 2023 14:06:47 -0700 (PDT)
+        with ESMTP id S243143AbjD0MKC (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Thu, 27 Apr 2023 08:10:02 -0400
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8924F4698
+        for <dmaengine@vger.kernel.org>; Thu, 27 Apr 2023 05:10:00 -0700 (PDT)
+Received: by mail-lf1-x131.google.com with SMTP id 2adb3069b0e04-4f00c33c3d6so1151793e87.2
+        for <dmaengine@vger.kernel.org>; Thu, 27 Apr 2023 05:10:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1682543207; x=1685135207;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=8C6tKrbT51GaZnl8zer1AnBo8yNRgpprgLkj0av5l+E=;
-        b=Kh7TmG3JlHQoPDgJrxEspZSpUN+36yUdamiO43UnPnWU5WHRHExsZuq1crpHQPMIXw
-         zzWzXMlOi38Xx4my+77mCqHvk7/X81J/7WthQKZt0CHx/5a1ohrap/HzGWEDQbQACJTb
-         YhsFcjssiyz48P8HUQnvmRDVNrO8n5ZicePPH1S7Zj9YadbExO7GDrfEmhV8+JMdHi44
-         dS/U1Lzmekv6Z1Px+wN/pWN5LwOrRpCZPrnqoQccfnfTFROZXP698w5QlH4NBcZahcI9
-         Av/WtFSCGNW/WXdsMcqPPizaCNJVu9G6mBZV0Jx9mGGkKSo+tGaTmr2RPFnSQVsLEyzh
-         SKbg==
+        d=linaro.org; s=google; t=1682597399; x=1685189399;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=gB9tP7rs+oqMW9ALl8bFEzP45alTjiFtwAOU4p0A3+Q=;
+        b=NJztf3p42UXFPuoXibn0+jqHTbnG84XbMZGKeP94kzfUPTQBB/OuFcWZcNk+OkrZLX
+         e8PdVruCzOBS3FlWQu5sgElAvbdZmkXJxuOTuTUw+BY6YS8tFHx393HXFfOtxSz6eCLB
+         852JfhSqWOBG3Ks9bDMPSFGeGsoqoqbzvnoTyGUu6HlSV04dXjvQLEAT1rnuhdgKD3mm
+         PMcuQviX9SEqipD/6F+87Io0TOb5pVwAMTeGNNAgwtaC8cgp86NtWXyALXEiU6q/sMwf
+         ZT2d/BzrLaZ8n5yGtKUXDmdVibJXNO/FnDoK9UbNte4QwoI3Y86So0WuB0fWTJde3BVa
+         +J5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682543207; x=1685135207;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=8C6tKrbT51GaZnl8zer1AnBo8yNRgpprgLkj0av5l+E=;
-        b=Bickk1o2tQ4t51mxhPlLeXQXEiJmAW7uoMGr4uhCOOJK7fltM0bJE0JyNGMsCEMaOT
-         JNBPMJ74H1/tVnho9miB/1HQHLVq9QT9+cH6B6VyuEGPAP/cDGVn98bFLuQTCBRk6dk0
-         0d3q0fMBx328D97bnYAVFKGBB5maZm8HwaDYVbsJWeJ2TKvVf7knitp0BO17YDpT8+Dz
-         KdkQ1r808xvYlUQNDaai+66bFg7g1b8Bir3sB3fycjD74JoPepSiLhFdwNKWz9HZvyYA
-         o52RjKKa+PM3vWHGSpogl6DQykUeeS5k1AKdJaEaF913ByJ5lKJasoJttbdDd4u3iXKD
-         BghQ==
-X-Gm-Message-State: AAQBX9edRkI9sgcBSuE9n6AOh1821xKdSeZbUQmXTLKr+Cjurn3LPdHJ
-        drMTEXrqg4CocASLMkaOb21hQ7HYBkvuwNXGKB5djA==
-X-Google-Smtp-Source: AKy350bnHkFKck7ScHLySUohS3TGug3PuU6k1b4WHzFwKnH0/14BD/IU48R1JEuMfUGu5baNdUtxQXCsghQML3QSaV8=
-X-Received: by 2002:a81:5d02:0:b0:54f:8b56:bb3 with SMTP id
- r2-20020a815d02000000b0054f8b560bb3mr13933284ywb.5.1682543207061; Wed, 26 Apr
- 2023 14:06:47 -0700 (PDT)
-MIME-Version: 1.0
-References: <20230424123522.18302-1-nikita.shubin@maquefel.me>
- <CACRpkdarANFQ7-p=-Pi_iuk6L=PfSLDsD3_w4dEVqarwXkEGMQ@mail.gmail.com> <b5396ef5-3fed-4e98-8f37-a9cd4473bddc@sirena.org.uk>
-In-Reply-To: <b5396ef5-3fed-4e98-8f37-a9cd4473bddc@sirena.org.uk>
+        d=1e100.net; s=20221208; t=1682597399; x=1685189399;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=gB9tP7rs+oqMW9ALl8bFEzP45alTjiFtwAOU4p0A3+Q=;
+        b=L/SMRmQAxDJtbozR2GsdjsSppprFcBj2OQ9D63mlAbevwl+W+k5QCKeqUs92kL1ot0
+         yTKUyQgrw9J6CEGVAKrvqr4X2pamPl3AzHIL4vIAgSHJjVS4yV7u8eMFiCK7Z4nzBpVf
+         noopYtata2hRprnqbFzB4tMnkq5muCpqKxMqDSh/wbJNrVfdkXSbgim4qIDdLbTfMlQC
+         ui14B4RK2iLIsUgp/2/j9QtZRpJxnXzfGs/uTvl55sa+9NeuTVm1E+aItz3PI4D+s+Dx
+         OQZ1k/p7Pik6WsVJpGcAz9wa0Z+fNvI+hKqztIxQNWprhYpLlbVUajQs9MScmuMJxrGS
+         QzpA==
+X-Gm-Message-State: AC+VfDyiRA58K2mfquQ48Jn1ac5/xUxPPmT2DYmEUpa24Bys5ioilt2I
+        Faz+vX6CA3K3OccbWiG3qL9oQQ==
+X-Google-Smtp-Source: ACHHUZ49Ifw3IGPXCugcW1uWCK8DG1B1lpCN+elQI5TdLqaoq2CrgC4KbKYoN9gZK933+CpLqKxpyg==
+X-Received: by 2002:ac2:52b7:0:b0:4f0:80:d0c0 with SMTP id r23-20020ac252b7000000b004f00080d0c0mr570943lfm.63.1682597398713;
+        Thu, 27 Apr 2023 05:09:58 -0700 (PDT)
+Received: from [192.168.1.2] (c-05d8225c.014-348-6c756e10.bbcust.telenor.se. [92.34.216.5])
+        by smtp.gmail.com with ESMTPSA id e7-20020ac25467000000b004d4d7fb0e07sm2892044lfn.216.2023.04.27.05.09.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 27 Apr 2023 05:09:58 -0700 (PDT)
 From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Wed, 26 Apr 2023 23:06:35 +0200
-Message-ID: <CACRpkdaZvKoFuDHP0Cd1MuayKtnBjCG5wmWPjwq3pccCrb-P9A@mail.gmail.com>
-Subject: Re: [PATCH 00/43] ep93xx device tree conversion
-To:     Mark Brown <broonie@kernel.org>
-Cc:     Nikita Shubin <nikita.shubin@maquefel.me>,
-        Arnd Bergmann <arnd@kernel.org>,
-        Linus Walleij <linusw@kernel.org>,
-        Alexander Sverdlin <alexander.sverdlin@gmail.com>,
-        "David S. Miller" <davem@davemloft.net>,
-        =?UTF-8?Q?Jonathan_Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>,
-        "Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
-        =?UTF-8?Q?Uwe_Kleine=2DK=C3=B6nig?= 
-        <u.kleine-koenig@pengutronix.de>,
-        Alessandro Zummo <a.zummo@towertech.it>,
-        Alexander Gordeev <agordeev@linux.ibm.com>,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Bartosz Golaszewski <brgl@bgdev.pl>,
-        Brian Norris <briannorris@chromium.org>,
-        Chuanhong Guo <gch981213@gmail.com>,
-        Conor Dooley <conor.dooley@microchip.com>,
-        Damien Le Moal <dlemoal@kernel.org>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-        Emil Renner Berthing <kernel@esmil.dk>,
-        Eric Dumazet <edumazet@google.com>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Guenter Roeck <linux@roeck-us.net>,
-        Hartley Sweeten <hsweeten@visionengravers.com>,
-        Heiko Stuebner <heiko@sntech.de>,
-        Hitomi Hasegawa <hasegawa-hitomi@fujitsu.com>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Jaroslav Kysela <perex@perex.cz>,
-        Jean Delvare <jdelvare@suse.de>, Joel Stanley <joel@jms.id.au>,
-        Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Le Moal <damien.lemoal@opensource.wdc.com>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Liang Yang <liang.yang@amlogic.com>,
-        Lukasz Majewski <lukma@denx.de>, Lv Ruyi <lv.ruyi@zte.com.cn>,
-        Masahiro Yamada <masahiroy@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Miquel Raynal <miquel.raynal@bootlin.com>,
-        Nathan Chancellor <nathan@kernel.org>,
-        Nick Desaulniers <ndesaulniers@google.com>,
-        Nicolas Saenz Julienne <nsaenz@kernel.org>,
-        Olof Johansson <olof@lixom.net>,
-        Paolo Abeni <pabeni@redhat.com>,
-        Qin Jian <qinjian@cqplus1.com>,
-        Richard Weinberger <richard@nod.at>,
-        Rob Herring <robh+dt@kernel.org>,
-        Robert Jarzmik <robert.jarzmik@free.fr>,
-        Russell King <linux@armlinux.org.uk>,
-        Sebastian Reichel <sre@kernel.org>,
-        Sergey Shtylyov <s.shtylyov@omp.ru>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Sumanth Korikkar <sumanthk@linux.ibm.com>,
-        Sven Peter <sven@svenpeter.dev>, Takashi Iwai <tiwai@suse.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Vasily Gorbik <gor@linux.ibm.com>,
-        Vignesh Raghavendra <vigneshr@ti.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        Walker Chen <walker.chen@starfivetech.com>,
-        Wim Van Sebroeck <wim@linux-watchdog.org>,
-        Yinbo Zhu <zhuyinbo@loongson.cn>, alsa-devel@alsa-project.org,
-        devicetree@vger.kernel.org, dmaengine@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-clk@vger.kernel.org,
-        linux-gpio@vger.kernel.org, linux-ide@vger.kernel.org,
-        linux-input@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-mtd@lists.infradead.org, linux-pm@vger.kernel.org,
-        linux-pwm@vger.kernel.org, linux-rtc@vger.kernel.org,
-        linux-spi@vger.kernel.org, linux-watchdog@vger.kernel.org,
-        netdev@vger.kernel.org, soc@kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Subject: [PATCH v2 0/8] DMA40 SRAM refactoring and cleanup
+Date:   Thu, 27 Apr 2023 14:09:55 +0200
+Message-Id: <20230417-ux500-dma40-cleanup-v2-0-cdaa68a4b863@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIABNmSmQC/32NQQ6DIBBFr9Kw7jSAqLWr3qNxATgqiYIZ1NgY7
+ 170AF2+//PydhaRHEb2uu2McHXRBZ9A3m/M9tp3CK5JzCSXGVeihGXLOYdm1IqDHVD7ZYIWVft
+ sKiMqm7NkGh0RDGlv+9MddZyRzmMibN125T514t7FOdD3qq/iXP+HVgEcjCwyqaq8QFW+B+c1h
+ UegjtXHcfwA9c/TAtAAAAA=
+To:     Vinod Koul <vkoul@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     dmaengine@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        Linus Walleij <linus.walleij@linaro.org>
+X-Mailer: b4 0.12.2
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On Wed, Apr 26, 2023 at 11:02=E2=80=AFPM Mark Brown <broonie@kernel.org> wr=
-ote:
-> On Wed, Apr 26, 2023 at 10:56:53PM +0200, Linus Walleij wrote:
->
-> > This is a big patch set and the improvement to the ARM kernel it
-> > brings is great, so I am a bit worried about over-review stalling the
-> > merged. If there start to be nitpicky comments I would prefer that
-> > we merge it and let minor comments and "nice-to-haves" be
-> > addressed in-tree during the development cycle.
->
-> I'm really not enthusiastic about the SPI bindings being merged as-is.
+I started out by augmenting the STE DMA40 driver to get
+its LCPA SRAM memory from a proper SRAM handle in the
+device tree instead of as a reg cell, and then I saw
+that the driver was in a bit of sad state so I did a bit
+of cleanups on top.
 
-Agree, the bindings are more important than the code IMO,
-they tend to get written in stone.
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+---
+Changes in v2:
+- Amendments to the bindings after review.
+- Link to v1: https://lore.kernel.org/r/20230417-ux500-dma40-cleanup-v1-0-b26324956e47@linaro.org
 
-Yours,
-Linus Walleij
+---
+Linus Walleij (8):
+      dt-bindings: dma: dma40: Prefer to pass sram through phandle
+      dmaengine: ste_dma40: Get LCPA SRAM from SRAM node
+      dmaengine: ste_dma40: Add dev helper variable
+      dmaengine: ste_dma40: Remove platform data
+      dmaengine: ste_dma40: Pass dev to OF function
+      dmaengine: ste_dma40: Use managed resources
+      dmaengine: ste_dma40: Return error codes properly
+      ARM: dts: ux500: Add eSRAM nodes
+
+ .../devicetree/bindings/dma/stericsson,dma40.yaml  |  36 ++-
+ arch/arm/boot/dts/ste-dbx5x0.dtsi                  |  73 ++++-
+ drivers/dma/Kconfig                                |   1 +
+ drivers/dma/ste_dma40.c                            | 336 +++++++++------------
+ .../dma-ste-dma40.h => drivers/dma/ste_dma40.h     | 101 +------
+ drivers/dma/ste_dma40_ll.c                         |   3 +-
+ 6 files changed, 254 insertions(+), 296 deletions(-)
+---
+base-commit: fe15c26ee26efa11741a7b632e9f23b01aca4cc6
+change-id: 20230417-ux500-dma40-cleanup-fe4f8d9b19c5
+
+Best regards,
+-- 
+Linus Walleij <linus.walleij@linaro.org>
+
