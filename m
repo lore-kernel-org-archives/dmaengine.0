@@ -2,42 +2,42 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 843FEC77B61
-	for <dmaengine@archiver.kernel.org>; Thu, 27 Apr 2023 17:45:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D5989C7EE21
+	for <dmaengine@archiver.kernel.org>; Thu, 27 Apr 2023 17:45:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244370AbjD0Rpl (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Thu, 27 Apr 2023 13:45:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53536 "EHLO
+        id S244477AbjD0Rpn (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Thu, 27 Apr 2023 13:45:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53534 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244163AbjD0Rpj (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Thu, 27 Apr 2023 13:45:39 -0400
+        with ESMTP id S244409AbjD0Rpk (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Thu, 27 Apr 2023 13:45:40 -0400
 Received: from mga03.intel.com (mga03.intel.com [134.134.136.65])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0ACFE35A5;
-        Thu, 27 Apr 2023 10:45:20 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D5B724233;
+        Thu, 27 Apr 2023 10:45:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1682617521; x=1714153521;
-  h=from:to:cc:subject:date:message-id:mime-version:
-   content-transfer-encoding;
-  bh=sL1Oogrx9xSZdLUnJG5ws6JoMbQTO9hqS3tsfFCI38U=;
-  b=UwEImCoa0/Gi6LOCz6SeD1pb5ujIdyhBVu6NHPJrwUOpTGkXwsaDA+9I
-   fI6q+cDwJYno3oPoSn8UsWZ48cFTmheXSk4ZZJnsaVz8pXoIBEEAaAmgM
-   LrA9v5CzMdKOhlVzUIcXxcUJwNMVv6GpwUB3tit384cuJZRvhTQxSFrGg
-   Vt5fptj2S+OFoUuCDaa00lGi6mX8Fe7uTLCljRbn902kYMo1UnLUKdHhc
-   kQDlvpqyAmG2oUvxXY4Nk8ArMZWoG9rt17Iijxv7dcy9noJ7+XDg7HmGC
-   T6G4iBRfplX4OvmvCVxB1lgC3G2plme+T9uatjcHSg7tWAyGAZPAXBUNM
+  t=1682617523; x=1714153523;
+  h=from:to:cc:subject:date:message-id:in-reply-to:
+   references:mime-version:content-transfer-encoding;
+  bh=sUwpT3UJslOINCLJ0IN/Qa1aCnftYprMhdpAjRPm5/Y=;
+  b=ciYR0MYwUGGACADHMXWzkZIwKn0K1Z/IQaKXidGtqZohfuTspkXmgcvR
+   F5h9gGQ1PzdU8TUsaJL+6ILvKIhiSVC9h/3QZZ4p6LrxIxIH6zzg4kJHd
+   7xr09rigBynA6QDbusaQTb1/WLXzVjOS8qzq9OWeT2wL+aevW5H2O0wlp
+   kp7MdPr4IA6Me8ppRUfUtRkutBznaQe3m+sqvrCYOrR7lZclkqW1XvU+D
+   VBG3fSVT5qFMoJ4JEYFq4jUPf42Jjcb7gsIv4q7kKYqppVogcnXuMiPA+
+   ncuIvZ6XtkPXLPZnY5LZF3biJN2bmkhUHW0R6oLmIi3kwt9z/1ElwzScI
    g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10693"; a="350398689"
+X-IronPort-AV: E=McAfee;i="6600,9927,10693"; a="350398707"
 X-IronPort-AV: E=Sophos;i="5.99,232,1677571200"; 
-   d="scan'208";a="350398689"
+   d="scan'208";a="350398707"
 Received: from fmsmga005.fm.intel.com ([10.253.24.32])
-  by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Apr 2023 10:45:20 -0700
+  by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Apr 2023 10:45:21 -0700
 X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10693"; a="1024219686"
+X-IronPort-AV: E=McAfee;i="6600,9927,10693"; a="1024219698"
 X-IronPort-AV: E=Sophos;i="5.99,232,1677571200"; 
-   d="scan'208";a="1024219686"
+   d="scan'208";a="1024219698"
 Received: from srinivas-otcpl-7600.jf.intel.com (HELO jacob-builder.jf.intel.com) ([10.54.39.106])
-  by fmsmga005.fm.intel.com with ESMTP; 27 Apr 2023 10:45:19 -0700
+  by fmsmga005.fm.intel.com with ESMTP; 27 Apr 2023 10:45:20 -0700
 From:   Jacob Pan <jacob.jun.pan@linux.intel.com>
 To:     LKML <linux-kernel@vger.kernel.org>, iommu@lists.linux.dev,
         "Robin Murphy" <robin.murphy@arm.com>,
@@ -55,86 +55,39 @@ Cc:     "Will Deacon" <will@kernel.org>,
         "Zanussi, Tom" <tom.zanussi@intel.com>,
         narayan.ranganathan@intel.com,
         Jacob Pan <jacob.jun.pan@linux.intel.com>
-Subject: [PATCH v5 0/7] Re-enable IDXD kernel workqueue under DMA API
-Date:   Thu, 27 Apr 2023 10:49:30 -0700
-Message-Id: <20230427174937.471668-1-jacob.jun.pan@linux.intel.com>
+Subject: [PATCH v5 2/7] iommu/sva: Explicitly exclude RID_PASID from SVA
+Date:   Thu, 27 Apr 2023 10:49:32 -0700
+Message-Id: <20230427174937.471668-3-jacob.jun.pan@linux.intel.com>
 X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20230427174937.471668-1-jacob.jun.pan@linux.intel.com>
+References: <20230427174937.471668-1-jacob.jun.pan@linux.intel.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Hi all,
+SVA PASID allocation is hardcoded to start from 1 because 0 is used for
+RID_PASID, let's make it explicit to avoid the potential conflicts.
 
-IDXD kernel work queues were disabled due to the flawed use of kernel VA
-and SVA API.
-Link: https://lore.kernel.org/linux-iommu/20210511194726.GP1002214@nvidia.com/
-
-The solution is to enable it under DMA API where IDXD shared workqueue users
-can use ENQCMDS to submit work on buffers mapped by DMA API.
-
-This patchset adds support for attaching PASID to the device's default
-domain and the ability to allocate global PASIDs from IOMMU APIs. We can then
-re-enable the kernel work queues and use them under DMA API.
-
-This depends on the IOASID removal series. (merged)
-https://lore.kernel.org/all/ZCaUBJvUMsJyD7EW@8bytes.org/
-
-
-Thanks,
-
-Jacob
-
+Signed-off-by: Jacob Pan <jacob.jun.pan@linux.intel.com>
 ---
-Changelog:
-v5:
-	- exclude two patches related to supervisor mode, taken by VT-d
-	maintainer Baolu.
-	- move PASID range check into allocation API so that device drivers
-	  only need to pass in struct device*. (Kevin)
-	- factor out helper functions in device-domain attach (Baolu)
-	- make explicit use of RID_PASID across architectures
-v4:
-	- move dummy functions outside ifdef CONFIG_IOMMU_SVA (Baolu)
-	- dropped domain type check while disabling idxd system PASID (Baolu)
+ drivers/iommu/iommu-sva.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-v3:
-	- moved global PASID allocation API from SVA to IOMMU (Kevin)
-	- remove #ifdef around global PASID reservation during boot (Baolu)
-	- remove restriction on PASID 0 allocation (Baolu)
-	- fix a bug in sysfs domain change when attaching devices
-	- clear idxd user interrupt enable bit after disabling device( Fenghua)
-v2:
-	- refactored device PASID attach domain ops based on Baolu's early patch
-	- addressed TLB flush gap
-	- explicitly reserve RID_PASID from SVA PASID number space
-	- get dma domain directly, avoid checking domain types
-
-
-Jacob Pan (6):
-  iommu: Generalize default PCIe requester ID PASID
-  iommu/sva: Explicitly exclude RID_PASID from SVA
-  iommu: Move global PASID allocation from SVA to core
-  iommu/vt-d: Prepare PASID attachment beyond RID_PASID
-  iommu/vt-d: Implement set_dev_pasid domain op
-  dmaengine/idxd: Re-enable kernel workqueue under DMA API
-
-Lu Baolu (1):
-  iommu/vt-d: Factoring out PASID set up helper function
-
- drivers/dma/idxd/device.c   |  30 +----
- drivers/dma/idxd/init.c     |  60 ++++++++-
- drivers/dma/idxd/sysfs.c    |   7 --
- drivers/iommu/intel/iommu.c | 240 +++++++++++++++++++++++++++++-------
- drivers/iommu/intel/iommu.h |   8 ++
- drivers/iommu/intel/pasid.c |   2 +-
- drivers/iommu/intel/pasid.h |   1 -
- drivers/iommu/iommu-sva.c   |  25 +---
- drivers/iommu/iommu.c       |  24 ++++
- include/linux/iommu.h       |  10 ++
- 10 files changed, 305 insertions(+), 102 deletions(-)
-
+diff --git a/drivers/iommu/iommu-sva.c b/drivers/iommu/iommu-sva.c
+index c434b95dc8eb..ac7c93bacb5c 100644
+--- a/drivers/iommu/iommu-sva.c
++++ b/drivers/iommu/iommu-sva.c
+@@ -66,7 +66,7 @@ struct iommu_sva *iommu_sva_bind_device(struct device *dev, struct mm_struct *mm
+ 		return ERR_PTR(-EOPNOTSUPP);
+ 
+ 	/* Allocate mm->pasid if necessary. */
+-	ret = iommu_sva_alloc_pasid(mm, 1, max_pasids - 1);
++	ret = iommu_sva_alloc_pasid(mm, IOMMU_DEF_RID_PASID + 1, max_pasids - 1);
+ 	if (ret)
+ 		return ERR_PTR(ret);
+ 
 -- 
 2.25.1
 
