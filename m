@@ -2,127 +2,121 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 76083C77B7C
-	for <dmaengine@archiver.kernel.org>; Fri,  5 May 2023 02:59:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 74CBFC7EE22
+	for <dmaengine@archiver.kernel.org>; Fri,  5 May 2023 08:28:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229482AbjEEC7Q (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Thu, 4 May 2023 22:59:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45418 "EHLO
+        id S229789AbjEEI2q (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 5 May 2023 04:28:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53046 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229459AbjEEC7P (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Thu, 4 May 2023 22:59:15 -0400
-Received: from mga04.intel.com (mga04.intel.com [192.55.52.120])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CBCA31160F;
-        Thu,  4 May 2023 19:59:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1683255554; x=1714791554;
-  h=message-id:date:mime-version:cc:subject:to:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=+6Ksxw8NnDuZ6E01rOeUZM6j9Ahu/Zzr4rk7clJ2PuI=;
-  b=KLH+cVFc5H6Wve8KmQotbbelz+9xYl5mMBk8BZ5HRUIwbHnTsSzRYIUN
-   /YRrvY/x/liYpjfVrND4/9taT2vaMsKVmjKF7MOVVsxBX5J6JOPXzQESi
-   D34Zp2lXsq8VLb2Xurs4Qvkb+1+5GxefPgalV4juL8XBUQTzr6qWHdbFz
-   mQRyKOS/2evoVtJmDqqz1hAahW6/07AZZ+pHw2in5UugqQmee6VYe2V+U
-   kXhqAF0dPKXv0AQhvDn/GEESUSwpBR3wUMmYuCwzy5oEVlR5Pqi0cVXk4
-   4l/0UEw4/ZpPSTNdKWVd5uKFOrM2mGeTv9IVhoJV/1/DnknYUeY9dKURS
-   w==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10700"; a="347935664"
-X-IronPort-AV: E=Sophos;i="5.99,250,1677571200"; 
-   d="scan'208";a="347935664"
-Received: from fmsmga008.fm.intel.com ([10.253.24.58])
-  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 May 2023 19:59:06 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10700"; a="762232080"
-X-IronPort-AV: E=Sophos;i="5.99,250,1677571200"; 
-   d="scan'208";a="762232080"
-Received: from allen-box.sh.intel.com (HELO [10.239.159.127]) ([10.239.159.127])
-  by fmsmga008.fm.intel.com with ESMTP; 04 May 2023 19:59:00 -0700
-Message-ID: <35ceffc2-e306-6215-e90a-43548f6feca6@linux.intel.com>
-Date:   Fri, 5 May 2023 10:58:38 +0800
+        with ESMTP id S231264AbjEEI2T (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Fri, 5 May 2023 04:28:19 -0400
+Received: from lelv0142.ext.ti.com (lelv0142.ext.ti.com [198.47.23.249])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0800B18927;
+        Fri,  5 May 2023 01:27:07 -0700 (PDT)
+Received: from lelv0266.itg.ti.com ([10.180.67.225])
+        by lelv0142.ext.ti.com (8.15.2/8.15.2) with ESMTP id 3458Q819003857;
+        Fri, 5 May 2023 03:26:08 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
+        s=ti-com-17Q1; t=1683275168;
+        bh=dDL1Ix5ed3FpBkik2TeAdp7w4F8HGFiJXQbTgcTMItg=;
+        h=From:To:CC:Subject:Date:In-Reply-To:References;
+        b=mD5O5x5drXSMEGikaubI8ZijpDUdjYwNgSi1FDfuahvxzryN4xJxKHQR0BaXmKgmM
+         PtVyGYAalrXyFV/IiX5CeMXc8umGhPmE7TwaoqD+lj4EdyoVqk73wXW1kj2e3pHIML
+         wSzUpgAWFi5tQe8mGp5pQI7fwqbg9bzSeLbHqknY=
+Received: from DLEE104.ent.ti.com (dlee104.ent.ti.com [157.170.170.34])
+        by lelv0266.itg.ti.com (8.15.2/8.15.2) with ESMTPS id 3458Q84k035321
+        (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
+        Fri, 5 May 2023 03:26:08 -0500
+Received: from DLEE105.ent.ti.com (157.170.170.35) by DLEE104.ent.ti.com
+ (157.170.170.34) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.2507.23; Fri, 5
+ May 2023 03:26:07 -0500
+Received: from fllv0040.itg.ti.com (10.64.41.20) by DLEE105.ent.ti.com
+ (157.170.170.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.2507.23 via
+ Frontend Transport; Fri, 5 May 2023 03:26:08 -0500
+Received: from localhost (ileaxei01-snat.itg.ti.com [10.180.69.5])
+        by fllv0040.itg.ti.com (8.15.2/8.15.2) with ESMTP id 3458Q6Yo120576;
+        Fri, 5 May 2023 03:26:07 -0500
+From:   Vaishnav Achath <vaishnav.a@ti.com>
+To:     <krzysztof.kozlowski+dt@linaro.org>, <peter.ujfalusi@gmail.com>,
+        <robh+dt@kernel.org>, <vkoul@kernel.org>
+CC:     <devicetree@vger.kernel.org>, <dmaengine@vger.kernel.org>,
+        <j-choudhary@ti.com>, <linux-kernel@vger.kernel.org>,
+        <u-kumar1@ti.com>, <vigneshr@ti.com>, <vaishnav.a@ti.com>
+Subject: [PATCH v2 2/2] dmaengine: ti: k3-udma: Add support for J721S2 CSI BCDMA instance
+Date:   Fri, 5 May 2023 13:56:02 +0530
+Message-ID: <20230505082602.31783-3-vaishnav.a@ti.com>
+X-Mailer: git-send-email 2.17.1
+In-Reply-To: <20230505082602.31783-1-vaishnav.a@ti.com>
+References: <20230505082602.31783-1-vaishnav.a@ti.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.0
-Cc:     baolu.lu@linux.intel.com, LKML <linux-kernel@vger.kernel.org>,
-        iommu@lists.linux.dev, Robin Murphy <robin.murphy@arm.com>,
-        Jason Gunthorpe <jgg@nvidia.com>,
-        Joerg Roedel <joro@8bytes.org>, dmaengine@vger.kernel.org,
-        vkoul@kernel.org, Will Deacon <will@kernel.org>,
-        David Woodhouse <dwmw2@infradead.org>,
-        Raj Ashok <ashok.raj@intel.com>,
-        "Tian, Kevin" <kevin.tian@intel.com>, Yi Liu <yi.l.liu@intel.com>,
-        "Yu, Fenghua" <fenghua.yu@intel.com>,
-        Dave Jiang <dave.jiang@intel.com>,
-        Tony Luck <tony.luck@intel.com>,
-        "Zanussi, Tom" <tom.zanussi@intel.com>,
-        narayan.ranganathan@intel.com
-Subject: Re: [PATCH v5 6/7] iommu/vt-d: Implement set_dev_pasid domain op
-Content-Language: en-US
-To:     Jacob Pan <jacob.jun.pan@linux.intel.com>
-References: <20230427174937.471668-1-jacob.jun.pan@linux.intel.com>
- <20230427174937.471668-7-jacob.jun.pan@linux.intel.com>
- <76c98e62-1cac-2ab6-7721-08ec2c1fceb8@linux.intel.com>
- <20230504160334.496085db@jacob-builder>
-From:   Baolu Lu <baolu.lu@linux.intel.com>
-In-Reply-To: <20230504160334.496085db@jacob-builder>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-EXCLAIMER-MD-CONFIG: e1e8a2fd-e40a-4ac6-ac9b-f7e9cc9ee180
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On 5/5/23 7:03 AM, Jacob Pan wrote:
->>> +static int intel_iommu_attach_device_pasid(struct iommu_domain *domain,
->>> +					   struct device *dev,
->>> ioasid_t pasid) +{
->>> +	struct device_domain_info *info = dev_iommu_priv_get(dev);
->>> +	struct dmar_domain *dmar_domain = to_dmar_domain(domain);
->>> +	struct intel_iommu *iommu = info->iommu;
->>> +	int ret;
->>> +
->>> +	if (!pasid_supported(iommu))
->>> +		return -ENODEV;
->>> +
->>> +	ret = prepare_domain_attach_device(domain, dev);
->>> +	if (ret)
->>> +		return ret;
->>> +
->>> +	/*
->>> +	 * Most likely the device context has already been set up,
->>> will only
->>> +	 * take a domain ID reference. Otherwise, device context will
->>> be set
->>> +	 * up here.
->> The "otherwise" case is only default domain deferred attaching case,
->> right?
-> it might be the only case so far, but my intention is to be general. i.e.
-> no ordering requirements. I believe it is more future proof in case
-> device_attach_pasid called before device_attach.
+J721S2 has dedicated BCDMA instance for Camera Serial Interface RX
+and TX. The BCDMA instance supports RX and TX channels but block copy
+channels are not present, add support for the same.
 
-Let's put aside deferred attach and talk about it later.
+Signed-off-by: Vaishnav Achath <vaishnav.a@ti.com>
+---
+ drivers/dma/ti/k3-udma.c | 25 +++++++++++++++++++++++++
+ 1 file changed, 25 insertions(+)
 
-The device's context entry is configured when the default domain is
-being attached to the device. And, the default domain attaching is in
-the iommu probe_device path. It always happens before set_device_pasid
-which is designed to be called by the device driver. So the real
-situation is that when the device driver calls set_device_pasid, the
-context entry should already have been configured.
+diff --git a/drivers/dma/ti/k3-udma.c b/drivers/dma/ti/k3-udma.c
+index fc3a2a05ab7b..16c5c333808b 100644
+--- a/drivers/dma/ti/k3-udma.c
++++ b/drivers/dma/ti/k3-udma.c
+@@ -4308,6 +4308,15 @@ static struct udma_soc_data am62a_dmss_csi_soc_data = {
+ 	},
+ };
+ 
++static struct udma_soc_data j721s2_bcdma_csi_soc_data = {
++	.oes = {
++		.bcdma_tchan_data = 0x800,
++		.bcdma_tchan_ring = 0xa00,
++		.bcdma_rchan_data = 0xe00,
++		.bcdma_rchan_ring = 0x1000,
++	},
++};
++
+ static struct udma_match_data am62a_bcdma_csirx_data = {
+ 	.type = DMA_TYPE_BCDMA,
+ 	.psil_base = 0x3100,
+@@ -4346,6 +4355,18 @@ static struct udma_match_data am64_pktdma_data = {
+ 	},
+ };
+ 
++static struct udma_match_data j721s2_bcdma_csi_data = {
++	.type = DMA_TYPE_BCDMA,
++	.psil_base = 0x2000,
++	.enable_memcpy_support = false,
++	.burst_size = {
++		TI_SCI_RM_UDMAP_CHAN_BURST_SIZE_64_BYTES, /* Normal Channels */
++		0, /* No H Channels */
++		0, /* No UH Channels */
++	},
++	.soc_data = &j721s2_bcdma_csi_soc_data,
++};
++
+ static const struct of_device_id udma_of_match[] = {
+ 	{
+ 		.compatible = "ti,am654-navss-main-udmap",
+@@ -4373,6 +4394,10 @@ static const struct of_device_id udma_of_match[] = {
+ 		.compatible = "ti,am62a-dmss-bcdma-csirx",
+ 		.data = &am62a_bcdma_csirx_data,
+ 	},
++	{
++		.compatible = "ti,j721s2-dmss-bcdma-csi",
++		.data = &j721s2_bcdma_csi_data,
++	},
+ 	{ /* Sentinel */ },
+ };
+ 
+-- 
+2.17.1
 
-Then let's pick up the deferred attach case. It is a workaround for
-kdump (Documentation/admin-guide/kdump/kdump.rst). I don't think PASID
-feature is functionally required by any kdump capture kernel as its
-main purpose is to dump the memory of a panic kernel.
-
-In summary, it seems to be reasonable for the vt-d driver to return
--EBUSY when a device's context was copied. The idxd driver should
-continue to work without kernel DMA with PASID support.
-
-	if (context_copied(iommu, bus, devfn))
-		return -EBUSY;
-
-Make things general is always good, but this doesn't mean that we need
-to make the code complex to support cases that do not exist or are not
-used. Thoughts?
-
-Best regards,
-baolu
