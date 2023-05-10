@@ -2,95 +2,107 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 309E2C7EE22
-	for <dmaengine@archiver.kernel.org>; Wed, 10 May 2023 06:04:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9E575C7EE22
+	for <dmaengine@archiver.kernel.org>; Wed, 10 May 2023 17:01:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235326AbjEJGE3 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 10 May 2023 02:04:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51924 "EHLO
+        id S232032AbjEJRBT (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 10 May 2023 13:01:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42940 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229482AbjEJGE1 (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Wed, 10 May 2023 02:04:27 -0400
-Received: from mail-pl1-x62d.google.com (mail-pl1-x62d.google.com [IPv6:2607:f8b0:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E3E7040F7
-        for <dmaengine@vger.kernel.org>; Tue,  9 May 2023 23:04:26 -0700 (PDT)
-Received: by mail-pl1-x62d.google.com with SMTP id d9443c01a7336-1aafa41116fso47189255ad.1
-        for <dmaengine@vger.kernel.org>; Tue, 09 May 2023 23:04:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=sifive.com; s=google; t=1683698666; x=1686290666;
-        h=message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Gu0Ww4Btm3ZJWmUm54OXSmR11HegrPdHhOCTMAKgm2g=;
-        b=h8djJvjR8ebEG6ImUF1nkveTqSFqxQK3NuyugJ0rvCgfuk3n7bOjbRYxjtXbDIo41c
-         9hkL5I3sSZAH4LWpU5Hz4rzaimszZBnNgQOeLWbHtCSvV7WE23HlCEltuB97H+lsxDhi
-         T0Nr9HX8Syru1uaPiRtTS46v2moIsJGkvq2fkvbS9avnh5cZYPI/gMly6X4IibbUV9Ex
-         V/dQFKHhfVsUE9F4bjL0+Da5GeBHVH47z3e2nCnG8iqSQwDFB78EZK5iy9Znzu0czH/C
-         bkc9CPb8uKkFm5Hp+RwIdrNE6RB3gLGj+3o9CVYLr6Psz0nv+LzShMjkAsT7kk0uGH+m
-         OjtQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683698666; x=1686290666;
-        h=message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Gu0Ww4Btm3ZJWmUm54OXSmR11HegrPdHhOCTMAKgm2g=;
-        b=cacmZ+65VaNm7uW2/3TCmICeX63hwDmMQramm/0Jo+OCpxBRFytAUwJpuJ2uHt4AIp
-         +Y9SmlrRKOshQgu9X3CHAFDiDI6Q0KRipIBnohWMlLMAHm3Mo76SbD1Q20AvuGTmY0BS
-         59Msc8yw81+2itk6uAUUnFLFQWHg7EvvrtrtndMrM4yyL9EzAmLrO87Ib7n5GiNU3rBc
-         hXDLoPyInXXa9TRLOPDtZs5FtRu5VHXCOMb1xXqBwWcRzRjb4Vky36rV6AnDw1TJt5tm
-         Fdi6jsmOU42ep2nl3VtZ2I87tH8dMK73IVbuI+ULKjJjPTqp7AzgBOgIVphkz3JYYQRT
-         njeg==
-X-Gm-Message-State: AC+VfDx/bm+InUd5+nVblGS8Exd97nwyiV24Iy+bBlCuFFNyi3KXHumv
-        +CTX7+IO8ZOLQ7SqEmYylDheUg==
-X-Google-Smtp-Source: ACHHUZ58wm9Z0W6YIYZ1v9zc9DcTUNNZ2qDA21or5nSqrykEbxFIclL0qerbXr6/V4brO+GwwybdGA==
-X-Received: by 2002:a17:902:c40a:b0:1ab:28ec:bf10 with SMTP id k10-20020a170902c40a00b001ab28ecbf10mr23310293plk.51.1683698666262;
-        Tue, 09 May 2023 23:04:26 -0700 (PDT)
-Received: from hsinchu26.internal.sifive.com (59-124-168-89.hinet-ip.hinet.net. [59.124.168.89])
-        by smtp.gmail.com with ESMTPSA id io20-20020a17090312d400b001ab0a30c895sm2751424plb.202.2023.05.09.23.04.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 09 May 2023 23:04:25 -0700 (PDT)
-From:   Zong Li <zong.li@sifive.com>
-To:     vkoul@kernel.org, palmer@dabbelt.com, radhey.shyam.pandey@amd.com,
-        dmaengine@vger.kernel.org, linux-riscv@lists.infradead.org,
-        linux-kernel@vger.kernel.org
-Cc:     Zong Li <zong.li@sifive.com>
-Subject: [PATCH v2] dmaengine: xilinx: dma: remove arch dependency
-Date:   Wed, 10 May 2023 06:04:21 +0000
-Message-Id: <20230510060421.30982-1-zong.li@sifive.com>
-X-Mailer: git-send-email 2.17.1
+        with ESMTP id S236082AbjEJRBJ (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Wed, 10 May 2023 13:01:09 -0400
+Received: from mga05.intel.com (mga05.intel.com [192.55.52.43])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3640661A4;
+        Wed, 10 May 2023 10:00:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1683738043; x=1715274043;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=gKhRGj85UbImK57Kh1ESFgEHiDGK4xuek1Ky82rVH5g=;
+  b=XOnaOmTSHMg4Opqb2c1N5LwrCLwv3IUtbqkhm23ETre5NKuCCHlsoRpm
+   4LPVSmpnnDprnYGk35hQVKIJnskU2EgiHjqjYovqw/qUYZdm8eiw4JlGn
+   /CrQBOC0LVDzD1qHtmIhB3QbtyWslRkVLShIAHlxWBV+Y94S/QeBrKZqr
+   IZFWj9onLmZ2wjUvGK6A5Ll3aGvFPC6xTIx8Ghbm8GLKk5I/CMOdNDLMj
+   2hjJXvovPrh8Xss7KH+uOu38ZCYOuJYMdIZEEXKopmMqWrMua6H6/3rkY
+   CaFw0Sm8mqf53saXChIRtLvKUJEAl3Jcfnws24HDH42LkE33R4HAuB8bP
+   g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10706"; a="436590206"
+X-IronPort-AV: E=Sophos;i="5.99,265,1677571200"; 
+   d="scan'208";a="436590206"
+Received: from fmsmga008.fm.intel.com ([10.253.24.58])
+  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 May 2023 10:00:42 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10706"; a="764375418"
+X-IronPort-AV: E=Sophos;i="5.99,265,1677571200"; 
+   d="scan'208";a="764375418"
+Received: from lkp-server01.sh.intel.com (HELO dea6d5a4f140) ([10.239.97.150])
+  by fmsmga008.fm.intel.com with ESMTP; 10 May 2023 10:00:40 -0700
+Received: from kbuild by dea6d5a4f140 with local (Exim 4.96)
+        (envelope-from <lkp@intel.com>)
+        id 1pwnB9-0003S4-24;
+        Wed, 10 May 2023 17:00:39 +0000
+Date:   Thu, 11 May 2023 01:00:23 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Zong Li <zong.li@sifive.com>, vkoul@kernel.org, palmer@dabbelt.com,
+        radhey.shyam.pandey@amd.com, dmaengine@vger.kernel.org,
+        linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org
+Cc:     oe-kbuild-all@lists.linux.dev, Zong Li <zong.li@sifive.com>
+Subject: Re: [PATCH v2] dmaengine: xilinx: dma: remove arch dependency
+Message-ID: <202305110023.SRQHQ5Sg-lkp@intel.com>
+References: <20230510060421.30982-1-zong.li@sifive.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230510060421.30982-1-zong.li@sifive.com>
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-As following patches, xilinx dma is also now architecture agnostic,
-and it can be compiled for several architectures. We have verified the
-CDMA on RISC-V platform, let's remove the ARCH dependency list instead
-of adding new ARCH.
+Hi Zong,
 
-'e8b6c54f6d57 ("net: xilinx: temac: Relax Kconfig dependencies")'
-'d7eaf962a90b ("net: axienet: In kconfig remove arch dependency for axi_emac")'
+kernel test robot noticed the following build errors:
 
-Signed-off-by: Zong Li <zong.li@sifive.com>
-Acked-by: Palmer Dabbelt <palmer@rivosinc.com>
-Suggested-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
----
+[auto build test ERROR on vkoul-dmaengine/next]
+[also build test ERROR on linus/master v6.4-rc1 next-20230510]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
 
- Changes in v2:
- - Remove ARCH dependency list instead of adding new ARCH
+url:    https://github.com/intel-lab-lkp/linux/commits/Zong-Li/dmaengine-xilinx-dma-remove-arch-dependency/20230510-140509
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/vkoul/dmaengine.git next
+patch link:    https://lore.kernel.org/r/20230510060421.30982-1-zong.li%40sifive.com
+patch subject: [PATCH v2] dmaengine: xilinx: dma: remove arch dependency
+config: s390-allmodconfig (https://download.01.org/0day-ci/archive/20230511/202305110023.SRQHQ5Sg-lkp@intel.com/config)
+compiler: s390-linux-gcc (GCC) 12.1.0
+reproduce (this is a W=1 build):
+        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
+        chmod +x ~/bin/make.cross
+        # https://github.com/intel-lab-lkp/linux/commit/5ffa30d0089e127bb702f8904856e05dfdee85d5
+        git remote add linux-review https://github.com/intel-lab-lkp/linux
+        git fetch --no-tags linux-review Zong-Li/dmaengine-xilinx-dma-remove-arch-dependency/20230510-140509
+        git checkout 5ffa30d0089e127bb702f8904856e05dfdee85d5
+        # save the config file
+        mkdir build_dir && cp config build_dir/.config
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-12.1.0 make.cross W=1 O=build_dir ARCH=s390 olddefconfig
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-12.1.0 make.cross W=1 O=build_dir ARCH=s390 SHELL=/bin/bash
 
- drivers/dma/Kconfig | 1 -
- 1 file changed, 1 deletion(-)
+If you fix the issue, kindly add following tag where applicable
+| Reported-by: kernel test robot <lkp@intel.com>
+| Link: https://lore.kernel.org/oe-kbuild-all/202305110023.SRQHQ5Sg-lkp@intel.com/
 
-diff --git a/drivers/dma/Kconfig b/drivers/dma/Kconfig
-index f5f422f9b850..daf20600a167 100644
---- a/drivers/dma/Kconfig
-+++ b/drivers/dma/Kconfig
-@@ -696,7 +696,6 @@ config XGENE_DMA
- 
- config XILINX_DMA
- 	tristate "Xilinx AXI DMAS Engine"
--	depends on (ARCH_ZYNQ || MICROBLAZE || ARM64)
- 	select DMA_ENGINE
- 	help
- 	  Enable support for Xilinx AXI VDMA Soft IP.
+All errors (new ones prefixed by >>, old ones prefixed by <<):
+
+>> ERROR: modpost: "devm_platform_ioremap_resource" [drivers/dma/xilinx/xilinx_dma.ko] undefined!
+ERROR: modpost: "devm_platform_ioremap_resource" [drivers/dma/fsl-edma.ko] undefined!
+ERROR: modpost: "devm_platform_ioremap_resource" [drivers/dma/idma64.ko] undefined!
+ERROR: modpost: "devm_platform_ioremap_resource" [drivers/char/xillybus/xillybus_of.ko] undefined!
+ERROR: modpost: "devm_memremap" [drivers/misc/open-dice.ko] undefined!
+ERROR: modpost: "devm_memunmap" [drivers/misc/open-dice.ko] undefined!
+ERROR: modpost: "devm_ioremap" [drivers/net/ethernet/altera/altera_tse.ko] undefined!
+ERROR: modpost: "iounmap" [drivers/pcmcia/pcmcia.ko] undefined!
+ERROR: modpost: "ioremap" [drivers/pcmcia/pcmcia.ko] undefined!
+
 -- 
-2.17.1
-
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests
