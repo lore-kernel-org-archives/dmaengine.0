@@ -2,84 +2,141 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 78E32C77B75
-	for <dmaengine@archiver.kernel.org>; Wed, 17 May 2023 20:19:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A78B7C77B7D
+	for <dmaengine@archiver.kernel.org>; Thu, 18 May 2023 09:32:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229453AbjEQUT6 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 17 May 2023 16:19:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50032 "EHLO
+        id S230110AbjERJca (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Thu, 18 May 2023 05:32:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54204 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229448AbjEQUT6 (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Wed, 17 May 2023 16:19:58 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 58B681FE5;
-        Wed, 17 May 2023 13:19:57 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id E8E02636B3;
-        Wed, 17 May 2023 20:19:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9214EC433EF;
-        Wed, 17 May 2023 20:19:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1684354796;
-        bh=h3i1Kbtu2+A1CAmny+IHIGNGTx6Ino27EpoDhBCMCUg=;
-        h=From:To:Cc:Subject:Date:From;
-        b=dKTVy9RVKLUOGSJm4GI2wiXXavIxvJWRQOXFML1qF5dX6IQv/j/BQ6OaaGy1EZqrF
-         QjDxyEbxGDQMGJU6/anHP0DmQ1SbRsrsqNQd+pDZ/H+Na1pefAzI2HHDI5F+wEXZgx
-         1HOHkb86GpqWY1YuS/jZ/Q1TACdvCNg/xWDInApnYvb875r1BuhPrO41mIt5fh1nEI
-         akTM8FKO4g1jA4i1ku59nOLBOhiEh3Jcdy9CH0ndt1QvULB22Ks2YcRN6t0KAFbhbm
-         9LbEfcVyimFeGNWIdT9yHa1J4HlFev9CcniTZC+iStMbCy37giqWRUAR8saClYm0zk
-         DptvrOxjgrWLg==
-From:   Arnd Bergmann <arnd@kernel.org>
-To:     Linus Walleij <linus.walleij@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>
-Cc:     Arnd Bergmann <arnd@arndb.de>,
-        Julia Lawall <Julia.Lawall@inria.fr>,
-        linux-arm-kernel@lists.infradead.org, dmaengine@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH] dmaengine: ste_dma40: use proper format string for resource_size_t
-Date:   Wed, 17 May 2023 22:19:47 +0200
-Message-Id: <20230517201951.619693-1-arnd@kernel.org>
-X-Mailer: git-send-email 2.39.2
+        with ESMTP id S230128AbjERJcY (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Thu, 18 May 2023 05:32:24 -0400
+X-Greylist: delayed 181 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Thu, 18 May 2023 02:32:16 PDT
+Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de [81.169.146.167])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE702269F
+        for <dmaengine@vger.kernel.org>; Thu, 18 May 2023 02:32:16 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1684401972; cv=none;
+    d=strato.com; s=strato-dkim-0002;
+    b=Rl6R68C8H4FPS/jhpoG/Z31osMkn07jJyu2d79AfgLwKgfd294KNUbRsdLtXpyZGSw
+    Ho2eSCCRy2J3Jk1LZMKL4KTAObInXkmhfg8cdx8VeHCwlStjIFHB9cmnUSqnaSEL6sb3
+    +2QE70nh5o4Hrsik/XYYueDYQ0GvamH0C47s6BZttfSjZGqUFErNas6/MIeIjODSDGqC
+    GGt6JUPfd9yXmYwnQjOvq0TZPz/jf5mdXno8z4a4PXa5EVkOtnGeo4B4xw8f6E/I/dQN
+    mFP0oYDABlnUYxsZMWsFoaaF4KNIiUwYWv99JeFa1AmjrHzXg4iiqQpNPdwbvQTzYdC9
+    C/Tg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1684401972;
+    s=strato-dkim-0002; d=strato.com;
+    h=Cc:To:Message-Id:Subject:Date:From:Cc:Date:From:Subject:Sender;
+    bh=VQO5GZKsRP3ZSA1ItJkim0mWjRZa1duUQAzHk9XLuPY=;
+    b=NIIo/VIFja0OfqtlM4e3RXLGSwMSF2BlN3ax5U95Y1Vq14CRZqicftsRm7MN5/MZjP
+    lvgwQXc9Jo/PFn3fnfxzahTZY937ggcZbkJOGlAYbKd0YLWVECy5dWLtoQCCxTI7rXpE
+    4oUEc7fuaYxoa8KYsAtaUxEPsWu69s7+kh1fcijKL8HVVnVzQvUxOYOvbW2VBKNtDUn8
+    fBWx3BlgSKdm/bJ6ydFnBfs8svd1jHsS+JdjzQ45FKRkBVapSQG6psNWZUnvbZ3FX08s
+    9hiGw6QnttU374FQRqkoU7t1JFoklMKKgT+sQnibgsQXtd9G6pcFRbm2x8SO7o947m/9
+    WO3Q==
+ARC-Authentication-Results: i=1; strato.com;
+    arc=none;
+    dkim=none
+X-RZG-CLASS-ID: mo01
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1684401972;
+    s=strato-dkim-0002; d=gerhold.net;
+    h=Cc:To:Message-Id:Subject:Date:From:Cc:Date:From:Subject:Sender;
+    bh=VQO5GZKsRP3ZSA1ItJkim0mWjRZa1duUQAzHk9XLuPY=;
+    b=Aj4L2AS39FtstuOcjpg1P1jT1Bkvw0beudtYK6j9LzznPKPhXBLiCBuXG898o9Cw00
+    4SjJBaCIUP40zcOUXy+SDa3OlO6BG9qa/B2G0hGSB9nidnpD8JHvHgV8UvcI5o7JtVRx
+    Rw9aSMRITOuJOAGxtrOTW52DG9E+e7CXwznteFFpvxixtS+ilNu+E4oDQwVe0Edtw6Ih
+    jVdvwOaNcnDgwNQYRFGosd+Ixcdy2GPxjW2DFTwTaiFO7724FgtHQEVdPU+O3ZXKZlY6
+    WNvf97fwjKAiwY9LLaF4apHbdZCKPOUrub1y8ONZu/qqnwnGuPrkae+JLm5QcB/al4d9
+    Kxtg==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1684401972;
+    s=strato-dkim-0003; d=gerhold.net;
+    h=Cc:To:Message-Id:Subject:Date:From:Cc:Date:From:Subject:Sender;
+    bh=VQO5GZKsRP3ZSA1ItJkim0mWjRZa1duUQAzHk9XLuPY=;
+    b=lQcwfg74Koai6ozuU8fbsRd5/ddzfMLtsyABsfDZg/Wr8FRRCoDTcz2TIDv0jBb7JC
+    wTwvBtwk0N7MEkjrhdCQ==
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQjVd4CteZ/7jYgS+mLFY+H0JAn8u4p1/zY="
+Received: from [192.168.244.3]
+    by smtp.strato.de (RZmta 49.4.0 DYNA|AUTH)
+    with ESMTPSA id j6420az4I9QBCGS
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+        (Client did not present a certificate);
+    Thu, 18 May 2023 11:26:11 +0200 (CEST)
+From:   Stephan Gerhold <stephan@gerhold.net>
+Date:   Thu, 18 May 2023 11:26:00 +0200
+Subject: [PATCH] dmaengine: qcom: bam_dma: make channels/EEs optional in DT
+ with clock
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20230518-bamclk-dt-v1-1-82f738c897d9@gerhold.net>
+X-B4-Tracking: v=1; b=H4sIACfvZWQC/x2N0QqDMAxFf0XyvIDaDmW/MvaQtNkMq91odQzEf
+ zf4eC7ncjaoUlQq3JoNivy06icbdJcGwkT5JajRGPq2d+21G5FpDumNccHoPZP4gZ0bwHymKsi
+ FcpjskdeUbPwWeer/DNwf+34A1/ZNkXAAAAA=
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Stephan Gerhold <stephan@gerhold.net>
+X-Mailer: b4 0.12.2
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-From: Arnd Bergmann <arnd@arndb.de>
+If we have a BAM clock in the DT we are able to turn on the BAM
+controller while probing, so there is no need to read "num-channels"
+and "qcom,num-ees" from the DT. It can be read more accurately directly
+from the identification registers of the BAM.
 
-When LPAE is set, both the dma_addr_t and resource_size_t become 64 bit
-wide, causing a warning about the format string:
+This simplifies setting up typical controlled-remotely BAM DMAs in the
+DT that can be turned on via a clock (e.g. the BLSP DMA).
 
-drivers/dma/ste_dma40.c: In function 'd40_probe':
-drivers/dma/ste_dma40.c:3539:23: error: format '%x' expects argument of type 'unsigned int', but argument 4 has type 'resource_size_t' {aka 'long long unsigned int'} [-Werror=format=]
- 3539 |         dev_info(dev, "found LCPA SRAM at 0x%08x, size 0x%08x\n",
-
-Change both to the special %pap and %pap helpers for these types.
-
-Fixes: 5a1a3b9c19dd ("dmaengine: ste_dma40: Get LCPA SRAM from SRAM node")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
 ---
- drivers/dma/ste_dma40.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/dma/qcom/bam_dma.c | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/dma/ste_dma40.c b/drivers/dma/ste_dma40.c
-index 9ff6dd9e2fa2..dbc988cfc4bf 100644
---- a/drivers/dma/ste_dma40.c
-+++ b/drivers/dma/ste_dma40.c
-@@ -3536,8 +3536,8 @@ static int __init d40_probe(struct platform_device *pdev)
- 	}
- 	base->lcpa_size = resource_size(&res_lcpa);
- 	base->phy_lcpa = res_lcpa.start;
--	dev_info(dev, "found LCPA SRAM at 0x%08x, size 0x%08x\n",
--		 (u32)base->phy_lcpa, base->lcpa_size);
-+	dev_info(dev, "found LCPA SRAM at %pad, size %pa\n",
-+		 &base->phy_lcpa, &base->lcpa_size);
+diff --git a/drivers/dma/qcom/bam_dma.c b/drivers/dma/qcom/bam_dma.c
+index 1e47d27e1f81..4c3eb972039d 100644
+--- a/drivers/dma/qcom/bam_dma.c
++++ b/drivers/dma/qcom/bam_dma.c
+@@ -1272,7 +1272,15 @@ static int bam_dma_probe(struct platform_device *pdev)
+ 	bdev->powered_remotely = of_property_read_bool(pdev->dev.of_node,
+ 						"qcom,powered-remotely");
  
- 	/* We make use of ESRAM memory for this. */
- 	val = readl(base->virtbase + D40_DREG_LCPA);
+-	if (bdev->controlled_remotely || bdev->powered_remotely) {
++	if (bdev->controlled_remotely || bdev->powered_remotely)
++		bdev->bamclk = devm_clk_get_optional(bdev->dev, "bam_clk");
++	else
++		bdev->bamclk = devm_clk_get(bdev->dev, "bam_clk");
++
++	if (IS_ERR(bdev->bamclk))
++		return PTR_ERR(bdev->bamclk);
++
++	if (!bdev->bamclk) {
+ 		ret = of_property_read_u32(pdev->dev.of_node, "num-channels",
+ 					   &bdev->num_channels);
+ 		if (ret)
+@@ -1284,14 +1292,6 @@ static int bam_dma_probe(struct platform_device *pdev)
+ 			dev_err(bdev->dev, "num-ees unspecified in dt\n");
+ 	}
+ 
+-	if (bdev->controlled_remotely || bdev->powered_remotely)
+-		bdev->bamclk = devm_clk_get_optional(bdev->dev, "bam_clk");
+-	else
+-		bdev->bamclk = devm_clk_get(bdev->dev, "bam_clk");
+-
+-	if (IS_ERR(bdev->bamclk))
+-		return PTR_ERR(bdev->bamclk);
+-
+ 	ret = clk_prepare_enable(bdev->bamclk);
+ 	if (ret) {
+ 		dev_err(bdev->dev, "failed to prepare/enable clock\n");
+
+---
+base-commit: 1c677f238f92ba0a329b7c13220f38b396872806
+change-id: 20230518-bamclk-dt-d44bae47b337
+
+Best regards,
 -- 
-2.39.2
+Stephan Gerhold <stephan@gerhold.net>
 
