@@ -2,67 +2,99 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 22014C77B7A
-	for <dmaengine@archiver.kernel.org>; Fri, 19 May 2023 03:56:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 24353C77B75
+	for <dmaengine@archiver.kernel.org>; Fri, 19 May 2023 09:11:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229691AbjESD4v (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Thu, 18 May 2023 23:56:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39920 "EHLO
+        id S231497AbjESJLK (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 19 May 2023 05:11:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54198 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229707AbjESD4v (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Thu, 18 May 2023 23:56:51 -0400
-Received: from bombadil.infradead.org (bombadil.infradead.org [IPv6:2607:7c80:54:3::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 899CCE75;
-        Thu, 18 May 2023 20:56:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=infradead.org; s=bombadil.20210309; h=In-Reply-To:Content-Type:MIME-Version
-        :References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
-        Content-Transfer-Encoding:Content-ID:Content-Description;
-        bh=Gpsz6npDHVFSw1EWEqKvMH8wRk2QP4HwK8Cw+1qxftg=; b=QrpA83FpxqkZP75q4uAA4UsM5i
-        ZK5QFdf8ZlDSpIEgizQWJSPkNARkw1w1DcjwBX9Yy2ySEQ65c2IkAA5zMb5aOWPU2/piPiibT9MRI
-        QGGfa5Y6f62uV7f8A+tBx4kZK9yw/v4tQEJoHXRn2FKzYjL/xy5NVhbHM1SiFsbvKoQEPVxY4j8qP
-        Li5Vi2M1QkgNeI2wsl4JuTnE+6P5Kns3ky7xa6zELqMMD6H0ET0kPklo+tN01WI+vs/qD8tuiqcma
-        3hdMRtlUp22l6r+I8PDATLBMefocJNOkHrD/IhSMMwQ/zw6TJQLCT5yP2cqoZxP8MNlFvjsv4tTbo
-        OUJmdcuQ==;
-Received: from hch by bombadil.infradead.org with local (Exim 4.96 #2 (Red Hat Linux))
-        id 1pzrEV-00Ezzp-1K;
-        Fri, 19 May 2023 03:56:47 +0000
-Date:   Thu, 18 May 2023 20:56:47 -0700
-From:   Christoph Hellwig <hch@infradead.org>
-To:     Kelvin Cao <kelvin.cao@microchip.com>
-Cc:     vkoul@kernel.org, dmaengine@vger.kernel.org,
-        linux-kernel@vger.kernel.org, logang@deltatee.com,
-        george.ge@microchip.com, christophe.jaillet@wanadoo.fr,
-        hch@infradead.org
-Subject: Re: [PATCH v5 1/1] dmaengine: switchtec-dma: Introduce Switchtec DMA
- engine PCI driver
-Message-ID: <ZGbzf6G5OpK0mRXN@infradead.org>
-References: <20230518165920.897620-1-kelvin.cao@microchip.com>
- <20230518165920.897620-2-kelvin.cao@microchip.com>
+        with ESMTP id S231520AbjESJK5 (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Fri, 19 May 2023 05:10:57 -0400
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA52B1BDB
+        for <dmaengine@vger.kernel.org>; Fri, 19 May 2023 02:10:34 -0700 (PDT)
+Received: by mail-wr1-x42e.google.com with SMTP id ffacd0b85a97d-3078c092056so1983074f8f.1
+        for <dmaengine@vger.kernel.org>; Fri, 19 May 2023 02:10:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1684487433; x=1687079433;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=m4PUn3laZkjlv9r91VlagRE7SeQ4y7zfvRtcaATbBto=;
+        b=tPPNaiTO8lJ5jKQV6OBH0hubdfYT6e0g5een+CNh5ZVnoqtMivb80X9jt62BmL7Ntc
+         JmDTguBRtWeMmeWge9aFO2HntpQSdodBZm/+Bk5lRIzSoCNh6vAi8eupqFAh9LXyq/av
+         mqb/xGE2oU0pXdzRbXi6jBqk9jQj2FCBBKMSVhMYeAHY7KTU9fNZZweDD4jivvMWtQrj
+         OENV18nIItD13qed13rPXMEVGHvBz7PVZ5m4CA4oa5LRABnMxGoPL0J7t8A0zq94JhVp
+         hXc9a81Ra8u+zRHvw9la+GPmwDtH70uD0C2A8Dgcu+vmuDYVDVWK0L5Gt0RgSYf0hcyL
+         pd/g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1684487433; x=1687079433;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=m4PUn3laZkjlv9r91VlagRE7SeQ4y7zfvRtcaATbBto=;
+        b=MqVglmPsVzFrH+w6RXYVx2qapqIIpY/IZ8i//mqOIM1MMbGkMUJtFKVx15r8nBG/bD
+         CoC3KlhbpFTgqhpG0kOszPHcQL8B1Kt04FtDfhaMvF+jE55LZQXTtjlgGu04PZ+0mDPi
+         x9Ne333oyvgswXUD0nA2I5xY5Ly2s00aXkiH/o7mmT/AWcffshKceclDEd/NjTQaIvTe
+         ZZg7j1/eFbYt53CPCGYiYxfgR3KUVRWwnWyscPQJ6dXx/rkyITI2UwJf4zCvQmrhZgJl
+         gA9YY+XhFLQRLeOxX3/AbODzaUePttL+2o2aLEsoPX7aq7xDWVRBWSFw+xkGAFLk/VHK
+         5LUA==
+X-Gm-Message-State: AC+VfDy0rAI4O2RvE/na5rCcGkjyRKNRYiGqo0uPNF7DRqyIYlJAmarL
+        gsJGa7QmTG1z1L1n0Iqw8m3FnLQW2uHpQ3xS4sztMw==
+X-Google-Smtp-Source: ACHHUZ6Ls/fxuZgcyZ694cYOnC1gqFmjt2rYX4qoLImFgpcP92r4Yt0cObiHBFfjDzWMPfy6SRBwmNGjFRTCq9koXeo=
+X-Received: by 2002:a5d:6388:0:b0:309:492a:bb07 with SMTP id
+ p8-20020a5d6388000000b00309492abb07mr1162243wru.26.1684487432711; Fri, 19 May
+ 2023 02:10:32 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230518165920.897620-2-kelvin.cao@microchip.com>
-X-SRS-Rewrite: SMTP reverse-path rewritten from <hch@infradead.org> by bombadil.infradead.org. See http://www.infradead.org/rpr.html
+References: <20230518-bamclk-dt-v1-1-82f738c897d9@gerhold.net>
+ <CAH=2Ntya7bqHVri_F8BOUJ6kJxtG2_usV08do+=OgkaoVJvxBQ@mail.gmail.com> <ZGYKQkgRrBqO2rsx@gerhold.net>
+In-Reply-To: <ZGYKQkgRrBqO2rsx@gerhold.net>
+From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
+Date:   Fri, 19 May 2023 14:40:21 +0530
+Message-ID: <CAH=2Ntw0BZH=RGp14mYLhX7D6jV5O5eDKRQbby=uCy85xMDU_g@mail.gmail.com>
+Subject: Re: [PATCH] dmaengine: qcom: bam_dma: make channels/EEs optional in
+ DT with clock
+To:     Stephan Gerhold <stephan@gerhold.net>
+Cc:     Vinod Koul <vkoul@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-> +/*
-> + * Use vender/device and class to identify the DMA function.
-> + */
-> +#define SWITCHTEC_DMA_DEVICE(device_id) \
+On Thu, 18 May 2023 at 16:51, Stephan Gerhold <stephan@gerhold.net> wrote:
+>
+> On Thu, May 18, 2023 at 04:43:57PM +0530, Bhupesh Sharma wrote:
+> > On Thu, 18 May 2023 at 14:56, Stephan Gerhold <stephan@gerhold.net> wrote:
+> > >
+> > > If we have a BAM clock in the DT we are able to turn on the BAM
+> > > controller while probing, so there is no need to read "num-channels"
+> > > and "qcom,num-ees" from the DT. It can be read more accurately directly
+> > > from the identification registers of the BAM.
+> > >
+> > > This simplifies setting up typical controlled-remotely BAM DMAs in the
+> > > DT that can be turned on via a clock (e.g. the BLSP DMA).
+> >
+> > Can you please list which qcom board(s) you tested this patch on?
+> >
+>
+> It works fine at least on MSM8916/DB410c (for blsp_dma) and MDM9607
+> (blsp_dma and qpic_dma (for NAND)). More testing would be much
+> appreciated of course!
 
-I'd word this as:
+I tested this yesterday on RB1/RB2, RB5 and saw no improvement, so was wondering
+why exactly is this needed and which platforms are impacted.
 
-/*
- * Also use the class code to identify the devices, as some of the
- * device IDs are also used for other devices with other classes by
- * Microsemi.
- */
+> Personally I don't see much of a risk: If enabling the clock doesn't
+> actually enable the BAM controller, then the clock probably does not
+> belong to the BAM in the first place... :)
 
-to emphasis on why this macro even exists.
+Right, but I think the commit message needs a bit more clarity to
+reflect that it is now proposed to check for the bam_clk presence
+earlier in the _probe flow (as compared to earlier).
 
-Otherwise looks good:
-
-Reviewed-by: Christoph Hellwig <hch@lst.de>
+Thanks.
