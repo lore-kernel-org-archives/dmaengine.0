@@ -2,86 +2,80 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D34F3C7EE2E
-	for <dmaengine@archiver.kernel.org>; Sun, 21 May 2023 11:49:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 61DE4C7EE32
+	for <dmaengine@archiver.kernel.org>; Sun, 21 May 2023 11:49:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230022AbjEULsO (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Sun, 21 May 2023 07:48:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35682 "EHLO
+        id S230231AbjEULsT (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Sun, 21 May 2023 07:48:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35666 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230470AbjEUK1w (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Sun, 21 May 2023 06:27:52 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1DEF910E6;
-        Sun, 21 May 2023 03:23:33 -0700 (PDT)
+        with ESMTP id S231180AbjEUKZZ (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Sun, 21 May 2023 06:25:25 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3A64810CB;
+        Sun, 21 May 2023 03:14:18 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id A85A760E74;
-        Sun, 21 May 2023 10:23:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DB34C4339B;
-        Sun, 21 May 2023 10:23:31 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id C104861551;
+        Sun, 21 May 2023 10:14:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44CA9C4339E;
+        Sun, 21 May 2023 10:14:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1684664612;
-        bh=+Tf439DcPyOhnrJYLUHMQ/cInIgZ19g0uwID2SQPxBs=;
+        s=k20201202; t=1684664057;
+        bh=VWHHZGOph30FRSEIQKdN3FOhxU5GdBKx6unG4ho62NU=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=onljlQhnGLnsMg8c1ByUgOfPf+pW4AQdNXQQfNkiVzxEmVJIqo1lCyYXS617e7stn
-         SLs3YAiTnhWULSS0eEE1vuuZLP9FuwgB/MMv488p0Bql484cf/ntGD45TRB4KlDzQ6
-         pXt4ZUYZMo3SKUsI9BOE5PGrVSw1r55lVhpXyIMirQEzAb/fC9SvEVQwN0inkwp0Nt
-         xWe6V7FF9wzKr12vR0+o2jNptP86lAmi+U8XUuLnEdgH8BJlyfr4TrZmWkPipBrq5L
-         Px0JE2bkVCUzf9+H6BKb3NQocHi0nnR2/TtPOTrq+JxT61sntQD/Ou112+Sz2qS9HL
-         b9fhqCoe1CunQ==
+        b=Gwdzc8fcRcHU/eCL7hnccXdMDGUCH9rcOxlu+ymGWE7sMpzJF4GydPHgDhWlbKL+P
+         kbx8r3vRZ6OyCzcsSmdoYbz0dl81U4JWUuu8KskJarknuBBLNACXgEybq234srfs+q
+         uJ5yGpMK73hqWEzE81SnNQlEph0bM/a5OF+xXY2XI77RQCXYQt1m6nzi1dkfy8GvJ7
+         p9JDeOYb+DzeNaRVzWkuczeniwn5iDGXDgf5CdIoC7sqHPk3Sl/fRx1g1+Idymlpf/
+         Bfzs/3OH1rSUzRF2c7bsO/oHbMjX3gQ87JlfEv9dioAFnbYdCOx0LdEwm0ZWm6WT/i
+         5wyvEliqBS+og==
 From:   Jisheng Zhang <jszhang@kernel.org>
-To:     Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>,
-        Vinod Koul <vkoul@kernel.org>
-Cc:     dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v3 05/11] dmaengine: dw-axi-dmac: delay irq getting until request_irq
-Date:   Sun, 21 May 2023 18:12:10 +0800
-Message-Id: <20230521101216.4084-6-jszhang@kernel.org>
+To:     Lars-Peter Clausen <lars@metafoo.de>,
+        Vinod Koul <vkoul@kernel.org>,
+        Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>,
+        Logan Gunthorpe <logang@deltatee.com>,
+        Sinan Kaya <okaya@kernel.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Orson Zhai <orsonzhai@gmail.com>,
+        Baolin Wang <baolin.wang@linux.alibaba.com>,
+        Chunyan Zhang <zhang.lyra@gmail.com>
+Cc:     dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org
+Subject: [PATCH v3 4/5] dmaengine: hidma: Don't set chancnt
+Date:   Sun, 21 May 2023 18:02:51 +0800
+Message-Id: <20230521100252.3197-5-jszhang@kernel.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230521101216.4084-1-jszhang@kernel.org>
-References: <20230521101216.4084-1-jszhang@kernel.org>
+In-Reply-To: <20230521100252.3197-1-jszhang@kernel.org>
+References: <20230521100252.3197-1-jszhang@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-This is to prepare for per-channel irq support in next patch. In
-per-channel irq case, we need to parse dt firstly to know whether
-the platform is per-channel irq or not.
+The dma framework will calculate the dma channels chancnt, setting it
+ourself is wrong.
 
 Signed-off-by: Jisheng Zhang <jszhang@kernel.org>
 ---
- drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/dma/qcom/hidma.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-index e596910e9f84..64b4ee2d618b 100644
---- a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-+++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-@@ -1403,10 +1403,6 @@ static int dw_probe(struct platform_device *pdev)
- 	chip->dev = &pdev->dev;
- 	chip->dw->hdata = hdata;
+diff --git a/drivers/dma/qcom/hidma.c b/drivers/dma/qcom/hidma.c
+index 04d1c33afc12..344525c3a32f 100644
+--- a/drivers/dma/qcom/hidma.c
++++ b/drivers/dma/qcom/hidma.c
+@@ -214,7 +214,6 @@ static int hidma_chan_init(struct hidma_dev *dmadev, u32 dma_sig)
  
--	chip->irq = platform_get_irq(pdev, 0);
--	if (chip->irq < 0)
--		return chip->irq;
--
- 	chip->regs = devm_platform_ioremap_resource(pdev, 0);
- 	if (IS_ERR(chip->regs))
- 		return PTR_ERR(chip->regs);
-@@ -1447,6 +1443,10 @@ static int dw_probe(struct platform_device *pdev)
- 	if (!dw->chan)
- 		return -ENOMEM;
+ 	spin_lock_init(&mchan->lock);
+ 	list_add_tail(&mchan->chan.device_node, &ddev->channels);
+-	dmadev->ddev.chancnt++;
+ 	return 0;
+ }
  
-+	chip->irq = platform_get_irq(pdev, 0);
-+	if (chip->irq < 0)
-+		return chip->irq;
-+
- 	ret = devm_request_irq(chip->dev, chip->irq, dw_axi_dma_interrupt,
- 			       IRQF_SHARED, KBUILD_MODNAME, chip);
- 	if (ret)
 -- 
 2.40.0
 
