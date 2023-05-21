@@ -2,62 +2,53 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A3484C8300C
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 93AF5C87FDC
 	for <dmaengine@archiver.kernel.org>; Sun, 21 May 2023 11:49:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230333AbjEULsZ (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Sun, 21 May 2023 07:48:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35634 "EHLO
+        id S230313AbjEULsX (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Sun, 21 May 2023 07:48:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35572 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231166AbjEUKZE (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Sun, 21 May 2023 06:25:04 -0400
+        with ESMTP id S230412AbjEUK1w (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Sun, 21 May 2023 06:27:52 -0400
 Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3568D10C4;
-        Sun, 21 May 2023 03:14:08 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D75B810E4;
+        Sun, 21 May 2023 03:23:31 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id BE68861541;
-        Sun, 21 May 2023 10:14:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 465CAC433A0;
-        Sun, 21 May 2023 10:14:04 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 6C9F360E05;
+        Sun, 21 May 2023 10:23:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01046C433D2;
+        Sun, 21 May 2023 10:23:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1684664047;
-        bh=705IbEQR9rBrNaTOK0WaKUUekkPcDSW7kXi/cfnV5VA=;
+        s=k20201202; t=1684664610;
+        bh=mJ5yS9oI4b3i7UhOvVPGcZz88NvjaTzXIsaTK0vbsRY=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=MUVndTHcpPU908yiU65cmte9E0nyV3gRWK9GLfARUXuD0H7FKZn12VR11W/FwfLCC
-         SDxcuqtYH403Imj8zdQVqJI6Kp4DSqG87zDbE4k3euSrIp0z1GBqPXmW8B746uSEhu
-         Pfje810jmbEiYAOcypN3Nt0WbHxmR7qr0BfLGVDGlZzEy//ACd5IKw5rilFobMxJ6V
-         I27lH8Gc5Q8QLGn10R7+OqyR5jK5KZ7Q1GDk6smvWW/Obhr8WyAuG88GobdRVQHRlU
-         tuc2xGCW0+no1IGxSCDnha0LARVY4RNXU3tjrSE2qL7c5dlRPUJFbR33p1giAI5IEx
-         w0ucU+KcMY+pg==
+        b=cJbg/qlKueDxxcK7o7KMD+7lkG+dw3yGQVp3s/fUr7dngLT8jEbqbe3smC5PAioeS
+         YWERFWjBpl3cvQHKJ5G8jjwOZWMGx8WQrjovmylKiQ7dQqzX0KS5btxTJTtYaB6A12
+         vBa3i25d1tSBD4TzIFOdzO19vN9c+yzjDGd4Ny8X8Od08hEDwJCjAYE7AW6Ld2QE8w
+         xG8501nXb0L9kIlalaufG0ywHwtEID+ngGLVUh0tv524eXTjNV3cBKzrxRTqY5xvIT
+         ep10J2F4/SPlyOvrP7bdVbHWEQzsZbEDHT6ILLB5+g6X4cg437Qov98+SCJ+/P7ffG
+         Ma3SaL75VSZZw==
 From:   Jisheng Zhang <jszhang@kernel.org>
-To:     Lars-Peter Clausen <lars@metafoo.de>,
-        Vinod Koul <vkoul@kernel.org>,
-        Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>,
-        Logan Gunthorpe <logang@deltatee.com>,
-        Sinan Kaya <okaya@kernel.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Orson Zhai <orsonzhai@gmail.com>,
-        Baolin Wang <baolin.wang@linux.alibaba.com>,
-        Chunyan Zhang <zhang.lyra@gmail.com>
-Cc:     dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org
-Subject: [PATCH v3 1/5] dmaengine: dw-axi-dmac: Don't set chancnt
-Date:   Sun, 21 May 2023 18:02:48 +0800
-Message-Id: <20230521100252.3197-2-jszhang@kernel.org>
+To:     Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>,
+        Vinod Koul <vkoul@kernel.org>
+Cc:     dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH v3 04/11] dmaengine: dw-axi-dmac: remove redundant axi_dma_disable() calling
+Date:   Sun, 21 May 2023 18:12:09 +0800
+Message-Id: <20230521101216.4084-5-jszhang@kernel.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230521100252.3197-1-jszhang@kernel.org>
-References: <20230521100252.3197-1-jszhang@kernel.org>
+In-Reply-To: <20230521101216.4084-1-jszhang@kernel.org>
+References: <20230521101216.4084-1-jszhang@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-The dma framework will calculate the dma channels chancnt, setting it
-ourself is wrong.
+axi_dma_suspend() will soon call axi_dma_disable(), remove the redundant
+axi_dma_disable() callin.
 
 Signed-off-by: Jisheng Zhang <jszhang@kernel.org>
 ---
@@ -65,17 +56,17 @@ Signed-off-by: Jisheng Zhang <jszhang@kernel.org>
  1 file changed, 1 deletion(-)
 
 diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-index 6937cc0c0b65..796b6caf0bab 100644
+index 4378134eea63..e596910e9f84 100644
 --- a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
 +++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-@@ -1466,7 +1466,6 @@ static int dw_probe(struct platform_device *pdev)
- 	dma_cap_set(DMA_CYCLIC, dw->dma.cap_mask);
+@@ -1556,7 +1556,6 @@ static int dw_remove(struct platform_device *pdev)
+ 		axi_chan_disable(&chip->dw->chan[i]);
+ 		axi_chan_irq_disable(&chip->dw->chan[i], DWAXIDMAC_IRQ_ALL);
+ 	}
+-	axi_dma_disable(chip);
  
- 	/* DMA capabilities */
--	dw->dma.chancnt = hdata->nr_channels;
- 	dw->dma.max_burst = hdata->axi_rw_burst_len;
- 	dw->dma.src_addr_widths = AXI_DMA_BUSWIDTHS;
- 	dw->dma.dst_addr_widths = AXI_DMA_BUSWIDTHS;
+ 	pm_runtime_disable(chip->dev);
+ 	axi_dma_suspend(chip);
 -- 
 2.40.0
 
