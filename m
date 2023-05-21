@@ -2,42 +2,42 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EEF20C87FE2
-	for <dmaengine@archiver.kernel.org>; Sun, 21 May 2023 11:49:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1938CC87FE1
+	for <dmaengine@archiver.kernel.org>; Sun, 21 May 2023 11:49:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230382AbjEULs2 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Sun, 21 May 2023 07:48:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36130 "EHLO
+        id S230410AbjEULsa (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Sun, 21 May 2023 07:48:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36162 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230459AbjEUK1S (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Sun, 21 May 2023 06:27:18 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E80C10E2;
-        Sun, 21 May 2023 03:23:29 -0700 (PDT)
+        with ESMTP id S230484AbjEUK1w (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Sun, 21 May 2023 06:27:52 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59AD110F0;
+        Sun, 21 May 2023 03:23:39 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id E6F3C60C94;
-        Sun, 21 May 2023 10:23:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C825C433D2;
-        Sun, 21 May 2023 10:23:27 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id E36A3611F6;
+        Sun, 21 May 2023 10:23:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 758A8C4339C;
+        Sun, 21 May 2023 10:23:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1684664608;
-        bh=xLmFwERNLFGS44YuN2v3vab89SlNXlrWfcwD+NSS4sc=;
+        s=k20201202; t=1684664618;
+        bh=3vm8AIqJvr6Fc6EEUZBTa078hFQD/CBcDZ6PM3gC9JA=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=PINJX4DODMB4CoA3wTX1FBA+zyOp+XmO+q/mnBCmSPeov7yP4TZ3nxL6xkr/RDTPi
-         E6UVndyBT3h1d7vXfHTNuAvNKgPeOvNLdZ04FAC+sgCkHTTjvmHaNCnokQztF1f5bP
-         rlapEI4CHl1x1OJFDijLkGTR9+w1QAmcEN+iH3ACxjQk3AIeiI5Js/5W8Z7G6q/An1
-         Na6p98Uo6JFslD9QhscTGwocbd7yC9dwjyvQ4ySvmkQSRu+OKnn1q74g4EM5CQcfUb
-         LTeVoalXU3XlWBjphsWOWcIgORzPCMcemewKU65GF/nKBPwuJc9E4R+PVWZyTNX3Da
-         E00rb9AO2hw3g==
+        b=ZTS2wewKlHnWKe/Xt0LHnE/CRuHSfAree8mN77wrdaHUgAwoMzJxDIv9fOnD9xuCa
+         Z5gw7/WkCIz6Uc2CXENgFaDYuWj294/D9DAA+hm9kPqKFv7z1S5mRIv5a1HU4r0Lzw
+         sKVlEtkCZMAVHPdG/CS9SooYm3vY4TG4AOwg358K5yhravQ8lP9qpcUMOU79pvWG3M
+         JAkzoXuK3cNMCqbSdrR+OS7eeFcKOVgY9tr9AgjRQBX5QgcNuWnETHSTGcoz7Bpd6H
+         G1hGLEeTqCj3IsudnqNzsjs4MFMzyzhW2rlfsy/onGJMTxxzWwRd32XawUkkPKfN83
+         +H8XR1Xxshipw==
 From:   Jisheng Zhang <jszhang@kernel.org>
 To:     Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>,
         Vinod Koul <vkoul@kernel.org>
 Cc:     dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v3 02/11] dmaengine: dw-axi-dmac: remove unnecessary devm_free_irq() calling
-Date:   Sun, 21 May 2023 18:12:07 +0800
-Message-Id: <20230521101216.4084-3-jszhang@kernel.org>
+Subject: [PATCH v3 10/11] dmaengine: dw-axi-dmac: move dma_chan_tx_status()
+Date:   Sun, 21 May 2023 18:12:15 +0800
+Message-Id: <20230521101216.4084-11-jszhang@kernel.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230521101216.4084-1-jszhang@kernel.org>
 References: <20230521101216.4084-1-jszhang@kernel.org>
@@ -47,28 +47,119 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-In dw_remove(), We have disabled the irq from the dw-axi-dma side, so
-we are safe against the case "The irq is still ON when devices remove
-is executed and irq should be quiesced before remove is completed."
+We will add polled support soon, for which we need to call
+dw_axi_dma_handle_ch() in dma_chan_tx_status(). Move the function
+to avoid pre-declaration.
+
+No functionality changes.
 
 Signed-off-by: Jisheng Zhang <jszhang@kernel.org>
 ---
- drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c | 2 --
- 1 file changed, 2 deletions(-)
+ .../dma/dw-axi-dmac/dw-axi-dmac-platform.c    | 84 +++++++++----------
+ 1 file changed, 42 insertions(+), 42 deletions(-)
 
 diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-index 203be13499e3..a19b651ddaad 100644
+index f14fdfc9c7e9..091c15c2ec31 100644
 --- a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
 +++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-@@ -1563,8 +1563,6 @@ static int dw_remove(struct platform_device *pdev)
- 	pm_runtime_disable(chip->dev);
- 	axi_dma_suspend(chip);
+@@ -307,48 +307,6 @@ static void vchan_desc_put(struct virt_dma_desc *vdesc)
+ 	axi_desc_put(vd_to_axi_desc(vdesc));
+ }
  
--	devm_free_irq(chip->dev, chip->irq, chip);
+-static enum dma_status
+-dma_chan_tx_status(struct dma_chan *dchan, dma_cookie_t cookie,
+-		  struct dma_tx_state *txstate)
+-{
+-	struct axi_dma_chan *chan = dchan_to_axi_dma_chan(dchan);
+-	struct axi_dma_desc *desc = NULL;
+-	struct virt_dma_desc *vdesc;
+-	enum dma_status status;
+-	u32 completed_length;
+-	unsigned long flags;
+-	u32 completed_blocks;
+-	size_t bytes = 0;
+-	u32 length;
+-	u32 len;
 -
- 	of_dma_controller_free(chip->dev->of_node);
+-	status = dma_cookie_status(dchan, cookie, txstate);
+-	if (status == DMA_COMPLETE || !txstate)
+-		return status;
+-
+-	spin_lock_irqsave(&chan->vc.lock, flags);
+-
+-	vdesc = vchan_find_desc(&chan->vc, cookie);
+-	if (vdesc) {
+-		desc = vd_to_axi_desc(vdesc);
+-	} else if (chan->desc && chan->desc->vd.tx.cookie == cookie) {
+-		desc = chan->desc;
+-	}
+-
+-	if (desc) {
+-		length = desc->length;
+-		completed_blocks = desc->completed_blocks;
+-		len = desc->hw_desc[0].len;
+-		completed_length = completed_blocks * len;
+-		bytes = length - completed_length;
+-	}
+-
+-	spin_unlock_irqrestore(&chan->vc.lock, flags);
+-	dma_set_residue(txstate, bytes);
+-
+-	return status;
+-}
+-
+ static void write_desc_llp(struct axi_dma_hw_desc *desc, dma_addr_t adr)
+ {
+ 	desc->lli->llp = cpu_to_le64(adr);
+@@ -1173,6 +1131,48 @@ static irqreturn_t dw_axi_dma_ch_interrupt(int irq, void *dev_id)
+ 	return IRQ_HANDLED;
+ }
  
- 	list_for_each_entry_safe(chan, _chan, &dw->dma.channels,
++static enum dma_status
++dma_chan_tx_status(struct dma_chan *dchan, dma_cookie_t cookie,
++		  struct dma_tx_state *txstate)
++{
++	struct axi_dma_chan *chan = dchan_to_axi_dma_chan(dchan);
++	struct axi_dma_desc *desc = NULL;
++	struct virt_dma_desc *vdesc;
++	enum dma_status status;
++	u32 completed_length;
++	unsigned long flags;
++	u32 completed_blocks;
++	size_t bytes = 0;
++	u32 length;
++	u32 len;
++
++	status = dma_cookie_status(dchan, cookie, txstate);
++	if (status == DMA_COMPLETE || !txstate)
++		return status;
++
++	spin_lock_irqsave(&chan->vc.lock, flags);
++
++	vdesc = vchan_find_desc(&chan->vc, cookie);
++	if (vdesc) {
++		desc = vd_to_axi_desc(vdesc);
++	} else if (chan->desc && chan->desc->vd.tx.cookie == cookie) {
++		desc = chan->desc;
++	}
++
++	if (desc) {
++		length = desc->length;
++		completed_blocks = desc->completed_blocks;
++		len = desc->hw_desc[0].len;
++		completed_length = completed_blocks * len;
++		bytes = length - completed_length;
++	}
++
++	spin_unlock_irqrestore(&chan->vc.lock, flags);
++	dma_set_residue(txstate, bytes);
++
++	return status;
++}
++
+ static int dma_chan_terminate_all(struct dma_chan *dchan)
+ {
+ 	struct axi_dma_chan *chan = dchan_to_axi_dma_chan(dchan);
 -- 
 2.40.0
 
