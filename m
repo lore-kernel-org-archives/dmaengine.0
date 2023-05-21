@@ -2,80 +2,73 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 61DE4C7EE32
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AF874C7EE33
 	for <dmaengine@archiver.kernel.org>; Sun, 21 May 2023 11:49:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230231AbjEULsT (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Sun, 21 May 2023 07:48:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35666 "EHLO
+        id S230327AbjEULsU (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Sun, 21 May 2023 07:48:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36132 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231180AbjEUKZZ (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Sun, 21 May 2023 06:25:25 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3A64810CB;
-        Sun, 21 May 2023 03:14:18 -0700 (PDT)
+        with ESMTP id S230455AbjEUK1S (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Sun, 21 May 2023 06:27:18 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9BFBB10E3;
+        Sun, 21 May 2023 03:23:30 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id C104861551;
-        Sun, 21 May 2023 10:14:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44CA9C4339E;
-        Sun, 21 May 2023 10:14:14 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 2F788611F6;
+        Sun, 21 May 2023 10:23:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7E49C4339B;
+        Sun, 21 May 2023 10:23:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1684664057;
-        bh=VWHHZGOph30FRSEIQKdN3FOhxU5GdBKx6unG4ho62NU=;
+        s=k20201202; t=1684664609;
+        bh=BLq9O0pAfUMUGI7sir1Wus9mHo0zlYVxEcjud2ZFuwA=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=Gwdzc8fcRcHU/eCL7hnccXdMDGUCH9rcOxlu+ymGWE7sMpzJF4GydPHgDhWlbKL+P
-         kbx8r3vRZ6OyCzcsSmdoYbz0dl81U4JWUuu8KskJarknuBBLNACXgEybq234srfs+q
-         uJ5yGpMK73hqWEzE81SnNQlEph0bM/a5OF+xXY2XI77RQCXYQt1m6nzi1dkfy8GvJ7
-         p9JDeOYb+DzeNaRVzWkuczeniwn5iDGXDgf5CdIoC7sqHPk3Sl/fRx1g1+Idymlpf/
-         Bfzs/3OH1rSUzRF2c7bsO/oHbMjX3gQ87JlfEv9dioAFnbYdCOx0LdEwm0ZWm6WT/i
-         5wyvEliqBS+og==
+        b=obhYptZiMtvVZVJlLF20TpBWHQwK+KLU/DD5Fd//1C8URO1K0xZnhXxazi/WNESxr
+         XzO9yh2LPz2Cmnz+ywcbRJFpc5J3G4eeCCwTY8T7aIeEnN46DrcEKnuH88X70TGO2o
+         hsBtcV8N2/hJNHagOsDdsDeW94yvF1CVcxthm4v2j0K7Pzb7CNP4ys1xWDLYgUOd4e
+         2eJFczzUX7ZUo4TfdqtHisXtsM89mAc5tQQqkHSUsmw1yMiD8EmPS3PcnhjK0sLp9+
+         V/zuL1oiw2RcYtIMKcaMFxUafhn8uI3iCk0XKP7CEjZQO65HxcCJAkU3N66gZDrt+5
+         OS9wB7NqLQr5g==
 From:   Jisheng Zhang <jszhang@kernel.org>
-To:     Lars-Peter Clausen <lars@metafoo.de>,
-        Vinod Koul <vkoul@kernel.org>,
-        Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>,
-        Logan Gunthorpe <logang@deltatee.com>,
-        Sinan Kaya <okaya@kernel.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Orson Zhai <orsonzhai@gmail.com>,
-        Baolin Wang <baolin.wang@linux.alibaba.com>,
-        Chunyan Zhang <zhang.lyra@gmail.com>
-Cc:     dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org
-Subject: [PATCH v3 4/5] dmaengine: hidma: Don't set chancnt
-Date:   Sun, 21 May 2023 18:02:51 +0800
-Message-Id: <20230521100252.3197-5-jszhang@kernel.org>
+To:     Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>,
+        Vinod Koul <vkoul@kernel.org>
+Cc:     dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH v3 03/11] dmaengine: dw-axi-dmac: remove unnecessary axi_dma_enable() calling
+Date:   Sun, 21 May 2023 18:12:08 +0800
+Message-Id: <20230521101216.4084-4-jszhang@kernel.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230521100252.3197-1-jszhang@kernel.org>
-References: <20230521100252.3197-1-jszhang@kernel.org>
+In-Reply-To: <20230521101216.4084-1-jszhang@kernel.org>
+References: <20230521101216.4084-1-jszhang@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-The dma framework will calculate the dma channels chancnt, setting it
-ourself is wrong.
+The dma is enabled, I.E runtime resumed during chan allocation, and
+is disable, I.E runtime suspended during chan free. So when starting
+xfer, we are sure the dma is enabled.
 
 Signed-off-by: Jisheng Zhang <jszhang@kernel.org>
 ---
- drivers/dma/qcom/hidma.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/drivers/dma/qcom/hidma.c b/drivers/dma/qcom/hidma.c
-index 04d1c33afc12..344525c3a32f 100644
---- a/drivers/dma/qcom/hidma.c
-+++ b/drivers/dma/qcom/hidma.c
-@@ -214,7 +214,6 @@ static int hidma_chan_init(struct hidma_dev *dmadev, u32 dma_sig)
+diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
+index a19b651ddaad..4378134eea63 100644
+--- a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
++++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
+@@ -389,8 +389,6 @@ static void axi_chan_block_xfer_start(struct axi_dma_chan *chan,
+ 		return;
+ 	}
  
- 	spin_lock_init(&mchan->lock);
- 	list_add_tail(&mchan->chan.device_node, &ddev->channels);
--	dmadev->ddev.chancnt++;
- 	return 0;
- }
- 
+-	axi_dma_enable(chan->chip);
+-
+ 	config.dst_multblk_type = DWAXIDMAC_MBLK_TYPE_LL;
+ 	config.src_multblk_type = DWAXIDMAC_MBLK_TYPE_LL;
+ 	config.tt_fc = DWAXIDMAC_TT_FC_MEM_TO_MEM_DMAC;
 -- 
 2.40.0
 
