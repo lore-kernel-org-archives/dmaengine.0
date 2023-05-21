@@ -2,90 +2,106 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 98F56C7EE23
-	for <dmaengine@archiver.kernel.org>; Sun, 21 May 2023 10:44:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E00A0C7EE23
+	for <dmaengine@archiver.kernel.org>; Sun, 21 May 2023 10:47:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230496AbjEUK1z (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Sun, 21 May 2023 06:27:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35632 "EHLO
+        id S229597AbjEUKqj (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Sun, 21 May 2023 06:46:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36160 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231171AbjEUKZE (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Sun, 21 May 2023 06:25:04 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E052210C3;
-        Sun, 21 May 2023 03:14:04 -0700 (PDT)
+        with ESMTP id S230483AbjEUK1w (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Sun, 21 May 2023 06:27:52 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C84210EC;
+        Sun, 21 May 2023 03:23:38 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 7222161542;
-        Sun, 21 May 2023 10:14:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6455C433D2;
-        Sun, 21 May 2023 10:14:00 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id A4E6F60E74;
+        Sun, 21 May 2023 10:23:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A01AC433D2;
+        Sun, 21 May 2023 10:23:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1684664043;
-        bh=Vu1TAPPciiNN/+NNVmvm2e6pyVPkwqUzX+KPyIlmhCM=;
-        h=From:To:Cc:Subject:Date:From;
-        b=ZajnV1LcRAkwfLq/SJRiJS+qsd4lpR2KLL8lVNF7DVVheUsJOlHe7P2ShRWtM0Tkd
-         69DII5MQ03k9o/X8SjWJD7kfLHjYKxcfuYPcVl56KiPn64ch/vX5Cs2xud/M3ExphV
-         sSyuyMf7SQxEidkxPniJVpNz8d3w7Mi0gBzORbN9WIkfW+F6LznOr/6WaoBMXCmPyX
-         RqlLJHqzojkHWOnad98ZUuIwQzcOwIH8C7fPRHurcfWl83vJ1sORj07t1O94LRJl7b
-         H/goTc0FbDbgnMGh5zgjrk0qNgbIgB6iB03SXh+WkBPUoC3kuZyymqZHNA8SMP3tCp
-         7dvGSDzJFa1Xg==
+        s=k20201202; t=1684664617;
+        bh=wuVX/0YvZSuO5U9SVtkLtDjCssqIgDDcmJ1FV8R4DUU=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=AvSff5QrbnWVP3y0CGYY3/phzmkCqWYAL7qL7/ZyeLhCrD5tXdwcj7HvafpUNDXEE
+         yIhivZGr/ZmbayQikZ+dqPITjxqZUvHF3BRIJMfizara/A7zB/cFhnT/lTzm7jFL+Z
+         3jvG9acunlQQTnF+g3+L2Q7zRueUQXaMUg0n5hCzAvkPa6J7LaDPfW2AqSjHIxB0e7
+         jPHHQmzu/bSD1yScYIUk8LgqnBMjrx/WvFizDZKoH3fte7tw5DE4IxvKacr5VzPWQl
+         hqFcFhsbZBfLOd9oGZyxrWtihuyELUNIpHfFDK+9Bhzwa3ilPhObIgRnW7i2wBG8X8
+         +YfeEt/5LisKA==
 From:   Jisheng Zhang <jszhang@kernel.org>
-To:     Lars-Peter Clausen <lars@metafoo.de>,
-        Vinod Koul <vkoul@kernel.org>,
-        Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>,
-        Logan Gunthorpe <logang@deltatee.com>,
-        Sinan Kaya <okaya@kernel.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Orson Zhai <orsonzhai@gmail.com>,
-        Baolin Wang <baolin.wang@linux.alibaba.com>,
-        Chunyan Zhang <zhang.lyra@gmail.com>
-Cc:     dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org
-Subject: [PATCH v3 0/5] dma: don't set chancnt
-Date:   Sun, 21 May 2023 18:02:47 +0800
-Message-Id: <20230521100252.3197-1-jszhang@kernel.org>
+To:     Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>,
+        Vinod Koul <vkoul@kernel.org>
+Cc:     dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH v3 09/11] dmaengine: dw-axi-dmac: try best to get residue when tx is running
+Date:   Sun, 21 May 2023 18:12:14 +0800
+Message-Id: <20230521101216.4084-10-jszhang@kernel.org>
 X-Mailer: git-send-email 2.40.0
+In-Reply-To: <20230521101216.4084-1-jszhang@kernel.org>
+References: <20230521101216.4084-1-jszhang@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-I'm patching dw-axi-dmac to add more features, but I found a small
-clean up point and some drivers in drivers/dma/ have the same issue,
-so this series comes.
+When tx is running, vchan_find_desc() will return NULL, try our best
+to get the residue in this case.
 
-The dma framework will calculate the dma channels chancnt, setting it
-is wrong.
+Signed-off-by: Jisheng Zhang <jszhang@kernel.org>
+---
+ drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c | 15 ++++++++++++---
+ 1 file changed, 12 insertions(+), 3 deletions(-)
 
-NOTE: I leave drivers/dma/ioat/ as is, because its logic have a
-heavy dependency on chancnt usage, however it's still doable.
-
-Since v2:
-  - rebase on latest rc1
-  - collet Acked-by tag
-
-Since v1:
-  - collet Acked-by tag
-  - fix typo
-
-Jisheng Zhang (5):
-  dmaengine: dw-axi-dmac: Don't set chancnt
-  dmaengine: axi-dmac: Don't set chancnt
-  dmaengine: plx_dma: Don't set chancnt
-  dmaengine: hidma: Don't set chancnt
-  dmaengine: sprd: Don't set chancnt
-
- drivers/dma/dma-axi-dmac.c                     | 1 -
- drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c | 1 -
- drivers/dma/plx_dma.c                          | 1 -
- drivers/dma/qcom/hidma.c                       | 1 -
- drivers/dma/sprd-dma.c                         | 1 -
- 5 files changed, 5 deletions(-)
-
+diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
+index f0bd8a7e3caf..f14fdfc9c7e9 100644
+--- a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
++++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
+@@ -312,6 +312,7 @@ dma_chan_tx_status(struct dma_chan *dchan, dma_cookie_t cookie,
+ 		  struct dma_tx_state *txstate)
+ {
+ 	struct axi_dma_chan *chan = dchan_to_axi_dma_chan(dchan);
++	struct axi_dma_desc *desc = NULL;
+ 	struct virt_dma_desc *vdesc;
+ 	enum dma_status status;
+ 	u32 completed_length;
+@@ -329,9 +330,15 @@ dma_chan_tx_status(struct dma_chan *dchan, dma_cookie_t cookie,
+ 
+ 	vdesc = vchan_find_desc(&chan->vc, cookie);
+ 	if (vdesc) {
+-		length = vd_to_axi_desc(vdesc)->length;
+-		completed_blocks = vd_to_axi_desc(vdesc)->completed_blocks;
+-		len = vd_to_axi_desc(vdesc)->hw_desc[0].len;
++		desc = vd_to_axi_desc(vdesc);
++	} else if (chan->desc && chan->desc->vd.tx.cookie == cookie) {
++		desc = chan->desc;
++	}
++
++	if (desc) {
++		length = desc->length;
++		completed_blocks = desc->completed_blocks;
++		len = desc->hw_desc[0].len;
+ 		completed_length = completed_blocks * len;
+ 		bytes = length - completed_length;
+ 	}
+@@ -432,6 +439,7 @@ static void axi_chan_block_xfer_start(struct axi_dma_chan *chan,
+ 	axi_chan_irq_set(chan, irq_mask);
+ 
+ 	axi_chan_enable(chan);
++	chan->desc = first;
+ }
+ 
+ static void axi_chan_start_first_queued(struct axi_dma_chan *chan)
+@@ -1195,6 +1203,7 @@ static int dma_chan_terminate_all(struct dma_chan *dchan)
+ 	spin_unlock_irqrestore(&chan->vc.lock, flags);
+ 
+ 	vchan_dma_desc_free_list(&chan->vc, &head);
++	chan->desc = NULL;
+ 
+ 	dev_vdbg(dchan2dev(dchan), "terminated: %s\n", axi_chan_name(chan));
+ 
 -- 
 2.40.0
 
