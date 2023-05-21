@@ -2,151 +2,81 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 01C4FC7EE26
-	for <dmaengine@archiver.kernel.org>; Sun, 21 May 2023 11:49:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 11791C7EE23
+	for <dmaengine@archiver.kernel.org>; Sun, 21 May 2023 11:49:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229938AbjEULsL (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Sun, 21 May 2023 07:48:11 -0400
+        id S230145AbjEULsN (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Sun, 21 May 2023 07:48:13 -0400
 Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35586 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230407AbjEUK1w (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Sun, 21 May 2023 06:27:52 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 98E0710E9;
-        Sun, 21 May 2023 03:23:35 -0700 (PDT)
+        with ESMTP id S231190AbjEUKZc (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Sun, 21 May 2023 06:25:32 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7EE5810CC;
+        Sun, 21 May 2023 03:14:21 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 2D55060C94;
-        Sun, 21 May 2023 10:23:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7164C4339B;
-        Sun, 21 May 2023 10:23:33 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 14AAD60F0E;
+        Sun, 21 May 2023 10:14:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9ACFDC433A4;
+        Sun, 21 May 2023 10:14:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1684664614;
-        bh=yGoRDjvKLbCYkSOxnH9X59HxNfLXO+ROMNUsbfcZ4wM=;
+        s=k20201202; t=1684664060;
+        bh=6pmh1p/2P56PknsAf9XgnrAcTCEe0jke0QzLpJtlW2A=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=vMcLc2lI+wQvbqyTaFbmRSdqRqkCkEaQ0bJ/5dlZRCdKtbi237kfH1e0PRZkbuK5A
-         6Epfhd5w9eeJ57Tq9kIfLtbgTyhd5Q9LKxClSgqfsNorGNi7SPDXtTkWv6+W1UqF2C
-         L7GSnjVmvg9itJ9/SYs9HGsU9aRWlgVifoD5o+N8C08Yq/GapJF6k/zNGPC9Fz1RyV
-         Q+AgF4ASkUWs4EawSh4RdE8NlfNRdOXw/N8oGDRllrYJLyqXg3ChNXw1UdSNR54KJ/
-         fsqgSjvNKp2Sue4So1+wY2iSkcaF7W7Nk25RD0jKSWl4oMS5+IuE/TtauQzzFVi0Au
-         G6n69g2C3rXFA==
+        b=uofbQcNglIZ9SCjmGN+WPWumHtt/je6y8z/YzzUos9PthN9lQldIWEzLGiL6qhyLs
+         zKpcmIWqjnBTatvWM58sQ48WBPDzYdChRwONNQYeDmKPnJFU39vvPPeX6w4BYDPXFD
+         F2/AutCikIJdzYM2Cbm6RX5ZLnnDVGswhSpCK36slWRJUCiuhcwrIhcIkcNeLeWFOa
+         53jIlqITQiEkHsQx7z+F3gnQ2BYHCp3CNtUBBjkbETRf/uslkwFCP3mUr+zRB/Wj1q
+         lBnvVuJEPBlSfOqE5LFmEv641lmVLX9HTKLDhywlJKtZuJrw1PMaM2B3gCmG3F1vbM
+         gZs8mNOQ5Pj5g==
 From:   Jisheng Zhang <jszhang@kernel.org>
-To:     Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>,
-        Vinod Koul <vkoul@kernel.org>
-Cc:     dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v3 07/11] dmaengine: dw-axi-dmac: support per channel irq
-Date:   Sun, 21 May 2023 18:12:12 +0800
-Message-Id: <20230521101216.4084-8-jszhang@kernel.org>
+To:     Lars-Peter Clausen <lars@metafoo.de>,
+        Vinod Koul <vkoul@kernel.org>,
+        Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>,
+        Logan Gunthorpe <logang@deltatee.com>,
+        Sinan Kaya <okaya@kernel.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Orson Zhai <orsonzhai@gmail.com>,
+        Baolin Wang <baolin.wang@linux.alibaba.com>,
+        Chunyan Zhang <zhang.lyra@gmail.com>
+Cc:     dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org
+Subject: [PATCH v3 5/5] dmaengine: sprd: Don't set chancnt
+Date:   Sun, 21 May 2023 18:02:52 +0800
+Message-Id: <20230521100252.3197-6-jszhang@kernel.org>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230521101216.4084-1-jszhang@kernel.org>
-References: <20230521101216.4084-1-jszhang@kernel.org>
+In-Reply-To: <20230521100252.3197-1-jszhang@kernel.org>
+References: <20230521100252.3197-1-jszhang@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Each channel can have its own irq, support this case.
+The dma framework will calculate the dma channels chancnt, setting it
+ourself is wrong.
 
 Signed-off-by: Jisheng Zhang <jszhang@kernel.org>
+Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
 ---
- .../dma/dw-axi-dmac/dw-axi-dmac-platform.c    | 46 ++++++++++++++++---
- drivers/dma/dw-axi-dmac/dw-axi-dmac.h         |  2 +
- 2 files changed, 41 insertions(+), 7 deletions(-)
+ drivers/dma/sprd-dma.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-index 24a93b0c1489..3f3db48822e3 100644
---- a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-+++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-@@ -1148,6 +1148,21 @@ static irqreturn_t dw_axi_dma_interrupt(int irq, void *dev_id)
- 	return IRQ_HANDLED;
- }
+diff --git a/drivers/dma/sprd-dma.c b/drivers/dma/sprd-dma.c
+index 474d3ba8ec9f..2b639adb48ba 100644
+--- a/drivers/dma/sprd-dma.c
++++ b/drivers/dma/sprd-dma.c
+@@ -1169,7 +1169,6 @@ static int sprd_dma_probe(struct platform_device *pdev)
  
-+static irqreturn_t dw_axi_dma_ch_interrupt(int irq, void *dev_id)
-+{
-+	struct axi_dma_chan *chan = dev_id;
-+
-+	/* Disable DMAC interrupts. We'll enable them after processing channels */
-+	axi_chan_irq_sig_set(chan, DWAXIDMAC_IRQ_NONE);
-+
-+	dw_axi_dma_handle_ch(chan);
-+
-+	/* Re-enable interrupts */
-+	axi_chan_irq_sig_set(chan, DWAXIDMAC_IRQ_DMA_TRF | DWAXIDMAC_IRQ_ALL_ERR);
-+
-+	return IRQ_HANDLED;
-+}
-+
- static int dma_chan_terminate_all(struct dma_chan *dchan)
- {
- 	struct axi_dma_chan *chan = dchan_to_axi_dma_chan(dchan);
-@@ -1382,6 +1397,8 @@ static int parse_device_properties(struct axi_dma_chip *chip)
- 		chip->dw->hdata->axi_rw_burst_len = tmp;
- 	}
- 
-+	chip->dw->hdata->perch_irq = device_property_read_bool(dev, "snps,perch_irq");
-+
- 	return 0;
- }
- 
-@@ -1451,14 +1468,29 @@ static int dw_probe(struct platform_device *pdev)
- 	if (!dw->chan)
- 		return -ENOMEM;
- 
--	chip->irq = platform_get_irq(pdev, 0);
--	if (chip->irq < 0)
--		return chip->irq;
-+	if (hdata->perch_irq) {
-+		char irqname[8];
-+		for (i = 0; i < hdata->nr_channels; i++) {
-+			snprintf(irqname, sizeof(irqname), "ch%u", i);
-+			dw->chan[i].irq = platform_get_irq_byname(pdev, irqname);
-+			if (dw->chan[i].irq < 0)
-+				return dw->chan[i].irq;
-+			ret = devm_request_irq(chip->dev, dw->chan[i].irq,
-+					       dw_axi_dma_ch_interrupt,
-+					       0, KBUILD_MODNAME, &dw->chan[i]);
-+			if (ret)
-+				return ret;
-+		}
-+	} else {
-+		chip->irq = platform_get_irq(pdev, 0);
-+		if (chip->irq < 0)
-+			return chip->irq;
- 
--	ret = devm_request_irq(chip->dev, chip->irq, dw_axi_dma_interrupt,
--			       IRQF_SHARED, KBUILD_MODNAME, chip);
--	if (ret)
--		return ret;
-+		ret = devm_request_irq(chip->dev, chip->irq, dw_axi_dma_interrupt,
-+				       IRQF_SHARED, KBUILD_MODNAME, chip);
-+		if (ret)
-+			return ret;
-+	}
- 
- 	INIT_LIST_HEAD(&dw->dma.channels);
- 	for (i = 0; i < hdata->nr_channels; i++) {
-diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac.h b/drivers/dma/dw-axi-dmac/dw-axi-dmac.h
-index eb267cb24f67..49210a248c27 100644
---- a/drivers/dma/dw-axi-dmac/dw-axi-dmac.h
-+++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac.h
-@@ -34,6 +34,7 @@ struct dw_axi_dma_hcfg {
- 	bool	reg_map_8_channels;
- 	bool	restrict_axi_burst_len;
- 	bool	use_cfg2;
-+	bool	perch_irq;
- };
- 
- struct axi_dma_chan {
-@@ -49,6 +50,7 @@ struct axi_dma_chan {
- 	struct axi_dma_desc		*desc;
- 	struct dma_slave_config		config;
- 	enum dma_transfer_direction	direction;
-+	int				irq;
- 	bool				cyclic;
- 	/* these other elements are all protected by vc.lock */
- 	bool				is_paused;
+ 	dma_cap_set(DMA_MEMCPY, sdev->dma_dev.cap_mask);
+ 	sdev->total_chns = chn_count;
+-	sdev->dma_dev.chancnt = chn_count;
+ 	INIT_LIST_HEAD(&sdev->dma_dev.channels);
+ 	INIT_LIST_HEAD(&sdev->dma_dev.global_node);
+ 	sdev->dma_dev.dev = &pdev->dev;
 -- 
 2.40.0
 
