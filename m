@@ -2,164 +2,169 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1938CC87FE1
-	for <dmaengine@archiver.kernel.org>; Sun, 21 May 2023 11:49:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 49EEBC77B75
+	for <dmaengine@archiver.kernel.org>; Mon, 22 May 2023 13:24:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230410AbjEULsa (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Sun, 21 May 2023 07:48:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36162 "EHLO
+        id S230293AbjEVNYb (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 22 May 2023 09:24:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45094 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230484AbjEUK1w (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Sun, 21 May 2023 06:27:52 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59AD110F0;
-        Sun, 21 May 2023 03:23:39 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id E36A3611F6;
-        Sun, 21 May 2023 10:23:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 758A8C4339C;
-        Sun, 21 May 2023 10:23:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1684664618;
-        bh=3vm8AIqJvr6Fc6EEUZBTa078hFQD/CBcDZ6PM3gC9JA=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=ZTS2wewKlHnWKe/Xt0LHnE/CRuHSfAree8mN77wrdaHUgAwoMzJxDIv9fOnD9xuCa
-         Z5gw7/WkCIz6Uc2CXENgFaDYuWj294/D9DAA+hm9kPqKFv7z1S5mRIv5a1HU4r0Lzw
-         sKVlEtkCZMAVHPdG/CS9SooYm3vY4TG4AOwg358K5yhravQ8lP9qpcUMOU79pvWG3M
-         JAkzoXuK3cNMCqbSdrR+OS7eeFcKOVgY9tr9AgjRQBX5QgcNuWnETHSTGcoz7Bpd6H
-         G1hGLEeTqCj3IsudnqNzsjs4MFMzyzhW2rlfsy/onGJMTxxzWwRd32XawUkkPKfN83
-         +H8XR1Xxshipw==
-From:   Jisheng Zhang <jszhang@kernel.org>
-To:     Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>,
-        Vinod Koul <vkoul@kernel.org>
-Cc:     dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v3 10/11] dmaengine: dw-axi-dmac: move dma_chan_tx_status()
-Date:   Sun, 21 May 2023 18:12:15 +0800
-Message-Id: <20230521101216.4084-11-jszhang@kernel.org>
-X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230521101216.4084-1-jszhang@kernel.org>
-References: <20230521101216.4084-1-jszhang@kernel.org>
+        with ESMTP id S229714AbjEVNY0 (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Mon, 22 May 2023 09:24:26 -0400
+Received: from wp530.webpack.hosteurope.de (wp530.webpack.hosteurope.de [80.237.130.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB427A0;
+        Mon, 22 May 2023 06:24:24 -0700 (PDT)
+Received: from [2a02:8108:8980:2478:8cde:aa2c:f324:937e]; authenticated
+        by wp530.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
+        id 1q15WR-0000n2-9k; Mon, 22 May 2023 15:24:23 +0200
+Message-ID: <dafe0626-b949-0c04-de50-b74c93b66250@leemhuis.info>
+Date:   Mon, 22 May 2023 15:24:22 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.0
+Subject: Re: dmaengine: at_hdmac: Regression regarding rs485 via dma in v5.4
+Content-Language: en-US, de-DE
+From:   Thorsten Leemhuis <regressions@leemhuis.info>
+To:     Kristof Havasi <havasiefr@gmail.com>
+Cc:     Linux kernel regressions list <regressions@lists.linux.dev>,
+        LKML <linux-kernel@vger.kernel.org>,
+        Vinod Koul <vkoul@kernel.org>, dmaengine@vger.kernel.org,
+        Peter Rosin <peda@axentia.se>,
+        Nicolas Ferre <nicolas.ferre@microchip.com>,
+        "stable@vger.kernel.org" <stable@vger.kernel.org>,
+        tudor.ambarus@microchip.com
+Reply-To: Linux regressions mailing list <regressions@lists.linux.dev>,
+          Linux regressions mailing list 
+          <regressions@lists.linux.dev>
+References: <CADBnMvj93bSO=+wU4=pLTgONV7w_hhecxQHAc_YS4P4GaqMNrA@mail.gmail.com>
+ <1473b364-777a-ede8-3ff6-36d9e1d577ad@leemhuis.info>
+ <eda7abb0-89a2-fa51-4e82-1972b1eed591@leemhuis.info>
+In-Reply-To: <eda7abb0-89a2-fa51-4e82-1972b1eed591@leemhuis.info>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+X-bounce-key: webpack.hosteurope.de;regressions@leemhuis.info;1684761864;06ea0305;
+X-HE-SMSGID: 1q15WR-0000n2-9k
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-We will add polled support soon, for which we need to call
-dw_axi_dma_handle_ch() in dma_chan_tx_status(). Move the function
-to avoid pre-declaration.
+On 04.05.23 11:11, Linux regression tracking (Thorsten Leemhuis) wrote:
+> On 04.04.23 13:25, Linux regression tracking (Thorsten Leemhuis) wrote:
+>> On 29.03.23 16:31, Kristof Havasi wrote:
+>>>
+>>> I was rebasing the Kernel branch of our SAMA5D35 based board from
+>>> v5.4.189 to v5.4.238.
+>>> I noticed that after the rebase we could _only send, but not receive_
+>>> through our RS485 interface.
+>>>
+>>> I could bisect the problem to 77b97ef4908aa917e7b68667ec6b344cc5dc5034
+>>> in the v5.4.225 release. 
+>>
+>> FWIW, that's 7176a6a8982d ("dmaengine: at_hdmac: Don't start
+>> transactions at tx_submit level") in mainline.
+>>
+>> Kristof Havasi: would be good to know if this is something that happens
+>> with recent mainline as well, because if not it might be something the
+>> stable team needs to handle.
+> 
+> Kristof, any news? Doesn't look like it from here, but maybe I'm missing
+> something.
+> 
+> And did you try what I suggested? Without trying that it looks like
+> neither the mainline developers nor the stable team cares enough to look
+> into your report, as both sides might assume it's the other sides duty
+> to do so.
 
-No functionality changes.
+Hmmm, still no update from . This is unfortunate, as without Kristof's
+help the kernel developers are likely unable to get down to this and
+provide a fix. That's why I'm dropping it from the tracking now.
 
-Signed-off-by: Jisheng Zhang <jszhang@kernel.org>
----
- .../dma/dw-axi-dmac/dw-axi-dmac-platform.c    | 84 +++++++++----------
- 1 file changed, 42 insertions(+), 42 deletions(-)
+#regzbot inconclusive: reporter apparently lost interest
 
-diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-index f14fdfc9c7e9..091c15c2ec31 100644
---- a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-+++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-@@ -307,48 +307,6 @@ static void vchan_desc_put(struct virt_dma_desc *vdesc)
- 	axi_desc_put(vd_to_axi_desc(vdesc));
- }
- 
--static enum dma_status
--dma_chan_tx_status(struct dma_chan *dchan, dma_cookie_t cookie,
--		  struct dma_tx_state *txstate)
--{
--	struct axi_dma_chan *chan = dchan_to_axi_dma_chan(dchan);
--	struct axi_dma_desc *desc = NULL;
--	struct virt_dma_desc *vdesc;
--	enum dma_status status;
--	u32 completed_length;
--	unsigned long flags;
--	u32 completed_blocks;
--	size_t bytes = 0;
--	u32 length;
--	u32 len;
--
--	status = dma_cookie_status(dchan, cookie, txstate);
--	if (status == DMA_COMPLETE || !txstate)
--		return status;
--
--	spin_lock_irqsave(&chan->vc.lock, flags);
--
--	vdesc = vchan_find_desc(&chan->vc, cookie);
--	if (vdesc) {
--		desc = vd_to_axi_desc(vdesc);
--	} else if (chan->desc && chan->desc->vd.tx.cookie == cookie) {
--		desc = chan->desc;
--	}
--
--	if (desc) {
--		length = desc->length;
--		completed_blocks = desc->completed_blocks;
--		len = desc->hw_desc[0].len;
--		completed_length = completed_blocks * len;
--		bytes = length - completed_length;
--	}
--
--	spin_unlock_irqrestore(&chan->vc.lock, flags);
--	dma_set_residue(txstate, bytes);
--
--	return status;
--}
--
- static void write_desc_llp(struct axi_dma_hw_desc *desc, dma_addr_t adr)
- {
- 	desc->lli->llp = cpu_to_le64(adr);
-@@ -1173,6 +1131,48 @@ static irqreturn_t dw_axi_dma_ch_interrupt(int irq, void *dev_id)
- 	return IRQ_HANDLED;
- }
- 
-+static enum dma_status
-+dma_chan_tx_status(struct dma_chan *dchan, dma_cookie_t cookie,
-+		  struct dma_tx_state *txstate)
-+{
-+	struct axi_dma_chan *chan = dchan_to_axi_dma_chan(dchan);
-+	struct axi_dma_desc *desc = NULL;
-+	struct virt_dma_desc *vdesc;
-+	enum dma_status status;
-+	u32 completed_length;
-+	unsigned long flags;
-+	u32 completed_blocks;
-+	size_t bytes = 0;
-+	u32 length;
-+	u32 len;
-+
-+	status = dma_cookie_status(dchan, cookie, txstate);
-+	if (status == DMA_COMPLETE || !txstate)
-+		return status;
-+
-+	spin_lock_irqsave(&chan->vc.lock, flags);
-+
-+	vdesc = vchan_find_desc(&chan->vc, cookie);
-+	if (vdesc) {
-+		desc = vd_to_axi_desc(vdesc);
-+	} else if (chan->desc && chan->desc->vd.tx.cookie == cookie) {
-+		desc = chan->desc;
-+	}
-+
-+	if (desc) {
-+		length = desc->length;
-+		completed_blocks = desc->completed_blocks;
-+		len = desc->hw_desc[0].len;
-+		completed_length = completed_blocks * len;
-+		bytes = length - completed_length;
-+	}
-+
-+	spin_unlock_irqrestore(&chan->vc.lock, flags);
-+	dma_set_residue(txstate, bytes);
-+
-+	return status;
-+}
-+
- static int dma_chan_terminate_all(struct dma_chan *dchan)
- {
- 	struct axi_dma_chan *chan = dchan_to_axi_dma_chan(dchan);
--- 
-2.40.0
+Ciao, Thorsten
 
+>>> If I revert this commit, the tx/rx works just
+>>> like before.
+>>> Maybe this use-case wasn't considered when this patch was created?
+>>> I haven't seen a documentation change regarding this in DT bindings,
+>>> but if the config should be something else, please let me know.
+>>> Otherwise this commit breaks the RS485 function of atmel_serial at
+>>> least in the v5.4.y branch.
+>>>
+>>> Best Regards,
+>>> Kristóf Havasi
+>>>
+>>> The relevant device tree nodes:
+>>>
+>>> from sama5d3.dtsi:
+>>>
+>>> usart1: serial@f0020000 {
+>>>   compatible = "atmel,at91sam9260-usart";
+>>>   reg = <0xf0020000 0x100>;
+>>>   interrupts = <13 IRQ_TYPE_LEVEL_HIGH 5>;
+>>>   dmas = <&dma0 2 AT91_DMA_CFG_PER_ID(5)>,
+>>>   <&dma0 2 (AT91_DMA_CFG_PER_ID(6) | AT91_DMA_CFG_FIFOCFG_ASAP)>;
+>>>   dma-names = "tx", "rx";
+>>>   pinctrl-names = "default";
+>>>   pinctrl-0 = <&pinctrl_usart1>;
+>>>   clocks = <&usart1_clk>;
+>>>   clock-names = "usart";
+>>>   status = "disabled";
+>>> };
+>>>
+>>> pinctrl_usart1: usart1-0 {
+>>>   atmel,pins =
+>>>   <AT91_PIOB 28 AT91_PERIPH_A AT91_PINCTRL_PULL_UP
+>>>    AT91_PIOB 29 AT91_PERIPH_A AT91_PINCTRL_NONE>;
+>>> };
+>>> pinctrl_usart1_rts_cts: usart1_rts_cts-0 {
+>>>   atmel,pins =
+>>>   <AT91_PIOB 26 AT91_PERIPH_A AT91_PINCTRL_NONE /* PB26 periph A,
+>>> conflicts with GRX7 */
+>>>    AT91_PIOB 27 AT91_PERIPH_A AT91_PINCTRL_NONE>; /* PB27 periph A,
+>>> conflicts with G125CKO */
+>>> };
+>>>
+>>> from our dts:
+>>>
+>>> &usart1 {
+>>>   pinctrl-0 = <&pinctrl_usart1 &pinctrl_usart1_rts_cts>;
+>>>   atmel,use-dma-rx;
+>>>   atmel,use-dma-tx;
+>>>   rs485-rx-during-tx;
+>>>   linux,rs485-enabled-at-boot-time;
+>>>   status = "okay";
+>>> };
+>>>
+>>> HW:
+>>> The SAMA5D3's PB27 is connected to the |RE+DE of the RS485 transceiver
+>>> SP3458EN-L
+>>
+>>
+>> Thanks for the report. To be sure the issue doesn't fall through the
+>> cracks unnoticed, I'm adding it to regzbot, the Linux kernel regression
+>> tracking bot:
+>>
+>> #regzbot ^introduced 77b97ef4908aa
+>> #regzbot title dmaengine: at_hdmac: receiving data through the RS485
+>> interface broke
+>> #regzbot ignore-activity
+>>
+>> This isn't a regression? This issue or a fix for it are already
+>> discussed somewhere else? It was fixed already? You want to clarify when
+>> the regression started to happen? Or point out I got the title or
+>> something else totally wrong? Then just reply and tell me -- ideally
+>> while also telling regzbot about it, as explained by the page listed in
+>> the footer of this mail.
+>>
+>> Developers: When fixing the issue, remember to add 'Link:' tags pointing
+>> to the report (the parent of this mail). See page linked in footer for
+>> details.
+>>
+>> Ciao, Thorsten (wearing his 'the Linux kernel's regression tracker' hat)
+>> --
+>> Everything you wanna know about Linux kernel regression tracking:
+>> https://linux-regtracking.leemhuis.info/about/#tldr
+>> That page also explains what to do if mails like this annoy you.
+>>
+>>
