@@ -2,125 +2,121 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 26361C77B73
-	for <dmaengine@archiver.kernel.org>; Sat, 27 May 2023 07:44:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 62D70C77B7E
+	for <dmaengine@archiver.kernel.org>; Sat, 27 May 2023 10:44:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231178AbjE0HoL (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Sat, 27 May 2023 03:44:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42478 "EHLO
+        id S230348AbjE0KoF (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Sat, 27 May 2023 06:44:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50738 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231802AbjE0HoG (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Sat, 27 May 2023 03:44:06 -0400
-Received: from smtp.smtpout.orange.fr (smtp-23.smtpout.orange.fr [80.12.242.23])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 87DD0B6
-        for <dmaengine@vger.kernel.org>; Sat, 27 May 2023 00:44:05 -0700 (PDT)
-Received: from pop-os.home ([86.243.2.178])
-        by smtp.orange.fr with ESMTPA
-        id 2oTXqn1098aX92oTYqO5DH; Sat, 27 May 2023 09:36:32 +0200
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=wanadoo.fr;
-        s=t20230301; t=1685172992;
-        bh=jfcq+JgA5tqsNjhJdIRr8u+hc7+NPdvjx/XHhop2/Is=;
-        h=From:To:Cc:Subject:Date;
-        b=oP99AC7iTJ4UihSNEW/pzpRz9iPotcP9k/mZw954h9q8LA73LTHHJczpFnk/qBRMl
-         lTgFns4cYPAN0ZS5x6mLvkGA9aHf/LGVs7PHK1WyQ8FgT/PZKljP8D+qV/VWCj7u1O
-         y5T3byDZuJIiQbpJBgaR92HwVRQk/zMZXh293hilGGGDolrRYqEnnUFkcBH4y5uhzX
-         OtG9D7FE7fw1Hosi0RDUdPhpi8F+sq2tb94BpW43lwxRQvXp28WrHCZ0geIHiwbcMM
-         EjqY4iW+4nNJFKZbDd+TQdHrgZQFQnnyLnhnvL8JjrLtwL1J2V7JuMPHNCPcY7yrnF
-         Pe4WX+B0QtlnA==
-X-ME-Helo: pop-os.home
-X-ME-Auth: Y2hyaXN0b3BoZS5qYWlsbGV0QHdhbmFkb28uZnI=
-X-ME-Date: Sat, 27 May 2023 09:36:32 +0200
-X-ME-IP: 86.243.2.178
-From:   Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-To:     vkoul@kernel.org
-Cc:     dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
-        kernel-janitors@vger.kernel.org,
-        Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Subject: [PATCH v2] dmaengine: mcf-edma: Fix a potential un-allocated memory access
-Date:   Sat, 27 May 2023 09:36:31 +0200
-Message-Id: <f55d914407c900828f6fad3ea5fa791a5f17b9a4.1685172449.git.christophe.jaillet@wanadoo.fr>
-X-Mailer: git-send-email 2.34.1
+        with ESMTP id S229730AbjE0KoF (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Sat, 27 May 2023 06:44:05 -0400
+Received: from mga06.intel.com (mga06b.intel.com [134.134.136.31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 86A749E;
+        Sat, 27 May 2023 03:44:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1685184243; x=1716720243;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=htgVJ0Mc9jfpsCqyHX2MoPkxQc8Odo9Ce4AmOTBizhE=;
+  b=L/rril5Eyuh0Liy/lAbwjZ8OvMsII1IwAZXza3DdlzKEXeRtyJFNMgBe
+   L8nl75ksilMBO47+ebvVejqiTwLcby0hht3VNYiDla2OV9rAPnOJR26Ge
+   Z27men4KVcipAgSwCOHL8F2rIEhOpklb1OA7DHKlAy0FQA+019ZEcfAQ9
+   76qaHEAKyaRubLfzgGyjCw2ktVBHN+8+RUhsPSJD/Fodekf1RwKG2ymp9
+   g0GKcqXdOeAQR0u/rKgYIAWi2deLMPsDpWPOtp82977trbStjcHzEb4e0
+   Wz/r9FjZv/CUeh2mRXfIuYo6jNGr7se+HnpX9Kvu8id8erZGmz8PrYtUe
+   g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10722"; a="417866954"
+X-IronPort-AV: E=Sophos;i="6.00,196,1681196400"; 
+   d="scan'208";a="417866954"
+Received: from orsmga007.jf.intel.com ([10.7.209.58])
+  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 May 2023 03:44:03 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10722"; a="699679398"
+X-IronPort-AV: E=Sophos;i="6.00,196,1681196400"; 
+   d="scan'208";a="699679398"
+Received: from lkp-server01.sh.intel.com (HELO dea6d5a4f140) ([10.239.97.150])
+  by orsmga007.jf.intel.com with ESMTP; 27 May 2023 03:44:00 -0700
+Received: from kbuild by dea6d5a4f140 with local (Exim 4.96)
+        (envelope-from <lkp@intel.com>)
+        id 1q2rOx-000JuI-2L;
+        Sat, 27 May 2023 10:43:59 +0000
+Date:   Sat, 27 May 2023 18:43:45 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Lizhi Hou <lizhi.hou@amd.com>, vkoul@kernel.org,
+        dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     oe-kbuild-all@lists.linux.dev, Nishad Saraf <nishads@amd.com>,
+        max.zhen@amd.com, sonal.santan@amd.com, nishad.saraf@amd.com,
+        Lizhi Hou <lizhi.hou@amd.com>
+Subject: Re: [PATCH V1 QDMA 1/1] dmaengine: amd: qdma: Add AMD QDMA driver
+Message-ID: <202305271839.2OLecczN-lkp@intel.com>
+References: <1685119795-11729-2-git-send-email-lizhi.hou@amd.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1685119795-11729-2-git-send-email-lizhi.hou@amd.com>
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-When 'mcf_edma' is allocated, some space is allocated for a
-flexible array at the end of the struct. 'chans' item are allocated, that is
-to say 'pdata->dma_channels'.
+Hi Lizhi,
 
-Then, this number of item is stored in 'mcf_edma->n_chans'.
+kernel test robot noticed the following build errors:
 
-A few lines later, if 'mcf_edma->n_chans' is 0, then a default value of 64
-is set.
+[auto build test ERROR on vkoul-dmaengine/next]
+[also build test ERROR on linus/master v6.4-rc3 next-20230525]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
 
-This ends to no space allocated by devm_kzalloc() because chans was 0, but
-64 items are read and/or written in some not allocated memory.
+url:    https://github.com/intel-lab-lkp/linux/commits/Lizhi-Hou/dmaengine-amd-qdma-Add-AMD-QDMA-driver/20230527-005214
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/vkoul/dmaengine.git next
+patch link:    https://lore.kernel.org/r/1685119795-11729-2-git-send-email-lizhi.hou%40amd.com
+patch subject: [PATCH V1 QDMA 1/1] dmaengine: amd: qdma: Add AMD QDMA driver
+config: mips-allyesconfig (https://download.01.org/0day-ci/archive/20230527/202305271839.2OLecczN-lkp@intel.com/config)
+compiler: mips-linux-gcc (GCC) 12.1.0
+reproduce (this is a W=1 build):
+        mkdir -p ~/bin
+        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
+        chmod +x ~/bin/make.cross
+        # https://github.com/intel-lab-lkp/linux/commit/d300fd23b7ecbcc89512dba3fa745941c1c03fac
+        git remote add linux-review https://github.com/intel-lab-lkp/linux
+        git fetch --no-tags linux-review Lizhi-Hou/dmaengine-amd-qdma-Add-AMD-QDMA-driver/20230527-005214
+        git checkout d300fd23b7ecbcc89512dba3fa745941c1c03fac
+        # save the config file
+        mkdir build_dir && cp config build_dir/.config
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-12.1.0 ~/bin/make.cross W=1 O=build_dir ARCH=mips olddefconfig
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-12.1.0 ~/bin/make.cross W=1 O=build_dir ARCH=mips SHELL=/bin/bash
 
-Change the logic to define a default value before allocating the memory.
+If you fix the issue, kindly add following tag where applicable
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202305271839.2OLecczN-lkp@intel.com/
 
-Fixes: e7a3ff92eaf1 ("dmaengine: fsl-edma: add ColdFire mcf5441x edma support")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
----
-If I'm correct, then:
+All errors (new ones prefixed by >>):
 
-   - the default value is hard-coded as 64. There is also a
-        #define EDMA_CHANNELS 64
-     which maybe could be used, or renamed as EDMA_DEFAULT_CHANNELS
+   arch/mips/kernel/head.o: in function `kernel_entry':
+   (.ref.text+0xac): relocation truncated to fit: R_MIPS_26 against `start_kernel'
+   init/main.o: in function `set_reset_devices':
+   main.c:(.init.text+0x20): relocation truncated to fit: R_MIPS_26 against `_mcount'
+   main.c:(.init.text+0x30): relocation truncated to fit: R_MIPS_26 against `__sanitizer_cov_trace_pc'
+   init/main.o: in function `debug_kernel':
+   main.c:(.init.text+0xa4): relocation truncated to fit: R_MIPS_26 against `_mcount'
+   main.c:(.init.text+0xb4): relocation truncated to fit: R_MIPS_26 against `__sanitizer_cov_trace_pc'
+   init/main.o: in function `quiet_kernel':
+   main.c:(.init.text+0x128): relocation truncated to fit: R_MIPS_26 against `_mcount'
+   main.c:(.init.text+0x138): relocation truncated to fit: R_MIPS_26 against `__sanitizer_cov_trace_pc'
+   init/main.o: in function `warn_bootconfig':
+   main.c:(.init.text+0x1ac): relocation truncated to fit: R_MIPS_26 against `_mcount'
+   main.c:(.init.text+0x1bc): relocation truncated to fit: R_MIPS_26 against `__sanitizer_cov_trace_pc'
+   init/main.o: in function `init_setup':
+   main.c:(.init.text+0x234): relocation truncated to fit: R_MIPS_26 against `_mcount'
+   main.c:(.init.text+0x254): additional relocation overflows omitted from the output
+   mips-linux-ld: drivers/dma/amd/qdma.o: in function `qdma_get_field.isra.0':
+>> qdma.c:(.text.qdma_get_field.isra.0+0xa8): undefined reference to `__ffsdi2'
+>> mips-linux-ld: qdma.c:(.text.qdma_get_field.isra.0+0x200): undefined reference to `__ffsdi2'
+   mips-linux-ld: qdma.c:(.text.qdma_get_field.isra.0+0x3e0): undefined reference to `__ffsdi2'
 
-   - mcf_edma_err_handler() looks bogus, because it considers that
-     mcf_edma->chans has EDMA_CHANNELS items.
-     I guess that something related to mcf_edma->n_chans is what is
-     expected, but how should this be done?
-
-Maybe, the EDMA_CHANNELS value should be used all the time?
-Maybe, the number of chans should be limited to EDMA_CHANNELS?
-Maybe, the number of chans should be at least EDMA_CHANNELS?
-
-Maybe, maybe, maybe, but me, I don't know :(
-
-All I know is that this patch compiles :)
-and that it can gives Dan an idea for smatch for checking access to un-allocated
-memory related to flexible array :)
-
-
-v2: I forgot the subject in v1...
----
- drivers/dma/mcf-edma.c | 13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
-
-diff --git a/drivers/dma/mcf-edma.c b/drivers/dma/mcf-edma.c
-index ebd8733f72ad..9413fad08a60 100644
---- a/drivers/dma/mcf-edma.c
-+++ b/drivers/dma/mcf-edma.c
-@@ -190,7 +190,13 @@ static int mcf_edma_probe(struct platform_device *pdev)
- 		return -EINVAL;
- 	}
- 
--	chans = pdata->dma_channels;
-+	if (!pdata->dma_channels) {
-+		dev_info(&pdev->dev, "setting default channel number to 64");
-+		chans = 64;
-+	} else {
-+		chans = pdata->dma_channels;
-+	}
-+
- 	len = sizeof(*mcf_edma) + sizeof(*mcf_chan) * chans;
- 	mcf_edma = devm_kzalloc(&pdev->dev, len, GFP_KERNEL);
- 	if (!mcf_edma)
-@@ -202,11 +208,6 @@ static int mcf_edma_probe(struct platform_device *pdev)
- 	mcf_edma->drvdata = &mcf_data;
- 	mcf_edma->big_endian = 1;
- 
--	if (!mcf_edma->n_chans) {
--		dev_info(&pdev->dev, "setting default channel number to 64");
--		mcf_edma->n_chans = 64;
--	}
--
- 	mutex_init(&mcf_edma->fsl_edma_mutex);
- 
- 	mcf_edma->membase = devm_platform_ioremap_resource(pdev, 0);
 -- 
-2.34.1
-
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
