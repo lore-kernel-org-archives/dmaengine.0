@@ -2,69 +2,79 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 65FFAC7EE24
-	for <dmaengine@archiver.kernel.org>; Tue, 30 May 2023 18:31:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6ACD3C77B73
+	for <dmaengine@archiver.kernel.org>; Tue, 30 May 2023 18:46:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230493AbjE3Sbp (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 30 May 2023 14:31:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59022 "EHLO
+        id S232034AbjE3Sqh (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 30 May 2023 14:46:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36890 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229997AbjE3Sbo (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Tue, 30 May 2023 14:31:44 -0400
-X-Greylist: delayed 3600 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Tue, 30 May 2023 11:31:39 PDT
-Received: from esgaroth.petrovitsch.at (unknown [IPv6:2a01:4f8:120:527b:6876:2a4f:a044:62ad])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 695F2A7;
-        Tue, 30 May 2023 11:31:39 -0700 (PDT)
-Received: from [172.16.0.14] (84-115-216-26.cable.dynamic.surfer.at [84.115.216.26])
-        (authenticated bits=0)
-        by esgaroth.petrovitsch.at (8.17.1/8.17.1) with ESMTPSA id 34UFsxK01500577
-        (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT);
-        Tue, 30 May 2023 17:55:00 +0200
-DKIM-Filter: OpenDKIM Filter v2.11.0 esgaroth.petrovitsch.at 34UFsxK01500577
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=petrovitsch.priv.at;
-        s=default; t=1685462101;
-        bh=2yoseQpk0oEKpAjWSngakamuL3Rs29Obuu+kf+gqlh4=;
-        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-        b=c2/GGaS0sc5BANOVSnmlgp4xetUgAykF+Z7jT/lakOyBAPVCKjv4xM/EcX+O6axU9
-         NuiTRKajHjz1s1LYLBvK3ywe2ME574EdotIxouX/dk0mPXqL9MXTh4eGlb6lo3psmI
-         6YjM4y8Omfpg16I9lNqn9TMnlFxe0W0viCeRCOPo=
-X-Info-sendmail: I was here
-Message-ID: <1e87f3fa-58c5-d47f-3335-cd0a554b3144@petrovitsch.priv.at>
-Date:   Tue, 30 May 2023 17:54:46 +0200
+        with ESMTP id S231757AbjE3Sqg (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Tue, 30 May 2023 14:46:36 -0400
+Received: from smtp.smtpout.orange.fr (smtp-25.smtpout.orange.fr [80.12.242.25])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 695C0C9
+        for <dmaengine@vger.kernel.org>; Tue, 30 May 2023 11:46:31 -0700 (PDT)
+Received: from [192.168.1.18] ([86.243.2.178])
+        by smtp.orange.fr with ESMTPA
+        id 44MPqYngtbOsk44MPqezJs; Tue, 30 May 2023 20:46:24 +0200
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=wanadoo.fr;
+        s=t20230301; t=1685472384;
+        bh=wAisxzg8dfWOsHsZpM0v+nS0EU1aAoqe1cA6dlcGUok=;
+        h=Date:Subject:To:Cc:References:From:In-Reply-To;
+        b=cxt0b70ongh8rsgRilK/5wy7YAeEmoJ6BLvRFuDAttIFdCTyIEADSZEsZ9Pt/f9gp
+         /8DhWc68KV2UcjVYvivWz3kq7O1O5X9Fvi+CTn0I+rEO+d1jf933J2/xdcymkleJIs
+         RGan+1ir9Dzt6Z2N2nRYOgW+dALxxgKqJyoZ08xKxpyGFNSYD55OYnqZuVmjkitpp3
+         OkzZbMEnIRnMELQqRlpZvf5Rq/ylVz+Wt/if9U9hWAXQpfz3S6DnWFAg16Y0fgONQI
+         riQDrtvrRSoEXkaj3RRjcnrJI0HLg8cxj48aDPbFtEAeUBTYdtjAf4VinNLHypXG1o
+         KGXxJF0XHpo/Q==
+X-ME-Helo: [192.168.1.18]
+X-ME-Auth: Y2hyaXN0b3BoZS5qYWlsbGV0QHdhbmFkb28uZnI=
+X-ME-Date: Tue, 30 May 2023 20:46:24 +0200
+X-ME-IP: 86.243.2.178
+Message-ID: <1335982c-70ea-6af2-19cf-73a4332ae510@wanadoo.fr>
+Date:   Tue, 30 May 2023 20:46:21 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.11.0
 Subject: Re: [PATCH] dmaengine: idxd: No need to clear memory after a
  dma_alloc_coherent() call
-Content-Language: en-US, de-AT, en-IE
-To:     Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+To:     Bernd Petrovitsch <bernd@petrovitsch.priv.at>,
         Fenghua Yu <fenghua.yu@intel.com>,
         Dave Jiang <dave.jiang@intel.com>,
         Vinod Koul <vkoul@kernel.org>
 Cc:     linux-kernel@vger.kernel.org, kernel-janitors@vger.kernel.org,
         dmaengine@vger.kernel.org
 References: <f44be04317387f8936d31d5470963541615f30ef.1685283065.git.christophe.jaillet@wanadoo.fr>
-From:   Bernd Petrovitsch <bernd@petrovitsch.priv.at>
-BIMI-Selector: v=BIMI1; s=default
-In-Reply-To: <f44be04317387f8936d31d5470963541615f30ef.1685283065.git.christophe.jaillet@wanadoo.fr>
+ <1e87f3fa-58c5-d47f-3335-cd0a554b3144@petrovitsch.priv.at>
+Content-Language: fr, en-US
+From:   Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+In-Reply-To: <1e87f3fa-58c5-d47f-3335-cd0a554b3144@petrovitsch.priv.at>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-DCC-x.dcc-servers-Metrics: esgaroth.petrovitsch.priv.at 104; Body=7 Fuz1=7
-        Fuz2=7
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On 28/05/2023 16:11, Christophe JAILLET wrote:
-> dma_alloc_coherent() already clear the allocated memory, there is no need
-> to explicitly call memset().
+Le 30/05/2023 à 17:54, Bernd Petrovitsch a écrit :
+> On 28/05/2023 16:11, Christophe JAILLET wrote:
+>> dma_alloc_coherent() already clear the allocated memory, there is no need
+>> to explicitly call memset().
+> 
+> Hmm, so wouldn't be dma_zalloc_coherent() a better name for the function?
+> 
+> Kind regards,
+>      Bernd
 
-Hmm, so wouldn't be dma_zalloc_coherent() a better name for the function?
+Hi,
 
-Kind regards,
-	Bernd
--- 
-Bernd Petrovitsch                  Email : bernd@petrovitsch.priv.at
-      There is NO CLOUD, just other people's computers. - FSFE
-                      LUGA : http://www.luga.at
+No strong opinion about it.
+It is not malloc either !)
 
+When dma_zalloc_coherent() has been deprecated (see [1]), for some 
+reason, it was decided to keep the "alloc" version.
+
+CJ
+
+
+[1]: 
+https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/commit/include/linux/dma-mapping.h?id=06d4dd2f2ce1cdb625f77c0676d5af6ba310c01d
