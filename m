@@ -2,32 +2,32 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 74E0EC7EE23
-	for <dmaengine@archiver.kernel.org>; Wed,  7 Jun 2023 20:37:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A423BC83003
+	for <dmaengine@archiver.kernel.org>; Wed,  7 Jun 2023 20:48:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234049AbjFGUhv (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 7 Jun 2023 16:37:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36752 "EHLO
+        id S235057AbjFGUsG (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 7 Jun 2023 16:48:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48552 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234039AbjFGUhu (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Wed, 7 Jun 2023 16:37:50 -0400
+        with ESMTP id S235074AbjFGUru (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Wed, 7 Jun 2023 16:47:50 -0400
 Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA369271B;
-        Wed,  7 Jun 2023 13:37:34 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5489126AA;
+        Wed,  7 Jun 2023 13:47:27 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id D0175645A6;
-        Wed,  7 Jun 2023 20:37:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDF2DC433EF;
-        Wed,  7 Jun 2023 20:37:32 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id A977F646C0;
+        Wed,  7 Jun 2023 20:47:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60873C433EF;
+        Wed,  7 Jun 2023 20:47:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-        s=korg; t=1686170253;
-        bh=c5ZuE0yaAWFLmKZiWkPwIe9FoGlS6223SAYh/GBDZus=;
+        s=korg; t=1686170840;
+        bh=1gHrGw5o8xpsvZU9kheSjgjtAMjYM4s74H91KO94IsM=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=YsWeTfPJ2AAJM1vNKJAuCnV2XGDaOwUCxczpRcSB1TtJc8WBamJue8qM9nmsVp2ZH
-         /o22Tbe/sVrYen7KMFae1FwcPkaP+bc5b2Nv0IwgtyCjlu5kVi+XHjg8IyCLnel+59
-         riodbQzgV+zhs0H+ByudBso5X+KG0X+dbMAotuvQ=
+        b=Aus1aGwD8A9csBzg9rSWMy6tr83dXPGm2FUqb34S1Gr9qcabi0ilUj+oNAtJeCBtc
+         Epfm2VqwykSgB2z8yZ1bTNitxCBqmvtj1VziKDolx+zfvqzBq8SP6tF4imz9uhg8aw
+         zYMXkoB4d8dHF0FYOPJDR9QqOi6IPHr1C8d9MQh4=
 From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To:     stable@vger.kernel.org
 Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -38,12 +38,12 @@ Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
         Russell King <rmk+kernel@arm.linux.org.uk>,
         Vinod Koul <vkoul@kernel.org>, dmaengine@vger.kernel.org,
         linux-riscv@lists.infradead.org, Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 015/225] dmaengine: pl330: rename _start to prevent build error
-Date:   Wed,  7 Jun 2023 22:13:28 +0200
-Message-ID: <20230607200913.846911858@linuxfoundation.org>
+Subject: [PATCH 5.10 012/120] dmaengine: pl330: rename _start to prevent build error
+Date:   Wed,  7 Jun 2023 22:15:28 +0200
+Message-ID: <20230607200901.304221767@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20230607200913.334991024@linuxfoundation.org>
-References: <20230607200913.334991024@linuxfoundation.org>
+In-Reply-To: <20230607200900.915613242@linuxfoundation.org>
+References: <20230607200900.915613242@linuxfoundation.org>
 User-Agent: quilt/0.67
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -90,7 +90,7 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/dma/pl330.c b/drivers/dma/pl330.c
-index 0d9257fbdfb0d..b4731fe6bbc14 100644
+index 5bbae99f2d34e..6f697b3f2c184 100644
 --- a/drivers/dma/pl330.c
 +++ b/drivers/dma/pl330.c
 @@ -1050,7 +1050,7 @@ static bool _trigger(struct pl330_thread *thrd)
@@ -102,7 +102,7 @@ index 0d9257fbdfb0d..b4731fe6bbc14 100644
  {
  	switch (_state(thrd)) {
  	case PL330_STATE_FAULT_COMPLETING:
-@@ -1702,7 +1702,7 @@ static int pl330_update(struct pl330_dmac *pl330)
+@@ -1704,7 +1704,7 @@ static int pl330_update(struct pl330_dmac *pl330)
  			thrd->req_running = -1;
  
  			/* Get going again ASAP */
@@ -111,7 +111,7 @@ index 0d9257fbdfb0d..b4731fe6bbc14 100644
  
  			/* For now, just make a list of callbacks to be done */
  			list_add_tail(&descdone->rqd, &pl330->req_done);
-@@ -2089,7 +2089,7 @@ static void pl330_tasklet(struct tasklet_struct *t)
+@@ -2091,7 +2091,7 @@ static void pl330_tasklet(struct tasklet_struct *t)
  	} else {
  		/* Make sure the PL330 Channel thread is active */
  		spin_lock(&pch->thread->dmac->lock);
@@ -120,7 +120,7 @@ index 0d9257fbdfb0d..b4731fe6bbc14 100644
  		spin_unlock(&pch->thread->dmac->lock);
  	}
  
-@@ -2107,7 +2107,7 @@ static void pl330_tasklet(struct tasklet_struct *t)
+@@ -2109,7 +2109,7 @@ static void pl330_tasklet(struct tasklet_struct *t)
  			if (power_down) {
  				pch->active = true;
  				spin_lock(&pch->thread->dmac->lock);
