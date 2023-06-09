@@ -2,106 +2,112 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BA22AC7EE43
-	for <dmaengine@archiver.kernel.org>; Fri,  9 Jun 2023 08:17:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C074CC83005
+	for <dmaengine@archiver.kernel.org>; Fri,  9 Jun 2023 16:49:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240275AbjFIIRx (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 9 Jun 2023 04:17:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51960 "EHLO
+        id S229956AbjFIQtG (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 9 Jun 2023 12:49:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52516 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240274AbjFIIRs (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Fri, 9 Jun 2023 04:17:48 -0400
-Received: from relay6-d.mail.gandi.net (relay6-d.mail.gandi.net [IPv6:2001:4b98:dc4:8::226])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7865130EC;
-        Fri,  9 Jun 2023 01:17:14 -0700 (PDT)
-X-GND-Sasl: kory.maincent@bootlin.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
-        t=1686298625;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=ZA+S0v6iLr2wkmRPyH+qWvvhx/TnOH2owT01i8MhK3U=;
-        b=PKfIeo5Idiacxg521v7LF2oTJXigoQW/18p/KEPAo44SGR0/PPVw4kJXW2qpLQVKbogDLb
-        vfMcoIAPliXK3BtdMbpT4k2pm4qWpTynj31/tKkh4pHzW/diVPNd5uT4xgFcQnO2L2/eNY
-        OXuA3OvJCygSS4qXY0HhCxz4q9/7ILy4VE7ly9t69G6pPGE5hJrv4HbDwrKKKgi1De1Z70
-        PX6QfN+tjxKJiNNh7HAVQ1Hr5ngnVzLUJRO2g9ITc+v2zIrU20Marb1oqPe78DkzMg5LT4
-        rbDH6gFhURB3Oyn5Mrrh0FEVSmaS1P8n9JauFqKVVomSKBq1s3Utg1N1PQzceg==
-X-GND-Sasl: kory.maincent@bootlin.com
-X-GND-Sasl: kory.maincent@bootlin.com
-X-GND-Sasl: kory.maincent@bootlin.com
-X-GND-Sasl: kory.maincent@bootlin.com
-X-GND-Sasl: kory.maincent@bootlin.com
-X-GND-Sasl: kory.maincent@bootlin.com
-X-GND-Sasl: kory.maincent@bootlin.com
-X-GND-Sasl: kory.maincent@bootlin.com
-X-GND-Sasl: kory.maincent@bootlin.com
-X-GND-Sasl: kory.maincent@bootlin.com
-Received: by mail.gandi.net (Postfix) with ESMTPSA id AE98AC0012;
-        Fri,  9 Jun 2023 08:17:04 +0000 (UTC)
-From:   =?UTF-8?q?K=C3=B6ry=20Maincent?= <kory.maincent@bootlin.com>
-To:     Cai Huoqing <cai.huoqing@linux.dev>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Serge Semin <fancer.lancer@gmail.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        Gustavo Pimentel <Gustavo.Pimentel@synopsys.com>,
-        dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
-        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-        Herve Codina <herve.codina@bootlin.com>,
-        Kory Maincent <kory.maincent@bootlin.com>
-Subject: [PATCH 8/9] dmaengine: dw-edma: eDMA: Fix possible race condition in remote setup
-Date:   Fri,  9 Jun 2023 10:16:53 +0200
-Message-Id: <20230609081654.330857-9-kory.maincent@bootlin.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20230609081654.330857-1-kory.maincent@bootlin.com>
-References: <20230609081654.330857-1-kory.maincent@bootlin.com>
+        with ESMTP id S229790AbjFIQtC (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Fri, 9 Jun 2023 12:49:02 -0400
+Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D57C30C1
+        for <dmaengine@vger.kernel.org>; Fri,  9 Jun 2023 09:49:01 -0700 (PDT)
+Received: by mail-ej1-x631.google.com with SMTP id a640c23a62f3a-9768fd99c0cso662162166b.0
+        for <dmaengine@vger.kernel.org>; Fri, 09 Jun 2023 09:49:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1686329340; x=1688921340;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=aSvYel0oSeG4uzRcYI5j4gpx20764e2Nwh+/Z/Nnl1A=;
+        b=GqaA6BXrI4NSSBQiawEV3px6ukzbXAokvUgPsE170MIYdj5lW9YzBNK3Iud1KmB+3j
+         YcZ5ydWfizNk4R2X/+4Q/VDf5hidvFJullxNHwG95VYPHSCNDOxXEJPPg/JDF7ReICGe
+         Aha1LH9bxO1FXE9PcpqAWCkxy3D+7eqTRe3HXJaki1cwz0lhHw3imgeln+EGCEx02B7Z
+         VAUSPuqmk3cwHTa3LFfKywNX2hRq/ORwgaEtnJXOWp77y1vfcFx+kScZw1/7jb+iwp0l
+         8H7irS+fJbyEWhl3B0ZAAwiqcWkImoUBLlOBAns4YCilxJMkTiPl1hk0GnrFYtl1C4sv
+         0svA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1686329340; x=1688921340;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=aSvYel0oSeG4uzRcYI5j4gpx20764e2Nwh+/Z/Nnl1A=;
+        b=Er0DsEJjYHxEmb+RnqEQsiClnjp09mZPY9PTr4dCnjc2cJhqtsUA6lYF47wtMhBr4Z
+         MxCE4w6J7AwoELclr9AXT8j/N7nIA3PxiF2Q6MowCx/WwjDlmJf6H6o7YhcYtcmAewdz
+         46DUsSeSl1J0u8ppviFUcSJ1Z303vTbkC6A4AKGuWdrhDhLi2JS/XboPfYM5Q6AKWyGz
+         I+SpKCSm5gH19pBmr0oYyeVzuhmlXUDtHMDPVLerleokaeNKpXwpzxuBuDjJjXJCGnK7
+         3kv0vZMA0zAMy46vtQY1V/NCwEfmW1rj5FsoAazczoxgwcnbZmpR24VztORkK+wEcFNe
+         BBhg==
+X-Gm-Message-State: AC+VfDz4qhWyN6B3UDlkcaEtxr+ZYL6BYM2gkySgSeTaI7PBU5rt+132
+        Ni8F8fB5wfAUacKF8+qGRUJNbA==
+X-Google-Smtp-Source: ACHHUZ6fNIBlf5NkJCpoQyReFyo7EbA99Bdav938siA0HlK0sEn9NZuqD/s/Grj6odVySPMsl3BE6g==
+X-Received: by 2002:a17:907:7291:b0:973:7096:60c2 with SMTP id dt17-20020a170907729100b00973709660c2mr2663964ejc.20.1686329339740;
+        Fri, 09 Jun 2023 09:48:59 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.219.26])
+        by smtp.gmail.com with ESMTPSA id sd2-20020a170906ce2200b009749b769c95sm1480759ejb.158.2023.06.09.09.48.58
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 09 Jun 2023 09:48:59 -0700 (PDT)
+Message-ID: <68bb3816-d707-3a21-59a2-8785dce7210a@linaro.org>
+Date:   Fri, 9 Jun 2023 18:48:57 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-GND-Spam-Score: 300
-X-GND-Status: SPAM
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.2
+Subject: Re: [PATCH RESEND v2 1/2] dt-bindings: dmaengine: Add Loongson LS2X
+ APB DMA controller
+Content-Language: en-US
+To:     Binbin Zhou <zhoubinbin@loongson.cn>,
+        Binbin Zhou <zhoubb.aaron@gmail.com>,
+        Huacai Chen <chenhuacai@loongson.cn>,
+        Vinod Koul <vkoul@kernel.org>, dmaengine@vger.kernel.org,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>, devicetree@vger.kernel.org
+Cc:     Huacai Chen <chenhuacai@kernel.org>,
+        loongson-kernel@lists.loongnix.cn, Xuerui Wang <kernel@xen0n.name>,
+        loongarch@lists.linux.dev, Yingkun Meng <mengyingkun@loongson.cn>,
+        Conor Dooley <conor.dooley@microchip.com>
+References: <cover.1686192243.git.zhoubinbin@loongson.cn>
+ <bb2d5985a3d9fd8e7ccbe2794842d93a8978d8a6.1686192243.git.zhoubinbin@loongson.cn>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <bb2d5985a3d9fd8e7ccbe2794842d93a8978d8a6.1686192243.git.zhoubinbin@loongson.cn>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-From: Kory Maincent <kory.maincent@bootlin.com>
+On 08/06/2023 04:55, Binbin Zhou wrote:
+> Add Loongson LS2X APB DMA controller binding with DT schema
+> format using json-schema.
+> 
+> Signed-off-by: Binbin Zhou <zhoubinbin@loongson.cn>
+> Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
 
-When writing the linked list elements and pointer the control need to be
-written at the end. If the control is written and the SAR and DAR not
-stored we could face a race condition.
 
-Fixes: 7e4b8a4fbe2c ("dmaengine: Add Synopsys eDMA IP version 0 support")
-Signed-off-by: Kory Maincent <kory.maincent@bootlin.com>
----
- drivers/dma/dw-edma/dw-edma-v0-core.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+> +properties:
+> +  compatible:
+> +    oneOf:
+> +      - const: loongson,ls2k1000-apbdma
+> +      - items:
+> +          - const: loongson,ls2k0500-apbdma
+> +          - const: loongson,ls2k1000-apbdma
+> +
+> +  reg:
+> +    maxItems: 1
+> +
+> +  interrupts:
+> +    maxItems: 1
+> +
+> +  "#dma-cells":
+> +    const: 1
+> +
+> +  dma-channels:
+> +    const: 1
 
-diff --git a/drivers/dma/dw-edma/dw-edma-v0-core.c b/drivers/dma/dw-edma/dw-edma-v0-core.c
-index 2e872d6f2c04..a5d921ef54ec 100644
---- a/drivers/dma/dw-edma/dw-edma-v0-core.c
-+++ b/drivers/dma/dw-edma/dw-edma-v0-core.c
-@@ -291,10 +291,10 @@ static void dw_edma_v0_write_ll_data(struct dw_edma_chunk *chunk, int i,
- 	} else {
- 		struct dw_edma_v0_lli __iomem *lli = chunk->ll_region.vaddr.io + ofs;
- 
--		writel(control, &lli->control);
- 		writel(size, &lli->transfer_size);
- 		writeq(sar, &lli->sar.reg);
- 		writeq(dar, &lli->dar.reg);
-+		writel(control, &lli->control);
- 	}
- }
- 
-@@ -311,8 +311,8 @@ static void dw_edma_v0_write_ll_link(struct dw_edma_chunk *chunk,
- 	} else {
- 		struct dw_edma_v0_llp __iomem *llp = chunk->ll_region.vaddr.io + ofs;
- 
--		writel(control, &llp->control);
- 		writeq(pointer, &llp->llp.reg);
-+		writel(control, &llp->control);
- 	}
- }
- 
--- 
-2.25.1
+If it is const, why do you need it?
+
+Best regards,
+Krzysztof
 
