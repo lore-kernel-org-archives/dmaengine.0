@@ -2,31 +2,31 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EF903C7EE2F
-	for <dmaengine@archiver.kernel.org>; Fri,  9 Jun 2023 08:17:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6008AC83005
+	for <dmaengine@archiver.kernel.org>; Fri,  9 Jun 2023 08:17:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240320AbjFIIRv (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 9 Jun 2023 04:17:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51854 "EHLO
+        id S240249AbjFIIRw (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 9 Jun 2023 04:17:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51722 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240248AbjFIIRm (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Fri, 9 Jun 2023 04:17:42 -0400
+        with ESMTP id S240237AbjFIIRl (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Fri, 9 Jun 2023 04:17:41 -0400
 Received: from relay6-d.mail.gandi.net (relay6-d.mail.gandi.net [217.70.183.198])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E052D30ED;
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5BB3F30DB;
         Fri,  9 Jun 2023 01:17:10 -0700 (PDT)
 X-GND-Sasl: kory.maincent@bootlin.com
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
-        t=1686298626;
+        t=1686298624;
         h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
          to:to:cc:cc:mime-version:mime-version:
          content-transfer-encoding:content-transfer-encoding:
          in-reply-to:in-reply-to:references:references;
-        bh=GiInZFwv5UYo7clt/bdC/mTWPa4mwyqkZum6ygvm/Fw=;
-        b=AyqcItkyGQ0Nf2EBvxSv7WugPbRmP9c+lYLP5DnylOOr8hMKkR04j+iZovz+F6Wp8BgN4K
-        ET+m7VZ0WgduGkgYOcPMuMqDxIVP+PNQrSlLNi4t0J1I+/AytTqLR2bQFKNO209gvp0Htg
-        9WMvMBFy4d8MOHdOxVGKE6vXYLXDZcmazPW/t9fcwyhtvw8FuhVmImdrZIM40u8dC6Ucdp
-        CZGdkSsHQRfsfGUbqqUqYjvyTDiG14dPadFX4RcVyQKcKhWwoqYZigiB/5mKNXQ9ecNTyY
-        Dy67EsthO1953HjstPMYiuPVjHBQR7CDYyvMiHlnDfEpdnxQQVLZQLoxUrY7lg==
+        bh=ZN4vSrdEzZbjDfKQW2lKALJhEegIaV8kRdvhAJHOihQ=;
+        b=hcG/OaQGWsEJoSXYV3ZcJgpjt9j3R7FGTjZ/ONxgw9+gogqpNSHbZ9uOlMzNMebGLDA1nP
+        rfuD1999pBUuLpUk8aiWioqyBn4Tzo5BunhzuOIL/36dfyT0j7HNSshdLfEWgCU1GnnG9i
+        6s+mCK+dVhvHUZNWcrGe7WHMVULdAa1t185/6r02IERNw+DRJTmpUEDFffUkEKlxg+PEoa
+        3DWAE1JtmiRqfz3evHdONfh5Z9Nt5jDeEHBxQLsDqXhLK1h5AuxM0BqB266FtdmKNeub9y
+        CTTJR1IUFMjjQqbuoTqJEQTlGGenWtY5WMiTcmY37PcM17+1AXQV839sNXW1YA==
 X-GND-Sasl: kory.maincent@bootlin.com
 X-GND-Sasl: kory.maincent@bootlin.com
 X-GND-Sasl: kory.maincent@bootlin.com
@@ -37,8 +37,8 @@ X-GND-Sasl: kory.maincent@bootlin.com
 X-GND-Sasl: kory.maincent@bootlin.com
 X-GND-Sasl: kory.maincent@bootlin.com
 X-GND-Sasl: kory.maincent@bootlin.com
-Received: by mail.gandi.net (Postfix) with ESMTPSA id BD163C0014;
-        Fri,  9 Jun 2023 08:17:05 +0000 (UTC)
+Received: by mail.gandi.net (Postfix) with ESMTPSA id 80D28C000E;
+        Fri,  9 Jun 2023 08:17:03 +0000 (UTC)
 From:   =?UTF-8?q?K=C3=B6ry=20Maincent?= <kory.maincent@bootlin.com>
 To:     Cai Huoqing <cai.huoqing@linux.dev>,
         Manivannan Sadhasivam <mani@kernel.org>,
@@ -50,9 +50,9 @@ Cc:     Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
         Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
         Herve Codina <herve.codina@bootlin.com>,
         Kory Maincent <kory.maincent@bootlin.com>
-Subject: [PATCH 9/9] dmaengine: dw-edma: eDMA: Fix possible race condition in local setup
-Date:   Fri,  9 Jun 2023 10:16:54 +0200
-Message-Id: <20230609081654.330857-10-kory.maincent@bootlin.com>
+Subject: [PATCH 7/9] dmaengine: dw-edma: eDMA: Add memory barrier before starting the DMA transfer in remote setup
+Date:   Fri,  9 Jun 2023 10:16:52 +0200
+Message-Id: <20230609081654.330857-8-kory.maincent@bootlin.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20230609081654.330857-1-kory.maincent@bootlin.com>
 References: <20230609081654.330857-1-kory.maincent@bootlin.com>
@@ -66,53 +66,38 @@ X-Mailing-List: dmaengine@vger.kernel.org
 
 From: Kory Maincent <kory.maincent@bootlin.com>
 
-When writing the linked list elements and pointer the control need to be
-written at the end. If the control is written and the SAR and DAR not
-stored we could face a race condition. Added a memory barrier to make sure
-the memory has been written.
+The Linked list element and pointer are not stored in the same memory as
+the eDMA controller register. If the doorbell register is toggled before
+the full write of the linked list a race condition error can appears.
+In remote setup we can only use a readl to the memory to assured the full
+write has occurred.
 
 Fixes: 7e4b8a4fbe2c ("dmaengine: Add Synopsys eDMA IP version 0 support")
 Signed-off-by: Kory Maincent <kory.maincent@bootlin.com>
 ---
-
-This patch has not been tested since I don't have board with eDMA in local
-setup.
----
- drivers/dma/dw-edma/dw-edma-v0-core.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/dma/dw-edma/dw-edma-v0-core.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
 diff --git a/drivers/dma/dw-edma/dw-edma-v0-core.c b/drivers/dma/dw-edma/dw-edma-v0-core.c
-index a5d921ef54ec..612c8c49668f 100644
+index b38786f0ad79..2e872d6f2c04 100644
 --- a/drivers/dma/dw-edma/dw-edma-v0-core.c
 +++ b/drivers/dma/dw-edma/dw-edma-v0-core.c
-@@ -284,10 +284,13 @@ static void dw_edma_v0_write_ll_data(struct dw_edma_chunk *chunk, int i,
- 	if (chunk->chan->dw->chip->flags & DW_EDMA_CHIP_LOCAL) {
- 		struct dw_edma_v0_lli *lli = chunk->ll_region.vaddr.mem + ofs;
- 
--		lli->control = control;
- 		lli->transfer_size = size;
- 		lli->sar.reg = sar;
- 		lli->dar.reg = dar;
+@@ -412,6 +412,15 @@ static void dw_edma_v0_core_start(struct dw_edma_chunk *chunk, bool first)
+ 		SET_CH_32(dw, chan->dir, chan->id, llp.msb,
+ 			  upper_32_bits(chunk->ll_region.paddr));
+ 	}
 +
-+		/* Make sure sar and dar is written before writing control */
-+		dma_wmb();
-+		lli->control = control;
- 	} else {
- 		struct dw_edma_v0_lli __iomem *lli = chunk->ll_region.vaddr.io + ofs;
- 
-@@ -306,8 +309,11 @@ static void dw_edma_v0_write_ll_link(struct dw_edma_chunk *chunk,
- 	if (chunk->chan->dw->chip->flags & DW_EDMA_CHIP_LOCAL) {
- 		struct dw_edma_v0_llp *llp = chunk->ll_region.vaddr.mem + ofs;
- 
--		llp->control = control;
- 		llp->llp.reg = pointer;
++	if (!(chunk->chan->dw->chip->flags & DW_EDMA_CHIP_LOCAL))
++		/* Make sure Linked List has been written.
++		 * Linux memory barriers don't cater for what's required here.
++		 * What's required is what's here - a read of the linked
++		 * list region.
++		 */
++		readl(chunk->ll_region.vaddr.io);
 +
-+		/* Make sure sar and dar is written before writing control */
-+		dma_wmb();
-+		llp->control = control;
- 	} else {
- 		struct dw_edma_v0_llp __iomem *llp = chunk->ll_region.vaddr.io + ofs;
- 
+ 	/* Doorbell */
+ 	SET_RW_32(dw, chan->dir, doorbell,
+ 		  FIELD_PREP(EDMA_V0_DOORBELL_CH_MASK, chan->id));
 -- 
 2.25.1
 
