@@ -2,31 +2,31 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9AD66C87FDC
-	for <dmaengine@archiver.kernel.org>; Fri,  9 Jun 2023 08:17:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3D239C7EE37
+	for <dmaengine@archiver.kernel.org>; Fri,  9 Jun 2023 08:17:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240167AbjFIIRj (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 9 Jun 2023 04:17:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51730 "EHLO
+        id S240164AbjFIIRk (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 9 Jun 2023 04:17:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51746 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240168AbjFIIRg (ORCPT
+        with ESMTP id S240187AbjFIIRg (ORCPT
         <rfc822;dmaengine@vger.kernel.org>); Fri, 9 Jun 2023 04:17:36 -0400
-Received: from relay6-d.mail.gandi.net (relay6-d.mail.gandi.net [217.70.183.198])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47D1B35BD;
-        Fri,  9 Jun 2023 01:17:01 -0700 (PDT)
+Received: from relay6-d.mail.gandi.net (relay6-d.mail.gandi.net [IPv6:2001:4b98:dc4:8::226])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B6C91FEC;
+        Fri,  9 Jun 2023 01:17:02 -0700 (PDT)
 X-GND-Sasl: kory.maincent@bootlin.com
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
-        t=1686298618;
+        t=1686298620;
         h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
          to:to:cc:cc:mime-version:mime-version:
          content-transfer-encoding:content-transfer-encoding:
          in-reply-to:in-reply-to:references:references;
-        bh=xTZthyABqfsJIp2/g/QBAbmCaWyEr1NmIxCo1bqkf3w=;
-        b=lNmNHKx3hN3/of+rh7ppTvpGt+1KLaFbiH/zTDC0UEaCIYiIqC6vZOhIh+7rCw+Y3xpi6e
-        dEWqHmiIg9vc9l0ZpAeGnNsxVfghdk/AwFpAsUJ0tdI2uTTr7cLLCjXTpki4xS8n0DyK4S
-        ir8aWOOYlkGjD/iJNiZwPwO2u0ejZ9QpFoLVaXp227O30waeICI/ox/pFkBme1Tq0jh3Gf
-        tEokEAi+cqqIe0MEDcxq8YeEWb2js/xpepKgcSsz2zAoNCegdCgLZIqOtBy50nyVtS7TcR
-        5EtN2CNtcG4qn3N67y89kHjM7W9SCineFBy+xHBDpd9wTDEPRe13HRvFuMUziw==
+        bh=iaIwrR05LfNW5SSLQAneAaJEWILGvAsISfahHxT0j/M=;
+        b=Ex3mdL6eGB+jsiAganw8NeFfEveOKMnoTHHsGmGraYohL+oKAE+F/B9Hqq07myNS2d86D0
+        m58xWjJxig8A3VFHxrQ6gkPNMk1q/PzKvcoUXN7tGHfoMYq/pth5TtFJdINUI+7+kufST0
+        /exwSmDFjkMouCOk7+jlHMiTZ7UrgVwkjDSDmI7SpOu/Gaf37NubjLYP604h5G0foA9Ljn
+        bHh/ASjJMWOwBaxbD+ABTbyqHE4IDoe4Lx5quchR/xFb2SFou/ZI8V2SFRf641EqHgIyyQ
+        8uQccGgDyXVtM4KiAfqWnEwi6PzcUW/Vo47DmKm04LaQ45bZusVyp/I6ESAUgw==
 X-GND-Sasl: kory.maincent@bootlin.com
 X-GND-Sasl: kory.maincent@bootlin.com
 X-GND-Sasl: kory.maincent@bootlin.com
@@ -37,8 +37,8 @@ X-GND-Sasl: kory.maincent@bootlin.com
 X-GND-Sasl: kory.maincent@bootlin.com
 X-GND-Sasl: kory.maincent@bootlin.com
 X-GND-Sasl: kory.maincent@bootlin.com
-Received: by mail.gandi.net (Postfix) with ESMTPSA id 0EACBC0009;
-        Fri,  9 Jun 2023 08:16:57 +0000 (UTC)
+Received: by mail.gandi.net (Postfix) with ESMTPSA id ED319C0006;
+        Fri,  9 Jun 2023 08:16:59 +0000 (UTC)
 From:   =?UTF-8?q?K=C3=B6ry=20Maincent?= <kory.maincent@bootlin.com>
 To:     Cai Huoqing <cai.huoqing@linux.dev>,
         Manivannan Sadhasivam <mani@kernel.org>,
@@ -50,61 +50,58 @@ Cc:     Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
         Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
         Herve Codina <herve.codina@bootlin.com>,
         Kory Maincent <kory.maincent@bootlin.com>
-Subject: [PATCH 2/9] dmaengine: dw-edma: Typos fixes
-Date:   Fri,  9 Jun 2023 10:16:47 +0200
-Message-Id: <20230609081654.330857-3-kory.maincent@bootlin.com>
+Subject: [PATCH 4/9] dmaengine: dw-edma: HDMA: Add memory barrier before starting the DMA transfer in remote setup
+Date:   Fri,  9 Jun 2023 10:16:49 +0200
+Message-Id: <20230609081654.330857-5-kory.maincent@bootlin.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20230609081654.330857-1-kory.maincent@bootlin.com>
 References: <20230609081654.330857-1-kory.maincent@bootlin.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+X-GND-Spam-Score: 300
+X-GND-Status: SPAM
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
 From: Kory Maincent <kory.maincent@bootlin.com>
 
-Fix "HDMA_V0_REMOTEL_STOP_INT_EN" typo error.
-Fix "HDMA_V0_LOCAL_STOP_INT_EN" to "HDMA_V0_LOCAL_ABORT_INT_EN" as the STOP
-bit is already set in the same line.
+The Linked list element and pointer are not stored in the same memory as
+the HDMA controller register. If the doorbell register is toggled before
+the full write of the linked list a race condition error can appears.
+In remote setup we can only use a readl to the memory to assured the full
+write has occurred.
 
-Signed-off-by: Kory Maincent <kory.maincent@bootlin.com>
 Fixes: e74c39573d35 ("dmaengine: dw-edma: Add support for native HDMA")
+Signed-off-by: Kory Maincent <kory.maincent@bootlin.com>
 ---
 
 This patch is fixing a commit which is only in dmaengine tree and not
 merged mainline.
 ---
- drivers/dma/dw-edma/dw-hdma-v0-core.c | 2 +-
- drivers/dma/dw-edma/dw-hdma-v0-regs.h | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ drivers/dma/dw-edma/dw-hdma-v0-core.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
 diff --git a/drivers/dma/dw-edma/dw-hdma-v0-core.c b/drivers/dma/dw-edma/dw-hdma-v0-core.c
-index de87ce6b8585..da8663f45fdb 100644
+index 7bd1a0f742be..0b77ddbe91b5 100644
 --- a/drivers/dma/dw-edma/dw-hdma-v0-core.c
 +++ b/drivers/dma/dw-edma/dw-hdma-v0-core.c
-@@ -231,7 +231,7 @@ static void dw_hdma_v0_core_start(struct dw_edma_chunk *chunk, bool first)
- 		/* Interrupt enable&unmask - done, abort */
- 		tmp = GET_CH_32(dw, chan->dir, chan->id, int_setup) |
- 		      HDMA_V0_STOP_INT_MASK | HDMA_V0_ABORT_INT_MASK |
--		      HDMA_V0_LOCAL_STOP_INT_EN | HDMA_V0_LOCAL_STOP_INT_EN;
-+		      HDMA_V0_LOCAL_STOP_INT_EN | HDMA_V0_LOCAL_ABORT_INT_EN;
- 		SET_CH_32(dw, chan->dir, chan->id, int_setup, tmp);
- 		/* Channel control */
- 		SET_CH_32(dw, chan->dir, chan->id, control1, HDMA_V0_LINKLIST_EN);
-diff --git a/drivers/dma/dw-edma/dw-hdma-v0-regs.h b/drivers/dma/dw-edma/dw-hdma-v0-regs.h
-index a974abdf8aaf..eab5fd7177e5 100644
---- a/drivers/dma/dw-edma/dw-hdma-v0-regs.h
-+++ b/drivers/dma/dw-edma/dw-hdma-v0-regs.h
-@@ -15,7 +15,7 @@
- #define HDMA_V0_LOCAL_ABORT_INT_EN		BIT(6)
- #define HDMA_V0_REMOTE_ABORT_INT_EN		BIT(5)
- #define HDMA_V0_LOCAL_STOP_INT_EN		BIT(4)
--#define HDMA_V0_REMOTEL_STOP_INT_EN		BIT(3)
-+#define HDMA_V0_REMOTE_STOP_INT_EN		BIT(3)
- #define HDMA_V0_ABORT_INT_MASK			BIT(2)
- #define HDMA_V0_STOP_INT_MASK			BIT(0)
- #define HDMA_V0_LINKLIST_EN			BIT(0)
+@@ -247,6 +247,15 @@ static void dw_hdma_v0_core_start(struct dw_edma_chunk *chunk, bool first)
+ 	/* Set consumer cycle */
+ 	SET_CH_32(dw, chan->dir, chan->id, cycle_sync,
+ 		  HDMA_V0_CONSUMER_CYCLE_STAT | HDMA_V0_CONSUMER_CYCLE_BIT);
++
++	if (!(chunk->chan->dw->chip->flags & DW_EDMA_CHIP_LOCAL))
++		/* Make sure Linked List has been written.
++		 * Linux memory barriers don't cater for what's required here.
++		 * What's required is what's here - a read of the linked
++		 * list region.
++		 */
++		readl(chunk->ll_region.vaddr.io);
++
+ 	/* Doorbell */
+ 	SET_CH_32(dw, chan->dir, chan->id, doorbell, HDMA_V0_DOORBELL_START);
+ }
 -- 
 2.25.1
 
