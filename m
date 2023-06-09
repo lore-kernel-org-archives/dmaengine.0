@@ -2,31 +2,31 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 370E5C7EE2E
-	for <dmaengine@archiver.kernel.org>; Fri,  9 Jun 2023 08:17:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 97A07C7EE37
+	for <dmaengine@archiver.kernel.org>; Fri,  9 Jun 2023 08:17:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240241AbjFIIRm (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 9 Jun 2023 04:17:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51716 "EHLO
+        id S240172AbjFIIRt (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 9 Jun 2023 04:17:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51710 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240196AbjFIIRh (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Fri, 9 Jun 2023 04:17:37 -0400
+        with ESMTP id S240207AbjFIIRk (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Fri, 9 Jun 2023 04:17:40 -0400
 Received: from relay6-d.mail.gandi.net (relay6-d.mail.gandi.net [217.70.183.198])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C212635BE;
-        Fri,  9 Jun 2023 01:17:03 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 10EDD2D7B;
+        Fri,  9 Jun 2023 01:17:06 -0700 (PDT)
 X-GND-Sasl: kory.maincent@bootlin.com
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
-        t=1686298619;
+        t=1686298623;
         h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
          to:to:cc:cc:mime-version:mime-version:
          content-transfer-encoding:content-transfer-encoding:
          in-reply-to:in-reply-to:references:references;
-        bh=8SNOyQIGrae4VS8d9/zrsPOL4K+WbpBEtOXUfe9PyKQ=;
-        b=B4qv8kRPDn7Ovadfs8sRaW/pXvhXWRW/TvZEx5jieXw1js19IeVyqqJ0mbPmwUNP5iucaS
-        InPb45H4uAfjLOirgCwC6ZQodiQPxZb9QmW6gegp3IYsopMaf3kJYUoiAXc85DVQhkaYct
-        hT8mlRDu8CaiAAYOlQZVvZy8o5H6gKmqi7vcA7x80VANNnjvWDT/EDBoj5xpCdP9mQ0izG
-        ZhPCd4exN6dNsNIy7cN9hbG25u9U6aT3ea1Q/vY5tikRMb0fP+xHD/ZpEEYrgol6QoN0pC
-        5HCtPrJHOtJlnVJriqcyGoDFjl0Oy1QM/fGT8+UPg65oi6hr3AA9rh3loNxwdw==
+        bh=oCPB9Nf3YZqvG1rzu67yQSLPi8ZPt/80c1MDnzGqrYE=;
+        b=d+AW7TcbsOXUczeTbAj0+f1hTV3cgIhoVMCMFoZUmd4pq1hiPoV7nM3TWzrjrDqXxJGIBH
+        WCZWVzTHH9uIxpnW0agbTU70MjQKdEYkKJ7vevRIvaRfuuQTAlh3+AjAuDTXNqoRf/Ziza
+        eN7Wrz+IPBv6JEfNn2zGCeCXpUmJ2U/Gz1N8NZRZLCTIlfidyUzxTmRk6N/v4VZSBzDLVV
+        YQ4nYhGhNZ/Bcis2Jav4orHvVEQbrbBBMLhx3HI39x/F0zCUpGZ99YnFbF/PquYBo7Zmvl
+        c476gy+A60kmmPotp6HPPLqNwdZkIBglcWZEx62DbPGosO0elJnd8DGVeg1lSw==
 X-GND-Sasl: kory.maincent@bootlin.com
 X-GND-Sasl: kory.maincent@bootlin.com
 X-GND-Sasl: kory.maincent@bootlin.com
@@ -37,8 +37,8 @@ X-GND-Sasl: kory.maincent@bootlin.com
 X-GND-Sasl: kory.maincent@bootlin.com
 X-GND-Sasl: kory.maincent@bootlin.com
 X-GND-Sasl: kory.maincent@bootlin.com
-Received: by mail.gandi.net (Postfix) with ESMTPSA id 0033FC000C;
-        Fri,  9 Jun 2023 08:16:58 +0000 (UTC)
+Received: by mail.gandi.net (Postfix) with ESMTPSA id 47970C0010;
+        Fri,  9 Jun 2023 08:17:02 +0000 (UTC)
 From:   =?UTF-8?q?K=C3=B6ry=20Maincent?= <kory.maincent@bootlin.com>
 To:     Cai Huoqing <cai.huoqing@linux.dev>,
         Manivannan Sadhasivam <mani@kernel.org>,
@@ -50,47 +50,72 @@ Cc:     Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
         Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
         Herve Codina <herve.codina@bootlin.com>,
         Kory Maincent <kory.maincent@bootlin.com>
-Subject: [PATCH 3/9] dmaengine: dw-edma: Add HDMA remote interrupt configuration
-Date:   Fri,  9 Jun 2023 10:16:48 +0200
-Message-Id: <20230609081654.330857-4-kory.maincent@bootlin.com>
+Subject: [PATCH 6/9] dmaengine: dw-edma: HDMA: Fix possible race condition in local setup
+Date:   Fri,  9 Jun 2023 10:16:51 +0200
+Message-Id: <20230609081654.330857-7-kory.maincent@bootlin.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20230609081654.330857-1-kory.maincent@bootlin.com>
 References: <20230609081654.330857-1-kory.maincent@bootlin.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+X-GND-Spam-Score: 300
+X-GND-Status: SPAM
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
 From: Kory Maincent <kory.maincent@bootlin.com>
 
-Only the local interruption was configured, remote interrupt was left
-behind. This patch fix it by setting stop and abort remote interrupts when
-the DW_EDMA_CHIP_LOCAL flag is not set.
+When writing the linked list elements and pointer the control need to be
+written at the end. If the control is written and the SAR and DAR not
+stored we could face a race condition. Added a memory barrier to make sure
+the memory has been written.
 
-Signed-off-by: Kory Maincent <kory.maincent@bootlin.com>
 Fixes: e74c39573d35 ("dmaengine: dw-edma: Add support for native HDMA")
+Signed-off-by: Kory Maincent <kory.maincent@bootlin.com>
 ---
+
+This patch has not been tested since I don't have board with HDMA in local
+setup.
 
 This patch is fixing a commit which is only in dmaengine tree and not
 merged mainline.
 ---
- drivers/dma/dw-edma/dw-hdma-v0-core.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/dma/dw-edma/dw-hdma-v0-core.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/dma/dw-edma/dw-hdma-v0-core.c b/drivers/dma/dw-edma/dw-hdma-v0-core.c
-index da8663f45fdb..7bd1a0f742be 100644
+index f28e1671a753..d3c70500496c 100644
 --- a/drivers/dma/dw-edma/dw-hdma-v0-core.c
 +++ b/drivers/dma/dw-edma/dw-hdma-v0-core.c
-@@ -232,6 +232,8 @@ static void dw_hdma_v0_core_start(struct dw_edma_chunk *chunk, bool first)
- 		tmp = GET_CH_32(dw, chan->dir, chan->id, int_setup) |
- 		      HDMA_V0_STOP_INT_MASK | HDMA_V0_ABORT_INT_MASK |
- 		      HDMA_V0_LOCAL_STOP_INT_EN | HDMA_V0_LOCAL_ABORT_INT_EN;
-+		if (!(dw->chip->flags & DW_EDMA_CHIP_LOCAL))
-+			tmp |= HDMA_V0_REMOTE_STOP_INT_EN | HDMA_V0_REMOTE_ABORT_INT_EN;
- 		SET_CH_32(dw, chan->dir, chan->id, int_setup, tmp);
- 		/* Channel control */
- 		SET_CH_32(dw, chan->dir, chan->id, control1, HDMA_V0_LINKLIST_EN);
+@@ -155,10 +155,13 @@ static void dw_hdma_v0_write_ll_data(struct dw_edma_chunk *chunk, int i,
+ 	if (chunk->chan->dw->chip->flags & DW_EDMA_CHIP_LOCAL) {
+ 		struct dw_hdma_v0_lli *lli = chunk->ll_region.vaddr.mem + ofs;
+ 
+-		lli->control = control;
+ 		lli->transfer_size = size;
+ 		lli->sar.reg = sar;
+ 		lli->dar.reg = dar;
++
++		/* Make sure sar and dar is written before writing control */
++		dma_wmb();
++		lli->control = control;
+ 	} else {
+ 		struct dw_hdma_v0_lli __iomem *lli = chunk->ll_region.vaddr.io + ofs;
+ 
+@@ -177,8 +180,11 @@ static void dw_hdma_v0_write_ll_link(struct dw_edma_chunk *chunk,
+ 	if (chunk->chan->dw->chip->flags & DW_EDMA_CHIP_LOCAL) {
+ 		struct dw_hdma_v0_llp *llp = chunk->ll_region.vaddr.mem + ofs;
+ 
+-		llp->control = control;
+ 		llp->llp.reg = pointer;
++
++		/* Make sure sar and dar is written before writing control */
++		dma_wmb();
++		llp->control = control;
+ 	} else {
+ 		struct dw_hdma_v0_llp __iomem *llp = chunk->ll_region.vaddr.io + ofs;
+ 
 -- 
 2.25.1
 
