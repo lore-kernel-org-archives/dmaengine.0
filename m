@@ -2,43 +2,42 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 26D71C87FDD
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CB37AC88C95
 	for <dmaengine@archiver.kernel.org>; Mon, 12 Jun 2023 09:55:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235572AbjFLJz5 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 12 Jun 2023 05:55:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32890 "EHLO
+        id S235601AbjFLJz6 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 12 Jun 2023 05:55:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32878 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233586AbjFLJyp (ORCPT
+        with ESMTP id S233523AbjFLJyp (ORCPT
         <rfc822;dmaengine@vger.kernel.org>); Mon, 12 Jun 2023 05:54:45 -0400
-Received: from desiato.infradead.org (desiato.infradead.org [IPv6:2001:8b0:10b:1:d65d:64ff:fe57:4e05])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA9D56190;
+Received: from casper.infradead.org (casper.infradead.org [IPv6:2001:8b0:10b:1236::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B34D0618F;
         Mon, 12 Jun 2023 02:39:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=infradead.org; s=desiato.20200630; h=Content-Type:MIME-Version:References:
+        d=infradead.org; s=casper.20170209; h=Content-Type:MIME-Version:References:
         Subject:Cc:To:From:Date:Message-ID:Sender:Reply-To:Content-Transfer-Encoding:
         Content-ID:Content-Description:In-Reply-To;
-        bh=5KSqPesmPX08w8dWPEEw5Ll2e7FMQinOnTr3XW9NIYo=; b=otUSsXrkwDi6rVuLl90MM+76vL
-        cE6gp9EEa8Zpqqg9MG4CPJ7+wgAaw1DsHIj5puea/XbvsOxRyOFpyECLs24dRzQ6Sjol89f/EXqvQ
-        LChObBEVQXRBsTW4GZSlyTIrge2V5AXUII3ByKeNmerebPgKH0p6l5UMuFfc+5XpT1yAnuRwxbHT8
-        2TJtKzkAkK7oEDchq+KMZKfYnIVzQSIQ18PSNfOGRXZs26r2yqrAQzcGI/y/cuIBGiWJXVqpmFdO/
-        vnWMq8UVC4ZBmx1AVgqzGkpD1hMSd/tM7MGG2el0Wb3T3Cib/eS7vjoZ84B8P3FcOaWoCXC0PdTIv
-        Ssmk1qgw==;
+        bh=VxLoQWqPLfFOizpz6LclwAvcc6NhnspZtOnksJEP8nY=; b=p6PhqIfSxM8DiwUuU4pSepp9+t
+        sQDAs+RLgzLsKfJ0Kcen7QCEGUEiIeSA/rwAsAR7b6MfNGO9pcntCkHSiswQZFuF2xM2R+zf8J3ow
+        wX35cUTV1JxcFVTwq7nPW7+2yeRbGO9zPkqabUzEI167PNV6S41nRrSC4/lAzjfi/vOJ3w15MxDOX
+        ZX/q+B8JUmaFcJIBrT88ZNo/cz0VSFtkEr9L9mebjyXbMWd2ohnjBecsQJ/J3K5VJxidYIQPFKy+9
+        4HVU7cOA9JH1oDaOoJo11k/QJT8iAkLcVqjNx5HmWfEws0lEKwGfEU1AD+SSkaq9GPZUqJdegwQDg
+        EEzgg1Jw==;
 Received: from j130084.upc-j.chello.nl ([24.132.130.84] helo=noisy.programming.kicks-ass.net)
-        by desiato.infradead.org with esmtpsa (Exim 4.96 #2 (Red Hat Linux))
-        id 1q8e0o-008kRF-02;
-        Mon, 12 Jun 2023 09:39:04 +0000
+        by casper.infradead.org with esmtpsa (Exim 4.94.2 #2 (Red Hat Linux))
+        id 1q8e0u-002NIB-Nl; Mon, 12 Jun 2023 09:39:04 +0000
 Received: from hirez.programming.kicks-ass.net (hirez.programming.kicks-ass.net [192.168.1.225])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (4096 bits))
         (Client did not present a certificate)
-        by noisy.programming.kicks-ass.net (Postfix) with ESMTPS id 52D533033FC;
+        by noisy.programming.kicks-ass.net (Postfix) with ESMTPS id 6627730612F;
         Mon, 12 Jun 2023 11:38:53 +0200 (CEST)
 Received: by hirez.programming.kicks-ass.net (Postfix, from userid 0)
-        id EBB5330A77B75; Mon, 12 Jun 2023 11:38:48 +0200 (CEST)
-Message-ID: <20230612093540.638818161@infradead.org>
+        id 1B34930A79083; Mon, 12 Jun 2023 11:38:49 +0200 (CEST)
+Message-ID: <20230612093541.097332151@infradead.org>
 User-Agent: quilt/0.66
-Date:   Mon, 12 Jun 2023 11:07:56 +0200
+Date:   Mon, 12 Jun 2023 11:08:02 +0200
 From:   Peter Zijlstra <peterz@infradead.org>
 To:     torvalds@linux-foundation.org, keescook@chromium.org,
         gregkh@linuxfoundation.org, pbonzini@redhat.com
@@ -66,7 +65,7 @@ Cc:     masahiroy@kernel.org, nathan@kernel.org, ndesaulniers@google.com,
         rcu@vger.kernel.org, linux-security-module@vger.kernel.org,
         tglx@linutronix.de, ravi.bangoria@amd.com, error27@gmail.com,
         luc.vanoostenryck@gmail.com
-Subject: [PATCH v3 43/57] perf: Simplify perf_sw_event()
+Subject: [PATCH v3 49/57] perf: Simplify perf_event_alloc()
 References: <20230612090713.652690195@infradead.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -77,96 +76,127 @@ X-Mailing-List: dmaengine@vger.kernel.org
 
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
 ---
- kernel/events/core.c |   37 ++++++++++++-------------------------
- 1 file changed, 12 insertions(+), 25 deletions(-)
+ kernel/events/core.c |   47 ++++++++++++++++++-----------------------------
+ 1 file changed, 18 insertions(+), 29 deletions(-)
 
 --- a/kernel/events/core.c
 +++ b/kernel/events/core.c
-@@ -9701,17 +9701,15 @@ static void do_perf_sw_event(enum perf_t
- 	struct perf_event *event;
- 	struct hlist_head *head;
- 
--	rcu_read_lock();
-+	guard(rcu)();
- 	head = find_swevent_head_rcu(swhash, type, event_id);
- 	if (!head)
--		goto end;
-+		return;
- 
- 	hlist_for_each_entry_rcu(event, head, hlist_entry) {
- 		if (perf_swevent_match(event, type, event_id, data, regs))
- 			perf_swevent_event(event, nr, data, regs);
- 	}
--end:
--	rcu_read_unlock();
+@@ -5148,6 +5148,8 @@ static void __free_event(struct perf_eve
+ 	call_rcu(&event->rcu_head, free_event_rcu);
  }
  
- DEFINE_PER_CPU(struct pt_regs, __perf_regs[4]);
-@@ -9746,16 +9744,13 @@ void __perf_sw_event(u32 event_id, u64 n
++DEFINE_FREE(__free_event, struct perf_event *, if (_T) __free_event(_T))
++
+ /* vs perf_event_alloc() success */
+ static void _free_event(struct perf_event *event)
  {
- 	int rctx;
+@@ -11694,7 +11696,6 @@ perf_event_alloc(struct perf_event_attr
+ 		 void *context, int cgroup_fd)
+ {
+ 	struct pmu *pmu;
+-	struct perf_event *event;
+ 	struct hw_perf_event *hwc;
+ 	long err = -EINVAL;
+ 	int node;
+@@ -11709,8 +11710,8 @@ perf_event_alloc(struct perf_event_attr
+ 	}
  
--	preempt_disable_notrace();
-+	guard(preempt_notrace)();
- 	rctx = perf_swevent_get_recursion_context();
- 	if (unlikely(rctx < 0))
--		goto fail;
-+		return;
+ 	node = (cpu >= 0) ? cpu_to_node(cpu) : -1;
+-	event = kmem_cache_alloc_node(perf_event_cache, GFP_KERNEL | __GFP_ZERO,
+-				      node);
++	struct perf_event *event __free(__free_event) =
++		kmem_cache_alloc_node(perf_event_cache, GFP_KERNEL | __GFP_ZERO, node);
+ 	if (!event)
+ 		return ERR_PTR(-ENOMEM);
  
- 	___perf_sw_event(event_id, nr, regs, addr);
--
- 	perf_swevent_put_recursion_context(rctx);
--fail:
--	preempt_enable_notrace();
- }
+@@ -11815,51 +11816,43 @@ perf_event_alloc(struct perf_event_attr
+ 	 * See perf_output_read().
+ 	 */
+ 	if (attr->inherit && (attr->sample_type & PERF_SAMPLE_READ))
+-		goto err;
++		return ERR_PTR(-EINVAL);
  
- static void perf_swevent_read(struct perf_event *event)
-@@ -9844,21 +9839,17 @@ static int swevent_hlist_get_cpu(int cpu
- 	struct swevent_htable *swhash = &per_cpu(swevent_htable, cpu);
- 	int err = 0;
+ 	if (!has_branch_stack(event))
+ 		event->attr.branch_sample_type = 0;
  
--	mutex_lock(&swhash->hlist_mutex);
-+	guard(mutex)(&swhash->hlist_mutex);
- 	if (!swevent_hlist_deref(swhash) &&
- 	    cpumask_test_cpu(cpu, perf_online_mask)) {
- 		struct swevent_hlist *hlist;
+ 	pmu = perf_init_event(event);
+-	if (IS_ERR(pmu)) {
+-		err = PTR_ERR(pmu);
+-		goto err;
+-	}
++	if (IS_ERR(pmu))
++		return (void*)pmu;
  
- 		hlist = kzalloc(sizeof(*hlist), GFP_KERNEL);
--		if (!hlist) {
+ 	/*
+ 	 * Disallow uncore-task events. Similarly, disallow uncore-cgroup
+ 	 * events (they don't make sense as the cgroup will be different
+ 	 * on other CPUs in the uncore mask).
+ 	 */
+-	if (pmu->task_ctx_nr == perf_invalid_context && (task || cgroup_fd != -1)) {
+-		err = -EINVAL;
+-		goto err;
+-	}
++	if (pmu->task_ctx_nr == perf_invalid_context && (task || cgroup_fd != -1))
++		return ERR_PTR(-EINVAL);
+ 
+ 	if (event->attr.aux_output &&
+-	    !(pmu->capabilities & PERF_PMU_CAP_AUX_OUTPUT)) {
+-		err = -EOPNOTSUPP;
+-		goto err;
+-	}
++	    !(pmu->capabilities & PERF_PMU_CAP_AUX_OUTPUT))
++		return ERR_PTR(-EOPNOTSUPP);
+ 
+ 	if (cgroup_fd != -1) {
+ 		err = perf_cgroup_connect(cgroup_fd, event, attr, group_leader);
+ 		if (err)
+-			goto err;
++			return ERR_PTR(err);
+ 	}
+ 
+ 	err = exclusive_event_init(event);
+ 	if (err)
+-		goto err;
++		return ERR_PTR(err);
+ 
+ 	if (has_addr_filter(event)) {
+ 		event->addr_filter_ranges = kcalloc(pmu->nr_addr_filters,
+ 						    sizeof(struct perf_addr_filter_range),
+ 						    GFP_KERNEL);
+-		if (!event->addr_filter_ranges) {
 -			err = -ENOMEM;
--			goto exit;
+-			goto err;
 -		}
-+		if (!hlist)
-+			return -ENOMEM;
- 		rcu_assign_pointer(swhash->swevent_hlist, hlist);
++		if (!event->addr_filter_ranges)
++			return ERR_PTR(-ENOMEM);
+ 
+ 		/*
+ 		 * Clone the parent's vma offsets: they are valid until exec()
+@@ -11883,22 +11876,18 @@ perf_event_alloc(struct perf_event_attr
+ 		if (event->attr.sample_type & PERF_SAMPLE_CALLCHAIN) {
+ 			err = get_callchain_buffers(attr->sample_max_stack);
+ 			if (err)
+-				goto err;
++				return ERR_PTR(err);
+ 		}
  	}
- 	swhash->hlist_refcount++;
--exit:
--	mutex_unlock(&swhash->hlist_mutex);
  
- 	return err;
- }
-@@ -10115,16 +10106,12 @@ void perf_tp_event(u16 event_type, u64 c
- 	if (task && task != current) {
- 		struct perf_event_context *ctx;
+ 	err = security_perf_event_alloc(event);
+ 	if (err)
+-		goto err;
++		return ERR_PTR(err);
  
--		rcu_read_lock();
-+		guard(rcu)();
- 		ctx = rcu_dereference(task->perf_event_ctxp);
--		if (!ctx)
--			goto unlock;
+ 	/* symmetric to unaccount_event() in _free_event() */
+ 	account_event(event);
+ 
+-	return event;
 -
--		raw_spin_lock(&ctx->lock);
--		perf_tp_event_target_task(count, record, regs, &data, ctx);
--		raw_spin_unlock(&ctx->lock);
--unlock:
--		rcu_read_unlock();
-+		if (ctx) {
-+			guard(raw_spinlock)(&ctx->lock);
-+			perf_tp_event_target_task(count, record, regs, &data, ctx);
-+		}
- 	}
+-err:
+-	__free_event(event);
+-	return ERR_PTR(err);
++	return_ptr(event);
+ }
  
- 	perf_swevent_put_recursion_context(rctx);
+ static int perf_copy_attr(struct perf_event_attr __user *uattr,
 
 
