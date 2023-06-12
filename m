@@ -2,42 +2,42 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BF19DC87FE1
-	for <dmaengine@archiver.kernel.org>; Mon, 12 Jun 2023 09:55:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A2CDEC8300C
+	for <dmaengine@archiver.kernel.org>; Mon, 12 Jun 2023 09:55:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233451AbjFLJzi (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 12 Jun 2023 05:55:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33910 "EHLO
+        id S233496AbjFLJzj (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 12 Jun 2023 05:55:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33902 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231321AbjFLJyX (ORCPT
+        with ESMTP id S232091AbjFLJyX (ORCPT
         <rfc822;dmaengine@vger.kernel.org>); Mon, 12 Jun 2023 05:54:23 -0400
 Received: from casper.infradead.org (casper.infradead.org [IPv6:2001:8b0:10b:1236::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B6DF4C11;
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B5204C10;
         Mon, 12 Jun 2023 02:38:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
         d=infradead.org; s=casper.20170209; h=Content-Type:MIME-Version:References:
         Subject:Cc:To:From:Date:Message-ID:Sender:Reply-To:Content-Transfer-Encoding:
         Content-ID:Content-Description:In-Reply-To;
-        bh=4+/Q1nIn7pjeaoOkqiN8ZoN9dOzRXj0Qx8pmucBG9KU=; b=JTIbW/gvOSQ58b4TCHUoHGEDh4
-        Y1YJaLE27tmAx/JmH64kRErvzD0KUqyqfrX71MGF7wv0MltPgLgnjyg/kORWC199iFcMaqxABBB85
-        2ngIl0UzK18xlGkdJHKfnwYwA/Wl2lR2NRNxaCAnNGGdy6tjZchz97RFC/huuNDIRiljM+iyvvmex
-        VegKabbNI/sdQ6KSFyu7uT5aaMn9NnyH70zAM87Em+UPxNfTHrP0e+GNEWh2sXqUMKqamS/UzmCip
-        zhr1rYAeBzRzlh1FU7evBmwXBmRVHZ/P3LFM8ztGfR2bODV96a59vURa3b146za2hED5IY+f1Izzy
-        M5i/AT6A==;
+        bh=i7e4Ed2VApizqqMeLDQrTIcscOdlMDKi2d1+AvdLSfc=; b=wMzEZ40Omey0hsxhU/f3YtsHn5
+        zztcNlN85LbTkIssyfkfrL48NmxnO6Xui7xALjewqMlyvd6RZfe6D4fBUEzU8ivSmkwH/rB+mgo8T
+        DhIJ64bXK4MQAZHj4XNZbgTg99syxZL71a1nSxvAdXCC6Uq6WFU3Xo8Qau8qLevXW3vCcNOlO2hGd
+        kLRb3QAfPguHrywS9Q4UgqR5mxOfj+Fk/M4IRihmVpaRZyf1EnKiw6p0zeUoZx/4h4dCUGPxRMpDH
+        XqqMxcqWisvIc3MeLjMSkQ+D+XHT/6tgpmqY6cFvXD2CLwtL8aPDEHRB9Vg3FRPnxzDUV9pZfUiAM
+        GAqscdag==;
 Received: from j130084.upc-j.chello.nl ([24.132.130.84] helo=noisy.programming.kicks-ass.net)
         by casper.infradead.org with esmtpsa (Exim 4.94.2 #2 (Red Hat Linux))
-        id 1q8e0g-002N97-A5; Mon, 12 Jun 2023 09:38:50 +0000
+        id 1q8e0g-002N94-7B; Mon, 12 Jun 2023 09:38:50 +0000
 Received: from hirez.programming.kicks-ass.net (hirez.programming.kicks-ass.net [192.168.1.225])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (4096 bits))
         (Client did not present a certificate)
-        by noisy.programming.kicks-ass.net (Postfix) with ESMTPS id D205C303189;
+        by noisy.programming.kicks-ass.net (Postfix) with ESMTPS id A9B5B302FB8;
         Mon, 12 Jun 2023 11:38:48 +0200 (CEST)
 Received: by hirez.programming.kicks-ass.net (Postfix, from userid 0)
-        id 3C3B930A70ADE; Mon, 12 Jun 2023 11:38:48 +0200 (CEST)
-Message-ID: <20230612093538.307089780@infradead.org>
+        id 22F9530A70248; Mon, 12 Jun 2023 11:38:48 +0200 (CEST)
+Message-ID: <20230612093537.977924652@infradead.org>
 User-Agent: quilt/0.66
-Date:   Mon, 12 Jun 2023 11:07:25 +0200
+Date:   Mon, 12 Jun 2023 11:07:21 +0200
 From:   Peter Zijlstra <peterz@infradead.org>
 To:     torvalds@linux-foundation.org, keescook@chromium.org,
         gregkh@linuxfoundation.org, pbonzini@redhat.com
@@ -65,7 +65,7 @@ Cc:     masahiroy@kernel.org, nathan@kernel.org, ndesaulniers@google.com,
         rcu@vger.kernel.org, linux-security-module@vger.kernel.org,
         tglx@linutronix.de, ravi.bangoria@amd.com, error27@gmail.com,
         luc.vanoostenryck@gmail.com
-Subject: [PATCH v3 12/57] sched: Simplify try_steal_cookie()
+Subject: [PATCH v3 08/57] sched: Simplify wake_up_if_idle()
 References: <20230612090713.652690195@infradead.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -77,60 +77,63 @@ Use guards to reduce gotos and simplify control flow.
 
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
 ---
- kernel/sched/core.c |   21 +++++++++------------
- 1 file changed, 9 insertions(+), 12 deletions(-)
+ kernel/sched/core.c  |   20 ++++++--------------
+ kernel/sched/sched.h |   15 +++++++++++++++
+ 2 files changed, 21 insertions(+), 14 deletions(-)
 
 --- a/kernel/sched/core.c
 +++ b/kernel/sched/core.c
-@@ -6229,19 +6229,19 @@ static bool try_steal_cookie(int this, i
- 	unsigned long cookie;
- 	bool success = false;
+@@ -3872,21 +3872,13 @@ static void __ttwu_queue_wakelist(struct
+ void wake_up_if_idle(int cpu)
+ {
+ 	struct rq *rq = cpu_rq(cpu);
+-	struct rq_flags rf;
  
--	local_irq_disable();
--	double_rq_lock(dst, src);
-+	guard(irq)();
-+	guard(double_rq_lock)(dst, src);
- 
- 	cookie = dst->core->core_cookie;
- 	if (!cookie)
--		goto unlock;
-+		return false;
- 
- 	if (dst->curr != dst->idle)
--		goto unlock;
-+		return false;
- 
- 	p = sched_core_find(src, cookie);
- 	if (!p)
--		goto unlock;
-+		return false;
- 
- 	do {
- 		if (p == src->core_pick || p == src->curr)
-@@ -6253,9 +6253,10 @@ static bool try_steal_cookie(int this, i
- 		if (p->core_occupation > dst->idle->core_occupation)
- 			goto next;
- 		/*
--		 * sched_core_find() and sched_core_next() will ensure that task @p
--		 * is not throttled now, we also need to check whether the runqueue
--		 * of the destination CPU is being throttled.
-+		 * sched_core_find() and sched_core_next() will ensure
-+		 * that task @p is not throttled now, we also need to
-+		 * check whether the runqueue of the destination CPU is
-+		 * being throttled.
- 		 */
- 		if (sched_task_is_throttled(p, this))
- 			goto next;
-@@ -6273,10 +6274,6 @@ static bool try_steal_cookie(int this, i
- 		p = sched_core_next(p, cookie);
- 	} while (p);
- 
--unlock:
--	double_rq_unlock(dst, src);
--	local_irq_enable();
+-	rcu_read_lock();
 -
- 	return success;
+-	if (!is_idle_task(rcu_dereference(rq->curr)))
+-		goto out;
+-
+-	rq_lock_irqsave(rq, &rf);
+-	if (is_idle_task(rq->curr))
+-		resched_curr(rq);
+-	/* Else CPU is not idle, do nothing here: */
+-	rq_unlock_irqrestore(rq, &rf);
+-
+-out:
+-	rcu_read_unlock();
++	guard(rcu)();
++	if (is_idle_task(rcu_dereference(rq->curr))) {
++		guard(rq_lock)(rq);
++		if (is_idle_task(rq->curr))
++			resched_curr(rq);
++	}
  }
  
+ bool cpus_share_cache(int this_cpu, int that_cpu)
+--- a/kernel/sched/sched.h
++++ b/kernel/sched/sched.h
+@@ -1678,6 +1678,21 @@ rq_unlock(struct rq *rq, struct rq_flags
+ 	raw_spin_rq_unlock(rq);
+ }
+ 
++DEFINE_LOCK_GUARD_1(rq_lock, struct rq,
++		    rq_lock(_T->lock, &_T->rf),
++		    rq_unlock(_T->lock, &_T->rf),
++		    struct rq_flags rf)
++
++DEFINE_LOCK_GUARD_1(rq_lock_irq, struct rq,
++		    rq_lock_irq(_T->lock, &_T->rf),
++		    rq_unlock_irq(_T->lock, &_T->rf),
++		    struct rq_flags rf)
++
++DEFINE_LOCK_GUARD_1(rq_lock_irqsave, struct rq,
++		    rq_lock_irqsave(_T->lock, &_T->rf),
++		    rq_unlock_irqrestore(_T->lock, &_T->rf),
++		    struct rq_flags rf)
++
+ static inline struct rq *
+ this_rq_lock_irq(struct rq_flags *rf)
+ 	__acquires(rq->lock)
 
 
