@@ -2,43 +2,43 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 81449C7EE2E
-	for <dmaengine@archiver.kernel.org>; Mon, 12 Jun 2023 09:56:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CD589C7EE45
+	for <dmaengine@archiver.kernel.org>; Mon, 12 Jun 2023 09:56:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235717AbjFLJ4L (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 12 Jun 2023 05:56:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32900 "EHLO
+        id S235724AbjFLJ4N (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 12 Jun 2023 05:56:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32902 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233785AbjFLJys (ORCPT
+        with ESMTP id S233804AbjFLJys (ORCPT
         <rfc822;dmaengine@vger.kernel.org>); Mon, 12 Jun 2023 05:54:48 -0400
 Received: from desiato.infradead.org (desiato.infradead.org [IPv6:2001:8b0:10b:1:d65d:64ff:fe57:4e05])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2B1B96193;
-        Mon, 12 Jun 2023 02:39:13 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07AB14C18;
+        Mon, 12 Jun 2023 02:39:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
         d=infradead.org; s=desiato.20200630; h=Content-Type:MIME-Version:References:
         Subject:Cc:To:From:Date:Message-ID:Sender:Reply-To:Content-Transfer-Encoding:
         Content-ID:Content-Description:In-Reply-To;
-        bh=u1PqToTv4tGu/wNo5qNbJmeSKvydQLpyPDESq1sFIz4=; b=mHcg7bsEVSqy84in9mzk14TWOQ
-        pUvBhruN8Ps4QU7UuXumepKGGKVTz/FqQ93C9z0RN9W8/VKYjDbgUgbBY3/hYg1MVwS8NQtUh+Xww
-        CynHYhgrEVuJvTSlRsgcVCBrRmckY/PSGTJojKVJLzgMoiN08hB1rnPRAI2jI27rXNxb+MIytDB8L
-        DnKzYQDZWDNXEVW7juyczQTLAGwCYM4mK+1HoLnrpThSbhUJZex38ZlRC9grt10V6FjhXAKdXPMZm
-        veFavMchJctFhw66K958zPJTPkM0N+TjTu3S9OTJzMVp9r9RRaE5dQ/R2ohI3MV52F1JIkwJGTg5z
-        XosuHW2w==;
+        bh=ICqqJG5l0sWCX8xrZRxbU0jefpCN2MYfe0yl/+VCRM4=; b=CKNAf/OLveGu3h4G35M1XEIV5u
+        NBuElad+1Cyz7hAjxLmdiofAlNZ59WVXwN3CrP9Gfl4Ccdi/+VZXviefm9IV8ZOsEiIAALkH+ZQeM
+        JSCshvWoOk2ye0l3PailK5L7O/HIe+rzqBLavcMqSUulNXyI0lqc5mlQE1RAC+EzaqyQPBUzKfid5
+        LYfkCZS8vnyRr2VmNLRD6E8uxxm0Qg99fQqc78oc6Bz3sD5VsR472rJ6vx1URMn7VGFn0WBGdm0KG
+        /Q43F20jOaH5vDTomYkIeci0EFi5Mfq3RUVPKf9bOojvjiudIa4EFwja6+7exCspONRew6SwRyHT0
+        wI+FO4zQ==;
 Received: from j130084.upc-j.chello.nl ([24.132.130.84] helo=noisy.programming.kicks-ass.net)
         by desiato.infradead.org with esmtpsa (Exim 4.96 #2 (Red Hat Linux))
-        id 1q8e0p-008kRQ-2g;
-        Mon, 12 Jun 2023 09:39:06 +0000
+        id 1q8e0n-008kR8-1I;
+        Mon, 12 Jun 2023 09:39:04 +0000
 Received: from hirez.programming.kicks-ass.net (hirez.programming.kicks-ass.net [192.168.1.225])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (4096 bits))
         (Client did not present a certificate)
-        by noisy.programming.kicks-ass.net (Postfix) with ESMTPS id 51E713033FA;
+        by noisy.programming.kicks-ass.net (Postfix) with ESMTPS id 3F98B3033B5;
         Mon, 12 Jun 2023 11:38:53 +0200 (CEST)
 Received: by hirez.programming.kicks-ass.net (Postfix, from userid 0)
-        id E65E130A77B74; Mon, 12 Jun 2023 11:38:48 +0200 (CEST)
-Message-ID: <20230612093540.564584285@infradead.org>
+        id CA60630A77B6F; Mon, 12 Jun 2023 11:38:48 +0200 (CEST)
+Message-ID: <20230612093540.181605463@infradead.org>
 User-Agent: quilt/0.66
-Date:   Mon, 12 Jun 2023 11:07:55 +0200
+Date:   Mon, 12 Jun 2023 11:07:50 +0200
 From:   Peter Zijlstra <peterz@infradead.org>
 To:     torvalds@linux-foundation.org, keescook@chromium.org,
         gregkh@linuxfoundation.org, pbonzini@redhat.com
@@ -66,7 +66,7 @@ Cc:     masahiroy@kernel.org, nathan@kernel.org, ndesaulniers@google.com,
         rcu@vger.kernel.org, linux-security-module@vger.kernel.org,
         tglx@linutronix.de, ravi.bangoria@amd.com, error27@gmail.com,
         luc.vanoostenryck@gmail.com
-Subject: [PATCH v3 42/57] perf: Simplify perf_iterate_sb()
+Subject: [PATCH v3 37/57] perf: Simplify perf_read_group()
 References: <20230612090713.652690195@infradead.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -77,40 +77,63 @@ X-Mailing-List: dmaengine@vger.kernel.org
 
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
 ---
- kernel/events/core.c |    9 +++------
- 1 file changed, 3 insertions(+), 6 deletions(-)
+ kernel/events/core.c |   30 +++++++++++-------------------
+ 1 file changed, 11 insertions(+), 19 deletions(-)
 
 --- a/kernel/events/core.c
 +++ b/kernel/events/core.c
-@@ -7871,8 +7871,8 @@ perf_iterate_sb(perf_iterate_f output, v
- {
- 	struct perf_event_context *ctx;
+@@ -5472,11 +5472,10 @@ static int perf_read_group(struct perf_e
+ 	struct perf_event *leader = event->group_leader, *child;
+ 	struct perf_event_context *ctx = leader->ctx;
+ 	int ret;
+-	u64 *values;
  
--	rcu_read_lock();
--	preempt_disable();
-+	guard(rcu)();
-+	guard(preempt)();
+ 	lockdep_assert_held(&ctx->mutex);
  
- 	/*
- 	 * If we have task_ctx != NULL we only notify the task context itself.
-@@ -7881,7 +7881,7 @@ perf_iterate_sb(perf_iterate_f output, v
+-	values = kzalloc(event->read_size, GFP_KERNEL);
++	u64 *values __free(kfree) = kzalloc(event->read_size, GFP_KERNEL);
+ 	if (!values)
+ 		return -ENOMEM;
+ 
+@@ -5486,29 +5485,22 @@ static int perf_read_group(struct perf_e
+ 	 * By locking the child_mutex of the leader we effectively
+ 	 * lock the child list of all siblings.. XXX explain how.
  	 */
- 	if (task_ctx) {
- 		perf_iterate_ctx(task_ctx, output, data, false);
--		goto done;
-+		return;
- 	}
+-	mutex_lock(&leader->child_mutex);
+-
+-	ret = __perf_read_group_add(leader, read_format, values);
+-	if (ret)
+-		goto unlock;
+-
+-	list_for_each_entry(child, &leader->child_list, child_list) {
+-		ret = __perf_read_group_add(child, read_format, values);
++	scoped_guard (mutex, &leader->child_mutex) {
++		ret = __perf_read_group_add(leader, read_format, values);
+ 		if (ret)
+-			goto unlock;
+-	}
++			return ret;
  
- 	perf_iterate_sb_cpu(output, data);
-@@ -7889,9 +7889,6 @@ perf_iterate_sb(perf_iterate_f output, v
- 	ctx = rcu_dereference(current->perf_event_ctxp);
- 	if (ctx)
- 		perf_iterate_ctx(ctx, output, data, false);
--done:
--	preempt_enable();
--	rcu_read_unlock();
+-	mutex_unlock(&leader->child_mutex);
++		list_for_each_entry(child, &leader->child_list, child_list) {
++			ret = __perf_read_group_add(child, read_format, values);
++			if (ret)
++				return ret;
++		}
++	}
+ 
+ 	ret = event->read_size;
+ 	if (copy_to_user(buf, values, event->read_size))
+-		ret = -EFAULT;
+-	goto out;
++		return -EFAULT;
+ 
+-unlock:
+-	mutex_unlock(&leader->child_mutex);
+-out:
+-	kfree(values);
+ 	return ret;
  }
  
- /*
 
 
