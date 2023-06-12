@@ -2,43 +2,43 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 31492C87FDE
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 87EC7C87FDD
 	for <dmaengine@archiver.kernel.org>; Mon, 12 Jun 2023 09:55:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230329AbjFLJz0 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 12 Jun 2023 05:55:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33806 "EHLO
+        id S232505AbjFLJz1 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 12 Jun 2023 05:55:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33802 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232365AbjFLJyV (ORCPT
+        with ESMTP id S232392AbjFLJyV (ORCPT
         <rfc822;dmaengine@vger.kernel.org>); Mon, 12 Jun 2023 05:54:21 -0400
 Received: from desiato.infradead.org (desiato.infradead.org [IPv6:2001:8b0:10b:1:d65d:64ff:fe57:4e05])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B634D4C05;
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E2D994C09;
         Mon, 12 Jun 2023 02:38:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
         d=infradead.org; s=desiato.20200630; h=Content-Type:MIME-Version:References:
         Subject:Cc:To:From:Date:Message-ID:Sender:Reply-To:Content-Transfer-Encoding:
         Content-ID:Content-Description:In-Reply-To;
-        bh=8IwM37e642EshGkaM591nsICKeU24b96IU4dYucK72I=; b=dXBEmpz80b7hoderM45846w/8O
-        pNO8hpipMKRJ27niZQqDP/oZ7/BF1rbJvgcP4PNZOjA0/uy51im9efmFnxUQeqkaz8ERUeIMTVgbA
-        4VU+/qmkIVh9mruK1Kemd08wt+2YvNqj7iMBDIb55yjZBxdNbyYHd4vmkglhIRzn3VhbsO1g6kMNX
-        DPownbe5F7lKMEY9oMSiQbAsQ6Sq/LDRo6BH7dsjs/eLhKCTZkfWMRYDFaavzf9aNxmS0+JA4YiOd
-        d6r7PI/eGL4W69GpFhaxW3FPhqLQIpOokWmypJbsZsB0KhQzPHHjPZBSmrvaJDXXl2NqdZOvB1M89
-        9hb3DItQ==;
+        bh=vDHS8Plr2cencdpiH/auo6E776oNoOhgYdcpKlgKc4Q=; b=XfspiS8Usbqb2dpT01GShTpXYF
+        0wwyX4AcSTYBMwe4XCE0JXv0GEXukM5Z+wJrQ5ydemtoQKvufj+e0HtUrkEv50Xk/7NS5f+kXoBH9
+        NRHSIXz+gP5a9fY839hRRMg3XMU8GiI1b3Pt7sMPV4OqaS+t6EGwmATXLiqnN97MCbKsORuHO2Pr8
+        vz3ITtR3OFV8f2JSdzAkJYccKWoz7g4QT5P8RYF55XvZaHjj/8iBTBPAQu9E+hOhqdBtj1hgmbPlJ
+        c78PyIoTct3THwyJGFh1bmBuUYmoopUkjAyRnngrF2sMB5pJoA+wZWUNb+w3pp3J3RKYPSrqc3iKz
+        xqluhn6g==;
 Received: from j130084.upc-j.chello.nl ([24.132.130.84] helo=noisy.programming.kicks-ass.net)
         by desiato.infradead.org with esmtpsa (Exim 4.96 #2 (Red Hat Linux))
-        id 1q8e0g-008kPD-1r;
+        id 1q8e0g-008kPA-1f;
         Mon, 12 Jun 2023 09:38:51 +0000
 Received: from hirez.programming.kicks-ass.net (hirez.programming.kicks-ass.net [192.168.1.225])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (4096 bits))
         (Client did not present a certificate)
-        by noisy.programming.kicks-ass.net (Postfix) with ESMTPS id 226E43031CC;
+        by noisy.programming.kicks-ass.net (Postfix) with ESMTPS id 04CC13031B9;
         Mon, 12 Jun 2023 11:38:49 +0200 (CEST)
 Received: by hirez.programming.kicks-ass.net (Postfix, from userid 0)
-        id 5D3FD30A77B5B; Mon, 12 Jun 2023 11:38:48 +0200 (CEST)
-Message-ID: <20230612093538.792690687@infradead.org>
+        id 53B9E30A77B56; Mon, 12 Jun 2023 11:38:48 +0200 (CEST)
+Message-ID: <20230612093538.640502622@infradead.org>
 User-Agent: quilt/0.66
-Date:   Mon, 12 Jun 2023 11:07:31 +0200
+Date:   Mon, 12 Jun 2023 11:07:29 +0200
 From:   Peter Zijlstra <peterz@infradead.org>
 To:     torvalds@linux-foundation.org, keescook@chromium.org,
         gregkh@linuxfoundation.org, pbonzini@redhat.com
@@ -66,7 +66,7 @@ Cc:     masahiroy@kernel.org, nathan@kernel.org, ndesaulniers@google.com,
         rcu@vger.kernel.org, linux-security-module@vger.kernel.org,
         tglx@linutronix.de, ravi.bangoria@amd.com, error27@gmail.com,
         luc.vanoostenryck@gmail.com
-Subject: [PATCH v3 18/57] sched: Simplify sched_rr_get_interval()
+Subject: [PATCH v3 16/57] sched: Simplify sched_{set,get}affinity()
 References: <20230612090713.652690195@infradead.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -78,63 +78,109 @@ Use guards to reduce gotos and simplify control flow.
 
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
 ---
- kernel/sched/core.c |   40 ++++++++++++++++------------------------
- 1 file changed, 16 insertions(+), 24 deletions(-)
+ kernel/sched/core.c |   53 +++++++++++++---------------------------------------
+ 1 file changed, 14 insertions(+), 39 deletions(-)
 
 --- a/kernel/sched/core.c
 +++ b/kernel/sched/core.c
-@@ -8941,38 +8941,30 @@ SYSCALL_DEFINE1(sched_get_priority_min,
- 
- static int sched_rr_get_interval(pid_t pid, struct timespec64 *t)
+@@ -8258,39 +8258,24 @@ long sched_setaffinity(pid_t pid, const
  {
+ 	struct affinity_context ac;
+ 	struct cpumask *user_mask;
 -	struct task_struct *p;
--	unsigned int time_slice;
--	struct rq_flags rf;
--	struct rq *rq;
-+	unsigned int time_slice = 0;
  	int retval;
  
- 	if (pid < 0)
- 		return -EINVAL;
- 
--	retval = -ESRCH;
 -	rcu_read_lock();
+-
 -	p = find_process_by_pid(pid);
--	if (!p)
--		goto out_unlock;
--
--	retval = security_task_getscheduler(p);
--	if (retval)
--		goto out_unlock;
--
--	rq = task_rq_lock(p, &rf);
--	time_slice = 0;
--	if (p->sched_class->get_rr_interval)
--		time_slice = p->sched_class->get_rr_interval(rq, p);
--	task_rq_unlock(rq, p, &rf);
-+	scoped_guard (rcu) {
-+		struct task_struct *p = find_process_by_pid(pid);
-+		if (!p)
-+			return -ESRCH;
-+
-+		retval = security_task_getscheduler(p);
-+		if (retval)
-+			return retval;
-+
-+		scoped_guard (task_rq_lock, p) {
-+			struct rq *rq = scope.rq;
-+			if (p->sched_class->get_rr_interval)
-+				time_slice = p->sched_class->get_rr_interval(rq, p);
-+		}
-+	}
+-	if (!p) {
+-		rcu_read_unlock();
++	CLASS(find_get_task, p)(pid);
++	if (!p)
+ 		return -ESRCH;
+-	}
  
+-	/* Prevent p going away */
+-	get_task_struct(p);
 -	rcu_read_unlock();
- 	jiffies_to_timespec64(time_slice, t);
- 	return 0;
 -
+-	if (p->flags & PF_NO_SETAFFINITY) {
+-		retval = -EINVAL;
+-		goto out_put_task;
+-	}
++	if (p->flags & PF_NO_SETAFFINITY)
++		return -EINVAL;
+ 
+ 	if (!check_same_owner(p)) {
+-		rcu_read_lock();
+-		if (!ns_capable(__task_cred(p)->user_ns, CAP_SYS_NICE)) {
+-			rcu_read_unlock();
+-			retval = -EPERM;
+-			goto out_put_task;
+-		}
+-		rcu_read_unlock();
++		guard(rcu)();
++		if (!ns_capable(__task_cred(p)->user_ns, CAP_SYS_NICE))
++			return -EPERM;
+ 	}
+ 
+ 	retval = security_task_setscheduler(p);
+ 	if (retval)
+-		goto out_put_task;
++		return retval;
+ 
+ 	/*
+ 	 * With non-SMP configs, user_cpus_ptr/user_mask isn't used and
+@@ -8300,8 +8285,7 @@ long sched_setaffinity(pid_t pid, const
+ 	if (user_mask) {
+ 		cpumask_copy(user_mask, in_mask);
+ 	} else if (IS_ENABLED(CONFIG_SMP)) {
+-		retval = -ENOMEM;
+-		goto out_put_task;
++		return -ENOMEM;
+ 	}
+ 
+ 	ac = (struct affinity_context){
+@@ -8313,8 +8297,6 @@ long sched_setaffinity(pid_t pid, const
+ 	retval = __sched_setaffinity(p, &ac);
+ 	kfree(ac.user_mask);
+ 
+-out_put_task:
+-	put_task_struct(p);
+ 	return retval;
+ }
+ 
+@@ -8356,28 +8338,21 @@ SYSCALL_DEFINE3(sched_setaffinity, pid_t
+ long sched_getaffinity(pid_t pid, struct cpumask *mask)
+ {
+ 	struct task_struct *p;
+-	unsigned long flags;
+ 	int retval;
+ 
+-	rcu_read_lock();
+-
+-	retval = -ESRCH;
++	guard(rcu)();
+ 	p = find_process_by_pid(pid);
+ 	if (!p)
+-		goto out_unlock;
++		return -ESRCH;
+ 
+ 	retval = security_task_getscheduler(p);
+ 	if (retval)
+-		goto out_unlock;
++		return retval;
+ 
+-	raw_spin_lock_irqsave(&p->pi_lock, flags);
++	guard(raw_spinlock_irqsave)(&p->pi_lock);
+ 	cpumask_and(mask, &p->cpus_mask, cpu_active_mask);
+-	raw_spin_unlock_irqrestore(&p->pi_lock, flags);
+ 
 -out_unlock:
 -	rcu_read_unlock();
+-
 -	return retval;
++	return 0;
  }
  
  /**
