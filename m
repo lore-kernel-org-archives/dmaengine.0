@@ -2,78 +2,137 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7293CC7EE23
-	for <dmaengine@archiver.kernel.org>; Mon, 12 Jun 2023 09:04:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 734F1C7EE2E
+	for <dmaengine@archiver.kernel.org>; Mon, 12 Jun 2023 09:55:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232840AbjFLJEH (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 12 Jun 2023 05:04:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60920 "EHLO
+        id S229479AbjFLJzR (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 12 Jun 2023 05:55:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33450 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229732AbjFLJDn (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Mon, 12 Jun 2023 05:03:43 -0400
-Received: from relay4-d.mail.gandi.net (relay4-d.mail.gandi.net [IPv6:2001:4b98:dc4:8::224])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 627C64221;
-        Mon, 12 Jun 2023 01:59:46 -0700 (PDT)
-X-GND-Sasl: kory.maincent@bootlin.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
-        t=1686560385;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=cO14zcOxiDtyCfggm0ZmyKFEk1cAqg+L0MJg9mmmLXA=;
-        b=EAx7dXfxNEBqD4fGyCMO1OXqwqMZa1zGGZfX4BGkt1A0KO4KCXzb2UlSxieMdfU7CZmtux
-        PVAbpRpZWubf36NUaKNoOBEwbrB+3FKXxKoGJTBuieInszGut2lOxnPDuup6EVFHyLAbG9
-        fpBu4UlapEYEM3UFPC1DiJkUifjsAGpvQ47wkFWOi2JADQjt2/pSwkUkEzV7w39FWENkMr
-        xBIKLn7ZdBtR4F/2KjsLt9HVZGxpkOHOaEhQUlu4gS0j/UAMXmv3hNERO7YGrZuJC3jABu
-        l9qsINOpjW9Fu7edJrWFgmYiGjhSQziqoeUP4Wv7FrGWDfXv3euhlPf5TYijMQ==
-X-GND-Sasl: kory.maincent@bootlin.com
-X-GND-Sasl: kory.maincent@bootlin.com
-X-GND-Sasl: kory.maincent@bootlin.com
-X-GND-Sasl: kory.maincent@bootlin.com
-X-GND-Sasl: kory.maincent@bootlin.com
-X-GND-Sasl: kory.maincent@bootlin.com
-X-GND-Sasl: kory.maincent@bootlin.com
-X-GND-Sasl: kory.maincent@bootlin.com
-Received: by mail.gandi.net (Postfix) with ESMTPSA id 97657E000F;
-        Mon, 12 Jun 2023 08:59:44 +0000 (UTC)
-Date:   Mon, 12 Jun 2023 10:59:42 +0200
-From:   =?UTF-8?B?S8O2cnk=?= Maincent <kory.maincent@bootlin.com>
-To:     Cai Huoqing <cai.huoqing@linux.dev>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Serge Semin <fancer.lancer@gmail.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        Gustavo Pimentel <Gustavo.Pimentel@synopsys.com>,
-        dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
-        Herve Codina <herve.codina@bootlin.com>
-Subject: Re: [PATCH 0/9] Fix support of dw-edma HDMA NATIVE IP in remote
- setup
-Message-ID: <20230612105942.039b6fc0@kmaincent-XPS-13-7390>
-In-Reply-To: <20230609081654.330857-1-kory.maincent@bootlin.com>
-References: <20230609081654.330857-1-kory.maincent@bootlin.com>
-Organization: bootlin
-X-Mailer: Claws Mail 3.17.5 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
+        with ESMTP id S229692AbjFLJyR (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Mon, 12 Jun 2023 05:54:17 -0400
+Received: from desiato.infradead.org (desiato.infradead.org [IPv6:2001:8b0:10b:1:d65d:64ff:fe57:4e05])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6347649F6;
+        Mon, 12 Jun 2023 02:38:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=infradead.org; s=desiato.20200630; h=Content-Type:MIME-Version:References:
+        Subject:Cc:To:From:Date:Message-ID:Sender:Reply-To:Content-Transfer-Encoding:
+        Content-ID:Content-Description:In-Reply-To;
+        bh=VyS6fqYhD/n91U5f9GQ+a8R8fakG8EouUVHj8V9PE00=; b=QruMXFdvJIpT6C4xhfbtXQc4F6
+        4BWAt2iZpXnuR4PZL/DqfGiytuUGSiJSOq/8VdBO2EL0m6XzvNtDiKZ1oLWkBo4Fjyp1SCW0HtowW
+        khBwKdFSkOaLE0NRU0h6wppJ/BJQbx6t+fi0YMOq8E+vtMHdfs8eGLnlXdcKkdtjJW1TZjuaLEaOi
+        xRrHYrmW0sm1wBcbePBmYSzXufFebgerY8jxwNA5ArsNL9JCWj7MuCccd5YfoqES1HrUtarXWvNv9
+        rTToGRe669jagMzznnXleX7c296r5JI6WREQfZY9f/DB2/IM2B7t9lrQeaDhqxwYfXOZ/h3jaM8KO
+        MM3mvBbQ==;
+Received: from j130084.upc-j.chello.nl ([24.132.130.84] helo=noisy.programming.kicks-ass.net)
+        by desiato.infradead.org with esmtpsa (Exim 4.96 #2 (Red Hat Linux))
+        id 1q8e0f-008kOm-0u;
+        Mon, 12 Jun 2023 09:38:49 +0000
+Received: from hirez.programming.kicks-ass.net (hirez.programming.kicks-ass.net [192.168.1.225])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+        (Client did not present a certificate)
+        by noisy.programming.kicks-ass.net (Postfix) with ESMTPS id 29BC6300E86;
+        Mon, 12 Jun 2023 11:38:48 +0200 (CEST)
+Received: by hirez.programming.kicks-ass.net (Postfix, from userid 0)
+        id ED20B240FDF93; Mon, 12 Jun 2023 11:38:47 +0200 (CEST)
+Message-ID: <20230612093537.467120754@infradead.org>
+User-Agent: quilt/0.66
+Date:   Mon, 12 Jun 2023 11:07:14 +0200
+From:   Peter Zijlstra <peterz@infradead.org>
+To:     torvalds@linux-foundation.org, keescook@chromium.org,
+        gregkh@linuxfoundation.org, pbonzini@redhat.com
+Cc:     masahiroy@kernel.org, nathan@kernel.org, ndesaulniers@google.com,
+        nicolas@fjasle.eu, catalin.marinas@arm.com, will@kernel.org,
+        vkoul@kernel.org, trix@redhat.com, ojeda@kernel.org,
+        peterz@infradead.org, mingo@redhat.com, longman@redhat.com,
+        boqun.feng@gmail.com, dennis@kernel.org, tj@kernel.org,
+        cl@linux.com, acme@kernel.org, mark.rutland@arm.com,
+        alexander.shishkin@linux.intel.com, jolsa@kernel.org,
+        namhyung@kernel.org, irogers@google.com, adrian.hunter@intel.com,
+        juri.lelli@redhat.com, vincent.guittot@linaro.org,
+        dietmar.eggemann@arm.com, rostedt@goodmis.org, bsegall@google.com,
+        mgorman@suse.de, bristot@redhat.com, vschneid@redhat.com,
+        paulmck@kernel.org, frederic@kernel.org, quic_neeraju@quicinc.com,
+        joel@joelfernandes.org, josh@joshtriplett.org,
+        mathieu.desnoyers@efficios.com, jiangshanlai@gmail.com,
+        rientjes@google.com, vbabka@suse.cz, roman.gushchin@linux.dev,
+        42.hyeyoo@gmail.com, apw@canonical.com, joe@perches.com,
+        dwaipayanray1@gmail.com, lukas.bulwahn@gmail.com,
+        john.johansen@canonical.com, paul@paul-moore.com,
+        jmorris@namei.org, serge@hallyn.com, linux-kbuild@vger.kernel.org,
+        linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org,
+        llvm@lists.linux.dev, linux-perf-users@vger.kernel.org,
+        rcu@vger.kernel.org, linux-security-module@vger.kernel.org,
+        tglx@linutronix.de, ravi.bangoria@amd.com, error27@gmail.com,
+        luc.vanoostenryck@gmail.com
+Subject: [PATCH v3 01/57] dmaengine: ioat: Free up __cleanup() name
+References: <20230612090713.652690195@infradead.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On Fri,  9 Jun 2023 10:16:45 +0200
-K=C3=B6ry Maincent <kory.maincent@bootlin.com> wrote:
+In order to use __cleanup for __attribute__((__cleanup__(func))) the
+name must not be used for anything else. Avoid the conflict.
 
-> From: Kory Maincent <kory.maincent@bootlin.com>
->=20
-> This patch series fix the support of dw-edma HDMA NATIVE IP.
-> I can only test it in remote HDMA IP setup with single dma transfer, but
-> with these fixes it works properly.
->=20
-> Few fixes has also been added for eDMA version. Similarly to HDMA I have
-> tested only eDMA in remote setup.
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+---
+ drivers/dma/ioat/dma.c |   12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-FYI it seems several patches of this series has been categorized as spam.
-I think it is because the code of these patches are quite similar.
+--- a/drivers/dma/ioat/dma.c
++++ b/drivers/dma/ioat/dma.c
+@@ -584,11 +584,11 @@ desc_get_errstat(struct ioatdma_chan *io
+ }
+ 
+ /**
+- * __cleanup - reclaim used descriptors
++ * __ioat_cleanup - reclaim used descriptors
+  * @ioat_chan: channel (ring) to clean
+  * @phys_complete: zeroed (or not) completion address (from status)
+  */
+-static void __cleanup(struct ioatdma_chan *ioat_chan, dma_addr_t phys_complete)
++static void __ioat_cleanup(struct ioatdma_chan *ioat_chan, dma_addr_t phys_complete)
+ {
+ 	struct ioatdma_device *ioat_dma = ioat_chan->ioat_dma;
+ 	struct ioat_ring_ent *desc;
+@@ -675,7 +675,7 @@ static void ioat_cleanup(struct ioatdma_
+ 	spin_lock_bh(&ioat_chan->cleanup_lock);
+ 
+ 	if (ioat_cleanup_preamble(ioat_chan, &phys_complete))
+-		__cleanup(ioat_chan, phys_complete);
++		__ioat_cleanup(ioat_chan, phys_complete);
+ 
+ 	if (is_ioat_halted(*ioat_chan->completion)) {
+ 		u32 chanerr = readl(ioat_chan->reg_base + IOAT_CHANERR_OFFSET);
+@@ -712,7 +712,7 @@ static void ioat_restart_channel(struct
+ 
+ 	ioat_quiesce(ioat_chan, 0);
+ 	if (ioat_cleanup_preamble(ioat_chan, &phys_complete))
+-		__cleanup(ioat_chan, phys_complete);
++		__ioat_cleanup(ioat_chan, phys_complete);
+ 
+ 	__ioat_restart_chan(ioat_chan);
+ }
+@@ -786,7 +786,7 @@ static void ioat_eh(struct ioatdma_chan
+ 
+ 	/* cleanup so tail points to descriptor that caused the error */
+ 	if (ioat_cleanup_preamble(ioat_chan, &phys_complete))
+-		__cleanup(ioat_chan, phys_complete);
++		__ioat_cleanup(ioat_chan, phys_complete);
+ 
+ 	chanerr = readl(ioat_chan->reg_base + IOAT_CHANERR_OFFSET);
+ 	pci_read_config_dword(pdev, IOAT_PCI_CHANERR_INT_OFFSET, &chanerr_int);
+@@ -943,7 +943,7 @@ void ioat_timer_event(struct timer_list
+ 		/* timer restarted in ioat_cleanup_preamble
+ 		 * and IOAT_COMPLETION_ACK cleared
+ 		 */
+-		__cleanup(ioat_chan, phys_complete);
++		__ioat_cleanup(ioat_chan, phys_complete);
+ 		goto unlock_out;
+ 	}
+ 
 
-K=C3=B6ry
+
