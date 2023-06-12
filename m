@@ -2,42 +2,42 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B292BC87FDE
-	for <dmaengine@archiver.kernel.org>; Mon, 12 Jun 2023 09:55:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BF19DC87FE1
+	for <dmaengine@archiver.kernel.org>; Mon, 12 Jun 2023 09:55:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229537AbjFLJzh (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 12 Jun 2023 05:55:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33886 "EHLO
+        id S233451AbjFLJzi (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 12 Jun 2023 05:55:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33910 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231173AbjFLJyX (ORCPT
+        with ESMTP id S231321AbjFLJyX (ORCPT
         <rfc822;dmaengine@vger.kernel.org>); Mon, 12 Jun 2023 05:54:23 -0400
 Received: from casper.infradead.org (casper.infradead.org [IPv6:2001:8b0:10b:1236::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F3E55FF0;
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B6DF4C11;
         Mon, 12 Jun 2023 02:38:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
         d=infradead.org; s=casper.20170209; h=Content-Type:MIME-Version:References:
         Subject:Cc:To:From:Date:Message-ID:Sender:Reply-To:Content-Transfer-Encoding:
         Content-ID:Content-Description:In-Reply-To;
-        bh=mq5JO2tPl8C7SILOfz/KwJIcnobnm9UFdJaARgXH410=; b=AMcWXrFAvQk7IooWq5vsQKOUpX
-        c+43fYmu8uTkx0XjpUhBb5rLhhZTpeo7fFtrFQ6gX1Ie/h4dDKHWEhenT13VsLCQtYF4J8qBvnqTN
-        Rb7fXamtrAdhJIYp7XX1thb9d5mecYu5DsgQSqMp7US340Et8Gvt1QM3WZU+8S6FEN+rhyMOUXAIr
-        zrgte1I7kA8l7tRuTCoT+JXSeh785ZZ203dX7QWjb/gjzrBXnKJDRygq4P+8awKyHb5qZx9laV/87
-        GV7BCj0gIl7rPXAFdcBqCQXcR9zo9IGdzN5vsPxOEsYOaEA/IqiNceS6vjnqf815nn9bTlK1cd3oY
-        AFlkOulA==;
+        bh=4+/Q1nIn7pjeaoOkqiN8ZoN9dOzRXj0Qx8pmucBG9KU=; b=JTIbW/gvOSQ58b4TCHUoHGEDh4
+        Y1YJaLE27tmAx/JmH64kRErvzD0KUqyqfrX71MGF7wv0MltPgLgnjyg/kORWC199iFcMaqxABBB85
+        2ngIl0UzK18xlGkdJHKfnwYwA/Wl2lR2NRNxaCAnNGGdy6tjZchz97RFC/huuNDIRiljM+iyvvmex
+        VegKabbNI/sdQ6KSFyu7uT5aaMn9NnyH70zAM87Em+UPxNfTHrP0e+GNEWh2sXqUMKqamS/UzmCip
+        zhr1rYAeBzRzlh1FU7evBmwXBmRVHZ/P3LFM8ztGfR2bODV96a59vURa3b146za2hED5IY+f1Izzy
+        M5i/AT6A==;
 Received: from j130084.upc-j.chello.nl ([24.132.130.84] helo=noisy.programming.kicks-ass.net)
         by casper.infradead.org with esmtpsa (Exim 4.94.2 #2 (Red Hat Linux))
-        id 1q8e0f-002N8u-IH; Mon, 12 Jun 2023 09:38:49 +0000
+        id 1q8e0g-002N97-A5; Mon, 12 Jun 2023 09:38:50 +0000
 Received: from hirez.programming.kicks-ass.net (hirez.programming.kicks-ass.net [192.168.1.225])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (4096 bits))
         (Client did not present a certificate)
-        by noisy.programming.kicks-ass.net (Postfix) with ESMTPS id 6C280302680;
+        by noisy.programming.kicks-ass.net (Postfix) with ESMTPS id D205C303189;
         Mon, 12 Jun 2023 11:38:48 +0200 (CEST)
 Received: by hirez.programming.kicks-ass.net (Postfix, from userid 0)
-        id F111730A210B0; Mon, 12 Jun 2023 11:38:47 +0200 (CEST)
-Message-ID: <20230612093537.536441207@infradead.org>
+        id 3C3B930A70ADE; Mon, 12 Jun 2023 11:38:48 +0200 (CEST)
+Message-ID: <20230612093538.307089780@infradead.org>
 User-Agent: quilt/0.66
-Date:   Mon, 12 Jun 2023 11:07:15 +0200
+Date:   Mon, 12 Jun 2023 11:07:25 +0200
 From:   Peter Zijlstra <peterz@infradead.org>
 To:     torvalds@linux-foundation.org, keescook@chromium.org,
         gregkh@linuxfoundation.org, pbonzini@redhat.com
@@ -65,7 +65,7 @@ Cc:     masahiroy@kernel.org, nathan@kernel.org, ndesaulniers@google.com,
         rcu@vger.kernel.org, linux-security-module@vger.kernel.org,
         tglx@linutronix.de, ravi.bangoria@amd.com, error27@gmail.com,
         luc.vanoostenryck@gmail.com
-Subject: [PATCH v3 02/57] apparmor: Free up __cleanup() name
+Subject: [PATCH v3 12/57] sched: Simplify try_steal_cookie()
 References: <20230612090713.652690195@infradead.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -73,42 +73,64 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-In order to use __cleanup for __attribute__((__cleanup__(func))) the
-name must not be used for anything else. Avoid the conflict.
+Use guards to reduce gotos and simplify control flow.
 
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
 ---
- security/apparmor/include/lib.h |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ kernel/sched/core.c |   21 +++++++++------------
+ 1 file changed, 9 insertions(+), 12 deletions(-)
 
---- a/security/apparmor/include/lib.h
-+++ b/security/apparmor/include/lib.h
-@@ -232,7 +232,7 @@ void aa_policy_destroy(struct aa_policy
-  */
- #define fn_label_build(L, P, GFP, FN)					\
- ({									\
--	__label__ __cleanup, __done;					\
-+	__label__ __do_cleanup, __done;					\
- 	struct aa_label *__new_;					\
- 									\
- 	if ((L)->size > 1) {						\
-@@ -250,7 +250,7 @@ void aa_policy_destroy(struct aa_policy
- 			__new_ = (FN);					\
- 			AA_BUG(!__new_);				\
- 			if (IS_ERR(__new_))				\
--				goto __cleanup;				\
-+				goto __do_cleanup;			\
- 			__lvec[__j++] = __new_;				\
- 		}							\
- 		for (__j = __count = 0; __j < (L)->size; __j++)		\
-@@ -272,7 +272,7 @@ void aa_policy_destroy(struct aa_policy
- 			vec_cleanup(profile, __pvec, __count);		\
- 		} else							\
- 			__new_ = NULL;					\
--__cleanup:								\
-+__do_cleanup:								\
- 		vec_cleanup(label, __lvec, (L)->size);			\
- 	} else {							\
- 		(P) = labels_profile(L);				\
+--- a/kernel/sched/core.c
++++ b/kernel/sched/core.c
+@@ -6229,19 +6229,19 @@ static bool try_steal_cookie(int this, i
+ 	unsigned long cookie;
+ 	bool success = false;
+ 
+-	local_irq_disable();
+-	double_rq_lock(dst, src);
++	guard(irq)();
++	guard(double_rq_lock)(dst, src);
+ 
+ 	cookie = dst->core->core_cookie;
+ 	if (!cookie)
+-		goto unlock;
++		return false;
+ 
+ 	if (dst->curr != dst->idle)
+-		goto unlock;
++		return false;
+ 
+ 	p = sched_core_find(src, cookie);
+ 	if (!p)
+-		goto unlock;
++		return false;
+ 
+ 	do {
+ 		if (p == src->core_pick || p == src->curr)
+@@ -6253,9 +6253,10 @@ static bool try_steal_cookie(int this, i
+ 		if (p->core_occupation > dst->idle->core_occupation)
+ 			goto next;
+ 		/*
+-		 * sched_core_find() and sched_core_next() will ensure that task @p
+-		 * is not throttled now, we also need to check whether the runqueue
+-		 * of the destination CPU is being throttled.
++		 * sched_core_find() and sched_core_next() will ensure
++		 * that task @p is not throttled now, we also need to
++		 * check whether the runqueue of the destination CPU is
++		 * being throttled.
+ 		 */
+ 		if (sched_task_is_throttled(p, this))
+ 			goto next;
+@@ -6273,10 +6274,6 @@ static bool try_steal_cookie(int this, i
+ 		p = sched_core_next(p, cookie);
+ 	} while (p);
+ 
+-unlock:
+-	double_rq_unlock(dst, src);
+-	local_irq_enable();
+-
+ 	return success;
+ }
+ 
 
 
