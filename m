@@ -2,198 +2,166 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 12D5EEB64DC
-	for <dmaengine@archiver.kernel.org>; Thu, 15 Jun 2023 10:52:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 25DE2EB64DA
+	for <dmaengine@archiver.kernel.org>; Thu, 15 Jun 2023 14:37:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239287AbjFOKw0 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Thu, 15 Jun 2023 06:52:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55778 "EHLO
+        id S1344574AbjFOOhV (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Thu, 15 Jun 2023 10:37:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55370 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240308AbjFOKwY (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Thu, 15 Jun 2023 06:52:24 -0400
-Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 03B702103
-        for <dmaengine@vger.kernel.org>; Thu, 15 Jun 2023 03:52:23 -0700 (PDT)
-Received: by mail-ej1-x62f.google.com with SMTP id a640c23a62f3a-982b1a18daeso49293066b.2
-        for <dmaengine@vger.kernel.org>; Thu, 15 Jun 2023 03:52:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686826341; x=1689418341;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=utjDDOKSdywXvqy83VTqNIGTgbsgC3M+2PZw+Kce6sM=;
-        b=jMxmfFyWyjWPG1BBJFqu7ITbVdSbOJc+kZnPxcrFjMnrqW8CgSpUNKKRq3Lh6lYBDC
-         wfLpqvqyxwHwoRJnmanXLhx7/widM7u7ZK3BKxD585LF/e1rgRj6Xwpi0/bPvj16Iyk7
-         erZDOdKqgdkP7RtKevIGVqVn+/fCntNyDzKi265xL+yZzYybJvuuttWdWdkHiGH5NDmr
-         4cuY/Iag1OgJ6uY7Gspjh7hoI76PzCkh0ftku3A81zogEi06szELcSSdacIGCNE420JL
-         /Wh9OakOZG3sWBhKKKEYDAx/PHxNQvcSU7tYzEj9EOv651PmEsv86w0WoRn6VW71DUXp
-         ZmwQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686826341; x=1689418341;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=utjDDOKSdywXvqy83VTqNIGTgbsgC3M+2PZw+Kce6sM=;
-        b=BK6f67JvmyeIRg4G3J0cUwRG35+CPqJztPIczr3Uaq5BDlcyDeKZmyPS1ML5aXyoaR
-         R9jgAPS0UZCaQbH29gqBAmqjbk2dkg+G7TVj8r0Sn4kaYfOBB08okkbBf8u8BSV5oGa5
-         t09VWTPavK4SRGU2M4f0mKxsJaW/wh9d2HbvMNxlJpKKtPyIPzUsYDqlHUqWnE2a3TYm
-         1Bsq6me/bv66HFOe7G9ivZACranipaYMnU4jX1ITL04viMPAEabzWd+R0FT1GnwY/rja
-         TWjUDnyRz5LRa7fQCC+M3m3wY2SCBiXX3+a0oY7S0vi+XiTCZVcjvwqG/ik3fvR37tzN
-         AyQg==
-X-Gm-Message-State: AC+VfDxKMM7yma3m9jUqY5Vgd1SUm0DSgioG/9FVzVY3SuafsKZVfTXU
-        MfthpXu07fsY6Jl1e8PZwmRpUA==
-X-Google-Smtp-Source: ACHHUZ4Zd7QenZN7bznsbb9rzk810MzuMCf4/T0SCZwLsNuT+24Ngk0O8vLf6fuM3CBh7UAmyym6KQ==
-X-Received: by 2002:a17:906:d54b:b0:978:94b1:25ac with SMTP id cr11-20020a170906d54b00b0097894b125acmr21518784ejc.40.1686826341146;
-        Thu, 15 Jun 2023 03:52:21 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.219.26])
-        by smtp.gmail.com with ESMTPSA id jt18-20020a170906ca1200b009823e0bfb05sm3396417ejb.162.2023.06.15.03.52.19
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 15 Jun 2023 03:52:20 -0700 (PDT)
-Message-ID: <0cddd5e8-3de1-1b6a-b4b8-6304e4c674cf@linaro.org>
-Date:   Thu, 15 Jun 2023 12:52:18 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Subject: Re: [PATCH v6 12/12] dt-bindings: fsl-dma: fsl-edma: add edma3
- compatible string
-Content-Language: en-US
-To:     Frank Li <Frank.Li@nxp.com>, vkoul@kernel.org, robh+dt@kernel.org,
+        with ESMTP id S1343811AbjFOOhV (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Thu, 15 Jun 2023 10:37:21 -0400
+Received: from EUR02-AM0-obe.outbound.protection.outlook.com (mail-am0eur02on2080.outbound.protection.outlook.com [40.107.247.80])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D5591A2;
+        Thu, 15 Jun 2023 07:37:19 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=UQmtZ3se3XYsJO1pLWx5CmeMSKO6Dzmd6Kj/Nps4gE6lo7GTYEAB/m/07vMwmXbeqY+g5iXa9rHG1L1pAIU6LVu5PPt9aFmUAi5SsBOt7bOZ5zw1jZc4QiwFRxWMfIRi3RYAjvKd6ATnWxvZc1yW/TIhBO/XpjKlJ7F/aVWErijZfpfCEf+PcTfSqJguwgEM4SksCCFI1P6rwHRMX3TnxaCqdTbrTC8cdZKck6R/mPglhe2rjOP7ZukZU72rC3NSQDZOpdAVYnbUzLhpc7Jc8mQEOx3OtSVSuGvZ2FTVfe/NqxZjOXYKwpZwTvG5WbmOn37fCh8MrYnpyzOGD/AJMA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=mv+Q2r/Lh4ip6Z0qBGIMTwH/4j3eKpo2sBaTwhSpLeA=;
+ b=FqQ2cc2R7qpBhTVWjp939ZcOocKOeynkC4Q0sisQRMFkLS4bW+bgSTeIm4uuSd4Ck0f+Rhgk1eR3qX0Xvdqa8HNBz7pQ9LcOkTLKzZkdIfv14/uIAk1smV6ZmYvWoOo8R3GaGrHV2Ix6ZUW89LEUYmX5o3ZZglWCc8kn/oaxIXGa/FMPXT+VnQu6SF7CyUXVfYeRBvGa2bNliLzjJoeayQzNiCoe2eJi0MDEMCPzr9WWZc4SOSRHP4p55KbNEaZPAWBlPKjJXLJTQ/SQed8vOdF+ASs+xIL+XXSQT6YIW9IXST8t4F+vAKATtF06EUGIAS6bCNsfC2FBew0lNhDtJw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
+ header.d=nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=mv+Q2r/Lh4ip6Z0qBGIMTwH/4j3eKpo2sBaTwhSpLeA=;
+ b=Gh4H/2a1R0yTvYzILvPZbOQsB5XhxPH0vDwaoZaAtYSv5EDSuqiFg9qmb8DfSiqisJ/p2iQBNf2SzdCyIxZnbGiiDZ7JkjAg6lh/hyo9UkzdH5MKVZQVhGAa0aINowi9GgM00ZslZRPELSEAWRkb41ix3IUB0lc6Hk7jL5w9uko=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nxp.com;
+Received: from AM6PR04MB4838.eurprd04.prod.outlook.com (2603:10a6:20b:4::16)
+ by AM8PR04MB7395.eurprd04.prod.outlook.com (2603:10a6:20b:1c4::15) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6500.25; Thu, 15 Jun
+ 2023 14:37:17 +0000
+Received: from AM6PR04MB4838.eurprd04.prod.outlook.com
+ ([fe80::4a2a:262e:415f:e41c]) by AM6PR04MB4838.eurprd04.prod.outlook.com
+ ([fe80::4a2a:262e:415f:e41c%7]) with mapi id 15.20.6477.035; Thu, 15 Jun 2023
+ 14:37:17 +0000
+Date:   Thu, 15 Jun 2023 10:37:04 -0400
+From:   Frank Li <Frank.li@nxp.com>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     vkoul@kernel.org, robh+dt@kernel.org,
         krzysztof.kozlowski+dt@linaro.org, dmaengine@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
         peng.fan@nxp.com, joy.zou@nxp.com, shenwei.wang@nxp.com,
         imx@lists.linux.dev
+Subject: Re: [PATCH v6 12/12] dt-bindings: fsl-dma: fsl-edma: add edma3
+ compatible string
+Message-ID: <ZIsiEIhmpS7DSs6R@lizhi-Precision-Tower-5810>
 References: <20230614193544.2114603-1-Frank.Li@nxp.com>
  <20230614193544.2114603-13-Frank.Li@nxp.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230614193544.2114603-13-Frank.Li@nxp.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+ <0cddd5e8-3de1-1b6a-b4b8-6304e4c674cf@linaro.org>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <0cddd5e8-3de1-1b6a-b4b8-6304e4c674cf@linaro.org>
+X-ClientProxiedBy: SJ0PR03CA0059.namprd03.prod.outlook.com
+ (2603:10b6:a03:33e::34) To AM6PR04MB4838.eurprd04.prod.outlook.com
+ (2603:10a6:20b:4::16)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: AM6PR04MB4838:EE_|AM8PR04MB7395:EE_
+X-MS-Office365-Filtering-Correlation-Id: d05c5b48-095a-4617-a5f8-08db6dae0489
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: mspyX4v7qIgwVEj+P7nwmeWFXW8MyxIiKipmjje5155NrWeOGsyHigSp4MxRQzC7hNp6sCHoBZjuyZBa0T0Q5rOTqvjzBwq8+1RsjUucApQulPWWimnl7jawCVyuBOFWxsQgrPgVAT5ifb+KObQHKjvE3SRkDeZORMcgSSD1JyIBPZ+ficRQG1U3qRuutyFXawPXtqTZJ53X/EUMElNPYJuXnA4H5nT5umcAIHb/RJlCF/loGUQOPHHUhN8bcQfAehvOG1rOKgOtAUJq0IQvYX4MlmioJRy7s8VtKjPcYiizETzZjI5glbVgLepXAOsnIsuhY1TE5Vg0QWdKzrPTkaoGqY64VY2pWmX+Xr2HeAKeQX/j8z3096+yZk5xVySlMdDh01vPB4J+6CPaVseD/8qNTfyGKfVVyrNu/tgY4sBBeHb4enIW/zGqq8fbAGONC29Rk6zfIAKQEM5fEQNL0+jxo94klxc4LOuJPKzjFtyMITypUYrFqBZfS2CzH5BzzUaWrVQ4CXkAykz++DS0Tfj9d/n7HbFQLfM2ybgpIbkaQDjTF/QjenxBvZ1QNjJ7idWoUoyuR8LGug8B1qJBuIKa/0UKrwabVMQS5Q6pvYy+j3bK6tEVUS5GkdtEMwt2
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:AM6PR04MB4838.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230028)(4636009)(7916004)(346002)(376002)(136003)(396003)(366004)(39860400002)(451199021)(186003)(2906002)(83380400001)(6666004)(6916009)(66476007)(66946007)(66556008)(33716001)(52116002)(316002)(8936002)(41300700001)(8676002)(6486002)(86362001)(4326008)(478600001)(9686003)(26005)(6512007)(53546011)(6506007)(38100700002)(38350700002)(5660300002);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?fYe+dr7A0BMcrFWNmC8xzzV4FsN69Dsqu3jiThsLDIJkKPRm6/eR2vsfT/B0?=
+ =?us-ascii?Q?2dmj54TG7A5eYhW9X8yNvH75eHNzKv+PmvfMQJRJ9iM+z5Rlu0VD/uhm+NfG?=
+ =?us-ascii?Q?iNPIH6mZtePIt4ebTRwLVfwsRTaG3IK5PzmTgqYoyw+IYKeRFt79A3lmBL+H?=
+ =?us-ascii?Q?runRDBVHbbf1072lfQu8bGPFELsob6J+wJ0+WMlgZ2J2KCkWOF97Z0ICADNL?=
+ =?us-ascii?Q?ymggfBSR9XDqLii+bv87iRQtwul1Tu3TUdoSjjX/zb7nxp5TffAFwJ2EVPxr?=
+ =?us-ascii?Q?OpnXaFV2rB0bepvcv5PZwZiM2G7K45N9D2kCyuWigxzsD4PwfZVwTsDrRqm+?=
+ =?us-ascii?Q?ZUOoOqrfNAuyBzZlqXVFhq3aI0JU0RrPoOCE8NPcUJvukrvsvBk47/fZBzH6?=
+ =?us-ascii?Q?UFIG54NELECwIr15UuDTTozWecU0tTAej0yeBWtYdlMCxjWyjKLWQhDZLvua?=
+ =?us-ascii?Q?uqQATj6iHojuY/51MfGRFDdWFrqy1+Jpc3ZpoPc9qkKDIyoEJoqWUhomGytK?=
+ =?us-ascii?Q?lL83tp80+S4kqWCqp2NYZG1VciID1uO/QRLtb+utVfzNIeCRHeT4u1mLd8pZ?=
+ =?us-ascii?Q?I4YrknuKIVwOhoUGa90/UC4VG48rJ4efVvbGf6Y8+qSBbsljHk/LQ3G1ikqf?=
+ =?us-ascii?Q?OVjwyoOhDkyYUJIsfDHJI8vfK+PwRuZX+MsHdIXwMED5HXgx1oBWazGA4Unq?=
+ =?us-ascii?Q?u4sBjBB4l4zS77bDtdeYrGmFOYrq/yzL+nB6JF8gB5khxgaedukveMPsYedJ?=
+ =?us-ascii?Q?YFOCvKieYAUxXYCmxRETg/J2/PcW2OAInwRJSsWAt3aAmgdaJwp1vBJvXPlC?=
+ =?us-ascii?Q?zEyXmGDDQHuIwUsq+evd0SDNubWfZXkxpCWMXAmGhod3bBNaz8pOsCa1mj82?=
+ =?us-ascii?Q?oQq0Wl01cZKe2txPakN6FaWoUo7pPbRluu53zR3VP284vL+27nq0kieE1Ev6?=
+ =?us-ascii?Q?zchjz9US7MM9Z4VE9qihpEWtqeSX0Pd0zsc5EjttBhUtZ1wawsWQxMLwCB3v?=
+ =?us-ascii?Q?D3NvxCGP88cvmUbQH9aRFRhgqN+h8MJ3xkuV/PHC73Qjq0bbpbdY3Cmiajeb?=
+ =?us-ascii?Q?cCHXSHrpwjr+QhwfT8PUEIO6Hs3v4Buak9KfGIvwkgO2QJRlsWFlAzJqPAXJ?=
+ =?us-ascii?Q?SJ0uLxXnRz+6mVIqVKM5OLlpqQr0632vIoFr2l0dPHfH0EtsJVej6ZtKdcwG?=
+ =?us-ascii?Q?Nci9pbDibuZZtDFwsBzmhLZL4/fJqQZZ1vx6ZfqA9BcSdZ0DrvZwhrqKyOJZ?=
+ =?us-ascii?Q?FIFZFZxgs9u4vptl9a1A5gO1qAnElLl5+uRM09xJ3ksXWOqdC+8O6kaY2tXU?=
+ =?us-ascii?Q?UPmDFXAzYmdywvN4xvzEAZnvstcNRqZ7cI/cEih+yL9kMCC136Q6XvSEgBw9?=
+ =?us-ascii?Q?BPNnNj5kmUxons3KmilBoDySO8xVg2AklLLvkZjKQ4RsCB350Qvqm9xNd/30?=
+ =?us-ascii?Q?ZYWnAIlken/p3Sk+Bgym+DSqXw7TWsWkAG+HscLtd+Ia3g1245EWTaiKWGf/?=
+ =?us-ascii?Q?Rs/WmQCwkdA+90zu197q0J5v2GxwkFKaFPdY5oxroAIVp9WOg+3u7hmnQSf7?=
+ =?us-ascii?Q?rZx93VeVHAmSonjcLAbqHCceLRlqoVUp93lEScBe?=
+X-OriginatorOrg: nxp.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: d05c5b48-095a-4617-a5f8-08db6dae0489
+X-MS-Exchange-CrossTenant-AuthSource: AM6PR04MB4838.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 15 Jun 2023 14:37:17.2611
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: BGLqIPRv4bCTWaU6fIVdUWkCmnUxOZqVjou5RvQw9/9fTOmO2r2fUNCc15L6NmgL+WIttTeB2VVrxVC49Zk+zQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM8PR04MB7395
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On 14/06/2023 21:35, Frank Li wrote:
-> Extend Freescale eDMA driver bindings to support eDMA3 IP blocks in
-> i.MX8QM and i.MX8QXP SoCs. In i.MX93, both eDMA3 and eDMA4 are now.
+On Thu, Jun 15, 2023 at 12:52:18PM +0200, Krzysztof Kozlowski wrote:
+> On 14/06/2023 21:35, Frank Li wrote:
+> > +        # It is not necessary to write the interrupt name for each channel.
+> > +        # instead, you can simply maintain the sequential IRQ numbers as
+> > +        # defined for the DMA channels.
+> > +        interrupt-names: false
+> > +        clock-names:
 > 
-> Signed-off-by: Frank Li <Frank.Li@nxp.com>
-> ---
->  .../devicetree/bindings/dma/fsl,edma.yaml     | 99 +++++++++++++++++--
->  1 file changed, 92 insertions(+), 7 deletions(-)
+> items:
+>   - const: dma
 > 
-> diff --git a/Documentation/devicetree/bindings/dma/fsl,edma.yaml b/Documentation/devicetree/bindings/dma/fsl,edma.yaml
-> index 5fd8fc604261..de8c44bd8a89 100644
-> --- a/Documentation/devicetree/bindings/dma/fsl,edma.yaml
-> +++ b/Documentation/devicetree/bindings/dma/fsl,edma.yaml
-> @@ -21,32 +21,41 @@ properties:
->        - enum:
->            - fsl,vf610-edma
->            - fsl,imx7ulp-edma
-> +          - fsl,imx8qm-adma
-> +          - fsl,imx8qm-edma
-> +          - fsl,imx93-edma3
-> +          - fsl,imx93-edma4
->        - items:
->            - const: fsl,ls1028a-edma
->            - const: fsl,vf610-edma
->  
->    reg:
-> -    minItems: 2
-> +    minItems: 1
->      maxItems: 3
->  
->    interrupts:
-> -    minItems: 2
-> -    maxItems: 17
-> +    minItems: 1
-> +    maxItems: 64
->  
->    interrupt-names:
-> -    minItems: 2
-> -    maxItems: 17
-> +    minItems: 1
-> +    maxItems: 64
->  
->    "#dma-cells":
-> -    const: 2
-> +    enum:
-> +      - 2
-> +      - 3
->  
->    dma-channels:
-> -    const: 32
-> +    minItems: 1
-> +    maxItems: 64
->  
->    clocks:
-> +    minItems: 1
->      maxItems: 2
->  
->    clock-names:
-> +    minItems: 1
->      maxItems: 2
->  
->    big-endian:
-> @@ -65,6 +74,38 @@ required:
->  
->  allOf:
->    - $ref: dma-controller.yaml#
-> +  - if:
-> +      properties:
-> +        compatible:
-> +          contains:
-> +            enum:
-> +              - fsl,imx8qm-adma
-> +              - fsl,imx8qm-edma
-> +              - fsl,imx93-edma3
-> +              - fsl,imx93-edma4
-> +    then:
-> +      properties:
-> +        "#dma-cells":
-> +          const: 3
-> +        # It is not necessary to write the interrupt name for each channel.
-> +        # instead, you can simply maintain the sequential IRQ numbers as
-> +        # defined for the DMA channels.
-> +        interrupt-names: false
-> +        clock-names:
+> clocks:
+>   maxItems: 1
+> 
+> You do not allow more than one clock, right?
 
-items:
-  - const: dma
+Yes, at least now. Only 1 clock needed.
 
-clocks:
-  maxItems: 1
+> 
+> > +          const: dma
+> > +    else:
+> 
+> You already have two ifs, so you should not have else here, but rather
+> make each if clause proper for your setup.
+> 
+> BTW, the amount of differences point to very complicated schema, so you
+> should think whether it makes sense to keep binding growing in the first
+> place.
 
-You do not allow more than one clock, right?
+Any good ways if don't growing binding at the first place?
 
-> +          const: dma
-> +    else:
-
-You already have two ifs, so you should not have else here, but rather
-make each if clause proper for your setup.
-
-BTW, the amount of differences point to very complicated schema, so you
-should think whether it makes sense to keep binding growing in the first
-place.
-
-> +      properties:
-> +        reg:
-> +          minItems: 2
-> +          maxItems: 3
-> +        interrupts:
-> +          minItems: 2
-> +          maxItems: 17
-
-missing clocks restriction to minItems: 2
-
-
-> +        "#dma-cells":
-> +          const: 2
-> +        dma-channels:
-> +          const: 32
-> +
-
-
-
-Best regards,
-Krzysztof
-
+> 
+> > +      properties:
+> > +        reg:
+> > +          minItems: 2
+> > +          maxItems: 3
+> > +        interrupts:
+> > +          minItems: 2
+> > +          maxItems: 17
+> 
+> missing clocks restriction to minItems: 2
+> 
+> 
+> > +        "#dma-cells":
+> > +          const: 2
+> > +        dma-channels:
+> > +          const: 32
+> > +
+> 
+> 
+> 
+> Best regards,
+> Krzysztof
+> 
