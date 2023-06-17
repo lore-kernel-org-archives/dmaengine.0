@@ -2,21 +2,21 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6836AC001E0
-	for <dmaengine@archiver.kernel.org>; Sat, 17 Jun 2023 13:37:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4F9B8EB64DA
+	for <dmaengine@archiver.kernel.org>; Sat, 17 Jun 2023 13:37:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235949AbjFQNhK (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Sat, 17 Jun 2023 09:37:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40692 "EHLO
+        id S236398AbjFQNhO (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Sat, 17 Jun 2023 09:37:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40728 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234012AbjFQNhI (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Sat, 17 Jun 2023 09:37:08 -0400
-Received: from mout.kundenserver.de (mout.kundenserver.de [212.227.126.133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B270AE72;
-        Sat, 17 Jun 2023 06:37:06 -0700 (PDT)
+        with ESMTP id S234607AbjFQNhM (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Sat, 17 Jun 2023 09:37:12 -0400
+Received: from mout.kundenserver.de (mout.kundenserver.de [212.227.126.135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C5B7DA;
+        Sat, 17 Jun 2023 06:37:11 -0700 (PDT)
 Received: from stefanw-SCHENKER ([37.4.248.58]) by mrelayeu.kundenserver.de
  (mreue009 [212.227.15.167]) with ESMTPSA (Nemesis) id
- 1MCsLo-1qJHWx2N3Q-008rdh; Sat, 17 Jun 2023 15:36:39 +0200
+ 1N7zJj-1q6GnA2pc3-0154nC; Sat, 17 Jun 2023 15:36:43 +0200
 From:   Stefan Wahren <stefan.wahren@i2se.com>
 To:     Vinod Koul <vkoul@kernel.org>, Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
@@ -35,86 +35,121 @@ Cc:     linux-arm-kernel@lists.infradead.org, dmaengine@vger.kernel.org,
         linux-pwm@vger.kernel.org, linux-pm@vger.kernel.org,
         bcm-kernel-feedback-list@broadcom.com,
         Stefan Wahren <stefan.wahren@i2se.com>
-Subject: [PATCH V2 0/7] ARM: dts: bcm283x: Improve device-trees and bindings
-Date:   Sat, 17 Jun 2023 15:36:13 +0200
-Message-Id: <20230617133620.53129-1-stefan.wahren@i2se.com>
+Subject: [PATCH V2 6/7] dt-bindings: mailbox: convert bcm2835-mbox bindings to YAML
+Date:   Sat, 17 Jun 2023 15:36:19 +0200
+Message-Id: <20230617133620.53129-7-stefan.wahren@i2se.com>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20230617133620.53129-1-stefan.wahren@i2se.com>
+References: <20230617133620.53129-1-stefan.wahren@i2se.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K1:YcK/WR3T6hRaLw1AnRYEOWbBdCZO9EhCjZdqdqs73nVdKHWNmCZ
- 20NQGWbCY/hqlHi3SeaUojIUqSFa4Zp6DkL7MTtmuyaro5Z0MGjEd2SOK7KkLRSUl+pJQVo
- vhKkfgNjXl56DrXFxTBMKAF0aaqicxN8CLwL/u+Afz89D8nChAO6OTEK1sMlQEs/Tbiz6IV
- HfyVn1YxUq8qCgMf71InA==
-UI-OutboundReport: notjunk:1;M01:P0:WRpEgt448HQ=;Jrx4hK3B7Q3em0TSzh5wtA+CGrh
- x5IVkZUABea9X6Ymu3965wxvZwVk6bzg5CJC3GpRtVdZs0yAJvJJuRmLQgb6RdBgY7u9yftA3
- JadzRKSiEIcXX7DZGHN8YbxhU2tWn+k6vugMS+kRF9Y2M1wVdd68wT4igPjydHir0pDkT3FgR
- FnimddScYqvul10fN05NYrjQuNbZ+Izd5Z7pSjX3nPlWpi+a1PdLu+piSUXMXu4+8qMfcPXIm
- PvkmsEkhM48Nef7MObzLGcKVzAtgdy3dwqu+1uGiz/5guJM5zY6Ju6XDNat2EjGwW45vKjp/7
- lm2yMqXiedbMX38XwhfRcJqyfuAoGmE1PwyJDeZE8migVNlC4Iv0ZFay86jd+oyZ+gQo26Rjy
- rCwKbjat3YcvZlfX1AYjK5IlPPpk+JOvuZeAerP7K5VyLprj3J7wj1Uym+SyImJZ9/809uv1G
- UCnTWrgqHUN3deThwTuR1t1rh+qkwBtkLjrhDKdF41TpHvyWePcZzGOgcxan+SOczFDZ+DtOG
- u27BWXSESaUJdxvGSTw0Hh41bJwqvxVY986XgzkVTIRal2SV1cTOPcd9oCR+RoVUD0xpuDflt
- eDUkzlY3f8W1qdkMwO22qRZlBcGewAeeum+ryOFpy0vtYdssiHWNsYsCdm0i0QLwssiVscG4W
- u0CfwhSWbkgnmfwXUKcpxJKUodnNmNriu5vxZ1X1eA==
+X-Provags-ID: V03:K1:BN/G7vW9/+OwrOJf64TGPnwW5YzRRIk27PgTlhcRzCSfc0brUlW
+ ksBPxIXOOflP29UVRJOMrUXLvyz7paYxVQKtRebHImuLSZEQYMhW4HLut1gLnlP0nZjTlrz
+ J+KXcOrxBNo2L2+aSHOU6bcKtRLFcb92XLDnjMNjC7c1k85gf2Xv4UwY4xK3kbWGxpBo7US
+ o7UJRe9alQqQ9hyQfgzGw==
+UI-OutboundReport: notjunk:1;M01:P0:EUvzvJRXwIs=;PHI27EI6rgPYtu1TJFYQ9ZkqTdl
+ jmu3db43i6TwbJSn+BV2022WjElLQab0IsbgYi/5OE2HeCPbmSYa719xd8tI5287nZs8Xmmpg
+ INyL2p7d8pYBzhiEhL0QP5mU32yfIP/oPPmrwGnX5nKjkeFftEcbSCjdeVDCh2sxUAbqOSkHN
+ pf58TnJp+yI0WrF8Cfnv4kKqJhKnRTuAEtVVkc/Jo8+v1vhND1G074AXJ0tkA7qH/1ZuAHWto
+ +JSnUBSZIf80+8iQ5R8RlIF0WqABRic2ZEFia4Sk2JqQHMmAw3b/5/47wL0lQhalyZd1BrKbs
+ F4ctHvm7Z+eTESeRsX2FEocXdHK2Tx4kKlCL3FQhsDtlHPL+Z3JxTRZ+Mac5zk6oIhXxkwyfw
+ tLmlHCftHDGZoN2+uezOeKNrnaackdD7N79BEzbGeiC01yFqY/B5f+C0hvyDnADhGVeFa8pWA
+ VwtwRKcX8cajG5sfLVpuy0DlI5ZDAEIs3m2Bvogp41oIi/pOH1nNnho7a9f9Lg9bk9N10DceD
+ ox2cTsAB2Fdkgdp//EEe64n0ZkIfMOhrlS54sSUzhjuxTLgwq0ab2i4Rpy4LGNhYAnB2a/San
+ FkcvHTT/fimrd+ptx2z7SFkN5+8VNGFTKnpoJ3XqxowHBdzcBP+y6KhkhlSgwMNbd7i3uiTSg
+ 0Qvuqhj0b+AiDbWjvLRzK/8Lxolqe8ooJ5VklVoLpg==
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-This series fix some dtbs_check warning for the Raspberry Pi boards
-and convert 4 txt DT bindings for BCM2835 to YAML.
+Convert the DT binding document for bcm2835-mbox from .txt to YAML.
 
-Changes in V2:
-- drop already applied patches (bcm2835-sdhost, bcm2835-thermal)
-- drop patch "dmaengine: bcm2835: also support generic dma-channel-mask"
-- keep brcm,bcm2835-dma for ABI compatibility which also resolve
-  dependency between patch 2 and 3
-- drop quotes in patch 2 as noted by Rob Herring
-- add interrupt description as suggested by Rob
-- add Rob's and Uwe's Reviewed-by
-
-
-Stefan Wahren (7):
-  ARM: dts: bcm283x: Fix pinctrl groups
-  dt-bindings: dma: convert bcm2835-dma bindings to YAML
-  ARM: dts: bcm2835: adjust DMA node names
-  dt-bindings: pwm: convert pwm-bcm2835 bindings to YAML
-  ARM: dts: bcm283x: Increase pwm-cells
-  dt-bindings: mailbox: convert bcm2835-mbox bindings to YAML
-  dt-bindings: timer: convert bcm2835-system-timer bindings to YAML
-
- .../bindings/dma/brcm,bcm2835-dma.txt         |  83 --------------
- .../bindings/dma/brcm,bcm2835-dma.yaml        | 102 ++++++++++++++++++
- .../bindings/mailbox/brcm,bcm2835-mbox.txt    |  26 -----
- .../bindings/mailbox/brcm,bcm2835-mbox.yaml   |  40 +++++++
- .../devicetree/bindings/pwm/pwm-bcm2835.txt   |  30 ------
- .../devicetree/bindings/pwm/pwm-bcm2835.yaml  |  43 ++++++++
- .../timer/brcm,bcm2835-system-timer.txt       |  22 ----
- .../timer/brcm,bcm2835-system-timer.yaml      |  48 +++++++++
- arch/arm/boot/dts/bcm2711.dtsi                |   4 +-
- arch/arm/boot/dts/bcm2835-common.dtsi         |   2 +-
- arch/arm/boot/dts/bcm2835-rpi-a-plus.dts      |   1 +
- arch/arm/boot/dts/bcm2835-rpi-a.dts           |   1 +
- arch/arm/boot/dts/bcm2835-rpi-b-plus.dts      |   1 +
- arch/arm/boot/dts/bcm2835-rpi-b-rev2.dts      |   1 +
- arch/arm/boot/dts/bcm2835-rpi-b.dts           |   1 +
- arch/arm/boot/dts/bcm2835-rpi-cm1-io1.dts     |   1 +
- arch/arm/boot/dts/bcm2835-rpi-zero-w.dts      |   2 +
- arch/arm/boot/dts/bcm2835-rpi-zero.dts        |   1 +
- arch/arm/boot/dts/bcm2835-rpi.dtsi            |   2 -
- arch/arm/boot/dts/bcm2836-rpi-2-b.dts         |   1 +
- arch/arm/boot/dts/bcm2837-rpi-cm3-io3.dts     |   1 +
- arch/arm/boot/dts/bcm2837-rpi-zero-2-w.dts    |   2 +
- arch/arm/boot/dts/bcm283x.dtsi                |   2 +-
- 23 files changed, 250 insertions(+), 167 deletions(-)
- delete mode 100644 Documentation/devicetree/bindings/dma/brcm,bcm2835-dma.txt
- create mode 100644 Documentation/devicetree/bindings/dma/brcm,bcm2835-dma.yaml
+Signed-off-by: Stefan Wahren <stefan.wahren@i2se.com>
+---
+ .../bindings/mailbox/brcm,bcm2835-mbox.txt    | 26 ------------
+ .../bindings/mailbox/brcm,bcm2835-mbox.yaml   | 40 +++++++++++++++++++
+ 2 files changed, 40 insertions(+), 26 deletions(-)
  delete mode 100644 Documentation/devicetree/bindings/mailbox/brcm,bcm2835-mbox.txt
  create mode 100644 Documentation/devicetree/bindings/mailbox/brcm,bcm2835-mbox.yaml
- delete mode 100644 Documentation/devicetree/bindings/pwm/pwm-bcm2835.txt
- create mode 100644 Documentation/devicetree/bindings/pwm/pwm-bcm2835.yaml
- delete mode 100644 Documentation/devicetree/bindings/timer/brcm,bcm2835-system-timer.txt
- create mode 100644 Documentation/devicetree/bindings/timer/brcm,bcm2835-system-timer.yaml
 
+diff --git a/Documentation/devicetree/bindings/mailbox/brcm,bcm2835-mbox.txt b/Documentation/devicetree/bindings/mailbox/brcm,bcm2835-mbox.txt
+deleted file mode 100644
+index b48d7d30012c..000000000000
+--- a/Documentation/devicetree/bindings/mailbox/brcm,bcm2835-mbox.txt
++++ /dev/null
+@@ -1,26 +0,0 @@
+-Broadcom BCM2835 VideoCore mailbox IPC
+-
+-Required properties:
+-
+-- compatible:	Should be "brcm,bcm2835-mbox"
+-- reg:		Specifies base physical address and size of the registers
+-- interrupts:	The interrupt number
+-		  See bindings/interrupt-controller/brcm,bcm2835-armctrl-ic.txt
+-- #mbox-cells:	Specifies the number of cells needed to encode a mailbox
+-		  channel. The value shall be 0, since there is only one
+-		  mailbox channel implemented by the device.
+-
+-Example:
+-
+-mailbox: mailbox@7e00b880 {
+-	compatible = "brcm,bcm2835-mbox";
+-	reg = <0x7e00b880 0x40>;
+-	interrupts = <0 1>;
+-	#mbox-cells = <0>;
+-};
+-
+-firmware: firmware {
+-	compatible = "raspberrypi,firmware";
+-	mboxes = <&mailbox>;
+-	#power-domain-cells = <1>;
+-};
+diff --git a/Documentation/devicetree/bindings/mailbox/brcm,bcm2835-mbox.yaml b/Documentation/devicetree/bindings/mailbox/brcm,bcm2835-mbox.yaml
+new file mode 100644
+index 000000000000..9588817f4511
+--- /dev/null
++++ b/Documentation/devicetree/bindings/mailbox/brcm,bcm2835-mbox.yaml
+@@ -0,0 +1,40 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/mailbox/brcm,bcm2835-mbox.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Broadcom BCM2835 VideoCore mailbox IPC
++
++maintainers:
++  - Stefan Wahren <stefan.wahren@i2se.com>
++
++properties:
++  compatible:
++    const: brcm,bcm2835-mbox
++
++  reg:
++    maxItems: 1
++
++  interrupts:
++    maxItems: 1
++
++  "#mbox-cells":
++    const: 0
++
++required:
++  - compatible
++  - reg
++  - interrupts
++  - "#mbox-cells"
++
++additionalProperties: false
++
++examples:
++  - |
++    mailbox@7e00b880 {
++      compatible = "brcm,bcm2835-mbox";
++      reg = <0x7e00b880 0x40>;
++      interrupts = <0 1>;
++      #mbox-cells = <0>;
++    };
 -- 
 2.34.1
 
