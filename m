@@ -2,111 +2,128 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E066CEB64D9
-	for <dmaengine@archiver.kernel.org>; Mon, 26 Jun 2023 18:16:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EB797EB64D9
+	for <dmaengine@archiver.kernel.org>; Tue, 27 Jun 2023 16:08:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230517AbjFZSQz (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 26 Jun 2023 14:16:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60890 "EHLO
+        id S231743AbjF0QIi (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 27 Jun 2023 12:08:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36532 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230397AbjFZSQy (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Mon, 26 Jun 2023 14:16:54 -0400
-Received: from mout.kundenserver.de (mout.kundenserver.de [212.227.126.130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B0CCD94;
-        Mon, 26 Jun 2023 11:16:52 -0700 (PDT)
-Received: from [192.168.1.141] ([37.4.248.15]) by mrelayeu.kundenserver.de
- (mreue009 [212.227.15.167]) with ESMTPSA (Nemesis) id
- 1N63NQ-1pyGlv1Q2S-016R6o; Mon, 26 Jun 2023 20:16:19 +0200
-Message-ID: <47eac53a-8d93-16fa-a8db-68bbd40020a8@i2se.com>
-Date:   Mon, 26 Jun 2023 20:16:18 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH V2 7/7] dt-bindings: timer: convert bcm2835-system-timer
- bindings to YAML
-From:   Stefan Wahren <stefan.wahren@i2se.com>
-To:     Rob Herring <robh+dt@kernel.org>, Rob Herring <robh@kernel.org>
-Cc:     linux-arm-kernel@lists.infradead.org, Ray Jui <rjui@broadcom.com>,
-        dmaengine@vger.kernel.org,
-        Florian Fainelli <florian.fainelli@broadcom.com>,
-        devicetree@vger.kernel.org, linux-mmc@vger.kernel.org,
-        linux-pwm@vger.kernel.org, Jassi Brar <jassisinghbrar@gmail.com>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        =?UTF-8?Q?Uwe_Kleine-K=c3=b6nig?= <u.kleine-koenig@pengutronix.de>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-pm@vger.kernel.org, bcm-kernel-feedback-list@broadcom.com,
-        Vinod Koul <vkoul@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Scott Branden <sbranden@broadcom.com>
-References: <20230617133620.53129-1-stefan.wahren@i2se.com>
- <20230617133620.53129-8-stefan.wahren@i2se.com>
- <02d1d74a-1476-41c8-6d94-3eb477352309@linaro.org>
- <543ca0c5-0051-3968-63cd-7982f95c06c6@i2se.com>
-Content-Language: en-US
-In-Reply-To: <543ca0c5-0051-3968-63cd-7982f95c06c6@i2se.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K1:Pf+nK9VlP6UkuRXw6XpNBDYvdhpAMd7zCnAyEYISBTYUuWfZsGA
- KhKvXGty+Tb7YBrwQDkiXzvssgyiuvbh1qNHvlEzU1uVAt5DaVXhSukj4YlEdnFCxs/Kc56
- 3AMyVt0eNBGYqT6Mww9J1VWG19uSHT850Q67pFWJcxQ70YrI6gKDTGufkCQGnZf5q9B0Eef
- PkC3ZofiennUM481xaQrg==
-UI-OutboundReport: notjunk:1;M01:P0:9baAdFLbfrw=;I04Bud++nv5QiIFcrr0i7NvorWL
- bmeG4KE1VO4eQSh+Wj84BLTzHYeNd7sAo9plxWLSlm6+wrJ6+eZSH5Tz5es+/silzRfMkHNvr
- QX7EBXAf3+4lnnI3dajXM5Bl/lntwtvh/wZlRUBrrYrejthXr6YQE160LSVzKSNCg5liKHvOl
- MtqTce1vS0xdsg2XNHdDarkIl3Q0yA4v/7tyl1VL+OgBcU92YQVyvzx7+4gq58wcc6vhAxyt5
- RvPgZ5+Fi/ui0GvojkXoMu4a40PhD4SrnI4gyfPOctRZc9EVW0YcNk5XRXXrNFZcrAOWYNR0n
- DLudhGKTeokM39AuofC6vHIvSS091Jm9S8XmwQVLhhMKdgw+AHAp5nq2EECpbgqu9/jRwTCH1
- AyUwgAz38xB9x4D9qJKC5vf7Z5duDMFLOhe0zjUYJxdxr5Es9nqHcdhwV1KgCh+xRELVs67dU
- A2e8NrLjZYOUovtmKtR+N7fa0tq0N7faVL8B/uwby3e9hCly8/UYPkUBKSWwfF9fFTIeVOqsL
- IFgnG0Dw/McbUSSnV9+RP3QEpvO3XLK9SiOF6p3HMZwbXaPe8OT5ec8kSkb6tAOjVDtVuB1nH
- 4Mxn4KibjxdPfaKfCCG/vdsXETLLunRNoixCqqk8IwifTw7aL/NZ2Ukr9ZLELEbFkFJAYaww7
- aC56FuQq3AdG5s/Yt/gCc4ryMTEhg2wkLZmfXso8RA==
+        with ESMTP id S232204AbjF0QIg (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Tue, 27 Jun 2023 12:08:36 -0400
+Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com [IPv6:2607:f8b0:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E119430EA;
+        Tue, 27 Jun 2023 09:08:25 -0700 (PDT)
+Received: by mail-pl1-x62e.google.com with SMTP id d9443c01a7336-1b80f2e6c17so15266375ad.0;
+        Tue, 27 Jun 2023 09:08:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1687882105; x=1690474105;
+        h=message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=UcMATJN8xXqVyRFtTuyOpaRPWGgCQutMdeEQmPJDSaM=;
+        b=dW5tIzc8PZWHLch9wtCYSSNk5Kk7CDKrQbzjr+kL4FL53IsKmldGk7iocVp4frRgMm
+         f4tg+3DIJA59hHmJwY2GVV+X6a3nenchRPAfJ3wfOuycfUBon/lPe4Yi9D5X/HIfxSNO
+         C43Go4tahpLRb6S/YyUdFwKs8dGwvP0lDOH3dyV373LEb6kcS7E/s+knitRtMgPDqx4K
+         f+9Q6TXKRhLoM31qQnb1z0/HgKpHM/jQa2NReKiOYsEV3fZEcrX8F6GbelCbmJgH20j1
+         6OncEHi/3DcsUtOIrVO1Weoq0tVBA9SpGmrgYtFg3rztpF7LPEa78qCnvT1RGIO4J49/
+         CDVg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1687882105; x=1690474105;
+        h=message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=UcMATJN8xXqVyRFtTuyOpaRPWGgCQutMdeEQmPJDSaM=;
+        b=bqplZAdO0emLut9fZOKlgCE3O2jR+1bblUGpmxmOHOaR9kSw07mAcfByqVQRofzpTa
+         ioJurMCHg1yfL6AWZnKzQjWJemlFcijW228vFlTsUr6SnmZBnWn3ndvw9Ta4rkTSInve
+         XHhMX82RSuUOFyjDyUzzmJr5vOjA75GugEQIxy5BBrtUkesw352+XF54qQTgHF3XhvX9
+         roJXlMzeT+5L5gQjqOx1O8N/wDrH7SeOEQ67JFxo8s/OC/UmTY6sEMFC1e2lpwkNMezu
+         G+GuqU9MY6ajU2ufRs2J9ej98SUmZmznekd59LhCAMt0y5nreVAQlHen7+DS73ZfcdNb
+         YV1A==
+X-Gm-Message-State: AC+VfDz38Pt/2vgN8ci4BxqGZKuDmO2AO4keMO9qdWBMvyN84CapirWr
+        F1rY7o+ABVYczIuPhOOybGxvRlf1E38zzw==
+X-Google-Smtp-Source: ACHHUZ5BTauw/zKna/oWZR79JVRvXQg9k9SzKWVgse9pUJT5oj4EIVac4+zntqBTSsG9g25aKVdn8A==
+X-Received: by 2002:a17:902:e5c1:b0:1b6:b4e5:23a with SMTP id u1-20020a170902e5c100b001b6b4e5023amr12542835plf.26.1687882105163;
+        Tue, 27 Jun 2023 09:08:25 -0700 (PDT)
+Received: from 377044c6c369.cse.ust.hk (191host097.mobilenet.cse.ust.hk. [143.89.191.97])
+        by smtp.gmail.com with ESMTPSA id a7-20020a170902ecc700b001ae7fad1598sm6206468plh.29.2023.06.27.09.08.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 27 Jun 2023 09:08:24 -0700 (PDT)
+From:   Chengfeng Ye <dg573847474@gmail.com>
+To:     vkoul@kernel.org
+Cc:     dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Chengfeng Ye <dg573847474@gmail.com>
+Subject: [PATCH] dmaengine: k3dma: fix potential deadlock on &d->lock
+Date:   Tue, 27 Jun 2023 16:08:17 +0000
+Message-Id: <20230627160817.47353-1-dg573847474@gmail.com>
+X-Mailer: git-send-email 2.17.1
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Hi Rob,
+As &d->lock is acquired by the tasklet k3_dma_tasklet() under softirq
+context, other process context code acquring the lock should disable
+irq or at least bottom-half irq. The dma terminate callback
+k3_dma_terminate_all() and pause callback k3_dma_transfer_pause()
+acquire the same lock but without closing irq.
 
-Am 19.06.23 um 20:57 schrieb Stefan Wahren:
-> Hi Daniel,
-> 
-> Am 19.06.23 um 19:00 schrieb Daniel Lezcano:
->> On 17/06/2023 15:36, Stefan Wahren wrote:
->>> Convert the DT binding document for bcm2835-system-timer from .txt
->>> to YAML.
->>>
->>> Signed-off-by: Stefan Wahren <stefan.wahren@i2se.com>
->>> Reviewed-by: Rob Herring <robh@kernel.org>
->>> ---
->>>   .../timer/brcm,bcm2835-system-timer.txt       | 22 ---------
->>>   .../timer/brcm,bcm2835-system-timer.yaml      | 48 +++++++++++++++++++
->>>   2 files changed, 48 insertions(+), 22 deletions(-)
->>>   delete mode 100644 
->>> Documentation/devicetree/bindings/timer/brcm,bcm2835-system-timer.txt
->>>   create mode 100644 
->>> Documentation/devicetree/bindings/timer/brcm,bcm2835-system-timer.yaml
->>>
->>> diff --git 
->>> a/Documentation/devicetree/bindings/timer/brcm,bcm2835-system-timer.txt b/Documentation/devicetree/bindings/timer/brcm,bcm2835-system-timer.txt
->>> deleted file mode 100644
->>> index 844bd5fbd04c..000000000000
->>> --- 
->>> a/Documentation/devicetree/bindings/timer/brcm,bcm2835-system-timer.txt
->>
->> Appliedp patch #7
-> 
-> i'm so sorry but i accidentially added a Reviewed-by from Rob, which is 
-> wrong here. I should have added to the patch 6 :-(
+I am not sure whether the two callbacks are already irq close in the
+core, if not, then it would have the following deadlocks. But I saw
+a spin_lock_irq() or another lock inside the terminate callback so
+I guess not.
 
-did you noticed the problem about the accidentially wrong added Reviewed-by?
+Possible deadlock scenario:
+k3_dma_transfer_pause()
+    -> spin_lock(&d->lock)
+        <tasklet interrupt>
+        -> k3_dma_tasklet()
+        -> spin_lock_irq(&d->lock) (deadlock here)
 
-Best regards
+This flaw was found using an experimental static analysis tool we are
+developing for irq-related deadlock.
 
-> 
-> Regards Stefan
-> 
->>
->> Thanks
->>
+The tentative patch fix the potential deadlock by spin_lock_irqsave(),
+or it can be spin_lock_bh() if should be fixed?
+
+Signed-off-by: Chengfeng Ye <dg573847474@gmail.com>
+---
+ drivers/dma/k3dma.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
+
+diff --git a/drivers/dma/k3dma.c b/drivers/dma/k3dma.c
+index ecdaada95120..ee398cb4ac11 100644
+--- a/drivers/dma/k3dma.c
++++ b/drivers/dma/k3dma.c
+@@ -728,9 +728,9 @@ static int k3_dma_terminate_all(struct dma_chan *chan)
+ 	dev_dbg(d->slave.dev, "vchan %p: terminate all\n", &c->vc);
+ 
+ 	/* Prevent this channel being scheduled */
+-	spin_lock(&d->lock);
++	spin_lock_irqsave(&d->lock, flags);
+ 	list_del_init(&c->node);
+-	spin_unlock(&d->lock);
++	spin_unlock_irqrestore(&d->lock, flags);
+ 
+ 	/* Clear the tx descriptor lists */
+ 	spin_lock_irqsave(&c->vc.lock, flags);
+@@ -764,6 +764,7 @@ static int k3_dma_transfer_pause(struct dma_chan *chan)
+ 	struct k3_dma_chan *c = to_k3_chan(chan);
+ 	struct k3_dma_dev *d = to_k3_dma(chan->device);
+ 	struct k3_dma_phy *p = c->phy;
++	unsigned long flags;
+ 
+ 	dev_dbg(d->slave.dev, "vchan %p: pause\n", &c->vc);
+ 	if (c->status == DMA_IN_PROGRESS) {
+@@ -771,9 +772,9 @@ static int k3_dma_transfer_pause(struct dma_chan *chan)
+ 		if (p) {
+ 			k3_dma_pause_dma(p, false);
+ 		} else {
+-			spin_lock(&d->lock);
++			spin_lock_irqsave(&d->lock, flags);
+ 			list_del_init(&c->node);
+-			spin_unlock(&d->lock);
++			spin_unlock_irqrestore(&d->lock, flags);
+ 		}
+ 	}
+ 
+-- 
+2.17.1
+
