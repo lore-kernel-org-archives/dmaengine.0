@@ -2,167 +2,158 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7185AEB64DD
-	for <dmaengine@archiver.kernel.org>; Wed,  5 Jul 2023 07:32:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 84434C001B1
+	for <dmaengine@archiver.kernel.org>; Wed,  5 Jul 2023 08:20:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232085AbjGEHc0 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 5 Jul 2023 03:32:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50678 "EHLO
+        id S232413AbjGEIUr (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 5 Jul 2023 04:20:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44686 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231627AbjGEHcZ (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Wed, 5 Jul 2023 03:32:25 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 003E310C3;
-        Wed,  5 Jul 2023 00:32:15 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 91CC461459;
-        Wed,  5 Jul 2023 07:32:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70B20C433C8;
-        Wed,  5 Jul 2023 07:32:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1688542334;
-        bh=rrKS9XlbWXtXv9/M+AGV0hoVPd4VwC9NnkejaVVNV/s=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=PebVrMnxOd9dYXNZ9uEZx40XeASe4nHkgzQwy6WsR4jV1HuOvzMR+ZEGb6xxZ1oZT
-         p7el+iseuVSvWgraRwCdSnkns/vJu0mecsLNlmhfiLgIQRvUD7ff/TXoSQa/fQZDSN
-         A5R8NP0hAPxSu6j2HWUy1j/Yv8rOewaCaC0+6IFE5xvEpztYPqCoevRyadmjy3412D
-         7eLTsKKGSYdxhOoyG1UWfLTDRvWuuuEnKd1Ug4xvkxxl73C6E07i5RbiFXUxOsGmAD
-         A5KAdpNxnsrEgPBAFK1zx2ykBOiWT4Z2PtBDamrCcd4s765Or75qhXPRgGg0kjC5bh
-         /2hSsvRTvxPlw==
-Date:   Wed, 5 Jul 2023 13:02:10 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Ilpo =?iso-8859-1?Q?J=E4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Cc:     linux-serial@vger.kernel.org,
-        Robert Baldyga <r.baldyga@samsung.com>,
-        dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Richard Tresidder <rtresidd@electromag.com.au>,
-        stable@vger.kernel.org
-Subject: Re: [PATCH] dmaengine: pl330: Return DMA_PAUSED when transaction is
- paused
-Message-ID: <ZKUceu9iJuAAeYYT@matsya>
-References: <20230526105434.14959-1-ilpo.jarvinen@linux.intel.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+        with ESMTP id S231594AbjGEIUY (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Wed, 5 Jul 2023 04:20:24 -0400
+Received: from APC01-TYZ-obe.outbound.protection.outlook.com (mail-tyzapc01on2072a.outbound.protection.outlook.com [IPv6:2a01:111:f403:704b::72a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 311791FCF;
+        Wed,  5 Jul 2023 01:19:42 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=fgicCFOy68Qxtu6a0yCgJXY0+25NmuNnOmbh6o5a4+Eblkwhq1n9STCLhRILQ4jzaI68uUPqMFKIP2DsbPwbIs2g2NHTCCLhp3eHz8MG4cTDpEsE+2rTeoYyiI97jb3b5SjdfLZZF2euOCZydPS0bSwd/svNhl2BuWXQ08X5z4xpb3SUrG7kn22Qg8c7dzkRumSBjN5ILReNhBqK1x9qGE2Z1coSrJaqd5oAc7q0tmU2LATd7mzeIW3q3spTs7tH2lSrBpATWFYHzcIc4EFJspTEJYP1mwT/URmgfmgVh7E1HA5AA3JmShWBXEnsPC0YO+8mDynPXJOH9+m2/zZjpQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=Li11zbLzf1YFMqKUTEIvOK09mYXdHEPAbxQ9C2YqLVs=;
+ b=VnmO0hQiurW3SttdCpFQk1E6XE2Tq0unDH5ZiV0XO3tZ8wU3zg2kzugPzXViYbM3hIyzfSDYxRZsioAwmV8RgKEDInkg2o4TqKDaa5KgkQmsLPQ0tucUp5KW5iGSNt1ZmcD2V8YzoEn7XvUbuV/ANnLSIuqTVxCuyO/Kp6oHdtzlofmeoEN5p1MTb8rK20Zf2P+pbrv4OIO1uNcw3CR2/1qVPv4KPzy79+u9w+v+uRYmufYgb2I18dCa8bTtQKktBH3mr0JMBWHv/c9WKOMzU12/L1RoQ0XesUHWV5+cjvGECTHJpnC0BBL6vNANgz3ABLswpgjOygJqPARPzUYCCw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=vivo.com; dmarc=pass action=none header.from=vivo.com;
+ dkim=pass header.d=vivo.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vivo.com; s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=Li11zbLzf1YFMqKUTEIvOK09mYXdHEPAbxQ9C2YqLVs=;
+ b=BcKN6qfOoOhGBPMYeCtaRHZp9UM/RLFcmva0iK0hiIVuCJjniuAe9kNi/trD439yfIb33Bgpa11NwpYlHn8jrJ7g5s95HekK9goHrmSYjq3MxyRwMFgsgUsvkaAa9lvNYebga6OYG+/GxR74h7JG/DosCAavPWNAD+zqY2r1YREk/31UfYeCJE0VdfdUiOdCJVTeMxGxvCXo+NJqhnmb3XlUhaO5nehEjpPZleuMSsdYPimD6fb/q65jPFQma6QdrOBAM4bwMXN3+sNJ8mTo/AStKou6Zo9+Owzomr55e1sdm9mlE2b5KGIMdZvGEorockhPxnDYyHzEQFjl7yDbEQ==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=vivo.com;
+Received: from SEZPR06MB5269.apcprd06.prod.outlook.com (2603:1096:101:78::6)
+ by SEZPR06MB5119.apcprd06.prod.outlook.com (2603:1096:101:4e::14) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6565.17; Wed, 5 Jul
+ 2023 08:19:10 +0000
+Received: from SEZPR06MB5269.apcprd06.prod.outlook.com
+ ([fe80::fa0e:6c06:7474:285c]) by SEZPR06MB5269.apcprd06.prod.outlook.com
+ ([fe80::fa0e:6c06:7474:285c%5]) with mapi id 15.20.6565.016; Wed, 5 Jul 2023
+ 08:19:10 +0000
+From:   Yangtao Li <frank.li@vivo.com>
+To:     Sinan Kaya <okaya@kernel.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>
+Cc:     Yangtao Li <frank.li@vivo.com>,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH 2/5] dmaengine: qcom_hidma: Use devm_platform_get_and_ioremap_resource()
+Date:   Wed,  5 Jul 2023 16:18:53 +0800
+Message-Id: <20230705081856.13734-2-frank.li@vivo.com>
+X-Mailer: git-send-email 2.39.0
+In-Reply-To: <20230705081856.13734-1-frank.li@vivo.com>
+References: <20230705081856.13734-1-frank.li@vivo.com>
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20230526105434.14959-1-ilpo.jarvinen@linux.intel.com>
+Content-Type: text/plain
+X-ClientProxiedBy: SG2P153CA0044.APCP153.PROD.OUTLOOK.COM (2603:1096:4:c6::13)
+ To SEZPR06MB5269.apcprd06.prod.outlook.com (2603:1096:101:78::6)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SEZPR06MB5269:EE_|SEZPR06MB5119:EE_
+X-MS-Office365-Filtering-Correlation-Id: 92c66c87-f94b-4557-21d2-08db7d30828f
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: bgrDN9HXVdv+YQxzWlaY81zHMTqYxgE/J3GaPpOJrD9B+Q9HwZxiP/5yZ6N3kqtolJaIdmLF/RS8VrDDGXfgDpyUG8DA2zGM/ZyQgZJ0rDexuSh3Ab6x+GCeIMGPY4PqxknjfGwuv95cN0Gy12GG3z6xrBbGi3aoZoZGCE6VtENSszvXhVnkD8S3n8ThpVOgM7OC335KX5ZECJEUJM8AfNh1B51dj/4SbleqYPuRcXudvgAA+k/t6msn9j7daEcMcAqmvrFyfAqnIEnls9oCnabQREXtPbvkodGNq8vPz2oLlYhk8A+ygHGhnayGtbLcWbFU2hoYUSg1m/FXnPObmm30Vyjb5azNR9xbFsO/bWTEaQ2R3B/RmLM4Pq3F/J549280uMgBhsBa0iavqt3GmxI+FMd/UhqXpzp+sojv26aIda0tw/lxjUHFkI/Akky4Gj+ZeqYxuDKKcCdODyQi4wNk370gCXjP4ESAEwAolaABqY05WYSWHyAO9HG4aCdj8l8ducKvQ2mVa4hbhJHAaNjHZ6s4Ha6V8MGNfSogIxcF3WAXfaedKP9uRs+dlpHD/8b0kwvbrdcg1NP3/r45niiqcdHLtJwZNgVkqyBTEv9jTrpJON0gbe42/7jTqZv+
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SEZPR06MB5269.apcprd06.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230028)(4636009)(136003)(346002)(396003)(366004)(376002)(39860400002)(451199021)(316002)(2616005)(4326008)(66556008)(66946007)(83380400001)(8936002)(86362001)(52116002)(1076003)(2906002)(66476007)(5660300002)(8676002)(41300700001)(36756003)(6486002)(6512007)(186003)(6506007)(478600001)(26005)(6666004)(110136005)(38350700002)(38100700002);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?Iyvc3QKZQH8DZ7YeI6Yj31OtpWHjLDACAtxOn9tSwfo5k0hFDbL3kMW5kgAe?=
+ =?us-ascii?Q?v44mVlKy0MBjF6mHmH5D8AeSkl/qzki/QlbC6TB84lyOdsZDcp1YjP7t5axv?=
+ =?us-ascii?Q?dNzHMhIeyhWV9HAYi/qI6/OnA12f8LfrmT3pRBPTP0BMql5ZiyV6lwnRpGCx?=
+ =?us-ascii?Q?8v5ihW7kuAO4i+qizZqAd/omPJ2QM1ae5JmfjRFqZdZiv4rwZG2ibBlYpVi+?=
+ =?us-ascii?Q?y7jnTD/J7M65cyjo2JwQtwYe4YRbkIk6L0C6osGWeFSUm3okweE8ka36Zb5m?=
+ =?us-ascii?Q?rpdxO5zfQx2YyEl30m1P/+u1UBDTLmxZjzhcAm3ajoQ1FT2JvNDJyvonVGTR?=
+ =?us-ascii?Q?xfXSwkKrp05MVIxn/6do9BQ41jUA58YcemUFfMDw/qexy6z84BhRjk1G2Nm2?=
+ =?us-ascii?Q?vhs/r3hJEz2KDY4TUYAma7AAD7Qxh92g7L8u6lNxLl6hNMYmZnhp9egjmXT/?=
+ =?us-ascii?Q?FDzd1Ie//xYolsM2UKLZRwSghxs2ITrCLmNSfds+0L9vKkVdqoUFVHvDQ2kf?=
+ =?us-ascii?Q?FisM+G+4gk1bwkgUHY0IST5E2RMe9PvKASKST/qq+IAV6ZEN8Q19byVBOQhj?=
+ =?us-ascii?Q?qbBm6Renqr/iuJc9bCscpzDi0KwvF3/UnaXqvBcagOuamIpJD5aZBMguzpoB?=
+ =?us-ascii?Q?RucJURzBKnCC5IfkuwVyQu75niT9n6TPEBeWDRPRE0dJB8sA0ec9+4qHpa6L?=
+ =?us-ascii?Q?Z+6tD0Jnfb4NjIGbUhIklErDxbMJfd9P9I4UvJOIpeAS4bGsLfBI/DWPnG0y?=
+ =?us-ascii?Q?GPNJD3wstdJJ1wbVBOHSBr7hUdBh/vj07QX6Woj/h+4idIb6LulWqCQMtbds?=
+ =?us-ascii?Q?4078VvlY0y4+5xM+vPMPzPxhr/nZVD2eCfZEnBdVPDkPACVHHpk3weLIOAml?=
+ =?us-ascii?Q?k6P7HqxbHfGDOqBQ0wjre7Ezc7CYIRcYUW0zoyosyKZU8Vd20a/nBTyXf0JC?=
+ =?us-ascii?Q?DX0eaophMrG8X806Q6R4hd+xKPNy0OkrbSLrzRYOgLyVSr1rKbFUTD3eTYPA?=
+ =?us-ascii?Q?hhFHC9wdFtsp1tozG/nbPYDje/mcEY7hPesgoqs497Wk1x1gj5KEqAkMBEyX?=
+ =?us-ascii?Q?1qGZ+bGMAcp1uYOEU4st4A0nj1hFICIP1fu4gSw7g4DMimA6L58S5C2SVTPd?=
+ =?us-ascii?Q?tFksNWbnU1FMJSFfEHGQILAFagsrlWbfz7IYMGi1d16GlK2cSyOo6dIsR3pf?=
+ =?us-ascii?Q?a7abuNrXnvZWtZMMOrQK5wyQ2HbPBjqFkq47Yh+bD5WhnKNDt5D+eBGk1J7L?=
+ =?us-ascii?Q?N4b85C6ggteshG0t29Mg2uHD6467Z/WY73YAUtlBitVE+wquuN9O6IJWG8Ng?=
+ =?us-ascii?Q?HMY0mIZWgP9XcfNvNMrQbz3aLlH43giUUBRBX5fi9X1B+8bBh2zIbWS4AO1l?=
+ =?us-ascii?Q?RnrBLsXqh/NZG0XG/PgjbuV/sMhehvAtp9AXKYthHO2eSLUSLwTbbFQ1Kyb5?=
+ =?us-ascii?Q?8h3ia1vxvfSKTIQ0YcK5G3FtL9B2a13wTuXnHXfswCxzGFlEZ8N/zibJY+kz?=
+ =?us-ascii?Q?vGKPvZ0Mx36OtfzlDBc0OBXtLDCJJ4dY/Mp7qJSdR6fbuD5iz3XyzYrJ+ph+?=
+ =?us-ascii?Q?pEQgoJMjEe3dtnTRkaahD0FuMnofY/1ZnnbKLOxL?=
+X-OriginatorOrg: vivo.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 92c66c87-f94b-4557-21d2-08db7d30828f
+X-MS-Exchange-CrossTenant-AuthSource: SEZPR06MB5269.apcprd06.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Jul 2023 08:19:10.6690
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 923e42dc-48d5-4cbe-b582-1a797a6412ed
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: MU2uMU7D8aLjecxTgIZI4WFRiUV6xPdmjTuo+t4uRlX6FpeSL2QFtJTyrJ1pUp1IaDLA2Z9/VfnCszY4DTWF9w==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SEZPR06MB5119
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On 26-05-23, 13:54, Ilpo Järvinen wrote:
-> pl330_pause() does not set anything to indicate paused condition which
-> causes pl330_tx_status() to return DMA_IN_PROGRESS. This breaks 8250
-> DMA flush after the fix in commit 57e9af7831dc ("serial: 8250_dma: Fix
-> DMA Rx rearm race"). The function comment for pl330_pause() claims
-> pause is supported but resume is not which is enough for 8250 DMA flush
-> to work as long as DMA status reports DMA_PAUSED when appropriate.
-> 
-> Add PAUSED state for descriptor and mark BUSY descriptors with PAUSED
-> in pl330_pause(). Return DMA_PAUSED from pl330_tx_status() when the
-> descriptor is PAUSED.
+Convert platform_get_resource(), devm_ioremap_resource() to a single
+call to devm_platform_get_and_ioremap_resource(), as this is exactly
+what this function does.
 
-Have you noticed the comment in the code which reads:
+Signed-off-by: Yangtao Li <frank.li@vivo.com>
+---
+ drivers/dma/qcom/hidma.c | 12 +++++-------
+ 1 file changed, 5 insertions(+), 7 deletions(-)
 
-/*
- * We don't support DMA_RESUME command because of hardware
- * limitations, so after pausing the channel we cannot restore
- * it to active state. We have to terminate channel and setup
- * DMA transfer again. This pause feature was implemented to
- * allow safely read residue before channel termination.
- */
-
-So driver just stops when in pause.
-
-Now the commit 57e9af7831dc returns when in progress state, so am not
-sure how returning Paused would help here?
-
-> 
-> Reported-by: Richard Tresidder <rtresidd@electromag.com.au>
-> Tested-by: Richard Tresidder <rtresidd@electromag.com.au>
-> Fixes: 88987d2c7534 ("dmaengine: pl330: add DMA_PAUSE feature")
-> Cc: stable@vger.kernel.org
-> Link: https://lore.kernel.org/linux-serial/f8a86ecd-64b1-573f-c2fa-59f541083f1a@electromag.com.au/
-> Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-> ---
-> 
-> $ diff -u <(git grep -l -e '\.device_pause' -e '->device_pause') <(git grep -l DMA_PAUSED)
-> 
-> ...tells there might a few other drivers which do not properly return
-> DMA_PAUSED status despite having a pause function.
-> 
->  drivers/dma/pl330.c | 18 ++++++++++++++++--
->  1 file changed, 16 insertions(+), 2 deletions(-)
-> 
-> diff --git a/drivers/dma/pl330.c b/drivers/dma/pl330.c
-> index 0d9257fbdfb0..daad25f2c498 100644
-> --- a/drivers/dma/pl330.c
-> +++ b/drivers/dma/pl330.c
-> @@ -403,6 +403,12 @@ enum desc_status {
->  	 * of a channel can be BUSY at any time.
->  	 */
->  	BUSY,
-> +	/*
-> +	 * Pause was called while descriptor was BUSY. Due to hardware
-> +	 * limitations, only termination is possible for descriptors
-> +	 * that have been paused.
-> +	 */
-> +	PAUSED,
->  	/*
->  	 * Sitting on the channel work_list but xfer done
->  	 * by PL330 core
-> @@ -2041,7 +2047,7 @@ static inline void fill_queue(struct dma_pl330_chan *pch)
->  	list_for_each_entry(desc, &pch->work_list, node) {
->  
->  		/* If already submitted */
-> -		if (desc->status == BUSY)
-> +		if (desc->status == BUSY || desc->status == PAUSED)
->  			continue;
->  
->  		ret = pl330_submit_req(pch->thread, desc);
-> @@ -2326,6 +2332,7 @@ static int pl330_pause(struct dma_chan *chan)
->  {
->  	struct dma_pl330_chan *pch = to_pchan(chan);
->  	struct pl330_dmac *pl330 = pch->dmac;
-> +	struct dma_pl330_desc *desc;
->  	unsigned long flags;
->  
->  	pm_runtime_get_sync(pl330->ddma.dev);
-> @@ -2335,6 +2342,10 @@ static int pl330_pause(struct dma_chan *chan)
->  	_stop(pch->thread);
->  	spin_unlock(&pl330->lock);
->  
-> +	list_for_each_entry(desc, &pch->work_list, node) {
-> +		if (desc->status == BUSY)
-> +			desc->status = PAUSED;
-> +	}
->  	spin_unlock_irqrestore(&pch->lock, flags);
->  	pm_runtime_mark_last_busy(pl330->ddma.dev);
->  	pm_runtime_put_autosuspend(pl330->ddma.dev);
-> @@ -2425,7 +2436,7 @@ pl330_tx_status(struct dma_chan *chan, dma_cookie_t cookie,
->  		else if (running && desc == running)
->  			transferred =
->  				pl330_get_current_xferred_count(pch, desc);
-> -		else if (desc->status == BUSY)
-> +		else if (desc->status == BUSY || desc->status == PAUSED)
->  			/*
->  			 * Busy but not running means either just enqueued,
->  			 * or finished and not yet marked done
-> @@ -2442,6 +2453,9 @@ pl330_tx_status(struct dma_chan *chan, dma_cookie_t cookie,
->  			case DONE:
->  				ret = DMA_COMPLETE;
->  				break;
-> +			case PAUSED:
-> +				ret = DMA_PAUSED;
-> +				break;
->  			case PREP:
->  			case BUSY:
->  				ret = DMA_IN_PROGRESS;
-> -- 
-> 2.30.2
-
+diff --git a/drivers/dma/qcom/hidma.c b/drivers/dma/qcom/hidma.c
+index 344525c3a32f..b5e3633e6a5e 100644
+--- a/drivers/dma/qcom/hidma.c
++++ b/drivers/dma/qcom/hidma.c
+@@ -765,17 +765,15 @@ static int hidma_probe(struct platform_device *pdev)
+ 	pm_runtime_set_active(&pdev->dev);
+ 	pm_runtime_enable(&pdev->dev);
+ 
+-	trca_resource = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+-	trca = devm_ioremap_resource(&pdev->dev, trca_resource);
++	trca = devm_platform_get_and_ioremap_resource(pdev, 0, &trca_resource);
+ 	if (IS_ERR(trca)) {
+-		rc = -ENOMEM;
++		rc = PTR_ERR(trca);
+ 		goto bailout;
+ 	}
+ 
+-	evca_resource = platform_get_resource(pdev, IORESOURCE_MEM, 1);
+-	evca = devm_ioremap_resource(&pdev->dev, evca_resource);
++	evca = devm_platform_get_and_ioremap_resource(pdev, 1, &evca_resource);
+ 	if (IS_ERR(evca)) {
+-		rc = -ENOMEM;
++		rc = PTR_ERR(evca);
+ 		goto bailout;
+ 	}
+ 
+@@ -785,7 +783,7 @@ static int hidma_probe(struct platform_device *pdev)
+ 	 */
+ 	chirq = platform_get_irq(pdev, 0);
+ 	if (chirq < 0) {
+-		rc = -ENODEV;
++		rc = chirq;
+ 		goto bailout;
+ 	}
+ 
 -- 
-~Vinod
+2.39.0
+
