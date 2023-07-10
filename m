@@ -2,42 +2,42 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 95994EB64DC
-	for <dmaengine@archiver.kernel.org>; Mon, 10 Jul 2023 19:08:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B7EC9C001DC
+	for <dmaengine@archiver.kernel.org>; Mon, 10 Jul 2023 19:08:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229868AbjGJTIA (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Mon, 10 Jul 2023 15:08:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59614 "EHLO
+        id S229608AbjGJTIJ (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 10 Jul 2023 15:08:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59816 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231859AbjGJTH3 (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Mon, 10 Jul 2023 15:07:29 -0400
+        with ESMTP id S232402AbjGJTHx (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Mon, 10 Jul 2023 15:07:53 -0400
 Received: from mga02.intel.com (mga02.intel.com [134.134.136.20])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E48E5E59;
-        Mon, 10 Jul 2023 12:07:14 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 969BC10F4;
+        Mon, 10 Jul 2023 12:07:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1689016035; x=1720552035;
+  t=1689016041; x=1720552041;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=nx1IHmnmDllG9Q7UE1IZact6wTcEv/CISKDtDpubzbA=;
-  b=k4satZzuY1lMJ+cQZR++VSvjHDm9o82qv1pCE4WxmRlLSTarKStTgYUk
-   1F5MT2epdiAEEoVYXQx9rd+T7rafkARptHuWybQDFyNV9siMCCsJQajg5
-   K0vMdcAMGi3mO6jcBxlVhB4dr2SCkfsJc5xKIFuETrn0F78bzAEAcZj+R
-   pNo0lZRxticN6V1mZKWlX7MWu4JGxfdyofK1ygZbquKabL9AaJdVnGZNP
-   6ZOnLEDDr7+QEDKL0VNjoJdGDT7+DYKp0aqOpyRbU8AWU+5DMeskC5kiW
-   cHvf59hktOb/IaQeGcyMFkW+e7sUJbez2g9ihBc6aU64IiUGOhw4GmTHz
-   g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10767"; a="354290789"
+  bh=gwTTsreHzCk9i2/NeHjW08Gd30ZFhWIRVlEyw4/AHOs=;
+  b=jq7V3Cz1XZHULn9yLzsdV6GFBKhMUbJRznJBCEC5epikpYEyIdaQuxkl
+   rynBNOlU54VjO6Ndre2IDqZow4WWe9pUFaxoekuHQ9IAEeEdbGA9YjUNs
+   w6R9SQgzMspU0xy+GKbespf3AyTDNIAEaaEylyOg0idU2WszoAmFUjoPT
+   1M/H4uJ1xkqgREIAAqN+zDWea04dMxw0aKT1oIO7nptr1S4b+4iD2FxAA
+   zoazwZExMniu/m5tmluylaDHVq3fiYQmPtXPpB8bAXM8zXwTtoGSxyVAB
+   yMETkkCtYP4PyI+qPC9vDTnZa+jO0ABN96M6ZVCE60i9BXw3IsscFnxdA
+   Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10767"; a="354290822"
 X-IronPort-AV: E=Sophos;i="6.01,195,1684825200"; 
-   d="scan'208";a="354290789"
+   d="scan'208";a="354290822"
 Received: from orsmga004.jf.intel.com ([10.7.209.38])
-  by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Jul 2023 12:07:14 -0700
+  by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Jul 2023 12:07:21 -0700
 X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10767"; a="844991097"
+X-IronPort-AV: E=McAfee;i="6600,9927,10767"; a="844991131"
 X-IronPort-AV: E=Sophos;i="6.01,195,1684825200"; 
-   d="scan'208";a="844991097"
+   d="scan'208";a="844991131"
 Received: from jdmillsx-mobl1.amr.corp.intel.com (HELO tzanussi-mobl1.intel.com) ([10.212.107.12])
-  by orsmga004-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Jul 2023 12:07:12 -0700
+  by orsmga004-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Jul 2023 12:07:19 -0700
 From:   Tom Zanussi <tom.zanussi@linux.intel.com>
 To:     herbert@gondor.apana.org.au, davem@davemloft.net,
         fenghua.yu@intel.com, vkoul@kernel.org
@@ -46,9 +46,9 @@ Cc:     dave.jiang@intel.com, tony.luck@intel.com,
         kanchana.p.sridhar@intel.com, vinodh.gopal@intel.com,
         giovanni.cabiddu@intel.com, linux-kernel@vger.kernel.org,
         linux-crypto@vger.kernel.org, dmaengine@vger.kernel.org
-Subject: [PATCH v7 07/14] dmaengine: idxd: add callback support for iaa crypto
-Date:   Mon, 10 Jul 2023 14:06:47 -0500
-Message-Id: <20230710190654.299639-8-tom.zanussi@linux.intel.com>
+Subject: [PATCH v7 10/14] crypto: iaa - Add per-cpu workqueue table with rebalancing
+Date:   Mon, 10 Jul 2023 14:06:50 -0500
+Message-Id: <20230710190654.299639-11-tom.zanussi@linux.intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20230710190654.299639-1-tom.zanussi@linux.intel.com>
 References: <20230710190654.299639-1-tom.zanussi@linux.intel.com>
@@ -58,286 +58,342 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Create a lightweight callback interface to allow idxd sub-drivers to
-be notified when work sent to idxd wqs has completed.
+The iaa compression/decompression algorithms in later patches need a
+way to retrieve an appropriate IAA workqueue depending on how close
+the associated IAA device is to the current cpu.
 
-For a sub-driver to be notified of work completion, it needs to:
+For this purpose, add a per-cpu array of workqueues such that an
+appropriate workqueue can be retrieved by simply accessing the per-cpu
+array.
 
-  - Set the descriptor's 'Request Completion Interrupt'
-    (IDXD_OP_FLAG_RCI)
+Whenever a new workqueue is bound to or unbound from the iaa_crypto
+driver, the available workqueues are 'rebalanced' such that work
+submitted from a particular CPU is given to the most appropriate
+workqueue available.  There currently isn't any way for the user to
+tweak the way this is done internally - if necessary, knobs can be
+added later for that purpose.  Current best practice is to configure
+and bind at least one workqueue for each IAA device, but as long as
+there is at least one workqueue configured and bound to any IAA device
+in the system, the iaa_crypto driver will work, albeit most likely not
+as efficiently.
 
-  - Set the sub-driver desc_complete() callback when registering the
-    sub-driver e.g.:
+[ Based on work originally by George Powley, Jing Lin and Kyung Min
+Park ]
 
-      struct idxd_device_driver my_drv = {
-            .probe = my_probe,
-            .desc_complete = my_complete,
-      }
-
-  - Set the sub-driver-specific context in the sub-driver's descriptor
-    e.g:
-
-      idxd_desc->crypto.req = req;
-      idxd_desc->crypto.tfm = tfm;
-      idxd_desc->crypto.src_addr = src_addr;
-      idxd_desc->crypto.dst_addr = dst_addr;
-
-When the work completes and the completion irq fires, idxd will invoke
-the desc_complete() callback with pointers to the descriptor, context,
-and completion_type.
-
-Signed-off-by: Dave Jiang <dave.jiang@intel.com>
 Signed-off-by: Tom Zanussi <tom.zanussi@linux.intel.com>
-Reviewed-by: Fenghua Yu <fenghua.yu@intel.com>
 ---
- drivers/dma/idxd/device.c |  2 +-
- drivers/dma/idxd/dma.c    |  3 +-
- drivers/dma/idxd/idxd.h   | 62 ++++++++++++++++++++++++++++++++-------
- drivers/dma/idxd/irq.c    | 12 ++++----
- drivers/dma/idxd/submit.c |  6 ++--
- 5 files changed, 65 insertions(+), 20 deletions(-)
+ drivers/crypto/intel/iaa/iaa_crypto.h      |   7 +
+ drivers/crypto/intel/iaa/iaa_crypto_main.c | 221 +++++++++++++++++++++
+ 2 files changed, 228 insertions(+)
 
-diff --git a/drivers/dma/idxd/device.c b/drivers/dma/idxd/device.c
-index 626600bd394b..0e2fbec79449 100644
---- a/drivers/dma/idxd/device.c
-+++ b/drivers/dma/idxd/device.c
-@@ -1289,7 +1289,7 @@ static void idxd_flush_pending_descs(struct idxd_irq_entry *ie)
- 		tx = &desc->txd;
- 		tx->callback = NULL;
- 		tx->callback_result = NULL;
--		idxd_dma_complete_txd(desc, ctype, true);
-+		idxd_dma_complete_txd(desc, ctype, true, NULL, NULL);
+diff --git a/drivers/crypto/intel/iaa/iaa_crypto.h b/drivers/crypto/intel/iaa/iaa_crypto.h
+index 5d1fff7f4b8e..c25546fa87f7 100644
+--- a/drivers/crypto/intel/iaa/iaa_crypto.h
++++ b/drivers/crypto/intel/iaa/iaa_crypto.h
+@@ -27,4 +27,11 @@ struct iaa_device {
+ 	struct list_head		wqs;
+ };
+ 
++struct wq_table_entry {
++	struct idxd_wq **wqs;
++	int	max_wqs;
++	int	n_wqs;
++	int	cur_wq;
++};
++
+ #endif
+diff --git a/drivers/crypto/intel/iaa/iaa_crypto_main.c b/drivers/crypto/intel/iaa/iaa_crypto_main.c
+index ab1bd0b00d89..670e9c3c8f9a 100644
+--- a/drivers/crypto/intel/iaa/iaa_crypto_main.c
++++ b/drivers/crypto/intel/iaa/iaa_crypto_main.c
+@@ -22,6 +22,46 @@
+ 
+ /* number of iaa instances probed */
+ static unsigned int nr_iaa;
++static unsigned int nr_cpus;
++static unsigned int nr_nodes;
++static unsigned int nr_cpus_per_node;
++
++/* Number of physical cpus sharing each iaa instance */
++static unsigned int cpus_per_iaa;
++
++/* Per-cpu lookup table for balanced wqs */
++static struct wq_table_entry __percpu *wq_table;
++
++static void wq_table_add(int cpu, struct idxd_wq *wq)
++{
++	struct wq_table_entry *entry = per_cpu_ptr(wq_table, cpu);
++
++	if (WARN_ON(entry->n_wqs == entry->max_wqs))
++		return;
++
++	entry->wqs[entry->n_wqs++] = wq;
++
++	pr_debug("%s: added iaa wq %d.%d to idx %d of cpu %d\n", __func__,
++		 entry->wqs[entry->n_wqs - 1]->idxd->id,
++		 entry->wqs[entry->n_wqs - 1]->id, entry->n_wqs - 1, cpu);
++}
++
++static void wq_table_free_entry(int cpu)
++{
++	struct wq_table_entry *entry = per_cpu_ptr(wq_table, cpu);
++
++	kfree(entry->wqs);
++	memset(entry, 0, sizeof(*entry));
++}
++
++static void wq_table_clear_entry(int cpu)
++{
++	struct wq_table_entry *entry = per_cpu_ptr(wq_table, cpu);
++
++	entry->n_wqs = 0;
++	entry->cur_wq = 0;
++	memset(entry->wqs, 0, entry->max_wqs * sizeof(struct idxd_wq *));
++}
+ 
+ static LIST_HEAD(iaa_devices);
+ static DEFINE_MUTEX(iaa_devices_lock);
+@@ -141,6 +181,53 @@ static void del_iaa_wq(struct iaa_device *iaa_device, struct idxd_wq *wq)
  	}
  }
  
-diff --git a/drivers/dma/idxd/dma.c b/drivers/dma/idxd/dma.c
-index 8bb7e7ff8d6a..9a12b02b0549 100644
---- a/drivers/dma/idxd/dma.c
-+++ b/drivers/dma/idxd/dma.c
-@@ -22,7 +22,7 @@ static inline struct idxd_wq *to_idxd_wq(struct dma_chan *c)
- 
- void idxd_dma_complete_txd(struct idxd_desc *desc,
- 			   enum idxd_complete_type comp_type,
--			   bool free_desc)
-+			   bool free_desc, void *ctx, u32 *status)
++static void clear_wq_table(void)
++{
++	int cpu;
++
++	for (cpu = 0; cpu < nr_cpus; cpu++)
++		wq_table_clear_entry(cpu);
++
++	pr_debug("cleared wq table\n");
++}
++
++static void free_wq_table(void)
++{
++	int cpu;
++
++	for (cpu = 0; cpu < nr_cpus; cpu++)
++		wq_table_free_entry(cpu);
++
++	free_percpu(wq_table);
++
++	pr_debug("freed wq table\n");
++}
++
++static int alloc_wq_table(int max_wqs)
++{
++	struct wq_table_entry *entry;
++	int cpu;
++
++	wq_table = alloc_percpu(struct wq_table_entry);
++	if (!wq_table)
++		return -ENOMEM;
++
++	for (cpu = 0; cpu < nr_cpus; cpu++) {
++		entry = per_cpu_ptr(wq_table, cpu);
++		entry->wqs = kzalloc(GFP_KERNEL, max_wqs * sizeof(struct wq *));
++		if (!entry->wqs) {
++			free_wq_table();
++			return -ENOMEM;
++		}
++
++		entry->max_wqs = max_wqs;
++	}
++
++	pr_debug("initialized wq table\n");
++
++	return 0;
++}
++
+ static int save_iaa_wq(struct idxd_wq *wq)
  {
- 	struct idxd_device *idxd = desc->wq->idxd;
- 	struct dma_async_tx_descriptor *tx;
-@@ -358,6 +358,7 @@ static enum idxd_dev_type dev_types[] = {
- struct idxd_device_driver idxd_dmaengine_drv = {
- 	.probe = idxd_dmaengine_drv_probe,
- 	.remove = idxd_dmaengine_drv_remove,
-+	.desc_complete = idxd_dma_complete_txd,
- 	.name = "dmaengine",
- 	.type = dev_types,
- };
-diff --git a/drivers/dma/idxd/idxd.h b/drivers/dma/idxd/idxd.h
-index 971daf323655..364dbe8cb271 100644
---- a/drivers/dma/idxd/idxd.h
-+++ b/drivers/dma/idxd/idxd.h
-@@ -13,6 +13,7 @@
- #include <linux/bitmap.h>
- #include <linux/perf_event.h>
- #include <linux/iommu.h>
-+#include <linux/crypto.h>
- #include <uapi/linux/idxd.h>
- #include "registers.h"
+ 	struct iaa_device *iaa_device, *found = NULL;
+@@ -195,6 +282,8 @@ static int save_iaa_wq(struct idxd_wq *wq)
+ 		return -EINVAL;
  
-@@ -57,11 +58,23 @@ enum idxd_type {
- #define IDXD_ENQCMDS_RETRIES		32
- #define IDXD_ENQCMDS_MAX_RETRIES	64
- 
-+enum idxd_complete_type {
-+	IDXD_COMPLETE_NORMAL = 0,
-+	IDXD_COMPLETE_ABORT,
-+	IDXD_COMPLETE_DEV_FAIL,
-+};
+ 	idxd_wq_get(wq);
 +
-+struct idxd_desc;
-+
- struct idxd_device_driver {
- 	const char *name;
- 	enum idxd_dev_type *type;
- 	int (*probe)(struct idxd_dev *idxd_dev);
- 	void (*remove)(struct idxd_dev *idxd_dev);
-+	void (*desc_complete)(struct idxd_desc *desc,
-+			      enum idxd_complete_type comp_type,
-+			      bool free_desc,
-+			      void *ctx, u32 *status);
- 	struct device_driver drv;
- };
- 
-@@ -174,12 +187,6 @@ enum idxd_op_type {
- 	IDXD_OP_NONBLOCK = 1,
- };
- 
--enum idxd_complete_type {
--	IDXD_COMPLETE_NORMAL = 0,
--	IDXD_COMPLETE_ABORT,
--	IDXD_COMPLETE_DEV_FAIL,
--};
--
- struct idxd_dma_chan {
- 	struct dma_chan chan;
- 	struct idxd_wq *wq;
-@@ -378,6 +385,14 @@ static inline unsigned int evl_size(struct idxd_device *idxd)
- 	return idxd->evl->size * evl_ent_size(idxd);
++	cpus_per_iaa = (nr_nodes * nr_cpus_per_node) / nr_iaa;
+ out:
+ 	return 0;
  }
- 
-+struct crypto_ctx {
-+	struct acomp_req *req;
-+	struct crypto_tfm *tfm;
-+	dma_addr_t src_addr;
-+	dma_addr_t dst_addr;
-+	bool compress;
-+};
+@@ -210,6 +299,116 @@ static void remove_iaa_wq(struct idxd_wq *wq)
+ 			break;
+ 		}
+ 	}
 +
- /* IDXD software descriptor */
- struct idxd_desc {
- 	union {
-@@ -390,7 +405,10 @@ struct idxd_desc {
- 		struct iax_completion_record *iax_completion;
- 	};
- 	dma_addr_t compl_dma;
--	struct dma_async_tx_descriptor txd;
-+	union {
-+		struct dma_async_tx_descriptor txd;
-+		struct crypto_ctx crypto;
++	if (nr_iaa)
++		cpus_per_iaa = (nr_nodes * nr_cpus_per_node) / nr_iaa;
++	else
++		cpus_per_iaa = 0;
++}
++
++static int wq_table_add_wqs(int iaa, int cpu)
++{
++	struct iaa_device *iaa_device, *found_device = NULL;
++	int ret = 0, cur_iaa = 0, n_wqs_added = 0;
++	struct idxd_device *idxd;
++	struct iaa_wq *iaa_wq;
++	struct pci_dev *pdev;
++	struct device *dev;
++
++	list_for_each_entry(iaa_device, &iaa_devices, list) {
++		idxd = iaa_device->idxd;
++		pdev = idxd->pdev;
++		dev = &pdev->dev;
++
++		if (cur_iaa != iaa) {
++			cur_iaa++;
++			continue;
++		}
++
++		found_device = iaa_device;
++		dev_dbg(dev, "getting wq from iaa_device %d, cur_iaa %d\n",
++			found_device->idxd->id, cur_iaa);
++		break;
++	}
++
++	if (!found_device) {
++		found_device = list_first_entry_or_null(&iaa_devices,
++							struct iaa_device, list);
++		if (!found_device) {
++			pr_debug("couldn't find any iaa devices with wqs!\n");
++			ret = -EINVAL;
++			goto out;
++		}
++		cur_iaa = 0;
++
++		idxd = found_device->idxd;
++		pdev = idxd->pdev;
++		dev = &pdev->dev;
++		dev_dbg(dev, "getting wq from only iaa_device %d, cur_iaa %d\n",
++			found_device->idxd->id, cur_iaa);
++	}
++
++	list_for_each_entry(iaa_wq, &found_device->wqs, list) {
++		wq_table_add(cpu, iaa_wq->wq);
++		pr_debug("rebalance: added wq for cpu=%d: iaa wq %d.%d\n",
++			 cpu, iaa_wq->wq->idxd->id, iaa_wq->wq->id);
++		n_wqs_added++;
 +	};
- 	struct llist_node llnode;
- 	struct list_head list;
- 	int id;
-@@ -417,6 +435,15 @@ enum idxd_completion_status {
- #define idxd_dev_to_idxd(idxd_dev) container_of(idxd_dev, struct idxd_device, idxd_dev)
- #define idxd_dev_to_wq(idxd_dev) container_of(idxd_dev, struct idxd_wq, idxd_dev)
- 
-+static inline struct idxd_device_driver *wq_to_idxd_drv(struct idxd_wq *wq)
-+{
-+	struct device *dev = wq_confdev(wq);
-+	struct idxd_device_driver *idxd_drv =
-+		container_of(dev->driver, struct idxd_device_driver, drv);
 +
-+	return idxd_drv;
++	if (!n_wqs_added) {
++		pr_debug("couldn't find any iaa wqs!\n");
++		ret = -EINVAL;
++		goto out;
++	}
++out:
++	return ret;
 +}
 +
- static inline struct idxd_device *confdev_to_idxd(struct device *dev)
++/*
++ * Rebalance the wq table so that given a cpu, it's easy to find the
++ * closest IAA instance.  The idea is to try to choose the most
++ * appropriate IAA instance for a caller and spread available
++ * workqueues around to clients.
++ */
++static void rebalance_wq_table(void)
++{
++	const struct cpumask *node_cpus;
++	int node, cpu, iaa = -1;
++
++	if (nr_iaa == 0)
++		return;
++
++	pr_debug("rebalance: nr_nodes=%d, nr_cpus %d, nr_iaa %d, cpus_per_iaa %d\n",
++		 nr_nodes, nr_cpus, nr_iaa, cpus_per_iaa);
++
++	clear_wq_table();
++
++	if (nr_iaa == 1) {
++		for (cpu = 0; cpu < nr_cpus; cpu++) {
++			if (WARN_ON(wq_table_add_wqs(0, cpu))) {
++				pr_debug("could not add any wqs for iaa 0 to cpu %d!\n", cpu);
++				return;
++			}
++		}
++
++		return;
++	}
++
++	for_each_online_node(node) {
++		node_cpus = cpumask_of_node(node);
++
++		for (cpu = 0; cpu < nr_cpus_per_node; cpu++) {
++			int node_cpu = cpumask_nth(cpu, node_cpus);
++
++			if ((cpu % cpus_per_iaa) == 0)
++				iaa++;
++
++			if (WARN_ON(wq_table_add_wqs(iaa, node_cpu))) {
++				pr_debug("could not add any wqs for iaa %d to cpu %d!\n", iaa, cpu);
++				return;
++			}
++		}
++	}
+ }
+ 
+ static int iaa_crypto_probe(struct idxd_dev *idxd_dev)
+@@ -218,6 +417,7 @@ static int iaa_crypto_probe(struct idxd_dev *idxd_dev)
+ 	struct idxd_device *idxd = wq->idxd;
+ 	struct idxd_driver_data *data = idxd->data;
+ 	struct device *dev = &idxd_dev->conf_dev;
++	bool first_wq = false;
+ 	int ret = 0;
+ 
+ 	if (idxd->state != IDXD_DEV_ENABLED)
+@@ -248,10 +448,19 @@ static int iaa_crypto_probe(struct idxd_dev *idxd_dev)
+ 
+ 	mutex_lock(&iaa_devices_lock);
+ 
++	if (list_empty(&iaa_devices)) {
++		ret = alloc_wq_table(wq->idxd->max_wqs);
++		if (ret)
++			goto err_alloc;
++		first_wq = true;
++	}
++
+ 	ret = save_iaa_wq(wq);
+ 	if (ret)
+ 		goto err_save;
+ 
++	rebalance_wq_table();
++
+ 	mutex_unlock(&iaa_devices_lock);
+ out:
+ 	mutex_unlock(&wq->wq_lock);
+@@ -259,6 +468,10 @@ static int iaa_crypto_probe(struct idxd_dev *idxd_dev)
+ 	return ret;
+ 
+ err_save:
++	if (first_wq)
++		free_wq_table();
++err_alloc:
++	mutex_unlock(&iaa_devices_lock);
+ 	drv_disable_wq(wq);
+ err:
+ 	wq->type = IDXD_WQT_NONE;
+@@ -277,6 +490,10 @@ static void iaa_crypto_remove(struct idxd_dev *idxd_dev)
+ 
+ 	remove_iaa_wq(wq);
+ 	drv_disable_wq(wq);
++	rebalance_wq_table();
++
++	if (nr_iaa == 0)
++		free_wq_table();
+ 
+ 	mutex_unlock(&iaa_devices_lock);
+ 	mutex_unlock(&wq->wq_lock);
+@@ -298,6 +515,10 @@ static int __init iaa_crypto_init_module(void)
  {
- 	struct idxd_dev *idxd_dev = confdev_to_idxd_dev(dev);
-@@ -669,6 +696,24 @@ void idxd_driver_unregister(struct idxd_device_driver *idxd_drv);
- #define module_idxd_driver(__idxd_driver) \
- 	module_driver(__idxd_driver, idxd_driver_register, idxd_driver_unregister)
+ 	int ret = 0;
  
-+void idxd_free_desc(struct idxd_wq *wq, struct idxd_desc *desc);
-+void idxd_dma_complete_txd(struct idxd_desc *desc,
-+			   enum idxd_complete_type comp_type,
-+			   bool free_desc, void *ctx, u32 *status);
++	nr_cpus = num_online_cpus();
++	nr_nodes = num_online_nodes();
++	nr_cpus_per_node = nr_cpus / nr_nodes;
 +
-+static inline void idxd_desc_complete(struct idxd_desc *desc,
-+				      enum idxd_complete_type comp_type,
-+				      bool free_desc)
-+{
-+	struct idxd_device_driver *drv;
-+	u32 status;
-+
-+	drv = wq_to_idxd_drv(desc->wq);
-+	if (drv->desc_complete)
-+		drv->desc_complete(desc, comp_type, free_desc,
-+				   &desc->txd, &status);
-+}
-+
- int idxd_register_bus_type(void);
- void idxd_unregister_bus_type(void);
- int idxd_register_devices(struct idxd_device *idxd);
-@@ -726,15 +771,12 @@ int idxd_wq_request_irq(struct idxd_wq *wq);
- /* submission */
- int idxd_submit_desc(struct idxd_wq *wq, struct idxd_desc *desc);
- struct idxd_desc *idxd_alloc_desc(struct idxd_wq *wq, enum idxd_op_type optype);
--void idxd_free_desc(struct idxd_wq *wq, struct idxd_desc *desc);
- int idxd_enqcmds(struct idxd_wq *wq, void __iomem *portal, const void *desc);
- 
- /* dmaengine */
- int idxd_register_dma_device(struct idxd_device *idxd);
- void idxd_unregister_dma_device(struct idxd_device *idxd);
- void idxd_parse_completion_status(u8 status, enum dmaengine_tx_result *res);
--void idxd_dma_complete_txd(struct idxd_desc *desc,
--			   enum idxd_complete_type comp_type, bool free_desc);
- 
- /* cdev */
- int idxd_cdev_register(void);
-diff --git a/drivers/dma/idxd/irq.c b/drivers/dma/idxd/irq.c
-index b501320a9c7a..c889ec8817e2 100644
---- a/drivers/dma/idxd/irq.c
-+++ b/drivers/dma/idxd/irq.c
-@@ -123,7 +123,7 @@ static void idxd_abort_invalid_int_handle_descs(struct idxd_irq_entry *ie)
- 
- 	list_for_each_entry_safe(d, t, &flist, list) {
- 		list_del(&d->list);
--		idxd_dma_complete_txd(d, IDXD_COMPLETE_ABORT, true);
-+		idxd_desc_complete(d, IDXD_COMPLETE_ABORT, true);
- 	}
- }
- 
-@@ -534,7 +534,7 @@ static void idxd_int_handle_resubmit_work(struct work_struct *work)
- 		 */
- 		if (rc != -EAGAIN) {
- 			desc->completion->status = IDXD_COMP_DESC_ABORT;
--			idxd_dma_complete_txd(desc, IDXD_COMPLETE_ABORT, false);
-+			idxd_desc_complete(desc, IDXD_COMPLETE_ABORT, false);
- 		}
- 		idxd_free_desc(wq, desc);
- 	}
-@@ -575,11 +575,11 @@ static void irq_process_pending_llist(struct idxd_irq_entry *irq_entry)
- 			 * and 0xff, which DSA_COMP_STATUS_MASK can mask out.
- 			 */
- 			if (unlikely(desc->completion->status == IDXD_COMP_DESC_ABORT)) {
--				idxd_dma_complete_txd(desc, IDXD_COMPLETE_ABORT, true);
-+				idxd_desc_complete(desc, IDXD_COMPLETE_ABORT, true);
- 				continue;
- 			}
- 
--			idxd_dma_complete_txd(desc, IDXD_COMPLETE_NORMAL, true);
-+			idxd_desc_complete(desc, IDXD_COMPLETE_NORMAL, true);
- 		} else {
- 			spin_lock(&irq_entry->list_lock);
- 			list_add_tail(&desc->list,
-@@ -618,11 +618,11 @@ static void irq_process_work_list(struct idxd_irq_entry *irq_entry)
- 		 * and 0xff, which DSA_COMP_STATUS_MASK can mask out.
- 		 */
- 		if (unlikely(desc->completion->status == IDXD_COMP_DESC_ABORT)) {
--			idxd_dma_complete_txd(desc, IDXD_COMPLETE_ABORT, true);
-+			idxd_desc_complete(desc, IDXD_COMPLETE_ABORT, true);
- 			continue;
- 		}
- 
--		idxd_dma_complete_txd(desc, IDXD_COMPLETE_NORMAL, true);
-+		idxd_desc_complete(desc, IDXD_COMPLETE_NORMAL, true);
- 	}
- }
- 
-diff --git a/drivers/dma/idxd/submit.c b/drivers/dma/idxd/submit.c
-index 5e651e216094..f927743a5ba2 100644
---- a/drivers/dma/idxd/submit.c
-+++ b/drivers/dma/idxd/submit.c
-@@ -127,7 +127,8 @@ static void llist_abort_desc(struct idxd_wq *wq, struct idxd_irq_entry *ie,
- 	spin_unlock(&ie->list_lock);
- 
- 	if (found)
--		idxd_dma_complete_txd(found, IDXD_COMPLETE_ABORT, false);
-+		idxd_dma_complete_txd(found, IDXD_COMPLETE_ABORT, false,
-+				      NULL, NULL);
- 
- 	/*
- 	 * completing the descriptor will return desc to allocator and
-@@ -137,7 +138,8 @@ static void llist_abort_desc(struct idxd_wq *wq, struct idxd_irq_entry *ie,
- 	 */
- 	list_for_each_entry_safe(d, t, &flist, list) {
- 		list_del_init(&d->list);
--		idxd_dma_complete_txd(found, IDXD_COMPLETE_ABORT, true);
-+		idxd_dma_complete_txd(found, IDXD_COMPLETE_ABORT, true,
-+				      NULL, NULL);
- 	}
- }
- 
+ 	ret = idxd_driver_register(&iaa_crypto_driver);
+ 	if (ret) {
+ 		pr_debug("IAA wq sub-driver registration failed\n");
 -- 
 2.34.1
 
