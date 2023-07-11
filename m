@@ -2,163 +2,140 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5E270EB64DC
-	for <dmaengine@archiver.kernel.org>; Tue, 11 Jul 2023 12:26:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2F9C1C0015E
+	for <dmaengine@archiver.kernel.org>; Tue, 11 Jul 2023 14:28:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231278AbjGKM0D (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 11 Jul 2023 08:26:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57012 "EHLO
+        id S233622AbjGKO2u (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 11 Jul 2023 10:28:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37950 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230478AbjGKM0B (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Tue, 11 Jul 2023 08:26:01 -0400
-Received: from mail.loongson.cn (mail.loongson.cn [114.242.206.163])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id B0C8C199A;
-        Tue, 11 Jul 2023 05:25:33 -0700 (PDT)
-Received: from loongson.cn (unknown [112.20.109.108])
-        by gateway (Coremail) with SMTP id _____8CxNvHHSK1kNIEDAA--.10243S3;
-        Tue, 11 Jul 2023 20:19:19 +0800 (CST)
-Received: from localhost.localdomain (unknown [112.20.109.108])
-        by localhost.localdomain (Coremail) with SMTP id AQAAf8BxniPDSK1kBa0oAA--.9337S3;
-        Tue, 11 Jul 2023 20:19:17 +0800 (CST)
-From:   Binbin Zhou <zhoubinbin@loongson.cn>
-To:     Binbin Zhou <zhoubb.aaron@gmail.com>,
-        Huacai Chen <chenhuacai@loongson.cn>,
-        Vinod Koul <vkoul@kernel.org>, dmaengine@vger.kernel.org,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>, devicetree@vger.kernel.org
-Cc:     Huacai Chen <chenhuacai@kernel.org>,
-        loongson-kernel@lists.loongnix.cn, Xuerui Wang <kernel@xen0n.name>,
-        loongarch@lists.linux.dev, Yingkun Meng <mengyingkun@loongson.cn>,
-        Binbin Zhou <zhoubinbin@loongson.cn>,
-        Conor Dooley <conor.dooley@microchip.com>
-Subject: [PATCH v3 1/2] dt-bindings: dmaengine: Add Loongson LS2X APB DMA controller
-Date:   Tue, 11 Jul 2023 20:19:00 +0800
-Message-Id: <4fa49c111dd783d380caa6bef9bd10edf9281ec2.1689075791.git.zhoubinbin@loongson.cn>
-X-Mailer: git-send-email 2.39.3
-In-Reply-To: <cover.1689075791.git.zhoubinbin@loongson.cn>
-References: <cover.1689075791.git.zhoubinbin@loongson.cn>
+        with ESMTP id S234052AbjGKO20 (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Tue, 11 Jul 2023 10:28:26 -0400
+Received: from mga09.intel.com (mga09.intel.com [134.134.136.24])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 334B51BC0;
+        Tue, 11 Jul 2023 07:27:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1689085678; x=1720621678;
+  h=date:from:to:cc:subject:message-id:in-reply-to:
+   references:mime-version:content-transfer-encoding;
+  bh=Hd7KPTyRP0JRvFe990SYWoGyr6006I4GxCYcQVy1VCM=;
+  b=cUg4trA+t3NH/Vpxr1ucFyIePfFQzhzGQ8YdMlE4ZJ51QBXvU2LvrGGC
+   tREYZlZkCts73Gte83Ry6Z0Ip5I/kzMqGwkhvDkZ2JHnzVgMhR4UK3WRu
+   FjCFsCFSgHTUKzsRwmBQLc5dYx+JWRWt7EoXid73lC+9I/TEYom/dUHAM
+   K+o9m0rdjbFhDTkqQyBnHZXu6Jlt1cqLcUGPrdKtOkZanOFOZ6LkKsY9K
+   UXNuxliUy/DRUil0hp9Tr3LnbtF6k8WTBFeZ1lckhusQUYWh5fCbl8loD
+   NdEbxxXymT871Px0Hwp8mtXrkTn8hdWrip2+tFVSd5EZlhDhiRq9gwKWT
+   g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10768"; a="367212620"
+X-IronPort-AV: E=Sophos;i="6.01,196,1684825200"; 
+   d="scan'208";a="367212620"
+Received: from orsmga008.jf.intel.com ([10.7.209.65])
+  by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Jul 2023 07:27:32 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10768"; a="750774534"
+X-IronPort-AV: E=Sophos;i="6.01,196,1684825200"; 
+   d="scan'208";a="750774534"
+Received: from jacob-builder.jf.intel.com (HELO jacob-builder) ([10.24.100.114])
+  by orsmga008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Jul 2023 07:27:31 -0700
+Date:   Tue, 11 Jul 2023 07:32:28 -0700
+From:   Jacob Pan <jacob.jun.pan@linux.intel.com>
+To:     Baolu Lu <baolu.lu@linux.intel.com>
+Cc:     LKML <linux-kernel@vger.kernel.org>, iommu@lists.linux.dev,
+        Jason Gunthorpe <jgg@nvidia.com>,
+        Joerg Roedel <joro@8bytes.org>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Jean-Philippe Brucker <jean-philippe@linaro.com>,
+        dmaengine@vger.kernel.org, vkoul@kernel.org,
+        Will Deacon <will@kernel.org>,
+        David Woodhouse <dwmw2@infradead.org>,
+        Raj Ashok <ashok.raj@intel.com>,
+        "Tian, Kevin" <kevin.tian@intel.com>, Yi Liu <yi.l.liu@intel.com>,
+        "Yu, Fenghua" <fenghua.yu@intel.com>,
+        Dave Jiang <dave.jiang@intel.com>,
+        Tony Luck <tony.luck@intel.com>,
+        "Zanussi, Tom" <tom.zanussi@intel.com>, rex.zhang@intel.com,
+        xiaochen.shen@intel.com, narayan.ranganathan@intel.com,
+        jacob.jun.pan@linux.intel.com
+Subject: Re: [PATCH v8 2/7] iommu: Move global PASID allocation from SVA to
+ core
+Message-ID: <20230711073228.7c4977f8@jacob-builder>
+In-Reply-To: <08830c11-5528-0c42-0bc3-89c3796611fe@linux.intel.com>
+References: <20230602182212.150825-1-jacob.jun.pan@linux.intel.com>
+        <20230602182212.150825-3-jacob.jun.pan@linux.intel.com>
+        <08830c11-5528-0c42-0bc3-89c3796611fe@linux.intel.com>
+Organization: OTC
+X-Mailer: Claws Mail 3.17.5 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAf8BxniPDSK1kBa0oAA--.9337S3
-X-CM-SenderInfo: p2kr3uplqex0o6or00hjvr0hdfq/
-X-Coremail-Antispam: 1Uk129KBj93XoWxZw4kZr47Ar15Zw4UZF1xCrX_yoW5Xr17pF
-        n3C3Z3KrW0qF17A395GFy0kw1fZ3s3AanrWa9rAwnrKrZxX3ZYvw4akr1vvay3CrWjqFW7
-        ZFZa9r4jkayxArcCm3ZEXasCq-sJn29KB7ZKAUJUUUUx529EdanIXcx71UUUUU7KY7ZEXa
-        sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
-        0xBIdaVrnRJUUUBFb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
-        IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
-        e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
-        0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVWxJr0_GcWl84ACjcxK6I8E87Iv6xkF7I0E14v2
-        6F4UJVW0owAaw2AFwI0_JF0_Jw1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0c
-        Ia020Ex4CE44I27wAqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jw0_
-        WrylYx0Ex4A2jsIE14v26r4j6F4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvY0x0EwI
-        xGrwCY1x0262kKe7AKxVWUAVWUtwCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWU
-        JVW8JwCFI7km07C267AKxVWUAVWUtwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4
-        vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jw0_GFylIxkGc2Ij64vIr41lIxAIcVC0I7IY
-        x2IY67AKxVW8JVW5JwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Gr0_Cr1lIxAIcVCF04k26c
-        xKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r4j6F4UMIIF0xvEx4A2jsIEc7CjxVAF
-        wI0_Gr0_Gr1UYxBIdaVFxhVjvjDU0xZFpf9x07jz5lbUUUUU=
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Add Loongson LS2X APB DMA controller binding with DT schema
-format using json-schema.
+Hi Baolu,
 
-Signed-off-by: Binbin Zhou <zhoubinbin@loongson.cn>
-Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
----
- .../bindings/dma/loongson,ls2x-apbdma.yaml    | 62 +++++++++++++++++++
- MAINTAINERS                                   |  6 ++
- 2 files changed, 68 insertions(+)
- create mode 100644 Documentation/devicetree/bindings/dma/loongson,ls2x-apbdma.yaml
+On Sat, 10 Jun 2023 20:13:03 +0800, Baolu Lu <baolu.lu@linux.intel.com>
+wrote:
 
-diff --git a/Documentation/devicetree/bindings/dma/loongson,ls2x-apbdma.yaml b/Documentation/devicetree/bindings/dma/loongson,ls2x-apbdma.yaml
-new file mode 100644
-index 000000000000..35298c4fbfa0
---- /dev/null
-+++ b/Documentation/devicetree/bindings/dma/loongson,ls2x-apbdma.yaml
-@@ -0,0 +1,62 @@
-+# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/dma/loongson,ls2x-apbdma.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Loongson LS2X APB DMA controller
-+
-+description:
-+  The Loongson LS2X APB DMA controller is used for transferring data
-+  between system memory and the peripherals on the APB bus.
-+
-+maintainers:
-+  - Binbin Zhou <zhoubinbin@loongson.cn>
-+
-+allOf:
-+  - $ref: dma-controller.yaml#
-+
-+properties:
-+  compatible:
-+    oneOf:
-+      - const: loongson,ls2k1000-apbdma
-+      - items:
-+          - const: loongson,ls2k0500-apbdma
-+          - const: loongson,ls2k1000-apbdma
-+
-+  reg:
-+    maxItems: 1
-+
-+  interrupts:
-+    maxItems: 1
-+
-+  clocks:
-+    maxItems: 1
-+
-+  "#dma-cells":
-+    const: 1
-+
-+required:
-+  - compatible
-+  - reg
-+  - interrupts
-+  - clocks
-+  - "#dma-cells"
-+
-+additionalProperties: false
-+
-+examples:
-+  - |
-+    #include <dt-bindings/interrupt-controller/irq.h>
-+    #include <dt-bindings/clock/loongson,ls2k-clk.h>
-+
-+    dma-controller@1fe00c00 {
-+        compatible = "loongson,ls2k1000-apbdma";
-+        reg = <0x1fe00c00 0x8>;
-+        interrupt-parent = <&liointc1>;
-+        interrupts = <12 IRQ_TYPE_LEVEL_HIGH>;
-+        clocks = <&clk LOONGSON2_APB_CLK>;
-+        #dma-cells = <1>;
-+    };
-+
-+...
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 3be1bdfe8ecc..60a411936ba7 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -12243,6 +12243,12 @@ S:	Maintained
- F:	Documentation/devicetree/bindings/gpio/loongson,ls-gpio.yaml
- F:	drivers/gpio/gpio-loongson-64bit.c
- 
-+LOONGSON LS2X APB DMA DRIVER
-+M:	Binbin Zhou <zhoubinbin@loongson.cn>
-+L:	dmaengine@vger.kernel.org
-+S:	Maintained
-+F:	Documentation/devicetree/bindings/dma/loongson,ls2x-apbdma.yaml
-+
- LOONGSON LS2X I2C DRIVER
- M:	Binbin Zhou <zhoubinbin@loongson.cn>
- L:	linux-i2c@vger.kernel.org
--- 
-2.39.3
+> On 6/3/23 2:22 AM, Jacob Pan wrote:
+> > +ioasid_t iommu_alloc_global_pasid_dev(struct device *dev)
+> > +{
+> > +	int ret;
+> > +	ioasid_t max;
+> > +
+> > +	max = dev->iommu->max_pasids;
+> > +	/*
+> > +	 * max_pasids is set up by vendor driver based on number of
+> > PASID bits
+> > +	 * supported but the IDA allocation is inclusive.
+> > +	 */
+> > +	ret = ida_alloc_range(&iommu_global_pasid_ida,
+> > IOMMU_FIRST_GLOBAL_PASID, max - 1, GFP_KERNEL);
+> > +	if (ret < 0)
+> > +		return IOMMU_PASID_INVALID;
+> > +
+> > +	return ret;
+> > +}
+> > +EXPORT_SYMBOL_GPL(iommu_alloc_global_pasid_dev);  
+> 
+> "dev->iommu->max_pasids == 0" indicates no pasid support on the device.
+> The code should return IOMMU_PASID_INVALID explicitly. Perhaps we can
+> make this function like this:
+> 
+> ioasid_t iommu_alloc_global_pasid_dev(struct device *dev)
+> {
+>          int ret;
+> 
+>          if (!dev->iommu->max_pasids)
+>                  return IOMMU_PASID_INVALID;
+> 
+>          /*
+>           * max_pasids is set up by vendor driver based on number of 
+> PASID bits
+>           * supported but the IDA allocation is inclusive.
+>           */
+>          ret = ida_alloc_range(&iommu_global_pasid_ida, 
+> IOMMU_FIRST_GLOBAL_PASID,
+>                                dev->iommu->max_pasids - 1, GFP_KERNEL);
+> 
+>          return ret < 0 ? IOMMU_PASID_INVALID : ret;
+> }
+> EXPORT_SYMBOL_GPL(iommu_alloc_global_pasid_dev);
+> 
+good catch, sorry i missed this. let me send an updated version.
 
+> Other change in this series looks good to me.
+> 
+> I hope I can queue this series including above change as part of my VT-d
+> update for v6.5 to Joerg if no objection.
+> 
+> Let's try to re-enable this key feature of Intel idxd driver in v6.5.
+> 
+> Best regards,
+> baolu
+
+
+Thanks,
+
+Jacob
