@@ -2,96 +2,73 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EAEA7C0015E
-	for <dmaengine@archiver.kernel.org>; Sat, 22 Jul 2023 17:14:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DE863C0015E
+	for <dmaengine@archiver.kernel.org>; Mon, 24 Jul 2023 06:42:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229551AbjGVROd (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Sat, 22 Jul 2023 13:14:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34072 "EHLO
+        id S231127AbjGXGm0 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 24 Jul 2023 02:42:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38324 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229477AbjGVROc (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Sat, 22 Jul 2023 13:14:32 -0400
-Received: from mga12.intel.com (mga12.intel.com [192.55.52.136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D567E67;
-        Sat, 22 Jul 2023 10:14:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1690046071; x=1721582071;
-  h=message-id:subject:from:to:cc:date:in-reply-to:
-   references:content-transfer-encoding:mime-version;
-  bh=/NqgA0E24iFKqv6TOSZM3Z4tMvI5XUmHE6RDNtykCIo=;
-  b=i6EQxJQ4T2ohQ8ML37NC1saU/Tky9ftlyhPyAS95W8iNQAtZuHHHHFxi
-   MSHXRDRkZvcUM+X4agTVIiXQl2Mw0qozCOm53lda6FXFGYAYQvO3P4pe9
-   5POCcC6b+We4w92lZgcM4Smk3F4cvwbybLt+YsS9CSB8DhmqUBGqQFqFu
-   Ope28M2GFzZ9SyC4b+eDlrdrwR+yjRTi4T5mwIn9PcOAb014vYCLWFtM6
-   rTQ7FTs7dYY9bIlu4Iul8uMS8vBdz7bhuhlmYXUq3QOLxQ+iMvHmlHQm2
-   nZ8z/3qCuQkiljQCkEeV17uB9K+rrnXheMNRyBp8cnwr1GZcxbXeohifh
-   g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10779"; a="346815030"
-X-IronPort-AV: E=Sophos;i="6.01,224,1684825200"; 
-   d="scan'208";a="346815030"
-Received: from orsmga006.jf.intel.com ([10.7.209.51])
-  by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Jul 2023 10:14:30 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10779"; a="702386602"
-X-IronPort-AV: E=Sophos;i="6.01,224,1684825200"; 
-   d="scan'208";a="702386602"
-Received: from maggieya-mobl1.amr.corp.intel.com ([10.212.61.70])
-  by orsmga006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Jul 2023 10:14:29 -0700
-Message-ID: <6ba5b58f637e3ec8c4b00e407e18dd426db6086f.camel@linux.intel.com>
-Subject: Re: [PATCH v7 12/14] crypto: iaa - Add support for deflate-iaa
- compression algorithm
-From:   Tom Zanussi <tom.zanussi@linux.intel.com>
-To:     Herbert Xu <herbert@gondor.apana.org.au>
-Cc:     davem@davemloft.net, fenghua.yu@intel.com, vkoul@kernel.org,
-        dave.jiang@intel.com, tony.luck@intel.com,
-        wajdi.k.feghali@intel.com, james.guilford@intel.com,
-        kanchana.p.sridhar@intel.com, vinodh.gopal@intel.com,
-        giovanni.cabiddu@intel.com, linux-kernel@vger.kernel.org,
-        linux-crypto@vger.kernel.org, dmaengine@vger.kernel.org
-Date:   Sat, 22 Jul 2023 12:14:28 -0500
-In-Reply-To: <ZLsvdS6NbaetDFe1@gondor.apana.org.au>
-References: <20230710190654.299639-1-tom.zanussi@linux.intel.com>
-         <20230710190654.299639-13-tom.zanussi@linux.intel.com>
-         <ZLsvdS6NbaetDFe1@gondor.apana.org.au>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.44.1-0ubuntu1 
+        with ESMTP id S230521AbjGXGmX (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Mon, 24 Jul 2023 02:42:23 -0400
+Received: from szxga03-in.huawei.com (szxga03-in.huawei.com [45.249.212.189])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 062D910FA;
+        Sun, 23 Jul 2023 23:41:47 -0700 (PDT)
+Received: from kwepemi500008.china.huawei.com (unknown [172.30.72.57])
+        by szxga03-in.huawei.com (SkyGuard) with ESMTP id 4R8VpZ13ptzHqc2;
+        Mon, 24 Jul 2023 14:37:58 +0800 (CST)
+Received: from huawei.com (10.90.53.73) by kwepemi500008.china.huawei.com
+ (7.221.188.139) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.27; Mon, 24 Jul
+ 2023 14:40:30 +0800
+From:   Ruan Jinjie <ruanjinjie@huawei.com>
+To:     <linus.walleij@linaro.org>, <vkoul@kernel.org>,
+        <akpm@linux-foundation.org>, <dan.j.williams@intel.com>,
+        <srinidhi.kasagar@stericsson.com>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <dmaengine@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+CC:     <ruanjinjie@huawei.com>
+Subject: [PATCH -next] dmaengine: ste_dma40: Add missing IRQ check in d40_probe
+Date:   Mon, 24 Jul 2023 14:41:08 +0000
+Message-ID: <20230724144108.2582917-1-ruanjinjie@huawei.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
+Content-Transfer-Encoding: 7BIT
+Content-Type:   text/plain; charset=US-ASCII
+X-Originating-IP: [10.90.53.73]
+X-ClientProxiedBy: dggems701-chm.china.huawei.com (10.3.19.178) To
+ kwepemi500008.china.huawei.com (7.221.188.139)
+X-CFilter-Loop: Reflected
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On Sat, 2023-07-22 at 13:23 +1200, Herbert Xu wrote:
-> On Mon, Jul 10, 2023 at 02:06:52PM -0500, Tom Zanussi wrote:
-> >=20
-> > Because the IAA hardware has a 4k history-window limitation, only
-> > buffers <=3D 4k, or that have been compressed using a <=3D 4k history
-> > window, are technically compliant with the deflate spec, which
-> > allows
-> > for a window of up to 32k.=C2=A0 Because of this limitation, the IAA
-> > fixed
-> > mode deflate algorithm is given its own algorithm name, 'deflate-
-> > iaa'.
->=20
-> So compressed results produced by this can always be decompressed
-> by the generic algorithm, right?
->=20
+From: ruanjinjie <ruanjinjie@huawei.com>
 
-Right.
+Check for the return value of platform_get_irq(): if no interrupt
+is specified, it wouldn't make sense to call request_irq().
 
-> If it's only when you decompress that you may encounter failures,
-> then I suggest that we still use the same algorithm name, but fall
-> back at run-time if the result cannot be decompressed by the
-> hardware.=C2=A0 Is it possible to fail gracefully and then retry the
-> decompression in this case?
->=20
+Fixes: 8d318a50b3d7 ("DMAENGINE: Support for ST-Ericssons DMA40 block v3")
+Signed-off-by: Ruan Jinjie <ruanjinjie@huawei.com>
+---
+ drivers/dma/ste_dma40.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-Yeah, I think that should be possible. I'll try it out and add it to
-the next version.  Thanks for the suggestion!
-
-Tom
-
-
-> Thanks,
+diff --git a/drivers/dma/ste_dma40.c b/drivers/dma/ste_dma40.c
+index 825001bde42c..89e82508c133 100644
+--- a/drivers/dma/ste_dma40.c
++++ b/drivers/dma/ste_dma40.c
+@@ -3590,6 +3590,10 @@ static int __init d40_probe(struct platform_device *pdev)
+ 	spin_lock_init(&base->lcla_pool.lock);
+ 
+ 	base->irq = platform_get_irq(pdev, 0);
++	if (base->irq < 0) {
++		ret = base->irq;
++		goto destroy_cache;
++	}
+ 
+ 	ret = request_irq(base->irq, d40_handle_interrupt, 0, D40_NAME, base);
+ 	if (ret) {
+-- 
+2.34.1
 
