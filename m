@@ -2,74 +2,95 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4D111C001B0
-	for <dmaengine@archiver.kernel.org>; Tue,  8 Aug 2023 18:31:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 92AC9C001B0
+	for <dmaengine@archiver.kernel.org>; Tue,  8 Aug 2023 19:07:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235719AbjHHSb0 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 8 Aug 2023 14:31:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60994 "EHLO
+        id S229470AbjHHTHn (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 8 Aug 2023 15:07:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39878 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231886AbjHHSbJ (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Tue, 8 Aug 2023 14:31:09 -0400
-Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.126])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B82EB4F08;
-        Tue,  8 Aug 2023 10:51:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1691517067; x=1723053067;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=XfHZb7jTrJDIeX504oyNI889yH88C3wdHdQ0aKD/m78=;
-  b=gLtN2lAYEQCNudXJ2Ft6SMF9yHjqINl483wXAmoDta8VC+hcuXw9QR9l
-   AyoANWmgAGduCKF7IvSLpQu5sWxIGApjiTZEVkGxwecpNszkWcJfatuwS
-   unRgQVMvRm1r8DfsSErCzj1ML7Ap/UPOChzgfA/BA4M7Wmjuh/LOo5cn+
-   PeuWjlIkcrg0Y7009H5xQCTif3T9hdoVkYY2FgD4k0Q8uJDOCYykVbOwU
-   NiLkzZpNoQ24Dh26crNowMbpFQjDqqaKtTerTn8xp3jpdMwWr5k3ImK13
-   g3tZIJST3WzQ1tlZl/crgj+4t/4WsNYUmCfJrpzJxIPVYnHtxAHjOHAIK
-   Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10795"; a="355856823"
-X-IronPort-AV: E=Sophos;i="6.01,156,1684825200"; 
-   d="scan'208";a="355856823"
-Received: from orsmga002.jf.intel.com ([10.7.209.21])
-  by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Aug 2023 10:25:22 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10795"; a="731501652"
-X-IronPort-AV: E=Sophos;i="6.01,156,1684825200"; 
-   d="scan'208";a="731501652"
-Received: from smile.fi.intel.com ([10.237.72.54])
-  by orsmga002.jf.intel.com with ESMTP; 08 Aug 2023 10:25:21 -0700
-Received: from andy by smile.fi.intel.com with local (Exim 4.96)
-        (envelope-from <andriy.shevchenko@linux.intel.com>)
-        id 1qTQSN-000FEM-2I;
-        Tue, 08 Aug 2023 20:25:19 +0300
-Date:   Tue, 8 Aug 2023 20:25:19 +0300
-From:   Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-To:     Yue Haibing <yuehaibing@huawei.com>
-Cc:     vkoul@kernel.org, dmaengine@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH -next] dmaengine: Remove unused declaration
- dma_chan_cleanup()
-Message-ID: <ZNJ6f2ifosu8obFl@smile.fi.intel.com>
-References: <20230808150517.36632-1-yuehaibing@huawei.com>
+        with ESMTP id S233984AbjHHTH3 (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Tue, 8 Aug 2023 15:07:29 -0400
+Received: from madras.collabora.co.uk (madras.collabora.co.uk [IPv6:2a00:1098:0:82:1000:25:2eeb:e5ab])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F02512D1D9;
+        Tue,  8 Aug 2023 09:29:18 -0700 (PDT)
+Received: from [192.168.0.125] (unknown [82.76.24.202])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (4096 bits))
+        (No client certificate requested)
+        (Authenticated sender: ehristev)
+        by madras.collabora.co.uk (Postfix) with ESMTPSA id 7224E66071F6;
+        Tue,  8 Aug 2023 12:45:03 +0100 (BST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+        s=mail; t=1691495104;
+        bh=TLCXArraVp1GnqEqP+LWsyF5aCVliI9FrcY4g8JDRiE=;
+        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+        b=FZIwYjLSNwUeWjsyZKshC+XGEuO9rzr2fl6CY137AFkL27nbhoX1viX64mcXCBSs9
+         VMQuda3NcfX7cJGMIWFEj7VHIoGKrg7ZLOiPIwNtL9w07KH1eqNyJDHAd9aPwrHVDd
+         GYstIOuUbIgVi9CmE/Sh5tiHf8+6Isbio8IVF2WRuomdAT8XyMRiuCn8PsRZUa9qfL
+         zF7IuvANvKydrM7uktr78aa0dDv3u4/NkSrUUSLSmkgMjCDd0e5/mLATy4XPWcEoTX
+         MCsliGpI+8JdKzwaN7GDNQWugpfe/bD5jsnbxayCIx4FNQ37RMQZ0Sy03/BDnn++iV
+         8/8z2GvOGvEQg==
+Message-ID: <da5d1a11-93d4-3952-9a2b-8313b9206660@collabora.com>
+Date:   Tue, 8 Aug 2023 14:45:01 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230808150517.36632-1-yuehaibing@huawei.com>
-Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH] dmaengine: mediatek: Fix deadlock caused by
+ synchronize_irq()
+Content-Language: en-US
+To:     Duoming Zhou <duoming@zju.edu.cn>, sean.wang@mediatek.com
+Cc:     vkoul@kernel.org, matthias.bgg@gmail.com,
+        angelogioacchino.delregno@collabora.com, dmaengine@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-mediatek@lists.infradead.org, linux-kernel@vger.kernel.org
+References: <20230806032511.45263-1-duoming@zju.edu.cn>
+From:   Eugen Hristev <eugen.hristev@collabora.com>
+In-Reply-To: <20230806032511.45263-1-duoming@zju.edu.cn>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On Tue, Aug 08, 2023 at 11:05:17PM +0800, Yue Haibing wrote:
-> Commit f27c580c3628 ("dmaengine: remove 'bigref' infrastructure")
-> removed the implementation but leave declaration.
+On 8/6/23 06:25, Duoming Zhou wrote:
+> The synchronize_irq(c->irq) will not return until the IRQ handler
+> mtk_uart_apdma_irq_handler() is completed. If the synchronize_irq()
+> holds a spin_lock and waits the IRQ handler to complete, but the
+> IRQ handler also needs the same spin_lock. The deadlock will happen.
+> The process is shown below:
+> 
+>            cpu0                        cpu1
+> mtk_uart_apdma_device_pause() | mtk_uart_apdma_irq_handler()
+>    spin_lock_irqsave()         |
+>                                |   spin_lock_irqsave()
+>    //hold the lock to wait     |
+>    synchronize_irq()           |
+> 
+> This patch reorders the synchronize_irq(c->irq) outside the spin_lock
+> in order to mitigate the bug.
+> 
+> Fixes: 9135408c3ace ("dmaengine: mediatek: Add MediaTek UART APDMA support")
+> Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
+> ---
+>   drivers/dma/mediatek/mtk-uart-apdma.c | 3 +--
+>   1 file changed, 1 insertion(+), 2 deletions(-)
+> 
+> diff --git a/drivers/dma/mediatek/mtk-uart-apdma.c b/drivers/dma/mediatek/mtk-uart-apdma.c
+> index a1517ef1f4a..0acf6a92a4a 100644
+> --- a/drivers/dma/mediatek/mtk-uart-apdma.c
+> +++ b/drivers/dma/mediatek/mtk-uart-apdma.c
+> @@ -451,9 +451,8 @@ static int mtk_uart_apdma_device_pause(struct dma_chan *chan)
+>   	mtk_uart_apdma_write(c, VFF_EN, VFF_EN_CLR_B);
+>   	mtk_uart_apdma_write(c, VFF_INT_EN, VFF_INT_EN_CLR_B);
+>   
+> -	synchronize_irq(c->irq);
+> -
+>   	spin_unlock_irqrestore(&c->vc.lock, flags);
+> +	synchronize_irq(c->irq);
+>   
+>   	return 0;
+>   }
 
-"...left declaration in place. Remove it."
 
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-
--- 
-With Best Regards,
-Andy Shevchenko
-
-
+Reviewed-by: Eugen Hristev <eugen.hristev@collabora.com>
