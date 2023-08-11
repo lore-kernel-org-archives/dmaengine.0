@@ -2,173 +2,198 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 03D77C001B0
-	for <dmaengine@archiver.kernel.org>; Fri, 11 Aug 2023 09:51:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 56A77C0015E
+	for <dmaengine@archiver.kernel.org>; Fri, 11 Aug 2023 10:08:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234013AbjHKJvp (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 11 Aug 2023 05:51:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35128 "EHLO
+        id S230407AbjHKKIh (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 11 Aug 2023 06:08:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42802 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231476AbjHKJvo (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Fri, 11 Aug 2023 05:51:44 -0400
-Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.115])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C21AF2683;
-        Fri, 11 Aug 2023 02:51:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1691747503; x=1723283503;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=z453GNYmMJDY4aCcWBHhUYvZPy4HUOOIDo+Dln4hDxA=;
-  b=NkmP6PTp/lcJ37fyw8C3rn5PnpKsj4hpPZxtCDKQutS1ilSIS0zdXtS9
-   cUNbSPExKXy0Du7nHde6S32oM8KK3ViZRQJXPr1EPBwGozfy5vKwDf1r4
-   XLG+7mRorZT1ncck71hKIBnBRoHq9T2t6N2APA3SHsUeguQgEc5ZxmSF2
-   udWjxmJPw1jAIBUyNQHfmnm85wzuB5a5Nvqwo5Ol1eWTNO7JYDy4u8iWY
-   P53cf1jytkwel7xNKkkjjtdfo056KeoyMff4u2uf2hF3bcS57pU3RuhvP
-   xBe+w4M6wRZ+qEa5he6boRzjhMJYve53Iv0Boew1PLSXHKqt002ztYSJb
-   A==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10798"; a="371649172"
-X-IronPort-AV: E=Sophos;i="6.01,165,1684825200"; 
-   d="scan'208";a="371649172"
-Received: from fmsmga003.fm.intel.com ([10.253.24.29])
-  by fmsmga103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Aug 2023 02:51:42 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10798"; a="822612343"
-X-IronPort-AV: E=Sophos;i="6.01,165,1684825200"; 
-   d="scan'208";a="822612343"
-Received: from lkp-server01.sh.intel.com (HELO d1ccc7e87e8f) ([10.239.97.150])
-  by FMSMGA003.fm.intel.com with ESMTP; 11 Aug 2023 02:51:38 -0700
-Received: from kbuild by d1ccc7e87e8f with local (Exim 4.96)
-        (envelope-from <lkp@intel.com>)
-        id 1qUOnx-0007ga-36;
-        Fri, 11 Aug 2023 09:51:37 +0000
-Date:   Fri, 11 Aug 2023 17:50:58 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Guo Mengqi <guomengqi3@huawei.com>, vkoul@kernel.org,
-        dmaengine@vger.kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        devicetree@vger.kernel.org
-Cc:     oe-kbuild-all@lists.linux.dev, guomengqi3@huawei.com,
-        xuqiang36@huawei.com
-Subject: Re: [PATCH 1/2] dmaengine: Add HiSilicon Ascend SDMA engine support
-Message-ID: <202308111712.7M4TmcC2-lkp@intel.com>
-References: <20230811034822.107229-2-guomengqi3@huawei.com>
+        with ESMTP id S229719AbjHKKIh (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Fri, 11 Aug 2023 06:08:37 -0400
+Received: from mx07-00178001.pphosted.com (mx07-00178001.pphosted.com [185.132.182.106])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 16D95E3;
+        Fri, 11 Aug 2023 03:08:32 -0700 (PDT)
+Received: from pps.filterd (m0241204.ppops.net [127.0.0.1])
+        by mx07-00178001.pphosted.com (8.17.1.22/8.17.1.22) with ESMTP id 37B6sQmc008644;
+        Fri, 11 Aug 2023 12:07:44 +0200
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foss.st.com; h=
+        from:to:cc:subject:date:message-id:in-reply-to:references
+        :mime-version:content-transfer-encoding:content-type; s=
+        selector1; bh=HR3hURRfNMxwM0MNF+bffvIV/HtWswDGC7r7A8PHRvw=; b=zt
+        dLCCs9Mh95e+0719CFdW3EV6mAoXUpTAZGo8U7JU77UEtgPshTkd0IN7xof5vy8h
+        kjkQa4QYKTYkEHuVDbH+wYpvI10km7WmmIUjupCqYBEMDMvxVcVEql/OUlzpNMIO
+        qKrynGR+MoLX5A061Xf5DV/ClsrEe/vQBunQfbZ0VAMxyelZMIx4vQ/uSTzzvSD+
+        DAqCcbBNaOK28L5vBecTAegcqlqG7oSZwBtAB38H2hyN8Hq9wNk5m98SeERclQA+
+        DTHJtwZ2Z42tb/pQi3iCHs57qffMt2rWWumDM4NevRPVGj5nyT7mPxKZV7LfsVpc
+        MaqpOlbkpJX9JIgX7KKA==
+Received: from beta.dmz-eu.st.com (beta.dmz-eu.st.com [164.129.1.35])
+        by mx07-00178001.pphosted.com (PPS) with ESMTPS id 3sd9jrtyf2-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 11 Aug 2023 12:07:43 +0200 (MEST)
+Received: from euls16034.sgp.st.com (euls16034.sgp.st.com [10.75.44.20])
+        by beta.dmz-eu.st.com (STMicroelectronics) with ESMTP id A8031100050;
+        Fri, 11 Aug 2023 12:07:41 +0200 (CEST)
+Received: from Webmail-eu.st.com (eqndag1node4.st.com [10.75.129.133])
+        by euls16034.sgp.st.com (STMicroelectronics) with ESMTP id 985B02138FD;
+        Fri, 11 Aug 2023 12:07:41 +0200 (CEST)
+Received: from localhost (10.201.21.121) by EQNDAG1NODE4.st.com
+ (10.75.129.133) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.21; Fri, 11 Aug
+ 2023 12:07:41 +0200
+From:   Gatien Chevallier <gatien.chevallier@foss.st.com>
+To:     <Oleksii_Moisieiev@epam.com>, <gregkh@linuxfoundation.org>,
+        <herbert@gondor.apana.org.au>, <davem@davemloft.net>,
+        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        <conor+dt@kernel.org>, <alexandre.torgue@foss.st.com>,
+        <vkoul@kernel.org>, <jic23@kernel.org>,
+        <olivier.moysan@foss.st.com>, <arnaud.pouliquen@foss.st.com>,
+        <mchehab@kernel.org>, <fabrice.gasnier@foss.st.com>,
+        <andi.shyti@kernel.org>, <ulf.hansson@linaro.org>,
+        <edumazet@google.com>, <kuba@kernel.org>, <pabeni@redhat.com>,
+        <hugues.fruchet@foss.st.com>, <lee@kernel.org>, <will@kernel.org>,
+        <catalin.marinas@arm.com>, <arnd@kernel.org>,
+        <richardcochran@gmail.com>, Frank Rowand <frowand.list@gmail.com>,
+        <peng.fan@oss.nxp.com>
+CC:     <linux-crypto@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-stm32@st-md-mailman.stormreply.com>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>, <dmaengine@vger.kernel.org>,
+        <linux-i2c@vger.kernel.org>, <linux-iio@vger.kernel.org>,
+        <alsa-devel@alsa-project.org>, <linux-media@vger.kernel.org>,
+        <linux-mmc@vger.kernel.org>, <netdev@vger.kernel.org>,
+        <linux-phy@lists.infradead.org>, <linux-serial@vger.kernel.org>,
+        <linux-spi@vger.kernel.org>, <linux-usb@vger.kernel.org>,
+        Oleksii Moisieiev <oleksii_moisieiev@epam.com>,
+        Gatien Chevallier <gatien.chevallier@foss.st.com>
+Subject: [IGNORE][PATCH v4 01/11] dt-bindings: Document common device controller bindings
+Date:   Fri, 11 Aug 2023 12:07:21 +0200
+Message-ID: <20230811100731.108145-2-gatien.chevallier@foss.st.com>
+X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20230811100731.108145-1-gatien.chevallier@foss.st.com>
+References: <20230811100731.108145-1-gatien.chevallier@foss.st.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230811034822.107229-2-guomengqi3@huawei.com>
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.201.21.121]
+X-ClientProxiedBy: EQNCAS1NODE4.st.com (10.75.129.82) To EQNDAG1NODE4.st.com
+ (10.75.129.133)
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-08-10_20,2023-08-10_01,2023-05-22_02
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Hi Guo,
+From: Oleksii Moisieiev <Oleksii_Moisieiev@epam.com>
 
-kernel test robot noticed the following build warnings:
+Introducing of the common device controller bindings for the controller
+provider and consumer devices. Those bindings are intended to allow
+divided system on chip into multiple domains, that can be used to
+configure hardware permissions.
 
-[auto build test WARNING on vkoul-dmaengine/next]
-[also build test WARNING on linus/master v6.5-rc5 next-20230809]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+Signed-off-by: Oleksii Moisieiev <oleksii_moisieiev@epam.com>
+[Gatien: Fix typos and YAML error]
+Signed-off-by: Gatien Chevallier <gatien.chevallier@foss.st.com>
+---
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Guo-Mengqi/dmaengine-Add-HiSilicon-Ascend-SDMA-engine-support/20230811-115823
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/vkoul/dmaengine.git next
-patch link:    https://lore.kernel.org/r/20230811034822.107229-2-guomengqi3%40huawei.com
-patch subject: [PATCH 1/2] dmaengine: Add HiSilicon Ascend SDMA engine support
-config: csky-randconfig-r003-20230811 (https://download.01.org/0day-ci/archive/20230811/202308111712.7M4TmcC2-lkp@intel.com/config)
-compiler: csky-linux-gcc (GCC) 12.3.0
-reproduce: (https://download.01.org/0day-ci/archive/20230811/202308111712.7M4TmcC2-lkp@intel.com/reproduce)
+Changes in V4: 
+	Corrected typos and YAML errors	
+	
+ .../feature-domain-controller.yaml            | 84 +++++++++++++++++++
+ 1 file changed, 84 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/feature-controllers/feature-domain-controller.yaml
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202308111712.7M4TmcC2-lkp@intel.com/
-
-All warnings (new ones prefixed by >>):
-
->> drivers/dma/ascend_sdma.c:191:6: warning: no previous prototype for 'set_sdma_channel_info' [-Wmissing-prototypes]
-     191 | void set_sdma_channel_info(struct dma_chan *c, int pasid)
-         |      ^~~~~~~~~~~~~~~~~~~~~
-   In file included from include/linux/kernel.h:30,
-                    from drivers/dma/ascend_sdma.c:4:
-   drivers/dma/ascend_sdma.c: In function 'of_sdma_collect_info':
->> include/linux/kern_levels.h:5:25: warning: format '%llx' expects argument of type 'long long unsigned int', but argument 2 has type 'resource_size_t' {aka 'unsigned int'} [-Wformat=]
-       5 | #define KERN_SOH        "\001"          /* ASCII Start Of Header */
-         |                         ^~~~~~
-   include/linux/printk.h:427:25: note: in definition of macro 'printk_index_wrap'
-     427 |                 _p_func(_fmt, ##__VA_ARGS__);                           \
-         |                         ^~~~
-   include/linux/printk.h:508:9: note: in expansion of macro 'printk'
-     508 |         printk(KERN_WARNING pr_fmt(fmt), ##__VA_ARGS__)
-         |         ^~~~~~
-   include/linux/kern_levels.h:12:25: note: in expansion of macro 'KERN_SOH'
-      12 | #define KERN_WARNING    KERN_SOH "4"    /* warning conditions */
-         |                         ^~~~~~~~
-   include/linux/printk.h:508:16: note: in expansion of macro 'KERN_WARNING'
-     508 |         printk(KERN_WARNING pr_fmt(fmt), ##__VA_ARGS__)
-         |                ^~~~~~~~~~~~
-   drivers/dma/ascend_sdma.c:234:17: note: in expansion of macro 'pr_warn'
-     234 |                 pr_warn("reg size %#llx check failed, use %#x\n",
-         |                 ^~~~~~~
-   drivers/dma/ascend_sdma.c: At top level:
->> drivers/dma/ascend_sdma.c:490:33: warning: no previous prototype for 'sdma_prep_dma_memcpy' [-Wmissing-prototypes]
-     490 | struct dma_async_tx_descriptor *sdma_prep_dma_memcpy(
-         |                                 ^~~~~~~~~~~~~~~~~~~~
->> drivers/dma/ascend_sdma.c:520:5: warning: no previous prototype for 'sdma_terminate_all' [-Wmissing-prototypes]
-     520 | int sdma_terminate_all(struct dma_chan *chan)
-         |     ^~~~~~~~~~~~~~~~~~
->> drivers/dma/ascend_sdma.c:528:6: warning: no previous prototype for 'sdma_synchronize' [-Wmissing-prototypes]
-     528 | void sdma_synchronize(struct dma_chan *chan)
-         |      ^~~~~~~~~~~~~~~~
->> drivers/dma/ascend_sdma.c:535:17: warning: no previous prototype for 'sdma_tx_status' [-Wmissing-prototypes]
-     535 | enum dma_status sdma_tx_status(struct dma_chan *chan,
-         |                 ^~~~~~~~~~~~~~
-   drivers/dma/ascend_sdma.c: In function 'sdma_tx_status':
-   drivers/dma/ascend_sdma.c:545:9: error: implicit declaration of function 'dsb' [-Werror=implicit-function-declaration]
-     545 |         dsb(sy);
-         |         ^~~
-   drivers/dma/ascend_sdma.c:545:13: error: 'sy' undeclared (first use in this function); did you mean 'sc'?
-     545 |         dsb(sy);
-         |             ^~
-         |             sc
-   drivers/dma/ascend_sdma.c:545:13: note: each undeclared identifier is reported only once for each function it appears in
->> drivers/dma/ascend_sdma.c:540:22: warning: variable 'ch_ctrl_reg' set but not used [-Wunused-but-set-variable]
-     540 |         u32 irq_reg, ch_ctrl_reg;
-         |                      ^~~~~~~~~~~
-   drivers/dma/ascend_sdma.c: In function 'sdma_start_transfer':
-   drivers/dma/ascend_sdma.c:633:9: error: implicit declaration of function 'dmb'; did you mean 'rmb'? [-Werror=implicit-function-declaration]
-     633 |         dmb(sy);
-         |         ^~~
-         |         rmb
-   drivers/dma/ascend_sdma.c:633:13: error: 'sy' undeclared (first use in this function); did you mean 's8'?
-     633 |         dmb(sy);
-         |             ^~
-         |             s8
-   drivers/dma/ascend_sdma.c: At top level:
->> drivers/dma/ascend_sdma.c:638:6: warning: no previous prototype for 'sdma_issue_pending' [-Wmissing-prototypes]
-     638 | void sdma_issue_pending(struct dma_chan *chan)
-         |      ^~~~~~~~~~~~~~~~~~
->> drivers/dma/ascend_sdma.c:651:6: warning: no previous prototype for 'sdma_free_chan_resources' [-Wmissing-prototypes]
-     651 | void sdma_free_chan_resources(struct dma_chan *chan)
-         |      ^~~~~~~~~~~~~~~~~~~~~~~~
-   cc1: some warnings being treated as errors
-
-
-vim +/set_sdma_channel_info +191 drivers/dma/ascend_sdma.c
-
-   187	
-   188	/* sdma supports sva transfer via iommu.
-   189	 * client must first set the pasid.
-   190	 */
- > 191	void set_sdma_channel_info(struct dma_chan *c, int pasid)
-   192	{
-   193		struct sdma_chan *sc = to_sdma_chan(c);
-   194	
-   195		sc->pasid = pasid;
-   196	}
-   197	EXPORT_SYMBOL_GPL(set_sdma_channel_info);
-   198	
-
+diff --git a/Documentation/devicetree/bindings/feature-controllers/feature-domain-controller.yaml b/Documentation/devicetree/bindings/feature-controllers/feature-domain-controller.yaml
+new file mode 100644
+index 000000000000..57217da2d1cf
+--- /dev/null
++++ b/Documentation/devicetree/bindings/feature-controllers/feature-domain-controller.yaml
+@@ -0,0 +1,84 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/feature-controllers/feature-domain-controller.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Generic Domain Controller
++
++maintainers:
++  - Oleksii Moisieiev <oleksii_moisieiev@epam.com>
++
++description: |+
++  Common Feature Domains Controller properties
++
++  Domain controllers allow to divided system on chip into multiple feature
++  domains that can be used to select by who hardware blocks could be accessed.
++  A feature domain could be a cluster of CPUs (or coprocessors), a range of
++  addresses or a group of hardware blocks.
++
++  This device tree bindings can be used to bind feature domain consumer devices
++  with their feature domains provided by feature-domains controllers.
++  Feature omain controller provider can be represened by any node in the
++  device tree and can provide one or more configuration parameters, needed to
++  control parameters of the consumer device. A consumer node can refer to the
++  provider by phandle and a set of phandle arguments, specified by
++  '#feature-domain-cells' property in the device controller provider node.
++
++  Device controllers are typically used to set the permissions of the hardware
++  block. The contents of the feature-domains configuration properties are
++  defined by the binding for the individual feature-domains controller device.
++
++  Each node can be a consumer for the several providers. The first
++  configuration of 'feature-domains' or the one named 'default' is applied
++  before probing the device itself.
++
++# always select the core schema
++select: true
++
++properties:
++  '#feature-domain-cells':
++    $ref: /schemas/types.yaml#/definitions/uint32
++    description:
++      Number of cells in a feature-domains controller specifier;
++      Can be any value as specified by device tree binding documentation
++      of a particular provider.
++
++  feature-domain-controller:
++    description:
++      Indicates that the node is feature-domain-controller provider.
++
++  feature-domain-names:
++    $ref: '/schemas/types.yaml#/definitions/string-array'
++    description:
++      A list of feature-domains names, sorted in the same order as
++      feature-domains entries. Consumer drivers will use feature-domain-names
++      to match with existing feature-domains entries.
++
++  feature-domains:
++    $ref: "/schemas/types.yaml#/definitions/phandle-array"
++    description:
++      A list of feature-domains controller specifiers, as defined by the
++      bindings of the feature-domain-controller provider.
++
++additionalProperties: true
++
++examples:
++  - |
++    ctrl0: ctrl@100 {
++        feature-domain-controller;
++        reg = <0x100 0x10>;
++        #feature-domain-cells = <2>;
++    };
++
++    ctrl1: ctrl@110 {
++        feature-domain-controller;
++        reg = <0x110 0x10>;
++        #feature-domain-cells = <3>;
++    };
++
++    foo@0 {
++        reg = <0x0 0x1>;
++        feature-domains = <&ctrl0 1 2>, <&ctrl1 3 4 5>;
++        feature-domain-names = "default", "unbind";
++    };
 -- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+2.25.1
+
