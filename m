@@ -2,58 +2,55 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9FADCC7EE2F
-	for <dmaengine@archiver.kernel.org>; Fri, 18 Aug 2023 00:00:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5E4ACC7EE43
+	for <dmaengine@archiver.kernel.org>; Fri, 18 Aug 2023 00:00:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1356365AbjHQX7h (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Thu, 17 Aug 2023 19:59:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44210 "EHLO
+        id S1356386AbjHQX7j (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Thu, 17 Aug 2023 19:59:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44134 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1356406AbjHQX7R (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Thu, 17 Aug 2023 19:59:17 -0400
-Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com [IPv6:2607:f8b0:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 437FD2713
-        for <dmaengine@vger.kernel.org>; Thu, 17 Aug 2023 16:59:13 -0700 (PDT)
-Received: by mail-pl1-x62e.google.com with SMTP id d9443c01a7336-1bc8045e09dso3004655ad.0
-        for <dmaengine@vger.kernel.org>; Thu, 17 Aug 2023 16:59:13 -0700 (PDT)
+        with ESMTP id S1356396AbjHQX7Q (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Thu, 17 Aug 2023 19:59:16 -0400
+Received: from mail-pf1-x42a.google.com (mail-pf1-x42a.google.com [IPv6:2607:f8b0:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D2F1A3A93
+        for <dmaengine@vger.kernel.org>; Thu, 17 Aug 2023 16:59:11 -0700 (PDT)
+Received: by mail-pf1-x42a.google.com with SMTP id d2e1a72fcca58-686be3cbea0so1070512b3a.0
+        for <dmaengine@vger.kernel.org>; Thu, 17 Aug 2023 16:59:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1692316753; x=1692921553;
+        d=chromium.org; s=google; t=1692316751; x=1692921551;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Mk1SCmr54SByakeWUh6yowv1wkxM4Sng/sHbcFaXDNY=;
-        b=Li42VoXYxopvcAosNllETb31bGBNqG1eav+/PT2XDAsWeF5EQR1O1xIIavffuSqGx6
-         NWMBk8BWHGBLra/nts8yKC0wrGWaj+ndVUkZOUp9IJz+HuHHCeUiM9weglzL3JUMtFNM
-         e7LgNLfxXWTcCqxa7v3GQXhsxXl9sO2ZXMCpQ=
+        bh=/y2Eh4/WKRjvBkeOEfQI129skaNYk4SyGprhYtjFhak=;
+        b=SzUW2GrAVSjYkhX+pusIUEOM+KNuQmK1FASSRRo4qO8aZqzl/n/O9lDGtPK2t65ly2
+         aR/6/Z55DpooK0hj1hBnzvmaxOGaMFCvnXYiGBjR9+03xK0pMUQjNqa3GJWDJNBe3qiF
+         jT3v6MwHJmiAXg1SI/wTDZTvSnHlP95OYuJHA=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692316753; x=1692921553;
+        d=1e100.net; s=20221208; t=1692316751; x=1692921551;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Mk1SCmr54SByakeWUh6yowv1wkxM4Sng/sHbcFaXDNY=;
-        b=JyzRQ5kuAM7Huqr4/Dr8r09TBXjHRy8mKgLcF2b2PSOIVaZWRrpfELufQ2Ho1iSOIN
-         sWJrHdSrIJ5CXol0zRwJyt/oKisba7ArpzmvQhddfHnTvLZf+ufexLGy2IR6UDTbNmex
-         JAvsiCHVBVbRDsOTqtth589LraO7s4XnPgSu+i2bf6jbAzsA8osiad1WUhPjNTdn4IyV
-         sAY7VvxwB2sRcN99Lv90XWErWJEaMhyCkmy7R3o/zCL1eftk7FKKM5KMGHW5drOuQCgd
-         +zuf/i3vpA3B0m3SR8dH+e6P8MSj7XzBPGKQJGh6EHAqzgfcMjWNqZwPRJw5y4YApStt
-         SLYw==
-X-Gm-Message-State: AOJu0YxLel1KsuJ//nYABFveIfb6Vt7eojEF2ZdzhwgSS/LrpH8/9nKK
-        6sDpdvrAlU2zavvEuzEsaD/YAg==
-X-Google-Smtp-Source: AGHT+IHuGCe3rbXfUgNLJKkSPXe8KKaQtbAMaaVfphgPjZsWlcb4US0F/FZRapuXz2PkIwNaTWVG8A==
-X-Received: by 2002:a17:902:8503:b0:1bb:1523:b311 with SMTP id bj3-20020a170902850300b001bb1523b311mr808869plb.41.1692316752793;
-        Thu, 17 Aug 2023 16:59:12 -0700 (PDT)
+        bh=/y2Eh4/WKRjvBkeOEfQI129skaNYk4SyGprhYtjFhak=;
+        b=aIFhRdkUvCndxynowoeM/YErSuexOnPCyiKql/NwFAGcwwHtMR299iB+s2Bh0rjUZU
+         4Zcuctj5MRWdeDMVxSRFmf1wqLcch2oyrqJliuHAlXmKYq6AQGqvQeMmLQ2weWSywiVw
+         NpLMZAFsKL1oL+PEmKaNUNkNlO8sbdHGKjgk3TSF9F1SYTykcQdxSg1nMNriBiCQJmpf
+         /okOcfG+RrCJXUX7o01CV1ZInGpnDTrsxIgdAKr5uRyq+ZyZoCRXBTMsScu8lucEWMn+
+         YC/I/m2dsu5GMeZ8P4sIqFzN2yNkZskdns0ffPB9nd1wpy2yk6VUTECftftbolPHQzjH
+         2vug==
+X-Gm-Message-State: AOJu0YySl2rcXXr8CjM6VN2IhWrm8DnZVXNi89T5HeT9hbjPIy0W1u4b
+        WLaSaMZHORVRnL6qJdZE4zcJ/Q==
+X-Google-Smtp-Source: AGHT+IHFr30RcRjlqiQJEr6xWEDOZp1+abHFVC9+OhQwpQoJHgk9ThDktq6OxUXsC0D8f6pR31KY3Q==
+X-Received: by 2002:a05:6a00:2d10:b0:687:ffac:c62e with SMTP id fa16-20020a056a002d1000b00687ffacc62emr5083101pfb.3.1692316751240;
+        Thu, 17 Aug 2023 16:59:11 -0700 (PDT)
 Received: from www.outflux.net (198-0-35-241-static.hfc.comcastbusiness.net. [198.0.35.241])
-        by smtp.gmail.com with ESMTPSA id d12-20020a170902cecc00b001b7f40a8959sm343232plg.76.2023.08.17.16.59.03
+        by smtp.gmail.com with ESMTPSA id q26-20020a62ae1a000000b0064378c52398sm313422pff.25.2023.08.17.16.59.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Thu, 17 Aug 2023 16:59:08 -0700 (PDT)
 From:   Kees Cook <keescook@chromium.org>
 To:     Vinod Koul <vkoul@kernel.org>
 Cc:     Kees Cook <keescook@chromium.org>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        dmaengine@vger.kernel.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-arm-kernel@lists.infradead.org,
+        Patrice Chotard <patrice.chotard@foss.st.com>,
+        linux-arm-kernel@lists.infradead.org, dmaengine@vger.kernel.org,
         Hector Martin <marcan@marcan.st>,
         Sven Peter <sven@svenpeter.dev>,
         Alyssa Rosenzweig <alyssa@rosenzweig.io>,
@@ -68,7 +65,8 @@ Cc:     Kees Cook <keescook@chromium.org>,
         Orson Zhai <orsonzhai@gmail.com>,
         Baolin Wang <baolin.wang@linux.alibaba.com>,
         Chunyan Zhang <zhang.lyra@gmail.com>,
-        Patrice Chotard <patrice.chotard@foss.st.com>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
         Laxman Dewangan <ldewangan@nvidia.com>,
         Jon Hunter <jonathanh@nvidia.com>,
         Thierry Reding <thierry.reding@gmail.com>,
@@ -83,28 +81,29 @@ Cc:     Kees Cook <keescook@chromium.org>,
         Nick Desaulniers <ndesaulniers@google.com>,
         Tom Rix <trix@redhat.com>, linux-kernel@vger.kernel.org,
         asahi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+        linux-stm32@st-md-mailman.stormreply.com,
         linux-tegra@vger.kernel.org, llvm@lists.linux.dev,
         linux-hardening@vger.kernel.org
-Subject: [PATCH 14/21] dmaengine: stm32-mdma: Annotate struct stm32_mdma_device with __counted_by
-Date:   Thu, 17 Aug 2023 16:58:51 -0700
-Message-Id: <20230817235859.49846-14-keescook@chromium.org>
+Subject: [PATCH 11/21] dmaengine: st_fdma: Annotate struct st_fdma_desc with __counted_by
+Date:   Thu, 17 Aug 2023 16:58:48 -0700
+Message-Id: <20230817235859.49846-11-keescook@chromium.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20230817235428.never.111-kees@kernel.org>
 References: <20230817235428.never.111-kees@kernel.org>
 MIME-Version: 1.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2025; i=keescook@chromium.org;
- h=from:subject; bh=pKTclpaZruv+pWk34ERm2W6zAMi5KXhuaV3hDpciGTg=;
- b=owEBbQKS/ZANAwAKAYly9N/cbcAmAcsmYgBk3rRB0Kp6SezIcvelRc5vIjA6L87F3Jxd807ZE
- TawptODXHaJAjMEAAEKAB0WIQSlw/aPIp3WD3I+bhOJcvTf3G3AJgUCZN60QQAKCRCJcvTf3G3A
- JkowD/0bdDsHfBNlgVJ6IMXnkrBtd8nyV9tr34/9GAsGIx6iKvbcxPRfiAZB5usq35bGE6r9shD
- jsCa/mEq3Ml6mYiEWgLVgUaeVpGJk26dgwgXaWB0tgAj950FICdaGqIKKZfqwZGQXKuULpY4fof
- zFKMLeD63ek6gqBDfGWGy+4SWdU4R0Dn4JrysDFrucIju/vvHhFNhLbUR4oNUC9QXZaFrrG4xW9
- Sn6OJTAFSqdYijRTfeMWXlACRcDVj/co8MnpctKLLcy6UlFT3x4GRQ2pS3jeOTS7T0BCvUnDNc1
- L5ImfV0Z4r+BCfs6ZArg/5dtLt49JhzrT9YDVLnjZOSj21QxOMe6RY07KOnX2TQfalz/Y0MHVP7
- 9H5IXWPUdz45Df8wVJzaiYN860p90QvySYHNUARWv0yJ+kxOMjZccNG2dlSvXtJqHshg6NmusH+
- Leote/t+f+LKtsRIXglKvDe9uZVG5tWlf8eJdxeOnS6x0LcYGSBUdNLH5nJdKcHBMADld97pyBU
- P1NLDFAuLqbJ+caaX0mVhjDLuic01Wl3YdnvLkF/D/tfsgNKsnb8NQuvzAsGtpmyq8jKWq7DyQ+
- 6LXmQjlUQfooWKoKlL2KIyjRUmQxUq9xg9MmVYdTiK19xN3TKrTx8prWlmvSZ8bZVKZYIHGqhns kEJejcVzr2sYgJQ==
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1181; i=keescook@chromium.org;
+ h=from:subject; bh=/eh3gjVXUNLSKs9JrCYa1PazNmJDO3vyJIq0hWQiyZ8=;
+ b=owEBbQKS/ZANAwAKAYly9N/cbcAmAcsmYgBk3rRAuXQI4DpuGM5iOlcO51tj0uf03Jt7vDRoW
+ 1Ii4cUpYx6JAjMEAAEKAB0WIQSlw/aPIp3WD3I+bhOJcvTf3G3AJgUCZN60QAAKCRCJcvTf3G3A
+ Ju+5D/0YrvVo8rjhZaCcPFDgAshvwzk+u6v2Fw/4/dfJ+OS6ryJ+sJav8pUCdDNGIv2zNyAWlil
+ adBNzQRmJl6gNY6faZUcd9pPz7Gcis004eQUoFbl8BnE3oJTlAxq+mvH7rqyIItvnZz+pJcjY0X
+ tRJ+2EQIAhNV2+IAdF39L4hFVZgH9n07Un8gQljl3C6GL4SZ6ydxuNARV0yuzj7ksYtQmbUZWiM
+ sjzN3ijHcW4y90VnWlisCuyiH85rwJD5v81mw4D4T0bIk/KVW/XzQElanZGyhFShZ7NB0xecSaW
+ 4yskOrN45ih97E4wcfYbmX583qeuDF3+HIspWg4vx1Esg/JpzBGhZDGKmgjJgdKbiQeqPxJWziN
+ rIPjrRxb64nMV1bvGZRAdGM9OEb7BpcPqDTHrYmHTuWlt8smEvhSGFIE1oonrgwP+V9dNpFIRUU
+ dy5znG3aae+m869/A13/KcStCYb4q5v49KTf2ABP9XaGOsiow4VEg3WjkTcdDlCo0YX2VF5IgpY
+ 73r7xslhvy5W4iRgnCw24jT+VAqyVI1tlBfB/8qckc7VndWWdkYtBmoiY4dhiAGxPg/PYcpwrrT
+ NffAKTMZbkpcLpaBKi/B2Ah9kKVH82HTlRPVZ+JlStUZiw4juxxp/4t9OqnZmR3hLyQCVVpYhna yy/imOVfvaQKlqQ==
 X-Developer-Key: i=keescook@chromium.org; a=openpgp; fpr=A5C3F68F229DD60F723E6E138972F4DFDC6DC026
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
@@ -117,51 +116,32 @@ their accesses bounds-checked at run-time checking via CONFIG_UBSAN_BOUNDS
 (for array indexing) and CONFIG_FORTIFY_SOURCE (for strcpy/memcpy-family
 functions).
 
-As found with Coccinelle[1], add __counted_by for struct stm32_mdma_device.
-Additionally, since the element count member must be set before accessing
-the annotated flexible array member, move its initialization earlier.
+As found with Coccinelle[1], add __counted_by for struct st_fdma_desc.
 
 [1] https://github.com/kees/kernel-tools/blob/trunk/coccinelle/examples/counted_by.cocci
 
 Cc: Vinod Koul <vkoul@kernel.org>
-Cc: Maxime Coquelin <mcoquelin.stm32@gmail.com>
-Cc: Alexandre Torgue <alexandre.torgue@foss.st.com>
-Cc: dmaengine@vger.kernel.org
-Cc: linux-stm32@st-md-mailman.stormreply.com
+Cc: Patrice Chotard <patrice.chotard@foss.st.com>
 Cc: linux-arm-kernel@lists.infradead.org
+Cc: dmaengine@vger.kernel.org
 Signed-off-by: Kees Cook <keescook@chromium.org>
 ---
- drivers/dma/stm32-mdma.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/dma/st_fdma.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/dma/stm32-mdma.c b/drivers/dma/stm32-mdma.c
-index 926d6ecf1274..0c7d2295856e 100644
---- a/drivers/dma/stm32-mdma.c
-+++ b/drivers/dma/stm32-mdma.c
-@@ -256,7 +256,7 @@ struct stm32_mdma_device {
- 	u32 nr_ahb_addr_masks;
- 	u32 chan_reserved;
- 	struct stm32_mdma_chan chan[STM32_MDMA_MAX_CHANNELS];
--	u32 ahb_addr_masks[];
-+	u32 ahb_addr_masks[] __counted_by(nr_ahb_addr_masks);
+diff --git a/drivers/dma/st_fdma.h b/drivers/dma/st_fdma.h
+index fa15b97a3bab..f296412e96b6 100644
+--- a/drivers/dma/st_fdma.h
++++ b/drivers/dma/st_fdma.h
+@@ -97,7 +97,7 @@ struct st_fdma_desc {
+ 	struct st_fdma_chan *fchan;
+ 	bool iscyclic;
+ 	unsigned int n_nodes;
+-	struct st_fdma_sw_node node[];
++	struct st_fdma_sw_node node[] __counted_by(n_nodes);
  };
  
- static struct stm32_mdma_device *stm32_mdma_get_dev(
-@@ -1611,13 +1611,13 @@ static int stm32_mdma_probe(struct platform_device *pdev)
- 			      GFP_KERNEL);
- 	if (!dmadev)
- 		return -ENOMEM;
-+	dmadev->nr_ahb_addr_masks = count;
- 
- 	dmadev->nr_channels = nr_channels;
- 	dmadev->nr_requests = nr_requests;
- 	device_property_read_u32_array(&pdev->dev, "st,ahb-addr-masks",
- 				       dmadev->ahb_addr_masks,
- 				       count);
--	dmadev->nr_ahb_addr_masks = count;
- 
- 	dmadev->base = devm_platform_ioremap_resource(pdev, 0);
- 	if (IS_ERR(dmadev->base))
+ enum st_fdma_type {
 -- 
 2.34.1
 
