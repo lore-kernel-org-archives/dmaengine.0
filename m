@@ -2,141 +2,137 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B79E6C7113D
-	for <dmaengine@archiver.kernel.org>; Fri, 18 Aug 2023 09:30:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E25FDC05052
+	for <dmaengine@archiver.kernel.org>; Fri, 18 Aug 2023 10:12:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1359092AbjHRJaA (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 18 Aug 2023 05:30:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40802 "EHLO
+        id S1354775AbjHRKMJ (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 18 Aug 2023 06:12:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52286 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1359080AbjHRJ3c (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Fri, 18 Aug 2023 05:29:32 -0400
-Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD59B12B
-        for <dmaengine@vger.kernel.org>; Fri, 18 Aug 2023 02:29:30 -0700 (PDT)
-Received: by mail-ed1-x52f.google.com with SMTP id 4fb4d7f45d1cf-523bf06f7f8so830965a12.1
-        for <dmaengine@vger.kernel.org>; Fri, 18 Aug 2023 02:29:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1692350969; x=1692955769;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=jTPWfjzgiS6MREC/CQy9YZ7a0Ba4pXdxJTPBP//ZxkQ=;
-        b=ChP1wEg29yXYxpK7J9uqfILfPe/L9xBS0HNQPXH54y1zGDEvcdwljY5HVw15zrjTzx
-         VpGb3h1ffXsIXv8NTndpsLQEcYlTmf6GA/8cPAvQ5OUfezNHFsG8dA4nQbmzYXZ+EEL/
-         +E2hg2SAdUHITLhvITSusy2v1ZLvoO2kw3JiBht3/qHk2OjQyiKqn5GvDCtklD/qqqOS
-         WHA7JqYdvqZ/Rjg0POkhOL40Q+5AYUtbCVBLV0PI/oamzCz/eMWcPzEw4/GQHHTTUYwt
-         OWzP/mRyk+KkHBFUux84C272URdVjJQPiQUdj9yjv5T/igPb7VaLMxL8ciSwoEZ9ARB8
-         hxvg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692350969; x=1692955769;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=jTPWfjzgiS6MREC/CQy9YZ7a0Ba4pXdxJTPBP//ZxkQ=;
-        b=YCaPd1Tu9Fmy5nqoTzLemSszQndTSeicnqlHW6kt/IUsdIQgxSIHvedJU/FAjy/Etz
-         6qPdYaYPl/shyWYanAcwfWeF9nFGJNboizyHAEpw/AGu7UuSWuexi06PntWVr0eHebJG
-         AmkUdlzAE0SmdKK7D2XT0ANlZokcbLUUL4aGnLMPKa20oAENjDvqm9gcPYc/tWSm9kYo
-         CdKYr7f7tDzNC4inpjUurqAWLmJeMCKgLEtdW6CwcMIK6ztvTob+T4YeOnxtQfkYwf74
-         g7/Wl+LVYfMDgM2Nw+XE55SQI+r6UKl4dpkvfYqlQ1j0UndbwjEbWjpCd8ud6rFaYPnk
-         hL7w==
-X-Gm-Message-State: AOJu0Yw9LxdnanpsUJ9nIwjSBbicLJtswaA8rllckWYx67IekCTewsXA
-        9iR9OtIO1SVbg06evsnDJ08m4g==
-X-Google-Smtp-Source: AGHT+IHd1/56PSeqitQJGalEGxXcH26drQEeAdG2dzNVUp/FxWHNv/06+iWRebGIeZUvbnvpxSWWDA==
-X-Received: by 2002:a05:6402:5154:b0:525:466c:5fda with SMTP id n20-20020a056402515400b00525466c5fdamr1836205edd.28.1692350969335;
-        Fri, 18 Aug 2023 02:29:29 -0700 (PDT)
-Received: from [192.168.0.107] ([79.115.63.195])
-        by smtp.gmail.com with ESMTPSA id e26-20020a056402149a00b005233deb30aesm857895edv.10.2023.08.18.02.29.25
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 18 Aug 2023 02:29:28 -0700 (PDT)
-Message-ID: <d1c285ff-5eef-4dae-dde0-8946162f19ac@linaro.org>
-Date:   Fri, 18 Aug 2023 10:29:24 +0100
+        with ESMTP id S1376345AbjHRKLh (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Fri, 18 Aug 2023 06:11:37 -0400
+Received: from szxga03-in.huawei.com (szxga03-in.huawei.com [45.249.212.189])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AFAC2469E;
+        Fri, 18 Aug 2023 03:11:07 -0700 (PDT)
+Received: from kwepemm600013.china.huawei.com (unknown [172.30.72.55])
+        by szxga03-in.huawei.com (SkyGuard) with ESMTP id 4RRyGF33ywzFqlx;
+        Fri, 18 Aug 2023 18:07:01 +0800 (CST)
+Received: from huawei.com (10.175.112.208) by kwepemm600013.china.huawei.com
+ (7.193.23.68) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.31; Fri, 18 Aug
+ 2023 18:10:00 +0800
+From:   Guo Mengqi <guomengqi3@huawei.com>
+To:     <vkoul@kernel.org>, <dmaengine@vger.kernel.org>,
+        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        <conor+dt@kernel.org>, <devicetree@vger.kernel.org>
+CC:     <guomengqi3@huawei.com>, <xuqiang36@huawei.com>,
+        <chenweilong@huawei.com>
+Subject: [PATCH v2 2/2] dt-bindings: dma: hisi: Add bindings for Hisi Ascend sdma
+Date:   Fri, 18 Aug 2023 18:01:28 +0800
+Message-ID: <20230818100128.112491-3-guomengqi3@huawei.com>
+X-Mailer: git-send-email 2.17.1
+In-Reply-To: <20230818100128.112491-1-guomengqi3@huawei.com>
+References: <20230818100128.112491-1-guomengqi3@huawei.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.1
-Subject: Re: [PATCH 02/21] dmaengine: at_hdmac: Annotate struct at_desc with
- __counted_by
-To:     Kees Cook <keescook@chromium.org>, Vinod Koul <vkoul@kernel.org>
-Cc:     Ludovic Desroches <ludovic.desroches@microchip.com>,
-        linux-arm-kernel@lists.infradead.org, dmaengine@vger.kernel.org,
-        Hector Martin <marcan@marcan.st>,
-        Sven Peter <sven@svenpeter.dev>,
-        Alyssa Rosenzweig <alyssa@rosenzweig.io>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        Zhou Wang <wangzhou1@hisilicon.com>,
-        Jie Hai <haijie1@huawei.com>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Green Wan <green.wan@sifive.com>,
-        Orson Zhai <orsonzhai@gmail.com>,
-        Baolin Wang <baolin.wang@linux.alibaba.com>,
-        Chunyan Zhang <zhang.lyra@gmail.com>,
-        Patrice Chotard <patrice.chotard@foss.st.com>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Laxman Dewangan <ldewangan@nvidia.com>,
-        Jon Hunter <jonathanh@nvidia.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Peter Ujfalusi <peter.ujfalusi@gmail.com>,
-        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-        Masami Hiramatsu <mhiramat@kernel.org>,
-        Yu Kuai <yukuai3@huawei.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Jordy Zomer <jordy@pwning.systems>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Nathan Chancellor <nathan@kernel.org>,
-        Nick Desaulniers <ndesaulniers@google.com>,
-        Tom Rix <trix@redhat.com>, linux-kernel@vger.kernel.org,
-        asahi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-tegra@vger.kernel.org, llvm@lists.linux.dev,
-        linux-hardening@vger.kernel.org
-References: <20230817235428.never.111-kees@kernel.org>
- <20230817235859.49846-2-keescook@chromium.org>
-Content-Language: en-US
-From:   Tudor Ambarus <tudor.ambarus@linaro.org>
-In-Reply-To: <20230817235859.49846-2-keescook@chromium.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Originating-IP: [10.175.112.208]
+X-ClientProxiedBy: dggems706-chm.china.huawei.com (10.3.19.183) To
+ kwepemm600013.china.huawei.com (7.193.23.68)
+X-CFilter-Loop: Reflected
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
+Add device-tree binding documentation for the Hisi Ascend sdma
+controller.
 
+Signed-off-by: Guo Mengqi <guomengqi3@huawei.com>
+---
+ .../bindings/dma/hisi,ascend-sdma.yaml        | 75 +++++++++++++++++++
+ 1 file changed, 75 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/dma/hisi,ascend-sdma.yaml
 
-On 8/18/23 00:58, Kees Cook wrote:
-> Prepare for the coming implementation by GCC and Clang of the __counted_by
-> attribute. Flexible array members annotated with __counted_by can have
-> their accesses bounds-checked at run-time checking via CONFIG_UBSAN_BOUNDS
-> (for array indexing) and CONFIG_FORTIFY_SOURCE (for strcpy/memcpy-family
-> functions).
-> 
-> As found with Coccinelle[1], add __counted_by for struct at_desc.
-> 
-> [1] https://github.com/kees/kernel-tools/blob/trunk/coccinelle/examples/counted_by.cocci
-> 
-> Cc: Vinod Koul <vkoul@kernel.org>
-> Cc: Ludovic Desroches <ludovic.desroches@microchip.com>
-> Cc: Tudor Ambarus <tudor.ambarus@linaro.org>
-> Cc: linux-arm-kernel@lists.infradead.org
-> Cc: dmaengine@vger.kernel.org
-> Signed-off-by: Kees Cook <keescook@chromium.org>
+diff --git a/Documentation/devicetree/bindings/dma/hisi,ascend-sdma.yaml b/Documentation/devicetree/bindings/dma/hisi,ascend-sdma.yaml
+new file mode 100644
+index 000000000000..eab8192fac67
+--- /dev/null
++++ b/Documentation/devicetree/bindings/dma/hisi,ascend-sdma.yaml
+@@ -0,0 +1,75 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/dma/hisi,ascend-sdma.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: HISI Ascend System DMA (SDMA) controller
++
++description: |
++  The Ascend SDMA controller is used for transferring data
++  in system memory. It utilizes IOMMU SVA feature and accepts
++  virtual address from user process.
++
++maintainers:
++  - Guo Mengqi <guomengqi3@huawei.com>
++
++allOf:
++  - $ref: dma-controller.yaml#
++
++properties:
++  compatible:
++    enum:
++      - hisi,ascend310-sdma
++      - hisi,ascend910-sdma
++
++  reg:
++    maxItems: 1
++
++  '#dma-cells':
++    const: 1
++    description:
++      Clients specify a single cell with channel number.
++
++  hisi,ascend-sdma-channel-map:
++    description: |
++      bitmap, each bit stands for a channel that is allowed to
++      use by this system. Maximum 64 bits.
++    $ref: /schemas/types.yaml#/definitions/uint64
++
++  iommus:
++    maxItems: 1
++
++  pasid-num-bits:
++    description: |
++      sdma utilizes iommu sva feature to transfer user space data.
++      It acts as a basic dma controller if not bound to user space.
++    const: 0x10
++
++  dma-coherent: true
++
++  dma-can-stall: true
++
++required:
++  - compatible
++  - reg
++  - hisi,ascend-sdma-channel-map
++  - '#dma-cells'
++  - iommus
++
++additionalProperties: false
++
++examples:
++  - |
++    dma-controller@880e0000 {
++        compatible = "hisilicon,ascend310-sdma";
++        reg = <0x880e0000 0x10000>;
++        hisi,ascend-sdma-channel-map = <0x00000000 0x0000ff00>;
++        iommus = <&smmu 0x7f46>;
++        pasid-num-bits = <0x10>;
++        dma-coherent;
++        dma-can-stall;
++        #dma-cells = <1>;
++    };
++
++...
+-- 
+2.17.1
 
-Reviewed-by: Tudor Ambarus <tudor.ambarus@linaro.org>
-> ---
->  drivers/dma/at_hdmac.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/drivers/dma/at_hdmac.c b/drivers/dma/at_hdmac.c
-> index b2876f67471f..b66c7f416881 100644
-> --- a/drivers/dma/at_hdmac.c
-> +++ b/drivers/dma/at_hdmac.c
-> @@ -239,7 +239,7 @@ struct at_desc {
->  	bool				memset_buffer;
->  	dma_addr_t			memset_paddr;
->  	int				*memset_vaddr;
-> -	struct atdma_sg			sg[];
-> +	struct atdma_sg			sg[] __counted_by(sglen);
->  };
->  
->  /*--  Channels  --------------------------------------------------------*/
