@@ -2,29 +2,29 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7226BC71132
-	for <dmaengine@archiver.kernel.org>; Fri, 18 Aug 2023 01:24:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 62EFEC3DA66
+	for <dmaengine@archiver.kernel.org>; Fri, 18 Aug 2023 01:25:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1356943AbjHRBY2 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Thu, 17 Aug 2023 21:24:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52136 "EHLO
+        id S1356970AbjHRBY7 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Thu, 17 Aug 2023 21:24:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38970 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1356991AbjHRBYK (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Thu, 17 Aug 2023 21:24:10 -0400
-Received: from omta038.useast.a.cloudfilter.net (omta038.useast.a.cloudfilter.net [44.202.169.37])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B0F333C17
-        for <dmaengine@vger.kernel.org>; Thu, 17 Aug 2023 18:23:36 -0700 (PDT)
-Received: from eig-obgw-6003a.ext.cloudfilter.net ([10.0.30.151])
+        with ESMTP id S1357027AbjHRBYk (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Thu, 17 Aug 2023 21:24:40 -0400
+Received: from omta38.uswest2.a.cloudfilter.net (omta38.uswest2.a.cloudfilter.net [35.89.44.37])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD27E3AAB
+        for <dmaengine@vger.kernel.org>; Thu, 17 Aug 2023 18:24:14 -0700 (PDT)
+Received: from eig-obgw-5005a.ext.cloudfilter.net ([10.0.29.234])
         by cmsmtp with ESMTP
-        id WcM8qWzEcWU1cWoCSqSQZW; Fri, 18 Aug 2023 01:22:52 +0000
+        id WIWCquBYHQFHRWoD1qtdn0; Fri, 18 Aug 2023 01:23:27 +0000
 Received: from gator4166.hostgator.com ([108.167.133.22])
         by cmsmtp with ESMTPS
-        id WoCRq6zKqoeMqWoCSqsPmN; Fri, 18 Aug 2023 01:22:52 +0000
-X-Authority-Analysis: v=2.4 cv=F9xEy4tN c=1 sm=1 tr=0 ts=64dec7ec
+        id WoD0qQM1di8uRWoD0q7XPR; Fri, 18 Aug 2023 01:23:27 +0000
+X-Authority-Analysis: v=2.4 cv=JOsoDuGb c=1 sm=1 tr=0 ts=64dec80f
  a=1YbLdUo/zbTtOZ3uB5T3HA==:117 a=WzbPXH4gqzPVN0x6HrNMNA==:17
  a=OWjo9vPv0XrRhIrVQ50Ab3nP57M=:19 a=dLZJa+xiwSxG16/P+YVxDGlgEgI=:19
  a=IkcTkHD0fZMA:10 a=UttIx32zK-AA:10 a=wYkD_t78qR0A:10 a=NEAV23lmAAAA:8
- a=VwQbUJbxAAAA:8 a=cm27Pg_UAAAA:8 a=HvF037n1xESchLcPDVoA:9 a=QEXdDO2ut3YA:10
+ a=VwQbUJbxAAAA:8 a=cm27Pg_UAAAA:8 a=qjWHau5h7Oqj65Zv8QkA:9 a=QEXdDO2ut3YA:10
  a=AjGcO6oz07-iQ99wixmX:22 a=xmb-EsYY8bH0VWELuYED:22
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
         d=embeddedor.com; s=default; h=Content-Transfer-Encoding:Content-Type:
@@ -32,24 +32,24 @@ DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
         :Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
         Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
         List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-        bh=fF3hnykDlOGFPwkIEyewUVhIxtgTu0SczeFdKMI/qh4=; b=lD1crn4CtDXv3+aMF5M143w4Iq
-        DzjrkR3K1fDAyWjg3iqfgmi0NGyqbmmi395Mj9Pay6ogK9tEIqEp76oXasM0zQdm0FcTM7Zf66G62
-        F5Wp3CcoaYTA3O6tF0j6A56JworWR8vtK+Nb31MGK3oOL3fb6YiY4E0NY4iwoHFozQx6L+jpXsQU9
-        Hcirv9YgaAf/G9oW9OAcqA3MBldiU6I6CkyKFmRy+SAJ3J619A6TctnKbrxtJWi76O4QR9QSPZFOy
-        R+mIdW3eGj6JFE+WAW7Je8tIcA+ITuzG9wpO09d4E/Wt7LNeqKdpyl0fXVLQXrRzYv+2vv8tGLBmA
-        oZj65Hrw==;
-Received: from 187-162-21-192.static.axtel.net ([187.162.21.192]:57124 helo=[192.168.15.8])
+        bh=4O/pnsMN2mbUZXxNy5kzNXFmPO21hV2JJ/xiQe1qSMo=; b=KMrBMGMXN+OPsPe1WYDiAsg4Xz
+        fV0vGm09SDOP8V0o8AD/WiWjeZ/ttYw5oZvtIfro0fjdAoYqSt106U1OpqEYNdrMLk5HVpBqQnGj2
+        cjH8H8ft36qOdQ7+UmgvX+ENKt3RKIioeb//n15aDS3YsiAJz8uapZk1MHSacBm1fjkp8vJsqvpq3
+        kvKmjG6ryksjNTn6SCDesKpS2dj7hqYPy9VzkMdfDINL0Ky+8d1Xm4treWBRAMr8Ybv7MtUQb1mrr
+        CjmD0WecnaY6N0lIo6CRY/NzYGIy9ulPKd3uMI9wOQ5kf6r45IrtuIMz+6dtnhBIUXiHeMrb6y/EC
+        q5SlftHg==;
+Received: from 187-162-21-192.static.axtel.net ([187.162.21.192]:48268 helo=[192.168.15.8])
         by gator4166.hostgator.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
         (Exim 4.96)
         (envelope-from <gustavo@embeddedor.com>)
-        id 1qWoCP-000Uj0-00;
-        Thu, 17 Aug 2023 20:22:49 -0500
-Message-ID: <e15140e7-1122-17af-8088-4dcb5043019f@embeddedor.com>
-Date:   Thu, 17 Aug 2023 19:23:47 -0600
+        id 1qWoCx-000VYw-1s;
+        Thu, 17 Aug 2023 20:23:23 -0500
+Message-ID: <cb31dd54-89fc-9eaa-4dc5-3ba51f92842c@embeddedor.com>
+Date:   Thu, 17 Aug 2023 19:24:22 -0600
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.13.0
-Subject: Re: [PATCH 06/21] dmaengine: moxart-dma: Annotate struct moxart_desc
+Subject: Re: [PATCH 08/21] dmaengine: sa11x0: Annotate struct sa11x0_dma_desc
  with __counted_by
 Content-Language: en-US
 To:     Kees Cook <keescook@chromium.org>, Vinod Koul <vkoul@kernel.org>
@@ -89,9 +89,9 @@ Cc:     dmaengine@vger.kernel.org, Hector Martin <marcan@marcan.st>,
         linux-tegra@vger.kernel.org, llvm@lists.linux.dev,
         linux-hardening@vger.kernel.org
 References: <20230817235428.never.111-kees@kernel.org>
- <20230817235859.49846-6-keescook@chromium.org>
+ <20230817235859.49846-8-keescook@chromium.org>
 From:   "Gustavo A. R. Silva" <gustavo@embeddedor.com>
-In-Reply-To: <20230817235859.49846-6-keescook@chromium.org>
+In-Reply-To: <20230817235859.49846-8-keescook@chromium.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
@@ -102,18 +102,18 @@ X-AntiAbuse: Sender Address Domain - embeddedor.com
 X-BWhitelist: no
 X-Source-IP: 187.162.21.192
 X-Source-L: No
-X-Exim-ID: 1qWoCP-000Uj0-00
+X-Exim-ID: 1qWoCx-000VYw-1s
 X-Source: 
 X-Source-Args: 
 X-Source-Dir: 
-X-Source-Sender: 187-162-21-192.static.axtel.net ([192.168.15.8]) [187.162.21.192]:57124
+X-Source-Sender: 187-162-21-192.static.axtel.net ([192.168.15.8]) [187.162.21.192]:48268
 X-Source-Auth: gustavo@embeddedor.com
-X-Email-Count: 166
+X-Email-Count: 250
 X-Org:  HG=hgshared;ORG=hostgator;
 X-Source-Cap: Z3V6aWRpbmU7Z3V6aWRpbmU7Z2F0b3I0MTY2Lmhvc3RnYXRvci5jb20=
 X-Local-Domain: yes
-X-CMAE-Envelope: MS4xfLPy+PKPtKd31coAyQ3/vUOcX9i+FM/b4rG4tpXchDoPoBO/n2R4LlNPItY54e+YMzHGhXv0AioKczzphWAkR65eRz/3V6b+x5zW9htV/YHL8XrTBz7b
- jrcERptpt7cEtU17ceGWnry9M4YZTloYX7Y1kqZBXsLS42GBewE8nOPziHy8XFfPreUf7gpwWhOKTiA7AgWUT6OVqdNOW7zr8gY=
+X-CMAE-Envelope: MS4xfHedpg3jS5T95TeKufdGJBz1r97RUCn72vbicobE8omK+36Cs5DP005zWamJQ3KIC9VCtBVDeKh+dvz8XWHQUN0W+uDQfxJYfK8FTWWtq33ppKgYIfvb
+ c+flv7ixNuwJpMjLjc7mB7QVo0Pj1iyql8cPjQSwlYiBJjDZJJmdcsk7Dmig0HNUnfLAzxUHjCEOcSLfyKYKgBqm6jJHddmC8pE=
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
@@ -127,7 +127,7 @@ On 8/17/23 17:58, Kees Cook wrote:
 > (for array indexing) and CONFIG_FORTIFY_SOURCE (for strcpy/memcpy-family
 > functions).
 > 
-> As found with Coccinelle[1], add __counted_by for struct moxart_desc.
+> As found with Coccinelle[1], add __counted_by for struct sa11x0_dma_desc.
 > Additionally, since the element count member must be set before accessing
 > the annotated flexible array member, move its initialization earlier.
 > 
@@ -144,36 +144,51 @@ Thanks
 Gustavo
 
 > ---
->   drivers/dma/moxart-dma.c | 5 ++---
->   1 file changed, 2 insertions(+), 3 deletions(-)
+>   drivers/dma/sa11x0-dma.c | 6 +++---
+>   1 file changed, 3 insertions(+), 3 deletions(-)
 > 
-> diff --git a/drivers/dma/moxart-dma.c b/drivers/dma/moxart-dma.c
-> index 7565ad98ba66..c1dd5716a46d 100644
-> --- a/drivers/dma/moxart-dma.c
-> +++ b/drivers/dma/moxart-dma.c
-> @@ -124,7 +124,7 @@ struct moxart_desc {
->   	unsigned int			dma_cycles;
->   	struct virt_dma_desc		vd;
->   	uint8_t				es;
-> -	struct moxart_sg		sg[];
-> +	struct moxart_sg		sg[] __counted_by(sglen);
+> diff --git a/drivers/dma/sa11x0-dma.c b/drivers/dma/sa11x0-dma.c
+> index a29c13cae716..e5849622f198 100644
+> --- a/drivers/dma/sa11x0-dma.c
+> +++ b/drivers/dma/sa11x0-dma.c
+> @@ -78,7 +78,7 @@ struct sa11x0_dma_desc {
+>   	bool			cyclic;
+>   
+>   	unsigned		sglen;
+> -	struct sa11x0_dma_sg	sg[];
+> +	struct sa11x0_dma_sg	sg[] __counted_by(sglen);
 >   };
 >   
->   struct moxart_chan {
-> @@ -309,6 +309,7 @@ static struct dma_async_tx_descriptor *moxart_prep_slave_sg(
->   	d = kzalloc(struct_size(d, sg, sg_len), GFP_ATOMIC);
->   	if (!d)
+>   struct sa11x0_dma_phy;
+> @@ -558,6 +558,7 @@ static struct dma_async_tx_descriptor *sa11x0_dma_prep_slave_sg(
+>   		dev_dbg(chan->device->dev, "vchan %p: kzalloc failed\n", &c->vc);
 >   		return NULL;
-> +	d->sglen = sg_len;
->   
->   	d->dma_dir = dir;
->   	d->dev_addr = dev_addr;
-> @@ -319,8 +320,6 @@ static struct dma_async_tx_descriptor *moxart_prep_slave_sg(
->   		d->sg[i].len = sg_dma_len(sgent);
 >   	}
+> +	txd->sglen = j;
 >   
-> -	d->sglen = sg_len;
-> -
->   	ch->error = 0;
+>   	j = 0;
+>   	for_each_sg(sg, sgent, sglen, i) {
+> @@ -593,7 +594,6 @@ static struct dma_async_tx_descriptor *sa11x0_dma_prep_slave_sg(
 >   
->   	return vchan_tx_prep(&ch->vc, &d->vd, tx_flags);
+>   	txd->ddar = c->ddar;
+>   	txd->size = size;
+> -	txd->sglen = j;
+>   
+>   	dev_dbg(chan->device->dev, "vchan %p: txd %p: size %zu nr %u\n",
+>   		&c->vc, &txd->vd, txd->size, txd->sglen);
+> @@ -628,6 +628,7 @@ static struct dma_async_tx_descriptor *sa11x0_dma_prep_dma_cyclic(
+>   		dev_dbg(chan->device->dev, "vchan %p: kzalloc failed\n", &c->vc);
+>   		return NULL;
+>   	}
+> +	txd->sglen = sglen;
+>   
+>   	for (i = k = 0; i < size / period; i++) {
+>   		size_t tlen, len = period;
+> @@ -653,7 +654,6 @@ static struct dma_async_tx_descriptor *sa11x0_dma_prep_dma_cyclic(
+>   
+>   	txd->ddar = c->ddar;
+>   	txd->size = size;
+> -	txd->sglen = sglen;
+>   	txd->cyclic = 1;
+>   	txd->period = sgperiod;
+>   
