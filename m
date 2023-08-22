@@ -2,49 +2,49 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8488FEE49B1
-	for <dmaengine@archiver.kernel.org>; Tue, 22 Aug 2023 11:38:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EE16DEE49AC
+	for <dmaengine@archiver.kernel.org>; Tue, 22 Aug 2023 11:38:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235325AbjHVLiT (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 22 Aug 2023 07:38:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37358 "EHLO
+        id S235285AbjHVLiY (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 22 Aug 2023 07:38:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60614 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234680AbjHVLiQ (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Tue, 22 Aug 2023 07:38:16 -0400
+        with ESMTP id S235279AbjHVLiR (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Tue, 22 Aug 2023 07:38:17 -0400
 Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4AED9E55;
-        Tue, 22 Aug 2023 04:37:38 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C6BAE5E;
+        Tue, 22 Aug 2023 04:37:42 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id E8790653B6;
-        Tue, 22 Aug 2023 11:37:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D6E2C433C8;
-        Tue, 22 Aug 2023 11:37:27 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 66D4963EF3;
+        Tue, 22 Aug 2023 11:37:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF5F3C433C7;
+        Tue, 22 Aug 2023 11:37:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1692704248;
-        bh=J5LTv04B6E9fLGdn50DdEFveChC/UUO+VdN5/anymhg=;
+        s=k20201202; t=1692704257;
+        bh=pS3C6OJwDVw1/O+FKnNM35oJevc4kvD7A2jiNNBLs38=;
         h=From:To:Cc:Subject:Date:From;
-        b=C4JcT52LLXRcAurG/jtg3hfgtHLkIXaLyOqWBDj8N8P4ij5kQZ1/C17EYjHjYGnne
-         azCqUHqkrPr4sJ9FKICZw3lNXlLSF2LuyXYSy6ylJe9b4S+Pwmnfx9Wsn2xByHBp59
-         KUfIRISKPUTRYXPg9QqT8hAJwgUPQDll+BNjtsDxuun1Av0J3RC7EVZ1xDuy1W0Atv
-         o+wx4hjzBMP38INWsbSrznWth6T+z5DgP1r5XB5L7WtYlDjl7fboL6MAclafeYUOxk
-         egN7erG6aMGcNsbRSaWOhPxYbj5sbHHS/tVIxtzC0KjlT7Vuvepje9njut6tlL+26i
-         VqXrfSFrG2Evg==
+        b=JOQbXSEBtPKUgG2SHCRw3YwfhjU4A+JGIj3U/h3PzTIQaVzBgDycUWyRDIfh2V5Z1
+         PQxsbQWuA+blRVZVdXxsao0BcEX9J4C0vg9MpEhBH/t9P1dZb/DfY3KAGnY6GEhpCS
+         EzyWphGj0pWJ8DjQoW67PfNJuwaCIafSLn+Df39tzB1G6/WLdiAhap7mbWslU1uUy2
+         nlk02v/CKynfGA2UQlz12t+JJd2YeBanXq+hTN0ZNr8SG8JPrwgmApaZT89NQnKCgY
+         AHIA/uTehBgIPPlqdQdXg7wiD/1+Hig0gcYiyiFHhd+Fe3H1Zt0RD0dbhYYEm94wZT
+         rHlNHJZA9FrOw==
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Cc:     Baoquan He <bhe@redhat.com>, kernel test robot <lkp@intel.com>,
         Vinod Koul <vkoul@kernel.org>, dmaengine@vger.kernel.org,
         Sasha Levin <sashal@kernel.org>
-Subject: [PATCH AUTOSEL 5.4 1/2] idmaengine: make FSL_EDMA and INTEL_IDMA64 depends on HAS_IOMEM
-Date:   Tue, 22 Aug 2023 07:37:24 -0400
-Message-Id: <20230822113725.3551688-1-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 4.14 1/2] idmaengine: make FSL_EDMA and INTEL_IDMA64 depends on HAS_IOMEM
+Date:   Tue, 22 Aug 2023 07:37:33 -0400
+Message-Id: <20230822113735.3551762-1-sashal@kernel.org>
 X-Mailer: git-send-email 2.40.1
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
-X-stable-base: Linux 5.4.254
+X-stable-base: Linux 4.14.323
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
@@ -81,10 +81,10 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 2 insertions(+)
 
 diff --git a/drivers/dma/Kconfig b/drivers/dma/Kconfig
-index 1322461f1f3c5..66aad9dbd58c5 100644
+index 5ea37d133f241..6abb80b09db3b 100644
 --- a/drivers/dma/Kconfig
 +++ b/drivers/dma/Kconfig
-@@ -208,6 +208,7 @@ config FSL_DMA
+@@ -209,6 +209,7 @@ config FSL_DMA
  config FSL_EDMA
  	tristate "Freescale eDMA engine support"
  	depends on OF
@@ -92,7 +92,7 @@ index 1322461f1f3c5..66aad9dbd58c5 100644
  	select DMA_ENGINE
  	select DMA_VIRTUAL_CHANNELS
  	help
-@@ -268,6 +269,7 @@ config IMX_SDMA
+@@ -254,6 +255,7 @@ config IMX_SDMA
  
  config INTEL_IDMA64
  	tristate "Intel integrated DMA 64-bit support"
