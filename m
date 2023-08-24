@@ -2,35 +2,37 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DFD10C27C40
-	for <dmaengine@archiver.kernel.org>; Thu, 24 Aug 2023 04:09:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 20433C7EE43
+	for <dmaengine@archiver.kernel.org>; Thu, 24 Aug 2023 04:09:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234537AbjHXEI5 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        id S238096AbjHXEI5 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
         Thu, 24 Aug 2023 00:08:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35220 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35228 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236381AbjHXEI4 (ORCPT
+        with ESMTP id S238019AbjHXEI4 (ORCPT
         <rfc822;dmaengine@vger.kernel.org>); Thu, 24 Aug 2023 00:08:56 -0400
-Received: from szxga02-in.huawei.com (szxga02-in.huawei.com [45.249.212.188])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B1FCCA1;
-        Wed, 23 Aug 2023 21:08:53 -0700 (PDT)
-Received: from kwepemm600013.china.huawei.com (unknown [172.30.72.55])
-        by szxga02-in.huawei.com (SkyGuard) with ESMTP id 4RWTzY6q8kzVkNB;
-        Thu, 24 Aug 2023 12:06:33 +0800 (CST)
+Received: from szxga01-in.huawei.com (szxga01-in.huawei.com [45.249.212.187])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 87349E4B;
+        Wed, 23 Aug 2023 21:08:54 -0700 (PDT)
+Received: from kwepemm600013.china.huawei.com (unknown [172.30.72.56])
+        by szxga01-in.huawei.com (SkyGuard) with ESMTP id 4RWTxv3sT0ztS6v;
+        Thu, 24 Aug 2023 12:05:07 +0800 (CST)
 Received: from huawei.com (10.175.112.208) by kwepemm600013.china.huawei.com
  (7.193.23.68) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.31; Thu, 24 Aug
- 2023 12:08:50 +0800
+ 2023 12:08:51 +0800
 From:   Guo Mengqi <guomengqi3@huawei.com>
 To:     <vkoul@kernel.org>, <robh+dt@kernel.org>,
         <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
         <dmaengine@vger.kernel.org>, <devicetree@vger.kernel.org>
 CC:     <guomengqi3@huawei.com>, <xuqiang36@huawei.com>,
         <chenweilong@huawei.com>
-Subject: [PATCH v3 0/2] Add dma controller for hisilicon ascend310/910
-Date:   Thu, 24 Aug 2023 12:00:05 +0800
-Message-ID: <20230824040007.1476-1-guomengqi3@huawei.com>
+Subject: [PATCH v3 2/2] dt-bindings: dma: hisi: Add bindings for Hisi Ascend sdma
+Date:   Thu, 24 Aug 2023 12:00:07 +0800
+Message-ID: <20230824040007.1476-3-guomengqi3@huawei.com>
 X-Mailer: git-send-email 2.17.1
+In-Reply-To: <20230824040007.1476-1-guomengqi3@huawei.com>
+References: <20230824040007.1476-1-guomengqi3@huawei.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Originating-IP: [10.175.112.208]
@@ -41,38 +43,96 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-The patch set add driver and device-tree bindings for a dma controller
-on hisilicon ascend310/910 platform.
+Add device-tree binding documentation for the Hisi Ascend sdma
+controller.
 
-Changes v2 to v3:
-	- Fix dts-binding error: 
-		* Use "hisilicon" as a unified vendor prefix.
-
-Changes v1 to v2:
-	- Fix dts-binding error:
-		* change "compatible" to two exact models: ascend310/ascend910.
-		* add vendor prefix for customized channel-map property.
-		* add $ref for customized channel-map property.
-		* remove unnecessary label in example.
-	- Logic change in probe function:
-		* If iommu sva feature is disabled, probe will not lead to failure
-	- Use common driver apis: dev_xxx() devm_xxx()
-
-V2: https://lore.kernel.org/dmaengine/53729f0f-2341-4329-8b2d-95dd377752d7@linaro.org/T/#t
-V1: https://lore.kernel.org/dmaengine/20230811034822.107229-1-guomengqi3@huawei.com/T/#t
-
-Guo Mengqi (2):
-  dmaengine: Add HiSilicon Ascend SDMA engine support
-  dt-bindings: dma: hisi: Add bindings for Hisi Ascend sdma
-
- .../bindings/dma/hisi,ascend-sdma.yaml        |  75 ++
- drivers/dma/Kconfig                           |   9 +
- drivers/dma/Makefile                          |   1 +
- drivers/dma/ascend_sdma.c                     | 817 ++++++++++++++++++
- 4 files changed, 902 insertions(+)
+Signed-off-by: Guo Mengqi <guomengqi3@huawei.com>
+---
+ .../bindings/dma/hisi,ascend-sdma.yaml        | 75 +++++++++++++++++++
+ 1 file changed, 75 insertions(+)
  create mode 100644 Documentation/devicetree/bindings/dma/hisi,ascend-sdma.yaml
- create mode 100644 drivers/dma/ascend_sdma.c
 
+diff --git a/Documentation/devicetree/bindings/dma/hisi,ascend-sdma.yaml b/Documentation/devicetree/bindings/dma/hisi,ascend-sdma.yaml
+new file mode 100644
+index 000000000000..87b6132c1b4b
+--- /dev/null
++++ b/Documentation/devicetree/bindings/dma/hisi,ascend-sdma.yaml
+@@ -0,0 +1,75 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/dma/hisi,ascend-sdma.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: HISI Ascend System DMA (SDMA) controller
++
++description: |
++  The Ascend SDMA controller is used for transferring data
++  in system memory. It utilizes IOMMU SVA feature and accepts
++  virtual address from user process.
++
++maintainers:
++  - Guo Mengqi <guomengqi3@huawei.com>
++
++allOf:
++  - $ref: dma-controller.yaml#
++
++properties:
++  compatible:
++    enum:
++      - hisilicon,ascend310-sdma
++      - hisilicon,ascend910-sdma
++
++  reg:
++    maxItems: 1
++
++  '#dma-cells':
++    const: 1
++    description:
++      Clients specify a single cell with channel number.
++
++  hisilicon,ascend-sdma-channel-map:
++    description: |
++      bitmap, each bit stands for a channel that is allowed to
++      use by this system. Maximum 64 bits.
++    $ref: /schemas/types.yaml#/definitions/uint64
++
++  iommus:
++    maxItems: 1
++
++  pasid-num-bits:
++    description: |
++      sdma utilizes iommu sva feature to transfer user space data.
++      It acts as a basic dma controller if not bound to user space.
++    const: 0x10
++
++  dma-coherent: true
++
++  dma-can-stall: true
++
++required:
++  - compatible
++  - reg
++  - hisilicon,ascend-sdma-channel-map
++  - '#dma-cells'
++  - iommus
++
++additionalProperties: false
++
++examples:
++  - |
++    dma-controller@880e0000 {
++        compatible = "hisilicon,ascend310-sdma";
++        reg = <0x880e0000 0x10000>;
++        hisilicon,ascend-sdma-channel-map = <0x00000000 0x0000ff00>;
++        iommus = <&smmu 0x7f46>;
++        pasid-num-bits = <0x10>;
++        dma-coherent;
++        dma-can-stall;
++        #dma-cells = <1>;
++    };
++
++...
 -- 
 2.17.1
 
