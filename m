@@ -2,151 +2,166 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 725D3C83F1C
-	for <dmaengine@archiver.kernel.org>; Wed, 30 Aug 2023 18:46:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E7B50C6FA8F
+	for <dmaengine@archiver.kernel.org>; Wed, 30 Aug 2023 20:28:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239863AbjH3SoH (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 30 Aug 2023 14:44:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42270 "EHLO
+        id S239421AbjH3U2O (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 30 Aug 2023 16:28:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58256 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242772AbjH3Jd6 (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Wed, 30 Aug 2023 05:33:58 -0400
-Received: from szxga01-in.huawei.com (szxga01-in.huawei.com [45.249.212.187])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2015EBE;
-        Wed, 30 Aug 2023 02:33:55 -0700 (PDT)
-Received: from kwepemm600013.china.huawei.com (unknown [172.30.72.54])
-        by szxga01-in.huawei.com (SkyGuard) with ESMTP id 4RbJwY2FvqzrS4S;
-        Wed, 30 Aug 2023 17:32:13 +0800 (CST)
-Received: from [10.174.178.156] (10.174.178.156) by
- kwepemm600013.china.huawei.com (7.193.23.68) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.31; Wed, 30 Aug 2023 17:33:51 +0800
-Message-ID: <6906870e-cafa-9a5e-f981-38561576455c@huawei.com>
-Date:   Wed, 30 Aug 2023 17:33:50 +0800
+        with ESMTP id S239369AbjH3U2B (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Wed, 30 Aug 2023 16:28:01 -0400
+Received: from mail-pl1-x632.google.com (mail-pl1-x632.google.com [IPv6:2607:f8b0:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D6255699
+        for <dmaengine@vger.kernel.org>; Wed, 30 Aug 2023 13:26:18 -0700 (PDT)
+Received: by mail-pl1-x632.google.com with SMTP id d9443c01a7336-1bf6ea270b2so563855ad.0
+        for <dmaengine@vger.kernel.org>; Wed, 30 Aug 2023 13:26:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1693427111; x=1694031911; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=uXbqOlh8r0k+tg/OMYYC/pnzYsMBRXOUkdntBwOPi+I=;
+        b=UfclEdRU5aHcRASygBDXKbb/+X1bsaxYjU5oTKTAYLEmNbwDuGXAYMLcAqmi8Uvv1A
+         ynv/UHmRxN4hPYoKyubUzpAWNzWTfyLfA75eVs4BXJEagYQnlGI8RfBoXx+RyGrhi9UU
+         wmAaRAfHYTSy2oGoZV5NhnqN4iefU7R4fGcP8CNYnry0ZRaSVH2H7kCyFZbz5VSzIVHs
+         aM4MFmoNq2T1hr1EJUloJe48uDFFSMQwEcXR/dGELdUU3yw4zFFqdEou6vXibfcg3W9P
+         5opI1r33DQxebVt1I+sQP0dXR5/ZJqxAEBF7FN6w8dXxPbsjqTWyt98NcYI8UBwYXTWp
+         3JBg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1693427111; x=1694031911;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=uXbqOlh8r0k+tg/OMYYC/pnzYsMBRXOUkdntBwOPi+I=;
+        b=WJ0Cl+DY5e2zfS2oxi6LA/GqS4SShLPL3K6yJH7Khj23MaocKlRguOcK26rkSx51rn
+         nhLPLfGr2u9fM7yjB26walJdjfPAitOSQzEgjISLgNcTX0o7w6I9oFTqAE4o4L1gs4OO
+         1JPpwaXR7Mw9HJ2+GzgRwnCOwhs/SXsDl8c/iH97VvEvtuicgAdrXDsd1jUz4qLV/v0E
+         YIqg+VnO0UEqPzx212tf8xHN0Vu/ieAy5smKZBOX+lYVQwbBAZibv93aPq1B9t0Q0bzK
+         Cm8YO+rtApdzImHk/13UWYbGxLyWTCCqnr4ClPbfjYN87sHP2LdYT6R2QZ5fyl++LIW5
+         B+dQ==
+X-Gm-Message-State: AOJu0Yx/WOj+1/fzUhXxC57gRlneFBgIfY1O5CTNzHoo20L7L15HCVra
+        p6Squk45O2eaOStfPlBDERgje/f62P270Vdy7ET6PVcvK8ZwIi3V
+X-Google-Smtp-Source: AGHT+IG1yr729IfyggfMaOGuobww8IAVL5gyF4x4lEuRUAz8feYviF2R4vEKFUgp2ZVYBHxBGUymjHngjSlEj9VOTDM=
+X-Received: by 2002:a25:6a88:0:b0:d7b:1f20:293c with SMTP id
+ f130-20020a256a88000000b00d7b1f20293cmr3255375ybc.1.1693426431915; Wed, 30
+ Aug 2023 13:13:51 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.3.2
-Subject: Re: [PATCH v3 2/2] dt-bindings: dma: hisi: Add bindings for Hisi
- Ascend sdma
-To:     Rob Herring <robh@kernel.org>
-CC:     <vkoul@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
-        <conor+dt@kernel.org>, <dmaengine@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <xuqiang36@huawei.com>,
-        <chenweilong@huawei.com>
-References: <20230824040007.1476-1-guomengqi3@huawei.com>
- <20230824040007.1476-3-guomengqi3@huawei.com>
- <20230824194324.GA1342234-robh@kernel.org>
-From:   "guomengqi (A)" <guomengqi3@huawei.com>
-In-Reply-To: <20230824194324.GA1342234-robh@kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.174.178.156]
-X-ClientProxiedBy: dggems701-chm.china.huawei.com (10.3.19.178) To
- kwepemm600013.china.huawei.com (7.193.23.68)
-X-CFilter-Loop: Reflected
+References: <20230830-topic-8550_dmac2-v1-0-49bb25239fb1@linaro.org> <20230830-topic-8550_dmac2-v1-3-49bb25239fb1@linaro.org>
+In-Reply-To: <20230830-topic-8550_dmac2-v1-3-49bb25239fb1@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Wed, 30 Aug 2023 23:13:40 +0300
+Message-ID: <CAA8EJpp7bxq4=i1CMPYvz99ZuKLz+th6zSFhhRhFMjDwGB5Z8Q@mail.gmail.com>
+Subject: Re: [PATCH 3/7] arm64: dts: qcom: sm8550: Fix up CPU idle states
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Abel Vesa <abel.vesa@linaro.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Sai Prakash Ranjan <quic_saipraka@quicinc.com>,
+        Vinod Koul <vkoul@kernel.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
+On Wed, 30 Aug 2023 at 22:04, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
+>
+> The idle residency times are largely too low according to the vendor
+> kernel (maybe they came from an earlier release or something), especially
+> for the prime X2 core. Fix them.
+>
+> Fixes: ffc50b2d3828 ("arm64: dts: qcom: Add base SM8550 dtsi")
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> ---
+>  arch/arm64/boot/dts/qcom/sm8550.dtsi | 32 +++++++++++++++++++++-----------
+>  1 file changed, 21 insertions(+), 11 deletions(-)
+>
+> diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
+> index d115960bdeec..c21ba6afa752 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
+> @@ -283,9 +283,9 @@ LITTLE_CPU_SLEEP_0: cpu-sleep-0-0 {
+>                                 compatible = "arm,idle-state";
+>                                 idle-state-name = "silver-rail-power-collapse";
+>                                 arm,psci-suspend-param = <0x40000004>;
+> -                               entry-latency-us = <800>;
+> +                               entry-latency-us = <550>;
+>                                 exit-latency-us = <750>;
+> -                               min-residency-us = <4090>;
+> +                               min-residency-us = <6700>;
+>                                 local-timer-stop;
+>                         };
+>
+> @@ -294,8 +294,18 @@ BIG_CPU_SLEEP_0: cpu-sleep-1-0 {
+>                                 idle-state-name = "gold-rail-power-collapse";
+>                                 arm,psci-suspend-param = <0x40000004>;
+>                                 entry-latency-us = <600>;
+> -                               exit-latency-us = <1550>;
+> -                               min-residency-us = <4791>;
+> +                               exit-latency-us = <1300>;
+> +                               min-residency-us = <8136>;
+> +                               local-timer-stop;
+> +                       };
+> +
+> +                       PRIME_CPU_SLEEP_0: cpu-sleep-2-0 {
+> +                               compatible = "arm,idle-state";
+> +                               idle-state-name = "gold-plus-rail-power-collapse";
+> +                               arm,psci-suspend-param = <0x40000004>;
+> +                               entry-latency-us = <500>;
+> +                               exit-latency-us = <1350>;
+> +                               min-residency-us = <7480>;
+>                                 local-timer-stop;
 
-在 2023/8/25 3:43, Rob Herring 写道:
-> On Thu, Aug 24, 2023 at 12:00:07PM +0800, Guo Mengqi wrote:
->> Add device-tree binding documentation for the Hisi Ascend sdma
->> controller.
->>
->> Signed-off-by: Guo Mengqi <guomengqi3@huawei.com>
->> ---
->>   .../bindings/dma/hisi,ascend-sdma.yaml        | 75 +++++++++++++++++++
->>   1 file changed, 75 insertions(+)
->>   create mode 100644 Documentation/devicetree/bindings/dma/hisi,ascend-sdma.yaml
->>
->> diff --git a/Documentation/devicetree/bindings/dma/hisi,ascend-sdma.yaml b/Documentation/devicetree/bindings/dma/hisi,ascend-sdma.yaml
->> new file mode 100644
->> index 000000000000..87b6132c1b4b
->> --- /dev/null
->> +++ b/Documentation/devicetree/bindings/dma/hisi,ascend-sdma.yaml
->> @@ -0,0 +1,75 @@
->> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
->> +%YAML 1.2
->> +---
->> +$id: http://devicetree.org/schemas/dma/hisi,ascend-sdma.yaml#
->> +$schema: http://devicetree.org/meta-schemas/core.yaml#
->> +
->> +title: HISI Ascend System DMA (SDMA) controller
->> +
->> +description: |
->> +  The Ascend SDMA controller is used for transferring data
->> +  in system memory. It utilizes IOMMU SVA feature and accepts
->> +  virtual address from user process.
->> +
->> +maintainers:
->> +  - Guo Mengqi <guomengqi3@huawei.com>
->> +
->> +allOf:
->> +  - $ref: dma-controller.yaml#
->> +
->> +properties:
->> +  compatible:
->> +    enum:
->> +      - hisilicon,ascend310-sdma
->> +      - hisilicon,ascend910-sdma
->> +
->> +  reg:
->> +    maxItems: 1
->> +
->> +  '#dma-cells':
->> +    const: 1
->> +    description:
->> +      Clients specify a single cell with channel number.
->> +
->> +  hisilicon,ascend-sdma-channel-map:
->> +    description: |
->> +      bitmap, each bit stands for a channel that is allowed to
->> +      use by this system. Maximum 64 bits.
->> +    $ref: /schemas/types.yaml#/definitions/uint64
-> Sounds like the common property dma-channel-mask. Use that.
-It does seem to be the one I'm looking for. Will use it in next patch.
->> +
->> +  iommus:
->> +    maxItems: 1
->> +
->> +  pasid-num-bits:
-> Needs a vendor prefix.
-This can be found in iommu optional properties. Although nobody use it 
-for now.
->> +    description: |
->> +      sdma utilizes iommu sva feature to transfer user space data.
-> Isn't shared VA mostly a s/w concept?
+This isn't only fixing the time properties, but also adds the whole
+new sleep state!
 
-Well, sdma controller has built-in mechanism to support shared VA 
-translation.
-
-I add this to explain purpose of property.
-
->> +      It acts as a basic dma controller if not bound to user space.
-> I don't understand what this means.
-
-By "basic" I mean iommu bypass mode, which is supported in hardware design.
-
-So if the transfer is all in physical address, it seems quite... basic?
+>                         };
+>                 };
+> @@ -304,17 +314,17 @@ domain-idle-states {
+>                         CLUSTER_SLEEP_0: cluster-sleep-0 {
+>                                 compatible = "domain-idle-state";
+>                                 arm,psci-suspend-param = <0x41000044>;
+> -                               entry-latency-us = <1050>;
+> -                               exit-latency-us = <2500>;
+> -                               min-residency-us = <5309>;
+> +                               entry-latency-us = <750>;
+> +                               exit-latency-us = <2350>;
+> +                               min-residency-us = <9144>;
+>                         };
+>
+>                         CLUSTER_SLEEP_1: cluster-sleep-1 {
+>                                 compatible = "domain-idle-state";
+>                                 arm,psci-suspend-param = <0x4100c344>;
+> -                               entry-latency-us = <2700>;
+> -                               exit-latency-us = <3500>;
+> -                               min-residency-us = <13959>;
+> +                               entry-latency-us = <2800>;
+> +                               exit-latency-us = <4400>;
+> +                               min-residency-us = <10150>;
+>                         };
+>                 };
+>         };
+> @@ -398,7 +408,7 @@ CPU_PD6: power-domain-cpu6 {
+>                 CPU_PD7: power-domain-cpu7 {
+>                         #power-domain-cells = <0>;
+>                         power-domains = <&CLUSTER_PD>;
+> -                       domain-idle-states = <&BIG_CPU_SLEEP_0>;
+> +                       domain-idle-states = <&PRIME_CPU_SLEEP_0>;
+>                 };
+>
+>                 CLUSTER_PD: power-domain-cluster {
+>
+> --
+> 2.42.0
+>
 
 
-However, shared VA is main usage scenario. Driver only implements shared 
-VA. So I guess I can remove this line.
-
->> +    const: 0x10
-> If only 1 value is allowed, what is the point of this property.
-
-It seems that the property should be declared here, to tell iommu it 
-supports PASID (see 2e981b9468e670b76bd1048fa939ad1f9653bd79 mainline).
-
-I think it could be adjust to other values. I will check out if there is 
-a specific range.
-
-> Rob
-> .
-
-Best regards,
-
-Guo Mengqi
-
+-- 
+With best wishes
+Dmitry
