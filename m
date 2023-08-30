@@ -2,60 +2,61 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 86D1FC83F1B
-	for <dmaengine@archiver.kernel.org>; Wed, 30 Aug 2023 18:46:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4DA3CC83F21
+	for <dmaengine@archiver.kernel.org>; Wed, 30 Aug 2023 18:46:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236225AbjH3Snt (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 30 Aug 2023 14:43:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55612 "EHLO
+        id S235875AbjH3Snz (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 30 Aug 2023 14:43:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55722 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244245AbjH3Msx (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Wed, 30 Aug 2023 08:48:53 -0400
-Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA941185
-        for <dmaengine@vger.kernel.org>; Wed, 30 Aug 2023 05:48:50 -0700 (PDT)
-Received: by mail-lj1-x22e.google.com with SMTP id 38308e7fff4ca-2bcda0aaf47so9693651fa.1
-        for <dmaengine@vger.kernel.org>; Wed, 30 Aug 2023 05:48:50 -0700 (PDT)
+        with ESMTP id S244258AbjH3Ms5 (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Wed, 30 Aug 2023 08:48:57 -0400
+Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E571132
+        for <dmaengine@vger.kernel.org>; Wed, 30 Aug 2023 05:48:54 -0700 (PDT)
+Received: by mail-lj1-x229.google.com with SMTP id 38308e7fff4ca-2bceb02fd2bso82233831fa.1
+        for <dmaengine@vger.kernel.org>; Wed, 30 Aug 2023 05:48:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1693399729; x=1694004529; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1693399733; x=1694004533; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=tWkuNyNpN35mUdPo9osM+UvbCZY9NRuobjLnr6Z6HMI=;
-        b=sSFEkiCBX3hFqR6l2ESC6Ze2Xv8sHKa9NYGmcIbpu3NGJZ3TqInyjXBlui8V/Jto0t
-         swM9GMHAl+Qp3vLUdO4KXnDKCVScwgeSynZw2I+rpsv4YeXdRaXD/06nXDaQJsx8uo+N
-         GkiiOVVcOt8XRtAuElYex6Qx/ZHJql2knZr9wPMQ0sVX+wvVRyr+E+Yxh/+aLM7aGveH
-         lPb2cTlIV/q1ZVXBYmcGZ74+M4U+lqqJhh714Nyc0mwLp8XSlez5+70nTiytH1WG8V3T
-         yjSGvDBAX/XqzEXIcPDsuemkkbxPhcbGE9v6wh0zTWZKdXi/RUuLfgxli/2z6ZVnZ+Eh
-         NBiQ==
+        bh=oKPXhXF1PLbuqp2N8PbVHGsxWJlF7sZyrRMN/kZaQfg=;
+        b=Iwf+Sg2l+pMVTfdACffpzWyblWAqUX6mYK+WP20dOAVkBt48AL8z4uIk+ZKgT3LvN2
+         MhPMVQP3fYMQBcuqM6oa6PDK5PfCSGSzRRkIHAp3PM0JdUfyDXX0XzoePSQ6cu6H0Vl8
+         dNx7YhWThvzZIzp+SGDBc7DkNh87WmsF90v6f2HnFGZTOQV0N/qdbKf2nXkqAcIUsGfb
+         HLevRRIguU47rX3pmF5C1irzPj3variRhAKam/XtAcLmrkax6yITJ5b/+68bPLRQjLdv
+         +XZ2TxQDXWK846oo0jjwOiL6wns7mog1ajoaTLZSgHPJ8dJrbZlFGh2bLQtrFx/Gl6Pe
+         nLoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693399729; x=1694004529;
+        d=1e100.net; s=20221208; t=1693399733; x=1694004533;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=tWkuNyNpN35mUdPo9osM+UvbCZY9NRuobjLnr6Z6HMI=;
-        b=FhnfTneXvvJpS7lBnB+M+VQbsJMo/M1k8L+BFj+xZ1rrfFTXumZo5J0OZHmiO65zgs
-         vN1rsMx1IY5sgE3GEIbF8Tuj344TfzrtIz4ST+Ak5SW/LWbvTcHWqMInCEdfTCi4KjV2
-         Vzqu0Nrj+ZKZcCJezZPJN2/6IEps1+QEN2x5V5bJ+suSwiZpsIUHqtEA9Y13MrC8udqP
-         e4eAlPFDmg2cF+zqPpZ/gpuGShnqdidb5c5tkkl1BeJm4Nd69OZxRDTty+8iOFtfEi7d
-         LJpwigV5ZrNFTGlNb9K9IQocJcYN8qJ/9BNi3EBrFfO08eEqRrqmZURI/PEPVFmtwxJy
-         vTkQ==
-X-Gm-Message-State: AOJu0Yxp9tk4BJQhqWFFPg1jQf+nHqbU1D9kt+DPpmhiABx03C9YLOGe
-        KZd93gdBI7NKHiYdgDMMrZ/7PxFX3CqYDdTCZ/LfYA==
-X-Google-Smtp-Source: AGHT+IHnTIGMZI8k8PHQCgawzuSVJ+4ZmqO1+OtbsAv1rszk4da6sggiDWDSJgEzOWurdA6UTHV+OA==
-X-Received: by 2002:a05:651c:2314:b0:2bb:7e3f:3cc2 with SMTP id bi20-20020a05651c231400b002bb7e3f3cc2mr2083506ljb.2.1693399729224;
-        Wed, 30 Aug 2023 05:48:49 -0700 (PDT)
+        bh=oKPXhXF1PLbuqp2N8PbVHGsxWJlF7sZyrRMN/kZaQfg=;
+        b=WvKbuAxp8nyccTRo09J8NuCMn1A5p7E8qBxmpDhqXbYIrmPVKjdg3cR/hSnFqNxaKh
+         22VG5bDctVcLJw26K7BMBl4pDThfLcLG7lIgnXHpC+i6gNoJ8lFoZZB1OgbXso0+ayYF
+         RO97ua/6Z5pW3bmsOi5gJ4hpNNguT9jc0aAkF/ekjgbuQtiXoOkWs5CSVWDCUDvHImQ/
+         Qlo8j2xgYNE4cSSsuw3JP2i1zJAoIlXCxXeNU0mJ8QlrRoW6zFpEwYT6ZYNXdd80as6r
+         1gNOskmEZTxJLvq4sQSyH9OZElXEJrKq+AL1sezfBUpn+0WsH8JutiL1kqN4z26Q8Ubm
+         CYqg==
+X-Gm-Message-State: AOJu0YziNISIcBMoF5eT0/9la6kTlLT/C+PPE9RU26YKhWYAAgHvEu2K
+        PNxGjsb5m3chRVFslSkmoqPolw==
+X-Google-Smtp-Source: AGHT+IEMqA8Wy1vPUEbfk80T0idVD4AwaoFtCsmwNdpJ/6NEPZQjtmG7nTLODMRmD5xy+1kpYdT7gA==
+X-Received: by 2002:a2e:7316:0:b0:2bd:1614:d47 with SMTP id o22-20020a2e7316000000b002bd16140d47mr1774740ljc.42.1693399732906;
+        Wed, 30 Aug 2023 05:48:52 -0700 (PDT)
 Received: from [192.168.1.101] (abyl195.neoplus.adsl.tpnet.pl. [83.9.31.195])
-        by smtp.gmail.com with ESMTPSA id y23-20020a2e7d17000000b002b94b355527sm2602662ljc.32.2023.08.30.05.48.48
+        by smtp.gmail.com with ESMTPSA id y23-20020a2e7d17000000b002b94b355527sm2602662ljc.32.2023.08.30.05.48.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 30 Aug 2023 05:48:48 -0700 (PDT)
+        Wed, 30 Aug 2023 05:48:52 -0700 (PDT)
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Wed, 30 Aug 2023 14:48:41 +0200
-Subject: [PATCH 2/7] dt-bindings: qcom: geni-se: Allow dma-coherent
+Date:   Wed, 30 Aug 2023 14:48:44 +0200
+Subject: [PATCH 5/7] arm64: dts: qcom: sm8550: Mark APPS SMMU as
+ dma-coherent
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230830-topic-8550_dmac2-v1-2-49bb25239fb1@linaro.org>
+Message-Id: <20230830-topic-8550_dmac2-v1-5-49bb25239fb1@linaro.org>
 References: <20230830-topic-8550_dmac2-v1-0-49bb25239fb1@linaro.org>
 In-Reply-To: <20230830-topic-8550_dmac2-v1-0-49bb25239fb1@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
@@ -72,38 +73,38 @@ Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
         linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org,
         Konrad Dybcio <konrad.dybcio@linaro.org>
 X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1693399725; l=710;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1693399725; l=787;
  i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=CppecVFIy2DoqbEQwzZdR+9tg6tYiwkRdQB1uCJt3Uk=;
- b=1W0O6Wei8zx7qhG0OegNkxw9mq9RE0tWQdW4sZEAZXQkjwthGZWHtFarTl/I/KRpha9uXkOJd
- xqjIz3ppSuoDkXD4iNn9zf0dCmG0yXSaM5kfUze/b8/Ef14pXrObwYT
+ bh=dxb1X41je4rSeIgX7+gDy1NHdrHHkO6VZ2ImanBaUfE=;
+ b=RnhOr3wT86Iumb2IEqK64ax6cEBUEMNSImGSUIVZrcGXpnCPKZWNcUmIKZUm7MJzPHM3sIvA8
+ efPFh646mx2DZRzLKLxp4otgWTyEK++fXIVn2vEknLn21XV2ltd+j0M
 X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
  pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On SM8550, the QUP controller is coherent with the CPU.
-Allow specifying that.
+Like on earlier flagship Qualcomm SoCs, the SMMU is dma-coherent.
+Mark it as such.
 
+Fixes: ffc50b2d3828 ("arm64: dts: qcom: Add base SM8550 dtsi")
 Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 ---
- Documentation/devicetree/bindings/soc/qcom/qcom,geni-se.yaml | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/arm64/boot/dts/qcom/sm8550.dtsi | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,geni-se.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,geni-se.yaml
-index 8a4b7ba3aaf6..7b031ef09669 100644
---- a/Documentation/devicetree/bindings/soc/qcom/qcom,geni-se.yaml
-+++ b/Documentation/devicetree/bindings/soc/qcom/qcom,geni-se.yaml
-@@ -52,6 +52,8 @@ properties:
-   iommus:
-     maxItems: 1
+diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
+index d1911b2f0bf3..944b4b8c95f5 100644
+--- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
+@@ -3655,6 +3655,7 @@ apps_smmu: iommu@15000000 {
+ 				     <GIC_SPI 694 IRQ_TYPE_LEVEL_HIGH>,
+ 				     <GIC_SPI 695 IRQ_TYPE_LEVEL_HIGH>,
+ 				     <GIC_SPI 696 IRQ_TYPE_LEVEL_HIGH>;
++			dma-coherent;
+ 		};
  
-+  dma-coherent: true
-+
- required:
-   - compatible
-   - reg
+ 		intc: interrupt-controller@17100000 {
 
 -- 
 2.42.0
