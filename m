@@ -2,89 +2,74 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9FB4EC6FA8F
-	for <dmaengine@archiver.kernel.org>; Wed, 30 Aug 2023 22:23:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5FC01C83F39
+	for <dmaengine@archiver.kernel.org>; Thu, 31 Aug 2023 18:20:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240323AbjH3WX5 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 30 Aug 2023 18:23:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36030 "EHLO
+        id S1346872AbjHaSUU (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Thu, 31 Aug 2023 14:20:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34450 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243992AbjH3WX4 (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Wed, 30 Aug 2023 18:23:56 -0400
-Received: from mail-yw1-x1129.google.com (mail-yw1-x1129.google.com [IPv6:2607:f8b0:4864:20::1129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 79173B8
-        for <dmaengine@vger.kernel.org>; Wed, 30 Aug 2023 15:23:36 -0700 (PDT)
-Received: by mail-yw1-x1129.google.com with SMTP id 00721157ae682-58fc4d319d2so3481827b3.1
-        for <dmaengine@vger.kernel.org>; Wed, 30 Aug 2023 15:23:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1693434215; x=1694039015; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZSyK+dHkjDMQS0UZZd2TV/HXC5yoOWbGzZSM7TZhYog=;
-        b=Ecsjuxxp3HpHpAGqGDl75vIiWpUJweaR8RVcsTYNMVv69OU26uS7om3cd+8jcN1/Ej
-         XUZZL8Ho/pHCakuWdGHEx/ZZUPwYuSXXIRFn+1acCOXJDiNAz1UPuE7fA/6NmCRvIDRI
-         9HU2V9MWoaRQelErcICyBTKsT39r5h1/GWMljvniXeT0I3IKD/8YOjwTUZ7zZO+J1fJw
-         J514jUCJ8beaE54H8PC+p9t+Yd3ykuOzlOc4kQ6ZlMLrpf3+anI65x5oAHCpuBZjs7p4
-         YDEfF7NUa2tZuMpaXA/hP0FtcENpf2vM0gOIuYLMnRZTxuJm/ayGp1gwtHXwlYEqegmJ
-         0PNA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693434215; x=1694039015;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ZSyK+dHkjDMQS0UZZd2TV/HXC5yoOWbGzZSM7TZhYog=;
-        b=JdtgSYqmmduvRcCufKZmAfxi+10qM6EaaXd/nGxT0pOiYoQQUyhqtIkfjEu62c/oq+
-         KlcAx4ZOmGr6K1BJwvUyIkkTyt5pawS8DmOv3CPyGW24+fl0QZrm+tBILF/LjRqFTn21
-         h/JXk0S8DjnIhRiRzyHCdmVdFSmcjLnhnA6IR+nl9IaLBFA5c/+Za6sjvms22vK6rfRV
-         adYuTEr53xNEsxEW9bb0KKPXqkb2Vc1IYgiFZ0lNtnLpe1HQ+SVQaVEFoGpPOaFPA4T2
-         uliHdm0RfpORblejO1Un7P6sY4B5R3zhoomV3xjAWXf2Yapaw58zIl4AWFUUnemWEnNp
-         RGRw==
-X-Gm-Message-State: AOJu0YzY1+o6f52WKbA0ZPEUalMjEfI/s3aI5Ss6WMSMOuB20RJtYm+3
-        yLdMpU//g6X5KDa/uNu57m/VeXaRjWdB8C91hvq+7H7mQM0qq3J5
-X-Google-Smtp-Source: AGHT+IF3BC4QjQc9khz8UvoRWdeIpu1q8Bvmo2laKSOuKZOvmEKB3zwHspagVqx73Iha2+2P48AjcTOvasTtYpuNrM8=
-X-Received: by 2002:a25:547:0:b0:d0f:846c:ef7b with SMTP id
- 68-20020a250547000000b00d0f846cef7bmr3216161ybf.17.1693425868564; Wed, 30 Aug
- 2023 13:04:28 -0700 (PDT)
-MIME-Version: 1.0
-References: <20230830-topic-8550_dmac2-v1-0-49bb25239fb1@linaro.org> <20230830-topic-8550_dmac2-v1-5-49bb25239fb1@linaro.org>
-In-Reply-To: <20230830-topic-8550_dmac2-v1-5-49bb25239fb1@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Wed, 30 Aug 2023 23:04:17 +0300
-Message-ID: <CAA8EJpp2UbiknJ876ccCiSV2hDYdiGVRiQBdAEMM7e9z5OqK3A@mail.gmail.com>
-Subject: Re: [PATCH 5/7] arm64: dts: qcom: sm8550: Mark APPS SMMU as dma-coherent
+        with ESMTP id S1343507AbjHaSUU (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Thu, 31 Aug 2023 14:20:20 -0400
+Received: from sin.source.kernel.org (sin.source.kernel.org [145.40.73.55])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C4EC8E6B;
+        Thu, 31 Aug 2023 11:20:15 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by sin.source.kernel.org (Postfix) with ESMTPS id EFACCCE201B;
+        Thu, 31 Aug 2023 18:20:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82DC9C433C8;
+        Thu, 31 Aug 2023 18:20:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1693506012;
+        bh=7WZI1mZEAh514Sx8f5fF5/Wrmape0Upa19isw5zY/KQ=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=KKvJ4sKl6IpJTyTUlBUin9PMewbFd3/btKqOkBv7/kNsKJqy93lhMvBKt2YxKD6gl
+         QUYdrgZGqcIITI8Eg6E5a7LgzhimMq1DG6nd9YtsmxQCRD78QaXnBXxFGHEsaMkaMa
+         xVxLg9TouCBR0XBS3CiGIB9oYTtPZPlb3y/4Xoc6P+AMENWJJO4c8plKwxQTyriRwL
+         8jU7mgpbCAkRe5IZCkICompyodmRuH/aWOeOzxZkgdNn7dpr+qLXzRjGB0p9GmNLcG
+         XnVCYH0uyMXFXO7SLVdjv/mxULzcb5GZeb77v19QuF1Ey6OSdj7RfItFRdhBgJn4A9
+         FUEI3iVPSdGQw==
+Received: (nullmailer pid 2540904 invoked by uid 1000);
+        Thu, 31 Aug 2023 18:20:04 -0000
+Date:   Thu, 31 Aug 2023 13:20:04 -0500
+From:   Rob Herring <robh@kernel.org>
 To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Abel Vesa <abel.vesa@linaro.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Sai Prakash Ranjan <quic_saipraka@quicinc.com>,
-        Vinod Koul <vkoul@kernel.org>,
+Cc:     Neil Armstrong <neil.armstrong@linaro.org>,
+        linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org,
         Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        Abel Vesa <abel.vesa@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>, devicetree@vger.kernel.org,
+        Sai Prakash Ranjan <quic_saipraka@quicinc.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, Conor Dooley <conor+dt@kernel.org>,
+        Vinod Koul <vkoul@kernel.org>
+Subject: Re: [PATCH 1/7] dt-bindings: dmaengine: qcom: gpi: Allow dma-coherent
+Message-ID: <169350600377.2540849.5971761743710979201.robh@kernel.org>
+References: <20230830-topic-8550_dmac2-v1-0-49bb25239fb1@linaro.org>
+ <20230830-topic-8550_dmac2-v1-1-49bb25239fb1@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230830-topic-8550_dmac2-v1-1-49bb25239fb1@linaro.org>
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On Wed, 30 Aug 2023 at 21:32, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
->
-> Like on earlier flagship Qualcomm SoCs, the SMMU is dma-coherent.
-> Mark it as such.
 
-On earlier SoCs we marked Adreno SMMU as dma-coherent, not the apps
-one. Only on sm8250 you've added dma-coherent to the apps smmu.
-
->
-> Fixes: ffc50b2d3828 ("arm64: dts: qcom: Add base SM8550 dtsi")
+On Wed, 30 Aug 2023 14:48:40 +0200, Konrad Dybcio wrote:
+> On SM8550, the GPI DMA controller is coherent with the CPU.
+> Allow specifying that.
+> 
 > Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 > ---
->  arch/arm64/boot/dts/qcom/sm8550.dtsi | 1 +
->  1 file changed, 1 insertion(+)
+>  Documentation/devicetree/bindings/dma/qcom,gpi.yaml | 2 ++
+>  1 file changed, 2 insertions(+)
+> 
 
--- 
-With best wishes
-Dmitry
+Acked-by: Rob Herring <robh@kernel.org>
+
