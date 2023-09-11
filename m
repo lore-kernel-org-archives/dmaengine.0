@@ -2,253 +2,133 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D4A32EEB56E
-	for <dmaengine@archiver.kernel.org>; Fri,  8 Sep 2023 20:10:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 773E6CA0ECE
+	for <dmaengine@archiver.kernel.org>; Mon, 11 Sep 2023 22:46:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236446AbjIHUKx (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 8 Sep 2023 16:10:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43246 "EHLO
+        id S236077AbjIKWi2 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Mon, 11 Sep 2023 18:38:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51196 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232528AbjIHUKu (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Fri, 8 Sep 2023 16:10:50 -0400
-Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.88])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0AE978E;
-        Fri,  8 Sep 2023 13:10:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1694203844; x=1725739844;
-  h=from:to:cc:subject:date:message-id:mime-version:
-   content-transfer-encoding;
-  bh=cyNIqzHzFbt3kTtjv0BnfNWVtOBRC0rRScqzT/ho4ig=;
-  b=aqbbxHZpvZ71vrU2ZB9BE+NS5mfxUQqpTo4arsMbZ07YXO45bWvotxqA
-   FItUZakz0YunwknsolsH0G4+mafvbh8j4EYh/gBKC/McaHqJe9Be4yRj/
-   Ny/sezSB8igsdO656wkrguZgnMPChD6dtiB3KovkygjoI4J88aZ8LG4PW
-   u4/b16iwE2WUvbHsw6vsPIOgg00yy3N/06dTSNRHMWy+g3cSeSBdPBBU/
-   TWLahQtkH/Spr9tI2K1DrV+tmk4Om0FXa1yBDMnahv4hr2YqmfiwIWLUI
-   LDX+TjI/4NeNS9sNlcAnIu+zHsh97T5WW6g/Mqzi1yj7Xkn1mdlQWUyWA
-   g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10827"; a="408716854"
-X-IronPort-AV: E=Sophos;i="6.02,237,1688454000"; 
-   d="scan'208";a="408716854"
-Received: from fmsmga004.fm.intel.com ([10.253.24.48])
-  by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Sep 2023 13:10:44 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10827"; a="812678393"
-X-IronPort-AV: E=Sophos;i="6.02,237,1688454000"; 
-   d="scan'208";a="812678393"
-Received: from fyu1.sc.intel.com ([172.25.103.126])
-  by fmsmga004.fm.intel.com with ESMTP; 08 Sep 2023 13:10:44 -0700
-From:   Fenghua Yu <fenghua.yu@intel.com>
-To:     "Vinod Koul" <vkoul@kernel.org>,
-        "Dave Jiang" <dave.jiang@intel.com>
-Cc:     dmaengine@vger.kernel.org,
-        "linux-kernel" <linux-kernel@vger.kernel.org>,
-        Tom Zanussi <tom.zanussi@linux.intel.com>,
-        Fenghua Yu <fenghua.yu@intel.com>
-Subject: [PATCH] dmaengine: idxd: add wq driver name support for accel-config user tool
-Date:   Fri,  8 Sep 2023 13:10:45 -0700
-Message-Id: <20230908201045.4115614-1-fenghua.yu@intel.com>
-X-Mailer: git-send-email 2.37.1
+        with ESMTP id S244164AbjIKTZq (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Mon, 11 Sep 2023 15:25:46 -0400
+Received: from NAM04-BN8-obe.outbound.protection.outlook.com (mail-bn8nam04on2045.outbound.protection.outlook.com [40.107.100.45])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 75E6810D;
+        Mon, 11 Sep 2023 12:25:41 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=D67BpoU+eBHxV1gJr2uHgpNMS6h7tDcp4pF4JajrprxIX/aPm10sAdw/VJtc4UDezI0x7lmd17Y1nq0CG3x9djOggDBOJedvUHimdl8WS+H/lyaDsfugSvAWXoFXhijsAY/gWOtVXh8pV/FHy6cO8/k/NBBmf5eC5ZnewTHxkgYiuQK8sXD4M/gJGESqUzu68ncbzlGn+YTBF1NKsY7qdB5Uzf773/TayERo0yBYjrd2F8MUuB436sy6lShOKfk0/U882r23X3klO8SvPTlUIxJIIpxZ3aE2zWtzu0sHSRoB7rvs2S0iMv9nMDdr4xJxup/7cLoIRrAKVP9WBQ4iUw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=Nihn8RGe6nEhpTkGzgmZ4KKgFBThZzxYJySDzvUqwuc=;
+ b=T9KP2udDLzeLOHii32n5RfjtJZSesxm9Y7XE3btrpo2mhGtze6pE/DUZJDyWmuwWzD+pWOS7T8gTh5NIsQYibgZLa5MrQNkNMpk3g/Xw2pXY9XOu3j8ibOzV2lPTgdBNxxO2zEmTtRXYlh/H19W7P6lYM1eX+MuzHH//Ov+SqmNW32HScRl8TkKz+k5EqBGX/xneNq1ZLX/+Kj/mrJBIOVfqL5PuOcyJkxN/CGQhRTDkPlM5F1M44F89B4QsRx+moZwNdvsWJBuq6UmMC3dbtkJ9zNnN6t5Xic7uf3/iYGQouiYYwCrBPHxsc54qFNACV+xzpD3plqpbjRrdFYqFTw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=kernel.org smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=Nihn8RGe6nEhpTkGzgmZ4KKgFBThZzxYJySDzvUqwuc=;
+ b=FchRcglM/E8Ezj3QbSk/sdjmS5JrtxSeATPsG+K1vC18YV5Jmk1mfi6I60LJ0vO3XABYsJNmu3yJ77FmLVvWukFd6l5PqmEHB9lRTo/49SIM5yi/ZB2A3mMC5an3yuIt4+CPJg/9ovGNwEKdZPydD4SG50hCYgAMVGITElLazLs=
+Received: from DS7PR03CA0174.namprd03.prod.outlook.com (2603:10b6:5:3b2::29)
+ by SJ0PR12MB6686.namprd12.prod.outlook.com (2603:10b6:a03:479::22) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6768.30; Mon, 11 Sep
+ 2023 19:25:38 +0000
+Received: from DS3PEPF000099DC.namprd04.prod.outlook.com
+ (2603:10b6:5:3b2:cafe::8e) by DS7PR03CA0174.outlook.office365.com
+ (2603:10b6:5:3b2::29) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6768.35 via Frontend
+ Transport; Mon, 11 Sep 2023 19:25:38 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
+Received: from SATLEXMB04.amd.com (165.204.84.17) by
+ DS3PEPF000099DC.mail.protection.outlook.com (10.167.17.198) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.20.6792.17 via Frontend Transport; Mon, 11 Sep 2023 19:25:38 +0000
+Received: from sanjuamdntb2.amd.com (10.180.168.240) by SATLEXMB04.amd.com
+ (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.27; Mon, 11 Sep
+ 2023 14:25:35 -0500
+From:   Sanjay R Mehta <Sanju.Mehta@amd.com>
+To:     <vkoul@kernel.org>
+CC:     <gregkh@linuxfoundation.org>, <dan.j.williams@intel.com>,
+        <robh@kernel.org>, <mchehab+samsung@kernel.org>,
+        <davem@davemloft.net>, <linux-kernel@vger.kernel.org>,
+        <dmaengine@vger.kernel.org>, Sanjay R Mehta <sanju.mehta@amd.com>
+Subject: [PATCH 0/3] Add support for AMD AE4DMA controller driver
+Date:   Mon, 11 Sep 2023 14:25:21 -0500
+Message-ID: <1694460324-60346-1-git-send-email-Sanju.Mehta@amd.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.180.168.240]
+X-ClientProxiedBy: SATLEXMB03.amd.com (10.181.40.144) To SATLEXMB04.amd.com
+ (10.181.40.145)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DS3PEPF000099DC:EE_|SJ0PR12MB6686:EE_
+X-MS-Office365-Filtering-Correlation-Id: 974a33db-ff20-46c3-a7ae-08dbb2fce12c
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: p28ffX7KrDdoW/wvs8qyhHRbONUatoOGCjWj5kuLGjVs+rTp1D7iLk7KauYTin+Q6FTi1zK6NoBhOsIpgb+JOMXM2+457WoWfmhX3cpRWWV4eIZ17MwwSGpgdZgHHitwdcYSRuLy6RALNzN7igPY+vRBJIZJqhI7TOQCSfu9l5A707zogDZuObpUnK4sQYhztUtPfaudFm2UH0EyBHQOFltmvC8CReTsgCXpsTAFGRc0Mornb1N16JitZmpfqwn1BW+lZtzdx4PKy59xiZGWD06Cx+/g9IHX5gQnsH0Ip4f86He21CoCbxL+ajzmFPMzU+lfqHTY8prpw/RdPYvzgZ7K+DUe1yk38eLyrQJDRYfBX0LO4NS8S5cJPcW/19S6m/B/7Iv4GzYgtOALW57ufh5AQGHqhGQNkjLvhEqTKifjXvTwrd5MUtB3khy+0P8e2p+3cmfCKau4RN2Ayhr+EKc0vqwkUfW4wnPVyiXWGrnBswI5jjt2L+6iiEApAuHETi5FNVlub4LhiV93AkEdxsg9kxFYP2+VqzGscyv8IOhy5YGl8dDKOOavKA4kuh91xYT7DNGKwbKYw6xE+2NRBn7nTpZG8q5n9b10VOeA59z9s1xYzBVkoOrqjioR5oPgs/GcafvBYqQHb7IueYEMjK2I+DH3bTNAzGnjJNVQwY6qpyzqGW03rGNNpwb3+QHvIszAgzdNdzVngA0tscqs+b2G1cuLi78YEsbE59agu9yKoeQvPojgBTlh4UEPgx2hnZG0meGiAB+smnqvi6xTLSkGa6PUfoEZmayyfzkFl2A=
+X-Forefront-Antispam-Report: CIP:165.204.84.17;CTRY:US;LANG:en;SCL:1;SRV:;IPV:CAL;SFV:NSPM;H:SATLEXMB04.amd.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230031)(4636009)(396003)(39860400002)(136003)(376002)(346002)(1800799009)(451199024)(82310400011)(186009)(40470700004)(46966006)(36840700001)(81166007)(356005)(7696005)(6666004)(41300700001)(70586007)(40460700003)(36756003)(86362001)(2616005)(82740400003)(36860700001)(47076005)(40480700001)(426003)(336012)(2906002)(478600001)(8676002)(8936002)(5660300002)(316002)(4326008)(16526019)(54906003)(70206006)(6916009)(26005)(32563001)(36900700001);DIR:OUT;SFP:1101;
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Sep 2023 19:25:38.1422
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 974a33db-ff20-46c3-a7ae-08dbb2fce12c
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d;Ip=[165.204.84.17];Helo=[SATLEXMB04.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: DS3PEPF000099DC.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR12MB6686
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-From: Dave Jiang <dave.jiang@intel.com>
+From: Sanjay R Mehta <sanju.mehta@amd.com>
 
-With the possibility of multiple wq drivers that can be bound to the wq,
-the user config tool accel-config needs a way to know which wq driver to
-bind to the wq. Introduce per wq driver_name sysfs attribute where the user
-can indicate the driver to be bound to the wq. This allows accel-config to
-just bind to the driver using wq->driver_name.
+This patch series add support for AMD AE4DMA controller which
+performs high bandwidth memory-to-memory and IO copy operation,
+performs DMA transfer through queue based descriptor management.
 
-Signed-off-by: Dave Jiang <dave.jiang@intel.com>
-Signed-off-by: Tom Zanussi <tom.zanussi@linux.intel.com>
-Reviewed-by: Fenghua Yu <fenghua.yu@intel.com>
-Acked-by: Vinod Koul <vkoul@kernel.org>
----
+The AE4DMA controller allows for configuration of the number of
+queues per controller, with a range from 1 to 16. This configuration
+can be conveniently adjusted using the driver's "max_hw_q" parameter.
 
-Hi, Vinod,
+The AMD Processor features multiple ae4dma device instances,
+with each controller supporting a maximum of 16 DMA queues.
 
-This patch is part of IAA crypto patch series:
-https://lore.kernel.org/all/20230731212939.1391453-2-tom.zanussi@linux.intel.com/
-I'm sending this patch indepentantly here because:
-1. the IAA crypto patch series is unlikely to be merged into 6.7
-2. this patch is useful by itself in a few other places
-3. this patch doesn't depend on the IAA crypto patch set and can
-   be used and applied cleanly by itself
-4. this patch has only dmaengine code
+Sanjay R Mehta (3):
+  dmaengine: ae4dma: Initial ae4dma controller driver with multi channel
+  dmaengine: ae4dma: register AE4DMA controller as a DMA resource
+  dmaengine: ae4dma: Add debugfs entries for AE4DMA
 
-So it would be good to merge this patch into 6.7 first. An updated
-IAA crypto patch set will be submitted later after 6.7 time frame
-and merged in a later kernel version.
+ MAINTAINERS                           |   6 +
+ drivers/dma/Kconfig                   |   2 +
+ drivers/dma/Makefile                  |   1 +
+ drivers/dma/ae4dma/Kconfig            |  13 ++
+ drivers/dma/ae4dma/Makefile           |  10 +
+ drivers/dma/ae4dma/ae4dma-debugfs.c   |  98 ++++++++
+ drivers/dma/ae4dma/ae4dma-dev.c       | 353 ++++++++++++++++++++++++++++
+ drivers/dma/ae4dma/ae4dma-dmaengine.c | 425 ++++++++++++++++++++++++++++++++++
+ drivers/dma/ae4dma/ae4dma-pci.c       | 247 ++++++++++++++++++++
+ drivers/dma/ae4dma/ae4dma.h           | 374 ++++++++++++++++++++++++++++++
+ 10 files changed, 1529 insertions(+)
+ create mode 100644 drivers/dma/ae4dma/Kconfig
+ create mode 100644 drivers/dma/ae4dma/Makefile
+ create mode 100644 drivers/dma/ae4dma/ae4dma-debugfs.c
+ create mode 100644 drivers/dma/ae4dma/ae4dma-dev.c
+ create mode 100644 drivers/dma/ae4dma/ae4dma-dmaengine.c
+ create mode 100644 drivers/dma/ae4dma/ae4dma-pci.c
+ create mode 100644 drivers/dma/ae4dma/ae4dma.h
 
- .../ABI/stable/sysfs-driver-dma-idxd          |  6 ++++
- drivers/dma/idxd/cdev.c                       |  7 ++++
- drivers/dma/idxd/dma.c                        |  6 ++++
- drivers/dma/idxd/idxd.h                       |  9 +++++
- drivers/dma/idxd/sysfs.c                      | 34 +++++++++++++++++++
- include/uapi/linux/idxd.h                     |  1 +
- 6 files changed, 63 insertions(+)
-
-diff --git a/Documentation/ABI/stable/sysfs-driver-dma-idxd b/Documentation/ABI/stable/sysfs-driver-dma-idxd
-index 825e619250bf..982e9f3b80e2 100644
---- a/Documentation/ABI/stable/sysfs-driver-dma-idxd
-+++ b/Documentation/ABI/stable/sysfs-driver-dma-idxd
-@@ -270,6 +270,12 @@ Description:	Shows the operation capability bits displayed in bitmap format
- 		correlates to the operations allowed. It's visible only
- 		on platforms that support the capability.
- 
-+What:		/sys/bus/dsa/devices/wq<m>.<n>/driver_name
-+Date:		Sept 8, 2023
-+KernelVersion:	6.7.0
-+Contact:	dmaengine@vger.kernel.org
-+Description:	Name of driver to be bounded to the wq.
-+
- What:           /sys/bus/dsa/devices/engine<m>.<n>/group_id
- Date:           Oct 25, 2019
- KernelVersion:  5.6.0
-diff --git a/drivers/dma/idxd/cdev.c b/drivers/dma/idxd/cdev.c
-index d32deb9b4e3d..0423655f5a88 100644
---- a/drivers/dma/idxd/cdev.c
-+++ b/drivers/dma/idxd/cdev.c
-@@ -509,6 +509,7 @@ void idxd_wq_del_cdev(struct idxd_wq *wq)
- 
- static int idxd_user_drv_probe(struct idxd_dev *idxd_dev)
- {
-+	struct device *dev = &idxd_dev->conf_dev;
- 	struct idxd_wq *wq = idxd_dev_to_wq(idxd_dev);
- 	struct idxd_device *idxd = wq->idxd;
- 	int rc;
-@@ -536,6 +537,12 @@ static int idxd_user_drv_probe(struct idxd_dev *idxd_dev)
- 
- 	mutex_lock(&wq->wq_lock);
- 
-+	if (!idxd_wq_driver_name_match(wq, dev)) {
-+		idxd->cmd_status = IDXD_SCMD_WQ_NO_DRV_NAME;
-+		rc = -ENODEV;
-+		goto wq_err;
-+	}
-+
- 	wq->wq = create_workqueue(dev_name(wq_confdev(wq)));
- 	if (!wq->wq) {
- 		rc = -ENOMEM;
-diff --git a/drivers/dma/idxd/dma.c b/drivers/dma/idxd/dma.c
-index 07623fb0f52f..47a01893cfdb 100644
---- a/drivers/dma/idxd/dma.c
-+++ b/drivers/dma/idxd/dma.c
-@@ -306,6 +306,12 @@ static int idxd_dmaengine_drv_probe(struct idxd_dev *idxd_dev)
- 		return -ENXIO;
- 
- 	mutex_lock(&wq->wq_lock);
-+	if (!idxd_wq_driver_name_match(wq, dev)) {
-+		idxd->cmd_status = IDXD_SCMD_WQ_NO_DRV_NAME;
-+		rc = -ENODEV;
-+		goto err;
-+	}
-+
- 	wq->type = IDXD_WQT_KERNEL;
- 
- 	rc = drv_enable_wq(wq);
-diff --git a/drivers/dma/idxd/idxd.h b/drivers/dma/idxd/idxd.h
-index e269ca1f4862..1e89c80a07fc 100644
---- a/drivers/dma/idxd/idxd.h
-+++ b/drivers/dma/idxd/idxd.h
-@@ -159,6 +159,8 @@ struct idxd_cdev {
- 	int minor;
- };
- 
-+#define DRIVER_NAME_SIZE		128
-+
- #define IDXD_ALLOCATED_BATCH_SIZE	128U
- #define WQ_NAME_SIZE   1024
- #define WQ_TYPE_SIZE   10
-@@ -227,6 +229,8 @@ struct idxd_wq {
- 	/* Lock to protect upasid_xa access. */
- 	struct mutex uc_lock;
- 	struct xarray upasid_xa;
-+
-+	char driver_name[DRIVER_NAME_SIZE + 1];
- };
- 
- struct idxd_engine {
-@@ -646,6 +650,11 @@ static inline void idxd_wqcfg_set_max_batch_shift(int idxd_type, union wqcfg *wq
- 		wqcfg->max_batch_shift = max_batch_shift;
- }
- 
-+static inline int idxd_wq_driver_name_match(struct idxd_wq *wq, struct device *dev)
-+{
-+	return (strncmp(wq->driver_name, dev->driver->name, strlen(dev->driver->name)) == 0);
-+}
-+
- int __must_check __idxd_driver_register(struct idxd_device_driver *idxd_drv,
- 					struct module *module, const char *mod_name);
- #define idxd_driver_register(driver) \
-diff --git a/drivers/dma/idxd/sysfs.c b/drivers/dma/idxd/sysfs.c
-index 7caba90d85b3..523ae0dff7d4 100644
---- a/drivers/dma/idxd/sysfs.c
-+++ b/drivers/dma/idxd/sysfs.c
-@@ -1259,6 +1259,39 @@ static ssize_t wq_op_config_store(struct device *dev, struct device_attribute *a
- static struct device_attribute dev_attr_wq_op_config =
- 		__ATTR(op_config, 0644, wq_op_config_show, wq_op_config_store);
- 
-+static ssize_t wq_driver_name_show(struct device *dev, struct device_attribute *attr, char *buf)
-+{
-+	struct idxd_wq *wq = confdev_to_wq(dev);
-+
-+	return sysfs_emit(buf, "%s\n", wq->driver_name);
-+}
-+
-+static ssize_t wq_driver_name_store(struct device *dev, struct device_attribute *attr,
-+				    const char *buf, size_t count)
-+{
-+	struct idxd_wq *wq = confdev_to_wq(dev);
-+	char *input, *pos;
-+
-+	if (wq->state != IDXD_WQ_DISABLED)
-+		return -EPERM;
-+
-+	if (strlen(buf) > DRIVER_NAME_SIZE || strlen(buf) == 0)
-+		return -EINVAL;
-+
-+	input = kstrndup(buf, count, GFP_KERNEL);
-+	if (!input)
-+		return -ENOMEM;
-+
-+	pos = strim(input);
-+	memset(wq->driver_name, 0, DRIVER_NAME_SIZE + 1);
-+	sprintf(wq->driver_name, "%s", pos);
-+	kfree(input);
-+	return count;
-+}
-+
-+static struct device_attribute dev_attr_wq_driver_name =
-+		__ATTR(driver_name, 0644, wq_driver_name_show, wq_driver_name_store);
-+
- static struct attribute *idxd_wq_attributes[] = {
- 	&dev_attr_wq_clients.attr,
- 	&dev_attr_wq_state.attr,
-@@ -1278,6 +1311,7 @@ static struct attribute *idxd_wq_attributes[] = {
- 	&dev_attr_wq_occupancy.attr,
- 	&dev_attr_wq_enqcmds_retries.attr,
- 	&dev_attr_wq_op_config.attr,
-+	&dev_attr_wq_driver_name.attr,
- 	NULL,
- };
- 
-diff --git a/include/uapi/linux/idxd.h b/include/uapi/linux/idxd.h
-index 606b52e88ce3..3d1987e1bb2d 100644
---- a/include/uapi/linux/idxd.h
-+++ b/include/uapi/linux/idxd.h
-@@ -31,6 +31,7 @@ enum idxd_scmd_stat {
- 	IDXD_SCMD_WQ_IRQ_ERR = 0x80100000,
- 	IDXD_SCMD_WQ_USER_NO_IOMMU = 0x80110000,
- 	IDXD_SCMD_DEV_EVL_ERR = 0x80120000,
-+	IDXD_SCMD_WQ_NO_DRV_NAME = 0x80200000,
- };
- 
- #define IDXD_SCMD_SOFTERR_MASK	0x80000000
 -- 
-2.37.1
+2.7.4
 
