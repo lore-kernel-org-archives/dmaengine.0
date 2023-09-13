@@ -2,35 +2,37 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 63EF2CA5509
-	for <dmaengine@archiver.kernel.org>; Wed, 13 Sep 2023 08:37:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 08C96CA550A
+	for <dmaengine@archiver.kernel.org>; Wed, 13 Sep 2023 08:37:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238966AbjIMIh6 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 13 Sep 2023 04:37:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59762 "EHLO
+        id S238971AbjIMIiA (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 13 Sep 2023 04:38:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59776 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236752AbjIMIh5 (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Wed, 13 Sep 2023 04:37:57 -0400
+        with ESMTP id S238967AbjIMIh6 (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Wed, 13 Sep 2023 04:37:58 -0400
 Received: from szxga01-in.huawei.com (szxga01-in.huawei.com [45.249.212.187])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C954196;
-        Wed, 13 Sep 2023 01:37:53 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE72E196;
+        Wed, 13 Sep 2023 01:37:54 -0700 (PDT)
 Received: from kwepemm600013.china.huawei.com (unknown [172.30.72.54])
-        by szxga01-in.huawei.com (SkyGuard) with ESMTP id 4Rltyc3dCvztSWY;
-        Wed, 13 Sep 2023 16:33:44 +0800 (CST)
+        by szxga01-in.huawei.com (SkyGuard) with ESMTP id 4Rltyd72WwztSQ2;
+        Wed, 13 Sep 2023 16:33:45 +0800 (CST)
 Received: from huawei.com (10.175.112.208) by kwepemm600013.china.huawei.com
  (7.193.23.68) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.31; Wed, 13 Sep
- 2023 16:37:50 +0800
+ 2023 16:37:51 +0800
 From:   Guo Mengqi <guomengqi3@huawei.com>
 To:     <vkoul@kernel.org>, <dmaengine@vger.kernel.org>,
         <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
         <conor+dt@kernel.org>, <devicetree@vger.kernel.org>
 CC:     <guomengqi3@huawei.com>, <xuqiang36@huawei.com>,
         <chenweilong@huawei.com>
-Subject: [PATCH v4 0/2] Add dma controller driver for HiSilicon Ascend310/910
-Date:   Wed, 13 Sep 2023 16:28:23 +0800
-Message-ID: <20230913082825.3180-1-guomengqi3@huawei.com>
+Subject: [PATCH v4 2/2] dt-bindings: dma: HiSilicon: Add bindings for HiSilicon Ascend sdma
+Date:   Wed, 13 Sep 2023 16:28:25 +0800
+Message-ID: <20230913082825.3180-3-guomengqi3@huawei.com>
 X-Mailer: git-send-email 2.17.1
+In-Reply-To: <20230913082825.3180-1-guomengqi3@huawei.com>
+References: <20230913082825.3180-1-guomengqi3@huawei.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Originating-IP: [10.175.112.208]
@@ -41,41 +43,95 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-The patch set add driver and device-tree bindings for a dma controller
-on HiSilicon Ascend310/910 platform.
+Add device-tree binding documentation for sdma hardware on
+HiSilicon Ascend SoC families.
 
-Changes v3 to v4:
-	- dts-binding
-		- filename changed to hisilicon,ascend-sdma.yaml
-		- use common property "dma-channel-mask"
-		- make a clearer description of property "pasid-num-bits"
-
-Changes v2 to v3:
-	- Fix dts-binding error:
-		* Use "hisilicon" as a unified vendor prefix.
-
-Changes v1 to v2:
-	- Fix dts-binding error:
-		* change "compatible" to two exact models: ascend310/ascend910.
-		* add vendor prefix for customized channel-map property.
-		* add $ref for customized channel-map property.
-		* remove unnecessary label in example.
-	- Logic change in probe function:
-		* If iommu sva feature is disabled, probe will not lead to failure
-	- Use common driver apis: dev_xxx() devm_xxx()
-
-Guo Mengqi (2):
-  dmaengine: Add HiSilicon Ascend SDMA engine support
-  dt-bindings: dma: HiSilicon: Add bindings for HiSilicon Ascend sdma
-
- .../bindings/dma/hisilicon,ascend-sdma.yaml   |  74 ++
- drivers/dma/Kconfig                           |   9 +
- drivers/dma/Makefile                          |   1 +
- drivers/dma/hisi-ascend-sdma.c                | 810 ++++++++++++++++++
- 4 files changed, 894 insertions(+)
+Signed-off-by: Guo Mengqi <guomengqi3@huawei.com>
+---
+ .../bindings/dma/hisilicon,ascend-sdma.yaml   | 74 +++++++++++++++++++
+ 1 file changed, 74 insertions(+)
  create mode 100644 Documentation/devicetree/bindings/dma/hisilicon,ascend-sdma.yaml
- create mode 100644 drivers/dma/hisi-ascend-sdma.c
 
+diff --git a/Documentation/devicetree/bindings/dma/hisilicon,ascend-sdma.yaml b/Documentation/devicetree/bindings/dma/hisilicon,ascend-sdma.yaml
+new file mode 100644
+index 000000000000..9a3f8b701395
+--- /dev/null
++++ b/Documentation/devicetree/bindings/dma/hisilicon,ascend-sdma.yaml
+@@ -0,0 +1,74 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/dma/hisilicon,ascend-sdma.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: HiSilicon Ascend System DMA (SDMA) controller
++
++description: |
++  The Ascend SDMA controller is used for transferring data
++  in system memory.
++
++maintainers:
++  - Guo Mengqi <guomengqi3@huawei.com>
++
++allOf:
++  - $ref: dma-controller.yaml#
++
++properties:
++  compatible:
++    enum:
++      - hisilicon,ascend310-sdma
++      - hisilicon,ascend910-sdma
++
++  reg:
++    maxItems: 1
++
++  '#dma-cells':
++    const: 1
++    description:
++      Clients specify a single cell with channel number.
++
++  dma-channel-mask:
++    minItems: 1
++    maxItems: 2
++
++  iommus:
++    maxItems: 1
++
++  pasid-num-bits:
++    description: |
++      This tells smmu that this device supports iommu-sva feature.
++      This determines the maximum number of digits in the pasid.
++    maximum: 0x10
++
++  dma-coherent: true
++
++  dma-can-stall: true
++
++required:
++  - compatible
++  - reg
++  - dma-channel-mask
++  - '#dma-cells'
++  - iommus
++  - pasid-num-bits
++  - dma-can-stall
++
++additionalProperties: false
++
++examples:
++  - |
++    dma-controller@880e0000 {
++        compatible = "hisilicon,ascend310-sdma";
++        reg = <0x880e0000 0x10000>;
++        dma-channel-mask = <0xff00>;
++        iommus = <&smmu 0x7f46>;
++        pasid-num-bits = <0x10>;
++        dma-coherent;
++        dma-can-stall;
++        #dma-cells = <1>;
++    };
++
++...
 -- 
 2.17.1
 
