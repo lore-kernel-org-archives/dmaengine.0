@@ -2,44 +2,44 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 89CA4CD5BBD
-	for <dmaengine@archiver.kernel.org>; Tue, 19 Sep 2023 13:32:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A44D9CD5BC1
+	for <dmaengine@archiver.kernel.org>; Tue, 19 Sep 2023 13:32:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232388AbjISNcc (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 19 Sep 2023 09:32:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50092 "EHLO
+        id S232384AbjISNcd (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 19 Sep 2023 09:32:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50102 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232359AbjISNcZ (ORCPT
+        with ESMTP id S232399AbjISNcZ (ORCPT
         <rfc822;dmaengine@vger.kernel.org>); Tue, 19 Sep 2023 09:32:25 -0400
 Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [IPv6:2a0a:edc0:2:b01:1d::104])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F16F912F
-        for <dmaengine@vger.kernel.org>; Tue, 19 Sep 2023 06:32:18 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 547FA134
+        for <dmaengine@vger.kernel.org>; Tue, 19 Sep 2023 06:32:19 -0700 (PDT)
 Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
         by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
         (Exim 4.92)
         (envelope-from <ukl@pengutronix.de>)
-        id 1qiaps-0004pd-VI; Tue, 19 Sep 2023 15:32:17 +0200
+        id 1qiapt-0004s7-IN; Tue, 19 Sep 2023 15:32:17 +0200
 Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
         by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
         (Exim 4.94.2)
         (envelope-from <ukl@pengutronix.de>)
-        id 1qiaps-007T4O-Ik; Tue, 19 Sep 2023 15:32:16 +0200
+        id 1qiapt-007T4W-3T; Tue, 19 Sep 2023 15:32:17 +0200
 Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.94.2)
         (envelope-from <ukl@pengutronix.de>)
-        id 1qiaps-0030fE-95; Tue, 19 Sep 2023 15:32:16 +0200
+        id 1qiaps-0030fM-Mm; Tue, 19 Sep 2023 15:32:16 +0200
 From:   =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= 
         <u.kleine-koenig@pengutronix.de>
 To:     Vinod Koul <vkoul@kernel.org>
 Cc:     dmaengine@vger.kernel.org, kernel@pengutronix.de
-Subject: [PATCH 27/59] dma: moxart-dma: Convert to platform remove callback returning void
-Date:   Tue, 19 Sep 2023 15:31:35 +0200
-Message-Id: <20230919133207.1400430-28-u.kleine-koenig@pengutronix.de>
+Subject: [PATCH 29/59] dma: mv_xor_v2: Convert to platform remove callback returning void
+Date:   Tue, 19 Sep 2023 15:31:37 +0200
+Message-Id: <20230919133207.1400430-30-u.kleine-koenig@pengutronix.de>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230919133207.1400430-1-u.kleine-koenig@pengutronix.de>
 References: <20230919133207.1400430-1-u.kleine-koenig@pengutronix.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1816; i=u.kleine-koenig@pengutronix.de; h=from:subject; bh=bqYSeygDthAQ/q4ws7NUTrBbEaJKVSKEzcasn4q5cN0=; b=owEBbQGS/pANAwAKAY+A+1h9Ev5OAcsmYgBlCaHNyXgjTX+3W35L7FIR+OQGIQD/RFbLeMqpG Q5gUC3QIUiJATMEAAEKAB0WIQQ/gaxpOnoeWYmt/tOPgPtYfRL+TgUCZQmhzQAKCRCPgPtYfRL+ Th8BCACky83aEPs+bK/P6Vd328FE+YpB+k6sL7JR8CraBA6h4zkwCvHgQLIIEv/kWqLuKwYl6eM 9PTc7Um3GDeD2ahRS1uhVdI0th5o0Z8OqxzqDepI1s7+sdd6UPVdPyTQOi5BvE8CdJWaL4fycyR MpAicr7h0NFaF9WlqLQ6DWKFQnxULP8L4AN7aTmgOr2pw8Qyuv4zPAPZ/NQWt8TPeyne+HT+VmB 2fLKlzUeeOYXz+How95biTPs7GMlEJbaf4VTcd21a0ZS1v3Hi5NNMtNyossTz8CSacwIFjE4qH+ ZAfD0g6foy8uSE7gLBgTjVrXFOifTjzGnvfEu4PEYIuwqUco
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1845; i=u.kleine-koenig@pengutronix.de; h=from:subject; bh=Lir/2pWM6pJT+COkVu4De9PMrWTrkno4TIttFZrPsXc=; b=owEBbQGS/pANAwAKAY+A+1h9Ev5OAcsmYgBlCaHQ09/PAXDnFt1i0Ucup2gZnzsSx1jn3apFv CFV80uk3CeJATMEAAEKAB0WIQQ/gaxpOnoeWYmt/tOPgPtYfRL+TgUCZQmh0AAKCRCPgPtYfRL+ TiH/B/9GoTZ2m3UFK2B4iWL+3ij5CID2pa3WutdiKrF+NrPYBHVl8hjUSxjW2SlH50xRwX3Bn12 ACj/rgCGAFKHBouJ+W8DAM8J6BnGuN5RlA1U62Hfqnm0mfdiWAfYsYZEFbFXQJ3m5z2cq+TdMDi YDBA6f415lZ7Zmr++uo5qmX3fiXw2GfUHziOnRrT049I5+eWzOVke6h8sUPVtLIz9iucPlbFz/X 8LAYKmIBUgrqznCdovfEtt3t7pu24A9rPm3Ml2qLwPfmypJV3+LhLM9OFsUH80HEEf9X3kP0JKJ QDwnk2BcRneYXOhCnEsa2idmDIoOR0O1ekO8Wt/lwD6lhuXY
 X-Developer-Key: i=u.kleine-koenig@pengutronix.de; a=openpgp; fpr=0D2511F322BFAB1C1580266BE2DCDD9132669BD6
 Content-Transfer-Encoding: 8bit
 X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
@@ -64,40 +64,40 @@ callback to the void returning variant.
 
 Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 ---
- drivers/dma/moxart-dma.c | 6 ++----
+ drivers/dma/mv_xor_v2.c | 6 ++----
  1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/dma/moxart-dma.c b/drivers/dma/moxart-dma.c
-index 7565ad98ba66..a03953b3016b 100644
---- a/drivers/dma/moxart-dma.c
-+++ b/drivers/dma/moxart-dma.c
-@@ -630,7 +630,7 @@ static int moxart_probe(struct platform_device *pdev)
- 	return 0;
+diff --git a/drivers/dma/mv_xor_v2.c b/drivers/dma/mv_xor_v2.c
+index 0e1e9ca1c005..1ebfbe88e733 100644
+--- a/drivers/dma/mv_xor_v2.c
++++ b/drivers/dma/mv_xor_v2.c
+@@ -855,7 +855,7 @@ static int mv_xor_v2_probe(struct platform_device *pdev)
+ 	return ret;
  }
  
--static int moxart_remove(struct platform_device *pdev)
-+static void moxart_remove(struct platform_device *pdev)
+-static int mv_xor_v2_remove(struct platform_device *pdev)
++static void mv_xor_v2_remove(struct platform_device *pdev)
  {
- 	struct moxart_dmadev *m = platform_get_drvdata(pdev);
+ 	struct mv_xor_v2_device *xor_dev = platform_get_drvdata(pdev);
  
-@@ -640,8 +640,6 @@ static int moxart_remove(struct platform_device *pdev)
+@@ -870,8 +870,6 @@ static int mv_xor_v2_remove(struct platform_device *pdev)
+ 	platform_msi_domain_free_irqs(&pdev->dev);
  
- 	if (pdev->dev.of_node)
- 		of_dma_controller_free(pdev->dev.of_node);
+ 	tasklet_kill(&xor_dev->irq_tasklet);
 -
 -	return 0;
  }
  
- static const struct of_device_id moxart_dma_match[] = {
-@@ -652,7 +650,7 @@ MODULE_DEVICE_TABLE(of, moxart_dma_match);
- 
- static struct platform_driver moxart_driver = {
- 	.probe	= moxart_probe,
--	.remove	= moxart_remove,
-+	.remove_new = moxart_remove,
- 	.driver = {
- 		.name		= "moxart-dma-engine",
- 		.of_match_table	= moxart_dma_match,
+ #ifdef CONFIG_OF
+@@ -886,7 +884,7 @@ static struct platform_driver mv_xor_v2_driver = {
+ 	.probe		= mv_xor_v2_probe,
+ 	.suspend	= mv_xor_v2_suspend,
+ 	.resume		= mv_xor_v2_resume,
+-	.remove		= mv_xor_v2_remove,
++	.remove_new	= mv_xor_v2_remove,
+ 	.driver		= {
+ 		.name	= "mv_xor_v2",
+ 		.of_match_table = of_match_ptr(mv_xor_v2_dt_ids),
 -- 
 2.40.1
 
