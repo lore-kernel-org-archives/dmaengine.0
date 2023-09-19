@@ -2,84 +2,102 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4186DCD548B
-	for <dmaengine@archiver.kernel.org>; Tue, 19 Sep 2023 07:39:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 01764CD5BBF
+	for <dmaengine@archiver.kernel.org>; Tue, 19 Sep 2023 13:32:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231755AbjISHjD (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 19 Sep 2023 03:39:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49288 "EHLO
+        id S231960AbjISNcU (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 19 Sep 2023 09:32:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49008 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231872AbjISHip (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Tue, 19 Sep 2023 03:38:45 -0400
-Received: from SHSQR01.spreadtrum.com (unknown [222.66.158.135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 673AFCDA;
-        Tue, 19 Sep 2023 00:38:35 -0700 (PDT)
-Received: from dlp.unisoc.com ([10.29.3.86])
-        by SHSQR01.spreadtrum.com with ESMTP id 38J7c88j088603;
-        Tue, 19 Sep 2023 15:38:08 +0800 (+08)
-        (envelope-from Kaiwei.Liu@unisoc.com)
-Received: from SHDLP.spreadtrum.com (shmbx07.spreadtrum.com [10.0.1.12])
-        by dlp.unisoc.com (SkyGuard) with ESMTPS id 4RqYMw3Lnkz2SH4Wh;
-        Tue, 19 Sep 2023 15:34:52 +0800 (CST)
-Received: from xm9614pcu.spreadtrum.com (10.13.2.29) by shmbx07.spreadtrum.com
- (10.0.1.12) with Microsoft SMTP Server (TLS) id 15.0.1497.23; Tue, 19 Sep
- 2023 15:38:07 +0800
-From:   Kaiwei Liu <kaiwei.liu@unisoc.com>
-To:     Vinod Koul <vkoul@kernel.org>, Orson Zhai <orsonzhai@gmail.com>,
-        Baolin Wang <baolin.wang@linux.alibaba.com>,
-        Chunyan Zhang <zhang.lyra@gmail.com>
-CC:     <dmaengine@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        kaiwei liu <liukaiwei086@gmail.com>,
-        Wenming Wu <wenming.wu@unisoc.com>
-Subject: [PATCH V3] dmaengine: sprd: add dma mask interface in probe
-Date:   Tue, 19 Sep 2023 15:38:01 +0800
-Message-ID: <20230919073801.25054-1-kaiwei.liu@unisoc.com>
-X-Mailer: git-send-email 2.17.1
+        with ESMTP id S232347AbjISNcT (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Tue, 19 Sep 2023 09:32:19 -0400
+Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [IPv6:2a0a:edc0:2:b01:1d::104])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 91DF8EC
+        for <dmaengine@vger.kernel.org>; Tue, 19 Sep 2023 06:32:13 -0700 (PDT)
+Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
+        by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.92)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1qiapo-0004al-1o; Tue, 19 Sep 2023 15:32:12 +0200
+Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
+        by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+        (Exim 4.94.2)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1qiapn-007T2w-K2; Tue, 19 Sep 2023 15:32:11 +0200
+Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.94.2)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1qiapn-0030dn-A1; Tue, 19 Sep 2023 15:32:11 +0200
+From:   =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= 
+        <u.kleine-koenig@pengutronix.de>
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     dmaengine@vger.kernel.org, kernel@pengutronix.de
+Subject: [PATCH 05/59] dma: bcm-sba-raid: Convert to platform remove callback returning void
+Date:   Tue, 19 Sep 2023 15:31:13 +0200
+Message-Id: <20230919133207.1400430-6-u.kleine-koenig@pengutronix.de>
+X-Mailer: git-send-email 2.40.1
+In-Reply-To: <20230919133207.1400430-1-u.kleine-koenig@pengutronix.de>
+References: <20230919133207.1400430-1-u.kleine-koenig@pengutronix.de>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.13.2.29]
-X-ClientProxiedBy: SHCAS03.spreadtrum.com (10.0.1.207) To
- shmbx07.spreadtrum.com (10.0.1.12)
-X-MAIL: SHSQR01.spreadtrum.com 38J7c88j088603
+Content-Type: text/plain; charset=UTF-8
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1790; i=u.kleine-koenig@pengutronix.de; h=from:subject; bh=A02aCJhftn/IWOTeTpjgUNkzoNIffng9aDifeYyoi7k=; b=owEBbQGS/pANAwAKAY+A+1h9Ev5OAcsmYgBlCaGzllh66NmdjAkSVxEqhWIelUZsp6kuHc6dh rxFfZT6sxuJATMEAAEKAB0WIQQ/gaxpOnoeWYmt/tOPgPtYfRL+TgUCZQmhswAKCRCPgPtYfRL+ TtvcB/9xDmhT5SuZPR4ZLwP6iayCtu3KE33yyAGIxE9qhVXx0kTba0cMiPSN/Nhz/bkH9JkPgzB oD6wjCDjvwmMlGxDSdBbx+682hxtF16U6KspxCLgZqtBLipT4wiMuDGnzpdOfFZyIbVuGEMJsnb eWOZiAESxNfaqJDhArAiFQyOTyxJP0nJhRpmsPgIIjwLw6noLCLym8JRhVdhMPHqWPUIn63fYWr 7MFFakhEz7BIxsj+EvD0tGbpdpLz6nS84fw5iEz62GI99ZpyeQ3zf9Nc+Hlrs7uRnmvbpKYXnOg T67zz0D4TSYxT7JV62+7CL26siCo4Yr2OxOSHq7gpVPJnTRL
+X-Developer-Key: i=u.kleine-koenig@pengutronix.de; a=openpgp; fpr=0D2511F322BFAB1C1580266BE2DCDD9132669BD6
+Content-Transfer-Encoding: 8bit
+X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
+X-SA-Exim-Mail-From: ukl@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: dmaengine@vger.kernel.org
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-In the probe of DMA, the default addressing range is 32 bits,
-while the actual DMA hardware addressing range used is 36 bits.
-So add dma_set_mask_and_coherent function to match DMA
-addressing range.
+The .remove() callback for a platform driver returns an int which makes
+many driver authors wrongly assume it's possible to do error handling by
+returning an error code. However the value returned is ignored (apart
+from emitting a warning) and this typically results in resource leaks.
+To improve here there is a quest to make the remove callback return
+void. In the first step of this quest all drivers are converted to
+.remove_new() which already returns void. Eventually after all drivers
+are converted, .remove_new() is renamed to .remove().
 
-Signed-off-by: Kaiwei Liu <kaiwei.liu@unisoc.com>
----
-Change in V2:
--Change subject line.
-Change in V3:
--Modify error message to make it more readable.
----
- drivers/dma/sprd-dma.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+Trivially convert this driver from always returning zero in the remove
+callback to the void returning variant.
 
-diff --git a/drivers/dma/sprd-dma.c b/drivers/dma/sprd-dma.c
-index 20c3cb1ef2f5..c371ce405f1d 100644
---- a/drivers/dma/sprd-dma.c
-+++ b/drivers/dma/sprd-dma.c
-@@ -1115,6 +1115,15 @@ static int sprd_dma_probe(struct platform_device *pdev)
- 	u32 chn_count;
- 	int ret, i;
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+---
+ drivers/dma/bcm-sba-raid.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
+
+diff --git a/drivers/dma/bcm-sba-raid.c b/drivers/dma/bcm-sba-raid.c
+index 94ea35330eb5..fbaacb4c19b2 100644
+--- a/drivers/dma/bcm-sba-raid.c
++++ b/drivers/dma/bcm-sba-raid.c
+@@ -1734,7 +1734,7 @@ static int sba_probe(struct platform_device *pdev)
+ 	return ret;
+ }
  
-+	ret = dma_set_mask_and_coherent(&pdev->dev, DMA_BIT_MASK(36));
-+	if (ret) {
-+		ret = dma_set_mask_and_coherent(&pdev->dev, DMA_BIT_MASK(32));
-+		if (ret) {
-+			dev_err(&pdev->dev, "unable to set coherent mask to 32\n");
-+			return ret;
-+		}
-+	}
-+
- 	/* Parse new and deprecated dma-channels properties */
- 	ret = device_property_read_u32(&pdev->dev, "dma-channels", &chn_count);
- 	if (ret)
+-static int sba_remove(struct platform_device *pdev)
++static void sba_remove(struct platform_device *pdev)
+ {
+ 	struct sba_device *sba = platform_get_drvdata(pdev);
+ 
+@@ -1745,8 +1745,6 @@ static int sba_remove(struct platform_device *pdev)
+ 	sba_freeup_channel_resources(sba);
+ 
+ 	mbox_free_channel(sba->mchan);
+-
+-	return 0;
+ }
+ 
+ static const struct of_device_id sba_of_match[] = {
+@@ -1758,7 +1756,7 @@ MODULE_DEVICE_TABLE(of, sba_of_match);
+ 
+ static struct platform_driver sba_driver = {
+ 	.probe = sba_probe,
+-	.remove = sba_remove,
++	.remove_new = sba_remove,
+ 	.driver = {
+ 		.name = "bcm-sba-raid",
+ 		.of_match_table = sba_of_match,
 -- 
-2.17.1
+2.40.1
 
