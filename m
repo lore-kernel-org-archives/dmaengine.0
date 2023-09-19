@@ -2,44 +2,46 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D8804CD5BC3
-	for <dmaengine@archiver.kernel.org>; Tue, 19 Sep 2023 13:32:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 60C0ACD5BBD
+	for <dmaengine@archiver.kernel.org>; Tue, 19 Sep 2023 13:32:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232390AbjISNco (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 19 Sep 2023 09:32:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55020 "EHLO
+        id S232380AbjISNcp (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 19 Sep 2023 09:32:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55002 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232380AbjISNcg (ORCPT
+        with ESMTP id S232403AbjISNcg (ORCPT
         <rfc822;dmaengine@vger.kernel.org>); Tue, 19 Sep 2023 09:32:36 -0400
 Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [IPv6:2a0a:edc0:2:b01:1d::104])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CA8C9129
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CADE812B
         for <dmaengine@vger.kernel.org>; Tue, 19 Sep 2023 06:32:29 -0700 (PDT)
 Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
         by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
         (Exim 4.92)
         (envelope-from <ukl@pengutronix.de>)
-        id 1qiaq1-0005Ol-B1; Tue, 19 Sep 2023 15:32:25 +0200
+        id 1qiapu-0004x8-ON; Tue, 19 Sep 2023 15:32:18 +0200
 Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
         by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
         (Exim 4.94.2)
         (envelope-from <ukl@pengutronix.de>)
-        id 1qiapz-007T63-6u; Tue, 19 Sep 2023 15:32:23 +0200
+        id 1qiapt-007T4i-V0; Tue, 19 Sep 2023 15:32:17 +0200
 Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.94.2)
         (envelope-from <ukl@pengutronix.de>)
-        id 1qiapy-0030gx-Rm; Tue, 19 Sep 2023 15:32:22 +0200
+        id 1qiapt-0030fY-LZ; Tue, 19 Sep 2023 15:32:17 +0200
 From:   =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= 
         <u.kleine-koenig@pengutronix.de>
 To:     Vinod Koul <vkoul@kernel.org>
-Cc:     dmaengine@vger.kernel.org, kernel@pengutronix.de
-Subject: [PATCH 54/59] dma: txx9dmac: Convert to platform remove callback returning void
-Date:   Tue, 19 Sep 2023 15:32:02 +0200
-Message-Id: <20230919133207.1400430-55-u.kleine-koenig@pengutronix.de>
+Cc:     ye xingchen <ye.xingchen@zte.com.cn>,
+        Rob Herring <robh@kernel.org>, dmaengine@vger.kernel.org,
+        kernel@pengutronix.de
+Subject: [PATCH 32/59] dma: ppc4xx: adma: Convert to platform remove callback returning void
+Date:   Tue, 19 Sep 2023 15:31:40 +0200
+Message-Id: <20230919133207.1400430-33-u.kleine-koenig@pengutronix.de>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230919133207.1400430-1-u.kleine-koenig@pengutronix.de>
 References: <20230919133207.1400430-1-u.kleine-koenig@pengutronix.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2595; i=u.kleine-koenig@pengutronix.de; h=from:subject; bh=R11KPobSn7r186XiXMFetAdcJGYGunyGcsscfFvQUfg=; b=owEBbQGS/pANAwAKAY+A+1h9Ev5OAcsmYgBlCaHt1lItaf/VF2sdW1fL8S7rQ8t9Ox6rkHMyo fAMygXG/6uJATMEAAEKAB0WIQQ/gaxpOnoeWYmt/tOPgPtYfRL+TgUCZQmh7QAKCRCPgPtYfRL+ TvBYB/42ztlFQOxuJ6UtTQMv/91SZ8X/YWLmem3LLedxhD/7eqzspwG/wavZCoRQqt/8qaEjjMs jd841PftR9w1oTPO00UUYPXR6GF2cC0L1RgML3Wqct93IMLD3z7sY8mmxvc42/qDe89cxbs1nOs ZenY+TT7sAX8Mq1/LQV+f1V9NnvfuQ5LjH0awZW5hX3QjpW3AeXvoxLtUkwrVoPVgG/k6WqkJaT OfDy2GYz5pzVKif4os0MEfNqIBP/rXHTCRc9JVeLe/sJQ/kgQSx8+qxY1tFFC29Igi9W7e5N0oe mUKt5qfXibB9LE3OnneUxqWBVjgbDRO+gB6A1GiG/W5IBh/0
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1988; i=u.kleine-koenig@pengutronix.de; h=from:subject; bh=nsAdusj5aYvPL6Xrpokl/tz2ob6tdpRyWRuJFliBCS4=; b=owEBbQGS/pANAwAKAY+A+1h9Ev5OAcsmYgBlCaHT4uwi3P85zWuppooSvKRsZik2GRxgKpGYG JOKpn7S0/WJATMEAAEKAB0WIQQ/gaxpOnoeWYmt/tOPgPtYfRL+TgUCZQmh0wAKCRCPgPtYfRL+ TsMsB/9Hk5bEfuRf64VGwFE0HBcj5+8MEHjUbu83bihzx2ff4k00YvgU3fS8eumDrqV6lQD6vmB 6oZLyh1qJcIkqkHB3v+cmEQ883jz37ZNZiyJjAo5E1PW7936t7pJRlb+ioLeGkNYi+AnIUampW/ zxpeWDhYhYZwP4CfJ4wMPlumq89lZWo9UFfeIfDZnqh1H2FvrD3qrxkW0qEgJjyE+DXp9w84hRp eJdcxZk2Ae7gUiqfQJ6Fuz5+roDcVZl7tNlrpnUVt+NJekEA8Os5/KrbcYFJ2V0VJjfAPqFt9Bm uf+Bwu6aLOx/bagD2g75HybKFotYvCnHyUxi4UGiwxjJmQV/
 X-Developer-Key: i=u.kleine-koenig@pengutronix.de; a=openpgp; fpr=0D2511F322BFAB1C1580266BE2DCDD9132669BD6
 Content-Transfer-Encoding: 8bit
 X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
@@ -64,64 +66,39 @@ callback to the void returning variant.
 
 Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 ---
- drivers/dma/txx9dmac.c | 10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+ drivers/dma/ppc4xx/adma.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/dma/txx9dmac.c b/drivers/dma/txx9dmac.c
-index 5b6b375a257e..44ba377b4b5a 100644
---- a/drivers/dma/txx9dmac.c
-+++ b/drivers/dma/txx9dmac.c
-@@ -1151,7 +1151,7 @@ static int __init txx9dmac_chan_probe(struct platform_device *pdev)
- 	return 0;
- }
- 
--static int txx9dmac_chan_remove(struct platform_device *pdev)
-+static void txx9dmac_chan_remove(struct platform_device *pdev)
+diff --git a/drivers/dma/ppc4xx/adma.c b/drivers/dma/ppc4xx/adma.c
+index f9b82dff3387..bbb60a970dab 100644
+--- a/drivers/dma/ppc4xx/adma.c
++++ b/drivers/dma/ppc4xx/adma.c
+@@ -4230,7 +4230,7 @@ static int ppc440spe_adma_probe(struct platform_device *ofdev)
+ /**
+  * ppc440spe_adma_remove - remove the asynch device
+  */
+-static int ppc440spe_adma_remove(struct platform_device *ofdev)
++static void ppc440spe_adma_remove(struct platform_device *ofdev)
  {
- 	struct txx9dmac_chan *dc = platform_get_drvdata(pdev);
- 
-@@ -1162,7 +1162,6 @@ static int txx9dmac_chan_remove(struct platform_device *pdev)
- 		tasklet_kill(&dc->tasklet);
- 	}
- 	dc->ddev->chan[pdev->id % TXX9_DMA_MAX_NR_CHANNELS] = NULL;
+ 	struct ppc440spe_adma_device *adev = platform_get_drvdata(ofdev);
+ 	struct device_node *np = ofdev->dev.of_node;
+@@ -4278,7 +4278,6 @@ static int ppc440spe_adma_remove(struct platform_device *ofdev)
+ 	of_address_to_resource(np, 0, &res);
+ 	release_mem_region(res.start, resource_size(&res));
+ 	kfree(adev);
 -	return 0;
  }
  
- static int __init txx9dmac_probe(struct platform_device *pdev)
-@@ -1215,7 +1214,7 @@ static int __init txx9dmac_probe(struct platform_device *pdev)
- 	return 0;
- }
+ /*
+@@ -4550,7 +4549,7 @@ MODULE_DEVICE_TABLE(of, ppc440spe_adma_of_match);
  
--static int txx9dmac_remove(struct platform_device *pdev)
-+static void txx9dmac_remove(struct platform_device *pdev)
- {
- 	struct txx9dmac_dev *ddev = platform_get_drvdata(pdev);
- 
-@@ -1224,7 +1223,6 @@ static int txx9dmac_remove(struct platform_device *pdev)
- 		devm_free_irq(&pdev->dev, ddev->irq, ddev);
- 		tasklet_kill(&ddev->tasklet);
- 	}
--	return 0;
- }
- 
- static void txx9dmac_shutdown(struct platform_device *pdev)
-@@ -1262,14 +1260,14 @@ static const struct dev_pm_ops txx9dmac_dev_pm_ops = {
- };
- 
- static struct platform_driver txx9dmac_chan_driver = {
--	.remove		= txx9dmac_chan_remove,
-+	.remove_new	= txx9dmac_chan_remove,
+ static struct platform_driver ppc440spe_adma_driver = {
+ 	.probe = ppc440spe_adma_probe,
+-	.remove = ppc440spe_adma_remove,
++	.remove_new = ppc440spe_adma_remove,
  	.driver = {
- 		.name	= "txx9dmac-chan",
- 	},
- };
- 
- static struct platform_driver txx9dmac_driver = {
--	.remove		= txx9dmac_remove,
-+	.remove_new	= txx9dmac_remove,
- 	.shutdown	= txx9dmac_shutdown,
- 	.driver = {
- 		.name	= "txx9dmac",
+ 		.name = "PPC440SP(E)-ADMA",
+ 		.of_match_table = ppc440spe_adma_of_match,
 -- 
 2.40.1
 
