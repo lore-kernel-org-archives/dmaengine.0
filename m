@@ -2,49 +2,49 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E7DA1CD5BC4
-	for <dmaengine@archiver.kernel.org>; Tue, 19 Sep 2023 13:32:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1C6BBCD5BC2
+	for <dmaengine@archiver.kernel.org>; Tue, 19 Sep 2023 13:32:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232364AbjISNcg (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 19 Sep 2023 09:32:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50222 "EHLO
+        id S232372AbjISNch (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 19 Sep 2023 09:32:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50160 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232405AbjISNca (ORCPT
+        with ESMTP id S232398AbjISNca (ORCPT
         <rfc822;dmaengine@vger.kernel.org>); Tue, 19 Sep 2023 09:32:30 -0400
 Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [IPv6:2a0a:edc0:2:b01:1d::104])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 61221123
-        for <dmaengine@vger.kernel.org>; Tue, 19 Sep 2023 06:32:25 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 45DE1F5
+        for <dmaengine@vger.kernel.org>; Tue, 19 Sep 2023 06:32:24 -0700 (PDT)
 Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
         by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
         (Exim 4.92)
         (envelope-from <ukl@pengutronix.de>)
-        id 1qiapr-0004jD-95; Tue, 19 Sep 2023 15:32:15 +0200
+        id 1qiaps-0004lU-2q; Tue, 19 Sep 2023 15:32:16 +0200
 Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
         by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
         (Exim 4.94.2)
         (envelope-from <ukl@pengutronix.de>)
-        id 1qiapq-007T3o-Jj; Tue, 19 Sep 2023 15:32:14 +0200
+        id 1qiapr-007T43-Hv; Tue, 19 Sep 2023 15:32:15 +0200
 Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.94.2)
         (envelope-from <ukl@pengutronix.de>)
-        id 1qiapq-0030ee-AU; Tue, 19 Sep 2023 15:32:14 +0200
+        id 1qiapr-0030eu-8Q; Tue, 19 Sep 2023 15:32:15 +0200
 From:   =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= 
         <u.kleine-koenig@pengutronix.de>
 To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
+Cc:     Sean Wang <sean.wang@mediatek.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
         dmaengine@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        kernel@pengutronix.de
-Subject: [PATCH 18/59] dma: imx-dma: Convert to platform remove callback returning void
-Date:   Tue, 19 Sep 2023 15:31:26 +0200
-Message-Id: <20230919133207.1400430-19-u.kleine-koenig@pengutronix.de>
+        linux-mediatek@lists.infradead.org, kernel@pengutronix.de
+Subject: [PATCH 22/59] dma: mediatek: mtk-cqdma: Convert to platform remove callback returning void
+Date:   Tue, 19 Sep 2023 15:31:30 +0200
+Message-Id: <20230919133207.1400430-23-u.kleine-koenig@pengutronix.de>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230919133207.1400430-1-u.kleine-koenig@pengutronix.de>
 References: <20230919133207.1400430-1-u.kleine-koenig@pengutronix.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1804; i=u.kleine-koenig@pengutronix.de; h=from:subject; bh=jFClRoZci1hZIqjL65iDQsFtOH3Eq+23KmERQ04Ia5c=; b=owEBbQGS/pANAwAKAY+A+1h9Ev5OAcsmYgBlCaHCjERJqV3CFl+utVhnbbZEll1ydaFNVNPmM 23PlcthRDmJATMEAAEKAB0WIQQ/gaxpOnoeWYmt/tOPgPtYfRL+TgUCZQmhwgAKCRCPgPtYfRL+ TsVEB/sGXeKszBGDm+qUaIyIOhvSGu54UBTEg1/4ipdmzakd9J0LBla4+AgspBmdrch8qINZP/H hdfvPYIhjxytFSOZ5CvfhtZCSlRS3tz4kVwIsXMW2HgTpEQEI0NXcjwfWGaSNpJxhE+JbfsBZNQ M+hnkmBMab7TdplpXU/3ccNLLtdljxMoV8wgjvF3Xcuyog15cvqVCqMGIDqJl5GagTCad1205LY wrq78/nIX8z+VVlmvIpZQvJ6R0EU71ihRVaEY6UExLwYqTO4TERFr7Gjc4cD4H4kNFH9hTCfHCS svR0JjxzDNv550f2NnXIl7jAN2XPxZIkYgRQvvpByai5ZYzT
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1816; i=u.kleine-koenig@pengutronix.de; h=from:subject; bh=YJbeovTY/lshOQ9H/y+Krl2XAltInqDgPcX2R8AjpCQ=; b=owEBbQGS/pANAwAKAY+A+1h9Ev5OAcsmYgBlCaHH9ujjB5HmrSGUbvrIzAR4yuMWtHJ9HDkOm CQ78TXL1OiJATMEAAEKAB0WIQQ/gaxpOnoeWYmt/tOPgPtYfRL+TgUCZQmhxwAKCRCPgPtYfRL+ TvIlCACfKCVspXcqAoqSCz8HES+XLDWJAvS5U3mb49tYIQ7MAR8BjUH1ZFRM/+rRHno4UDtzU6i 6CW3aKThZ/2sQmsX78pxUaKLctRU+Dg0jKx0N7g3d42wFRdfUOogI3l4YxEz2h7Q5BGTuuQ3yIA HpLed1bOlCcQ3+HARE6KBlKTzNymiohy0CJ4wF+lrftR7MIz0VOF3Kxe12WyLI2GJcEwdpDlRuH skrWojmXT33Hp3aEvZ2jUgFP02BzU5WqwPpucgXkfTZ8Th653DBdaeRux6Zx+YTyG4GOJpQB8mt PRS0ATmaUxUQGhiahT/qCa3BDuu0k83Bs56uHQaaVF9ptEj4
 X-Developer-Key: i=u.kleine-koenig@pengutronix.de; a=openpgp; fpr=0D2511F322BFAB1C1580266BE2DCDD9132669BD6
 Content-Transfer-Encoding: 8bit
 X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
@@ -69,40 +69,37 @@ callback to the void returning variant.
 
 Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 ---
- drivers/dma/imx-dma.c | 6 ++----
+ drivers/dma/mediatek/mtk-cqdma.c | 6 ++----
  1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/dma/imx-dma.c b/drivers/dma/imx-dma.c
-index 114f254b9f50..ebf7c115d553 100644
---- a/drivers/dma/imx-dma.c
-+++ b/drivers/dma/imx-dma.c
-@@ -1216,7 +1216,7 @@ static void imxdma_free_irq(struct platform_device *pdev, struct imxdma_engine *
- 	}
+diff --git a/drivers/dma/mediatek/mtk-cqdma.c b/drivers/dma/mediatek/mtk-cqdma.c
+index 324b7387b1b9..529100c5b9f5 100644
+--- a/drivers/dma/mediatek/mtk-cqdma.c
++++ b/drivers/dma/mediatek/mtk-cqdma.c
+@@ -885,7 +885,7 @@ static int mtk_cqdma_probe(struct platform_device *pdev)
+ 	return err;
  }
  
--static int imxdma_remove(struct platform_device *pdev)
-+static void imxdma_remove(struct platform_device *pdev)
+-static int mtk_cqdma_remove(struct platform_device *pdev)
++static void mtk_cqdma_remove(struct platform_device *pdev)
  {
- 	struct imxdma_engine *imxdma = platform_get_drvdata(pdev);
+ 	struct mtk_cqdma_device *cqdma = platform_get_drvdata(pdev);
+ 	struct mtk_cqdma_vchan *vc;
+@@ -918,13 +918,11 @@ static int mtk_cqdma_remove(struct platform_device *pdev)
  
-@@ -1229,8 +1229,6 @@ static int imxdma_remove(struct platform_device *pdev)
- 
- 	clk_disable_unprepare(imxdma->dma_ipg);
- 	clk_disable_unprepare(imxdma->dma_ahb);
+ 	dma_async_device_unregister(&cqdma->ddev);
+ 	of_dma_controller_free(pdev->dev.of_node);
 -
--        return 0;
+-	return 0;
  }
  
- static struct platform_driver imxdma_driver = {
-@@ -1238,7 +1236,7 @@ static struct platform_driver imxdma_driver = {
- 		.name	= "imx-dma",
- 		.of_match_table = imx_dma_of_dev_id,
- 	},
--	.remove		= imxdma_remove,
-+	.remove_new	= imxdma_remove,
- };
- 
- static int __init imxdma_module_init(void)
+ static struct platform_driver mtk_cqdma_driver = {
+ 	.probe = mtk_cqdma_probe,
+-	.remove = mtk_cqdma_remove,
++	.remove_new = mtk_cqdma_remove,
+ 	.driver = {
+ 		.name           = KBUILD_MODNAME,
+ 		.of_match_table = mtk_cqdma_match,
 -- 
 2.40.1
 
