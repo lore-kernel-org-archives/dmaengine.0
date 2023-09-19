@@ -2,48 +2,44 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6F380CD5BC1
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D8804CD5BC3
 	for <dmaengine@archiver.kernel.org>; Tue, 19 Sep 2023 13:32:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232409AbjISNco (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        id S232390AbjISNco (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
         Tue, 19 Sep 2023 09:32:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54988 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55020 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232390AbjISNcg (ORCPT
+        with ESMTP id S232380AbjISNcg (ORCPT
         <rfc822;dmaengine@vger.kernel.org>); Tue, 19 Sep 2023 09:32:36 -0400
 Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [IPv6:2a0a:edc0:2:b01:1d::104])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C6835122
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CA8C9129
         for <dmaengine@vger.kernel.org>; Tue, 19 Sep 2023 06:32:29 -0700 (PDT)
 Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
         by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
         (Exim 4.92)
         (envelope-from <ukl@pengutronix.de>)
-        id 1qiapw-00050U-3h; Tue, 19 Sep 2023 15:32:20 +0200
+        id 1qiaq1-0005Ol-B1; Tue, 19 Sep 2023 15:32:25 +0200
 Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
         by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
         (Exim 4.94.2)
         (envelope-from <ukl@pengutronix.de>)
-        id 1qiapu-007T4p-Dl; Tue, 19 Sep 2023 15:32:18 +0200
+        id 1qiapz-007T63-6u; Tue, 19 Sep 2023 15:32:23 +0200
 Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.94.2)
         (envelope-from <ukl@pengutronix.de>)
-        id 1qiapu-0030fg-4L; Tue, 19 Sep 2023 15:32:18 +0200
+        id 1qiapy-0030gx-Rm; Tue, 19 Sep 2023 15:32:22 +0200
 From:   =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= 
         <u.kleine-koenig@pengutronix.de>
 To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
-        kernel@pengutronix.de
-Subject: [PATCH 34/59] dma: qcom: bam_dma: Convert to platform remove callback returning void
-Date:   Tue, 19 Sep 2023 15:31:42 +0200
-Message-Id: <20230919133207.1400430-35-u.kleine-koenig@pengutronix.de>
+Cc:     dmaengine@vger.kernel.org, kernel@pengutronix.de
+Subject: [PATCH 54/59] dma: txx9dmac: Convert to platform remove callback returning void
+Date:   Tue, 19 Sep 2023 15:32:02 +0200
+Message-Id: <20230919133207.1400430-55-u.kleine-koenig@pengutronix.de>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230919133207.1400430-1-u.kleine-koenig@pengutronix.de>
 References: <20230919133207.1400430-1-u.kleine-koenig@pengutronix.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1850; i=u.kleine-koenig@pengutronix.de; h=from:subject; bh=0cAcvIAz+mB1p4VR0D7nAMhLTtA7jGJNOdsv/F0fQRE=; b=owEBbQGS/pANAwAKAY+A+1h9Ev5OAcsmYgBlCaHVzkM8GSSJ0ZA+qd+Jl1+D7+2iYGUCHOUss CcKSudxtT6JATMEAAEKAB0WIQQ/gaxpOnoeWYmt/tOPgPtYfRL+TgUCZQmh1QAKCRCPgPtYfRL+ ThfiB/wIDZTgqESs7NT+Jb2r4vv5CL8wulWPFEgFX5tHuoC3DK7bonuDMe08VwFFeat+pDK8xlW lNMr2JmIQIQwUkxHagaSkatls9dLasDjjD1a2oumP73h1Ypck4+2uoOfj6Mr4Y95nasyBG0wiGM TfuptJdqVaWJ7CjPNwZddqNFUE+9TjMZtJxUaLuBXDu36iNbnAAqWv5trd8Sn8S879JPWDZa8RR Cs7haiSNBKy08NzC25X5n4brTqMf6BhaU4Dxlyxg6g4XMA5IW627z7Ftwk1tAoEeqsN7MfSyGR7 qjR1K1zT2EuFOO20KXxflJLfNkz3bg4pHSu2MMlmiwNCwRMV
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2595; i=u.kleine-koenig@pengutronix.de; h=from:subject; bh=R11KPobSn7r186XiXMFetAdcJGYGunyGcsscfFvQUfg=; b=owEBbQGS/pANAwAKAY+A+1h9Ev5OAcsmYgBlCaHt1lItaf/VF2sdW1fL8S7rQ8t9Ox6rkHMyo fAMygXG/6uJATMEAAEKAB0WIQQ/gaxpOnoeWYmt/tOPgPtYfRL+TgUCZQmh7QAKCRCPgPtYfRL+ TvBYB/42ztlFQOxuJ6UtTQMv/91SZ8X/YWLmem3LLedxhD/7eqzspwG/wavZCoRQqt/8qaEjjMs jd841PftR9w1oTPO00UUYPXR6GF2cC0L1RgML3Wqct93IMLD3z7sY8mmxvc42/qDe89cxbs1nOs ZenY+TT7sAX8Mq1/LQV+f1V9NnvfuQ5LjH0awZW5hX3QjpW3AeXvoxLtUkwrVoPVgG/k6WqkJaT OfDy2GYz5pzVKif4os0MEfNqIBP/rXHTCRc9JVeLe/sJQ/kgQSx8+qxY1tFFC29Igi9W7e5N0oe mUKt5qfXibB9LE3OnneUxqWBVjgbDRO+gB6A1GiG/W5IBh/0
 X-Developer-Key: i=u.kleine-koenig@pengutronix.de; a=openpgp; fpr=0D2511F322BFAB1C1580266BE2DCDD9132669BD6
 Content-Transfer-Encoding: 8bit
 X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
@@ -68,40 +64,64 @@ callback to the void returning variant.
 
 Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 ---
- drivers/dma/qcom/bam_dma.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/dma/txx9dmac.c | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/dma/qcom/bam_dma.c b/drivers/dma/qcom/bam_dma.c
-index 4c3eb972039d..c4f8d17d0c68 100644
---- a/drivers/dma/qcom/bam_dma.c
-+++ b/drivers/dma/qcom/bam_dma.c
-@@ -1386,7 +1386,7 @@ static int bam_dma_probe(struct platform_device *pdev)
- 	return ret;
+diff --git a/drivers/dma/txx9dmac.c b/drivers/dma/txx9dmac.c
+index 5b6b375a257e..44ba377b4b5a 100644
+--- a/drivers/dma/txx9dmac.c
++++ b/drivers/dma/txx9dmac.c
+@@ -1151,7 +1151,7 @@ static int __init txx9dmac_chan_probe(struct platform_device *pdev)
+ 	return 0;
  }
  
--static int bam_dma_remove(struct platform_device *pdev)
-+static void bam_dma_remove(struct platform_device *pdev)
+-static int txx9dmac_chan_remove(struct platform_device *pdev)
++static void txx9dmac_chan_remove(struct platform_device *pdev)
  {
- 	struct bam_device *bdev = platform_get_drvdata(pdev);
- 	u32 i;
-@@ -1416,8 +1416,6 @@ static int bam_dma_remove(struct platform_device *pdev)
- 	tasklet_kill(&bdev->task);
+ 	struct txx9dmac_chan *dc = platform_get_drvdata(pdev);
  
- 	clk_disable_unprepare(bdev->bamclk);
--
+@@ -1162,7 +1162,6 @@ static int txx9dmac_chan_remove(struct platform_device *pdev)
+ 		tasklet_kill(&dc->tasklet);
+ 	}
+ 	dc->ddev->chan[pdev->id % TXX9_DMA_MAX_NR_CHANNELS] = NULL;
 -	return 0;
  }
  
- static int __maybe_unused bam_dma_runtime_suspend(struct device *dev)
-@@ -1475,7 +1473,7 @@ static const struct dev_pm_ops bam_dma_pm_ops = {
+ static int __init txx9dmac_probe(struct platform_device *pdev)
+@@ -1215,7 +1214,7 @@ static int __init txx9dmac_probe(struct platform_device *pdev)
+ 	return 0;
+ }
  
- static struct platform_driver bam_dma_driver = {
- 	.probe = bam_dma_probe,
--	.remove = bam_dma_remove,
-+	.remove_new = bam_dma_remove,
+-static int txx9dmac_remove(struct platform_device *pdev)
++static void txx9dmac_remove(struct platform_device *pdev)
+ {
+ 	struct txx9dmac_dev *ddev = platform_get_drvdata(pdev);
+ 
+@@ -1224,7 +1223,6 @@ static int txx9dmac_remove(struct platform_device *pdev)
+ 		devm_free_irq(&pdev->dev, ddev->irq, ddev);
+ 		tasklet_kill(&ddev->tasklet);
+ 	}
+-	return 0;
+ }
+ 
+ static void txx9dmac_shutdown(struct platform_device *pdev)
+@@ -1262,14 +1260,14 @@ static const struct dev_pm_ops txx9dmac_dev_pm_ops = {
+ };
+ 
+ static struct platform_driver txx9dmac_chan_driver = {
+-	.remove		= txx9dmac_chan_remove,
++	.remove_new	= txx9dmac_chan_remove,
  	.driver = {
- 		.name = "bam-dma-engine",
- 		.pm = &bam_dma_pm_ops,
+ 		.name	= "txx9dmac-chan",
+ 	},
+ };
+ 
+ static struct platform_driver txx9dmac_driver = {
+-	.remove		= txx9dmac_remove,
++	.remove_new	= txx9dmac_remove,
+ 	.shutdown	= txx9dmac_shutdown,
+ 	.driver = {
+ 		.name	= "txx9dmac",
 -- 
 2.40.1
 
