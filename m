@@ -2,47 +2,47 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 881DFCD5BC1
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EBB2BCD5BC6
 	for <dmaengine@archiver.kernel.org>; Tue, 19 Sep 2023 13:32:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232429AbjISNcr (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 19 Sep 2023 09:32:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55064 "EHLO
+        id S232403AbjISNcs (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 19 Sep 2023 09:32:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55038 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232430AbjISNci (ORCPT
+        with ESMTP id S232428AbjISNci (ORCPT
         <rfc822;dmaengine@vger.kernel.org>); Tue, 19 Sep 2023 09:32:38 -0400
 Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [IPv6:2a0a:edc0:2:b01:1d::104])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8420BFB
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 73B50F3
         for <dmaengine@vger.kernel.org>; Tue, 19 Sep 2023 06:32:31 -0700 (PDT)
 Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
         by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
         (Exim 4.92)
         (envelope-from <ukl@pengutronix.de>)
-        id 1qiaq0-0005Je-La; Tue, 19 Sep 2023 15:32:24 +0200
+        id 1qiapp-0004ai-Gn; Tue, 19 Sep 2023 15:32:13 +0200
 Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
         by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
         (Exim 4.94.2)
         (envelope-from <ukl@pengutronix.de>)
-        id 1qiapy-007T5p-9G; Tue, 19 Sep 2023 15:32:22 +0200
+        id 1qiapm-007T2n-Tl; Tue, 19 Sep 2023 15:32:10 +0200
 Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.94.2)
         (envelope-from <ukl@pengutronix.de>)
-        id 1qiapx-0030gi-VF; Tue, 19 Sep 2023 15:32:21 +0200
+        id 1qiapm-0030db-Ip; Tue, 19 Sep 2023 15:32:10 +0200
 From:   =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= 
         <u.kleine-koenig@pengutronix.de>
 To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Peter Ujfalusi <peter.ujfalusi@gmail.com>,
-        Tudor Ambarus <tudor.ambarus@linaro.org>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
+Cc:     Hector Martin <marcan@marcan.st>, Sven Peter <sven@svenpeter.dev>,
+        Alyssa Rosenzweig <alyssa@rosenzweig.io>,
+        asahi@lists.linux.dev, linux-arm-kernel@lists.infradead.org,
         dmaengine@vger.kernel.org, kernel@pengutronix.de
-Subject: [PATCH 50/59] dma: ti: cppi41: Convert to platform remove callback returning void
-Date:   Tue, 19 Sep 2023 15:31:58 +0200
-Message-Id: <20230919133207.1400430-51-u.kleine-koenig@pengutronix.de>
+Subject: [PATCH 02/59] dma: apple-admac: Convert to platform remove callback returning void
+Date:   Tue, 19 Sep 2023 15:31:10 +0200
+Message-Id: <20230919133207.1400430-3-u.kleine-koenig@pengutronix.de>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230919133207.1400430-1-u.kleine-koenig@pengutronix.de>
 References: <20230919133207.1400430-1-u.kleine-koenig@pengutronix.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1895; i=u.kleine-koenig@pengutronix.de; h=from:subject; bh=pdZs2mpxrwwB99tDUJ7sIFNa8QSLEn1C5iWYhRjxrt0=; b=owEBbQGS/pANAwAKAY+A+1h9Ev5OAcsmYgBlCaHpKt0CrbwXMUQwVwTilGTwdMR/21IDTUNIk HkDtZYQEgGJATMEAAEKAB0WIQQ/gaxpOnoeWYmt/tOPgPtYfRL+TgUCZQmh6QAKCRCPgPtYfRL+ TkFLB/970Fiz4twQUtX2WWerpZIMpeB7+uhYXv4+7NOW5h4guR2zbc9MHClox5XWLnOqhQP6db7 hXKqFiWhy1bNc87tZGrR9y/0oryCKzyvWL30Ziz1R1z3CAzrj4AvhSWIWeGkAfJCoi/QnFYjySA xUOjg5UcJDta+WLNf7cqqwHWmysKfqjMPdpAvZzAMsP/zopySQY/7wdOV5eAh3eE3TX8fDyAQJf tzmWM2Oxflbuuk50zgm3DP0PetL0vsLjV4J+FU4B6H3cMIjT+pE/5AjhtmQQ4q5OW8X5nUF0fMS kcTWQloPR0nxziWBQ9naQYWKS+dsqZvSZPcsVpP4awEJ4kam
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1804; i=u.kleine-koenig@pengutronix.de; h=from:subject; bh=4cB0nw0yRieunGEduwbEFfSDJhK0MVnXD1ukbBmrjFc=; b=owEBbQGS/pANAwAKAY+A+1h9Ev5OAcsmYgBlCaGvXdbPaKXCELiF60wFgzJrODKGuGkxDr4uF v6NfyFey3mJATMEAAEKAB0WIQQ/gaxpOnoeWYmt/tOPgPtYfRL+TgUCZQmhrwAKCRCPgPtYfRL+ TnJuB/9Ytvtvi3cRL9ZOU1ix4RRTQzUaiCnjhzfwyy7LYPKgzsSCJB7vHlQE4G3OuYrEdLZwyou RdoHe3e9rgLob2PuPw/05x7MFT6bpoDr1TPuLdbTyb579GC8f7kg0RKH5IQ+PYn1TqwBrXdcM16 KGDcFLzmtLa3e+wUIw/iyshugOp6fAFgcpRcfgcCYB8XDtYfOULOfzwoUzLYH9EJwIDRjuKJawi ++jGRFsdHqlUODBGBujtzXAuPmrMdHxEoNkWzxhbF3hz827ILv77sd9b3gXEwtDX3x0A0bBWxUq W2F6julJDk+8F4NecdHe9VuPkm2wj+SwwGqNmn7iFZV3GF2K
 X-Developer-Key: i=u.kleine-koenig@pengutronix.de; a=openpgp; fpr=0D2511F322BFAB1C1580266BE2DCDD9132669BD6
 Content-Transfer-Encoding: 8bit
 X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
@@ -67,39 +67,40 @@ callback to the void returning variant.
 
 Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 ---
- drivers/dma/ti/cppi41.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/dma/apple-admac.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/dma/ti/cppi41.c b/drivers/dma/ti/cppi41.c
-index c3555cfb0681..7e0b06b5dff0 100644
---- a/drivers/dma/ti/cppi41.c
-+++ b/drivers/dma/ti/cppi41.c
-@@ -1156,7 +1156,7 @@ static int cppi41_dma_probe(struct platform_device *pdev)
- 	return ret;
+diff --git a/drivers/dma/apple-admac.c b/drivers/dma/apple-admac.c
+index 3af795635c5c..46bb02858561 100644
+--- a/drivers/dma/apple-admac.c
++++ b/drivers/dma/apple-admac.c
+@@ -925,7 +925,7 @@ static int admac_probe(struct platform_device *pdev)
+ 	return err;
  }
  
--static int cppi41_dma_remove(struct platform_device *pdev)
-+static void cppi41_dma_remove(struct platform_device *pdev)
+-static int admac_remove(struct platform_device *pdev)
++static void admac_remove(struct platform_device *pdev)
  {
- 	struct cppi41_dd *cdd = platform_get_drvdata(pdev);
- 	int error;
-@@ -1173,7 +1173,6 @@ static int cppi41_dma_remove(struct platform_device *pdev)
- 	pm_runtime_dont_use_autosuspend(&pdev->dev);
- 	pm_runtime_put_sync(&pdev->dev);
- 	pm_runtime_disable(&pdev->dev);
+ 	struct admac_data *ad = platform_get_drvdata(pdev);
+ 
+@@ -933,8 +933,6 @@ static int admac_remove(struct platform_device *pdev)
+ 	dma_async_device_unregister(&ad->dma);
+ 	free_irq(ad->irq, ad);
+ 	reset_control_rearm(ad->rstc);
+-
 -	return 0;
  }
  
- static int __maybe_unused cppi41_suspend(struct device *dev)
-@@ -1244,7 +1243,7 @@ static const struct dev_pm_ops cppi41_pm_ops = {
+ static const struct of_device_id admac_of_match[] = {
+@@ -949,7 +947,7 @@ static struct platform_driver apple_admac_driver = {
+ 		.of_match_table = admac_of_match,
+ 	},
+ 	.probe = admac_probe,
+-	.remove = admac_remove,
++	.remove_new = admac_remove,
+ };
+ module_platform_driver(apple_admac_driver);
  
- static struct platform_driver cpp41_dma_driver = {
- 	.probe  = cppi41_dma_probe,
--	.remove = cppi41_dma_remove,
-+	.remove_new = cppi41_dma_remove,
- 	.driver = {
- 		.name = "cppi41-dma-engine",
- 		.pm = &cppi41_pm_ops,
 -- 
 2.40.1
 
