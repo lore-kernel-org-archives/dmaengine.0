@@ -2,44 +2,44 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 42075CD5BBF
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E6ACDCD5BC7
 	for <dmaengine@archiver.kernel.org>; Tue, 19 Sep 2023 13:32:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232399AbjISNcm (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 19 Sep 2023 09:32:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54966 "EHLO
+        id S232419AbjISNcn (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 19 Sep 2023 09:32:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54980 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232419AbjISNcf (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Tue, 19 Sep 2023 09:32:35 -0400
+        with ESMTP id S232389AbjISNcg (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Tue, 19 Sep 2023 09:32:36 -0400
 Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [IPv6:2a0a:edc0:2:b01:1d::104])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C92F0125
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C936B128
         for <dmaengine@vger.kernel.org>; Tue, 19 Sep 2023 06:32:29 -0700 (PDT)
 Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
         by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
         (Exim 4.92)
         (envelope-from <ukl@pengutronix.de>)
-        id 1qiaq1-0005Pi-AX; Tue, 19 Sep 2023 15:32:25 +0200
+        id 1qiaq0-0005Nh-NL; Tue, 19 Sep 2023 15:32:24 +0200
 Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
         by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
         (Exim 4.94.2)
         (envelope-from <ukl@pengutronix.de>)
-        id 1qiapz-007T66-Eh; Tue, 19 Sep 2023 15:32:23 +0200
+        id 1qiapy-007T60-V0; Tue, 19 Sep 2023 15:32:22 +0200
 Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.94.2)
         (envelope-from <ukl@pengutronix.de>)
-        id 1qiapz-0030h2-4K; Tue, 19 Sep 2023 15:32:23 +0200
+        id 1qiapy-0030gt-L9; Tue, 19 Sep 2023 15:32:22 +0200
 From:   =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= 
         <u.kleine-koenig@pengutronix.de>
 To:     Vinod Koul <vkoul@kernel.org>
 Cc:     dmaengine@vger.kernel.org, kernel@pengutronix.de
-Subject: [PATCH 55/59] dma: xgene-dma: Convert to platform remove callback returning void
-Date:   Tue, 19 Sep 2023 15:32:03 +0200
-Message-Id: <20230919133207.1400430-56-u.kleine-koenig@pengutronix.de>
+Subject: [PATCH 53/59] dma: timb_dma: Convert to platform remove callback returning void
+Date:   Tue, 19 Sep 2023 15:32:01 +0200
+Message-Id: <20230919133207.1400430-54-u.kleine-koenig@pengutronix.de>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230919133207.1400430-1-u.kleine-koenig@pengutronix.de>
 References: <20230919133207.1400430-1-u.kleine-koenig@pengutronix.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1830; i=u.kleine-koenig@pengutronix.de; h=from:subject; bh=USoMClqln1iL9Q1cbh+gC3Zp0/ti44srvL+C7Pc7GZg=; b=owEBbQGS/pANAwAKAY+A+1h9Ev5OAcsmYgBlCaHuACSxsvu1jo4+mW25/aFpZ7bGLJhHMfG7B aNCay7CNIiJATMEAAEKAB0WIQQ/gaxpOnoeWYmt/tOPgPtYfRL+TgUCZQmh7gAKCRCPgPtYfRL+ Thl2B/wNFhRo/yoRES/4YstoQBlA7p3bx2Wz3F1PfflC+puZJ3xJyMkwlABjQMF/05+KSphgWP7 z/ob7gIyTo+YFL7l59qn57vBMphTxhy7JNRpiONva9CesKafhwtm8vsz8cdMD9YctjNccWJTKIt KAb75pQ3UPwV/m/kPVoFATkTfYAraTfewafKg1PaqU2XJco4qLXCcT7YIYTayGKAVS/qfOH8Vj0 nEzNHwadbA3S4FXYtB8CFGNDFX+eGY0fvDS2K4f0fm0LrIqXEZM52f7wOupGTTOAl9HtV2v1DZ9 QQVRhxunSYioz6lzKry1WWCgMXQ0IP0LXUZTzlDVZ5dWALq2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1782; i=u.kleine-koenig@pengutronix.de; h=from:subject; bh=R7UQG3BNS22hG5Ey3S6ZDo6icHMCN8EqOM1kWJ7zMkw=; b=owEBbQGS/pANAwAKAY+A+1h9Ev5OAcsmYgBlCaHs4CiIuv9ZqZt8rYtEbRtxCvMXP5cwpv6Vd k/GobpTPw+JATMEAAEKAB0WIQQ/gaxpOnoeWYmt/tOPgPtYfRL+TgUCZQmh7AAKCRCPgPtYfRL+ TotECACnj3m1yRyQz5++1wbOzWklDFdA4AbUia5kf832I6w6oTJTtiOBU+xlJLzv43EwZcaFRU/ 7gpEyb628HQ+c/JHAmRLSEyb64RsnpsvUAgjpzY/b0mFE8hLTE6R86uVBJ2cE2iqEqnTFp5TPGQ pdmWP4u4ePKBcNgM4mPIOJQ4VVZ/jjmox7LRX454NLw4G5iihhyA+uOj8XB5hwDFCt0qLNOBKT9 nLP2Q4Si09Zo6P6Tnlbm8bHPUq7bUSBClsgqKizP92sqc0EPzShrSeLceoCrr16PZs1gkohs2cP CYa/KUxbMcMGr8AafClfjfFe8qpCjoitEoU2Fo363xIqUkYQ
 X-Developer-Key: i=u.kleine-koenig@pengutronix.de; a=openpgp; fpr=0D2511F322BFAB1C1580266BE2DCDD9132669BD6
 Content-Transfer-Encoding: 8bit
 X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
@@ -64,40 +64,39 @@ callback to the void returning variant.
 
 Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 ---
- drivers/dma/xgene-dma.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/dma/timb_dma.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/dma/xgene-dma.c b/drivers/dma/xgene-dma.c
-index bb4ff8c86733..fd4397adeb79 100644
---- a/drivers/dma/xgene-dma.c
-+++ b/drivers/dma/xgene-dma.c
-@@ -1776,7 +1776,7 @@ static int xgene_dma_probe(struct platform_device *pdev)
- 	return ret;
+diff --git a/drivers/dma/timb_dma.c b/drivers/dma/timb_dma.c
+index 3f524be69efb..7410025605e0 100644
+--- a/drivers/dma/timb_dma.c
++++ b/drivers/dma/timb_dma.c
+@@ -740,7 +740,7 @@ static int td_probe(struct platform_device *pdev)
+ 
  }
  
--static int xgene_dma_remove(struct platform_device *pdev)
-+static void xgene_dma_remove(struct platform_device *pdev)
+-static int td_remove(struct platform_device *pdev)
++static void td_remove(struct platform_device *pdev)
  {
- 	struct xgene_dma *pdma = platform_get_drvdata(pdev);
- 	struct xgene_dma_chan *chan;
-@@ -1797,8 +1797,6 @@ static int xgene_dma_remove(struct platform_device *pdev)
+ 	struct timb_dma *td = platform_get_drvdata(pdev);
+ 	struct resource *iomem = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+@@ -754,7 +754,6 @@ static int td_remove(struct platform_device *pdev)
+ 	release_mem_region(iomem->start, resource_size(iomem));
  
- 	if (!IS_ERR(pdma->clk))
- 		clk_disable_unprepare(pdma->clk);
--
+ 	dev_dbg(&pdev->dev, "Removed...\n");
 -	return 0;
  }
  
- #ifdef CONFIG_ACPI
-@@ -1817,7 +1815,7 @@ MODULE_DEVICE_TABLE(of, xgene_dma_of_match_ptr);
+ static struct platform_driver td_driver = {
+@@ -762,7 +761,7 @@ static struct platform_driver td_driver = {
+ 		.name	= DRIVER_NAME,
+ 	},
+ 	.probe	= td_probe,
+-	.remove	= td_remove,
++	.remove_new = td_remove,
+ };
  
- static struct platform_driver xgene_dma_driver = {
- 	.probe = xgene_dma_probe,
--	.remove = xgene_dma_remove,
-+	.remove_new = xgene_dma_remove,
- 	.driver = {
- 		.name = "X-Gene-DMA",
- 		.of_match_table = xgene_dma_of_match_ptr,
+ module_platform_driver(td_driver);
 -- 
 2.40.1
 
