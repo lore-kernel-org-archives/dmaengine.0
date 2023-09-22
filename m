@@ -2,109 +2,161 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 06146CD4847
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C9B5DCD4848
 	for <dmaengine@archiver.kernel.org>; Fri, 22 Sep 2023 17:16:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232867AbjIVRQT (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        id S231789AbjIVRQT (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
         Fri, 22 Sep 2023 13:16:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35160 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49216 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232697AbjIVRQQ (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Fri, 22 Sep 2023 13:16:16 -0400
-Received: from mail-pl1-x636.google.com (mail-pl1-x636.google.com [IPv6:2607:f8b0:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 25C0D1AB
-        for <dmaengine@vger.kernel.org>; Fri, 22 Sep 2023 10:16:08 -0700 (PDT)
-Received: by mail-pl1-x636.google.com with SMTP id d9443c01a7336-1c47309a8ccso28065805ad.1
-        for <dmaengine@vger.kernel.org>; Fri, 22 Sep 2023 10:16:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1695402967; x=1696007767; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=ICBL/Q4jbf7cf4gR4zY8Pazn4MfjoBlTiYldqzQrKlk=;
-        b=BWQIRm3eUX4ZBoJ1U57MYmaIbPdf8z5SesOZqHrXyqm/tIcJKfKxXVm9Ksj8HT7CRX
-         zDEztsz5fpzUChAX3JySlC09KbWyvZYC0q2GuLgRtBMR+xEHhpB60s2FKMlLE5TMPfb7
-         x9VHwlp1N1qomZ3ZmOlgZgj/mJHUaeaKxrj7s=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695402967; x=1696007767;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ICBL/Q4jbf7cf4gR4zY8Pazn4MfjoBlTiYldqzQrKlk=;
-        b=BSNjzAotUm/xxeyw5iYt9WrI5ShcsLY9ZsxZ1X+lMO1bThXV+1SQTKvgoLBn+7U1ug
-         4J6YQc2m7GNFZAdBIqa2JfZajltb7nTOvdBelWRZ2Bxmp02n87XzumDr0hqz3gwZi7et
-         yVEtQo1GTC+jZO/usbXiDs4vln5O1WI+cv2UkWSZi9BkYdZDV9VRR3cNd36anC3H6c46
-         /TVMGYRydhZjPOX27/iXh7iuZpU07aY6vfyMb0BntyVs1VTffC/K5xQrmesHtnSS0t+W
-         oJIr1vgCJX8/TJPEnqkFnLIqlgONg0bV8RYCc9a7jAP0lai5Xd39F0VB0D+8X4RK7xnu
-         SuZA==
-X-Gm-Message-State: AOJu0YwptShELLCB0wseP5dn0dRTJ18owJLvMoq5WS75N1ON4HMJgDms
-        8Fns4VZ6BzNiPIjaciiVjYEpkg==
-X-Google-Smtp-Source: AGHT+IEetMJnHs5bBcV9L3R6HPyKeQTS1z7sgSklrhHfcojQhz5I0wr5ShzBfZ21ocAxIbhohXa34w==
-X-Received: by 2002:a17:902:a416:b0:1c5:ecfc:2650 with SMTP id p22-20020a170902a41600b001c5ecfc2650mr2175732plq.14.1695402967593;
-        Fri, 22 Sep 2023 10:16:07 -0700 (PDT)
-Received: from www.outflux.net (198-0-35-241-static.hfc.comcastbusiness.net. [198.0.35.241])
-        by smtp.gmail.com with ESMTPSA id ji18-20020a170903325200b001bdbe6c86a9sm3742195plb.225.2023.09.22.10.16.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 22 Sep 2023 10:16:07 -0700 (PDT)
-Date:   Fri, 22 Sep 2023 10:16:06 -0700
-From:   Kees Cook <keescook@chromium.org>
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Hector Martin <marcan@marcan.st>, Sven Peter <sven@svenpeter.dev>,
-        Alyssa Rosenzweig <alyssa@rosenzweig.io>,
-        Ludovic Desroches <ludovic.desroches@microchip.com>,
-        Tudor Ambarus <tudor.ambarus@linaro.org>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        Zhou Wang <wangzhou1@hisilicon.com>,
-        Jie Hai <haijie1@huawei.com>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Green Wan <green.wan@sifive.com>,
-        Orson Zhai <orsonzhai@gmail.com>,
-        Baolin Wang <baolin.wang@linux.alibaba.com>,
-        Chunyan Zhang <zhang.lyra@gmail.com>,
-        Patrice Chotard <patrice.chotard@foss.st.com>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Laxman Dewangan <ldewangan@nvidia.com>,
-        Jon Hunter <jonathanh@nvidia.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Peter Ujfalusi <peter.ujfalusi@gmail.com>,
-        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-        Masami Hiramatsu <mhiramat@kernel.org>,
-        Yu Kuai <yukuai3@huawei.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Jordy Zomer <jordy@pwning.systems>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Nathan Chancellor <nathan@kernel.org>,
-        Nick Desaulniers <ndesaulniers@google.com>,
-        Tom Rix <trix@redhat.com>, linux-kernel@vger.kernel.org,
-        asahi@lists.linux.dev, linux-arm-kernel@lists.infradead.org,
-        dmaengine@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-tegra@vger.kernel.org, llvm@lists.linux.dev,
-        linux-hardening@vger.kernel.org
-Subject: Re: [PATCH 00/21] dmaengine: Annotate with __counted_by
-Message-ID: <202309221015.AB63726@keescook>
-References: <20230817235428.never.111-kees@kernel.org>
- <202309151307.F3341BD5A@keescook>
+        with ESMTP id S232828AbjIVRQR (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Fri, 22 Sep 2023 13:16:17 -0400
+Received: from NAM10-DM6-obe.outbound.protection.outlook.com (mail-dm6nam10on2084.outbound.protection.outlook.com [40.107.93.84])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CE68E1AD;
+        Fri, 22 Sep 2023 10:16:10 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=W0KUhl5OWlQU8YGmJkj9pGE3KdCwVdIBtJi68O0WV387gPOJLVl4AFema7ubsTdkCOkSi4r4m0NrjPWIMI09B5+s0gPnfc92Wz5A/SKFFFvobci26Cm9N8Ps9zEOxb8AMVZPVtC8ST9P4opkzOeq4EOiv8I+l7al8son+kyQ0gLGndkf3VDG38AQc9ASB3gpAYPfHVM4cL+SUSRYgn76dbR9CfjwZkLrQveFgwftTv8+XZdlbSI/PHY8Fc3uy5jvoLdWzX7QKDtDNVuTRXkL4qpYmJHMmpZ0UDPUpY9pouXDNltBjSNBdc4/v2nfPV8ZLBcn+fDrEeeWIDYA1g34rw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=IOdTPUsmiBCcxTOj8NIg/rtLtUis7KIL3NY/t1A3G5I=;
+ b=BQBDdpeXfqYEICMtj4NZjYA5lfTKhKCqlbaMdxzb7YFbiCXC1/MLPIH4OYvfPdsi5BHQ/rPOaf8Es3mrIIA4SIX+QM2mdGXPUQeK5IZbL00eHXIjG99D6PnuUf15cAhjTtH6Z5NDI09So2Y3IZ5SxmsMFQjONoYSVemd28Edbs5To5Dbk0nFBdOUkOPa46kjkaQwQJJeBbHsESs50s/tRk1Fi1zeCrq5EHa6B8k4XsfL2Tmu/r/9hW1nDfuykiGadUmXjPDPd8v69lDCN+3k2U/7+vmwWLhcxOGbLxATbaDREPEmd35K28nu9kMfwWC/S0p/TBoIcNm5+LAwUy2YnQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=kernel.org smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=IOdTPUsmiBCcxTOj8NIg/rtLtUis7KIL3NY/t1A3G5I=;
+ b=Hw3uAvUgCi9+bzG3JQM7CTp2BMTec02kSDABSoo3JA+IkIUhl5A3XGiPCCSJ0GgQEFrup0yyNlvza8WrO6ih8pbitzasfZr9qDst2wQba7XzT3HM7/Ttby2gCpZl9YqL5weQKIgZZk94tHuZkxhJplqO1QihHU8SiZzjjr+SAM4=
+Received: from MN2PR04CA0029.namprd04.prod.outlook.com (2603:10b6:208:d4::42)
+ by PH8PR12MB6794.namprd12.prod.outlook.com (2603:10b6:510:1c5::17) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6792.27; Fri, 22 Sep
+ 2023 17:16:07 +0000
+Received: from MN1PEPF0000ECD6.namprd02.prod.outlook.com
+ (2603:10b6:208:d4:cafe::11) by MN2PR04CA0029.outlook.office365.com
+ (2603:10b6:208:d4::42) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6792.32 via Frontend
+ Transport; Fri, 22 Sep 2023 17:16:07 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=SATLEXMB03.amd.com; pr=C
+Received: from SATLEXMB03.amd.com (165.204.84.17) by
+ MN1PEPF0000ECD6.mail.protection.outlook.com (10.167.242.135) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.20.6838.14 via Frontend Transport; Fri, 22 Sep 2023 17:16:07 +0000
+Received: from SATLEXMB06.amd.com (10.181.40.147) by SATLEXMB03.amd.com
+ (10.181.40.144) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.27; Fri, 22 Sep
+ 2023 12:16:05 -0500
+Received: from SATLEXMB03.amd.com (10.181.40.144) by SATLEXMB06.amd.com
+ (10.181.40.147) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.27; Fri, 22 Sep
+ 2023 12:15:41 -0500
+Received: from xsjlizhih40.xilinx.com (10.180.168.240) by SATLEXMB03.amd.com
+ (10.181.40.144) with Microsoft SMTP Server id 15.1.2507.27 via Frontend
+ Transport; Fri, 22 Sep 2023 12:15:40 -0500
+From:   Lizhi Hou <lizhi.hou@amd.com>
+To:     <vkoul@kernel.org>, <dmaengine@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+CC:     Lizhi Hou <lizhi.hou@amd.com>, <nishad.saraf@amd.com>,
+        <sonal.santan@amd.com>, <max.zhen@amd.com>
+Subject: [PATCH V5 0/1] AMD QDMA driver
+Date:   Fri, 22 Sep 2023 10:15:38 -0700
+Message-ID: <1695402939-28924-1-git-send-email-lizhi.hou@amd.com>
+X-Mailer: git-send-email 1.8.3.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <202309151307.F3341BD5A@keescook>
+Content-Type: text/plain
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: MN1PEPF0000ECD6:EE_|PH8PR12MB6794:EE_
+X-MS-Office365-Filtering-Correlation-Id: 5fe2a410-8957-43c5-c952-08dbbb8f9bdc
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: 4/h7OWHaGPxLcpDkV+EEXMPTHraOHdVKr4Y7zHIsWI5pZMU1t+l6yqaQ0ri98/TyOHBRmJH3JuFzf0gjd3T0jN7dm7bSmKzyt2oiaVaAepOKp3v1j1Fqnt6S3E8xMct7/phtRaTChB38Eq8lJH2lWuD1aXAcj6hdhmJ9psbnN28zNfn5amX3IWDiZzQZdAzgsoNYjJ4il23h11mGIsLNp4+cNYOE3r4wqWEkErlGfr9tdKRHtM3RdBm8RkGDNc95jiH9Az6JeJ3izIezVIeKpMKUrKxGUEg4eDwzFaFEtffDwmX+aQk3CAQ9+A3jUI+LMKxAcBXk5xD7FeawfVFH47yY32AzG9IWlMskjvm9qPOFHUYnqAbSvfQnUCXaXLUqSrJZ+ZbEzUC43N+20FyYKnloZR5YLV43i0FK9VN/luSS0UwXErYBZYBKcO6DujGHvGrTtSB9LfN45rvNvZW4/+3wORyTjN5upgf7PM+FYk4Ha2Se8T0z1w+CY4bl4KpWqKJOm0cQk++pybtFvc6WNZ2Ba+xtPgIldxOba2enNpQtxu9lkuELpF59y/x4QVTIMKU/LFg9QoTaXYUT0Xkus5jlb0qiuGu0OgXIUnBlzvsXVJa+U58IV/Mcl+/J9UBvJ/9/8UQO/p+Xed7ncFoStKcX1EiqVX/uvPQo0ua7o0G8602QDK+CVToMwghzlXRqsLIVtULkiGOIX/O+dibI+RPsrmdt4xFFEMFSpdjVrwUWN5I0KZ90qgizJD5jJIMTRjPN7BcwJEP9pcipxgJUph/hOmlzxyyZWh/NN3hBCl1RpCp8G3l0Nb/N0iUIoS5num+4B5gijiECu1crc3KX2w==
+X-Forefront-Antispam-Report: CIP:165.204.84.17;CTRY:US;LANG:en;SCL:1;SRV:;IPV:CAL;SFV:NSPM;H:SATLEXMB03.amd.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230031)(4636009)(396003)(39860400002)(376002)(346002)(136003)(230921699003)(82310400011)(1800799009)(186009)(451199024)(46966006)(40470700004)(36840700001)(40460700003)(26005)(2616005)(86362001)(36860700001)(47076005)(82740400003)(356005)(81166007)(36756003)(426003)(336012)(4326008)(110136005)(40480700001)(8936002)(478600001)(966005)(316002)(44832011)(70586007)(54906003)(70206006)(5660300002)(8676002)(83380400001)(2906002)(41300700001)(36900700001);DIR:OUT;SFP:1101;
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Sep 2023 17:16:07.2400
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 5fe2a410-8957-43c5-c952-08dbbb8f9bdc
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d;Ip=[165.204.84.17];Helo=[SATLEXMB03.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: MN1PEPF0000ECD6.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH8PR12MB6794
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On Fri, Sep 15, 2023 at 01:08:30PM -0700, Kees Cook wrote:
-> Just a ping on the series... how do these look to you, Vinod?
-> 
-> If you want I can carry them in my tree. Please let me know.
+Hello,
 
-I'm now carrying this in my for-next/hardening tree. Let me know if
-you'd prefer I drop it.
+The QDMA subsystem is used in conjunction with the PCI Express IP block
+to provide high performance data transfer between host memory and the
+card's DMA subsystem.
 
-Thanks!
+            +-------+       +-------+       +-----------+
+   PCIe     |       |       |       |       |           |
+   Tx/Rx    |       |       |       |  AXI  |           |
+ <=======>  | PCIE  | <===> | QDMA  | <====>| User Logic|
+            |       |       |       |       |           |
+            +-------+       +-------+       +-----------+
 
--Kees
+Comparing to AMD/Xilinx XDMA subsystem,
+    https://lore.kernel.org/lkml/Y+XeKt5yPr1nGGaq@matsya/
+the QDMA subsystem is a queue based, configurable scatter-gather DMA
+implementation which provides thousands of queues, support for multiple
+physical/virtual functions with single-root I/O virtualization (SR-IOV),
+and advanced interrupt support. In this mode the IP provides AXI4-MM and
+AXI4-Stream user interfaces which may be configured on a per-queue basis.
+
+The QDMA has been used for Xilinx Alveo PCIe devices.
+    https://www.xilinx.com/applications/data-center/v70.html
+
+This patch series is to provide the platform driver for AMD QDMA subsystem
+to support AXI4-MM DMA transfers. More functions, such as AXI4-Stream
+and SR-IOV, will be supported by future patches.
+
+The device driver for any FPGA based PCIe device which leverages QDMA can
+call the standard dmaengine APIs to discover and use the QDMA subsystem
+without duplicating the QDMA driver code in its own driver.
+
+Changes since v4:
+- Convert to use platform driver callback .remove_new()
+
+Changes since v3:
+- Minor changes in Kconfig description.
+
+Changes since v2:
+- A minor change from code review comments.
+
+Changes since v1:
+- Minor changes from code review comments.
+- Fixed kernel robot warning.
+
+Nishad Saraf (1):
+  dmaengine: amd: qdma: Add AMD QDMA driver
+
+ MAINTAINERS                            |    9 +
+ drivers/dma/Kconfig                    |   13 +
+ drivers/dma/Makefile                   |    1 +
+ drivers/dma/amd/Makefile               |    8 +
+ drivers/dma/amd/qdma-comm-regs.c       |   66 ++
+ drivers/dma/amd/qdma.c                 | 1187 ++++++++++++++++++++++++
+ drivers/dma/amd/qdma.h                 |  269 ++++++
+ include/linux/platform_data/amd_qdma.h |   36 +
+ 8 files changed, 1589 insertions(+)
+ create mode 100644 drivers/dma/amd/Makefile
+ create mode 100644 drivers/dma/amd/qdma-comm-regs.c
+ create mode 100644 drivers/dma/amd/qdma.c
+ create mode 100644 drivers/dma/amd/qdma.h
+ create mode 100644 include/linux/platform_data/amd_qdma.h
 
 -- 
-Kees Cook
+2.34.1
+
