@@ -2,115 +2,109 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7758DCD4844
-	for <dmaengine@archiver.kernel.org>; Fri, 22 Sep 2023 16:34:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 06146CD4847
+	for <dmaengine@archiver.kernel.org>; Fri, 22 Sep 2023 17:16:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230396AbjIVQeH (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 22 Sep 2023 12:34:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48070 "EHLO
+        id S232867AbjIVRQT (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 22 Sep 2023 13:16:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35160 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229636AbjIVQeG (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Fri, 22 Sep 2023 12:34:06 -0400
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1845A114;
-        Fri, 22 Sep 2023 09:34:00 -0700 (PDT)
-Received: by mail-wr1-x430.google.com with SMTP id ffacd0b85a97d-32008e339adso2304862f8f.2;
-        Fri, 22 Sep 2023 09:34:00 -0700 (PDT)
+        with ESMTP id S232697AbjIVRQQ (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Fri, 22 Sep 2023 13:16:16 -0400
+Received: from mail-pl1-x636.google.com (mail-pl1-x636.google.com [IPv6:2607:f8b0:4864:20::636])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 25C0D1AB
+        for <dmaengine@vger.kernel.org>; Fri, 22 Sep 2023 10:16:08 -0700 (PDT)
+Received: by mail-pl1-x636.google.com with SMTP id d9443c01a7336-1c47309a8ccso28065805ad.1
+        for <dmaengine@vger.kernel.org>; Fri, 22 Sep 2023 10:16:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1695400438; x=1696005238; darn=vger.kernel.org;
+        d=chromium.org; s=google; t=1695402967; x=1696007767; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=mkDZtszQ+UHkMPtdGr7RA5ZQQqpUUNchTvgj6snT3r4=;
-        b=iZfMstvZFrs6WMN+DRIfjxSHkncKo9HFg/Cwxtmlo87X0CHvfK7bVYPHtELj2YAwSp
-         set9eXdSZUXHr6toWU/xFgUIkwuIQwkPi0KnWwPXZHWo4afsUF3XlrkdYE+z85P0Rp4d
-         YRgvICCn7CXeYWCzVy9CI7vRg8JeBBBhsARLiAlNds2RpChq3XQVOpR79MX9lfjmWnBc
-         AGFNqMYsJeNPot8SIYBWs6sd9ekA8PQuf8lyrniqXk/1qzJM/Oxgfd5YPm/ksxlBbrod
-         OKqNVddhef07w85/bOJgmnsnfrqGXHjArFL4oiisGDBpjTLFvtgfCqbRqRevYYSAizVT
-         9rnQ==
+        bh=ICBL/Q4jbf7cf4gR4zY8Pazn4MfjoBlTiYldqzQrKlk=;
+        b=BWQIRm3eUX4ZBoJ1U57MYmaIbPdf8z5SesOZqHrXyqm/tIcJKfKxXVm9Ksj8HT7CRX
+         zDEztsz5fpzUChAX3JySlC09KbWyvZYC0q2GuLgRtBMR+xEHhpB60s2FKMlLE5TMPfb7
+         x9VHwlp1N1qomZ3ZmOlgZgj/mJHUaeaKxrj7s=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695400438; x=1696005238;
+        d=1e100.net; s=20230601; t=1695402967; x=1696007767;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=mkDZtszQ+UHkMPtdGr7RA5ZQQqpUUNchTvgj6snT3r4=;
-        b=svsSNcdpz5om+FXRufbD+DKYpl2r6KRJbRzaR16HZuJTP96amvwp+xSz9vaYO0+q3E
-         l7UNua/Ev4Sr7Y5++c6Ucfa5y8ib9uESBSRfqqNO7FcOgFcNneGXfW1a2e3Yn14aK1ix
-         zcCIiSBspVK1hp3edFSBdFLodWVQqHduZwVSPM93wJmPeAbzgzRD17IcIPjXM9nSdfGL
-         vmo18EBQmmFjNPZvx3LDZdX+AZVR3i+U93xEXEmjS0IvE8soTFA3v8bBP+EUGUX8Bmsr
-         27cNr9I8FMPNH8b9lCe9anxwgBjjRdIy1WI16NNAR0SFtuS/isPA5zeqTSj4e47HBaDd
-         6B1w==
-X-Gm-Message-State: AOJu0YyVw4LYSLtfgq0aiuvJ1qN5KCF1luw6O5Yk0IVxn/qyaR8O2vOx
-        q/elTrM/OIdrPszIdK6cUC3oxDgu6942VINa
-X-Google-Smtp-Source: AGHT+IEzVs58OCT4qIw+qVb7rJWnifIFxLH/lm7FSkAJ2vjb/rKjkFs+p1w/R40zERMnyKBkYnY1ww==
-X-Received: by 2002:a5d:6a8c:0:b0:31f:f2dc:db7d with SMTP id s12-20020a5d6a8c000000b0031ff2dcdb7dmr132107wru.65.1695400438208;
-        Fri, 22 Sep 2023 09:33:58 -0700 (PDT)
-Received: from freebase (oliv-cloud.duckdns.org. [78.196.47.215])
-        by smtp.gmail.com with ESMTPSA id p14-20020adfe60e000000b003197b85bad2sm4857547wrm.79.2023.09.22.09.33.57
+        bh=ICBL/Q4jbf7cf4gR4zY8Pazn4MfjoBlTiYldqzQrKlk=;
+        b=BSNjzAotUm/xxeyw5iYt9WrI5ShcsLY9ZsxZ1X+lMO1bThXV+1SQTKvgoLBn+7U1ug
+         4J6YQc2m7GNFZAdBIqa2JfZajltb7nTOvdBelWRZ2Bxmp02n87XzumDr0hqz3gwZi7et
+         yVEtQo1GTC+jZO/usbXiDs4vln5O1WI+cv2UkWSZi9BkYdZDV9VRR3cNd36anC3H6c46
+         /TVMGYRydhZjPOX27/iXh7iuZpU07aY6vfyMb0BntyVs1VTffC/K5xQrmesHtnSS0t+W
+         oJIr1vgCJX8/TJPEnqkFnLIqlgONg0bV8RYCc9a7jAP0lai5Xd39F0VB0D+8X4RK7xnu
+         SuZA==
+X-Gm-Message-State: AOJu0YwptShELLCB0wseP5dn0dRTJ18owJLvMoq5WS75N1ON4HMJgDms
+        8Fns4VZ6BzNiPIjaciiVjYEpkg==
+X-Google-Smtp-Source: AGHT+IEetMJnHs5bBcV9L3R6HPyKeQTS1z7sgSklrhHfcojQhz5I0wr5ShzBfZ21ocAxIbhohXa34w==
+X-Received: by 2002:a17:902:a416:b0:1c5:ecfc:2650 with SMTP id p22-20020a170902a41600b001c5ecfc2650mr2175732plq.14.1695402967593;
+        Fri, 22 Sep 2023 10:16:07 -0700 (PDT)
+Received: from www.outflux.net (198-0-35-241-static.hfc.comcastbusiness.net. [198.0.35.241])
+        by smtp.gmail.com with ESMTPSA id ji18-20020a170903325200b001bdbe6c86a9sm3742195plb.225.2023.09.22.10.16.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 22 Sep 2023 09:33:57 -0700 (PDT)
-Date:   Fri, 22 Sep 2023 18:33:56 +0200
-From:   Olivier Dautricourt <olivierdautricourt@gmail.com>
-To:     Eric Schwarz <eas@sw-optimization.com>
-Cc:     dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Vinod Koul <vkoul@kernel.org>, Stefan Roese <sr@denx.de>
-Subject: Re: [PATCH] dmaengine: altera-msgdma: fix descriptors freeing logic
-Message-ID: <ZQ3B9NWVmLvaVhJX@freebase>
-References: <20230920200636.32870-3-olivierdautricourt@gmail.com>
- <22402987-305b-024b-044e-53db17037d90@sw-optimization.com>
- <ZQyWsvcQCJgmG5aO@freebase>
- <8d18106d-444e-9346-26cc-3767540df5d8@sw-optimization.com>
+        Fri, 22 Sep 2023 10:16:07 -0700 (PDT)
+Date:   Fri, 22 Sep 2023 10:16:06 -0700
+From:   Kees Cook <keescook@chromium.org>
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     Hector Martin <marcan@marcan.st>, Sven Peter <sven@svenpeter.dev>,
+        Alyssa Rosenzweig <alyssa@rosenzweig.io>,
+        Ludovic Desroches <ludovic.desroches@microchip.com>,
+        Tudor Ambarus <tudor.ambarus@linaro.org>,
+        Lars-Peter Clausen <lars@metafoo.de>,
+        Zhou Wang <wangzhou1@hisilicon.com>,
+        Jie Hai <haijie1@huawei.com>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Green Wan <green.wan@sifive.com>,
+        Orson Zhai <orsonzhai@gmail.com>,
+        Baolin Wang <baolin.wang@linux.alibaba.com>,
+        Chunyan Zhang <zhang.lyra@gmail.com>,
+        Patrice Chotard <patrice.chotard@foss.st.com>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        Laxman Dewangan <ldewangan@nvidia.com>,
+        Jon Hunter <jonathanh@nvidia.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Peter Ujfalusi <peter.ujfalusi@gmail.com>,
+        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+        Masami Hiramatsu <mhiramat@kernel.org>,
+        Yu Kuai <yukuai3@huawei.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Jordy Zomer <jordy@pwning.systems>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Nathan Chancellor <nathan@kernel.org>,
+        Nick Desaulniers <ndesaulniers@google.com>,
+        Tom Rix <trix@redhat.com>, linux-kernel@vger.kernel.org,
+        asahi@lists.linux.dev, linux-arm-kernel@lists.infradead.org,
+        dmaengine@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        linux-tegra@vger.kernel.org, llvm@lists.linux.dev,
+        linux-hardening@vger.kernel.org
+Subject: Re: [PATCH 00/21] dmaengine: Annotate with __counted_by
+Message-ID: <202309221015.AB63726@keescook>
+References: <20230817235428.never.111-kees@kernel.org>
+ <202309151307.F3341BD5A@keescook>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <8d18106d-444e-9346-26cc-3767540df5d8@sw-optimization.com>
+In-Reply-To: <202309151307.F3341BD5A@keescook>
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Hi Eric,
-
-On Fri, Sep 22, 2023 at 09:49:59AM +0200, Eric Schwarz wrote:
-> Hello Olivier,
+On Fri, Sep 15, 2023 at 01:08:30PM -0700, Kees Cook wrote:
+> Just a ping on the series... how do these look to you, Vinod?
 > 
-> > > Am 20.09.2023 um 21:58 schrieb Olivier Dautricourt:
-> > > > Sparse complains because we first take the lock in msgdma_tasklet -> move
-> > > > locking to msgdma_chan_desc_cleanup.
-> > > > In consequence, move calling of msgdma_chan_desc_cleanup outside of the
-> > > > critical section of function msgdma_tasklet.
-> > > > 
-> > > > Use spin_unlock_irqsave/restore instead of just spinlock/unlock to keep
-> > > > state of irqs while executing the callbacks.
-> > > 
-> > > What about the locking in the IRQ handler msgdma_irq_handler() itself? -
-> > > Shouldn't spin_unlock_irqsave/restore() be used there as well instead of
-> > > just spinlock/unlock()?
-> > 
-> > IMO no:
-> > It is covered by [1]("Locking Between Hard IRQ and Softirqs/Tasklets")
-> > The irq handler cannot be preempted by the tasklet, so the
-> > spin_lock/unlock version is ok. However the tasklet could be interrupted
-> > by the Hard IRQ hence the disabling of irqs with save/restore when
-> > entering critical section.
-> > 
-> > It should not be needed to keep interrupts locally disabled while invoking
-> > callbacks, will add this to the commit description.
-> > 
-> > [1] https://www.kernel.org/doc/Documentation/kernel-hacking/locking.rst
-> 
-> Thanks for the link. I have read differently here [2] w/ special emphasis on
-> "Lesson 3: spinlocks revisited.".
-> 
-> [2] https://www.kernel.org/doc/Documentation/locking/spinlocks.txt
-> 
+> If you want I can carry them in my tree. Please let me know.
 
-This chapter [2] says that our code must use irq versions of spin_lock
-because our handler does indeed play with the lock. However this
-requirement does not apply to the irq handler itself, as we know that the
-interrupt line is disabled during the execution of the handler (and our
-handler is not shared with another irq).
+I'm now carrying this in my for-next/hardening tree. Let me know if
+you'd prefer I drop it.
 
-Kr,
-Olivier
+Thanks!
 
-> Cheers
-> Eric
+-Kees
+
+-- 
+Kees Cook
