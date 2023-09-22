@@ -2,85 +2,85 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 86E5ECD4F2B
-	for <dmaengine@archiver.kernel.org>; Fri, 22 Sep 2023 07:50:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C4ECDCD4F43
+	for <dmaengine@archiver.kernel.org>; Fri, 22 Sep 2023 09:50:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231803AbjIVHuM (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 22 Sep 2023 03:50:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48556 "EHLO
+        id S232039AbjIVJuP (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 22 Sep 2023 05:50:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47548 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231787AbjIVHuL (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Fri, 22 Sep 2023 03:50:11 -0400
-Received: from mx12lb.world4you.com (mx12lb.world4you.com [81.19.149.122])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BAE8F19C;
-        Fri, 22 Sep 2023 00:50:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=sw-optimization.com; s=dkim11; h=Content-Transfer-Encoding:Content-Type:
-        In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender
-        :Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
-        Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
-        List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-        bh=4cbMygGp9uogMxBbKSPpHm/fjDurwwZEgvsXEFU9RNA=; b=wEdMDiiNDDdZqiLCicthKEUI+0
-        WTtV7XdnyB2Jq0z1Igwdaa64pw6JbaIoincNcfX4LgexUUoBirew/mSisrzfcX/8DxD7Hq8JBNyfA
-        FWPywOSDVfMVYpBYpZgaWBFtypfTBC/rr961QllnOKIfCF/aq9FkuU04EHpSsj1HgjRU=;
-Received: from [195.192.57.194] (helo=[192.168.0.20])
-        by mx12lb.world4you.com with esmtpa (Exim 4.96)
-        (envelope-from <eas@sw-optimization.com>)
-        id 1qjavJ-0001VD-2X;
-        Fri, 22 Sep 2023 09:50:02 +0200
-Message-ID: <8d18106d-444e-9346-26cc-3767540df5d8@sw-optimization.com>
-Date:   Fri, 22 Sep 2023 09:49:59 +0200
+        with ESMTP id S231384AbjIVJuO (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Fri, 22 Sep 2023 05:50:14 -0400
+Received: from esa.microchip.iphmx.com (esa.microchip.iphmx.com [68.232.153.233])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE80291;
+        Fri, 22 Sep 2023 02:50:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=microchip.com; i=@microchip.com; q=dns/txt; s=mchp;
+  t=1695376205; x=1726912205;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=zeipEBhaXghXmN5oGpPDW5qjunGQZm56YlJ7LLJ5W1Q=;
+  b=ErI2UfqrnnV+XETjH//ImB4B6Fbl8G56qm7WhmQXJtkF9Ma7fkx7Jl4x
+   8MX2WBzGdi5OKOrAAJZxqnELWFYU34pQsekbyV5VeSFAQwG8Y/CThwaic
+   /1UMQF+bFstHVcfa26ITgLhheh2qXey3uDJR/1vT93cRYVR/7FegEsWuL
+   Z3EzuDjmJjfSmKI1BOA+ROAg1+bx5lKAMwfjRNc+FDRiCEq2WYeoDTLld
+   hee0zCwetjGffmQ5H+j5qeX++5vVLGBDgBORAqb6La8EJqNy1yDBGBJWF
+   iTLGnTx58ym7ryTiw8CWbGyAvMrNElM2UoWLcylUWeAOF7O26OThncKpV
+   g==;
+X-CSE-ConnectionGUID: fQsQIPFwSuS+RkzQs9lxqw==
+X-CSE-MsgGUID: ce4PFu03SpK2T9raFQWtFg==
+X-ThreatScanner-Verdict: Negative
+X-IronPort-AV: E=Sophos;i="6.03,167,1694761200"; 
+   d="scan'208";a="236602553"
+X-Amp-Result: SKIPPED(no attachment in message)
+Received: from unknown (HELO email.microchip.com) ([170.129.1.10])
+  by esa5.microchip.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES128-GCM-SHA256; 22 Sep 2023 02:50:04 -0700
+Received: from chn-vm-ex04.mchp-main.com (10.10.85.152) by
+ chn-vm-ex04.mchp-main.com (10.10.85.152) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.21; Fri, 22 Sep 2023 02:49:57 -0700
+Received: from microchip1-OptiPlex-9020.microchip.com (10.10.85.11) by
+ chn-vm-ex04.mchp-main.com (10.10.85.152) with Microsoft SMTP Server id
+ 15.1.2507.21 via Frontend Transport; Fri, 22 Sep 2023 02:49:52 -0700
+From:   shravan chippa <shravan.chippa@microchip.com>
+To:     <green.wan@sifive.com>, <vkoul@kernel.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <palmer@dabbelt.com>,
+        <paul.walmsley@sifive.com>, <conor+dt@kernel.org>,
+        <palmer@sifive.com>
+CC:     <dmaengine@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-riscv@lists.infradead.org>, <linux-kernel@vger.kernel.org>,
+        <nagasuresh.relli@microchip.com>, <praveen.kumar@microchip.com>,
+        <shravan.chippa@microchip.com>
+Subject: [PATCH v1 0/3] dma: sf-pdma: various sf-pdma updates for the mpfs platform
+Date:   Fri, 22 Sep 2023 15:20:36 +0530
+Message-ID: <20230922095039.74878-1-shravan.chippa@microchip.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH] dmaengine: altera-msgdma: fix descriptors freeing logic
-To:     Olivier Dautricourt <olivierdautricourt@gmail.com>
-Cc:     dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Vinod Koul <vkoul@kernel.org>, Stefan Roese <sr@denx.de>
-References: <20230920200636.32870-3-olivierdautricourt@gmail.com>
- <22402987-305b-024b-044e-53db17037d90@sw-optimization.com>
- <ZQyWsvcQCJgmG5aO@freebase>
-Content-Language: de-DE
-From:   Eric Schwarz <eas@sw-optimization.com>
-In-Reply-To: <ZQyWsvcQCJgmG5aO@freebase>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-AV-Do-Run: Yes
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Hello Olivier,
+From: Shravan Chippa <shravan.chippa@microchip.com>
 
->> Am 20.09.2023 um 21:58 schrieb Olivier Dautricourt:
->>> Sparse complains because we first take the lock in msgdma_tasklet -> move
->>> locking to msgdma_chan_desc_cleanup.
->>> In consequence, move calling of msgdma_chan_desc_cleanup outside of the
->>> critical section of function msgdma_tasklet.
->>>
->>> Use spin_unlock_irqsave/restore instead of just spinlock/unlock to keep
->>> state of irqs while executing the callbacks.
->>
->> What about the locking in the IRQ handler msgdma_irq_handler() itself? -
->> Shouldn't spin_unlock_irqsave/restore() be used there as well instead of
->> just spinlock/unlock()?
-> 
-> IMO no:
-> It is covered by [1]("Locking Between Hard IRQ and Softirqs/Tasklets")
-> The irq handler cannot be preempted by the tasklet, so the
-> spin_lock/unlock version is ok. However the tasklet could be interrupted
-> by the Hard IRQ hence the disabling of irqs with save/restore when
-> entering critical section.
-> 
-> It should not be needed to keep interrupts locally disabled while invoking
-> callbacks, will add this to the commit description.
-> 
-> [1] https://www.kernel.org/doc/Documentation/kernel-hacking/locking.rst
+This series does the following
+1. Adds a PolarFire SoC specific compatible and code to support for
+out-of-order dma transfers 
 
-Thanks for the link. I have read differently here [2] w/ special 
-emphasis on "Lesson 3: spinlocks revisited.".
+2. Adds generic device tree bindings support by using 
+of_dma_controller_register()
 
-[2] https://www.kernel.org/doc/Documentation/locking/spinlocks.txt
+Shravan Chippa (3):
+  dmaengine: sf-pdma: Support of_dma_controller_register()
+  dt-bindings: dma: sf-pdma: add new compatible name
+  dmaengine: sf-pdma: add mpfs-pdma compatible name
 
-Cheers
-Eric
+ .../bindings/dma/sifive,fu540-c000-pdma.yaml  | 12 ++--
+ drivers/dma/sf-pdma/sf-pdma.c                 | 68 ++++++++++++++++++-
+ drivers/dma/sf-pdma/sf-pdma.h                 |  6 ++
+ 3 files changed, 79 insertions(+), 7 deletions(-)
+
+-- 
+2.34.1
+
