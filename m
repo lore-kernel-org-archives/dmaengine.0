@@ -2,98 +2,120 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 33341CD4F46
-	for <dmaengine@archiver.kernel.org>; Fri, 22 Sep 2023 09:50:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EC0FBCD4F45
+	for <dmaengine@archiver.kernel.org>; Fri, 22 Sep 2023 09:59:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232783AbjIVJuz (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 22 Sep 2023 05:50:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36152 "EHLO
+        id S232926AbjIVKAE (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 22 Sep 2023 06:00:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60044 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232542AbjIVJuv (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Fri, 22 Sep 2023 05:50:51 -0400
-Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [IPv6:2a0a:edc0:2:b01:1d::104])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E45891
-        for <dmaengine@vger.kernel.org>; Fri, 22 Sep 2023 02:50:41 -0700 (PDT)
-Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
-        by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.92)
-        (envelope-from <sha@pengutronix.de>)
-        id 1qjcnx-0007Ns-Ak; Fri, 22 Sep 2023 11:50:33 +0200
-Received: from [2a0a:edc0:2:b01:1d::c0] (helo=ptx.whiteo.stw.pengutronix.de)
-        by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-        (Exim 4.94.2)
-        (envelope-from <sha@pengutronix.de>)
-        id 1qjcnw-0088Hm-6G; Fri, 22 Sep 2023 11:50:32 +0200
-Received: from sha by ptx.whiteo.stw.pengutronix.de with local (Exim 4.92)
-        (envelope-from <sha@pengutronix.de>)
-        id 1qjcnw-00AwJ0-3Y; Fri, 22 Sep 2023 11:50:32 +0200
-Date:   Fri, 22 Sep 2023 11:50:32 +0200
-From:   Sascha Hauer <s.hauer@pengutronix.de>
-To:     Tim van der Staaij | Zign <Tim.vanderstaaij@zigngroup.com>
-Cc:     Shawn Guo <shawnguo@kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        "dmaengine@vger.kernel.org" <dmaengine@vger.kernel.org>,
-        Fabio Estevam <festevam@gmail.com>,
-        "linux-arm-kernel@lists.infradead.org" 
-        <linux-arm-kernel@lists.infradead.org>
-Subject: Re: [PATCH] dmaengine: imx-sdma: fix deadlock in interrupt handler
-Message-ID: <20230922095032.GU637806@pengutronix.de>
-References: <AM0PR08MB30897429213E8DB9BCC1D6C880F8A@AM0PR08MB3089.eurprd08.prod.outlook.com>
+        with ESMTP id S229533AbjIVKAD (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Fri, 22 Sep 2023 06:00:03 -0400
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E59391;
+        Fri, 22 Sep 2023 02:59:58 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A961DC433C8;
+        Fri, 22 Sep 2023 09:59:54 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1695376797;
+        bh=Rmbwnfy/2jfDt6etmwMj6pRES6Qp/FcaWgWrT8xRulQ=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=mw1vZL+iRdVdZLIzYj9igp3k9yg7oXHD4JzzSXuD4hY3XJRDU6thvQcwYcW2hoEme
+         Ol1W9cMUVlfw7qW8LMI83PivEgj+cOpdSv0DTkoKAN9lDYgY/AtQRGy0cm/he3eyB2
+         2Mcu5jtXms7IBzBE9oPKkmlKDTvcknmyu/efrFcWtFMMFx5FH1MLY9TzLVy2Aujnsk
+         7TcTkEjdS1JF71KqHiCIwlDhSCw7+Cvty2sGgYx9+hMcVaCZcJvbhS34J1zF8VhSqK
+         C9pqpiDIhkC3bxWxjL6kjIxrP3mlHgqPckTIpT3CsWUj0rx38f9Co7f2URmDB3Tlwu
+         xnljFyl4KAc6w==
+Date:   Fri, 22 Sep 2023 10:59:52 +0100
+From:   Conor Dooley <conor@kernel.org>
+To:     shravan chippa <shravan.chippa@microchip.com>
+Cc:     green.wan@sifive.com, vkoul@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, palmer@dabbelt.com,
+        paul.walmsley@sifive.com, conor+dt@kernel.org, palmer@sifive.com,
+        dmaengine@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org,
+        nagasuresh.relli@microchip.com, praveen.kumar@microchip.com,
+        Conor Dooley <conor.dooley@microchip.com>
+Subject: Re: [PATCH v1 2/3] dt-bindings: dma: sf-pdma: add new compatible name
+Message-ID: <20230922-gray-zebra-a0ea451cc5cc@spud>
+References: <20230922095039.74878-1-shravan.chippa@microchip.com>
+ <20230922095039.74878-3-shravan.chippa@microchip.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha256;
+        protocol="application/pgp-signature"; boundary="aMX1ax+XegASzcpP"
 Content-Disposition: inline
-In-Reply-To: <AM0PR08MB30897429213E8DB9BCC1D6C880F8A@AM0PR08MB3089.eurprd08.prod.outlook.com>
-X-Sent-From: Pengutronix Hildesheim
-X-URL:  http://www.pengutronix.de/
-X-Accept-Language: de,en
-X-Accept-Content-Type: text/plain
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
-X-SA-Exim-Mail-From: sha@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: dmaengine@vger.kernel.org
+In-Reply-To: <20230922095039.74878-3-shravan.chippa@microchip.com>
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Hi Tim,
 
-On Thu, Sep 21, 2023 at 09:57:11AM +0000, Tim van der Staaij | Zign wrote:
-> dev_warn internally acquires the lock that is already held when
-> sdma_update_channel_loop is called. Therefore it is acquired twice and
-> this is detected as a deadlock. Temporarily release the lock while
-> logging to avoid this.
-> 
-> Signed-off-by: Tim van der Staaij <tim.vanderstaaij@zigngroup.com>
-> Link: https://lore.kernel.org/all/AM0PR08MB308979EC3A8A53AE6E2D3408802CA@AM0PR08MB3089.eurprd08.prod.outlook.com/
+--aMX1ax+XegASzcpP
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+Hey Shravan,
+
+On Fri, Sep 22, 2023 at 03:20:38PM +0530, shravan chippa wrote:
+> From: Shravan Chippa <shravan.chippa@microchip.com>
+>=20
+> add new compatible name microchip,mpfs-pdma to support out of order dma
+> transfers this will improve the dma throughput for mem-to-mem transfer
+>=20
+> Signed-off-by: Shravan Chippa <shravan.chippa@microchip.com>
+> Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
+> Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
+
+I would appreciate if you would drop any vendor tree related tags when
+submitting patches upstream, especially for dt-bindings where it
+actually means something to have my R-b on them.
+
+Cheers,
+Conor.
+
 > ---
->  drivers/dma/imx-sdma.c | 3 +++
->  1 file changed, 3 insertions(+)
-> 
-> diff --git a/drivers/dma/imx-sdma.c b/drivers/dma/imx-sdma.c
-> index 51012bd39900..3a7cd783a567 100644
-> --- a/drivers/dma/imx-sdma.c
-> +++ b/drivers/dma/imx-sdma.c
-> @@ -904,7 +904,10 @@ static void sdma_update_channel_loop(struct sdma_channel *sdmac)
->  	 * owned buffer is available (i.e. BD_DONE was set too late).
->  	 */
->  	if (sdmac->desc && !is_sdma_channel_enabled(sdmac->sdma, sdmac->channel)) {
-> +		spin_unlock(&sdmac->vc.lock);
->  		dev_warn(sdmac->sdma->dev, "restart cyclic channel %d\n", sdmac->channel);
-> +		spin_lock(&sdmac->vc.lock);
+>  .../bindings/dma/sifive,fu540-c000-pdma.yaml         | 12 ++++++++----
+>  1 file changed, 8 insertions(+), 4 deletions(-)
+>=20
+> diff --git a/Documentation/devicetree/bindings/dma/sifive,fu540-c000-pdma=
+=2Eyaml b/Documentation/devicetree/bindings/dma/sifive,fu540-c000-pdma.yaml
+> index a1af0b906365..974467c4bacb 100644
+> --- a/Documentation/devicetree/bindings/dma/sifive,fu540-c000-pdma.yaml
+> +++ b/Documentation/devicetree/bindings/dma/sifive,fu540-c000-pdma.yaml
+> @@ -27,10 +27,14 @@ allOf:
+> =20
+>  properties:
+>    compatible:
+> -    items:
+> -      - enum:
+> -          - sifive,fu540-c000-pdma
+> -      - const: sifive,pdma0
+> +    oneOf:
+> +      - items:
+> +          - const: microchip,mpfs-pdma # Microchip out of order DMA tran=
+sfer
+> +          - const: sifive,fu540-c000-pdma # Sifive in-order DMA transfer
+> +      - items:
+> +          - enum:
+> +              - sifive,fu540-c000-pdma
+> +          - const: sifive,pdma0
+>      description:
+>        Should be "sifive,<chip>-pdma" and "sifive,pdma<version>".
+>        Supported compatible strings are -
+> --=20
+> 2.34.1
+>=20
 
-This is strange. Why and how does dev_warn() call back into the SDMA
-driver?
+--aMX1ax+XegASzcpP
+Content-Type: application/pgp-signature; name="signature.asc"
 
-We shouldn't merge this without having a clue what exactly goes wrong
-here. Please provide the corresponding lockdep output.
+-----BEGIN PGP SIGNATURE-----
 
-Sascha
+iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCZQ1lmAAKCRB4tDGHoIJi
+0pXbAP0UtoRGkkj5hBqOaT63U8Em3NH+kiUFeZ/HgkF8mLKhdQEA48b4gMC9cPIS
+e5Clll7FoZlKKL8d+LNM/uuMmpUvvQ0=
+=6kQe
+-----END PGP SIGNATURE-----
 
--- 
-Pengutronix e.K.                           |                             |
-Steuerwalder Str. 21                       | http://www.pengutronix.de/  |
-31137 Hildesheim, Germany                  | Phone: +49-5121-206917-0    |
-Amtsgericht Hildesheim, HRA 2686           | Fax:   +49-5121-206917-5555 |
+--aMX1ax+XegASzcpP--
