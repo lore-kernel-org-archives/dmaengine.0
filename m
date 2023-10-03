@@ -2,52 +2,52 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4815AE7AD58
-	for <dmaengine@archiver.kernel.org>; Tue,  3 Oct 2023 14:54:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 42C77E7AD6D
+	for <dmaengine@archiver.kernel.org>; Tue,  3 Oct 2023 14:56:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240188AbjJCOyt (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 3 Oct 2023 10:54:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40914 "EHLO
+        id S240344AbjJCO4D (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 3 Oct 2023 10:56:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37496 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240176AbjJCOyr (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Tue, 3 Oct 2023 10:54:47 -0400
-Received: from EUR05-AM6-obe.outbound.protection.outlook.com (mail-am6eur05on2049.outbound.protection.outlook.com [40.107.22.49])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 86AD71B1;
-        Tue,  3 Oct 2023 07:53:28 -0700 (PDT)
+        with ESMTP id S240596AbjJCOz6 (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Tue, 3 Oct 2023 10:55:58 -0400
+Received: from EUR05-AM6-obe.outbound.protection.outlook.com (mail-am6eur05on2067.outbound.protection.outlook.com [40.107.22.67])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 99174D7;
+        Tue,  3 Oct 2023 07:54:29 -0700 (PDT)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=N2DsTnJ1wRfXUFs6siVFJkSUUTlctN7wDZeTdgpwtXDC+sI2J15NgIy3bDRDiD4732QvC04S1s5LVSF+bdaX7gveorIghXYlc+bGo3UlOA3Zl4o4GOJWdXc1e77XkL8jPm5Q5Xn8J4p/0yB0vOYWUcQk2Fyne8CeI8nvCcanNeZHwG+BQOTmecjSWH/k8shnTtSmVZy26Mm/B4NLTSayF4+aQ5W40bPhFU4ml7T0ACQov+wthRQ/N5BVQdsgpu87efzPyT5ebhK//G59xHXvoMCDUXL+7+OX7Ch+T51el6bk2CwUha7foBcQ5Qeh0PyE/y/7yrMfJI9t+kyg9uzWmw==
+ b=NrPKwwBpU0iMFh80uTAzl5v9DN9pD6DgSKI7+tYD/GiNWfiPsiAPzTOowmCJVwzEW+uaXIxwo7O9Ujkl83VCqUkVSDFCCXGKp+95tS1YBKVV6vv4pu1iZ2t/Afy6MOIMk2U/qHC0oMo69dOK/l9CUTc0uw/6x2LQ6c40lHSHNcX45629TQ4eIuRQlxSuCIzEqmbi5TiVyMt656i1b1L2p/DtpKjjHkUWpOWDuMzDX2LuC8uoXBFiDDH9zGS8QP8IN/ulwyx8HhCPk/eugsEVMLYY8s8vf8e+Pvj1p0gYYFnKfBi9BDqT1B2SNYZ4WTEvl07u4V/+yKnFZGEkan3+SQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=dsHRCYpEctI6Zzn89z8ATSekt/z2xOHV1+DaQDxRwCI=;
- b=YRwcnkQ8VLLn+tjmlU84DKM5OlasWOke7JAZiDZNnoeMTbvoyTosXjZpjR69s18PpHbsZwmVKEWxapa2NQVNA3uczC1WUkQ1MihwCRyW6G/kzJBbLiFUFmShD7GdHtq9KW1qTY6ANu75UiyeeBfyQnrkWchkP/ftygbrZx4+98qNfG1QyEu4OBCh3na/FYFBWXincibd+gJIm8icgpjwIKuVHmB1M5wvE/MaKu6Dw5EQAbgBRboPc4xsX0/bNKmYJmcOuxtESAsuhfAnfVrbdROQEIPcboKr0bBe4uKQpr+rwRmR2s2N6aHKxPyXCGlrG55Xqj9KVLLZ5danrJ6dHw==
+ bh=vSwA1bfeEHszTu5G6jeavumnHAM9N1N3W/jyFWLPiiA=;
+ b=fJ8G1PcMpgICT65drpWGku5PUHiKWIZVXRjsRt2+dgY/PCKn335UgEnkbB3CWvWIv1NXZwUmLRh5N26Qs176UYv/aRA1Tbaae3FvNmgcMG9OmzoVETOebB2TLJxQVP8NjJHKP7VE0EGnBVtpd52i2rDg7Uj2CfS7gMwVdi6KC6uUgWL0m+V4VFkjykMPJXUJR4iQlKgNniSwAS+LLMHR3YunOYoaJcX2S7QVOJinLpeArsBVEQSo4q4DTN9551RX75Sp6s547y9buNOikmhWII/DpE+7N+qmP5Ng1WfBa0S1S2G+X1PI9C7UFJCYV/napgegh9Qze2e61vgbusl90g==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
  header.d=nxp.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=dsHRCYpEctI6Zzn89z8ATSekt/z2xOHV1+DaQDxRwCI=;
- b=PQtnblVo0rhbT1nd7yO5pONJUb1hbpXVTdqeZjbwSaGihbYkMXznJK3v6hvSRCYUmbBP3Jdr2NGaYBcKRHXTpICZT5sBOu96YeYHVc766aFDvhz22QE9qmujOeTF9xLeIhNFQIdd62YjbuUsM48q1PKOwlwvpAJuN1g5qplOIXs=
+ bh=vSwA1bfeEHszTu5G6jeavumnHAM9N1N3W/jyFWLPiiA=;
+ b=ZahUVLhBfq/B0noF/Tgu9VK/AszGLAHmbT6UhISRFQL+bGcUi0TtlbuYoNnYHXlXDgX2gMHcHfpQgGUtnCLpNvjeUVPOawhAwsej8v7K+VR28UDwGId8inwHcWYJgikldq05UjybT/ZjB3yrks9P6NEBvNR2Kw/78MH+rNuliAM=
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nxp.com;
 Received: from AM6PR04MB4838.eurprd04.prod.outlook.com (2603:10a6:20b:4::16)
  by AS8PR04MB7526.eurprd04.prod.outlook.com (2603:10a6:20b:299::23) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6813.23; Tue, 3 Oct
- 2023 14:52:32 +0000
+ 2023 14:52:39 +0000
 Received: from AM6PR04MB4838.eurprd04.prod.outlook.com
  ([fe80::1774:e25f:f99:aca2]) by AM6PR04MB4838.eurprd04.prod.outlook.com
  ([fe80::1774:e25f:f99:aca2%4]) with mapi id 15.20.6813.027; Tue, 3 Oct 2023
- 14:52:32 +0000
+ 14:52:39 +0000
 From:   Frank Li <Frank.Li@nxp.com>
 To:     arnd@arndb.de, vkoul@kernel.org
 Cc:     Frank.Li@nxp.com, bhe@redhat.com, dmaengine@vger.kernel.org,
         gregkh@linuxfoundation.org, imx@lists.linux.dev,
         linux-kernel@vger.kernel.org, lkp@intel.com,
         oe-kbuild-all@lists.linux.dev, rafael@kernel.org
-Subject: [PATCH v6 1/3] debugfs_create_regset32() support 8/16 bit width registers
-Date:   Tue,  3 Oct 2023 10:52:10 -0400
-Message-Id: <20231003145212.662955-2-Frank.Li@nxp.com>
+Subject: [PATCH v6 3/3] dmaengine: fsl-edma: add trace event support
+Date:   Tue,  3 Oct 2023 10:52:12 -0400
+Message-Id: <20231003145212.662955-4-Frank.Li@nxp.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20231003145212.662955-1-Frank.Li@nxp.com>
 References: <20231003145212.662955-1-Frank.Li@nxp.com>
@@ -59,247 +59,329 @@ X-ClientProxiedBy: SJ0PR13CA0186.namprd13.prod.outlook.com
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: AM6PR04MB4838:EE_|AS8PR04MB7526:EE_
-X-MS-Office365-Filtering-Correlation-Id: 9b1ca539-7e22-49b1-3489-08dbc4205fab
+X-MS-Office365-Filtering-Correlation-Id: 51245aee-a80b-4c2f-81f9-08dbc4206356
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: EmfIDY2sQjEJ1D0o4G0y6lhHD7U6kRj4xSxKubx39Tsy38RmUeP095YZ7q/0XpmKaI0n+BeNoM/DhDP6+u0rZRkNSyIdM4FkEvnY6es0oaXTl7UiehtOUaMu3LgBycqzKlhd+6A1ScuX2DcfwniByHDit7WKuo+HJMSb7S5l/Kzu+pWHEzfAH/0VpzELWASO2HjcrZi6p87NE3YC99ZQ3JhJxPa0z5STDGwVidmAlX2GW3GphcJ4nos0QwFpVDxog8Fwo7olwRhoSerrMPx6CYVLDkzrtKIFC1GyBBeJO7fdKbo1j7frPeoSBWtYoEV7MlIueZblqDHsdLzb9hbW3lVbM6UKc/a93YlGrYfLbijblfcSRsDtrL12moRD1+x26tZ0ON4nMZkFuRmKrbsbQSxL61m6+f7oohD0oZMgGGIvqA+BFgI/WrXHSjty4Clh6/2Uk+OQEQNgdg6tlcL20A72zh0clmzIi+ixTaStE9xUwZsU0rYxR4fJ1E8gNAPalf0TQiiQ5nFMzyx0ihrj1QFvQSn6Gtadt0mcqjiRoZA5uWuipX54ZKirqzmmaki+Z/LEuPWWtUk6Nu0CWP3plALalBDtHBOMHHPCtwgTadi6ctZyId06/twBXzZ3RuuP
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:AM6PR04MB4838.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(396003)(346002)(136003)(366004)(39860400002)(376002)(230922051799003)(186009)(1800799009)(64100799003)(451199024)(36756003)(38350700002)(86362001)(66899024)(8676002)(66476007)(2616005)(1076003)(41300700001)(52116002)(8936002)(4326008)(66556008)(5660300002)(7416002)(2906002)(6486002)(83380400001)(6666004)(478600001)(6506007)(6512007)(316002)(26005)(38100700002)(66946007);DIR:OUT;SFP:1101;
+X-Microsoft-Antispam-Message-Info: GUoQjmagccczRU+KR7MKIly5AlD5XeX0/RdZNF97i96BxAH/lvOXmTA37Yk4hRtgUqqoKrQeeRQmEWttTnA+J9DgfIoYRTkCzYecVj6JF89OZMkW1y3+NbSnbgV79DIOvPvevnI+XZE/k7AS/mWYRSJtdbDQWTsYflWHKHRkLac5vRMqMNK+kGISCXDjIOjui+j5ud2buQbvEZecV+k1roOhOI8Pk9MDb5PCGDDWSVu7qLt5YlCY21VMd2ipHpxWYZsha+phLZlTn8zPDcN96EDWQms51Fy1fuNxajiXHvyDafy6sdZfbPSKD83pfgVz6tpEOzkdJKapoCdB3sWnhsPop3e7jMZacntNsGM3S3IfPJkr0EcOVGDwRRQDpOCFB+pBnyMJkCSB6jgrny5mVF/oDjLnH4XUQ/tnqGbMbXccrNfJdVmRebHaK60LonK4LgajKk9Ou8X8uGYBOBYV2WkcArXWSHZOGb/T/dLYfG5SwRovmNNgg3cMhuhvKQUkeSdhjS6U2iWsFpBKvLZIQ0iw+8ezw7WREsvMYLmNSi+v2rd36P6kXYbM0G7cY9eHHdPolnaZB6/lF+7KU65K13TnsC7nm5GGuci5jGSj9izmJ5Y7X0Bi+YSW4I4mAw4J
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:AM6PR04MB4838.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(396003)(346002)(136003)(366004)(39860400002)(376002)(230922051799003)(186009)(1800799009)(64100799003)(451199024)(36756003)(38350700002)(86362001)(8676002)(66476007)(2616005)(1076003)(41300700001)(52116002)(8936002)(4326008)(66556008)(5660300002)(7416002)(2906002)(6486002)(83380400001)(6666004)(478600001)(6506007)(6512007)(316002)(26005)(38100700002)(66946007);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?UkT19nXjxNM/FY/PQvzOriNyZnjM8sMUhYsDXvMNiz+/vUCQH80OZfuMVKb5?=
- =?us-ascii?Q?lnSarIFXZeXzZUMLb9paXESKyiP/bVyDFscVetfUJpnKhvZQHgbcKga5HN0O?=
- =?us-ascii?Q?jHGsOfSoMIsRikkxf/swadKgX0TCCSBVCrix5UCehGy0RKJRqcMSgEf0XtzQ?=
- =?us-ascii?Q?nheNk6IcNb5dBQJJkANP4cGthFRTuM9JGGffeexNpFuudlWWXxtejGQTGz0p?=
- =?us-ascii?Q?PjUpoGMW0KyitmB9VrXwOFy84x1Qf8WpqyEKx7Xhqt/ERpGzxPxlaB3z8UOO?=
- =?us-ascii?Q?Lf2JUm8OaWFGPfxRSW3M7lszdEmxfz/FJYNDbXrwLGddikkY8X1lSdLfDmFx?=
- =?us-ascii?Q?CnW24gsLVGH2LelJBhbPKdLJmfoexRuvrupsTivSwFkVi7FWS1rbAflhJ1Ub?=
- =?us-ascii?Q?WEk5MXzUleO4yeuZ9MBzb+ObQ3F7sWvbiGHPYpt1QTAhnWIRTJnqIDGFS8s6?=
- =?us-ascii?Q?CXchCWIUjQ9Gh7kpmUhBDDDvLh6PgBlgLgOMM1iMYISDCznW5vhNBe46Z18N?=
- =?us-ascii?Q?CGsqzndJxXGDy4xqilp5Kz9LlPHpQ+4NgrvqUewwXg4fJXH7Ihd7abGyGWLY?=
- =?us-ascii?Q?M9Bt2NNXJiLdbWPk/fXSXvVSD/Hp14iuE57Hv40MPs2sMjHt03SwupNTtvj9?=
- =?us-ascii?Q?CiK/wcxJJgPAfYHGkm02h31XFqtsB0chZWcr3yLcNAVXQ3d7J5I/WtAAk2vR?=
- =?us-ascii?Q?thgZctVFyLwci9zqcTryAe4ikt1XqsCkKhCB0LhR2JQ65lWGllA24FYNxa+x?=
- =?us-ascii?Q?dTW46b5/MGANbAFgKWY/F1LHvX0yH2oejdaN1QXCww1L9WXfMuBvSAHu9II2?=
- =?us-ascii?Q?HuCOVu1LvwNupG9LNIB4vQGXcR7rdooya/8C9pi6vbKTsrwnYw8yw7dctxzK?=
- =?us-ascii?Q?6RncCAU9R0insk7wYU8Xk+TJVNocECWkUDcC8ocy8/+TMOjgd5xgLu5+S4jF?=
- =?us-ascii?Q?WXcvC24Drmk26AmbAfHecw9+Ow/FoT4Teo3ySsYjJL0g99Ll1PvFsw2J2yzC?=
- =?us-ascii?Q?3qasx7mnWes7/VN3+5HSVUCnrLWTFxPDVrdrnee182a546bk0hC8n9ZGtCcR?=
- =?us-ascii?Q?vCcCY9e0PtCdqNAYIWeHO/ZaaTmUSUmVniUYDiNXeYa29R5tVqyf5O4ZFLB/?=
- =?us-ascii?Q?oY05thd4udtxJfN276V2YfebWzZ2C9BOo/CrG13//KIi/XJVnOTjiNOTwzKt?=
- =?us-ascii?Q?A9prIkRJ4xueB75Y+MEzxpD0L8jC2URVPmRDuWAGaU4h0Oq2jT2zPpM2aLSx?=
- =?us-ascii?Q?DRl6xWxzDgbiHrYlO0SMGfXcopEnyW0B73E5EkUteJIqK4TanmxH8eK/+99W?=
- =?us-ascii?Q?NnpCa2KuHoSZ3EfS7NE+oH5C5KkOXzNcWm0Hmf8Leep/mDaH9dlqNp+REAvL?=
- =?us-ascii?Q?py8A5rnOAzrcZ/Xry0nKTMS3iKLARXptML5f8dwCCL6y4TlCnn+Hm87Vs3Ec?=
- =?us-ascii?Q?62eLFSA/eOrq5ptFDzMPCQvndepPmJfKrhys2j9RqyCUj2A1KkFkfKw0ACd9?=
- =?us-ascii?Q?3HVCwN26D/RQZtjrYV6CvaUCItYpHiQ7bFFFPrKZvpiZ05LEZJLzVwdYuDER?=
- =?us-ascii?Q?8r5ZPmIz4Q6ad7zg+DBbHTGFPe6+IlurPqXHkfaZ?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?TONi1xaDgTbLfBpG+jG14KJqQ9bwBYjzWj2oD1VoKjqR/rJ9TELpj3daMwgt?=
+ =?us-ascii?Q?zjNd0Z/MCotzEudcmR5rdfBvfLp1Jxj9hRgPtdjhYYSa9pg9Wk04m7CcoLyO?=
+ =?us-ascii?Q?JgymRC1fMCUUtILv0kgON6s9NBs5G30g6SaLUu+nosWrj5IYNR5UI6MKBQz8?=
+ =?us-ascii?Q?HhRAsIqD2GEyubb23wfTpvAiyZk8+6v0DPMYRb3Uj0xoUkYK5F8/MLwu9ifM?=
+ =?us-ascii?Q?AajMzRV6hM0WKRIft9qtFWjwEmyBUHjfAfAmOo5Bpkb0fnpSWxYL+v8x8VQX?=
+ =?us-ascii?Q?JPXeZ7L/DMC2cAGkwT/kapUFvOIN/bvKqVsGUQS2dYuAPLRthVUR2JW4E7bN?=
+ =?us-ascii?Q?w6Lha1AV9uONxlNSbBWlyaEYheNlHjoQ63TE0PFTz/sfb0NfudGwbbQfD/e4?=
+ =?us-ascii?Q?Qzq30RYL5wGMLCcZAsG+R8LdI3Atsf9mLE+ei0N3xtp4ViQRacak3kdDjeJe?=
+ =?us-ascii?Q?7tKkr8K1BcyZJLo6B5Vvg2b71FUZnsbj9CSZZqpyXdbyDuOjABG566mj5Pfd?=
+ =?us-ascii?Q?wQctFrqmG5gTRw7jKqjUiXnuHTiZ+g68b3PM2B1G28e9j/i/FLgr67Ld/dds?=
+ =?us-ascii?Q?X+0f0JOvzScrbgoMsfJOoQzmDrLW35GG/Y/j7TgdRCfvD6+AN08332zhLrve?=
+ =?us-ascii?Q?gAR1hQQbhJc4rTznnW4HNoiXz2u4au46WW7xo54703AO24xXPwNI+C5yFoRl?=
+ =?us-ascii?Q?6pnaWwW+tw6nHa3Y5OoXEiUWkhAKv7xf910RRXnbC92rtUswZbi3BwglxG/S?=
+ =?us-ascii?Q?eIVPjiG9riraN2Ni3ntUZTELXpClppsfc1rSx9gSWLtfdz4T2cuybn0R+pcs?=
+ =?us-ascii?Q?73M2uZOtSVrzzEBLRNpFJn/dZDws+KXnw/tk4O+PSta6zWjPrPuKf1Gso8dV?=
+ =?us-ascii?Q?iKkXPotY2Ri9Q+M/nWkRRvnzoMRA6q6yqsH5miTPVePm6QrBIOCK69rEkvRi?=
+ =?us-ascii?Q?QrhrXmCtIFMmQs2cV0EgE4NX7P5c6zNH3CbmyzusWkIknH4jJfk2kEP+ASTI?=
+ =?us-ascii?Q?NW3wwECoZHkSOeYjAbmIn2jlMshwOnqIfRr+i9yZ+iAxQWEkxfeXEnjwCZgo?=
+ =?us-ascii?Q?yvthpR2viZjgBSrJAZwSlFSZAEHcRe1ksbNQQD1q7hx+c6O8e5w4FxnONx3r?=
+ =?us-ascii?Q?OVQLysp3YdMhcE1TaJyf6KAwIIzbnvwPGgVETfCscZHcmQF0FSRV69r7aal5?=
+ =?us-ascii?Q?q8qqczScuxmrMXWOevrp7Tcq0RwMY19nZ0YBJ1iDXGlFxOc9AMYXggoS01Li?=
+ =?us-ascii?Q?pXavxrOHFsHo2yHY8vfwgSpMwieP9MbHMnuPe+qGCjKh382/z/5wGFWDaSXg?=
+ =?us-ascii?Q?3Tv/BN0nWW/XK6XcXVARweTm0F8OW+UnFAYyNGvH4d5ZdiE7aEN9IX0FdtR7?=
+ =?us-ascii?Q?GeWO1cNrefEYYsjJ7S6IIUY4unb9fwL3e0yLCKhjlLtfRQxi4qEiFkqJrVL8?=
+ =?us-ascii?Q?SAHnSlDqJaA0NusDk+cFVYlLzmAAAcM2argae/NZupBExUUSYVDHfXezfMNS?=
+ =?us-ascii?Q?nzQ0M3JZ1b71s1O07Iaj5VYfwXnc/pckruB4E59G4ywS38zhG/CEuO8/j0wK?=
+ =?us-ascii?Q?XN+S5A6UqQngiVvBHB3z/+YCM4iyB4lvOcCauf4i?=
 X-OriginatorOrg: nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 9b1ca539-7e22-49b1-3489-08dbc4205fab
+X-MS-Exchange-CrossTenant-Network-Message-Id: 51245aee-a80b-4c2f-81f9-08dbc4206356
 X-MS-Exchange-CrossTenant-AuthSource: AM6PR04MB4838.eurprd04.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Oct 2023 14:52:32.7955
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Oct 2023 14:52:38.9267
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: zy+nGYDAIXmNljuMnIRFawOBmlaKjjSslf6jC4D10u6XFhekbQCjF2FuxY7NF5j4Y+6ELhJkBAPnEn7kDK9Wjg==
+X-MS-Exchange-CrossTenant-UserPrincipalName: iFrloVFPonZSYNddqkixnOzUGvh+b4RUXxFQsedLmMwNVcQ9WOCP4dUoefirPgzyiYYC6ddJYkPrq1FlCeferg==
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS8PR04MB7526
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Enhance the flexibility of `debugfs_create_regset32()` to support registers
-of various bit widths. The key changes are as follows:
-
-1. Renamed '*reg32' and '*regset32' to '*reg' and '*regset' in relevant
-   code to reflect that the register width is not limited to 32 bits.
-
-2. Added 'size' and 'bigendian' fields to the `struct debugfs_reg` to allow
-   for specifying the size and endianness of registers. These additions
-   enable `debugfs_create_regset()` to support a wider range of register
-   types.
-
-3. When 'size' is set to 0, it signifies a 32-bit register. This change
-   maintains compatibility with existing code that assumes 32-bit
-   registers.
-
-Improve the versatility of `debugfs_create_regset()` and enable it to
-handle registers of different sizes and endianness, offering greater
-flexibility for debugging and monitoring.
+Implement trace event support to enhance logging functionality for
+register access and the transfer control descriptor (TCD) context.
+This will enable more comprehensive monitoring and analysis of system
+activities
 
 Signed-off-by: Frank Li <Frank.Li@nxp.com>
 ---
- fs/debugfs/file.c       | 54 +++++++++++++++++++++++++++--------------
- include/linux/debugfs.h | 17 ++++++++++---
- 2 files changed, 49 insertions(+), 22 deletions(-)
+ drivers/dma/Makefile          |   6 +-
+ drivers/dma/fsl-edma-common.c |   2 +
+ drivers/dma/fsl-edma-common.h |  29 +++++++-
+ drivers/dma/fsl-edma-trace.c  |   4 +
+ drivers/dma/fsl-edma-trace.h  | 134 ++++++++++++++++++++++++++++++++++
+ 5 files changed, 169 insertions(+), 6 deletions(-)
+ create mode 100644 drivers/dma/fsl-edma-trace.c
+ create mode 100644 drivers/dma/fsl-edma-trace.h
 
-diff --git a/fs/debugfs/file.c b/fs/debugfs/file.c
-index 87b3753aa4b1..2f2baf5ee3b3 100644
---- a/fs/debugfs/file.c
-+++ b/fs/debugfs/file.c
-@@ -1137,15 +1137,15 @@ EXPORT_SYMBOL_GPL(debugfs_create_u32_array);
- #ifdef CONFIG_HAS_IOMEM
+diff --git a/drivers/dma/Makefile b/drivers/dma/Makefile
+index a51c6397bcad..40b2dd554e5d 100644
+--- a/drivers/dma/Makefile
++++ b/drivers/dma/Makefile
+@@ -32,10 +32,12 @@ obj-$(CONFIG_DW_DMAC_CORE) += dw/
+ obj-$(CONFIG_DW_EDMA) += dw-edma/
+ obj-$(CONFIG_EP93XX_DMA) += ep93xx_dma.o
+ fsl-edma-debugfs-$(CONFIG_DEBUG_FS) := fsl-edma-debugfs.o
++CFLAGS_fsl-edma-trace.o := -I$(src)
++fsl-edma-trace-$(CONFIG_TRACING) := fsl-edma-trace.o
+ obj-$(CONFIG_FSL_DMA) += fsldma.o
+-fsl-edma-objs := fsl-edma-main.o fsl-edma-common.o $(fsl-edma-debugfs-y)
++fsl-edma-objs := fsl-edma-main.o fsl-edma-common.o $(fsl-edma-debugfs-y) ${fsl-edma-trace-y}
+ obj-$(CONFIG_FSL_EDMA) += fsl-edma.o
+-mcf-edma-objs := mcf-edma-main.o fsl-edma-common.o $(fsl-edma-debugfs-y)
++mcf-edma-objs := mcf-edma-main.o fsl-edma-common.o $(fsl-edma-debugfs-y) ${fsl-edma-trace-y}
+ obj-$(CONFIG_MCF_EDMA) += mcf-edma.o
+ obj-$(CONFIG_FSL_QDMA) += fsl-qdma.o
+ obj-$(CONFIG_FSL_RAID) += fsl_raid.o
+diff --git a/drivers/dma/fsl-edma-common.c b/drivers/dma/fsl-edma-common.c
+index a0f5741abcc4..0182e2695fdc 100644
+--- a/drivers/dma/fsl-edma-common.c
++++ b/drivers/dma/fsl-edma-common.c
+@@ -521,6 +521,8 @@ void fsl_edma_fill_tcd(struct fsl_edma_chan *fsl_chan,
+ 		csr |= EDMA_TCD_CSR_START;
  
+ 	tcd->csr = cpu_to_le16(csr);
++
++	trace_edma_fill_tcd(fsl_chan->edma, tcd);
+ }
+ 
+ static struct fsl_edma_desc *fsl_edma_alloc_desc(struct fsl_edma_chan *fsl_chan,
+diff --git a/drivers/dma/fsl-edma-common.h b/drivers/dma/fsl-edma-common.h
+index 029197440bc3..453c997d0119 100644
+--- a/drivers/dma/fsl-edma-common.h
++++ b/drivers/dma/fsl-edma-common.h
+@@ -234,6 +234,9 @@ struct fsl_edma_engine {
+ 	edma_writel(chan->edma, val,				\
+ 		   (void __iomem *)&(container_of(chan->tcd, struct fsl_edma3_ch_reg, tcd)->__name))
+ 
++/* Need after struct defination */
++#include "fsl-edma-trace.h"
++
  /*
-- * The regset32 stuff is used to print 32-bit registers using the
-+ * The regset stuff is used to print 32-bit registers using the
-  * seq_file utilities. We offer printing a register set in an already-opened
-- * sequential file or create a debugfs file that only prints a regset32.
-+ * sequential file or create a debugfs file that only prints a regset.
+  * R/W functions for big- or little-endian registers:
+  * The eDMA controller's endian is independent of the CPU core's endian.
+@@ -242,18 +245,30 @@ struct fsl_edma_engine {
   */
- 
- /**
-- * debugfs_print_regs32 - use seq_print to describe a set of registers
-+ * debugfs_print_regs - use seq_print to describe a set of registers
-  * @s: the seq_file structure being used to generate output
-- * @regs: an array if struct debugfs_reg32 structures
-+ * @regs: an array if struct debugfs_reg structures
-  * @nregs: the length of the above array
-  * @base: the base address to be used in reading the registers
-  * @prefix: a string to be prefixed to every output line
-@@ -1157,30 +1157,48 @@ EXPORT_SYMBOL_GPL(debugfs_create_u32_array);
-  * because some peripherals have several blocks of identical registers,
-  * for example configuration of dma channels
-  */
--void debugfs_print_regs32(struct seq_file *s, const struct debugfs_reg32 *regs,
-+void debugfs_print_regs(struct seq_file *s, const struct debugfs_reg *regs,
- 			  int nregs, void __iomem *base, char *prefix)
+ static inline u32 edma_readl(struct fsl_edma_engine *edma, void __iomem *addr)
  {
-+	void __iomem *reg;
-+	bool b;
- 	int i;
- 
- 	for (i = 0; i < nregs; i++, regs++) {
- 		if (prefix)
- 			seq_printf(s, "%s", prefix);
--		seq_printf(s, "%s = 0x%08x\n", regs->name,
--			   readl(base + regs->offset));
++	u32 val;
 +
-+		b = regs->bigendian;
-+		reg = base + regs->offset;
+ 	if (edma->big_endian)
+-		return ioread32be(addr);
++		val = ioread32be(addr);
+ 	else
+-		return ioread32(addr);
++		val = ioread32(addr);
 +
-+		switch (regs->size) {
-+		case sizeof(u8):
-+			seq_printf(s, "%s = 0x%02x\n", regs->name, ioread8(reg));
-+			break;
-+		case sizeof(u16):
-+			seq_printf(s, "%s = 0x%04x\n", regs->name,
-+				  b ? ioread16be(reg) : ioread16(reg));
-+			break;
-+		case sizeof(u32):
-+		case 0:
-+			seq_printf(s, "%s = 0x%08x\n", regs->name,
-+				   b ? ioread32be(reg) : ioread32(reg));
-+		}
++	trace_edma_readl(edma, addr, val);
 +
- 		if (seq_has_overflowed(s))
- 			break;
- 	}
- }
--EXPORT_SYMBOL_GPL(debugfs_print_regs32);
-+EXPORT_SYMBOL_GPL(debugfs_print_regs);
- 
--static int debugfs_regset32_show(struct seq_file *s, void *data)
-+static int debugfs_regset_show(struct seq_file *s, void *data)
- {
--	struct debugfs_regset32 *regset = s->private;
-+	struct debugfs_regset *regset = s->private;
- 
- 	if (regset->dev)
- 		pm_runtime_get_sync(regset->dev);
- 
--	debugfs_print_regs32(s, regset->regs, regset->nregs, regset->base, "");
-+	debugfs_print_regs(s, regset->regs, regset->nregs, regset->base, "");
- 
- 	if (regset->dev)
- 		pm_runtime_put(regset->dev);
-@@ -1188,16 +1206,16 @@ static int debugfs_regset32_show(struct seq_file *s, void *data)
- 	return 0;
++	return val;
  }
  
--DEFINE_SHOW_ATTRIBUTE(debugfs_regset32);
-+DEFINE_SHOW_ATTRIBUTE(debugfs_regset);
- 
- /**
-- * debugfs_create_regset32 - create a debugfs file that returns register values
-+ * debugfs_create_regset - create a debugfs file that returns register values
-  * @name: a pointer to a string containing the name of the file to create.
-  * @mode: the permission that the file should have
-  * @parent: a pointer to the parent dentry for this file.  This should be a
-  *          directory dentry if set.  If this parameter is %NULL, then the
-  *          file will be created in the root of the debugfs filesystem.
-- * @regset: a pointer to a struct debugfs_regset32, which contains a pointer
-+ * @regset: a pointer to a struct debugfs_regset, which contains a pointer
-  *          to an array of register definitions, the array size and the base
-  *          address where the register bank is to be found.
-  *
-@@ -1205,13 +1223,13 @@ DEFINE_SHOW_ATTRIBUTE(debugfs_regset32);
-  * the names and values of a set of 32-bit registers. If the @mode variable
-  * is so set it can be read from. Writing is not supported.
-  */
--void debugfs_create_regset32(const char *name, umode_t mode,
-+void debugfs_create_regset(const char *name, umode_t mode,
- 			     struct dentry *parent,
--			     struct debugfs_regset32 *regset)
-+			     struct debugfs_regset *regset)
+ static inline u16 edma_readw(struct fsl_edma_engine *edma, void __iomem *addr)
  {
--	debugfs_create_file(name, mode, parent, regset, &debugfs_regset32_fops);
-+	debugfs_create_file(name, mode, parent, regset, &debugfs_regset_fops);
++	u16 val;
++
+ 	if (edma->big_endian)
+-		return ioread16be(addr);
++		val = ioread16be(addr);
+ 	else
+-		return ioread16(addr);
++		val = ioread16(addr);
++
++	trace_edma_readw(edma, addr, val);
++
++	return val;
  }
--EXPORT_SYMBOL_GPL(debugfs_create_regset32);
-+EXPORT_SYMBOL_GPL(debugfs_create_regset);
  
- #endif /* CONFIG_HAS_IOMEM */
- 
-diff --git a/include/linux/debugfs.h b/include/linux/debugfs.h
-index ea2d919fd9c7..247ae4217ea5 100644
---- a/include/linux/debugfs.h
-+++ b/include/linux/debugfs.h
-@@ -26,18 +26,24 @@ struct debugfs_blob_wrapper {
- 	unsigned long size;
- };
- 
--struct debugfs_reg32 {
-+struct debugfs_reg {
- 	char *name;
-+	int size;
-+	int bigendian;
- 	unsigned long offset;
- };
- 
--struct debugfs_regset32 {
-+#define debugfs_reg32 debugfs_reg
+ static inline void edma_writeb(struct fsl_edma_engine *edma,
+@@ -264,6 +279,8 @@ static inline void edma_writeb(struct fsl_edma_engine *edma,
+ 		iowrite8(val, (void __iomem *)((unsigned long)addr ^ 0x3));
+ 	else
+ 		iowrite8(val, addr);
 +
-+struct debugfs_regset {
- 	const struct debugfs_reg32 *regs;
- 	int nregs;
- 	void __iomem *base;
- 	struct device *dev;	/* Optional device for Runtime PM */
- };
++	trace_edma_writeb(edma, addr, val);
+ }
  
-+#define debugfs_regset32 debugfs_regset
+ static inline void edma_writew(struct fsl_edma_engine *edma,
+@@ -274,6 +291,8 @@ static inline void edma_writew(struct fsl_edma_engine *edma,
+ 		iowrite16be(val, (void __iomem *)((unsigned long)addr ^ 0x2));
+ 	else
+ 		iowrite16(val, addr);
 +
- struct debugfs_u32_array {
- 	u32 *array;
- 	u32 n_elements;
-@@ -145,12 +151,15 @@ struct dentry *debugfs_create_blob(const char *name, umode_t mode,
- 				  struct dentry *parent,
- 				  struct debugfs_blob_wrapper *blob);
++	trace_edma_writew(edma, addr, val);
+ }
  
--void debugfs_create_regset32(const char *name, umode_t mode,
-+void debugfs_create_regset(const char *name, umode_t mode,
- 			     struct dentry *parent,
- 			     struct debugfs_regset32 *regset);
- 
--void debugfs_print_regs32(struct seq_file *s, const struct debugfs_reg32 *regs,
-+#define debugfs_create_regset32 debugfs_create_regset
+ static inline void edma_writel(struct fsl_edma_engine *edma,
+@@ -283,6 +302,8 @@ static inline void edma_writel(struct fsl_edma_engine *edma,
+ 		iowrite32be(val, addr);
+ 	else
+ 		iowrite32(val, addr);
 +
-+void debugfs_print_regs(struct seq_file *s, const struct debugfs_reg32 *regs,
- 			  int nregs, void __iomem *base, char *prefix);
-+#define debugfs_print_regs32 debugfs_print_regs
++	trace_edma_writel(edma, addr, val);
+ }
  
- void debugfs_create_u32_array(const char *name, umode_t mode,
- 			      struct dentry *parent,
+ static inline struct fsl_edma_chan *to_fsl_edma_chan(struct dma_chan *chan)
+diff --git a/drivers/dma/fsl-edma-trace.c b/drivers/dma/fsl-edma-trace.c
+new file mode 100644
+index 000000000000..28300ad80bb7
+--- /dev/null
++++ b/drivers/dma/fsl-edma-trace.c
+@@ -0,0 +1,4 @@
++// SPDX-License-Identifier: GPL-2.0
++
++#define CREATE_TRACE_POINTS
++#include "fsl-edma-common.h"
+diff --git a/drivers/dma/fsl-edma-trace.h b/drivers/dma/fsl-edma-trace.h
+new file mode 100644
+index 000000000000..9dd08a42ad54
+--- /dev/null
++++ b/drivers/dma/fsl-edma-trace.h
+@@ -0,0 +1,134 @@
++/* SPDX-License-Identifier: GPL-2.0+ */
++/*
++ * Copyright 2023 NXP.
++ */
++
++#undef TRACE_SYSTEM
++#define TRACE_SYSTEM fsl_edma
++
++#if !defined(__LINUX_FSL_EDMA_TRACE) || defined(TRACE_HEADER_MULTI_READ)
++#define __LINUX_FSL_EDMA_TRACE
++
++#include <linux/types.h>
++#include <linux/tracepoint.h>
++
++DECLARE_EVENT_CLASS(edma_log_io,
++	TP_PROTO(struct fsl_edma_engine *edma, void __iomem *addr, u32 value),
++	TP_ARGS(edma, addr, value),
++	TP_STRUCT__entry(
++		__field(struct fsl_edma_engine *, edma)
++		__field(void __iomem *, addr)
++		__field(u32, value)
++	),
++	TP_fast_assign(
++		__entry->edma = edma;
++		__entry->addr = addr;
++		__entry->value = value;
++	),
++	TP_printk("offset %08x: value %08x",
++		(u32)(__entry->addr - __entry->edma->membase), __entry->value)
++);
++
++DEFINE_EVENT(edma_log_io, edma_readl,
++	TP_PROTO(struct fsl_edma_engine *edma, void __iomem *addr, u32 value),
++	TP_ARGS(edma, addr, value)
++);
++
++DEFINE_EVENT(edma_log_io, edma_writel,
++	TP_PROTO(struct fsl_edma_engine *edma, void __iomem *addr,  u32 value),
++	TP_ARGS(edma, addr, value)
++);
++
++DEFINE_EVENT(edma_log_io, edma_readw,
++	TP_PROTO(struct fsl_edma_engine *edma, void __iomem *addr, u32 value),
++	TP_ARGS(edma, addr, value)
++);
++
++DEFINE_EVENT(edma_log_io, edma_writew,
++	TP_PROTO(struct fsl_edma_engine *edma, void __iomem *addr,  u32 value),
++	TP_ARGS(edma, addr, value)
++);
++
++DEFINE_EVENT(edma_log_io, edma_readb,
++	TP_PROTO(struct fsl_edma_engine *edma, void __iomem *addr, u32 value),
++	TP_ARGS(edma, addr, value)
++);
++
++DEFINE_EVENT(edma_log_io, edma_writeb,
++	TP_PROTO(struct fsl_edma_engine *edma, void __iomem *addr,  u32 value),
++	TP_ARGS(edma, addr, value)
++);
++
++DECLARE_EVENT_CLASS(edma_log_tcd,
++	TP_PROTO(struct fsl_edma_engine *edma, struct fsl_edma_hw_tcd *tcd),
++	TP_ARGS(edma, tcd),
++	TP_STRUCT__entry(
++		__field(struct fsl_edma_engine *, edma)
++		__field(u32, saddr)
++		__field(u16, soff)
++		__field(u16, attr)
++		__field(u32, nbytes)
++		__field(u32, slast)
++		__field(u32, daddr)
++		__field(u16, doff)
++		__field(u16, citer)
++		__field(u32, dlast_sga)
++		__field(u16, csr)
++		__field(u16, biter)
++
++	),
++	TP_fast_assign(
++		__entry->edma = edma;
++		__entry->saddr = le32_to_cpu(tcd->saddr),
++		__entry->soff = le16_to_cpu(tcd->soff),
++		__entry->attr = le16_to_cpu(tcd->attr),
++		__entry->nbytes = le32_to_cpu(tcd->nbytes),
++		__entry->slast = le32_to_cpu(tcd->slast),
++		__entry->daddr = le32_to_cpu(tcd->daddr),
++		__entry->doff = le16_to_cpu(tcd->doff),
++		__entry->citer = le16_to_cpu(tcd->citer),
++		__entry->dlast_sga = le32_to_cpu(tcd->dlast_sga),
++		__entry->csr = le16_to_cpu(tcd->csr),
++		__entry->biter = le16_to_cpu(tcd->biter);
++	),
++	TP_printk("\n==== TCD =====\n"
++		  "  saddr:  0x%08x\n"
++		  "  soff:       0x%04x\n"
++		  "  attr:       0x%04x\n"
++		  "  nbytes: 0x%08x\n"
++		  "  slast:  0x%08x\n"
++		  "  daddr:  0x%08x\n"
++		  "  doff:       0x%04x\n"
++		  "  citer:      0x%04x\n"
++		  "  dlast:  0x%08x\n"
++		  "  csr:        0x%04x\n"
++		  "  biter:      0x%04x\n",
++		__entry->saddr,
++		__entry->soff,
++		__entry->attr,
++		__entry->nbytes,
++		__entry->slast,
++		__entry->daddr,
++		__entry->doff,
++		__entry->citer,
++		__entry->dlast_sga,
++		__entry->csr,
++		__entry->biter)
++);
++
++DEFINE_EVENT(edma_log_tcd, edma_fill_tcd,
++	TP_PROTO(struct fsl_edma_engine *edma, struct fsl_edma_hw_tcd *tcd),
++	TP_ARGS(edma, tcd)
++);
++
++#endif
++
++/* this part must be outside header guard */
++
++#undef TRACE_INCLUDE_PATH
++#define TRACE_INCLUDE_PATH .
++
++#undef TRACE_INCLUDE_FILE
++#define TRACE_INCLUDE_FILE fsl-edma-trace
++
++#include <trace/define_trace.h>
 -- 
 2.34.1
 
