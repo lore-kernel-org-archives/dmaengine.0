@@ -2,46 +2,46 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 38853E776FD
-	for <dmaengine@archiver.kernel.org>; Tue,  3 Oct 2023 04:21:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2A3F8E784A8
+	for <dmaengine@archiver.kernel.org>; Tue,  3 Oct 2023 04:21:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230105AbjJCEVr (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 3 Oct 2023 00:21:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44986 "EHLO
+        id S239062AbjJCEV5 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 3 Oct 2023 00:21:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54906 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239033AbjJCEVq (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Tue, 3 Oct 2023 00:21:46 -0400
-Received: from esa.microchip.iphmx.com (esa.microchip.iphmx.com [68.232.154.123])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D44BE0;
-        Mon,  2 Oct 2023 21:21:43 -0700 (PDT)
+        with ESMTP id S239033AbjJCEV4 (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Tue, 3 Oct 2023 00:21:56 -0400
+Received: from esa.microchip.iphmx.com (esa.microchip.iphmx.com [68.232.153.233])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1D3AECC;
+        Mon,  2 Oct 2023 21:21:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=microchip.com; i=@microchip.com; q=dns/txt; s=mchp;
-  t=1696306903; x=1727842903;
-  h=from:to:cc:subject:date:message-id:mime-version:
-   content-transfer-encoding;
-  bh=Yt9kur5BOK9zz99nEWYdw3rGi4a4apiDmhvaQ22Y6sY=;
-  b=lOF4gZ4PxuCNQm/C1OCbMTBK8PKTlIHwFAShl3y0FLHO1dFI4WehDM2Z
-   yhltPYF0vutz0tBtR0pqXykuZhHhRmPZtyGJEh3a0Rqx2qH0suXP2hpk9
-   Kn8b4LGuvLkrX7+gi2TvtQ3RjIsCYIb6wS5X9HHydDjvHr/6sZAelQxmF
-   xEKzLm6RJ6vDcEDWAvDMLOP9mKWWkdWE+HIYrKip5diz3vkTireTQsMwH
-   3L4GmmIaa7IaTCiKrktTubr2g86Rx+06nZR8wEtkp+Orse7WLRl5MNeY4
-   yNMobi5jvkKALs16AkQgBJZGY1OHcgD6YspK3EZdNrPQJXFZwSbMQmnsE
-   w==;
-X-CSE-ConnectionGUID: TaAzhFjkR5qC5aGoP7QXJg==
-X-CSE-MsgGUID: zqmCeQghSHe8/3PhYhlj8A==
+  t=1696306915; x=1727842915;
+  h=from:to:cc:subject:date:message-id:in-reply-to:
+   references:mime-version:content-transfer-encoding;
+  bh=oGnYDVYlhxSOhgTr4iUbpKBCV4C+XeuVk7jPWfYQ5Os=;
+  b=l3EqC9q5UkcflsMCFPMdOEQMzv2tspleMy1ex3ERDpAhBJZeJ1MPi/T8
+   dc9hfjqcW4BU+7RD3bewxYnR3gBXCtGlB9GbXG+fWVNndU2RdV6/Sq+ey
+   lMdDzptcqjFZ5lMh8w9ifB0m9Eel6eIZUBWv3f91j5rt+ZOWw13wQF1un
+   lEAshkwIZu0HGN0FYXiSKNmBri871mPz74QPf0u1w+B682JyR3j0XS6bh
+   HCfd2qQ7v9pxT+3bLhCCyVx8WISz7iTLZEy3PQoA+BK8s2JpDNiCHsRxA
+   sNvilyg89aOw3ekJp89AUtOoMmWMTBRBOqnutJ2qd80wpscTvd+pVzsfZ
+   g==;
+X-CSE-ConnectionGUID: vej+VRO8Q1y2r3o3Bac/dQ==
+X-CSE-MsgGUID: 5Ei/Ysn1Q1mgStJD23Cb0A==
 X-ThreatScanner-Verdict: Negative
 X-IronPort-AV: E=Sophos;i="6.03,196,1694761200"; 
-   d="scan'208";a="7783646"
+   d="scan'208";a="238350717"
 X-Amp-Result: SKIPPED(no attachment in message)
 Received: from unknown (HELO email.microchip.com) ([170.129.1.10])
-  by esa2.microchip.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES128-GCM-SHA256; 02 Oct 2023 21:21:42 -0700
+  by esa5.microchip.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES128-GCM-SHA256; 02 Oct 2023 21:21:54 -0700
 Received: from chn-vm-ex02.mchp-main.com (10.10.85.144) by
- chn-vm-ex03.mchp-main.com (10.10.85.151) with Microsoft SMTP Server
+ chn-vm-ex01.mchp-main.com (10.10.85.143) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.21; Mon, 2 Oct 2023 21:21:00 -0700
+ 15.1.2507.21; Mon, 2 Oct 2023 21:21:29 -0700
 Received: from microchip1-OptiPlex-9020.microchip.com (10.10.85.11) by
  chn-vm-ex02.mchp-main.com (10.10.85.144) with Microsoft SMTP Server id
- 15.1.2507.21 via Frontend Transport; Mon, 2 Oct 2023 21:20:55 -0700
+ 15.1.2507.21 via Frontend Transport; Mon, 2 Oct 2023 21:21:24 -0700
 From:   shravan chippa <shravan.chippa@microchip.com>
 To:     <green.wan@sifive.com>, <vkoul@kernel.org>, <robh+dt@kernel.org>,
         <krzysztof.kozlowski+dt@linaro.org>, <palmer@dabbelt.com>,
@@ -50,10 +50,12 @@ CC:     <dmaengine@vger.kernel.org>, <devicetree@vger.kernel.org>,
         <linux-riscv@lists.infradead.org>, <linux-kernel@vger.kernel.org>,
         <nagasuresh.relli@microchip.com>, <praveen.kumar@microchip.com>,
         <shravan.chippa@microchip.com>
-Subject: [PATCH v2 0/4] dma: sf-pdma: various sf-pdma updates for the mpfs platform
-Date:   Tue, 3 Oct 2023 09:52:11 +0530
-Message-ID: <20231003042215.142678-1-shravan.chippa@microchip.com>
+Subject: [PATCH v2 4/4] riscv: dts: microchip: add specific compatible for mpfs' pdma
+Date:   Tue, 3 Oct 2023 09:52:15 +0530
+Message-ID: <20231003042215.142678-5-shravan.chippa@microchip.com>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20231003042215.142678-1-shravan.chippa@microchip.com>
+References: <20231003042215.142678-1-shravan.chippa@microchip.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
@@ -63,35 +65,26 @@ X-Mailing-List: dmaengine@vger.kernel.org
 
 From: Shravan Chippa <shravan.chippa@microchip.com>
 
-Changes from V1 -> V2:
+Add specific compatible for PolarFire SoC for The SiFive PDMA driver
 
-Removed internal review tags
-Commit massages modified.
-Added devicetree patch with new compatible name for mpfs platform
-Added of_dma_controller_free() clenup call in sf_pdma_remove() function
+Signed-off-by: Shravan Chippa <shravan.chippa@microchip.com>
+---
+ arch/riscv/boot/dts/microchip/mpfs.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-
-V1:
-
-This series does the following
-1. Adds a PolarFire SoC specific compatible and code to support for
-out-of-order dma transfers 
-
-2. Adds generic device tree bindings support by using 
-of_dma_controller_register()
-
-Shravan Chippa (4):
-  dmaengine: sf-pdma: Support of_dma_controller_register()
-  dt-bindings: dma: sf-pdma: add new compatible name
-  dmaengine: sf-pdma: add mpfs-pdma compatible name
-  riscv: dts: microchip: add specific compatible for mpfs' pdma
-
- .../bindings/dma/sifive,fu540-c000-pdma.yaml  | 12 ++--
- arch/riscv/boot/dts/microchip/mpfs.dtsi       |  2 +-
- drivers/dma/sf-pdma/sf-pdma.c                 | 71 ++++++++++++++++++-
- drivers/dma/sf-pdma/sf-pdma.h                 |  6 ++
- 4 files changed, 83 insertions(+), 8 deletions(-)
-
+diff --git a/arch/riscv/boot/dts/microchip/mpfs.dtsi b/arch/riscv/boot/dts/microchip/mpfs.dtsi
+index 104504352e99..05525d5c2c82 100644
+--- a/arch/riscv/boot/dts/microchip/mpfs.dtsi
++++ b/arch/riscv/boot/dts/microchip/mpfs.dtsi
+@@ -221,7 +221,7 @@ plic: interrupt-controller@c000000 {
+ 		};
+ 
+ 		pdma: dma-controller@3000000 {
+-			compatible = "sifive,fu540-c000-pdma", "sifive,pdma0";
++			compatible = "microchip,mpfs-pdma", "sifive,fu540-c000-pdma";
+ 			reg = <0x0 0x3000000 0x0 0x8000>;
+ 			interrupt-parent = <&plic>;
+ 			interrupts = <5 6>, <7 8>, <9 10>, <11 12>;
 -- 
 2.34.1
 
