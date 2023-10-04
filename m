@@ -2,89 +2,126 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EE741E7B615
-	for <dmaengine@archiver.kernel.org>; Wed,  4 Oct 2023 13:30:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B0BEEE7B611
+	for <dmaengine@archiver.kernel.org>; Wed,  4 Oct 2023 13:41:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242608AbjJDNa2 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 4 Oct 2023 09:30:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37286 "EHLO
+        id S233290AbjJDNly (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 4 Oct 2023 09:41:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42680 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233096AbjJDNa1 (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Wed, 4 Oct 2023 09:30:27 -0400
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 62D97AD;
-        Wed,  4 Oct 2023 06:30:24 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA32BC433C8;
-        Wed,  4 Oct 2023 13:30:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1696426224;
-        bh=aJVniq+g35ZseQJZAGkIBzb7ufaQ4aP0ZCjtBHrm/hE=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=JHyi7tX99vVdzsJMQXpWs9xJM8JqAe8UVCFgCr1+jn8VyY9G7ZUiy2OMV99FyYbI/
-         9D/91JmtqIi3B5u2Bgfl++OVCgNrrB1kL1PCnn0xfEQg3Iw9Ycy+B8XQrfPhDPsval
-         fWbtbwurTKuZLbkDHw5iCoy1DfuhBafozyS8z9IYqIOG5J/jAJFo+PbtcnN/whIVjP
-         hQb/YK/DAOI1qHF7czLo+bo5IedvtDwQXidg4sMhVQx/R/XTUCcw6I0B9dZvTyPDSc
-         kNiDk/2ZGTHfCupwaaKbZ0KouUMZuGwGksHBjpByPDO9f0392I495pyCfgqJtxuq/r
-         jGLtT3L8mNT9w==
-Received: (nullmailer pid 2755166 invoked by uid 1000);
-        Wed, 04 Oct 2023 13:30:21 -0000
-Date:   Wed, 4 Oct 2023 08:30:21 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     shravan chippa <shravan.chippa@microchip.com>
-Cc:     green.wan@sifive.com, vkoul@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, palmer@dabbelt.com,
-        paul.walmsley@sifive.com, conor+dt@kernel.org,
+        with ESMTP id S233284AbjJDNly (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Wed, 4 Oct 2023 09:41:54 -0400
+X-Greylist: delayed 526 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Wed, 04 Oct 2023 06:41:47 PDT
+Received: from hutie.ust.cz (hutie.ust.cz [IPv6:2a03:3b40:fe:f0::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AFAF89B;
+        Wed,  4 Oct 2023 06:41:47 -0700 (PDT)
+Content-Type: text/plain;
+        charset=utf-8
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cutebit.org; s=mail;
+        t=1696426905; bh=sU/d24Q9y2TCzdvOpiUL9hCru3TADvlA0JRFhZXYqr4=;
+        h=Subject:From:In-Reply-To:Date:Cc:References:To;
+        b=ZND2d/K2BraU0o69mMKc565+4XuYVzNaDsTGyFxT/ohiJmYe/OX7CY9nTEMyU8bgL
+         5xaksDcCQc3gFlnLgJhRq6aMUJRZxpdOe3Zhvn6qzqWOP1YlC3MmoajmP+x/Db2r45
+         LNSnbPU/7JlhOuwJN4Cr44TEk6FTjggblYAbYaFU=
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3731.700.6\))
+Subject: Re: [PATCH v2 2/2] dmaengine: apple-sio: Add Apple SIO driver
+From:   =?utf-8?Q?Martin_Povi=C5=A1er?= <povik+lin@cutebit.org>
+In-Reply-To: <06444557-414A-4710-88A0-620975BB258A@cutebit.org>
+Date:   Wed, 4 Oct 2023 15:41:35 +0200
+Cc:     Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>, asahi@lists.linux.dev,
         dmaengine@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org,
-        nagasuresh.relli@microchip.com, praveen.kumar@microchip.com,
-        Conor Dooley <conor.dooley@microchip.com>
-Subject: Re: [PATCH v2 2/4] dt-bindings: dma: sf-pdma: add new compatible name
-Message-ID: <20231004133021.GB2743005-robh@kernel.org>
-References: <20231003042215.142678-1-shravan.chippa@microchip.com>
- <20231003042215.142678-3-shravan.chippa@microchip.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20231003042215.142678-3-shravan.chippa@microchip.com>
+        linux-kernel@vger.kernel.org
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <5E0D0316-5AE4-49D1-B687-E72BDC203245@cutebit.org>
+References: <20230828170013.75820-1-povik+lin@cutebit.org>
+ <20230828170013.75820-3-povik+lin@cutebit.org> <ZR1kz7Sil8onc1uC@matsya>
+ <06444557-414A-4710-88A0-620975BB258A@cutebit.org>
+To:     Vinod Koul <vkoul@kernel.org>
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On Tue, Oct 03, 2023 at 09:52:13AM +0530, shravan chippa wrote:
-> From: Shravan Chippa <shravan.chippa@microchip.com>
-> 
-> Add new compatible name microchip,mpfs-pdma to support
-> out of order dma transfers
-> 
-> Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
-> Signed-off-by: Shravan Chippa <shravan.chippa@microchip.com>
-> ---
->  .../bindings/dma/sifive,fu540-c000-pdma.yaml         | 12 ++++++++----
->  1 file changed, 8 insertions(+), 4 deletions(-)
-> 
-> diff --git a/Documentation/devicetree/bindings/dma/sifive,fu540-c000-pdma.yaml b/Documentation/devicetree/bindings/dma/sifive,fu540-c000-pdma.yaml
-> index a1af0b906365..974467c4bacb 100644
-> --- a/Documentation/devicetree/bindings/dma/sifive,fu540-c000-pdma.yaml
-> +++ b/Documentation/devicetree/bindings/dma/sifive,fu540-c000-pdma.yaml
-> @@ -27,10 +27,14 @@ allOf:
->  
->  properties:
->    compatible:
-> -    items:
-> -      - enum:
-> -          - sifive,fu540-c000-pdma
-> -      - const: sifive,pdma0
-> +    oneOf:
-> +      - items:
-> +          - const: microchip,mpfs-pdma # Microchip out of order DMA transfer
-> +          - const: sifive,fu540-c000-pdma # Sifive in-order DMA transfer
 
-This doesn't really make sense. microchip,mpfs-pdma is compatible with 
-sifive,fu540-c000-pdma and sifive,fu540-c000-pdma is compatible with 
-sifive,pdma0, but microchip,mpfs-pdma is not compatible with 
-sifive,pdma0? (Or replace "compatible with" with "a superset of")
 
-Any fallback is only useful if an OS only understanding the fallback 
-will work with the h/w. Does this h/w work without the driver changes?
+> On 4. 10. 2023, at 15:32, Martin Povi=C5=A1er <povik+lin@cutebit.org> =
+wrote:
+>=20
+>=20
+> Hello Vinod,
+>=20
+> some of those things we have discussed on v1 already, let me link
+> that here:
+> =
+https://lore.kernel.org/asahi/20230712133806.4450-1-povik+lin@cutebit.org/=
+T/#t
+>=20
+> Anyway find my replies below.
+>=20
+> Best regards, Martin
+>=20
+>> On 4. 10. 2023, at 15:12, Vinod Koul <vkoul@kernel.org> wrote:
+>>=20
+>> On 28-08-23, 19:00, Martin Povi=C5=A1er wrote:
+>>> Add a dmaengine driver for the Apple SIO coprocessor found on Apple
+>>> SoCs where it provides DMA services. Have the driver support cyclic
+>>> transactions so that ALSA drivers can rely on it in audio output to
+>>> HDMI and DisplayPort.
+>>>=20
+>>> Signed-off-by: Martin Povi=C5=A1er <povik+lin@cutebit.org>
+>>> ---
+>>> MAINTAINERS             |   2 +
+>>> drivers/dma/Kconfig     |  11 +
+>>> drivers/dma/Makefile    |   1 +
+>>> drivers/dma/apple-sio.c | 868 =
+++++++++++++++++++++++++++++++++++++++++
+>>> 4 files changed, 882 insertions(+)
+>>> create mode 100644 drivers/dma/apple-sio.c
 
-Rob
+...
+
+>>> +/*
+>>> + * There are two kinds of 'transaction descriptors' in play here.
+>>> + *
+>>> + * There's the struct sio_tx, and the struct =
+dma_async_tx_descriptor embedded
+>>> + * inside, which jointly represent a transaction to the dmaengine =
+subsystem.
+>>> + * At this time we only support those transactions to be cyclic.
+>>> + *
+>>> + * Then there are the coprocessor descriptors, which is what the =
+coprocessor
+>>> + * knows and understands. These don't seem to have a cyclic regime, =
+so we can't
+>>> + * map the dmaengine transaction on an exact coprocessor =
+counterpart. Instead
+>>> + * we continually queue up many coprocessor descriptors to =
+implement a cyclic
+>>> + * transaction.
+>>> + *
+>>> + * The number below is the maximum of how far ahead (how many) =
+coprocessor
+>>> + * descriptors we should be queuing up, per channel, for a cyclic =
+transaction.
+>>> + * Basically it's a made-up number.
+>>> + */
+>>> +#define SIO_MAX_NINFLIGHT 4
+>>=20
+>> you meant SIO_MAX_INFLIGHT if not what is NINFLIGHT?
+>=20
+> I mean the number is arbitrary, it doesn=E2=80=99t reflect any =
+coprocessor limit since
+> I haven=E2=80=99t run the tests to figure one out. It's supposed to be =
+a small reasonable
+> number.
+
+Ah I didn=E2=80=99t get what you were commenting on at first. Sure, =
+INFLIGHT, NINFLIGHT,
+it=E2=80=99s the same thing to me. I have a tendency to put in the N to =
+signify it=E2=80=99s
+the =E2=80=9Cnumber of=E2=80=9D.
+
+Best,
+Martin
+
