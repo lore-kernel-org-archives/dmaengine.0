@@ -2,232 +2,127 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BE9EBE7C4DA
-	for <dmaengine@archiver.kernel.org>; Wed,  4 Oct 2023 16:03:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2E5DAE7C4E3
+	for <dmaengine@archiver.kernel.org>; Wed,  4 Oct 2023 16:36:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233664AbjJDQDS (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 4 Oct 2023 12:03:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50672 "EHLO
+        id S233604AbjJDQgP (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 4 Oct 2023 12:36:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57648 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233576AbjJDQDS (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Wed, 4 Oct 2023 12:03:18 -0400
-Received: from NAM10-MW2-obe.outbound.protection.outlook.com (mail-mw2nam10on2054.outbound.protection.outlook.com [40.107.94.54])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 27892C0;
-        Wed,  4 Oct 2023 09:03:13 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=jBdmRxl8nem9U4HulZ4eMAy4Bg3lNrUQp3jKIhWh4jMaLv8ix9A8T0njhnndA6e5YktOlpFQ0EvcSIYqY4s2CxXBobGRx8crg1gfHhxRMAWRaXYkXyV4QUhyHKpzTmux/V9FPa5m4nLxp/jkMpJD5zoFYBfGBUlg3rJ9U3ewgBouARAZVG1T/Ef4iD+QnW4N6Mee2v4hqULYa9K5kDWk29CmVoQcMSh4AV7oxF7yrKrGqLnxWNYxNzK1Mt6v7XEtmTdR9ar3lJ61XZrolMSApLEpIsjr5gNtR9WzLkXYlcG1j+eq9YLHSM6PtyimuiiO2iN0Wvpu8POcXp7kFEQuBg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=tRcFNA7NMBQqsj/6yWOtDY1G0Llo5tLVX4qXrYsxdyI=;
- b=Xf/rgKPvwsoZug4h/SVOF8t6eo23m0rIDpAYZ66vttrqP9wnfrD1ueYce3Jv2vFRHFIIAs5AcUHuDe5vQuU2Lsj0Sfvh4d5rz0rfruKKNlX9RzXO7xxsL9djmkYUNUeJh5YkscnzbYwSkHQ8B1pYUudVbmLzTDazpcROd6grw/eczKFuet8XkWr/hOhEfJNqj8SmtGwuTQpWv+e6PHmNL7Ya+opfySFBJ1wqL8GLtR3kEoK/71yoBH2/IuagUKQNKrvwUvqbt496lEs7RPY2BuWWbzm5aPiQu0LikquHOuhcsxdIExcL/yny1cEKUWsjVpEdTCsAIwsjU+L/4FMvtA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=wanadoo.fr smtp.mailfrom=amd.com; dmarc=pass
- (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
- dkim=none (message not signed); arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=tRcFNA7NMBQqsj/6yWOtDY1G0Llo5tLVX4qXrYsxdyI=;
- b=I4u8XJ3JkhyxawGya0XVnttgowge4azqT49znzm3LxLuPv4BSWGwj1bNGZtZ6Khnwb6cVqJgHARwBqKsnrcnpWgI0uo+ZF5FQb36O21vlkkmo60aIT5n0RoDlPIWUrOvuWY8UY0+EcVv3/uJAylCcDu4I3PZdNzTLvG4Sqoe5vE=
-Received: from BL0PR0102CA0032.prod.exchangelabs.com (2603:10b6:207:18::45) by
- IA1PR12MB7493.namprd12.prod.outlook.com (2603:10b6:208:41b::17) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6838.33; Wed, 4 Oct
- 2023 16:03:10 +0000
-Received: from MN1PEPF0000ECD6.namprd02.prod.outlook.com
- (2603:10b6:207:18:cafe::da) by BL0PR0102CA0032.outlook.office365.com
- (2603:10b6:207:18::45) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6863.26 via Frontend
- Transport; Wed, 4 Oct 2023 16:03:10 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=SATLEXMB03.amd.com; pr=C
-Received: from SATLEXMB03.amd.com (165.204.84.17) by
- MN1PEPF0000ECD6.mail.protection.outlook.com (10.167.242.135) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.20.6838.14 via Frontend Transport; Wed, 4 Oct 2023 16:03:10 +0000
-Received: from SATLEXMB03.amd.com (10.181.40.144) by SATLEXMB03.amd.com
- (10.181.40.144) with Microsoft SMTP Server (version=TLS1_2,
+        with ESMTP id S233054AbjJDQgP (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Wed, 4 Oct 2023 12:36:15 -0400
+Received: from mx07-00178001.pphosted.com (mx08-00178001.pphosted.com [91.207.212.93])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 66CC99B;
+        Wed,  4 Oct 2023 09:36:11 -0700 (PDT)
+Received: from pps.filterd (m0046660.ppops.net [127.0.0.1])
+        by mx07-00178001.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 394GFwTE024386;
+        Wed, 4 Oct 2023 18:35:56 +0200
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foss.st.com; h=
+        from:to:cc:subject:date:message-id:in-reply-to:references
+        :mime-version:content-transfer-encoding:content-type; s=
+        selector1; bh=6b81mFUL95HARJf/aHfZjVghFKXm4nR1+fC+ZW/mq+w=; b=Fp
+        lrx3wMcHU4WBL3o8JlVEPApMSfVMqnOlUBJ00GaHJAdbB6pZAs8rNmEH3FHMRJ7X
+        wwy6eIQEfAUrqBKfGMjC1/1TLFn8eLSAaY+wbUabmNHaU7Pwdne6GMJW+O7sHIBj
+        biSYUMEBWhDTjKR/rdrnp9PrwfTgmysuktGEuioJOe+TB/7/SvRKfNSIf1MxQt9h
+        FqLd43eHR20pND2y1cswMA9OI0CiLgDB+9xw5M1lIaKfdBw6lY6k6JSQoJr1iqg6
+        FuaUnw8VjJmUd4K+szbtERw+F4lzsUmx5QEMRJUPfFi/YxFw8GxMgmOtQJbn+aQX
+        qL3MjSIqj52gPq9f2GxA==
+Received: from beta.dmz-eu.st.com (beta.dmz-eu.st.com [164.129.1.35])
+        by mx07-00178001.pphosted.com (PPS) with ESMTPS id 3te8t528dt-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 04 Oct 2023 18:35:56 +0200 (MEST)
+Received: from euls16034.sgp.st.com (euls16034.sgp.st.com [10.75.44.20])
+        by beta.dmz-eu.st.com (STMicroelectronics) with ESMTP id 093F7100053;
+        Wed,  4 Oct 2023 18:35:56 +0200 (CEST)
+Received: from Webmail-eu.st.com (shfdag1node3.st.com [10.75.129.71])
+        by euls16034.sgp.st.com (STMicroelectronics) with ESMTP id 00492281EB6;
+        Wed,  4 Oct 2023 18:35:55 +0200 (CEST)
+Received: from localhost (10.252.26.61) by SHFDAG1NODE3.st.com (10.75.129.71)
+ with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.27; Wed, 4 Oct
- 2023 11:03:09 -0500
-Received: from [172.19.74.144] (10.180.168.240) by SATLEXMB03.amd.com
- (10.181.40.144) with Microsoft SMTP Server id 15.1.2507.27 via Frontend
- Transport; Wed, 4 Oct 2023 11:03:08 -0500
-Message-ID: <299a9a54-89c4-75d6-67d4-3aebfc6fd414@amd.com>
-Date:   Wed, 4 Oct 2023 09:03:03 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: [PATCH V6 1/1] dmaengine: amd: qdma: Add AMD QDMA driver
-Content-Language: en-US
-To:     Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-        <vkoul@kernel.org>, <dmaengine@vger.kernel.org>,
+ 2023 18:35:55 +0200
+From:   Amelie Delaunay <amelie.delaunay@foss.st.com>
+To:     Vinod Koul <vkoul@kernel.org>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        Amelie Delaunay <amelie.delaunay@foss.st.com>
+CC:     <stable@vger.kernel.org>, <dmaengine@vger.kernel.org>,
+        <linux-stm32@st-md-mailman.stormreply.com>,
+        <linux-arm-kernel@lists.infradead.org>,
         <linux-kernel@vger.kernel.org>
-CC:     Nishad Saraf <nishads@amd.com>, <nishad.saraf@amd.com>,
-        <sonal.santan@amd.com>, <max.zhen@amd.com>
-References: <1696008263-42937-1-git-send-email-lizhi.hou@amd.com>
- <1696008263-42937-2-git-send-email-lizhi.hou@amd.com>
- <0750d8b2-b624-3293-23ac-a034c88d8e0e@wanadoo.fr>
-From:   Lizhi Hou <lizhi.hou@amd.com>
-In-Reply-To: <0750d8b2-b624-3293-23ac-a034c88d8e0e@wanadoo.fr>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Subject: [PATCH 2/3] dmaengine: stm32-mdma: use Link Address Register to compute residue
+Date:   Wed, 4 Oct 2023 18:35:29 +0200
+Message-ID: <20231004163531.2864160-2-amelie.delaunay@foss.st.com>
+X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20231004163531.2864160-1-amelie.delaunay@foss.st.com>
+References: <20231004163531.2864160-1-amelie.delaunay@foss.st.com>
+MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: MN1PEPF0000ECD6:EE_|IA1PR12MB7493:EE_
-X-MS-Office365-Filtering-Correlation-Id: bf2614cc-3874-4831-a42e-08dbc4f367df
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: SAbiODpO7IgoE+5Zi5sDK89m1BqcSqoQ1ddQP3meQ99OJGxqwovAK6H/xvzbE1hopgeXYwHv9QH8kunNc81QvCZm/5OT6HLzq+sVobhOW21lhv0YzaYv450IUAI/PRUsS24ap5ZJmTs0BsLS/caNRWteTrTDq7Y8/9/piFvwi+hLbc4eOS+LPS4/LnozI1JPX3j4MEjFdXt0rzzygq/fKLHnwvJdeYRkHuX/3ncqYGDiIzyNlsPqwkhZVJt7tw6QU3irvbUjEqdowDTsLJxFVEWJZhhg9s9bWAqr+wmlApO8KoPilhdeymhe1rYHZrJdVPzFZbBZ5sOvZ1oXuS/XKmK97i5lF+TG1LULON1gSpDnaleAgzTchmi9aaM/iRQhKICPyLGnOD2uCGOjOtemxEMaLjY7FBuQX4wTvgPQny/Rrzur5K/jUstgZPkWLHjMVb9i9GnJJ2+WRod5bkotbuG9Q+tqC5N1q9il0CmXZeMRqXJN93rekZgN2YKDB+69qgk2brNzGGO3KQxAUu5AZ2XEXlSOkszrgddITRJIxy6DMZjWH5YRDtPYhuD2RG3BsLtE7FisAcJu1b2qKS3EwBHvki8ldwSe4i5MibB+bYh/7yAbHozFG0DaN4pirctE1wGtbLl/kSjnWYpVBR/1/LV1vvyNuhNSodHSirMyRgnnD/b0Xk87Djg7r8az24lcYkFRew8voNtKkoa4C5TUWZc3R0vdy1DcQuPTlIJFVjr9wttowcqKHolOtqzxligBGYpETVjU6xlJ5wLCghcTqmJVCNFy2n281rLWzfMdfp8=
-X-Forefront-Antispam-Report: CIP:165.204.84.17;CTRY:US;LANG:en;SCL:1;SRV:;IPV:CAL;SFV:NSPM;H:SATLEXMB03.amd.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230031)(4636009)(136003)(39860400002)(376002)(396003)(346002)(230922051799003)(1800799009)(64100799003)(186009)(451199024)(82310400011)(40470700004)(36840700001)(46966006)(40460700003)(31686004)(40480700001)(53546011)(478600001)(966005)(6666004)(82740400003)(36860700001)(356005)(31696002)(86362001)(81166007)(110136005)(2906002)(4326008)(47076005)(16576012)(2616005)(66574015)(426003)(336012)(26005)(83380400001)(36756003)(70206006)(70586007)(44832011)(41300700001)(8936002)(54906003)(5660300002)(316002)(8676002)(36900700001)(43740500002);DIR:OUT;SFP:1101;
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Oct 2023 16:03:10.1551
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: bf2614cc-3874-4831-a42e-08dbc4f367df
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d;Ip=[165.204.84.17];Helo=[SATLEXMB03.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: MN1PEPF0000ECD6.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR12MB7493
+Content-Type: text/plain
+X-Originating-IP: [10.252.26.61]
+X-ClientProxiedBy: EQNCAS1NODE4.st.com (10.75.129.82) To SHFDAG1NODE3.st.com
+ (10.75.129.71)
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-10-04_08,2023-10-02_01,2023-05-22_02
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
+Current implementation relies on curr_hwdesc index. But to keep this index
+up to date, Block Transfer interrupt (BTIE) has to be enabled.
+If it is not, curr_hwdesc is not updated, and then residue is not reliable.
+Rely on Link Address Register instead. And disable BTIE interrupt
+in stm32_mdma_setup_xfer() because it is no more needed in case of
+_prep_slave_sg() to maintain curr_hwdesc up to date.
+It avoids extra interrupts and also ensures a reliable residue. These
+improvements are required for STM32 DCMI camera capture use case, which
+need STM32 DMA and MDMA chaining for good performance.
 
-On 9/29/23 13:35, Christophe JAILLET wrote:
-> Le 29/09/2023 à 19:24, Lizhi Hou a écrit :
->> From: Nishad Saraf <nishads@amd.com>
->>
->> Adds driver to enable PCIe board which uses AMD QDMA (the Queue-based
->> Direct Memory Access) subsystem. For example, Xilinx Alveo V70 AI
->> Accelerator devices.
->>      https://www.xilinx.com/applications/data-center/v70.html
->>
->> The QDMA subsystem is used in conjunction with the PCI Express IP block
->> to provide high performance data transfer between host memory and the
->> card's DMA subsystem.
->>
->
-> ...
->
->> +static int amd_qdma_probe(struct platform_device *pdev)
->> +{
->> +    struct qdma_platdata *pdata = dev_get_platdata(&pdev->dev);
->> +    struct qdma_device *qdev;
->> +    struct resource *res;
->> +    void __iomem *regs;
->> +    int ret;
->> +
->> +    qdev = devm_kzalloc(&pdev->dev, sizeof(*qdev), GFP_KERNEL);
->> +    if (!qdev)
->> +        return -ENOMEM;
->> +
->> +    platform_set_drvdata(pdev, qdev);
->> +    qdev->pdev = pdev;
->> +    mutex_init(&qdev->ctxt_lock);
->
-> If this was done later, it could simplify some error handling below.
+Fixes: 696874322771 ("dmaengine: stm32-mdma: add support to be triggered by STM32 DMA")
+Signed-off-by: Amelie Delaunay <amelie.delaunay@foss.st.com>
+Cc: stable@vger.kernel.org
+---
+ drivers/dma/stm32-mdma.c | 15 +++++++++++----
+ 1 file changed, 11 insertions(+), 4 deletions(-)
 
-This lock is used for sending indirect commands. And the probe function 
-needs to send indirect commands as well. Thus, the lock init can not be 
-moved to the end of the function to simplify error handling.
+diff --git a/drivers/dma/stm32-mdma.c b/drivers/dma/stm32-mdma.c
+index cc6f4b00091f..da73e13b8c9d 100644
+--- a/drivers/dma/stm32-mdma.c
++++ b/drivers/dma/stm32-mdma.c
+@@ -777,8 +777,6 @@ static int stm32_mdma_setup_xfer(struct stm32_mdma_chan *chan,
+ 	/* Enable interrupts */
+ 	ccr &= ~STM32_MDMA_CCR_IRQ_MASK;
+ 	ccr |= STM32_MDMA_CCR_TEIE | STM32_MDMA_CCR_CTCIE;
+-	if (sg_len > 1)
+-		ccr |= STM32_MDMA_CCR_BTIE;
+ 	desc->ccr = ccr;
+ 
+ 	return 0;
+@@ -1324,12 +1322,21 @@ static size_t stm32_mdma_desc_residue(struct stm32_mdma_chan *chan,
+ {
+ 	struct stm32_mdma_device *dmadev = stm32_mdma_get_dev(chan);
+ 	struct stm32_mdma_hwdesc *hwdesc;
+-	u32 cbndtr, residue, modulo, burst_size;
++	u32 cisr, clar, cbndtr, residue, modulo, burst_size;
+ 	int i;
+ 
++	cisr = stm32_mdma_read(dmadev, STM32_MDMA_CISR(chan->id));
++
+ 	residue = 0;
+-	for (i = curr_hwdesc + 1; i < desc->count; i++) {
++	/* Get the next hw descriptor to process from current transfer */
++	clar = stm32_mdma_read(dmadev, STM32_MDMA_CLAR(chan->id));
++	for (i = desc->count - 1; i >= 0; i--) {
+ 		hwdesc = desc->node[i].hwdesc;
++
++		if (hwdesc->clar == clar)
++			break;/* Current transfer found, stop cumulating */
++
++		/* Cumulate residue of unprocessed hw descriptors */
+ 		residue += STM32_MDMA_CBNDTR_BNDT(hwdesc->cbndtr);
+ 	}
+ 	cbndtr = stm32_mdma_read(dmadev, STM32_MDMA_CBNDTR(chan->id));
+-- 
+2.25.1
 
->
->> +
->> +    res = platform_get_resource(pdev, IORESOURCE_IRQ, 0);
->> +    if (!res) {
->> +        qdma_err(qdev, "Failed to get IRQ resource");
->> +        ret = -ENODEV;
->> +        goto failed;
->> +    }
->> +    qdev->err_irq_idx = pdata->irq_index;
->> +    qdev->queue_irq_start = res->start + 1;
->> +    qdev->queue_irq_num = res->end - res->start;
->> +
->> +    regs = devm_platform_get_and_ioremap_resource(pdev, 0, NULL);
->> +    if (IS_ERR(regs)) {
->> +        ret = PTR_ERR(regs);
->> +        qdma_err(qdev, "Failed to map IO resource, err %d", ret);
->> +        goto failed;
->> +    }
->> +
->> +    qdev->regmap = devm_regmap_init_mmio(&pdev->dev, regs,
->> +                         &qdma_regmap_config);
->> +    if (IS_ERR(qdev->regmap)) {
->> +        ret = PTR_ERR(qdev->regmap);
->> +        qdma_err(qdev, "Regmap init failed, err %d", ret);
->> +        goto failed;
->> +    }
->> +
->> +    ret = qdma_device_verify(qdev);
->> +    if (ret)
->> +        goto failed;
->> +
->> +    ret = qdma_get_hw_info(qdev);
->> +    if (ret)
->> +        goto failed;
->> +
->> +    INIT_LIST_HEAD(&qdev->dma_dev.channels);
->> +
->> +    ret = qdma_device_setup(qdev);
->> +    if (ret)
->> +        goto failed;
->> +
->> +    ret = qdma_intr_init(qdev);
->> +    if (ret) {
->> +        qdma_err(qdev, "Failed to initialize IRQs %d", ret);
->> +        return ret;
->
-> Should it be "goto failed"?
-Yes. Will fix it.
->
->> +    }
->> +    qdev->status |= QDMA_DEV_STATUS_INTR_INIT;
->> +
->> +    dma_cap_set(DMA_SLAVE, qdev->dma_dev.cap_mask);
->> +    dma_cap_set(DMA_PRIVATE, qdev->dma_dev.cap_mask);
->
-> ...
->
->> +struct qdma_device {
->> +    struct platform_device        *pdev;
->> +    struct dma_device        dma_dev;
->> +    struct regmap            *regmap;
->> +    struct mutex            ctxt_lock; /* protect ctxt registers */
->> +    const struct qdma_reg_field    *rfields;
->> +    const struct qdma_reg        *roffs;
->> +    struct qdma_queue        *h2c_queues;
->> +    struct qdma_queue        *c2h_queues;
->> +    struct qdma_intr_ring        *qintr_rings;
->> +    u32                qintr_ring_num;
->> +    u32                qintr_ring_idx;
->> +    u32                chan_num;
->> +    u32                queue_irq_start;
->> +    u32                queue_irq_num;
->> +    u32                err_irq_idx;
->> +    u32                fid;
->> +    u32                status;
->
-> Using such a mechanism with this 'status' in the probe and 
-> amd_qdma_remove(), apparently only to simplify the error handling of 
-> the probe looks really unusual to me.
-
-Ok. I will remove 'status' and add more 'goto' labels to do error handling.
-
-
-Thanks,
-
-Lizhi
-
->
-> CJ
->
->> +};
->
-> ...
->
