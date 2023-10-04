@@ -2,41 +2,42 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 77B29E784A9
-	for <dmaengine@archiver.kernel.org>; Wed,  4 Oct 2023 14:18:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5641CE7C4C6
+	for <dmaengine@archiver.kernel.org>; Wed,  4 Oct 2023 14:29:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242880AbjJDOSM (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 4 Oct 2023 10:18:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55866 "EHLO
+        id S233340AbjJDO3J (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 4 Oct 2023 10:29:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44074 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242863AbjJDOSK (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Wed, 4 Oct 2023 10:18:10 -0400
+        with ESMTP id S233430AbjJDO3I (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Wed, 4 Oct 2023 10:29:08 -0400
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D4896D7;
-        Wed,  4 Oct 2023 07:18:06 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E65EEC433C9;
-        Wed,  4 Oct 2023 14:18:03 +0000 (UTC)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 587C8AB;
+        Wed,  4 Oct 2023 07:29:05 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 656B2C433CA;
+        Wed,  4 Oct 2023 14:29:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1696429086;
-        bh=1SSxbMRto1cv7K/OV22a+RO/1d1PaOeTe9kLraLmCug=;
+        s=k20201202; t=1696429745;
+        bh=i3oPaZJTxFmjSMSUxGfO7GQlP35gAN9BPs9L6YdVA6M=;
         h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-        b=n2K5H+OVrCpg3TOSvk9GC531Wi9M+KZn6D8at5ZfZku8+V3KBicomrhMMHD/9ADI4
-         Hl2WgLpo6VBJht8XBbWiVjXX9+rvyu40Hyaqr24P3RdBrGOA6TH9uNDz7aPr0w+pi1
-         TlF+IrUSsIT7sjDk336bsuZsqI44BRogCP/YYePzQM4HhkWu95S0t7tsjf8IraW8Vt
-         tsGwjG4hZSVyIYS6NpIFLf9NNJvZhsI1I0mT3Z9pjVyqHYRfAq220tYS/EiG+zQsOB
-         5J+RF+gahYrcoTWziZG25qsOd+0ag4akGyWvzIgT/x9gRHujza9arHIOuAd34U9is0
-         TcEZGLwUe3/NQ==
+        b=bXjY9E97A/1VOk+6wOUzboJsNwLSfsBhUlDN0nyVZqntCaX+JrGAqpSRiLebAkz73
+         dZRR8k7v2qbnFqm+EoY72WFHR6K6P0hsf1y5ObLLt08C2ghLMDZDPTBfnwUGywUJvU
+         wmElgty8QOD7gekd/ios9OzEDDhydG5kUJRUjAUhRXL2xc0syYaA5gRZ3pmUgCKfYk
+         Dyr3gTrP0aK3bIhX0X55FRv7QWWsOVT/LPwOaoBdgNHMZqwOQjH7l48Biw61SELPxz
+         GIiXRuvxFuNilruaA+/tfsscO91fXIm1J/GFic6YnSvYHs7p7wVgjhi5hmC8LdDmPZ
+         MxOHGIksb6QEg==
 From:   Vinod Koul <vkoul@kernel.org>
-To:     sean.wang@mediatek.com, Duoming Zhou <duoming@zju.edu.cn>
-Cc:     matthias.bgg@gmail.com, angelogioacchino.delregno@collabora.com,
-        dmaengine@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-mediatek@lists.infradead.org, linux-kernel@vger.kernel.org
-In-Reply-To: <20230806032511.45263-1-duoming@zju.edu.cn>
-References: <20230806032511.45263-1-duoming@zju.edu.cn>
-Subject: Re: [PATCH] dmaengine: mediatek: Fix deadlock caused by
- synchronize_irq()
-Message-Id: <169642908358.429977.8140374757545835839.b4-ty@kernel.org>
-Date:   Wed, 04 Oct 2023 19:48:03 +0530
+To:     Dave Jiang <dave.jiang@intel.com>,
+        Fenghua Yu <fenghua.yu@intel.com>
+Cc:     dmaengine@vger.kernel.org,
+        linux-kernel <linux-kernel@vger.kernel.org>,
+        Tom Zanussi <tom.zanussi@linux.intel.com>
+In-Reply-To: <20230908201045.4115614-1-fenghua.yu@intel.com>
+References: <20230908201045.4115614-1-fenghua.yu@intel.com>
+Subject: Re: [PATCH] dmaengine: idxd: add wq driver name support for
+ accel-config user tool
+Message-Id: <169642974297.440009.10230225002907030565.b4-ty@kernel.org>
+Date:   Wed, 04 Oct 2023 19:59:02 +0530
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
@@ -46,26 +47,20 @@ List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
 
-On Sun, 06 Aug 2023 11:25:11 +0800, Duoming Zhou wrote:
-> The synchronize_irq(c->irq) will not return until the IRQ handler
-> mtk_uart_apdma_irq_handler() is completed. If the synchronize_irq()
-> holds a spin_lock and waits the IRQ handler to complete, but the
-> IRQ handler also needs the same spin_lock. The deadlock will happen.
-> The process is shown below:
+On Fri, 08 Sep 2023 13:10:45 -0700, Fenghua Yu wrote:
+> With the possibility of multiple wq drivers that can be bound to the wq,
+> the user config tool accel-config needs a way to know which wq driver to
+> bind to the wq. Introduce per wq driver_name sysfs attribute where the user
+> can indicate the driver to be bound to the wq. This allows accel-config to
+> just bind to the driver using wq->driver_name.
 > 
->           cpu0                        cpu1
-> mtk_uart_apdma_device_pause() | mtk_uart_apdma_irq_handler()
->   spin_lock_irqsave()         |
->                               |   spin_lock_irqsave()
->   //hold the lock to wait     |
->   synchronize_irq()           |
 > 
 > [...]
 
 Applied, thanks!
 
-[1/1] dmaengine: mediatek: Fix deadlock caused by synchronize_irq()
-      commit: 01f1ae2733e2bb4de92fefcea5fda847d92aede1
+[1/1] dmaengine: idxd: add wq driver name support for accel-config user tool
+      commit: 7af1e0aceeb321cbc90fcf6fa0bec8870290377f
 
 Best regards,
 -- 
