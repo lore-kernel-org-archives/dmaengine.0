@@ -2,60 +2,60 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BB149E7C4E7
-	for <dmaengine@archiver.kernel.org>; Wed,  4 Oct 2023 16:36:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 71445E7C4EA
+	for <dmaengine@archiver.kernel.org>; Wed,  4 Oct 2023 16:36:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243337AbjJDQgR (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        id S243409AbjJDQgR (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
         Wed, 4 Oct 2023 12:36:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57678 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57688 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233799AbjJDQgQ (ORCPT
+        with ESMTP id S233810AbjJDQgQ (ORCPT
         <rfc822;dmaengine@vger.kernel.org>); Wed, 4 Oct 2023 12:36:16 -0400
-Received: from mx07-00178001.pphosted.com (mx07-00178001.pphosted.com [185.132.182.106])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 898EB95;
-        Wed,  4 Oct 2023 09:36:10 -0700 (PDT)
-Received: from pps.filterd (m0241204.ppops.net [127.0.0.1])
-        by mx07-00178001.pphosted.com (8.17.1.22/8.17.1.22) with ESMTP id 394AavuA022614;
-        Wed, 4 Oct 2023 18:35:55 +0200
+Received: from mx07-00178001.pphosted.com (mx08-00178001.pphosted.com [91.207.212.93])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DEBA4C0;
+        Wed,  4 Oct 2023 09:36:11 -0700 (PDT)
+Received: from pps.filterd (m0046660.ppops.net [127.0.0.1])
+        by mx07-00178001.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 394CT3GR008905;
+        Wed, 4 Oct 2023 18:35:57 +0200
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foss.st.com; h=
-        from:to:cc:subject:date:message-id:mime-version
-        :content-transfer-encoding:content-type; s=selector1; bh=dyiz+tj
-        fiV2jpQFO28ugDVDITHWqIXX0qTTS/2IIaYg=; b=CDOyv5d4QUbM1WjCWwIJXBD
-        DSi4ZgqWpzaHg8dky77xXIM/V1dxFE6Jwa6DFlsf8LcOOIwfAVhCHwPOsNlx9I7L
-        TuaYZSCKn67PUjxIlwGj7tZL29EJHgOp6U9ua4zuw7xE/YJe27Mjbi1OHnzAVG/r
-        LBHaRISHLXr0XugucynvryAD+zF6kGZIFAiW8Ga01/x0OcN77OC9dg8PrPF3VOE7
-        hjNeZ28jaAwLYAbkBU7AFsBiCkD3k2H0PaLldo99UoDJJXkofkfFr9Qh8OgYuxH/
-        4qgROhfdwVmzxVGzEaH5Ftegw3sUULVosX+eMrBB68dAZAtidXa58c/Oln4JAkA=
-        =
+        from:to:cc:subject:date:message-id:in-reply-to:references
+        :mime-version:content-transfer-encoding:content-type; s=
+        selector1; bh=Z53DfuJZW+Q+VIEyVMKQjbTggimV1KXI0jR6FczH0GA=; b=mc
+        rRFYZ9lYhyhVQ3xjC9bRAQGnhylVdtdfjfmU2fREquAnso1HI5dnglaJSS9SAeGL
+        lropzWprYap2aprXttHdw609ifdzDP4o3xNKHHJYSvmg7nh025bnFow8fEgvRRhN
+        Evr+Wxift+2OfjHCTq0uaigoF8eNw1s5zuFli8CSpwLJL7/4QVdVkNWabP4+a5ln
+        DKGNCZmkCd9ViwDWREBZf62Z8PeF4y8+9VxFJz1dCN+TaizOiZQD5US1LVgWW9lw
+        oSSrOvr4oiJ5fA/QvqS4XbIDP2G2J1jdVciGy1tQ9MuZb+zgHD7LTsnE3ZFn+xvK
+        WjwCTcQ2s2LmbSF/aryw==
 Received: from beta.dmz-eu.st.com (beta.dmz-eu.st.com [164.129.1.35])
-        by mx07-00178001.pphosted.com (PPS) with ESMTPS id 3tggx36fju-1
+        by mx07-00178001.pphosted.com (PPS) with ESMTPS id 3te8t528du-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 04 Oct 2023 18:35:55 +0200 (MEST)
+        Wed, 04 Oct 2023 18:35:57 +0200 (MEST)
 Received: from euls16034.sgp.st.com (euls16034.sgp.st.com [10.75.44.20])
-        by beta.dmz-eu.st.com (STMicroelectronics) with ESMTP id 0D065100053;
-        Wed,  4 Oct 2023 18:35:55 +0200 (CEST)
+        by beta.dmz-eu.st.com (STMicroelectronics) with ESMTP id 1ED66100053;
+        Wed,  4 Oct 2023 18:35:57 +0200 (CEST)
 Received: from Webmail-eu.st.com (shfdag1node3.st.com [10.75.129.71])
-        by euls16034.sgp.st.com (STMicroelectronics) with ESMTP id 0528A281EB6;
-        Wed,  4 Oct 2023 18:35:55 +0200 (CEST)
+        by euls16034.sgp.st.com (STMicroelectronics) with ESMTP id 16084281EB6;
+        Wed,  4 Oct 2023 18:35:57 +0200 (CEST)
 Received: from localhost (10.252.26.61) by SHFDAG1NODE3.st.com (10.75.129.71)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.27; Wed, 4 Oct
- 2023 18:35:54 +0200
+ 2023 18:35:56 +0200
 From:   Amelie Delaunay <amelie.delaunay@foss.st.com>
 To:     Vinod Koul <vkoul@kernel.org>,
         Maxime Coquelin <mcoquelin.stm32@gmail.com>,
         Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        M'boumba Cedric Madianga <cedric.madianga@gmail.com>,
-        Pierre-Yves MORDRET <pierre-yves.mordret@st.com>
-CC:     Amelie Delaunay <amelie.delaunay@foss.st.com>,
-        <stable@vger.kernel.org>, <dmaengine@vger.kernel.org>,
+        Amelie Delaunay <amelie.delaunay@foss.st.com>
+CC:     <stable@vger.kernel.org>, <dmaengine@vger.kernel.org>,
         <linux-stm32@st-md-mailman.stormreply.com>,
         <linux-arm-kernel@lists.infradead.org>,
         <linux-kernel@vger.kernel.org>
-Subject: [PATCH 1/3] dmaengine: stm32-mdma: abort resume if no ongoing transfer
-Date:   Wed, 4 Oct 2023 18:35:28 +0200
-Message-ID: <20231004163531.2864160-1-amelie.delaunay@foss.st.com>
+Subject: [PATCH 3/3] dmaengine: stm32-mdma: set in_flight_bytes in case CRQA flag is set
+Date:   Wed, 4 Oct 2023 18:35:30 +0200
+Message-ID: <20231004163531.2864160-3-amelie.delaunay@foss.st.com>
 X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20231004163531.2864160-1-amelie.delaunay@foss.st.com>
+References: <20231004163531.2864160-1-amelie.delaunay@foss.st.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
@@ -69,33 +69,64 @@ Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-chan->desc can be null, if transfer is terminated when resume is called,
-leading to a NULL pointer when retrieving the hwdesc.
-To avoid this case, check that chan->desc is not null and channel is
-disabled (transfer previously paused or terminated).
+CRQA flag is set by hardware when the channel request become active and
+the channel is enabled. It is cleared by hardware, when the channel request
+is completed.
+So when it is set, it means MDMA is transferring bytes.
+This information is useful in case of STM32 DMA and MDMA chaining,
+especially when the user pauses DMA before stopping it, to trig one last
+MDMA transfer to get the latest bytes of the SRAM buffer to the
+destination buffer.
+STM32 DCMI driver can then use this to know if the last MDMA transfer in
+case of chaining is done.
 
-Fixes: a4ffb13c8946 ("dmaengine: Add STM32 MDMA driver")
+Fixes: 696874322771 ("dmaengine: stm32-mdma: add support to be triggered by STM32 DMA")
 Signed-off-by: Amelie Delaunay <amelie.delaunay@foss.st.com>
 Cc: stable@vger.kernel.org
 ---
- drivers/dma/stm32-mdma.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/dma/stm32-mdma.c | 14 +++++++++-----
+ 1 file changed, 9 insertions(+), 5 deletions(-)
 
 diff --git a/drivers/dma/stm32-mdma.c b/drivers/dma/stm32-mdma.c
-index 0de234022c6d..cc6f4b00091f 100644
+index da73e13b8c9d..bae08b3f55c7 100644
 --- a/drivers/dma/stm32-mdma.c
 +++ b/drivers/dma/stm32-mdma.c
-@@ -1236,6 +1236,10 @@ static int stm32_mdma_resume(struct dma_chan *c)
- 	unsigned long flags;
- 	u32 status, reg;
+@@ -1318,7 +1318,8 @@ static int stm32_mdma_slave_config(struct dma_chan *c,
  
-+	/* Transfer can be terminated */
-+	if (!chan->desc || (stm32_mdma_read(dmadev, STM32_MDMA_CCR(chan->id)) & STM32_MDMA_CCR_EN))
-+		return -EPERM;
+ static size_t stm32_mdma_desc_residue(struct stm32_mdma_chan *chan,
+ 				      struct stm32_mdma_desc *desc,
+-				      u32 curr_hwdesc)
++				      u32 curr_hwdesc,
++				      struct dma_tx_state *state)
+ {
+ 	struct stm32_mdma_device *dmadev = stm32_mdma_get_dev(chan);
+ 	struct stm32_mdma_hwdesc *hwdesc;
+@@ -1342,6 +1343,10 @@ static size_t stm32_mdma_desc_residue(struct stm32_mdma_chan *chan,
+ 	cbndtr = stm32_mdma_read(dmadev, STM32_MDMA_CBNDTR(chan->id));
+ 	residue += cbndtr & STM32_MDMA_CBNDTR_BNDT_MASK;
+ 
++	state->in_flight_bytes = 0;
++	if (chan->chan_config.m2m_hw && (cisr & STM32_MDMA_CISR_CRQA))
++		state->in_flight_bytes = cbndtr & STM32_MDMA_CBNDTR_BNDT_MASK;
 +
- 	hwdesc = chan->desc->node[chan->curr_hwdesc].hwdesc;
+ 	if (!chan->mem_burst)
+ 		return residue;
  
- 	spin_lock_irqsave(&chan->vchan.lock, flags);
+@@ -1371,11 +1376,10 @@ static enum dma_status stm32_mdma_tx_status(struct dma_chan *c,
+ 
+ 	vdesc = vchan_find_desc(&chan->vchan, cookie);
+ 	if (chan->desc && cookie == chan->desc->vdesc.tx.cookie)
+-		residue = stm32_mdma_desc_residue(chan, chan->desc,
+-						  chan->curr_hwdesc);
++		residue = stm32_mdma_desc_residue(chan, chan->desc, chan->curr_hwdesc, state);
+ 	else if (vdesc)
+-		residue = stm32_mdma_desc_residue(chan,
+-						  to_stm32_mdma_desc(vdesc), 0);
++		residue = stm32_mdma_desc_residue(chan, to_stm32_mdma_desc(vdesc), 0, state);
++
+ 	dma_set_residue(state, residue);
+ 
+ 	spin_unlock_irqrestore(&chan->vchan.lock, flags);
 -- 
 2.25.1
 
