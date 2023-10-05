@@ -2,130 +2,83 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BBCDCE9270D
-	for <dmaengine@archiver.kernel.org>; Thu,  5 Oct 2023 15:45:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C863CE772A0
+	for <dmaengine@archiver.kernel.org>; Thu,  5 Oct 2023 16:05:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232953AbjJEPpS (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Thu, 5 Oct 2023 11:45:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36366 "EHLO
+        id S239960AbjJEQFP (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Thu, 5 Oct 2023 12:05:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58066 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232999AbjJEPoz (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Thu, 5 Oct 2023 11:44:55 -0400
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1BB4B13C80;
-        Thu,  5 Oct 2023 07:32:31 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5903BC32782;
-        Thu,  5 Oct 2023 10:54:31 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1696503274;
-        bh=r9QAN25ECg8YV7rovLkgwPyjjglMxbc27XwhgPj0p2k=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=jylTMHbvJxFAMVfEx+/VTWJ5qLSXYONVK3QwgUliTNxTLcVa8fp1LiFRhv8pXAEiG
-         c6IiyFrR/PMIZPxfaWHGeiEjHY7WqILh+Dz+ukbT78vExFr+jS34I+5LH3isMfZ44S
-         qJKlRR8+urhiXnx8GpuqU0JHlw2ssmvVraMs/zIj7WyVlj3504YyoTfBlXUEIySbmG
-         7SRdbQEUn0OJ7UxE9O9zzI0SzobLyNc1nPSIQU4xE3oVxKEOkYDjFgN/iuu3G0Cxqh
-         H/3Q+LOeLDOYEiQ3Jx6lKEWtH40Fo7GS0K4LLz7c4KaAka3U16sUdq0wM80Xwsg+9q
-         9RYFeYnWmN0Zw==
-Date:   Thu, 5 Oct 2023 11:54:29 +0100
-From:   Conor Dooley <conor@kernel.org>
-To:     Rob Herring <robh@kernel.org>
-Cc:     shravan chippa <shravan.chippa@microchip.com>,
-        green.wan@sifive.com, vkoul@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, palmer@dabbelt.com,
-        paul.walmsley@sifive.com, conor+dt@kernel.org,
-        dmaengine@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org,
-        nagasuresh.relli@microchip.com, praveen.kumar@microchip.com,
-        Conor Dooley <conor.dooley@microchip.com>
-Subject: Re: [PATCH v2 2/4] dt-bindings: dma: sf-pdma: add new compatible name
-Message-ID: <20231005-wanted-plausible-71dae05ccc7b@spud>
-References: <20231003042215.142678-1-shravan.chippa@microchip.com>
- <20231003042215.142678-3-shravan.chippa@microchip.com>
- <20231004133021.GB2743005-robh@kernel.org>
+        with ESMTP id S237519AbjJEQEE (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Thu, 5 Oct 2023 12:04:04 -0400
+Received: from out203-205-221-209.mail.qq.com (out203-205-221-209.mail.qq.com [203.205.221.209])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0AFF5F0;
+        Thu,  5 Oct 2023 07:28:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foxmail.com;
+        s=s201512; t=1696516127;
+        bh=zYh0StUlW1/9GZ1nQmMvd67xErwUSkJSZvHWN7RYvWw=;
+        h=From:To:Cc:Subject:Date;
+        b=n8r8q8SBAMJMvMI3TGCJQMWZ66LiXMwWmRa6kCUFgLRRsK2EHDh51Zll1+NEitWL4
+         XrLGaFGK8DJqMyAl1cO9387hUge7xZvFeqxmpcPcP0gBXJqwxzpCJlLg3cVRlSrUu+
+         7Bs/L5hvwzt5tG31UDT0XDbKZvuKUZ66boHf6w58=
+Received: from KernelDevBox.byted.org ([180.184.103.200])
+        by newxmesmtplogicsvrsza12-0.qq.com (NewEsmtp) with SMTP
+        id 72D30833; Thu, 05 Oct 2023 22:28:45 +0800
+X-QQ-mid: xmsmtpt1696516125t7v14ww2j
+Message-ID: <tencent_DD2D371DB5925B4B602B1E1D0A5FA88F1208@qq.com>
+X-QQ-XMAILINFO: OZZSS56D9fAj7Xv7SNfCcx1y4p/riDf0NjD0pb458JvO99e9GBIo18F+sIu9Cw
+         HIgV3FhsKAGYxGVDeEp0iZZ2v+Uit8GZN4jLaNGKhniEsWyIyvcPAKJJpQcoINsmbM02QGjS9FvT
+         WjJfor7Kwr0s8Tk/I/xm9KWvGthXxCcclnrwEqeQwjlKAZUa1TF20FroXJJKQkWAQkfNFCFxsWK/
+         sqFnEUqgcKjCiWnzmBeK7Yzi8tqrC2sdVMEjKUjZr5ZUFSFrb4wkWsiATZpwu5BAxnnOTWsZCedr
+         3u3VA+WpzIJasVUjXSASbU2iGT/9RHDi3Xkr2CYE5QsRJ2M+M8qYd7FALEKHQ8kt7XXL40jcnC51
+         KmBRzU4iPSs1E4bxFTOMA9OOVOyqiUAdtT5ykPggno5dNpK4/W8ZaJi37e588gy/gOGtUYxGrN8T
+         0O4ZaX6BjLLEmuFv1cD7FK11EK2seXmUMe5g5Lvp+iQwtMWLO9jpEfCV+YFpw9uB6YFGJJdkLiCu
+         0nfKtHfgdzqYAk6QIBXhYQo4kJXM3mJICHdtx4koyyTbSHCsyO/4JwEShK8A2UkQ8gpcn8BQ0Yyo
+         ymT/yUnI+3XzrBEAmDZFwVxnh3Ndqpew2Bbk5AXdgENikl4BuVwc91RWmr0JeJCYVF6ninrmrrH6
+         7S+hGQ1ylOit0Mif3P/BFbSib5jUlzbJsVO5aFr/tPMaky/79RbQa8Dv12DEqcJryBU8NHUu2WEr
+         R7PJQDC+tLUAFsOd+naif3jS/vL6ucGnkcDtxr4DQUSP7n22TAs2FtTjxw1YXF9z3D2d1jcPmKJc
+         CG9vaIEYsIJCOQG1jGjSPRwZY3otkMujjJQyWANn7FQDxknEorKYaeVmI2/iM7Bjy8S7DmaedLfF
+         9ExJFtFT1QtQF2pCQzNhWw/zQjP5pJiB3CiHKo2AgRKvlGhY8u7jkBsnsHxj4aJdtAxKoG1dbc+5
+         9OqthpWnrGi+DD8RPYFKR/mD9fnP2qsZUOWsNE7w7qPh0XadkrHptb3MuGbNSs2HQC5xaATJx7tK
+         9QJdXxeQ==
+X-QQ-XMRINFO: Mp0Kj//9VHAxr69bL5MkOOs=
+From:   Zhang Shurong <zhang_shurong@foxmail.com>
+To:     linus.walleij@linaro.org
+Cc:     vkoul@kernel.org, linux-arm-kernel@lists.infradead.org,
+        dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Zhang Shurong <zhang_shurong@foxmail.com>
+Subject: [PATCH] maengine: ste_dma40: Fix PM disable depth imbalance in d40_probe
+Date:   Thu,  5 Oct 2023 22:28:35 +0800
+X-OQ-MSGID: <20231005142835.2256265-1-zhang_shurong@foxmail.com>
+X-Mailer: git-send-email 2.30.2
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-        protocol="application/pgp-signature"; boundary="FXxfjJNs6siMoTeZ"
-Content-Disposition: inline
-In-Reply-To: <20231004133021.GB2743005-robh@kernel.org>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
+The pm_runtime_enable will increase power disable depth. Thus
+a pairing decrement is needed on the error handling path to
+keep it balanced according to context.
+We fix it by calling pm_runtime_disable when error returns.
 
---FXxfjJNs6siMoTeZ
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Signed-off-by: Zhang Shurong <zhang_shurong@foxmail.com>
+---
+ drivers/dma/ste_dma40.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-On Wed, Oct 04, 2023 at 08:30:21AM -0500, Rob Herring wrote:
-> On Tue, Oct 03, 2023 at 09:52:13AM +0530, shravan chippa wrote:
-> > From: Shravan Chippa <shravan.chippa@microchip.com>
-> >=20
-> > Add new compatible name microchip,mpfs-pdma to support
-> > out of order dma transfers
-> >=20
-> > Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
-> > Signed-off-by: Shravan Chippa <shravan.chippa@microchip.com>
-> > ---
-> >  .../bindings/dma/sifive,fu540-c000-pdma.yaml         | 12 ++++++++----
-> >  1 file changed, 8 insertions(+), 4 deletions(-)
-> >=20
-> > diff --git a/Documentation/devicetree/bindings/dma/sifive,fu540-c000-pd=
-ma.yaml b/Documentation/devicetree/bindings/dma/sifive,fu540-c000-pdma.yaml
-> > index a1af0b906365..974467c4bacb 100644
-> > --- a/Documentation/devicetree/bindings/dma/sifive,fu540-c000-pdma.yaml
-> > +++ b/Documentation/devicetree/bindings/dma/sifive,fu540-c000-pdma.yaml
-> > @@ -27,10 +27,14 @@ allOf:
-> > =20
-> >  properties:
-> >    compatible:
-> > -    items:
-> > -      - enum:
-> > -          - sifive,fu540-c000-pdma
-> > -      - const: sifive,pdma0
-> > +    oneOf:
-> > +      - items:
-> > +          - const: microchip,mpfs-pdma # Microchip out of order DMA tr=
-ansfer
-> > +          - const: sifive,fu540-c000-pdma # Sifive in-order DMA transf=
-er
+diff --git a/drivers/dma/ste_dma40.c b/drivers/dma/ste_dma40.c
+index 89e82508c133..002833fb1fa0 100644
+--- a/drivers/dma/ste_dma40.c
++++ b/drivers/dma/ste_dma40.c
+@@ -3668,6 +3668,7 @@ static int __init d40_probe(struct platform_device *pdev)
+ 		regulator_disable(base->lcpa_regulator);
+ 		regulator_put(base->lcpa_regulator);
+ 	}
++	pm_runtime_disable(base->dev);
+ 
+  report_failure:
+ 	d40_err(dev, "probe failed\n");
+-- 
+2.30.2
 
-IIRC I asked for the comments here to be removed on the previous
-version, and my r-b was conditional on that.
-The device specific compatible has merit outside of the ordering, which
-may just be a software policy decision.
-
-> This doesn't really make sense. microchip,mpfs-pdma is compatible with=20
-> sifive,fu540-c000-pdma and sifive,fu540-c000-pdma is compatible with=20
-> sifive,pdma0, but microchip,mpfs-pdma is not compatible with=20
-> sifive,pdma0? (Or replace "compatible with" with "a superset of")
-
-TBH, I am not sure why it was done this way. Probably because the driver
-contains both sifive,pdma0 and sifive,fu540-c000-pdma. Doing
-compatible =3D "microchip,mpfs-pdma", "sifive,fu540-c000-pdma", "sifive,pdm=
-a0";
-thing would be fine.
-
-> Any fallback is only useful if an OS only understanding the fallback=20
-> will work with the h/w. Does this h/w work without the driver changes?
-
-Yes.=20
-I've been hoping that someone from SiFive would come along, and in
-response to this patchset, tell us _why_ the driver does not make use of
-out-of-order transfers to begin with.
-
-Thanks,
-Conor.
-
---FXxfjJNs6siMoTeZ
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCZR6V5AAKCRB4tDGHoIJi
-0oX1AP4gvbx/YYM63FggUSYmU1/62CsJzHKn0+mB5T85IMCFwgD/cOxS4ARE5fEz
-L4ddVpARkl5OfnTsKxySy+l9cZjbFgc=
-=hzTR
------END PGP SIGNATURE-----
-
---FXxfjJNs6siMoTeZ--
