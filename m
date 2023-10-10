@@ -2,309 +2,216 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 78C7FE95A97
-	for <dmaengine@archiver.kernel.org>; Tue, 10 Oct 2023 10:14:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 23417CD80CA
+	for <dmaengine@archiver.kernel.org>; Tue, 10 Oct 2023 12:59:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229516AbjJJKO7 (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Tue, 10 Oct 2023 06:14:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39566 "EHLO
+        id S232066AbjJJM7a (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Tue, 10 Oct 2023 08:59:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60904 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230396AbjJJKO5 (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Tue, 10 Oct 2023 06:14:57 -0400
-Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EDFCB97;
-        Tue, 10 Oct 2023 03:14:54 -0700 (PDT)
-Received: by mail-lj1-x230.google.com with SMTP id 38308e7fff4ca-2c27d653856so78013191fa.0;
-        Tue, 10 Oct 2023 03:14:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1696932893; x=1697537693; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=8uevVZ5l49O79IDGgv2qzPiOyxsWvTfFBE56J4eeoZk=;
-        b=hA1iDf9sro/q53QWqn5VyD3qwu+6NO1J/ZTfz+LpxJNuwjBrPpfqQ59bJcAW+HQBJC
-         xFDPDR4PNs/7xupoIG13oIXE+pbAZMAVmuHGJEZApQyuwQCnSpw8ymICqXjowiktXgJv
-         aw7ivBLZSXbi3YbqXcMc00Wn2pn/T2B3kRz7fbE3pP6i9QQE7J4hAgAtMYfYgvapMwnJ
-         LbLPrGLPID/WW+jQg667PQpbCs6mtp/DOrsR48Y1FJ2Vf1rd+yOR2Vl3qBjqB8AqZE7g
-         irrSAxYZlfDRiHwSPUYObERhMmypQfVbx0AJuj0KwNmSYXo+heelyRZddfTFyI6x38MF
-         fGLQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696932893; x=1697537693;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=8uevVZ5l49O79IDGgv2qzPiOyxsWvTfFBE56J4eeoZk=;
-        b=RT5CNxFTFxj5uk6TcEL0eNlvs2wmWnIuaGuNPfX8thMqvkTb6eX7bVL9L7GKdxkpmX
-         iv404CxR1phkyKQDsKTS8JiKoW1ZeyLFBBQ4x0qVUPgmEajQYpUXVx4LSEgxhSe/0SIU
-         X0BB+n5XJB92cYshh0vpxEu8WK+x5Rl405wsajD8L4dKqGIHYHVv6NOlJWlPGUcQKx6X
-         zxz8GNMlqcJjeKcIvwtpQptnkoY9oHz5yG6PKfXYkGZljJV6M/iAZCXupBhdNyr+wzOW
-         gq0OjSZeS1ATzxi2CH84k6r8v+d7iJ5wdS7xD/8lVVSD4ydI02W21h9+AR7QKe0ZZZ71
-         4I5w==
-X-Gm-Message-State: AOJu0YyiAIjBALkKUFgJP6D++LKUUEKD6PXjpNkP8d+sPGyAt65927hv
-        jkHJuHCZDWO4qjANroMeX5WDYPGfYAUlqHv6
-X-Google-Smtp-Source: AGHT+IGB9wiyCZOSwRuBPq5oqH4OQsHTMF8mPErWaOJ5w3L00pL0BFWosieAxXXzZXTmjo/nTGYRUA==
-X-Received: by 2002:a05:6512:3b88:b0:504:b84f:7b19 with SMTP id g8-20020a0565123b8800b00504b84f7b19mr11632877lfv.20.1696932892561;
-        Tue, 10 Oct 2023 03:14:52 -0700 (PDT)
-Received: from skhimich.dev.yadro.com ([185.15.172.210])
-        by smtp.gmail.com with ESMTPSA id w2-20020ac25d42000000b004fce9e8c390sm1754454lfd.63.2023.10.10.03.14.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 10 Oct 2023 03:14:52 -0700 (PDT)
-From:   Sergey Khimich <serghox@gmail.com>
-To:     linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org
-Cc:     Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>
-Subject: [PATCH v2 1/1] dmaengine: dw-axi-dmac: Add support DMAX_NUM_CHANNELS > 16
-Date:   Tue, 10 Oct 2023 13:14:50 +0300
-Message-Id: <20231010101450.2949126-2-serghox@gmail.com>
-X-Mailer: git-send-email 2.30.2
-In-Reply-To: <20231010101450.2949126-1-serghox@gmail.com>
-References: <20231010101450.2949126-1-serghox@gmail.com>
+        with ESMTP id S231400AbjJJM73 (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Tue, 10 Oct 2023 08:59:29 -0400
+Received: from mx07-00178001.pphosted.com (mx07-00178001.pphosted.com [185.132.182.106])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8ECFFA7;
+        Tue, 10 Oct 2023 05:59:27 -0700 (PDT)
+Received: from pps.filterd (m0241204.ppops.net [127.0.0.1])
+        by mx07-00178001.pphosted.com (8.17.1.22/8.17.1.22) with ESMTP id 39A8XFEj012493;
+        Tue, 10 Oct 2023 14:58:50 +0200
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foss.st.com; h=
+        from:to:cc:subject:date:message-id:in-reply-to:references
+        :mime-version:content-transfer-encoding:content-type; s=
+        selector1; bh=pRaHro0Cx77mAnyA1b4ha7ivIMmgkx+PPwasbOVpgNk=; b=aP
+        Uum6UMTy22Gms/T55cBpJ9KqYp8A+MW+OciqhTiewGdmquPbs/9Ivh/cdMnyRIIu
+        DHLv4VPW/rDIS7ZiwgQyJI5lVuokhEfqyLv31IEqcnTwCu/wOjNzogTsv0L4i+U1
+        r674LbOp8cFgIyBfCduoKPYWWwO4jRocfFoaGLwiyHhSpu8WHes5rn+FOqMrfuUG
+        AoUqkn2SCcOKDD3z7Y1m12l2iAE2Jbqu/kwFaUfDJnuviEqNiY0PbkWm2vnijhN/
+        90qv+85u1rts8bmdycNajbh5U/eeBZZGSzQkVoNwaD93xNVhHT2blj5lqB/5IeHa
+        /OPkSweYkqaCH48h3+mw==
+Received: from beta.dmz-eu.st.com (beta.dmz-eu.st.com [164.129.1.35])
+        by mx07-00178001.pphosted.com (PPS) with ESMTPS id 3tkhjga1xf-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 10 Oct 2023 14:58:50 +0200 (MEST)
+Received: from euls16034.sgp.st.com (euls16034.sgp.st.com [10.75.44.20])
+        by beta.dmz-eu.st.com (STMicroelectronics) with ESMTP id E771210005A;
+        Tue, 10 Oct 2023 14:58:48 +0200 (CEST)
+Received: from Webmail-eu.st.com (shfdag1node1.st.com [10.75.129.69])
+        by euls16034.sgp.st.com (STMicroelectronics) with ESMTP id D75DE231505;
+        Tue, 10 Oct 2023 14:58:48 +0200 (CEST)
+Received: from localhost (10.201.20.32) by SHFDAG1NODE1.st.com (10.75.129.69)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.27; Tue, 10 Oct
+ 2023 14:58:48 +0200
+From:   Gatien Chevallier <gatien.chevallier@foss.st.com>
+To:     <Oleksii_Moisieiev@epam.com>, <gregkh@linuxfoundation.org>,
+        <herbert@gondor.apana.org.au>, <davem@davemloft.net>,
+        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        <conor+dt@kernel.org>, <alexandre.torgue@foss.st.com>,
+        <vkoul@kernel.org>, <jic23@kernel.org>,
+        <olivier.moysan@foss.st.com>, <arnaud.pouliquen@foss.st.com>,
+        <mchehab@kernel.org>, <fabrice.gasnier@foss.st.com>,
+        <andi.shyti@kernel.org>, <ulf.hansson@linaro.org>,
+        <edumazet@google.com>, <kuba@kernel.org>, <pabeni@redhat.com>,
+        <hugues.fruchet@foss.st.com>, <lee@kernel.org>, <will@kernel.org>,
+        <catalin.marinas@arm.com>, <arnd@kernel.org>,
+        <richardcochran@gmail.com>, Frank Rowand <frowand.list@gmail.com>,
+        <peng.fan@oss.nxp.com>
+CC:     <linux-crypto@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-stm32@st-md-mailman.stormreply.com>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>, <dmaengine@vger.kernel.org>,
+        <linux-i2c@vger.kernel.org>, <linux-iio@vger.kernel.org>,
+        <alsa-devel@alsa-project.org>, <linux-media@vger.kernel.org>,
+        <linux-mmc@vger.kernel.org>, <netdev@vger.kernel.org>,
+        <linux-phy@lists.infradead.org>, <linux-serial@vger.kernel.org>,
+        <linux-spi@vger.kernel.org>, <linux-usb@vger.kernel.org>,
+        Oleksii Moisieiev <oleksii_moisieiev@epam.com>,
+        Gatien Chevallier <gatien.chevallier@foss.st.com>
+Subject: [PATCH v6 01/11] dt-bindings: document generic access controllers
+Date:   Tue, 10 Oct 2023 14:57:09 +0200
+Message-ID: <20231010125719.784627-2-gatien.chevallier@foss.st.com>
+X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20231010125719.784627-1-gatien.chevallier@foss.st.com>
+References: <20231010125719.784627-1-gatien.chevallier@foss.st.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.201.20.32]
+X-ClientProxiedBy: SHFCAS1NODE2.st.com (10.75.129.73) To SHFDAG1NODE1.st.com
+ (10.75.129.69)
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-10-10_08,2023-10-10_01,2023-05-22_02
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-From: Sergey Khimich <serghox@gmail.com>
+From: Oleksii Moisieiev <Oleksii_Moisieiev@epam.com>
 
-Added support for DMA controller with more than 16 channels.
+Introducing of the generic access controllers bindings for the
+access controller provider and consumer devices. Those bindings are
+intended to allow a better handling of accesses to resources in a
+hardware architecture supporting several compartments.
 
-Signed-off-by: Sergey Khimich <serghox@gmail.com>
+This patch is based on [1]. It is integrated in this patchset as it
+provides a use-case for it.
+
+Diffs with [1]:
+	- Rename feature-domain* properties to access-control* to narrow
+	  down the scope of the binding
+	- YAML errors and typos corrected.
+	- Example updated
+	- Some rephrasing in the binding description
+
+[1]: https://lore.kernel.org/lkml/0c0a82bb-18ae-d057-562b
+
+Signed-off-by: Oleksii Moisieiev <oleksii_moisieiev@epam.com>
+Signed-off-by: Gatien Chevallier <gatien.chevallier@foss.st.com>
 ---
- .../dma/dw-axi-dmac/dw-axi-dmac-platform.c    | 156 +++++++++++++-----
- drivers/dma/dw-axi-dmac/dw-axi-dmac.h         |   6 +-
- 2 files changed, 120 insertions(+), 42 deletions(-)
 
-diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-index dd02f84e404d..f2587159bf5a 100644
---- a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-+++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-@@ -62,6 +62,17 @@ static inline u32 axi_dma_ioread32(struct axi_dma_chip *chip, u32 reg)
- 	return ioread32(chip->regs + reg);
- }
- 
-+static inline void
-+axi_dma_iowrite64(struct axi_dma_chip *chip, u32 reg, u64 val)
-+{
-+	iowrite64(val, chip->regs + reg);
-+}
+Changes in V6:
+	- Renamed access-controller to access-controllers
+	- Example updated
+	- Removal of access-control-provider property
+
+Changes in V5:
+	- Diffs with [1]
+	- Discarded the [IGNORE] tag as the patch is now part of the
+	  patchset
+
+ .../access-controllers.yaml                   | 84 +++++++++++++++++++
+ 1 file changed, 84 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/access-controllers/access-controllers.yaml
+
+diff --git a/Documentation/devicetree/bindings/access-controllers/access-controllers.yaml b/Documentation/devicetree/bindings/access-controllers/access-controllers.yaml
+new file mode 100644
+index 000000000000..99e2865f0e46
+--- /dev/null
++++ b/Documentation/devicetree/bindings/access-controllers/access-controllers.yaml
+@@ -0,0 +1,84 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/access-controllers/access-controllers.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
 +
-+static inline u64 axi_dma_ioread64(struct axi_dma_chip *chip, u32 reg)
-+{
-+	return ioread64(chip->regs + reg);
-+}
++title: Generic Domain Access Controllers
 +
- static inline void
- axi_chan_iowrite32(struct axi_dma_chan *chan, u32 reg, u32 val)
- {
-@@ -182,38 +193,73 @@ static inline u32 axi_chan_irq_read(struct axi_dma_chan *chan)
- 
- static inline void axi_chan_disable(struct axi_dma_chan *chan)
- {
--	u32 val;
--
--	val = axi_dma_ioread32(chan->chip, DMAC_CHEN);
--	val &= ~(BIT(chan->id) << DMAC_CHAN_EN_SHIFT);
--	if (chan->chip->dw->hdata->reg_map_8_channels)
--		val |=   BIT(chan->id) << DMAC_CHAN_EN_WE_SHIFT;
--	else
--		val |=   BIT(chan->id) << DMAC_CHAN_EN2_WE_SHIFT;
--	axi_dma_iowrite32(chan->chip, DMAC_CHEN, val);
-+	u64 val;
++maintainers:
++  - Oleksii Moisieiev <oleksii_moisieiev@epam.com>
 +
-+	if (chan->chip->dw->hdata->nr_channels >= DMAC_CHAN_16) {
-+		val = axi_dma_ioread64(chan->chip, DMAC_CHEN);
-+		if (chan->id >= DMAC_CHAN_16) {
-+			val &= ~((u64)(BIT(chan->id) >> DMAC_CHAN_16)
-+				<< (DMAC_CHAN_EN_SHIFT + DMAC_CHAN_BLOCK_SHIFT));
-+			val |=   (u64)(BIT(chan->id) >> DMAC_CHAN_16)
-+				<< (DMAC_CHAN_EN2_WE_SHIFT + DMAC_CHAN_BLOCK_SHIFT);
-+		} else {
-+			val &= ~(BIT(chan->id) << DMAC_CHAN_EN_SHIFT);
-+			val |=   BIT(chan->id) << DMAC_CHAN_EN2_WE_SHIFT;
-+		}
-+		axi_dma_iowrite64(chan->chip, DMAC_CHEN, val);
-+	} else {
-+		val = axi_dma_ioread32(chan->chip, DMAC_CHEN);
-+		val &= ~(BIT(chan->id) << DMAC_CHAN_EN_SHIFT);
-+		if (chan->chip->dw->hdata->reg_map_8_channels)
-+			val |=   BIT(chan->id) << DMAC_CHAN_EN_WE_SHIFT;
-+		else
-+			val |=   BIT(chan->id) << DMAC_CHAN_EN2_WE_SHIFT;
-+		axi_dma_iowrite32(chan->chip, DMAC_CHEN, (u32)val);
-+	}
- }
- 
- static inline void axi_chan_enable(struct axi_dma_chan *chan)
- {
--	u32 val;
--
--	val = axi_dma_ioread32(chan->chip, DMAC_CHEN);
--	if (chan->chip->dw->hdata->reg_map_8_channels)
--		val |= BIT(chan->id) << DMAC_CHAN_EN_SHIFT |
--			BIT(chan->id) << DMAC_CHAN_EN_WE_SHIFT;
--	else
--		val |= BIT(chan->id) << DMAC_CHAN_EN_SHIFT |
-+	u64 val;
++description: |+
++  Common access controllers properties
 +
-+	if (chan->chip->dw->hdata->nr_channels >= DMAC_CHAN_16) {
-+		val = axi_dma_ioread64(chan->chip, DMAC_CHEN);
-+		if (chan->id >= DMAC_CHAN_16) {
-+			val |= (u64)(BIT(chan->id) >> DMAC_CHAN_16)
-+				<< (DMAC_CHAN_EN_SHIFT + DMAC_CHAN_BLOCK_SHIFT) |
-+				(u64)(BIT(chan->id) >> DMAC_CHAN_16)
-+				<< (DMAC_CHAN_EN2_WE_SHIFT + DMAC_CHAN_BLOCK_SHIFT);
-+		} else {
-+			val |= BIT(chan->id) << DMAC_CHAN_EN_SHIFT |
- 			BIT(chan->id) << DMAC_CHAN_EN2_WE_SHIFT;
--	axi_dma_iowrite32(chan->chip, DMAC_CHEN, val);
-+		}
-+		axi_dma_iowrite64(chan->chip, DMAC_CHEN, val);
-+	} else {
-+		val = axi_dma_ioread32(chan->chip, DMAC_CHEN);
-+		if (chan->chip->dw->hdata->reg_map_8_channels) {
-+			val |= BIT(chan->id) << DMAC_CHAN_EN_SHIFT |
-+			BIT(chan->id) << DMAC_CHAN_EN_WE_SHIFT;
-+		} else {
-+			val |= BIT(chan->id) << DMAC_CHAN_EN_SHIFT |
-+				BIT(chan->id) << DMAC_CHAN_EN2_WE_SHIFT;
-+		}
-+		axi_dma_iowrite32(chan->chip, DMAC_CHEN, (u32)val);
-+	}
- }
- 
- static inline bool axi_chan_is_hw_enable(struct axi_dma_chan *chan)
- {
--	u32 val;
-+	u64 val;
- 
--	val = axi_dma_ioread32(chan->chip, DMAC_CHEN);
-+	if (chan->chip->dw->hdata->nr_channels >= DMAC_CHAN_16)
-+		val = axi_dma_ioread64(chan->chip, DMAC_CHEN);
-+	else
-+		val = axi_dma_ioread32(chan->chip, DMAC_CHEN);
- 
--	return !!(val & (BIT(chan->id) << DMAC_CHAN_EN_SHIFT));
-+	if (chan->id >= DMAC_CHAN_16)
-+		return !!(val & ((u64)(BIT(chan->id) >> DMAC_CHAN_16) << DMAC_CHAN_BLOCK_SHIFT));
-+	else
-+		return !!(val & (BIT(chan->id) << DMAC_CHAN_EN_SHIFT));
- }
- 
- static void axi_dma_hw_init(struct axi_dma_chip *chip)
-@@ -1175,20 +1221,34 @@ static int dma_chan_pause(struct dma_chan *dchan)
- 	struct axi_dma_chan *chan = dchan_to_axi_dma_chan(dchan);
- 	unsigned long flags;
- 	unsigned int timeout = 20; /* timeout iterations */
--	u32 val;
-+	u64 val;
- 
- 	spin_lock_irqsave(&chan->vc.lock, flags);
- 
--	if (chan->chip->dw->hdata->reg_map_8_channels) {
--		val = axi_dma_ioread32(chan->chip, DMAC_CHEN);
--		val |= BIT(chan->id) << DMAC_CHAN_SUSP_SHIFT |
--			BIT(chan->id) << DMAC_CHAN_SUSP_WE_SHIFT;
--		axi_dma_iowrite32(chan->chip, DMAC_CHEN, val);
-+	if (chan->chip->dw->hdata->nr_channels >= DMAC_CHAN_16) {
-+		val = axi_dma_ioread64(chan->chip, DMAC_CHSUSPREG);
-+		if (chan->id >= DMAC_CHAN_16) {
-+			val |= (u64)(BIT(chan->id) >> DMAC_CHAN_16)
-+				<< (DMAC_CHAN_SUSP2_SHIFT + DMAC_CHAN_BLOCK_SHIFT) |
-+				(u64)(BIT(chan->id) >> DMAC_CHAN_16)
-+				<< (DMAC_CHAN_SUSP2_WE_SHIFT + DMAC_CHAN_BLOCK_SHIFT);
-+		} else {
-+			val |= BIT(chan->id) << DMAC_CHAN_SUSP2_SHIFT |
-+			       BIT(chan->id) << DMAC_CHAN_SUSP2_WE_SHIFT;
-+			}
-+			axi_dma_iowrite64(chan->chip, DMAC_CHSUSPREG, val);
- 	} else {
--		val = axi_dma_ioread32(chan->chip, DMAC_CHSUSPREG);
--		val |= BIT(chan->id) << DMAC_CHAN_SUSP2_SHIFT |
-+		if (chan->chip->dw->hdata->reg_map_8_channels) {
-+			val = axi_dma_ioread32(chan->chip, DMAC_CHEN);
-+			val |= BIT(chan->id) << DMAC_CHAN_SUSP_SHIFT |
-+			BIT(chan->id) << DMAC_CHAN_SUSP_WE_SHIFT;
-+			axi_dma_iowrite32(chan->chip, DMAC_CHEN, (u32)val);
-+		} else {
-+			val = axi_dma_ioread32(chan->chip, DMAC_CHSUSPREG);
-+			val |= BIT(chan->id) << DMAC_CHAN_SUSP2_SHIFT |
- 			BIT(chan->id) << DMAC_CHAN_SUSP2_WE_SHIFT;
--		axi_dma_iowrite32(chan->chip, DMAC_CHSUSPREG, val);
-+			axi_dma_iowrite32(chan->chip, DMAC_CHSUSPREG, (u32)val);
-+		}
- 	}
- 
- 	do  {
-@@ -1210,18 +1270,32 @@ static int dma_chan_pause(struct dma_chan *dchan)
- /* Called in chan locked context */
- static inline void axi_chan_resume(struct axi_dma_chan *chan)
- {
--	u32 val;
--
--	if (chan->chip->dw->hdata->reg_map_8_channels) {
--		val = axi_dma_ioread32(chan->chip, DMAC_CHEN);
--		val &= ~(BIT(chan->id) << DMAC_CHAN_SUSP_SHIFT);
--		val |=  (BIT(chan->id) << DMAC_CHAN_SUSP_WE_SHIFT);
--		axi_dma_iowrite32(chan->chip, DMAC_CHEN, val);
-+	u64 val;
++  Access controllers are in charge of stating which of the hardware blocks under
++  their responsibility (their domain) can be accesssed by which compartment. A
++  compartment can be a cluster of CPUs (or coprocessors), a range of addresses
++  or a group of hardware blocks. An access controller's domain is the set of
++  resources covered by the access controller.
 +
-+	if (chan->chip->dw->hdata->nr_channels >= DMAC_CHAN_16) {
-+		val = axi_dma_ioread64(chan->chip, DMAC_CHSUSPREG);
-+		if (chan->id >= DMAC_CHAN_16) {
-+			val &= ~((u64)(BIT(chan->id) >> DMAC_CHAN_16)
-+				<< (DMAC_CHAN_SUSP2_SHIFT + DMAC_CHAN_BLOCK_SHIFT));
-+			val |=  ((u64)(BIT(chan->id) >> DMAC_CHAN_16)
-+				<< (DMAC_CHAN_SUSP2_WE_SHIFT + DMAC_CHAN_BLOCK_SHIFT));
-+		} else {
-+			val &= ~(BIT(chan->id) << DMAC_CHAN_SUSP2_SHIFT);
-+			val |=  (BIT(chan->id) << DMAC_CHAN_SUSP2_WE_SHIFT);
-+		}
-+			axi_dma_iowrite64(chan->chip, DMAC_CHSUSPREG, val);
- 	} else {
--		val = axi_dma_ioread32(chan->chip, DMAC_CHSUSPREG);
--		val &= ~(BIT(chan->id) << DMAC_CHAN_SUSP2_SHIFT);
--		val |=  (BIT(chan->id) << DMAC_CHAN_SUSP2_WE_SHIFT);
--		axi_dma_iowrite32(chan->chip, DMAC_CHSUSPREG, val);
-+		if (chan->chip->dw->hdata->reg_map_8_channels) {
-+			val = axi_dma_ioread32(chan->chip, DMAC_CHEN);
-+			val &= ~(BIT(chan->id) << DMAC_CHAN_SUSP_SHIFT);
-+			val |=  (BIT(chan->id) << DMAC_CHAN_SUSP_WE_SHIFT);
-+			axi_dma_iowrite32(chan->chip, DMAC_CHEN, (u32)val);
-+		} else {
-+			val = axi_dma_ioread32(chan->chip, DMAC_CHSUSPREG);
-+			val &= ~(BIT(chan->id) << DMAC_CHAN_SUSP2_SHIFT);
-+			val |=  (BIT(chan->id) << DMAC_CHAN_SUSP2_WE_SHIFT);
-+			axi_dma_iowrite32(chan->chip, DMAC_CHSUSPREG, (u32)val);
-+		}
- 	}
- 
- 	chan->is_paused = false;
-diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac.h b/drivers/dma/dw-axi-dmac/dw-axi-dmac.h
-index eb267cb24f67..454904d99654 100644
---- a/drivers/dma/dw-axi-dmac/dw-axi-dmac.h
-+++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac.h
-@@ -18,7 +18,7 @@
- 
- #include "../virt-dma.h"
- 
--#define DMAC_MAX_CHANNELS	16
-+#define DMAC_MAX_CHANNELS	32
- #define DMAC_MAX_MASTERS	2
- #define DMAC_MAX_BLK_SIZE	0x200000
- 
-@@ -222,6 +222,10 @@ static inline struct axi_dma_chan *dchan_to_axi_dma_chan(struct dma_chan *dchan)
- /* DMAC_CHEN2 */
- #define DMAC_CHAN_EN2_WE_SHIFT		16
- 
-+/* DMAC CHAN BLOCKS */
-+#define DMAC_CHAN_BLOCK_SHIFT		32
-+#define DMAC_CHAN_16			16
++  This device tree binding can be used to bind devices to their access
++  controller provided by access-controllers property. In this case, the device
++  is a consumer and the access controller is the provider.
 +
- /* DMAC_CHSUSP */
- #define DMAC_CHAN_SUSP2_SHIFT		0
- #define DMAC_CHAN_SUSP2_WE_SHIFT	16
++  An access controller can be represented by any node in the device tree and
++  can provide one or more configuration parameters, needed to control parameters
++  of the consumer device. A consumer node can refer to the provider by phandle
++  and a set of phandle arguments, specified by '#access-controller-cells'
++  property in the access controller node.
++
++  Access controllers are typically used to set/read the permissions of a
++  hardware block and grant access to it. Any of which depends on the access
++  controller. The capabilities of each access controller are defined by the
++  binding of the access controller device.
++
++  Each node can be a consumer for the several access controllers.
++
++# always select the core schema
++select: true
++
++properties:
++  "#access-controller-cells":
++    description:
++      Number of cells in an access-controllers specifier;
++      Can be any value as specified by device tree binding documentation
++      of a particular provider. The node is an access controller.
++
++  access-controller-names:
++    $ref: /schemas/types.yaml#/definitions/string-array
++    description:
++      A list of access-controllers names, sorted in the same order as
++      access-controllers entries. Consumer drivers will use
++      access-controller-names to match with existing access-controllers entries.
++
++  access-controllers:
++    $ref: /schemas/types.yaml#/definitions/phandle-array
++    description:
++      A list of access controller specifiers, as defined by the
++      bindings of the access-controllers provider.
++
++additionalProperties: true
++
++examples:
++  - |
++    clock_controller: access-controllers@50000 {
++        reg = <0x50000 0x400>;
++        #access-controller-cells = <2>;
++    };
++
++    bus_controller: bus@60000 {
++        reg = <0x60000 0x10000>;
++        #address-cells = <1>;
++        #size-cells = <1>;
++        ranges;
++        #access-controller-cells = <3>;
++
++        uart4: serial@60100 {
++            reg = <0x60100 0x400>;
++            clocks = <&clk_serial>;
++            access-controllers = <&clock_controller 1 2>,
++                                 <&bus_controller 1 3 5>;
++            access-controller-names = "clock", "bus";
++        };
++    };
 -- 
-2.30.2
+2.35.3
 
