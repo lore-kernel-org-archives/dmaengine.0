@@ -2,40 +2,40 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E3901CD98FE
-	for <dmaengine@archiver.kernel.org>; Wed, 11 Oct 2023 08:12:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 34826CD98FE
+	for <dmaengine@archiver.kernel.org>; Wed, 11 Oct 2023 08:12:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230270AbjJKIMn (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 11 Oct 2023 04:12:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54816 "EHLO
+        id S230216AbjJKIMt (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 11 Oct 2023 04:12:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54906 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230209AbjJKIMm (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Wed, 11 Oct 2023 04:12:42 -0400
-Received: from relay8-d.mail.gandi.net (relay8-d.mail.gandi.net [217.70.183.201])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 489DA9E;
-        Wed, 11 Oct 2023 01:12:35 -0700 (PDT)
-Received: by mail.gandi.net (Postfix) with ESMTPSA id CB7801BF207;
-        Wed, 11 Oct 2023 08:12:31 +0000 (UTC)
+        with ESMTP id S230255AbjJKIMn (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Wed, 11 Oct 2023 04:12:43 -0400
+Received: from relay8-d.mail.gandi.net (relay8-d.mail.gandi.net [IPv6:2001:4b98:dc4:8::228])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A131DA;
+        Wed, 11 Oct 2023 01:12:39 -0700 (PDT)
+Received: by mail.gandi.net (Postfix) with ESMTPSA id 475771BF20C;
+        Wed, 11 Oct 2023 08:12:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
-        t=1697011954;
+        t=1697011957;
         h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
          to:to:cc:cc:mime-version:mime-version:content-type:content-type:
          content-transfer-encoding:content-transfer-encoding:
          in-reply-to:in-reply-to:references:references;
-        bh=svngh7gavoOsAoTd14KvI+aVm1JHod9n5Mvh72UXNZY=;
-        b=Mh4FFs5qGnnta/KdhOFirxSlbpfwyU8rWS7+pkpEzJHs0IcWQ4Pc1Bd3A0ZhunxMo2zIfH
-        HyjTs249F1qpcLVApKrrb7H1MZ8O3X5ojm3NQi0nde5Z74VcOUnspyXIPHjWzYF4uCgiwG
-        6tXRh3TiwjaHQidUuiJ5+5NpiwXCSn77BQ8WAWKu5r4pxzgZTgtrS5EKqFmx31GWNGGanO
-        QEP4fXaB6CTcvzGAlAVx4Uy6BQjlndJodNLLxGZ6dEnSUrPRmMOX94lnTnwMEDDr2vPuF6
-        BY5mAeAfjpzbZLizS7IKzL3KdMsbaB+zZeO0+C4JQc+6XkqQOZW+FclSunsyGg==
+        bh=raWpLxdnCsHiI6FQxGeq5/CW+Sjk7JXPZqqzsnU681g=;
+        b=PdEzs+iwrBvoWBhPl97FjcpSGd90nBOEQ8xvaPJqFZ7EOnP3oVIei7hBWoOahPXkZiKoSx
+        /eo7W0Bmiqth0V+eQESnoaYF7oZto0U9u57kkZUbon7wRGWnWbTk0pHou76+4tyfhmNHrj
+        slmPP7CUxxKEsbcOPACjFRkqSdF4UPyK8sTNxvzqA9bz3z4olqOPb8rjmHMOj6vy5OE2WJ
+        yRBPuUOe/3ahekYliDRdH3flj9EfuntbpXPyz+p2Prp4Mw/G3rf+BxjmZ8Zz+9GWcRjV+a
+        RZBtCgCrdw7F14jdH3Eb9UmafuX+pLFOCM2lqm9xfacqRB7iwI0k/27CYO/ClA==
 From:   Kory Maincent <kory.maincent@bootlin.com>
-Date:   Wed, 11 Oct 2023 10:11:43 +0200
-Subject: [PATCH v3 4/6] dmaengine: dw-edma: Add HDMA remote interrupt
- configuration
+Date:   Wed, 11 Oct 2023 10:11:45 +0200
+Subject: [PATCH v3 6/6] dmaengine: dw-edma: eDMA: Add sync read before
+ starting the DMA transfer in remote setup
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20231011-b4-feature_hdma_mainline-v3-4-24ee0c979c6f@bootlin.com>
+Message-Id: <20231011-b4-feature_hdma_mainline-v3-6-24ee0c979c6f@bootlin.com>
 References: <20231011-b4-feature_hdma_mainline-v3-0-24ee0c979c6f@bootlin.com>
 In-Reply-To: <20231011-b4-feature_hdma_mainline-v3-0-24ee0c979c6f@bootlin.com>
 To:     Manivannan Sadhasivam <mani@kernel.org>,
@@ -46,39 +46,64 @@ To:     Manivannan Sadhasivam <mani@kernel.org>,
 Cc:     Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
         dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
         Herve Codina <herve.codina@bootlin.com>,
-        Kory Maincent <kory.maincent@bootlin.com>,
-        Manivannan Sadhasivam <mani@kernel.org>
+        Kory Maincent <kory.maincent@bootlin.com>
 X-Mailer: b4 0.12.3
 X-GND-Sasl: kory.maincent@bootlin.com
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-Only the local interruption was configured, remote interrupt was left
-behind. This patch fix it by setting stop and abort remote interrupts when
-the DW_EDMA_CHIP_LOCAL flag is not set.
+The Linked list element and pointer are not stored in the same memory as
+the eDMA controller register. If the doorbell register is toggled before
+the full write of the linked list a race condition error can appears.
+In remote setup we can only use a readl to the memory to assured the full
+write has occurred.
 
-Fixes: e74c39573d35 ("dmaengine: dw-edma: Add support for native HDMA")
+Fixes: 7e4b8a4fbe2c ("dmaengine: Add Synopsys eDMA IP version 0 support")
 Signed-off-by: Kory Maincent <kory.maincent@bootlin.com>
-Reviewed-by: Serge Semin <fancer.lancer@gmail.com>
-Acked-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 ---
- drivers/dma/dw-edma/dw-hdma-v0-core.c | 2 ++
- 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/dma/dw-edma/dw-hdma-v0-core.c b/drivers/dma/dw-edma/dw-hdma-v0-core.c
-index 108f9127aaaa..04b0bcb6ded9 100644
---- a/drivers/dma/dw-edma/dw-hdma-v0-core.c
-+++ b/drivers/dma/dw-edma/dw-hdma-v0-core.c
-@@ -237,6 +237,8 @@ static void dw_hdma_v0_core_start(struct dw_edma_chunk *chunk, bool first)
- 		tmp = GET_CH_32(dw, chan->dir, chan->id, int_setup) |
- 		      HDMA_V0_STOP_INT_MASK | HDMA_V0_ABORT_INT_MASK |
- 		      HDMA_V0_LOCAL_STOP_INT_EN | HDMA_V0_LOCAL_ABORT_INT_EN;
-+		if (!(dw->chip->flags & DW_EDMA_CHIP_LOCAL))
-+			tmp |= HDMA_V0_REMOTE_STOP_INT_EN | HDMA_V0_REMOTE_ABORT_INT_EN;
- 		SET_CH_32(dw, chan->dir, chan->id, int_setup, tmp);
- 		/* Channel control */
- 		SET_CH_32(dw, chan->dir, chan->id, control1, HDMA_V0_LINKLIST_EN);
+Changes in v2:
+- New patch
+---
+ drivers/dma/dw-edma/dw-edma-v0-core.c | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
+
+diff --git a/drivers/dma/dw-edma/dw-edma-v0-core.c b/drivers/dma/dw-edma/dw-edma-v0-core.c
+index b38786f0ad79..6245b720fbfe 100644
+--- a/drivers/dma/dw-edma/dw-edma-v0-core.c
++++ b/drivers/dma/dw-edma/dw-edma-v0-core.c
+@@ -346,6 +346,20 @@ static void dw_edma_v0_core_write_chunk(struct dw_edma_chunk *chunk)
+ 	dw_edma_v0_write_ll_link(chunk, i, control, chunk->ll_region.paddr);
+ }
+ 
++static void dw_edma_v0_sync_ll_data(struct dw_edma_chunk *chunk)
++{
++	/*
++	 * In case of remote eDMA engine setup, the DW PCIe RP/EP internals
++	 * configuration registers and Application memory are normally accessed
++	 * over different buses. Ensure LL-data reaches the memory before the
++	 * doorbell register is toggled by issuing the dummy-read from the remote
++	 * LL memory in a hope that the posted MRd TLP will return only after the
++	 * last MWr TLP is completed
++	 */
++	if (!(chunk->chan->dw->chip->flags & DW_EDMA_CHIP_LOCAL))
++		readl(chunk->ll_region.vaddr.io);
++}
++
+ static void dw_edma_v0_core_start(struct dw_edma_chunk *chunk, bool first)
+ {
+ 	struct dw_edma_chan *chan = chunk->chan;
+@@ -412,6 +426,9 @@ static void dw_edma_v0_core_start(struct dw_edma_chunk *chunk, bool first)
+ 		SET_CH_32(dw, chan->dir, chan->id, llp.msb,
+ 			  upper_32_bits(chunk->ll_region.paddr));
+ 	}
++
++	dw_edma_v0_sync_ll_data(chunk);
++
+ 	/* Doorbell */
+ 	SET_RW_32(dw, chan->dir, doorbell,
+ 		  FIELD_PREP(EDMA_V0_DOORBELL_CH_MASK, chan->id));
 
 -- 
 2.25.1
