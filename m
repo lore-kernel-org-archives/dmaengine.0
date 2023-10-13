@@ -2,129 +2,98 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C9DFFCDB46E
-	for <dmaengine@archiver.kernel.org>; Thu, 12 Oct 2023 15:30:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AA891CDB47E
+	for <dmaengine@archiver.kernel.org>; Fri, 13 Oct 2023 16:50:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1379373AbjJLPaT (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Thu, 12 Oct 2023 11:30:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50872 "EHLO
+        id S229879AbjJMQuT (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 13 Oct 2023 12:50:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60616 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1379229AbjJLPaS (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Thu, 12 Oct 2023 11:30:18 -0400
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5AA29C0;
-        Thu, 12 Oct 2023 08:30:17 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65F77C433C8;
-        Thu, 12 Oct 2023 15:30:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1697124617;
-        bh=ZtcSIbjB2WpeZfQRyCvdpc+0MAvoSIsAVFQJFGWoAZY=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=sNlqy8imXhwlW5ogqsGatXLJh6x3ULy2dxsaSxs56ggFVkTV6XlGelwtvmknbj7Xu
-         ShUCZ/8OXslZolbuuvyrBlxLrcJ01GSlmz7CSJEaxf3rAcgbPMbnfuFHufU09E90RW
-         5ApYEGyJHTTls7cFvAibnKaw6QYJ/MgybICMj+V6qAR0vsGzNnF3N6loiEvhXeakbo
-         Tc8RBxaMuLt9cw9IyN5cmf2yVbPk/7zrWOf/NIL+18Z146Hj24oQ+EZR236LNiKgxH
-         rW8s1EpB9lyTQA3S/nGP0hy8u95XFa9UJYnNgK7IXnZV4NIWHKMv5YsKgXN/Jehq6j
-         lkrAiKBqcY2gw==
-Received: (nullmailer pid 821925 invoked by uid 1000);
-        Thu, 12 Oct 2023 15:30:12 -0000
-Date:   Thu, 12 Oct 2023 10:30:12 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Gatien CHEVALLIER <gatien.chevallier@foss.st.com>
-Cc:     Oleksii_Moisieiev@epam.com, gregkh@linuxfoundation.org,
-        herbert@gondor.apana.org.au, davem@davemloft.net,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        alexandre.torgue@foss.st.com, vkoul@kernel.org, jic23@kernel.org,
-        olivier.moysan@foss.st.com, arnaud.pouliquen@foss.st.com,
-        mchehab@kernel.org, fabrice.gasnier@foss.st.com,
-        andi.shyti@kernel.org, ulf.hansson@linaro.org, edumazet@google.com,
-        kuba@kernel.org, pabeni@redhat.com, hugues.fruchet@foss.st.com,
-        lee@kernel.org, will@kernel.org, catalin.marinas@arm.com,
-        arnd@kernel.org, richardcochran@gmail.com,
-        Frank Rowand <frowand.list@gmail.com>, peng.fan@oss.nxp.com,
-        linux-crypto@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        dmaengine@vger.kernel.org, linux-i2c@vger.kernel.org,
-        linux-iio@vger.kernel.org, alsa-devel@alsa-project.org,
-        linux-media@vger.kernel.org, linux-mmc@vger.kernel.org,
-        netdev@vger.kernel.org, linux-p.hy@lists.infradead.org,
-        linux-serial@vger.kernel.org, linux-spi@vger.kernel.org,
-        linux-usb@vger.kernel.org
-Subject: Re: [PATCH v6 10/11] ARM: dts: stm32: add ETZPC as a system bus for
- STM32MP15x boards
-Message-ID: <20231012153012.GA698406-robh@kernel.org>
-References: <20231010125719.784627-1-gatien.chevallier@foss.st.com>
- <20231010125719.784627-11-gatien.chevallier@foss.st.com>
- <20231010184212.GA1221641-robh@kernel.org>
- <8f1b6915-68be-a525-c5d5-37f0983c14de@foss.st.com>
+        with ESMTP id S229958AbjJMQuS (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Fri, 13 Oct 2023 12:50:18 -0400
+Received: from hutie.ust.cz (hutie.ust.cz [IPv6:2a03:3b40:fe:f0::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 005C6B7;
+        Fri, 13 Oct 2023 09:50:15 -0700 (PDT)
+From:   =?UTF-8?q?Martin=20Povi=C5=A1er?= <povik+lin@cutebit.org>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cutebit.org; s=mail;
+        t=1697215810; bh=Zz8k/vmZ3NGYYQQPdxfPH4QZU0TH/TxEf+ATJmTjL7A=;
+        h=From:To:Cc:Subject:Date;
+        b=hAdic2C8HcMkOI+fxprcLO8c4u0x8x+m8k8xEjpvFolJB+VM3EIaZmVyTakYQDNas
+         D0LOl7xZ3qK+kq3272moX0ZlXHjv3QegAKrkltDToL8igO5+iPwnqMi0VhFn2TntVi
+         1wJwVJ0jJw6dGlkVTsBv9wEiLyOxICu+YW0Ns50w=
+To:     =?UTF-8?q?Martin=20Povi=C5=A1er?= <povik+lin@cutebit.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc:     asahi@lists.linux.dev, dmaengine@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH v3 0/2] Apple SIO driver
+Date:   Fri, 13 Oct 2023 18:49:34 +0200
+Message-Id: <20231013164936.60718-1-povik+lin@cutebit.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <8f1b6915-68be-a525-c5d5-37f0983c14de@foss.st.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-On Wed, Oct 11, 2023 at 10:49:58AM +0200, Gatien CHEVALLIER wrote:
-> Hi Rob,
-> 
-> On 10/10/23 20:42, Rob Herring wrote:
-> > On Tue, Oct 10, 2023 at 02:57:18PM +0200, Gatien Chevallier wrote:
-> > > ETZPC is a firewall controller. Put all peripherals filtered by the
-> > > ETZPC as ETZPC subnodes and reference ETZPC as an
-> > > access-control-provider.
-> > > 
-> > > For more information on which peripheral is securable or supports MCU
-> > > isolation, please read the STM32MP15 reference manual.
-> > > 
-> > > Signed-off-by: Gatien Chevallier <gatien.chevallier@foss.st.com>
-> > > ---
-> > > 
-> > > Changes in V6:
-> > >      	- Renamed access-controller to access-controllers
-> > >      	- Removal of access-control-provider property
-> > > 
-> > > Changes in V5:
-> > >      	- Renamed feature-domain* to access-control*
-> > > 
-> > >   arch/arm/boot/dts/st/stm32mp151.dtsi  | 2756 +++++++++++++------------
-> > >   arch/arm/boot/dts/st/stm32mp153.dtsi  |   52 +-
-> > >   arch/arm/boot/dts/st/stm32mp15xc.dtsi |   19 +-
-> > >   3 files changed, 1450 insertions(+), 1377 deletions(-)
-> > 
-> > This is not reviewable. Change the indentation and any non-functional
-> > change in one patch and then actual changes in another.
-> 
-> Ok, I'll make it easier to read.
-> 
-> > 
-> > This is also an ABI break. Though I'm not sure it's avoidable. All the
-> > devices below the ETZPC node won't probe on existing kernel. A
-> > simple-bus fallback for ETZPC node should solve that.
-> > 
-> 
-> I had one issue when trying with a simple-bus fallback that was the
-> drivers were probing even though the access rights aren't correct.
-> Hence the removal of the simple-bus compatible in the STM32MP25 patch.
+Hi,
 
-But it worked before, right? So the difference is you have either added 
-new devices which need setup or your firmware changed how devices are 
-setup (or not setup). Certainly can't fix the latter case. You just need 
-to be explicit about what you are doing to users.
+on v2 of this driver we had discussion over the device_config op not
+following the dmaengine spec. I came up with a lazy solution I am
+happy with. See sio_device_config for details.
+
+Changes since v2:
+https://lore.kernel.org/asahi/CAEg-Je8_f_hZ3VyBg+8tK8uobWNaEqCwp==2JhV6jVpPYXj_Pg@mail.gmail.com/T/#t
+ - do requested formatting fixes
+ - fix device_config up to spec in a lazy way
+
+Changes since v1:
+https://lore.kernel.org/asahi/20230712133806.4450-1-povik+lin@cutebit.org/T/#t
+ - move to using virt-dma
+ - drop redundant cookie field from `sio_tx`
+ - use DECLARE_BITMAP for `allocated` in sio_tagdata
+
+Original cover letter from v1 follows.
+--
+
+Hi all,
+
+see attached a driver for the SIO coprocessor found on recent Apple
+SoCs. This coprocessor provides general DMA services, it can feed
+many peripherals but so far it seems it will only be useful for
+audio output over HDMI/DisplayPort. So the driver here only supports
+the DMA_CYCLIC mode of transactions with the focus being on audio.
+There's a downstream prototype ALSA driver the DMA driver is being
+tested against.
+
+Some of the boilerplate code in implementing the dmaengine interface
+was lifted from apple-admac.c. Among other things these two drivers
+have in common that they implement the DMA_CYCLIC regime on top of
+hardware/coprocessor layer supporting linear transactions only.
+
+The binding schema saw two RFC rounds before and has a reviewed-by
+from Rob.
+https://lore.kernel.org/asahi/167693643966.613996.10372170526471864080.robh@kernel.org
+
+Best regards,
+Martin
 
 
-> Even though a node is tagged with the OF_POPULATED flag when checking
-> the access rights with the firewall controller, it seems that when
-> simple-bus is probing, there's no check of this flag.
+Martin Povišer (2):
+  dt-bindings: dma: apple,sio: Add schema
+  dmaengine: apple-sio: Add Apple SIO driver
 
-It shouldn't. Those flags are for creating the devices (or not) and 
-removing only devices of_platform_populate() created.
+ .../devicetree/bindings/dma/apple,sio.yaml    | 111 +++
+ MAINTAINERS                                   |   2 +
+ drivers/dma/Kconfig                           |  11 +
+ drivers/dma/Makefile                          |   1 +
+ drivers/dma/apple-sio.c                       | 907 ++++++++++++++++++
+ 5 files changed, 1032 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/dma/apple,sio.yaml
+ create mode 100644 drivers/dma/apple-sio.c
 
-> of_platform_populate() checks and sets the OF_POPULATED_BUS flag.
-> Maybe that is my error and the firewall bus populate should set
-> OF_POPULATED_BUS instead of OF_POPULATED. Is that correct?
+-- 
+2.38.3
 
-Shrug. Off hand, I'd say probably not, but am not certain.
-
-Rob
