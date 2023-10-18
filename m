@@ -2,46 +2,46 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B4B0CCDB483
-	for <dmaengine@archiver.kernel.org>; Wed, 18 Oct 2023 14:18:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 70F01CDB484
+	for <dmaengine@archiver.kernel.org>; Wed, 18 Oct 2023 14:24:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345239AbjJROSY (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 18 Oct 2023 10:18:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49516 "EHLO
+        id S1345137AbjJROYW (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 18 Oct 2023 10:24:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53918 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345196AbjJROSQ (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Wed, 18 Oct 2023 10:18:16 -0400
+        with ESMTP id S1345225AbjJROXz (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Wed, 18 Oct 2023 10:23:55 -0400
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 38C3F49FC;
-        Wed, 18 Oct 2023 07:16:23 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E900CC433CC;
-        Wed, 18 Oct 2023 14:16:21 +0000 (UTC)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 687444209;
+        Wed, 18 Oct 2023 07:15:07 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6509FC433BB;
+        Wed, 18 Oct 2023 14:15:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1697638582;
-        bh=WHnnd90rLnf8jpNRxFcfyRVBWvywCkM/Goa6sLpEoPQ=;
+        s=k20201202; t=1697638507;
+        bh=zekRr9a00Jr3ArCQxgxsODP0YzWw4bHCuFhfHXDv9hc=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=Yx8s/waTsgP4Mt9MfguFIudKGqszHukXkpyOuLdy15MF0svyXi355L52Jo+vr6dSX
-         hvmnxHe21FPZln+UzdhOIi8cbJlrNz3Jh+zkvyECXoEli1WVHIy6F/SEsKkF9rLsid
-         w5kEMCqYza5fsnUfHc9rAjK9CAn+0ExOQJAqxdtH7q1vWaPUMa4iK4RrX6pwkJYkW5
-         qeqQnsQ9bJpG63wCdI2rmJauJXM41Vc6DiJpZ2QSi4xDFzmAO/K7PGT8oJ5rY1vfKb
-         mOTnlp+gnT+lS9CniY7T01cKG1Sn1kyXJ8lBDfqcF4lp8MFEp3StTNvFbdVLsHY4NY
-         og5eCYuSFMqBQ==
+        b=mJMciktXwPiQPPfZQNUpy/xraA+rwInMq20Kj/5k2qJUXHhy8uDCtVYwFPwhLkrE1
+         TOWUxsySo4pDVIZ5EfxF8cWmuDhzTVNGLVhxgDlADITZ/Nj0szn3/z8gAl6ga9tvoC
+         WeLBvY7kQvhrSqY1/bsVRee1kq/alZV4Y/rkj1iG6GxPEUQik6x8+yb8AOvIrIJ4kh
+         slfJU/ouat/YLXIh/G7sY7ZrRqT/j7kBHt5ZBkJaVfNVsLkr9KXiXqLki9fqoCQDpH
+         1I/86MapGNvwib/Iuacg8g63vmgxbyheP/BX475LNKeAotXoJNx5ZvsRF1Wwo/BsH5
+         OXIlncguMEDUg==
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Cc:     Zhang Shurong <zhang_shurong@foxmail.com>,
         Linus Walleij <linus.walleij@linaro.org>,
         Vinod Koul <vkoul@kernel.org>, Sasha Levin <sashal@kernel.org>,
         linux-arm-kernel@lists.infradead.org, dmaengine@vger.kernel.org
-Subject: [PATCH AUTOSEL 4.14 4/7] dmaengine: ste_dma40: Fix PM disable depth imbalance in d40_probe
-Date:   Wed, 18 Oct 2023 10:16:09 -0400
-Message-Id: <20231018141613.1335848-4-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 5.10 07/11] dmaengine: ste_dma40: Fix PM disable depth imbalance in d40_probe
+Date:   Wed, 18 Oct 2023 10:14:49 -0400
+Message-Id: <20231018141455.1335353-7-sashal@kernel.org>
 X-Mailer: git-send-email 2.40.1
-In-Reply-To: <20231018141613.1335848-1-sashal@kernel.org>
-References: <20231018141613.1335848-1-sashal@kernel.org>
+In-Reply-To: <20231018141455.1335353-1-sashal@kernel.org>
+References: <20231018141455.1335353-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
-X-stable-base: Linux 4.14.327
+X-stable-base: Linux 5.10.198
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
@@ -66,10 +66,10 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 1 insertion(+)
 
 diff --git a/drivers/dma/ste_dma40.c b/drivers/dma/ste_dma40.c
-index 498d9886ed9bc..bb39b04d67d71 100644
+index d99fec8215083..4c306dd13e865 100644
 --- a/drivers/dma/ste_dma40.c
 +++ b/drivers/dma/ste_dma40.c
-@@ -3678,6 +3678,7 @@ static int __init d40_probe(struct platform_device *pdev)
+@@ -3698,6 +3698,7 @@ static int __init d40_probe(struct platform_device *pdev)
  		regulator_disable(base->lcpa_regulator);
  		regulator_put(base->lcpa_regulator);
  	}
