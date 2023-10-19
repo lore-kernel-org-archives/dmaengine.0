@@ -2,81 +2,71 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CA99ECDB47E
-	for <dmaengine@archiver.kernel.org>; Wed, 18 Oct 2023 14:36:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 00F52CDB482
+	for <dmaengine@archiver.kernel.org>; Thu, 19 Oct 2023 00:48:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345786AbjJROgT (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 18 Oct 2023 10:36:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39594 "EHLO
+        id S229688AbjJSAss (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 18 Oct 2023 20:48:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48552 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345731AbjJROfu (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Wed, 18 Oct 2023 10:35:50 -0400
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F2111726;
-        Wed, 18 Oct 2023 07:14:36 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D291C4339A;
-        Wed, 18 Oct 2023 14:14:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1697638475;
-        bh=gN8cYZmzrmw4cPbabJxCr1aTBAHsKK25MwdgN88SNnI=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=bkbBPjk4BD4hguzqyG4fWu1prnOqJ/34iGA94SFiLt7XifqalgbxdRTzbgZeD4eoV
-         nLKTXLcZzzhxH420lwkk08UylbdAb4oRPe8/vyxEpAs085L3z8HffF1FhaZpP6UBOj
-         JHAXEfJE9u0+6OOYg4C6EkJqFP8Cdion7WkxYf4EDB1lWDtAstdULBj2NC4TSYfaCh
-         2zkf4HPARUOmgVA53vWeeFwH0w+Qbqt8RND1jnHOWqytdHFkF2jGlTxFr450X61Wni
-         Yd9Vyg/jm7qrt/m++AinsWfwD8bFu3eGxR7ZlGf1tYUy+XWPtR7a3GakrgOpDK9lv4
-         74o5zB682C5Fg==
-From:   Sasha Levin <sashal@kernel.org>
-To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Zhang Shurong <zhang_shurong@foxmail.com>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>, Sasha Levin <sashal@kernel.org>,
-        linux-arm-kernel@lists.infradead.org, dmaengine@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.15 09/14] dmaengine: ste_dma40: Fix PM disable depth imbalance in d40_probe
-Date:   Wed, 18 Oct 2023 10:14:09 -0400
-Message-Id: <20231018141416.1335165-9-sashal@kernel.org>
-X-Mailer: git-send-email 2.40.1
-In-Reply-To: <20231018141416.1335165-1-sashal@kernel.org>
-References: <20231018141416.1335165-1-sashal@kernel.org>
+        with ESMTP id S230391AbjJSAsr (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Wed, 18 Oct 2023 20:48:47 -0400
+Received: from out30-130.freemail.mail.aliyun.com (out30-130.freemail.mail.aliyun.com [115.124.30.130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E038124;
+        Wed, 18 Oct 2023 17:48:44 -0700 (PDT)
+X-Alimail-AntiSpam: AC=PASS;BC=-1|-1;BR=01201311R171e4;CH=green;DM=||false|;DS=||;FP=0|-1|-1|-1|0|-1|-1|-1;HT=ay29a033018046049;MF=yang.lee@linux.alibaba.com;NM=1;PH=DS;RN=6;SR=0;TI=SMTPD_---0VuRvLSx_1697676520;
+Received: from localhost(mailfrom:yang.lee@linux.alibaba.com fp:SMTPD_---0VuRvLSx_1697676520)
+          by smtp.aliyun-inc.com;
+          Thu, 19 Oct 2023 08:48:41 +0800
+From:   Yang Li <yang.lee@linux.alibaba.com>
+To:     Eugeniy.Paltsev@synopsys.com, vkoul@kernel.org
+Cc:     dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Yang Li <yang.lee@linux.alibaba.com>,
+        Abaci Robot <abaci@linux.alibaba.com>
+Subject: [PATCH -next] dmaengine: dw-axi-dmac: drm/amd/display: clean up some inconsistent indentings
+Date:   Thu, 19 Oct 2023 08:48:28 +0800
+Message-Id: <20231019004828.124756-1-yang.lee@linux.alibaba.com>
+X-Mailer: git-send-email 2.20.1.7.g153144c
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-X-stable-base: Linux 5.15.135
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-From: Zhang Shurong <zhang_shurong@foxmail.com>
+drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c:1239 dma_chan_pause() warn: inconsistent indenting
+drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c:1286 axi_chan_resume() warn: inconsistent indenting
 
-[ Upstream commit 0618c077a8c20e8c81e367988f70f7e32bb5a717 ]
-
-The pm_runtime_enable will increase power disable depth. Thus
-a pairing decrement is needed on the error handling path to
-keep it balanced according to context.
-We fix it by calling pm_runtime_disable when error returns.
-
-Signed-off-by: Zhang Shurong <zhang_shurong@foxmail.com>
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-Link: https://lore.kernel.org/r/tencent_DD2D371DB5925B4B602B1E1D0A5FA88F1208@qq.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: Abaci Robot <abaci@linux.alibaba.com>
+Closes: https://bugzilla.openanolis.cn/show_bug.cgi?id=6932
+Signed-off-by: Yang Li <yang.lee@linux.alibaba.com>
 ---
- drivers/dma/ste_dma40.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/dma/ste_dma40.c b/drivers/dma/ste_dma40.c
-index cb6b0e9ed5adc..0e9cb01682647 100644
---- a/drivers/dma/ste_dma40.c
-+++ b/drivers/dma/ste_dma40.c
-@@ -3697,6 +3697,7 @@ static int __init d40_probe(struct platform_device *pdev)
- 		regulator_disable(base->lcpa_regulator);
- 		regulator_put(base->lcpa_regulator);
- 	}
-+	pm_runtime_disable(base->dev);
- 
- 	kfree(base->lcla_pool.alloc_map);
- 	kfree(base->lookup_log_chans);
+diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
+index a86a81ff0caa..79c96b8a63c1 100644
+--- a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
++++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
+@@ -1235,8 +1235,8 @@ static int dma_chan_pause(struct dma_chan *dchan)
+ 		} else {
+ 			val |= BIT(chan->id) << DMAC_CHAN_SUSP2_SHIFT |
+ 			       BIT(chan->id) << DMAC_CHAN_SUSP2_WE_SHIFT;
+-			}
+-			axi_dma_iowrite64(chan->chip, DMAC_CHSUSPREG, val);
++		}
++		axi_dma_iowrite64(chan->chip, DMAC_CHSUSPREG, val);
+ 	} else {
+ 		if (chan->chip->dw->hdata->reg_map_8_channels) {
+ 			val = axi_dma_ioread32(chan->chip, DMAC_CHEN);
+@@ -1283,7 +1283,7 @@ static inline void axi_chan_resume(struct axi_dma_chan *chan)
+ 			val &= ~(BIT(chan->id) << DMAC_CHAN_SUSP2_SHIFT);
+ 			val |=  (BIT(chan->id) << DMAC_CHAN_SUSP2_WE_SHIFT);
+ 		}
+-			axi_dma_iowrite64(chan->chip, DMAC_CHSUSPREG, val);
++		axi_dma_iowrite64(chan->chip, DMAC_CHSUSPREG, val);
+ 	} else {
+ 		if (chan->chip->dw->hdata->reg_map_8_channels) {
+ 			val = axi_dma_ioread32(chan->chip, DMAC_CHEN);
 -- 
-2.40.1
+2.20.1.7.g153144c
 
