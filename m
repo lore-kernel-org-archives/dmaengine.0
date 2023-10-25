@@ -2,110 +2,102 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CA028C07545
-	for <dmaengine@archiver.kernel.org>; Wed, 25 Oct 2023 14:08:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 92444C0032E
+	for <dmaengine@archiver.kernel.org>; Wed, 25 Oct 2023 14:12:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344872AbjJYOIE (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Wed, 25 Oct 2023 10:08:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43406 "EHLO
+        id S233459AbjJYOMc (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Wed, 25 Oct 2023 10:12:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34312 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344889AbjJYOID (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Wed, 25 Oct 2023 10:08:03 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B5D82195;
-        Wed, 25 Oct 2023 07:07:56 -0700 (PDT)
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39PDVRCL003655;
-        Wed, 25 Oct 2023 14:07:40 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=K/f75RgsZ+X4IbqdsclB8PZ3LgnD+bM0fBTW3jTQ5Pg=;
- b=lRYsRTuIsO8sLzYpiwBVDAra/XcUNq04kyn4FitQKN0iji+JtZ7FK9YRS9lAyQJfiGh7
- OolJRbgC7hWYKecGdoVFMwKbzbJxLxFNf3EjiAH6O0IBn58O4IVO604NAGVdQ2WXgY26
- w4Nnk/nnAHQV6tIr0x5bA66LH0CnYJvS5fpdpJZnmyOsw7uWic69mkdF9zTEtgcKHtP7
- Kwr/so+o9JK99DPxtysml0VBZjD8CVV2V8e3bO3McT9NF7C87eQK5hgfoo128k3zzbDo
- kS3EeyO4+cUPGLb5VI58sM7SinU1hiXXGpd7FGA5TaByAeRp3fMk7ASvjWkBuWETSSla TQ== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3txxbb8r6s-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 25 Oct 2023 14:07:40 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 39PE7K9Q006736
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 25 Oct 2023 14:07:20 GMT
-Received: from blr-ubuntu-87.ap.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.39; Wed, 25 Oct 2023 07:07:14 -0700
-From:   Sibi Sankar <quic_sibis@quicinc.com>
-To:     <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
-        <will@kernel.org>, <robin.murphy@arm.com>, <joro@8bytes.org>,
-        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>
-CC:     <agross@kernel.org>, <vkoul@kernel.org>, <quic_gurus@quicinc.com>,
-        <conor+dt@kernel.org>, <quic_rjendra@quicinc.com>,
-        <abel.vesa@linaro.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <dmaengine@vger.kernel.org>, <iommu@lists.linux.dev>,
-        <quic_tsoni@quicinc.com>, <neil.armstrong@linaro.org>,
-        Sibi Sankar <quic_sibis@quicinc.com>
-Subject: [PATCH 1/3] dt-bindings: arm-smmu: Add compatible for SC8380XP SoC
-Date:   Wed, 25 Oct 2023 19:36:38 +0530
-Message-ID: <20231025140640.22601-2-quic_sibis@quicinc.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20231025140640.22601-1-quic_sibis@quicinc.com>
-References: <20231025140640.22601-1-quic_sibis@quicinc.com>
+        with ESMTP id S234937AbjJYOMb (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Wed, 25 Oct 2023 10:12:31 -0400
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C9BF0191;
+        Wed, 25 Oct 2023 07:12:26 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B295C433C7;
+        Wed, 25 Oct 2023 14:12:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1698243146;
+        bh=q8F2mFd6CImLzNK99x7rHDG+F1bVa1gJCgNVAIBLG/4=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=fa2CjzMmnPB1Vv5v/Pj+OQfsAWkGvN3dFH2tb5BEpfxZMBT11FWppbZPhXnuKKCAo
+         rEwTYJmjaj7cwFStsB0PBCQZq+Z0hV25Kz4qfJ9reXiVVSsJ0QapbtZ5PqK+1KzlT6
+         VkPg0YH1xriRN7GlydwW2Gv9QeuFIRKS7MM8cbWfz8z79Z9M05A+AyiFLt2SF6Wy94
+         ccqqFHYWiDwlX4OKAccp5W/zFZ3NKn1xh7BCXkrfw1KE8E3i64YortLQocPE0s6kPI
+         8bE8GX0n+FJuim5VtjYXs25em/+oaM4oL2gAsQYsaPtanJ5Qk0sB1pjQD0JWas6ru7
+         gLwz9f17C1NVA==
+Date:   Wed, 25 Oct 2023 15:12:20 +0100
+From:   Conor Dooley <conor@kernel.org>
+To:     shravan chippa <shravan.chippa@microchip.com>
+Cc:     green.wan@sifive.com, vkoul@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, palmer@dabbelt.com,
+        paul.walmsley@sifive.com, conor+dt@kernel.org,
+        dmaengine@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org,
+        nagasuresh.relli@microchip.com, praveen.kumar@microchip.com
+Subject: Re: [PATCH v3 4/4] riscv: dts: microchip: add specific compatible
+ for mpfs' pdma
+Message-ID: <20231025-pang-unstuffed-4d8bf48baf21@spud>
+References: <20231025102251.3369472-1-shravan.chippa@microchip.com>
+ <20231025102251.3369472-5-shravan.chippa@microchip.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: gEEf_ykj-_YpjQE8So-DEAL9hgPs4B8N
-X-Proofpoint-GUID: gEEf_ykj-_YpjQE8So-DEAL9hgPs4B8N
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-10-25_03,2023-10-25_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 impostorscore=0
- lowpriorityscore=0 phishscore=0 mlxlogscore=721 adultscore=0 bulkscore=0
- spamscore=0 mlxscore=0 suspectscore=0 malwarescore=0 priorityscore=1501
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2310170001
- definitions=main-2310250122
+Content-Type: multipart/signed; micalg=pgp-sha256;
+        protocol="application/pgp-signature"; boundary="qwZ+jMYzinWm1SqJ"
+Content-Disposition: inline
+In-Reply-To: <20231025102251.3369472-5-shravan.chippa@microchip.com>
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
-From: Rajendra Nayak <quic_rjendra@quicinc.com>
 
-Add the SoC specific compatible for SC8380XP implementing arm,mmu-500.
+--qwZ+jMYzinWm1SqJ
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Signed-off-by: Rajendra Nayak <quic_rjendra@quicinc.com>
-Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
----
- Documentation/devicetree/bindings/iommu/arm,smmu.yaml | 2 ++
- 1 file changed, 2 insertions(+)
+On Wed, Oct 25, 2023 at 03:52:51PM +0530, shravan chippa wrote:
+> From: Shravan Chippa <shravan.chippa@microchip.com>
+>=20
+> Add specific compatible for PolarFire SoC for The SiFive PDMA driver
+>=20
 
-diff --git a/Documentation/devicetree/bindings/iommu/arm,smmu.yaml b/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
-index aa9e1c0895a5..fc28a1913711 100644
---- a/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
-+++ b/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
-@@ -42,6 +42,7 @@ properties:
-               - qcom,sc7280-smmu-500
-               - qcom,sc8180x-smmu-500
-               - qcom,sc8280xp-smmu-500
-+              - qcom,sc8380xp-smmu-500
-               - qcom,sdm670-smmu-500
-               - qcom,sdm845-smmu-500
-               - qcom,sdx55-smmu-500
-@@ -382,6 +383,7 @@ allOf:
-               - qcom,sa8775p-smmu-500
-               - qcom,sc7280-smmu-500
-               - qcom,sc8280xp-smmu-500
-+              - qcom,sc8380xp-smmu-500
-     then:
-       properties:
-         clock-names:
--- 
-2.17.1
+Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
 
+Thanks,
+Conor.
+
+> Signed-off-by: Shravan Chippa <shravan.chippa@microchip.com>
+> ---
+>  arch/riscv/boot/dts/microchip/mpfs.dtsi | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>=20
+> diff --git a/arch/riscv/boot/dts/microchip/mpfs.dtsi b/arch/riscv/boot/dt=
+s/microchip/mpfs.dtsi
+> index 104504352e99..f43486e9a090 100644
+> --- a/arch/riscv/boot/dts/microchip/mpfs.dtsi
+> +++ b/arch/riscv/boot/dts/microchip/mpfs.dtsi
+> @@ -221,7 +221,7 @@ plic: interrupt-controller@c000000 {
+>  		};
+> =20
+>  		pdma: dma-controller@3000000 {
+> -			compatible =3D "sifive,fu540-c000-pdma", "sifive,pdma0";
+> +			compatible =3D "microchip,mpfs-pdma", "sifive,pdma0";
+>  			reg =3D <0x0 0x3000000 0x0 0x8000>;
+>  			interrupt-parent =3D <&plic>;
+>  			interrupts =3D <5 6>, <7 8>, <9 10>, <11 12>;
+> --=20
+> 2.34.1
+>=20
+
+--qwZ+jMYzinWm1SqJ
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCZTkiRAAKCRB4tDGHoIJi
+0sEJAQCHzvvzlWORtnYlb+uw/EMYHDQckws0ffM81OhwMCFujAD/bvpu5fSldrSt
+ZlX/mfkXv0hoIFwpIi4+lGF8Y7p/Jgw=
+=ip81
+-----END PGP SIGNATURE-----
+
+--qwZ+jMYzinWm1SqJ--
