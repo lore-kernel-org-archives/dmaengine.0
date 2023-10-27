@@ -2,82 +2,73 @@ Return-Path: <dmaengine-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 176F5C25B67
-	for <dmaengine@archiver.kernel.org>; Fri, 27 Oct 2023 09:38:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 872F8C25B47
+	for <dmaengine@archiver.kernel.org>; Fri, 27 Oct 2023 19:17:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235159AbjJ0JiE (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
-        Fri, 27 Oct 2023 05:38:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57846 "EHLO
+        id S232192AbjJ0TRd (ORCPT <rfc822;dmaengine@archiver.kernel.org>);
+        Fri, 27 Oct 2023 15:17:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56936 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345717AbjJ0Jhz (ORCPT
-        <rfc822;dmaengine@vger.kernel.org>); Fri, 27 Oct 2023 05:37:55 -0400
-Received: from szxga02-in.huawei.com (szxga02-in.huawei.com [45.249.212.188])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A893110CC;
-        Fri, 27 Oct 2023 02:37:49 -0700 (PDT)
-Received: from kwepemm000013.china.huawei.com (unknown [172.30.72.56])
-        by szxga02-in.huawei.com (SkyGuard) with ESMTP id 4SGyCj2fgYzVlMy;
-        Fri, 27 Oct 2023 17:33:53 +0800 (CST)
-Received: from [10.174.178.156] (10.174.178.156) by
- kwepemm000013.china.huawei.com (7.193.23.81) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.31; Fri, 27 Oct 2023 17:37:46 +0800
-Message-ID: <8032bf97-4d22-1d67-09e2-7183d3a75ae3@huawei.com>
-Date:   Fri, 27 Oct 2023 17:37:45 +0800
+        with ESMTP id S229586AbjJ0TRc (ORCPT
+        <rfc822;dmaengine@vger.kernel.org>); Fri, 27 Oct 2023 15:17:32 -0400
+Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B2DA812A
+        for <dmaengine@vger.kernel.org>; Fri, 27 Oct 2023 12:17:30 -0700 (PDT)
+Received: by mail-ej1-x635.google.com with SMTP id a640c23a62f3a-9ba1eb73c27so386841266b.3
+        for <dmaengine@vger.kernel.org>; Fri, 27 Oct 2023 12:17:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gigaio-com.20230601.gappssmtp.com; s=20230601; t=1698434249; x=1699039049; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=YfXNY5+Qb2CuwFyDDH5zc72IL9f1vcKMEUozaq/s6YQ=;
+        b=ScdTTsA75frR0XVHDukyQmo9IOo51/Rz7myI8iXb21GmXU0YPlCYTPaSX4+GeAXSCI
+         Ww0pUAIR/BWkyupa4Jv7O4NnveE/lrQC5J1ydpqIqOTLovqNQIqsjA6Rw8Jqk+M0oiwq
+         3BP8DaFSeDhiZ2yW6qSZbqKiiR6Qllt81/P8SRABX4BeeN17sbZVzpMbHlWS8Tytd8km
+         nWznW6WOF4TE6TLFeiOxQH5l15IOQ1gKa80ts54NV/+DxnsgGS2K1oSBPX9zrWWWpkgD
+         4yXo0vcTw0zC9bUn2+y1AzMhe9y+Gn3T+9YqGoeJPhCUo2RmZfsefntu23X0lrEKHIDN
+         W4Uw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1698434249; x=1699039049;
+        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=YfXNY5+Qb2CuwFyDDH5zc72IL9f1vcKMEUozaq/s6YQ=;
+        b=b6DbZcvGOHrK4VH/ic5cWUbt2P98tNHXEjPlrnuweRPRF3A4df6hFb3BGvDwzTNLCH
+         fzvldwKhKfizfBEQm9GMFgzrWKNiolGKeJtP3xSqDFhOM4SluTsvhITSWpcuygvl3vQK
+         Hh4biDkobFmdK9t8xcLd3pryrs+HNvEPZQf0LGQIa534k+BEgWCkW7t1OLc7qhSNuZzZ
+         jsKpQGL7pza1mq8Tm+Ci1wRM4h489NYed1nEmrquavtxCFBefGCwW5AucFirMylgO26+
+         dvbfhFGsg5+YJpfyEnxcXbuSJ4ol353JDF0FWDTVfxCm2ACQRQsYVBYFSINsi/26VOfY
+         /zZA==
+X-Gm-Message-State: AOJu0YzPHFgUoRXPhXolFKwkfETffUaEpMBgB9CkQqIXYbtGA1Qxq3be
+        j1/Vxi0KuR04Shy0GTOAMOWhxPHYu7+sOt5OMCySN5KD5n2FL75h
+X-Google-Smtp-Source: AGHT+IGb5ReXfsXF6LQQQyxWyvO9P+rw7gib+XZu1vUBzKfU6/sRg8Imq3HvjjdJf6I86ZONO/7nKbBXDyftEarLK2g=
+X-Received: by 2002:a17:907:1b13:b0:9bd:ea65:7626 with SMTP id
+ mp19-20020a1709071b1300b009bdea657626mr3077707ejc.20.1698434248924; Fri, 27
+ Oct 2023 12:17:28 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.3.2
-Subject: Re: [PATCH v6 2/2] dt-bindings: dma: HiSilicon: Add bindings for
- HiSilicon Ascend sdma
-To:     Rob Herring <robh@kernel.org>
-CC:     <vkoul@kernel.org>, <dmaengine@vger.kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <devicetree@vger.kernel.org>, <xuqiang36@huawei.com>,
-        <chenweilong@huawei.com>
-References: <20231026072549.103102-1-guomengqi3@huawei.com>
- <20231026072549.103102-3-guomengqi3@huawei.com>
- <20231026165502.GA3979802-robh@kernel.org>
-From:   "guomengqi (A)" <guomengqi3@huawei.com>
-In-Reply-To: <20231026165502.GA3979802-robh@kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.174.178.156]
-X-ClientProxiedBy: dggems702-chm.china.huawei.com (10.3.19.179) To
- kwepemm000013.china.huawei.com (7.193.23.81)
-X-CFilter-Loop: Reflected
+From:   Eric Pilmore <epilmore@gigaio.com>
+Date:   Fri, 27 Oct 2023 12:17:17 -0700
+Message-ID: <CAOQPn8uAWqR+0Qpk+Ua8gria06xx99ge5MnCGi4MwPOZNaXBvw@mail.gmail.com>
+Subject: IOVA address range
+To:     linux-pci@vger.kernel.org, dmaengine@vger.kernel.org
+Cc:     Eric Pilmore <epilmore@gigaio.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <dmaengine.vger.kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 
+Need a little IOVA/IOMMU help.
 
-在 2023/10/27 0:55, Rob Herring 写道:
-> On Thu, Oct 26, 2023 at 03:25:49PM +0800, Guo Mengqi wrote:
->> Add device-tree binding documentation for sdma hardware on
->> HiSilicon Ascend SoC families.
->>
->> Signed-off-by: Guo Mengqi <guomengqi3@huawei.com>
->> ---
-> This is where you explain any expected failure. Resending the same patch
-> with the same failure again is not a great strategy. The patch needs to
-> stand on its own and not rely on some explanation in a prior version.
+Is it correct that the IOVA address range for a device goes from
+address 0x0 up to the dma-mask of the respective device?
 
-OK, will do this next time. I was eager to see whether those kernel 
-build warnings are fixed, so sent the new patch quickly.
+Is it correct to assume that the base of the IOVA address space for a
+device will always be zero (0x0)? Is there any reason to think that
+this has changed in some newer iteration of the kernel, perhaps 5.10,
+and that the base could be non-zero?
 
->>   .../bindings/dma/hisilicon,ascend-sdma.yaml   | 73 +++++++++++++++++++
->>   1 file changed, 73 insertions(+)
->>   create mode 100644 Documentation/devicetree/bindings/dma/hisilicon,ascend-sdma.yaml
-> Reviewed-by: Rob Herring <robh@kernel.org>
->
-> I had missed that pasid-num-bits and dma-can-stall are IOMMU consumer
-> properties. (We really should have prefixed them with 'iommu'.) I've now
-> added them to dtschema which should fix the warning.
+I realize an IOVA itself can be non-zero. I'm trying to verify what
+the base address is of the IOVA space as a whole on a per device
+basis.
 
-They do look a little confusing.
-
-Thanks.
-
--Mengqi
-
-> Rob
->
-> .
+Thanks,
+Eric Pilmore
