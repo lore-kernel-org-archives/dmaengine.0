@@ -1,41 +1,41 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86CEBCA7F;
-	Tue, 31 Oct 2023 05:27:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D35CCD279;
+	Tue, 31 Oct 2023 05:27:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=microchip.com header.i=@microchip.com header.b="I0iwVpeq"
-Received: from esa.microchip.iphmx.com (esa.microchip.iphmx.com [68.232.153.233])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 28041F3;
-	Mon, 30 Oct 2023 22:27:11 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=microchip.com header.i=@microchip.com header.b="DzNN6kKY"
+Received: from esa.microchip.iphmx.com (esa.microchip.iphmx.com [68.232.154.123])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C880AFC;
+	Mon, 30 Oct 2023 22:27:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=microchip.com; i=@microchip.com; q=dns/txt; s=mchp;
-  t=1698730031; x=1730266031;
+  t=1698730058; x=1730266058;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=zSkOZ12TKc1wwVLKvzsXxeC5tl7G/J3ooSzJ/My7COk=;
-  b=I0iwVpeq/sEYsS8YRv41Hy3+VDNQTIeFfh6zjjFb8AlmAlVDK751VBoY
-   EUBNyWu2HqSbOdanj7yAOsJTD6iPfyB38LJ3MVNwrpzCJQxvvdlcfOgXK
-   qxbMX4kOX0E7kgRydc8PW0402phC8f/9eVXefXrqjdBBDWFdpVXH5n5mM
-   EtFDLZh+MmNVFy6o4aFBPiMSLEska4hiBs1N4n7XrQ0w08k6tDT0OP6Bo
-   +1YABoPHvQyNbKkItz4XjQOKo+Hk1D8BUz4EdpdMb0BhLn39SBQUwRhWF
-   iXXTFBAfbMwcNS5VxOHaYbv/v69+dfJsHxP7TM1g2g4vhET1lODJQjpzT
-   A==;
-X-CSE-ConnectionGUID: PIbu8/OSQLmLuwlEm2kgKw==
-X-CSE-MsgGUID: 4ywV+5BdQyKhiYDhnoDz9A==
+  bh=vJhEbYubpVGf21vpeHAIwxdulF7QvT8fhZVat8R+Pg0=;
+  b=DzNN6kKYmFarxyO7Rkfx6W/7KoPUYJ49v0tpoGO+6NnnaJAuCex13Jp2
+   Zrnlkc/xLPJszCEXR9SRpfN2LFnSrTlulvu5F9Da15Y7zg49l7U1Am+2b
+   6MKSIizWv0/RKpYcO3smDg25Y166w4y2g+xkZ62DmyNZMO+xBDjLeCgnX
+   8Vs4YVa/C+yyQHa1epM1ovADCS28KgNqeB91+dysGkoLHRIF7VULkvV+5
+   JE0Cy27KGeqgKMKX0YTnt0CDMr41+Jfv4oD/sZSuSJa2gFhSHGgp1swjv
+   KhtlJ29drU+rYzQh2vFT7/id6BNneO4CJGSASIo4koFUseYKJqfkbdK1l
+   Q==;
+X-CSE-ConnectionGUID: r/YQwnBYQ0ihAZZkayWq2A==
+X-CSE-MsgGUID: wnCkYct9QTSxlNM17VuO5Q==
 X-ThreatScanner-Verdict: Negative
 X-IronPort-AV: E=Sophos;i="6.03,265,1694761200"; 
-   d="scan'208";a="11483952"
+   d="scan'208";a="11147693"
 X-Amp-Result: SKIPPED(no attachment in message)
 Received: from unknown (HELO email.microchip.com) ([170.129.1.10])
-  by esa1.microchip.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES128-GCM-SHA256; 30 Oct 2023 22:27:10 -0700
+  by esa2.microchip.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES128-GCM-SHA256; 30 Oct 2023 22:27:37 -0700
 Received: from chn-vm-ex04.mchp-main.com (10.10.85.152) by
- chn-vm-ex04.mchp-main.com (10.10.85.152) with Microsoft SMTP Server
+ chn-vm-ex03.mchp-main.com (10.10.85.151) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.21; Mon, 30 Oct 2023 22:26:49 -0700
+ 15.1.2507.21; Mon, 30 Oct 2023 22:27:03 -0700
 Received: from microchip1-OptiPlex-9020.microchip.com (10.10.85.11) by
  chn-vm-ex04.mchp-main.com (10.10.85.152) with Microsoft SMTP Server id
- 15.1.2507.21 via Frontend Transport; Mon, 30 Oct 2023 22:26:45 -0700
+ 15.1.2507.21 via Frontend Transport; Mon, 30 Oct 2023 22:26:58 -0700
 From: shravan chippa <shravan.chippa@microchip.com>
 To: <green.wan@sifive.com>, <vkoul@kernel.org>, <robh+dt@kernel.org>,
 	<krzysztof.kozlowski+dt@linaro.org>, <palmer@dabbelt.com>,
@@ -43,10 +43,11 @@ To: <green.wan@sifive.com>, <vkoul@kernel.org>, <robh+dt@kernel.org>,
 CC: <dmaengine@vger.kernel.org>, <devicetree@vger.kernel.org>,
 	<linux-riscv@lists.infradead.org>, <linux-kernel@vger.kernel.org>,
 	<nagasuresh.relli@microchip.com>, <praveen.kumar@microchip.com>,
-	<shravan.chippa@microchip.com>
-Subject: [PATCH v4 1/4] dmaengine: sf-pdma: Support of_dma_controller_register()
-Date: Tue, 31 Oct 2023 10:57:50 +0530
-Message-ID: <20231031052753.3430169-2-shravan.chippa@microchip.com>
+	<shravan.chippa@microchip.com>, Emil Renner Berthing
+	<emil.renner.berthing@canonical.com>
+Subject: [PATCH v4 3/4] dmaengine: sf-pdma: add mpfs-pdma compatible name
+Date: Tue, 31 Oct 2023 10:57:52 +0530
+Message-ID: <20231031052753.3430169-4-shravan.chippa@microchip.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20231031052753.3430169-1-shravan.chippa@microchip.com>
 References: <20231031052753.3430169-1-shravan.chippa@microchip.com>
@@ -61,94 +62,112 @@ Content-Type: text/plain
 
 From: Shravan Chippa <shravan.chippa@microchip.com>
 
-Update sf-pdma driver to adopt generic DMA device tree bindings.
-It calls of_dma_controller_register() with sf-pdma specific
-of_dma_xlate to get the generic DMA device tree helper support
-and the DMA clients can look up the sf-pdma controller using
-standard APIs.
+Sifive platform dma does not allow out-of-order transfers,
+Add a PolarFire SoC specific compatible and code to support
+for out-of-order dma transfers
 
+Reviewed-by: Emil Renner Berthing <emil.renner.berthing@canonical.com>
 Signed-off-by: Shravan Chippa <shravan.chippa@microchip.com>
 ---
- drivers/dma/sf-pdma/sf-pdma.c | 44 +++++++++++++++++++++++++++++++++++
- 1 file changed, 44 insertions(+)
+ drivers/dma/sf-pdma/sf-pdma.c | 27 ++++++++++++++++++++++++---
+ drivers/dma/sf-pdma/sf-pdma.h |  8 +++++++-
+ 2 files changed, 31 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/dma/sf-pdma/sf-pdma.c b/drivers/dma/sf-pdma/sf-pdma.c
-index d1c6956af452..4c456bdef882 100644
+index 4c456bdef882..82ab12c40743 100644
 --- a/drivers/dma/sf-pdma/sf-pdma.c
 +++ b/drivers/dma/sf-pdma/sf-pdma.c
-@@ -20,6 +20,7 @@
- #include <linux/mod_devicetable.h>
- #include <linux/dma-mapping.h>
- #include <linux/of.h>
-+#include <linux/of_dma.h>
- #include <linux/slab.h>
+@@ -25,6 +25,8 @@
  
  #include "sf-pdma.h"
-@@ -490,6 +491,33 @@ static void sf_pdma_setup_chans(struct sf_pdma *pdma)
- 	}
- }
  
-+static struct dma_chan *sf_pdma_of_xlate(struct of_phandle_args *dma_spec,
-+					 struct of_dma *ofdma)
-+{
-+	struct sf_pdma *pdma = ofdma->of_dma_data;
-+	struct device *dev = pdma->dma_dev.dev;
-+	struct sf_pdma_chan *chan;
-+	struct dma_chan *c;
-+	u32 channel_id;
++#define PDMA_QUIRK_NO_STRICT_ORDERING   BIT(0)
 +
-+	if (dma_spec->args_count != 1) {
-+		dev_err(dev, "Bad number of cells\n");
-+		return NULL;
-+	}
-+
-+	channel_id = dma_spec->args[0];
-+
-+	chan = &pdma->chans[channel_id];
-+
-+	c = dma_get_slave_channel(&chan->vchan.chan);
-+	if (!c) {
-+		dev_err(dev, "No more channels available\n");
-+		return NULL;
-+	}
-+
-+	return c;
-+}
-+
+ #ifndef readq
+ static inline unsigned long long readq(void __iomem *addr)
+ {
+@@ -66,7 +68,7 @@ static struct sf_pdma_desc *sf_pdma_alloc_desc(struct sf_pdma_chan *chan)
+ static void sf_pdma_fill_desc(struct sf_pdma_desc *desc,
+ 			      u64 dst, u64 src, u64 size)
+ {
+-	desc->xfer_type = PDMA_FULL_SPEED;
++	desc->xfer_type =  desc->chan->pdma->transfer_type;
+ 	desc->xfer_size = size;
+ 	desc->dst_addr = dst;
+ 	desc->src_addr = src;
+@@ -520,6 +522,7 @@ static struct dma_chan *sf_pdma_of_xlate(struct of_phandle_args *dma_spec,
+ 
  static int sf_pdma_probe(struct platform_device *pdev)
  {
++	const struct sf_pdma_driver_platdata *ddata;
  	struct sf_pdma *pdma;
-@@ -563,7 +591,20 @@ static int sf_pdma_probe(struct platform_device *pdev)
- 		return ret;
- 	}
+ 	int ret, n_chans;
+ 	const enum dma_slave_buswidth widths =
+@@ -545,6 +548,14 @@ static int sf_pdma_probe(struct platform_device *pdev)
  
-+	ret = of_dma_controller_register(pdev->dev.of_node,
-+					 sf_pdma_of_xlate, pdma);
-+	if (ret < 0) {
-+		dev_err(&pdev->dev,
-+			"Can't register SiFive Platform OF_DMA. (%d)\n", ret);
-+		goto err_unregister;
+ 	pdma->n_chans = n_chans;
+ 
++	pdma->transfer_type = PDMA_FULL_SPEED | PDMA_STRICT_ORDERING;
++
++	ddata  = device_get_match_data(&pdev->dev);
++	if (ddata) {
++		if (ddata->quirks & PDMA_QUIRK_NO_STRICT_ORDERING)
++			pdma->transfer_type &= ~PDMA_STRICT_ORDERING;
 +	}
 +
+ 	pdma->membase = devm_platform_ioremap_resource(pdev, 0);
+ 	if (IS_ERR(pdma->membase))
+ 		return PTR_ERR(pdma->membase);
+@@ -632,9 +643,19 @@ static int sf_pdma_remove(struct platform_device *pdev)
  	return 0;
-+
-+err_unregister:
-+	dma_async_device_unregister(&pdma->dma_dev);
-+
-+	return ret;
  }
  
- static int sf_pdma_remove(struct platform_device *pdev)
-@@ -583,6 +624,9 @@ static int sf_pdma_remove(struct platform_device *pdev)
- 		tasklet_kill(&ch->err_tasklet);
- 	}
- 
-+	if (pdev->dev.of_node)
-+		of_dma_controller_free(pdev->dev.of_node);
++static const struct sf_pdma_driver_platdata mpfs_pdma = {
++	.quirks = PDMA_QUIRK_NO_STRICT_ORDERING,
++};
 +
- 	dma_async_device_unregister(&pdma->dma_dev);
+ static const struct of_device_id sf_pdma_dt_ids[] = {
+-	{ .compatible = "sifive,fu540-c000-pdma" },
+-	{ .compatible = "sifive,pdma0" },
++	{
++		.compatible = "sifive,fu540-c000-pdma",
++	}, {
++		.compatible = "sifive,pdma0",
++	}, {
++		.compatible = "microchip,mpfs-pdma",
++		.data	    = &mpfs_pdma,
++	},
+ 	{},
+ };
+ MODULE_DEVICE_TABLE(of, sf_pdma_dt_ids);
+diff --git a/drivers/dma/sf-pdma/sf-pdma.h b/drivers/dma/sf-pdma/sf-pdma.h
+index 5c398a83b491..267e79a5e0a5 100644
+--- a/drivers/dma/sf-pdma/sf-pdma.h
++++ b/drivers/dma/sf-pdma/sf-pdma.h
+@@ -48,7 +48,8 @@
+ #define PDMA_ERR_STATUS_MASK				GENMASK(31, 31)
  
- 	return 0;
+ /* Transfer Type */
+-#define PDMA_FULL_SPEED					0xFF000008
++#define PDMA_FULL_SPEED					0xFF000000
++#define PDMA_STRICT_ORDERING				BIT(3)
+ 
+ /* Error Recovery */
+ #define MAX_RETRY					1
+@@ -112,8 +113,13 @@ struct sf_pdma {
+ 	struct dma_device       dma_dev;
+ 	void __iomem            *membase;
+ 	void __iomem            *mappedbase;
++	u32			transfer_type;
+ 	u32			n_chans;
+ 	struct sf_pdma_chan	chans[];
+ };
+ 
++struct sf_pdma_driver_platdata {
++	u32 quirks;
++};
++
+ #endif /* _SF_PDMA_H */
 -- 
 2.34.1
 
