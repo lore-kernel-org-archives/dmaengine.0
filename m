@@ -1,35 +1,35 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3407C8C13
-	for <dmaengine@vger.kernel.org>; Sun,  5 Nov 2023 09:34:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B22E88C16
+	for <dmaengine@vger.kernel.org>; Sun,  5 Nov 2023 09:34:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dkim=none
 Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [IPv6:2a0a:edc0:2:b01:1d::104])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8EF0BB7
-	for <dmaengine@vger.kernel.org>; Sun,  5 Nov 2023 01:34:42 -0800 (PST)
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 55CF8C0
+	for <dmaengine@vger.kernel.org>; Sun,  5 Nov 2023 01:34:43 -0800 (PST)
 Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
 	by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
 	(Exim 4.92)
 	(envelope-from <ukl@pengutronix.de>)
-	id 1qzZWd-0000Pf-T9; Sun, 05 Nov 2023 10:34:35 +0100
+	id 1qzZWd-0000Pd-T4; Sun, 05 Nov 2023 10:34:35 +0100
 Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
 	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
 	(Exim 4.94.2)
 	(envelope-from <ukl@pengutronix.de>)
-	id 1qzZWc-006l7O-Ak; Sun, 05 Nov 2023 10:34:34 +0100
+	id 1qzZWb-006l7I-Te; Sun, 05 Nov 2023 10:34:33 +0100
 Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.94.2)
 	(envelope-from <ukl@pengutronix.de>)
-	id 1qzZWc-00D8nn-1o; Sun, 05 Nov 2023 10:34:34 +0100
+	id 1qzZWb-00D8nf-KR; Sun, 05 Nov 2023 10:34:33 +0100
 From: =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
 To: Vinod Koul <vkoul@kernel.org>
-Cc: Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-	Masami Hiramatsu <mhiramat@kernel.org>,
+Cc: Taichi Sugaya <sugaya.taichi@socionext.com>,
+	Takao Orito <orito.takao@socionext.com>,
 	dmaengine@vger.kernel.org,
 	linux-arm-kernel@lists.infradead.org,
 	kernel@pengutronix.de
-Subject: [PATCH 3/4] dmaengine: uniphier-mdmac: Convert to platform remove callback returning void
-Date: Sun,  5 Nov 2023 10:34:19 +0100
-Message-ID: <20231105093415.3704633-9-u.kleine-koenig@pengutronix.de>
+Subject: [PATCH 1/4] dmaengine: milbeaut-hdmac: Convert to platform remove callback returning void
+Date: Sun,  5 Nov 2023 10:34:17 +0100
+Message-ID: <20231105093415.3704633-7-u.kleine-koenig@pengutronix.de>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231105093415.3704633-6-u.kleine-koenig@pengutronix.de>
 References: <20231105093415.3704633-6-u.kleine-koenig@pengutronix.de>
@@ -40,7 +40,7 @@ List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2640; i=u.kleine-koenig@pengutronix.de; h=from:subject; bh=KteA0sSG4oioIIBmCXZuIP2i8ZzuLBd1ds3YZc/Wpw0=; b=owEBbQGS/pANAwAKAY+A+1h9Ev5OAcsmYgBlR2GbzQegeQgG49nVuLEjV+AkhupybybvP492w XTJhuZ4chaJATMEAAEKAB0WIQQ/gaxpOnoeWYmt/tOPgPtYfRL+TgUCZUdhmwAKCRCPgPtYfRL+ TpE/CAC1VKU/vpTuUqO+Gq5U0eCAqLliLMByCCgKcNlEW7RJfqye/3E8kl9IZrLo4FhrRcDAuqX wJIlwLTkPVwvtFxcfVl+bu6b28zsv1052aqlS7OcMXl3be+Eu2LmG5c5fMvamZHoLVVjKve90pB 6vVmBX4VG8jDfHuB9oyEhud35+OYkI8eF51lq+wuyo80SCSeGDYW/eBOjQ91UHs0ALmQyuZvjpO QFBLlmPUE677TisT5Qc/rl9+ORNYUmv3ww2bQizxoryjgFj+bfbSlMRB7vtoDxHkmt4Ey3Xm1KI wn8ULnJNoFKrGQf/FmaHtLYpe+T43FVwZXvC21/u0tdxws4m
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2642; i=u.kleine-koenig@pengutronix.de; h=from:subject; bh=iFA5SppBIUUrRTjlHh/H9b168YL1tbBN6Q5z7xRSG+A=; b=owEBbQGS/pANAwAKAY+A+1h9Ev5OAcsmYgBlR2GYE0b9wUxglKY+saD0HA5khqRUyH857dbZ5 Bg24LiORTKJATMEAAEKAB0WIQQ/gaxpOnoeWYmt/tOPgPtYfRL+TgUCZUdhmAAKCRCPgPtYfRL+ Tt96CACPBr/T5fmGsFg4nVxjGCv2TxQEa7qFpSvVlYTvnfx7FIGt6PIdltD6B3LEJDxvjq27B68 dnpAJsbhXY0ZcmaWX3TGcJrFpazAb1/ogMK6MEsglattVL7+RcLtzbr79qBADdwDaR3RkUUIZAh e8jXRrnxCtXBTL7xqv2rpdkIC2Lv5S8Wseu/SIynz3CdpTxcjzuL8SVVog/BDy+qeHz5mHLoPif jQeWAQiccAHnbnlY+FnerBcCnE65bKjT8iHTABdnb7h4C1jqW7WzT7FX5OObi7sdjqMyjUw/5Bg kizbOnbQZuha5RdvWCCcJeB8c1Teb5DKlG4DjATRUMokhgCp
 X-Developer-Key: i=u.kleine-koenig@pengutronix.de; a=openpgp; fpr=0D2511F322BFAB1C1580266BE2DCDD9132669BD6
 Content-Transfer-Encoding: 8bit
 X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
@@ -65,23 +65,23 @@ safe to not call it as other drivers seem to assume).
 
 Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 ---
- drivers/dma/uniphier-mdmac.c | 17 +++++++++++------
+ drivers/dma/milbeaut-hdmac.c | 17 +++++++++++------
  1 file changed, 11 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/dma/uniphier-mdmac.c b/drivers/dma/uniphier-mdmac.c
-index 618839df0748..ad7125f6e2ca 100644
---- a/drivers/dma/uniphier-mdmac.c
-+++ b/drivers/dma/uniphier-mdmac.c
-@@ -453,7 +453,7 @@ static int uniphier_mdmac_probe(struct platform_device *pdev)
+diff --git a/drivers/dma/milbeaut-hdmac.c b/drivers/dma/milbeaut-hdmac.c
+index 1b0a95892627..7b41c670970a 100644
+--- a/drivers/dma/milbeaut-hdmac.c
++++ b/drivers/dma/milbeaut-hdmac.c
+@@ -531,7 +531,7 @@ static int milbeaut_hdmac_probe(struct platform_device *pdev)
  	return ret;
  }
  
--static int uniphier_mdmac_remove(struct platform_device *pdev)
-+static void uniphier_mdmac_remove(struct platform_device *pdev)
+-static int milbeaut_hdmac_remove(struct platform_device *pdev)
++static void milbeaut_hdmac_remove(struct platform_device *pdev)
  {
- 	struct uniphier_mdmac_device *mdev = platform_get_drvdata(pdev);
+ 	struct milbeaut_hdmac_device *mdev = platform_get_drvdata(pdev);
  	struct dma_chan *chan;
-@@ -468,16 +468,21 @@ static int uniphier_mdmac_remove(struct platform_device *pdev)
+@@ -546,16 +546,21 @@ static int milbeaut_hdmac_remove(struct platform_device *pdev)
  	 */
  	list_for_each_entry(chan, &mdev->ddev.channels, device_node) {
  		ret = dmaengine_terminate_sync(chan);
@@ -96,7 +96,7 @@ index 618839df0748..ad7125f6e2ca 100644
 +				  chan->chan_id, ERR_PTR(ret));
 +			return;
 +		}
- 		uniphier_mdmac_free_chan_resources(chan);
+ 		milbeaut_hdmac_free_chan_resources(chan);
  	}
  
  	of_dma_controller_free(pdev->dev.of_node);
@@ -106,16 +106,16 @@ index 618839df0748..ad7125f6e2ca 100644
 -	return 0;
  }
  
- static const struct of_device_id uniphier_mdmac_match[] = {
-@@ -488,7 +493,7 @@ MODULE_DEVICE_TABLE(of, uniphier_mdmac_match);
+ static const struct of_device_id milbeaut_hdmac_match[] = {
+@@ -566,7 +571,7 @@ MODULE_DEVICE_TABLE(of, milbeaut_hdmac_match);
  
- static struct platform_driver uniphier_mdmac_driver = {
- 	.probe = uniphier_mdmac_probe,
--	.remove = uniphier_mdmac_remove,
-+	.remove_new = uniphier_mdmac_remove,
+ static struct platform_driver milbeaut_hdmac_driver = {
+ 	.probe = milbeaut_hdmac_probe,
+-	.remove = milbeaut_hdmac_remove,
++	.remove_new = milbeaut_hdmac_remove,
  	.driver = {
- 		.name = "uniphier-mio-dmac",
- 		.of_match_table = uniphier_mdmac_match,
+ 		.name = "milbeaut-m10v-hdmac",
+ 		.of_match_table = milbeaut_hdmac_match,
 -- 
 2.42.0
 
