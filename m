@@ -1,26 +1,26 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="QYHHyKIm"
-Received: from relay9-d.mail.gandi.net (relay9-d.mail.gandi.net [IPv6:2001:4b98:dc4:8::229])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB864C1;
-	Fri, 17 Nov 2023 02:04:09 -0800 (PST)
-Received: by mail.gandi.net (Postfix) with ESMTPSA id BA377FF817;
-	Fri, 17 Nov 2023 10:04:07 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="ifWxZU5M"
+Received: from relay9-d.mail.gandi.net (relay9-d.mail.gandi.net [217.70.183.199])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ACFC7C5;
+	Fri, 17 Nov 2023 02:04:10 -0800 (PST)
+Received: by mail.gandi.net (Postfix) with ESMTPSA id F0408FF80E;
+	Fri, 17 Nov 2023 10:04:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
-	t=1700215448;
+	t=1700215449;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=svngh7gavoOsAoTd14KvI+aVm1JHod9n5Mvh72UXNZY=;
-	b=QYHHyKIme7eUxzobIVI12NLStklWJelYUHOZJ8AvmXXYvVElzTGwhkFIEekpHOSAcW+K18
-	l2G2pjqbTC+vUGDQq4caHJnddWHbObwbnmuLFdXz6OHmI5UQdklpT+f5Tam2dLWOW8kYqZ
-	aygZ3O+Dh2MQLgPPzYeM3II+RhgcZsTqTiW7Gd5RkguZymAmsnmbw88V2uQDy1Nsu+B+Yr
-	M5sifRmoU3s/BGjR6O0bBukYE5UNkg63Dh/xrTT5HSqVhwIG5d/kk4MH6BX71psxXwLM8n
-	AeT5maXpNpy6RDf8b46r8dFUQyUMjm/QOYl+KuSWQRvIph3e3tZsuZljL0ziWw==
+	bh=NmKeLzmrWDgqwybx3yFMvQV6TVy/TJmLs+gOb6jsjkI=;
+	b=ifWxZU5MoSMJa1RExPWzueMckAhDz+/FP9AYay2y7oLb+Zalg5OPxS+uJSZ6G4PLL7tG27
+	7B6Ezqo8uZROfk4rgCJc6dbvYgIY0+mmsg5++iTo+2fcRvuDlLaiwaAPAf0dyV1+8PobEE
+	skGRJZEe1YrNGNOeLk6h94G5RCnogZx93R8UT/syiH7T0M9ZLWcTVt+xB67YQ+n6/3r0tV
+	IGok0iY52aiynYO0qUXH50zKQ3zI/Qe6E8pLLQT4iH9YOGT69DmSBzVZnc2wkvYBBxQHs/
+	4/1BS0mmd0dfRSU8bMiJBmTHfAEEK2aqW2EIlzEH2dGTFVoTpf8JR8kZfqoNKg==
 From: Kory Maincent <kory.maincent@bootlin.com>
-Date: Fri, 17 Nov 2023 11:03:52 +0100
-Subject: [PATCH v6 4/6] dmaengine: dw-edma: Add HDMA remote interrupt
- configuration
+Date: Fri, 17 Nov 2023 11:03:54 +0100
+Subject: [PATCH v6 6/6] dmaengine: dw-edma: eDMA: Add sync read before
+ starting the DMA transfer in remote setup
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -29,7 +29,7 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20231117-b4-feature_hdma_mainline-v6-4-ebf7aa0e40d7@bootlin.com>
+Message-Id: <20231117-b4-feature_hdma_mainline-v6-6-ebf7aa0e40d7@bootlin.com>
 References: <20231117-b4-feature_hdma_mainline-v6-0-ebf7aa0e40d7@bootlin.com>
 In-Reply-To: <20231117-b4-feature_hdma_mainline-v6-0-ebf7aa0e40d7@bootlin.com>
 To: Manivannan Sadhasivam <mani@kernel.org>, 
@@ -44,31 +44,65 @@ Cc: Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
 X-Mailer: b4 0.12.4
 X-GND-Sasl: kory.maincent@bootlin.com
 
-Only the local interruption was configured, remote interrupt was left
-behind. This patch fix it by setting stop and abort remote interrupts when
-the DW_EDMA_CHIP_LOCAL flag is not set.
+The Linked list element and pointer are not stored in the same memory as
+the eDMA controller register. If the doorbell register is toggled before
+the full write of the linked list a race condition error will occur.
+In remote setup we can only use a readl to the memory to assure the full
+write has occurred.
 
-Fixes: e74c39573d35 ("dmaengine: dw-edma: Add support for native HDMA")
-Signed-off-by: Kory Maincent <kory.maincent@bootlin.com>
+Fixes: 7e4b8a4fbe2c ("dmaengine: Add Synopsys eDMA IP version 0 support")
 Reviewed-by: Serge Semin <fancer.lancer@gmail.com>
-Acked-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Signed-off-by: Kory Maincent <kory.maincent@bootlin.com>
 ---
- drivers/dma/dw-edma/dw-hdma-v0-core.c | 2 ++
- 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/dma/dw-edma/dw-hdma-v0-core.c b/drivers/dma/dw-edma/dw-hdma-v0-core.c
-index 108f9127aaaa..04b0bcb6ded9 100644
---- a/drivers/dma/dw-edma/dw-hdma-v0-core.c
-+++ b/drivers/dma/dw-edma/dw-hdma-v0-core.c
-@@ -237,6 +237,8 @@ static void dw_hdma_v0_core_start(struct dw_edma_chunk *chunk, bool first)
- 		tmp = GET_CH_32(dw, chan->dir, chan->id, int_setup) |
- 		      HDMA_V0_STOP_INT_MASK | HDMA_V0_ABORT_INT_MASK |
- 		      HDMA_V0_LOCAL_STOP_INT_EN | HDMA_V0_LOCAL_ABORT_INT_EN;
-+		if (!(dw->chip->flags & DW_EDMA_CHIP_LOCAL))
-+			tmp |= HDMA_V0_REMOTE_STOP_INT_EN | HDMA_V0_REMOTE_ABORT_INT_EN;
- 		SET_CH_32(dw, chan->dir, chan->id, int_setup, tmp);
- 		/* Channel control */
- 		SET_CH_32(dw, chan->dir, chan->id, control1, HDMA_V0_LINKLIST_EN);
+Changes in v2:
+- New patch
+
+Changes in v4:
+- Update git commit message.
+
+Changes in v6:
+- Fix comment typos.
+---
+ drivers/dma/dw-edma/dw-edma-v0-core.c | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
+
+diff --git a/drivers/dma/dw-edma/dw-edma-v0-core.c b/drivers/dma/dw-edma/dw-edma-v0-core.c
+index b38786f0ad79..b75fdaffad9a 100644
+--- a/drivers/dma/dw-edma/dw-edma-v0-core.c
++++ b/drivers/dma/dw-edma/dw-edma-v0-core.c
+@@ -346,6 +346,20 @@ static void dw_edma_v0_core_write_chunk(struct dw_edma_chunk *chunk)
+ 	dw_edma_v0_write_ll_link(chunk, i, control, chunk->ll_region.paddr);
+ }
+ 
++static void dw_edma_v0_sync_ll_data(struct dw_edma_chunk *chunk)
++{
++	/*
++	 * In case of remote eDMA engine setup, the DW PCIe RP/EP internal
++	 * configuration registers and application memory are normally accessed
++	 * over different buses. Ensure LL-data reaches the memory before the
++	 * doorbell register is toggled by issuing the dummy-read from the remote
++	 * LL memory in a hope that the MRd TLP will return only after the
++	 * last MWr TLP is completed
++	 */
++	if (!(chunk->chan->dw->chip->flags & DW_EDMA_CHIP_LOCAL))
++		readl(chunk->ll_region.vaddr.io);
++}
++
+ static void dw_edma_v0_core_start(struct dw_edma_chunk *chunk, bool first)
+ {
+ 	struct dw_edma_chan *chan = chunk->chan;
+@@ -412,6 +426,9 @@ static void dw_edma_v0_core_start(struct dw_edma_chunk *chunk, bool first)
+ 		SET_CH_32(dw, chan->dir, chan->id, llp.msb,
+ 			  upper_32_bits(chunk->ll_region.paddr));
+ 	}
++
++	dw_edma_v0_sync_ll_data(chunk);
++
+ 	/* Doorbell */
+ 	SET_RW_32(dw, chan->dir, doorbell,
+ 		  FIELD_PREP(EDMA_V0_DOORBELL_CH_MASK, chan->id));
 
 -- 
 2.25.1
