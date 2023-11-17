@@ -1,25 +1,26 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="p3UZahcB"
-Received: from relay9-d.mail.gandi.net (relay9-d.mail.gandi.net [217.70.183.199])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 188ECA9;
-	Fri, 17 Nov 2023 02:04:07 -0800 (PST)
-Received: by mail.gandi.net (Postfix) with ESMTPSA id 2DD6EFF81D;
-	Fri, 17 Nov 2023 10:04:06 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="QYHHyKIm"
+Received: from relay9-d.mail.gandi.net (relay9-d.mail.gandi.net [IPv6:2001:4b98:dc4:8::229])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB864C1;
+	Fri, 17 Nov 2023 02:04:09 -0800 (PST)
+Received: by mail.gandi.net (Postfix) with ESMTPSA id BA377FF817;
+	Fri, 17 Nov 2023 10:04:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
-	t=1700215446;
+	t=1700215448;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=MG/EpR8bVcQceln2f1UmgAvAjO7ip8LLXAJEWchyMuQ=;
-	b=p3UZahcB5fPC27GIKBJabXO5yGHhpl+kOie0qlM7j1CpkzJyrQcOTgUyIeLo+dxwDCc8LJ
-	wcIFqOwpqlsYXCZyC3le3j3IOn3+s3fBImDVtTnQ41iadU/8lxdtZZg4CnP8Mlg/8xvzIV
-	gm9Ay9vzq98L1n6juEMCyLaOuGAe6XrCsCJ+b3llcTKwoyvmoeFRxxSQOZ/MoT8f3dtPVR
-	3zv1QPyoW0I/ySSr1IdJsaah5IkVDd5upVx/KnT7jijLnsi5M917oLCG8nefH7qc/R+JBt
-	eWxxxA2FMtg4ejttruB5ZA8bpXRBqe4TgSxsKmm9N6PCNLxgQsvBQ11F6j7Ekw==
+	bh=svngh7gavoOsAoTd14KvI+aVm1JHod9n5Mvh72UXNZY=;
+	b=QYHHyKIme7eUxzobIVI12NLStklWJelYUHOZJ8AvmXXYvVElzTGwhkFIEekpHOSAcW+K18
+	l2G2pjqbTC+vUGDQq4caHJnddWHbObwbnmuLFdXz6OHmI5UQdklpT+f5Tam2dLWOW8kYqZ
+	aygZ3O+Dh2MQLgPPzYeM3II+RhgcZsTqTiW7Gd5RkguZymAmsnmbw88V2uQDy1Nsu+B+Yr
+	M5sifRmoU3s/BGjR6O0bBukYE5UNkg63Dh/xrTT5HSqVhwIG5d/kk4MH6BX71psxXwLM8n
+	AeT5maXpNpy6RDf8b46r8dFUQyUMjm/QOYl+KuSWQRvIph3e3tZsuZljL0ziWw==
 From: Kory Maincent <kory.maincent@bootlin.com>
-Date: Fri, 17 Nov 2023 11:03:49 +0100
-Subject: [PATCH v6 1/6] dmaengine: dw-edma: Fix the ch_count hdma callback
+Date: Fri, 17 Nov 2023 11:03:52 +0100
+Subject: [PATCH v6 4/6] dmaengine: dw-edma: Add HDMA remote interrupt
+ configuration
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -28,7 +29,7 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20231117-b4-feature_hdma_mainline-v6-1-ebf7aa0e40d7@bootlin.com>
+Message-Id: <20231117-b4-feature_hdma_mainline-v6-4-ebf7aa0e40d7@bootlin.com>
 References: <20231117-b4-feature_hdma_mainline-v6-0-ebf7aa0e40d7@bootlin.com>
 In-Reply-To: <20231117-b4-feature_hdma_mainline-v6-0-ebf7aa0e40d7@bootlin.com>
 To: Manivannan Sadhasivam <mani@kernel.org>, 
@@ -43,62 +44,31 @@ Cc: Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
 X-Mailer: b4 0.12.4
 X-GND-Sasl: kory.maincent@bootlin.com
 
-The current check of ch_en enabled to know the maximum number of available
-hardware channels is wrong as it check the number of ch_en register set
-but all of them are unset at probe. This register is set at the
-dw_hdma_v0_core_start function which is run lately before a DMA transfer.
-
-The HDMA IP have no way to know the number of hardware channels available
-like the eDMA IP, then let set it to maximum channels and let the platform
-set the right number of channels.
+Only the local interruption was configured, remote interrupt was left
+behind. This patch fix it by setting stop and abort remote interrupts when
+the DW_EDMA_CHIP_LOCAL flag is not set.
 
 Fixes: e74c39573d35 ("dmaengine: dw-edma: Add support for native HDMA")
-Acked-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Reviewed-by: Serge Semin <fancer.lancer@gmail.com>
 Signed-off-by: Kory Maincent <kory.maincent@bootlin.com>
+Reviewed-by: Serge Semin <fancer.lancer@gmail.com>
+Acked-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 ---
-
-See the following thread mail that talk about this issue:
-https://lore.kernel.org/lkml/20230607095832.6d6b1a73@kmaincent-XPS-13-7390/
-
-Changes in v2:
-- Add comment
-
-Changes in v3:
-- Fix comment style.
----
- drivers/dma/dw-edma/dw-hdma-v0-core.c | 18 ++++++------------
- 1 file changed, 6 insertions(+), 12 deletions(-)
+ drivers/dma/dw-edma/dw-hdma-v0-core.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
 diff --git a/drivers/dma/dw-edma/dw-hdma-v0-core.c b/drivers/dma/dw-edma/dw-hdma-v0-core.c
-index 00b735a0202a..1f4cb7db5475 100644
+index 108f9127aaaa..04b0bcb6ded9 100644
 --- a/drivers/dma/dw-edma/dw-hdma-v0-core.c
 +++ b/drivers/dma/dw-edma/dw-hdma-v0-core.c
-@@ -65,18 +65,12 @@ static void dw_hdma_v0_core_off(struct dw_edma *dw)
- 
- static u16 dw_hdma_v0_core_ch_count(struct dw_edma *dw, enum dw_edma_dir dir)
- {
--	u32 num_ch = 0;
--	int id;
--
--	for (id = 0; id < HDMA_V0_MAX_NR_CH; id++) {
--		if (GET_CH_32(dw, id, dir, ch_en) & BIT(0))
--			num_ch++;
--	}
--
--	if (num_ch > HDMA_V0_MAX_NR_CH)
--		num_ch = HDMA_V0_MAX_NR_CH;
--
--	return (u16)num_ch;
-+	/*
-+	 * The HDMA IP have no way to know the number of hardware channels
-+	 * available, we set it to maximum channels and let the platform
-+	 * set the right number of channels.
-+	 */
-+	return HDMA_V0_MAX_NR_CH;
- }
- 
- static enum dma_status dw_hdma_v0_core_ch_status(struct dw_edma_chan *chan)
+@@ -237,6 +237,8 @@ static void dw_hdma_v0_core_start(struct dw_edma_chunk *chunk, bool first)
+ 		tmp = GET_CH_32(dw, chan->dir, chan->id, int_setup) |
+ 		      HDMA_V0_STOP_INT_MASK | HDMA_V0_ABORT_INT_MASK |
+ 		      HDMA_V0_LOCAL_STOP_INT_EN | HDMA_V0_LOCAL_ABORT_INT_EN;
++		if (!(dw->chip->flags & DW_EDMA_CHIP_LOCAL))
++			tmp |= HDMA_V0_REMOTE_STOP_INT_EN | HDMA_V0_REMOTE_ABORT_INT_EN;
+ 		SET_CH_32(dw, chan->dir, chan->id, int_setup, tmp);
+ 		/* Channel control */
+ 		SET_CH_32(dw, chan->dir, chan->id, control1, HDMA_V0_LINKLIST_EN);
 
 -- 
 2.25.1
