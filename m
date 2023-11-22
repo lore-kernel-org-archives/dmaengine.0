@@ -1,35 +1,35 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=temperror (0-bit key) header.d=alatek.krakow.pl header.i=@alatek.krakow.pl header.b="ub4fzT4y"
+	dkim=temperror (0-bit key) header.d=alatek.krakow.pl header.i=@alatek.krakow.pl header.b="YNW+agj/"
 Received: from helios.alatek.com.pl (helios.alatek.com.pl [85.14.123.227])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41571D4F;
-	Wed, 22 Nov 2023 14:11:21 -0800 (PST)
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA7B4AD;
+	Wed, 22 Nov 2023 14:14:38 -0800 (PST)
 Received: from localhost (localhost [127.0.0.1])
-	by helios.alatek.com.pl (Postfix) with ESMTP id 399FC2D00B67;
-	Wed, 22 Nov 2023 23:11:19 +0100 (CET)
+	by helios.alatek.com.pl (Postfix) with ESMTP id 3C4812D00B5B;
+	Wed, 22 Nov 2023 23:08:50 +0100 (CET)
 Received: from helios.alatek.com.pl ([127.0.0.1])
  by localhost (helios.alatek.com.pl [127.0.0.1]) (amavis, port 10032)
- with ESMTP id myf48UbQDSqH; Wed, 22 Nov 2023 23:11:19 +0100 (CET)
+ with ESMTP id Npj0OrRRbQ5m; Wed, 22 Nov 2023 23:08:49 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by helios.alatek.com.pl (Postfix) with ESMTP id DE31B2D00B66;
-	Wed, 22 Nov 2023 23:11:18 +0100 (CET)
-DKIM-Filter: OpenDKIM Filter v2.10.3 helios.alatek.com.pl DE31B2D00B66
+	by helios.alatek.com.pl (Postfix) with ESMTP id BEA1B2D00B5A;
+	Wed, 22 Nov 2023 23:08:49 +0100 (CET)
+DKIM-Filter: OpenDKIM Filter v2.10.3 helios.alatek.com.pl BEA1B2D00B5A
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alatek.krakow.pl;
-	s=99EE5E86-D06A-11EC-BE24-DBCCD0A148D3; t=1700691078;
-	bh=uZ+7hCD2vT8n0SaxTdHVUD9PS0Q6BCcg7P18KUDliew=;
+	s=99EE5E86-D06A-11EC-BE24-DBCCD0A148D3; t=1700690929;
+	bh=PTa268/JX+mlRh2pftJ7srsiSRZlKXzy21FlzLAe5Bs=;
 	h=From:To:Date:Message-Id:MIME-Version;
-	b=ub4fzT4ygt8aOn+/jnwPW50jLQbpPDijox4ElW+v78BfJpHRHWKCQyu8YjrytjqVU
-	 lFcD1bco8NAaDw5TEFXPK1id6VTKWXIo7XXhuUDg9VaSJCd9P/WVtpn267AKtynv+U
-	 B2fyt0Hkxje5DqNaxT3Ew/xg5PQnHOY9CN4iGb4Y6snEgCNbWea13GUiKEdB/A63Xp
-	 R9/r0E2hdP4vPQM8yLLm6ufY8H5JyiExCWqBQBqXGiXm+4jEHkBsNPuZjOY/BHzRok
-	 QOMim/tlglzdJ2YVnp/zKCbO1+nUQ0jjSMv7mla6hcKhdI92UWDsycAxDlNsb48Lug
-	 ceZwUc8A2WkOg==
+	b=YNW+agj/fsLXUNs8xM0/H5ifHDFwktw8wkaao56kuymnufHKcZyKgKJC+MspTCSDG
+	 4OShWE8s8QJBSCBFxJgoaxid/HPMyc+9vob4Q/X/N1m186AFBl/n6DNI2SbMDOGauD
+	 4yMklW9I5usHXdMmezlei0sBlnmqFH5g7r5dFiM0xVk9f/E7jmirY1rp9Qrw/kamZn
+	 Uc4PzP+7ozfPx/jsZa9wYn6eSI+WrzwvEiP3uWuwR7yXuUJoNvALEDGRWTTZTs56v3
+	 c/ldIqLOp6Vw1rp2/Nx/pG9joyVjEqOpibKqzbf+SUflJgOBGIjqmN2f2NaExyl2I4
+	 CQpkjv5dyy5VA==
 X-Virus-Scanned: amavis at alatek.com.pl
 Received: from helios.alatek.com.pl ([127.0.0.1])
  by localhost (helios.alatek.com.pl [127.0.0.1]) (amavis, port 10026)
- with ESMTP id D11LkTmYqi1Q; Wed, 22 Nov 2023 23:11:18 +0100 (CET)
+ with ESMTP id vJcjfbOJKJxQ; Wed, 22 Nov 2023 23:08:49 +0100 (CET)
 Received: from ideapad.. (unknown [10.0.2.2])
-	by helios.alatek.com.pl (Postfix) with ESMTPSA id A68B92D00B64;
-	Wed, 22 Nov 2023 23:11:18 +0100 (CET)
+	by helios.alatek.com.pl (Postfix) with ESMTPSA id 82D562D00B50;
+	Wed, 22 Nov 2023 23:08:49 +0100 (CET)
 From: Jan Kuliga <jankul@alatek.krakow.pl>
 To: lizhi.hou@amd.com,
 	brian.xu@amd.com,
@@ -39,12 +39,10 @@ To: lizhi.hou@amd.com,
 	dmaengine@vger.kernel.org,
 	linux-kernel@vger.kernel.org
 Cc: Jan Kuliga <jankul@alatek.krakow.pl>
-Subject: [PATCH 5/5] dmaengine: xilinx: xdma: Ease dma_pool alignment requirements
-Date: Wed, 22 Nov 2023 23:09:21 +0100
-Message-Id: <20231122220921.117428-6-jankul@alatek.krakow.pl>
+Subject: [PATCH 0/5] Miscellaneous xdma driver enhancements
+Date: Wed, 22 Nov 2023 23:08:30 +0100
+Message-Id: <20231122220830.117403-1-jankul@alatek.krakow.pl>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20231122220830.117403-1-jankul@alatek.krakow.pl>
-References: <20231122220830.117403-1-jankul@alatek.krakow.pl>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -53,57 +51,28 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 
-According to the XDMA datasheet (PG195), the address of any descriptor
-must be 32 byte aligned. The datasheet also states that a contiguous
-block of descriptors must not cross a 4k address boundary. Therefore,
-it is possible to ease the pressure put on the dma_pool allocator
-just by requiring sufficient alignment and boundary values. Add proper
-macro definition and change the values passed into the
-dma_pool_create().
+Hi,
 
-Signed-off-by: Jan Kuliga <jankul@alatek.krakow.pl>
+This patch series introduces a couple of xdma driver enhancements, such
+as two dmaengine callbacks, partial rework of a interrupt service
+routine and loosening of dma_pool alignment requirements. I have tested
+these changes with XDMA v4.1 (Rev. 20) block.
+
+Jan
 ---
- drivers/dma/xilinx/xdma-regs.h | 7 ++++---
- drivers/dma/xilinx/xdma.c      | 6 +++---
- 2 files changed, 7 insertions(+), 6 deletions(-)
+Jan Kuliga (5):
+  dmaengine: xilinx: xdma: Add transfer termination callbacks
+  dmaengine: xilinx: xdma: Get rid of duplicated macros definitions
+  dmaengine: xilinx: xdma: Complete lacking register description
+  dmaengine: xilinx: xdma: Rework xdma_channel_isr()
+  dmaengine: xilinx: xdma: Ease dma_pool alignment requirements
 
-diff --git a/drivers/dma/xilinx/xdma-regs.h b/drivers/dma/xilinx/xdma-reg=
-s.h
-index 6bf7ae84e452..d5cb12e6b8d4 100644
---- a/drivers/dma/xilinx/xdma-regs.h
-+++ b/drivers/dma/xilinx/xdma-regs.h
-@@ -64,9 +64,10 @@ struct xdma_hw_desc {
- 	__le64		next_desc;
- };
-=20
--#define XDMA_DESC_SIZE		sizeof(struct xdma_hw_desc)
--#define XDMA_DESC_BLOCK_SIZE	(XDMA_DESC_SIZE * XDMA_DESC_ADJACENT)
--#define XDMA_DESC_BLOCK_ALIGN	4096
-+#define XDMA_DESC_SIZE			sizeof(struct xdma_hw_desc)
-+#define XDMA_DESC_BLOCK_SIZE		(XDMA_DESC_SIZE * XDMA_DESC_ADJACENT)
-+#define XDMA_DESC_BLOCK_ALIGN		32
-+#define XDMA_DESC_BLOCK_BOUNDARY	4096
-=20
- /*
-  * Channel registers
-diff --git a/drivers/dma/xilinx/xdma.c b/drivers/dma/xilinx/xdma.c
-index dc7f43f17103..9e382ce524a4 100644
---- a/drivers/dma/xilinx/xdma.c
-+++ b/drivers/dma/xilinx/xdma.c
-@@ -730,9 +730,9 @@ static int xdma_alloc_chan_resources(struct dma_chan =
-*chan)
- 		return -EINVAL;
- 	}
-=20
--	xdma_chan->desc_pool =3D dma_pool_create(dma_chan_name(chan),
--					       dev, XDMA_DESC_BLOCK_SIZE,
--					       XDMA_DESC_BLOCK_ALIGN, 0);
-+	xdma_chan->desc_pool =3D dma_pool_create(dma_chan_name(chan), dev,
-+				XDMA_DESC_BLOCK_SIZE, XDMA_DESC_BLOCK_ALIGN,
-+						XDMA_DESC_BLOCK_BOUNDARY);
- 	if (!xdma_chan->desc_pool) {
- 		xdma_err(xdev, "unable to allocate descriptor pool");
- 		return -ENOMEM;
+ drivers/dma/xilinx/xdma-regs.h | 24 ++++-------
+ drivers/dma/xilinx/xdma.c      | 78 +++++++++++++++++++++++++++++-----
+ 2 files changed, 76 insertions(+), 26 deletions(-)
+
+
+base-commit: 98b1cc82c4affc16f5598d4fa14b1858671b2263
 --=20
 2.34.1
 
