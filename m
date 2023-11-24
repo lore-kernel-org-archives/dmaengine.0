@@ -1,62 +1,85 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27E5E16432;
-	Fri, 24 Nov 2023 13:33:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GTzGzVWZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6203C43397;
-	Fri, 24 Nov 2023 13:33:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1700832803;
-	bh=uoPeOd9O4SgQkdeE6NWSU3YB1DPElD4w0UIMSK4oJHU=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=GTzGzVWZV+39lerM0qSCYf+1y8RdZ8n7t8PU66/S7rCtUkPt1dA/Dj18tWlK6GmeV
-	 opYFxwcixBvCQj7UQCpzeuCNacBDXgDwKXfC9cGVLp5V91JO4I52XkpWpM/Mg0TOJW
-	 iRvAXbNg65mBuGbSptYLdWpg0pJpStgi8GN7/omibD1sMN7nK9yPAcilAaleHgLOW+
-	 uBL9XiWuZiwiRQXisv8hPK8F2r8uz1V5XRKy4xBcpjNO2SRGIzEgvpWkeCiIrDxHOc
-	 fhEtaHFzd3UMW4c1NXtglt3U4YaRGurdMhlH2mOdjLKZGGMt+bQ9/AgR2Fa4FqV93H
-	 twZPW16ItI1iw==
-From: Vinod Koul <vkoul@kernel.org>
-To: Hector Martin <marcan@marcan.st>, Sven Peter <sven@svenpeter.dev>, 
- =?utf-8?q?Martin_Povi=C5=A1er?= <povik+lin@cutebit.org>
-Cc: Alyssa Rosenzweig <alyssa@rosenzweig.io>, asahi@lists.linux.dev, 
- linux-arm-kernel@lists.infradead.org, dmaengine@vger.kernel.org, 
- linux-kernel@vger.kernel.org
-In-Reply-To: <20231029170704.82238-1-povik+lin@cutebit.org>
-References: <20231029170704.82238-1-povik+lin@cutebit.org>
-Subject: Re: [PATCH v2] dmaengine: apple-admac: Keep upper bits of
- REG_BUS_WIDTH
-Message-Id: <170083280044.771517.11806054531627846759.b4-ty@kernel.org>
-Date: Fri, 24 Nov 2023 19:03:20 +0530
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="PKlUHei4"
+Received: from relay2-d.mail.gandi.net (relay2-d.mail.gandi.net [IPv6:2001:4b98:dc4:8::222])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F08019A2
+	for <dmaengine@vger.kernel.org>; Fri, 24 Nov 2023 07:09:25 -0800 (PST)
+Received: by mail.gandi.net (Postfix) with ESMTPSA id 6E99D40016;
+	Fri, 24 Nov 2023 15:09:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
+	t=1700838564;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=kdneLdQtosT/1Jsu3ffIIlGLAwKem6GqvHil4BjQ5vY=;
+	b=PKlUHei4HMuOdPC0gO0/8wbvWRsY09RLrQZDqljb2e113q5tDn9+FxmwmIQ5c/+VInBJMx
+	I6aVp1jNK8rSgZ7wbL0CqcrH/EFq8Roj6YVyfYP9Kw2i0RaqhDMocLuRLS494BMDj7eAhe
+	3HyK+0xkERgz5BcC4zAgy/QiheRiV8J9F10RMIPO8Q5PdkjVjoLhBxkWRsUIUaTbZwKgit
+	2t7ddWpNADhDKvqNkcXhT6L+nVwZZFlUdfgpmsqm0KSq91rwP8cYAvMKbNuYPR1K2TVJAK
+	odyu0trY1JD4etZ8MBRYqvI4M4zbbZuAXrMa9o9wtYUFR8v6KZ/RaZs0FaRITQ==
+From: Miquel Raynal <miquel.raynal@bootlin.com>
+To: Vinod Koul <vkoul@kernel.org>,
+	Lizhi Hou <lizhi.hou@amd.com>,
+	Brian Xu <brian.xu@amd.com>,
+	Raj Kumar Rampelli <raj.kumar.rampelli@amd.com>,
+	dmaengine@vger.kernel.org
+Cc: Michal Simek <monstr@monstr.eu>,
+	Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>
+Subject: [PATCH 2/3] dmaengine: xilinx: xdma: Better handling of the busy variable
+Date: Fri, 24 Nov 2023 16:09:22 +0100
+Message-Id: <20231124150923.257687-3-miquel.raynal@bootlin.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20231124150923.257687-1-miquel.raynal@bootlin.com>
+References: <20231124150923.257687-1-miquel.raynal@bootlin.com>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-Mailer: b4 0.12.3
+X-GND-Sasl: miquel.raynal@bootlin.com
 
+The driver internal scatter-gather logic is:
+- set busy to true
+- start transfer
+<irq>
+- set busy to false
+- trigger next transfer if any
+  - set busy to true
 
-On Sun, 29 Oct 2023 18:07:04 +0100, Martin Povišer wrote:
-> For RX channels, REG_BUS_WIDTH seems to default to a value of 0xf00, and
-> macOS preserves the upper bits when setting the configuration in the
-> lower ones. If we reset the upper bits to 0, this causes framing errors
-> on suspend/resume (the data stream "tears" and channels get swapped
-> around). Keeping the upper bits untouched, like the macOS driver does,
-> fixes this issue.
-> 
-> [...]
+Setting busy to false in cyclic transfers does not make any sense and is
+conceptually wrong. In order to ease the integration of additional
+callbacks let's move this change to a scatter-gather-only path.
 
-Applied, thanks!
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+---
+---
+ drivers/dma/xilinx/xdma.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-[1/1] dmaengine: apple-admac: Keep upper bits of REG_BUS_WIDTH
-      commit: 306f5df81fcc89b462fbeb9dbe26d9a8ad7c7582
-
-Best regards,
+diff --git a/drivers/dma/xilinx/xdma.c b/drivers/dma/xilinx/xdma.c
+index 75533e787414..caddd741a79c 100644
+--- a/drivers/dma/xilinx/xdma.c
++++ b/drivers/dma/xilinx/xdma.c
+@@ -745,7 +745,6 @@ static irqreturn_t xdma_channel_isr(int irq, void *dev_id)
+ 	if (!vd)
+ 		goto out;
+ 
+-	xchan->busy = false;
+ 	desc = to_xdma_desc(vd);
+ 	xdev = xchan->xdev_hdl;
+ 
+@@ -768,6 +767,8 @@ static irqreturn_t xdma_channel_isr(int irq, void *dev_id)
+ 		goto out;
+ 	}
+ 
++	xchan->busy = false;
++
+ 	/*
+ 	 * if all data blocks are transferred, remove and complete the request
+ 	 */
 -- 
-~Vinod
-
+2.34.1
 
