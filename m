@@ -1,45 +1,45 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="TyKVTc/3"
-Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CE75A10C9
-	for <dmaengine@vger.kernel.org>; Fri, 24 Nov 2023 00:16:17 -0800 (PST)
-Received: by mail-ej1-x630.google.com with SMTP id a640c23a62f3a-a011e9bf336so225227066b.3
-        for <dmaengine@vger.kernel.org>; Fri, 24 Nov 2023 00:16:17 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="VO4X5Myp"
+Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4872CD5E
+	for <dmaengine@vger.kernel.org>; Fri, 24 Nov 2023 00:16:38 -0800 (PST)
+Received: by mail-ed1-x52b.google.com with SMTP id 4fb4d7f45d1cf-54af2498e85so491509a12.0
+        for <dmaengine@vger.kernel.org>; Fri, 24 Nov 2023 00:16:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1700813776; x=1701418576; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1700813796; x=1701418596; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=JG26eN2L6aLKDyKOYcGVR0lUniHJPCQSntM8z4DIVOk=;
-        b=TyKVTc/3upiROw4HwC9tuwpNdLqOcXQY+kDQvev1xGOkemCWHBylSPkVe/WDv+aXu3
-         YyjYrtru1kNb5k5VYyik9GXCMLg/h/5IQ89ZV4tWAjqJfSHHxZrseVAjEoA1cRb8wZ2I
-         bFPu+glT2cqTVxTtbjHHyc0EIQDf/uDhCWURA1mt7l8GViaWoGofS4h/P6ON4Gh/VOkU
-         6vDo/mF93J/0Ef+afKKE4ABOjWXdycpVa1J3QL9uGUtDqV1fqWgajiJdAAV9M98rtmjO
-         emx7b3W5tzrZpbIMDR+2NR0KRTxMYA5vwcSoONOH1gVgKobrj8MW2Oti2v1Y90zN/77o
-         fbvg==
+        bh=zIWG3YzrIVIqhqQJnKaM2e5naBD6/ub+8w2rt6aGVRs=;
+        b=VO4X5Mypc/vAY4dYHCtFeR2tV8K1yStpscfZOCwfpcG+GF53fz07pcGyw0tuSW5bjc
+         Plvyv3sMhXTwNOAZSq8CPhFFyMnpepj7gl+4/ofSmsuDsFqq4TpuANtPrh/IqMeGyUNz
+         jkgVVSQXE7ArJmQPbxUM83YtZ8olmzeHLpZzw6jN1/hGpGSH+kHhnf7RMx9Qp3ZyV5XC
+         e+UEsWiPz/Ib5Fl1dO9VwVZTKoSh/ExMMTLkJEYi28YCeObxFI87oJb9cBH9waX3dQO4
+         PhAi3vMu67xJ5fRS6g5XBaMtBHBd99oXOZy8Uu4PcUMhEntf79l2XkzoE5zENSua6ZoP
+         rRuw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700813776; x=1701418576;
+        d=1e100.net; s=20230601; t=1700813797; x=1701418597;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=JG26eN2L6aLKDyKOYcGVR0lUniHJPCQSntM8z4DIVOk=;
-        b=Ry/iYDWjPDBA4fk/fpZS60CNlSV9jjaaBIvGqGhRpmGIzB+xY+IjaLc1XiDh7lDK0r
-         vJP7SpFqACvZGVRz5LKrYGVruGsA/HeSyYBTSsPdMjYuw4QSTOlGO7K2sT4pQoFgcAaC
-         cAZ9c1kXGrAg1a6JJ3vcxKPp7r8jlBWo7UnB5yZpGxRoSCQEoVgQtk5zd26WBAq/sKtH
-         gjdbyEfJHqQP6JQUq6XYbmgUXdOC2vc1UfpOsKR/EdFGQdstN84FDlZu6yD3d38G745C
-         ufzrRUmwF8vT6i87h/9wl+TJRVAZRVJK2a0dOKaPBUAk7mD9/X9hZwfWsPAuJp/1v7D1
-         bS0w==
-X-Gm-Message-State: AOJu0Yx7H33vT5tEV3qP6vG2STAwY8N1KiAQI1T5djpl2hJ7rM2hHrv/
-	XCJFVLHif3qTmXpMLebWoIViMw==
-X-Google-Smtp-Source: AGHT+IHvEGARAll4TmWO+j3FaaSx29hM6EFAS6hAZQOERT7Ue2PvNJ/2OdioC2PB13mTrBe+qrbpIw==
-X-Received: by 2002:a17:906:af13:b0:a00:53cc:8590 with SMTP id lx19-20020a170906af1300b00a0053cc8590mr1306786ejb.40.1700813776197;
-        Fri, 24 Nov 2023 00:16:16 -0800 (PST)
+        bh=zIWG3YzrIVIqhqQJnKaM2e5naBD6/ub+8w2rt6aGVRs=;
+        b=g2pqEhkC53LktN33kO7OC8S/VzY1omrnNiog7OXREkUTYXk2V5vdjQ1WImy4/AGdS6
+         qNYbtxosfahZJ9LZiSkkwPe8zvIkcav0CiH/gObfhWahpG+74sYqv6NzRUbWxPZ17tp7
+         egjg1MfC5P8J2WdJp/NoCrK74kebgERfpM1K5T+XGgedLq7Pud1f561TKh3nHNkypB6T
+         C0NmMNB4moAUmFct0ntTcCA7sen+y3DhyVAWvrbM4167PjaU4syzjhLiqk9q7dyH79v9
+         10WLxf9/sRX1B2wVJZSce55jFWgK9GMicR0OYxEFgAZRmrs6xzwQ8VHZ9axjhxWh0ass
+         W4Xw==
+X-Gm-Message-State: AOJu0YyEmMoyh7cq5IbCJwjyJvUcu8j/St2ciaaqk3PDGSB5GVrYNEF1
+	xDyaePCUjUHlOUmGRLCSedEPnA==
+X-Google-Smtp-Source: AGHT+IGA78Tc9gn9lEPXuo+VO2FtN6jJHFT9KXc9y85/am8r9tLR2gw4uvdeONq3tQ+rJyCcGZTKNA==
+X-Received: by 2002:a17:906:b882:b0:9e7:3af8:1fcd with SMTP id hb2-20020a170906b88200b009e73af81fcdmr1235076ejb.76.1700813796623;
+        Fri, 24 Nov 2023 00:16:36 -0800 (PST)
 Received: from [192.168.1.20] ([178.197.218.100])
-        by smtp.gmail.com with ESMTPSA id x22-20020a1709060a5600b009c3827134e5sm1749428ejf.117.2023.11.24.00.16.15
+        by smtp.gmail.com with ESMTPSA id x22-20020a1709060a5600b009c3827134e5sm1749428ejf.117.2023.11.24.00.16.35
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 24 Nov 2023 00:16:15 -0800 (PST)
-Message-ID: <eef3b144-9986-4057-8c3f-bb7711aab9a3@linaro.org>
-Date: Fri, 24 Nov 2023 09:16:14 +0100
+        Fri, 24 Nov 2023 00:16:36 -0800 (PST)
+Message-ID: <8495eeb4-20c3-47bb-9016-aa34aecfee89@linaro.org>
+Date: Fri, 24 Nov 2023 09:16:35 +0100
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -47,7 +47,7 @@ List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 3/4] dt-bindings: dma: ti: k3-pktdma: Describe cfg
+Subject: Re: [PATCH v3 4/4] dt-bindings: dma: ti: k3-udma: Describe cfg
  register regions
 Content-Language: en-US
 To: Vignesh Raghavendra <vigneshr@ti.com>,
@@ -58,7 +58,7 @@ To: Vignesh Raghavendra <vigneshr@ti.com>,
 Cc: dmaengine@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org
 References: <20231124045722.191817-1-vigneshr@ti.com>
- <20231124045722.191817-4-vigneshr@ti.com>
+ <20231124045722.191817-5-vigneshr@ti.com>
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -104,22 +104,19 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20231124045722.191817-4-vigneshr@ti.com>
+In-Reply-To: <20231124045722.191817-5-vigneshr@ti.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 24/11/2023 05:57, Vignesh Raghavendra wrote:
-> Packet DMA (PKTDMA) module on K3 SoCs have ring cfg, TX and RX channel
-> cfg and RX flow cfg register regions which are usually configured by a
-> Device Management firmware. But certain entities such as bootloader
-> (like U-Boot) may have to access them directly. Describe this region in
-> the binding documentation for completeness of module description.
+> Unified DMA (UDMA) module on K3 SoCs have TX and RX channel cfg and RX
+> flow cfg register regions which are usually configured by a Device
+> Management firmware. But certain entities such as bootloader (like
+> U-Boot) may have to access them directly. Describe this region in the
+> binding documentation for completeness of module description.
 > 
 > Keep the binding compatible with existing DTS files by requiring first
 > four regions to be present at least.
-> 
-> Signed-off-by: Vignesh Raghavendra <vigneshr@ti.com>
-> ---
 
 Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
