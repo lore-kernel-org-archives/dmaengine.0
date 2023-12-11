@@ -1,133 +1,97 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b="v4biwjQq"
-Received: from lelv0143.ext.ti.com (lelv0143.ext.ti.com [198.47.23.248])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D2AAF2;
-	Mon, 11 Dec 2023 01:00:38 -0800 (PST)
-Received: from lelv0265.itg.ti.com ([10.180.67.224])
-	by lelv0143.ext.ti.com (8.15.2/8.15.2) with ESMTP id 3BB90PYY053914;
-	Mon, 11 Dec 2023 03:00:25 -0600
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
-	s=ti-com-17Q1; t=1702285225;
-	bh=fes+2jdnu+cwIMijeZdTMvzhl1D0uYB5n4UdqPCiFzA=;
-	h=Date:CC:Subject:To:References:From:In-Reply-To;
-	b=v4biwjQqh4yHk+hxF5kuE9O9FLHdyyIWt0w28StEmAc2FDOvIEL8CR/6On0YqXbIy
-	 o4HucvSfagdygapccICe6/WquECjS3an7Lm9ZBlQahKRbBDdZ7HrimRrwE3OzvnODo
-	 R+5g1UcJYWNYNNIMF+HeLvw8nmpCzT/IWCh86DfE=
-Received: from DFLE110.ent.ti.com (dfle110.ent.ti.com [10.64.6.31])
-	by lelv0265.itg.ti.com (8.15.2/8.15.2) with ESMTPS id 3BB90PEe010336
-	(version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
-	Mon, 11 Dec 2023 03:00:25 -0600
-Received: from DFLE114.ent.ti.com (10.64.6.35) by DFLE110.ent.ti.com
- (10.64.6.31) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.2507.23; Mon, 11
- Dec 2023 03:00:25 -0600
-Received: from lelvsmtp5.itg.ti.com (10.180.75.250) by DFLE114.ent.ti.com
- (10.64.6.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.2507.23 via
- Frontend Transport; Mon, 11 Dec 2023 03:00:25 -0600
-Received: from [172.24.227.9] (uda0492258.dhcp.ti.com [172.24.227.9])
-	by lelvsmtp5.itg.ti.com (8.15.2/8.15.2) with ESMTP id 3BB90M8N004370;
-	Mon, 11 Dec 2023 03:00:23 -0600
-Message-ID: <08e04ee2-b6e7-4da6-87f4-6d111dc25286@ti.com>
-Date: Mon, 11 Dec 2023 14:30:21 +0530
+	dkim=pass (1024-bit key) header.d=maquefel.me header.i=@maquefel.me header.b="K97Abeap"
+X-Greylist: delayed 355 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Mon, 11 Dec 2023 01:16:49 PST
+Received: from forward501c.mail.yandex.net (forward501c.mail.yandex.net [IPv6:2a02:6b8:c03:500:1:45:d181:d501])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 74DD1AF
+	for <dmaengine@vger.kernel.org>; Mon, 11 Dec 2023 01:16:49 -0800 (PST)
+Received: from mail-nwsmtp-smtp-production-main-25.sas.yp-c.yandex.net (mail-nwsmtp-smtp-production-main-25.sas.yp-c.yandex.net [IPv6:2a02:6b8:c08:2e14:0:640:2cd1:0])
+	by forward501c.mail.yandex.net (Yandex) with ESMTP id BA67660B25;
+	Mon, 11 Dec 2023 12:10:52 +0300 (MSK)
+Received: by mail-nwsmtp-smtp-production-main-25.sas.yp-c.yandex.net (smtp/Yandex) with ESMTPSA id pAddjN8Caa60-KabXMH28;
+	Mon, 11 Dec 2023 12:10:52 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=maquefel.me; s=mail;
+	t=1702285852; bh=UKtwdG87cbMckGwyNHeE1b5Vb5hNiKX74obiGUxAGKg=;
+	h=References:Date:In-Reply-To:Cc:To:From:Subject:Message-ID;
+	b=K97AbeapFDKuCtOee6amDMu8ldcf1mWMhdW2PujdAsJoL+9o2MZyTuY/7IDMsqjtw
+	 QkEKLt+s2RMGhpDdgZyeAfvVlikeRXavIin32CqkoKmoDlmEoPXKOWxVkR9X/2ZKm0
+	 CiCY0mtu7tPsvVcfT/s4miaxYBgyB4ZCi1JtZvD0=
+Authentication-Results: mail-nwsmtp-smtp-production-main-25.sas.yp-c.yandex.net; dkim=pass header.i=@maquefel.me
+Message-ID: <1bbcd4e612a1577d83456a5c88ad633547e59e9b.camel@maquefel.me>
+Subject: Re: [PATCH v5 39/39] dma: cirrus: remove platform code
+From: Nikita Shubin <nikita.shubin@maquefel.me>
+To: Andy Shevchenko <andriy.shevchenko@intel.com>
+Cc: Vinod Koul <vkoul@kernel.org>, Alexander Sverdlin
+	 <alexander.sverdlin@gmail.com>, linux-kernel@vger.kernel.org, 
+	dmaengine@vger.kernel.org
+Date: Mon, 11 Dec 2023 15:10:51 +0300
+In-Reply-To: <ZV30llA4yDUs2G-Z@smile.fi.intel.com>
+References: <20231122-ep93xx-v5-0-d59a76d5df29@maquefel.me>
+	 <20231122-ep93xx-v5-39-d59a76d5df29@maquefel.me>
+	 <ZV30llA4yDUs2G-Z@smile.fi.intel.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.48.4 
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-CC: <vkoul@kernel.org>, <dmaengine@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
-        <srk@ti.com>, <vigneshr@ti.com>, <s-vadapalli@ti.com>
-Subject: Re: [PATCH 0/4] Add APIs to request TX/RX DMA channels by ID
-Content-Language: en-US
-To: =?UTF-8?Q?P=C3=A9ter_Ujfalusi?= <peter.ujfalusi@gmail.com>
-References: <20231114083906.3143548-1-s-vadapalli@ti.com>
- <9d465de4-3930-4856-9d8e-7deb567a628f@gmail.com>
- <c693efec-ab67-44bb-8871-a40dc408f278@ti.com>
- <ed1d0221-d0ee-4a7d-8955-d5973027d113@gmail.com>
- <a4ca48fb-2e87-494a-bc71-8970d7f8c6a0@ti.com>
-From: Siddharth Vadapalli <s-vadapalli@ti.com>
-In-Reply-To: <a4ca48fb-2e87-494a-bc71-8970d7f8c6a0@ti.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-EXCLAIMER-MD-CONFIG: e1e8a2fd-e40a-4ac6-ac9b-f7e9cc9ee180
 
-If there are no concerns, may I post the v2 of this series, rebasing it on the
-latest linux-next tree with minor code cleanup and reordering of the patches?
+Hello Andy!
 
-On 04/12/23 13:51, Siddharth Vadapalli wrote:
-> Hello Péter,
-> 
-> On 22/11/23 20:52, Péter Ujfalusi wrote:
->> Hi Siddharth,
->>
->> On 17/11/2023 07:55, Siddharth Vadapalli wrote:
->>>> I would really like to follow a standard binding since what will happen
->>>> if the firmware will start to provision channels/flows for DMAengine
->>>> users? It is not that simple to hack that around.
->>>
->>> Please consider the following use-case for which the APIs are being added by
->>> this series. I apologize for not explaining the idea behind the APIs in more
->>> detail earlier.
->>>
->>> Firmware running on a remote core is in control of a peripheral (CPSW Ethernet
->>> Switch for example) and shares the peripheral across software running on
->>> different cores. The control path between the Firmware and the Clients on
->>> various cores is via RPMsg, while the data path used by the Clients is the DMA
->>> Channels. In the example where Clients send data to the shared peripheral over
->>> DMA, the Clients send RPMsg based requests to the Firmware to obtain the
->>> allocated thead IDs. Firmware allocates the thread IDs by making a request to
->>> TISCI Resource Manager followed by sharing the thread IDs to the Clients.
->>>
->>> In such use cases, the Linux Client is probed by RPMsg endpoint discovery over
->>> the RPMsg bus. Therefore, there is no device-tree corresponding to the Client
->>> device. The Client knows the DMA Channel IDs as well as the RX Flow details from
->>> the Firmware. Knowing these details, the Client can request the configuration of
->>> the TX and RX Channels/Flows by using the DMA APIs which this series adds.
->>
->> I see, so the CPSW will be probed in a similar way as USB peripherals
->> for example? The CPSW does not have a DT entry at all? Is this correct?
-> 
-> I apologize for the delayed response. Yes, the CPSW instance which shall be in
-> control of Firmware running on the remote core will not have a DT entry. The
-> Linux Client driver shall be probed when the Firmware announces its endpoint
-> over the RPMsg bus, which the Client driver shall register with the RPMsg framework.
-> 
->>
->>> Please let me know in case of any suggestions for an implementation which shall
->>> address the above use-case.
->>
->> How does the driver knows how to request a DMA resource from the remote
->> core? How that scales with different SoCs and even with changes in the
->> firmware?
-> 
-> After getting probed, the Client driver communicates with Firmware via RPMsg,
-> requesting details of the allocated resources including the TX Channels and RX
-> Flows. Knowing these parameters, the Client driver can use the newly added DMA
-> APIs to request TX Channel and RX Flows by IDs. The only dependency here is that
-> the Client driver needs to know which DMA instance to request these resources
-> from. That information is hard coded in the driver's data in the form of the
-> compatible used for the DMA instance, thereby allowing the Client driver to get
-> a reference to the DMA controller node using the of_find_compatible_node() API.
-> 
-> Since all the resource allocation information comes from Firmware, the
-> device-specific details will be hard coded in the Firmware while the Client
-> driver can be used across all K3 SoCs which have the same DMA APIs.
-> 
->>
->> You are right, this is in a grey area. The DMA channel as it is
->> controlled by the remote processor, it lends a thread to clients on
->> other cores (like Linux) via RPMsg.
->> Well, it is similar to how non DT is working in a way.
->>
->> This CPSW type is not yet supported mainline, right?
-> 
-> Yes, it is not yet supported in mainline. This series is a dependency for
-> upstreaming the Client driver.
-> 
+On Wed, 2023-11-22 at 14:31 +0200, Andy Shevchenko wrote:
+> On Wed, Nov 22, 2023 at 12:00:17PM +0300, Nikita Shubin wrote:
+> > Remove DMA platform header, from now on we use device tree for dma
+>=20
+> DMA
+>=20
+> > clients.
+>=20
+> ...
+>=20
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0if (device_is_compatible(cha=
+n->device->dev, "cirrus,ep9301-
+> > dma-m2p"))
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0return true;
+> > +
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0return !strcmp(dev_name(chan=
+->device->dev), "ep93xx-dma-
+> > m2p");
+>=20
+> Haven't you introduced an inliner with the similar flow? Why not
+> reuse it?
 
--- 
-Regards,
-Siddharth.
+It's the same, i moved it from platform header file into driver itself,
+as i am removing "include/linux/platform_data/dma-ep93xx.h" completely.
+
+>=20
+> ...
+>=20
+> > +/**
+> > + * ep93xx_dma_chan_direction - returns direction the channel can
+> > be used
+> > + * @chan: channel
+> > + *
+> > + * This function can be used in filter functions to find out
+> > whether the
+> > + * channel supports given DMA direction. Only M2P channels have
+> > such
+> > + * limitation, for M2M channels the direction is configurable.
+>=20
+> I believe
+>=20
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0scripts/kernel-doc -v -no=
+ne -Wall ...
+>=20
+> against this file (and maybe others!) will complain ("no return
+> section"
+> or alike).
+>=20
+> > + */
+>=20
+
+Agree, dropped doc style comment and converted it to simple comment, it
+is internal to driver now, so no point putting it into docs.
