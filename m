@@ -1,33 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A987738DD4
-	for <dmaengine@vger.kernel.org>; Mon, 11 Dec 2023 11:57:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB1EB38FA0
+	for <dmaengine@vger.kernel.org>; Mon, 11 Dec 2023 12:01:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iJCFuiwC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 360A5C433C8;
-	Mon, 11 Dec 2023 11:57:27 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UdoPj2K2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2DC0C433C8;
+	Mon, 11 Dec 2023 12:01:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1702295849;
-	bh=f7zaWwRmNF7dE+t0wkFnZGPtHDh8NCiV/vSatviei50=;
+	s=k20201202; t=1702296099;
+	bh=oCr5WivpKHnBfuV05fpWq2BCfxH42ssUJX2KXJJzi2c=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=iJCFuiwCrgd/gJPq0nQBruKCePHfDzR5dGgp2MEcGBnmLCO7wjWQNGthFNuvx1gv0
-	 HUJRiYO+ovvN5g8zsr6LEfl5U6P2WFdlXDE5wqKSjl8rkpyAxHiNFgiVRxeLFncil4
-	 DzF4lJOJwc/HcW3vmxzkv7HQEUhz6wBP0VbOLuxjoXmY8Rua/ejtiSOEaPzIKlzbMx
-	 zjNTQYqPn3HhXem6Mv/FfimjAHoxVJppHZAOhCVpvd4YW5GvWza2rjsgN04B1MPcuw
-	 YeBCT/rNvxq9WEK+36Qhf06h9bHtJdsRuHt2HxgMt4MDT6iblhxHVPWxEz8N/1Q88k
-	 AGhcerK4ZwGgg==
-Date: Mon, 11 Dec 2023 17:27:22 +0530
+	b=UdoPj2K21OzXKLz2Sa5CGfHq6A/EDzr2G1ZE31IeG9Ec8+9XpMdWmmDZEysg1zZAo
+	 0TBXLWYhr1dAOEc3ZJ6i533NEDrEFnuINndFDAE776FXRbQqrvBA0xGPe+i1Jt2lO7
+	 gGJQgmJAWmLaCvlCrcGBTqjViaT/YMeyuBYYM7OVnsNYnLw97OxcSMztWkndp2oJW2
+	 JksAUOY2mQ2w3vPAnuOh4VL9XBU8J4Jr//FBP26hEB5lLbXxw0I8MSFbdB4vqI/MFs
+	 Fs+Fm/QcaOylvzTOpQkDHXp/JcnJlp33+AzIX4eqIiBKCkJQPb+FFex2e1PBz/G2KT
+	 LJBpmziPF0emw==
+Date: Mon, 11 Dec 2023 17:31:24 +0530
 From: Vinod Koul <vkoul@kernel.org>
 To: Paul Cercueil <paul@crapouillou.net>
 Cc: Lars-Peter Clausen <lars@metafoo.de>,
 	Nuno =?iso-8859-1?Q?S=E1?= <noname.nuno@gmail.com>,
 	Michael Hennerich <Michael.Hennerich@analog.com>,
 	dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/4] dmaengine: axi-dmac: Small code cleanup
-Message-ID: <ZXb5IhaNiKJufH/k@matsya>
+Subject: Re: [PATCH 4/4] dmaengine: axi-dmac: Use only EOT interrupts when
+ doing scatter-gather
+Message-ID: <ZXb6FE5Z1zcmRFKO@matsya>
 References: <20231204140352.30420-1-paul@crapouillou.net>
- <20231204140352.30420-2-paul@crapouillou.net>
+ <20231204140352.30420-5-paul@crapouillou.net>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -36,41 +37,55 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20231204140352.30420-2-paul@crapouillou.net>
+In-Reply-To: <20231204140352.30420-5-paul@crapouillou.net>
 
 On 04-12-23, 15:03, Paul Cercueil wrote:
-> Use a for() loop instead of a while() loop in axi_dmac_fill_linear_sg().
-
-Why?
-
+> Instead of notifying userspace in the end-of-transfer (EOT) interrupt
+> and program the hardware in the start-of-transfer (SOT) interrupt, we
+> can do both things in the EOT, allowing us to mask the SOT, and halve
+> the number of interrupts sent by the HDL core.
 > 
 > Signed-off-by: Paul Cercueil <paul@crapouillou.net>
 > ---
->  drivers/dma/dma-axi-dmac.c | 5 +----
->  1 file changed, 1 insertion(+), 4 deletions(-)
+>  drivers/dma/dma-axi-dmac.c | 7 ++++++-
+>  1 file changed, 6 insertions(+), 1 deletion(-)
 > 
 > diff --git a/drivers/dma/dma-axi-dmac.c b/drivers/dma/dma-axi-dmac.c
-> index 2457a420c13d..760940b21eab 100644
+> index 5109530b66de..beed91a8238c 100644
 > --- a/drivers/dma/dma-axi-dmac.c
 > +++ b/drivers/dma/dma-axi-dmac.c
-> @@ -508,16 +508,13 @@ static struct axi_dmac_sg *axi_dmac_fill_linear_sg(struct axi_dmac_chan *chan,
->  	segment_size = ((segment_size - 1) | chan->length_align_mask) + 1;
->  
->  	for (i = 0; i < num_periods; i++) {
-> -		len = period_len;
-> -
-> -		while (len > segment_size) {
-> +		for (len = period_len; len > segment_size; sg++) {
->  			if (direction == DMA_DEV_TO_MEM)
->  				sg->dest_addr = addr;
->  			else
->  				sg->src_addr = addr;
->  			sg->x_len = segment_size;
->  			sg->y_len = 1;
-> -			sg++;
->  			addr += segment_size;
->  			len -= segment_size;
+> @@ -415,6 +415,7 @@ static bool axi_dmac_transfer_done(struct axi_dmac_chan *chan,
+>  			list_del(&active->vdesc.node);
+>  			vchan_cookie_complete(&active->vdesc);
+>  			active = axi_dmac_active_desc(chan);
+> +			start_next = !!active;
+
+Should this be in current patch, sounds like this should be a different
+patch?
+
 >  		}
+>  	} else {
+>  		do {
+> @@ -1000,6 +1001,7 @@ static int axi_dmac_probe(struct platform_device *pdev)
+>  	struct axi_dmac *dmac;
+>  	struct regmap *regmap;
+>  	unsigned int version;
+> +	u32 irq_mask = 0;
+>  	int ret;
+>  
+>  	dmac = devm_kzalloc(&pdev->dev, sizeof(*dmac), GFP_KERNEL);
+> @@ -1067,7 +1069,10 @@ static int axi_dmac_probe(struct platform_device *pdev)
+>  
+>  	dma_dev->copy_align = (dmac->chan.address_align_mask + 1);
+>  
+> -	axi_dmac_write(dmac, AXI_DMAC_REG_IRQ_MASK, 0x00);
+> +	if (dmac->chan.hw_sg)
+> +		irq_mask |= AXI_DMAC_IRQ_SOT;
+> +
+> +	axi_dmac_write(dmac, AXI_DMAC_REG_IRQ_MASK, irq_mask);
+>  
+>  	if (of_dma_is_coherent(pdev->dev.of_node)) {
+>  		ret = axi_dmac_read(dmac, AXI_DMAC_REG_COHERENCY_DESC);
 > -- 
 > 2.42.0
 > 
