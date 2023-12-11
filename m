@@ -1,31 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 732B44A99A;
-	Mon, 11 Dec 2023 15:04:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 283B54A986;
+	Mon, 11 Dec 2023 15:04:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tfNOIv8W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C37ADC433C7;
-	Mon, 11 Dec 2023 15:04:04 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="A209N3Rw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09FF7C433C7;
+	Mon, 11 Dec 2023 15:04:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1702307046;
-	bh=IrH6aa/oGSpb78xUbgGhpZuk8lP0RCbUq/v+VLpNYcY=;
-	h=From:To:In-Reply-To:References:Subject:Date:From;
-	b=tfNOIv8WYCFmw7THIgtuWaQ7B/p/C11+vUq86HWaXy73S54IfJYPYsA6LJS0F7ve9
-	 woS3LiETdWq4UC/Uq8A9bF8rDDba4ZqPLy/JmsgrVBGd1VzSIqS/fgaOiVCFGBxeUT
-	 dqVgQC7HbQQthJ/2ls932SgzVStyHDAyeH4Hn5iqz1EStY3VwQfQHvOtZmy3p4PChP
-	 BSduI0QyQPWbAbxsGTyy3s63CkpUa6cQDfdDuTGlhr6NtXu7YrbEie4ojfQVECuc0W
-	 MKWhPpeuLthVHZJJvmv33Dslb0kOe4mghj6hj/8d8qle1Mnhc07MBWUIvYH87b4BUq
-	 /8icIB8tRzj4w==
+	s=k20201202; t=1702307063;
+	bh=6YPTpmneh2xOLLFp7HB+g9pk93OOl5wyKTQWmwlvyBY=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+	b=A209N3RwTmTf9qNW4JLthFdDYscWbS6svzgzXePytW9dVoVLfqXJFFd0vFj0uxY2N
+	 PZCtAZY+22sFadCQ9SmUZRk2gUxX2wFKadbHKVHXN7W5fzIp5tZLIePv3vxSoJAlfJ
+	 PluUY167kBTI4BJQsz9HtFXKNYUvTvJ+8Wu3sGgHVuQpaTP26YaCExvUT/Tl1WrF4J
+	 lszBBwQIAu5V+YvMshL5CNu6jGbZZk19BEB4zt3x09aGb03GN9FMHBE0H5VwKQ97B4
+	 wjXIh2M3DbaoKz5yh7Qw0D/R8v07d9wmiHz1jmXfl7ShlVaqtvMQVzPNbew8rUk2ks
+	 6wFIAsBnpLe9w==
 From: Vinod Koul <vkoul@kernel.org>
-To: imx@lists.linux.dev, dmaengine@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Frank Li <Frank.Li@nxp.com>
-In-Reply-To: <20231127214325.2477247-1-Frank.Li@nxp.com>
-References: <20231127214325.2477247-1-Frank.Li@nxp.com>
-Subject: Re: [PATCH 1/1] dmaengine: fsl-edma: fix DMA channel leak in
- eDMAv4
-Message-Id: <170230704442.319897.10351287575492933941.b4-ty@kernel.org>
-Date: Mon, 11 Dec 2023 20:34:04 +0530
+To: robh+dt@kernel.org, thierry.reding@gmail.com, jonathanh@nvidia.com, 
+ ldewangan@nvidia.com, krzysztof.kozlowski+dt@linaro.org, 
+ Mohan Kumar <mkumard@nvidia.com>
+Cc: dmaengine@vger.kernel.org, linux-tegra@vger.kernel.org, 
+ devicetree@vger.kernel.org
+In-Reply-To: <20231009063509.2269-1-mkumard@nvidia.com>
+References: <20231009063509.2269-1-mkumard@nvidia.com>
+Subject: Re: [PATCH V1 0/2] Support dma channel mask
+Message-Id: <170230706064.319997.12594760561127798160.b4-ty@kernel.org>
+Date: Mon, 11 Dec 2023 20:34:20 +0530
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -37,20 +39,22 @@ Content-Transfer-Encoding: 7bit
 X-Mailer: b4 0.12.3
 
 
-On Mon, 27 Nov 2023 16:43:25 -0500, Frank Li wrote:
-> Allocate channel count consistently increases due to a missing source ID
-> (srcid) cleanup in the fsl_edma_free_chan_resources() function at imx93
-> eDMAv4.
+On Mon, 09 Oct 2023 12:05:07 +0530, Mohan Kumar wrote:
+> To reserve the dma channel using dma-channel-mask property
+> for Tegra platforms.
 > 
-> Reset 'srcid' at fsl_edma_free_chan_resources().
-> 
+> Mohan Kumar (2):
+>   dt-bindings: dma: Add dma-channel-mask to nvidia,tegra210-adma
+>   dmaengine: tegra210-adma: Support dma-channel-mask property
 > 
 > [...]
 
 Applied, thanks!
 
-[1/1] dmaengine: fsl-edma: fix DMA channel leak in eDMAv4
-      commit: 4ee632c82d2dbb9e2dcc816890ef182a151cbd99
+[1/2] dt-bindings: dma: Add dma-channel-mask to nvidia,tegra210-adma
+      commit: d95fcb78e7f263f909ce492c3882a704067dc534
+[2/2] dmaengine: tegra210-adma: Support dma-channel-mask property
+      commit: 25b636225a0816eac20b02fcb37daf6c722d0bed
 
 Best regards,
 -- 
