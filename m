@@ -1,88 +1,256 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=8bytes.org header.i=@8bytes.org header.b="abG4gKiv"
-Received: from mail.8bytes.org (mail.8bytes.org [IPv6:2a01:238:42d9:3f00:e505:6202:4f0c:f051])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTP id 03543EE;
-	Tue, 12 Dec 2023 01:19:28 -0800 (PST)
-Received: from 8bytes.org (p4ffe1e67.dip0.t-ipconnect.de [79.254.30.103])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by mail.8bytes.org (Postfix) with ESMTPSA id 985681A4F1D;
-	Tue, 12 Dec 2023 10:19:26 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=8bytes.org;
-	s=default; t=1702372767;
-	bh=bEwFfSnf2RFnsUSszwfjtJnyVAQAG+2ku4jSVsqYtho=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=abG4gKivOGRZ/AI3r3S4ykAogD7/67qJfPpecLXixxPdCLvNaaHplc2zY7kr49dVW
-	 //lK3CmDXn8kgeq/V0CZR9ktKlB8X0k+ITJm0ltQTznpuMo6Vb74aQpMwh3nTTGVkp
-	 Vy6AfWo4XcQNBdkAhhR+006eTJRikgSpnu1zxfyJ76UClAzcqQ5x8fI3bS/syUfk5j
-	 4EzlogNC4F5cinu2gbIPFhhEV/M0hyHlrd2XxZSENppE6ttNDQtHQ8JgEKvxnsEjaT
-	 tGQK7YmKPtfzARKk+wVIW1dNCyoJC63TSQbXOzaQtz4LM+81hJrx/weWcfjW4iINH9
-	 K1OBYT39fG51A==
-Date: Tue, 12 Dec 2023 10:19:25 +0100
-From: Joerg Roedel <joro@8bytes.org>
-To: Jason Gunthorpe <jgg@nvidia.com>
-Cc: David Airlie <airlied@gmail.com>,
-	Alyssa Rosenzweig <alyssa@rosenzweig.io>,
-	Albert Ou <aou@eecs.berkeley.edu>, asahi@lists.linux.dev,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Danilo Krummrich <dakr@redhat.com>, Daniel Vetter <daniel@ffwll.ch>,
-	Dexuan Cui <decui@microsoft.com>, devicetree@vger.kernel.org,
-	dmaengine@vger.kernel.org, dri-devel@lists.freedesktop.org,
-	David Woodhouse <dwmw2@infradead.org>,
-	Frank Rowand <frowand.list@gmail.com>,
-	Haiyang Zhang <haiyangz@microsoft.com>, iommu@lists.linux.dev,
-	Jon Hunter <jonathanh@nvidia.com>,
-	Karol Herbst <kherbst@redhat.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	"K. Y. Srinivasan" <kys@microsoft.com>,
-	Laxman Dewangan <ldewangan@nvidia.com>, Len Brown <lenb@kernel.org>,
-	linux-acpi@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-	linux-hyperv@vger.kernel.org, linux-mips@vger.kernel.org,
-	linux-riscv@lists.infradead.org, linux-snps-arc@lists.infradead.org,
-	linux-tegra@vger.kernel.org, Russell King <linux@armlinux.org.uk>,
-	Lyude Paul <lyude@redhat.com>,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	nouveau@lists.freedesktop.org, Palmer Dabbelt <palmer@dabbelt.com>,
-	Paul Walmsley <paul.walmsley@sifive.com>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	Rob Herring <robh+dt@kernel.org>,
-	Robin Murphy <robin.murphy@arm.com>,
-	Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
-	Sven Peter <sven@svenpeter.dev>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
-	Vineet Gupta <vgupta@kernel.org>, Vinod Koul <vkoul@kernel.org>,
-	Wei Liu <wei.liu@kernel.org>, Will Deacon <will@kernel.org>,
-	Lu Baolu <baolu.lu@linux.intel.com>, Christoph Hellwig <hch@lst.de>,
-	Jerry Snitselaar <jsnitsel@redhat.com>,
-	Hector Martin <marcan@marcan.st>, Moritz Fischer <mdf@kernel.org>,
-	Moritz Fischer <moritzf@google.com>, patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Rob Herring <robh@kernel.org>,
-	Thierry Reding <thierry.reding@gmail.com>,
-	Thierry Reding <treding@nvidia.com>
-Subject: Re: [PATCH v2 0/7] IOMMU related FW parsing cleanup
-Message-ID: <ZXglne-jYLXHZbtn@8bytes.org>
-References: <0-v2-16e4def25ebb+820-iommu_fwspec_p1_jgg@nvidia.com>
+	dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b="RsFiL61F"
+Received: from fllv0015.ext.ti.com (fllv0015.ext.ti.com [198.47.19.141])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B2DB26BA;
+	Tue, 12 Dec 2023 03:10:41 -0800 (PST)
+Received: from lelv0265.itg.ti.com ([10.180.67.224])
+	by fllv0015.ext.ti.com (8.15.2/8.15.2) with ESMTP id 3BCBAMko052438;
+	Tue, 12 Dec 2023 05:10:22 -0600
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
+	s=ti-com-17Q1; t=1702379422;
+	bh=7+jdojrvI/WT4WBoua2xkCIhykh2otOmQh/gKolYxxQ=;
+	h=From:To:CC:Subject:Date:In-Reply-To:References;
+	b=RsFiL61FcvnYtZw0dLfiJfPHyvJd0iaK1ZxaGaXcwR3B0PBBPx1cWBjC3FCvYdH/b
+	 +Qr/8KljboBpOhT5jZtnsM9MW3J17NL4kGkkK8OqtVYru96tCRkuE295s5z0gxLbDb
+	 TSvcNkjc3NCEj0iuDCG2H5wyqWvw9ssAIzJoFRjc=
+Received: from DFLE108.ent.ti.com (dfle108.ent.ti.com [10.64.6.29])
+	by lelv0265.itg.ti.com (8.15.2/8.15.2) with ESMTPS id 3BCBAM6P014659
+	(version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
+	Tue, 12 Dec 2023 05:10:22 -0600
+Received: from DFLE115.ent.ti.com (10.64.6.36) by DFLE108.ent.ti.com
+ (10.64.6.29) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.2507.23; Tue, 12
+ Dec 2023 05:10:22 -0600
+Received: from lelvsmtp5.itg.ti.com (10.180.75.250) by DFLE115.ent.ti.com
+ (10.64.6.36) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.2507.23 via
+ Frontend Transport; Tue, 12 Dec 2023 05:10:22 -0600
+Received: from uda0492258.dhcp.ti.com (uda0492258.dhcp.ti.com [172.24.227.9])
+	by lelvsmtp5.itg.ti.com (8.15.2/8.15.2) with ESMTP id 3BCBABA0088764;
+	Tue, 12 Dec 2023 05:10:19 -0600
+From: Siddharth Vadapalli <s-vadapalli@ti.com>
+To: <peter.ujfalusi@gmail.com>, <vkoul@kernel.org>
+CC: <dmaengine@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>, <srk@ti.com>,
+        <vigneshr@ti.com>, <s-vadapalli@ti.com>
+Subject: [PATCH v2 3/4] dmaengine: ti: k3-udma-glue: Add function to request TX channel by ID
+Date: Tue, 12 Dec 2023 16:40:10 +0530
+Message-ID: <20231212111011.1401641-4-s-vadapalli@ti.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20231212111011.1401641-1-s-vadapalli@ti.com>
+References: <20231212111011.1401641-1-s-vadapalli@ti.com>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <0-v2-16e4def25ebb+820-iommu_fwspec_p1_jgg@nvidia.com>
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-EXCLAIMER-MD-CONFIG: e1e8a2fd-e40a-4ac6-ac9b-f7e9cc9ee180
 
-On Thu, Dec 07, 2023 at 02:03:07PM -0400, Jason Gunthorpe wrote:
-> Jason Gunthorpe (7):
->   iommu: Remove struct iommu_ops *iommu from arch_setup_dma_ops()
->   iommmu/of: Do not return struct iommu_ops from of_iommu_configure()
->   iommu/of: Use -ENODEV consistently in of_iommu_configure()
->   iommu: Mark dev_iommu_get() with lockdep
->   iommu: Mark dev_iommu_priv_set() with a lockdep
->   acpi: Do not return struct iommu_ops from acpi_iommu_configure_id()
->   iommu/tegra: Use tegra_dev_iommu_get_stream_id() in the remaining
->     places
+The existing function k3_udma_glue_request_tx_chn() supports requesting
+a TX DMA channel by its name. Add support to request TX channel by ID in
+the form of a new function k3_udma_glue_request_tx_chn_by_id() and export
+it for use by drivers which are probed by alternate methods (non
+device-tree) but still wish to make use of the existing DMA APIs. Such
+drivers could be informed about the TX channel to use by RPMsg for example.
 
-Applied, thanks.
+Since the implementation of k3_udma_glue_request_tx_chn_by_id() reuses
+most of the code in k3_udma_glue_request_tx_chn(), create a new function
+for the common code named as k3_udma_glue_request_tx_chn_common().
+
+Signed-off-by: Siddharth Vadapalli <s-vadapalli@ti.com>
+---
+Changes since v1:
+- Updated commit message indicating the use-case for which the patch is
+  being added.
+
+ drivers/dma/ti/k3-udma-glue.c    | 101 +++++++++++++++++++++++--------
+ include/linux/dma/k3-udma-glue.h |   4 ++
+ 2 files changed, 79 insertions(+), 26 deletions(-)
+
+diff --git a/drivers/dma/ti/k3-udma-glue.c b/drivers/dma/ti/k3-udma-glue.c
+index eff1ae3d3efe..ea5119a5e8eb 100644
+--- a/drivers/dma/ti/k3-udma-glue.c
++++ b/drivers/dma/ti/k3-udma-glue.c
+@@ -274,29 +274,13 @@ static int k3_udma_glue_cfg_tx_chn(struct k3_udma_glue_tx_channel *tx_chn)
+ 	return tisci_rm->tisci_udmap_ops->tx_ch_cfg(tisci_rm->tisci, &req);
+ }
+ 
+-struct k3_udma_glue_tx_channel *k3_udma_glue_request_tx_chn(struct device *dev,
+-		const char *name, struct k3_udma_glue_tx_channel_cfg *cfg)
++static int
++k3_udma_glue_request_tx_chn_common(struct device *dev,
++				   struct k3_udma_glue_tx_channel *tx_chn,
++				   struct k3_udma_glue_tx_channel_cfg *cfg)
+ {
+-	struct k3_udma_glue_tx_channel *tx_chn;
+ 	int ret;
+ 
+-	tx_chn = devm_kzalloc(dev, sizeof(*tx_chn), GFP_KERNEL);
+-	if (!tx_chn)
+-		return ERR_PTR(-ENOMEM);
+-
+-	tx_chn->common.dev = dev;
+-	tx_chn->common.swdata_size = cfg->swdata_size;
+-	tx_chn->tx_pause_on_err = cfg->tx_pause_on_err;
+-	tx_chn->tx_filt_einfo = cfg->tx_filt_einfo;
+-	tx_chn->tx_filt_pswords = cfg->tx_filt_pswords;
+-	tx_chn->tx_supr_tdpkt = cfg->tx_supr_tdpkt;
+-
+-	/* parse of udmap channel */
+-	ret = of_k3_udma_glue_parse_chn(dev->of_node, name,
+-					&tx_chn->common, true);
+-	if (ret)
+-		goto err;
+-
+ 	tx_chn->common.hdesc_size = cppi5_hdesc_calc_size(tx_chn->common.epib,
+ 						tx_chn->common.psdata_size,
+ 						tx_chn->common.swdata_size);
+@@ -312,7 +296,7 @@ struct k3_udma_glue_tx_channel *k3_udma_glue_request_tx_chn(struct device *dev,
+ 	if (IS_ERR(tx_chn->udma_tchanx)) {
+ 		ret = PTR_ERR(tx_chn->udma_tchanx);
+ 		dev_err(dev, "UDMAX tchanx get err %d\n", ret);
+-		goto err;
++		return ret;
+ 	}
+ 	tx_chn->udma_tchan_id = xudma_tchan_get_id(tx_chn->udma_tchanx);
+ 
+@@ -325,7 +309,7 @@ struct k3_udma_glue_tx_channel *k3_udma_glue_request_tx_chn(struct device *dev,
+ 		dev_err(dev, "Channel Device registration failed %d\n", ret);
+ 		put_device(&tx_chn->common.chan_dev);
+ 		tx_chn->common.chan_dev.parent = NULL;
+-		goto err;
++		return ret;
+ 	}
+ 
+ 	if (xudma_is_pktdma(tx_chn->common.udmax)) {
+@@ -349,7 +333,7 @@ struct k3_udma_glue_tx_channel *k3_udma_glue_request_tx_chn(struct device *dev,
+ 					     &tx_chn->ringtxcq);
+ 	if (ret) {
+ 		dev_err(dev, "Failed to get TX/TXCQ rings %d\n", ret);
+-		goto err;
++		return ret;
+ 	}
+ 
+ 	/* Set the dma_dev for the rings to be configured */
+@@ -365,13 +349,13 @@ struct k3_udma_glue_tx_channel *k3_udma_glue_request_tx_chn(struct device *dev,
+ 	ret = k3_ringacc_ring_cfg(tx_chn->ringtx, &cfg->tx_cfg);
+ 	if (ret) {
+ 		dev_err(dev, "Failed to cfg ringtx %d\n", ret);
+-		goto err;
++		return ret;
+ 	}
+ 
+ 	ret = k3_ringacc_ring_cfg(tx_chn->ringtxcq, &cfg->txcq_cfg);
+ 	if (ret) {
+ 		dev_err(dev, "Failed to cfg ringtx %d\n", ret);
+-		goto err;
++		return ret;
+ 	}
+ 
+ 	/* request and cfg psi-l */
+@@ -382,11 +366,42 @@ struct k3_udma_glue_tx_channel *k3_udma_glue_request_tx_chn(struct device *dev,
+ 	ret = k3_udma_glue_cfg_tx_chn(tx_chn);
+ 	if (ret) {
+ 		dev_err(dev, "Failed to cfg tchan %d\n", ret);
+-		goto err;
++		return ret;
+ 	}
+ 
+ 	k3_udma_glue_dump_tx_chn(tx_chn);
+ 
++	return 0;
++}
++
++struct k3_udma_glue_tx_channel *
++k3_udma_glue_request_tx_chn(struct device *dev, const char *name,
++			    struct k3_udma_glue_tx_channel_cfg *cfg)
++{
++	struct k3_udma_glue_tx_channel *tx_chn;
++	int ret;
++
++	tx_chn = devm_kzalloc(dev, sizeof(*tx_chn), GFP_KERNEL);
++	if (!tx_chn)
++		return ERR_PTR(-ENOMEM);
++
++	tx_chn->common.dev = dev;
++	tx_chn->common.swdata_size = cfg->swdata_size;
++	tx_chn->tx_pause_on_err = cfg->tx_pause_on_err;
++	tx_chn->tx_filt_einfo = cfg->tx_filt_einfo;
++	tx_chn->tx_filt_pswords = cfg->tx_filt_pswords;
++	tx_chn->tx_supr_tdpkt = cfg->tx_supr_tdpkt;
++
++	/* parse of udmap channel */
++	ret = of_k3_udma_glue_parse_chn(dev->of_node, name,
++					&tx_chn->common, true);
++	if (ret)
++		goto err;
++
++	ret = k3_udma_glue_request_tx_chn_common(dev, tx_chn, cfg);
++	if (ret)
++		goto err;
++
+ 	return tx_chn;
+ 
+ err:
+@@ -395,6 +410,40 @@ struct k3_udma_glue_tx_channel *k3_udma_glue_request_tx_chn(struct device *dev,
+ }
+ EXPORT_SYMBOL_GPL(k3_udma_glue_request_tx_chn);
+ 
++struct k3_udma_glue_tx_channel *
++k3_udma_glue_request_tx_chn_by_id(struct device *dev, struct k3_udma_glue_tx_channel_cfg *cfg,
++				  struct device_node *udmax_np, u32 thread_id)
++{
++	struct k3_udma_glue_tx_channel *tx_chn;
++	int ret;
++
++	tx_chn = devm_kzalloc(dev, sizeof(*tx_chn), GFP_KERNEL);
++	if (!tx_chn)
++		return ERR_PTR(-ENOMEM);
++
++	tx_chn->common.dev = dev;
++	tx_chn->common.swdata_size = cfg->swdata_size;
++	tx_chn->tx_pause_on_err = cfg->tx_pause_on_err;
++	tx_chn->tx_filt_einfo = cfg->tx_filt_einfo;
++	tx_chn->tx_filt_pswords = cfg->tx_filt_pswords;
++	tx_chn->tx_supr_tdpkt = cfg->tx_supr_tdpkt;
++
++	ret = of_k3_udma_glue_parse_chn_by_id(udmax_np, &tx_chn->common, true, thread_id);
++	if (ret)
++		goto err;
++
++	ret = k3_udma_glue_request_tx_chn_common(dev, tx_chn, cfg);
++	if (ret)
++		goto err;
++
++	return tx_chn;
++
++err:
++	k3_udma_glue_release_tx_chn(tx_chn);
++	return ERR_PTR(ret);
++}
++EXPORT_SYMBOL_GPL(k3_udma_glue_request_tx_chn_by_id);
++
+ void k3_udma_glue_release_tx_chn(struct k3_udma_glue_tx_channel *tx_chn)
+ {
+ 	if (tx_chn->psil_paired) {
+diff --git a/include/linux/dma/k3-udma-glue.h b/include/linux/dma/k3-udma-glue.h
+index e443be4d3b4b..6205d84430ca 100644
+--- a/include/linux/dma/k3-udma-glue.h
++++ b/include/linux/dma/k3-udma-glue.h
+@@ -26,6 +26,10 @@ struct k3_udma_glue_tx_channel;
+ struct k3_udma_glue_tx_channel *k3_udma_glue_request_tx_chn(struct device *dev,
+ 		const char *name, struct k3_udma_glue_tx_channel_cfg *cfg);
+ 
++struct k3_udma_glue_tx_channel *
++k3_udma_glue_request_tx_chn_by_id(struct device *dev, struct k3_udma_glue_tx_channel_cfg *cfg,
++				  struct device_node *udmax_np, u32 thread_id);
++
+ void k3_udma_glue_release_tx_chn(struct k3_udma_glue_tx_channel *tx_chn);
+ int k3_udma_glue_push_tx_chn(struct k3_udma_glue_tx_channel *tx_chn,
+ 			     struct cppi5_host_desc_t *desc_tx,
+-- 
+2.34.1
+
