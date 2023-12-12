@@ -1,136 +1,207 @@
-Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [IPv6:2a0a:edc0:2:b01:1d::104])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B1A06EB
-	for <dmaengine@vger.kernel.org>; Tue, 12 Dec 2023 03:55:14 -0800 (PST)
-Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
-	by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-	(Exim 4.92)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1rD1KL-0007kg-9r; Tue, 12 Dec 2023 12:53:29 +0100
-Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
-	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.94.2)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1rD1KH-00FKLk-Ov; Tue, 12 Dec 2023 12:53:25 +0100
-Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.94.2)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1rD1KH-001bPz-E7; Tue, 12 Dec 2023 12:53:25 +0100
-Date: Tue, 12 Dec 2023 12:53:25 +0100
-From: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
-To: nikita.shubin@maquefel.me
-Cc: Hartley Sweeten <hsweeten@visionengravers.com>,
-	Alexander Sverdlin <alexander.sverdlin@gmail.com>,
-	Russell King <linux@armlinux.org.uk>,
-	Lukasz Majewski <lukma@denx.de>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Bartosz Golaszewski <brgl@bgdev.pl>,
-	Andy Shevchenko <andy@kernel.org>,
-	Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>, Sebastian Reichel <sre@kernel.org>,
-	Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>, Vinod Koul <vkoul@kernel.org>,
-	Wim Van Sebroeck <wim@linux-watchdog.org>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Thierry Reding <thierry.reding@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
-	Richard Weinberger <richard@nod.at>,
-	Vignesh Raghavendra <vigneshr@ti.com>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Sergey Shtylyov <s.shtylyov@omp.ru>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	Liam Girdwood <lgirdwood@gmail.com>,
-	Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>,
-	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-	linux-gpio@vger.kernel.org, linux-clk@vger.kernel.org,
-	linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
-	dmaengine@vger.kernel.org, linux-watchdog@vger.kernel.org,
-	linux-pwm@vger.kernel.org, linux-spi@vger.kernel.org,
-	netdev@vger.kernel.org, linux-mtd@lists.infradead.org,
-	linux-ide@vger.kernel.org, linux-input@vger.kernel.org,
-	linux-sound@vger.kernel.org, Arnd Bergmann <arnd@arndb.de>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Andy Shevchenko <andy.shevchenko@gmail.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Subject: Re: [PATCH v6 00/40] ep93xx device tree conversion
-Message-ID: <20231212115325.m4w6cg4ttdispkvm@pengutronix.de>
-References: <20231212-ep93xx-v6-0-c307b8ac9aa8@maquefel.me>
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=foss.st.com header.i=@foss.st.com header.b="P5a0uB+d"
+Received: from mx07-00178001.pphosted.com (mx08-00178001.pphosted.com [91.207.212.93])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B74EB100;
+	Tue, 12 Dec 2023 07:25:03 -0800 (PST)
+Received: from pps.filterd (m0046661.ppops.net [127.0.0.1])
+	by mx07-00178001.pphosted.com (8.17.1.22/8.17.1.22) with ESMTP id 3BCCqu7T030022;
+	Tue, 12 Dec 2023 16:24:06 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foss.st.com; h=
+	from:to:cc:subject:date:message-id:in-reply-to:references
+	:mime-version:content-transfer-encoding:content-type; s=
+	selector1; bh=JpXp2EJHxY+VtUUSPxkkTyJMNNq/ux4P17gSFHI+E8k=; b=P5
+	a0uB+dKMINb+zPuc568irPju8xw51gybAQYBQqrkUxMu3M/daUwzLeBEMD67Z2pW
+	ZH7PDLmlDrfr/B4lVLS62uSacZ8JiKYyAenA/x5fmTYwYB15heyGh8kTJgJvsuQD
+	nOz17WrlMaFrPtHehUiLXYUtOzkQH+B35JMddfZeBL7C1Y/9mRxvGId44wPvcQkH
+	ZdFozR/5Tbj7PdKW+F1yDiqRLPzvxFskqZmlwOKJrkldl/c9NYieo3Ea4A7LIhBO
+	Lb/s9OGh50jT5E2CVdlCnKbHlomgpaRMh5BHVyNnOTf9otZuPl/Nr+TMg4G/wCum
+	7XNZu/4Q52TZ8AlCCM3g==
+Received: from beta.dmz-eu.st.com (beta.dmz-eu.st.com [164.129.1.35])
+	by mx07-00178001.pphosted.com (PPS) with ESMTPS id 3uvg0gusvb-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 12 Dec 2023 16:24:06 +0100 (CET)
+Received: from euls16034.sgp.st.com (euls16034.sgp.st.com [10.75.44.20])
+	by beta.dmz-eu.st.com (STMicroelectronics) with ESMTP id 7F638100060;
+	Tue, 12 Dec 2023 16:24:05 +0100 (CET)
+Received: from Webmail-eu.st.com (shfdag1node1.st.com [10.75.129.69])
+	by euls16034.sgp.st.com (STMicroelectronics) with ESMTP id 7435A22F7B3;
+	Tue, 12 Dec 2023 16:24:05 +0100 (CET)
+Received: from localhost (10.252.7.20) by SHFDAG1NODE1.st.com (10.75.129.69)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.27; Tue, 12 Dec
+ 2023 16:24:04 +0100
+From: Gatien Chevallier <gatien.chevallier@foss.st.com>
+To: <Oleksii_Moisieiev@epam.com>, <gregkh@linuxfoundation.org>,
+        <herbert@gondor.apana.org.au>, <davem@davemloft.net>,
+        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        <conor+dt@kernel.org>, <alexandre.torgue@foss.st.com>,
+        <vkoul@kernel.org>, <jic23@kernel.org>, <olivier.moysan@foss.st.com>,
+        <arnaud.pouliquen@foss.st.com>, <mchehab@kernel.org>,
+        <fabrice.gasnier@foss.st.com>, <andi.shyti@kernel.org>,
+        <ulf.hansson@linaro.org>, <edumazet@google.com>, <kuba@kernel.org>,
+        <pabeni@redhat.com>, <hugues.fruchet@foss.st.com>, <lee@kernel.org>,
+        <will@kernel.org>, <catalin.marinas@arm.com>, <arnd@kernel.org>,
+        <richardcochran@gmail.com>, Frank Rowand <frowand.list@gmail.com>,
+        <peng.fan@oss.nxp.com>, <lars@metafoo.de>, <rcsekar@samsung.com>,
+        <wg@grandegger.com>, <mkl@pengutronix.de>
+CC: <linux-crypto@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-stm32@st-md-mailman.stormreply.com>,
+        <linux-arm-kernel@lists.infradead.org>, <linux-kernel@vger.kernel.org>,
+        <dmaengine@vger.kernel.org>, <linux-i2c@vger.kernel.org>,
+        <linux-iio@vger.kernel.org>, <alsa-devel@alsa-project.org>,
+        <linux-media@vger.kernel.org>, <linux-mmc@vger.kernel.org>,
+        <netdev@vger.kernel.org>, <linux-phy@lists.infradead.org>,
+        <linux-serial@vger.kernel.org>, <linux-spi@vger.kernel.org>,
+        <linux-usb@vger.kernel.org>,
+        Oleksii Moisieiev <oleksii_moisieiev@epam.com>,
+        Gatien Chevallier <gatien.chevallier@foss.st.com>
+Subject: [PATCH v8 01/13] dt-bindings: document generic access controllers
+Date: Tue, 12 Dec 2023 16:23:44 +0100
+Message-ID: <20231212152356.345703-2-gatien.chevallier@foss.st.com>
+X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20231212152356.345703-1-gatien.chevallier@foss.st.com>
+References: <20231212152356.345703-1-gatien.chevallier@foss.st.com>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="aamqyrxtxz2kjjms"
-Content-Disposition: inline
-In-Reply-To: <20231212-ep93xx-v6-0-c307b8ac9aa8@maquefel.me>
-X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: dmaengine@vger.kernel.org
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: EQNCAS1NODE3.st.com (10.75.129.80) To SHFDAG1NODE1.st.com
+ (10.75.129.69)
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-12-12_09,2023-12-12_01,2023-05-22_02
 
+From: Oleksii Moisieiev <Oleksii_Moisieiev@epam.com>
 
---aamqyrxtxz2kjjms
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Introducing of the generic access controllers bindings for the
+access controller provider and consumer devices. Those bindings are
+intended to allow a better handling of accesses to resources in a
+hardware architecture supporting several compartments.
 
-Hello,
+This patch is based on [1]. It is integrated in this patchset as it
+provides a use-case for it.
 
-On Tue, Dec 12, 2023 at 11:20:17AM +0300, Nikita Shubin via B4 Relay wrote:
-> No major changes since last version all changes are cometic.
->=20
-> Following patches require attention from Stephen Boyd, as they were conve=
-rted to aux_dev as suggested:
->=20
-> - ARM: ep93xx: add regmap aux_dev
-> - clk: ep93xx: add DT support for Cirrus EP93xx
->=20
-> DMA related patches still require Acked or Reviewed tags.
->=20
-> got approval LGTM from Miquel:
-> - mtd: rawnand: add support for ts72xx
-> Link: https://lore.kernel.org/lkml/20231004103911.2aa65354@xps-13/
->=20
-> new patches:
->=20
-> ARM: ep93xx:  Add terminator to gpiod_lookup_table
->   - fixed terminator in gpiod_lockup_table
->=20
-> So mostly all patches got approval.
->=20
-> Patches should be now formated with '--histogram'
+Diffs with [1]:
+	- Rename feature-domain* properties to access-control* to narrow
+	  down the scope of the binding
+	- YAML errors and typos corrected.
+	- Example updated
+	- Some rephrasing in the binding description
 
-You didn't mention how this should be merged. IIRC for the earlier
-rounds the idea was to merge it all together via arm-soc when all
-necessary agreement is reached. I assume that's still the case here?
+[1]: https://lore.kernel.org/lkml/0c0a82bb-18ae-d057-562b
 
-Best regards
-Uwe
+Signed-off-by: Oleksii Moisieiev <oleksii_moisieiev@epam.com>
+Signed-off-by: Gatien Chevallier <gatien.chevallier@foss.st.com>
+---
 
---=20
-Pengutronix e.K.                           | Uwe Kleine-K=F6nig            |
-Industrial Linux Solutions                 | https://www.pengutronix.de/ |
+Changes in V6:
+	- Renamed access-controller to access-controllers
+	- Example updated
+	- Removal of access-control-provider property
 
---aamqyrxtxz2kjjms
-Content-Type: application/pgp-signature; name="signature.asc"
+Changes in V5:
+	- Diffs with [1]
+	- Discarded the [IGNORE] tag as the patch is now part of the
+	  patchset
 
------BEGIN PGP SIGNATURE-----
+ .../access-controllers.yaml                   | 84 +++++++++++++++++++
+ 1 file changed, 84 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/access-controllers/access-controllers.yaml
 
-iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmV4SbQACgkQj4D7WH0S
-/k4PhAf9FUkX+fzsz5zB6lrl7lgCvYm5ZVb3B7jDw5VKDO3L/jcpIQBnKW28hqdN
-fjyiqoG4kcqJrqfSN7RxYVHnxPmPMREuU5dkbLnXs4nakNuG6kYOLoWYRW6g7LHA
-2aJAqNPA3r1vRHwgyLaSlwVy4TxsWEJoU/Wa7pnN5VGjjyA22i9iruZRGzbsfSbG
-b4TPtncg2+HG5Z2NtBTY2w2wy/0XOTgO40vcUbW+gfh+ktRpJl5quupeZdYByknj
-l9QU3yt6tCJoKvAXYc2/jykymWajShXD0UJhcLTTYcWnQYEgfLWypFNR4YXJmJGC
-SbVz5vPzsa56pT4BPvsUI7alw9v79g==
-=T2K5
------END PGP SIGNATURE-----
+diff --git a/Documentation/devicetree/bindings/access-controllers/access-controllers.yaml b/Documentation/devicetree/bindings/access-controllers/access-controllers.yaml
+new file mode 100644
+index 000000000000..99e2865f0e46
+--- /dev/null
++++ b/Documentation/devicetree/bindings/access-controllers/access-controllers.yaml
+@@ -0,0 +1,84 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/access-controllers/access-controllers.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Generic Domain Access Controllers
++
++maintainers:
++  - Oleksii Moisieiev <oleksii_moisieiev@epam.com>
++
++description: |+
++  Common access controllers properties
++
++  Access controllers are in charge of stating which of the hardware blocks under
++  their responsibility (their domain) can be accesssed by which compartment. A
++  compartment can be a cluster of CPUs (or coprocessors), a range of addresses
++  or a group of hardware blocks. An access controller's domain is the set of
++  resources covered by the access controller.
++
++  This device tree binding can be used to bind devices to their access
++  controller provided by access-controllers property. In this case, the device
++  is a consumer and the access controller is the provider.
++
++  An access controller can be represented by any node in the device tree and
++  can provide one or more configuration parameters, needed to control parameters
++  of the consumer device. A consumer node can refer to the provider by phandle
++  and a set of phandle arguments, specified by '#access-controller-cells'
++  property in the access controller node.
++
++  Access controllers are typically used to set/read the permissions of a
++  hardware block and grant access to it. Any of which depends on the access
++  controller. The capabilities of each access controller are defined by the
++  binding of the access controller device.
++
++  Each node can be a consumer for the several access controllers.
++
++# always select the core schema
++select: true
++
++properties:
++  "#access-controller-cells":
++    description:
++      Number of cells in an access-controllers specifier;
++      Can be any value as specified by device tree binding documentation
++      of a particular provider. The node is an access controller.
++
++  access-controller-names:
++    $ref: /schemas/types.yaml#/definitions/string-array
++    description:
++      A list of access-controllers names, sorted in the same order as
++      access-controllers entries. Consumer drivers will use
++      access-controller-names to match with existing access-controllers entries.
++
++  access-controllers:
++    $ref: /schemas/types.yaml#/definitions/phandle-array
++    description:
++      A list of access controller specifiers, as defined by the
++      bindings of the access-controllers provider.
++
++additionalProperties: true
++
++examples:
++  - |
++    clock_controller: access-controllers@50000 {
++        reg = <0x50000 0x400>;
++        #access-controller-cells = <2>;
++    };
++
++    bus_controller: bus@60000 {
++        reg = <0x60000 0x10000>;
++        #address-cells = <1>;
++        #size-cells = <1>;
++        ranges;
++        #access-controller-cells = <3>;
++
++        uart4: serial@60100 {
++            reg = <0x60100 0x400>;
++            clocks = <&clk_serial>;
++            access-controllers = <&clock_controller 1 2>,
++                                 <&bus_controller 1 3 5>;
++            access-controller-names = "clock", "bus";
++        };
++    };
+-- 
+2.25.1
 
---aamqyrxtxz2kjjms--
