@@ -1,79 +1,230 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="eUG6SRQd"
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.11])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 249C1181;
-	Wed, 13 Dec 2023 10:30:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1702492246; x=1734028246;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=6mjYUiiWTKU+zQiM8bgxUs35x1rWNcFswLWdtn0ALYc=;
-  b=eUG6SRQdn5X8kzpmImO21Ma9G1Klzb6ftQkQx03SYHf9nwbjFGko2ULA
-   pSYyiNPtZoMpVECnRGuTBDakExojL3NbwXHEpF3weByxM63Gh4qUgR1+5
-   IXKRspijowgQik2AWYp13joScbOBZ3wtmdnNKNTFLN0102yXeTv4cKXIy
-   7UOqLgtGe2rI867rs5ZwmS32vdWUDUYFoLLUuIdQvq7yjPFIcBf7iZmvv
-   +5egqyGp6fjx+Lal/O6P9adZ3EFaZlSkK8BnopS4i7eO5UGdzeTvSSuhu
-   nH6qF80Yv2NfYKCQQNvBcGZ5oSgk1fZ7e2nxA7x6G4Mco0PdZvOjZU+cg
-   g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10923"; a="1844802"
-X-IronPort-AV: E=Sophos;i="6.04,273,1695711600"; 
-   d="scan'208";a="1844802"
-Received: from orsmga006.jf.intel.com ([10.7.209.51])
-  by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Dec 2023 10:30:45 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10923"; a="750222872"
-X-IronPort-AV: E=Sophos;i="6.04,273,1695711600"; 
-   d="scan'208";a="750222872"
-Received: from smile.fi.intel.com ([10.237.72.54])
-  by orsmga006.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Dec 2023 10:30:43 -0800
-Received: from andy by smile.fi.intel.com with local (Exim 4.97)
-	(envelope-from <andriy.shevchenko@intel.com>)
-	id 1rDU0H-00000005bnG-04KO;
-	Wed, 13 Dec 2023 20:30:41 +0200
-Date: Wed, 13 Dec 2023 20:30:40 +0200
-From: Andy Shevchenko <andriy.shevchenko@intel.com>
-To: Nikita Shubin <nikita.shubin@maquefel.me>
-Cc: Vinod Koul <vkoul@kernel.org>,
-	Alexander Sverdlin <alexander.sverdlin@gmail.com>,
-	linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org,
-	Arnd Bergmann <arnd@arndb.de>
-Subject: Re: [PATCH v6 40/40] dma: cirrus: remove platform code
-Message-ID: <ZXn4UIkoJeHnAAGW@smile.fi.intel.com>
-References: <20231212-ep93xx-v6-0-c307b8ac9aa8@maquefel.me>
- <20231212-ep93xx-v6-40-c307b8ac9aa8@maquefel.me>
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="XU9f9D2w"
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9BEC5B2;
+	Thu, 14 Dec 2023 03:42:55 -0800 (PST)
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 3BE6Td47021597;
+	Thu, 14 Dec 2023 11:42:48 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	from:to:cc:subject:date:message-id:in-reply-to:references
+	:mime-version:content-transfer-encoding; s=qcppdkim1; bh=9RohmAJ
+	7e6YEt6pDOa8r9PuoQD0ErczCjS53ByZGL1g=; b=XU9f9D2wEllVCpwQxull19E
+	0UtqvKOX1/o7yG2wx4MaRL6F2vi4D9PjvYQLNm+sv7JXfUqnCAvkoHMNc9VmcLuF
+	ZLTxOYs/JHKX9p69WTqQKK5sFifmFlacu8FiAl8+3eRJw+OX+AZwvft9i56scTxb
+	/mMLhwUacUtHAqI7cwRVK6LQnDhnKkPu8r22yYocPaz8lxuolqOKPKqj1rsaNp/C
+	NZ+jrnicUHiS2mbPkSGvEhEl2/MmEeGTP78mmR1VIgeYCghhw7ubWs1l9VhxSZDg
+	P33f1UV4UKuNiU4jPxOxVyXfXOAJbKALkkhbO/xXwekutY30+eEl0PWBngwoMMQ=
+	=
+Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3uynre19yv-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 14 Dec 2023 11:42:47 +0000 (GMT)
+Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+	by APBLRPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 3BEBghGo003058;
+	Thu, 14 Dec 2023 11:42:43 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 3uvhaktcgj-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 14 Dec 2023 11:42:43 +0000
+Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 3BEBgh1A002935;
+	Thu, 14 Dec 2023 11:42:43 GMT
+Received: from hu-devc-blr-u22-a.qualcomm.com (hu-mdalam-blr.qualcomm.com [10.131.36.157])
+	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 3BEBghpn002829
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 14 Dec 2023 11:42:43 +0000
+Received: by hu-devc-blr-u22-a.qualcomm.com (Postfix, from userid 466583)
+	id 8BF1641610; Thu, 14 Dec 2023 17:12:42 +0530 (+0530)
+From: Md Sadre Alam <quic_mdalam@quicinc.com>
+To: thara.gopinath@gmail.com, herbert@gondor.apana.org.au, davem@davemloft.net,
+        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        vkoul@kernel.org, linux-crypto@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        dmaengine@vger.kernel.org, quic_srichara@quicinc.com,
+        quic_varada@quicinc.com
+Cc: quic_mdalam@quicinc.com
+Subject: [PATCH 03/11] crypto: qce - Convert register r/w for skcipher via BAM/DMA
+Date: Thu, 14 Dec 2023 17:12:31 +0530
+Message-Id: <20231214114239.2635325-4-quic_mdalam@quicinc.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20231214114239.2635325-1-quic_mdalam@quicinc.com>
+References: <20231214114239.2635325-1-quic_mdalam@quicinc.com>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20231212-ep93xx-v6-40-c307b8ac9aa8@maquefel.me>
-Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
+Content-Transfer-Encoding: 8bit
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: XbkDumnWttJApC3mNuMir68lNvMhNZqO
+X-Proofpoint-GUID: XbkDumnWttJApC3mNuMir68lNvMhNZqO
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-12-09_01,2023-12-07_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 mlxlogscore=999
+ suspectscore=0 impostorscore=0 phishscore=0 bulkscore=0 spamscore=0
+ malwarescore=0 priorityscore=1501 lowpriorityscore=0 clxscore=1015
+ mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2311290000 definitions=main-2312140080
 
-On Tue, Dec 12, 2023 at 11:20:57AM +0300, Nikita Shubin wrote:
-> Remove DMA platform header, from now on we use device tree for dma
+Convert register read/write for skcipher via BAM/DMA.
+with this change all the crypto register configuration
+will be done via BAM/DMA. This change will prepare command
+descriptor for all register and write it once.
 
-DMA
+Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
+---
+ drivers/crypto/qce/common.c   | 42 +++++++++++++++++++++--------------
+ drivers/crypto/qce/skcipher.c | 12 ++++++++++
+ 2 files changed, 37 insertions(+), 17 deletions(-)
 
-> clients.
-
-...
-
-> +static inline bool ep93xx_dma_chan_is_m2p(struct dma_chan *chan)
-> +{
-> +	if (device_is_compatible(chan->device->dev, "cirrus,ep9301-dma-m2p"))
-> +		return true;
-> +
-> +	return !strcmp(dev_name(chan->device->dev), "ep93xx-dma-m2p");
-> +}
-
-Hmm... Isn't the same as new helper in a header in another patch?
-
+diff --git a/drivers/crypto/qce/common.c b/drivers/crypto/qce/common.c
+index 04253a8d3340..d1da6b1938f3 100644
+--- a/drivers/crypto/qce/common.c
++++ b/drivers/crypto/qce/common.c
+@@ -34,7 +34,7 @@ static inline void qce_write_array(struct qce_device *qce, u32 offset,
+ 	int i;
+ 
+ 	for (i = 0; i < len; i++)
+-		qce_write(qce, offset + i * sizeof(u32), val[i]);
++		qce_write_reg_dma(qce, offset + i * sizeof(u32), val[i], 1);
+ }
+ 
+ static inline void
+@@ -43,7 +43,7 @@ qce_clear_array(struct qce_device *qce, u32 offset, unsigned int len)
+ 	int i;
+ 
+ 	for (i = 0; i < len; i++)
+-		qce_write(qce, offset + i * sizeof(u32), 0);
++		qce_write_reg_dma(qce, offset + i * sizeof(u32), 0, 1);
+ }
+ 
+ static u32 qce_config_reg(struct qce_device *qce, int little)
+@@ -86,16 +86,16 @@ static void qce_setup_config(struct qce_device *qce)
+ 	config = qce_config_reg(qce, 0);
+ 
+ 	/* clear status */
+-	qce_write(qce, REG_STATUS, 0);
+-	qce_write(qce, REG_CONFIG, config);
++	qce_write_reg_dma(qce, REG_STATUS, 0, 1);
++	qce_write_reg_dma(qce, REG_CONFIG, config, 1);
+ }
+ 
+ static inline void qce_crypto_go(struct qce_device *qce, bool result_dump)
+ {
+ 	if (result_dump)
+-		qce_write(qce, REG_GOPROC, BIT(GO_SHIFT) | BIT(RESULTS_DUMP_SHIFT));
++		qce_write_reg_dma(qce, REG_GOPROC, BIT(GO_SHIFT) | BIT(RESULTS_DUMP_SHIFT), 1);
+ 	else
+-		qce_write(qce, REG_GOPROC, BIT(GO_SHIFT));
++		qce_write_reg_dma(qce, REG_GOPROC, BIT(GO_SHIFT), 1);
+ }
+ 
+ #if defined(CONFIG_CRYPTO_DEV_QCE_SHA) || defined(CONFIG_CRYPTO_DEV_QCE_AEAD)
+@@ -308,7 +308,7 @@ static void qce_xtskey(struct qce_device *qce, const u8 *enckey,
+ 	/* Set data unit size to cryptlen. Anything else causes
+ 	 * crypto engine to return back incorrect results.
+ 	 */
+-	qce_write(qce, REG_ENCR_XTS_DU_SIZE, cryptlen);
++	qce_write_reg_dma(qce, REG_ENCR_XTS_DU_SIZE, cryptlen, 1);
+ }
+ 
+ static int qce_setup_regs_skcipher(struct crypto_async_request *async_req)
+@@ -325,7 +325,9 @@ static int qce_setup_regs_skcipher(struct crypto_async_request *async_req)
+ 	u32 encr_cfg = 0, auth_cfg = 0, config;
+ 	unsigned int ivsize = rctx->ivsize;
+ 	unsigned long flags = rctx->flags;
++	int ret;
+ 
++	qce_clear_bam_transaction(qce);
+ 	qce_setup_config(qce);
+ 
+ 	if (IS_XTS(flags))
+@@ -336,7 +338,7 @@ static int qce_setup_regs_skcipher(struct crypto_async_request *async_req)
+ 	qce_cpu_to_be32p_array(enckey, ctx->enc_key, keylen);
+ 	enckey_words = keylen / sizeof(u32);
+ 
+-	qce_write(qce, REG_AUTH_SEG_CFG, auth_cfg);
++	qce_write_reg_dma(qce, REG_AUTH_SEG_CFG, auth_cfg, 1);
+ 
+ 	encr_cfg = qce_encr_cfg(flags, keylen);
+ 
+@@ -369,25 +371,31 @@ static int qce_setup_regs_skcipher(struct crypto_async_request *async_req)
+ 	if (IS_ENCRYPT(flags))
+ 		encr_cfg |= BIT(ENCODE_SHIFT);
+ 
+-	qce_write(qce, REG_ENCR_SEG_CFG, encr_cfg);
+-	qce_write(qce, REG_ENCR_SEG_SIZE, rctx->cryptlen);
+-	qce_write(qce, REG_ENCR_SEG_START, 0);
++	qce_write_reg_dma(qce, REG_ENCR_SEG_CFG, encr_cfg, 1);
++	qce_write_reg_dma(qce, REG_ENCR_SEG_SIZE, rctx->cryptlen, 1);
++	qce_write_reg_dma(qce, REG_ENCR_SEG_START, 0, 1);
+ 
+ 	if (IS_CTR(flags)) {
+-		qce_write(qce, REG_CNTR_MASK, ~0);
+-		qce_write(qce, REG_CNTR_MASK0, ~0);
+-		qce_write(qce, REG_CNTR_MASK1, ~0);
+-		qce_write(qce, REG_CNTR_MASK2, ~0);
++		qce_write_reg_dma(qce, REG_CNTR_MASK, ~0, 1);
++		qce_write_reg_dma(qce, REG_CNTR_MASK0, ~0, 1);
++		qce_write_reg_dma(qce, REG_CNTR_MASK1, ~0, 1);
++		qce_write_reg_dma(qce, REG_CNTR_MASK2, ~0, 1);
+ 	}
+ 
+-	qce_write(qce, REG_SEG_SIZE, rctx->cryptlen);
++	qce_write_reg_dma(qce, REG_SEG_SIZE, rctx->cryptlen, 1);
+ 
+ 	/* get little endianness */
+ 	config = qce_config_reg(qce, 1);
+-	qce_write(qce, REG_CONFIG, config);
++	qce_write_reg_dma(qce, REG_CONFIG, config, 1);
+ 
+ 	qce_crypto_go(qce, true);
+ 
++	ret = qce_submit_cmd_desc(qce, 0);
++	if (ret) {
++		dev_err(qce->dev, "Error in skcipher cmd descriptor\n");
++		return ret;
++	}
++
+ 	return 0;
+ }
+ #endif
+diff --git a/drivers/crypto/qce/skcipher.c b/drivers/crypto/qce/skcipher.c
+index 5b493fdc1e74..fa7ee5db9aa0 100644
+--- a/drivers/crypto/qce/skcipher.c
++++ b/drivers/crypto/qce/skcipher.c
+@@ -31,6 +31,7 @@ static void qce_skcipher_done(void *data)
+ 	struct qce_cipher_reqctx *rctx = skcipher_request_ctx(req);
+ 	struct qce_alg_template *tmpl = to_cipher_tmpl(crypto_skcipher_reqtfm(req));
+ 	struct qce_device *qce = tmpl->qce;
++	struct qce_bam_transaction *qce_bam_txn = qce->dma.qce_bam_txn;
+ 	struct qce_result_dump *result_buf = qce->dma.result_buf;
+ 	enum dma_data_direction dir_src, dir_dst;
+ 	u32 status;
+@@ -52,6 +53,17 @@ static void qce_skcipher_done(void *data)
+ 
+ 	sg_free_table(&rctx->dst_tbl);
+ 
++	if (qce_bam_txn->qce_read_sgl_cnt)
++		dma_unmap_sg(qce->dev,
++			     qce_bam_txn->qce_reg_read_sgl,
++			qce_bam_txn->qce_read_sgl_cnt,
++			DMA_DEV_TO_MEM);
++	if (qce_bam_txn->qce_write_sgl_cnt)
++		dma_unmap_sg(qce->dev,
++			     qce_bam_txn->qce_reg_write_sgl,
++			qce_bam_txn->qce_write_sgl_cnt,
++			DMA_MEM_TO_DEV);
++
+ 	error = qce_check_status(qce, &status);
+ 	if (error < 0)
+ 		dev_dbg(qce->dev, "skcipher operation error (%x)\n", status);
 -- 
-With Best Regards,
-Andy Shevchenko
-
+2.34.1
 
