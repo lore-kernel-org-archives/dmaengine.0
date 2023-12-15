@@ -1,60 +1,70 @@
-Received: from aposti.net (aposti.net [89.234.176.197])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.24])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C80CE2D79D;
-	Fri, 15 Dec 2023 13:18:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=crapouillou.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crapouillou.net
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26DD23EA69;
+	Fri, 15 Dec 2023 16:55:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=crapouillou.net header.i=@crapouillou.net header.b="eMxqBcfM"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=crapouillou.net;
-	s=mail; t=1702646029;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=lpAu/d+BadtNM8H50tJnl00JvfI119f25JB4NGpdWMc=;
-	b=eMxqBcfMP0DV0n+emq0JfrNQtly3RitIdhiUbi3fNOab3IS1rr2eZvlLQt+JaTiqwJCE89
-	yVj29eXlvSH551gHhZGLqUV3ZOA6uENM3WKO8mzm6CcF5zL9KVadKw/nmVL/VPyG5P3d30
-	fDSamI4ChwycsfSF0aSMbCC+ObqI9Z4=
-From: Paul Cercueil <paul@crapouillou.net>
-To: Vinod Koul <vkoul@kernel.org>
-Cc: Lars-Peter Clausen <lars@metafoo.de>,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <noname.nuno@gmail.com>,
-	Michael Hennerich <Michael.Hennerich@analog.com>,
-	dmaengine@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Paul Cercueil <paul@crapouillou.net>
-Subject: [PATCH v2 0/5] axi-dmac: Add support for scatter-gather
-Date: Fri, 15 Dec 2023 14:13:08 +0100
-Message-ID: <20231215131313.23840-1-paul@crapouillou.net>
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="U+TR9UVY"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1702659319; x=1734195319;
+  h=message-id:subject:from:to:cc:date:in-reply-to:
+   references:content-transfer-encoding:mime-version;
+  bh=RoQz5Hj3AlwnPNUQqmm0YVyXpkRm7JA23dpjOTRWF2o=;
+  b=U+TR9UVYD8nm/zUSFD/Bje9kvwpxBFBhMD/T2aBlMJe56SL+/flFqUD0
+   tTTIHJf8AhTTxyHmcsL2hS2PDkzP3kzKTVmTAqSSH39EpveAOzLEH9IhI
+   zS99okglr2g5qVJNdntCacIJTZYDDJMT9gZbIP+5d4yH3NuYAwOovTVXl
+   M2nUrSNkLrz7aFwc1AATm9Qb5r+7vanJzrRNyT/Ufl8KsX9AXDTGedqDW
+   56y/cRsmI92UbK2wqrzwXAPzxHu/Yz0VxTJyZPxQFLzutORR70nlXOImb
+   N80O1siJZSaqAsxoM7RpCCRcZG6f9oEu2paqpf79WrrzfnVA0N8PDzbF3
+   g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10924"; a="398091302"
+X-IronPort-AV: E=Sophos;i="6.04,279,1695711600"; 
+   d="scan'208";a="398091302"
+Received: from orsmga005.jf.intel.com ([10.7.209.41])
+  by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Dec 2023 08:55:18 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10924"; a="948027381"
+X-IronPort-AV: E=Sophos;i="6.04,279,1695711600"; 
+   d="scan'208";a="948027381"
+Received: from gyuchull-mobl2.amr.corp.intel.com ([10.212.27.50])
+  by orsmga005-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Dec 2023 08:55:16 -0800
+Message-ID: <204ec32b24062a29baf2cb0e9c1c4bba097833d5.camel@linux.intel.com>
+Subject: Re: [PATCH v12 00/14] crypto: Add Intel Analytics Accelerator (IAA)
+ crypto compression driver
+From: Tom Zanussi <tom.zanussi@linux.intel.com>
+To: Herbert Xu <herbert@gondor.apana.org.au>
+Cc: davem@davemloft.net, fenghua.yu@intel.com, vkoul@kernel.org, 
+ dave.jiang@intel.com, tony.luck@intel.com, wajdi.k.feghali@intel.com, 
+ james.guilford@intel.com, kanchana.p.sridhar@intel.com,
+ vinodh.gopal@intel.com,  giovanni.cabiddu@intel.com, pavel@ucw.cz,
+ linux-kernel@vger.kernel.org,  linux-crypto@vger.kernel.org,
+ dmaengine@vger.kernel.org
+Date: Fri, 15 Dec 2023 10:55:15 -0600
+In-Reply-To: <ZXwi+UN0OP9+ht99@gondor.apana.org.au>
+References: <20231205212530.285671-1-tom.zanussi@linux.intel.com>
+	 <ZXwi+UN0OP9+ht99@gondor.apana.org.au>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.44.4-0ubuntu2 
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam: Yes
 
-Hi Vinod,
+On Fri, 2023-12-15 at 17:57 +0800, Herbert Xu wrote:
+> On Tue, Dec 05, 2023 at 03:25:16PM -0600, Tom Zanussi wrote:
+> > Hi, this is v12 of the IAA crypto driver, incorporating feedback
 
-V2 of my patchset which introduces scatter-gather transfers support to
-the axi-dmac driver.
+[snip]
 
-I updated patch [1/5] with your feedback. Patch [4/5] was updated as
-well, so that cyclic transfers are restarted properly in the EOT. This
-was a bug in my V1, but it was fixed here just for bisectability, as the
-new patch [5/5] will improve cyclic transfers by linking the last
-descriptor to the first one in a SG chain, which means that the EOT IRQ
-only needs to call the callback associated with the cyclic transfer, and
-the EOT IRQ can be masked if there is no callback associated with it.
+> All applied.=C2=A0 Thanks.
 
-Cheers,
--Paul
+Thanks, Herbert!
 
- drivers/dma/dma-axi-dmac.c | 280 +++++++++++++++++++++++++------------
- 1 file changed, 191 insertions(+), 89 deletions(-)
-
--- 
-2.42.0
+Tom
 
