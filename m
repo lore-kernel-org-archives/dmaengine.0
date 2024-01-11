@@ -1,104 +1,123 @@
-Received: from wout3-smtp.messagingengine.com (wout3-smtp.messagingengine.com [64.147.123.19])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f173.google.com (mail-yw1-f173.google.com [209.85.128.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A202FBF2;
-	Thu, 11 Jan 2024 06:24:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arndb.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arndb.de
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=arndb.de header.i=@arndb.de header.b="GkipVFTE";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Y/8wUkSJ"
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-	by mailout.west.internal (Postfix) with ESMTP id BE0CE3200A7A;
-	Thu, 11 Jan 2024 01:24:17 -0500 (EST)
-Received: from imap51 ([10.202.2.101])
-  by compute5.internal (MEProxy); Thu, 11 Jan 2024 01:24:18 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arndb.de; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1704954257; x=1705040657; bh=DrHB+y9Pgc
-	vV0CSGp8H420Yn6g7abiIoAQ9Qr6Gyars=; b=GkipVFTE0PStlL9e/y52pEHOHM
-	+nDgLIhX+lPWbqe7arZFqGvrxEt/mZ2l+BGl0OvhbIbEPvLfL1/Y1Qngp+0+Z+aY
-	ua4T6YTQxQl6G1i4M4Dx9lXbiodzGTXB0ZCE6zn5qhxfmc//SR0UyHHkypMqGs21
-	GVTc8LiPYV2ObPT2XVVQflil3evqzbZ5gOu1J/5jZcrQjP2mG6chgGRBCUuNmbIO
-	276SYaLT+zSGmYn2LS3pQ8xEMnqywOtbo2oRX7dTggg3QFaRs0Uwi9URroObMNf1
-	A85G+p0O8KWiXf/pV0YFXLRvK/YBlm5FPQeJQBa/sawDBpG+G1CKdlMFniNA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1704954257; x=1705040657; bh=DrHB+y9PgcvV0CSGp8H420Yn6g7a
-	biIoAQ9Qr6Gyars=; b=Y/8wUkSJEobH2iVWvcsm87q14HOzEf7pmiM7brlRtgQX
-	4L/XOIQ3jsYxcIELJUxK/d5vS4fg4bOf9TrGu9/+HRslPN/3bzXGndLFMq2u5mA/
-	1X8DZhvGY+RucQ7w/2slxRdFODZA4i7KOf6OdbuxnWyKx4tF05DUN1drg3YKrHbe
-	3uKiuIKe6XyazwypVu4xDflhDoAOa1KSGMFKiMQyO8qCAPtaDokB2ioy1sYLm9LU
-	joRdj6mJ3ikCQBFIpiqaj+huP+Gbf6ZtVDeGqAaVnekDjpLcHrJUSjOzCZgPRdL8
-	jnxMLt2UJMOPdVusDcoeSqJj2s3LyklhjexnBI7m6g==
-X-ME-Sender: <xms:kImfZToohpB0iiVwCIIpSA4gA8h7hnsWXOMP1kX45e4dmbma1uipEA>
-    <xme:kImfZdpYsbq9wZTS4w6n_ZGDR_1uhdy7I8Nttm2_w71c6dyIx9PEn8b8iBRB4f7BL
-    Ox0xvU51Q6rj8Hrtg0>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvdeivddgledvucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepofgfggfkjghffffhvfevufgtsehttdertderredtnecuhfhrohhmpedftehr
-    nhguuceuvghrghhmrghnnhdfuceorghrnhgusegrrhhnuggsrdguvgeqnecuggftrfgrth
-    htvghrnhepffehueegteeihfegtefhjefgtdeugfegjeelheejueethfefgeeghfektdek
-    teffnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheprg
-    hrnhgusegrrhhnuggsrdguvg
-X-ME-Proxy: <xmx:kImfZQMJr7-RRGACZLQVMhlKrezabwoIQZr8tLGh9sHILBFP-TjdVA>
-    <xmx:kImfZW70Rg18t07fBnnqOk5jWKeaPE8d7rS0if3N8_In5hv4BRVotw>
-    <xmx:kImfZS6rfFwcP9SjhxgzptIJvPsVAlIDJIycNmX4dOtn1SsNwYMtOA>
-    <xmx:kYmfZUSa1bIot4l6cbwDd7RBweTaKAxT-SNfrk_Eo9CQDZGFWdFhqA>
-Feedback-ID: i56a14606:Fastmail
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
-	id D2E92B6008D; Thu, 11 Jan 2024 01:24:16 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.9.0-alpha0-1374-gc37f3abe3d-fm-20240102.001-gc37f3abe
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AAF2DF6E;
+	Thu, 11 Jan 2024 09:05:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-yw1-f173.google.com with SMTP id 00721157ae682-5edfcba97e3so53639907b3.2;
+        Thu, 11 Jan 2024 01:05:22 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1704963921; x=1705568721;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=iR6KU/zGe5ub/62SWQbwkfMRKXXvW7W7wYmrGRm2qBE=;
+        b=gYXHOGG3tkCqkbtLdpX4dcQklepvn6Bepm9GYZTcJTxNvEeQ8Dms0wlGMgwlboBswh
+         +GroZYRA2OOcyGJ/ERvOqr98ZXKTcTIG7vhCEDuOia7AVFDQPkaWJFimADwr4TvwMO2C
+         pdEufVdFJkm88EEDfREcX7cn1zDdSDrqLWBY3crbirO2LDbwDfO3d5fKv1k15DYhL0ft
+         LvWFj2vxLyeHNwj5kK6sZbnW//FjQ7uideRCaKgURGDqEFFiqHj5oqBgdPAEV3e2ioGg
+         aVknLTI76MlZI7iwP5haxNJOZajuPO3TFQ9NBQZQztNUni+grig9V3HPd++tDsjWWZSC
+         fI/g==
+X-Gm-Message-State: AOJu0Yx2JFAzmn393PWiluols84mZEF/VuNNR3jGYyq/IdByCoIvfkeq
+	XWPCsuv05VeebxarblzuplOAwmH9sGcFHw==
+X-Google-Smtp-Source: AGHT+IEPl3K98FtUDTMOoP6Sn8AxfrFnU3KMpA7rl3Oft8tdXtvZ9KYKqRRtsyYpCS7ljRmkPaSysA==
+X-Received: by 2002:a05:690c:fd1:b0:5d7:1940:f3d2 with SMTP id dg17-20020a05690c0fd100b005d71940f3d2mr296288ywb.58.1704963920831;
+        Thu, 11 Jan 2024 01:05:20 -0800 (PST)
+Received: from mail-yb1-f172.google.com (mail-yb1-f172.google.com. [209.85.219.172])
+        by smtp.gmail.com with ESMTPSA id u80-20020a818453000000b005e7467eaa43sm254600ywf.32.2024.01.11.01.05.20
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 11 Jan 2024 01:05:20 -0800 (PST)
+Received: by mail-yb1-f172.google.com with SMTP id 3f1490d57ef6-dbf2b5556f9so1367952276.2;
+        Thu, 11 Jan 2024 01:05:20 -0800 (PST)
+X-Received: by 2002:a5b:5d2:0:b0:dbf:196c:b615 with SMTP id
+ w18-20020a5b05d2000000b00dbf196cb615mr950823ybp.0.1704963919994; Thu, 11 Jan
+ 2024 01:05:19 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Message-Id: <343cedc4-a078-4cf8-ba3b-a1a8df74185b@app.fastmail.com>
-In-Reply-To: <ZZ8wMWQMo4eGnSuG@lizhi-Precision-Tower-5810>
-References: <20240110232255.1099757-1-arnd@kernel.org>
- <ZZ8wMWQMo4eGnSuG@lizhi-Precision-Tower-5810>
-Date: Thu, 11 Jan 2024 07:23:34 +0100
-From: "Arnd Bergmann" <arnd@arndb.de>
-To: "Frank Li" <Frank.li@nxp.com>, "Arnd Bergmann" <arnd@kernel.org>
-Cc: "Vinod Koul" <vkoul@kernel.org>, "Peng Fan" <peng.fan@nxp.com>,
- "Fabio Estevam" <festevam@denx.de>, dmaengine@vger.kernel.org,
- linux-kernel@vger.kernel.org, imx@lists.linux.dev
-Subject: Re: [PATCH] dmaengine: fsl-edma: fix Makefile logic
-Content-Type: text/plain
+References: <20240110222210.193479-1-prabhakar.mahadev-lad.rj@bp.renesas.com>
+In-Reply-To: <20240110222210.193479-1-prabhakar.mahadev-lad.rj@bp.renesas.com>
+From: Geert Uytterhoeven <geert@linux-m68k.org>
+Date: Thu, 11 Jan 2024 10:05:00 +0100
+X-Gmail-Original-Message-ID: <CAMuHMdXSLBARbtc91F=cWqTdL+UcT4wJbr0_m5+iz_6BXA4Acw@mail.gmail.com>
+Message-ID: <CAMuHMdXSLBARbtc91F=cWqTdL+UcT4wJbr0_m5+iz_6BXA4Acw@mail.gmail.com>
+Subject: Re: [PATCH] dmaengine: usb-dmac: Avoid format-overflow warning
+To: Prabhakar <prabhakar.csengg@gmail.com>
+Cc: Vinod Koul <vkoul@kernel.org>, =?UTF-8?Q?Uwe_Kleine=2DK=C3=B6nig?= <u.kleine-koenig@pengutronix.de>, 
+	Tudor Ambarus <tudor.ambarus@linaro.org>, Kees Cook <keescook@chromium.org>, 
+	dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-renesas-soc@vger.kernel.org, 
+	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>, 
+	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, Jan 11, 2024, at 01:02, Frank Li wrote:
-> On Thu, Jan 11, 2024 at 12:03:42AM +0100, Arnd Bergmann wrote:
->> From: Arnd Bergmann <arnd@arndb.de>
->> 
->> A change to remove some unnecessary exports ended up removing some
->> necessary ones as well, and caused a build regression by trying to
->> link a single source file into two separate modules:
+Hi Prabhakar,
+
+On Wed, Jan 10, 2024 at 11:23=E2=80=AFPM Prabhakar <prabhakar.csengg@gmail.=
+com> wrote:
+> From: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
 >
-> You should fix Kconfig to provent fsl-edma and mcf-edma build at the same
-> time.
-
-That sounds like the wrong approach since it prevents
-compile-testing one of the drivers in an allmodconfig
-build.
-
-> EXPORT_SYMBOL_GPL is not necesary at all.
+> gcc points out that the fix-byte buffer might be too small:
+> drivers/dma/sh/usb-dmac.c: In function 'usb_dmac_probe':
+> drivers/dma/sh/usb-dmac.c:720:34: warning: '%u' directive writing between=
+ 1 and 10 bytes into a region of size 3 [-Wformat-overflow=3D]
+>   720 |         sprintf(pdev_irqname, "ch%u", index);
+>       |                                  ^~
+> In function 'usb_dmac_chan_probe',
+>     inlined from 'usb_dmac_probe' at drivers/dma/sh/usb-dmac.c:814:9:
+> drivers/dma/sh/usb-dmac.c:720:31: note: directive argument in the range [=
+0, 4294967294]
+>   720 |         sprintf(pdev_irqname, "ch%u", index);
+>       |                               ^~~~~~
+> drivers/dma/sh/usb-dmac.c:720:9: note: 'sprintf' output between 4 and 13 =
+bytes into a destination of size 5
+>   720 |         sprintf(pdev_irqname, "ch%u", index);
+>       |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 >
-> mcf-edma is quit old. ideally, it should be merged into fsl-edma.
+> Maximum number of channels for USB-DMAC as per the driver is 1-99 so use
+> u8 instead of unsigned int/int for DMAC channel indexing and make the
+> pdev_irqname string long enough to avoid the warning.
+>
+> While at it use scnprintf() instead of sprintf() to make the code more
+> robust.
+>
+> Signed-off-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
 
-I have no specific interest in either of the drivers, just
-trying to fix the build regression. I see no harm in exporting
-the symbols, but I can refactor the drivers to link all three
-files into the same module and add a hack to register both
-platform_driver instances from a shared module_init() if
-you think that's better. Unfortunately we can't have more
-than one initcall in a loadable module.
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
 
-     Arnd
+One nit below.
+
+> --- a/drivers/dma/sh/usb-dmac.c
+> +++ b/drivers/dma/sh/usb-dmac.c
+
+> @@ -768,8 +768,8 @@ static int usb_dmac_probe(struct platform_device *pde=
+v)
+>         const enum dma_slave_buswidth widths =3D USB_DMAC_SLAVE_BUSWIDTH;
+>         struct dma_device *engine;
+>         struct usb_dmac *dmac;
+> -       unsigned int i;
+>         int ret;
+> +       u8 i;
+
+Personally, I'm not much a fan of making loop counters smaller than
+(unsigned) int.  If you do go this way, there are more loops over all
+channels still using int.
+
+Gr{oetje,eeting}s,
+
+                        Geert
+
+--=20
+Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k=
+.org
+
+In personal conversations with technical people, I call myself a hacker. Bu=
+t
+when I'm talking to journalists I just say "programmer" or something like t=
+hat.
+                                -- Linus Torvalds
