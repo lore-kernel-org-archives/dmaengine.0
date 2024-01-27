@@ -1,33 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A444C2C68B;
-	Sat, 27 Jan 2024 16:32:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 631DD2E62E;
+	Sat, 27 Jan 2024 16:32:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706373175; cv=none; b=NCRGadzofvjzQy64qpRkqeRt48hxttXCkRe0QfkRtN3INm6EZp/lH/iOXqFWZUzhb//GriFww1/rCZYkDXf6kWlV+P8bK59+RmzJ9c69mMyWKwCiho6Sf4AvRff+w4Ptt8Jrcm9To6mSDsfO/R7lujwXIv4/udfz7OqeGzmTsKE=
+	t=1706373177; cv=none; b=P0itoltflBrf9/qtZm9oQ2pfQPtY0KuEetxq3d8E453ixUCTAO2BDaNgactZ9SJ+NO6TSh16Z5I4Yh8c1LzZ2fclSFc6tWCqTDQ5RlPlTlYWmLwYBrv5UodSnnv7c5Abu6FzvNF2H3PXUrHJ0YV8TI6RrrcdGLEZgQBPJqSTkP8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706373175; c=relaxed/simple;
-	bh=UV5vUtB55jwJjSHcj4dFELiMmvh+A8Qx1KiXYwwaOdg=;
+	s=arc-20240116; t=1706373177; c=relaxed/simple;
+	bh=WOUqb67kFNowd66WvLyJkFViYo3BarKcvhbuq1ivPvc=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=jhW9N4EWH/uLq9OPeKWzQr0/hV/aIjHCUynPbc5/9Obdu76VtqthXbGsJ+DLP3X9EacNgCfWFGJa463f92JtdZFFqt2QceDhiAVQ9WnRZEAakaEraZMRqhi2tHhDPeLNrnGLIPVn6kvLWXV+lOTd4itM2t44TPibPzCL2gn/+RI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=U2laxqYa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YHwl36dqNS7qqIgu3wsLIAVkPfhSk/MryH4qr6aCt7ObKwiz6sUOjKEH0eWw16/QQtfYfBn5JlDJvxCNK68RdJZ+Fqw7xmemn6IGaXaO/ev4FRlyxUQp5x4xtibxA9QqocHwBsNQlfv3PVGUElrFTz94i/zkt6497zH671OyWNI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=H6f72xPR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="U2laxqYa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21DD4C43330;
-	Sat, 27 Jan 2024 16:32:55 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="H6f72xPR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD5B4C43330;
+	Sat, 27 Jan 2024 16:32:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1706373175;
-	bh=UV5vUtB55jwJjSHcj4dFELiMmvh+A8Qx1KiXYwwaOdg=;
+	s=k20201202; t=1706373177;
+	bh=WOUqb67kFNowd66WvLyJkFViYo3BarKcvhbuq1ivPvc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U2laxqYaYIfMWNW+FebTG7Hp8zE4EwXty2oystY1/hs3eXZEc8jB+BUmgZQqcOr+2
-	 Mqg/rvm/WMyizloRS+sMFhizfAVrJ1VukgJZr8yeTGUXYkOn3yn4vQjBPwVf9vULZS
-	 JusJRPqfVJZSs9ucVReRxUJKNX9/WkylUjxrrJz6I3LluAvLWMTiBEGsAyl/pu7v+V
-	 3/mapLOWcy2vGO/4aAgtdvnLMIa4dUzZ0eyjhafu56TDpiuYralUG6h4XsIrCdvdNY
-	 DAMS5+mFJ0b89V4sRzwv7mK7eTtwpyrXuTfyjGebW2RqE+xla6iN/YZ8k1TYxjetoi
-	 3k+gtIyCpLOCQ==
+	b=H6f72xPRi0Dz/4aTk0M8NlzZl45rEQCYBvPGz7KEBrnFVNqcWpvST8O0iC1HrVCEg
+	 /aFV1BPgXYX3ME/N2jN0HXFF9uL81kg3c6Fw0G70LmHOp8CEe7wWsf4v7c+IL0kZ4N
+	 IuF23IrccqrDX5y8i385BX3IcelHacJdFHjiBsoP8IjctcQdEMp7WyyQ4hYCKIy/J1
+	 9FYMdUldFxR21IMLv7QkfjRFgvzZAdXl5VRAruktMRFeB+B1myXfP6WKCVnVE8H9Kb
+	 i+gVwx5DRmzuGPCMf/Ku66qUDbPRKdKZDTezgpmaMR2ELMdDoVXGHcYKzzsRHnoQO/
+	 D7Ji4MjvGRyUw==
 Received: by wens.tw (Postfix, from userid 1000)
-	id 6B21B5FDDF; Sun, 28 Jan 2024 00:32:52 +0800 (CST)
+	id 7AB825FE36; Sun, 28 Jan 2024 00:32:52 +0800 (CST)
 From: Chen-Yu Tsai <wens@kernel.org>
 To: Rob Herring <robh+dt@kernel.org>,
 	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
@@ -46,10 +46,10 @@ Cc: Chen-Yu Tsai <wens@csie.org>,
 	linux-sound@vger.kernel.org,
 	dmaengine@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	Conor Dooley <conor.dooley@microchip.com>
-Subject: [PATCH v2 2/7] dt-bindings: sound: sun4i-spdif: Add Allwinner H616 compatible
-Date: Sun, 28 Jan 2024 00:32:42 +0800
-Message-Id: <20240127163247.384439-3-wens@kernel.org>
+	Andre Przywara <andre.przywara@arm.com>
+Subject: [PATCH v2 5/7] arm64: dts: allwinner: h6: Add RX DMA channel for SPDIF
+Date: Sun, 28 Jan 2024 00:32:45 +0800
+Message-Id: <20240127163247.384439-6-wens@kernel.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240127163247.384439-1-wens@kernel.org>
 References: <20240127163247.384439-1-wens@kernel.org>
@@ -63,47 +63,74 @@ Content-Transfer-Encoding: 8bit
 
 From: Chen-Yu Tsai <wens@csie.org>
 
-The SPDIF hardware block found in the H616 SoC has the same layout as
-the one found in the H6 SoC, except that it is missing the receiver
-side.
+The SPDIF hardware found on the H6 supports both transmit and receive
+functions. However it is missing the RX DMA channel.
 
-Add a new compatible string for it.
+Add the SPDIF hardware block's RX DMA channel. Also remove the
+by-default pinmux, since the end device can choose to implement
+either or both functionalities.
 
+Fixes: f95b598df419 ("arm64: dts: allwinner: Add SPDIF node for Allwinner H6")
 Signed-off-by: Chen-Yu Tsai <wens@csie.org>
-Acked-by: Conor Dooley <conor.dooley@microchip.com>
+Reviewed-by: Andre Przywara <andre.przywara@arm.com>
 Reviewed-by: Jernej Skrabec <jernej.skrabec@gmail.com>
 ---
- .../devicetree/bindings/sound/allwinner,sun4i-a10-spdif.yaml   | 3 +++
- 1 file changed, 3 insertions(+)
+ arch/arm64/boot/dts/allwinner/sun50i-h6-beelink-gs1.dts | 2 ++
+ arch/arm64/boot/dts/allwinner/sun50i-h6-tanix.dtsi      | 2 ++
+ arch/arm64/boot/dts/allwinner/sun50i-h6.dtsi            | 7 +++----
+ 3 files changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/sound/allwinner,sun4i-a10-spdif.yaml b/Documentation/devicetree/bindings/sound/allwinner,sun4i-a10-spdif.yaml
-index 98e2e053fa19..aa32dc950e72 100644
---- a/Documentation/devicetree/bindings/sound/allwinner,sun4i-a10-spdif.yaml
-+++ b/Documentation/devicetree/bindings/sound/allwinner,sun4i-a10-spdif.yaml
-@@ -22,6 +22,7 @@ properties:
-       - const: allwinner,sun6i-a31-spdif
-       - const: allwinner,sun8i-h3-spdif
-       - const: allwinner,sun50i-h6-spdif
-+      - const: allwinner,sun50i-h616-spdif
-       - items:
-           - const: allwinner,sun8i-a83t-spdif
-           - const: allwinner,sun8i-h3-spdif
-@@ -63,6 +64,7 @@ allOf:
-               - allwinner,sun6i-a31-spdif
-               - allwinner,sun8i-h3-spdif
-               - allwinner,sun50i-h6-spdif
-+              - allwinner,sun50i-h616-spdif
+diff --git a/arch/arm64/boot/dts/allwinner/sun50i-h6-beelink-gs1.dts b/arch/arm64/boot/dts/allwinner/sun50i-h6-beelink-gs1.dts
+index 9ec49ac2f6fd..381d58cea092 100644
+--- a/arch/arm64/boot/dts/allwinner/sun50i-h6-beelink-gs1.dts
++++ b/arch/arm64/boot/dts/allwinner/sun50i-h6-beelink-gs1.dts
+@@ -291,6 +291,8 @@ sw {
+ };
  
-     then:
-       required:
-@@ -74,6 +76,7 @@ allOf:
-           contains:
-             enum:
-               - allwinner,sun8i-h3-spdif
-+              - allwinner,sun50i-h616-spdif
+ &spdif {
++	pinctrl-names = "default";
++	pinctrl-0 = <&spdif_tx_pin>;
+ 	status = "okay";
+ };
  
-     then:
-       properties:
+diff --git a/arch/arm64/boot/dts/allwinner/sun50i-h6-tanix.dtsi b/arch/arm64/boot/dts/allwinner/sun50i-h6-tanix.dtsi
+index 4903d6358112..855b7d43bc50 100644
+--- a/arch/arm64/boot/dts/allwinner/sun50i-h6-tanix.dtsi
++++ b/arch/arm64/boot/dts/allwinner/sun50i-h6-tanix.dtsi
+@@ -166,6 +166,8 @@ &r_ir {
+ };
+ 
+ &spdif {
++	pinctrl-names = "default";
++	pinctrl-0 = <&spdif_tx_pin>;
+ 	status = "okay";
+ };
+ 
+diff --git a/arch/arm64/boot/dts/allwinner/sun50i-h6.dtsi b/arch/arm64/boot/dts/allwinner/sun50i-h6.dtsi
+index ca1d287a0a01..d11e5041bae9 100644
+--- a/arch/arm64/boot/dts/allwinner/sun50i-h6.dtsi
++++ b/arch/arm64/boot/dts/allwinner/sun50i-h6.dtsi
+@@ -406,6 +406,7 @@ spi1_cs_pin: spi1-cs-pin {
+ 				function = "spi1";
+ 			};
+ 
++			/omit-if-no-ref/
+ 			spdif_tx_pin: spdif-tx-pin {
+ 				pins = "PH7";
+ 				function = "spdif";
+@@ -655,10 +656,8 @@ spdif: spdif@5093000 {
+ 			clocks = <&ccu CLK_BUS_SPDIF>, <&ccu CLK_SPDIF>;
+ 			clock-names = "apb", "spdif";
+ 			resets = <&ccu RST_BUS_SPDIF>;
+-			dmas = <&dma 2>;
+-			dma-names = "tx";
+-			pinctrl-names = "default";
+-			pinctrl-0 = <&spdif_tx_pin>;
++			dmas = <&dma 2>, <&dma 2>;
++			dma-names = "rx", "tx";
+ 			status = "disabled";
+ 		};
+ 
 -- 
 2.39.2
 
