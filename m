@@ -1,61 +1,106 @@
-Received: from abb.hmeau.com (abb.hmeau.com [144.6.53.87])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30A0A51C26;
-	Fri, 26 Jan 2024 09:00:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=144.6.53.87
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55C601B812;
+	Sat, 27 Jan 2024 16:32:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706259612; cv=none; b=B/TBkjI6zsW2r+WMc5TSpPJFZILkdN5z/K1cSznLYhXZ6iJX8SWjXbi/VHCR+XK1uqFhQ8g3RJIRE6V7mHOFEXUs4QkkktN83wqxRKB0Xn1WUqkWGqQhbAiVNSOK765mdjCi4+veS0mQK3yiXRqrvIBxndJ0t6TGa0ujGI7xisk=
+	t=1706373175; cv=none; b=LKqKALkki6yiEn5jt+IYbulEPbaLif1Vf2mTKcOl91nBkwordNPPJKuxywoFN0YhQ1GiabUhLLoyUguMudBg7L+x12hp48PotpYgE2XplZywWocLGds+ZuVenjJFN6Uj4pyCoirJPGe8oeRXi7iVIBLwPlbI8OsBRFKSp43z6aE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706259612; c=relaxed/simple;
-	bh=kOkPe13PZ9nRiXrBdZLTfIKaB5agjBUgj++JJpMbqb0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=D1E8W/Nw7TgcQ2Crps84XiuTMF6NP2UfVeT+hUoA68JWZeUunPFl0PsaJLubA7FGptFbrEK/L4n5cDe+1dNJcjQU7AJU6HdQJg2u6abx4/rgJq5dTuJQ8PsgVyckP9mY7/o2bC/nrBe2HHKHr7n5ceQV1n1/5IVwE2pvZAe7FQU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gondor.apana.org.au; spf=pass smtp.mailfrom=gondor.apana.org.au; arc=none smtp.client-ip=144.6.53.87
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gondor.apana.org.au
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gondor.apana.org.au
-Received: from loth.rohan.me.apana.org.au ([192.168.167.2])
-	by formenos.hmeau.com with smtp (Exim 4.94.2 #2 (Debian))
-	id 1rTI49-006EdX-8S; Fri, 26 Jan 2024 17:00:02 +0800
-Received: by loth.rohan.me.apana.org.au (sSMTP sendmail emulation); Fri, 26 Jan 2024 17:00:13 +0800
-Date: Fri, 26 Jan 2024 17:00:13 +0800
-From: Herbert Xu <herbert@gondor.apana.org.au>
-To: Tom Zanussi <tom.zanussi@linux.intel.com>
-Cc: davem@davemloft.net, fenghua.yu@intel.com, dan.carpenter@linaro.org,
-	dave.jiang@intel.com, tony.luck@intel.com,
-	linux-kernel@vger.kernel.org, linux-crypto@vger.kernel.org,
-	dmaengine@vger.kernel.org
-Subject: Re: [PATCH] crypto: iaa - Remove header table code
-Message-ID: <ZbN0nS0krktSqB51@gondor.apana.org.au>
-References: <8bde35bf981a1e490114c6b50fc4755a64da55a5.camel@linux.intel.com>
+	s=arc-20240116; t=1706373175; c=relaxed/simple;
+	bh=vsL0mbXsOusXWQQoLV0+ENppFAA94idE+K76ih4R3EY=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=YuTRKB3xexFcgSKSCeqgGBhF6wLtIRY+HEtST01mnrj7Jf7wlG6IzLzADBb24utOmyH7BhfnvkJLenY7fG3BqeSouoAxtttg9FlGygqzK7l9Rtk+5ZPtTTinBgZ0qqsixMwDa5cRH2P50m3AzLskwKMpRDKAgSoaZIIUmrWJg9Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=f5iClA6L; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="f5iClA6L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B36B6C433C7;
+	Sat, 27 Jan 2024 16:32:54 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1706373174;
+	bh=vsL0mbXsOusXWQQoLV0+ENppFAA94idE+K76ih4R3EY=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=f5iClA6LGijEWwjkd3JAyCqVl96GzTg73GnRC2fvLKT+m6IUiGiC3W0oDeF6N4z5d
+	 RQfxt4c2fXpZXqd9Cq6MJpMqH9QSuM8ueQPpnfDfi7TNAy3sHueUo7KCjAs/BM4MNd
+	 w5iqzM3q8A/GqmDmI1o74TiGz1I2JhH8htUq8djsqyDpOYwwXn6Bk0EvZI0xrjoTM1
+	 OWOM7m7QRPaQnfcxwpBogHsvDWfiu4/+YVjtUSvDzVXheiJ4/byOV4lJqGQf0a5piF
+	 hvi1W1KfZPWkNqITxNhOB5R69uRMZR4Bm1igljypmNR4hP16HJ7N+31Ssfy53loYWU
+	 PnfYgW2gvwMSQ==
+Received: by wens.tw (Postfix, from userid 1000)
+	id 4B4D15FA14; Sun, 28 Jan 2024 00:32:52 +0800 (CST)
+From: Chen-Yu Tsai <wens@kernel.org>
+To: Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Samuel Holland <samuel@sholland.org>,
+	Liam Girdwood <lgirdwood@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
+	Jaroslav Kysela <perex@perex.cz>,
+	Takashi Iwai <tiwai@suse.com>,
+	Vinod Koul <vkoul@kernel.org>
+Cc: Chen-Yu Tsai <wens@csie.org>,
+	devicetree@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-sunxi@lists.linux.dev,
+	linux-sound@vger.kernel.org,
+	dmaengine@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Conor Dooley <conor.dooley@microchip.com>
+Subject: [PATCH v2 1/7] dt-bindings: sound: sun4i-spdif: Fix requirements for H6
+Date: Sun, 28 Jan 2024 00:32:41 +0800
+Message-Id: <20240127163247.384439-2-wens@kernel.org>
+X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20240127163247.384439-1-wens@kernel.org>
+References: <20240127163247.384439-1-wens@kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <8bde35bf981a1e490114c6b50fc4755a64da55a5.camel@linux.intel.com>
+Content-Transfer-Encoding: 8bit
 
-On Mon, Jan 08, 2024 at 04:53:48PM -0600, Tom Zanussi wrote:
-> The header table and related code is currently unused - it was
-> included and used for canned mode, but canned mode has been removed,
-> so this code can be safely removed as well.
-> 
-> This indirectly fixes a bug reported by Dan Carpenter.
-> 
-> Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-> Closes: https://lore.kernel.org/linux-crypto/b2e0bd974981291e16882686a2b9b1db3986abe4.camel@linux.intel.com/T/#m4403253d6a4347a925fab4fc1cdb4ef7c095fb86
-> Signed-off-by: Tom Zanussi <tom.zanussi@linux.intel.com>
-> ---
->  drivers/crypto/intel/iaa/iaa_crypto.h         |  25 ----
->  .../crypto/intel/iaa/iaa_crypto_comp_fixed.c  |   1 -
->  drivers/crypto/intel/iaa/iaa_crypto_main.c    | 108 +-----------------
->  3 files changed, 3 insertions(+), 131 deletions(-)
+From: Chen-Yu Tsai <wens@csie.org>
 
-Patch applied.  Thanks.
+When the H6 was added to the bindings, only the TX DMA channel was
+added. As the hardware supports both transmit and receive functions,
+the binding is missing the RX DMA channel and is thus incorrect.
+Also, the reset control was not made mandatory.
+
+Add the RX DMA channel for SPDIF on H6 by removing the compatible from
+the list of compatibles that should only have a TX DMA channel. And add
+the H6 compatible to the list of compatibles that require the reset
+control to be present.
+
+Fixes: b20453031472 ("dt-bindings: sound: sun4i-spdif: Add Allwinner H6 compatible")
+Signed-off-by: Chen-Yu Tsai <wens@csie.org>
+Acked-by: Conor Dooley <conor.dooley@microchip.com>
+Reviewed-by: Jernej Skrabec <jernej.skrabec@gmail.com>
+---
+ .../devicetree/bindings/sound/allwinner,sun4i-a10-spdif.yaml    | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Documentation/devicetree/bindings/sound/allwinner,sun4i-a10-spdif.yaml b/Documentation/devicetree/bindings/sound/allwinner,sun4i-a10-spdif.yaml
+index 8108c564dd78..98e2e053fa19 100644
+--- a/Documentation/devicetree/bindings/sound/allwinner,sun4i-a10-spdif.yaml
++++ b/Documentation/devicetree/bindings/sound/allwinner,sun4i-a10-spdif.yaml
+@@ -62,6 +62,7 @@ allOf:
+             enum:
+               - allwinner,sun6i-a31-spdif
+               - allwinner,sun8i-h3-spdif
++              - allwinner,sun50i-h6-spdif
+ 
+     then:
+       required:
+@@ -73,7 +74,6 @@ allOf:
+           contains:
+             enum:
+               - allwinner,sun8i-h3-spdif
+-              - allwinner,sun50i-h6-spdif
+ 
+     then:
+       properties:
 -- 
-Email: Herbert Xu <herbert@gondor.apana.org.au>
-Home Page: http://gondor.apana.org.au/~herbert/
-PGP Key: http://gondor.apana.org.au/~herbert/pubkey.txt
+2.39.2
+
