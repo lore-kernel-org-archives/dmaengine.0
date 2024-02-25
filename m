@@ -1,192 +1,81 @@
-Received: from smtp.smtpout.orange.fr (smtp-27.smtpout.orange.fr [80.12.242.27])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 18DE8143C6F
-	for <dmaengine@vger.kernel.org>; Fri, 23 Feb 2024 19:00:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.12.242.27
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.9])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FF181B800;
+	Sun, 25 Feb 2024 20:11:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.9
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708714803; cv=none; b=rXKF6a3RqSMRNVXRfbp967VWsaQ0CUsB7vRW/+gENMhhU8jE+v0AEjuPOVzTtY2/a5IEOk8oAdXuSpsXyFaDA2Qu8SrnPMPg9aG8v3WlHxsQq9Fdu+ebHLmDOCHR7t0DA7h65KdSAbKYJlVXj6A7azWBpC7sWSIlKKrpD7zoqXI=
+	t=1708891914; cv=none; b=dYBXw37otS2m5AaJRLXC6nazTIJKZr5CbPtOXd3c2DY8Yzf328B6S+pudPq/fL72u4707YF5VNgmdV8qAp74y9mLTaWrh2pOGmbm7gv+vbI4Khctd2TdcNtFWcFoxvws220llNqkHe60phD0whrT7GSCHuXSIO3FmnvUAXE+oKk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708714803; c=relaxed/simple;
-	bh=7UqDuwBDaflgwCxw652350Ulcmu75Iyquu+SWNAvWw4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=nLXA50UuuwuqLUt/uwFG20BvF4hoXxG1PC2iWqjUGTa5iUR4lZVRCeZIcUPHVopoxZ0vP2NPJBpE9En98CWn8o3iy3EIfKSifSwsro/Lo02KG42x5DmBwA+8QlgqcEjKJRu1zYMsydhKVu1HBMXLWCJeTRGktRnAX6Hl+mSQO0U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=wanadoo.fr; spf=pass smtp.mailfrom=wanadoo.fr; dkim=pass (2048-bit key) header.d=wanadoo.fr header.i=@wanadoo.fr header.b=gSJOHz8G; arc=none smtp.client-ip=80.12.242.27
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=wanadoo.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=wanadoo.fr
+	s=arc-20240116; t=1708891914; c=relaxed/simple;
+	bh=ipeSeJEnGh8gKOqj8bEZj+meMRjyyaDgYj/HDJhNvV0=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=gsOdmyV2XBfDv4lNsdmdsxLTNwvxPSSVN8lidpidKfIjKXJFUMpbRsa/zTrl85nN2jjUjqLMlZDOItM2R6qcTo1qGRAdtOur4/g0emQLHTIZ62/v0fTdYFyovltBZj0UIunR54Gkcg0MlS0TiQKG3SEB7OYgIhqdsFKGkAW3C0Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=NPUeLmKO; arc=none smtp.client-ip=198.175.65.9
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=wanadoo.fr header.i=@wanadoo.fr header.b="gSJOHz8G"
-Received: from [192.168.1.18] ([92.140.202.140])
-	by smtp.orange.fr with ESMTPA
-	id dad3rSWmGAVWCdad3rWYDQ; Fri, 23 Feb 2024 19:50:38 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=wanadoo.fr;
-	s=t20230301; t=1708714238;
-	bh=b2nzjyV92V5xFcCR433HxBvfMH7+kUtrO9FWeyeWOCQ=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=gSJOHz8G0WmTpVutXKnIFVjcLbBB1QIclwwVEQyQ4j6idFD9JbNJap3o6UKPBJVZz
-	 cqMFD/y4EvOF8qWOv8Y8+4Qy1CHhsbC2ahw9ZY+oHwAwBojDPKbLC+0eARYERsT9kZ
-	 J8MljnZMQYF9Ed3LsOYxwkorekwBuoSpdxNXoEfegcDpWAKJ/8I6lQGCdD5v3FdVWp
-	 qo8FRhlWim+zAOeryHLsfiwrcj1wkkTTeNGWvmNwMpDTDfoPGJkMYbh8KayxOMxHWG
-	 NjB7hOFJZMC9iA/hGqmcSxgeeNpY5s+jus6lwGJZpxVEzbWBI1yZ87CD5L9VV1q6tH
-	 oiJ1FRv0DTNCA==
-X-ME-Helo: [192.168.1.18]
-X-ME-Auth: Y2hyaXN0b3BoZS5qYWlsbGV0QHdhbmFkb28uZnI=
-X-ME-Date: Fri, 23 Feb 2024 19:50:38 +0100
-X-ME-IP: 92.140.202.140
-Message-ID: <530912d2-aa44-494d-bd51-dcac6147b78a@wanadoo.fr>
-Date: Fri, 23 Feb 2024 19:50:37 +0100
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="NPUeLmKO"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1708891914; x=1740427914;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=ipeSeJEnGh8gKOqj8bEZj+meMRjyyaDgYj/HDJhNvV0=;
+  b=NPUeLmKO+oRNw2j2I4podqsa05LUZNdy1I5QTqob6jBEMU9AsbkZzfLn
+   /pwAOTYMegkHOE4xOp65/9nF7qZzNwcTQIahR8IYUYrwwoFA15gsT3oM6
+   z1nD0n7MEfApTsSl8bEGW9HxQYawi1Ux9DrDxr2BAmFGw0Q/Y9LoRWASR
+   fDO/ncvok8sOYY4NNF93vU/xIdqwbFbmO7DfMrbYI9+NjfZiwSnRleV/6
+   o6Jh32lu10seFUsMHs62j08bpk5iU6s5Wei2bK9iJBuK54AjXtVBqnSnw
+   LdBzPjTunw8+8waz7s8aY4iVYNTC2+ZACWd+O7LZa5S39n8lNgKq+NGTF
+   g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10995"; a="25639526"
+X-IronPort-AV: E=Sophos;i="6.06,185,1705392000"; 
+   d="scan'208";a="25639526"
+Received: from fmviesa002.fm.intel.com ([10.60.135.142])
+  by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Feb 2024 12:11:53 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.06,185,1705392000"; 
+   d="scan'208";a="29632546"
+Received: from rfredric-mobl.amr.corp.intel.com (HELO tzanussi-mobl1.amr.corp.intel.com) ([10.213.171.152])
+  by fmviesa002-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Feb 2024 12:11:51 -0800
+From: Tom Zanussi <tom.zanussi@linux.intel.com>
+To: herbert@gondor.apana.org.au,
+	davem@davemloft.net
+Cc: rex.zhang@intel.com,
+	andre.glover@linux.intel.com,
+	linux-kernel@vger.kernel.org,
+	linux-crypto@vger.kernel.org,
+	dmaengine@vger.kernel.org
+Subject: [PATCH 0/2] crypto: Intel Analytics Accelerator (IAA) bugfixes
+Date: Sun, 25 Feb 2024 14:11:32 -0600
+Message-Id: <20240225201134.759335-1-tom.zanussi@linux.intel.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RESEND PATCH V8 2/2] dmaengine: amd: qdma: Add AMD QDMA driver
-Content-Language: en-MW
-To: Lizhi Hou <lizhi.hou@amd.com>, vkoul@kernel.org,
- dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc: Nishad Saraf <nishads@amd.com>, nishad.saraf@amd.com,
- sonal.santan@amd.com, max.zhen@amd.com
-References: <1708707403-47386-1-git-send-email-lizhi.hou@amd.com>
- <1708707403-47386-3-git-send-email-lizhi.hou@amd.com>
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-In-Reply-To: <1708707403-47386-3-git-send-email-lizhi.hou@amd.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
-Le 23/02/2024 à 17:56, Lizhi Hou a écrit :
-> From: Nishad Saraf <nishads@amd.com>
-> 
-> Adds driver to enable PCIe board which uses AMD QDMA (the Queue-based
-> Direct Memory Access) subsystem. For example, Xilinx Alveo V70 AI
-> Accelerator devices.
->      https://www.xilinx.com/applications/data-center/v70.html
-> 
-> The QDMA subsystem is used in conjunction with the PCI Express IP block
-> to provide high performance data transfer between host memory and the
-> card's DMA subsystem.
-> 
->              +-------+       +-------+       +-----------+
->     PCIe     |       |       |       |       |           |
->     Tx/Rx    |       |       |       |  AXI  |           |
->   <=======>  | PCIE  | <===> | QDMA  | <====>| User Logic|
->              |       |       |       |       |           |
->              +-------+       +-------+       +-----------+
-> 
-> The primary mechanism to transfer data using the QDMA is for the QDMA
-> engine to operate on instructions (descriptors) provided by the host
-> operating system. Using the descriptors, the QDMA can move data in both
-> the Host to Card (H2C) direction, or the Card to Host (C2H) direction.
-> The QDMA provides a per-queue basis option whether DMA traffic goes
-> to an AXI4 memory map (MM) interface or to an AXI4-Stream interface.
-> 
-> The hardware detail is provided by
->      https://docs.xilinx.com/r/en-US/pg302-qdma
-> 
-> Implements dmaengine APIs to support MM DMA transfers.
-> - probe the available DMA channels
-> - use dma_slave_map for channel lookup
-> - use virtual channel to manage dmaengine tx descriptors
-> - implement device_prep_slave_sg callback to handle host scatter gather
->    list
-> - implement descriptor metadata operations to set device address for DMA
->    transfer
-> 
-> Signed-off-by: Nishad Saraf <nishads@amd.com>
-> Signed-off-by: Lizhi Hou <lizhi.hou@amd.com>
-> ---
+Hi Herbert,
 
-...
+Here are a couple of bugfixes for some minor problems discovered while
+testing.
 
-> +static void qdma_free_qintr_rings(struct qdma_device *qdev)
-> +{
-> +	int i;
-> +
-> +	for (i = 0; i < qdev->qintr_ring_num; i++) {
-> +		if (!qdev->qintr_rings[i].base)
-> +			continue;
-> +
-> +		dma_free_coherent(&qdev->pdev->dev, QDMA_INTR_RING_SIZE,
-> +				  qdev->qintr_rings[i].base,
-> +				  qdev->qintr_rings[i].dev_base);
-> +	}
-> +}
-> +
-> +static int qdma_alloc_qintr_rings(struct qdma_device *qdev)
-> +{
-> +	u32 ctxt[QDMA_CTXT_REGMAP_LEN];
-> +	struct device *dev = &qdev->pdev->dev;
-> +	struct qdma_intr_ring *ring;
-> +	struct qdma_ctxt_intr intr_ctxt;
-> +	u32 vector;
-> +	int ret, i;
-> +
-> +	qdev->qintr_ring_num = qdev->queue_irq_num;
-> +	qdev->qintr_rings = devm_kcalloc(dev, qdev->qintr_ring_num,
-> +					 sizeof(*qdev->qintr_rings),
-> +					 GFP_KERNEL);
-> +	if (!qdev->qintr_rings)
-> +		return -ENOMEM;
-> +
-> +	vector = qdev->queue_irq_start;
-> +	for (i = 0; i < qdev->qintr_ring_num; i++, vector++) {
-> +		ring = &qdev->qintr_rings[i];
-> +		ring->qdev = qdev;
-> +		ring->msix_id = qdev->err_irq_idx + i + 1;
-> +		ring->ridx = i;
-> +		ring->color = 1;
-> +		ring->base = dma_alloc_coherent(dev, QDMA_INTR_RING_SIZE,
-> +						&ring->dev_base,
-> +						GFP_KERNEL);
+Thanks,
 
-Hi,
+Tom
 
-Does it make sense to use dmam_alloc_coherent() and remove 
-qdma_free_qintr_rings()?
+Tom Zanussi (2):
+  crypto: iaa - Fix async_disable descriptor leak
+  crypto: iaa - Fix comp/decomp delay statistics
 
-If yes, maybe the function could be renamed as qdmam_alloc_qintr_rings() 
-or devm_qdma_alloc_qintr_rings() to show that it is fully managed.
+ drivers/crypto/intel/iaa/iaa_crypto_main.c  | 13 ++++++++--
+ drivers/crypto/intel/iaa/iaa_crypto_stats.c | 28 ---------------------
+ drivers/crypto/intel/iaa/iaa_crypto_stats.h |  8 +++---
+ 3 files changed, 15 insertions(+), 34 deletions(-)
 
-CJ
+-- 
+2.34.1
 
-> +		if (!ring->base) {
-> +			qdma_err(qdev, "Failed to alloc intr ring %d", i);
-> +			ret = -ENOMEM;
-> +			goto failed;
-> +		}
-> +		intr_ctxt.agg_base = QDMA_INTR_RING_BASE(ring->dev_base);
-> +		intr_ctxt.size = (QDMA_INTR_RING_SIZE - 1) / 4096;
-> +		intr_ctxt.vec = ring->msix_id;
-> +		intr_ctxt.valid = true;
-> +		intr_ctxt.color = true;
-> +		ret = qdma_prog_context(qdev, QDMA_CTXT_INTR_COAL,
-> +					QDMA_CTXT_CLEAR, ring->ridx, NULL);
-> +		if (ret) {
-> +			qdma_err(qdev, "Failed clear intr ctx, ret %d", ret);
-> +			goto failed;
-> +		}
-> +
-> +		qdma_prep_intr_context(qdev, &intr_ctxt, ctxt);
-> +		ret = qdma_prog_context(qdev, QDMA_CTXT_INTR_COAL,
-> +					QDMA_CTXT_WRITE, ring->ridx, ctxt);
-> +		if (ret) {
-> +			qdma_err(qdev, "Failed setup intr ctx, ret %d", ret);
-> +			goto failed;
-> +		}
-> +
-> +		ret = devm_request_threaded_irq(dev, vector, NULL,
-> +						qdma_queue_isr, IRQF_ONESHOT,
-> +						"amd-qdma-queue", ring);
-> +		if (ret) {
-> +			qdma_err(qdev, "Failed to request irq %d", vector);
-> +			goto failed;
-> +		}
-> +	}
-> +
-> +	return 0;
-> +
-> +failed:
-> +	qdma_free_qintr_rings(qdev);
-> +	return ret;
-> +}
-
-...
