@@ -1,243 +1,193 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.9])
+Received: from mx11lb.world4you.com (mx11lb.world4you.com [81.19.149.121])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6BAF1BC2F;
-	Sun, 25 Feb 2024 20:11:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.9
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38D72D2FE;
+	Sun, 25 Feb 2024 20:23:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=81.19.149.121
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708891919; cv=none; b=D+LygMI9rzAe6bRXsFN1Dwug9YZyJGIX2mtGOSgODNMmU0Pi2H2/n1LPHBQw6TMM8QZBUExkj4Yk1X7D1EU5tvOPOE6lWa0J9WN+ckg0ZLrQM40/Nc+szcRYgVLMpmVZmxAr+MQHEwqqmJyUqtimwcEKkKUHA9AGZ/FHTTpxBEU=
+	t=1708892593; cv=none; b=eQ1vZPPQVFDQ0jaWQRgYmN/l82v+BEiy8ERQHdXz9O/qzEOGbjVENJhWgziABrPpVDrIUtbQzWpRwfaFueVcP55q9Tra04DkfaJiK0UnP17RtPiCX9Eu1mjtPsyHWjPYqjpXv7Z5IGWf5QMFiXpTEE20BoLZ6XDpazYaEmssUgs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708891919; c=relaxed/simple;
-	bh=2ZHJPk46orqg1Qb+fXEa/VDYyDsc6n+YD/UPcHAmhuA=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=YxY5bqz7iZH4ZIkONPz7kfaW6d6VDEm6Qq/b+uSOwoKjZKHw1lUuuVZBXtr5Alo0TYVz1qB+NlFtk8TpRSllXcNbLK7OZsB94lFPhYANKaxR7xwXh6oC+F3EDbDcFjzxfzDbP6w6JJvFYRCoiNZlIp7m3EImtWSwtX6KQT/AX94=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=TMi3W9cp; arc=none smtp.client-ip=198.175.65.9
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
+	s=arc-20240116; t=1708892593; c=relaxed/simple;
+	bh=yW/+obWtXZSHaK0Je1F5WkuDWcXhnWjrtjf+VbTL55I=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=mMfQ0Kw9Fgrt13u/s3V54YjJBMhtVI+Ibd6X8dVlVUaGNEFB1MnhOW7aa67VHK5XeU4wBHOunin0TAlhr1YbkYW29MLcAOOjMFmIhDJS3v2nyESOkaEVhYm0OwoB3II55i1smKtOWBzvxC8VUq0SYKfESKSu4yD9YCvfvULXoss=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=sw-optimization.com; spf=pass smtp.mailfrom=sw-optimization.com; dkim=pass (1024-bit key) header.d=sw-optimization.com header.i=@sw-optimization.com header.b=edXJWmE/; arc=none smtp.client-ip=81.19.149.121
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=sw-optimization.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sw-optimization.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="TMi3W9cp"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1708891918; x=1740427918;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=2ZHJPk46orqg1Qb+fXEa/VDYyDsc6n+YD/UPcHAmhuA=;
-  b=TMi3W9cpMI+oqVydVw/2r3f6C/FNnYRZSQkgKEyfZYCqxQ+8O6zTtWyJ
-   8eNJg10rSEyPa7ivUpXG3mw2FdshTE4ANI7zYKUABiuUlJLIluPrjuEXH
-   Zy/AO0PZlucMOK+lwcGn8tCPX7hpWuJ3R7sgOvnDV2rOxARyFZZW8VdbN
-   rWik3Su/u7wDL4ob8d4vrT0ZOQcUndEVj8aKY/KRCCTq0NkCQ779aPKGN
-   c9NwRbDXWZGggqAxt+XTOajD+fofvmdP36j9PRX5GMf81/Itd8FW+jRTm
-   sERlCkSMw0SF3WcLcIoP2tx5ZR/PijoVFW4pru3YJg8RQmJRVKzxs5KlS
-   A==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10995"; a="25639535"
-X-IronPort-AV: E=Sophos;i="6.06,185,1705392000"; 
-   d="scan'208";a="25639535"
-Received: from fmviesa002.fm.intel.com ([10.60.135.142])
-  by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Feb 2024 12:11:58 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.06,185,1705392000"; 
-   d="scan'208";a="29632554"
-Received: from rfredric-mobl.amr.corp.intel.com (HELO tzanussi-mobl1.amr.corp.intel.com) ([10.213.171.152])
-  by fmviesa002-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Feb 2024 12:11:57 -0800
-From: Tom Zanussi <tom.zanussi@linux.intel.com>
-To: herbert@gondor.apana.org.au,
-	davem@davemloft.net
-Cc: rex.zhang@intel.com,
-	andre.glover@linux.intel.com,
-	linux-kernel@vger.kernel.org,
-	linux-crypto@vger.kernel.org,
-	dmaengine@vger.kernel.org
-Subject: [PATCH 2/2] crypto: iaa - Fix comp/decomp delay statistics
-Date: Sun, 25 Feb 2024 14:11:34 -0600
-Message-Id: <20240225201134.759335-3-tom.zanussi@linux.intel.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240225201134.759335-1-tom.zanussi@linux.intel.com>
-References: <20240225201134.759335-1-tom.zanussi@linux.intel.com>
+	dkim=pass (1024-bit key) header.d=sw-optimization.com header.i=@sw-optimization.com header.b="edXJWmE/"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=sw-optimization.com; s=dkim11; h=Content-Transfer-Encoding:Content-Type:
+	In-Reply-To:References:Cc:To:From:Subject:MIME-Version:Date:Message-ID:Sender
+	:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
+	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
+	List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=ECMTj4d0RwuHIR6RVnxKDJNLLn5ad3xX9dN37q8WZfk=; b=edXJWmE/j2+9KN6qSnOzuJ2cHo
+	cotC8/3KLRovQiwfhhrdtKZClEeOFBhE2BtXx/BKrsE4vJ240ZAiffmNmJ618+l++GnK7ap42JQqz
+	OR+84dsQPF5WezZHAjkVd3uBM35J0UXLrIJAYU+L2JNsLO/BbKJNB/dLOTu1qv3BoSnk=;
+Received: from [82.194.150.36] (helo=[192.168.0.145])
+	by mx11lb.world4you.com with esmtpa (Exim 4.96.2)
+	(envelope-from <eas@sw-optimization.com>)
+	id 1reKkj-0006le-1n;
+	Sun, 25 Feb 2024 21:05:37 +0100
+Message-ID: <245a848c-5bbc-463d-b7e1-b82cea2c4dba@sw-optimization.com>
+Date: Sun, 25 Feb 2024 21:05:37 +0100
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] dmaengine: altera-msgdma: fix descriptors freeing logic
+From: Eric Schwarz <eas@sw-optimization.com>
+To: Olivier Dautricourt <olivierdautricourt@gmail.com>
+Cc: dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
+ Vinod Koul <vkoul@kernel.org>, Stefan Roese <sr@denx.de>
+References: <20230920200636.32870-3-olivierdautricourt@gmail.com>
+ <22402987-305b-024b-044e-53db17037d90@sw-optimization.com>
+ <ZQyWsvcQCJgmG5aO@freebase>
+ <8d18106d-444e-9346-26cc-3767540df5d8@sw-optimization.com>
+ <ZQ3B9NWVmLvaVhJX@freebase>
+ <5e2404d4-f36c-7718-c0fc-d226aefdf2f6@sw-optimization.com>
+Content-Language: de-DE
+In-Reply-To: <5e2404d4-f36c-7718-c0fc-d226aefdf2f6@sw-optimization.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
+X-AV-Do-Run: Yes
 
-The comp/decomp delay statistics currently have no callers; somehow
-they were dropped during refactoring. There originally were also two
-sets, one for the async algorithm, the other for the synchronous
-version. Because the synchronous algorithm was dropped, one set should
-be removed. To keep it consistent with the rest of the stats, and
-since there's no ambiguity, remove the acomp/adecomp versions.  Also
-add back the callers.
+Hello Olivier,
 
-Reported-by: Rex Zhang <rex.zhang@intel.com>
-Signed-off-by: Tom Zanussi <tom.zanussi@linux.intel.com>
----
- drivers/crypto/intel/iaa/iaa_crypto_main.c  |  9 +++++++
- drivers/crypto/intel/iaa/iaa_crypto_stats.c | 28 ---------------------
- drivers/crypto/intel/iaa/iaa_crypto_stats.h |  8 +++---
- 3 files changed, 13 insertions(+), 32 deletions(-)
+just a ping on getting the patches / fixes below mainline. - Were you 
+able to get hardware for testing?
 
-diff --git a/drivers/crypto/intel/iaa/iaa_crypto_main.c b/drivers/crypto/intel/iaa/iaa_crypto_main.c
-index 85ee4c965ccf..b54f93c64033 100644
---- a/drivers/crypto/intel/iaa/iaa_crypto_main.c
-+++ b/drivers/crypto/intel/iaa/iaa_crypto_main.c
-@@ -1494,6 +1494,7 @@ static int iaa_comp_acompress(struct acomp_req *req)
- 	u32 compression_crc;
- 	struct idxd_wq *wq;
- 	struct device *dev;
-+	u64 start_time_ns;
- 	int order = -1;
- 
- 	compression_ctx = crypto_tfm_ctx(tfm);
-@@ -1567,8 +1568,10 @@ static int iaa_comp_acompress(struct acomp_req *req)
- 		" req->dlen %d, sg_dma_len(sg) %d\n", dst_addr, nr_sgs,
- 		req->dst, req->dlen, sg_dma_len(req->dst));
- 
-+	start_time_ns = iaa_get_ts();
- 	ret = iaa_compress(tfm, req, wq, src_addr, req->slen, dst_addr,
- 			   &req->dlen, &compression_crc, disable_async);
-+	update_max_comp_delay_ns(start_time_ns);
- 	if (ret == -EINPROGRESS)
- 		return ret;
- 
-@@ -1615,6 +1618,7 @@ static int iaa_comp_adecompress_alloc_dest(struct acomp_req *req)
- 	struct iaa_wq *iaa_wq;
- 	struct device *dev;
- 	struct idxd_wq *wq;
-+	u64 start_time_ns;
- 	int order = -1;
- 
- 	cpu = get_cpu();
-@@ -1671,8 +1675,10 @@ static int iaa_comp_adecompress_alloc_dest(struct acomp_req *req)
- 	dev_dbg(dev, "dma_map_sg, dst_addr %llx, nr_sgs %d, req->dst %p,"
- 		" req->dlen %d, sg_dma_len(sg) %d\n", dst_addr, nr_sgs,
- 		req->dst, req->dlen, sg_dma_len(req->dst));
-+	start_time_ns = iaa_get_ts();
- 	ret = iaa_decompress(tfm, req, wq, src_addr, req->slen,
- 			     dst_addr, &req->dlen, true);
-+	update_max_decomp_delay_ns(start_time_ns);
- 	if (ret == -EOVERFLOW) {
- 		dma_unmap_sg(dev, req->dst, sg_nents(req->dst), DMA_FROM_DEVICE);
- 		req->dlen *= 2;
-@@ -1703,6 +1709,7 @@ static int iaa_comp_adecompress(struct acomp_req *req)
- 	int nr_sgs, cpu, ret = 0;
- 	struct iaa_wq *iaa_wq;
- 	struct device *dev;
-+	u64 start_time_ns;
- 	struct idxd_wq *wq;
- 
- 	if (!iaa_crypto_enabled) {
-@@ -1762,8 +1769,10 @@ static int iaa_comp_adecompress(struct acomp_req *req)
- 		" req->dlen %d, sg_dma_len(sg) %d\n", dst_addr, nr_sgs,
- 		req->dst, req->dlen, sg_dma_len(req->dst));
- 
-+	start_time_ns = iaa_get_ts();
- 	ret = iaa_decompress(tfm, req, wq, src_addr, req->slen,
- 			     dst_addr, &req->dlen, false);
-+	update_max_decomp_delay_ns(start_time_ns);
- 	if (ret == -EINPROGRESS)
- 		return ret;
- 
-diff --git a/drivers/crypto/intel/iaa/iaa_crypto_stats.c b/drivers/crypto/intel/iaa/iaa_crypto_stats.c
-index cbf87d0effe3..c9f83af4b307 100644
---- a/drivers/crypto/intel/iaa/iaa_crypto_stats.c
-+++ b/drivers/crypto/intel/iaa/iaa_crypto_stats.c
-@@ -22,8 +22,6 @@ static u64 total_decomp_calls;
- static u64 total_sw_decomp_calls;
- static u64 max_comp_delay_ns;
- static u64 max_decomp_delay_ns;
--static u64 max_acomp_delay_ns;
--static u64 max_adecomp_delay_ns;
- static u64 total_comp_bytes_out;
- static u64 total_decomp_bytes_in;
- static u64 total_completion_einval_errors;
-@@ -92,26 +90,6 @@ void update_max_decomp_delay_ns(u64 start_time_ns)
- 		max_decomp_delay_ns = time_diff;
- }
- 
--void update_max_acomp_delay_ns(u64 start_time_ns)
--{
--	u64 time_diff;
--
--	time_diff = ktime_get_ns() - start_time_ns;
--
--	if (time_diff > max_acomp_delay_ns)
--		max_acomp_delay_ns = time_diff;
--}
--
--void update_max_adecomp_delay_ns(u64 start_time_ns)
--{
--	u64 time_diff;
--
--	time_diff = ktime_get_ns() - start_time_ns;
--
--	if (time_diff > max_adecomp_delay_ns)
--		max_adecomp_delay_ns = time_diff;
--}
--
- void update_wq_comp_calls(struct idxd_wq *idxd_wq)
- {
- 	struct iaa_wq *wq = idxd_wq_get_private(idxd_wq);
-@@ -151,8 +129,6 @@ static void reset_iaa_crypto_stats(void)
- 	total_sw_decomp_calls = 0;
- 	max_comp_delay_ns = 0;
- 	max_decomp_delay_ns = 0;
--	max_acomp_delay_ns = 0;
--	max_adecomp_delay_ns = 0;
- 	total_comp_bytes_out = 0;
- 	total_decomp_bytes_in = 0;
- 	total_completion_einval_errors = 0;
-@@ -280,10 +256,6 @@ int __init iaa_crypto_debugfs_init(void)
- 			   iaa_crypto_debugfs_root, &max_comp_delay_ns);
- 	debugfs_create_u64("max_decomp_delay_ns", 0644,
- 			   iaa_crypto_debugfs_root, &max_decomp_delay_ns);
--	debugfs_create_u64("max_acomp_delay_ns", 0644,
--			   iaa_crypto_debugfs_root, &max_comp_delay_ns);
--	debugfs_create_u64("max_adecomp_delay_ns", 0644,
--			   iaa_crypto_debugfs_root, &max_decomp_delay_ns);
- 	debugfs_create_u64("total_comp_calls", 0644,
- 			   iaa_crypto_debugfs_root, &total_comp_calls);
- 	debugfs_create_u64("total_decomp_calls", 0644,
-diff --git a/drivers/crypto/intel/iaa/iaa_crypto_stats.h b/drivers/crypto/intel/iaa/iaa_crypto_stats.h
-index c10b87b86fa4..c916ca83f070 100644
---- a/drivers/crypto/intel/iaa/iaa_crypto_stats.h
-+++ b/drivers/crypto/intel/iaa/iaa_crypto_stats.h
-@@ -15,8 +15,6 @@ void	update_total_sw_decomp_calls(void);
- void	update_total_decomp_bytes_in(int n);
- void	update_max_comp_delay_ns(u64 start_time_ns);
- void	update_max_decomp_delay_ns(u64 start_time_ns);
--void	update_max_acomp_delay_ns(u64 start_time_ns);
--void	update_max_adecomp_delay_ns(u64 start_time_ns);
- void	update_completion_einval_errs(void);
- void	update_completion_timeout_errs(void);
- void	update_completion_comp_buf_overflow_errs(void);
-@@ -26,6 +24,8 @@ void	update_wq_comp_bytes(struct idxd_wq *idxd_wq, int n);
- void	update_wq_decomp_calls(struct idxd_wq *idxd_wq);
- void	update_wq_decomp_bytes(struct idxd_wq *idxd_wq, int n);
- 
-+static inline u64	iaa_get_ts(void) { return ktime_get_ns(); }
-+
- #else
- static inline int	iaa_crypto_debugfs_init(void) { return 0; }
- static inline void	iaa_crypto_debugfs_cleanup(void) {}
-@@ -37,8 +37,6 @@ static inline void	update_total_sw_decomp_calls(void) {}
- static inline void	update_total_decomp_bytes_in(int n) {}
- static inline void	update_max_comp_delay_ns(u64 start_time_ns) {}
- static inline void	update_max_decomp_delay_ns(u64 start_time_ns) {}
--static inline void	update_max_acomp_delay_ns(u64 start_time_ns) {}
--static inline void	update_max_adecomp_delay_ns(u64 start_time_ns) {}
- static inline void	update_completion_einval_errs(void) {}
- static inline void	update_completion_timeout_errs(void) {}
- static inline void	update_completion_comp_buf_overflow_errs(void) {}
-@@ -48,6 +46,8 @@ static inline void	update_wq_comp_bytes(struct idxd_wq *idxd_wq, int n) {}
- static inline void	update_wq_decomp_calls(struct idxd_wq *idxd_wq) {}
- static inline void	update_wq_decomp_bytes(struct idxd_wq *idxd_wq, int n) {}
- 
-+static inline u64	iaa_get_ts(void) { return 0; }
-+
- #endif // CONFIG_CRYPTO_DEV_IAA_CRYPTO_STATS
- 
- #endif
--- 
-2.34.1
+Many thanks
+Eric
 
+
+Am 28.09.2023 um 09:57 schrieb Eric Schwarz:
+> Hello Olivier,
+> 
+> Am 22.09.2023 um 18:33 schrieb Olivier Dautricourt:
+>> Hi Eric,
+>>
+>> On Fri, Sep 22, 2023 at 09:49:59AM +0200, Eric Schwarz wrote:
+>>> Hello Olivier,
+>>>
+>>>>> Am 20.09.2023 um 21:58 schrieb Olivier Dautricourt:
+>>>>>> Sparse complains because we first take the lock in msgdma_tasklet 
+>>>>>> -> move
+>>>>>> locking to msgdma_chan_desc_cleanup.
+>>>>>> In consequence, move calling of msgdma_chan_desc_cleanup outside 
+>>>>>> of the
+>>>>>> critical section of function msgdma_tasklet.
+>>>>>>
+>>>>>> Use spin_unlock_irqsave/restore instead of just spinlock/unlock to 
+>>>>>> keep
+>>>>>> state of irqs while executing the callbacks.
+>>>>>
+>>>>> What about the locking in the IRQ handler msgdma_irq_handler() 
+>>>>> itself? -
+>>>>> Shouldn't spin_unlock_irqsave/restore() be used there as well 
+>>>>> instead of
+>>>>> just spinlock/unlock()?
+>>>>
+>>>> IMO no:
+>>>> It is covered by [1]("Locking Between Hard IRQ and Softirqs/Tasklets")
+>>>> The irq handler cannot be preempted by the tasklet, so the
+>>>> spin_lock/unlock version is ok. However the tasklet could be 
+>>>> interrupted
+>>>> by the Hard IRQ hence the disabling of irqs with save/restore when
+>>>> entering critical section.
+>>>>
+>>>> It should not be needed to keep interrupts locally disabled while 
+>>>> invoking
+>>>> callbacks, will add this to the commit description.
+>>>>
+>>>> [1] https://www.kernel.org/doc/Documentation/kernel-hacking/locking.rst
+>>>
+>>> Thanks for the link. I have read differently here [2] w/ special 
+>>> emphasis on
+>>> "Lesson 3: spinlocks revisited.".
+>>>
+>>> [2] https://www.kernel.org/doc/Documentation/locking/spinlocks.txt
+>>>
+>>
+>> This chapter [2] says that our code must use irq versions of spin_lock
+>> because our handler does indeed play with the lock. However this
+>> requirement does not apply to the irq handler itself, as we know that the
+>> interrupt line is disabled during the execution of the handler (and our
+>> handler is not shared with another irq).
+> 
+> "... as we know that the interrupt line is disabled during the execution 
+> of the handler (and our handler is not shared with another irq)."
+> 
+> That was the point I wanted to be sure about. So if the IRQ handler 
+> cannot be called twice ensured by architecture neither on single or 
+> multi CPU systems (SMP or others) I am fine.
+> Thanks for your response on that. Appreciated.
+> 
+> Because you take the effort to set up hardware and environment again you 
+> may also test following fixes/improvements from zynqmp driver which 
+> could then be merged into altera-msgdma driver. Please check yourself:
+> 
+> f2b816a1dfb8 ("dmaengine: zynqmp_dma: Add device_synchronize support")
+> # Caught by your patchset
+> #9558cf4ad07e ("dmaengine: zynqmp_dma: fix lockdep warning in tasklet")
+> # Caught by your patchset
+> #16ed0ef3e931 ("dmaengine: zynqmp_dma: cleanup after completing all 
+> descriptors")
+> # Caught by your patchset - For the altera-msgdma driver it is a real 
+> fix not an optimization.
+> #48594dbf793a ("dmaengine: zynqmp_dma: Use list_move_tail instead of 
+> list_del/list_add_tail")
+> 5ba080aada5e ("dmaengine: zynqmp_dma: Fix race condition in the probe")
+> 
+> Note: If the sequence is applied in reverse order the log would be 
+> comparable to zynqmp driver's log.
+> 
+> IMHO your patchset could/should be extended by two more patches and 
+> split into small junks as mentioned. Then history would stay intact to 
+> be compared to zynqmp driver.
+> 
+> Note: Take care about "Developer’s Certificate of Origin 1.1". IMHO 
+> "Signed-off-by" tags from the other patches might/must be copied at 
+> least for most of the patches then, which would make it easier to get it 
+> into mainline.
+> 
+> Btw, some cosmetic changes could be made in the mainlined driver:
+> 
+> 30s/implements/Implements/
+> 31s/data/Data/
+> 32s/data/Data/
+> 33s/the/The/
+> 39s/data/Data/
+> 40s/data/Data/
+> 41s/characteristics/Characteristics/
+> 109s/response/Response/
+> 154s/implements/Implements/
+> 154s/sw\ /SW\ /
+> 155s/support/Support/
+> 155s/api/API/
+> 156s/assosiated/Associated/
+> 157s/node\ /Node\ /
+> 158s/transmit/Transmit/
+> 259s/Hw/HW/
+> 291s/Hw/HW/
+> 322s/prepare/Prepare/
+> 327s/transfer/Transfer/
+> 378s/prepare/Prepare/
+> 384s/transfer/Transfer/
+> 385s/transfer/Transfer/
+> 502s/its/it\'s/
+> 514s/oder/order/
+> 530s/copy\ /Copy\ /
+> 680s/sSGDMA/mSGDMA/
+> 723s/Interrupt/interrupt/
+> 752s/\(\)//
+> 921s/\(\)//
+> 
+> ... and another patch, if that is taken into account.
+> 
+> Cheers
+> Eric
