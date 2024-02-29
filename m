@@ -1,56 +1,81 @@
-Received: from mx0a-00128a01.pphosted.com (mx0a-00128a01.pphosted.com [148.163.135.77])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57F057A131
-	for <dmaengine@vger.kernel.org>; Thu, 29 Feb 2024 16:20:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.135.77
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 883F7130AC1
+	for <dmaengine@vger.kernel.org>; Thu, 29 Feb 2024 18:30:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709223646; cv=none; b=RI/Ys+fFOADq6tZydXxJ9ZjuFn8QHiZYOhXajnrijM0Ti9tnCfkEdLfycqg+AhfXbZFT0DAfcabYTepfI0P77f38QBjIoRZpxqUvHJu+Xj9bHpkZTvy0hhV3SBle1fnoc09M+gPydsgC6ZjcHbf+yjTZJqejD3F+gJ5pAO2y63E=
+	t=1709231425; cv=none; b=JVO18dvRX8MfwhUQ4CJO4EGFwikf+xF7Q+ALCEa1KUUO/+MSoK2VbXd9V5+lrs9edsSjxevAaRCuFnsITEqP2RKAwb4ucCMMqgO6+xSgvK5Eqkf+ANmw73nnBfqeyzfwF0rx/9IXfVE/IoT6+a3RniezDy7h2LzZf218sVR3ys8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709223646; c=relaxed/simple;
-	bh=RwGYh78S1JORZNVlFUHaMay3ZOZvYL5wWjKog0nr+/Y=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:References:
-	 In-Reply-To:To:CC; b=Xc/u/oO+aTfy8NmPh3RXTEGO0liOuCXYYpkfcI8WcoTM0t3qLW3MHlZOTPRMpkN9EeA9bzdD4qdqLsPaUNXQI+hgGPBkCLdbzWmpJLJQw036nJ1y6ewl2565PTGRJG+jWwAzS7PhuU60U0dgw0XyvMgSwWwBR4iRTncbNh7yr9Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=analog.com; spf=pass smtp.mailfrom=analog.com; dkim=pass (2048-bit key) header.d=analog.com header.i=@analog.com header.b=FUr5V/iP; arc=none smtp.client-ip=148.163.135.77
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=analog.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=analog.com
+	s=arc-20240116; t=1709231425; c=relaxed/simple;
+	bh=8yy/4GV1yFJzF9sv2B95/iwZJPmwic5KkIWGzHyFdDA=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=gXajQnDeRQN8/UN5G1MotFMlIP2STEsELcpCxBP6QoGtp/MTV9RQRrQJILiv+ip6BuCM5imUGYXfsxNYNig/QffqRZklCl30gg3t2ejYc7tsmQPj1jwGSvaJyyyHSjcev1e0KoFjkf5wvxcfRu+LuopizdTHqaBvgXCuvsydfcY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=iM5mHmPo; arc=none smtp.client-ip=209.85.214.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=analog.com header.i=@analog.com header.b="FUr5V/iP"
-Received: from pps.filterd (m0167089.ppops.net [127.0.0.1])
-	by mx0a-00128a01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41TF6f99013749;
-	Thu, 29 Feb 2024 11:20:29 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=analog.com; h=
-	from:date:subject:mime-version:content-type
-	:content-transfer-encoding:message-id:references:in-reply-to:to
-	:cc; s=DKIM; bh=9x/uc9BrjafhgeMO8bED2sAzXo5uqApxqvOT+nDh868=; b=
-	FUr5V/iPyNFS8O+s+mGrKHiCL1BPNzp2ScYetSZXi0upG9d+cRuEYwCPZlWd7nNk
-	ha+pCA7SoMkhGk3/pQEZpM0MF2HBFYBaqInaLPbjcp8hu80xyj/WyNcyQpVefXBp
-	hZNg1aQiaRgeU3Y7N8J/2gprGbJ+GD2yNjHbXwrR9tgEVXP2G7fWdoTqxLZWpuoZ
-	FmtpK5Ja41uhbwQh21dID/8En+aEdUPV08ZEE60f31FfA2cd2hz1La3kYQEKqEyc
-	P99CCAAT+sxzXadjBoGzUC9VcRXmSjbqgSXJ4Rnx++HDYUFCuLtL7nLLEfifR23x
-	GClHApgWSBfn1eb71xs6bQ==
-Received: from nwd2mta4.analog.com ([137.71.173.58])
-	by mx0a-00128a01.pphosted.com (PPS) with ESMTPS id 3whyvepvux-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 29 Feb 2024 11:20:28 -0500 (EST)
-Received: from ASHBMBX8.ad.analog.com (ASHBMBX8.ad.analog.com [10.64.17.5])
-	by nwd2mta4.analog.com (8.14.7/8.14.7) with ESMTP id 41TGKRRs026500
-	(version=TLSv1/SSLv3 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=FAIL);
-	Thu, 29 Feb 2024 11:20:27 -0500
-Received: from ASHBMBX9.ad.analog.com (10.64.17.10) by ASHBMBX8.ad.analog.com
- (10.64.17.5) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.14; Thu, 29 Feb
- 2024 11:20:26 -0500
-Received: from zeus.spd.analog.com (10.66.68.11) by ashbmbx9.ad.analog.com
- (10.64.17.10) with Microsoft SMTP Server id 15.2.986.14 via Frontend
- Transport; Thu, 29 Feb 2024 11:20:26 -0500
-Received: from [127.0.0.1] ([10.44.3.58])
-	by zeus.spd.analog.com (8.15.1/8.15.1) with ESMTP id 41TGKHwa019308;
-	Thu, 29 Feb 2024 11:20:22 -0500
-From: Nuno Sa <nuno.sa@analog.com>
-Date: Thu, 29 Feb 2024 17:23:16 +0100
-Subject: [PATCH RESEND v3 1/2] dmaengine: axi-dmac: fix possible race in
- remove()
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="iM5mHmPo"
+Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-1dc09556599so11587635ad.1
+        for <dmaengine@vger.kernel.org>; Thu, 29 Feb 2024 10:30:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1709231422; x=1709836222; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=aYbYLgN//LB6IKshdj2UFvVMq+97XOWcZTiyLMqD288=;
+        b=iM5mHmPoziyBmXNKdfjG1EYs9RZkxqajHY0iJTm8qPwQw7XSYOaQmmExCBBqcpxL4k
+         S1mlEu61ub7ABvinLlFMWO0Aet7chIuR4vUqHYZM4CGZESNe1dTYwittwTDQi0ewrRY1
+         HPmeUJKQL/2H6rQa4zKQVPc1Z1ERlwwVXNLV8=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1709231422; x=1709836222;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=aYbYLgN//LB6IKshdj2UFvVMq+97XOWcZTiyLMqD288=;
+        b=HkFvJfGzuNdCDetVoF74KzNP9owNmw0iSHu4gBsIcNKMQJjPtVmLYH/dC9l8hY+k6p
+         O8scO9ZbZ+DpB1tQY4q+4EGJM3P3jziCqHYAQ61YUq3qXgZxob1SXsF9ARdIq9XETrll
+         Ze0MKSfz69fxJQTPhIUZXku22Otph86eaMesCEIclys78lPSZHGg8uBFJtJamvHRibaj
+         7cK7DsKehqOZpxZJQK8z2h78+b4vNrPVqN3QQUQzOXk0TNw51N4uBc5wlxdzYQVUpiVm
+         wPbl8F/nRd1YZCqWOyQRwQGEeqTPIhCPVwMRmhO8uBzO5Nb0Q9fxHSBBKWyxasqvILh1
+         LL6Q==
+X-Forwarded-Encrypted: i=1; AJvYcCWzDV7K1i5G0jZ4zmhY/NxKXDs2fNExSt4G6d56APzEHW3J9umUbhoD4yLVGZjYZzjtZ3R+agSCxRi5dF+Ss0AXWTa40tOt+zwN
+X-Gm-Message-State: AOJu0YwmVmNmURjyM00dplRiBau1sbWxLcy0mSOROsko74oKu1RvZvqS
+	jTsc8JIb3caubtFA/9E0tlqrqCj4ZA1BUNtvjunz6j8nT9TG5eSK9/nOrKQU/g==
+X-Google-Smtp-Source: AGHT+IFZ8jcrjcQAt+MQj+2B0Sj5fw+uvOzg9P3n+GwTvGaDLn2o9jX7lXUHTKfIFeYePsmaS46Yrw==
+X-Received: by 2002:a17:902:d4c4:b0:1db:ea23:9ee6 with SMTP id o4-20020a170902d4c400b001dbea239ee6mr3615434plg.12.1709231421915;
+        Thu, 29 Feb 2024 10:30:21 -0800 (PST)
+Received: from www.outflux.net ([198.0.35.241])
+        by smtp.gmail.com with ESMTPSA id 21-20020a170902c15500b001d93a85ae13sm1803519plj.309.2024.02.29.10.30.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 29 Feb 2024 10:30:21 -0800 (PST)
+From: Kees Cook <keescook@chromium.org>
+To: Vinod Koul <vkoul@kernel.org>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Mark Brown <broonie@kernel.org>,
+	linux-arm-kernel@lists.infradead.org,
+	dmaengine@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-iio@vger.kernel.org,
+	linux-spi@vger.kernel.org,
+	netdev@vger.kernel.org,
+	linux-hardening@vger.kernel.org,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Cc: Kees Cook <keescook@chromium.org>,
+	Jonathan Cameron <jic23@kernel.org>,
+	Lars-Peter Clausen <lars@metafoo.de>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>
+Subject: Re: (subset) [PATCH v4 1/8] overflow: Use POD in check_shl_overflow()
+Date: Thu, 29 Feb 2024 10:30:14 -0800
+Message-Id: <170923141241.775345.14051727895770192324.b4-ty@chromium.org>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240228204919.3680786-2-andriy.shevchenko@linux.intel.com>
+References: <20240228204919.3680786-1-andriy.shevchenko@linux.intel.com> <20240228204919.3680786-2-andriy.shevchenko@linux.intel.com>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -58,59 +83,22 @@ List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-ID: <20240229-axi-dmac-devm-probe-v3-1-f0e78d2ab5b1@analog.com>
-References: <20240229-axi-dmac-devm-probe-v3-0-f0e78d2ab5b1@analog.com>
-In-Reply-To: <20240229-axi-dmac-devm-probe-v3-0-f0e78d2ab5b1@analog.com>
-To: <dmaengine@vger.kernel.org>
-CC: Lars-Peter Clausen <lars@metafoo.de>, Vinod Koul <vkoul@kernel.org>,
-        <stable@kernel.org>
-X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1709223821; l=1011;
- i=nuno.sa@analog.com; s=20231116; h=from:subject:message-id;
- bh=RwGYh78S1JORZNVlFUHaMay3ZOZvYL5wWjKog0nr+/Y=;
- b=sZ0Pvbp5SqfgCTloY5jAJErKWbk9i5fxzU5ngx7NwmgRx1RnDytT2V8v9UV+CUugToznZcU6c
- BdGz8LDN+g+B3aq4bm1Vfw46V888VdzNSfqyiZYU1xej01P9VQ0Lqhv
-X-Developer-Key: i=nuno.sa@analog.com; a=ed25519;
- pk=3NQwYA013OUYZsmDFBf8rmyyr5iQlxV/9H4/Df83o1E=
-X-ADIRuleOP-NewSCL: Rule Triggered
-X-Proofpoint-ORIG-GUID: YEZEYxk2ueq46tFURAy7pf5-oa7Nx9TP
-X-Proofpoint-GUID: YEZEYxk2ueq46tFURAy7pf5-oa7Nx9TP
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-02-29_02,2024-02-29_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0
- priorityscore=1501 mlxlogscore=611 spamscore=0 phishscore=0 suspectscore=0
- bulkscore=0 mlxscore=0 lowpriorityscore=0 impostorscore=0 clxscore=1015
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2402120000 definitions=main-2402290125
+Content-Transfer-Encoding: 8bit
 
-We need to first free the IRQ before calling of_dma_controller_free().
-Otherwise we could get an interrupt and schedule a tasklet while
-removing the DMA controller.
+On Wed, 28 Feb 2024 22:41:31 +0200, Andy Shevchenko wrote:
+> The check_shl_overflow() uses u64 type that is defined in types.h.
+> Instead of including that header, just switch to use POD type
+> directly.
+> 
+> 
 
-Fixes: 0e3b67b348b8 ("dmaengine: Add support for the Analog Devices AXI-DMAC DMA controller")
-Cc: <stable@kernel.org>
-Signed-off-by: Nuno Sa <nuno.sa@analog.com>
----
- drivers/dma/dma-axi-dmac.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Applied to for-next/hardening, thanks!
 
-diff --git a/drivers/dma/dma-axi-dmac.c b/drivers/dma/dma-axi-dmac.c
-index 4e339c04fc1e..d5a33e4a91b1 100644
---- a/drivers/dma/dma-axi-dmac.c
-+++ b/drivers/dma/dma-axi-dmac.c
-@@ -1134,8 +1134,8 @@ static void axi_dmac_remove(struct platform_device *pdev)
- {
- 	struct axi_dmac *dmac = platform_get_drvdata(pdev);
- 
--	of_dma_controller_free(pdev->dev.of_node);
- 	free_irq(dmac->irq, dmac);
-+	of_dma_controller_free(pdev->dev.of_node);
- 	tasklet_kill(&dmac->chan.vchan.task);
- 	dma_async_device_unregister(&dmac->dma_dev);
- 	clk_disable_unprepare(dmac->clk);
+[1/8] overflow: Use POD in check_shl_overflow()
+      https://git.kernel.org/kees/c/4e55a75495b7
+
+Take care,
 
 -- 
-2.44.0
+Kees Cook
 
