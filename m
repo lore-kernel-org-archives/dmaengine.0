@@ -1,39 +1,45 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from 12.mo581.mail-out.ovh.net (12.mo581.mail-out.ovh.net [178.33.107.167])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8CF1548F3
-	for <dmaengine@vger.kernel.org>; Thu, 28 Mar 2024 07:39:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6A824C62E
+	for <dmaengine@vger.kernel.org>; Thu, 28 Mar 2024 07:44:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.33.107.167
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711611595; cv=none; b=EDUS8IYup4JJ41Ooa65D39Bt47/E9vJwkPaB9FhlvuoD+DTLiUzm12jIzikZMakoJCebyH2mE+q5dYTX2MRzelUMM7GaMJGymPhY+L1XNpJapD82XOqJAqHewm9o4vCYt34PaxM5XnbG2wLzg9cZIMCtL/0CzcfYhp4FV9Ki2jY=
+	t=1711611884; cv=none; b=KEjiR3XgCPrbGZM3zI1LDlAIeJmpHmHa6ZL3oF6sr4QG8PTPCgYdwdw5DOx+o/Ib9BTI6f5eslV0nI9kv9zGWWEif8NqsGtu3adYxgv2ixBJzGfUgcQZCyhES+q61u4Zc/ofkv8LaQ3v00YgL/Ot03FCscJoV8vbB6VQuuG9+UE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711611595; c=relaxed/simple;
-	bh=ZzvvQ6YDsyvBgi8WcanQNPPP/sckfC2BHc9RNMuK7JM=;
+	s=arc-20240116; t=1711611884; c=relaxed/simple;
+	bh=FoK+TTnkZBEIxAuqwtZNUFYhYqEUw8/IIA5uwrrKnQc=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=M5cZXptAXZam40Op2oT5X5kULS16kmOzdmYmUwFetLRD75qp3V65v1GcORWEdfU9M3gmsexqKXLX1xIsuPpODFbPx3Cjnu2qdIIapcdWbOzH/sCdtm1tkWYUeJBktVaBIUKD612ZB1z9HY+J3ON4rLHd99biGt34w1R5WvaK9wQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jXGQffug; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jXGQffug"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36EADC43390;
-	Thu, 28 Mar 2024 07:39:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1711611595;
-	bh=ZzvvQ6YDsyvBgi8WcanQNPPP/sckfC2BHc9RNMuK7JM=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=jXGQffugSUbEvfxjWWsfje6nlRM3tGqf88R35JBgHDTSp1B3CeQ1t7ZNY5FUY7Bm3
-	 kYWvxoStl53693cuDjKWKuz4nZXjyK6rxMt8O8N6mWoBpBmwkBDEcRK5rakaK47X/q
-	 CFN/HPLjbkwE/x+dQ8q3ibI8SG3CIM7tgnH65snKfYUP6DbjIEH7Fe+mP8kMxKNGsG
-	 kZDSmw2AklxRZ2kY18itUNW11SugWaQe1qeLO5hyT2GAIlVgDvWFT4IMO+L+a6FMOk
-	 +wFu8nwQ/U/mQ0/Siv74Hz7v0mFt4nl3KJLeW7er6cwc7Z5PPdEzrEDBjPp8wreUzw
-	 OeSU0rCOx8nbQ==
-From: Vinod Koul <vkoul@kernel.org>
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc: fancer.lancer@gmail.com, dmaengine@vger.kernel.org
-In-Reply-To: <20240326085256.12639-1-manivannan.sadhasivam@linaro.org>
-References: <20240326085256.12639-1-manivannan.sadhasivam@linaro.org>
-Subject: Re: [PATCH] MAINTAINERS: Drop Gustavo Pimentel as EDMA Reviewer
-Message-Id: <171161159370.113475.14170948972163028712.b4-ty@kernel.org>
-Date: Thu, 28 Mar 2024 13:09:53 +0530
+	 MIME-Version:Content-Type; b=TMe6Ldj1y5I3RvnSSzyEr4ezUXQlURAtV0+1qB0o4xislxz9pdNa5ExvHqGarq0EBBM80znUgfic324lkDIb7tw4qdGyr9Nw0OLOQtu+YWKoNajjWG74Pc4c5o1IHUeAfiVQasFOB/zHMo46ctCzWSwK6mzhNATnnoSemv5gRkc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org; spf=pass smtp.mailfrom=etezian.org; arc=none smtp.client-ip=178.33.107.167
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=etezian.org
+Received: from director10.ghost.mail-out.ovh.net (unknown [10.108.9.167])
+	by mo581.mail-out.ovh.net (Postfix) with ESMTP id 4V4wMx6nWRz1F94
+	for <dmaengine@vger.kernel.org>; Thu, 28 Mar 2024 07:36:45 +0000 (UTC)
+Received: from ghost-submission-6684bf9d7b-ldk78 (unknown [10.110.96.65])
+	by director10.ghost.mail-out.ovh.net (Postfix) with ESMTPS id 92A881FEE9;
+	Thu, 28 Mar 2024 07:36:43 +0000 (UTC)
+Received: from etezian.org ([37.59.142.99])
+	by ghost-submission-6684bf9d7b-ldk78 with ESMTPSA
+	id irrGGgseBWbkIwAANZbBaA
+	(envelope-from <andi@etezian.org>); Thu, 28 Mar 2024 07:36:43 +0000
+Authentication-Results:garm.ovh; auth=pass (GARM-99G00369bef739-e97a-4666-95b7-831df257c96e,
+                    6D693167F0AB1D8A9C15294DA3267AC24BED3ACC) smtp.auth=andi@etezian.org
+X-OVh-ClientIp:89.217.109.169
+From: Andi Shyti <andi.shyti@kernel.org>
+To: konrad.dybcio@linaro.org, andersson@kernel.org, vkoul@kernel.org, 
+ wsa@kernel.org, linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, linux-i2c@vger.kernel.org, 
+ Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
+Cc: quic_vdadhani@quicinc.com, 
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20240313052639.1747078-1-quic_msavaliy@quicinc.com>
+References: <20240313052639.1747078-1-quic_msavaliy@quicinc.com>
+Subject: Re: [PATCH v4] i2c: i2c-qcom-geni: Parse Error correctly in i2c
+ GSI mode
+Message-Id: <171161140136.2698925.4294566764047886777.b4-ty@kernel.org>
+Date: Thu, 28 Mar 2024 08:36:41 +0100
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -42,26 +48,35 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.12.3
+X-Mailer: b4 0.13.0
+X-Ovh-Tracer-Id: 2165386998096661243
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -100
+X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedvledruddukedguddtlecutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfqggfjpdevjffgvefmvefgnecuuegrihhlohhuthemucehtddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefhvfevjghfuffkffggtgfgofesthejredtredtjeenucfhrhhomheptehnughiucfuhhihthhiuceorghnughirdhshhihthhisehkvghrnhgvlhdrohhrgheqnecuggftrfgrthhtvghrnhepffetheduffdvhfdugfffudfgjeejudehheegfeeguefhieeugffhgfeuffdvgfefnecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucfkphepuddvjedrtddrtddruddpkeelrddvudejrddutdelrdduieelpdefjedrheelrddugedvrdelleenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepihhnvghtpeduvdejrddtrddtrddupdhmrghilhhfrhhomheprghnughisegvthgviihirghnrdhorhhgpdhnsggprhgtphhtthhopedupdhrtghpthhtohepughmrggvnhhgihhnvgesvhhgvghrrdhkvghrnhgvlhdrohhrghdpoffvtefjohhsthepmhhoheekuddpmhhouggvpehsmhhtphhouhht
 
+Hi
 
-On Tue, 26 Mar 2024 14:22:56 +0530, Manivannan Sadhasivam wrote:
-> Gustavo Pimentel seems to have left Synopsys, so his email is bouncing.
-> And there is no indication from him expressing willingless to
-> continue contributing to the driver.
+On Wed, 13 Mar 2024 10:56:39 +0530, Mukesh Kumar Savaliya wrote:
+> I2C driver currently reports "DMA txn failed" error even though it's
+> NACK OR BUS_PROTO OR ARB_LOST. Detect NACK error when no device ACKs
+> on the bus instead of generic transfer failure which doesn't give any
+> specific clue.
 > 
-> So let's drop him from the MAINTAINERS entry.
-> 
+> Make Changes inside i2c driver callback handler function
+> i2c_gpi_cb_result() to parse these errors and make sure GSI driver
+> stores the error status during error interrupt.
 > 
 > [...]
 
-Applied, thanks!
+Applied to i2c/i2c-host-next on
 
-[1/1] MAINTAINERS: Drop Gustavo Pimentel as EDMA Reviewer
-      commit: 8b7149803af174f3184d97c779faa1c7608da5af
+git://git.kernel.org/pub/scm/linux/kernel/git/local tree
 
-Best regards,
--- 
-~Vinod
+Thank you,
+Andi
 
+Patches applied
+===============
+[1/1] i2c: i2c-qcom-geni: Parse Error correctly in i2c GSI mode
+      commit: 394b3e3ead0d9fdcc1ef53bb893fdbe7bf1db3ac
 
