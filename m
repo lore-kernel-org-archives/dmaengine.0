@@ -1,115 +1,80 @@
-Received: from forward501a.mail.yandex.net (forward501a.mail.yandex.net [178.154.239.81])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4BC152F6C;
-	Thu, 28 Mar 2024 07:30:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.154.239.81
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9089239FC6;
+	Thu, 28 Mar 2024 07:39:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711611019; cv=none; b=tc8mY55wBJZGN0BHpV2iKL20jHVwUdF/GZTqTO3RCVP4JJohwj5X+6SZlmD0t32TjDOg6iUIHGjibbTQA/Xf3PasyuGGbIPleLe4RqNOEzDEckc2iiz3qUM7OwUzfA0YvoNjMhlQEBdchcdWAMmUvgK2LbycTa+toG2Qbk/Ygyo=
+	t=1711611581; cv=none; b=rqebFjur6WY3i1w+4ONm0eFPym8dDM8JEcMkCGh2zJAWPwz4uyliAiwx+xEcifH+yFfmhGPJ0KhBcMSMUCqQ58yeVceckqyn3qakPi3QzudCcIzKieKZZyVODC65WjYmAPXGvVFp2arQWt3DWyPrL0m811hxCPQhZzB9DPlb5Q4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711611019; c=relaxed/simple;
-	bh=bRVgFqHFRGemmtjNQzkJSMwtxi1ANVGaKfrKPoTWPXs=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=kHvwx2SHpznVvbZ/bNTfMyNvMMqcn5nNVVsTtftjSJNLr9E/nfv2Dl4r+iMxJxXDMEKwBnuVeId99tIOK1bFmuaRl6LAumYo7URtceA7k0ZFPkhcG+5zHjBPH86dPwwCf8YxTt+lPRmbfy2ThphmND90UM4rSjq0wZ9I4FqPP/E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=maquefel.me; spf=pass smtp.mailfrom=maquefel.me; dkim=pass (1024-bit key) header.d=maquefel.me header.i=@maquefel.me header.b=A9e2NBjX; arc=none smtp.client-ip=178.154.239.81
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=maquefel.me
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=maquefel.me
+	s=arc-20240116; t=1711611581; c=relaxed/simple;
+	bh=j2fecunGf2z206NzbuhZVhae6PguWXtF1jN4ko+Qk6A=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=I+EJ+EX/vV3ZwHu/K0+At/DjsAfwX+yZSnu1AgubKZvkM1gIc44lR1rHeUEBsQIGgv1s2WZRa572AjyWJQMSRfg1TzwEWPCV/eL8JTKQjYsGu+SC+BI2XYCkwbPxKbXjQ09YqYyfBBbALMErv2EazJy7W0Ybd5hWGqAt2euJiFM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mzXDtiMj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=maquefel.me header.i=@maquefel.me header.b="A9e2NBjX"
-Received: from mail-nwsmtp-smtp-production-main-74.vla.yp-c.yandex.net (mail-nwsmtp-smtp-production-main-74.vla.yp-c.yandex.net [IPv6:2a02:6b8:c0d:193:0:640:a325:0])
-	by forward501a.mail.yandex.net (Yandex) with ESMTPS id ADBDB61D82;
-	Thu, 28 Mar 2024 10:24:25 +0300 (MSK)
-Received: by mail-nwsmtp-smtp-production-main-74.vla.yp-c.yandex.net (smtp/Yandex) with ESMTPSA id OOHQfKCGluQ0-10d0dH6M;
-	Thu, 28 Mar 2024 10:24:25 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=maquefel.me; s=mail;
-	t=1711610665; bh=bRVgFqHFRGemmtjNQzkJSMwtxi1ANVGaKfrKPoTWPXs=;
-	h=References:Date:In-Reply-To:Cc:To:From:Subject:Message-ID;
-	b=A9e2NBjXYR/su5FPIUiqJbhtyLfm93unMpbCKmofAVDuYnY8DyM6Ypa1/SJeYEGd7
-	 QZWu/11UcJwjYQhBsmOLEPwHJP72dsBn9pMtYzdz8ap+NjA5zaM4Z0lXhSjZR+hQLb
-	 blU6ZNFUt4mncN4245FGlcYKW4+SeWWX6spLTirs=
-Authentication-Results: mail-nwsmtp-smtp-production-main-74.vla.yp-c.yandex.net; dkim=pass header.i=@maquefel.me
-Message-ID: <821da3f70fcd326860a995514791b228e3f3f7b7.camel@maquefel.me>
-Subject: Re: [PATCH v9 09/38] dma: cirrus: Convert to DT for Cirrus EP93xx
-From: Nikita Shubin <nikita.shubin@maquefel.me>
-To: Vinod Koul <vkoul@kernel.org>
-Cc: Alexander Sverdlin <alexander.sverdlin@gmail.com>, 
-	dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org, Arnd Bergmann
-	 <arnd@arndb.de>
-Date: Thu, 28 Mar 2024 10:24:25 +0300
-In-Reply-To: <ZgTytMtgvqcHlEsO@matsya>
-References: <20240326-ep93xx-v9-0-156e2ae5dfc8@maquefel.me>
-	 <20240326-ep93xx-v9-9-156e2ae5dfc8@maquefel.me> <ZgTytMtgvqcHlEsO@matsya>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.48.4 
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mzXDtiMj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CF47C433C7;
+	Thu, 28 Mar 2024 07:39:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1711611581;
+	bh=j2fecunGf2z206NzbuhZVhae6PguWXtF1jN4ko+Qk6A=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+	b=mzXDtiMjwTUnjifYo0LhCLPcO+1bwT0CitQmJUs/rFiAbkNL6H2YmohGRnS/lSeaf
+	 sDrUPbms3pcO6baStESjextCTz7lHVTPPofrdOVek9lOO/feshIw6YkqYWYVI+CJlC
+	 sQc6Qs2fMEe/yrog4CthJix+Tftiu6gqmIXlTDIGn6ZPJcTtGC4qaa7+OJ2kb9VKcO
+	 lNDBFH70yy/a+NeI9ebAL2HoWdgAbqzpO8MddZiiiELpJVeWPWE58t2ysgMo++e2Ci
+	 hyO19+NUTMTr9JW86vEE1aW1wK3APPWHMbyeIP5vPzQL2qYRg+mMI8SMVUJKYXzj89
+	 awTZf6QtkShjw==
+From: Vinod Koul <vkoul@kernel.org>
+To: =?utf-8?q?Andreas_F=C3=A4rber?= <afaerber@suse.de>, 
+ Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, 
+ Nathan Chancellor <nathan@kernel.org>, Arnd Bergmann <arnd@kernel.org>
+Cc: Arnd Bergmann <arnd@arndb.de>, 
+ Nick Desaulniers <ndesaulniers@google.com>, 
+ Bill Wendling <morbo@google.com>, Justin Stitt <justinstitt@google.com>, 
+ =?utf-8?q?Uwe_Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>, 
+ Randy Dunlap <rdunlap@infradead.org>, Rob Herring <robh@kernel.org>, 
+ Zhang Jianhua <chris.zjh@huawei.com>, dmaengine@vger.kernel.org, 
+ linux-arm-kernel@lists.infradead.org, linux-actions@lists.infradead.org, 
+ linux-kernel@vger.kernel.org, llvm@lists.linux.dev
+In-Reply-To: <20240322132116.906475-1-arnd@kernel.org>
+References: <20240322132116.906475-1-arnd@kernel.org>
+Subject: Re: [PATCH] dmaengine: owl: fix register access functions
+Message-Id: <171161157512.113367.10881464487051334801.b4-ty@kernel.org>
+Date: Thu, 28 Mar 2024 13:09:35 +0530
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-
-Hello Vinod!
-
-Thank you for looking into this.
-
-On Thu, 2024-03-28 at 10:01 +0530, Vinod Koul wrote:
-> On 26-03-24, 12:18, Nikita Shubin via B4 Relay wrote:
-> > From: Nikita Shubin <nikita.shubin@maquefel.me>
-> >=20
-> > +enum ep93xx_dma_type {
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0M2P_DMA,
->=20
-> Is this missing P2M?
->=20
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0M2M_DMA,
-> > +};
-> > +
-
-These are internal types used only to distinguish M2P/P2M and M2M
-capable controllers in "of_device_id ep93xx_dma_of_ids[]".
-
-So M2P_DMA is M2P/P2M, a can rename M2P_DMA to M2P_P2M_DMA to avoid
-confusion.
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.12.3
 
 
-> > =C2=A0struct ep93xx_dma_engine;
-> > =C2=A0static int ep93xx_dma_slave_config_write(struct dma_chan *chan,
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0 enum
-> > dma_transfer_direction dir,
-> > @@ -129,11 +136,17 @@ struct ep93xx_dma_desc {
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0struct list_head=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0node;
-> > =C2=A0};
-> > =C2=A0
-> > +struct ep93xx_dma_chan_cfg {
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0u8=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0port;
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0enum dma_transfer_direction=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0dir;
->=20
-> Why is direction stored here, it should be derived from the prep_xxx
-> call, that has direction as an argument
->=20
->=20
+On Fri, 22 Mar 2024 14:21:07 +0100, Arnd Bergmann wrote:
+> When building with 'make W=1', clang notices that the computed register
+> values are never actually written back but instead the wrong variable
+> is set:
+> 
+> drivers/dma/owl-dma.c:244:6: error: variable 'regval' set but not used [-Werror,-Wunused-but-set-variable]
+>   244 |         u32 regval;
+>       |             ^
+> drivers/dma/owl-dma.c:268:6: error: variable 'regval' set but not used [-Werror,-Wunused-but-set-variable]
+>   268 |         u32 regval;
+>       |             ^
+> 
+> [...]
 
-M2P/P2M channels aren't unidirectional.
+Applied, thanks!
 
-Citing "EP9xx User Guide":
+[1/1] dmaengine: owl: fix register access functions
+      commit: 43c633ef93a5d293c96ebcedb40130df13128428
 
-"Ten fully independent, programmable DMA controller internal M2P/P2M
-channels (5 Tx and 5 Rx)."
+Best regards,
+-- 
+~Vinod
 
-We need to return correct channel based on Device Tree provided data,
-because we need direction in device_alloc_chan_resources() for hardware
-setup before prepping.
-
-May be i am mistaking somewhere.
 
