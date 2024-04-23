@@ -1,94 +1,158 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1223136E38;
-	Tue, 23 Apr 2024 13:50:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E20B81B94F
+	for <dmaengine@vger.kernel.org>; Tue, 23 Apr 2024 14:32:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713880243; cv=none; b=adeTs/X7gdMN4GeTjj4Eo/qZc3Nbep0J0K3x29L3FP2BtBCjIgnsNCeL2o3EhpHkVJ0DR8yUqsjAlbxZYFClG2zfhj4FLh+cSMoD4V6dbIqFCf+duUPd7q1gPM4JmcgHqQt69tFnW6SMUhMI7ntp/TgFD3AWD9u7o0CcUcPIcPI=
+	t=1713882759; cv=none; b=E6tH0jiGL1oRbYzq7HknowMTV3CFeTOoJCPKbAuyWtVE+jys2FnVIJKy1YoiYBiZSJK9BqcuLG89/uE8EkfF86BNPnbyFhLXEIjW0oEaMyfYXXgDsRu6YIddeT0VZyaeiLwVco0dwqPAKfg+TwPXMnsKqMPNFqAsMND8LFY+wto=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713880243; c=relaxed/simple;
-	bh=69xKIHYi9IlkPeRLSshR5Kkz2te6ObXlX0YWGXKs98A=;
-	h=Date:Content-Type:MIME-Version:From:To:Cc:In-Reply-To:References:
-	 Message-Id:Subject; b=h6TLAngWpctKYdE2NtzMP90csgkM24/T0Z5CfB5/vbv5rp+00gQv3/YLYk8EcF86P7pznTuRtQ9MjTo2XCecmXxyLD22AbVZ+E30HKO/89hpG3FkMgwjreitm8QDyKKqBzXABaX0ulsdXpZlIf568NE+XIq2ai8aMfTu2BBCVxw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uJRvjvv+; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1713882759; c=relaxed/simple;
+	bh=JWM2q6UKkmz8H/Xpe/GSq85B4GCozLjkupEY7UIUvRk=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=JlNwwMgfx8V+dQbbFFzg1Rz5S5rjywSL5Rn0q8RoJI2kYHTBVT02Asl99RaA2gnsYtdFJrQ1gsNFs99mLx3+SOB08sniGMbd/2neGGF85Amqz7JaV9uKchOhbhnCyfAkNMv2OYSFqmUSYl12DRFG+Z8viaZK6ZwRztZmdz9mznQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=NMw6lgNr; arc=none smtp.client-ip=209.85.221.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uJRvjvv+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EE67C32783;
-	Tue, 23 Apr 2024 13:50:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1713880242;
-	bh=69xKIHYi9IlkPeRLSshR5Kkz2te6ObXlX0YWGXKs98A=;
-	h=Date:From:To:Cc:In-Reply-To:References:Subject:From;
-	b=uJRvjvv+NskakdFYTyFSA8LvJusLkXDk85F1TIbbT6zb04rUFmlCmdZJbPRZJctwv
-	 fyLDEgsPmHdVYnqa2irO5oOhhnc5gVEkb7KmGBIk56+RYNRZkav5cWgxyhlm87IzXv
-	 eMLCy4fXhtNLZMVGt+GkXPnTWQhHykIclEoBLxur9mMYJrWv3ogAdZNM/s6/AOWn3D
-	 rNbNtLZ7nabTNi6EpZ/FlU4ArW1RKkoFtp7sw93audwp4THtxqn3012OrZBEY7bVbJ
-	 eBaXyZ7FeBe0vj/3yDjC6u53Q47gvgIAMXDYt3R/cNRL+LkE3JLlIoHPHTq+xh57y0
-	 8W4EMtW3zYA3A==
-Date: Tue, 23 Apr 2024 08:50:41 -0500
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="NMw6lgNr"
+Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-343c7fae6e4so4999260f8f.1
+        for <dmaengine@vger.kernel.org>; Tue, 23 Apr 2024 07:32:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1713882756; x=1714487556; darn=vger.kernel.org;
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=sZEaYbNBN6VwiEMjZ9dxH2E1jE9IWjAX6OUPtgfdueE=;
+        b=NMw6lgNrJ7maO+GOULzGCSZXkIuvyF7PDbxcFnLuGmlsv501uiteJ/q9d8YmoRPX2U
+         to3DpK8oayB+tURMz3xkwDf4K93K5l00Fj6+Q3h6YjC09zIzVspPJLs910Ii2hfgflra
+         71fFChwP2YJ7QUjb71bLL7AX3DFiFjH98HOlCDGfjTq3VyTzCrBV+rNvf/RiYU/vMfw7
+         7I9kYwRzCDlly1byno+9XpcrsO6+/YADmww4LQbX6IeEnUc/c5sRjyKaDUQPPVqo1Mor
+         mQhB+ZWooPUWVVF7/RpHzxRRq4SN7FjwWafcPuNXGAqsTORQ3xmnQzhtnkDvUssAS52E
+         Mfcg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1713882756; x=1714487556;
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=sZEaYbNBN6VwiEMjZ9dxH2E1jE9IWjAX6OUPtgfdueE=;
+        b=WwgHjxWRyKjltm6Viqt48icynq7lJCtv789Au8BaA540oeXBsqVvu3Q5c4YfVESXqF
+         CVHknn6V8Q+z5pgHC4FXhg4vYw14yfYDeOMEtnmOGtGZJIS8df+IEZJUQEzhF2HFefLq
+         5Jy0cMEOeiHAY9dPUfrkrW41EzLYsmuaBg+C9TCifZUdnI9BJ8yVOHv6koQDUYYa74he
+         51uV03SFMetCGbppXwm4YCOpzhxY8KmBIQnog/hQ5m4Uf4BpOhMyzXsdOxHW1aDMZK4+
+         DW7bxmXMhWk7dvZjvNu7zBVIzcTkZqjtKLgZEiyHYbN8ddDuiVMfxBkEs9JczwYeVXQc
+         ndiw==
+X-Gm-Message-State: AOJu0YyvZCcRDhJgzUkE6pEQ6BznBCG51RcRpPqOjaZ9qyPwRqT3h9/b
+	abJk7ou0mdBoR2fff1rlUNIvVfGRox4uZtGfRZ5H3wP8KAsxlPibn+RxiOnInYGACJWaNSQkpzq
+	I
+X-Google-Smtp-Source: AGHT+IG4mIMgMfm7UJJHdm53OlTrf/WL+dVBu9a8HvRYr0qY3FpmqwdTD5bFPK8tyQL7rw8v7fGJBg==
+X-Received: by 2002:a5d:4851:0:b0:34a:3148:47f2 with SMTP id n17-20020a5d4851000000b0034a314847f2mr8427060wrs.18.1713882756058;
+        Tue, 23 Apr 2024 07:32:36 -0700 (PDT)
+Received: from localhost ([102.222.70.76])
+        by smtp.gmail.com with ESMTPSA id j6-20020a5d5646000000b0034b19cb1531sm5103831wrw.59.2024.04.23.07.32.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 23 Apr 2024 07:32:35 -0700 (PDT)
+Date: Tue, 23 Apr 2024 17:32:31 +0300
+From: Dan Carpenter <dan.carpenter@linaro.org>
+To: robh@kernel.org
+Cc: dmaengine@vger.kernel.org
+Subject: [bug report] dmaengine: qcom_hidma: simplify DT resource parsing
+Message-ID: <71169d0e-e751-4c08-b6ce-36c37f63879c@moroto.mountain>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Rob Herring <robh@kernel.org>
-To: Amelie Delaunay <amelie.delaunay@foss.st.com>
-Cc: Maxime Coquelin <mcoquelin.stm32@gmail.com>, dmaengine@vger.kernel.org, 
- linux-kernel@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com, 
- Vinod Koul <vkoul@kernel.org>, linux-hardening@vger.kernel.org, 
- Alexandre Torgue <alexandre.torgue@foss.st.com>, 
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
- Conor Dooley <conor+dt@kernel.org>, devicetree@vger.kernel.org, 
- Rob Herring <robh+dt@kernel.org>, linux-arm-kernel@lists.infradead.org
-In-Reply-To: <20240423123302.1550592-2-amelie.delaunay@foss.st.com>
-References: <20240423123302.1550592-1-amelie.delaunay@foss.st.com>
- <20240423123302.1550592-2-amelie.delaunay@foss.st.com>
-Message-Id: <171388024017.101826.4338039717721212935.robh@kernel.org>
-Subject: Re: [PATCH 01/12] dt-bindings: dma: New directory for STM32 DMA
- controllers bindings
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
+Hello Rob Herring,
 
-On Tue, 23 Apr 2024 14:32:51 +0200, Amelie Delaunay wrote:
-> Gather the STM32 DMA controllers bindings under ./dma/stm32/
-> 
-> Signed-off-by: Amelie Delaunay <amelie.delaunay@foss.st.com>
-> ---
->  .../devicetree/bindings/dma/{ => stm32}/st,stm32-dma.yaml     | 4 ++--
->  .../devicetree/bindings/dma/{ => stm32}/st,stm32-dmamux.yaml  | 4 ++--
->  .../devicetree/bindings/dma/{ => stm32}/st,stm32-mdma.yaml    | 4 ++--
->  3 files changed, 6 insertions(+), 6 deletions(-)
->  rename Documentation/devicetree/bindings/dma/{ => stm32}/st,stm32-dma.yaml (97%)
->  rename Documentation/devicetree/bindings/dma/{ => stm32}/st,stm32-dmamux.yaml (89%)
->  rename Documentation/devicetree/bindings/dma/{ => stm32}/st,stm32-mdma.yaml (96%)
-> 
+Commit 37fa4905d22a ("dmaengine: qcom_hidma: simplify DT resource
+parsing") from Jan 4, 2018 (linux-next), leads to the following
+Smatch static checker warning:
 
-My bot found errors running 'make dt_binding_check' on your patch:
+	drivers/dma/qcom/hidma_mgmt.c:408 hidma_mgmt_of_populate_channels()
+	warn: both zero and negative are errors 'ret'
 
-yamllint warnings/errors:
+drivers/dma/qcom/hidma_mgmt.c
+    348 static int __init hidma_mgmt_of_populate_channels(struct device_node *np)
+    349 {
+    350         struct platform_device *pdev_parent = of_find_device_by_node(np);
+    351         struct platform_device_info pdevinfo;
+    352         struct device_node *child;
+    353         struct resource *res;
+    354         int ret = 0;
+    355 
+    356         /* allocate a resource array */
+    357         res = kcalloc(3, sizeof(*res), GFP_KERNEL);
+    358         if (!res)
+    359                 return -ENOMEM;
+    360 
+    361         for_each_available_child_of_node(np, child) {
+    362                 struct platform_device *new_pdev;
+    363 
+    364                 ret = of_address_to_resource(child, 0, &res[0]);
+    365                 if (!ret)
+    366                         goto out;
 
-dtschema/dtc warnings/errors:
+This if statement seems reversed.  It will exit with success on the
+first iteration through the loop.
 
+    367 
+    368                 ret = of_address_to_resource(child, 1, &res[1]);
+    369                 if (!ret)
+    370                         goto out;
 
-doc reference errors (make refcheckdocs):
-Warning: Documentation/devicetree/bindings/spi/st,stm32-spi.yaml references a file that doesn't exist: Documentation/devicetree/bindings/dma/st,stm32-dma.yaml
-Documentation/devicetree/bindings/spi/st,stm32-spi.yaml: Documentation/devicetree/bindings/dma/st,stm32-dma.yaml
+Same.
 
-See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20240423123302.1550592-2-amelie.delaunay@foss.st.com
+    371 
+    372                 ret = of_irq_to_resource(child, 0, &res[2]);
+    373                 if (ret <= 0)
+    374                         goto out;
 
-The base for the series is generally the latest rc1. A different dependency
-should be noted in *this* patch.
+This is actually what triggers the warning.  of_irq_to_resource()
+returns a mix of negative error codes and zero on failure and positive
+values on success.
 
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
+    375 
+    376                 memset(&pdevinfo, 0, sizeof(pdevinfo));
+    377                 pdevinfo.fwnode = &child->fwnode;
+    378                 pdevinfo.parent = pdev_parent ? &pdev_parent->dev : NULL;
+    379                 pdevinfo.name = child->name;
+    380                 pdevinfo.id = object_counter++;
+    381                 pdevinfo.res = res;
+    382                 pdevinfo.num_res = 3;
+    383                 pdevinfo.data = NULL;
+    384                 pdevinfo.size_data = 0;
+    385                 pdevinfo.dma_mask = DMA_BIT_MASK(64);
+    386                 new_pdev = platform_device_register_full(&pdevinfo);
+    387                 if (IS_ERR(new_pdev)) {
+    388                         ret = PTR_ERR(new_pdev);
+    389                         goto out;
+    390                 }
+    391                 new_pdev->dev.of_node = child;
+    392                 of_dma_configure(&new_pdev->dev, child, true);
+    393                 /*
+    394                  * It is assumed that calling of_msi_configure is safe on
+    395                  * platforms with or without MSI support.
+    396                  */
+    397                 of_msi_configure(&new_pdev->dev, child);
+    398         }
+    399 
+    400         kfree(res);
+    401 
+    402         return ret;
 
-pip3 install dtschema --upgrade
+This should just be "return 0;" otherwise it's returning the positive
+result from of_irq_to_resource().
 
-Please check and re-submit after running the above command yourself. Note
-that DT_SCHEMA_FILES can be set to your schema file to speed up checking
-your schema. However, it must be unset to test all examples with your schema.
+    403 
+    404 out:
+    405         of_node_put(child);
+    406         kfree(res);
+    407 
+--> 408         return ret;
+    409 }
 
+regards,
+dan carpenter
