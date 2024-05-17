@@ -1,36 +1,36 @@
-Received: from relay2-d.mail.gandi.net (relay2-d.mail.gandi.net [217.70.183.194])
+Received: from relay3-d.mail.gandi.net (relay3-d.mail.gandi.net [217.70.183.195])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5520A14273;
-	Fri, 17 May 2024 18:36:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.194
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 475CA433A6;
+	Fri, 17 May 2024 18:39:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.195
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715970990; cv=none; b=flBvkatubHSpKBN26i8DIN20BBRJVgegV7luwTaZkAqDDmjmkwfm/WflBpvuLrKVg1bIeklgyyOb8Mb9D0Oqrqp6x0SRyZTH2kdXTCKG+8DvZbg8gYxYuF2rM9WInaMUDZLMbi+Jy71KkCjZrRt7PKvZVN8FTMAyfBfe3ixpLwU=
+	t=1715971152; cv=none; b=go5zxfueeAwavQlqX+fD6YaLyiwoywMdl5HBVNQodlVjodLRHbHfLiNjNrb5mQ5nnJei1Xn4zyHmtVoz8qq31R5ycQo9/qlXXbxA8tnMHYhQkGp1YhHLYNgXuKuU1Qg9fA07893uSfFObIhsqTxwy4BZTHCOEF3woUz0/64YbR4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715970990; c=relaxed/simple;
-	bh=afHr6vcYGE6+c2wcjc3RuskM/1BHQYoKya2tnQkT3Tk=;
+	s=arc-20240116; t=1715971152; c=relaxed/simple;
+	bh=XjbV/dDMibbGeaSWigHuyPox9WqyXpKxSJ9Fnk5PmIg=;
 	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=SbIxqRtbolRhIXC41UC+snnGpm1nHc7yCv+j3LixKyP6m+6U7+JdlhDi3J7WlfRXLcKEy+F7BtwshtXCI3zTe282hYu5WGy2fg8URZCb9KGAGt2K5tWCYCT8BXVQB2EHAw8p68cbF40zlzowcfII1MdRvXYDMQ74cI6InKgiMJo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=XIVoHlL+; arc=none smtp.client-ip=217.70.183.194
+	 MIME-Version:Content-Type; b=SJo8joEoZHg8LvFjkjRgQiwrto8IWj/6dNd5Pp+s5rW/EWp276tNNH5v7UiZOMOQp84vmRj4TWHtK1av7t6JsKSAfI8jy1KScBaABk/z3WctjIA7qRmmdAdbU3Fyy6GqRlp9VVHcAD0K2ayWpluIsaBuFrMFJBWeX9yoNoLVJIQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=IFUQN0+f; arc=none smtp.client-ip=217.70.183.195
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="XIVoHlL+"
-Received: by mail.gandi.net (Postfix) with ESMTPSA id 7048740004;
-	Fri, 17 May 2024 18:36:23 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="IFUQN0+f"
+Received: by mail.gandi.net (Postfix) with ESMTPSA id 6343F60005;
+	Fri, 17 May 2024 18:39:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
-	t=1715970986;
+	t=1715971148;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=aakjMiXrIK1SMo9a5spsETuysQuqYvFsuHtJGNipjLc=;
-	b=XIVoHlL+HvLfXAVErilHWu7Ml5HtDRH+tBzVUn8AYOu5kOkUIIaaQUhc5cUzEu8wKW3ofY
-	GS96wap5ixRrjAFlQpjwDAhKXSt1QkZIMT0BdQRZPYutWwaEFJ0HImnrkFJ6HcC9z+IwTP
-	WDeWAfAGGzLlxppRzyFZc8qmlaMeghP7hY+wa06ozngQhfY5SBRh2mX/wbDWLFwiqfWzmq
-	Bm9LlqkshhpMmVwVaIj22vqgFcqIGSmk+xloNklHiSfOEk0QNp0eXREBAKd9inQaOYVo9a
-	jkG1DdO01MmGnbXh8jQX/Q3IuyprBJGju9Y0g/RaA02fXeCHxfc0fGmhvzNzRA==
-Date: Fri, 17 May 2024 20:36:21 +0200
+	bh=MQ7u9L9F7F+dadEFYVniuXHGpmQQ9IaDZC1coQKlN20=;
+	b=IFUQN0+fQySFvQs40/92OM4Rw9bpLf2T3FAWIbtByl/HZ1fSz6CflMrs1uuekDlGVkf+rH
+	XivWXqepQgAO8O4sQ0VXDcPV44h/OSCdX5nA/uaOFb2UxpLSvdL8jE6kSAFhzb2CKVEbaR
+	6ghyt/pnaqxnFJD3I9RH4K8ebiojEepfpmBQbqW/COW+Kkcx31zG6RTstU8umeRaBxR6gC
+	+Y7kPqIm1RNkrkfSaCRT1n1vgJJ896xM+6Oj6P6+zUv6zZvys4KkePGixR3kvg8RdAUrDI
+	Bmb9MSoetIJIzJ6zIbKZFKieN8pF6hNRs579apctpFv2FKMVQrxYoxvcImulDw==
+Date: Fri, 17 May 2024 20:39:04 +0200
 From: Miquel Raynal <miquel.raynal@bootlin.com>
 To: Frank Li <Frank.Li@nxp.com>
 Cc: Richard Weinberger <richard@nod.at>, Vignesh Raghavendra
@@ -43,12 +43,11 @@ Cc: Richard Weinberger <richard@nod.at>, Vignesh Raghavendra
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
  dmaengine@vger.kernel.org, imx@lists.linux.dev,
  linux-arm-kernel@lists.infradead.org
-Subject: Re: [PATCH 1/5] dt-bindings: mtd: gpmi-nand: Add
- 'fsl,imx8qxp-gpmi-nand' compatible string
-Message-ID: <20240517203621.72b8b9c7@xps-13>
-In-Reply-To: <20240517-gpmi_nand-v1-1-73bb8d2cd441@nxp.com>
+Subject: Re: [PATCH 3/5] mtd: rawnand: gpmi: add iMX8QXP support.
+Message-ID: <20240517203904.2879419a@xps-13>
+In-Reply-To: <20240517-gpmi_nand-v1-3-73bb8d2cd441@nxp.com>
 References: <20240517-gpmi_nand-v1-0-73bb8d2cd441@nxp.com>
-	<20240517-gpmi_nand-v1-1-73bb8d2cd441@nxp.com>
+	<20240517-gpmi_nand-v1-3-73bb8d2cd441@nxp.com>
 Organization: Bootlin
 X-Mailer: Claws Mail 4.1.1 (GTK 3.24.38; x86_64-pc-linux-gnu)
 Precedence: bulk
@@ -63,62 +62,47 @@ X-GND-Sasl: miquel.raynal@bootlin.com
 
 Hi Frank,
 
-Frank.Li@nxp.com wrote on Fri, 17 May 2024 14:09:48 -0400:
+Frank.Li@nxp.com wrote on Fri, 17 May 2024 14:09:50 -0400:
 
-> Add 'fsl,imx8qxp-gpmi-nand' compatible string and clock-names restriction.
+> From: Han Xu <han.xu@nxp.com>
 >=20
+> Add "fsl,imx8qxp-gpmi-nand" compatible string. iMX8QXP gpmi nand is simil=
+ar
+> with iMX7D. But it using 4 clock: "gpmi_io", "gpmi_apb", "gpmi_bch" and
+
+  to?             is         clocks
+
+> "gpmi_bch_apb".
+>=20
+> Signed-off-by: Han Xu <han.xu@nxp.com>
 > Signed-off-by: Frank Li <Frank.Li@nxp.com>
 > ---
->  .../devicetree/bindings/mtd/gpmi-nand.yaml         | 22 ++++++++++++++++=
-++++++
->  1 file changed, 22 insertions(+)
+>  drivers/mtd/nand/raw/gpmi-nand/gpmi-nand.c | 20 +++++++++++++++++---
+>  drivers/mtd/nand/raw/gpmi-nand/gpmi-nand.h |  4 ++++
+>  2 files changed, 21 insertions(+), 3 deletions(-)
 >=20
-> diff --git a/Documentation/devicetree/bindings/mtd/gpmi-nand.yaml b/Docum=
-entation/devicetree/bindings/mtd/gpmi-nand.yaml
-> index 021c0da0b072f..f9eb1868ca1f4 100644
-> --- a/Documentation/devicetree/bindings/mtd/gpmi-nand.yaml
-> +++ b/Documentation/devicetree/bindings/mtd/gpmi-nand.yaml
-> @@ -24,6 +24,7 @@ properties:
->            - fsl,imx6q-gpmi-nand
->            - fsl,imx6sx-gpmi-nand
->            - fsl,imx7d-gpmi-nand
-> +          - fsl,imx8qxp-gpmi-nand
->        - items:
->            - enum:
->                - fsl,imx8mm-gpmi-nand
-> @@ -151,6 +152,27 @@ allOf:
->              - const: gpmi_io
->              - const: gpmi_bch_apb
+> diff --git a/drivers/mtd/nand/raw/gpmi-nand/gpmi-nand.c b/drivers/mtd/nan=
+d/raw/gpmi-nand/gpmi-nand.c
+> index e71ad2fcec232..f90c5207bacb6 100644
+> --- a/drivers/mtd/nand/raw/gpmi-nand/gpmi-nand.c
+> +++ b/drivers/mtd/nand/raw/gpmi-nand/gpmi-nand.c
+> @@ -983,7 +983,8 @@ static int gpmi_setup_interface(struct nand_chip *chi=
+p, int chipnr,
+>  		return PTR_ERR(sdr);
 > =20
-> +  - if:
-> +      properties:
-> +        compatible:
-> +          contains:
-> +            enum:
-> +              - fsl,imx8qxp-gpmi-nand
-> +    then:
-> +      properties:
-> +        clocks:
-> +          items:
-> +            - description: SoC gpmi io clock
-> +            - description: SoC gpmi apb clock
+>  	/* Only MX28/MX6 GPMI controller can reach EDO timings */
+> -	if (sdr->tRC_min <=3D 25000 && !GPMI_IS_MX28(this) && !GPMI_IS_MX6(this=
+))
+> +	if (sdr->tRC_min <=3D 25000 && !GPMI_IS_MX28(this) &&
+> +	    !(GPMI_IS_MX6(this) || GPMI_IS_MX8(this)))
 
-I believe these two clocks are mandatory?
+Feels completely redundant, no? If it's not an imx6 nor an imx28, it
+already returns -ENOTSUPP.
 
-> +            - description: SoC gpmi bch clock
-> +            - description: SoC gpmi bch apb clock
-> +        clock-names:
-> +          items:
-> +            - const: gpmi_io
-> +            - const: gpmi_apb
-> +            - const: gpmi_bch
-> +            - const: gpmi_bch_apb
-> +
->  examples:
->    - |
->      nand-controller@8000c000 {
->=20
+>  		return -ENOTSUPP;
 
+
+Fine otherwise.
 
 Thanks,
 Miqu=C3=A8l
