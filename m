@@ -1,158 +1,213 @@
-Received: from CHN02-BJS-obe.outbound.protection.partner.outlook.cn (mail-bjschn02on2115.outbound.protection.partner.outlook.cn [139.219.17.115])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f177.google.com (mail-pf1-f177.google.com [209.85.210.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D49293207;
-	Thu, 30 May 2024 06:46:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=139.219.17.115
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717051611; cv=fail; b=udz9h3FJpW5Ldby7MNimtwTbHNPAZ+vw5dxHITxNkukPC2NF0GZPxzNBwf8iwHNpUqfXQvbi1+G6sZNiNPsXjUEq4kenObtr0BKfPBjw+ob8e2ulrvCX8TES3Rh2bnT0Rh1xTacTzk8TjRbg8U0HNDg52GP/ps7iLPG6eXD4MF4=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717051611; c=relaxed/simple;
-	bh=fjjWk8ndr+UmFoK4LzVFtpJxUpCINDlYUQ8/Gk6wqUI=;
-	h=From:To:Subject:Date:Message-ID:Content-Type:MIME-Version; b=CH0rAds2tXWxBhjPQOUixvPh1A+igFfzVdz2lbpFS6JpSX3GEo2eoiNaojNsjwivaeCrLkyrI2qxNf+T1kiUP1XFQffcg+IQcdxfvlooiDWNite5egPK5HJX/6zYAybwcLdDUHMwgb5ohx9llidrqMmVtLiFRH5Oz/FBbgKE9CQ=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=starfivetech.com; spf=pass smtp.mailfrom=starfivetech.com; arc=fail smtp.client-ip=139.219.17.115
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=starfivetech.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=starfivetech.com
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=Jmf9WXv6b/B/aE/E3IhdgI6qkidk+mkV9HP74nYxhaLb0BSzL76rZEt3DvU5zJbmzDB+qB0wQln0HRsFmwKkB3/g2lsKOenNEyi+5Zefgf9V0bXCXmICo1Fqn6Ys0CcVWfKbBqMU5rOAbjLidUnEjvAkNYUPoXcNMvPJJu29hx6qtye3AqXSgEfQAvq4M7KZr2q0XxPCgtcHGtmK2dqamYpd1WQeC3XytYeeBsb2IQ+X59BFljmEb20qMPzgMAHRapi+/MR+Hds1Rye3CJ9UeWqVQKqBr+wnRxaZZtFli4OgGM1sD/DTliEqlJdDD6etYh+9BffVjtlNVqTR2jonAw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=daPUXex62SYqgy2tU010SjCFcRcRoJ7Sym1Zgx0P7Xo=;
- b=iRPuQauna8nqbkPmvOItwqPdS83xlP2C3ala5Eo2ww1AUEXmeRBw/KQo5gPyLQY1M39C8hycN+qsd9EIil/nFOi+78VwSrdZ7MLIdaM/MMtN83w+36SQiPTdUvKf3dxEbxTihggNR6NuRUNYUuGAOE77sYniZPilsOQzwOmygMxXfKOg7B1vM6SXSXr14xcFL6j67ikKa8Ac0g6zByKz9dPEm4SIYQlc/p0UyZpawlOrtLf3sZ5l4zfZWDM9xpakbaUXzMWBdq6yYBh3IpTTmPDh5QA8DOl81/tpdYI/5e0TYtaObTimgAR5d1KCWoxl4Eb5UpYR6wDJgFzhJnRSpQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=starfivetech.com; dmarc=pass action=none
- header.from=starfivetech.com; dkim=pass header.d=starfivetech.com; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=starfivetech.com;
-Received: from NT0PR01MB1182.CHNPR01.prod.partner.outlook.cn
- (2406:e500:c510:10::10) by NT0PR01MB1054.CHNPR01.prod.partner.outlook.cn
- (2406:e500:c510:2::6) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7587.36; Thu, 30 May
- 2024 03:11:24 +0000
-Received: from NT0PR01MB1182.CHNPR01.prod.partner.outlook.cn
- ([fe80::e3b:43f8:2e6d:ecce]) by NT0PR01MB1182.CHNPR01.prod.partner.outlook.cn
- ([fe80::e3b:43f8:2e6d:ecce%7]) with mapi id 15.20.7587.037; Thu, 30 May 2024
- 03:11:24 +0000
-From: Jia Jie Ho <jiajie.ho@starfivetech.com>
-To: Herbert Xu <herbert@gondor.apana.org.au>,
-	"David S . Miller" <davem@davemloft.net>,
-	Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>,
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 565011CD20;
+	Thu, 30 May 2024 07:21:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.177
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1717053719; cv=none; b=mwUbb5ei7d8AqdfudnVeJEMMCe+4fQTRVv4y09YNfAPxUw22DtSzZvvjm0Jzz/O+oTh/s0oSWpsOejFTyFATuYay61VLKANxfg0/l6bsTaik7hp+Y1Jivl3VFEddCicekq9Ynuzqrjs1Z94vInQ8FuVW6hmIofX2fvcX9uuBdPg=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1717053719; c=relaxed/simple;
+	bh=jJhmiG8KehPBL2jJ7s4/R8p14YnNFAx4zWKUCdgG0Hk=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=E4V6E/3Ce7MqSiKftOGNMuY/IWWlxh5+ZuudCO5PlY3+PJyR+qBiMysJnrgROFmDz5T5v5XrvBoiPMgRkcz5b7za/xBXcdWd/fG/gaVswOCg4P0+/inEVKabc8AihNRWSa3L3ZRE46OXGYath/LxVAsXP1KypZJRyOpkl7ABbM4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZeFwQfqD; arc=none smtp.client-ip=209.85.210.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZeFwQfqD"
+Received: by mail-pf1-f177.google.com with SMTP id d2e1a72fcca58-70109d34a16so518822b3a.2;
+        Thu, 30 May 2024 00:21:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1717053717; x=1717658517; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=wwEQ2aSFxNGCmqcaa7Y6YTRAbWdn03vUjAsreQHummw=;
+        b=ZeFwQfqDe+F0kn8I/hOyzNNKMNv8zQ2JRNGNfVMNoXLX8cUEirlNhykPFwrHz6lLHK
+         HL2cNSJLi2j7JThtD7xGwyuS6T2gDErsY3UCs1NIUmsGesWZksJSo9FsnCg1Uq9wa6BJ
+         WUBZO1LQXbvR+j+/Ta6sxv+7lN1Xi7/RV1EVjZvWQ+DFC8J2BIec02fvNaK9LSUSCXNX
+         NLbFlkr8JSUu8jjCwoB7P+x4aPL55nmiGloqO2w+ky5fRe4qwN1eTe1ob/hevzg4PjEi
+         l3zhBWJ71BiHe1rTqZzOqtwAFTtisEZD9F8D0KAxh/9jT856VSxazFw0OsRrVHk2l6nt
+         vLwQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1717053717; x=1717658517;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=wwEQ2aSFxNGCmqcaa7Y6YTRAbWdn03vUjAsreQHummw=;
+        b=aZkXVyDsgBcnh2IGLcMbcRLQc4pm1615ZUHf7BzSO6PAi4aAwngh3Q8+tRUA59VS6n
+         y5rXGeRLwI7DMlH5a2cd6lDZrFoHroRREkToje0dQUsEY4GGlZXeGuHdt2PMEa+q+TGt
+         rkdhEHB5cAA6fnNXsyuhmgJytIlot7On/LnLlivttqt7cEsPV84NTlpCYpdzsY02LQUF
+         z3RHasEUlVN3TrwC86eox0TTBj5s+C5T2lDz5PTdCuvS0hPzOiGgqRXgq/uCbN+JaZom
+         TOkS0p2zdx/PwCPcRskeemoMtz+ChlDSkRG91hes0ELDzLH5JjVM2xH2qAWKjekUdmmR
+         oTtQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWd339fuhkKguAofJt5Rb75yTq5As4vm7EGhcU5BZiKAv0j5S7cxOxOgtX3m+2zZXOFEfHGxJgl5nxaSLWtkjpOR+nOvtColzNCDxzz38whWz8LdjQWpQFIWo20NvSarMz5pqzNVqAyhwYoSjyHW245n1yjRZ46Hei2pMvSsHIme7A9Vg==
+X-Gm-Message-State: AOJu0YzI5HN4W5sv/Jn2mLtVUgW4/XOsy7Q2iDeEzDCwQMpUhA6eMBoW
+	gNMSPdCDpGDTZ6s3LihnHtLHjz4vyFoTSMa31v78BeJNpg8bD4F9
+X-Google-Smtp-Source: AGHT+IHm8CThq7x4u28tGzaiRwu0dXSkjGYx78ZeeID2h/0ElC/teNL2bCFK3G+FY+BOPAg92MAnPQ==
+X-Received: by 2002:a05:6a00:2909:b0:6f6:9601:b0b9 with SMTP id d2e1a72fcca58-70231116613mr1179612b3a.11.1717053716346;
+        Thu, 30 May 2024 00:21:56 -0700 (PDT)
+Received: from fedora.pi.hole ([2405:201:6013:c0b2:b3f7:7c95:a370:4345])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-702390b6fa3sm88609b3a.119.2024.05.30.00.21.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 30 May 2024 00:21:55 -0700 (PDT)
+From: Animesh Agarwal <animeshagarwal28@gmail.com>
+To: 
+Cc: animeshagarwal28@gmail.com,
 	Vinod Koul <vkoul@kernel.org>,
-	linux-kernel@vger.kernel.org,
-	linux-crypto@vger.kernel.org,
-	dmaengine@vger.kernel.org
-Subject: [PATCH v5 0/3] crypto: starfive: Add support for JH8100
-Date: Thu, 30 May 2024 11:11:09 +0800
-Message-ID: <20240530031112.4952-1-jiajie.ho@starfivetech.com>
-X-Mailer: git-send-email 2.43.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: ZQ0PR01CA0027.CHNPR01.prod.partner.outlook.cn
- (2406:e500:c550:2::17) To NT0PR01MB1182.CHNPR01.prod.partner.outlook.cn
- (2406:e500:c510:10::10)
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Shawn Guo <shawnguo@kernel.org>,
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	Pengutronix Kernel Team <kernel@pengutronix.de>,
+	Fabio Estevam <festevam@gmail.com>,
+	dmaengine@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	imx@lists.linux.dev,
+	linux-arm-kernel@lists.infradead.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH] dt-bindings: dma: fsl,imx-dma: Convert to dtschema
+Date: Thu, 30 May 2024 12:51:07 +0530
+Message-ID: <20240530072113.30410-1-animeshagarwal28@gmail.com>
+X-Mailer: git-send-email 2.45.1
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: NT0PR01MB1182:EE_|NT0PR01MB1054:EE_
-X-MS-Office365-Filtering-Correlation-Id: b3647e40-5935-485d-84f2-08dc8056301d
-X-MS-Exchange-SenderADCheck: 1
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230031|366007|41320700004|1800799015|52116005|38350700005;
-X-Microsoft-Antispam-Message-Info:
-	JFLWT9AWmzDmTnpEG+1gz+HQ6YkM6UorlMgjHWb9U7TYRlwC9zmNaGz23FYVwuOyEMF474/tf5flS4LH5Q6sJsoUOCJUeWX99Vkjpe//89IrG3RIzIPqTInTivpZtr37HnfQkd81gf4oxlCtA7MRtJoDwYvEEgJYqxRzRsUp6K6g7d0gnDJE48Kx76CWXY/L1KdmHuRIC2G1e2ZdkORcJdEvdpNRKdeBXQqGqWMAFOcK+hcJczDIupNcJUvriRLafZBpOeKgTn3waDcXhRMEQgPYIlXdG6hb8wb9MkP2Bh8GQoNWyyWkf3EgJMizoMLCluu7+JqXEovZLd24L00RKYztkKAEsKF4OFliCWldsVFN2JtlBxrK/6q1njotAICHn8EPMtOL1vKhTCjM8JUhWzP8FC7O5miyOHfK1vBNMd7lBSGe9fJSdS3x/DuorUlDkYgB2hFEoZcdZwANYFjl37xAk5Crnu2K055ShMiLUqpeGmFV8b6R3xTJUVkdAQYbVk2ftB3nm0FjJ8mfUuO0WfjkVw79Q6DChbDk7Bubc1kyz1WqLIYy7JRFKP9CTwNoZ0hWG7/ESKqfShICGcSmfEeqz+IAVmMFlJMUptG9bTCbsb3ioo6sTAwA/SI+ZPzx
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:NT0PR01MB1182.CHNPR01.prod.partner.outlook.cn;PTR:;CAT:NONE;SFS:(13230031)(366007)(41320700004)(1800799015)(52116005)(38350700005);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?Tpxuvf+wBEdR5Fhiouh4gx2TlGFvdNZtms8sz2hYLjMeSk94WvPYLzGEnkH4?=
- =?us-ascii?Q?fjohxfMmurWZEvnRVV38h/0pcqKxlHyVlZ+DMpYBirqrqAhv4rpl2oGkK2q+?=
- =?us-ascii?Q?coK4lp9fbmelUtkm97yePNYFWCPs395PfoKzjeAOKyQXzQEaZM0UdnAKLW2b?=
- =?us-ascii?Q?niQ4vH2QOPNWKCQe+DE6ZfJxt2v/atJK96tuJKwrQ2LfWA44SPRDiJ9eP87R?=
- =?us-ascii?Q?8i7CVv2t11iSSyReRcMgheSiQkzeiCDjR353zDtt+rF34EnUImfkkGd5PFjb?=
- =?us-ascii?Q?nyHXMfRHG0kvaQxbaG6UjRIxCPUKIVHPjHO/ukXSwVOaKdp5ecPYQsggWOnV?=
- =?us-ascii?Q?Qi8G8h2Qe2u6HLHZI6JSOfRXdqJ0oaTsdMpMIuhY5QyNEi2cRXb5jpS6cG01?=
- =?us-ascii?Q?ebHYVr+suaGvzQlOQ3eGSFDwHS3iubvfXK3+JNFTF+RUSRFdYb8Q8vhne+UJ?=
- =?us-ascii?Q?xDvJKoEGjo7nlH1IBasGtIoAxV7/HyXXYPK+DySJH6I4/hiCvODUBZFuXJRH?=
- =?us-ascii?Q?CfIw+U5GygC33fhh7IyGio5l2SEJYQzwEHrtfYXiK8ZuTdZoyitXBZslcUHa?=
- =?us-ascii?Q?PlSPIuAJ4ipIiVnrlX7NkxzW9w70XS0cjMsprQECRONVv3WmJsgZgXl3lryw?=
- =?us-ascii?Q?+XNIZJFjbOVCPsRNpeyPTqKAobuGJT/4sJB1nDSe58aCPb1xsUlS9XlxOOjO?=
- =?us-ascii?Q?Kfymkh3pkOvEd1SO3vtPzcjsGkHN+EsQrm+wFl5xCbSg4pp9v6jBn7LYLq1R?=
- =?us-ascii?Q?cCyNGxxM9m0Gtg9d5pXIwCVUD2cZemdfxWE0c0B3ARI+r5IOpxGMqwjgYuLx?=
- =?us-ascii?Q?93/0HSqi0CfRWdV1k3zg7mqaaBCJSGLyaUt+dmrLI+cYSkb1TLaHUR/Gf9Kp?=
- =?us-ascii?Q?DJddDynttmB2dwcNAFQBVUBTZl7Rh82M10rg+/FdmXcR4baQB1fhzelt9mhz?=
- =?us-ascii?Q?9tmMd1vlTNa1wCKkwRK0enzTKyH+s/Hl0eIgxP1v3Nt88PQFxfBWXtMOSoWb?=
- =?us-ascii?Q?/iNO/ZJNgkbG29fj8gbt+1CJXSaSeFhHqfI/D4rAPjhSOsNo7X2uRuU9kRd1?=
- =?us-ascii?Q?rnXeXmDl9C5ZESFARTPM3/6UJyowk8lrkVyyK1gUV5j4qD8dNb5H10jzASg6?=
- =?us-ascii?Q?RKo4HLGHATt8ZPGEXtyJJ5ZpPxqhdfsd7xxmwT7z716QAUkMNOoWZK9yTQUI?=
- =?us-ascii?Q?2yFAHurikZnC7uLyfWIZvjOkyvb//06ZSy4Cnag9mCa/EVA/3Ut+Ej6/KNdk?=
- =?us-ascii?Q?aDlLNpBKKa8WHR8xorh+EzodbSYNL3C4xDcF32MgsXgA6MGcIEsVBD+2Sk8I?=
- =?us-ascii?Q?bd6wGz/9oqSwc4DXPRRjUg9Et0EK2KCtUTUfhC2GUHyM1Q2LwozI+yWenleu?=
- =?us-ascii?Q?UGyNvSoSQ6nOJBYI3Qalyj73qZQ9IHBpFBqeKNbaXAs3dVdzckU0TVS4PLap?=
- =?us-ascii?Q?EtyIAikfaMGxtdYnKLEV1JMrZSekwuBDyQiPrk9aStSXxVDf8+da/Yz+Fd6Z?=
- =?us-ascii?Q?Y8ywIPNfa7kWEwW3uje8rNKBw4irt/LpE+A6C9Z5i22wU5yyyvPa964l2eqL?=
- =?us-ascii?Q?wyuly0ANLYtQPPZhZewlorZ1PvOeLj8Wdz1kVFQ1Ua1/8Vn/8RvW3Kq8AkgP?=
- =?us-ascii?Q?AQ=3D=3D?=
-X-OriginatorOrg: starfivetech.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: b3647e40-5935-485d-84f2-08dc8056301d
-X-MS-Exchange-CrossTenant-AuthSource: NT0PR01MB1182.CHNPR01.prod.partner.outlook.cn
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 May 2024 03:11:24.4530
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 06fe3fa3-1221-43d3-861b-5a4ee687a85c
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: drTemRiB2l7lwoIR/fIGQ2iMo8lDa7FiIDmS2eJ1DeA0kMjRQr/50CNxUkK5JYIoQhMrRvoFSsKm3hI8rksQYAoljRJlo7UzZTZZxBN9enw=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: NT0PR01MB1054
+Content-Transfer-Encoding: 8bit
 
-This patch series add driver support for StarFive JH8100 SoC crypto
-engine. Patch 1 adds compatible string and update irq descriptions for
-JH8100 device. Subsequent patches update current driver implementations
-to support both 7110 and 8100 variants.
+Convert the fsl i.MX DMA controller bindings to DT schema
 
-v4->v5:
-- Dropped patch 1-4 from series as they are mainlined.
-- Rebased to v6.10-rc.
+Signed-off-by: Animesh Agarwal <animeshagarwal28@gmail.com>
+---
+ .../devicetree/bindings/dma/fsl,imx-dma.yaml  | 58 +++++++++++++++++++
+ .../devicetree/bindings/dma/fsl-imx-dma.txt   | 50 ----------------
+ 2 files changed, 58 insertions(+), 50 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/dma/fsl,imx-dma.yaml
+ delete mode 100644 Documentation/devicetree/bindings/dma/fsl-imx-dma.txt
 
-v3->v4:
-- Updated interrupts descriptions for jh8100-crypto compatible. (Rob)
-- Added patch 3 to skip unneeded key freeing for RSA module.
-
-v2->v3:
-- Use of device data instead of #ifdef CONFIG_ for different device
-  variants.
-- Updated dt bindings compatible and interrupts descriptions.
-- Added patch 4 to support hardware quirks for dw-axi-dmac driver.
-
-v1->v2:
-- Resolved build warnings reported by kernel test robot
-  https://lore.kernel.org/oe-kbuild-all/202312170614.24rtwf9x-lkp@intel.com/
-
-Jia Jie Ho (3):
-  dmaengine: dw-axi-dmac: Support hardware quirks
-  crypto: starfive: Add sm3 support for JH8100
-  crypto: starfive: Add sm4 support for JH8100
-
- drivers/crypto/starfive/Kconfig               |   26 +-
- drivers/crypto/starfive/Makefile              |    5 +-
- drivers/crypto/starfive/jh7110-aes.c          |    3 +
- drivers/crypto/starfive/jh7110-cryp.c         |   36 +-
- drivers/crypto/starfive/jh7110-cryp.h         |  106 +-
- drivers/crypto/starfive/jh7110-hash.c         |   45 +-
- drivers/crypto/starfive/jh8100-sm3.c          |  544 ++++++++
- drivers/crypto/starfive/jh8100-sm4.c          | 1123 +++++++++++++++++
- .../dma/dw-axi-dmac/dw-axi-dmac-platform.c    |   32 +-
- drivers/dma/dw-axi-dmac/dw-axi-dmac.h         |    2 +
- include/linux/dma/dw_axi.h                    |   11 +
- 11 files changed, 1907 insertions(+), 26 deletions(-)
- create mode 100644 drivers/crypto/starfive/jh8100-sm3.c
- create mode 100644 drivers/crypto/starfive/jh8100-sm4.c
- create mode 100644 include/linux/dma/dw_axi.h
-
+diff --git a/Documentation/devicetree/bindings/dma/fsl,imx-dma.yaml b/Documentation/devicetree/bindings/dma/fsl,imx-dma.yaml
+new file mode 100644
+index 000000000000..f36ab5425bdb
+--- /dev/null
++++ b/Documentation/devicetree/bindings/dma/fsl,imx-dma.yaml
+@@ -0,0 +1,58 @@
++# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/dma/fsl,imx-dma.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Freescale Direct Memory Access (DMA) Controller for i.MX
++
++maintainers:
++  - Animesh Agarwal <animeshagarwal28@gmail.com>
++
++allOf:
++  - $ref: dma-controller.yaml#
++
++properties:
++  compatible:
++    enum:
++      - fsl,imx1-dma
++      - fsl,imx21-dma
++      - fsl,imx27-dma
++
++  reg:
++    maxItems: 1
++
++  interrupts:
++    description: |
++      First item should be DMA interrupt, second one is optional and
++      should contain DMA Error interrupt.
++    minItems: 1
++    maxItems: 2
++
++  "#dma-cells":
++    const: 1
++
++  dma-channels:
++    const: 16
++
++  dma-requests:
++    description: |
++      Number of DMA requests supported.
++
++required:
++  - compatible
++  - reg
++  - interrupts
++  - "#dma-cells"
++
++additionalProperties: false
++
++examples:
++  - |
++    dma: dma-controller@10001000 {
++      compatible = "fsl,imx27-dma";
++      reg = <0x10001000 0x1000>;
++      interrupts = <32 33>;
++      #dma-cells = <1>;
++      dma-channels = <16>;
++    };
+diff --git a/Documentation/devicetree/bindings/dma/fsl-imx-dma.txt b/Documentation/devicetree/bindings/dma/fsl-imx-dma.txt
+deleted file mode 100644
+index 1c9929d53727..000000000000
+--- a/Documentation/devicetree/bindings/dma/fsl-imx-dma.txt
++++ /dev/null
+@@ -1,50 +0,0 @@
+-* Freescale Direct Memory Access (DMA) Controller for i.MX
+-
+-This document will only describe differences to the generic DMA Controller and
+-DMA request bindings as described in dma/dma.txt .
+-
+-* DMA controller
+-
+-Required properties:
+-- compatible : Should be "fsl,<chip>-dma". chip can be imx1, imx21 or imx27
+-- reg : Should contain DMA registers location and length
+-- interrupts : First item should be DMA interrupt, second one is optional and
+-    should contain DMA Error interrupt
+-- #dma-cells : Has to be 1. imx-dma does not support anything else.
+-
+-Optional properties:
+-- dma-channels : Number of DMA channels supported. Should be 16.
+-- #dma-channels : deprecated
+-- dma-requests : Number of DMA requests supported.
+-- #dma-requests : deprecated
+-
+-Example:
+-
+-	dma: dma@10001000 {
+-		compatible = "fsl,imx27-dma";
+-		reg = <0x10001000 0x1000>;
+-		interrupts = <32 33>;
+-		#dma-cells = <1>;
+-		dma-channels = <16>;
+-	};
+-
+-
+-* DMA client
+-
+-Clients have to specify the DMA requests with phandles in a list.
+-
+-Required properties:
+-- dmas: List of one or more DMA request specifiers. One DMA request specifier
+-    consists of a phandle to the DMA controller followed by the integer
+-    specifying the request line.
+-- dma-names: List of string identifiers for the DMA requests. For the correct
+-    names, have a look at the specific client driver.
+-
+-Example:
+-
+-	sdhci1: sdhci@10013000 {
+-		...
+-		dmas = <&dma 7>;
+-		dma-names = "rx-tx";
+-		...
+-	};
 -- 
-2.43.0
+2.45.1
 
