@@ -1,262 +1,139 @@
-Received: from NAM10-BN7-obe.outbound.protection.outlook.com (mail-bn7nam10on2080.outbound.protection.outlook.com [40.107.92.80])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29C951922C7
-	for <dmaengine@vger.kernel.org>; Mon, 17 Jun 2024 10:04:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.92.80
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718618693; cv=fail; b=mri7VdFDN8VzOa06Aw9zbYFVKC3YqnncNQw2dvPgr2B5jl358RWtzMKB/vyWKdxCvFDV1qJcT7AUgcu52zVh5XW1+KLq3uQZb6yPyKYL+XiiHGZ1riMX38SJ92bx5rfdu64Mo/bBfpXuqqgjzaQP+kqFHvD7kPlJ0YIh2/9RSRU=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718618693; c=relaxed/simple;
-	bh=b0aowZT5jOnuAEJvm1jtpE5bCOc6J1cqlzYDaL7Savc=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Q517KIByWh2EvfoyqkyBi81HAFbR2pu31l7mvB15zpGIGVvQKuS1DwcpqNX6Cf7FyMWZn+rSj+G/TCmvMby09h9Gvx5bincT7O6wZ9VwcWf7+FP8YA7F54+pDZRmaCsqluIiuLMByIE8KObW/oYu0ajN3pd/5fKps1Qonv0TS/A=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=ZgpN5o99; arc=fail smtp.client-ip=40.107.92.80
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC5B75025E;
+	Mon, 17 Jun 2024 10:59:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.54
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1718621942; cv=none; b=PhyG4e9Chl10awX8ElTvOukSpto5d+MZqRORWtKBIcwnUIuxBPld6lmHRExnhwcwI+frz8ogbbMC2lVQXjtlQIT1BbPBB2rcVnXrTXhRNFpfkvOFbzQqeEZJSCaJPY+wMEGwAz3CjEuMIdtaH4c1fYHi2S0E8QiM22tavY1ilIg=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1718621942; c=relaxed/simple;
+	bh=8wB8dLUWtRHRl79UEIYwwpGcoRPP7LZqthPrT0xkjS0=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=tmSL8pHWP7tXChYqmQ4L9lut8TUNjQJA7qNleqICbF9gXTry/4g98x9EgrAmdRwXRZtVzNyNXgOGXh0UQuT/OLhcjz347ixgqKgfOrvQnmOPwB/Y7m7OMGrDufCbMgqHuk4O0JofMDXafhWZXcNpRtDTRtYgywjH/U1HmAJjI4Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=G3ddtES0; arc=none smtp.client-ip=209.85.218.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="ZgpN5o99"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=ZAAEEyFHvJHlaALny7TtyD6f68KyK1QggjPHK/pDdhnqGNSc6cJ8qUwRYpfFLRTvYhfTT2c5c+v/HjdQkFnRdPmvTT+RZd+K36HFyCpsmN0libKgHwyZQDDtzSoAtvPRuHgeL4Gd+V2m2v0rXWmIrC68FZsmLz74HI8M0TUYDYdcVpIzgzVWARnCt8Cguvv9KgUuyMHXWvNSGyLrcj5d6PxoHO2gnxu0Ae/d/GhjkA72YQ3oH53vDH0B618+r827ihfNLy9SmclllwM6/0AmZpy3828t+b+b7wDnh+MtiCSThCsB2do1vqNX1bQpNL18w8ecyczzLRedArXUAucS2w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=AfVuBQfuvb3Z3ecPjWRpAmSCUYkcHH5s6Ftzphrc9fM=;
- b=OlazVwE+0Tf9kmgrueEmRZqyZREhfPESNFqRHaUvFPJrbjxs1NHYIoj86Y6HC2aA6MY8dEYYkqGi1Pe6gOW0H7/MuXauzX9gb+Xjfcf4OtlbF9oS/4YXgUSUu2Lb0NGB+igXzI4Z4xnTHa60a8UmtJhqylQPWOwpqKuM48xiGVkZUWPlOr3aL1JHPoaGxFT+TJevhFJAWamVSQ6giSLpVZHD+4d2HoEZ4dk+GpF3Hy5rbI25vVEzCXGrwYjm1arjFiAqjJnLfnOsggOE+jWFy94h9ZF8fkgX8q+5hcrU44C5Y9tE6TZrCw28v5g1WbiAttzH1In+SnsgR11Zqk2VhQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=kernel.org smtp.mailfrom=amd.com; dmarc=pass
- (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=AfVuBQfuvb3Z3ecPjWRpAmSCUYkcHH5s6Ftzphrc9fM=;
- b=ZgpN5o99fHoBKrHxFSisZwGHWh2vJZ0vvYu1YQVDroB8u5kp5VZ8d/C11BDQriLEFL4sTGFzIrZQXZuPr1EjvZo1DL4yIjhTIIUAYSc7FsKncc48aGy+LE+ehvkAIsSD8f/w1AI3qboi3RBay0M9QNouse9NbCXlEBuZ5shY9Io=
-Received: from BN8PR07CA0029.namprd07.prod.outlook.com (2603:10b6:408:ac::42)
- by MN0PR12MB6002.namprd12.prod.outlook.com (2603:10b6:208:37e::10) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7677.30; Mon, 17 Jun
- 2024 10:04:47 +0000
-Received: from BN3PEPF0000B373.namprd21.prod.outlook.com
- (2603:10b6:408:ac:cafe::94) by BN8PR07CA0029.outlook.office365.com
- (2603:10b6:408:ac::42) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7677.30 via Frontend
- Transport; Mon, 17 Jun 2024 10:04:47 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
-Received: from SATLEXMB04.amd.com (165.204.84.17) by
- BN3PEPF0000B373.mail.protection.outlook.com (10.167.243.170) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.20.7719.0 via Frontend Transport; Mon, 17 Jun 2024 10:04:47 +0000
-Received: from jatayu.amd.com (10.180.168.240) by SATLEXMB04.amd.com
- (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Mon, 17 Jun
- 2024 05:04:44 -0500
-From: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
-To: <vkoul@kernel.org>, <dmaengine@vger.kernel.org>
-CC: <Raju.Rangoju@amd.com>, <Frank.li@nxp.com>, Basavaraj Natikar
-	<Basavaraj.Natikar@amd.com>
-Subject: [PATCH v2 6/7] dmaengine: ptdma: Extend ptdma-debugfs to support multi-queue
-Date: Mon, 17 Jun 2024 15:33:58 +0530
-Message-ID: <20240617100359.2550541-7-Basavaraj.Natikar@amd.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20240617100359.2550541-1-Basavaraj.Natikar@amd.com>
-References: <20240617100359.2550541-1-Basavaraj.Natikar@amd.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="G3ddtES0"
+Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-a6efae34c83so526291566b.0;
+        Mon, 17 Jun 2024 03:59:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1718621939; x=1719226739; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=8wB8dLUWtRHRl79UEIYwwpGcoRPP7LZqthPrT0xkjS0=;
+        b=G3ddtES05KBngq6UHWH+bLeDVjHVfJjrer71x1oClPjFqQBWo5q9UMK1VfJW6kJjJq
+         F4PZsQestdbLeUKH8unSqie5VDD7EagbCBXSZaSHuKvJxjTFA/00cMjlFbvezuyidolY
+         8IJb1AK6waFkrjIHxm7K2jDf6tFJR0iyUq90OZ/4DYyR6qbWKG66yZWTuedKtIqlm8W5
+         z4+SG4bxj3pYqXnzunZrkvLOprES3JCkbQ5t/523EXHIeWZN+QHdYZwKrt/L9C8QlQPV
+         PqKllIoFKQiOiLgDsIpjcCywPn+fn1M61OU6KA6imYIqeZ1vynt+cI/1YCXgPb1rWNm9
+         QYdg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1718621939; x=1719226739;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=8wB8dLUWtRHRl79UEIYwwpGcoRPP7LZqthPrT0xkjS0=;
+        b=Cem9PGTanUq25o7phJ/RZGVY6Fpz35uWfNYKsGpdnXX0rElhFVmgGP6Rrbje9nyAtx
+         NE54dUSFZtoOAJa5sj9dDnNckeTkqQ8/kk6MQUeNvSPggSXKCRYVClQaZ7hk458B2v2b
+         GLOcjRAvV+53S8o1kDhSdBCs3m+FS23qVsf0umL7PczsUqqdK/Agg899XxTdVZr5un84
+         AoH5wT4ZNz6tOzfnptMPeISwSWBiphVQohjan6l0x7LDYKpIIZn0VvDYDCkHD6FuyRMe
+         YlfXnzfqlGgFUZZNP7aY4G/UvmOpnx4P6z0MqxjjyVcqS71crNSmCMU/7Z5RJTK8EMf9
+         cx1Q==
+X-Forwarded-Encrypted: i=1; AJvYcCXAoM7IbF4e2rcIclY5h762jyQSucTNkLrD1Euq0cJADoK/mEztSfuiQ78x0JeizEcchdTzju5NKh3G9SaF+VGrSV/rK7krkENH2e7qRK5DavQ4pVAevFe8x0Mn3jB7Hg2kiq43LmavSpsdjDh07LxqqNde3hqzi1dr3zeXkuBeZeH/2BZ9+0lRqvc3tQOzfU94er3VowrZ75uV8sr9HiYAOHJ4qDqQzyEtvEFaTb7DqC5WzsZv4IUfnuQHOdORpeTNxsKSynsSyEOyMg5Moxi9xMaXkXKDCw1r3C3S/gcbSQyBCU6J02FbV4/bRkDFvCOBPyOpM1xXnRbB03w5+O7BauI+6ZATcO6orxmdmRNVG5Q/7wrcDhuSFxlAdtv3w1Zr23MPqM2kCzjanP/BNourXGHl23JmDSvhdAIh4f208KUpeEosZ3LvPokFg9xO9A23MYBYQMtCvey1Hx/dqcAEiGbId9RB2JWBvaVgwzSkjgwOV8mJcwE8U+NwTETTrg9F7ilwpITU22TB4or+sYQJ17CnWqGdcw==
+X-Gm-Message-State: AOJu0YwDIXeuRJwaLI4H401MKf5j+cAUX/r4xUQja9OxSvnLuZ9M+2WY
+	dtJO0KPQnet/MhpGT+GXwov5CXnBDWDEF09Fcua+E1aLv53pVi3/mLPFrs35TGOr+BtRwrdybUu
+	xjNN4gi2Cdat2K5oceKxYGXHsoi0=
+X-Google-Smtp-Source: AGHT+IFLQNwGHlc2x1pJKtfDQbxygWK6Gf7QAcGKtHzYeiun/g/cbs2h4qNhFprWOgm/WKjClpcVLvXhnCvHBWIHCLQ=
+X-Received: by 2002:a17:906:f8c6:b0:a6f:d1d:b523 with SMTP id
+ a640c23a62f3a-a6f60d430e6mr561654166b.36.1718621938822; Mon, 17 Jun 2024
+ 03:58:58 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: SATLEXMB04.amd.com (10.181.40.145) To SATLEXMB04.amd.com
- (10.181.40.145)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BN3PEPF0000B373:EE_|MN0PR12MB6002:EE_
-X-MS-Office365-Filtering-Correlation-Id: f579f4e1-36c7-498d-ad3b-08dc8eb4eb2e
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230037|36860700010|376011|1800799021|82310400023;
-X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?a7dSmXJQtRQMZ70paPc0XugKJ1za9x5m3SpPQiIsKarEUV6SKYPDIQoaDhNm?=
- =?us-ascii?Q?X1US4GL8Mex5Zs54FO1ZwEDN0yvcLmn1pTYCmK/w6S/pCHU6bNEOvzHSItyR?=
- =?us-ascii?Q?Krjl+RqiQ1KYtFcgTZWLIG06X8zYK/UEnh153ndHUswdQpCBcHMf8GC7pV7E?=
- =?us-ascii?Q?uTzDksqrw25GUgNnQ1fk/UlXAnnKz+UsAEtaPsEJ8t93MWWC5X5bUjVPa476?=
- =?us-ascii?Q?7sVwIyL4rQI2kGiU0Y4ZGV+GdaQXq9u4PoD1J12CLyMboCOOqTp+W1YsJbuX?=
- =?us-ascii?Q?jcFoSKsvCrTtcg3EuSavbY427PKcpm/DgPG/Hns2Oe9E74uc0ZpE3lh3jlTx?=
- =?us-ascii?Q?UK6b6O70uOr0HAuDOuZFLK5Nfi5krlxoIXsRcrl1EfO46JD8jYPhoHig07Jl?=
- =?us-ascii?Q?c/m1Kh9jJaAZOUE4V8cT7VURNv5ei38GXFLGweirpvjpwBh41gJddq3BkQml?=
- =?us-ascii?Q?UxIbHZYSuVXYyWKe/WOE0iQmfJPEZk7bH08tdCNSGVZm0JEVJcsIrepTOHqX?=
- =?us-ascii?Q?RI5kbrcphf+STd2DfnIFzyn0O/dIRHy12FZ8GKFBYwUQlOTyOHUhJs5jNqvM?=
- =?us-ascii?Q?bpVLmm45jNfi1HCJMiVT6wCfiYKPYlPgvkVv+X8YaAsZJNuhiNT8kqTZIkLn?=
- =?us-ascii?Q?mnX/qoWNVgzADTtouBJY1tPKs6XzyKWmAucvni0vXJcUWt6AEeCyCjIDXs0J?=
- =?us-ascii?Q?VUPH5Ca/tJENDrd7fSn/peTu96P6icvitKMZFVWNvqK34BJkzxVX+UqCj7DO?=
- =?us-ascii?Q?PTa9QE6rcrxGs2H+HuDk/MtE3aqrYRk5Inz6esSgE6KLVNKEtkDou1yRNtFW?=
- =?us-ascii?Q?TmsLF646jsgU9rYthtd0rqM+stymJVq+4yvR27JxHXtxfAHMqSqrK89Hmtrr?=
- =?us-ascii?Q?WLjlFXc45PehSzat6FSAtQYphdyh5WJRY199cQe3PZ7vFVNUuDtBaJNPQeWG?=
- =?us-ascii?Q?uqVQH3USc8OtgmUGU+ixcxQ8vtD9zflX1915me8Ylanjs3HXDF+mWdefnJQt?=
- =?us-ascii?Q?YW9jW9m3/uG4dlpnHHgC7L6c4wLLzg7vg9FEwPrZKg8kVtL6ohbrf4kLklbc?=
- =?us-ascii?Q?agryb3PDNnsOhSzChvu6i0fJDq6myMJsIWsuKp4SBPby/KZbZ3QX/TKzcWMS?=
- =?us-ascii?Q?3apHLtwBC58+Yp/Sr3OAZt4NgRMxyh/Gr/dDtGvjnORdopIm9NNlGH0TdiQL?=
- =?us-ascii?Q?Bsm6Mna6pnp7zYI1pcfSX8DqfQU4E3FbWhtpap/nekwr3VGasOw1ujdLyVNg?=
- =?us-ascii?Q?B986sNxAxg6/zl+i0/nI0s7uRFlJftkRzFeW5AIjT+dU7KBOhguc0jeiRVHE?=
- =?us-ascii?Q?Gwon3a5Zkn3Ob5b3J9NlJotQaiHQJfBJElw39lc21zVjPi6xYyxLRH6zYMSr?=
- =?us-ascii?Q?zB19GIY=3D?=
-X-Forefront-Antispam-Report:
-	CIP:165.204.84.17;CTRY:;LANG:en;SCL:1;SRV:;IPV:CAL;SFV:NSPM;H:SATLEXMB04.amd.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230037)(36860700010)(376011)(1800799021)(82310400023);DIR:OUT;SFP:1101;
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Jun 2024 10:04:47.0105
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: f579f4e1-36c7-498d-ad3b-08dc8eb4eb2e
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d;Ip=[165.204.84.17];Helo=[SATLEXMB04.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	BN3PEPF0000B373.namprd21.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN0PR12MB6002
+References: <20240617-ep93xx-v10-0-662e640ed811@maquefel.me>
+In-Reply-To: <20240617-ep93xx-v10-0-662e640ed811@maquefel.me>
+From: Andy Shevchenko <andy.shevchenko@gmail.com>
+Date: Mon, 17 Jun 2024 12:58:22 +0200
+Message-ID: <CAHp75VfSC9gAD9ipeWRPdQOxUp4FXqYYei-cJTs38nbz0cHpkg@mail.gmail.com>
+Subject: Re: [PATCH v10 00/38] ep93xx device tree conversion
+To: nikita.shubin@maquefel.me
+Cc: Arnd Bergmann <arnd@arndb.de>, Hartley Sweeten <hsweeten@visionengravers.com>, 
+	Alexander Sverdlin <alexander.sverdlin@gmail.com>, Russell King <linux@armlinux.org.uk>, 
+	Lukasz Majewski <lukma@denx.de>, Linus Walleij <linus.walleij@linaro.org>, 
+	Bartosz Golaszewski <brgl@bgdev.pl>, Andy Shevchenko <andy@kernel.org>, 
+	Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, 
+	Sebastian Reichel <sre@kernel.org>, Rob Herring <robh+dt@kernel.org>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Vinod Koul <vkoul@kernel.org>, Wim Van Sebroeck <wim@linux-watchdog.org>, 
+	Guenter Roeck <linux@roeck-us.net>, Thierry Reding <thierry.reding@gmail.com>, 
+	=?UTF-8?Q?Uwe_Kleine=2DK=C3=B6nig?= <u.kleine-koenig@pengutronix.de>, 
+	Mark Brown <broonie@kernel.org>, "David S. Miller" <davem@davemloft.net>, 
+	Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, 
+	Miquel Raynal <miquel.raynal@bootlin.com>, Richard Weinberger <richard@nod.at>, 
+	Vignesh Raghavendra <vigneshr@ti.com>, Damien Le Moal <dlemoal@kernel.org>, 
+	Sergey Shtylyov <s.shtylyov@omp.ru>, Dmitry Torokhov <dmitry.torokhov@gmail.com>, 
+	Liam Girdwood <lgirdwood@gmail.com>, Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, 
+	Ralf Baechle <ralf@linux-mips.org>, "Wu, Aaron" <Aaron.Wu@analog.com>, Lee Jones <lee@kernel.org>, 
+	Olof Johansson <olof@lixom.net>, Niklas Cassel <cassel@kernel.org>, linux-arm-kernel@lists.infradead.org, 
+	linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org, 
+	linux-clk@vger.kernel.org, linux-pm@vger.kernel.org, 
+	devicetree@vger.kernel.org, dmaengine@vger.kernel.org, 
+	linux-watchdog@vger.kernel.org, linux-pwm@vger.kernel.org, 
+	linux-spi@vger.kernel.org, netdev@vger.kernel.org, 
+	linux-mtd@lists.infradead.org, linux-ide@vger.kernel.org, 
+	linux-input@vger.kernel.org, linux-sound@vger.kernel.org, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>, Andrew Lunn <andrew@lunn.ch>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-To support multi-channel functionality with AE4DMA engine, extend the
-ptdma-debugfs with reusable components.
+On Mon, Jun 17, 2024 at 11:38=E2=80=AFAM Nikita Shubin via B4 Relay
+<devnull+nikita.shubin.maquefel.me@kernel.org> wrote:
+>
+> The goal is to recieve ACKs for all patches in series to merge it via Arn=
+d branch.
 
-Reviewed-by: Raju Rangoju <Raju.Rangoju@amd.com>
-Signed-off-by: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
----
- drivers/dma/amd/ptdma/ptdma-debugfs.c | 76 +++++++++++++++++++--------
- 1 file changed, 55 insertions(+), 21 deletions(-)
+'receive'
 
-diff --git a/drivers/dma/amd/ptdma/ptdma-debugfs.c b/drivers/dma/amd/ptdma/ptdma-debugfs.c
-index c8307d3044a3..9aa7a49ae5be 100644
---- a/drivers/dma/amd/ptdma/ptdma-debugfs.c
-+++ b/drivers/dma/amd/ptdma/ptdma-debugfs.c
-@@ -12,7 +12,7 @@
- #include <linux/debugfs.h>
- #include <linux/seq_file.h>
- 
--#include "ptdma.h"
-+#include "../common/amd_dma.h"
- 
- /* DebugFS helpers */
- #define	RI_VERSION_NUM	0x0000003F
-@@ -23,11 +23,19 @@
- static int pt_debugfs_info_show(struct seq_file *s, void *p)
- {
- 	struct pt_device *pt = s->private;
-+	struct ae4_device *ae4;
- 	unsigned int regval;
- 
- 	seq_printf(s, "Device name: %s\n", dev_name(pt->dev));
--	seq_printf(s, "   # Queues: %d\n", 1);
--	seq_printf(s, "     # Cmds: %d\n", pt->cmd_count);
-+
-+	if (pt->ver == AE4_DMA_VERSION) {
-+		ae4 = container_of(pt, struct ae4_device, pt);
-+		seq_printf(s, "   # Queues: %d\n", ae4->cmd_q_count);
-+		seq_printf(s, "     # Cmds per queue: %d\n", CMD_Q_LEN);
-+	} else {
-+		seq_printf(s, "   # Queues: %d\n", 1);
-+		seq_printf(s, "     # Cmds: %d\n", pt->cmd_count);
-+	}
- 
- 	regval = ioread32(pt->io_regs + CMD_PT_VERSION);
- 
-@@ -55,6 +63,7 @@ static int pt_debugfs_stats_show(struct seq_file *s, void *p)
- static int pt_debugfs_queue_show(struct seq_file *s, void *p)
- {
- 	struct pt_cmd_queue *cmd_q = s->private;
-+	struct pt_device *pt;
- 	unsigned int regval;
- 
- 	if (!cmd_q)
-@@ -62,18 +71,24 @@ static int pt_debugfs_queue_show(struct seq_file *s, void *p)
- 
- 	seq_printf(s, "               Pass-Thru: %ld\n", cmd_q->total_pt_ops);
- 
--	regval = ioread32(cmd_q->reg_control + 0x000C);
--
--	seq_puts(s, "      Enabled Interrupts:");
--	if (regval & INT_EMPTY_QUEUE)
--		seq_puts(s, " EMPTY");
--	if (regval & INT_QUEUE_STOPPED)
--		seq_puts(s, " STOPPED");
--	if (regval & INT_ERROR)
--		seq_puts(s, " ERROR");
--	if (regval & INT_COMPLETION)
--		seq_puts(s, " COMPLETION");
--	seq_puts(s, "\n");
-+	pt = cmd_q->pt;
-+	if (pt->ver == AE4_DMA_VERSION) {
-+		regval = readl(cmd_q->reg_control + 0x4);
-+		seq_printf(s, "     Enabled Interrupts:: status 0x%x\n", regval);
-+	} else {
-+		regval = ioread32(cmd_q->reg_control + 0x000C);
-+
-+		seq_puts(s, "      Enabled Interrupts:");
-+		if (regval & INT_EMPTY_QUEUE)
-+			seq_puts(s, " EMPTY");
-+		if (regval & INT_QUEUE_STOPPED)
-+			seq_puts(s, " STOPPED");
-+		if (regval & INT_ERROR)
-+			seq_puts(s, " ERROR");
-+		if (regval & INT_COMPLETION)
-+			seq_puts(s, " COMPLETION");
-+		seq_puts(s, "\n");
-+	}
- 
- 	return 0;
- }
-@@ -84,8 +99,12 @@ DEFINE_SHOW_ATTRIBUTE(pt_debugfs_stats);
- 
- void ptdma_debugfs_setup(struct pt_device *pt)
- {
--	struct pt_cmd_queue *cmd_q;
- 	struct dentry *debugfs_q_instance;
-+	struct ae4_cmd_queue *ae4cmd_q;
-+	struct pt_cmd_queue *cmd_q;
-+	struct ae4_device *ae4;
-+	char name[30];
-+	int i;
- 
- 	if (!debugfs_initialized())
- 		return;
-@@ -96,11 +115,26 @@ void ptdma_debugfs_setup(struct pt_device *pt)
- 	debugfs_create_file("stats", 0400, pt->dma_dev.dbg_dev_root, pt,
- 			    &pt_debugfs_stats_fops);
- 
--	cmd_q = &pt->cmd_q;
- 
--	debugfs_q_instance =
--		debugfs_create_dir("q", pt->dma_dev.dbg_dev_root);
-+	if (pt->ver == AE4_DMA_VERSION) {
-+		ae4 = container_of(pt, struct ae4_device, pt);
-+		for (i = 0; i < ae4->cmd_q_count; i++) {
-+			ae4cmd_q = &ae4->ae4cmd_q[i];
-+			cmd_q = &ae4cmd_q->cmd_q;
-+
-+			snprintf(name, 29, "q%d", ae4cmd_q->id);
-+
-+			debugfs_q_instance =
-+				debugfs_create_dir(name, pt->dma_dev.dbg_dev_root);
- 
--	debugfs_create_file("stats", 0400, debugfs_q_instance, cmd_q,
--			    &pt_debugfs_queue_fops);
-+			debugfs_create_file("stats", 0400, debugfs_q_instance, cmd_q,
-+					    &pt_debugfs_queue_fops);
-+		}
-+	} else {
-+		debugfs_q_instance =
-+			debugfs_create_dir("q", pt->dma_dev.dbg_dev_root);
-+		cmd_q = &pt->cmd_q;
-+		debugfs_create_file("stats", 0400, debugfs_q_instance, cmd_q,
-+				    &pt_debugfs_queue_fops);
-+	}
- }
--- 
-2.25.1
+> Unfortunately, CLK subsystem suddenly went silent on clk portion of serie=
+s V2 reroll,
+> tried to ping them for about a month but no luck.
+>
+> Link: https://lore.kernel.org/r/20240408-ep93xx-clk-v2-1-adcd68c13753@maq=
+uefel.me
+>
+> Some changes since last version (v9) - see "Changes in v10", mostly
+> cosmetic.
 
+...
+
+> Patches should be formated with '--histogram'
+
+'formatted'
+
+...
+
+> Changes in v10:
+>
+> Reordered SoB tags to make sure they appear before Rb and Acked tags.
+
+This is not required. The importance is only the order of SoBs
+themselves. If they are interleaved with other tags, it's fine.
+
+...
+
+
+Hopefully to see this series being eventually applied soon.
+Arnd? (Do we have all necessary subsystem maintainers' tags, btw?)
+
+
+--=20
+With Best Regards,
+Andy Shevchenko
