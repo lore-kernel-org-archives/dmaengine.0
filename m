@@ -1,46 +1,46 @@
-Received: from NAM12-MW2-obe.outbound.protection.outlook.com (mail-mw2nam12on2047.outbound.protection.outlook.com [40.107.244.47])
+Received: from NAM04-BN8-obe.outbound.protection.outlook.com (mail-bn8nam04on2069.outbound.protection.outlook.com [40.107.100.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EE6318FDAE
-	for <dmaengine@vger.kernel.org>; Mon, 17 Jun 2024 10:04:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.244.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7AE418C326
+	for <dmaengine@vger.kernel.org>; Mon, 17 Jun 2024 10:04:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.100.69
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718618681; cv=fail; b=sbTbAoh0OIuChe8F76SRxYn4fbg0kLLGWreTmiV2iT5FCYCB6oVB7/KGdoJkeZ7GbxEtjR+Xs5V4LtK8bPKwHgSWtkmknAcMiJT9nR+3XEQBT2dzwIuQej/Od13HzgznHonXs+QtjnJmK5WNwpSpPMkQrukAeA0jG5nlzeFvcX0=
+	t=1718618687; cv=fail; b=iT2KX4/nve0lgc5M8pWHreV4x1tSO//YpdyTvd/rVoN3JbBdRyCRI1KkXAdS+aaVaSWpwT7ZJ6xx+W07eA2JH7Uunft0zuR0ayWzuL91oUViy7ar7dZONdJVc1AN+b7gc12sxTz4/N/HJp0O4nZ7JkiXFq1wkEnZ9sKebSt0Wk8=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718618681; c=relaxed/simple;
-	bh=FReLNjKDrIKMcjD3rH+iuacICf1uyTTymYJGZ9gzFVY=;
+	s=arc-20240116; t=1718618687; c=relaxed/simple;
+	bh=4XvKQapPEUF5pkSLTb1aWLP0kMNLu60W44TNQQeWDDI=;
 	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=LdczOoJbd5FXzuzNbt3KsClNOxeagI8QpQo30rPpsjf1YMF4eUquh4v1waJeF+/5vSzq77GsX0V+Ujf/oNErTSso3c+ElRuKKz525LiOb/sMHC43fSOQRNI6Yy6pgtcQXY2PalKR588gqCdxOyS9quA/xn2va7CaqXxmqYACQ7g=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=5U6uT2Bu; arc=fail smtp.client-ip=40.107.244.47
+	 MIME-Version:Content-Type; b=fao4ZHX9RiTBCrBossvbgxgg5jUDhu8PM4oPOQvGFDV9fWMOp24/52KF1i6LtewO+gIRwwELwLJm8wpr6OUVPWhSNXULraC1FAAuKbCxuABG/VlIOzOpuUqrcRgKsdFXORQNpMX0s65zRAca7f++xcsnveVoNFjjNIFPmKYcMjs=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=sscLI2eD; arc=fail smtp.client-ip=40.107.100.69
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="5U6uT2Bu"
+	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="sscLI2eD"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=JZmSo3y98Ox5J2yG95S8TNvuWHY9wbsTRliZhlTpZ3B630NFi8YD+GEqnOUIos0Ufpefmq6UjmKn+mAd7U1ed61g2V6bvMGCHlgRCiZIZ4gqdV2+EwdUPvSK4WsaHTaWe5cOxIrxay8DH4qtcHKmRRrdMD2+B9mRNDjflCig6hcRgh5B0c56fDxGgLjqOLXKYuAaP78B1PVqSpQJtkmEKyuaHdr0EPj/y1/gczSCgHBcU+Muo3IxJczzAedflSjnNcEXdx4U/pcTGeR3BjwTxad9BkPe/lQ5fs5DtKLBs6wSMvbUWbgGgZC3okEffBDzCKwN3tJTdf4FZdX8pZHguA==
+ b=CBs/W9RPLlQlnL1JM36STeZWybMX5PfzQN/wKnl9TI1iSDK0N4UiGNQMuXO5q0uRnVKpH5D+ruPPOuTw5zIsZVDzthnbn+PVQTXbE6hhjAKR8bPx6mcI2OJe1xVqp1sRXTec5VbJzn+0MzZRpkEcMS/SukBzS2WqZYWNPS3c3nHY0CLUTtX5KMAoCfBipl9+ahKbueKx/AIuPk06ATLgqcXVg1W+0LsQIq/OgLGkf9AblwMAbqTKZHtYKkXTFur5n0PGMx6izON6uIb9J/3Jnftbo/1bhCzhSWUNgeLlKW7E3SKxJ7+dJMYgoEeCyol7miXtuC+RJtNHDo+Y0FVa7A==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=cqHHpNafa3pV0IaSbdtF6gDz0atdqid9p4eg5mEQxXU=;
- b=aNzXW944bw4MVe/bh1fVQCfAbCrdmUCdeiPFUBC3MirYSCh1qEhv9ANhIkuAvrVgwEV0zlWsk5CnR2Tk/gwU9quQLeOWkdh2qpCKmi7HDxeHB+2ZGP2Ym2/2Cb/sT9YUOru6hOOS+vZ6kbJdLPVeIuDEOCClLhwNrHUk6ALW/fQMR12Ue+BGvQnJ2eXDrbAmKBtHEcopdpX+n/+RSAUpDO4MLVcz8G9yygMN2UufnU2OhYd1STJTE+zV/1fUNtan52ohhpCdQc2BuVmmKbUIyJgRxweWPNswacxd0oL5Ket1lmr/HmYkKgpwfntMIv/kxj4M271EnHTOmLYwjf/jsw==
+ bh=BbQXzQE3n8D8KEX3AtDQ2WMnNc3I3YLOo/iaQhTrQ/I=;
+ b=b/lkk7Nq6QCSLdJ/4hDGwwR9SDtxOwQuziK5g4TVbrKZo/lChSvrh62VQ6KeSFfGxrst4yoiPqfCOWytElUw6w7bPZtMPuIuplud6hOeohs5u3pbiI/KspDPHJuVaytL3ZQn+WvTDDAJULwnzg/RnfbOAsFx0cTf7z6ub7B1+xxq86xGSomYS6CS7UYMzQoyWuHuJOZFt5ufQZDCCM5byEUvP56yuSdNKPEDYurP/fjmRSgbKBldyZjCjgWrBX+AlT4vwwT2+r2N+s5AhjLh8IddZ2X0yOyVA8yhvcs8jBOBW1+X61Pa4uPEqSytLpXy1/T9BxQ2H49IZFayUNSujA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
  165.204.84.17) smtp.rcpttodomain=kernel.org smtp.mailfrom=amd.com; dmarc=pass
  (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
  dkim=none (message not signed); arc=none (0)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=cqHHpNafa3pV0IaSbdtF6gDz0atdqid9p4eg5mEQxXU=;
- b=5U6uT2BuE8GNaWwUwl62jPxMog83x4+sTkjY1hvNUrWcF9bNShZ4yiuuu80as3PlBjGEhDDoGMblccEoSiCo8XPa34weLqCSXO8n97A73K258yCDdSE1AUawUVbCinp6OwVFDprWUMncqxNrwm1NLDACCCnx9s3yZtMab5+d1A0=
-Received: from BN9PR03CA0180.namprd03.prod.outlook.com (2603:10b6:408:f4::35)
- by PH7PR12MB9174.namprd12.prod.outlook.com (2603:10b6:510:2ed::9) with
+ bh=BbQXzQE3n8D8KEX3AtDQ2WMnNc3I3YLOo/iaQhTrQ/I=;
+ b=sscLI2eDaanBXHE9wDjaflb3cLQ3X4VYuNJMKobKicqYzmaPM5bumEP0EGqNe0GLEKTOJUbw3N5wp9Q9/ih0zfqdnPxo0S87ErIPHFerPADlbpslBHJGQmQ7SftA+QT1w9x28MD6l0qhoR6QJgXWIFjfgPH61w0eZ5rkelJ9ztg=
+Received: from BL1P223CA0025.NAMP223.PROD.OUTLOOK.COM (2603:10b6:208:2c4::30)
+ by CH3PR12MB8911.namprd12.prod.outlook.com (2603:10b6:610:169::16) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7677.30; Mon, 17 Jun
- 2024 10:04:37 +0000
-Received: from BN3PEPF0000B36F.namprd21.prod.outlook.com
- (2603:10b6:408:f4:cafe::d8) by BN9PR03CA0180.outlook.office365.com
- (2603:10b6:408:f4::35) with Microsoft SMTP Server (version=TLS1_2,
+ 2024 10:04:43 +0000
+Received: from BN3PEPF0000B371.namprd21.prod.outlook.com
+ (2603:10b6:208:2c4:cafe::4f) by BL1P223CA0025.outlook.office365.com
+ (2603:10b6:208:2c4::30) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7677.30 via Frontend
- Transport; Mon, 17 Jun 2024 10:04:36 +0000
+ Transport; Mon, 17 Jun 2024 10:04:43 +0000
 X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
  smtp.mailfrom=amd.com; dkim=none (message not signed)
  header.d=none;dmarc=pass action=none header.from=amd.com;
@@ -48,20 +48,20 @@ Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
  165.204.84.17 as permitted sender) receiver=protection.outlook.com;
  client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
 Received: from SATLEXMB04.amd.com (165.204.84.17) by
- BN3PEPF0000B36F.mail.protection.outlook.com (10.167.243.166) with Microsoft
+ BN3PEPF0000B371.mail.protection.outlook.com (10.167.243.168) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.20.7719.0 via Frontend Transport; Mon, 17 Jun 2024 10:04:36 +0000
+ 15.20.7719.0 via Frontend Transport; Mon, 17 Jun 2024 10:04:43 +0000
 Received: from jatayu.amd.com (10.180.168.240) by SATLEXMB04.amd.com
  (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Mon, 17 Jun
- 2024 05:04:34 -0500
+ 2024 05:04:38 -0500
 From: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
 To: <vkoul@kernel.org>, <dmaengine@vger.kernel.org>
 CC: <Raju.Rangoju@amd.com>, <Frank.li@nxp.com>, Basavaraj Natikar
 	<Basavaraj.Natikar@amd.com>
-Subject: [PATCH v2 1/7] dmaengine: Move AMD DMA driver to separate directory
-Date: Mon, 17 Jun 2024 15:33:53 +0530
-Message-ID: <20240617100359.2550541-2-Basavaraj.Natikar@amd.com>
+Subject: [PATCH v2 3/7] dmaengine: ptdma: Move common functions to common code
+Date: Mon, 17 Jun 2024 15:33:55 +0530
+Message-ID: <20240617100359.2550541-4-Basavaraj.Natikar@amd.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20240617100359.2550541-1-Basavaraj.Natikar@amd.com>
 References: <20240617100359.2550541-1-Basavaraj.Natikar@amd.com>
@@ -77,206 +77,191 @@ X-ClientProxiedBy: SATLEXMB04.amd.com (10.181.40.145) To SATLEXMB04.amd.com
  (10.181.40.145)
 X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BN3PEPF0000B36F:EE_|PH7PR12MB9174:EE_
-X-MS-Office365-Filtering-Correlation-Id: 968518b7-5388-4f68-6186-08dc8eb4e51c
+X-MS-TrafficTypeDiagnostic: BN3PEPF0000B371:EE_|CH3PR12MB8911:EE_
+X-MS-Office365-Filtering-Correlation-Id: c3abc2b4-ca0d-4f42-5c22-08dc8eb4e8ce
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230037|376011|82310400023|1800799021|36860700010;
+	BCL:0;ARA:13230037|376011|36860700010|1800799021|82310400023;
 X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?ZA7cE6fRjtRMsZSFiwiOc3fR0hn8Yh339ElbzCv1MLewLKgvpMgvHKBdJmBw?=
- =?us-ascii?Q?wRkqAi0p7xqHp7+kxqmpHOCPVCzz4vqA0PKMKe1gWE8KwO9Q+q4x1W0EdP9r?=
- =?us-ascii?Q?tl/0Cx8gT6I90eaqee4O334uZIdrBjMg6SfE8xW33+HOBWjX4e6+f52mD+Mu?=
- =?us-ascii?Q?lFmfYVtuEpgvK8MLDHPqDHTL5C334p32rU26E7h+C1z4f4+2VE4ta6o0sOHO?=
- =?us-ascii?Q?+ef3bZdc8qVs2DLu5nCctyuhSpItya+HKFdiBKyrXpxjHH8/bg7JsBMh9u2p?=
- =?us-ascii?Q?rH/PwuOLyCA7py9EK45DjUgnYG57G9WVy2sNa8/XZnsiocikllyr+eOZNo9l?=
- =?us-ascii?Q?LlaalMXmxLQD4QlZB3UI1X/6jA5zEJYSepD9saAVDmWdkg69RYs5saefxJ+J?=
- =?us-ascii?Q?JdWzP/L+gyv1YejRZrz7507QBpxeg81VKW4tcaKVJbF6M16szYqH46JvXQtq?=
- =?us-ascii?Q?b98q09FiHQYt1Q/X9VmIqoI/gN/Avyjjvs/5yOlik1RSYeoePUCwPJsH53Bf?=
- =?us-ascii?Q?EfoCtD+Qk5eQjhB3vvGcBW/z140I/hHxvkgUsdg9S+7aKozB6dpP/SR1WVnJ?=
- =?us-ascii?Q?ZxwbQiS7zztMu3wjvkVzecH0FOSZgC40VZjIMbDMD2TCO//fTuCE72l0o59c?=
- =?us-ascii?Q?o3HL53Ej07DxL5HabvYrnQBjP9xKDX+yLqSMWxKesbk5jm3i0yYbyCzQxaBs?=
- =?us-ascii?Q?cP9E6LMwOGvKGe60VReDBExAnFBnM/PqUB2qWURc9C6EqImpArkNbGoClYBj?=
- =?us-ascii?Q?hivJN5NmJfrrNYXLTz4uZr8wW2U9cBKIu71hTIlt0tlGBUz7l2vUmwGhfiQk?=
- =?us-ascii?Q?TbcZCatXVVma57pvu2V7fxrSCYZNNc8Cp8mJCl9bww74z0IfdPWLzZBsa52x?=
- =?us-ascii?Q?gZwUlSM3iWMDG/XmOrryQwc2jgGPc1gpb445nZHYI84UeEuTCTJQkppSU3ol?=
- =?us-ascii?Q?H8YZoStjyagFDZwcPC0yTtWhE2aAs8A5qgXWubaWo1SBl9D775Dracmi2VpG?=
- =?us-ascii?Q?CbkuCqKkDOLRSDGo7mT3FIuerHV+1vaeYlknfPLA3+mD9PCQydVx9s9Ym5ZO?=
- =?us-ascii?Q?hpDnF1NLrxhUwGtmMKShYRc3Rf617olGKXkl5ulTw9nQ51367NHhZDQJBtK8?=
- =?us-ascii?Q?G59swVfYZVajLOGFJZo8p7keHM4X5aqRlE61KtqPFSk9XlEnCRu94SEWTRCw?=
- =?us-ascii?Q?ChtANf9rTpipn6LtdrvxTwxHHAOf/YHdxSDrkzIcQE2jn/A9LxPT2xTV89MA?=
- =?us-ascii?Q?+n3BM7xAl6c9P+3cp8kwhArKNwVUCp/mtI1ULZXg5ftnuLLG6WmKSMpvR9eD?=
- =?us-ascii?Q?ibTkU6IQfHrEW+hfHgDMDqJYmWX8DY4rZacIFi8+RoFfKC/OQHvq2IfOt9+5?=
- =?us-ascii?Q?SMlhP0A=3D?=
+	=?us-ascii?Q?QKNONxJ5vW5p35a34VhFrhs1Td+hIgSgIIMEeZvC5ZapAJYl2N06N7wVEVWs?=
+ =?us-ascii?Q?83AUEtfr6sxxyQU6IVWqxA48NyziQtNjg2zi7kWatYbN8rkwvH52OsmUXw8N?=
+ =?us-ascii?Q?ZCk/rUjglMPLqDln/BE95VawQ3tBhLkb0lCV8QLqkYz77nH79wC7XW2bPZPv?=
+ =?us-ascii?Q?AFTYsXrCuBo7RUmLC7cjL2kRqSDcUCBFksOaTK6dfCrvmAx5H6WnYRU//78+?=
+ =?us-ascii?Q?OspnpVjH7ifj59bKurNvt53pm5DRh4EDSLU03sS4LjZsRb5fQB+a75+Eu1ZC?=
+ =?us-ascii?Q?XW9YxkpLMXA7CGJ6gJa9+uLb83qK75pWwMphdolgVzP5ecx/zUhW0AUTebRk?=
+ =?us-ascii?Q?T29laJ8ueZtFGgvXG8bAkTuz2RDn8Suj54n0Yap8Q4nKK/L7T1O10AeoD4t0?=
+ =?us-ascii?Q?Q0CkukOf/D0v5KW15A87U77UfBABXOm7wQguL/+XshfjQZXj5WYFUl24ttdm?=
+ =?us-ascii?Q?ycXRr9Y+0kpoS2Dx7TZi8CikOIzzjQOOqT6POjKlco9OpyS2TXBAVGxnKxCq?=
+ =?us-ascii?Q?dyFs5CrUunLmxINP0CQxPqsIGP23j4k9h/nD35QPGOKf/lQAWmuR9vZh7ZeF?=
+ =?us-ascii?Q?as9Jnh1Pru2LPoa6znusN4dgLU2syGDw8rwUiOPqfeJMeL/9lCiOrzQzyrTW?=
+ =?us-ascii?Q?PaU/UtuOXZUuplHHYvTm7AobJLw5FnsTjVLfX8co5mrVtUw8k239YYEjtliV?=
+ =?us-ascii?Q?VkypTYjgpRGqPZZ7RiWynrgJKcs11mFPVYdugVPPtcACchukdwg9VAsdJIC/?=
+ =?us-ascii?Q?ELX3zYbh1v3ZcnyDqcr2ZOuqtMjQbxY9RlKRe4gItenv1mr40gSTtXAit7Kw?=
+ =?us-ascii?Q?/hG5cLOkZpjzMfpQE/RCYewodaLmxyHBRk2QD51pKy9wdguMFueXi+J6iw/w?=
+ =?us-ascii?Q?eCP/uAybYG+waFm6FISRqk8yGzMxzkMCPPQd3uDqu4DGTmGt4isGnxd7gaCO?=
+ =?us-ascii?Q?uMSQoFUfdIhtTwiy5mxRGlrWkMgnEuTZXgthzsyph6D87GNxtypiaxcjBbj2?=
+ =?us-ascii?Q?YnNf7A41Xt9kxFvpvKQCvVKgZTn+hs4P3GEj/WTIT8NNGwMMbVGlQyMxHFf6?=
+ =?us-ascii?Q?ckozRlJiDXLSUtzxLMHCDWQhK0udSoKYpy+ZKXTAP4Ep6mSwgUHsZqplBotH?=
+ =?us-ascii?Q?HKeDm825urRU/GBOh1eNmuFaAaw/nfKt/8cZFMGsu/XD3rxsLRjXXXeVnZGS?=
+ =?us-ascii?Q?dMaamx4muv6NFXrdeVqwIeam9dB1PMGFBKaB4HuEhGsGJTk9mqXeblWkaHqv?=
+ =?us-ascii?Q?bWJCaGuFECZ5v4+YoNDx2bUJX20DP9sOu0nfrLjp0Bec2AEVhrLLJms9NmHV?=
+ =?us-ascii?Q?/+nkAEKrtyveN1xCuezcszFZMlTfsXOTu6x76zsBa3G6sRkY9d2CaZkezHxG?=
+ =?us-ascii?Q?CatsqIuT8Oz2GJZfBt5wI+mNwuS1oV8sNIFQO/SqSiI/rI0hxg=3D=3D?=
 X-Forefront-Antispam-Report:
-	CIP:165.204.84.17;CTRY:;LANG:en;SCL:1;SRV:;IPV:CAL;SFV:NSPM;H:SATLEXMB04.amd.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230037)(376011)(82310400023)(1800799021)(36860700010);DIR:OUT;SFP:1101;
+	CIP:165.204.84.17;CTRY:US;LANG:en;SCL:1;SRV:;IPV:CAL;SFV:NSPM;H:SATLEXMB04.amd.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230037)(376011)(36860700010)(1800799021)(82310400023);DIR:OUT;SFP:1101;
 X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Jun 2024 10:04:36.8242
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Jun 2024 10:04:43.0082
  (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 968518b7-5388-4f68-6186-08dc8eb4e51c
+X-MS-Exchange-CrossTenant-Network-Message-Id: c3abc2b4-ca0d-4f42-5c22-08dc8eb4e8ce
 X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d;Ip=[165.204.84.17];Helo=[SATLEXMB04.amd.com]
 X-MS-Exchange-CrossTenant-AuthSource:
-	BN3PEPF0000B36F.namprd21.prod.outlook.com
+	BN3PEPF0000B371.namprd21.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR12MB9174
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR12MB8911
 
-Currently, AMD PTDMA driver is single DMA driver supported and newer AMD
-platforms supports newer DMA engine. Hence move the current drivers to
-separate directory. This would also mean the newer driver submissions to
-AMD DMA driver in the future will also land in AMD specific directory.
+To focus on reusability of ptdma code across modules extract common
+functions into reusable modules.
 
 Reviewed-by: Raju Rangoju <Raju.Rangoju@amd.com>
 Signed-off-by: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
 ---
- MAINTAINERS                                   | 2 +-
- drivers/dma/Kconfig                           | 4 ++--
- drivers/dma/Makefile                          | 2 +-
- drivers/dma/amd/Kconfig                       | 5 +++++
- drivers/dma/amd/Makefile                      | 6 ++++++
- drivers/dma/{ => amd}/ptdma/Kconfig           | 0
- drivers/dma/{ => amd}/ptdma/Makefile          | 0
- drivers/dma/{ => amd}/ptdma/ptdma-debugfs.c   | 0
- drivers/dma/{ => amd}/ptdma/ptdma-dev.c       | 0
- drivers/dma/{ => amd}/ptdma/ptdma-dmaengine.c | 3 +--
- drivers/dma/{ => amd}/ptdma/ptdma-pci.c       | 0
- drivers/dma/{ => amd}/ptdma/ptdma.h           | 2 +-
- 12 files changed, 17 insertions(+), 7 deletions(-)
- create mode 100644 drivers/dma/amd/Kconfig
- create mode 100644 drivers/dma/amd/Makefile
- rename drivers/dma/{ => amd}/ptdma/Kconfig (100%)
- rename drivers/dma/{ => amd}/ptdma/Makefile (100%)
- rename drivers/dma/{ => amd}/ptdma/ptdma-debugfs.c (100%)
- rename drivers/dma/{ => amd}/ptdma/ptdma-dev.c (100%)
- rename drivers/dma/{ => amd}/ptdma/ptdma-dmaengine.c (99%)
- rename drivers/dma/{ => amd}/ptdma/ptdma-pci.c (100%)
- rename drivers/dma/{ => amd}/ptdma/ptdma.h (99%)
+ MAINTAINERS                             |  1 +
+ drivers/dma/amd/common/amd_dma.c        | 23 +++++++++++++++++++++++
+ drivers/dma/amd/common/amd_dma.h        |  3 +++
+ drivers/dma/amd/ptdma/Makefile          |  2 +-
+ drivers/dma/amd/ptdma/ptdma-dev.c       | 14 +-------------
+ drivers/dma/amd/ptdma/ptdma-dmaengine.c |  3 +--
+ drivers/dma/amd/ptdma/ptdma.h           |  2 --
+ 7 files changed, 30 insertions(+), 18 deletions(-)
+ create mode 100644 drivers/dma/amd/common/amd_dma.c
 
 diff --git a/MAINTAINERS b/MAINTAINERS
-index cf9c9221c388..c500c0567779 100644
+index 0d222d1ca83f..3000ea780db4 100644
 --- a/MAINTAINERS
 +++ b/MAINTAINERS
-@@ -1113,7 +1113,7 @@ AMD PTDMA DRIVER
- M:	Basavaraj Natikar <Basavaraj.Natikar@amd.com>
+@@ -952,6 +952,7 @@ M:	Basavaraj Natikar <Basavaraj.Natikar@amd.com>
  L:	dmaengine@vger.kernel.org
  S:	Maintained
--F:	drivers/dma/ptdma/
-+F:	drivers/dma/amd/ptdma/
+ F:	drivers/dma/amd/ae4dma/
++F:	drivers/dma/amd/common/
  
- AMD SEATTLE DEVICE TREE SUPPORT
- M:	Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
-diff --git a/drivers/dma/Kconfig b/drivers/dma/Kconfig
-index 002a5ec80620..ac6e9d3828b7 100644
---- a/drivers/dma/Kconfig
-+++ b/drivers/dma/Kconfig
-@@ -752,8 +752,6 @@ source "drivers/dma/bestcomm/Kconfig"
+ AMD AXI W1 DRIVER
+ M:	Kris Chaplin <kris.chaplin@amd.com>
+diff --git a/drivers/dma/amd/common/amd_dma.c b/drivers/dma/amd/common/amd_dma.c
+new file mode 100644
+index 000000000000..3552d36fa8b9
+--- /dev/null
++++ b/drivers/dma/amd/common/amd_dma.c
+@@ -0,0 +1,23 @@
++// SPDX-License-Identifier: GPL-2.0-or-later
++/*
++ * AMD DMA Driver common
++ *
++ * Copyright (c) 2024, Advanced Micro Devices, Inc.
++ * All Rights Reserved.
++ *
++ * Author: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
++ */
++
++#include "../common/amd_dma.h"
++
++void pt_start_queue(struct pt_cmd_queue *cmd_q)
++{
++	/* Turn on the run bit */
++	iowrite32(cmd_q->qcontrol | CMD_Q_RUN, cmd_q->reg_control);
++}
++
++void pt_stop_queue(struct pt_cmd_queue *cmd_q)
++{
++	/* Turn off the run bit */
++	iowrite32(cmd_q->qcontrol & ~CMD_Q_RUN, cmd_q->reg_control);
++}
+diff --git a/drivers/dma/amd/common/amd_dma.h b/drivers/dma/amd/common/amd_dma.h
+index f9f396cd4371..44251918f157 100644
+--- a/drivers/dma/amd/common/amd_dma.h
++++ b/drivers/dma/amd/common/amd_dma.h
+@@ -23,4 +23,7 @@
+ #include "../ptdma/ptdma.h"
+ #include "../../virt-dma.h"
  
- source "drivers/dma/mediatek/Kconfig"
++void pt_start_queue(struct pt_cmd_queue *cmd_q);
++void pt_stop_queue(struct pt_cmd_queue *cmd_q);
++
+ #endif
+diff --git a/drivers/dma/amd/ptdma/Makefile b/drivers/dma/amd/ptdma/Makefile
+index ce5410268a9a..42606d7302e6 100644
+--- a/drivers/dma/amd/ptdma/Makefile
++++ b/drivers/dma/amd/ptdma/Makefile
+@@ -5,6 +5,6 @@
  
--source "drivers/dma/ptdma/Kconfig"
+ obj-$(CONFIG_AMD_PTDMA) += ptdma.o
+ 
+-ptdma-objs := ptdma-dev.o ptdma-dmaengine.o ptdma-debugfs.o
++ptdma-objs := ptdma-dev.o ptdma-dmaengine.o ptdma-debugfs.o ../common/amd_dma.o
+ 
+ ptdma-$(CONFIG_PCI) += ptdma-pci.o
+diff --git a/drivers/dma/amd/ptdma/ptdma-dev.c b/drivers/dma/amd/ptdma/ptdma-dev.c
+index a2bf13ff18b6..506b3dfca549 100644
+--- a/drivers/dma/amd/ptdma/ptdma-dev.c
++++ b/drivers/dma/amd/ptdma/ptdma-dev.c
+@@ -17,7 +17,7 @@
+ #include <linux/module.h>
+ #include <linux/pci.h>
+ 
+-#include "ptdma.h"
++#include "../common/amd_dma.h"
+ 
+ /* Human-readable error strings */
+ static char *pt_error_codes[] = {
+@@ -54,18 +54,6 @@ static void pt_log_error(struct pt_device *d, int e)
+ 	dev_err(d->dev, "PTDMA error: %s (0x%x)\n", pt_error_codes[e], e);
+ }
+ 
+-void pt_start_queue(struct pt_cmd_queue *cmd_q)
+-{
+-	/* Turn on the run bit */
+-	iowrite32(cmd_q->qcontrol | CMD_Q_RUN, cmd_q->reg_control);
+-}
 -
- source "drivers/dma/qcom/Kconfig"
- 
- source "drivers/dma/dw/Kconfig"
-@@ -772,6 +770,8 @@ source "drivers/dma/fsl-dpaa2-qdma/Kconfig"
- 
- source "drivers/dma/lgm/Kconfig"
- 
-+source "drivers/dma/amd/Kconfig"
-+
- # clients
- comment "DMA Clients"
- 	depends on DMA_ENGINE
-diff --git a/drivers/dma/Makefile b/drivers/dma/Makefile
-index 802ca916f05f..c59948a0dc7c 100644
---- a/drivers/dma/Makefile
-+++ b/drivers/dma/Makefile
-@@ -16,7 +16,7 @@ obj-$(CONFIG_DMATEST) += dmatest.o
- obj-$(CONFIG_ALTERA_MSGDMA) += altera-msgdma.o
- obj-$(CONFIG_AMBA_PL08X) += amba-pl08x.o
- obj-$(CONFIG_AMCC_PPC440SPE_ADMA) += ppc4xx/
--obj-$(CONFIG_AMD_PTDMA) += ptdma/
-+obj-y += amd/
- obj-$(CONFIG_APPLE_ADMAC) += apple-admac.o
- obj-$(CONFIG_AT_HDMAC) += at_hdmac.o
- obj-$(CONFIG_AT_XDMAC) += at_xdmac.o
-diff --git a/drivers/dma/amd/Kconfig b/drivers/dma/amd/Kconfig
-new file mode 100644
-index 000000000000..8246b463bcf7
---- /dev/null
-+++ b/drivers/dma/amd/Kconfig
-@@ -0,0 +1,5 @@
-+# SPDX-License-Identifier: GPL-2.0-only
-+#
-+# AMD DMA Drivers
-+
-+source "drivers/dma/amd/ptdma/Kconfig"
-diff --git a/drivers/dma/amd/Makefile b/drivers/dma/amd/Makefile
-new file mode 100644
-index 000000000000..dd7257ba7e06
---- /dev/null
-+++ b/drivers/dma/amd/Makefile
-@@ -0,0 +1,6 @@
-+# SPDX-License-Identifier: GPL-2.0-only
-+#
-+# AMD DMA drivers
-+#
-+
-+obj-$(CONFIG_AMD_PTDMA) += ptdma/
-diff --git a/drivers/dma/ptdma/Kconfig b/drivers/dma/amd/ptdma/Kconfig
-similarity index 100%
-rename from drivers/dma/ptdma/Kconfig
-rename to drivers/dma/amd/ptdma/Kconfig
-diff --git a/drivers/dma/ptdma/Makefile b/drivers/dma/amd/ptdma/Makefile
-similarity index 100%
-rename from drivers/dma/ptdma/Makefile
-rename to drivers/dma/amd/ptdma/Makefile
-diff --git a/drivers/dma/ptdma/ptdma-debugfs.c b/drivers/dma/amd/ptdma/ptdma-debugfs.c
-similarity index 100%
-rename from drivers/dma/ptdma/ptdma-debugfs.c
-rename to drivers/dma/amd/ptdma/ptdma-debugfs.c
-diff --git a/drivers/dma/ptdma/ptdma-dev.c b/drivers/dma/amd/ptdma/ptdma-dev.c
-similarity index 100%
-rename from drivers/dma/ptdma/ptdma-dev.c
-rename to drivers/dma/amd/ptdma/ptdma-dev.c
-diff --git a/drivers/dma/ptdma/ptdma-dmaengine.c b/drivers/dma/amd/ptdma/ptdma-dmaengine.c
-similarity index 99%
-rename from drivers/dma/ptdma/ptdma-dmaengine.c
-rename to drivers/dma/amd/ptdma/ptdma-dmaengine.c
-index f79240734807..a2e7c2cec15e 100644
---- a/drivers/dma/ptdma/ptdma-dmaengine.c
+-void pt_stop_queue(struct pt_cmd_queue *cmd_q)
+-{
+-	/* Turn off the run bit */
+-	iowrite32(cmd_q->qcontrol & ~CMD_Q_RUN, cmd_q->reg_control);
+-}
+-
+ static int pt_core_execute_cmd(struct ptdma_desc *desc, struct pt_cmd_queue *cmd_q)
+ {
+ 	bool soc = FIELD_GET(DWORD0_SOC, desc->dw0);
+diff --git a/drivers/dma/amd/ptdma/ptdma-dmaengine.c b/drivers/dma/amd/ptdma/ptdma-dmaengine.c
+index a2e7c2cec15e..66ea10499643 100644
+--- a/drivers/dma/amd/ptdma/ptdma-dmaengine.c
 +++ b/drivers/dma/amd/ptdma/ptdma-dmaengine.c
-@@ -10,8 +10,7 @@
+@@ -9,8 +9,7 @@
+  * Author: Gary R Hook <gary.hook@amd.com>
   */
  
- #include "ptdma.h"
--#include "../dmaengine.h"
--#include "../virt-dma.h"
-+#include "../../dmaengine.h"
+-#include "ptdma.h"
+-#include "../../dmaengine.h"
++#include "../common/amd_dma.h"
  
  static inline struct pt_dma_chan *to_pt_chan(struct dma_chan *dma_chan)
  {
-diff --git a/drivers/dma/ptdma/ptdma-pci.c b/drivers/dma/amd/ptdma/ptdma-pci.c
-similarity index 100%
-rename from drivers/dma/ptdma/ptdma-pci.c
-rename to drivers/dma/amd/ptdma/ptdma-pci.c
-diff --git a/drivers/dma/ptdma/ptdma.h b/drivers/dma/amd/ptdma/ptdma.h
-similarity index 99%
-rename from drivers/dma/ptdma/ptdma.h
-rename to drivers/dma/amd/ptdma/ptdma.h
-index 21b4bf895200..2690a32fc7cb 100644
---- a/drivers/dma/ptdma/ptdma.h
+diff --git a/drivers/dma/amd/ptdma/ptdma.h b/drivers/dma/amd/ptdma/ptdma.h
+index 2690a32fc7cb..b4f9ee83b074 100644
+--- a/drivers/dma/amd/ptdma/ptdma.h
 +++ b/drivers/dma/amd/ptdma/ptdma.h
-@@ -22,7 +22,7 @@
- #include <linux/wait.h>
- #include <linux/dmapool.h>
+@@ -322,8 +322,6 @@ int pt_core_perform_passthru(struct pt_cmd_queue *cmd_q,
+ 			     struct pt_passthru_engine *pt_engine);
  
--#include "../virt-dma.h"
-+#include "../../virt-dma.h"
+ void pt_check_status_trans(struct pt_device *pt, struct pt_cmd_queue *cmd_q);
+-void pt_start_queue(struct pt_cmd_queue *cmd_q);
+-void pt_stop_queue(struct pt_cmd_queue *cmd_q);
  
- #define MAX_PT_NAME_LEN			16
- #define MAX_DMAPOOL_NAME_LEN		32
+ static inline void pt_core_disable_queue_interrupts(struct pt_device *pt)
+ {
 -- 
 2.25.1
 
