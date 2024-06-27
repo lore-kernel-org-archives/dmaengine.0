@@ -1,48 +1,39 @@
-Received: from mail-m16.yeah.net (mail-m16.yeah.net [220.197.32.17])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2232A7484;
-	Thu, 27 Jun 2024 06:40:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=220.197.32.17
+Received: from mail-m16.yeah.net (mail-m16.yeah.net [1.95.21.14])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 60CA46F30B;
+	Thu, 27 Jun 2024 07:56:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=1.95.21.14
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719470449; cv=none; b=tmRhmnAtWycisQ3cSkUl2cbza1TOvspGMm51ugGz54cvWs/gtqMuFFeiG994mOKvuLnsEwHylCsN33Og7BPQXrCEswp8nUhAoXQfESilGrjJaUb57dLam8A849BJeJ6FYBlANp2K9AkPKT8lrGY09TYzEOBUqszXn/wydwp1WYo=
+	t=1719474999; cv=none; b=knj82im27eq1b6ma1z4CQtQi1aM6wUImdhGl5TyPn/pgpqBx6MZwKpO707/PtJ7bOf9jrMt1WDChypTtfhO4D1Kz1FGQuNoqi0iyS9y++YgOjSoWIBJyMJTNGwx7OtF0bpbx6FoPxPKt5kUV7FBJsMcB2qxcxOyC7P9kJomzBKQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719470449; c=relaxed/simple;
-	bh=bJJt0FeM0KbEJPLYk2tCjgBeMwoyVLEpB+8s2fa5LfA=;
+	s=arc-20240116; t=1719474999; c=relaxed/simple;
+	bh=pmh2WPEGH93NRjf9Mx0zSTtzvhQAcUIo7vgaooEg9rQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=lSqjiwDzwe8h4bYW6R7MrOt7wibS8j0X7vMa+xgTK7bXQ62V86I4CceQMjNRY82PLpFeFL0AS+6Zt10Z1K+SfjLCGcMF8Bxv6qCtt5HDBQYcQLzsow14AHQDCT17XOKLgc/9QTXTHMJCIBFC8aVVJGUjPIy6BErKVViT53rJyWo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=yeah.net; spf=pass smtp.mailfrom=yeah.net; dkim=pass (1024-bit key) header.d=yeah.net header.i=@yeah.net header.b=dfzvGqDh; arc=none smtp.client-ip=220.197.32.17
+	 Content-Type:Content-Disposition:In-Reply-To; b=UVHwRE83abGrV293+6IW5aRIPULq0QaRi6En+f6EbFGr/lBgeEEN2CE9AxU6Np7UqJBnlSZq4DqMTaGd23F5uF9tcjINLEzki2+2rTjFbgVctOuAbYFtNyw8e4pU7sDPEhVwABNCn7LvhvGlO/L7Q/qFTnWDhp+hRuxbZAeCd0E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=yeah.net; spf=pass smtp.mailfrom=yeah.net; dkim=pass (1024-bit key) header.d=yeah.net header.i=@yeah.net header.b=WcJEYMWY; arc=none smtp.client-ip=1.95.21.14
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=yeah.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=yeah.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=yeah.net header.i=@yeah.net header.b="dfzvGqDh"
+	dkim=pass (1024-bit key) header.d=yeah.net header.i=@yeah.net header.b="WcJEYMWY"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yeah.net;
 	s=s110527; h=Date:From:Subject:Message-ID:MIME-Version:
-	Content-Type; bh=4E9CM/5/mBeIexGZwjxuNqelU9W/5r9P19OkUaKlST4=;
-	b=dfzvGqDhDzW8CIUfGN8u6wD8w3rvXo2pAA6zlf+rQX4lPDA5QpbZ/I6YFCAH/R
-	AtSNZnRznbzJIxQX9GYN1yCEM9d2DlnR33U0XRfkg1QxcmeuHPWSm5pAfp63ZeJY
-	YZZj9WZvf9XhghQZl3e5rxftZCaCaIcC0bxl20ZTq6rCI=
+	Content-Type; bh=sp8KZdlX3RPDhtLx6ynzr5IonFdRIlNIab79h3NFXaM=;
+	b=WcJEYMWYQ9vVXCutrY7Klxkm8Ev4MpSZGszXHCl8J/JX5tTXnjtOC0XGFBno91
+	vMTYQR3wD/Vy2Pvlop81NotNidMSoxJDf2gIF4Axfa7HUrRCduMFlw0sJQxPokdF
+	jjGDEn6KXAE9XKmN4r8Fvx2jwsVIme6UHqgCaxm70/nak=
 Received: from dragon (unknown [114.218.218.47])
-	by gzsmtp2 (Coremail) with SMTP id Ms8vCgDXP5t6Bn1m600aAA--.26605S3;
-	Thu, 27 Jun 2024 14:28:12 +0800 (CST)
-Date: Thu, 27 Jun 2024 14:28:06 +0800
+	by gzsmtp3 (Coremail) with SMTP id M88vCgD33_AVG31mPrkZAA--.25823S3;
+	Thu, 27 Jun 2024 15:56:06 +0800 (CST)
+Date: Thu, 27 Jun 2024 15:56:04 +0800
 From: Shawn Guo <shawnguo2@yeah.net>
-To: Frank Li <Frank.Li@nxp.com>
-Cc: Miquel Raynal <miquel.raynal@bootlin.com>,
-	Richard Weinberger <richard@nod.at>,
-	Vignesh Raghavendra <vigneshr@ti.com>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Han Xu <han.xu@nxp.com>,
-	Vinod Koul <vkoul@kernel.org>, Shawn Guo <shawnguo@kernel.org>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Pengutronix Kernel Team <kernel@pengutronix.de>,
-	Fabio Estevam <festevam@gmail.com>, Marek Vasut <marex@denx.de>,
-	linux-mtd@lists.infradead.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org,
-	imx@lists.linux.dev, linux-arm-kernel@lists.infradead.org
-Subject: Re: [PATCH v2 5/6] arm64: dts: imx8-ss-conn: add gpmi nand node
-Message-ID: <Zn0GdvvigLqcGXxn@dragon>
-References: <20240520-gpmi_nand-v2-0-e3017e4c9da5@nxp.com>
- <20240520-gpmi_nand-v2-5-e3017e4c9da5@nxp.com>
+To: Joy Zou <joy.zou@nxp.com>
+Cc: frank.li@nxp.com, robh@kernel.org, krzk+dt@kernel.org,
+	conor+dt@kernel.org, shawnguo@kernel.org, s.hauer@pengutronix.de,
+	kernel@pengutronix.de, festevam@gmail.com, imx@lists.linux.dev,
+	dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
+	devicetree@vger.kernel.org
+Subject: Re: [PATCH v2 0/2] remove and reorder labels
+Message-ID: <Zn0bFMhDlK5agGjT@dragon>
+References: <20240620022637.2494329-1-joy.zou@nxp.com>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -51,16 +42,24 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240520-gpmi_nand-v2-5-e3017e4c9da5@nxp.com>
-X-CM-TRANSID:Ms8vCgDXP5t6Bn1m600aAA--.26605S3
+In-Reply-To: <20240620022637.2494329-1-joy.zou@nxp.com>
+X-CM-TRANSID:M88vCgD33_AVG31mPrkZAA--.25823S3
 X-Coremail-Antispam: 1Uf129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7v73
-	VFW2AGmfu7bjvjm3AaLaJ3UbIYCTnIWIevJa73UjIFyTuYvjxUaK0PUUUUU
-X-CM-SenderInfo: pvkd40hjxrjqh1hdxhhqhw/1tbiBBILZWZqryB7ewABs6
+	VFW2AGmfu7bjvjm3AaLaJ3UbIYCTnIWIevJa73UjIFyTuYvjxU-o7KDUUUU
+X-CM-SenderInfo: pvkd40hjxrjqh1hdxhhqhw/1tbiCRcLZWZv-cx1LgAAsT
 
-On Mon, May 20, 2024 at 12:09:16PM -0400, Frank Li wrote:
-> Add gpmi nand support.
+On Thu, Jun 20, 2024 at 10:26:35AM +0800, Joy Zou wrote:
+> For the details, please check the patch commit log.
 > 
-> Signed-off-by: Frank Li <Frank.Li@nxp.com>
+> ---
+> Changes for v2:
+> 1. separate the remove label patch from reorder patch.
+> 2. change the child device order in lpi2c3.
+> 3. modify the commit message.
+> 
+> Joy Zou (2):
+>   arm64: dts: imx93-11x11-evk: fix duplicated lpi2c3 labels
+>   arm64: dts: imx93-11x11-evk: reorder lpi2c2, lpi2c3, mu1 and mu2 label
 
-Applied, thanks!
+Applied both, thanks!
 
