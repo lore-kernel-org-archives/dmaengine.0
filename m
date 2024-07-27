@@ -1,180 +1,117 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8001D17B511;
-	Fri, 26 Jul 2024 13:07:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C57580C09;
+	Sat, 27 Jul 2024 19:11:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721999252; cv=none; b=cpg8U/05rNbX6Fqp9H7UxwpmgPI05F27g4P2Wf6OQLIrxEhuZ7YgIOG0k8VMCHJ+cNZaQtPxBmWjHj0nYtIUrtnaphsgvFuXVN8P+ATlgBIExx8s5OL9iIGASqFpFqH/zd8J8LoQXhUkD+RkRjsMmGcKIaxw/WAanGwmMsG0HmQ=
+	t=1722107502; cv=none; b=Wz0qPvUBxgsFLGST39sQMQp3b83MDIvVJkU7R6BJke5KLAQhMK1ai+UuQWwOX5f2Q460S3akb2CFaZyAdirIncuzPM+Hc/E7zvkj/6Oz+zN6M896yRHcgt5bhrzseFwLvuCtg6lgCk/YWfRUKca1OSIj5KGaZbrMcaeqCwlnlWI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721999252; c=relaxed/simple;
-	bh=u1m7gZkZ1yjoWoSMDdRGk7cBsTW8fNNZ2DIvAqgBKSs=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=k3TO9hkIruNCn9jK9psO9uPtiD9mgCcShaGYL2d22EzBV0ZAuq64v8zm+e2fHuam+qDu7fBvHWIwD/d97MvY0kg2hG9gi0rfUIfhr70uSvO1kGTNyAR5b4nFFlsiXE9B6LeA202LHcpQYU7sUbm4m2kj+2AVSRtyCzb0smFB9oc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XTllicQs; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1722107502; c=relaxed/simple;
+	bh=M8mrct+fcXWf4dQP4IR3e4KiOgK+DHB5K7VgHM1qCDM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=TuxIBcqyPCBwvmWEy5XkpkPrLeg+Lix+w6zUoodxUkXFVWW/x6/WhrLc29hnHYHOIWMb7fgIi2KgzH7FQ47evlhc6q51SV7otxgmvb2huh7pwJ0kzqdSW8FN1CrcitrnI2SeJFuhCE+IuVi9EJ4hn/dCYcCyVwpdwOLuPS4Kkic=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=QGqh6HkN; arc=none smtp.client-ip=192.198.163.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XTllicQs"
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 0D0A9C4AF07;
-	Fri, 26 Jul 2024 13:07:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1721999252;
-	bh=u1m7gZkZ1yjoWoSMDdRGk7cBsTW8fNNZ2DIvAqgBKSs=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=XTllicQsaIYCkCR2gZeIKflDU5ln7xRJ9mhpefR0DAzfqPkIRs6HDpjbPFI7Vq+RW
-	 87Nt9zFExeZEo7HgA9qsVKe0dKYxsxwDNtEGmVpPJy7qF7sSPtn1IoEZRldU7TuOkj
-	 CphOkwZboiq9/KBOnp8SMnCLnOgeDE5ncLBOkR3BqbVVdP1ketroBYyzbS1R3udnez
-	 tb2V3V0Ww9WtKceQCxSswqVeJ+vBRYOH4wVM4LnU74VObWjLdsjBs0gYWZZsy1WPPs
-	 uYSh35+p/bUZYAqpZDUlgN7JJtoAcgBcP/ve64gR7RRn5rnCUVOFK8ZKTJ60ogtZA3
-	 2HpWHVmXG8ipg==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ED541C3DA7F;
-	Fri, 26 Jul 2024 13:07:31 +0000 (UTC)
-From: Keguang Zhang via B4 Relay <devnull+keguang.zhang.gmail.com@kernel.org>
-Date: Fri, 26 Jul 2024 21:06:49 +0800
-Subject: [PATCH v10 1/2] dt-bindings: dma: Add Loongson-1 APB DMA
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="QGqh6HkN"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1722107500; x=1753643500;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=M8mrct+fcXWf4dQP4IR3e4KiOgK+DHB5K7VgHM1qCDM=;
+  b=QGqh6HkNaLLN6pwjbKizC3hee9tPHzyCIJY2Ejh0RrUMJmgp3uguS9c+
+   XxBBr4ltNUMUB0gYkX3K9owYvSRKBR1z9emzGTlXu0PiBpGaBv0OTS+za
+   HDKGLHpMNdHK6Txsxpek6fwG8BbtXAhpui8G6AUUg1/7Pj7MKCZUfRKo4
+   wRxtK9UU6Modgse+4bDYnAhulFBixAd80rHuK+e6+kPiwNB455GiFvCsv
+   CPo/bNhXp4hhKMmSGO9XSeKD/FuDMioxoD/qorhBcmNhJ/ZNNZw6w4mrG
+   KuOShxYussF0W2bGWINGMM4IptX3b/LkghuyA6kAerp5N2oJgPy5IxxIt
+   Q==;
+X-CSE-ConnectionGUID: rD8YJziURpCzS8cVtIjoOw==
+X-CSE-MsgGUID: uW4GXKzASl2YiIHga0qfIw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11146"; a="23737250"
+X-IronPort-AV: E=Sophos;i="6.09,242,1716274800"; 
+   d="scan'208";a="23737250"
+Received: from fmviesa002.fm.intel.com ([10.60.135.142])
+  by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Jul 2024 12:11:39 -0700
+X-CSE-ConnectionGUID: 2Ao0g3xGS8qfccCuivH2mA==
+X-CSE-MsgGUID: QhoqwShcSuSMVXNuVVxAXA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.09,242,1716274800"; 
+   d="scan'208";a="76793712"
+Received: from lkp-server01.sh.intel.com (HELO 68891e0c336b) ([10.239.97.150])
+  by fmviesa002.fm.intel.com with ESMTP; 27 Jul 2024 12:11:37 -0700
+Received: from kbuild by 68891e0c336b with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1sXmpK-000qAq-1F;
+	Sat, 27 Jul 2024 19:11:34 +0000
+Date: Sun, 28 Jul 2024 03:11:03 +0800
+From: kernel test robot <lkp@intel.com>
+To: Keguang Zhang via B4 Relay <devnull+keguang.zhang.gmail.com@kernel.org>,
+	Keguang Zhang <keguang.zhang@gmail.com>,
+	Vinod Koul <vkoul@kernel.org>, Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>
+Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
+	linux-mips@vger.kernel.org, dmaengine@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	Jiaxun Yang <jiaxun.yang@flygoat.com>
+Subject: Re: [PATCH v10 2/2] dmaengine: Loongson1: Add Loongson-1 APB DMA
+ driver
+Message-ID: <202407280250.YTVHsCYs-lkp@intel.com>
+References: <20240726-loongson1-dma-v10-2-31bf095a6fa6@gmail.com>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240726-loongson1-dma-v10-1-31bf095a6fa6@gmail.com>
-References: <20240726-loongson1-dma-v10-0-31bf095a6fa6@gmail.com>
-In-Reply-To: <20240726-loongson1-dma-v10-0-31bf095a6fa6@gmail.com>
-To: Keguang Zhang <keguang.zhang@gmail.com>, Vinod Koul <vkoul@kernel.org>, 
- Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
- Conor Dooley <conor+dt@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>
-Cc: linux-mips@vger.kernel.org, dmaengine@vger.kernel.org, 
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
- Conor Dooley <conor.dooley@microchip.com>, 
- Jiaxun Yang <jiaxun.yang@flygoat.com>
-X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1721999250; l=2857;
- i=keguang.zhang@gmail.com; s=20231129; h=from:subject:message-id;
- bh=R8rn22f2AyWKsMzsGCrIEUV/dVtejeQpZG1kFfGOao0=;
- b=YrISyxilxDZEO0l5vFCheESMU0/GrcCgaOwim4azDaeVTa/9D6nacBcw3r0qdZKR06LSBvn/u
- k6PD2GwnypOCJw3plZrBAOr00uqVBlKxZEyfFdB9MHrMzG+PEeDZCj5
-X-Developer-Key: i=keguang.zhang@gmail.com; a=ed25519;
- pk=FMKGj/JgKll/MgClpNZ3frIIogsh5e5r8CeW2mr+WLs=
-X-Endpoint-Received: by B4 Relay for keguang.zhang@gmail.com/20231129 with
- auth_id=102
-X-Original-From: Keguang Zhang <keguang.zhang@gmail.com>
-Reply-To: keguang.zhang@gmail.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240726-loongson1-dma-v10-2-31bf095a6fa6@gmail.com>
 
-From: Keguang Zhang <keguang.zhang@gmail.com>
+Hi Keguang,
 
-Add devicetree binding document for Loongson-1 APB DMA.
+kernel test robot noticed the following build errors:
 
-Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
-Reviewed-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
-Signed-off-by: Keguang Zhang <keguang.zhang@gmail.com>
----
-Changes in v10:
-- None
+[auto build test ERROR on 668d33c9ff922c4590c58754ab064aaf53c387dd]
 
-Changes in v9:
-- None
+url:    https://github.com/intel-lab-lkp/linux/commits/Keguang-Zhang-via-B4-Relay/dt-bindings-dma-Add-Loongson-1-APB-DMA/20240726-212659
+base:   668d33c9ff922c4590c58754ab064aaf53c387dd
+patch link:    https://lore.kernel.org/r/20240726-loongson1-dma-v10-2-31bf095a6fa6%40gmail.com
+patch subject: [PATCH v10 2/2] dmaengine: Loongson1: Add Loongson-1 APB DMA driver
+config: x86_64-allyesconfig (https://download.01.org/0day-ci/archive/20240728/202407280250.YTVHsCYs-lkp@intel.com/config)
+compiler: clang version 18.1.5 (https://github.com/llvm/llvm-project 617a15a9eac96088ae5e9134248d8236e34b91b1)
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20240728/202407280250.YTVHsCYs-lkp@intel.com/reproduce)
 
-Changes in v8:
-- Change 'interrupts' property to an items list
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202407280250.YTVHsCYs-lkp@intel.com/
 
-Changes in v7:
-- Change the comptible to 'loongson,ls1*-apbdma' (suggested by Huacai Chen)
-- Update the title and description part accordingly
-- Rename the file to loongson,ls1b-apbdma.yaml
-- Add a compatible string for LS1A
-- Delete minItems of 'interrupts'
-- Change patterns of 'interrupt-names' to const
+All errors (new ones prefixed by >>):
 
-Changes in v6:
-- Change the compatible to the fallback
-- Some minor fixes
+>> drivers/dma/loongson1-apb-dma.c:58:3: error: requested alignment must be 4294967296 bytes or smaller
+      58 | } __aligned(LS1X_DMA_LLI_ALIGNMENT);
+         |   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   include/linux/compiler_attributes.h:33:56: note: expanded from macro '__aligned'
+      33 | #define __aligned(x)                    __attribute__((__aligned__(x)))
+         |                                                        ^           ~
+   1 error generated.
 
-Changes in v5:
-- A newly added patch
----
- .../bindings/dma/loongson,ls1b-apbdma.yaml         | 67 ++++++++++++++++++++++
- 1 file changed, 67 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/dma/loongson,ls1b-apbdma.yaml b/Documentation/devicetree/bindings/dma/loongson,ls1b-apbdma.yaml
-new file mode 100644
-index 000000000000..192c85c1199d
---- /dev/null
-+++ b/Documentation/devicetree/bindings/dma/loongson,ls1b-apbdma.yaml
-@@ -0,0 +1,67 @@
-+# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/dma/loongson,ls1b-apbdma.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Loongson-1 APB DMA Controller
-+
-+maintainers:
-+  - Keguang Zhang <keguang.zhang@gmail.com>
-+
-+description:
-+  Loongson-1 APB DMA controller provides 3 independent channels for
-+  peripherals such as NAND, audio playback and capture.
-+
-+properties:
-+  compatible:
-+    oneOf:
-+      - const: loongson,ls1b-apbdma
-+      - items:
-+          - enum:
-+              - loongson,ls1a-apbdma
-+              - loongson,ls1c-apbdma
-+          - const: loongson,ls1b-apbdma
-+
-+  reg:
-+    maxItems: 1
-+
-+  interrupts:
-+    items:
-+      - description: NAND interrupt
-+      - description: Audio playback interrupt
-+      - description: Audio capture interrupt
-+
-+  interrupt-names:
-+    items:
-+      - const: ch0
-+      - const: ch1
-+      - const: ch2
-+
-+  '#dma-cells':
-+    const: 1
-+
-+required:
-+  - compatible
-+  - reg
-+  - interrupts
-+  - interrupt-names
-+  - '#dma-cells'
-+
-+additionalProperties: false
-+
-+examples:
-+  - |
-+    #include <dt-bindings/interrupt-controller/irq.h>
-+    dma-controller@1fd01160 {
-+        compatible = "loongson,ls1b-apbdma";
-+        reg = <0x1fd01160 0x4>;
-+
-+        interrupt-parent = <&intc0>;
-+        interrupts = <13 IRQ_TYPE_EDGE_RISING>,
-+                     <14 IRQ_TYPE_EDGE_RISING>,
-+                     <15 IRQ_TYPE_EDGE_RISING>;
-+        interrupt-names = "ch0", "ch1", "ch2";
-+
-+        #dma-cells = <1>;
-+    };
+vim +58 drivers/dma/loongson1-apb-dma.c
+
+    53	
+    54	struct ls1x_dma_lli {
+    55		unsigned int hw[LS1X_DMADESC_SIZE];
+    56		dma_addr_t phys;
+    57		struct list_head node;
+  > 58	} __aligned(LS1X_DMA_LLI_ALIGNMENT);
+    59	
 
 -- 
-2.43.0
-
-
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
