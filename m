@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AA991B150D;
-	Mon,  9 Sep 2024 08:12:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF3951B373E;
+	Mon,  9 Sep 2024 08:12:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725869536; cv=none; b=LH3TGjlKcWV0ryLDBGrxH3wwYYe/N4FaNqLHBoIO4mTH0Lo/T3SCh98QIiEiaDZyZgJqmkfO5iXNgc4OVmVLGz416i+FIttC9TGxNSLO90NO6cRlzcTfIuJQJf7j3eiwhd9532apHb11UqywruoOQPvkC4Os0dW1dsTR4BXg2Uw=
+	t=1725869538; cv=none; b=lcCHhczZHSN3vCTV8Run9ucOBMyL7q7oMo4eM2FxDSDNmuvdQITMt5yxmDFokGSa7EA1yhARaMCMDB1HtOOD1x+ACQqDk7fNd1OaG3kX7AhopPhsm7DO0iUny+pC8Z1ZNAfjmCKNDfEXBM/U1QOr546IiyBd8baC/bvuIc2xYwA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725869536; c=relaxed/simple;
-	bh=OwXslceZMSHlNCp9gnYCsH+AlosVcBVrdxvtTOSfLHE=;
+	s=arc-20240116; t=1725869538; c=relaxed/simple;
+	bh=y2IxKtzUhXnXpBUVRkzQENsuJPq31K5nZgVywAEhZnw=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=KSqmJmRTPP47/yxLZscIniubsqziwx41wbE7BFyAehsZDw7Wh4DTY35SXGIW328dFJzghXy6lz8t/4B/Wn7xlLuXZEe5h7lUiXx6RgnRaTdhVm/bUpaY838oT0HDXenVb5URKf5RPi4quw/yHU4VEA8zpL5X4kAEjyO+dFEk8Q8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Mv/GC30K; arc=none smtp.client-ip=10.30.226.201
+	 In-Reply-To:To:Cc; b=A/vq8I0AC7C3PWZDxXJM7/JLXdxULz72i/U4BzfBO0PE1DivI8UDllcJhjNdJ6FV85kix6KTOR2B7RYwP0DxXgVCzg1Wv3c21UhHTPtnygC+tM8Egqq7Zljsbp+jU/I4pTQMFS32FmfbTi/QeLZLI1p4+NLi7lQt4+UM0+vA4Jk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aJRQ8BvO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Mv/GC30K"
-Received: by smtp.kernel.org (Postfix) with ESMTPS id B76B8C4CEDB;
-	Mon,  9 Sep 2024 08:12:15 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aJRQ8BvO"
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 80779C4FDE1;
+	Mon,  9 Sep 2024 08:12:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1725869535;
-	bh=OwXslceZMSHlNCp9gnYCsH+AlosVcBVrdxvtTOSfLHE=;
+	s=k20201202; t=1725869537;
+	bh=y2IxKtzUhXnXpBUVRkzQENsuJPq31K5nZgVywAEhZnw=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=Mv/GC30KsMPjYlNvrIwovUPues6eetqWuHXKHjmfFvLzdywuUFnQZv/FD1uLr1HAG
-	 enYA3+6AqOyDKeDigTMUCFXrBSzwXCfUyGmITqhkBn4Ycby4PdCzD2YPqB/1CDe72S
-	 aDDT35q3VhunlGWoCOiqsfoFU81pglYXDJ/t6PD8PMbQSqfDjXErnWV6nKvYe/ChQz
-	 jVEwTmum2LAUHJjt4DgYjHi30YKSD2K1DM04blWRy18ETFHKdeNOJaroyWgQhlzde5
-	 WladIiGbCXq8SEthJu/jq6nmnawQYcX71689DTj9sGkcNGfs6a3H97q3EEoNeYZg0H
-	 l7DKheC5eZJkg==
+	b=aJRQ8BvOSC6XctlyWn9Od4i6Yu+eEJrZUh8m0nCZbGt7Znk4fvJVsrodi3ADtFG0W
+	 PxNgN0pCknGODKIjRPZBofCIFP5XktrKYPtdf7ZLgOPJZ8CJIxFvNl3IN56PXAnPCA
+	 Ev/m+aAIBmTSu++bpKJosFaEapjC1O9njluGZbgx+zd4hr4LCvU7p14ByAGguDY89e
+	 SdHTsqxDGJxbQVARPbBGUVTBCzX4lyYjLhqBdNANEL1Glg4hh+8WWCaNMhlfUQovpc
+	 ITahPtf2nCsQXW6xRc1+crOgcoFkQjtp7zPGKFw5IRK2W8kRIitzBTk0+egmREuDfd
+	 vhqohbGxHq5IA==
 Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AEFD1CD4F4C;
-	Mon,  9 Sep 2024 08:12:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 78C13ECE584;
+	Mon,  9 Sep 2024 08:12:17 +0000 (UTC)
 From: Nikita Shubin via B4 Relay <devnull+nikita.shubin.maquefel.me@kernel.org>
-Date: Mon, 09 Sep 2024 11:10:33 +0300
-Subject: [PATCH v12 08/38] dt-bindings: dma: Add Cirrus EP93xx
+Date: Mon, 09 Sep 2024 11:11:03 +0300
+Subject: [PATCH v12 38/38] dmaengine: cirrus: remove platform code
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -40,23 +40,19 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240909-ep93xx-v12-8-e86ab2423d4b@maquefel.me>
+Message-Id: <20240909-ep93xx-v12-38-e86ab2423d4b@maquefel.me>
 References: <20240909-ep93xx-v12-0-e86ab2423d4b@maquefel.me>
 In-Reply-To: <20240909-ep93xx-v12-0-e86ab2423d4b@maquefel.me>
-To: Vinod Koul <vkoul@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, 
- Alexander Sverdlin <alexander.sverdlin@gmail.com>, 
- Nikita Shubin <nikita.shubin@maquefel.me>
-Cc: dmaengine@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, 
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To: Vinod Koul <vkoul@kernel.org>, 
+ Nikita Shubin <nikita.shubin@maquefel.me>, 
+ Alexander Sverdlin <alexander.sverdlin@gmail.com>
+Cc: linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org
 X-Mailer: b4 0.13-dev-e3e53
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1725869532; l=7696;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1725869532; l=6076;
  i=nikita.shubin@maquefel.me; s=20230718; h=from:subject:message-id;
- bh=Y0DItFCDipfwR6StRBre7127VedaUlKJubOzvlu96UM=;
- b=GAnN0CDd+SmDOF7VfOSvQsINkSFNHn0Yz4hs0kPe43GE60ULUx3YEsgZGTu3cGZza2xZMm9mxEqm
- HvtbKhu0B+JZfz0G2Q6zOQ6UF+HiZRYD38h0bprWfpw4V1o38m0R
+ bh=qbQ0k1cwlr7iv0JKjGQW+rzyy6spZcOEIpiufkU6/UM=;
+ b=/gN4YL9x6gkXMRxVkoaIoFopl5KLkK0/hrLvMoax6xoUBAuoaHzoI1GIb6fUOiYdDQWPHVSyw0R/
+ uPui7c1EA/0qCu9jtaoWaXAbfKMuzi66iO8lPYHJFU7XgYv+2zMY
 X-Developer-Key: i=nikita.shubin@maquefel.me; a=ed25519;
  pk=vqf5YIUJ7BJv3EJFaNNxWZgGuMgDH6rwufTLflwU9ac=
 X-Endpoint-Received: by B4 Relay for nikita.shubin@maquefel.me/20230718
@@ -66,256 +62,202 @@ Reply-To: nikita.shubin@maquefel.me
 
 From: Nikita Shubin <nikita.shubin@maquefel.me>
 
-Add YAML bindings for ep93xx SoC DMA.
+Remove DMA platform header, from now on we use device tree for DMA
+clients.
 
-Signed-off-by: Nikita Shubin <nikita.shubin@maquefel.me>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Acked-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Nikita Shubin <nikita.shubin@maquefel.me>
 ---
- .../bindings/dma/cirrus,ep9301-dma-m2m.yaml        |  84 ++++++++++++
- .../bindings/dma/cirrus,ep9301-dma-m2p.yaml        | 144 +++++++++++++++++++++
- 2 files changed, 228 insertions(+)
+ drivers/dma/ep93xx_dma.c                 |  48 ++++++++++++++-
+ include/linux/platform_data/dma-ep93xx.h | 100 -------------------------------
+ 2 files changed, 46 insertions(+), 102 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/dma/cirrus,ep9301-dma-m2m.yaml b/Documentation/devicetree/bindings/dma/cirrus,ep9301-dma-m2m.yaml
-new file mode 100644
-index 000000000000..871b76ddf90f
---- /dev/null
-+++ b/Documentation/devicetree/bindings/dma/cirrus,ep9301-dma-m2m.yaml
-@@ -0,0 +1,84 @@
-+# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/dma/cirrus,ep9301-dma-m2m.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
+diff --git a/drivers/dma/ep93xx_dma.c b/drivers/dma/ep93xx_dma.c
+index 17c8e2badee2..43c4241af7f5 100644
+--- a/drivers/dma/ep93xx_dma.c
++++ b/drivers/dma/ep93xx_dma.c
+@@ -17,6 +17,7 @@
+ #include <linux/clk.h>
+ #include <linux/init.h>
+ #include <linux/interrupt.h>
++#include <linux/dma-mapping.h>
+ #include <linux/dmaengine.h>
+ #include <linux/module.h>
+ #include <linux/mod_devicetable.h>
+@@ -25,8 +26,6 @@
+ #include <linux/platform_device.h>
+ #include <linux/slab.h>
+ 
+-#include <linux/platform_data/dma-ep93xx.h>
+-
+ #include "dmaengine.h"
+ 
+ /* M2P registers */
+@@ -106,6 +105,26 @@
+ #define DMA_MAX_CHAN_BYTES		0xffff
+ #define DMA_MAX_CHAN_DESCRIPTORS	32
+ 
++/*
++ * M2P channels.
++ *
++ * Note that these values are also directly used for setting the PPALLOC
++ * register.
++ */
++#define EP93XX_DMA_I2S1			0
++#define EP93XX_DMA_I2S2			1
++#define EP93XX_DMA_AAC1			2
++#define EP93XX_DMA_AAC2			3
++#define EP93XX_DMA_AAC3			4
++#define EP93XX_DMA_I2S3			5
++#define EP93XX_DMA_UART1		6
++#define EP93XX_DMA_UART2		7
++#define EP93XX_DMA_UART3		8
++#define EP93XX_DMA_IRDA			9
++/* M2M channels */
++#define EP93XX_DMA_SSP			10
++#define EP93XX_DMA_IDE			11
 +
-+title: Cirrus Logic ep93xx SoC DMA controller
+ enum ep93xx_dma_type {
+ 	M2P_DMA,
+ 	M2M_DMA,
+@@ -242,6 +261,31 @@ static struct ep93xx_dma_chan *to_ep93xx_dma_chan(struct dma_chan *chan)
+ 	return container_of(chan, struct ep93xx_dma_chan, chan);
+ }
+ 
++static inline bool ep93xx_dma_chan_is_m2p(struct dma_chan *chan)
++{
++	if (device_is_compatible(chan->device->dev, "cirrus,ep9301-dma-m2p"))
++		return true;
 +
-+maintainers:
-+  - Alexander Sverdlin <alexander.sverdlin@gmail.com>
-+  - Nikita Shubin <nikita.shubin@maquefel.me>
++	return !strcmp(dev_name(chan->device->dev), "ep93xx-dma-m2p");
++}
 +
-+allOf:
-+  - $ref: dma-controller.yaml#
++/*
++ * ep93xx_dma_chan_direction - returns direction the channel can be used
++ *
++ * This function can be used in filter functions to find out whether the
++ * channel supports given DMA direction. Only M2P channels have such
++ * limitation, for M2M channels the direction is configurable.
++ */
++static inline enum dma_transfer_direction
++ep93xx_dma_chan_direction(struct dma_chan *chan)
++{
++	if (!ep93xx_dma_chan_is_m2p(chan))
++		return DMA_TRANS_NONE;
 +
-+properties:
-+  compatible:
-+    oneOf:
-+      - const: cirrus,ep9301-dma-m2m
-+      - items:
-+          - enum:
-+              - cirrus,ep9302-dma-m2m
-+              - cirrus,ep9307-dma-m2m
-+              - cirrus,ep9312-dma-m2m
-+              - cirrus,ep9315-dma-m2m
-+          - const: cirrus,ep9301-dma-m2m
++	/* even channels are for TX, odd for RX */
++	return (chan->chan_id % 2 == 0) ? DMA_MEM_TO_DEV : DMA_DEV_TO_MEM;
++}
 +
-+  reg:
-+    items:
-+      - description: m2m0 channel registers
-+      - description: m2m1 channel registers
-+
-+  clocks:
-+    items:
-+      - description: m2m0 channel gate clock
-+      - description: m2m1 channel gate clock
-+
-+  clock-names:
-+    items:
-+      - const: m2m0
-+      - const: m2m1
-+
-+  interrupts:
-+    items:
-+      - description: m2m0 channel interrupt
-+      - description: m2m1 channel interrupt
-+
-+  '#dma-cells':
-+    const: 2
-+    description: |
-+      The first cell is the unique device channel number as indicated by this
-+      table for ep93xx:
-+
-+      10: SPI controller
-+      11: IDE controller
-+
-+      The second cell is the DMA direction line number:
-+
-+      1: Memory to device
-+      2: Device to memory
-+
-+required:
-+  - compatible
-+  - reg
-+  - clocks
-+  - clock-names
-+  - interrupts
-+
-+additionalProperties: false
-+
-+examples:
-+  - |
-+    #include <dt-bindings/clock/cirrus,ep9301-syscon.h>
-+    dma-controller@80000100 {
-+        compatible = "cirrus,ep9301-dma-m2m";
-+        reg = <0x80000100 0x0040>,
-+              <0x80000140 0x0040>;
-+        clocks = <&syscon EP93XX_CLK_M2M0>,
-+                 <&syscon EP93XX_CLK_M2M1>;
-+        clock-names = "m2m0", "m2m1";
-+        interrupt-parent = <&vic0>;
-+        interrupts = <17>, <18>;
-+        #dma-cells = <2>;
-+    };
-diff --git a/Documentation/devicetree/bindings/dma/cirrus,ep9301-dma-m2p.yaml b/Documentation/devicetree/bindings/dma/cirrus,ep9301-dma-m2p.yaml
-new file mode 100644
-index 000000000000..d14c31553543
---- /dev/null
-+++ b/Documentation/devicetree/bindings/dma/cirrus,ep9301-dma-m2p.yaml
-@@ -0,0 +1,144 @@
-+# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/dma/cirrus,ep9301-dma-m2p.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Cirrus Logic ep93xx SoC M2P DMA controller
-+
-+maintainers:
-+  - Alexander Sverdlin <alexander.sverdlin@gmail.com>
-+  - Nikita Shubin <nikita.shubin@maquefel.me>
-+
-+allOf:
-+  - $ref: dma-controller.yaml#
-+
-+properties:
-+  compatible:
-+    oneOf:
-+      - const: cirrus,ep9301-dma-m2p
-+      - items:
-+          - enum:
-+              - cirrus,ep9302-dma-m2p
-+              - cirrus,ep9307-dma-m2p
-+              - cirrus,ep9312-dma-m2p
-+              - cirrus,ep9315-dma-m2p
-+          - const: cirrus,ep9301-dma-m2p
-+
-+  reg:
-+    items:
-+      - description: m2p0 channel registers
-+      - description: m2p1 channel registers
-+      - description: m2p2 channel registers
-+      - description: m2p3 channel registers
-+      - description: m2p4 channel registers
-+      - description: m2p5 channel registers
-+      - description: m2p6 channel registers
-+      - description: m2p7 channel registers
-+      - description: m2p8 channel registers
-+      - description: m2p9 channel registers
-+
-+  clocks:
-+    items:
-+      - description: m2p0 channel gate clock
-+      - description: m2p1 channel gate clock
-+      - description: m2p2 channel gate clock
-+      - description: m2p3 channel gate clock
-+      - description: m2p4 channel gate clock
-+      - description: m2p5 channel gate clock
-+      - description: m2p6 channel gate clock
-+      - description: m2p7 channel gate clock
-+      - description: m2p8 channel gate clock
-+      - description: m2p9 channel gate clock
-+
-+  clock-names:
-+    items:
-+      - const: m2p0
-+      - const: m2p1
-+      - const: m2p2
-+      - const: m2p3
-+      - const: m2p4
-+      - const: m2p5
-+      - const: m2p6
-+      - const: m2p7
-+      - const: m2p8
-+      - const: m2p9
-+
-+  interrupts:
-+    items:
-+      - description: m2p0 channel interrupt
-+      - description: m2p1 channel interrupt
-+      - description: m2p2 channel interrupt
-+      - description: m2p3 channel interrupt
-+      - description: m2p4 channel interrupt
-+      - description: m2p5 channel interrupt
-+      - description: m2p6 channel interrupt
-+      - description: m2p7 channel interrupt
-+      - description: m2p8 channel interrupt
-+      - description: m2p9 channel interrupt
-+
-+  '#dma-cells':
-+    const: 2
-+    description: |
-+      The first cell is the unique device channel number as indicated by this
-+      table for ep93xx:
-+
-+      0: I2S channel 1
-+      1: I2S channel 2 (unused)
-+      2: AC97 channel 1 (unused)
-+      3: AC97 channel 2 (unused)
-+      4: AC97 channel 3 (unused)
-+      5: I2S channel 3 (unused)
-+      6: UART1 (unused)
-+      7: UART2 (unused)
-+      8: UART3 (unused)
-+      9: IRDA (unused)
-+
-+      The second cell is the DMA direction line number:
-+
-+      1: Memory to device
-+      2: Device to memory
-+
-+required:
-+  - compatible
-+  - reg
-+  - clocks
-+  - clock-names
-+  - interrupts
-+
-+additionalProperties: false
-+
-+examples:
-+  - |
-+    #include <dt-bindings/clock/cirrus,ep9301-syscon.h>
-+    dma-controller@80000000 {
-+        compatible = "cirrus,ep9301-dma-m2p";
-+        reg = <0x80000000 0x0040>,
-+              <0x80000040 0x0040>,
-+              <0x80000080 0x0040>,
-+              <0x800000c0 0x0040>,
-+              <0x80000240 0x0040>,
-+              <0x80000200 0x0040>,
-+              <0x800002c0 0x0040>,
-+              <0x80000280 0x0040>,
-+              <0x80000340 0x0040>,
-+              <0x80000300 0x0040>;
-+        clocks = <&syscon EP93XX_CLK_M2P0>,
-+                 <&syscon EP93XX_CLK_M2P1>,
-+                 <&syscon EP93XX_CLK_M2P2>,
-+                 <&syscon EP93XX_CLK_M2P3>,
-+                 <&syscon EP93XX_CLK_M2P4>,
-+                 <&syscon EP93XX_CLK_M2P5>,
-+                 <&syscon EP93XX_CLK_M2P6>,
-+                 <&syscon EP93XX_CLK_M2P7>,
-+                 <&syscon EP93XX_CLK_M2P8>,
-+                 <&syscon EP93XX_CLK_M2P9>;
-+        clock-names = "m2p0", "m2p1",
-+                      "m2p2", "m2p3",
-+                      "m2p4", "m2p5",
-+                      "m2p6", "m2p7",
-+                      "m2p8", "m2p9";
-+        interrupt-parent = <&vic0>;
-+        interrupts = <7>, <8>, <9>, <10>, <11>, <12>, <13>, <14>, <15>, <16>;
-+        #dma-cells = <2>;
-+    };
+ /**
+  * ep93xx_dma_set_active - set new active descriptor chain
+  * @edmac: channel
+diff --git a/include/linux/platform_data/dma-ep93xx.h b/include/linux/platform_data/dma-ep93xx.h
+deleted file mode 100644
+index 9ec5cdd5a1eb..000000000000
+--- a/include/linux/platform_data/dma-ep93xx.h
++++ /dev/null
+@@ -1,100 +0,0 @@
+-/* SPDX-License-Identifier: GPL-2.0 */
+-#ifndef __ASM_ARCH_DMA_H
+-#define __ASM_ARCH_DMA_H
+-
+-#include <linux/types.h>
+-#include <linux/device.h>
+-#include <linux/dmaengine.h>
+-#include <linux/dma-mapping.h>
+-#include <linux/property.h>
+-#include <linux/string.h>
+-
+-/*
+- * M2P channels.
+- *
+- * Note that these values are also directly used for setting the PPALLOC
+- * register.
+- */
+-#define EP93XX_DMA_I2S1		0
+-#define EP93XX_DMA_I2S2		1
+-#define EP93XX_DMA_AAC1		2
+-#define EP93XX_DMA_AAC2		3
+-#define EP93XX_DMA_AAC3		4
+-#define EP93XX_DMA_I2S3		5
+-#define EP93XX_DMA_UART1	6
+-#define EP93XX_DMA_UART2	7
+-#define EP93XX_DMA_UART3	8
+-#define EP93XX_DMA_IRDA		9
+-/* M2M channels */
+-#define EP93XX_DMA_SSP		10
+-#define EP93XX_DMA_IDE		11
+-
+-/**
+- * struct ep93xx_dma_data - configuration data for the EP93xx dmaengine
+- * @port: peripheral which is requesting the channel
+- * @direction: TX/RX channel
+- * @name: optional name for the channel, this is displayed in /proc/interrupts
+- *
+- * This information is passed as private channel parameter in a filter
+- * function. Note that this is only needed for slave/cyclic channels.  For
+- * memcpy channels %NULL data should be passed.
+- */
+-struct ep93xx_dma_data {
+-	int				port;
+-	enum dma_transfer_direction	direction;
+-	const char			*name;
+-};
+-
+-/**
+- * struct ep93xx_dma_chan_data - platform specific data for a DMA channel
+- * @name: name of the channel, used for getting the right clock for the channel
+- * @base: mapped registers
+- * @irq: interrupt number used by this channel
+- */
+-struct ep93xx_dma_chan_data {
+-	const char			*name;
+-	void __iomem			*base;
+-	int				irq;
+-};
+-
+-/**
+- * struct ep93xx_dma_platform_data - platform data for the dmaengine driver
+- * @channels: array of channels which are passed to the driver
+- * @num_channels: number of channels in the array
+- *
+- * This structure is passed to the DMA engine driver via platform data. For
+- * M2P channels, contract is that even channels are for TX and odd for RX.
+- * There is no requirement for the M2M channels.
+- */
+-struct ep93xx_dma_platform_data {
+-	struct ep93xx_dma_chan_data	*channels;
+-	size_t				num_channels;
+-};
+-
+-static inline bool ep93xx_dma_chan_is_m2p(struct dma_chan *chan)
+-{
+-	if (device_is_compatible(chan->device->dev, "cirrus,ep9301-dma-m2p"))
+-		return true;
+-
+-	return !strcmp(dev_name(chan->device->dev), "ep93xx-dma-m2p");
+-}
+-
+-/**
+- * ep93xx_dma_chan_direction - returns direction the channel can be used
+- * @chan: channel
+- *
+- * This function can be used in filter functions to find out whether the
+- * channel supports given DMA direction. Only M2P channels have such
+- * limitation, for M2M channels the direction is configurable.
+- */
+-static inline enum dma_transfer_direction
+-ep93xx_dma_chan_direction(struct dma_chan *chan)
+-{
+-	if (!ep93xx_dma_chan_is_m2p(chan))
+-		return DMA_TRANS_NONE;
+-
+-	/* even channels are for TX, odd for RX */
+-	return (chan->chan_id % 2 == 0) ? DMA_MEM_TO_DEV : DMA_DEV_TO_MEM;
+-}
+-
+-#endif /* __ASM_ARCH_DMA_H */
 
 -- 
 2.43.2
