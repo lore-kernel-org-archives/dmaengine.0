@@ -1,103 +1,124 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7B1312BEBB;
-	Thu, 26 Sep 2024 16:36:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCC652C9A;
+	Fri, 27 Sep 2024 06:31:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727368620; cv=none; b=ASWskJdqojKnDDXh6nlrYWb0lfNHl/xu26v7CyLB12Q3t8GPo5OmQn1X5rPRntwm3yO7xJX2eku4vRzTbDnmRnFK9lebPyYxf8oe3I+DGgj7b7+vttQfPXxT7jvdu9trIsNGNdqGiTr+cMuCLJBr1Um81piXPnfMlU9P9evRmcc=
+	t=1727418694; cv=none; b=DAc/A5Ot/Ieghb4cAPEpIUzdxDiKwzuYFZYs1WRc+0p6LUAfJBgb8VOcqp+VJEnVe/OcNMcsy5QhOzKmg4SV36tLakLiAvhxjkWcFWvFKCWNZl2jhqiAKbPuJt/xjND+2Rh4vKVxtcMGR0ZFtIfMEFy5HAi5ZFlmXKCIxg4t09I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727368620; c=relaxed/simple;
-	bh=w1FJdKOm32c+Ge8FTW9mqPZjuB6KQQTcj8OAX5YmD4o=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GkZ5qREBmwl+s7E12XwYPuULtTauWy/qh9/VM3nxeqSZ0IkZSaYn/FOaXsoQVVbU0QjMrvb9cBU/6znPgpq+4FgSKQKS4ygD1ad8ntm6134kaJkf5I1LNNXn0iZNcqk4BDGo7lF6PpP1vC15H0GSDeZ7DfutXc61zn7tLgs+3k4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TJWIDfQi; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1727418694; c=relaxed/simple;
+	bh=rUqfjJCAfy1LrtgWHiQ+oEM5KcGDH97xXKrdNM0YKNY=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=DRgW6uSa59lmaj6xLr6t5u0vU8KM9+M+KkBEIioj2Z8uVP+/FEzUoYnbO2A2n1MWWxZc1LQ6kg591+pDtT/u2mu3+KNhP7Xd72EUWQwfx0Y7/IkgQK2WC5E+p5dc6yxpzltkS/8eXk+W49vy41wiIZYh3ELFcmlCrPx55NkvLF8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=NIwbHujM; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TJWIDfQi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC584C4CEC5;
-	Thu, 26 Sep 2024 16:36:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1727368619;
-	bh=w1FJdKOm32c+Ge8FTW9mqPZjuB6KQQTcj8OAX5YmD4o=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=TJWIDfQiU3geDX/2aC7h48yAL5lr4yBVoaHkFfIiMG2WxAK9jVbdT8d0DDKwwCfrU
-	 VgGEIMqGfYackuRbizXofkLgd3uwft1kELY7e8nW7oXy8tmugyRHDWlMXuLKrDiVRB
-	 4M+3Y0chGvD5CO/8hcYvhpmKffIvMleF1oZ76l0SCGdRoQ2LTzThDA4hci6c67GzCc
-	 UK29Sg2RR10ZjRqupgOeZK0+tCRHrpLtvLrO7e0xfItdeyN6G1jquRpAoM4/xDTgfX
-	 WmDpEC2Nqz4UvKwHtHtbm94EG0WKQxNunbFiwUfrfN1n8FUtRUNpXc6nebKIN3c6fP
-	 dd6gOhBKhV6UQ==
-Date: Thu, 26 Sep 2024 17:36:51 +0100
-From: Conor Dooley <conor@kernel.org>
-To: "Rob Herring (Arm)" <robh@kernel.org>
-Cc: Krzysztof Kozlowski <krzk+dt@kernel.org>, Vinod Koul <vkoul@kernel.org>,
-	Marc Zyngier <maz@kernel.org>, Thomas Gleixner <tglx@linutronix.de>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Paul Elder <paul.elder@ideasonboard.com>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	Alim Akhtar <alim.akhtar@samsung.com>,
-	Jim Quinlan <jim2101024@gmail.com>,
-	Nicolas Saenz Julienne <nsaenz@kernel.org>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Andy Gross <agross@kernel.org>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	Jim Quinlan <james.quinlan@broadcom.com>,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	dmaengine@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-	linux-media@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
-	linux-rpi-kernel@lists.infradead.org, linux-pci@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH] dt-bindings: Fix array property constraints
-Message-ID: <20240926-bullion-semester-024fab878903@spud>
-References: <20240925232409.2208515-1-robh@kernel.org>
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="NIwbHujM"
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48QG9aOX027971;
+	Fri, 27 Sep 2024 06:31:24 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:date:from:in-reply-to:message-id
+	:mime-version:references:subject:to; s=qcppdkim1; bh=HBxhraJN5WF
+	DpCdwp/Cci0BXLl9DvlJdB7mbPSiBMCM=; b=NIwbHujM+ux+TeWmGZrAQiVFxDT
+	WA/nw1heFlo626MsNi9P7G2qJASwsdkq1lTW5i/LV3OT/G5iq1F6GwkPUUomvRZO
+	MXLmhWdPu5nFdQ3QXJpS7wDxMkgfh4atWrwFsNlrkBVx8zt95q8hiU6yFBw+vhpW
+	J/ivuR8Y6penHNDcygBcV/u2CgZys7aiEV+/+hO3Ol/NVI/LaaPn56V8v8bk6P5x
+	nO4M3oDxHCPaUn3HG4zKRD5VmrAQ1vm5kw1dpDDV8x4m61f931lAlk8QNjIq55Av
+	9AOFRXkDFYpPuTmtBdTtDCeq3PpGGjqx2K+VoiuIaRsZRrap8N7mvFi7kgg==
+Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41skuf219v-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 27 Sep 2024 06:31:23 +0000 (GMT)
+Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+	by APBLRPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 48R6VJ4O001845;
+	Fri, 27 Sep 2024 06:31:19 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 41sq7mnbn1-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 27 Sep 2024 06:31:19 +0000
+Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 48R6VJGD001832;
+	Fri, 27 Sep 2024 06:31:19 GMT
+Received: from hu-maiyas-hyd.qualcomm.com (hu-msavaliy-hyd.qualcomm.com [10.213.110.207])
+	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 48R6VIeA001830
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 27 Sep 2024 06:31:19 +0000
+Received: by hu-maiyas-hyd.qualcomm.com (Postfix, from userid 429934)
+	id 491322408B; Fri, 27 Sep 2024 12:01:18 +0530 (+0530)
+From: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
+To: konrad.dybcio@linaro.org, andersson@kernel.org, andi.shyti@kernel.org,
+        linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-i2c@vger.kernel.org,
+        conor+dt@kernel.org, agross@kernel.org, devicetree@vger.kernel.org,
+        vkoul@kernel.org, linux@treblig.org, dan.carpenter@linaro.org,
+        Frank.Li@nxp.com, konradybcio@kernel.org, bryan.odonoghue@linaro.org,
+        krzk+dt@kernel.org, robh@kernel.org
+Cc: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
+Subject: [PATCH v3 1/4] dt-bindindgs: i2c: qcom,i2c-geni: Document shared flag
+Date: Fri, 27 Sep 2024 12:01:05 +0530
+Message-Id: <20240927063108.2773304-2-quic_msavaliy@quicinc.com>
+X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20240927063108.2773304-1-quic_msavaliy@quicinc.com>
+References: <20240927063108.2773304-1-quic_msavaliy@quicinc.com>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="uWcwIitsRojZdEUY"
-Content-Disposition: inline
-In-Reply-To: <20240925232409.2208515-1-robh@kernel.org>
+Content-Transfer-Encoding: 8bit
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: s5bbIV4iZjwRAE0a7PneTwOXCcIfgVAo
+X-Proofpoint-ORIG-GUID: s5bbIV4iZjwRAE0a7PneTwOXCcIfgVAo
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 spamscore=0
+ adultscore=0 clxscore=1015 lowpriorityscore=0 suspectscore=0
+ malwarescore=0 impostorscore=0 mlxlogscore=999 bulkscore=0 mlxscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2408220000 definitions=main-2409270043
 
+Adds qcom,shared-se flag usage. Use this when particular I2C serial
+controller needs to be shared between two subsystems.
 
---uWcwIitsRojZdEUY
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+SE = Serial Engine, meant for I2C controller here.
+TRE = Transfer Ring Element, refers to Queued Descriptor.
+SS = Subsystems (APPS processor, Modem, TZ, ADSP etc).
 
-On Wed, Sep 25, 2024 at 06:24:06PM -0500, Rob Herring (Arm) wrote:
-> Schemas for array properties should only have 1 level of array
-> constraints (e.g. items, maxItems, minItems). Sometimes the old
-> encoding of all properties into a matrix leaked into the schema, and
-> didn't matter for validation. Now the inner constraints are just
-> silently ignored as json-schema array keywords are ignored on scalar
-> values.
->=20
-> Generally, keep the inner constraints and drop the outer "items". With
-> gicv3 "mbi-alias" property, it is more appropriately a uint32 or uint64
-> as it is an address and size depends on "#address-cells".
->=20
-> Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
+Example :
+Two clients from different SS can share an I2C SE for same slave device
+OR their owned slave devices.
+Assume I2C Slave EEPROM device connected with I2C controller.
+Each client from ADSP SS and APPS Linux SS can perform i2c transactions.
+This gets serialized by lock TRE + DMA Transfers + Unlock TRE at HW level.
 
-Acked-by: Conor Dooley <conor.dooley@microchip.com>
+Signed-off-by: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
+---
+ Documentation/devicetree/bindings/i2c/qcom,i2c-geni-qcom.yaml | 4 ++++
+ 1 file changed, 4 insertions(+)
 
---uWcwIitsRojZdEUY
-Content-Type: application/pgp-signature; name="signature.asc"
+diff --git a/Documentation/devicetree/bindings/i2c/qcom,i2c-geni-qcom.yaml b/Documentation/devicetree/bindings/i2c/qcom,i2c-geni-qcom.yaml
+index 9f66a3bb1f80..3b9b20a0edff 100644
+--- a/Documentation/devicetree/bindings/i2c/qcom,i2c-geni-qcom.yaml
++++ b/Documentation/devicetree/bindings/i2c/qcom,i2c-geni-qcom.yaml
+@@ -60,6 +60,10 @@ properties:
+   power-domains:
+     maxItems: 1
+ 
++  qcom,shared-se:
++    description: True if I2C needs to be shared between two or more subsystems(SS).
++    type: boolean
++
+   reg:
+     maxItems: 1
+ 
+-- 
+2.25.1
 
------BEGIN PGP SIGNATURE-----
-
-iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCZvWNowAKCRB4tDGHoIJi
-0uo/AQCSoUq76yV2zPjc/Dv0ex3UOkszyyKeTqzAyCiuqne2QAD/WOq25LSaE13W
-/Ok8UcwWwBnHRPHDLu6I17O3OvhLEAk=
-=PPnK
------END PGP SIGNATURE-----
-
---uWcwIitsRojZdEUY--
