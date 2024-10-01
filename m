@@ -1,64 +1,64 @@
-Received: from mail-pg1-f174.google.com (mail-pg1-f174.google.com [209.85.215.174])
+Received: from mail-pg1-f182.google.com (mail-pg1-f182.google.com [209.85.215.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3F021CEAD9;
-	Tue,  1 Oct 2024 21:59:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCF0B1CEE89;
+	Tue,  1 Oct 2024 21:59:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727819952; cv=none; b=ICIOBDVj3Yb/19d98/4OtCTF6QJfUCBv6xjLHr3BBQpa2om2dHcDyYa6a0bAiRrCVM2Jsftj6DWfgBrI7ADtzPeJ+zCXuV1OyttcRyiVcAQ7MjBkB3Q21kEjko9VEnRYKuyn/FmbqAlrKQAYKp7UWzcTSbiAaIRFPAjscOsVREQ=
+	t=1727819953; cv=none; b=qgtePtfbKjhWg6/KdNSh9eO+AH6H9n2OCdgqghBP9VtUua17ozZVZvt9/1OAVSpdzNp28oyTGq2rDHxfbbgVKLQCgC4jR9oYueNH+6DlTtS55/yZWed2m3C48nEfP+VU2IrxNRfdlm5sKL/zSUSI+juuoCgG1/PlAlgOeoAkT6Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727819952; c=relaxed/simple;
-	bh=wT54DUM23cRMFJbX1OGPnpPeFFp4V54AWUcEawGvmAU=;
+	s=arc-20240116; t=1727819953; c=relaxed/simple;
+	bh=LkItG/XM2lPcbiYc9wOuFAj95UjQCOY/auMtrslpOY0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f0QsH/wJxdL7482kM2c3hlpN/YglFJ+675oFXpeYAnBTn3EFJgzn4ztzvLWJNd3VIW8lre6LSPtO5Qh5JSQkTEuiCodxqLuiLhBrK5EC6yevQQDCtX3lBo3YIKfjhL8zpm6aP8STINiaXxndIKR2hAaT4d7icyRPKZpeSArxzFQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nQ50fI06; arc=none smtp.client-ip=209.85.215.174
+	 MIME-Version; b=je8oAtJx+52J97BprG9JgPvGDBOGVKDJQYfndWjBZdh6DVlqsFfT82OEQOhnUX/JCXEdbBAgG65UlPpkncBeMyoCIcwmuSpJqcQLMKEZ4AW35dcjHyLzTI9RpAQrkC8hxITuNxHh2B0GDeitiZq00Ymu4gGEs4+jH6JmM9LfeOU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=inB9y5QX; arc=none smtp.client-ip=209.85.215.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nQ50fI06"
-Received: by mail-pg1-f174.google.com with SMTP id 41be03b00d2f7-7e6b738acd5so2348467a12.0;
-        Tue, 01 Oct 2024 14:59:09 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="inB9y5QX"
+Received: by mail-pg1-f182.google.com with SMTP id 41be03b00d2f7-7e6afa8baeaso5154465a12.3;
+        Tue, 01 Oct 2024 14:59:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1727819949; x=1728424749; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1727819951; x=1728424751; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=VvY980vGnSj9GOPHk6OH7hxmhi/61lkBJqdX69NjbjA=;
-        b=nQ50fI0663f7gXgAyJc9eSLEn2GKw6lBjNHZ9d6EC6+Fn42zWjzWiAyIXKDqQ4Y0HF
-         88oDFUHRIYz/73Frg8Rk+zI66V+zDYppGLB7lAeo2GwRljjD/4WXGc8dIsMGNzY1D7rV
-         WDZaixQs0xQsoR9CGOm5FxOacYkllLMfnuSgK3C5/PFiVLrbwHv43rDtWzZGy0uOLmOH
-         WtGH8eQBq/xsSGlrKJoSekan4O4aq+/GHiKM9mZs5+SWum8ECUrIMX3gnvA/TDX/wqG1
-         k+5CqZP5JszJy9GfdFTG38rqS4jezhtDducRpd+ZEan3SUvlbHbKZLjeWCwcrnYOFpNs
-         /mEQ==
+        bh=LDUmlBvkzd45Lb0kE8W4n/5dpJsPmG0u2wmjx5yqbQQ=;
+        b=inB9y5QXDLahvAKlZlEG1Lyi9KG7Ygjr9Co7ziAs3SNQtJtGVFS+tAyeRZTjIOcbBy
+         KZaHHHC36b2Jgf2CInfZHgkB1F7BsYexLcTxizyJ7suWiFVZFaP1SlYKGwOnV6jUak8A
+         kg6JacqHqJlOVZ2NI/9xZ3XL7ZWiehUcQM3XIu+CqA9vV5jHV9R7llFXyhzrfg551F6d
+         9T/l6vsRm8F7G8zVZe8LUqisbSgUTRA33Nu6ko3HI9lQe5B/I7Rdn7bzzzwCU46YQUpC
+         h/9YcMHPGtyvjNMaHBlt7N42u+j58Bg5W+4sjgDRK1sBcRAvW42qZk4OyxzGRSUnlwtj
+         77LA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727819949; x=1728424749;
+        d=1e100.net; s=20230601; t=1727819951; x=1728424751;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=VvY980vGnSj9GOPHk6OH7hxmhi/61lkBJqdX69NjbjA=;
-        b=u6jPnQCw4Z+9CBvif0A9ZEjajczDBVSibFdh+xSBoIL1AAOM4lwBuNsjtmzwKq0z/t
-         0V7nN13pMIGH1KoJNaI9TMVLfEne8hNuytb6o1w8xtsoIisE1et73NfwHHXThYU8HxrC
-         QC03bwlzFv6M6wl9lKIjumiqihPVHn/v7vFvfCMlGK+xtHn+3KcZBLugt2uNeBvYOv4b
-         VHJXZKG2uDu4RHApO6ibyZ7B+F6zjXv95XK2/DtNWYYtsIwENhw9WNOgFS2vD4/azrpQ
-         2pQe2VyjAdD9hHvtHQLkEoEm9Nt2Cq7H19zMCxSfABlsAp6aUtveWnKQwOb7VkhHAu1A
-         ZW2g==
-X-Forwarded-Encrypted: i=1; AJvYcCV51eGTZRFqi4JihmL/4S9uiSox9/79ahpg/3gaABigBhSsPhVBA6c1aGY6SPH0n7mZofWQ5assPRN02oE=@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywibb3p2kyrya/uGG9u3VZWWCqDhKWTpL81vBXV2QSA5RCDP9Wd
-	q3jDGyGZtYeH/C7g+LXd4sgaBd9r9yr/qySViNNfatRB8b9OSEiR1qvx/UKb
-X-Google-Smtp-Source: AGHT+IHkU8nhPQ+TFNULmiYdDh5HrllZsYtSC9ULkaNxB8JESq1R3QjY8mq15+E+3f2IgBphhqRqsg==
-X-Received: by 2002:a05:6a21:1646:b0:1cf:ff65:22f4 with SMTP id adf61e73a8af0-1d5e2d0217amr1199319637.41.1727819948966;
-        Tue, 01 Oct 2024 14:59:08 -0700 (PDT)
+        bh=LDUmlBvkzd45Lb0kE8W4n/5dpJsPmG0u2wmjx5yqbQQ=;
+        b=Vp/72nB8unJOcbRohnbyAVYwJR9xZPKgMTCowpg/JovGCuulGPqodzWOaKCHcaRZCt
+         1xrOmCFb1bPIBsNqtpE2EwELp8giEB568yYV+DH0a9eH8voKbdZjL/ChnSRLb5IVH4Et
+         ypDxZkUOi97NVWuTDiIIXGoIlTzbwfMh8EJZHFSrhQOekar3DpmuRMVZTXxtRPkwd4uW
+         3+fDz+ahaC1/e79qnqKDBV2nf/wZBBKlayGiJQpmc2RF2qrhhyJCKYyV+zRdg9bkz1sX
+         m1xxaNqtEoXBVHzzM5mvRiGGiQIoEU17jMVVwYrDvq+/2ZvOWWsjW7lRssWKTWYP+09y
+         S9zQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUcbTly3qAqTVH4BINr/2ctOT2JKXphJTIi8ZCRcQ79+epyEeRIdjTfSmz+mJZn6zpuPfBKdeezVpRKdFg=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyVTr+0KupBzUvUVjS0vplxNQ1iqlml155TZdh/CpglOwRM2D6n
+	lRMCwC+TrtiUnDBkRp6toTPMQMnqb35Oz2QZs9j4oBxA1BnXknxw7qSlGDSD
+X-Google-Smtp-Source: AGHT+IHjtg7fH1kJgK/bPu9LnMjn4rLIwOCsVQ7TuJLmUrSlmPmtimjQo+lRK7OnIKTnuiIbhU4CpQ==
+X-Received: by 2002:a05:6a20:c6cd:b0:1d5:1604:65e5 with SMTP id adf61e73a8af0-1d5e2d2f303mr1421339637.40.1727819951052;
+        Tue, 01 Oct 2024 14:59:11 -0700 (PDT)
 Received: from ryzen.lan ([2601:644:8200:dab8::a86])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-71b2651630esm8599162b3a.109.2024.10.01.14.59.08
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-71b2651630esm8599162b3a.109.2024.10.01.14.59.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 01 Oct 2024 14:59:08 -0700 (PDT)
+        Tue, 01 Oct 2024 14:59:10 -0700 (PDT)
 From: Rosen Penev <rosenp@gmail.com>
 To: dmaengine@vger.kernel.org
 Cc: Vinod Koul <vkoul@kernel.org>,
 	linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH 1/3] dma: mv_xor: use devm_platform_ioremap_resource
-Date: Tue,  1 Oct 2024 14:59:03 -0700
-Message-ID: <20241001215905.316366-2-rosenp@gmail.com>
+Subject: [PATCH 3/3] dma: mv_xor: use devm for request_irq
+Date: Tue,  1 Oct 2024 14:59:05 -0700
+Message-ID: <20241001215905.316366-4-rosenp@gmail.com>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241001215905.316366-1-rosenp@gmail.com>
 References: <20241001215905.316366-1-rosenp@gmail.com>
@@ -70,56 +70,92 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Simplifies probe slightly by removing explicit struct resource pointers
-and platform_get_resource calls.
+This is only called in _probe. Removes the need to manually free_irq.
+
+Same with irq_dispose_mapping.
 
 Signed-off-by: Rosen Penev <rosenp@gmail.com>
 ---
- drivers/dma/mv_xor.c | 23 ++++++-----------------
- 1 file changed, 6 insertions(+), 17 deletions(-)
+ drivers/dma/mv_xor.c | 21 +++++++--------------
+ 1 file changed, 7 insertions(+), 14 deletions(-)
 
 diff --git a/drivers/dma/mv_xor.c b/drivers/dma/mv_xor.c
-index 43efce77bb57..9355ee84db25 100644
+index 54e3c24d1666..3a0044bff993 100644
 --- a/drivers/dma/mv_xor.c
 +++ b/drivers/dma/mv_xor.c
-@@ -1292,7 +1292,6 @@ static int mv_xor_probe(struct platform_device *pdev)
- 	const struct mbus_dram_target_info *dram;
- 	struct mv_xor_device *xordev;
- 	struct mv_xor_platform_data *pdata = dev_get_platdata(&pdev->dev);
--	struct resource *res;
- 	unsigned int max_engines, max_channels;
- 	int i, ret;
+@@ -1025,8 +1025,6 @@ static int mv_xor_channel_remove(struct mv_xor_chan *mv_chan)
+ 		list_del(&chan->device_node);
+ 	}
  
-@@ -1302,23 +1301,13 @@ static int mv_xor_probe(struct platform_device *pdev)
- 	if (!xordev)
- 		return -ENOMEM;
- 
--	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
--	if (!res)
--		return -ENODEV;
-+	xordev->xor_base = devm_platform_ioremap_resource(pdev, 0);
-+	if (IS_ERR(xordev->xor_base))
-+		return PTR_ERR(xordev->xor_base);
- 
--	xordev->xor_base = devm_ioremap(&pdev->dev, res->start,
--					resource_size(res));
--	if (!xordev->xor_base)
--		return -EBUSY;
+-	free_irq(mv_chan->irq, mv_chan);
 -
--	res = platform_get_resource(pdev, IORESOURCE_MEM, 1);
--	if (!res)
--		return -ENODEV;
--
--	xordev->xor_high_base = devm_ioremap(&pdev->dev, res->start,
--					     resource_size(res));
--	if (!xordev->xor_high_base)
--		return -EBUSY;
-+	xordev->xor_high_base = devm_platform_ioremap_resource(pdev, 1);
-+	if (IS_ERR(xordev->xor_high_base))
-+		return PTR_ERR(xordev->xor_high_base);
+ 	return 0;
+ }
  
- 	platform_set_drvdata(pdev, xordev);
+@@ -1102,8 +1100,9 @@ mv_xor_channel_add(struct mv_xor_device *xordev,
+ 	/* clear errors before enabling interrupts */
+ 	mv_chan_clear_err_status(mv_chan);
  
+-	ret = request_irq(mv_chan->irq, mv_xor_interrupt_handler,
+-			  0, dev_name(&pdev->dev), mv_chan);
++	ret = devm_request_irq(&pdev->dev, mv_chan->irq,
++			       mv_xor_interrupt_handler, 0,
++			       dev_name(&pdev->dev), mv_chan);
+ 	if (ret)
+ 		goto err_free_dma;
+ 
+@@ -1128,14 +1127,14 @@ mv_xor_channel_add(struct mv_xor_device *xordev,
+ 		ret = mv_chan_memcpy_self_test(mv_chan);
+ 		dev_dbg(&pdev->dev, "memcpy self test returned %d\n", ret);
+ 		if (ret)
+-			goto err_free_irq;
++			goto err_free_dma;
+ 	}
+ 
+ 	if (dma_has_cap(DMA_XOR, dma_dev->cap_mask)) {
+ 		ret = mv_chan_xor_self_test(mv_chan);
+ 		dev_dbg(&pdev->dev, "xor self test returned %d\n", ret);
+ 		if (ret)
+-			goto err_free_irq;
++			goto err_free_dma;
+ 	}
+ 
+ 	dev_info(&pdev->dev, "Marvell XOR (%s): ( %s%s%s)\n",
+@@ -1146,12 +1145,10 @@ mv_xor_channel_add(struct mv_xor_device *xordev,
+ 
+ 	ret = dma_async_device_register(dma_dev);
+ 	if (ret)
+-		goto err_free_irq;
++		goto err_free_dma;
+ 
+ 	return mv_chan;
+ 
+-err_free_irq:
+-	free_irq(mv_chan->irq, mv_chan);
+ err_free_dma:
+ 	dma_free_coherent(&pdev->dev, MV_XOR_POOL_SIZE,
+ 			  mv_chan->dma_desc_pool_virt, mv_chan->dma_desc_pool);
+@@ -1382,7 +1379,6 @@ static int mv_xor_probe(struct platform_device *pdev)
+ 						  cap_mask, irq);
+ 			if (IS_ERR(chan)) {
+ 				ret = PTR_ERR(chan);
+-				irq_dispose_mapping(irq);
+ 				goto err_channel_add;
+ 			}
+ 
+@@ -1417,11 +1413,8 @@ static int mv_xor_probe(struct platform_device *pdev)
+ 
+ err_channel_add:
+ 	for (i = 0; i < MV_XOR_MAX_CHANNELS; i++)
+-		if (xordev->channels[i]) {
++		if (xordev->channels[i])
+ 			mv_xor_channel_remove(xordev->channels[i]);
+-			if (pdev->dev.of_node)
+-				irq_dispose_mapping(xordev->channels[i]->irq);
+-		}
+ 
+ 	return ret;
+ }
 -- 
 2.46.2
 
