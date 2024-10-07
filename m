@@ -1,49 +1,50 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.17])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.16])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 119A11D86D2;
-	Mon,  7 Oct 2024 15:04:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.17
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79A261D86F0;
+	Mon,  7 Oct 2024 15:04:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.16
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728313486; cv=none; b=C1SX4Jd0liaNvTq7cG4RkgBeY70MkHrDpP1mfu4NRRRGKAU8duW1jb25sJKqb6c/1NJ/ilBi+qCHjtBDnpdS+Ae5M4KgzkKThPKQFlO/PwNemZEncmHdiWlXwYUAEyGAAlKoQOdJ4f2n1iV0LuPSMw1kdGwZsduKFZTFWug15C0=
+	t=1728313487; cv=none; b=nnJjXTE2/UH6smiQyd/8B3SQSJDfhp2++SxvBH7UKAgmcielHZM6v+sqZn7wsYo0zD2ZFNFHDTWzTdMk4osRcx8x7swoBNZ8WtF/8ppO1Vlc7uC7ym7eB0+u8jWy1qMwkr0JuMFSNUT2HPaQ+WvYaJj4qxXa+Uwcc6b+3xKfBP4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728313486; c=relaxed/simple;
-	bh=hMVFo2QqijVdQmD9I29p4WSfR8DVMo2z3LQfrBgDbMc=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=eJeSgPftDZy9nYEV3nLv5h2mi4TZTJPpKFbTrSmAyEX7J5IdZisgwJ4wpH0nOcI8Jhbk90dolZvCEnvufF0IQucW4TQVDy+Sr7syN6m92W5EIx9rSnXI4RhvkYGC64PFBWuVNGm33D7B46hHKe08i2roG2EC2AJ4DL1a4qA/IHU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=JUFQFDMK; arc=none smtp.client-ip=198.175.65.17
+	s=arc-20240116; t=1728313487; c=relaxed/simple;
+	bh=KJGY5oUBDjsW46vaPrEZIFU5m7FmsPsjEeFfIsxnDf0=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=hkffInEanGLtJCOUpSkZK/pYx6NDaSb7riyYylO21H9CdciCOjFAbghN6AY7+32HYpQpJblrQR2tGCNp3dBRHWCrJHjBew6dOKF+56qXrhMEsoqFx+yT75AFw4y9zS6BcE7ycNFlwjRG4A349PZ6spiJFzruS6f2YB+zLnhSfqU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=MjzEQfvs; arc=none smtp.client-ip=198.175.65.16
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="JUFQFDMK"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="MjzEQfvs"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
   t=1728313486; x=1759849486;
-  h=from:to:cc:subject:date:message-id:mime-version:
-   content-transfer-encoding;
-  bh=hMVFo2QqijVdQmD9I29p4WSfR8DVMo2z3LQfrBgDbMc=;
-  b=JUFQFDMKh/hkLKHBIU4wkLSeb2MCVMP573AxeH11YCvGp8ENhdSNo/FP
-   g/XzMD9BCnELO9s8pjcqjd35rlm6kxc4zohVXI0tQzk9jtmVC2m8bgime
-   qh/c+9jvV5Dc+PW6m7nEZPcO1SpD1rEnbP585CDoBJaqdWoJnmm8njOx3
-   8ynTxXKzOsoOOyGaiQRvbjqILKu+Vv0eIpcqvWseIcb50e7/C5+EtoPHK
-   xoDA0vwQpnT787kBDt+teG/PXJQM2JF8gEgKYgQI7KGgOd0WXkULpW5dV
-   8gaBzh6PpGg9+3kgxFUCpHYqmwCn2nzLZGjWZaAwBuJzlDfzEp8MnfRSm
-   Q==;
-X-CSE-ConnectionGUID: 22Tqf2tmQlaKLibe/1EIig==
-X-CSE-MsgGUID: 2QPXgvDfRFO6DUJH8tt64w==
-X-IronPort-AV: E=McAfee;i="6700,10204,11218"; a="27593250"
+  h=from:to:cc:subject:date:message-id:in-reply-to:
+   references:mime-version:content-transfer-encoding;
+  bh=KJGY5oUBDjsW46vaPrEZIFU5m7FmsPsjEeFfIsxnDf0=;
+  b=MjzEQfvsXY9FLRg4UymY94iAzgZXu02bcN6smRxH+iVd4QrZw6X3or9U
+   JFUjEAjTmT+FSxpvtuthCPgdPztSY67jsYi7/UuEIwSsLEb8u9FKcJt11
+   FCdGlykCGTxT7/dpZ8+qbkqicMZuY4Ki1z5LVgsJerZ8/OehBQucSdE/N
+   VHLlYMNCAEg6HkqWXvCSkZnnRYp7Y7Cj5KMnhpvmor87nP56amTxt8F4z
+   HUDParwxwOMKMLGAYfsGgla9QutIg9cDIx1+JKV9u5xml6lSpb74P2n3L
+   A4KZ6l3t+8kAvfJqAQ99I8YeH/COjf6VrgrnzAcMH1RLtH/WIBS1vcV4F
+   A==;
+X-CSE-ConnectionGUID: CnNKpodwRaWDPU7C84oWSA==
+X-CSE-MsgGUID: YnC9A11oRbqaczckc75h5w==
+X-IronPort-AV: E=McAfee;i="6700,10204,11218"; a="27559140"
 X-IronPort-AV: E=Sophos;i="6.11,184,1725346800"; 
-   d="scan'208";a="27593250"
-Received: from orviesa009.jf.intel.com ([10.64.159.149])
-  by orvoesa109.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Oct 2024 08:04:45 -0700
-X-CSE-ConnectionGUID: typ133cYQ4iAayN5Erz0ZQ==
-X-CSE-MsgGUID: kb2LZHkwQiOb/BINbrbGJw==
+   d="scan'208";a="27559140"
+Received: from orviesa002.jf.intel.com ([10.64.159.142])
+  by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Oct 2024 08:04:45 -0700
+X-CSE-ConnectionGUID: /Kt3DdR5Tt2GesWcj7gIhQ==
+X-CSE-MsgGUID: HWdfjWETQVunGp0+xRivJA==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.11,184,1725346800"; 
-   d="scan'208";a="75463528"
+   d="scan'208";a="106342480"
 Received: from black.fi.intel.com ([10.237.72.28])
-  by orviesa009.jf.intel.com with ESMTP; 07 Oct 2024 08:04:43 -0700
+  by orviesa002.jf.intel.com with ESMTP; 07 Oct 2024 08:04:44 -0700
 Received: by black.fi.intel.com (Postfix, from userid 1003)
-	id CAB12301; Mon, 07 Oct 2024 18:04:41 +0300 (EEST)
+	id 0033B4FB; Mon, 07 Oct 2024 18:04:41 +0300 (EEST)
 From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	linux-doc@vger.kernel.org,
@@ -51,10 +52,12 @@ To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	dmaengine@vger.kernel.org
 Cc: Jonathan Corbet <corbet@lwn.net>,
 	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH v1 0/3] dmaengine: acpi: devm APIs and other cleanups
-Date: Mon,  7 Oct 2024 18:03:22 +0300
-Message-ID: <20241007150436.2183575-1-andriy.shevchenko@linux.intel.com>
+Subject: [PATCH v1 3/3] dmaengine: acpi: Clean up headers
+Date: Mon,  7 Oct 2024 18:03:25 +0300
+Message-ID: <20241007150436.2183575-4-andriy.shevchenko@linux.intel.com>
 X-Mailer: git-send-email 2.43.0.rc1.1336.g36b5255a03ac
+In-Reply-To: <20241007150436.2183575-1-andriy.shevchenko@linux.intel.com>
+References: <20241007150436.2183575-1-andriy.shevchenko@linux.intel.com>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -63,19 +66,67 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Here is a set of a few cleanups mostly related to ACPI DMA devm APIs.
-No functional changes intended.
+There is a few things done:
+- include only the headers we are direct user of
+- when pointer is in use, provide a forward declaration
+- add missing headers
+- sort alphabetically
 
-Andy Shevchenko (3):
-  dmaengine: acpi: Drop unused devm_acpi_dma_controller_free()
-  dmaengine: acpi: Simplify devm_acpi_dma_controller_register()
-  dmaengine: acpi: Clean up headers
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+---
+ drivers/dma/acpi-dma.c   | 13 ++++++++-----
+ include/linux/acpi_dma.h |  5 +++--
+ 2 files changed, 11 insertions(+), 7 deletions(-)
 
- .../driver-api/driver-model/devres.rst        |  1 -
- drivers/dma/acpi-dma.c                        | 43 ++++++-------------
- include/linux/acpi_dma.h                      |  9 ++--
- 3 files changed, 15 insertions(+), 38 deletions(-)
-
+diff --git a/drivers/dma/acpi-dma.c b/drivers/dma/acpi-dma.c
+index f594ea265c76..2abbe11e797e 100644
+--- a/drivers/dma/acpi-dma.c
++++ b/drivers/dma/acpi-dma.c
+@@ -9,18 +9,21 @@
+  *	    Mika Westerberg <mika.westerberg@linux.intel.com>
+  */
+ 
++#include <linux/acpi.h>
++#include <linux/acpi_dma.h>
+ #include <linux/device.h>
+ #include <linux/dma-mapping.h>
+ #include <linux/err.h>
+-#include <linux/module.h>
++#include <linux/errno.h>
++#include <linux/export.h>
++#include <linux/ioport.h>
+ #include <linux/kernel.h>
+ #include <linux/list.h>
+ #include <linux/mutex.h>
+-#include <linux/slab.h>
+-#include <linux/ioport.h>
+-#include <linux/acpi.h>
+-#include <linux/acpi_dma.h>
+ #include <linux/property.h>
++#include <linux/slab.h>
++#include <linux/string.h>
++#include <linux/types.h>
+ 
+ static LIST_HEAD(acpi_dma_list);
+ static DEFINE_MUTEX(acpi_dma_lock);
+diff --git a/include/linux/acpi_dma.h b/include/linux/acpi_dma.h
+index 3ef1ec7a04cb..e748b2877602 100644
+--- a/include/linux/acpi_dma.h
++++ b/include/linux/acpi_dma.h
+@@ -11,10 +11,11 @@
+ #ifndef __LINUX_ACPI_DMA_H
+ #define __LINUX_ACPI_DMA_H
+ 
+-#include <linux/list.h>
+-#include <linux/device.h>
+ #include <linux/err.h>
+ #include <linux/dmaengine.h>
++#include <linux/types.h>
++
++struct device;
+ 
+ /**
+  * struct acpi_dma_spec - slave device DMA resources
 -- 
 2.43.0.rc1.1336.g36b5255a03ac
 
