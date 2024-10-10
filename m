@@ -1,52 +1,52 @@
 Received: from mx08-00178001.pphosted.com (mx08-00178001.pphosted.com [91.207.212.93])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E4471CF285;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66DBF1F7069;
 	Thu, 10 Oct 2024 14:31:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.207.212.93
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728570704; cv=none; b=bX6N34wOLV6C4osMYDflA9MZXHk5I9XfCh3BLp2YkVev86uapqLvW+OvuIrWr4voPxuz28v3UHD4hIPoGTwXHXxgE78n3eFXNPyeEqTbSPz9Ms315LrUyRGqL7rvey/HsHZ8IR/1GVQ144MQb62iVqsiD5yFSw3hpF78VVXZVws=
+	t=1728570704; cv=none; b=PatlWkgc1rtMr7Hb6/ZffKKQ+i+1mES9ATcLrlEroykgOMjp8L2oQjI61zwWxaXvORR7+48rVWTRglRG2Wgt84uRizAZN/d67bttmp0Nq5nD23/IRiX3D3I7i4ROXoNdcspn3ElDMAMq4+C3ZFXRpv3xWcdBjyGnTfuP5JYzGk8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1728570704; c=relaxed/simple;
-	bh=K3X7oiSCcT8hUzV633V8iq+iIATr9PhSk/pOdFOaKsE=;
+	bh=KoQGSnpOs6ieXxEnyHHrxeA6S2VnsBKxUAdaTMFg/9U=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:References:
-	 In-Reply-To:To:CC; b=fLkpE5Fpm1oVplCD/J9LFgbZAG9eEMDHCdI5tTjpeSOubejtUlrSsZpLwHRwfneYnf5Efi+QyQWT/SlwK0o2Z9SEgkU4STQvc4NLlrauRNQypavzkNADsiPRxDha63VA23h0tN9MnLWAueP25k+GNF2Dljw4UWxckBh6Oye8RM0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=foss.st.com; spf=pass smtp.mailfrom=foss.st.com; dkim=pass (2048-bit key) header.d=foss.st.com header.i=@foss.st.com header.b=nSA93HAX; arc=none smtp.client-ip=91.207.212.93
+	 In-Reply-To:To:CC; b=IuR9rTpmz4K3R3X/ZkCbDrJMerWrgpM0llI9ddn4YQ0lxokoX114iSAGxtFKFSe+A3E0LtEKFLiu/GLjFTenjvQGLbWmrRYkKNDmlI71ViM7bDSTcd4IUtYcoVCvO5ojH40igV50aJD1Q8upd5RkKkfOFa5ax+SnDfvM2Hvsbto=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=foss.st.com; spf=pass smtp.mailfrom=foss.st.com; dkim=pass (2048-bit key) header.d=foss.st.com header.i=@foss.st.com header.b=nJaX0eR7; arc=none smtp.client-ip=91.207.212.93
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=foss.st.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=foss.st.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=foss.st.com header.i=@foss.st.com header.b="nSA93HAX"
+	dkim=pass (2048-bit key) header.d=foss.st.com header.i=@foss.st.com header.b="nJaX0eR7"
 Received: from pps.filterd (m0369457.ppops.net [127.0.0.1])
-	by mx07-00178001.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49A92Fas006182;
-	Thu, 10 Oct 2024 16:31:23 +0200
+	by mx07-00178001.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49AE3xWM004150;
+	Thu, 10 Oct 2024 16:31:17 +0200
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foss.st.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=selector1; bh=
-	KH8nP8o/qes/Z0lwN5BroWJF926mtTX7phjDCx9kS2E=; b=nSA93HAXkZWV5JM1
-	mT/sIvf83NaqDEfXZwfXkVlaS0VPBAAKgM5b6C49KNzrJxGIusadiCktEkkNXnnG
-	oWYdBhSmLFhGFQdveS1QRQroHWa5jsvVivsa4mkWr5reUZPyjAdQk4YSr+P3E+sQ
-	q851FJWbc7A4cK80EChr5i0L+R9zPKuqK80aKafNpWIIQMPEl1j/NtMWAjvrTU+g
-	lWETU+iRKgaYsCNFcrEkmRw/yqSUI1x18/rsaCqU2lChgT+4UNFkTR7LmSj8cjXk
-	b4mJVjwGvAyBuvCBY02weTTxZ65mZpo6SE7q3icvbKgZ/Rr/EHXqjtowEsO95tGv
-	N7yx/Q==
+	O41xSOzJv31DX5Er3+Tj267w66tdT1K/Yy2IS+3r0fM=; b=nJaX0eR7Z/4Ss7Ld
+	drCUwepSIpU3l3EmEE/katOm4AnSDO+Gajt8JFTpsehTbpyFhysmeFeXK5Id31hJ
+	Mnf5GqvjP/4xZFdyxNGZSTjCsCjK9tojvn+bsW+gwtW7XV2M3DBWWTsrlv+Vnh9f
+	pKcUVZpQXbsHtshyamo9s3gZMfBY9SuVQRADEZH7E2CvjJ3QuFMbKmpvvnEPVqpu
+	k/cC1GURyEil+gb42/WX7zay7qsywXm/VFzPsg5CN4OtS1NlRATidRZ6KIu0AFB7
+	2IWhlFXf5ny5biXr1ufcZ9J7U59xQk/G6m//NHffWNhe+hK+60eNOg6+17nOJa6v
+	7Pe8TA==
 Received: from beta.dmz-ap.st.com (beta.dmz-ap.st.com [138.198.100.35])
-	by mx07-00178001.pphosted.com (PPS) with ESMTPS id 425w7xmw4x-1
+	by mx07-00178001.pphosted.com (PPS) with ESMTPS id 425w7xmw4j-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 10 Oct 2024 16:31:23 +0200 (MEST)
+	Thu, 10 Oct 2024 16:31:17 +0200 (MEST)
 Received: from euls16034.sgp.st.com (euls16034.sgp.st.com [10.75.44.20])
-	by beta.dmz-ap.st.com (STMicroelectronics) with ESMTP id 570244005B;
-	Thu, 10 Oct 2024 16:30:29 +0200 (CEST)
+	by beta.dmz-ap.st.com (STMicroelectronics) with ESMTP id C7C254005D;
+	Thu, 10 Oct 2024 16:30:24 +0200 (CEST)
 Received: from Webmail-eu.st.com (shfdag1node3.st.com [10.75.129.71])
-	by euls16034.sgp.st.com (STMicroelectronics) with ESMTP id 36FC12A2FDD;
-	Thu, 10 Oct 2024 16:28:14 +0200 (CEST)
+	by euls16034.sgp.st.com (STMicroelectronics) with ESMTP id A36D129F351;
+	Thu, 10 Oct 2024 16:28:12 +0200 (CEST)
 Received: from localhost (10.252.31.182) by SHFDAG1NODE3.st.com (10.75.129.71)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.37; Thu, 10 Oct
- 2024 16:28:13 +0200
+ 2024 16:28:12 +0200
 From: Amelie Delaunay <amelie.delaunay@foss.st.com>
-Date: Thu, 10 Oct 2024 16:28:00 +0200
-Subject: [PATCH 10/11] arm64: dts: st: add DMA support on I2C instances of
- stm32mp25
+Date: Thu, 10 Oct 2024 16:27:58 +0200
+Subject: [PATCH 08/11] arm64: dts: st: limit axi burst length in dma nodes
+ of stm32mp25
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -55,7 +55,7 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-ID: <20241010-dma3-mp25-updates-v1-10-adf0633981ea@foss.st.com>
+Message-ID: <20241010-dma3-mp25-updates-v1-8-adf0633981ea@foss.st.com>
 References: <20241010-dma3-mp25-updates-v1-0-adf0633981ea@foss.st.com>
 In-Reply-To: <20241010-dma3-mp25-updates-v1-0-adf0633981ea@foss.st.com>
 To: Vinod Koul <vkoul@kernel.org>, Rob Herring <robh@kernel.org>,
@@ -77,98 +77,47 @@ X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
 
-Add dmas and dma-names properties in i2c nodes of stm32mp251.dtsi to
-enable DMA support.
+As stated in STM32MP2 Reference Manual [1], chapter "HPDMA allowed AXI
+maximum length", "The maximum allowed AXI burst length is limited to 16.".
+
+To apply this limitation on STM32MP25, add "st,axi-max-burst-len" property
+in DMA controllers nodes in stm32mp251.dtsi.
+
+[1] https://www.st.com/resource/en/reference_manual/rm0457-stm32mp2325xx-advanced-armbased-3264bit-mpus-stmicroelectronics.pdf
 
 Signed-off-by: Amelie Delaunay <amelie.delaunay@foss.st.com>
 ---
- arch/arm64/boot/dts/st/stm32mp251.dtsi | 24 ++++++++++++++++++++++++
- 1 file changed, 24 insertions(+)
+ arch/arm64/boot/dts/st/stm32mp251.dtsi | 3 +++
+ 1 file changed, 3 insertions(+)
 
 diff --git a/arch/arm64/boot/dts/st/stm32mp251.dtsi b/arch/arm64/boot/dts/st/stm32mp251.dtsi
-index 02fcb9fcff87ba9d5c1ecab0385e3a57cde31e2e..033da03d05a72c557dd81547fffa54eefed1e9cd 100644
+index 1167cf63d7e87aaa15c5c1ed70a9f6511fd818d4..443cc8d6ae8e9e2bff1bb862b0921d9626bb78e1 100644
 --- a/arch/arm64/boot/dts/st/stm32mp251.dtsi
 +++ b/arch/arm64/boot/dts/st/stm32mp251.dtsi
-@@ -321,6 +321,9 @@ i2c1: i2c@40120000 {
- 				resets = <&rcc I2C1_R>;
- 				#address-cells = <1>;
- 				#size-cells = <0>;
-+				dmas = <&hpdma 27 0x20 0x3012>,
-+				       <&hpdma 28 0x20 0x3021>;
-+				dma-names = "rx", "tx";
- 				access-controllers = <&rifsc 41>;
- 				status = "disabled";
- 			};
-@@ -334,6 +337,9 @@ i2c2: i2c@40130000 {
- 				resets = <&rcc I2C2_R>;
- 				#address-cells = <1>;
- 				#size-cells = <0>;
-+				dmas = <&hpdma 30 0x20 0x3012>,
-+				       <&hpdma 31 0x20 0x3021>;
-+				dma-names = "rx", "tx";
- 				access-controllers = <&rifsc 42>;
- 				status = "disabled";
- 			};
-@@ -347,6 +353,9 @@ i2c3: i2c@40140000 {
- 				resets = <&rcc I2C3_R>;
- 				#address-cells = <1>;
- 				#size-cells = <0>;
-+				dmas = <&hpdma 33 0x20 0x3012>,
-+				       <&hpdma 34 0x20 0x3021>;
-+				dma-names = "rx", "tx";
- 				access-controllers = <&rifsc 43>;
- 				status = "disabled";
- 			};
-@@ -360,6 +369,9 @@ i2c4: i2c@40150000 {
- 				resets = <&rcc I2C4_R>;
- 				#address-cells = <1>;
- 				#size-cells = <0>;
-+				dmas = <&hpdma 36 0x20 0x3012>,
-+				       <&hpdma 37 0x20 0x3021>;
-+				dma-names = "rx", "tx";
- 				access-controllers = <&rifsc 44>;
- 				status = "disabled";
- 			};
-@@ -373,6 +385,9 @@ i2c5: i2c@40160000 {
- 				resets = <&rcc I2C5_R>;
- 				#address-cells = <1>;
- 				#size-cells = <0>;
-+				dmas = <&hpdma 39 0x20 0x3012>,
-+				       <&hpdma 40 0x20 0x3021>;
-+				dma-names = "rx", "tx";
- 				access-controllers = <&rifsc 45>;
- 				status = "disabled";
- 			};
-@@ -386,6 +401,9 @@ i2c6: i2c@40170000 {
- 				resets = <&rcc I2C6_R>;
- 				#address-cells = <1>;
- 				#size-cells = <0>;
-+				dmas = <&hpdma 42 0x20 0x3012>,
-+				       <&hpdma 43 0x20 0x3021>;
-+				dma-names = "rx", "tx";
- 				access-controllers = <&rifsc 46>;
- 				status = "disabled";
- 			};
-@@ -399,6 +417,9 @@ i2c7: i2c@40180000 {
- 				resets = <&rcc I2C7_R>;
- 				#address-cells = <1>;
- 				#size-cells = <0>;
-+				dmas = <&hpdma 45 0x20 0x3012>,
-+				       <&hpdma 46 0x20 0x3021>;
-+				dma-names = "rx", "tx";
- 				access-controllers = <&rifsc 47>;
- 				status = "disabled";
- 			};
-@@ -544,6 +565,9 @@ i2c8: i2c@46040000 {
- 				resets = <&rcc I2C8_R>;
- 				#address-cells = <1>;
- 				#size-cells = <0>;
-+				dmas = <&hpdma 168 0x20 0x3012>,
-+				       <&hpdma 169 0x20 0x3021>;
-+				dma-names = "rx", "tx";
- 				access-controllers = <&rifsc 48>;
- 				status = "disabled";
- 			};
+@@ -181,6 +181,7 @@ hpdma: dma-controller@40400000 {
+ 				     <GIC_SPI 48 IRQ_TYPE_LEVEL_HIGH>;
+ 			clocks = <&scmi_clk CK_SCMI_HPDMA1>;
+ 			#dma-cells = <3>;
++			st,axi-max-burst-len = <16>;
+ 		};
+ 
+ 		hpdma2: dma-controller@40410000 {
+@@ -204,6 +205,7 @@ hpdma2: dma-controller@40410000 {
+ 				     <GIC_SPI 64 IRQ_TYPE_LEVEL_HIGH>;
+ 			clocks = <&scmi_clk CK_SCMI_HPDMA2>;
+ 			#dma-cells = <3>;
++			st,axi-max-burst-len = <16>;
+ 		};
+ 
+ 		hpdma3: dma-controller@40420000 {
+@@ -227,6 +229,7 @@ hpdma3: dma-controller@40420000 {
+ 				     <GIC_SPI 80 IRQ_TYPE_LEVEL_HIGH>;
+ 			clocks = <&scmi_clk CK_SCMI_HPDMA3>;
+ 			#dma-cells = <3>;
++			st,axi-max-burst-len = <16>;
+ 		};
+ 
+ 		rifsc: bus@42080000 {
 
 -- 
 2.25.1
