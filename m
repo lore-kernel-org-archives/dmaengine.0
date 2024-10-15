@@ -1,187 +1,110 @@
-Received: from mx08-00178001.pphosted.com (mx08-00178001.pphosted.com [91.207.212.93])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F35471F707A;
-	Tue, 15 Oct 2024 12:16:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.207.212.93
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 853211FC7D4;
+	Tue, 15 Oct 2024 13:26:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728994604; cv=none; b=pbdrc0Dhw220nvVnTj/Vg4SGp549Lhg56Tb65pqQ3ZInH7TttlAG2iOvearInrNF7eL3SyeVkPLvOleZFIk9DRlXOiSPPYEMcmQKfsaNO9sX+AcCUNhaBwLbhdX2+E0OHiIKlM0D+Gp4OuKz/l9qsne64xEXw18w2MFNTBSkfXw=
+	t=1728998778; cv=none; b=Kx5ji8a9zVjTb4U5FEvQvFLxCr4pjQt2E7HlbUNfcmwzJOD9dJFd+WBYkmiuVsYeRdeTW6MmcnOR1BUW6cAOSYOhmyTtrhpRJZ78lOsm6fl4sGSSXwo2pbJ/gc9fR5ONH1bm32vvgYSFQchpqtH1vJs6XTn1qgLWHTUZjEvQsqE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728994604; c=relaxed/simple;
-	bh=HgMME6IRDHpuIAaHCfRr6oI+t6HtahI4szIwGwlqa4g=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:References:
-	 In-Reply-To:To:CC; b=u2Hc60eqpH8LZxz3xZ3uL0ufrXttG5Y3nMFOhrFpmLatzzFGMgQxVug7tGDNk6y82JGe83jHSs7Jv+HInUDuLQVAfRF0T82rylkUvdjlxbHM4RW6XheSCYrcRd9plQXvwpRaB52G6X3uC9EP0gtpzKWf70qJODW0tN/X6RjkuF4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=foss.st.com; spf=pass smtp.mailfrom=foss.st.com; dkim=pass (2048-bit key) header.d=foss.st.com header.i=@foss.st.com header.b=3bS1b1Eg; arc=none smtp.client-ip=91.207.212.93
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=foss.st.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=foss.st.com
+	s=arc-20240116; t=1728998778; c=relaxed/simple;
+	bh=UpHokupAtjlDauqa70fE2fQJZrcfyQZ3EvXkwOwsheY=;
+	h=Date:Content-Type:MIME-Version:From:To:Cc:In-Reply-To:References:
+	 Message-Id:Subject; b=ZvXfQxTPi2Qs3WSp8nJNVTsKUgn63m7Mxm1oJkAX0N+DwKJzV0o8OCQYRQwbUdqL8CJ1tC/sppsZSK3i07DMGDdn2/pPR4fXE1NsBOVu/vuR5LbN7aRoiUWpxHa8z1sO+makPTwfoU3ngVPklni3V1MBclEsFsLkoDKqv/96XgU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BEe1tpbR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=foss.st.com header.i=@foss.st.com header.b="3bS1b1Eg"
-Received: from pps.filterd (m0369457.ppops.net [127.0.0.1])
-	by mx07-00178001.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49FBeP8P018110;
-	Tue, 15 Oct 2024 14:16:21 +0200
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foss.st.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=selector1; bh=
-	SpHHpfjWYDyEBkQxP7SYNJ+CCTu5C3HJbtAasNlzTiE=; b=3bS1b1EgFj/3hNrb
-	5rDefCCkSbAF+rOkWaG/5wszwmbWMoQnx8GSxTuARwLkojNisbucUAymmIqrOALa
-	XGYUHND52SUIvH0KZn/9BSdZOxALN9EXNcH6eO8UGMRB50MBFIYpz91h85LA9CHU
-	nCEhMzp4boCVZOCXrMWBy/eI+XMZuUVf2qmTwwS8RFGsUOtT1PDyKFrYIVOvzXCv
-	49KYORGCRPlqTguZSyXZzOEfI1YRskfi+5rEiSobvsViQf4xbgBl5/W3Z42kgs+o
-	0ncLyfCLGqpM/FLgAU4wc7dUHyKzTBKMn6G9MgVVK10UEOTApntIjqxwblHEUaIz
-	RU/hKw==
-Received: from beta.dmz-ap.st.com (beta.dmz-ap.st.com [138.198.100.35])
-	by mx07-00178001.pphosted.com (PPS) with ESMTPS id 42842jacmc-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 15 Oct 2024 14:16:21 +0200 (MEST)
-Received: from euls16034.sgp.st.com (euls16034.sgp.st.com [10.75.44.20])
-	by beta.dmz-ap.st.com (STMicroelectronics) with ESMTP id 07FCA40048;
-	Tue, 15 Oct 2024 14:15:28 +0200 (CEST)
-Received: from Webmail-eu.st.com (shfdag1node3.st.com [10.75.129.71])
-	by euls16034.sgp.st.com (STMicroelectronics) with ESMTP id B2EC3222350;
-	Tue, 15 Oct 2024 14:14:48 +0200 (CEST)
-Received: from localhost (10.48.87.35) by SHFDAG1NODE3.st.com (10.75.129.71)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.37; Tue, 15 Oct
- 2024 14:14:48 +0200
-From: Amelie Delaunay <amelie.delaunay@foss.st.com>
-Date: Tue, 15 Oct 2024 14:14:39 +0200
-Subject: [PATCH v2 3/9] dmaengine: stm32-dma3: refactor HW linked-list to
- optimize memory accesses
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BEe1tpbR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BBC9C4CECF;
+	Tue, 15 Oct 2024 13:26:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1728998778;
+	bh=UpHokupAtjlDauqa70fE2fQJZrcfyQZ3EvXkwOwsheY=;
+	h=Date:From:To:Cc:In-Reply-To:References:Subject:From;
+	b=BEe1tpbRQRTtSRuN4OXaCHRF+kwB/JEnlK1e/0lPAhiN0YN4QMigvsa2wPcYIuu0y
+	 5Z4fF/34tOfOcT+q8jRDPt8zcbw+sZmcoSmA3bn+SpVELbN1S/HbIJ4BRENhzmJUQE
+	 ZRUjsqs8i0l3XL1Pr9TJG0ib8x8fQOJpzC9Nj9UX+slS1Yjq6MYT+sUBmac5f2A37t
+	 CZy4AMcw1F2wea9wIJNRv9tFdITShoS5V+0AodawCMRFnfiT5MuDecr2D+r2SwJ39L
+	 kAUce5JOBmW7mvu80X7v3iUmv1kXciem1B3RyORsAjONhurY1RBBtDKBzQ62oUSSmB
+	 3DuPKnnx8D0gw==
+Date: Tue, 15 Oct 2024 08:26:14 -0500
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-ID: <20241015-dma3-mp25-updates-v2-3-b63e21556ec8@foss.st.com>
-References: <20241015-dma3-mp25-updates-v2-0-b63e21556ec8@foss.st.com>
-In-Reply-To: <20241015-dma3-mp25-updates-v2-0-b63e21556ec8@foss.st.com>
-To: Vinod Koul <vkoul@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof
- Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Maxime
- Coquelin <mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue
-	<alexandre.torgue@foss.st.com>
-CC: <dmaengine@vger.kernel.org>, <linux-stm32@st-md-mailman.stormreply.com>,
-        <devicetree@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>,
-        Amelie Delaunay <amelie.delaunay@foss.st.com>
-X-Mailer: b4 0.14.2
-X-ClientProxiedBy: EQNCAS1NODE4.st.com (10.75.129.82) To SHFDAG1NODE3.st.com
- (10.75.129.71)
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+From: "Rob Herring (Arm)" <robh@kernel.org>
+To: Jyothi Kumar Seerapu <quic_jseerapu@quicinc.com>
+Cc: dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, linux-i2c@vger.kernel.org, 
+ =?utf-8?q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>, 
+ Sumit Semwal <sumit.semwal@linaro.org>, quic_vtanuku@quicinc.com, 
+ Bjorn Andersson <andersson@kernel.org>, dmaengine@vger.kernel.org, 
+ Andi Shyti <andi.shyti@kernel.org>, linaro-mm-sig@lists.linaro.org, 
+ linux-media@vger.kernel.org, quic_msavaliy@quicinc.com, 
+ devicetree@vger.kernel.org, cros-qcom-dts-watchers@chromium.org, 
+ Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org, 
+ Vinod Koul <vkoul@kernel.org>
+In-Reply-To: <20241015120750.21217-2-quic_jseerapu@quicinc.com>
+References: <20241015120750.21217-1-quic_jseerapu@quicinc.com>
+ <20241015120750.21217-2-quic_jseerapu@quicinc.com>
+Message-Id: <172899877472.523926.14548368912530185631.robh@kernel.org>
+Subject: Re: [PATCH v1 1/5] dt-bindings: dmaengine: qcom: gpi: Add
+ additional arg to dma-cell property
 
-Current behavior splits the buffer/sg in n * STM32_DMA3_MAX_BLOCK_SIZE + 1
-for the remainder without optimization.
 
-New behavior splits the buffer/sg in n * STM32_DMA3_MAX_BLOCK_SIZE + 1 for
-(x * chan->max_burst) + 1 for the remainder.
-Depending on channel FIFO size, optimal double-word (word if only 8-byte
-FIFO size) bursts can be programmed before managing the very last remainder
-with lower data width.
-In case of _prep_slave_sg, and depending on the channel Transfer Complete
-event configuration, the user is warned about the refactored linked-list,
-not having the same items count than the initial sg_list. This warning is
-shown only if the configuration is successful.
+On Tue, 15 Oct 2024 17:37:46 +0530, Jyothi Kumar Seerapu wrote:
+> When high performance with multiple i2c messages in a single transfer
+> is required, employ Block Event Interrupt (BEI) to trigger interrupts
+> after specific messages transfer and the last message transfer,
+> thereby reducing interrupts.
+> 
+> For each i2c message transfer, a series of Transfer Request Elements(TREs)
+> must be programmed, including config tre for frequency configuration,
+> go tre for holding i2c address and dma tre for holding dma buffer address,
+> length as per the hardware programming guide. For transfer using BEI,
+> multiple I2C messages may necessitate the preparation of config, go,
+> and tx DMA TREs. However, a channel TRE size of 64 is often insufficient,
+> potentially leading to failures due to inadequate memory space.
+> 
+> Add additional argument to dma-cell property for channel TRE size.
+> With this, adjust the channel TRE size via the device tree.
+> The default size is 64, but clients can modify this value based on
+> their specific requirements.
+> 
+> Signed-off-by: Jyothi Kumar Seerapu <quic_jseerapu@quicinc.com>
+> ---
+>  Documentation/devicetree/bindings/dma/qcom,gpi.yaml | 6 ++++--
+>  1 file changed, 4 insertions(+), 2 deletions(-)
+> 
 
-Signed-off-by: Amelie Delaunay <amelie.delaunay@foss.st.com>
----
- drivers/dma/stm32/stm32-dma3.c | 40 +++++++++++++++++++++++++++++++++-------
- 1 file changed, 33 insertions(+), 7 deletions(-)
+My bot found errors running 'make dt_binding_check' on your patch:
 
-diff --git a/drivers/dma/stm32/stm32-dma3.c b/drivers/dma/stm32/stm32-dma3.c
-index f793eecd2c27ca17cedd5cabbaa1b1beca202039..1d961f5935f935e3855467318cdcde6e6173e43c 100644
---- a/drivers/dma/stm32/stm32-dma3.c
-+++ b/drivers/dma/stm32/stm32-dma3.c
-@@ -1126,6 +1126,25 @@ static void stm32_dma3_free_chan_resources(struct dma_chan *c)
- 	chan->config_set = 0;
- }
- 
-+static u32 stm32_dma3_get_ll_count(struct stm32_dma3_chan *chan, size_t len)
-+{
-+	u32 count;
-+
-+	count = len / STM32_DMA3_MAX_BLOCK_SIZE;
-+	len -= (len / STM32_DMA3_MAX_BLOCK_SIZE) * STM32_DMA3_MAX_BLOCK_SIZE;
-+
-+	if (len >= chan->max_burst) {
-+		count += 1; /* len < STM32_DMA3_MAX_BLOCK_SIZE here, so it fits in one item */
-+		len -= (len / chan->max_burst) * chan->max_burst;
-+	}
-+
-+	/* Unaligned remainder fits in one extra item */
-+	if (len > 0)
-+		count += 1;
-+
-+	return count;
-+}
-+
- static void stm32_dma3_init_chan_config_for_memcpy(struct stm32_dma3_chan *chan,
- 						   dma_addr_t dst, dma_addr_t src)
- {
-@@ -1161,7 +1180,7 @@ static struct dma_async_tx_descriptor *stm32_dma3_prep_dma_memcpy(struct dma_cha
- 	size_t next_size, offset;
- 	u32 count, i, ctr1, ctr2;
- 
--	count = DIV_ROUND_UP(len, STM32_DMA3_MAX_BLOCK_SIZE);
-+	count = stm32_dma3_get_ll_count(chan, len);
- 
- 	swdesc = stm32_dma3_chan_desc_alloc(chan, count);
- 	if (!swdesc)
-@@ -1177,6 +1196,9 @@ static struct dma_async_tx_descriptor *stm32_dma3_prep_dma_memcpy(struct dma_cha
- 		remaining = len - offset;
- 		next_size = min_t(size_t, remaining, STM32_DMA3_MAX_BLOCK_SIZE);
- 
-+		if (next_size < STM32_DMA3_MAX_BLOCK_SIZE && next_size >= chan->max_burst)
-+			next_size = chan->max_burst * (remaining / chan->max_burst);
-+
- 		ret = stm32_dma3_chan_prep_hw(chan, DMA_MEM_TO_MEM, &swdesc->ccr, &ctr1, &ctr2,
- 					      src + offset, dst + offset, next_size);
- 		if (ret)
-@@ -1215,12 +1237,9 @@ static struct dma_async_tx_descriptor *stm32_dma3_prep_slave_sg(struct dma_chan
- 	u32 i, j, count, ctr1, ctr2;
- 	int ret;
- 
--	count = sg_len;
--	for_each_sg(sgl, sg, sg_len, i) {
--		len = sg_dma_len(sg);
--		if (len > STM32_DMA3_MAX_BLOCK_SIZE)
--			count += DIV_ROUND_UP(len, STM32_DMA3_MAX_BLOCK_SIZE) - 1;
--	}
-+	count = 0;
-+	for_each_sg(sgl, sg, sg_len, i)
-+		count += stm32_dma3_get_ll_count(chan, sg_dma_len(sg));
- 
- 	swdesc = stm32_dma3_chan_desc_alloc(chan, count);
- 	if (!swdesc)
-@@ -1237,6 +1256,9 @@ static struct dma_async_tx_descriptor *stm32_dma3_prep_slave_sg(struct dma_chan
- 		do {
- 			size_t chunk = min_t(size_t, len, STM32_DMA3_MAX_BLOCK_SIZE);
- 
-+			if (chunk < STM32_DMA3_MAX_BLOCK_SIZE && chunk >= chan->max_burst)
-+				chunk = chan->max_burst * (len / chan->max_burst);
-+
- 			if (dir == DMA_MEM_TO_DEV) {
- 				src = sg_addr;
- 				dst = dev_addr;
-@@ -1269,6 +1291,10 @@ static struct dma_async_tx_descriptor *stm32_dma3_prep_slave_sg(struct dma_chan
- 		} while (len);
- 	}
- 
-+	if (count != sg_len && chan->tcem != CTR2_TCEM_CHANNEL)
-+		dev_warn(chan2dev(chan), "Linked-list refactored, %d items instead of %d\n",
-+			 count, sg_len);
-+
- 	/* Enable Error interrupts */
- 	swdesc->ccr |= CCR_USEIE | CCR_ULEIE | CCR_DTEIE;
- 	/* Enable Transfer state interrupts */
+yamllint warnings/errors:
 
--- 
-2.25.1
+dtschema/dtc warnings/errors:
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/dma/qcom,gpi.yaml: properties:#dma-cells: 'minItems' is not one of ['description', 'deprecated', 'const', 'enum', 'minimum', 'maximum', 'multipleOf', 'default', '$ref', 'oneOf']
+	from schema $id: http://devicetree.org/meta-schemas/core.yaml#
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/dma/qcom,gpi.yaml: properties:#dma-cells: 'maxItems' is not one of ['description', 'deprecated', 'const', 'enum', 'minimum', 'maximum', 'multipleOf', 'default', '$ref', 'oneOf']
+	from schema $id: http://devicetree.org/meta-schemas/core.yaml#
+
+doc reference errors (make refcheckdocs):
+
+See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20241015120750.21217-2-quic_jseerapu@quicinc.com
+
+The base for the series is generally the latest rc1. A different dependency
+should be noted in *this* patch.
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit after running the above command yourself. Note
+that DT_SCHEMA_FILES can be set to your schema file to speed up checking
+your schema. However, it must be unset to test all examples with your schema.
 
