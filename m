@@ -1,52 +1,52 @@
-Received: from mx07-00178001.pphosted.com (mx08-00178001.pphosted.com [91.207.212.93])
+Received: from mx08-00178001.pphosted.com (mx08-00178001.pphosted.com [91.207.212.93])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAEA5208D7B;
-	Wed, 16 Oct 2024 12:43:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93EBA208D63;
+	Wed, 16 Oct 2024 12:43:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.207.212.93
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729082597; cv=none; b=kICuf7n0Br3OjIEeInVnTzdEjgwcbrzdoF3+iwScNwWJW+bFwRt0pAOEUsEk42zi6neK3/oDb1ZEvXNvNilo/frPpxMXMAW4/m6kQHOrCORx+lnTyfjOlr8VMwq40p1GDM9/QB2S9j/AANfeXFpY1jse4UgSTjbKF+QGa6Zlkno=
+	t=1729082598; cv=none; b=HSVy9XIXq5n8kErkQK0ZD9F4/acVGK4GRvmFEdbR7PwXzwXsu7n+y6bG2aaLwoUCBkTyRCMhJVd42myaQQhwxI71UWyVkzbCTnY3t+zjb7eO08CbJKNjpzK+COtCobKBMSUnIUBu+8vOCXH4BjD/sESu/rUOiTcjtkwHRFQfazA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729082597; c=relaxed/simple;
-	bh=dJQWkcrhwk0Vkj1AihIMxNRLDfQsHXxazUmkVVKOLlY=;
+	s=arc-20240116; t=1729082598; c=relaxed/simple;
+	bh=UbN/dByhvTSbSeoPfBiRX/vO2M0WLylvxyBrvYKBvzs=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:References:
-	 In-Reply-To:To:CC; b=FZcO5UwC+pz/axmv0VSJO+lG5KQWQUgF42g/ZD75scrx1fnizBAsw6Smdt6ME2K9SQIpOKSHpNLhxeelPSbuYAY4x64i10I1i2F9cnoAsVqsML81tlyIOgt4n3Tce+hcsLyJCdtBBMuQ5UbtAUNNjIqEdA1Oc7y6/070/mg02yw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=foss.st.com; spf=pass smtp.mailfrom=foss.st.com; dkim=pass (2048-bit key) header.d=foss.st.com header.i=@foss.st.com header.b=ZBvnHLQO; arc=none smtp.client-ip=91.207.212.93
+	 In-Reply-To:To:CC; b=Ym1g49BoQekDt1n70zVfx7aPLjiX+QIwm/KZsx5/V8JUj2MySSyTmtYBL1tkFacV4gboFZxjLiVCw324ZpN9aDgXM41dKMWklCBjL5PZbyeTUQgsfjKs3wHA6havucWuOoy58j4Y3zxa4Y55cgmPlEWone8Tmwp+c90OOiX3eFE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=foss.st.com; spf=pass smtp.mailfrom=foss.st.com; dkim=pass (2048-bit key) header.d=foss.st.com header.i=@foss.st.com header.b=rCzgGH3r; arc=none smtp.client-ip=91.207.212.93
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=foss.st.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=foss.st.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=foss.st.com header.i=@foss.st.com header.b="ZBvnHLQO"
-Received: from pps.filterd (m0046660.ppops.net [127.0.0.1])
-	by mx07-00178001.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49G8rQLD011450;
-	Wed, 16 Oct 2024 14:42:52 +0200
+	dkim=pass (2048-bit key) header.d=foss.st.com header.i=@foss.st.com header.b="rCzgGH3r"
+Received: from pps.filterd (m0369457.ppops.net [127.0.0.1])
+	by mx07-00178001.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49G8o7FK018075;
+	Wed, 16 Oct 2024 14:42:53 +0200
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foss.st.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=selector1; bh=
-	1FmGrSANQn07iSNnWCRz9WCfIaMI09hSsfRbqu2gnOU=; b=ZBvnHLQOdIBA/1cO
-	+xTlxzQr++yJVmlpcQI4iIXtMxaBSRmxPM3B7Zqn/C78swAWLsCCQofpcp9sB62j
-	KHoCxAulsrtOyMuQgDsOImRW6wKLCOZQt6lLF2ECBRG00U5y+fSvAvUgHXvlNxCt
-	wqJGmAY+o0pWGT/iTQ90ADJyVYmU4vMmKaRhSA6C3iVvZj6qc5CpAe+eqRrGWPzh
-	X2UbWHi++yTJdbm9uBT6P99PXaWtqk9FkwveJkRxMUnm7YKkFbhJAu5ZibRHvmux
-	K0dDfKwMKxfo8UqoEQp/3qA3wYlqkG/MilGQ3ZHQRel03LQ33NXSxYm05QVDChFl
-	4BIFKw==
+	QY3+4yFvEuS+q43fMZ7qPJn6kolc7ne5LyE/5i7vFNg=; b=rCzgGH3rbhpPvAeM
+	9Ky4rLWql2K5YYqtqu0JoZnQ8Rp5U1twv1av2IW4gRe4aGrzq+A1J0TqkTDgGCNW
+	umYdVobhgxSd62yPzlKUl9xMsZYFU+ZXB+p2zXsc5MBHzECyXKrmLAcDLLB0SJt/
+	sDfABUmsndpwo+8GDfNuKr2GMkmAADPx6dAPR8TK8gzQE0x/d4y1WwgtOwkKWa5L
+	/3JZCYvlVUy+CaCLqGMuxfBrHNpfWVGwJmWkaV425Wyy8etn0PG0HbBRRPmzFmZE
+	MG6hvb0jq//hbFgeGTYBmjhVyh1c6RZeeWm87wPxtmpZVfVmSMrVLcVEyNZ7jWzG
+	64867Q==
 Received: from beta.dmz-ap.st.com (beta.dmz-ap.st.com [138.198.100.35])
-	by mx07-00178001.pphosted.com (PPS) with ESMTPS id 429qybdjc0-1
+	by mx07-00178001.pphosted.com (PPS) with ESMTPS id 42842jfv5t-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
 	Wed, 16 Oct 2024 14:42:52 +0200 (MEST)
 Received: from euls16034.sgp.st.com (euls16034.sgp.st.com [10.75.44.20])
-	by beta.dmz-ap.st.com (STMicroelectronics) with ESMTP id 36BCF4004C;
-	Wed, 16 Oct 2024 14:41:23 +0200 (CEST)
+	by beta.dmz-ap.st.com (STMicroelectronics) with ESMTP id 690A44004F;
+	Wed, 16 Oct 2024 14:41:28 +0200 (CEST)
 Received: from Webmail-eu.st.com (shfdag1node3.st.com [10.75.129.71])
-	by euls16034.sgp.st.com (STMicroelectronics) with ESMTP id F1429239965;
-	Wed, 16 Oct 2024 14:40:20 +0200 (CEST)
+	by euls16034.sgp.st.com (STMicroelectronics) with ESMTP id 4BC5323D403;
+	Wed, 16 Oct 2024 14:40:27 +0200 (CEST)
 Received: from localhost (10.252.17.239) by SHFDAG1NODE3.st.com (10.75.129.71)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.37; Wed, 16 Oct
- 2024 14:40:20 +0200
+ 2024 14:40:27 +0200
 From: Amelie Delaunay <amelie.delaunay@foss.st.com>
-Date: Wed, 16 Oct 2024 14:39:53 +0200
-Subject: [PATCH v3 1/9] dt-bindings: dma: stm32-dma3: prevent
- packing/unpacking mode
+Date: Wed, 16 Oct 2024 14:40:01 +0200
+Subject: [PATCH v3 9/9] arm64: dts: st: add DMA support on SPI instances of
+ stm32mp25
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -55,7 +55,7 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-ID: <20241016-dma3-mp25-updates-v3-1-8311fe6f228d@foss.st.com>
+Message-ID: <20241016-dma3-mp25-updates-v3-9-8311fe6f228d@foss.st.com>
 References: <20241016-dma3-mp25-updates-v3-0-8311fe6f228d@foss.st.com>
 In-Reply-To: <20241016-dma3-mp25-updates-v3-0-8311fe6f228d@foss.st.com>
 To: Vinod Koul <vkoul@kernel.org>, Rob Herring <robh@kernel.org>,
@@ -77,42 +77,98 @@ X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
 
-When source data width/burst and destination data width/burst are
-different, data are packed or unpacked in DMA3 channel FIFO.
-Data are pushed out from DMA3 channel FIFO when the destination burst
-length (= data width * burst) is reached.
-If the channel is stopped before the transfer end, and if some bytes are
-packed/unpacked in the DMA3 channel FIFO, these bytes are lost.
-Indeed, DMA3 channel FIFO has no flush capability, only reset.
-To avoid potential bytes lost, pack/unpack must be prevented by setting
-memory data width/burst equal to peripheral data width/burst.
-Memory accesses will be penalized. But it is the only way to avoid bytes
-lost.
+Add dmas and dma-names properties in spi nodes of stm32mp251.dtsi to
+enable DMA support.
 
-Some devices (e.g. cyclic RX like UART) need this, so add the possibility
-to prevent pack/unpack feature, by setting bit 16 of the 'DMA transfer
-requirements' bit mask.
-
-Acked-by: Rob Herring (Arm) <robh@kernel.org>
 Signed-off-by: Amelie Delaunay <amelie.delaunay@foss.st.com>
 ---
- Documentation/devicetree/bindings/dma/stm32/st,stm32-dma3.yaml | 3 +++
- 1 file changed, 3 insertions(+)
+ arch/arm64/boot/dts/st/stm32mp251.dtsi | 24 ++++++++++++++++++++++++
+ 1 file changed, 24 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/dma/stm32/st,stm32-dma3.yaml b/Documentation/devicetree/bindings/dma/stm32/st,stm32-dma3.yaml
-index 7fdc44b2e6467928622a5bb25d9e0c74bb1790ae..5484848735f8ac3d2050104bbab1d986e82ba6a7 100644
---- a/Documentation/devicetree/bindings/dma/stm32/st,stm32-dma3.yaml
-+++ b/Documentation/devicetree/bindings/dma/stm32/st,stm32-dma3.yaml
-@@ -96,6 +96,9 @@ properties:
-                including the update of the LLI if any
-           0x3: at channel level, the transfer complete event is generated at the
-                end of the last LLI
-+        -bit 16: Prevent packing/unpacking mode
-+          0x0: pack/unpack enabled when source data width/burst != destination data width/burst
-+          0x1: memory data width/burst forced to peripheral data width/burst to prevent pack/unpack
- 
- required:
-   - compatible
+diff --git a/arch/arm64/boot/dts/st/stm32mp251.dtsi b/arch/arm64/boot/dts/st/stm32mp251.dtsi
+index e166e2f1f1400faf7fb56ed07c5779c26cf80cdd..ed1d778ab441be3ebf2e53dea9fef484d41ab31a 100644
+--- a/arch/arm64/boot/dts/st/stm32mp251.dtsi
++++ b/arch/arm64/boot/dts/st/stm32mp251.dtsi
+@@ -245,6 +245,9 @@ spi2: spi@400b0000 {
+ 				interrupts = <GIC_SPI 113 IRQ_TYPE_LEVEL_HIGH>;
+ 				clocks = <&rcc CK_KER_SPI2>;
+ 				resets = <&rcc SPI2_R>;
++				dmas = <&hpdma 51 0x20 0x3012>,
++				       <&hpdma 52 0x20 0x3021>;
++				dma-names = "rx", "tx";
+ 				access-controllers = <&rifsc 23>;
+ 				status = "disabled";
+ 			};
+@@ -257,6 +260,9 @@ spi3: spi@400c0000 {
+ 				interrupts = <GIC_SPI 125 IRQ_TYPE_LEVEL_HIGH>;
+ 				clocks = <&rcc CK_KER_SPI3>;
+ 				resets = <&rcc SPI3_R>;
++				dmas = <&hpdma 53 0x20 0x3012>,
++				       <&hpdma 54 0x20 0x3021>;
++				dma-names = "rx", "tx";
+ 				access-controllers = <&rifsc 24>;
+ 				status = "disabled";
+ 			};
+@@ -441,6 +447,9 @@ spi1: spi@40230000 {
+ 				interrupts = <GIC_SPI 112 IRQ_TYPE_LEVEL_HIGH>;
+ 				clocks = <&rcc CK_KER_SPI1>;
+ 				resets = <&rcc SPI1_R>;
++				dmas = <&hpdma 49 0x20 0x3012>,
++				       <&hpdma 50 0x20 0x3021>;
++				dma-names = "rx", "tx";
+ 				access-controllers = <&rifsc 22>;
+ 				status = "disabled";
+ 			};
+@@ -453,6 +462,9 @@ spi4: spi@40240000 {
+ 				interrupts = <GIC_SPI 152 IRQ_TYPE_LEVEL_HIGH>;
+ 				clocks = <&rcc CK_KER_SPI4>;
+ 				resets = <&rcc SPI4_R>;
++				dmas = <&hpdma 55 0x20 0x3012>,
++				       <&hpdma 56 0x20 0x3021>;
++				dma-names = "rx", "tx";
+ 				access-controllers = <&rifsc 25>;
+ 				status = "disabled";
+ 			};
+@@ -465,6 +477,9 @@ spi5: spi@40280000 {
+ 				interrupts = <GIC_SPI 153 IRQ_TYPE_LEVEL_HIGH>;
+ 				clocks = <&rcc CK_KER_SPI5>;
+ 				resets = <&rcc SPI5_R>;
++				dmas = <&hpdma 57 0x20 0x3012>,
++				       <&hpdma 58 0x20 0x3021>;
++				dma-names = "rx", "tx";
+ 				access-controllers = <&rifsc 26>;
+ 				status = "disabled";
+ 			};
+@@ -501,6 +516,9 @@ spi6: spi@40350000 {
+ 				interrupts = <GIC_SPI 154 IRQ_TYPE_LEVEL_HIGH>;
+ 				clocks = <&rcc CK_KER_SPI6>;
+ 				resets = <&rcc SPI6_R>;
++				dmas = <&hpdma 59 0x20 0x3012>,
++				       <&hpdma 60 0x20 0x3021>;
++				dma-names = "rx", "tx";
+ 				access-controllers = <&rifsc 27>;
+ 				status = "disabled";
+ 			};
+@@ -513,6 +531,9 @@ spi7: spi@40360000 {
+ 				interrupts = <GIC_SPI 155 IRQ_TYPE_LEVEL_HIGH>;
+ 				clocks = <&rcc CK_KER_SPI7>;
+ 				resets = <&rcc SPI7_R>;
++				dmas = <&hpdma 61 0x20 0x3012>,
++				       <&hpdma 62 0x20 0x3021>;
++				dma-names = "rx", "tx";
+ 				access-controllers = <&rifsc 28>;
+ 				status = "disabled";
+ 			};
+@@ -549,6 +570,9 @@ spi8: spi@46020000 {
+ 				interrupts = <GIC_SPI 156 IRQ_TYPE_LEVEL_HIGH>;
+ 				clocks = <&rcc CK_KER_SPI8>;
+ 				resets = <&rcc SPI8_R>;
++				dmas = <&hpdma 171 0x20 0x3012>,
++				       <&hpdma 172 0x20 0x3021>;
++				dma-names = "rx", "tx";
+ 				access-controllers = <&rifsc 29>;
+ 				status = "disabled";
+ 			};
 
 -- 
 2.25.1
