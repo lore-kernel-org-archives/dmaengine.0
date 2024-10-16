@@ -1,201 +1,117 @@
-Received: from mx07-00178001.pphosted.com (mx08-00178001.pphosted.com [91.207.212.93])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 113D620C03D;
-	Wed, 16 Oct 2024 12:43:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.207.212.93
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48F4520C039;
+	Wed, 16 Oct 2024 14:35:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729082599; cv=none; b=OdOovaaH6avIZHTAiBOmcntquAHO5I86RBnDnkLnxNj07n7xPjDgf3P3oxRjFiwC2Cu30llircpjtmeh4SCVkcbvxkS3slKyvVvY6PVfKHiUaAFXHALFysbBbi46i13q5gD21KuymynnAh+9ak8QrcSm8WecVv7b8xaG/zyas2c=
+	t=1729089355; cv=none; b=HGDwKf507ahMIdCEET55Oo+ofu9rzbrirdfwo1KfBE0zOcMRd98etbhV4QkKzSBFRFq9gTEHqWAPLG+F96YqalJXPQYOOYcI17mIpJJaSix4TR2EhsyL5BRx9DUPxoy8qxgFN8WoBezD8AwVswVbb5dBrmkQOLhTNcJjFpewy3o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729082599; c=relaxed/simple;
-	bh=r3jPO17KChr01yagm5lhIXwjnINK7ogTlXKwCpA6Wz0=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:References:
-	 In-Reply-To:To:CC; b=AdrgzO+PX76+KVkd3RL6tJgr3eVowHRSZ/WSwzBPGCXepxolhzKBiOQ/pNCQ5k0bBvsk8EN8V8AiN3gMX3Ofcf4E7HU2F1ishQOuGVzAkhZA5Yn6wXtPFvEyc9KcL03KUsPxUb1e4vZdH+ZONPDDv3GgBIk/b2Km3uwfzzI+upU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=foss.st.com; spf=pass smtp.mailfrom=foss.st.com; dkim=pass (2048-bit key) header.d=foss.st.com header.i=@foss.st.com header.b=0f0nPWyq; arc=none smtp.client-ip=91.207.212.93
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=foss.st.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=foss.st.com
+	s=arc-20240116; t=1729089355; c=relaxed/simple;
+	bh=NXK/fPhGl4mqtfjEA+PZpwSNsIwN2iaBtslPz058mG4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=jP8Hlr8GdAMTVVSg/C/DhFKM70Yw7zxl6Y9AorDO0E32W/ngGylxiNg6FJdBYVUABW5W1fP8XoJQnVv5yF0geB16nJtuPrSf9LQ45PgP8DRSLOOQGQ4+9ppPsQyWojvafFlqDNp5k1fINqdQX91EcdtNR+6LaU5AzgRddzU9Oas=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=doT98/NT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=foss.st.com header.i=@foss.st.com header.b="0f0nPWyq"
-Received: from pps.filterd (m0046660.ppops.net [127.0.0.1])
-	by mx07-00178001.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49G8U5QK011399;
-	Wed, 16 Oct 2024 14:43:07 +0200
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foss.st.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=selector1; bh=
-	KFc5UtMsTxPLpZ5ZNu4v4Ik5v+Rez2xhUaWk/edfOo0=; b=0f0nPWyqcu1jUB6B
-	zeg0yvt51kybMVVKiTe2to/fVM2YA2OI16jIlQS6QTtIJGdAQNaH4nXoP6uHxYh0
-	LyTHEwRCMuLlvE1tZceh61irIG47BLdS+WCoz1+2FpenHQZUcxaYPnpdxGK3CxaC
-	DYGeupxclJ5d1iLnFSpZCyYIhvl0LRI1iacsS0F5feQ+vHAqtSFWEoAFOs0Hqy+j
-	qMaaFfs32pbHYMXo3rY0aoUtyJ/nFh5X1DZdqTTA+scOHUzNqxuwqaDOnJIw5/LW
-	0AIWfpj2ENrH6k8IRkPE6DSu0rP14nDeoYHtQiaaIIcFNw185Iwbi3pQeEgNhg3H
-	ytP6Kw==
-Received: from beta.dmz-ap.st.com (beta.dmz-ap.st.com [138.198.100.35])
-	by mx07-00178001.pphosted.com (PPS) with ESMTPS id 429qybdjcq-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 16 Oct 2024 14:43:07 +0200 (MEST)
-Received: from euls16034.sgp.st.com (euls16034.sgp.st.com [10.75.44.20])
-	by beta.dmz-ap.st.com (STMicroelectronics) with ESMTP id C2FAD4004D;
-	Wed, 16 Oct 2024 14:41:25 +0200 (CEST)
-Received: from Webmail-eu.st.com (shfdag1node3.st.com [10.75.129.71])
-	by euls16034.sgp.st.com (STMicroelectronics) with ESMTP id B282723CEB3;
-	Wed, 16 Oct 2024 14:40:25 +0200 (CEST)
-Received: from localhost (10.252.17.239) by SHFDAG1NODE3.st.com (10.75.129.71)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.37; Wed, 16 Oct
- 2024 14:40:25 +0200
-From: Amelie Delaunay <amelie.delaunay@foss.st.com>
-Date: Wed, 16 Oct 2024 14:39:59 +0200
-Subject: [PATCH v3 7/9] arm64: dts: st: add DMA support on U(S)ART
- instances of stm32mp25
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="doT98/NT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50854C4CEC5;
+	Wed, 16 Oct 2024 14:35:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1729089354;
+	bh=NXK/fPhGl4mqtfjEA+PZpwSNsIwN2iaBtslPz058mG4=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=doT98/NT4FM40wYqR+SAm4CK3i00eE0ELNQ2AAFfLrDWK15sN8WmePaZVqR1S8G+j
+	 f/wMm2JKvoAX1cNiI0SVJyVRDEw9N7C4ZyZR3sXHYxmFbcZZoZZ4ggESnvaMDP3m+n
+	 aZs3c/6MfoMmv7cY/AhJ6GBa9B7VFynlW2FBe5HdJU2Y509EyQ7TFYzSX1BBiyVDMd
+	 yIPUARKazo11AoVwVfGg5nfeOtRqbU/UM+3t9IoqUcg9J1ywBE7XTXz+/bA5f61Koj
+	 psv6t/QnwXD4pMnPISVPDLyxbHEIaAVEYqLekUPdyyTejmdHulsiUBlHGGI5tskbEs
+	 ddma1Se1F5KQg==
+Date: Wed, 16 Oct 2024 09:35:59 -0500
+From: Bjorn Andersson <andersson@kernel.org>
+To: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: Jyothi Kumar Seerapu <quic_jseerapu@quicinc.com>, 
+	Vinod Koul <vkoul@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Andi Shyti <andi.shyti@kernel.org>, 
+	Sumit Semwal <sumit.semwal@linaro.org>, Christian =?utf-8?B?S8O2bmln?= <christian.koenig@amd.com>, 
+	cros-qcom-dts-watchers@chromium.org, linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, linux-i2c@vger.kernel.org, 
+	linux-media@vger.kernel.org, dri-devel@lists.freedesktop.org, linaro-mm-sig@lists.linaro.org, 
+	quic_msavaliy@quicinc.com, quic_vtanuku@quicinc.com
+Subject: Re: [PATCH v1 2/5] arm64: dts: qcom: Add support for configuring
+ channel TRE size
+Message-ID: <7e7ksit5ptjrcnct66v75mbxuabnzzloungockdal2dl2y6nn5@ge4mrsjmd746>
+References: <20241015120750.21217-1-quic_jseerapu@quicinc.com>
+ <20241015120750.21217-3-quic_jseerapu@quicinc.com>
+ <78a1c5c8-53c8-4144-b311-c34b155ca27c@kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-ID: <20241016-dma3-mp25-updates-v3-7-8311fe6f228d@foss.st.com>
-References: <20241016-dma3-mp25-updates-v3-0-8311fe6f228d@foss.st.com>
-In-Reply-To: <20241016-dma3-mp25-updates-v3-0-8311fe6f228d@foss.st.com>
-To: Vinod Koul <vkoul@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof
- Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Maxime
- Coquelin <mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue
-	<alexandre.torgue@foss.st.com>
-CC: <dmaengine@vger.kernel.org>, <linux-stm32@st-md-mailman.stormreply.com>,
-        <devicetree@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>,
-        Amelie Delaunay <amelie.delaunay@foss.st.com>
-X-Mailer: b4 0.14.2
-X-ClientProxiedBy: EQNCAS1NODE4.st.com (10.75.129.82) To SHFDAG1NODE3.st.com
- (10.75.129.71)
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <78a1c5c8-53c8-4144-b311-c34b155ca27c@kernel.org>
 
-Add dmas and dma-names properties in u(s)art nodes of stm32mp251.dtsi to
-enable DMA support.
-RX channel requires to prevent pack/unpack feature of DMA to avoid losing
-bytes when interrupting RX transfer, as it uses a cyclic buffer.
+On Tue, Oct 15, 2024 at 03:33:00PM GMT, Krzysztof Kozlowski wrote:
+> On 15/10/2024 14:07, Jyothi Kumar Seerapu wrote:
+> > When high performance with multiple i2c messages in a single transfer
+> > is required, employ Block Event Interrupt (BEI) to trigger interrupts
+> > after specific messages transfer and the last message transfer,
+> > thereby reducing interrupts.
+> > For each i2c message transfer, a series of Transfer Request Elements(TREs)
+> > must be programmed, including config tre for frequency configuration,
+> > go tre for holding i2c address and dma tre for holding dma buffer address,
+> > length as per the hardware programming guide. For transfer using BEI,
+> > multiple I2C messages may necessitate the preparation of config, go,
+> > and tx DMA TREs. However, a channel TRE size of 64 is often insufficient,
+> > potentially leading to failures due to inadequate memory space.
+> > 
+> > Adjust the channel TRE size through the device tree.
+> > The default size is 64, but clients can modify this value based on
+> > their heigher channel TRE size requirements.
+> > 
+> > Signed-off-by: Jyothi Kumar Seerapu <quic_jseerapu@quicinc.com>
+> > ---
+> >  arch/arm64/boot/dts/qcom/sc7280.dtsi | 132 +++++++++++++--------------
+> >  1 file changed, 66 insertions(+), 66 deletions(-)
+> > 
+> > diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> > index 3d8410683402..c7c0e15ff9d3 100644
+> > --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> > +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> > @@ -1064,7 +1064,7 @@
+> >  		};
+> >  
+> >  		gpi_dma0: dma-controller@900000 {
+> > -			#dma-cells = <3>;
+> > +			#dma-cells = <4>;
+> >  			compatible = "qcom,sc7280-gpi-dma", "qcom,sm6350-gpi-dma";
+> >  			reg = <0 0x00900000 0 0x60000>;
+> >  			interrupts = <GIC_SPI 244 IRQ_TYPE_LEVEL_HIGH>,
+> > @@ -1114,8 +1114,8 @@
+> >  							"qup-memory";
+> >  				power-domains = <&rpmhpd SC7280_CX>;
+> >  				required-opps = <&rpmhpd_opp_low_svs>;
+> > -				dmas = <&gpi_dma0 0 0 QCOM_GPI_I2C>,
+> > -				       <&gpi_dma0 1 0 QCOM_GPI_I2C>;
+> > +				dmas = <&gpi_dma0 0 0 QCOM_GPI_I2C 64>,
+> > +				       <&gpi_dma0 1 0 QCOM_GPI_I2C 64>;
+> 
+> So everywhere is 64, thus this is fixed. Deduce it from the compatible
+> 
 
-Signed-off-by: Amelie Delaunay <amelie.delaunay@foss.st.com>
----
- arch/arm64/boot/dts/st/stm32mp251.dtsi     | 27 +++++++++++++++++++++++++++
- arch/arm64/boot/dts/st/stm32mp257f-ev1.dts |  2 ++
- 2 files changed, 29 insertions(+)
+If I understand correctly, it's a software tunable property, used to
+balance how many TRE elements that should be preallocated.
 
-diff --git a/arch/arm64/boot/dts/st/stm32mp251.dtsi b/arch/arm64/boot/dts/st/stm32mp251.dtsi
-index 1167cf63d7e87aaa15c5c1ed70a9f6511fd818d4..9035fc7ba4857ca98a1a86246d7d0250196b2a13 100644
---- a/arch/arm64/boot/dts/st/stm32mp251.dtsi
-+++ b/arch/arm64/boot/dts/st/stm32mp251.dtsi
-@@ -266,6 +266,9 @@ usart2: serial@400e0000 {
- 				reg = <0x400e0000 0x400>;
- 				interrupts = <GIC_SPI 115 IRQ_TYPE_LEVEL_HIGH>;
- 				clocks = <&rcc CK_KER_USART2>;
-+				dmas = <&hpdma 11 0x20 0x10012>,
-+				       <&hpdma 12 0x20 0x3021>;
-+				dma-names = "rx", "tx";
- 				access-controllers = <&rifsc 32>;
- 				status = "disabled";
- 			};
-@@ -275,6 +278,9 @@ usart3: serial@400f0000 {
- 				reg = <0x400f0000 0x400>;
- 				interrupts = <GIC_SPI 116 IRQ_TYPE_LEVEL_HIGH>;
- 				clocks = <&rcc CK_KER_USART3>;
-+				dmas = <&hpdma 13 0x20 0x10012>,
-+				       <&hpdma 14 0x20 0x3021>;
-+				dma-names = "rx", "tx";
- 				access-controllers = <&rifsc 33>;
- 				status = "disabled";
- 			};
-@@ -284,6 +290,9 @@ uart4: serial@40100000 {
- 				reg = <0x40100000 0x400>;
- 				interrupts = <GIC_SPI 126 IRQ_TYPE_LEVEL_HIGH>;
- 				clocks = <&rcc CK_KER_UART4>;
-+				dmas = <&hpdma 15 0x20 0x10012>,
-+				       <&hpdma 16 0x20 0x3021>;
-+				dma-names = "rx", "tx";
- 				access-controllers = <&rifsc 34>;
- 				status = "disabled";
- 			};
-@@ -293,6 +302,9 @@ uart5: serial@40110000 {
- 				reg = <0x40110000 0x400>;
- 				interrupts = <GIC_SPI 127 IRQ_TYPE_LEVEL_HIGH>;
- 				clocks = <&rcc CK_KER_UART5>;
-+				dmas = <&hpdma 17 0x20 0x10012>,
-+				       <&hpdma 18 0x20 0x3021>;
-+				dma-names = "rx", "tx";
- 				access-controllers = <&rifsc 35>;
- 				status = "disabled";
- 			};
-@@ -393,6 +405,9 @@ usart6: serial@40220000 {
- 				reg = <0x40220000 0x400>;
- 				interrupts = <GIC_SPI 136 IRQ_TYPE_LEVEL_HIGH>;
- 				clocks = <&rcc CK_KER_USART6>;
-+				dmas = <&hpdma 19 0x20 0x10012>,
-+				       <&hpdma 20 0x20 0x3021>;
-+				dma-names = "rx", "tx";
- 				access-controllers = <&rifsc 36>;
- 				status = "disabled";
- 			};
-@@ -438,6 +453,9 @@ uart9: serial@402c0000 {
- 				reg = <0x402c0000 0x400>;
- 				interrupts = <GIC_SPI 150 IRQ_TYPE_LEVEL_HIGH>;
- 				clocks = <&rcc CK_KER_UART9>;
-+				dmas = <&hpdma 25 0x20 0x10012>,
-+				       <&hpdma 26 0x20 0x3021>;
-+				dma-names = "rx", "tx";
- 				access-controllers = <&rifsc 39>;
- 				status = "disabled";
- 			};
-@@ -447,6 +465,9 @@ usart1: serial@40330000 {
- 				reg = <0x40330000 0x400>;
- 				interrupts = <GIC_SPI 114 IRQ_TYPE_LEVEL_HIGH>;
- 				clocks = <&rcc CK_KER_USART1>;
-+				dmas = <&hpdma 9 0x20 0x10012>,
-+				       <&hpdma 10 0x20 0x3021>;
-+				dma-names = "rx", "tx";
- 				access-controllers = <&rifsc 31>;
- 				status = "disabled";
- 			};
-@@ -480,6 +501,9 @@ uart7: serial@40370000 {
- 				reg = <0x40370000 0x400>;
- 				interrupts = <GIC_SPI 148 IRQ_TYPE_LEVEL_HIGH>;
- 				clocks = <&rcc CK_KER_UART7>;
-+				dmas = <&hpdma 21 0x20 0x10012>,
-+				       <&hpdma 22 0x20 0x3021>;
-+				dma-names = "rx", "tx";
- 				access-controllers = <&rifsc 37>;
- 				status = "disabled";
- 			};
-@@ -489,6 +513,9 @@ uart8: serial@40380000 {
- 				reg = <0x40380000 0x400>;
- 				interrupts = <GIC_SPI 149 IRQ_TYPE_LEVEL_HIGH>;
- 				clocks = <&rcc CK_KER_UART8>;
-+				dmas = <&hpdma 23 0x20 0x10012>,
-+				       <&hpdma 24 0x20 0x3021>;
-+				dma-names = "rx", "tx";
- 				access-controllers = <&rifsc 38>;
- 				status = "disabled";
- 			};
-diff --git a/arch/arm64/boot/dts/st/stm32mp257f-ev1.dts b/arch/arm64/boot/dts/st/stm32mp257f-ev1.dts
-index 214191a8322b81e7ae453503863b4465d9b625e0..d468dcbe849680de812a0ddd593f30cbf507f645 100644
---- a/arch/arm64/boot/dts/st/stm32mp257f-ev1.dts
-+++ b/arch/arm64/boot/dts/st/stm32mp257f-ev1.dts
-@@ -157,6 +157,8 @@ &usart2 {
- 	pinctrl-0 = <&usart2_pins_a>;
- 	pinctrl-1 = <&usart2_idle_pins_a>;
- 	pinctrl-2 = <&usart2_sleep_pins_a>;
-+	/delete-property/dmas;
-+	/delete-property/dma-names;
- 	status = "okay";
- };
- 
+If so, it would not be a property of the hardware/compatible, but rather
+a result of profiling and a balance between memory "waste" and
+performance.
 
--- 
-2.25.1
+Regards,
+Bjorn
 
+> Best regards,
+> Krzysztof
+> 
