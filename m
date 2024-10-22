@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF99C13664E;
-	Tue, 22 Oct 2024 05:32:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0E9A13F42F;
+	Tue, 22 Oct 2024 05:32:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729575164; cv=none; b=kz0vX91sF5EGNZPbMUr6Up+RL6/W9mrSxo2cq3iNzVOF7q//16XrpgGDPmju8N3BOj/sRr5rOp0yHfhsAhofztgeLNX8USwyavbGlK3483S0ctmlv2h4w2hhN9CBMOiaBdznEvYTF+OtqkQPxAMxo44IpThpjMU98hOT2q9XwEk=
+	t=1729575175; cv=none; b=GNA1fNBVWPN6Ki3GICQA6w9xr3Fycg88DMCICyAXapU+q/Xt7Do7mh+YjJsiROAJ8nOOYLvHu3UwZ8Bt0B3FnwszwCKUFhIqwV0qRznteJxlReTJpLZYQmfDksAbzUD1/ski6ObFHAraObz5PvPxp/Djgzw7uhwYyrctzkscmMU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729575164; c=relaxed/simple;
-	bh=LQmRQVLyBjyaDESGZpvscgdg5HdPKWGlhEVGHcB4LkI=;
+	s=arc-20240116; t=1729575175; c=relaxed/simple;
+	bh=eh5c4h3CkGCO/mZQgkwvM/qIDAYGPN9tRfVaEHgegAs=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=jiAykHHxzLKHDEppVIEX7H2pYaLJwNi1MwhmDgB+FcP2Ua7NZH4Wk0P+ku9iJPpVYPGpqAbxovKdyLtvegXslOPRPCCkf11T0sga+5sHz3AZKHrMId9mboK04w0w+ZlupkBFAvJL+rsqvV50X1y7AYh2jN33bprg9JBp1MLSJsQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=S6OfitfW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=NIOuhdacbS7n9HrAwtgZAgsZAnAR8VK+ABvbvKA1rIZPKW3clOwPxzx3Wsupy2Ze75OGQ59c1wmYx75eFPrT1Jez2NoRrF7svBxAhAAKh1pfTek8gUjW+HB9XDoAKqWfFcZaCkM7UFOFTgOB7Fz5Y30jWNuS5i7DfD/7BkjgGKw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SsIsfUVB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="S6OfitfW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0C3CC4CEC3;
-	Tue, 22 Oct 2024 05:32:42 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SsIsfUVB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E074C4CEC3;
+	Tue, 22 Oct 2024 05:32:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1729575164;
-	bh=LQmRQVLyBjyaDESGZpvscgdg5HdPKWGlhEVGHcB4LkI=;
+	s=k20201202; t=1729575175;
+	bh=eh5c4h3CkGCO/mZQgkwvM/qIDAYGPN9tRfVaEHgegAs=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=S6OfitfWTAZbLDu9ZZgCsfsmPBCC6s3faq018SpS9cKC0j11FEhF7GkcKz+tvv6ic
-	 Hz/oCnEYijb7eKO2QDrHp5uZjnjU6VtblyjmEFF0PoBZNgs/xiQhtyoGDpmRRL9vX2
-	 ZwRRdI69U7V+nE6CxidNFLw7+/ySvvcBju1AxCa65csdfyhDjBTo0HdMUZtDvwlh6i
-	 aFKOlvVCSY+BniIZwV/AH1Q0L7nhN3zx9ufs319K08+SY9MLzvx/s/RZe24KeGxldS
-	 lxcv6p1FP0UV3XsgjfYd+HWnNFGURWjYBPX4DeRLrs1ZDxF9MicBsv29XnWoiVNKsG
-	 B1OBtKHSno43Q==
+	b=SsIsfUVB+2l3Nx+c5HhekukYSvbFt9KNQKkmpjgIisTuWv8fIZMtuLUVhWwYgX/0z
+	 cFdK6lO17/JXUnO3gCEU/tBnP6zIvkM4vtM9Axpx9EbjYm6TTh6D0nIczLxpjwjq9R
+	 5mKh1EKIkTCaY9InQnTBJGeqEU/jqMfil4VR5cYAfmyIlsY7Q3nXiXxhhfpgX8UEJc
+	 7lrdeL25eo7cLo3YNCwR5mkY6eMmWpwUdd94RoxLloPDnM7pPGSs2nAatJVr13Xnad
+	 EIR/b9DXI3gz+lxC22/j5MJT5LY7NknUemeQnDR5SeFuGg1+byIPaa0VYGzc0a7Lw+
+	 GMIeoIbUZb4TA==
 From: Vinod Koul <vkoul@kernel.org>
-To: Peter Ujfalusi <peter.ujfalusi@gmail.com>, 
- Mikhail Arkhipov <m.arhipov@rosa.ru>
-Cc: dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org, 
- lvc-project@linuxtesting.org
-In-Reply-To: <20240923193703.36645-1-m.arhipov@rosa.ru>
-References: <20240923193703.36645-1-m.arhipov@rosa.ru>
-Subject: Re: [PATCH] dmaengine: ti: edma: Check return value of
- of_dma_controller_register
-Message-Id: <172957516287.489012.10792417455228330513.b4-ty@kernel.org>
-Date: Tue, 22 Oct 2024 11:02:42 +0530
+To: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, 
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+In-Reply-To: <20241017-sar2130p-dma-v1-1-e6aa6789f116@linaro.org>
+References: <20241017-sar2130p-dma-v1-1-e6aa6789f116@linaro.org>
+Subject: Re: [PATCH] dt-bindings: dma: qcom,gpi: Add SAR2130P compatible
+Message-Id: <172957517301.489113.3658561077139339207.b4-ty@kernel.org>
+Date: Tue, 22 Oct 2024 11:02:53 +0530
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -48,21 +48,15 @@ Content-Transfer-Encoding: 7bit
 X-Mailer: b4 0.14.2
 
 
-On Mon, 23 Sep 2024 22:37:03 +0300, Mikhail Arkhipov wrote:
-> If of_dma_controller_register() fails within the edma_probe() function,
-> the driver does not check the return value or log the failure. This
-> oversight can cause other drivers that rely on this DMA controller to fail
-> during their probe phase. Specifically, when other drivers call
-> of_dma_request_slave_channel(), they may receive an error code
-> -EPROBE_DEFER, causing their initialization to be delayed or fail without
-> clear logging of the root cause.
+On Thu, 17 Oct 2024 21:11:49 +0300, Dmitry Baryshkov wrote:
+> Document compatible for GPI DMA controller on SAR2130P platform.
 > 
-> [...]
+> 
 
 Applied, thanks!
 
-[1/1] dmaengine: ti: edma: Check return value of of_dma_controller_register
-      commit: 83158a3a712ad6ebdebd470d25af04c66c4e2223
+[1/1] dt-bindings: dma: qcom,gpi: Add SAR2130P compatible
+      commit: e7a614cc8847f469370ea29604be966ee16f07e9
 
 Best regards,
 -- 
