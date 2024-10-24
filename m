@@ -1,86 +1,146 @@
-Received: from mail-oi1-f172.google.com (mail-oi1-f172.google.com [209.85.167.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fw2.prolan.hu (fw2.prolan.hu [193.68.50.107])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B464F16D9B8;
-	Thu, 24 Oct 2024 04:42:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CBC7175D50;
+	Thu, 24 Oct 2024 06:50:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.68.50.107
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729744929; cv=none; b=Kb5PVQQ5Hvc1m3+uBmCnG79KYnjpHAHYwxyo1jo/Hjlpwi9dW9jMJbOApFSyb8OLSxa7IU5mZgbxu6/MOw4i/GDCY7DngflV/DuoKt5xAan3p+RMaETiG4D5VqOmg1mqtWglGG7GFDSiE2nzTU5ieAONw1EEF8jfLd17qaCgEf4=
+	t=1729752662; cv=none; b=Kq1EGevZemEf70ceGglzyleAnL6lYciGvX5miKkHO8UM3EQeYo46qcvPqI1RhooEU4byAFcKoLtbww/yLjoCDH01D0HHuDC3dyNmp0TJQ2mSC3GiIMg46r4EbSKTJ9T7zUcEk1bC6L/GUWFjdOo9r21gqumVHXp/buLtiCnTjMw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729744929; c=relaxed/simple;
-	bh=/E05jT6POpOqZDCpwe8J4QUwk/2Ud1uqQgjbaLBTXt0=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=qe7SXfWJeqMkBqkBNX+jZ04P6GKiGbO2ltLOqohlDiQmUKkTsHZ74cgn8yzHBqtC+6DJGH4YeGaS7QKAA4J43B9KWvjg5TmwweKNB7l6wzbHEii9kDGkE4SvfTZMXZVL7ZEMFE4+ZKo88KH/StUCnNXQKspQU+uC+lrJda7k0Mg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iYwBDNZC; arc=none smtp.client-ip=209.85.167.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1729752662; c=relaxed/simple;
+	bh=OfqqZUFbF5ur/gCAQtvYoTBdw4wYk5M2eXPxex2njbk=;
+	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=rbD8h8ujm8scB9HiLrNtRWC4zyhVWXvmX59l/lXa4z69ZQO/jiJSaAUa2Gqn2HYBE3iy0QzY64GNcOrKZka4CFAokrCzGWjfP1au9Nhbu8vQdXvmFlp3dI6aLvqtbfFzcRVPjGX2RRM1FXXamGMeGAafaYbh84iaPKMIEIPzllM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=prolan.hu; spf=pass smtp.mailfrom=prolan.hu; dkim=pass (4096-bit key) header.d=prolan.hu header.i=@prolan.hu header.b=Bl5t6sXl; arc=none smtp.client-ip=193.68.50.107
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=prolan.hu
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=prolan.hu
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iYwBDNZC"
-Received: by mail-oi1-f172.google.com with SMTP id 5614622812f47-3e5f6e44727so379622b6e.0;
-        Wed, 23 Oct 2024 21:42:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1729744927; x=1730349727; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=/E05jT6POpOqZDCpwe8J4QUwk/2Ud1uqQgjbaLBTXt0=;
-        b=iYwBDNZCE4PIvv2GzhNkgR0nhcJHXEMmQ/4Es1RoDp6eS9i9Sy60W5PZP8GRnBmEQ6
-         eCCmoVkahEHUNX0q757rmHgTCnBb3OiP48oSMYxH3hwxOOK8iHWG7fky8fMtk2p52LAK
-         aw2egkSYqXKUmnhsQlR5oP1ciT0QSZoe8Ua0LsHzURqcMsZwTOOtJnywIDnho84lV0nc
-         x0OIyT0adoIeK9mJpEx9aiz7EWL42XeLz8mkexAKqjIkRHwUY9S6ZZuln1XBv6bFcmle
-         aG+CFNtIdNk++42zFJOY9Gi++ALFS9125ln/LhKvlC44e/jbe+smGXwgx2AVgiUGl++B
-         H6iw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729744927; x=1730349727;
-        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=/E05jT6POpOqZDCpwe8J4QUwk/2Ud1uqQgjbaLBTXt0=;
-        b=m6tnofiDEOr2PL0e46WFkiqwcr6hc9BJ56/St3gPSsXrnNyQcRtqkAjQ8fKpRfh966
-         lBkenycEEVpeewH/KTZeRCEYaTqxk8WSuCxZCi2e0dbA3FxMjvL85PdV2bpiVMeG4km7
-         wV1wIVe8mUrz1iCj/ZsVWeSB1hjJ1Xso9RuT10JuNSe+m/O7GK+uLP5Rp/PeZO2N91hU
-         lsfwDr6HW2nERIealvnmW6fgqH8FbwvKLrT9HGXyxRGhSCFHWSWMfmOqcnVzBU3luSXf
-         FyQhHId5tc3X04QH9aNAq21fXTPnmc9J1yUJu0m24UpjGt/DO7NDx0vD79BtA3Jw1iY/
-         wiNg==
-X-Forwarded-Encrypted: i=1; AJvYcCU8yXETFVXvX4Qy1lZW1xs5lTH2lDQr7n4qoJtN5K7zt4C8lMgBoyfPoZ7CiZFV0smzrFxpZQ5x27tizU8=@vger.kernel.org, AJvYcCUAFEcVi/E1h+gCSHIpQxg8Ebc4ZC/nZgWy0nzEqeAC7JYgIlFvAR6lpmDosDYml4HSuxjjNr00onoWJ8U=@vger.kernel.org, AJvYcCUrgyH22CeC2NO0Ru+7cgXphwZ/7a9w3hNmnsDomhP7O6yc+dEfbFVtbe74vKNMWnnr41/QEPBroD4C@vger.kernel.org, AJvYcCVpdjGI1wKOXlaFnQaV8saJPykrbhNYfcgbjZ4XK4iF8BcLwxxXg5UuoR9v9eaUUihTuK8zaDPOyU0lWA==@vger.kernel.org, AJvYcCVtjXdUbAeNbiJcutBuf3oVFmCDP3xIY4M09km2QULbKi/7q5g0hmomejUuOZXmZTWS3v3dUQhdIWU=@vger.kernel.org, AJvYcCWcXrye6ten84Z/7bReyRPrOMmGPpeaVuQ6I0R1kZNJxLiK2NOkxJfO1hNWA3r5cwSkCdN10SKSupfC@vger.kernel.org, AJvYcCX8AMOF8wqogJfgUsEQBcHMnHix14/XGtMrv7W66Tb0M+hEwJokY1etik+bebMgKlZrVMbQKXVcArZn@vger.kernel.org, AJvYcCXAByLVofUKiQGmamMKhrI/MpBF4gn2yR/cMxj28pGrVyc2n9d5u9Rf4Mc2WLQ4mWTtHUucF8WxpDqqPg==@vger.kernel.org, AJvYcCXIXjF9a4H3tzvMOWrTxznlh6L4e/zBzOYNwWrAZaQldauWmZ9NX2ieS+jZhmLBArO/SZQHCzoHpHnsWU4=@vger.kernel.org, AJvYcCXUGvStD/7y2uW31S6Jy+p3hPokAoH0TFIrvPmw+QqOKm3WaEDc+P6pKamJWG9MVVC0xuXiZbPL@vger.kernel.org, AJvYcCXr7C7x0L+IYNAN4Ho8VhzN/7/cxGYsf889UdlOp8gMIpi7+/SYoPXi3SaZN0h7PltlbN5nR1Iuv6je4B7gc8ygXeM=@vger.kernel.org, AJvYcCXxiFpBwWKKL3DbZ8TtwYWyxkwu/PG2+l4Ya7zS9/yaeIFM3pzOwIi1L/2H9Enio2iNc40fgIA6ZD3Hrg==@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy79KG7HsQRrtfq58Kx5WV+6qcfbD1L2dr14l5saBwpnqUyzrcH
-	r4jgLp3Pns1jAUVZb6M/Zss58G2Rs6608WFUHMx9VS9xaV0H9gr2HRzAFP1GT0I/TktE8hLiiHh
-	GMiVWbrV7I6u0v9ChP5cYGIb7/dpOiDpCcv+ozAzg
-X-Google-Smtp-Source: AGHT+IEcPxkLcRYoYZ+qYqdz3rf9C8aaTqIgeoOwaGj1dLh0kiz4T/GQTSq6ljBIHvhnOb/5OXIeeI806cLnduNI9A0=
-X-Received: by 2002:a05:6870:3324:b0:286:f2cc:7a4a with SMTP id
- 586e51a60fabf-28ccb9e54fbmr5220982fac.34.1729744926679; Wed, 23 Oct 2024
- 21:42:06 -0700 (PDT)
+	dkim=pass (4096-bit key) header.d=prolan.hu header.i=@prolan.hu header.b="Bl5t6sXl"
+Received: from proxmox-mailgw.intranet.prolan.hu (localhost.localdomain [127.0.0.1])
+	by proxmox-mailgw.intranet.prolan.hu (Proxmox) with ESMTP id 47074A0642;
+	Thu, 24 Oct 2024 08:50:51 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=prolan.hu; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:from:from:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to; s=mail; bh=oEkMkOoeysYlj2KcLEx7
+	PgbymfxkS+ZogQhGsMWtRJg=; b=Bl5t6sXlV7X7dFZwUX7P84yQLLobWyw7Phyu
+	nSrBStmsWPT3XVu1X/e3SQQcSNCwni+VYLTYRx0VqE9vb5mHbTVOBDw9MWGeo1+H
+	eShqSzLPp8JIf9rSONfy5rMnz5PpviAoNab/1JGqPQiIpCWzMUsg/Qx/UOCRWDlO
+	cc7yBgoA4FKpNJX5FK7YXtszRsUiBoZt35nRdYI9JWfSFlFhQl1Q4rNu5HJ95QsH
+	es7ToRb1//C48ozqxsqGQzLftikhVmd3YM44GsFPYmlIBZVnafjobrTBWhwO27HG
+	fg01OM9FZTuBldilzijhWw5Rh+wXHcYx6hQtrd/OogQGBeQDQ9L+S7D3KvYBkz5x
+	YAhQ8XiYptVXqGDmquyoroWqkQWcC03U13FVWakAm7NFOsvzgQjYWTcPeQ9govol
+	q5L6dJ2iwrLOF65uPr7jzkPXhpic1YS3AWbNpvNnLTItsV2SYJJSASDNEjuuUW94
+	VCNL3XjyFz24X41tJ1pXgCPAKZ7F9Xlm3Ts7fCbkEVE6Nk2kqOeGqrEJg7Udej0s
+	wru7pNVPI1CJJ0XcZxRM5pKYH3GME9njP0ROuKcZLwMZrk8a7F5iY81j/a07/UbY
+	F1zBSa8IaVHuHoYdwA/cEKvID8TynioDTcIrtp0vJRZ8v8v+PkXxyn5PRXcPHb7L
+	2402iN0=
+From: =?UTF-8?q?Cs=C3=B3k=C3=A1s=2C=20Bence?= <csokas.bence@prolan.hu>
+To: <dmaengine@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
+	<linux-sunxi@lists.linux.dev>, <linux-kernel@vger.kernel.org>
+CC: Mesih Kilinc <mesihkilinc@gmail.com>, Vinod Koul <vkoul@kernel.org>,
+	Chen-Yu Tsai <wens@csie.org>, Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Samuel Holland <samuel@sholland.org>, Philipp Zabel <p.zabel@pengutronix.de>
+Subject: [PATCH 02/10] dma-engine: sun4i: Add has_reset option to quirk
+Date: Thu, 24 Oct 2024 08:49:23 +0200
+Message-ID: <20241024064931.1144605-3-csokas.bence@prolan.hu>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <13ab5cec-25e5-4e82-b956-5c154641d7ab@prolan.hu>
+References:
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Ar Worf <fricks6@gmail.com>
-Date: Thu, 24 Oct 2024 09:42:02 +0500
-Message-ID: <CANSmiqmTobiHdS3zi794hg=rmvg6ePWDp7_vhgMD4_Sb4by7hA@mail.gmail.com>
-Subject: Re: [PATCH] Revert "MAINTAINERS: Remove some entries due to various
- compliance requirements."
-To: torvalds@linux-foundation.org
-Cc: aospan@netup.ru, conor.dooley@microchip.com, ddrokosov@sberdevices.ru, 
-	dmaengine@vger.kernel.org, dushistov@mail.ru, fancer.lancer@gmail.com, 
-	geert@linux-m68k.org, gregkh@linuxfoundation.org, hoan@os.amperecomputing.com, 
-	ink@jurassic.park.msu.ru, jeffbai@aosc.io, kexybiscuit@aosc.io, 
-	linux-alpha@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
-	linux-fpga@vger.kernel.org, linux-gpio@vger.kernel.org, 
-	linux-hwmon@vger.kernel.org, linux-ide@vger.kernel.org, 
-	linux-iio@vger.kernel.org, linux-media@vger.kernel.org, 
-	linux-mips@vger.kernel.org, linux-renesas-soc@vger.kernel.org, 
-	linux-spi@vger.kernel.org, manivannan.sadhasivam@linaro.org, 
-	Matt Turner <mattst88@gmail.com>, netdev@vger.kernel.org, nikita@trvn.ru, 
-	ntb@lists.linux.dev, patches@lists.linux.dev, richard.henderson@linaro.org, 
-	s.shtylyov@omp.ru, serjk@netup.ru, shc_work@mail.ru, torvic9@mailbox.org, 
-	tsbogend@alpha.franken.de, v.georgiev@metrotek.ru, wangyuli@uniontech.com, 
-	wsa+renesas@sang-engineering.com, xeb@mail.ru
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ESET-AS: R=OK;S=0;OP=CALC;TIME=1729752650;VERSION=7978;MC=1474290725;ID=135549;TRN=0;CRV=0;IPC=;SP=0;SIPS=0;PI=3;F=0
+X-ESET-Antispam: OK
+X-EsetResult: clean, is OK
+X-EsetId: 37303A29ACD94855677065
 
-> I'm Finnish.
+From: Mesih Kilinc <mesihkilinc@gmail.com>
 
-Said a descendant of Swedish occupiers. Ooookay.
+Allwinner suniv F1C100s has a reset bit for DMA in CCU. Sun4i do not
+has this bit but in order to support suniv we need to add it. So add
+support for reset bit.
 
-If you deleted all the code committed by Russians, that would be at
-least understandable. But what you just have done is refusing the
-people who contributed to the kernel due credit for their work, while
-keeping the results. A totally imperialist mindset.
+Signed-off-by: Mesih Kilinc <mesihkilinc@gmail.com>
+---
+ drivers/dma/sun4i-dma.c | 23 +++++++++++++++++++++++
+ 1 file changed, 23 insertions(+)
+
+diff --git a/drivers/dma/sun4i-dma.c b/drivers/dma/sun4i-dma.c
+index 5efbed7c546f..0b99b3884971 100644
+--- a/drivers/dma/sun4i-dma.c
++++ b/drivers/dma/sun4i-dma.c
+@@ -15,6 +15,7 @@
+ #include <linux/of_dma.h>
+ #include <linux/of_device.h>
+ #include <linux/platform_device.h>
++#include <linux/reset.h>
+ #include <linux/slab.h>
+ #include <linux/spinlock.h>
+ 
+@@ -159,6 +160,7 @@ struct sun4i_dma_config {
+ 	u8 ddma_drq_sdram;
+ 
+ 	u8 max_burst;
++	bool has_reset;
+ };
+ 
+ struct sun4i_dma_pchan {
+@@ -208,6 +210,7 @@ struct sun4i_dma_dev {
+ 	int				irq;
+ 	spinlock_t			lock;
+ 	const struct sun4i_dma_config *cfg;
++	struct reset_control *rst;
+ };
+ 
+ static struct sun4i_dma_dev *to_sun4i_dma_dev(struct dma_device *dev)
+@@ -1215,6 +1218,15 @@ static int sun4i_dma_probe(struct platform_device *pdev)
+ 		return PTR_ERR(priv->clk);
+ 	}
+ 
++	if (priv->cfg->has_reset) {
++		priv->rst = devm_reset_control_get_exclusive(&pdev->dev,
++							       NULL);
++		if (IS_ERR(priv->rst)) {
++			dev_err(&pdev->dev, "Failed to get reset control\n");
++			return PTR_ERR(priv->rst);
++		}
++	}
++
+ 	platform_set_drvdata(pdev, priv);
+ 	spin_lock_init(&priv->lock);
+ 
+@@ -1287,6 +1299,16 @@ static int sun4i_dma_probe(struct platform_device *pdev)
+ 		return ret;
+ 	}
+ 
++	/* Deassert the reset control */
++	if (priv->rst) {
++		ret = reset_control_deassert(priv->rst);
++		if (ret) {
++			dev_err(&pdev->dev,
++				"Failed to deassert the reset control\n");
++			goto err_clk_disable;
++		}
++	}
++
+ 	/*
+ 	 * Make sure the IRQs are all disabled and accounted for. The bootloader
+ 	 * likes to leave these dirty
+@@ -1356,6 +1378,7 @@ static struct sun4i_dma_config sun4i_a10_dma_cfg = {
+ 	.ddma_drq_sdram		= SUN4I_DDMA_DRQ_TYPE_SDRAM,
+ 
+ 	.max_burst		= SUN4I_MAX_BURST,
++	.has_reset		= false,
+ };
+ 
+ static const struct of_device_id sun4i_dma_match[] = {
+-- 
+2.34.1
+
+
