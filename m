@@ -1,491 +1,122 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.21])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B8781F80A3;
-	Fri, 25 Oct 2024 10:36:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.20
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 473291E7660;
+	Fri, 25 Oct 2024 13:12:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.21
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729852618; cv=none; b=hm+/lhls1r8WHjAGHc77+cPeoy9G/cP1lT05x+KXtueo7f2TdQpBeK0J7GuQf6qHxVe/W75BHtnC5tl+BRKliDPfOrHBy48hIxAWrGdHttOzxhvcbHrV4/non6fikvLHLymdcxaupWfeGwuTDY/cmc8aZbIiC0cXYRxuPaP9Yik=
+	t=1729861949; cv=none; b=Ffk2EfF+aBWfD1t8jNRigw6xRLySGBFZobA4pB5fW9y3jtQmETZT94jzOKHmXDdFjMr/7J2K8+gfRtlZDJZhQGRs3dBdv5sqV2rbUFlsbGkaT/pR7qrO1RDi91goSPZgRF0ktJIaSjQrfwRUSP7kRtBROeeLrl1ugLZNoAeSSoI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729852618; c=relaxed/simple;
-	bh=j30l09n0Udlcdy0qRhe+svmzEsdnvvcaYN/b2OU5rG8=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=pgxY91dP3gbFkh5dq1i1Xassk3Bh/FKlBdJsu/CHr9CSb6dV2hMLvVux/fJdsZndxB6VrufMjfr3ODsvQc+zfQZZccm6plxI/ySv68ZCkiF25jOAk28sOGDKlwJPISamUU5OY7vLuJx+WyBZ36b1BTYgtVFk64r13oukVn4c2JQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.net; spf=pass smtp.mailfrom=gmx.net; dkim=pass (2048-bit key) header.d=gmx.net header.i=wahrenst@gmx.net header.b=e8IfikFU; arc=none smtp.client-ip=212.227.17.20
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.net
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.net header.i=wahrenst@gmx.net header.b="e8IfikFU"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.net;
-	s=s31663417; t=1729852595; x=1730457395; i=wahrenst@gmx.net;
-	bh=+xEThDmQ7pfAOY3UNaiZU7Wtb02xRWnrFRg9OV2hgNc=;
-	h=X-UI-Sender-Class:From:To:Cc:Subject:Date:Message-Id:In-Reply-To:
-	 References:MIME-Version:Content-Transfer-Encoding:cc:
-	 content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=e8IfikFUhS00/cG5SnOefGqP+1oHgachGFHXZCEk3fQfAAmhDnsT53FC43XKyxky
-	 Dkg/ie9jZvl2/QB4QHAIe9jDet9vmQax2KM0g+ldeMhJd3sSGRNrXViJZCiLE+oeu
-	 O8hme0tIYznwg17eN7dd0dfRyl3rSuejAPUi5myLDCK4DsfeMhQPrx9b9b5w6Ztq9
-	 kXBdq+5AS2wV+EOhtjobmyiiOqCWkaQSHBklAgPdBJ0wLjNK1IEZ5p0pyNQVfpwrX
-	 slWiXOPWbcKBKugf8VsSEx6FjCvHZ9CMYyoNxpZCw3Nd82RN6hTycn8dv2eCAZRce
-	 oI5Zoi5vSS7Q831CMA==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from stefanw-SCHENKER ([37.4.248.43]) by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1N0G1n-1tr0Ro0kL9-015MnT; Fri, 25
- Oct 2024 12:36:35 +0200
-From: Stefan Wahren <wahrenst@gmx.net>
-To: Russell King <linux@armlinux.org.uk>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Ray Jui <rjui@broadcom.com>,
-	Scott Branden <sbranden@broadcom.com>,
-	Vinod Koul <vkoul@kernel.org>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
-	Minas Harutyunyan <hminas@synopsys.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Lukas Wunner <lukas@wunner.de>,
-	Peter Robinson <pbrobinson@gmail.com>,
-	"Ivan T . Ivanov" <iivanov@suse.de>,
-	linux-arm-kernel@lists.infradead.org,
-	kernel-list@raspberrypi.com,
-	bcm-kernel-feedback-list@broadcom.com,
-	dmaengine@vger.kernel.org,
-	linux-mmc@vger.kernel.org,
-	linux-usb@vger.kernel.org,
-	Stefan Wahren <wahrenst@gmx.net>
-Subject: [PATCH V5 7/9] usb: dwc2: Refactor backup/restore of registers
-Date: Fri, 25 Oct 2024 12:36:19 +0200
-Message-Id: <20241025103621.4780-8-wahrenst@gmx.net>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20241025103621.4780-1-wahrenst@gmx.net>
-References: <20241025103621.4780-1-wahrenst@gmx.net>
+	s=arc-20240116; t=1729861949; c=relaxed/simple;
+	bh=DyZekcekX3RtD9pX7NDF9lTJOHreJBPcOIWwl++T12A=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=pvf/bJ3wygRBqbWdvTMehUBMFoREG4pRNgX762FD/uylbyWIGk1XIVlOxuKXi0NOl8UkV1j5qj3H3YqF7ZhSWGcKhP7dSF531Dg9T3aVT2o99XIOPnQX3G4w8Y+Bqe1eyN1eqfIpNaUC0vWf/B4Wd89+hwegrUMUAbi5/S+Bvw8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=quarantine dis=none) header.from=kernel.org; spf=fail smtp.mailfrom=kernel.org; arc=none smtp.client-ip=198.175.65.21
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=quarantine dis=none) header.from=kernel.org
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=kernel.org
+X-CSE-ConnectionGUID: +MippmjcS7GiCHxfKD/FPQ==
+X-CSE-MsgGUID: YqiQFwgNQ2urN4bdSLfTEg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11222"; a="29474401"
+X-IronPort-AV: E=Sophos;i="6.11,199,1725346800"; 
+   d="scan'208";a="29474401"
+Received: from orviesa006.jf.intel.com ([10.64.159.146])
+  by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Oct 2024 06:12:27 -0700
+X-CSE-ConnectionGUID: YBODLHiKRmKI4N2x3UePrA==
+X-CSE-MsgGUID: ORNpoHttQRiMH14+J3yUxg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.11,231,1725346800"; 
+   d="scan'208";a="81073104"
+Received: from smile.fi.intel.com ([10.237.72.154])
+  by orviesa006.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Oct 2024 06:12:15 -0700
+Received: from andy by smile.fi.intel.com with local (Exim 4.98)
+	(envelope-from <andy@kernel.org>)
+	id 1t4K6r-00000006v8Q-1Pfa;
+	Fri, 25 Oct 2024 16:12:09 +0300
+Date: Fri, 25 Oct 2024 16:12:09 +0300
+From: Andy Shevchenko <andy@kernel.org>
+To: Dragan =?utf-8?Q?Milivojevi=C4=87?= <d.milivojevic@gmail.com>
+Cc: Peter Cai <peter@typeblog.net>,
+	James Bottomley <James.Bottomley@hansenpartnership.com>,
+	Serge Semin <fancer.lancer@gmail.com>, Jon Mason <jdmason@kudzu.us>,
+	Dave Jiang <dave.jiang@intel.com>, Allen Hubbe <allenbh@gmail.com>,
+	ntb@lists.linux.dev, Kory Maincent <kory.maincent@bootlin.com>,
+	Cai Huoqing <cai.huoqing@linux.dev>, dmaengine@vger.kernel.org,
+	Mark Brown <broonie@kernel.org>, linux-spi@vger.kernel.org,
+	Damien Le Moal <dlemoal@kernel.org>, linux-ide@vger.kernel.org,
+	Paul Burton <paulburton@kernel.org>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Jiaxun Yang <jiaxun.yang@flygoat.com>, linux-mips@vger.kernel.org,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+	linux-pci@vger.kernel.org, "David S. Miller" <davem@davemloft.net>,
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+	Andrew Lunn <andrew@lunn.ch>, Russell King <linux@armlinux.org.uk>,
+	Vladimir Oltean <olteanv@gmail.com>,
+	Keguang Zhang <keguang.zhang@gmail.com>,
+	Yanteng Si <siyanteng@loongson.cn>, netdev@vger.kernel.org,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Guenter Roeck <linux@roeck-us.net>, linux-hwmon@vger.kernel.org,
+	Borislav Petkov <bp@alien8.de>, linux-edac@vger.kernel.org,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	linux-serial@vger.kernel.org, Andrew Halaney <ajhalaney@gmail.com>,
+	Nikita Travkin <nikita@trvn.ru>,
+	Ivan Kokshaysky <ink@jurassic.park.msu.ru>,
+	Alexander Shiyan <shc_work@mail.ru>, Dmitry Kozlov <xeb@mail.ru>,
+	Sergey Shtylyov <s.shtylyov@omp.ru>,
+	Evgeniy Dushistov <dushistov@mail.ru>,
+	Geert Uytterhoeven <geert@linux-m68k.org>,
+	Sergio Paracuellos <sergio.paracuellos@gmail.com>,
+	Nikita Shubin <nikita.shubin@maquefel.me>,
+	linux-renesas-soc@vger.kernel.org, linux-kernel@vger.kernel.org,
+	Kexy Biscuit <kexybiscuit@aosc.io>, jeffbai@aosc.io,
+	Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: linux: Goodbye from a Linux community volunteer
+Message-ID: <ZxuZKcTafSVXLcIe@smile.fi.intel.com>
+References: <2m53bmuzemamzc4jzk2bj7tli22ruaaqqe34a2shtdtqrd52hp@alifh66en3rj>
+ <e7d548a7fc835f9f3c9cb2e5ed97dfdfa164813f.camel@HansenPartnership.com>
+ <6beb4070-1946-4387-bd0e-34608a76b19e@typeblog.net>
+ <CALtW_agj1rurb3DRrPd9o2mkfku5fq_M3CEKY5sW+Zz7shKYHA@mail.gmail.com>
+ <ZxqK75WdFBod0rZ9@smile.fi.intel.com>
+ <CALtW_ajKAYYwYVGnEArPWz_XaCkEiMFwpoCtzeiO1OLbAk77Sw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:Vw1V1WhXww1QaWFXbTeKYFfUI/BMW4zYiGy6qP/5s4eBxfztFXN
- I83BsXlcuY5ZejevaPXKISRwV+FeiXIUdFDyTNuKVibJ/jkaOnL6yP/K+XR3pp4w4l8t0m3
- AInO05RSw0KiyVFVoJ7p2tdMvzdf9bcM5NyELjT9Excme57Cfdei7H1uJKN7mHLhgfgm0S8
- 5g4ekT6PHs2242cC7V9XA==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:/1E7nH8sgTY=;xKIZoNotUSSgMFIK7WHZ/kejPvf
- wOynXlT1BmROyjRH1lp7ky8ZATjKndChoVmaZQ80nCDR/Sj9sBRn7s/lObBADkCaEL9QFd+1I
- yudfXlMKFxGjAHkVqWFlHBKTGvxiwMqC8MDIa9Y4iR7A2zBq9x+qtapndzwBv4NmCLJVV7/Qi
- Ke8/uqNPmnVyIYwePgpyBi3uBOnJKCTeFBSLNeCb/EVfzulaeXLRv8nkWi1qB84hE3sDAv5vL
- 8hiruxOCh1DosZy9Cyx21ZrSXKlapljYgPrdM2R3fcHVK1MyMw0duOaoqTc//ksT4QAmuMjVA
- t5mrhOW/kslMKsnTVexzxH6VLeQ+PqbIR5V0FSe5v6mQOuQjU/eSXBkR9tqJmyxD/p1X9wKsl
- 1Xs7Ju3jlPLq3yB6x5TdXIIVTWMbcsI+DwI0wQR9nBTobOlJS3SKFjj9Cud0sUUjpG4x3hWer
- LFoDH6EJAEFGjl2E9be8mRUaD4KW2FDpuWdDI8G0cVqF93kJRsW01sqZgDc8AlpLKGiA+cYoc
- uq3Zp4ftDWZ/qmwcTYc+xLnZJ/JxDZk8IY3MgZ2dnV22K287W+WvK83Fmvop0XdT3kwBXejWw
- TFfWWGRG/hJcUFpVVRNulNAocDNJhYSjIU9JEoWsIKoSH0IgiqI5FPNw8nJcUQkuZMWksaO9i
- 62SVO9TLxCaSfr35HDTo7+LnaDX7XkLHqHxzeR8cTNTBjVd3akvq80tH3MC2i6X64qbfbPu1u
- JCa3Kt6Qm8TPompCknwOIewo8x0p7OeOHPfHDxVjG8OQd4jtxvEgMZcjV2QN85TFWPx5Y5Zoa
- 3EnWXsxWZ27l0/pKsv277gxQ==
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CALtW_ajKAYYwYVGnEArPWz_XaCkEiMFwpoCtzeiO1OLbAk77Sw@mail.gmail.com>
+Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
 
-The DWC2 runtime PM code reuses similar patterns to backup and
-restore the registers. So consolidate them in USB mode specific
-variants. This also has the advantage it is reusable for further
-PM improvements.
+On Thu, Oct 24, 2024 at 09:46:58PM +0200, Dragan Milivojević wrote:
+> > Yeah, with my hat of the person whose home town is under (Russian) attack for
+> > the 10+ years (don't be surprised, please, the war lasts more than a decade
+> > already) on I am fully understand Linus' arguments about history and being not
+> > very friendly about Russians.
+> 
+> How about your hat off to the people in the Donbas,
+> ~12K of them that had died from Ukrainian artillery fire,
+> that were under imminent threat of being overrun by
+> the Ukrainian forces in February 2022? Are you going
+> to scream about Russian propaganda when I link
+> the OSCE reports about a 10 fold increase in attacks
+> at that same time?
 
-Special care is taken for DCFG register during device mode restore.
+Yeah, yeah, no point to discuss with you "Russian state-sponsored spam".
+Btw, are you from Serbia?
 
-Signed-off-by: Stefan Wahren <wahrenst@gmx.net>
-=2D--
- drivers/usb/dwc2/core.h   |  15 ++++++
- drivers/usb/dwc2/gadget.c | 108 +++++++++++++++++++-------------------
- drivers/usb/dwc2/hcd.c    |  99 +++++++++++++++++-----------------
- 3 files changed, 121 insertions(+), 101 deletions(-)
+> BTW can I be racist towards Germans and Croats since
+> their ancestors exterminated my kin in their death camps?
 
-diff --git a/drivers/usb/dwc2/core.h b/drivers/usb/dwc2/core.h
-index 48f4b639ca2f..265791fbe87f 100644
-=2D-- a/drivers/usb/dwc2/core.h
-+++ b/drivers/usb/dwc2/core.h
-@@ -1128,6 +1128,7 @@ struct dwc2_hsotg {
- #define DWC2_HS_IOT_ID		0x55320000
+You should answer your question yourself.
 
- #define DWC2_RESTORE_DCTL BIT(0)
-+#define DWC2_RESTORE_DCFG BIT(1)
+-- 
+With Best Regards,
+Andy Shevchenko
 
- #if IS_ENABLED(CONFIG_USB_DWC2_HOST) || IS_ENABLED(CONFIG_USB_DWC2_DUAL_R=
-OLE)
- 	union dwc2_hcd_internal_flags {
-@@ -1437,6 +1438,9 @@ int dwc2_hsotg_tx_fifo_total_depth(struct dwc2_hsotg=
- *hsotg);
- int dwc2_hsotg_tx_fifo_average_depth(struct dwc2_hsotg *hsotg);
- void dwc2_gadget_init_lpm(struct dwc2_hsotg *hsotg);
- void dwc2_gadget_program_ref_clk(struct dwc2_hsotg *hsotg);
-+int dwc2_gadget_backup_critical_registers(struct dwc2_hsotg *hsotg);
-+int dwc2_gadget_restore_critical_registers(struct dwc2_hsotg *hsotg,
-+					   unsigned int flags);
- static inline void dwc2_clear_fifo_map(struct dwc2_hsotg *hsotg)
- { hsotg->fifo_map =3D 0; }
- #else
-@@ -1484,6 +1488,11 @@ static inline int dwc2_hsotg_tx_fifo_average_depth(=
-struct dwc2_hsotg *hsotg)
- { return 0; }
- static inline void dwc2_gadget_init_lpm(struct dwc2_hsotg *hsotg) {}
- static inline void dwc2_gadget_program_ref_clk(struct dwc2_hsotg *hsotg) =
-{}
-+static inline int dwc2_gadget_backup_critical_registers(struct dwc2_hsotg=
- *hsotg)
-+{ return 0; }
-+static inline int dwc2_gadget_restore_critical_registers(struct dwc2_hsot=
-g *hsotg,
-+							 unsigned int flags)
-+{ return 0; }
- static inline void dwc2_clear_fifo_map(struct dwc2_hsotg *hsotg) {}
- #endif
-
-@@ -1507,6 +1516,8 @@ int dwc2_host_exit_partial_power_down(struct dwc2_hs=
-otg *hsotg,
- void dwc2_host_enter_clock_gating(struct dwc2_hsotg *hsotg);
- void dwc2_host_exit_clock_gating(struct dwc2_hsotg *hsotg, int rem_wakeup=
-);
- bool dwc2_host_can_poweroff_phy(struct dwc2_hsotg *dwc2);
-+int dwc2_host_backup_critical_registers(struct dwc2_hsotg *hsotg);
-+int dwc2_host_restore_critical_registers(struct dwc2_hsotg *hsotg);
- static inline void dwc2_host_schedule_phy_reset(struct dwc2_hsotg *hsotg)
- { schedule_work(&hsotg->phy_reset_work); }
- #else
-@@ -1546,6 +1557,10 @@ static inline void dwc2_host_exit_clock_gating(stru=
-ct dwc2_hsotg *hsotg,
- 					       int rem_wakeup) {}
- static inline bool dwc2_host_can_poweroff_phy(struct dwc2_hsotg *dwc2)
- { return false; }
-+static inline int dwc2_host_backup_critical_registers(struct dwc2_hsotg *=
-hsotg)
-+{ return 0; }
-+static inline int dwc2_host_restore_critical_registers(struct dwc2_hsotg =
-*hsotg)
-+{ return 0; }
- static inline void dwc2_host_schedule_phy_reset(struct dwc2_hsotg *hsotg)=
- {}
-
- #endif
-diff --git a/drivers/usb/dwc2/gadget.c b/drivers/usb/dwc2/gadget.c
-index 96d703f4c509..2e071a0342f8 100644
-=2D-- a/drivers/usb/dwc2/gadget.c
-+++ b/drivers/usb/dwc2/gadget.c
-@@ -5223,6 +5223,9 @@ int dwc2_restore_device_registers(struct dwc2_hsotg =
-*hsotg, unsigned int flags)
- 	}
- 	dr->valid =3D false;
-
-+	if (flags & DWC2_RESTORE_DCFG)
-+		dwc2_writel(hsotg, dr->dcfg, DCFG);
-+
- 	if (flags & DWC2_RESTORE_DCTL)
- 		dwc2_writel(hsotg, dr->dctl, DCTL);
-
-@@ -5309,6 +5312,49 @@ void dwc2_gadget_program_ref_clk(struct dwc2_hsotg =
-*hsotg)
- 	dev_dbg(hsotg->dev, "GREFCLK=3D0x%08x\n", dwc2_readl(hsotg, GREFCLK));
- }
-
-+int dwc2_gadget_backup_critical_registers(struct dwc2_hsotg *hsotg)
-+{
-+	int ret;
-+
-+	/* Backup all registers */
-+	ret =3D dwc2_backup_global_registers(hsotg);
-+	if (ret) {
-+		dev_err(hsotg->dev, "%s: failed to backup global registers\n",
-+			__func__);
-+		return ret;
-+	}
-+
-+	ret =3D dwc2_backup_device_registers(hsotg);
-+	if (ret) {
-+		dev_err(hsotg->dev, "%s: failed to backup device registers\n",
-+			__func__);
-+		return ret;
-+	}
-+
-+	return 0;
-+}
-+
-+int dwc2_gadget_restore_critical_registers(struct dwc2_hsotg *hsotg,
-+					   unsigned int flags)
-+{
-+	int ret;
-+
-+	ret =3D dwc2_restore_global_registers(hsotg);
-+	if (ret) {
-+		dev_err(hsotg->dev, "%s: failed to restore registers\n",
-+			__func__);
-+		return ret;
-+	}
-+	ret =3D dwc2_restore_device_registers(hsotg, flags);
-+	if (ret) {
-+		dev_err(hsotg->dev, "%s: failed to restore device registers\n",
-+			__func__);
-+		return ret;
-+	}
-+
-+	return 0;
-+}
-+
- /**
-  * dwc2_gadget_enter_hibernation() - Put controller in Hibernation.
-  *
-@@ -5326,18 +5372,9 @@ int dwc2_gadget_enter_hibernation(struct dwc2_hsotg=
- *hsotg)
- 	/* Change to L2(suspend) state */
- 	hsotg->lx_state =3D DWC2_L2;
- 	dev_dbg(hsotg->dev, "Start of hibernation completed\n");
--	ret =3D dwc2_backup_global_registers(hsotg);
--	if (ret) {
--		dev_err(hsotg->dev, "%s: failed to backup global registers\n",
--			__func__);
--		return ret;
--	}
--	ret =3D dwc2_backup_device_registers(hsotg);
--	if (ret) {
--		dev_err(hsotg->dev, "%s: failed to backup device registers\n",
--			__func__);
-+	ret =3D dwc2_gadget_backup_critical_registers(hsotg);
-+	if (ret)
- 		return ret;
--	}
-
- 	gpwrdn =3D GPWRDN_PWRDNRSTN;
- 	udelay(10);
-@@ -5485,20 +5522,9 @@ int dwc2_gadget_exit_hibernation(struct dwc2_hsotg =
-*hsotg,
- 	dwc2_writel(hsotg, 0xffffffff, GINTSTS);
-
- 	/* Restore global registers */
--	ret =3D dwc2_restore_global_registers(hsotg);
--	if (ret) {
--		dev_err(hsotg->dev, "%s: failed to restore registers\n",
--			__func__);
--		return ret;
--	}
--
--	/* Restore device registers */
--	ret =3D dwc2_restore_device_registers(hsotg, flags);
--	if (ret) {
--		dev_err(hsotg->dev, "%s: failed to restore device registers\n",
--			__func__);
-+	ret =3D dwc2_gadget_restore_critical_registers(hsotg, flags);
-+	if (ret)
- 		return ret;
--	}
-
- 	if (rem_wakeup) {
- 		mdelay(10);
-@@ -5532,19 +5558,9 @@ int dwc2_gadget_enter_partial_power_down(struct dwc=
-2_hsotg *hsotg)
- 	dev_dbg(hsotg->dev, "Entering device partial power down started.\n");
-
- 	/* Backup all registers */
--	ret =3D dwc2_backup_global_registers(hsotg);
--	if (ret) {
--		dev_err(hsotg->dev, "%s: failed to backup global registers\n",
--			__func__);
--		return ret;
--	}
--
--	ret =3D dwc2_backup_device_registers(hsotg);
--	if (ret) {
--		dev_err(hsotg->dev, "%s: failed to backup device registers\n",
--			__func__);
-+	ret =3D dwc2_gadget_backup_critical_registers(hsotg);
-+	if (ret)
- 		return ret;
--	}
-
- 	/*
- 	 * Clear any pending interrupts since dwc2 will not be able to
-@@ -5591,11 +5607,8 @@ int dwc2_gadget_exit_partial_power_down(struct dwc2=
-_hsotg *hsotg,
- {
- 	u32 pcgcctl;
- 	u32 dctl;
--	struct dwc2_dregs_backup *dr;
- 	int ret =3D 0;
-
--	dr =3D &hsotg->dr_backup;
--
- 	dev_dbg(hsotg->dev, "Exiting device partial Power Down started.\n");
-
- 	pcgcctl =3D dwc2_readl(hsotg, PCGCTL);
-@@ -5612,21 +5625,10 @@ int dwc2_gadget_exit_partial_power_down(struct dwc=
-2_hsotg *hsotg,
-
- 	udelay(100);
- 	if (restore) {
--		ret =3D dwc2_restore_global_registers(hsotg);
--		if (ret) {
--			dev_err(hsotg->dev, "%s: failed to restore registers\n",
--				__func__);
--			return ret;
--		}
--		/* Restore DCFG */
--		dwc2_writel(hsotg, dr->dcfg, DCFG);
--
--		ret =3D dwc2_restore_device_registers(hsotg, DWC2_RESTORE_DCTL);
--		if (ret) {
--			dev_err(hsotg->dev, "%s: failed to restore device registers\n",
--				__func__);
-+		ret =3D dwc2_gadget_restore_critical_registers(hsotg, DWC2_RESTORE_DCTL=
- |
-+							     DWC2_RESTORE_DCFG);
-+		if (ret)
- 			return ret;
--		}
- 	}
-
- 	/* Set the Power-On Programming done bit */
-diff --git a/drivers/usb/dwc2/hcd.c b/drivers/usb/dwc2/hcd.c
-index cb54390e7de4..32fa606e5d59 100644
-=2D-- a/drivers/usb/dwc2/hcd.c
-+++ b/drivers/usb/dwc2/hcd.c
-@@ -5477,6 +5477,49 @@ int dwc2_restore_host_registers(struct dwc2_hsotg *=
-hsotg)
- 	return 0;
- }
-
-+int dwc2_host_backup_critical_registers(struct dwc2_hsotg *hsotg)
-+{
-+	int ret;
-+
-+	/* Backup all registers */
-+	ret =3D dwc2_backup_global_registers(hsotg);
-+	if (ret) {
-+		dev_err(hsotg->dev, "%s: failed to backup global registers\n",
-+			__func__);
-+		return ret;
-+	}
-+
-+	ret =3D dwc2_backup_host_registers(hsotg);
-+	if (ret) {
-+		dev_err(hsotg->dev, "%s: failed to backup host registers\n",
-+			__func__);
-+		return ret;
-+	}
-+
-+	return 0;
-+}
-+
-+int dwc2_host_restore_critical_registers(struct dwc2_hsotg *hsotg)
-+{
-+	int ret;
-+
-+	ret =3D dwc2_restore_global_registers(hsotg);
-+	if (ret) {
-+		dev_err(hsotg->dev, "%s: failed to restore registers\n",
-+			__func__);
-+		return ret;
-+	}
-+
-+	ret =3D dwc2_restore_host_registers(hsotg);
-+	if (ret) {
-+		dev_err(hsotg->dev, "%s: failed to restore host registers\n",
-+			__func__);
-+		return ret;
-+	}
-+
-+	return 0;
-+}
-+
- /**
-  * dwc2_host_enter_hibernation() - Put controller in Hibernation.
-  *
-@@ -5492,18 +5535,9 @@ int dwc2_host_enter_hibernation(struct dwc2_hsotg *=
-hsotg)
- 	u32 gpwrdn;
-
- 	dev_dbg(hsotg->dev, "Preparing host for hibernation\n");
--	ret =3D dwc2_backup_global_registers(hsotg);
--	if (ret) {
--		dev_err(hsotg->dev, "%s: failed to backup global registers\n",
--			__func__);
--		return ret;
--	}
--	ret =3D dwc2_backup_host_registers(hsotg);
--	if (ret) {
--		dev_err(hsotg->dev, "%s: failed to backup host registers\n",
--			__func__);
-+	ret =3D dwc2_host_backup_critical_registers(hsotg);
-+	if (ret)
- 		return ret;
--	}
-
- 	/* Enter USB Suspend Mode */
- 	hprt0 =3D dwc2_readl(hsotg, HPRT0);
-@@ -5697,20 +5731,9 @@ int dwc2_host_exit_hibernation(struct dwc2_hsotg *h=
-sotg, int rem_wakeup,
- 	dwc2_writel(hsotg, 0xffffffff, GINTSTS);
-
- 	/* Restore global registers */
--	ret =3D dwc2_restore_global_registers(hsotg);
--	if (ret) {
--		dev_err(hsotg->dev, "%s: failed to restore registers\n",
--			__func__);
-+	ret =3D dwc2_host_restore_critical_registers(hsotg);
-+	if (ret)
- 		return ret;
--	}
--
--	/* Restore host registers */
--	ret =3D dwc2_restore_host_registers(hsotg);
--	if (ret) {
--		dev_err(hsotg->dev, "%s: failed to restore host registers\n",
--			__func__);
--		return ret;
--	}
-
- 	if (rem_wakeup) {
- 		dwc2_hcd_rem_wakeup(hsotg);
-@@ -5777,19 +5800,9 @@ int dwc2_host_enter_partial_power_down(struct dwc2_=
-hsotg *hsotg)
- 		dev_warn(hsotg->dev, "Suspend wasn't generated\n");
-
- 	/* Backup all registers */
--	ret =3D dwc2_backup_global_registers(hsotg);
--	if (ret) {
--		dev_err(hsotg->dev, "%s: failed to backup global registers\n",
--			__func__);
--		return ret;
--	}
--
--	ret =3D dwc2_backup_host_registers(hsotg);
--	if (ret) {
--		dev_err(hsotg->dev, "%s: failed to backup host registers\n",
--			__func__);
-+	ret =3D dwc2_host_backup_critical_registers(hsotg);
-+	if (ret)
- 		return ret;
--	}
-
- 	/*
- 	 * Clear any pending interrupts since dwc2 will not be able to
-@@ -5858,19 +5871,9 @@ int dwc2_host_exit_partial_power_down(struct dwc2_h=
-sotg *hsotg,
-
- 	udelay(100);
- 	if (restore) {
--		ret =3D dwc2_restore_global_registers(hsotg);
--		if (ret) {
--			dev_err(hsotg->dev, "%s: failed to restore registers\n",
--				__func__);
--			return ret;
--		}
--
--		ret =3D dwc2_restore_host_registers(hsotg);
--		if (ret) {
--			dev_err(hsotg->dev, "%s: failed to restore host registers\n",
--				__func__);
-+		ret =3D dwc2_host_restore_critical_registers(hsotg);
-+		if (ret)
- 			return ret;
--		}
- 	}
-
- 	/* Drive resume signaling and exit suspend mode on the port. */
-=2D-
-2.34.1
 
