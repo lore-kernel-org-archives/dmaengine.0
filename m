@@ -1,135 +1,70 @@
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from szxga05-in.huawei.com (szxga05-in.huawei.com [45.249.212.191])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11AB118E74C;
-	Mon, 28 Oct 2024 06:06:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C450D18EFD2
+	for <dmaengine@vger.kernel.org>; Mon, 28 Oct 2024 06:06:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.191
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730095595; cv=none; b=UTKogaWRMU0hZdwMisNGFMfLvV1ebz/652vpSICVif+LSRL9YdPCoyJGlHlrhPW+CfKiaUpt1F8YXVPDtNAZ1wEnsjsHb5w4fM4lY8+HMhLPwOvChJe/dBB7jCl91f5LIgBLIdvEC8/AgWDubgZ7rWx3+nxxNhpSl5JKr7bwk3A=
+	t=1730095604; cv=none; b=d4VFnaus0hW4Jx8IsZBbuDVJPVBsem+E+ZQPXmqiDB3QK3hSuxo5tTBIq1g0I2g10DsSm3gcQkZE2GY2a53xW+zwijBXStSJJOOfjtlaZgaw9xbfaQqjgByDeAtIxAEcWtn7xsPyiEg2VRMa8JPjM+PRhUznZPO9Pr69CjfeWt8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730095595; c=relaxed/simple;
-	bh=miIxxl5+U0i14SfV93WdmSgaguMjZukgbuvI8Med48Y=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=phdroc+fh6VeqgYUI7EI+tr1KgWqcqdpC185MPZznalGAeeuNaGPPyHUC7pE0wJM/n16BFyPEMFxAcjrBWYk4mg62pf1avViO5m5DlKAWqRhzx5+Sh/CuuSK89syaw5x6hTH9onLbypJ1WNiYB+Ja3p3ATuadj1KHQMSCVw9r/Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Zf48rz3J; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Zf48rz3J"
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49RLw231016167;
-	Mon, 28 Oct 2024 06:06:25 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	Em8Tc31dZKLc4ca5+0jW7wblgmsW9KumGOsBtyhqUj0=; b=Zf48rz3JrMv+eXeW
-	7NxyLXt1RbEYsE7eQHdg8jkV+sJyugz1NgtSGWuF+sOx8JR1WPJv1AOb/hPMbLEi
-	aS0bfpuJEJKbkRMlbC54xPNE5GCWpBrGmg8Z4x5NSjNpg76OyOKt5evh3FQgQtlr
-	1Q6BIppDcWi6/iSCi2WBnvuwXpLq1EJKlBug8droYx934izZrIsYaZEuzHziO4T+
-	0wIvdIAkxspLiOPmuw7u0rsLVCs4/NcgFepfGBsKjokEZ7eHtpRr1XMrJ0PdSFKM
-	vxNaOpIN5oDc67er1I3F1oTv0n0Mrxyx/hqm81RjufS5r62/cN5YGcp2sbZi27Lh
-	MNyRrA==
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42gp4dv14w-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 28 Oct 2024 06:06:25 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49S66Om6020194
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 28 Oct 2024 06:06:24 GMT
-Received: from [10.217.219.62] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Sun, 27 Oct
- 2024 23:06:18 -0700
-Message-ID: <e5405cc7-a748-4e6f-8128-9e271ccc462f@quicinc.com>
-Date: Mon, 28 Oct 2024 11:36:15 +0530
+	s=arc-20240116; t=1730095604; c=relaxed/simple;
+	bh=hjbmCVEgdYw13utb3ARrRH//Pq802INSHmN0uYbN4Cw=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=gOhfvhDjpvbVePGDgEck/teQldxFksmggn/ujZNWt6qVYQha8Ti3JOQEBCDF0P9I4rbeJAQp305QrkeqR8zzNjWU1Xo2jirkNohWrs0ReV5C7oIzx4W5YeGXYfAWIMm0qOU2uptTDLaT49huFhOjgUyAT3uzZxCp50e0Y5j07U0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; arc=none smtp.client-ip=45.249.212.191
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
+Received: from mail.maildlp.com (unknown [172.19.163.44])
+	by szxga05-in.huawei.com (SkyGuard) with ESMTP id 4XcNCR0zxwz1jw1s;
+	Mon, 28 Oct 2024 14:05:07 +0800 (CST)
+Received: from kwepemf500003.china.huawei.com (unknown [7.202.181.241])
+	by mail.maildlp.com (Postfix) with ESMTPS id 4333314022D;
+	Mon, 28 Oct 2024 14:06:36 +0800 (CST)
+Received: from huawei.com (10.175.112.208) by kwepemf500003.china.huawei.com
+ (7.202.181.241) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.11; Mon, 28 Oct
+ 2024 14:06:35 +0800
+From: Zhang Zekun <zhangzekun11@huawei.com>
+To: <peter.ujfalusi@gmail.com>, <vkoul@kernel.org>,
+	<grygorii.strashko@ti.com>, <dmaengine@vger.kernel.org>
+CC: <chenjun102@huawei.com>, <liuyongqiang13@huawei.com>,
+	<zhangzekun11@huawei.com>
+Subject: [PATCH] engine: ti: Fix potential NULL pointer dereference
+Date: Mon, 28 Oct 2024 14:01:40 +0800
+Message-ID: <20241028060140.5232-1-zhangzekun11@huawei.com>
+X-Mailer: git-send-email 2.17.1
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 5/5] i2c: i2c-qcom-geni: Add Block event interrupt
- support
-To: kernel test robot <lkp@intel.com>, Vinod Koul <vkoul@kernel.org>,
-        "Rob
- Herring" <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        "Conor
- Dooley" <conor+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        "Konrad Dybcio" <konradybcio@kernel.org>,
-        Andi Shyti <andi.shyti@kernel.org>,
-        "Sumit Semwal" <sumit.semwal@linaro.org>,
-        =?UTF-8?Q?Christian_K=C3=B6nig?=
-	<christian.koenig@amd.com>
-CC: <oe-kbuild-all@lists.linux.dev>, <cros-qcom-dts-watchers@chromium.org>,
-        <linux-arm-msm@vger.kernel.org>, <dmaengine@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-i2c@vger.kernel.org>, <linux-media@vger.kernel.org>,
-        <dri-devel@lists.freedesktop.org>, <linaro-mm-sig@lists.linaro.org>,
-        <quic_msavaliy@quicinc.com>, <quic_vtanuku@quicinc.com>
-References: <20241015120750.21217-6-quic_jseerapu@quicinc.com>
- <202410191055.bi1pWTAY-lkp@intel.com>
-Content-Language: en-US
-From: Jyothi Kumar Seerapu <quic_jseerapu@quicinc.com>
-In-Reply-To: <202410191055.bi1pWTAY-lkp@intel.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: fAQXcrvzG8ifnkoAE7cliPA5KgMYSabc
-X-Proofpoint-GUID: fAQXcrvzG8ifnkoAE7cliPA5KgMYSabc
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- priorityscore=1501 mlxlogscore=999 clxscore=1011 spamscore=0
- lowpriorityscore=0 malwarescore=0 bulkscore=0 adultscore=0 phishscore=0
- mlxscore=0 suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2410280050
+Content-Type: text/plain
+X-ClientProxiedBy: dggems706-chm.china.huawei.com (10.3.19.183) To
+ kwepemf500003.china.huawei.com (7.202.181.241)
 
+devm_kasprintf() could failed and return a NULL pointer, which
+will then be used in the later code. Add check to prevent the potential
+NULL pointer dereference.
 
+Fixes: 25dcb5dd7b7c ("dmaengine: ti: New driver for K3 UDMA")
+Signed-off-by: Zhang Zekun <zhangzekun11@huawei.com>
+---
+ drivers/dma/ti/k3-udma.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-On 10/19/2024 8:42 AM, kernel test robot wrote:
-> Hi Jyothi,
-> 
-> kernel test robot noticed the following build errors:
-> 
-> [auto build test ERROR on 55bcd2e0d04c1171d382badef1def1fd04ef66c5]
-> 
-> url:    https://github.com/intel-lab-lkp/linux/commits/Jyothi-Kumar-Seerapu/dt-bindings-dmaengine-qcom-gpi-Add-additional-arg-to-dma-cell-property/20241015-202637
-> base:   55bcd2e0d04c1171d382badef1def1fd04ef66c5
-> patch link:    https://lore.kernel.org/r/20241015120750.21217-6-quic_jseerapu%40quicinc.com
-> patch subject: [PATCH v1 5/5] i2c: i2c-qcom-geni: Add Block event interrupt support
-> config: i386-allmodconfig (https://download.01.org/0day-ci/archive/20241019/202410191055.bi1pWTAY-lkp@intel.com/config)
-> compiler: gcc-12 (Debian 12.2.0-14) 12.2.0
-> reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20241019/202410191055.bi1pWTAY-lkp@intel.com/reproduce)
-> 
-> If you fix the issue in a separate patch/commit (i.e. not just a new version of
-> the same patch/commit), kindly add following tags
-> | Reported-by: kernel test robot <lkp@intel.com>
-> | Closes: https://lore.kernel.org/oe-kbuild-all/202410191055.bi1pWTAY-lkp@intel.com/
-> 
-> All errors (new ones prefixed by >>, old ones prefixed by <<):
-> 
->>> ERROR: modpost: "gpi_multi_desc_process" [drivers/i2c/busses/i2c-qcom-geni.ko] undefined!
-> 
-> Kconfig warnings: (for reference only)
->     WARNING: unmet direct dependencies detected for GET_FREE_REGION
->     Depends on [n]: SPARSEMEM [=n]
->     Selected by [m]:
->     - RESOURCE_KUNIT_TEST [=m] && RUNTIME_TESTING_MENU [=y] && KUNIT [=m]
->     WARNING: unmet direct dependencies detected for OMAP2PLUS_MBOX
->     Depends on [n]: MAILBOX [=y] && (ARCH_OMAP2PLUS || ARCH_K3)
->     Selected by [m]:
->     - TI_K3_M4_REMOTEPROC [=m] && REMOTEPROC [=y] && (ARCH_K3 || COMPILE_TEST [=y])
-> 
+diff --git a/drivers/dma/ti/k3-udma.c b/drivers/dma/ti/k3-udma.c
+index 406ee199c2ac..fdaea8f72a9c 100644
+--- a/drivers/dma/ti/k3-udma.c
++++ b/drivers/dma/ti/k3-udma.c
+@@ -5534,6 +5534,8 @@ static int udma_probe(struct platform_device *pdev)
+ 		uc->config.dir = DMA_MEM_TO_MEM;
+ 		uc->name = devm_kasprintf(dev, GFP_KERNEL, "%s chan%d",
+ 					  dev_name(dev), i);
++		if (!uc->name)
++			return -ENOMEM;
+ 
+ 		vchan_init(&uc->vc, &ud->ddev);
+ 		/* Use custom vchan completion handling */
+-- 
+2.17.1
 
-Fixed the reported issue in V2 patch.
-
-Regards,
-JyothiKumar
