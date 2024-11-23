@@ -1,181 +1,157 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.9])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 561D31C9DCB;
-	Fri, 22 Nov 2024 23:30:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.9
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8E44E555;
+	Sat, 23 Nov 2024 04:37:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732318241; cv=none; b=YLUn5Kvgi2wgGFE8W7w/6xWEcx/8Oz0UpFoVT6M/+GqGwzSNZnUIo4y7ODhc3VDWk2eOLIQ72ohHaSmAJ154/a0q4X5rGtn+bkv16IBf3uoQ/mzfePrTRriT7F0NWB0eORU0TuS/5iDI0AYk6pm81b5ThqUWz+D9uvVkSYHnRM4=
+	t=1732336639; cv=none; b=WRNsnLhA5ROmapTILdUsItb0yofbXssg7Xbg4pXLqRo0eKFL/4/J/dmwngeJZaliCEmCHT2xxwgMjJG/S7WgaV9ejlQeBOOlMsrvaZ2XrQG4FIf9rtKqDSssKmry3rH/ZL57tmHeSmJceHRmFuAqCPXJT9pYF4jLAMxYWpwr2o4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732318241; c=relaxed/simple;
-	bh=lKegD691mBFS3bQxcyUvsTDpQBfCiZd+eZcTdkQier0=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=pgz3ffkfwAHbutw9Q26oLEPYwNNIiKrC7Iu8jii3IlG7+mtPm6BUDd4qhCqBbOZb13kolvkNiuH6wVlhm/M3TwAME26hGNRKnBVw+jxqpWQld3rjwJqj1kVo80IlsJl4nDx2Je6+kmR1GJTSYupE/c1EsWgCr4uwz51q2VnVqb4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=BDRKxVw2; arc=none smtp.client-ip=192.198.163.9
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	s=arc-20240116; t=1732336639; c=relaxed/simple;
+	bh=IEfmIuvf4RAZiKcvZ/bEeGLP0YpTuFTW7nzn8ETa25s=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=PrAVE6xrFWuCY2jWhj5FGY6wiHBiFGKNdi4axauK5ZxxDf6zluvYODakGND06oWw8edU/Hy+3rpEmWNQxeXuxqvtfPOKDgvvfybdNFQHinANvzSY4bzkgD9JCXFrN7uVWoJKfozFX/IjttdEk6vGlyapEzhXn3v26yXFE93+dqU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=jj+6P33+; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="BDRKxVw2"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1732318237; x=1763854237;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=lKegD691mBFS3bQxcyUvsTDpQBfCiZd+eZcTdkQier0=;
-  b=BDRKxVw28ioN4DBwNvP8X5R1vVXIm2yJbluOUtxqUtw9s8yh57vDDUGW
-   0CBj8FkB7xUSmDmusqSpABzrdG6rw6YKZeHI3TmF/+YwwOth7vhpud0qu
-   eEVzg2hZfXatRjGBVNZQ5qICfrmc1lLAzV6Tq3R6X/D4Z5CxkcGpggJuk
-   rxeNlwlYCBpWOZHk7Opi7/J+r2UliFboQAV7zKJrXTw6gSns/D3BmWU1y
-   FLXl5x/jyBqs/rvsxXYwN6cWXARyvNWhmifhHDeyjL5DupryOHISXvO33
-   Kvl5IRJjC3vkgqU4tcHh2lEA+zEsWzYvhnIroXLl3joTO2PVR5F5ETYDl
-   g==;
-X-CSE-ConnectionGUID: Cew2i9RFT8Wa4qvysAaXyA==
-X-CSE-MsgGUID: PEYfV/vBQmqDRIU8uH4Ukw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11264"; a="43134425"
-X-IronPort-AV: E=Sophos;i="6.12,177,1728975600"; 
-   d="scan'208";a="43134425"
-Received: from fmviesa005.fm.intel.com ([10.60.135.145])
-  by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Nov 2024 15:30:35 -0800
-X-CSE-ConnectionGUID: NS/4vwCUTou5SDHTT0uQag==
-X-CSE-MsgGUID: N7CxQGoWQ76ACypRl/9n7g==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,177,1728975600"; 
-   d="scan'208";a="95127801"
-Received: from fyu1.sc.intel.com ([172.25.103.126])
-  by fmviesa005.fm.intel.com with ESMTP; 22 Nov 2024 15:30:35 -0800
-From: Fenghua Yu <fenghua.yu@intel.com>
-To: "Vinod Koul" <vkoul@kernel.org>,
-	"Dave Jiang" <dave.jiang@intel.com>
-Cc: dmaengine@vger.kernel.org,
-	"linux-kernel" <linux-kernel@vger.kernel.org>,
-	Fenghua Yu <fenghua.yu@intel.com>
-Subject: [PATCH v2 4/5] dmaengine: idxd: Refactor halt handler
-Date: Fri, 22 Nov 2024 15:30:27 -0800
-Message-Id: <20241122233028.2762809-5-fenghua.yu@intel.com>
-X-Mailer: git-send-email 2.37.1
-In-Reply-To: <20241122233028.2762809-1-fenghua.yu@intel.com>
-References: <20241122233028.2762809-1-fenghua.yu@intel.com>
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="jj+6P33+"
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AN4Gw1w005848;
+	Sat, 23 Nov 2024 04:37:04 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=c2xEIpSPn21EhzqyOoYBSY89
+	AGIccID/ZJQJM8/dhek=; b=jj+6P33+PlgqHvQFfhcImgUh4cjOFDqQbVNThrhi
+	Lx3axgsvp9bEde24hcjT+umDuO9x3zYI5PB2Q1JjEW0Ms+sfsvPaswnaQLoiZGpD
+	rRGEsawybkoUt3mDlwpjAOwnTjLh5vAzjIwXxhfRzh9WvTOgQDkRip6iQ0pXVDvz
+	V6RBEWXd3za1SueGSx0/4/JM+1jTFtDt9Ub4mIW5VH4ngzEKH1rqjeVVx2apHFGY
+	MMYcbY/mv2+56KsbtANCqhAF7LtcOth1p9Hwd/6+sOxRluRCDQbgtDJrz4nH+NeY
+	EAuNg6LCU5r44LKnboETVCx9qmxA9EJS1/y1qQAwrM9zQA==
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43362685fe-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sat, 23 Nov 2024 04:37:03 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4AN4b24w021123
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sat, 23 Nov 2024 04:37:02 GMT
+Received: from hu-varada-blr.qualcomm.com (10.80.80.8) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Fri, 22 Nov 2024 20:36:59 -0800
+Date: Sat, 23 Nov 2024 10:06:55 +0530
+From: Varadarajan Narayanan <quic_varada@quicinc.com>
+To: Md Sadre Alam <quic_mdalam@quicinc.com>
+CC: <vkoul@kernel.org>, <ulf.hansson@linaro.org>, <martin.petersen@oracle.com>,
+        <kees@kernel.org>, <dave.jiang@intel.com>, <av2082000@gmail.com>,
+        <linux-arm-msm@vger.kernel.org>, <dmaengine@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <quic_srichara@quicinc.com>
+Subject: Re: [PATCH] dmaengine: qcom: bam_dma: Avoid writing unavailable
+ register
+Message-ID: <Z0Fb5xBolEtwyUKb@hu-varada-blr.qualcomm.com>
+References: <20241122071649.2618320-1-quic_mdalam@quicinc.com>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <20241122071649.2618320-1-quic_mdalam@quicinc.com>
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: NRZFCp9wre6-FjG--Mb6mOSdEovYI7qI
+X-Proofpoint-ORIG-GUID: NRZFCp9wre6-FjG--Mb6mOSdEovYI7qI
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0
+ priorityscore=1501 clxscore=1011 phishscore=0 spamscore=0 adultscore=0
+ impostorscore=0 mlxscore=0 malwarescore=0 suspectscore=0 mlxlogscore=999
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2411230034
 
-Define a halt handling helper idxd_halt(). Refactor the halt interrupt
-handler to call the helper. This will simplify the Function Level
-Reset (FLR) code.
+On Fri, Nov 22, 2024 at 12:46:49PM +0530, Md Sadre Alam wrote:
+> Avoid writing unavailable register in BAM-Lite mode.
+> BAM_DESC_CNT_TRSHLD register is unavailable in BAM-Lite
+> mode. Its only available in BAM-NDP mode. So avoid writing
+> this register for clients who is using BAM-Lite mode.
+>
+> Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
+> ---
+>  drivers/dma/qcom/bam_dma.c | 22 ++++++++++++++--------
+>  1 file changed, 14 insertions(+), 8 deletions(-)
+>
+> diff --git a/drivers/dma/qcom/bam_dma.c b/drivers/dma/qcom/bam_dma.c
+> index d43a881e43b9..13a08c03746b 100644
+> --- a/drivers/dma/qcom/bam_dma.c
+> +++ b/drivers/dma/qcom/bam_dma.c
+> @@ -59,6 +59,9 @@ struct bam_desc_hw {
+>  #define DESC_FLAG_NWD BIT(12)
+>  #define DESC_FLAG_CMD BIT(11)
+>
+> +#define BAM_LITE	0x13
+> +#define BAM_NDP		0x20
+> +
+>  struct bam_async_desc {
+>  	struct virt_dma_desc vd;
+>
+> @@ -398,6 +401,7 @@ struct bam_device {
+>
+>  	/* dma start transaction tasklet */
+>  	struct tasklet_struct task;
+> +	u32 bam_revision;
+>  };
+>
+>  /**
+> @@ -441,8 +445,9 @@ static void bam_reset(struct bam_device *bdev)
+>  	writel_relaxed(val, bam_addr(bdev, 0, BAM_CTRL));
+>
+>  	/* set descriptor threshold, start with 4 bytes */
+> -	writel_relaxed(DEFAULT_CNT_THRSHLD,
+> -			bam_addr(bdev, 0, BAM_DESC_CNT_TRSHLD));
+> +	if (bdev->bam_revision >= BAM_LITE && bdev->bam_revision < BAM_NDP)
+> +		writel_relaxed(DEFAULT_CNT_THRSHLD,
+> +			       bam_addr(bdev, 0, BAM_DESC_CNT_TRSHLD));
+>
+>  	/* Enable default set of h/w workarounds, ie all except BAM_FULL_PIPE */
+>  	writel_relaxed(BAM_CNFG_BITS_DEFAULT, bam_addr(bdev, 0, BAM_CNFG_BITS));
+> @@ -1000,9 +1005,9 @@ static void bam_apply_new_config(struct bam_chan *bchan,
+>  			maxburst = bchan->slave.src_maxburst;
+>  		else
+>  			maxburst = bchan->slave.dst_maxburst;
+> -
+> -		writel_relaxed(maxburst,
+> -			       bam_addr(bdev, 0, BAM_DESC_CNT_TRSHLD));
+> +		if (bdev->bam_revision >= BAM_LITE && bdev->bam_revision < BAM_NDP)
+> +			writel_relaxed(maxburst,
+> +				       bam_addr(bdev, 0, BAM_DESC_CNT_TRSHLD));
+>  	}
+>
+>  	bchan->reconfigure = 0;
+> @@ -1192,10 +1197,11 @@ static int bam_init(struct bam_device *bdev)
+>  	u32 val;
+>
+>  	/* read revision and configuration information */
+> -	if (!bdev->num_ees) {
+> -		val = readl_relaxed(bam_addr(bdev, 0, BAM_REVISION));
+> +	val = readl_relaxed(bam_addr(bdev, 0, BAM_REVISION));
+> +	if (!bdev->num_ees)
+>  		bdev->num_ees = (val >> NUM_EES_SHIFT) & NUM_EES_MASK;
+> -	}
+> +
+> +	bdev->bam_revision = val & 0xff;
 
-No functional change.
+Use REVISION_MASK instead of 0xff
 
-Signed-off-by: Fenghua Yu <fenghua.yu@intel.com>
----
- drivers/dma/idxd/irq.c | 63 +++++++++++++++++++++---------------------
- 1 file changed, 31 insertions(+), 32 deletions(-)
+-Varada
 
-diff --git a/drivers/dma/idxd/irq.c b/drivers/dma/idxd/irq.c
-index fc049c9c9892..a46e58b756a5 100644
---- a/drivers/dma/idxd/irq.c
-+++ b/drivers/dma/idxd/irq.c
-@@ -383,15 +383,43 @@ static void process_evl_entries(struct idxd_device *idxd)
- 	mutex_unlock(&evl->lock);
- }
- 
-+static irqreturn_t idxd_halt(struct idxd_device *idxd)
-+{
-+	union gensts_reg gensts;
-+
-+	gensts.bits = ioread32(idxd->reg_base + IDXD_GENSTATS_OFFSET);
-+	if (gensts.state == IDXD_DEVICE_STATE_HALT) {
-+		idxd->state = IDXD_DEV_HALTED;
-+		if (gensts.reset_type == IDXD_DEVICE_RESET_SOFTWARE) {
-+			/*
-+			 * If we need a software reset, we will throw the work
-+			 * on a system workqueue in order to allow interrupts
-+			 * for the device command completions.
-+			 */
-+			INIT_WORK(&idxd->work, idxd_device_reinit);
-+			queue_work(idxd->wq, &idxd->work);
-+		} else {
-+			idxd->state = IDXD_DEV_HALTED;
-+			idxd_wqs_quiesce(idxd);
-+			idxd_wqs_unmap_portal(idxd);
-+			idxd_device_clear_state(idxd);
-+			dev_err(&idxd->pdev->dev,
-+				"idxd halted, need %s.\n",
-+				gensts.reset_type == IDXD_DEVICE_RESET_FLR ?
-+				"FLR" : "system reset");
-+		}
-+	}
-+
-+	return IRQ_HANDLED;
-+}
-+
- irqreturn_t idxd_misc_thread(int vec, void *data)
- {
- 	struct idxd_irq_entry *irq_entry = data;
- 	struct idxd_device *idxd = ie_to_idxd(irq_entry);
- 	struct device *dev = &idxd->pdev->dev;
--	union gensts_reg gensts;
- 	u32 val = 0;
- 	int i;
--	bool err = false;
- 	u32 cause;
- 
- 	cause = ioread32(idxd->reg_base + IDXD_INTCAUSE_OFFSET);
-@@ -401,7 +429,7 @@ irqreturn_t idxd_misc_thread(int vec, void *data)
- 	iowrite32(cause, idxd->reg_base + IDXD_INTCAUSE_OFFSET);
- 
- 	if (cause & IDXD_INTC_HALT_STATE)
--		goto halt;
-+		return idxd_halt(idxd);
- 
- 	if (cause & IDXD_INTC_ERR) {
- 		spin_lock(&idxd->dev_lock);
-@@ -435,7 +463,6 @@ irqreturn_t idxd_misc_thread(int vec, void *data)
- 		for (i = 0; i < 4; i++)
- 			dev_warn_ratelimited(dev, "err[%d]: %#16.16llx\n",
- 					     i, idxd->sw_err.bits[i]);
--		err = true;
- 	}
- 
- 	if (cause & IDXD_INTC_INT_HANDLE_REVOKED) {
-@@ -480,34 +507,6 @@ irqreturn_t idxd_misc_thread(int vec, void *data)
- 		dev_warn_once(dev, "Unexpected interrupt cause bits set: %#x\n",
- 			      val);
- 
--	if (!err)
--		goto out;
--
--halt:
--	gensts.bits = ioread32(idxd->reg_base + IDXD_GENSTATS_OFFSET);
--	if (gensts.state == IDXD_DEVICE_STATE_HALT) {
--		idxd->state = IDXD_DEV_HALTED;
--		if (gensts.reset_type == IDXD_DEVICE_RESET_SOFTWARE) {
--			/*
--			 * If we need a software reset, we will throw the work
--			 * on a system workqueue in order to allow interrupts
--			 * for the device command completions.
--			 */
--			INIT_WORK(&idxd->work, idxd_device_reinit);
--			queue_work(idxd->wq, &idxd->work);
--		} else {
--			idxd->state = IDXD_DEV_HALTED;
--			idxd_wqs_quiesce(idxd);
--			idxd_wqs_unmap_portal(idxd);
--			idxd_device_clear_state(idxd);
--			dev_err(&idxd->pdev->dev,
--				"idxd halted, need %s.\n",
--				gensts.reset_type == IDXD_DEVICE_RESET_FLR ?
--				"FLR" : "system reset");
--		}
--	}
--
--out:
- 	return IRQ_HANDLED;
- }
- 
--- 
-2.37.1
-
+>  	/* check that configured EE is within range */
+>  	if (bdev->ee >= bdev->num_ees)
+> --
+> 2.34.1
+>
