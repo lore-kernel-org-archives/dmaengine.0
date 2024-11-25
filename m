@@ -1,166 +1,130 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f174.google.com (mail-yw1-f174.google.com [209.85.128.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43C508827;
-	Mon, 25 Nov 2024 08:11:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0C8518D64B;
+	Mon, 25 Nov 2024 08:54:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732522280; cv=none; b=LJZ5aPn+lAUKEgRDj3VrR6h2SRI70mkPZFGiBmfek87tIOZkZB0GGkSmVsenXlBuxkIAGvljtq8/ukqEhOP3H0LQCDPfItjjZIGLuEpMJODK+cYxkcSXSXuPOoi2w5dtI2vXQlf7v0nFvn1Qo4IBHab1cFMQNWL4YyPz5ugN6qY=
+	t=1732524853; cv=none; b=Rcy/HfskNxaBdLt6BYEqoEqvEF43+iNVnhkHSHVaudO1DakwuG1hfVLFqeziX8eSWk01qsutQM69q+MjCOPLtodK44nMYLuNaPIKOFdw/EdXi/erz2j25vgDlM/UvLy5t5s2m9b98qCpAC+GbsLW9rDFKKWMEiZdXJGkSxvdAGU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732522280; c=relaxed/simple;
-	bh=zV+uPzFR4jgxt9py0AYoazJ5UUZncuWxs2GK2HxNutI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=cTCzRTX0I7DxUKed5wU8CR/OiQrTAvV8/0em1zx36vd0SESelOe3JbuNdLqQUceakM83nQmytVsxkdwS/yMEk0lQ7fNEk1ugG4amLtd/xY84EVLMwWd5BrConfo1YEgMMiTJHlKDemtXk/UN3t2sOQDWuRvHXddYkALgDeycK2c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CsGIwaDe; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CsGIwaDe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32E55C4CECE;
-	Mon, 25 Nov 2024 08:11:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1732522279;
-	bh=zV+uPzFR4jgxt9py0AYoazJ5UUZncuWxs2GK2HxNutI=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=CsGIwaDeYx4LhwxV2uAj7ROqK8UrTWCwCP0EnMS7IiQDDNGEvn9J+lWHecXU8Y0Fn
-	 uw4JmJYqcxa/5aGub3L0IbUzVco3s7ATcw51J+p0qjA70Tskj8KTUyDVqGT9GOYR9S
-	 Eo6LKpxe67ISRVUi8ogB11i06n5YGeA4OU6psF01IXsUMx9RVlGgL2z/9chJJzdZSY
-	 Kc0d5cIwn35e2OwJAQKgAQh+VKwJUpSFn8N5zwrA7g4FWrV2sF0xoJvB1E5aqbxQzD
-	 +qfDtiNpGtWgEyvtRwoCUWQ0ouj0hDDdQxNxY1QmDnUszIkJqrTrK44cE3fD6aweOs
-	 JRmX1//XF8ieQ==
-Message-ID: <e1a7d9d6-c382-48f6-bf7f-145290d214d1@kernel.org>
-Date: Mon, 25 Nov 2024 09:11:10 +0100
+	s=arc-20240116; t=1732524853; c=relaxed/simple;
+	bh=FAzHehnj8z0R4xGCvHYxjzAVaPYClp5BTtPVU62/xVk=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=aGOLI8AwtnXc6ZHFLoK/7Y5gJ8SESmKszd+7qEQWQJQRyDoMKX2jacSaWpiqpiZC1chcgiHDE6/1V+ALTIVVDTL2/ah3UfMN/MrW/1G7GWSLLbx0A+J8B7oqRRHOIiWz0Hax3u8TkPXRBujRbYqHALpiYl8cys6zqmMXBL7ZtdA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.128.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-yw1-f174.google.com with SMTP id 00721157ae682-6ee676b4e20so41039257b3.3;
+        Mon, 25 Nov 2024 00:54:10 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1732524849; x=1733129649;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=uTvz5S4bSfDhcEqcnkIVdhgujNubXreDmH6cr9kqGes=;
+        b=solAI/Nros4tIp6dXAjcKkFplmjj/1LJfcH57fbK2GE6pBOafXa3BZb2EJZ8qqZHf8
+         BbzXdPven0HFrc9JNmZA9+ZwbsKTayajoIVpBomKncsYw7hBxqXN85Wot1rK9tV3M3MB
+         pZvT0N2trWFzZEqnqJBBBuxDBv1WAlpJ4rXT+Ei1SDxATD83E2Z2mLNJEunU50apb5mO
+         /rKZzJP7xIibPVy5Z+xXPfaLToELfkMmMWwUGQvIo23HbaPDhuNbFdzLDV4VYm3r5ivV
+         GynQxEkboUseQ11BKx5+qlcbWkjHRqdt2IDBhq1pdyCKdeFuwIfWxYiCuyUkYB6Ayzfd
+         RLMg==
+X-Forwarded-Encrypted: i=1; AJvYcCWKthxGNztv3t/A24GnpHwoC2+uGRHS8cNK2nN37ptvCyf9tEI1DQ0THGNy6TGxViC82sfkQU1Xek4=@vger.kernel.org, AJvYcCXkRAYulJKFbAcCocDBDRPPXLaWplm+qIPZSiNjx5U+vmc0XWdLOzKsCX5Kq9+DLAYQLYeJDHdHbYTUvTo4mHdZsR0=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwOwk5yvAuRNWIlGfCi6u3KCXSwub7ggd7Iqx9Duy/HPz4V2KGq
+	/YRIU81SLZ+rfa+u8+HXWOY4T7gAFsdqFLCEUXX2NRZwjejXyT6vNpf4VNf9
+X-Gm-Gg: ASbGnctwhGkQb6BbO25R0UqU1mMSvOkJV82SRCG0DcP0HtW8XtGwBkph8S1CzTtS66O
+	zxcyjEXitkXNptETN7Sx2qdAvwlt5v2QXMvFFXHrH72yx2xq4/jcf53VXDkBoaOgWFg+RNafcg4
+	TMB+PD35fjCiwMVK66TMzzWj29LDQm3BrWSR4ACYZRCwpWidlxB9yXYMGSE6u0/hB8iUpQYnhg2
+	3pl/bCytivAz8BfM6weYpKA/aH3WKovK+foAbDEpqZL0jB4q8+wLYTggdekye30tAA/9hzGAlGK
+	vwJw10h2xOaFspM1
+X-Google-Smtp-Source: AGHT+IH3I9YZYVYQBgy0WQYLdh/v416ZCGgX48qD+RWHndFiV+3yQF7txJM7u000qpN7pcjLCIjOzQ==
+X-Received: by 2002:a05:690c:6c13:b0:6e2:aceb:fb34 with SMTP id 00721157ae682-6eee087c02cmr110381767b3.1.1732524849407;
+        Mon, 25 Nov 2024 00:54:09 -0800 (PST)
+Received: from mail-yw1-f174.google.com (mail-yw1-f174.google.com. [209.85.128.174])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-6eedfe15248sm17281377b3.25.2024.11.25.00.54.09
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 25 Nov 2024 00:54:09 -0800 (PST)
+Received: by mail-yw1-f174.google.com with SMTP id 00721157ae682-6ee7a400647so42929557b3.1;
+        Mon, 25 Nov 2024 00:54:09 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCWlcP+EK7aXMiI6OD/TCR5ozk6lZsHmoyL5+Heu4dwa6WPxEL6j7FOe9o70UnvWUhN03yG7WVJI3Es=@vger.kernel.org, AJvYcCXtIdzHjbm63IM/UJu+nPvH4+/Y0FDkOpzviLWH9BR9dzt8/ZpatdQHlazq9JSVDjtOXbv1351ClEComgWAbBZncjk=@vger.kernel.org
+X-Received: by 2002:a0d:c2c1:0:b0:6ee:9052:8e18 with SMTP id
+ 00721157ae682-6eee087b79amr83811147b3.6.1732524848899; Mon, 25 Nov 2024
+ 00:54:08 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 1/4] dt-bindindgs: i2c: qcom,i2c-geni: Document shared
- flag
-To: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>,
- Rob Herring <robh@kernel.org>
-Cc: konrad.dybcio@linaro.org, andersson@kernel.org, andi.shyti@kernel.org,
- linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-i2c@vger.kernel.org,
- conor+dt@kernel.org, agross@kernel.org, devicetree@vger.kernel.org,
- vkoul@kernel.org, linux@treblig.org, dan.carpenter@linaro.org,
- Frank.Li@nxp.com, konradybcio@kernel.org, bryan.odonoghue@linaro.org,
- krzk+dt@kernel.org, quic_vdadhani@quicinc.com
-References: <20241113161413.3821858-1-quic_msavaliy@quicinc.com>
- <20241113161413.3821858-2-quic_msavaliy@quicinc.com>
- <20241115173156.GA3432253-robh@kernel.org>
- <ff20d185-4db4-482b-b6dd-06e46124b8ab@quicinc.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <ff20d185-4db4-482b-b6dd-06e46124b8ab@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <87ttbw3zq7.wl-kuninori.morimoto.gx@renesas.com>
+In-Reply-To: <87ttbw3zq7.wl-kuninori.morimoto.gx@renesas.com>
+From: Geert Uytterhoeven <geert@linux-m68k.org>
+Date: Mon, 25 Nov 2024 09:53:57 +0100
+X-Gmail-Original-Message-ID: <CAMuHMdVyCNcdkE=HpRA1mOiE5qAF0+vcWbwJM531G91G-b9aTg@mail.gmail.com>
+Message-ID: <CAMuHMdVyCNcdkE=HpRA1mOiE5qAF0+vcWbwJM531G91G-b9aTg@mail.gmail.com>
+Subject: Re: [PATCH] dmaengine: sh: rcar-dmac: remove r8a779a0 settings
+To: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
+Cc: Vinod Koul <vkoul@kernel.org>, Ulf Hansson <ulf.hansson@linaro.org>, 
+	Robin Murphy <robin.murphy@arm.com>, dmaengine@vger.kernel.org, 
+	linux-renesas-soc@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 17/11/2024 18:45, Mukesh Kumar Savaliya wrote:
-> Thanks Rob for your review and comments !
-> 
-> On 11/15/2024 11:01 PM, Rob Herring wrote:
->> On Wed, Nov 13, 2024 at 09:44:10PM +0530, Mukesh Kumar Savaliya wrote:
->>> Adds qcom,is-shared flag usage. Use this flag when I2C serial controller
->>
->> Doesn't match the property name.
-> Sure, i need to change the name here as qcom,shared-se, will upload a 
-> new patch.
->>
->>> needs to be shared in multiprocessor system(APPS,Modem,ADSP) environment.
->>>
->>> Two clients from different processors can share an I2C controller for same
->>> slave device OR their owned slave devices. Assume I2C Slave EEPROM device
->>> connected with I2C controller. Each client from ADSP SS and APPS Linux SS
->>> can perform i2c transactions.
->>>
->>> Transfer gets serialized by Lock TRE + DMA xfer + Unlock TRE at HW level.
->>>
->>> Signed-off-by: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
->>> ---
->>>   Documentation/devicetree/bindings/i2c/qcom,i2c-geni-qcom.yaml | 4 ++++
->>>   1 file changed, 4 insertions(+)
->>>
->>> diff --git a/Documentation/devicetree/bindings/i2c/qcom,i2c-geni-qcom.yaml b/Documentation/devicetree/bindings/i2c/qcom,i2c-geni-qcom.yaml
->>> index 9f66a3bb1f80..fe36938712f7 100644
->>> --- a/Documentation/devicetree/bindings/i2c/qcom,i2c-geni-qcom.yaml
->>> +++ b/Documentation/devicetree/bindings/i2c/qcom,i2c-geni-qcom.yaml
->>> @@ -60,6 +60,10 @@ properties:
->>>     power-domains:
->>>       maxItems: 1
->>>   
->>> +  qcom,shared-se:
->>
->> What is 'se'? Is that defined somewhere?
->>
-> SE is Serial Engine acting as I2C controller. Let me add second line for 
-> SE here also.
-> 
-> It's mentioned in source code in Patch 3 where it's used.
->  >>> True if serial engine is shared between multiprocessors OR 
-> Execution Environment.
-You already got this comment:
-https://lore.kernel.org/lkml/20240927063108.2773304-4-quic_msavaliy@quicinc.com/T/#m79efdd1172631aca99a838b4bfe57943755701e3
+Hi Morimoto-san,
 
-""se" is also not explained in the binding - please open it and look for
-such explanation."
+On Mon, Nov 25, 2024 at 1:48=E2=80=AFAM Kuninori Morimoto
+<kuninori.morimoto.gx@renesas.com> wrote:
+> Historically r8a779a0 SoC specific compatible was added to rcar-dmac,
+> but it is same as Gen4 today, and r8a779a0 SoC DT has both SoC and Gen4
+> compatible. SoC specific compatible is no longer needed. Let's remove it.
+>
+>         static const struct of_device_id rcar_dmac_of_ids[] =3D {
+>                 ...
+>                 }, {
+>                         .compatible =3D "renesas,rcar-gen4-dmac",
+> =3D>                      .data =3D &rcar_gen4_dmac_data,
+>                 }, {
+>                         .compatible =3D "renesas,dmac-r8a779a0",
+> =3D>                      .data =3D &rcar_gen4_dmac_data,
+>                 },
+>
+>         dmacX: dma-controller@XXXXX {
+> =3D>              compatible =3D "renesas,dmac-r8a779a0",
+> =3D>                           "renesas,rcar-gen4-dmac";
+>                 ...
+>         };
+>
+> Signed-off-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
 
-Further comments asked you to rephrase it. Did anything improve? No,
-nothing.
+Thanks for your patch!
 
-You got comments, you ignore them and send the same.
+> --- a/drivers/dma/sh/rcar-dmac.c
+> +++ b/drivers/dma/sh/rcar-dmac.c
+> @@ -2022,9 +2022,6 @@ static const struct of_device_id rcar_dmac_of_ids[]=
+ =3D {
+>         }, {
+>                 .compatible =3D "renesas,rcar-gen4-dmac",
+>                 .data =3D &rcar_gen4_dmac_data,
+> -       }, {
+> -               .compatible =3D "renesas,dmac-r8a779a0",
+> -               .data =3D &rcar_gen4_dmac_data,
+>         },
+>         { /* Sentinel */ }
+>  };
 
-But most important: I keep repeating this over and over - NAK for some
-specific "shared-se" flag, different for each of your IP blocks. Come
-with something generic for entire qualcomm. There are few of such flags
-already and there are some patches adding it in different flavors.
+This compatible value was retained in the driver because of DT
+backwards compatibility: DTBs created between v5.12 and v5.19 use only
+"renesas,dmac-r8a779a0".
 
-Get this consistent.
+Gr{oetje,eeting}s,
 
-NAK for this and v5 doing exactly theh same.
+                        Geert
 
-Best regards,
-Krzysztof
+--=20
+Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k=
+.org
+
+In personal conversations with technical people, I call myself a hacker. Bu=
+t
+when I'm talking to journalists I just say "programmer" or something like t=
+hat.
+                                -- Linus Torvalds
