@@ -1,124 +1,142 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 929521D79BE;
-	Mon,  2 Dec 2024 16:52:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C00101D90B3;
+	Mon,  2 Dec 2024 17:20:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.137.202.133
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733158371; cv=none; b=fHcRYolvlz/CwZ6ZlxxpEFiRWUiG39/vCcVMa1oSx4ysA2uMJ/7zF5/iBfrEvGEbhSFj/SgzFBycE4V+RuszMTfJ5zKmDdoPbN5EUcv4xUI51XifixgA574X7mA8WUXA8kfbqCzao3hHR3npJg5ED8FbEBDfg0vqU8fnf29L7b0=
+	t=1733160010; cv=none; b=pO/cdT1/IUUTZJALKTH70mNdwy47DeCDlLFOEtWwPDSqsl5uTBtm3+dGqnc0IxfPwYAFNYegGj6O2uKpu2PLaC1shIl48tJqm0FQq42RzLKWRcKPvNoLspWh2diFrTziwssYXxeTug2p2N3FdGeFFlq/MNqqOa20m1OYAxtgNag=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733158371; c=relaxed/simple;
-	bh=Q4lgsKkUPNBCVPx2h6Wla6/xJs8K53Ur7RI1wCNcloo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=d/coeqsC6xCKPOq/rbg2rhAvQeAOf7nDC5/BgE3v/EirvbXP+HFciGEqxmVqsoQkJ2YQp16TS16Fbd3y320zlTaitfRqTMXLcwDoVT3l0UIJvfpdR8F6hW+wyQ8G5cL99yDrvlrWY85xjglOMzRurBl42XqX7ai9OuzNqO9EwKk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=i7eCKFg1; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1733160010; c=relaxed/simple;
+	bh=v+f54fpLaQL8rTOv4FoBlBj13ULgxn3OJ8Sel2teQqg=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=rcdGe9xlKHHkcQnFob2xiYuvMI8yYTWi3VI3NbYgbTJlR3LzXjBPsP4JW4+vtqBk2gT8D5B8N5LiiBDw6fGmdCRBcdwDQcFKjqbKvs7GvkAltC2YW8VvATMpZ5ddaUQz6XHrR6XyqZqD1NcP3UhxXNBjKm6zPZ9ZdlFe9lkW1/I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org; spf=none smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=yrppKEqj; arc=none smtp.client-ip=198.137.202.133
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=infradead.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="i7eCKFg1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE0C7C4CED1;
-	Mon,  2 Dec 2024 16:52:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1733158371;
-	bh=Q4lgsKkUPNBCVPx2h6Wla6/xJs8K53Ur7RI1wCNcloo=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=i7eCKFg1KXaaddaBtfqvXEQXCx2za65xSHDAg3p8iOSCWY6ytSNVv12kFL7z7CWvq
-	 0DMDJHotcWDgEDTMj4PylU1/giO6ZMrur/AUevxXMWfJF2QSKA3PdTnFBuglYs9v1l
-	 zCVze3VgoxR4wEK0qEngPtu4l8FdTi7N57nYrhTLhhuUiGnk52yUwNHMtO6TRkLpKD
-	 UO1NIPx7IyPzKssU3ntLNZQ0wOGJoLJEbIu5NOn9z91bBvHGpBiuRqU9SfQfDX5wWr
-	 2rARLFekFQxrlVxy3Fzeu/aF4tQcZku6YYQMY6hDpWKslOmAWnZO0V9FbFOSRigjCM
-	 3xbcYpmeBH+9Q==
-Date: Mon, 2 Dec 2024 22:22:47 +0530
-From: Vinod Koul <vkoul@kernel.org>
-To: Stefan Wahren <wahrenst@gmx.net>
-Cc: Russell King <linux@armlinux.org.uk>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Ray Jui <rjui@broadcom.com>, Scott Branden <sbranden@broadcom.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
-	Minas Harutyunyan <hminas@synopsys.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Lukas Wunner <lukas@wunner.de>,
-	Peter Robinson <pbrobinson@gmail.com>,
-	"Ivan T . Ivanov" <iivanov@suse.de>,
-	linux-arm-kernel@lists.infradead.org, kernel-list@raspberrypi.com,
-	bcm-kernel-feedback-list@broadcom.com, dmaengine@vger.kernel.org,
-	linux-mmc@vger.kernel.org, linux-usb@vger.kernel.org
-Subject: Re: [PATCH V5 2/9] dmaengine: bcm2835-dma: add suspend/resume pm
- support
-Message-ID: <Z03l308ur7xuE1SB@vaman>
-References: <20241025103621.4780-1-wahrenst@gmx.net>
- <20241025103621.4780-3-wahrenst@gmx.net>
+	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="yrppKEqj"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=bombadil.20210309; h=Content-Transfer-Encoding:
+	MIME-Version:Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:
+	Content-ID:Content-Description:In-Reply-To:References;
+	bh=EgOfwhcvCW9bcLzd0M9yQx5qoL3sNtqxGVsT84DfwBQ=; b=yrppKEqj1zeoN1nSXyY9dJfPXm
+	khMCf66sivKMa97z52e9Lamtv7I0O4AZddxKautnbZ2hOa1gQd3bTjBoxCFua4qafDpLXILK8esih
+	ca9FyM79NL/E2zS6RVqNeKJfPNi8xQzUxFrY+AOtP7V52UVfFUOmZbmB8aqJVlaPXSaoBRRNFGX2f
+	zxYg4LV1GuV9cexiMCz5W8OpRn5zTkjo+iqoDcSksfed/J1CORKZtO8sPubpyw1Vn8EGfJ9zu/aTM
+	aUV4MrKlyJ0cixxIe5DGPThLPrfAbMGT0RILaTv8+UgFJ68mgQLW7kn5BzN9L81sejCXJhtL85STw
+	tL1TKChw==;
+Received: from [50.53.2.24] (helo=bombadil.infradead.org)
+	by bombadil.infradead.org with esmtpsa (Exim 4.98 #2 (Red Hat Linux))
+	id 1tIA5f-00000006zlD-0ijO;
+	Mon, 02 Dec 2024 17:20:07 +0000
+From: Randy Dunlap <rdunlap@infradead.org>
+To: linux-kernel@vger.kernel.org
+Cc: Randy Dunlap <rdunlap@infradead.org>,
+	Dan Williams <dan.j.williams@intel.com>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Paul Cercueil <paul@crapouillou.net>,
+	Nuno Sa <nuno.sa@analog.com>,
+	Vinod Koul <vkoul@kernel.org>,
+	dmaengine@vger.kernel.org
+Subject: [PATCH v2] linux/dmaengine.h: fix a few kernel-doc warnings
+Date: Mon,  2 Dec 2024 09:20:04 -0800
+Message-ID: <20241202172004.76020-1-rdunlap@infradead.org>
+X-Mailer: git-send-email 2.47.1
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241025103621.4780-3-wahrenst@gmx.net>
+Content-Transfer-Encoding: 8bit
 
-On 25-10-24, 12:36, Stefan Wahren wrote:
-> bcm2835-dma provides the service to others, so it should
-> suspend late and resume early.
-> 
-> Signed-off-by: Stefan Wahren <wahrenst@gmx.net>
-> ---
->  drivers/dma/bcm2835-dma.c | 30 ++++++++++++++++++++++++++++++
->  1 file changed, 30 insertions(+)
-> 
-> diff --git a/drivers/dma/bcm2835-dma.c b/drivers/dma/bcm2835-dma.c
-> index e1b92b4d7b05..647dda9f3376 100644
-> --- a/drivers/dma/bcm2835-dma.c
-> +++ b/drivers/dma/bcm2835-dma.c
-> @@ -875,6 +875,35 @@ static struct dma_chan *bcm2835_dma_xlate(struct of_phandle_args *spec,
->  	return chan;
->  }
-> 
-> +static int bcm2835_dma_suspend_late(struct device *dev)
-> +{
-> +	struct bcm2835_dmadev *od = dev_get_drvdata(dev);
-> +	struct bcm2835_chan *c, *next;
-> +
-> +	list_for_each_entry_safe(c, next, &od->ddev.channels,
-> +				 vc.chan.device_node) {
-> +		void __iomem *chan_base = c->chan_base;
-> +
-> +		if (readl(chan_base + BCM2835_DMA_ADDR)) {
-> +			dev_warn(dev, "Suspend is prevented by chan %d\n",
-> +				 c->ch);
-> +			return -EBUSY;
-> +		}
+The comment block for "Interleaved Transfer Request" should not begin
+with "/**" since it is not in kernel-doc format.
 
-Can you help understand how this helps by logging... we are not adding
-anything except checking this and resume is NOP as well!
+Fix doc name for enum sum_check_flags.
 
-> +	}
-> +
-> +	return 0;
-> +}
-> +
-> +static int bcm2835_dma_resume_early(struct device *dev)
-> +{
-> +	return 0;
-> +}
-> +
-> +static const struct dev_pm_ops bcm2835_dma_pm_ops = {
-> +	SET_LATE_SYSTEM_SLEEP_PM_OPS(bcm2835_dma_suspend_late,
-> +				     bcm2835_dma_resume_early)
-> +};
-> +
->  static int bcm2835_dma_probe(struct platform_device *pdev)
->  {
->  	struct bcm2835_dmadev *od;
-> @@ -1033,6 +1062,7 @@ static struct platform_driver bcm2835_dma_driver = {
->  	.driver = {
->  		.name = "bcm2835-dma",
->  		.of_match_table = of_match_ptr(bcm2835_dma_of_match),
-> +		.pm = pm_ptr(&bcm2835_dma_pm_ops),
->  	},
->  };
-> 
-> --
-> 2.34.1
+Fix all (4) missing struct member warnings.
 
--- 
-~Vinod
+Use "Warning:" for one "Note:" in enum dma_desc_metadata_mode since
+scripts/kernel-doc does not allow more than one Note:
+per function or identifier description.
+
+This leaves around 49 kernel-doc warnings like:
+  include/linux/dmaengine.h:43: warning: Enum value 'DMA_OUT_OF_ORDER' not described in enum 'dma_status'
+
+and another scripts/kernel-doc problem with it not being able to parse
+some typedefs.
+
+Fixes: b14dab792dee ("DMAEngine: Define interleaved transfer request api")
+Fixes: ad283ea4a3ce ("async_tx: add sum check flags")
+Fixes: 272420214d26 ("dmaengine: Add DMA_CTRL_REUSE")
+Fixes: f067025bc676 ("dmaengine: add support to provide error result from a DMA transation")
+Fixes: d38a8c622a1b ("dmaengine: prepare for generic 'unmap' data")
+Fixes: 5878853fc938 ("dmaengine: Add API function dmaengine_prep_peripheral_dma_vec()")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Cc: Dan Williams <dan.j.williams@intel.com>
+Cc: Dave Jiang <dave.jiang@intel.com>
+Cc: Paul Cercueil <paul@crapouillou.net>
+Cc: Nuno Sa <nuno.sa@analog.com>
+Cc: Vinod Koul <vkoul@kernel.org>
+Cc: dmaengine@vger.kernel.org
+---
+v2: Fix an improper Fixes: line.
+    Drop Jassi Brar from Cc: list (bounces).
+
+ include/linux/dmaengine.h |   13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
+
+--- linux-next-20241122.orig/include/linux/dmaengine.h
++++ linux-next-20241122/include/linux/dmaengine.h
+@@ -84,7 +84,7 @@ enum dma_transfer_direction {
+ 	DMA_TRANS_NONE,
+ };
+ 
+-/**
++/*
+  * Interleaved Transfer Request
+  * ----------------------------
+  * A chunk is collection of contiguous bytes to be transferred.
+@@ -223,7 +223,7 @@ enum sum_check_bits {
+ };
+ 
+ /**
+- * enum pq_check_flags - result of async_{xor,pq}_zero_sum operations
++ * enum sum_check_flags - result of async_{xor,pq}_zero_sum operations
+  * @SUM_CHECK_P_RESULT - 1 if xor zero sum error, 0 otherwise
+  * @SUM_CHECK_Q_RESULT - 1 if reed-solomon zero sum error, 0 otherwise
+  */
+@@ -286,7 +286,7 @@ typedef struct { DECLARE_BITMAP(bits, DM
+  *	pointer to the engine's metadata area
+  *   4. Read out the metadata from the pointer
+  *
+- * Note: the two mode is not compatible and clients must use one mode for a
++ * Warning: the two modes are not compatible and clients must use one mode for a
+  * descriptor.
+  */
+ enum dma_desc_metadata_mode {
+@@ -594,9 +594,13 @@ struct dma_descriptor_metadata_ops {
+  * @phys: physical address of the descriptor
+  * @chan: target channel for this operation
+  * @tx_submit: accept the descriptor, assign ordered cookie and mark the
++ * @desc_free: driver's callback function to free a resusable descriptor
++ *	after completion
+  * descriptor pending. To be pushed on .issue_pending() call
+  * @callback: routine to call after this operation is complete
++ * @callback_result: error result from a DMA transaction
+  * @callback_param: general parameter to pass to the callback routine
++ * @unmap: hook for generic DMA unmap data
+  * @desc_metadata_mode: core managed metadata mode to protect mixed use of
+  *	DESC_METADATA_CLIENT or DESC_METADATA_ENGINE. Otherwise
+  *	DESC_METADATA_NONE
+@@ -827,6 +831,9 @@ struct dma_filter {
+  * @device_prep_dma_memset: prepares a memset operation
+  * @device_prep_dma_memset_sg: prepares a memset operation over a scatter list
+  * @device_prep_dma_interrupt: prepares an end of chain interrupt operation
++ * @device_prep_peripheral_dma_vec: prepares a scatter-gather DMA transfer,
++ *	where the address and size of each segment is located in one entry of
++ *	the dma_vec array.
+  * @device_prep_slave_sg: prepares a slave dma operation
+  * @device_prep_dma_cyclic: prepare a cyclic dma operation suitable for audio.
+  *	The function takes a buffer of size buf_len. The callback function will
