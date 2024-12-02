@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77F5817DFE1;
-	Mon,  2 Dec 2024 16:21:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 052A5AD51;
+	Mon,  2 Dec 2024 16:27:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733156513; cv=none; b=D0GjvxHzhGI6i1xoD1RvWhXhaVvlos+57/zZ//Yk7x3UoxmI4kuYc32h3u2UuDq4jC9XKOgK6SdLvgshRqDfjkDqmUEFsZNdyaOZh9Omhkcxik4rohkvmLmKeHx85Z3vi2k138pa2z0r2in/ldKtcvg+aJhTF6juQtZ0rG2EYG4=
+	t=1733156824; cv=none; b=RVtYv/cIKvSql9Dhgb9bT9Gsxqhq5xYyUVbJXQNsDwjPhO5eZVzxoNmV9fCdBKXSavN3QEVYgtZdhP2hPhqupn1k7y8T5a0A0rIE6aJ1zAlvj0i8KFnW/F45XX5QVlEeINbR7NqXiOW++fkX/uXqNmbqXyTpj4OQi2pIvQYQooA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733156513; c=relaxed/simple;
-	bh=M8G40HlAqKSLTPrhmiBGiAiaHsou848ROOonuY5/5nU=;
+	s=arc-20240116; t=1733156824; c=relaxed/simple;
+	bh=nPtb1zSByJeaDM0DUV8mbGmOuC3IvCO7oLz660454R8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=CRhnD2q3Oi2nhCDmLY32mjUdHxT12eEUDSIGCjBQkFKdzeVC0257obxAA2akaYp+qylUyKZQNgxN1GDjEMo+5gVzgepTreRMT4Hs6zFYx/7SSK/mKPR4cXYj5A+lVWF6AebYe0bs0fwq13jeq2xm8pNMwLN73qLU4R55S7sGhAY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UbbY+fN9; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=JnEVsCFSlU2D/h/xY+hNFFCENKNOJW/T/qrS5VSWUhOeT4XCfQu01k6TCKQO3PaPzY4vC+DG8Dbj2R+gnKIgR9/ZO5PFhH+Hp/X3oc9U4LBT6e7ZP+iKBERKg7m/cWw3SrepFJ3c8/2n4EGIDkD0wAlok5JFycqBMXlQyt60xiE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tqDFWYx7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UbbY+fN9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 653EBC4CED2;
-	Mon,  2 Dec 2024 16:21:52 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tqDFWYx7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3500C4CED6;
+	Mon,  2 Dec 2024 16:27:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1733156513;
-	bh=M8G40HlAqKSLTPrhmiBGiAiaHsou848ROOonuY5/5nU=;
+	s=k20201202; t=1733156823;
+	bh=nPtb1zSByJeaDM0DUV8mbGmOuC3IvCO7oLz660454R8=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=UbbY+fN9ZiJcMZQiFp71hUeY1hRNb1GaGHbKL3cQIQv0DQHsvaP05oB6ME1aUAQxc
-	 66OqCG4Uc+204F0ecBk78hYkY4ho4pO0qH5pqLnWHqdQYJsREc4kPCnz2BvEDSpzC5
-	 M8LRpBj6bbZwV+ZNZn+NOPeekUitp+jfcHt79/k3/extQmg1tlR0PRod1vM2d2EUnN
-	 zKoE3/d5q8t5H+K0Uut/gTFjwSaKBctZukM/POAYtb9mc7h+xtGljfj2baAMfQthWf
-	 YYe1vLveIWbFaVPj4sT3Fnl9F7ptEGWujI2ObxJ4p49tb4eTGgzYXdeTjYxjG2HYFO
-	 chlJpSIVYvNEQ==
-Date: Mon, 2 Dec 2024 21:51:48 +0530
+	b=tqDFWYx7tpuPs3199TfcyJNFHIKuE9dIV29mA/Za4FBuKVG04CgyqNFfqVNTXOkGE
+	 j5u+kEm6H5NIy4FvI/Jo5lXhzQcMhvrPpRtT8TWqTy7jrTDrJcy08aqMoaDKDlnm04
+	 7uEsw71bbPEAa8jiTRrjUn58w39Tc5IKSbLrELF05NTtzs5FfsAOG2S8Dna5J0Adcl
+	 UVmAVfjsJy/+ZFFf2p7UB0mixrpNIiVPGsC88kxq88WslnlWxI22tRcX6Sxnw1wEle
+	 v9Y2UOyFEOOcY/Xs9QtBR/R3fae/o17hjvAfF/yhxhjKHJkbkQhJ54Fa9/2nhy8cgN
+	 pr9+jf6ygE3zQ==
+Date: Mon, 2 Dec 2024 21:56:59 +0530
 From: Vinod Koul <vkoul@kernel.org>
-To: Randy Dunlap <rdunlap@infradead.org>
-Cc: linux-kernel@vger.kernel.org, Dan Williams <dan.j.williams@intel.com>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Paul Cercueil <paul@crapouillou.net>, Nuno Sa <nuno.sa@analog.com>,
-	dmaengine@vger.kernel.org
-Subject: Re: [PATCH] linux/dmaengine.h: fix a few kernel-doc warnings
-Message-ID: <Z03enImvI+c7cZYw@vaman>
-References: <20241125061508.165099-1-rdunlap@infradead.org>
- <1dcee6d5-761b-4fa2-a336-c23d3aaadcb9@infradead.org>
+To: fnkl.kernel@gmail.com
+Cc: Hector Martin <marcan@marcan.st>, Sven Peter <sven@svenpeter.dev>,
+	Alyssa Rosenzweig <alyssa@rosenzweig.io>,
+	Martin =?utf-8?Q?Povi=C5=A1er?= <povik+lin@cutebit.org>,
+	asahi@lists.linux.dev, linux-arm-kernel@lists.infradead.org,
+	dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] dmaengine: apple-admac: Avoid accessing registers in
+ probe
+Message-ID: <Z03f08Os/csGbMap@vaman>
+References: <20241124-admac-power-v1-1-58f2165a4d55@gmail.com>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -45,56 +46,59 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1dcee6d5-761b-4fa2-a336-c23d3aaadcb9@infradead.org>
+In-Reply-To: <20241124-admac-power-v1-1-58f2165a4d55@gmail.com>
 
-On 24-11-24, 22:20, Randy Dunlap wrote:
+On 24-11-24, 16:48, Sasha Finkelstein via B4 Relay wrote:
+> From: Sasha Finkelstein <fnkl.kernel@gmail.com>
 > 
-> 
-> On 11/24/24 10:15 PM, Randy Dunlap wrote:
-> > The comment block for "Interleaved Transfer Request" should not begin
-> > with "/**" since it is not in kernel-doc format.
-> > 
-> > Fix doc name for enum sum_check_flags.
-> > 
-> > Fix all (4) missing struct member warnings.
-> > 
-> > Use "Warning:" for one "Note:" in enum dma_desc_metadata_mode since
-> > scripts/kernel-doc does not allow more than one Note:
-> > per function or identifier description.
-> > 
-> > This leaves around 49 kernel-doc warnings like:
-> >   include/linux/dmaengine.h:43: warning: Enum value 'DMA_OUT_OF_ORDER' not described in enum 'dma_status'
-> > 
-> > and another scripts/kernel-doc problem with it not being able to parse
-> > some typedefs.
-> > 
-> > Fixes: b14dab792dee ("DMAEngine: Define interleaved transfer request api"), Jassi Brar
-> 
-> Oops, I left a note in the line above. I'll fix it for v2 after comments.
+> The ADMAC attached to the AOP has complex power sequencing, and is
+> power gated when the probe callback runs. Move the register reads
+> to other functions, where we can guarantee that the hardware is
+> switched on.
 
-lgt,, I guess we can do a v2 now
+So looking at the driver, there is code to turn power, so what ensures
+that power is up while we are in alloc callback
 
 > 
-> > Fixes: ad283ea4a3ce ("async_tx: add sum check flags")
-> > Fixes: 272420214d26 ("dmaengine: Add DMA_CTRL_REUSE")
-> > Fixes: f067025bc676 ("dmaengine: add support to provide error result from a DMA transation")
-> > Fixes: d38a8c622a1b ("dmaengine: prepare for generic 'unmap' data")
-> > Fixes: 5878853fc938 ("dmaengine: Add API function dmaengine_prep_peripheral_dma_vec()")
-> > Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-> > Cc: Jassi Brar <jaswinder.singh@linaro.org>
-> > Cc: Dan Williams <dan.j.williams@intel.com>
-> > Cc: Dave Jiang <dave.jiang@intel.com>
-> > Cc: Paul Cercueil <paul@crapouillou.net>
-> > Cc: Nuno Sa <nuno.sa@analog.com>
-> > Cc: Vinod Koul <vkoul@kernel.org>
-> > Cc: dmaengine@vger.kernel.org
-> > ---
-> >  include/linux/dmaengine.h |   13 ++++++++++---
-> >  1 file changed, 10 insertions(+), 3 deletions(-)
+> Fixes: 568aa6dd641f ("dmaengine: apple-admac: Allocate cache SRAM to channels")
+> Signed-off-by: Sasha Finkelstein <fnkl.kernel@gmail.com>
+> ---
+>  drivers/dma/apple-admac.c | 7 ++-----
+>  1 file changed, 2 insertions(+), 5 deletions(-)
 > 
+> diff --git a/drivers/dma/apple-admac.c b/drivers/dma/apple-admac.c
+> index 9588773dd2eb670a2f6115fdaef39a0e88248015..037ec38730cf980eee11ebb8ec17be7623879cf8 100644
+> --- a/drivers/dma/apple-admac.c
+> +++ b/drivers/dma/apple-admac.c
+> @@ -153,6 +153,8 @@ static int admac_alloc_sram_carveout(struct admac_data *ad,
+>  {
+>  	struct admac_sram *sram;
+>  	int i, ret = 0, nblocks;
+
+Empty line before this please
+
+> +	ad->txcache.size = readl_relaxed(ad->base + REG_TX_SRAM_SIZE);
+> +	ad->rxcache.size = readl_relaxed(ad->base + REG_RX_SRAM_SIZE);
+>  
+>  	if (dir == DMA_MEM_TO_DEV)
+>  		sram = &ad->txcache;
+> @@ -912,12 +914,7 @@ static int admac_probe(struct platform_device *pdev)
+>  		goto free_irq;
+>  	}
+>  
+> -	ad->txcache.size = readl_relaxed(ad->base + REG_TX_SRAM_SIZE);
+> -	ad->rxcache.size = readl_relaxed(ad->base + REG_RX_SRAM_SIZE);
+> -
+>  	dev_info(&pdev->dev, "Audio DMA Controller\n");
+> -	dev_info(&pdev->dev, "imprint %x TX cache %u RX cache %u\n",
+> -		 readl_relaxed(ad->base + REG_IMPRINT), ad->txcache.size, ad->rxcache.size);
+>  
+>  	return 0;
+>  
 > 
-> -- 
-> ~Randy
+> ---
+> base-commit: 9f16d5e6f220661f73b36a4be1b21575651d8833
+> change-id: 20241124-admac-power-7f32c2a1850a
 > 
 
 -- 
