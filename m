@@ -1,105 +1,82 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f173.google.com (mail-yb1-f173.google.com [209.85.219.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 052A5AD51;
-	Mon,  2 Dec 2024 16:27:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 581B9126C13;
+	Mon,  2 Dec 2024 16:36:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733156824; cv=none; b=RVtYv/cIKvSql9Dhgb9bT9Gsxqhq5xYyUVbJXQNsDwjPhO5eZVzxoNmV9fCdBKXSavN3QEVYgtZdhP2hPhqupn1k7y8T5a0A0rIE6aJ1zAlvj0i8KFnW/F45XX5QVlEeINbR7NqXiOW++fkX/uXqNmbqXyTpj4OQi2pIvQYQooA=
+	t=1733157402; cv=none; b=m2W9TkdAYDsd8qRP3eDP1ChGnGs7nCRKVMPC6tudcfFi84bIn0OGFFGTnuUMkKLrEIa8mAjaAuhAQ9pzlw4y8FdHcP34ij5hJR7hjWLOzVR7TRSiJy0Ill3pCIcqXnO+VEOCHjj25ACKuxAyVysK7/WcU/Ep7WfXPLro0Nc56Eo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733156824; c=relaxed/simple;
-	bh=nPtb1zSByJeaDM0DUV8mbGmOuC3IvCO7oLz660454R8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=JnEVsCFSlU2D/h/xY+hNFFCENKNOJW/T/qrS5VSWUhOeT4XCfQu01k6TCKQO3PaPzY4vC+DG8Dbj2R+gnKIgR9/ZO5PFhH+Hp/X3oc9U4LBT6e7ZP+iKBERKg7m/cWw3SrepFJ3c8/2n4EGIDkD0wAlok5JFycqBMXlQyt60xiE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tqDFWYx7; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1733157402; c=relaxed/simple;
+	bh=3iIxLX8MdJKmfYZx84Ifi8jJEfVuHKL2dEYMIadupn0=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=mKP9+igDayXqTHrziHFMX4OZaPMjP3VzVaay3cGW5e/fImctEGbkmwzQh34SWP/oF8CLZma05eQMUm1s9VPMldqWR5L2wJDvmgsR17JX2IMcdtxIi7WT89An4epfMVwNuGHhWoYBqsGpFFccewehji3RzStKl6dlEJ+knz2mHdc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Pgr+NJo/; arc=none smtp.client-ip=209.85.219.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tqDFWYx7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3500C4CED6;
-	Mon,  2 Dec 2024 16:27:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1733156823;
-	bh=nPtb1zSByJeaDM0DUV8mbGmOuC3IvCO7oLz660454R8=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=tqDFWYx7tpuPs3199TfcyJNFHIKuE9dIV29mA/Za4FBuKVG04CgyqNFfqVNTXOkGE
-	 j5u+kEm6H5NIy4FvI/Jo5lXhzQcMhvrPpRtT8TWqTy7jrTDrJcy08aqMoaDKDlnm04
-	 7uEsw71bbPEAa8jiTRrjUn58w39Tc5IKSbLrELF05NTtzs5FfsAOG2S8Dna5J0Adcl
-	 UVmAVfjsJy/+ZFFf2p7UB0mixrpNIiVPGsC88kxq88WslnlWxI22tRcX6Sxnw1wEle
-	 v9Y2UOyFEOOcY/Xs9QtBR/R3fae/o17hjvAfF/yhxhjKHJkbkQhJ54Fa9/2nhy8cgN
-	 pr9+jf6ygE3zQ==
-Date: Mon, 2 Dec 2024 21:56:59 +0530
-From: Vinod Koul <vkoul@kernel.org>
-To: fnkl.kernel@gmail.com
-Cc: Hector Martin <marcan@marcan.st>, Sven Peter <sven@svenpeter.dev>,
-	Alyssa Rosenzweig <alyssa@rosenzweig.io>,
-	Martin =?utf-8?Q?Povi=C5=A1er?= <povik+lin@cutebit.org>,
-	asahi@lists.linux.dev, linux-arm-kernel@lists.infradead.org,
-	dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] dmaengine: apple-admac: Avoid accessing registers in
- probe
-Message-ID: <Z03f08Os/csGbMap@vaman>
-References: <20241124-admac-power-v1-1-58f2165a4d55@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Pgr+NJo/"
+Received: by mail-yb1-f173.google.com with SMTP id 3f1490d57ef6-e3989d27ba3so2072884276.1;
+        Mon, 02 Dec 2024 08:36:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1733157400; x=1733762200; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=3iIxLX8MdJKmfYZx84Ifi8jJEfVuHKL2dEYMIadupn0=;
+        b=Pgr+NJo/ByL4jnAftOPwniVU3u3uwOjEvq0ixQte+9GixoTMMVJoaXnR08XWyBJRP+
+         2vOoDwgcBgDN+qBVKxmtWbmFuDHaFYeZyDnCI1N913zXr8rYW3Y/7uWXAtkksixzha7A
+         6kRad0yzxxc5D18p+7fY/bEsTGKJiAFl4CaesnKbDYJUu+6I4VRDEUkzwZx7KV7dLbfl
+         gxu1eL4uRudntWjgeuJh2G9ujAgO7QC8SmzYJYa0WRu2PpUzkjnwNLoZyJvoqwQK5Gus
+         oGiu1Un/ObSaB/B0a5ix8LI8RulzvklD094ZtHxCUKVBI0sKE8S/T1LUr56H0q6uluWE
+         4qjQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1733157400; x=1733762200;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=3iIxLX8MdJKmfYZx84Ifi8jJEfVuHKL2dEYMIadupn0=;
+        b=fvOeflT6uMvbn5hubLUvMYd0IYG518KI0wdlt31KZkbrFZLuydyH9dUKFaJdGWIoJK
+         Hsz0j/SuOTHVGP8e3oU0IA5xEDRRylvpao/7mVb4U6uLImY+1in2kg73Mr8LEMTaZLpp
+         Vw6L2j4jnpuXSoJBVmTOQ8frAf/u+6qxEg5TGjuu/R8Wr5i3lj90pmJYITRSuOb8Y1E4
+         /oNvIqkdoSKeHitDpSVZYcgknNjE1qY7tO1Ho7jg9TRUVw5XMkgbRykGp9AGQM+eTnE7
+         LyN2c/hQz5FxhBY4d0wQigcmpMmxzRTQqRN1lHmElGfHkYgMmE5A2iT6RFc7SZf5NqBE
+         YjlA==
+X-Forwarded-Encrypted: i=1; AJvYcCUUP02T3ZAXsDDLOb6oqNIOo2Wn4wdjlYkX7ZUXthRiEVgfTNWVKrKFnKqXJBnTN/UaD3XpnITo8kTblQik@vger.kernel.org, AJvYcCXA7clWNjGKzquhNPOVUYhuJtNJlsJzJQSp7AC6MZU9CgMpIhYOmLzMeRY8Mf3chOahAi3dCw3tmws=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzmgeIslnVS4faPz4WTTHLFWzZuFqmhAxXgoCeVQTb5k9qx2vI/
+	VBDuxPQ7+/ggAkDBLVjErkepdx2xs4gi+S66zAWyKe6R87nrBasp4WB+LlhajaSXKNJlsSxwKvQ
+	OJAKTT6Ap29gKAwr9YR3vCVFy1Fo=
+X-Gm-Gg: ASbGnctw0cgcshEp3LuLi0zEf4cb4TnzKBuS10JsewqKZtGeeW6O+34S7SHSWoBzFkZ
+	rHoK4R9PAcvaRB0x24dH19Kft5LMcPOnc
+X-Google-Smtp-Source: AGHT+IFQ4i9gEalC/d1K/SdeClnhnHzZj+IX6cR1THj7nWjoIltHkFk9vX6X4yTjjoj8SQHlC0zxj1n3y1n377U0g9Y=
+X-Received: by 2002:a05:6902:110b:b0:e39:7a90:eed0 with SMTP id
+ 3f1490d57ef6-e397a90f42emr15007609276.44.1733157400328; Mon, 02 Dec 2024
+ 08:36:40 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241124-admac-power-v1-1-58f2165a4d55@gmail.com>
+References: <20241124-admac-power-v1-1-58f2165a4d55@gmail.com> <Z03f08Os/csGbMap@vaman>
+In-Reply-To: <Z03f08Os/csGbMap@vaman>
+From: Sasha Finkelstein <fnkl.kernel@gmail.com>
+Date: Mon, 2 Dec 2024 17:36:28 +0100
+Message-ID: <CAMT+MTTFkVcZHoC77BAVc+R_rvDfhoSQZujic9SCCqb8OkgSew@mail.gmail.com>
+Subject: Re: [PATCH] dmaengine: apple-admac: Avoid accessing registers in probe
+To: Vinod Koul <vkoul@kernel.org>
+Cc: Hector Martin <marcan@marcan.st>, Sven Peter <sven@svenpeter.dev>, 
+	Alyssa Rosenzweig <alyssa@rosenzweig.io>, =?UTF-8?Q?Martin_Povi=C5=A1er?= <povik+lin@cutebit.org>, 
+	asahi@lists.linux.dev, linux-arm-kernel@lists.infradead.org, 
+	dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On 24-11-24, 16:48, Sasha Finkelstein via B4 Relay wrote:
-> From: Sasha Finkelstein <fnkl.kernel@gmail.com>
-> 
-> The ADMAC attached to the AOP has complex power sequencing, and is
-> power gated when the probe callback runs. Move the register reads
-> to other functions, where we can guarantee that the hardware is
-> switched on.
+On Mon, 2 Dec 2024 at 17:27, Vinod Koul <vkoul@kernel.org> wrote:
+> So looking at the driver, there is code to turn power, so what ensures
+> that power is up while we are in alloc callback
 
-So looking at the driver, there is code to turn power, so what ensures
-that power is up while we are in alloc callback
-
-> 
-> Fixes: 568aa6dd641f ("dmaengine: apple-admac: Allocate cache SRAM to channels")
-> Signed-off-by: Sasha Finkelstein <fnkl.kernel@gmail.com>
-> ---
->  drivers/dma/apple-admac.c | 7 ++-----
->  1 file changed, 2 insertions(+), 5 deletions(-)
-> 
-> diff --git a/drivers/dma/apple-admac.c b/drivers/dma/apple-admac.c
-> index 9588773dd2eb670a2f6115fdaef39a0e88248015..037ec38730cf980eee11ebb8ec17be7623879cf8 100644
-> --- a/drivers/dma/apple-admac.c
-> +++ b/drivers/dma/apple-admac.c
-> @@ -153,6 +153,8 @@ static int admac_alloc_sram_carveout(struct admac_data *ad,
->  {
->  	struct admac_sram *sram;
->  	int i, ret = 0, nblocks;
-
-Empty line before this please
-
-> +	ad->txcache.size = readl_relaxed(ad->base + REG_TX_SRAM_SIZE);
-> +	ad->rxcache.size = readl_relaxed(ad->base + REG_RX_SRAM_SIZE);
->  
->  	if (dir == DMA_MEM_TO_DEV)
->  		sram = &ad->txcache;
-> @@ -912,12 +914,7 @@ static int admac_probe(struct platform_device *pdev)
->  		goto free_irq;
->  	}
->  
-> -	ad->txcache.size = readl_relaxed(ad->base + REG_TX_SRAM_SIZE);
-> -	ad->rxcache.size = readl_relaxed(ad->base + REG_RX_SRAM_SIZE);
-> -
->  	dev_info(&pdev->dev, "Audio DMA Controller\n");
-> -	dev_info(&pdev->dev, "imprint %x TX cache %u RX cache %u\n",
-> -		 readl_relaxed(ad->base + REG_IMPRINT), ad->txcache.size, ad->rxcache.size);
->  
->  	return 0;
->  
-> 
-> ---
-> base-commit: 9f16d5e6f220661f73b36a4be1b21575651d8833
-> change-id: 20241124-admac-power-7f32c2a1850a
-> 
-
--- 
-~Vinod
+There are two devices that use admacs, mca, and aop, with aop
+only having a downstream driver for now. Aop's admac is controlled
+by aop firmware, which does the power switching. Naturally, that firmware
+has it's own idea of how power is supposed to be managed, so we can't
+sequence it in such a way that the relevant admac has power when we
+are running probe().
