@@ -1,60 +1,76 @@
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from NAM12-BN8-obe.outbound.protection.outlook.com (mail-bn8nam12on2056.outbound.protection.outlook.com [40.107.237.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DECAC14EC7E;
-	Thu, 12 Dec 2024 04:22:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733977362; cv=none; b=gse153bIhgV8kPV22JD20PviBKZi5WpADHIZiaoKBeMjgVhQ92MUnVSYqNtPrjQtKzdPXguduoYUuG2euDIzddagKniZavMO69R64y776JjynWFaoMDOqCRacU06uQHvd6kagQU9crlbCByxRaSIgAF+88I1TUqqHZPWQSHy6sI=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733977362; c=relaxed/simple;
-	bh=JkMtpFzqF4zidLZ24qjhE2vsydxW4L/IfB3tUY4/674=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ipS4KuUtGVIsq82W4iLDHIDqabbDEq4q69ZBPh40TWIjCJdh0HndiI6ZNl7YPv4zQG3gj00bBYiRbYeRlYMww7m0YS9h19rNfdsC7SGxwOWikH3wQypwoVCOmUf3o+iWvNxeN4uq7XdPagaih+8ChhDKIfkN7T38QfaqEAAGT/E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=U2BEkK0W; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7348B2135AC;
+	Thu, 12 Dec 2024 12:44:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.237.56
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1734007474; cv=fail; b=RhQFZgF8Z3hUpqpQECS8cjBrBXQoN0391bYK73pvgafDwklE/d5oDLBSrmlx1jhvFmzb4UR3XfdvaNGP+G9c1loLtY1hi9Z+6+Ov7rq5w+olNCl4QOpiSGkX/AIAVc1jLF/CJe9M9VQpwT5goJuygQu8p5LW0UH+a9PfCZWEoCI=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1734007474; c=relaxed/simple;
+	bh=050jm9qI6BzLjVUSEqD/bLFmR8a3rvrzM609B/ToyGI=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=Mvv31TpeENxzPVr8vsSLWNrfsaEEb3kxs5bxOtjqGHhjxpVLNIuq1vkJM8Vs3IaU8AQL09b4byWbZtMWK3SxCratrPvKGkoZfD3FRAsdsR5u2EjwYPYbuB5TdO8g953op2MhQrtAVAU8u23/zq4y62svO2QApRmt3LuAj6RGzP8=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=MO4rPOmF; arc=fail smtp.client-ip=40.107.237.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="U2BEkK0W"
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BBHDGP4002304;
-	Thu, 12 Dec 2024 04:17:29 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	VYMkhxhQdgI3UK6GhEAmMzJHmo36esqvhXDY//UFXMU=; b=U2BEkK0WZFYqZu9Q
-	e1OuL3gIs881Lab04RtYXrv2uHPwf8JPQ6QAxwPhWl5N9o50Qv1SEtRzCOiq+8Q+
-	XANpAOjiTS8GQuimaLrgt6HHDN5D45zfd4nsCU7gfCJAF2taFxi015IwbFraG1gv
-	Vh4RPj/BV9m3DTNNfOc8UU1eeV1b//sCkhFxqkenr8QqXHiSxrs202NL0+iXmLnZ
-	wd8niC8gd95/5RaYmColUQDshi9vl8UQCzky55q+YyXwPyNE8OBirCuVfCcpQxRA
-	pU1rt9SjMzmDr04kwZZ8R3+dkqduHQ8vP65P7Mez879urDevb6vlRwu+NjiHnJny
-	NhEyAw==
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43eyg646gf-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 12 Dec 2024 04:17:29 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BC4HSlY011795
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 12 Dec 2024 04:17:28 GMT
-Received: from hu-mdalam-blr.qualcomm.com (10.80.80.8) by
- nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="MO4rPOmF"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=bLqYf/FfY0CUEyQpwiTFSj0UA9SYEmv428D55uHjC9+ny7xL6r/wXU6/LzKhpFoSYplrk9FCfZ97b8Q8c8eEoy/NHEcdjBTY2/kzTiXyyDbNA2e5+0P+X88J/iFoYZ/hDbobw2LEv24rpHH0QLWOCpcZ7xec169sBvmSGDQGW5cWdo3xAwbnmTjQ7AHMJrzbhbWx7FsO68Sc8ghrBB6GVP+eIHMr/n0bArhrKmuiHYN9vEBOEdp5PRufveKLyp/c0uUEU62GLK69uDMvwrsNjQjRrYrKmQrF7wouSyjJpEY08nshAD/LuDf7Drs7+aUFiI9M5Mpp7RPK5Ny8sH59bw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=feOki6WXa8Dc2urtOMhGEJGkbjKgK/FQe20bWjCg1Yc=;
+ b=jYKBVPi0VtO43LURbbE6el1b62ZqbZ/g89JTtXeqwZSc1vecA40Mr6NE+Z5HzzHVjWb8Jg4ksvWQ26aHt68P2ZF1R+mno4Mfe76TvtVeXgX1NMdWw8KtjCwNgtM7Zd6Dg4QKHeKbMtZj420p/PVhxEogBh6TbB2nkXDSI+zcqI2yBliW5WGbXBYANkxWD4mIG1dv4aI4vKG1EpflOZvkacMdPw8G+t9yFFVBUZWO/U8HeyenzPMWnnLgQbrGcWPi4TsV47gfBozoZ/7AkM0leeuvtpV/1IJBFENbfaCMOLjh0Cx/8Qbz3GIdd1OcQp4uOU+76ukUyLqp+FtZx21ZjQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.118.232) smtp.rcpttodomain=kernel.org smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=feOki6WXa8Dc2urtOMhGEJGkbjKgK/FQe20bWjCg1Yc=;
+ b=MO4rPOmFVXn7nAiUG55qLe00k9I5urWWeesxD5SGKB1MST/gLPugrwumdP4ijpBDnz0YRm8tQsu35RxqwD9gL4tE4r2XefgLXh4WZCeW66yLVvHWEKrn6tscV8fZVSU1PkVru0R9457kXw+0JCIM2jOcov53CLj3JygE7vZ+YaYoA8bHY4kszDxV3zPVZ3la7g3atk/5vKoHj9vK9Bl6d+jd+xyZXhtuQN/iz2JmUlH35sGasnkNKSLrB3o45bbAOEMRJ5YCCjB1fqUWufJoh4zXkA8qrpp4K6pkQMFf2OsJ2sBE+tyM/uuLlIfcTnN7rKtbBvhY4qcOu11Mo1h63g==
+Received: from SA9PR10CA0002.namprd10.prod.outlook.com (2603:10b6:806:a7::7)
+ by SA1PR12MB7412.namprd12.prod.outlook.com (2603:10b6:806:2b2::7) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8251.16; Thu, 12 Dec
+ 2024 12:44:26 +0000
+Received: from SA2PEPF00001506.namprd04.prod.outlook.com
+ (2603:10b6:806:a7:cafe::b) by SA9PR10CA0002.outlook.office365.com
+ (2603:10b6:806:a7::7) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.8251.15 via Frontend Transport; Thu,
+ 12 Dec 2024 12:44:26 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.118.232)
+ smtp.mailfrom=nvidia.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.118.232 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.118.232; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.118.232) by
+ SA2PEPF00001506.mail.protection.outlook.com (10.167.242.38) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.8251.15 via Frontend Transport; Thu, 12 Dec 2024 12:44:26 +0000
+Received: from drhqmail202.nvidia.com (10.126.190.181) by mail.nvidia.com
+ (10.127.129.5) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Thu, 12 Dec
+ 2024 04:44:18 -0800
+Received: from drhqmail203.nvidia.com (10.126.190.182) by
+ drhqmail202.nvidia.com (10.126.190.181) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Wed, 11 Dec 2024 20:17:23 -0800
-From: Md Sadre Alam <quic_mdalam@quicinc.com>
-To: <vkoul@kernel.org>, <corbet@lwn.net>, <thara.gopinath@gmail.com>,
-        <herbert@gondor.apana.org.au>, <davem@davemloft.net>,
-        <kees@kernel.org>, <dave.jiang@intel.com>, <dmaengine@vger.kernel.org>,
-        <linux-doc@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-crypto@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>
-CC: <quic_srichara@quicinc.com>, <quic_varada@quicinc.com>,
-        <quic_mdalam@quicinc.com>, <quic_utiwari@quicinc.com>
-Subject: [PATCH v5 06/12] crypto: qce - Convert register r/w for skcipher via BAM/DMA
-Date: Thu, 12 Dec 2024 09:46:33 +0530
-Message-ID: <20241212041639.4109039-7-quic_mdalam@quicinc.com>
+ 15.2.1544.4; Thu, 12 Dec 2024 04:44:17 -0800
+Received: from NV-2XGVVG3.nvidia.com (10.127.8.9) by mail.nvidia.com
+ (10.126.190.182) with Microsoft SMTP Server id 15.2.1544.4 via Frontend
+ Transport; Thu, 12 Dec 2024 04:44:14 -0800
+From: Kartik Rajput <kkartik@nvidia.com>
+To: <ldewangan@nvidia.com>, <jonathanh@nvidia.com>, <vkoul@kernel.org>,
+	<thierry.reding@gmail.com>, <rgumasta@nvidia.com>, <akhilrajeev@nvidia.com>,
+	<dmaengine@vger.kernel.org>, <linux-tegra@vger.kernel.org>,
+	<linux-kernel@vger.kernel.org>
+Subject: [PATCH] dmaengine: tegra: Return correct DMA status when paused
+Date: Thu, 12 Dec 2024 18:14:12 +0530
+Message-ID: <20241212124412.5650-1-kkartik@nvidia.com>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20241212041639.4109039-1-quic_mdalam@quicinc.com>
-References: <20241212041639.4109039-1-quic_mdalam@quicinc.com>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -63,165 +79,128 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: z-wnswFRrxE_CVkVJ_nQmqewyuO2HSLN
-X-Proofpoint-ORIG-GUID: z-wnswFRrxE_CVkVJ_nQmqewyuO2HSLN
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 bulkscore=0
- lowpriorityscore=0 priorityscore=1501 adultscore=0 impostorscore=0
- mlxlogscore=999 phishscore=0 suspectscore=0 mlxscore=0 clxscore=1011
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2412120028
+X-NV-OnPremToCloud: AnonymousSubmission
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SA2PEPF00001506:EE_|SA1PR12MB7412:EE_
+X-MS-Office365-Filtering-Correlation-Id: 0a0fb5b5-1379-4aad-5471-08dd1aaab67e
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|36860700013|376014|1800799024|82310400026;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?JxTA86gh7SU0PYFfJLXagK89zcob7vWUvJkCR3TzdHDHZrVNyHjR1N6fsqPV?=
+ =?us-ascii?Q?q/IIuZ3NWWbnAnqZ6VRqnblNWnxWIJaNaq2VPTfTp1h2Qpzdc6zTgXSJNt78?=
+ =?us-ascii?Q?VJmiwZC02+h9gv0Dqqdwk84hIyZ3NpYru67rq+0VF2D8T5GQugMkjRTKUAB1?=
+ =?us-ascii?Q?3FGbFe/5Ufac6pufK/6YV2WBt5zihZd3FYJGh1plRWme/Kl+bj0s3QdXMezh?=
+ =?us-ascii?Q?nvVF/53Qcwxys0qamkC7R9I8JiQ5wcEg+ZwVDo2c1tGprNDczF04jrwWpV/P?=
+ =?us-ascii?Q?zqsrB9g8l+NwVuTt0e4OIRCGqxDeqnM+jS/dSyhozNX+wQ36szeffaKGXOro?=
+ =?us-ascii?Q?gNwI/qyCGRbws6H+Gl0I4v/bcVX3fOo07h3enJYYnx9OmeITCX2Ejxqf4usR?=
+ =?us-ascii?Q?Gv2sdsjchuq4Loy/OxGbsGIaXBvXPoVNGj8yghEx27dPMjbensXi0TII2bdR?=
+ =?us-ascii?Q?ygluxp/1Cu9wKr3KV8Ht44LX3eNhBDRFkK/rtu1iGwLa7fEDS3cGDvsQEhGd?=
+ =?us-ascii?Q?ZEvWHQX4CvKEmK3UAMXb3/7IONiVfnrASFo/mHMK3L9WhSpDAxVEJhewKuWC?=
+ =?us-ascii?Q?YnCX2/fHDYCdfkg/xXSBxB+BzeOz3HXzQn4BAfj8gYmSYK8wZ95QJwhVrC/m?=
+ =?us-ascii?Q?DEvm3v8uGWNz8q0KrNpSk1U0l/8cbss0snPSPG1NmeNenOVhdiIRU5QiUMp+?=
+ =?us-ascii?Q?4gv2xI8M9RW5rMZBuVdmpryFIQk/lmP0cocZ2t2ku/rduIg6FdA5Ov2VihLQ?=
+ =?us-ascii?Q?4okmy8QO8qastdBVnXNvUnBnyMMYX7RuI9IC0oQzl39T7sEaa4Ytp0yfKRpg?=
+ =?us-ascii?Q?PcKhzq2xyTbhuzhEUUmCLKxO4EFTt0Dqec2w0l2FoLG8e9qFI35U47t5jTdV?=
+ =?us-ascii?Q?UnZgtWv7U3LNEuiGhggD5Uv0SguS1w4wX7Qyb+lxKNIjWhdEC+1HZrDlBMaF?=
+ =?us-ascii?Q?Vd1Jn3su4G0EgruRXXBUbcwqCPntb3OKj61XO2YVSUM+V6msSXayyPRoVurt?=
+ =?us-ascii?Q?B2eUyXaasSHM9f+qPlR5gmxHa8mJzmYbHQgdoQVsJ8GjceYIM7vUhdVovg6i?=
+ =?us-ascii?Q?ziaAXvMzFNWxGncsDpQfd0Anxiz7C8LvjBXwa2kfW5Sb975LpF9q5i+K5SJz?=
+ =?us-ascii?Q?5t3xDUnaCENy/U1WPQmyiOd1NqJAzOG/qTZODu3fb0EoRWYSD5O+LOKriESl?=
+ =?us-ascii?Q?K4eGTlEMtePT9KOTVjLnbgqiSmmw5210rZN2YRZN155gqMkspKQdQW0Wzz08?=
+ =?us-ascii?Q?mXWQmkRMrYCob8op7RznAu/hPtqOjF466dkuf3pAnGf7BTJOi2MwygEJdnW/?=
+ =?us-ascii?Q?J2t5amjuNT6kICw3AITxL2ufp2dPER5OrgHpxQm2VTYZSzIohdxep/WAVfGT?=
+ =?us-ascii?Q?jkd3W9ip1GzHEnoe5Ps1reXVWM97SckseK8lT7MDbKP8w8uL2qYV9e3IW2Jz?=
+ =?us-ascii?Q?G5LSokPIxlz1fmKpis/9r6g0dsOir16L?=
+X-Forefront-Antispam-Report:
+	CIP:216.228.118.232;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc7edge1.nvidia.com;CAT:NONE;SFS:(13230040)(36860700013)(376014)(1800799024)(82310400026);DIR:OUT;SFP:1101;
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Dec 2024 12:44:26.3567
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 0a0fb5b5-1379-4aad-5471-08dd1aaab67e
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.118.232];Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	SA2PEPF00001506.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR12MB7412
 
-Convert register read/write for skcipher via BAM/DMA.
-with this change all the crypto register configuration
-will be done via BAM/DMA. This change will prepare command
-descriptor for all register and write it once.
+From: Akhil R <akhilrajeev@nvidia.com>
 
-Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
+Currently, the driver does not return the correct DMA status when a DMA
+pause is issued by the client drivers. This causes GPCDMA users to
+assume that DMA is still running, while in reality, the DMA is paused.
+
+Return DMA_PAUSED for tx_status() if the channel is paused in the middle
+of a transfer.
+
+Fixes: ee17028009d4 ("dmaengine: tegra: Add tegra gpcdma driver")
+Cc: stable@vger.kernel.org
+Signed-off-by: Akhil R <akhilrajeev@nvidia.com>
+Signed-off-by: Kartik Rajput <kkartik@nvidia.com>
 ---
+ drivers/dma/tegra186-gpc-dma.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-Change in [v5]
-
-* No change
-
-Change in [v4]
-
-* No change 
- 
-Change in [v3]
-
-* No change
-
-Change in [v2]
-
-* Added initial support to read/write crypto
-  register via BAM for skcipher
-
-Change in [v1]
-
-* This patch was not included in [v1]
-
- drivers/crypto/qce/common.c | 42 ++++++++++++++++++++++---------------
- 1 file changed, 25 insertions(+), 17 deletions(-)
-
-diff --git a/drivers/crypto/qce/common.c b/drivers/crypto/qce/common.c
-index 04253a8d3340..d1da6b1938f3 100644
---- a/drivers/crypto/qce/common.c
-+++ b/drivers/crypto/qce/common.c
-@@ -34,7 +34,7 @@ static inline void qce_write_array(struct qce_device *qce, u32 offset,
- 	int i;
- 
- 	for (i = 0; i < len; i++)
--		qce_write(qce, offset + i * sizeof(u32), val[i]);
-+		qce_write_reg_dma(qce, offset + i * sizeof(u32), val[i], 1);
- }
- 
- static inline void
-@@ -43,7 +43,7 @@ qce_clear_array(struct qce_device *qce, u32 offset, unsigned int len)
- 	int i;
- 
- 	for (i = 0; i < len; i++)
--		qce_write(qce, offset + i * sizeof(u32), 0);
-+		qce_write_reg_dma(qce, offset + i * sizeof(u32), 0, 1);
- }
- 
- static u32 qce_config_reg(struct qce_device *qce, int little)
-@@ -86,16 +86,16 @@ static void qce_setup_config(struct qce_device *qce)
- 	config = qce_config_reg(qce, 0);
- 
- 	/* clear status */
--	qce_write(qce, REG_STATUS, 0);
--	qce_write(qce, REG_CONFIG, config);
-+	qce_write_reg_dma(qce, REG_STATUS, 0, 1);
-+	qce_write_reg_dma(qce, REG_CONFIG, config, 1);
- }
- 
- static inline void qce_crypto_go(struct qce_device *qce, bool result_dump)
- {
- 	if (result_dump)
--		qce_write(qce, REG_GOPROC, BIT(GO_SHIFT) | BIT(RESULTS_DUMP_SHIFT));
-+		qce_write_reg_dma(qce, REG_GOPROC, BIT(GO_SHIFT) | BIT(RESULTS_DUMP_SHIFT), 1);
- 	else
--		qce_write(qce, REG_GOPROC, BIT(GO_SHIFT));
-+		qce_write_reg_dma(qce, REG_GOPROC, BIT(GO_SHIFT), 1);
- }
- 
- #if defined(CONFIG_CRYPTO_DEV_QCE_SHA) || defined(CONFIG_CRYPTO_DEV_QCE_AEAD)
-@@ -308,7 +308,7 @@ static void qce_xtskey(struct qce_device *qce, const u8 *enckey,
- 	/* Set data unit size to cryptlen. Anything else causes
- 	 * crypto engine to return back incorrect results.
- 	 */
--	qce_write(qce, REG_ENCR_XTS_DU_SIZE, cryptlen);
-+	qce_write_reg_dma(qce, REG_ENCR_XTS_DU_SIZE, cryptlen, 1);
- }
- 
- static int qce_setup_regs_skcipher(struct crypto_async_request *async_req)
-@@ -325,7 +325,9 @@ static int qce_setup_regs_skcipher(struct crypto_async_request *async_req)
- 	u32 encr_cfg = 0, auth_cfg = 0, config;
- 	unsigned int ivsize = rctx->ivsize;
- 	unsigned long flags = rctx->flags;
-+	int ret;
- 
-+	qce_clear_bam_transaction(qce);
- 	qce_setup_config(qce);
- 
- 	if (IS_XTS(flags))
-@@ -336,7 +338,7 @@ static int qce_setup_regs_skcipher(struct crypto_async_request *async_req)
- 	qce_cpu_to_be32p_array(enckey, ctx->enc_key, keylen);
- 	enckey_words = keylen / sizeof(u32);
- 
--	qce_write(qce, REG_AUTH_SEG_CFG, auth_cfg);
-+	qce_write_reg_dma(qce, REG_AUTH_SEG_CFG, auth_cfg, 1);
- 
- 	encr_cfg = qce_encr_cfg(flags, keylen);
- 
-@@ -369,25 +371,31 @@ static int qce_setup_regs_skcipher(struct crypto_async_request *async_req)
- 	if (IS_ENCRYPT(flags))
- 		encr_cfg |= BIT(ENCODE_SHIFT);
- 
--	qce_write(qce, REG_ENCR_SEG_CFG, encr_cfg);
--	qce_write(qce, REG_ENCR_SEG_SIZE, rctx->cryptlen);
--	qce_write(qce, REG_ENCR_SEG_START, 0);
-+	qce_write_reg_dma(qce, REG_ENCR_SEG_CFG, encr_cfg, 1);
-+	qce_write_reg_dma(qce, REG_ENCR_SEG_SIZE, rctx->cryptlen, 1);
-+	qce_write_reg_dma(qce, REG_ENCR_SEG_START, 0, 1);
- 
- 	if (IS_CTR(flags)) {
--		qce_write(qce, REG_CNTR_MASK, ~0);
--		qce_write(qce, REG_CNTR_MASK0, ~0);
--		qce_write(qce, REG_CNTR_MASK1, ~0);
--		qce_write(qce, REG_CNTR_MASK2, ~0);
-+		qce_write_reg_dma(qce, REG_CNTR_MASK, ~0, 1);
-+		qce_write_reg_dma(qce, REG_CNTR_MASK0, ~0, 1);
-+		qce_write_reg_dma(qce, REG_CNTR_MASK1, ~0, 1);
-+		qce_write_reg_dma(qce, REG_CNTR_MASK2, ~0, 1);
+diff --git a/drivers/dma/tegra186-gpc-dma.c b/drivers/dma/tegra186-gpc-dma.c
+index cacf3757adc2..4d6fe0efa76e 100644
+--- a/drivers/dma/tegra186-gpc-dma.c
++++ b/drivers/dma/tegra186-gpc-dma.c
+@@ -231,6 +231,7 @@ struct tegra_dma_channel {
+ 	bool config_init;
+ 	char name[30];
+ 	enum dma_transfer_direction sid_dir;
++	enum dma_status status;
+ 	int id;
+ 	int irq;
+ 	int slave_id;
+@@ -393,6 +394,8 @@ static int tegra_dma_pause(struct tegra_dma_channel *tdc)
+ 		tegra_dma_dump_chan_regs(tdc);
  	}
  
--	qce_write(qce, REG_SEG_SIZE, rctx->cryptlen);
-+	qce_write_reg_dma(qce, REG_SEG_SIZE, rctx->cryptlen, 1);
- 
- 	/* get little endianness */
- 	config = qce_config_reg(qce, 1);
--	qce_write(qce, REG_CONFIG, config);
-+	qce_write_reg_dma(qce, REG_CONFIG, config, 1);
- 
- 	qce_crypto_go(qce, true);
- 
-+	ret = qce_submit_cmd_desc(qce, 0);
-+	if (ret) {
-+		dev_err(qce->dev, "Error in skcipher cmd descriptor\n");
-+		return ret;
-+	}
++	tdc->status = DMA_PAUSED;
 +
- 	return 0;
+ 	return ret;
  }
- #endif
+ 
+@@ -419,6 +422,8 @@ static void tegra_dma_resume(struct tegra_dma_channel *tdc)
+ 	val = tdc_read(tdc, TEGRA_GPCDMA_CHAN_CSRE);
+ 	val &= ~TEGRA_GPCDMA_CHAN_CSRE_PAUSE;
+ 	tdc_write(tdc, TEGRA_GPCDMA_CHAN_CSRE, val);
++
++	tdc->status = DMA_IN_PROGRESS;
+ }
+ 
+ static int tegra_dma_device_resume(struct dma_chan *dc)
+@@ -544,6 +549,7 @@ static void tegra_dma_xfer_complete(struct tegra_dma_channel *tdc)
+ 
+ 	tegra_dma_sid_free(tdc);
+ 	tdc->dma_desc = NULL;
++	tdc->status = DMA_COMPLETE;
+ }
+ 
+ static void tegra_dma_chan_decode_error(struct tegra_dma_channel *tdc,
+@@ -716,6 +722,7 @@ static int tegra_dma_terminate_all(struct dma_chan *dc)
+ 		tdc->dma_desc = NULL;
+ 	}
+ 
++	tdc->status = DMA_COMPLETE;
+ 	tegra_dma_sid_free(tdc);
+ 	vchan_get_all_descriptors(&tdc->vc, &head);
+ 	spin_unlock_irqrestore(&tdc->vc.lock, flags);
+@@ -769,6 +776,9 @@ static enum dma_status tegra_dma_tx_status(struct dma_chan *dc,
+ 	if (ret == DMA_COMPLETE)
+ 		return ret;
+ 
++	if (tdc->status == DMA_PAUSED)
++		ret = DMA_PAUSED;
++
+ 	spin_lock_irqsave(&tdc->vc.lock, flags);
+ 	vd = vchan_find_desc(&tdc->vc, cookie);
+ 	if (vd) {
 -- 
-2.34.1
+2.47.0
 
