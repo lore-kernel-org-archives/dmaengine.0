@@ -1,127 +1,123 @@
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from out30-118.freemail.mail.aliyun.com (out30-118.freemail.mail.aliyun.com [115.124.30.118])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF5E11E25F4;
-	Fri, 10 Jan 2025 05:23:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B93418F54;
+	Fri, 10 Jan 2025 08:22:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=115.124.30.118
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736486600; cv=none; b=p4ezuMstdfJ2HQcam68gcQv5he9qLPDmny9AC03IcXMIzeBOO6SGF4fTwk2QTfglYRJYuCm3sQzrZbhsu9e7PjylYkuVl5TD8x/Swj9mTQn6kbfUxP3qnO2Uor45zO+LjYOFpHFKVnbllWGggXAumawubC1YPA1Gtjfk+gj1jkI=
+	t=1736497366; cv=none; b=hLYQDrPuqcdfmP5hNbA+XfoOylMD3J/oCYifDqH+6XqPvdZd5EEf/JB6LrvTWnbiYZ+P0C5SqqCzeDMW8s2tYFz5UHyTBHAdEOUX6/keI/Hw1wVs3mcOUA0nTInXI12vuZOerdcKOAfA8CgdGi+YI7ze++mCd/4AT2jvkv/+h24=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736486600; c=relaxed/simple;
-	bh=e2x6HBFferLn3orAOqqQfR25ez9f9bBZme+XzmfSKVg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=gEJu9dbfS82B26uZ7meb6K6CAOZy8abZ+jOeT5vnxzZ4EgnMKqhZDwTL6xc/Nq4T4OFikJpPl/ei1NrAGayQK3sbbaM4zBAQLy+Si2+FyE+CI7Ik1f1FBrveWsXx8IFifS2vW5ywpOf8oR6cl1kUSrNiX3c0X388Q0O94QKsJsU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=izVoDzbC; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+	s=arc-20240116; t=1736497366; c=relaxed/simple;
+	bh=IElGyJw+SrDCt/hiQANTJdV06h4bSsP3ho0A9Vq4IBM=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=Ys1BwvbCGoY3PYcdcgyVsKjgkM1kQG/DjZYLZTyHCcICPrkiFeLnhPVrB5id6gpyJeUYvRUPRDVpOe1o4g7tiDQnP9AkwokEga8hE1Y+VFk7RJRdiJMn4A/ghufkfrWkaixHmL2eS1pBug/xQ9nrsnZn/n770MDNB9lb0X5au7g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.alibaba.com; spf=pass smtp.mailfrom=linux.alibaba.com; dkim=pass (1024-bit key) header.d=linux.alibaba.com header.i=@linux.alibaba.com header.b=mbpm4XNn; arc=none smtp.client-ip=115.124.30.118
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.alibaba.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.alibaba.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="izVoDzbC"
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50A1G4Ux014540;
-	Fri, 10 Jan 2025 05:23:09 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	O1DfT2v8Ib1hkBwg4j0zmv42Kh9XU7zScZpnUmI/SR8=; b=izVoDzbC+8ciC34x
-	cclwYiGT9mEq+BA3nJdPF0e0yycvEfvOdltaliFBc2h9LV4AibLtZ3YaaqVNTLEJ
-	kiQxiNupAjoli1xwljtJZo9ZWkoom4Do+bRhU1BiZ6h12jF4F6tsfHl8g4l7sPPZ
-	SoRXnhiE1Dadf6t1K+fV4m/wYGT52MYAkFzS1uZasm1x7IhnE02HZG2V5CzxvMO2
-	EXDJ3HYb62hFeOFbojvxhWx+xLm9aZyaY2n++cNsE4lrPULjBid4JEtJTzsTwWaq
-	5RI0GPI7KjZYjnzkgtTkLzKwkKiPChiPN0BtRpxovOwTmv4NPDX25KhXV0G5G7xP
-	9aOpxg==
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 442sqvgf50-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 10 Jan 2025 05:23:08 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 50A5N8wU029932
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 10 Jan 2025 05:23:08 GMT
-Received: from [10.151.36.43] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 9 Jan 2025
- 21:23:04 -0800
-Message-ID: <25bfbeaa-db33-555a-c268-dae2324915d3@quicinc.com>
-Date: Fri, 10 Jan 2025 10:53:01 +0530
+	dkim=pass (1024-bit key) header.d=linux.alibaba.com header.i=@linux.alibaba.com header.b="mbpm4XNn"
+DKIM-Signature:v=1; a=rsa-sha256; c=relaxed/relaxed;
+	d=linux.alibaba.com; s=default;
+	t=1736497360; h=From:To:Subject:Date:Message-ID:MIME-Version;
+	bh=87EsWey0RhJOOSVtnxQRiNfjF2nSIAafUIVDhuFBxbM=;
+	b=mbpm4XNno77pBt4HqHrR/+zSU94iKFxLVnzT58pslPT88AdahfWOCf+Stc6lMnC1ZvfXWARfhSananDMeXroVAcYVKWmR6KN1ZVxO51rUWLVytCcBSYsZxrSpEFohiKhRzD+OE9Vnde4QpKDN3ETwGGmik2UwTVLkWyitEDLhfU=
+Received: from localhost.localdomain(mailfrom:xueshuai@linux.alibaba.com fp:SMTPD_---0WNKKAxX_1736497359 cluster:ay36)
+          by smtp.aliyun-inc.com;
+          Fri, 10 Jan 2025 16:22:39 +0800
+From: Shuai Xue <xueshuai@linux.alibaba.com>
+To: fenghua.yu@intel.com,
+	dave.jiang@intel.com,
+	vkoul@kernel.org
+Cc: xueshuai@linux.alibaba.com,
+	dmaengine@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH v1 1/5] dmaengine: idxd: fix memory leak in error handling path of idxd_setup_wqs
+Date: Fri, 10 Jan 2025 16:22:33 +0800
+Message-ID: <20250110082237.21135-2-xueshuai@linux.alibaba.com>
+X-Mailer: git-send-email 2.44.0
+In-Reply-To: <20250110082237.21135-1-xueshuai@linux.alibaba.com>
+References: <20250110082237.21135-1-xueshuai@linux.alibaba.com>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH v4] dmaengine: qcom: bam_dma: Avoid writing unavailable
- register
-Content-Language: en-US
-To: Vinod Koul <vkoul@kernel.org>, Georgi Djakov <djakov@kernel.org>
-CC: <linux-arm-msm@vger.kernel.org>, <dmaengine@vger.kernel.org>,
-        <quic_mmanikan@quicinc.com>, <quic_srichara@quicinc.com>,
-        <quic_varada@quicinc.com>, <robin.murphy@arm.com>,
-        <u.kleine-koenig@baylibre.com>, <martin.petersen@oracle.com>,
-        <fenghua.yu@intel.com>, <av2082000@gmail.com>,
-        <linux-kernel@vger.kernel.org>
-References: <20241220094203.3510335-1-quic_mdalam@quicinc.com>
- <9ef3daa8-cdb1-49f2-8d19-a72d6210ff3a@kernel.org> <Z35dG7J8BLzeoT3B@vaman>
-From: Md Sadre Alam <quic_mdalam@quicinc.com>
-In-Reply-To: <Z35dG7J8BLzeoT3B@vaman>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: W_mLUVUDNOrex1KUucxFisCH1U-yBX3G
-X-Proofpoint-ORIG-GUID: W_mLUVUDNOrex1KUucxFisCH1U-yBX3G
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- impostorscore=0 malwarescore=0 clxscore=1015 suspectscore=0 bulkscore=0
- adultscore=0 spamscore=0 phishscore=0 mlxlogscore=999 mlxscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2501100042
+Content-Transfer-Encoding: 8bit
 
+Memory allocated for wqs is not freed if an error occurs during
+idxd_setup_wqs(). To fix it, free the allocated memory in the reverse
+order of allocation before exiting the function in case of an error.
 
+Signed-off-by: Shuai Xue <xueshuai@linux.alibaba.com>
+---
+ drivers/dma/idxd/init.c | 20 +++++++++++++++++---
+ 1 file changed, 17 insertions(+), 3 deletions(-)
 
-On 1/8/2025 4:40 PM, Vinod Koul wrote:
-> On 07-01-25, 23:30, Georgi Djakov wrote:
->> On 20.12.24 11:42, Md Sadre Alam wrote:
->>> Avoid writing unavailable register in BAM-Lite mode.
->>> BAM_DESC_CNT_TRSHLD register is unavailable in BAM-Lite
->>> mode. Its only available in BAM-NDP mode. So only write
->>> this register for clients who is using BAM-NDP.
->>>
->>> Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
->>> ---
->>
->> My Dragonboard db845c fails to boot on recent linux-next releases and
->> git bisect points to this patch. It boots again when it's reverted.
-> 
-> Should we revert?
-I have posted the fix. Patch available at [1]
-[1] 
-https://patchwork.kernel.org/project/linux-arm-msm/patch/20250110051409.4099727-1-quic_mdalam@quicinc.com/
-> 
->>
->> [..]
->>
->>>    	bchan->reconfigure = 0;
->>> @@ -1192,10 +1199,11 @@ static int bam_init(struct bam_device *bdev)
->>>    	u32 val;
->>>    	/* read revision and configuration information */
->>> -	if (!bdev->num_ees) {
->>> -		val = readl_relaxed(bam_addr(bdev, 0, BAM_REVISION));
->>> +	val = readl_relaxed(bam_addr(bdev, 0, BAM_REVISION));
->>> +	if (!bdev->num_ees)
->>>    		bdev->num_ees = (val >> NUM_EES_SHIFT) & NUM_EES_MASK;
->>> -	}
->>> +
->>> +	bdev->bam_revision = val & REVISION_MASK;
->>
->> The problem seems to occur when we try to read the revision for the
->> slimbus bam instance at 0x17184000 (which has "qcom,num-ees = <2>;").
->>
->> Thanks,
->> Georgi
-> 
+diff --git a/drivers/dma/idxd/init.c b/drivers/dma/idxd/init.c
+index 234c1c658ec7..6772d9251cd7 100644
+--- a/drivers/dma/idxd/init.c
++++ b/drivers/dma/idxd/init.c
+@@ -167,8 +167,8 @@ static int idxd_setup_wqs(struct idxd_device *idxd)
+ 
+ 	idxd->wq_enable_map = bitmap_zalloc_node(idxd->max_wqs, GFP_KERNEL, dev_to_node(dev));
+ 	if (!idxd->wq_enable_map) {
+-		kfree(idxd->wqs);
+-		return -ENOMEM;
++		rc = -ENOMEM;
++		goto err_bitmap;
+ 	}
+ 
+ 	for (i = 0; i < idxd->max_wqs; i++) {
+@@ -189,6 +189,7 @@ static int idxd_setup_wqs(struct idxd_device *idxd)
+ 		rc = dev_set_name(conf_dev, "wq%d.%d", idxd->id, wq->id);
+ 		if (rc < 0) {
+ 			put_device(conf_dev);
++			kfree(wq);
+ 			goto err;
+ 		}
+ 
+@@ -202,6 +203,7 @@ static int idxd_setup_wqs(struct idxd_device *idxd)
+ 		wq->wqcfg = kzalloc_node(idxd->wqcfg_size, GFP_KERNEL, dev_to_node(dev));
+ 		if (!wq->wqcfg) {
+ 			put_device(conf_dev);
++			kfree(wq);
+ 			rc = -ENOMEM;
+ 			goto err;
+ 		}
+@@ -209,7 +211,9 @@ static int idxd_setup_wqs(struct idxd_device *idxd)
+ 		if (idxd->hw.wq_cap.op_config) {
+ 			wq->opcap_bmap = bitmap_zalloc(IDXD_MAX_OPCAP_BITS, GFP_KERNEL);
+ 			if (!wq->opcap_bmap) {
++				kfree(wq->wqcfg);
+ 				put_device(conf_dev);
++				kfree(wq);
+ 				rc = -ENOMEM;
+ 				goto err;
+ 			}
+@@ -223,11 +227,21 @@ static int idxd_setup_wqs(struct idxd_device *idxd)
+ 	return 0;
+ 
+  err:
+-	while (--i >= 0) {
++	while (i-- > 0) {
+ 		wq = idxd->wqs[i];
++		if (idxd->hw.wq_cap.op_config)
++			bitmap_free(wq->opcap_bmap);
++		kfree(wq->wqcfg);
+ 		conf_dev = wq_confdev(wq);
+ 		put_device(conf_dev);
++		kfree(wq);
++
+ 	}
++	bitmap_free(idxd->wq_enable_map);
++
++err_bitmap:
++	kfree(idxd->wqs);
++
+ 	return rc;
+ }
+ 
+-- 
+2.39.3
+
