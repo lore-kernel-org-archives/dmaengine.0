@@ -1,126 +1,197 @@
-Received: from mail.ispras.ru (mail.ispras.ru [83.149.199.84])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F30D21A952;
-	Fri, 24 Jan 2025 11:02:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=83.149.199.84
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 336DE25A621;
+	Sun, 26 Jan 2025 18:59:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737716571; cv=none; b=GAL6gX0XCMWHd4X1UEPnaDVU1i3yLi/T8dcVUc3hkjf5HoVI0k9dHfQbgvflmdLOwUtHjUj017JZanR3mIXTYJ4k1DhlqnscRQloKob8Saza30sMm50UPZSgOr1q+2OddW5am15DgcEFqq3OIqOmsw/7mYA3POInC4iB9zyUFEc=
+	t=1737917946; cv=none; b=Sb8ylXpbq/Npw3pK2T1N/yUyLfXW72++OT/gA9YSDaUnsncX00HqJYctsJcBQkcvdVAnFH5lXT/bd4P6Eg8VO9hCx90HoQx8HOnicXcZ9oB5+Dl34LHgIULqB2D8Dxug2lWgK+Babu47QHALKgHWokRbjA04dRU1mnwfLH0u5jU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737716571; c=relaxed/simple;
-	bh=9XJ9C70z8Ww3U+ShAnD9VE5rOt6CcpHr4+Z3npdj4Ik=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=Pg+Hg2ojECIqTiBsKyzRcCbmD36Ba1MXwgandYWcEkJHMd+LKgzP1SaBYJlOE0BfL62e7Swo1+lfQwmKZ0DJm+qodiDIyOOiK5FdqRvAQJ/ikq3G0BGY/zS1jqutcBO8Bf0HLrN7xUwgLWM+y+5MVkcTC7cH3RhWtruFpWRCSc4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ispras.ru; spf=pass smtp.mailfrom=ispras.ru; dkim=pass (1024-bit key) header.d=ispras.ru header.i=@ispras.ru header.b=audw0Ohg; arc=none smtp.client-ip=83.149.199.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ispras.ru
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ispras.ru
+	s=arc-20240116; t=1737917946; c=relaxed/simple;
+	bh=PfmNx/8FKpi9tfUAdO7gZEl/uHyfgKgSWW2BXdSdoIQ=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=T4x/gJwhwDYSFGgzaSQtOgccdsypeI+nbvNywSaKAxDiWDM0V7iMG4icbHmCtM0K9j9l+lXq2mr+ii7F7AP+iau4e4LfuJ8kNhJp8UzyoC9zXw0Kp+qx5lh5/kecmGdhQ9ur8FJ103ae4TFBhX8Xuay2UgzhnuMsyHa5TiBu3gg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hlBl+2Me; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ispras.ru header.i=@ispras.ru header.b="audw0Ohg"
-Received: from ldvnode.intra.ispras.ru (unknown [10.10.2.153])
-	by mail.ispras.ru (Postfix) with ESMTPSA id 0BC1640755EB;
-	Fri, 24 Jan 2025 11:02:47 +0000 (UTC)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mail.ispras.ru 0BC1640755EB
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ispras.ru;
-	s=default; t=1737716567;
-	bh=xS8sfpyKxEecLfJgThWHKU3Ix8NabgEGiuP5uDP/ji4=;
-	h=From:To:Cc:Subject:Date:From;
-	b=audw0OhgKV189hBmIGwdsFiT6XnENZxvdWhS8yD+r0GxiqxQ8Gz0uH7D/uGRH/QRg
-	 wwlUwtw4XIZrWLSNm1acFni0WyisihC2bUvZqCb8Efj59Lvn+qb65yg/kaF+b3Alj+
-	 6Ef+S+FmRjiBS15zhgKYkH9CbAP+fXTPhHJ2cIeY=
-From: Vitalii Mordan <mordan@ispras.ru>
-To: Vinod Koul <vkoul@kernel.org>
-Cc: Vitalii Mordan <mordan@ispras.ru>,
-	Taichi Sugaya <sugaya.taichi@socionext.com>,
-	Takao Orito <orito.takao@socionext.com>,
-	Jassi Brar <jaswinder.singh@linaro.org>,
-	dmaengine@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-kernel@vger.kernel.org,
-	lvc-project@linuxtesting.org,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
-	Alexey Khoroshilov <khoroshilov@ispras.ru>,
-	Vadim Mutilin <mutilin@ispras.ru>
-Subject: [PATCH] dma: milbeaut-hdmac: fix call balance of mdev->clk handling routines
-Date: Fri, 24 Jan 2025 14:02:40 +0300
-Message-Id: <20250124110240.1285500-1-mordan@ispras.ru>
-X-Mailer: git-send-email 2.25.1
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hlBl+2Me"
+Received: by smtp.kernel.org (Postfix) with ESMTPS id AC328C4CEEA;
+	Sun, 26 Jan 2025 18:59:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1737917945;
+	bh=PfmNx/8FKpi9tfUAdO7gZEl/uHyfgKgSWW2BXdSdoIQ=;
+	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
+	b=hlBl+2Mepw3J0ugLK7PkI8UhzdeeqA/WiddWAV3kijb7ZnCtkPlAyMnYcEBRKzM8i
+	 szPVi3M92ZsLsWNMLoZRauZkytz+GVITyoORsXs1LFwgUKIAOBOcRIUeYEWQYIQB5A
+	 3eYI/ojthnmUg2xz45MP76X0LM9NAfOUXljfNym5onKAeu0ORIKBMlYvLyLg52/MUk
+	 LP3i9Yb0exACSUyS2RblZUbAjiM5bIAdcVQXNSsneEpXLdeRhG/5cYZlCmEpLJjcp8
+	 rux3S6W1R4QAF0j7ZLLp6ihPOh92E4FabI0Z7i9XcG/fELKiegSW1Clla/onX+AYxA
+	 1R41p4+M9CSFQ==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 959D7C0218F;
+	Sun, 26 Jan 2025 18:59:05 +0000 (UTC)
+From: =?utf-8?q?J=2E_Neusch=C3=A4fer_via_B4_Relay?= <devnull+j.ne.posteo.net@kernel.org>
+Date: Sun, 26 Jan 2025 19:58:57 +0100
+Subject: [PATCH 2/9] dt-bindings: ata: Convert fsl,pq-sata binding to YAML
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
+Message-Id: <20250126-ppcyaml-v1-2-50649f51c3dd@posteo.net>
+References: <20250126-ppcyaml-v1-0-50649f51c3dd@posteo.net>
+In-Reply-To: <20250126-ppcyaml-v1-0-50649f51c3dd@posteo.net>
+To: devicetree@vger.kernel.org, linuxppc-dev@lists.ozlabs.org
+Cc: Scott Wood <oss@buserror.net>, 
+ Madhavan Srinivasan <maddy@linux.ibm.com>, 
+ Michael Ellerman <mpe@ellerman.id.au>, Nicholas Piggin <npiggin@gmail.com>, 
+ Christophe Leroy <christophe.leroy@csgroup.eu>, 
+ Naveen N Rao <naveen@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Damien Le Moal <dlemoal@kernel.org>, 
+ Niklas Cassel <cassel@kernel.org>, Herbert Xu <herbert@gondor.apana.org.au>, 
+ "David S. Miller" <davem@davemloft.net>, Lee Jones <lee@kernel.org>, 
+ Vinod Koul <vkoul@kernel.org>, Lorenzo Pieralisi <lpieralisi@kernel.org>, 
+ =?utf-8?q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>, 
+ Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, 
+ Bjorn Helgaas <bhelgaas@google.com>, 
+ =?utf-8?q?J=2E_Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>, 
+ Wim Van Sebroeck <wim@linux-watchdog.org>, 
+ Guenter Roeck <linux@roeck-us.net>, Mark Brown <broonie@kernel.org>, 
+ Miquel Raynal <miquel.raynal@bootlin.com>, 
+ Richard Weinberger <richard@nod.at>, Vignesh Raghavendra <vigneshr@ti.com>, 
+ linux-kernel@vger.kernel.org, linux-ide@vger.kernel.org, 
+ linux-crypto@vger.kernel.org, dmaengine@vger.kernel.org, 
+ linux-pci@vger.kernel.org, linux-watchdog@vger.kernel.org, 
+ linux-spi@vger.kernel.org, linux-mtd@lists.infradead.org, 
+ =?utf-8?q?J=2E_Neusch=C3=A4fer?= <j.ne@posteo.net>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1737917943; l=3504;
+ i=j.ne@posteo.net; s=20240329; h=from:subject:message-id;
+ bh=48lSRCoXCpxIM3oWRMWEs2/wzI+AW7ICjxV1sPl67HM=;
+ b=bLScZP/2+P6PR65AL0gqKUI72UMsRCVo5PvGbwA6A20OrYb8mo+L9jUpwnATuOGNgbYUCZiMa
+ IDQ1X0kek+XC8PpxrWEqVS4GPZSevrgs3kbZPbmh63BNiFb2AkiKb0p
+X-Developer-Key: i=j.ne@posteo.net; a=ed25519;
+ pk=NIe0bK42wNaX/C4bi6ezm7NJK0IQE+8MKBm7igFMIS4=
+X-Endpoint-Received: by B4 Relay for j.ne@posteo.net/20240329 with
+ auth_id=156
+X-Original-From: =?utf-8?q?J=2E_Neusch=C3=A4fer?= <j.ne@posteo.net>
+Reply-To: j.ne@posteo.net
 
-If the clock mdev->clk was enabled in milbeaut_hdmac_probe(), it should be
-disabled in any path. If dmaengine_terminate_sync() returns an error in
-milbeaut_hdmac_remove(), the clock mdev->clk will not be disabled.
+From: "J. Neuschäfer" <j.ne@posteo.net>
 
-Use the devm_clk_get_enabled() helper function to ensure proper call
-balance for mdev->clk.
+Convert the Freescale PowerQUICC SATA controller binding from text form
+to YAML. The list of compatible strings reflects current usage.
 
-Found by Linux Verification Center (linuxtesting.org) with Klever.
-
-Fixes: 6c3214e698e4 ("dmaengine: milbeaut-hdmac: Add HDMAC driver for Milbeaut platforms")
-Signed-off-by: Vitalii Mordan <mordan@ispras.ru>
+Signed-off-by: J. Neuschäfer <j.ne@posteo.net>
 ---
- drivers/dma/milbeaut-hdmac.c | 15 ++++-----------
- 1 file changed, 4 insertions(+), 11 deletions(-)
+ .../devicetree/bindings/ata/fsl,pq-sata.yaml       | 59 ++++++++++++++++++++++
+ Documentation/devicetree/bindings/ata/fsl-sata.txt | 28 ----------
+ 2 files changed, 59 insertions(+), 28 deletions(-)
 
-diff --git a/drivers/dma/milbeaut-hdmac.c b/drivers/dma/milbeaut-hdmac.c
-index 9a5ec247ed6d..cc70928602af 100644
---- a/drivers/dma/milbeaut-hdmac.c
-+++ b/drivers/dma/milbeaut-hdmac.c
-@@ -476,16 +476,12 @@ static int milbeaut_hdmac_probe(struct platform_device *pdev)
- 	if (IS_ERR(mdev->reg_base))
- 		return PTR_ERR(mdev->reg_base);
- 
--	mdev->clk = devm_clk_get(dev, NULL);
-+	mdev->clk = devm_clk_get_enabled(dev, NULL);
- 	if (IS_ERR(mdev->clk)) {
--		dev_err(dev, "failed to get clock\n");
-+		dev_err(dev, "failed to get and enable clock\n");
- 		return PTR_ERR(mdev->clk);
- 	}
- 
--	ret = clk_prepare_enable(mdev->clk);
--	if (ret)
--		return ret;
+diff --git a/Documentation/devicetree/bindings/ata/fsl,pq-sata.yaml b/Documentation/devicetree/bindings/ata/fsl,pq-sata.yaml
+new file mode 100644
+index 0000000000000000000000000000000000000000..6af31ffbcad5e9cc83118a0bd8eaf45351a2823f
+--- /dev/null
++++ b/Documentation/devicetree/bindings/ata/fsl,pq-sata.yaml
+@@ -0,0 +1,59 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/ata/fsl,pq-sata.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Freescale 8xxx/3.0 Gb/s SATA nodes
++
++maintainers:
++  - J. Neuschäfer <j.ne@posteo.net>
++
++description: |
++  SATA nodes are defined to describe on-chip Serial ATA controllers.
++  Each SATA port should have its own node.
++
++properties:
++  compatible:
++    oneOf:
++      - items:
++          - enum:
++              - fsl,mpc8377-sata
++              - fsl,mpc8536-sata
++              - fsl,mpc8315-sata
++              - fsl,mpc8379-sata
++          - const: fsl,pq-sata
++      - const: fsl,pq-sata-v2
++
++  reg:
++    maxItems: 1
++
++  interrupts:
++    maxItems: 1
++
++  cell-index:
++    $ref: /schemas/types.yaml#/definitions/uint32
++    enum: [1, 2, 3, 4]
++    description: |
++      1 for controller @ 0x18000
++      2 for controller @ 0x19000
++      3 for controller @ 0x1a000
++      4 for controller @ 0x1b000
++
++required:
++  - compatible
++  - interrupts
++  - cell-index
++
++additionalProperties: false
++
++examples:
++  - |
++    #include <dt-bindings/interrupt-controller/irq.h>
++    sata@18000 {
++        compatible = "fsl,mpc8379-sata", "fsl,pq-sata";
++        reg = <0x18000 0x1000>;
++        cell-index = <1>;
++        interrupts = <44 IRQ_TYPE_LEVEL_LOW>;
++        interrupt-parent = <&ipic>;
++    };
+diff --git a/Documentation/devicetree/bindings/ata/fsl-sata.txt b/Documentation/devicetree/bindings/ata/fsl-sata.txt
+deleted file mode 100644
+index fd63bb3becc9363c520a8fd06629fdc52c4d4299..0000000000000000000000000000000000000000
+--- a/Documentation/devicetree/bindings/ata/fsl-sata.txt
++++ /dev/null
+@@ -1,28 +0,0 @@
+-* Freescale 8xxx/3.0 Gb/s SATA nodes
 -
- 	ddev = &mdev->ddev;
- 	ddev->dev = dev;
- 	dma_cap_set(DMA_SLAVE, ddev->cap_mask);
-@@ -507,12 +503,12 @@ static int milbeaut_hdmac_probe(struct platform_device *pdev)
- 	for (i = 0; i < nr_chans; i++) {
- 		ret = milbeaut_hdmac_chan_init(pdev, mdev, i);
- 		if (ret)
--			goto disable_clk;
-+			return ret;
- 	}
- 
- 	ret = dma_async_device_register(ddev);
- 	if (ret)
--		goto disable_clk;
-+		return ret;
- 
- 	ret = of_dma_controller_register(dev->of_node,
- 					 milbeaut_hdmac_xlate, mdev);
-@@ -525,8 +521,6 @@ static int milbeaut_hdmac_probe(struct platform_device *pdev)
- 
- unregister_dmac:
- 	dma_async_device_unregister(ddev);
--disable_clk:
--	clk_disable_unprepare(mdev->clk);
- 
- 	return ret;
- }
-@@ -560,7 +554,6 @@ static void milbeaut_hdmac_remove(struct platform_device *pdev)
- 
- 	of_dma_controller_free(pdev->dev.of_node);
- 	dma_async_device_unregister(&mdev->ddev);
--	clk_disable_unprepare(mdev->clk);
- }
- 
- static const struct of_device_id milbeaut_hdmac_match[] = {
+-SATA nodes are defined to describe on-chip Serial ATA controllers.
+-Each SATA port should have its own node.
+-
+-Required properties:
+-- compatible        : compatible list, contains 2 entries, first is
+-		 "fsl,CHIP-sata", where CHIP is the processor
+-		 (mpc8315, mpc8379, etc.) and the second is
+-		 "fsl,pq-sata"
+-- interrupts        : <interrupt mapping for SATA IRQ>
+-- cell-index        : controller index.
+-                          1 for controller @ 0x18000
+-                          2 for controller @ 0x19000
+-                          3 for controller @ 0x1a000
+-                          4 for controller @ 0x1b000
+-
+-Optional properties:
+-- reg               : <registers mapping>
+-
+-Example:
+-	sata@18000 {
+-		compatible = "fsl,mpc8379-sata", "fsl,pq-sata";
+-		reg = <0x18000 0x1000>;
+-		cell-index = <1>;
+-		interrupts = <2c 8>;
+-		interrupt-parent = < &ipic >;
+-	};
+
 -- 
-2.25.1
+2.48.0.rc1.219.gb6b6757d772
+
 
