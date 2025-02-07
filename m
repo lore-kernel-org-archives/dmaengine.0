@@ -1,104 +1,90 @@
-Received: from fw2.prolan.hu (fw2.prolan.hu [193.68.50.107])
+Received: from mout01.posteo.de (mout01.posteo.de [185.67.36.65])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AD051DC99E;
-	Fri,  7 Feb 2025 12:48:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.68.50.107
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D7971FC7D8
+	for <dmaengine@vger.kernel.org>; Fri,  7 Feb 2025 13:37:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.67.36.65
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738932491; cv=none; b=lhsBDRI8JFoY6Tg4SR0FAmUAzu4TFMN7tqE24LRE0mAISQU7lp7sm2Q6rg0kD8j4RP50d2/N6VfGO04OTIRpFEMnZsC5UGrSSf4SPTHS0P4f41eFYzF8dsnNQDKtU34r4teK/d1ST2md6aKU626ZyqKpiI2i94vHal2B7Df81Ls=
+	t=1738935441; cv=none; b=KC2gN0/MXzmcQbziX+dq1uBGpjOWSQEjgrfqAPU1rnIbt5uIl9DGC+JwWAaTNQDJxSoBF3+llbiIGeEjbawr9ph5I5sJ3u3Fgclg4NUn56gm0r4QIfzl/unQCedZNZxbd5kaq7InU2PYz7+2wzqfKQzC06qA3PJPblHoWeSVzM4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738932491; c=relaxed/simple;
-	bh=Z7GlX4G3CLXl4PdntmkGapZgBz10huhVzZfNPwGxMJY=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=dR9HmUdtU6WrndBEwJWzk623y4l2fw6GqaJcaTu+x5YpVYlLhDVp7PHmKmtFN/BVKHpJS/1dIjj8HccY3TaYgy/CfHF/IF6etyZZZ9hssKvwLN0W/tWFz0g57y5RhU5TKFNKnUAzJdmG1XVsKUkciarC22VyJxnEYeX7f3Hd978=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=prolan.hu; spf=pass smtp.mailfrom=prolan.hu; dkim=pass (4096-bit key) header.d=prolan.hu header.i=@prolan.hu header.b=BytzGPT3; arc=none smtp.client-ip=193.68.50.107
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=prolan.hu
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=prolan.hu
+	s=arc-20240116; t=1738935441; c=relaxed/simple;
+	bh=IdbOi6N0+bHgyQ08uTaIC9JomsdE+10WelxdSZmGp0A=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=uMIwnTwgDfbZXkEFzxdK60HNquetIEF6LmrWbG43bDu3G1bWe3K4FqKvDF+dBOlyXFy8aplKQUzWM72W8nTAKfq2mtxXwp85UX1O9JWvmR2v0ZSJNcvgFD7cd67AoiKI1STFmqz8KDLQktHf75p7dPtzKqca84lE9s8xL1LIi+8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=posteo.net; spf=pass smtp.mailfrom=posteo.net; dkim=pass (2048-bit key) header.d=posteo.net header.i=@posteo.net header.b=WGLsSyhy; arc=none smtp.client-ip=185.67.36.65
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=posteo.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=posteo.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (4096-bit key) header.d=prolan.hu header.i=@prolan.hu header.b="BytzGPT3"
-Received: from proxmox-mailgw.intranet.prolan.hu (localhost.localdomain [127.0.0.1])
-	by proxmox-mailgw.intranet.prolan.hu (Proxmox) with ESMTP id 9D100A037B;
-	Fri,  7 Feb 2025 13:48:05 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=prolan.hu; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:from:from:message-id:mime-version:reply-to:subject:subject:to
-	:to; s=mail; bh=BCu/ryqDczot25TDMnKcJhaUWntHdW2uO8lsXLpQ4VQ=; b=
-	BytzGPT360C98IhBFxeTx3NOwsyn+LLjSv0HyYRHltnx/CHg6fMAUgNUP0g/vhjs
-	HJxPAeodhFy0B9L8D+VPCYnu98rFe4cKHSX/pojtKyvogse4DqFFAbg51iZ2Jup5
-	uIxAv+GAjZemdhK5q5MI/MPNV7WbWu1fyaoPYgvY6svrrFaBp0nRadftitN00V5D
-	pzR5HEXN65zo1P+kvq0W5U7nf6H8KYekVzRcB8DAYKyDC0q9SdChzmib9RP2W9EF
-	Hjq/LD2nIqLG5a4Q0+oThW6llaY4XNGwZvFLuVeonmW/LKGf3ztbwQF86bU1w2ED
-	wmdGDqj9mMFWbvbAVzr77z75vqzYYAbFqPy9iAvdB+GCvSPsPU+wtvC6yGdtLwJI
-	y8BkaR6EFSwIqjbZSUsmqlDSH9EIyqGuWDOp6+jRRvddW/TY0Z/ncsWqzfX0Ckry
-	QSAQ7jIvcO96yTxLPoTddO2EAZcNQIKRvcCbUSYLvoKz/+2KphB+qP3TyvMh4fmT
-	26DbUX/oORlbm50fgAzvDeZ3Yd7CIqen5uEGq3CfegZacs6yVTjjLMfVScpOAcus
-	TE6BU59rVCQ1HTxjXJxUthHBY7RTKe92xlAAO6xfmM9Tqgb6iRBkXfljpFvsXwTM
-	8axDWRciHBAbucV/68S2oTKfum+ucJ5A8Nd7pygzZYk=
-From: =?UTF-8?q?Bence=20Cs=C3=B3k=C3=A1s?= <csokas.bence@prolan.hu>
-To:
-CC: =?UTF-8?q?Bence=20Cs=C3=B3k=C3=A1s?= <csokas.bence@prolan.hu>, Mark Brown
-	<broonie@kernel.org>, Vinod Koul <vkoul@kernel.org>, "Rafael J . Wysocki"
-	<rafael@kernel.org>, Len Brown <len.brown@intel.com>, Pavel Machek
-	<pavel@ucw.cz>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, "Nicolas
- Ferre" <nicolas.ferre@microchip.com>, Alexandre Belloni
-	<alexandre.belloni@bootlin.com>, Claudiu Beznea <claudiu.beznea@tuxon.dev>,
-	Tudor Ambarus <tudor.ambarus@linaro.org>, Varshini Rajendran
-	<varshini.rajendran@microchip.com>, Alexander Dahl <ada@thorsis.com>,
-	<linux-spi@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
-	<dmaengine@vger.kernel.org>, <linux-pm@vger.kernel.org>,
-	<linux-kernel@vger.kernel.org>
-Subject: [PATCH for-6.14 v3 0/4] Add more devm_ functions to simplify probe path in drivers/spi/atmel-quadspi.c
-Date: Fri, 7 Feb 2025 13:47:55 +0100
-Message-ID: <20250207124802.165408-1-csokas.bence@prolan.hu>
-X-Mailer: git-send-email 2.48.1
+	dkim=pass (2048-bit key) header.d=posteo.net header.i=@posteo.net header.b="WGLsSyhy"
+Received: from submission (posteo.de [185.67.36.169]) 
+	by mout01.posteo.de (Postfix) with ESMTPS id C3F8A240029
+	for <dmaengine@vger.kernel.org>; Fri,  7 Feb 2025 14:37:11 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=posteo.net; s=2017;
+	t=1738935431; bh=IdbOi6N0+bHgyQ08uTaIC9JomsdE+10WelxdSZmGp0A=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition:Content-Transfer-Encoding:From;
+	b=WGLsSyhyR1M+holYpFY2DE/LqX/M15jThbkxjOYqB/FmQAFFwC+GWz5a9IBwAww3F
+	 mXlFcNxwX5ET/KIyhDzrzYAJY2KaepXF/mKP4+zXFWdqXcK2Rpm93qt97oV3bsN4U3
+	 6OYk4IO4oNfu/VfOtLRiUArkbEZMHnUtEJuShNd8ptsnidw4lztDocLchG9SWz9COQ
+	 GA8CeOLRgAiXRcPtFw1cPUr7OZALJdnNxBcwTv1PQp4jHg7fJVSTPfXh9ptk+RHx08
+	 mrnvnVzNvI/Gm1FUwiVaDkEn8atEz/5JPR20I63GGSttcZALk/3j01UOWYKbg5sLQG
+	 8/F+eljWn4kpQ==
+Received: from customer (localhost [127.0.0.1])
+	by submission (posteo.de) with ESMTPSA id 4YqFPs4w9Pz9rxF;
+	Fri,  7 Feb 2025 14:37:05 +0100 (CET)
+Date: Fri,  7 Feb 2025 13:37:04 +0000
+From: =?utf-8?Q?J=2E_Neusch=C3=A4fer?= <j.ne@posteo.net>
+To: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
+Cc: =?utf-8?Q?J=2E_Neusch=C3=A4fer?= <j.ne@posteo.net>,
+	Frank Li <Frank.li@nxp.com>, devicetree@vger.kernel.org,
+	linuxppc-dev@lists.ozlabs.org, Scott Wood <oss@buserror.net>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Nicholas Piggin <npiggin@gmail.com>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Naveen N Rao <naveen@kernel.org>, Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Niklas Cassel <cassel@kernel.org>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	"David S. Miller" <davem@davemloft.net>, Lee Jones <lee@kernel.org>,
+	Vinod Koul <vkoul@kernel.org>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	=?utf-8?Q?J=2E_Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>,
+	Wim Van Sebroeck <wim@linux-watchdog.org>,
+	Guenter Roeck <linux@roeck-us.net>, Mark Brown <broonie@kernel.org>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Richard Weinberger <richard@nod.at>,
+	Vignesh Raghavendra <vigneshr@ti.com>, linux-kernel@vger.kernel.org,
+	linux-ide@vger.kernel.org, linux-crypto@vger.kernel.org,
+	dmaengine@vger.kernel.org, linux-pci@vger.kernel.org,
+	linux-watchdog@vger.kernel.org, linux-spi@vger.kernel.org,
+	linux-mtd@lists.infradead.org
+Subject: Re: [PATCH 6/9] dt-bindings: pci: Add fsl,mpc83xx-pcie bindings
+Message-ID: <Z6YMgETdCZGMJI4i@probook>
+References: <20250126-ppcyaml-v1-0-50649f51c3dd@posteo.net>
+ <20250126-ppcyaml-v1-6-50649f51c3dd@posteo.net>
+ <Z5qx3jAFE81Ni2cJ@lizhi-Precision-Tower-5810>
+ <Z6KkBEaGTkSyWiE_@probook>
+ <689302c6-8fba-4fd1-a4b7-557cb2f8fa4d@quicinc.com>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-ESET-AS: R=OK;S=0;OP=CALC;TIME=1738932485;VERSION=7985;MC=412144077;ID=401531;TRN=0;CRV=0;IPC=;SP=0;SIPS=0;PI=3;F=0
-X-ESET-Antispam: OK
-X-EsetResult: clean, is OK
-X-EsetId: 37303A29ACD94852617560
+In-Reply-To: <689302c6-8fba-4fd1-a4b7-557cb2f8fa4d@quicinc.com>
 
-The probe function of the atmel-quadspi driver got quite convoluted,
-especially since the addition of SAMA7G5 support, that was forward-ported
-from an older vendor kernel. To alleivate this - and similar problems in
-the future - an effort was made to migrate as many functions as possible,
-to their devm_ managed counterparts. The few functions, which did not yet
-have a devm_ variant, are added in patch 1 and 2 of this series. Patch 3
-and 4 then use these APIs to simplify and fix the probe() function.
+On Thu, Feb 06, 2025 at 06:12:47PM +0530, Mukesh Kumar Savaliya wrote:
+> neat: subject: since binding is already mentioned in the prefix of the
+> subject, no need to add bindings word again.
 
-Patch 4 in particular, fixes a bug present in 6.14-rc1, where the PM get()
-and put() calls were imbalanced.
-
-Links to previous versions:
-pre-series:
-https://lore.kernel.org/linux-kernel/20241222141427.819222-1-csokas.bence@prolan.hu/
-https://lore.kernel.org/linux-kernel/20250114222851.1023194-1-csokas.bence@prolan.hu/
-v1:
-https://lore.kernel.org/linux-kernel/20250115160244.1102881-1-csokas.bence@prolan.hu/
-v2:
-https://lore.kernel.org/linux-kernel/20250124085221.766303-8-csokas.bence@prolan.hu/
-
-Bence Csókás (4):
-  dma: Add devm_dma_request_chan()
-  pm: runtime: Add new devm functions
-  spi: atmel-quadspi: Use `devm_dma_request_chan()`
-  spi: atmel-quadspi: Fix unbalanced pm_runtime by using devm_ API
-
- drivers/base/power/runtime.c | 36 +++++++++++++++++++++
- drivers/dma/dmaengine.c      | 30 +++++++++++++++++
- drivers/spi/atmel-quadspi.c  | 62 ++++++++++--------------------------
- include/linux/dmaengine.h    |  7 ++++
- include/linux/pm_runtime.h   |  4 +++
- 5 files changed, 93 insertions(+), 46 deletions(-)
-
-
-base-commit: bb066fe812d6fb3a9d01c073d9f1e2fd5a63403b
--- 
-2.48.1
-
-
+Sounds reasonable, thanks
+J. Neuschäfer
