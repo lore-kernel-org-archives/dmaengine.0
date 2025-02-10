@@ -1,135 +1,176 @@
-Received: from mailout4.samsung.com (mailout4.samsung.com [203.254.224.34])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51E222F2A
-	for <dmaengine@vger.kernel.org>; Mon, 10 Feb 2025 07:55:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=203.254.224.34
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AF4D1BCA19
+	for <dmaengine@vger.kernel.org>; Mon, 10 Feb 2025 08:44:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739174105; cv=none; b=OFJTJ2IwT0dU5gTw5jvwaxRCiP/bMlfugxKAZT5CDPObmcB6JA94d+zzKSXO4tctVA31xpnhrrvJ+csvEH7IGL4IwjKlC87fiXMlAeoE5fsO68grOVHFxGHPEzBCSDtXePUZXOFjpNomZBT9gdlZAVSVjPGKf2UGn5RdvfvPQg8=
+	t=1739177079; cv=none; b=D4zwaehxWlUuge/S5mQgqHwyqRNUxQg0vpRCN3tptrZi3+zWBM3D4lBaTwEOjuEZpc4x86W6tzdKnrEW9xKctNNolWjAmLcJUiP7rkmRC6kzSfc0Op5kigfaYBA8su3+SRdsGbWoFrK2XuXpMNx/dpZF+G9kKiD6vA/FNHV36sg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739174105; c=relaxed/simple;
-	bh=JomylP+Fs6SJyqj2Jc4h+BAK20Yu8IHbZLtFviRNntM=;
-	h=From:To:Cc:In-Reply-To:Subject:Date:Message-ID:MIME-Version:
-	 Content-Type:References; b=LFalsnW5vxUZy8d1IvKRTNY9lBHa5i1gl7yJ5AW5bNyJ02lpK7jzv3N2OpvY9kHc6AYXPpmWrb3mQGBNJFXmvah5VMuUAnB6H7dQn/iszW0EMeqSgF9s/lH6Tg4quAtEtELW9WU2teIAcMbFvSA7lLeYz2bk7BFI7YCv4GRpeRI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com; spf=pass smtp.mailfrom=samsung.com; dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b=DyFh8jMN; arc=none smtp.client-ip=203.254.224.34
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=samsung.com
+	s=arc-20240116; t=1739177079; c=relaxed/simple;
+	bh=4fZ8hkk0JfCQHZ3YWUau2oqwdEOKuxV5oYRE3kgnKgM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=L1uwS5USTy9CgdPpMn4kYAbti2YqfzMCy18CvIqWVmKUo5hUBS1k45ndOIDieZ1vPpOs+O5C465e2h5Hl2ejUkrnZQ3zSqwC3vJBov50CVmfmoXkgTkCstvYZjyaYL5jETSUpaXjGnHQ/+AEkfvZH8qWI1CIcqItZ1TZVgwRF6I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=tXn/xoGa; arc=none smtp.client-ip=209.85.128.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b="DyFh8jMN"
-Received: from epcas5p3.samsung.com (unknown [182.195.41.41])
-	by mailout4.samsung.com (KnoxPortal) with ESMTP id 20250210075501epoutp04d0da8c806bbdb1b85813b5090d5f8c26~iyaFs9JcR2383623836epoutp04K
-	for <dmaengine@vger.kernel.org>; Mon, 10 Feb 2025 07:55:01 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout4.samsung.com 20250210075501epoutp04d0da8c806bbdb1b85813b5090d5f8c26~iyaFs9JcR2383623836epoutp04K
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-	s=mail20170921; t=1739174101;
-	bh=Kjo+EpNxKONxJbmDV6xPmrDu62bACw6LLEldMcvmQzo=;
-	h=From:To:Cc:In-Reply-To:Subject:Date:References:From;
-	b=DyFh8jMNtMwddJLEJ5FEkkmYbnsZyk5Vcep1M4Z+Y6g5Fy9zhqSSO7v37VQ7aB9G0
-	 jE93jEIVZhtljyt8A8rGkN2TBBXl9fy0PKIQagwNUZ8a8lMCjsGiXp08GoeepXIuCA
-	 Ww4b45gt5PnBuhVIw1v0YCVI9A/lC7FWJdSrSFKc=
-Received: from epsnrtp2.localdomain (unknown [182.195.42.163]) by
-	epcas5p2.samsung.com (KnoxPortal) with ESMTP id
-	20250210075500epcas5p2531b9376732ad53cbb8909b4bb8d4d63~iyaFYDPhG1889218892epcas5p2M;
-	Mon, 10 Feb 2025 07:55:00 +0000 (GMT)
-Received: from epsmgec5p1-new.samsung.com (unknown [182.195.38.181]) by
-	epsnrtp2.localdomain (Postfix) with ESMTP id 4Yrxgl5TXdz4x9Pt; Mon, 10 Feb
-	2025 07:54:59 +0000 (GMT)
-Received: from epcas5p4.samsung.com ( [182.195.41.42]) by
-	epsmgec5p1-new.samsung.com (Symantec Messaging Gateway) with SMTP id
-	15.C8.29212.3D0B9A76; Mon, 10 Feb 2025 16:54:59 +0900 (KST)
-Received: from epsmtrp2.samsung.com (unknown [182.195.40.14]) by
-	epcas5p2.samsung.com (KnoxPortal) with ESMTPA id
-	20250210075459epcas5p2eb0d4b6916f999e7c98d7e869e2d0ad6~iyaD7Boqz2130321303epcas5p2e;
-	Mon, 10 Feb 2025 07:54:59 +0000 (GMT)
-Received: from epsmgms1p1new.samsung.com (unknown [182.195.42.41]) by
-	epsmtrp2.samsung.com (KnoxPortal) with ESMTP id
-	20250210075459epsmtrp2eeacef6f877ae1ee64f33fb74fd7bcca~iyaD6UFgG1951919519epsmtrp2P;
-	Mon, 10 Feb 2025 07:54:59 +0000 (GMT)
-X-AuditID: b6c32a50-801fa7000000721c-c8-67a9b0d39803
-Received: from epsmtip2.samsung.com ( [182.195.34.31]) by
-	epsmgms1p1new.samsung.com (Symantec Messaging Gateway) with SMTP id
-	26.AF.18729.3D0B9A76; Mon, 10 Feb 2025 16:54:59 +0900 (KST)
-Received: from INBRO001561 (unknown [107.122.12.6]) by epsmtip2.samsung.com
-	(KnoxPortal) with ESMTPA id
-	20250210075458epsmtip23ed4d1a3bb38732f3092bfad636fb382~iyaDFWaaM0703907039epsmtip2y;
-	Mon, 10 Feb 2025 07:54:58 +0000 (GMT)
-From: "Pankaj Dubey" <pankaj.dubey@samsung.com>
-To: "'Aatif Mushtaq'" <aatif4.m@samsung.com>, <vkoul@kernel.org>,
-	<dmaengine@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-Cc: <aswani.reddy@samsung.com>
-In-Reply-To: <20250210061915.26218-4-aatif4.m@samsung.com>
-Subject: RE: [PATCH 3/3] dmaengine: pl330: Add DMA_2D capability
-Date: Mon, 10 Feb 2025 13:24:57 +0530
-Message-ID: <05c801db7b91$15058800$3f109800$@samsung.com>
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="tXn/xoGa"
+Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-438a39e659cso26970975e9.2
+        for <dmaengine@vger.kernel.org>; Mon, 10 Feb 2025 00:44:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1739177075; x=1739781875; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=a9jWy1Q5jX1SgFclMU8WZwRWsNWJuzin+o6tDoU266o=;
+        b=tXn/xoGawRSLSqMTkgezffT1G3FlX5wJBLkivK8WnL9Lqt6Cmb3uCu385D+HUh+7lN
+         Iu+/qEm/7VDBrh/BEwxAuehSRyVPQjb2kpj7kO7bnhDXtfJNznC1J9hlg7hjIssMrjk/
+         MJyokiGlvX0D0INFqXA1/DoQgVZ457c9pI5KzAoLAVcFU+4gwM4k7VV5E+5pxWlGdBZ3
+         bOldhGd3fTLCZoNci1geLdYUpfCvClzDp9EHXF5YEpoYC5S06TlZQe+7hzBn+uraHKKT
+         vwAvAM7ePK5+vi2ZL1gQFrNrU9jap+MFKMbE/VoYA2AKW95yr8TICO+UHCtGcOqIIxvx
+         zgIA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1739177075; x=1739781875;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=a9jWy1Q5jX1SgFclMU8WZwRWsNWJuzin+o6tDoU266o=;
+        b=AheuUMrzq6+tajXJpfO5L19S5Ys5vJCoEFNhuVYB2kHxKgMPnwXDsKH9AkTJDAMRpn
+         a4Yj9hAahtgfSc5Moh+S+cJgd7t0xA4YbAfjj0xMDNyWwJSKWtD3vAiqXF1E1g3F2tCu
+         U3C1VdNX5NgWV9RUAHpHN0v205u2sEzKqIiTHFLfQ60ti3hIEYoVh8xLE1rX2t4jBSsm
+         sS9qgKY3v+6SIT+LArDwnvtxRvbjxzyQ+NVCwiFc9gAxB/Uxqr/LQ7wDc0BLbmUtFWQf
+         /e079yaLFqQc1A8IHR609+72meCV/PpTc5VJAUL6zvKlYdsjP59naVqsJNZ4kiD1+wdm
+         aUHw==
+X-Forwarded-Encrypted: i=1; AJvYcCVeULzXoUS2ODnZshY7K1Mptal+1ehcWk8RFxzZOede3yzGFxQMS/Scw9tKgC5b1pF4hkprhyshlAA=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx3XU2ibXdJjdazN0V7iBnsbSMndkgjGPyWpIMBXU5RyQ2zAo9I
+	DHt5iJ1wIaWdo1a/sKLn1oj6EJZ0rXdcbI/KoPFZ228wd/zA/O5MvGV1b+ocloA=
+X-Gm-Gg: ASbGnct+rxFILTdAgj219tHRCzLvCMtF61PBc8JrZHvXqxML8032EnfBD030SxqdsFk
+	cXgJizrDSjApm3lCBk2FVSAs+f5CtSr3z8RJLgMrE6B1oRa7I48/BR+tLPcGn5hDDMS7gEHAbIb
+	IXPC9k7GB0c4S0z4Ag61/RmTOQOD58axkkJp+mZx8NK3babDTxtX2w1wLsRcOwl6FuEoL+ozwLr
+	yfJjiUd1x+CXbuZeKHNljX5ko3VdpAa4KnDd8Lk7Ahrydbo7ZRK8xcvmL1+a5v1+lM4gKucO9QK
+	rwMvIoUuoNOMq1XrTUJurfO6cko=
+X-Google-Smtp-Source: AGHT+IEIHivwIw1YLGXpQln/J8OfUdVcDuE29uK5Y0cehr1g+Cm1qc4Jrq0qwsltV208ZxXpHMxo2w==
+X-Received: by 2002:a05:600c:5248:b0:439:422d:d642 with SMTP id 5b1f17b1804b1-439422dd712mr30757655e9.23.1739177075235;
+        Mon, 10 Feb 2025 00:44:35 -0800 (PST)
+Received: from linaro.org ([2a02:2454:ff21:ef30:ef53:9f00:dac2:a172])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38dcde66729sm8119137f8f.81.2025.02.10.00.44.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 10 Feb 2025 00:44:34 -0800 (PST)
+Date: Mon, 10 Feb 2025 09:44:30 +0100
+From: Stephan Gerhold <stephan.gerhold@linaro.org>
+To: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
+Cc: Vinod Koul <vkoul@kernel.org>, Md Sadre Alam <quic_mdalam@quicinc.com>,
+	linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Georgi Djakov <djakov@kernel.org>
+Subject: Re: [PATCH] dmaengine: qcom: bam_dma: Avoid accessing BAM_REVISION
+ on remote BAM
+Message-ID: <Z6m8btwhJ9q4RjB6@linaro.org>
+References: <20250207-bam-read-fix-v1-1-027975cf1a04@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQFsIHTrWqAe9Pu9L3iNOvGTrR8WTgJaKAVsAmCg8Nqz+QrNYA==
-Content-Language: en-us
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFmplk+LIzCtJLcpLzFFi42LZdlhTS/fyhpXpBu2ntS2OzfjIaHFo81Z2
-	i9VT/7JaXN41h81i550TzA6sHptWdbJ59G1ZxejxeZNcAHNUtk1GamJKapFCal5yfkpmXrqt
-	kndwvHO8qZmBoa6hpYW5kkJeYm6qrZKLT4CuW2YO0EolhbLEnFKgUEBicbGSvp1NUX5pSapC
-	Rn5xia1SakFKToFJgV5xYm5xaV66Xl5qiZWhgYGRKVBhQnbGzZOrGQuesFT8fbGQqYGxmaWL
-	kZNDQsBE4u3dN2xdjFwcQgJ7GCXmbpjFDuF8YpR4MWcHlPONUeLAjivMMC1zF5xghEjsZZSY
-	M2MClPOCUeLejyZWkCo2AX2Jcz/mgdkiAvUSTe0PwRYyC8hJNO1qYQSxOQWsJI6v2sEEYgsL
-	OEg87GsHsjk4WARUJRY8ZQcxeQUsJW5NjQCp4BUQlDg58wnUFHmJ7W/nQN2jIPHz6TKoTU4S
-	XQ/+sUPUiEu8PHoE7AEJgb/sEgcuL2CEaHCRWHjgA1SzsMSr41vYIWwpic/v9rKB7JUQ8JFY
-	utsDIlwisaFnKTS47CUOXJnDAlLCLKApsX6XPsQqPone30+YIDp5JTrahCCq1SS+Pz8DtUhG
-	4mHzUiYI20OifcVi9gmMirOQPDYLyWOzkDwwC2HZAkaWVYxSqQXFuempyaYFhrp5qeXw6E7O
-	z93ECE6PWgE7GFdv+Kt3iJGJg/EQowQHs5IIr8nCFelCvCmJlVWpRfnxRaU5qcWHGE2BgT2R
-	WUo0OR+YoPNK4g1NLA1MzMzMTCyNzQyVxHmbd7akCwmkJ5akZqemFqQWwfQxcXBKNTC57Y0V
-	7/nAqGdUYzbBd+Mmw4X6OkW1wt0Ji52/VuypmNhgqfD+4Camd/l5f+fMUE6acnmz+8Wnb5MZ
-	Isx+/sx5sfjnUtuwm9d2ffw+NaYjQkVxCxeX7+mFIvyTDz1tY92ftWhOZP2n1pUXBJn3MdVf
-	2bKk5gmjlu7BN6JOX67b2hRcNL+cF7069fedQ4d+br6mqK9Vs8/puueqk8c1TY6sFr34rVb8
-	d7HmyURp1+bZ+YtbufwXhTDeU5izWG33ZAN2pmKFN9dK5u9zLzxeqWSYur2caWXA/lq5uuYP
-	y54dvc/4c9nTjus2J+c4WkXv9M8I8NRdrxZ6/snhQ0E/l2bM3vQvPcrJ6ahYf7LOciE/JZbi
-	jERDLeai4kQAAiqenBgEAAA=
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrPLMWRmVeSWpSXmKPExsWy7bCSvO7lDSvTDXb8ELQ4NuMjo8WhzVvZ
-	LVZP/ctqcXnXHDaLnXdOMDuwemxa1cnm0bdlFaPH501yAcxRXDYpqTmZZalF+nYJXBk3T65m
-	LHjCUvH3xUKmBsZmli5GTg4JAROJuQtOMHYxcnEICexmlLj9cy9UQkZi8uoVrBC2sMTKf8/Z
-	IYqeMUosPHCQHSTBJqAvce7HPFaQhIhAM6PEyZ1XwDqYBeQkmna1QI3dySjxYtE9RpAEp4CV
-	xPFVO5hAbGEBB4mHfe1ANgcHi4CqxIKn7CAmr4ClxK2pESAVvAKCEidnPmGBGKkt0fuwlRHC
-	lpfY/nYOM8RxChI/ny4DWysi4CTR9eAfO0SNuMTLo0fYJzAKz0IyahaSUbOQjJqFpGUBI8sq
-	RsnUguLc9NxiwwLDvNRyveLE3OLSvHS95PzcTYzgONHS3MG4fdUHvUOMTByMhxglOJiVRHhN
-	Fq5IF+JNSaysSi3Kjy8qzUktPsQozcGiJM4r/qI3RUggPbEkNTs1tSC1CCbLxMEp1cDUfiN/
-	qVFkb0/afb2MPeYLHf+pXfrxQL8uf7/VrfvS5+00YrJdPbfZt/lHWN/ddvvK2dueZuZStoyS
-	bIEvM+suqsVrtZxl12fie/Dg7WntB/IvT03w4VhYKP9ZeO1MhU8W/8qFtN2b/kc7CCv/rDxb
-	t8Gcw7y6686mHSFrNkY6PhMJUtx98n9zknee3w/uRRvsM4SsORp/uO1dNinkaouhZqSg4Ksj
-	u6qLb0uqFWmUfpxt3n1jfdSv2fKtHZfWruqadvSM6kPHN29DdT2Pnzp1RTuS4SnvGS9FXq6c
-	E+eUJ51v/ahuYJ1aym03Y9ILBaeLybve9U0wnDPzpuze/2wd3XdizZVPXPpsc9VP7r4SS3FG
-	oqEWc1FxIgC47UQGAgMAAA==
-X-CMS-MailID: 20250210075459epcas5p2eb0d4b6916f999e7c98d7e869e2d0ad6
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-CMS-TYPE: 105P
-DLP-Filter: Pass
-X-CFilter-Loop: Reflected
-X-CMS-RootMailID: 20250210062258epcas5p195b96f374fa9ce1802ec4d1c1e73f69c
-References: <20250210061915.26218-1-aatif4.m@samsung.com>
-	<CGME20250210062258epcas5p195b96f374fa9ce1802ec4d1c1e73f69c@epcas5p1.samsung.com>
-	<20250210061915.26218-4-aatif4.m@samsung.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250207-bam-read-fix-v1-1-027975cf1a04@oss.qualcomm.com>
 
-
-
-> -----Original Message-----
-> From: Aatif Mushtaq <aatif4.m@samsung.com>
-> Sent: Monday, February 10, 2025 11:49 AM
-> To: vkoul@kernel.org; dmaengine@vger.kernel.org; linux-
-> kernel@vger.kernel.org
-> Cc: pankaj.dubey@samsung.com; aswani.reddy@samsung.com; Aatif Mushtaq
-> <aatif4.m@samsung.com>
-> Subject: [PATCH 3/3] dmaengine: pl330: Add DMA_2D capability
+On Fri, Feb 07, 2025 at 12:17:33PM -0800, Bjorn Andersson wrote:
+> Commit '57a7138d0627 ("dmaengine: qcom: bam_dma: Avoid writing
+> unavailable register")' made this read unconditional, in order to
+> identify if the instance is BAM-NDP or BAM-Lite.
+> But the BAM_REVISION register is not accessible on remotely managed BAM
+> instances and attempts to access it causes the system to crash.
 > 
-> Add a capability to prepare DMA for 2D transfer and create a hook
-> between the DMA engine and the pl330 driver
+> Move the access back to be conditional and expand the checks that was
+> introduced to restore the old behavior when no revision information is
+> available.
 > 
-> Signed-off-by: Aatif Mushtaq <aatif4.m@samsung.com>
+> Fixes: 57a7138d0627 ("dmaengine: qcom: bam_dma: Avoid writing unavailable register")
+> Reported-by: Georgi Djakov <djakov@kernel.org>
+> Closes: https://lore.kernel.org/lkml/9ef3daa8-cdb1-49f2-8d19-a72d6210ff3a@kernel.org/
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
+
+This patch fixes the most critical regression (the bus hang), but the
+in_range(..., BAM_NDP) checks are also wrong. They do not consider the
+plain "BAM" type where the register is apparently also available. The
+check should be !in_range(..., BAM_LITE) instead to fix this.
+
+I mentioned this twice to Md Sadre Alam [1, 2], but a fix was
+unfortunately never sent for that part of the regression.
+
+I think we should take Caleb's patch and revert the entire patch for the
+6.14 cycle. There are several incorrect assumptions in the original
+patch, it will be easier to review a fixed version with the full diff,
+rather than looking at incremental fixups.
+
+On a somewhat related note, I'm working on a patch series for bam_dma to
+clean up the handling of remotely controlled BAMs. It will make it more
+clear when it's safe to access BAM registers and when not, and should
+allow reading the revision also for remotely controlled BAMs. This would
+avoid the need for all these if (!bdev->bam_revision) checks.
+
+Thanks,
+Stephan
+
+[1]: https://lore.kernel.org/linux-arm-msm/Z4D2jQNNW94qGIlv@linaro.org/
+[2]: https://lore.kernel.org/linux-arm-msm/Z4_U19_QyH2RJvKW@linaro.org/
+
 > ---
-
-Reviewed-by: Pankaj Dubey <pankaj.dubey@samsung.com>
-
+>  drivers/dma/qcom/bam_dma.c | 15 ++++++++-------
+>  1 file changed, 8 insertions(+), 7 deletions(-)
+> 
+> diff --git a/drivers/dma/qcom/bam_dma.c b/drivers/dma/qcom/bam_dma.c
+> index c14557efd577..d42d913492a8 100644
+> --- a/drivers/dma/qcom/bam_dma.c
+> +++ b/drivers/dma/qcom/bam_dma.c
+> @@ -445,8 +445,8 @@ static void bam_reset(struct bam_device *bdev)
+>  	writel_relaxed(val, bam_addr(bdev, 0, BAM_CTRL));
+>  
+>  	/* set descriptor threshold, start with 4 bytes */
+> -	if (in_range(bdev->bam_revision, BAM_NDP_REVISION_START,
+> -		     BAM_NDP_REVISION_END))
+> +	if (!bdev->bam_revision ||
+> +	    in_range(bdev->bam_revision, BAM_NDP_REVISION_START, BAM_NDP_REVISION_END))
+>  		writel_relaxed(DEFAULT_CNT_THRSHLD,
+>  			       bam_addr(bdev, 0, BAM_DESC_CNT_TRSHLD));
+>  
+> @@ -1006,8 +1006,8 @@ static void bam_apply_new_config(struct bam_chan *bchan,
+>  			maxburst = bchan->slave.src_maxburst;
+>  		else
+>  			maxburst = bchan->slave.dst_maxburst;
+> -		if (in_range(bdev->bam_revision, BAM_NDP_REVISION_START,
+> -			     BAM_NDP_REVISION_END))
+> +		if (!bdev->bam_revision ||
+> +		    in_range(bdev->bam_revision, BAM_NDP_REVISION_START, BAM_NDP_REVISION_END))
+>  			writel_relaxed(maxburst,
+>  				       bam_addr(bdev, 0, BAM_DESC_CNT_TRSHLD));
+>  	}
+> @@ -1199,11 +1199,12 @@ static int bam_init(struct bam_device *bdev)
+>  	u32 val;
+>  
+>  	/* read revision and configuration information */
+> -	val = readl_relaxed(bam_addr(bdev, 0, BAM_REVISION));
+> -	if (!bdev->num_ees)
+> +	if (!bdev->num_ees) {
+> +		val = readl_relaxed(bam_addr(bdev, 0, BAM_REVISION));
+>  		bdev->num_ees = (val >> NUM_EES_SHIFT) & NUM_EES_MASK;
+>  
+> -	bdev->bam_revision = val & REVISION_MASK;
+> +		bdev->bam_revision = val & REVISION_MASK;
+> +	}
+>  
+>  	/* check that configured EE is within range */
+>  	if (bdev->ee >= bdev->num_ees)
+> 
+> ---
+> base-commit: 2014c95afecee3e76ca4a56956a936e23283f05b
+> change-id: 20250207-bam-read-fix-2b31297d3fa1
+> 
+> Best regards,
+> -- 
+> Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
+> 
