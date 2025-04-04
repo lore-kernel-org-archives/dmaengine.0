@@ -1,29 +1,29 @@
-Received: from out30-132.freemail.mail.aliyun.com (out30-132.freemail.mail.aliyun.com [115.124.30.132])
+Received: from out30-97.freemail.mail.aliyun.com (out30-97.freemail.mail.aliyun.com [115.124.30.97])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3333E1E1020;
-	Fri,  4 Apr 2025 12:02:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=115.124.30.132
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F026A191F98;
+	Fri,  4 Apr 2025 12:02:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=115.124.30.97
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743768152; cv=none; b=Jk8Xcdf4OKWPTcdkxsw8Uxm6xAJYe7AjKRnOtIe3koRxOzFG3kZNK2wVvWLhnwdXwM2sKWrgp1sEcfeRoUuYIpQESVrt5em8RBqVNer+TcXYxQc0yLdVxvDPLXdeC21Jrqh1eNc2Oom7HiBATo2jxIYx2TgetpESC/sXGWY6uz4=
+	t=1743768153; cv=none; b=fkV5yS0HiN9hLdVPdDMA6PiKVntDOdjjNuz/lO1UGo1CkPzvjcz1MVMl+D9OlkxUcYQKc44VhpGa4c3tEWd//9oF+UG1mJotg6KDkjoxCzIk3TjqGtt0/+l5xtLT9HTiOisyarPmXS9Sijz8L/dm2TNoQc+BDlrqqc1k/TcVvK8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743768152; c=relaxed/simple;
-	bh=KAyEV8BTleWW1dzXEcTbbOThEjffpdF7ikqrRRQ/Nzc=;
+	s=arc-20240116; t=1743768153; c=relaxed/simple;
+	bh=dqDu8WL4h4bZfWHM69QQlCAdoWMi8cbOaNG41oLCUw0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FOGnEHJNLVpEWk5ICbQIvNKr2LLUiscPG+QFeRMSxswt6Jo1m0h3VaoNDbHs4W+aIbdx1zJClhclp7NZam8oiBK6LBY1RA+4Vq7/s0EvFFfBLjGLOYN1fVX0wOfdQ8A8fWbkLr+uSlMwC00fBt1nSiKWQ+5N2QeEl1Op4j26OSA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.alibaba.com; spf=pass smtp.mailfrom=linux.alibaba.com; dkim=pass (1024-bit key) header.d=linux.alibaba.com header.i=@linux.alibaba.com header.b=cZBPEYzU; arc=none smtp.client-ip=115.124.30.132
+	 MIME-Version; b=ILI7TYHfO74gGww+L+TSzo2Gax/dubltsygcRTvGRwYKModTQQ4gOjVtCWNxdj1Xns5Ln91PyZDRng9iSzAogetlQSq51hlxgocfErP/qrWNMYhi63+e2VKfgCCOW+J/d7KZ+byctfQdS1DssdaMOI9ycTNmRcQsP5dNRApKCVA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.alibaba.com; spf=pass smtp.mailfrom=linux.alibaba.com; dkim=pass (1024-bit key) header.d=linux.alibaba.com header.i=@linux.alibaba.com header.b=yKmuO7x4; arc=none smtp.client-ip=115.124.30.97
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.alibaba.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.alibaba.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.alibaba.com header.i=@linux.alibaba.com header.b="cZBPEYzU"
+	dkim=pass (1024-bit key) header.d=linux.alibaba.com header.i=@linux.alibaba.com header.b="yKmuO7x4"
 DKIM-Signature:v=1; a=rsa-sha256; c=relaxed/relaxed;
 	d=linux.alibaba.com; s=default;
-	t=1743768140; h=From:To:Subject:Date:Message-ID:MIME-Version;
-	bh=bHrE7lpbUgz12wfwjxk2eHqBwsJF0K53E2iCqsP2ONE=;
-	b=cZBPEYzU5FKBfy6Xc6OQzR+vNIItc/+6D2QKJ1WwRafS+t3vegUsIHkMPVl9+k5Sn0UtEbOqrVE52k9OF7wT78DUsnEl2ugKlVqyAzZoGrjAGVBGCK0j5dOLyGffk6Qrly8Z3sC5/sTLvU1F/cq12wSg9NkX9Yk4Ho2Ol7+u0/0=
-Received: from localhost.localdomain(mailfrom:xueshuai@linux.alibaba.com fp:SMTPD_---0WUyld47_1743768140 cluster:ay36)
+	t=1743768144; h=From:To:Subject:Date:Message-ID:MIME-Version;
+	bh=BF0hRp/spta9T2HH0txDA+euJMfdcZjxuSjIy5hZh2U=;
+	b=yKmuO7x4uDWBRtVFiav3k9/+m09KF8/7pSJj988XW0N4GmOijoqFWGq2heLZXhfYeQsGD+caJTwmdwpPeYITRcu4lpJOs3fxBQsCOfXtPNEIdvba1zvQPguGimlogDPP514cjCuOqOO1vhJVzPGZBUxPdpysbe8YwWdhpymAy6s=
+Received: from localhost.localdomain(mailfrom:xueshuai@linux.alibaba.com fp:SMTPD_---0WUyld5F_1743768141 cluster:ay36)
           by smtp.aliyun-inc.com;
-          Fri, 04 Apr 2025 20:02:20 +0800
+          Fri, 04 Apr 2025 20:02:21 +0800
 From: Shuai Xue <xueshuai@linux.alibaba.com>
 To: vinicius.gomes@intel.com,
 	dave.jiang@intel.com,
@@ -32,9 +32,9 @@ To: vinicius.gomes@intel.com,
 Cc: xueshuai@linux.alibaba.com,
 	dmaengine@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH v4 2/9] dmaengine: idxd: fix memory leak in error handling path of idxd_setup_engines
-Date: Fri,  4 Apr 2025 20:02:10 +0800
-Message-ID: <20250404120217.48772-3-xueshuai@linux.alibaba.com>
+Subject: [PATCH v4 5/9] dmaengine: idxd: Add missing cleanups in cleanup internals
+Date: Fri,  4 Apr 2025 20:02:13 +0800
+Message-ID: <20250404120217.48772-6-xueshuai@linux.alibaba.com>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20250404120217.48772-1-xueshuai@linux.alibaba.com>
 References: <20250404120217.48772-1-xueshuai@linux.alibaba.com>
@@ -46,41 +46,41 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Memory allocated for engines is not freed if an error occurs during
-idxd_setup_engines(). To fix it, free the allocated memory in the
-reverse order of allocation before exiting the function in case of an
-error.
+The idxd_cleanup_internals() function only decreases the reference count
+of groups, engines, and wqs but is missing the step to release memory
+resources.
 
-Fixes: 75b911309060 ("dmaengine: idxd: fix engine conf_dev lifetime")
+To fix this, use the cleanup helper to properly release the memory
+resources.
+
+Fixes: ddf742d4f3f1 ("dmaengine: idxd: Add missing cleanup for early error out in probe call")
 Cc: stable@vger.kernel.org
 Signed-off-by: Shuai Xue <xueshuai@linux.alibaba.com>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
 Reviewed-by: Fenghua Yu <fenghuay@nvidia.com>
 ---
- drivers/dma/idxd/init.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/dma/idxd/init.c | 11 +++--------
+ 1 file changed, 3 insertions(+), 8 deletions(-)
 
 diff --git a/drivers/dma/idxd/init.c b/drivers/dma/idxd/init.c
-index 80fb189c9624..ff6ec3c0f604 100644
+index a40fb2fd5006..f8129d2d53f1 100644
 --- a/drivers/dma/idxd/init.c
 +++ b/drivers/dma/idxd/init.c
-@@ -275,6 +275,7 @@ static int idxd_setup_engines(struct idxd_device *idxd)
- 		rc = dev_set_name(conf_dev, "engine%d.%d", idxd->id, engine->id);
- 		if (rc < 0) {
- 			put_device(conf_dev);
-+			kfree(engine);
- 			goto err;
- 		}
+@@ -407,14 +407,9 @@ static int idxd_setup_groups(struct idxd_device *idxd)
  
-@@ -288,7 +289,10 @@ static int idxd_setup_engines(struct idxd_device *idxd)
- 		engine = idxd->engines[i];
- 		conf_dev = engine_confdev(engine);
- 		put_device(conf_dev);
-+		kfree(engine);
- 	}
-+	kfree(idxd->engines);
-+
- 	return rc;
+ static void idxd_cleanup_internals(struct idxd_device *idxd)
+ {
+-	int i;
+-
+-	for (i = 0; i < idxd->max_groups; i++)
+-		put_device(group_confdev(idxd->groups[i]));
+-	for (i = 0; i < idxd->max_engines; i++)
+-		put_device(engine_confdev(idxd->engines[i]));
+-	for (i = 0; i < idxd->max_wqs; i++)
+-		put_device(wq_confdev(idxd->wqs[i]));
++	idxd_clean_groups(idxd);
++	idxd_clean_engines(idxd);
++	idxd_clean_wqs(idxd);
+ 	destroy_workqueue(idxd->wq);
  }
  
 -- 
