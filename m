@@ -1,198 +1,147 @@
-Received: from fallback17.i.mail.ru (fallback17.i.mail.ru [79.137.243.72])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFE06262FF2;
-	Tue, 22 Apr 2025 22:10:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=79.137.243.72
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB6CF158DA3;
+	Wed, 23 Apr 2025 06:31:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745359847; cv=none; b=SaOt5qazRT987ZZcnZUoEZ1tfDYiCxtZl2Ap/8plHAw4mMTcT7KlOO9sxe4Tkse9RbKssHZUQxVWd8tK7QXVNXKqp93JilCqJuvphm1PF6NiKmXcYl2ip9RgsfIBX5PvROpMF+nD9B1hSpLGnYeb6c2UEVkkPsrw2SfXABkgKyk=
+	t=1745389914; cv=none; b=g5tCLPG22DL9BMx0sQwd8Jj14EQ3rN+Dg1wbDlT+4DLeYH1oqbMe2CKnVbGwVgkbZJc52/NdmNlEmVIcTs5nQuuPvKjr3g29a0oyO4jOBUF5TlUOM6Jm4Anjf+IZxhziNj3bcHdgSFxT5LO41dsTHXLmzOE2KKNCsfHmGFLQCU0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745359847; c=relaxed/simple;
-	bh=P4oeDifbHhKNMdQ/cK3zVKTE2rFexkZ5m5L2kBjD+1w=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gufqac85bw/3cHwZV0Wyas6wjoNeLNKzVsImeEmqKFuPEQEXLVBKR0bd/wyDWNlDtwkPeC9I8jINl7ePSNjDnexGOt9P9VoeFTBSvpmjr+I9mguu/cAs5N/fE2+9qQkOX6Si+7cG5R6dzV//zBeewaiIGLp02eA9nOxTfIDOUqs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jiaxyga.com; spf=pass smtp.mailfrom=jiaxyga.com; dkim=pass (1024-bit key) header.d=jiaxyga.com header.i=@jiaxyga.com header.b=voz5Bn1I; dkim=pass (1024-bit key) header.d=jiaxyga.com header.i=@jiaxyga.com header.b=NXFPmHdz; dkim=pass (1024-bit key) header.d=jiaxyga.com header.i=@jiaxyga.com header.b=UNtniXgF; arc=none smtp.client-ip=79.137.243.72
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jiaxyga.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jiaxyga.com
+	s=arc-20240116; t=1745389914; c=relaxed/simple;
+	bh=r9ExManz1A0r6sYsqtHhQZ4DG96cmggqeZkaMZKdsgU=;
+	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=NAEIj0S9HUTiMWdgrDekYF5CIN7G2AvD7e82JwdFbDS88TD88Ya4jHSYFeXKuSYp2tYF6Akv7SsNAAVfCwIhuFQ2Qfxjr2Y29KS2GsnJHdhGCWowVh9tPqXFNOyRfz4l+X2sS+sL/W26k4k81TDasySbndqVlv+gQWYZieccuhA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=IaboBbS1; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=jiaxyga.com header.i=@jiaxyga.com header.b="voz5Bn1I";
-	dkim=pass (1024-bit key) header.d=jiaxyga.com header.i=@jiaxyga.com header.b="NXFPmHdz";
-	dkim=pass (1024-bit key) header.d=jiaxyga.com header.i=@jiaxyga.com header.b="UNtniXgF"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=jiaxyga.com; s=mailru;
-	h=Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:From:Subject:Content-Type:Content-Transfer-Encoding:To:Cc; bh=V1fosFZDaIltgP12PKs2O3GRjq5xljMFAutsPMirhmE=;
-	t=1745359844;x=1745449844; 
-	b=voz5Bn1IxfPDCgWbBuo15yWtC7gruKtfXi/e4JPtzR6gWKHA10mYUBGaW0W9eeaaP7wz/zUs5yD0Ew5D/GBfa5wFEPd74CHYus3OSUzg/d28buyzFf0cqBJwds9xaeeUVNRqRJ6q146NSOaULaCcYcozfLrp+24jCVH1ltsiHBc=;
-Received: from [10.113.250.130] (port=35402 helo=send54.i.mail.ru)
-	by fallback17.i.mail.ru with esmtp (envelope-from <danila@jiaxyga.com>)
-	id 1u7LIx-008vBZ-CV; Wed, 23 Apr 2025 00:37:23 +0300
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=jiaxyga.com
-	; s=mailru; h=Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:
-	Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:
-	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-	:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
-	List-Post:List-Owner:List-Archive:X-Cloud-Ids;
-	bh=V1fosFZDaIltgP12PKs2O3GRjq5xljMFAutsPMirhmE=; t=1745357843; x=1745447843; 
-	b=NXFPmHdzUbhvFvmJI9QF+3i4YSeqOEFJtIcN867alhF+GHZRHmD4+FNXue3YJrCvJHtxICEB64W
-	0RdGGe6iKg10xA6lF1jkmqAdwyrGR3TR+ngw4KEMmHZMpnWd/tTYvHR1mjejCwTTinT9mShUyS6tJ
-	uLoO8YDLEyOlHRD4fjw=;
-Received: from [10.113.242.2] (port=46536 helo=send265.i.mail.ru)
-	by exim-fallback-5f8f9b6d5b-kbgz4 with esmtp (envelope-from <danila@jiaxyga.com>)
-	id 1u7LIj-00000000PpD-2jPU; Wed, 23 Apr 2025 00:37:09 +0300
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=jiaxyga.com
-	; s=mailru; h=Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:
-	Message-ID:Date:Subject:Cc:To:From:From:Sender:Reply-To:To:Cc:Content-Type:
-	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
-	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
-	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive:
-	X-Cloud-Ids:Disposition-Notification-To;
-	bh=V1fosFZDaIltgP12PKs2O3GRjq5xljMFAutsPMirhmE=; t=1745357829; x=1745447829; 
-	b=UNtniXgFHok/qmt18ifRoNREPMEggcomBcaY9K7tVAUCc3Lffvaf0w1v64sB2QUZzL0aJZwuAh9
-	Tzb8sjbdgXtdJu37fgEnlgJnNiuF8B62bJLLmY/NZZGC5cLRbN5EYmNwyssLiH1vfcZfy4ZuKJiE/
-	CgqoYR2ALb216jglk9g=;
-Received: by exim-smtp-77d8cdf77b-wlhm8 with esmtpa (envelope-from <danila@jiaxyga.com>)
-	id 1u7LIR-00000000BOp-0puE; Wed, 23 Apr 2025 00:36:51 +0300
-From: Danila Tikhonov <danila@jiaxyga.com>
-To: Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	"Rafael J . Wysocki" <rafael@kernel.org>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Wim Van Sebroeck <wim@linux-watchdog.org>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Rajendra Nayak <quic_rjendra@quicinc.com>,
-	Jassi Brar <jassisinghbrar@gmail.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Amit Kucheria <amitk@kernel.org>,
-	Thara Gopinath <thara.gopinath@gmail.com>,
-	Daniel Lezcano <daniel.lezcano@linaro.org>,
-	Zhang Rui <rui.zhang@intel.com>,
-	Lukasz Luba <lukasz.luba@arm.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Wesley Cheng <quic_wcheng@quicinc.com>,
-	Vinod Koul <vkoul@kernel.org>,
-	Kishon Vijay Abraham I <kishon@kernel.org>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
-	Souradeep Chowdhury <quic_schowdhu@quicinc.com>,
-	Lee Jones <lee@kernel.org>,
-	Andrew Lunn <andrew+netdev@lunn.ch>,
-	"David S . Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Alex Elder <elder@kernel.org>,
-	Alim Akhtar <alim.akhtar@samsung.com>,
-	Avri Altman <avri.altman@wdc.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Andy Gross <agross@kernel.org>,
-	Srinivas Kandagatla <srini@kernel.org>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Georgi Djakov <djakov@kernel.org>,
-	Loic Poulain <loic.poulain@oss.qualcomm.com>,
-	Robert Foss <rfoss@kernel.org>,
-	Andi Shyti <andi.shyti@kernel.org>,
-	Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>,
-	Taniya Das <quic_tdas@quicinc.com>,
-	Sibi Sankar <quic_sibis@quicinc.com>,
-	Will Deacon <will@kernel.org>,
-	Robin Murphy <robin.murphy@arm.com>,
-	Joerg Roedel <joro@8bytes.org>,
-	Imran Shaik <quic_imrashai@quicinc.com>,
-	Mathieu Poirier <mathieu.poirier@linaro.org>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Jessica Zhang <quic_jesszhan@quicinc.com>,
-	David Airlie <airlied@gmail.com>,
-	Simona Vetter <simona@ffwll.ch>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Kees Cook <kees@kernel.org>,
-	Tony Luck <tony.luck@intel.com>,
-	"Guilherme G . Piccoli" <gpiccoli@igalia.com>,
-	David Wronek <david@mainlining.org>,
-	Jens Reidel <adrian@mainlining.org>
-Cc: devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-pm@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-watchdog@vger.kernel.org,
-	linux-usb@vger.kernel.org,
-	linux-phy@lists.infradead.org,
-	linux-mmc@vger.kernel.org,
-	netdev@vger.kernel.org,
-	linux-scsi@vger.kernel.org,
-	dmaengine@vger.kernel.org,
-	linux-crypto@vger.kernel.org,
-	linux-i2c@vger.kernel.org,
-	linux-clk@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	iommu@lists.linux.dev,
-	linux-remoteproc@vger.kernel.org,
-	dri-devel@lists.freedesktop.org,
-	linux-hardening@vger.kernel.org,
-	linux@mainlining.org,
-	~postmarketos/upstreaming@lists.sr.ht,
-	Danila Tikhonov <danila@jiaxyga.com>
-Subject: [PATCH 22/33] dt-bindings: interconnect: OSM L3: Add the SM7150 compatible
-Date: Wed, 23 Apr 2025 00:31:26 +0300
-Message-ID: <20250422213137.80366-6-danila@jiaxyga.com>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250422213137.80366-1-danila@jiaxyga.com>
-References: <20250422213137.80366-1-danila@jiaxyga.com>
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="IaboBbS1"
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53N0i96A016294;
+	Wed, 23 Apr 2025 06:31:44 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=0YQNBAjlr064X1/5yt4rnDgv
+	WKgjcQXurOIWhIT2fjc=; b=IaboBbS1E3qOPyWFduUgZM0fnSl1tl1d1JGHql40
+	AO2qJTQHgkxeWQM05nVAMd8bz+WOTO2WXISlu3lFLC8UlIExNvC8hDsk1USx7Uxg
+	JTUOQAKNiJ2Ho+0LuXG8EaOZEOMZZR+H9inz9J3WKKxqnX8FhimALvAR7N6Hw3kn
+	hq28aH2XewmOAMmeE+EBvFiWKFN/MxmMGWi6xJGrQ/wACCrl3UYwOxl+cfnBlhEN
+	DoREiJt4XsTOU6vWHAJ0OQr2BvyiMNq07Gr1RuJT4PGNG1wyptMS6jXZx27rw85K
+	tAkYEUY/H0gAGnG4yyFvemF6iaKY6331Rvsns06QkCDJQA==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 466jh093x1-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 23 Apr 2025 06:31:43 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 53N6VhVn006678
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 23 Apr 2025 06:31:43 GMT
+Received: from hu-kaushalk-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Tue, 22 Apr 2025 23:31:38 -0700
+From: Kaushal Kumar <quic_kaushalk@quicinc.com>
+To: <vkoul@kernel.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
+        <conor+dt@kernel.org>, <manivannan.sadhasivam@linaro.org>,
+        <miquel.raynal@bootlin.com>, <richard@nod.at>, <vigneshr@ti.com>,
+        <andersson@kernel.org>, <konradybcio@kernel.org>, <agross@kernel.org>
+CC: <linux-arm-msm@vger.kernel.org>, <dmaengine@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-mtd@lists.infradead.org>,
+        Kaushal Kumar <quic_kaushalk@quicinc.com>
+Subject: [PATCH v3 1/5] dt-bindings: mtd: qcom,nandc: Document the SDX75 NAND controller
+Date: Wed, 23 Apr 2025 12:00:50 +0530
+Message-ID: <20250423063054.28795-2-quic_kaushalk@quicinc.com>
+X-Mailer: git-send-email 2.17.1
+In-Reply-To: <20250423063054.28795-1-quic_kaushalk@quicinc.com>
+References: <20250423063054.28795-1-quic_kaushalk@quicinc.com>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Mailru-Src: smtp
-X-4EC0790: 10
-X-7564579A: 646B95376F6C166E
-X-77F55803: 4F1203BC0FB41BD985535D2C87FE65BB5D73E3D950B0DD10C757DC83125CEFA200894C459B0CD1B9E45468F3D2148E1133594132A326AF8BE13F8EB43D44EC973781E644FA50EF3D5F9067195EC86057
-X-7FA49CB5: FF5795518A3D127A4AD6D5ED66289B5278DA827A17800CE737AE489DBC023F2AEA1F7E6F0F101C67BD4B6F7A4D31EC0BCC500DACC3FED6E28638F802B75D45FF8AA50765F79006371005780D56A98C20EA1F7E6F0F101C67CDEEF6D7F21E0D1D9295C2E9FA3191EE1B59CA4C82EFA65801FF6380E37ADEF08D1BBA29F9A7A3F7785E4A5951648B74117882F4460429724CE54428C33FAD305F5C1EE8F4F765FCF80095D1E57F4578A471835C12D1D9774AD6D5ED66289B52BA9C0B312567BB23117882F44604297287769387670735201E561CDFBCA1751FF6B57BC7E6449061A352F6E88A58FB86F5D81C698A659EA73AA81AA40904B5D9A18204E546F3947CE3786DD2C77EBDAAAD7EC71F1DB884274AD6D5ED66289B523666184CF4C3C14F6136E347CC761E07725E5C173C3A84C3457234DA37CC1B30BA3038C0950A5D36B5C8C57E37DE458B330BD67F2E7D9AF16D1867E19FE14079C09775C1D3CA48CF3D321E7403792E342EB15956EA79C166A417C69337E82CC275ECD9A6C639B01B78DA827A17800CE75A9E79F66F1C28F3731C566533BA786AA5CC5B56E945C8DA
-X-C1DE0DAB: 0D63561A33F958A59A44524D18F8C7125002B1117B3ED696CCF52F37E3778654E772F934B9BCD185823CB91A9FED034534781492E4B8EEAD303003AC7AA20DD0C79554A2A72441328621D336A7BC284946AD531847A6065A17B107DEF921CE79BDAD6C7F3747799A
-X-C8649E89: 1C3962B70DF3F0ADE00A9FD3E00BEEDF3FED46C3ACD6F73ED3581295AF09D3DF87807E0823442EA2ED31085941D9CD0AF7F820E7B07EA4CF664FE48248724D6359852A40B167F5B839DE41CA986C137B0BC55662B05C7AF1506ED036F265C54268A835CA8743990B0E68F76089DC0941D59B53E1D0EAB01214D85D07BDC7F366EFF8118B638B08AA02C26D483E81D6BE72B480F99247062FEE42F474E8A1C6FD34D382445848F2F3
-X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu53w8ahmwBjZKM/YPHZyZHvz5uv+WouB9+ObcCpyrx6l7KImUglyhkEat/+ysWwi0gdhEs0JGjl6ggRWTy1haxBpVdbIX1nthFXMZebaIdHP2ghjoIc/363UZI6Kf1ptIMVS+uSU+BUhgvHg8IPXFAgg4=
-X-Mailru-Sender: 9EB879F2C80682A0D0AE6A344B45275F1CE3799C8C751E69AAE6F637C7150CBC7E2900C1BE1F324E1C51C0036B6E24842C62728BC403A049225EC17F3711B6CF1A6F2E8989E84EC137BFB0221605B344978139F6FA5A77F05FEEDEB644C299C0ED14614B50AE0675
-X-Mras: Ok
-X-Mailru-Src: fallback
-X-7564579A: 646B95376F6C166E
-X-77F55803: 6242723A09DB00B4F4CF43BFC943A6056BD31E8E40B57B3700FEBA0AECF444F968F3CF0E9FE49B69E3325780BABEE66F6D6B9635FD2E1A812DBD6F567ED823A7DABA482F18F025FB04C9823AC0C1480D
-X-87b9d050: 1
-X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu53w8ahmwBjZKM/YPHZyZHvz5uv+WouB9+OYcBso8Zm+oliTz8oZwnDrFsY77LZRcHyw5ht0smWrfSeTW5FiI8avd9v29gUBslpEZ9wIMwqVP4jLQVQ+dVm7x9BpDHadBV9RMjI809PraZIUCeVl2zoX9egAO52yjOtA==
-X-Mras: Ok
-X-7564579A: B8F34718100C35BD
-X-77F55803: 6242723A09DB00B4F4CF43BFC943A605C6C1A77FDB0143BE94EA45A41698E33D68F3CF0E9FE49B69E3325780BABEE66F7D2BEA74499B0B2661824E5187158EBA79E1739485A1B2EE
-X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu53w8ahmwBjZKM/YPHZyZHvz5uv+WouB9+OYcBso8Zm+oliTz8oZwnDrFsY77LZRcHyw5ht0smWrfSeTW5FiI8avd9v29gUBslpEZ9wIMwqVP4jLQVQ+dVm7x9BpDHadBV9RMjI809PraZIUCeVl2zoX/3sMqhUFiA/w==
-X-Mailru-MI: 20000000000000800
-X-Mras: Ok
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: YCEGiSXAHRT3xrQNtpPg29sRlR7E5zlT
+X-Proofpoint-ORIG-GUID: YCEGiSXAHRT3xrQNtpPg29sRlR7E5zlT
+X-Authority-Analysis: v=2.4 cv=Fv0F/3rq c=1 sm=1 tr=0 ts=6808894f cx=c_pps a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17 a=GEpy-HfZoHoA:10 a=XR8D0OoHHMoA:10 a=VwQbUJbxAAAA:8 a=COk6AnOGAAAA:8 a=T7SboCa-U_X_iRyOqw0A:9
+ a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNDIzMDA0MiBTYWx0ZWRfX6Ui+eBipH0ET n7n9tF2OEyHpq54UGijc9+VruKP/P+qcBHtqWAdhljjF3tDDi/zEKKj5bL+rpsjvJI6dUJlXOrH KfmBqw8Ob5jHipgfKS7SY8MU9ToixODb5+qDUnpobgQ9i3GpLckIaMnhHq3+5NFfeAE7IvAKPY9
+ UtxajMB3vbd08ptW0CkN+BZ8Qfwe9eAkzb4+cYXvczaS72vwCbLGfH5fk4T/OinQpbWlMc2XC6Y D9d/tWzvj3SktyATJVNneCE9lUNfA/daSZISQtxRRMtTjVXGHuAa8nn1H4iTnsF5s6TgP5/dBbT OJT6Gmp7W9ncsUKQd9nUUYZFetgKeXgGMEBORfcNDYMd4/s9BeZQnOy7rjv99G3IX5TJHz02zj8
+ kl3dMoj5bBeuLSY588/HC80TnGW38/HAKIxItzMEgbGa99kkXeWDDdfYb9UvcrkQvdf2BRba
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-04-23_05,2025-04-22_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 mlxscore=0
+ malwarescore=0 mlxlogscore=999 priorityscore=1501 suspectscore=0
+ adultscore=0 bulkscore=0 clxscore=1015 spamscore=0 lowpriorityscore=0
+ phishscore=0 classifier=spam authscore=0 authtc=n/a authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
+ definitions=main-2504230042
 
-Document the OSM L3 found in the Qualcomm SM7150 platform.
+Add new compatible for the QPIC NAND controller v2.1.1 used for SDX75 SoC.
 
-Signed-off-by: Danila Tikhonov <danila@jiaxyga.com>
+SDX75 NAND controller has iommu support so define it in the properties
+section.
+
+Reviewed-by: Rob Herring (Arm) <robh@kernel.org>
+Signed-off-by: Kaushal Kumar <quic_kaushalk@quicinc.com>
 ---
- Documentation/devicetree/bindings/interconnect/qcom,osm-l3.yaml | 1 +
- 1 file changed, 1 insertion(+)
+ .../devicetree/bindings/mtd/qcom,nandc.yaml   | 30 +++++++++++++++----
+ 1 file changed, 24 insertions(+), 6 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/interconnect/qcom,osm-l3.yaml b/Documentation/devicetree/bindings/interconnect/qcom,osm-l3.yaml
-index cd4bb912e0dc..022574bb5996 100644
---- a/Documentation/devicetree/bindings/interconnect/qcom,osm-l3.yaml
-+++ b/Documentation/devicetree/bindings/interconnect/qcom,osm-l3.yaml
-@@ -24,6 +24,7 @@ properties:
-               - qcom,sdm670-osm-l3
-               - qcom,sdm845-osm-l3
-               - qcom,sm6350-osm-l3
-+              - qcom,sm7150-osm-l3
-               - qcom,sm8150-osm-l3
-           - const: qcom,osm-l3
-       - items:
+diff --git a/Documentation/devicetree/bindings/mtd/qcom,nandc.yaml b/Documentation/devicetree/bindings/mtd/qcom,nandc.yaml
+index 35b4206ea918..5511389960f0 100644
+--- a/Documentation/devicetree/bindings/mtd/qcom,nandc.yaml
++++ b/Documentation/devicetree/bindings/mtd/qcom,nandc.yaml
+@@ -11,12 +11,18 @@ maintainers:
+ 
+ properties:
+   compatible:
+-    enum:
+-      - qcom,ipq806x-nand
+-      - qcom,ipq4019-nand
+-      - qcom,ipq6018-nand
+-      - qcom,ipq8074-nand
+-      - qcom,sdx55-nand
++    oneOf:
++      - items:
++          - enum:
++              - qcom,sdx75-nand
++          - const: qcom,sdx55-nand
++      - items:
++          - enum:
++              - qcom,ipq806x-nand
++              - qcom,ipq4019-nand
++              - qcom,ipq6018-nand
++              - qcom,ipq8074-nand
++              - qcom,sdx55-nand
+ 
+   reg:
+     maxItems: 1
+@@ -95,6 +101,18 @@ allOf:
+           items:
+             - const: rxtx
+ 
++  - if:
++      properties:
++        compatible:
++          contains:
++            enum:
++              - qcom,sdx75-nand
++
++    then:
++      properties:
++        iommus:
++          maxItems: 1
++
+   - if:
+       properties:
+         compatible:
 -- 
-2.49.0
+2.17.1
 
