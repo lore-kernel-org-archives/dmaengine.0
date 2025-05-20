@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D370422DF87;
-	Tue, 20 May 2025 13:59:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0186F22DF87;
+	Tue, 20 May 2025 14:04:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747749597; cv=none; b=DG36VzPgshP7p0P/bWglqxQkRr9rLF2EWixMP5pIn9XYyOY8xm/wmX3gNiQ/hhdtz0qf7QCxSFos0uuafR3Be0bW9VbnDKsoyy/TEeVMViUMfwPjRkzjlhoayE5TLnAylbmyPicAIBt+WBGwMMRwvoFtrtV85fP+FMNyHPq9KCk=
+	t=1747749886; cv=none; b=Jn30cVJhlQ0rm+NfHc6N4dv+Fg/EdhVYIa0+8snuOg+DT2ur5x3l2m8QoBvgyHl8whTZI5OcsWQbHsE5bUdqGgRfwa88Y2ZXHtOnSx9FQjjgVbP+v1zEjTuUjJfCkk2KFozC+6lCJI2omTh36wR0f7eeC8ehgKVwCkZAiLVBGSc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747749597; c=relaxed/simple;
-	bh=JbMVGMqvemKbJECI9vxZUDar+D71ghpKvuEUqaSnzuI=;
+	s=arc-20240116; t=1747749886; c=relaxed/simple;
+	bh=0SLkKG1eEqu9XI5Q/lghF+flNTA4tjofVYEFIukv30c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IHm/kFLd1xZxOXr7q0J3rlWFmxNXLXhmCZVrm3jVu+/AFL360vUQhIEhX2O0gDamr+SFvyR2pB6QqcE9Wx0hDh0PTMrl6hwH/e4cIHkRVjRUuwvLCD/BUzF6r5ARNi4n7LLwUzrjQfZno0w4hLDMowUPcyhGwghqeP5Ze2JmPfI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zy5yAIR7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ih9WfFDifS19ScRk/px12EoEoKTYaXhvGVtgU9L7Wp0Z31Cawbo1wRGWfyKkTicRGJVU3sf4Qa3Dkv4aah+PZRLM1JOaV1Y6uTlmWKiup9uWlSoGMnBzkuPtw7MKNnj2Rk0crvLlRNLH1rCtBYk8gnjedZcZZ4Ge3sRonSzuTFU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b1Wq9lmp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zy5yAIR7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5421EC4CEE9;
-	Tue, 20 May 2025 13:59:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b1Wq9lmp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D73CC4CEE9;
+	Tue, 20 May 2025 14:04:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747749597;
-	bh=JbMVGMqvemKbJECI9vxZUDar+D71ghpKvuEUqaSnzuI=;
+	s=korg; t=1747749885;
+	bh=0SLkKG1eEqu9XI5Q/lghF+flNTA4tjofVYEFIukv30c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Zy5yAIR7tVbNOLeIeMETikzagJ54ftrXErnRR4Mul/OjHKPhtAIwBiGM38dGyUPkg
-	 RfMUBRD6sF1BkJwprCd843dCoLbqT13G7Qq97cO7gGdLIvAklgnrZdCUhVxumDs83k
-	 uCxt5mLSySLPUrzbdN578Zq/r+79/Q/EZYU+wOCc=
+	b=b1Wq9lmp52VwbIPfqnbPsVGYUR66zjNtd/KjeJPy2LjaJejvgLrpzLt6QW0pxkq5t
+	 e7K49POGEpdWoV6jCK+UniLCoN9m9ovUwRaHK60BN74n01SN+SkOxDjTldFC9KAjvx
+	 9oCNlgS2SkAKfW753lgKLxOr0NsBPcAvy2Ie8HSU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,12 +32,12 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Vinod Koul <vkoul@kernel.org>,
 	dmaengine@vger.kernel.org,
 	Ronald Wahl <ronald.wahl@legrand.com>
-Subject: [PATCH 6.1 65/97] dmaengine: ti: k3-udma: Add missing locking
-Date: Tue, 20 May 2025 15:50:30 +0200
-Message-ID: <20250520125803.197726240@linuxfoundation.org>
+Subject: [PATCH 6.6 092/117] dmaengine: ti: k3-udma: Add missing locking
+Date: Tue, 20 May 2025 15:50:57 +0200
+Message-ID: <20250520125807.640409243@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250520125800.653047540@linuxfoundation.org>
-References: <20250520125800.653047540@linuxfoundation.org>
+In-Reply-To: <20250520125803.981048184@linuxfoundation.org>
+References: <20250520125803.981048184@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,7 +49,7 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
@@ -112,7 +112,7 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
 --- a/drivers/dma/ti/k3-udma.c
 +++ b/drivers/dma/ti/k3-udma.c
-@@ -1088,8 +1088,11 @@ static void udma_check_tx_completion(str
+@@ -1091,8 +1091,11 @@ static void udma_check_tx_completion(str
  	u32 residue_diff;
  	ktime_t time_diff;
  	unsigned long delay;
@@ -124,7 +124,7 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
  		if (uc->desc) {
  			/* Get previous residue and time stamp */
  			residue_diff = uc->tx_drain.residue;
-@@ -1124,6 +1127,8 @@ static void udma_check_tx_completion(str
+@@ -1127,6 +1130,8 @@ static void udma_check_tx_completion(str
  				break;
  			}
  
@@ -133,7 +133,7 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
  			usleep_range(ktime_to_us(delay),
  				     ktime_to_us(delay) + 10);
  			continue;
-@@ -1140,6 +1145,8 @@ static void udma_check_tx_completion(str
+@@ -1143,6 +1148,8 @@ static void udma_check_tx_completion(str
  
  		break;
  	}
