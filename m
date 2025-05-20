@@ -1,46 +1,54 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22E9D2517AC;
-	Tue, 20 May 2025 14:19:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 561ED254852;
+	Tue, 20 May 2025 22:39:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.137.202.133
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747750799; cv=none; b=QPC9sOpsIhoAw0lJxzpw0zhLi2+EIKPsIeGPzkegMmk+iFyk1FYglBwK+HQKhH99XbIxQbYZnBCviMvtSvjjJ1qTvyagnChOqdkjw197X5psE1GCXt4kpK1/d+qvPs4Tc6s9WcdOATTXq/F55hQNUKA0w6Gwp3uHJkc7mYDZFeM=
+	t=1747780762; cv=none; b=padU7hA3TdzqBLveD2ZMDjMYNWxpq6IccE8FxgfkHHLyIp6udh2rSeKGSiwbkrMckXxhE1HAkzfZe5vO+OowwpP0aM3/L4n9pknwIJxbp1CSGqKt26nANkgSG3KB3x0e6OuCD02dekVGRlfMtPM82IZ1wPP+lfi4o/Vjwids7fA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747750799; c=relaxed/simple;
-	bh=VbzGW9/v/gEC11cqHCF2STw270qXZuaO6zKwvfin6II=;
+	s=arc-20240116; t=1747780762; c=relaxed/simple;
+	bh=65dHJuig6Xc09FeCjANQYLWLrjIQwQ/KDf+eiInMvuU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CHD+wXPirzU6lSJJExbMb7P3xByegA4/NAVr5N5BNuCqMx3DN9JR9XFNFzSWJpmpGR4VVgq6AOloHFXS7/8wZmipjKI5jqMZ4UnDooIe3Ul8xZXLMJomt4Eleqm+EU/NoqWUx0JzRY/lPDFHO64vfRYJb1xVxJFjP43gslQm+lk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dhqLAISW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EHIVyL2HVeb1pzEMA70ZaMy9MhSf11u3e4UyBU+Bzi295v12bmVfSRNNlxnneU5fIjyQ7hkttx7HWH/2tKsCAea8J46hfI3CV2xvjtuogMM+3ZNhHjVrdYtXj+ei8uZRqEtMPpr7ukjlCC4JN78CqxA/vsAf3Ge0PvwU5UDRu+c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=quarantine dis=none) header.from=kernel.org; spf=none smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=HH5/mGrE; arc=none smtp.client-ip=198.137.202.133
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=quarantine dis=none) header.from=kernel.org
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=infradead.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dhqLAISW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 869D8C4CEE9;
-	Tue, 20 May 2025 14:19:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747750799;
-	bh=VbzGW9/v/gEC11cqHCF2STw270qXZuaO6zKwvfin6II=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dhqLAISWg38lRud9mQPSETo0dWmKwxFbVh8Qjccezjii8ewp816IsKmxz3rPd8K/O
-	 Wzy2pwLSQCRWFrKt9Hp+Qd8NUgO2lP6KP8I0s9oLrDUcgszS7yFscNSpDOHzFiMJLZ
-	 nY5pbIddVb/SeAMXrJsplo1vIaoD0g9ToVVigxBc=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Peter Ujfalusi <peter.ujfalusi@gmail.com>,
-	Vignesh Raghavendra <vigneshr@ti.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="HH5/mGrE"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=bombadil.20210309; h=Sender:Content-Transfer-Encoding:
+	MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:
+	Reply-To:Content-Type:Content-ID:Content-Description;
+	bh=lFuaiLgn9f656U1Jyjdt1AHxduwwtq8xY1xmWGyvM9g=; b=HH5/mGrE1UHBZKXVrTY9T2F15q
+	PbRQFeWX3/4O5rDCkQopdUuvy495K+2KLCv3g2PuBiCyi+k6l7SF7hlSlEfKBgqWR5WxaS5Ka4TtS
+	NhqMVsFVEYh1bq5c6zKOqDNYs/b4YQHotfEjTLo/6Z2BA8+rugP5BdsBh3hJc5/x/6g3pJyInwQFh
+	Mx0FeVkROW6O3uhY/kZFlrA8zMrZ8hi5spRdlm8lNLEMfpp+25F8bkEfJASBHgsBPZ/pq4WH3lNlO
+	wz21TMGZ6LjryO1SBL1RjA2ujq6vu6dj1vUrlpasiLKHsDQypV+JUSV3IH6r6LFqY6Vfqu96gyAlK
+	x9ltFGBw==;
+Received: from mcgrof by bombadil.infradead.org with local (Exim 4.98.2 #2 (Red Hat Linux))
+	id 1uHVcA-0000000EIMJ-1Jrw;
+	Tue, 20 May 2025 22:39:14 +0000
+From: Luis Chamberlain <mcgrof@kernel.org>
+To: vkoul@kernel.org,
+	chenxiang66@hisilicon.com,
+	m.szyprowski@samsung.com,
+	robin.murphy@arm.com,
+	leon@kernel.org,
+	jgg@nvidia.com,
+	alex.williamson@redhat.com,
+	joel.granados@kernel.org
+Cc: iommu@lists.linux.dev,
 	dmaengine@vger.kernel.org,
-	Ronald Wahl <ronald.wahl@legrand.com>
-Subject: [PATCH 6.14 125/145] dmaengine: ti: k3-udma: Add missing locking
-Date: Tue, 20 May 2025 15:51:35 +0200
-Message-ID: <20250520125815.443772349@linuxfoundation.org>
+	linux-block@vger.kernel.org,
+	gost.dev@samsung.com,
+	mcgrof@kernel.org
+Subject: [PATCH 5/6] dma-mapping: benchmark: move validation parameters into a helper
+Date: Tue, 20 May 2025 15:39:12 -0700
+Message-ID: <20250520223913.3407136-6-mcgrof@kernel.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250520125810.535475500@linuxfoundation.org>
-References: <20250520125810.535475500@linuxfoundation.org>
-User-Agent: quilt/0.68
-X-stable: review
-X-Patchwork-Hint: ignore
+In-Reply-To: <20250520223913.3407136-1-mcgrof@kernel.org>
+References: <20250520223913.3407136-1-mcgrof@kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -48,99 +56,145 @@ List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+Sender: Luis Chamberlain <mcgrof@infradead.org>
 
-6.14-stable review patch.  If anyone has any objections, please let me know.
+Before we run the benchmark we validate the input parameters. Move
+this into a helper so we can also use this for other type of DMA
+benchmark tests. This will be used in a subsequent patch for another
+type of DMA benchmark.
 
-------------------
-
-From: Ronald Wahl <ronald.wahl@legrand.com>
-
-commit fca280992af8c2fbd511bc43f65abb4a17363f2f upstream.
-
-Recent kernels complain about a missing lock in k3-udma.c when the lock
-validator is enabled:
-
-[    4.128073] WARNING: CPU: 0 PID: 746 at drivers/dma/ti/../virt-dma.h:169 udma_start.isra.0+0x34/0x238
-[    4.137352] CPU: 0 UID: 0 PID: 746 Comm: kworker/0:3 Not tainted 6.12.9-arm64 #28
-[    4.144867] Hardware name: pp-v12 (DT)
-[    4.148648] Workqueue: events udma_check_tx_completion
-[    4.153841] pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-[    4.160834] pc : udma_start.isra.0+0x34/0x238
-[    4.165227] lr : udma_start.isra.0+0x30/0x238
-[    4.169618] sp : ffffffc083cabcf0
-[    4.172963] x29: ffffffc083cabcf0 x28: 0000000000000000 x27: ffffff800001b005
-[    4.180167] x26: ffffffc0812f0000 x25: 0000000000000000 x24: 0000000000000000
-[    4.187370] x23: 0000000000000001 x22: 00000000e21eabe9 x21: ffffff8000fa0670
-[    4.194571] x20: ffffff8001b6bf00 x19: ffffff8000fa0430 x18: ffffffc083b95030
-[    4.201773] x17: 0000000000000000 x16: 00000000f0000000 x15: 0000000000000048
-[    4.208976] x14: 0000000000000048 x13: 0000000000000000 x12: 0000000000000001
-[    4.216179] x11: ffffffc08151a240 x10: 0000000000003ea1 x9 : ffffffc08046ab68
-[    4.223381] x8 : ffffffc083cabac0 x7 : ffffffc081df3718 x6 : 0000000000029fc8
-[    4.230583] x5 : ffffffc0817ee6d8 x4 : 0000000000000bc0 x3 : 0000000000000000
-[    4.237784] x2 : 0000000000000000 x1 : 00000000001fffff x0 : 0000000000000000
-[    4.244986] Call trace:
-[    4.247463]  udma_start.isra.0+0x34/0x238
-[    4.251509]  udma_check_tx_completion+0xd0/0xdc
-[    4.256076]  process_one_work+0x244/0x3fc
-[    4.260129]  process_scheduled_works+0x6c/0x74
-[    4.264610]  worker_thread+0x150/0x1dc
-[    4.268398]  kthread+0xd8/0xe8
-[    4.271492]  ret_from_fork+0x10/0x20
-[    4.275107] irq event stamp: 220
-[    4.278363] hardirqs last  enabled at (219): [<ffffffc080a27c7c>] _raw_spin_unlock_irq+0x38/0x50
-[    4.287183] hardirqs last disabled at (220): [<ffffffc080a1c154>] el1_dbg+0x24/0x50
-[    4.294879] softirqs last  enabled at (182): [<ffffffc080037e68>] handle_softirqs+0x1c0/0x3cc
-[    4.303437] softirqs last disabled at (177): [<ffffffc080010170>] __do_softirq+0x1c/0x28
-[    4.311559] ---[ end trace 0000000000000000 ]---
-
-This commit adds the missing locking.
-
-Fixes: 25dcb5dd7b7c ("dmaengine: ti: New driver for K3 UDMA")
-Cc: Peter Ujfalusi <peter.ujfalusi@gmail.com>
-Cc: Vignesh Raghavendra <vigneshr@ti.com>
-Cc: Vinod Koul <vkoul@kernel.org>
-Cc: dmaengine@vger.kernel.org
-Cc: stable@vger.kernel.org
-Signed-off-by: Ronald Wahl <ronald.wahl@legrand.com>
-Acked-by: Peter Ujfalusi <peter.ujfalusi@gmail.com>
-Link: https://lore.kernel.org/r/20250414173113.80677-1-rwahl@gmx.de
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
 ---
- drivers/dma/ti/k3-udma.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ kernel/dma/map_benchmark.c | 99 +++++++++++++++++++++-----------------
+ 1 file changed, 54 insertions(+), 45 deletions(-)
 
---- a/drivers/dma/ti/k3-udma.c
-+++ b/drivers/dma/ti/k3-udma.c
-@@ -1091,8 +1091,11 @@ static void udma_check_tx_completion(str
- 	u32 residue_diff;
- 	ktime_t time_diff;
- 	unsigned long delay;
-+	unsigned long flags;
- 
- 	while (1) {
-+		spin_lock_irqsave(&uc->vc.lock, flags);
-+
- 		if (uc->desc) {
- 			/* Get previous residue and time stamp */
- 			residue_diff = uc->tx_drain.residue;
-@@ -1127,6 +1130,8 @@ static void udma_check_tx_completion(str
- 				break;
- 			}
- 
-+			spin_unlock_irqrestore(&uc->vc.lock, flags);
-+
- 			usleep_range(ktime_to_us(delay),
- 				     ktime_to_us(delay) + 10);
- 			continue;
-@@ -1143,6 +1148,8 @@ static void udma_check_tx_completion(str
- 
- 		break;
- 	}
-+
-+	spin_unlock_irqrestore(&uc->vc.lock, flags);
+diff --git a/kernel/dma/map_benchmark.c b/kernel/dma/map_benchmark.c
+index cc19a3efea89..b54345a757cb 100644
+--- a/kernel/dma/map_benchmark.c
++++ b/kernel/dma/map_benchmark.c
+@@ -196,6 +196,55 @@ static int do_map_benchmark(struct map_benchmark_data *map)
+ 	return ret;
  }
  
- static irqreturn_t udma_ring_irq_handler(int irq, void *data)
-
++static int validate_benchmark_params(struct map_benchmark_data *map)
++{
++	if (map->bparam.threads == 0 ||
++	    map->bparam.threads > DMA_MAP_MAX_THREADS) {
++		pr_err("invalid thread number\n");
++		return -EINVAL;
++	}
++
++	if (map->bparam.seconds == 0 ||
++	    map->bparam.seconds > DMA_MAP_MAX_SECONDS) {
++		pr_err("invalid duration seconds\n");
++		return -EINVAL;
++	}
++
++	if (map->bparam.dma_trans_ns > DMA_MAP_MAX_TRANS_DELAY) {
++		pr_err("invalid transmission delay\n");
++		return -EINVAL;
++	}
++
++	if (map->bparam.node != NUMA_NO_NODE &&
++	    (map->bparam.node < 0 || map->bparam.node >= MAX_NUMNODES ||
++	     !node_possible(map->bparam.node))) {
++		pr_err("invalid numa node\n");
++		return -EINVAL;
++	}
++
++	if (map->bparam.granule < 1 || map->bparam.granule > 1024) {
++		pr_err("invalid granule size\n");
++		return -EINVAL;
++	}
++
++	switch (map->bparam.dma_dir) {
++	case DMA_MAP_BIDIRECTIONAL:
++		map->dir = DMA_BIDIRECTIONAL;
++		break;
++	case DMA_MAP_FROM_DEVICE:
++		map->dir = DMA_FROM_DEVICE;
++		break;
++	case DMA_MAP_TO_DEVICE:
++		map->dir = DMA_TO_DEVICE;
++		break;
++	default:
++		pr_err("invalid DMA direction\n");
++		return -EINVAL;
++	}
++
++	return 0;
++}
++
+ static long map_benchmark_ioctl(struct file *file, unsigned int cmd,
+ 		unsigned long arg)
+ {
+@@ -207,54 +256,13 @@ static long map_benchmark_ioctl(struct file *file, unsigned int cmd,
+ 	if (copy_from_user(&map->bparam, argp, sizeof(map->bparam)))
+ 		return -EFAULT;
+ 
++	ret = validate_benchmark_params(map);
++	if (ret)
++		return ret;
++
+ 	switch (cmd) {
+ 	case DMA_MAP_BENCHMARK:
+-		if (map->bparam.threads == 0 ||
+-		    map->bparam.threads > DMA_MAP_MAX_THREADS) {
+-			pr_err("invalid thread number\n");
+-			return -EINVAL;
+-		}
+-
+-		if (map->bparam.seconds == 0 ||
+-		    map->bparam.seconds > DMA_MAP_MAX_SECONDS) {
+-			pr_err("invalid duration seconds\n");
+-			return -EINVAL;
+-		}
+-
+-		if (map->bparam.dma_trans_ns > DMA_MAP_MAX_TRANS_DELAY) {
+-			pr_err("invalid transmission delay\n");
+-			return -EINVAL;
+-		}
+-
+-		if (map->bparam.node != NUMA_NO_NODE &&
+-		    (map->bparam.node < 0 || map->bparam.node >= MAX_NUMNODES ||
+-		     !node_possible(map->bparam.node))) {
+-			pr_err("invalid numa node\n");
+-			return -EINVAL;
+-		}
+-
+-		if (map->bparam.granule < 1 || map->bparam.granule > 1024) {
+-			pr_err("invalid granule size\n");
+-			return -EINVAL;
+-		}
+-
+-		switch (map->bparam.dma_dir) {
+-		case DMA_MAP_BIDIRECTIONAL:
+-			map->dir = DMA_BIDIRECTIONAL;
+-			break;
+-		case DMA_MAP_FROM_DEVICE:
+-			map->dir = DMA_FROM_DEVICE;
+-			break;
+-		case DMA_MAP_TO_DEVICE:
+-			map->dir = DMA_TO_DEVICE;
+-			break;
+-		default:
+-			pr_err("invalid DMA direction\n");
+-			return -EINVAL;
+-		}
+-
+ 		old_dma_mask = dma_get_mask(map->dev);
+-
+ 		ret = dma_set_mask(map->dev,
+ 				   DMA_BIT_MASK(map->bparam.dma_bits));
+ 		if (ret) {
+@@ -263,6 +271,7 @@ static long map_benchmark_ioctl(struct file *file, unsigned int cmd,
+ 			return -EINVAL;
+ 		}
+ 
++		/* Run streaming DMA benchmark */
+ 		ret = do_map_benchmark(map);
+ 
+ 		/*
+-- 
+2.47.2
 
