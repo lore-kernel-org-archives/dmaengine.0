@@ -1,65 +1,65 @@
-Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
+Received: from mail-ed1-f48.google.com (mail-ed1-f48.google.com [209.85.208.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9185425F975
-	for <dmaengine@vger.kernel.org>; Sun, 25 May 2025 19:26:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EE011F582B
+	for <dmaengine@vger.kernel.org>; Sun, 25 May 2025 19:26:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748201178; cv=none; b=lVnvAW78ikEKJ/Tqq0PnBmxLTtS02Ya10JLKppieAcab+IPjAvL+XRECG0XrE+1BYMYJtFXtG6hX1deqhXG5tepdCaGgQ68I40qMa/fWju5A2m5eD5nWLCuF6fY+gwmr8CHORorU+i2zd7IIiWyaSSKPNOR/312FsK+1Z93DMEs=
+	t=1748201182; cv=none; b=NwxVgNFHa1plJC4M6ZfeUArWRkhwccVxI73V7aqsWzLkBeu59u6OCMtMOkWObE1j0bGJJig/NdpVbu3I8qDLoIlbR2xYzQ+LtMXkTKyflL9rwCodeg7MoKffKhd7JzHHlDuuKNmA3d6brxohwI5oVV0SumW/Z7U79P9weweFNfs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748201178; c=relaxed/simple;
-	bh=DTGCxtKKBS1I1ezcV34L8Qi5iTSOukUz7ljm7yYIh1c=;
+	s=arc-20240116; t=1748201182; c=relaxed/simple;
+	bh=wf9mMF4piwylWLERQD6eu/HVFRIY7xIhB8VCk+ieFdQ=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=WbjF1/Q7DoiK0IYo/atoXUchcLp0tXfPUOBzTYcnMS8lOCrnC1Mo4gyM9kjEdV4fJ2Huc7SIB5biiYC7ihqPj9FAzanR9WZ09tYoFIqwPcFhCUNBvkPkIDk975OWqUo79F0Iizf2I/Apo4gjL9kzU8xY/4S6qrK3+iL7aMA52c0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=AZPkJZ5C; arc=none smtp.client-ip=209.85.218.49
+	 In-Reply-To:To:Cc; b=Iy8NkB3r/9dZpR2tQtTH1A7f6iW0zaWo96BCr/EDNfAS3Nmh5mWKcRQ8Ba2vrCEKMJyhnL+SUeDcHv9kRyYba9JNI/BdAKiB+jIDhuHy117jTGhoGwkTMKYIvGX1G3jT21HPqLWdnvpBIaHQNmDCHKs0mGcqgEdaMM0mm9lHA4o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=wrcDgDdl; arc=none smtp.client-ip=209.85.208.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="AZPkJZ5C"
-Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-ad5735755c8so31665566b.0
-        for <dmaengine@vger.kernel.org>; Sun, 25 May 2025 12:26:16 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="wrcDgDdl"
+Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-60462e6f227so163388a12.2
+        for <dmaengine@vger.kernel.org>; Sun, 25 May 2025 12:26:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1748201175; x=1748805975; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1748201179; x=1748805979; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=NUGmk08kPRJlfJsZZ8kitsMWnHXcUPNuZWI1jkR5sn4=;
-        b=AZPkJZ5CcG2rmSD8B/UU97AK50+PYHBhkK+s4fCzOWdsBtEwpEClyjgHWDyUJVUh/i
-         AQf4Mi4A6GVtlhz+V26vTd3RGSaDpO5g/uN8LkqGpHM8X+nLFYutuuU2KmtN0g3SamZz
-         eqKYRpCApR6LpEE9s4QNwb4Ja+DLOYsd9eLn2tIhvk91uvHr23o5rAJnbtovYq95KXmV
-         fK1vk1zcRDEXe9P9UzxQTh7x/AwvbQRV76krQeMet1TtZCG6/H9XTUzL8785ieOX+gbz
-         h8GAzEFxILxz1//eKdcsnXtZBXfDYKBhmdycJmyOOetqcWAbIqTZEWIWZ2aI25R8Ag2m
-         XLCA==
+        bh=dB8Qgyau5a7VreD6df5S2eMKOiRWv79kx7XCROS4r/I=;
+        b=wrcDgDdlB77/8sVADWbFbOueNOJpY8qiY9wKfUIUQE9NoFavXjWdOUwgMoNiJBvPkO
+         z4h9OtgTl8ePEx26YoyUWKBz7o2+jSY0Uab/ZaQKF3ph1BoVatIHG6lMoI1s983uDVna
+         gMnNYvFGP4puFStd8Tpy6vNf3+YuGEW5MloIh8tX7Y08BMyZui4anXbaXe/oJlQsNfk6
+         MSqcEA9b4orMXeWaGEk2YLCRRWVhNk2GMNfN83gONhMThdzG2NzB+KXxwejg4t9LHwPT
+         aw2s2/pID65qzl/yXRZS+Y4cobkUsngQq3xn2x5xqlTPLGMJyBQovbq6Y3sGrqiMOxzZ
+         jpaw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748201175; x=1748805975;
+        d=1e100.net; s=20230601; t=1748201179; x=1748805979;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=NUGmk08kPRJlfJsZZ8kitsMWnHXcUPNuZWI1jkR5sn4=;
-        b=tNvcDrEkpFOU9zfgWdGckBRrTJvG6ZbaV1ef7O1vz/CKMUPdTkBWkxL0Y6IK+2lCh4
-         9EDt3ne4VnGGaUhSl9UBTx5W497fhQEWdSQqiOAEIbtMr1KqHCxCs5iE3RZZe4mOBPD4
-         Oq6gEKAvP9L4knfrY63j32vrmgRDzHsehnHwqdT1zQxJ+mX4Io0iENOIaJs2zVvEvMjV
-         SvxqBfjIYEJlso6ibgWEvIDGGnlqC0B0Zxi5dviIfO0iE7Y5ZdAgRMjwH5qSW8Nq9IBi
-         fQTu8v3YdJ4OkCg9O8rirSok7ebfd6Wn7TP2qCDOK5bx4og5p8Cuk7Gx959Kv9ojSOLK
-         OWZw==
-X-Gm-Message-State: AOJu0Yy3to2EUKjEtlsW376RDUVZ0qrLyR25yZiZfEah9gYnLvWX43I1
-	45UBcWyCyvsI7VoXDf+zJ4Cm359g5c+lxG0rE9/7X9aolz1ROo99p4Cdbt7ronku9ig=
-X-Gm-Gg: ASbGncvd/sYdBiHPLrciBmV6l2bdfW5kx5VK0MgBPVJtwnPdm3ANtxo7ENz2IN0BfZr
-	JeJMGyxoym2o0i8NbEGaPdQRDM2r/xhZM4L0M5KHrVNuF0vLtfmJkU7/wdLl4DgfQT3ac7yZtDU
-	AB2dISJRueNB+M3nJcIgVXpIkxbaaZ6FrD3gkCDd8M1sWD6qUXj5WaeOPHQ+oE78dbAkm/0foZG
-	fLKV8wty6K24f3SeQdytmFoxyFUO2ccsSeNey1l/tp0oxIUiP8n/giGJNdCW0Xp2l/BSwqmc/qM
-	L4437dAMi+eGTs/nfuXh5QOA031VxtXGqaINgMC3cGLdnhXaraPOD4VSipMZcGQIlAuiUPE=
-X-Google-Smtp-Source: AGHT+IGDspk3xRlZUcMOomJg+MJ6Cv8DfQb08HEeWxoIWLa0flvIj8xNaDHLS9Dogctf47fotRXlMg==
-X-Received: by 2002:a17:907:270d:b0:acb:1d24:a9e0 with SMTP id a640c23a62f3a-ad85b1e6fbdmr170962466b.11.1748201174891;
-        Sun, 25 May 2025 12:26:14 -0700 (PDT)
+        bh=dB8Qgyau5a7VreD6df5S2eMKOiRWv79kx7XCROS4r/I=;
+        b=Kd3REZ4yzaOgbCJdweH57hFWnJgiMMu9f+k/FROdYZGouCXdgwPriKyQStnZDbgVTz
+         Al4jTMix1GEbkWsZHKwELJoYxK9rPv11tCZbWfRJBzES+MYoaRiTQk9ijJVoLHo59RXz
+         pcniI71jcJb3J0/qk86tpKW4Wt08kliXqlddOsQy7L12nyYjP8c51L87Lc2/CLncYdOu
+         MD0fYh7ZQavNATygScrWqgSLXdeh+bKQz+C/vzxUxB6kMB1th35lRFs0AFZshWXFhsJX
+         4yKe7xvDo5XlRieN+eLTCEqpymVc8pClJ5ZcxNaStkdde85+fPRMlLgPDL+45eqpnvsx
+         0vyA==
+X-Gm-Message-State: AOJu0YxA7Q1x+VWJ94Z1IZ91kUMkPWsVDVgJN39dRUSgwm8l7ltitRuL
+	5GtQizC934MukmKYv9pJhK6fIY2y/gYLA+qf+YvjCCc6BjHetagPGTwd0k9T+ayJW3Q=
+X-Gm-Gg: ASbGncvDMle2n7ED7izEzEGzhewmjL8Dd6LcV44zsh1yW15/5EiC4CFb/hbNhEXKaY2
+	nfiom4md5a5CsqXlTUU36mAKTND3XF+DWdC6jjC0CJMns8I8VSaJvLk1PngXtcqzT/eV1JaOjYZ
+	iyZFTIA6CnVubHPzD4Oiz68JxymrqsgRweBNI1Nmcz0xKbQJ5rndEAjbAfxwdGmkyYeZo2V54OI
+	S8Yd0JpDZN3HORwmKqdCDT+02vu492JqLqDbv4eQC0cjb3+aH7GorvLD60TGbyNWGKnAc+JJcVB
+	iV3Mk7Q0fhxLqeAtzE1wQy1f21UNar/R4r0QpT5ZoiVNlNQSXvW6Brctm94JHfvZUxPJvxo=
+X-Google-Smtp-Source: AGHT+IFU6iw0nh+JfwxngddrMbaAdOgnyTVpsEnCYJPukcl1HAYkzxRla7dTLdaaFau0zKRt4TXHew==
+X-Received: by 2002:a17:906:8470:b0:ac7:4397:4345 with SMTP id a640c23a62f3a-ad85b11378bmr178652266b.6.1748201179389;
+        Sun, 25 May 2025 12:26:19 -0700 (PDT)
 Received: from [192.168.1.29] ([178.197.223.125])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ad52d047738sm1578899866b.19.2025.05.25.12.26.13
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ad52d047738sm1578899866b.19.2025.05.25.12.26.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 25 May 2025 12:26:14 -0700 (PDT)
+        Sun, 25 May 2025 12:26:17 -0700 (PDT)
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Date: Sun, 25 May 2025 21:26:03 +0200
-Subject: [PATCH 3/5] dmaengine: qcom: gpi: Drop unused
- gpi_write_reg_field()
+Date: Sun, 25 May 2025 21:26:05 +0200
+Subject: [PATCH 5/5] dmaengine: mmp: Fix again Wvoid-pointer-to-enum-cast
+ warning
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -68,7 +68,7 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250525-dma-fixes-v1-3-89d06dac9bcb@linaro.org>
+Message-Id: <20250525-dma-fixes-v1-5-89d06dac9bcb@linaro.org>
 References: <20250525-dma-fixes-v1-0-89d06dac9bcb@linaro.org>
 In-Reply-To: <20250525-dma-fixes-v1-0-89d06dac9bcb@linaro.org>
 To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, 
@@ -79,56 +79,48 @@ Cc: dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
  linux-arm-msm@vger.kernel.org, 
  Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1171;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1089;
  i=krzysztof.kozlowski@linaro.org; h=from:subject:message-id;
- bh=DTGCxtKKBS1I1ezcV34L8Qi5iTSOukUz7ljm7yYIh1c=;
- b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBoM27PgAKcZyUOvAe2Df5AqRmgIVPRCSQsc065v
- J0vXKIuBY+JAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCaDNuzwAKCRDBN2bmhouD
- 1/nYD/93SvlxVjCD1TglYASkqQ2qqr000Y89tUkwwl2SoG+YN6656cSxwO1ACez/CVB+6yR6bxt
- ga+T22HudMKUyp92eidyz10KGRV8qWPl6yv/DpSdOBtd/+3OAjhxX2QBRgeEWuJmSNlq9lSq0z7
- pa1ZX3JqZvoUP/pt+VnLuQed/qp0whCyPJ7KyYbnDYM8SC8mc1QBpoi8m63t6rY3kKEw1svY5U+
- Dua5jFWk76pkInqHzO5li6TwER5w0iCu7qcgOFKYGU4FGppxbjiIMk7zHWjXlQPinlpu4g6SiMX
- fQLfs+uluS5rS0jol1VEPfaOCG5h1GO2lXs1LDmajFgs1tgHQAT4C1Sm1U7s7akP6oZiAUH3dlW
- +FFGMF2udbtXJtzaqiQiBtGCPsE2iNBBE9V5oHZFMGrmSBBbO3Wlp8dHSEN4qaZzufboPLAUKu+
- 1CsRChawkry5babwEB60I5B4IwOXlskk8nP90OH3501BliTpnHfXaXQTJw7G9hmdlujsfUvSfky
- s9vTTuN2cag/K/saGkyswv/H5SegkF+RUQSKHg9zJdTTNqG9Q4NQUzmy7AM1pIdNJJE6kFdM6tu
- fbIfAm9Ip/NenXmCFi+sKeWGwr0C9kJvCFC/GQRI9Q+RArWGPnNrUl2CLN6eHZRQAQHuTLQupG+
- 1JAA+eGmozRwJFg==
+ bh=wf9mMF4piwylWLERQD6eu/HVFRIY7xIhB8VCk+ieFdQ=;
+ b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBoM27QVOIFby5xrQ2vikjmTQ7sy/m4A+Dgt9+tq
+ viv3z7R1WGJAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCaDNu0AAKCRDBN2bmhouD
+ 13XnEACJx5d0HBGfD5BYrQ/0oD8C7EAM3yTiKzycRx0rnOvdsj40fPEbcAEVzJWDBnzOojfNm6D
+ lnrDDw49hqQIGOukFQsiJv/gZDfBaUJw7+Dmtv57AjMZ585U2DErn1tA2ts/l8KZ4G2m23X/eFK
+ BBND/wfdmH4dlObFa99BwZ/25oozbvMPTm4vX/w99ss1IfuHu5ccWWTWWPRT7UhGKKEjaP0DKn9
+ 52jsFGQqXwGXeXQlOeOhVZ/sRVW8qTABHRgDoNS8jnUAZc1JyimVR16JQTQYc+FhBXPvT+HC4Ds
+ JTTxgv2cB8/KJSg3TD1yXecjPEC14rrhX9hLg7MwERfca5VtUOgATV/iRGO/6Yam/XNwHeCGm3a
+ HWsKhm5Jor2ZFKDzphxNICY4Hlfn05hfbPz8CictbHrcbLFLQhvujVChlYOA+yzUUDcU8ZHuHuL
+ wq9KcgowFM3M1pBICip1f6FPIIJ+1rvfFNIX+bWNvcsHECHzL7gStOswCNa/BGQS3OdLj9rTgOg
+ hCJxryLHK7x3BkTmWdJkqhVkc+p0/4jjmtrZeYLpMo10JtVV8ocEAFD4b4sGYK6HIsWpXH0LHrf
+ OD1yWyRuahfwIM4pACg81vcfiesVeEOYgsWaUrFbe34fn1tNlGZIA4rvem0fMjGYuiwCcc2wXaJ
+ 6MtXrUj2ocfKrEQ==
 X-Developer-Key: i=krzysztof.kozlowski@linaro.org; a=openpgp;
  fpr=9BD07E0E0C51F8D59677B7541B93437D3B41629B
 
-Static function gpi_write_reg_field() is not used, W=1 build:
+This was fixed and re-introduced.  'type' is an enum, thus cast of
+pointer on 64-bit compile test with W=1 causes:
 
-  gpi.c:573:20: error: unused function 'gpi_write_reg_field' [-Werror,-Wunused-function]
+  mmp_tdma.c:644:9: error: cast to smaller integer type 'enum mmp_tdma_type' from 'const void *' [-Werror,-Wvoid-pointer-to-enum-cast]
 
-Fixes: 5d0c3533a19f ("dmaengine: qcom: Add GPI dma driver")
+Fixes: a67ba97dfb30 ("dmaengine: Use device_get_match_data()")
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 ---
- drivers/dma/qcom/gpi.c | 11 -----------
- 1 file changed, 11 deletions(-)
+ drivers/dma/mmp_tdma.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/dma/qcom/gpi.c b/drivers/dma/qcom/gpi.c
-index b1f0001cc99c7066b6d08f53d9381d4fd22588ca..8e87738086b25ac37edbdcd5e237447f3e832e8e 100644
---- a/drivers/dma/qcom/gpi.c
-+++ b/drivers/dma/qcom/gpi.c
-@@ -569,17 +569,6 @@ static inline void gpi_write_reg(struct gpii *gpii, void __iomem *addr, u32 val)
- 	writel_relaxed(val, addr);
- }
+diff --git a/drivers/dma/mmp_tdma.c b/drivers/dma/mmp_tdma.c
+index c8dc504510f1e325017ba4fa5e7aa72b019e3be4..b7fb843c67a6f247395296fc726f7b6cab7d223f 100644
+--- a/drivers/dma/mmp_tdma.c
++++ b/drivers/dma/mmp_tdma.c
+@@ -641,7 +641,7 @@ static int mmp_tdma_probe(struct platform_device *pdev)
+ 	int chan_num = TDMA_CHANNEL_NUM;
+ 	struct gen_pool *pool = NULL;
  
--/* gpi_write_reg_field - write to specific bit field */
--static inline void gpi_write_reg_field(struct gpii *gpii, void __iomem *addr,
--				       u32 mask, u32 shift, u32 val)
--{
--	u32 tmp = gpi_read_reg(gpii, addr);
--
--	tmp &= ~mask;
--	val = tmp | ((val << shift) & mask);
--	gpi_write_reg(gpii, addr, val);
--}
--
- static __always_inline void
- gpi_update_reg(struct gpii *gpii, u32 offset, u32 mask, u32 val)
- {
+-	type = (enum mmp_tdma_type)device_get_match_data(&pdev->dev);
++	type = (kernel_ulong_t)device_get_match_data(&pdev->dev);
+ 
+ 	/* always have couple channels */
+ 	tdev = devm_kzalloc(&pdev->dev, sizeof(*tdev), GFP_KERNEL);
 
 -- 
 2.45.2
