@@ -1,128 +1,236 @@
-Received: from mail-ej1-f50.google.com (mail-ej1-f50.google.com [209.85.218.50])
+Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10BEB26983E
-	for <dmaengine@vger.kernel.org>; Sun, 25 May 2025 19:26:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF2371DE3C8
+	for <dmaengine@vger.kernel.org>; Mon, 26 May 2025 09:01:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748201183; cv=none; b=bdTbWrupaj8Jzc5SHCoVPHmWB+J2ujbeEHHedo5mbS8iPoYoemb7gKE5OlgYxqS+OFAicO89gMux7THGkYvpqeyJBXI/e2AZTxl991+BSouWGDEPGUMWNIcE9453ezPWzazY4Y7SqbA9LDiNkfJg61lJEkgRE0OxT/tmgCV0X5k=
+	t=1748250086; cv=none; b=nFpWGYsERF2/gjXVQ3A9bz2bexnjtUrXJ3IfWx85r4vK/g55ZLOK2MbSEigm8s/LDj2bFv4P9HoGf1dPXDXcFsX/DapJtRlRMBP3N3l3erto05IPhWkxZouuDH1uEzQAn+6LXHk+fF9EMSpwiGoZgWybxrrTY6HvZdN6TRHPyCI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748201183; c=relaxed/simple;
-	bh=Sm3IbikRxGrXe/Gygal0RcvZGGE5Vm9xAe0Sy1mv/PU=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=IrUAh+n23rbUOBUaTGdZelyptJRVymBKzEsHtJiVzTIkCCdOq6Y6W16Jc7mrcVogb/BwC+ao7QJ5lWQ8gMELAfcs/c0I4hCwhSevRxjqCH0Hzs59nPI3HnuDy2+KHGVnIKuBWMM7HDDQfnZlhjZxRqq71vOrYFMWa/+04nEct4M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=hz2NPo7V; arc=none smtp.client-ip=209.85.218.50
+	s=arc-20240116; t=1748250086; c=relaxed/simple;
+	bh=qZ8a/wzgHRgnV/+OXVUjISE9WV8EyuMRegt9KnFqfW8=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=lOPjZVhoc8Z8m1qODd9crkywOfCzcu5V2R2aWh9adOB+9DJMfwGo+UXlCEAz+CZEQEColE4perkQKMsicPCde+7+oh2Xr4xltvYoWhLyMdgNm5S2cbgksqri4e9wz++0I+WCWIoVnQhXKFYZSZwV77HygEmIumoMUsj/qGAOTvY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=I/ccA301; arc=none smtp.client-ip=209.85.128.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="hz2NPo7V"
-Received: by mail-ej1-f50.google.com with SMTP id a640c23a62f3a-ad54a67caffso31376066b.3
-        for <dmaengine@vger.kernel.org>; Sun, 25 May 2025 12:26:18 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="I/ccA301"
+Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-442ea341570so14272815e9.1
+        for <dmaengine@vger.kernel.org>; Mon, 26 May 2025 02:01:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1748201177; x=1748805977; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=+KYB356hjRUGEK2kucuFd88ZkvKFuYQT9LdCpggTLBM=;
-        b=hz2NPo7VQc448cohplA+OqzluFFWBW7IRMe5yIzDEBHFDJTiUUZSX6Fm87UxX1iEzW
-         1jKqdcC+7js1CF8s6k0gIsz1BioBYITpkbYnpLql3NZTQoKIdwR9YLsCNRKGmyM4SwG6
-         /vTpdyRaXkpLWe5PxF+rRjM40VYW60RYBV0RMGddsSGvWtXBt4cy0Dpq/cARxsgVV0/z
-         4lSeT7FImVbFJnBZj8xZTr1I36yMugHYGxj5hZdgnJieszLYXRZSrMP6T7If4wYitkWL
-         VstyaIULchtp6mx1WiM0aPa74UINql+UkHKxFejp72dydgHZf3aIuCucoU/RzAk2Yo4+
-         MWUg==
+        d=linaro.org; s=google; t=1748250083; x=1748854883; darn=vger.kernel.org;
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=rhDfqzGQ43DTbP8j6XW/+Wu55hrk6NWC9L/NiuHi/LA=;
+        b=I/ccA301ERv453s5497P6JWlzUsCNgGldEwr6mzUnxhv3FiKfDUA7cWY1T24bhDuMR
+         dSSZDNcbhcPI1UC5N6eLkEsX+mcHl4GtvwYNGCaDEq9TXiMvPkLwa1zQRi+L4jmFGH4I
+         P+Gv8JpD3A7gStulwHmmCAZzeATeM0/M5NPMo7j+cutQ7IW2hVkoivBIzdEX2YQxmq/H
+         FmZZm6hUJCrhZHm2tyCsNYbx2IiBVCWyB05NWUKNd5/O0cDaaYaWEFfdqypRAh9Tj3kJ
+         KqhfOl18LApIT3LI1+ujI32HKfC59zu34h9eyhGWfwg8lFJ0SPRAYHAd4R0ebyUas7Kr
+         qBvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748201177; x=1748805977;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=+KYB356hjRUGEK2kucuFd88ZkvKFuYQT9LdCpggTLBM=;
-        b=b6ZK+PmsI7Stx3MCA09W7LveDIvWPWXYO0jovg+B+Mi1MadN4FUOzx9ZSyL45kYYg0
-         8h0GJJ+xs0z6NcBOQYmzgRn+sCDp3DBPEiFmQXzFgcsRZIEp4l6WlkfeluYPw7+M57Zt
-         ogCFwsSEZoHCTtqAZT4naTCUbFNVBILHJRpmO73I1TLopG8zwKT51edNYvxW1o9BdbLa
-         frhc+iHS4Xwbp7cuY5wiRTsP3yXH6fIgJvdwRi9KE73F+AZzqfiGYQ+Z+7bj4zRmWo7F
-         RTo3Apjm3oxckUgA4ZFQiYmkH7u7gM6CbuXLxYnlmc62mZzZuMwDJJHG+Z0ve72wYSo5
-         oxMw==
-X-Gm-Message-State: AOJu0Yxg+6fyJoJaC0KSh+K6A48AdUTSHY0xA5mlaE9kfIYz1MNaW3Zo
-	iZCu+E67x5Dfbmxnzi8oZ2HuwbyFwfUq7fIZS5Sc02dloyDrFtvvYiw1SB7OkVAfB8A=
-X-Gm-Gg: ASbGncuxfaqKEfYJHU+yBH899qiuCaqwwS0+fS7nbBQbrRQIOa/CUJCofyU7DFBB8NN
-	SJOnPATIfW4ZqIl98ff3pgnSjFgQ0W0xjbX9/dcEwE98aTGoula1Pj0Y3ag/N+4wunCVwtIVAhC
-	uz1dusIvbhsAq5q+KCbfaO44o064+SKcA1M/6YV6ruKF8u7XLeKonbUB7B3ERgNc0lUbxsQSosa
-	9J9lx1670AoiINqLj7qu+hqpOvVGNvSg0j5R63/b7wB8aF378lasyfq3cREkGsOU8Pkf9U8pg4B
-	H/zAHgTFmyS9oq/sl/hWLZFj8zIExr4enU+gmarTRUiXs7iUmVOAaHavg2CYl4lX9Rd7Q5w=
-X-Google-Smtp-Source: AGHT+IHkuoLwwomZCcsBErFL19H6yB+kPnlaQoi4fKoMrOde6G8mnghCGbbT8/M/SSHBkWuXUyowgA==
-X-Received: by 2002:a17:907:2cf8:b0:ad2:23d0:cde3 with SMTP id a640c23a62f3a-ad85b2178famr169938866b.15.1748201177180;
-        Sun, 25 May 2025 12:26:17 -0700 (PDT)
-Received: from [192.168.1.29] ([178.197.223.125])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ad52d047738sm1578899866b.19.2025.05.25.12.26.15
+        d=1e100.net; s=20230601; t=1748250083; x=1748854883;
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=rhDfqzGQ43DTbP8j6XW/+Wu55hrk6NWC9L/NiuHi/LA=;
+        b=MRgR1HLwCFyYBPSEXDeoYpn9vnEbBoW+7p1s0bb+9DA0xysNeaSEBVE6qjohee0mXv
+         AsaYsL8Z+CsxxjpPGjWaE7WeUaWyWvazsQYinniy7F5NPTWJVinTXr3eNttpCa6E1t57
+         HY1Z4zoukuEwhblAajepRkKSMsGMCB522tpRV/s9/5i4fadiRKiF5mtWu8dbuHI8GYzb
+         96ylrg4L06es3HIUw6z4bn6BVFgoLICvCo6V/IIEMG2fdNwUxGlpOCBN5R84GeOMEVpo
+         njXaN99OgnTZYBq3v0SyLf6qN3b1gE7jQ3RokXNsQLplpx743DS3fhg43DQfZZQ4XD6Q
+         8glg==
+X-Gm-Message-State: AOJu0Yw6jW+N1cvDxgwHoAGvyA7Dk9uQiDU+knVE7niryT0gOxKp8b4i
+	Te58nsbHLF6CUD27VP3DhftqLmikxNxJzitwOVFYydSZGYnz/HoA+rwM7Nhtkz7SgCkbW0vSUDH
+	Lzkko
+X-Gm-Gg: ASbGncs2w62wsmELPlHePffFk4zlvtwJLaJW6OnTq/XtP4BhSnY8wolOBnNjs0yMi9u
+	Vl5y7+nvW1/4tMHTrFem8uSC2tfhNys7Wmta5/0+EVbyL2AWFwf13+qqsnqSjueuGh0o+vKyD3S
+	X7mOxO67Pqht2fNvHqPKuz7WR0iCJNUvI3CWKm1Cvs6h4ZJIutlCfAtZ3lDZmgQ8k76o71BYBJM
+	pE9fqmbAWzflb3ndaUgsKC6rABgLFgtM+iLCHGzXCY8skHqmHrUPQ6TN/ICA4bsFoBTqvXDlwuk
+	b9aBilZ2unCi0ZbFT+5ZALBlwXbwEARxjt+Vld4ECaU4ZzLQFeyDURKQ
+X-Google-Smtp-Source: AGHT+IHxtV4+3gh0C/cesx6Zo3UrF0Z3Xp2TmSozx5XMhhBpL4XCWsFhSBuM7IsuKYoShdYEiZ2MMg==
+X-Received: by 2002:a05:600c:5126:b0:43d:a90:9f1 with SMTP id 5b1f17b1804b1-44c93016686mr71184365e9.6.1748250082800;
+        Mon, 26 May 2025 02:01:22 -0700 (PDT)
+Received: from localhost ([196.207.164.177])
+        by smtp.gmail.com with UTF8SMTPSA id 5b1f17b1804b1-447f1ef035csm225569045e9.11.2025.05.26.02.01.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 25 May 2025 12:26:15 -0700 (PDT)
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Date: Sun, 25 May 2025 21:26:04 +0200
-Subject: [PATCH 4/5] dmaengine: fsl-qdma: Add missing fsl_qdma_format
- kerneldoc
+        Mon, 26 May 2025 02:01:22 -0700 (PDT)
+Date: Mon, 26 May 2025 12:01:19 +0300
+From: Dan Carpenter <dan.carpenter@linaro.org>
+To: Shuai Xue <xueshuai@linux.alibaba.com>
+Cc: dmaengine@vger.kernel.org
+Subject: [bug report] dmaengine: idxd: fix memory leak in error handling path
+ of idxd_setup_wqs
+Message-ID: <aDQt3_rZjX-VuHJW@stanley.mountain>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250525-dma-fixes-v1-4-89d06dac9bcb@linaro.org>
-References: <20250525-dma-fixes-v1-0-89d06dac9bcb@linaro.org>
-In-Reply-To: <20250525-dma-fixes-v1-0-89d06dac9bcb@linaro.org>
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, 
- Vinod Koul <vkoul@kernel.org>, 
- Gustavo Pimentel <Gustavo.Pimentel@synopsys.com>, 
- Frank Li <Frank.Li@nxp.com>, Rob Herring <robh@kernel.org>
-Cc: dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org, 
- linux-arm-msm@vger.kernel.org, 
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1062;
- i=krzysztof.kozlowski@linaro.org; h=from:subject:message-id;
- bh=Sm3IbikRxGrXe/Gygal0RcvZGGE5Vm9xAe0Sy1mv/PU=;
- b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBoM27QW6O28ENwDMIgLoVAwIdJvteqy1tPicytR
- BfWmJV0pSqJAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCaDNu0AAKCRDBN2bmhouD
- 17GRD/4v8X01UCwnBhEJ/X49zBCMCGI/MAbmL54jLi2/WSqphrmRNW0Y4KOAyfaP9EuJBniGf73
- bjAlg5nd0qIQrAtppNrjr+IKB6U9yrEKuSjCg8/BwmBWQdmHZ+TvsEXkYYr+SSvSo8bCSlS5p+Q
- UL897us4/f7Zsv3lu7YjLqd0OhGeAwbnncLzAHWoyLzqemX1aWGVSHjz1SBoi3LCWCGWhOGG+RY
- SSeFxSUJ/tEfpZAqJqsXIcJhjBiJ6pW3WQ/3ZJvbhSjyNwsLPZwOaYFJwmBA28D8EIplIHpMosU
- O376GQgalZqkfotPw1w8egRPis/R5P64XDrODtY6EEC7YdFCfYQSGO3/HSS68P17DtBGxw8Gc2S
- Jy40O38OT4v+KyKpMAMDGVud292G1lfseiHQ+yXSDPytfxjR0VC6w73RbwzlKf6GLoLrFCciYJk
- 6MZji3NotdKEFMeze0mFxCaBL7lg7PA4qFcCOMRGcpIyFF8b8HobyXdOeBt0ghbidlB3DlB9w4q
- XOhc6Zd9zfTlbtQCmhEFcot/vAVdQ7WOxrQFsVoW+Wqs4jEpOWxy+3VhvHwma/qH9/OieJDuRWF
- SvB7jB8N9pNR4k/tbBxHj1v1R4ttV8RkYRlx3e1ZhWoje3ylFkjogHxNuS7vcy8k+gXKywoEIaA
- MK7VdioVfAQsNBw==
-X-Developer-Key: i=krzysztof.kozlowski@linaro.org; a=openpgp;
- fpr=9BD07E0E0C51F8D59677B7541B93437D3B41629B
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Document '__reserved2' and 'cmd' fields of 'struct fsl_qdma_format' to
-fix W=1 warnings:
+Hello Shuai Xue,
 
-  fsl-qdma.c:169 struct member '__reserved2' not described in 'fsl_qdma_format'
-  fsl-qdma.c:169 struct member 'cmd' not described in 'fsl_qdma_format'
+Commit 3fd2f4bc010c ("dmaengine: idxd: fix memory leak in error
+handling path of idxd_setup_wqs") from Apr 4, 2025 (linux-next),
+leads to the following Smatch static checker warning:
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- drivers/dma/fsl-qdma.c | 3 +++
- 1 file changed, 3 insertions(+)
+	drivers/dma/idxd/init.c:246 idxd_setup_wqs()
+	error: uninitialized symbol 'conf_dev'.
 
-diff --git a/drivers/dma/fsl-qdma.c b/drivers/dma/fsl-qdma.c
-index 823f5c6bc2e1a5bc5e30ea7175bff31e53ff8744..21e13f1207cbe6e82a45c828b93edcadf88b52d1 100644
---- a/drivers/dma/fsl-qdma.c
-+++ b/drivers/dma/fsl-qdma.c
-@@ -148,6 +148,9 @@
-  * @__reserved1:	    Reserved field.
-  * @cfg8b_w1:		    Compound descriptor command queue origin produced
-  *			    by qDMA and dynamic debug field.
-+ * @__reserved2:	    Reserved field.
-+ * @cmd:		    Command for QDMA (see FSL_QDMA_CMD_RWTTYPE and
-+ *			     others).
-  * @data:		    Pointer to the memory 40-bit address, describes DMA
-  *			    source information and DMA destination information.
-  */
+drivers/dma/idxd/init.c
+    177 static int idxd_setup_wqs(struct idxd_device *idxd)
+    178 {
+    179         struct device *dev = &idxd->pdev->dev;
+    180         struct idxd_wq *wq;
+    181         struct device *conf_dev;
+    182         int i, rc;
+    183 
+    184         idxd->wqs = kcalloc_node(idxd->max_wqs, sizeof(struct idxd_wq *),
+    185                                  GFP_KERNEL, dev_to_node(dev));
+    186         if (!idxd->wqs)
+    187                 return -ENOMEM;
+    188 
+    189         idxd->wq_enable_map = bitmap_zalloc_node(idxd->max_wqs, GFP_KERNEL, dev_to_node(dev));
+    190         if (!idxd->wq_enable_map) {
+    191                 rc = -ENOMEM;
+    192                 goto err_bitmap;
+    193         }
+    194 
+    195         for (i = 0; i < idxd->max_wqs; i++) {
+    196                 wq = kzalloc_node(sizeof(*wq), GFP_KERNEL, dev_to_node(dev));
+    197                 if (!wq) {
+    198                         rc = -ENOMEM;
+    199                         goto err;
 
--- 
-2.45.2
+On this error path we either free an uninitialized variable or we
+double free conf_dev.
 
+    200                 }
+    201 
+    202                 idxd_dev_set_type(&wq->idxd_dev, IDXD_DEV_WQ);
+    203                 conf_dev = wq_confdev(wq);
+    204                 wq->id = i;
+    205                 wq->idxd = idxd;
+    206                 device_initialize(wq_confdev(wq));
+    207                 conf_dev->parent = idxd_confdev(idxd);
+    208                 conf_dev->bus = &dsa_bus_type;
+    209                 conf_dev->type = &idxd_wq_device_type;
+    210                 rc = dev_set_name(conf_dev, "wq%d.%d", idxd->id, wq->id);
+    211                 if (rc < 0)
+    212                         goto err;
+
+When we're cleaning up loops what I recommend is that we clean up the
+partial iterations before the goto.
+
+		if (rc < 0) {
+			put_device(conf_dev);
+			kfree(wq);
+			goto unwind_loop;
+		}
+
+That's sort of how the code was written originally but it missed some
+frees.
+
+
+    213 
+    214                 mutex_init(&wq->wq_lock);
+    215                 init_waitqueue_head(&wq->err_queue);
+    216                 init_completion(&wq->wq_dead);
+    217                 init_completion(&wq->wq_resurrect);
+    218                 wq->max_xfer_bytes = WQ_DEFAULT_MAX_XFER;
+    219                 idxd_wq_set_max_batch_size(idxd->data->type, wq, WQ_DEFAULT_MAX_BATCH);
+    220                 wq->enqcmds_retries = IDXD_ENQCMDS_RETRIES;
+    221                 wq->wqcfg = kzalloc_node(idxd->wqcfg_size, GFP_KERNEL, dev_to_node(dev));
+    222                 if (!wq->wqcfg) {
+    223                         rc = -ENOMEM;
+    224                         goto err;
+    225                 }
+
+Same:
+
+		if (!wq->wqcfg) {
+			put_device(conf_dev);
+			kfree(wq);
+			rc = -ENOMEM;
+			goto unwind_loop;
+		}
+
+    226 
+    227                 if (idxd->hw.wq_cap.op_config) {
+    228                         wq->opcap_bmap = bitmap_zalloc(IDXD_MAX_OPCAP_BITS, GFP_KERNEL);
+    229                         if (!wq->opcap_bmap) {
+    230                                 rc = -ENOMEM;
+    231                                 goto err_opcap_bmap;
+    232                         }
+
+		if (!wq->wqcfg) {
+			kfree(wq->wqcfg);
+			put_device(conf_dev);
+			kfree(wq);
+			rc = -ENOMEM;
+			goto unwind_loop;
+		}
+
+
+    233                         bitmap_copy(wq->opcap_bmap, idxd->opcap_bmap, IDXD_MAX_OPCAP_BITS);
+    234                 }
+    235                 mutex_init(&wq->uc_lock);
+    236                 xa_init(&wq->upasid_xa);
+    237                 idxd->wqs[i] = wq;
+    238         }
+    239 
+
+Imagine if we add another two allocations here.
+
+		foo = alloc();
+		if (!foo)
+			goto err;
+		bar = alloc();
+		if (!bar)
+			goto free_foo;
+
+
+    240         return 0;
+    241 
+
+Then we have to do a little bunny hop.
+
+free_foo:
+	free(foo);
+	goto err; // <-- bunny hop
+
+err_opcap_bmap:
+	kfree(wq->wqcfg);
+
+People often get confused and forget the bunny hop.
+
+    242 err_opcap_bmap:
+    243         kfree(wq->wqcfg);
+    244 
+    245 err:
+--> 246         put_device(conf_dev);
+    247         kfree(wq);
+    248 
+    249         while (--i >= 0) {
+    250                 wq = idxd->wqs[i];
+    251                 if (idxd->hw.wq_cap.op_config)
+    252                         bitmap_free(wq->opcap_bmap);
+    253                 kfree(wq->wqcfg);
+    254                 conf_dev = wq_confdev(wq);
+    255                 put_device(conf_dev);
+    256                 kfree(wq);
+    257 
+    258         }
+    259         bitmap_free(idxd->wq_enable_map);
+    260 
+    261 err_bitmap:
+    262         kfree(idxd->wqs);
+    263 
+    264         return rc;
+    265 }
+
+regards,
+dan carpenter
