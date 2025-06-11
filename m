@@ -1,85 +1,151 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3D52190497
-	for <dmaengine@vger.kernel.org>; Wed, 11 Jun 2025 16:16:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3C291714AC;
+	Wed, 11 Jun 2025 16:27:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749658613; cv=none; b=cYyUs8Onh6gUU8XMGLlBDKvxrRgGwkEzd2EgCIJ80um0eN5XI9N2Pyjnyc4NssHZF9Ky2CnrjoWMDWokMa69uXxD6oN/V09yeAqQSCBAvCp6CMLJ7Sk5FfQ6cT2B5AKL4xmhWDHd2rfa1k0uC+USOx2jBQyj5EnZzgwIzBacdrE=
+	t=1749659240; cv=none; b=G2Rgn0wF3+LostotEAsGlAKVKmkfDV4lYqiZz2LoMIpmMDFADrUGO7LwNqChSh7P0DiQzRGH3s05ThD66P9YygxTGQSD34MvYwgSfrEgLNoGw0Mq7VyH9RJM28kU6hJgkyFA8qBzkGD2FlGzMkBnCOlZ7FfeAYahpkVIlzBMFL0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749658613; c=relaxed/simple;
-	bh=WFtUBJqlAhF8dGqTN2nXC1pQiRHrSopQJ1PTtE6d/n0=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=B3fDHH6nSeZjQi8kek+7ZTFkUmoYzTnTmAx8CEu4o2PS7RapcrNZpQQFlElCa5PEA6uw9Z/KlBb2RIPvl79wmAtsnM24NIzXi/xM0N/QKLRjSiPTpBhtJmjajS9YY1ZFhSBSKMGPhJ1UlgvC1FCtxUDuhv7ovJgbRfz4duhbxNg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=A8ivT56d; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1749659240; c=relaxed/simple;
+	bh=TtXVw+PkPXOitHU74/zipxEl0FGTF6GQcOkD9yWCbmk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=X2DxVWIYcHIv7XisqMD3MFRXddyhh1o1KPBdcWxR5CLXdXPfgPJo5B/T8F07eZUVMEtZQS3k6n1wiSIZKstrqPBEEfI+ENyj5AMH4njsj2ydUbFV4S9Zb/OXBjKWMeGzOfHlvsDjD6KKhON31lA/w6+hQ2w6/ZCe79oHNrm9jIU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Of69h1mo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="A8ivT56d"
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 3D840C4CEE3;
-	Wed, 11 Jun 2025 16:16:53 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Of69h1mo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA55FC4CEE3;
+	Wed, 11 Jun 2025 16:27:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1749658613;
-	bh=WFtUBJqlAhF8dGqTN2nXC1pQiRHrSopQJ1PTtE6d/n0=;
-	h=From:Subject:Date:To:Cc:Reply-To:From;
-	b=A8ivT56dUw/1mkYBmqAYXT8Jl30TxyVUkSC8armZBguZ9DfHaujbV0Qfsoliq0wJP
-	 EUcVUnFqO8NG9SUSKL7rQehqax+9nl1Ihmuo5gJp/TdABLNgFaVlZJvllKE9bHyfW0
-	 AC1R3qmUoDZMNJN+mLLoJT2x8zxuZbmhjJiszw0PX3pox/Utthj6vqFXH8Egye3eVF
-	 7+HRg4JUkBEGcYY/wlFP/KXZ19iX+cA9GXY6S8TAp7HzmCzLfJSC2Esy/wgtCcJ8yl
-	 U9qwAKOVo+/SqtWr6NDPHk2tSXOj/e7bFnK0lhllaS2bYiKcaNPpKNbmOSG3feJdQi
-	 MLMhqKBaNlpBA==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 32EC1C71136;
-	Wed, 11 Jun 2025 16:16:53 +0000 (UTC)
-From: =?utf-8?q?Nuno_S=C3=A1_via_B4_Relay?= <devnull+nuno.sa.analog.com@kernel.org>
-Subject: [PATCH RESEND 0/4] dma: dma-axi-dmac: fixes and improvements
-Date: Wed, 11 Jun 2025 17:16:54 +0100
-Message-Id: <20250611-dev-axi-dmac-fixes-v1-0-d30af52a2af5@analog.com>
+	s=k20201202; t=1749659237;
+	bh=TtXVw+PkPXOitHU74/zipxEl0FGTF6GQcOkD9yWCbmk=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=Of69h1moi0kvk/wUGfC8qUrYlhnSf5HEF+Y08XuY4uWhQgQIfpaKOOUbCMBEfU5Xk
+	 m/JmMjypFT5H6Z6KZT9Xv21j9YKSR30BKLl/NooP9nZIhmaUOfKcyzJA2elWTRd3P9
+	 hFJ624oP/nZmvLkDU/piWDaokPP0F1GVWpqbJR7jkfAplrVxOzjdVU26f2IpGcog7O
+	 mg5HZ8bMfTz3ruS03ExOSyhMCWXHURuTNmaa98JNQ9U8OpEQ1m0e+kNssvJYZBijpf
+	 y6GipI71Y3uYOfaC45cKAzEi5+mYe9X9xhkHHxx9GgsD0Y++ECkyvhmT32xNjnDd7H
+	 EaRKgPT4P2IKA==
+Date: Wed, 11 Jun 2025 17:27:10 +0100
+From: Conor Dooley <conor@kernel.org>
+To: Guodong Xu <guodong@riscstar.com>
+Cc: vkoul@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
+	conor+dt@kernel.org, dlan@gentoo.org, paul.walmsley@sifive.com,
+	palmer@dabbelt.com, aou@eecs.berkeley.edu, alex@ghiti.fr,
+	p.zabel@pengutronix.de, drew@pdp7.com,
+	emil.renner.berthing@canonical.com, inochiama@gmail.com,
+	geert+renesas@glider.be, tglx@linutronix.de,
+	hal.feng@starfivetech.com, joel@jms.id.au, duje.mihanovic@skole.hr,
+	elder@riscstar.com, dmaengine@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev
+Subject: Re: [PATCH 1/8] dt-bindings: dma: marvell,mmp-dma: Add SpacemiT PDMA
+ compatibility
+Message-ID: <20250611-kabob-unmindful-3b1e9728e77d@spud>
+References: <20250611125723.181711-1-guodong@riscstar.com>
+ <20250611125723.181711-2-guodong@riscstar.com>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-To: dmaengine@vger.kernel.org
-Cc: Paul Cercueil <paul@crapouillou.net>, 
- Lars-Peter Clausen <lars@metafoo.de>, Vinod Koul <vkoul@kernel.org>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1749658620; l=827;
- i=nuno.sa@analog.com; s=20231116; h=from:subject:message-id;
- bh=WFtUBJqlAhF8dGqTN2nXC1pQiRHrSopQJ1PTtE6d/n0=;
- b=pQMoPDapELFwXwnQL4cpqIg2ISYyebkeiUbi996HX5NsnVzWddSBOg8RGcrzrEHPwna5+v2hO
- EWxCoU1aaYmCdY68fF6nWWi3hj8i2jud0RdhxuOJ2SJOJyIb88yz4sG
-X-Developer-Key: i=nuno.sa@analog.com; a=ed25519;
- pk=3NQwYA013OUYZsmDFBf8rmyyr5iQlxV/9H4/Df83o1E=
-X-Endpoint-Received: by B4 Relay for nuno.sa@analog.com/20231116 with
- auth_id=100
-X-Original-From: =?utf-8?q?Nuno_S=C3=A1?= <nuno.sa@analog.com>
-Reply-To: nuno.sa@analog.com
-
-This series adds some fixes to the DMA core with respect with cyclic
-transfer and HW scatter gather.
-
-It also adds some improvements. Most notably for allowing bigger that
-32bits DMA masks so we do not have to rely on bounce buffers from
-swiotlb.
-
----
-Nuno Sá (4):
-      dma: dma-axi-dmac: fix SW cyclic transfers
-      dma: dma-axi-dmac: fix HW scatter-gather not looking at the queue
-      dma: dma-axi-dmac: support bigger than 32bits addresses
-      dma: dma-axi-dmac: simplify axi_dmac_parse_dt()
-
- drivers/dma/dma-axi-dmac.c | 48 +++++++++++++++++++++++++++++++---------------
- 1 file changed, 33 insertions(+), 15 deletions(-)
----
-base-commit: 3c018bf5a0ee3abe8d579d6a0dda616c3858d7b2
-change-id: 20250520-dev-axi-dmac-fixes-41502e41d982
---
-
-Thanks!
-- Nuno Sá
--- 
-Nuno Sá <nuno.sa@analog.com>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="82h4siQLdNk8igEh"
+Content-Disposition: inline
+In-Reply-To: <20250611125723.181711-2-guodong@riscstar.com>
 
 
+--82h4siQLdNk8igEh
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Wed, Jun 11, 2025 at 08:57:16PM +0800, Guodong Xu wrote:
+> Add "spacemit,pdma-1.0" compatible string to support SpacemiT PDMA
+> controller in the Marvell MMP DMA device tree bindings. This enables:
+>=20
+> - Support for SpacemiT PDMA controller configuration
+> - New optional properties for platform-specific integration:
+>   * clocks: Clock controller for the DMA
+>   * resets: Reset controller for the DMA
+>=20
+> Also, add explicit #dma-cells property definition to avoid
+> "make dtbs_check W=3D3" warnings about unevaluated properties.
+>=20
+> The #dma-cells property is defined as 2 cells to maintain compatibility
+> with existing ARM device trees. The first cell specifies the DMA request
+> line number, while the second cell is currently unused by the driver but
+> required for backward compatibility with PXA device tree files.
+>=20
+> Signed-off-by: Guodong Xu <guodong@riscstar.com>
+> ---
+>  .../bindings/dma/marvell,mmp-dma.yaml           | 17 +++++++++++++++++
+>  1 file changed, 17 insertions(+)
+>=20
+> diff --git a/Documentation/devicetree/bindings/dma/marvell,mmp-dma.yaml b=
+/Documentation/devicetree/bindings/dma/marvell,mmp-dma.yaml
+> index d447d5207be0..e117a81414bd 100644
+> --- a/Documentation/devicetree/bindings/dma/marvell,mmp-dma.yaml
+> +++ b/Documentation/devicetree/bindings/dma/marvell,mmp-dma.yaml
+> @@ -18,6 +18,7 @@ properties:
+>        - marvell,pdma-1.0
+>        - marvell,adma-1.0
+>        - marvell,pxa910-squ
+> +      - spacemit,pdma-1.0
+
+You need a soc-specific compatible here.
+
+> =20
+>    reg:
+>      maxItems: 1
+> @@ -32,6 +33,21 @@ properties:
+>        A phandle to the SRAM pool
+>      $ref: /schemas/types.yaml#/definitions/phandle
+> =20
+> +  clocks:
+> +    description: Clock for the controller
+> +    maxItems: 1
+> +
+> +  resets:
+> +    description: Reset controller for the DMA controller
+> +    maxItems: 1
+> +
+> +  '#dma-cells':
+> +    const: 2
+> +    description:
+> +      The first cell contains the DMA request number for the peripheral
+> +      device. The second cell is currently unused but must be present for
+> +      backward compatibility.
+
+These properties are only valid for your new device, right?
+If so, please restrict them to only the spacemit platform.
+
+> +
+>    '#dma-channels':
+>      deprecated: true
+> =20
+> @@ -52,6 +68,7 @@ allOf:
+>            contains:
+>              enum:
+>                - marvell,pdma-1.0
+> +              - spacemit,pdma-1.0
+>      then:
+>        properties:
+>          asram: false
+> --=20
+> 2.43.0
+>=20
+
+--82h4siQLdNk8igEh
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCaEmuXgAKCRB4tDGHoIJi
+0qVeAQDGipWedss8FsQk82+JZZWNvXPOTFMRXZ9UZDbpVDtD9AD9HKL4/k0Gara+
+cP7bfGhZRfjr9QcvF763N1YHTn34eg0=
+=BguH
+-----END PGP SIGNATURE-----
+
+--82h4siQLdNk8igEh--
