@@ -1,60 +1,62 @@
-Received: from mail-qk1-f179.google.com (mail-qk1-f179.google.com [209.85.222.179])
+Received: from mail-qk1-f177.google.com (mail-qk1-f177.google.com [209.85.222.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1C9829D19;
-	Wed, 11 Jun 2025 07:54:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B32D23373B;
+	Wed, 11 Jun 2025 07:54:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749628474; cv=none; b=DwizaBuRcXyx2NNWnWA0kSSrA8dpoP0U8WH+pz2yrCOZ1gLYtyTs5uAJR+MwFz72ecFGxhgpc8eSlL8zrjmf/hiEwLHr+mgOSjIIezvIFzl/VdqtqqVX0ZGfIw4RP3QLbUghC8EfESdS9X84aOu6LW0pHMLkvJyWw6jztPS6tG8=
+	t=1749628481; cv=none; b=jodW+4HusBToZURl7dKVrJhFaLqXfJ6ngyZaG4Ipe+MIvNhaut925ewlBDMqFdJIpi8VnLgy8/R10rf+ZBoSqPmFCl0CYFshJvsT/JLVu8OOhk9BDgNG2S1X3ZUkPhS6njFxXPQm16n2ee5Io2rQR3HP0fkB/rlJhaWGa5zwkDg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749628474; c=relaxed/simple;
-	bh=bCVbSVwSBYwY1otSjwDqL5GnRL1mK5EbHr8LxlhsFIw=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=hdflYyRC+vdBPJfmemo3CkIhkUymucavPxST/H2MW+GVqHhPyQmFtB1Rm7ZLqQYPkM2oDyAm4gdX7fB45Ma8S4k2hKhI0Xr9kfo9V2LAxG/PmCLBtES3gO9Srm4wVATd3nclIgCORNlUYpg4Scd5TPb1lukt7yLHSaghqpECRsc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aSd9C5zM; arc=none smtp.client-ip=209.85.222.179
+	s=arc-20240116; t=1749628481; c=relaxed/simple;
+	bh=leYEMODDBviLVcx7yoQ0Zt5ZI1j1sck0Bv2d4cc1ysQ=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=a9793L1FCn075R2easaO/OK2OlNTarZd6sCGQwl2yX4jDI0OYugLbN4jbnDeWBP0p/pEabyn3+LVlW+Z/iDB7iktsoKWe7x6mMVX4zk3WVv8d5PF+xmnhfCETAPyWQTsgbSQgOQOct/h19nuwC3MD/McqhXm8nmy8GuM5MrPQ6Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YiRZn59i; arc=none smtp.client-ip=209.85.222.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aSd9C5zM"
-Received: by mail-qk1-f179.google.com with SMTP id af79cd13be357-7c922169051so359339385a.0;
-        Wed, 11 Jun 2025 00:54:32 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YiRZn59i"
+Received: by mail-qk1-f177.google.com with SMTP id af79cd13be357-7d38cfa9773so384255685a.2;
+        Wed, 11 Jun 2025 00:54:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1749628471; x=1750233271; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=AFY1n8hKD7YHLP1kf7MxSpa9O55c6JB9hP3AwHqMzNA=;
-        b=aSd9C5zMK1tAxoVRawCXkvQpBqgp2CoUCcmUERqQ7WZtltUI9H8EYddyeWi9WGKIvL
-         SPgx21DrhMhXe9TPE43b1jQhBjQWw+TicUYq3ezWU7xGzNmhlxN4IPy1MqZM3+hmKIHg
-         OdbHXjGvxQcUR30+KYYjKbY6sGIRPRoHxh6zR4CLtPEU2qScqwj3e8Msui2zLtMCa0LC
-         L6EA36zx3mwoKWGl7MjPgC3Hc8to+0y9vXrpy4tfE4gda6961VRdwTE9k7IwYhkfd79m
-         75kjW8fI1UEaArdfuPJml5iM5uZTlvNiIefHmdPxzD26J6kbJ8P43DqWFtWlzhg0ZX3C
-         tcAg==
+        d=gmail.com; s=20230601; t=1749628478; x=1750233278; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=TucqLG/tk3Y/USNHaS48EdntTVxxdA1FanRm1k8rL/8=;
+        b=YiRZn59iIGvdM3HzcD6U2ldQ5wwGfQyZLr8TQKnWBPDuOwkfWgrOblNVEG9hBNWo+e
+         MUMg/QTqttkyCZQpzuJ5FLDbRsqX5Bj4FJg59wOgCWItPi4fFzuZO0wwlKs0Qm+p65dl
+         SiwjyRxSvklm3EbPgJDFVtf5KBHcbYL6LcmvTqFvcKf0KvSGwRCU4nnVWfun3F6Rqz1L
+         u0bYDWMPiMRNQM3i6hOy2yfWiyk9zhs7Y6KDWmSzNTDUYLP7RX9ardwG/mVBmIE9cjhN
+         kWOUSbKKRhHzKOo8liYthc9+e/0pflsO1NbhbmiJbIqd9PBO757/0s35YjXMLd71Ir7B
+         Irpg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749628471; x=1750233271;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=AFY1n8hKD7YHLP1kf7MxSpa9O55c6JB9hP3AwHqMzNA=;
-        b=YRRvaeMNEXOZLz649WLUpyP+0wQhOG8mCH/XZutjKwo/AS1eU/TzNAYtNO3KtgCCOj
-         wC5JhQRcSfKrMzChN/E7Hn3MKBF4fo9Z8FU4pkGqxULk5QyweFreOhSIDLBshCrSdO6Q
-         YZayAa/W4I3Q3m+FstlwOFly/4Ca+DJxqBuOmnjpXsNNAMBGmIcGkYIlwDkqr7OcbVlp
-         cjaxrd8vfV5KtbF8uCAD8f1/e5On6wOuMNU68h30yxxxvFNDauzalTGa/vcfL8jXtsfp
-         yDEnWmO2nIjHxPKsATGVMRHcG7MURPDzDMzkks5vs32JLkAda49jzu+74ge1JExsyw2C
-         du0w==
-X-Forwarded-Encrypted: i=1; AJvYcCV/BciA+dt/ufrs5PgiMBPidLAt9g58rVZs1XMGg6BZ1coTOvgiIvL/sPn93TyBCGORKwi3ildH+KEWsGhp@vger.kernel.org, AJvYcCVH9EhMK9cN9WuE1k2Fful0XbA+viRE9c/06YgMsaPNLoypO3+IkqyfqQqoQg50+WBNO7PLGYRD+aXQ@vger.kernel.org, AJvYcCXa9fD9/j4Wh+QHFNEO4KVKcWRhLx1IIJqmnIAE30pSiTQOJ3r4vg2zSpeNA9dBQnxxoRJseGGwRyBZ@vger.kernel.org
-X-Gm-Message-State: AOJu0YxXk4M7716T02ZNQ67wpx3XB2ptjmNgsH78Ec3byeDmZ7asmwJQ
-	MsC37uXUWo7l1Mk5IPlW5FiyxTwnDZyAipMwDT4C6bx5/zpdOUh64GVS
-X-Gm-Gg: ASbGncsLrjc22QTx8SiwYrSNaObz8apXHdGHfzASJIF148S8cu4z6Wd3/FjXmosvPcz
-	zfjw1x0kFXLk/PA4Rc9UMgbwiq/tBtcZNhO+9y50lfmZnyB9ebQlaT6XM89DtZV9Y8hHsJwlRUh
-	PbDcBAwkPjfWEUDLk2suw5bzMe5IerfSPJZ1CsYkaYqed9ZDfywAAlf4chxErBJC9MKOqffIDt1
-	+/CHy/7k5kxe3eHVPMp6RpXJ32Xp7tuNZCefJfF6HfJ1LTHO8UwDfRfVL52SemCf5cV0nnVM3GQ
-	C9jImDt7K4VHAOiyjisStbaKW5sIST1cc0l+3Q==
-X-Google-Smtp-Source: AGHT+IHiEq5NOVnzdI0MVOEGferuZ6sPEJIWdas7r5sxvl6GtQWSqqWA/YtBhGlgc6evDKBd2SnF9Q==
-X-Received: by 2002:a05:620a:29c9:b0:7d3:9ecc:1bd2 with SMTP id af79cd13be357-7d3a8805fe9mr315815185a.10.1749628471424;
-        Wed, 11 Jun 2025 00:54:31 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1749628478; x=1750233278;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=TucqLG/tk3Y/USNHaS48EdntTVxxdA1FanRm1k8rL/8=;
+        b=RgsGgUdbH9FjxRkU7H/oU9QU7CFMILydO/GtVrwXt8+xIacLzwk9WxmLmFERa4RfFp
+         SLQZTxF537LgDvsNikU0WB+894dmfYWawvuBZ7RClZL/iys0ncTsMh1kn+Uq5cjA/Kxu
+         gDzCQd5qffoN31tjemGOt7DxETwVmjOMw69Oe/89rquEvwgJcXiMY44ALXbcgDVLEP+c
+         f8wU55+S28OcfwOdRCezQIJabDQeV7WhTpUdjQJjQWrk7zaLa79I36Ffki9Ppv0qza4Y
+         +T28CsgBbUY0BnpfgGTMq4HKnGQ4r5BvRxIOFKEr6DINZKIxziQF4WTEO6pjFnNktTso
+         lSBA==
+X-Forwarded-Encrypted: i=1; AJvYcCVacsn52fsXISi0WKQCQTZVayaC1NEDH0qpG5nz8/Eu2ZWZcACRR6J+OWP35W8s9u0d8DFGN+qrbg5I@vger.kernel.org, AJvYcCVdQ5amXC3VsJ9ZXxGlqgi+FbVQcDM9fuRmqtZWfja6H90AmSD7UMPwP+9H11WiNZhn4OAwkzmvkFh3@vger.kernel.org, AJvYcCXNCQW8I1NJM4jHO6ck3Y373lqZvqzp8tIvNlXH9grOmp8VZGcB30BwDxUJkAgMQiACFrN+UqXk5xr/j7MG@vger.kernel.org
+X-Gm-Message-State: AOJu0YzS4Ih5jbZJiwkaIJEv+74G+eiTXLLdi+xgyB3wUUGmS2MOoN+f
+	AY4o97pKYiyalm6RNfo01mnxPQGYXUK4CZeL3ky/zQ6DekUMXfb9wk2P
+X-Gm-Gg: ASbGncuPoTNAszlCp/8U4+LzSdgaA64UTuzQpa93Rt4zqzGdbH50MnhpRLWJJ+hRnDX
+	0a4uCAtTfIGKDeAcPStBKAV5DV9Mizdxitl4+NjUJAv/QwlskS9ZM1huSgY0F9BmgSkI7Yr6gUo
+	oiSDd/RipRG8Tt0mC5leWeEk8PxcfyLpof8ji1c01jT7m8QccaWOBplgiyB50LDkJeA57/HCci/
+	Co8wyYJcp2+RY6W0++nSaTmsrg09Brk7zwvS5LnoQZY0dDBpvpsbr+HKGFSSlOMfP99OQ0l7JBZ
+	qESQdd865AQYzRfioVyBwbB/ksSZtnwM9qTL6ZziQdGIAOAG
+X-Google-Smtp-Source: AGHT+IEySdwciKZhGZrTCtsR/Gxqu5FAFCLHguwmpefzLwsb16bnu8UFs0/XpS23i1fk+Kd0aatnNg==
+X-Received: by 2002:a05:620a:29ca:b0:7d0:99dc:d026 with SMTP id af79cd13be357-7d3a88057a4mr312939885a.12.1749628478269;
+        Wed, 11 Jun 2025 00:54:38 -0700 (PDT)
 Received: from localhost ([2001:da8:7001:11::cb])
-        by smtp.gmail.com with UTF8SMTPSA id af79cd13be357-7d25a609092sm825539885a.65.2025.06.11.00.54.30
+        by smtp.gmail.com with UTF8SMTPSA id 6a1803df08f44-6fb09ab8a3csm79057766d6.10.2025.06.11.00.54.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 11 Jun 2025 00:54:31 -0700 (PDT)
+        Wed, 11 Jun 2025 00:54:37 -0700 (PDT)
 From: Inochi Amaoto <inochiama@gmail.com>
 To: Philipp Zabel <p.zabel@pengutronix.de>,
 	Rob Herring <robh@kernel.org>,
@@ -79,10 +81,12 @@ Cc: Junhui Liu <junhui.liu@pigmoral.tech>,
 	dmaengine@vger.kernel.org,
 	Yixun Lan <dlan@gentoo.org>,
 	Longbin Li <looong.bin@gmail.com>
-Subject: [PATCH v3 0/4] riscv: sophgo: cv18xx: Add reset generator support
-Date: Wed, 11 Jun 2025 15:53:14 +0800
-Message-ID: <20250611075321.1160973-1-inochiama@gmail.com>
+Subject: [PATCH v3 2/4] reset: simple: add support for Sophgo CV1800B
+Date: Wed, 11 Jun 2025 15:53:16 +0800
+Message-ID: <20250611075321.1160973-3-inochiama@gmail.com>
 X-Mailer: git-send-email 2.49.0
+In-Reply-To: <20250611075321.1160973-1-inochiama@gmail.com>
+References: <20250611075321.1160973-1-inochiama@gmail.com>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -91,31 +95,27 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Like SG2042, CV1800 Series SoCs also have simple bit reset generator.
-Add necessary code and bindings for it.
+Reuse reset-simple driver for the Sophgo CV1800B reset generator.
 
-Changes from v2:
-1. patch 3: fix wrong reset ID.
+Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
+Reviewed-by: Alexander Sverdlin <alexander.sverdlin@gmail.com>
+---
+ drivers/reset/reset-simple.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-Changes from v1:
-1. rebase to v6.16-rc1
-2. patch 1: apply Rob's tag
-3. patch 3: fix wrong reset ID
-
-Inochi Amaoto (4):
-  dt-bindings: reset: sophgo: Add CV1800B support
-  reset: simple: add support for Sophgo CV1800B
-  riscv: dts: sophgo: add reset generator for Sophgo CV1800 series SoC
-  riscv: dts: sophgo: add reset configuration for Sophgo CV1800 series
-    SoC
-
- .../bindings/reset/sophgo,sg2042-reset.yaml   |  1 +
- arch/riscv/boot/dts/sophgo/cv180x.dtsi        | 25 +++++
- arch/riscv/boot/dts/sophgo/cv18xx-reset.h     | 98 +++++++++++++++++++
- drivers/reset/reset-simple.c                  |  2 +
- 4 files changed, 126 insertions(+)
- create mode 100644 arch/riscv/boot/dts/sophgo/cv18xx-reset.h
-
---
+diff --git a/drivers/reset/reset-simple.c b/drivers/reset/reset-simple.c
+index 276067839830..79e94ecfe4f5 100644
+--- a/drivers/reset/reset-simple.c
++++ b/drivers/reset/reset-simple.c
+@@ -151,6 +151,8 @@ static const struct of_device_id reset_simple_dt_ids[] = {
+ 	{ .compatible = "snps,dw-high-reset" },
+ 	{ .compatible = "snps,dw-low-reset",
+ 		.data = &reset_simple_active_low },
++	{ .compatible = "sophgo,cv1800b-reset",
++		.data = &reset_simple_active_low },
+ 	{ .compatible = "sophgo,sg2042-reset",
+ 		.data = &reset_simple_active_low },
+ 	{ /* sentinel */ },
+-- 
 2.49.0
 
