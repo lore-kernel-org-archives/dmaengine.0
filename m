@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 739C02DECBE;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F0962DECA3;
 	Thu, 12 Jun 2025 21:12:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749762722; cv=none; b=YLXIIWglsYVTRV3IAsQ0UCbfZS4I7C9IPOQED/uRsTifjqCPoZHCxlS+MllvgjkaFWzEN1GxJst4NeIV96JY/C/skb/pt6A5zzMpHAv/+7wsDfwKElcBXdznPxbNnh5eBn4arwSI/6X5rroX1r+E85kUKJ16pcKToyyc/Vvv7G4=
+	t=1749762722; cv=none; b=fqDiTfLpZEx5x/HEkWirnXEAA3vvZaYWtkmlS6W+82EArLueAZLG7ig6/3lLNLaa+o2JkILjR+hRRI6QGbkVosQ5rA7RhL69OEdpunSTXPtk+zaQi8RBe9Wb+3HWST3NBjdLR+kJbDC6FCe2MrCDBuxTU0UWv4vh8J5AJzL3qvQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1749762722; c=relaxed/simple;
-	bh=tyfoi6A3/hWKyBxg+7dQ9gWUnySxJ6hV0JWYh2NA5SY=;
+	bh=F/Z4decNsz4B5o9bV+TnqdRPSE6G0uWtE1olsYTJyJw=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=BPJjSwW3TqY0wUgOw5YQHj+sk9NxmD8Dsp0ej/Z450H17w/C08EUvXbi1IPkgMATTaqXPsixRG+OXN38etJT3dsbSF4KdCHdQf3zy3J9kHt5MOx6xCFpszXlo24diS1MfkR0Yfvj1uaKtziKL13bkyJJUh+1fq15boM1TxZ4Eq0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Lqm1mW9z; arc=none smtp.client-ip=10.30.226.201
+	 In-Reply-To:To:Cc; b=VfKlm5hbzGLodH/mnyF9y8SlnYPtZYnXh0IVS0IcmQWl92hX5Qih23MFa4RzwDEQcdmNj1FEn8KJTmoIEEWmzCMCaxSVuFkWI4bfV68mDCM6JeODcMliCYfa8jDz+M0op7vibLkwPz48yZ/RC4VtJ0yRrvHYdDCoKX4bgsnqfFc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kA5XHzVq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Lqm1mW9z"
-Received: by smtp.kernel.org (Postfix) with ESMTPS id EEBE0C4CEF3;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kA5XHzVq"
+Received: by smtp.kernel.org (Postfix) with ESMTPS id C75B0C4AF1C;
 	Thu, 12 Jun 2025 21:12:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1749762722;
-	bh=tyfoi6A3/hWKyBxg+7dQ9gWUnySxJ6hV0JWYh2NA5SY=;
+	s=k20201202; t=1749762721;
+	bh=F/Z4decNsz4B5o9bV+TnqdRPSE6G0uWtE1olsYTJyJw=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
-	b=Lqm1mW9zhoSi87OuQ3NBNdrXrH2pndZjeBBcCC06n+rE36Thzj+tq3eUHZhGrwHeg
-	 9anWYUzgBu6dtA8ELYzcOqIWBmD9WbnChKpdjLUNhEumJLg0Y6s0J836c04w8pipwu
-	 m8Qjj5ZkYGetH36ACw95NMXHAQCVBCan+lYBWCd8RaCx/VvalaU6gHTqcDbkSU0dQj
-	 tLoKTRKi6GbZR/keJ/5TAeKLKT7qCE4d2V+iGVQDp4XKtakuMX10tLuORKgjVcVZ9G
-	 NXI1UUPalEvI4PwUjBjmHbYlV90VnPTyaU/e6cD2eJTYUaJsql8fm76MXgdggcREWS
-	 741feaYc18BLg==
+	b=kA5XHzVqJvgGcVKM9DXo7DqZXxZRzPNluPUT67R3nqfpYeewQtfAdlM0Lij/aERAj
+	 jqplxG/MYLbXxhcd/DB1QJVt5TT0666VO6gvruTPFZGCpwFDaHL5PUX1KJEwXgyZ8X
+	 e4fN4LVfF8DRBJc4YjfCEzGNvxCqrrDs0m8DOqxSdTaVZcFoL6JLaAkrFKKtygAYJs
+	 o4TXZKw69sNPcyJLmEwDezwdmY5vZJZUUjw65osYte2zTSUN7AJHBHkrFBIQ1fIB65
+	 LLX/jzFuc41sN8JRkSpF1kQNCXhEWgCIP4HfvdzN7Sn/JeQJAmLrzy3hFmBK9PhbKU
+	 Rj0DHmAxJ2S1A==
 Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E4A55C71148;
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B92EFC71148;
 	Thu, 12 Jun 2025 21:12:01 +0000 (UTC)
 From: Sven Peter <sven@kernel.org>
-Date: Thu, 12 Jun 2025 21:11:31 +0000
-Subject: [PATCH 07/11] iommu/apple-dart: Drop default ARCH_APPLE in Kconfig
+Date: Thu, 12 Jun 2025 21:11:29 +0000
+Subject: [PATCH 05/11] i2c: apple: Drop default ARCH_APPLE in Kconfig
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -40,7 +40,7 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250612-apple-kconfig-defconfig-v1-7-0e6f9cb512c1@kernel.org>
+Message-Id: <20250612-apple-kconfig-defconfig-v1-5-0e6f9cb512c1@kernel.org>
 References: <20250612-apple-kconfig-defconfig-v1-0-0e6f9cb512c1@kernel.org>
 In-Reply-To: <20250612-apple-kconfig-defconfig-v1-0-0e6f9cb512c1@kernel.org>
 To: Janne Grunau <j@jannau.net>, Alyssa Rosenzweig <alyssa@rosenzweig.io>, 
@@ -61,13 +61,13 @@ Cc: asahi@lists.linux.dev, linux-arm-kernel@lists.infradead.org,
  linux-input@vger.kernel.org, dmaengine@vger.kernel.org, 
  linux-sound@vger.kernel.org, Sven Peter <sven@kernel.org>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=963; i=sven@kernel.org;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=979; i=sven@kernel.org;
  h=from:subject:message-id;
- bh=tyfoi6A3/hWKyBxg+7dQ9gWUnySxJ6hV0JWYh2NA5SY=;
- b=owGbwMvMwCHmIlirolUq95LxtFoSQ4a304y5gocs3585cclobV4/76v+mRxML5nmhvmtlPK9y
- lh36mtSRykLgxgHg6yYIsv2/famTx6+EVy66dJ7mDmsTCBDGLg4BWAiKzQZ/gpeKXvIFiTHKB+Z
- 9mjDcaF373RfOzuHbYt+5bXy7cnroecYGRZMSZoflsp0q0rx7wvjO0/e/U4Xci+7H2h64e+TaTU
- peSwA
+ bh=F/Z4decNsz4B5o9bV+TnqdRPSE6G0uWtE1olsYTJyJw=;
+ b=owGbwMvMwCHmIlirolUq95LxtFoSQ4a309Tjlzsdfh/YrRvMdvlWd/X9b492KIXyqdx64bvnh
+ ea2t4u0OkpZGMQ4GGTFFFm277c3ffLwjeDSTZfew8xhZQIZwsDFKQATMV3G8IfjxgbDMtONC+JW
+ vj3Zcn/W0gvHX8tm3fhgcvNZsNPBjuRbjAxL6xJk8nXf2sqf7lvLznvmksb5tFtZEtVWLD1LZf0
+ 8zJkA
 X-Developer-Key: i=sven@kernel.org; a=openpgp;
  fpr=A1E3E34A2B3C820DBC4955E5993B08092F131F93
 X-Endpoint-Received: by B4 Relay for sven@kernel.org/default with
@@ -81,21 +81,21 @@ Thus, drop `default ARCH_APPLE` from Kconfig.
 
 Signed-off-by: Sven Peter <sven@kernel.org>
 ---
- drivers/iommu/Kconfig | 1 -
+ drivers/i2c/busses/Kconfig | 1 -
  1 file changed, 1 deletion(-)
 
-diff --git a/drivers/iommu/Kconfig b/drivers/iommu/Kconfig
-index 0a33d995d15dd759eb47705c00b411f1157b408a..91d0c871acc418ac5fede4f177ce3af97aef5560 100644
---- a/drivers/iommu/Kconfig
-+++ b/drivers/iommu/Kconfig
-@@ -305,7 +305,6 @@ config APPLE_DART
- 	depends on !GENERIC_ATOMIC64	# for IOMMU_IO_PGTABLE_DART
- 	select IOMMU_API
- 	select IOMMU_IO_PGTABLE_DART
+diff --git a/drivers/i2c/busses/Kconfig b/drivers/i2c/busses/Kconfig
+index 48c5ab8320090cc383cea32337fb391c2b01a904..93440702b8eaf0fba4cca337eb2fd2959801a570 100644
+--- a/drivers/i2c/busses/Kconfig
++++ b/drivers/i2c/busses/Kconfig
+@@ -992,7 +992,6 @@ config I2C_APPLE
+ 	tristate "Apple SMBus platform driver"
+ 	depends on !I2C_PASEMI
+ 	depends on ARCH_APPLE || COMPILE_TEST
 -	default ARCH_APPLE
  	help
- 	  Support for Apple DART (Device Address Resolution Table) IOMMUs
- 	  found in Apple ARM SoCs like the M1.
+ 	  Say Y here if you want to use the I2C controller present on Apple
+ 	  Silicon chips such as the M1.
 
 -- 
 2.34.1
