@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FD5123505E;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B87112356BE;
 	Thu, 26 Jun 2025 22:48:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750978091; cv=none; b=P9yveNaNqzKrd6DyRW36BWWxScJHRiT94ogT7mYAaKi9gnhXX+qOQx/PU462ZmjDEAxwDnugcmzL8SmIs1g3DSbu9AAuj2ibi90fQsfQ5nYc6xtALvBoWDij9StcUc4wAvfMnpEkzW0drlIZPaZVT+eMvuZOal3hzG3+NiDEfdo=
+	t=1750978091; cv=none; b=PgwoVURBlDswAFWeJvsRT3IgK5GDiT7KAY23S0BQR1/5MmuQxdigu0DHCNTUqBo/IL9i/4Twlt6oKsNUSE0b9po/aoQxXnsPD1axKMLj3gSNbSI6+pt5Mt0eXvl6pY+Aih+yAgNfEpV6g2KOGTeOLZxlcABlt3e8oTqv5yNAIbY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1750978091; c=relaxed/simple;
-	bh=hSygeHkDhS+YkJFMpecHyCBgLpOxEv9yB8zO6lSVNG8=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=AOwzXp0SrtNkFd0yw1kukL9iBkTHl+6YmxCPLYvlWxHGAi5eH66Iiq/fVCLoT9dKooySYbhcyb6b2dvo7ByauopHHUTFzneNVNVM3vJvMEimy4iqENZhGXH4zqw07DwkTeaMzOkX26AleoAtRNsv3zJaDSuFTATAhcVhifFSg0M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jYksLS88; arc=none smtp.client-ip=10.30.226.201
+	bh=3fBhKy1+utiVAQDLVFIyeUDSkV8JwRYwEjiojfvti6Q=;
+	h=From:To:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=WQ6ew6v6zYnIu5fSgrb39J2CNngTTvRXTPxRbxGVLuApgsdNwttxEP0gOrAzn6n4f1hbocqNZHQI4L635yG4j0XTSuOUMpTMuQbUaMEvoE+MtW2aoenrAzEv9fcJHXfDVUSt9UcS9GVSSUnfO1j9btUqDbUQiteqcZJQV96fdrA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=vENZzbPY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jYksLS88"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5C47C4CEEF;
-	Thu, 26 Jun 2025 22:48:10 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="vENZzbPY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B905C4CEF0;
+	Thu, 26 Jun 2025 22:48:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1750978091;
-	bh=hSygeHkDhS+YkJFMpecHyCBgLpOxEv9yB8zO6lSVNG8=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=jYksLS88uoW5ZfxZ8y0tPu47NMYfPfULNP4b0L19nolyKzHxwuHVf0T43PhlKI1az
-	 QqSFU/9HiGg1YJX5EDjy8CNvhS+/6gr6NL35JniUooivJI0MOiA+44dJFp7UY0zX85
-	 DiIF40YnSD0+4odO2tt4F4zfp+fegfxKwaJ5mIEBz+yr6LfoRQDVrnVex4DAUiyOdZ
-	 +7WIEj8UbsnuYAi6GucZLcVVZ0drTWV1xGGPfh5q5B+4Wxwo0JOt6jss8rSF/W55sz
-	 aJq7I+ZaLdQ4VpK1AYLBWhR2AATtLxATdWFQ2T5/UU5mfJLXhpUUArFOTBtjXknSx3
-	 BS8cMDzCWsxNg==
+	bh=3fBhKy1+utiVAQDLVFIyeUDSkV8JwRYwEjiojfvti6Q=;
+	h=From:To:In-Reply-To:References:Subject:Date:From;
+	b=vENZzbPYOzKpFGAiu3tEUky6wFCydYGu6rV4Cj+c6LEQUH73/Bbuu4osbwtk+8g22
+	 6tBE+hgRV4R093Qdxf1gvfvRr8SHb4Wg2RzAivQiNnEwUdMW3tOEfa0JGf6SR0Yl7q
+	 RzpZcsZ5qW6N4aTLipM/5wbsLCC/G78CywvsuW17ZQCmnRXDAxTFl79yXprOxzPPqI
+	 Hi/DX5TcQuXm8YsqF1pPV0SKP/uuaYj3/xsUKdCYdHFnhfh9k8VAFQVDEOTb3jnA6X
+	 i/gA1xiYqEj3iJXNjG4/oPjSHwuPbIa9o1LZ1RWT65o77ie5ZYts3LuTFol0VdJJ+s
+	 oja1NoeidNCQA==
 From: Vinod Koul <vkoul@kernel.org>
-To: dave.jiang@intel.com, vinicius.gomes@intel.com, fenghuay@nvidia.com, 
- Anil S Keshavamurthy <anil.s.keshavamurthy@intel.com>
-Cc: dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
-In-Reply-To: <20250521231331.889204-1-anil.s.keshavamurthy@intel.com>
-References: <20250521231331.889204-1-anil.s.keshavamurthy@intel.com>
-Subject: Re: [PATCH] dmaengine: idxd: Fix warning for deadcode.deadstore
-Message-Id: <175097809088.79884.9986625120938692414.b4-ty@kernel.org>
-Date: Thu, 26 Jun 2025 15:48:10 -0700
+To: Peter Ujfalusi <peter.ujfalusi@gmail.com>, dmaengine@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20250404122114.359087-1-krzysztof.kozlowski@linaro.org>
+References: <20250404122114.359087-1-krzysztof.kozlowski@linaro.org>
+Subject: Re: [PATCH 1/2] dmaengine: sh: Do not enable SH_DMAE_BASE by
+ default during compile testing
+Message-Id: <175097809125.79884.17167867217631386949.b4-ty@kernel.org>
+Date: Thu, 26 Jun 2025 15:48:11 -0700
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -46,22 +47,18 @@ Content-Transfer-Encoding: 7bit
 X-Mailer: b4 0.13.0
 
 
-On Wed, 21 May 2025 19:13:31 -0400, Anil S Keshavamurthy wrote:
-> Deletes the  second initialization as the value stored to 'dev' during
-> its initialization (struct device *dev = &idxd->pdev->dev;) is
-> sufficient.
+On Fri, 04 Apr 2025 14:21:13 +0200, Krzysztof Kozlowski wrote:
+> Enabling the compile test should not cause automatic enabling of all
+> drivers.
 > 
-> ../drivers/dma/idxd/init.c:988:17: warning: Value stored to 'dev' during
-> its initialization is never read [deadcode.DeadStores]
->   988 |         struct device *dev = &idxd->pdev->dev;
->       |                        ^~~   ~~~~~~~~~~~~~~~~
 > 
-> [...]
 
 Applied, thanks!
 
-[1/1] dmaengine: idxd: Fix warning for deadcode.deadstore
-      commit: 8c2442663f683f4fabadb3c491821169da6c89a8
+[1/2] dmaengine: sh: Do not enable SH_DMAE_BASE by default during compile testing
+      commit: 587dd30449fb10121fc8a319bb825dc6152b8dd5
+[2/2] dmaengine: ti: Do not enable by default during compile testing
+      commit: ddf16e16346a36ec6616e5282f675f2e3cdc826f
 
 Best regards,
 -- 
