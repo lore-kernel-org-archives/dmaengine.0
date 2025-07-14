@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1518E253F30
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 150C21FF1A0
 	for <dmaengine@vger.kernel.org>; Mon, 14 Jul 2025 15:39:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752507541; cv=none; b=W6Lz0uHkH304Qhiwl1+MI6XuPGIGkE+rKqapBkhG3ljQ3h1LdTSZ5WF6x3SMNE0AkHrXN7ZJkeupFjTScIfMS5VPlWW4NrUnRtiv/O5ZlYabccmLZttLidGtblKuQnZiO02tEsOsAI7K2U3ThcwYya+nTCooVyup3w1D8P5H+ew=
+	t=1752507541; cv=none; b=EWQKh9ZM39wQCQnTMLJxUbZG/d4Bd0fSS2y461iNkHCiEyyDQmXPzQK2HEBWWGUZgITxwfDxz53WJnaw0t3ucfowDib58C+eOOUkz4AIrFILhEYhuBfi2ZKbOS9prtjEObjZ7SVs/YlbEfEvLZzWi6s8MP4XPkxgoq7ZqTxM3Ng=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1752507541; c=relaxed/simple;
-	bh=WFtUBJqlAhF8dGqTN2nXC1pQiRHrSopQJ1PTtE6d/n0=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=SpqoYl6HEZbrjPjH8DWFvMGzMS612cG3grCp19U8vepdCo72yzgjgda4kHml9fkFAV8Oh0FzENIQ6L6nDPY6iSzeQXYxCDckxZAiS9eiNpUNW8MYrJWZZbAk/m4b05OROrdJUKeeqtNabJ32Wdm1+KRhwompbTiyI3q6lLtmL/U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mNRZNXWJ; arc=none smtp.client-ip=10.30.226.201
+	bh=2Tzz7ysj80lYB1BE5Wt/UNTORIUkdlDrcYmxDhh1i1s=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=UykE+FmvAaqKZUXezaR0yz1kia/5z9KLJAewkIGMqcU2HD+nj08kI0EByWL9lVbGEF4pTv+qFzYpxRg4QKCWu3VvG4Ce/EZfizMAXLmjuL8j9l+V8hE3DgxUEbQx0ern1D2yIofuX51JJ9x6ioZI6/SSzhYOvZRsK5AJiBKWaJg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PJQBorRx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mNRZNXWJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 985A9C4CEF0;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PJQBorRx"
+Received: by smtp.kernel.org (Postfix) with ESMTPS id BA632C4CEF8;
 	Mon, 14 Jul 2025 15:39:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1752507540;
-	bh=WFtUBJqlAhF8dGqTN2nXC1pQiRHrSopQJ1PTtE6d/n0=;
-	h=From:Subject:Date:To:Cc:Reply-To:From;
-	b=mNRZNXWJvGdrLj9JY7XDNmhWwS3YyKj6cW6fZL7BRngZYcidjJH0EoSKJO7qRZPjP
-	 rfYcOm8towkYtytGTECw7Jt13UotUySxLXfS62GSow+WVqF4GY/xMdvVDjLt9F48rW
-	 1knMpTTt8MRpBA1Njm4Xc6lbkmx6EMQVKTcC9NZjeTSJAYcHN/XpO2KBHcXnIoxHhJ
-	 QRssb46NIXQVl0iFzR3YeflWW+6Hu2WGtjOZAuk+8+oX7//teX6Br72+DU9g8tBN0w
-	 JC3Wzv4vNX9cid1bV+QoPIdH0Xj4f2CTUDGYPMu+0feGTxyxRpoUR/3O9X8gNA06iI
-	 bG4S7j3cID8jQ==
+	bh=2Tzz7ysj80lYB1BE5Wt/UNTORIUkdlDrcYmxDhh1i1s=;
+	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
+	b=PJQBorRx5uizpCdXzWZzYlg2PqMsadYHX6d7WTcL8AB57f4U79Szy7rDx9uBiBBjK
+	 yxVkG4hHcdG5AR23YjleTQwtuOtt8LnbUKPl/GOVMzP9P7ZbdDdaYmQprgRwZXtuOH
+	 rj3URIs7zYwW5upsScdTaFV2piDViCnIyPE+WXeqUxWhr3cPO1qxHD0IBi/nqVsqHN
+	 mMCKr6PZlLCQom6S44z4VRBgNKns5W8FkJWog7Izn1bwJCnUoTezO1PvEpxkBJG6JM
+	 E5j7G8XZQPbCpvejRQflGBhpeSgnad6TcerlmMDf84lGZyuNEpC/FobA3o/BgCoKMo
+	 RAkLFUD9g16VQ==
 Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 890BAC83F17;
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B06E7C83F17;
 	Mon, 14 Jul 2025 15:39:00 +0000 (UTC)
 From: =?utf-8?q?Nuno_S=C3=A1_via_B4_Relay?= <devnull+nuno.sa.analog.com@kernel.org>
-Subject: [PATCH RESEND 0/4] dma: dma-axi-dmac: fixes and improvements
-Date: Mon, 14 Jul 2025 16:39:06 +0100
-Message-Id: <20250714-dev-axi-dmac-fixes-v1-0-c3888b0d671b@analog.com>
+Date: Mon, 14 Jul 2025 16:39:08 +0100
+Subject: [PATCH RESEND 2/4] dma: dma-axi-dmac: fix HW scatter-gather not
+ looking at the queue
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -40,15 +41,18 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
+Message-Id: <20250714-dev-axi-dmac-fixes-v1-2-c3888b0d671b@analog.com>
+References: <20250714-dev-axi-dmac-fixes-v1-0-c3888b0d671b@analog.com>
+In-Reply-To: <20250714-dev-axi-dmac-fixes-v1-0-c3888b0d671b@analog.com>
 To: dmaengine@vger.kernel.org
 Cc: Paul Cercueil <paul@crapouillou.net>, 
  Lars-Peter Clausen <lars@metafoo.de>, Vinod Koul <vkoul@kernel.org>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1752507553; l=827;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1752507553; l=1232;
  i=nuno.sa@analog.com; s=20231116; h=from:subject:message-id;
- bh=WFtUBJqlAhF8dGqTN2nXC1pQiRHrSopQJ1PTtE6d/n0=;
- b=3ok2fFkrfW44j04sii5qHrmmXVYMG2uUVYPY8C0t+W0kYm8PyeMIvmb+x/kK6BoawGjpMxtUD
- MiLZ3qFXykNDw9HU5R7eRH0/5MeQeNBmot/apEUVAvTHr9U2vnzX1+4
+ bh=qODL1NlzaztSF9p9vRP44mRlOQRklh3MwhgK7VeiTxQ=;
+ b=acsfjOmWxJquRKjJp26gvsSQ3DUPZ5tbC45kUPsRSQOzlZ7MySmFyBOzszethQ6NtEjsIIADq
+ wbShJ2fkvKICjLeYjuO5ROwUBzM/TW6/TQgMcWWvyzE5FEaoxpB3HaN
 X-Developer-Key: i=nuno.sa@analog.com; a=ed25519;
  pk=3NQwYA013OUYZsmDFBf8rmyyr5iQlxV/9H4/Df83o1E=
 X-Endpoint-Received: by B4 Relay for nuno.sa@analog.com/20231116 with
@@ -56,30 +60,40 @@ X-Endpoint-Received: by B4 Relay for nuno.sa@analog.com/20231116 with
 X-Original-From: =?utf-8?q?Nuno_S=C3=A1?= <nuno.sa@analog.com>
 Reply-To: nuno.sa@analog.com
 
-This series adds some fixes to the DMA core with respect with cyclic
-transfer and HW scatter gather.
+From: Nuno Sá <nuno.sa@analog.com>
 
-It also adds some improvements. Most notably for allowing bigger that
-32bits DMA masks so we do not have to rely on bounce buffers from
-swiotlb.
+For HW scatter gather transfers we still need to look for the queue. The
+HW is capable of queueing 3 concurrent transfers and if we try more than
+that we'll get the submit queue full and should return. Otherwise, if we
+go ahead and program the new transfer, we end up discarding it.
 
+Fixes: e97dc7435972 ("dmaengine: axi-dmac: Add support for scatter-gather transfers")
+Signed-off-by: Nuno Sá <nuno.sa@analog.com>
 ---
-Nuno Sá (4):
-      dma: dma-axi-dmac: fix SW cyclic transfers
-      dma: dma-axi-dmac: fix HW scatter-gather not looking at the queue
-      dma: dma-axi-dmac: support bigger than 32bits addresses
-      dma: dma-axi-dmac: simplify axi_dmac_parse_dt()
+ drivers/dma/dma-axi-dmac.c | 8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
- drivers/dma/dma-axi-dmac.c | 48 +++++++++++++++++++++++++++++++---------------
- 1 file changed, 33 insertions(+), 15 deletions(-)
----
-base-commit: 3c018bf5a0ee3abe8d579d6a0dda616c3858d7b2
-change-id: 20250520-dev-axi-dmac-fixes-41502e41d982
---
+diff --git a/drivers/dma/dma-axi-dmac.c b/drivers/dma/dma-axi-dmac.c
+index 2aa06f66624ba5749e7e7f24b55416f96064b82f..47d95d2d743b1b939ed0ec79ee29763843bcdc09 100644
+--- a/drivers/dma/dma-axi-dmac.c
++++ b/drivers/dma/dma-axi-dmac.c
+@@ -233,11 +233,9 @@ static void axi_dmac_start_transfer(struct axi_dmac_chan *chan)
+ 	unsigned int flags = 0;
+ 	unsigned int val;
+ 
+-	if (!chan->hw_sg) {
+-		val = axi_dmac_read(dmac, AXI_DMAC_REG_START_TRANSFER);
+-		if (val) /* Queue is full, wait for the next SOT IRQ */
+-			return;
+-	}
++	val = axi_dmac_read(dmac, AXI_DMAC_REG_START_TRANSFER);
++	if (val) /* Queue is full, wait for the next SOT IRQ */
++		return;
+ 
+ 	desc = chan->next_desc;
+ 
 
-Thanks!
-- Nuno Sá
 -- 
-Nuno Sá <nuno.sa@analog.com>
+2.50.1
 
 
