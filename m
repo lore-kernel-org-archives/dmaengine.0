@@ -1,35 +1,36 @@
-Received: from szxga03-in.huawei.com (szxga03-in.huawei.com [45.249.212.189])
+Received: from szxga01-in.huawei.com (szxga01-in.huawei.com [45.249.212.187])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC58C42A82;
-	Mon, 28 Jul 2025 11:08:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.189
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B5861DB125;
+	Mon, 28 Jul 2025 11:23:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.187
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753700923; cv=none; b=IAUAzpdaBcwI0nL2SyBWBUr3XWYwIzxU0cRHlLFEY1s4rXXzHeMG2cNjPhMkq6yY1xBM1sWJjPgjOVKObf5oOPu3eQDcpZiR9VEYIQ58ommSRqTB/7efG1nOz6HksGkAeyR54RgS7+WSvA3nqIZknlwPc2h2aa4qwbyFES5QAMc=
+	t=1753701820; cv=none; b=GUXz8YICQpDfBArS7pfmV2doMgc7pXxrnR6fPuzcNIseyuCbWdB2lYhdyE5IsrQ7U7PWGM5Mo0iV4PlRoL4F4tjLuyIVscTiTSa6pzJJHFXjed7tpLBFQrctvKX/fCMzri9Q8w+5kcMH2ROAUM70T5iesRpcysBzg56xQE26eMs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753700923; c=relaxed/simple;
+	s=arc-20240116; t=1753701820; c=relaxed/simple;
 	bh=bPjTWwaYcYGFnl+LXKUqClUFdbY1il0+wZRkk8mi2EI=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=uqEhofElN7pSvMJ5AWc5fOs5en87LEQT2WXGdcCuE9F5W9r/NpTGtdJlunrZekjgjkvbehygA2Wp6weXxZmhexqzHqQik/pcx+kMha9QDwGxUMtiWsVJEmWwn4tns+udQn2dkYzzEZ9chEM7IgK34C03yb0ey/K8VqK3tjPbODY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; arc=none smtp.client-ip=45.249.212.189
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=VwRNswemToxcorFHNc44ngpoeyNeCuwmQv+B+c4XWWfgzQKbkZzvWug/G8pGQAwl1TGFUE472zqWvB/ydXk2PlohtFpkQ91Iz5vl1lw1ykV7TIFNXzUJbz+FMJq3WZNjwlgUKN++B/i9oUEWCEvnwEae/xwJ5A7NRwjVlg4C0i4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; arc=none smtp.client-ip=45.249.212.187
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
-Received: from mail.maildlp.com (unknown [172.19.163.48])
-	by szxga03-in.huawei.com (SkyGuard) with ESMTP id 4brFwn150dzdc7H;
-	Mon, 28 Jul 2025 19:04:25 +0800 (CST)
+Received: from mail.maildlp.com (unknown [172.19.163.252])
+	by szxga01-in.huawei.com (SkyGuard) with ESMTP id 4brGFF2QGNz14M34;
+	Mon, 28 Jul 2025 19:18:41 +0800 (CST)
 Received: from kwepemp200005.china.huawei.com (unknown [7.202.195.96])
-	by mail.maildlp.com (Postfix) with ESMTPS id C89821800B2;
-	Mon, 28 Jul 2025 19:08:37 +0800 (CST)
+	by mail.maildlp.com (Postfix) with ESMTPS id 892A4180B52;
+	Mon, 28 Jul 2025 19:23:33 +0800 (CST)
 Received: from localhost.localdomain (10.175.101.6) by
  kwepemp200005.china.huawei.com (7.202.195.96) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.11; Mon, 28 Jul 2025 19:08:37 +0800
+ 15.2.1544.11; Mon, 28 Jul 2025 19:23:32 +0800
 From: Ziming Du <duziming2@huawei.com>
-To: <linux-kernel@vger.kernel.org>
-CC: <dmaengine@vger.kernel.org>, <vkoul@kernel.org>, <dave.jiang@intel.com>,
-	<vinicius.gomes@intel.com>, <liuyongqiang13@huawei.com>
+To: <dmaengine@vger.kernel.org>
+CC: <linux-kernel@vger.kernel.org>, <vkoul@kernel.org>,
+	<dave.jiang@intel.com>, <vinicius.gomes@intel.com>,
+	<liuyongqiang13@huawei.com>
 Subject: [PATCH next] dmaengine: idxd: init: Fix uninitialized use of conf_dev in  idxd_setup_wqs()
-Date: Mon, 28 Jul 2025 19:36:32 +0800
-Message-ID: <20250728113632.50805-1-duziming2@huawei.com>
+Date: Mon, 28 Jul 2025 19:51:28 +0800
+Message-ID: <20250728115128.50889-1-duziming2@huawei.com>
 X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
@@ -39,7 +40,7 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-ClientProxiedBy: kwepems500002.china.huawei.com (7.221.188.17) To
+X-ClientProxiedBy: kwepems100001.china.huawei.com (7.221.188.238) To
  kwepemp200005.china.huawei.com (7.202.195.96)
 
 Fix Smatch-detected issue:
