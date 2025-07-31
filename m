@@ -1,38 +1,38 @@
 Received: from relay15.mail.gandi.net (relay15.mail.gandi.net [217.70.178.235])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6684723BCEB;
-	Thu, 31 Jul 2025 16:41:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B94323D284;
+	Thu, 31 Jul 2025 16:41:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.178.235
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753980116; cv=none; b=oz8kkfOuuvzMphJa9ag2IhhvncETnmqNRRZN8k422XwJkxnsZLtk8htcIhNr4nLYK/Vusq4yJ3hKC78NVQIOCj+m6vD6/h/zYCeNmLUnnLFs34ttl1G1SpBOwvyFY8zpdg53+EQgoBhRiBw5mxeG6fn8ow4Zon3B9LgEl7424nE=
+	t=1753980117; cv=none; b=QOv9f3JFjTOCpO5tKYfgiIr0yrOrD2Bpoig5PprqRxcAQvhlBKCGlV99P+8ccVyrWBRWnDX6LdlhN9IqadkZ5eMUzYfQGDD+5ihW1PaSzmOFfII+uwZRGlfpq0mQ2uQeB7THfEvrrr4JCU4yCzP7k7MSMw3tGV51kvq/eGjuHD4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753980116; c=relaxed/simple;
-	bh=w/BwWoXSSGEoqYGfrP6elklpqv0jLdw5bZ4EtYdBvbY=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=DTpZTtg++qSuctS7lyZMKvHCs9QQm+DctC20ZgrAQCEYkEeRt/9+ddAMliBYrWE84ZtORDLnvGg22Ty8vw48odbqHjKjtJaRZ0b8p2xguWfcFFU9xk3Jmm+AaUP7Ri+CFKESSIcfhtGkVlFAaK4SVGocYijddafzqJTaEvK0/+U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=hWxjMaSt; arc=none smtp.client-ip=217.70.178.235
+	s=arc-20240116; t=1753980117; c=relaxed/simple;
+	bh=7M9NRZGHjzTS5WyiKepVzjAZJvDbHOsyZQlkUDtQ8bY=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=Z5Lky1dNMoCL7AYdUGdJxdDKbJD0mItW9MacnUISt7kqFCNsqc/7uzr7PxlevxD946+ZOde2EPvo7lGvdM66b/KIhx7ybpjhGk+lCi1OZVVujObzhAaWUHNmCJKqx/65Um/6Wv5XxU0cxZGHdaR0bQI/H6w6KVf9sDdg1pKEl24=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=UJXuBUsp; arc=none smtp.client-ip=217.70.178.235
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="hWxjMaSt"
-Received: by mail.gandi.net (Postfix) with ESMTPSA id 284C1442A6;
-	Thu, 31 Jul 2025 16:41:52 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="UJXuBUsp"
+Received: by mail.gandi.net (Postfix) with ESMTPSA id 5AAC1442A5;
+	Thu, 31 Jul 2025 16:41:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
-	t=1753980112;
+	t=1753980113;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=kkEwjf1aQ4fiXjUuxQRxFV9YyAmLujK4b3TTjpYJE0k=;
-	b=hWxjMaStZzIp2hNMNa7W3UiSnXwlS7JKXbH2IE+kSdPJCrNuTMwfV26foDFEJteJnV4M7Z
-	2Yy40QUiK5A6MxEhNHMUvc+RyQ/u+85aSkKwMJ55Guj/+QnaBq+FTxeGEmIofl53x5T7KX
-	E1EixdzLMskPsnEBlCFQ342CVcUYCCUH0gqEhw2Gw1yDtDfKXUD0iSKoNiUQ/X3MYVOyyX
-	6LrP10TNlZWdmxQQQiA4JzKePJ8nM+QdnK43w+ecVxcHskPYrQfBTqwzoYBdfw7Mv3xnV8
-	RxYzYPB3PDyam4cnPEP00MNCh95LdqolbfJ5fDlPh5ueWtA/58liioeGj3AJ2w==
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=5uvpXvEFRFfyA16JVJ522XbDcj8E6l4w5eLokJco14g=;
+	b=UJXuBUspSnyQFhsFF7uBHYXFxKTZScgg7T56a5M76LqJTAYMUSrX71G4FrHaM5NfaVM+OZ
+	l0RLJ58BLsRFw8RCaXTaKOtDGvocemf+TMCdPpyt56EGhoyFpJUhFMp4ezAjRwA1NCFz4O
+	GwJ5qRHP4uZ2OKeIDlgu6pfxiAR56Asrf23ysLep954AVWLfWIIWEylQcQMD4Y9CzMt1Ac
+	FSp7xsA/ue8etyiIux6akEn62FUtyhykSyivvcRWCNfE9+G1EFmG0CgofNcB3gL17Q+l6T
+	MDP9hrtu/uLHgqpwcLYv4hHDAsg0rUt6T+zIKZ4y+qHNldQUI4xEMGzx4Ht9bw==
 From: Miquel Raynal <miquel.raynal@bootlin.com>
-Subject: [PATCH 0/3] dmaengine: ti: k3-udma: Fix/improve the completion
- helper
-Date: Thu, 31 Jul 2025 18:41:28 +0200
-Message-Id: <20250731-ti-dma-timeout-v1-0-33321d2b7406@bootlin.com>
+Date: Thu, 31 Jul 2025 18:41:30 +0200
+Subject: [PATCH 2/3] dmaengine: ti: k3-udma: Ensure a minimum polling delay
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -41,10 +41,9 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIALici2gC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
- vPSU3UzU4B8JSMDI1MDc2ND3ZJM3ZTcRCCVm5pfWqJrmGxmYmFmkWSalJimBNRUUJSallkBNjA
- 6trYWAD3LUB5gAAAA
-X-Change-ID: 20250731-ti-dma-timeout-1c64868b5baf
+Message-Id: <20250731-ti-dma-timeout-v1-2-33321d2b7406@bootlin.com>
+References: <20250731-ti-dma-timeout-v1-0-33321d2b7406@bootlin.com>
+In-Reply-To: <20250731-ti-dma-timeout-v1-0-33321d2b7406@bootlin.com>
 To: Peter Ujfalusi <peter.ujfalusi@gmail.com>, 
  Vinod Koul <vkoul@kernel.org>, Grygorii Strashko <grygorii.strashko@ti.com>
 Cc: Thomas Petazzoni <thomas.petazzoni@bootlin.com>, 
@@ -54,41 +53,38 @@ Cc: Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
 X-Mailer: b4 0.14.2
 X-GND-State: clean
 X-GND-Score: -100
-X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddutddufedvucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuifetpfffkfdpucggtfgfnhhsuhgsshgtrhhisggvnecuuegrihhlohhuthemuceftddunecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefhufffkfggtgfgvfevofesthejredtredtjeenucfhrhhomhepofhiqhhuvghlucftrgihnhgrlhcuoehmihhquhgvlhdrrhgrhihnrghlsegsohhothhlihhnrdgtohhmqeenucggtffrrghtthgvrhhnpeelfeejlefgieehueejteffjefhteelffdtgfduteehhfdtjeeiueeikeegkedvgfenucfkphepledtrdekledrudeifedruddvjeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepihhnvghtpeeltddrkeelrdduieefrdduvdejpdhhvghloheplgduledvrdduieekrdegvddrgeeingdpmhgrihhlfhhrohhmpehmihhquhgvlhdrrhgrhihnrghlsegsohhothhlihhnrdgtohhmpdhnsggprhgtphhtthhopeelpdhrtghpthhtoheplhhinhhugidqkhgvrhhnvghlsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepughmrggvnhhgihhnvgesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgrhihghhorhhiihdrshhtrhgrshhhkhhosehtihdrtghomhdprhgtphhtthhopehvkhhouhhlsehkvghrnhgvlhdrohhrghdprhgtphhtthhopehthhhomhgrshdrphgvthgriiiio
- hhnihessghoohhtlhhinhdrtghomhdprhgtphhtthhopehsthgrsghlvgesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehpvghtvghrrdhujhhfrghluhhsihesthhirdgtohhmpdhrtghpthhtohepmhhiqhhuvghlrdhrrgihnhgrlhessghoohhtlhhinhdrtghomh
+X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddutddufedvucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuifetpfffkfdpucggtfgfnhhsuhgsshgtrhhisggvnecuuegrihhlohhuthemuceftddunecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefhfffugggtgffkfhgjvfevofesthejredtredtjeenucfhrhhomhepofhiqhhuvghlucftrgihnhgrlhcuoehmihhquhgvlhdrrhgrhihnrghlsegsohhothhlihhnrdgtohhmqeenucggtffrrghtthgvrhhnpeelgfehvdduieefieeikeffgffggfdttdeugeffieetheeuleelfeehffdtffetveenucfkphepledtrdekledrudeifedruddvjeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepihhnvghtpeeltddrkeelrdduieefrdduvdejpdhhvghloheplgduledvrdduieekrdegvddrgeeingdpmhgrihhlfhhrohhmpehmihhquhgvlhdrrhgrhihnrghlsegsohhothhlihhnrdgtohhmpdhnsggprhgtphhtthhopeelpdhrtghpthhtoheplhhinhhugidqkhgvrhhnvghlsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepughmrggvnhhgihhnvgesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgrhihghhorhhiihdrshhtrhgrshhhkhhosehtihdrtghomhdprhgtphhtthhopehvkhhouhhlsehkvghrnhgvlhdrohhrghdprhgtphhtthhopehthhhomhgrshdrphgvthgri
+ iiiohhnihessghoohhtlhhinhdrtghomhdprhgtphhtthhopehsthgrsghlvgesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehpvghtvghrrdhujhhfrghluhhsihesthhirdgtohhmpdhrtghpthhtohepmhhiqhhuvghlrdhrrgihnhgrlhessghoohhtlhhinhdrtghomh
 
-While working on a BeaglePlay with the UART controller and making it use
-DMA, I figured the DMA controller completion helper was clearly
-misbehaving.
+ktime_to_us() returns 0 if the time (ktime_t stores nanoseconds) is too
+small, leading to a while loop without sleeps, kind of conflicting with
+the initial aim of this function at observing a small delay and then
+guessing the amount of time needed to finish draining the descriptor.
 
-On one side, with slow devices like a UART controller, the helper uses
-an unusual polling delay of 1s.
+Make sure we always sleep for (abitrarily) at least 1us to reduce
+pressure on the CPU, while not waiting too much either.
 
-On the other side, the helper can also perform 0us sleeps which means
-the driver does not sleep at all in some situations and keeps the CPU
-busy waiting.
-
-Finally, while I was digging into these issues, it felt like the helper
-was a bit too complex and could be simplified, which is what I did in
-patch 3. I initially worked on v6.7.x which did not had the spinlocks, I
-hope I didn't got them wrong.
-
-I also tested this with v6.17-rc7.
-
+Fixes: 25dcb5dd7b7c ("dmaengine: ti: New driver for K3 UDMA")
+Cc: stable@vger.kernel.org # 5.7
 Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 ---
-Miquel Raynal (3):
-      dmaengine: ti: k3-udma: Reduce completion polling delay
-      dmaengine: ti: k3-udma: Ensure a minimum polling delay
-      dmaengine: ti: k3-udma: Simplify the completion worker
+ drivers/dma/ti/k3-udma.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
- drivers/dma/ti/k3-udma.c | 85 ++++++++++++++++++++----------------------------
- 1 file changed, 36 insertions(+), 49 deletions(-)
----
-base-commit: b59220b9fa2c3da4295d71913146cd64b869fcf9
-change-id: 20250731-ti-dma-timeout-1c64868b5baf
+diff --git a/drivers/dma/ti/k3-udma.c b/drivers/dma/ti/k3-udma.c
+index b2059baed1b2ffc81c10feca797c763e2a04a357..11232b306475edd5e1ed75d938bbf49ed9c2aabd 100644
+--- a/drivers/dma/ti/k3-udma.c
++++ b/drivers/dma/ti/k3-udma.c
+@@ -1125,6 +1125,8 @@ static void udma_check_tx_completion(struct work_struct *work)
+ 			if (residue_diff) {
+ 				delay = (time_diff / residue_diff) *
+ 					uc->tx_drain.residue;
++				if (delay < 1000)
++					delay = 1000;
+ 			} else {
+ 				delay = 100000;
+ 			}
 
-Best regards,
 -- 
-Miquel Raynal <miquel.raynal@bootlin.com>
+2.50.1
 
