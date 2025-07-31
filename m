@@ -1,39 +1,38 @@
 Received: from relay15.mail.gandi.net (relay15.mail.gandi.net [217.70.178.235])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3530623CEFF;
-	Thu, 31 Jul 2025 16:41:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D890223D29B;
+	Thu, 31 Jul 2025 16:41:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.178.235
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753980117; cv=none; b=f9cgNo8nkptXM6l4g/vnk5nMbSENrR1fDnsJP7WjqXF8MKatZZBRDbA4k9l+p+2SS8JSQf70mGS9zs/VfYk+z/agkWl/PE5hyGWA42afjtkBq8VcDewqiun0z4/WCw86IMQzQEpNVhdS86AEVnNwPeWP2ry8UKA8n6sgpdT0oAQ=
+	t=1753980117; cv=none; b=tlVsgglS6trz04PdM/3XJ/w+N/EhrPSCXGKeQ+YfwSXQeKe8k1bXACxdgXqoqIGKGXRcEtBZt3Rz4J17fjJdn6I9sozfuQDiFYwvYs6TX0YwdfgX2BDNJbNJlFsQZek3x8fAZN7SPLvN1L+DmMbg1dGNdUf7uE/ULBbgdAHfEq0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1753980117; c=relaxed/simple;
-	bh=8kWaYMO4/TPF0++aa8eWEkKJzwuOUB0FYKWwLyDxXEQ=;
+	bh=J7RNG/7xvpoBqH05h6aB+j8xGF21xMDc3MAc75QY2lE=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=ZLNAUJxpevsLuBgNzMIiRjRcQBJ7mbA4bQ5RR+zfJZ/sLoHCYsHRvd6KxyclBhLooq+i1cu656gUulTZHdWrG/EzQDbYBlsmk36Fm1l7ajUctClZSJ1f3QxrPYU+KoFbGAmwP7oGZnO6FVGWKSIMg1mw4QO/KoTXEmRVi5JsFbY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=oJSEv3Hy; arc=none smtp.client-ip=217.70.178.235
+	 In-Reply-To:To:Cc; b=Ct1jvXvEKmH0SSjuikJl6UgtU63Wtzy6RBFI0oQ0bnOVOrZZkbUA3cFpDGuM9HjxS3yIUiILQJyb57ORyBvzQAnUODKcG6TfOiCswHcA7YuIzYenphx6ne433aeZTiKBNpL41sFFYHhsWQ2ZTYt+bI30r2JFjvdRSKnkEqlfwyA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=dtcWBCy1; arc=none smtp.client-ip=217.70.178.235
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="oJSEv3Hy"
-Received: by mail.gandi.net (Postfix) with ESMTPSA id C3E204428E;
-	Thu, 31 Jul 2025 16:41:52 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="dtcWBCy1"
+Received: by mail.gandi.net (Postfix) with ESMTPSA id E270F442A7;
+	Thu, 31 Jul 2025 16:41:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
-	t=1753980113;
+	t=1753980114;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=lrXkFCzrUMvz3TNlu59g94FVpAyOWOwiIIhTB/3kxOg=;
-	b=oJSEv3Hy6tjLUqerOs4tJYtpsHhqDtAD29rregL+jk3biP4961ck35BpL3qwpOYq+oRnEI
-	7hog93NqLMOfpflBginPtJ7PTC2ErXltwlHilA9aWSZzE9d+K6WC1PPacbDU6Fb05JDmN5
-	cMq4LpsWQ879/TilvevXgZUwuNjNg/4TSatfQ0VgLM2oJf4dWSfGQV1GDDwZ/jP45PmI//
-	PV2MHluf2qD9obcFoN2yhbOWH871q9PybTHm4DOG6/yHPrq2+/hLMivyf/xtZtv8+KtWmv
-	2GL2S5tmASQVwInxpAGcpV9ZUy1Qf/TcTtxtClWCvAyOJ89m0v1jUktE7atgbg==
+	bh=ju676odYa3fzthpZBub6TEXhiCg5nHSgO4/BZxB4t/c=;
+	b=dtcWBCy1JonFpo/ZMWfC0X9ELTP8QJ1OFRCbY8nhzd0+hwcTHcK4NCzmcQnH5OCoR9VPRN
+	uNGi+VyDFifLwJMUREKuLWZns2f2W73DQHvtTx8DO11HHlAPTmLd+0VmQSXn7bFiEWiBse
+	qDy17syGZN8SoMH7q+ZRTfF7FweVgGs4Q4kLHqqdtfWGm3IlrMTCqKAGKRh6NNGDX4re7T
+	x5fjcTjMJtOZh5YeACgTI+TeXYDdTAgk/2KY+rIoKPpw/FQ7/QFuYj2vV/6SmFxa63jrB3
+	yBIuNQjqKhhgumpfmnW6BkFUEdS2Ow5QvmlXJ/BJLLdNiRklfN4RYfxGGIRbcg==
 From: Miquel Raynal <miquel.raynal@bootlin.com>
-Date: Thu, 31 Jul 2025 18:41:29 +0200
-Subject: [PATCH 1/3] dmaengine: ti: k3-udma: Reduce completion polling
- delay
+Date: Thu, 31 Jul 2025 18:41:31 +0200
+Subject: [PATCH 3/3] dmaengine: ti: k3-udma: Simplify the completion worker
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -42,82 +41,144 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250731-ti-dma-timeout-v1-1-33321d2b7406@bootlin.com>
+Message-Id: <20250731-ti-dma-timeout-v1-3-33321d2b7406@bootlin.com>
 References: <20250731-ti-dma-timeout-v1-0-33321d2b7406@bootlin.com>
 In-Reply-To: <20250731-ti-dma-timeout-v1-0-33321d2b7406@bootlin.com>
 To: Peter Ujfalusi <peter.ujfalusi@gmail.com>, 
  Vinod Koul <vkoul@kernel.org>, Grygorii Strashko <grygorii.strashko@ti.com>
 Cc: Thomas Petazzoni <thomas.petazzoni@bootlin.com>, 
  Peter Ujfalusi <peter.ujfalusi@ti.com>, dmaengine@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Miquel Raynal <miquel.raynal@bootlin.com>, 
- stable@vger.kernel.org
+ linux-kernel@vger.kernel.org, Miquel Raynal <miquel.raynal@bootlin.com>
 X-Mailer: b4 0.14.2
 X-GND-State: clean
 X-GND-Score: -100
-X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddutddufedvucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuifetpfffkfdpucggtfgfnhhsuhgsshgtrhhisggvnecuuegrihhlohhuthemuceftddunecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefhfffugggtgffkfhgjvfevofesthejredtredtjeenucfhrhhomhepofhiqhhuvghlucftrgihnhgrlhcuoehmihhquhgvlhdrrhgrhihnrghlsegsohhothhlihhnrdgtohhmqeenucggtffrrghtthgvrhhnpeelgfehvdduieefieeikeffgffggfdttdeugeffieetheeuleelfeehffdtffetveenucfkphepledtrdekledrudeifedruddvjeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepihhnvghtpeeltddrkeelrdduieefrdduvdejpdhhvghloheplgduledvrdduieekrdegvddrgeeingdpmhgrihhlfhhrohhmpehmihhquhgvlhdrrhgrhihnrghlsegsohhothhlihhnrdgtohhmpdhnsggprhgtphhtthhopeelpdhrtghpthhtoheplhhinhhugidqkhgvrhhnvghlsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepughmrggvnhhgihhnvgesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgrhihghhorhhiihdrshhtrhgrshhhkhhosehtihdrtghomhdprhgtphhtthhopehvkhhouhhlsehkvghrnhgvlhdrohhrghdprhgtphhtthhopehthhhomhgrshdrphgvthgri
- iiiohhnihessghoohhtlhhinhdrtghomhdprhgtphhtthhopehsthgrsghlvgesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehpvghtvghrrdhujhhfrghluhhsihesthhirdgtohhmpdhrtghpthhtohepmhhiqhhuvghlrdhrrgihnhgrlhessghoohhtlhhinhdrtghomh
+X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddutddufedvucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuifetpfffkfdpucggtfgfnhhsuhgsshgtrhhisggvnecuuegrihhlohhuthemuceftddunecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefhfffugggtgffkfhgjvfevofesthejredtredtjeenucfhrhhomhepofhiqhhuvghlucftrgihnhgrlhcuoehmihhquhgvlhdrrhgrhihnrghlsegsohhothhlihhnrdgtohhmqeenucggtffrrghtthgvrhhnpeelgfehvdduieefieeikeffgffggfdttdeugeffieetheeuleelfeehffdtffetveenucfkphepledtrdekledrudeifedruddvjeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepihhnvghtpeeltddrkeelrdduieefrdduvdejpdhhvghloheplgduledvrdduieekrdegvddrgeeingdpmhgrihhlfhhrohhmpehmihhquhgvlhdrrhgrhihnrghlsegsohhothhlihhnrdgtohhmpdhnsggprhgtphhtthhopeekpdhrtghpthhtoheplhhinhhugidqkhgvrhhnvghlsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepughmrggvnhhgihhnvgesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgrhihghhorhhiihdrshhtrhgrshhhkhhosehtihdrtghomhdprhgtphhtthhopehvkhhouhhlsehkvghrnhgvlhdrohhrghdprhgtphhtthhopehthhhomhgrshdrphgvthgri
+ iiiohhnihessghoohhtlhhinhdrtghomhdprhgtphhtthhopehpvghtvghrrdhujhhfrghluhhsihesthhirdgtohhmpdhrtghpthhtohepmhhiqhhuvghlrdhrrgihnhgrlhessghoohhtlhhinhdrtghomhdprhgtphhtthhopehpvghtvghrrdhujhhfrghluhhsihesghhmrghilhdrtghomh
 
-DMA transfers may be slow if the peer device is slow (eg. a UART
-controller, a SPI controller...). The completion worker is started very
-early compared to the actual draining speed, leading to low speed
-devices suffering from a full 1s delay before noticing the transfers are
-done, further delaying the execution of their callback.
+The function does nothing in the !uc->desc condition.
 
-1s seems overly large for a polling delay, reduce it to arbitrarily
-100us which is the minimum amount of time to transfer a byte (and see
-some progress on the residue variable) on a 100kHz bus. Based on this
-first measure, the next sleep will be much closer to what is actually
-needed for the transfer to complete.
+No need to go through the entire delay guessing logic if the descriptor
+is already done when we first check.
 
-The 1 second polling delay involves that any device driver with a (very
-standard) 1 second timeout will error out indicating a transfer error,
-whereas the data has actually been transferred correctly.
+Invert the "no descriptor" and "descriptor done" conditions. This
+greatly simplifies the function by dropping two indentation levels and
+improves the readability.
 
-Fixes: 25dcb5dd7b7c ("dmaengine: ti: New driver for K3 UDMA")
-Cc: stable@vger.kernel.org # 5.7
 Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 ---
-This issue has been observed by playing with the DMA controller on
-Beagle Play.
-
-The patch will not apply before v5.7 and probably do not need to be
-backported before anyway.
----
- drivers/dma/ti/k3-udma.c | 17 ++++++++---------
- 1 file changed, 8 insertions(+), 9 deletions(-)
+ drivers/dma/ti/k3-udma.c | 86 ++++++++++++++++++++----------------------------
+ 1 file changed, 36 insertions(+), 50 deletions(-)
 
 diff --git a/drivers/dma/ti/k3-udma.c b/drivers/dma/ti/k3-udma.c
-index aa2dc762140f6eee334f4506a592e72600ae9834..b2059baed1b2ffc81c10feca797c763e2a04a357 100644
+index 11232b306475edd5e1ed75d938bbf49ed9c2aabd..fb323df15a1b6693d917750f18f907e63bb38c53 100644
 --- a/drivers/dma/ti/k3-udma.c
 +++ b/drivers/dma/ti/k3-udma.c
-@@ -1115,19 +1115,18 @@ static void udma_check_tx_completion(struct work_struct *work)
- 			time_diff = ktime_sub(uc->tx_drain.tstamp,
- 					      time_diff) + 1;
- 			residue_diff -= uc->tx_drain.residue;
-+			/*
-+			 * Try to guess when we should check next time by
-+			 * calculating rate at which data is being drained at
-+			 * the peer device. Slow devices might have not yet
-+			 * started, showing no progress. Use an arbitrary delay
-+			 * in this case.
-+			 */
- 			if (residue_diff) {
--				/*
--				 * Try to guess when we should check
--				 * next time by calculating rate at
--				 * which data is being drained at the
--				 * peer device
--				 */
- 				delay = (time_diff / residue_diff) *
- 					uc->tx_drain.residue;
- 			} else {
--				/* No progress, check again in 1 second  */
--				schedule_delayed_work(&uc->tx_drain.work, HZ);
--				break;
-+				delay = 100000;
- 			}
+@@ -1087,69 +1087,55 @@ static void udma_check_tx_completion(struct work_struct *work)
+ {
+ 	struct udma_chan *uc = container_of(work, typeof(*uc),
+ 					    tx_drain.work.work);
+-	bool desc_done = true;
++	struct udma_desc *d = uc->desc;
++	bool desc_done;
+ 	u32 residue_diff;
+ 	ktime_t time_diff;
+ 	unsigned long delay;
+ 	unsigned long flags;
  
- 			spin_unlock_irqrestore(&uc->vc.lock, flags);
++	if (!d)
++		return;
++
+ 	while (1) {
+ 		spin_lock_irqsave(&uc->vc.lock, flags);
+ 
+-		if (uc->desc) {
+-			/* Get previous residue and time stamp */
+-			residue_diff = uc->tx_drain.residue;
+-			time_diff = uc->tx_drain.tstamp;
+-			/*
+-			 * Get current residue and time stamp or see if
+-			 * transfer is complete
+-			 */
+-			desc_done = udma_is_desc_really_done(uc, uc->desc);
+-		}
+-
+-		if (!desc_done) {
+-			/*
+-			 * Find the time delta and residue delta w.r.t
+-			 * previous poll
+-			 */
+-			time_diff = ktime_sub(uc->tx_drain.tstamp,
+-					      time_diff) + 1;
+-			residue_diff -= uc->tx_drain.residue;
+-			/*
+-			 * Try to guess when we should check next time by
+-			 * calculating rate at which data is being drained at
+-			 * the peer device. Slow devices might have not yet
+-			 * started, showing no progress. Use an arbitrary delay
+-			 * in this case.
+-			 */
+-			if (residue_diff) {
+-				delay = (time_diff / residue_diff) *
+-					uc->tx_drain.residue;
+-				if (delay < 1000)
+-					delay = 1000;
+-			} else {
+-				delay = 100000;
+-			}
+-
+-			spin_unlock_irqrestore(&uc->vc.lock, flags);
+-
+-			usleep_range(ktime_to_us(delay),
+-				     ktime_to_us(delay) + 10);
+-			continue;
+-		}
+-
+-		if (uc->desc) {
+-			struct udma_desc *d = uc->desc;
+-
+-			udma_decrement_byte_counters(uc, d->residue);
+-			udma_start(uc);
+-			vchan_cookie_complete(&d->vd);
++		/* Get previous residue and time stamp */
++		residue_diff = uc->tx_drain.residue;
++		time_diff = uc->tx_drain.tstamp;
++		/* Get current residue and time stamp or see if transfer is complete */
++		desc_done = udma_is_desc_really_done(uc, uc->desc);
++		if (desc_done)
+ 			break;
++
++		/* Find the time delta and residue delta w.r.t previous poll */
++		time_diff = ktime_sub(uc->tx_drain.tstamp, time_diff) + 1;
++		residue_diff -= uc->tx_drain.residue;
++		/*
++		 * Try to guess when we should check next time by
++		 * calculating rate at which data is being drained at
++		 * the peer device. Slow devices might have not yet
++		 * started, showing no progress. Use an arbitrary delay
++		 * in this case.
++		 */
++		if (residue_diff) {
++			delay = (time_diff / residue_diff) * uc->tx_drain.residue;
++			if (delay < 1000)
++				delay = 1000;
++		} else {
++			delay = 100000;
+ 		}
+ 
+-		break;
++		spin_unlock_irqrestore(&uc->vc.lock, flags);
++
++		usleep_range(ktime_to_us(delay),
++			     ktime_to_us(delay) + 10);
+ 	}
+ 
++	udma_decrement_byte_counters(uc, d->residue);
++	udma_start(uc);
++	vchan_cookie_complete(&d->vd);
++
+ 	spin_unlock_irqrestore(&uc->vc.lock, flags);
+ }
+ 
 
 -- 
 2.50.1
