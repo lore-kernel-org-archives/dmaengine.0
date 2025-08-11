@@ -1,104 +1,71 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from out-177.mta1.migadu.com (out-177.mta1.migadu.com [95.215.58.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26A2E2D47EF
-	for <dmaengine@vger.kernel.org>; Mon, 11 Aug 2025 15:56:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D7AF2D6E69
+	for <dmaengine@vger.kernel.org>; Mon, 11 Aug 2025 15:58:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754927797; cv=none; b=F0kKVs1u3hETVFuEPK4Tr55wiSHnqGE6YUko2oGGcjkdZZpsB4y8Q7blMOm2oMzTAyU+R1vj+qRJtF1OVM4PEr9RogJG50tLDfCAay2eI0ErYjq7Dq3BJcz5V6GryRRJFev5mGZFaAwsAQhksO4jpUxHvogXzFFv39fI9VqZSRs=
+	t=1754927894; cv=none; b=u8devI88Ghp6c5PhM1OyYSFmC7CtElShNhGEAtJMqFkwy9H/ZyOwWvEnRKXJpcNUPkzwNpMFZmgNcgtDh3hWK8KGMJtmh/p/J5IOTDuzAQFWuIAiEoghq32pHCmEYG02E4AfJxd+YYDHCVrjWxwWl1SIblaUYicUItAPWo4DYBs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754927797; c=relaxed/simple;
-	bh=m0HSEjX1jaREX9X9d/z3wVxya3rZDLBco5Un+YDkXHI=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=ZqK0eUhFG6O5NLqsVhhy1hnynDOkHFMyAutGnxwBnIhk8IA/B2Mev3g85cepFdW7WKX6Sg6F19yby8JqeX5qOjBFXlW+aS5d1lfn3+5KNIvYBssf6UKL+DmqAgV+Dd5EAhkBOTTcptM3Fj3QOd1ehscgZLOjZQMzYaLKFc7NgoM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MLU0O6WB; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1754927894; c=relaxed/simple;
+	bh=fpvWnWdstGhbljo+hLXM9cxY4szZeXds+846MREusvw=;
+	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
+	 Message-Id:References:To; b=JgZTOEDawApfeU69BPUgaP+Tob08o2/sEbkCTHPrM1JB+KyAZ8/warIG3E7rkgmQn1IvMr7sjuVGf6i1y6OXtM+2r9EEGcY1D+pPYKLovPuxXuZQpWG/SagElKjmlBJ7YXwMPjQYOOtxfnIKvZ6ph7IW9ms9DBDgx+kVv3GTqEY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=Su+kSvpi; arc=none smtp.client-ip=95.215.58.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MLU0O6WB"
-Received: by smtp.kernel.org (Postfix) with ESMTPS id AAB0CC4CEFA;
-	Mon, 11 Aug 2025 15:56:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754927796;
-	bh=m0HSEjX1jaREX9X9d/z3wVxya3rZDLBco5Un+YDkXHI=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=MLU0O6WBuZv1TKzcsVEcW0M3MAqTbO13ZCTPtaHDqi/r+g3fgrwtuf+gUrX4qyv/B
-	 oGV8WVTq/E0FWB4wJkDOJUyLwpUlSEz4WBE1cbVfMU3/W0y5Oj+oq+4Yd/HlhIYAZc
-	 3POdhlApmr7U/O3RI+2fjK2AY+AeYR+j4D5gechZPadQhyWUhEWgnAgFbcorfRz+hM
-	 cUTxSYSuOGhSOxQaXU7/gygpa2OAqrffqLyd/NSSDGS6iHiXiudy8FDeMCxcguK4Tw
-	 7Xqbp/9YFFvYt4rf8Umi/F/HtcgpM/HkkDdcR51J2tiTpZOTmIfxoiUWrCJ0IJz5zR
-	 ZHS7cvSdd6qaw==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9D50DCA0ECD;
-	Mon, 11 Aug 2025 15:56:36 +0000 (UTC)
-From: =?utf-8?q?Nuno_S=C3=A1_via_B4_Relay?= <devnull+nuno.sa.analog.com@kernel.org>
-Date: Mon, 11 Aug 2025 16:56:36 +0100
-Subject: [PATCH RESEND 1/4] dma: dma-axi-dmac: fix SW cyclic transfers
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="Su+kSvpi"
+Content-Type: text/plain;
+	charset=us-ascii
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1754927890;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=3uoUpDe04kmJ8+YWdTwk4QpPH+xCmB1Y2gfij6uukA0=;
+	b=Su+kSvpi9ss6b27TG52pBqxc/KH/hbs0pmQl4uC1V3r/aRLNuRtQ9pb2yM4F6xwQKgn8T0
+	OCppXHF6WHTS2kc45qEf6OQjcZfrHFijnSytE9r8/IMiVPfjwLkwMU344Jw0nm6zOEXHnD
+	crW2wyHpQMk7/XlOSxalk0bXZY3xpMs=
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20250811-dev-axi-dmac-fixes-v1-1-8d9895f6003f@analog.com>
-References: <20250811-dev-axi-dmac-fixes-v1-0-8d9895f6003f@analog.com>
-In-Reply-To: <20250811-dev-axi-dmac-fixes-v1-0-8d9895f6003f@analog.com>
-To: dmaengine@vger.kernel.org
-Cc: Paul Cercueil <paul@crapouillou.net>, 
- Lars-Peter Clausen <lars@metafoo.de>, Vinod Koul <vkoul@kernel.org>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1754927814; l=1461;
- i=nuno.sa@analog.com; s=20231116; h=from:subject:message-id;
- bh=7FGbSXizw76IfQYT0EAU1rxT7UHIvRzOGYH1bHBB6Mo=;
- b=PeU369nnqC+xMfx+Vr5Jfehuz+82TKy75zP0xaI2bEdie78hM/iQPdFaH3qek0LqQicWmIDhb
- QrA2HIsRrzHAGFASdBIUEZszO3waY9SpfMVwejpo220N+ZP4BUvPFQC
-X-Developer-Key: i=nuno.sa@analog.com; a=ed25519;
- pk=3NQwYA013OUYZsmDFBf8rmyyr5iQlxV/9H4/Df83o1E=
-X-Endpoint-Received: by B4 Relay for nuno.sa@analog.com/20231116 with
- auth_id=100
-X-Original-From: =?utf-8?q?Nuno_S=C3=A1?= <nuno.sa@analog.com>
-Reply-To: nuno.sa@analog.com
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.700.81\))
+Subject: Re: [PATCH] dmaengine: idxd: Replace memset(0) + strscpy() with
+ strscpy_pad()
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Thorsten Blum <thorsten.blum@linux.dev>
+In-Reply-To: <5ecf9433-5de7-4e52-b246-bf17d0cea776@intel.com>
+Date: Mon, 11 Aug 2025 17:57:55 +0200
+Cc: Vinicius Costa Gomes <vinicius.gomes@intel.com>,
+ Vinod Koul <vkoul@kernel.org>,
+ dmaengine@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+Content-Transfer-Encoding: 7bit
+Message-Id: <C2F1E020-7F59-4545-814D-B05FBE2D7C22@linux.dev>
+References: <20250810225858.2953-2-thorsten.blum@linux.dev>
+ <5ecf9433-5de7-4e52-b246-bf17d0cea776@intel.com>
+To: Dave Jiang <dave.jiang@intel.com>
+X-Migadu-Flow: FLOW_OUT
 
-From: Nuno Sá <nuno.sa@analog.com>
+Hi Dave,
 
-If 'hw_cyclic' is false we should still be able to do cyclic transfers in
-"software". That was not working for the case where 'desc->num_sgs' is 1
-because 'chan->next_desc' is never set with the current desc which means
-that the cyclic transfer only runs once and in the next SOT interrupt we
-do nothing since vchan_next_desc() will return NULL.
+> On 11. Aug 2025, at 17:37, Dave Jiang wrote:
+>> 	/* set name to "iaa_crypto" */
+>> -	memset(wq->name, 0, WQ_NAME_SIZE + 1);
+>> -	strscpy(wq->name, "iaa_crypto", WQ_NAME_SIZE + 1);
+>> +	strscpy_pad(wq->name, "iaa_crypto");
+> 
+> Should also supply the max length?
 
-Fix it by setting 'chan->next_desc' as soon as we get a new desc via
-vchan_next_desc().
+The third argument of strscpy_pad() is optional when the destination
+buffer has a fixed size. strscpy_pad() can then infer the size using
+sizeof(), which equals 'WQ_NAME_SIZE + 1' and 'DRIVER_NAME_SIZE + 1',
+respectively.
 
-Fixes: 0e3b67b348b8 ("dmaengine: Add support for the Analog Devices AXI-DMAC DMA controller")
-Signed-off-by: Nuno Sá <nuno.sa@analog.com>
----
- drivers/dma/dma-axi-dmac.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
-
-diff --git a/drivers/dma/dma-axi-dmac.c b/drivers/dma/dma-axi-dmac.c
-index 36943b0c6d603cbe38606b0d7bde02535f529a9a..2aa06f66624ba5749e7e7f24b55416f96064b82f 100644
---- a/drivers/dma/dma-axi-dmac.c
-+++ b/drivers/dma/dma-axi-dmac.c
-@@ -247,6 +247,7 @@ static void axi_dmac_start_transfer(struct axi_dmac_chan *chan)
- 			return;
- 		list_move_tail(&vdesc->node, &chan->active_descs);
- 		desc = to_axi_dmac_desc(vdesc);
-+		chan->next_desc = desc;
- 	}
- 	sg = &desc->sg[desc->num_submitted];
- 
-@@ -265,8 +266,6 @@ static void axi_dmac_start_transfer(struct axi_dmac_chan *chan)
- 		else
- 			chan->next_desc = NULL;
- 		flags |= AXI_DMAC_FLAG_LAST;
--	} else {
--		chan->next_desc = desc;
- 	}
- 
- 	sg->hw->id = axi_dmac_read(dmac, AXI_DMAC_REG_TRANSFER_ID);
-
--- 
-2.50.1
-
+Thanks,
+Thorsten
 
