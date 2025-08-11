@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26AA32D47F0
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26A2E2D47EF
 	for <dmaengine@vger.kernel.org>; Mon, 11 Aug 2025 15:56:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754927797; cv=none; b=HvR/KShW8RXa0WHQdANY1KM/p9hiRIWIAMypt7UDw81SEs4/J5PzprSZw3kcWPG+h3V2WQB9sEWA9krGgmYntwZw87B+agxPBT6M2YUtELWkuhYKM46bDZ711QLVbGsny0IkFQstMVjuPMpgH5B4wDGWZcqC00hvL8fSy7NPre0=
+	t=1754927797; cv=none; b=F0kKVs1u3hETVFuEPK4Tr55wiSHnqGE6YUko2oGGcjkdZZpsB4y8Q7blMOm2oMzTAyU+R1vj+qRJtF1OVM4PEr9RogJG50tLDfCAay2eI0ErYjq7Dq3BJcz5V6GryRRJFev5mGZFaAwsAQhksO4jpUxHvogXzFFv39fI9VqZSRs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1754927797; c=relaxed/simple;
-	bh=Rd6o8pDXikzAlTDUKP6ZQpoh+QmeJDOhnSsyi/IwSbs=;
+	bh=m0HSEjX1jaREX9X9d/z3wVxya3rZDLBco5Un+YDkXHI=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=JF2VjsKkFK+McDcKIbo9UtgnXD3c6D0fVotTMyfU1c0ekyGCg14sneQLezEdRYjNHB0SX87/p02d9StaT4qqT7vNxE0wxqLHBRJj4q0qrd5gLuHva/FD5on/NlFHYg2P2wf06vMoQp2joOadqtsAk4S9fv93T1vpg3Liogffo5c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IhewGO+Z; arc=none smtp.client-ip=10.30.226.201
+	 In-Reply-To:To:Cc; b=ZqK0eUhFG6O5NLqsVhhy1hnynDOkHFMyAutGnxwBnIhk8IA/B2Mev3g85cepFdW7WKX6Sg6F19yby8JqeX5qOjBFXlW+aS5d1lfn3+5KNIvYBssf6UKL+DmqAgV+Dd5EAhkBOTTcptM3Fj3QOd1ehscgZLOjZQMzYaLKFc7NgoM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MLU0O6WB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IhewGO+Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPS id D28E8C4CEFB;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MLU0O6WB"
+Received: by smtp.kernel.org (Postfix) with ESMTPS id AAB0CC4CEFA;
 	Mon, 11 Aug 2025 15:56:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1754927796;
-	bh=Rd6o8pDXikzAlTDUKP6ZQpoh+QmeJDOhnSsyi/IwSbs=;
+	bh=m0HSEjX1jaREX9X9d/z3wVxya3rZDLBco5Un+YDkXHI=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=IhewGO+ZdE0Uy1NDmo5ACiL+A+c7h48IZUO+iEUocH7+pHSWYcnrZrJGhAzF3vtAg
-	 eY3JFZrcZHw6PfbeXUCwTgwHddXGoeoxIEOmaw7MwkD4NLFGS1XkEAqorgCDSfWxdZ
-	 oB670AW26fGfxNebrO5wI2GHdenjwae33h3qg2+C/r1w6fP3AgJ9OdXvG97cD64/1B
-	 kH93OP3CPkA5OyvM0rFEYaRq3Sk7a7LLv65rWQgqW6l5zS8wVdr+llCPQOVhm0UXLq
-	 FNizng4fJyBuwa2ie+WIR6kFtEPl0ELhPgbSguKZHNhfAENs3Qyt1EplFkiz3ksba0
-	 RK3HdV5ieWU5A==
+	b=MLU0O6WBuZv1TKzcsVEcW0M3MAqTbO13ZCTPtaHDqi/r+g3fgrwtuf+gUrX4qyv/B
+	 oGV8WVTq/E0FWB4wJkDOJUyLwpUlSEz4WBE1cbVfMU3/W0y5Oj+oq+4Yd/HlhIYAZc
+	 3POdhlApmr7U/O3RI+2fjK2AY+AeYR+j4D5gechZPadQhyWUhEWgnAgFbcorfRz+hM
+	 cUTxSYSuOGhSOxQaXU7/gygpa2OAqrffqLyd/NSSDGS6iHiXiudy8FDeMCxcguK4Tw
+	 7Xqbp/9YFFvYt4rf8Umi/F/HtcgpM/HkkDdcR51J2tiTpZOTmIfxoiUWrCJ0IJz5zR
+	 ZHS7cvSdd6qaw==
 Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C523BCA0EDC;
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9D50DCA0ECD;
 	Mon, 11 Aug 2025 15:56:36 +0000 (UTC)
 From: =?utf-8?q?Nuno_S=C3=A1_via_B4_Relay?= <devnull+nuno.sa.analog.com@kernel.org>
-Date: Mon, 11 Aug 2025 16:56:39 +0100
-Subject: [PATCH RESEND 4/4] dma: dma-axi-dmac: simplify axi_dmac_parse_dt()
+Date: Mon, 11 Aug 2025 16:56:36 +0100
+Subject: [PATCH RESEND 1/4] dma: dma-axi-dmac: fix SW cyclic transfers
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -40,18 +40,18 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20250811-dev-axi-dmac-fixes-v1-4-8d9895f6003f@analog.com>
+Message-Id: <20250811-dev-axi-dmac-fixes-v1-1-8d9895f6003f@analog.com>
 References: <20250811-dev-axi-dmac-fixes-v1-0-8d9895f6003f@analog.com>
 In-Reply-To: <20250811-dev-axi-dmac-fixes-v1-0-8d9895f6003f@analog.com>
 To: dmaengine@vger.kernel.org
 Cc: Paul Cercueil <paul@crapouillou.net>, 
  Lars-Peter Clausen <lars@metafoo.de>, Vinod Koul <vkoul@kernel.org>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1754927814; l=1521;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1754927814; l=1461;
  i=nuno.sa@analog.com; s=20231116; h=from:subject:message-id;
- bh=zr8s3sNnjY22gMwbOqfgSaxAAz3Ulgnov71IpuImhaU=;
- b=/9zIhg97WgRvx1wq+Sk32F8dUuDuY3Gsx18g6z+PVDtavfmOjMTV/Pj8Rytf4EuvcNvxK43/h
- hEpn5lOsKXmClLoY4I8xmBu1t4bwFggcnzCi+/IN2/IErrjg2nzJOzI
+ bh=7FGbSXizw76IfQYT0EAU1rxT7UHIvRzOGYH1bHBB6Mo=;
+ b=PeU369nnqC+xMfx+Vr5Jfehuz+82TKy75zP0xaI2bEdie78hM/iQPdFaH3qek0LqQicWmIDhb
+ QrA2HIsRrzHAGFASdBIUEZszO3waY9SpfMVwejpo220N+ZP4BUvPFQC
 X-Developer-Key: i=nuno.sa@analog.com; a=ed25519;
  pk=3NQwYA013OUYZsmDFBf8rmyyr5iQlxV/9H4/Df83o1E=
 X-Endpoint-Received: by B4 Relay for nuno.sa@analog.com/20231116 with
@@ -61,53 +61,42 @@ Reply-To: nuno.sa@analog.com
 
 From: Nuno Sá <nuno.sa@analog.com>
 
-Simplify axi_dmac_parse_dt() by using the cleanup device_node class for
-automatically releasing the of_node reference when going out of scope.
+If 'hw_cyclic' is false we should still be able to do cyclic transfers in
+"software". That was not working for the case where 'desc->num_sgs' is 1
+because 'chan->next_desc' is never set with the current desc which means
+that the cyclic transfer only runs once and in the next SOT interrupt we
+do nothing since vchan_next_desc() will return NULL.
 
+Fix it by setting 'chan->next_desc' as soon as we get a new desc via
+vchan_next_desc().
+
+Fixes: 0e3b67b348b8 ("dmaengine: Add support for the Analog Devices AXI-DMAC DMA controller")
 Signed-off-by: Nuno Sá <nuno.sa@analog.com>
 ---
- drivers/dma/dma-axi-dmac.c | 13 +++++--------
- 1 file changed, 5 insertions(+), 8 deletions(-)
+ drivers/dma/dma-axi-dmac.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
 diff --git a/drivers/dma/dma-axi-dmac.c b/drivers/dma/dma-axi-dmac.c
-index 25717a6ea9848b6c591a3ab6adb27c6f21f002b9..035fc703506977ad59fd0b6ee8a8e5858d2c120e 100644
+index 36943b0c6d603cbe38606b0d7bde02535f529a9a..2aa06f66624ba5749e7e7f24b55416f96064b82f 100644
 --- a/drivers/dma/dma-axi-dmac.c
 +++ b/drivers/dma/dma-axi-dmac.c
-@@ -7,6 +7,7 @@
-  */
- 
- #include <linux/bitfield.h>
-+#include <linux/cleanup.h>
- #include <linux/clk.h>
- #include <linux/device.h>
- #include <linux/dma-mapping.h>
-@@ -927,22 +928,18 @@ static int axi_dmac_parse_chan_dt(struct device_node *of_chan,
- 
- static int axi_dmac_parse_dt(struct device *dev, struct axi_dmac *dmac)
- {
--	struct device_node *of_channels, *of_chan;
- 	int ret;
- 
--	of_channels = of_get_child_by_name(dev->of_node, "adi,channels");
-+	struct device_node *of_channels __free(device_node) = of_get_child_by_name(dev->of_node,
-+										   "adi,channels");
- 	if (of_channels == NULL)
- 		return -ENODEV;
- 
--	for_each_child_of_node(of_channels, of_chan) {
-+	for_each_child_of_node_scoped(of_channels, of_chan) {
- 		ret = axi_dmac_parse_chan_dt(of_chan, &dmac->chan);
--		if (ret) {
--			of_node_put(of_chan);
--			of_node_put(of_channels);
-+		if (ret)
- 			return -EINVAL;
--		}
+@@ -247,6 +247,7 @@ static void axi_dmac_start_transfer(struct axi_dmac_chan *chan)
+ 			return;
+ 		list_move_tail(&vdesc->node, &chan->active_descs);
+ 		desc = to_axi_dmac_desc(vdesc);
++		chan->next_desc = desc;
  	}
--	of_node_put(of_channels);
+ 	sg = &desc->sg[desc->num_submitted];
  
- 	return 0;
- }
+@@ -265,8 +266,6 @@ static void axi_dmac_start_transfer(struct axi_dmac_chan *chan)
+ 		else
+ 			chan->next_desc = NULL;
+ 		flags |= AXI_DMAC_FLAG_LAST;
+-	} else {
+-		chan->next_desc = desc;
+ 	}
+ 
+ 	sg->hw->id = axi_dmac_read(dmac, AXI_DMAC_REG_TRANSFER_ID);
 
 -- 
 2.50.1
