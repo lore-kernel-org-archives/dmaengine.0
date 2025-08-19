@@ -1,102 +1,129 @@
-Received: from mail-vs1-f52.google.com (mail-vs1-f52.google.com [209.85.217.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.19])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B27A30C36E
-	for <dmaengine@vger.kernel.org>; Tue, 19 Aug 2025 17:49:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A14B30C345;
+	Tue, 19 Aug 2025 18:52:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.19
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755625772; cv=none; b=OHlEC201xSW8atcL7vvnLvUT7/DNCrawj9ngQ8W3Oq1WUEKIZwXoim3Atk/fofJxcG3JSz9SJ/83hRe2iC3Nw7Y6L7/vCx8LGENkUZ4rchs9ve28d+rfdNvMK6x1c2iC6qN2UgB719VXlZBFBN8o4g3TpPBH1Hhh1yDlj+JKkMw=
+	t=1755629554; cv=none; b=RRHXd9RwBe0PDizNeeZ4VDMqgfb2DDkGKFuP3nLidN3gfWoTPOaBGtQpASLkHbMl+i0xUEcZzXlJXf0HClpBZThgGGdjUdAj/ysEGCP8SbyOSMsdtpvb/Ee9X6ThzAyno1xaJoJKDr4nEpJb0I+WWbeTeuU4AJD9atb1XOThOqw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755625772; c=relaxed/simple;
-	bh=YWkp7me/aGAqDor+8g4ul51C+lYC9lu/O53kvPxYg4o=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=gwFmOiTL4dh/nq3qoQx2j+zuF4G04iwhuy1WCGESaHDxU6X6xt5353Ts19wlPdahzd9grYrhPUMszYiWntnqnFB9eS2CIT/w7ktgqItzOA0t92kjSw8lhRRpaWCftoLLRkwi9HoSIRvg8AVQV+cR6vbK/ewI1Tps0Dui487f8Ps=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=fQpLuwh5; arc=none smtp.client-ip=209.85.217.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1755629554; c=relaxed/simple;
+	bh=Rc4iMvJDf73+qtSHlzp1IZqc6F/OIdBDvKE5ldovWvk=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=uK3IrjxhMGEU7iKfI5Z1FHx9cGjqYmEo81keSD0SrKE8zytu1IYuRGLnGu63ZSbLMuWpDLNTubqecSKoU3hXZh8vg1wk61WgO6ObwS23Zzvsm+qEoGOB5dQs2LpkZyJeRIRg3Ov9QE05AW0tKUE/fOD7V4AJhXLSJrChNyJnWmk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=ZRhAKDe6; arc=none smtp.client-ip=198.175.65.19
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="fQpLuwh5"
-Received: by mail-vs1-f52.google.com with SMTP id ada2fe7eead31-50f8b94c6adso1370633137.3
-        for <dmaengine@vger.kernel.org>; Tue, 19 Aug 2025 10:49:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1755625770; x=1756230570; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=YWkp7me/aGAqDor+8g4ul51C+lYC9lu/O53kvPxYg4o=;
-        b=fQpLuwh5yNqxvx9BovYEUoVO+U8lWGFmgEesys7A/OYKL61yjBESefcISBOmwUZeGH
-         3yB8ZFvi9hdElBnMaPONv1t/vtiFRQ02WNr3Dh/DfRWhKfEF9CBioPzfgyxsgJjzceUe
-         a9wix2Va8aRJe4II7SvrGrqjrYSUvRT7k1/3v7UE1Ejkyuhy5LrzrDlJDP3SYBts1jS8
-         vyVp3ZGH9bHftyzCazeD7IpKJYxMZvyzt4F+53YG9kr/vFo0qSyWTajVVAd0WWuUf94h
-         GjbjCKVb9hYhhweO9vQE7b318m9OT5IvzoNM0WfV8p+cU6W9cqYMxqoMubxtYa5biAIn
-         cgGQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755625770; x=1756230570;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=YWkp7me/aGAqDor+8g4ul51C+lYC9lu/O53kvPxYg4o=;
-        b=vlPXqzNVkWlILE2b/y7oi/Sr81SSumjNadiOz44+xzXc2waL8AgGQO5cu8C2Rr3yyI
-         SIOb+4dCrzGpDiT6jJt/Ua+Zikb95QJO8Ly4OS0wHnZl7/eMMQ1R3Ng9v8s0IFYDTwHa
-         dlZPMygiK4xu1Jx2V+6Div557xTDR0HWHBtuZRQ2u8VDACz7UAlBvcvPmNeyaCLI1qjM
-         34gH5asUajUzxnnXNpoemFC0FYnFtzzLbAv5rvBekthPWegoRMhcNezaFgb3otrY892/
-         QcKuIsMzQT8xXyYqTYtFICl+Rvt5e3E1JXpuPOkE/tuHmDCol7rc1fuom/xWOqwL6fQU
-         Wo5Q==
-X-Forwarded-Encrypted: i=1; AJvYcCVmrN5cDY4PbcbfRYWswRpSN7yeSoqrT4A86SSRQGR9nhOBzjkzCuU8Y25VX5d0W7MvMWUtnpR85YE=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzPKsWl10qr++IoYB/0LqvSiVFzUZLzbJdOik4WlHLkD1vtNVHq
-	wRLCVsdUP7XbaAnE6lGmq2gxNwD6tgUsFo8qiG5UAGQ23FHxnaZTgVnqb60gdfhEiSEpFGWOoqs
-	O1iOURZlC1ck7fnlp6Rabhm41zBYs9LsVp2IQNDJ1
-X-Gm-Gg: ASbGncuIprW519EgSQGI9e0u4nynoSqbboMKhVqP+LKxwLdaRAntfnuXV4OlieWpLr2
-	CO1sNy0bVD28Ug9SDXzhLpQxoD5QQ4Z8YzG8KIp7bw1Aszd90fJ/S6DxVZSdUgOUrU+T+qwgHaK
-	m18CI5Sgwyy3u7uOi2+pCglUnT2Vc9Z3HXLhJllmJU9yLmmuKa4Ylkr1YTX7d7OVt6MiTJ0jfmS
-	4XS1uSZ1VOvDw==
-X-Google-Smtp-Source: AGHT+IFhwGbrpihJuRhLUkMJwZwhp7F48vbVUtNc9cDlNYXnwMfD57uFUB1fnDEYXaM+LrUY65InbhFraP2uGeXjfLE=
-X-Received: by 2002:a05:6102:290e:b0:518:9c6a:2c03 with SMTP id
- ada2fe7eead31-51a52a18e04mr12948137.30.1755625769614; Tue, 19 Aug 2025
- 10:49:29 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="ZRhAKDe6"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1755629553; x=1787165553;
+  h=from:to:cc:subject:in-reply-to:references:date:
+   message-id:mime-version:content-transfer-encoding;
+  bh=Rc4iMvJDf73+qtSHlzp1IZqc6F/OIdBDvKE5ldovWvk=;
+  b=ZRhAKDe6euuQaipuF1MDVqr3nQxrpTEUXNdYkPnKYvhaXHiNPoL4Jccj
+   Jv0XRGrVTEehZZn8oM5ZdgTVaHJydUkpoa9m5UsSgoHUKgxuRjWiYxrt7
+   p0pg8jtBaibjpaX32POzUwqhHv+uIrlY89lJDe2dlvmqe6Rh8gEjOmDPR
+   Vfv6s9Iyroo4leiB4SIWtjGXDpafLLlCGzy7RzSi7jAVqjydVhTR64oz8
+   UDXp510nKW3PKQcLfhAni+UOij0ySBIWfXbvJTthjwBwnbdCypUxkM73L
+   J10/ZKMEumodS4/W+IAgilDf7WPU0zzzkzZ3gDHHI3S3BA9xkJ2bst5PK
+   g==;
+X-CSE-ConnectionGUID: UyAo12npTDeXbciPiRlYNw==
+X-CSE-MsgGUID: DjTcespIQEGrU5N/53y3Jw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11527"; a="57747177"
+X-IronPort-AV: E=Sophos;i="6.17,302,1747724400"; 
+   d="scan'208";a="57747177"
+Received: from fmviesa005.fm.intel.com ([10.60.135.145])
+  by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Aug 2025 11:52:32 -0700
+X-CSE-ConnectionGUID: NxmXx4u3THynXbPaF2BGrA==
+X-CSE-MsgGUID: A4mYhuW4SZem3KS6hFBqtQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.17,302,1747724400"; 
+   d="scan'208";a="172168891"
+Received: from unknown (HELO vcostago-mobl3) ([10.98.24.145])
+  by fmviesa005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Aug 2025 11:52:30 -0700
+From: Vinicius Costa Gomes <vinicius.gomes@intel.com>
+To: David Matlack <dmatlack@google.com>
+Cc: Alex Williamson <alex.williamson@redhat.com>, Aaron Lewis
+ <aaronlewis@google.com>, Adhemerval Zanella
+ <adhemerval.zanella@linaro.org>, Adithya Jayachandran
+ <ajayachandra@nvidia.com>, Andrew Jones <ajones@ventanamicro.com>, Ard
+ Biesheuvel <ardb@kernel.org>, Arnaldo Carvalho de Melo <acme@redhat.com>,
+ Bibo Mao <maobibo@loongson.cn>, Claudio Imbrenda <imbrenda@linux.ibm.com>,
+ Dan Williams <dan.j.williams@intel.com>, Dave Jiang
+ <dave.jiang@intel.com>, dmaengine@vger.kernel.org, Huacai Chen
+ <chenhuacai@kernel.org>, James Houghton <jthoughton@google.com>, Jason
+ Gunthorpe <jgg@nvidia.com>, Joel Granados <joel.granados@kernel.org>, Josh
+ Hilke <jrhilke@google.com>, Kevin Tian <kevin.tian@intel.com>,
+ kvm@vger.kernel.org, linux-kselftest@vger.kernel.org, "Mike Rapoport
+ (Microsoft)" <rppt@kernel.org>, Paolo Bonzini <pbonzini@redhat.com>, Pasha
+ Tatashin <pasha.tatashin@soleen.com>, "Pratik R. Sampat"
+ <prsampat@amd.com>, Saeed Mahameed <saeedm@nvidia.com>, Sean
+ Christopherson <seanjc@google.com>, Shuah Khan <shuah@kernel.org>, Vipin
+ Sharma <vipinsh@google.com>, Wei Yang <richard.weiyang@gmail.com>, "Yury
+ Norov [NVIDIA]" <yury.norov@gmail.com>
+Subject: Re: [PATCH 22/33] vfio: selftests: Add driver for Intel DSA
+In-Reply-To: <CALzav=dPRfPxNAaVvbxSNz=Ss0DAGjxJQO2JnXLbZgwZmO0NBQ@mail.gmail.com>
+References: <20250620232031.2705638-1-dmatlack@google.com>
+ <20250620232031.2705638-23-dmatlack@google.com> <87a53w2o65.fsf@intel.com>
+ <CALzav=dPRfPxNAaVvbxSNz=Ss0DAGjxJQO2JnXLbZgwZmO0NBQ@mail.gmail.com>
+Date: Tue, 19 Aug 2025 11:52:30 -0700
+Message-ID: <87v7mj16vl.fsf@intel.com>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250620232031.2705638-1-dmatlack@google.com> <77qzhwwieggkmyguxm6v7dhpro2ez3nch6qelc2dd5lbdgp6hz@dnbfliagwpnv>
- <aJtYDWm3kT_Nz6Fd@google.com>
-In-Reply-To: <aJtYDWm3kT_Nz6Fd@google.com>
-From: David Matlack <dmatlack@google.com>
-Date: Tue, 19 Aug 2025 10:48:57 -0700
-X-Gm-Features: Ac12FXyvmYoSYuILjgZtuLq3eWcuEq7lOvEZt6VwwKRTWGTNC68lrUWFoa_zNzo
-Message-ID: <CALzav=caCWiZ1oS05ZpPNcE1cVVmn8jk9xmbXsEF_Sqexq03JA@mail.gmail.com>
-Subject: Re: [PATCH 00/33] vfio: Introduce selftests for VFIO
-To: Joel Granados <joel.granados@kernel.org>
-Cc: Alex Williamson <alex.williamson@redhat.com>, Aaron Lewis <aaronlewis@google.com>, 
-	Adhemerval Zanella <adhemerval.zanella@linaro.org>, 
-	Adithya Jayachandran <ajayachandra@nvidia.com>, Andrew Jones <ajones@ventanamicro.com>, 
-	Ard Biesheuvel <ardb@kernel.org>, Arnaldo Carvalho de Melo <acme@redhat.com>, Bibo Mao <maobibo@loongson.cn>, 
-	Claudio Imbrenda <imbrenda@linux.ibm.com>, Dan Williams <dan.j.williams@intel.com>, 
-	Dave Jiang <dave.jiang@intel.com>, dmaengine@vger.kernel.org, 
-	Huacai Chen <chenhuacai@kernel.org>, James Houghton <jthoughton@google.com>, 
-	Jason Gunthorpe <jgg@nvidia.com>, Josh Hilke <jrhilke@google.com>, Kevin Tian <kevin.tian@intel.com>, 
-	kvm@vger.kernel.org, linux-kselftest@vger.kernel.org, 
-	"Mike Rapoport (Microsoft)" <rppt@kernel.org>, Paolo Bonzini <pbonzini@redhat.com>, 
-	Pasha Tatashin <pasha.tatashin@soleen.com>, "Pratik R. Sampat" <prsampat@amd.com>, 
-	Saeed Mahameed <saeedm@nvidia.com>, Sean Christopherson <seanjc@google.com>, Shuah Khan <shuah@kernel.org>, 
-	Vinicius Costa Gomes <vinicius.gomes@intel.com>, Vipin Sharma <vipinsh@google.com>, 
-	Wei Yang <richard.weiyang@gmail.com>, "Yury Norov [NVIDIA]" <yury.norov@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Aug 12, 2025 at 8:04=E2=80=AFAM David Matlack <dmatlack@google.com>=
- wrote:
->
-> On 2025-08-05 05:08 PM, Joel Granados wrote:
-> > On Fri, Jun 20, 2025 at 11:19:58PM +0000, David Matlack wrote:
-> > > This series introduces VFIO selftests, located in
-> > > tools/testing/selftests/vfio/.
-> > Sorry for coming late to the party. Only recently got some cycles to go
-> > through this. This seems very similar to what we are trying to do with
-> > iommutests [3].
+David Matlack <dmatlack@google.com> writes:
 
-Joel and I synced offline. We decided the best path forward for now is
-to proceed with VFIO selftests and iommutests in parallel, then look
-for opportunities to share code once both have matured a bit.
+> On Mon, Aug 18, 2025 at 4:41=E2=80=AFPM Vinicius Costa Gomes
+> <vinicius.gomes@intel.com> wrote:
+>> David Matlack <dmatlack@google.com> writes:
+>> > +
+>> > +static int dsa_probe(struct vfio_pci_device *device)
+>> > +{
+>> > +     if (!vfio_pci_device_match(device, PCI_VENDOR_ID_INTEL,
+>> > +                                PCI_DEVICE_ID_INTEL_DSA_SPR0))
+>>
+>> What are you thinking about adding support for multiple device ids?
+>
+> I haven't given it much thought yet. But we could definitely support
+> fancier device matching (e.g. multiple acceptable device ids) if/when
+> a use-case for that arises.
+>
+
+Fair enough. I just wanted to bring this up (hoping that's more a matter
+of "when" than "if" :-))
+
+>> > +static int dsa_completion_wait(struct vfio_pci_device *device,
+>> > +                            struct dsa_completion_record *completion)
+>> > +{
+>> > +     u8 status;
+>> > +
+>> > +     for (;;) {
+>> > +             dsa_check_sw_err(device);
+>> > +
+>> > +             status =3D READ_ONCE(completion->status);
+>> > +             if (status)
+>> > +                     break;
+>> > +
+>> > +             usleep(1000);
+>>
+>> Another minor/thing to think about: using umonitor/umwait.
+>
+> Thanks for the tip, I hadn't considered that. But I think for this
+> driver, keeping things as simple as possible is best. This code is
+> only used for testing so I don't think we care enough about efficiency
+> to justify using unmonitor/umwait here.
+
+Yeah, agreed.
+
+
+Cheers,
+--=20
+Vinicius
