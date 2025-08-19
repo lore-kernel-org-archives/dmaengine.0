@@ -1,124 +1,136 @@
-Received: from mail-lf1-f44.google.com (mail-lf1-f44.google.com [209.85.167.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E951425A352
-	for <dmaengine@vger.kernel.org>; Tue, 19 Aug 2025 16:31:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.44
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 737C02206B8;
+	Tue, 19 Aug 2025 17:49:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755621121; cv=none; b=Dmx+K+YQyd5aIgdcJKvsPIovibp6ucYYDBQEpeQZ2Q9yiIl49Aa+0iGe09ZOWmJNCqKCGpcxB8wTC1qNefIUqEH4hSQ7kqO+3cOKqBNKKRA0LdJDXKZyDjxggiRVwZ0nAHNlvSJFgJnDEI8OBWDPi/5RSTEQhqK6eWDxTAFmUhU=
+	t=1755625757; cv=none; b=TWHBLcq0Gx3x8clSJkLLPfNmgS5SG1v/cwwScY4/JJeAS5u9WreIdTfcAXkgKa5NuDubaY65bbq2f4zjD+IyfKLqLeQb2U2wnmfcwTYg8arXHQ4lAXfzFiIQQv1lws1ktlc0TaUHdHon1b94GVnm0R7KRDw3jvN5zavjoDPwFWc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755621121; c=relaxed/simple;
-	bh=cJyL4HFGFISuvEGZWUWistyHRtKUWIye98ZZtuZrwNY=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=VlgcPogKeZzP25igU9BC/U5SR7faJURKQU9l8W4GgVWjAQzls3Xg5n+kb1hxW+qvV62Z7hVdaCOeQ9T8zVUSYNQs0u7fcPdjWHJFz4Zxm4k1rdV9jqXftNaSXILyrcEwrUQnEnC+aMPt4pbt527kujdg3FfdZ2GtORs8RAy0MN0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=WvKIlnsK; arc=none smtp.client-ip=209.85.167.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="WvKIlnsK"
-Received: by mail-lf1-f44.google.com with SMTP id 2adb3069b0e04-55ce526a25eso5485167e87.3
-        for <dmaengine@vger.kernel.org>; Tue, 19 Aug 2025 09:31:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1755621118; x=1756225918; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Uid2sLCe2fLbFbHk5A3JRr3795+bhaHijptEMore4t0=;
-        b=WvKIlnsKDIffGsQDSkmbohpZGknofn6riVzl3zEzFv8NvPq2Z/vdF2b/wvXrV4RCwZ
-         ooWTpRnS6qyCnzCfeMJXEnQMF8ri2TmRPvr3VL+/88IVSWQ9g5ri9vUxIp/9h/HXcvLg
-         43EPHuWaeXIlCf7ie+9mzV45UMo6jkXO5mQ+rA3RE1GI8TaYzs3yqr+D0L2BKEhHpSIG
-         tMSzsbJfoH0+db2cowunZ9Ci0uGIuGwGYbnA0f4sbCdtu9veWH25/xytpKMoZRFNWzgn
-         yUhEGLqMm2fUGavjn2G8YOEpVB0FKMRpmjCfUHCEC6IOdeDy/6pS1+P10tO9pgv0JSWr
-         K70g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755621118; x=1756225918;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Uid2sLCe2fLbFbHk5A3JRr3795+bhaHijptEMore4t0=;
-        b=n3fFUqHpCzZIFtzgqZRiPJX3wGakBhaQnpdpT2tUl63uSygVUfm+BI475zwUmUY0O2
-         ikEufHfeUtE6NGbLCHQQtwBnVCr2cwnMyb2/M2pOJL2sbUv0M613GNV+7lfzDvVq5XPM
-         8EKx84SUWBUgTPzd/Ygz40W3CfWiu+vwZ4UImJLEkHkiHDXCMx/c38Jtdc7E3XrqjhDp
-         1iCGv9/SQGLsc2KmQEWez+V+2fF7xc9gcujKxmqXFO6T7SXwyx00jR3r6aUUObNgaHbG
-         KKgdjzVfDQeN/PhFA2dEcWrlds8Jio+wMxKwqFGPoh9s46ekLutaY8YOBFUo08Zn9s3w
-         OKtA==
-X-Forwarded-Encrypted: i=1; AJvYcCXVLKLA4dexwwFz+3F6yom0+XQLSEPj2rSbGLPP508093ovX/zHjkuxksxT3In3Fhp1NKkViJXLlNU=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwVsTU322BonF+LV08WkhWX5b4QKW9yXfl8r0DJJqO6P6m0AMoN
-	sh1JoLQpBrVuE3LTGby8wh77YNX0rkwaF/3ecjCYW6joc9WIW1i1Q2QJoRTMcbKWzfl8Ll6k3x6
-	Xzi0Gl6tNeXdfFvnARXEPDCSQJa2jBsb6p7n6hY29bNmq17hjbwO7+1lqNclsLA==
-X-Gm-Gg: ASbGncuTkJzkb6J+rPypXvG+SZfDWEXAJgmMjRwlVmC9r6fb1HWdrR5ID2PNyeeZlwK
-	P/4K0TF4F9zb1qK07w5imyBBfT0wrZ50GOEgpKbHq+xZJ5iPH9yn1s7O0Gtlf9FXOTAkA/upSxW
-	n3DYXJlIJizxED3+8KYafE9pfUNjbFm97QLb87bFC434gvxI1OwYhW/ebnnqWLN0e9jengN82cf
-	b+Emp6askWvTjK2m8tqz3SX
-X-Google-Smtp-Source: AGHT+IG9LSQukP8L1OyXcAwDvQvV6AZS3ttTz4sGM7WhcvGtXa2X9Lc5cAjEjuGQBLz/JBJDdtyLVwih19LLEtI26SQ=
-X-Received: by 2002:a05:6512:1287:b0:553:2c01:ff44 with SMTP id
- 2adb3069b0e04-55e00756893mr851298e87.2.1755621117683; Tue, 19 Aug 2025
- 09:31:57 -0700 (PDT)
+	s=arc-20240116; t=1755625757; c=relaxed/simple;
+	bh=yfhPbDJoc+6CdAo/HUDbAHjm5EOHsprDS0bgOVBPTUo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=u1ggeva+JSjhmo79XKXV92uGsDx2Tdb8tuc4mz+mpH+ImeqLDAPjyuBirabjGLv44dFqqLANceqyhF4DxjP72whhJ+U9T2aEbizeuZrAWMJAbT6xkzIpg4oyVAazkCowyJKO8xToNxIFDhibYKPFUXzL/oWUVdYGz1k3gngk5Lw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 8E877152B;
+	Tue, 19 Aug 2025 10:49:06 -0700 (PDT)
+Received: from [10.1.196.50] (e121345-lin.cambridge.arm.com [10.1.196.50])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 475103F738;
+	Tue, 19 Aug 2025 10:49:10 -0700 (PDT)
+Message-ID: <cdb7b1e7-6e51-4c0e-bffb-b0d4b654a623@arm.com>
+Date: Tue, 19 Aug 2025 18:49:08 +0100
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250620232031.2705638-1-dmatlack@google.com> <20250620232031.2705638-23-dmatlack@google.com>
- <87a53w2o65.fsf@intel.com>
-In-Reply-To: <87a53w2o65.fsf@intel.com>
-From: David Matlack <dmatlack@google.com>
-Date: Tue, 19 Aug 2025 09:31:30 -0700
-X-Gm-Features: Ac12FXya_SwncPtupiaWHc47GwUOexOFH1Y3z4fRmAiEPe7hf7t_7YyPUGq3HJs
-Message-ID: <CALzav=dPRfPxNAaVvbxSNz=Ss0DAGjxJQO2JnXLbZgwZmO0NBQ@mail.gmail.com>
-Subject: Re: [PATCH 22/33] vfio: selftests: Add driver for Intel DSA
-To: Vinicius Costa Gomes <vinicius.gomes@intel.com>
-Cc: Alex Williamson <alex.williamson@redhat.com>, Aaron Lewis <aaronlewis@google.com>, 
-	Adhemerval Zanella <adhemerval.zanella@linaro.org>, 
-	Adithya Jayachandran <ajayachandra@nvidia.com>, Andrew Jones <ajones@ventanamicro.com>, 
-	Ard Biesheuvel <ardb@kernel.org>, Arnaldo Carvalho de Melo <acme@redhat.com>, Bibo Mao <maobibo@loongson.cn>, 
-	Claudio Imbrenda <imbrenda@linux.ibm.com>, Dan Williams <dan.j.williams@intel.com>, 
-	Dave Jiang <dave.jiang@intel.com>, dmaengine@vger.kernel.org, 
-	Huacai Chen <chenhuacai@kernel.org>, James Houghton <jthoughton@google.com>, 
-	Jason Gunthorpe <jgg@nvidia.com>, Joel Granados <joel.granados@kernel.org>, 
-	Josh Hilke <jrhilke@google.com>, Kevin Tian <kevin.tian@intel.com>, kvm@vger.kernel.org, 
-	linux-kselftest@vger.kernel.org, 
-	"Mike Rapoport (Microsoft)" <rppt@kernel.org>, Paolo Bonzini <pbonzini@redhat.com>, 
-	Pasha Tatashin <pasha.tatashin@soleen.com>, "Pratik R. Sampat" <prsampat@amd.com>, 
-	Saeed Mahameed <saeedm@nvidia.com>, Sean Christopherson <seanjc@google.com>, Shuah Khan <shuah@kernel.org>, 
-	Vipin Sharma <vipinsh@google.com>, Wei Yang <richard.weiyang@gmail.com>, 
-	"Yury Norov [NVIDIA]" <yury.norov@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 19/19] perf: Garbage-collect event_init checks
+To: kernel test robot <oliver.sang@intel.com>
+Cc: oe-lkp@lists.linux.dev, lkp@intel.com,
+ linux-arm-kernel@lists.infradead.org, linuxppc-dev@lists.ozlabs.org,
+ linux-s390@vger.kernel.org, linux-perf-users@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-rockchip@lists.infradead.org,
+ dmaengine@vger.kernel.org, linux-fpga@vger.kernel.org,
+ amd-gfx@lists.freedesktop.org, intel-gfx@lists.freedesktop.org,
+ intel-xe@lists.freedesktop.org, coresight@lists.linaro.org,
+ iommu@lists.linux.dev, linux-amlogic@lists.infradead.org,
+ linux-cxl@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-pm@vger.kernel.org, peterz@infradead.org, mingo@redhat.com,
+ will@kernel.org, mark.rutland@arm.com, acme@kernel.org, namhyung@kernel.org,
+ alexander.shishkin@linux.intel.com, jolsa@kernel.org, irogers@google.com,
+ adrian.hunter@intel.com, kan.liang@linux.intel.com,
+ linux-alpha@vger.kernel.org, linux-snps-arc@lists.infradead.org,
+ imx@lists.linux.dev, linux-csky@vger.kernel.org, loongarch@lists.linux.dev,
+ linux-mips@vger.kernel.org, linux-sh@vger.kernel.org,
+ sparclinux@vger.kernel.org, dri-devel@lists.freedesktop.org,
+ linux-riscv@lists.infradead.org
+References: <202508190403.33c83ece-lkp@intel.com>
+From: Robin Murphy <robin.murphy@arm.com>
+Content-Language: en-GB
+In-Reply-To: <202508190403.33c83ece-lkp@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Mon, Aug 18, 2025 at 4:41=E2=80=AFPM Vinicius Costa Gomes
-<vinicius.gomes@intel.com> wrote:
-> David Matlack <dmatlack@google.com> writes:
-> > +
-> > +static int dsa_probe(struct vfio_pci_device *device)
-> > +{
-> > +     if (!vfio_pci_device_match(device, PCI_VENDOR_ID_INTEL,
-> > +                                PCI_DEVICE_ID_INTEL_DSA_SPR0))
->
-> What are you thinking about adding support for multiple device ids?
+On 19/08/2025 3:44 am, kernel test robot wrote:
+> 
+> 
+> Hello,
+> 
+> kernel test robot noticed "BUG:unable_to_handle_page_fault_for_address" on:
+> 
+> commit: 1ba20479196e5af3ebbedf9321de6b26f2a0cdd3 ("[PATCH 19/19] perf: Garbage-collect event_init checks")
+> url: https://github.com/intel-lab-lkp/linux/commits/Robin-Murphy/perf-arm-cmn-Fix-event-validation/20250814-010626
+> base: https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git 91325f31afc1026de28665cf1a7b6e157fa4d39d
+> patch link: https://lore.kernel.org/all/ace3532a8a438a96338bf349a27636d8294c7111.1755096883.git.robin.murphy@arm.com/
+> patch subject: [PATCH 19/19] perf: Garbage-collect event_init checks
 
-I haven't given it much thought yet. But we could definitely support
-fancier device matching (e.g. multiple acceptable device ids) if/when
-a use-case for that arises.
+OK, after looking a bit more deeply at x86 and PowerPC, I think it
+probably is nicest to solve this commonly too. Below is what I've cooked
+up for a v2 (I'll save reposting the whole series this soon...)
 
-> > +static int dsa_completion_wait(struct vfio_pci_device *device,
-> > +                            struct dsa_completion_record *completion)
-> > +{
-> > +     u8 status;
-> > +
-> > +     for (;;) {
-> > +             dsa_check_sw_err(device);
-> > +
-> > +             status =3D READ_ONCE(completion->status);
-> > +             if (status)
-> > +                     break;
-> > +
-> > +             usleep(1000);
->
-> Another minor/thing to think about: using umonitor/umwait.
+Thanks,
+Robin.
 
-Thanks for the tip, I hadn't considered that. But I think for this
-driver, keeping things as simple as possible is best. This code is
-only used for testing so I don't think we care enough about efficiency
-to justify using unmonitor/umwait here.
+----->8-----
+Subject: [PATCH 18.5/19] perf: Add common uncore-CPU check
+
+Many uncore drivers depend on event->cpu being valid in order to look
+up various data in their event_init call. Since we've now factored out
+common PMU identification, we can factor out this check in the correct
+order too. While it might technically be possible to hoist the general
+task/cgroup check up here now, that would be horribly messy, so for
+clarity let's keep these as distinct (albeit related) concerns.
+
+Reported-by: kernel test robot <oliver.sang@intel.com>
+Closes: https://lore.kernel.org/oe-lkp/202508190403.33c83ece-lkp@intel.com
+Signed-off-by: Robin Murphy <robin.murphy@arm.com>
+---
+  kernel/events/core.c | 12 +++++++++++-
+  1 file changed, 11 insertions(+), 1 deletion(-)
+
+diff --git a/kernel/events/core.c b/kernel/events/core.c
+index 5f7eb526d87c..ddf045ad4d83 100644
+--- a/kernel/events/core.c
++++ b/kernel/events/core.c
+@@ -12562,6 +12562,11 @@ static bool is_raw_pmu(const struct pmu *pmu)
+  	       pmu->capabilities & PERF_PMU_CAP_RAW_EVENTS;
+  }
+  
++static bool is_uncore_pmu(const struct pmu *pmu)
++{
++	return pmu->task_ctx_nr == perf_invalid_context;
++}
++
+  static int perf_try_init_event(struct pmu *pmu, struct perf_event *event)
+  {
+  	struct perf_event_context *ctx = NULL;
+@@ -12571,11 +12576,16 @@ static int perf_try_init_event(struct pmu *pmu, struct perf_event *event)
+  	 * Before touching anything, we can safely skip:
+  	 * - any event for a specific PMU which is not this one
+  	 * - any common event if this PMU doesn't support them
++	 * - non-CPU-bound uncore events (so drivers can assume event->cpu is
++	 *   valid; we'll check the actual task/cgroup attach state later)
+  	 */
+  	if (event->attr.type != pmu->type &&
+  	    (event->attr.type >= PERF_TYPE_MAX || !is_raw_pmu(pmu)))
+  		return -ENOENT;
+  
++	if (is_uncore_pmu(pmu) && event->cpu < 0)
++		return -EINVAL;
++
+  	if (!try_module_get(pmu->module))
+  		return -ENODEV;
+  
+@@ -12990,7 +13000,7 @@ perf_event_alloc(struct perf_event_attr *attr, int cpu,
+  	 * events (they don't make sense as the cgroup will be different
+  	 * on other CPUs in the uncore mask).
+  	 */
+-	if (pmu->task_ctx_nr == perf_invalid_context && (task || cgroup_fd != -1))
++	if (is_uncore_pmu(pmu) && (task || cgroup_fd != -1))
+  		return ERR_PTR(-EINVAL);
+  
+  	if (event->attr.aux_output &&
+-- 
