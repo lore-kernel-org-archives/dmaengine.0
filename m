@@ -1,27 +1,27 @@
 Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [185.203.201.7])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F2423019CE
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F1CB3019CD
 	for <dmaengine@vger.kernel.org>; Wed,  3 Sep 2025 13:06:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.203.201.7
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756904784; cv=none; b=HBdVopbtwJuSu0F65FHK9K0vgtenItjfDgFaXxZcpKb5BDtWwNfh9+KyhpqryCGHHEKGuJDBLK2qPiAGo5HjcAHPkETz/5nWor6ToiYo45HZgqZi0SlfaxdKB1YiQT7L8g/ti9xRNVPtUWEdXGwAUl7oX7nAFw4InMxnLbwpC1c=
+	t=1756904784; cv=none; b=KL8Pv5jz7EuZwtbRJYHK8wReX37bUo829og2/VcdIM1+aPFYV/siVq0ViuV1i6rZloQ9hTHS11NdLY8y9u67luj/tNyzdT8vppcgUjAsqY/ocgRj68FXITwIj5xVKYSS4MxDtfOaRahLHr5qF8ulROZtB5h2eslB7V3XiFDprnc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1756904784; c=relaxed/simple;
-	bh=R4rQ0QjdqK60jUB9CHycckkXdaZ+8SOys9bWYtlGlY0=;
+	bh=wK9kqRE+190Nmnm4ozR9PGQi5dhCYAkQNurhvOsKnTQ=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=ObiF5XH4NJVN9Jo+gXclPNPtJJ4Q1z8WMc/UGhtFDlg9mLPwvo857h0opqSTr1QpQ6fWNG+QwCkPYa48wPlborFF65evMaIzMzaSGtI7BqwAdwwPbshG9XLF7raH8BaholvxqmXvUdFWb7uC0lrrK7ebsD357/2JhipmVv1G+Ew=
+	 In-Reply-To:To:Cc; b=iC7fIbvQBDFUIG1lk1CKD6aCjLHlLVxBFFU1RnkrUMf4OEJNYZ9Aucp4lSj7hdNCxZeDZ6D+/3YpzXWE5mbyhYKd857x0XFz1dB8/PFa+/lOE+EKCdP5FuIIx6i99VdyJ8R6Vqf+01N6+O9x6QLOsMOflHlG+w7a++p0NQtDxM0=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de; spf=pass smtp.mailfrom=pengutronix.de; arc=none smtp.client-ip=185.203.201.7
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pengutronix.de
 Received: from dude02.red.stw.pengutronix.de ([2a0a:edc0:0:1101:1d::28])
 	by metis.whiteo.stw.pengutronix.de with esmtp (Exim 4.92)
 	(envelope-from <m.felsch@pengutronix.de>)
-	id 1utnBl-00006Z-Ns; Wed, 03 Sep 2025 15:06:13 +0200
+	id 1utnBl-00006Z-U1; Wed, 03 Sep 2025 15:06:13 +0200
 From: Marco Felsch <m.felsch@pengutronix.de>
-Date: Wed, 03 Sep 2025 15:06:12 +0200
-Subject: [PATCH 04/11] dmaengine: imx-sdma: make use of devm_kzalloc for
- script_addrs
+Date: Wed, 03 Sep 2025 15:06:16 +0200
+Subject: [PATCH 08/11] dmaengine: imx-sdma: fix missing
+ of_dma_controller_free()
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -30,7 +30,7 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250903-v6-16-topic-sdma-v1-4-ac7bab629e8b@pengutronix.de>
+Message-Id: <20250903-v6-16-topic-sdma-v1-8-ac7bab629e8b@pengutronix.de>
 References: <20250903-v6-16-topic-sdma-v1-0-ac7bab629e8b@pengutronix.de>
 In-Reply-To: <20250903-v6-16-topic-sdma-v1-0-ac7bab629e8b@pengutronix.de>
 To: Vinod Koul <vkoul@kernel.org>, Shawn Guo <shawnguo@kernel.org>, 
@@ -46,82 +46,45 @@ X-SA-Exim-Mail-From: m.felsch@pengutronix.de
 X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
 X-PTX-Original-Recipient: dmaengine@vger.kernel.org
 
-Shuffle the allocation of script_addrs and make use of devm_kzalloc() to
-drop the local error handling as well as the kfree() during the remove.
+Add the missing of_dma_controller_free() to free the resources allocated
+via of_dma_controller_register(). The missing free was introduced long
+time ago  by commit 23e118113782 ("dma: imx-sdma: use
+module_platform_driver for SDMA driver") while adding a proper .remove()
+implementation.
 
+Fixes: 23e118113782 ("dma: imx-sdma: use module_platform_driver for SDMA driver")
 Signed-off-by: Marco Felsch <m.felsch@pengutronix.de>
 ---
- drivers/dma/imx-sdma.c | 19 +++++++------------
- 1 file changed, 7 insertions(+), 12 deletions(-)
+ drivers/dma/imx-sdma.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
 diff --git a/drivers/dma/imx-sdma.c b/drivers/dma/imx-sdma.c
-index a85739d279f51fdb517fce90b3dc67673cf2b56c..b6e649fda71dbce12a2106c94887f90d0aaaf600 100644
+index e30dd46cf6522ee2aa4d3aca9868a01afbd29615..6c6d38b202dd2deffc36b1bd27bc7c60de3d7403 100644
 --- a/drivers/dma/imx-sdma.c
 +++ b/drivers/dma/imx-sdma.c
-@@ -2253,6 +2253,10 @@ static int sdma_probe(struct platform_device *pdev)
- 	if (!sdma)
- 		return -ENOMEM;
+@@ -2232,6 +2232,13 @@ static struct dma_chan *sdma_xlate(struct of_phandle_args *dma_spec,
+ 				     ofdma->of_node);
+ }
  
-+	sdma->script_addrs = devm_kzalloc(dev, sizeof(*sdma->script_addrs), GFP_KERNEL);
-+	if (!sdma->script_addrs)
-+		return -ENOMEM;
++static void sdma_dma_of_dma_controller_unregister_action(void *data)
++{
++	struct sdma_engine *sdma = data;
 +
- 	spin_lock_init(&sdma->channel_0_lock);
- 
- 	sdma->dev = dev;
-@@ -2289,12 +2293,6 @@ static int sdma_probe(struct platform_device *pdev)
- 
- 	sdma->irq = irq;
- 
--	sdma->script_addrs = kzalloc(sizeof(*sdma->script_addrs), GFP_KERNEL);
--	if (!sdma->script_addrs) {
--		ret = -ENOMEM;
--		goto err_irq;
--	}
--
- 	/* initially no scripts available */
- 	saddr_arr = (s32 *)sdma->script_addrs;
- 	for (i = 0; i < sizeof(*sdma->script_addrs) / sizeof(s32); i++)
-@@ -2332,11 +2330,11 @@ static int sdma_probe(struct platform_device *pdev)
- 
- 	ret = sdma_init(sdma);
++	of_dma_controller_free(sdma->dev->of_node);
++}
++
+ static void sdma_dma_device_unregister_action(void *data)
+ {
+ 	struct sdma_engine *sdma = data;
+@@ -2370,6 +2377,8 @@ static int sdma_probe(struct platform_device *pdev)
  	if (ret)
--		goto err_init;
-+		goto err_irq;
+ 		return dev_err_probe(dev, ret, "failed to register controller\n");
  
- 	ret = sdma_event_remap(sdma);
- 	if (ret)
--		goto err_init;
-+		goto err_irq;
- 
- 	if (sdma->drvdata->script_addrs)
- 		sdma_add_scripts(sdma, sdma->drvdata->script_addrs);
-@@ -2365,7 +2363,7 @@ static int sdma_probe(struct platform_device *pdev)
- 	ret = dma_async_device_register(&sdma->dma_device);
- 	if (ret) {
- 		dev_err(dev, "unable to register\n");
--		goto err_init;
-+		goto err_irq;
- 	}
- 
- 	ret = of_dma_controller_register(np, sdma_xlate, sdma);
-@@ -2401,8 +2399,6 @@ static int sdma_probe(struct platform_device *pdev)
- 
- err_register:
- 	dma_async_device_unregister(&sdma->dma_device);
--err_init:
--	kfree(sdma->script_addrs);
- err_irq:
- 	clk_unprepare(sdma->clk_ahb);
- err_clk:
-@@ -2417,7 +2413,6 @@ static void sdma_remove(struct platform_device *pdev)
- 
- 	devm_free_irq(&pdev->dev, sdma->irq, sdma);
- 	dma_async_device_unregister(&sdma->dma_device);
--	kfree(sdma->script_addrs);
- 	clk_unprepare(sdma->clk_ahb);
- 	clk_unprepare(sdma->clk_ipg);
- 	/* Kill the tasklet */
++	devm_add_action_or_reset(dev, sdma_dma_of_dma_controller_unregister_action, sdma);
++
+ 	spba_bus = of_find_compatible_node(NULL, NULL, "fsl,spba-bus");
+ 	ret = of_address_to_resource(spba_bus, 0, &spba_res);
+ 	if (!ret) {
 
 -- 
 2.47.2
