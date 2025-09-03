@@ -1,26 +1,27 @@
 Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [185.203.201.7])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F0422EC548
-	for <dmaengine@vger.kernel.org>; Wed,  3 Sep 2025 13:06:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D980D3043DC
+	for <dmaengine@vger.kernel.org>; Wed,  3 Sep 2025 13:06:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.203.201.7
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756904784; cv=none; b=dYLCBNBxtUOS0j4t8gRoxIMuUO2PUSzuXL3RXq/3uSQxk4rQLMBsqIH0Q/08cDwD+yr0z5RV2GYmgPjg5p1B3r9pJ0DIoKkek9k9ps/tFMc+W8rds63Ms1gwtfEh+nKqsasf6DBqRPLSYa5z8Q5JoIxjnfuEzj7m/9TNvDQkqB8=
+	t=1756904785; cv=none; b=TFremObOJAiU5c5vhCGkUJtU37ZILNEUWXuhAmRhBWH1rwFdfhh23SICBq24wxwOfPpEQfQcyYmu5tfSFlArVxfb8jMP7xeiYMqNR4G6Ejqm5ABtUyl+HQbohH5Te/Jnkn+jmdFa9w/C7qlRN0GwgMDeXuwooqVNhnUVZ61u+vU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756904784; c=relaxed/simple;
-	bh=dO5AouNWL4aNepxpem6zpAWY9cfFLUMSDdsjvpTHUbY=;
+	s=arc-20240116; t=1756904785; c=relaxed/simple;
+	bh=l+p0YSax35ZqpVK6u/Uh/pohy4HYLDe2vbH2/NkXimo=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=BL6Qhi6wbr/XvhBNspkzs+QAvj2neevObf2FajRD+uB59/YBvtV+SnXYsZAbCwwab56nhS0arJHuogDsAj1PH7akLxr47o5LHewSzTSinwZaXP+l7WhyjuOfGqmMy01UL+3UuJ/MsQGUmsWaceZtYZp09qB3PUorjwPqJuTxiUA=
+	 In-Reply-To:To:Cc; b=aUKGFuui9l1UV7u24afdSPFn8d8sQh6q9zTCEmMHKI0ppTbaYtbbkh3RRLOUwhinfXd9miF70eTZOqVcoW6lytFCdAYAkEUNHTBVQ6vSm8o7NDGbcRlWVNERlj21NTM81W1yHFK1x2P0A1XVR2x6q9H2Bpx/iyUmAb+IBJvfOOs=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de; spf=pass smtp.mailfrom=pengutronix.de; arc=none smtp.client-ip=185.203.201.7
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pengutronix.de
 Received: from dude02.red.stw.pengutronix.de ([2a0a:edc0:0:1101:1d::28])
 	by metis.whiteo.stw.pengutronix.de with esmtp (Exim 4.92)
 	(envelope-from <m.felsch@pengutronix.de>)
-	id 1utnBl-00006Z-Vo; Wed, 03 Sep 2025 15:06:13 +0200
+	id 1utnBm-00006Z-2s; Wed, 03 Sep 2025 15:06:14 +0200
 From: Marco Felsch <m.felsch@pengutronix.de>
-Date: Wed, 03 Sep 2025 15:06:17 +0200
-Subject: [PATCH 09/11] dmaengine: add support for device_link
+Date: Wed, 03 Sep 2025 15:06:19 +0200
+Subject: [PATCH 11/11] dmaengine: imx-sdma: fix spba-bus handling for
+ i.MX8M
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -29,7 +30,7 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250903-v6-16-topic-sdma-v1-9-ac7bab629e8b@pengutronix.de>
+Message-Id: <20250903-v6-16-topic-sdma-v1-11-ac7bab629e8b@pengutronix.de>
 References: <20250903-v6-16-topic-sdma-v1-0-ac7bab629e8b@pengutronix.de>
 In-Reply-To: <20250903-v6-16-topic-sdma-v1-0-ac7bab629e8b@pengutronix.de>
 To: Vinod Koul <vkoul@kernel.org>, Shawn Guo <shawnguo@kernel.org>, 
@@ -45,45 +46,154 @@ X-SA-Exim-Mail-From: m.felsch@pengutronix.de
 X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
 X-PTX-Original-Recipient: dmaengine@vger.kernel.org
 
-Add support to create device_links between dmaengine suppliers and the
-dma consumers. This shifts the device dep-chain teardown/bringup logic
-to the driver core.
+Starting with i.MX8M* devices there are multiple spba-busses so we can't
+just search the whole DT for the first spba-bus match and take it.
+Instead we need to check for each device to which bus it belongs and
+setup the spba_{start,end}_addr accordingly per sdma_channel.
 
-Moving this to the core allows the dmaengine drivers to simplify the
-.remove() hooks and also to ensure that no dmaengine driver is ever
-removed before the consumer is removed.
+While on it, don't ignore errors from of_address_to_resource() if they
+are valid.
 
 Signed-off-by: Marco Felsch <m.felsch@pengutronix.de>
 ---
- drivers/dma/dmaengine.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/dma/imx-sdma.c | 56 ++++++++++++++++++++++++++++++++++----------------
+ 1 file changed, 38 insertions(+), 18 deletions(-)
 
-diff --git a/drivers/dma/dmaengine.c b/drivers/dma/dmaengine.c
-index 758fcd0546d8bde8e8dddc6039848feeb1e24475..a50652bc70b8ce9d4edabfaa781b3432ee47d31e 100644
---- a/drivers/dma/dmaengine.c
-+++ b/drivers/dma/dmaengine.c
-@@ -817,6 +817,7 @@ struct dma_chan *dma_request_chan(struct device *dev, const char *name)
- 	struct fwnode_handle *fwnode = dev_fwnode(dev);
- 	struct dma_device *d, *_d;
- 	struct dma_chan *chan = NULL;
-+	struct device_link *dl;
+diff --git a/drivers/dma/imx-sdma.c b/drivers/dma/imx-sdma.c
+index c31785977351163d6fddf4d8b2f90dfebb508400..3ef415aa578a96e35a969ac2488d08bcab9fadc3 100644
+--- a/drivers/dma/imx-sdma.c
++++ b/drivers/dma/imx-sdma.c
+@@ -461,6 +461,8 @@ struct sdma_channel {
+ 	dma_addr_t			per_address, per_address2;
+ 	unsigned long			event_mask[2];
+ 	unsigned long			watermark_level;
++	u32				spba_start_addr;
++	u32				spba_end_addr;
+ 	u32				shp_addr, per_addr;
+ 	enum dma_status			status;
+ 	struct imx_dma_data		data;
+@@ -534,8 +536,6 @@ struct sdma_engine {
+ 	u32				script_number;
+ 	struct sdma_script_start_addrs	*script_addrs;
+ 	const struct sdma_driver_data	*drvdata;
+-	u32				spba_start_addr;
+-	u32				spba_end_addr;
+ 	unsigned int			irq;
+ 	dma_addr_t			bd0_phys;
+ 	struct sdma_buffer_descriptor	*bd0;
+@@ -1236,8 +1236,6 @@ static void sdma_channel_synchronize(struct dma_chan *chan)
  
- 	if (is_of_node(fwnode))
- 		chan = of_dma_request_slave_channel(to_of_node(fwnode), name);
-@@ -858,6 +859,13 @@ struct dma_chan *dma_request_chan(struct device *dev, const char *name)
- 	/* No functional issue if it fails, users are supposed to test before use */
- #endif
+ static void sdma_set_watermarklevel_for_p2p(struct sdma_channel *sdmac)
+ {
+-	struct sdma_engine *sdma = sdmac->sdma;
+-
+ 	int lwml = sdmac->watermark_level & SDMA_WATERMARK_LEVEL_LWML;
+ 	int hwml = (sdmac->watermark_level & SDMA_WATERMARK_LEVEL_HWML) >> 16;
  
-+	dl = device_link_add(dev, chan->device->dev, DL_FLAG_AUTOREMOVE_CONSUMER);
-+	if (!dl) {
-+		dev_err(dev, "failed to create device link to %s\n",
-+			dev_name(chan->device->dev));
-+		return ERR_PTR(-EINVAL);
+@@ -1263,12 +1261,12 @@ static void sdma_set_watermarklevel_for_p2p(struct sdma_channel *sdmac)
+ 		swap(sdmac->event_mask[0], sdmac->event_mask[1]);
+ 	}
+ 
+-	if (sdmac->per_address2 >= sdma->spba_start_addr &&
+-			sdmac->per_address2 <= sdma->spba_end_addr)
++	if (sdmac->per_address2 >= sdmac->spba_start_addr &&
++			sdmac->per_address2 <= sdmac->spba_end_addr)
+ 		sdmac->watermark_level |= SDMA_WATERMARK_LEVEL_SP;
+ 
+-	if (sdmac->per_address >= sdma->spba_start_addr &&
+-			sdmac->per_address <= sdma->spba_end_addr)
++	if (sdmac->per_address >= sdmac->spba_start_addr &&
++			sdmac->per_address <= sdmac->spba_end_addr)
+ 		sdmac->watermark_level |= SDMA_WATERMARK_LEVEL_DP;
+ 
+ 	sdmac->watermark_level |= SDMA_WATERMARK_LEVEL_CONT;
+@@ -1447,6 +1445,31 @@ static void sdma_desc_free(struct virt_dma_desc *vd)
+ 	kfree(desc);
+ }
+ 
++static int sdma_config_spba_slave(struct dma_chan *chan)
++{
++	struct sdma_channel *sdmac = to_sdma_chan(chan);
++	struct device_node *spba_bus;
++	struct resource spba_res;
++	int ret;
++
++	spba_bus = of_get_parent(chan->slave->of_node);
++	/* Device doesn't belong to the spba-bus */
++	if (!of_device_is_compatible(spba_bus, "fsl,spba-bus"))
++		return 0;
++
++	ret = of_address_to_resource(spba_bus, 0, &spba_res);
++	of_node_put(spba_bus);
++	if (ret) {
++		dev_err(sdmac->sdma->dev, "Failed to get spba-bus resources\n");
++		return -EINVAL;
 +	}
 +
- 	chan->name = kasprintf(GFP_KERNEL, "dma:%s", name);
- 	if (!chan->name)
- 		return chan;
++	sdmac->spba_start_addr = spba_res.start;
++	sdmac->spba_end_addr = spba_res.end;
++
++	return 0;
++}
++
+ static int sdma_alloc_chan_resources(struct dma_chan *chan)
+ {
+ 	struct sdma_channel *sdmac = to_sdma_chan(chan);
+@@ -1527,6 +1550,8 @@ static void sdma_free_chan_resources(struct dma_chan *chan)
+ 
+ 	sdmac->event_id0 = 0;
+ 	sdmac->event_id1 = 0;
++	sdmac->spba_start_addr = 0;
++	sdmac->spba_end_addr = 0;
+ 
+ 	sdma_set_channel_priority(sdmac, 0);
+ 
+@@ -1837,6 +1862,7 @@ static int sdma_config(struct dma_chan *chan,
+ {
+ 	struct sdma_channel *sdmac = to_sdma_chan(chan);
+ 	struct sdma_engine *sdma = sdmac->sdma;
++	int ret;
+ 
+ 	memcpy(&sdmac->slave_config, dmaengine_cfg, sizeof(*dmaengine_cfg));
+ 
+@@ -1867,6 +1893,10 @@ static int sdma_config(struct dma_chan *chan,
+ 		sdma_event_enable(sdmac, sdmac->event_id1);
+ 	}
+ 
++	ret = sdma_config_spba_slave(chan);
++	if (ret)
++		return ret;
++
+ 	return 0;
+ }
+ 
+@@ -2251,11 +2281,9 @@ static int sdma_probe(struct platform_device *pdev)
+ {
+ 	struct device *dev = &pdev->dev;
+ 	struct device_node *np = dev->of_node;
+-	struct device_node *spba_bus;
+ 	const char *fw_name;
+ 	int ret;
+ 	int irq;
+-	struct resource spba_res;
+ 	int i;
+ 	struct sdma_engine *sdma;
+ 	s32 *saddr_arr;
+@@ -2379,14 +2407,6 @@ static int sdma_probe(struct platform_device *pdev)
+ 
+ 	devm_add_action_or_reset(dev, sdma_dma_of_dma_controller_unregister_action, sdma);
+ 
+-	spba_bus = of_find_compatible_node(NULL, NULL, "fsl,spba-bus");
+-	ret = of_address_to_resource(spba_bus, 0, &spba_res);
+-	if (!ret) {
+-		sdma->spba_start_addr = spba_res.start;
+-		sdma->spba_end_addr = spba_res.end;
+-	}
+-	of_node_put(spba_bus);
+-
+ 	/*
+ 	 * Because that device tree does not encode ROM script address,
+ 	 * the RAM script in firmware is mandatory for device tree
 
 -- 
 2.47.2
