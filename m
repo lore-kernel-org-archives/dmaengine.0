@@ -1,110 +1,111 @@
-Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [185.203.201.7])
+Received: from mail.thorsis.com (mail.thorsis.com [217.92.40.78])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C6943019D3
-	for <dmaengine@vger.kernel.org>; Wed,  3 Sep 2025 13:06:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.203.201.7
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF6FF2E4257;
+	Wed,  3 Sep 2025 13:16:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.92.40.78
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756904786; cv=none; b=LPGkM/vB9/EIEKF3WlrZI1EIc/NHpyBPL3uR9ChKmSRlt/+nXWDOYyDNiD9p9LzsnZ+caoE5kKKSQBBk7XrThvluB8dJj0FgPFnjdK1FUsH/kkkTeOlfXZDsYKvhGWgpMiOAFb81bmRVnbYyXZyF6cLB0AOwkmNug/meEmXN0pA=
+	t=1756905398; cv=none; b=tTGXlf4/fgkDEDKn144ePxoxrjo4WAQjcRHw87aFliG9/ngrvwOI3W2BThmI6yLonxabVTiuDATMgu5mKvyBZ8SDcMlePAAXhmZSj9UxtpRfCrylA/LAiXk/YXAN9uYPMXRqY7IOGKGw8LYXqBJsN1Gk3MTgUdgK7u2y3DJP+wE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756904786; c=relaxed/simple;
-	bh=XDKPHV75wgIjXXUhw4V5YtDkPybmhaqtXj422XNlmpk=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=H/psOxceE/wYgfKO5zANadMc4ddF091AALxquvS2xEVpwyfI2DtI3kgHSMDc1FyfUM+pW78CqwNEoOwV8AdXNCwuHhnAC9xqX+Xmiq6d2zxzg3yk1NKnxMNqWmpoObnbOSlOvKbaXpMLozK/4C7Hw0Zq42hvo/Xkvasg+2pfaEs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de; spf=pass smtp.mailfrom=pengutronix.de; arc=none smtp.client-ip=185.203.201.7
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pengutronix.de
-Received: from dude02.red.stw.pengutronix.de ([2a0a:edc0:0:1101:1d::28])
-	by metis.whiteo.stw.pengutronix.de with esmtp (Exim 4.92)
-	(envelope-from <m.felsch@pengutronix.de>)
-	id 1utnBm-00006Z-1K; Wed, 03 Sep 2025 15:06:14 +0200
-From: Marco Felsch <m.felsch@pengutronix.de>
-Date: Wed, 03 Sep 2025 15:06:18 +0200
-Subject: [PATCH 10/11] dmaengine: imx-sdma: drop remove callback
+	s=arc-20240116; t=1756905398; c=relaxed/simple;
+	bh=nh/Jvj+3PfiFDjRFpwIMNEZfJ4VoTazjot8RleOlFQg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=KbjbBLawTWlEFjEt1hvXjnszJibpQKISg+76OkGxyFv8GLX477kyTwWXFFx+CgMgvd3SPSNmF3s8a3mtjWbZrEDUZw++2hKtdsNfx+xf0bA1aXlf/+WfYvQba+smGnlCceipagfZva5sgbHOm1dOdAtwVQJO3s1zNq9968z/OT0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=thorsis.com; spf=pass smtp.mailfrom=thorsis.com; dkim=pass (2048-bit key) header.d=thorsis.com header.i=@thorsis.com header.b=Mi40bUy3; arc=none smtp.client-ip=217.92.40.78
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=thorsis.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=thorsis.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=thorsis.com header.i=@thorsis.com header.b="Mi40bUy3"
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id C4D4D1487E25;
+	Wed,  3 Sep 2025 15:16:16 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=thorsis.com; s=dkim;
+	t=1756905386; h=from:subject:date:message-id:to:cc:mime-version:content-type:
+	 in-reply-to:references; bh=aHqRa8jsx4scxQoHsogOHYRV2hwQ6tQgcKa606SaBXY=;
+	b=Mi40bUy3Qk6XWegkRfPM2jnv4dDk/bMr2lj8J/pF4Gri48WBAkFX2c8VfueH8QqgCf2Ng8
+	j5AcfYSFfVjl6qZmg4jeiz3c6SMpf4oy8SG4v5oJmU7JXVKjlUK0bGcYIOJWNDqUGyZcms
+	Sff7vKAfUKeT6nvfJzbKbjFGimAEMj1wL7WqwQ3CZM5jPi07ldAlfZilQmSE3wtlrNL8Gv
+	OYP7T1CFZSdYRfuoHH7n6uRcTI+N6s7ysLFA6qazlJP/eibZT1JQi7uKBLnEPtQqfcfvvh
+	qz6NHVk6ppVZmLyBYDYcwkHh/+haGNIMfW6/g/QOTfw6wH67NV3Kug8C4llwIQ==
+Date: Wed, 3 Sep 2025 15:16:10 +0200
+From: Alexander Dahl <ada@thorsis.com>
+To: Claudiu Beznea <claudiu.beznea@tuxon.dev>
+Cc: Vinod Koul <vkoul@kernel.org>, linux@armlinux.org.uk,
+	nicolas.ferre@microchip.com, alexandre.belloni@bootlin.com,
+	catalin.marinas@arm.com, will@kernel.org, olivia@selenic.com,
+	herbert@gondor.apana.org.au, davem@davemloft.net,
+	andi.shyti@kernel.org, lee@kernel.org, broonie@kernel.org,
+	gregkh@linuxfoundation.org, jirislaby@kernel.org, arnd@kernel.org,
+	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+	linux-crypto@vger.kernel.org, dmaengine@vger.kernel.org,
+	linux-i2c@vger.kernel.org, linux-spi@vger.kernel.org,
+	linux-serial@vger.kernel.org, o.rempel@pengutronix.de,
+	daniel.machon@microchip.com, Robert Marko <robert.marko@sartura.hr>,
+	luka.perkov@sartura.hr
+Subject: Re: (subset) [PATCH v8 00/10] arm64: lan969x: Add support for
+ Microchip LAN969x SoC
+Message-ID: <20250903-gratify-sustained-9acc011bc3c9@thorsis.com>
+Mail-Followup-To: Claudiu Beznea <claudiu.beznea@tuxon.dev>,
+	Vinod Koul <vkoul@kernel.org>, linux@armlinux.org.uk,
+	nicolas.ferre@microchip.com, alexandre.belloni@bootlin.com,
+	catalin.marinas@arm.com, will@kernel.org, olivia@selenic.com,
+	herbert@gondor.apana.org.au, davem@davemloft.net,
+	andi.shyti@kernel.org, lee@kernel.org, broonie@kernel.org,
+	gregkh@linuxfoundation.org, jirislaby@kernel.org, arnd@kernel.org,
+	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+	linux-crypto@vger.kernel.org, dmaengine@vger.kernel.org,
+	linux-i2c@vger.kernel.org, linux-spi@vger.kernel.org,
+	linux-serial@vger.kernel.org, o.rempel@pengutronix.de,
+	daniel.machon@microchip.com, Robert Marko <robert.marko@sartura.hr>,
+	luka.perkov@sartura.hr
+References: <20250702183856.1727275-1-robert.marko@sartura.hr>
+ <175327377884.189941.15214972441246653208.b4-ty@kernel.org>
+ <bac5390f-725a-43db-a2b6-17a68d0d733c@tuxon.dev>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250903-v6-16-topic-sdma-v1-10-ac7bab629e8b@pengutronix.de>
-References: <20250903-v6-16-topic-sdma-v1-0-ac7bab629e8b@pengutronix.de>
-In-Reply-To: <20250903-v6-16-topic-sdma-v1-0-ac7bab629e8b@pengutronix.de>
-To: Vinod Koul <vkoul@kernel.org>, Shawn Guo <shawnguo@kernel.org>, 
- Sascha Hauer <s.hauer@pengutronix.de>, 
- Pengutronix Kernel Team <kernel@pengutronix.de>, 
- Fabio Estevam <festevam@gmail.com>, Jiada Wang <jiada_wang@mentor.com>
-Cc: dmaengine@vger.kernel.org, imx@lists.linux.dev, 
- linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, 
- Marco Felsch <m.felsch@pengutronix.de>
-X-Mailer: b4 0.14.2
-X-SA-Exim-Connect-IP: 2a0a:edc0:0:1101:1d::28
-X-SA-Exim-Mail-From: m.felsch@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: dmaengine@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <bac5390f-725a-43db-a2b6-17a68d0d733c@tuxon.dev>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Last-TLS-Session-Version: TLSv1.3
 
-The whole driver was converted to the devm APIs except for this last
-for-loop. This loop is buggy due to three reasons:
- 1) It removes the channels without removing the users first. This can
-    lead to very bad situations.
- 2) The loop starts at 0 and which is channel0 which is a special
-    control channel not registered via vchan_init(). Therefore the
-    remove() always Oops because of NULL pointer exception.
- 3) sdma_free_chan_resources() disable the clks unconditional without
-    checking if the clks are enabled. This is done for all
-    MAX_DMA_CHANNELS which hang the system if there is at least one unused
-    channel.
+Hello,
 
-Since the dmaengine core supports devlinks we already addressed the
-first issue.
+Am Thu, Jul 31, 2025 at 11:05:07AM +0300 schrieb Claudiu Beznea:
+> Hi, Vinod,
+> 
+> On 23.07.2025 15:29, Vinod Koul wrote:
+> > 
+> > On Wed, 02 Jul 2025 20:35:58 +0200, Robert Marko wrote:
+> >> This patch series adds basic support for Microchip LAN969x SoC.
+> >>
+> >> It introduces the SoC ARCH symbol itself under the ARCH_MICROCHIP symbol
+> >> which allows to avoid the need to change dependencies of the drivers that
+> >> are shared for Microchip SoC-s in the future.
+> >>
+> >> DTS and further driver will be added in follow-up series.
+> >>
+> >> [...]
+> > 
+> > Applied, thanks!
+> > 
+> > [08/10] dma: xdmac: make it selectable for ARCH_MICROCHIP
+> >         commit: e56982021f5303b2523ac247e3c79b063459d012
+> 
+> As this one depends, as well, on the first 3 patches in the series (Robert,
+> please correct me if I'm wrong), and there are still discussions ongoing,
+> can you please drop it until all is clear on the first 3 patches?
+> 
+> Otherwise, applying only this patch will lead to AT91 XDMAC driver not
+> being built for SAMA5{D2, D3, D4}, SAMA7{G5, D65} SoCs. Linux is not
+> booting on SAMA7G5 SoC only with this patch applied.
 
-The devlink support also addresses the third issue because during the
-consumer teardown phase each requested channel is dropped accordingly so
-the dmaengine driver doesn't need to this.
+Second that.  Just tested v6.17-rc4 on sam9x60 and DMA is not working
+at all because this driver can not be selected anymore.  This must be
+fixed before v6.17 release please!
 
-The second issue is fixed by not doing anything on channel0.
-
-To sum-up, all issues are fixed by dropping the .remove() callback and
-let the frameworks do their job.
-
-Signed-off-by: Marco Felsch <m.felsch@pengutronix.de>
----
- drivers/dma/imx-sdma.c | 14 --------------
- 1 file changed, 14 deletions(-)
-
-diff --git a/drivers/dma/imx-sdma.c b/drivers/dma/imx-sdma.c
-index 6c6d38b202dd2deffc36b1bd27bc7c60de3d7403..c31785977351163d6fddf4d8b2f90dfebb508400 100644
---- a/drivers/dma/imx-sdma.c
-+++ b/drivers/dma/imx-sdma.c
-@@ -2405,25 +2405,11 @@ static int sdma_probe(struct platform_device *pdev)
- 	return 0;
- }
- 
--static void sdma_remove(struct platform_device *pdev)
--{
--	struct sdma_engine *sdma = platform_get_drvdata(pdev);
--	int i;
--
--	/* Kill the tasklet */
--	for (i = 0; i < MAX_DMA_CHANNELS; i++) {
--		struct sdma_channel *sdmac = &sdma->channel[i];
--
--		sdma_free_chan_resources(&sdmac->vc.chan);
--	}
--}
--
- static struct platform_driver sdma_driver = {
- 	.driver		= {
- 		.name	= "imx-sdma",
- 		.of_match_table = sdma_dt_ids,
- 	},
--	.remove		= sdma_remove,
- 	.probe		= sdma_probe,
- };
- 
-
--- 
-2.47.2
-
+Greets
+Alex
