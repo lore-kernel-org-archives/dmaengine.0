@@ -1,26 +1,27 @@
 Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [185.203.201.7])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C3312DF12D
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C85E32E5B0C
 	for <dmaengine@vger.kernel.org>; Thu, 11 Sep 2025 21:57:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.203.201.7
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757627824; cv=none; b=T5B0H+nfjt3lNB/i8jHoer7LyTdIrt+6sBiiN8aTSzUPkR93op3fYMr6TzfZPNwqj3HnJ8J5zDWcXkBMulYIXKVB4WA5MMvo0VZAYhKumB2nw/79PdxyTeCqBuYHpJdSh2dbc3Ua9q0GFySQdRQK+/0fTx9YMg3/cnWTF00i7vQ=
+	t=1757627824; cv=none; b=Bq0M35wpDbMTvEQ1LOVx373bfoWQYrO3+V76yt3D0HuAv/qCOBuxh8mQyvsz/WFv1OoztMVyhutMHtsVrb7FE8I6LEs8+CD4atVbPld7N+rKKZUonPASkP/x/NfiDfxYJV821eGm5039RmpuF6MdNZ6gE26Xz9D4w9Z4XLk2lY8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1757627824; c=relaxed/simple;
-	bh=9JBExctI+l2MIs5a270p1JQ4VYHxvk44V9VY5IfRnR0=;
+	bh=cL1unuE3WF08z+2/1hEr0+OZ0Bd6FXIqUHhnJzPyAA4=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=nyHfli0t1K+4X3L6hOZeEb6s8ynpZNaDDF0kGafPj325PV+6hNG/RzZ3HXjmkwE8vHjYtGUKIys7Mbh//uzR+zDXAfCsGN4LfuB8XsrMnszuVxg/KbIWJNy+kU5cIrBJmg/67UGauxyBfMzjCkufD6389S63h1UDPwFlhx9LHOk=
+	 In-Reply-To:To:Cc; b=ErBnpHWwV39bA2FnJxZQzxMTuXFmykiARYZlh1XmENwZrjM38R6H1TmpTaSJYEl/eYy8xaK4tc7EDqh2wH4/dPuoUHoWzlEeeAfYRtfu5ecW1xlh+aI9cyk/I0X/gtUh5QM7sIZjEkPVpWcnEshzS25MoZQeBd6TBjIKVjy41HU=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de; spf=pass smtp.mailfrom=pengutronix.de; arc=none smtp.client-ip=185.203.201.7
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pengutronix.de
 Received: from dude02.red.stw.pengutronix.de ([2a0a:edc0:0:1101:1d::28])
 	by metis.whiteo.stw.pengutronix.de with esmtp (Exim 4.92)
 	(envelope-from <m.felsch@pengutronix.de>)
-	id 1uwpHe-0004g5-5B; Thu, 11 Sep 2025 23:56:50 +0200
+	id 1uwpHe-0004g5-ES; Thu, 11 Sep 2025 23:56:50 +0200
 From: Marco Felsch <m.felsch@pengutronix.de>
-Date: Thu, 11 Sep 2025 23:56:45 +0200
-Subject: [PATCH v2 04/10] dmaengine: imx-sdma: sdma_remove minor cleanups
+Date: Thu, 11 Sep 2025 23:56:50 +0200
+Subject: [PATCH v2 09/10] dmaengine: imx-sdma: make use of
+ devm_add_action_or_reset to unregiser the dma-controller
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -29,7 +30,7 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250911-v6-16-topic-sdma-v2-4-d315f56343b5@pengutronix.de>
+Message-Id: <20250911-v6-16-topic-sdma-v2-9-d315f56343b5@pengutronix.de>
 References: <20250911-v6-16-topic-sdma-v2-0-d315f56343b5@pengutronix.de>
 In-Reply-To: <20250911-v6-16-topic-sdma-v2-0-d315f56343b5@pengutronix.de>
 To: Vinod Koul <vkoul@kernel.org>, Shawn Guo <shawnguo@kernel.org>, 
@@ -38,41 +39,59 @@ To: Vinod Koul <vkoul@kernel.org>, Shawn Guo <shawnguo@kernel.org>,
  Fabio Estevam <festevam@gmail.com>, Jiada Wang <jiada_wang@mentor.com>
 Cc: dmaengine@vger.kernel.org, imx@lists.linux.dev, 
  linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, 
- Marco Felsch <m.felsch@pengutronix.de>, Frank Li <Frank.Li@nxp.com>
+ Marco Felsch <m.felsch@pengutronix.de>
 X-Mailer: b4 0.14.2
 X-SA-Exim-Connect-IP: 2a0a:edc0:0:1101:1d::28
 X-SA-Exim-Mail-From: m.felsch@pengutronix.de
 X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
 X-PTX-Original-Recipient: dmaengine@vger.kernel.org
 
-We don't need to set the pdev driver data to NULL since the device will
-be freed anyways.
+Use the devres capabilities to cleanup the driver remove() callback.
 
-Also drop the tasklet_kill() since this is done by the virt-dma driver
-during the vchan_synchronize().
-
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Marco Felsch <m.felsch@pengutronix.de>
 ---
- drivers/dma/imx-sdma.c | 3 ---
- 1 file changed, 3 deletions(-)
+ drivers/dma/imx-sdma.c | 14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/dma/imx-sdma.c b/drivers/dma/imx-sdma.c
-index dab3589e1c8d9efe06e16925c53554f8e22ce679..44411c15029c9b09f307c4b9e3f7b1ab77fa5093 100644
+index d6d0d4300f540268a3ab4a6b14af685f7b93275a..a7e6554ca223e2e980caf2e2dea832db9ad60ed6 100644
 --- a/drivers/dma/imx-sdma.c
 +++ b/drivers/dma/imx-sdma.c
-@@ -2446,11 +2446,8 @@ static void sdma_remove(struct platform_device *pdev)
- 	for (i = 0; i < MAX_DMA_CHANNELS; i++) {
- 		struct sdma_channel *sdmac = &sdma->channel[i];
- 
--		tasklet_kill(&sdmac->vc.task);
- 		sdma_free_chan_resources(&sdmac->vc.chan);
- 	}
--
--	platform_set_drvdata(pdev, NULL);
+@@ -2264,6 +2264,13 @@ static struct dma_chan *sdma_xlate(struct of_phandle_args *dma_spec,
+ 				     ofdma->of_node);
  }
  
- static struct platform_driver sdma_driver = {
++static void sdma_dma_of_dma_controller_unregister_action(void *data)
++{
++	struct sdma_engine *sdma = data;
++
++	of_dma_controller_free(sdma->dev->of_node);
++}
++
+ static void sdma_dma_device_unregister_action(void *data)
+ {
+ 	struct sdma_engine *sdma = data;
+@@ -2408,6 +2415,12 @@ static int sdma_probe(struct platform_device *pdev)
+ 		return ret;
+ 	}
+ 
++	ret = devm_add_action_or_reset(dev, sdma_dma_of_dma_controller_unregister_action, sdma);
++	if (ret) {
++		dev_err(dev, "failed to register of-dma-controller unregister hook\n");
++		return ret;
++	}
++
+ 	/*
+ 	 * Because that device tree does not encode ROM script address,
+ 	 * the RAM script in firmware is mandatory for device tree
+@@ -2431,7 +2444,6 @@ static void sdma_remove(struct platform_device *pdev)
+ 	struct sdma_engine *sdma = platform_get_drvdata(pdev);
+ 	int i;
+ 
+-	of_dma_controller_free(sdma->dev->of_node);
+ 	/* Kill the tasklet */
+ 	for (i = 0; i < MAX_DMA_CHANNELS; i++) {
+ 		struct sdma_channel *sdmac = &sdma->channel[i];
 
 -- 
 2.47.3
