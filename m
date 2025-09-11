@@ -1,27 +1,26 @@
 Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [185.203.201.7])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DEA22E5B13
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C3312DF12D
 	for <dmaengine@vger.kernel.org>; Thu, 11 Sep 2025 21:57:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.203.201.7
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757627823; cv=none; b=euREzQirIfS88+mTHKRu5FqI/m3Lu53dloRCWjaz6kbHsqrALPXuIHpnAdH+BMavV8jzwLCFoAOSBzK/PlM6ry2GojEbVwhaPkFSMKkIyhd047dGr1l06iAeKvmZ4YezU1YR4H3bXz7ynl1+NiqfMG9iMqH8ghJjFFLlVsD6/gs=
+	t=1757627824; cv=none; b=T5B0H+nfjt3lNB/i8jHoer7LyTdIrt+6sBiiN8aTSzUPkR93op3fYMr6TzfZPNwqj3HnJ8J5zDWcXkBMulYIXKVB4WA5MMvo0VZAYhKumB2nw/79PdxyTeCqBuYHpJdSh2dbc3Ua9q0GFySQdRQK+/0fTx9YMg3/cnWTF00i7vQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757627823; c=relaxed/simple;
-	bh=9zF4mej1ibTbrnImtNt9POEB2AmOALM3WqplmmIKV4Y=;
+	s=arc-20240116; t=1757627824; c=relaxed/simple;
+	bh=9JBExctI+l2MIs5a270p1JQ4VYHxvk44V9VY5IfRnR0=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=IeIOhFDAR7MlWjGD/c+pPm7ALv1jBCs0ctnYvKo9xcDcYm2GIOVwH6zpWBNAuPj7lM5MijdbfNshRKAFen3emZkaPk8mGGLykAwSHkpkEbz3fz02Zya/9XTCmgPpYYfyEsBLADQxrZVRAEyld5fkvA9byIXPQ7tflBBCVZ4cgt4=
+	 In-Reply-To:To:Cc; b=nyHfli0t1K+4X3L6hOZeEb6s8ynpZNaDDF0kGafPj325PV+6hNG/RzZ3HXjmkwE8vHjYtGUKIys7Mbh//uzR+zDXAfCsGN4LfuB8XsrMnszuVxg/KbIWJNy+kU5cIrBJmg/67UGauxyBfMzjCkufD6389S63h1UDPwFlhx9LHOk=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de; spf=pass smtp.mailfrom=pengutronix.de; arc=none smtp.client-ip=185.203.201.7
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pengutronix.de
 Received: from dude02.red.stw.pengutronix.de ([2a0a:edc0:0:1101:1d::28])
 	by metis.whiteo.stw.pengutronix.de with esmtp (Exim 4.92)
 	(envelope-from <m.felsch@pengutronix.de>)
-	id 1uwpHe-0004g5-0q; Thu, 11 Sep 2025 23:56:50 +0200
+	id 1uwpHe-0004g5-5B; Thu, 11 Sep 2025 23:56:50 +0200
 From: Marco Felsch <m.felsch@pengutronix.de>
-Date: Thu, 11 Sep 2025 23:56:42 +0200
-Subject: [PATCH v2 01/10] dmaengine: imx-sdma: fix missing
- of_dma_controller_free()
+Date: Thu, 11 Sep 2025 23:56:45 +0200
+Subject: [PATCH v2 04/10] dmaengine: imx-sdma: sdma_remove minor cleanups
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -30,7 +29,7 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250911-v6-16-topic-sdma-v2-1-d315f56343b5@pengutronix.de>
+Message-Id: <20250911-v6-16-topic-sdma-v2-4-d315f56343b5@pengutronix.de>
 References: <20250911-v6-16-topic-sdma-v2-0-d315f56343b5@pengutronix.de>
 In-Reply-To: <20250911-v6-16-topic-sdma-v2-0-d315f56343b5@pengutronix.de>
 To: Vinod Koul <vkoul@kernel.org>, Shawn Guo <shawnguo@kernel.org>, 
@@ -39,40 +38,41 @@ To: Vinod Koul <vkoul@kernel.org>, Shawn Guo <shawnguo@kernel.org>,
  Fabio Estevam <festevam@gmail.com>, Jiada Wang <jiada_wang@mentor.com>
 Cc: dmaengine@vger.kernel.org, imx@lists.linux.dev, 
  linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, 
- Marco Felsch <m.felsch@pengutronix.de>
+ Marco Felsch <m.felsch@pengutronix.de>, Frank Li <Frank.Li@nxp.com>
 X-Mailer: b4 0.14.2
 X-SA-Exim-Connect-IP: 2a0a:edc0:0:1101:1d::28
 X-SA-Exim-Mail-From: m.felsch@pengutronix.de
 X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
 X-PTX-Original-Recipient: dmaengine@vger.kernel.org
 
-Add the missing of_dma_controller_free() to free the resources allocated
-via of_dma_controller_register() during probe(). The missing free was
-introduced long time ago  by commit 23e118113782 ("dma: imx-sdma: use
-module_platform_driver for SDMA driver") while adding a proper .remove()
-implementation.
+We don't need to set the pdev driver data to NULL since the device will
+be freed anyways.
 
-Use the driver remove() callback to make it possible to backport this
-commit.
+Also drop the tasklet_kill() since this is done by the virt-dma driver
+during the vchan_synchronize().
 
-Fixes: 23e118113782 ("dma: imx-sdma: use module_platform_driver for SDMA driver")
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Marco Felsch <m.felsch@pengutronix.de>
 ---
- drivers/dma/imx-sdma.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/dma/imx-sdma.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
 diff --git a/drivers/dma/imx-sdma.c b/drivers/dma/imx-sdma.c
-index 02a85d6f1bea2df7d355858094c0c0b0bd07148e..3ecb917214b1268b148a29df697b780bc462afa4 100644
+index dab3589e1c8d9efe06e16925c53554f8e22ce679..44411c15029c9b09f307c4b9e3f7b1ab77fa5093 100644
 --- a/drivers/dma/imx-sdma.c
 +++ b/drivers/dma/imx-sdma.c
-@@ -2418,6 +2418,7 @@ static void sdma_remove(struct platform_device *pdev)
- 	struct sdma_engine *sdma = platform_get_drvdata(pdev);
- 	int i;
+@@ -2446,11 +2446,8 @@ static void sdma_remove(struct platform_device *pdev)
+ 	for (i = 0; i < MAX_DMA_CHANNELS; i++) {
+ 		struct sdma_channel *sdmac = &sdma->channel[i];
  
-+	of_dma_controller_free(sdma->dev->of_node);
- 	devm_free_irq(&pdev->dev, sdma->irq, sdma);
- 	dma_async_device_unregister(&sdma->dma_device);
- 	kfree(sdma->script_addrs);
+-		tasklet_kill(&sdmac->vc.task);
+ 		sdma_free_chan_resources(&sdmac->vc.chan);
+ 	}
+-
+-	platform_set_drvdata(pdev, NULL);
+ }
+ 
+ static struct platform_driver sdma_driver = {
 
 -- 
 2.47.3
