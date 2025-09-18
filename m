@@ -1,44 +1,44 @@
 Received: from www522.your-server.de (www522.your-server.de [195.201.215.122])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D8902E41E;
-	Thu, 18 Sep 2025 07:37:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8B49244662;
+	Thu, 18 Sep 2025 07:46:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.201.215.122
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758181021; cv=none; b=J7vYVMLsf0s0k9kBI8Jz41vnRUlNx58kmgGe1d7rdz00j9DbV+MGoDIUd+r6e8xu7z4k2gQdKVcPOzz0JoSqX1DTMfEFizKM0EC9feuKvXlRVh07Rs+Sx6LI40VsEo4GYCEwe1Vcqi0YHfv4BLXUKbSxF3JVMMAD16/DYTBt0Us=
+	t=1758181610; cv=none; b=Ws1nclg8Ul49+XWXTCwq0hZC418EHn0X4z9VuzCNMtdBX/9pAtzFiS3WeljbwSmYMK+bKWgzsjpq0tREwSe0C2gbcWhm+v7TDwJXfRJuR7f5JN+kua2MCHXvufR5ioizgcDP9+vd4sr4+dyNuhvf0IiJ6ILjvjkQWTXY66Nyf1w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758181021; c=relaxed/simple;
+	s=arc-20240116; t=1758181610; c=relaxed/simple;
 	bh=w5HW0BpCLTD8OrwMkFN+e0qjESMJICYUfRbSTLJROfs=;
 	h=Mime-Version:Content-Type:Date:Message-Id:Cc:From:To:Subject:
-	 References:In-Reply-To; b=ksReHx8u84q0TKrKYuCide6MUGMad+2vMX43gE/Cbj5DX2G5yxFSfHBtSEpo/fHbWU3nPyt6fDNUdgIDF6Mevg+Ncg2INu8fLITwrzLUnGkXnODpisRxl7UkvBMJCPsHyUl2ATb9UrROfNA/wJPR6cMtJqL1b0PKH5F+mU/dMqg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=folker-schwesinger.de; spf=pass smtp.mailfrom=folker-schwesinger.de; dkim=pass (2048-bit key) header.d=folker-schwesinger.de header.i=@folker-schwesinger.de header.b=NU0u7pVj; arc=none smtp.client-ip=195.201.215.122
+	 References:In-Reply-To; b=kvFjRB3tvFPJH4ExQI69tuUICdOmWMgVhDEqKcbNxYHgvolaPtxCkoHdeBvqTiD4pd+tFm4O6edhutPvdmjzS8wcrgQedrY7sw4RFKwMPApTBBWR0NsQoJWedjZZdVbNG0I0hW8tq+8JQY/PH4eVh9TfeUhnNlt5Qc1sAHY4100=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=folker-schwesinger.de; spf=pass smtp.mailfrom=folker-schwesinger.de; dkim=pass (2048-bit key) header.d=folker-schwesinger.de header.i=@folker-schwesinger.de header.b=EnizF+iZ; arc=none smtp.client-ip=195.201.215.122
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=folker-schwesinger.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=folker-schwesinger.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=folker-schwesinger.de header.i=@folker-schwesinger.de header.b="NU0u7pVj"
+	dkim=pass (2048-bit key) header.d=folker-schwesinger.de header.i=@folker-schwesinger.de header.b="EnizF+iZ"
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
 	d=folker-schwesinger.de; s=default2212; h=In-Reply-To:References:Subject:To:
 	From:Cc:Message-Id:Date:Content-Type:Content-Transfer-Encoding:Mime-Version:
 	Sender:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
 	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID;
-	bh=EF2JvwMr4g7DRklqifcz4XumYYnybiwSa2gvTXwheOk=; b=NU0u7pVj07uFgNnYUttHqC2iLY
-	l4Z8cQobu1E9+hD2ES9xr30AAkAIIglxfNfvtCKbClB1u3KA+gHH/tgn+RKKTLX3fFnnOUG4QvXNX
-	NkV/emb0upMEJZYkYYVgDGgnqvSH0A3BTN50wg+KQ4FUO2dnM7kcxnUqbg0XS6eFM8Hg7aTzertJQ
-	iinODO0UOcpYjqGeERhLz0Y5lAoplCOMHh9vOU5KTQMl8FqkDgkkdDs72w6rQN3+xtBK80OrbDXDm
-	YiVBQY3IaUV5pGw5VhYJiYyTEn/oeNWYR2m1qKS1KFMBvy3dssDkrof9hfRjj+RJXU2mFdqKvN6/H
-	t2n5xyoA==;
+	bh=EF2JvwMr4g7DRklqifcz4XumYYnybiwSa2gvTXwheOk=; b=EnizF+iZQgDygZvrprMPkoxH+r
+	bmlHflwK0jotENxOpC+j4GT5fpjYGV7bSahnPc7omgEpiN81PdKt1mCdE6ysDdaMGN1PNSyxhdyC1
+	42SyKvyCwz7S0zFtIGSBa3jnLMPg8vXTTEmP3jf94E2zb0uyXjx9WI43ym08l5pW/jrmDZDyjMSuA
+	QkUPjvED9VJsMgLOh9onupKMBbfepCFySKnUPSPxhkzaHwPiiF3GzvazkmBnuTDCCCxZQl2RPNcXr
+	33zsCn+Q2h+qXdgUVEgKyNA04FzCL7GZU98kg7HplvKxnux4FnODt/Ez8slySQBSU8A+/2wzhg5En
+	AY8h4kdQ==;
 Received: from sslproxy07.your-server.de ([78.47.199.104])
 	by www522.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
 	(Exim 4.96.2)
 	(envelope-from <dev@folker-schwesinger.de>)
-	id 1uz9CM-000DN7-0F;
-	Thu, 18 Sep 2025 09:36:58 +0200
+	id 1uz97e-000CPT-1u;
+	Thu, 18 Sep 2025 09:32:06 +0200
 Received: from localhost ([127.0.0.1])
 	by sslproxy07.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
 	(Exim 4.96)
 	(envelope-from <dev@folker-schwesinger.de>)
-	id 1uz9CL-0006j2-0t;
-	Thu, 18 Sep 2025 09:36:57 +0200
+	id 1uz97d-0009pW-2N;
+	Thu, 18 Sep 2025 09:32:06 +0200
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -47,8 +47,8 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Date: Thu, 18 Sep 2025 07:36:56 +0000
-Message-Id: <DCVR5KLTP8SD.1K7YIKXC08TWX@folker-schwesinger.de>
+Date: Thu, 18 Sep 2025 07:32:04 +0000
+Message-Id: <DCVR1UNIOUUU.2VF0ODU86VKI2@folker-schwesinger.de>
 Cc: <dmaengine@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
  <linux-kernel@vger.kernel.org>
 From: "Folker Schwesinger" <dev@folker-schwesinger.de>
