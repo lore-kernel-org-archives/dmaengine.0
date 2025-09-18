@@ -1,100 +1,144 @@
-Received: from www522.your-server.de (www522.your-server.de [195.201.215.122])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8B49244662;
-	Thu, 18 Sep 2025 07:46:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.201.215.122
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5EF21D9663;
+	Thu, 18 Sep 2025 09:41:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758181610; cv=none; b=Ws1nclg8Ul49+XWXTCwq0hZC418EHn0X4z9VuzCNMtdBX/9pAtzFiS3WeljbwSmYMK+bKWgzsjpq0tREwSe0C2gbcWhm+v7TDwJXfRJuR7f5JN+kua2MCHXvufR5ioizgcDP9+vd4sr4+dyNuhvf0IiJ6ILjvjkQWTXY66Nyf1w=
+	t=1758188475; cv=none; b=vF88A94Zt6TsjCLS1Ny6g/bEUTpiWfgTib9CgbgnkhAgFTXLQgKneiazkNw4pciTBPC0KsE+KEvHEJmzajH77K+v/R3C6rA6RdF00BnNuO1y05Zj8I9FjsY1X9WG9X9Xrt8jCViNkkqy4aZaXnVY3yO6ox5MSPgNIjyynJ0ACX8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758181610; c=relaxed/simple;
-	bh=w5HW0BpCLTD8OrwMkFN+e0qjESMJICYUfRbSTLJROfs=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:From:To:Subject:
-	 References:In-Reply-To; b=kvFjRB3tvFPJH4ExQI69tuUICdOmWMgVhDEqKcbNxYHgvolaPtxCkoHdeBvqTiD4pd+tFm4O6edhutPvdmjzS8wcrgQedrY7sw4RFKwMPApTBBWR0NsQoJWedjZZdVbNG0I0hW8tq+8JQY/PH4eVh9TfeUhnNlt5Qc1sAHY4100=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=folker-schwesinger.de; spf=pass smtp.mailfrom=folker-schwesinger.de; dkim=pass (2048-bit key) header.d=folker-schwesinger.de header.i=@folker-schwesinger.de header.b=EnizF+iZ; arc=none smtp.client-ip=195.201.215.122
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=folker-schwesinger.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=folker-schwesinger.de
+	s=arc-20240116; t=1758188475; c=relaxed/simple;
+	bh=ixkdTPvFUCxFE95etiwcgzZUrptGeYMATeqD3qe54l8=;
+	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=bJR5kZ3ETPAzgzs0Afqb4k1DOADc2/NLnIJ1PeyS9+AsXspOyCSYtxBvIWmmRvPZwvoVBpg/ncKksPKs247bMWhziN2YmXbzFrJfFU4uLGNTSH3fdT2Kku86l9+EwVSQZnMaYZjxXBpSN6Lb2Uu6tdu0Cpgy+0sycPPPtxoNaU0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=mOkN3dLF; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=folker-schwesinger.de header.i=@folker-schwesinger.de header.b="EnizF+iZ"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=folker-schwesinger.de; s=default2212; h=In-Reply-To:References:Subject:To:
-	From:Cc:Message-Id:Date:Content-Type:Content-Transfer-Encoding:Mime-Version:
-	Sender:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
-	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID;
-	bh=EF2JvwMr4g7DRklqifcz4XumYYnybiwSa2gvTXwheOk=; b=EnizF+iZQgDygZvrprMPkoxH+r
-	bmlHflwK0jotENxOpC+j4GT5fpjYGV7bSahnPc7omgEpiN81PdKt1mCdE6ysDdaMGN1PNSyxhdyC1
-	42SyKvyCwz7S0zFtIGSBa3jnLMPg8vXTTEmP3jf94E2zb0uyXjx9WI43ym08l5pW/jrmDZDyjMSuA
-	QkUPjvED9VJsMgLOh9onupKMBbfepCFySKnUPSPxhkzaHwPiiF3GzvazkmBnuTDCCCxZQl2RPNcXr
-	33zsCn+Q2h+qXdgUVEgKyNA04FzCL7GZU98kg7HplvKxnux4FnODt/Ez8slySQBSU8A+/2wzhg5En
-	AY8h4kdQ==;
-Received: from sslproxy07.your-server.de ([78.47.199.104])
-	by www522.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
-	(Exim 4.96.2)
-	(envelope-from <dev@folker-schwesinger.de>)
-	id 1uz97e-000CPT-1u;
-	Thu, 18 Sep 2025 09:32:06 +0200
-Received: from localhost ([127.0.0.1])
-	by sslproxy07.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
-	(Exim 4.96)
-	(envelope-from <dev@folker-schwesinger.de>)
-	id 1uz97d-0009pW-2N;
-	Thu, 18 Sep 2025 09:32:06 +0200
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="mOkN3dLF"
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58I8BBRf007486;
+	Thu, 18 Sep 2025 09:41:09 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	6SUqQPxDgyxQKMxp0CuYLZT1/B9YWizmbnY5cZquSxs=; b=mOkN3dLFRLcVIq9b
+	p4OgbGeh9IXe8Jw7GTbdSyIPfQJ2pMGlsBobCfNTJAIHgxDsmVluUzu+RKNoTyPR
+	aSDTWPy4wDxWNlIJ/TCBx94DPTJCslhkjkfrbbjtQlGgixu+j2tflHx2osJw2oGG
+	glBHBhgD0zc5aEGcm6hUU3jqMidf6hVDo3KJ6mZgJA2bO6uS7nu2rcGzLG7CElGF
+	BaaWrCtbJjDFdzKeSrFxJP25TrwsCQwsqiyIv14Zp/7a71z2PfASM81OktPMPIdj
+	3aiSkYVV5yZaDfPfTaBfAhsfmKgYhM6ezeYoezWngyUtVnY+3bDzN1SlRSnqVkoa
+	8gZuUQ==
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 498eber9jv-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 18 Sep 2025 09:41:09 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 58I9f8gj029124
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 18 Sep 2025 09:41:09 GMT
+Received: from hu-mdalam-blr.qualcomm.com (10.80.80.8) by
+ nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1748.24; Thu, 18 Sep 2025 02:40:51 -0700
+From: Md Sadre Alam <quic_mdalam@quicinc.com>
+To: <broonie@kernel.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
+        <conor+dt@kernel.org>, <andersson@kernel.org>,
+        <konradybcio@kernel.org>, <vkoul@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-spi@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <dmaengine@vger.kernel.org>
+CC: <quic_varada@quicinc.com>, <quic_mdalam@quicinc.com>
+Subject: [PATCH 4/9] arm64: dts: qcom: ipq5424: Add QPIC SPI NAND controller support
+Date: Thu, 18 Sep 2025 15:10:12 +0530
+Message-ID: <20250918094017.3844338-5-quic_mdalam@quicinc.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20250918094017.3844338-1-quic_mdalam@quicinc.com>
+References: <20250918094017.3844338-1-quic_mdalam@quicinc.com>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Thu, 18 Sep 2025 07:32:04 +0000
-Message-Id: <DCVR1UNIOUUU.2VF0ODU86VKI2@folker-schwesinger.de>
-Cc: <dmaengine@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
- <linux-kernel@vger.kernel.org>
-From: "Folker Schwesinger" <dev@folker-schwesinger.de>
-To: "Suraj Gupta" <suraj.gupta2@amd.com>, <vkoul@kernel.org>,
- <radhey.shyam.pandey@amd.com>, <michal.simek@amd.com>
-Subject: Re: [PATCH 1/3] dmaengine: xilinx_dma: Fix channel idle state
- management in interrupt handler
-X-Mailer: aerc 0.21.0-0-g5549850facc2
-References: <20250917133609.231316-1-suraj.gupta2@amd.com>
- <20250917133609.231316-2-suraj.gupta2@amd.com>
-In-Reply-To: <20250917133609.231316-2-suraj.gupta2@amd.com>
-X-Virus-Scanned: Clear (ClamAV 1.0.9/27765/Tue Sep 16 10:26:41 2025)
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: UpztV1MAUS40zeBxrkZgweRycFLAogfL
+X-Authority-Analysis: v=2.4 cv=H6/bw/Yi c=1 sm=1 tr=0 ts=68cbd3b5 cx=c_pps
+ a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
+ a=GEpy-HfZoHoA:10 a=yJojWOMRYYMA:10 a=COk6AnOGAAAA:8 a=6UWhdCim3U11iwMnUWwA:9
+ a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-GUID: UpztV1MAUS40zeBxrkZgweRycFLAogfL
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTE4MDA3NCBTYWx0ZWRfX5UD0+dg1imQu
+ Gc6HXXFbaR3ISgvtF7cQcCs4q7Z6o0w+NRXCMVL3WbmR3Pwxn4yMLDWJu1DpUmaSKEuRg5XgoL3
+ VX4VOdBUboLy+zdLkYEcEWzxNiL18icJHlnkTHjPqqpW/IjXQRMvYiRqVpGEraFtey34CPTkjqu
+ 96sybM6JhBp+xYp/2Htt8rvNFb5DBuMLFcLbmfkx+h4pNgQsGVv1RiZXc5N9v9kPMlweodE2vLC
+ wSue42xIhT4W0DdQ0NxbIoHAEraZgsdEFe77OO5c5pvmxR8zI/hMB10Sfii3F1L09qKJeAMTlZU
+ vUS8ag/KeCGA6hacEtbTz4npsTiQk2dRV06V0HJ8rP0LgUwOByh3OWdn3TK2I1J2P8a5BZrWeZQ
+ WCBlWqML
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-09-17_01,2025-09-18_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1011 phishscore=0 adultscore=0 impostorscore=0 suspectscore=0
+ malwarescore=0 priorityscore=1501 bulkscore=0 spamscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2509180074
 
-On Wed Sep 17, 2025 at 3:36 PM CEST, Suraj Gupta wrote:
-> Only mark the channel as idle and start new transfers when the active lis=
-t
-> is actually empty, ensuring proper channel state management and avoiding
-> spurious transfer attempts.
->
-> Signed-off-by: Suraj Gupta <suraj.gupta2@amd.com>
-> Fixes: c0bba3a99f07 ("dmaengine: vdma: Add Support for Xilinx AXI Direct =
-Memory Access Engine")
+Add device tree nodes for QPIC SPI NAND flash controller support
+on IPQ5424 SoC.
 
-Tested-by: Folker Schwesinger <dev@folker-schwesinger.de>
+The IPQ5424 SoC includes a QPIC controller that supports SPI NAND flash
+devices with hardware ECC capabilities and DMA support through BAM
+(Bus Access Manager).
 
-> ---
->  drivers/dma/xilinx/xilinx_dma.c | 6 ++++--
->  1 file changed, 4 insertions(+), 2 deletions(-)
->
-> diff --git a/drivers/dma/xilinx/xilinx_dma.c b/drivers/dma/xilinx/xilinx_=
-dma.c
-> index a34d8f0ceed8..9f416eae33d0 100644
-> --- a/drivers/dma/xilinx/xilinx_dma.c
-> +++ b/drivers/dma/xilinx/xilinx_dma.c
-> @@ -1914,8 +1914,10 @@ static irqreturn_t xilinx_dma_irq_handler(int irq,=
- void *data)
->  		      XILINX_DMA_DMASR_DLY_CNT_IRQ)) {
->  		spin_lock(&chan->lock);
->  		xilinx_dma_complete_descriptor(chan);
-> -		chan->idle =3D true;
-> -		chan->start_transfer(chan);
-> +		if (list_empty(&chan->active_list)) {
-> +			chan->idle =3D true;
-> +			chan->start_transfer(chan);
-> +		}
->  		spin_unlock(&chan->lock);
->  	}
-> =20
+Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
+---
+ arch/arm64/boot/dts/qcom/ipq5424.dtsi | 27 +++++++++++++++++++++++++++
+ 1 file changed, 27 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/qcom/ipq5424.dtsi b/arch/arm64/boot/dts/qcom/ipq5424.dtsi
+index ef2b52f3597d..81f133568bb6 100644
+--- a/arch/arm64/boot/dts/qcom/ipq5424.dtsi
++++ b/arch/arm64/boot/dts/qcom/ipq5424.dtsi
+@@ -567,6 +567,33 @@ sdhc: mmc@7804000 {
+ 			status = "disabled";
+ 		};
+ 
++		qpic_bam: dma-controller@7984000 {
++			compatible = "qcom,bam-v1.7.4", "qcom,bam-v1.7.0";
++			reg = <0x0 0x07984000 0x0 0x1c000>;
++			interrupts = <GIC_SPI 109 IRQ_TYPE_LEVEL_HIGH>;
++			clocks = <&gcc GCC_QPIC_AHB_CLK>;
++			clock-names = "bam_clk";
++			#dma-cells = <1>;
++			qcom,ee = <0>;
++			status = "disabled";
++		};
++
++		qpic_nand: spi@79b0000 {
++			compatible = "qcom,ipq5424-snand", "qcom,ipq9574-snand";
++			reg = <0x0 0x079b0000 0x0 0x10000>;
++			#address-cells = <1>;
++			#size-cells = <0>;
++			clocks = <&gcc GCC_QPIC_CLK>,
++				 <&gcc GCC_QPIC_AHB_CLK>,
++				 <&gcc GCC_QPIC_IO_MACRO_CLK>;
++			clock-names = "core", "aon", "iom";
++			dmas = <&qpic_bam 0>,
++			       <&qpic_bam 1>,
++			       <&qpic_bam 2>;
++			dma-names = "tx", "rx", "cmd";
++			status = "disabled";
++		};
++
+ 		intc: interrupt-controller@f200000 {
+ 			compatible = "arm,gic-v3";
+ 			reg = <0 0xf200000 0 0x10000>, /* GICD */
+-- 
+2.34.1
 
