@@ -1,33 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D441A332EBA;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1814033342D;
 	Mon, 20 Oct 2025 17:11:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760980282; cv=none; b=etSkMv4uN4gYTqOmFCRH1IA+/JiPWYi1uEc7hSc9q9IUJgntxl5F2TbjA9sU+6nRcgrp9MAvb/cznt405FZRjaC90WvkxoDl5oCZXEoeakWhCmXI5yFbPH0/UbejFtQu2WtSnBqp6VZ9tIprfRLzIaQSs+3o0/lEiKh2HmrD9lE=
+	t=1760980283; cv=none; b=DIdPmD10y+L32kMT1lFSlzmH9FYYmpFmcZbxr73QpqO6xUb9l5e03qxMzXPbEa/3/jiih4pWB2T0Ka0dqKdFcPdu5WJAD0/Ak4ECwZQKf46vwmPCSX48i5obGr627e/TZWjyEt4RbbmauDNgN9YLKgqRYD4hrmdwGAJVnBCTG9Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760980282; c=relaxed/simple;
-	bh=IrJnFSl0vpD3jGCn+oBa7YlslutdYfojddkzQZM95dk=;
+	s=arc-20240116; t=1760980283; c=relaxed/simple;
+	bh=JAXFSTXHoi2lWkQbmUxgDURhf5LRyBjzq6/sRld0KGE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HzYWJjjZqT3I0RNdRnpf0X6yfb8E+TeUYA7Fpt1awzjwF0obQROxbyRsmb5nHyLAFuVKxX2P61b6aAAIAKjS7YZ1yNQZypEE38DN1jn0fBgGhEc/Uu+QAGv7Ds3Xqf7qw6T9gdRj7cvL8wfqE0DWBLX71gqZDb6UQJpt7KA5gLI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ll1u0K+4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Wtb84kPl9jCOhDokoYyxoHAU6LxrCi2BNKOWY4bkochz3RHtH70hq105xsla7ru0h3I9edEPxFHY1WEZfrQh7hxfOvKOcaPsmHlPV241x6F36VryL1XL51XiSsINaLnMknT9FkR+Mq2pte41HyibxRv9ilXCy98sxC90xWhNBcc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qhSYF2x1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ll1u0K+4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AD3FC113D0;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qhSYF2x1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EF48C2BCB1;
 	Mon, 20 Oct 2025 17:11:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1760980282;
-	bh=IrJnFSl0vpD3jGCn+oBa7YlslutdYfojddkzQZM95dk=;
+	bh=JAXFSTXHoi2lWkQbmUxgDURhf5LRyBjzq6/sRld0KGE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ll1u0K+4eP+gsGLcebeYiSuIsCSyF8lilj4gby7yHw+6Xm3n7BC9FS3+kiL4RKIr8
-	 G9aTXWih4Z4rHUEHbA1WtbrlC1svYG/6DBSJHXtC3rf01P2OcNLgo1BOrzMjxzb6Jq
-	 0omSqngr32C9EmsA/OmpFuXddT91xBpOPlD8ayQYbi/k4TEt6scLSZy1KYhepV/Gl4
-	 7ActQB0DDucoi9b7qvg3ndo1UDigjgpj6ksXdVIuOO32YllCwPDoqWPO3TJiMdh2te
-	 hiFUGH0YEV9gU5YArLPP+4CmX+3nOdB8ITc84yPdyMUo5xc95YJ6yli0E38DqmOy08
-	 Q35J/32vbmsPQ==
+	b=qhSYF2x18gezxn8W9SgUF6hy6rUHBaXOg6ph2VjiEAx29wvX5U5Oa05T2lw7reI/n
+	 kn1ZTDIbFT7UvV0xitDjxSv1SiFcBxxt2I6sNK6SG1hil/wKHdXC5b8ZYPeeV6Wost
+	 cNvEU/VSA9UkcIsVT9MXgnSHiEhV6/+q3iExPXSj/YcNmzsO8CyXwxC+LJiJj+CnYh
+	 24H2ACtsEv10HLPnZDIBB17J91hBsKeZwhaMdg5FwDgPXkvKZiIrSiu2RxVlLoMo2T
+	 dTamHu9JEDL6WzK7OshtVzyzAdA4KY/Gwa7pD7e8XbD3TC3vy/PqcSSFsGu6JBL9h5
+	 6V+cb5GCVcHOQ==
 Received: by wens.tw (Postfix, from userid 1000)
-	id 524AA5FEC0; Tue, 21 Oct 2025 01:11:18 +0800 (CST)
+	id 770105FEC6; Tue, 21 Oct 2025 01:11:18 +0800 (CST)
 From: Chen-Yu Tsai <wens@kernel.org>
 To: Chen-Yu Tsai <wens@kernel.org>,
 	Jernej Skrabec <jernej@kernel.org>,
@@ -45,9 +45,9 @@ Cc: linux-sunxi@lists.linux.dev,
 	devicetree@vger.kernel.org,
 	dmaengine@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH 06/11] clk: sunxi-ng: sun55i-a523-ccu: Lower audio0 pll minimum rate
-Date: Tue, 21 Oct 2025 01:10:52 +0800
-Message-ID: <20251020171059.2786070-7-wens@kernel.org>
+Subject: [PATCH 10/11] arm64: dts: allwinner: a523: Add I2S2 pins on PI pin group
+Date: Tue, 21 Oct 2025 01:10:56 +0800
+Message-ID: <20251020171059.2786070-11-wens@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20251020171059.2786070-1-wens@kernel.org>
 References: <20251020171059.2786070-1-wens@kernel.org>
@@ -59,33 +59,36 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-While the user manual states that the PLL's rate should be between 180
-MHz and 3 GHz in the register defninition section, it also says the
-actual operating frequency is 22.5792*4 MHz in the PLL features table.
+The Radxa Cubie A5E exposes I2S2 through the PI pin group on the 40-pin
+GPIO header.
 
-22.5792*4 MHz is one of the actual clock rates that we want and is
-is available in the SDM table. Lower the minimum clock rate to 90 MHz
-so that both rates in the SDM table can be used.
+Add a pinmux setting for it so potential users can directly reference
+it.
 
-Fixes: 7cae1e2b5544 ("clk: sunxi-ng: Add support for the A523/T527 CCU PLLs")
 Signed-off-by: Chen-Yu Tsai <wens@kernel.org>
 ---
- drivers/clk/sunxi-ng/ccu-sun55i-a523.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/allwinner/sun55i-a523.dtsi | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/clk/sunxi-ng/ccu-sun55i-a523.c b/drivers/clk/sunxi-ng/ccu-sun55i-a523.c
-index acb532f8361b..20dad06b37ca 100644
---- a/drivers/clk/sunxi-ng/ccu-sun55i-a523.c
-+++ b/drivers/clk/sunxi-ng/ccu-sun55i-a523.c
-@@ -300,7 +300,7 @@ static struct ccu_nm pll_audio0_4x_clk = {
- 	.m		= _SUNXI_CCU_DIV(16, 6),
- 	.sdm		= _SUNXI_CCU_SDM(pll_audio0_sdm_table, BIT(24),
- 					 0x178, BIT(31)),
--	.min_rate	= 180000000U,
-+	.min_rate	= 90000000U,
- 	.max_rate	= 3000000000U,
- 	.common		= {
- 		.reg		= 0x078,
+diff --git a/arch/arm64/boot/dts/allwinner/sun55i-a523.dtsi b/arch/arm64/boot/dts/allwinner/sun55i-a523.dtsi
+index eea9ce83783c..cebd8e16e845 100644
+--- a/arch/arm64/boot/dts/allwinner/sun55i-a523.dtsi
++++ b/arch/arm64/boot/dts/allwinner/sun55i-a523.dtsi
+@@ -145,6 +145,14 @@ pio: pinctrl@2000000 {
+ 			interrupt-controller;
+ 			#interrupt-cells = <3>;
+ 
++			/omit-if-no-ref/
++			i2s2_pi_pins: i2s2-pi-pins {
++				pins = "PI2", "PI3", "PI4", "PI5";
++				allwinner,pinmux = <5>;
++				function = "i2s2";
++				bias-disable;
++			};
++
+ 			mmc0_pins: mmc0-pins {
+ 				pins = "PF0" ,"PF1", "PF2", "PF3", "PF4", "PF5";
+ 				allwinner,pinmux = <2>;
 -- 
 2.47.3
 
