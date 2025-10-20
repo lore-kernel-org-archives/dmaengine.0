@@ -1,33 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0E6C32F74C;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0F2532F754;
 	Mon, 20 Oct 2025 17:11:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760980280; cv=none; b=YcxDaNwm7BnrvRUq1055xXkUl/ikSlmKQIumQWc/G0PnBy2LAuFFARXWABqahKP4FAUnd6OScVBEHso2bufMLMV8hFQmK5b/baW8sY+XNr07uodmVoCwA8mmkexq4KasTvAsO++IXylJlaH8yI4ljjABwUsuRaq3rjcthEF1x7I=
+	t=1760980280; cv=none; b=KL4JMiuQ1GKOFFkAUnSVz03AM0ogk/zwwzGBNPxHc3GZlIbshzcv4hm1C3u982P5Ay7bHMJLsf+VT9VR+/DgnpWneG85Za9lWLSeRAcZ74F4agyvN3Gdmsx99PwfnCtErJRKDNhEDpKcwIfuTAyGso/O+WIn3C+SJIqV46qR1ug=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1760980280; c=relaxed/simple;
-	bh=bfZTvPbJKxHOKhlO78loZoETiX7+tlInaGSPp76tZcE=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZQxYVtUue5TmW127URkGui2kilRCfRLf/ftY3GzLxRDfffLmLrkvLAq7MN+lFhKQ8YBfx1UF3XUVb4L7qy1lWDo0/luqtg5eeqT/mncJ4OFPeEvZzua7Pr2O/dhYJ9myUNtwGbWAcypJWSctzJAP+UKTd5WoxXIG/P9BxBlZEGg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CLckVGJ5; arc=none smtp.client-ip=10.30.226.201
+	bh=TJPYa24Z5KTj/XUQBDA+4muq/sKdsaWSFY+S+sPkdkw=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=nIfTC1fQRqpNr66bAWuk4T6M9eiIOTdheb/qPSCuISI2/s3pua+2mntMwNlnMTrrKPlNq9n91m3GM/iGciLfC4tqz9pTTOdUQHTmTRisQnS2BPTznNdzbBcdNl9741XH6rqsayyyKW/3PEAVCcBZEDKNuW3exIwRucp/ab84wiY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RTQz/DbS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CLckVGJ5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4614BC4CEFE;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RTQz/DbS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B395C4CEF9;
 	Mon, 20 Oct 2025 17:11:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1760980280;
-	bh=bfZTvPbJKxHOKhlO78loZoETiX7+tlInaGSPp76tZcE=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CLckVGJ5tDHhW7IotJ9DZCXI7B/SYprw7XvmrT3wvjQCMu7z2uoptGX1kX4mFqP37
-	 KIyemA8gOhpgtNjQhxd3daeWK16mFZVDorTEaUIn4TeH0q/CQWwo2r7g6wxUSf1ST0
-	 TZetVf80aXNAUs+KzDujeHQDCjh6htC53i1jTP8YTTYF8EhHiBXZUpO/ITebx6xlUz
-	 WRDYSatVJoUnYWPnFbJp+bnWryZLOfJC2YlrLR+luGgothpRNSDng9Naig3NUme0jP
-	 DaQqe7aQ48s8oePQg21kcrkBCzYfQvRAY0DpD/k4JgGKHB6/0i06+rElKB/TdlOyAf
-	 dEPcVO6kC5b0w==
+	bh=TJPYa24Z5KTj/XUQBDA+4muq/sKdsaWSFY+S+sPkdkw=;
+	h=From:To:Cc:Subject:Date:From;
+	b=RTQz/DbS3nDJtiW0gDdrU4/D+mk33QWYGezbsuDwSgW+xyVGsCuE7m2lbKyKoZDYg
+	 Qxd2TUg5S8DD4fruNkVcz6j9K2v0gJFpE6uo4SZaiwN6gkdyVwLfkaneT53r5mDLH7
+	 WoUBvzrF4qdszKMcVpagSm4DAFS+/vF12j6AL74W6f3HsqSeqZ3cfBsFgCvUocr291
+	 Q84eyOe8eHgi1cUIQiImKIl+am2qIMJjFA3bkyY05VTwx/oHMC06eQm5Aq1xnKVWUt
+	 odkOIZ8CHk2n+GNqzHgdEF7a5pMxYN0hWChZwXnFGS4LMAX5WhEe+eSD+gJ7lXcQdw
+	 MLoZ4bYpOegMA==
 Received: by wens.tw (Postfix, from userid 1000)
-	id 3BFAC5FE31; Tue, 21 Oct 2025 01:11:18 +0800 (CST)
+	id 1D6D45FDC3; Tue, 21 Oct 2025 01:11:18 +0800 (CST)
 From: Chen-Yu Tsai <wens@kernel.org>
 To: Chen-Yu Tsai <wens@kernel.org>,
 	Jernej Skrabec <jernej@kernel.org>,
@@ -45,12 +44,10 @@ Cc: linux-sunxi@lists.linux.dev,
 	devicetree@vger.kernel.org,
 	dmaengine@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH 03/11] ASoC: dt-bindings: allwinner,sun4i-a10-spdif: Add compatible for A523
-Date: Tue, 21 Oct 2025 01:10:49 +0800
-Message-ID: <20251020171059.2786070-4-wens@kernel.org>
+Subject: [PATCH 00/11] allwinner: a523: Enable I2S and SPDIF TX
+Date: Tue, 21 Oct 2025 01:10:46 +0800
+Message-ID: <20251020171059.2786070-1-wens@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20251020171059.2786070-1-wens@kernel.org>
-References: <20251020171059.2786070-1-wens@kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -59,98 +56,84 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The SPDIF hardware block in the A523 SoC has the same layout as the
-H616 for the transmitter side. However unlike previous generations,
-the hardware block now takes separate module clocks for the TX and RX
-sides. This presumably allows the hardware to send and receive audio
-streams at different sample rates. The new hardware also gained RX
-insertion detection, and some extra information registers.
+Hi folks,
 
-Add a new compatible for it without any fallbacks.
+This series enables the SPDIF and I2S hardware found on the Allwinner
+A523/A527/T527 family SoCs. These SoCs have one SPDIF interface and
+four I2S interfaces. All of them are capable of both playback and
+capture, however the SPDIF driver only supports playback.
 
-Signed-off-by: Chen-Yu Tsai <wens@kernel.org>
----
- .../sound/allwinner,sun4i-a10-spdif.yaml      | 44 ++++++++++++++++---
- 1 file changed, 38 insertions(+), 6 deletions(-)
+The series is organized by subsystem, so each maintainer can find the
+patches they need to take.
 
-diff --git a/Documentation/devicetree/bindings/sound/allwinner,sun4i-a10-spdif.yaml b/Documentation/devicetree/bindings/sound/allwinner,sun4i-a10-spdif.yaml
-index aa32dc950e72..1d089ba70f45 100644
---- a/Documentation/devicetree/bindings/sound/allwinner,sun4i-a10-spdif.yaml
-+++ b/Documentation/devicetree/bindings/sound/allwinner,sun4i-a10-spdif.yaml
-@@ -23,6 +23,7 @@ properties:
-       - const: allwinner,sun8i-h3-spdif
-       - const: allwinner,sun50i-h6-spdif
-       - const: allwinner,sun50i-h616-spdif
-+      - const: allwinner,sun55i-a523-spdif
-       - items:
-           - const: allwinner,sun8i-a83t-spdif
-           - const: allwinner,sun8i-h3-spdif
-@@ -37,14 +38,12 @@ properties:
-     maxItems: 1
- 
-   clocks:
--    items:
--      - description: Bus Clock
--      - description: Module Clock
-+    minItems: 2
-+    maxItems: 3
- 
-   clock-names:
--    items:
--      - const: apb
--      - const: spdif
-+    minItems: 2
-+    maxItems: 3
- 
-   # Even though it only applies to subschemas under the conditionals,
-   # not listing them here will trigger a warning because of the
-@@ -65,6 +64,7 @@ allOf:
-               - allwinner,sun8i-h3-spdif
-               - allwinner,sun50i-h6-spdif
-               - allwinner,sun50i-h616-spdif
-+              - allwinner,sun55i-a523-spdif
- 
-     then:
-       required:
-@@ -98,6 +98,38 @@ allOf:
-             - const: rx
-             - const: tx
- 
-+  - if:
-+      properties:
-+        compatible:
-+          contains:
-+            enum:
-+              - allwinner,sun55i-a523-spdif
-+
-+    then:
-+      properties:
-+        clocks:
-+          items:
-+            - description: Bus Clock
-+            - description: TX Clock
-+            - description: RX Clock
-+
-+        clock-names:
-+          items:
-+            - const: apb
-+            - const: tx
-+            - const: rx
-+    else:
-+      properties:
-+        clocks:
-+          items:
-+            - description: Bus Clock
-+            - description: Module Clock
-+
-+        clock-names:
-+          items:
-+            - const: apb
-+            - const: spdif
-+
- required:
-   - "#sound-dai-cells"
-   - compatible
+Patch 1 adds SoC/hardware specific compatibles for the two DMA
+controllers in the A523 SoC.
+
+Patch 2 adds an SoC specific compatible for the I2S interface
+controllers in the A523 SoC.
+
+Patch 3 adds an SoC specific compatible for the SPDIF interface
+controller in the A523 SoC.
+
+Patch 4 adds driver support for the SPDIF interface.
+
+Patch 5 marks a clock related to the DMA controller as critical. The
+docs are quite vague on how this particular clock gate ties in with
+the other memory bus gate that the DMA controller needs.
+
+Patch 6 tweaks the software lower limit of the audio PLL.
+
+Patch 7 adds devices nodes for the DMA controllers.
+
+Patch 8 adds a devices node for the SPDIF interface controller.
+
+Patch 9 adds device nodes for the I2S interface controllers.
+
+Patch 10 adds one set of pinmux settings for I2S2.
+
+Patch 11 is what I used to test the changes, and serves as an example
+for how to use these new interfaces.
+
+
+Patch 1 can go through the dmaengine tree, or I can take it through the
+sunxi tree.
+
+Patches 2 through 4 should go through the ASoC tree.
+
+The rest, except the example, will go through the sunxi tree.
+
+
+Please take a look.
+
+
+Thanks
+ChenYu
+
+
+Chen-Yu Tsai (11):
+  dt-bindings: dma: allwinner,sun50i-a64-dma: Add compatibles for A523
+  ASoC: dt-bindings: allwinner,sun4i-a10-i2s: Add compatible for A523
+  ASoC: dt-bindings: allwinner,sun4i-a10-spdif: Add compatible for A523
+  ASoC: sun4i-spdif: Support SPDIF output on A523 family
+  clk: sunxi-ng: sun55i-a523-r-ccu: Mark bus-r-dma as critical
+  clk: sunxi-ng: sun55i-a523-ccu: Lower audio0 pll minimum rate
+  arm64: dts: allwinner: a523: Add DMA controller device nodes
+  arm64: dts: allwinner: a523: Add device node for SPDIF block
+  arm64: dts: allwinner: a523: Add device nodes for I2S controllers
+  arm64: dts: allwinner: a523: Add I2S2 pins on PI pin group
+  [EXAMPLE] arm64: dts: allwinner: a527-cubie-a5e: Enable I2S and SPDIF
+    output
+
+ .../dma/allwinner,sun50i-a64-dma.yaml         |   5 +-
+ .../sound/allwinner,sun4i-a10-i2s.yaml        |   4 +-
+ .../sound/allwinner,sun4i-a10-spdif.yaml      |  44 +++++-
+ .../arm64/boot/dts/allwinner/sun55i-a523.dtsi | 135 ++++++++++++++++++
+ .../dts/allwinner/sun55i-a527-cubie-a5e.dts   |  52 +++++++
+ drivers/clk/sunxi-ng/ccu-sun55i-a523-r.c      |   2 +-
+ drivers/clk/sunxi-ng/ccu-sun55i-a523.c        |   2 +-
+ sound/soc/sunxi/sun4i-spdif.c                 |  28 +++-
+ 8 files changed, 259 insertions(+), 13 deletions(-)
+
 -- 
 2.47.3
 
