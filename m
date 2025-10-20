@@ -1,33 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1821A33342E;
-	Mon, 20 Oct 2025 17:11:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 344C93321A3;
+	Mon, 20 Oct 2025 17:11:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760980283; cv=none; b=upCGKA/uBNe+Hkv/mSOJakNv6+k6mqqNsDg6xZNKWe1C8qAU3W5AQsSRTb19pCWaPOgGIoaMpZAf4HwzWVTNL3+KyCSp7L6fvpc4mNxe1uUfxGD8mOomo2M++hWdKzCVlgyII+XZgdRnH8wODyepzBarQXQeToO/4/CnB+PcuCQ=
+	t=1760980283; cv=none; b=DJZS4jICjWXofzbQMHadpaPSpsgcm7bNvwvzdOlLiVwN/IB6MPyQ46NaOpSqNPX/lPPVzTBhryJ70cYpjy/t6SI1VE9o4q321454LKJRr9wLtOdMU+F7+kXeK/qUk4pOSqhBP8TuGe4p6T9UPZUADVohX0tbYo8S+AErOnYBpV8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1760980283; c=relaxed/simple;
-	bh=0ChEAhtAFbnQFbVJGkrrhKo/Uoy5YpaI4s6lIy/TvXM=;
+	bh=7WylpHCfl5v2xSL09jxwrG9Ik/L6u+sN2kDjKM+sdbI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nn3cHSfr+HtPN6pjM2R5W0Gp1h4gPkmL/ooKhpgNr6lbnd2JRSEC6VXy3iaZkxIi7IJh2/OPVryhaR2zIaj2YA7gVQy+Aj1eBcndmj/aQYYR2XjX70IJB/g4UfEpDhPwQRmSrAm6BB+eUU2j+n6R1wuXY9RYpEpvV0m30SmarB8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QFgPhNMI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O4N186eKhWzJDqTvjLwZlVGQoGTEMaEe1uI+tX+Y3caD4djuDHty+gq3SrbaCRjP6W0TqvNOUYtMdjS1QMoVsv9K+yCNXvKMVyfpNQiD/a2MCNu7KbwopegSy7bPB4Ct32OCHLJdlNuhG9MpJtv9ZI8/6/9D7xtMGXQhGBiT0b0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PJrLsn+g; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QFgPhNMI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93322C4AF0F;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PJrLsn+g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2964C16AAE;
 	Mon, 20 Oct 2025 17:11:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1760980282;
-	bh=0ChEAhtAFbnQFbVJGkrrhKo/Uoy5YpaI4s6lIy/TvXM=;
+	bh=7WylpHCfl5v2xSL09jxwrG9Ik/L6u+sN2kDjKM+sdbI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QFgPhNMI2Jj90qwqd7mDU/ZGMu+ZjcHs5w0mLa+IsNtEgj0sgkZnwc4paZhm33RCU
-	 1LptkaLyQRXZkSYB9tWLderYNPCpMIqHX/Ca4CEdsm33tL5utK7qMOZA+7gX5vHM9j
-	 02O9+o9Olcw2OfJJsLClQ1mmOXwIdW//v02t0gaiaWWOu36vhXhPZfoAImpEDw2iKC
-	 k84LiAP8JBU9+ocen1vnga+nSR8ELeXrvBFsPLT30hR5/g+w/HhSSJyniNHy1rlEO9
-	 F44qxeo4PQAcV9RGRUpNv9fG+TDjXiAZCaKNWMDQp6+Z5pcyUOa59afKNKQTTLsKY9
-	 sRSdJjineEy7A==
+	b=PJrLsn+galda3bYPgMdWQJEffSywb41/LmjAd3z8v3a1YlYtdfLc559jdDWnv+Wig
+	 V9XGVO7dvkaKETtdhrtDbwL1y9p4bGq0oaIm1VZnnsL3gxWWMGyB4BYIpznNMbhv9/
+	 iE3GnEpXGzgF5rKyQepzeFz28YxLcHMSmpunD2BzmOPrZr9ODGzvMSautCJ+vgyBvn
+	 5dFRNlAsNBy9vXs69lt1bt7xpy3CRUCo5IOxKaFLISOyUIW2HQwXFGsqjT3Zr4l5l7
+	 hPMWkX+bX1Vqa+cvLZ/wNKrCZeWN06GAe3D4bkHjNCajAywnufCgqFk8G/JKeMnkvB
+	 Bf6MvlnlxwuVw==
 Received: by wens.tw (Postfix, from userid 1000)
-	id 667A65FEEE; Tue, 21 Oct 2025 01:11:18 +0800 (CST)
+	id 811E45FF56; Tue, 21 Oct 2025 01:11:18 +0800 (CST)
 From: Chen-Yu Tsai <wens@kernel.org>
 To: Chen-Yu Tsai <wens@kernel.org>,
 	Jernej Skrabec <jernej@kernel.org>,
@@ -45,9 +45,9 @@ Cc: linux-sunxi@lists.linux.dev,
 	devicetree@vger.kernel.org,
 	dmaengine@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH 08/11] arm64: dts: allwinner: a523: Add device node for SPDIF block
-Date: Tue, 21 Oct 2025 01:10:54 +0800
-Message-ID: <20251020171059.2786070-9-wens@kernel.org>
+Subject: [PATCH 11/11] [EXAMPLE] arm64: dts: allwinner: a527-cubie-a5e: Enable I2S and SPDIF output
+Date: Tue, 21 Oct 2025 01:10:57 +0800
+Message-ID: <20251020171059.2786070-12-wens@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20251020171059.2786070-1-wens@kernel.org>
 References: <20251020171059.2786070-1-wens@kernel.org>
@@ -59,42 +59,99 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The A523 has a SPDIF interface that is capable of both playback and
-capture.
+This is an example change.
 
-Add a node for it.
+The Radxa Cubie A5E exposes I2S2 and SPDIF on the 40-pin header. Enable
+both.
+
+In this example, I2S2 is connected to adafruit speaker bonnet, which
+sports a pair of MAX98357A for speaker amplication. SPDIF is connected
+to a SPDIF interface card for PCs, which has both coaxial and optical
+outputs. The output was connected via optical cable to a dumb SPDIF to
+analog audio converter.
 
 Signed-off-by: Chen-Yu Tsai <wens@kernel.org>
 ---
- arch/arm64/boot/dts/allwinner/sun55i-a523.dtsi | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ .../dts/allwinner/sun55i-a527-cubie-a5e.dts   | 52 +++++++++++++++++++
+ 1 file changed, 52 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/allwinner/sun55i-a523.dtsi b/arch/arm64/boot/dts/allwinner/sun55i-a523.dtsi
-index 8edbd3873199..33f991dbd00b 100644
---- a/arch/arm64/boot/dts/allwinner/sun55i-a523.dtsi
-+++ b/arch/arm64/boot/dts/allwinner/sun55i-a523.dtsi
-@@ -818,6 +818,21 @@ mcu_ccu: clock-controller@7102000 {
- 			#reset-cells = <1>;
- 		};
- 
-+		spdif: spdif@7116000 {
-+			compatible = "allwinner,sun55i-a523-spdif";
-+			reg = <0x07116000 0x400>;
-+			interrupts = <GIC_SPI 196 IRQ_TYPE_LEVEL_HIGH>;
-+			clocks = <&mcu_ccu CLK_BUS_MCU_SPDIF>,
-+				 <&mcu_ccu CLK_MCU_SPDIF_TX>,
-+				 <&mcu_ccu CLK_MCU_SPDIF_RX>;
-+			clock-names = "apb", "tx", "rx";
-+			resets = <&mcu_ccu RST_BUS_MCU_SPDIF>;
-+			dmas = <&mcu_dma 2>, <&mcu_dma 2>;
-+			dma-names = "rx", "tx";
-+			#sound-dai-cells = <0>;
-+			status = "disabled";
+diff --git a/arch/arm64/boot/dts/allwinner/sun55i-a527-cubie-a5e.dts b/arch/arm64/boot/dts/allwinner/sun55i-a527-cubie-a5e.dts
+index bfdf1728cd14..828d101d28e8 100644
+--- a/arch/arm64/boot/dts/allwinner/sun55i-a527-cubie-a5e.dts
++++ b/arch/arm64/boot/dts/allwinner/sun55i-a527-cubie-a5e.dts
+@@ -64,6 +64,46 @@ reg_usb_vbus: vbus {
+ 		gpio = <&r_pio 0 8 GPIO_ACTIVE_HIGH>;	/* PL8 */
+ 		enable-active-high;
+ 	};
++
++	codec: audio-codec {
++		compatible = "maxim,max98360a";
++		#sound-dai-cells = <0>;
++	};
++
++	sound-i2s {
++		compatible = "simple-audio-card";
++		simple-audio-card,name = "I2S";
++		simple-audio-card,format = "left_j";
++		simple-audio-card,bitclock-master = <&dailink_cpu>;
++		simple-audio-card,frame-master = <&dailink_cpu>;
++		simple-audio-card,mclk-fs = <128>;
++
++		dailink_cpu: simple-audio-card,cpu {
++			sound-dai = <&i2s2>;
 +		};
 +
- 		mcu_dma: dma-controller@7121000 {
- 			compatible = "allwinner,sun55i-a523-mcu-dma",
- 				     "allwinner,sun50i-a100-dma";
++		dailink0_master: simple-audio-card,codec {
++			sound-dai = <&codec>;
++		};
++	};
++
++	sound-spdif {
++		compatible = "simple-audio-card";
++		simple-audio-card,name = "spdif-out";
++
++		simple-audio-card,cpu {
++			sound-dai = <&spdif>;
++		};
++
++		simple-audio-card,codec {
++			sound-dai = <&spdif_out>;
++		};
++	};
++
++	spdif_out: spdif-out {
++		#sound-dai-cells = <0>;
++		compatible = "linux,spdif-dit";
++	};
+ };
+ 
+ &ehci0 {
+@@ -101,6 +141,12 @@ &gpu {
+ 	status = "okay";
+ };
+ 
++&i2s2 {
++	pinctrl-names = "default";
++	pinctrl-0 = <&i2s2_pi_pins>;
++	status = "okay";
++};
++
+ &mdio0 {
+ 	ext_rgmii0_phy: ethernet-phy@1 {
+ 		compatible = "ethernet-phy-ieee802.3-c22";
+@@ -344,6 +390,12 @@ &r_pio {
+ 	vcc-pm-supply = <&reg_aldo3>;
+ };
+ 
++&spdif {
++	pinctrl-names = "default";
++	pinctrl-0 = <&spdif_out_pi_pin>;
++	status = "okay";
++};
++
+ &uart0 {
+ 	pinctrl-names = "default";
+ 	pinctrl-0 = <&uart0_pb_pins>;
 -- 
 2.47.3
 
