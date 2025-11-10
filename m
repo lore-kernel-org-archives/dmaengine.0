@@ -1,50 +1,50 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.16])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FBFF30BBB0;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06E5E30BBAB;
 	Mon, 10 Nov 2025 10:38:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.16
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762771100; cv=none; b=l8gNflbRcUJZKIX6AyDk8knN2nQpXeSky+qSqOYoc3hFwLE+nwUGNTVOQCpgth3K8FKyoe8t+BgkaaBe1pPe+M4fr+V+yrwzC2BypCwQ+Pqmc14ZBs41PmChyd5UAcKm+vOGBqtk4H4bq6wzezklJpLCkCdGBOH8puDKruWcayA=
+	t=1762771100; cv=none; b=COtw7gKYiGVYJgKgReZ52HZbko3qypQHHbWgdQo3YJGAavaOgmwgklpTfCmSq3hXjCvDq+D9BwA/S5RJu6sT+FsKFDUyHp6VK44V6Yi9krRnoP782Fa0iYuC2ms+V66upH4uQCxdrtdUVVmLfgCssX1P64eNLonfokL0cUeD4MQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1762771100; c=relaxed/simple;
-	bh=90DBnN1DGQYnGUgwfmS95iw+ByD4MmosW5yY9D3pBv0=;
+	bh=XsqlCtPiLy+XmIRbck4ylskBkeyrZIVThqfjAn1sq0o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hu+0P5DYYtZdlx8M//PaV+cdUnfvj9MYmdQpJV1VVily0vGoHkNUgNwhb25AcJHaJO973FPGCI5dOTb6X/vQasjmcEOAixRF3lAGNl7SneZAG4/HbL6O9Ga5epIpWtpq5LgNZo7kkSY5f8gCSwAxxsmwxSaBboDUTeGd2OcXubA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=J3desNKI; arc=none smtp.client-ip=192.198.163.16
+	 MIME-Version; b=SPgrsZwtztxJMo+e0ApYS9UBNhQotmi1Zk5CrRrNjqLNHGzHRUqYd2z1fHg8CG/icwWtX44KqniPwr6sqzkMilfeJ9784WMANNzGYjP5Tl610P/yGjNXQ5CfOeNOLG8aLfmJ4TjhBZbLDGkqQStKe5ODR0j6ak53ifQPEWoZEIU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=BaqJU7wx; arc=none smtp.client-ip=192.198.163.11
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="J3desNKI"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="BaqJU7wx"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
   t=1762771099; x=1794307099;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=90DBnN1DGQYnGUgwfmS95iw+ByD4MmosW5yY9D3pBv0=;
-  b=J3desNKI9TNJ5VtcMB5/LTfQBAvlTpUJb2ppzQpepdfZlaWnUrcNRRRm
-   JJ6PL9pYmi9zwixaoiFA9yGnZ5vZohYJVQURbTlTo4ymnWExeUT1A8F15
-   cJLdrQoip+5BfFzseNWDMZX22HVGxfPcPcyAePaONl3shINCmltZvwBvq
-   nABiF50feJtUxOQUSZZreeyAtCJQL44sBOCyZ5zezb9DOFEvfpKVRkA0a
-   cG/S0ygDlqD/VBFy5V9k2dKWU7aVQOp94HRUsSeVFNIrZBEf30kKCjL9X
-   /uN7JEgm9Ti13GkZT2ncJ3UtuN3vE60IrmtdQQIBaoKOpjXHbmPdYoN+a
+  bh=XsqlCtPiLy+XmIRbck4ylskBkeyrZIVThqfjAn1sq0o=;
+  b=BaqJU7wxPYmjJfDG6zN4f1Fmg5B7QZxmv8GY8EEwKRhx5T4CKOb83X2M
+   m0rCNWgla+Hguworxj2EXjyysq1ekuRfUaclIIW1gTaF3mlAIzqzkhVgn
+   i7Xl8zoL2i/QYeuF4JDNFUtJMGdino1aOwt3ITrzgEYZHzzaD4OGiyuWc
+   8+OnrACPqrHMXcw/eiVovJaYdZEiclgnR83SdpmAo2OqqF6G9TGw+YxFF
+   zDVO/xbmN5zZ2Huahx8/duVFwZLXp3sAUDEi/H5wB8gVtjevbE0TGgrhp
+   75Xn2En9Bg1jxeHzr5veqoaBIih6ee0JGaZOuyHilR/VPApzPNG8iCp3S
    A==;
-X-CSE-ConnectionGUID: 4yYmdELzRS6bvY/MLoIAfw==
-X-CSE-MsgGUID: GS64F8pJTgunHl3mKUUMHg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11608"; a="52376882"
+X-CSE-ConnectionGUID: yJmnB4CnR5OC9SGNgxUjIQ==
+X-CSE-MsgGUID: RHhzn2ZXSCOUwGZk5AnB3w==
+X-IronPort-AV: E=McAfee;i="6800,10657,11608"; a="75428656"
 X-IronPort-AV: E=Sophos;i="6.19,293,1754982000"; 
-   d="scan'208";a="52376882"
-Received: from fmviesa008.fm.intel.com ([10.60.135.148])
-  by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Nov 2025 02:38:19 -0800
-X-CSE-ConnectionGUID: QkmrFVSsSRGnEf/YxIPPiA==
-X-CSE-MsgGUID: np91THmSSw2v20kIwbQ+dA==
+   d="scan'208";a="75428656"
+Received: from orviesa003.jf.intel.com ([10.64.159.143])
+  by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Nov 2025 02:38:18 -0800
+X-CSE-ConnectionGUID: YB99gmtmQfaV/LSvfgaycg==
+X-CSE-MsgGUID: TRm5i9mLQvehQQMNp9VGpQ==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.19,293,1754982000"; 
-   d="scan'208";a="188891261"
+   d="scan'208";a="192750714"
 Received: from black.igk.intel.com ([10.91.253.5])
-  by fmviesa008.fm.intel.com with ESMTP; 10 Nov 2025 02:38:13 -0800
+  by orviesa003.jf.intel.com with ESMTP; 10 Nov 2025 02:38:14 -0800
 Received: by black.igk.intel.com (Postfix, from userid 1003)
-	id 8CC869D; Mon, 10 Nov 2025 11:38:07 +0100 (CET)
+	id 835C19B; Mon, 10 Nov 2025 11:38:07 +0100 (CET)
 From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	Stefan Wahren <wahrenst@gmx.net>,
@@ -72,9 +72,9 @@ Cc: Olivier Dautricourt <olivierdautricourt@gmail.com>,
 	Raj Kumar Rampelli <raj.kumar.rampelli@amd.com>,
 	Michal Simek <michal.simek@amd.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH v2 08/13] dmaengine: pxa-dma: use sg_nents_for_dma() helper
-Date: Mon, 10 Nov 2025 11:23:35 +0100
-Message-ID: <20251110103805.3562136-9-andriy.shevchenko@linux.intel.com>
+Subject: [PATCH v2 06/13] dmaengine: k3dma: use sg_nents_for_dma() helper
+Date: Mon, 10 Nov 2025 11:23:33 +0100
+Message-ID: <20251110103805.3562136-7-andriy.shevchenko@linux.intel.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20251110103805.3562136-1-andriy.shevchenko@linux.intel.com>
 References: <20251110103805.3562136-1-andriy.shevchenko@linux.intel.com>
@@ -90,31 +90,34 @@ Instead of open coded variant let's use recently introduced helper.
 
 Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 ---
- drivers/dma/pxa_dma.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/dma/k3dma.c | 9 ++-------
+ 1 file changed, 2 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/dma/pxa_dma.c b/drivers/dma/pxa_dma.c
-index 249296389771..b639c8b51e87 100644
---- a/drivers/dma/pxa_dma.c
-+++ b/drivers/dma/pxa_dma.c
-@@ -970,7 +970,7 @@ pxad_prep_slave_sg(struct dma_chan *dchan, struct scatterlist *sgl,
+diff --git a/drivers/dma/k3dma.c b/drivers/dma/k3dma.c
+index acc2983e28e0..88f9a2952edc 100644
+--- a/drivers/dma/k3dma.c
++++ b/drivers/dma/k3dma.c
+@@ -536,19 +536,14 @@ static struct dma_async_tx_descriptor *k3_dma_prep_slave_sg(
+ 	size_t len, avail, total = 0;
  	struct scatterlist *sg;
- 	dma_addr_t dma;
- 	u32 dcmd, dsadr = 0, dtadr = 0;
--	unsigned int nb_desc = 0, i, j = 0;
-+	unsigned int nb_desc, i, j = 0;
+ 	dma_addr_t addr, src = 0, dst = 0;
+-	int num = sglen, i;
++	int num, i;
  
- 	if ((sgl == NULL) || (sg_len == 0))
+ 	if (sgl == NULL)
  		return NULL;
-@@ -979,8 +979,7 @@ pxad_prep_slave_sg(struct dma_chan *dchan, struct scatterlist *sgl,
- 	dev_dbg(&chan->vc.chan.dev->device,
- 		"%s(): dir=%d flags=%lx\n", __func__, dir, flags);
  
--	for_each_sg(sgl, sg, sg_len, i)
--		nb_desc += DIV_ROUND_UP(sg_dma_len(sg), PDMA_MAX_DESC_BYTES);
-+	nb_desc = sg_nents_for_dma(sgl, sg_len, PDMA_MAX_DESC_BYTES);
- 	sw_desc = pxad_alloc_desc(chan, nb_desc + 1);
- 	if (!sw_desc)
+ 	c->cyclic = 0;
+ 
+-	for_each_sg(sgl, sg, sglen, i) {
+-		avail = sg_dma_len(sg);
+-		if (avail > DMA_MAX_SIZE)
+-			num += DIV_ROUND_UP(avail, DMA_MAX_SIZE) - 1;
+-	}
+-
++	num = sg_nents_for_dma(sgl, sglen, DMA_MAX_SIZE);
+ 	ds = k3_dma_alloc_desc_resource(num, chan);
+ 	if (!ds)
  		return NULL;
 -- 
 2.50.1
