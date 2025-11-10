@@ -1,50 +1,50 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.13])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 183B530BBBB;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62A5C3054CC;
 	Mon, 10 Nov 2025 10:38:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.13
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762771101; cv=none; b=GyYypZQnWW6aFKECSy4HH70XTJ/JFZiTzdNlGProcUEV1MUbxp0z0UuHE+aZYA9Va4uZfIQXpfHeCUL/stgwlNEqco+aKKqdHUQ/tatl/z2u3X5Q33byMpNCUFFZa3aGh9bgpRHY1mSJ+/RW4FQ7Gu58huQBv3GB4FZVHmS/z4k=
+	t=1762771101; cv=none; b=Vdy6aJKuzCma/+C6HEYNZwnXBFhUqJJA29C2oWlfOR62VG1Wiq/EZlXXuicrql3rU+KAbsf0dWqQ/bJPPAAlHMjz+nY5LWOZEKMbJSFa7442RjSFN1HhPPvhWzCZedxsi5ZytEMzjkLRdSV3SCQwmLSmEIM6jLbtqoBoa9PaVWQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1762771101; c=relaxed/simple;
-	bh=FVYq9jhKnLoWvvNaF2UoF2l9OnxxHFIvRoR7/5QiK/I=;
+	bh=8yAlrs00JSl0ed7bQ0uLXdi6Ey9t5OjHKtlhl1VgOJk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Pb1ms1pbAX368NMx4w3ry5udPLhop+aiP7OOtnkTd06gSgOEH2zpON05Oxuf7WdaC4WZBs4GO/kKeQ2ND6jrEUKpilXFF+U46SShHo163k1tW+1Ai4jc1JMyNJGnsdiPo9PVk9o2QZUtxKrcV5L0m7N63eXYbowT7UA/2bgBF3U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=j/+TtB6P; arc=none smtp.client-ip=192.198.163.13
+	 MIME-Version; b=DqvfwuNcqHn8lXhLr1KQGuXwZrhHil3gUXvGoGvJFYLgtz+qClVFBUHpER67xXtsBDbm+vZExuoAWERXW1PCZS3AJF2FGd3Az4s1zdXQ8iH3gtMEUgLik38e2MwG/HxhAIXULUoSkjOCUFyCJjascVzOidgAueTRxABZEp3xzo0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=QH6PZUCd; arc=none smtp.client-ip=198.175.65.11
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="j/+TtB6P"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="QH6PZUCd"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
   t=1762771099; x=1794307099;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=FVYq9jhKnLoWvvNaF2UoF2l9OnxxHFIvRoR7/5QiK/I=;
-  b=j/+TtB6PpxMKVBGApCiQzd/KSdM1DXOVPCyLIcRHrpTVjQ4mHbM+zo6R
-   ePlbY415JCwZt072k5WHUTEfyJjxS/HplZBdQ6HvL6IP3pwzmwrZ6ooZ0
-   Y3UTV9FtbVj90YhE1KNSJn2wrHupseJb8lv/GXI7ZUBLTSrIoAVZuc6QP
-   LDrufNzjz0dg/UexL6ncNDfT0t1bi7Xz3aY+/5MxJ6xdm1V7F5IcHBq7Z
-   +5NxNhnakTOrftK9oJ0eysReWL2fAoY+Wq8M58yLHzWqzMm0mh9sOmL/o
-   1oUywfS8MBWOymeRSdggbmb/tXlD+UmpwWB5swZbSDONlak2UcWO9KYmO
-   g==;
-X-CSE-ConnectionGUID: elJfZAKmStWd9dx/ACAO9Q==
-X-CSE-MsgGUID: XRb9m5QbQNGyI68hoBhqDg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11608"; a="67425228"
+  bh=8yAlrs00JSl0ed7bQ0uLXdi6Ey9t5OjHKtlhl1VgOJk=;
+  b=QH6PZUCdJuqfr19WgbQHTJNsQvitwEDBAINTrvIQlLSS1HSQcn4uMKev
+   oVmUQghcQTZNyTPiBU0TA0GyfyvwTm9eoAfjhZ2YI88YF4U0plUww/TLV
+   pwG0dETdsRXq1gCwuWZk+0vvQiN6PjJ8a8V0nesDaCevuMLxgvH/iHJlg
+   PjGBEj0caUQxryyRX+ZnjhanKdBjeQZC4YllRjW3jTl27n/CF4ESAlFt1
+   pblxdLGtBxFTxlJ1f1NpiLFHMl+HJtypXK1SP/xiSAbSahR200DcEin84
+   WIkE5VTrUM1vS8XXJqxPGOZdTFlB3wIz93ekUm6ObAQ5ad5+Ehv9a+Thh
+   Q==;
+X-CSE-ConnectionGUID: qkIzMVr6RdSqZgW97N0Idw==
+X-CSE-MsgGUID: nZ+sKLg9SZapUrKxrPvsXg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11608"; a="75111770"
 X-IronPort-AV: E=Sophos;i="6.19,293,1754982000"; 
-   d="scan'208";a="67425228"
-Received: from orviesa004.jf.intel.com ([10.64.159.144])
-  by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Nov 2025 02:38:19 -0800
-X-CSE-ConnectionGUID: 1OAI2T3eTcmOyt/qIdGftA==
-X-CSE-MsgGUID: 3KHBWfu/Qo65fequlUDp1A==
+   d="scan'208";a="75111770"
+Received: from orviesa009.jf.intel.com ([10.64.159.149])
+  by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Nov 2025 02:38:19 -0800
+X-CSE-ConnectionGUID: iB+mA8BnRL6lJ5u2cXHMGg==
+X-CSE-MsgGUID: lGPahJxqSQaaqozs/u17Ng==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.19,293,1754982000"; 
-   d="scan'208";a="193026324"
+   d="scan'208";a="188384808"
 Received: from black.igk.intel.com ([10.91.253.5])
-  by orviesa004.jf.intel.com with ESMTP; 10 Nov 2025 02:38:14 -0800
+  by orviesa009.jf.intel.com with ESMTP; 10 Nov 2025 02:38:13 -0800
 Received: by black.igk.intel.com (Postfix, from userid 1003)
-	id 918539E; Mon, 10 Nov 2025 11:38:07 +0100 (CET)
+	id 7E02F9A; Mon, 10 Nov 2025 11:38:07 +0100 (CET)
 From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	Stefan Wahren <wahrenst@gmx.net>,
@@ -72,9 +72,9 @@ Cc: Olivier Dautricourt <olivierdautricourt@gmail.com>,
 	Raj Kumar Rampelli <raj.kumar.rampelli@amd.com>,
 	Michal Simek <michal.simek@amd.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH v2 09/13] dmaengine: qcom: adm: use sg_nents_for_dma() helper
-Date: Mon, 10 Nov 2025 11:23:36 +0100
-Message-ID: <20251110103805.3562136-10-andriy.shevchenko@linux.intel.com>
+Subject: [PATCH v2 05/13] dmaengine: dw-axi-dmac: use sg_nents_for_dma() helper
+Date: Mon, 10 Nov 2025 11:23:32 +0100
+Message-ID: <20251110103805.3562136-6-andriy.shevchenko@linux.intel.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20251110103805.3562136-1-andriy.shevchenko@linux.intel.com>
 References: <20251110103805.3562136-1-andriy.shevchenko@linux.intel.com>
@@ -90,34 +90,33 @@ Instead of open coded variant let's use recently introduced helper.
 
 Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 ---
- drivers/dma/qcom/qcom_adm.c | 9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/dma/qcom/qcom_adm.c b/drivers/dma/qcom/qcom_adm.c
-index 6be54fddcee1..490edad20ae6 100644
---- a/drivers/dma/qcom/qcom_adm.c
-+++ b/drivers/dma/qcom/qcom_adm.c
-@@ -390,16 +390,15 @@ static struct dma_async_tx_descriptor *adm_prep_slave_sg(struct dma_chan *chan,
- 	}
+diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
+index b23536645ff7..493c2a32b0fe 100644
+--- a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
++++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
+@@ -850,7 +850,7 @@ dw_axi_dma_chan_prep_slave_sg(struct dma_chan *dchan, struct scatterlist *sgl,
+ 	unsigned int loop = 0;
+ 	struct scatterlist *sg;
+ 	size_t axi_block_len;
+-	u32 len, num_sgs = 0;
++	u32 len, num_sgs;
+ 	unsigned int i;
+ 	dma_addr_t mem;
+ 	int status;
+@@ -867,9 +867,7 @@ dw_axi_dma_chan_prep_slave_sg(struct dma_chan *dchan, struct scatterlist *sgl,
+ 	if (axi_block_len == 0)
+ 		return NULL;
  
- 	/* iterate through sgs and compute allocation size of structures */
--	for_each_sg(sgl, sg, sg_len, i) {
--		if (achan->slave.device_fc) {
-+	if (achan->slave.device_fc) {
-+		for_each_sg(sgl, sg, sg_len, i) {
- 			box_count += DIV_ROUND_UP(sg_dma_len(sg) / burst,
- 						  ADM_MAX_ROWS);
- 			if (sg_dma_len(sg) % burst)
- 				single_count++;
--		} else {
--			single_count += DIV_ROUND_UP(sg_dma_len(sg),
--						     ADM_MAX_XFER);
- 		}
-+	} else {
-+		single_count = sg_nents_for_dma(sgl, sg_len, ADM_MAX_XFER);
- 	}
- 
- 	async_desc = kzalloc(sizeof(*async_desc), GFP_NOWAIT);
+-	for_each_sg(sgl, sg, sg_len, i)
+-		num_sgs += DIV_ROUND_UP(sg_dma_len(sg), axi_block_len);
+-
++	num_sgs = sg_nents_for_dma(sgl, sg_len, axi_block_len);
+ 	desc = axi_desc_alloc(num_sgs);
+ 	if (unlikely(!desc))
+ 		goto err_desc_get;
 -- 
 2.50.1
 
