@@ -1,35 +1,58 @@
-Received: from mail-m49198.qiye.163.com (mail-m49198.qiye.163.com [45.254.49.198])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A21E248891;
-	Mon, 10 Nov 2025 08:52:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.254.49.198
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 755782F25F1;
+	Mon, 10 Nov 2025 08:53:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.17
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762764732; cv=none; b=KHLCLv3K5bMM57Zh+gQq18am2rG/cjk7O5pg0vLYSEsH76O3Aacs4yj95L6oXiq8dsewv9S/AAfpvcfz47tmcOX3Xpn+FgEq31ktay4+yqjEyS+Hd9uFN32LV2+AmZWrsWHZgj17aBlfMBaKUxy+/Va5W0wk/yv91pKKNtmAwbw=
+	t=1762764834; cv=none; b=OnvmKe9AUUHlppKrUbj4LPO3fPZfvaeMTDERtg9a2n9Yg/IUyY2+n3HJy76JRL0kBrtlWrCDKGclMqKJjW0EjpACNOOAK4i7wwRm3Tkh0sFnqzD3qBgZpNTppA+ZEvd2pXh5hl3Px83rx2WZkOHqL7mkAHQW9HE7o95aUP6hYyg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762764732; c=relaxed/simple;
-	bh=K+XaybmtfpqHcjKaCkJr8J+VLm4wYXeR6iV5x1IR+HQ=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=X/Gvpx6YIRYNmTq1iqTpmk8Af5g8+xw28q4qcOOolcU8itvcUWoV4OLiEOKyvusHvrf590Aj6oYqelkCUpIlICp/h3ewovMMHf4AtkOPva1I0b2BPsDsNXdfbCXeG8N9L+ml01zBnGa4YDGu0pckRUqnrWvVxhdtMttAlAdXd+c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=seu.edu.cn; spf=pass smtp.mailfrom=seu.edu.cn; dkim=pass (1024-bit key) header.d=seu.edu.cn header.i=@seu.edu.cn header.b=SEsYRy3t; arc=none smtp.client-ip=45.254.49.198
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=seu.edu.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=seu.edu.cn
+	s=arc-20240116; t=1762764834; c=relaxed/simple;
+	bh=jlPhlQ/arUEIrfdbFemlVJUaoIjE9Osvf6PZWhDgZXs=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=XcO/ifW8Nt0CfhpokXNt7TSTEVmiaKEpHTlNMrSfcHIRGB2mUpew7cOrcLbA464/IuKzDJD6yvpMwMhUwxrT+UsIGMEJi/SGTcfDfFqP7H7JS30M8j/wGGx5NMp6oExP8HI9SNhtPn1Prtw/xkoVILMcKvAJ9A2NH35obozhIic=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=hrjwPMFU; arc=none smtp.client-ip=198.175.65.17
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=seu.edu.cn header.i=@seu.edu.cn header.b="SEsYRy3t"
-Received: from LAPTOP-N070L597.localdomain (unknown [223.112.146.162])
-	by smtp.qiye.163.com (Hmail) with ESMTP id 29056feac;
-	Mon, 10 Nov 2025 16:52:01 +0800 (GMT+08:00)
-From: Zilin Guan <zilin@seu.edu.cn>
-To: keguang.zhang@gmail.com
-Cc: vkoul@kernel.org,
-	linux-mips@vger.kernel.org,
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="hrjwPMFU"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1762764833; x=1794300833;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=jlPhlQ/arUEIrfdbFemlVJUaoIjE9Osvf6PZWhDgZXs=;
+  b=hrjwPMFUMQgXbYQuURlqNlH80FvVKNyTouInwCEiWkLfvK2MtuFkfHNi
+   +CFK0/a5G5JS3+zc3erTe4kZ4WDLZz6Rfw/fB0tqo7lx5Ih0Viyq1V+bM
+   9irn3ZGAFCccmEWmXp/FKLbJRJuVowPE7LUGfvUMK8j2/T+R0HYW3qLDu
+   Xkow2fAgfSIgruFy330ffj72TKJS/L/JEXvQQCYnBGt/IJYrFy9YvEycb
+   9Q4nDvKyFGzkY1IAFPsONYtM5mTZZ2nFt2l8DBH8/8USOBfTBkpSXpNM7
+   TTU+fz1MVRKp+IEukGwfafK2C9N8Q+jGGY7VkXpCrjYv5XJx1t+YIoLEQ
+   g==;
+X-CSE-ConnectionGUID: oRlVBN9JSrCmz6Arvs0hVg==
+X-CSE-MsgGUID: Y4a8z3lyT3+iDGpbsEoS2w==
+X-IronPort-AV: E=McAfee;i="6800,10657,11531"; a="64738894"
+X-IronPort-AV: E=Sophos;i="6.17,312,1747724400"; 
+   d="scan'208";a="64738894"
+Received: from fmviesa005.fm.intel.com ([10.60.135.145])
+  by orvoesa109.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Nov 2025 00:53:52 -0800
+X-CSE-ConnectionGUID: 4jD9BhJcTvGb1ljLEKMknw==
+X-CSE-MsgGUID: r8XsQKH9ShqxEi0wswlPBw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.19,293,1754982000"; 
+   d="scan'208";a="192877839"
+Received: from black.igk.intel.com ([10.91.253.5])
+  by fmviesa005.fm.intel.com with ESMTP; 10 Nov 2025 00:53:51 -0800
+Received: by black.igk.intel.com (Postfix, from userid 1003)
+	id 20F6D95; Mon, 10 Nov 2025 09:53:50 +0100 (CET)
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	dmaengine@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	jianhao.xu@seu.edu.cn,
-	Zilin Guan <zilin@seu.edu.cn>
-Subject: [PATCH] dmaengine: Loongson1: Fix memory leak in ls1x_dma_prep_dma_cyclic()
-Date: Mon, 10 Nov 2025 08:51:59 +0000
-Message-Id: <20251110085159.754528-1-zilin@seu.edu.cn>
-X-Mailer: git-send-email 2.34.1
+	linux-kernel@vger.kernel.org
+Cc: Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH v2 0/3] dmaengine: A little cleanup and refactoring
+Date: Mon, 10 Nov 2025 09:47:42 +0100
+Message-ID: <20251110085349.3414507-1-andriy.shevchenko@linux.intel.com>
+X-Mailer: git-send-email 2.50.1
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -37,47 +60,21 @@ List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-HM-Tid: 0a9a6cf70cca03a1kunm6f9f71c9a59337
-X-HM-MType: 10
-X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
-	tZV1koWUFITzdXWS1ZQUlXWQ8JGhUIEh9ZQVlCSkNCVhlOGRhITEhPT0lLTFYeHw5VEwETFhoSFy
-	QUDg9ZV1kYEgtZQVlJSUhVSkpJVUpPTVVKTUlZV1kWGg8SFR0UWUFZT0tIVUpLSUJDQ0xVSktLVU
-	tZBg++
-DKIM-Signature: a=rsa-sha256;
-	b=SEsYRy3t70QomWfnKUNX5YgGVIArj7EpAQYHNlAYLTj1Io55hjZYFyRRHCw3arKl81YBcSDxEmgUteCqvuawSlBur7Ji5HoEj3dBs7q8T8qCpHsIEaMmSu1FWjXc7f0ZVF4d467rQdyDZGAvMssDqyl1Mfh1q4T93tvbEO6dc3o=; s=default; c=relaxed/relaxed; d=seu.edu.cn; v=1;
-	bh=diZNDUepMPp6k3NXFNNQrzxv9BkBiMSl8tvoJAuqeyo=;
-	h=date:mime-version:subject:message-id:from;
 
-In ls1x_dma_prep_dma_cyclic(), a descriptor is allocated with
-ls1x_dma_alloc_desc(). If the subsequent allocation for the scatterlist
-fails, the function returns NULL without freeing the descriptor, which
-causes a memory leak.
+This just a set of small almost ad-hoc cleanups and refactoring.
+Nothing special and nothing that changes behaviour.
 
-Fix this by calling ls1x_dma_free_desc() in the error path to ensure
-the descriptor is freed.
+Changelog v2:
+- dropped not very good (and not compilable) change (LKP)
 
-Fixes: e06c432312148 ("dmaengine: Loongson1: Add Loongson-1 APB DMA driver")
-Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
----
- drivers/dma/loongson1-apb-dma.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+Andy Shevchenko (3):
+  dmaengine: Refactor devm_dma_request_chan() for readability
+  dmaengine: Use device_match_of_node() helper
+  dmaengine: Sort headers alphabetically
 
-diff --git a/drivers/dma/loongson1-apb-dma.c b/drivers/dma/loongson1-apb-dma.c
-index 255fe7eca212..5ee829bc5c77 100644
---- a/drivers/dma/loongson1-apb-dma.c
-+++ b/drivers/dma/loongson1-apb-dma.c
-@@ -336,8 +336,10 @@ ls1x_dma_prep_dma_cyclic(struct dma_chan *dchan, dma_addr_t buf_addr,
- 	/* allocate the scatterlist */
- 	sg_len = buf_len / period_len;
- 	sgl = kmalloc_array(sg_len, sizeof(*sgl), GFP_NOWAIT);
--	if (!sgl)
-+	if (!sgl) {
-+		ls1x_dma_free_desc(&desc->vd);
- 		return NULL;
-+	}
- 
- 	sg_init_table(sgl, sg_len);
- 	for (i = 0; i < sg_len; ++i) {
+ drivers/dma/dmaengine.c | 50 +++++++++++++++++++++--------------------
+ 1 file changed, 26 insertions(+), 24 deletions(-)
+
 -- 
-2.34.1
+2.50.1
 
