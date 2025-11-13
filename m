@@ -1,50 +1,49 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.11])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.9])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86F893557ED;
-	Thu, 13 Nov 2025 15:16:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49EDA3557F5;
+	Thu, 13 Nov 2025 15:16:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.9
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763046979; cv=none; b=oS1M9+9bHBbN060+GwTsHTl9Xj9Y6cGjhYy4m6v5gINz6KPwdrM7kKMaAnKqsfr/4JvqtMtI81nxDACSvM6tpznVxe0oywqAMNAOOme38TiehNpg85+b/8LofrRE0+SzXWwXT1dIehKqHgJugeJ+PS0HiBqcpmQDaCFphy0+7Fo=
+	t=1763046980; cv=none; b=hoKwg1Hz43nromqhrDhss/7khIfAzMSx2tcn9WYFwFXNRHhcf2ggIVDpQuE1q+T63z6ytgRVocaT79aBpgV6vuqBbO3s1PgF6KDO8P0hwaxAwV2Cl9Ala0fJEFIdDgk1Fh3grRuVhn2BOHrEZpIEWZOAV/nJqM4x1cgTg1B+emI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763046979; c=relaxed/simple;
-	bh=aIZKpp2i1U4bYPp+lJpBExBX9TU2DJpWjDWAz41Iejk=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NwvhUqxByzceCPbBXGT44Hp5MtSJwFDEeA9qbi8slcRG0OzhWpgh5iofDMofntThFak/6JXWwODX2iOakF4rh+SQuLrjQJ/COQZyIXhIOnyUf/AUttGSyVGCjIbYB4z2JpGT7QXTumExFCVzBG9PwV47oIrPjES3SNgibpRRmGk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=NX6Ij+p/; arc=none smtp.client-ip=192.198.163.11
+	s=arc-20240116; t=1763046980; c=relaxed/simple;
+	bh=YgPrha/FWL+rx0Hr+rnyQmwA7SuU4BQbCsM9ur+PqQ4=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Iio+cqmXCM++Y07aqVmmyT9t/Zh+lM3FjwTp1jv174r5eteKCylHadPq+mrJVJX0VywS+BaIQNvcKH6eaxljZeX+hUwdN3kAc+U+iXt20wNJJFEw9penZHbmQqLNS49v2Sl5DZ9kpGaZM1/5zMVn9zL4cs1PfhQvOUx8S42fkys=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=EnmetsOF; arc=none smtp.client-ip=192.198.163.9
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="NX6Ij+p/"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="EnmetsOF"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
   t=1763046978; x=1794582978;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=aIZKpp2i1U4bYPp+lJpBExBX9TU2DJpWjDWAz41Iejk=;
-  b=NX6Ij+p/2GT8E90D8SxdspqbV+VM26hbiRQccyb/C5sKrXVWiyxHM4QY
-   H1XNiXau4UauVYekc3kSsYcBl8GuZTSY4j5BYlFr0T1qX143qRJtO4gkn
-   uGwMelGVCzBoQzC50l3S80YzGj4WpRXmyLd6KFFJWoDfvkfAeJU3+7IyZ
-   QKak4xhwq2ZPtPhB03obwiVQrCvRQ0onzbTzaoeSTQg1Divz0sS20SOj8
-   jgG+qQURrHQZzhYibHgzLxemQDn4RoCmNv6Z8bfOBCpT11aeCDT8G22Yj
-   muE+BFsa8PFBabROFGxS5dPxLzymCQnlNtF0xQl6MND2sohvmP/Sggu2D
-   Q==;
-X-CSE-ConnectionGUID: 3C9rWzKHR9eR9OVrPM4LEA==
-X-CSE-MsgGUID: BMTXTz/6TpSzXVQo1RsEww==
-X-IronPort-AV: E=McAfee;i="6800,10657,11612"; a="75740533"
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=YgPrha/FWL+rx0Hr+rnyQmwA7SuU4BQbCsM9ur+PqQ4=;
+  b=EnmetsOFkrMhnjqsZFPawIS8LrNbGsq6CEo6fLmzBbSQuXy0BzQJTklE
+   kgduaTuFf5Nlv70+V4hNVh8w4+kQwNbhwfNzOJlwQL2+k4hNIH7qBtAme
+   LpAmVQYz0KrU+FNMcJMXa58r4g3dx7qHXiqbbAOsbF5aC/NOMKLDkebDP
+   hlHxZ2a7cuQ0dPmOt/xtYBttlf5n0C4IiWe0DEZ0pmtKWfwPHrRdeXlIk
+   zGYHfzdEQerLZFVca2teih6+LYv6O9H84CDRmKp18v2rzq4UrsRaUQpod
+   d6ZdE6R+LYdQFNv2RLeu5wJADKSgFYy7l3y4Mm1F1QF/gW/cBna5Q/+g1
+   w==;
+X-CSE-ConnectionGUID: Xtr1oeDOTt6IrASZofrMjA==
+X-CSE-MsgGUID: HdlVYgJDSvuYRamaF8arww==
+X-IronPort-AV: E=McAfee;i="6800,10657,11612"; a="75809634"
 X-IronPort-AV: E=Sophos;i="6.19,302,1754982000"; 
-   d="scan'208";a="75740533"
-Received: from fmviesa008.fm.intel.com ([10.60.135.148])
-  by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Nov 2025 07:16:17 -0800
-X-CSE-ConnectionGUID: wjhhABpbSUGlxlItUqzAHw==
-X-CSE-MsgGUID: RSO0QpruQw+tQAMQ6Xjwqw==
+   d="scan'208";a="75809634"
+Received: from orviesa005.jf.intel.com ([10.64.159.145])
+  by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Nov 2025 07:16:11 -0800
+X-CSE-ConnectionGUID: bviZ6KxzTBKFZEORJuB7qA==
+X-CSE-MsgGUID: VwK7v3k3SYeEve+g81JZqw==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.19,302,1754982000"; 
-   d="scan'208";a="189792122"
+   d="scan'208";a="194684640"
 Received: from black.igk.intel.com ([10.91.253.5])
-  by fmviesa008.fm.intel.com with ESMTP; 13 Nov 2025 07:16:11 -0800
+  by orviesa005.jf.intel.com with ESMTP; 13 Nov 2025 07:16:05 -0800
 Received: by black.igk.intel.com (Postfix, from userid 1003)
-	id D4E309E; Thu, 13 Nov 2025 16:16:04 +0100 (CET)
+	id AE7A996; Thu, 13 Nov 2025 16:16:04 +0100 (CET)
 From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	Bjorn Andersson <andersson@kernel.org>,
@@ -73,12 +72,10 @@ Cc: Olivier Dautricourt <olivierdautricourt@gmail.com>,
 	Raj Kumar Rampelli <raj.kumar.rampelli@amd.com>,
 	Michal Simek <michal.simek@amd.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH v3 08/13] dmaengine: pxa-dma: use sg_nents_for_dma() helper
-Date: Thu, 13 Nov 2025 16:13:04 +0100
-Message-ID: <20251113151603.3031717-9-andriy.shevchenko@linux.intel.com>
+Subject: [PATCH v3 00/13] dmaengine: introduce sg_nents_for_dma() and convert users
+Date: Thu, 13 Nov 2025 16:12:56 +0100
+Message-ID: <20251113151603.3031717-1-andriy.shevchenko@linux.intel.com>
 X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20251113151603.3031717-1-andriy.shevchenko@linux.intel.com>
-References: <20251113151603.3031717-1-andriy.shevchenko@linux.intel.com>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -87,37 +84,61 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Instead of open coded variant let's use recently introduced helper.
+A handful of the DMAengine drivers use same routine to calculate the number of
+SG entries needed for the given DMA transfer. Provide a common helper for them
+and convert.
 
-Reviewed-by: Bjorn Andersson <andersson@kernel.org>
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
----
- drivers/dma/pxa_dma.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+I left the new helper on SG level of API because brief grepping shows potential
+candidates outside of DMA engine, e.g.:
 
-diff --git a/drivers/dma/pxa_dma.c b/drivers/dma/pxa_dma.c
-index 249296389771..b639c8b51e87 100644
---- a/drivers/dma/pxa_dma.c
-+++ b/drivers/dma/pxa_dma.c
-@@ -970,7 +970,7 @@ pxad_prep_slave_sg(struct dma_chan *dchan, struct scatterlist *sgl,
- 	struct scatterlist *sg;
- 	dma_addr_t dma;
- 	u32 dcmd, dsadr = 0, dtadr = 0;
--	unsigned int nb_desc = 0, i, j = 0;
-+	unsigned int nb_desc, i, j = 0;
- 
- 	if ((sgl == NULL) || (sg_len == 0))
- 		return NULL;
-@@ -979,8 +979,7 @@ pxad_prep_slave_sg(struct dma_chan *dchan, struct scatterlist *sgl,
- 	dev_dbg(&chan->vc.chan.dev->device,
- 		"%s(): dir=%d flags=%lx\n", __func__, dir, flags);
- 
--	for_each_sg(sgl, sg, sg_len, i)
--		nb_desc += DIV_ROUND_UP(sg_dma_len(sg), PDMA_MAX_DESC_BYTES);
-+	nb_desc = sg_nents_for_dma(sgl, sg_len, PDMA_MAX_DESC_BYTES);
- 	sw_desc = pxad_alloc_desc(chan, nb_desc + 1);
- 	if (!sw_desc)
- 		return NULL;
+  drivers/crypto/chelsio/chcr_algo.c:154:  nents += DIV_ROUND_UP(less, entlen);
+  drivers/spi/spi-stm32.c:1495:  /* Count the number of entries needed */
+
+Changelog v3:
+- added missed EXPORT_SYMBOL() (Bjorn)
+- left the return type as signed int (as agreed with Bjorn)
+- collected tags (Bjorn)
+
+v2: <20251110103805.3562136-1-andriy.shevchenko@linux.intel.com>
+
+Changelog v2:
+- dropped outdated patches (only 9 years passed :-)
+- rebased on top of the current kernel
+- left API SG wide It might
+
+v1: https://patchwork.kernel.org/project/linux-dmaengine/patch/20161021173535.100245-1-andriy.shevchenko@linux.intel.com/
+
+Andy Shevchenko (13):
+  scatterlist: introduce sg_nents_for_dma() helper
+  dmaengine: altera-msgdma: use sg_nents_for_dma() helper
+  dmaengine: axi-dmac: use sg_nents_for_dma() helper
+  dmaengine: bcm2835-dma: use sg_nents_for_dma() helper
+  dmaengine: dw-axi-dmac: use sg_nents_for_dma() helper
+  dmaengine: k3dma: use sg_nents_for_dma() helper
+  dmaengine: lgm: use sg_nents_for_dma() helper
+  dmaengine: pxa-dma: use sg_nents_for_dma() helper
+  dmaengine: qcom: adm: use sg_nents_for_dma() helper
+  dmaengine: qcom: bam_dma: use sg_nents_for_dma() helper
+  dmaengine: sa11x0: use sg_nents_for_dma() helper
+  dmaengine: sh: use sg_nents_for_dma() helper
+  dmaengine: xilinx: xdma: use sg_nents_for_dma() helper
+
+ drivers/dma/altera-msgdma.c                   |  5 ++--
+ drivers/dma/bcm2835-dma.c                     | 19 +-------------
+ drivers/dma/dma-axi-dmac.c                    |  5 +---
+ .../dma/dw-axi-dmac/dw-axi-dmac-platform.c    |  6 ++---
+ drivers/dma/k3dma.c                           |  9 ++-----
+ drivers/dma/lgm/lgm-dma.c                     |  9 ++-----
+ drivers/dma/pxa_dma.c                         |  5 ++--
+ drivers/dma/qcom/bam_dma.c                    |  9 ++-----
+ drivers/dma/qcom/qcom_adm.c                   |  9 +++----
+ drivers/dma/sa11x0-dma.c                      |  6 ++---
+ drivers/dma/sh/shdma-base.c                   |  5 ++--
+ drivers/dma/xilinx/xdma.c                     |  6 ++---
+ include/linux/scatterlist.h                   |  2 ++
+ lib/scatterlist.c                             | 26 +++++++++++++++++++
+ 14 files changed, 52 insertions(+), 69 deletions(-)
+
 -- 
 2.50.1
 
