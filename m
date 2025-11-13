@@ -1,50 +1,50 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.11])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.9])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 652E23559D3;
-	Thu, 13 Nov 2025 15:16:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27DB03559F8;
+	Thu, 13 Nov 2025 15:16:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.9
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763046981; cv=none; b=VxQ2egRlpF9t/CWIAKP2SrfcCHCoZ6ghuk/cLI7uObJdH1/VsN41cBUuh/Cv5tKUZhV+J6ET44korB3RfbTeqeCI2hauf2dcZaxo4eeb0pnZVRuBpv1bo0PqgxSAv0kKIlYU4ZmGQYs2JYgeE2jVR9tMocN2KvIkmrrl6LiuwfA=
+	t=1763046982; cv=none; b=J1qVRS4AIi5Wo1P5nlJk4Gp0onqYEb/TTxfUo546zxe371lgGycDBAiG2hgOA+cG0ZhY1aDFKdr6LQwMUjuN0LEqRuYekUsfqM0pOPXQgZti3R6g4GHnRAOPzsHw97P1qEPyo0KEkbSDZnFigJfu39JuoRJ1DJMAFHDY+YUM1Bs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763046981; c=relaxed/simple;
-	bh=3FTR/BGUP+Jif1zotbkvzWhNiBsBN/SOnlvS3OB5AC0=;
+	s=arc-20240116; t=1763046982; c=relaxed/simple;
+	bh=1Su3S1OYlS3Av5yiXyt302P5FfhwZUhZFXIJtWLZ5yY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WpijORBqKfyu6LujKnowI2IS4+01R9DqAV/rM6yfJO9Z2Fdo3srKiWHsbnCo8fN3JGwNAIf2lOBpg0gMc3ta6dfL6E211dpPutqj0CvnB6KocLxgT/XzVApivJVm4uelKqG4/FM6kz3fv+IzVRXB/Al6oc4RxZjryxEiNc9BFhQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Zde39cYH; arc=none smtp.client-ip=192.198.163.11
+	 MIME-Version; b=lbOtR4Zn2cr5OV/UNLMiH675Gk45eszr46ktx66tQNiG/fqQNFADpc8y/m265OGoUm3cbOW2PbK8AjlIhv8UCX+PdMHk8j29wSI+Q+gkJDKo/RDEAtoXloKtePRAD0rOdEaRywrhc/HZbeZrx1N0hGluz7tW5Eb6NVgXjelps/8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Lj+T3BZr; arc=none smtp.client-ip=192.198.163.9
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Zde39cYH"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Lj+T3BZr"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
   t=1763046980; x=1794582980;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=3FTR/BGUP+Jif1zotbkvzWhNiBsBN/SOnlvS3OB5AC0=;
-  b=Zde39cYHbHtX6s+AoRzKd9A9A8Yc6QrCxzAl+c0614joYud4DdV0k3Z9
-   esqo5MMHJ9DJekJqAhsgNUpnQ3MjtVLsMBA6vF9Myl7A17wYQqpeJ9sRj
-   +ZelNd0JEdG5zPu/yHXmxCIqb0Wd9xnfZy4hHFMk9PpALnncR/Ypz+pzK
-   JqCalWZfOEztzUzcAiz8DbTIv88UtVbp4oNPRN0GlKb/KztNNUKMqmxpZ
-   rFj7O3hiGFCeuqiAdiruqAvwPPEtnpBuG945EMGOSGS5yog3yOdq+N0dO
-   YZN6ZfeNs5FDeJpd7qptY4WT6d4keAEYRaJ9IWchLfjbCZcCzJ9MKMGHj
-   A==;
-X-CSE-ConnectionGUID: ytB3fz9sRbuA6a7hI0b5Jg==
-X-CSE-MsgGUID: Gd0FfUCBSdq02MKHNuj44w==
-X-IronPort-AV: E=McAfee;i="6800,10657,11612"; a="75740572"
+  bh=1Su3S1OYlS3Av5yiXyt302P5FfhwZUhZFXIJtWLZ5yY=;
+  b=Lj+T3BZrgR9YTAmbLt/NQ5bSrOvZyf+48dauO0lotPMY9l3eINkkDPBS
+   ctNMk6YWweqpUjojdOmuXNktQ4hdEALdwFhWLVjDuoKiwKWTqDJAsZfOh
+   mCE9iITpYoPI+aEGWCOdwrgPmRR/Diey5LKD/wGgOq2W52shJHydCwOG/
+   lTfSzDovSS2j2MHhUBYqEfjBrBJfaC53OgV8t6TBi0alZSTTjBbnoOVtP
+   4c62uQhwlA1a13aLV6eDwAOTZsCzfIcqzDeN+s6dxiwUqV58Rke6sk++d
+   Rfj12DL9NgqbIrZ0LLmyBhOyhEHQ85ZDGcP+raC0fKGMdH1UWXbuxRc5q
+   g==;
+X-CSE-ConnectionGUID: UdoTrrdDTcOHzdplXuO8eA==
+X-CSE-MsgGUID: cQlpvt77SDqh6sbK9/5xBw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11612"; a="75809665"
 X-IronPort-AV: E=Sophos;i="6.19,302,1754982000"; 
-   d="scan'208";a="75740572"
-Received: from fmviesa008.fm.intel.com ([10.60.135.148])
-  by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Nov 2025 07:16:17 -0800
-X-CSE-ConnectionGUID: oe33S9NdSVCKz0Aw3l685A==
-X-CSE-MsgGUID: R5LCAFi/RxubMtn/y2mShg==
+   d="scan'208";a="75809665"
+Received: from orviesa005.jf.intel.com ([10.64.159.145])
+  by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Nov 2025 07:16:11 -0800
+X-CSE-ConnectionGUID: ZrcshzK7Rmen4NdOTdDGrg==
+X-CSE-MsgGUID: armfIibfREi1XvODTfMFiw==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.19,302,1754982000"; 
-   d="scan'208";a="189792125"
+   d="scan'208";a="194684641"
 Received: from black.igk.intel.com ([10.91.253.5])
-  by fmviesa008.fm.intel.com with ESMTP; 13 Nov 2025 07:16:12 -0800
+  by orviesa005.jf.intel.com with ESMTP; 13 Nov 2025 07:16:05 -0800
 Received: by black.igk.intel.com (Postfix, from userid 1003)
-	id E6ED6A2; Thu, 13 Nov 2025 16:16:04 +0100 (CET)
+	id C12E09A; Thu, 13 Nov 2025 16:16:04 +0100 (CET)
 From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	Bjorn Andersson <andersson@kernel.org>,
@@ -73,9 +73,9 @@ Cc: Olivier Dautricourt <olivierdautricourt@gmail.com>,
 	Raj Kumar Rampelli <raj.kumar.rampelli@amd.com>,
 	Michal Simek <michal.simek@amd.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH v3 12/13] dmaengine: sh: use sg_nents_for_dma() helper
-Date: Thu, 13 Nov 2025 16:13:08 +0100
-Message-ID: <20251113151603.3031717-13-andriy.shevchenko@linux.intel.com>
+Subject: [PATCH v3 04/13] dmaengine: bcm2835-dma: use sg_nents_for_dma() helper
+Date: Thu, 13 Nov 2025 16:13:00 +0100
+Message-ID: <20251113151603.3031717-5-andriy.shevchenko@linux.intel.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20251113151603.3031717-1-andriy.shevchenko@linux.intel.com>
 References: <20251113151603.3031717-1-andriy.shevchenko@linux.intel.com>
@@ -92,28 +92,46 @@ Instead of open coded variant let's use recently introduced helper.
 Reviewed-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 ---
- drivers/dma/sh/shdma-base.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/dma/bcm2835-dma.c | 19 +------------------
+ 1 file changed, 1 insertion(+), 18 deletions(-)
 
-diff --git a/drivers/dma/sh/shdma-base.c b/drivers/dma/sh/shdma-base.c
-index 834741adadaa..1e1b65e46668 100644
---- a/drivers/dma/sh/shdma-base.c
-+++ b/drivers/dma/sh/shdma-base.c
-@@ -577,12 +577,11 @@ static struct dma_async_tx_descriptor *shdma_prep_sg(struct shdma_chan *schan,
- 	struct scatterlist *sg;
- 	struct shdma_desc *first = NULL, *new = NULL /* compiler... */;
- 	LIST_HEAD(tx_list);
--	int chunks = 0;
-+	int chunks;
- 	unsigned long irq_flags;
- 	int i;
+diff --git a/drivers/dma/bcm2835-dma.c b/drivers/dma/bcm2835-dma.c
+index 0117bb2e8591..802b23be2fd8 100644
+--- a/drivers/dma/bcm2835-dma.c
++++ b/drivers/dma/bcm2835-dma.c
+@@ -260,23 +260,6 @@ static void bcm2835_dma_create_cb_set_length(
+ 	control_block->info |= finalextrainfo;
+ }
  
--	for_each_sg(sgl, sg, sg_len, i)
--		chunks += DIV_ROUND_UP(sg_dma_len(sg), schan->max_xfer_len);
-+	chunks = sg_nents_for_dma(sgl, sg_len, schan->max_xfer_len);
+-static inline size_t bcm2835_dma_count_frames_for_sg(
+-	struct bcm2835_chan *c,
+-	struct scatterlist *sgl,
+-	unsigned int sg_len)
+-{
+-	size_t frames = 0;
+-	struct scatterlist *sgent;
+-	unsigned int i;
+-	size_t plength = bcm2835_dma_max_frame_length(c);
+-
+-	for_each_sg(sgl, sgent, sg_len, i)
+-		frames += bcm2835_dma_frames_for_length(
+-			sg_dma_len(sgent), plength);
+-
+-	return frames;
+-}
+-
+ /**
+  * bcm2835_dma_create_cb_chain - create a control block and fills data in
+  *
+@@ -672,7 +655,7 @@ static struct dma_async_tx_descriptor *bcm2835_dma_prep_slave_sg(
+ 	}
  
- 	/* Have to lock the whole loop to protect against concurrent release */
- 	spin_lock_irqsave(&schan->chan_lock, irq_flags);
+ 	/* count frames in sg list */
+-	frames = bcm2835_dma_count_frames_for_sg(c, sgl, sg_len);
++	frames = sg_nents_for_dma(sgl, sg_len, bcm2835_dma_max_frame_length(c));
+ 
+ 	/* allocate the CB chain */
+ 	d = bcm2835_dma_create_cb_chain(chan, direction, false,
 -- 
 2.50.1
 
