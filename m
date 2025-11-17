@@ -1,35 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24A472C237C;
-	Mon, 17 Nov 2025 16:13:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 162AF2C235D;
+	Mon, 17 Nov 2025 16:13:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763396005; cv=none; b=mRWXyCBND+gqkTs5FuPaCy0y37ro3c8ZaH+sZxq+K4liXsIYTwhkPPyzGBNBCAnyoeWoz1Zbk6HMC/oQjxnrT6tWY4oJwXeLDR23hyYbExTWBfVpZfmkDBDJE1w4MLtnRAGE3OP25o9MLUG0C/rqC2Um9/9BUimqXuEJOH05rZw=
+	t=1763396005; cv=none; b=IBzyQGNvvm8qwx/eTpmDVddO+e1DAQz4lzT+dzQX6MAUW/rTcdVpQ7wtkeWKRE2tE18ATwMjagV+fuTjeyG/ARonSwqqJehAMHKKz37etq5ELP+tGjuLqHn2vuWPbhp6LEYxhQmO6hasQ+5/6oNk6SavaX1STOukAi9mWFeqcLo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1763396005; c=relaxed/simple;
-	bh=+gtV5rGLMOFmbBmErF+iAc9MrKb8OqQyobykzk6xYrA=;
+	bh=AGV01UnVDJZRdNN3E9lTAeqlaL238kaCs0BNRl5f36Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WzFsBjGkWBjDI7QTmELi/3giME20jjyJZRRILCtwt6y5F2tqDUEnRlOp3VTz8wy3FulDfbkY0OwylEuyq/DMCmyLBCQfbVQJQwgBdnAAkPiwAfeqkui/FePHounlv6MKp7ryfR91uZ5C4HMpyO+smjads9dzKLHN6E2wC53XHrg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RtWPys9u; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TG5/pApkexB0AW2XdicbEDaDhJnyQKd9IY54Ekh1vWvbND52LodTEpzgTO7U+XJ43NzgX7MYLP/9UoBwnGLQRP7/1dUEzkckMrNZDhyfnf00OUTnbCfjTpg0uV8udj5E1zskUksgq1bGrwHPCTJ4hBX31DmsMqTHNptbsZs4nF0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=c5OGDO/8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RtWPys9u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F052CC2BCB6;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="c5OGDO/8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADBDBC19423;
 	Mon, 17 Nov 2025 16:13:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1763396005;
-	bh=+gtV5rGLMOFmbBmErF+iAc9MrKb8OqQyobykzk6xYrA=;
+	s=k20201202; t=1763396004;
+	bh=AGV01UnVDJZRdNN3E9lTAeqlaL238kaCs0BNRl5f36Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RtWPys9u5/RHjAa0zDWNmAErSem3vWH2P2aGvlP1X3AaddCUPcbWVS1lGZr3qfj9X
-	 Trrj0Vd5Cj0YOieXIBj5SJTkLObFlOflcF16wp9Yixszgydx86RfAYfhEQf0zUfB7R
-	 hSxxI3Gzbvusoucfw/VeFE7x/qSuw+AuAsWAyW96kOlq/UzCDbYG9Yv7+qwvSURBFV
-	 bX6PKhyiEjCNadMqH4Om8Lz61ME0XIQAX+hOuYqtVi1riP2HJmPB+NYbEZlMnfWcK3
-	 OOIhFJL+80MhuM6+3+oXAYhpxm66oWen6g2YEtZya9377PJl9ZFLnzHggbruCqS9In
-	 6A+JzeVw5Vofg==
+	b=c5OGDO/8M8JnaAvlv6uwOe9ZOC6on23fntxgXTRPLQrQTrFUrGuvnxXDkuqdnrfXF
+	 sz2WSYb1cDLpxGdsRiIC6gg6YTjD58s1tfCPCzjqpz+RzsuXFLYNVcEsWXFqCWNrhA
+	 pDpxYILO507gB2sCSlQSZ+uW41LiswaTeSXo8b2x9lkF9dFYK3iubt5wVjXjCPgyhy
+	 YD4v42nsbE8Bk+ZbvLCWH7fCRkLL4iD7zZdBW3Rtxjw1kJK8FfUut7Re+YxmCytDw3
+	 sVbOOl1L7nipB83yOACuZdTLUlRzQRXNaSLVYKFibNc2YwWoRopkUMk8YsoUiNZ4zX
+	 9Q3Q+H0dQdKDw==
 Received: from johan by xi.lan with local (Exim 4.98.2)
 	(envelope-from <johan@kernel.org>)
-	id 1vL1r1-000000002o0-08t5;
-	Mon, 17 Nov 2025 17:13:23 +0100
+	id 1vL1r0-000000002np-34IE;
+	Mon, 17 Nov 2025 17:13:22 +0100
 From: Johan Hovold <johan@kernel.org>
 To: Vinod Koul <vkoul@kernel.org>
 Cc: Ludovic Desroches <ludovic.desroches@microchip.com>,
@@ -46,11 +46,10 @@ Cc: Ludovic Desroches <ludovic.desroches@microchip.com>,
 	dmaengine@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	Johan Hovold <johan@kernel.org>,
-	stable@vger.kernel.org,
-	Fabrizio Castro <fabrizio.castro.jz@renesas.com>
-Subject: [PATCH 08/15] dmaengine: sh: rz-dmac: fix device leak on probe failure
-Date: Mon, 17 Nov 2025 17:12:51 +0100
-Message-ID: <20251117161258.10679-10-johan@kernel.org>
+	stable@vger.kernel.org
+Subject: [PATCH 05/15] dmaengine: idxd: fix device leaks on compat bind and unbind
+Date: Mon, 17 Nov 2025 17:12:48 +0100
+Message-ID: <20251117161258.10679-7-johan@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251117161258.10679-1-johan@kernel.org>
 References: <20251117161258.10679-1-johan@kernel.org>
@@ -62,55 +61,76 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Make sure to drop the reference taken when looking up the ICU device
-during probe also on probe failures (e.g. probe deferral).
+Make sure to drop the reference taken when looking up the idxd device as
+part of the compat bind and unbind sysfs interface.
 
-Fixes: 7de873201c44 ("dmaengine: sh: rz-dmac: Add RZ/V2H(P) support")
-Cc: stable@vger.kernel.org	# 6.16
-Cc: Fabrizio Castro <fabrizio.castro.jz@renesas.com>
+Fixes: 6e7f3ee97bbe ("dmaengine: idxd: move dsa_drv support to compatible mode")
+Cc: stable@vger.kernel.org	# 5.15
+Cc: Dave Jiang <dave.jiang@intel.com>
 Signed-off-by: Johan Hovold <johan@kernel.org>
 ---
- drivers/dma/sh/rz-dmac.c | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ drivers/dma/idxd/compat.c | 23 +++++++++++++++++++----
+ 1 file changed, 19 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/dma/sh/rz-dmac.c b/drivers/dma/sh/rz-dmac.c
-index 1f687b08d6b8..38137e8d80b9 100644
---- a/drivers/dma/sh/rz-dmac.c
-+++ b/drivers/dma/sh/rz-dmac.c
-@@ -854,6 +854,13 @@ static int rz_dmac_chan_probe(struct rz_dmac *dmac,
- 	return 0;
- }
+diff --git a/drivers/dma/idxd/compat.c b/drivers/dma/idxd/compat.c
+index eff9943f1a42..95b8ef958633 100644
+--- a/drivers/dma/idxd/compat.c
++++ b/drivers/dma/idxd/compat.c
+@@ -20,11 +20,16 @@ static ssize_t unbind_store(struct device_driver *drv, const char *buf, size_t c
+ 	int rc = -ENODEV;
  
-+static void rz_dmac_put_device(void *_dev)
-+{
-+	struct device *dev = _dev;
+ 	dev = bus_find_device_by_name(bus, NULL, buf);
+-	if (dev && dev->driver) {
++	if (!dev)
++		return -ENODEV;
 +
-+	put_device(dev);
-+}
-+
- static int rz_dmac_parse_of_icu(struct device *dev, struct rz_dmac *dmac)
- {
- 	struct device_node *np = dev->of_node;
-@@ -876,6 +883,10 @@ static int rz_dmac_parse_of_icu(struct device *dev, struct rz_dmac *dmac)
- 		return -ENODEV;
++	if (dev->driver) {
+ 		device_driver_detach(dev);
+ 		rc = count;
  	}
  
-+	ret = devm_add_action_or_reset(dev, rz_dmac_put_device, &dmac->icu.pdev->dev);
-+	if (ret)
-+		return ret;
++	put_device(dev);
 +
- 	dmac_index = args.args[0];
- 	if (dmac_index > RZV2H_MAX_DMAC_INDEX) {
- 		dev_err(dev, "DMAC index %u invalid.\n", dmac_index);
-@@ -1055,8 +1066,6 @@ static void rz_dmac_remove(struct platform_device *pdev)
- 	reset_control_assert(dmac->rstc);
- 	pm_runtime_put(&pdev->dev);
- 	pm_runtime_disable(&pdev->dev);
--
--	platform_device_put(dmac->icu.pdev);
+ 	return rc;
  }
+ static DRIVER_ATTR_IGNORE_LOCKDEP(unbind, 0200, NULL, unbind_store);
+@@ -38,9 +43,12 @@ static ssize_t bind_store(struct device_driver *drv, const char *buf, size_t cou
+ 	struct idxd_dev *idxd_dev;
  
- static const struct of_device_id of_rz_dmac_match[] = {
+ 	dev = bus_find_device_by_name(bus, NULL, buf);
+-	if (!dev || dev->driver || drv != &dsa_drv.drv)
++	if (!dev)
+ 		return -ENODEV;
+ 
++	if (dev->driver || drv != &dsa_drv.drv)
++		goto err_put_dev;
++
+ 	idxd_dev = confdev_to_idxd_dev(dev);
+ 	if (is_idxd_dev(idxd_dev)) {
+ 		alt_drv = driver_find("idxd", bus);
+@@ -53,13 +61,20 @@ static ssize_t bind_store(struct device_driver *drv, const char *buf, size_t cou
+ 			alt_drv = driver_find("user", bus);
+ 	}
+ 	if (!alt_drv)
+-		return -ENODEV;
++		goto err_put_dev;
+ 
+ 	rc = device_driver_attach(alt_drv, dev);
+ 	if (rc < 0)
+-		return rc;
++		goto err_put_dev;
++
++	put_device(dev);
+ 
+ 	return count;
++
++err_put_dev:
++	put_device(dev);
++
++	return rc;
+ }
+ static DRIVER_ATTR_IGNORE_LOCKDEP(bind, 0200, NULL, bind_store);
+ 
 -- 
 2.51.0
 
