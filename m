@@ -1,35 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D9EF2C3242;
-	Mon, 17 Nov 2025 16:13:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24A472C237C;
+	Mon, 17 Nov 2025 16:13:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763396005; cv=none; b=R33rZI90fT/faRcxMlQPrSHXrA3VicTdtUEkD/f7hSJX5pCgij/o03HJXJJyC/vWO/8IgwpqMI33CCjvWsZ5nvN7M/zI3GG+nXodoR89VeODvVom85FaWpK9Yu9dNQDm6zehG8oIM39CojaDzN15QAK4gKmej1ZAaunix3AXA5o=
+	t=1763396005; cv=none; b=mRWXyCBND+gqkTs5FuPaCy0y37ro3c8ZaH+sZxq+K4liXsIYTwhkPPyzGBNBCAnyoeWoz1Zbk6HMC/oQjxnrT6tWY4oJwXeLDR23hyYbExTWBfVpZfmkDBDJE1w4MLtnRAGE3OP25o9MLUG0C/rqC2Um9/9BUimqXuEJOH05rZw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1763396005; c=relaxed/simple;
-	bh=0DynXlE5pKQC4/xRzubob/eyJtg08UMyjLT5ZcH1k6A=;
+	bh=+gtV5rGLMOFmbBmErF+iAc9MrKb8OqQyobykzk6xYrA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WfCAeaN9thtnURey/4vkVlyRJf4yOmTHbK2TT2rOP6KJVIgXSqm1QMF1XzAy0LahravG2syUgpm+MxpCLB4DpI7pPAY2SjJ3t1RJs6UMHoaSkHly6rfZSevwQ8anv/EhuQsI/fY08JQ3EYk6+LeTXGVjUwgozH6yrt8eu+2FseA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mVcHPq8Z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WzFsBjGkWBjDI7QTmELi/3giME20jjyJZRRILCtwt6y5F2tqDUEnRlOp3VTz8wy3FulDfbkY0OwylEuyq/DMCmyLBCQfbVQJQwgBdnAAkPiwAfeqkui/FePHounlv6MKp7ryfR91uZ5C4HMpyO+smjads9dzKLHN6E2wC53XHrg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RtWPys9u; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mVcHPq8Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD9ECC113D0;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RtWPys9u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F052CC2BCB6;
 	Mon, 17 Nov 2025 16:13:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1763396004;
-	bh=0DynXlE5pKQC4/xRzubob/eyJtg08UMyjLT5ZcH1k6A=;
+	s=k20201202; t=1763396005;
+	bh=+gtV5rGLMOFmbBmErF+iAc9MrKb8OqQyobykzk6xYrA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mVcHPq8ZTWz4uWDZWzVMMjJXFU/M86wxffulhTv2OQbHxP71Xol2t2Xch0HyGvpSt
-	 u8+qnCeMIZf/d9YY3qvqzSwk1SKGv6GgayVFNQppif6bHWJ60Pz8nDdWueclC5ZLVA
-	 tMwaCotSaGMJJNwMMiseBYNZfq98FMqoHA3jqUnAMwlVgzFMTKa28mE7QmbmAlYLme
-	 eDeHKXC73vV9ZVEfrrTECVt8rjyZT1sUcD/lmsv/xnp4Ynt8OAyLW5rafuAnSnMrhH
-	 pVaaweTRoyo0lGS1p8M24RP6+YU4+IEF8X1mtX3bCDlQrrP+nBXr/b4EmPmn2aBWuk
-	 FnMLxvCknKK+A==
+	b=RtWPys9u5/RHjAa0zDWNmAErSem3vWH2P2aGvlP1X3AaddCUPcbWVS1lGZr3qfj9X
+	 Trrj0Vd5Cj0YOieXIBj5SJTkLObFlOflcF16wp9Yixszgydx86RfAYfhEQf0zUfB7R
+	 hSxxI3Gzbvusoucfw/VeFE7x/qSuw+AuAsWAyW96kOlq/UzCDbYG9Yv7+qwvSURBFV
+	 bX6PKhyiEjCNadMqH4Om8Lz61ME0XIQAX+hOuYqtVi1riP2HJmPB+NYbEZlMnfWcK3
+	 OOIhFJL+80MhuM6+3+oXAYhpxm66oWen6g2YEtZya9377PJl9ZFLnzHggbruCqS9In
+	 6A+JzeVw5Vofg==
 Received: from johan by xi.lan with local (Exim 4.98.2)
 	(envelope-from <johan@kernel.org>)
-	id 1vL1r0-000000002nb-2Lzy;
-	Mon, 17 Nov 2025 17:13:22 +0100
+	id 1vL1r1-000000002o0-08t5;
+	Mon, 17 Nov 2025 17:13:23 +0100
 From: Johan Hovold <johan@kernel.org>
 To: Vinod Koul <vkoul@kernel.org>
 Cc: Ludovic Desroches <ludovic.desroches@microchip.com>,
@@ -47,10 +47,10 @@ Cc: Ludovic Desroches <ludovic.desroches@microchip.com>,
 	linux-kernel@vger.kernel.org,
 	Johan Hovold <johan@kernel.org>,
 	stable@vger.kernel.org,
-	Inochi Amaoto <inochiama@gmail.com>
-Subject: [PATCH 03/15] dmaengine: cv1800b-dmamux: fix device leak on route allocation
-Date: Mon, 17 Nov 2025 17:12:46 +0100
-Message-ID: <20251117161258.10679-5-johan@kernel.org>
+	Fabrizio Castro <fabrizio.castro.jz@renesas.com>
+Subject: [PATCH 08/15] dmaengine: sh: rz-dmac: fix device leak on probe failure
+Date: Mon, 17 Nov 2025 17:12:51 +0100
+Message-ID: <20251117161258.10679-10-johan@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251117161258.10679-1-johan@kernel.org>
 References: <20251117161258.10679-1-johan@kernel.org>
@@ -62,87 +62,55 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Make sure to drop the reference taken when looking up the DMA mux
-platform device during route allocation.
+Make sure to drop the reference taken when looking up the ICU device
+during probe also on probe failures (e.g. probe deferral).
 
-Note that holding a reference to a device does not prevent its driver
-data from going away so there is no point in keeping the reference.
-
-Fixes: db7d07b5add4 ("dmaengine: add driver for Sophgo CV18XX/SG200X dmamux")
-Cc: stable@vger.kernel.org	# 6.17
-Cc: Inochi Amaoto <inochiama@gmail.com>
+Fixes: 7de873201c44 ("dmaengine: sh: rz-dmac: Add RZ/V2H(P) support")
+Cc: stable@vger.kernel.org	# 6.16
+Cc: Fabrizio Castro <fabrizio.castro.jz@renesas.com>
 Signed-off-by: Johan Hovold <johan@kernel.org>
 ---
- drivers/dma/cv1800b-dmamux.c | 17 ++++++++++-------
- 1 file changed, 10 insertions(+), 7 deletions(-)
+ drivers/dma/sh/rz-dmac.c | 13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/dma/cv1800b-dmamux.c b/drivers/dma/cv1800b-dmamux.c
-index e900d6595617..f7a952fcbc7d 100644
---- a/drivers/dma/cv1800b-dmamux.c
-+++ b/drivers/dma/cv1800b-dmamux.c
-@@ -102,11 +102,11 @@ static void *cv1800_dmamux_route_allocate(struct of_phandle_args *dma_spec,
- 	struct llist_node *node;
- 	unsigned long flags;
- 	unsigned int chid, devid, cpuid;
--	int ret;
-+	int ret = -EINVAL;
- 
- 	if (dma_spec->args_count != DMAMUX_NCELLS) {
- 		dev_err(&pdev->dev, "invalid number of dma mux args\n");
--		return ERR_PTR(-EINVAL);
-+		goto err_put_pdev;
- 	}
- 
- 	devid = dma_spec->args[0];
-@@ -115,18 +115,18 @@ static void *cv1800_dmamux_route_allocate(struct of_phandle_args *dma_spec,
- 
- 	if (devid > MAX_DMA_MAPPING_ID) {
- 		dev_err(&pdev->dev, "invalid device id: %u\n", devid);
--		return ERR_PTR(-EINVAL);
-+		goto err_put_pdev;
- 	}
- 
- 	if (cpuid > MAX_DMA_CPU_ID) {
- 		dev_err(&pdev->dev, "invalid cpu id: %u\n", cpuid);
--		return ERR_PTR(-EINVAL);
-+		goto err_put_pdev;
- 	}
- 
- 	dma_spec->np = of_parse_phandle(ofdma->of_node, "dma-masters", 0);
- 	if (!dma_spec->np) {
- 		dev_err(&pdev->dev, "can't get dma master\n");
--		return ERR_PTR(-EINVAL);
-+		goto err_put_pdev;
- 	}
- 
- 	spin_lock_irqsave(&dmamux->lock, flags);
-@@ -136,8 +136,6 @@ static void *cv1800_dmamux_route_allocate(struct of_phandle_args *dma_spec,
- 			if (map->peripheral == devid && map->cpu == cpuid)
- 				goto found;
- 		}
--
--		ret = -EINVAL;
- 		goto failed;
- 	} else {
- 		node = llist_del_first(&dmamux->free_maps);
-@@ -171,12 +169,17 @@ static void *cv1800_dmamux_route_allocate(struct of_phandle_args *dma_spec,
- 	dev_dbg(&pdev->dev, "register channel %u for req %u (cpu %u)\n",
- 		chid, devid, cpuid);
- 
-+	put_device(&pdev->dev);
-+
- 	return map;
- 
- failed:
- 	spin_unlock_irqrestore(&dmamux->lock, flags);
- 	of_node_put(dma_spec->np);
- 	dev_err(&pdev->dev, "errno %d\n", ret);
-+err_put_pdev:
-+	put_device(&pdev->dev);
-+
- 	return ERR_PTR(ret);
+diff --git a/drivers/dma/sh/rz-dmac.c b/drivers/dma/sh/rz-dmac.c
+index 1f687b08d6b8..38137e8d80b9 100644
+--- a/drivers/dma/sh/rz-dmac.c
++++ b/drivers/dma/sh/rz-dmac.c
+@@ -854,6 +854,13 @@ static int rz_dmac_chan_probe(struct rz_dmac *dmac,
+ 	return 0;
  }
  
++static void rz_dmac_put_device(void *_dev)
++{
++	struct device *dev = _dev;
++
++	put_device(dev);
++}
++
+ static int rz_dmac_parse_of_icu(struct device *dev, struct rz_dmac *dmac)
+ {
+ 	struct device_node *np = dev->of_node;
+@@ -876,6 +883,10 @@ static int rz_dmac_parse_of_icu(struct device *dev, struct rz_dmac *dmac)
+ 		return -ENODEV;
+ 	}
+ 
++	ret = devm_add_action_or_reset(dev, rz_dmac_put_device, &dmac->icu.pdev->dev);
++	if (ret)
++		return ret;
++
+ 	dmac_index = args.args[0];
+ 	if (dmac_index > RZV2H_MAX_DMAC_INDEX) {
+ 		dev_err(dev, "DMAC index %u invalid.\n", dmac_index);
+@@ -1055,8 +1066,6 @@ static void rz_dmac_remove(struct platform_device *pdev)
+ 	reset_control_assert(dmac->rstc);
+ 	pm_runtime_put(&pdev->dev);
+ 	pm_runtime_disable(&pdev->dev);
+-
+-	platform_device_put(dmac->icu.pdev);
+ }
+ 
+ static const struct of_device_id of_rz_dmac_match[] = {
 -- 
 2.51.0
 
