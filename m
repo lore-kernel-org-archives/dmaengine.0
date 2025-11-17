@@ -1,34 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F80A2D0635;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F0702D0616;
 	Mon, 17 Nov 2025 16:13:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763396005; cv=none; b=bn3JFAPlbKVnvYR5aSj19k4h50vz8xQ7i2T5ZqJWm0z+I1Kr8ogW0hVHH0QpsdstmPzkf2pQBzwX/KsxSXkBtLfGN4kuOrm+8/sDvDeEeaz1kjsZgF6ZECKz1tZhaxSoPcx6SMbQYzXT/3wYU/1MGfd9lahF5fMGVmyomnHGKtA=
+	t=1763396005; cv=none; b=CdBdOV17pXhECeDLF8NI5tZJ3SNa9lDiimjQPztCc+LwvF/4zAMKwfR2oouN2BO/e32058OhZX7S4kUUYQtjvxlaj6AKNAcK2+WRHWSXFFNKdFsE4XJol2+MknxgONgGyYf6kRgTdqVdO55OhhLo+h3shMp7oSNDIesfiRfsA+4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1763396005; c=relaxed/simple;
-	bh=y1FuJEfKwFBT32YZR2KFCDOM008BUzx/mEb1XlP/nHU=;
+	bh=a/z8oiJ1emaOdi37ui+TS+tLvLimlhxJjpEUmOHOftw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b3Q7TnbN8omxHEswwQdbDlsvnjld2Ubia1pEuk5g15+R9AOej0QHzKvWkwhe05nfn6Dwk12NpM2bh3EP8FtYUNEAs2J4peUTrmAGIK4sW+N+rGnpPMDg2DxmLAd1T2UuHqKjrAZoIFUAyi89ioP79F9NvDv+gDJp+du+dzK7d90=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Illrwbrl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LP2YBwEGXGMEWUT5O91kDx4hnX/Xh7kKtFVUV+WSq0JjPkSNu4bi1pnPWJx2iNKiN1CI0ZBttzABTezJNi8zBMFRs/9Vu3Y0cYQJa7TLMVG4WlracFSC4S0kAzZ5aCMXs7YFYCThbau404ENGQipFkzikRlO58ntqGLXk6T1Y/k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jHPMA0X1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Illrwbrl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 587B6C113D0;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jHPMA0X1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42927C2BCB3;
 	Mon, 17 Nov 2025 16:13:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1763396005;
-	bh=y1FuJEfKwFBT32YZR2KFCDOM008BUzx/mEb1XlP/nHU=;
+	bh=a/z8oiJ1emaOdi37ui+TS+tLvLimlhxJjpEUmOHOftw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IllrwbrlnAm0LHbftszwREVu7ZXeuhaUjd7+ExOS6LEv+uvmOTVV4VBJKp6p316GN
-	 xkFyfCnVhKS12yldSvGW7xRJWlZtQfslEvCTznIVbDUbmXLUJO2lieGTXh4aGl104c
-	 nwqGg4gGelojAcMqAIt3PEgThvvTN/fXLXJBc+utIRay+giDePUxJiufjVuwBWbGm0
-	 BW2o/7h9ROulkqWltRONK9HqNMIzxShd9zoIbUnsHrjHDhwEkXkmIdshs4IfsJYeiC
-	 sy0pOlQq3i/ARVSGp5Oas66mxaLmF07o2e8V11Q7rBOoEIlhEHjbBqStishFiAkDGL
-	 eXltv9jurugcg==
+	b=jHPMA0X1ANaCFuJeKjxmU3tWhGqJ7obpUxJjBttqM/CPJvhOL1lkOywb1invE8fbF
+	 K/9OLZAfIz1lxZDANrcw7yGpvDoW8OhZECYt+nB5xUIpqlQ7/C0n62wfinBBpdeaSG
+	 xYYfqOJ7zmDDFl7bdpMUmq5EKqmjuVSwSf4OG9cbTtxz6ytxj/FPSC9p/d7prNxNpQ
+	 u5tGxPSFTd5ZksmQ+Dk3LciDbhWC4FF+zFOKXXyTbhl9J01etFv9RwLzC2DK8TQV0K
+	 Iti36CDYqHoGJdj/1IGYy9dfZjwarlLeWr7vGpXQ/p6FKJwkcnmqyrzqOZNrMq7okp
+	 GJwXiZ5zSw2SQ==
 Received: from johan by xi.lan with local (Exim 4.98.2)
 	(envelope-from <johan@kernel.org>)
-	id 1vL1r1-000000002oB-1h9L;
+	id 1vL1r1-000000002o8-1Gcc;
 	Mon, 17 Nov 2025 17:13:23 +0100
 From: Johan Hovold <johan@kernel.org>
 To: Vinod Koul <vkoul@kernel.org>
@@ -45,13 +45,10 @@ Cc: Ludovic Desroches <ludovic.desroches@microchip.com>,
 	Peter Ujfalusi <peter.ujfalusi@gmail.com>,
 	dmaengine@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	Johan Hovold <johan@kernel.org>,
-	stable@vger.kernel.org,
-	Peter Ujfalusi <peter.ujfalusi@ti.com>,
-	Miaoqian Lin <linmq006@gmail.com>
-Subject: [PATCH 12/15] dmaengine: ti: dma-crossbar: fix device leak on dra7x route allocation
-Date: Mon, 17 Nov 2025 17:12:55 +0100
-Message-ID: <20251117161258.10679-14-johan@kernel.org>
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 11/15] dmaengine: stm32: dmamux: clean up route allocation error labels
+Date: Mon, 17 Nov 2025 17:12:54 +0100
+Message-ID: <20251117161258.10679-13-johan@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251117161258.10679-1-johan@kernel.org>
 References: <20251117161258.10679-1-johan@kernel.org>
@@ -63,36 +60,49 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Make sure to drop the reference taken when looking up the crossbar
-platform device during dra7x route allocation.
+Error labels should be named after what they do (and not after wherefrom
+they are jumped to).
 
-Note that commit 615a4bfc426e ("dmaengine: ti: Add missing put_device in
-ti_dra7_xbar_route_allocate") fixed the leak in the error paths but the
-reference is still leaking on successful allocation.
-
-Fixes: a074ae38f859 ("dmaengine: Add driver for TI DMA crossbar on DRA7x")
-Fixes: 615a4bfc426e ("dmaengine: ti: Add missing put_device in ti_dra7_xbar_route_allocate")
-Cc: stable@vger.kernel.org	# 4.2: 615a4bfc426e
-Cc: Peter Ujfalusi <peter.ujfalusi@ti.com>
-Cc: Miaoqian Lin <linmq006@gmail.com>
 Signed-off-by: Johan Hovold <johan@kernel.org>
 ---
- drivers/dma/ti/dma-crossbar.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/dma/stm32/stm32-dmamux.c | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/dma/ti/dma-crossbar.c b/drivers/dma/ti/dma-crossbar.c
-index 7f17ee87a6dc..e52b0e139900 100644
---- a/drivers/dma/ti/dma-crossbar.c
-+++ b/drivers/dma/ti/dma-crossbar.c
-@@ -288,6 +288,8 @@ static void *ti_dra7_xbar_route_allocate(struct of_phandle_args *dma_spec,
+diff --git a/drivers/dma/stm32/stm32-dmamux.c b/drivers/dma/stm32/stm32-dmamux.c
+index 2bd218dbabbb..db13498b9c9f 100644
+--- a/drivers/dma/stm32/stm32-dmamux.c
++++ b/drivers/dma/stm32/stm32-dmamux.c
+@@ -118,7 +118,7 @@ static void *stm32_dmamux_route_allocate(struct of_phandle_args *dma_spec,
+ 		spin_unlock_irqrestore(&dmamux->lock, flags);
+ 		dev_err(&pdev->dev, "Run out of free DMA requests\n");
+ 		ret = -ENOMEM;
+-		goto error_chan_id;
++		goto err_free_mux;
+ 	}
+ 	set_bit(mux->chan_id, dmamux->dma_inuse);
+ 	spin_unlock_irqrestore(&dmamux->lock, flags);
+@@ -135,7 +135,7 @@ static void *stm32_dmamux_route_allocate(struct of_phandle_args *dma_spec,
+ 	dma_spec->np = of_parse_phandle(ofdma->of_node, "dma-masters", i - 1);
+ 	if (!dma_spec->np) {
+ 		dev_err(&pdev->dev, "can't get dma master\n");
+-		goto error;
++		goto err_clear_inuse;
+ 	}
  
- 	ti_dra7_xbar_write(xbar->iomem, map->xbar_out, map->xbar_in);
+ 	/* Set dma request */
+@@ -167,10 +167,9 @@ static void *stm32_dmamux_route_allocate(struct of_phandle_args *dma_spec,
  
-+	put_device(&pdev->dev);
-+
- 	return map;
- }
- 
+ err_put_dma_spec_np:
+ 	of_node_put(dma_spec->np);
+-error:
++err_clear_inuse:
+ 	clear_bit(mux->chan_id, dmamux->dma_inuse);
+-
+-error_chan_id:
++err_free_mux:
+ 	kfree(mux);
+ err_put_pdev:
+ 	put_device(&pdev->dev);
 -- 
 2.51.0
 
