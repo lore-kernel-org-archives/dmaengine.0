@@ -1,35 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B9A92C3259;
-	Mon, 17 Nov 2025 16:13:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35CC02C3252;
+	Mon, 17 Nov 2025 16:13:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763396005; cv=none; b=da/Bd1sZhmrJlTTzG8qNpK9bJhzpmgb0MCgESR8Q0YPlnc7cLIxv5YeCIHVmliXUufsQYlAWLB0wA1GO3Ujtep3YWF65G1ewiuomylqSouzEPSjsct6ZuVlo20annbVzpYN5WVi9Bn9aC27EnLd1NWy9Evkks9nbrNBy8rfyv0g=
+	t=1763396005; cv=none; b=XSCM05R+eaybC6PJ5x0ykYhYU9i/Nslxi8dkydccd5CXWGLP4uXIF000//PZo8LtWpOYlrlgO/xc/GjpRd0rbeGq4G01WBeRgXkCLW3jwHn64CG5PiAkgsukorF9srvV3/Ml4SVpyxmkzNBG1y8SHH/y76gNJRGilt2Yf8C6pDA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1763396005; c=relaxed/simple;
-	bh=5jhp2qvO0rHVrq0HKmOWaRqTDSDSkNCr3jjIIuXsGzQ=;
+	bh=oJuF1iY88Mpi7VOqHbnjYrJMJU1Agh3Lfe9Wxf7yHvo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PqSkBBbjPLkoiPbagUdSsUvawqTWDabNOIRRiPUUsqbp2oGfm2lCPkWG1dMmmeY7R50lXwdVGtf9gEo/ZK27TSx1TiTVQzm1RLD7oKB/HM5v5HzELgJLetRabd2zcDpe4bvH1IJVIl5JH93LohRUGcPk86ryNPcvaD1M7OeiBpk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OfCIpUhl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K/mT9nscgC3RVtOKKDsXuK7cEaou4rJv4bkhNX3nUGR7CAXX/OIJi1F6DKsyNKK7bT2FOZNykdU0pjxbD6jpudNXk547roW5JCXZ89/RoJgK0VwlpjN3CpABfeeXikUm2OeXUic6shqm8S0UHZzxPa79sMVRVLk9+1QkMIHRTZM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cu1DHYUV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OfCIpUhl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 120A9C2BCB1;
-	Mon, 17 Nov 2025 16:13:25 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cu1DHYUV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE7BAC2BC87;
+	Mon, 17 Nov 2025 16:13:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1763396005;
-	bh=5jhp2qvO0rHVrq0HKmOWaRqTDSDSkNCr3jjIIuXsGzQ=;
+	s=k20201202; t=1763396004;
+	bh=oJuF1iY88Mpi7VOqHbnjYrJMJU1Agh3Lfe9Wxf7yHvo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OfCIpUhld0WTnUFtatmt7+0DZ7alHoRi4w1T/9y/nJCOqhH2F3dIxyoAFK1IaJ/i6
-	 xdWTmgkNi90QwTx3LEorB8OiMETlsOw3Jo8yPP7WcfKk/mJ6i9MG6MbL/2Lg+bBP+B
-	 f2o4HxZTmySciGOMfKEC5ZnDF5YYJQx1ZbuAiufsMPpBKiSEKxTm7YyOzW2fJ2x9IP
-	 qacT39tDHvlK4BnB3SlNSYUhIZSiq1fF3FJOem5fGjKlcOHtBfIasClivrE0f27EH3
-	 j6E3FL/cUaeDTY1RO5PTXewJTO9FUinkOPWi4z8wWuIo3y72XFrawWmwvDFuxuviWU
-	 RVddu56CzTyRw==
+	b=cu1DHYUVgtEm205Jb5mmzJC/SVEFZKltYM/QvaPgYkZXi5dZRxJuosZ+HRoQQLQzD
+	 g8BAIo1qP9bIMCIQ8eRoA8lPB5QVB8LJP9sRCX7o3zQsUP8FrGbA3EKL6GG8pfcCOQ
+	 98wjO4qYy/ahSzpc+N3H2a6q9LwgENkrfDb7iQARH5sOMau6WMjgpKKo6EX6TlKd9B
+	 bU4DHzAIpJW7YkSa9ccJ9WN+OjFjnltcSPUmWLZNws9DSbDmOiIhit5rlSa2H5r4p/
+	 OptEh5av8tplwBjFQr4XwqqG/XSaCuasYL4QNhXfrfILl53r354PReAiIKwqsE6EHg
+	 uoYez+6nZWcMg==
 Received: from johan by xi.lan with local (Exim 4.98.2)
 	(envelope-from <johan@kernel.org>)
-	id 1vL1r1-000000002o3-0Y6X;
-	Mon, 17 Nov 2025 17:13:23 +0100
+	id 1vL1r0-000000002ns-3UOf;
+	Mon, 17 Nov 2025 17:13:22 +0100
 From: Johan Hovold <johan@kernel.org>
 To: Vinod Koul <vkoul@kernel.org>
 Cc: Ludovic Desroches <ludovic.desroches@microchip.com>,
@@ -46,11 +46,10 @@ Cc: Ludovic Desroches <ludovic.desroches@microchip.com>,
 	dmaengine@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	Johan Hovold <johan@kernel.org>,
-	stable@vger.kernel.org,
-	Pierre-Yves MORDRET <pierre-yves.mordret@foss.st.com>
-Subject: [PATCH 09/15] dmaengine: stm32: dmamux: fix device leak on route allocation
-Date: Mon, 17 Nov 2025 17:12:52 +0100
-Message-ID: <20251117161258.10679-11-johan@kernel.org>
+	stable@vger.kernel.org
+Subject: [PATCH 06/15] dmaengine: lpc18xx-dmamux: fix device leak on route allocation
+Date: Mon, 17 Nov 2025 17:12:49 +0100
+Message-ID: <20251117161258.10679-8-johan@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251117161258.10679-1-johan@kernel.org>
 References: <20251117161258.10679-1-johan@kernel.org>
@@ -68,25 +67,22 @@ platform device during route allocation.
 Note that holding a reference to a device does not prevent its driver
 data from going away so there is no point in keeping the reference.
 
-Fixes: df7e762db5f6 ("dmaengine: Add STM32 DMAMUX driver")
-Cc: stable@vger.kernel.org	# 4.15
-Cc: Pierre-Yves MORDRET <pierre-yves.mordret@foss.st.com>
+Fixes: e5f4ae84be74 ("dmaengine: add driver for lpc18xx dmamux")
+Cc: stable@vger.kernel.org	# 4.3
 Signed-off-by: Johan Hovold <johan@kernel.org>
 ---
- drivers/dma/stm32/stm32-dmamux.c | 18 ++++++++++++------
- 1 file changed, 12 insertions(+), 6 deletions(-)
+ drivers/dma/lpc18xx-dmamux.c | 19 ++++++++++++++-----
+ 1 file changed, 14 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/dma/stm32/stm32-dmamux.c b/drivers/dma/stm32/stm32-dmamux.c
-index 8d77e2a7939a..791179760782 100644
---- a/drivers/dma/stm32/stm32-dmamux.c
-+++ b/drivers/dma/stm32/stm32-dmamux.c
-@@ -90,23 +90,25 @@ static void *stm32_dmamux_route_allocate(struct of_phandle_args *dma_spec,
- 	struct stm32_dmamux_data *dmamux = platform_get_drvdata(pdev);
- 	struct stm32_dmamux *mux;
- 	u32 i, min, max;
--	int ret;
-+	int ret = -EINVAL;
+diff --git a/drivers/dma/lpc18xx-dmamux.c b/drivers/dma/lpc18xx-dmamux.c
+index 2b6436f4b193..d3ff521951b8 100644
+--- a/drivers/dma/lpc18xx-dmamux.c
++++ b/drivers/dma/lpc18xx-dmamux.c
+@@ -57,30 +57,31 @@ static void *lpc18xx_dmamux_reserve(struct of_phandle_args *dma_spec,
+ 	struct lpc18xx_dmamux_data *dmamux = platform_get_drvdata(pdev);
  	unsigned long flags;
+ 	unsigned mux;
++	int ret = -EINVAL;
  
  	if (dma_spec->args_count != 3) {
  		dev_err(&pdev->dev, "invalid number of dma mux args\n");
@@ -94,50 +90,55 @@ index 8d77e2a7939a..791179760782 100644
 +		goto err_put_pdev;
  	}
  
- 	if (dma_spec->args[0] > dmamux->dmamux_requests) {
- 		dev_err(&pdev->dev, "invalid mux request number: %d\n",
+ 	mux = dma_spec->args[0];
+ 	if (mux >= dmamux->dma_master_requests) {
+ 		dev_err(&pdev->dev, "invalid mux number: %d\n",
  			dma_spec->args[0]);
 -		return ERR_PTR(-EINVAL);
 +		goto err_put_pdev;
  	}
  
- 	mux = kzalloc(sizeof(*mux), GFP_KERNEL);
--	if (!mux)
--		return ERR_PTR(-ENOMEM);
-+	if (!mux) {
-+		ret = -ENOMEM;
+ 	if (dma_spec->args[1] > LPC18XX_DMAMUX_MAX_VAL) {
+ 		dev_err(&pdev->dev, "invalid dma mux value: %d\n",
+ 			dma_spec->args[1]);
+-		return ERR_PTR(-EINVAL);
 +		goto err_put_pdev;
-+	}
- 
- 	spin_lock_irqsave(&dmamux->lock, flags);
- 	mux->chan_id = find_first_zero_bit(dmamux->dma_inuse,
-@@ -133,7 +135,6 @@ static void *stm32_dmamux_route_allocate(struct of_phandle_args *dma_spec,
- 	dma_spec->np = of_parse_phandle(ofdma->of_node, "dma-masters", i - 1);
- 	if (!dma_spec->np) {
- 		dev_err(&pdev->dev, "can't get dma master\n");
--		ret = -EINVAL;
- 		goto error;
  	}
  
-@@ -160,6 +161,8 @@ static void *stm32_dmamux_route_allocate(struct of_phandle_args *dma_spec,
- 	dev_dbg(&pdev->dev, "Mapping DMAMUX(%u) to DMA%u(%u)\n",
- 		mux->request, mux->master, mux->chan_id);
+ 	/* The of_node_put() will be done in the core for the node */
+ 	dma_spec->np = of_parse_phandle(ofdma->of_node, "dma-masters", 0);
+ 	if (!dma_spec->np) {
+ 		dev_err(&pdev->dev, "can't get dma master\n");
+-		return ERR_PTR(-EINVAL);
++		goto err_put_pdev;
+ 	}
+ 
+ 	spin_lock_irqsave(&dmamux->lock, flags);
+@@ -89,7 +90,8 @@ static void *lpc18xx_dmamux_reserve(struct of_phandle_args *dma_spec,
+ 		dev_err(&pdev->dev, "dma request %u busy with %u.%u\n",
+ 			mux, mux, dmamux->muxes[mux].value);
+ 		of_node_put(dma_spec->np);
+-		return ERR_PTR(-EBUSY);
++		ret = -EBUSY;
++		goto err_put_pdev;
+ 	}
+ 
+ 	dmamux->muxes[mux].busy = true;
+@@ -106,7 +108,14 @@ static void *lpc18xx_dmamux_reserve(struct of_phandle_args *dma_spec,
+ 	dev_dbg(&pdev->dev, "mapping dmamux %u.%u to dma request %u\n", mux,
+ 		dmamux->muxes[mux].value, mux);
  
 +	put_device(&pdev->dev);
 +
- 	return mux;
- 
- error:
-@@ -167,6 +170,9 @@ static void *stm32_dmamux_route_allocate(struct of_phandle_args *dma_spec,
- 
- error_chan_id:
- 	kfree(mux);
+ 	return &dmamux->muxes[mux];
++
 +err_put_pdev:
 +	put_device(&pdev->dev);
 +
- 	return ERR_PTR(ret);
++	return ERR_PTR(ret);
  }
  
+ static int lpc18xx_dmamux_probe(struct platform_device *pdev)
 -- 
 2.51.0
 
