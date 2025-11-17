@@ -1,34 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D00682D23A8;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA9B82D238A;
 	Mon, 17 Nov 2025 16:13:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763396005; cv=none; b=bkcBosAnOgNnQnGQz2cKJ/dXnq5fBXP5lGJk0FHCkvItO2nuA59A1IQgaSlUQElouqakmDQo8VgoRnNoHZzWEmZmjsNMbVgG4w41wIGlkHkvewX8xzxeChw1jCdapiH2Oj1iGgj9JwY41RjVCWFb4EWcbawuzqgcswR+h364x90=
+	t=1763396005; cv=none; b=VrykFwJ5+pOzAwJ/IKrnfZoczxjDPocVaaqOpnQ/AX0LIR9jaSYNKzBlj0MR8VUR5tGdr473aLeQiqB0sgBjbhao2vO/lE9nkOh1oIbAcqh3rXXiC6HMEsyNmOhxc18bUUk8KGDbzlwITg5sBrFzpEDfV9KnwVWvYVBSCgQ36cE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1763396005; c=relaxed/simple;
-	bh=AriYcLx5dNNAKOVwHc1ayU8f+JVccX083sw071ekSEA=;
+	bh=Z8NqhFEf8Fvku86AUBmfERbhqkjUKqdlmIojfDTnDYA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Mgt3JC0vFubetvQeYkFx9A9wNl5t8y+mJHEQPTqAgD7hf0H7QHMdocy2eyGTEudlyuoyMP1R0aGIrrxdc5obuaqqv9MD/uopaU7+rkeFnOSiWJQosoqyvAEKiaZAbrmA5BxBYmTsys8u5l3RN+xX7lW/pvMu818QmrmORGXlc/U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hT6H2mov; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rPwmn4p0A0oXe0H9DDOMGEfF147vHDVrGbYF93AVMrLe0LJiHgtUMP4IVx/EP0QtrchWoNCG8ZheWjeWHt8m4W6I9zlIM6byPr0doaZXcZvKsWSFuZT2kzPBaCWf8cQGeJ6X8gdLKoc2q5xIMLY+KiHJxwkCA71y1hNIhQLobF8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HPk9IpdM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hT6H2mov"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8124C113D0;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HPk9IpdM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9572BC116B1;
 	Mon, 17 Nov 2025 16:13:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1763396005;
-	bh=AriYcLx5dNNAKOVwHc1ayU8f+JVccX083sw071ekSEA=;
+	bh=Z8NqhFEf8Fvku86AUBmfERbhqkjUKqdlmIojfDTnDYA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hT6H2movz5qHJg2r8TLZbGJPKAspN17fCMGqom/NOeHDqZQorPt5+xC/YkT8nFd3h
-	 5gYnBZSFzwqcY6T85m4VftThKWO8u7QHGlCOYaqeNdSpwwoiJD/OMW0rFIW72kIpGd
-	 X9crdyURpHP4njoxgz3B3TeEVZL1rpfiM7SGJ4qfWQUwDA40RKT6uKmRsKy9Pg1/xP
-	 X6APTdwxfX/7/tRTi7NHfzLlx9/uvnJ0kRt16HulH1Y4hGeccRDLQdwURDrUp+/oFn
-	 C0uGnuN1dbM2zCq3hNgnDAmBk3zteaJ4WtXkVLY74j4kD5W+qRD4jpdabaRKldpGWY
-	 Lu+Hx0b/iDG7w==
+	b=HPk9IpdMlLa6wmBnftfH+GgxTDFPHUV5Zr5zGHqUl++tUFPjYGk4T67AWyonAPVut
+	 wCj85L0v7BLOs/4K0RjQN+6S3png9QVoaRHQ+JHfY+o2/SZcoZ0qqKwDQDZLSdFxc3
+	 ostT9nRbAY+5YrTgPE2SrB7XZJtJLerrE3hCuOuvhSN/MNPvn9e0ChLHe+8LWQbaTU
+	 S4FnoU+e/rZexxP4fXpSp93G0W5oEyMsVVajvjskI/cl9hsFZ5KybsOZ6gdNjv7y4+
+	 zmkNv7TdmXg/WetF2Uvw9gUeoeGbs5OZ2FLcNAoHRnyyGsGwymx+axNWmgfg8XjflO
+	 bMPPKOFJhncKQ==
 Received: from johan by xi.lan with local (Exim 4.98.2)
 	(envelope-from <johan@kernel.org>)
-	id 1vL1r1-000000002oL-2qg0;
+	id 1vL1r1-000000002oE-21g6;
 	Mon, 17 Nov 2025 17:13:23 +0100
 From: Johan Hovold <johan@kernel.org>
 To: Vinod Koul <vkoul@kernel.org>
@@ -47,11 +47,10 @@ Cc: Ludovic Desroches <ludovic.desroches@microchip.com>,
 	linux-kernel@vger.kernel.org,
 	Johan Hovold <johan@kernel.org>,
 	stable@vger.kernel.org,
-	Grygorii Strashko <grygorii.strashko@ti.com>,
-	Yu Kuai <yukuai3@huawei.com>
-Subject: [PATCH 15/15] dmaengine: ti: k3-udma: fix device leak on udma lookup
-Date: Mon, 17 Nov 2025 17:12:58 +0100
-Message-ID: <20251117161258.10679-17-johan@kernel.org>
+	Peter Ujfalusi <peter.ujfalusi@ti.com>
+Subject: [PATCH 13/15] dmaengine: ti: dma-crossbar: fix device leak on am335x route allocation
+Date: Mon, 17 Nov 2025 17:12:56 +0100
+Message-ID: <20251117161258.10679-15-johan@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251117161258.10679-1-johan@kernel.org>
 References: <20251117161258.10679-1-johan@kernel.org>
@@ -63,37 +62,72 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Make sure to drop the reference taken when looking up the UDMA platform
-device.
+Make sure to drop the reference taken when looking up the crossbar
+platform device during am335x route allocation.
 
-Note that holding a reference to a platform device does not prevent its
-driver data from going away so there is no point in keeping the
-reference after the lookup helper returns.
-
-Fixes: d70241913413 ("dmaengine: ti: k3-udma: Add glue layer for non DMAengine users")
-Fixes: 1438cde8fe9c ("dmaengine: ti: k3-udma: add missing put_device() call in of_xudma_dev_get()")
-Cc: stable@vger.kernel.org	# 5.6: 1438cde8fe9c
-Cc: Grygorii Strashko <grygorii.strashko@ti.com>
-Cc: Yu Kuai <yukuai3@huawei.com>
+Fixes: 42dbdcc6bf96 ("dmaengine: ti-dma-crossbar: Add support for crossbar on AM33xx/AM43xx")
+Cc: stable@vger.kernel.org	# 4.4
+Cc: Peter Ujfalusi <peter.ujfalusi@ti.com>
 Signed-off-by: Johan Hovold <johan@kernel.org>
 ---
- drivers/dma/ti/k3-udma-private.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/dma/ti/dma-crossbar.c | 16 ++++++++++------
+ 1 file changed, 10 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/dma/ti/k3-udma-private.c b/drivers/dma/ti/k3-udma-private.c
-index 05228bf00033..624360423ef1 100644
---- a/drivers/dma/ti/k3-udma-private.c
-+++ b/drivers/dma/ti/k3-udma-private.c
-@@ -42,9 +42,9 @@ struct udma_dev *of_xudma_dev_get(struct device_node *np, const char *property)
+diff --git a/drivers/dma/ti/dma-crossbar.c b/drivers/dma/ti/dma-crossbar.c
+index e52b0e139900..ff05b150ad37 100644
+--- a/drivers/dma/ti/dma-crossbar.c
++++ b/drivers/dma/ti/dma-crossbar.c
+@@ -79,34 +79,35 @@ static void *ti_am335x_xbar_route_allocate(struct of_phandle_args *dma_spec,
+ {
+ 	struct platform_device *pdev = of_find_device_by_node(ofdma->of_node);
+ 	struct ti_am335x_xbar_data *xbar = platform_get_drvdata(pdev);
+-	struct ti_am335x_xbar_map *map;
++	struct ti_am335x_xbar_map *map = ERR_PTR(-EINVAL);
+ 
+ 	if (dma_spec->args_count != 3)
+-		return ERR_PTR(-EINVAL);
++		goto out_put_pdev;
+ 
+ 	if (dma_spec->args[2] >= xbar->xbar_events) {
+ 		dev_err(&pdev->dev, "Invalid XBAR event number: %d\n",
+ 			dma_spec->args[2]);
+-		return ERR_PTR(-EINVAL);
++		goto out_put_pdev;
  	}
  
- 	ud = platform_get_drvdata(pdev);
-+	put_device(&pdev->dev);
- 	if (!ud) {
- 		pr_debug("UDMA has not been probed\n");
--		put_device(&pdev->dev);
- 		return ERR_PTR(-EPROBE_DEFER);
+ 	if (dma_spec->args[0] >= xbar->dma_requests) {
+ 		dev_err(&pdev->dev, "Invalid DMA request line number: %d\n",
+ 			dma_spec->args[0]);
+-		return ERR_PTR(-EINVAL);
++		goto out_put_pdev;
  	}
+ 
+ 	/* The of_node_put() will be done in the core for the node */
+ 	dma_spec->np = of_parse_phandle(ofdma->of_node, "dma-masters", 0);
+ 	if (!dma_spec->np) {
+ 		dev_err(&pdev->dev, "Can't get DMA master\n");
+-		return ERR_PTR(-EINVAL);
++		goto out_put_pdev;
+ 	}
+ 
+ 	map = kzalloc(sizeof(*map), GFP_KERNEL);
+ 	if (!map) {
+ 		of_node_put(dma_spec->np);
+-		return ERR_PTR(-ENOMEM);
++		map = ERR_PTR(-ENOMEM);
++		goto out_put_pdev;
+ 	}
+ 
+ 	map->dma_line = (u16)dma_spec->args[0];
+@@ -120,6 +121,9 @@ static void *ti_am335x_xbar_route_allocate(struct of_phandle_args *dma_spec,
+ 
+ 	ti_am335x_xbar_write(xbar->iomem, map->dma_line, map->mux_val);
+ 
++out_put_pdev:
++	put_device(&pdev->dev);
++
+ 	return map;
+ }
  
 -- 
 2.51.0
