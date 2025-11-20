@@ -1,52 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19A7A331203;
-	Thu, 20 Nov 2025 11:45:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A93B1302CB0;
+	Thu, 20 Nov 2025 11:47:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763639161; cv=none; b=dqQP28L+JCAGg6/AntqOO/FIlu3fcVVBiYdvm75JJ926GqCEvcnnLG/ZN1PRpkpz+mLNZNzJ+mn1sRrnm/z8Z2ttF4fBeQRoXXwuhbgIFzl5CkZzz+GwmzALfd7yjDEBI1glc+pDhR90qCwwtsy9BGr/wXQWEWjDpItMerXIxlM=
+	t=1763639269; cv=none; b=NbzAW1yaDXP00A3lccyAYgJf8pLycswCscfak9+uJL0L+P8IGZBaoj+B7ZoPqgvqvWShLtEn1SQUV0nzzyJP6Mb91QGbz5sL6BvgAvq1KvKn1K0m/tP3h7V3O5gH9gRUEtd0Jxj3qHmEdLvaO6ShJLCpZSSpAPYw1aD2TwCuvYE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763639161; c=relaxed/simple;
-	bh=v5HtxW3ky1lHVbjlzpylRqpq8KOcLif8Q/vMkgK5c00=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dx7Bhe07TUmBgB5CaTCK+MVnyqere8OXH4zgZPHAtw42tzKS6CQOl+JCvrwvcHnRUQLZW+jscDv+gbUpqan50zHBP/oCW3qLCVZgJ5U8Mk7qVJ88877T1Q2Ufj4528sBW+GvfXeu4uuYjUeA7w0BKUqMKQCqvxFWO/vaD36r0D0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QOurhnwf; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1763639269; c=relaxed/simple;
+	bh=jlBISMafcPOaSCkHt5SiIEqaS7RM1+PNySMlLFMbVqk=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=nHQx3aQkXXbiPZfp7J+uXnbEnqjRWhGC4IUK6mvopwH/J8vqcLl3m22xyYXWo6KY1axHbQcHgN/K64iDZayOYeetTP+nL2n6Xgm4RgK9i3bDbXeL0FsjSGxd7NXi7M4F0Cr3oxUSWF0ClXNo/gH9TsqcnhR+pzJMcWpMqbtHmb4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uqsqXetj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QOurhnwf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6F41C4AF10;
-	Thu, 20 Nov 2025 11:45:59 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uqsqXetj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 394F6C4CEF1;
+	Thu, 20 Nov 2025 11:47:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1763639159;
-	bh=v5HtxW3ky1lHVbjlzpylRqpq8KOcLif8Q/vMkgK5c00=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QOurhnwfZVvgOcKh0NTj/eLiEER/zbC+B5kIi6UzFenDn15S/GlBsVqGeNVYB6YRA
-	 EvYFA/ozBMcg9Vx7HzuinOVYVelNyLbYAdg9VAl9Nycjn5VReKUogq7fTtjYjnEbJa
-	 WQIW+uAnMq772GCp/oBgqHcf/3naZgZ912fqbncOq5lJBU1g3IEl9g3BOorUMlOzOH
-	 FmYwqgrxUYN9221uMK1wVn3Cn7urbyRHUhys1iiY9RxsbSn/QE6tiLBaWVt9mQpLMM
-	 FJTxI4zl/94N4dyoFNt+2aLsiXqKw4AOE7dHzue8CC47him27J88qkbcQQG22Z+35u
-	 oNnvBoFqGd2zQ==
+	s=k20201202; t=1763639268;
+	bh=jlBISMafcPOaSCkHt5SiIEqaS7RM1+PNySMlLFMbVqk=;
+	h=From:To:Cc:Subject:Date:From;
+	b=uqsqXetjTXitb+2wT+v4VCGFpI6qo5k++FyRdnUe+q4cZ0yZYAplGMM/cXQ8zfEA5
+	 jn2Lq4FaRnvwoFm+RNkE8oB65ZofIFrs6Zt8giL2UsI62/ve7i9iAO/x/d6yzNC2rz
+	 4D03GvzNpfVL8wZ/Nt8EeMN/D1dhxRAjiB4CcuwGLRyE55LYNM/33o7U2GB2K+OAvP
+	 B9TZXf+1TxRcueMIh6pdAd0JKFYZ6NDkhjcKi1Ti/HFh4d6t8FhEVo8aKo5tOfzPEQ
+	 13BjvgcshFUdfo5l6EUab9BfIH/cqu3eXf70B8vjgrtWiGZPG4W9kAzuDWxm2oiNcZ
+	 a8bMTuGsLmJgw==
 Received: from johan by xi.lan with local (Exim 4.98.2)
 	(envelope-from <johan@kernel.org>)
-	id 1vM36u-000000002DF-030f;
-	Thu, 20 Nov 2025 12:46:00 +0100
+	id 1vM38e-000000002G0-24w1;
+	Thu, 20 Nov 2025 12:47:48 +0100
 From: Johan Hovold <johan@kernel.org>
 To: Vinod Koul <vkoul@kernel.org>
-Cc: Florian Fainelli <florian.fainelli@broadcom.com>,
-	Viresh Kumar <vireshk@kernel.org>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Laxman Dewangan <ldewangan@nvidia.com>,
-	Jon Hunter <jonathanh@nvidia.com>,
-	dmaengine@vger.kernel.org,
+Cc: dmaengine@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 8/9] dmaengine: sprd: drop unused module alias
-Date: Thu, 20 Nov 2025 12:45:23 +0100
-Message-ID: <20251120114524.8431-9-johan@kernel.org>
+Subject: [PATCH] dmaengine: bcm2835: enable compile testing
+Date: Thu, 20 Nov 2025 12:47:44 +0100
+Message-ID: <20251120114744.8666-1-johan@kernel.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251120114524.8431-1-johan@kernel.org>
-References: <20251120114524.8431-1-johan@kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -55,23 +46,27 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The driver has never supported anything but OF probe so drop the unused
-platform module alias.
+The seems to be nothing preventing the driver from being compile tested
+so enable that for wider build coverage.
 
 Signed-off-by: Johan Hovold <johan@kernel.org>
 ---
- drivers/dma/sprd-dma.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/dma/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/dma/sprd-dma.c b/drivers/dma/sprd-dma.c
-index 187a090463ce..6207e0b185e1 100644
---- a/drivers/dma/sprd-dma.c
-+++ b/drivers/dma/sprd-dma.c
-@@ -1311,4 +1311,3 @@ MODULE_LICENSE("GPL v2");
- MODULE_DESCRIPTION("DMA driver for Spreadtrum");
- MODULE_AUTHOR("Baolin Wang <baolin.wang@spreadtrum.com>");
- MODULE_AUTHOR("Eric Long <eric.long@spreadtrum.com>");
--MODULE_ALIAS("platform:sprd-dma");
+diff --git a/drivers/dma/Kconfig b/drivers/dma/Kconfig
+index 115e7f2a9988..1a80760a9978 100644
+--- a/drivers/dma/Kconfig
++++ b/drivers/dma/Kconfig
+@@ -143,7 +143,7 @@ config BCM_SBA_RAID
+ 
+ config DMA_BCM2835
+ 	tristate "BCM2835 DMA engine support"
+-	depends on ARCH_BCM2835
++	depends on ARCH_BCM2835 || COMPILE_TEST
+ 	select DMA_ENGINE
+ 	select DMA_VIRTUAL_CHANNELS
+ 
 -- 
 2.51.2
 
