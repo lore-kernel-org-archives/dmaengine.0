@@ -1,34 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03142326921;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19A7A331203;
 	Thu, 20 Nov 2025 11:45:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763639160; cv=none; b=GzKqTtWJlVuBXHCrg3V21CZ4IW1B6n55tkQDWlByn40t90SCzgcW5h/OyxCgx9LbAtM8WGzVAkBNeolYV3A4867FY4TcZSPqFBTFJvqruJYI1vMebm+WGN7Yc7hgfOcnetmsYf5rRwX02GartufqnLzC6BKeTCEQSYct/vADbTI=
+	t=1763639161; cv=none; b=dqQP28L+JCAGg6/AntqOO/FIlu3fcVVBiYdvm75JJ926GqCEvcnnLG/ZN1PRpkpz+mLNZNzJ+mn1sRrnm/z8Z2ttF4fBeQRoXXwuhbgIFzl5CkZzz+GwmzALfd7yjDEBI1glc+pDhR90qCwwtsy9BGr/wXQWEWjDpItMerXIxlM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763639160; c=relaxed/simple;
-	bh=kU+WADkV2y2yNK4d4L0JrDTb7z9c0e+c6t9PGw3bHL0=;
+	s=arc-20240116; t=1763639161; c=relaxed/simple;
+	bh=v5HtxW3ky1lHVbjlzpylRqpq8KOcLif8Q/vMkgK5c00=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PFyxiOwnVdzlP2rehl1SEHJ41kBVi57apUehnFm4NE5ENY5xj/9yMbBYN0WmFFEheEpaKrOZJn2jrs2Q74cIT2GbBB9jacdOV5Hy8J0mey3bNP+OkO2xP1sKY2+BYS0IjPXAtKg6NbumGYN9bMxI1l4bkNKLfTuwMLd8s4iY4+8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ujcB4IA6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dx7Bhe07TUmBgB5CaTCK+MVnyqere8OXH4zgZPHAtw42tzKS6CQOl+JCvrwvcHnRUQLZW+jscDv+gbUpqan50zHBP/oCW3qLCVZgJ5U8Mk7qVJ88877T1Q2Ufj4528sBW+GvfXeu4uuYjUeA7w0BKUqMKQCqvxFWO/vaD36r0D0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QOurhnwf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ujcB4IA6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D669DC4CEF1;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QOurhnwf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6F41C4AF10;
 	Thu, 20 Nov 2025 11:45:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1763639159;
-	bh=kU+WADkV2y2yNK4d4L0JrDTb7z9c0e+c6t9PGw3bHL0=;
+	bh=v5HtxW3ky1lHVbjlzpylRqpq8KOcLif8Q/vMkgK5c00=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ujcB4IA6GJoOSkd2Bim/+6oOKv8idVUAfNbfN38Ee26xyMfyjhaaoiPAKOrou+wf4
-	 QhY6Zsf7VwEK3h8cPB8ggtegcH/DgY7t3BpUXd1DoWQtwVikmqb9nvSWei78Dxol5S
-	 F7a57OJ6UJUCOnIh10eikzKkvep5snXsAyZ5kD4Qfx+QmvxZYHWkHEt3j6hu4jCYqY
-	 0InV7lsFfHDgB7OAA2esQwtJIQZ/y+wzab1Sl4rO1SfFBh8R/0AE1vasRxZkNGghJX
-	 AsnxaUDexqoVTgqELXQa/XIaW21pBYEwFw+Lv1KfY+BOpqHOEYV2bnS0T9q01btwp8
-	 7X0FagxtxrfMg==
+	b=QOurhnwfZVvgOcKh0NTj/eLiEER/zbC+B5kIi6UzFenDn15S/GlBsVqGeNVYB6YRA
+	 EvYFA/ozBMcg9Vx7HzuinOVYVelNyLbYAdg9VAl9Nycjn5VReKUogq7fTtjYjnEbJa
+	 WQIW+uAnMq772GCp/oBgqHcf/3naZgZ912fqbncOq5lJBU1g3IEl9g3BOorUMlOzOH
+	 FmYwqgrxUYN9221uMK1wVn3Cn7urbyRHUhys1iiY9RxsbSn/QE6tiLBaWVt9mQpLMM
+	 FJTxI4zl/94N4dyoFNt+2aLsiXqKw4AOE7dHzue8CC47him27J88qkbcQQG22Z+35u
+	 oNnvBoFqGd2zQ==
 Received: from johan by xi.lan with local (Exim 4.98.2)
 	(envelope-from <johan@kernel.org>)
-	id 1vM36u-000000002DI-0MeZ;
+	id 1vM36u-000000002DF-030f;
 	Thu, 20 Nov 2025 12:46:00 +0100
 From: Johan Hovold <johan@kernel.org>
 To: Vinod Koul <vkoul@kernel.org>
@@ -41,9 +41,9 @@ Cc: Florian Fainelli <florian.fainelli@broadcom.com>,
 	dmaengine@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 9/9] dmaengine: tegra210-adma: drop unused module alias
-Date: Thu, 20 Nov 2025 12:45:24 +0100
-Message-ID: <20251120114524.8431-10-johan@kernel.org>
+Subject: [PATCH 8/9] dmaengine: sprd: drop unused module alias
+Date: Thu, 20 Nov 2025 12:45:23 +0100
+Message-ID: <20251120114524.8431-9-johan@kernel.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251120114524.8431-1-johan@kernel.org>
 References: <20251120114524.8431-1-johan@kernel.org>
@@ -60,21 +60,18 @@ platform module alias.
 
 Signed-off-by: Johan Hovold <johan@kernel.org>
 ---
- drivers/dma/tegra210-adma.c | 1 -
+ drivers/dma/sprd-dma.c | 1 -
  1 file changed, 1 deletion(-)
 
-diff --git a/drivers/dma/tegra210-adma.c b/drivers/dma/tegra210-adma.c
-index fad896ff29a2..d0e8bb27a03b 100644
---- a/drivers/dma/tegra210-adma.c
-+++ b/drivers/dma/tegra210-adma.c
-@@ -1230,7 +1230,6 @@ static struct platform_driver tegra_admac_driver = {
- 
- module_platform_driver(tegra_admac_driver);
- 
--MODULE_ALIAS("platform:tegra210-adma");
- MODULE_DESCRIPTION("NVIDIA Tegra ADMA driver");
- MODULE_AUTHOR("Dara Ramesh <dramesh@nvidia.com>");
- MODULE_AUTHOR("Jon Hunter <jonathanh@nvidia.com>");
+diff --git a/drivers/dma/sprd-dma.c b/drivers/dma/sprd-dma.c
+index 187a090463ce..6207e0b185e1 100644
+--- a/drivers/dma/sprd-dma.c
++++ b/drivers/dma/sprd-dma.c
+@@ -1311,4 +1311,3 @@ MODULE_LICENSE("GPL v2");
+ MODULE_DESCRIPTION("DMA driver for Spreadtrum");
+ MODULE_AUTHOR("Baolin Wang <baolin.wang@spreadtrum.com>");
+ MODULE_AUTHOR("Eric Long <eric.long@spreadtrum.com>");
+-MODULE_ALIAS("platform:sprd-dma");
 -- 
 2.51.2
 
