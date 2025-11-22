@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 348FD1B4156;
-	Sat, 22 Nov 2025 09:30:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F4561B4156;
+	Sat, 22 Nov 2025 09:30:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763803819; cv=none; b=Rcos8gHLI4/uBui6ioMCtjQyixnmoRRiznwbVlcUO4ZncjGZXj4efcec2VcMFRd2nxHDmCQuNL4OTPXGU5ebab1+C4aXY1kHfU8QpwzB5qQQcM9reFJIyqfAyhIn905HT2ygVnB3vmsXZnUxC7+xof1McDZODFVbjxYj/igbaUg=
+	t=1763803823; cv=none; b=rzJ5e4t5EzecVOJ5enu8TyqQeMmQ31ZlpdWNVXb2FYcupf9mxbk7VIQwR5iEhYpi3yhw9MYt0d82FOiNm842M2kKBZ4w1Wji//2J8yi8EmULkcG5j/dAgZe9pgRq3RxJq0BKTDN2cdB3ry2v65o3fqJ+E9zeondh3niW6tbFC0Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763803819; c=relaxed/simple;
-	bh=Ai+LE8Gr95nnOMo5dHhh4+Xl9SJvGnQwsoBd7ie891w=;
+	s=arc-20240116; t=1763803823; c=relaxed/simple;
+	bh=le5Y77ebR39RtnyuXWTiJ0ViKQ0rNkahzXot9h7RudA=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=Rn+YoJwke5m3c3tATXzuv7SQhtxM+pVpp+UGTLBSaaykYR8aJqy/Bs/ZQJCPxI+OAHkzMFURR4Kqbm2EPK0JtxfJPwhWrdKRQ1Xy65OfnRlwRDVrwI79GDmL75Rmkm8fBIbFTjPhbkvimAequfi0OQgXpsxvmP3qEjTWl9QKrnU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=spcxbr0V; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=j2vA6ZuWxFpW7f4e73mm10wUhJXyr5ie0F3T2H1ITJ/r0gFp/aqBJibBORyPvsjmyOoSUsMl8FwJYLbCgnagxnlYM/G5p22HprnAK8fudt6Bu4s4uZk2F2HGCl6uhmCUsqkG0veM0n+pxl4biu/k4gaFGAG0V3Xz245uEfSUPi8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ewl+02dp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="spcxbr0V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 578F6C4CEF5;
-	Sat, 22 Nov 2025 09:30:17 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ewl+02dp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59C8AC4CEFB;
+	Sat, 22 Nov 2025 09:30:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1763803818;
-	bh=Ai+LE8Gr95nnOMo5dHhh4+Xl9SJvGnQwsoBd7ie891w=;
+	s=k20201202; t=1763803823;
+	bh=le5Y77ebR39RtnyuXWTiJ0ViKQ0rNkahzXot9h7RudA=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=spcxbr0Vb+zV9Jg+OS45WrgZgjKKRLox9UNR5ofiLGgRbFvJqeEAD2myouhEnziJ0
-	 KALERaD28C0Gap2b6HMiiuwy/2xh3BO0ZI1xb/a3YSdgYWIS/xqnzFoFyjbC1Co9xo
-	 iWvAC5yt+cMNPjkDH8+y6BOPTsa1JMReARM/CxeYrC90dTf0dacWhDOHmhwCCHDgV3
-	 IdS7J0FWsai3Kgdq+urIq8aqW0JHhHfae56saW+3pv9VuRyIHCDufSb0CV2QrWwpkB
-	 9yTYIbmusTz774RBJGGfLpNY5QlkXaEPGTeepgs14Z8IO4dnOVjYD7m9ZoIAaGl5D7
-	 /6pWyeCNyOjOA==
+	b=ewl+02dpllftYjjAnJ5wvXFNMUq4QIznzQi5uHGR8J+SnUcWLmWs8UACHdikL+CtH
+	 ypq0QnEMblapztwcRcqsnxSrV2V85MFMAG6VKO5Um8YiytJvqcWWjc5kjLtbkYLo/u
+	 Hte/KUar8w9bvdyE8ltmRoWnUaz9bq9Jy9y+SKFgeQLdVHOFXRN+AW2BJXC23/IJtF
+	 kyHxdLEcsGtA7pcnc8pyK7ERjZ7LpA33z/vh1xiGO9Pn3+JZjVmyI3/+wg+sNoBibt
+	 voTEZ5+QKeVEY/HNCd414j5Vz5muxwBhUmV+xsQnoMsnywKvmbFlKAzrPu+3wuI/UD
+	 47Cr9lt0iuLiA==
 From: Vinod Koul <vkoul@kernel.org>
-To: dmaengine@vger.kernel.org, Rosen Penev <rosenp@gmail.com>
-Cc: Ludovic Desroches <ludovic.desroches@microchip.com>, 
- linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org
-In-Reply-To: <20251106022405.85604-1-rosenp@gmail.com>
-References: <20251106022405.85604-1-rosenp@gmail.com>
-Subject: Re: [PATCH dmaengine 0/2] dmaengine: at_hdmac: support
- COMPILE_TEST
-Message-Id: <176380381696.330370.13914894604690798483.b4-ty@kernel.org>
-Date: Sat, 22 Nov 2025 15:00:16 +0530
+To: Johan Hovold <johan@kernel.org>
+Cc: dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
+In-Reply-To: <20251120115016.8967-1-johan@kernel.org>
+References: <20251120115016.8967-1-johan@kernel.org>
+Subject: Re: [PATCH v2] dmaengine: bcm2835: enable compile testing
+Message-Id: <176380382198.330370.4162683336228985033.b4-ty@kernel.org>
+Date: Sat, 22 Nov 2025 15:00:21 +0530
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -47,22 +45,16 @@ Content-Transfer-Encoding: 7bit
 X-Mailer: b4 0.13.0
 
 
-On Wed, 05 Nov 2025 18:24:03 -0800, Rosen Penev wrote:
-> First commit fixes compilation under 64-bit and second actually enables
-> it.
+On Thu, 20 Nov 2025 12:50:16 +0100, Johan Hovold wrote:
+> There seems to be nothing preventing the driver from being compile
+> tested so enable that for wider build coverage.
 > 
-> Rosen Penev (2):
->   dmaengine: at_hdmac: fix formats under 64-bit
->   dmaengine: at_hdmac: add COMPILE_TEST support
 > 
-> [...]
 
 Applied, thanks!
 
-[1/2] dmaengine: at_hdmac: fix formats under 64-bit
-      commit: 938eae912ac52f8e9e5f2463e2db30cfe6f895d5
-[2/2] dmaengine: at_hdmac: add COMPILE_TEST support
-      commit: 5d8c5bea0da97809813b5f702700019cfffb6085
+[1/1] dmaengine: bcm2835: enable compile testing
+      commit: d3e1935fba8d71ef1889cbc2d6e2447cb829070f
 
 Best regards,
 -- 
