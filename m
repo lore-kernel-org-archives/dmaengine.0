@@ -1,120 +1,111 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.7])
+Received: from relay9-d.mail.gandi.net (relay9-d.mail.gandi.net [217.70.183.199])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C764274B44;
-	Mon, 24 Nov 2025 12:12:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.7
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4F2A3009ED;
+	Mon, 24 Nov 2025 12:50:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.199
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763986347; cv=none; b=UaCUu0Mr/6rlyvgCD/bZdbZCMopjraabV7UI8clx8+ktl3DPms9Hxrxp5lrfd0VHaqwaB+OLOfuDe+zWfeya+RjWaK8v/o4NDyOTjhvC0K08IZgJknNLDZJvxCg3TNKpop7N78ZN61H+ypFfiusXSmb/yyEf5k0ArDSySlR2/4Y=
+	t=1763988636; cv=none; b=YcxY/sUTVOsbfXGqrLv6xzVxAyBy4jGUL4ySHmdJrQo7XzTSCUZz2pbdVKFm++09+EdbxqetWY3uvef4pi2QrM7ECbGiGNXv5rmtT+JUF7c+FvLGRqId3sX5uDO7bBbiRK81XscXRKOrNfuV0IIXW4wtEElbbAr8gd7hTlCDdcY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763986347; c=relaxed/simple;
-	bh=rUyODX56g/0PVw4q9uoPm3QtJgx5W1kE7M9udwy7iHM=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b3J/dxBjXKudqj2F0BJQ5r/ScQv13Muje/ZSE2ZsmtspaWEPOxCZxkXWzFWhC2QQqLzWWDi+cNp5ya8PlqXBLLxd8tBiuSOd2ERRXlnabZhVgXJBXnb4tfqSb2iAVne/wR7pks57QernPYLaJ0F7h763pl7PvO1KP6EqAUMlWiQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=galhEHDn; arc=none smtp.client-ip=192.198.163.7
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
+	s=arc-20240116; t=1763988636; c=relaxed/simple;
+	bh=BaqG+ncA4e6jPTLXGj38TJPyzRCYGVfmkhU4oOz1CUk=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=Qa6XciMxG17UFIjCx6NaViX5vIxouv8WdX5598OG8hrAC/XtBnDyqBggh93emQuCx2X+V2Q+WGyOu+EFCx3M/ScAZlz0x8aXoYreip7kYgwltbO1VTZkbK1LFqFvCeWhZGeisJ0ztNU7dlG5bYJ0Pp1uQVJfBuBP0qvAJrYov1U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=yoseli.org; spf=pass smtp.mailfrom=yoseli.org; dkim=pass (2048-bit key) header.d=yoseli.org header.i=@yoseli.org header.b=ocCJdz60; arc=none smtp.client-ip=217.70.183.199
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=yoseli.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=yoseli.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="galhEHDn"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1763986344; x=1795522344;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=rUyODX56g/0PVw4q9uoPm3QtJgx5W1kE7M9udwy7iHM=;
-  b=galhEHDnjfXG40zzvZRcs2D3MScSiPhCEpdqa7syjorB4CpGkCOKFaBC
-   YTWaAYCga/iQ3PvXR9gPWO+oYKyJ8GQg6Xc2UInY4xyHUJsfPgMIlFWML
-   poNeQcPm2w0kTqtYf0WRbZef1v4heo9ZeYtvNhMS1uW7RMC6HRAv8f3v2
-   RxmSK3AdmmmdmPFHlBRP4oQ5XhAn3MzVejiUIujIOEuA+AhSOECOQo7Ig
-   RecUsTifwUFS205AemPXR73z8xu9ZraWfyGhaU4ZSEQE3UyuERZSzv1LB
-   I1lujMMxODieoxL/XRIBPV1iMHZJcHtCzitM4F33WWCKB+MduY8o2fSmy
-   g==;
-X-CSE-ConnectionGUID: /YQ7W60fSlKwg1Hw5rBduA==
-X-CSE-MsgGUID: dk5SjVEQSQa+L4/aQKlWWg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11622"; a="91468005"
-X-IronPort-AV: E=Sophos;i="6.20,222,1758610800"; 
-   d="scan'208";a="91468005"
-Received: from fmviesa008.fm.intel.com ([10.60.135.148])
-  by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Nov 2025 04:12:15 -0800
-X-CSE-ConnectionGUID: nnXj4wckTvi9keb5yZ3x/g==
-X-CSE-MsgGUID: 7CI4VqycQDKBM7yw1yp7Tw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.20,222,1758610800"; 
-   d="scan'208";a="192559576"
-Received: from black.igk.intel.com ([10.91.253.5])
-  by fmviesa008.fm.intel.com with ESMTP; 24 Nov 2025 04:12:10 -0800
-Received: by black.igk.intel.com (Postfix, from userid 1003)
-	id 823E6AD; Mon, 24 Nov 2025 13:12:03 +0100 (CET)
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-To: Bjorn Andersson <andersson@kernel.org>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Stefan Wahren <wahrenst@gmx.net>,
-	Vinod Koul <vkoul@kernel.org>,
-	Thomas Andreatta <thomasandreatta2000@gmail.com>,
-	Caleb Sander Mateos <csander@purestorage.com>,
-	dmaengine@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-rpi-kernel@lists.infradead.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-arm-msm@vger.kernel.org
-Cc: Olivier Dautricourt <olivierdautricourt@gmail.com>,
-	Stefan Roese <sr@denx.de>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Ray Jui <rjui@broadcom.com>,
-	Scott Branden <sbranden@broadcom.com>,
-	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
-	Lars-Peter Clausen <lars@metafoo.de>,
-	Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>,
-	Daniel Mack <daniel@zonque.org>,
-	Haojian Zhuang <haojian.zhuang@gmail.com>,
-	Robert Jarzmik <robert.jarzmik@free.fr>,
-	Lizhi Hou <lizhi.hou@amd.com>,
-	Brian Xu <brian.xu@amd.com>,
-	Raj Kumar Rampelli <raj.kumar.rampelli@amd.com>,
-	Michal Simek <michal.simek@amd.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH v4 13/13] dmaengine: xilinx: xdma: use sg_nents_for_dma() helper
-Date: Mon, 24 Nov 2025 13:09:31 +0100
-Message-ID: <20251124121202.424072-14-andriy.shevchenko@linux.intel.com>
-X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20251124121202.424072-1-andriy.shevchenko@linux.intel.com>
-References: <20251124121202.424072-1-andriy.shevchenko@linux.intel.com>
+	dkim=pass (2048-bit key) header.d=yoseli.org header.i=@yoseli.org header.b="ocCJdz60"
+Received: by mail.gandi.net (Postfix) with ESMTPSA id BCD29442B0;
+	Mon, 24 Nov 2025 12:50:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yoseli.org; s=gm1;
+	t=1763988625;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=W5926LvFRqXES9Meu0EUUgUHy4p8Z6V+TT02fhE4MHI=;
+	b=ocCJdz60FjHaM+ZEJvXxQ9T1XOBfGdtDJyk5GkWBe4Jkbhwo04TgRdLAGih1OQFWEtnStB
+	tV4cfZEbNrKqe6Yg0NeBFB0RBUblM5/Ak/Jxi3kH6did7jk+IU1oUW2v+MsvCoR2Cj67KR
+	o1gvdLE8PXCXkWSeeNBr3Bs+hJCnWLceHSwTnwuWUS261fPLI6Az1VHxZlQXn16hcL0fpn
+	CIynIp+9XaVobsMyb4qpuDOlYDD2Gq97trWIrAxGpWqQY7IVFZTHF3MHMQpoc24IYsj+m+
+	J7XOYdvM1M8Nf2kDsBHU6+xXXbX/d6M7orVni7G8eI/i8bhcimkO8Om5KD5Vjg==
+From: Jean-Michel Hautbois <jeanmichel.hautbois@yoseli.org>
+Subject: [PATCH 0/7] dma: fsl/mcf-edma: Bug fixes and enhancements for
+ ColdFire support
+Date: Mon, 24 Nov 2025 13:50:21 +0100
+Message-Id: <20251124-dma-coldfire-v1-0-dc8f93185464@yoseli.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAI1UJGkC/x3MQQqAIBBA0avIrBtIzRZdJVqYjjVQGgoRSHdPW
+ r7F/xUKZaYCk6iQ6ebCKTbIToDbbdwI2TeD6pWRUmn0p0WXDh84E5qgR0skB71qaMmVKfDz7+b
+ lfT8OBzYrXgAAAA==
+X-Change-ID: 20251123-dma-coldfire-5f36aee143b3
+To: Frank Li <Frank.Li@nxp.com>, Vinod Koul <vkoul@kernel.org>
+Cc: Greg Ungerer <gerg@linux-m68k.org>, imx@lists.linux.dev, 
+ dmaengine@vger.kernel.org, linux-m68k@lists.linux-m68k.org, 
+ linux-kernel@vger.kernel.org, 
+ Jean-Michel Hautbois <jeanmichel.hautbois@yoseli.org>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1763988624; l=1829;
+ i=jeanmichel.hautbois@yoseli.org; s=20240925; h=from:subject:message-id;
+ bh=BaqG+ncA4e6jPTLXGj38TJPyzRCYGVfmkhU4oOz1CUk=;
+ b=Fxs1DZlsqwRCapYlWQSXqfJsbrfVlGZrT6bjmqm46WsGu4wjs2yJwd65eXhY6P2NKfjlmEfkm
+ iPFA+GgIN92A2Hgn/lEuy4b8mQbXX+KUEphIaaCLZzgQtWpaCyIUTd2
+X-Developer-Key: i=jeanmichel.hautbois@yoseli.org; a=ed25519;
+ pk=MsMTVmoV69wLIlSkHlFoACIMVNQFyvJzvsJSQsn/kq4=
+X-GND-State: clean
+X-GND-Score: -100
+X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvfeekieegucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuifetpfffkfdpucggtfgfnhhsuhgsshgtrhhisggvnecuuegrihhlohhuthemuceftddunecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefhufffkfggtgfgvfevofesthejredtredtjeenucfhrhhomheplfgvrghnqdfoihgthhgvlhcujfgruhhtsghoihhsuceojhgvrghnmhhitghhvghlrdhhrghuthgsohhisheshihoshgvlhhirdhorhhgqeenucggtffrrghtthgvrhhnpeduteehgeeihfelleelkeetkeetvefhvddugeduvddvudegheelkeeltdfftdehjeenucfkphepvdgrtddumegvtdgrmeduieelmeejudegtdemkeeksgefmeehudehfeemtgdvieegmeegfhgsnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehinhgvthepvdgrtddumegvtdgrmeduieelmeejudegtdemkeeksgefmeehudehfeemtgdvieegmeegfhgspdhhvghlohephihoshgvlhhiqdihohgtthhordihohhsvghlihdrohhrghdpmhgrihhlfhhrohhmpehjvggrnhhmihgthhgvlhdrhhgruhhtsghoihhsseihohhsvghlihdrohhrghdpnhgspghrtghpthhtohepkedprhgtphhtthhopegumhgrvghnghhinhgvsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepjhgvrghnmhhitghhvghlrdhhrghuthgsohhisheshihoshgvlhhirdhorhhgpdhrtghpt
+ hhtohepghgvrhhgsehlihhnuhigqdhmieekkhdrohhrghdprhgtphhtthhopefhrhgrnhhkrdfnihesnhigphdrtghomhdprhgtphhtthhopehvkhhouhhlsehkvghrnhgvlhdrohhrghdprhgtphhtthhopehlihhnuhigqdhkvghrnhgvlhesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehimhigsehlihhsthhsrdhlihhnuhigrdguvghvpdhrtghpthhtoheplhhinhhugidqmheikehksehlihhsthhsrdhlihhnuhigqdhmieekkhdrohhrgh
+X-GND-Sasl: jeanmichel.hautbois@yoseli.org
 
-Instead of open coded variant let's use recently introduced helper.
+This series addresses several bugs in the fsl-edma and mcf-edma drivers
+affecting MCF54418 ColdFire processors.
 
-Reviewed-by: Bjorn Andersson <andersson@kernel.org>
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Patch 1 adds a write barrier after TCD descriptor fill to ensure proper
+memory ordering.
+
+Patch 2 adds the FSL_EDMA_DRV_MCF flag to fix byte-lane addressing for
+MCF54418.
+
+Patch 3 adds per-channel IRQ naming for easier debugging.
+
+Patches 4-6 fix the interrupt and error handlers for all 64 DMA
+channels:
+- Patch 4 fixes the interrupt handler to process all 64 channels
+- Patch 5 moves the error handler out of the header file for clarity
+- Patch 6 fixes the error handler for all 64 channels with proper types
+
+Patch 7 adds source stride support for interleaved DMA transfers,
+enabling memory access patterns where source samples are not contiguous.
+
+Tested on a custom MCF54418-based platform with slave DMA transfers.
+
+Signed-off-by: Jean-Michel Hautbois <jeanmichel.hautbois@yoseli.org>
 ---
- drivers/dma/xilinx/xdma.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+Jean-Michel Hautbois (7):
+      dma: fsl-edma: Add write barrier after TCD descriptor fill
+      dma: fsl-edma: Add FSL_EDMA_DRV_MCF flag for ColdFire eDMA
+      dma: mcf-edma: Add per-channel IRQ naming for debugging
+      dma: mcf-edma: Fix interrupt handler for 64 DMA channels
+      dma: fsl-edma: Move error handler out of header file
+      dma: mcf-edma: Fix error handler for all 64 DMA channels
+      dma: fsl-edma: Support source stride for interleaved DMA transfers
 
-diff --git a/drivers/dma/xilinx/xdma.c b/drivers/dma/xilinx/xdma.c
-index 5ecf8223c112..118199a04902 100644
---- a/drivers/dma/xilinx/xdma.c
-+++ b/drivers/dma/xilinx/xdma.c
-@@ -605,13 +605,11 @@ xdma_prep_device_sg(struct dma_chan *chan, struct scatterlist *sgl,
- 	struct xdma_chan *xdma_chan = to_xdma_chan(chan);
- 	struct dma_async_tx_descriptor *tx_desc;
- 	struct xdma_desc *sw_desc;
--	u32 desc_num = 0, i;
- 	u64 addr, dev_addr, *src, *dst;
-+	u32 desc_num, i;
- 	struct scatterlist *sg;
- 
--	for_each_sg(sgl, sg, sg_len, i)
--		desc_num += DIV_ROUND_UP(sg_dma_len(sg), XDMA_DESC_BLEN_MAX);
--
-+	desc_num = sg_nents_for_dma(sgl, sg_len, XDMA_DESC_BLEN_MAX);
- 	sw_desc = xdma_alloc_desc(xdma_chan, desc_num, false);
- 	if (!sw_desc)
- 		return NULL;
+ drivers/dma/fsl-edma-common.c | 14 +++++++++
+ drivers/dma/fsl-edma-common.h | 11 ++++----
+ drivers/dma/mcf-edma-main.c   | 66 +++++++++++++++++++++++++------------------
+ 3 files changed, 57 insertions(+), 34 deletions(-)
+---
+base-commit: d13f3ac64efb868d09cb2726b1e84929afe90235
+change-id: 20251123-dma-coldfire-5f36aee143b3
+
+Best regards,
 -- 
-2.50.1
+Jean-Michel Hautbois <jeanmichel.hautbois@yoseli.org>
 
