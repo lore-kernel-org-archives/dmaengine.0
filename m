@@ -1,115 +1,167 @@
-Received: from relay9-d.mail.gandi.net (relay9-d.mail.gandi.net [217.70.183.199])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vs1-f52.google.com (mail-vs1-f52.google.com [209.85.217.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C1A13019D8;
-	Mon, 24 Nov 2025 12:50:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.199
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B0BB26F467
+	for <dmaengine@vger.kernel.org>; Mon, 24 Nov 2025 13:05:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763988641; cv=none; b=mnWsv+tDVJnsUOZtKJVLRukIFWwfo4+yOrhLTn57KdTCdYSUYIMnHU2arAOhI5YwzA4lwh2hZgTjan/4Nyko6pV2f6jY460cd8i7OUvqEA75gJo6I+JOQN5k50wmmB5xhvhC+R/aCuomnCy3OzvmIWbS62H8uqACvZ503GyD0is=
+	t=1763989533; cv=none; b=f5ddPqz1mB49KSoPk5iREwJo6PH8DCB2vH89cQoG+tklN0PmpXXR+rTGHdS2EUXJx9gH1dJVN13BdsreJ7iAZLE7xvYCxkYupm2gaRtVW758S6g+EB1uCJjUEyT+4D5o0fdG9fVMzyB6gyo2EmzsdzryEqUqjUi0ALFNV2rBM+8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763988641; c=relaxed/simple;
-	bh=va9Btmq0fbQ8/UccRYS5f0pnh1pGaTMnXaLt4GgFyE4=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=eEFoc3aAnRmJHe577KakXTj9S495es0Dmx5l0M03t2yNet7lb7ov/XSM+3R0Ypd7R449SPhChKBRuUJ+u797FGH+bNaeRRnCpSPJ1r3zi4balJv4xORloRvp/y1bYI0EEhmodv1MlRWbCrdniXKtZHpfD1wS4fitiT6F0rH5SmQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=yoseli.org; spf=pass smtp.mailfrom=yoseli.org; dkim=pass (2048-bit key) header.d=yoseli.org header.i=@yoseli.org header.b=dCE/EADP; arc=none smtp.client-ip=217.70.183.199
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=yoseli.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=yoseli.org
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=yoseli.org header.i=@yoseli.org header.b="dCE/EADP"
-Received: by mail.gandi.net (Postfix) with ESMTPSA id 2E70A443F2;
-	Mon, 24 Nov 2025 12:50:30 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yoseli.org; s=gm1;
-	t=1763988631;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=7ZtBQiByJLXTd7tTZYVsrh3HjYSN2tUwTsUZ2S4eorM=;
-	b=dCE/EADPCiUx/BmWcaQ91hKfGmfXq+LjtqIgKmF2lGiKgn4/nJ78cHSVJ4jjRpaLCF4xjm
-	7gZ+XdXJ1Jq3198HOrbDyTCr1lZZQXKf03PUji7c4V5uz15ivq26BLLmld6iepm042U+hm
-	6J3DqpJU4jAVWgzrz7rnE+HvXtaNxed1wdLeducplH2ILL4SCMnESkg/KFZIZkX/9aVwrl
-	iJPoJM8OBrLV+TgZl3+QdMiUSnKv4e26vgpFpmgO9rOCU64rqYfIsLcSHjwD0Oj/iuwmUH
-	jdcwD7AQ85d5xSIgRhpN21S+6DXcVM7DaPMk9etinKnVlj4Y1W1ZoQUZR/xBFw==
-From: Jean-Michel Hautbois <jeanmichel.hautbois@yoseli.org>
-Date: Mon, 24 Nov 2025 13:50:26 +0100
-Subject: [PATCH 5/7] dma: fsl-edma: Move error handler out of header file
+	s=arc-20240116; t=1763989533; c=relaxed/simple;
+	bh=rvffBPeDVxbQoo+Q7lx63a7eZIjGM7ukQNoAugTkn9w=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=nXv+g488H0ef4IOPMRGUFGfvIaKFykjXZbLpFa1Fmc3+QPTWJK4GBquftALsmhO3/GAY5XL0Qes51kExR6UTQ40oa6yIjrSB6a7nU6yoaw8EyNhf5/QUgDA810JbC50pH3AUTEPvsTQwha91Ec8cnsYYl1d1Fsr3sRQSVXga8Cc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.217.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-vs1-f52.google.com with SMTP id ada2fe7eead31-5de0c1fa660so1388438137.1
+        for <dmaengine@vger.kernel.org>; Mon, 24 Nov 2025 05:05:32 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1763989531; x=1764594331;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=oRA7IiXm/R9YyxGpbeRsKjwk7bFwEo0rtrEj2XwEZxU=;
+        b=lFCuiI8+lI+iMIUzhwEEi5c6XpUg19sj7BhpnmTte9dTMpLGUmw9G/DvAC9zg0ObGH
+         ZmGlNHp8G92eWXam5eeEzoTibSDBEpJAWtAM0sr2lq70DqQLfXlQz+dsWePI+QC6ejXE
+         M7V34e62HAh14YZwVk4lj778pVxanduAHS3Bo8h+HT+78gg/Frow+wOaa6obv5LxRqyg
+         jSrUBJ4iOQHjS9c+mym7n/6jgIEEZyJk1I6o3dXW/AQG4B4KXwOlm9imB05jCOWqvoTC
+         cSyoL1I2q2WXJzAwhYvDwoPBAy1Ecer7sen/MmMEtIbQi7FPrFM+RChZcJ3vmiSp6QNa
+         EQ/A==
+X-Forwarded-Encrypted: i=1; AJvYcCUOY1WMEOOm82fsBeMeYiUMEXwTeGkdbhyh9/A5siZfR8ipknT2ypSSh94FyiOuuJL9cVw+9PNMTTw=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyuAFIyYw/+L5i1xEYC/+y3SqLqwT4cQzVyHuDt6godO+NGbz5c
+	VBOjppOO55WTcKuwDgHGiZ3LUcqGg0mCYCY4aeYKu3rWGgL+emUVBa67wB3Rm/za
+X-Gm-Gg: ASbGncv5Jv2WrDbfHDmwvz+i8vaAWCKfDHK5oNhDTWMy9PKhMPfyTkM/xPiBiPll+C8
+	1e3Rg9c7qZRPfiwrzBm1H5DCaN8i75moPYqY0t9nKId0Z/lXA1bDrSn5rVaQ5mdqrL3L1tJy/JW
+	Byrbygi7b4wDDK8XxOfbReqdWYsYer1+aL2EgQkArOPLicPxCHP0FSEm0HkjP93jqs2VkZG6fsG
+	U4minjFbLG1x1pnIFC0p76ZKG4OR0updi6VaqP2YQ5VSZAOfzNIgTYcrk34IiHJXDKnJT0wOFZY
+	pXhL7D+/miMUgufchcKMOw96ljyLtlIBT9sHiy/5+LXXQw1fZR8Sr5PkKijWbi3Sh/i7Y1VdtmX
+	mdVdydYkgs5ntNOQf7l2FovazItKVNR/d33Ly+z+gHI69FzKV705MVhgjPu+f9rEejePgneS5W5
+	Wb50v/wkDbcdh+uxtpE8WbMW4cRvMgSy0Z3lrBiZZcZzBOBhVhBRpVU9axUOE=
+X-Google-Smtp-Source: AGHT+IHnFxHA7bjYX+noPZOyk4QTYB/oeL0hXbi7bcXVxw1/NrJB55WVWYNGTKjNDfMg6OTyrfCLFQ==
+X-Received: by 2002:a05:6102:50a1:b0:5d7:bd67:eaf with SMTP id ada2fe7eead31-5e1de1f88c7mr3052132137.18.1763989531088;
+        Mon, 24 Nov 2025 05:05:31 -0800 (PST)
+Received: from mail-ua1-f52.google.com (mail-ua1-f52.google.com. [209.85.222.52])
+        by smtp.gmail.com with ESMTPSA id a1e0cc1a2514c-93c564c8261sm5682957241.10.2025.11.24.05.05.29
+        for <dmaengine@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 24 Nov 2025 05:05:29 -0800 (PST)
+Received: by mail-ua1-f52.google.com with SMTP id a1e0cc1a2514c-9352980a4f2so1211903241.2
+        for <dmaengine@vger.kernel.org>; Mon, 24 Nov 2025 05:05:29 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCW+AEncAIiTaRYmt1aYfWW7E8yhtsMRDTZGnDimLR18IZjfaVJAOWnD74NVhAvsaQHSDg6gPs0MiDg=@vger.kernel.org
+X-Received: by 2002:a05:6102:5113:b0:5db:18fe:7520 with SMTP id
+ ada2fe7eead31-5e1de3bf69dmr2992625137.22.1763989529183; Mon, 24 Nov 2025
+ 05:05:29 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20251124-dma-coldfire-v1-5-dc8f93185464@yoseli.org>
-References: <20251124-dma-coldfire-v1-0-dc8f93185464@yoseli.org>
-In-Reply-To: <20251124-dma-coldfire-v1-0-dc8f93185464@yoseli.org>
-To: Frank Li <Frank.Li@nxp.com>, Vinod Koul <vkoul@kernel.org>
-Cc: Greg Ungerer <gerg@linux-m68k.org>, imx@lists.linux.dev, 
- dmaengine@vger.kernel.org, linux-m68k@lists.linux-m68k.org, 
- linux-kernel@vger.kernel.org, 
- Jean-Michel Hautbois <jeanmichel.hautbois@yoseli.org>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1763988624; l=1852;
- i=jeanmichel.hautbois@yoseli.org; s=20240925; h=from:subject:message-id;
- bh=va9Btmq0fbQ8/UccRYS5f0pnh1pGaTMnXaLt4GgFyE4=;
- b=U+7OL0mSSRtoc1L1IzHaoAh3XKB++Gghc/o8riySTGs8840ZQW83gYZJVA9DyfGUs/Ojx8q5p
- NVkDcnZ1NJlDVcCR8Uo9EWSysAc5TiM58JZliwIUv+fK1JQRRZKdOWY
-X-Developer-Key: i=jeanmichel.hautbois@yoseli.org; a=ed25519;
- pk=MsMTVmoV69wLIlSkHlFoACIMVNQFyvJzvsJSQsn/kq4=
-X-GND-State: clean
-X-GND-Score: -100
-X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvfeekieegucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuifetpfffkfdpucggtfgfnhhsuhgsshgtrhhisggvnecuuegrihhlohhuthemuceftddunecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefhfffugggtgffkfhgjvfevofesthejredtredtjeenucfhrhhomheplfgvrghnqdfoihgthhgvlhcujfgruhhtsghoihhsuceojhgvrghnmhhitghhvghlrdhhrghuthgsohhisheshihoshgvlhhirdhorhhgqeenucggtffrrghtthgvrhhnpeffjefhtdelhffhheevheeutefghfefteeluedvudfhgeegteeitddtuefhhfelteenucfkphepvdgrtddumegvtdgrmeduieelmeejudegtdemkeeksgefmeehudehfeemtgdvieegmeegfhgsnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehinhgvthepvdgrtddumegvtdgrmeduieelmeejudegtdemkeeksgefmeehudehfeemtgdvieegmeegfhgspdhhvghlohephihoshgvlhhiqdihohgtthhordihohhsvghlihdrohhrghdpmhgrihhlfhhrohhmpehjvggrnhhmihgthhgvlhdrhhgruhhtsghoihhsseihohhsvghlihdrohhrghdpnhgspghrtghpthhtohepkedprhgtphhtthhopegumhgrvghnghhinhgvsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepjhgvrghnmhhitghhvghlrdhhrghuthgsohhisheshihoshgvlhhirdhorhhgpdhrt
- ghpthhtohepghgvrhhgsehlihhnuhigqdhmieekkhdrohhrghdprhgtphhtthhopefhrhgrnhhkrdfnihesnhigphdrtghomhdprhgtphhtthhopehvkhhouhhlsehkvghrnhgvlhdrohhrghdprhgtphhtthhopehlihhnuhigqdhkvghrnhgvlhesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehimhigsehlihhsthhsrdhlihhnuhigrdguvghvpdhrtghpthhtoheplhhinhhugidqmheikehksehlihhsthhsrdhlihhnuhigqdhmieekkhdrohhrgh
-X-GND-Sasl: jeanmichel.hautbois@yoseli.org
+References: <20251124-dma-coldfire-v1-0-dc8f93185464@yoseli.org> <20251124-dma-coldfire-v1-3-dc8f93185464@yoseli.org>
+In-Reply-To: <20251124-dma-coldfire-v1-3-dc8f93185464@yoseli.org>
+From: Geert Uytterhoeven <geert@linux-m68k.org>
+Date: Mon, 24 Nov 2025 14:05:18 +0100
+X-Gmail-Original-Message-ID: <CAMuHMdWDryHHdrsBzsUF4BRhNoDXm4+3FVQ4FV2acGT6reeYhw@mail.gmail.com>
+X-Gm-Features: AWmQ_bleU8rfcOoPzR7hq6Rm0AD1QUkBfKzAzzAbdXJa_V1TGP9TwrSr0BINHw4
+Message-ID: <CAMuHMdWDryHHdrsBzsUF4BRhNoDXm4+3FVQ4FV2acGT6reeYhw@mail.gmail.com>
+Subject: Re: [PATCH 3/7] dma: mcf-edma: Add per-channel IRQ naming for debugging
+To: Jean-Michel Hautbois <jeanmichel.hautbois@yoseli.org>
+Cc: Frank Li <Frank.Li@nxp.com>, Vinod Koul <vkoul@kernel.org>, 
+	Greg Ungerer <gerg@linux-m68k.org>, imx@lists.linux.dev, dmaengine@vger.kernel.org, 
+	linux-m68k@lists.linux-m68k.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-Move fsl_edma_err_chan_handler from an inline function in the header
-to a proper function in fsl-edma-common.c. This prepares for MCF
-ColdFire eDMA support where the error handler needs to be called from
-the MCF-specific error interrupt handler.
+Hi Jean-Michel,
 
-No functional change for existing users.
+On Mon, 24 Nov 2025 at 13:52, Jean-Michel Hautbois
+<jeanmichel.hautbois@yoseli.org> wrote:
+> Add dynamic per-channel IRQ naming to make DMA interrupt identification
+> easier in /proc/interrupts and debugging tools.
+>
+> Instead of all channels showing "eDMA", they now show:
+> - "eDMA-0" through "eDMA-15" for channels 0-15
+> - "eDMA-16" through "eDMA-55" for channels 16-55
+> - "eDMA-tx-56" for the shared channel 56-63 interrupt
+> - "eDMA-err" for the error interrupt
+>
+> This aids debugging DMA issues by making it clear which channel's
+> interrupt is being serviced.
+>
+> Signed-off-by: Jean-Michel Hautbois <jeanmichel.hautbois@yoseli.org>
 
-Signed-off-by: Jean-Michel Hautbois <jeanmichel.hautbois@yoseli.org>
----
- drivers/dma/fsl-edma-common.c | 5 +++++
- drivers/dma/fsl-edma-common.h | 6 +-----
- 2 files changed, 6 insertions(+), 5 deletions(-)
+Thanks for your patch!
 
-diff --git a/drivers/dma/fsl-edma-common.c b/drivers/dma/fsl-edma-common.c
-index db36a6aafc910364d75ce6c5d334fd19d2120b6b..40ac6a7d8480b9ed2c6a2bdec59b4fda5fcb6271 100644
---- a/drivers/dma/fsl-edma-common.c
-+++ b/drivers/dma/fsl-edma-common.c
-@@ -44,6 +44,11 @@
- #define EDMA64_ERRH		0x28
- #define EDMA64_ERRL		0x2c
- 
-+void fsl_edma_err_chan_handler(struct fsl_edma_chan *fsl_chan)
-+{
-+	fsl_chan->status = DMA_ERROR;
-+}
-+
- void fsl_edma_tx_chan_handler(struct fsl_edma_chan *fsl_chan)
- {
- 	spin_lock(&fsl_chan->vchan.lock);
-diff --git a/drivers/dma/fsl-edma-common.h b/drivers/dma/fsl-edma-common.h
-index 4c86f2f39c1db9a812245fe85755ec8d1169c44c..64b537527291795964a77a9021192a39756b6987 100644
---- a/drivers/dma/fsl-edma-common.h
-+++ b/drivers/dma/fsl-edma-common.h
-@@ -478,11 +478,7 @@ static inline struct fsl_edma_desc *to_fsl_edma_desc(struct virt_dma_desc *vd)
- 	return container_of(vd, struct fsl_edma_desc, vdesc);
- }
- 
--static inline void fsl_edma_err_chan_handler(struct fsl_edma_chan *fsl_chan)
--{
--	fsl_chan->status = DMA_ERROR;
--}
--
-+void fsl_edma_err_chan_handler(struct fsl_edma_chan *fsl_chan);
- void fsl_edma_tx_chan_handler(struct fsl_edma_chan *fsl_chan);
- void fsl_edma_disable_request(struct fsl_edma_chan *fsl_chan);
- void fsl_edma_chan_mux(struct fsl_edma_chan *fsl_chan,
+> --- a/drivers/dma/mcf-edma-main.c
+> +++ b/drivers/dma/mcf-edma-main.c
+> @@ -81,8 +81,12 @@ static int mcf_edma_irq_init(struct platform_device *pdev,
+>         if (!res)
+>                 return -1;
+>
+> -       for (ret = 0, i = res->start; i <= res->end; ++i)
+> -               ret |= request_irq(i, mcf_edma_tx_handler, 0, "eDMA", mcf_edma);
+> +       for (ret = 0, i = res->start; i <= res->end; ++i) {
+> +               char *irq_name = devm_kasprintf(&pdev->dev, GFP_KERNEL,
+> +                                               "eDMA-%d", i - res->start);
+
+Can return NULL, so needs error handling.
+
+> +
+> +               ret |= request_irq(i, mcf_edma_tx_handler, 0, irq_name, mcf_edma);
+> +       }
+>         if (ret)
+>                 return ret;
+>
+> @@ -91,15 +95,19 @@ static int mcf_edma_irq_init(struct platform_device *pdev,
+>         if (!res)
+>                 return -1;
+>
+> -       for (ret = 0, i = res->start; i <= res->end; ++i)
+> -               ret |= request_irq(i, mcf_edma_tx_handler, 0, "eDMA", mcf_edma);
+> +       for (ret = 0, i = res->start; i <= res->end; ++i) {
+> +               char *irq_name = devm_kasprintf(&pdev->dev, GFP_KERNEL,
+> +                                               "eDMA-%d", 16 + i - res->start);
+
+Likewise
+
+> +
+> +               ret |= request_irq(i, mcf_edma_tx_handler, 0, irq_name, mcf_edma);
+> +       }
+>         if (ret)
+>                 return ret;
+>
+>         ret = platform_get_irq_byname(pdev, "edma-tx-56-63");
+>         if (ret != -ENXIO) {
+>                 ret = request_irq(ret, mcf_edma_tx_handler,
+> -                                 0, "eDMA", mcf_edma);
+> +                                 0, "eDMA-tx-56", mcf_edma);
+
+Fits on a single line.
+
+>                 if (ret)
+>                         return ret;
+>         }
+> @@ -107,7 +115,7 @@ static int mcf_edma_irq_init(struct platform_device *pdev,
+>         ret = platform_get_irq_byname(pdev, "edma-err");
+>         if (ret != -ENXIO) {
+>                 ret = request_irq(ret, mcf_edma_err_handler,
+> -                                 0, "eDMA", mcf_edma);
+> +                                 0, "eDMA-err", mcf_edma);
+
+Likewise.
+
+>                 if (ret)
+>                         return ret;
+>         }
+>
+
+Gr{oetje,eeting}s,
+
+                        Geert
 
 -- 
-2.39.5
+Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
 
+In personal conversations with technical people, I call myself a hacker. But
+when I'm talking to journalists I just say "programmer" or something like that.
+                                -- Linus Torvalds
