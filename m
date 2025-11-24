@@ -1,129 +1,108 @@
-Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.19])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD23525BEF8
-	for <dmaengine@vger.kernel.org>; Mon, 24 Nov 2025 09:01:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61F2E2248BD;
+	Mon, 24 Nov 2025 12:10:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.19
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763974909; cv=none; b=asdBH16xAhOrpLl7MUHQJECB8lHu81rv8mf4zcyz2IcsIK4X67oTtKflZdwgW86t/Via+mIsMMWcSNRQaaLlBQqjyBKtiZmdBMe/r8n2/lKIvn3IAdkRrw+j2nnCt3YXpScfzKfxH2ZiN0EXTe6moZUcpZnZNbWTeyW2blhBem8=
+	t=1763986219; cv=none; b=sMrmAf648VKcpBWjZltul6ftBkhjoiuAJBGLDZ56cS8yq7uBnqbQk33gqnfIuvKc43x+N8vfkbRlfNN69b6kB5E2AQ1XPVPLaxOSH6DuB04JZzW4f1d9NKys63xlnugE5mn7oHeJnpO2Z4Jog3DaTv1VJnAGmoBIx5VwubbjfMc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763974909; c=relaxed/simple;
-	bh=9HDxsuDK4Usuf4fFg1Su4y9i5l8Na+Uqsdy5sZXmG8c=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=fQHutVoiVtIGPvzI6KalYAuOtyhA6/ELMKBdc6nqmVJVtvajafH9tRfhVBwY/XsmQ/lz/DQh/GE2gec4fUI5V6Cu0nRzmyrC1b8sOIj878bxOInY+Y9wz50mX4l3E4p3plRcGrnl1T/uz2KlHV78rt3mhTp9CHj4ceZ+iQjj5rU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=tuxon.dev; spf=pass smtp.mailfrom=tuxon.dev; dkim=pass (2048-bit key) header.d=tuxon.dev header.i=@tuxon.dev header.b=B2Mo11Z+; arc=none smtp.client-ip=209.85.221.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=tuxon.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=tuxon.dev
+	s=arc-20240116; t=1763986219; c=relaxed/simple;
+	bh=d5nNg3j4GXG9OHJ73JYH0c5+/jyYRN1qHBQffAJxf+Q=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ad7N6WFq/9HZY0lvZUCbcQ5IwwZLYQuVUtULjtcnKsLkBk+Nk/t+HwLlLPGaD816BeAHLFjCPSWSGUE2AO1vK4+Mcf33gy6HxLNHg3MLy0wqBiymRnJWfHsHgifS85z8V7wRUYM+vw/X62wXHB9CgYawg82NnmZz770rgRsPulM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=gUen6ELn; arc=none smtp.client-ip=192.198.163.19
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=tuxon.dev header.i=@tuxon.dev header.b="B2Mo11Z+"
-Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-42b3377aaf2so2267657f8f.2
-        for <dmaengine@vger.kernel.org>; Mon, 24 Nov 2025 01:01:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=tuxon.dev; s=google; t=1763974906; x=1764579706; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=6nBgH6OeWos1+QO/ftng5YHCteHUXL03O59bd8c4DFQ=;
-        b=B2Mo11Z+OsTdlcmdm99gCyQvnxiVflV81NPjETqXpjiHvGazKvRzqF9XhULdY4tED6
-         g4R1GVWOkxVk6V06+GvngOw7ZMF1h0i8p3Od8/V7lJnxG5A9epn6fi6l9GZ3UaMQdN8R
-         ck0WclMlennuv0IJ2IkwETrAkXHmPAmsDkfgl4iEuApzEQpBZIax5fu9s9tBeP8ZdSBK
-         TXH+EvbiHYEa8Vzpn+VlA3OAc3eNQPuMKkxXifOagYJxGBIbz9N5a/UE+cDKaaBNi1Md
-         HHtYfv04Q8WRdXDiHHbb4WgL/02RIMIxf5931Kh/1EP5C0HHbT7EcL1IIo9KGh3lE37j
-         dbXg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1763974906; x=1764579706;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=6nBgH6OeWos1+QO/ftng5YHCteHUXL03O59bd8c4DFQ=;
-        b=p2CQUWiKKzGWyWrqQgxKiUTkdTovOPZcJY1/pirs2TojcVERMCVCyvplrrtFTVtLWf
-         Vz8IHjWSbvnzMjIps3c4EXd3E3npTk7AzhEOO34Irx8DkSKiVX1ChrKPPrwcrkFI4cWX
-         vprNeHRffOORvQpS8Aj6LsmfmZGywW/ipka6w5Lb7g4Y9BjaHtKgmgNXWjTbEEIS9Hap
-         tNdoEWa3ScfiXIH7AjEAD36TBv8KOe445ePZttlnS6OeUER/qgRHCc255QncuQH8HeIO
-         L0r5eEJ9r2jDkusDM68o5hSoEfi5cylTzZz2ENn3gz3tc7NDfr9ZrkT9eXX+uCXPHCLz
-         ActA==
-X-Forwarded-Encrypted: i=1; AJvYcCX1WkH7nYcgEs562dDLxz30mWS7DInKqdoI3hizxUEUErvbalAze8fSnA1WQSBz7kgjcsv+YRANLR4=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyjO3oRykAGpZD27/A9NZyxZcvda9BMaK6XDnvJsEmD5Ov/kEJh
-	65RVEb5okgruVn2qsMUtGtkigmhYA3cprAC1LoDwjmuuEImow/hcSucfzWrSlNIiQEs=
-X-Gm-Gg: ASbGncso0NAkIzv77sx0rNGYZ2jwJZl3lJZhaznCPCtwP0XJFdDnSu4FlWalhJK1fky
-	ReNbdFCkaItX9wBp86IIW67X1PAO5O2VrA5L/CKeOUpO5MOIfc8Uc1JGxOzB4Rx9vD2hBQ5YB8y
-	d6/9+Rfrg1Zs6UI73f8+3OLFQpE0gfSGT6oy7Pz0mIBuRsD1MiKMcjvv+OrKG2/XiM8V9r1CJ+J
-	7cDj4Le9EFVTfC/joYSjb4Vjm1cVtcRfy3iOs1pTViRSY4uiVYrT9LW8qJAoWB2/YCUW62URjYz
-	vvozvthUR5EEZUr1ymFAbozIUbWYCF27fHxzonDd/KF/7719oy0smt1J6goZmErrNMwcQ0Ps59w
-	3Op3nESWSwqXc7mqWw+3cwFZReS7DoBRmg/DfYkEjKkrki3adAK3yM5zm9k43V+YOz46oGBGsrN
-	nxAIkK+Xa6SmPX5BlleQGfijWAIlQK4g==
-X-Google-Smtp-Source: AGHT+IHpqwyo6K5TdqE2KfSegPDXC/WvD0IxtuuZUq85wkwa8CWfc6Ew15Et9fQbxFWP3fbI3xvJKQ==
-X-Received: by 2002:a05:6000:220e:b0:42b:3dbe:3a54 with SMTP id ffacd0b85a97d-42cc1cbd338mr10590267f8f.17.1763974905896;
-        Mon, 24 Nov 2025 01:01:45 -0800 (PST)
-Received: from [192.168.50.4] ([82.78.167.134])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-42cb7f34fd1sm27603538f8f.11.2025.11.24.01.01.44
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 24 Nov 2025 01:01:45 -0800 (PST)
-Message-ID: <4f21e13c-b37d-4614-94c9-4cb89017539f@tuxon.dev>
-Date: Mon, 24 Nov 2025 11:01:44 +0200
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="gUen6ELn"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1763986217; x=1795522217;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:content-transfer-encoding:in-reply-to;
+  bh=d5nNg3j4GXG9OHJ73JYH0c5+/jyYRN1qHBQffAJxf+Q=;
+  b=gUen6ELnFSsM6kK6YAMHMNobscoPv0yDTJQzhGw3EfX4kLYH6KRnEQeO
+   4/N65JICpuu2MaW8ZJnQUMv+WbU+jSD3itTtMQ9/JagQLYAGMmF/3uIhE
+   urVkG/mPnVnP3RLkHMSoe+ZHsj2LsuGyRa1YThJVgX3Xofa6vXvE8sP4B
+   MITjL5na2N7InZwG+2/SlVEH6f6cew5NA8oqv+C2+9sqoCK4q9CpG0wNN
+   ZOapC2n0L/y4XV2n8LDChkC34QkRFTlifjDeZNIRfeUNEhSM5W1BbSYlg
+   W88aebFd4GycCH/aTa+JSV42M8yLPnOSfajnP06CR6oSBmhM/MfKnLnUx
+   A==;
+X-CSE-ConnectionGUID: Sy7CxMYjQXaDM8aia0/tOQ==
+X-CSE-MsgGUID: TrLMyXmFRH67Wm7It8JN/w==
+X-IronPort-AV: E=McAfee;i="6800,10657,11622"; a="64984403"
+X-IronPort-AV: E=Sophos;i="6.20,222,1758610800"; 
+   d="scan'208";a="64984403"
+Received: from fmviesa007.fm.intel.com ([10.60.135.147])
+  by fmvoesa113.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Nov 2025 04:10:16 -0800
+X-CSE-ConnectionGUID: kCgZIcdZRl+BizAz96HPnQ==
+X-CSE-MsgGUID: ATl7n97tSL2Horct6YF6tg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.20,222,1758610800"; 
+   d="scan'208";a="191986359"
+Received: from egrumbac-mobl6.ger.corp.intel.com (HELO localhost) ([10.245.244.5])
+  by fmviesa007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Nov 2025 04:10:11 -0800
+Date: Mon, 24 Nov 2025 14:10:09 +0200
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+To: Vinod Koul <vkoul@kernel.org>
+Cc: Stefan Wahren <wahrenst@gmx.net>,
+	Thomas Andreatta <thomasandreatta2000@gmail.com>,
+	Caleb Sander Mateos <csander@purestorage.com>,
+	dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-rpi-kernel@lists.infradead.org,
+	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+	Olivier Dautricourt <olivierdautricourt@gmail.com>,
+	Stefan Roese <sr@denx.de>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
+	Ray Jui <rjui@broadcom.com>, Scott Branden <sbranden@broadcom.com>,
+	Lars-Peter Clausen <lars@metafoo.de>,
+	Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>,
+	Daniel Mack <daniel@zonque.org>,
+	Haojian Zhuang <haojian.zhuang@gmail.com>,
+	Robert Jarzmik <robert.jarzmik@free.fr>,
+	Lizhi Hou <lizhi.hou@amd.com>, Brian Xu <brian.xu@amd.com>,
+	Raj Kumar Rampelli <raj.kumar.rampelli@amd.com>,
+	Michal Simek <michal.simek@amd.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: Re: [PATCH v2 07/13] dmaengine: lgm: use sg_nents_for_dma() helper
+Message-ID: <aSRLIY4KmhAxePq1@smile.fi.intel.com>
+References: <20251110103805.3562136-1-andriy.shevchenko@linux.intel.com>
+ <20251110103805.3562136-8-andriy.shevchenko@linux.intel.com>
+ <aSGCJQc152Y9V10E@vaman>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] dmaengine: sh: rz-dmac: Fix rz_dmac_terminate_all()
-To: Biju Das <biju.das.jz@bp.renesas.com>, Vinod Koul <vkoul@kernel.org>
-Cc: Geert Uytterhoeven <geert+renesas@glider.be>,
- Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
- Fabrizio Castro <fabrizio.castro.jz@renesas.com>, dmaengine@vger.kernel.org,
- linux-kernel@vger.kernel.org, Biju Das <biju.das.au@gmail.com>,
- linux-renesas-soc@vger.kernel.org, stable@kernel.org
-References: <20251106125256.122133-1-biju.das.jz@bp.renesas.com>
-From: Claudiu Beznea <claudiu.beznea@tuxon.dev>
-Content-Language: en-US
-In-Reply-To: <20251106125256.122133-1-biju.das.jz@bp.renesas.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <aSGCJQc152Y9V10E@vaman>
+Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park, 6
+ krs, Bertel Jungin Aukio 5, 02600 Espoo
 
+On Sat, Nov 22, 2025 at 02:58:05PM +0530, Vinod Koul wrote:
+> On 10-11-25, 11:23, Andy Shevchenko wrote:
+> > Instead of open coded variant let's use recently introduced helper.
 
+...
 
-On 11/6/25 14:52, Biju Das wrote:
-> After audio full duplex testing, playing the recorded file contains a few
-> playback frames for the first time. The rz_dmac_terminate_all() does not
-> reset all the hardware descriptors queued previously, leading to the wrong
-> descriptor being picked up during the next DMA transfer. Fix this issue by
-> resetting all descriptor headers for a channel in rz_dmac_terminate_all()
-> as rz_dmac_lmdesc_recycle() points to the proper descriptor header filled
-> by the rz_dmac_prepare_descs_for_slave_sg().
+> > +	num = sg_nents_for_dma(sgl, sg_len, DMA_MAX_SIZE);
 > 
-> Cc: stable@kernel.org
-> Fixes: 5000d37042a6 ("dmaengine: sh: Add DMAC driver for RZ/G2L SoC")
-> Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
-
-Reviewed-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
-Tested-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
-
-> ---
->  drivers/dma/sh/rz-dmac.c | 5 +++++
->  1 file changed, 5 insertions(+)
+> drivers/dma/lgm/lgm-dma.c:1176:37: error: ‘sg_len’ undeclared (first use in this function); did you mean ‘sglen’?
+>          num = sg_nents_for_dma(sgl, sg_len, DMA_MAX_SIZE);
 > 
-> diff --git a/drivers/dma/sh/rz-dmac.c b/drivers/dma/sh/rz-dmac.c
-> index 1f687b08d6b8..3087bbd11d59 100644
-> --- a/drivers/dma/sh/rz-dmac.c
-> +++ b/drivers/dma/sh/rz-dmac.c
-> @@ -557,11 +557,16 @@ rz_dmac_prep_slave_sg(struct dma_chan *chan, struct scatterlist *sgl,
->  static int rz_dmac_terminate_all(struct dma_chan *chan)
->  {
->  	struct rz_dmac_chan *channel = to_rz_dmac_chan(chan);
-> +	struct rz_lmdesc *lmdesc = channel->lmdesc.base;
->  	unsigned long flags;
-> +	unsigned int i;
->  	LIST_HEAD(head);
->  
->  	rz_dmac_disable_hw(channel);
->  	spin_lock_irqsave(&channel->vc.lock, flags);
-> +	for (i = 0; i < DMAC_NR_LMDESC; i++)
-> +		lmdesc[i].header = 0;
-> +
->  	list_splice_tail_init(&channel->ld_active, &channel->ld_free);
->  	list_splice_tail_init(&channel->ld_queue, &channel->ld_free);
->  	vchan_get_all_descriptors(&channel->vc, &head);
+> I am getting the build failure, as well as few unused warning with this,
+> pls fix
+
+Indeed, sorry for that, in v4 should be fixed.
+Thanks!
+
+-- 
+With Best Regards,
+Andy Shevchenko
+
 
