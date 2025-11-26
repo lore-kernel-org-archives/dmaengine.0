@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA2F631960A;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA37E31960C;
 	Wed, 26 Nov 2025 08:36:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764146164; cv=none; b=oqpXjfeio9aQPT8Fw3MQIk09mYUxUhsOtexL/6AQz8J1XheURXQWeAm0rXMGhzuAbRAHPVzq3ctlbH+pv+VuP+Crc2sLE/wfa1Aap9RzTVOPHHQX6vtDU6SCIqHM4LEhlMdW0o52t0scdrX7n+o4/g6adMKZ0hNL9R9j8DcWUXE=
+	t=1764146164; cv=none; b=fTNCyvShhVDtXr1QE1TWAIc4rJliG8kqoFJXi5ZoHG2t5jD2digdILBZhXHgnCgfI2Lp/9Ppm1fw+7k33TsXRoAsKDTwkDCSPM3GkUYPH80jaloVAQGSLTG39l6D8rBimzUuDPi+pkGjY8OD3NIZZTFEw0r45wgDLGmGybiw8Fg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1764146164; c=relaxed/simple;
-	bh=fOmsUHpgbUfm96TRpWCT/YXCIOrIrgwM+3sS66JgI0U=;
+	bh=c4hfh7JuwsfiLhuVDttvKrbLU4tWLHCTyrAp7i/wpyE=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=ij4YkzAscrx6yZ6/GgbT9QQBAfrPmXN95vQ8pz5omzW4GoLpkgjdVrpYNAzf1l6KH8sO9KvIxQmObbYQOMyfaZQ1iUJobMooxenYK3InjO/akOClKOOvBqR3Fmw71CknbL/6s/RQRXxb38TU+P+IqYCZ5YgRTVioGiticUDHsPA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VuxdDgFF; arc=none smtp.client-ip=10.30.226.201
+	 In-Reply-To:To:Cc; b=HxFzFtGt5tufeCBvp2YE7uDekHgYp9EkWICjzXZwLTZ5+vhMoTH3rhs/UkRHiCzx0M0VPeDevQRLzLfWTZ7FnxDni+sd37iQZ3v+rFWvBOd6j/L2D5NgCHDlcqHobfG3x1E0Q7MfjVT1EQslwkDtVNiRDTQV6kEGxA5Iwb71mbo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YKbQmNhR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VuxdDgFF"
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 57A70C19422;
-	Wed, 26 Nov 2025 08:36:04 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YKbQmNhR"
+Received: by smtp.kernel.org (Postfix) with ESMTPS id F12F9C113D0;
+	Wed, 26 Nov 2025 08:36:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1764146164;
-	bh=fOmsUHpgbUfm96TRpWCT/YXCIOrIrgwM+3sS66JgI0U=;
+	bh=c4hfh7JuwsfiLhuVDttvKrbLU4tWLHCTyrAp7i/wpyE=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=VuxdDgFFABklqYuk8Yd+YQ3AC27lYGUrzliQ+s5JYPOZNMvMPErQzI8QYsuRfUFLN
-	 XvDu6GFPWlrkAYmbQqlHOFL+37TSg6iOGIkL5PC1WjzcIxWbj2umYOrpi3qvQO6pu8
-	 EiHweKQcDU1q2yAy5dXtIBc34TZIIHGfWhXTxMTW1iJ6nUZ8GHPDJaqZJHeaYjutxT
-	 Daieh0isDzXYWPI5Rg2TmCE9FOHD+XFsCqqfRpTLysi4aPsGnHiqfK727liajCo+m6
-	 qdWYgnLaDIz28S9Y/WriIr6t9av53LKyoPtahoHrwRVrBgenD9SZHhomKWPHDhvvhW
-	 Zi803ecakGfaw==
+	b=YKbQmNhRN98Gh94Ty3hQcr/E7uvX/SqdiLG1JevNmiZHtDXBarb84xL8ao8ss/etg
+	 N2bbLYLGZKgn0m6urGNjSDIdAZr+3ZgLRuVyok/PIBnCT00J0FAnKEMpFkZYxv+nOy
+	 GcNpoxz20ORQqyALBjvPlEf/soDRDl1IvfqYzRvW4JZzeeJMBraovqpp4at/VH3Fjl
+	 Vqu/lu5bLCZfuJ9fsPRGX2x4DsbJnCVKZa+B3uY/DQihDUo1lMh5pDNPvSrkS2yEaq
+	 6gjuDJMh/vivfvp2FsMKAB8sX/8RiFmnxxC7+80vKMSLKbls0iL8oyFF/jnn+l9F1P
+	 TanBqy5gxehkA==
 Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 47F99D10390;
-	Wed, 26 Nov 2025 08:36:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D2D04D10391;
+	Wed, 26 Nov 2025 08:36:03 +0000 (UTC)
 From: Jean-Michel Hautbois via B4 Relay <devnull+jeanmichel.hautbois.yoseli.org@kernel.org>
-Date: Wed, 26 Nov 2025 09:36:05 +0100
-Subject: [PATCH v2 4/5] dma: fsl-edma: Move error handler out of header
- file
+Date: Wed, 26 Nov 2025 09:36:02 +0100
+Subject: [PATCH v2 1/5] dma: fsl-edma: Add FSL_EDMA_DRV_MCF flag for
+ ColdFire eDMA
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -41,7 +41,7 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251126-dma-coldfire-v2-4-5b1e4544d609@yoseli.org>
+Message-Id: <20251126-dma-coldfire-v2-1-5b1e4544d609@yoseli.org>
 References: <20251126-dma-coldfire-v2-0-5b1e4544d609@yoseli.org>
 In-Reply-To: <20251126-dma-coldfire-v2-0-5b1e4544d609@yoseli.org>
 To: Frank Li <Frank.Li@nxp.com>, Vinod Koul <vkoul@kernel.org>, 
@@ -51,11 +51,11 @@ Cc: Greg Ungerer <gerg@linux-m68k.org>, imx@lists.linux.dev,
  linux-kernel@vger.kernel.org, 
  Jean-Michel Hautbois <jeanmichel.hautbois@yoseli.org>
 X-Mailer: b4 0.15-dev-47773
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1764146162; l=1782;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1764146162; l=2499;
  i=jeanmichel.hautbois@yoseli.org; s=20240925; h=from:subject:message-id;
- bh=gG4IzOttHb1mDGj3hSrbOa5uG61+wAi/EXuAZ5+EKHs=;
- b=5CVOve8F7k3DV8CGTn4M0M42Wyr47VbbF4O7r9xtQ9Sn+z5nbv+OkMjMHKv/r01wvrdsOus8+
- anmIioJWRw5AtV1EwbXG6XX1iUJ9GqER/P/0xmNI7nj2eQibHashL2k
+ bh=9Rl/w8Flv4FYHKNwt2QAAOrN5X7BfFjFIc6s+uDV++s=;
+ b=qxtJdH6M5NqML0HZbwh4Es0Y/QUSnr+NBgpH0A7u7ay9142548awxn+ruhMWpHWc4nIiSjk+d
+ zdxCMuA6eGvA/cpjqTlKje7dvM+vNG2IsC+9xGT50DAinjJ/8aNrUFL
 X-Developer-Key: i=jeanmichel.hautbois@yoseli.org; a=ed25519;
  pk=MsMTVmoV69wLIlSkHlFoACIMVNQFyvJzvsJSQsn/kq4=
 X-Endpoint-Received: by B4 Relay for
@@ -65,53 +65,66 @@ Reply-To: jeanmichel.hautbois@yoseli.org
 
 From: Jean-Michel Hautbois <jeanmichel.hautbois@yoseli.org>
 
-Move fsl_edma_err_chan_handler from an inline function in the header
-to a proper function in fsl-edma-common.c. This prepares for MCF
-ColdFire eDMA support where the error handler needs to be called from
-the MCF-specific error interrupt handler.
+Add FSL_EDMA_DRV_MCF driver flag to identify MCF ColdFire eDMA
+controllers which have a native M68K register layout.
 
-No functional change for existing users.
+The edma_writeb() function applies an XOR ^ 0x3 byte-lane adjustment for
+big-endian eDMA controllers where byte registers within a 32-bit word
+need address correction.
+
+However, the MCF54418 eDMA 8-bit registers (SERQ, CERQ, SEEI, CEEI,
+CINT, CERR, SSRT, CDNE) are located at sequential byte addresses
+(0x4018-0x401F) as documented in the MCF54418 Reference Manual Table
+19-2. No byte-lane adjustment is needed, as applying the XOR causes
+writes to target incorrect registers (writing to CERR at 0x401D would
+actually access SSRT at 0x401E).
+
+Set this flag in the MCF eDMA driver to bypass the XOR adjustment and
+access registers at their documented addresses.
 
 Reviewed-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Jean-Michel Hautbois <jeanmichel.hautbois@yoseli.org>
 ---
- drivers/dma/fsl-edma-common.c | 5 +++++
- drivers/dma/fsl-edma-common.h | 6 +-----
- 2 files changed, 6 insertions(+), 5 deletions(-)
+ drivers/dma/fsl-edma-common.h | 5 ++++-
+ drivers/dma/mcf-edma-main.c   | 2 +-
+ 2 files changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/dma/fsl-edma-common.c b/drivers/dma/fsl-edma-common.c
-index 4976d7dde080..49d5dca216b6 100644
---- a/drivers/dma/fsl-edma-common.c
-+++ b/drivers/dma/fsl-edma-common.c
-@@ -44,6 +44,11 @@
- #define EDMA64_ERRH		0x28
- #define EDMA64_ERRL		0x2c
- 
-+void fsl_edma_err_chan_handler(struct fsl_edma_chan *fsl_chan)
-+{
-+	fsl_chan->status = DMA_ERROR;
-+}
-+
- void fsl_edma_tx_chan_handler(struct fsl_edma_chan *fsl_chan)
- {
- 	spin_lock(&fsl_chan->vchan.lock);
 diff --git a/drivers/dma/fsl-edma-common.h b/drivers/dma/fsl-edma-common.h
-index 4c86f2f39c1d..64b537527291 100644
+index 205a96489094..4c86f2f39c1d 100644
 --- a/drivers/dma/fsl-edma-common.h
 +++ b/drivers/dma/fsl-edma-common.h
-@@ -478,11 +478,7 @@ static inline struct fsl_edma_desc *to_fsl_edma_desc(struct virt_dma_desc *vd)
- 	return container_of(vd, struct fsl_edma_desc, vdesc);
+@@ -225,6 +225,8 @@ struct fsl_edma_desc {
+ #define FSL_EDMA_DRV_TCD64		BIT(15)
+ /* All channel ERR IRQ share one IRQ line */
+ #define FSL_EDMA_DRV_ERRIRQ_SHARE       BIT(16)
++/* MCF eDMA: Different register layout, no XOR for byte access */
++#define FSL_EDMA_DRV_MCF                BIT(17)
+ 
+ 
+ #define FSL_EDMA_DRV_EDMA3	(FSL_EDMA_DRV_SPLIT_REG |	\
+@@ -419,7 +421,8 @@ static inline void edma_writeb(struct fsl_edma_engine *edma,
+ 			       u8 val, void __iomem *addr)
+ {
+ 	/* swap the reg offset for these in big-endian mode */
+-	if (edma->big_endian)
++	/* MCF eDMA has different register layout, no XOR needed */
++	if (edma->big_endian && !(edma->drvdata->flags & FSL_EDMA_DRV_MCF))
+ 		iowrite8(val, (void __iomem *)((unsigned long)addr ^ 0x3));
+ 	else
+ 		iowrite8(val, addr);
+diff --git a/drivers/dma/mcf-edma-main.c b/drivers/dma/mcf-edma-main.c
+index 9e1c6400c77b..f95114829d80 100644
+--- a/drivers/dma/mcf-edma-main.c
++++ b/drivers/dma/mcf-edma-main.c
+@@ -145,7 +145,7 @@ static void mcf_edma_irq_free(struct platform_device *pdev,
  }
  
--static inline void fsl_edma_err_chan_handler(struct fsl_edma_chan *fsl_chan)
--{
--	fsl_chan->status = DMA_ERROR;
--}
--
-+void fsl_edma_err_chan_handler(struct fsl_edma_chan *fsl_chan);
- void fsl_edma_tx_chan_handler(struct fsl_edma_chan *fsl_chan);
- void fsl_edma_disable_request(struct fsl_edma_chan *fsl_chan);
- void fsl_edma_chan_mux(struct fsl_edma_chan *fsl_chan,
+ static struct fsl_edma_drvdata mcf_data = {
+-	.flags = FSL_EDMA_DRV_EDMA64,
++	.flags = FSL_EDMA_DRV_EDMA64 | FSL_EDMA_DRV_MCF,
+ 	.setup_irq = mcf_edma_irq_init,
+ };
+ 
 
 -- 
 2.39.5
