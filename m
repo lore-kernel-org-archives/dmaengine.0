@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA24B319603;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA2F631960A;
 	Wed, 26 Nov 2025 08:36:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764146164; cv=none; b=DvqTyJn6io5aqU9IktkFpiu5au8HnyfYKkDzAIMTNoRyD5zXeH/4UJKSbdgNOtNQe3RYgbxZZ346K4KLjdEW7TX6df112+DxPzPnqt44SW3EzHMG1OKz5CmRdXEQdCQIfxPsshM/EmIKGwqoeTyXsHhCDN1bJ8kQ13TstxvmcfA=
+	t=1764146164; cv=none; b=oqpXjfeio9aQPT8Fw3MQIk09mYUxUhsOtexL/6AQz8J1XheURXQWeAm0rXMGhzuAbRAHPVzq3ctlbH+pv+VuP+Crc2sLE/wfa1Aap9RzTVOPHHQX6vtDU6SCIqHM4LEhlMdW0o52t0scdrX7n+o4/g6adMKZ0hNL9R9j8DcWUXE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1764146164; c=relaxed/simple;
-	bh=sjzSudo3EoBVY+lDVXdn/xFAbAYc+5JQiCsHKUpfBW8=;
+	bh=fOmsUHpgbUfm96TRpWCT/YXCIOrIrgwM+3sS66JgI0U=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=WrLLckzHZKzujvpDN6vVopd/gZCm741/s1bGDWKdXmlygpfNaULRm2GERCV4DuSmbsQ+veUZfIZDBWJWcUrScsnKG4N5WsnzpDz6Pfw5qWtwhaOkOGZhabA9/O3+HsxiqWaKTQOKyxodah06zRs091S+q0PvVFJRtAKkT2i6kUY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OnOymYDF; arc=none smtp.client-ip=10.30.226.201
+	 In-Reply-To:To:Cc; b=ij4YkzAscrx6yZ6/GgbT9QQBAfrPmXN95vQ8pz5omzW4GoLpkgjdVrpYNAzf1l6KH8sO9KvIxQmObbYQOMyfaZQ1iUJobMooxenYK3InjO/akOClKOOvBqR3Fmw71CknbL/6s/RQRXxb38TU+P+IqYCZ5YgRTVioGiticUDHsPA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VuxdDgFF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OnOymYDF"
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 07DCEC116D0;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VuxdDgFF"
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 57A70C19422;
 	Wed, 26 Nov 2025 08:36:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1764146164;
-	bh=sjzSudo3EoBVY+lDVXdn/xFAbAYc+5JQiCsHKUpfBW8=;
+	bh=fOmsUHpgbUfm96TRpWCT/YXCIOrIrgwM+3sS66JgI0U=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=OnOymYDFaTJedmGS42+ISGis2z+Vz7I/WkxLK/bD4NG7Irc6doyp96rDSegK0xQY2
-	 GfWXrzQxzOvYd215+JxRIHrO5WvMVdcg2q8/icDoSlINSKNcej19qObo4YTmBHOvZR
-	 aD6MOe9kru/LEblqG264oQYx/xfI/hgzHNj7CmULyqpjl4ozhaEA/czDZ83lflOnJc
-	 EhDZz/D51w89PsacfFigm5PwsQ+reZmihDvDtzvuZ6iLt6kvdBII0PyQGa/s+speYW
-	 +OBmEKXW7+v7X88jdWYyMIIywBYt5bzQ2/p33gRh1vudevoKecvPLBHOdo4fepf3E1
-	 jREPBEO4KLuUA==
+	b=VuxdDgFFABklqYuk8Yd+YQ3AC27lYGUrzliQ+s5JYPOZNMvMPErQzI8QYsuRfUFLN
+	 XvDu6GFPWlrkAYmbQqlHOFL+37TSg6iOGIkL5PC1WjzcIxWbj2umYOrpi3qvQO6pu8
+	 EiHweKQcDU1q2yAy5dXtIBc34TZIIHGfWhXTxMTW1iJ6nUZ8GHPDJaqZJHeaYjutxT
+	 Daieh0isDzXYWPI5Rg2TmCE9FOHD+XFsCqqfRpTLysi4aPsGnHiqfK727liajCo+m6
+	 qdWYgnLaDIz28S9Y/WriIr6t9av53LKyoPtahoHrwRVrBgenD9SZHhomKWPHDhvvhW
+	 Zi803ecakGfaw==
 Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EC106D10390;
-	Wed, 26 Nov 2025 08:36:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 47F99D10390;
+	Wed, 26 Nov 2025 08:36:04 +0000 (UTC)
 From: Jean-Michel Hautbois via B4 Relay <devnull+jeanmichel.hautbois.yoseli.org@kernel.org>
-Date: Wed, 26 Nov 2025 09:36:03 +0100
-Subject: [PATCH v2 2/5] dma: mcf-edma: Add per-channel IRQ naming for
- debugging
+Date: Wed, 26 Nov 2025 09:36:05 +0100
+Subject: [PATCH v2 4/5] dma: fsl-edma: Move error handler out of header
+ file
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -41,7 +41,7 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251126-dma-coldfire-v2-2-5b1e4544d609@yoseli.org>
+Message-Id: <20251126-dma-coldfire-v2-4-5b1e4544d609@yoseli.org>
 References: <20251126-dma-coldfire-v2-0-5b1e4544d609@yoseli.org>
 In-Reply-To: <20251126-dma-coldfire-v2-0-5b1e4544d609@yoseli.org>
 To: Frank Li <Frank.Li@nxp.com>, Vinod Koul <vkoul@kernel.org>, 
@@ -51,11 +51,11 @@ Cc: Greg Ungerer <gerg@linux-m68k.org>, imx@lists.linux.dev,
  linux-kernel@vger.kernel.org, 
  Jean-Michel Hautbois <jeanmichel.hautbois@yoseli.org>
 X-Mailer: b4 0.15-dev-47773
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1764146162; l=2484;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1764146162; l=1782;
  i=jeanmichel.hautbois@yoseli.org; s=20240925; h=from:subject:message-id;
- bh=TOkFpkS4T7DbH7y0xlolnOAKUy6LY9n/XPRytl2P/DM=;
- b=eXEURz7RQO0BH0cJTkHQf62CHI2X69oRsk8d+iX2tOt9SVdilKka5OtxkRGVOhFlVYbteVbXa
- fHPERnOPFXaDjLqwnSSABn7K2/lG265dpaDWM0d6p5epUVBuRLHSQ4/
+ bh=gG4IzOttHb1mDGj3hSrbOa5uG61+wAi/EXuAZ5+EKHs=;
+ b=5CVOve8F7k3DV8CGTn4M0M42Wyr47VbbF4O7r9xtQ9Sn+z5nbv+OkMjMHKv/r01wvrdsOus8+
+ anmIioJWRw5AtV1EwbXG6XX1iUJ9GqER/P/0xmNI7nj2eQibHashL2k
 X-Developer-Key: i=jeanmichel.hautbois@yoseli.org; a=ed25519;
  pk=MsMTVmoV69wLIlSkHlFoACIMVNQFyvJzvsJSQsn/kq4=
 X-Endpoint-Received: by B4 Relay for
@@ -65,78 +65,53 @@ Reply-To: jeanmichel.hautbois@yoseli.org
 
 From: Jean-Michel Hautbois <jeanmichel.hautbois@yoseli.org>
 
-Add dynamic per-channel IRQ naming to make DMA interrupt identification
-easier in /proc/interrupts and debugging tools.
+Move fsl_edma_err_chan_handler from an inline function in the header
+to a proper function in fsl-edma-common.c. This prepares for MCF
+ColdFire eDMA support where the error handler needs to be called from
+the MCF-specific error interrupt handler.
 
-Instead of all channels showing "eDMA", they now show:
-- "eDMA-0" through "eDMA-15" for channels 0-15
-- "eDMA-16" through "eDMA-55" for channels 16-55
-- "eDMA-tx-56" for the shared channel 56-63 interrupt
-- "eDMA-err" for the error interrupt
+No functional change for existing users.
 
-This aids debugging DMA issues by making it clear which channel's
-interrupt is being serviced.
-
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Jean-Michel Hautbois <jeanmichel.hautbois@yoseli.org>
 ---
- drivers/dma/mcf-edma-main.c | 26 ++++++++++++++++++--------
- 1 file changed, 18 insertions(+), 8 deletions(-)
+ drivers/dma/fsl-edma-common.c | 5 +++++
+ drivers/dma/fsl-edma-common.h | 6 +-----
+ 2 files changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/dma/mcf-edma-main.c b/drivers/dma/mcf-edma-main.c
-index f95114829d80..6a7d88895501 100644
---- a/drivers/dma/mcf-edma-main.c
-+++ b/drivers/dma/mcf-edma-main.c
-@@ -81,8 +81,14 @@ static int mcf_edma_irq_init(struct platform_device *pdev,
- 	if (!res)
- 		return -1;
+diff --git a/drivers/dma/fsl-edma-common.c b/drivers/dma/fsl-edma-common.c
+index 4976d7dde080..49d5dca216b6 100644
+--- a/drivers/dma/fsl-edma-common.c
++++ b/drivers/dma/fsl-edma-common.c
+@@ -44,6 +44,11 @@
+ #define EDMA64_ERRH		0x28
+ #define EDMA64_ERRL		0x2c
  
--	for (ret = 0, i = res->start; i <= res->end; ++i)
--		ret |= request_irq(i, mcf_edma_tx_handler, 0, "eDMA", mcf_edma);
-+	for (ret = 0, i = res->start; i <= res->end; ++i) {
-+		char *irq_name = devm_kasprintf(&pdev->dev, GFP_KERNEL,
-+						"eDMA-%d", (int)(i - res->start));
-+		if (!irq_name)
-+			return -ENOMEM;
++void fsl_edma_err_chan_handler(struct fsl_edma_chan *fsl_chan)
++{
++	fsl_chan->status = DMA_ERROR;
++}
 +
-+		ret |= request_irq(i, mcf_edma_tx_handler, 0, irq_name, mcf_edma);
-+	}
- 	if (ret)
- 		return ret;
+ void fsl_edma_tx_chan_handler(struct fsl_edma_chan *fsl_chan)
+ {
+ 	spin_lock(&fsl_chan->vchan.lock);
+diff --git a/drivers/dma/fsl-edma-common.h b/drivers/dma/fsl-edma-common.h
+index 4c86f2f39c1d..64b537527291 100644
+--- a/drivers/dma/fsl-edma-common.h
++++ b/drivers/dma/fsl-edma-common.h
+@@ -478,11 +478,7 @@ static inline struct fsl_edma_desc *to_fsl_edma_desc(struct virt_dma_desc *vd)
+ 	return container_of(vd, struct fsl_edma_desc, vdesc);
+ }
  
-@@ -91,23 +97,27 @@ static int mcf_edma_irq_init(struct platform_device *pdev,
- 	if (!res)
- 		return -1;
- 
--	for (ret = 0, i = res->start; i <= res->end; ++i)
--		ret |= request_irq(i, mcf_edma_tx_handler, 0, "eDMA", mcf_edma);
-+	for (ret = 0, i = res->start; i <= res->end; ++i) {
-+		char *irq_name = devm_kasprintf(&pdev->dev, GFP_KERNEL,
-+						"eDMA-%d", (int)(16 + i - res->start));
-+		if (!irq_name)
-+			return -ENOMEM;
-+
-+		ret |= request_irq(i, mcf_edma_tx_handler, 0, irq_name, mcf_edma);
-+	}
- 	if (ret)
- 		return ret;
- 
- 	ret = platform_get_irq_byname(pdev, "edma-tx-56-63");
- 	if (ret != -ENXIO) {
--		ret = request_irq(ret, mcf_edma_tx_handler,
--				  0, "eDMA", mcf_edma);
-+		ret = request_irq(ret, mcf_edma_tx_handler, 0, "eDMA-tx-56", mcf_edma);
- 		if (ret)
- 			return ret;
- 	}
- 
- 	ret = platform_get_irq_byname(pdev, "edma-err");
- 	if (ret != -ENXIO) {
--		ret = request_irq(ret, mcf_edma_err_handler,
--				  0, "eDMA", mcf_edma);
-+		ret = request_irq(ret, mcf_edma_err_handler, 0, "eDMA-err", mcf_edma);
- 		if (ret)
- 			return ret;
- 	}
+-static inline void fsl_edma_err_chan_handler(struct fsl_edma_chan *fsl_chan)
+-{
+-	fsl_chan->status = DMA_ERROR;
+-}
+-
++void fsl_edma_err_chan_handler(struct fsl_edma_chan *fsl_chan);
+ void fsl_edma_tx_chan_handler(struct fsl_edma_chan *fsl_chan);
+ void fsl_edma_disable_request(struct fsl_edma_chan *fsl_chan);
+ void fsl_edma_chan_mux(struct fsl_edma_chan *fsl_chan,
 
 -- 
 2.39.5
