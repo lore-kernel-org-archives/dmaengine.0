@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C418C21FF26;
-	Tue, 16 Dec 2025 16:56:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3C1E2882C5;
+	Tue, 16 Dec 2025 16:56:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765904181; cv=none; b=s758Flhk8RSi5z6N6XAzpB+3F5vYvO7e0cvHJV83ptzRzMWIybMh1PjRAk4Lu789L4W5ienFlCQ//btP9wvcumy+N6ivnvCIfHx1fv0LhTrbQwvX19v5vzns8yXh737+6rmnP1ljCPoqVnxCOcMM4acxO0L+RKfvIzJjcF6OlR4=
+	t=1765904183; cv=none; b=obEFzbqSWtTskpQc/EO6vH2KBBWX30ih14xUEvpV9CaENvY2vdks74n5rSCbROyK20Jst0H7NhQItOZe5pGcWGihS18jVds22zsY5QthOhGM53dJ+ShacQELcZ7ftazPvfLgWqfr8TG4WgcJD6B8vYMVbQaS+JrWhl7o2lROj50=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765904181; c=relaxed/simple;
-	bh=TARPN6Yt6Y6qE5PKNWdfNem27drZ6puaqfrsr4THSbo=;
+	s=arc-20240116; t=1765904183; c=relaxed/simple;
+	bh=tG1SeQOIXU1i/h7qdkQqs75ay6wmpkRhFCtiG6Q9UtE=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=lU8LBscmWDksHGL8gnXlK9MW0er7AAsFK/MOGEyVL2E3HEAoPI/7d7QHUd8N1Xl6IvbMkVdo7Wx3s1Xv0Er/BBDMBSdLLQlfotLwizENmFo2PKpFF9x/CRnYbHgBqtZ/zfg0+hDpImLsJBfubOLJtXLSyqAubqulEXhok/q3AXk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cakfrr4x; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=UDUbuoSrtmNOof/5CMZuCYI3JrSAFJPU+s9qk24fy2va2p1o7GeRha+bEPHJJ2fitBDIyqH6xvaUsU2ETJdUthlK+24JpWIzTodHRG+D+z0JfEpFhCjxB9zhHxxSEiLMUbrICygvGL7ba22/wkq19xfKTBZNDZPJnbntzl3HkpQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tQJcmnep; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cakfrr4x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3838FC4CEF1;
-	Tue, 16 Dec 2025 16:56:18 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tQJcmnep"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1BD0C4CEF1;
+	Tue, 16 Dec 2025 16:56:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1765904181;
-	bh=TARPN6Yt6Y6qE5PKNWdfNem27drZ6puaqfrsr4THSbo=;
+	s=k20201202; t=1765904183;
+	bh=tG1SeQOIXU1i/h7qdkQqs75ay6wmpkRhFCtiG6Q9UtE=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=cakfrr4xAHefjOXOFgjDWOJ2gW6mWvs0tWBBtjws7vUlwI6o0YZ/zRv43tKtzXUnT
-	 h/A3KBw+cNqzfIdGPcLsfTV7lkUUOkDDjrqlnd5DSpjsrXoDtxrInOKJDWsjp5sLcP
-	 eCuOS3CC9/Ni37YLAGvZn+s0RJo+n0MeSdc7oxt0AwwcbNybTU588V9eKw11yvyqQ7
-	 DGTon/wT3pLxeViHXQyT/A15u/p+RYDGtPUJZH6xRc+2DZDqn2Kn1MsVX5c6dlg7GS
-	 52aaf9qUpt6sRZqYvIdW1km6GvFAahtriQK0J8sE10RnjNzpEQ7ZAIrukOQx1W6mt1
-	 xyautJitcydMQ==
+	b=tQJcmnep3X5OaTr7M8sl6sAneglR3sSnvztHM/lNU2JFpXSUR+VnRAysvJvxidnbW
+	 hGKH807FiJvuUhcRjyNeIIsZMjrnw+x+agK/YzR8ndjQ5kEFjqQePQ3sW4PaBc9pJd
+	 RAV6s/I9rgpSAd0/K1/tdTX6jdPH4Cj4bSQRSqmxpKZ8AJLnd3pQ26tiVuW/d/tP9S
+	 6tO7ZHHwJda28Lo4ItYxU5ryznvIlh1DB0RyK1nLE7c8vITsg1xqawZ6mbriuva3xL
+	 9/U/Eu+W6lTUg4ky064k5q4nvMSLo0tmshUkjxBsDYTGFBq20mWL5zqk1VNwPAf+zW
+	 GEhJ9zLFVWiLA==
 From: Vinod Koul <vkoul@kernel.org>
-To: Yixun Lan <dlan@gentoo.org>, Guodong Xu <guodong@riscstar.com>
-Cc: Alex Elder <elder@riscstar.com>, dmaengine@vger.kernel.org, 
- linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org, 
- spacemit@lists.linux.dev, Juan Li <lijuan@linux.spacemit.com>
-In-Reply-To: <20251216-mmp-pdma-race-v1-1-976a224bb622@riscstar.com>
-References: <20251216-mmp-pdma-race-v1-1-976a224bb622@riscstar.com>
-Subject: Re: [PATCH] dmaengine: mmp_pdma: Fix race condition in
- mmp_pdma_residue()
-Message-Id: <176590417885.422798.17247803206459718657.b4-ty@kernel.org>
-Date: Tue, 16 Dec 2025 22:26:18 +0530
+To: Frank.Li@nxp.com, Zhen Ni <zhen.ni@easystack.cn>
+Cc: imx@lists.linux.dev, dmaengine@vger.kernel.org, stable@vger.kernel.org
+In-Reply-To: <20251014090522.827726-1-zhen.ni@easystack.cn>
+References: <20251014090522.827726-1-zhen.ni@easystack.cn>
+Subject: Re: [PATCH v4] dmaengine: fsl-edma: Fix clk leak on
+ alloc_chan_resources failure
+Message-Id: <176590418161.422798.10654079302568628725.b4-ty@kernel.org>
+Date: Tue, 16 Dec 2025 22:26:21 +0530
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -48,33 +46,20 @@ Content-Transfer-Encoding: 7bit
 X-Mailer: b4 0.13.0
 
 
-On Tue, 16 Dec 2025 22:10:06 +0800, Guodong Xu wrote:
-> Add proper locking in mmp_pdma_residue() to prevent use-after-free when
-> accessing descriptor list and descriptor contents.
+On Tue, 14 Oct 2025 17:05:22 +0800, Zhen Ni wrote:
+> When fsl_edma_alloc_chan_resources() fails after clk_prepare_enable(),
+> the error paths only free IRQs and destroy the TCD pool, but forget to
+> call clk_disable_unprepare(). This causes the channel clock to remain
+> enabled, leaking power and resources.
 > 
-> The race occurs when multiple threads call tx_status() while the tasklet
-> on another CPU is freeing completed descriptors:
-> 
-> CPU 0                              CPU 1
-> -----                              -----
-> mmp_pdma_tx_status()
-> mmp_pdma_residue()
->   -> NO LOCK held
->      list_for_each_entry(sw, ..)
->                                    DMA interrupt
->                                    dma_do_tasklet()
->                                      -> spin_lock(&desc_lock)
->                                         list_move(sw->node, ...)
->                                         spin_unlock(&desc_lock)
->   |                                     dma_pool_free(sw) <- FREED!
->   -> access sw->desc <- UAF!
+> Fix it by disabling the channel clock in the error unwind path.
 > 
 > [...]
 
 Applied, thanks!
 
-[1/1] dmaengine: mmp_pdma: Fix race condition in mmp_pdma_residue()
-      commit: a143545855bc2c6e1330f6f57ae375ac44af00a7
+[1/1] dmaengine: fsl-edma: Fix clk leak on alloc_chan_resources failure
+      commit: b18cd8b210417f90537d914ffb96e390c85a7379
 
 Best regards,
 -- 
