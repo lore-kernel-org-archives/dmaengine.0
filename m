@@ -1,24 +1,23 @@
 Received: from relmlie5.idc.renesas.com (relmlor1.renesas.com [210.160.252.171])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7209B332918;
-	Mon,  5 Jan 2026 11:46:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4EC3E337BB8;
+	Mon,  5 Jan 2026 11:50:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=210.160.252.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767613570; cv=none; b=fxjmKQgsSz3pLjJMOCQfi6uT5XYQ/tLzLffhKTftAI5V2ki4AeyTBQM7jFzNBffqwI01c6tXAWRSRrxqGvzuO5XneUt2HHmgPWA6Ek9IF0+mdh4U2XnTPOlPA0ll3m3Zs7yowK++vUxZdR0AXS1IWBZ3x0s7Eh5bIFjI970h6Q0=
+	t=1767613852; cv=none; b=kLA4O66yLU9YC/RlatggyK+Ncd9ENTsR1UyhHcOwXzfka2IHRes9hrbPqNR9jM00XktU9C8PJU8YjYGH61IFVv04SZ5M2SYPJZuHigpUvWf4KKRUGStDbKXmfKCaLwY0QKXjjrIHVRvKDQd2iwNfH4Jc/1Tyrl6QLVhYGRiO2CE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767613570; c=relaxed/simple;
-	bh=5NaoM49GzV7popx8iNvV5GKjrT/oZGdOz547aUUDssM=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j2CkDEhP3jWrBNq7BENzgzQUGoLEEN1xPODwn+zwm1DPs/YiEW2PzdtVYeCkwQYNDsL/2gjurXr7Qk9BC8vhqx54Lsk1RJuzMBjNI0cI3WDZM0Mcvd7IVOohl8MzAltq+jC84yKghutHEfRVR4oemmABDpyDYtFurakmTeQndQE=
+	s=arc-20240116; t=1767613852; c=relaxed/simple;
+	bh=snQtFXhMfL0UkoI1/gff761gT0FdnfFb1zzs4OQ/20M=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Bb8HlnTQFLVp9idhaFV/DoKCziSAyzuQSLPLYb3D78pb8xdnkwKMh0qNXk42439nic1ljYCtgERwYUL4Vce4dGcqKv6l4/Rr9XkW/WTKl6XgkjTR93gGYUg/hAekwk+H51Ie/vRHww+UwOtmjY9H9kOR/aR+FVJA/heGVQGA2pk=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=renesas.com; spf=pass smtp.mailfrom=renesas.com; arc=none smtp.client-ip=210.160.252.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=renesas.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=renesas.com
-X-CSE-ConnectionGUID: 5PqvRYpgSXeutxZjwFSE4w==
-X-CSE-MsgGUID: fH5+xeNzRLiF8vipSL6zmw==
+X-CSE-ConnectionGUID: /Jl6MBB+Sde52w5E0XOfWg==
+X-CSE-MsgGUID: Z025EZ3zTrK4runtz1RWfA==
 Received: from unknown (HELO relmlir6.idc.renesas.com) ([10.200.68.152])
-  by relmlie5.idc.renesas.com with ESMTP; 05 Jan 2026 20:46:06 +0900
+  by relmlie5.idc.renesas.com with ESMTP; 05 Jan 2026 20:45:41 +0900
 Received: from demon-pc.localdomain (unknown [10.226.92.160])
-	by relmlir6.idc.renesas.com (Postfix) with ESMTP id 6DD8D41AF7F0;
-	Mon,  5 Jan 2026 20:46:01 +0900 (JST)
+	by relmlir6.idc.renesas.com (Postfix) with ESMTP id AB8AA41AF7ED;
+	Mon,  5 Jan 2026 20:45:36 +0900 (JST)
 From: Cosmin Tanislav <cosmin-gabriel.tanislav.xa@renesas.com>
 To: Vinod Koul <vkoul@kernel.org>,
 	Rob Herring <robh@kernel.org>,
@@ -35,12 +34,10 @@ Cc: dmaengine@vger.kernel.org,
 	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	linux-renesas-soc@vger.kernel.org
-Subject: [PATCH v4 4/4] dmaengine: sh: rz_dmac: add RZ/{T2H,N2H} support
-Date: Mon,  5 Jan 2026 13:44:45 +0200
-Message-ID: <20260105114445.878262-5-cosmin-gabriel.tanislav.xa@renesas.com>
+Subject: [PATCH v4 0/4] Add DMA support for RZ/T2H and RZ/N2H
+Date: Mon,  5 Jan 2026 13:44:41 +0200
+Message-ID: <20260105114445.878262-1-cosmin-gabriel.tanislav.xa@renesas.com>
 X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260105114445.878262-1-cosmin-gabriel.tanislav.xa@renesas.com>
-References: <20260105114445.878262-1-cosmin-gabriel.tanislav.xa@renesas.com>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -49,60 +46,36 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The Renesas RZ/T2H (R9A09G077) and RZ/N2H (R9A09G087) SoCs use a
-completely different ICU unit compared to RZ/V2H, which requires a
-separate implementation.
-
-Add support for them.
-
-RZ/N2H will use RZ/T2H as a fallback.
-
-Signed-off-by: Cosmin Tanislav <cosmin-gabriel.tanislav.xa@renesas.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
----
+The Renesas RZ/T2H (R9A09G077) and RZ/N2H (R9A09G087) SoCs have three
+DMAC instances. Compared to the previously supported RZ/V2H, these SoCs
+are missing the error interrupt line and the reset lines, and they use
+a different ICU IP.
 
 V4:
+ * drop device tree patches already queued up by Geert
  * pick up Geert's Reviewed-by
+ * dma_req_no_default -> default_dma_req_no
+ * register_dma_req -> icu_register_dma_req
+ * rz_dmac_common_info -> rz_dmac_generic_info
 
 V3:
- * no changes
+ * replace -1 with direct usage of dma_req_no_default and remove the
+   check inside rz_dmac_set_dma_req_no()
+ * pick up Rob's Reviewed-by tag
 
 V2:
  * remove notes
 
- drivers/dma/sh/rz-dmac.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+Cosmin Tanislav (4):
+  dmaengine: sh: rz_dmac: make error interrupt optional
+  dmaengine: sh: rz_dmac: make register_dma_req() chip-specific
+  dt-bindings: dma: renesas,rz-dmac: document RZ/{T2H,N2H}
+  dmaengine: sh: rz_dmac: add RZ/{T2H,N2H} support
 
-diff --git a/drivers/dma/sh/rz-dmac.c b/drivers/dma/sh/rz-dmac.c
-index b3e38bd294b2..3dde4b006bcc 100644
---- a/drivers/dma/sh/rz-dmac.c
-+++ b/drivers/dma/sh/rz-dmac.c
-@@ -15,6 +15,7 @@
- #include <linux/interrupt.h>
- #include <linux/iopoll.h>
- #include <linux/irqchip/irq-renesas-rzv2h.h>
-+#include <linux/irqchip/irq-renesas-rzt2h.h>
- #include <linux/list.h>
- #include <linux/module.h>
- #include <linux/of.h>
-@@ -1075,12 +1076,18 @@ static const struct rz_dmac_info rz_dmac_v2h_info = {
- 	.default_dma_req_no = RZV2H_ICU_DMAC_REQ_NO_DEFAULT,
- };
- 
-+static const struct rz_dmac_info rz_dmac_t2h_info = {
-+	.icu_register_dma_req = rzt2h_icu_register_dma_req,
-+	.default_dma_req_no = RZT2H_ICU_DMAC_REQ_NO_DEFAULT,
-+};
-+
- static const struct rz_dmac_info rz_dmac_generic_info = {
- 	.default_dma_req_no = 0,
- };
- 
- static const struct of_device_id of_rz_dmac_match[] = {
- 	{ .compatible = "renesas,r9a09g057-dmac", .data = &rz_dmac_v2h_info },
-+	{ .compatible = "renesas,r9a09g077-dmac", .data = &rz_dmac_t2h_info },
- 	{ .compatible = "renesas,rz-dmac", .data = &rz_dmac_generic_info },
- 	{ /* Sentinel */ }
- };
+ .../bindings/dma/renesas,rz-dmac.yaml         | 100 ++++++++++++++----
+ drivers/dma/sh/rz-dmac.c                      |  91 +++++++++-------
+ 2 files changed, 134 insertions(+), 57 deletions(-)
+
 -- 
 2.52.0
+
