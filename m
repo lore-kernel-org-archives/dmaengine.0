@@ -1,106 +1,96 @@
-Received: from relmlie6.idc.renesas.com (relmlor2.renesas.com [210.160.252.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2BD033385BF;
-	Mon,  5 Jan 2026 11:50:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=210.160.252.172
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2445346E64;
+	Mon,  5 Jan 2026 12:47:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767613858; cv=none; b=GVy7kwW9sVnllSGHSNdBFTCC/97fM8q7bH3DoUeupjAJAi7U+C9kDrHCLELxjFp/Jymq4mRkoyYfuUKaRj/8zrFYJOsDRDok+Hb/i/G15JNiYN96lWkQDFiYYMlRm6j1z2npSrBv8wrjkEW13DXc/R+BsFojIGQl4VZ7dX85uAs=
+	t=1767617231; cv=none; b=FJKe3vEm/4n+ZKx2rhjh+QAtFT3M4+qxaRp5NGRkfNshiZqlNkncRb6S6d8z0AHHbSTU+GVsWqoIemOSx4qBebrORoPlTNexs28VMo11Ne/iRkK/ks5tb5+q7AIrn9dBSkSfPMMz26FqObyiktWBEhQvVOPpe+dBSpvtCgcMNTw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767613858; c=relaxed/simple;
-	bh=zjM2wzVUidoSsGNlBrMAr26NSnnXT8gNMLOQ4iBf0xQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uYdj1mCGOeYyUliaBzr0cqT5ntdbISGpteJPsCM1C812wO0QIop13zFddNqJ5HZXDsYHWom6XJJMsRDQTV9gJlF5uvV7kGi8gizAzVuvBtpWx5k0/fhhQlgkJoeN07zJRlIWGoNmuDylE5ju0g/65Xrej9L/GAOE6G3H3Fu4RUQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=renesas.com; spf=pass smtp.mailfrom=renesas.com; arc=none smtp.client-ip=210.160.252.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=renesas.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=renesas.com
-X-CSE-ConnectionGUID: hwP48P8gQ7KlP8lvNaezDw==
-X-CSE-MsgGUID: RF3Pg/HtRbO2W/Riiwdywg==
-Received: from unknown (HELO relmlir6.idc.renesas.com) ([10.200.68.152])
-  by relmlie6.idc.renesas.com with ESMTP; 05 Jan 2026 20:45:46 +0900
-Received: from demon-pc.localdomain (unknown [10.226.92.160])
-	by relmlir6.idc.renesas.com (Postfix) with ESMTP id 6712C41AF7E7;
-	Mon,  5 Jan 2026 20:45:42 +0900 (JST)
-From: Cosmin Tanislav <cosmin-gabriel.tanislav.xa@renesas.com>
-To: Vinod Koul <vkoul@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Magnus Damm <magnus.damm@gmail.com>,
-	Cosmin Tanislav <cosmin-gabriel.tanislav.xa@renesas.com>,
-	Fabrizio Castro <fabrizio.castro.jz@renesas.com>,
-	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-	Johan Hovold <johan@kernel.org>,
-	Biju Das <biju.das.jz@bp.renesas.com>
-Cc: dmaengine@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-renesas-soc@vger.kernel.org
-Subject: [PATCH v4 1/4] dmaengine: sh: rz_dmac: make error interrupt optional
-Date: Mon,  5 Jan 2026 13:44:42 +0200
-Message-ID: <20260105114445.878262-2-cosmin-gabriel.tanislav.xa@renesas.com>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260105114445.878262-1-cosmin-gabriel.tanislav.xa@renesas.com>
-References: <20260105114445.878262-1-cosmin-gabriel.tanislav.xa@renesas.com>
+	s=arc-20240116; t=1767617231; c=relaxed/simple;
+	bh=DcK9JhgklTlks/dbMU+80cGJYIWzHkB6Fy6SWnC+6X4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=HoCR0KRRlpdsPBo9c2/AmpDVc+hkbQ0MKouk5w5QDWI9LHiKBkM5wcjwyFUbk6SoPHDpo2qywan8s/ULpcLGKbmpEpKr1WuuGwzBcS7xoFP8O2YOYTpUuh5qWGoJIS2ooQMmUTpzIlFtcosgB0PxYjVSweFvV0y8ki+wR1bCS3A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Nz5BKJw/; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Nz5BKJw/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3606CC116D0;
+	Mon,  5 Jan 2026 12:47:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1767617227;
+	bh=DcK9JhgklTlks/dbMU+80cGJYIWzHkB6Fy6SWnC+6X4=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=Nz5BKJw/SW7aFh5PDOn4mjTKTV+LFDrfIA0RGg+0ukrtI/PWWaAkWyRxPhjHOORJ2
+	 F/w6WBFrMWFgCSU2ISdgFwjDlN6RJQGUpNtbSDFRgxj0nCBCNDcP/L8EDfUCsH9gEc
+	 mlu4FBl2Ci2EU2Ws0he3TS3VVhUptlYr949Nb1Pt3prNClT7c60WGSzHXKmRhXNJ6j
+	 AahYn0rfC6Gh2cHn5zTWUzZEAv/8eKMksb2N723rGz9Dh7iCNZ/zP1/Y/1u5wxBIyA
+	 1Un3saqGObtBBTQaXpEhtVjmp3anbCGER1NIrZ5yjgzlo4HO5YIiuhg64BQYow0aEu
+	 K25kQXvV5JU6Q==
+Date: Mon, 5 Jan 2026 12:46:57 +0000
+From: Mark Brown <broonie@kernel.org>
+To: Robert Marko <robert.marko@sartura.hr>
+Cc: robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
+	nicolas.ferre@microchip.com, alexandre.belloni@bootlin.com,
+	claudiu.beznea@tuxon.dev, herbert@gondor.apana.org.au,
+	davem@davemloft.net, vkoul@kernel.org, andi.shyti@kernel.org,
+	lee@kernel.org, andrew+netdev@lunn.ch, edumazet@google.com,
+	kuba@kernel.org, pabeni@redhat.com, linusw@kernel.org,
+	Steen.Hegelund@microchip.com, daniel.machon@microchip.com,
+	UNGLinuxDriver@microchip.com, olivia@selenic.com,
+	radu_nicolae.pirea@upb.ro, richard.genoud@bootlin.com,
+	gregkh@linuxfoundation.org, jirislaby@kernel.org,
+	lars.povlsen@microchip.com, devicetree@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+	linux-crypto@vger.kernel.org, dmaengine@vger.kernel.org,
+	linux-i2c@vger.kernel.org, netdev@vger.kernel.org,
+	linux-gpio@vger.kernel.org, linux-spi@vger.kernel.org,
+	linux-serial@vger.kernel.org, linux-usb@vger.kernel.org,
+	luka.perkov@sartura.hr, Conor Dooley <conor.dooley@microchip.com>
+Subject: Re: [PATCH v4 04/15] dt-bindings: spi: at91: add
+ microchip,lan9691-spi
+Message-ID: <2ff4b417-871b-4b0e-a4f5-424ce535ebd3@sirena.org.uk>
+References: <20251229184004.571837-1-robert.marko@sartura.hr>
+ <20251229184004.571837-5-robert.marko@sartura.hr>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="L5qsEAHx6q9dJj52"
+Content-Disposition: inline
+In-Reply-To: <20251229184004.571837-5-robert.marko@sartura.hr>
+X-Cookie: So many women
 
-The Renesas RZ/T2H (R9A09G077) and RZ/N2H (R9A09G087) SoCs do not have
-an error interrupt for the DMACs, and the current driver implementation
-does not make much use of it.
 
-To prepare for adding support for these SoCs, do not error out if the
-error interrupt is missing.
+--L5qsEAHx6q9dJj52
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Signed-off-by: Cosmin Tanislav <cosmin-gabriel.tanislav.xa@renesas.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
----
+On Mon, Dec 29, 2025 at 07:37:45PM +0100, Robert Marko wrote:
 
-V4:
- * pick up Geert's Reviewed-by
+> Document Microchip LAN969x SPI compatible.
 
-V3:
- * no changes
+Please submit patches using subject lines reflecting the style for the
+subsystem, this makes it easier for people to identify relevant patches.
+Look at what existing commits in the area you're changing are doing and
+make sure your subject lines visually resemble what they're doing.
+There's no need to resubmit to fix this alone.
 
-V2:
- * remove notes
+--L5qsEAHx6q9dJj52
+Content-Type: application/pgp-signature; name="signature.asc"
 
- drivers/dma/sh/rz-dmac.c | 19 +++++++++----------
- 1 file changed, 9 insertions(+), 10 deletions(-)
+-----BEGIN PGP SIGNATURE-----
 
-diff --git a/drivers/dma/sh/rz-dmac.c b/drivers/dma/sh/rz-dmac.c
-index 9e5f088355e2..801e363f341f 100644
---- a/drivers/dma/sh/rz-dmac.c
-+++ b/drivers/dma/sh/rz-dmac.c
-@@ -959,16 +959,15 @@ static int rz_dmac_probe(struct platform_device *pdev)
- 	}
- 
- 	/* Register interrupt handler for error */
--	irq = platform_get_irq_byname(pdev, irqname);
--	if (irq < 0)
--		return irq;
--
--	ret = devm_request_irq(&pdev->dev, irq, rz_dmac_irq_handler, 0,
--			       irqname, NULL);
--	if (ret) {
--		dev_err(&pdev->dev, "failed to request IRQ %u (%d)\n",
--			irq, ret);
--		return ret;
-+	irq = platform_get_irq_byname_optional(pdev, irqname);
-+	if (irq > 0) {
-+		ret = devm_request_irq(&pdev->dev, irq, rz_dmac_irq_handler, 0,
-+				       irqname, NULL);
-+		if (ret) {
-+			dev_err(&pdev->dev, "failed to request IRQ %u (%d)\n",
-+				irq, ret);
-+			return ret;
-+		}
- 	}
- 
- 	/* Initialize the channels. */
--- 
-2.52.0
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmlbssAACgkQJNaLcl1U
+h9D4Xwf/SR39qhC6yLd9TVLdTbJvbv9td/1UUXSFHjr1far0W1wTnHIk9agrEcs+
+/CUvNmq9Xga7s68neH9NM4e3phBnJZt74a3J3zzhvBekn3xXCyKfmhw9WFU+rGGC
+dLJg/c/VyK4Dzfq6tzvajmvH8NYGkfWsf8TDYMAQkWfyFf3iASqrWODzvobA5l8D
+f4Q5wCZqo6GnSlAfW2+galQbUNMK85g0ponFRfi1JfjuTyYb2ZKghpKWLJGOTJzj
+PMinOleBkv3jp7jH4T6Lh+DiCyhddXuYJhoGGfDIlnhZrm+1fCifyVtpxwbXKXH3
+bT3c73me1CxD3Ncn8Q6E2gOrpidxdg==
+=VKTA
+-----END PGP SIGNATURE-----
+
+--L5qsEAHx6q9dJj52--
