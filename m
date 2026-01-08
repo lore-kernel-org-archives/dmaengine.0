@@ -1,64 +1,64 @@
-Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
+Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF01D387568
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66BFF2D94A4
 	for <dmaengine@vger.kernel.org>; Thu,  8 Jan 2026 10:36:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.41
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767868602; cv=none; b=MzydXf3fQq8Y2bZritFbKrz1umP8H3mPjJG3L83Atrcn0v6dx642syQdlyq/ORdvR6wxPWYB3BTHquRp0mCLb3FX8HqnDjnvGAVy6/fT5KWpYHBc6sKkV3nJD6XBMtGSoGqVHTsQlrl3ueHSuajPweoDxC8jwQ4laxMLu/v9zf4=
+	t=1767868601; cv=none; b=oGCw0a2Siq8ODAMggNjNUzj5wnXVFBhsZcOeAD0vQ6xIE3Umd0LAyBej4O/jImF+D/toZXpvjTs1CAoL74gjciozwKQM1AAWTjXwKPnowavpYHvqAyez4PNcAjVBGYACFRWu4xTt5JzsdxJShbjeNBUr5L4L05hmG4cKAxAlIb4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767868602; c=relaxed/simple;
-	bh=6WsUDBB7QB7beHKPFRpBEY1bDN8cUp493GVUrOWSTok=;
+	s=arc-20240116; t=1767868601; c=relaxed/simple;
+	bh=spUFrQpAHUSihVIbrTd6aDb/HQEXMQYbUxekF5wDPZI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Okie8dwDsiPOqgE/LTCOssdkMbwmln5GsT35HcxwgzIPy4TKnUP+6Qh4mQDAnSTvL4IUeCBGvn5bR5u9MXm2rFsXAPBWZsn/CXfi145Vki0TZ8Bes4UOzJWd1uk/ql3QYugmXx7Zs1lnJj0HmE9BR/6myaQmLZVTrF1jB/z4TFY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=tuxon.dev; spf=pass smtp.mailfrom=tuxon.dev; dkim=pass (2048-bit key) header.d=tuxon.dev header.i=@tuxon.dev header.b=F4WK8N55; arc=none smtp.client-ip=209.85.221.41
+	 MIME-Version; b=pXzevYDq5vY8tZ9nguW+OWUnlLhSm3RTRswkl4Q9HBBDFLYj52IDDwD76IgTR8EVW6z6X3sHtEMRGF/40XuE6zx5afSIytjfaX7/Oo3dR2obq6O5xkQGUDCMuKUTPhe4lSS+JT/4OOlX+KAoFUIkMn+7H6afPdx823ix0GuJLak=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=tuxon.dev; spf=pass smtp.mailfrom=tuxon.dev; dkim=pass (2048-bit key) header.d=tuxon.dev header.i=@tuxon.dev header.b=YuFPcOpN; arc=none smtp.client-ip=209.85.128.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=tuxon.dev
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=tuxon.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=tuxon.dev header.i=@tuxon.dev header.b="F4WK8N55"
-Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-42fbad1fa90so2502601f8f.0
-        for <dmaengine@vger.kernel.org>; Thu, 08 Jan 2026 02:36:31 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=tuxon.dev header.i=@tuxon.dev header.b="YuFPcOpN"
+Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-47d3ffa6720so30913655e9.0
+        for <dmaengine@vger.kernel.org>; Thu, 08 Jan 2026 02:36:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=tuxon.dev; s=google; t=1767868589; x=1768473389; darn=vger.kernel.org;
+        d=tuxon.dev; s=google; t=1767868593; x=1768473393; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=e1SXKH3uUM3QnZfl6aZyV1ZJSZCTqIp00wyVEztqcnA=;
-        b=F4WK8N55OHopne6Nm39snqKl9wIVf98Zy23Kptoef6q5194Pyvnyd5YiOy1E1Bwl3u
-         9trMbOvQ3+fAlEH5gZxpi9Yp1IsMGKh6dM6+xyWge8yqtxqrC7iqeToJtrpt9FwfZJ0f
-         lus8D+JpTeitHjrjZrdnXsMJ/gEqTg6Xljsk8TaC0MMsExcLjSM8LmJXj92ITgqrQ57w
-         3Vqj2lV+w/krWrIcShj/O2AnftXBT9doPBDQ+d/leWhypNlp2gSw4cA0dNHrOlC5znb6
-         cmR24xMCKe8ikD1+u/WEOLyltDs8RTnvoXWMFvVbbhawlDybf0KWER40ZEvLwQMP1gaK
-         o4Zg==
+        bh=o7PLTkw/HbTkvBtEU+lXi+/ObfFOUjX/JmNK1olicNI=;
+        b=YuFPcOpNeyae46NGGeFsfiFNhZrPb5qRP9WlE/O4oGxcGR8aR7ERqVxRLjt6lzVa9r
+         +E//QSn4VStD4CCJ1CzvPoDDIM8623B27W1pGRcRM4rjVSsR2H6BrGKTXZoGHml/vlXB
+         5+dezXY8ifJe/UBXFwhR2htCu913IGqhxGrtlVvcahBjQXH6aPOYpiE8hIT9Rcf8gkYq
+         CXLi9CxDntOaa+m8IDVsf0Zoj8/XvhXk2PirJRdO2kWJs8Z76BJ39Ypz5uWureCXn7Ba
+         f5OaqLKa9ZPOu9Jink9fCjv4uK8eKzcQ8VhuJ10esIuSelm/Lu2hm8tCwhSQASTAmLkq
+         dM/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767868589; x=1768473389;
+        d=1e100.net; s=20230601; t=1767868593; x=1768473393;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=e1SXKH3uUM3QnZfl6aZyV1ZJSZCTqIp00wyVEztqcnA=;
-        b=YxlG3d12GCuEKyCRDNBNrTMKug90adLd99iA40C9zF9rAgQtoPzt659pHAbD9JXsYq
-         021iAQEd1ZoSmKniQCOiDVEnGqHpkSNfTxp48g+s5WcoW+QiFDW2W72M8rdlYWD+JhRr
-         /bauLCwsa6yCRQn6WdcU7IkBGf9XydG5Hjct7ZOEPstaih9t3k7oIkadALv+TqmW+5N6
-         GOYAt39CKMdEVOcXZXw5AD5B9TvlWOTPnCFY7QBDrMFRefvcVpv1q/BW8KlpsBOhxoTs
-         xzYxFSFfZlHJjm7fPsLqbLFK5tZhg7I7BY4q47ms2XgbStxfrmhubFlTrhY8F41wyw+S
-         hLEw==
-X-Forwarded-Encrypted: i=1; AJvYcCUHnrarBtQEQGGMzSzEDbwik8KapNTxlS7r9DiStKp+2/2WMGeiZ0+1GmrdL9o6tc6UWnSAl2Rul0E=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyiDYr18xxTVD4DpUyiwVl+BexXC/iz0XHm1lSA2WlNNh+NzTCw
-	C6JTTt/umacHkUjt/sv9YXrRCqxqkV6cBYm/5nvv8dTDG1TlWcDu/6bGV2Jja3x5t1o=
-X-Gm-Gg: AY/fxX5EBREdGvIQJfd1NiDwA3QRZlfhxQk1mITRQoxUgEqprVHBFf6BCK+pVDjsuCB
-	Yb1/ecRrzC5UoJCNbMwwuuNtIXDqZm1gAwTSdLqkRvgr8FipPLTvuE5ynR44IxegVQPkPlrYEOA
-	3yBcKbRrPZ/JyoowdtMEPhmwPgISGJpBxSl5UGfTFbW1J3JVOUyhRFYxwgFZ9BSVIgBWNKB+OVU
-	ykx3tvTr93Jh3gNec2NoD129gXQ/p/KO2Z3etyGdCpvoZHscN3Q6vZ72rqH6ktW/bacS0jpRsB0
-	LjldVbOHDlT2fVNp6zL7DUiJOI4JYRmSTgI4cO7OUAb3Gmj2HFmYQrUsaX9MXvX+69JAIFAQhmS
-	2annsOttPM4kmQ7Wr855askTGXXiWZqG26EierNQt5tQmf3IVs+VFNucWxJpgvFIu7D79VMOReE
-	wBJH2zBFMXpN27gOH9jy3XERSeYcRXMErruSJc5XQ=
-X-Google-Smtp-Source: AGHT+IHsxCiYx8rmqp77oAdTH6pZgI1q5pv2nheYrLqEiaVk/RQ4pqEz3b62xkFaX7spNJWohof1hQ==
-X-Received: by 2002:a05:6000:2909:b0:431:84:33e with SMTP id ffacd0b85a97d-432c37d3641mr7597423f8f.50.1767868588683;
-        Thu, 08 Jan 2026 02:36:28 -0800 (PST)
+        bh=o7PLTkw/HbTkvBtEU+lXi+/ObfFOUjX/JmNK1olicNI=;
+        b=kY+HE5lRn1C63PePv69vhsz6YqyDZ785AfLHndrfKdBDLcOCDFsB0VJ/Evpz4XTZNh
+         I5H1K+oajqXTaa29/tk4H171sgFyZCJZiL8sjURt3zevf0WlFCkgh9UURJuDe0c+J65O
+         SGr3DcFqE+g4eqhc1ptNHbpOv8u/7D/Vd3ufI5X6gteNACdCV4Rau05kNv7USUFPtU25
+         n+2f4K5aepu3q8kmIjZ3ht/KHQOCnV6R9iCVfErRQypud4x0bwDqW8BRqa0W8DNGPqEY
+         A2dsSDKGi5A+RMlyA0dVpNmuBvDXDUBXvTwo5e3879yZUABCOCp1lIYK/w3ObvuYNtxK
+         iFrg==
+X-Forwarded-Encrypted: i=1; AJvYcCVjx4JqgouPhN+QPxZ6w1l7KUgWlqWw/4GkH8Sa/UOh03zizQ/ONdUC+t6u0R84ptjBprH27gS/bVw=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy1hP84Wkt7nwU458R20sz8zhSXDw7OQpOqJbkvUiwV27l1ndld
+	Ki0ZEO+j+niJjGWK9sMSUWkC35PqvyqsIVjAKpQRlPVpRyvN+8xfj8PVGuEd/XHp/Sk=
+X-Gm-Gg: AY/fxX4kpN1VaaLyQ+gAbTnpu/aKwYR/Lg/Hjm+y4DjXV0j2Cb+fLV6hjDJrHpEFZOt
+	sO8CKrxjPn2KEF6mL7jL9qNfKHKrvuPRwrrXcGeAIOGXGW5+1kbGdyUdMRXSQyISxt+sBsXzvzH
+	ixCCE7PKWhJSpG9jyl8IovNKNuMy3YKtg10bjz+D/2IS0q5du8qsKbpsDJsaJNYlcweTcbQI01D
+	5+Aijuyo49J39JgP7yy27ocF4w1Kgac/CN9mJZT2DK/qpoIeIqJlIgkqRe/UmdT5YFyHV+p9oQ+
+	6OHVBqCIcl/6Nn175KNr4Zr3bHQHj2NVxzi6fwQlp+sjcZQPyAcnLhAoOeN16toyPZTiFoB3PNV
+	faAo9G4Svt8pY8eMySeWXhc185F1AbrbEpwlpMArbLxXXGtq1R0h9ha3Z3QDltT0aPcJ1Wi2IxM
+	mqrAvjJvGTooaU3EgjsPZS+RW0q63DaqHlKuBvIW8=
+X-Google-Smtp-Source: AGHT+IF0e1OZBhaJwQ+s5DlVX+WY1KnxeqJ91c95V464aKTYpKJlrDgGrA3vXH3o0akj7eFchMyu+A==
+X-Received: by 2002:a05:6000:25c6:b0:42b:4267:83e3 with SMTP id ffacd0b85a97d-432c374f5femr7993687f8f.5.1767868592727;
+        Thu, 08 Jan 2026 02:36:32 -0800 (PST)
 Received: from claudiu-X670E-Pro-RS.. ([82.78.167.17])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-432bd5ee243sm15399033f8f.31.2026.01.08.02.36.27
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-432bd5ee243sm15399033f8f.31.2026.01.08.02.36.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 08 Jan 2026 02:36:28 -0800 (PST)
+        Thu, 08 Jan 2026 02:36:32 -0800 (PST)
 From: Claudiu <claudiu.beznea@tuxon.dev>
 X-Google-Original-From: Claudiu <claudiu.beznea.uj@bp.renesas.com>
 To: vkoul@kernel.org,
@@ -69,9 +69,9 @@ To: vkoul@kernel.org,
 Cc: claudiu.beznea@tuxon.dev,
 	dmaengine@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH v7 5/8] dmaengine: sh: rz-dmac: Drop unnecessary local_irq_save() call
-Date: Thu,  8 Jan 2026 12:36:17 +0200
-Message-ID: <20260108103620.3482147-6-claudiu.beznea.uj@bp.renesas.com>
+Subject: [PATCH v7 8/8] dmaengine: sh: rz-dmac: Add device_{pause,resume}() callbacks
+Date: Thu,  8 Jan 2026 12:36:20 +0200
+Message-ID: <20260108103620.3482147-9-claudiu.beznea.uj@bp.renesas.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260108103620.3482147-1-claudiu.beznea.uj@bp.renesas.com>
 References: <20260108103620.3482147-1-claudiu.beznea.uj@bp.renesas.com>
@@ -85,57 +85,97 @@ Content-Transfer-Encoding: 8bit
 
 From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
 
-rz_dmac_enable_hw() calls local_irq_save()/local_irq_restore(), but
-this is not needed because the callers of rz_dmac_enable_hw() already
-protect the critical section using
-spin_lock_irqsave()/spin_lock_irqrestore().
-
-Remove the local_irq_save()/local_irq_restore() calls.
+Add support for device_{pause, resume}() callbacks. These are required by
+the RZ/G2L SCIFA driver.
 
 Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
 ---
 
 Changes in v7:
-- none
+- use guard() instead of scoped_guard()
+- in rz_dmac_device_pause() checked the channel is enabled
+  before suspending it to avoid read poll timeouts
+- added a comment in rz_dmac_device_resume()
 
 Changes in v6:
-- none
+- set CHCTRL_SETSUS for pause and CHCTRL_CLRSUS for resume
+- dropped read-modify-update approach for CHCTRL updates as the
+  HW returns zero when reading CHCTRL
+- moved the read_poll_timeout_atomic() under spin lock to
+  ensure avoid any races b/w pause and resume functionalities
 
 Changes in v5:
-- none, this patch is new
+- used suspend capability of the controller to pause/resume
+  the transfers
 
- drivers/dma/sh/rz-dmac.c | 5 -----
- 1 file changed, 5 deletions(-)
+ drivers/dma/sh/rz-dmac.c | 36 ++++++++++++++++++++++++++++++++++++
+ 1 file changed, 36 insertions(+)
 
 diff --git a/drivers/dma/sh/rz-dmac.c b/drivers/dma/sh/rz-dmac.c
-index a2e16b52efe8..72ec42fedac6 100644
+index 44f0f72cbcf1..de95139c18a0 100644
 --- a/drivers/dma/sh/rz-dmac.c
 +++ b/drivers/dma/sh/rz-dmac.c
-@@ -267,15 +267,12 @@ static void rz_dmac_enable_hw(struct rz_dmac_chan *channel)
- {
- 	struct dma_chan *chan = &channel->vc.chan;
- 	struct rz_dmac *dmac = to_rz_dmac(chan->device);
--	unsigned long flags;
- 	u32 nxla;
- 	u32 chctrl;
- 	u32 chstat;
+@@ -135,10 +135,12 @@ struct rz_dmac {
+ #define CHANNEL_8_15_COMMON_BASE	0x0700
  
- 	dev_dbg(dmac->dev, "%s channel %d\n", __func__, channel->index);
+ #define CHSTAT_ER			BIT(4)
++#define CHSTAT_SUS			BIT(3)
+ #define CHSTAT_EN			BIT(0)
  
--	local_irq_save(flags);
--
- 	rz_dmac_lmdesc_recycle(channel);
- 
- 	nxla = channel->lmdesc.base_dma +
-@@ -290,8 +287,6 @@ static void rz_dmac_enable_hw(struct rz_dmac_chan *channel)
- 		rz_dmac_ch_writel(channel, CHCTRL_SWRST, CHCTRL, 1);
- 		rz_dmac_ch_writel(channel, chctrl, CHCTRL, 1);
- 	}
--
--	local_irq_restore(flags);
+ #define CHCTRL_CLRINTMSK		BIT(17)
+ #define CHCTRL_CLRSUS			BIT(9)
++#define CHCTRL_SETSUS			BIT(8)
+ #define CHCTRL_CLRTC			BIT(6)
+ #define CHCTRL_CLREND			BIT(5)
+ #define CHCTRL_CLRRQ			BIT(4)
+@@ -827,6 +829,38 @@ static enum dma_status rz_dmac_tx_status(struct dma_chan *chan,
+ 	return status;
  }
  
- static void rz_dmac_disable_hw(struct rz_dmac_chan *channel)
++static int rz_dmac_device_pause(struct dma_chan *chan)
++{
++	struct rz_dmac_chan *channel = to_rz_dmac_chan(chan);
++	u32 val;
++
++	guard(spinlock_irqsave)(&channel->vc.lock);
++
++	val = rz_dmac_ch_readl(channel, CHSTAT, 1);
++	if (!(val & CHSTAT_EN))
++		return 0;
++
++	rz_dmac_ch_writel(channel, CHCTRL_SETSUS, CHCTRL, 1);
++	return read_poll_timeout_atomic(rz_dmac_ch_readl, val,
++					(val & CHSTAT_SUS), 1, 1024,
++					false, channel, CHSTAT, 1);
++}
++
++static int rz_dmac_device_resume(struct dma_chan *chan)
++{
++	struct rz_dmac_chan *channel = to_rz_dmac_chan(chan);
++	u32 val;
++
++	guard(spinlock_irqsave)(&channel->vc.lock);
++
++	/* Do not check CHSTAT_SUS but rely on HW capabilities. */
++
++	rz_dmac_ch_writel(channel, CHCTRL_CLRSUS, CHCTRL, 1);
++	return read_poll_timeout_atomic(rz_dmac_ch_readl, val,
++					!(val & CHSTAT_SUS), 1, 1024,
++					false, channel, CHSTAT, 1);
++}
++
+ /*
+  * -----------------------------------------------------------------------------
+  * IRQ handling
+@@ -1165,6 +1199,8 @@ static int rz_dmac_probe(struct platform_device *pdev)
+ 	engine->device_terminate_all = rz_dmac_terminate_all;
+ 	engine->device_issue_pending = rz_dmac_issue_pending;
+ 	engine->device_synchronize = rz_dmac_device_synchronize;
++	engine->device_pause = rz_dmac_device_pause;
++	engine->device_resume = rz_dmac_device_resume;
+ 
+ 	engine->copy_align = DMAENGINE_ALIGN_1_BYTE;
+ 	dma_set_max_seg_size(engine->dev, U32_MAX);
 -- 
 2.43.0
 
