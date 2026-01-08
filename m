@@ -1,64 +1,65 @@
-Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
+Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AD3D4BB0A0
-	for <dmaengine@vger.kernel.org>; Thu,  8 Jan 2026 10:36:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CEBD4B8DD6
+	for <dmaengine@vger.kernel.org>; Thu,  8 Jan 2026 10:36:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767868594; cv=none; b=hNtG4phujjSa7B4oGMRzujgbRYW593eRltj4gFNA3Kuz6UHo0QEAUfdRxfi9AWFaAnHnxXC+5Z21mkDSuVgE+oteka7NlyDEuhPV4ALRoMaTrOOxnhVmu90rlnwNPne60QKMzYS/rATBtIjM3Jn6aET3ZHt8UBksDFsAbnAq3rM=
+	t=1767868600; cv=none; b=Q6vvQJntj/ZNG5GnGqp9K3jRQP1isffKJJoMwHLAic2MvQKKnjMNmYxIC1o6EzD9fYi6fT8U/wKmjDlibhdGa1ilpvXDVX/XCUYOaxrlqnYuym7eTdY3K65TdhGlcHjAMd4nRfTDh4NTcq2zxx5duH/xYgFOW4P6Cx28OK1gRdI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767868594; c=relaxed/simple;
-	bh=cKZhuVFO1q2xfKQugBDH5m/0EIcp/48jwQv4HFV08PA=;
+	s=arc-20240116; t=1767868600; c=relaxed/simple;
+	bh=HETVrG2xXKuP/JPJ6ag7HnrtvAYHmwaCMinWzd9CPyw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CjuyOt8yOSO3uazlec/nr+Jtv73U2h+OUnItVc8ouI4ABUqiQ7tPKPvNuPI7B2fqTgdw48A1ltwm7ZaR+9khqePfbLpUfTXUw+5hcPYAAYTkwRvNLBO2bxRWuTODQ0TCQsZN7gJZnbafQvjwHIQOeEXFuMItNH/sFCEEMpkgc1E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=tuxon.dev; spf=pass smtp.mailfrom=tuxon.dev; dkim=pass (2048-bit key) header.d=tuxon.dev header.i=@tuxon.dev header.b=gdjyhQKW; arc=none smtp.client-ip=209.85.128.52
+	 MIME-Version; b=naPXmhy9DVvshPIBftc6eUm/EuXPmBC3XQ//F52uXOTLBWwV4fzZN6zskli5D0ZZkDDKtq4vQn3uC+fomMRmFjAQIld0DSsh6Q6lcbPj/A0vDjpTq+/tnGqGzvBinpgknqSlXxv+jLheI2ICNFwbnehSOy5WaS0vQZOxP08ls6I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=tuxon.dev; spf=pass smtp.mailfrom=tuxon.dev; dkim=pass (2048-bit key) header.d=tuxon.dev header.i=@tuxon.dev header.b=rSz7bJTD; arc=none smtp.client-ip=209.85.221.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=tuxon.dev
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=tuxon.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=tuxon.dev header.i=@tuxon.dev header.b="gdjyhQKW"
-Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-4775ae77516so33426215e9.1
+	dkim=pass (2048-bit key) header.d=tuxon.dev header.i=@tuxon.dev header.b="rSz7bJTD"
+Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-42fbc3056afso1627569f8f.2
         for <dmaengine@vger.kernel.org>; Thu, 08 Jan 2026 02:36:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=tuxon.dev; s=google; t=1767868587; x=1768473387; darn=vger.kernel.org;
+        d=tuxon.dev; s=google; t=1767868586; x=1768473386; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=YLrl6GiIePCtteP1jR08IO97Jd422famCxZr1GzvOdM=;
-        b=gdjyhQKWBvGcyhYJr5XKaFkbYr7XCHoS10ATr4Us6K9RX0igBlf7PTRJ3M4VaiYS4w
-         c+sV4PoAmdR5cqCoC04U+zZpCtU+gedapZKLN0mVeKSDZguK+UWiC5pqpz1sByPqTysD
-         YOMfAgmFCh9uSCXpCnWOy8RpAUf/BOM3PzhoP5LwY/9WvmX4FdWbFnUZUlaSSNvwfAzk
-         LY99KpKjFgNXCd1Nzp3k0a/7LtnqLZ+4DNykiajhb+o3rWHMZuZdiRY0LjphDqzGCsIs
-         byOeM8pKlNZkznHGxw+fSpkMuTFQe1LakHlCUnaxvWnUkb7rQP2YNv3v+p0SFX9qD0cb
-         qflg==
+        bh=ZBsL+5U9mBQbUpXgenVPfjce381EbAdS3YvmQ5cZZAE=;
+        b=rSz7bJTDHxYiHge7Dky7s3miRn37Re71RiDqQLpmOA9l5498YzGQSenEgwqYzhMTkh
+         St0CDCuE7cllfVYGsathm6hD05jto9xKTgRqR/MfqZ+0D9K/Q6Achl5N5323w6o11uaI
+         rU2M8PZdM6eB2T/0Arm62wy93a72hwuvkIGEV4oN6aea5wFY6NIP5RRqdUj8RJ1b/014
+         UlT9nHQtHVguUTUsKzDTxHPI1abwmgmnIAlu5KUHv6AiACLSYgrESXymQoceJKlIhJC2
+         G6rjWJ0V0G8cOiQOzY4qhGytmGigvP3PR5x+8lMny3VBGJ74UyZlE5Gp9dw3yjWmMuiJ
+         iunA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767868587; x=1768473387;
+        d=1e100.net; s=20230601; t=1767868586; x=1768473386;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=YLrl6GiIePCtteP1jR08IO97Jd422famCxZr1GzvOdM=;
-        b=flHIm38EK4DgYjvhBO7TGhH2qRxbahlcXJcuE5b30XMr1N7lEB3Gm+nOzZuhRrWi4/
-         ufHIcWtzFahyyHEzB74CVp14l4c7kIt5NRRKQd7SdQc8kCiT5qHAlbKMdbL3SFkUAtM/
-         2BtlIXG9azR1nlBMmI3OPythaEH2ShAgStnBgXLLhJ8yblWp6mYR9Hh/+uhbTrsAdSBw
-         t43SDJNBl83KsHmn0KgJswqye2dBDpaLgeF46cmQb1MJa9cgvZx58LlfOu2PK8G/gJMu
-         EVf6EAWFDCQNELtFbEe3S7h/2A9hDrMz+0PMfs6NhWljN0aZR3vfO24++Rr48IJH2PRl
-         mCuQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXCCsV9FjpaT779bboS5GOQ40R4zRqyTqLYSdI24oPI9r+QRFA0n3xN2VMQNfqrhoJcSJEuCwj+13s=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyNgmJBNcK02HQ6tsJQOaiuEjJCqunVROuegVIBe7W7Dt5yGH4d
-	GmkLtbQqCYl8khez57BarDAUkmy6kM33bKA3nHXpJ33COg5Ak8+9SqiHZ4RhM7DOTbc=
-X-Gm-Gg: AY/fxX4FtQ4qs9jokwI796BtITXH7dVYLblhVrbKI7QcTTtqGh/BM6SHBCWTc+BfP3I
-	CzhqBEapuiSMwuSJ9JEdX3hhFdPoLFCBpk3+KBe1obroKNzKGPv1fwOyU8pzOnnjedWQdOV7bzS
-	5/QSrAl9WToBISF9pInEQkBeyzMUXE12JiVzVE87zVDAOQGRaKExPtuw1lT9euFTBNkMu5skLnv
-	LLjAetMqow0zIMnrEOM9aW4JvFwYKyJLdjcQ3uHMPRAlS/CNnNR37e+s5sfFMR6X3hJ3diseogN
-	zmnQQ7+UU5Eezry7W60MVv166oJZO7rLNZxnzmaq+Yrgy3h51omG0VP4Yp2+MKRXPhjCIdxJELx
-	L15sC+o+ZnpMpXKLhjG59/7jDI59zqt53VQMF1cLnhfd8a8fRjRwJZQW/DmqOfR+IuV0WNkxVjJ
-	lxPCebxbO4tx1sqmzz+/PUKRBSqd6NXKKM79OU9yE=
-X-Google-Smtp-Source: AGHT+IEeoFFEPeqUu/5dUdvSI7Ttbgabj544hEOiXsYJUJMKsoX04E+p6Y5ieTX7aNcxvUT+g71maQ==
-X-Received: by 2002:a5d:64e3:0:b0:430:f68f:ee7d with SMTP id ffacd0b85a97d-432c379b79cmr7333948f8f.47.1767868587539;
-        Thu, 08 Jan 2026 02:36:27 -0800 (PST)
+        bh=ZBsL+5U9mBQbUpXgenVPfjce381EbAdS3YvmQ5cZZAE=;
+        b=aumTYL9aCxVCnnrfzOKR4sUe8A+OuOFI5pfjou4fhfJdyR+8XDwsHIQBTDRkS72WpF
+         lI7qcd5sE+FpvunwE44iYAhl+ZH5i9XWzyP5TwcgPMjklQq4bxMorriyxB2kkqXqDAa9
+         7J8tHRO4BfMDfw0xVm9IDewmXEKgB4JGtg7+yUbikmsj4gW09EHsXXsiOsnwUINk6gQz
+         YzXBRXsU8W6qnqEpGV8WArHF5EDgenPn4BFpCSX/WwhkQCj++586D4XVFieCXNrsFRaI
+         U1cDeHhC/uGd1WyorwcGDcu48gOdw6xpv77VXJYx7wrbX1g6HLf/VOOp6lRJKl7guSmH
+         0ujw==
+X-Forwarded-Encrypted: i=1; AJvYcCXgbvSgxfCWbATMNbGQWSBqpnDvxuGtffQ03EitOtZXd6Ftqb8M0V6W9HYI5qQqm8mVi1n98HbSbkM=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwAL9VG6DZmGibBi427f25CKkyfgMhpgR/N1+CiPGyB+TWGCtTX
+	bKhQeaDgytlD0Ix2DS7bR7+XsOGsW0CVE3L4luZeXTvYFflNVeBJ/Mvv0aGnbbHVdVWEZCQkdwx
+	At49a
+X-Gm-Gg: AY/fxX6JTXmK+uTCUsMHVJ7vB+e2lkMwBHQGSmiQYpuxUUEAKqbo55ZLbE3ELN3dvsU
+	Q+4mjBULAozD236jU4S3be+e67zj82ezWn/3azmJU0uICQJR2gLfrayYNYIpAE6vDJhd9SZ6O7F
+	G5nZxWF7H3Rse8gNEADr8bYTQttgZoo/p3cgJBTUDBtTN698OmSNmX8aCVQXVjHxhshIVYAUJhZ
+	WokC5BfDSEuoGG6oWHIyNdexPogYWM7Bo8ALtoufPgATVHwTRbzN2L1MUOlB8k7ZuPf9bL0OvXj
+	F+A8FKNZb3oWdkZUStD6BdAQE7M6G0uGaqJNF+AEWBkTIJ5/Z/U3e616LsXPXYM0azsUIcdiWUa
+	V0m/XA6+0KQvIYLAACqdntL/eB4aTzBTZbQcp4WiPYiwnjOXJds/vuQvuHnB3lX8ksqmXrq0TAd
+	tD/lCRxJsJHTLgtDOJA+rQLE1RO0bH+eSy0Y+wtnM=
+X-Google-Smtp-Source: AGHT+IFN6hOBhvkM+I+ctFJfN3aGqoA1MUMOHG5e0LucOvl5KGhtkxH/erS6N+bFoWDZhu8EOHkqFA==
+X-Received: by 2002:a05:6000:2913:b0:42f:b871:66b9 with SMTP id ffacd0b85a97d-432c3778dc8mr7189927f8f.56.1767868586329;
+        Thu, 08 Jan 2026 02:36:26 -0800 (PST)
 Received: from claudiu-X670E-Pro-RS.. ([82.78.167.17])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-432bd5ee243sm15399033f8f.31.2026.01.08.02.36.26
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-432bd5ee243sm15399033f8f.31.2026.01.08.02.36.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 08 Jan 2026 02:36:27 -0800 (PST)
+        Thu, 08 Jan 2026 02:36:25 -0800 (PST)
 From: Claudiu <claudiu.beznea@tuxon.dev>
 X-Google-Original-From: Claudiu <claudiu.beznea.uj@bp.renesas.com>
 To: vkoul@kernel.org,
@@ -69,9 +70,9 @@ To: vkoul@kernel.org,
 Cc: claudiu.beznea@tuxon.dev,
 	dmaengine@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH v7 4/8] dmaengine: sh: rz-dmac: Drop goto instruction and label
-Date: Thu,  8 Jan 2026 12:36:16 +0200
-Message-ID: <20260108103620.3482147-5-claudiu.beznea.uj@bp.renesas.com>
+Subject: [PATCH v7 3/8] dmaengine: sh: rz-dmac: Drop read of CHCTRL register
+Date: Thu,  8 Jan 2026 12:36:15 +0200
+Message-ID: <20260108103620.3482147-4-claudiu.beznea.uj@bp.renesas.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260108103620.3482147-1-claudiu.beznea.uj@bp.renesas.com>
 References: <20260108103620.3482147-1-claudiu.beznea.uj@bp.renesas.com>
@@ -85,43 +86,71 @@ Content-Transfer-Encoding: 8bit
 
 From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
 
-There is no need to jump to the done label just to return.
-Return immediately.
+The CHCTRL register has 11 bits that can be updated by software. The
+documentation for all these bits states the following:
+- A read operation results in 0 being read
+- Writing zero does not affect the operation
 
+All bits in the CHCTRL register accessible by software are set and clear
+bits.
+
+The documentation for the CLREND bit of CHCTRL states:
+Setting this bit to 1 can clear the END bit of the CHSTAT_n/nS register.
+Also, the DMA transfer end interrupt is cleared. An attempt to read this
+bit results in 0 being read.
+1: Clears the END bit.
+0: Does not affect the operation.
+
+Since writing zero to any bit in this register does not affect controller
+operation and reads always return zero, there is no need to perform
+read-modify-write accesses to set the CLREND bit. Drop the read of the
+CHCTRL register.
+
+Also, since setting the CLREND bit does not interact with other
+functionalities exposed through this register and only clears the END
+interrupt, there is no need to lock around this operation. Add a comment
+to document this.
+
+Reviewed-by: Biju Das <biju.das.jz@bp.renesas.com>
 Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
 ---
 
 Changes in v7:
-- none
+- collected tags
 
 Changes in v6:
 - none, this patch is new
 
- drivers/dma/sh/rz-dmac.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/dma/sh/rz-dmac.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/dma/sh/rz-dmac.c b/drivers/dma/sh/rz-dmac.c
-index 43a772e4478c..a2e16b52efe8 100644
+index 818d1ef6f0bf..43a772e4478c 100644
 --- a/drivers/dma/sh/rz-dmac.c
 +++ b/drivers/dma/sh/rz-dmac.c
-@@ -707,7 +707,7 @@ static void rz_dmac_irq_handle_channel(struct rz_dmac_chan *channel)
+@@ -698,7 +698,7 @@ static void rz_dmac_irq_handle_channel(struct rz_dmac_chan *channel)
+ {
+ 	struct dma_chan *chan = &channel->vc.chan;
+ 	struct rz_dmac *dmac = to_rz_dmac(chan->device);
+-	u32 chstat, chctrl;
++	u32 chstat;
  
- 		scoped_guard(spinlock_irqsave, &channel->vc.lock)
- 			rz_dmac_ch_writel(channel, CHCTRL_DEFAULT, CHCTRL, 1);
--		goto done;
-+		return;
+ 	chstat = rz_dmac_ch_readl(channel, CHSTAT, 1);
+ 	if (chstat & CHSTAT_ER) {
+@@ -710,8 +710,11 @@ static void rz_dmac_irq_handle_channel(struct rz_dmac_chan *channel)
+ 		goto done;
  	}
  
- 	/*
-@@ -715,8 +715,6 @@ static void rz_dmac_irq_handle_channel(struct rz_dmac_chan *channel)
- 	 * zeros to CHCTRL is just ignored by HW.
- 	 */
- 	rz_dmac_ch_writel(channel, CHCTRL_CLREND, CHCTRL, 1);
--done:
--	return;
+-	chctrl = rz_dmac_ch_readl(channel, CHCTRL, 1);
+-	rz_dmac_ch_writel(channel, chctrl | CHCTRL_CLREND, CHCTRL, 1);
++	/*
++	 * No need to lock. This just clears the END interrupt. Writing
++	 * zeros to CHCTRL is just ignored by HW.
++	 */
++	rz_dmac_ch_writel(channel, CHCTRL_CLREND, CHCTRL, 1);
+ done:
+ 	return;
  }
- 
- static irqreturn_t rz_dmac_irq_handler(int irq, void *dev_id)
 -- 
 2.43.0
 
