@@ -1,121 +1,105 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.21])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6060C3644AD;
-	Fri,  9 Jan 2026 17:22:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C522933BBC6;
+	Fri,  9 Jan 2026 17:37:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.21
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767979355; cv=none; b=QjGTV+u2gDfV2cQyzxeUe7Nd1fVP1mX3PCC1rWsA35+BJsAVN0wbm1yPM36HWpVyYsbJ0xWOzuSNTT0NgukSWHt1T0nf2ZYLPvpFWrMtXrUpYKBJt1JKFWeXVB6RG1sHVy5yLgl2uPiXp/WE3yXar4Fq4ori6M/Q9khTgRrBHlg=
+	t=1767980245; cv=none; b=bTzJqVT2jl3s74N/f+rz1fSER/o3miefHNjqhJVEKPmt2YtWB3P7sCjH/tBcgOSzcRzbzTpoNS4KD1XsQlDq5ksmoVv9DFxQEku+JYsHG/Hs/I7b6VP+daNBwRLifxody1E2wkLYleU8AL3e9UAa4/kZ1Q3o8HJBnyt1l8evNY0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767979355; c=relaxed/simple;
-	bh=ANMtR/alobtcTc1B2UvZS7tSAS69B3p/g2Gc9BywPbc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=f4gt1OqfNr0Y1ix5RAf8n4wMAiF6XMUvBn7axw3+5SF2EL/l1UOn6iGWZn5MagBnxgk8h0EDM2xH8D007dzLQna5mRVhnX35U1rtL96alv2W56lZDV+DdlJJ6CUr1fnl34FmNzOWjcWhJKdtVUOXVfULFulwoWjqOG9sOBfqr4E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nz6KMZGO; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1767980245; c=relaxed/simple;
+	bh=Ezv/cI+S7Rpio/bPOgUj7+jGK2vl4C3PC4kBtAVLg9U=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=aHf3nnlDEFFxfBFXLYWGWohwMbv7rjJuTeyYfCZ/YGxU/M3YYW/A2kqBM0K88zSicQPXvvxtzbNuuEvNDb0KBJV3WNIGD+CfQwI7dmkbx04RlUECBx6cpaX6fXod8mTAXy3Sn/Xr1eg9JBUvaaCVztOLB+76M+QXHeqbKu20jRI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=NgzkXxbU; arc=none smtp.client-ip=198.175.65.21
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nz6KMZGO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 013C9C4CEF1;
-	Fri,  9 Jan 2026 17:22:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1767979355;
-	bh=ANMtR/alobtcTc1B2UvZS7tSAS69B3p/g2Gc9BywPbc=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=nz6KMZGOR0IWeqrcGkzHUWt15KFX1u57rcmSi142rXY6IhUKCMxco2rLIZciMuJnl
-	 8C/7D0f76zWMgRMyECqecQl4ck15bMVM1MqXCsEZb1sxZJ6OIzyjehuEjlzJkpqTck
-	 YiVe26cVIund+DnlSquBzSPDjh6jAN/rxXUUdiUy6ekbqqe8KgbmBs/tVJIe+Nt0me
-	 qvflVUseSsHMdKcTfYR7LjeuoyiYfx5oIfzugwKuNs7aNAVRmOlYijDCMm44nuzmeH
-	 DAlajjQtAGsjWT5V+opkAbTE4Og3VhHVlxqHfo9CzeLphrWbyGDlxk+ssLxsfX+sU7
-	 7dn2GxNm+sSIA==
-Message-ID: <a6b5cf84-454e-4a43-b52f-d607c648864e@kernel.org>
-Date: Fri, 9 Jan 2026 18:22:20 +0100
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="NgzkXxbU"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1767980243; x=1799516243;
+  h=from:to:cc:subject:date:message-id:in-reply-to:
+   references:mime-version:content-transfer-encoding;
+  bh=Ezv/cI+S7Rpio/bPOgUj7+jGK2vl4C3PC4kBtAVLg9U=;
+  b=NgzkXxbUwNVYlz3BLa8/nMsjqDVqOOzFOQS4fn9KPz/gxfHAuo4yidlP
+   L2xGZ1AyfcKftaQQ5YVGmBLeg9wfviXgVSKRQrMYNTllR6kxF7CaLF+vT
+   y0Tt8YXknBFYgaVFqWoNW6lZVIKekS5zLQmneG0PkUvNhIDZ8DuIrI4GY
+   lFbc1hfl2OnsiYd9cK4/J7UwNdbr4B9XkwEeR4wArPn6nyZnPVLCZBpA5
+   38qlS4fEBfXCjlL9a5TJeV7zL/VmKBxB1W9QpV8Ij7KfozPvhXEOlft5B
+   FgUhKUVOPVFeKPx2ccF+Plr7B8TSKW8nEE8pUttvYwLix9HqT3Fy6xSLl
+   A==;
+X-CSE-ConnectionGUID: wJqR3ZBOSWe/bxang7+kZg==
+X-CSE-MsgGUID: +s3E0HPcR0+Wey/3j54H3A==
+X-IronPort-AV: E=McAfee;i="6800,10657,11666"; a="69296536"
+X-IronPort-AV: E=Sophos;i="6.21,214,1763452800"; 
+   d="scan'208";a="69296536"
+Received: from fmviesa010.fm.intel.com ([10.60.135.150])
+  by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Jan 2026 09:37:21 -0800
+X-CSE-ConnectionGUID: 0kyikiZ0RTGClZJ+U3eKQQ==
+X-CSE-MsgGUID: mUAQbDW6SxKhNDG/eW34Cg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.21,214,1763452800"; 
+   d="scan'208";a="204318498"
+Received: from black.igk.intel.com ([10.91.253.5])
+  by fmviesa010.fm.intel.com with ESMTP; 09 Jan 2026 09:37:20 -0800
+Received: by black.igk.intel.com (Postfix, from userid 1003)
+	id 3635F98; Fri, 09 Jan 2026 18:37:19 +0100 (CET)
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	dmaengine@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Cc: Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH v3 1/3] dmaengine: Refactor devm_dma_request_chan() for readability
+Date: Fri,  9 Jan 2026 18:35:41 +0100
+Message-ID: <20260109173718.3605829-2-andriy.shevchenko@linux.intel.com>
+X-Mailer: git-send-email 2.50.1
+In-Reply-To: <20260109173718.3605829-1-andriy.shevchenko@linux.intel.com>
+References: <20260109173718.3605829-1-andriy.shevchenko@linux.intel.com>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 05/12] powerpc/wii: Simplify with scoped for each OF
- child loop
-To: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
- Miguel Ojeda <ojeda@kernel.org>, Rob Herring <robh@kernel.org>,
- Saravana Kannan <saravanak@google.com>, Nathan Chancellor
- <nathan@kernel.org>, Nick Desaulniers <nick.desaulniers+lkml@gmail.com>,
- Bill Wendling <morbo@google.com>, Justin Stitt <justinstitt@google.com>,
- Russell King <linux@armlinux.org.uk>,
- Nicolas Ferre <nicolas.ferre@microchip.com>,
- Alexandre Belloni <alexandre.belloni@bootlin.com>,
- Claudiu Beznea <claudiu.beznea@tuxon.dev>,
- Krzysztof Kozlowski <krzk@kernel.org>, Alim Akhtar
- <alim.akhtar@samsung.com>, Madhavan Srinivasan <maddy@linux.ibm.com>,
- Michael Ellerman <mpe@ellerman.id.au>, Nicholas Piggin <npiggin@gmail.com>,
- Nipun Gupta <nipun.gupta@amd.com>, Nikhil Agarwal <nikhil.agarwal@amd.com>,
- Abel Vesa <abelvesa@kernel.org>, Peng Fan <peng.fan@nxp.com>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
- <sboyd@kernel.org>, Shawn Guo <shawnguo@kernel.org>,
- Sascha Hauer <s.hauer@pengutronix.de>,
- Pengutronix Kernel Team <kernel@pengutronix.de>,
- Fabio Estevam <festevam@gmail.com>, Vinod Koul <vkoul@kernel.org>,
- Sylwester Nawrocki <s.nawrocki@samsung.com>,
- Mauro Carvalho Chehab <mchehab@kernel.org>,
- "Rafael J. Wysocki" <rafael@kernel.org>,
- Viresh Kumar <viresh.kumar@linaro.org>
-Cc: linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
- llvm@lists.linux.dev, linux-arm-kernel@lists.infradead.org,
- linux-samsung-soc@vger.kernel.org, linuxppc-dev@lists.ozlabs.org,
- linux-clk@vger.kernel.org, imx@lists.linux.dev, dmaengine@vger.kernel.org,
- linux-media@vger.kernel.org, linux-pm@vger.kernel.org,
- Jonathan Cameron <jonathan.cameron@huawei.com>
-References: <20260109-of-for-each-compatible-scoped-v3-0-c22fa2c0749a@oss.qualcomm.com>
- <20260109-of-for-each-compatible-scoped-v3-5-c22fa2c0749a@oss.qualcomm.com>
-Content-Language: fr-FR
-From: "Christophe Leroy (CS GROUP)" <chleroy@kernel.org>
-In-Reply-To: <20260109-of-for-each-compatible-scoped-v3-5-c22fa2c0749a@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
+Yes, while it's a bit longer in terms of LoCs, it's more readable
+when we use the usual patter to check for errors, and not for
+a success). This eliminates unneeded assignment and moves the
+needed one closer to its user which is better programming pattern
+because it allows avoiding potential errors in case the variable
+is getting reused. Also note that the same pattern have been used
+already in dmaenginem_async_device_register().
 
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+---
+ drivers/dma/dmaengine.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-Le 09/01/2026 à 17:57, Krzysztof Kozlowski a écrit :
-> Use scoped for-each loop when iterating over device nodes to make code a
-> bit simpler.
-> 
-> Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-
-Reviewed-by: Christophe Leroy (CS GROUP) <chleroy@kernel.org>
-
-> ---
-> 
-> Depends on the first patch.
-> ---
->   arch/powerpc/platforms/embedded6xx/hlwd-pic.c | 4 +---
->   1 file changed, 1 insertion(+), 3 deletions(-)
-> 
-> diff --git a/arch/powerpc/platforms/embedded6xx/hlwd-pic.c b/arch/powerpc/platforms/embedded6xx/hlwd-pic.c
-> index b57e87b0b3ce..1522a8bece29 100644
-> --- a/arch/powerpc/platforms/embedded6xx/hlwd-pic.c
-> +++ b/arch/powerpc/platforms/embedded6xx/hlwd-pic.c
-> @@ -201,11 +201,10 @@ unsigned int hlwd_pic_get_irq(void)
->   void __init hlwd_pic_probe(void)
->   {
->   	struct irq_domain *host;
-> -	struct device_node *np;
->   	const u32 *interrupts;
->   	int cascade_virq;
->   
-> -	for_each_compatible_node(np, NULL, "nintendo,hollywood-pic") {
-> +	for_each_compatible_node_scoped(np, NULL, "nintendo,hollywood-pic") {
->   		interrupts = of_get_property(np, "interrupts", NULL);
->   		if (interrupts) {
->   			host = hlwd_pic_init(np);
-> @@ -215,7 +214,6 @@ void __init hlwd_pic_probe(void)
->   			irq_set_chained_handler(cascade_virq,
->   						hlwd_pic_irq_cascade);
->   			hlwd_irq_host = host;
-> -			of_node_put(np);
->   			break;
->   		}
->   	}
-> 
+diff --git a/drivers/dma/dmaengine.c b/drivers/dma/dmaengine.c
+index ca13cd39330b..8fe552c74eb8 100644
+--- a/drivers/dma/dmaengine.c
++++ b/drivers/dma/dmaengine.c
+@@ -943,12 +943,14 @@ static void dmaenginem_release_channel(void *chan)
+ 
+ struct dma_chan *devm_dma_request_chan(struct device *dev, const char *name)
+ {
+-	struct dma_chan *chan = dma_request_chan(dev, name);
+-	int ret = 0;
++	struct dma_chan *chan;
++	int ret;
+ 
+-	if (!IS_ERR(chan))
+-		ret = devm_add_action_or_reset(dev, dmaenginem_release_channel, chan);
++	chan = dma_request_chan(dev, name);
++	if (IS_ERR(chan))
++		return chan;
+ 
++	ret = devm_add_action_or_reset(dev, dmaenginem_release_channel, chan);
+ 	if (ret)
+ 		return ERR_PTR(ret);
+ 
+-- 
+2.50.1
 
