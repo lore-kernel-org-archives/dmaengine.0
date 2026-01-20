@@ -1,86 +1,84 @@
-Received: from mail-ej1-f41.google.com (mail-ej1-f41.google.com [209.85.218.41])
+Received: from mail-ej1-f67.google.com (mail-ej1-f67.google.com [209.85.218.67])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B34F4266A1
-	for <dmaengine@vger.kernel.org>; Tue, 20 Jan 2026 12:52:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 744F942849A
+	for <dmaengine@vger.kernel.org>; Tue, 20 Jan 2026 12:52:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.67
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768913559; cv=none; b=ALytUGKrsiOe1ILXajurqgWmIfj8Fv7UliH8rCi2oqSFHybrSemRmuxlSgMkFeoggW/zM2i8l3nvzwCPPD2LaVzf3VWIOQeMBhEXksnbWvUwgL4FCWeR8TzPTXZmbvxFN7Q14L47xo3dYTdHuOzzwfOM1GtoMozSMlLToQauSag=
+	t=1768913561; cv=none; b=erK1NZD3kBDfdJ7qUZaNNqI3TXILjHTykuvarF+1sz341zKl6+4U7JYxjOxnrRD8kRD5ejz11DqQequOgciB/suYR7jhdyXHXdCO5oUEAywWeajqN1JnSysO9KDLLKdMjOnf4gGiVus/1rudzYIywMte0EVMzJfDOPbRQxV8i4s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768913559; c=relaxed/simple;
-	bh=dLT4BztcJUHlJv2mbKW05XmD97+BUruAVhf1PrnKC0s=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Y5zDwx0ZJNlUa2PGP6Ol2x/KWBK9MPZuZsLg/XzDewLjZWFNRapB7uSUQ7gB09PBZec5rFMTQa42WY9Z77L/LcXK0T6GHQwkB50+TuSGqKv4mcQoF2DzGRbUAKclQgn21BqYxHbwO5tIZ7qnwbj+6y2r5jyOfk6nzxbuZ0v84NM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=c3jWciWk; arc=none smtp.client-ip=209.85.218.41
+	s=arc-20240116; t=1768913561; c=relaxed/simple;
+	bh=VFvvzCPVMppU9YZe/NAS6ZVyOvp/Aoa+1BRn4/TUYGI=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=lj6X+MKzbGbYBLbS/WcbcQg3q9+BFyEPy6Xp/AmNIGnHrI+p7XWn2FR0MuahybISJDBZwDFFKeCs1avrmbzx7HbW1cHQOgUjh3OA4kdBMHd00jtshpHxnQTR2ADtbry5h4LDprNkXKMITTofkdZ5YQqjpmyJbEvaXixsST94BzM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DZJENXM3; arc=none smtp.client-ip=209.85.218.67
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="c3jWciWk"
-Received: by mail-ej1-f41.google.com with SMTP id a640c23a62f3a-b8768225837so758161266b.2
-        for <dmaengine@vger.kernel.org>; Tue, 20 Jan 2026 04:52:37 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DZJENXM3"
+Received: by mail-ej1-f67.google.com with SMTP id a640c23a62f3a-b8718187eb6so815188166b.2
+        for <dmaengine@vger.kernel.org>; Tue, 20 Jan 2026 04:52:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1768913556; x=1769518356; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=3ttQo/ynjtoD9vPtncN+5aFty4ApifbhAAoI8HwtRUw=;
-        b=c3jWciWkuZUsvfBQhPCwCkmAwn4UcWt4E0D9OSmWVlN6M/tyYN3Jw8yoe/CZQJc4W6
-         4CnmXCrhl2RhzXfsK8mQ1zI4eV1j0KnJh9ZxLYstNe2cHIKDVBQb+sCOQB7aKuxQZl+s
-         /kaD36AxieB5fVBP6RlAzaB4rx7oGu8YOUFM9j5WuUb37jSqYxFq+qSFfQY5oSuQvMPO
-         oCTDGsA3zeciiKOT9IXpFACDJLWgLwiTXt7fZsuMlqg+uxU25VFztDPGaxrcpEoXOz2p
-         8jwomSStQerQ1CSLunDVgX4hwT7IQ7imHz72vjlxF84U2jDKC7YYZOBJC9hFzEwDfsar
-         +fgg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768913556; x=1769518356;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1768913557; x=1769518357; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=3ttQo/ynjtoD9vPtncN+5aFty4ApifbhAAoI8HwtRUw=;
-        b=t1/nSsx5D2hIWmu85RoNOVglzM0XVCGWo4TUZ7euZFFbhZMhyMSikZQm3Wrza7DTX5
-         X2T6lfmKMri3QaZelyWsiZE79yGom4bhBzfYhxC0N6Px3LWOClvgqrDDhHHbV6zgSi51
-         k1BKCi28/6jAE6lfTU6DqTu82PmtwYBE1cLTxiJVpic+BRpfiUjbAgAw5f7G41Sprc+b
-         lyLtPnrYhhA0cbMcgki2UEWebib2QWwvANwCd+l7mJw/ZTgm5nMeINLTR//QUIZTBTo8
-         F1EcCjY9BtxRU08ci1Bim8q5zrAWQJLO6byskybpfGHoFKxcHcXcEMc1mY3AcMI46584
-         hWJA==
-X-Forwarded-Encrypted: i=1; AJvYcCXRnB3f6R7OrKySskFLUFRAzzvByBxzF2Ysix3B7oVPENb8oXjDDz3nQBQgTwmHQLnaoIVGh5Cl5EI=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxyRmY2olJ49jxurmmbTjvbLdTYdtzG/JSTSxr+VJ8mMc5JH3VV
-	pzrAhUR4gK6cTMWxL97oVIAhygH3EmQZdqx7bB/6mMh/VjtU0SRlv2l4
-X-Gm-Gg: AY/fxX7XSgyzGfzwIbnPyyOR8gZa6xCSY1WFzcKfYKmBdz4oJNKuRlpXGowDjvYMA68
-	Dhcu01/FqsdLJj/CWY9OXrUZayFwlywgrjdgRfOQkZXZl+4b2OJ5VbRJEIO8vLwt0mhzy9pBcm0
-	mSekyRfvIcURfs0P0IMe8Kcs7HuR5yFcyPTY4lZgavd/diqw0qj+AArDpAu/CuA4ZVBYOK30zHT
-	ZVh8HM8fqRJ7DIF892MeTxv5R5Fxogb/GmO5pQcb0MeD5NZMfI9dm+Grt8gB3blvCTkqJ6fW4lZ
-	KFl1LHoOPL/iEF9Rt4FtmNjtK5w4RuvFz5FUptOOD3iuJIg/W9pnkjgPIx6ooArzYA/tLmyCbYH
-	tQWx7t/wXJWdZ0oYEBKv+66nHAr2vbE4FRe+t8rXgD9X/BnywmMyC69VYMat8J4KiiwGVclXDNn
-	abTplDx02M8/LWqmeqhT6OUgTCEkVp3cu/1cNGuC2wwUyMhg==
-X-Received: by 2002:a17:906:209c:b0:b87:d255:39ff with SMTP id a640c23a62f3a-b87d2553c76mr452807266b.32.1768913555294;
-        Tue, 20 Jan 2026 04:52:35 -0800 (PST)
+        bh=eN8iJ2c4mGSzLhHXbqnnydUI7yMc6vZwoegrLK0Ce8U=;
+        b=DZJENXM32XvUP+cXKxMScacTdq0w3VJnAPQGJVqr0gEiMZ9UXAtqy6PNbatrx3xAAg
+         aj7ou7CmkmCAmtftrDGgrPuV7KREPCTsvxEddaYY+TnaFZcr08xqgHejH7Bbu0/C5zpY
+         eUoeebGi29sS/vGJ3ZKNlfgp9r4Jv0ugX/v1AexX1uRMB/fHnFeqr4zMLKhJC6yjiF39
+         UhLSjE/5aejcvP/iGoPKZ+05n8y3U5VGnXid7ruXr5LF4SY2GvhtLP26kg+8FdBcmru6
+         /AY7ADAECHv2HlMMpOMOBikqLgH42t4oUrK+z+Ecx4gjIgrB6JiDbeVHiOfjmHMcowhs
+         lysA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1768913557; x=1769518357;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=eN8iJ2c4mGSzLhHXbqnnydUI7yMc6vZwoegrLK0Ce8U=;
+        b=HjDXK42LnHW0wtNrxrZWYcxVkjQAtytdA+I3NxCYzvWDLaXkpJdwiR5XWnG3FaMW4h
+         KkkZUx8MjYYJUZu4DT8W8mZuFhUs6Dtip+xiRDLUi6HSI0YWuqSg22b3504WGVN8RYlD
+         og8w2INdL1TgACKQl3ME4kX4biFvJRGFw2DY5GIINAglMbyzLbR/w/QDh0ebEQdvoa2s
+         5r38yN5RsvX+VQ4WVYXA8QoZ8f7PYy/9asE6QM5r1oH/YuQhH4a46uYoueQKxIPCBZnE
+         XHKbAF3PpEHFL7MMY2+lOjELMFm1SW7Pqg3qKRrHZOKXNwYiI+KZHcbbwG+14i6A6je6
+         ywMw==
+X-Forwarded-Encrypted: i=1; AJvYcCUDEdW1VFUed7FHu+lqXeTcVOkxrFd+MfqcT5PlTYEB16URzXSlToGQAvusXMO1l1zjYwilZegpNiE=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzwRsoYOy5r8Xvr7fdkXsjm8P7zQWVdoG2vjnB4dye5a4GrV81O
+	agXGKpIDv7ITR0VXDeu+bZewwLZ4Yj1tIzk7bQQpnzvuhNuVPWXnrIiCwnjlpyTa
+X-Gm-Gg: AY/fxX4N+zxuwE8s3K2JmnfLexfUR0ofB7NAtdPAiUcTRsFIZD1yYQqxHFH0l5nlNWO
+	Kb0k5oBQs2heAIv2t0CMFVNzQHzgE5zxDUZLGGk0a+Ev+SrUmlUiz9B/OVpI852iCLOmS5A3t1g
+	L1jpG5tULyfzgOKob3A/48g0Jb74hErFc26T58CSySyqEOxGBMdmEbdZQKDHVv+Hm0UspBxwpG6
+	fYG7R4oytvvzsQWSgKUpqSVjP31E6NADyvvgkxyBfo4Gc57Jf6ZIQnSfQKQuXoo5cGHvPBE/Mgc
+	qcmKyRBX1ushIHPHM+N1UmM8fp0A8KXpHVGlQMMANgtSIoomUOVO9ZSnpRmSuUROxuPGvFZHT7c
+	JSr7DCPZqdC0ynRXSzP54K1/9E8/4NoXi7cVYTpRl+IPN6RwXQ3FG1f7VBizxafPbNHCIfiqpPe
+	ULaMfqVerFPCPAYSIorRVWPHbgdjahLLA1nXs=
+X-Received: by 2002:a17:907:e114:b0:b87:be08:815b with SMTP id a640c23a62f3a-b87be08844bmr596030166b.27.1768913556604;
+        Tue, 20 Jan 2026 04:52:36 -0800 (PST)
 Received: from localhost.localdomain ([2a00:23c4:a758:8a01:c8c7:2ef6:8ac5:5556])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b87959ca32esm1420626066b.41.2026.01.20.04.52.34
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b87959ca32esm1420626066b.41.2026.01.20.04.52.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 20 Jan 2026 04:52:35 -0800 (PST)
+        Tue, 20 Jan 2026 04:52:36 -0800 (PST)
 From: Biju <biju.das.au@gmail.com>
 X-Google-Original-From: Biju <biju.das.jz@bp.renesas.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Jiri Slaby <jirislaby@kernel.org>,
-	Vinod Koul <vkoul@kernel.org>,
-	Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>,
+To: Vinod Koul <vkoul@kernel.org>,
 	Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
 	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Magnus Damm <magnus.damm@gmail.com>
 Cc: Biju Das <biju.das.jz@bp.renesas.com>,
-	linux-kernel@vger.kernel.org,
-	linux-serial@vger.kernel.org,
 	dmaengine@vger.kernel.org,
 	devicetree@vger.kernel.org,
-	linux-clk@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
 	linux-renesas-soc@vger.kernel.org,
 	Prabhakar Mahadev Lad <prabhakar.mahadev-lad.rj@bp.renesas.com>,
 	Biju Das <biju.das.au@gmail.com>
-Subject: [PATCH 00/12] Add support for Renesas RZ/G3L SoC and SMARC-EVK platform
-Date: Tue, 20 Jan 2026 12:52:11 +0000
-Message-ID: <20260120125232.349708-1-biju.das.jz@bp.renesas.com>
+Subject: [PATCH 02/12] dt-bindings: dma: rz-dmac: Document RZ/G3L SoC
+Date: Tue, 20 Jan 2026 12:52:13 +0000
+Message-ID: <20260120125232.349708-3-biju.das.jz@bp.renesas.com>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260120125232.349708-1-biju.das.jz@bp.renesas.com>
+References: <20260120125232.349708-1-biju.das.jz@bp.renesas.com>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -91,160 +89,26 @@ Content-Transfer-Encoding: 8bit
 
 From: Biju Das <biju.das.jz@bp.renesas.com>
 
-Hi all,
+Document the Renesas RZ/G3L DMAC block. This is identical to the one found
+on the RZ/G3S SoC.
 
-This patch series adds initial support for the Renesas RZ/G3L SoC and
-RZ/G3L SMARC EVK platform. The RZ/G3L device is a general-purpose
-microprocessor with a quad-core CA-55, single core CM-33, Mali-G31
-3-D Graphics and other peripherals.
+Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
+---
+ Documentation/devicetree/bindings/dma/renesas,rz-dmac.yaml | 1 +
+ 1 file changed, 1 insertion(+)
 
-Support for the below list of blocks is added in the SoC DTSI (r9a08g046.dtsi):
-
- - EXT CLK
- - 4X CA55
- - SCIF
- - CPG
- - GIC
- - ARMv8 Timer
-
-This series also adds SCIF support for the RZ/G3L SMARC EVK board (r9a08g046l68-smarc.dts).
+diff --git a/Documentation/devicetree/bindings/dma/renesas,rz-dmac.yaml b/Documentation/devicetree/bindings/dma/renesas,rz-dmac.yaml
+index d137b9cbaee9..e3311029eb2f 100644
+--- a/Documentation/devicetree/bindings/dma/renesas,rz-dmac.yaml
++++ b/Documentation/devicetree/bindings/dma/renesas,rz-dmac.yaml
+@@ -19,6 +19,7 @@ properties:
+               - renesas,r9a07g044-dmac # RZ/G2{L,LC}
+               - renesas,r9a07g054-dmac # RZ/V2L
+               - renesas,r9a08g045-dmac # RZ/G3S
++              - renesas,r9a08g046-dmac # RZ/G3L
+           - const: renesas,rz-dmac
  
-Test logs:
-/ #uname -r
-6.19.0-rc6-next-20260119-g31b78275d04b
-/ # cat /proc/cpuinfo
-processor       : 0
-BogoMIPS        : 48.00
-Features        : fp asimd evtstrm aes pmull sha1 sha2 crc32 atomics fphp asimdhp cpuid asimdrdm lrcpc dcpop asimddp
-CPU implementer : 0x41
-CPU architecture: 8
-CPU variant     : 0x2
-CPU part        : 0xd05
-CPU revision    : 0
-
-processor       : 1
-BogoMIPS        : 48.00
-Features        : fp asimd evtstrm aes pmull sha1 sha2 crc32 atomics fphp asimdhp cpuid asimdrdm lrcpc dcpop asimddp
-CPU implementer : 0x41
-CPU architecture: 8
-CPU variant     : 0x2
-CPU part        : 0xd05
-CPU revision    : 0
-
-processor       : 2
-BogoMIPS        : 48.00
-Features        : fp asimd evtstrm aes pmull sha1 sha2 crc32 atomics fphp asimdhp cpuid asimdrdm lrcpc dcpop asimddp
-CPU implementer : 0x41
-CPU architecture: 8
-CPU variant     : 0x2
-CPU part        : 0xd05
-CPU revision    : 0
-
-processor       : 3
-BogoMIPS        : 48.00
-Features        : fp asimd evtstrm aes pmull sha1 sha2 crc32 atomics fphp asimdhp cpuid asimdrdm lrcpc dcpop asimddp
-CPU implementer : 0x41
-CPU architecture: 8
-CPU variant     : 0x2
-CPU part        : 0xd05
-CPU revision    : 0
-
-/ # cat /proc/interrupts
-           CPU0       CPU1       CPU2       CPU3
- 11:        262        109        324         98    GICv3  27 Level     arch_timer
- 14:          0          0          0          0    GICv3 185 Edge      error
- 15:          0          0          0          0    GICv3 186 Edge      11820000.dma-controller:0
- 16:          0          0          0          0    GICv3 187 Edge      11820000.dma-controller:1
- 17:          0          0          0          0    GICv3 188 Edge      11820000.dma-controller:2
- 18:          0          0          0          0    GICv3 189 Edge      11820000.dma-controller:3
- 19:          0          0          0          0    GICv3 190 Edge      11820000.dma-controller:4
- 20:          0          0          0          0    GICv3 191 Edge      11820000.dma-controller:5
- 21:          0          0          0          0    GICv3 192 Edge      11820000.dma-controller:6
- 22:          0          0          0          0    GICv3 193 Edge      11820000.dma-controller:7
- 23:          0          0          0          0    GICv3 194 Edge      11820000.dma-controller:8
- 24:          0          0          0          0    GICv3 195 Edge      11820000.dma-controller:9
- 25:          0          0          0          0    GICv3 196 Edge      11820000.dma-controller:10
- 26:          0          0          0          0    GICv3 197 Edge      11820000.dma-controller:11
- 27:          0          0          0          0    GICv3 198 Edge      11820000.dma-controller:12
- 28:          0          0          0          0    GICv3 199 Edge      11820000.dma-controller:13
- 29:          0          0          0          0    GICv3 200 Edge      11820000.dma-controller:14
- 30:          0          0          0          0    GICv3 201 Edge      11820000.dma-controller:15
- 31:          0          0          0          0    GICv3 418 Level     100ac000.serial:rx err
- 32:          4          0          0          0    GICv3 420 Level     100ac000.serial:rx full
- 33:        206          0          0          0    GICv3 421 Level     100ac000.serial:tx empty
- 34:          0          0          0          0    GICv3 419 Level     100ac000.serial:break
- 35:         13          0          0          0    GICv3 422 Level     100ac000.serial:rx ready
-IPI0:        23         26         19         22       Rescheduling interrupts
-IPI1:       237        385        152         90       Function call interrupts
-IPI2:         0          0          0          0       CPU stop interrupts
-IPI3:         0          0          0          0       CPU stop NMIs
-IPI4:         0          0          0          0       Timer broadcast interrupts
-IPI5:         0          0          0          0       IRQ work interrupts
-IPI6:         0          0          0          0       CPU backtrace interrupts
-IPI7:         0          0          0          0       KGDB roundup interrupts
-/ # cat /proc/meminfo
-MemTotal:        1887948 kB
-MemFree:         1849056 kB
-MemAvailable:    1816424 kB
-
-/ # cat /sys/devices/soc0/family
-RZ/G3L
-/ # cat /sys/devices/soc0/machine
-Renesas SMARC EVK version 2 based on r9a08g046l48
-/ # cat /sys/devices/soc0/soc_id
-r9a08g046
-/ # cat /sys/devices/soc0/revision
-0
-
-
-Biju Das (12):
-  dt-bindings: serial: renesas,scif: Document RZ/G3L SoC
-  dt-bindings: dma: rz-dmac: Document RZ/G3L SoC
-  dt-bindings: soc: renesas: Document Renesas RZ/G3L SoC variants
-  dt-bindings: soc: renesas: Document RZ/G3L SMARC SoM and Carrier-II
-    EVK
-  dt-bindings: soc: renesas: renesas,rzg2l-sysc: Document RZ/G3L SoC
-  soc: renesas: rz-sysc: Add SoC identification for RZ/G3L SoC
-  dt-bindings: clock: Document RZ/G3L SoC
-  clk: renesas: Add support for RZ/G3L SoC
-  arm64: dts: renesas: Add initial DTSI for RZ/G3L SoC
-  arm64: dts: renesas: Add initial support for RZ/G3L SMARC SoM
-  arm64: dts: renesas: renesas-smarc2: Move usb3 nodes to board DTS
-  arm64: dts: renesas: Add initial device tree for RZ/G3L SMARC EVK
-    board
-
- .../bindings/clock/renesas,rzg2l-cpg.yaml     |   1 +
- .../bindings/dma/renesas,rz-dmac.yaml         |   1 +
- .../bindings/serial/renesas,scif.yaml         |   1 +
- .../soc/renesas/renesas,rzg2l-sysc.yaml       |   1 +
- .../bindings/soc/renesas/renesas.yaml         |  13 +
- arch/arm64/boot/dts/renesas/Makefile          |   2 +
- arch/arm64/boot/dts/renesas/r9a08g046.dtsi    | 219 +++++++++++
- .../boot/dts/renesas/r9a08g046l48-smarc.dts   |  41 +++
- arch/arm64/boot/dts/renesas/r9a08g046l48.dtsi |  13 +
- .../boot/dts/renesas/r9a09g047e57-smarc.dts   |   6 +
- .../boot/dts/renesas/renesas-smarc2.dtsi      |   8 -
- .../boot/dts/renesas/rzg3l-smarc-som.dtsi     |  22 ++
- drivers/clk/renesas/Kconfig                   |   7 +-
- drivers/clk/renesas/Makefile                  |   1 +
- drivers/clk/renesas/r9a08g046-cpg.c           | 137 +++++++
- drivers/clk/renesas/rzg2l-cpg.c               |   6 +
- drivers/clk/renesas/rzg2l-cpg.h               |   1 +
- drivers/soc/renesas/Kconfig                   |  12 +
- drivers/soc/renesas/Makefile                  |   1 +
- drivers/soc/renesas/r9a08g046-sysc.c          |  91 +++++
- drivers/soc/renesas/rz-sysc.c                 |   3 +
- drivers/soc/renesas/rz-sysc.h                 |   1 +
- include/dt-bindings/clock/r9a08g046-cpg.h     | 339 ++++++++++++++++++
- 23 files changed, 918 insertions(+), 9 deletions(-)
- create mode 100644 arch/arm64/boot/dts/renesas/r9a08g046.dtsi
- create mode 100644 arch/arm64/boot/dts/renesas/r9a08g046l48-smarc.dts
- create mode 100644 arch/arm64/boot/dts/renesas/r9a08g046l48.dtsi
- create mode 100644 arch/arm64/boot/dts/renesas/rzg3l-smarc-som.dtsi
- create mode 100644 drivers/clk/renesas/r9a08g046-cpg.c
- create mode 100644 drivers/soc/renesas/r9a08g046-sysc.c
- create mode 100644 include/dt-bindings/clock/r9a08g046-cpg.h
-
+       - items:
 -- 
 2.43.0
 
