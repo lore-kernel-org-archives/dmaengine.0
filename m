@@ -1,52 +1,52 @@
 Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.15])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A018A3DAC13;
-	Wed, 21 Jan 2026 18:35:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D0CA3E958B;
+	Wed, 21 Jan 2026 18:35:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.15
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769020503; cv=none; b=JttOVpFV/WQYPrCNGJtEFKlHOE/qPbbMEyiHeM6bmFZp+KOc0/JQaSmeb3TTw/Ilz35mSs+RpxmDtRzBQOGSsd3YGy1oWuqgOHPGGHzRBvnjyoeNVBpxCN51d26ZP9I7+XuWK4V9d/6quKISoOaYvefEdaGw+UG0i4Xk8SVdh24=
+	t=1769020505; cv=none; b=V2kawdBAGnpm2XPgVMqSmFEOPOi/PEnDRSsTnYYcL2h+oGvq4YQhlp/q4HcFU9kRIwwuuVydIIF2V7znwhNDbafVHFPQLp1PVs8AFoD5d75qWpu0ijaF9t9C5UVsF8O5psJ8U3rOMkRrkmC0gIP8afgSGl6mF3+K/Q3VewGoJTU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769020503; c=relaxed/simple;
-	bh=xB8N5q8I7kbV6Ztld4qJHNyrVrvAmYmEBJ5LDbjmrww=;
+	s=arc-20240116; t=1769020505; c=relaxed/simple;
+	bh=tauCY6vkWDYmy1V08ddQkgcF50qlMxCqdAyDBGoLsaQ=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=ROvQPczgbEhAJgEruHubMWAVbDdSu8I23NXfdZPYeSX+GS4JVa61z8yUb20oegz2PO7uUmQeb6fcBYCOlcBhpr/Gi+f+jhy5eXFKKIwpANIqI3vUyzIh5qxXQ338kZkMA6I/efzP3gt2pDobiNOQECCXI5hjjoAMQM2zbdNWqE0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=jS17zQP4; arc=none smtp.client-ip=192.198.163.15
+	 In-Reply-To:To:Cc; b=dxMv3yFfW/1j9Rxw6dLVinqQNMZgnZqs3709m0+Fxx7UhyL0/MJwi3VGmlZroM3bPkd0umLH2HVafx7ZBHirFJHu8zpopohuELOxNkruiVI2jwMPCh8XShi0v7Djz1J58xlpR1jLvjwF39wV2z8AhFM3Vk4CRHQ5ukpAjYa07/Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=QTM0voLX; arc=none smtp.client-ip=192.198.163.15
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="jS17zQP4"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="QTM0voLX"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1769020501; x=1800556501;
+  t=1769020503; x=1800556503;
   h=from:date:subject:mime-version:content-transfer-encoding:
    message-id:references:in-reply-to:to:cc;
-  bh=xB8N5q8I7kbV6Ztld4qJHNyrVrvAmYmEBJ5LDbjmrww=;
-  b=jS17zQP4m4GwzzuOPelkAXQoEqaNBvw+bGE8PKMgA9U5iOIP0d59HHch
-   CGW4GHDW7pn0+ItGFg8OIaBkut40eMOTZcZyLqzhS7C+tNd3KQ+LQJlvt
-   l+pGWRAvI9xFGpToAEuTXdeXtj9FQjLT7Xl8rJdCoMDXijE5J97PtjCaE
-   ZYHBfGlMFWrgzGffSgtoHOwh+f0kSaEDlwkM9cRryHe58FSPijDxD4OCy
-   A/JQRG36MKxwm7bzo8HrH+/YnEDbON4sEhJJUChmiSBLGg8ENAEBtKlLa
-   NkqKt1IGFS0xo4rDbtfNFJxtB0cJQEIVhcZochE0mEkSCEBm0NkXtUmSl
+  bh=tauCY6vkWDYmy1V08ddQkgcF50qlMxCqdAyDBGoLsaQ=;
+  b=QTM0voLX9dGItnzi9AsKM6UHaiKzzlosBIemPOCvBJzM64YZ4qlsp5JV
+   m4Rnejta+29NklQPcKgQ2SxxgfrHypA52LZocDa/HG0t9sszpXRkblV9N
+   AUBC5xe8vxjRQpXRsb0tM2Gyamwr5JMVPMc5vtU6APWWFBroJVEU60sve
+   YhGXOFLSfy2LYwIxY6HdF7Z5eOxgW+8a47uotXn2k+ezqFMXHnG2Hygid
+   Hs4DFtfhaDCWrlfzMXZloEdilp0vPJY+RrVc0XVPT/B+MNppD/lRioXsT
+   3Ta+bR7LrjQ0SAzUW7aj5xaDUs5+0pxwwM8uVpUD4FaieF+IKJhcXLpKa
    Q==;
-X-CSE-ConnectionGUID: I+9ppen+TjWxJfBEaR8//A==
-X-CSE-MsgGUID: 0AztEto4S9SwWiHBpgoJQA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11678"; a="70349903"
+X-CSE-ConnectionGUID: 84JReQBkSCeZ1YnKZjK5vA==
+X-CSE-MsgGUID: YKgmODaQQ1yD5Y8eQk62vw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11678"; a="70349907"
 X-IronPort-AV: E=Sophos;i="6.21,244,1763452800"; 
-   d="scan'208";a="70349903"
+   d="scan'208";a="70349907"
 Received: from orviesa003.jf.intel.com ([10.64.159.143])
   by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Jan 2026 10:34:56 -0800
-X-CSE-ConnectionGUID: ZwFd0iIdQvO6QBU6T/iG4Q==
-X-CSE-MsgGUID: 0Fc/F5WaSbiF99utDK/wog==
+X-CSE-ConnectionGUID: xQHc3+TiTgeTBEz5gUYIzQ==
+X-CSE-MsgGUID: KHDA/cSrSJqSMZ4DEC5q7w==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.21,244,1763452800"; 
-   d="scan'208";a="210678470"
+   d="scan'208";a="210678476"
 Received: from vcostago-desk1.jf.intel.com (HELO [10.88.27.144]) ([10.88.27.144])
   by ORVIESA003-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Jan 2026 10:34:54 -0800
 From: Vinicius Costa Gomes <vinicius.gomes@intel.com>
-Date: Wed, 21 Jan 2026 10:34:32 -0800
-Subject: [PATCH v3 06/10] dmaengine: idxd: Wait for submitted operations on
- .device_synchronize()
+Date: Wed, 21 Jan 2026 10:34:34 -0800
+Subject: [PATCH v3 08/10] dmaengine: idxd: Fix memory leak when a wq is
+ reset
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -55,7 +55,7 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260121-idxd-fix-flr-on-kernel-queues-v3-v3-6-7ed70658a9d1@intel.com>
+Message-Id: <20260121-idxd-fix-flr-on-kernel-queues-v3-v3-8-7ed70658a9d1@intel.com>
 References: <20260121-idxd-fix-flr-on-kernel-queues-v3-v3-0-7ed70658a9d1@intel.com>
 In-Reply-To: <20260121-idxd-fix-flr-on-kernel-queues-v3-v3-0-7ed70658a9d1@intel.com>
 To: Dave Jiang <dave.jiang@intel.com>, Vinod Koul <vkoul@kernel.org>, 
@@ -63,50 +63,55 @@ To: Dave Jiang <dave.jiang@intel.com>, Vinod Koul <vkoul@kernel.org>,
 Cc: dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org, 
  Vinicius Costa Gomes <vinicius.gomes@intel.com>
 X-Mailer: b4 0.15-dev-47773
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1769020494; l=1243;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1769020494; l=1614;
  i=vinicius.gomes@intel.com; s=20230921; h=from:subject:message-id;
- bh=xB8N5q8I7kbV6Ztld4qJHNyrVrvAmYmEBJ5LDbjmrww=;
- b=9817eWM1ojIb1MBqzdUfPKQcCcmymfDf+Xl79WIG3tg354lYv2HRVxQMyBqT/jtvVz3AcqnC8
- rU6gAEuDfR2AhuGzuzyo0mMWEZy+eW4WVe0Nnfs1CPhet4Z4Va7sLu0
+ bh=tauCY6vkWDYmy1V08ddQkgcF50qlMxCqdAyDBGoLsaQ=;
+ b=5czP+2/5pJlJ95kmkdwSBmufLmSBIP0xn5Ub7uHsQ404vHPNhvMmJDHD6J7LkinL95IGUkYA+
+ BV3boBJxCf+BLqP/UXfBOg077H2CvW5Z9RlBpKyzC/I5I+BuT3Yc96L
 X-Developer-Key: i=vinicius.gomes@intel.com; a=ed25519;
  pk=aJkrtgqgT6TZ8iIHSG8/rTPsmlYnjMrUjCsMYvCzntk=
 
-When the dmaengine "core" asks the driver to synchronize, send a Drain
-operation to the device workqueue, which will wait for the already
-submitted operations to finish.
+idxd_wq_disable_cleanup() which is called from the reset path for a
+workqueue, sets the wq type to NONE, which for other parts of the
+driver mean that the wq is empty (all its resources were released).
 
+Only set the wq type to NONE after its resources are released.
+
+Fixes: da32b28c95a7 ("dmaengine: idxd: cleanup workqueue config after disabling")
 Reviewed-by: Dave Jiang <dave.jiang@intel.com>
 Signed-off-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
 ---
- drivers/dma/idxd/dma.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/dma/idxd/device.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/dma/idxd/dma.c b/drivers/dma/idxd/dma.c
-index e4f9788aa635..9937b671f637 100644
---- a/drivers/dma/idxd/dma.c
-+++ b/drivers/dma/idxd/dma.c
-@@ -203,6 +203,13 @@ static int idxd_dma_terminate_all(struct dma_chan *c)
- 	return 0;
+diff --git a/drivers/dma/idxd/device.c b/drivers/dma/idxd/device.c
+index 5e890b6771cb..efd7bfccc51f 100644
+--- a/drivers/dma/idxd/device.c
++++ b/drivers/dma/idxd/device.c
+@@ -175,6 +175,7 @@ void idxd_wq_free_resources(struct idxd_wq *wq)
+ 	free_descs(wq);
+ 	dma_free_coherent(dev, wq->compls_size, wq->compls, wq->compls_addr);
+ 	sbitmap_queue_free(&wq->sbq);
++	wq->type = IDXD_WQT_NONE;
  }
+ EXPORT_SYMBOL_NS_GPL(idxd_wq_free_resources, "IDXD");
  
-+static void idxd_dma_synchronize(struct dma_chan *c)
-+{
-+	struct idxd_wq *wq = to_idxd_wq(c);
-+
-+	idxd_wq_drain(wq);
-+}
-+
- int idxd_register_dma_device(struct idxd_device *idxd)
- {
- 	struct idxd_dma_dev *idxd_dma;
-@@ -234,6 +241,7 @@ int idxd_register_dma_device(struct idxd_device *idxd)
- 	dma->device_alloc_chan_resources = idxd_dma_alloc_chan_resources;
- 	dma->device_free_chan_resources = idxd_dma_free_chan_resources;
- 	dma->device_terminate_all = idxd_dma_terminate_all;
-+	dma->device_synchronize = idxd_dma_synchronize;
- 
- 	rc = dma_async_device_register(dma);
- 	if (rc < 0) {
+@@ -382,7 +383,6 @@ static void idxd_wq_disable_cleanup(struct idxd_wq *wq)
+ 	lockdep_assert_held(&wq->wq_lock);
+ 	wq->state = IDXD_WQ_DISABLED;
+ 	memset(wq->wqcfg, 0, idxd->wqcfg_size);
+-	wq->type = IDXD_WQT_NONE;
+ 	wq->threshold = 0;
+ 	wq->priority = 0;
+ 	wq->enqcmds_retries = IDXD_ENQCMDS_RETRIES;
+@@ -1558,7 +1558,6 @@ void idxd_drv_disable_wq(struct idxd_wq *wq)
+ 	idxd_wq_reset(wq);
+ 	idxd_wq_free_resources(wq);
+ 	percpu_ref_exit(&wq->wq_active);
+-	wq->type = IDXD_WQT_NONE;
+ 	wq->client_count = 0;
+ }
+ EXPORT_SYMBOL_NS_GPL(idxd_drv_disable_wq, "IDXD");
 
 -- 
 2.52.0
