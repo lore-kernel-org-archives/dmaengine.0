@@ -1,326 +1,275 @@
-Received: from ale.deltatee.com (ale.deltatee.com [204.191.154.188])
+Received: from TY3P286CU002.outbound.protection.outlook.com (mail-japaneastazon11020106.outbound.protection.outlook.com [52.101.229.106])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62558425CE1
-	for <dmaengine@vger.kernel.org>; Wed, 21 Jan 2026 05:45:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=204.191.154.188
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768974325; cv=none; b=GETb9TrsHsHbQyKnqbA1HGeNEGXIaHkWBi1ZP3BABEWc9bNWofgIeNC0Qzdc0x7NovdQ1kc7Isho42+nBafR9/RNOSMRpngbqLvng2YcewqrokXh6AmvCGqk3JQSW1lzM9vwqqMCoxw+nOFWPuTswrbGmjsMCdiOcVGDq8WsGcs=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768974325; c=relaxed/simple;
-	bh=S0IsqQbqWFl7r11vg5R3y+KM33Z6zpECjWRO1jQGLf4=;
-	h=From:To:Cc:Date:Message-ID:MIME-Version:Subject; b=GODhN/Bz7kAYT0n434qt617lq+otMpxprhh1CFjXM9QCFJCERlQq90PTja/IM/RbU+41M/bnsEP6iraBeTfKbBPo7ghu+JnXhbVGU+2o12cVkt1EDOBBpDbnLz3jCxVSdJHGVbOh3FcA4oBsiCR+n4crdTqV/RZ/LsSmrB/zjf8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=deltatee.com; spf=pass smtp.mailfrom=deltatee.com; dkim=pass (2048-bit key) header.d=deltatee.com header.i=@deltatee.com header.b=COB+kgub; arc=none smtp.client-ip=204.191.154.188
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=deltatee.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=deltatee.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14335366547;
+	Wed, 21 Jan 2026 08:41:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.229.106
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1768984878; cv=fail; b=ludfK9sSgWX15FVzXzv7jDSCECquYhtvXesCbTG0XSH2gNCy6mR6jgKzMCltZMjSLxsDYV3Xak2GLIpQIQ2WwQcfGC6BpXvHiwRr2fTEeRAi6DXALjj76tv6oYu5CJqR8TnLRmmYj/7+k/SwWtFxBKGkWi2TF2dwbKZVqAQ4YQU=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1768984878; c=relaxed/simple;
+	bh=+G8w9IL86tW8aZZR42c1KtC9YdxqKuc0506uoAtZHYQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=QfHGn6l0AVhKUxqgt7cJOX3qWE+ebp8Ob1lp3xDnmjuTmVfq0yIOEGmsU6bVjMrEfTkMe9QCqoVTBJdR3nK09Ds50P2LTuto32lwPAq3BYyifl9LKDrI8bZCYbI5ofo0cjmcqtHyO6BCYZhX7AHspchc8PHy7mCCok0ePCJwKf8=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=valinux.co.jp; spf=pass smtp.mailfrom=valinux.co.jp; dkim=pass (1024-bit key) header.d=valinux.co.jp header.i=@valinux.co.jp header.b=wjCJJPRu; arc=fail smtp.client-ip=52.101.229.106
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=valinux.co.jp
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=valinux.co.jp
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=deltatee.com header.i=@deltatee.com header.b="COB+kgub"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=deltatee.com; s=20200525; h=Subject:MIME-Version:Message-ID:Date:Cc:To:From
-	:references:content-disposition:in-reply-to;
-	bh=YHvH0nnzfp8ndeXNxuAVwy1cLnx4LDpmfadjcqUd1HY=; b=COB+kgubn5Jk5sHuuojYPi2Uoc
-	BTnvvvUrtOeaCsOkgvodoQR4oaeZCe7qZj0K1BjzPKLeAx/z2BNDDu2ZD4NU9nm1XGghmp8d62c4U
-	r/zw1ss6ckIc+nJ6Mb3fQo+li9AI8Nmz8pAyqbni5TrLmkbodEfHmrt0/8gp8nJVINB1O642NrGWA
-	qUim+/F3jaR5w5WjNIcLxcmZzIiIlVTtTqlf4BHHd5eR9HD0wNh5NLbnNWRVAPxkP41FXnThw9mJu
-	pwzWdmshqKZqbb+AqEA8HW2HPEQONAWUq2mwC9owZPk1fTfOXDLlzjlsKa50XUySkgI/1O8s2D88H
-	qNK6tHWw==;
-Received: from cgy1-donard.priv.deltatee.com ([172.16.1.31])
-	by ale.deltatee.com with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.98.2)
-	(envelope-from <gunthorp@deltatee.com>)
-	id 1viQW9-00000005tSB-29tx;
-	Tue, 20 Jan 2026 22:12:35 -0700
-Received: from gunthorp by cgy1-donard.priv.deltatee.com with local (Exim 4.98.2)
-	(envelope-from <gunthorp@deltatee.com>)
-	id 1viQVy-000000000dA-3GL5;
-	Tue, 20 Jan 2026 22:12:22 -0700
-From: Logan Gunthorpe <logang@deltatee.com>
-To: dmaengine@vger.kernel.org,
-	Vinod Koul <vkoul@kernel.org>
-Cc: Kelvin Cao <kelvin.cao@microchip.com>,
-	George Ge <George.Ge@microchip.com>,
-	Christoph Hellwig <hch@infradead.org>,
-	Christophe Jaillet <christophe.jaillet@wanadoo.fr>,
-	Logan Gunthorpe <logang@deltatee.com>
-Date: Tue, 20 Jan 2026 22:12:15 -0700
-Message-ID: <20260121051219.2409-1-logang@deltatee.com>
-X-Mailer: git-send-email 2.47.3
+	dkim=pass (1024-bit key) header.d=valinux.co.jp header.i=@valinux.co.jp header.b="wjCJJPRu"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=eeRVlpsYvADXzU0hIo59kUntd0kLjsWDwllfKz0OqCzU6KDjEKrw8GPiiCZ++lSKa6hGkTIpmGYMypSMum/hBviv8PPHgUvislee76ryl2iJTesD2JIM4BvuBPxP8qM6YinlPm1NKw1hpa6uhmIpa04zABT/u28ef8ihVoMQj24SaFsitH1ZEB9FS52JvJPBcRyXytfP3thj6zLnTpbUDjSn4+n12sGegrC4MQkuUubbRg2sLDjzC5b+qXSmfZD66oqFxG91MDMpEgDAVTvUSuyc4rTfjpZqnr90U01nv+1v0Lao+ZKSlCwIhaTRcSRRPKjE+h6Wk5BFhIaYOeg5LQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=GOSVzEYsXXVLtUtGw3S2fHju9pRo1CgGCLhFI2gHzTE=;
+ b=vZagksvoAWZMJBs5acCZpvi5p/ETwCTNdF6YoV6XBibhCPQXqcuJ1jnU/w8DCmQ1mEl27/BQTtA6vAnsZ+GleVxGN8zP/AiBmf1DUsc8qOHqq2/Yt5Lo4Of1PUThBEoC1mQux5fPmUlKzPupozQiC6392OwT2RMIj5WrpsJFR0DJmKF8PfGPlmI0VkDw4iBAplVvdKzEJFvq+EhJBVnANfNnpME0MhdD0RCYmj0C3NlsWYbX3Ju+sQVFT3LbZuwtJFHD2GYXsBeBUn9HMREU/t059n0u9z4zXCnSp26S/xREryQtdUY0FLp5PoQOm/B1WtJAuS2yU/9F++ykgiKCzA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=valinux.co.jp; dmarc=pass action=none
+ header.from=valinux.co.jp; dkim=pass header.d=valinux.co.jp; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=valinux.co.jp;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=GOSVzEYsXXVLtUtGw3S2fHju9pRo1CgGCLhFI2gHzTE=;
+ b=wjCJJPRuJVlRP4L4jjHsSX+cQzg04XSkgmU1SeuiE5vVP9j05cNZakQD0pCWNAseFqmFbL5OWOir0ysiqpuJH4x1R6gyD2H50WpBsc49nRrjYC9y/z7BWqxhae3GSBQiSa31zltFymJfMMDZCTw0lpUYlbITJiaPWs8YJIhXD+w=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=valinux.co.jp;
+Received: from TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM (2603:1096:405:38f::10)
+ by TY4P286MB6959.JPNP286.PROD.OUTLOOK.COM (2603:1096:405:343::13) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9542.9; Wed, 21 Jan
+ 2026 08:41:13 +0000
+Received: from TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
+ ([fe80::2305:327c:28ec:9b32]) by TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
+ ([fe80::2305:327c:28ec:9b32%5]) with mapi id 15.20.9542.008; Wed, 21 Jan 2026
+ 08:41:12 +0000
+Date: Wed, 21 Jan 2026 17:41:11 +0900
+From: Koichiro Den <den@valinux.co.jp>
+To: Frank Li <Frank.li@nxp.com>
+Cc: dave.jiang@intel.com, cassel@kernel.org, mani@kernel.org, 
+	kwilczynski@kernel.org, kishon@kernel.org, bhelgaas@google.com, geert+renesas@glider.be, 
+	robh@kernel.org, vkoul@kernel.org, jdmason@kudzu.us, allenbh@gmail.com, 
+	jingoohan1@gmail.com, lpieralisi@kernel.org, linux-pci@vger.kernel.org, 
+	linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org, linux-renesas-soc@vger.kernel.org, 
+	devicetree@vger.kernel.org, dmaengine@vger.kernel.org, iommu@lists.linux.dev, 
+	ntb@lists.linux.dev, netdev@vger.kernel.org, linux-kselftest@vger.kernel.org, 
+	arnd@arndb.de, gregkh@linuxfoundation.org, joro@8bytes.org, will@kernel.org, 
+	robin.murphy@arm.com, magnus.damm@gmail.com, krzk+dt@kernel.org, conor+dt@kernel.org, 
+	corbet@lwn.net, skhan@linuxfoundation.org, andriy.shevchenko@linux.intel.com, 
+	jbrunet@baylibre.com, utkarsh02t@gmail.com
+Subject: Re: [RFC PATCH v4 05/38] dmaengine: dw-edma: Add a helper to query
+ linked-list region
+Message-ID: <tuhaxwmmcjfltih7ckfo2l5ltzicnj6zfc5ka3pvqlljn7ldu2@ibo5eo62lndn>
+References: <20260118135440.1958279-1-den@valinux.co.jp>
+ <20260118135440.1958279-6-den@valinux.co.jp>
+ <aW0S60D2uALBXdtQ@lizhi-Precision-Tower-5810>
+ <e4y664ylum35wvj4endwprzpp4cvfaggklik5mxvdkgmakuqyj@lgevmhllem72>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <e4y664ylum35wvj4endwprzpp4cvfaggklik5mxvdkgmakuqyj@lgevmhllem72>
+X-ClientProxiedBy: TY4PR01CA0095.jpnprd01.prod.outlook.com
+ (2603:1096:405:37d::6) To TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
+ (2603:1096:405:38f::10)
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: 172.16.1.31
-X-SA-Exim-Rcpt-To: dmaengine@vger.kernel.org, vkoul@kernel.org, kelvin.cao@microchip.com, George.Ge@microchip.com, hch@infradead.org, christophe.jaillet@wanadoo.fr, logang@deltatee.com
-X-SA-Exim-Mail-From: gunthorp@deltatee.com
-X-Spam-Level: 
-Subject: [PATCH v13 0/3] Switchtec Switch DMA Engine Driver
-X-SA-Exim-Version: 4.2.1 (built Sun, 23 Feb 2025 07:57:16 +0000)
-X-SA-Exim-Scanned: Yes (on ale.deltatee.com)
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: TY7P286MB7722:EE_|TY4P286MB6959:EE_
+X-MS-Office365-Filtering-Correlation-Id: 183226ac-5552-40e4-6169-08de58c8d516
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|376014|7416014|366016|10070799003|1800799024;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?HTUvQ1fcAqlnc9ISfUWYNkWfIOtSAWSAbcwoLAooWCguvh/haowSg0zADT/a?=
+ =?us-ascii?Q?8jUkBBKQ4c+GG83TVUO+HlKM1mKACjQ7D9YnEu21lB6fxHBu0DEcTemf8lr8?=
+ =?us-ascii?Q?lyaMoIMe8mSM09Z/T2g9zUcz92kGfStOR7CPAlD2WENFVLBh+CCcSfbc8j7e?=
+ =?us-ascii?Q?udX8zfAgcmZqLgFsOQs61bqO+oKJNDRVoeAE+dmV5IRpChJSTp+TUwSK7ua2?=
+ =?us-ascii?Q?GREwsGwJbIkJQvD7B7jja0yPtkn1s0j0OP9r97fSZbZXlxAHZPXwntElFEbI?=
+ =?us-ascii?Q?kaYXHuRCViEvG5zpxfWCrlxmc53JiITiVKciDy5w2CX65MSuBHr1CzLKamIm?=
+ =?us-ascii?Q?7+fCsFBwmY+HDl+5GlV9HT6ZuoszHWgUzyHeC0x69c96glLRFcKvf8PI59jU?=
+ =?us-ascii?Q?J0V1exTJnPN70wjphH9qINPP07bXP6hdXFMF7fhztAPIDNG1Cg9aUTypUraF?=
+ =?us-ascii?Q?w6ygwOu2O/WXGGajhQyn65LbzNhGLca+rBY6ai3rZoo54rsakXJJOqWhpDpG?=
+ =?us-ascii?Q?ULlwA3oQaBTbEmzncqeRfzGksQZ4qLp92zOSj/r6rhbGzY8YsxhhhpNmPt49?=
+ =?us-ascii?Q?oTcYiZWumcUQN/kDKv4JZFzZgCHoj3aysIJrfWOu8DLa8Sih221drgyOAP6h?=
+ =?us-ascii?Q?7L6bNk2XmvYVeVZ2IEuomMCX847amqtelx3BhU6O3FpCvyH7uMoH13wGt4AC?=
+ =?us-ascii?Q?a66Njb+D/qxFGRY4sM9bwVRr5MtIFjw/wH7eoxocIOlgEkYYWO+ttWb23JFs?=
+ =?us-ascii?Q?DYoPA11qovUegNxH0j6qC+6KeZt25UfrjjHVjLEi226zkkuqqUndGO57BhEU?=
+ =?us-ascii?Q?1ZJD6qFpjE+vDfUxIV4o1/hRvCD3uEimUKp6WjU8Hv/s7VDKOwo7WAKwaOtt?=
+ =?us-ascii?Q?FDopG7HbJ4EshWoS3P2AGhENz1ddTcDjLgl37BIP7RcCBL56diLrCGlVg9W3?=
+ =?us-ascii?Q?QM82vCMLGG1cYoqqvoX0d57fHcaUMjjCEZF+T//h7C1RtzWHKlhMv0/HkdeX?=
+ =?us-ascii?Q?m6KNm7HcerhAw59lmmuf6isA+5RijmffD8fFPbYOhknerWrWOOLhw2dU29yW?=
+ =?us-ascii?Q?20Ryu8IJURtdgoxlS7TtInGxYuEC9WrXlVPFPSresv4P5AtlgTeY/BrgD+I4?=
+ =?us-ascii?Q?SQ3+HgOvp0/87fSkGm71DNxQw4y2RuEwoYa02b064LbsnWB3MjQgQQvqJLB+?=
+ =?us-ascii?Q?mFjmQYv0xDXpOfJyj1OB2YDrSDddd0F8LJqt7afD7osfiDxvHmGetTys2pzi?=
+ =?us-ascii?Q?bsAOm3bXNjO4bJR+Th6m2vvF3Rbqj3BLGfZXDILSaoVKsZzPrDvH7PzDr4Js?=
+ =?us-ascii?Q?UltbRTMzsxFcXTR+17rPui5oAc6NsuQ364wZznW06mgjNqdE1VRk89OaXQMn?=
+ =?us-ascii?Q?Zn/RA4gXbarhFGYpjZ24PjDGlTmwhfR9+7xD2A4S4vZAFz5cuqcK9tGsHnTM?=
+ =?us-ascii?Q?p7Cvou90YwmUPdxEFMiEGPctpk//UWEtz3TYd6reRVre3xZh8JhsC5Zh357O?=
+ =?us-ascii?Q?ONKzUTGWmPY0oZACO2I24IK111TbBBDRLQfRMbl/wfHDFgXIT5BfTlt4H8fQ?=
+ =?us-ascii?Q?vYo++uy8UPEpjdecGWI=3D?=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(376014)(7416014)(366016)(10070799003)(1800799024);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?oQZ+J2M8Qdxq3ktf4q5zZ+R9nO/Dir2DgQtpn0zQrtzeWmOhgHr9N/tLbbq1?=
+ =?us-ascii?Q?iTeq1NEeCJP1K3vw5ZD+x2z5/CkMTUzPSzkkyGJVMWiQjGtJQEv7Oq+iD0lq?=
+ =?us-ascii?Q?vcz7POQ1iIoLMwXclenKNbidjB33BA7yMsSp9gVMJoHF4NMZJ/njsHFZcAUs?=
+ =?us-ascii?Q?zqDsAP0tf6Mcm2k/yJNMXeShLaL/MUVq4smzQ9itUgajzeqklhpVaRoXohXx?=
+ =?us-ascii?Q?oeojOjT4G3hybs/l74aAF71o5YZ7oSbqTkhntGSFPx0vLhYv9lR9f+ZtD54I?=
+ =?us-ascii?Q?R4Ciav/T8A08Su9ylWGfWo6FSJbYATPRnjQVL3JS0lKD1juCcVN8HioOUVwL?=
+ =?us-ascii?Q?Hyzx72NtEF1ERtS/NvNz54j9sbyw1vQAlevUqmonMTEteTP65bs+m+wBEEfI?=
+ =?us-ascii?Q?nK/wyyJxkuqqGQcofbHWTNFWEgzq1YGwoFKJqMEqgF/Azd2x5llOqt9wFf7J?=
+ =?us-ascii?Q?ZImFkMWofwQVeTY7L9bHS7jgJScN/cONRyrUgFDqd5s8yU0nSJqzsZk61LPm?=
+ =?us-ascii?Q?tONqvFucjJrjARJ8QC+Zc86BjGaiuH08drSrMfosaaKeKlIiebWPR+Bmh9Tp?=
+ =?us-ascii?Q?8bUy0XzVrOOm5LB9sxpfOK9+s4VDCQKU4iUe4dq1Ogwl5LI/H6Kx8SpOFWcw?=
+ =?us-ascii?Q?WjBqNfS+x4pTnIEaCMws1AJPCL1i4Rah6KwdK2dNHKblGDFybl2BtzuP5mzj?=
+ =?us-ascii?Q?126jI0K8XCsDWQwYhub7+ApmtM/BE0QLpOZIi8y+MV6wwGBPrx1vnkBLv73w?=
+ =?us-ascii?Q?YbtHcmUEchFB+EU20KjDCaTkOqPPdFy27pUO55SUYzIm/klWblSGd6KiVifd?=
+ =?us-ascii?Q?gcQTV8kmFBD3eVZvFCCMLVmq6AnxZsgeAOWn2v8ZBIGqmQL4/zhjQ21w9o7x?=
+ =?us-ascii?Q?cvp26tDIiVtqiq+LWAbuSqky+JmAHEFwLY/fPB0p4a1LiZfCX4//CcnRzvY0?=
+ =?us-ascii?Q?/nTm5DIrt+7da+hOmPv6KEfO/H882xDfRmc9GDRcPRQgZVljiPnLTe8ER62O?=
+ =?us-ascii?Q?DrNKcQR8gSNzCQutpKOave54qJ+xReFszzpb8gVx3u1hDe/wwE6SQ/pfZs+w?=
+ =?us-ascii?Q?2TLGWrxiPnIVT4CHHi6Lbhccbxp0ZtNmHWF79L//3zSDDR61FD+xgyt3LY95?=
+ =?us-ascii?Q?b22gWI4UZmhG8t6U6S7q5Vw5SPN+KO70Yxf1/bPwMxDVIu6+fymm0yK49IMG?=
+ =?us-ascii?Q?JiiivnmpHREzxiUSu0eC5CYIcZnwETKZlU4AZqeVU3zjRhUURsHvc+w/6QtI?=
+ =?us-ascii?Q?pWUXd56XeX+J36K0EoxOuNGjB2ehFazqivP10ukoycUkZY0SDXEsDnuI5/cO?=
+ =?us-ascii?Q?syXUq4R6Zi6XVkfeJe/A2adU09Ib9HXGBYqr2QM43DOo762VV0CnNyv7ktht?=
+ =?us-ascii?Q?HPlhayUEtICZ+aM3XV4oxm54YgBYpYC7zIP3xnuPK51y5SEpT6MR8QOn2B4t?=
+ =?us-ascii?Q?jvGKxcDZOA/XAqYFsrRyMvcbiLPksCInGhTpGtlFtXLyOWTkwsEgQjyo00GS?=
+ =?us-ascii?Q?FBGkeTVySj2qntaAG+Ca3eBXQzxFLQ6gW7owp0JrhmyPBDzFKcqAhW0wzaG9?=
+ =?us-ascii?Q?gautmMWqH1p1K9RQ1WsBANRK3+lkhI+zXRsX+a7zDbHHuCwgCygusqS/1My5?=
+ =?us-ascii?Q?uTYYZmX5m/VIUpNLftKFNrNzbymaBwZs3RXKR/F8DR5wz0p/DYhZa3x702FC?=
+ =?us-ascii?Q?COlVXJ4wjFJAgpa9kYZO6MtCQkRTqx3sIu36VuyhIHvVOCTcEt8kfN14Vhba?=
+ =?us-ascii?Q?J+dE/iN9dq3iun3IT+0U5ieQg4gMsmd6spdP8u4eVb5SoOqbIiFs?=
+X-OriginatorOrg: valinux.co.jp
+X-MS-Exchange-CrossTenant-Network-Message-Id: 183226ac-5552-40e4-6169-08de58c8d516
+X-MS-Exchange-CrossTenant-AuthSource: TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Jan 2026 08:41:12.6158
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 7a57bee8-f73d-4c5f-a4f7-d72c91c8c111
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 2vz+4fD3WlvkNuJsjdCJ7ZuSWFMxB9tliwzXHH81R19T/FcC6HMwNrEFAVVL9vlteUWxnRcOn6rwIC7vj9Pnaw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TY4P286MB6959
 
-This is v13 of the Switchtec Switch DMA Engine Driver.
+On Wed, Jan 21, 2026 at 10:38:53AM +0900, Koichiro Den wrote:
+> On Sun, Jan 18, 2026 at 12:05:47PM -0500, Frank Li wrote:
+> > On Sun, Jan 18, 2026 at 10:54:07PM +0900, Koichiro Den wrote:
+> > > A remote eDMA provider may need to expose the linked-list (LL) memory
+> > > region that was configured by platform glue (typically at boot), so the
+> > > peer (host) can map it and operate the remote view of the controller.
+> > >
+> > > Export dw_edma_chan_get_ll_region() to return the LL region associated
+> > > with a given dma_chan.
+> > 
+> > This informaiton passed from dwc epc driver. Is it possible to get it from
+> > EPC driver.
+> 
+> That makes sense, from an API cleanness perspective, thanks.
+> I'll add a helper function dw_pcie_edma_get_ll_region() in
+> drivers/pci/controller/dwc/pcie-designware.c, instead of the current
+> dw_edma_chan_get_ll_region() in dw-edma-core.c.
 
-The patchset has been rebased on v6.19-rc6.
+Hi Frank,
 
-We've addressed a number of issues pointed out by Vinod and Frank.
-We continue to push back on processing completions from the hardware
-in switchtec_dma_tx_status() seeing this is the only place to handle
-the completions if interrupts are disabled. A comment was added to
-the code to clarify this point.
+I looked into exposing LL regions from the EPC driver side, but the key
+issue is channel identification under possibly concurrent dmaengine users.
+In practice, the only stable handle a consumer has is a pointer to struct
+dma_chan, and the only reliable way to map that to the eDMA hardware
+channel is via dw_edma_chan->id. I think an EPC-facing API would still need
+that mapping in any case, so keeping the helper in dw-edma seems simpler
+and more robust.
+If you have another idea, I'd appreciate your insights.
 
-Thanks,
+Regards,
+Koichiro
 
-Logan
-
---
-
-v13 changes:
- - Rebase onto v6.19-rc6
- - Drop error check for dma_set_mask_and_coherent() as it is not
-   required when all 64 bits are valid. (Per Frank)
- - Remove wmb() call before writew() as the barrier should be
-   implied by the write. (Per Frank)
-
-v12 changes:
- - Rebase onto v6.19-rc5
- - Drop some unecessary info messages and convert some others to debug
-   messages (per Vinod)
- - Drop the MODULE_VERSION tag (per Vinod)
- - Move the enum chan_op definition up (per Vinod)
- - Change desc_ring to be part of the switchtec_dma_chan structure
-   instead of its own allocation (per Vinod)
- - Move the increment of the head pointer out of switchtec_dma_prep_desc()
-   and into switchtec_dma_tx_submit() (per Vinod)
- - Added a comment to switchtec_dma_tx_status() to justify calling
-   switchtec_dma_cleanup_completed() in that function.
-
-v11 changes:
- - Rebased onto v6.19-rc1
-
-v10 changes:
- - Rebased onto v6.18-rc1
- - Some systems were seeing the warning message: "WARN: Device release
-   is not defined so it is not safe to unbind this driver while in use"
-   Adjusted the copy_align parameter to align to 8 bytes to fix this
-   issue.
-
-v9 changes:
- - Rebase onto v6.17-rc2
- - Fix multiple RCU derference warnings
- - Fix the spinlocks being used before they were initialized causing
-   an INFO message when built with lockdep enabled. (noticed by Maciej
-   Grochowski)
- - Add additional entries to the PCI table which use an EFAR vendor ID.
- - Remove some enums that were not used by the code
- - Update copyright date to 2025 (as requested by Vinod)
- - Drop the default values enum and just set the defaults
-   directly. (to address some confusing code noticed by Vinod)
- - Use GENMASK and FIELD_GET/PREP macros instead of direct bit
-   operations (suggested by Vinod)
- - Use lower case hex numbers (requested by Vinod)
- - Don't mangle the return value of readl_poll_timeout_atomic()
-   and return it's error directly (per Vinod)
- - Split the patch into a couple patches (per Vinod)
- - Fix some missing new line characters on numerous printks
- - Rename switchtec_dma_process_desc() function to
-   switchtec_dma_cleanup_completed() for clarity.
- - Open code a few short, unnecessary, helper functions.
- - Drop the tasklet used for the chan_status interrupt. It is only
-   really used when the device is paused so performance is not
-   critical and thus it can be a threaded interrupt instead of
-   a tasklet.
- - Fixed an uninitialized symbol ('i') error (caught by Dan Carpenter)
-
-v8 changes:
- - Rebase onto kernel 6.8
- - Add Gen5 device IDs
-
-v7 changes:
- - Remove implementation of device_prep_dma_imm_data
-
-v6 changes:
- - Fix './scripts/checkpatch.pl --strict' warnings
- - Use readl_poll_timeout_atomic for status checking with timeout
- - Wrap enable_channel/disable_channel over channel_op
- - Use flag GFP_NOWAIT for mem allocation in switchtec_dma_alloc_desc
- - Use proper comment for macro SWITCHTEC_DMA_DEVICE
-
-v5 changes:
- - Remove unnecessary structure modifier '__packed'
- - Remove the use of union of identical data types in a structure
- - Remove unnecessary call sites of synchronize_irq
- - Remove unnecessary rcu lock for pdev during device initialization
- - Use pci_request_irq/pci_free_irq to replace request_irq/free_irq
- - Add mailing list info in file MAINTAINERS
- - Miscellaneous cleanups
-
-v4 changes:
- - Sort driver entry in drivers/dma/Kconfig and drivers/dma/Makefile
-   alphabetically
- - Fix miscellaneous style issues
- - Correct year in copyright
- - Add function and call sites to flush PCIe MMIO Write
- - Add a helper to wait for status register update
- - Move synchronize_irq out of RCU critical section
- - Remove unnecessary endianness conversion for register access
- - Remove some unused code
- - Use pci_enable_device/pci_request_mem_regions instead of
-   pcim_enable_device/pcim_iomap_regions to make the resource lifetime
-   management more understandable
- - Use offset macros instead of memory mapped structures when accessing
-   some registers
- - Remove the attempt to set DMA mask with smaller number as it would
-   never succeed if the first attempt with bigger number fails
- - Use PCI_VENDOR_ID_MICROSEMI in include/linux/pci_ids.h as device ID
-
-v3 changes:
- - Remove some unnecessary memory/variable zeroing
-
-v2 changes:
- - Move put_device(dma_dev->dev) before kfree(swdma_dev) as dma_dev is
-   part of swdma_dev.
- - Convert dev_ print calls to pci_ print calls to make the use of
-   print functions consistent within switchtec_dma_create().
- - Remove some dev_ print calls, which use device pointer as handles,
-   to ensure there's no reference issue when the device is unbound.
- - Remove unused .driver_data from pci_device_id structure.
-
-v1:
-  The following patch implements a DMAEngine driver to use the DMA
-  controller in Switchtec PSX/PFX switchtes. The DMA controller
-  appears as a PCI function on the switch upstream port. The DMA
-  function can include one or more DMA channels.
- Switchtec Switch DMA Engine Driver
-
-This is v9 of the Switchtec Switch DMA Engine Driver. It's been over a
-year since the last posting, appologies for that. Kelvin has asked
-me to take over getting the work upstream.
-
-I reviewed the feedback and addressed most of it in this posting. I've
-also caught additional issues during my testing.
-
-The remaining disagreement is on how the completions are cleaned up. I
-maintain[1] that it's best to clean them up in the status() call back
-in addition to the interrupt as this allows for transfers that don't
-use interrupts. Vinod has argued that this is wrong and the other
-drivers that do this should be changed as well (IOAT and PLX). In this
-poisting, I have left it the original way with cleanups in the status()
-call back.
-
-This patch set is based on v6.17-rc2.
-
-Thanks,
-
-Logan
-
-[1] https://lore.kernel.org/r/e759d483-e303-421a-b674-72fd9121750d@deltatee.com
-
---
-
-v9 changes:
- - Rebase onto v6.17-rc2
- - Fix multiple RCU derference warnings
- - Fix the spinlocks being used before they were initialized causing
-   an INFO message when built with lockdep enabled. (noticed by Maciej
-   Grochowski)
- - Add additional entries to the PCI table which use an EFAR vendor ID.
- - Remove some enums that were not used by the code
- - Update copyright date to 2025 (as requested by Vinod)
- - Drop the default values enum and just set the defaults
-   directly. (to address some confusing code noticed by Vinod)
- - Use GENMASK and FIELD_GET/PREP macros instead of direct bit
-   operations (suggested by Vinod)
- - Use lower case hex numbers (requested by Vinod)
- - Don't mangle the return value of readl_poll_timeout_atomic()
-   and return it's error directly (per Vinod)
- - Split the patch into a couple patches (per Vinod)
- - Fix some missing new line characters on numerous printks
- - Rename switchtec_dma_process_desc() function to
-   switchtec_dma_cleanup_completed() for clarity.
- - Open code a few short, unnecessary, helper functions.
- - Drop the tasklet used for the chan_status interrupt. It is only
-   really used when the device is paused so performance is not
-   critical and thus it can be a threaded interrupt instead of
-   a tasklet.
- - Fixed an uninitialized symbol ('i') error (caught by Dan Carpenter)
-
-v8 changes:
- - Rebase onto kernel 6.8
- - Add Gen5 device IDs
-
-v7 changes:
- - Remove implementation of device_prep_dma_imm_data
-
-v6 changes:
- - Fix './scripts/checkpatch.pl --strict' warnings
- - Use readl_poll_timeout_atomic for status checking with timeout
- - Wrap enable_channel/disable_channel over channel_op
- - Use flag GFP_NOWAIT for mem allocation in switchtec_dma_alloc_desc
- - Use proper comment for macro SWITCHTEC_DMA_DEVICE
-
-v5 changes:
- - Remove unnecessary structure modifier '__packed'
- - Remove the use of union of identical data types in a structure
- - Remove unnecessary call sites of synchronize_irq
- - Remove unnecessary rcu lock for pdev during device initialization
- - Use pci_request_irq/pci_free_irq to replace request_irq/free_irq
- - Add mailing list info in file MAINTAINERS
- - Miscellaneous cleanups
-
-v4 changes:
- - Sort driver entry in drivers/dma/Kconfig and drivers/dma/Makefile
-   alphabetically
- - Fix miscellaneous style issues
- - Correct year in copyright
- - Add function and call sites to flush PCIe MMIO Write
- - Add a helper to wait for status register update
- - Move synchronize_irq out of RCU critical section
- - Remove unnecessary endianness conversion for register access
- - Remove some unused code
- - Use pci_enable_device/pci_request_mem_regions instead of
-   pcim_enable_device/pcim_iomap_regions to make the resource lifetime
-   management more understandable
- - Use offset macros instead of memory mapped structures when accessing
-   some registers
- - Remove the attempt to set DMA mask with smaller number as it would
-   never succeed if the first attempt with bigger number fails
- - Use PCI_VENDOR_ID_MICROSEMI in include/linux/pci_ids.h as device ID
-
-v3 changes:
- - Remove some unnecessary memory/variable zeroing
-
-v2 changes:
- - Move put_device(dma_dev->dev) before kfree(swdma_dev) as dma_dev is
-   part of swdma_dev.
- - Convert dev_ print calls to pci_ print calls to make the use of
-   print functions consistent within switchtec_dma_create().
- - Remove some dev_ print calls, which use device pointer as handles,
-   to ensure there's no reference issue when the device is unbound.
- - Remove unused .driver_data from pci_device_id structure.
-
-v1:
-  The following patch implements a DMAEngine driver to use the DMA
-  controller in Switchtec PSX/PFX switchtes. The DMA controller
-  appears as a PCI function on the switch upstream port. The DMA
-  function can include one or more DMA channels.
-
-Kelvin Cao (3):
-  dmaengine: switchtec-dma: Introduce Switchtec DMA engine skeleton
-  dmaengine: switchtec-dma: Implement hardware initialization and
-    cleanup
-  dmaengine: switchtec-dma: Implement descriptor submission
-
- MAINTAINERS                 |    7 +
- drivers/dma/Kconfig         |    9 +
- drivers/dma/Makefile        |    1 +
- drivers/dma/switchtec_dma.c | 1437 +++++++++++++++++++++++++++++++++++
- 4 files changed, 1454 insertions(+)
- create mode 100644 drivers/dma/switchtec_dma.c
-
-
-base-commit: 24d479d26b25bce5faea3ddd9fa8f3a6c3129ea7
--- 
-2.47.3
-
+> 
+> Thanks for the review,
+> Koichiro
+> 
+> > 
+> > Frank
+> > >
+> > > Signed-off-by: Koichiro Den <den@valinux.co.jp>
+> > > ---
+> > >  drivers/dma/dw-edma/dw-edma-core.c | 26 ++++++++++++++++++++++++++
+> > >  include/linux/dma/edma.h           | 14 ++++++++++++++
+> > >  2 files changed, 40 insertions(+)
+> > >
+> > > diff --git a/drivers/dma/dw-edma/dw-edma-core.c b/drivers/dma/dw-edma/dw-edma-core.c
+> > > index 0eb8fc1dcc34..c4fb66a9b5f5 100644
+> > > --- a/drivers/dma/dw-edma/dw-edma-core.c
+> > > +++ b/drivers/dma/dw-edma/dw-edma-core.c
+> > > @@ -1209,6 +1209,32 @@ int dw_edma_chan_register_notify(struct dma_chan *dchan,
+> > >  }
+> > >  EXPORT_SYMBOL_GPL(dw_edma_chan_register_notify);
+> > >
+> > > +int dw_edma_chan_get_ll_region(struct dma_chan *dchan,
+> > > +			       struct dw_edma_region *region)
+> > > +{
+> > > +	struct dw_edma_chip *chip;
+> > > +	struct dw_edma_chan *chan;
+> > > +
+> > > +	if (!dchan || !region || !dchan->device)
+> > > +		return -ENODEV;
+> > > +
+> > > +	chan = dchan2dw_edma_chan(dchan);
+> > > +	if (!chan)
+> > > +		return -ENODEV;
+> > > +
+> > > +	chip = chan->dw->chip;
+> > > +	if (!(chip->flags & DW_EDMA_CHIP_LOCAL))
+> > > +		return -EINVAL;
+> > > +
+> > > +	if (chan->dir == EDMA_DIR_WRITE)
+> > > +		*region = chip->ll_region_wr[chan->id];
+> > > +	else
+> > > +		*region = chip->ll_region_rd[chan->id];
+> > > +
+> > > +	return 0;
+> > > +}
+> > > +EXPORT_SYMBOL_GPL(dw_edma_chan_get_ll_region);
+> > > +
+> > >  MODULE_LICENSE("GPL v2");
+> > >  MODULE_DESCRIPTION("Synopsys DesignWare eDMA controller core driver");
+> > >  MODULE_AUTHOR("Gustavo Pimentel <gustavo.pimentel@synopsys.com>");
+> > > diff --git a/include/linux/dma/edma.h b/include/linux/dma/edma.h
+> > > index 3c538246de07..c9ec426e27ec 100644
+> > > --- a/include/linux/dma/edma.h
+> > > +++ b/include/linux/dma/edma.h
+> > > @@ -153,6 +153,14 @@ bool dw_edma_chan_ignore_irq(struct dma_chan *chan);
+> > >  int dw_edma_chan_register_notify(struct dma_chan *chan,
+> > >  				 void (*cb)(struct dma_chan *chan, void *user),
+> > >  				 void *user);
+> > > +
+> > > +/**
+> > > + * dw_edma_chan_get_ll_region - get linked list (LL) memory for a dma_chan
+> > > + * @chan: the target DMA channel
+> > > + * @region: output parameter returning the corresponding LL region
+> > > + */
+> > > +int dw_edma_chan_get_ll_region(struct dma_chan *chan,
+> > > +			       struct dw_edma_region *region);
+> > >  #else
+> > >  static inline int dw_edma_probe(struct dw_edma_chip *chip)
+> > >  {
+> > > @@ -182,6 +190,12 @@ static inline int dw_edma_chan_register_notify(struct dma_chan *chan,
+> > >  {
+> > >  	return -ENODEV;
+> > >  }
+> > > +
+> > > +static inline int dw_edma_chan_get_ll_region(struct dma_chan *chan,
+> > > +					     struct dw_edma_region *region)
+> > > +{
+> > > +	return -EINVAL;
+> > > +}
+> > >  #endif /* CONFIG_DW_EDMA */
+> > >
+> > >  struct pci_epc;
+> > > --
+> > > 2.51.0
+> > >
