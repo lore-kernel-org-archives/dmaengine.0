@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3192335B62C
-	for <dmaengine@vger.kernel.org>; Tue, 27 Jan 2026 14:27:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3189635B62A
+	for <dmaengine@vger.kernel.org>; Tue, 27 Jan 2026 14:27:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769524065; cv=none; b=ssveR3N0lkt3f0dMRY5go5BuGrl88QgLKIKxTlsLaF41vj9i8IC0scg16J31eXcQJ2D+tLOvW/WMHK2HK0Ho11R3WfnmJJp+wyNU+rHIsY2R+/0GaUBHGxKE0tfPClPhTP0vLTLxSrEMo+PRKJ+0lJgz+jBp5C3Nga0CmUz/NwM=
+	t=1769524065; cv=none; b=FBbiqA7Qf16Lk6ejTsx+KV+YiGY7DD47MzEYyF4y5yDgN4GU25uidZNqcuxXsHBSkdH0i2T/oYBHKZIqVjtli96TIqkZSOmIcTZsKc4JyrH5bW2bAYR9AgAlIWSWc/nraLXOyTbrk8WsTqoTbqjAbXqgB2jw6a3NKGx9VtwlKWc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1769524065; c=relaxed/simple;
-	bh=3HvqTBYkV3aATja0J5KbViF7E4aOH3n6falxINzDQoc=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=py9So6qj8b7y/PsGJnTZPgQ+8brwmx7/FuxOAj/IOv/m8tjW0M9xnHoTUgJhk1j9Dd46wlXqEz4FBwYO0Laq3WcI8nykxZa+moEaFCLVs0ggpEYz3TXGRAimShW9Ptu7FJs/sGKqearWCh4jKCu9o74CvDOPLGpGlJl8C5+qEJ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gP0BGBHm; arc=none smtp.client-ip=10.30.226.201
+	bh=TsN3+2f8NBy0wbrgXGHVk2Qs0sIwfFC5HGrt2R3wz78=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=jt0NIwIQ3S4V5vOvi87BhkAIR1A2YiW+/v1B/146sutSfYFhsejOkxCFX/kYaN8NQRWMACgrRcHbWzNBSVql/zmfRlKbKwEs7Y2ghwtPd6lqPNGWYg2KKNmF9rsrQZE6IazDCzEb9kdXz4QZeiWwffLLetbX0BQuwbLxFw5u+Qk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mTPD6yLj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gP0BGBHm"
-Received: by smtp.kernel.org (Postfix) with ESMTPS id C2154C116C6;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mTPD6yLj"
+Received: by smtp.kernel.org (Postfix) with ESMTPS id EB52AC2BC86;
 	Tue, 27 Jan 2026 14:27:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1769524064;
-	bh=3HvqTBYkV3aATja0J5KbViF7E4aOH3n6falxINzDQoc=;
-	h=From:Subject:Date:To:Cc:Reply-To:From;
-	b=gP0BGBHmEnGHyidHwPEllJzy15vB9n8UDkqFN+kf3+qCOgcAV8qZrhhXmVBmCBAko
-	 2MICfLFyyh8G34+P/A0qC6NmrmlAdwnYIs4x9MTqMEhEIN/nQUo5rMwts2Gm5S/HkF
-	 gOxaYa9d6J5jXiq95Gh4VIEMA+bwRZjTklSHUtiZAj7cxIs1wywd1CamV+CrkINNha
-	 OS3AevXnv5nwYbnZXsNFTVOrGOhHpoIg+h3LH26sx7bfVVzVw12Edq+Ig85BwiRs/8
-	 /i/lHUYXRikA/hNnaPgpqnuzQftiFSYfecHZCBFTOoyyHsWOUjOC8pV6R94hcH5Z+1
-	 6TLAkPP8C1ZyA==
+	s=k20201202; t=1769524065;
+	bh=TsN3+2f8NBy0wbrgXGHVk2Qs0sIwfFC5HGrt2R3wz78=;
+	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
+	b=mTPD6yLjCBgRqP+oqgMgrpbM+KmwBxqjk1/VZamLeoaZZmKEpwk0RCuu2wXmOhfrW
+	 jSpdR5+WzaT18irn7pFxNontdWckppdc44JrEFBD1JjvzmSNLM8rnNOXqAYzV1pFC2
+	 NG6HiP+tcDuSDMXX+x+FlPSMSWIIuFx8GYLs+3T/Ny0qW92hsMZs3Ss9Dh/21PLKwP
+	 iB4UzCozPqqsRKo88qhdgHaB2ds4pWb7W0osbYd3QtMXjKDtZxT/Blk41ZoJvksT6o
+	 WL317L4mctpMjnWVLkFOAebn+JpTFswAlFf4jOKS0oHQ4z2sx0iznW14xK2xkaj9hA
+	 Hq0OmUL5mjwNQ==
 Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AEB7AD2F033;
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D94D2D2F039;
 	Tue, 27 Jan 2026 14:27:44 +0000 (UTC)
 From: =?utf-8?q?Nuno_S=C3=A1_via_B4_Relay?= <devnull+nuno.sa.analog.com@kernel.org>
-Subject: [PATCH 0/5] dma: dma-axi-dmac: Add cyclic transfer support and
- graceful termination
-Date: Tue, 27 Jan 2026 14:28:21 +0000
-Message-Id: <20260127-axi-dac-cyclic-support-v1-0-b32daca4b3c7@analog.com>
+Date: Tue, 27 Jan 2026 14:28:24 +0000
+Subject: [PATCH 3/5] dma: dma-axi-dmac: add helper for getting next desc
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -41,18 +40,17 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/x3MMQqAMAxA0atIZgNthgpeRRxqGjUgWloVRby7x
- fEN/z+QJalkaKsHkpyadVsLbF0Bz36dBDUUAxlyxpJDfykGz8g3L8qYjxi3tKM3riE7kFjTQIl
- jklGvf9z17/sBqTiTdGgAAAA=
-X-Change-ID: 20260126-axi-dac-cyclic-support-a06721b2e107
+Message-Id: <20260127-axi-dac-cyclic-support-v1-3-b32daca4b3c7@analog.com>
+References: <20260127-axi-dac-cyclic-support-v1-0-b32daca4b3c7@analog.com>
+In-Reply-To: <20260127-axi-dac-cyclic-support-v1-0-b32daca4b3c7@analog.com>
 To: dmaengine@vger.kernel.org
 Cc: Lars-Peter Clausen <lars@metafoo.de>, Vinod Koul <vkoul@kernel.org>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1769524107; l=2413;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1769524107; l=1936;
  i=nuno.sa@analog.com; s=20231116; h=from:subject:message-id;
- bh=3HvqTBYkV3aATja0J5KbViF7E4aOH3n6falxINzDQoc=;
- b=SKdghfEKEFUwl8IYf7tgeKB/NB4V6xg6OM4tUd4y7LQBtZtAONewZnjW70nLg+JCC+XGPplbH
- TgE6qNxTz5FCZfJ50lQ80G2sYQyDczNgrwElEDrpMgEQJaprDUEFF2T
+ bh=BR4Apl19xp83XGAyxvW1BHptEpCk3eFm5vTB8511sW0=;
+ b=WHCZQHo9nHskB9VUvmdlSX0EI8BvAdrnb1q87vnny1VY7vYx8F82itnC5ZfqnFgJ2V8I88wSc
+ IHg6m3u7JNSBJPv0B3tJ99Th1syh0G5hzFpas4NP1VdVZRvrM4CaCoX
 X-Developer-Key: i=nuno.sa@analog.com; a=ed25519;
  pk=3NQwYA013OUYZsmDFBf8rmyyr5iQlxV/9H4/Df83o1E=
 X-Endpoint-Received: by B4 Relay for nuno.sa@analog.com/20231116 with
@@ -60,54 +58,74 @@ X-Endpoint-Received: by B4 Relay for nuno.sa@analog.com/20231116 with
 X-Original-From: =?utf-8?q?Nuno_S=C3=A1?= <nuno.sa@analog.com>
 Reply-To: nuno.sa@analog.com
 
-This series adds support for cyclic transfers in the .device_prep_peripheral_dma_vec()
-callback and implements graceful termination of cyclic transfers using the
-DMA_PREP_LOAD_EOT flag. Using DMA_PREP_REPEAT and DMA_PREP_LOAD_EOT is
-based on the discussion in [1].
+From: Nuno Sá <nuno.sa@analog.com>
 
-Currently, the only way to stop a cyclic transfer is through brute force using
-.device_terminate_all(), which terminates all pending transfers. This series
-introduces a mechanism to gracefully terminate individual cyclic transfers when
-a new transfer flagged with DMA_PREP_LOAD_EOT is queued.
+Add a new helper for getting the next valid struct axi_dmac_desc. This
+will be extended in follow up patches to support to gracefully terminate
+cyclic transfers.
 
-We need two different approaches:
-
-1. Software-managed cyclic transfers: These generate EOT (End-Of-Transfer)
-   interrupts for each cycle. Hence, termination can be handled directly
-   in the interrupt handler when the EOT interrupt fires, making the
-   transition to the next transfer straightforward.
-
-2. Hardware-managed cyclic transfers: These are optimized to avoid interrupt
-   overhead by suppressing EOT interrupts. Since there are no EOT interrupts,
-   termination must be detected at SOF (Start-Of-Frame) when new transfers
-   are being considered. The transfer is marked for termination and the
-   hardware is configured to end the current cycle gracefully.
-
-For HW-managed cyclic mode, the series handles both scatter-gather and non-SG
-variants. With SG support, the last segment flags are modified to trigger EOT.
-Without SG, the CYCLIC flag is cleared to allow natural completion. A workaround
-is included for older IP cores (pre-4.6.a) that can prefetch data incorrectly
-when clearing the CYCLIC flag, requiring a core disable/enable cycle.
-
-[1]: https://lore.kernel.org/dmaengine/ZhJW9JEqN2wrejvC@matsya/
-
+Signed-off-by: Nuno Sá <nuno.sa@analog.com>
 ---
-Nuno Sá (5):
-      dmaengine: Document cyclic transfer for dmaengine_prep_peripheral_dma_vec()
-      dma: dma-axi-dmac: add cyclic transfers in .device_prep_peripheral_dma_vec()
-      dma: dma-axi-dmac: add helper for getting next desc
-      dma: dma-axi-dmac: Gracefully terminate SW cyclic transfers
-      dma: dma-axi-dmac: gracefully terminate HW cyclic transfers
+ drivers/dma/dma-axi-dmac.c | 33 +++++++++++++++++++++++----------
+ 1 file changed, 23 insertions(+), 10 deletions(-)
 
- drivers/dma/dma-axi-dmac.c | 170 +++++++++++++++++++++++++++++++++++++++------
- include/linux/dmaengine.h  |   3 +-
- 2 files changed, 151 insertions(+), 22 deletions(-)
----
-base-commit: 3c8a86ed002ab8fb287ee4ec92f0fd6ac5b291d2
-change-id: 20260126-axi-dac-cyclic-support-a06721b2e107
---
+diff --git a/drivers/dma/dma-axi-dmac.c b/drivers/dma/dma-axi-dmac.c
+index b083b6176593..3984236717a6 100644
+--- a/drivers/dma/dma-axi-dmac.c
++++ b/drivers/dma/dma-axi-dmac.c
+@@ -227,10 +227,29 @@ static bool axi_dmac_check_addr(struct axi_dmac_chan *chan, dma_addr_t addr)
+ 	return true;
+ }
+ 
++static struct axi_dmac_desc *axi_dmac_get_next_desc(struct axi_dmac *dmac,
++						    struct axi_dmac_chan *chan)
++{
++	struct virt_dma_desc *vdesc;
++	struct axi_dmac_desc *desc;
++
++	if (chan->next_desc)
++		return chan->next_desc;
++
++	vdesc = vchan_next_desc(&chan->vchan);
++	if (!vdesc)
++		return NULL;
++
++	list_move_tail(&vdesc->node, &chan->active_descs);
++	desc = to_axi_dmac_desc(vdesc);
++	chan->next_desc = desc;
++
++	return desc;
++}
++
+ static void axi_dmac_start_transfer(struct axi_dmac_chan *chan)
+ {
+ 	struct axi_dmac *dmac = chan_to_axi_dmac(chan);
+-	struct virt_dma_desc *vdesc;
+ 	struct axi_dmac_desc *desc;
+ 	struct axi_dmac_sg *sg;
+ 	unsigned int flags = 0;
+@@ -240,16 +259,10 @@ static void axi_dmac_start_transfer(struct axi_dmac_chan *chan)
+ 	if (val) /* Queue is full, wait for the next SOT IRQ */
+ 		return;
+ 
+-	desc = chan->next_desc;
++	desc = axi_dmac_get_next_desc(dmac, chan);
++	if (!desc)
++		return;
+ 
+-	if (!desc) {
+-		vdesc = vchan_next_desc(&chan->vchan);
+-		if (!vdesc)
+-			return;
+-		list_move_tail(&vdesc->node, &chan->active_descs);
+-		desc = to_axi_dmac_desc(vdesc);
+-		chan->next_desc = desc;
+-	}
+ 	sg = &desc->sg[desc->num_submitted];
+ 
+ 	/* Already queued in cyclic mode. Wait for it to finish */
 
-Thanks!
-- Nuno Sá
+-- 
+2.52.0
 
 
