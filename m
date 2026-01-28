@@ -1,64 +1,64 @@
-Received: from AM0PR02CU008.outbound.protection.outlook.com (mail-westeuropeazon11013046.outbound.protection.outlook.com [52.101.72.46])
+Received: from AM0PR02CU008.outbound.protection.outlook.com (mail-westeuropeazon11013055.outbound.protection.outlook.com [52.101.72.55])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A20933783DB;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 074EB378803;
 	Wed, 28 Jan 2026 18:06:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.72.46
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.72.55
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769623573; cv=fail; b=UG/YdtVSMlnmZCj3hv3tesi8q5kCWeYqvF9WiHTjV+uSpqBV9dPzPtlSLfasCFrNWIchGR3RSkVQSE19Dt4ur2o3pwaVdTtM9BKJwEExTQU8BWmZwzIpUW/oNs8VNMaQWT5I8PMmoLH8ZjWHGChkjiS6ippZD4Y1N+cywUblJVI=
+	t=1769623574; cv=fail; b=MOKL9lpVKV6+w9nsL0Cy8DZmKN4OJlnYRJzDmj5crkIX2oRv3jJIp5NgvjkRE6c0geXvavEObtyX+WJp1Ftbw18/GTpiuIs0TRw1aTk3zZB+3XFUem1Ab5rem1l+i45kO6jfc3WWTd3ZuZGOdJqkgJ4mekSAJ6cmFNfEAvgGN5k=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769623573; c=relaxed/simple;
-	bh=wOXQMNIzbVOutah0EmLhmjIneZqWHqMTuYUyly6i+gs=;
+	s=arc-20240116; t=1769623574; c=relaxed/simple;
+	bh=T/R1cBEiR3v0+MtMeMed2PnwWXA62oWKFIBXUBGCHT0=;
 	h=From:Date:Subject:Content-Type:Message-Id:References:In-Reply-To:
-	 To:Cc:MIME-Version; b=i+/1P622yBjjb56/hFitDmbsB+l7nJ0S/il7Wa1+SMaUUwoW77chluBZUR/PgUTnLbTFdWIO25HajZo2UBTQ55Tq1+D3NEQaF8SIhgtrsPVMBLAsUrjdv9qSzFyVTTPHoSePw0V4UAYJPlmF5YtOkk0Pu8HyqlT/J3eRKlWfazw=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com; spf=pass smtp.mailfrom=nxp.com; dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b=XY7JJicm; arc=fail smtp.client-ip=52.101.72.46
+	 To:Cc:MIME-Version; b=j7MuPw6Exd5MVkG+XNFLIew4YtXuWMVeWPcdo2YyZrhFcZYYtW/WhmSVMbitTqNIku64GUeECVmJDwGG33SPzUtckk2NlY7WeB2NZwZQvI2QFCNaFJHivDGeFkUbqwnRyLLy/BQz049/Vkncr0GdZRyg/i/qa1CE3dv9et5x4yQ=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com; spf=pass smtp.mailfrom=nxp.com; dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b=c0qNa3lq; arc=fail smtp.client-ip=52.101.72.55
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b="XY7JJicm"
+	dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b="c0qNa3lq"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=oW0BA2bF88G6ATg5y4O3x1dGEv76HszuNhs1zgx0f48h2i3wG7tPcAzLT8QtgXx7GfRsj6Pv+DHtcqTnDxUH673qD2UJhRvMnhWWg94vaZuoBekFuR/UF+Ux6bNyRXWcucZgrUaoFbDWH4KQuatVS8e+c1DltjaGo8pnPoJD2vHT+xclEdaCo7C2ao+5dUEI6e4PpzW82AVIG2OS0zGUO4WefNhTRDwhSZCBRoWS6ZsoiwR/zL/dLISYPl1Df/P6w19PRacIfY28LLiWxTt4Jn0qW5VyTQKyFwgOBDs/LjJfF5+YC1KMMLhCusXSlv58gRy9hhydquC+DHKPTNhdog==
+ b=flWhHcX6y5K6RoLpudf49dqXj2BvAtiUXwmS03QjvU0eHR+uyB+QvwLylyzV/RA3iQqzukFIdCTNiFvwwcxtppSj+KUIS+uB8OoQvWWfVd/kYLGcyeP/Li9/X9i2HYSfubZ1gzSPD8RS7MomgnvvGeMRHqFJyM/q+RoxBrlqfk2nO5uOtS+hmsEGfBKKacPsUNc9SMaAznAqhzS6GnlC1Qe8JCFlp/lm0WOptJuLYkCffob4n/UvrRFWG32SQkgAPtlpTS44cFOCor2d8CJIoNgLbsoUz4tPZYbLZGudj5TB6HqFTla6xt7xpIoskPbZdkPagYbOIJbNAXn8yvvGjg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=O91igY/QhRawhuVExvoeVFdm8g0MsNxV8roTZdvm3yg=;
- b=d6xlSkmLIbbe7CphIxgsKDO2RrOk7PfkMbQqGA1aOj3kFGcA+pbzQPxrxhlKgifEakCNEeNvaUuXJZKXCXqww3mGxuPvvm0jkCkKAgFcbPEYQJzsGADMYJidyTDzbwdDBrK/xWtcFC0fh0GX559yYgRKZHfE8A+kI/J+MusulooYtguJr3jb6n13UapaD/Db2ZEcFDOAJcUacMCcWO82J0qHgdX6kr4HbQsk9xolA/5Ul1NPMYErF0lDCtCTqjcIcR4jDgMZP9SpmKHIAsWJx2yJF4uRWJyWGqrbRFUTmxhpDzVHz7314VhG/x+7VKHueNYU0QowVvrzmVPvkJDX9A==
+ bh=L+qS2Ko7f+qaIMTEuVoEhd6W/HjUxLrSlJW68ZYvYag=;
+ b=TvL+sMSI/g2GeGA6tyaEtsjPnk/FA51htPsNpMNGOJwvMKEdilUpbaNPKoD6XtyG0sQjGXzHujDwt6QcHg1fJ8WkourpCNUsbkb610gcboQGRL3nAcMzn4Ip84l5dQuED+QkDw3Ie5bghwpuL75C/PEn40hWYRF19MWQb+8L7dX+y9KBz/HeNfj293x9X0utADc7fyzD3Q4EZDTXm75Vmy68VsIOgQlaq6N6W7b9VhGrpOxdXCYGue2ZLqxpA3jAJ/Kd0aH5CZo8+oz8epyVv5AC+1KNXr3Lo7qj/ETC9ovWXyrS+vCLBBb5ydXHTgvneQs7rvgeW4aRfDrawb58hA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
  header.d=nxp.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=O91igY/QhRawhuVExvoeVFdm8g0MsNxV8roTZdvm3yg=;
- b=XY7JJicmEYP1mx6+dowXcU+5VCR6NMEByLi5SMeN75whlBlRmWW73tED+Wp2Iyua4lJWdLSpMPgyqkYuNuf/uyILUQ/Jk/2eI3/z/Lx4xcTcLDSVgWYUkmwSgmRGfD01hDIVwj40CxZeTJ+mbwAZ47qwg6sUd0kA64a5PlybttaXi4FXQFPTEXQrbdAUTggw0yBF80rAWSfGmxk/Ro1iN3VhCUweGgicjKFP33EoPp/WXafrq1VjvjqKzl8jt0nxBP2buWWjbJ5BomeiEmlqNOtqoIOKmEYDx8mQAkM/e5Qd8x1kx3L1DpSeC2CYbMBgdf3zMi/ynljtmNbEf3tujg==
+ bh=L+qS2Ko7f+qaIMTEuVoEhd6W/HjUxLrSlJW68ZYvYag=;
+ b=c0qNa3lqQpMoHwobpOlom51mIk/MzvCKgkZ8aJ/L79PHU3VtYXeQyjA2s9VMAeUvkgVOLqygdEu9PFiPtOvkzyaxPylPr0J/Xu8OVeAeodhg0VtFcEGStSiMRF185jQbLcQK3zVJum4i78KBzkTEGbGD9AGKdsYYX/DlXBuE+b5Tyn4r7EYZA9MhkQcN4SL7mC6Bkihwhure3uJf6/yUzZaZPnyl0gnr4E1FAdLzWAhiyowUeuS3oVrciaa1/e3v9VmGaekFiKaaKh6yRVSfRSalLUd6cDLnFps2152E2hz6vai7h5cwMS8VVaHwq83Tox1ma/xxcHC53eudSgLbMA==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nxp.com;
 Received: from PA4PR04MB9366.eurprd04.prod.outlook.com (2603:10a6:102:2a9::8)
- by AM9PR04MB8145.eurprd04.prod.outlook.com (2603:10a6:20b:3e1::6) with
+ by PA4PR04MB7600.eurprd04.prod.outlook.com (2603:10a6:102:f2::8) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9564.8; Wed, 28 Jan
- 2026 18:06:03 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9542.11; Wed, 28 Jan
+ 2026 18:06:09 +0000
 Received: from PA4PR04MB9366.eurprd04.prod.outlook.com
  ([fe80::75e4:8143:ddbc:6588]) by PA4PR04MB9366.eurprd04.prod.outlook.com
  ([fe80::75e4:8143:ddbc:6588%6]) with mapi id 15.20.9520.005; Wed, 28 Jan 2026
- 18:06:03 +0000
+ 18:06:09 +0000
 From: Frank Li <Frank.Li@nxp.com>
-Date: Wed, 28 Jan 2026 13:05:29 -0500
-Subject: [PATCH RFC 10/12] dmaengine: move fsl-edma dma_[un]map_resource()
- to linked list library
+Date: Wed, 28 Jan 2026 13:05:31 -0500
+Subject: [PATCH RFC 12/12] dmaengine: add
+ vchan_dma_ll_prep_slave_{sg,cyclic} API
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260128-dma_ll_comlib-v1-10-1b1fa2c671f9@nxp.com>
+Message-Id: <20260128-dma_ll_comlib-v1-12-1b1fa2c671f9@nxp.com>
 References: <20260128-dma_ll_comlib-v1-0-1b1fa2c671f9@nxp.com>
 In-Reply-To: <20260128-dma_ll_comlib-v1-0-1b1fa2c671f9@nxp.com>
 To: Vinod Koul <vkoul@kernel.org>
 Cc: linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org, 
  imx@lists.linux.dev, joy.zou@nxp.com, Frank Li <Frank.Li@nxp.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1769623546; l=10194;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1769623546; l=16298;
  i=Frank.Li@nxp.com; s=20240130; h=from:subject:message-id;
- bh=wOXQMNIzbVOutah0EmLhmjIneZqWHqMTuYUyly6i+gs=;
- b=ZZJT836zlVqGJWpbJbAAvxYJNVAdGySK/XqskzQkW/EUaGd+tGTy8EsD3+PPlwn/aI9WhVEIV
- SsB5MY4+p5/BOnwmb6wqFMIc/5RWJDg+pf30OODoFtCfh7JaeBXIKWa
+ bh=T/R1cBEiR3v0+MtMeMed2PnwWXA62oWKFIBXUBGCHT0=;
+ b=NjpoSeIeeu7dmTxOprVfSkd/JGard4izn4NerZxrgGKX7a8TQPfFm4AI20QMFh/IANmev+HVG
+ m6gNLTiK61lC6D+5PE9VmNuBxL34NzMuCY/+To6+IHR1A2nllUNpkOV
 X-Developer-Key: i=Frank.Li@nxp.com; a=ed25519;
  pk=I0L1sDUfPxpAkRvPKy7MdauTuSENRq+DnA+G4qcS94Q=
 X-ClientProxiedBy: SA9PR03CA0009.namprd03.prod.outlook.com
@@ -71,421 +71,575 @@ List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PA4PR04MB9366:EE_|AM9PR04MB8145:EE_
-X-MS-Office365-Filtering-Correlation-Id: 81e7129a-ca19-4173-9aa2-08de5e97e63e
+X-MS-TrafficTypeDiagnostic: PA4PR04MB9366:EE_|PA4PR04MB7600:EE_
+X-MS-Office365-Filtering-Correlation-Id: 953db963-2bdf-4438-717d-08de5e97e89d
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|366016|19092799006|376014|52116014|1800799024|38350700014;
+	BCL:0;ARA:13230040|366016|1800799024|376014|52116014|19092799006|38350700014;
 X-Microsoft-Antispam-Message-Info:
-	=?utf-8?B?Z3NHR2xMNnRaQVhmSkl3TFBkSzhlME1raVl1Z0dSVTg4dVFOVS9halZHc2lL?=
- =?utf-8?B?ZU1neUNuZWRyTEtGUUwxNDdneDhlWXA2Zm5GYmtjRFlKZnV6K1NBMU56VEtI?=
- =?utf-8?B?dmpZNkFtOE90NFA5Vk82ZWVNTDQrNlhGL1BWOXB4TncyczBVdE5KSWJoN0l0?=
- =?utf-8?B?akgxOGlXU0s1TFhiMWlNV29rb2pxaHp3K1lMOWVHdDhpQXhqL0Jwa09sZjE4?=
- =?utf-8?B?L3pnMWpOanlseEU3YVdybU82MnB2bVUyZERhbUxwRkhhTHgrZDBTNlFHRWhK?=
- =?utf-8?B?czNUY3VOZ1FVTURDT3htN2tCMllDVDZwQUdRclZvcEVHMzNjVERodVpmTmFV?=
- =?utf-8?B?MFNxbkJUbmROTGxTZm9ISSt2TFZtT045R2MvNGdwVHZWNDh6cU1pbm8yZGlC?=
- =?utf-8?B?Q3JyTkZxa1ZVcmZyNlNlUWlpVlAzMDdLM29vUzBvQWhIdEZoNVRCNW1jWVBi?=
- =?utf-8?B?dVJjL3hPK3ZsNm9NeEtIcUR5THZYQjl1MUFyaGwwQjc1V2MyUTcwaHRueFFZ?=
- =?utf-8?B?QnU0dXFxUXAyRzZNU1cyR2dzWkNsZ3ZNN08yYnpBNm9EY0QyeU9HcWp4d0pB?=
- =?utf-8?B?cStHQnppeituQ1JBK2ZVM2NSaUs2dFNoRkdlUy9nWDdGT2JZd1ZaKy8zeHV0?=
- =?utf-8?B?QkZuNWZuRUNnTlhLYmlveEswUHhGTVVCUnU5cGNRcmYrOG5OVU5ibGpQZS95?=
- =?utf-8?B?aWU3a2FzdTRyczRwRUM0WWJTSGVIQ2o2UTl3QytOV3VDZkgrWXpCbDZyelBa?=
- =?utf-8?B?N2JDa05tUU9PVVBCT09KOHNVaUllRWFvbDE1M0NsL3BhbUpzWUNNYjJ3V2Vi?=
- =?utf-8?B?TENQdTFnT3B4elIyOHhUVGNURTlXMktvTTB6anhsYy9tRUFMNytlemJZTit6?=
- =?utf-8?B?L1VkM0RJdHkvU29XT2hmcncrcE1tN21NUk9VbE00RDR5bWZaK2pvc1N2UFpV?=
- =?utf-8?B?TzNLTEFOQnIwYStnSC9QTktGVHhZVFlZSkJoc21RYkFYNGVpcTFtOEVseERN?=
- =?utf-8?B?cGxkanVJSDZxdWc3dTh0ek4xUHhXdmFZR0pTTlYza3hsRVFLVGhPOW9va3Bn?=
- =?utf-8?B?dkpHbGl3NkZWemFrZTlVbE5lMi8xSk96cFJqV2pvaE8raWdXbFp1TUlGYnEv?=
- =?utf-8?B?UkxoL1d0OXlZYTk5c2o5QndFRGRTTDNWemgweW95V2xhM0Z1M2FZOXprNFJR?=
- =?utf-8?B?dmhFK08vM3BBN2svVm5ONVZ2SlB3NUd0Nk56NE4wR3d1R3FYajFtUUdxYk56?=
- =?utf-8?B?enIxM2lqMnhqM2xYK0VZdGZsdng5UG8yMTR6WEtxZ2twWjBkUmRaVU1oSS8y?=
- =?utf-8?B?VFBSSGRaemdqTVJtZ1duNWFsbXRSWGZzOHZUSTUwMVNzNlhtaXJUVHJURHRz?=
- =?utf-8?B?VzZGZTBudDRLeVF2dE0zSThuazhuQ1hwSUZ1Qm12UzJULzZIaU5KMHhFQUxG?=
- =?utf-8?B?QWNOVzZwMkM2Uk9jRW1La0d5M2V3UjhZTWlPQUhSZUNwenprakY1dmVBYU9N?=
- =?utf-8?B?R2JPSFBGNm1LaHZMU0pJS3Q1WXB1WkhWWXZ1emhKNFhJOEhGdW5IcFBNWXNP?=
- =?utf-8?B?dHZwUWE2QWVPellQakJpcm9hVzF1ZHJ2L1V1eEwzOEpXYUxOdk0rL0RDOFla?=
- =?utf-8?B?dVZkREpIWS9oenJoTWo5WllIcVd0Zi9YREE3UFFKaVhWV1Q0NmdEYTUzdWxi?=
- =?utf-8?B?dll0TkorSkR6dDl2WmZjc28xMXRwTjdJd1RnTEYyWlM5M3hVamFyYmdWSVcr?=
- =?utf-8?B?bWE0Mzl3S1NGUGpCNnVVbjY1N283a2lIUmxXSUg5Z1pISGZNNGtiQUJoREtH?=
- =?utf-8?B?dVZidUVVU2oxQlZrbmpuZTN4ei9yODZVYkdxTzRzUWc4MzFqaDRzbWJqUGVk?=
- =?utf-8?B?VFRWN2ZVdWlWdVk5ZmtyZDVRZkxIbi8wU210WHJRdk5RNFhyZytldjZFMWd0?=
- =?utf-8?B?SnQ5ZklFalNjbExDeGxBdkZEQXVoSVdkNzg5MVg3Ny9nT3JtR2JYcmlrKzVC?=
- =?utf-8?B?azdCaXFySEQ0cUYyS25SMFpmKzM2QStUSzltUGt0SGtUQ0pIWlNaY004M0R1?=
- =?utf-8?B?NldmaEl3MUZJWldpSVR2cTlpT1lpUkNrZ1BCcms3V1JvWGZRN1ZJV2FtL0Rj?=
- =?utf-8?B?d3VtM1NydzhtRHRJRVJiVEhjbGJhT1p0ekNyNS9iSDZwNDY3Wm41V3VtdHFi?=
- =?utf-8?Q?X7b1Co4Q8MPU+Lq3UwyxbXA=3D?=
+	=?utf-8?B?MUIrTk41WFlma1AraTBFczJXem5tS2UvMGJCT0FzcnpJeUdNV1piNmJ3bEcw?=
+ =?utf-8?B?VnkxeTZqOGZ0bFczejlyRXZVR0ZocVVDZmxsUnNkUnRYK05qZGx3NVNkbVdE?=
+ =?utf-8?B?QzR5Y04zdmZSbUY4NXQwU1BRQ3loaXlDWll3ZVNZem1IQ1ZlcTJ5SEpDTThW?=
+ =?utf-8?B?VUtESEtOYmEvcjZ6YzZOZFhCV2NwN3lsUlArNTR1QzFVNkFPQldNRE9nSTgy?=
+ =?utf-8?B?NHJXSUJGNUI5ZFRpMlFtMXI4K3ljVnZRL0VOMVZjZ1dRSUVrQyt1MFhNblJn?=
+ =?utf-8?B?L2Y1ZkF6ZjIvRHMzL1Nsd214SmFHRFg5d2NwUEcyUG5sYk5tenUyMEhIazFJ?=
+ =?utf-8?B?T0dFWGRpSUN2Qjk3bjFvNGlHQTh1UDJncjk0SUJlZ1hhdVJ4Y1ZhMDhPMTk3?=
+ =?utf-8?B?TXdwaHU5SFp1YkZjVHNKdlVQNFMvNWNQb1ZnWXM2NEF2dFltRGhGUXBQSkN1?=
+ =?utf-8?B?aUl0ZnRxOFgwWmJnNGpvTG1wYXRST2JtYlFRV3o4Z2JqQUNXUnlQWXV3T08w?=
+ =?utf-8?B?bTdCTkRXR0dtaHJJU2hlNmhpNmVSTGhXU1pGWklDU1JaRTl4VXdFOHJ6MXBT?=
+ =?utf-8?B?bDVUQWxSVTg5djFFY0p6T0RQU1pjUlIwcTFNMWM3N3F5eXc4cTVPNTY1YU4x?=
+ =?utf-8?B?SC91aFNUYWdvUmp2UDhtbW9HaWl6em1SZXBEdURBckFIYmxGYUhwckM0Nll6?=
+ =?utf-8?B?bzVEZEJRMXgzcFQ0UEdCTlByWWwyYnNYQ0NLV0Nkb2JscDNIOTFmOERUQlpx?=
+ =?utf-8?B?T3JqWTg4NSt1UGJOZG9XVkxpUnpDRXhFZFBWNkJ3TkRYM0ZCeFJqT3RSSklQ?=
+ =?utf-8?B?UlY1WVdnVG1ucEVRd1o0YWZtTXZLeHlXbkhQVGZjR3h3cDczZFYwbzA4ekpP?=
+ =?utf-8?B?Y0R0SGJEV2VVeUJJTk52dzJZVlVhUk9rc1RmTEhDdng1ekxMeUEyNEMzL2NE?=
+ =?utf-8?B?Z04xQVZwMlNoaDZNbWkweGdvWmlyUVVrbjBoVVl5YTFZVjRDaXVaNkdTazVm?=
+ =?utf-8?B?aTh4VXpBSlZXdlo3cGQ2SkN6eHpVNzJYOENySTZOYzA3QnFLTkxrRFdJZk1D?=
+ =?utf-8?B?c0RqY1IzeEVQYXJvK0tMMHM1V3VuUEFZUGdHa1F1dTdhYjBVTE5ac0pRWG5C?=
+ =?utf-8?B?OFl0TEVucTM4MEdML05xaTBpMzQxL1NWd3B0eUhtMmM0Qkw2L25ML1lQdWs5?=
+ =?utf-8?B?bmxlRCtFblNjdkNxZFBQL29qUUdWenhkVWVOcEZHVW5FMVQzYjVwaGF5VXlW?=
+ =?utf-8?B?ellRWnhrRGZFUGVLMThGSFZBR2c5YkswbVBtYm9MY0o3eW5KekJoTHZTTmNs?=
+ =?utf-8?B?SWZjcGg0STlnbUhlMC9OZmF0YmNaQlNYN24rN3pTYVcwcjdzallPS0NBaHZo?=
+ =?utf-8?B?SmFncUk5Nkt2Z1ZMdUF6Tlh6Vi9ldFJEYnQ1OEVpRzN3ZDYzcjZpZzUrZlJx?=
+ =?utf-8?B?UWxVRHFkSURtaGhtTm1ucnZjOEpvcTljQmc3Q2E5blp1eDZlUFByZU5MNHRM?=
+ =?utf-8?B?UmlYdzZNY2FQZXB3cmx2bG5zenVHUGwvazI1Vm9rTHU1bGJjc3Y4eXlLUDB0?=
+ =?utf-8?B?c3ZlMitFdnRoQUJKOWpvR3hTYi8vS2hZWHNWcVBqN3RocXRXQzE5bE1jK2Ru?=
+ =?utf-8?B?ZVhLdnhqOTR4dUtEa1ZXWnBDYnhuVVJnQmdsMEcrb2pzbTdLNHZ5SG5ySFkv?=
+ =?utf-8?B?WGhEVHVWeFZndXkxbFIvVjB1eENOWmwxZytWRWpOM2s2Y0QrQnpHVXltTDNO?=
+ =?utf-8?B?OS9xdGxlRExwc3JvK3FieTJPaXIyNVJVN0d0MnZGdDJncjV0bXBpQVVPU01n?=
+ =?utf-8?B?cE1lZ2E0cm5yV2RzS3FlVzlEa05wYXdRVkdJSkRodUNld0Y1dWhjMkNRa1VM?=
+ =?utf-8?B?YXpSVWFramtUWmdxeUV5TjFjaU9sWG9OdXdjV2sweHFYWEFzbUpzenZ0Y3JV?=
+ =?utf-8?B?RytlVGgrREFXSllGNzdEVzhRd2llaHZvMG11WUFHNXdFUTBCZGhjTzYvY1pj?=
+ =?utf-8?B?Y0dEUEl6TUlSNDhaYlFJVVJRa1UzNXppcmpzbXA2MEpuVXYyQkJJdUhSVDFP?=
+ =?utf-8?B?YzJsSnpvWGFWTXhsTEpza1hOdHVyYzZHQnRpT2Z4WjFudCthN1hxWS9PRVZU?=
+ =?utf-8?B?VS9MZTRDeFZ4NE5WRmphN1FhdkNoUkRLREU4UWtWYS9nUk4wVXY5MG5Lek9h?=
+ =?utf-8?Q?yby4gkhs1v+xuJe6JXdYxEg=3D?=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PA4PR04MB9366.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(19092799006)(376014)(52116014)(1800799024)(38350700014);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PA4PR04MB9366.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(376014)(52116014)(19092799006)(38350700014);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?aHA0eFJFZWFIT3VIbERXdkhHc0NUejFhVExhR3V3NWM0NHluSFpkZ3d5Zll6?=
- =?utf-8?B?aXdDZW9XMVJQYnJZTzRhVXdWdXMvd3hFaFFjZEV6SjFDWkd1ZHpkZUh0OWpO?=
- =?utf-8?B?SFNrK0xjUTJuQi9XNUhqUkFTTWViZVhGRDJnYXdYOHFjcnd0NU0ycmJDS0tp?=
- =?utf-8?B?bXYrT3NqSGk0NGxUaCtJakxwZmxWcDg0dGswS1Y0eFNjUVVIbWVndElCTUZv?=
- =?utf-8?B?L1MrVHpOaEVvZmU0ajhQS2plOVJuUFBudldRb0U0VEtDZWNtZTZrckM0U25J?=
- =?utf-8?B?cTlCU0M1WHc1UStaTm5lSXF2WVFScEorZVl6dDZQL1BnRGd0NkJrdDdiTTk0?=
- =?utf-8?B?dVd5N2RPZWJxcXQ1RzZEWWQ1TnZyaFViaUVsNVFjTVNuRHJtbTlTSUFqSzhI?=
- =?utf-8?B?Ukg1T3pmRFNCbWtDeFIxdnV0eW5YU0Fad2hFUGxqK00zQUI4TDFIUWd0Kzkw?=
- =?utf-8?B?U2ZmdDh6bktFMDhYYUVIRlFqbFJhbUxWUEc1b0pGTmlXa0tlbVBKTm82Sjlz?=
- =?utf-8?B?THIyQlZQaUVqbE1ESUZOcStSdDkzYk5LRVcxSXpvYllDMUJ2RG1vKzBzcEJn?=
- =?utf-8?B?UW1VN3pLbGRqU204WTZHK1JZM05PcW9LanI0NllhSlFlYjlNQ1RnWi9LNHdp?=
- =?utf-8?B?MlhZcm1JcWJyQklZT1dmTHBtdUJBYlk0c3lybk9kYlhLNnVjdk9xNHIxYWFG?=
- =?utf-8?B?aWFZSVEwMTlQcXBBNGI3VEE2VkdmdDIyRm9TWDhTRVBlNTVLSHFYNlppNjZt?=
- =?utf-8?B?TFdJbit4d0dhMDUvanBreExEL3hNYlJ5MHRNQm0zYVNwSjhXQkNXaEpZTk5y?=
- =?utf-8?B?dEg0bWVyM3VTYnI0dzNSSDlhQStONDFUTTMxM1VScnVlSEVVbHo1NXNrZTIv?=
- =?utf-8?B?WWozbUo1anYxSW5YL25Ha3JUTEU1bHdJb3ZnZWJZSjZkKzVFZUhVYlp0MEI3?=
- =?utf-8?B?YmJjOXFQRnBZa2dWU3BKcGJ5dDh1QjdkeGE5TU1yVEVtZXV4SDhBK2NacThy?=
- =?utf-8?B?QTVmZWpSZ3QvNVlWQTcxL2J2L3hPMTg4WldnVHN3bDkwTGE5VlFtMzUxNkVx?=
- =?utf-8?B?RkVaNXhPb0E0eFFweE1hRldLbXpuRUE2RWNVaGQzYmVTdTRjRk96a2J5Zk1K?=
- =?utf-8?B?OXJqa1pvZVQvRWRiMFpQSmk1WTdhL0wrOEZQRUpDY0M4cHJIelBHdnk2TFNP?=
- =?utf-8?B?WGd2b3ZFcXVGWGxtOVdQSjFXRm92Rk9tOG41b0tMWXIvYllIKytwZDJLWm1Q?=
- =?utf-8?B?TVRKOUQyRmlEYlZRb3FNeW1MYUFxYVBNekprN1pTVVBaVUtCYWVINncwMnZY?=
- =?utf-8?B?cWEwK2t5UmJJWS9FbTdBa3l4ZzJCaUZwSFF5Q0pjM3p5eVN3Um41YStpL1pI?=
- =?utf-8?B?K21jTjhHeWhTRXZKR2ZQWURvTkFWcHdFY1V2Y3Ntd2x2WXMvQStiK0plOHJY?=
- =?utf-8?B?b0tjTzZzUHBGeDR3eWkzbmw0ZHZKc1FzL0lMRGwrRWllblhpT0lLZFJWTTB0?=
- =?utf-8?B?SHRLalRHajNXNDh0cys0TXU3TWQ2TzFMWVhJWUJoaVRYTnZqeGVzdUxWZ3lR?=
- =?utf-8?B?UXM3Z21mVFFZR1lrci83eXRnbVdWQ2llVkZFMUpRSit4T1J3VElLVEcyZU54?=
- =?utf-8?B?S21STDZrOGRJMnhwMFVodGFJcmFYL3V5bkFVelh6SGloMXVtWU1wRm1zMHlo?=
- =?utf-8?B?MnRUbjI2V2Q2YWZEUjZPOXhtVzlVZzRmTmFoWWNHaExVeHhlQ29nZkhpc1B3?=
- =?utf-8?B?aGNzY0xOam8zTFBMVW9HTEFJMnI2QzgxSVkzeStBeXdpRVhXVk1WSHZWS0Fy?=
- =?utf-8?B?QVFWNU1Ma3MwVWZwMUNkRmovaGlzODJXWitSODRlR2lpTmpJQ04yRjJsbGwx?=
- =?utf-8?B?eVFxMDhSVmNPNUZxTjZkQjFnSUVKKzQxbHRrT2VyeDhLbVJtNHRtdkYwZ0lY?=
- =?utf-8?B?anIrZmtlZHNUMHVqdFovdHJQUTJtZXBONTB1U3hOYzFTZTAzQkhwTXBoVWor?=
- =?utf-8?B?eURVcUZ4d3lybmxaWG8wRDRVNER5SnowNmlCWGFaNDhjZDd4WDgrVkVZZkoz?=
- =?utf-8?B?YXYyWUZvL3BvcEE3ZkRCaTVRMFF5dm1McUc2SjQyZjdJVmZab2pPNTFoU1RK?=
- =?utf-8?B?UWxGSy9nQndyNi9pbHdnaUMvRUx6N3dqcGtjUkVGblpPMmVkSmpwRjlzTEk5?=
- =?utf-8?B?QnBvekRITmJYb1A3dk9CYStGY1BoK3dtaHBYbFZtZVlYb0dlbGRFZzdDWGFW?=
- =?utf-8?B?YmRCdEFqYUthVmo1Um9WM2dXekxWYUl1ZkV6Um1vcTJLTXp2eisvZVJXV2hy?=
- =?utf-8?B?ZTBWa202dGdUQjdCU0RIOVVPWHIwdnNLNkNITzNiQ05uK1doVVg0QT09?=
+	=?utf-8?B?Rm1OU3pudFhqZ2tXMzgwZ2pMUU42QVBESkhkSi9FMGtFVkVxU1R5ZkJnSXg5?=
+ =?utf-8?B?T2k4STA2YS91cGRCQWJTcmZkRUFsTXhnRG5UVGt1V2VXVlE3MkdMRTlRRndp?=
+ =?utf-8?B?THlselNXNXNwNFk5cmt1dE9YamkwenlTTFpJYzF6MW55MXdGeUt6emc0VVYy?=
+ =?utf-8?B?cXJNTHNaeCtNN0IzeHJjMlhDM1BDWEpPanFZbCtiVGdQN294aGg5blYxU1Rx?=
+ =?utf-8?B?dnEvNGN1bGdHU2FvZmdKL2JDbTUzYU11eFR2bTFVMnFINWF3V04vWGtnMzBF?=
+ =?utf-8?B?VERvYUZnSlBNd2xab1pxbVJCWnFsRStGTEc3VDZWYmMzN0l6SFQ0QXNVMFdn?=
+ =?utf-8?B?TFpMM0VRWGMrN2pBOU9zMlcvOUM5RUo5QkFOanNhT3FpL1BMMTErOUZMS1Q4?=
+ =?utf-8?B?ZEE3S2NBSkxPZGErWnZHUlRnQ3VWMDdwQ0Q1Wno4Mno2OFd1VjhNVkZNWWdu?=
+ =?utf-8?B?dUZmQ2JWL2crTzVQN25rNnEzZ0dmVC9tV0Z0NFBrdkJ4dXhSa1NNcDNEM0dz?=
+ =?utf-8?B?bUlMTm5uWFgvQWxSSTF4NS8yb2p0c3RjampNRm85STFHS0YyMWZIV2hwL3VX?=
+ =?utf-8?B?RGJwMmhUNEdyUDBTMzM2RXl4VzZwSS9iZ1Vka1hJN3dla1FFRlVQMXY0RUdQ?=
+ =?utf-8?B?dzdtTldXUFlOL2dmNWFjNWU1RkdGaUNna25WQzNpK3o2M0Fza2k1MGEvSldx?=
+ =?utf-8?B?aGJCWkNFcGYzN2hSTmVzaWZPL25FWFBaM0ZSWk1nbkl4WFgrYzFubStxWXdG?=
+ =?utf-8?B?d01ycFdUZHJMWVB0TUVEYUV6QWl4MFFUVnNha2N1M0FmUG9nakcxbWNxRnBm?=
+ =?utf-8?B?MTFOY2FoY0JjTDBKZ0ZUT2xscGtWQy9qUGRxd2liSTRIdUFsUnQzQ0NweEhG?=
+ =?utf-8?B?WkIrWXdhd05ISWJYcThneWk2YitWMGcrbklNL09sbnNxUWR5bzBTNW9YdnAz?=
+ =?utf-8?B?SzdBUHVRMWJPdlNTVlVQME81TWxSVEJBTFQvK1kwcE40ZmpKNWlRQTZIbVNp?=
+ =?utf-8?B?NDgzV29MdFVPMCtMWFR3aHpMbEtJcEloMk5NZC9kdWZLdEFuS3orNktVcFFC?=
+ =?utf-8?B?ZHBVTlEySjQ5a0hRS1VkNEdOMEplQWFYcGVaNVBaZWVpcGFwdWRIL2w4RjBu?=
+ =?utf-8?B?OUpJZW5hcmZEWW1VVWt4QVhSS1oxT1MzaEpieVNUczVQMTJCUVdhc0VlNWMr?=
+ =?utf-8?B?ak83WjU3V2owN1dlZVlCbEVWWXRCQ3pIWndveDYrOW9yWjI1L2Q4ZDdpWDAw?=
+ =?utf-8?B?d2RNY25aUFNSNG8rekJnSzh0NkVES1B3Wm5pSTkrc3hLRzZJZGxwbFlSemtX?=
+ =?utf-8?B?Z3MzL1F3NDQ2Wm9WS1dmQ042TnBpQ2wwQnBXRmE2d1R3OTh2N3p6MlRsTUFy?=
+ =?utf-8?B?UjRBeiszOVZPdmNvaFBBSGhVR05CWlFZaHp2Q2Y2V1ArcE1ESlkzV1MwK2gx?=
+ =?utf-8?B?WkFhaWJLYzRWcUY5anpGVGpUdktkWDRjajJzdUh2YXVEcWh5T3dzS2htZWRz?=
+ =?utf-8?B?UEp1RFQrME0rSGxMOStuTzN4aEk2dnNIZ0I3QlVNMnRJa28wQ1FEcm1PaUwv?=
+ =?utf-8?B?SUJOU0lrbS9rRGFqVkhqMUZ0NjRWcXhnckFIWjVPa0tWWnRiMzA1UmRJYkJl?=
+ =?utf-8?B?ajJhMURnUzh3TEhlY1RVSTFGcTFONk1xU0pBaHUzL3Z4OVRsN2h5MXhrZHU2?=
+ =?utf-8?B?SWE5QXV3TzV6UGd4d3llZUlvS25oSkxRYmlqTzNWRXZIOWJpcW5Uc1FDdFVa?=
+ =?utf-8?B?ZWlzUmVaZTR2bWZVVk1veFg0NmhER2hIVFg3U3YwVUxCQjJZRklTcW43NWdM?=
+ =?utf-8?B?V29SMUNuQ2E5a3R4ZklpVGJRM1NEWVZEY1NabnBJbnhoakNscTB3cUJxUUxL?=
+ =?utf-8?B?OVlvbTdCOEtFSjVrT3pKenBreFdFTVhMWlF3dEJrNFhIc0crUjVyWHFzdEZq?=
+ =?utf-8?B?T3J6TlJwZzUzR3VwTzF4RDdKNDJlb0dQY1ordEZRTmY0enhEdTJESGdWU2R4?=
+ =?utf-8?B?ekFuLy9JNVlSdnBKeERDa0dMdjFTVjNIUFpGR1NnRk10cWtoNDhwb0s0L3BS?=
+ =?utf-8?B?YUF1V0VTdmZwY0RNZTRCWGNBeWpVQ29JL1RzZXA5d2dFMHdWT1NrazZvcTYw?=
+ =?utf-8?B?YmJFaTJvODdoUDZrZnlSdDFkT1FkWnl5RklsdlIyQk05U2IwK29sSGt5RFFP?=
+ =?utf-8?B?U3BudUVwQUtxV0lzUUw1NHdaT1E1OEgrSkt5a1Y4WGRDWW12M3VDdktBdDdp?=
+ =?utf-8?B?Q2w5N2VGd0k0bG92VTROekxQN3M0RERsRVkxT1BBalhMeWRlOW9MU3BtS3RJ?=
+ =?utf-8?B?cnczM0ZBSFEyTFo4b3VJMTFTKzlyOU9YVjF4VlN3cndMR2I2QlM1Zz09?=
 X-OriginatorOrg: nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 81e7129a-ca19-4173-9aa2-08de5e97e63e
+X-MS-Exchange-CrossTenant-Network-Message-Id: 953db963-2bdf-4438-717d-08de5e97e89d
 X-MS-Exchange-CrossTenant-AuthSource: PA4PR04MB9366.eurprd04.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Jan 2026 18:06:03.2399
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Jan 2026 18:06:07.4250
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: BNIm1kDDJGpXZIes2VVFJOMWzGxc3xepm/i58RkTGBtUKbLO0kOzQB6Ftzfn72FZtFkPdLGGWSez9BsWh4dJ6A==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM9PR04MB8145
+X-MS-Exchange-CrossTenant-UserPrincipalName: ezSQ4eWSjXOQ3VYOrMijcWIbAfbO/sUqbYtu3A42Zqwx2fujytRDvSWp3WQNHyatDHefCnsBjyTBJdgi/rSeow==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PA4PR04MB7600
 
-Move fsl-edma dma_[un]map_resource() into the common linked list library.
-These helpers do not touch hardware resources and can be reused by other
-DMA engine controller drivers.
+Create common vchan_dma_ll_prep_slave_{sg,cyclic} API in the DMA
+linked-list library, based on the existing fsl-edma implementation.
+
+Update the fsl-edma driver to use the common API instead of maintaining
+its own implementation.
 
 Signed-off-by: Frank Li <Frank.Li@nxp.com>
 ---
- drivers/dma/fsl-edma-common.c | 85 +++++++++----------------------------------
- drivers/dma/fsl-edma-common.h |  2 -
- drivers/dma/ll-dma.c          | 64 ++++++++++++++++++++++++++++++++
- drivers/dma/virt-dma.h        |  9 +++++
- 4 files changed, 91 insertions(+), 69 deletions(-)
+ drivers/dma/fsl-edma-common.c | 226 ++++++++----------------------------------
+ drivers/dma/fsl-edma-common.h |   8 --
+ drivers/dma/fsl-edma-main.c   |   4 +-
+ drivers/dma/ll-dma.c          | 112 +++++++++++++++++++++
+ drivers/dma/mcf-edma-main.c   |   4 +-
+ drivers/dma/virt-dma.h        |   9 ++
+ 6 files changed, 169 insertions(+), 194 deletions(-)
 
 diff --git a/drivers/dma/fsl-edma-common.c b/drivers/dma/fsl-edma-common.c
-index a8f29830e0172b7e818d209f20145121631743c3..ff1ef067cfcffef876eefd30c62d630c77ac537a 100644
+index fdac0518316914d59df592ad26f6000d2034bcb9..643e8bd30b88a2cf66eebf024505428365b8f0ae 100644
 --- a/drivers/dma/fsl-edma-common.c
 +++ b/drivers/dma/fsl-edma-common.c
-@@ -264,65 +264,9 @@ int fsl_edma_resume(struct dma_chan *chan)
- 	return 0;
- }
- 
--static void fsl_edma_unprep_slave_dma(struct fsl_edma_chan *fsl_chan)
--{
--	if (fsl_chan->dma_dir != DMA_NONE)
--		dma_unmap_resource(fsl_chan->vchan.chan.device->dev,
--				   fsl_chan->dma_dev_addr,
--				   fsl_chan->dma_dev_size,
--				   fsl_chan->dma_dir, 0);
--	fsl_chan->dma_dir = DMA_NONE;
+@@ -534,185 +534,55 @@ static int fsl_edma_set_lli(struct dma_ll_desc *desc, u32 idx,
+ 		iter = 1;
+ 		disable_req = true;
+ 		nbytes = len;
+-	}
+-
+-	if (fsl_edma_drvflags(fsl_chan) & FSL_EDMA_DRV_MEM_REMOTE)
+-		fsl_chan->is_remote = true;
+-
+-	/* To match with copy_align and max_seg_size so 1 tcd is enough */
+-	__fsl_edma_fill_tcd(fsl_chan, tcd, src, dst,
+-			    fsl_edma_get_tcd_attr(src_bus_width, dst_bus_width),
+-			    soff, nbytes, 0, iter, iter, doff, irq, disable_req);
+-
+-	return 0;
 -}
 -
--static enum dma_data_direction
--fsl_dma_dir_trans_to_data(enum dma_transfer_direction dir)
+-struct dma_async_tx_descriptor *fsl_edma_prep_dma_cyclic(
+-		struct dma_chan *chan, dma_addr_t dma_addr, size_t buf_len,
+-		size_t period_len, enum dma_transfer_direction direction,
+-		unsigned long flags)
 -{
--	if (dir == DMA_MEM_TO_DEV)
--		return DMA_FROM_DEVICE;
--
--	if (dir ==  DMA_DEV_TO_MEM)
--		return DMA_TO_DEVICE;
--
--	return DMA_NONE;
--}
--
--static bool fsl_edma_prep_slave_dma(struct fsl_edma_chan *fsl_chan,
--				    enum dma_transfer_direction dir)
--{
--	struct dma_slave_config *cfg = &fsl_chan->vchan.chan.config;
--	struct dma_slave_cfg *c = dma_slave_get_cfg(cfg, dir);
--	struct device *dev = fsl_chan->vchan.chan.device->dev;
--	enum dma_data_direction dma_dir;
--	phys_addr_t addr = 0;
--	u32 size = 0;
--
--	dma_dir = fsl_dma_dir_trans_to_data(dir);
--
--	addr = c->addr;
--	size = c->maxburst;
--
--	/* Already mapped for this config? */
--	if (fsl_chan->dma_dir == dma_dir)
--		return true;
--
--	fsl_edma_unprep_slave_dma(fsl_chan);
--
--	fsl_chan->dma_dev_addr = dma_map_resource(dev, addr, size, dma_dir, 0);
--	if (dma_mapping_error(dev, fsl_chan->dma_dev_addr))
--		return false;
--	fsl_chan->dma_dev_size = size;
--	fsl_chan->dma_dir = dma_dir;
--
--	return true;
--}
--
- int fsl_edma_slave_config(struct dma_chan *chan,
- 				 struct dma_slave_config *cfg)
- {
 -	struct fsl_edma_chan *fsl_chan = to_fsl_edma_chan(chan);
+-	struct dma_slave_config *cfg = &chan->config;
+-	struct dma_ll_desc *fsl_desc;
+-	dma_addr_t dma_buf_next;
+-	bool major_int = true;
+-	int sg_len, i;
+-	dma_addr_t src_addr, dst_addr, last_sg;
+-	u16 soff, doff, iter;
+-	u32 nbytes;
 -
--	fsl_edma_unprep_slave_dma(fsl_chan);
--
- 	return 0;
- }
- 
-@@ -611,9 +555,6 @@ struct dma_async_tx_descriptor *fsl_edma_prep_dma_cyclic(
- 	if (!is_slave_direction(direction))
- 		return NULL;
- 
--	if (!fsl_edma_prep_slave_dma(fsl_chan, direction))
+-	if (!is_slave_direction(direction))
 -		return NULL;
 -
- 	sg_len = buf_len / period_len;
- 	fsl_desc = vchan_dma_ll_alloc_desc(chan, sg_len, flags);
- 	if (!fsl_desc)
-@@ -621,6 +562,9 @@ struct dma_async_tx_descriptor *fsl_edma_prep_dma_cyclic(
- 	fsl_desc->iscyclic = true;
- 	fsl_desc->dir = direction;
+-	sg_len = buf_len / period_len;
+-	fsl_desc = vchan_dma_ll_alloc_desc(chan, sg_len, flags);
+-	if (!fsl_desc)
+-		return NULL;
+-	fsl_desc->iscyclic = true;
+-	fsl_desc->dir = direction;
+-
+-	if (vchan_dma_ll_map_slave_addr(chan, fsl_desc, direction, cfg))
+-		goto err;
+-
+-	dma_buf_next = dma_addr;
+-	if (direction == DMA_MEM_TO_DEV) {
+-		if (!cfg->src_addr_width)
+-			cfg->src_addr_width = cfg->dst_addr_width;
+-		fsl_chan->attr =
+-			fsl_edma_get_tcd_attr(cfg->src_addr_width,
+-					      cfg->dst_addr_width);
+-		nbytes = cfg->dst_addr_width * cfg->dst_maxburst;
+ 	} else {
+-		if (!cfg->dst_addr_width)
+-			cfg->dst_addr_width = cfg->src_addr_width;
+-		fsl_chan->attr =
+-			fsl_edma_get_tcd_attr(cfg->src_addr_width,
+-					      cfg->dst_addr_width);
+-		nbytes = cfg->src_addr_width * cfg->src_maxburst;
+-	}
++		enum dma_transfer_direction dir = config->direction;
  
-+	if (vchan_dma_ll_map_slave_addr(chan, fsl_desc, direction, cfg))
-+		goto err;
-+
- 	dma_buf_next = dma_addr;
- 	if (direction == DMA_MEM_TO_DEV) {
- 		if (!cfg->src_addr_width)
-@@ -649,13 +593,13 @@ struct dma_async_tx_descriptor *fsl_edma_prep_dma_cyclic(
+-	iter = period_len / nbytes;
++		if (!desc->iscyclic && idx == desc->n_its - 1)
++			disable_req = true;
++		else
++			disable_req = false;
  
- 		if (direction == DMA_MEM_TO_DEV) {
- 			src_addr = dma_buf_next;
--			dst_addr = fsl_chan->dma_dev_addr;
-+			dst_addr = fsl_desc->dst.addr;
- 			soff = cfg->dst_addr_width;
+-	for (i = 0; i < sg_len; i++) {
+-		if (dma_buf_next >= dma_addr + buf_len)
+-			dma_buf_next = dma_addr;
++		fsl_chan->is_sw = false;
+ 
+-		/* get next sg's physical address */
+-		last_sg = fsl_desc->its[(i + 1) % sg_len].paddr;
++		if (dir == DMA_MEM_TO_DEV) {
++			dst_bus_width = config->dst_addr_width;
++			if (!config->src_addr_width)
++				src_bus_width = config->dst_addr_width;
++			nbytes = config->dst_addr_width * config->dst_maxburst;
+ 
+-		if (direction == DMA_MEM_TO_DEV) {
+-			src_addr = dma_buf_next;
+-			dst_addr = fsl_desc->dst.addr;
+-			soff = cfg->dst_addr_width;
++			soff = config->dst_addr_width;
  			doff = fsl_chan->is_multi_fifo ? 4 : 0;
- 			if (cfg->dst_port_window_size)
- 				doff = cfg->dst_addr_width;
- 		} else if (direction == DMA_DEV_TO_MEM) {
--			src_addr = fsl_chan->dma_dev_addr;
-+			src_addr = fsl_desc->src.addr;
- 			dst_addr = dma_buf_next;
+-			if (cfg->dst_port_window_size)
+-				doff = cfg->dst_addr_width;
+-		} else if (direction == DMA_DEV_TO_MEM) {
+-			src_addr = fsl_desc->src.addr;
+-			dst_addr = dma_buf_next;
++			if (config->dst_port_window_size)
++				doff = config->dst_addr_width;
++		} else if (dir == DMA_DEV_TO_MEM) {
++			src_bus_width = config->src_addr_width;
++			if (!config->dst_addr_width)
++				dst_bus_width = config->src_addr_width;
++			nbytes = config->src_addr_width * config->src_maxburst;
  			soff = fsl_chan->is_multi_fifo ? 4 : 0;
- 			doff = cfg->src_addr_width;
-@@ -676,6 +620,10 @@ struct dma_async_tx_descriptor *fsl_edma_prep_dma_cyclic(
- 	}
- 
- 	return __vchan_tx_prep(&fsl_chan->vchan, &fsl_desc->vdesc);
-+
-+err:
-+	vchan_dma_ll_free_desc(&fsl_desc->vdesc);
-+	return NULL;
- }
- 
- struct dma_async_tx_descriptor *fsl_edma_prep_slave_sg(
-@@ -695,15 +643,15 @@ struct dma_async_tx_descriptor *fsl_edma_prep_slave_sg(
- 	if (!is_slave_direction(direction))
- 		return NULL;
- 
--	if (!fsl_edma_prep_slave_dma(fsl_chan, direction))
+-			doff = cfg->src_addr_width;
+-			if (cfg->src_port_window_size)
+-				soff = cfg->src_addr_width;
++			doff = config->src_addr_width;
++			if (config->src_port_window_size)
++				soff = config->src_addr_width;
+ 		} else {
+ 			/* DMA_DEV_TO_DEV */
+-			src_addr = cfg->src_addr;
+-			dst_addr = cfg->dst_addr;
+ 			soff = doff = 0;
+-			major_int = false;
+-		}
+-
+-		fsl_edma_fill_tcd(fsl_chan, fsl_desc->its[i].vaddr, src_addr, dst_addr,
+-				  fsl_chan->attr, soff, nbytes, 0, iter,
+-				  iter, doff, last_sg, major_int, false, true);
+-		dma_buf_next += period_len;
+-	}
+-
+-	return __vchan_tx_prep(&fsl_chan->vchan, &fsl_desc->vdesc);
+-
+-err:
+-	vchan_dma_ll_free_desc(&fsl_desc->vdesc);
+-	return NULL;
+-}
+-
+-struct dma_async_tx_descriptor *fsl_edma_prep_slave_sg(
+-		struct dma_chan *chan, struct scatterlist *sgl,
+-		unsigned int sg_len, enum dma_transfer_direction direction,
+-		unsigned long flags, void *context)
+-{
+-	struct fsl_edma_chan *fsl_chan = to_fsl_edma_chan(chan);
+-	struct dma_slave_config *cfg = &chan->config;
+-	struct dma_ll_desc *fsl_desc;
+-	struct scatterlist *sg;
+-	dma_addr_t src_addr, dst_addr, last_sg;
+-	u16 soff, doff, iter;
+-	u32 nbytes;
+-	int i;
+-
+-	if (!is_slave_direction(direction))
 -		return NULL;
 -
- 	fsl_desc = vchan_dma_ll_alloc_desc(chan, sg_len, flags);
- 	if (!fsl_desc)
- 		return NULL;
- 	fsl_desc->iscyclic = false;
- 	fsl_desc->dir = direction;
+-	fsl_desc = vchan_dma_ll_alloc_desc(chan, sg_len, flags);
+-	if (!fsl_desc)
+-		return NULL;
+-	fsl_desc->iscyclic = false;
+-	fsl_desc->dir = direction;
+-
+-	if (vchan_dma_ll_map_slave_addr(chan, fsl_desc, direction, cfg))
+-		goto err;
+-
+-	if (direction == DMA_MEM_TO_DEV) {
+-		if (!cfg->src_addr_width)
+-			cfg->src_addr_width = cfg->dst_addr_width;
+-		fsl_chan->attr =
+-			fsl_edma_get_tcd_attr(cfg->src_addr_width,
+-					      cfg->dst_addr_width);
+-		nbytes = cfg->dst_addr_width *
+-			cfg->dst_maxburst;
+-	} else {
+-		if (!cfg->dst_addr_width)
+-			cfg->dst_addr_width = cfg->src_addr_width;
+-		fsl_chan->attr =
+-			fsl_edma_get_tcd_attr(cfg->src_addr_width,
+-					      cfg->dst_addr_width);
+-		nbytes = cfg->src_addr_width *
+-			cfg->src_maxburst;
+-	}
+-
+-	for_each_sg(sgl, sg, sg_len, i) {
+-		if (direction == DMA_MEM_TO_DEV) {
+-			src_addr = sg_dma_address(sg);
+-			dst_addr = fsl_desc->dst.addr;
+-			soff = cfg->dst_addr_width;
+-			doff = 0;
+-		} else if (direction == DMA_DEV_TO_MEM) {
+-			src_addr = fsl_desc->src.addr;
+-			dst_addr = sg_dma_address(sg);
+-			soff = 0;
+-			doff = cfg->src_addr_width;
+-		} else {
+-			/* DMA_DEV_TO_DEV */
+-			src_addr = cfg->src_addr;
+-			dst_addr = cfg->dst_addr;
+-			soff = 0;
+-			doff = 0;
++			irq = false;
+ 		}
  
-+	if (vchan_dma_ll_map_slave_addr(chan, fsl_desc, direction, cfg))
-+		goto err;
+-		/*
+-		 * Choose the suitable burst length if sg_dma_len is not
+-		 * multiple of burst length so that the whole transfer length is
+-		 * multiple of minor loop(burst length).
+-		 */
+-		if (sg_dma_len(sg) % nbytes) {
+-			u32 width = (direction == DMA_DEV_TO_MEM) ? doff : soff;
+-			u32 burst = (direction == DMA_DEV_TO_MEM) ?
+-						cfg->src_maxburst :
+-						cfg->dst_maxburst;
++	       /*
++		* Choose the suitable burst length if sg_dma_len is not
++		* multiple of burst length so that the whole transfer length is
++		* multiple of minor loop(burst length).
++		*/
++		if (len % nbytes) {
++			u32 width = (dir == DMA_DEV_TO_MEM) ? doff : soff;
++			u32 burst = (dir == DMA_DEV_TO_MEM) ?
++					config->src_maxburst :
++					config->dst_maxburst;
+ 			int j;
+ 
+ 			for (j = burst; j > 1; j--) {
+-				if (!(sg_dma_len(sg) % (j * width))) {
++				if (!(len % (j * width))) {
+ 					nbytes = j * width;
+ 					break;
+ 				}
+@@ -721,27 +591,19 @@ struct dma_async_tx_descriptor *fsl_edma_prep_slave_sg(
+ 			if (j == 1)
+ 				nbytes = width;
+ 		}
+-		iter = sg_dma_len(sg) / nbytes;
+-		if (i < sg_len - 1) {
+-			last_sg = fsl_desc->its[(i + 1)].paddr;
+-			fsl_edma_fill_tcd(fsl_chan, fsl_desc->its[i].vaddr, src_addr,
+-					  dst_addr, fsl_chan->attr, soff,
+-					  nbytes, 0, iter, iter, doff, last_sg,
+-					  false, false, true);
+-		} else {
+-			last_sg = 0;
+-			fsl_edma_fill_tcd(fsl_chan, fsl_desc->its[i].vaddr, src_addr,
+-					  dst_addr, fsl_chan->attr, soff,
+-					  nbytes, 0, iter, iter, doff, last_sg,
+-					  true, true, false);
+-		}
 +
- 	if (direction == DMA_MEM_TO_DEV) {
- 		if (!cfg->src_addr_width)
- 			cfg->src_addr_width = cfg->dst_addr_width;
-@@ -725,11 +673,11 @@ struct dma_async_tx_descriptor *fsl_edma_prep_slave_sg(
- 	for_each_sg(sgl, sg, sg_len, i) {
- 		if (direction == DMA_MEM_TO_DEV) {
- 			src_addr = sg_dma_address(sg);
--			dst_addr = fsl_chan->dma_dev_addr;
-+			dst_addr = fsl_desc->dst.addr;
- 			soff = cfg->dst_addr_width;
- 			doff = 0;
- 		} else if (direction == DMA_DEV_TO_MEM) {
--			src_addr = fsl_chan->dma_dev_addr;
-+			src_addr = fsl_desc->src.addr;
- 			dst_addr = sg_dma_address(sg);
- 			soff = 0;
- 			doff = cfg->src_addr_width;
-@@ -780,6 +728,10 @@ struct dma_async_tx_descriptor *fsl_edma_prep_slave_sg(
++		iter = len / nbytes;
  	}
  
- 	return __vchan_tx_prep(&fsl_chan->vchan, &fsl_desc->vdesc);
+-	return __vchan_tx_prep(&fsl_chan->vchan, &fsl_desc->vdesc);
++	if (fsl_edma_drvflags(fsl_chan) & FSL_EDMA_DRV_MEM_REMOTE)
++		fsl_chan->is_remote = true;
 +
-+err:
-+	vchan_dma_ll_free_desc(&fsl_desc->vdesc);
-+	return NULL;
++	/* To match with copy_align and max_seg_size so 1 tcd is enough */
++	__fsl_edma_fill_tcd(fsl_chan, tcd, src, dst,
++			    fsl_edma_get_tcd_attr(src_bus_width, dst_bus_width),
++			    soff, nbytes, 0, iter, iter, doff, irq, disable_req);
+ 
+-err:
+-	vchan_dma_ll_free_desc(&fsl_desc->vdesc);
+-	return NULL;
++	return 0;
  }
  
  void fsl_edma_xfer_desc(struct fsl_edma_chan *fsl_chan)
-@@ -887,7 +839,6 @@ void fsl_edma_free_chan_resources(struct dma_chan *chan)
- 		fsl_edma_chan_mux(fsl_chan, 0, false);
- 	fsl_chan->edesc = NULL;
- 	vchan_get_all_descriptors(&fsl_chan->vchan, &head);
--	fsl_edma_unprep_slave_dma(fsl_chan);
- 	spin_unlock_irqrestore(&fsl_chan->vchan.lock, flags);
- 
- 	if (fsl_chan->txirq)
 diff --git a/drivers/dma/fsl-edma-common.h b/drivers/dma/fsl-edma-common.h
-index f2c346cb84f5f15d333cf8547963ea7a717f4d5f..7cba3bc0d39537e675167b42dda644647bf63819 100644
+index 7cba3bc0d39537e675167b42dda644647bf63819..b5bfd3162237bb9dd585bbf91e6f9f73f0376112 100644
 --- a/drivers/dma/fsl-edma-common.h
 +++ b/drivers/dma/fsl-edma-common.h
-@@ -164,8 +164,6 @@ struct fsl_edma_chan {
- 	u32				attr;
- 	bool                            is_sw;
- 	struct dma_pool			*tcd_pool;
--	dma_addr_t			dma_dev_addr;
--	u32				dma_dev_size;
- 	enum dma_data_direction		dma_dir;
- 	char				chan_name[32];
- 	char				errirq_name[36];
+@@ -469,14 +469,6 @@ int fsl_edma_slave_config(struct dma_chan *chan,
+ 				 struct dma_slave_config *cfg);
+ enum dma_status fsl_edma_tx_status(struct dma_chan *chan,
+ 		dma_cookie_t cookie, struct dma_tx_state *txstate);
+-struct dma_async_tx_descriptor *fsl_edma_prep_dma_cyclic(
+-		struct dma_chan *chan, dma_addr_t dma_addr, size_t buf_len,
+-		size_t period_len, enum dma_transfer_direction direction,
+-		unsigned long flags);
+-struct dma_async_tx_descriptor *fsl_edma_prep_slave_sg(
+-		struct dma_chan *chan, struct scatterlist *sgl,
+-		unsigned int sg_len, enum dma_transfer_direction direction,
+-		unsigned long flags, void *context);
+ void fsl_edma_xfer_desc(struct fsl_edma_chan *fsl_chan);
+ void fsl_edma_issue_pending(struct dma_chan *chan);
+ int fsl_edma_alloc_chan_resources(struct dma_chan *chan);
+diff --git a/drivers/dma/fsl-edma-main.c b/drivers/dma/fsl-edma-main.c
+index 1724a2d1449fe1850d460cefae5899a5ab828afd..e405aa96e625702673b5fc64e1102b50d18eb894 100644
+--- a/drivers/dma/fsl-edma-main.c
++++ b/drivers/dma/fsl-edma-main.c
+@@ -848,8 +848,8 @@ static int fsl_edma_probe(struct platform_device *pdev)
+ 	fsl_edma->dma_dev.device_free_chan_resources
+ 		= fsl_edma_free_chan_resources;
+ 	fsl_edma->dma_dev.device_tx_status = fsl_edma_tx_status;
+-	fsl_edma->dma_dev.device_prep_slave_sg = fsl_edma_prep_slave_sg;
+-	fsl_edma->dma_dev.device_prep_dma_cyclic = fsl_edma_prep_dma_cyclic;
++	fsl_edma->dma_dev.device_prep_slave_sg = vchan_dma_ll_prep_slave_sg;
++	fsl_edma->dma_dev.device_prep_dma_cyclic = vchan_dma_ll_prep_slave_cyclic;
+ 	fsl_edma->dma_dev.device_prep_dma_memcpy = vchan_dma_ll_prep_memcpy;
+ 	fsl_edma->dma_dev.device_config = fsl_edma_slave_config;
+ 	fsl_edma->dma_dev.device_pause = fsl_edma_pause;
 diff --git a/drivers/dma/ll-dma.c b/drivers/dma/ll-dma.c
-index 313ca274df945081fc569ddb6a172298c25bc11c..66e4222ac528f871c75a508c68895078fa38cf7b 100644
+index 66e4222ac528f871c75a508c68895078fa38cf7b..de289e10468b9c0e6ab6c15b1bd49ab2b627e59d 100644
 --- a/drivers/dma/ll-dma.c
 +++ b/drivers/dma/ll-dma.c
-@@ -99,12 +99,35 @@ struct dma_ll_desc *vchan_dma_ll_alloc_desc(struct dma_chan *chan, u32 n,
+@@ -216,6 +216,118 @@ vchan_dma_ll_prep_memcpy(struct dma_chan *chan,
  }
- EXPORT_SYMBOL_GPL(vchan_dma_ll_alloc_desc);
+ EXPORT_SYMBOL_GPL(vchan_dma_ll_prep_memcpy);
  
-+static void
-+vchan_dma_ll_unmap_slave_addr_one(struct device *dev,
-+				  struct dma_slave_map_addr *map,
-+				  enum dma_data_direction dir)
++static dma_addr_t
++vchan_dma_get_src_addr(struct dma_ll_desc *desc, dma_addr_t addr,
++		       enum dma_transfer_direction dir)
 +{
-+	if (!dma_mapping_error(dev, map->addr) && map->size)
-+		dma_unmap_resource(dev, map->addr, map->size, dir, 0);
++	if (dir == DMA_DEV_TO_MEM || dir == DMA_DEV_TO_DEV)
++		return desc->src.addr;
++
++	return addr;
 +}
 +
-+static void
-+vchan_dma_ll_unmap_slave_addr(struct dma_chan *chan, struct dma_ll_desc *desc)
++static dma_addr_t
++vchan_dma_get_dst_addr(struct dma_ll_desc *desc, dma_addr_t addr,
++		       enum dma_transfer_direction dir)
 +{
-+	struct device *dev = chan->device->dev;
++	if (dir == DMA_MEM_TO_DEV || dir == DMA_DEV_TO_DEV)
++		return desc->dst.addr;
 +
-+	if (desc->dir == DMA_MEM_TO_DEV || desc->dir == DMA_DEV_TO_DEV)
-+		vchan_dma_ll_unmap_slave_addr_one(dev, &desc->dst, DMA_TO_DEVICE);
-+
-+	if (desc->dir == DMA_DEV_TO_MEM || desc->dir == DMA_DEV_TO_DEV)
-+		vchan_dma_ll_unmap_slave_addr_one(dev, &desc->src, DMA_FROM_DEVICE);
++	return addr;
 +}
 +
- void vchan_dma_ll_free_desc(struct virt_dma_desc *vdesc)
- {
- 	struct dma_ll_desc *desc = to_dma_ll_desc(vdesc);
- 	struct virt_dma_chan *vchan = to_virt_chan(vdesc->tx.chan);
- 	int i;
- 
-+	vchan_dma_ll_unmap_slave_addr(&vchan->chan, desc);
-+
- 	for (i = 0; i < desc->n_its; i++)
- 		dma_pool_free(vchan->ll.pool, desc->its[i].vaddr,
- 			      desc->its[i].paddr);
-@@ -112,6 +135,47 @@ void vchan_dma_ll_free_desc(struct virt_dma_desc *vdesc)
- }
- EXPORT_SYMBOL_GPL(vchan_dma_ll_free_desc);
- 
-+static int
-+vchan_dma_ll_map_slave_addr_one(struct device *dev,
-+				struct dma_slave_map_addr *map,
-+				enum dma_transfer_direction tran_dir,
-+				enum dma_data_direction data_dir,
-+				struct dma_slave_cfg *cfg)
++struct dma_async_tx_descriptor *
++vchan_dma_ll_prep_slave_sg(struct dma_chan *chan, struct scatterlist *sgl,
++			   unsigned int sg_len, enum dma_transfer_direction dir,
++			   unsigned long flags, void *context)
 +{
-+	map->addr = dma_map_resource(dev, cfg->addr, cfg->maxburst, data_dir, 0);
-+	if (dma_mapping_error(dev, map->addr))
-+		return -ENOMEM;
++	struct virt_dma_chan *vchan = to_virt_chan(chan);
++	struct dma_slave_config *config = &chan->config;
++	struct dma_ll_desc *desc;
++	struct scatterlist *sg;
++	int i, ret;
 +
-+	map->size = cfg->maxburst;
-+	return 0;
-+}
++	if (!is_slave_direction(dir))
++		return NULL;
 +
-+int vchan_dma_ll_map_slave_addr(struct dma_chan *chan, struct dma_ll_desc *desc,
-+				enum dma_transfer_direction dir,
-+				struct dma_slave_config *cfg)
-+{
-+	struct device *dev = chan->device->dev;
++	desc = vchan_dma_ll_alloc_desc(chan, sg_len, flags);
++	if (!desc)
++		return NULL;
++	desc->iscyclic = false;
++	desc->dir = dir;
 +
-+	if (dir == DMA_MEM_TO_DEV || dir == DMA_DEV_TO_DEV) {
-+		if (vchan_dma_ll_map_slave_addr_one(dev, &desc->dst, dir,
-+						    DMA_TO_DEVICE, &cfg->dst))
++	if (vchan_dma_ll_map_slave_addr(chan, desc, dir, config))
++		goto err;
++
++	for_each_sg(sgl, sg, sg_len, i) {
++		dma_addr_t addr = sg_dma_address(sg);
++
++		ret = vchan->ll.ops->set_lli(desc, i,
++					     vchan_dma_get_src_addr(desc, addr, dir),
++					     vchan_dma_get_dst_addr(desc, addr, dir),
++					     sg_dma_len(sg),
++					     i == sg_len - 1, config);
++		if (ret)
 +			goto err;
 +	}
 +
-+	if (dir == DMA_DEV_TO_MEM || dir == DMA_DEV_TO_DEV) {
-+		if (vchan_dma_ll_map_slave_addr_one(dev, &desc->src, dir,
-+						    DMA_TO_DEVICE, &cfg->src))
-+			goto err;
-+	}
-+
-+	return 0;
++	return __vchan_tx_prep(vchan, &desc->vdesc);
 +
 +err:
-+	vchan_dma_ll_unmap_slave_addr(chan, desc);
-+	return -ENOMEM;
++	vchan_dma_ll_free_desc(&desc->vdesc);
++	return NULL;
 +}
-+EXPORT_SYMBOL_GPL(vchan_dma_ll_map_slave_addr);
++EXPORT_SYMBOL_GPL(vchan_dma_ll_prep_slave_sg);
 +
- struct dma_async_tx_descriptor *
- vchan_dma_ll_prep_memcpy(struct dma_chan *chan,
- 			 dma_addr_t dma_dst, dma_addr_t dma_src, size_t len,
++struct dma_async_tx_descriptor *
++vchan_dma_ll_prep_slave_cyclic(struct dma_chan *chan, dma_addr_t dma_addr,
++			       size_t buf_len, size_t period_len,
++			       enum dma_transfer_direction dir,
++			       unsigned long flags)
++{
++	struct virt_dma_chan *vchan = to_virt_chan(chan);
++	struct dma_slave_config *config = &chan->config;
++	dma_addr_t addr = dma_addr;
++	struct dma_ll_desc *desc;
++	int nItems;
++	int i, ret;
++
++	if (!is_slave_direction(dir))
++		return NULL;
++
++	nItems = buf_len / period_len;
++	desc = vchan_dma_ll_alloc_desc(chan, nItems, flags);
++	if (!desc)
++		return NULL;
++	desc->iscyclic = true;
++	desc->dir = dir;
++
++	if (vchan_dma_ll_map_slave_addr(chan, desc, dir, config))
++		goto err;
++
++	for (i = 0; i < nItems; i++) {
++		ret = vchan->ll.ops->set_lli(desc, i,
++					     vchan_dma_get_src_addr(desc, addr, dir),
++					     vchan_dma_get_dst_addr(desc, addr, dir),
++					     period_len, true, config);
++		if (ret)
++			goto err;
++
++		addr += period_len;
++	}
++
++	ret = vchan->ll.ops->set_ll_next(desc, nItems - 1, desc->its[0].paddr);
++	if (ret)
++		goto err;
++
++	return __vchan_tx_prep(vchan, &desc->vdesc);
++
++err:
++	vchan_dma_ll_free_desc(&desc->vdesc);
++	return NULL;
++}
++EXPORT_SYMBOL_GPL(vchan_dma_ll_prep_slave_cyclic);
++
+ int vchan_dma_ll_terminate_all(struct dma_chan *chan)
+ {
+ 	struct virt_dma_chan *vchan = to_virt_chan(chan);
+diff --git a/drivers/dma/mcf-edma-main.c b/drivers/dma/mcf-edma-main.c
+index 60c5b928ade74d36c8f4206777921544787f6cd8..6d68dfd97b47c88d2499540b10564b964820b807 100644
+--- a/drivers/dma/mcf-edma-main.c
++++ b/drivers/dma/mcf-edma-main.c
+@@ -221,8 +221,8 @@ static int mcf_edma_probe(struct platform_device *pdev)
+ 			fsl_edma_free_chan_resources;
+ 	mcf_edma->dma_dev.device_config = fsl_edma_slave_config;
+ 	mcf_edma->dma_dev.device_prep_dma_cyclic =
+-			fsl_edma_prep_dma_cyclic;
+-	mcf_edma->dma_dev.device_prep_slave_sg = fsl_edma_prep_slave_sg;
++			vchan_dma_ll_prep_slave_cyclic;
++	mcf_edma->dma_dev.device_prep_slave_sg = vchan_dma_ll_prep_slave_sg;
+ 	mcf_edma->dma_dev.device_tx_status = fsl_edma_tx_status;
+ 	mcf_edma->dma_dev.device_pause = fsl_edma_pause;
+ 	mcf_edma->dma_dev.device_resume = fsl_edma_resume;
 diff --git a/drivers/dma/virt-dma.h b/drivers/dma/virt-dma.h
-index f4aec6eb3c3900a5473c8feedc16b06e29751deb..0a18663dc95f323f7a9bab76f2d730701277371a 100644
+index 0a18663dc95f323f7a9bab76f2d730701277371a..d1bb130f0fd798f8ec78cc8f88da3f8d1ae74625 100644
 --- a/drivers/dma/virt-dma.h
 +++ b/drivers/dma/virt-dma.h
-@@ -24,6 +24,10 @@ struct dma_linklist_item {
- 	void *vaddr;
- };
- 
-+struct dma_slave_map_addr {
-+	dma_addr_t addr;
-+	size_t size;
-+};
- /*
-  * Must put to last one if need extend it
-  *   struct vendor_dma_ll_desc {
-@@ -35,6 +39,8 @@ struct dma_ll_desc {
- 	struct virt_dma_desc vdesc;
- 	bool iscyclic;
- 	enum dma_transfer_direction dir;
-+	struct dma_slave_map_addr src;
-+	struct dma_slave_map_addr dst;
- 	u32 n_its;
- 	struct dma_linklist_item its[];
- };
-@@ -304,6 +310,9 @@ vchan_dma_ll_prep_memcpy(struct dma_chan *chan,
+@@ -308,6 +308,15 @@ struct dma_async_tx_descriptor *
+ vchan_dma_ll_prep_memcpy(struct dma_chan *chan,
+ 			 dma_addr_t dma_dst, dma_addr_t dma_src, size_t len,
  			 unsigned long flags);
++struct dma_async_tx_descriptor *
++vchan_dma_ll_prep_slave_cyclic(struct dma_chan *chan, dma_addr_t dma_addr,
++			       size_t buf_len, size_t period_len,
++			       enum dma_transfer_direction dir,
++			       unsigned long flags);
++struct dma_async_tx_descriptor *
++vchan_dma_ll_prep_slave_sg(struct dma_chan *chan, struct scatterlist *sgl,
++			   unsigned int sg_len, enum dma_transfer_direction dir,
++			   unsigned long flags, void *context);
  void vchan_dma_ll_free_desc(struct virt_dma_desc *vdesc);
  int vchan_dma_ll_terminate_all(struct dma_chan *chan);
-+int vchan_dma_ll_map_slave_addr(struct dma_chan *chan, struct dma_ll_desc *desc,
-+				enum dma_transfer_direction dir,
-+				struct dma_slave_config *cfg);
- #endif
- 
- #endif
+ int vchan_dma_ll_map_slave_addr(struct dma_chan *chan, struct dma_ll_desc *desc,
 
 -- 
 2.34.1
