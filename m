@@ -1,71 +1,71 @@
-Received: from PH8PR06CU001.outbound.protection.outlook.com (mail-westus3azon11012033.outbound.protection.outlook.com [40.107.209.33])
+Received: from DM5PR21CU001.outbound.protection.outlook.com (mail-centralusazon11011009.outbound.protection.outlook.com [52.101.62.9])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 192483793BA;
-	Fri, 30 Jan 2026 11:03:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.209.33
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7896D37B40B;
+	Fri, 30 Jan 2026 11:03:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.62.9
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769771002; cv=fail; b=lMBa/baupN8wi8Dm53cHhUnXDCSTngB1lC2WP2TOxTL5FR538jzjPmY11kSat9QzPuphJZy4UsRMm1eSSRtxe0nGYJNQloaNRwoVNa7Uczw8O3ZUgKR4Yv6KytkLXmCHn5XCPmbfWSO9Nq3byJkkU2YQVm+bm3vVowpJFSijeZs=
+	t=1769771007; cv=fail; b=IGFV0bX/GpNobIcMPrSqMRXkr7N0PhtOtpbqsIJgPx3WXY1YMkpFP8bruqhUofLeVLtCXPM1oa43ZXjdvjjTophrt/bLyPgQmt7qfPx3hVPA/s++Pa7D5+9Sr9eFhuiil6cMIdpJ2Prn0uprkqnBAWHdeTiMeF6MbE46bWRXGNg=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769771002; c=relaxed/simple;
-	bh=c/H08gxFjJ2Fi7E/YHt5MqJKHlp5J3fmjkHbXsmJU5Q=;
+	s=arc-20240116; t=1769771007; c=relaxed/simple;
+	bh=rmLaMOQgrBuoGCure95Sx4FQnosYhF4wpfH+AtB4/q0=;
 	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=IaRG58Ij4A7WXsSvBN8pbW0jaB0o9Ijx9hjAGOiV+Y5bQcsM3Ss81t/eu6GqYUC0IyX0AeXCKEBSM1eJYK4CtJklYNypgli0vgzzexBJyJPwCgzfRupk2SHBg6/uMne3xGGEtG5VngebdOqUF56wblALeHHRc0chjec6e0X66IQ=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ti.com; spf=pass smtp.mailfrom=ti.com; dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b=po8X2p0Z; arc=fail smtp.client-ip=40.107.209.33
+	 MIME-Version:Content-Type; b=rm7L1WxQ+1MD8AGZ0vhv0A1NOpQf3dJ7z/2VPqyscWA6B2TCy1HN0RsN7IYMV4vkMdop0p7YjiezsF0g+iLjs+RjTFihjvXS7gXwGBvXEHRRi2uhLo4hFCPjjV0WSwvw9Z8MbnC+C+W82zi4fiq9CN+A1BhOP8LpsHN9bKuzX0k=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ti.com; spf=pass smtp.mailfrom=ti.com; dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b=cqUr+XuE; arc=fail smtp.client-ip=52.101.62.9
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ti.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ti.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b="po8X2p0Z"
+	dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b="cqUr+XuE"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=ngavYS/BhQVqA2GJISSenDwK0Dv/LmvPpAakHi9FXLcekB8mc6oYUONlo6lMCoSenUH+rWqpEWhknOhWWeQAFgnAVc90lrf9O9PMwGmiSFvetG9JvSjE9YkAC8qSjMjPUbJmr9rxM6fWfsOOAQKXdHKptDDgl136Gxza4pnbKnQhIKdRS+fG8XouD9C46hMonLdOhT646TPxpT4DD2eQyL8YM0t9TtTVpQFIr6Nfz7oylD1/4puvXmUz+VrgKI1PZl039mYY680CJz7ow6eyp/G3izFN8gMSq5FCZKe10zyq1phZlVxIz/e888oxl4GYgexjWaItcalbGkdsIvi76w==
+ b=blH3jCvyXpSH4H3wI7UAgS/BF9FRxzb7ec+vUp41loCtke3WTJaST6Yco+tp6Vj3vp/1C4vtR0fl7yX5i5YeI/ov4srUtN5I6fN2ePqpPkygqMTiep9bTLr/ddFSCPTmve9+dF0mzSJgJWLKy+ffGBmEo/PjqSvWtnFbzVDrywXk7eJxNDImqEcQVp+GSVq6M25/B4nXoqpkYLKHHSqrwrWt3YReGmWT0MnFrTJI6g/Ly/57z5TnVB5nXWrK0W+kwPwBQBEQpCKWknnET45kYUDULVSxbzglYaTsZx4XUct1t7RY0x1VDpkhbF2IzP/LuZohskS4iX27uawq2S2F6w==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=vGJ2zcyQk5gamoiO5PCb8dgOL5lmyv5Qi7hs4JxXy3w=;
- b=DoYSAGQo2NiLzfRFlFoSvP12Bot3NRD3xiM2xGuu9Keq1yxFMtbEUEMD9O8BGJ6SnN31HMwzpRip3FqaW5MS+o7OJTPcdzPO7qaqfwkXgRn40QgLz9Odrpb1tv7+vOrwvJBFPt8sFvhgfygJ8DXO5rf7VlGQAB9Sy914TVlnxBkAsdaCn2tFGI9ySyxS63c0Lsnure6YAouulmVWJTCn+HZKkXmpKhcKB2uIiM6uIodszQSoxTc8ZtmXqu+kPfi/AfOSAmTHxco3ANZQKvtDXi1xcPKZoNAXrtSVhSCWP+jdGpFqT4o7brRMAQvR5Eds3ddUWY0eOmh6sRhvlpPCCg==
+ bh=JJrAlx6lO+F7VT68NfA+jYVBa/9M218hBQEtuCnhwRs=;
+ b=nFGkgAcwjokhpM0ONxyiFt7SI5mLUuZOfblkzjrt5A5MYIhB7FCo49i9jlh6PGIw6P9Wu5xVN4HO9qhrgVw07a9jXVjntpbr3k963uq9BvgVUG6ovmEy1P/zf1YPQTwQaK7rahgZerIzAO1OOFXnwi+QTsByyIzrbxBaK3CGglcWeK+wvSmiF+H9aB9FlX3ZOe/1mg1YNlJp+kH+58P4F8IbbYwh2ay874hP3qhTI3xQtfoTSiEaiwfXOaD2wuc0RHi4nkssl4ANk+2aAprYi//R3X3GZsm5Tfy/LsQps4UpJh9k1dLP8wKvPZurzAL1US+XpUVWDI7+grunst9w7A==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 198.47.21.194) smtp.rcpttodomain=lists.infradead.org smtp.mailfrom=ti.com;
+ 198.47.23.194) smtp.rcpttodomain=lists.infradead.org smtp.mailfrom=ti.com;
  dmarc=pass (p=quarantine sp=none pct=100) action=none header.from=ti.com;
  dkim=none (message not signed); arc=none (0)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com; s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=vGJ2zcyQk5gamoiO5PCb8dgOL5lmyv5Qi7hs4JxXy3w=;
- b=po8X2p0Z9x1huZULdSKEe0Fo+8D8y4GJdxoWH/IWjScKejbU8tWJdPL7Qy5IKqBafZ+0+P9eU3JAGzH4hjaE4sBoJD7fpsEKGNFzN3vW6i2+KSy0920Q4VcVE7zc2rwO/LKoiqm20CVlZ3QbOxmy2HxaksImucOpvD7q713QpH0=
-Received: from SJ0PR05CA0030.namprd05.prod.outlook.com (2603:10b6:a03:33b::35)
- by SJ2PR10MB7112.namprd10.prod.outlook.com (2603:10b6:a03:4c6::15) with
+ bh=JJrAlx6lO+F7VT68NfA+jYVBa/9M218hBQEtuCnhwRs=;
+ b=cqUr+XuE4CfTz5K+00LAEADY0DIwKnfLSY2p19h4JpU6fApWW74tahJow2RNToAK4wDZHOexEeHCZ3HAyXthOOQXlJKLr7CShDtdvurOg4y+Wse0y69LI9Z3xThEqUpkPP/xJji48XpvIEuKCx3w4Aw2kPGGBYXsVg6iIh3fIjQ=
+Received: from PH0P220CA0018.NAMP220.PROD.OUTLOOK.COM (2603:10b6:510:d3::33)
+ by CYXPR10MB7952.namprd10.prod.outlook.com (2603:10b6:930:d6::10) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9564.12; Fri, 30 Jan
- 2026 11:03:17 +0000
-Received: from SJ5PEPF000001F1.namprd05.prod.outlook.com
- (2603:10b6:a03:33b:cafe::df) by SJ0PR05CA0030.outlook.office365.com
- (2603:10b6:a03:33b::35) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9587.4 via Frontend Transport; Fri,
- 30 Jan 2026 11:03:15 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 198.47.21.194)
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9542.15; Fri, 30 Jan
+ 2026 11:03:23 +0000
+Received: from SN1PEPF0002BA51.namprd03.prod.outlook.com
+ (2603:10b6:510:d3:cafe::fe) by PH0P220CA0018.outlook.office365.com
+ (2603:10b6:510:d3::33) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9564.11 via Frontend Transport; Fri,
+ 30 Jan 2026 11:03:02 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 198.47.23.194)
  smtp.mailfrom=ti.com; dkim=none (message not signed) header.d=none;dmarc=pass
  action=none header.from=ti.com;
 Received-SPF: Pass (protection.outlook.com: domain of ti.com designates
- 198.47.21.194 as permitted sender) receiver=protection.outlook.com;
- client-ip=198.47.21.194; helo=flwvzet200.ext.ti.com; pr=C
-Received: from flwvzet200.ext.ti.com (198.47.21.194) by
- SJ5PEPF000001F1.mail.protection.outlook.com (10.167.242.69) with Microsoft
+ 198.47.23.194 as permitted sender) receiver=protection.outlook.com;
+ client-ip=198.47.23.194; helo=lewvzet200.ext.ti.com; pr=C
+Received: from lewvzet200.ext.ti.com (198.47.23.194) by
+ SN1PEPF0002BA51.mail.protection.outlook.com (10.167.242.74) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9564.3 via Frontend Transport; Fri, 30 Jan 2026 11:03:15 +0000
-Received: from DFLE207.ent.ti.com (10.64.6.65) by flwvzet200.ext.ti.com
- (10.248.192.31) with Microsoft SMTP Server (version=TLS1_2,
+ 15.20.9564.3 via Frontend Transport; Fri, 30 Jan 2026 11:03:23 +0000
+Received: from DLEE214.ent.ti.com (157.170.170.117) by lewvzet200.ext.ti.com
+ (10.4.14.103) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Fri, 30 Jan
- 2026 05:03:14 -0600
-Received: from DFLE208.ent.ti.com (10.64.6.66) by DFLE207.ent.ti.com
- (10.64.6.65) with Microsoft SMTP Server (version=TLS1_2,
+ 2026 05:03:22 -0600
+Received: from DLEE208.ent.ti.com (157.170.170.97) by DLEE214.ent.ti.com
+ (157.170.170.117) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Fri, 30 Jan
- 2026 05:03:14 -0600
-Received: from lelvem-mr06.itg.ti.com (10.180.75.8) by DFLE208.ent.ti.com
- (10.64.6.66) with Microsoft SMTP Server (version=TLS1_2,
+ 2026 05:03:22 -0600
+Received: from lelvem-mr06.itg.ti.com (10.180.75.8) by DLEE208.ent.ti.com
+ (157.170.170.97) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20 via Frontend
- Transport; Fri, 30 Jan 2026 05:03:14 -0600
+ Transport; Fri, 30 Jan 2026 05:03:22 -0600
 Received: from uda0498651.dhcp.ti.com (uda0498651.dhcp.ti.com [172.24.233.239])
-	by lelvem-mr06.itg.ti.com (8.18.1/8.18.1) with ESMTP id 60UB2HBp1204392;
-	Fri, 30 Jan 2026 05:03:10 -0600
+	by lelvem-mr06.itg.ti.com (8.18.1/8.18.1) with ESMTP id 60UB2HBr1204392;
+	Fri, 30 Jan 2026 05:03:18 -0600
 From: Sai Sree Kartheek Adivi <s-adivi@ti.com>
 To: <peter.ujfalusi@gmail.com>, <vkoul@kernel.org>, <robh@kernel.org>,
 	<krzk+dt@kernel.org>, <conor+dt@kernel.org>, <nm@ti.com>,
@@ -73,9 +73,9 @@ To: <peter.ujfalusi@gmail.com>, <vkoul@kernel.org>, <robh@kernel.org>,
 	<devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
 	<linux-arm-kernel@lists.infradead.org>, <vigneshr@ti.com>, <s-adivi@ti.com>
 CC: <r-sharma3@ti.com>, <gehariprasath@ti.com>
-Subject: [PATCH v4 12/19] dt-bindings: dma: ti: Add K3 BCDMA V2
-Date: Fri, 30 Jan 2026 16:31:52 +0530
-Message-ID: <20260130110159.359501-13-s-adivi@ti.com>
+Subject: [PATCH v4 14/19] dmaengine: ti: k3-psil-am62l: Add AM62Lx PSIL and PDMA data
+Date: Fri, 30 Jan 2026 16:31:54 +0530
+Message-ID: <20260130110159.359501-15-s-adivi@ti.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260130110159.359501-1-s-adivi@ti.com>
 References: <20260130110159.359501-1-s-adivi@ti.com>
@@ -90,192 +90,243 @@ Content-Type: text/plain
 X-C2ProcessedOrg: 333ef613-75bf-4e12-a4b1-8e3623f5dcea
 X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ5PEPF000001F1:EE_|SJ2PR10MB7112:EE_
-X-MS-Office365-Filtering-Correlation-Id: e968c592-d3dd-4f6f-1920-08de5fef2af7
+X-MS-TrafficTypeDiagnostic: SN1PEPF0002BA51:EE_|CYXPR10MB7952:EE_
+X-MS-Office365-Filtering-Correlation-Id: 6fb278e3-e8a2-4563-ff3c-08de5fef2f93
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|36860700013|376014|7416014|1800799024|82310400026|921020;
+	BCL:0;ARA:13230040|1800799024|82310400026|36860700013|7416014|376014|921020;
 X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?qOQBi/GxvODEnii3gpZLghdCP1nipynreCsfN9ICU+eBRjFpstgYajCe+2Sx?=
- =?us-ascii?Q?5SjllQ8XIcC/VrefnFM2NYWB6HcVK0vT7aWcVSFBgNlIZTcGgLZJEXt4SqWl?=
- =?us-ascii?Q?Hw5VjFoh3eBaMAAAY9NNaSme2tRFXUjK54lYSbY9qVjYJw0t0O/JkNxsr1K9?=
- =?us-ascii?Q?H+WcKXdE1+Qqr6v6BJ7RW/RJbXVy4uCx4NG/NONeTGrHVjbBiAQ5fYfRA5PT?=
- =?us-ascii?Q?M9Zy6BJsr3GQDxIC0chCVNQAKANvFaOjujyZDyUiN5QjnRj8BchRV3dqO+O5?=
- =?us-ascii?Q?fhWzjiwyhNXlkM0eHSX7RxcMP0f7trMy3NYZDsmc2zKs6NuTyIPbMMWR76DZ?=
- =?us-ascii?Q?HPhDuq+jbe9r5y6bvb5C3XajnrmTQufpq6CMdtuIWZ8dFie9G/ChZUUA68tp?=
- =?us-ascii?Q?kEX6yqqmbEFahtOlN7wd09lUs7Pw84Qpfjrln93jltuUDc520Cs3FZnB9K1n?=
- =?us-ascii?Q?Q/0liADuISZXk2XiaogmmSXEwyWamCMVXzIZdjGd61f+9Nk3tyfAv8Vsvo0Y?=
- =?us-ascii?Q?KuzMwT61jAOasUaCVBNEH+vDl7Xna6zFmFHEAVkZvY5E86BpbrHubCen6y35?=
- =?us-ascii?Q?1Pk2hc8RlDZTN3N343Vk6g5UpEU2xxkwxRsmHmb9UVGizigXvIMiQYWet+6E?=
- =?us-ascii?Q?1729DSHMwLL1Rt1CTlY/mAAu4y2hMeDrCkLeOIyOnk80jxCyJslYJrx8xmrF?=
- =?us-ascii?Q?NPH5u5mNlsYyF4vst7iNgVxHaEf51TmM5duIuRHYZVwLpbEzrVGm00AtSFzO?=
- =?us-ascii?Q?dAtpV7LBegHKucv+tBR9Z6CV1KgCpRk0sfCyYxoOjWMddd2Ym5cXLk+H/tSP?=
- =?us-ascii?Q?pdKNgYPyKvd+JzwetCmMbJ5rO5p0k7oQ7zgMhmQqI/71Kml0G3Xk3KGfxlSz?=
- =?us-ascii?Q?YSBtbyrOrlw0HOSBKxnlW5tSb3oSjos+nhVE6f1s/SW5G5TevlDQ7PzmsEk9?=
- =?us-ascii?Q?QBXtOz3rTTUQgwv7sUyNVhIix40jCdg5I5Drg40Ust9gwm+qtQTbTLhBpcxC?=
- =?us-ascii?Q?K/utny1bwGTyExlgXPSMWS4D11erO4f0UHSwNHen5at8wapnf5Z+DBB4izbg?=
- =?us-ascii?Q?RMSCBF91Sg1UqV/yPoBQnw+Icl5N78+KuTwa0y13fYrYRZLRWXGirl55s2Lp?=
- =?us-ascii?Q?gQP+a8CqfTQyAhWm4Ldw3N4VTIouvyRhUCEfynt0erS+DzM/3mdWkBv8cko/?=
- =?us-ascii?Q?1uEbukYNGrfP1ElVZT2ePzI6xkCOKO+12bOf8bmliF9ah2TTOjBl8ITP7l8m?=
- =?us-ascii?Q?Qw+T/v6n+rDOwIxIaNvs3JJAX/4EErDAKRheGm1mA06gKCYg9+KQ6Jmgr/Mv?=
- =?us-ascii?Q?1Lzw05voiupBEFsiHWjT7uM1DJLhnNkzOA/Lg1PxSql88hmVhaDQQRDQTvd4?=
- =?us-ascii?Q?Pgd1IoR3c54CJI835R1wzqtquaduLHIFVxfWk18U5I3SuMBTgwB8hkmoM5rt?=
- =?us-ascii?Q?qlUHJoGVZMMzDEX+jsXLgiaF5oTio2z5gLqQnxkvdJVQUoLi66iLmw06Erq0?=
- =?us-ascii?Q?txq/sIZRVTXBCTAFoKRKlxPHvBWIdqHEM6C77DLyqDarQQMEN6LRJd65kGqB?=
- =?us-ascii?Q?VFeG/ZkqWaIgRnFJ58oxkXeeHEsQpjOec4yRhr/wxSduCYKe1fxOc3NwPbqb?=
- =?us-ascii?Q?+FhL9bNq8v+M45vMwLXIiYQ=3D?=
+	=?us-ascii?Q?Nr38oYvox/I8Akg9jyJa3QJn9k7vukLg30w1/dzeqCehNPqOFw5uPoBSaQJx?=
+ =?us-ascii?Q?Z4msxJTVVz3SOfcXvEDGylThuP+7AjqUwEC+ZVLhx1BJ/UbdyO1v3VxL9+7s?=
+ =?us-ascii?Q?vjjlyqmKryqZcttwlruOmLZt5fp0xn6uKsQFeIFpXXxbzrWdehWVKDSaHVIR?=
+ =?us-ascii?Q?+4HDLRrouIweAPESCdCWiqnDFB8HsGZG8Wv/9qbUSqNuqaR16UlMb+fmgxjo?=
+ =?us-ascii?Q?bXgixUt4QQ22le9q0cHEQZIurrhd0Kof7wpPMXXFV1S9b5qnEPZVYWnXL8It?=
+ =?us-ascii?Q?LgfGMSXIueugK9IeXbXXU8cIzm0FAbec0iuuzk4xg3XCl+Cjh7LDqpAaQLMg?=
+ =?us-ascii?Q?+8HfPTDE+sXm5kmIFR1fYhna32vvebKwrN65DZb/k+Z5nsiLS+B3CzIgxQrR?=
+ =?us-ascii?Q?67sUSPgdLzhwtLbbANXq+qGM8V/HnyC7WFbDih4bBVBCHFFRqP/NlV2PME4z?=
+ =?us-ascii?Q?J9lgG15vv7gJ+gaq0SNKckWuQRffzkw4RdPNVMErbWMwMazzPrCDLpzKBoE1?=
+ =?us-ascii?Q?PHwGrFyKvTDl1CWxj6w6W7waDk5oHWQ98e1acVTf4nn3SJ+T4qzo5Qxm7i7l?=
+ =?us-ascii?Q?7ZbeogJDZD8Gg5yZlmrtxkD/C5SMeIO4IFr5tX+CwGHVVYR1UwHuVq8O6USU?=
+ =?us-ascii?Q?huECGoRaB1orhqCjjhpKslNp+y1jYpP6TayOcYNyeC32OBgnT7ayKgNMF3Rv?=
+ =?us-ascii?Q?uQlKWYeo4h2dIyZgBHvGgTEkJeOhY9eXidWTt4i+KEwRHdxgZLBaPID6NMUk?=
+ =?us-ascii?Q?tWKm9oq7i+gNClCOeUSt+AvX03t3FY5rIMHqZb2RAc2M4fO1BC2paKe6awYs?=
+ =?us-ascii?Q?4PGDWJbx53g1Lq5oZSu7S4hJLMdNI3C/LKoNGuZD8p0Z44XQyA0TuQrU1CY0?=
+ =?us-ascii?Q?jCoh3XFGrsNN4Ytdw12ajwFn9DE1JyZ6wyx7fx5/9e2NtoasI+uqz3+f7AEM?=
+ =?us-ascii?Q?xrN4cFrSyHAInBlbTibbv+GbzFNOr/Q4cAkKi/s+AvHNwB9qOV8SBPGvvlMQ?=
+ =?us-ascii?Q?3t3jGiCQA2FC6xVyY9tvakovQP/mrqVQLkcSrxrHlT8QAhGB0lWyYsaFDNyU?=
+ =?us-ascii?Q?YDnJnwxpHrhip5uEUC742XPCdRInZyCsu+ZIXXTycfjj21yp27NSfrs2KVIf?=
+ =?us-ascii?Q?djxzVPgB3rIVkPSvGfYTejhYdagfrlFNKnMo0AO2OzGiTVCzjNCz2jv26zfZ?=
+ =?us-ascii?Q?dhIgT0cqGg+KrbNQ4kWAwU/JJp3avNciejt4+S6F/RYkEzd5CNRLnS0izgYu?=
+ =?us-ascii?Q?fz6Qe+H2szoaAx99ApW9h/9Pal8GxH37chiF9/BuO2gmfbfc4+8YxhVMpD/r?=
+ =?us-ascii?Q?1IesNFAIp9tdUsmyjCGOFUw7Yw/cJu9n4B3cuHD6m3HvkfonMtm7hrHJ6PIA?=
+ =?us-ascii?Q?NVDlCcVxnqpxEDVsfL1jLsO/gjTPWP8s/juPMPwtwXOM1BWhqLgUynyFGWXV?=
+ =?us-ascii?Q?cZSMwHJ645j4OtPX5whjfbd3TU2nKn0EJ+OYTkIPIgLbMa+bYTwVPBLgRF4R?=
+ =?us-ascii?Q?TA6SvhUAk+modMxm2JN048Iq2A1261qb0/o4xw7GCphv+ofjvN/nuDH77xH2?=
+ =?us-ascii?Q?9cc4P6tq7WQL05muJVCu84PRULihNr04Rhzx3LjMbEOaRHCKOzzWWbYeq4cU?=
+ =?us-ascii?Q?wSpfgYag5iabSxocddZjGRg=3D?=
 X-Forefront-Antispam-Report:
-	CIP:198.47.21.194;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:flwvzet200.ext.ti.com;PTR:ErrorRetry;CAT:NONE;SFS:(13230040)(36860700013)(376014)(7416014)(1800799024)(82310400026)(921020);DIR:OUT;SFP:1101;
+	CIP:198.47.23.194;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:lewvzet200.ext.ti.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(1800799024)(82310400026)(36860700013)(7416014)(376014)(921020);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	+ztJlR/21rNWuT6BMAeWam77K7Wyub/NPfVrOeUI+6vgE0BUdE8tXii9bMz77++ExHL73cVvUgXD72C1BmEW2sz7bP0l4pXFGcEHFXUBxOfrY0jZ3+wLylxym4S073H4IBQG5oud/qoSbQmsQGtW7D9OsvcUAi8SDPhEOV0wOMdJj8ukAyzvaG+sv4F4Ssh7wHByUZCHpoMZjnWrO7t1dDy7IyCwe0vKH5T6M5t6LeJLhAFQ+FIU0XGRqNslkvATQKSvhNIWPF6Ej/MY7e1il1V/KYawaFSSDy0u0NhLD1/sEnha+70IRqhBkWQgqw1b3ZQwfg/0QP8Jb/sAEnF7bxDE8x5O+g+5BNDp/5i1d6S0/JwYlhykicwIkbUwCQpqFOCIbZDb9ab1E0XHDg6ycUtufX7Z7PVVeT2ZZhYSlzQhEBKlV0Q6qUR1DvMuib75
+	mKDZ0K3PYftkt+SDiiIQM14O8Z4xQZBfdwQ5AWlIQEG9P1V71/4X312EFw2Q87z84RQS9M3X8tda5U38qbcqWJeI1jp6N5UBqz8Y6iqi9y/FRnyTeJL5rOA/0PhPadXMoAGBbyRY98ySOIyvnKa6mIEpdVtpAd9lmt15c+jmvd4eB75nneaqEb5gwWuYc5VwJOPchsscBNa6QbNVhrMiprGnAxPGzCXBAJ5+3yDBlvYqLcfibOB/t35zGDyza84ycvOvsytSFv9DjBzU6e59d0n3UJiocyI0Lrxx1hFWZwrYFjJhqtlQZWa40SKGoBvu3wLkt445xsWAxWiGcgZvYrtXF81g1sdUwT8PKJeFzyxnzAaJM3LpfS/ozLFC6bTf767OlDwsj249rk2zriYRZ13mtdNa8tyeiL0DmV/XpKtm33EZDZ44IMFsvzx8F0Ig
 X-OriginatorOrg: ti.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 Jan 2026 11:03:15.4443
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 Jan 2026 11:03:23.2458
  (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: e968c592-d3dd-4f6f-1920-08de5fef2af7
+X-MS-Exchange-CrossTenant-Network-Message-Id: 6fb278e3-e8a2-4563-ff3c-08de5fef2f93
 X-MS-Exchange-CrossTenant-Id: e5b49634-450b-4709-8abb-1e2b19b982b7
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=e5b49634-450b-4709-8abb-1e2b19b982b7;Ip=[198.47.21.194];Helo=[flwvzet200.ext.ti.com]
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=e5b49634-450b-4709-8abb-1e2b19b982b7;Ip=[198.47.23.194];Helo=[lewvzet200.ext.ti.com]
 X-MS-Exchange-CrossTenant-AuthSource:
-	SJ5PEPF000001F1.namprd05.prod.outlook.com
+	SN1PEPF0002BA51.namprd03.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ2PR10MB7112
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CYXPR10MB7952
 
-New binding document for
-Texas Instruments K3 Block Copy DMA (BCDMA) V2.
+Add PSIL and PDMA data for AM62Lx SoC.
 
-BCDMA V2 is introduced as part of AM62L.
-
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Signed-off-by: Sai Sree Kartheek Adivi <s-adivi@ti.com>
 ---
- .../bindings/dma/ti/ti,k3-bcdma-v2.yaml       | 116 ++++++++++++++++++
- 1 file changed, 116 insertions(+)
- create mode 100644 Documentation/devicetree/bindings/dma/ti/ti,k3-bcdma-v2.yaml
+ drivers/dma/ti/Makefile        |   3 +-
+ drivers/dma/ti/k3-psil-am62l.c | 132 +++++++++++++++++++++++++++++++++
+ drivers/dma/ti/k3-psil-priv.h  |   1 +
+ drivers/dma/ti/k3-psil.c       |   1 +
+ 4 files changed, 136 insertions(+), 1 deletion(-)
+ create mode 100644 drivers/dma/ti/k3-psil-am62l.c
 
-diff --git a/Documentation/devicetree/bindings/dma/ti/ti,k3-bcdma-v2.yaml b/Documentation/devicetree/bindings/dma/ti/ti,k3-bcdma-v2.yaml
+diff --git a/drivers/dma/ti/Makefile b/drivers/dma/ti/Makefile
+index 3b91c02e55eaf..41bfba944dc6c 100644
+--- a/drivers/dma/ti/Makefile
++++ b/drivers/dma/ti/Makefile
+@@ -14,6 +14,7 @@ k3-psil-lib-objs := k3-psil.o \
+ 		    k3-psil-am62.o \
+ 		    k3-psil-am62a.o \
+ 		    k3-psil-j784s4.o \
+-		    k3-psil-am62p.o
++		    k3-psil-am62p.o \
++		    k3-psil-am62l.o
+ obj-$(CONFIG_TI_K3_PSIL) += k3-psil-lib.o
+ obj-$(CONFIG_TI_DMA_CROSSBAR) += dma-crossbar.o
+diff --git a/drivers/dma/ti/k3-psil-am62l.c b/drivers/dma/ti/k3-psil-am62l.c
 new file mode 100644
-index 0000000000000..b0bfb19ba863a
+index 0000000000000..45f5aac32f6a0
 --- /dev/null
-+++ b/Documentation/devicetree/bindings/dma/ti/ti,k3-bcdma-v2.yaml
-@@ -0,0 +1,116 @@
-+# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-+# Copyright (C) 2024-2025 Texas Instruments Incorporated
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/dma/ti/ti,k3-bcdma-v2.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
++++ b/drivers/dma/ti/k3-psil-am62l.c
+@@ -0,0 +1,132 @@
++// SPDX-License-Identifier: GPL-2.0
++/*
++ *  Copyright (C) 2024-2025 Texas Instruments Incorporated - https://www.ti.com
++ */
 +
-+title: Texas Instruments K3 DMSS BCDMA V2
++#include <linux/kernel.h>
 +
-+maintainers:
-+  - Sai Sree Kartheek Adivi <s-adivi@ti.com>
++#include "k3-psil-priv.h"
 +
-+description: |
-+  The BCDMA V2 is intended to perform similar functions as the TR mode channels
-+  of K3 UDMA-P. BCDMA V2 includes block copy channels and Split channels.
++#define PSIL_PDMA_XY_TR(x, ch)					\
++	{							\
++		.thread_id = x,					\
++		.ep_config = {					\
++			.ep_type = PSIL_EP_PDMA_XY,		\
++			.mapped_channel_id = ch,		\
++			.default_flow_id = -1,			\
++		},						\
++	}
 +
-+  Block copy channels mainly used for memory to memory transfers, but with
-+  optional triggers a block copy channel can service peripherals by accessing
-+  directly to memory mapped registers or area.
++#define PSIL_PDMA_XY_PKT(x, ch)					\
++	{							\
++		.thread_id = x,					\
++		.ep_config = {					\
++			.ep_type = PSIL_EP_PDMA_XY,		\
++			.mapped_channel_id = ch,		\
++			.pkt_mode = 1,				\
++			.default_flow_id = -1			\
++		},						\
++	}
 +
-+  Split channels can be used to service PSI-L based peripherals. The peripherals
-+  can be PSI-L native or legacy, non PSI-L native peripherals with PDMAs. PDMA
-+  is tasked to act as a bridge between the PSI-L fabric and the legacy peripheral.
++#define PSIL_ETHERNET(x, ch, flow_base, flow_cnt)		\
++	{							\
++		.thread_id = x,					\
++		.ep_config = {					\
++			.ep_type = PSIL_EP_NATIVE,		\
++			.pkt_mode = 1,				\
++			.needs_epib = 1,			\
++			.psd_size = 16,				\
++			.mapped_channel_id = ch,		\
++			.flow_start = flow_base,		\
++			.flow_num = flow_cnt,			\
++			.default_flow_id = flow_base,		\
++		},						\
++	}
 +
-+allOf:
-+  - $ref: /schemas/dma/dma-controller.yaml#
++#define PSIL_PDMA_MCASP(x, ch)				\
++	{						\
++		.thread_id = x,				\
++		.ep_config = {				\
++			.ep_type = PSIL_EP_PDMA_XY,	\
++			.pdma_acc32 = 1,		\
++			.pdma_burst = 1,		\
++			.mapped_channel_id = ch,	\
++		},					\
++	}
 +
-+properties:
-+  compatible:
-+    const: ti,am62l-dmss-bcdma
++/* PSI-L source thread IDs, used for RX (DMA_DEV_TO_MEM) */
++static struct psil_ep am62l_src_ep_map[] = {
++	/* PDMA_MAIN1 - UART0-6 */
++	PSIL_PDMA_XY_PKT(0x4400, 0),
++	PSIL_PDMA_XY_PKT(0x4401, 2),
++	PSIL_PDMA_XY_PKT(0x4402, 4),
++	PSIL_PDMA_XY_PKT(0x4403, 6),
++	PSIL_PDMA_XY_PKT(0x4404, 8),
++	PSIL_PDMA_XY_PKT(0x4405, 10),
++	PSIL_PDMA_XY_PKT(0x4406, 12),
++	/* PDMA_MAIN0 - SPI0 - CH0-3 */
++	PSIL_PDMA_XY_TR(0x4300, 16),
++	/* PDMA_MAIN0 - SPI1 - CH0-3 */
++	PSIL_PDMA_XY_TR(0x4301, 24),
++	/* PDMA_MAIN0 - SPI2 - CH0-3 */
++	PSIL_PDMA_XY_TR(0x4302, 32),
++	/* PDMA_MAIN0 - SPI3 - CH0-3 */
++	PSIL_PDMA_XY_TR(0x4303, 40),
++	/* PDMA_MAIN2 - MCASP0-2 */
++	PSIL_PDMA_MCASP(0x4500, 48),
++	PSIL_PDMA_MCASP(0x4501, 50),
++	PSIL_PDMA_MCASP(0x4502, 52),
++	/* PDMA_MAIN0 - AES */
++	PSIL_PDMA_XY_TR(0x4700, 65),
++	/* PDMA_MAIN0 - ADC */
++	PSIL_PDMA_XY_TR(0x4503, 80),
++	PSIL_PDMA_XY_TR(0x4504, 81),
++	PSIL_ETHERNET(0x4600, 96, 96, 16),
++};
 +
-+  reg:
-+    items:
-+      - description: BCDMA Control /Status
-+      - description: Block Copy Channel Realtime
-+      - description: Channel Realtime
-+      - description: Ring Realtime
++/* PSI-L destination thread IDs, used for TX (DMA_MEM_TO_DEV) */
++static struct psil_ep am62l_dst_ep_map[] = {
++	/* PDMA_MAIN1 - UART0-6 */
++	PSIL_PDMA_XY_PKT(0xC400, 1),
++	PSIL_PDMA_XY_PKT(0xC401, 3),
++	PSIL_PDMA_XY_PKT(0xC402, 5),
++	PSIL_PDMA_XY_PKT(0xC403, 7),
++	PSIL_PDMA_XY_PKT(0xC404, 9),
++	PSIL_PDMA_XY_PKT(0xC405, 11),
++	PSIL_PDMA_XY_PKT(0xC406, 13),
++	/* PDMA_MAIN0 - SPI0 - CH0-3 */
++	PSIL_PDMA_XY_TR(0xC300, 17),
++	/* PDMA_MAIN0 - SPI1 - CH0-3 */
++	PSIL_PDMA_XY_TR(0xC301, 25),
++	/* PDMA_MAIN0 - SPI2 - CH0-3 */
++	PSIL_PDMA_XY_TR(0xC302, 33),
++	/* PDMA_MAIN0 - SPI3 - CH0-3 */
++	PSIL_PDMA_XY_TR(0xC303, 41),
++	/* PDMA_MAIN2 - MCASP0-2 */
++	PSIL_PDMA_MCASP(0xC500, 49),
++	PSIL_PDMA_MCASP(0xC501, 51),
++	PSIL_PDMA_MCASP(0xC502, 53),
++	/* PDMA_MAIN0 - SHA */
++	PSIL_PDMA_XY_TR(0xC700, 64),
++	/* PDMA_MAIN0 - AES */
++	PSIL_PDMA_XY_TR(0xC701, 66),
++	/* PDMA_MAIN0 - CRC32 - CH0-1 */
++	PSIL_PDMA_XY_TR(0xC702, 67),
++	/* CPSW3G */
++	PSIL_ETHERNET(0xc600, 64, 64, 2),
++	PSIL_ETHERNET(0xc601, 66, 66, 2),
++	PSIL_ETHERNET(0xc602, 68, 68, 2),
++	PSIL_ETHERNET(0xc603, 70, 70, 2),
++	PSIL_ETHERNET(0xc604, 72, 72, 2),
++	PSIL_ETHERNET(0xc605, 74, 74, 2),
++	PSIL_ETHERNET(0xc606, 76, 76, 2),
++	PSIL_ETHERNET(0xc607, 78, 78, 2),
++};
 +
-+  reg-names:
-+    items:
-+      - const: gcfg
-+      - const: bchanrt
-+      - const: chanrt
-+      - const: ringrt
-+
-+  "#dma-cells":
-+    const: 4
-+    description: |
-+      cell 1: Channel operation mode
-+        0 - split channel / no trigger
-+        1 - internal channel event
-+        2 - external signal
-+        3 - timer manager event
-+
-+      cell 2: parameter for the trigger:
-+        if cell 1 is 0 (disable / no trigger):
-+          Unused, ignored
-+        if cell 1 is 1 (internal channel event):
-+          channel number whose TR event should trigger the current channel.
-+        if cell 1 is 2 or 3 (external signal or timer manager event):
-+          index of global interfaces that come into the DMA.
-+
-+          Please refer to the device documentation for global interface indexes.
-+
-+      cell 3: Channel identification for the peripheral
-+        if cell 1 is 0 (split channel / no trigger):
-+          PSI-L thread ID of the remote (to BCDMA) end.
-+          Valid ranges for thread ID depends on the data movement direction:
-+          for source thread IDs (rx): 0 - 0x7fff
-+          for destination thread IDs (tx): 0x8000 - 0xffff
-+
-+          Please refer to the device documentation for the PSI-L thread map and
-+          also the PSI-L peripheral chapter for the correct thread ID.
-+
-+        if cell 1 is 1 or 2 or 3 (MEM_TO_MEM and/or trigger type):
-+          Unused, provide 0.
-+
-+      cell 4: ASEL value for the channel
-+
-+required:
-+  - compatible
-+  - reg
-+  - reg-names
-+  - "#dma-cells"
-+
-+unevaluatedProperties: false
-+
-+examples:
-+  - |
-+    main {
-+        #address-cells = <2>;
-+        #size-cells = <2>;
-+
-+        main_bcdma: dma-controller@485c4000 {
-+            compatible = "ti,am62l-dmss-bcdma";
-+            reg = <0x00 0x485c4000 0x00 0x4000>,
-+                  <0x00 0x48880000 0x00 0x10000>,
-+                  <0x00 0x48800000 0x00 0x80000>,
-+                  <0x00 0x47000000 0x00 0x200000>;
-+            reg-names = "gcfg", "bchanrt", "chanrt", "ringrt";
-+            #dma-cells = <4>;
-+        };
-+
-+        crypto@40800000 {
-+            compatible = "ti,am62l-dthev2";
-+            reg = <0x00 0x40800000 0x00 0x14000>;
-+
-+            dmas = <&main_bcdma 0 0 0x4700 0>,
-+                   /* rx: Split channel, no trigger, PSI-L thread id, ASEL value */
-+                   <&main_bcdma 0 0 0xc701 0>,
-+                   /* tx1: Split channel, no trigger, PSI-L thread id, ASEL value */
-+                   <&main_bcdma 0 0 0xc700 0>;
-+                   /* tx2: Split channel, no trigger, PSI-L thread id, ASEL value */
-+            dma-names = "rx", "tx1", "tx2";
-+        };
-+    };
++struct psil_ep_map am62l_ep_map = {
++	.name = "am62l",
++	.src = am62l_src_ep_map,
++	.src_count = ARRAY_SIZE(am62l_src_ep_map),
++	.dst = am62l_dst_ep_map,
++	.dst_count = ARRAY_SIZE(am62l_dst_ep_map),
++};
+diff --git a/drivers/dma/ti/k3-psil-priv.h b/drivers/dma/ti/k3-psil-priv.h
+index a577be97e3447..961b73df7a6bb 100644
+--- a/drivers/dma/ti/k3-psil-priv.h
++++ b/drivers/dma/ti/k3-psil-priv.h
+@@ -46,5 +46,6 @@ extern struct psil_ep_map am62_ep_map;
+ extern struct psil_ep_map am62a_ep_map;
+ extern struct psil_ep_map j784s4_ep_map;
+ extern struct psil_ep_map am62p_ep_map;
++extern struct psil_ep_map am62l_ep_map;
+ 
+ #endif /* K3_PSIL_PRIV_H_ */
+diff --git a/drivers/dma/ti/k3-psil.c b/drivers/dma/ti/k3-psil.c
+index c4b6f0df46861..2a843f36261bc 100644
+--- a/drivers/dma/ti/k3-psil.c
++++ b/drivers/dma/ti/k3-psil.c
+@@ -28,6 +28,7 @@ static const struct soc_device_attribute k3_soc_devices[] = {
+ 	{ .family = "J784S4", .data = &j784s4_ep_map },
+ 	{ .family = "AM62PX", .data = &am62p_ep_map },
+ 	{ .family = "J722S", .data = &am62p_ep_map },
++	{ .family = "AM62LX", .data = &am62l_ep_map },
+ 	{ /* sentinel */ }
+ };
+ 
 -- 
 2.34.1
 
