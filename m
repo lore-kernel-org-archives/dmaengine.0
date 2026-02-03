@@ -1,156 +1,123 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.17])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f67.google.com (mail-wr1-f67.google.com [209.85.221.67])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66630396D24;
-	Tue,  3 Feb 2026 10:04:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.17
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49CCA31A571
+	for <dmaengine@vger.kernel.org>; Tue,  3 Feb 2026 10:30:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.67
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770113096; cv=none; b=Z2FXQ6eewzp3j7gz01FaokPAIHTECYuEiRNiPHJn3K4Kdb46oSbVq7a243ylNT3ZCMjiKr6LQRxYCM4EfLzLMNFyo7qHrGfH9uIxSaPSzDgOWxfCLaqENijC1eO1LuKgmZ5z2yb3u1ySrCoP8610t9n+toxAFs1+EqrHa4r/tUQ=
+	t=1770114638; cv=none; b=itx38rhXiUyLcM+wHD0OSdUuk1br32A3qg5SJOqCXnBTwogYPNRaZ4Y4we4qBq4JdAPPSt9F8D4sE8Ak41LgabJFXDK+TrRioJBMtNfc3YzYZgm7Y/9BKMnfvD5/Zvy7/SV3HuPnvTwvnXmitqpAyr2sWFJNCP8VU72Hav+C7hs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770113096; c=relaxed/simple;
-	bh=vtrpsVqQb5YbyQPqbOoqVjxnUae20uePToXzdPR9HFg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mIoJ3D10YiDERzDqgCFn3HgzjvdaTbXBGNoGLJOfSoavo7IL5hYUr62w15ZnG46BxMX8HlC59AbDWAhGjCr7bcAU+EJglc3DHskNxI8z4GExfuPjI6pa9kTYeZ5ysEX1iDVOA5hCbUKeWC6adUjmnazqnizvZsVZKa1YegS0hq8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=n/d9IjOT; arc=none smtp.client-ip=198.175.65.17
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
+	s=arc-20240116; t=1770114638; c=relaxed/simple;
+	bh=PjFk164I71mZxjVv/pn85dLTnDDTC9xoAQHGjiSsSzM=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=Z5sj7+lTO+u8J5LOkYAEsd+OJoxGU2vB6yTfkJoYn3eELV7Ajd9gst/0/SjE1hl8+UMx3WYyf/6wHwmSH7Nu2gWVRzQfwnQdegxOFfu5/aTx8oNHNXkfS+Psv2EttwUrO1ZsCtLmXQ2cct0ghZEpViKOuP6ycRvTeq1UKLrmYi0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VDOp+1Qq; arc=none smtp.client-ip=209.85.221.67
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="n/d9IjOT"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1770113095; x=1801649095;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=vtrpsVqQb5YbyQPqbOoqVjxnUae20uePToXzdPR9HFg=;
-  b=n/d9IjOTt/U8zzM0q7vJZP+dm4jEY5JkdQ+9vjzCLqzmu9Ni9GqmHjj9
-   DqhSYgOknWE8YoCU0MuGzpCZQ6D8FvzNkaMAbjfGXP9OfG1UwDArpQScu
-   VYDX9zjRujMqxiCHNqW5xDl8SMUOqA5vv+7MLXxGpbRBvyQjHL2F8MvX0
-   iz4PVYVQJS3p13uFQo1YgAoOwXI7eZ4E2jjUR4yCSNXYZidIOqIxg2JtO
-   uYK56V8HTdJ6zyNuVTP7bachyLsDewWn8HNos0nmxkT4wm52bjMnbm4Fw
-   xk4h5zm8yUbkT/pfkmRdo89Oy24qRFT2Tw854Lp8rnj35qgU8siviGSkZ
-   A==;
-X-CSE-ConnectionGUID: pJNGc9MHQuOCaR9USnj9NQ==
-X-CSE-MsgGUID: siD45I7zR4KkJAL13d3jLA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11690"; a="71262688"
-X-IronPort-AV: E=Sophos;i="6.21,270,1763452800"; 
-   d="scan'208";a="71262688"
-Received: from fmviesa010.fm.intel.com ([10.60.135.150])
-  by orvoesa109.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Feb 2026 02:04:55 -0800
-X-CSE-ConnectionGUID: cQg2U5gcRlGlQJ4QvktJ9A==
-X-CSE-MsgGUID: k4wVpFo6TQCFjuzyYyKKSA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.21,270,1763452800"; 
-   d="scan'208";a="209977287"
-Received: from black.igk.intel.com ([10.91.253.5])
-  by fmviesa010.fm.intel.com with ESMTP; 03 Feb 2026 02:04:53 -0800
-Received: by black.igk.intel.com (Postfix, from userid 1001)
-	id 1BB7495; Tue, 03 Feb 2026 11:04:52 +0100 (CET)
-Date: Tue, 3 Feb 2026 11:04:52 +0100
-From: Mika Westerberg <mika.westerberg@linux.intel.com>
-To: correctmost <cmlists@sent.com>
-Cc: Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	dmaengine@vger.kernel.org, regressions@lists.linux.dev,
-	vkoul@kernel.org, linux-i2c@vger.kernel.org
-Subject: Re: [REGRESSION][BISECTED] Lenovo IdeaPad touchpad does not work
- when idma64 is present in initramfs
-Message-ID: <20260203100452.GE2275908@black.igk.intel.com>
-References: <20260129065837.GT2275908@black.igk.intel.com>
- <513c490f-c433-4298-ae66-6e165aa7b299@app.fastmail.com>
- <20260129115609.GV2275908@black.igk.intel.com>
- <7d966d39-aa5a-4a0f-a115-a4b90632a26c@app.fastmail.com>
- <20260130072620.GW2275908@black.igk.intel.com>
- <53bd143f-525d-4748-af93-3460c9f59d1a@app.fastmail.com>
- <20260202075118.GY2275908@black.igk.intel.com>
- <00ee321d-1f36-4f1e-91f7-fdee4212c5cc@app.fastmail.com>
- <20260202102225.GB2275908@black.igk.intel.com>
- <5ed857f5-59ae-4052-8f2e-dac7fcd014cc@app.fastmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VDOp+1Qq"
+Received: by mail-wr1-f67.google.com with SMTP id ffacd0b85a97d-435f177a8f7so4270608f8f.1
+        for <dmaengine@vger.kernel.org>; Tue, 03 Feb 2026 02:30:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1770114634; x=1770719434; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=1U+dkg/+uoRE1uMSj0xkZIAtaZIHuboawXSgHR45QSU=;
+        b=VDOp+1Qqhmta6P9zx3krp0YNF9MNafOkWV5JgHTha1WegG8L7HsN2ArHCah+QtoTa8
+         /7eLs2u6AgkEukxXBL9qzmdBWT0oQunF4g4ckqdCSSKtJg/WWszmXxlp4MmxnuIKyixh
+         e3DjwPDCHok89TsyBZMaUpNmwut64PGxLfGV5cYQTdN7gKGSvsEOv/haoUS3/rY6K89C
+         kugC4l5m3+MY8VKypR2vRq4OKuDqaw0R/WGHU8tpqlGBCggLHc4IHJgCObMNiwymQokO
+         UQ5ewHbLAOAKh8rVmGIcGpEeiGrdXibRMHKJBe9+UlORfFfblkJ/iw6HeaIhdvLALTpQ
+         8HuA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1770114634; x=1770719434;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=1U+dkg/+uoRE1uMSj0xkZIAtaZIHuboawXSgHR45QSU=;
+        b=P+CwGTbbHm1tQegFCpomDm3YwcqlHP3Q6NDRbCBeUUkjNT46N9XTyf637tcdRfU/NV
+         +bnyIo71AUzmCkzLWsyq/wbn8HKHTQUPLPgvP+CSthp5OINeOu1oSupYaRlrwlMACOKz
+         JzPhmCR2mgoTM1Wg1mKNVoUfrBKSo9kZ/MkU6Vt6pCquveaj5oSbgild+0oy/arPnEQC
+         iY9xpMsQsfgHApv/ygm0dOGwKq41GpKPfAK5q9CWzRHR/oKzN6SggrzzaMM7PBPApWZe
+         NdsPFvZi2wIBBrax8BJvOpH9tf0/HS9CoLUvflUSrQgK1llgcZeQ79pOZOT/SFAoS3qQ
+         votQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXxqCLtvml1vg5fRQE5VZy0L0qjCEkhPp/EV2RzJHS16F2n6K4qCyTlugV6WLPbLdyalnvYnQjQMac=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwDvmwkveYMj9xdkfQ2onUZjqINHLKJ9fJINrAm5Cd9FoWqodf5
+	dDJOtuKwTpA/pGRkQ/674kviCiKp3TX3z+om/IArJSGmk7wEghujdhTE
+X-Gm-Gg: AZuq6aJt/jKHsAp5PePOGq14q/hCwyfQC5xaDqigWWo1UchUn6lIf7VV5JZ8O1M8E1/
+	GE8QPgmo+m1BwP6d0QElxOVgv5eWQ89YCOU1qbO8eIuZ4gIWI4BOSKGgOSmw+/Utcy5Hffx9Pi9
+	Jni03GXMvw0LbNcdW1xgPUyVcXUqdFtyozz90kAiQk9JXW2eJwSZAEDgf1tM4k1Ejt/0j60foGQ
+	ctZ0IwCeINxGoAb8OmeUIGh7iGEEPzl5O3NLJff27k9U+7zHdYalqMJW55Uybf3IJ+AxaQIEtLs
+	Qpb3lmPdoVLt8BA0raqCn+2Hvo+GREgj79LP6zpZKgSK4vdMazRYSzM0hEupeBLAdqlXtcqI4eV
+	vpR/f1xhj88HFcANKIg5PTCWVywiN6CttNg0SDrbpBK1i4kafGfUO/KU2rgoK2tO9w7nk0P6x62
+	1owF/FFSKHY9EzBWDW/T4ro8ZK8HBH
+X-Received: by 2002:a05:6000:1863:b0:435:a136:b891 with SMTP id ffacd0b85a97d-435f3a6a7e0mr20936885f8f.13.1770114634374;
+        Tue, 03 Feb 2026 02:30:34 -0800 (PST)
+Received: from biju.lan ([2a00:23c4:a758:8a01:9cd9:f748:166d:55fc])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-435e1323034sm53160961f8f.35.2026.02.03.02.30.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 03 Feb 2026 02:30:34 -0800 (PST)
+From: Biju <biju.das.au@gmail.com>
+X-Google-Original-From: Biju <biju.das.jz@bp.renesas.com>
+To: Vinod Koul <vkoul@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Magnus Damm <magnus.damm@gmail.com>
+Cc: Biju Das <biju.das.jz@bp.renesas.com>,
+	dmaengine@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-renesas-soc@vger.kernel.org,
+	Prabhakar Mahadev Lad <prabhakar.mahadev-lad.rj@bp.renesas.com>,
+	Biju Das <biju.das.au@gmail.com>,
+	Fabrizio Castro <fabrizio.castro.jz@renesas.com>,
+	Conor Dooley <conor.dooley@microchip.com>
+Subject: [PATCH v3 01/10] dt-bindings: dma: rz-dmac: Document RZ/G3L SoC
+Date: Tue,  3 Feb 2026 10:30:09 +0000
+Message-ID: <20260203103031.247435-2-biju.das.jz@bp.renesas.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260203103031.247435-1-biju.das.jz@bp.renesas.com>
+References: <20260203103031.247435-1-biju.das.jz@bp.renesas.com>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <5ed857f5-59ae-4052-8f2e-dac7fcd014cc@app.fastmail.com>
+Content-Transfer-Encoding: 8bit
 
-On Mon, Feb 02, 2026 at 06:16:02AM -0500, correctmost wrote:
-> > Could you drop the above hack again so that it should "fail". Then build
-> > the kernel with CONFIG_PREEMPT_VOLUNTARY=y and add the below hack. Perhaps
-> > this is just lucky timing? Please try a couple of boots and make sure the
-> > results are the same each time.
-> 
-> I cold booted five times and the touchpad did not work during any of those boots.
+From: Biju Das <biju.das.jz@bp.renesas.com>
 
-Thanks!
+Document the Renesas RZ/G3L DMAC block. This is identical to the one found
+on the RZ/G3S SoC.
 
-> I noticed that the "probe with driver" failure reports -22 instead of -110 now:
-> 
-> [   33.023932] i2c_hid_acpi i2c-ELAN06FA:00: Report Descriptor: 05 01 09 02 a1 01 85 01 09 01 a1 00 05 09 19 01 29 02 15 00 25 01 75 01 95 02 81 02 95 06 81 03 05 01 09 30 09 31 15 81 25 7f 75 08 95 02 81 06 75 08 95 05 81 03 c0 06 00 ff 09 01 85 0e 09 c5
-> [   33.026070] hid-generic 0018:04F3:327E.0001: item fetching failed at offset 638/675
-> [   33.027573] hid-generic 0018:04F3:327E.0001: probe with driver hid-generic failed with error -22
-> ...
-> [   33.183959] hid-multitouch 0018:04F3:327E.0001: item fetching failed at offset 638/675
-> [   33.183975] hid-multitouch 0018:04F3:327E.0001: probe with driver hid-multitouch failed with error -22
-> 
+Reviewed-by: Fabrizio Castro <fabrizio.castro.jz@renesas.com>
+Acked-by: Conor Dooley <conor.dooley@microchip.com>
+Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
+---
+v2->v3:
+ * No change.
+v1->v2:
+ * Collected tags.
+---
+ Documentation/devicetree/bindings/dma/renesas,rz-dmac.yaml | 1 +
+ 1 file changed, 1 insertion(+)
 
-This is really odd because "item fetching" is not really accessing any
-hardware bus - it just parses the descriptor and the descriptor looks fine
-to me (and this is the same as in case of working run):
-
-Usage Page (Generic Desktop)
-Usage (Generic Desktop.Mouse)
-Collection (1)
-  Report ID (1)
-  Usage (Generic Desktop.Pointer)
-  Collection (0)
-    Usage Page (Button)
-    Usage Minimum (1)
-    Usage Maximum (2)
-    Logical Minimum (0)
-    Logical Maximum (1)
-    Report Size (1)
-    Report Count (2)
-    Input (2)
-    Report Count (6)
-    Input (3)
-    Usage Page (Generic Desktop)
-    Usage (Generic Desktop.X)
-    Usage (Generic Desktop.Y)
-    Logical Minimum (129)
-    Logical Maximum (127)
-    Report Size (8)
-    Report Count (2)
-    Input (6)
-    Report Size (8)
-    Report Count (5)
-    Input (3)
-  End Collection (0)
-  Usage Page (Vendor Defined Page 1)
-  Usage (Vendor Defined Page 1.Vendor Usage 1)
-  Report ID (14)
-  Usage (Vendor Defined Page 1.00c5)
-
-I noticed  you still have:
-
-[    0.069726] Dynamic Preempt: full
-
-Can you change that in .config to:
-
-CONFIG_PREEMPT_VOLUNTARY=y
-
-Also let's add on top of everything one more hack patch, just in case ;-)
-
-diff --git a/drivers/i2c/i2c-core-acpi.c b/drivers/i2c/i2c-core-acpi.c
-index ed90858a27b7..0297ebedb802 100644
---- a/drivers/i2c/i2c-core-acpi.c
-+++ b/drivers/i2c/i2c-core-acpi.c
-@@ -371,7 +371,7 @@ static const struct acpi_device_id i2c_acpi_force_100khz_device_ids[] = {
- 	 * a 400KHz frequency. The root cause of the issue is not known.
- 	 */
- 	{ "DLL0945", 0 },
--	{ "ELAN06FA", 0 },
-+//	{ "ELAN06FA", 0 },
- 	{}
- };
+diff --git a/Documentation/devicetree/bindings/dma/renesas,rz-dmac.yaml b/Documentation/devicetree/bindings/dma/renesas,rz-dmac.yaml
+index d137b9cbaee9..e3311029eb2f 100644
+--- a/Documentation/devicetree/bindings/dma/renesas,rz-dmac.yaml
++++ b/Documentation/devicetree/bindings/dma/renesas,rz-dmac.yaml
+@@ -19,6 +19,7 @@ properties:
+               - renesas,r9a07g044-dmac # RZ/G2{L,LC}
+               - renesas,r9a07g054-dmac # RZ/V2L
+               - renesas,r9a08g045-dmac # RZ/G3S
++              - renesas,r9a08g046-dmac # RZ/G3L
+           - const: renesas,rz-dmac
  
+       - items:
+-- 
+2.43.0
+
