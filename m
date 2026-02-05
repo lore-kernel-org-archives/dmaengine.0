@@ -1,33 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BBC03A7826;
-	Thu,  5 Feb 2026 09:04:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21B7C362157;
+	Thu,  5 Feb 2026 09:06:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770282285; cv=none; b=ZXfWbLs/Cl+HI87Vz/5uCyPHyvDnbyO1Az8e9QJ3dDzhZeglDrbXBzNZbBTMAhwhWwMzLhyGCF6B0E0JgQgtP5NYQuO4IevHZqW1iKmdK65VzEYuF0ts7GJknnV5LW3yMZoykHASthddM8T0bOx145dShLJttI1o9+z7vGWlfNQ=
+	t=1770282404; cv=none; b=DOSSGzX28Bht/hvMA/hWFv9lyeU7CKBWKnBaonStJ2ot//8jS1jFPb3s8Av7FasK+KFuSuV+9JOPwg+8nLS5XlD7L3EOXuV+U1b9dd1l9XG4q3+2QRdRL/SPAbp+Vg0OUEMucL24afna9WfQKI0LY5HJuPz2Ejp0TOMqP5s5kDY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770282285; c=relaxed/simple;
-	bh=4Q5WeQu/zTwn2zFF4bLWq5TBudvcoe4OZlMwzecKFa0=;
+	s=arc-20240116; t=1770282404; c=relaxed/simple;
+	bh=wop1MDyqRMZWsQk4JZXsjUmD3eQ+EYfWTPAV7uuZhs0=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=VsVzvS72jXCOM1FfBfJTqmBrZcSxyeOurG0PlpUheksQmVMtj5FvjrmlT0MEmJbPE2M8SHigFSLYuhtwLzwvrN/WYhJXRMRLXdwhJSgttbvM7tsqkAV1UWozI3lmo4e8jq/wIjEGr6JPZPGLqNSaNL1pvy2tt1l+DmrbO51b3/E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=il+tnjjq; arc=none smtp.client-ip=10.30.226.201
+	 In-Reply-To:Content-Type; b=GYzetiQeH+TNlBVcj5IVRmB2xvaRtcIzzPtPitgTlMO/dpIU8SIfa8L81cD9Rb6jzwdi5NP2HWkCO/58lYuLyz1C30ZsJtIH5IAgM1lzBvKVXL8hwUUq+LtFPlscQ6suSCzkVIEvf9QGrJo2Ye39zKnxEgAwieYp2QNAPZiJJpw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Lm6mfioH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="il+tnjjq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53D09C4CEF7;
-	Thu,  5 Feb 2026 09:04:41 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Lm6mfioH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F89EC4CEF7;
+	Thu,  5 Feb 2026 09:06:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1770282285;
-	bh=4Q5WeQu/zTwn2zFF4bLWq5TBudvcoe4OZlMwzecKFa0=;
+	s=k20201202; t=1770282403;
+	bh=wop1MDyqRMZWsQk4JZXsjUmD3eQ+EYfWTPAV7uuZhs0=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=il+tnjjqfcObw8VUHdAcqKUOKvG6tuOYzTMlPo2kfWf8EUmCbq1NyImS4afMIA6Y8
-	 7OUzGEGDWWj06W51MoP6zYw/ec/GYUbJyrHZyqp2Y/ZVQEShHi8ukXqT/iNarAo4Lt
-	 mXkNDGk7T2akLW2LVbS6I5+XDyVeVZr7KyGzP6/7k35UXcQY7NaSItCeqTMYnE/4+l
-	 CWGFfOZLRAYGZBlrtBmUJZXCcyOl+0XzUM4+Wr4Xshr5HOp9dlfBYwgh0YX3qqR2Hm
-	 c1xyGW+7iyGWzNe+CX1nKLO25gwDkwZkdZHYzJJhzvmWXEmeAcRs9MLoZrAzWt7VVj
-	 opVpoXShBcZgQ==
-Message-ID: <5ef32c40-41af-430d-a511-ba8322883e3a@kernel.org>
-Date: Thu, 5 Feb 2026 10:04:39 +0100
+	b=Lm6mfioHgKYTnD10rUl1ybeUS1J/LkEou9yIVTnDmauSRImgY0mtFiEJjAUwQk63N
+	 1tumNyGFg1e6qgAZB1Fvs1rbPsy+UewfBusScbuRFCKkbXFqFuIzVgNhpTUDdbV0Kk
+	 1EtoaAl/onkYIl55Oyh/9kUSnE4YeSzh2/Hf8g2SQ4T6zuA239UYMgNl8/r/TOFewC
+	 sdbjyrP3ANcY2gFzhBKQspDfV6FuhWc6DrpREfewfKc1hXWjG1VNreUVbhBaYLPQM2
+	 JpD4yIwvYBaYZ5h/iQ3ENLGpZkXic1Lcp72kufwsY6mDvdUpDNKsS3sHpti4sQIIIo
+	 s6JHqR9ywFjXQ==
+Message-ID: <559fe142-80ef-4f88-bb53-ce602b4e26af@kernel.org>
+Date: Thu, 5 Feb 2026 10:06:38 +0100
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -35,7 +35,7 @@ List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 12/19] dt-bindings: dma: ti: Add K3 BCDMA V2
+Subject: Re: [PATCH v4 13/19] dt-bindings: dma: ti: Add K3 PKTDMA V2
 To: Sai Sree Kartheek Adivi <s-adivi@ti.com>, peter.ujfalusi@gmail.com,
  vkoul@kernel.org, robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
  nm@ti.com, ssantosh@kernel.org, dmaengine@vger.kernel.org,
@@ -43,7 +43,7 @@ To: Sai Sree Kartheek Adivi <s-adivi@ti.com>, peter.ujfalusi@gmail.com,
  linux-arm-kernel@lists.infradead.org, vigneshr@ti.com
 Cc: r-sharma3@ti.com, gehariprasath@ti.com
 References: <20260130110159.359501-1-s-adivi@ti.com>
- <20260130110159.359501-13-s-adivi@ti.com>
+ <20260130110159.359501-14-s-adivi@ti.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -89,41 +89,22 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20260130110159.359501-13-s-adivi@ti.com>
+In-Reply-To: <20260130110159.359501-14-s-adivi@ti.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 30/01/2026 12:01, Sai Sree Kartheek Adivi wrote:
 > New binding document for
-> Texas Instruments K3 Block Copy DMA (BCDMA) V2.
+> Texas Instruments K3 Packet DMA (PKTDMA) V2.
 > 
-> BCDMA V2 is introduced as part of AM62L.
+> PKTDMA V2 is introduced as part of AM62L.
 > 
-> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> Signed-off-by: Sai Sree Kartheek Adivi <s-adivi@ti.com>
+> ---
+>  .../bindings/dma/ti/ti,k3-pktdma-v2.yaml      | 90 +++++++++++++++++++
 
-NAK, you ignored my review
-
-...
-
-> +
-> +        crypto@40800000 {
-> +            compatible = "ti,am62l-dthev2";
-
-NAK, you already received review. You cannot add more things here in hiding.
-
-
-> +            reg = <0x00 0x40800000 0x00 0x14000>;
-> +
-> +            dmas = <&main_bcdma 0 0 0x4700 0>,
-> +                   /* rx: Split channel, no trigger, PSI-L thread id, ASEL value */
-> +                   <&main_bcdma 0 0 0xc701 0>,
-> +                   /* tx1: Split channel, no trigger, PSI-L thread id, ASEL value */
-> +                   <&main_bcdma 0 0 0xc700 0>;
-> +                   /* tx2: Split channel, no trigger, PSI-L thread id, ASEL value */
-> +            dma-names = "rx", "tx1", "tx2";
-> +        };
-> +    };
-
+You ignored previous comments and repeated same mistake(s) here.
+Additionally you added more things which we did not ask you to add...
 
 Best regards,
 Krzysztof
