@@ -1,286 +1,118 @@
-Received: from AS8PR04CU009.outbound.protection.outlook.com (mail-westeuropeazon11011017.outbound.protection.outlook.com [52.101.70.17])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.15])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4EDF309DD2;
-	Fri,  6 Feb 2026 18:06:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.70.17
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770401220; cv=fail; b=ZQKguAWibRnFneAfS9Q8qxxaRMDbf5iyOeHPjNhkWIJGxvheWepzc6z25gzkFKNcdivIqSjFfvRY4Dvlp5+UnvTIu1NO99hvXkpnason73Qm+YB4d4pGq0O/gnu3FAPFQVEi0YYjw0/KgpgO21kUgaU7LWQ6hQWDpcSpQImx01c=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770401220; c=relaxed/simple;
-	bh=Jv9lAqRZMtkAUZddzQA7k0VYytlF9RVUowpw2h3hlgE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=lTqtW/R9wvEI6WF5p7HSsNXnL6D8PMOGyoIhLZJq+W8I+bk1lA3jDZ8YMFyz8CDYKHhWgA5u41kuGTNM2tD0kFClgqqz1jrCfnJyOunPz+LyMYfExzqAME/Zj6mDhWH6Obr2G28qc+FR3drCvUEP6jn9UqDaR8nDrjN8EcmJRzo=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com; spf=pass smtp.mailfrom=nxp.com; dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b=G3KklNus; arc=fail smtp.client-ip=52.101.70.17
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nxp.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69E0D2ECE9B;
+	Fri,  6 Feb 2026 19:08:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.15
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1770404895; cv=none; b=ZmHTXbb9wX7SuPvvuHfXdBG5KLFsqLy1x9VnOAxkQBqphzSoKNjS8vyox2bU9bDM5c+4tHQNuPZkWgrJ2bATnw1BXgpaXCBjAPp046Tjw7PeaZy8YFlxtMTEgknS4LgloQaufdYv9rIzdjAJzroDKUfs3d9CLdnUy1YoeqL1ULk=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1770404895; c=relaxed/simple;
+	bh=rD12jZNWPdLcwK9Chg3S5oef/etzrdqixcbLXgsH0rQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Yp0O90tovIDFhaDim21F4wQBl1N/fbwL5KEcnpPEgN/E5945TlFpE4s7Vb5n/9FeLgAdx4p1bgZklPvtuR8v/c+eyoQiy9shH4jrzQijdvs3eYSdA5/9RpX1ACek1IRVGrPikAr23Uk6tLNvC885G4OS5jowIqPCihS4UW9C7rg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=MPr3oF03; arc=none smtp.client-ip=198.175.65.15
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b="G3KklNus"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=HuNusW/eSaKROahqA4mOmWVTQrq6rti3jWkcRJKJD0Xh3Q7/nl5dngvb1pFiK6rlbRks1aPPeKvQs0meu2pShw6lRyfTtLypm+7SteiqN7HjtM9pMlaOvtDr2ZatqBN18PeEaAZ8ow8SCdjX9F5ydYTUzIBxhnSrhIPhyomonNKcxeLZPvo8UamFsjKYREDnN7yMmvQURoCneJe6YqMCKsF5xmW5DMONPfyWdTeiYyVdvjPFTnJ6YM4v0sJaLK6vN50TDyrI1P6Jy0Ig6Uk1j/vVLOwxZf56/n2p6vxz0KLCzBns+TGnZQmVhqqyCNsiQzN4u55OP5pjh36ocmw5nQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=bBfow7NX2NfQgs+UCQ0jlLkD+eDgXA7BLx1vw1pF5Gc=;
- b=l4DKXYIQzYE+6xz7dHI6OFrNn/Gxj695K3V6Vqa4meY8KHVas73RhYd58IHlZohHlKnHKAHJ3a6NFb4P3MDrW/FKg0g6MTRQRIBWsKfstJHnKEeu5wUtSA0HTTJhEURNEa6p9a0ng5yEOuuGpmML45a/ZibpUeqPvsQf1bbIxcD/aesALlSm1ct8WGNQsgr5tKyeqtanhUW3iM5yjPcvBSHxbsqBPIkkg/aCSZHvE058Yk31OlV4j9nB8zZ8Lw1dCuGbaWXrREX26rU6m6+loXpAiAc0xqwe6GXb6sNVIBZYyWCd9y+Pp3wX/bslUGCXm13LTFDGErGWqxkWXO6K/A==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
- header.d=nxp.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=bBfow7NX2NfQgs+UCQ0jlLkD+eDgXA7BLx1vw1pF5Gc=;
- b=G3KklNusBkhxd+jwiS/atzfBgh7OGhqvkVVKxbr/11dt/WLXJVHnyJ6XgDT2xJJk0G0sm1nTWusOG0VdieTNer+QtcdOkoYvJJZD5OCXBy9jXQCi7lgFiAjhNq3O4BfcEKkyiZZCOlRYjgDezxgyn/AyzFpmKtfeTvBdzEwgCvcTW5Mh/+KNvKWb5FMJK9Q88pWAIFm4hAVSXygPKRDwGyyv/LgiFGvanlcMy+GIkiC05tF3+N9sqeYspejqZ9C201yoLbRIM1PmEEEChSGy0SCWzJ21I7xMZ8ZuvylRUruiqSL9amV+fky54MoxgDPJevd0pRutynpNtZ6Xs/Pgng==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nxp.com;
-Received: from PA4PR04MB9366.eurprd04.prod.outlook.com (2603:10a6:102:2a9::8)
- by PA4PR04MB7982.eurprd04.prod.outlook.com (2603:10a6:102:c4::9) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9587.15; Fri, 6 Feb
- 2026 18:06:53 +0000
-Received: from PA4PR04MB9366.eurprd04.prod.outlook.com
- ([fe80::75e4:8143:ddbc:6588]) by PA4PR04MB9366.eurprd04.prod.outlook.com
- ([fe80::75e4:8143:ddbc:6588%6]) with mapi id 15.20.9587.010; Fri, 6 Feb 2026
- 18:06:53 +0000
-Date: Fri, 6 Feb 2026 13:06:46 -0500
-From: Frank Li <Frank.li@nxp.com>
-To: Koichiro Den <den@valinux.co.jp>
-Cc: vkoul@kernel.org, mani@kernel.org, jingoohan1@gmail.com,
-	lpieralisi@kernel.org, kwilczynski@kernel.org, robh@kernel.org,
-	bhelgaas@google.com, dmaengine@vger.kernel.org,
-	linux-pci@vger.kernel.org, linux-kselftest@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v4 6/9] PCI: dwc: ep: Report integrated eDMA resources
- via EPC remote-resource API
-Message-ID: <aYYttmm9alHg6LAY@lizhi-Precision-Tower-5810>
-References: <20260206172646.1556847-1-den@valinux.co.jp>
- <20260206172646.1556847-7-den@valinux.co.jp>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260206172646.1556847-7-den@valinux.co.jp>
-X-ClientProxiedBy: PH7P220CA0056.NAMP220.PROD.OUTLOOK.COM
- (2603:10b6:510:32b::14) To PA4PR04MB9366.eurprd04.prod.outlook.com
- (2603:10a6:102:2a9::8)
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="MPr3oF03"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1770404895; x=1801940895;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=rD12jZNWPdLcwK9Chg3S5oef/etzrdqixcbLXgsH0rQ=;
+  b=MPr3oF03yJPg+cb3Gu2oFU1BmvPN3Zu7j9ipSetbsukruzIdLEPkAe+F
+   Ik+5aQFYp2OtKFcr1v55/as567JVTwIETFZg2Xs0x1eFvK45y5uqyKJ4e
+   Z0vZuoKirZV7pSPWHLSteHxTx9FzRWTRPrj1hQVr64JgWT0O/PCd1n9Fu
+   UwOS3PlB6qf6ixR9XAt/At2tzr4A4/EwMcHMyVX4e51H8sZAwirGu5W0M
+   v6CA0BgBoWcvCUkyp2eTV9s4aThclprGx8wnhRydwj3Xub1F1boPparl2
+   Tzm9EeC25H6HLX0OGmfp9i+wNG0p4p0VeilvXu1ABfburi/Qtfpkq005a
+   Q==;
+X-CSE-ConnectionGUID: v8+33BxySwaBvsVKlqiyyQ==
+X-CSE-MsgGUID: Vgx/9i/gTfekrR8nalSbkA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11693"; a="75239314"
+X-IronPort-AV: E=Sophos;i="6.21,277,1763452800"; 
+   d="scan'208";a="75239314"
+Received: from fmviesa008.fm.intel.com ([10.60.135.148])
+  by orvoesa107.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Feb 2026 11:08:15 -0800
+X-CSE-ConnectionGUID: 5AXItfbKTdefetpi8q88Cw==
+X-CSE-MsgGUID: 3Xh8yCxSS/STtLkwnSHfFg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.21,277,1763452800"; 
+   d="scan'208";a="210819971"
+Received: from lkp-server01.sh.intel.com (HELO 765f4a05e27f) ([10.239.97.150])
+  by fmviesa008.fm.intel.com with ESMTP; 06 Feb 2026 11:08:11 -0800
+Received: from kbuild by 765f4a05e27f with local (Exim 4.98.2)
+	(envelope-from <lkp@intel.com>)
+	id 1voRBZ-00000000l32-1kjn;
+	Fri, 06 Feb 2026 19:08:09 +0000
+Date: Sat, 7 Feb 2026 03:08:01 +0800
+From: kernel test robot <lkp@intel.com>
+To: Xianwei Zhao via B4 Relay <devnull+xianwei.zhao.amlogic.com@kernel.org>,
+	Vinod Koul <vkoul@kernel.org>, Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, Kees Cook <kees@kernel.org>,
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>
+Cc: oe-kbuild-all@lists.linux.dev, linux-amlogic@lists.infradead.org,
+	dmaengine@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-hardening@vger.kernel.org,
+	Xianwei Zhao <xianwei.zhao@amlogic.com>
+Subject: Re: [PATCH v3 2/3] dma: amlogic: Add general DMA driver for A9
+Message-ID: <202602070253.hZ9PqUeB-lkp@intel.com>
+References: <20260206-amlogic-dma-v3-2-56fb9f59ed22@amlogic.com>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PA4PR04MB9366:EE_|PA4PR04MB7982:EE_
-X-MS-Office365-Filtering-Correlation-Id: d6f8f00e-5e41-4c9f-eefa-08de65aa823e
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|52116014|7416014|376014|19092799006|1800799024|366016|7053199007|38350700014;
-X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?ATof7GbnGKksehTE31hqRtcN2x3y2p40jHFLiivpThrC+wdRfUdDHBsTKHi6?=
- =?us-ascii?Q?pwNz8SyNNm1j/2XFLRFcXJkeXl6Ja9bxo3ITsMDjBH8YtjWtF2lBNaDC5O+i?=
- =?us-ascii?Q?73zUvMs3b0MBvz7/KsYBsVJjpdNa7sZE5Flj1rNPLF6FrhIHwP13DjTnQmYQ?=
- =?us-ascii?Q?ADW12zn0WemoOwhRJWsebhQQEUL3IjEzS9YUR+Prvy7jlg4cWGRJKZVkLP2k?=
- =?us-ascii?Q?vlsUZ44Nn2UgUb+NKr2U5GH9fT2KGAhddpdPVsKImG3KYFfKitm1GXgHqxKR?=
- =?us-ascii?Q?VpFVwu5wJ/TT0kmztG/aghMbrkD4Obb1n9GawnKnz4sus2NJW2A4TzOmbYoX?=
- =?us-ascii?Q?2HVwdYffWUrhhUWGT/ax8v289WkAr+SsR3B7pF57buBk0xkGVoJDKh4REwjN?=
- =?us-ascii?Q?kfHNvdTfaTuFSUNow4NOqROmeAgjlZa6vrfR39FBS1V3Ohk4zhfo13Ss2BvY?=
- =?us-ascii?Q?GI2DhfBYGm9WcNdSu8OydxfCW6PjwaZJd3ScvLNWSO0+tj/7rk/k/9KKBRNF?=
- =?us-ascii?Q?6nDvQDb918a4hOyEQYkvvtyfvE21X4e8M+qBWH3yb3DlQmcGDX5nZUaLcl2o?=
- =?us-ascii?Q?/pQMhZwOIr699mK5PFjLerkQf1SS1FveX0sLhhUlQrbrJntWL82AW5rajri4?=
- =?us-ascii?Q?bdl5pmAyLWLhHPZE6+C0lAOjPqgBnA46+jbghu6YPR4Wxj7EeMN3M1kjkK4R?=
- =?us-ascii?Q?KTWsZMASip0Qvz3mptc//H0lYhWGHLpkA0WYySiCovz/JM30YtNGShoQ2d1w?=
- =?us-ascii?Q?EbKcvGgS9JtswzUYoUuemCDVR/brXbPelRs2qXyOqN3GoU3Bvpov9ajajFz4?=
- =?us-ascii?Q?ZYEaUMsdtBG4DZHaI/RDhikU6SBkHdqmXvJrg9ADh5j5nFiZeoCufyhcSWzu?=
- =?us-ascii?Q?nL730x1q8qxxXBltu+y5WfPm+8SJvDxxHNLxiBDHFY/kr3vMfBzpbH2cWGfh?=
- =?us-ascii?Q?xyjdDHezeeWaQhHfxCeI6fVkkdK1ZYb/s2VbIMDiO5FgTWKreXeAgJ5Y5wLp?=
- =?us-ascii?Q?CXpNB+Fnj/Ia+9MKa8o/qWv0uuDmH8xcGAlOQ/ufb+5c4qGbt8ptdes5yrs/?=
- =?us-ascii?Q?6v0JkapnLGEQ8/N82Eyr28yzH8t1qfSMXQTt8snkU9QhrxPhp0rNCEQx7h6R?=
- =?us-ascii?Q?4D7smQoiKgl18VzbS9QC35SCc5AVrD0M/WKi/OacWTSuv82nEddKgb0TSjRe?=
- =?us-ascii?Q?eIma/sTREea7HrvgcsnESGHOYWp1fctzVXyJRO4V7IxN4u4GHMRZ9AUMEr1d?=
- =?us-ascii?Q?o1UMA2AzO7Lr45ykp0L2pfI6+BZJFNV0O1BJxAKA7aFTmDYxqQ1OwZz6u0sy?=
- =?us-ascii?Q?mxJCWcQtkEIqDC1Ytn1YC7vhztSMruFm+NwopaozfeD4ujz7my9Xthsbj7FN?=
- =?us-ascii?Q?FeRJRlJMWLUHnSvzE4FzOp9EbmgfjvSp56yskz8hkm2KUhTAyhji604ggjws?=
- =?us-ascii?Q?Fiz4W+lNnlHvhfiHRp+jmNVlzvuV15rsjuAOHAf67mZMxHh0Ly99GdmqF/J5?=
- =?us-ascii?Q?qujcP92bULbl+7m4Q490vxhFa8wwAWaUaZwAaPQAUgONZuWjqJa3EBuapV6a?=
- =?us-ascii?Q?xk40Vr6zQVDXbm5gjlCB8BFXHdvo5AlXyzUlcnlDfKIBokm6v1GXPlJH+viv?=
- =?us-ascii?Q?Lqcfb1vlWHx6CcRov4lyiVo=3D?=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PA4PR04MB9366.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(52116014)(7416014)(376014)(19092799006)(1800799024)(366016)(7053199007)(38350700014);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?nkOYd4NuGLv6apNNj0PfKhP0jx2+/px5TjzcJK8mYjJRw9qMI8gD6lVCATGw?=
- =?us-ascii?Q?k86s0KwqA+a5zGLklUWeF4VY66fZw01PQoMxN06u6JYQZFHWMjam3HbcoxI5?=
- =?us-ascii?Q?RGtDvk7feCDPC/m0vYZJFD1C96/WC7ZvvNkkk90akUuSc4UCtNMRLnVJiz3L?=
- =?us-ascii?Q?MgS3WwseoHr379wABCuO5naBuYUwUMuatelDGOGD5h1Fag76y4qxh977JkqV?=
- =?us-ascii?Q?37kkgbsCHfZkrIEcD5kvwCOZDnllcqzVg5TKva3ARgcSGFL35sJwTm53Nyhr?=
- =?us-ascii?Q?K55axbG2R944Pwc5px5vHZa1naqMxdcNCa1W9Fhc4Joq97/GohzhWs7psItR?=
- =?us-ascii?Q?UjYKdBSKi/azMu74hkG5dpUPRoUxT216cY5V1R0d3AXCISX3CTWS8KMxPHWE?=
- =?us-ascii?Q?KrLhSCXfrH6Ip7ZOy5fOY+Khb+Ki0z5NckAibLc0zmH6t3t0wXuVTbKj7zk0?=
- =?us-ascii?Q?Fpg90k2LrUDjbJhXvjM4MGpERg6kmFzq6QXHsPjD7Vb1asNcK3XyCIYgeOO4?=
- =?us-ascii?Q?YnsAtocxjnbEkbpdbOeBnxe19+HHgEc5KvHO2zadGChS6iJFbvZuEbhvUrPE?=
- =?us-ascii?Q?onjQ7n0fPrGoQJ4p3+fe7p9RG1jR/pAMhN6Zw4siYK2aL23Cdqp+6ZpbhkfB?=
- =?us-ascii?Q?MwqOsq0OT0Kli28QMKyHw/bGkgCHFpw2uisc/RRfAR3sY8l+VjAJA8NteczK?=
- =?us-ascii?Q?GT7L1/xxToP7BC3XG11njfzP3a8Q9hogDusMYrMqKchgK6kKMZDQjn7QHyeW?=
- =?us-ascii?Q?C3WnQlfhxK7jxhHdCUhpgIeCyTEFFbqdgCZ6HppvV01rOwmv//ROMLRnJkGX?=
- =?us-ascii?Q?ZZUXe2RrnW97lsJWXOxB7r2h5Ojj9pr/bb/Gb50BpDDjfL7bj2ke5NJ7kfFK?=
- =?us-ascii?Q?PO8uzcWpJfJmsgNSUxONv2H5zVhFoteV2zWQC1fuSf7qZDyxVBsLci3nG4nG?=
- =?us-ascii?Q?2KEWsq8lTjZJaa1I+57g5i2USjmn4qN7VrJsl9bZtYovt1RuYs/WuzULtQ0K?=
- =?us-ascii?Q?fiYNvN+FoeDFj5iqIkqGee93f9YIjE3weux9M3jyDPSO9XNdzqGba9RlHwOM?=
- =?us-ascii?Q?M2ph5qavOtqHFTjTGNIDR6x5n3YyEH71zM6t9xnIwINJg/vMBf/x4xrYsIxx?=
- =?us-ascii?Q?PZlqAvGee8anWWSFacIy3EOuZWGZ/nH42iqJPPIIfHDFf4uQySqW+Bv4n5Yi?=
- =?us-ascii?Q?pukrcRhnL04nHoL2yInFDmAbAqUtT7O+ySbAW4gCl5nUWnajHPqTrtDXRInC?=
- =?us-ascii?Q?jsVjt9DBtQiLPsc7XY+ET9GFS2MGQTXrJjd7V+sS9p/sgga7KwY2Pd91p8IH?=
- =?us-ascii?Q?fS7b+biZ9dQ/lTpzGI27VEKD/SqG1jJsEnsny1GT4jCcxgj9FyVIdpuGu1GM?=
- =?us-ascii?Q?/xt1oWbd7jLczK+aVHWdOSCjN/gOOW+7MyHiLHPCXeUSVCFqof+bZwpXUTQv?=
- =?us-ascii?Q?gTSRfomdkN8A6Y2YKxl/bYFa+9Ws9POO8KQeaLD1t0lzeUwp7B9t1yrZPEHO?=
- =?us-ascii?Q?Y9NkJsv8FhPACjj04R3jYoC31OoBLeKRSO9uQnvHHmGRO1iPzB8HBMWdgurE?=
- =?us-ascii?Q?+PeBAQRaYtMiTbvMUu2FtWs5r7AS9+lCNT+Lxr2OmjDQBDJeY1PlbZGw6hRI?=
- =?us-ascii?Q?Zi6baILFT54c5p2J3BJxsK1+79q63mcw1iyeKwal/drNP7gp2adnWU6TRuzP?=
- =?us-ascii?Q?+uZUoGfU5LnH57ZhOPLGulU5tOUXg77UmYSCU9ICcdT/ASPR?=
-X-OriginatorOrg: nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: d6f8f00e-5e41-4c9f-eefa-08de65aa823e
-X-MS-Exchange-CrossTenant-AuthSource: PA4PR04MB9366.eurprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Feb 2026 18:06:53.8651
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: YsNvHYlEnQMluhM1PwLwgzAv6qyCLHU3tyMtrL4yfUt7wdr+PVzqtnP3+31S38kNSIFOkqTKdgi+AAJcBPVShg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PA4PR04MB7982
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260206-amlogic-dma-v3-2-56fb9f59ed22@amlogic.com>
 
-On Sat, Feb 07, 2026 at 02:26:43AM +0900, Koichiro Den wrote:
-> Implement pci_epc_ops.get_remote_resources() for DesignWare PCIe
-> endpoint controllers with integrated eDMA.
->
-> Report:
->   - the eDMA controller MMIO window (physical base + size),
->   - each non-empty per-channel linked-list region, along with
->     per-channel metadata such as the Linux IRQ number and the
->     interrupt-emulation doorbell register offset.
->
-> This allows endpoint function drivers (e.g. pci-epf-test) to discover
-> the eDMA resources and map a suitable doorbell target into BAR space.
->
-> Signed-off-by: Koichiro Den <den@valinux.co.jp>
-> ---
->  .../pci/controller/dwc/pcie-designware-ep.c   | 85 +++++++++++++++++++
->  1 file changed, 85 insertions(+)
->
-> diff --git a/drivers/pci/controller/dwc/pcie-designware-ep.c b/drivers/pci/controller/dwc/pcie-designware-ep.c
-> index 7e7844ff0f7e..29dedac86190 100644
-> --- a/drivers/pci/controller/dwc/pcie-designware-ep.c
-> +++ b/drivers/pci/controller/dwc/pcie-designware-ep.c
-> @@ -8,6 +8,7 @@
->
->  #include <linux/align.h>
->  #include <linux/bitfield.h>
-> +#include <linux/dma/edma.h>
->  #include <linux/of.h>
->  #include <linux/platform_device.h>
->
-> @@ -808,6 +809,89 @@ dw_pcie_ep_get_features(struct pci_epc *epc, u8 func_no, u8 vfunc_no)
->  	return ep->ops->get_features(ep);
->  }
->
-> +static int
-> +dw_pcie_ep_get_remote_resources(struct pci_epc *epc, u8 func_no, u8 vfunc_no,
-> +				struct pci_epc_remote_resource *resources,
-> +				int num_resources)
-> +{
-> +	struct dw_pcie_ep *ep = epc_get_drvdata(epc);
-> +	struct dw_pcie *pci = to_dw_pcie_from_ep(ep);
-> +	struct dw_edma_chip *edma = &pci->edma;
-> +	struct dw_edma_chan_info info;
-> +	int ll_cnt = 0, needed, idx = 0;
-> +	resource_size_t dma_size;
-> +	phys_addr_t dma_phys;
-> +	unsigned int i;
-> +	int ret;
-> +
-> +	if (!pci->edma_reg_size)
-> +		return 0;
-> +
-> +	dma_phys = pci->edma_reg_phys;
-> +	dma_size = pci->edma_reg_size;
-> +
-> +	for (i = 0; i < edma->ll_wr_cnt; i++)
-> +		if (edma->ll_region_wr[i].sz)
-> +			ll_cnt++;
-> +
-> +	for (i = 0; i < edma->ll_rd_cnt; i++)
-> +		if (edma->ll_region_rd[i].sz)
-> +			ll_cnt++;
-> +
-> +	needed = 1 + ll_cnt;
-> +
-> +	/* Count query mode */
-> +	if (!resources || !num_resources)
-> +		return needed;
-> +
-> +	if (num_resources < needed)
-> +		return -ENOSPC;
-> +
-> +	resources[idx++] = (struct pci_epc_remote_resource) {
-> +		.type = PCI_EPC_RR_DMA_CTRL_MMIO,
-> +		.phys_addr = dma_phys,
-> +		.size = dma_size,
-> +	};
-> +
-> +	/* One LL region per write channel */
-> +	for (i = 0; i < edma->ll_wr_cnt; i++) {
-> +		if (!edma->ll_region_wr[i].sz)
-> +			continue;
-> +
-> +		ret = dw_edma_chan_info(edma, i, &info);
-> +		if (ret)
-> +			return ret;
-> +
-> +		resources[idx++] = (struct pci_epc_remote_resource) {
-> +			.type = PCI_EPC_RR_DMA_CHAN_DESC,
-> +			.phys_addr = edma->ll_region_wr[i].paddr,
-> +			.size = edma->ll_region_wr[i].sz,
-> +			.u.dma_chan_desc.irq = info.irq,
-> +			.u.dma_chan_desc.db_offset = info.db_offset,
-> +		};
-> +	}
-> +
-> +	/* One LL region per read channel */
-> +	for (i = 0; i < edma->ll_rd_cnt; i++) {
-> +		if (!edma->ll_region_rd[i].sz)
-> +			continue;
-> +
-> +		ret = dw_edma_chan_info(edma, i + edma->ll_wr_cnt, &info);
+Hi Xianwei,
 
-edma's information is what dw-EP pass to edma driver, supposed dw-ep know
-irq and HDMI or EDMA's information, I think needn't go around to EDMA again
-to fetch this information back.
+kernel test robot noticed the following build warnings:
 
-Frank
-> +		if (ret)
-> +			return ret;
-> +
-> +		resources[idx++] = (struct pci_epc_remote_resource) {
-> +			.type = PCI_EPC_RR_DMA_CHAN_DESC,
-> +			.phys_addr = edma->ll_region_rd[i].paddr,
-> +			.size = edma->ll_region_rd[i].sz,
-> +			.u.dma_chan_desc.irq = info.irq,
-> +			.u.dma_chan_desc.db_offset = info.db_offset,
-> +		};
-> +	}
-> +
-> +	return idx;
-> +}
-> +
->  static const struct pci_epc_ops epc_ops = {
->  	.write_header		= dw_pcie_ep_write_header,
->  	.set_bar		= dw_pcie_ep_set_bar,
-> @@ -823,6 +907,7 @@ static const struct pci_epc_ops epc_ops = {
->  	.start			= dw_pcie_ep_start,
->  	.stop			= dw_pcie_ep_stop,
->  	.get_features		= dw_pcie_ep_get_features,
-> +	.get_remote_resources	= dw_pcie_ep_get_remote_resources,
->  };
->
->  /**
-> --
-> 2.51.0
->
+[auto build test WARNING on 3c8a86ed002ab8fb287ee4ec92f0fd6ac5b291d2]
+
+url:    https://github.com/intel-lab-lkp/linux/commits/Xianwei-Zhao-via-B4-Relay/dt-bindings-dma-Add-Amlogic-A9-SoC-DMA/20260206-170903
+base:   3c8a86ed002ab8fb287ee4ec92f0fd6ac5b291d2
+patch link:    https://lore.kernel.org/r/20260206-amlogic-dma-v3-2-56fb9f59ed22%40amlogic.com
+patch subject: [PATCH v3 2/3] dma: amlogic: Add general DMA driver for A9
+config: i386-allmodconfig (https://download.01.org/0day-ci/archive/20260207/202602070253.hZ9PqUeB-lkp@intel.com/config)
+compiler: gcc-14 (Debian 14.2.0-19) 14.2.0
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20260207/202602070253.hZ9PqUeB-lkp@intel.com/reproduce)
+
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202602070253.hZ9PqUeB-lkp@intel.com/
+
+All warnings (new ones prefixed by >>):
+
+   In file included from drivers/dma/amlogic-dma.c:7:
+>> arch/x86/include/asm/irq.h:39:56: warning: 'struct pt_regs' declared inside parameter list will not be visible outside of this definition or declaration
+      39 | extern void __handle_irq(struct irq_desc *desc, struct pt_regs *regs);
+         |                                                        ^~~~~~~
+>> arch/x86/include/asm/irq.h:44:50: warning: 'struct cpumask' declared inside parameter list will not be visible outside of this definition or declaration
+      44 | void arch_trigger_cpumask_backtrace(const struct cpumask *mask,
+         |                                                  ^~~~~~~
+
+
+vim +39 arch/x86/include/asm/irq.h
+
+a782a7e46bb508 arch/x86/include/asm/irq.h Thomas Gleixner   2015-08-02  38  
+7c2a57364cae0f arch/x86/include/asm/irq.h Thomas Gleixner   2020-05-21 @39  extern void __handle_irq(struct irq_desc *desc, struct pt_regs *regs);
+22067d4501bfb4 include/asm-x86/irq.h      Thomas Gleixner   2008-05-02  40  
+d9112f43021554 arch/x86/include/asm/irq.h Thomas Gleixner   2009-08-20  41  extern void init_ISA_irqs(void);
+d9112f43021554 arch/x86/include/asm/irq.h Thomas Gleixner   2009-08-20  42  
+b52e0a7c4e4100 arch/x86/include/asm/irq.h Michel Lespinasse 2013-06-06  43  #ifdef CONFIG_X86_LOCAL_APIC
+9a01c3ed5cdb35 arch/x86/include/asm/irq.h Chris Metcalf     2016-10-07 @44  void arch_trigger_cpumask_backtrace(const struct cpumask *mask,
+8d539b84f1e347 arch/x86/include/asm/irq.h Douglas Anderson  2023-08-04  45  				    int exclude_cpu);
+89f579ce99f7e0 arch/x86/include/asm/irq.h Yi Wang           2018-11-22  46  
+
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
