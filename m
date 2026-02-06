@@ -1,151 +1,240 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8B36346AD3;
-	Fri,  6 Feb 2026 09:02:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B324362135
+	for <dmaengine@vger.kernel.org>; Fri,  6 Feb 2026 09:58:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770368565; cv=none; b=qQ3DMgLjAzwgSbLQ1OPFbbJa8vm7PRf97HQHNcWnjKgdudGAVKQmItrknsS1hK7phlxCrfMjTW0ASfVw9u5FxYceBNDJXzEyUHjgVcr2AqJhyPSnzYOGLXd4+t6Ug7k1fkiKh4gaeDRMYWkb/6y8TeO+JZ/LvDhsBBIxaGq0cLQ=
+	t=1770371937; cv=none; b=uW4U8QhUhjFH2YLsiu5r9IswW9AlV/6zYjOFlnGFyIJqYrUtJheax5tvCsKymOJNK9QrZDnZrufMA6zdP4eI4VrwWJFliVZSLUHBg9Do4xTmnvpzd7odFHgzEEfQ1BrRxskYjCiR000gdFk2ZB/rEuhxoLNjgYewQJa3DoiNNpw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770368565; c=relaxed/simple;
-	bh=OO2LYP/Tb0I+6e91AEQlOJswJ6g89wXPZXWxOGQ9iPk=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=stCA9308Q2pmwdM0G+a5c2j8XT/vOjcTT/VTLqU2JFD0duDfKiNOaas1MV/xbAjUuJ1gewM7LqpQPBX8ghEZkAPzbajBvAj7q8QexakDsNgBc+lXFqZhHO2oK078ZMWVmBCfGZ4KEbgn1gqYXUVKthZL03F0bF/Vqk+u7sVLsLc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iM11LzYK; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1770371937; c=relaxed/simple;
+	bh=jEHVM2uAFpnYm9PtPyvn7k9l3RglrtAY0EfiLY0es90=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=pVMe3qWufPz9UlGg/0h/MagCGiATqAFPO2gO7+5wiivlv8UuIWjEC3F8etgulIwnAyY/Lb9XvVjoX8e1Lmy71ZZF8EXKvSBskiqx67AXq9Q1NjjSE9g/3KRJm4o967oUdlJJZbVvRok4AR0vdRKodT9mbaSsJ7LbCZmhg2q2J5Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=tuxon.dev; spf=pass smtp.mailfrom=tuxon.dev; dkim=pass (2048-bit key) header.d=tuxon.dev header.i=@tuxon.dev header.b=ftapXC+n; arc=none smtp.client-ip=209.85.128.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=tuxon.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=tuxon.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iM11LzYK"
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 64912C19422;
-	Fri,  6 Feb 2026 09:02:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1770368565;
-	bh=OO2LYP/Tb0I+6e91AEQlOJswJ6g89wXPZXWxOGQ9iPk=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=iM11LzYKO90GFll4q8N7flSMDKe8xnB3rKfpCdaI4D/O3Z9PVDhFNdga5QIkOBA9G
-	 NAViS/Axsnp1vp0rQF2YoWv++pNwKS67SESau9Xl4WEkQH8vw5KJbuyHdkO2pLZbq1
-	 ktviTxwayO435YPIJsUzCBvyR9tlANukpJ0uQLKdQUvPYHqPOzSmgJHTmyjg6TGLqe
-	 aTclwTx58MJYpXGSBd1wREOuaNzRQLau7v08n2a/Eo64LTJdxx9tsioKdMEsH8BWAf
-	 RqL+WXfHZn4LfutHWNBlYenjidrpWsGOM71bIZfG8HLE4rSZwPOd6WWBhY9hMbOHd6
-	 wOjeri+vcPzyQ==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4CCA7EB28F7;
-	Fri,  6 Feb 2026 09:02:45 +0000 (UTC)
-From: Xianwei Zhao via B4 Relay <devnull+xianwei.zhao.amlogic.com@kernel.org>
-Date: Fri, 06 Feb 2026 09:02:32 +0000
-Subject: [PATCH v3 1/3] dt-bindings: dma: Add Amlogic A9 SoC DMA
+	dkim=pass (2048-bit key) header.d=tuxon.dev header.i=@tuxon.dev header.b="ftapXC+n"
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-4832701b9b7so1487255e9.2
+        for <dmaengine@vger.kernel.org>; Fri, 06 Feb 2026 01:58:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=tuxon.dev; s=google; t=1770371935; x=1770976735; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=QFozp/2BFyrawQi8Bi3WGk4TGqqtNng52TReapzy6oA=;
+        b=ftapXC+njD6iuyDVMsjMkryPKO2duqrT+B6YKm8HS8w99MlkEtN9NyOWxN+d+qRc7v
+         wxNZ9xXOpsjCKQ4celJ85HAqf0FG2N3QyF74MMY+Oeu4/txiK4Uv+XgJ4bdNLdH8YAX2
+         tVQYydeLypiNdS9TTVZ1x8lzZtxD14MIx6jWw+2d0pIWnAAktSrcauSvTeQnm5SXSZbO
+         y1C7y0/68C1A+FjvzNwnsEKuiB5h+FRjNURq+CnCW7xEhEQVvayHjHiPW1AO38V/oKqp
+         ArkzJENwcveQIx4hJYGtBcSpgQWMO0xQgul6o8aknfs2rWwPECaEv7izA/pjSW4qq24P
+         MPNQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1770371935; x=1770976735;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=QFozp/2BFyrawQi8Bi3WGk4TGqqtNng52TReapzy6oA=;
+        b=hzLGHQeeyIdXxuSkDInmyq2zYBwuKlzgPAagPa9N1LoAIZ6ioC1wNEXnB5T7YabPlt
+         2V80jTNOyMBG1UoTWN22srxH/L/KPbSvVYwuL9EF98CsPm0gcEACGvbdjqHbePEd3ixj
+         8PnOOGsOe1wngLzv9Xpq7yr+xhxUuacQWyr4Ug+40bUqtm3iPOsB3+EFTprq7tZ3L63u
+         gLDcx/oBog37nSNzMXiWIQhft0fkSRCK4li22NMxNXL8PMjD9oKdOqSjTLJVH97803c5
+         T5sS45SlebyUAV4dz4vb1DrKvlfFc2oVbtDBt6rnohvqVorF51xN/H2vvkxZ9URIdtGC
+         pHOA==
+X-Forwarded-Encrypted: i=1; AJvYcCV/sczafMEtdMBG1XbiT+AmjPN7PSTFfvqpGXclgCHy5ya1qV8Uy9UIgpzegHEwVkLPAu4b1dl+JDE=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz6Ua2nbW/1MSrEOSzmHjWaLJLzB0CjPgyjqFSsVZmZcuhNwy3V
+	crObbMsBJKePu2BmzVyiSbEu6d3zxXg0AFk121MeLz8mYRjRqfnu9aDGQ2W+0Dv6gew=
+X-Gm-Gg: AZuq6aL9KEUwzhwB3v1lh6IsfdgiAUsKbvorxrNFQ3kEO2GwM9suVe30Oed93KSVBcR
+	HKWeJcsgTTiVvh5VR3jNRFQgRWQOQ9c4wNlzSYwbEFLYoEbxSK5gSNIhJs8wUy9XQhAa1JxDp3a
+	hkQmPeZ2eGo861YyK5JpnT8zJ/jAqDM8zwwhuLYiMocPWRSWRabq8Z3NK0QXNZuxXB44wivdMuZ
+	weZ3A1Ue39TIsKhNyO13C3GjnlZ366v3nfMnJTaSgETfXM7EEqtPIxh3MEhEt26+RPtQehit2y3
+	NXHDlGbCe5TEy0d753bzX4X3RTl2dMP1PKUl12/gDB8iBM5AGoTMMtxeTd4TH+ht/fL2pmCpHia
+	Q8rVTt/2AdiYvpD1oxOBGFlGnrx29uPwgTrJfekm/TQ9l0gfEOWT0gtiIxGJfPtl2kjhMdiu45D
+	VN5OBtHulDKNk6asvMPPo=
+X-Received: by 2002:a05:600c:470c:b0:477:7ae0:cd6e with SMTP id 5b1f17b1804b1-483201daa3amr29029995e9.5.1770371934663;
+        Fri, 06 Feb 2026 01:58:54 -0800 (PST)
+Received: from [192.168.50.4] ([82.78.167.215])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-436296c0f2esm4622854f8f.19.2026.02.06.01.58.53
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 06 Feb 2026 01:58:54 -0800 (PST)
+Message-ID: <4dd522fe-8143-4423-b428-2774a185ad73@tuxon.dev>
+Date: Fri, 6 Feb 2026 11:58:52 +0200
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 5/7] dmaengine: sh: rz-dmac: Add suspend to RAM support
+To: Biju Das <biju.das.jz@bp.renesas.com>, geert <geert@linux-m68k.org>
+Cc: "vkoul@kernel.org" <vkoul@kernel.org>,
+ Prabhakar Mahadev Lad <prabhakar.mahadev-lad.rj@bp.renesas.com>,
+ "lgirdwood@gmail.com" <lgirdwood@gmail.com>,
+ "broonie@kernel.org" <broonie@kernel.org>, "perex@perex.cz"
+ <perex@perex.cz>, "tiwai@suse.com" <tiwai@suse.com>,
+ "p.zabel@pengutronix.de" <p.zabel@pengutronix.de>,
+ "geert+renesas@glider.be" <geert+renesas@glider.be>,
+ Fabrizio Castro <fabrizio.castro.jz@renesas.com>,
+ "dmaengine@vger.kernel.org" <dmaengine@vger.kernel.org>,
+ "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+ "linux-sound@vger.kernel.org" <linux-sound@vger.kernel.org>,
+ "linux-renesas-soc@vger.kernel.org" <linux-renesas-soc@vger.kernel.org>,
+ Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+References: <20260126103155.2644586-1-claudiu.beznea.uj@bp.renesas.com>
+ <16a6f14a-93e6-472c-8718-d46972f0ac5e@tuxon.dev>
+ <TY3PR01MB113463BE8A4B1A40DBB0860538693A@TY3PR01MB11346.jpnprd01.prod.outlook.com>
+ <5438ccc8-ed5a-4dd6-8995-e8e9926883a5@tuxon.dev>
+ <TY3PR01MB11346325F46C2BCA6B2B181D08693A@TY3PR01MB11346.jpnprd01.prod.outlook.com>
+ <ad752abc-275b-43ca-aec3-188c1a69c50b@tuxon.dev>
+ <TY3PR01MB113460006A458AB2F8B96542C8693A@TY3PR01MB11346.jpnprd01.prod.outlook.com>
+ <TY3PR01MB11346C8AD27554E40EC5746E38693A@TY3PR01MB11346.jpnprd01.prod.outlook.com>
+ <7f0305f6-ae2d-4069-b53a-d2a81e75d164@tuxon.dev>
+ <TY3PR01MB11346321A9AAE93C7070C6E578699A@TY3PR01MB11346.jpnprd01.prod.outlook.com>
+ <CAMuHMdWUpq1bUbNLu4WGheovQ1pYdEJGBMN3jdb6PZqXanN_GA@mail.gmail.com>
+ <TY3PR01MB1134661E4B93CE785700FC5AF8699A@TY3PR01MB11346.jpnprd01.prod.outlook.com>
+ <32ea84f2-621a-47d9-a661-9acd62d50662@tuxon.dev>
+ <TY3PR01MB113460619AE8C46BC674B28078699A@TY3PR01MB11346.jpnprd01.prod.outlook.com>
+Content-Language: en-US
+From: Claudiu Beznea <claudiu.beznea@tuxon.dev>
+In-Reply-To: <TY3PR01MB113460619AE8C46BC674B28078699A@TY3PR01MB11346.jpnprd01.prod.outlook.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260206-amlogic-dma-v3-1-56fb9f59ed22@amlogic.com>
-References: <20260206-amlogic-dma-v3-0-56fb9f59ed22@amlogic.com>
-In-Reply-To: <20260206-amlogic-dma-v3-0-56fb9f59ed22@amlogic.com>
-To: Vinod Koul <vkoul@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Kees Cook <kees@kernel.org>, 
- "Gustavo A. R. Silva" <gustavoars@kernel.org>
-Cc: linux-amlogic@lists.infradead.org, dmaengine@vger.kernel.org, 
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
- linux-hardening@vger.kernel.org, Xianwei Zhao <xianwei.zhao@amlogic.com>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1770368563; l=2154;
- i=xianwei.zhao@amlogic.com; s=20251216; h=from:subject:message-id;
- bh=KKG30sNDMKwUEsaooUR8f4bvhWXtqrK9G8Cq30l/PK8=;
- b=VFLaFNwFVnC8YY6CLU/Fo7QfyXgFEiGUj6Y87skZ4P+CkOzgR+V6fm3X7G5ehMWzPeYMdk4AC
- UchpQ8Au+WUADJgcivRZyux8uzbvqYGEd97cjBHBZD1ZAg3ZkdDF8Wf
-X-Developer-Key: i=xianwei.zhao@amlogic.com; a=ed25519;
- pk=dWwxtWCxC6FHRurOmxEtr34SuBYU+WJowV/ZmRJ7H+k=
-X-Endpoint-Received: by B4 Relay for xianwei.zhao@amlogic.com/20251216 with
- auth_id=578
-X-Original-From: Xianwei Zhao <xianwei.zhao@amlogic.com>
-Reply-To: xianwei.zhao@amlogic.com
 
-From: Xianwei Zhao <xianwei.zhao@amlogic.com>
+Hi, Biju,
 
-Add documentation describing the Amlogic A9 SoC DMA.
+On 2/5/26 19:41, Biju Das wrote:
+> Hi Claudiu,
+> 
+>> -----Original Message-----
+>> From: Claudiu Beznea <claudiu.beznea@tuxon.dev>
+>> Sent: 05 February 2026 17:21
+>> Subject: Re: [PATCH 5/7] dmaengine: sh: rz-dmac: Add suspend to RAM support
+>>
+>> Hi, Biju,
+>>
+>> On 2/5/26 16:06, Biju Das wrote:
+>>> Hi Geert,
+>>>
+>>>> -----Original Message-----
+>>>> From: Geert Uytterhoeven <geert@linux-m68k.org>
+>>>> Sent: 05 February 2026 13:34
+>>>> Subject: Re: [PATCH 5/7] dmaengine: sh: rz-dmac: Add suspend to RAM
+>>>> support
+>>>>
+>>>> Hi Biju,
+>>>>
+>>>> On Thu, 5 Feb 2026 at 14:30, Biju Das <biju.das.jz@bp.renesas.com> wrote:
+>>>>>> From: Claudiu Beznea <claudiu.beznea@tuxon.dev> On 1/26/26 17:28,
+>>>>>> Biju Das wrote:
+>>>>>>>> For s2idle issue on RZ/G3L is DMA device is in asserted state,
+>>>>>>>> not forwarding any IRQ to cpu for wakeup.
+>>>>>>>>
+>>>>>>>> For S2RAM issue on RZ/G3L is during suspend hardware turns
+>>>>>>>> DMAACLK off/ Asserted state. Clock framwork is not turning On DMAACLK as it critical clk.
+>>>>>>>>
+>>>>>>>> Can you please check your TF-A for the second case? First case,
+>>>>>>>> RZ/G3S may ok for reset assert state, it can forward IRQs to CPU.
+>>>>>>>
+>>>>>>> Just to summarize, currently there are 2 differences identified between RZ/G3S and RZ/G3L:
+>>>>>>>
+>>>>>>> SoC differences for s2idle:
+>>>>>>>
+>>>>>>> RZ/G3S: Can wake the system if the DMA device is in the assert
+>>>>>>> state
+>>>>>>>
+>>>>>>> RZ/G3L: Cannot wake the system if the DMA device is in the assert state.
+>>>>>>>
+>>>>>>>
+>>>>>>> TF-A differences for s2ram:
+>>>>>>>
+>>>>>>> RZ/G3S: TF_A turns on DMA_ACLK during boot/resume.
+>>>>>>>
+>>>>>>> RZ/G3L: TF_A does not handle DMA_ACLK during boot/resume.
+>>>>>>
+>>>>>> I'm seeing at [1] you are addressing these differences in the
+>>>>>> clock/reset drivers. With that, are you still considering this patch is breaking your system?
+>>>>>
+>>>>> Still, thinking whether to add critical reset or go with SoC quirk in DMA driver.
+>>>>> Some SoCs need DMA should be deasserted like critical clock that can
+>>>>> be handled either
+>>>>>
+>>>>> 1) Add a simple SoC quirk in DMA driver
+>>>>>
+>>>>> Or
+>>>>>
+>>>>> 2) Implement critical reset in SoC specific clock driver and check for all resets.
+>>>>>
+>>>>> Is simple SoC quirk in DMA driver, something can be done for RZ/G2L family SoCs?
+>>>>
+>>>> What if the DMA driver is not enabled?
+>>>
+>>> The below use cases will work (patch[1] - removing the code for
+>>> deassert in cpg_resume) as there is no DMA driver to assert the reset.
+>>>
+>>> 1) system will boot without DMA driver
+>>> 2) s2idle will work as there is no DMA driver to assert the reset.
+>>> 3) s2ram will work without DMA driver.
+>>>
+>>> If DMA driver is enabled, then there is an issue with  s2idle as DMA
+>>> driver assert the reset and we cannot use serial console as wakeup
+>>> source
+>>
+>> I think we're taking here about both DMA clocks and resets.
+>>
+>> What if the DMA clocks are declared critical in Linux and clocks and resets are not handled by
+>> bootloader in probe or resume? Who will restore critical clocks?
+> 
+> Patch [1] will restore critical clocks.
+>>
+>>>
+>>> One solution is SoC quirk will prevent assert/deassert  of the DMA
+>>> reset during
+>>> suspend/resume() for affected SoCs.
+>>
+>> This can't work w/o taking care of the DMA clocks in the clock driver resume function (in case DMA
+>> clocks are critical). If so, why handling DMA clocks and resets differently?
+> 
+> 
+> What will you prefer
+> 
+> a single check in suspend/resume of DMA driver?
+> 
+> Or
+> 
+> Around 100 checks in suspend/resume in clock driver for checking critical resets for skipping DMA reset?
 
-Signed-off-by: Xianwei Zhao <xianwei.zhao@amlogic.com>
----
- .../devicetree/bindings/dma/amlogic,a9-dma.yaml    | 66 ++++++++++++++++++++++
- 1 file changed, 66 insertions(+)
+I see no conditions in your code. Just raw writes for DMA clocks and resets. I 
+suspect the intention for v2 is to loop over all the resets in the resume path 
+to find the critical one.
 
-diff --git a/Documentation/devicetree/bindings/dma/amlogic,a9-dma.yaml b/Documentation/devicetree/bindings/dma/amlogic,a9-dma.yaml
-new file mode 100644
-index 000000000000..3158d99a3195
---- /dev/null
-+++ b/Documentation/devicetree/bindings/dma/amlogic,a9-dma.yaml
-@@ -0,0 +1,66 @@
-+# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/dma/amlogic,a9-dma.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Amlogic general DMA controller
-+
-+description:
-+  This is a general-purpose peripheral DMA controller. It currently supports
-+  major peripherals including I2C, I3C, PIO, and CAN-BUS. Transmit and receive
-+  for the same peripheral use two separate channels, controlled by different
-+  register sets. I2C and I3C transfer data in 1-byte units, while PIO and
-+  CAN-BUS transfer data in 4-byte units. From the controller’s perspective,
-+  there is no significant difference.
-+
-+maintainers:
-+  - Xianwei Zhao <xianwei.zhao@amlogic.com>
-+
-+properties:
-+  compatible:
-+    const: amlogic,a9-dma
-+
-+  reg:
-+    maxItems: 1
-+
-+  interrupts:
-+    maxItems: 1
-+
-+  clocks:
-+    maxItems: 1
-+
-+  clock-names:
-+    const: sys
-+
-+  '#dma-cells':
-+    const: 2
-+
-+  dma-channels:
-+    $ref: /schemas/types.yaml#/definitions/uint32
-+    maximum: 64
-+
-+required:
-+  - compatible
-+  - reg
-+  - interrupts
-+  - clocks
-+  - '#dma-cells'
-+  - dma-channels
-+
-+allOf:
-+  - $ref: dma-controller.yaml#
-+
-+unevaluatedProperties: false
-+
-+examples:
-+  - |
-+    #include <dt-bindings/interrupt-controller/arm-gic.h>
-+    dma-controller@fe400000{
-+        compatible = "amlogic,a9-dma";
-+        reg = <0xfe400000 0x4000>;
-+        interrupts = <GIC_SPI 35 IRQ_TYPE_EDGE_RISING>;
-+        clocks = <&clkc 45>;
-+        #dma-cells = <2>;
-+        dma-channels = <28>;
-+    };
+While reviewing it I asked to avoid asserting the DMA resets on reset assert 
+API. That could be handled either by adding the concept of critical assert in 
+the reset driver (or framework) of by just checking directly the reset ID to 
+match the DMA reset ID (as this is the only critical reset identified at the 
+moment).
 
--- 
-2.52.0
+To answer you, my personal taste would be:
+- to handle the setup of the critical clocks and resets in a single driver, for
+   probe and suspend/resume as well
+- to handle it in a SoC specific code as this is micro-architecture specific
+   issue; this problem is only for some of the SoCs, if I'm not wrong; the
+   manuals for some of the SoCs using this DMA driver states the following
+   (RZ/G3S HW manual, Rev.1.20., chapter 8.8.1):
 
+In addition, need following register settings *even if DMA controller is not used*.
 
+● Set CPG_CLKON_DMAC_REG register to supply a clock for DMA Controller.
+
+Refer to Section 7.2.4, Clock Control Register DMAC_REG for register detail.
+
+● Set CPG_RST_DMAC register to release a reset for DMA Controller.
+
+Refer to Section 7.2.4, Reset Control Register DMAC for register detail.
+
+Geert, Vinod: could you please let us know how would you like us to handle this?
+
+Thank you,
+Claudiu
