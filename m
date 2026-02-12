@@ -1,33 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99CAF13DDA4;
-	Thu, 12 Feb 2026 16:29:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1427F35CBD4;
+	Thu, 12 Feb 2026 16:30:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770913785; cv=none; b=DJ6veQmkBQRlQ68eu3gvhYr2VsW8kM4mpbKMHKmjfaumocL9M+YqBeBG8U8/n05hGSIpYjxawxGhNSu4RH9v50bd7pwBtRbRIYYi2q+RsWPxubK+Bh+0v9KE5k0OpdLJQd4D0JwPSkZSxLuHE1REWdPq0vTrR/c/gIOptsCRcVA=
+	t=1770913821; cv=none; b=IxkywtZa72DZDMOgGlkfYOVZ/GtkvmIUlStXBolwahygusFHINymuKStg9hQVjpQZYQspHXq+l2HKiToJZWMOAIYv3zIVOBwEqBTP0t4cdxlVqZikjJu5lep9ldzaT1Mz8tK33RQZCfsTKE95m+3akHe6r2+in8XulpgpyHFEHY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770913785; c=relaxed/simple;
-	bh=g6tjZlKG98dxqhFkJckuNNDVcuE6Nsc0MXhTp7hEh5Q=;
+	s=arc-20240116; t=1770913821; c=relaxed/simple;
+	bh=3ourdlWMcx/lqvoPyJvXSxAb1D6cN3WZIh4zW83XQOQ=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=E8VtsRp2O8bC+n/FGVbInd0OQhE9+B/PRwTErr0lLfE7t+d/43F+H+57LC5KeKlWr0BbyEpB9ECoaDTzviLnYrJLbfkJbb14L//SVosoVYQmFiSXrjAZl03926g6JsTKy7C3b/aVNKRv4wzgpmQ3m3wwIcme1DkDGIthqAXXUG8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=olOXLC5r; arc=none smtp.client-ip=10.30.226.201
+	 In-Reply-To:Content-Type; b=S1pmaQXImqGWPj73dHjvWb1d+LOk4IGZc/SUddhps2+1nAvBM2npTYhn+qvWPBGa0iz8sKBL5eTzochMru8rIVuiABKZlyspMgTARfQF4LYzVALwmDnqYN0taW6DQr3FlNnVJi4n8u/fN4o7YaC/cHuvJmUbAyVSWUb5gdcFiSM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GxvGO/rt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="olOXLC5r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9A21C4CEF7;
-	Thu, 12 Feb 2026 16:29:41 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GxvGO/rt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F475C4CEF7;
+	Thu, 12 Feb 2026 16:30:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1770913785;
-	bh=g6tjZlKG98dxqhFkJckuNNDVcuE6Nsc0MXhTp7hEh5Q=;
+	s=k20201202; t=1770913820;
+	bh=3ourdlWMcx/lqvoPyJvXSxAb1D6cN3WZIh4zW83XQOQ=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=olOXLC5rZfSWJ3Eyc7Y/ixoq1CoagnsZCIknizfGTNnlOCxfWWUpCW6GJAKJwM3OD
-	 nIivi4bEx6Fh7J3i5gzwY3ac5B/BnlONTl+lGjYP0gptZPUFCqOYyGB5XON0peiPP9
-	 R97UxUeQvOqNzYJGktePltyvuSyCRNJ3kyPLVZaUvm1Dxg8M0nzAbQ2jspfTMA0BDx
-	 CmJJrdvxMraT5Brom27ex36HRTwamBBDnxozgb96zfG+dQV9gsVsShc8RKOvYt1a2M
-	 g47Fax6lXQRY0s8YhYPjwlXW4nVAcfWHffElqsjhQbre9AHB2wUBSaZgFXAr4oU1k8
-	 YH0oE5tIHoYjg==
-Message-ID: <1f11cba3-205c-4d41-867c-1be58d9423d3@kernel.org>
-Date: Thu, 12 Feb 2026 17:29:39 +0100
+	b=GxvGO/rtzFiEwlUZQM43TkOkGSSud/30IikXC/1d8pQYnEnfJHn6u+ah12etCKKnb
+	 KeRvOTm2WlzJUm9Lx6v5JrEaBlTpBbnxNd63O/oikW0CP+rAEKNNoP8IG97Mvkz793
+	 lA9aS8O6+3YQHAybA5GBm1TRbKysKoAMwuPzJA/GK90YpDgC3H6WpWXCipDs6DeAr2
+	 Kmyw2h5ALdu9lIJRWMh/a5UtO69bkfr04h6+yH4mWnFEbjaXx5vAfV7BAu1IY0Cp2w
+	 bJIX+XYZb099ZIK2uYyeqEATafO0+wiABSufaxa54DzQbc1Uv3GkEZBjVhmeWlxWP4
+	 FzDRWs6bvjEVw==
+Message-ID: <f8012f1e-9d4a-48b1-8520-6577af60f81d@kernel.org>
+Date: Thu, 12 Feb 2026 17:30:12 +0100
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -35,8 +35,8 @@ List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6/7] dt-bindings: dmaengine: xilinx_dma: Add
- "xlnx,include-stscntrl-strm" property
+Subject: Re: [PATCH 2/7] dt-bindings: dmaengine: xilinx_dma: Move
+ xlnx,irq-delay to common AXI DMA and MCDMA section
 To: Srinivas Neeli <srinivas.neeli@amd.com>, vkoul@kernel.org
 Cc: michal.simek@amd.com, robh@kernel.org, krzk+dt@kernel.org,
  conor+dt@kernel.org, suraj.gupta2@amd.com, abin.joseph@amd.com,
@@ -46,7 +46,7 @@ Cc: michal.simek@amd.com, robh@kernel.org, krzk+dt@kernel.org,
  linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
  git@amd.com
 References: <20260212135146.1185416-1-srinivas.neeli@amd.com>
- <20260212135146.1185416-7-srinivas.neeli@amd.com>
+ <20260212135146.1185416-3-srinivas.neeli@amd.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -92,20 +92,23 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20260212135146.1185416-7-srinivas.neeli@amd.com>
+In-Reply-To: <20260212135146.1185416-3-srinivas.neeli@amd.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 12/02/2026 14:51, Srinivas Neeli wrote:
-> From: Suraj Gupta <suraj.gupta2@amd.com>
+> xlnx,irq-delay property is applicable to both AXI DMA and MCDMA
+> designs. Move it from "Optional properties for AXI DMA" to "Optional
+> properties for AXI DMA and MCDMA" section to correctly reflect its usage.
 > 
-> Add an optional boolean DT property "xlnx,include-stscntrl-strm" to
-> indicate that the AXI DMA IP is configured with the AXI4-Stream status
-> and control interface. This enables the use of APP fields in DMA
-> descriptors for metadata reporting.
+> Signed-off-by: Srinivas Neeli <srinivas.neeli@amd.com>
+> ---
+>  Documentation/devicetree/bindings/dma/xilinx/xilinx_dma.txt | 6 +++---
+>  1 file changed, 3 insertions(+), 3 deletions(-)
+> 
 
-Changes to TXT bindings are not allowed for long time. Convert the
-bindings first.
+
+First convert the binding, then make changes to it.
 
 Best regards,
 Krzysztof
