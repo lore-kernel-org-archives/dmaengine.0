@@ -1,87 +1,70 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E756393DE7
-	for <dmaengine@vger.kernel.org>; Wed, 25 Feb 2026 11:15:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C364288C3F;
+	Wed, 25 Feb 2026 11:20:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772018146; cv=none; b=YH4MMrybTAOvdkrErrJg+tmDoNGuR/CqnVxSQg1sym7ZSZ+DsPQiI4LO6KuE9VtAxMIgMN0067O8Stb6BvLa2zKI0c2PzBUyxBNNCPjd1T3AeaW4KGBXdgjEiuy2gm8Th5Xmdvf40fG1h+JZIVVA2Whg5LWtcZgKmV5ophU6+kw=
+	t=1772018460; cv=none; b=BgSVjBa9ewbY/RGda3IksK8PvxvQ/VX/s7eCRUFpdetMxOD2TvEx7xbkB1d+Wf05A7Hi89s3m2t9SS7Ij74vnwu+i1vxi8Hug20ceUngfLsnux+Lb7DCRp+aQVG091walffMphGIqxng6tw6x6WtPCnDyDGBwjduv0iIi2zLl7I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772018146; c=relaxed/simple;
-	bh=WyaJ2ZcmvK7t1w0wGS7im4tw2w5ym6S4jxoy0wCtosA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=iM7P42UK7TRi0GhkOAt3GawPB/lh5Mkki0TzHSHa4G0oC9MPJ/kATz00i6GWxqr2hYvsQi7kMlP+0+zWNVdSMCqjm7FfLdu11CVG+KgHnp/TWJZvFdj9HY+L91pbonziE937EUa2/15ZJ8MyE8rvlntisW9bSWAY6gQ4ujpopEQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CqvfD2+e; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1772018460; c=relaxed/simple;
+	bh=PIWBI9xHwQPeXFfDMuUlC2Tm2esfZZ4bw/oW27XCZXo=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=p3+KU2gV2qAksDtw8FzQ7iHJ4Ye6lffSlCOPX/lm09b5vM9t/u+6Ers2QoR6oVZ1pLZun/NMYnrmTfR8MA4JtdnfzCqxILIdYzmcfk0Nx5ku+rKPDjBOAcOd6Enqwt84+Y4fORZd3RI6QqvQuGmrxv7jbwUHlkYQxJklH0+CFVk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hJLGjn1i; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CqvfD2+e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7A17C116D0;
-	Wed, 25 Feb 2026 11:15:45 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hJLGjn1i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34C49C19421;
+	Wed, 25 Feb 2026 11:20:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772018146;
-	bh=WyaJ2ZcmvK7t1w0wGS7im4tw2w5ym6S4jxoy0wCtosA=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=CqvfD2+eAvwFruNrQ2MB4d6ny/3wxaCo3nfIUdeR+pVovqjiJKQyGra0JWVPOaCa/
-	 CEQs4UK7qYfxphNi7afsDYQe7TKbAkLfEG3U/ftwediXWn8mGZP95EOltLr6jOD7jr
-	 Gqf+5XzsOMzTBFyOKlRFSxT5mEJMht15LZGflE+YRGrB2mL9VhF1zyxfP47B8UHIlF
-	 y23bgS/7KVA05uxiqEB42XSs60m0UWeKWArJ+rQMbhNf1xYa8KkIrRxffW3OP+iIbP
-	 WhNTte7TJq7hkCXlqOf7nFF9fei6kP98DXNgJwMD0zsN0WNAdB8/j4dydzQtQPeOGB
-	 bEeu8OROV/DjQ==
-Date: Wed, 25 Feb 2026 16:45:43 +0530
+	s=k20201202; t=1772018459;
+	bh=PIWBI9xHwQPeXFfDMuUlC2Tm2esfZZ4bw/oW27XCZXo=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+	b=hJLGjn1iIZZYJe2jBxBy8t8RHbdkwCk/4HLJbWFTZDsHETMxFIkvfo9eeG3kr2WxA
+	 jfL9sTUhln9geF+wS/pCP9Pm31bV2twRtIQ/ubWb54Mx4IvgiLN/PpghNQPEVH313S
+	 5f0jxg7Ixga0zh6tpBac4VFxzYaLnP8xnGAGS4Qm2jP4CFWfRfFfTj2zm3HPZ4SBD6
+	 5tsJvN/NDqIoukEMoMnwc0Dd1fyQLyimxtzeVJb6E0sCEigTIPOPfJECMo9ndnRj3e
+	 VVWc1Au0nsdNkd4nbw/JHlBB0NpDWJ3ZgS/ippN34mlC+XkkDpC0EwQ7uFASm7sQaR
+	 s/f/NEwAO8kkg==
 From: Vinod Koul <vkoul@kernel.org>
-To: Logan Gunthorpe <logang@deltatee.com>
-Cc: dmaengine@vger.kernel.org, Kelvin Cao <kelvin.cao@microchip.com>,
-	George Ge <George.Ge@microchip.com>,
-	Christoph Hellwig <hch@infradead.org>,
-	Christophe Jaillet <christophe.jaillet@wanadoo.fr>,
-	Christoph Hellwig <hch@lst.de>
-Subject: Re: [PATCH v13 2/3] dmaengine: switchtec-dma: Implement hardware
- initialization and cleanup
-Message-ID: <aZ7Z31c0SCvTmAp0@vaman>
-References: <20260121051219.2409-1-logang@deltatee.com>
- <20260121051219.2409-3-logang@deltatee.com>
+To: Frank Li <Frank.Li@nxp.com>, Joy Zou <joy.zou@nxp.com>
+Cc: imx@lists.linux.dev, dmaengine@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, stable@vger.kernel.org
+In-Reply-To: <20250917-b4-edma-chanconf-v1-1-886486e02e91@nxp.com>
+References: <20250917-b4-edma-chanconf-v1-1-886486e02e91@nxp.com>
+Subject: Re: [PATCH] dmaengine: fsl-edma: fix channel parameter config for
+ fixed channel requests
+Message-Id: <177201845784.86127.12049882833167858735.b4-ty@kernel.org>
+Date: Wed, 25 Feb 2026 16:50:57 +0530
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260121051219.2409-3-logang@deltatee.com>
-
-On 20-01-26, 22:12, Logan Gunthorpe wrote:
-> From: Kelvin Cao <kelvin.cao@microchip.com>
-
-> +	size = SWITCHTEC_DMA_CQ_SIZE * sizeof(*swdma_chan->hw_cq);
-> +	swdma_chan->hw_cq = dma_alloc_coherent(swdma_dev->dma_dev.dev, size,
-> +					       &swdma_chan->dma_addr_cq,
-> +					       GFP_NOWAIT);
-> +	if (!swdma_chan->hw_cq) {
-> +		rc = -ENOMEM;
-> +		goto free_and_exit;
-> +	}
-> +
-> +	/* reset host phase tag */
-> +	swdma_chan->phase_tag = 0;
-> +
-> +	for (i = 0; i < SWITCHTEC_DMA_RING_SIZE; i++) {
-> +		desc = kzalloc(sizeof(*desc), GFP_NOWAIT);
-
-Here as well, make sure you keep the flag as is here.
-
-> +static int switchtec_dma_chan_init(struct switchtec_dma_dev *swdma_dev,
-> +				   struct pci_dev *pdev, int i)
-> +{
-> +	struct dma_device *dma = &swdma_dev->dma_dev;
-> +	struct switchtec_dma_chan *swdma_chan;
-> +	u32 valid_en_se, thresh;
-> +	int se_buf_len, irq, rc;
-> +	struct dma_chan *chan;
-> +
-> +	swdma_chan = kzalloc(sizeof(*swdma_chan), GFP_KERNEL);
-
-Here as well
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.13.0
 
 
+On Wed, 17 Sep 2025 17:53:42 +0800, Joy Zou wrote:
+> Configure only the requested channel when a fixed channel is specified
+> to avoid modifying other channels unintentionally.
+> 
+> Fix parameter configuration when a fixed DMA channel is requested on
+> i.MX9 AON domain and i.MX8QM/QXP/DXL platforms. When a client requests
+> a fixed channel (e.g., channel 6), the driver traverses channels 0-5
+> and may unintentionally modify their configuration if they are unused.
+> 
+> [...]
+
+Applied, thanks!
+
+[1/1] dmaengine: fsl-edma: fix channel parameter config for fixed channel requests
+      commit: 2e7b5cf72e51c9cf9c8b75190189c757df31ddd9
+
+Best regards,
 -- 
 ~Vinod
+
+
