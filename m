@@ -1,41 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C364288C3F;
-	Wed, 25 Feb 2026 11:20:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62DEB37B40E;
+	Wed, 25 Feb 2026 11:21:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772018460; cv=none; b=BgSVjBa9ewbY/RGda3IksK8PvxvQ/VX/s7eCRUFpdetMxOD2TvEx7xbkB1d+Wf05A7Hi89s3m2t9SS7Ij74vnwu+i1vxi8Hug20ceUngfLsnux+Lb7DCRp+aQVG091walffMphGIqxng6tw6x6WtPCnDyDGBwjduv0iIi2zLl7I=
+	t=1772018463; cv=none; b=Vhf+cxX8BBtu3BFaAKfNIF1KVDhrdk+/XgRCzIUZ8dbKzff07/6lhspfMtZS8YA0JyXlwczssg12S1WBJbBCLqbyNEKQvVi7gcG7KXtuwJQx3MfaXwjyMQ5WkAm4ItUmEsJSnwcLuvOk6yjYZweYjw14+++Y7RodOY+2ruNSr04=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772018460; c=relaxed/simple;
-	bh=PIWBI9xHwQPeXFfDMuUlC2Tm2esfZZ4bw/oW27XCZXo=;
+	s=arc-20240116; t=1772018463; c=relaxed/simple;
+	bh=K1v+cMMQE7GuCgYPADnCo18a8KFBYp6JSy2KW4kwWDI=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=p3+KU2gV2qAksDtw8FzQ7iHJ4Ye6lffSlCOPX/lm09b5vM9t/u+6Ers2QoR6oVZ1pLZun/NMYnrmTfR8MA4JtdnfzCqxILIdYzmcfk0Nx5ku+rKPDjBOAcOd6Enqwt84+Y4fORZd3RI6QqvQuGmrxv7jbwUHlkYQxJklH0+CFVk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hJLGjn1i; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=YL+R7mlTMDpoy4LGRIMewGchKrWWCWnYfpTXb5UN5Cy8xZPMZplT2WzhebrvdD8ztKX6DUnhaXXqyYjW53AaVGxQusp+9dfVcl1QLvVfhdjsUU1F7fKiZd9JsDSs6oeYMO/jFjlqFYDphXL7CaKmCUiqq5fR8t90myPIWfehI1E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=D3jmThW3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hJLGjn1i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34C49C19421;
-	Wed, 25 Feb 2026 11:20:57 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="D3jmThW3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70784C116D0;
+	Wed, 25 Feb 2026 11:21:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772018459;
-	bh=PIWBI9xHwQPeXFfDMuUlC2Tm2esfZZ4bw/oW27XCZXo=;
+	s=k20201202; t=1772018463;
+	bh=K1v+cMMQE7GuCgYPADnCo18a8KFBYp6JSy2KW4kwWDI=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=hJLGjn1iIZZYJe2jBxBy8t8RHbdkwCk/4HLJbWFTZDsHETMxFIkvfo9eeG3kr2WxA
-	 jfL9sTUhln9geF+wS/pCP9Pm31bV2twRtIQ/ubWb54Mx4IvgiLN/PpghNQPEVH313S
-	 5f0jxg7Ixga0zh6tpBac4VFxzYaLnP8xnGAGS4Qm2jP4CFWfRfFfTj2zm3HPZ4SBD6
-	 5tsJvN/NDqIoukEMoMnwc0Dd1fyQLyimxtzeVJb6E0sCEigTIPOPfJECMo9ndnRj3e
-	 VVWc1Au0nsdNkd4nbw/JHlBB0NpDWJ3ZgS/ippN34mlC+XkkDpC0EwQ7uFASm7sQaR
-	 s/f/NEwAO8kkg==
+	b=D3jmThW3ih13pQFyGZxXjKfvFpkNFYWrqMPUltafTAG+IdlS0kBlfehQm6/I5uGEf
+	 CBcQdi1sAusBSkoVDrxn+vsMUfE0SPtdR57xENXIDMxQc2SrFIAIeeC9wXT3g0pDWG
+	 b/hp7FZwAlEQzToMgizi0Y08p/3xLT+fIwjmdf1TcuuuUg3XR/v00xUTiDfoWQ4E8B
+	 +pCr7C8Jl6Ae4Psj/7LZXn4R71elyQYwiZYP12N09Z4Sb0oX3vdn3PuL4oxvHD4/+t
+	 FnmNGO0IswZ8YA+JZSSR+Ct4wva2YqSovs9/i8TawSm9YIF5l8e9BQG0xU6/zlDVD7
+	 5TRiRq5x8Prjg==
 From: Vinod Koul <vkoul@kernel.org>
-To: Frank Li <Frank.Li@nxp.com>, Joy Zou <joy.zou@nxp.com>
-Cc: imx@lists.linux.dev, dmaengine@vger.kernel.org, 
- linux-kernel@vger.kernel.org, stable@vger.kernel.org
-In-Reply-To: <20250917-b4-edma-chanconf-v1-1-886486e02e91@nxp.com>
-References: <20250917-b4-edma-chanconf-v1-1-886486e02e91@nxp.com>
-Subject: Re: [PATCH] dmaengine: fsl-edma: fix channel parameter config for
- fixed channel requests
-Message-Id: <177201845784.86127.12049882833167858735.b4-ty@kernel.org>
-Date: Wed, 25 Feb 2026 16:50:57 +0530
+To: Frank.Li@nxp.com, Shi-Shenghui <ssh.mediatek@gmail.com>
+Cc: dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ brody.shi@m2semi.com, kevin.song@m2semi.com, qixiang.zhong@m2semi.com, 
+ tom.hu@m2semi.com, richard.yang@m2semi.com, 
+ Manivannan Sadhasivam <mani@kernel.org>
+In-Reply-To: <20260209103726.414-1-brody.shi@m2semi.com>
+References: <20260209093642.273-1-brody.shi@m2semi.com>
+ <20260209103726.414-1-brody.shi@m2semi.com>
+Subject: Re: [PATCH v7] dmaengine: dw-edma: fix MSI data programming for
+ multi-IRQ case
+Message-Id: <177201846009.86127.5800129460585896515.b4-ty@kernel.org>
+Date: Wed, 25 Feb 2026 16:51:00 +0530
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -47,21 +50,21 @@ Content-Transfer-Encoding: 7bit
 X-Mailer: b4 0.13.0
 
 
-On Wed, 17 Sep 2025 17:53:42 +0800, Joy Zou wrote:
-> Configure only the requested channel when a fixed channel is specified
-> to avoid modifying other channels unintentionally.
+On Mon, 09 Feb 2026 18:37:25 +0800, Shi-Shenghui wrote:
+> When using MSI (not MSI-X) with multiple IRQs, the MSI data value
+> must be unique per vector to ensure correct interrupt delivery.
+> Currently, the driver fails to increment the MSI data per vector,
+> causing interrupts to be misrouted.
 > 
-> Fix parameter configuration when a fixed DMA channel is requested on
-> i.MX9 AON domain and i.MX8QM/QXP/DXL platforms. When a client requests
-> a fixed channel (e.g., channel 6), the driver traverses channels 0-5
-> and may unintentionally modify their configuration if they are unused.
+> Fix this by caching the base MSI data and adjusting each vector's
+> data accordingly during IRQ setup.
 > 
 > [...]
 
 Applied, thanks!
 
-[1/1] dmaengine: fsl-edma: fix channel parameter config for fixed channel requests
-      commit: 2e7b5cf72e51c9cf9c8b75190189c757df31ddd9
+[1/1] dmaengine: dw-edma: fix MSI data programming for multi-IRQ case
+      commit: 77b19d053ac2cce9e873007ad4b09f2323c93576
 
 Best regards,
 -- 
