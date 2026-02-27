@@ -1,71 +1,92 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BC74258CDC;
-	Fri, 27 Feb 2026 02:16:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D59211D416C
+	for <dmaengine@vger.kernel.org>; Fri, 27 Feb 2026 02:17:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772158598; cv=none; b=KGCF493IeQRR53Po1ftwsA6TB0A0vOFYb/6yL6FQ1lA5uDP7B5XGe+Z23V4CTxPlu36KPT5cNGayLlASOA72rDQDqnqTdL5+pavJX39YwE4q1STQ7QneXZUEFt1273Ib1JqMq4lxH98BW6dnpIadNiSarcF/2kVY4A9BTW4SAuY=
+	t=1772158667; cv=none; b=LuoIhDXX/u1v9gtcl7G+nPood97Y41tH/l02FwdDlaffW/OYR7G7U8UWIfxXlIjVVaOwmjLQgcJq/97Hshckhynu7HkYsbZgZrvkyonIGeBsMNOX9kv5+kirnH5ZuxFECq9M2FlW52t38n+OKWcClfNXb90Wtb6IN1Spc6VgpKg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772158598; c=relaxed/simple;
-	bh=ee9EbKwmHw9ebTlHpkhD7HSrZHZy0nwPHkdHF2tATUM=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=kW7Z2efC8ynHNLfibfEfYPF6RlUitDLttCaYEURCXep66SrNlyP80Eog35wFhuBgr62fJVvOX2B48v5IPH8tV+nY9gDKwC7h9ZlMVBZ7VzCT/e9rrfp4/eQpIBe0MSxVAT6LGG4qDTrZ8mV38yKuTf5pBc7IDndgOp6xt5yzW7I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ItgQo1lw; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1772158667; c=relaxed/simple;
+	bh=c9g9k6CutPXZrHh3VoTrEBBv4rAf5Kbh1V/ttfcD7Ko=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=fonu9kofNBIC62kEQBN+7tZ9E80mEmSlZQ87i/bNorYnbHPqExi97BdlQWzvvBXs3b2bKwex4m5ucumvKn+quASyCShqdFrc7oSDFFXEkXXyiOGtJKAcfZkkNX5x5/bPnUsEd3BIRZ4pZleZX70p5Wh0gFocAIBN3A5LYdI61vA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=g5SPLozK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ItgQo1lw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C203CC116C6;
-	Fri, 27 Feb 2026 02:16:36 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="g5SPLozK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0ABC9C116C6;
+	Fri, 27 Feb 2026 02:17:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772158598;
-	bh=ee9EbKwmHw9ebTlHpkhD7HSrZHZy0nwPHkdHF2tATUM=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=ItgQo1lwhbdoqPV6W/sxNmeDjiIaJTAkSarnBTGPzDNc+2jgt4nbauKxFfuSKWDYH
-	 pL7QDpk9iyMhyFCRxtNjJ/zP/TvRfHb2OdD0qcJ/1JAzTnoOgfNM3xCzFPctgqGwue
-	 L8+SF2tT4H4eSpNtXpXxMU+bNRLD8Xzl8iqinjLMVRSr6S2sp3byQHRmnwYTo7KUW7
-	 kmxxHfvkZ3RRZsdbIMYRs/dCHkhHXH9zyAQon5ITiUQydqzoRNYCeoxvlXHUk5yYy7
-	 X7vTarw54Qlr+6m2JWENoD2RHHLghgCEYb4W2z0Cp3dLAHPMAw4JY/hy0PYdUilYqE
-	 dQ6wXqZ4vr0zg==
+	s=k20201202; t=1772158667;
+	bh=c9g9k6CutPXZrHh3VoTrEBBv4rAf5Kbh1V/ttfcD7Ko=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=g5SPLozKyf0QcmapZslM6ILpjIB8ajfub957ConG5xag6gTTQXZKSbax3DOwCOQEI
+	 8bXUD4M4kKM+COM027O4Xt9fOYj12JX7Nj+qMerIA8rNAFaxZ9VIvrqUPAxvGLQwuy
+	 WqW/bcWmB+o7yAlyPTJuqETKSbNnjtoZIOfQaxg5YNXV/Jas3aHoK0JLDF1XSgIVQ9
+	 V3iPXZvO1W7dLu9fcfeavLf2F3MIX5dOGSsDnMLHLuiAzQ5+a8tOqbeVoow2NPXlwI
+	 s0pIPzobkZurGBcEKHmZjo6leaAbHkyWOlW4lpburrAsdZA3t1EsvYCmCyfHIqL9zf
+	 D+egacr8TY48A==
+Date: Fri, 27 Feb 2026 07:47:43 +0530
 From: Vinod Koul <vkoul@kernel.org>
-To: linux-kernel@vger.kernel.org, Randy Dunlap <rdunlap@infradead.org>
-Cc: Frank Li <Frank.Li@nxp.com>, imx@lists.linux.dev, 
- dmaengine@vger.kernel.org
-In-Reply-To: <20260226051220.548566-1-rdunlap@infradead.org>
-References: <20260226051220.548566-1-rdunlap@infradead.org>
-Subject: Re: [PATCH] dmaengine: fsl-edma: fix all kernel-doc warnings
-Message-Id: <177215859616.232003.14692353574886302614.b4-ty@kernel.org>
-Date: Fri, 27 Feb 2026 07:46:36 +0530
+To: Nuno =?iso-8859-1?Q?S=E1?= via B4 Relay <devnull+nuno.sa.analog.com@kernel.org>
+Cc: dmaengine@vger.kernel.org, Lars-Peter Clausen <lars@metafoo.de>
+Subject: Re: [PATCH 0/5] dma: dma-axi-dmac: Add cyclic transfer support and
+ graceful termination
+Message-ID: <aaD-xxghRKAhS8Yc@vaman>
+References: <20260127-axi-dac-cyclic-support-v1-0-b32daca4b3c7@analog.com>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.13.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260127-axi-dac-cyclic-support-v1-0-b32daca4b3c7@analog.com>
 
-
-On Wed, 25 Feb 2026 21:12:20 -0800, Randy Dunlap wrote:
-> Use the correct kernel-doc format and struct member names to eliminate
-> these kernel-doc warnings:
+On 27-01-26, 14:28, Nuno Sá via B4 Relay wrote:
+> This series adds support for cyclic transfers in the .device_prep_peripheral_dma_vec()
+> callback and implements graceful termination of cyclic transfers using the
+> DMA_PREP_LOAD_EOT flag. Using DMA_PREP_REPEAT and DMA_PREP_LOAD_EOT is
+> based on the discussion in [1].
 > 
-> Warning: include/linux/platform_data/dma-mcf-edma.h:35 struct member
->  'dma_channels' not described in 'mcf_edma_platform_data'
-> Warning: include/linux/platform_data/dma-mcf-edma.h:35 struct member
->  'slave_map' not described in 'mcf_edma_platform_data'
-> Warning: include/linux/platform_data/dma-mcf-edma.h:35 struct member
->  'slavecnt' not described in 'mcf_edma_platform_data'
+> Currently, the only way to stop a cyclic transfer is through brute force using
+> .device_terminate_all(), which terminates all pending transfers. This series
+> introduces a mechanism to gracefully terminate individual cyclic transfers when
+> a new transfer flagged with DMA_PREP_LOAD_EOT is queued.
 > 
-> [...]
+> We need two different approaches:
+> 
+> 1. Software-managed cyclic transfers: These generate EOT (End-Of-Transfer)
+>    interrupts for each cycle. Hence, termination can be handled directly
+>    in the interrupt handler when the EOT interrupt fires, making the
+>    transition to the next transfer straightforward.
+> 
+> 2. Hardware-managed cyclic transfers: These are optimized to avoid interrupt
+>    overhead by suppressing EOT interrupts. Since there are no EOT interrupts,
+>    termination must be detected at SOF (Start-Of-Frame) when new transfers
+>    are being considered. The transfer is marked for termination and the
+>    hardware is configured to end the current cycle gracefully.
+> 
+> For HW-managed cyclic mode, the series handles both scatter-gather and non-SG
+> variants. With SG support, the last segment flags are modified to trigger EOT.
+> Without SG, the CYCLIC flag is cleared to allow natural completion. A workaround
+> is included for older IP cores (pre-4.6.a) that can prefetch data incorrectly
+> when clearing the CYCLIC flag, requiring a core disable/enable cycle.
+> 
+> [1]: https://lore.kernel.org/dmaengine/ZhJW9JEqN2wrejvC@matsya/
+> 
+> ---
+> Nuno Sá (5):
+>       dmaengine: Document cyclic transfer for dmaengine_prep_peripheral_dma_vec()
+>       dma: dma-axi-dmac: add cyclic transfers in .device_prep_peripheral_dma_vec()
+>       dma: dma-axi-dmac: add helper for getting next desc
+>       dma: dma-axi-dmac: Gracefully terminate SW cyclic transfers
+>       dma: dma-axi-dmac: gracefully terminate HW cyclic transfers
 
-Applied, thanks!
+Please be consistent in naming, it should dmaengine: dma-axi-dmac: xxx
+everywhere!
 
-[1/1] dmaengine: fsl-edma: fix all kernel-doc warnings
-      commit: c8e9b1d9febc83ee94944695a07cfd40a1b29743
-
-Best regards,
 -- 
 ~Vinod
-
-
