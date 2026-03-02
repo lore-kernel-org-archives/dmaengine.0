@@ -1,63 +1,63 @@
-Received: from mail-pg1-f176.google.com (mail-pg1-f176.google.com [209.85.215.176])
+Received: from mail-pf1-f177.google.com (mail-pf1-f177.google.com [209.85.210.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDA16430BAC
-	for <dmaengine@vger.kernel.org>; Mon,  2 Mar 2026 07:13:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBE8A332EC8
+	for <dmaengine@vger.kernel.org>; Mon,  2 Mar 2026 07:24:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772435593; cv=none; b=GHUkkd65s2DP8Z43WEA3tdX6OUhdgky94r6kJm+4US5qhouD7i+c0RD8T/nkU6Q9bNWn1lRu0xAv44Q9RyX+Jds79Yjddlz0HPSJYfi7d65gf9VXGLb3qkREocxJExMIFXM6ILZdiH43bMMS4P0UZTdNkOrCBz+2QvR0iokyQ3M=
+	t=1772436287; cv=none; b=L5a83VYhLH0m+ALZj12xCVuaiKKEfO/AwGH9LCUz/pgw4lrQuq7Vj+wLTPzvauCJToBhOlgAPi/Z5A1alfRGMabCvJIei4aPOk9dBJHTUXPQaQs7fJB/x57Z0fc4LJKPkj6J+wf0915RiBmCEsOnNDpwiEsn4tjQuWR7M4Y0mg4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772435593; c=relaxed/simple;
+	s=arc-20240116; t=1772436287; c=relaxed/simple;
 	bh=ilkeyD8qZQOpsW+Xq7gCWaAiuV38Fp1tAggTNiSYlQ8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Mz6yyOaNbCamK47eZuVb0YTyVDQPuBE5DjO2SxjKyOGREoLzLioqTfSAa905hE4uMIufpqSuhpp01/w8wcBykZS5C67xxL0/x4Yk9mvRa2blMJrTbntvYn57Y1lnoJ36uFj1drLiRDrYBztKYatSgr2OuuTa7n3wkZoOch65fwE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Rf6VPKt9; arc=none smtp.client-ip=209.85.215.176
+	 MIME-Version; b=k58fbelnpaJl0RlhocePEXzWfh1snS7LfriQIm9PtunbtNiztKATBVlJj+k15F8p2mh2erQDWoycJ2f8rjt919XiaRuhCfnHtEnxhOvomMG/nRTnHSsHyP7RdcgBe6yxTOW6qCyo7U7xRccuawHGjGk9zruJ+f+EbSbDVoBkOwk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Hc//uMn+; arc=none smtp.client-ip=209.85.210.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Rf6VPKt9"
-Received: by mail-pg1-f176.google.com with SMTP id 41be03b00d2f7-c06cb8004e8so1595667a12.0
-        for <dmaengine@vger.kernel.org>; Sun, 01 Mar 2026 23:13:12 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Hc//uMn+"
+Received: by mail-pf1-f177.google.com with SMTP id d2e1a72fcca58-824b32875e7so1904922b3a.3
+        for <dmaengine@vger.kernel.org>; Sun, 01 Mar 2026 23:24:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772435592; x=1773040392; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1772436285; x=1773041085; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
         bh=RwUZOQ2ZJ7lWBPCWroaNir22y89SjANnXegT9KI0WTU=;
-        b=Rf6VPKt99dCqZRvhejum2RMxh1Vdt1TbXcUYPHM82xFQkFeYy1/P3rG6V+akymz1VJ
-         hVRp03CkIzs2w3mnQltOpCdzdoKPD+T8qeXfe3bpzv2ENPrsgk1EpMa8niVTiCnQGFpG
-         aivIc7cCOU5CORYQQR+lcFpVpHOZ1ZOYoKcBc1RzFi82dMzRAldoCGe+KD3tp0ImJAeI
-         b13V035fZzwB2zJaNhqJZCQ1bHvq17+NiAYFw6uLisvt2892XdTXN7Up7NwfZmpZQVF+
-         7cROY/qVxWQqJPHQRzomaldrw+V+FBlLvmfhCGoiDbnSRN+uIPW0WCa0zxhDJaniY4mD
-         Inrw==
+        b=Hc//uMn+uZvwUyjSaI1WtCZq+sporS7oeTCLT86a+JkQ6O8dLGejnwbRZuRggEIPcv
+         oFJ+H+ZFa+nWbv8G+H43tPYXzqp1fnsZPuBeW7h49YfcqGx2rJY2FXIzdCCTFFm5bTfW
+         jh+m4jYmcwi1ya/SkIgNYBfC+hF2K/xM+QPaWxQik0HdeeBmWcDJvbj5FioimUYEhToF
+         K3dQ3Pz7jS/G0HNGrkYMR7lMeUck353WQ/9rpDb1Z1wHTorBuQ84z8JURBuJzQW7PvrG
+         yBqVaHt/Q95xKjrQxvnSz13KH4KjXCZalr/TFjlhdEOT0W2PBfe43eGqfU2TtYUPlkeI
+         jdDA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772435592; x=1773040392;
+        d=1e100.net; s=20230601; t=1772436285; x=1773041085;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
         bh=RwUZOQ2ZJ7lWBPCWroaNir22y89SjANnXegT9KI0WTU=;
-        b=tUbrXByXRXGv7y3OqVmZqG3Ci+J+D8aRVfVTe3k0yJLYrvwJ1TGUrZoKdcZJ6tlBaW
-         Nd7MWJnL8y6v3GAGDkdOmcYgw+ajkNIfRTLfs+hKp7GL9IhccKaXnSI1KFMdnGN7pOty
-         FCE60a6k60hxWV64nllV/l2+xf4WdgHoaZzA0Q38g4TRhSYt09NAqNffENqa9KLNp3AT
-         Ci2ndzI7WehZztc/i6eY/+LlsEMUhU5sj6zwXBwfWuLJt68MBthsCfqZM1urrECHKsMz
-         duMwQbIBNq7M5vDMYRbSxFQUQO5ujIdtzSKUpOoPeup6j0A/5AUsRGPrb5+FJXETMm9R
-         mVmQ==
-X-Forwarded-Encrypted: i=1; AJvYcCX2vGZuuLgQErGGi2u+/vU/NmS7Q2XA7W23p+xbdCiuhjXIJHBAWofwsKBXGWl9VfIuB5az4jKfPvE=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzEP+h4NypS5cGR/MRLNNfnaZ/zpvW0OrDQ02Ocz1Hj26TADjlb
-	BOIHnZu8Yr4Qef9ITabQXa7ZG25n0vFS1vRlcECfy+jZLi/wsxibSKAy
-X-Gm-Gg: ATEYQzwwhlwegfOV9Xu6jumSAMdjzGoLiu2ACbBhCT9A1puPig1ggTlfikJuvRMTCF5
-	fe63HBTzuZ/nlMMdDvkTfcW8oRvqrTqv873BRLmU/f/8ZPlmBrEqC3xCyNHt9BdybM14tWGf1vb
-	ZNV/T8X/egkqJ6f1WYqnITV6SATqIc6S8TRRs/rGK9uWMGvhyzPVp6RzmN0JF6MQNvSdqK8XrcT
-	CTE7mOn/+dxk+nd6zUP0+MViw3XLvwbfAHS5Cab5vVG53LmRW3S3lAEYno46RiZ9HGs3LD4E32W
-	t19RsloI0tqbRbRBDKo0uCUUk//RuZj3YB2FDbUv6oTJ1xgwUh1yhvMfv4sBHans85F30JS/mIQ
-	C1+x965eWH005yfB3RTs4vvONTihdaYt8ntVd0j0F2t0vWwZ6nMnHKtreFbPLnkvxLXFN+O8i6s
-	V4RzyTKTcURoeDiqTxIzrveKzZ
-X-Received: by 2002:a17:902:ce09:b0:2ae:508d:fc33 with SMTP id d9443c01a7336-2ae508e0117mr17613475ad.43.1772435592070;
-        Sun, 01 Mar 2026 23:13:12 -0800 (PST)
-Received: from bsp.. ([2401:4900:52bb:cde9:66f7:69ca:84dd:3745])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2ae492e6901sm36069455ad.65.2026.03.01.23.13.05
+        b=ArsBYojqDKAwdTL99kLWmQAKEleytPgsO3Qlyq1vj1DlxWDyfnLq5euIMgpDt81PdH
+         jWblm7iwS7IT89VPoB4k3lLYRKQFynWlgJnMb91svahs8AFaT561nbAtPE7ZamlI8muj
+         TC96xlA3gM5VFfIjrKii0WV71XeGG6Ck6BrnmgqZ67AFOPQAclGMAgJwRVGElODNkXa5
+         nLzLbAGXJRYFgiSERoRC526/zwmdL6AR76ZsA5oc95Q5/+dGu1exlvSBs1K5ZDLuE3Xb
+         qwZhQE4P4mob0ARHD6pttx3zgCYxUnKC7ZcdJi34NRIbUm/O+beZvs2+1r/4g5TbOEiR
+         O1hQ==
+X-Forwarded-Encrypted: i=1; AJvYcCU3uXUSqZWzzlqOiehQNSiGhuJ1KAZk2AMxpGIM/IEHQDgLNwDHOq07H1vCEy27EAq1Q0ZRur0yNx4=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx3LeM7QNPSytJRoTEsGGIAy1m9uHT3odF7IgzFeomBHciva7bU
+	/Bl8jhHcsZmWRGjafo8jBdvBO5ilvAc3pDzSJHidsyVbvx6JN6NIz4IB
+X-Gm-Gg: ATEYQzyzVugEAFypw6oaY/D5sJImOo1AkziU1/4vpkItPR/tt9E3HViuxQdcxYiQtdz
+	p8mzRZoTiMGkKxVUxdWVHehOgSomh6H9oYlaCrBXAFwttkeS/Wa2zBRlHHP3XAzLux1zYs6BPdu
+	lLkFhw7fYe/HG5ddBesMacZdHvipq/L9pdzS6fKhFLXiFKQ9lg9ju81u+RxqYUlF+Ox5YZslK0Z
+	iWrm8Mq3rjaHQURS39n1r1N74WSgNeufR8wmXrmDnivtfhiBcwrnN+70QQPvA6Q9MMZpMa62A9L
+	O7D9BGem6RmobDWSgTk9VoBmJ1DDRAal/+HwSJTuubykfYnvSdPp40c5Rsw/efJ6esJ4AtGf99Y
+	Mto1hS9gWMpYzsypG0E622XrPhIBngvmnmmX9y9s8J7jZQYCQGBc+IC1LNGFi/YZZRw3VVO7Ek5
+	JXNft29VIOxs/gVgnf9WcDmOVtpp4aYYdm
+X-Received: by 2002:a05:6a00:3c8b:b0:824:ae74:571f with SMTP id d2e1a72fcca58-8274d9e60dfmr12793620b3a.40.1772436285118;
+        Sun, 01 Mar 2026 23:24:45 -0800 (PST)
+Received: from bsp.intra.ifm ([123.252.218.194])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-8273a0107f5sm11709615b3a.45.2026.03.01.23.24.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 01 Mar 2026 23:13:11 -0800 (PST)
+        Sun, 01 Mar 2026 23:24:44 -0800 (PST)
 From: Rahul Navale <rahulnavale04@gmail.com>
 To: Folker Schwesinger <dev@folker-schwesinger.de>
 Cc: Rahul Navale <rahul.navale@ifm.com>,
@@ -75,8 +75,8 @@ Cc: Rahul Navale <rahul.navale@ifm.com>,
 	marex@nabladev.com,
 	marex@denx.de
 Subject: Re: [RFC PATCH] dmaengine: xilinx_dma: Fix per-channel direction reporting via device_caps
-Date: Thu, 26 Feb 2026 13:32:48 +0530
-Message-ID: <20260226080249.3632-1-rahulnavale04@gmail.com>
+Date: Mon,  2 Mar 2026 12:54:32 +0530
+Message-ID: <20260302072433.5091-1-rahulnavale04@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <DGHGTCJRRZCW.9TGXQW44V6RR@folker-schwesinger.de>
 References: <DGHGTCJRRZCW.9TGXQW44V6RR@folker-schwesinger.de>
