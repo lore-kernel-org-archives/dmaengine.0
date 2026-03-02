@@ -1,157 +1,359 @@
-Received: from OSPPR02CU001.outbound.protection.outlook.com (mail-norwayeastazon11013002.outbound.protection.outlook.com [40.107.159.2])
+Received: from ale.deltatee.com (ale.deltatee.com [204.191.154.188])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9533347DD48;
-	Mon,  2 Mar 2026 20:32:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.159.2
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772483529; cv=fail; b=rk4htH8ydYEuJetKLb9DhZISv9ieNuxZGe9+G8RlU31zX/wlVGvHvjujWMeGiSCzXLSj75K6Fi70/PQ38AQrAbImqW8sidLQC9LzXTb8P/FBrRXzH9rqVW9NX3bNg9Q6Ftiihs+FfNgfx0GteLDpEhV7GvbLOEuqnMLnT2zYgV8=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772483529; c=relaxed/simple;
-	bh=RcUNp+iX+BOvTb7q62Hzd8lmnbqQJx6Pp8CEqS9phdg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=sk0KrUYVHJnuBJZCl2O3qouuISr//eVvdP261FnALroMj9U94veAOrTOGjpFAfn54WUCsuuWkY/BcqhhRi9OQkDkFLSc8oizp9c/8sgXmmGHrDqsv7uWW9iLyRSFKUgoPycoqvYIdqnhF4oJNbVFamk+xjI7OP5Ca/2YSOGTvus=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com; spf=pass smtp.mailfrom=nxp.com; dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b=LwQjl4ux; arc=fail smtp.client-ip=40.107.159.2
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nxp.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC641388E63
+	for <dmaengine@vger.kernel.org>; Mon,  2 Mar 2026 21:04:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=204.191.154.188
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1772485488; cv=none; b=quXSi7o+G/NrVoux3pFIOkjC2ZZLFZQle165+YjqxqyNG2Y9dPwh9mRSwqI5rUfeejUUOwbDDzBffoGkQ84K+BdW5gXFSaHr6ba8ujwnI+hgAiGcp0R7KI8QVjtuUEoWxmpZZUGDcb0/G3iyOua1wMBlJH9zJmTOKOkP/fxknlk=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1772485488; c=relaxed/simple;
+	bh=jBtLmJQdpDpLBulZbEC2qfDr151p3tVE1z4UTjxyN/U=;
+	h=From:To:Cc:Date:Message-ID:In-Reply-To:References:MIME-Version:
+	 Subject; b=ee4/wbKmsbp8Aba5y5/nXih2Qeo4VbxlPQy7pxDMmckgQwJTkoVyQRlx15Kg5tRRyI7E14OBL1acxNPzYYIye/5QoU9nkAqjavOuVPqo0Sk0LOsv5zMWJ52wa8nzAP6fvNHlKaZ0RYqSZUqufyY7IbWL6Ebb9N1ONLndrDy39MY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=deltatee.com; spf=pass smtp.mailfrom=deltatee.com; dkim=pass (2048-bit key) header.d=deltatee.com header.i=@deltatee.com header.b=TtO00hyj; arc=none smtp.client-ip=204.191.154.188
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=deltatee.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=deltatee.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b="LwQjl4ux"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=S6eU23HIgHpPRzR7sVQEaS41LGWM/f2irBVsyEmbge4DoAYfeyknlA3uXsC0HifTU8JCFvosj7VFlEpoqCDuq75L1qYbPafQ95k3kshrUgLSmfQWQFgG1UAhx5KIFJb6nWbQA2MUUryWQSBkBPuM4nNKIM+wwe9ompol8Yd129pH5SjKjkqpu1hHFuRu6C24xfaqp1Cg0KlgZE3doXRgGWKkAZzrTpq56FOmySjWKvKnVK+3B/88AiVdOor8ljVCDNmoJYKIpMBjZbO/5FrkgFln3OC85DtvVBWd2LpuaEcQglotvOt4vqkMYGk74v4FAQbcMU5Q4Cr/BIXVUos2Ng==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=2GRgNyS3Dh+1bU8Id1UQ+rVIhA7V8sWy+MjRZ/OJJkc=;
- b=fBm48d65TzQRAnRHvjwFw+GZN/2JxfoPjqmNKaQQTyw3hNrc1G74ltHolYYR09+9k4UBM+HyDwWA9Lrx/S57ItHYrhoLOqWDYMqbkP8ywQoGwQlA7dMpYNVtWiG+/OzmEXpOPMM6BwEtkQJ2u64+33CMZLVxZ9NQbhbn8l4QhxLtnUJ4eERH2mAeSADKLGeH4lQI7n8C5U3YDCMFWVybMCOdeULmHm4AEtDqQSpeMdqZibC0DtwO+8MyIPIBINZyNDD34Ni16M9YclM5wGpnQT/l/Pd3b4aFm291yCr4W5n8lqCNdOYiXOIM4yZ57+9w3wv78dsHkgx93bdM9jGnJw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
- header.d=nxp.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=2GRgNyS3Dh+1bU8Id1UQ+rVIhA7V8sWy+MjRZ/OJJkc=;
- b=LwQjl4uxb9CZAflfRh41vy+D7tfV40jNGiobSxFBNIcn7uTncQAJUEgVm8GgKBxm4ZMnzVMeSCTJfrMNYF6v/dTqfe/hOq4hMxzBOajAbfkxDgCLy8+wsHJuh9ht1IN/QsZhV2mtg1ujPf/PPQdDF7WRnu0BXZ8sMxHNNgBQDCF4E13G5BD31W0j+pVhrlkytuY9rr9dWuuWDb1xHJFdou7OQnK37fbJUKpOYk7ai/ScUg9zb3hVsrgi7pw0GCianS4hrjCAbfPkGn5XM2iPhTwedLmCM6CHGOycsg3lpSoWEoxncH9E73jNPZsGshLY1PSALAScxBW5OkRfIZ8PQg==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nxp.com;
-Received: from PA4PR04MB9366.eurprd04.prod.outlook.com (2603:10a6:102:2a9::8)
- by AM8PR04MB7905.eurprd04.prod.outlook.com (2603:10a6:20b:235::18) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9654.21; Mon, 2 Mar
- 2026 20:32:03 +0000
-Received: from PA4PR04MB9366.eurprd04.prod.outlook.com
- ([fe80::75e4:8143:ddbc:6588]) by PA4PR04MB9366.eurprd04.prod.outlook.com
- ([fe80::75e4:8143:ddbc:6588%6]) with mapi id 15.20.9654.020; Mon, 2 Mar 2026
- 20:32:03 +0000
-Date: Mon, 2 Mar 2026 15:31:56 -0500
-From: Frank Li <Frank.li@nxp.com>
-To: Akhil R <akhilrajeev@nvidia.com>
-Cc: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Thierry Reding <thierry.reding@kernel.org>,
-	Jonathan Hunter <jonathanh@nvidia.com>,
-	Laxman Dewangan <ldewangan@nvidia.com>,
-	Philipp Zabel <p.zabel@pengutronix.de>, dmaengine@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-tegra@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 3/9] dmaengine: tegra: Make reset control optional
-Message-ID: <aaXzvPYFF4euUTEY@lizhi-Precision-Tower-5810>
-References: <20260302123239.68441-1-akhilrajeev@nvidia.com>
- <20260302123239.68441-4-akhilrajeev@nvidia.com>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260302123239.68441-4-akhilrajeev@nvidia.com>
-X-ClientProxiedBy: PH5P220CA0007.NAMP220.PROD.OUTLOOK.COM
- (2603:10b6:510:34a::12) To PA4PR04MB9366.eurprd04.prod.outlook.com
- (2603:10a6:102:2a9::8)
+	dkim=pass (2048-bit key) header.d=deltatee.com header.i=@deltatee.com header.b="TtO00hyj"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=deltatee.com; s=20200525; h=Subject:MIME-Version:References:In-Reply-To:
+	Message-ID:Date:Cc:To:From:content-disposition;
+	bh=ybWyiknoOg2O2QN0fvevtk0UV3Mvjt+0teXlIaRNb1Q=; b=TtO00hyjXo7gozZd8RyRutGGYj
+	tv4c0pvx/YtEzu99RoXk4H2/e1OkZKksfECXvdvFxVnDCiyOm0DpLbwOdFOyO08bkr8dxh+cbdE8I
+	WoNF0r1MsvIgCjTt/5+XmYev5qghHJjyI8qFBcNIP3A9VimUzFTD9D5xsHLwG7tx33HASMkTaOyXe
+	6W2X53M8YBXb4EcHRSR4bHIw5MHncvhCjsA8hK15BbMFe7dXdFTPHLyf2J3FxR2klQXr4it3jp2KJ
+	Tu+69KmyeBTc+c9PUzo5jEh5v2a0EqzDwG7Azf/xFpTkqWzThuS7GvLuOPEAVZtEBVSU1HEb6+xI1
+	sEq9wkXw==;
+Received: from cgy1-donard.priv.deltatee.com ([172.16.1.31])
+	by ale.deltatee.com with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.98.2)
+	(envelope-from <gunthorp@deltatee.com>)
+	id 1vxARZ-00000005EPm-0eyY;
+	Mon, 02 Mar 2026 14:04:46 -0700
+Received: from gunthorp by cgy1-donard.priv.deltatee.com with local (Exim 4.98.2)
+	(envelope-from <gunthorp@deltatee.com>)
+	id 1vxARD-000000000xL-0kCW;
+	Mon, 02 Mar 2026 14:04:23 -0700
+From: Logan Gunthorpe <logang@deltatee.com>
+To: dmaengine@vger.kernel.org,
+	Vinod Koul <vkoul@kernel.org>
+Cc: Kelvin Cao <kelvin.cao@microchip.com>,
+	George Ge <George.Ge@microchip.com>,
+	Christoph Hellwig <hch@infradead.org>,
+	Christophe Jaillet <christophe.jaillet@wanadoo.fr>,
+	George Ge <george.ge@microchip.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Frank Li <Frank.Li@nxp.com>,
+	Logan Gunthorpe <logang@deltatee.com>
+Date: Mon,  2 Mar 2026 14:04:17 -0700
+Message-ID: <20260302210419.3656-2-logang@deltatee.com>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260302210419.3656-1-logang@deltatee.com>
+References: <20260302210419.3656-1-logang@deltatee.com>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PA4PR04MB9366:EE_|AM8PR04MB7905:EE_
-X-MS-Office365-Filtering-Correlation-Id: f9f77c41-9e43-4fe5-2f35-08de789ac3a1
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|376014|7416014|52116014|19092799006|1800799024|366016|38350700014|7053199007;
-X-Microsoft-Antispam-Message-Info:
-	mYwDjKs44K3xrTB3oPRk6wOyjSXSZxRf+O1Hm85lk/JNPfoaIGoST1MNqshTn55Q5rfYOIAnPIs80EtPr9UWvf210ya0gdtChka8U9w7euDrD4QrKZ/B1rKmcByEdSSkHRAg/GTEq9D+R/ECPWCpVM3Nfut0g7jcmmhu9upjoVGrP/ZqKUesfl56SnqhZE+s7Ud0SH5EJznOpK0Pw0H6DD41Sh3kGM0XknTepavpel8OGF1YfJrIyC/UHaO641SgJq0hv+/nTpYq32jgFUhvoNw1vD8KMwEn+Yq6YNVJfxv/l3/ml+5Gmjj91pCjRdlwdZc4KHdnW2VQaA2v8qPa+M/YpbvmHVd320i8FTaluoM/3ZYYcB6MjP6hCOAiVCb1Rjn46F6nq1+sJh5vrSDrLqO5uATG8WT58vvr4lBKcAQVwheWM9UnSq9m3GWEABGNOjjJqMB+yyqbPBMwrWPeGfxjdFKET0Xky9feCINe2xMPlKOTDbcPln5Yk0h6uM2ml0i7QQriL6H8UjowFKx2HpOrt7kRxhM4CSgkqPDPUQGyvmg8s9DL/jxFq4iHtNen02fFJr5g19KHQMwEnctzUDWwSDqbAmm6c20HxlKhf1cK+r5KNW3+kXRlXTRIQNZPEC3K0DWy4DIfYI8eYhNlUQdIeiNL3n7r98fJTrKNRQ1FxTfYMxun6KH6mvkU12WeTunHVlPj+uklAWTTXIoeIf5nLJPNiWouDqlWn8LkrZN1hf4726Es+r22vMt2WBNKqN7xKcGd+MjjAaHv6IDqfKX0GheQukOTBFmbCZMY0i4=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PA4PR04MB9366.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(7416014)(52116014)(19092799006)(1800799024)(366016)(38350700014)(7053199007);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?DdDDClA7ItTuOuJ+ETy8GkUphobvm93CXamR9YzFQmDo/KtEvDj4+Ssu1fjo?=
- =?us-ascii?Q?rhJmkV+S0HRvESEyMiAOnnzc/z16bu0NlumiLQI7iWN85IGPqkVetnd+Q7To?=
- =?us-ascii?Q?FQlb8YpPwQHM7dmgYT2nrhsIH9ues8rgnDU9rDYLkKSBXBpWZLdX4AUj4j9W?=
- =?us-ascii?Q?I91H56+AtXo3/eIoMpoLlfGhOTy0pf4rSOow88ySu7UKtmGx7RtG41shyXNq?=
- =?us-ascii?Q?31MZyooExx9Ojj+JznFe+s3Nj3rFx1lWeyp9A/x4Tt6WEaT6CXHtH8RKf2vU?=
- =?us-ascii?Q?mEze9ozMVcvuqkfPimdMpDeUdkA3ZpTU3kpDXSNDabcS6nrJVSRrUrI/AX1P?=
- =?us-ascii?Q?/jDSQQqegOkuxvav1+CA3Mx7twc0NzH1QT7B99SUHORzhtZVVQdwgZ5IY4bh?=
- =?us-ascii?Q?S0d/r5BLAiMkKz/ADMcpHZvsp89jxG4yqPAy5S/QpxlHkhqAot/rw1C8Eamc?=
- =?us-ascii?Q?uxkNFszPYvcRSVSMx/oZLiXJHHHKGZ1r+3uOhOhYdFRzVT6CjVCP6Jg0wezB?=
- =?us-ascii?Q?pTKzqqMwnncvi4v5xDYsG2WgbebmoYsv0m1ksRObB3XTGespWykOsGhXPzO3?=
- =?us-ascii?Q?jTd70fjdLX60Up4m68pQoCEmZbgs50zVJWO13aHo35U2QbW/8t/r7erZBb2e?=
- =?us-ascii?Q?YB/H0wPxJMRf4spMHy9Ol34W8idiPdNpTNLRLww0OOrmQ/K+S+/Pr4lMCRiF?=
- =?us-ascii?Q?E1GgFU2X2QtC40nL84SxZDaI8zkWpq+boxHrr5D+1cocw0R5Efg/aGEARfqm?=
- =?us-ascii?Q?oYyoanR2JJaE5J89wySZ7xRS0ML5nMyFBpjb0rOyd9EqG+LX8GpsKQ/km7e2?=
- =?us-ascii?Q?gdHitCMI1vV5e49rjqIrMlS11aUJTEGHA0XCrWXnVyVMPamob8El9zMLiuYk?=
- =?us-ascii?Q?r2Tyk+7d6MSMFbfWAaSQZ6Bu0Wlz9b24MMX4K78JIQ2NFBUd7a0NJTk1KSnO?=
- =?us-ascii?Q?+yb5Q2Sgmp+B3hCE7Nn3NNR2G0oFcTtD1+kB5U71/Hg2CC2JKIcPR0pmFMj+?=
- =?us-ascii?Q?I48c0kdWA8aYXkiQFx3l2oey91C5OQUr/KdlQ5OMr3g/+VuDcOyYawx7t1Uz?=
- =?us-ascii?Q?p9fKky1dOvTY72+FnYTY7XVyZdluNFAdnco/e1vb1CKt013wrIPxyLEDXxI9?=
- =?us-ascii?Q?HUhb8Cedd9gL4iK3kQCzgCn9fBUPjuZlW330ZTJwsNhialEF6s99VUXZjP/b?=
- =?us-ascii?Q?oJ0Io0sWCJwtFxppu2+F1Wvq+ysLmH+p6GVXs+oI2wfIAyN+9W9+m6i5IyOh?=
- =?us-ascii?Q?1Jni97+w6KaXuCn4nBedndz/ZMlCFItcbud9Vut7zZtKQ33WFtToCB0Q7D7T?=
- =?us-ascii?Q?oAA1YyXBZIBEJKuBHKOrikloBlc+f1AtQ/piTlpUQJqGpVzd0qhGu+wyxLmw?=
- =?us-ascii?Q?ExyonU0YFbwAdUohaH5r2+J6Ljf87kXMkMIpZ2r7AMrFypUeKpBI3FxInkNf?=
- =?us-ascii?Q?EZ9LbPh9WLbxFZUy0EEiDYpyIzR1nElCr88z3y+/pELWksUDWSlPG7mlO/tw?=
- =?us-ascii?Q?YEqKnx7xfrzmNU/ufHK3lCmyq91lLow67JCs//exr8yllf6pbxzESj6oQTyF?=
- =?us-ascii?Q?2vKmFTwcyknj8kfqkUzqleremFwIHzCJq2kJkz5xbbC611iOJwFd8fyu8Ikr?=
- =?us-ascii?Q?kFL6TODVe0by3ugvAcqXNnskwluiu/3thKJCnskh8XrOYpznIZPUULSivyw8?=
- =?us-ascii?Q?S70tA9xFczkRFxsUMH3BNYoEFDUH1d9Q02akLc/EAvlEjlvN?=
-X-OriginatorOrg: nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: f9f77c41-9e43-4fe5-2f35-08de789ac3a1
-X-MS-Exchange-CrossTenant-AuthSource: PA4PR04MB9366.eurprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Mar 2026 20:32:03.6890
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: VW2HYHsHc2CnbasK/hlgDToknsyMIedSI1/38ra3wM26XFxWipKcdFg2/K+9QpEMIVyIddjy3xZZzFjq8oT9aA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM8PR04MB7905
+Content-Transfer-Encoding: 8bit
+X-SA-Exim-Connect-IP: 172.16.1.31
+X-SA-Exim-Rcpt-To: dmaengine@vger.kernel.org, vkoul@kernel.org, hch@infradead.org, christophe.jaillet@wanadoo.fr, kelvin.cao@microchip.com, George.Ge@microchip.com, george.ge@microchip.com, hch@lst.de, Frank.Li@nxp.com, logang@deltatee.com
+X-SA-Exim-Mail-From: gunthorp@deltatee.com
+X-Spam-Level: 
+Subject: [PATCH v14 1/3] dmaengine: switchtec-dma: Introduce Switchtec DMA engine skeleton
+X-SA-Exim-Version: 4.2.1 (built Sun, 23 Feb 2025 07:57:16 +0000)
+X-SA-Exim-Scanned: Yes (on ale.deltatee.com)
 
-On Mon, Mar 02, 2026 at 06:02:33PM +0530, Akhil R wrote:
-> In Tegra264, reset is not available for the driver to control as
-> this is handled by the boot firmware. Hence make the reset control
-> optional and update the error message to reflect the correct error.
->
-> Signed-off-by: Akhil R <akhilrajeev@nvidia.com>
-> ---
+From: Kelvin Cao <kelvin.cao@microchip.com>
+
+Some Switchtec Switches can expose DMA engines via extra PCI functions
+on the upstream ports. At most one such function can be supported on
+each upstream port. Each function can have one or more DMA channels.
+
+This patch is just the core PCI driver skeleton and dma
+engine registration.
+
+Signed-off-by: Kelvin Cao <kelvin.cao@microchip.com>
+Co-developed-by: George Ge <george.ge@microchip.com>
+Signed-off-by: George Ge <george.ge@microchip.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
 Reviewed-by: Frank Li <Frank.Li@nxp.com>
->  drivers/dma/tegra186-gpc-dma.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/drivers/dma/tegra186-gpc-dma.c b/drivers/dma/tegra186-gpc-dma.c
-> index 4d6fe0efa76e..09a1717aa808 100644
-> --- a/drivers/dma/tegra186-gpc-dma.c
-> +++ b/drivers/dma/tegra186-gpc-dma.c
-> @@ -1382,10 +1382,10 @@ static int tegra_dma_probe(struct platform_device *pdev)
->  	if (IS_ERR(tdma->base_addr))
->  		return PTR_ERR(tdma->base_addr);
->
-> -	tdma->rst = devm_reset_control_get_exclusive(&pdev->dev, "gpcdma");
-> +	tdma->rst = devm_reset_control_get_optional_exclusive(&pdev->dev, "gpcdma");
->  	if (IS_ERR(tdma->rst)) {
->  		return dev_err_probe(&pdev->dev, PTR_ERR(tdma->rst),
-> -			      "Missing controller reset\n");
-> +			      "Failed to get controller reset\n");
->  	}
->  	reset_control_reset(tdma->rst);
->
-> --
-> 2.50.1
->
+Signed-off-by: Logan Gunthorpe <logang@deltatee.com>
+---
+ MAINTAINERS                 |   7 ++
+ drivers/dma/Kconfig         |   9 ++
+ drivers/dma/Makefile        |   1 +
+ drivers/dma/switchtec_dma.c | 209 ++++++++++++++++++++++++++++++++++++
+ 4 files changed, 226 insertions(+)
+ create mode 100644 drivers/dma/switchtec_dma.c
+
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 61bf550fd37c..53e0242f1b84 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -25523,6 +25523,13 @@ S:	Supported
+ F:	include/net/switchdev.h
+ F:	net/switchdev/
+ 
++SWITCHTEC DMA DRIVER
++M:	Kelvin Cao <kelvin.cao@microchip.com>
++M:	Logan Gunthorpe <logang@deltatee.com>
++L:	dmaengine@vger.kernel.org
++S:	Maintained
++F:	drivers/dma/switchtec_dma.c
++
+ SY8106A REGULATOR DRIVER
+ M:	Icenowy Zheng <icenowy@aosc.io>
+ S:	Maintained
+diff --git a/drivers/dma/Kconfig b/drivers/dma/Kconfig
+index 66cda7cc9f7a..e249f68423ba 100644
+--- a/drivers/dma/Kconfig
++++ b/drivers/dma/Kconfig
+@@ -610,6 +610,15 @@ config SPRD_DMA
+ 	help
+ 	  Enable support for the on-chip DMA controller on Spreadtrum platform.
+ 
++config SWITCHTEC_DMA
++	tristate "Switchtec PSX/PFX Switch DMA Engine Support"
++	depends on PCI
++	select DMA_ENGINE
++	help
++	  Some Switchtec PSX/PFX PCIe Switches support additional DMA engines.
++	  These are exposed via an extra function on the switch's upstream
++	  port.
++
+ config TXX9_DMAC
+ 	tristate "Toshiba TXx9 SoC DMA support"
+ 	depends on MACH_TX49XX
+diff --git a/drivers/dma/Makefile b/drivers/dma/Makefile
+index a54d7688392b..df566c4958b6 100644
+--- a/drivers/dma/Makefile
++++ b/drivers/dma/Makefile
+@@ -74,6 +74,7 @@ obj-$(CONFIG_SF_PDMA) += sf-pdma/
+ obj-$(CONFIG_SOPHGO_CV1800B_DMAMUX) += cv1800b-dmamux.o
+ obj-$(CONFIG_STE_DMA40) += ste_dma40.o ste_dma40_ll.o
+ obj-$(CONFIG_SPRD_DMA) += sprd-dma.o
++obj-$(CONFIG_SWITCHTEC_DMA) += switchtec_dma.o
+ obj-$(CONFIG_TXX9_DMAC) += txx9dmac.o
+ obj-$(CONFIG_TEGRA186_GPC_DMA) += tegra186-gpc-dma.o
+ obj-$(CONFIG_TEGRA20_APB_DMA) += tegra20-apb-dma.o
+diff --git a/drivers/dma/switchtec_dma.c b/drivers/dma/switchtec_dma.c
+new file mode 100644
+index 000000000000..2e7226333107
+--- /dev/null
++++ b/drivers/dma/switchtec_dma.c
+@@ -0,0 +1,209 @@
++// SPDX-License-Identifier: GPL-2.0
++/*
++ * Microchip Switchtec(tm) DMA Controller Driver
++ * Copyright (c) 2025, Kelvin Cao <kelvin.cao@microchip.com>
++ * Copyright (c) 2025, Microchip Corporation
++ */
++
++#include <linux/bitfield.h>
++#include <linux/circ_buf.h>
++#include <linux/dmaengine.h>
++#include <linux/module.h>
++#include <linux/pci.h>
++#include <linux/delay.h>
++#include <linux/iopoll.h>
++
++#include "dmaengine.h"
++
++MODULE_DESCRIPTION("Switchtec PCIe Switch DMA Engine");
++MODULE_LICENSE("GPL");
++MODULE_AUTHOR("Kelvin Cao");
++
++struct switchtec_dma_dev {
++	struct dma_device dma_dev;
++	struct pci_dev __rcu *pdev;
++	void __iomem *bar;
++};
++
++static void switchtec_dma_release(struct dma_device *dma_dev)
++{
++	struct switchtec_dma_dev *swdma_dev =
++		container_of(dma_dev, struct switchtec_dma_dev, dma_dev);
++
++	put_device(dma_dev->dev);
++	kfree(swdma_dev);
++}
++
++static int switchtec_dma_create(struct pci_dev *pdev)
++{
++	struct switchtec_dma_dev *swdma_dev;
++	struct dma_device *dma;
++	struct dma_chan *chan;
++	int nr_vecs, rc;
++
++	/*
++	 * Create the switchtec dma device
++	 */
++	swdma_dev = kzalloc_obj(*swdma_dev, GFP_KERNEL);
++	if (!swdma_dev)
++		return -ENOMEM;
++
++	swdma_dev->bar = ioremap(pci_resource_start(pdev, 0),
++				 pci_resource_len(pdev, 0));
++
++	RCU_INIT_POINTER(swdma_dev->pdev, pdev);
++
++	nr_vecs = pci_msix_vec_count(pdev);
++	rc = pci_alloc_irq_vectors(pdev, nr_vecs, nr_vecs, PCI_IRQ_MSIX);
++	if (rc < 0)
++		goto err_exit;
++
++	dma = &swdma_dev->dma_dev;
++	dma->copy_align = DMAENGINE_ALIGN_8_BYTES;
++	dma->dev = get_device(&pdev->dev);
++
++	dma->device_release = switchtec_dma_release;
++
++	rc = dma_async_device_register(dma);
++	if (rc) {
++		pci_err(pdev, "Failed to register dma device: %d\n", rc);
++		goto err_exit;
++	}
++
++	list_for_each_entry(chan, &dma->channels, device_node)
++		pci_dbg(pdev, "%s\n", dma_chan_name(chan));
++
++	pci_set_drvdata(pdev, swdma_dev);
++
++	return 0;
++
++err_exit:
++	iounmap(swdma_dev->bar);
++	kfree(swdma_dev);
++	return rc;
++}
++
++static int switchtec_dma_probe(struct pci_dev *pdev,
++			       const struct pci_device_id *id)
++{
++	int rc;
++
++	rc = pci_enable_device(pdev);
++	if (rc)
++		return rc;
++
++	dma_set_mask_and_coherent(&pdev->dev, DMA_BIT_MASK(64));
++
++	rc = pci_request_mem_regions(pdev, KBUILD_MODNAME);
++	if (rc)
++		goto err_disable;
++
++	pci_set_master(pdev);
++
++	rc = switchtec_dma_create(pdev);
++	if (rc)
++		goto err_free;
++
++	return 0;
++
++err_free:
++	pci_free_irq_vectors(pdev);
++	pci_release_mem_regions(pdev);
++
++err_disable:
++	pci_disable_device(pdev);
++
++	return rc;
++}
++
++static void switchtec_dma_remove(struct pci_dev *pdev)
++{
++	struct switchtec_dma_dev *swdma_dev = pci_get_drvdata(pdev);
++
++	rcu_assign_pointer(swdma_dev->pdev, NULL);
++	synchronize_rcu();
++
++	pci_free_irq_vectors(pdev);
++
++	dma_async_device_unregister(&swdma_dev->dma_dev);
++
++	iounmap(swdma_dev->bar);
++	pci_release_mem_regions(pdev);
++	pci_disable_device(pdev);
++}
++
++/*
++ * Also use the class code to identify the devices, as some of the
++ * device IDs are also used for other devices with other classes by
++ * Microsemi.
++ */
++#define SW_ID(vendor_id, device_id) \
++	{ \
++		.vendor     = vendor_id, \
++		.device     = device_id, \
++		.subvendor  = PCI_ANY_ID, \
++		.subdevice  = PCI_ANY_ID, \
++		.class      = PCI_CLASS_SYSTEM_OTHER << 8, \
++		.class_mask = 0xffffffff, \
++	}
++
++static const struct pci_device_id switchtec_dma_pci_tbl[] = {
++	SW_ID(PCI_VENDOR_ID_MICROSEMI, 0x4000), /* PFX 100XG4 */
++	SW_ID(PCI_VENDOR_ID_MICROSEMI, 0x4084), /* PFX 84XG4 */
++	SW_ID(PCI_VENDOR_ID_MICROSEMI, 0x4068), /* PFX 68XG4 */
++	SW_ID(PCI_VENDOR_ID_MICROSEMI, 0x4052), /* PFX 52XG4 */
++	SW_ID(PCI_VENDOR_ID_MICROSEMI, 0x4036), /* PFX 36XG4 */
++	SW_ID(PCI_VENDOR_ID_MICROSEMI, 0x4028), /* PFX 28XG4 */
++	SW_ID(PCI_VENDOR_ID_MICROSEMI, 0x4100), /* PSX 100XG4 */
++	SW_ID(PCI_VENDOR_ID_MICROSEMI, 0x4184), /* PSX 84XG4 */
++	SW_ID(PCI_VENDOR_ID_MICROSEMI, 0x4168), /* PSX 68XG4 */
++	SW_ID(PCI_VENDOR_ID_MICROSEMI, 0x4152), /* PSX 52XG4 */
++	SW_ID(PCI_VENDOR_ID_MICROSEMI, 0x4136), /* PSX 36XG4 */
++	SW_ID(PCI_VENDOR_ID_MICROSEMI, 0x4128), /* PSX 28XG4 */
++	SW_ID(PCI_VENDOR_ID_MICROSEMI, 0x4352), /* PFXA 52XG4 */
++	SW_ID(PCI_VENDOR_ID_MICROSEMI, 0x4336), /* PFXA 36XG4 */
++	SW_ID(PCI_VENDOR_ID_MICROSEMI, 0x4328), /* PFXA 28XG4 */
++	SW_ID(PCI_VENDOR_ID_MICROSEMI, 0x4452), /* PSXA 52XG4 */
++	SW_ID(PCI_VENDOR_ID_MICROSEMI, 0x4436), /* PSXA 36XG4 */
++	SW_ID(PCI_VENDOR_ID_MICROSEMI, 0x4428), /* PSXA 28XG4 */
++	SW_ID(PCI_VENDOR_ID_MICROSEMI, 0x5000), /* PFX 100XG5 */
++	SW_ID(PCI_VENDOR_ID_MICROSEMI, 0x5084), /* PFX 84XG5 */
++	SW_ID(PCI_VENDOR_ID_MICROSEMI, 0x5068), /* PFX 68XG5 */
++	SW_ID(PCI_VENDOR_ID_MICROSEMI, 0x5052), /* PFX 52XG5 */
++	SW_ID(PCI_VENDOR_ID_MICROSEMI, 0x5036), /* PFX 36XG5 */
++	SW_ID(PCI_VENDOR_ID_MICROSEMI, 0x5028), /* PFX 28XG5 */
++	SW_ID(PCI_VENDOR_ID_MICROSEMI, 0x5100), /* PSX 100XG5 */
++	SW_ID(PCI_VENDOR_ID_MICROSEMI, 0x5184), /* PSX 84XG5 */
++	SW_ID(PCI_VENDOR_ID_MICROSEMI, 0x5168), /* PSX 68XG5 */
++	SW_ID(PCI_VENDOR_ID_MICROSEMI, 0x5152), /* PSX 52XG5 */
++	SW_ID(PCI_VENDOR_ID_MICROSEMI, 0x5136), /* PSX 36XG5 */
++	SW_ID(PCI_VENDOR_ID_MICROSEMI, 0x5128), /* PSX 28XG5 */
++	SW_ID(PCI_VENDOR_ID_MICROSEMI, 0x5300), /* PFXA 100XG5 */
++	SW_ID(PCI_VENDOR_ID_MICROSEMI, 0x5384), /* PFXA 84XG5 */
++	SW_ID(PCI_VENDOR_ID_MICROSEMI, 0x5368), /* PFXA 68XG5 */
++	SW_ID(PCI_VENDOR_ID_MICROSEMI, 0x5352), /* PFXA 52XG5 */
++	SW_ID(PCI_VENDOR_ID_MICROSEMI, 0x5336), /* PFXA 36XG5 */
++	SW_ID(PCI_VENDOR_ID_MICROSEMI, 0x5328), /* PFXA 28XG5 */
++	SW_ID(PCI_VENDOR_ID_MICROSEMI, 0x5400), /* PSXA 100XG5 */
++	SW_ID(PCI_VENDOR_ID_MICROSEMI, 0x5484), /* PSXA 84XG5 */
++	SW_ID(PCI_VENDOR_ID_MICROSEMI, 0x5468), /* PSXA 68XG5 */
++	SW_ID(PCI_VENDOR_ID_MICROSEMI, 0x5452), /* PSXA 52XG5 */
++	SW_ID(PCI_VENDOR_ID_MICROSEMI, 0x5436), /* PSXA 36XG5 */
++	SW_ID(PCI_VENDOR_ID_MICROSEMI, 0x5428), /* PSXA 28XG5 */
++	SW_ID(PCI_VENDOR_ID_EFAR,      0x1001), /* PCI1001 16XG4 */
++	SW_ID(PCI_VENDOR_ID_EFAR,      0x1002), /* PCI1002 16XG4 */
++	SW_ID(PCI_VENDOR_ID_EFAR,      0x1003), /* PCI1003 16XG4 */
++	SW_ID(PCI_VENDOR_ID_EFAR,      0x1004), /* PCI1004 16XG4 */
++	SW_ID(PCI_VENDOR_ID_EFAR,      0x1005), /* PCI1005 16XG4 */
++	SW_ID(PCI_VENDOR_ID_EFAR,      0x1006), /* PCI1006 16XG4 */
++	{0}
++};
++MODULE_DEVICE_TABLE(pci, switchtec_dma_pci_tbl);
++
++static struct pci_driver switchtec_dma_pci_driver = {
++	.name           = KBUILD_MODNAME,
++	.id_table       = switchtec_dma_pci_tbl,
++	.probe          = switchtec_dma_probe,
++	.remove		= switchtec_dma_remove,
++};
++module_pci_driver(switchtec_dma_pci_driver);
+-- 
+2.47.3
+
