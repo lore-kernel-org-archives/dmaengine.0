@@ -1,32 +1,31 @@
 Received: from todd.t-8ch.de (todd.t-8ch.de [159.69.126.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AF213909BA;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AFA12773D3;
 	Mon,  2 Mar 2026 22:16:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.69.126.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772489765; cv=none; b=mdpjxXmGza1wi/uR33vX0adi45OyFlwO1ccptjVSs7uqnn1HD/A526HHvRhRB2PA26M+0WV3iF2D8RJ3s1Rvsz0i+uKNgwnxIuHUoSEP27fQ8MFWfrQwdCt5gq8Dmfe03Kmz0QikNWgJ0stkJD1MdCCSB85/bu33UFimty2hrfc=
+	t=1772489766; cv=none; b=FRWc83tEYfnwr7R6wNFPlOYR54J/reu+pqXTOuj4M4iWeVW+7F+sQTHoq9yxvGyjiIc/hZMUcmPF83w+gT7OySYks82r2aPTxurOZVVGfMpi91WgMN400KkFPBGhwCdiFGjzb6afYwYnefr2BpmN9c5o7DbGCisOTqiX6DXAhdM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772489765; c=relaxed/simple;
-	bh=JZP2Abqextap6gz847k1XOtMIXftBFTpr8gDUzGYlK4=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=qBDEZUc9lz2RrmRpocznRxoMOC7wGt1o8vqLhJ7UxyIi7c+sitqyL3gDsttXHKW+z1gEKW0RcDBV1fZBEoNc7zzHTPkHYXmHsD8VpjJXATigXMRSPYl+/7srue8h8hawyBrXtx+2/L6Lq7MTJ+60b7IqBIdtqPZhdiSFKWDC9Wk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=weissschuh.net; spf=pass smtp.mailfrom=weissschuh.net; dkim=pass (1024-bit key) header.d=weissschuh.net header.i=@weissschuh.net header.b=I/D2hA/b; arc=none smtp.client-ip=159.69.126.157
+	s=arc-20240116; t=1772489766; c=relaxed/simple;
+	bh=8qssZhIohoDDRPi+YpLr+uyOfmbuE0gxulu87WlTB7k=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=LH/eRY9p8l0zqVDIT+uYnuJiY5CLeTJM9xuuZ9SDeApla018Ssdo4rzv8sqfom9i/lA4qL+sZGZRilH4bUNQzpTq7Ekv6SAtsavFjC1rZN+bkben/ez2PmwXTilCGQNQnRtd4BvqnsRe+rsXYffV0R0ClLp/42Y/lQlFkV7PNNY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=weissschuh.net; spf=pass smtp.mailfrom=weissschuh.net; dkim=pass (1024-bit key) header.d=weissschuh.net header.i=@weissschuh.net header.b=Y+zUGUAn; arc=none smtp.client-ip=159.69.126.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=weissschuh.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=weissschuh.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=weissschuh.net header.i=@weissschuh.net header.b="I/D2hA/b"
+	dkim=pass (1024-bit key) header.d=weissschuh.net header.i=@weissschuh.net header.b="Y+zUGUAn"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=weissschuh.net;
 	s=mail; t=1772489757;
-	bh=JZP2Abqextap6gz847k1XOtMIXftBFTpr8gDUzGYlK4=;
-	h=From:Subject:Date:To:Cc:From;
-	b=I/D2hA/bZBa0jzFew7gZf/b/6ZKnroKS4PQuY5wuoo3SWO02yXJLe6Kza0HP+csgS
-	 EKAstXSnX3ZMF6Uga8GKeBRKTBN1oXY00FeOBQBGBAftah1nmfzDhCo9xYDK8Fsuil
-	 MORfbfaSz7bafqS2jWMTlyOxtYzidx9yOdi9jIZ4=
+	bh=8qssZhIohoDDRPi+YpLr+uyOfmbuE0gxulu87WlTB7k=;
+	h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
+	b=Y+zUGUAn66T8KY5lKVXH/XER7FhjZ3KNDNKMXXyCPZReIUKSa3dJMb2B0kdMYd9pP
+	 5QYbRHqqFtjprGOJyIL6ny8uGw8cfkYWxWqeQUvzOEWzOXvwVryMvPyEUBJ5K9ukTq
+	 6CzzSzXN/ECATCBibXbRmMPSTD5cKE5x9USdxu2Y=
 From: =?utf-8?q?Thomas_Wei=C3=9Fschuh?= <linux@weissschuh.net>
-Subject: [PATCH 0/4] dmaengine: ioatdma: some sysfs cleanups and
- constifications
-Date: Mon, 02 Mar 2026 23:15:52 +0100
-Message-Id: <20260302-sysfs-const-ioat-v1-0-1229ee1c83f3@weissschuh.net>
+Date: Mon, 02 Mar 2026 23:15:55 +0100
+Subject: [PATCH 3/4] dmaengine: ioatdma: make ioat_ktype const
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -35,40 +34,74 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/x3MMQ6AIAxA0auYzjYBVAavYhwUi3YBQ4nRGO4uc
- XzD/y8IJSaBsXkh0cXCMVTotgF3LGEn5K0ajDJWdcqgPOIFXQySkeOSUZG1g+71auwKNTsTeb7
- /5TSX8gFgqCx/YgAAAA==
-X-Change-ID: 20260302-sysfs-const-ioat-0e665141b26b
+Message-Id: <20260302-sysfs-const-ioat-v1-3-1229ee1c83f3@weissschuh.net>
+References: <20260302-sysfs-const-ioat-v1-0-1229ee1c83f3@weissschuh.net>
+In-Reply-To: <20260302-sysfs-const-ioat-v1-0-1229ee1c83f3@weissschuh.net>
 To: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>
 Cc: dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org, 
  =?utf-8?q?Thomas_Wei=C3=9Fschuh?= <linux@weissschuh.net>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1772489756; l=737;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1772489756; l=2006;
  i=linux@weissschuh.net; s=20221212; h=from:subject:message-id;
- bh=JZP2Abqextap6gz847k1XOtMIXftBFTpr8gDUzGYlK4=;
- b=SEuiwMTLg0gpcEdxWr67LNrlk8blKttdJg/YT2zXEpy49IciV5I6uWrT6VUezKvMWOMHjnh8i
- 4Bmji6RsBDKAe7VeYrk56oNKEZbtzNV5XYVE/o6nubVSM3jdjFwWOq9
+ bh=8qssZhIohoDDRPi+YpLr+uyOfmbuE0gxulu87WlTB7k=;
+ b=q9lshFTjon3XTRnnsrCJWEEC8v3SCBoVYGY1TX2YjL3vxGTlnO0ZdBiK1XtoYt4upQNitfQNe
+ 2J644+kEoGUDh5+ztJb4a9HOQ3nQBdYlA82NcQ6MI9QO2ZIo0NbeYQM
 X-Developer-Key: i=linux@weissschuh.net; a=ed25519;
  pk=KcycQgFPX2wGR5azS7RhpBqedglOZVgRPfdFSPB1LNw=
 
-Reduce the visibility of some symbols and make some structures readonly.
+This structure is never modified, mark is as read-only.
 
 Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
 ---
-Thomas Weißschuh (4):
-      dmaengine: ioatdma: make some sysfs structures static
-      dmaengine: ioatdma: move sysfs entry definition out of header
-      dmaengine: ioatdma: make ioat_ktype const
-      dmaengine: ioatdma: make sysfs attributes const
+ drivers/dma/ioat/dma.h   | 4 ++--
+ drivers/dma/ioat/sysfs.c | 4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
- drivers/dma/ioat/dma.h   | 13 ++-----------
- drivers/dma/ioat/sysfs.c | 32 +++++++++++++++++++-------------
- 2 files changed, 21 insertions(+), 24 deletions(-)
----
-base-commit: 6de23f81a5e08be8fbf5e8d7e9febc72a5b5f27f
-change-id: 20260302-sysfs-const-ioat-0e665141b26b
+diff --git a/drivers/dma/ioat/dma.h b/drivers/dma/ioat/dma.h
+index e187f3a7e968..e8a880f338c6 100644
+--- a/drivers/dma/ioat/dma.h
++++ b/drivers/dma/ioat/dma.h
+@@ -190,7 +190,7 @@ struct ioat_ring_ent {
+ };
+ 
+ extern int ioat_pending_level;
+-extern struct kobj_type ioat_ktype;
++extern const struct kobj_type ioat_ktype;
+ extern struct kmem_cache *ioat_cache;
+ extern struct kmem_cache *ioat_sed_cache;
+ 
+@@ -393,7 +393,7 @@ void ioat_issue_pending(struct dma_chan *chan);
+ /* IOAT Init functions */
+ bool is_bwd_ioat(struct pci_dev *pdev);
+ struct dca_provider *ioat_dca_init(struct pci_dev *pdev, void __iomem *iobase);
+-void ioat_kobject_add(struct ioatdma_device *ioat_dma, struct kobj_type *type);
++void ioat_kobject_add(struct ioatdma_device *ioat_dma, const struct kobj_type *type);
+ void ioat_kobject_del(struct ioatdma_device *ioat_dma);
+ int ioat_dma_setup_interrupts(struct ioatdma_device *ioat_dma);
+ void ioat_stop(struct ioatdma_chan *ioat_chan);
+diff --git a/drivers/dma/ioat/sysfs.c b/drivers/dma/ioat/sysfs.c
+index 709d672bae51..da616365fef5 100644
+--- a/drivers/dma/ioat/sysfs.c
++++ b/drivers/dma/ioat/sysfs.c
+@@ -78,7 +78,7 @@ static const struct sysfs_ops ioat_sysfs_ops = {
+ 	.store  = ioat_attr_store,
+ };
+ 
+-void ioat_kobject_add(struct ioatdma_device *ioat_dma, struct kobj_type *type)
++void ioat_kobject_add(struct ioatdma_device *ioat_dma, const struct kobj_type *type)
+ {
+ 	struct dma_device *dma = &ioat_dma->dma_dev;
+ 	struct dma_chan *c;
+@@ -166,7 +166,7 @@ static struct attribute *ioat_attrs[] = {
+ };
+ ATTRIBUTE_GROUPS(ioat);
+ 
+-struct kobj_type ioat_ktype = {
++const struct kobj_type ioat_ktype = {
+ 	.sysfs_ops = &ioat_sysfs_ops,
+ 	.default_groups = ioat_groups,
+ };
 
-Best regards,
 -- 
-Thomas Weißschuh <linux@weissschuh.net>
+2.53.0
 
