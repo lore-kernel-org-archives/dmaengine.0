@@ -1,61 +1,63 @@
-Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
+Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69BC1245019
-	for <dmaengine@vger.kernel.org>; Fri,  6 Mar 2026 12:41:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8A4324DCF6
+	for <dmaengine@vger.kernel.org>; Fri,  6 Mar 2026 12:41:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772800901; cv=none; b=aUOIOipXGCvx2ZjAscPSAQVA7ljhD8Z8lC6FOHrj2PAao+2IJ4jqA5Yj1m0TVOe7L3vp0IDfCKeVJ4zFPpu+S0hMkpDGndqiBeUOcNh4YE8xFMJd3jTC4DyWBFpEv4QMMtM53h85leIVClZApvbVYm+sNyROmA+sNgxVgX25+ig=
+	t=1772800903; cv=none; b=pLTsvyD8NVgzi+nQzYgrVufkklIuaCfDHu379ncYa3qbWTT6WKe8aicXlYeMiMXk9mwhF6k/9ibG1Nh0bXOp4TLXVJDQkwBkdE60/oL5hQebhZwWCqke78XAcBUQpMDeQLhSIHpzz3jQ/s0H4Xxes90jteCACS9ldwnDTS7F2Us=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772800901; c=relaxed/simple;
-	bh=T/TzqKUztVwcVczMMW2f9Rz3hVaXHuEUuZMUyuPUlrw=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=TO3FdUcuMzdTpu4aWYaViUUKOK5H9xFEKon/MtJmDKz+ToxY93+XwmBSsHLP9+ss74l54SmQjOtsoB7woFYASjMaV1BB9oRHHTCSmaAAmpV1boVoaDcVW1SIZ5yWM+DakorEWdm5uClL+i9Kifp3nLYB6M/J3kfyrWXZFOdBNms=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=tuxon.dev; spf=pass smtp.mailfrom=tuxon.dev; dkim=pass (2048-bit key) header.d=tuxon.dev header.i=@tuxon.dev header.b=ZzQFe0Qs; arc=none smtp.client-ip=209.85.128.54
+	s=arc-20240116; t=1772800903; c=relaxed/simple;
+	bh=HZ/1WFdnj+qO0WVw6GV1ZKDvd1Zn76kMVG0yFAr2u44=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=ngOSzvrBI7N8j6QVSQjtmeRlv9MkvCqhbPoVEQ5Qbnt+PqWsaQy30DkDaL8SjBN8BMTJq5+sUOe6mC4aDKndPbVx2rok21+dxHHXHFOd9+Bj6Ayzvfz3CtUV7b3rwNxWcvLHpFi46XhiHdV3jzWuKFua/kBuAdxs15aYeOxXqXs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=tuxon.dev; spf=pass smtp.mailfrom=tuxon.dev; dkim=pass (2048-bit key) header.d=tuxon.dev header.i=@tuxon.dev header.b=kdApaBin; arc=none smtp.client-ip=209.85.128.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=tuxon.dev
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=tuxon.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=tuxon.dev header.i=@tuxon.dev header.b="ZzQFe0Qs"
-Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-4806cc07ce7so105727325e9.1
-        for <dmaengine@vger.kernel.org>; Fri, 06 Mar 2026 04:41:38 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=tuxon.dev header.i=@tuxon.dev header.b="kdApaBin"
+Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-4836d4c26d3so72724175e9.2
+        for <dmaengine@vger.kernel.org>; Fri, 06 Mar 2026 04:41:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=tuxon.dev; s=google; t=1772800897; x=1773405697; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=2GyGLkPO8y8zRfKUcMFE/QOXCICKajlbCSDRUQR2YMw=;
-        b=ZzQFe0QsM1uBUjmMCf8vSJ0heeKp7VE5zSgnaoypj74BVK/4AG4795LH+mDCDuvDeN
-         d25I/WQXCOdV3xr6NNyoxaJXgxa3gnhNCXL6bL6fX23jgS2WYPfitr7vho4UOkUqZSSn
-         pNUqxEjDqH6Lz3A/UAtogkYYKgSc4cbkkYy6unh3n9xzpdcDYJxIJLuQEOQAIcF9jsFq
-         B9Ya4ZXHr1slbBl3PPi9x8AhKI7ZCN/SeWZbx1EDF8jN+V77vXCQMKI0XIaqsPiECQtu
-         76JKK6Cjc1iyXg5GENi0cW8mkLNNaoSxYsKQbM8xm5JfGRRNgJW+mPAFmpwk+jBLzFc3
-         vtOw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772800897; x=1773405697;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=tuxon.dev; s=google; t=1772800899; x=1773405699; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=2GyGLkPO8y8zRfKUcMFE/QOXCICKajlbCSDRUQR2YMw=;
-        b=lNrr2ba24NuoaiBwVohHI37w0rS53/iDDQMjgO3TRwNuH2kQLTJBOZ8vZQAM1WE+cN
-         RmK35C4iTeg1SoOLoF0FO89ggdLoJpKAYUw90KAH5km9jAXIgE7XXqbVRJt+Tfr5N/xS
-         06QkBwSLFroIWPINgbO2DdnqxCezxrbHvFbfqeBPGo6pbxXPZluEqbCRgM2AFf5UuMiA
-         lA0IjJPKLbLvoeQEdO/LwaumV10QZvt06RM8M1Zlx6AsCl3bU/otpGCYpTh2ddptKZSg
-         ky/3qPBCfJIooEXsurDJN7UM9rxBQ/z1d6NjmnlM4ACADpTwoRcx6yW/Q5hAUl96KjII
-         ZO4w==
-X-Forwarded-Encrypted: i=1; AJvYcCVsyMZuJEydAJ5VX0Pdl/KqgB+KB2o46PH03LwP7jUfTdZtGa2NbGzZQMtgZwDE4lOS5UHG+mJnh00=@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywjo1iXX3+v5Lh+A4/tZ4srQhBgpzHRYe4qDgtV7iHHpmccllqv
-	4gP6zS+ah9RUPtpxdv+6Z28XppMyucht7Gi/0tTvzi/L/djR+VQIwwmdG5//Mpw7cis=
-X-Gm-Gg: ATEYQzzTiFwv39n3oxYQ9NraHiNvi3ynFggiwPc7N2cFfErvqJuDuo6M03kbIhfSsfh
-	A0YxYG0KG6xyhSJy2e4JSLge+JuHiViYgYv4CckZ9egs94tPnyCE+FAhRX+jvX6wKAfQ9R5MXm9
-	/2zLNSMLoI7NqgtY3uC42goSzvAe/drs3Uq8gK8Q5BWLzJwLq5TI/ecrRFth5wBJmjXUspeVPLp
-	lFm6n80qRqELxe8cXhNp6q8kw2B3Q8OM1VQOrB6YMZvMUIMBas12MguT01uedxNQnSKAY4YuzNh
-	Vf1d3inYEXmBKfZW7HEbDHmdTGeoVtqlgsXL2oSnb+nLAi3i+uUGKAFbN9sVeAB5iCPDmmMLU4n
-	gHdUYycDmIUM4QY9FwvKybUoy0FHmkBXhYN4wTaI9m6pECj5ok/Xb9O52pbp+3GcMy2YYKtBFvX
-	kJ/vLB6DzfrG6/tVhKrlhg4FrZxSeAyXbnwl1MRfEdZjLpa7tNUfjB
-X-Received: by 2002:a05:600c:a013:b0:485:17a7:b9cc with SMTP id 5b1f17b1804b1-48526958835mr29611825e9.18.1772800896658;
-        Fri, 06 Mar 2026 04:41:36 -0800 (PST)
+        bh=CtS0r5TfYlqaL5VTrxQnay2hKIBKEN7+yQrm8HEoL/c=;
+        b=kdApaBinAt2kDkuIVkkiY6ZUkaY5pZz5QD5TdUX9op/vnu2Zu1O0IhSl2nZ8bbgKZd
+         IGa+dkdb/uvENx0/+TTDk5L6lgeFIACyM7bflYNrQ1ZqDda+mZDXPgykd0/lH2LUZjP2
+         411sWRLd55WzmvaHSS0F7UPzxlartjTKxDdvWYD+R20afVZ66BGZFj+dMrZeAv4J0XI2
+         meXPRxwAg3KtG5CvSLSL/ru9RS0DdYHa9wC9NK4RgEpdcJReIg0K+APFfGN3od0gcTkQ
+         /P5ctNkwpdFTNGX6FxN+X12wkl/fN+I3QPRth0VRimQ5IRqhZoh9ZJnPxjFaqCrEHtl0
+         76Og==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1772800899; x=1773405699;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=CtS0r5TfYlqaL5VTrxQnay2hKIBKEN7+yQrm8HEoL/c=;
+        b=LbP3Z7gCe6c1qdZTkrhFXRQsZkdM6uxbyShIOVXzAbA5rjNfEUQ69jY2RhY92gTqT7
+         Yh5BUjfBtDAfKTc19kpUj7snOip+2QOFT/tJi+6jHZfB6GF1xXhCBeodf0cylhFejGl2
+         hMSLTJ4s/kJ+ZWsYCEMS7a//TN4BXCC7nVVTCAXAlP67GhUykBas9213ILIE6yNvx3z7
+         BdzCgrp6YTQFg7V3iTeaUCGexG7FPYkhlT1/4b3FfDJN6fw0LJPsDO7PlU0OXDN/DDxW
+         GHo8fOrwgQlkmUQJN71NFwY293bP7GLb7xSdacQRClLhHM0KSMSBmbmtJJswht/XruE4
+         ZBAQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUrmkdXDnIiFI/WM+Vcj9y25v4Fx4C+PSn5SKABRID7d5b7Cml+NFWSRvioWwzvAtWKDOxQmbqWDyQ=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx711QSTZtC1/I69vcc31URR3aswat5CiOVsP8sJ2eXtqvM0w7k
+	hFWhoByvQlNQuPEDtkDyBdjs6IOWW0tZDVT2SIlwQ89FyFKp8C3sN7QGdiH+9VhSrK0=
+X-Gm-Gg: ATEYQzw1OQiCTzT3b6xnzop9OpZsEIVa4QCYgtkxqVkgVw5ERfRbiGw9VTHmZQLfv9c
+	0aAu+JzqTC394STnAO6MqabwVhxzYj7c9MkA7CgyRtifz3Uxs4EbhlEV9rQ1rD1umitFtswRGhe
+	fusGwLMJ2kwSYdjlsohd46FtFVpQmpxWIyG1cHopasBE/b/eOy/bushvKBKfwoSvi8DhKhJ05yZ
+	MMVEAEdHRB5sPO20rGcxD5gIopMGQq2mOxVK6JYlbsH1KQcFFg4/uT9Cq9cIbjhQMZ7En0zvRD5
+	2LNdErB2LkxZsyLynjNU6QeoaC1AgDQDaaXbr5UXUuzrWbAVDy+9ESIxJ/E39nJZ4p6oo2vj8Na
+	BDGhMJTRgS42kg5qUytbE9TWTuutltjoHOLu1/WS5YOEfE+JtWhQkycNsly1SImf8xxxg7E1T9+
+	V04Hn4Vcj21Ld7khkW/5KTeAK3VIDYPQgeItaB5JuIM860UYZZTTA7
+X-Received: by 2002:a05:600c:3e08:b0:483:7eea:b172 with SMTP id 5b1f17b1804b1-485269675a7mr33794685e9.23.1772800899339;
+        Fri, 06 Mar 2026 04:41:39 -0800 (PST)
 Received: from claudiu-X670E-Pro-RS.. ([82.78.167.134])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-485276b0c38sm38150505e9.9.2026.03.06.04.41.35
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-485276b0c38sm38150505e9.9.2026.03.06.04.41.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 06 Mar 2026 04:41:36 -0800 (PST)
+        Fri, 06 Mar 2026 04:41:38 -0800 (PST)
 From: Claudiu <claudiu.beznea@tuxon.dev>
 X-Google-Original-From: Claudiu <claudiu.beznea.uj@bp.renesas.com>
 To: vkoul@kernel.org,
@@ -67,11 +69,15 @@ To: vkoul@kernel.org,
 Cc: claudiu.beznea@tuxon.dev,
 	dmaengine@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
-Subject: [PATCH v9 0/8] dmaengine: sh: rz-dmac: Add tx_status and pause/resume support
-Date: Fri,  6 Mar 2026 14:41:25 +0200
-Message-ID: <20260306124133.2304687-1-claudiu.beznea.uj@bp.renesas.com>
+	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
+	stable@vger.kernel.org,
+	Frank Li <Frank.Li@nxp.com>
+Subject: [PATCH v9 2/8] dmaengine: sh: rz-dmac: Move CHCTRL updates under spinlock
+Date: Fri,  6 Mar 2026 14:41:27 +0200
+Message-ID: <20260306124133.2304687-3-claudiu.beznea.uj@bp.renesas.com>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260306124133.2304687-1-claudiu.beznea.uj@bp.renesas.com>
+References: <20260306124133.2304687-1-claudiu.beznea.uj@bp.renesas.com>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -82,77 +88,85 @@ Content-Transfer-Encoding: 8bit
 
 From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
 
-Hi,
+Both rz_dmac_disable_hw() and rz_dmac_irq_handle_channel() update the
+CHCTRL register. To avoid concurrency issues when configuring
+functionalities exposed by this registers, take the virtual channel lock.
+All other CHCTRL updates were already protected by the same lock.
 
-Series adds tx_status and pause/resume support for the rz-dmac driver.
-Along with it were added fixes and improvements identified while working
-on the above mentioned enhancements.
+Previously, rz_dmac_disable_hw() disabled and re-enabled local IRQs, before
+accessing CHCTRL registers but this does not ensure race-free access.
+Remove the local IRQ disable/enable code as well.
 
-Previous versions were addressed by Biju. The previous versions were
-posted here:
-
-v4: https://lore.kernel.org/all/20240628151728.84470-1-biju.das.jz@bp.renesas.com/
-v3: https://lore.kernel.org/all/20230412152445.117439-1-biju.das.jz@bp.renesas.com/
-v2: https://lore.kernel.org/all/20230405140842.201883-1-biju.das.jz@bp.renesas.com/
-v1: https://lore.kernel.org/all/20230324094957.115071-1-biju.das.jz@bp.renesas.com/
+Fixes: 5000d37042a6 ("dmaengine: sh: Add DMAC driver for RZ/G2L SoC")
+Cc: stable@vger.kernel.org
+Reviewed-by: Biju Das <biju.das.jz@bp.renesas.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+---
 
 Changes in v9:
 - collected tags
-- in patch 7/8 droppped contributions from the SoB list, used
-  Co-developed-by tag, and added Long Luu as well; also used
-  ctra as member of rz_dmac_calculate_residue_bytes_in_vd() to
-  avoid re-reading it again in rz_dmac_calculate_residue_bytes_in_vd()
-- adjusted the patch description for patches 7/8, 8/8
 
 Changes in v8:
-- rebased on top of https://lore.kernel.org/all/20260105114445.878262-1-cosmin-gabriel.tanislav.xa@renesas.com/
-- populated engine->residue_granularity in patch 7/8
-- report proper residue in case the channel is paused in patch 8/8
+- none
 
 Changes in v7:
-- adjusted the pause/resume support
 - collected tags
 
 Changes in v6:
-- added patches:
--- dmaengine: sh: rz-dmac: Drop read of CHCTRL register
--- dmaengine: sh: rz-dmac: Drop goto instruction and label
-- use vc lock in IRQ handler only for the error path
-- fixed typos
-- adjusted patch
-  "dmaengine: sh: rz-dmac: Add device_{pause,resume}() callbacks"
+- update patch title and description
+- in rz_dmac_irq_handle_channel() lock only around the
+  updates for the error path and continued using the vc lock
+  as this is the error path and the channel will anyway be
+  stopped; this avoids updating the code with another lock
+  as it was suggested in the review process of v5 and the code
+  remain simpler for a fix, w/o any impact on performance
 
 Changes in v5:
-- added patches
--- dmaengine: sh: rz-dmac: Add rz_dmac_invalidate_lmdesc()
--- dmaengine: sh: rz-dmac: Protect the driver specific lists
--- dmaengine: sh: rz-dmac: Move all CHCTRL updates under spinlock
--- dmaengine: sh: rz-dmac: Drop unnecessary local_irq_save() call
--- dmaengine: sh: rz-dmac: Add device_{pause,resume}() callbacks
--- dmaengine: sh: rz-dmac: Add rz_dmac_invalidate_lmdesc()
-- for pause/resume used the DMA controller support to pause/resume
-  transfers compared with previous versions
-- adjusted patches:
--- dmaengine: sh: rz-dmac: Add device_tx_status() callback
+- none, this patch is new
 
-Thank you,
-Claudiu
+ drivers/dma/sh/rz-dmac.c | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
-Biju Das (2):
-  dmaengine: sh: rz-dmac: Add rz_dmac_invalidate_lmdesc()
-  dmaengine: sh: rz-dmac: Add device_tx_status() callback
-
-Claudiu Beznea (6):
-  dmaengine: sh: rz-dmac: Protect the driver specific lists
-  dmaengine: sh: rz-dmac: Move CHCTRL updates under spinlock
-  dmaengine: sh: rz-dmac: Drop read of CHCTRL register
-  dmaengine: sh: rz-dmac: Drop goto instruction and label
-  dmaengine: sh: rz-dmac: Drop unnecessary local_irq_save() call
-  dmaengine: sh: rz-dmac: Add device_{pause,resume}() callbacks
-
- drivers/dma/sh/rz-dmac.c | 288 ++++++++++++++++++++++++++++++++-------
- 1 file changed, 238 insertions(+), 50 deletions(-)
-
+diff --git a/drivers/dma/sh/rz-dmac.c b/drivers/dma/sh/rz-dmac.c
+index 089e1ab29159..f30bdf69c740 100644
+--- a/drivers/dma/sh/rz-dmac.c
++++ b/drivers/dma/sh/rz-dmac.c
+@@ -297,13 +297,10 @@ static void rz_dmac_disable_hw(struct rz_dmac_chan *channel)
+ {
+ 	struct dma_chan *chan = &channel->vc.chan;
+ 	struct rz_dmac *dmac = to_rz_dmac(chan->device);
+-	unsigned long flags;
+ 
+ 	dev_dbg(dmac->dev, "%s channel %d\n", __func__, channel->index);
+ 
+-	local_irq_save(flags);
+ 	rz_dmac_ch_writel(channel, CHCTRL_DEFAULT, CHCTRL, 1);
+-	local_irq_restore(flags);
+ }
+ 
+ static void rz_dmac_set_dmars_register(struct rz_dmac *dmac, int nr, u32 dmars)
+@@ -568,8 +565,8 @@ static int rz_dmac_terminate_all(struct dma_chan *chan)
+ 	unsigned int i;
+ 	LIST_HEAD(head);
+ 
+-	rz_dmac_disable_hw(channel);
+ 	spin_lock_irqsave(&channel->vc.lock, flags);
++	rz_dmac_disable_hw(channel);
+ 	for (i = 0; i < DMAC_NR_LMDESC; i++)
+ 		lmdesc[i].header = 0;
+ 
+@@ -706,7 +703,9 @@ static void rz_dmac_irq_handle_channel(struct rz_dmac_chan *channel)
+ 	if (chstat & CHSTAT_ER) {
+ 		dev_err(dmac->dev, "DMAC err CHSTAT_%d = %08X\n",
+ 			channel->index, chstat);
+-		rz_dmac_ch_writel(channel, CHCTRL_DEFAULT, CHCTRL, 1);
++
++		scoped_guard(spinlock_irqsave, &channel->vc.lock)
++			rz_dmac_ch_writel(channel, CHCTRL_DEFAULT, CHCTRL, 1);
+ 		goto done;
+ 	}
+ 
 -- 
 2.43.0
 
