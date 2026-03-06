@@ -1,81 +1,81 @@
-Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B35628BA95
-	for <dmaengine@vger.kernel.org>; Fri,  6 Mar 2026 12:41:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F256E3A9D8B
+	for <dmaengine@vger.kernel.org>; Fri,  6 Mar 2026 14:58:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772800910; cv=none; b=SebfEOdls4ObcKNR/l2HqaKHqDZmNP3szE0Y4wujMewqy2qEaLvcH9MMeTJ8EpBdbEHs6qBI3NgWaC/wyORUuJQjEpLU46Egh+O6mKJBJbSFwoE+a6qcLctPwl3J5rSSZuKfvIIHsUP9TuNOtiKfPmkw+xgRnB2zHme3nwGOEbY=
+	t=1772809105; cv=none; b=qylwY+Wu9eXVxm4F4yx4pcj9PwvyKgIA3oSpgOwe9iYwKuVVlmF4ieyQdnRPonwIihF0wqKNsD0VrmX68QzTXepraoJiGF8PN/Lfi7IeHhD8GXaikmGurYtcsgdXVoUbbhCElTKtskluE7M/uYPQDb9a7xkBh8okTEBDdlUhGJk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772800910; c=relaxed/simple;
-	bh=m8HVDXAI0gFsFczYRIXenJR42GRKUDLDJ1N+K6c+Cok=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KfBECaTsN3D5jpidAfFUyuq+wl+U/N3006FEn8JBoy2vbj18l5I/hP+7+AJYyveO2yOlVlz8nRq/sL0YSw9qdJjn1LpWRFqDdJynxsSNhdjy55rPmmdTZYTTKVYAvdoS7G7ji9IR6bXRgyZ+jwixSxGTcpS/g0ZuHSbTOr9EGr8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=tuxon.dev; spf=pass smtp.mailfrom=tuxon.dev; dkim=pass (2048-bit key) header.d=tuxon.dev header.i=@tuxon.dev header.b=N4XPZ5+V; arc=none smtp.client-ip=209.85.128.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=tuxon.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=tuxon.dev
+	s=arc-20240116; t=1772809105; c=relaxed/simple;
+	bh=sKJohp6JSfNRiIYkryKiS5uEOD1WyzlAH27hQZmGU6w=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=NycKX+UTOHdhMgLz6dEssihXJBY/Ai+qwy7ZtIXfvUlKcL09AJNg/LPM6Zq9tQL1CJ29AfDyLoFaitQIG+dA7eTCJc//gSgE4Rrfmcdd5Nc+yTxBQj8nCZHnTNA/hokf4c5jzts4f0LoZyKvl/wabsMcsHgY+sUfF12V8MVfFvo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LjjixAr6; arc=none smtp.client-ip=209.85.128.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=tuxon.dev header.i=@tuxon.dev header.b="N4XPZ5+V"
-Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-4836f363ad2so107485915e9.1
-        for <dmaengine@vger.kernel.org>; Fri, 06 Mar 2026 04:41:48 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LjjixAr6"
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-4836f4cbe0bso81266815e9.3
+        for <dmaengine@vger.kernel.org>; Fri, 06 Mar 2026 06:58:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=tuxon.dev; s=google; t=1772800907; x=1773405707; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=zoqbEN/HoHhqzl9Aahz7CWhnPYMvokOytjXCAykOjvU=;
-        b=N4XPZ5+V6hl/xQylb76IRz/46cOrSgDw+aOkzOJAdHrHcraJ9Yt0nDzZxKFIVMk360
-         9NEZDV8h3rIPG7hgNYtqieBqR/kg0Y8CTi7T+enDAy7/DPii9RDLIunlWeBwQhpgU119
-         e3QmU5E3t7lGsEJoQTLMHyF+U9dX7is3Eg9lPsbUKCA3MxnwpczHpz991F5ANuqUqoX0
-         GU4+79k9ssfpMPwPzMT0A8k/8HAXmg6fewFSX3e23L+NRkEVdBgwvyIR3y110NX2USCh
-         BVQiOYioPlWXt0SEFBCm/l9dDDeSe6A2oXk/Fy7uOSP1OcGrQxK/6HHeMIkknz/6mx4F
-         zrFQ==
+        d=gmail.com; s=20230601; t=1772809102; x=1773413902; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=+IlAqrQXAoNRrPdFE8T+jJIC/19vJ3Es0LkJ9ayYBZk=;
+        b=LjjixAr6Q1SWC59DDySsjYaoAof4UHRyb6bUQa7nWmHXJ3vBM1uWddvdm9yJtM1g/3
+         4y01cm+p4j39EvMkn0E7JYg2eGZrOjO2T1HlccHu4elrcIhamQ42HdxuCzn+Ulyn8Vub
+         xNGEDmtBxQ3usGSHaK28iNc11rWc9zJzvVKTkTmjHlzSXt9PebVTUt/Rna4ZcPhHQXiW
+         tB31YE7eok07mOmvaJrJ5Df1v4Nx07I/d2HEU/6p8cLxLhF1I3HTrMsRy6DTgEyecCZd
+         H9piss4/ZP7sLVY5qiwUcUrwXcLlvd7NYwc0tv/TyvPZ/V3CMIGg0OTcBEZql789oSyJ
+         LfIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772800907; x=1773405707;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=zoqbEN/HoHhqzl9Aahz7CWhnPYMvokOytjXCAykOjvU=;
-        b=nj1KqQPqdSIKv4WwGj2A+JSTGYrRcElh/yITWzpIBlAMZ047+6oYOIZ5PXbEeeX+vO
-         kudKixpL7UVqfTn3U0wv350l5MOQHVnhogihwj3BQR/DnmYRaK0eKRLXizQMZjc7eC6h
-         QTaVex75cAIy6ziOvyJ/T42JzFOG8vIC1BGcDlb1/sb0WAeFtUP6FBqTYBJorCNYamKB
-         EX4qu0O6/xaLS2Tp28CGXTlDuSI2nne/PRDZvprlvZ3eIPjnFSt5+p0MBPRLoU/Xwcvt
-         bLkz77sGIBM52yJJkjvnCq6Y3F9+VvNuk54pcXM8poVbWbKuH88iQRI4BSghbghijsuN
-         nrVw==
-X-Forwarded-Encrypted: i=1; AJvYcCXLTchjbCygE5EGh5GMD6SjGL4mkFp6ftkZ9TTkTXyvhvtwpvONDj/7lB/ii1hZVTw+L2VX3QWIV8g=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx8jN3X3VL0kTif9Qhlc9NyDzWbcI+4/DJdGoS0s7a2xJYRZo8S
-	nmScx2z1tHjLQfSALLcutSiUps9L7Ui8FFvXihXbiPG2JE6ki+GaGeZn53U81UkT2RU=
-X-Gm-Gg: ATEYQzw1WFjH1Znc3OLq3sHCPyxAaZjdLFe8nPpNFMTgCI57qqHk663kDIjZDdzam6x
-	61OGxRxdsYhQAHiPkwX7i/f81OudtEM3d1M28E07isWRjmeiQnWel3kb0tFQm0zByaH7tMz4nbv
-	5ErxX5VZJFAPoBdUxgqu9ceUiuu96h49sEk1xvstBRLlDrDHLbez7EYLaPwJGIHK9KGtl06Lut3
-	3BF5YcL4dmbuJc4WqwZ/CPM+D5JRExGOJktLbAbpuLFV9cwwIbmXnA0oCKCQiXlDcUGaTwPyQvL
-	8PxsLufrGkhTX5I9lOuJ001UUM7JdYjMNBNnpnOdRTFnP9d80kWBftzOo/3SngJKOLXhUFTFV5l
-	tXVmz9IzMn/jxk1z1QASibNvT72vcgiBQXRAxlJLkhY64nCTJ9CV3g92RQDyXY+FcqtJPCsIxph
-	2TWW0aesV8XifRC0TbJZKizlIDVhtlRneECbX3wT/oDDL87w2p3Asn
-X-Received: by 2002:a05:600c:5303:b0:477:c478:46d7 with SMTP id 5b1f17b1804b1-4852695aa55mr31872855e9.22.1772800906819;
-        Fri, 06 Mar 2026 04:41:46 -0800 (PST)
-Received: from claudiu-X670E-Pro-RS.. ([82.78.167.134])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-485276b0c38sm38150505e9.9.2026.03.06.04.41.45
+        d=1e100.net; s=20230601; t=1772809102; x=1773413902;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=+IlAqrQXAoNRrPdFE8T+jJIC/19vJ3Es0LkJ9ayYBZk=;
+        b=VSnYpHu0d1tYuadMd48oTsOHKL1k8p1RjljBZfxly7wJTd6B5YtIBtkrvu/Vu3lu5J
+         oVATc9xyx53JxCaiI5wcuK80W+LpBfLSRgZTJxqZGICOJ86HGdmwSK0+H+v9UGZkpXf4
+         4OG8y3ACeLoVhatpMhlOpHSk5QAxAKHtXWE4KGogq3JDpeaGMOWD//smW7RKb3/iCL+P
+         OurF1gK8+CtqxtkctKZgs3EmbEeKNnKk1ryj0M/XSismha1z9a3pmhwmPWDC196OBRf5
+         iIrNfNSXUu6g9xgphwm1aN/3UeLEl5Mmu0lvJQkUoz/G+aymHomqb/i7vH2HNSWPYfxF
+         MrYQ==
+X-Forwarded-Encrypted: i=1; AJvYcCV+bpW+nkOD06Qx+PZZdnWu0CANPSdaw3DkwVQ01eCip7jF8XdBfZniKkuxs8ayV1GQ/oegJ/c6ocY=@vger.kernel.org
+X-Gm-Message-State: AOJu0YynL5VCXWSTx/njXcae9IhW1ifuqhquo6uC3/NhiSoRVAaEfIWh
+	DZaOXMyOU1Uhnvbqvv8RWM1+skHN7//WZAiFXJOkdmwYvL0OaTcZA216
+X-Gm-Gg: ATEYQzzitLeUW7VnhxXfTc5JznHcxw6oW88JsgoUD0l7fqxNbdixtyi1Qsjhos2kLeI
+	/Ck9B4pqJi8D9qawvNTMzssBfCJcj1HPLnTFp0LZMnfN8DMgO4iE8sp8QZIO8Q5kegcHMyhONBi
+	fkMOjkzQnHJPt4EE+/pRR6Zi6gk6VC+eKNWwDugDL5zN7BZmSaq8BPvIeCqMVhklfbA1zTWzBAt
+	eND3Mc7eoBRv5g7kjDndR+jVgmGKw6Fyyht9oav73WUK2Y7rOEv9lGztRnPu8KWbqDclh+ZBqi3
+	ifPuisYPYcGAfD9tHHwVii9CIz3EWLAnx9IB75CulBkBzbY2wj/kCrB5Cq4cJEBvs3f89V/69+i
+	n/jLZafhDDuyoRIHgjapMpzj/DdNaQFOmxp/bfANRdU/EBFQXTw8iOXU8jR031HKUlHeChk/dB+
+	ri6nzdPQJ842zNw6scCR7tFAZimV78xE3RKya/ad1Xlzji0Ls=
+X-Received: by 2002:a05:600c:4e89:b0:45d:d97c:236c with SMTP id 5b1f17b1804b1-48526951430mr42154915e9.21.1772809102033;
+        Fri, 06 Mar 2026 06:58:22 -0800 (PST)
+Received: from localhost.localdomain ([2a00:23c4:a758:8a01:d0f3:534:36a3:523a])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4851fad2812sm201153175e9.1.2026.03.06.06.58.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 06 Mar 2026 04:41:46 -0800 (PST)
-From: Claudiu <claudiu.beznea@tuxon.dev>
-X-Google-Original-From: Claudiu <claudiu.beznea.uj@bp.renesas.com>
-To: vkoul@kernel.org,
-	Frank.Li@kernel.org,
-	biju.das.jz@bp.renesas.com,
-	geert+renesas@glider.be,
-	fabrizio.castro.jz@renesas.com,
-	prabhakar.mahadev-lad.rj@bp.renesas.com
-Cc: claudiu.beznea@tuxon.dev,
+        Fri, 06 Mar 2026 06:58:21 -0800 (PST)
+From: Biju <biju.das.au@gmail.com>
+X-Google-Original-From: Biju <biju.das.jz@bp.renesas.com>
+To: Vinod Koul <vkoul@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Magnus Damm <magnus.damm@gmail.com>
+Cc: Biju Das <biju.das.jz@bp.renesas.com>,
+	Frank Li <Frank.Li@kernel.org>,
 	dmaengine@vger.kernel.org,
+	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
-Subject: [PATCH v9 8/8] dmaengine: sh: rz-dmac: Add device_{pause,resume}() callbacks
-Date: Fri,  6 Mar 2026 14:41:33 +0200
-Message-ID: <20260306124133.2304687-9-claudiu.beznea.uj@bp.renesas.com>
+	linux-renesas-soc@vger.kernel.org,
+	Prabhakar Mahadev Lad <prabhakar.mahadev-lad.rj@bp.renesas.com>,
+	Biju Das <biju.das.au@gmail.com>
+Subject: [PATCH] dt-bindings: dma: rz-dmac: Add conditional schema for RZ/G3L
+Date: Fri,  6 Mar 2026 14:58:17 +0000
+Message-ID: <20260306145819.897047-1-biju.das.jz@bp.renesas.com>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260306124133.2304687-1-claudiu.beznea.uj@bp.renesas.com>
-References: <20260306124133.2304687-1-claudiu.beznea.uj@bp.renesas.com>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -84,135 +84,33 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+From: Biju Das <biju.das.jz@bp.renesas.com>
 
-The RZ/G2L SCIFA driver uses dmaengine_prep_slave_sg() to enqueue DMA
-transfers and implements a timeout mechanism on RX to handle cases where
-a DMA transfer does not complete. The timeout is implemented using an
-hrtimer.
+The RZ/G3L DMA controller is compatible with RZ/G2L, sharing the same
+IP. However, the conditional schema logic that enforces RZ/G2L-specific
+binding constraints was not extended to cover the RZ/G3L compatible
+string, leaving its bindings without proper validation.
 
-In the hrtimer callback, dmaengine_tx_status() is called (along with
-dmaengine_pause()) to retrieve the transfer residue and handle incomplete
-DMA transfers.
+Add the RZ/G3L compatible string to the existing RZ/G2L conditional
+schema so that the same property constraints are applied to both SoCs.
 
-Add support for device_{pause, resume}() callbacks.
-
-Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
 ---
+ Documentation/devicetree/bindings/dma/renesas,rz-dmac.yaml | 1 +
+ 1 file changed, 1 insertion(+)
 
-Changes in v9:
-- updated the patch description
-
-Changes in v8:
-- reported residue for paused channels as well
-
-Changes in v7:
-- use guard() instead of scoped_guard()
-- in rz_dmac_device_pause() checked the channel is enabled
-  before suspending it to avoid read poll timeouts
-- added a comment in rz_dmac_device_resume()
-
-Changes in v6:
-- set CHCTRL_SETSUS for pause and CHCTRL_CLRSUS for resume
-- dropped read-modify-update approach for CHCTRL updates as the
-  HW returns zero when reading CHCTRL
-- moved the read_poll_timeout_atomic() under spin lock to
-  ensure avoid any races b/w pause and resume functionalities
-
-Changes in v5:
-- used suspend capability of the controller to pause/resume
-  the transfers
-
- drivers/dma/sh/rz-dmac.c | 49 +++++++++++++++++++++++++++++++++++++---
- 1 file changed, 46 insertions(+), 3 deletions(-)
-
-diff --git a/drivers/dma/sh/rz-dmac.c b/drivers/dma/sh/rz-dmac.c
-index 3b318fe06f28..6ad41e0285f5 100644
---- a/drivers/dma/sh/rz-dmac.c
-+++ b/drivers/dma/sh/rz-dmac.c
-@@ -134,10 +134,12 @@ struct rz_dmac {
- #define CHANNEL_8_15_COMMON_BASE	0x0700
- 
- #define CHSTAT_ER			BIT(4)
-+#define CHSTAT_SUS			BIT(3)
- #define CHSTAT_EN			BIT(0)
- 
- #define CHCTRL_CLRINTMSK		BIT(17)
- #define CHCTRL_CLRSUS			BIT(9)
-+#define CHCTRL_SETSUS			BIT(8)
- #define CHCTRL_CLRTC			BIT(6)
- #define CHCTRL_CLREND			BIT(5)
- #define CHCTRL_CLRRQ			BIT(4)
-@@ -813,11 +815,18 @@ static enum dma_status rz_dmac_tx_status(struct dma_chan *chan,
- 	if (status == DMA_COMPLETE || !txstate)
- 		return status;
- 
--	scoped_guard(spinlock_irqsave, &channel->vc.lock)
-+	scoped_guard(spinlock_irqsave, &channel->vc.lock) {
-+		u32 val;
-+
- 		residue = rz_dmac_chan_get_residue(channel, cookie);
- 
--	/* if there's no residue, the cookie is complete */
--	if (!residue)
-+		val = rz_dmac_ch_readl(channel, CHSTAT, 1);
-+		if (val & CHSTAT_SUS)
-+			status = DMA_PAUSED;
-+	}
-+
-+	/* if there's no residue and no paused, the cookie is complete */
-+	if (!residue && status != DMA_PAUSED)
- 		return DMA_COMPLETE;
- 
- 	dma_set_residue(txstate, residue);
-@@ -825,6 +834,38 @@ static enum dma_status rz_dmac_tx_status(struct dma_chan *chan,
- 	return status;
- }
- 
-+static int rz_dmac_device_pause(struct dma_chan *chan)
-+{
-+	struct rz_dmac_chan *channel = to_rz_dmac_chan(chan);
-+	u32 val;
-+
-+	guard(spinlock_irqsave)(&channel->vc.lock);
-+
-+	val = rz_dmac_ch_readl(channel, CHSTAT, 1);
-+	if (!(val & CHSTAT_EN))
-+		return 0;
-+
-+	rz_dmac_ch_writel(channel, CHCTRL_SETSUS, CHCTRL, 1);
-+	return read_poll_timeout_atomic(rz_dmac_ch_readl, val,
-+					(val & CHSTAT_SUS), 1, 1024,
-+					false, channel, CHSTAT, 1);
-+}
-+
-+static int rz_dmac_device_resume(struct dma_chan *chan)
-+{
-+	struct rz_dmac_chan *channel = to_rz_dmac_chan(chan);
-+	u32 val;
-+
-+	guard(spinlock_irqsave)(&channel->vc.lock);
-+
-+	/* Do not check CHSTAT_SUS but rely on HW capabilities. */
-+
-+	rz_dmac_ch_writel(channel, CHCTRL_CLRSUS, CHCTRL, 1);
-+	return read_poll_timeout_atomic(rz_dmac_ch_readl, val,
-+					!(val & CHSTAT_SUS), 1, 1024,
-+					false, channel, CHSTAT, 1);
-+}
-+
- /*
-  * -----------------------------------------------------------------------------
-  * IRQ handling
-@@ -1162,6 +1203,8 @@ static int rz_dmac_probe(struct platform_device *pdev)
- 	engine->device_terminate_all = rz_dmac_terminate_all;
- 	engine->device_issue_pending = rz_dmac_issue_pending;
- 	engine->device_synchronize = rz_dmac_device_synchronize;
-+	engine->device_pause = rz_dmac_device_pause;
-+	engine->device_resume = rz_dmac_device_resume;
- 
- 	engine->copy_align = DMAENGINE_ALIGN_1_BYTE;
- 	dma_set_max_seg_size(engine->dev, U32_MAX);
+diff --git a/Documentation/devicetree/bindings/dma/renesas,rz-dmac.yaml b/Documentation/devicetree/bindings/dma/renesas,rz-dmac.yaml
+index e3311029eb2f..31f3c153a793 100644
+--- a/Documentation/devicetree/bindings/dma/renesas,rz-dmac.yaml
++++ b/Documentation/devicetree/bindings/dma/renesas,rz-dmac.yaml
+@@ -132,6 +132,7 @@ allOf:
+               - renesas,r9a07g044-dmac
+               - renesas,r9a07g054-dmac
+               - renesas,r9a08g045-dmac
++              - renesas,r9a08g046-dmac
+     then:
+       properties:
+         reg:
 -- 
 2.43.0
 
