@@ -1,41 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 414B53A4F28;
-	Mon,  9 Mar 2026 11:41:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A21F3A4525;
+	Mon,  9 Mar 2026 11:46:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773056502; cv=none; b=dBl6cX5PVPBIvoDZZgrroL0g3skUcmQGgGdBcdKkSjJnsGfKD0Yyr4V/aIwyQ4R0gnu1EwTODGqJYQSVUtbuVxNjWWTD7/yZDnklJh8x3SdkkeoY+0W4+BhZb0QV26v4we2uQHgPt/2YVPtZs80N+46+vI8jyp3AZyC8kKLLnrQ=
+	t=1773056763; cv=none; b=Zq1rvIgZLQDbMXjs5ehsItxWO7FSwZ2GZVJzZvyZGiLO0kGK7gBH1P2U1U3sw4kCCZbAaebMxkxTNO93OGCEEs1UQh9FsARA0tZnStCQlC5WnnHj9AT2QKX2rR2a408YGiWXrKf0OM+ty2DR64JaeVEMOCiq7wf1F7bW61xUD0w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773056502; c=relaxed/simple;
-	bh=RxWsCee+ZoiR0GYYb2EJoVKT0M/8XIcfta/6B0inB1Q=;
+	s=arc-20240116; t=1773056763; c=relaxed/simple;
+	bh=4GHo3rpAhoh7Ez68qCniCSzBJN6YciwSNLek4y7NmYA=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=IytiuHV4BeVlRoAKi4/+8Whv0NA/cQ8dwbznqfkGIryZh+f/sWeFFUkN4KZh6+WalYAxRO+UQoBD3q2S18BQn87PO91Z9MKfQsXIGyuvMG4AZY53QC3v4oNfrREdUY0t62N53JXhlbDfPELFtwFlSEyTXKL6h7dI6jUMK8UW4T0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=llbsDlps; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=WrluL0cUpewtxz5uqHD/AFCZZwvoKF2x4wlzrAyTsRGBP7uk0gVO20ielvP4U870RaQ8cmDBbnTq/QDS3ICEY9ge4xym2s6pUWlksVINfXD0s5R+WVsk6f95Z+8Bmc2s8AL/EsAL050YtkUGIHEngzUfNuty2x+QA1SLMWigEmc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=W36W4/zC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="llbsDlps"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9F58C4CEF7;
-	Mon,  9 Mar 2026 11:41:40 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="W36W4/zC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7ECDCC4CEF7;
+	Mon,  9 Mar 2026 11:45:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773056502;
-	bh=RxWsCee+ZoiR0GYYb2EJoVKT0M/8XIcfta/6B0inB1Q=;
+	s=k20201202; t=1773056762;
+	bh=4GHo3rpAhoh7Ez68qCniCSzBJN6YciwSNLek4y7NmYA=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=llbsDlpsSEsEyFVLHHSLt0Fh6pbwzuusbkBxTky+Gv88z9TSgtVilx9rjDN77D7WN
-	 OXc5AXi03L3C2gpskdFgVdOx2JOmMF/VOtb4rhkkrFpmHdIkHiKsgtsOrnOqUQ/BFM
-	 dMpZcP6P9HNk6U7Uh6866DT19TXyVoSCIFSoq4NcIOWdg/65oRtma+k9S2aeeMbtUd
-	 T32NwvweUOx8SOUMNdnXkAD2JtBIywy6wF3ftO6ybFIgz5YuxUkQJeRsxfnPxfgDfH
-	 9/ruTeGsEsDmYpWuFTF7ZUnnxN0+u36WHFmzXqFcZRdbKIJ3UWcWH3SKg5DO7djec/
-	 KIfZxnrRo0HCQ==
+	b=W36W4/zCIY1OQLpUddYgQSvcv7rfjtlmRVHyJWDp1qi5vJ8n96Owl8g6LzSuwZmv3
+	 k52gqUlkRvZUAu4nUfC0r1UID4i87J/PMR49y7ivSYsBB1e6g/VADx63uaCGWE0KtO
+	 Sa3ZGFnXiAMFTj/m5/UI9sjUs7uWanwN7NQ9JIOj+BLMVePRpwUfjHxKMuDr3sWORO
+	 6+CUY6XP2qt2372Oe3MKYdbXJASTo0PbmoXI4v0NSGIzN1M/2FIqEeHc+JmPHkygeO
+	 YAyApKuiWuDCXiWEeVEiPN/75ySCyF40zTrBDcSG/1kr20/u2AsE71oUvWhn02XKCF
+	 Autm9PxLwOCxA==
 From: Vinod Koul <vkoul@kernel.org>
-To: vinicius.gomes@intel.com, dave.jiang@intel.com, 
- Tuo Li <islituo@gmail.com>
-Cc: dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
-In-Reply-To: <20260106032428.162445-1-islituo@gmail.com>
-References: <20260106032428.162445-1-islituo@gmail.com>
-Subject: Re: [PATCH] dmaengine: idxd: fix possible wrong descriptor
- completion in llist_abort_desc()
-Message-Id: <177305650060.108803.7377537408886763261.b4-ty@kernel.org>
-Date: Mon, 09 Mar 2026 12:41:40 +0100
+To: Rob Herring <robh@kernel.org>, Shawn Guo <shawnguo@kernel.org>, 
+ Sascha Hauer <s.hauer@pengutronix.de>, 
+ Pengutronix Kernel Team <kernel@pengutronix.de>, 
+ Fabio Estevam <festevam@gmail.com>, Saravana Kannan <saravanak@kernel.org>, 
+ Frank Li <Frank.Li@nxp.com>
+Cc: dmaengine@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, imx@lists.linux.dev, 
+ linux-arm-kernel@lists.infradead.org, Shawn Guo <shawn.guo@freescale.com>, 
+ Jindong Yue <jindong.yue@nxp.com>
+In-Reply-To: <20260225-mxsdma-module-v3-0-8f798b13baa6@nxp.com>
+References: <20260225-mxsdma-module-v3-0-8f798b13baa6@nxp.com>
+Subject: Re: [PATCH v3 00/13] dmaegnine: freescale-dmas: small improvement
+Message-Id: <177305675929.117444.10373471649910063885.b4-ty@kernel.org>
+Date: Mon, 09 Mar 2026 12:45:59 +0100
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -47,20 +52,42 @@ Content-Transfer-Encoding: 7bit
 X-Mailer: b4 0.13.0
 
 
-On Tue, 06 Jan 2026 11:24:28 +0800, Tuo Li wrote:
-> At the end of this function, d is the traversal cursor of flist, but the
-> code completes found instead. This can lead to issues such as NULL pointer
-> dereferences, double completion, or descriptor leaks.
+On Wed, 25 Feb 2026 16:41:36 -0500, Frank Li wrote:
+> Add managed API devm_of_dma_controller_register().
 > 
-> Fix this by completing d instead of found in the final
-> list_for_each_entry_safe() loop.
+> simple mxs-dma code and add build as module support.
+> Use dev_err_probe() simple freescale dmaengines.
 > 
-> [...]
+> 
 
 Applied, thanks!
 
-[1/1] dmaengine: idxd: fix possible wrong descriptor completion in llist_abort_desc()
-      commit: e1c9866173c5f8521f2d0768547a01508cb9ff27
+[01/13] dmaengine: of_dma: Add devm_of_dma_controller_register()
+        commit: 3a005126c9d7f30093627a6f329656c358e16b3a
+[02/13] dmaengine: mxs-dma: Fix missing return value from of_dma_controller_register()
+        commit: ab2bf6d4c0a0152907b18d25c1b118ea5ea779df
+[03/13] dmaengine: mxs-dma: Use local dev variable in probe()
+        commit: 96857a90982c2a461520fadc55dda3b8051e8d96
+[04/13] dmaengine: mxs-dma: Use dev_err_probe() to simplify code
+        commit: 4a5b0a728d665b3b7b08fb5bf6b2f69c995e30ec
+[05/13] dmaengine: mxs-dma: Use managed API devm_of_dma_controller_register()
+        commit: d11544c674b64beb9948724ba27187238c52b079
+[06/13] dmaengine: mxs-dma: Add module license and description
+        commit: e1b712c9352cf74285973462ced8d60ed7a9183c
+[07/13] dmaengine: mxs-dma: Turn MXS_DMA as tristate
+        commit: 67adf1f6643d75e33509900a2cb35db3a31f0410
+[08/13] dmaengine: imx-sdma: Use devm_clk_get_prepared() to simplify code
+        commit: 5daee52d7cc87415367fa0051a80998cccbab920
+[09/13] dmaengine: imx-sdma: Use managed API to simplify code
+        commit: 8982cb214a7f29db7d28058a3b4697f436af34d2
+[10/13] dmaengine: imx-sdma: Use dev_err_probe() to simplify code
+        commit: 917edfa57783352cd491cd5759a04d7b60de1714
+[11/13] dmaengine: fsl-edma: Use managed API dmaenginem_async_device_register()
+        commit: 4035726a6b724ff0f04b4f1429c7b1a935fc2e76
+[12/13] dmaengine: fsl-edma: Use dev_err_probe() to simplify code
+        commit: 804e18f7da6d29cff7ed4e004bcc05658f51d737
+[13/13] dmaengine: fsl-qdma: Use dev_err_probe() to simplify code
+        commit: 2438deea9ff82940ebfce67e232d558199ab8a6e
 
 Best regards,
 -- 
