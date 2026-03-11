@@ -1,96 +1,129 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2E3131714B
-	for <dmaengine@vger.kernel.org>; Wed, 11 Mar 2026 08:03:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9581034B663
+	for <dmaengine@vger.kernel.org>; Wed, 11 Mar 2026 08:06:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773216231; cv=none; b=eBkTCi8qs420yIkCfyBKD9mqYx1LtQTGUzS5beuJ9k8Qh0qm7Tp3vyGwNJlU4uFY9fkee7U8FAeo1G9suHT1QJ+Ssg777XLwIp11XNksYd6SYfJTY1PL+DgAa0W8sd7a2Po8yUaDKeI2lqP0wPnL1agFzzPak8s2KgsQayt2ENI=
+	t=1773216405; cv=none; b=UrMdHnapbEAKqryT6PVEcgpViXpE+8sVHD26I5scPKqs0x0k9YCBQ2wGqKiekhd0C7ReEYBOA8Q0y9RGMTsEFjwZ40uH2nATooVut6EDLfGRV1YXF+9XLVtRoZqP+wLzcMMHAIu/RjEOzfw6YPdWqgJyIo3b/ou352Amjm4t8GU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773216231; c=relaxed/simple;
-	bh=rsre+xoqF4I8t3EjmEwHt5ty2n0tD2K+A5STG+RJ75I=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=PzzCnS3M/Y+Ak8efTdC+vUOQCWbIemjJF/ycHwVhA5WS1vbvnlZGHHXcUs9q7/usxMF5Fmw6qNDPBqkTrFeNKqomL2e9S1jOEx7+Nk4lrgncoSdhPTJrinLFKCRlUn/9QaS4U+1a47L5MAtichR0YTrQ52TxlZxbo5KPB2OWf6s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KfGn8+3h; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1773216405; c=relaxed/simple;
+	bh=I5XePahDdZxkT2lcI/2aGwvT7jVpioZ3NcNMQHdU7Eo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=nEsxjG7ydjdDwJ21UBqPCl3Pkol1w5Z8QB9R5SgdmtKQ/+PjqAxVzNvyGpeDY3BodtTZvg7eEyy7/fAVOvNO3E4Pdaku1kuiZOQL/UumIglB+CU6l9UiW+xFqQi6RSVm6u+9LgEHfJywrUuxHdN6txhX1moCVSQjbvDTfNsZz1Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=h5/Hjhhc; arc=none smtp.client-ip=209.85.221.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KfGn8+3h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE262C2BCB0
-	for <dmaengine@vger.kernel.org>; Wed, 11 Mar 2026 08:03:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773216230;
-	bh=rsre+xoqF4I8t3EjmEwHt5ty2n0tD2K+A5STG+RJ75I=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=KfGn8+3h4e+NMyMcPHyts0qH8oqHt+9fe7SodTbWjSMFtJMfxJGc5fAqgo7/gZ9Fu
-	 TK6CGVYpw2V7Jn3Pk6Sr4T90twLsulLZusgTbQ8WHLqiQqNCG/q+E+lBlvaftngUjD
-	 qzRacpn59BVVJOOyCqKl+2j8Yb+VDlVS150bL9AXasECFXcPa7gIIm5FhjOT8ew92L
-	 nLliZhql25w3YTt9eGqZoiM/cRUgqgMRZUbiKnhpRnjxIqB9KKRQhsIDEvtHRPrgRC
-	 XxTCD1T9kvH9no+l8uex8ICN8Bsmmfkewjd30/SeHhZM6Q2M5gW6DPWnQmtrn4JTUV
-	 qBoPZL9pEX4hg==
-Received: by mail-lj1-f169.google.com with SMTP id 38308e7fff4ca-38a3066b68bso73857501fa.3
-        for <dmaengine@vger.kernel.org>; Wed, 11 Mar 2026 01:03:50 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCVv3tbM8fiDVfVX84zkLsaeEdn8Y2uq67gqQnNmFca30rPmB36n6ZFhAU//soj7662MQERNTGMRdQI=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzoncv8MhWcc4djdvkW3qyMsEIhvqqd+p34y7qz+VjNeFCmTHd9
-	P5WPuUBrTpFI077blcA+lCeEb/sLyIOEVMwPdtxT7n1OT25EVVtcxa3rCCRaqdbkcgvKB6E/Bm5
-	cRD4dBSpC/xXQrXmj3793KvR5Ds/+hEr94C0fnhnbaw==
-X-Received: by 2002:a2e:b8d1:0:b0:387:4ee2:1cbe with SMTP id
- 38308e7fff4ca-38a67dc9220mr6423881fa.2.1773216229237; Wed, 11 Mar 2026
- 01:03:49 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="h5/Hjhhc"
+Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-439cd6b0aedso5639515f8f.1
+        for <dmaengine@vger.kernel.org>; Wed, 11 Mar 2026 01:06:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1773216400; x=1773821200; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=QqJVCEF9evLSw9CGf9v4iGyJ+/vqb8/nhU/YNtIqzkw=;
+        b=h5/HjhhclbRrnH5/9ayteCfacKDvxrvJw4HAtGuduxqH7txBTyzUaQy8T5Svkngjnb
+         N9eZtr5vmwuuV4Hl0eB4t6polvHUvwtti1ynhYBiGotkS7iQiLwoCl8C6W6drqqE5Xd3
+         igdmjQcZO83solffJQsbzwH9XME6z+zWqxtLBz4vdr2AXuB+yQX521sJmAXdOrt8YTSR
+         kPSKuLuSMkIZgRowxjT3eaOvkoTmknh68nZPqzt3UhBau9kyK6iLxUMcYSVyTNCSuqAv
+         nq81IKZD2bsHvgcYwP+B0FUnbAgTyj5tfHE5xp3BBkBwEjWaiKIa0OYs4QRQqkW/gFvH
+         8csQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1773216400; x=1773821200;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=QqJVCEF9evLSw9CGf9v4iGyJ+/vqb8/nhU/YNtIqzkw=;
+        b=RMrFQDIb/22Avwx/0MnEnOJ59M3r3boUR+YWkeAC4mwCDeLpAGcL6aN9I82je+eHYO
+         YBOTsAvmKppFEuY21i4VruD/oyoN+Vrp5jFPdurGjzz4nsxrl5+psIZ+NjJJItZj4SLE
+         I77vKl6AqRGUJkQFOnBiQW2G0vcFK4C9bknAxpj1DmFRdTsSdGvfZL/LC8I2QNa0eZ8r
+         zrhD4M8zZd/PEtcjeTiw2QcVJ3liLuhB7++D2nwv0jO6HeEqDkYqe3ViisdNE5JEJctE
+         2PXcZo+tiT70zx2Emy3xeyS9ceiQZhPDi2s+BphERdsqRoV+QQ29R+uIj6+LeI6tBoOW
+         SF3w==
+X-Forwarded-Encrypted: i=1; AJvYcCWCaOkIKKZkOT8hZsJgTFyLQH4bWrjq7lEtZelz2E6Y+dofCYAGTiHB0caIV8SY8LNPIQbwiatUU+I=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyZ42RMiS6oIhLjdnGOf963OeikMx5wHHwecOXn0xACH77jg/B5
+	Jq0vFs+BkEGW1FBw/wbjPGrUDC7O6+0BkxYSTLdsgMDjpFBcmG55M4TOwl16AQe2RQw=
+X-Gm-Gg: ATEYQzwVW0l67b8SvB7jL9cv7LtEHkNWq4JtSV6eI34XIcpRyeIPg3r8dc5AzZwKPCj
+	w0sm4Gwb4jfoECNI0seNvFglF0yZDmqNpKMy9PqpliYCRUs5AiKy14i+mOBPbvXY/nLBFZklKPk
+	jJ1B3eFKtizby+TBrCQMY85r2ckF2T5+BIEJkoM6eox32N0bMspRsiXEw5jiIWMsrCs6z+ijK81
+	OgbmifVmq8d2R8GdZPsFur8zQPMadxAXq6qJ2Kwx4y852m97ZkkI5QUnz3Ujc8iw6ABrmBGKacK
+	L/MIO55C9vrJcFf7IJD7HyVufGqsSMMPoGiu967VI3+AqWQDTnzqv7DbgsFgJ+TumaIGBs+fLQe
+	3SRXWSgLNZvxvlK1SPGsLRa8r6kzKCsxNrcIBdu7NqaSZN30lsZllkUdWyNjaJAuQiunaMtjx7q
+	X7TQ4Tv7c36rEYRwIEGkLx4/g4MoJgJdrIUDBAGQT/mm3lzA==
+X-Received: by 2002:a05:600c:1f10:b0:485:3f58:da6 with SMTP id 5b1f17b1804b1-4854b0a55efmr29718895e9.2.1773216399585;
+        Wed, 11 Mar 2026 01:06:39 -0700 (PDT)
+Received: from linaro.org ([2a02:2454:ff23:4441:1c2c:7aff:fe45:362e])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4854b66ffe2sm30730665e9.13.2026.03.11.01.06.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 11 Mar 2026 01:06:39 -0700 (PDT)
+Date: Wed, 11 Mar 2026 09:06:34 +0100
+From: Stephan Gerhold <stephan.gerhold@linaro.org>
+To: Bartosz Golaszewski <brgl@kernel.org>
+Cc: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Vinod Koul <vkoul@kernel.org>, Jonathan Corbet <corbet@lwn.net>,
+	Thara Gopinath <thara.gopinath@gmail.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	"David S. Miller" <davem@davemloft.net>,
+	Udit Tiwari <quic_utiwari@quicinc.com>,
+	Daniel Perez-Zoghbi <dperezzo@quicinc.com>,
+	Md Sadre Alam <mdalam@qti.qualcomm.com>,
+	Dmitry Baryshkov <lumag@kernel.org>,
+	Peter Ujfalusi <peter.ujfalusi@gmail.com>,
+	Michal Simek <michal.simek@amd.com>, Frank Li <Frank.Li@kernel.org>,
+	dmaengine@vger.kernel.org, linux-doc@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	linux-crypto@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Manivannan Sadhasivam <mani@kernel.org>
+Subject: Re: [PATCH v12 00/12] crypto/dmaengine: qce: introduce BAM locking
+ and use DMA for register I/O
+Message-ID: <abEiiqKrn62Y_s1t@linaro.org>
+References: <20260310-qcom-qce-cmd-descr-v12-0-398f37f26ef0@oss.qualcomm.com>
+ <CAMRc=MdzjY2UJ3uSUgCabCLqWJcpaVq5eSx3-Ph-AZXcBf-JTw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260310-qcom-qce-cmd-descr-v12-0-398f37f26ef0@oss.qualcomm.com>
-In-Reply-To: <20260310-qcom-qce-cmd-descr-v12-0-398f37f26ef0@oss.qualcomm.com>
-From: Bartosz Golaszewski <brgl@kernel.org>
-Date: Wed, 11 Mar 2026 09:03:37 +0100
-X-Gmail-Original-Message-ID: <CAMRc=MdzjY2UJ3uSUgCabCLqWJcpaVq5eSx3-Ph-AZXcBf-JTw@mail.gmail.com>
-X-Gm-Features: AaiRm52ABCAk0kCFZ61a8pO0V-WhkvSQun4HTuAkOrhvrkcmKuT442r4SF3useQ
-Message-ID: <CAMRc=MdzjY2UJ3uSUgCabCLqWJcpaVq5eSx3-Ph-AZXcBf-JTw@mail.gmail.com>
-Subject: Re: [PATCH v12 00/12] crypto/dmaengine: qce: introduce BAM locking
- and use DMA for register I/O
-To: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Cc: Vinod Koul <vkoul@kernel.org>, Jonathan Corbet <corbet@lwn.net>, 
-	Thara Gopinath <thara.gopinath@gmail.com>, Herbert Xu <herbert@gondor.apana.org.au>, 
-	"David S. Miller" <davem@davemloft.net>, Udit Tiwari <quic_utiwari@quicinc.com>, 
-	Daniel Perez-Zoghbi <dperezzo@quicinc.com>, Md Sadre Alam <mdalam@qti.qualcomm.com>, 
-	Dmitry Baryshkov <lumag@kernel.org>, Peter Ujfalusi <peter.ujfalusi@gmail.com>, 
-	Michal Simek <michal.simek@amd.com>, Frank Li <Frank.Li@kernel.org>, dmaengine@vger.kernel.org, 
-	linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org, 
-	linux-arm-kernel@lists.infradead.org, 
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, 
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, Manivannan Sadhasivam <mani@kernel.org>, 
-	Stephan Gerhold <stephan.gerhold@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAMRc=MdzjY2UJ3uSUgCabCLqWJcpaVq5eSx3-Ph-AZXcBf-JTw@mail.gmail.com>
 
-On Tue, Mar 10, 2026 at 4:44=E2=80=AFPM Bartosz Golaszewski
-<bartosz.golaszewski@oss.qualcomm.com> wrote:
->
-> This iteration is built on top of the v11 RFC with remaining issues
-> fixed and the mechanism for communicating the scratchpad address from
-> clients to the BAM driver changed from slave config to descriptor
-> metadata.
->
-> However: during stress-testing I noticed that sometimes a transaction
-> would end with an error. The engine was indicating that a write/read to
-> the config registers was performed while the engine was busy (bit 17 of
-> the STATUS register was set). It turns out that we must not just
-> unconditionally append the UNLOCK descriptor to the "issued" queue, we
-> must wait for the transaction to end before we queue it so this version
-> takes this into account and queues the UNLOCK descriptor from the
-> workqueue.
->
-> With this all stress tests and benchmarks from cryptsetup work fine.
->
+On Wed, Mar 11, 2026 at 09:03:37AM +0100, Bartosz Golaszewski wrote:
+> On Tue, Mar 10, 2026 at 4:44 PM Bartosz Golaszewski
+> <bartosz.golaszewski@oss.qualcomm.com> wrote:
+> >
+> > This iteration is built on top of the v11 RFC with remaining issues
+> > fixed and the mechanism for communicating the scratchpad address from
+> > clients to the BAM driver changed from slave config to descriptor
+> > metadata.
+> >
+> > However: during stress-testing I noticed that sometimes a transaction
+> > would end with an error. The engine was indicating that a write/read to
+> > the config registers was performed while the engine was busy (bit 17 of
+> > the STATUS register was set). It turns out that we must not just
+> > unconditionally append the UNLOCK descriptor to the "issued" queue, we
+> > must wait for the transaction to end before we queue it so this version
+> > takes this into account and queues the UNLOCK descriptor from the
+> > workqueue.
+> >
+> > With this all stress tests and benchmarks from cryptsetup work fine.
+> >
+> 
+> Mani, Stephan: sorry, I forgot to update the cover letter to Cc you.
+> Doing it now here.
+> 
+> Stephan: I tried to use READ command but it would crash on sm8650, so
+> I went with WRITE. :(
+> 
 
-Mani, Stephan: sorry, I forgot to update the cover letter to Cc you.
-Doing it now here.
+No worries, thanks for testing this!
 
-Stephan: I tried to use READ command but it would crash on sm8650, so
-I went with WRITE. :(
-
-Bartosz
+Stephan
