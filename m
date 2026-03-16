@@ -1,64 +1,64 @@
-Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
+Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4802439B49A
-	for <dmaengine@vger.kernel.org>; Mon, 16 Mar 2026 13:33:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 768FC39B94D
+	for <dmaengine@vger.kernel.org>; Mon, 16 Mar 2026 13:33:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773667993; cv=none; b=dUOoCCUz9AkP5PNSgYQAcJIModx3/wb3/kPW5AL5bGNvQJExjXfdy64LhBK7ZWQWM7nfKt3MACBYfXTyApZpvVLNq6gUFO5y5S6Ar3ntMsPk2hqTeyW2YfPLmzTmAPLqfcORiEl+T3TcI/wonKH+8MeTJM8yw1ggpxWpuy2x9ic=
+	t=1773667995; cv=none; b=fcplrtk8u8CeIvJBmrkGwUw4xQs/vky1cMUCnVWe9zXsf4wuqVs07QABFjuuhwRZpleNY3AzBqfWpJENesaMgGrXXmfhOy9PUAVBsnZ0Bi27m318ZvhBFQmgWJVP2TDR0i2LPjrprKZM+xZBw7TgwWCP+UWqayKMiOUUqaz3XmA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773667993; c=relaxed/simple;
-	bh=BupfuUeepmoB7xVVwacbx2/wxqNrZQtov+patEo2Bt0=;
+	s=arc-20240116; t=1773667995; c=relaxed/simple;
+	bh=B2RbK6kjk6s67mYLWwiA6Nze/yCN+GHj144MbZkTQcw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mYOs4nYD6IXooJ1Z+f5cegkeVWIuQXDuMzeF61lT5kPEYUg5DoRWv//uiRBls5RC3l7qbNNxQ0R6QNGGVBxUu6z0Uencmc+ManizmYLHwZByGuSsN3XxRIeVfZaZtGlGwAJV3IkOOJko9ulDb1+CWDvblp3wLvunjXJT/V/m+3Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=tuxon.dev; spf=pass smtp.mailfrom=tuxon.dev; dkim=pass (2048-bit key) header.d=tuxon.dev header.i=@tuxon.dev header.b=VeJfnrRi; arc=none smtp.client-ip=209.85.221.47
+	 MIME-Version; b=TxkgPncST+HFiose8LQLcjNu9LWYVCNkJDfxJSTxOnUISb5xKoW+KmchpjwhAS8o5HgheYkjdTbYd7UiHJbtbr82Jup3JzOiGx3qu+zGppAosFfVdQ/rGbdm5nc1VLTg0j3mkgPPNC3NFbCPUe8xliK/BBNTIW78e2QV5PJC5vk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=tuxon.dev; spf=pass smtp.mailfrom=tuxon.dev; dkim=pass (2048-bit key) header.d=tuxon.dev header.i=@tuxon.dev header.b=Ra3GcFmS; arc=none smtp.client-ip=209.85.221.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=tuxon.dev
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=tuxon.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=tuxon.dev header.i=@tuxon.dev header.b="VeJfnrRi"
-Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-43b43f5990dso624754f8f.2
-        for <dmaengine@vger.kernel.org>; Mon, 16 Mar 2026 06:33:12 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=tuxon.dev header.i=@tuxon.dev header.b="Ra3GcFmS"
+Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-43b3d9d0695so1275446f8f.0
+        for <dmaengine@vger.kernel.org>; Mon, 16 Mar 2026 06:33:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=tuxon.dev; s=google; t=1773667991; x=1774272791; darn=vger.kernel.org;
+        d=tuxon.dev; s=google; t=1773667993; x=1774272793; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=LnXG4ZrgMRGRj5vokF2ff//q4bPBRfw2gjw8/p6FNyY=;
-        b=VeJfnrRioHx6xxRwxkaaHnZ1iXpNjInboJvy8Tvs045iwRSaLm2MUHGGfimm6aOl8b
-         NLiuS37ZFhJ4b88q/niNjTQ6x38CYmEWXdfG5QEvWA4zusoWR8t6n09X46WYqAGJmueL
-         1UAgxTxMrb0U++6sX1yMpxxxZna5NGrD4gSL0fIWMpiH5K/qPp4yMl9a4GBpXaY8LWSf
-         AvyKJdllRI6bcoHnAaqDbQZ8B5Hp58ihomU5lpD1WzhSRw6nZ2U67vQcXT3L6Eo8ZBK9
-         TXyTTVWiUeVOPsBNIu8KSJ0coz4ln5IIzxYTjmFoRkpsEwgedZpaFysKnu+9R8fS5+Ef
-         LpHA==
+        bh=uwjXM8kgcUK2RRM+wE8XQ1aADlrQmhM2JzmmP4SWYBQ=;
+        b=Ra3GcFmSqNoyk/No8bseYy0dSSB4CyBlKg9fjx7ZreyUorwk7oo8HaNtnbvPdzMld0
+         XQ1qFmg2ln36SvV+4u+YiGtkiJZErz+DpeRgkJ/gdFQX3tPs6oXkZBok/x79lXnyAXDw
+         GSFKTJk3pRcL3hHv6HNfPSQw0agA1k0QKG0n2Vo+qHwee7hPT2+Q/hT/DMTB3xIFaGy2
+         3jv/eGVHYLSDj8t3hCk1n0VwbtU5RgzE7KbaToD5TQKKyem2gdB62lswZ66FoyzmnsOW
+         BPY7xr8Co2G4d6J4Pq0CwBDhvL9UyX0wWPDGw4vABCLJGdk3WOAX3ydr3XX6PvtnS/sH
+         cpIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1773667991; x=1774272791;
+        d=1e100.net; s=20251104; t=1773667993; x=1774272793;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=LnXG4ZrgMRGRj5vokF2ff//q4bPBRfw2gjw8/p6FNyY=;
-        b=BfRxS6/uULjqHP3Ya4AfEhOH9QJmiYhlQw1LLmLgA3AM2w2d+QVIjpRT5Wk85I2+lm
-         Hn47ge6cqd4NS5Polhke/sJcoRF7LiQ5RORwQPCQJBjVvg7eWwNDBk7vnJYFfuKtqV3v
-         fcxBRMXOzg4wfuqxEfN3619N5sHamJuPVGza1dCczQfmbn7gRB+pIngfb3QMWuIgqlki
-         8/Id0dT8J6UGjLsS6b7AwL6yiIhsO0xcTZriS2TxqsaQcSOWPjpEbC8fzbpl8AB526FI
-         17MRaDbw306RoDpYb+0oQfbVMRpDVBt/PoGeuxTbP4E3jqng6kG0yWHs91Ctn1zbyyXo
-         vIhA==
-X-Forwarded-Encrypted: i=1; AJvYcCW8J83cngz1XmLM9beKlZuPooMSgEJXTOz1iX5O2HFGAg3dTOY6zMQ4zThT3r9c0P6e6kW20edA1DQ=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy2l8FiAqsTdz7kRDSjVYIBHRfBG9jom2dLr2jKVUWRfNL56ron
-	ywdiSdwpAXrnEJHnTKtpVhOVvMOLXHnl74Xs090voZBWFwqWC2761qYwq0ybtwZACyo=
-X-Gm-Gg: ATEYQzz4Ggz8zSZsmjUYnopEbDZHWUR/neuu1+sXfGHvKsROlNUY92QweR+sLa2JX23
-	aH76oSw33h21gGp5Z5xePZ6AgUfHpxTI6tSuYy8Pc5ljQffUN2kEiEZUELvyvU4SEmDtmKovr+e
-	FTJ1TsU921jnwTPpWXhUZhXCrRr0vu40X0kAfxNsWhM4I77CECSazPSyQGeX3mFOdj0CMKX5dad
-	2t74OU2u9tKxwmLwfvnqdtslp7cL5YmLurIpTTa41IL7JT05um0ZyHW3sJYo7BgRDqo9b4YiOHq
-	OjXSbNigD4nJ457Ig8aRnbBseeom82L6N6LhJH7eZ3UY+RIfdyeVcsoqDKVmzF9ZZ8ujcVRMr4W
-	6F37+KhR+H1Khyig6tXhcCqsLPrlu62zEeBdXfFkJwI2o/gMw7v4YAR5hqRwYouYCLpHyPHcKdC
-	bxxtyYiM06AiaOl4YPadrznI8jI9XqVcs3NEPwQjk1qOQscG+WswF1C7nJOVdgs5Batxv3OrBaQ
-	e+wsGA=
-X-Received: by 2002:a05:6000:4210:b0:43b:447a:11ab with SMTP id ffacd0b85a97d-43b447a134amr5408871f8f.2.1773667987544;
-        Mon, 16 Mar 2026 06:33:07 -0700 (PDT)
+        bh=uwjXM8kgcUK2RRM+wE8XQ1aADlrQmhM2JzmmP4SWYBQ=;
+        b=rAF8Wb6yKjgpxj4IxYto2OuirDP70Upa3VZnkBrYOAORiLYBYQd27sKY1j4GPFKZ6+
+         zfSq34ts7TUloSBKakpba9rTBOkwUdg4KrGXgZMfcWzbx3BCrZKuhL2tSHF7XTzd7jNY
+         vaelIRz7ygRXHO+rsftm7UAw9IkYPSX/dnp07QDRufJ3cjQQ0MQWFW178QaFsj+SCA6p
+         GQDEgb+hoqMNCU2dp1b0IcHj+/VHzUkppdnKy+FlLsrI8PMlKMBmphEwq0b1zLx8g5KT
+         O9VHGPdYQ9V4PyLPOV6/17eKuxtD7EZJBSQ5b69Ut1FagfOceDywj6pdMwv3Ih3/xmYl
+         BN5A==
+X-Forwarded-Encrypted: i=1; AJvYcCWl1w2IzUgqR2WftUhw/dhxRQOqT6Ogtm6I4/h9mma9ODfcRysuqTq9nKAvXLm76Pafc5zrprgDxzU=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyOiF0sXNO9/jusLBoabDMfKEWX+b8ago64CD7/eAJZFj5Zt/JF
+	x0RcnSaeIyJg57diQM88+y5bRbEE/ZP98qU0upyCnSXAFYdq5tjfzLclxXX4xrgicZE=
+X-Gm-Gg: ATEYQzysDlje6PHKKFasvzuzcUOjx6l9U6gMCiN/00pgr+YSODFiRe4RXbMkuZsZghc
+	nChgSG0fffxuvMWz6egcRiGnBWX2tTdqXjkWqG0F1GjHk+7KdgijQS+IhmmEvZxvlOBgYMlou0/
+	1AW/ymrVO0eBpHtl6MYGPY/oGySJxSPsSEplkiw6v+xGPgwd0UwnBSp0ndJtaaKy/jzHjII6QpK
+	9jmgRqSeFszSfHrDd0I0DJNPCW2T1XAIqQE0SnjXQ/8vHBOyG+ktH1Wg6KJRyOOAn8GC42Y09LO
+	uQGTSOE+vV4s5EZUoNa47ZkE/fkZJTt6Tzgrt39WgR3hxTs2Bfvnon/2Ysnc4w+Iuh+Zu4FNy99
+	qagvMZW3kjU5ep59KyQ6r1q/U/Uj9LlQch1RXw9eiBXfFsDU9QMnWHt9abiHj37SAgpvAMTCbBL
+	emF3pMRpVz6Ax6BgTg905gcXKNU6PsTt7ckfz8iN8Mb8w6nGPN092rmcMn+Nv/YkWGAKu54LVaL
+	jsPE6c=
+X-Received: by 2002:a05:6000:1a8e:b0:437:7300:eb1c with SMTP id ffacd0b85a97d-439fe1addc8mr29819532f8f.26.1773667992593;
+        Mon, 16 Mar 2026 06:33:12 -0700 (PDT)
 Received: from claudiu-TUXEDO-InfinityBook-Pro-AMD-Gen9.. ([2a02:2f04:6208:0:c5e3:3624:ad1c:6b4])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-43b419270efsm11629888f8f.16.2026.03.16.06.33.06
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-43b419270efsm11629888f8f.16.2026.03.16.06.33.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 16 Mar 2026 06:33:07 -0700 (PDT)
+        Mon, 16 Mar 2026 06:33:12 -0700 (PDT)
 From: Claudiu Beznea <claudiu.beznea@tuxon.dev>
 X-Google-Original-From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
 To: vkoul@kernel.org,
@@ -70,11 +70,10 @@ To: vkoul@kernel.org,
 Cc: claudiu.beznea@tuxon.dev,
 	dmaengine@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
-	Frank Li <Frank.Li@nxp.com>
-Subject: [PATCH v10 3/8] dmaengine: sh: rz-dmac: Drop read of CHCTRL register
-Date: Mon, 16 Mar 2026 15:32:47 +0200
-Message-ID: <20260316133252.240348-4-claudiu.beznea.uj@bp.renesas.com>
+	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+Subject: [PATCH v10 6/8] dmaengine: sh: rz-dmac: Use rz_lmdesc_setup() to invalidate descriptors
+Date: Mon, 16 Mar 2026 15:32:50 +0200
+Message-ID: <20260316133252.240348-7-claudiu.beznea.uj@bp.renesas.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260316133252.240348-1-claudiu.beznea.uj@bp.renesas.com>
 References: <20260316133252.240348-1-claudiu.beznea.uj@bp.renesas.com>
@@ -86,81 +85,62 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The CHCTRL register has 11 bits that can be updated by software. The
-documentation for all these bits states the following:
-- A read operation results in 0 being read
-- Writing zero does not affect the operation
+From: John Madieu <john.madieu.xa@bp.renesas.com>
 
-All bits in the CHCTRL register accessible by software are set and clear
-bits.
+rz_lmdesc_setup() invalidates DMA descriptors more comprehensively.
+It resets the base, head, and tail pointers of the descriptor list and
+clears the descriptor headers and their NXLA pointers. Use
+rz_lmdesc_setup() instead of open-coding parts of its logic.
 
-The documentation for the CLREND bit of CHCTRL states:
-Setting this bit to 1 can clear the END bit of the CHSTAT_n/nS register.
-Also, the DMA transfer end interrupt is cleared. An attempt to read this
-bit results in 0 being read.
-1: Clears the END bit.
-0: Does not affect the operation.
-
-Since writing zero to any bit in this register does not affect controller
-operation and reads always return zero, there is no need to perform
-read-modify-write accesses to set the CLREND bit. Drop the read of the
-CHCTRL register.
-
-Also, since setting the CLREND bit does not interact with other
-functionalities exposed through this register and only clears the END
-interrupt, there is no need to lock around this operation. Add a comment
-to document this.
-
-Reviewed-by: Biju Das <biju.das.jz@bp.renesas.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Signed-off-by: John Madieu <john.madieu.xa@bp.renesas.com>
 Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
 ---
 
 Changes in v10:
-- none
+- none, this patch is new and replaces the patch 6/8
+  ("dmaengine: sh: rz-dmac: Add rz_dmac_invalidate_lmdesc()") from v9
 
-Changes in v9:
-- collected tags
-
-Changes in v8:
-- none
-
-Changes in v7:
-- collected tags
-
-Changes in v6:
-- none, this patch is new
-
- drivers/dma/sh/rz-dmac.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/dma/sh/rz-dmac.c | 10 ++--------
+ 1 file changed, 2 insertions(+), 8 deletions(-)
 
 diff --git a/drivers/dma/sh/rz-dmac.c b/drivers/dma/sh/rz-dmac.c
-index e2d506eb8194..29fa2ad07e30 100644
+index eca62d9e9772..6bfa77844e02 100644
 --- a/drivers/dma/sh/rz-dmac.c
 +++ b/drivers/dma/sh/rz-dmac.c
-@@ -696,7 +696,7 @@ static void rz_dmac_irq_handle_channel(struct rz_dmac_chan *channel)
+@@ -460,15 +460,12 @@ static void rz_dmac_free_chan_resources(struct dma_chan *chan)
  {
- 	struct dma_chan *chan = &channel->vc.chan;
+ 	struct rz_dmac_chan *channel = to_rz_dmac_chan(chan);
  	struct rz_dmac *dmac = to_rz_dmac(chan->device);
--	u32 chstat, chctrl;
-+	u32 chstat;
+-	struct rz_lmdesc *lmdesc = channel->lmdesc.base;
+ 	struct rz_dmac_desc *desc, *_desc;
+ 	unsigned long flags;
+-	unsigned int i;
  
- 	chstat = rz_dmac_ch_readl(channel, CHSTAT, 1);
- 	if (chstat & CHSTAT_ER) {
-@@ -708,8 +708,11 @@ static void rz_dmac_irq_handle_channel(struct rz_dmac_chan *channel)
- 		goto done;
- 	}
+ 	spin_lock_irqsave(&channel->vc.lock, flags);
  
--	chctrl = rz_dmac_ch_readl(channel, CHCTRL, 1);
--	rz_dmac_ch_writel(channel, chctrl | CHCTRL_CLREND, CHCTRL, 1);
-+	/*
-+	 * No need to lock. This just clears the END interrupt. Writing
-+	 * zeros to CHCTRL is just ignored by HW.
-+	 */
-+	rz_dmac_ch_writel(channel, CHCTRL_CLREND, CHCTRL, 1);
- done:
- 	return;
- }
+-	for (i = 0; i < DMAC_NR_LMDESC; i++)
+-		lmdesc[i].header = 0;
++	rz_lmdesc_setup(channel, channel->lmdesc.base);
+ 
+ 	rz_dmac_disable_hw(channel);
+ 	list_splice_tail_init(&channel->ld_active, &channel->ld_free);
+@@ -560,15 +557,12 @@ rz_dmac_prep_slave_sg(struct dma_chan *chan, struct scatterlist *sgl,
+ static int rz_dmac_terminate_all(struct dma_chan *chan)
+ {
+ 	struct rz_dmac_chan *channel = to_rz_dmac_chan(chan);
+-	struct rz_lmdesc *lmdesc = channel->lmdesc.base;
+ 	unsigned long flags;
+-	unsigned int i;
+ 	LIST_HEAD(head);
+ 
+ 	spin_lock_irqsave(&channel->vc.lock, flags);
+ 	rz_dmac_disable_hw(channel);
+-	for (i = 0; i < DMAC_NR_LMDESC; i++)
+-		lmdesc[i].header = 0;
++	rz_lmdesc_setup(channel, channel->lmdesc.base);
+ 
+ 	list_splice_tail_init(&channel->ld_active, &channel->ld_free);
+ 	list_splice_tail_init(&channel->ld_queue, &channel->ld_free);
 -- 
 2.43.0
 
