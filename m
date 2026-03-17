@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B9722D9796;
-	Tue, 17 Mar 2026 11:27:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D7EC3932F0;
+	Tue, 17 Mar 2026 11:27:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773746871; cv=none; b=tTt77upCdIqBvsx7z4oqR8ZxoL8aYgMroVwJHfjXJTaQVFK/jxkljVHuD+EESuFrVAMzPKm4F50FVBlK29LanQ/W4ttnkVooNtYyicL9FaAqA1g8UQEP10vwTIxR0KdrvFOTurXz1IzG1dP4o3/04TijNRTf8db8/ZktYTsLky8=
+	t=1773746874; cv=none; b=SU3NhTwy3r10VGTkBmr7KgouUDVIqnbVdxttyxx5i8u8DDEfGnoEvcjIXodTlRBmEgtYnb75WJS9H3AL6x4nK7MHLVQq9e70+AOzhi6meaM36kp2WX7GkchFoXPy+bM5phMlFHCb2A9omuz52VXdNvLpHF4FTfVPOchp+Mt29ao=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773746871; c=relaxed/simple;
-	bh=/lJzgKXZtpaNxm1OXKdJSaQHb6rqsXre/eLfhtNuPiA=;
+	s=arc-20240116; t=1773746874; c=relaxed/simple;
+	bh=hHykJD+9TL8m1Kg8WRvXe8cTceyGxQGB9+Mf9oqzmBc=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=H5KzHu6f0EALmHRdO1FkSJbN+8AJVj2jRUamG6WSPankfeMmvJuvzeBIG79DUGkvdRfTm0upt4Hs2IkEWaqiBIm/MPahvF4SIkyLx/tjoW//87yvqOrdq32N9PtHqCkPPCOph7ArojlJUamNA9I9XheJGPVbpt83zrYKeb5ykmI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JuepidAi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=E0LnU+uDCQckEqV2OILEJaet1SOc8IpL8i0Lqe/afhn/1nEll0rtpV8wMZyDUHL/h8TZQ8yge5msW3afzUIO43+fZYa2VepsV9Gx40K1bzDja/TCTpvqOk09l2RHoLTJ9VyR5+kpANIwNWp8pzS942n4fC+g4rW1SMq3/9hHyzE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lqW110UI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JuepidAi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 464C4C4CEF7;
-	Tue, 17 Mar 2026 11:27:48 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lqW110UI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82AE2C19425;
+	Tue, 17 Mar 2026 11:27:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773746870;
-	bh=/lJzgKXZtpaNxm1OXKdJSaQHb6rqsXre/eLfhtNuPiA=;
+	s=k20201202; t=1773746874;
+	bh=hHykJD+9TL8m1Kg8WRvXe8cTceyGxQGB9+Mf9oqzmBc=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=JuepidAi89V8qdQRJBp2BIDWiFoG7kj/Ku2MkdVTHyyUqr2Rc8ZJsn2LnikH8Fsn0
-	 sJd4b0km1i5kEp5RjsiI24PRRK2UghKmIQ0gbT+duSQK0Bo8lOawzeMtNknxseImbv
-	 W+bxtXfNrPdrrSPPz5KqyzOlFuEDzOyDSL79hUYNT9knsfxAbOacaXPBwgBa4DFuAD
-	 qY9c/ZX0VYIS2h4Rb1YKzrsa6j7bxhWzuWw/K+OtyejkijWM+uUQsPzMQVQeAQJXhl
-	 xWWNEs5gKy5tw/gS7PN5lKUNEli4XCdfyIDqQvabmdy+7Xf/RUZvBfQnQSFlBOvcga
-	 eorLBi7rv+fpg==
+	b=lqW110UIZjPBkszkgbYhDWH1b/JZ4MAdLYNHiGMbuavTgpclgWbv9hsyPCFaLLu2Q
+	 wx9WHo4SRhO90mH5Q0axGI2KgDcbXdY3TgHSIZR9jxqrc+MD7TehSIg21qJmStbluK
+	 8cSSeoIUvq/hK+sayuXm3YFHNwZUzBzWGZRuhy78iAuUiQCL6tj02M3z29eNlWiHEG
+	 +yXHRPABYgyIgy+Bz4nEunVKsR790eTGW7uuF5yb03ZDwOG/by6lwsLJg5S+WHfDNM
+	 1TmVDKEqQlZaBjkctULbFJTgKsQnfci0hThSlebuh1VjmS4lP48jZlTbn6jCYe+2Y+
+	 PV9w2A3gteYMQ==
 From: Vinod Koul <vkoul@kernel.org>
 To: dmaengine@vger.kernel.org, Marek Vasut <marex@nabladev.com>
 Cc: Michal Simek <michal.simek@amd.com>, 
@@ -34,12 +34,12 @@ Cc: Michal Simek <michal.simek@amd.com>,
  Suraj Gupta <suraj.gupta2@amd.com>, 
  Thomas Gessler <thomas.gessler@brueckmann-gmbh.de>, 
  linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
-In-Reply-To: <20260316221943.160375-1-marex@nabladev.com>
-References: <20260316221943.160375-1-marex@nabladev.com>
-Subject: Re: [PATCH] dmaengine: xilinx: xilinx_dma: Fix residue calculation
- for cyclic DMA
-Message-Id: <177374686790.337094.9907584689024913744.b4-ty@kernel.org>
-Date: Tue, 17 Mar 2026 16:57:47 +0530
+In-Reply-To: <20260316222530.163815-1-marex@nabladev.com>
+References: <20260316222530.163815-1-marex@nabladev.com>
+Subject: Re: [PATCH] dmaengine: xilinx: xilinx_dma: Fix unmasked residue
+ subtraction
+Message-Id: <177374687115.337094.18303476978785991645.b4-ty@kernel.org>
+Date: Tue, 17 Mar 2026 16:57:51 +0530
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -51,24 +51,18 @@ Content-Transfer-Encoding: 7bit
 X-Mailer: b4 0.13.0
 
 
-On Mon, 16 Mar 2026 23:18:57 +0100, Marek Vasut wrote:
-> The cyclic DMA calculation is currently entirely broken and reports
-> residue only for the first segment. The problem is twofold.
+On Mon, 16 Mar 2026 23:25:24 +0100, Marek Vasut wrote:
+> The segment .control and .status fields both contain top bits which are
+> not part of the buffer size, the buffer size is located only in the bottom
+> max_buffer_len bits. To avoid interference from those top bits, mask out
+> the size using max_buffer_len first, and only then subtract the values.
 > 
-> First, when the first descriptor finishes, it is moved from active_list
-> to done_list, but it is never returned back into the active_list. The
-> xilinx_dma_tx_status() expects the descriptor to be in the active_list
-> to report any meaningful residue information, which never happens after
-> the first descriptor finishes. Fix this up in xilinx_dma_start_transfer()
-> and if the descriptor is cyclic, lift it from done_list and place it back
-> into active_list list.
 > 
-> [...]
 
 Applied, thanks!
 
-[1/1] dmaengine: xilinx: xilinx_dma: Fix residue calculation for cyclic DMA
-      commit: f61d145999d61948a23cd436ebbfa4c3b9ab8987
+[1/1] dmaengine: xilinx: xilinx_dma: Fix unmasked residue subtraction
+      commit: c7d812e33f3e8ca0fa9eeabf71d1c7bc3acedc09
 
 Best regards,
 -- 
