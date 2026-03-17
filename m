@@ -1,71 +1,75 @@
-Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
+Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EDCC189F43
-	for <dmaengine@vger.kernel.org>; Tue, 17 Mar 2026 20:47:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E489A38A71D
+	for <dmaengine@vger.kernel.org>; Tue, 17 Mar 2026 20:51:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773780477; cv=none; b=cUUw6PjYFLz0oOvMoqmRfeVQVPPbnCxkg5znbEkMB9/inX21pggHTR/ndc7yOahXYG3dUSsnL/nGrX0RngMYCnwhGtaVAp4BxADuUDbiSBC9JsM8N/N0t0NBexAUWdvhhidGeWcaMYLaMYJgR1AUIFAjqFtgNndjwLDKn8HDsms=
+	t=1773780664; cv=none; b=eaRCYOpniml6RqY5lQ9T1QFJCpoimawRdm9NSDSwS4STk/D/H9eIbyXva/rErNloNVfdwAe5mRwNUOL0JDniPFFDuJdUbrWQwxmvuZnsENgxATRIaFqibEC2sjHsoDDkBzNDKQMq4OHB3bwaK5VuSVyZFVLSZpMtUU7ijxZT8EA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773780477; c=relaxed/simple;
-	bh=erbVrTXG97D5FI0eFhcyGQkyScSUPMgDK8m5mqqKgng=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=i4kJrJ4tA0K+eRj/ehdCY796kLgNK2vWKDhH/LiPWEg9MTREXcRHqg/DuecSYkX9w7Fk+trA33+Vo06kRPTMV12A6LUsDLi09rHtrhGtOYCAT08ho8qdUuJBWJ5IroMTEvnkTfp9wtnAbiAGtTkMj/W8ifzuZMNz8qUuyRBtg1I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Rof47hfl; arc=none smtp.client-ip=209.85.128.42
+	s=arc-20240116; t=1773780664; c=relaxed/simple;
+	bh=yntkghlcCP7ZIzwF2Sh3ioPGHdXavGN3D4wJZF+nEE8=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=bdKb8UB9zpOcpLy+BKNexFeJdX1r8cquxKlBba3C9Maak8Ynh7hgcqn9zGnzqQV4q1HAUje5wiYeQqoLGHP8YeiD8zQHDpHVTV5mXU1Ash/tWQg4OKOlgC3P+5BFybRqgaYKCgnVn8LqrykNViWRgdai2XMZrQlLELp9a9hdodQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hO62Zr5w; arc=none smtp.client-ip=209.85.221.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Rof47hfl"
-Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-485345e1013so1962805e9.1
-        for <dmaengine@vger.kernel.org>; Tue, 17 Mar 2026 13:47:56 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hO62Zr5w"
+Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-43b45bb7548so60135f8f.1
+        for <dmaengine@vger.kernel.org>; Tue, 17 Mar 2026 13:51:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773780475; x=1774385275; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1773780661; x=1774385461; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=/1Ej2QQkVfR2yUyXwe861yMTinfcJrjiiA4dl00sg28=;
-        b=Rof47hfld/mXrYXwzhookdiJABxeKavaD1o5zD7+sgIMaQaFs4qInviaMEuAgk7LDs
-         HDQbImb0Ngt4774Wu6NNQwCXGP3/u/fD4dKBQ4W8qQ2ch9pKSR9rncOKgoO+I9XmbRmp
-         zaISZ8HGAW/3JTW0YWBt/aUYh0rPaQgw42c4ThD1H/XHjDNPnm2FuW+d/q0gXMgVrFCS
-         hQlQHiM2l77jpLwDXW51n/S7EWUnlfrkHRgMqPeAiwrcs+Uv2VnEW2GYsg0bntbskclY
-         62ZOwp5sYub8Af5XfthNs+WwPHI01cA5+1Ai7CqZBUiYt7t+yJfijXRm1jiYMEqvcPdj
-         4eCQ==
+        bh=7yFBJVJpKs5V7I19enN0uxv92VPjioQfGoucnyTKKqE=;
+        b=hO62Zr5wXn+5fG2NSIxA3RysgKWXYEBt6HPcheu54DQ5dabEVi24bbTtV4dMy8lsYU
+         z3zMDIlZ/haDHvtboukDXmFeqa21qI+QBw7DkM70u+mC2dtqZJpRC+8X1FczxYye2NMe
+         GHuXiqrzgcrjWXt8FP+YK1fAoB3WSA+olJ/icOQ3B7+0GoVyKIsTQl8zIqyCNhi09sa4
+         0DXOcoY9jb0Nsqpyiqi536yR2eWVooJwzeRXaB1nhS3CEnubeIo7ilDfkD3jkEOBbQUd
+         qRzPFiZSy8RlLSmXF49SSXErLRM7cR/QlfpqBcFLHQmKjioyzFJfJ1KKrD8aKQKAHbwX
+         Ij3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1773780475; x=1774385275;
+        d=1e100.net; s=20251104; t=1773780661; x=1774385461;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=/1Ej2QQkVfR2yUyXwe861yMTinfcJrjiiA4dl00sg28=;
-        b=rHoRAypHSGFDaRxovP2q75zBH7jlzHNNrNvBi8zNpkgyaZlZa/2BGC62lDDoE3LNsH
-         vfHlD15bxlHBXUlqwdhE9RDjMlZSlyqWryGrFLIvpQxxzzynvNQHlrgsNdnORe3gQ1H4
-         +7SPYRjB8fCV/qUIdeWWGCtSGHbtEfiQD8yZ5J4YIJYgbgdtLvKFPldC5lvSMu618ZbF
-         c9pM9gVsfycqqGy5eswaXHjzD5znj7xAiQ/crFUr1Lu+9/4T7f2P5xvLSsId7L2dq6ng
-         QS6YWxZ/WjQ35+zwhfs7f5p2EIgdTA+M4jSROCV/IZGdQsV5IAcORcGDz83crX1vpC6r
-         oBDg==
-X-Forwarded-Encrypted: i=1; AJvYcCWSqNE1nfGWzgmXGzzb6zmhiAKY3KS968Iwb83UldOsyR31v091Ko7maCfkYB/kioNMwEQtyr54wLc=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzgYbX1cK+P+h2LeDRKgcJWQPqrLX4bsBAWt2YKhA8fqmnPXkmC
-	mKvZk5f5n+oBWtlTD2TbBupAA/KDpHSXQbr3DPkAKnUy+0UUvu4d2u3O
-X-Gm-Gg: ATEYQzxPgkbB3JN8ChP8InKtN5BXPAia1/VxFuyHSinglulJ6ff3yU5AlXxPYyVz0zb
-	wSDy7IRLPIhAxKfc9zP5Mfq2JMcRgPpjMhFg94H5zrXhoBX3Qh5V7pwzswBSSsCZ4Nvb7iy+kOk
-	HHRF9/PkwNzg4MqeQhUOjdczSR2x6UBu0MjKSkX+l2cTQkOXfA0nunrdfMcWfhU/qzgMFiEfxWK
-	n34zrhJtCS8rOtzkqy1RywUvU3JBvbJUkTZhBz7bYxkE13vlZ6uxizbcwx7ZIrb6MCvvaig+cjQ
-	6S7X3EkVFHpX5a5LWRmLkWRNM4fg0DWM3GdMavWPB0PXVV/yiRNDjcr0+o8P1nKs7dyxT5Ha1RQ
-	iey2Flbfw9dIeM5CWMh4VNY8ti2M/3lm5/ps3XVOhlLO9p60DKlvhe0lij2dlHCJl+1eo2vhDzS
-	oI9y/oIyciOfr30wU2XNvEHQ==
-X-Received: by 2002:a05:600c:8b18:b0:485:38f1:5cec with SMTP id 5b1f17b1804b1-486f40aca00mr16393135e9.7.1773780474467;
-        Tue, 17 Mar 2026 13:47:54 -0700 (PDT)
+        bh=7yFBJVJpKs5V7I19enN0uxv92VPjioQfGoucnyTKKqE=;
+        b=If4jEQYHZgy3HYTzP3wPcKdaDeMZuQeF24ikqnL43c4rDPrrHAxD2LDODnkTkusQSd
+         QhRlnMXH2q79kcBy97Y+s5PfXAc/15kwZ1DQR9MC4huldp2+PUxJSiObYtP3yfL0wQkh
+         RAkFtrMm9UIIFpwi4SeFPyXI7fZ8qHLIeAnlkPpHBkB8aV/dJxAFAAOyMkwade3vYmhY
+         rYtc1+FOseJaKiQkGfLIDss4M2sSn1hkr/vW0lvqCZKARYrEqjVNoydks3hlxyELpwkM
+         PfOSIZYFE4mjnNpHxf2mhwa+uYWoX5JzTbRbP0fFZiIxRbS6PEXcvTCc9eQdEIE15SpV
+         dkKg==
+X-Forwarded-Encrypted: i=1; AJvYcCUH7I5lwsDpMzkWTJ5UFr6dP/qdyFGiFHcIIDbFwCmep3ndeEpuNmEtJkCCWASKNSEM5T82svbdt4I=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx6gnRCXgvgHHw6ZAFT6FLFSpJt66RiHx8SIke19iWlswhGXywa
+	tRsMQ6fSDW86pvNaHImz1uy4F68kP+fcAxEE8A70NTBne+PCFb9uHyp9
+X-Gm-Gg: ATEYQzyCEH8MyExOUil5X/7AmDPSMmaK5djQPurusaqsORqD44f/etiv6kZ27mR7qai
+	8lHoGSzWaON9+EfhSbwbUQnpS4xugxFlJ8LTebBlQAA/gBbfQsjMnSMLns/wX4cZiaMV1R0SOfC
+	pdbKpkKeGRPWDQO9C20KE7y1aPAl3iXk8fzmlugXPapjrudlcaoRaksg20gdpSx22Cm5aK7CGUA
+	LqrkGqPVWGm4Qk1dIwuhVDMdmSpveGfQD3U0ICuCQCZWesbM2DSlahZTXG0ETTlsYdcv0J9731r
+	XJL0Zp6Byr0Jyzq9dOXyF2dhOQ+Zf1X7bDgHdSvkw1dyPqrbtKj0rH4aXQiWLnHC5CT1fMXnNxH
+	Kvwbf2decnEauDXbgXVi70mqctI9jDw06zCGALfmE9/YUKQldAnSo31Z/gHrX1oaU5TOkX0wvam
+	26Ab96gK8Bc0KU8dR9SVebOQ==
+X-Received: by 2002:a5d:584b:0:b0:439:fe98:20f9 with SMTP id ffacd0b85a97d-43b527c4d66mr1136366f8f.27.1773780661024;
+        Tue, 17 Mar 2026 13:51:01 -0700 (PDT)
 Received: from localhost ([87.254.0.141])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-43b518a2cd3sm1641025f8f.32.2026.03.17.13.47.53
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-43b518522d7sm1706550f8f.13.2026.03.17.13.51.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 Mar 2026 13:47:53 -0700 (PDT)
+        Tue, 17 Mar 2026 13:51:00 -0700 (PDT)
 From: Colin Ian King <colin.i.king@gmail.com>
 To: Binbin Zhou <zhoubinbin@loongson.cn>,
 	Vinod Koul <vkoul@kernel.org>,
 	Frank Li <Frank.Li@kernel.org>,
-	dmaengine@vger.kernel.org
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	dmaengine@vger.kernel.org,
+	devicetree@vger.kernel.org
 Cc: kernel-janitors@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH][next] dmaengine: loongson: Fix spelling mistake "Looongson" -> "Looogson"
-Date: Tue, 17 Mar 2026 20:46:31 +0000
-Message-ID: <20260317204631.120332-1-colin.i.king@gmail.com>
+Subject: [PATCH][next] dt-bindings: dmaengine: Fix spelling mistake "Looongson" -> "Looogson"
+Date: Tue, 17 Mar 2026 20:49:38 +0000
+Message-ID: <20260317204938.120729-1-colin.i.king@gmail.com>
 X-Mailer: git-send-email 2.53.0
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
@@ -76,34 +80,26 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
-There are a couple of spelling mistakes, one in a comment block and
-one in a module description. Fix them.
+There is a spelling mistake in the title field. Fix it.
 
 Signed-off-by: Colin Ian King <colin.i.king@gmail.com>
 ---
- drivers/dma/loongson/loongson2-apb-cmc-dma.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ .../devicetree/bindings/dma/loongson,ls2k0300-dma.yaml          | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/dma/loongson/loongson2-apb-cmc-dma.c b/drivers/dma/loongson/loongson2-apb-cmc-dma.c
-index 2f2ef51e41b6..1c9a542edc85 100644
---- a/drivers/dma/loongson/loongson2-apb-cmc-dma.c
-+++ b/drivers/dma/loongson/loongson2-apb-cmc-dma.c
-@@ -1,6 +1,6 @@
- // SPDX-License-Identifier: GPL-2.0-or-later
- /*
-- * Looongson-2 Chain Multi-Channel DMA Controller driver
-+ * Loongson-2 Chain Multi-Channel DMA Controller driver
-  *
-  * Copyright (C) 2024-2026 Loongson Technology Corporation Limited
-  */
-@@ -725,6 +725,6 @@ static struct platform_driver loongson2_cmc_dma_driver = {
- };
- module_platform_driver(loongson2_cmc_dma_driver);
+diff --git a/Documentation/devicetree/bindings/dma/loongson,ls2k0300-dma.yaml b/Documentation/devicetree/bindings/dma/loongson,ls2k0300-dma.yaml
+index c3151d806b55..8095214ccaf7 100644
+--- a/Documentation/devicetree/bindings/dma/loongson,ls2k0300-dma.yaml
++++ b/Documentation/devicetree/bindings/dma/loongson,ls2k0300-dma.yaml
+@@ -4,7 +4,7 @@
+ $id: http://devicetree.org/schemas/dma/loongson,ls2k0300-dma.yaml#
+ $schema: http://devicetree.org/meta-schemas/core.yaml#
  
--MODULE_DESCRIPTION("Looongson-2 Chain Multi-Channel DMA Controller driver");
-+MODULE_DESCRIPTION("Loongson-2 Chain Multi-Channel DMA Controller driver");
- MODULE_AUTHOR("Loongson Technology Corporation Limited");
- MODULE_LICENSE("GPL");
+-title: Looongson-2 Multi-Channel DMA controller
++title: Loongson-2 Multi-Channel DMA controller
+ 
+ description:
+   The Loongson-2 Multi-Channel DMA controller is used for transferring data
 -- 
 2.53.0
 
